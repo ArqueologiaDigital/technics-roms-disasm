@@ -315,7 +315,7 @@ committed images:
 | a pointer chain through service-table slot `+0x04` (`KssWorkRam+0x9EC`) | 1     | -                |
 | a routine's return value                                                | 1     | -                |
 
-So 1,316 of the 1,340 (98.2 %) now have a known target. All 967 registry calls are firmware names.
+So 1,316 of the 1,340 (98.2 %) now have a known target (2026-11-02; on 2026-11-06 all 1,340, see "The last 24" below). All 967 registry calls are firmware names.
 The 23 service-table slots and the 3 `PtrStrList` methods are table-plug-in routines. Slot `+0xCC`
 is `KssPad16`, which already had a name. The lane gives `kn7000_sp7001_table_manual.sym` names
 for 17 more slots and the 3 methods, where the code is clear (`KssThrow`, `KssTraceForward`,
@@ -342,6 +342,76 @@ decompress to exactly program 942 (`0x000000`-`0x3F8BDB`; the dump's tail is 0xF
 in total or in any block, so like the table's it predates the final build -- but here there is no
 earlier image on hand to match it against.
 
+### The last 24 (2026-11-06, lane kn7000-names)
+
+Two fixes to `oldbuilds_baseext_indirect_calls.py`'s evaluator resolve 5 of them. It now models a
+register + register `add` with one constant side: `mov 0x2e1c, a1` / `add d0, a1`, with d0 =
+`(XapFrameworkObj)`, is registry slot `0x2E1`. A walk sent to a predecessor also no longer stops
+at the block start it came from. The four `add d0, a1` sites are `PAPI_Functions` `LibStrlen`
+(`0x502A88B2`, `0x502A88DE`), `strncmp` (`0x502A88BB`) and `strcpy` (`0x502A88E9`).
+`0x502A6BF9` is `KssContext+0x78`, `KssTraceForward`. The run now gives registry 971,
+context 330, object 20, so 1,321 of 1,340 are resolved.
+
+`notes/mn10300-names-probes/oldbuilds_baseext_unresolved_calls.py` follows each of the other 19
+one step further. It uses three facts about the `.XAP` that the first probe did not know:
+
+- **Its start-up copies `.data`.** The routine `XapEntry` calls first clears `.bss` and copies
+  0x56C bytes from file address `0x502B15E4` to RAM `0x502B1B50`. So the words of
+  `0x502B1B50`..`0x502B20BC` are read 0x56C bytes lower in the file.
+- **It is the base plug-in's implementation.** `XapEntry` returns `0x502B1E50` in a0, the
+  `.XAP`'s routine table (`XapExportTable`). `KssPluginLoad` stores it at
+  `KssWorkRam+0xA38 + 4 * id`; the id is 3, so the table lands at `KssWorkRam+0xA44`. 27 of the
+  base plug-in's class procedures and `Ap_*` callbacks are thunks: they load
+  `(KssWorkRam+0xA44)`, take a slot and call it through `func_483E856E`. So `AcKssListProc` is
+  `.XAP` slot `+0x04` (`0x502A19F3`), `AcKssScreenMenuProc` is `+0x08`, and so on. These 27 are
+  now named `Xap<name>` in `kn7000_sp7001_baseext.sym`.
+- **Two interfaces with six classes.** The two plug-ins store six vtables at an object's `+0`.
+  Three are 12-word "lists": `PtrStrList`, `BufList` (`0x5029913C`) and the `.XAP`'s
+  `XapListSource` (`0x502B1DA8`). Three are 19-word "iterators" with the same slots: destroy,
+  HasNext, Next, Index, Get `+0x24`, SetPos `+0x28`, Skip `+0x30`, Count `+0x44`, list `+0x48`.
+  They are `StrList`, `BufStrList` (`0x5029916C`) and `XapListIter` (`0x502B1DD8`).
+
+| sites | where the call goes                                                                                    | rule                                                                                                                                                    |
+|-------|--------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 4     | `PtrStrListVtbl+0x0C` (`loc_483ED43A`, set item d0 to a1)                                              | the routine spills a0 / a1, and every caller passes a `PtrStrList` the `.XAP` built (`0x502A5364`: 1 each; `0x502A5440`: 4 lists)                       |
+| 2     | `XapNameCmp` (`0x502A144D`, `strcmp` of two records)                                                   | `XapQsort`'s compare parameter (a1, spilled to `(0x48, sp)`); its only outside caller passes it, and its own recursion passes it on                     |
+| 1     | `PtrStrListVtbl+0x2C` (`loc_483ED524`: a new `StrList` over the list)                                  | `KssContext+0x04` is `&KssWorkRam+0x9EC`, which `func_483ECB8F` builds with `PtrStrListCreate`                                                          |
+| 5     | a list source's get-item routine (`+0x10`) or count routine (`+0x14`); the table below                 | inside the methods of `XapListSource` / `XapListIter`; `this`+0x10 / +0x14 (through the iterator's `+0xC`) are the a1 / d1 given to `XapListSourceInit` |
+| 7     | method `+0x00` / `+0x08` / `+0x28` / `+0x44` of an AcKssList's list object: `StrList` or `XapListIter` | inside `XapAcKssListProc`: view instance (GetViewInstance) word `+0x6C` -> X, `*X` -> S, `*S` -> the object, then its vtable                            |
+
+The 5 list-source sites: `0x502AB0A4` and `0x502AB12A` call get-item, `0x502AB0B1`, `0x502AB104` and
+`0x502AB145` call count. `XapListSourceInit` (export slot `+0x10`) is called five times, so the
+target is one of five routines on each side:
+
+| list source                                     | get item (`+0x10`) | count (`+0x14`) |
+|-------------------------------------------------|--------------------|-----------------|
+| `0x502B3D38` (`.XAP`, built at `0x502AA9B4`)    | `0x502AB000`       | `0x502A329A`    |
+| `0x502B3F90` (`.XAP`, built at `0x502ACA35`)    | `0x502AD1AE`       | `0x502AD1A9`    |
+| `0x502B4010` (`.XAP`, built at `0x502AD9C7`)    | `0x502AC530`       | `0x502AD1A5`    |
+| `KssWorkRam+0xA20` (base plug-in, export slots) | `0x5029F78B`       | `0x502A15BE`    |
+| `KssWorkRam+0xA08` (base plug-in, export slots) | `0x5029F600`       | `0x502A15B9`    |
+
+The 7 AcKssList sites read one field: `0x502A1FFC`, `0x502A29AE` and `0x502A2BC1` call Count;
+`0x502A206E` calls SetPos; `0x502A2157` and `0x502A2184` call Next; `0x502A2E38` calls destroy. The
+probe checks that every `add 0x6c` in the procedure is applied to the result of
+`InitBlockTable[181]` = `GetViewInstance`. Those four slots exist together only in the three iterator
+vtables. Two code paths in the procedure write the object:
+
+- its create path allocates S (0x24 bytes) and stores at S+0 a new `StrList`, made by the
+  `PtrStrList` at `KssWorkRam+0x9EC` (`PtrStrListVtbl+0x2C`, the CTXOBJ call above);
+- message `0x2F60008` destroys the old object (and frees it when the flag at S+0x12 says it is
+  owned), then stores the message's parameter at S+0.
+
+The `.XAP` sends `0x2F60008` (SendEvent) from 17 places. The parameter is a `StrList` at 7 of them
+and an `XapListIter` at 6; at the other 4 it is the callee-saved d3, which the evaluator does not
+follow. [INFERENCE] So the object is a `StrList` or an `XapListIter`. `BufStrList` has the same
+slots, but no sender is seen passing one.
+
+So all 24 are settled. 12 have one target: the 5 the evaluator now resolves and 4 + 2 + 1 from
+the probe. The other 12 have a closed set that the object picks at run time: 5 calls go to one of
+five list-source routines, and 7 to the same method of `StrList` or `XapListIter`. No site is
+left whose target could be any address.
+
 ## Still open
 
 - ~~Of `BASEEXT.XAP`'s 1,340 indirect calls, 701 go through MILK objects other than the framework
@@ -358,9 +428,9 @@ earlier image on hand to match it against.
   - 1 goes through service-table slot `+0x04` (a pointer into `KssWorkRam`), at `0x502A1B78`;
   - 1 calls a returned pointer, at `0x502A2E38`.
 
-  The next step for each is to trace the callers of its routine, or the store that fills the
-  local structure. `oldbuilds_baseext_indirect_calls.py -v` lists every site. Five service-table
-  slots are still unnamed: `+0x80` (a 12-way dispatch through `0x483F88C0`), `+0x90` (returns
+  **Settled 2026-11-06** (lane kn7000-names, N-42bc8729): all 24 have a known target, or a
+  closed set of targets that the object picks at run time. See "The last 24" below. Five service-table
+  slots are still unnamed (not part of the item): `+0x80` (a 12-way dispatch through `0x483F88C0`), `+0x90` (returns
   `*(0x50299084)`), `+0xE8` (MILK UI calls with id `0x00E30047`), `+0x10C` (activation, through
   `KssBuildParam1`) and `+0x130` (returns field `+0x18` of an object whose magic is `0x41DA4C8B`).
 - The v1.4 program update's **disk 1** (`kn7-14_1.exe` -> `JK1.SLD`, build 929) is the one lost disk

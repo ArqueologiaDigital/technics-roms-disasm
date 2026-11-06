@@ -2697,7 +2697,7 @@ SeLfo1_StepSelectorAndReload:
 	calr	SeLfo1_StepSelector
 	cp	(xsp), 1
 	jr	nz, SeLfo1_StepSelectorAndReload_Skip29
-	ld	a, 42:opc
+	ld	a, TT_SEPITLFO1:opc
 SeLfo1_StepSelectorAndReload_Join:
 	extz	wa
 	ld	bc, 1:i3
@@ -2706,12 +2706,12 @@ SeLfo1_StepSelectorAndReload_Join:
 SeLfo1_StepSelectorAndReload_Skip29:
 	cp	(xsp), 0
 	jr	nz, SeLfo1_StepSelectorAndReload_Skip30
-	ld	a, 47:opc
+	ld	a, TT_SEAMPLFO1:opc
 	jr	SeLfo1_StepSelectorAndReload_Join
 SeLfo1_StepSelectorAndReload_Skip30:
 	cp	(xsp), 2
 	jr	nz, SeLfo1_StepSelectorAndReload_Epilogue
-	ld	a, 57:opc
+	ld	a, TT_SEFILLFO1:opc
 	jr	SeLfo1_StepSelectorAndReload_Join
 SeLfo1_StepSelectorAndReload_Epilogue:
 	inc	2, xsp
@@ -6182,7 +6182,7 @@ SeMenu_HandleMenuChange_Overflow:
 	ld wa, 0:i3
 	calr SeMenu_SetCurrentStep
 	calr SeMenu_ResetSubIndex
-	ldw wa, 0x98
+	ldw wa, TT_SQDRMEDT
 	ld bc, 0:i3
 	calr SeMenu_SendEvent
 
@@ -6994,7 +6994,7 @@ SePitPit1_OnSwitch15:
 	ret	nz
 	ld	wa, 0:i3
 	call	SeMenu_SetupMenuDisplay
-	ldw	wa, 32
+	ldw	wa, TT_SEMENU
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
@@ -7041,7 +7041,7 @@ SePitEnv1_OnSideRow1:
 SePitEnv1_OnSideRow2:
 	cp	a, 0:i3
 	jr	nz, SePitEnv1_OnSideRow2_Skip5
-	ldw	wa, 39
+	ldw	wa, TT_SEPITPIT1
 	ld	bc, 0:i3
 	jr	SePitEnv1_OnSideRow2_Join4
 SePitEnv1_OnSideRow2_Skip5:
@@ -7049,7 +7049,7 @@ SePitEnv1_OnSideRow2_Skip5:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 40
+	ldw	wa, TT_SEPITENV1
 	ld	bc, 1:i3
 SePitEnv1_OnSideRow2_Join4:
 	call	SeMenu_SendEvent
@@ -7057,7 +7057,7 @@ SePitEnv1_OnSideRow2_Join4:
 SePitEnv1_OnSideRow3:
 	cp	a, 0:i3
 	jr	nz, SePitEnv1_OnSideRow3_Skip6
-	ldw	wa, 42
+	ldw	wa, TT_SEPITLFO1
 	ld	bc, 0:i3
 	jr	SePitEnv1_OnSideRow3_Join5
 SePitEnv1_OnSideRow3_Skip6:
@@ -7065,7 +7065,7 @@ SePitEnv1_OnSideRow3_Skip6:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 40
+	ldw	wa, TT_SEPITENV1
 	ld	bc, 1:i3
 SePitEnv1_OnSideRow3_Join5:
 	call	SeMenu_SendEvent
@@ -7080,7 +7080,7 @@ SePitEnv1_OnSideRow4_Skip7:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 40
+	ldw	wa, TT_SEPITENV1
 	ld	bc, 1:i3
 	call	SeMenu_SendEvent
 	ret
@@ -7094,14 +7094,14 @@ SePitEnv1_OnSideRow5_Skip8:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 40
+	ldw	wa, TT_SEPITENV1
 	ld	bc, 1:i3
 	call	SeMenu_SendEvent
 	ret
 SePitEnv1_OnSwitch25:
 	cp	a, 0:i3
 	ret	nz
-	ldw	wa, 41
+	ldw	wa, TT_SEPITENV2
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
@@ -7110,7 +7110,7 @@ SePitEnv1_OnSwitch15:
 	ret	nz
 	ld	wa, 0:i3
 	call	SeMenu_SetupMenuDisplay
-	ldw	wa, 32
+	ldw	wa, TT_SEMENU
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
@@ -7146,7 +7146,7 @@ SePitEnv2_OnSideRow1:
 SePitEnv2_OnSideRow2:
 	cp	a, 0:i3
 	jr	nz, SePitEnv2_OnSideRow2_Skip9
-	ldw	wa, 39
+	ldw	wa, TT_SEPITPIT1
 	ld	bc, 0:i3
 	jr	SePitEnv2_OnSideRow2_Join6
 SePitEnv2_OnSideRow2_Skip9:
@@ -7154,7 +7154,7 @@ SePitEnv2_OnSideRow2_Skip9:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 41
+	ldw	wa, TT_SEPITENV2
 	ld	bc, 1:i3
 SePitEnv2_OnSideRow2_Join6:
 	call	SeMenu_SendEvent
@@ -7162,7 +7162,7 @@ SePitEnv2_OnSideRow2_Join6:
 SePitEnv2_OnSideRow3:
 	cp	a, 0:i3
 	jr	nz, SePitEnv2_OnSideRow3_Skip10
-	ldw	wa, 42
+	ldw	wa, TT_SEPITLFO1
 	ld	bc, 0:i3
 	jr	SePitEnv2_OnSideRow3_Join7
 SePitEnv2_OnSideRow3_Skip10:
@@ -7170,7 +7170,7 @@ SePitEnv2_OnSideRow3_Skip10:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 41
+	ldw	wa, TT_SEPITENV2
 	ld	bc, 1:i3
 SePitEnv2_OnSideRow3_Join7:
 	call	SeMenu_SendEvent
@@ -7182,7 +7182,7 @@ SePitEnv2_OnSideRow4:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 41
+	ldw	wa, TT_SEPITENV2
 	ld	bc, 1:i3
 	call	SeMenu_SendEvent
 	ret
@@ -7193,14 +7193,14 @@ SePitEnv2_OnSideRow5:
 	call	SeMenu_SelectPartIfEnabled
 	cp	l, 0:i3
 	ret	z
-	ldw	wa, 41
+	ldw	wa, TT_SEPITENV2
 	ld	bc, 1:i3
 	call	SeMenu_SendEvent
 	ret
 SePitEnv2_OnSwitch25:
 	cp	a, 0:i3
 	ret	z
-	ldw	wa, 40
+	ldw	wa, TT_SEPITENV1
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
@@ -7209,7 +7209,7 @@ SePitEnv2_OnSwitch15:
 	ret	nz
 	ld	wa, 0:i3
 	call	SeMenu_SetupMenuDisplay
-	ldw	wa, 32
+	ldw	wa, TT_SEMENU
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
@@ -7283,7 +7283,7 @@ SePitLfo1_OnSwitch15:
 	ret	nz
 	ld	wa, 0:i3
 	call	SeMenu_SetupMenuDisplay
-	ldw	wa, 32
+	ldw	wa, TT_SEMENU
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret

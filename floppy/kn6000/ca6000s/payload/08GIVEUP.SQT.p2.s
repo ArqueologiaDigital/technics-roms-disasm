@@ -2273,13 +2273,10 @@ P_08GIVEUP_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"08GIVEUP.sqt.p2.ref", 0x199d, 2
-	sq_note	0, 0, 26, 60, 103, 13
-	sq_note	0, 0, 71, 60, 108, 11
-	sq_note	0, 0, 95, 60, 108, 12
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"08GIVEUP.sqt.p2.ref", 0x19b1, 1
+	.byte	108, 13, 0	; data bytes of an event cut at the start
+	k5_note	0x90, 26, 60, 103, 13, 0
+	k5_note	0x90, 71, 60, 108, 11, 0
+	k5_note	0x90, 95, 60, 108, 12, 0
 	sq_beat
 	k5_note	0x90, 46, 60, 112, 12, 0
 	k5_note	0x90, 73, 60, 103, 12, 0

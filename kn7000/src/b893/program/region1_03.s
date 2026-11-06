@@ -5051,7 +5051,7 @@ loc_484736F3:
     extb    d1
     mov     a3, d0
     or      d3, d1
-    call    func_484519DE_entry, [d2,d3], 0x1c
+    call    KeybedM3Dispatch_entry, [d2,d3], 0x1c
     cmp     d2, a2
     bcs     loc_484736F3
 loc_4847370A:
@@ -5090,7 +5090,7 @@ loc_48473749:
     mov     a3, d0
     mov     0, a0
     mov     a0, (0x10, sp)
-    call    func_484519DE_entry, [d2,d3], 0x1c
+    call    KeybedM3Dispatch_entry, [d2,d3], 0x1c
     mov     (0x2c, sp), a0
     add     2, a2
     movhu   (a0), d0
@@ -5168,7 +5168,7 @@ loc_484737C1:
     exth    d1
     asl     24, d1
     or      d2, d1
-    call    func_484519DE_entry, [d2,d3], 0x1c
+    call    KeybedM3Dispatch_entry, [d2,d3], 0x1c
 loc_484737FA:
     mov     (0x20, sp), a0
     mov     (0x18, sp), d1
@@ -5253,7 +5253,7 @@ loc_4847385E:
     clr     d1
     mov     d1, (0x10, sp)
     mov     d2, d1
-    call    func_484519DE_entry, [d2,d3], 0x1c
+    call    KeybedM3Dispatch_entry, [d2,d3], 0x1c
 loc_484738A3:
     mov     (0x14, sp), d0
     mov     (0x2c, sp), a0

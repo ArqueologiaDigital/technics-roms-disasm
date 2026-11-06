@@ -207,8 +207,9 @@ P_07DEMO_2_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
+	.byte	67	; data bytes of an event cut at the start
 	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"07DEMO_2.sqt.p2.ref", 0x25f, 161
+	.incbin	"07DEMO_2.sqt.p2.ref", 0x260, 160
 	sq_cell	0x9c, 0, 5	; cell 4: song 1 track 2, 1 of 5
 	sq_beat
 	sq_beat

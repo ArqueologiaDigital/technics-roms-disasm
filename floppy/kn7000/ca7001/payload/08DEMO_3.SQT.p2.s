@@ -1110,9 +1110,8 @@ P_08DEMO_3_SQT_p2:
 	sq_beat
 	sq_end
 ; after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	74, 94, 0, 94	; data bytes of an event cut at the start
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"08DEMO_3.sqt.p2.ref", 0xecc, 5
+	.byte	74, 94, 0	; data bytes of an event cut at the start
+	sq_note	94, 0, 49, 89, 9, 1
 	sq_beat
 	sq_beat
 	sq_beat
@@ -1125,8 +1124,7 @@ P_08DEMO_3_SQT_p2:
 	sq_beat
 	sq_note	63, 0, 43, 76, 22, 0
 	sq_note	63, 0, 53, 76, 23, 0
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"08DEMO_3.sqt.p2.ref", 0xefb, 5
+	.byte	63, 144, 50, 85, 21	; the first 5 bytes of a tick-first event, cut by the end
 	sq_cell	0x81, 0, 65535	; cell 16: song 1 track 4, 1 of 1
 	sq_beat
 	sq_beat
@@ -1324,10 +1322,9 @@ P_08DEMO_3_SQT_p2:
 	sq_beat
 	sq_end
 ; after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	29, 2, 75	; data bytes of an event cut at the start
-	k5_note	0x90, 43, 75, 28, 2, 76
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"08DEMO_3.sqt.p2.ref", 0xfd1, 5
+	.byte	29, 2	; data bytes of an event cut at the start
+	sq_note	75, 0, 43, 75, 28, 2
+	sq_note	76, 0, 52, 73, 31, 2
 	sq_beat
 	sq_beat
 	sq_beat

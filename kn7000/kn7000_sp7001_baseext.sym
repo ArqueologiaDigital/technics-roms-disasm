@@ -7,3 +7,53 @@
 0x5029B000  XapEntry                ; entry, called by KssPluginLoad with a0 = framework object (*0x50299298), a1 = 0x502992E4, d0 = &compile id, d1 = &plug-in id: saves a0/a1, calls 0x5029D4E1, then returns a0 = 0x502B1E50 (the plug-in object), *d0 = (0x502B2090) (compile id, checked against the base plug-in's 0x502992DC), *d1 = 3 (the plug-in id)
 0x502B4044  XapFrameworkObj         ; the framework object the loader passed in a0
 0x502B4048  XapContext              ; the a1 the loader passed (0x502992E4)
+;
+; lane kn7000-names 2026-11-06 (N-42bc8729): the export slots the base plug-in's thunks name,
+; the list-source / iterator classes and the quicksort (notes/mn10300-names-probes/oldbuilds_baseext_unresolved_calls.py)
+0x5029D3FB  XapQsort                  ; (a0 = base, d0 = count, d1 = element size, a1 = compare) [INFERENCE: quicksort: partitions with the compare routine and recurses on both parts]; its only caller outside itself sorts 0x34-byte records with XapNameCmp; also the export word at XapExportTable+0x238
+0x5029D51B  XapAcKssNamingWindowProc  ; export slot +0x018: the base plug-in's AcKssNamingWindowProc forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
+0x5029EABF  XapAcKssNamingEditSwProc  ; export slot +0x020: the base plug-in's AcKssNamingEditSwProc forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
+0x5029ED47  XapIvKssNamingProc        ; export slot +0x01c: the base plug-in's IvKssNamingProc forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
+0x5029ED9F  XapAp_Ce_WinNamingHistory ; export slot +0x024: the base plug-in's Ap_Ce_WinNamingHistory forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
+0x502A144D  XapNameCmp                ; XapQsort's compare routine (its only one): strcmp (PAPI_Functions[213]) of the two records
+0x502A19F3  XapAcKssListProc          ; export slot +0x004: the base plug-in's AcKssListProc forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
+0x502A393D  XapAp_Ce_WinSelSong       ; export slot +0x050: the base plug-in's Ap_Ce_WinSelSong forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
+0x502A3F14  XapAp_Lst_WinSelSong      ; export slot +0x04c: the base plug-in's Ap_Lst_WinSelSong forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
+0x502A4A60  XapAp_Ce_WinSfxSelect     ; export slot +0x054: the base plug-in's Ap_Ce_WinSfxSelect forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
+0x502A56AF  XapAp_Ce_SelDir           ; export slot +0x044: the base plug-in's Ap_Ce_SelDir forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
+0x502A5ABA  XapAp_Lst_SelDir          ; export slot +0x048: the base plug-in's Ap_Lst_SelDir forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
+0x502A5CE6  XapAp_Ce_WinLoadSave      ; export slot +0x058: the base plug-in's Ap_Ce_WinLoadSave forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
+0x502A7524  XapAp_Ce_JukeBox          ; export slot +0x05c: the base plug-in's Ap_Ce_JukeBox forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
+0x502A791F  XapKssXLyricsBoxProc      ; export slot +0x14c: the base plug-in's KssXLyricsBoxProc forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
+0x502A9808  XapAp_Ce_Fd2Sd            ; export slot +0x168: the base plug-in's Ap_Ce_Fd2Sd forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
+0x502AA46D  XapAp_Lst_Fd2Sd           ; export slot +0x16c: the base plug-in's Ap_Lst_Fd2Sd forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
+0x502AA90E  XapAp_Ce_WinAlphaSort     ; export slot +0x198: the base plug-in's Ap_Ce_WinAlphaSort forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
+0x502AAE4D  XapAp_Lst_WinAlphaSort    ; export slot +0x19c: the base plug-in's Ap_Lst_WinAlphaSort forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
+0x502AB042  XapListSourceInit         ; (a0 = object, d0 = item size, a1 = get-item routine, d1 = count routine) +0 XapListSourceVtbl, +4 magic 0xEF133AA1, +8 buffer malloc_X(d0 + 1), +0xC d0, +0x10 a1, +0x14 d1; export slot +0x10 (the base plug-in builds KssWorkRam+0xA20 / +0xA08 with it)
+0x502AB07A  XapListSourceDestroy      ; vtbl+0x00: magic := 0, free_X the buffer
+0x502AB097  XapListSourceGet          ; vtbl+0x14: (d0 = index) calls the get-item routine (+0x10) on the buffer, returns the buffer
+0x502AB0AB  XapListSourceCount        ; vtbl+0x20: calls the count routine (+0x14)
+0x502AB0B6  XapListSourceNewIter      ; vtbl+0x2C: malloc_X(0x10), XapListIterInit over this source
+0x502AB0D9  XapListIterInit           ; (a0 = object, a1 = source) +0 XapListIterVtbl, +4 magic 0xA4723BBC, +8 index 0, +0xC the source; export slot +0x14
+0x502AB0F2  XapListIterDestroy        ; vtbl+0x00: magic := 0
+0x502AB0F8  XapListIterHasNext        ; vtbl+0x04: 1 while index < the source's count
+0x502AB113  XapListIterNext           ; vtbl+0x08: the source's get-item routine for index, index += 1, returns the source's buffer
+0x502AB137  XapListIterIndex          ; vtbl+0x0C: index, or -1 at the end
+0x502AB152  XapListIterGet            ; vtbl+0x24: (d0) XapListSourceGet of the source
+0x502AB160  XapListIterSetPos         ; vtbl+0x28: index := d0
+0x502AB165  XapListIterSkip           ; vtbl+0x30: index += d0
+0x502AB16C  XapListIterCount          ; vtbl+0x44: XapListSourceCount of the source
+0x502AB17A  XapListIterSource         ; vtbl+0x48: the source (+0xC)
+0x502AB17F  XapAp_Ce_WinLbn           ; export slot +0x1bc: the base plug-in's Ap_Ce_WinLbn forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
+0x502ABD03  XapAp_Ce_WinSettings1     ; export slot +0x134: the base plug-in's Ap_Ce_WinSettings1 forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
+0x502ABE9C  XapAp_Ce_WinSettings2     ; export slot +0x138: the base plug-in's Ap_Ce_WinSettings2 forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
+0x502AC0FC  XapAp_Eb_WinSettings      ; export slot +0x13c: the base plug-in's Ap_Eb_WinSettings forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
+0x502AC967  XapAp_Ce_Cls              ; export slot +0x1d4: the base plug-in's Ap_Ce_Cls forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
+0x502AD0A2  XapAp_Lst_Cls             ; export slot +0x1d8: the base plug-in's Ap_Lst_Cls forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
+0x502AD91F  XapAp_Ce_ClsDir           ; export slot +0x1cc: the base plug-in's Ap_Ce_ClsDir forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
+0x502ADBD2  XapAp_Lst_ClsDir          ; export slot +0x1d0: the base plug-in's Ap_Lst_ClsDir forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
+0x502ADC50  XapAcKssScreenMenuProc    ; export slot +0x008: the base plug-in's AcKssScreenMenuProc forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
+0x502ADD6A  XapAcKssEditBoxProc       ; export slot +0x00c: the base plug-in's AcKssEditBoxProc forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
+0x502B1DA8  XapListSourceVtbl         ; (RAM, .data) 12 words, the list-source class: +0x00 XapListSourceDestroy, +0x14 XapListSourceGet, +0x20 XapListSourceCount, +0x2C XapListSourceNewIter -- the slots of the base plug-in's PtrStrList / BufList
+0x502B1DD8  XapListIterVtbl           ; (RAM, .data) 19 words, the list iterator: +0x00 Destroy, +0x04 HasNext, +0x08 Next, +0x0C Index, +0x24 Get, +0x28 SetPos, +0x30 Skip, +0x44 Count, +0x48 Source -- the slots of the base plug-in's StrList / BufStrList
+0x502B1E50  XapExportTable            ; (RAM, .data) the routine table XapEntry returns in a0; KssPluginLoad keeps it at KssWorkRam+0xA38 + 4 * id (id 3: KssWorkRam+0xA44), and the base plug-in calls through it

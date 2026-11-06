@@ -31,6 +31,11 @@ the table slots from src/sp7001/program/data/*.s), and the own-object roots.
 Measured 2026-11-02 at c240d1c0b (1,340 sites): registry 967 (InitBlockTable 643 / 30
 methods, PAPI_Functions 324 / 62), context 329 (23 slots), object 20 (PtrStrList, 3 methods),
 sp 11, unmodelled 6, arg 5, own 1, ret 1.
+Re-measured 2026-11-06 (lane kn7000-names, N-42bc8729), after two evaluator fixes: a register +
+register `add` with one constant side is modelled (`mov 0x2e1c, a1` / `add d0, a1`: the export
+table through the registry), and a walk sent to a predecessor no longer stops at the block start
+it came from: registry 971, context 330, object 20, sp 11, arg 5, ret 2, own 1 (1,321 resolved).
+The 19 left are followed one step further by oldbuilds_baseext_unresolved_calls.py.
 
 Run (from kn7000/, read-only on the baserom images):
     UNIDASM=/home/fsanches/compartilhado/mame-sony-video/unidasm \
@@ -151,7 +156,19 @@ def load_slots(names):
 PREDS = {}         # instruction index -> the indices control can come from (set by main)
 
 
-def evaluate(insns, i, reg, starts, depth=0, seen=None):
+def norm(e):
+    """LOAD(ADD(x, c), k) -> LOAD(x, c + k), so `add d0, a1` / `mov (a1), a0` reads like
+    `mov (0x2e1c, a0), a0` (2026-11-06)."""
+    if e[0] == "LOAD" and e[1][0] == "ADD":
+        return norm(("LOAD", e[1][1], e[1][2] + e[2]))
+    if e[0] == "LOAD":
+        return ("LOAD", norm(e[1]), e[2])
+    if e[0] == "ADD":
+        return ("ADD", norm(e[1]), e[2])
+    return e
+
+
+def evaluate(insns, i, reg, starts, depth=0, seen=None, came_from=None):
     """the value of `reg` just before insns[i], walking back; at a block start it
     follows the predecessors (a fall-through and/or branches) and keeps the value
     only when every predecessor gives the same one."""
@@ -161,12 +178,14 @@ def evaluate(insns, i, reg, starts, depth=0, seen=None):
     j = i - 1
     while j >= 0:
         a, n, mn, ops = insns[j]
-        if insns[j + 1][0] in starts:           # the block starts at insns[j + 1]
+        # the block starts at insns[j + 1]; (2026-11-06) not when j is the predecessor we were
+        # sent to from that very block start (came_from), which used to end every such walk in ARG
+        if insns[j + 1][0] in starts and j + 1 != came_from:
             ps = PREDS.get(j + 1, [])
             if not ps or (j + 1) in seen or len(ps) > 4:
                 return ("ARG", reg)
             seen = seen | {j + 1}
-            vals = {evaluate(insns, p + 1, reg, starts, depth + 1, seen) for p in ps}
+            vals = {evaluate(insns, p + 1, reg, starts, depth + 1, seen, came_from=j + 1) for p in ps}
             return vals.pop() if len(vals) == 1 else ("ARG", reg)
         if mn in ENDS:
             return ("ARG", reg)
@@ -195,6 +214,15 @@ def evaluate(insns, i, reg, starts, depth=0, seen=None):
                 if re.fullmatch(r"-?(0x[0-9a-f]+|\d+)", parts[0]):
                     base = evaluate(insns, j, reg, starts, depth + 1, seen)
                     return ("ADD", base, int(parts[0], 0))
+                if mn == "add" and re.fullmatch(r"[ad]\d", parts[0]):
+                    # (2026-11-06) register + register, when one side is a constant:
+                    # `mov 0x2e1c, a1` / `add d0, a1` with d0 = (XapFrameworkObj)
+                    x = evaluate(insns, j, parts[0], starts, depth + 1, seen)
+                    y = evaluate(insns, j, reg, starts, depth + 1, seen)
+                    if y[0] == "CONST":
+                        x, y = y, x
+                    if x[0] == "CONST":
+                        return ("ADD", y, x[1])
             return ("?", f"{mn} {ops}")
         if mn in ("inc4", "inc") and ops == reg:
             return ("ADD", evaluate(insns, j, reg, starts, depth + 1, seen), 4 if mn == "inc4" else 1)
@@ -242,7 +270,8 @@ def classify(e, slots, names, fw, ctx, tnames, objs={}):
     return "unmodelled", str(root)
 
 
-def main():
+def analyse():
+    """decode the .XAP and evaluate every `calls (aN)` (the state the classes below are read from)"""
     insns = decode()
     names = load_names()
     slots = load_slots(names)
@@ -284,13 +313,21 @@ def main():
             a0 = evaluate(insns, i, "a0", starts)
             if a0[0] == "CONST":
                 objs[a0[1]] = (CLASSES[e[2]][0], load_words(CLASSES[e[2]][1]))
+    return dict(insns=insns, names=names, slots=slots, fw=fw, ctx=ctx, tnames=tnames, starts=starts,
+                at=at, sites=sites, objs=objs)
+
+
+def main():
+    A = analyse()
+    insns, names, slots, fw, ctx, tnames, starts, sites, objs = (
+        A[k] for k in ("insns", "names", "slots", "fw", "ctx", "tnames", "starts", "sites", "objs"))
     print(f"own objects built through KssContext+0x118/+0x11C: " +
           ", ".join(f"{a:#x} {c}" for a, (c, _) in sorted(objs.items())))
     by_class = collections.Counter()
     detail = collections.defaultdict(collections.Counter)
     where = collections.defaultdict(list)
     for i, reg in sites:
-        c, dt = classify(evaluate(insns, i, reg, starts), slots, names, fw, ctx, tnames, objs)
+        c, dt = classify(norm(evaluate(insns, i, reg, starts)), slots, names, fw, ctx, tnames, objs)
         by_class[c] += 1
         detail[c][dt] += 1
         where[(c, dt)].append(insns[i][0])
@@ -304,4 +341,5 @@ def main():
             print(f"  {n:4d}  {dt:<60} {sample}")
 
 
-main()
+if __name__ == "__main__":
+    main()

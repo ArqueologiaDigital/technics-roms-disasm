@@ -5581,7 +5581,7 @@
 	.long	\SdMediaStateGet_d0
 .endm
 
-# REC_SdCommandSend_ArgA0: 10-byte records (SdCommandSend_ArgA0, 4 records); fields, and what reads them:
+# REC_SdCommandSend_ArgA0: 10-byte records (SdCommandSend_ArgA0, 9 records); fields, and what reads them:
 #   (the layout SdCommandSend 0x4854C291 reads through its argument a0 (passed by SdWorkerCmdHandler 0x4854AFE9 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +2 more calls))
 #   +0   SdSpiClockSet_d0 u16            SdCommandSend 0x4854C291 `movhu (a3), d0`
 #   +2   SdResponseScan_d0 u16            SdCommandSend 0x4854C291 `movhu (2, a3), d0`
@@ -5594,18 +5594,4 @@
 	.byte	\f4
 	.ascii	"\x5"
 	.byte	\f9
-.endm
-
-# REC_SdCardRegRead_ArgA1_s9: 9-byte records (SdCardRegRead_ArgA1_s9, 1 records); fields, and what reads them:
-#   (the layout SdCardRegRead 0x4854B5E3 reads through its argument a1 (passed by DiskDriveCtrlHandler 0x4854B32B `call SdCardRegRead_entry, [d2,d3,a2,a3], 0x24`))
-#   (the layout SdReadBlockCmd 0x4854C3A6 reads through its argument a0 (passed by SdWorkerCmdHandler 0x4854AFE9 `call SdReadBlockCmd_entry, [d2,d3,a2,a3], 0x2c`, +1 more calls))
-#   +0   SdSpiClockSet_d0 u16            SdReadBlockCmd 0x4854C3A6 `movhu (a3), d0`
-#   +2   SdResponseScan_d0 u16            SdReadBlockCmd 0x4854C3A6 `movhu (2, a3), d0`
-#   +4   f4           u8             SdSpiSendBuf 0x4854BF9D `movbu (d0, a0), d1`
-#   +5   x5           u8[4]          no reader seen
-.macro REC_SdCardRegRead_ArgA1_s9 SdSpiClockSet_d0=0, SdResponseScan_d0=0, f4=0, x5
-	.word	\SdSpiClockSet_d0
-	.word	\SdResponseScan_d0
-	.byte	\f4
-	.ascii	"\x5"
 .endm

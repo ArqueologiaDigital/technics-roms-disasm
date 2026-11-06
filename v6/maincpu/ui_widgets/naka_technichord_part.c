@@ -5261,7 +5261,7 @@ const naka_technichord_part_t naka_technichord_part_data
 
     /* ==== SCREEN TITLE_DRAWBAR -- "TT_DRAWBAR", title id 0xEA, function NAKA_APFUNC_DefaultFunction ====
      * What: the drawbar-organ screen. It is opened when the sound category byte (0xC07E) is 12.
-     * Path: none found (no data entry, and no traced code, opens it)
+     * Path: mode MD_SOUNDEDIT > (by UpdSeSel_ProcessStep)
      * EXIT -> TITLE_PS */
     .Drawbar = {
         .class_ = NAKA_CLASS(TtlScreen),

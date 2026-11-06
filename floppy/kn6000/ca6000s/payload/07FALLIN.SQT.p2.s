@@ -3077,8 +3077,7 @@ P_07FALLIN_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"07FALLIN.sqt.p2.ref", 0x1f35, 5
+	.byte	144, 47, 66, 34, 5	; a tick-first event cut at the start (its tick is gone)
 	sq_beat
 	sq_note	3, 0, 43, 49, 35, 5
 	sq_beat

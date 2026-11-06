@@ -4,9 +4,12 @@ Run from this directory. The chip image is private: `~/compartilhado/technics_ro
 (SHA-1 `2dc71f5082063cd6b21e4ed16acd67e9d326a79f`), or the copy `make verify-ic18-full` leaves in
 `../../baserom/kn7000_ic18.rom`.
 
-| script                 | question it answers                                                                                                                                | command                                                                                                                                                                                               |
-|------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `ic18_rhythm_probe.py` | what is where from 0x10000 to the end of the chip, does every record and event stream parse as the firmware reads it, and what do the fields hold? | `python3 -I ic18_rhythm_probe.py ~/compartilhado/technics_romsets/kn7000/c3cbnd000046.ic18 --program ../../baserom/kn7000_program.rom --table ../../baserom/kn7000_table.rom --source ../../src/ic18` |
+| script                        | question it answers                                                                                                                                                       | command                                                                                                                                                                                               |
+|-------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `ic18_rhythm_probe.py`        | what is where from 0x10000 to the end of the chip, does every record and event stream parse as the firmware reads it, and what do the fields hold?                        | `python3 -I ic18_rhythm_probe.py ~/compartilhado/technics_romsets/kn7000/c3cbnd000046.ic18 --program ../../baserom/kn7000_program.rom --table ../../baserom/kn7000_table.rom --source ../../src/ic18` |
+| `rhythm_noteconv_tables.py`   | what does each NoteConvRules table (program 941, 0x48736104) do to a key written over C, per chord type (and root)? (N-c052c027)                                          | `python3 -I rhythm_noteconv_tables.py`                                                                                                                                                                |
+| `rhythm_kit_tone_fallback.py` | which kit does ToneKeyFind fall back to for the ten kit sounds the internal archive lacks, and how many drum notes then name the key as Standard Kit 1 does? (N-83177c3d) | `python3 -I rhythm_kit_tone_fallback.py`                                                                                                                                                              |
+| `rhythm_part_eq_and_units.py` | which TG registers the part EQ coefficients reach, and what a variation's bytes +2/+3 select (func_48442164)? (N-e779328f)                                                | `python3 -I rhythm_part_eq_and_units.py`                                                                                                                                                              |
 
 `--program` (program 941) adds the rhythm groups, `--table` (table 84) the comparison with the table ROM's copy
 of the header, `--source` (the `src/ic18` directory) the size of the text against the bytes and the
@@ -42,6 +45,13 @@ What it printed on 2026-10-29 (abridged), at the commit that typed the event str
        bytes: 3.48x; .incbin lines: 0
     table ROM copy at file 0x3e828c, 0x1248 bytes: differs from IC18 in 7 bytes at [...] count 221
     243 rhythms in the groups; 169 of the 169 IC18 styles are in one; group order = chip order: True
+
+The three `rhythm_*` probes (2026-11-06) read program 941 (`../../baserom/kn7000_program.rom`) and its
+generated source (`../../src/program/`), and `rhythm_kit_tone_fallback.py` / `rhythm_part_eq_and_units.py`
+also `../../baserom/kn7000_ic18.rom`; each docstring gives the signals and the expected output.
+`rhythm_kit_tone_fallback.py` reuses `../mn10300-names-probes/rhythm_drum_kit_keys.py`'s tables but reads
+the voice names itself: that probe still expects a voice name on an `.ascii` line, and since the
+archive's records became `VOICE_HEAD "name", ...` it prints `'?'` for every key.
 
 `tools/gen_ic18_rhythm_s.py` makes the same checks before it writes `src/ic18/rhythm.s`, the style files and
 `old_build.s`, and stops on any difference.

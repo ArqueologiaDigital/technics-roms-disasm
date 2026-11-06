@@ -609,7 +609,7 @@ AccompSeq_ProcessNoteOn6:
 	calr AccompSeq_ResolveChannel
 	ld a, (0x7e56:16)
 	ld e, a
-	call AccompSeq_CheckVelocityFlags
+	call AccompSeq_ConvertNote90
 	ld	(xhl+iy), a
 	calr AccompSeq_AdvanceBufferPtr
 	ld a, (0x7e57:16)
@@ -638,7 +638,7 @@ AccompSeq_ProcessNoteOn8:
 	calr AccompSeq_ResolveChannel
 	ld a, (0x7e56:16)
 	ld e, a
-	calr AccompSeq_CheckVelFlagsExtended
+	calr AccompSeq_ConvertNote91
 	ld	(xhl+iy), a
 	calr AccompSeq_AdvanceBufferPtr
 	ld a, (0x7e57:16)
@@ -759,59 +759,59 @@ AccompSeq_ResolveCh_Done:
 	ei 0
 	ret
 
-AccompSeq_CheckVelocityFlags:
-	and (0x33e5:16), 253
-	and (0x33e5:16), 251
+AccompSeq_ConvertNote90:
+	and (ACCSEQ_CONVERT_FLAGS:16), 253
+	and (ACCSEQ_CONVERT_FLAGS:16), 251
 	cp a, 0x78
-	jr c, AccompSeq_VelFlags_CheckProgram
-	or (0x33e5:16), 4
+	jr c, AccompSeq_ConvNote90_CheckProgram
+	or (ACCSEQ_CONVERT_FLAGS:16), 4
 
-AccompSeq_VelFlags_CheckProgram:
+AccompSeq_ConvNote90_CheckProgram:
 	push xiy
 	ld xiy, (0x7e48:16)
 	ld w, (xiy)
 	cp w, 0xf0
-	jr c, AccompSeq_VelFlags_CallDispatch
-	or (0x33e5:16), 4
+	jr c, AccompSeq_ConvNote90_CallDispatch
+	or (ACCSEQ_CONVERT_FLAGS:16), 4
 
-AccompSeq_VelFlags_CallDispatch:
+AccompSeq_ConvNote90_CallDispatch:
 	pop xiy
 	push xde
 	push xhl
 	push xiy
-	call Rhythm_TransposeWithMod_Tramp
+	call Rhythm_PhraseConvertNote_Tramp
 	pop xiy
 	pop xhl
 	pop xde
 	ret
 
-AccompSeq_CheckVelFlagsExtended:
-	or (0x33e5:16), 2
+AccompSeq_ConvertNote91:
+	or (ACCSEQ_CONVERT_FLAGS:16), 2
 	pushw wa
 	ld a, (0x7e5a:16)
-	ld (0x33e6:16), a
+	ld (ACCSEQ_NOTE_EXT1:16), a
 	ld a, (0x7e5b:16)
-	ld (0x33e7:16), a
+	ld (ACCSEQ_NOTE_EXT2:16), a
 	popw wa
-	and (0x33e5:16), 251
+	and (ACCSEQ_CONVERT_FLAGS:16), 251
 	cp a, 0x78
-	jr c, AccompSeq_ExtVelFlags_CheckProg
-	or (0x33e5:16), 4
+	jr c, AccompSeq_ConvNote91_CheckProg
+	or (ACCSEQ_CONVERT_FLAGS:16), 4
 
-AccompSeq_ExtVelFlags_CheckProg:
+AccompSeq_ConvNote91_CheckProg:
 	push xiy
 	ld xiy, (0x7e48:16)
 	ld w, (xiy)
 	cp w, 0xf0
-	jr c, AccompSeq_ExtVelFlags_Dispatch
-	or (0x33e5:16), 4
+	jr c, AccompSeq_ConvNote91_Dispatch
+	or (ACCSEQ_CONVERT_FLAGS:16), 4
 
-AccompSeq_ExtVelFlags_Dispatch:
+AccompSeq_ConvNote91_Dispatch:
 	pop xiy
 	push xde
 	push xhl
 	push xiy
-	call Rhythm_TransposeWithMod_Tramp
+	call Rhythm_PhraseConvertNote_Tramp
 	pop xiy
 	pop xhl
 	pop xde
@@ -1799,7 +1799,7 @@ AccompSeq_ChordChange_Return:
 	ret
 
 AccompSeq_CompareChord:
-	bit 0, (0x3283:16)
+	bit 0, (ACC_RUN_FLAGS:16)
 	jr z, AccompSeq_CompareChord_Return
 	bit 2, (0x28b2:16)
 	jr nz, AccompSeq_CompareChord_Return

@@ -8,4 +8,4 @@ Corrections: the firmware does store chord names (Tbl_ChordTypeNames, 0xEFF5B9);
 
 Website draft: notes/open6-kn5000-d/accomp/README.md "Website page draft" items 1, 2 and 4 (accompaniment-engine.md: new "## Pattern transposition" after "## Chord Recognition", the chord-type table with the firmware's names and the chord modes, Research Needed and Rhythm Note Dispatch fixes). Renames proposed in rename_accomp.sed, RAM names in ram-names-accomp.txt (not applied).
 
-Caveats / still open: what sets CHORD_FLAGS / 0x32D7 bit 0 (only the 0x2306 song override found); Rhythm_TransposeWithMod (0xF55AD0, AccompSeq path) caller not traced; the fast path's table differs at type 7 (bug or intent unchecked). Related: kn5000-rzg (same notes), kn5000-98j.
+Caveats / still open: what sets CHORD_FLAGS / 0x32D7 bit 0 (only the 0x2306 song override found); Rhythm_PhraseConvertNote (0xF55AD0, AccompSeq path) caller not traced; the fast path's table differs at type 7 (bug or intent unchecked). Related: kn5000-rzg (same notes), kn5000-98j.

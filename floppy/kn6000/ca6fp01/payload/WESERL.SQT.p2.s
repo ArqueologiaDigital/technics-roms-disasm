@@ -11042,8 +11042,9 @@ P_WESERL_SQT_p2:
 	sq_beat
 	sq_end
 ; after the end of track: stale events of an earlier version of the song (stale_tokens)
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"WESERL.sqt.p2.ref", 0xa232, 206
+	.fill	25, 1, 0xff	; song memory no save wrote (it is 0xFF until written)
+	.byte	0xfe	; 0xFF with one bit clear
+	.fill	180, 1, 0xff	; song memory no save wrote (it is 0xFF until written)
 	sq_cell	0xff, 36, 65535	; cell 164: song 1 track 9, 8 of 8
 	.byte	0x66, 0x10, 0x00	; bytes 4..6 of `sq_note	5, 0, 54, 102, 16, 0` (the event spans two cells)
 	sq_beat
@@ -11440,8 +11441,9 @@ P_WESERL_SQT_p2:
 	sq_beat
 	sq_end
 ; after the end of track: stale events of an earlier version of the song (stale_tokens)
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"WESERL.sqt.p2.ref", 0xaa6c, 148
+	.fill	33, 1, 0xff	; song memory no save wrote (it is 0xFF until written)
+	.byte	0xfe	; 0xFF with one bit clear
+	.fill	114, 1, 0xff	; song memory no save wrote (it is 0xFF until written)
 	sq_cell	0xff, 125, 173	; cell 172: song 1 track 11, 59 of 74
 	.byte	0x40, 0x46, 0x38, 0x00	; bytes 3..6 of `sq_note	93, 0, 64, 70, 56, 0` (the event spans two cells)
 	sq_note	93, 0, 67, 78, 56, 0
@@ -12191,8 +12193,9 @@ P_WESERL_SQT_p2:
 	sq_beat
 	sq_end
 ; after the end of track: stale events of an earlier version of the song (stale_tokens)
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"WESERL.sqt.p2.ref", 0xba42, 190
+	.fill	75, 1, 0xff	; song memory no save wrote (it is 0xFF until written)
+	.byte	0xfe	; 0xFF with one bit clear
+	.fill	114, 1, 0xff	; song memory no save wrote (it is 0xFF until written)
 	sq_cell	0xff, 135, 189	; cell 188: song 1 track 12, 11 of 12
 	.byte	0x58, 0x44, 0x00	; bytes 4..6 of `sq_note	5, 0, 67, 88, 68, 0` (the event spans two cells)
 	sq_beat
@@ -12625,7 +12628,8 @@ P_WESERL_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; data bytes of an event cut by the end
+	.byte	0	; data bytes of an event cut at the start
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; data bytes of an event cut by the end
 
 	.if	(. - P_WESERL_SQT_p2) - 49408
 	.error	"WESERL.SQT part 2: the payload is not 49408 bytes"

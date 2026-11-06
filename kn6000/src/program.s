@@ -10224,7 +10224,7 @@ func_4C004B18:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x10, sp
 
-func_4C004B18_entry:
+JpegEngine:
 	mov	a0, a2
 	mov	a1, a3
 	mov	0x500ddc90, a1
@@ -10242,37 +10242,37 @@ func_4C004B18_entry:
 	mov	d0, (0x14, a1)
 	call	func_4C004E32_entry, 0, 8
 	cmp	0, d0
-	bge	func_4C004B18_entry_L34
+	bge	JpegEngine_L34
 	ret	[d2,d3,a2,a3], 0x20
-func_4C004B18_entry_L34:
+JpegEngine_L34:
 	clr	d0
 	movbu	d0, (0x500ddcd8)
 	movbu	(0x500ddc74), d1
 	movbu	(0x500ddcd8), d0
 	cmp	d1, d0
-	blt	func_4C004B18_entry_L4d
-	jmp	func_4C004B18_entry_L1a5
-func_4C004B18_entry_L4d:
+	blt	JpegEngine_L4d
+	jmp	JpegEngine_L1a5
+JpegEngine_L4d:
 	mov	a2, a0
 	mov	a3, a1
 	call	func_4C004EC9_entry, [a2,a3], 0x18
 	cmp	0, d0
-	bge	func_4C004B18_entry_L5b
+	bge	JpegEngine_L5b
 	ret	[d2,d3,a2,a3], 0x20
-func_4C004B18_entry_L5b:
+JpegEngine_L5b:
 	clr	d0
 	movhu	d0, (0x500ddcd6)
 	clr	d3
 	movhu	(0x500ddcca), d0
 	cmp	d3, d0
-	bgt	func_4C004B18_entry_L6f
-	jmp	func_4C004B18_entry_Lea
-func_4C004B18_entry_L6f:
+	bgt	JpegEngine_L6f
+	jmp	JpegEngine_Lea
+JpegEngine_L6f:
 	movhu	(0x500ddcc8), d1
 	clr	d2
 	cmp	d2, d1
-	ble	func_4C004B18_entry_Laa
-func_4C004B18_entry_L79:
+	ble	JpegEngine_Laa
+JpegEngine_L79:
 	clr	d0
 	movhu	d0, (0x500ddcd4)
 	movhu	(0x500ddccc), d0
@@ -10285,17 +10285,17 @@ func_4C004B18_entry_L79:
 	mul	d3, d1
 	call	func_4C004D2E_entry, [d2,d3,a2,a3], 0x44
 	cmp	0, d0
-	bge	func_4C004B18_entry_La0
+	bge	JpegEngine_La0
 	ret	[d2,d3,a2,a3], 0x20
-func_4C004B18_entry_La0:
+JpegEngine_La0:
 	movhu	(0x500ddcc8), d0
 	inc	d2
 	cmp	d0, d2
-	blt	func_4C004B18_entry_L79
-func_4C004B18_entry_Laa:
+	blt	JpegEngine_L79
+JpegEngine_Laa:
 	movhu	(0x500ddcd0), d0
 	cmp	0, d0
-	beq	func_4C004B18_entry_Le0
+	beq	JpegEngine_Le0
 	movhu	(0x500ddcd0), d0
 	movhu	d0, (0x500ddcd4)
 	movhu	(0x500ddccc), d0
@@ -10308,19 +10308,19 @@ func_4C004B18_entry_Laa:
 	mul	d3, d1
 	call	func_4C004D2E_entry, [d2,d3,a2,a3], 0x44
 	cmp	0, d0
-	bge	func_4C004B18_entry_Le0
+	bge	JpegEngine_Le0
 	ret	[d2,d3,a2,a3], 0x20
-func_4C004B18_entry_Le0:
+JpegEngine_Le0:
 	movhu	(0x500ddcca), d0
 	inc	d3
 	cmp	d0, d3
-	blt	func_4C004B18_entry_L6f
-func_4C004B18_entry_Lea:
+	blt	JpegEngine_L6f
+JpegEngine_Lea:
 	movhu	(0x500ddcd2), d0
 	cmp	0, d0
-	bne	func_4C004B18_entry_Lf7
-	jmp	func_4C004B18_entry_L174
-func_4C004B18_entry_Lf7:
+	bne	JpegEngine_Lf7
+	jmp	JpegEngine_L174
+JpegEngine_Lf7:
 	movhu	(0x500ddcd2), d0
 	movhu	(0x500ddcc8), d1
 	movhu	d0, (0x500ddcd6)
@@ -10328,8 +10328,8 @@ func_4C004B18_entry_Lf7:
 	movhu	d0, (0x500ddcd4)
 	clr	d2
 	cmp	d2, d1
-	ble	func_4C004B18_entry_L13e
-func_4C004B18_entry_L114:
+	ble	JpegEngine_L13e
+JpegEngine_L114:
 	movhu	(0x500ddccc), d0
 	movhu	(0x500ddcce), d1
 	nop
@@ -10340,17 +10340,17 @@ func_4C004B18_entry_L114:
 	mul	d3, d1
 	call	func_4C004D2E_entry, [d2,d3,a2,a3], 0x44
 	cmp	0, d0
-	bge	func_4C004B18_entry_L134
+	bge	JpegEngine_L134
 	ret	[d2,d3,a2,a3], 0x20
-func_4C004B18_entry_L134:
+JpegEngine_L134:
 	movhu	(0x500ddcc8), d0
 	inc	d2
 	cmp	d0, d2
-	blt	func_4C004B18_entry_L114
-func_4C004B18_entry_L13e:
+	blt	JpegEngine_L114
+JpegEngine_L13e:
 	movhu	(0x500ddcd0), d0
 	cmp	0, d0
-	beq	func_4C004B18_entry_L174
+	beq	JpegEngine_L174
 	movhu	(0x500ddcd0), d0
 	movhu	d0, (0x500ddcd4)
 	movhu	(0x500ddccc), d0
@@ -10363,14 +10363,14 @@ func_4C004B18_entry_L13e:
 	mul	d3, d1
 	call	func_4C004D2E_entry, [d2,d3,a2,a3], 0x44
 	cmp	0, d0
-	bge	func_4C004B18_entry_L174
+	bge	JpegEngine_L174
 	ret	[d2,d3,a2,a3], 0x20
-func_4C004B18_entry_L174:
+JpegEngine_L174:
 	call	func_4C004FB4_entry, 0, 8
 	cmp	0, d0
-	bge	func_4C004B18_entry_L180
+	bge	JpegEngine_L180
 	ret	[d2,d3,a2,a3], 0x20
-func_4C004B18_entry_L180:
+JpegEngine_L180:
 	movbu	(0x500ddcd8), d1
 	movbu	(0x500ddcda), d0
 	add	d0, d1
@@ -10378,9 +10378,9 @@ func_4C004B18_entry_L180:
 	movbu	(0x500ddc74), d1
 	movbu	(0x500ddcd8), d0
 	cmp	d1, d0
-	bge	func_4C004B18_entry_L1a5
-	jmp	func_4C004B18_entry_L4d
-func_4C004B18_entry_L1a5:
+	bge	JpegEngine_L1a5
+	jmp	JpegEngine_L4d
+JpegEngine_L1a5:
 	mov	0x500ddc70, a1
 	movhu	(a1), d1
 	movhu	(2, a1), d0
@@ -12390,7 +12390,7 @@ func_4C005F94_entry:
 	mov	sp, a0
 	add	0x10, a0
 	mov	0x10, d0
-	call	func_4C00602D_entry, [d2,a2], 0x10
+	call	JpegBitRefill, [d2,a2], 0x10
 	cmp	0, d0
 	blt	func_4C005F94_entry_L49
 	mov	(0x10, sp), d0
@@ -12462,19 +12462,19 @@ func_4C00602D:
 	movm	[d2,a2], (sp)
 	add	-8, sp
 
-func_4C00602D_entry:
+JpegBitRefill:
 	mov	a0, a2
 	mov	d0, d2
 	mov	(0x500ddcbc), a1
 	mov	(0x500ddcb8), d1
 	cmp	d2, a1
-	bgt	func_4C00602D_entry_L27
+	bgt	JpegBitRefill_L27
 	call	func_4C00606A_entry, [d2,d3,a2,a3], 0x10
 	cmp	0, d0
-	bne	func_4C00602D_entry_L35
+	bne	JpegBitRefill_L35
 	mov	(0x500ddcbc), a1
 	mov	(0x500ddcb8), d1
-func_4C00602D_entry_L27:
+JpegBitRefill_L27:
 	mov	0x20, d0
 	sub	a1, d0
 	asl	d0, d1
@@ -12483,7 +12483,7 @@ func_4C00602D_entry_L27:
 	lsr	d0, d1
 	mov	d1, (a2)
 	clr	d0
-func_4C00602D_entry_L35:
+JpegBitRefill_L35:
 	ret	[d2,a2], 0x10
 
 func_4C00606A:
@@ -67458,7 +67458,7 @@ func_4C0245EF_entry:
 func_4C02460E:
 	add	-8, sp
 
-func_4C02460E_entry:
+PanelBusyWait3000:
 	mov	0xbb8, d0
 	mov	d0, (0, sp)
 	mov	(0, sp), d0
@@ -67722,7 +67722,7 @@ PanelWaitLinkIdle_entry_L41:
 	bra	PanelWaitLinkIdle_entry_L70
 PanelWaitLinkIdle_entry_L62:
 	call	unl_cpu, 0, 0
-	call	func_4C02460E_entry, 0, 8
+	call	PanelBusyWait3000, 0, 8
 	bra	PanelWaitLinkIdle_entry_L9
 PanelWaitLinkIdle_entry_L70:
 	bset	0x80, (0x5001af78)
@@ -69292,7 +69292,7 @@ PutM3Em_entry_L45:
 	mov	d0, (0x10, sp)
 	mov	a2, d0
 	mov	(0x30, sp), d1
-	call	func_4C0D9B2B_entry, [d2,d3], 0x1c
+	call	KeybedM3Dispatch_entry, [d2,d3], 0x1c
 	ret	[d2,d3,a2], 0x24
 PutM3Em_entry_L58:
 	mov	a2, d0
@@ -69451,7 +69451,7 @@ PutM3Force_entry_L45:
 	mov	d0, (0x10, sp)
 	mov	a2, d0
 	mov	(0x30, sp), d1
-	call	func_4C0D9B2B_entry, [d2,d3], 0x1c
+	call	KeybedM3Dispatch_entry, [d2,d3], 0x1c
 	ret	[d2,d3,a2], 0x24
 PutM3Force_entry_L58:
 	mov	a2, d0
@@ -69572,7 +69572,7 @@ PutM3Non_entry_L45:
 	mov	d0, (0x10, sp)
 	mov	a2, d0
 	mov	(0x30, sp), d1
-	call	func_4C0D9B2B_entry, [d2,d3], 0x1c
+	call	KeybedM3Dispatch_entry, [d2,d3], 0x1c
 	ret	[d2,d3,a2], 0x24
 PutM3Non_entry_L58:
 	mov	a2, d0
@@ -69756,21 +69756,21 @@ M3BufferOut_entry_L13:
 M3BufferOut_entry_L29:
 	ret	[a2,a3], 0x20
 
-func_4C025EF8:
+KeybedPollPass:
 	movm	[a2,a3], (sp)
 	add	-0x1c, sp
 
-func_4C025EF8_entry:
+KeybedPollPass_entry:
 	mov	sp, a3
 	add	0x14, a3
 	mov	sp, a2
 	add	0x18, a2
 	mov	a3, a0
 	mov	a2, a1
-	call	func_4C07B55B_entry, [d2,d3,a2,a3], 0x28
+	call	KeybedEventToM3_entry, [d2,d3,a2,a3], 0x28
 	cmp	-1, d0
-	beq	func_4C025EF8_entry_L2c
-func_4C025EF8_entry_L13:
+	beq	KeybedPollPass_entry_L2c
+KeybedPollPass_entry_L13:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x14, sp), d0
@@ -69778,10 +69778,10 @@ func_4C025EF8_entry_L13:
 	call	func_4C02C667_entry, [d2,d3,a2,a3], 0x30
 	mov	a3, a0
 	mov	a2, a1
-	call	func_4C07B55B_entry, [d2,d3,a2,a3], 0x28
+	call	KeybedEventToM3_entry, [d2,d3,a2,a3], 0x28
 	cmp	-1, d0
-	bne	func_4C025EF8_entry_L13
-func_4C025EF8_entry_L2c:
+	bne	KeybedPollPass_entry_L13
+KeybedPollPass_entry_L2c:
 	ret	[a2,a3], 0x24
 
 func_4C025F2C:
@@ -73025,7 +73025,7 @@ func_4C02773B_entry_L1d8:
 	call	M3SendProcess_entry, [d2,d3], 0x18
 	mov	(0x58, sp), d0
 	mov	(0x28, sp), d1
-	call	func_4C04B629_entry, [d2,d3,a2], 0x24
+	call	MsaOnRhythmVariation_entry, [d2,d3,a2], 0x24
 	jmp	func_4C02773B_entry_L291
 func_4C02773B_entry_L206:
 	btst	0x08, d2
@@ -73044,7 +73044,7 @@ func_4C02773B_entry_L206:
 	call	M3SendProcess_entry, [d2,d3], 0x18
 	mov	(0x58, sp), d0
 	mov	(0x28, sp), d1
-	call	func_4C04B629_entry, [d2,d3,a2], 0x24
+	call	MsaOnRhythmVariation_entry, [d2,d3,a2], 0x24
 	bra	func_4C02773B_entry_L291
 func_4C02773B_entry_L238:
 	btst	0x04, d2
@@ -74780,7 +74780,7 @@ func_4C02886E_entry:
 	bne	func_4C02886E_entry_L1d
 	mov	(0x30, sp), d1
 	mov	d3, d0
-	call	func_4C04B629_entry, [d2,d3,a2], 0x24
+	call	MsaOnRhythmVariation_entry, [d2,d3,a2], 0x24
 func_4C02886E_entry_L1d:
 	mov	d2, d0
 	ret	[d2,d3], 0x20
@@ -74801,7 +74801,7 @@ func_4C028894_entry:
 	bne	func_4C028894_entry_L1d
 	mov	(0x30, sp), d1
 	mov	d3, d0
-	call	func_4C04B629_entry, [d2,d3,a2], 0x24
+	call	MsaOnRhythmVariation_entry, [d2,d3,a2], 0x24
 func_4C028894_entry_L1d:
 	mov	d2, d0
 	ret	[d2,d3], 0x20
@@ -77320,7 +77320,7 @@ func_4C029C06_entry_Lc5:
 	call	M3SendProcess_entry, [d2,d3], 0x18
 	mov	(0x20, sp), d1
 	mov	d2, d0
-	call	func_4C04B629_entry, [d2,d3,a2], 0x24
+	call	MsaOnRhythmVariation_entry, [d2,d3,a2], 0x24
 	bra	func_4C029C06_entry_L140
 func_4C029C06_entry_Lf2:
 	btst	0x08, d3
@@ -78641,7 +78641,7 @@ func_4C02A787_entry_L6f:
 	call	M3SendProcess_entry, [d2,d3], 0x18
 	mov	(0x20, sp), d1
 	mov	d2, d0
-	call	func_4C04B629_entry, [d2,d3,a2], 0x24
+	call	MsaOnRhythmVariation_entry, [d2,d3,a2], 0x24
 	bra	func_4C02A787_entry_Lc5
 func_4C02A787_entry_La0:
 	btst	0x08, d3
@@ -80272,7 +80272,7 @@ func_4C02B539_entry_L17:
 	call	func_4C026766_entry, [d2,d3,a2,a3], 0x28
 	mov	(0x18, sp), d1
 	mov	d2, d0
-	call	func_4C04B629_entry, [d2,d3,a2], 0x24
+	call	MsaOnRhythmVariation_entry, [d2,d3,a2], 0x24
 	bra	func_4C02B539_entry_L67
 func_4C02B539_entry_L45:
 	btst	0x08, d3
@@ -82462,7 +82462,7 @@ func_4C02C667_entry_L3f:
 	mov	a2, d1
 	mov	d0, (0x10, sp)
 	mov	(0x38, sp), d0
-	call	func_4C0D9B2B_entry, [d2,d3], 0x1c
+	call	KeybedM3Dispatch_entry, [d2,d3], 0x1c
 	ret	[d2,d3,a2,a3], 0x30
 func_4C02C667_entry_L52:
 	mov	(0x38, sp), d0
@@ -113728,21 +113728,21 @@ func_4C03CEAC_entry_L8b:
 func_4C03CEAC_entry_Lb1:
 	ret	[d2], 0x14
 
-func_4C03CF65:
+PmemRecallBankA:
 	movm	[d2,d3], (sp)
 	add	-0x10, sp
 
-func_4C03CF65_entry:
+PmemRecallBankA_entry:
 	movbu	d1, (0x24, sp)
 	mov	d0, d3
 	mov	d3, d2
 	extbu	d2
 	cmp	0, d2
-	bne	func_4C03CF65_entry_Ld
+	bne	PmemRecallBankA_entry_Ld
 	ret	[d2,d3], 0x18
-func_4C03CF65_entry_Ld:
+PmemRecallBankA_entry_Ld:
 	cmp	4, d2
-	bgt	func_4C03CF65_entry_L7a
+	bgt	PmemRecallBankA_entry_L7a
 	call	func_4C03E9ED_entry, [a2], 4
 	mov	d2, d0
 	call	func_4C03D4C7_entry, [d2], 0x18
@@ -113769,7 +113769,7 @@ func_4C03CF65_entry_Ld:
 	call	func_4C03E404_entry, [d2,d3,a2,a3], 0x30
 	call	func_4C03EB07_entry, [d2,d3], 0x18
 	call	func_4C03300C_entry, [a2], 0x28
-func_4C03CF65_entry_L7a:
+PmemRecallBankA_entry_L7a:
 	ret	[d2,d3], 0x18
 
 func_4C03CFE7:
@@ -130535,7 +130535,7 @@ func_4C047240_entry_L30:
 	mov	d3, a0
 	mov	0x5024f8d8, a1
 	mov	0xa4c, d0
-	call	func_4C167539_entry, [d2,d3,a2,a3], 0x50
+	call	FlashProgram128Words, [d2,d3,a2,a3], 0x50
 	call	HpFlashWriteDefaults_entry, 0, 8
 	call	func_4C07A880_entry, 0, 8
 	bra	func_4C047240_entry_L99
@@ -130551,7 +130551,7 @@ func_4C0472E1_entry:
 	mov	0x96804000, a0
 	mov	func_4C167343_entry_L46_Table, a1
 	mov	2, d0
-	call	func_4C167539_entry, [d2,d3,a2,a3], 0x50
+	call	FlashProgram128Words, [d2,d3,a2,a3], 0x50
 	ret	0, 0x14
 
 func_4C0472FC:
@@ -130574,7 +130574,7 @@ func_4C0472FC_entry:
 	mov	0x96804000, a0
 	mov	0x5024f8d8, a1
 	mov	0xa4c, d0
-	call	func_4C167539_entry, [d2,d3,a2,a3], 0x50
+	call	FlashProgram128Words, [d2,d3,a2,a3], 0x50
 	ret	[a2,a3], 0x1c
 
 func_4C04733A:
@@ -130594,7 +130594,7 @@ loc_4C047351:
 	mov	0x96804000, a0
 	mov	0x5024f8d8, a1
 	mov	0xa4c, d0
-	call	func_4C167539_entry, [d2,d3,a2,a3], 0x50
+	call	FlashProgram128Words, [d2,d3,a2,a3], 0x50
 func_4C04733A_entry_L2a:
 	ret	0, 0x14
 
@@ -137745,30 +137745,30 @@ func_4C04B5FE_L27:
 	extbu	d0
 	retf	0, 0
 
-func_4C04B629:
+MsaOnRhythmVariation:
 	movm	[d2,d3,a2], (sp)
 	add	-0x18, sp
 
-func_4C04B629_entry:
+MsaOnRhythmVariation_entry:
 	mov	d1, d3
 	mov	d0, a2
 	and	0x00ffffff, d0
 	cmp	0xa0, d0
-	beq	func_4C04B629_entry_L25
+	beq	MsaOnRhythmVariation_entry_L25
 	cmp	0xc004, d0
-	beq	func_4C04B629_entry_L75
+	beq	MsaOnRhythmVariation_entry_L75
 	cmp	0xc000, d0
-	bne	func_4C04B629_entry_L22
-	jmp	func_4C04B629_entry_Lc0
-func_4C04B629_entry_L22:
+	bne	MsaOnRhythmVariation_entry_L22
+	jmp	MsaOnRhythmVariation_entry_Lc0
+MsaOnRhythmVariation_entry_L22:
 	ret	[d2,d3,a2], 0x24
-func_4C04B629_entry_L25:
+MsaOnRhythmVariation_entry_L25:
 	and	0xff, d3
 	extbu	d3
 	cmp	1, d3
-	beq	func_4C04B629_entry_L30
+	beq	MsaOnRhythmVariation_entry_L30
 	ret	[d2,d3,a2], 0x24
-func_4C04B629_entry_L30:
+MsaOnRhythmVariation_entry_L30:
 	mov	0xa1, d0
 	clr	d1
 	call	GetM3EmVal_entry, 0, 0x10
@@ -137790,16 +137790,16 @@ func_4C04B629_entry_L30:
 	extbu	d3
 	mov	d2, d1
 	mov	d3, d0
-	call	func_4C04C558_entry, 0, 0x14
+	call	MsaModeApply_entry, 0, 0x14
 	ret	[d2,d3,a2], 0x24
-func_4C04B629_entry_L75:
+MsaOnRhythmVariation_entry_L75:
 	mov	0xa0, d0
 	clr	d1
 	call	GetM3EmVal_entry, 0, 0x10
 	cmp	1, d0
-	beq	func_4C04B629_entry_L87
+	beq	MsaOnRhythmVariation_entry_L87
 	ret	[d2,d3,a2], 0x24
-func_4C04B629_entry_L87:
+MsaOnRhythmVariation_entry_L87:
 	mov	0xa1, d0
 	clr	d1
 	call	GetM3EmVal_entry, 0, 0x10
@@ -137819,14 +137819,14 @@ func_4C04B629_entry_L87:
 	mov	d0, (0x14, sp)
 	extbu	d2
 	mov	d2, d0
-	call	func_4C04C558_entry, 0, 0x14
-	bra	func_4C04B629_entry_L105
-func_4C04B629_entry_Lc0:
+	call	MsaModeApply_entry, 0, 0x14
+	bra	MsaOnRhythmVariation_entry_L105
+MsaOnRhythmVariation_entry_Lc0:
 	mov	0xa0, d0
 	clr	d1
 	call	GetM3EmVal_entry, 0, 0x10
 	cmp	1, d0
-	bne	func_4C04B629_entry_L105
+	bne	MsaOnRhythmVariation_entry_L105
 	mov	0xa1, d0
 	clr	d1
 	call	GetM3EmVal_entry, 0, 0x10
@@ -137845,8 +137845,8 @@ func_4C04B629_entry_Lc0:
 	extbu	d2
 	mov	d3, d1
 	mov	d2, d0
-	call	func_4C04C558_entry, 0, 0x14
-func_4C04B629_entry_L105:
+	call	MsaModeApply_entry, 0, 0x14
+MsaOnRhythmVariation_entry_L105:
 	ret	[d2,d3,a2], 0x24
 
 func_4C04B736:
@@ -139534,32 +139534,32 @@ func_4C04C552:
 	mov	0x90, d0
 	retf	0, 0
 
-func_4C04C558:
+MsaModeApply:
 	add	-0x14, sp
 
-func_4C04C558_entry:
+MsaModeApply_entry:
 	extbu	d0
 	cmp	1, d0
-	beq	func_4C04C558_entry_L2e
+	beq	MsaModeApply_entry_L2e
 	cmp	2, d0
-	beq	func_4C04C558_entry_Lf
+	beq	MsaModeApply_entry_Lf
 	cmp	3, d0
-	beq	func_4C04C558_entry_L1f
-	bra	func_4C04C558_entry_L2e
-func_4C04C558_entry_Lf:
+	beq	MsaModeApply_entry_L1f
+	bra	MsaModeApply_entry_L2e
+MsaModeApply_entry_Lf:
 	movbu	(0x28, sp), d0
 	mov	d0, (0x10, sp)
 	mov	d1, d0
 	movbu	(0x24, sp), d1
 	call	func_4C04C4F4_entry, [d2,a2], 0x20
-	bra	func_4C04C558_entry_L2e
-func_4C04C558_entry_L1f:
+	bra	MsaModeApply_entry_L2e
+MsaModeApply_entry_L1f:
 	movbu	(0x24, sp), d0
 	movbu	(0x28, sp), d1
 	inc	d0
 	extbu	d0
-	call	func_4C03CF65_entry, [d2,d3], 0x18
-func_4C04C558_entry_L2e:
+	call	PmemRecallBankA_entry, [d2,d3], 0x18
+MsaModeApply_entry_L2e:
 	ret	0, 0x14
 
 func_4C04C58C:
@@ -146942,7 +146942,7 @@ func_4C05092C_entry_L68:
 	mov	sp, a1
 	add	0x14, a1
 	mov	0x80, d0
-	call	func_4C167539_entry, [d2,d3,a2,a3], 0x50
+	call	FlashProgram128Words, [d2,d3,a2,a3], 0x50
 	add	0x80, a2
 	inc	d2
 	extbu	d2
@@ -151816,7 +151816,7 @@ func_4C053A86_L1a4:
 	call	func_4C04EDDC_entry, 0, 0x10
 	call	func_4C09F669_entry, 0, 0x10
 func_4C053A86_L1b7:
-	call	func_4C025EF8_entry, [a2,a3], 0x24
+	call	KeybedPollPass_entry, [a2,a3], 0x24
 	call	func_4C032A41_entry, [d2,d3,a2,a3], 0x24
 	call	func_4C0378F3_entry, [a2,a3], 0x14
 	call	func_4C025FF6_entry, [d2,a2,a3], 0x2c
@@ -159501,17 +159501,17 @@ func_4C057B26_L17:
 func_4C057B26_L19:
 	retf	0, 0
 
-func_4C057B42:
+StylePartToTgPart:
 	extbu	d0
 	cmp	0x20, d0
-	bcc	func_4C057B42_L10
+	bcc	StylePartToTgPart_L10
 	asl2	d0
 	mov	func_4C057B42_Table, a0
 	mov	(d0, a0), d0
-	bra	func_4C057B42_L12
-func_4C057B42_L10:
+	bra	StylePartToTgPart_L12
+StylePartToTgPart_L10:
 	mov	-1, d0
-func_4C057B42_L12:
+StylePartToTgPart_L12:
 	retf	0, 0
 
 func_4C057B57:
@@ -159654,16 +159654,16 @@ func_4C057BFA_entry_L96:
 func_4C057C9A:
 	movm	[d2,d3], (sp)
 
-func_4C057C9A_entry:
+StyleIdArrayStore:
 	mov	d1, d3
 	mov	d0, d2
 	movhu	(0x5002de5c), d0
 	mov	0x1ff, d1
 	cmp	d1, d0
-	blt	func_4C057C9A_entry_L12
+	blt	StyleIdArrayStore_L12
 	mov	-3, d0
-	bra	func_4C057C9A_entry_L4a
-func_4C057C9A_entry_L12:
+	bra	StyleIdArrayStore_L4a
+StyleIdArrayStore_L12:
 	movhu	(0x5002de58), d0
 	mov	0x5002de60, a0
 	and	d1, d0
@@ -159681,7 +159681,7 @@ func_4C057C9A_entry_L12:
 	inc	d0
 	movhu	d0, (0x5002de5c)
 	mov	1, d0
-func_4C057C9A_entry_L4a:
+StyleIdArrayStore_L4a:
 	retf	[d2,d3], 8
 
 func_4C057CE9:
@@ -159694,7 +159694,7 @@ func_4C057CE9_entry:
 	extbu	d0
 	and	0xffffff0f, d0
 	extbu	d0
-	call	func_4C057B42, 0, 0
+	call	StylePartToTgPart, 0, 0
 	mov	d0, a2
 	exth	d0
 	cmp	0, d0
@@ -159729,7 +159729,7 @@ func_4C057CE9_entry_L3e:
 	or	d0, d1
 	mov	d1, (0x14, sp)
 	mov	(0x10, sp), d0
-	call	func_4C057C9A_entry, [d2,d3], 8
+	call	StyleIdArrayStore, [d2,d3], 8
 	movbu	(0x20, sp), d1
 	cmp	0, d1
 	beq	func_4C057CE9_entry_L7f
@@ -159744,7 +159744,7 @@ func_4C057CE9_entry_L3e:
 	mov	(0x1c, sp), d1
 	or	d2, d1
 	mov	d1, (0x1c, sp)
-	call	func_4C057C9A_entry, [d2,d3], 8
+	call	StyleIdArrayStore, [d2,d3], 8
 func_4C057CE9_entry_L7f:
 	ret	[d2,d3,a2], 0x34
 
@@ -175088,7 +175088,7 @@ func_4C05FA27:
 	movm	[d2,d3,a2], (sp)
 	add	-0x10, sp
 
-func_4C05FA27_entry:
+StyleRefIdMark:
 	mov	a0, a2
 	mov	a1, a0
 	call	StyleDspKeyDecode_entry, [d2], 4
@@ -175098,28 +175098,28 @@ func_4C05FA27_entry:
 	mov	d3, d2
 	extbu	d2
 	cmp	0x78, d2
-	blt	func_4C05FA27_entry_L1c
+	blt	StyleRefIdMark_L1c
 	extbu	d3
 	cmp	0x7f, d3
-	bgt	func_4C05FA27_entry_L1c
+	bgt	StyleRefIdMark_L1c
 	mov	-1, d0
-	bra	func_4C05FA27_entry_L3a
-func_4C05FA27_entry_L1c:
+	bra	StyleRefIdMark_L3a
+StyleRefIdMark_L1c:
 	mov	5, d0
 	call	func_4C15FD48_entry, [d2,d3], 8
 	extb	d0
 	cmp	0, d0
-	blt	func_4C05FA27_entry_L39
+	blt	StyleRefIdMark_L39
 	cmp	0x37, d0
-	bge	func_4C05FA27_entry_L39
+	bge	StyleRefIdMark_L39
 	asl2	d0
 	add	d0, a2
 	mov	(a2), d0
 	or	0x80000000, d0
 	mov	d0, (a2)
-func_4C05FA27_entry_L39:
+StyleRefIdMark_L39:
 	clr	d0
-func_4C05FA27_entry_L3a:
+StyleRefIdMark_L3a:
 	ret	[d2,d3,a2], 0x1c
 
 StyleRefIdApply:
@@ -175638,7 +175638,7 @@ func_4C05FE1A_entry_L1c:
 	add	d3, d2
 	mov	(0x38, sp), a0
 	mov	d2, a1
-	call	func_4C05FA27_entry, [d2,d3,a2], 0x1c
+	call	StyleRefIdMark, [d2,d3,a2], 0x1c
 	exth	d0
 	cmp	0, d0
 	bge	func_4C05FE1A_entry_L3e
@@ -175648,7 +175648,7 @@ func_4C05FE1A_entry_L3e:
 	mov	(0x38, sp), a0
 	mov	2, a1
 	add	d2, a1
-	call	func_4C05FA27_entry, [d2,d3,a2], 0x1c
+	call	StyleRefIdMark, [d2,d3,a2], 0x1c
 	exth	d0
 	cmp	0, d0
 	bge	func_4C05FE1A_entry_L52
@@ -183857,27 +183857,27 @@ StyleDspUnitsApply_entry_L23:
 	beq	StyleDspUnitsApply_entry_L43
 	mov	0x7000b001, d0
 	mov	1, d1
-	call	func_4C057C9A_entry, [d2,d3], 8
+	call	StyleIdArrayStore, [d2,d3], 8
 	bra	StyleDspUnitsApply_entry_L51
 StyleDspUnitsApply_entry_L43:
 	mov	0x7000b001, d0
 	clr	d1
-	call	func_4C057C9A_entry, [d2,d3], 8
+	call	StyleIdArrayStore, [d2,d3], 8
 StyleDspUnitsApply_entry_L51:
 	mov	0x7000b044, d0
 	mov	d2, d1
-	call	func_4C057C9A_entry, [d2,d3], 8
+	call	StyleIdArrayStore, [d2,d3], 8
 	mov	0x7000b054, d0
 	mov	d3, d1
-	call	func_4C057C9A_entry, [d2,d3], 8
+	call	StyleIdArrayStore, [d2,d3], 8
 StyleDspUnitsApply_entry_L6d:
 	ret	[d2,d3,a2], 0x1c
 
-func_4C063D45:
+StyleVarDspPartsApply:
 	movm	[d2,d3], (sp)
 	add	-0x14, sp
 
-func_4C063D45_entry:
+StyleVarDspPartsApply_entry:
 	call	func_4C055ED0, 0, 0
 	movbu	(a0), d1
 	movbu	(1, a0), d2
@@ -183886,78 +183886,78 @@ func_4C063D45_entry:
 	mov	d1, d0
 	extbu	d0
 	cmp	8, d0
-	blt	func_4C063D45_entry_L24
+	blt	StyleVarDspPartsApply_entry_L24
 	clr	d0
 	movbu	d0, (0x12, sp)
 	mov	2, d1
 	mov	d2, d0
 	extbu	d0
 	cmp	d1, d0
-	bne	func_4C063D45_entry_L24
+	bne	StyleVarDspPartsApply_entry_L24
 	mov	3, d1
-func_4C063D45_entry_L24:
+StyleVarDspPartsApply_entry_L24:
 	mov	1, d0
 	movbu	d0, (0x11, sp)
 	mov	d2, d0
 	extbu	d0
 	cmp	8, d0
-	blt	func_4C063D45_entry_L3c
+	blt	StyleVarDspPartsApply_entry_L3c
 	clr	d0
 	movbu	d0, (0x11, sp)
 	mov	3, d2
 	mov	d1, d0
 	extbu	d0
 	cmp	d2, d0
-	bne	func_4C063D45_entry_L3c
+	bne	StyleVarDspPartsApply_entry_L3c
 	mov	2, d2
-func_4C063D45_entry_L3c:
+StyleVarDspPartsApply_entry_L3c:
 	extbu	d1
 	mov	d1, d0
-	call	func_4C057B42, 0, 0
+	call	StylePartToTgPart, 0, 0
 	mov	d0, d1
 	exth	d1
 	cmp	0, d1
-	bge	func_4C063D45_entry_L4e
+	bge	StyleVarDspPartsApply_entry_L4e
 	ret	[d2,d3], 0x1c
-func_4C063D45_entry_L4e:
+StyleVarDspPartsApply_entry_L4e:
 	movbu	d0, (0x10, sp)
 	extbu	d2
 	mov	d2, d0
-	call	func_4C057B42, 0, 0
+	call	StylePartToTgPart, 0, 0
 	mov	d0, d1
 	exth	d1
 	cmp	0, d1
-	blt	func_4C063D45_entry_Lce
+	blt	StyleVarDspPartsApply_entry_Lce
 	movbu	(0x50033654), d1
 	mov	d0, d3
 	cmp	0, d1
-	beq	func_4C063D45_entry_Lce
+	beq	StyleVarDspPartsApply_entry_Lce
 	movbu	(0x10, sp), d2
 	extbu	d3
 	mov	d3, d1
 	asl	8, d1
 	or	d2, d1
 	mov	0x7000b048, d0
-	call	func_4C057C9A_entry, [d2,d3], 8
+	call	StyleIdArrayStore, [d2,d3], 8
 	movbu	(0x12, sp), d1
 	asl	24, d2
 	or	d2, d1
 	mov	0x7020005f, d0
-	call	func_4C057C9A_entry, [d2,d3], 8
+	call	StyleIdArrayStore, [d2,d3], 8
 	movbu	(0x11, sp), d1
 	asl	24, d3
 	or	d3, d1
 	or	0x50, d2
 	or	0x50, d3
 	mov	0x7020005f, d0
-	call	func_4C057C9A_entry, [d2,d3], 8
+	call	StyleIdArrayStore, [d2,d3], 8
 	mov	d2, d1
 	mov	0x70b0005f, d0
-	call	func_4C057C9A_entry, [d2,d3], 8
+	call	StyleIdArrayStore, [d2,d3], 8
 	mov	d3, d1
 	mov	0x70b0005f, d0
-	call	func_4C057C9A_entry, [d2,d3], 8
-func_4C063D45_entry_Lce:
+	call	StyleIdArrayStore, [d2,d3], 8
+StyleVarDspPartsApply_entry_Lce:
 	ret	[d2,d3], 0x1c
 
 func_4C063E1B:
@@ -183972,7 +183972,7 @@ func_4C063E1B_entry:
 	beq	func_4C063E1B_entry_L1b
 	movbu	d0, (0x50033654)
 	call	StyleDspUnitsApply_entry, [d2,d3,a2], 0x1c
-	call	func_4C063D45_entry, [d2,d3], 0x1c
+	call	StyleVarDspPartsApply_entry, [d2,d3], 0x1c
 func_4C063E1B_entry_L1b:
 	ret	[d2], 0xc
 
@@ -184104,7 +184104,7 @@ func_4C063F0C_entry_L35:
 func_4C063F0C_entry_L50:
 	mov	0x7000d001, d0
 	clr	d1
-	call	func_4C057C9A_entry, [d2,d3], 8
+	call	StyleIdArrayStore, [d2,d3], 8
 	ret	[d2,d3], 0x18
 func_4C063F0C_entry_L61:
 	cmp	0xc, d0
@@ -184132,7 +184132,7 @@ func_4C063F0C_entry_L89:
 	bne	func_4C063F0C_entry_L9b
 	mov	0x7000d002, d0
 	clr	d1
-	call	func_4C057C9A_entry, [d2,d3], 8
+	call	StyleIdArrayStore, [d2,d3], 8
 func_4C063F0C_entry_L9b:
 	extbu	d3
 	cmp	0, d3
@@ -184143,7 +184143,7 @@ func_4C063F0C_entry_L9b:
 	mov	d0, a0
 	mov	0x7000c004, d0
 	mov	a0, d1
-	call	func_4C057C9A_entry, [d2,d3], 8
+	call	StyleIdArrayStore, [d2,d3], 8
 	bra	func_4C063F0C_entry_Lfe
 func_4C063F0C_entry_Lc1:
 	cmp	0xc, d0
@@ -184172,7 +184172,7 @@ func_4C063F0C_entry_Lec:
 	bne	func_4C063F0C_entry_Lfe
 	mov	0x7000d003, d0
 	clr	d1
-	call	func_4C057C9A_entry, [d2,d3], 8
+	call	StyleIdArrayStore, [d2,d3], 8
 func_4C063F0C_entry_Lfe:
 	ret	[d2,d3], 0x18
 
@@ -184631,7 +184631,7 @@ func_4C064483_entry_L40:
 	ble	func_4C064483_entry_L53
 	call	StyleDspUnitsApply_entry, [d2,d3,a2], 0x1c
 func_4C064483_entry_L53:
-	call	func_4C063D45_entry, [d2,d3], 0x1c
+	call	StyleVarDspPartsApply_entry, [d2,d3], 0x1c
 	movhu	(0x5003368a), d0
 	exth	d0
 	call	StyleTemplateRebuild_entry, [d2,d3,a2,a3], 0x28
@@ -185126,7 +185126,7 @@ func_4C064A1E_entry:
 	beq	func_4C064A1E_entry_L2c
 	call	func_4C0635CC_entry, [d2,d3,a2], 0x28
 	call	StyleDspUnitsApply_entry, [d2,d3,a2], 0x1c
-	call	func_4C063D45_entry, [d2,d3], 0x1c
+	call	StyleVarDspPartsApply_entry, [d2,d3], 0x1c
 	movhu	(0x5003368a), d0
 	exth	d0
 	call	StyleTemplateRebuild_entry, [d2,d3,a2,a3], 0x28
@@ -185151,7 +185151,7 @@ func_4C064A50_entry:
 	beq	func_4C064A50_entry_L61
 	call	func_4C0635CC_entry, [d2,d3,a2], 0x28
 	call	func_4C05EE37_entry, [d2,a2], 0x20
-	call	func_4C063D45_entry, [d2,d3], 0x1c
+	call	StyleVarDspPartsApply_entry, [d2,d3], 0x1c
 	movhu	(0x5003368a), d0
 	exth	d0
 	call	StyleTemplateRebuild_entry, [d2,d3,a2,a3], 0x28
@@ -185649,7 +185649,7 @@ func_4C064ECD_entry_L8f:
 	mov	0x7000c004, d0
 	extbu	d2
 	mov	d2, d1
-	call	func_4C057C9A_entry, [d2,d3], 8
+	call	StyleIdArrayStore, [d2,d3], 8
 func_4C064ECD_entry_La5:
 	ret	[d2,d3], 0x1c
 
@@ -186398,7 +186398,7 @@ func_4C0656C3_entry:
 	call	func_4C0635CC_entry, [d2,d3,a2], 0x28
 	call	func_4C05EE37_entry, [d2,a2], 0x20
 	call	StyleDspUnitsApply_entry, [d2,d3,a2], 0x1c
-	call	func_4C063D45_entry, [d2,d3], 0x1c
+	call	StyleVarDspPartsApply_entry, [d2,d3], 0x1c
 	mov	(0x50033674), d0
 	call	SndArgRecordIfOn_entry, [d2], 0x10
 	movhu	d0, (0x5003368a)
@@ -186432,7 +186432,7 @@ func_4C065741_entry:
 	call	func_4C0635CC_entry, [d2,d3,a2], 0x28
 	call	func_4C05EE37_entry, [d2,a2], 0x20
 	call	StyleDspUnitsApply_entry, [d2,d3,a2], 0x1c
-	call	func_4C063D45_entry, [d2,d3], 0x1c
+	call	StyleVarDspPartsApply_entry, [d2,d3], 0x1c
 	mov	(0x50033674), d0
 	call	SndArgRecordIfOn_entry, [d2], 0x10
 	movhu	d0, (0x5003368a)
@@ -186463,7 +186463,7 @@ func_4C0657C0_entry:
 	mov	(0x50033674), d0
 	movbu	(0x5003367c), d1
 	call	StyleNameAndRecordSelect_entry, [d2], 0x18
-	call	func_4C063D45_entry, [d2,d3], 0x1c
+	call	StyleVarDspPartsApply_entry, [d2,d3], 0x1c
 	mov	(0x50033674), d0
 	call	SndArgRecordIfOn_entry, [d2], 0x10
 	movhu	d0, (0x5003368a)
@@ -219884,7 +219884,7 @@ func_4C07A8A0_entry:
 	mov	0x96810000, a0
 	mov	0x50033a1c, a1
 	mov	0x198, d0
-	call	func_4C167539_entry, [d2,d3,a2,a3], 0x50
+	call	FlashProgram128Words, [d2,d3,a2,a3], 0x50
 func_4C07A8A0_entry_L22:
 	ret	0, 0x14
 
@@ -220010,7 +220010,7 @@ HpBmpResetDefault_entry:
 	mov	a2, a0
 	mov	a3, a1
 	mov	0x42b6, d0
-	call	func_4C167539_entry, [d2,d3,a2,a3], 0x50
+	call	FlashProgram128Words, [d2,d3,a2,a3], 0x50
 	mov	a3, a0
 	call	ZArenaFree_entry, [a2,a3], 8
 	mov	a2, (AcHpBmpProc_L3c_Var)
@@ -220032,7 +220032,7 @@ HpRecordProgram_entry:
 	mov	0x96811000, a0
 	mov	0x500337c0, a1
 	mov	0x18c, d0
-	call	func_4C167539_entry, [d2,d3,a2,a3], 0x50
+	call	FlashProgram128Words, [d2,d3,a2,a3], 0x50
 HpRecordProgram_entry_L22:
 	ret	0, 0x14
 
@@ -220117,7 +220117,7 @@ func_4C07AAA5_entry:
 	mov	0x18c, a1
 	add	d1, a1
 	mov	0x42b6, d0
-	call	func_4C167539_entry, [d2,d3,a2,a3], 0x50
+	call	FlashProgram128Words, [d2,d3,a2,a3], 0x50
 func_4C07AAA5_entry_L50:
 	mov	(0x50033bb4), a0
 	call	ZArenaFree_entry, [a2,a3], 8
@@ -220204,7 +220204,7 @@ LoadHpBmp_entry_L86:
 	mov	0x9681118c, a0
 	mov	a2, a1
 	mov	0x42b6, d0
-	call	func_4C167539_entry, [d2,d3,a2,a3], 0x50
+	call	FlashProgram128Words, [d2,d3,a2,a3], 0x50
 	bra	LoadHpBmp_entry_Lac
 LoadHpBmp_entry_La9:
 	mov	-0x7fb9, d2
@@ -220998,22 +220998,22 @@ func_4C07B537:
 	movbu	d0, (0x50033bc0)
 	retf	0, 0
 
-func_4C07B55B:
+KeybedEventToM3:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x18, sp
 
-func_4C07B55B_entry:
+KeybedEventToM3_entry:
 	mov	a1, a3
 	mov	a0, a2
 	mov	sp, a0
 	add	0x10, a0
-	call	func_4C07B605_entry, [d2,d3,a2,a3], 0x2c
+	call	KeybedFifoRead_entry, [d2,d3,a2,a3], 0x2c
 	exth	d0
 	cmp	-1, d0
-	bne	func_4C07B55B_entry_L13
+	bne	KeybedEventToM3_entry_L13
 	mov	-1, d0
-	bra	func_4C07B55B_entry_L40
-func_4C07B55B_entry_L13:
+	bra	KeybedEventToM3_entry_L40
+KeybedEventToM3_entry_L13:
 	movbu	(0x10, sp), d2
 	movbu	(0x11, sp), d3
 	mov	0x10700000, d0
@@ -221034,7 +221034,7 @@ func_4C07B55B_entry_L13:
 	add	0x14, a0
 	call	func_4C07B7E7, 0, 0
 	clr	d0
-func_4C07B55B_entry_L40:
+KeybedEventToM3_entry_L40:
 	ret	[d2,d3,a2,a3], 0x28
 
 func_4C07B5A3:
@@ -221052,7 +221052,7 @@ func_4C07B5A3_L1e:
 	mov	sp, a3
 	add	0xc, a3
 	mov	a3, a0
-	call	func_4C07B605_entry, [d2,d3,a2,a3], 0x2c
+	call	KeybedFifoRead_entry, [d2,d3,a2,a3], 0x2c
 	exth	d0
 	cmp	-1, d0
 	beq	func_4C07B5A3_L5f
@@ -221080,41 +221080,41 @@ func_4C07B5A3_L35:
 	cmp	0x10, d0
 	bge	func_4C07B5A3_L5f
 	mov	a3, a0
-	call	func_4C07B605_entry, [d2,d3,a2,a3], 0x2c
+	call	KeybedFifoRead_entry, [d2,d3,a2,a3], 0x2c
 	exth	d0
 	cmp	-1, d0
 	bne	func_4C07B5A3_L35
 func_4C07B5A3_L5f:
 	ret	[d2,a2,a3], 0x40
 
-func_4C07B605:
+KeybedFifoRead:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x1c, sp
 
-func_4C07B605_entry:
+KeybedFifoRead_entry:
 	movbu	(func_4C07B605_Table), d0
 	mov	a0, a3
 	cmp	0, d0
-	beq	func_4C07B605_entry_L26
+	beq	KeybedFifoRead_entry_L26
 	movbu	(0x50276e52), d0
 	movbu	(0x50276e53), d1
 	call	func_4C07B6B6_entry, [d2,d3,a2,a3], 0x20
 	clr	d0
 	movbu	d0, (func_4C07B605_Table)
 	ret	[d2,d3,a2,a3], 0x2c
-func_4C07B605_entry_L26:
+KeybedFifoRead_entry_L26:
 	movhu	(0x98050004), d0
 	movhu	d0, (0x18, sp)
 	movhu	(0x18, sp), d0
 	cmp	0xffff, d0
-	bne	func_4C07B605_entry_L43
+	bne	KeybedFifoRead_entry_L43
 	movhu	(0x98050004), d0
 	movhu	d0, (0x18, sp)
-func_4C07B605_entry_L43:
+KeybedFifoRead_entry_L43:
 	movhu	(0x18, sp), d1
 	mov	-1, d0
 	cmp	0xffff, d1
-	beq	func_4C07B605_entry_La9
+	beq	KeybedFifoRead_entry_La9
 	movhu	(0x18, sp), d2
 	movhu	(0x18, sp), d0
 	mov	0xff, a2
@@ -221126,7 +221126,7 @@ func_4C07B605_entry_L43:
 	and	d0, d2
 	movhu	(0x18, sp), d0
 	btst	0x80, d0
-	beq	func_4C07B605_entry_L9e
+	beq	KeybedFifoRead_entry_L9e
 	mov	d2, d3
 	extbu	d3
 	movbu	(0x14, sp), d2
@@ -221136,21 +221136,21 @@ func_4C07B605_entry_L43:
 	clr	d0
 	movbu	d0, (1, a3)
 	cmp	a2, d2
-	beq	func_4C07B605_entry_La9
+	beq	KeybedFifoRead_entry_La9
 	movbu	(0x14, sp), d1
 	and	0x7f, d3
 	movbu	d3, (0x50276e52)
 	movbu	d1, (0x50276e53)
 	mov	1, d1
 	movbu	d1, (func_4C07B605_Table)
-	bra	func_4C07B605_entry_La9
-func_4C07B605_entry_L9e:
+	bra	KeybedFifoRead_entry_La9
+KeybedFifoRead_entry_L9e:
 	extbu	d2
 	movbu	(0x14, sp), d1
 	mov	d2, d0
 	call	func_4C07B6B6_entry, [d2,d3,a2,a3], 0x20
 	clr	d0
-func_4C07B605_entry_La9:
+KeybedFifoRead_entry_La9:
 	ret	[d2,d3,a2,a3], 0x2c
 
 func_4C07B6B6:
@@ -221265,13 +221265,13 @@ func_4C07B78F_entry:
 	mov	sp, a2
 	add	0xc, a2
 	mov	a2, a0
-	call	func_4C07B605_entry, [d2,d3,a2,a3], 0x2c
+	call	KeybedFifoRead_entry, [d2,d3,a2,a3], 0x2c
 	exth	d0
 	cmp	-1, d0
 	beq	func_4C07B78F_entry_L19
 func_4C07B78F_entry_Le:
 	mov	a2, a0
-	call	func_4C07B605_entry, [d2,d3,a2,a3], 0x2c
+	call	KeybedFifoRead_entry, [d2,d3,a2,a3], 0x2c
 	exth	d0
 	cmp	-1, d0
 	bne	func_4C07B78F_entry_Le
@@ -221301,7 +221301,7 @@ func_4C07B78F_entry_L32:
 	add	-0xc, sp
 
 func_4C07B7DF:
-	call	func_4C07B605_entry, [d2,d3,a2,a3], 0x2c
+	call	KeybedFifoRead_entry, [d2,d3,a2,a3], 0x2c
 	ret	0, 0xc
 
 func_4C07B7E7:
@@ -260332,7 +260332,7 @@ func_4C08F766:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0xc, sp
 
-func_4C08F766_entry:
+TgPartClassRegCollect:
 	mov	d0, d2
 	movhu	(0x2c, sp), d0
 	mov	d1, d3
@@ -260366,7 +260366,7 @@ func_4C08F766_entry:
 	mov	d3, d0
 	exthu	d0
 	cmp	0x100, d0
-	bge	func_4C08F766_entry_L5d
+	bge	TgPartClassRegCollect_L5d
 	mov	func_4C08F6DD_Table, a0
 	movbu	(d1, a0), d2
 	mov	(0, sp), d1
@@ -260374,14 +260374,14 @@ func_4C08F766_entry:
 	exthu	d0
 	and	d1, d0
 	cmp	a3, d0
-	bne	func_4C08F766_entry_L5d
+	bne	TgPartClassRegCollect_L5d
 	exthu	d2
 	asl	16, d2
 	exthu	d3
 	or	d3, d2
 	mov	d2, (a1)
 	inc4	a1
-func_4C08F766_entry_L5d:
+TgPartClassRegCollect_L5d:
 	mov	a2, d1
 	inc	d1
 	exthu	d1
@@ -269032,7 +269032,7 @@ func_4C093F63_entry:
 	mov	d0, (0x10, sp)
 	mov	(0x14, sp), d0
 	mov	0x11, d1
-	call	func_4C08F766_entry, [d2,d3,a2,a3], 0x1c
+	call	TgPartClassRegCollect, [d2,d3,a2,a3], 0x1c
 	mov	a0, a2
 	clr	d2
 	mov	(a2), d0
@@ -269156,7 +269156,7 @@ func_4C09405D_entry:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x14, sp), d0
-	call	func_4C08F766_entry, [d2,d3,a2,a3], 0x1c
+	call	TgPartClassRegCollect, [d2,d3,a2,a3], 0x1c
 	mov	a0, a2
 	mov	(a2), d0
 	clr	d2
@@ -269264,7 +269264,7 @@ func_4C09412D_entry:
 	mov	d0, (0x10, sp)
 	mov	(0x14, sp), d0
 	mov	0x10, d1
-	call	func_4C08F766_entry, [d2,d3,a2,a3], 0x1c
+	call	TgPartClassRegCollect, [d2,d3,a2,a3], 0x1c
 	mov	a0, a2
 	clr	d2
 	mov	(a2), d0
@@ -269388,7 +269388,7 @@ func_4C094224_entry:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x14, sp), d0
-	call	func_4C08F766_entry, [d2,d3,a2,a3], 0x1c
+	call	TgPartClassRegCollect, [d2,d3,a2,a3], 0x1c
 	mov	a0, a2
 	mov	(a2), d0
 	clr	d2
@@ -269496,7 +269496,7 @@ func_4C0942F1_entry:
 	mov	d0, (0x10, sp)
 	mov	0x20, d1
 	mov	d2, d0
-	call	func_4C08F766_entry, [d2,d3,a2,a3], 0x1c
+	call	TgPartClassRegCollect, [d2,d3,a2,a3], 0x1c
 	mov	a0, a2
 	clr	d2
 	mov	(a2), d0
@@ -269557,7 +269557,7 @@ func_4C094365_entry:
 	mov	d0, (0x10, sp)
 	mov	d2, d0
 	mov	0x20, d1
-	call	func_4C08F766_entry, [d2,d3,a2,a3], 0x1c
+	call	TgPartClassRegCollect, [d2,d3,a2,a3], 0x1c
 	mov	a0, a2
 	mov	(a2), d0
 	clr	d2
@@ -290650,21 +290650,21 @@ func_4C09EE17_entry_Lcb:
 func_4C09EF24:
 	movm	[d2], (sp)
 
-func_4C09EF24_entry:
+GetChordToneList:
 	mov	d0, d2
 	cmp	0, d2
-	bge	func_4C09EF24_entry_L9
+	bge	GetChordToneList_L9
 	mov	-1, d0
-	bra	func_4C09EF24_entry_L2f
-func_4C09EF24_entry_L9:
+	bra	GetChordToneList_L2f
+GetChordToneList_L9:
 	clr	d1
 	cmp	d1, d0
-	ble	func_4C09EF24_entry_L2e
+	ble	GetChordToneList_L2e
 	mov	0x5004aa35, a1
 	setlb
 	movbu	(0x5004aa34), d0
 	cmp	d1, d0
-	beq	func_4C09EF24_entry_L2e
+	beq	GetChordToneList_L2e
 	movbu	(a1), d0
 	inc	d1
 	movbu	d0, (a0)
@@ -290674,9 +290674,9 @@ func_4C09EF24_entry_L9:
 	add	2, a0
 	cmp	d2, d1
 	llt
-func_4C09EF24_entry_L2e:
+GetChordToneList_L2e:
 	mov	d1, d0
-func_4C09EF24_entry_L2f:
+GetChordToneList_L2f:
 	retf	[d2], 4
 
 func_4C09EF58:
@@ -291041,7 +291041,7 @@ func_4C09F1BD_entry_L97:
 	mov	d0, (0x10, sp)
 	mov	(0x18, sp), d0
 	mov	(0x14, sp), d1
-	call	func_4C0D9B2B_entry, [d2,d3], 0x1c
+	call	KeybedM3Dispatch_entry, [d2,d3], 0x1c
 	cmp	a3, a2
 	bcs	func_4C09F1BD_entry_L97
 func_4C09F1BD_entry_Lc7:
@@ -291093,7 +291093,7 @@ func_4C09F1BD_entry_Le1:
 	mov	a0, d0
 	and	0xff000000, d0
 	or	0x00900000, d0
-	call	func_4C0D9B2B_entry, [d2,d3], 0x1c
+	call	KeybedM3Dispatch_entry, [d2,d3], 0x1c
 	mov	(0x1c, sp), a0
 	add	2, a2
 	movbu	(a0), d0
@@ -291183,7 +291183,7 @@ func_4C09F1BD_entry_L1aa:
 	mov	a0, d0
 	and	0xff000000, d0
 	or	0x00900000, d0
-	call	func_4C0D9B2B_entry, [d2,d3], 0x1c
+	call	KeybedM3Dispatch_entry, [d2,d3], 0x1c
 func_4C09F1BD_entry_L20e:
 	mov	(0x28, sp), a0
 	mov	(0x1c, sp), d1
@@ -291277,7 +291277,7 @@ func_4C09F1BD_entry_L26e:
 	mov	a1, d0
 	and	0xff000000, d0
 	or	0x00900000, d0
-	call	func_4C0D9B2B_entry, [d2,d3], 0x1c
+	call	KeybedM3Dispatch_entry, [d2,d3], 0x1c
 func_4C09F1BD_entry_L2da:
 	mov	(0x1c, sp), a0
 	mov	(0x20, sp), d1
@@ -291332,7 +291332,7 @@ func_4C09F1BD_entry_L302:
 	and	0xffffff00, d1
 	or	d2, d1
 	and	0xffff00ff, d1
-	call	func_4C0D9B2B_entry, [d2,d3], 0x1c
+	call	KeybedM3Dispatch_entry, [d2,d3], 0x1c
 	jmp	func_4C09F1BD_entry_L4a3
 func_4C09F1BD_entry_L368:
 	movbu	(a0), d0
@@ -291383,7 +291383,7 @@ func_4C09F1BD_entry_L391:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d2, d0
-	call	func_4C0D9B2B_entry, [d2,d3], 0x1c
+	call	KeybedM3Dispatch_entry, [d2,d3], 0x1c
 	mov	(0x254, sp), a0
 	mov	1, d0
 	movhu	(a0), d2
@@ -291411,7 +291411,7 @@ func_4C09F1BD_entry_L391:
 	mov	d2, d1
 	clr	d3
 	mov	d3, (0x10, sp)
-	call	func_4C0D9B2B_entry, [d2,d3], 0x1c
+	call	KeybedM3Dispatch_entry, [d2,d3], 0x1c
 	bra	func_4C09F1BD_entry_L4a3
 func_4C09F1BD_entry_L433:
 	movbu	(a0), d0
@@ -291452,7 +291452,7 @@ func_4C09F1BD_entry_L433:
 	asl	8, d1
 	or	d1, d2
 	mov	d2, d1
-	call	func_4C0D9B2B_entry, [d2,d3], 0x1c
+	call	KeybedM3Dispatch_entry, [d2,d3], 0x1c
 func_4C09F1BD_entry_L4a3:
 	add	0x23c, sp
 	ret	[d2,d3,a2,a3], 0x10
@@ -383883,26 +383883,26 @@ func_4C0D9876_L2b1:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x34
 
-func_4C0D9B2B:
+KeybedM3Dispatch:
 	movm	[d2,d3], (sp)
 	add	-0x14, sp
 
-func_4C0D9B2B_entry:
+KeybedM3Dispatch_entry:
 	mov	d1, d3
 	mov	d0, d2
 	call	func_4C0521A8, 0, 0
 	cmp	0, d0
-	beq	func_4C0D9B2B_entry_L1a
+	beq	KeybedM3Dispatch_entry_L1a
 	mov	d3, d1
 	mov	d2, d0
 	call	M3SendProcess_entry, [d2,d3], 0x18
 	clr	d0
 	ret	[d2,d3], 0x1c
-func_4C0D9B2B_entry_L1a:
+KeybedM3Dispatch_entry_L1a:
 	mov	d2, d1
 	and	0x00ffffff, d1
 	cmp	CmpMemClrWin_FuncEditSw1_id, d1
-	bne	func_4C0D9B2B_entry_L39
+	bne	KeybedM3Dispatch_entry_L39
 	movbu	(0x2c, sp), d0
 	mov	d3, d1
 	mov	d0, (0x10, sp)
@@ -383910,13 +383910,13 @@ func_4C0D9B2B_entry_L1a:
 	call	func_4C0DAB5D_entry, [d2,d3,a2,a3], 0x34
 	clr	d0
 	ret	[d2,d3], 0x1c
-func_4C0D9B2B_entry_L39:
+KeybedM3Dispatch_entry_L39:
 	cmp	0x800000, d1
-	bne	func_4C0D9B2B_entry_L53
+	bne	KeybedM3Dispatch_entry_L53
 	and	0xff000000, d2
 	or	0x00900000, d2
 	and	0xffff00ff, d3
-func_4C0D9B2B_entry_L53:
+KeybedM3Dispatch_entry_L53:
 	movbu	(0x2c, sp), d1
 	mov	d2, d0
 	mov	d1, (0x10, sp)
@@ -383929,13 +383929,13 @@ func_4C0D9B2B_entry_L53:
 	call	func_4C0D7DD5_entry, [d2,d3], 8
 	exth	d0
 	cmp	0, d0
-	beq	func_4C0D9B2B_entry_L7d
+	beq	KeybedM3Dispatch_entry_L7d
 	and	0xff00, d3
 	lsr	8, d3
 	mov	d3, d0
 	extbu	d0
 	call	func_4C0DB2BB_entry, [a2], 0x14
-func_4C0D9B2B_entry_L7d:
+KeybedM3Dispatch_entry_L7d:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	2, d0
@@ -383943,10 +383943,10 @@ func_4C0D9B2B_entry_L7d:
 	call	func_4C0D7DD5_entry, [d2,d3], 8
 	exth	d0
 	cmp	0, d0
-	beq	func_4C0D9B2B_entry_L95
+	beq	KeybedM3Dispatch_entry_L95
 	clr	d0
 	call	func_4C09E427_entry, [d2,a2,a3], 0x28
-func_4C0D9B2B_entry_L95:
+KeybedM3Dispatch_entry_L95:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	2, d0
@@ -383954,10 +383954,10 @@ func_4C0D9B2B_entry_L95:
 	call	func_4C0D7DD5_entry, [d2,d3], 8
 	exth	d0
 	cmp	0, d0
-	beq	func_4C0D9B2B_entry_Lae
+	beq	KeybedM3Dispatch_entry_Lae
 	clr	d0
 	call	func_4C13409D_entry, [a2], 0x14
-func_4C0D9B2B_entry_Lae:
+KeybedM3Dispatch_entry_Lae:
 	clr	d0
 	mov	d0, d1
 	call	func_4C0D8F29_entry, 0, 8
@@ -387049,7 +387049,7 @@ func_4C0DB466_entry_L46:
 	exth	d1
 	asl	24, d1
 	or	d2, d1
-	call	func_4C0D9B2B_entry, [d2,d3], 0x1c
+	call	KeybedM3Dispatch_entry, [d2,d3], 0x1c
 func_4C0DB466_entry_L74:
 	mov	(0x14, sp), a0
 	movbu	(a0), d0
@@ -387087,7 +387087,7 @@ func_4C0DB466_entry_L85:
 	clr	d1
 	mov	d1, (0x10, sp)
 	mov	d2, d1
-	call	func_4C0D9B2B_entry, [d2,d3], 0x1c
+	call	KeybedM3Dispatch_entry, [d2,d3], 0x1c
 func_4C0DB466_entry_Lc5:
 	ret	[d2,d3,a2,a3], 0x28
 
@@ -538113,7 +538113,7 @@ TechniChordClose_entry:
 	mov	d0, (0x14, sp)
 	mov	d0, a0
 	mov	0x10, d0
-	call	func_4C09EF24_entry, [d2], 4
+	call	GetChordToneList, [d2], 4
 	mov	d0, d2
 	mov	d2, d1
 	exthu	d1
@@ -539377,7 +539377,7 @@ func_4C134CC6_entry_Le2:
 	extb	d1
 	mov	a3, d0
 	or	d3, d1
-	call	func_4C0D9B2B_entry, [d2,d3], 0x1c
+	call	KeybedM3Dispatch_entry, [d2,d3], 0x1c
 	cmp	d2, a2
 	bcs	func_4C134CC6_entry_Le2
 func_4C134CC6_entry_Lf9:
@@ -539416,7 +539416,7 @@ func_4C134CC6_entry_L138:
 	mov	a3, d0
 	mov	0, a0
 	mov	a0, (0x10, sp)
-	call	func_4C0D9B2B_entry, [d2,d3], 0x1c
+	call	KeybedM3Dispatch_entry, [d2,d3], 0x1c
 	mov	(0x2c, sp), a0
 	add	2, a2
 	movhu	(a0), d0
@@ -539494,7 +539494,7 @@ func_4C134CC6_entry_L1b0:
 	exth	d1
 	asl	24, d1
 	or	d2, d1
-	call	func_4C0D9B2B_entry, [d2,d3], 0x1c
+	call	KeybedM3Dispatch_entry, [d2,d3], 0x1c
 func_4C134CC6_entry_L1e9:
 	mov	(0x20, sp), a0
 	mov	(0x18, sp), d1
@@ -539579,7 +539579,7 @@ func_4C134CC6_entry_L24d:
 	clr	d1
 	mov	d1, (0x10, sp)
 	mov	d2, d1
-	call	func_4C0D9B2B_entry, [d2,d3], 0x1c
+	call	KeybedM3Dispatch_entry, [d2,d3], 0x1c
 func_4C134CC6_entry_L292:
 	mov	(0x14, sp), d0
 	mov	(0x2c, sp), a0
@@ -592856,7 +592856,7 @@ func_4C1544E8:
 	movm	[d2], (sp)
 	add	-0x18, sp
 
-func_4C1544E8_entry:
+DspEffectAssign:
 	mov	a0, (0x24, sp)
 	movhu	d1, (0x2c, sp)
 	movhu	d0, (0x28, sp)
@@ -592868,17 +592868,17 @@ func_4C1544E8_entry:
 	movhu	d0, (0x12, sp)
 	movhu	(0x28, sp), d0
 	cmp	9, d0
-	ble	func_4C1544E8_entry_L28
-	jmp	func_4C1544E8_entry_L10e
-func_4C1544E8_entry_L28:
+	ble	DspEffectAssign_L28
+	jmp	DspEffectAssign_L10e
+DspEffectAssign_L28:
 	movhu	(0x28, sp), d0
 	movhu	(0x2c, sp), d1
-	call	func_4C154FA8_entry, 0, 4
+	call	DspEffectTypeValid, 0, 4
 	exth	d0
 	cmp	0, d0
-	beq	func_4C1544E8_entry_L3b
-	jmp	func_4C1544E8_entry_L10e
-func_4C1544E8_entry_L3b:
+	beq	DspEffectAssign_L3b
+	jmp	DspEffectAssign_L10e
+DspEffectAssign_L3b:
 	movhu	(0x28, sp), d0
 	mov	0x120, d1
 	nop
@@ -592916,8 +592916,8 @@ func_4C1544E8_entry_L3b:
 	movhu	d1, (d0, a0)
 	mov	d1, d0
 	movhu	d0, (0x14, sp)
-	bra	func_4C1544E8_entry_L105
-func_4C1544E8_entry_L8e:
+	bra	DspEffectAssign_L105
+DspEffectAssign_L8e:
 	movhu	(0x14, sp), d1
 	movhu	(0x28, sp), d0
 	mov	0x120, d2
@@ -592981,12 +592981,12 @@ func_4C1544E8_entry_L8e:
 	movhu	(0x14, sp), d0
 	inc	d0
 	movhu	d0, (0x14, sp)
-func_4C1544E8_entry_L105:
+DspEffectAssign_L105:
 	movhu	(0x14, sp), d0
 	cmp	0x13, d0
-	bgt	func_4C1544E8_entry_L10e
-	bra	func_4C1544E8_entry_L8e
-func_4C1544E8_entry_L10e:
+	bgt	DspEffectAssign_L10e
+	bra	DspEffectAssign_L8e
+DspEffectAssign_L10e:
 	ret	[d2], 0x1c
 
 func_4C1545FE:
@@ -593004,7 +593004,7 @@ func_4C1545FE_entry:
 func_4C1545FE_entry_L11:
 	movhu	(0x20, sp), d0
 	movhu	(0x24, sp), d1
-	call	func_4C154FA8_entry, 0, 4
+	call	DspEffectTypeValid, 0, 4
 	exth	d0
 	cmp	0, d0
 	beq	func_4C1545FE_entry_L23
@@ -593045,18 +593045,18 @@ func_4C1545FE_entry_L61:
 func_4C154667:
 	add	-0x10, sp
 
-func_4C154667_entry:
+DspAllocParamBlock:
 	mov	0x5028e348, a0
 	mov	6, d0
 	call	func_4C3F5FCC, 0, 0
 	cmp	-0x55, d0
-	beq	func_4C154667_entry_L15
-	bra	func_4C154667_entry_L24
-func_4C154667_entry_L15:
+	beq	DspAllocParamBlock_L15
+	bra	DspAllocParamBlock_L24
+DspAllocParamBlock_L15:
 	mov	0x5028e348, a0
 	mov	5, d0
 	call	func_4C3F6962, 0, 0
-func_4C154667_entry_L24:
+DspAllocParamBlock_L24:
 	mov	(0x5028e348), a0
 	ret	0, 0x10
 
@@ -593074,7 +593074,7 @@ func_4C154697_entry:
 	beq	func_4C154697_entry_L19
 	bra	func_4C154697_entry_L24
 func_4C154697_entry_L19:
-	call	func_4C154667_entry, 0, 0x10
+	call	DspAllocParamBlock, 0, 0x10
 	mov	a0, (0x5028e348)
 func_4C154697_entry_L24:
 	mov	(0x5028e348), a0
@@ -593087,7 +593087,7 @@ func_4C154697_entry_L24:
 func_4C1546D3:
 	add	-0x20, sp
 
-func_4C1546D3_entry:
+DspEffectSelect:
 	movhu	d1, (0x2c, sp)
 	movhu	d0, (0x28, sp)
 	clr	d0
@@ -593098,18 +593098,18 @@ func_4C1546D3_entry:
 	movhu	d0, (0x1c, sp)
 	mov	(0x5028e348), d0
 	cmp	-1, d0
-	beq	func_4C1546D3_entry_L20
-	bra	func_4C1546D3_entry_L2b
-func_4C1546D3_entry_L20:
-	call	func_4C154667_entry, 0, 0x10
+	beq	DspEffectSelect_L20
+	bra	DspEffectSelect_L2b
+DspEffectSelect_L20:
+	call	DspAllocParamBlock, 0, 0x10
 	mov	a0, (0x5028e348)
-func_4C1546D3_entry_L2b:
+DspEffectSelect_L2b:
 	mov	(0x5028e348), d0
 	mov	d0, (0x14, sp)
 	mov	d0, a0
 	movhu	(0x28, sp), d0
 	movhu	(0x2c, sp), d1
-	call	func_4C1544E8_entry, [d2], 0x1c
+	call	DspEffectAssign, [d2], 0x1c
 	clr	d0
 	ret	0, 0x20
 
@@ -593258,7 +593258,7 @@ func_4C154803_entry:
 func_4C154803_entry_L20:
 	movhu	(0x28, sp), d0
 	movhu	(0x2c, sp), d1
-	call	func_4C154FA8_entry, 0, 4
+	call	DspEffectTypeValid, 0, 4
 	exth	d0
 	cmp	0, d0
 	beq	func_4C154803_entry_L33
@@ -593452,7 +593452,7 @@ func_4C154979_entry:
 	beq	func_4C154979_entry_L2e
 	bra	func_4C154979_entry_L39
 func_4C154979_entry_L2e:
-	call	func_4C154667_entry, 0, 0x10
+	call	DspAllocParamBlock, 0, 0x10
 	mov	a0, (0x5028e348)
 func_4C154979_entry_L39:
 	mov	(0x5028e348), d0
@@ -593670,12 +593670,10 @@ func_4C154A16_L199:
 	jmp	func_4C154A16_L5
 # func_4C154A16 + 0x1aa: no traced path reaches what follows (--decode-gaps)
 	ret	[d2], 0x20
-
-func_4C154BC3:
 	movm	[d2], (sp)
 	add	-0x2c, sp
 
-func_4C154BC3_entry:
+DspManagerInit:
 	mov	7, d0
 	mov	func_4C3F674B_Table_9, a0
 	call	cre_tsk, 0, 0
@@ -593716,14 +593714,14 @@ func_4C154BC3_entry:
 	mov	-1, d0
 	mov	d0, (0x5028e348)
 	mov	d0, (0x5028e34c)
-	call	func_4C157857_entry, 0, 0x1c
+	call	DspFullReinit, 0, 0x1c
 	movbu	(func_4C154BC3_Var), d0
 	extb	d0
 	movhu	d0, (0x24, sp)
 	clr	d0
 	movhu	d0, (0x26, sp)
-	jmp	func_4C154BC3_entry_L2e2
-func_4C154BC3_entry_Ld4:
+	jmp	DspManagerInit_L2e2
+DspManagerInit_Ld4:
 	movhu	(0x26, sp), d0
 	mov	0x14ac, d1
 	nop
@@ -593825,8 +593823,8 @@ func_4C154BC3_entry_Ld4:
 	movhu	d1, (d0, a0)
 	clr	d0
 	movhu	d0, (0x28, sp)
-	jmp	func_4C154BC3_entry_L2d1
-func_4C154BC3_entry_L1d1:
+	jmp	DspManagerInit_L2d1
+DspManagerInit_L1d1:
 	movhu	(0x28, sp), d1
 	movhu	(0x26, sp), d0
 	mov	0x120, d2
@@ -593944,21 +593942,21 @@ func_4C154BC3_entry_L1d1:
 	movhu	(0x28, sp), d0
 	inc	d0
 	movhu	d0, (0x28, sp)
-func_4C154BC3_entry_L2d1:
+DspManagerInit_L2d1:
 	movhu	(0x28, sp), d0
 	cmp	0x13, d0
-	bgt	func_4C154BC3_entry_L2db
-	jmp	func_4C154BC3_entry_L1d1
-func_4C154BC3_entry_L2db:
+	bgt	DspManagerInit_L2db
+	jmp	DspManagerInit_L1d1
+DspManagerInit_L2db:
 	movhu	(0x26, sp), d0
 	inc	d0
 	movhu	d0, (0x26, sp)
-func_4C154BC3_entry_L2e2:
+DspManagerInit_L2e2:
 	movhu	(0x26, sp), d0
 	cmp	9, d0
-	bgt	func_4C154BC3_entry_L2ec
-	jmp	func_4C154BC3_entry_Ld4
-func_4C154BC3_entry_L2ec:
+	bgt	DspManagerInit_L2ec
+	jmp	DspManagerInit_Ld4
+DspManagerInit_L2ec:
 	clr	d0
 	mov	d0, (0x500b69c0)
 	mov	d0, (0x500b69c4)
@@ -593991,15 +593989,15 @@ func_4C154BC3_entry_L2ec:
 	mov	sp, a0
 	add	0x20, a0
 	clr	d0
-	call	func_4C156A4C_entry, [d2], 0x34
+	call	DspRecordInterpreter, [d2], 0x34
 	movhu	d0, (0x2a, sp)
 	call	func_4C156955_entry, 0, 0x14
 	mov	0x32, d0
 	call	dly_tsk_entry, [d2,a2], 0x18
 	clr	d0
 	movhu	d0, (0x26, sp)
-	bra	func_4C154BC3_entry_L3c5
-func_4C154BC3_entry_L363:
+	bra	DspManagerInit_L3c5
+DspManagerInit_L363:
 	movhu	(0x26, sp), d0
 	asl2	d0
 	mov	func_4C154BC3_entry_L363_Table, a0
@@ -594007,9 +594005,9 @@ func_4C154BC3_entry_L363:
 	mov	d1, (0x20, sp)
 	mov	d1, d0
 	cmp	0, d0
-	bne	func_4C154BC3_entry_L378
-	bra	func_4C154BC3_entry_L3be
-func_4C154BC3_entry_L378:
+	bne	DspManagerInit_L378
+	bra	DspManagerInit_L3be
+DspManagerInit_L378:
 	mov	0xa0, d0
 	mov	d0, (0x10, sp)
 	mov	0x1d, d0
@@ -594019,7 +594017,7 @@ func_4C154BC3_entry_L378:
 	mov	sp, a0
 	add	0x20, a0
 	clr	d0
-	call	func_4C156A4C_entry, [d2], 0x34
+	call	DspRecordInterpreter, [d2], 0x34
 	movhu	d0, (0x2a, sp)
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -594037,16 +594035,16 @@ func_4C154BC3_entry_L378:
 	clr	d1
 	call	func_4C157B41_entry, 0, 0x10
 	call	func_4C156955_entry, 0, 0x14
-func_4C154BC3_entry_L3be:
+DspManagerInit_L3be:
 	movhu	(0x26, sp), d0
 	inc	d0
 	movhu	d0, (0x26, sp)
-func_4C154BC3_entry_L3c5:
+DspManagerInit_L3c5:
 	movhu	(0x26, sp), d0
 	cmp	0x91, d0
-	bgt	func_4C154BC3_entry_L3d0
-	bra	func_4C154BC3_entry_L363
-func_4C154BC3_entry_L3d0:
+	bgt	DspManagerInit_L3d0
+	bra	DspManagerInit_L363
+DspManagerInit_L3d0:
 	call	func_4C156955_entry, 0, 0x14
 	call	func_4C1575AE, 0, 0
 	movhu	(0x2a, sp), d0
@@ -594055,111 +594053,111 @@ func_4C154BC3_entry_L3d0:
 func_4C154FA8:
 	add	-4, sp
 
-func_4C154FA8_entry:
+DspEffectTypeValid:
 	movhu	d0, (0xc, sp)
 	movhu	d1, (0x10, sp)
 	mov	-1, d0
 	movhu	d0, (0, sp)
 	movhu	(0x10, sp), d0
 	cmp	0x91, d0
-	ble	func_4C154FA8_entry_L17
-	jmp	func_4C154FA8_entry_Lc1
-func_4C154FA8_entry_L17:
+	ble	DspEffectTypeValid_L17
+	jmp	DspEffectTypeValid_Lc1
+DspEffectTypeValid_L17:
 	movhu	(0xc, sp), d0
 	cmp	0, d0
-	bne	func_4C154FA8_entry_L20
-	bra	func_4C154FA8_entry_L58
-func_4C154FA8_entry_L20:
+	bne	DspEffectTypeValid_L20
+	bra	DspEffectTypeValid_L58
+DspEffectTypeValid_L20:
 	cmp	1, d0
-	bne	func_4C154FA8_entry_L26
-	bra	func_4C154FA8_entry_L6f
-func_4C154FA8_entry_L26:
+	bne	DspEffectTypeValid_L26
+	bra	DspEffectTypeValid_L6f
+DspEffectTypeValid_L26:
 	cmp	2, d0
-	bne	func_4C154FA8_entry_L2c
-	bra	func_4C154FA8_entry_L6f
-func_4C154FA8_entry_L2c:
+	bne	DspEffectTypeValid_L2c
+	bra	DspEffectTypeValid_L6f
+DspEffectTypeValid_L2c:
 	cmp	3, d0
-	bne	func_4C154FA8_entry_L32
-	bra	func_4C154FA8_entry_L6f
-func_4C154FA8_entry_L32:
+	bne	DspEffectTypeValid_L32
+	bra	DspEffectTypeValid_L6f
+DspEffectTypeValid_L32:
 	cmp	4, d0
-	bne	func_4C154FA8_entry_L38
-	bra	func_4C154FA8_entry_L6f
-func_4C154FA8_entry_L38:
+	bne	DspEffectTypeValid_L38
+	bra	DspEffectTypeValid_L6f
+DspEffectTypeValid_L38:
 	cmp	5, d0
-	bne	func_4C154FA8_entry_L3e
-	bra	func_4C154FA8_entry_L6f
-func_4C154FA8_entry_L3e:
+	bne	DspEffectTypeValid_L3e
+	bra	DspEffectTypeValid_L6f
+DspEffectTypeValid_L3e:
 	cmp	6, d0
-	bne	func_4C154FA8_entry_L44
-	bra	func_4C154FA8_entry_L6f
-func_4C154FA8_entry_L44:
+	bne	DspEffectTypeValid_L44
+	bra	DspEffectTypeValid_L6f
+DspEffectTypeValid_L44:
 	cmp	7, d0
-	bne	func_4C154FA8_entry_L4a
-	bra	func_4C154FA8_entry_L86
-func_4C154FA8_entry_L4a:
+	bne	DspEffectTypeValid_L4a
+	bra	DspEffectTypeValid_L86
+DspEffectTypeValid_L4a:
 	cmp	8, d0
-	bne	func_4C154FA8_entry_L50
-	bra	func_4C154FA8_entry_L9d
-func_4C154FA8_entry_L50:
+	bne	DspEffectTypeValid_L50
+	bra	DspEffectTypeValid_L9d
+DspEffectTypeValid_L50:
 	cmp	9, d0
-	bne	func_4C154FA8_entry_L56
-	bra	func_4C154FA8_entry_Lac
-func_4C154FA8_entry_L56:
-	bra	func_4C154FA8_entry_Lc1
-func_4C154FA8_entry_L58:
+	bne	DspEffectTypeValid_L56
+	bra	DspEffectTypeValid_Lac
+DspEffectTypeValid_L56:
+	bra	DspEffectTypeValid_Lc1
+DspEffectTypeValid_L58:
 	movhu	(0x10, sp), d0
 	mov	func_4C154FA8_entry_L58_Table, a0
 	movbu	(d0, a0), d0
 	cmp	0, d0
-	bne	func_4C154FA8_entry_L69
-	bra	func_4C154FA8_entry_Lc1
-func_4C154FA8_entry_L69:
+	bne	DspEffectTypeValid_L69
+	bra	DspEffectTypeValid_Lc1
+DspEffectTypeValid_L69:
 	clr	d0
 	movhu	d0, (0, sp)
-	bra	func_4C154FA8_entry_Lc1
-func_4C154FA8_entry_L6f:
+	bra	DspEffectTypeValid_Lc1
+DspEffectTypeValid_L6f:
 	movhu	(0x10, sp), d0
 	mov	func_4C154FA8_entry_L6f_Table, a0
 	movbu	(d0, a0), d0
 	cmp	0, d0
-	bne	func_4C154FA8_entry_L80
-	bra	func_4C154FA8_entry_Lc1
-func_4C154FA8_entry_L80:
+	bne	DspEffectTypeValid_L80
+	bra	DspEffectTypeValid_Lc1
+DspEffectTypeValid_L80:
 	clr	d0
 	movhu	d0, (0, sp)
-	bra	func_4C154FA8_entry_Lc1
-func_4C154FA8_entry_L86:
+	bra	DspEffectTypeValid_Lc1
+DspEffectTypeValid_L86:
 	movhu	(0x10, sp), d0
 	mov	func_4C154FA8_entry_L86_Table, a0
 	movbu	(d0, a0), d0
 	cmp	0, d0
-	bne	func_4C154FA8_entry_L97
-	bra	func_4C154FA8_entry_Lc1
-func_4C154FA8_entry_L97:
+	bne	DspEffectTypeValid_L97
+	bra	DspEffectTypeValid_Lc1
+DspEffectTypeValid_L97:
 	clr	d0
 	movhu	d0, (0, sp)
-	bra	func_4C154FA8_entry_Lc1
-func_4C154FA8_entry_L9d:
+	bra	DspEffectTypeValid_Lc1
+DspEffectTypeValid_L9d:
 	movhu	(0x10, sp), d0
 	cmp	0x4f, d0
-	beq	func_4C154FA8_entry_La6
-	bra	func_4C154FA8_entry_Lc1
-func_4C154FA8_entry_La6:
+	beq	DspEffectTypeValid_La6
+	bra	DspEffectTypeValid_Lc1
+DspEffectTypeValid_La6:
 	clr	d0
 	movhu	d0, (0, sp)
-	bra	func_4C154FA8_entry_Lc1
-func_4C154FA8_entry_Lac:
+	bra	DspEffectTypeValid_Lc1
+DspEffectTypeValid_Lac:
 	movhu	(0x10, sp), d0
 	mov	func_4C154FA8_entry_Lac_Table, a0
 	movbu	(d0, a0), d0
 	cmp	0, d0
-	bne	func_4C154FA8_entry_Lbd
-	bra	func_4C154FA8_entry_Lc1
-func_4C154FA8_entry_Lbd:
+	bne	DspEffectTypeValid_Lbd
+	bra	DspEffectTypeValid_Lc1
+DspEffectTypeValid_Lbd:
 	clr	d0
 	movhu	d0, (0, sp)
-func_4C154FA8_entry_Lc1:
+DspEffectTypeValid_Lc1:
 	movhu	(0, sp), d0
 	ret	0, 4
 
@@ -594252,7 +594250,7 @@ func_4C1550CD_entry_L2e:
 func_4C1550CD_entry_L48:
 	movhu	(0x1c, sp), d0
 	movhu	(0x20, sp), d1
-	call	func_4C154FA8_entry, 0, 4
+	call	DspEffectTypeValid, 0, 4
 	movhu	d0, (0x12, sp)
 	movhu	(0x12, sp), d0
 	exth	d0
@@ -594339,7 +594337,7 @@ func_4C15518A_entry_L2e:
 func_4C15518A_entry_L4b:
 	movhu	(0x1c, sp), d0
 	movhu	(0x20, sp), d1
-	call	func_4C154FA8_entry, 0, 4
+	call	DspEffectTypeValid, 0, 4
 	movhu	d0, (0x12, sp)
 	movhu	(0x12, sp), d0
 	exth	d0
@@ -595061,7 +595059,7 @@ func_4C15573F_entry_L14b:
 	mov	sp, a0
 	add	0x14, a0
 	movhu	(0x1c, sp), d0
-	call	func_4C156A4C_entry, [d2], 0x34
+	call	DspRecordInterpreter, [d2], 0x34
 	movhu	d0, (0x18, sp)
 	mov	1, d0
 	movhu	d0, (0x1a, sp)
@@ -595369,7 +595367,7 @@ func_4C155AFB_entry_L3d:
 func_4C155AFB_entry_L61:
 	clr	d0
 	mov	d0, d1
-	call	func_4C15797B_entry, 0, 0x10
+	call	DspWriteDMWord, 0, 0x10
 	movhu	(0x18, sp), d0
 	inc	d0
 	movhu	d0, (0x18, sp)
@@ -595735,7 +595733,7 @@ func_4C155D9B_entry_Ld7:
 	mov	sp, a0
 	add	0x18, a0
 	movhu	(0x1c, sp), d0
-	call	func_4C156A4C_entry, [d2], 0x34
+	call	DspRecordInterpreter, [d2], 0x34
 	movhu	d0, (0x22, sp)
 	bra	func_4C155D9B_entry_L11d
 func_4C155D9B_entry_Lef:
@@ -595744,7 +595742,7 @@ func_4C155D9B_entry_Lef:
 	mov	sp, a0
 	add	0x18, a0
 	movhu	(0x1c, sp), d0
-	call	func_4C156A4C_entry, [d2], 0x34
+	call	DspRecordInterpreter, [d2], 0x34
 	movhu	d0, (0x22, sp)
 	bra	func_4C155D9B_entry_L11d
 func_4C155D9B_entry_L107:
@@ -595753,7 +595751,7 @@ func_4C155D9B_entry_L107:
 	mov	sp, a0
 	add	0x18, a0
 	movhu	(0x1c, sp), d0
-	call	func_4C156A4C_entry, [d2], 0x34
+	call	DspRecordInterpreter, [d2], 0x34
 	movhu	d0, (0x22, sp)
 func_4C155D9B_entry_L11d:
 	movhu	(0x1c, sp), d0
@@ -596902,7 +596900,7 @@ func_4C156A20:
 	movm	[d3], (sp)
 	add	-8, sp
 
-func_4C156A20_entry:
+DspStreamReadU16:
 	mov	a0, (0x14, sp)
 	mov	(a0), d0
 	mov	d0, (0, sp)
@@ -596926,17 +596924,17 @@ func_4C156A4C:
 	movm	[d2], (sp)
 	add	-0x30, sp
 
-func_4C156A4C_entry:
+DspRecordInterpreter:
 	movhu	d0, (0x40, sp)
 	mov	a0, (0x3c, sp)
 	clr	d0
 	movhu	d0, (0x18, sp)
 	mov	(a0), d0
 	mov	d0, (0x14, sp)
-func_4C156A4C_entry_Lc:
+DspRecordInterpreter_Lc:
 	mov	sp, a0
 	add	0x14, a0
-	call	func_4C156A20_entry, [d3], 0xc
+	call	DspStreamReadU16, [d3], 0xc
 	movhu	d0, (0x1a, sp)
 	mov	(0x14, sp), a0
 	movbu	(a0), d0
@@ -596954,32 +596952,32 @@ func_4C156A4C_entry_Lc:
 	mov	d0, (0x14, sp)
 	mov	sp, a0
 	add	0x14, a0
-	call	func_4C156A20_entry, [d3], 0xc
+	call	DspStreamReadU16, [d3], 0xc
 	movhu	d0, (0x20, sp)
 	mov	sp, a0
 	add	0x14, a0
-	call	func_4C156A20_entry, [d3], 0xc
+	call	DspStreamReadU16, [d3], 0xc
 	movhu	d0, (0x22, sp)
 	mov	sp, a0
 	add	0x14, a0
-	call	func_4C156A20_entry, [d3], 0xc
+	call	DspStreamReadU16, [d3], 0xc
 	movhu	d0, (0x24, sp)
 	mov	sp, a0
 	add	0x14, a0
-	call	func_4C156A20_entry, [d3], 0xc
+	call	DspStreamReadU16, [d3], 0xc
 	movhu	d0, (0x26, sp)
 	movhu	(0x26, sp), d0
 	exth	d0
 	cmp	0, d0
-	bne	func_4C156A4C_entry_L68
-	jmp	func_4C156A4C_entry_L1d1
-func_4C156A4C_entry_L68:
+	bne	DspRecordInterpreter_L68
+	jmp	DspRecordInterpreter_L1d1
+DspRecordInterpreter_L68:
 	movhu	(0x1c, sp), d0
 	exth	d0
 	cmp	0x80, d0
-	beq	func_4C156A4C_entry_L74
-	bra	func_4C156A4C_entry_Lc1
-func_4C156A4C_entry_L74:
+	beq	DspRecordInterpreter_L74
+	bra	DspRecordInterpreter_Lc1
+DspRecordInterpreter_L74:
 	movhu	(0x26, sp), d0
 	exth	d0
 	mov	6, d1
@@ -596988,16 +596986,16 @@ func_4C156A4C_entry_L74:
 	movhu	(0x1e, sp), d0
 	exth	d0
 	cmp	0, d0
-	bne	func_4C156A4C_entry_L8e
-	bra	func_4C156A4C_entry_L94
-func_4C156A4C_entry_L8e:
+	bne	DspRecordInterpreter_L8e
+	bra	DspRecordInterpreter_L94
+DspRecordInterpreter_L8e:
 	clr	d0
 	movhu	d0, (0x28, sp)
-	bra	func_4C156A4C_entry_L99
-func_4C156A4C_entry_L94:
+	bra	DspRecordInterpreter_L99
+DspRecordInterpreter_L94:
 	mov	1, d0
 	movhu	d0, (0x28, sp)
-func_4C156A4C_entry_L99:
+DspRecordInterpreter_L99:
 	movhu	(0x26, sp), d1
 	exth	d1
 	movhu	(0x28, sp), d0
@@ -597015,8 +597013,8 @@ func_4C156A4C_entry_L99:
 	exthu	d1
 	call	func_4C156921_entry, 0, 0x14
 	call	func_4C1568FC_entry, 0, 0x14
-	bra	func_4C156A4C_entry_L132
-func_4C156A4C_entry_Lc1:
+	bra	DspRecordInterpreter_L132
+DspRecordInterpreter_Lc1:
 	movhu	(0x26, sp), d0
 	exth	d0
 	mov	5, d1
@@ -597025,21 +597023,21 @@ func_4C156A4C_entry_Lc1:
 	movhu	(0x1e, sp), d0
 	exth	d0
 	cmp	0, d0
-	bne	func_4C156A4C_entry_Ldb
-	bra	func_4C156A4C_entry_Le1
-func_4C156A4C_entry_Ldb:
+	bne	DspRecordInterpreter_Ldb
+	bra	DspRecordInterpreter_Le1
+DspRecordInterpreter_Ldb:
 	clr	d0
 	movhu	d0, (0x28, sp)
-	bra	func_4C156A4C_entry_Le6
-func_4C156A4C_entry_Le1:
+	bra	DspRecordInterpreter_Le6
+DspRecordInterpreter_Le1:
 	mov	1, d0
 	movhu	d0, (0x28, sp)
-func_4C156A4C_entry_Le6:
+DspRecordInterpreter_Le6:
 	movhu	(0x22, sp), d0
 	cmp	0x9800, d0
-	beq	func_4C156A4C_entry_Lf3
-	bra	func_4C156A4C_entry_L105
-func_4C156A4C_entry_Lf3:
+	beq	DspRecordInterpreter_Lf3
+	bra	DspRecordInterpreter_L105
+DspRecordInterpreter_Lf3:
 	movhu	(0x22, sp), d1
 	movhu	(0x40, sp), d0
 	mov	0x50, d2
@@ -597048,8 +597046,8 @@ func_4C156A4C_entry_Lf3:
 	mul	d2, d0
 	add	d0, d1
 	movhu	d1, (0x22, sp)
-	bra	func_4C156A4C_entry_L115
-func_4C156A4C_entry_L105:
+	bra	DspRecordInterpreter_L115
+DspRecordInterpreter_L105:
 	movhu	(0x22, sp), d1
 	movhu	(0x40, sp), d0
 	mov	0x4d, d2
@@ -597058,7 +597056,7 @@ func_4C156A4C_entry_L105:
 	mul	d2, d0
 	add	d0, d1
 	movhu	d1, (0x22, sp)
-func_4C156A4C_entry_L115:
+DspRecordInterpreter_L115:
 	movhu	(0x26, sp), d1
 	exth	d1
 	movhu	(0x28, sp), d0
@@ -597071,34 +597069,34 @@ func_4C156A4C_entry_L115:
 	movhu	(0x22, sp), d1
 	call	func_4C156921_entry, 0, 0x14
 	call	func_4C15690F_entry, 0, 0x14
-func_4C156A4C_entry_L132:
+DspRecordInterpreter_L132:
 	mov	4, d0
 	call	DspSetIndex_entry, 0, 0x10
-	bra	func_4C156A4C_entry_L1b5
-func_4C156A4C_entry_L13b:
+	bra	DspRecordInterpreter_L1b5
+DspRecordInterpreter_L13b:
 	movhu	(0x1c, sp), d0
 	exth	d0
 	cmp	0x80, d0
-	bne	func_4C156A4C_entry_L147
-	bra	func_4C156A4C_entry_L14f
-func_4C156A4C_entry_L147:
+	bne	DspRecordInterpreter_L147
+	bra	DspRecordInterpreter_L14f
+DspRecordInterpreter_L147:
 	cmp	0, d0
-	bne	func_4C156A4C_entry_L14d
-	bra	func_4C156A4C_entry_L185
-func_4C156A4C_entry_L14d:
-	bra	func_4C156A4C_entry_L1b5
-func_4C156A4C_entry_L14f:
+	bne	DspRecordInterpreter_L14d
+	bra	DspRecordInterpreter_L185
+DspRecordInterpreter_L14d:
+	bra	DspRecordInterpreter_L1b5
+DspRecordInterpreter_L14f:
 	mov	sp, a0
 	add	0x14, a0
-	call	func_4C156A20_entry, [d3], 0xc
+	call	DspStreamReadU16, [d3], 0xc
 	movhu	d0, (0x2a, sp)
 	mov	sp, a0
 	add	0x14, a0
-	call	func_4C156A20_entry, [d3], 0xc
+	call	DspStreamReadU16, [d3], 0xc
 	movhu	d0, (0x2c, sp)
 	mov	sp, a0
 	add	0x14, a0
-	call	func_4C156A20_entry, [d3], 0xc
+	call	DspStreamReadU16, [d3], 0xc
 	movhu	d0, (0x2e, sp)
 	movhu	(0x2e, sp), d0
 	exthu	d0
@@ -597107,16 +597105,16 @@ func_4C156A4C_entry_L14f:
 	exthu	d0
 	movhu	(0x2c, sp), d1
 	exthu	d1
-	call	func_4C157919_entry, 0, 0x10
-	bra	func_4C156A4C_entry_L1b5
-func_4C156A4C_entry_L185:
+	call	DspWritePMWord, 0, 0x10
+	bra	DspRecordInterpreter_L1b5
+DspRecordInterpreter_L185:
 	mov	sp, a0
 	add	0x14, a0
-	call	func_4C156A20_entry, [d3], 0xc
+	call	DspStreamReadU16, [d3], 0xc
 	movhu	d0, (0x2c, sp)
 	mov	sp, a0
 	add	0x14, a0
-	call	func_4C156A20_entry, [d3], 0xc
+	call	DspStreamReadU16, [d3], 0xc
 	movhu	d0, (0x2e, sp)
 	mov	(0x14, sp), a0
 	movbu	(a0), d0
@@ -597129,8 +597127,8 @@ func_4C156A4C_entry_L185:
 	exthu	d0
 	movhu	(0x2e, sp), d1
 	exthu	d1
-	call	func_4C15797B_entry, 0, 0x10
-func_4C156A4C_entry_L1b5:
+	call	DspWriteDMWord, 0, 0x10
+DspRecordInterpreter_L1b5:
 	movhu	(0x26, sp), d1
 	movhu	(0x26, sp), d0
 	exth	d0
@@ -597138,12 +597136,12 @@ func_4C156A4C_entry_L1b5:
 	movhu	d0, (0x26, sp)
 	exth	d1
 	cmp	0, d1
-	ble	func_4C156A4C_entry_L1c9
-	jmp	func_4C156A4C_entry_L13b
-func_4C156A4C_entry_L1c9:
+	ble	DspRecordInterpreter_L1c9
+	jmp	DspRecordInterpreter_L13b
+DspRecordInterpreter_L1c9:
 	call	func_4C156955_entry, 0, 0x14
-	jmp	func_4C156A4C_entry_Lc
-func_4C156A4C_entry_L1d1:
+	jmp	DspRecordInterpreter_Lc
+DspRecordInterpreter_L1d1:
 	mov	(0x14, sp), d0
 	mov	(0x3c, sp), a0
 	mov	d0, (a0)
@@ -598520,7 +598518,7 @@ DspPortReadSlow_entry:
 func_4C157857:
 	add	-0x1c, sp
 
-func_4C157857_entry:
+DspFullReinit:
 	bset	0x80, (P04)
 	mov	0xa, d0
 	call	dly_tsk_entry, [d2,a2], 0x18
@@ -598531,8 +598529,8 @@ func_4C157857_entry:
 	call	func_4C15760F, 0, 0
 	clr	d0
 	movbu	d0, (0x18, sp)
-	bra	func_4C157857_entry_L79
-func_4C157857_entry_L32:
+	bra	DspFullReinit_L79
+DspFullReinit_L32:
 	mov	0x00009191, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -598551,25 +598549,25 @@ func_4C157857_entry_L32:
 	mov	d0, (0x14, sp)
 	mov	(0x14, sp), d0
 	cmp	0x20, d0
-	beq	func_4C157857_entry_L69
-	bra	func_4C157857_entry_L72
-func_4C157857_entry_L69:
+	beq	DspFullReinit_L69
+	bra	DspFullReinit_L72
+DspFullReinit_L69:
 	clr	d0
 	movbu	d0, (func_4C154BC3_Var)
-	bra	func_4C157857_entry_L8a
-func_4C157857_entry_L72:
+	bra	DspFullReinit_L8a
+DspFullReinit_L72:
 	movbu	(0x18, sp), d0
 	inc	d0
 	movbu	d0, (0x18, sp)
-func_4C157857_entry_L79:
+DspFullReinit_L79:
 	movbu	(0x18, sp), d0
 	cmp	0xa, d0
-	bgt	func_4C157857_entry_L82
-	bra	func_4C157857_entry_L32
-func_4C157857_entry_L82:
+	bgt	DspFullReinit_L82
+	bra	DspFullReinit_L32
+DspFullReinit_L82:
 	mov	-1, d0
 	movbu	d0, (func_4C154BC3_Var)
-func_4C157857_entry_L8a:
+DspFullReinit_L8a:
 	ret	0, 0x1c
 
 DspSetIndex:
@@ -598599,7 +598597,7 @@ DspSetIndexSlow_entry:
 func_4C157919:
 	add	-0x10, sp
 
-func_4C157919_entry:
+DspWritePMWord:
 	movhu	d0, (0x18, sp)
 	movhu	d1, (0x1c, sp)
 	mov	0x9c4, d0
@@ -598636,7 +598634,7 @@ DspIndexWritePMWord_entry:
 func_4C15797B:
 	add	-0x10, sp
 
-func_4C15797B_entry:
+DspWriteDMWord:
 	movhu	d0, (0x18, sp)
 	movhu	d1, (0x1c, sp)
 	mov	0x9c4, d0
@@ -598824,7 +598822,7 @@ func_4C157B41_entry:
 	call	DspSetIndex_entry, 0, 0x10
 	movhu	(0x1c, sp), d0
 	movhu	(0x20, sp), d1
-	call	func_4C15797B_entry, 0, 0x10
+	call	DspWriteDMWord, 0, 0x10
 	ret	0, 0x10
 
 func_4C157B60:
@@ -598896,7 +598894,7 @@ DspBootDefaultEffects:
 DspBootDefaultEffects_Lf:
 	mov	1, d0
 	movbu	d0, (DspBootDefaultEffects_Table)
-	call	func_4C154BC3_entry, [d2], 0x30
+	call	DspManagerInit, [d2], 0x30
 	bra	DspBootDefaultEffects_L98
 DspBootDefaultEffects_L1e:
 	movbu	(DspBootDefaultEffects_Table), d0
@@ -598915,7 +598913,7 @@ DspBootDefaultEffects_L2a:
 	call	func_4C154A0D, 0, 0
 	movhu	(0x10, sp), d0
 	movhu	(0x12, sp), d1
-	call	func_4C1546D3_entry, 0, 0x20
+	call	DspEffectSelect, 0, 0x20
 	call	func_4C15471A, 0, 0
 	movhu	(0x10, sp), d0
 	call	func_4C154A10, 0, 0
@@ -598929,7 +598927,7 @@ DspBootDefaultEffects_L2a:
 	call	func_4C154A0D, 0, 0
 	movhu	(0x10, sp), d0
 	movhu	(0x12, sp), d1
-	call	func_4C1546D3_entry, 0, 0x20
+	call	DspEffectSelect, 0, 0x20
 	call	func_4C15471A, 0, 0
 	movhu	(0x10, sp), d0
 	call	func_4C154A10, 0, 0
@@ -598963,7 +598961,7 @@ DspBootRunTestRecord_entry:
 	mov	sp, a0
 	add	0x20, a0
 	clr	d0
-	call	func_4C156A4C_entry, [d2], 0x34
+	call	DspRecordInterpreter, [d2], 0x34
 	movhu	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x10, sp)
@@ -598993,7 +598991,7 @@ DspBootProbe_entry:
 	mov	sp, a0
 	add	0x10, a0
 	clr	d0
-	call	func_4C156A4C_entry, [d2], 0x34
+	call	DspRecordInterpreter, [d2], 0x34
 	call	func_4C1575B9, 0, 0
 	mov	DspRecord_4C387064, a0
 	call	DspBootRunTestRecord_entry, 0, 0x18
@@ -599027,26 +599025,26 @@ DspBootProbe_entry_L5e:
 	beq	DspBootProbe_entry_L76
 	bra	DspBootProbe_entry_L99
 DspBootProbe_entry_L76:
-	call	func_4C157857_entry, 0, 0x1c
+	call	DspFullReinit, 0, 0x1c
 	call	func_4C1568CC_entry, 0, 0x18
 	mov	DspRecord_4C387B48, d0
 	mov	d0, (0x10, sp)
 	mov	sp, a0
 	add	0x10, a0
 	clr	d0
-	call	func_4C156A4C_entry, [d2], 0x34
+	call	DspRecordInterpreter, [d2], 0x34
 	call	func_4C1575AE, 0, 0
 	clr	d0
 	bra	DspBootProbe_entry_Lbb
 DspBootProbe_entry_L99:
-	call	func_4C157857_entry, 0, 0x1c
+	call	DspFullReinit, 0, 0x1c
 	call	func_4C1568CC_entry, 0, 0x18
 	mov	DspRecord_4C387B48, d0
 	mov	d0, (0x10, sp)
 	mov	sp, a0
 	add	0x10, a0
 	clr	d0
-	call	func_4C156A4C_entry, [d2], 0x34
+	call	DspRecordInterpreter, [d2], 0x34
 	call	func_4C1575AE, 0, 0
 	mov	-1, d0
 DspBootProbe_entry_Lbb:
@@ -605722,7 +605720,7 @@ func_4C157DE2_entry_L4b5b:
 func_4C15C949:
 	movm	[d2,d3], (sp)
 	add	-0x10, sp
-	call	func_4C154BC3_entry, [d2], 0x30
+	call	DspManagerInit, [d2], 0x30
 	clr	d3
 	clr	d2
 func_4C15C949_Lc:
@@ -605736,7 +605734,7 @@ func_4C15C949_Lc:
 	blt	func_4C15C949_Lc
 	mov	8, d0
 	mov	0x4f, d1
-	call	func_4C1546D3_entry, 0, 0x20
+	call	DspEffectSelect, 0, 0x20
 	call	func_4C15471A, 0, 0
 	ret	[d2,d3], 0x18
 loc_4C15C980:
@@ -606146,7 +606144,7 @@ loc_4C15CCEA:
 	mov	d0, d1
 	mov	(0x24, sp), d0
 	exthu	d1
-	call	func_4C154FA8_entry, 0, 4
+	call	DspEffectTypeValid, 0, 4
 	exth	d0
 	cmp	0, d0
 	bge	SndUnitSettingApplyFull_entry_L68
@@ -606171,7 +606169,7 @@ SndUnitSettingApplyFull_entry_L68:
 	call	SndCmdEmitUnitCc_entry, [d2,d3,a2], 0x24
 	mov	(0x24, sp), d0
 	mov	(0x34, sp), d1
-	call	func_4C1546D3_entry, 0, 0x20
+	call	DspEffectSelect, 0, 0x20
 	call	func_4C15471A, 0, 0
 	bra	SndUnitSettingApplyFull_entry_Ldb
 SndUnitSettingApplyFull_entry_La4:
@@ -624423,13 +624421,13 @@ func_4C167263:
 	movm	[d2,a2], (sp)
 	add	-8, sp
 
-func_4C167263_entry:
+FlashWordProgram:
 	mov	a0, a2
 	mov	d0, d2
 	mov	d2, d1
 	exthu	d1
 	cmp	0xffff, d1
-	beq	func_4C167263_entry_L36
+	beq	FlashWordProgram_L36
 	call	loc_cpu_entry, 0, 0x10
 	mov	0xaa, d0
 	movhu	d0, (0x9680aaaa)
@@ -624439,7 +624437,7 @@ func_4C167263_entry:
 	movhu	d0, (0x9680aaaa)
 	movhu	d2, (a2)
 	call	unl_cpu, 0, 0
-func_4C167263_entry_L36:
+FlashWordProgram_L36:
 	ret	[d2,a2], 0x10
 
 FlashSectorErase:
@@ -624542,7 +624540,7 @@ func_4C167343_entry:
 func_4C167343_entry_L46:
 	movhu	(a3), d0
 	mov	a2, a0
-	call	func_4C167263_entry, [d2,a2], 0x10
+	call	FlashWordProgram, [d2,a2], 0x10
 	add	2, a3
 	add	2, a2
 	mov	(0x10, sp), d0
@@ -624731,7 +624729,7 @@ func_4C167539:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x40, sp
 
-func_4C167539_entry:
+FlashProgram128Words:
 	mov	a1, (0x5c, sp)
 	mov	d0, (0x60, sp)
 	mov	a0, a2
@@ -624739,10 +624737,10 @@ func_4C167539_entry:
 	mov	d0, d1
 	exth	d1
 	cmp	0, d1
-	bge	func_4C167539_entry_L14
+	bge	FlashProgram128Words_L14
 	exth	d0
 	ret	[d2,d3,a2,a3], 0x50
-func_4C167539_entry_L14:
+FlashProgram128Words_L14:
 	movhu	d0, (0x34, sp)
 	movhu	(0x34, sp), d0
 	sub	0x96800000, a2
@@ -624759,9 +624757,9 @@ func_4C167539_entry_L14:
 	movhu	(4, a0), d0
 	mov	0xffffffff, a2
 	cmp	d2, d0
-	bgt	func_4C167539_entry_L49
-	jmp	func_4C167539_entry_Ld5
-func_4C167539_entry_L49:
+	bgt	FlashProgram128Words_L49
+	jmp	FlashProgram128Words_Ld5
+FlashProgram128Words_L49:
 	mov	(0x1c, sp), d0
 	asl	5, d0
 	add	func_4C1674C2_Table, d0
@@ -624799,43 +624797,43 @@ func_4C167539_entry_L49:
 	mov	(4, a1), d3
 	mov	d2, a1
 	cmp	d1, d0
-	bhi	func_4C167539_entry_Lb2
+	bhi	FlashProgram128Words_Lb2
 	mov	(0x20, sp), d2
 	mov	d3, d1
 	add	d0, d1
 	mov	a1, (0x3c, sp)
 	cmp	d1, d2
 	mov	a1, d2
-	bcc	func_4C167539_entry_Lb2
+	bcc	FlashProgram128Words_Lb2
 	movhu	d2, (0x30, sp)
-func_4C167539_entry_Lb2:
+FlashProgram128Words_Lb2:
 	cmp	a0, d0
-	bcc	func_4C167539_entry_Lc9
+	bcc	FlashProgram128Words_Lc9
 	add	d3, d0
 	cmp	d0, a0
-	bhi	func_4C167539_entry_Lc9
+	bhi	FlashProgram128Words_Lc9
 	movhu	d2, (0x32, sp)
 	movhu	(0x30, sp), d1
 	movhu	(0x32, sp), d0
 	cmp	d0, d1
-	bgt	func_4C167539_entry_Lc9
+	bgt	FlashProgram128Words_Lc9
 	mov	0, a2
-func_4C167539_entry_Lc9:
+FlashProgram128Words_Lc9:
 	inc	d2
 	exthu	d2
 	cmp	a3, d2
-	bge	func_4C167539_entry_Ld5
+	bge	FlashProgram128Words_Ld5
 	mov	a2, d0
 	exth	d0
 	cmp	0, d0
 	llt
-func_4C167539_entry_Ld5:
+FlashProgram128Words_Ld5:
 	mov	a2, d0
 	exth	d0
 	cmp	0, d0
-	bge	func_4C167539_entry_Ldf
+	bge	FlashProgram128Words_Ldf
 	ret	[d2,d3,a2,a3], 0x50
-func_4C167539_entry_Ldf:
+FlashProgram128Words_Ldf:
 	movhu	(0x32, sp), d0
 	movhu	(0x30, sp), d1
 	mov	(0x5c, sp), d3
@@ -624844,7 +624842,7 @@ func_4C167539_entry_Ldf:
 	exthu	d2
 	mov	d0, (0x24, sp)
 	cmp	d0, d2
-	bgt	func_4C167539_entry_L163
+	bgt	FlashProgram128Words_L163
 	mov	(0x1c, sp), d0
 	asl	5, d0
 	add	func_4C1674C2_Table, d0
@@ -624857,7 +624855,7 @@ func_4C167539_entry_Ldf:
 	mov	d0, (0x28, sp)
 	movhu	(0x34, sp), d0
 	mov	d0, (0x1c, sp)
-func_4C167539_entry_L113:
+FlashProgram128Words_L113:
 	mov	(0x2c, sp), a0
 	exthu	d1
 	mov	(a0), a0
@@ -624873,20 +624871,20 @@ func_4C167539_entry_L113:
 	mov	(0x20, sp), a0
 	sub	d0, d1
 	cmp	d0, a0
-	bcc	func_4C167539_entry_L135
+	bcc	FlashProgram128Words_L135
 	clr	d1
-func_4C167539_entry_L135:
+FlashProgram128Words_L135:
 	mov	a3, d0
 	add	d1, d0
 	cmp	a2, d0
-	bhi	func_4C167539_entry_L141
+	bhi	FlashProgram128Words_L141
 	mov	a3, a2
 	sub	a2, a3
-	bra	func_4C167539_entry_L145
-func_4C167539_entry_L141:
+	bra	FlashProgram128Words_L145
+FlashProgram128Words_L141:
 	sub	d1, a2
 	sub	a2, a3
-func_4C167539_entry_L145:
+FlashProgram128Words_L145:
 	mov	d1, (0x10, sp)
 	mov	a2, (0x18, sp)
 	mov	(0x1c, sp), d0
@@ -624899,18 +624897,18 @@ func_4C167539_entry_L145:
 	mov	d2, d1
 	exthu	d2
 	cmp	a0, d2
-	bgt	func_4C167539_entry_L163
+	bgt	FlashProgram128Words_L163
 	exth	d0
 	cmp	0, d0
-	bge	func_4C167539_entry_L113
-func_4C167539_entry_L163:
+	bge	FlashProgram128Words_L113
+FlashProgram128Words_L163:
 	mov	(0x60, sp), d1
 	mov	-1, d0
 	cmp	d1, a3
-	beq	func_4C167539_entry_L16e
+	beq	FlashProgram128Words_L16e
 	mov	d1, d0
 	sub	a3, d0
-func_4C167539_entry_L16e:
+FlashProgram128Words_L16e:
 	ret	[d2,d3,a2,a3], 0x50
 
 func_4C1676AF:
@@ -624922,7 +624920,7 @@ func_4C1676AF_Ld:
 	mov	a2, a0
 	mov	(TechnicsPadsResourceInit_Var), a1
 	mov	0x00010000, d0
-	call	func_4C167539_entry, [d2,d3,a2,a3], 0x50
+	call	FlashProgram128Words, [d2,d3,a2,a3], 0x50
 	add	0x10000, a2
 	add	-1, d2
 	exthu	d2
@@ -634247,7 +634245,7 @@ func_4C16C572_entry_L5f:
 	mov	0x96820000, a0
 	mov	0x5037a000, a1
 	mov	0x6000, d0
-	call	func_4C167539_entry, [d2,d3,a2,a3], 0x50
+	call	FlashProgram128Words, [d2,d3,a2,a3], 0x50
 	cmp	0, d0
 	bge	func_4C16C572_entry_L93
 	mov	-1, d0
@@ -636392,7 +636390,7 @@ func_4C16D5C6_entry_L1c8:
 	mov	(0x60, sp), a1
 	mov	(a1), d0
 	mov	0x5031c000, a1
-	call	func_4C167539_entry, [d2,d3,a2,a3], 0x50
+	call	FlashProgram128Words, [d2,d3,a2,a3], 0x50
 	cmp	0, d0
 	bge	func_4C16D5C6_entry_L2bc
 	mov	-6, d0
@@ -636404,7 +636402,7 @@ func_4C16D5C6_entry_L29d:
 	mov	(0x60, sp), a1
 	mov	(a1), d0
 	mov	0x502b8000, a1
-	call	func_4C167539_entry, [d2,d3,a2,a3], 0x50
+	call	FlashProgram128Words, [d2,d3,a2,a3], 0x50
 	cmp	0, d0
 	bge	func_4C16D5C6_entry_L2bc
 	mov	-6, d0
@@ -636456,7 +636454,7 @@ func_4C16D892_entry_L37:
 	mov	0x96820000, a0
 	mov	0x5037a000, a1
 	mov	0x6000, d0
-	call	func_4C167539_entry, [d2,d3,a2,a3], 0x50
+	call	FlashProgram128Words, [d2,d3,a2,a3], 0x50
 	cmp	d3, d0
 	bge	func_4C16D892_entry_L50
 	mov	-6, d3
@@ -636728,7 +636726,7 @@ func_4C16DABB_entry_L74:
 	mov	d3, a0
 	mov	(a0), d0
 	mov	d1, a0
-	call	func_4C167539_entry, [d2,d3,a2,a3], 0x50
+	call	FlashProgram128Words, [d2,d3,a2,a3], 0x50
 	cmp	0, d0
 	bge	func_4C16DABB_entry_La9
 	mov	-6, d0
@@ -636742,7 +636740,7 @@ func_4C16DABB_entry_L8d:
 	mov	(a0), d1
 	mov	d0, a0
 	mov	d1, d0
-	call	func_4C167539_entry, [d2,d3,a2,a3], 0x50
+	call	FlashProgram128Words, [d2,d3,a2,a3], 0x50
 	cmp	0, d0
 	bge	func_4C16DABB_entry_La9
 	mov	-6, d0
@@ -636803,7 +636801,7 @@ func_4C16DB7D_entry:
 	call	func_4C16C0E2_entry, 0, 0xc
 	mov	a2, a1
 	mov	0x100, d0
-	call	func_4C167539_entry, [d2,d3,a2,a3], 0x50
+	call	FlashProgram128Words, [d2,d3,a2,a3], 0x50
 	ret	[d2,a2,a3], 0x30
 
 func_4C16DBEB:
@@ -636829,7 +636827,7 @@ func_4C16DBEB_entry:
 	add	0x2c, a0
 	mov	sp, a1
 	add	0x14, a1
-	call	func_4C004B18_entry, [d2,d3,a2,a3], 0x20
+	call	JpegEngine, [d2,d3,a2,a3], 0x20
 	mov	d0, (0x10, sp)
 	cmp	0, d0
 	blt	func_4C16DBEB_entry_L4b

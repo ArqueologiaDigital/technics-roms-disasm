@@ -600,12 +600,11 @@ P_10SECRET_SQT_p2:
 	sq_beat
 	sq_end
 ; after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	0, 51	; data bytes of an event cut at the start
-	k5_note	0x98, 71, 93, 24, 0, 51
-	k5_note	0x98, 64, 32, 22, 0, 74
-	k5_note	0x98, 67, 93, 25, 0, 74
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"10SECRET.sqt.p2.ref", 0x28d, 5
+	.byte	0	; data bytes of an event cut at the start
+	sq_note	51, 8, 71, 93, 24, 0
+	sq_note	51, 8, 64, 32, 22, 0
+	sq_note	74, 8, 67, 93, 25, 0
+	sq_note	74, 8, 59, 32, 23, 0
 	sq_beat
 	sq_note	2, 8, 69, 92, 1, 1
 	sq_beat
@@ -1472,8 +1471,7 @@ P_10SECRET_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"10SECRET.sqt.p2.ref", 0x9bb, 5
+	.byte	81, 74, 79, 22, 6	; data bytes of an event cut at the start
 	k5_note	0x98, 90, 78, 79, 16, 6
 	sq_beat
 	k5_note	0x98, 2, 81, 79, 0, 6

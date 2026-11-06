@@ -636,7 +636,7 @@ func_50134900_Table:	# 128 x u8, 0..26; read by func_50134900_entry : `movbu	(d0
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [80]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [96]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [112]
-func_50134A89_Table:	# 28 x u8, 0..255; read by func_50134A89 : `movbu	(d1, a0), d1`; func_50134B12_entry : `movbu	(d1, a0), d2` ...
+func_50134A89_Table:	# 28 x u8, 0..255; read by TgPartClassRegCollect : `movbu	(d1, a0), d2`; func_50134A89 : `movbu	(d1, a0), d1` ...
 	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 16, 17, 32, 64	# [0]
 	tab_u8	65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 255	# [16]
 TgElemRequestFlags_Table:	# 8 x u8, 0..7; read by TgElemRequestFlags_entry : `movbu	(d0, a0), d0`; TgElemRequestFlags_entry : `movbu	(d1, a0), d0`
@@ -8836,7 +8836,7 @@ MemStyleVarRecInit_Table:	# 20 x u8, 0..1; read by MemStyleVarRecInit_entry : `m
 	tab_u8	0, 1, 0, 1	# [16]
 func_50173924_Table:	# 8 x u32, 0..7; read by func_50173924 0x50173924: `mov	(-0x4c, a0), d0`
 	tab_u32	2, 3, 4, 5, 6, 1, 0, 7
-func_50173949_Table:	# 8 x u32, 19..26; read by func_50173949 0x50173949: `mov	(d0, a0), d0`
+func_50173949_Table:	# 8 x u32, 19..26; read by StylePartToTgPart 0x50173949: `mov	(d0, a0), d0`
 	tab_u32	25, 24, 19, 20, 21, 22, 23, 26
 
 func_50173BF4_entry_L54_Records:	# 32 x REC_func_50173BF4_entry_L54_Records (8 bytes each); read by func_50173BF4_entry_L54 0x50173C4D `mov (a0), d0`; func_50173BF4_entry_L7f 0x50173C78 `mov (a0), d0`; func_50173BF4_entry_L82 0x50173C7B `mov (4, a0), a0`
