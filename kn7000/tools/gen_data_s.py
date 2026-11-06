@@ -2811,8 +2811,11 @@ class Gen:
                 f"\t# rhythm id, TECHNI-CHORD on, VARIATION {(st[4] >> 4) + 1}, tempo",
                 f"\tPM_SET77\t{hx(r[0x77:0x7A])}",
                 f"\tPM_FX\t{hx(r[0x7A:0x88])}",
-                f"\tPM_SET88\t{hx(r[0x88:0x8C])}",
-                f"\tPM_SET8C\t{hx(r[0x8C:0x8E])}"] + (
+                # (N-4b34dd8b, lane mn10300-data3) the levels and numbers in decimal, the masks and the 0xFF
+                # "none" in hex: tremolo mask, TECHNI-CHORD orchestrator part, type 0..13, sequencer volume;
+                # pad volume, pad bank (src/include/panel_memory.inc)
+                f"\tPM_SET88\t{r[0x88]:#04x}, {r[0x89]:#04x}, {r[0x8A]}, {r[0x8B]}",
+                f"\tPM_SET8C\t{r[0x8C]}, {r[0x8D]}"] + (
                 ["\t.space\t2, 0xff"] if len(r) == 0x90 else
                 [f"\t.byte\t{r[0x8E]:#04x}\t# +0x8E (no field of the KN7000 writer func_4C02A0C4)"]
                 + [f"\tPM_PART_TAIL\t{hx(r[0x8F + 3 * j:0x92 + 3 * j])}\t# part {j}" for j in range(4)]

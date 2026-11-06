@@ -90,11 +90,17 @@
 .endm
 # +0x88..+0x8B (table 0x4858E235, source +0x700 / +0x6B6 = tag 0x44): tremolo mask 0x04 (parameter
 # 0x008030, AcTremoloProc), tc_orchestrator (+3, 0x008082, TechniChordOrchestratorPart),
-# techni_chord mask 0x0F (+4, 0x008081 TECHNI-CHORD type, AcTechniChordProc), m008008 (+8: 0x008008
-# bits 0-6, 0x008009 bit 7; meaning not traced: KN6000 func_4C114253 sets 0x008008 from latched panel
-# control 0xC6, as func_4C114234 sets 0x008006, and the KN5000's tag 0x70 has no byte +8).
-.macro PM_SET88 tremolo, tc_orchestrator, techni_chord, m008008
-	.byte	\tremolo, \tc_orchestrator, \techni_chord, \m008008
+# techni_chord mask 0x0F (+4, 0x008081 TECHNI-CHORD type, AcTechniChordProc), seq_volume (+8: 0x008008
+# bits 0-6, 0x008009 bit 7): the sequencer's volume, 0..127.  941 func_48454E3A (KN6000 func_4C114272)
+# sets 0x008008 and the accompaniment's 0x008006 from the APC/SEQUENCER VOLUME slider, PanelCtrlValueGet
+# of control 0xC2 (KN6000 0xC6): while the sequencer plays or in DEMO 0x008008 follows the slider and
+# 0x008006 is 0x7F, otherwise the other way round.  The control is the slider: index 26 of
+# PanelCtrlValueGet_Table (bank 3, input 2) is the byte PanelCtrlLatch32 latches from wire 0xD2, the
+# CPL panel CPU's AD2 input, which the KN7000 service manual wires to VR1102 "APC/SEQUENCER"; on the
+# KN6000 (index 30, AD6) the SX-KN6500 service manual's VR1 "APC/SEQUENCER VOLUME".  The KN5000's tag
+# 0x70 has no byte +8.  (kn7000/notes/mn10300-data3/README.md, N-4b34dd8b)
+.macro PM_SET88 tremolo, tc_orchestrator, techni_chord, seq_volume
+	.byte	\tremolo, \tc_orchestrator, \techni_chord, \seq_volume
 .endm
 # +0x8C..+0x8D (table 0x4858E241, source +0x716 / +0x6C6 = tag 0x46): pad_volume (0x00E001 bits 0-6,
 # 0x00E002 bit 7), pad_bank (0x00E005, AcPadBankProc); pad_bank is then passed through func_484417B9
@@ -274,18 +280,19 @@
 #   +0x05 m006000           0x006000, 1..16
 #   +0x06 m006001           0x006001, 1..16
 #   +0x07 m006004           bits 0-2 0x006004 / 0x006005 / 0x006006
-#   +0x08 m008008           bits 0-6 0x008008, bit 7 0x008009
+#   +0x08 seq_volume        bits 0-6 0x008008 the sequencer volume (the APC/SEQUENCER VOLUME slider while the
+#                           sequencer plays: 941 func_48454E3A), bit 7 0x008009
 #   +0x0C apc_rev1          KN7000 only: 0x00E030 APC reverb DEPTH of row 1, bit 7 0x00E038 (ApcRevFunc, grid
 #                           "PART | DEPTH" ACCOMP1..)
 #   +0x0D apc_rev2          KN7000 only: 0x00E031 APC reverb DEPTH of row 2, bit 7 0x00E039 (ApcRevFunc, grid
 #                           "PART | DEPTH" ACCOMP1..)
-.macro PMR_44_14 split_mode, split_point, transpose, tc_orchestrator, techni_chord, m006000, m006001, m006004, m008008, x09, x0a, x0b, apc_rev1, apc_rev2
+.macro PMR_44_14 split_mode, split_point, transpose, tc_orchestrator, techni_chord, m006000, m006001, m006004, seq_volume, x09, x0a, x0b, apc_rev1, apc_rev2
 	.byte	0x44, 14
-	.byte	\split_mode, \split_point, \transpose, \tc_orchestrator, \techni_chord, \m006000, \m006001, \m006004, \m008008, \x09, \x0a, \x0b, \apc_rev1, \apc_rev2
+	.byte	\split_mode, \split_point, \transpose, \tc_orchestrator, \techni_chord, \m006000, \m006001, \m006004, \seq_volume, \x09, \x0a, \x0b, \apc_rev1, \apc_rev2
 .endm
-.macro PMR_44_20 split_mode, split_point, transpose, tc_orchestrator, techni_chord, m006000, m006001, m006004, m008008, x09, x0a, x0b, apc_rev1, apc_rev2, apc_rev3, apc_rev4, apc_rev5, apc_rev6, apc_rev7, apc_rev8
+.macro PMR_44_20 split_mode, split_point, transpose, tc_orchestrator, techni_chord, m006000, m006001, m006004, seq_volume, x09, x0a, x0b, apc_rev1, apc_rev2, apc_rev3, apc_rev4, apc_rev5, apc_rev6, apc_rev7, apc_rev8
 	.byte	0x44, 20
-	.byte	\split_mode, \split_point, \transpose, \tc_orchestrator, \techni_chord, \m006000, \m006001, \m006004, \m008008, \x09, \x0a, \x0b, \apc_rev1, \apc_rev2, \apc_rev3, \apc_rev4, \apc_rev5, \apc_rev6
+	.byte	\split_mode, \split_point, \transpose, \tc_orchestrator, \techni_chord, \m006000, \m006001, \m006004, \seq_volume, \x09, \x0a, \x0b, \apc_rev1, \apc_rev2, \apc_rev3, \apc_rev4, \apc_rev5, \apc_rev6
 	.byte	\apc_rev7, \apc_rev8
 .endm
 # tag 0x45 fields:

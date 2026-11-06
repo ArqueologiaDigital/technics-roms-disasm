@@ -115,7 +115,8 @@ OTHER_FIELDS = {
            0x04: ('techni_chord', 'bits 0-3 0x008081 TECHNI-CHORD type 0..13 (AcTechniChordProc)'),
            0x05: ('m006000', '0x006000, 1..16'), 0x06: ('m006001', '0x006001, 1..16'),
            0x07: ('m006004', 'bits 0-2 0x006004 / 0x006005 / 0x006006'),
-           0x08: ('m008008', 'bits 0-6 0x008008, bit 7 0x008009'),
+           0x08: ('seq_volume', 'bits 0-6 0x008008 the sequencer volume (the APC/SEQUENCER VOLUME slider while '
+                                 'the sequencer plays: 941 func_48454E3A), bit 7 0x008009'),
            **{0x0C + k: ('apc_rev%d' % (k + 1), 'KN7000 only: 0x%06X APC reverb DEPTH of row %d, bit 7 0x%06X (ApcRevFunc, '
                          'grid "PART | DEPTH" ACCOMP1..)' % (0x00E030 + k, k + 1, 0x00E038 + k)) for k in range(8)}},
     0x45: {0x00: ('m005040', 'bit 0 0x005040, bit 1 0x005041')},
