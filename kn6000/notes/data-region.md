@@ -96,14 +96,14 @@ it: 551 names on the KN6000.  `gen_symbols.py` had found only 21 of these tables
 
 ## Other typed structures
 
-| structure                       | KN6000 / KN6500                  | evidence                                                         |
-|---------------------------------|----------------------------------|------------------------------------------------------------------|
-| demo songs (36 zlib streams)    | both: 12 songs x record / events / panel bank | `kn_sqt.py` (song record 0x870 B on the KN6000) / `kn_panel.py`; `.zlib 6` re-compresses byte-exactly |
-| `TechnicsRhythmsResource`       | `0x4C359AC0` / `0x4C2E5304`      | IC18's format, one style " 8 Beat 1" (`program_rhythm.py`); func_4C0557E9 falls back to it when the table ROM's resource does not check |
-| bitmap resources (13 / 13)      | both                             | procedures answering MT_GetBitmapData / Width / Height / Palette / GetBitCount (`gen_data_s.py bitmaps()`); PNG, `table_png.py pk D W H` |
-| `ToneRecordDirectory`           | KN6000 `0x4C3E5FD4` (2,475 entries) | func_4C07C26A: record index -> address when no archive is loaded; tone records (SOUND_HEAD + n SOUND_MOD), TABLE tones, voice records (`voice_record.inc`) |
-| `FactoryPanelMemory`            | KN6000 `0x4C32BE24`, 13 banks x 8 | func_4C03D431 copies it (0x2D8D0 bytes) and the .PMT header to the backup RAM `0x840007C2`: the factory reset; PMR_ lines |
-| JPEG / BMP files                | 3                                | whole files                                                      |
+| structure                    | KN6000 / KN6500                               | evidence                                                                                                                                                        |
+|------------------------------|-----------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| demo songs (36 zlib streams) | both: 12 songs x record / events / panel bank | `kn_sqt.py` (song record 0x870 B on the KN6000) / `kn_panel.py`; `.zlib 6` re-compresses byte-exactly                                                           |
+| `TechnicsRhythmsResource`    | `0x4C359AC0` / `0x4C2E5304`                   | IC18's format, one style " 8 Beat 1" (`program_rhythm.py`); func_4C0557E9 falls back to it when the table ROM's resource does not check                         |
+| bitmap resources (13 / 13)   | both                                          | procedures answering MT_GetBitmapData / Width / Height / Palette / GetBitCount (`gen_data_s.py bitmaps()`); PNG, `table_png.py pk D W H`                        |
+| `ToneRecordDirectory`        | KN6000 `0x4C3E5FD4` (2,475 entries)           | func_4C07C26A: record index -> address when no archive is loaded; tone records (SOUND_NAME_HEAD + n SOUND_MOD), TABLE tones, voice records (`voice_record.inc`) |
+| `FactoryPanelMemory`         | KN6000 `0x4C32BE24`, 13 banks x 8             | func_4C03D431 copies it (0x2D8D0 bytes) and the .PMT header to the backup RAM `0x840007C2`: the factory reset; PMR_ lines                                       |
+| JPEG / BMP files             | 3                                             | whole files                                                                                                                                                     |
 
 The bitmap PNGs keep the pixel VALUES; their palette is the bitmap's own when it has one, grey
 levels otherwise.  The pixel order is the drawing code's (traced 2026-11-02, lane mn10300-names; it was an

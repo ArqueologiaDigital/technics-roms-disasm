@@ -316,7 +316,7 @@ bytes of `01custm5`, is the tail `+0x77..+0x9F` of a setting just past a record'
 between two pieces where a position falls, and single bytes after a stream's end.
 
 **PMR and SOUND records.** floppy-others' `PMR_*` (the full 0x750 / 0x700-byte PANEL MEMORY
-record) and `SOUND_HEAD` / `SOUND_MOD` (the 0x2C8-byte SOUND EDIT record) are in the shared
+record) and `SOUND_NAME_HEAD` / `SOUND_MOD` (the 0x2C8-byte SOUND EDIT record) are in the shared
 includes, but IC21 holds neither: panel memories live in the backup SRAM (`0x84000824..`),
 IC21 holds only the 0xA0-byte one-touch settings built from them (`PM_*`), and no factory record
 has a SOUND EDIT dependency section. They would apply to a user's own IC21 with such sections.

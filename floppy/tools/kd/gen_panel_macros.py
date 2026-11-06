@@ -212,11 +212,7 @@ def section():
          '.macro PMR_END', '\t.byte\t0xff, 0xff', '.endm',
          '# 0x40, 18 bytes: the memory\'s 16-character name, then n10, n11.  The name is a quoted string argument',
          '# (llvm-mc and kn7asm both strip its quotes, so `.ascii "\\name"` serves both, as VOICE_HEAD does).',
-         '.macro PMR_NAME name, n10, n11', '\t.byte\t0x40, 18', '\t.ascii\t"\\name"', '\t.byte\t\\n10, \\n11', '.endm',
-         '# The same record in three lines, PMR_NAME_HEAD, `.ascii "<name>"`, PMR_NAME_TAIL: what the program builds\'',
-         '# data sources still write (kn7000/tools/gen_data_s.py; moving them is register row N-f67b155c\'s rest).',
-         '.macro PMR_NAME_HEAD', '\t.byte\t0x40, 18', '.endm',
-         '.macro PMR_NAME_TAIL n10, n11', '\t.byte\t\\n10, \\n11', '.endm']
+         '.macro PMR_NAME name, n10, n11', '\t.byte\t0x40, 18', '\t.ascii\t"\\name"', '\t.byte\t\\n10, \\n11', '.endm']
     names = [PART_NAMED.get(k, 'p%02x' % k) for k in range(72)]
     L += ['# A part record, 72 bytes: tags 0x00-0x0F (PART1-16), 0x10-0x12 (RIGHT1, RIGHT2, LEFT), 0x1B (CHORD), 0x1C and',
           '# (KN7000) 0x1F.  Fields (offset, name: parameter id, evidence):'] + \

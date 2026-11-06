@@ -2,7 +2,7 @@
 # Licensed under the terms of the GNU General Public License v3 or later
 #
 # voice_record.inc -- the KN7000 / KN6000 sound records: the 0x8E-byte voice record (VOICE_*),
-# the 0x54-byte tone head and its 0x7A-byte units (SOUND_HEAD / SOUND_MOD) and the 0x23-byte
+# the 0x54-byte tone head and its 0x7A-byte units (SOUND_NAME_HEAD / SOUND_MOD) and the 0x23-byte
 # element (VOICE_ELEM).  Shared by the CUSTOM banks (src/customdata/), the table flash's 'JK'
 # internal voice archive (src/table/voices/, tools/gen_table_voices.py) and the KN6000 .TM files
 # (floppy/tools/kd/kn_soundram.py).  Field names come from the tone generator's readers in the
@@ -48,18 +48,15 @@
 # per aux part, the JK archive 40 (descriptor +0x3C).  TgPartAuxRecBuild 0x4C00C6E9 builds it as 0x23C bytes of
 # the tone record (head + four units) over which it copies the part's own four units, so it is a tone record
 # plus four elements:
-#   +0x00  0x54-byte head, the 16-character name first (SOUND_HEAD after the name)
+#   +0x00  0x54-byte head, the 16-character name first (SOUND_NAME_HEAD)
 #   +0x54  four 0x7A-byte units, SOUND_MOD (TgPartAuxModRecPtr 0x4C00C25B)
 #   +0x23C four 0x23-byte elements, VOICE_ELEM (TgPartAuxElemRecPtr 0x4C00C28D; 0x54 + 4*0x7A + 4*0x23 = 0x2C8)
 # The 16-character name is a quoted string argument: llvm-mc and kn7asm both strip its quotes (since
 # 2026-10-31), so `.ascii "\name"` serves both.  SOUND_NAME_HEAD is the head with its name; the table flash's
-# archive (tools/gen_table_voices.py) and the KN6000 .TM files (floppy/tools/kd/kn_soundram.py) write it, and
-# VOICE_HEAD.  SOUND_HEAD (the head without its name, after an `.ascii "<name>"`) and VOICE_HEAD_TAIL (VOICE_HEAD
-# without its name) are what the program builds' data sources still write (tools/gen_data_s.py; moving them is
-# register row N-f67b155c's rest).
-.macro VOICE_HEAD_TAIL h0d, h0e, h0f
-	.byte	\h0d, \h0e, \h0f
-.endm
+# archive (tools/gen_table_voices.py), the KN6000 .TM files (floppy/tools/kd/kn_soundram.py) and the program
+# builds' data (tools/gen_data_s.py tones()) write it, and VOICE_HEAD.  (The nameless SOUND_HEAD and
+# VOICE_HEAD_TAIL, written after an `.ascii "<name>"`, were removed on 2026-11-06 with their last caller,
+# register row N-f67b155c.)
 # The head after the name, +0x10..+0x53:
 #   tone_class +0x10  & 0xC0 picks the note-on path (TgNoteOn 0x4C036832): 0x00 / 0xC0 melodic, 0x40 TABLE
 #                     (then the head is 0x27 bytes and a 3-byte entry per note follows: tone_head_table,
@@ -70,12 +67,6 @@
 #   eg_flag    +0x45  the flag TgVoiceEgSegParamGet tests for types 0xA / 0xB; SOUND EDIT reads and writes
 #                     it with TgPartAuxHdr45Get/Set 0x4C00C318 / 0x4C00C475
 #   h46, h47          SOUND EDIT fields (TgPartAuxHdr46/47Get/Set); meaning not traced
-.macro SOUND_HEAD tone_class, h11, mod_src, h13, h14, h15, h16, h17, h18, h19, h1a, h1b, h1c, h1d, h1e, h1f, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h2a, h2b, h2c, h2d, h2e, h2f, h30, h31, h32, h33, h34, h35, h36, h37, h38, h39, h3a, h3b, h3c, h3d, h3e, h3f, h40, h41, h42, h43, tone_type, eg_flag, h46, h47, h48, h49, h4a, h4b, h4c, h4d, h4e, h4f, h50, h51, h52, h53
-	.byte	\tone_class, \h11, \mod_src, \h13, \h14, \h15, \h16, \h17, \h18, \h19, \h1a, \h1b, \h1c, \h1d, \h1e, \h1f, \h20, \h21
-	.byte	\h22, \h23, \h24, \h25, \h26, \h27, \h28, \h29, \h2a, \h2b, \h2c, \h2d, \h2e, \h2f, \h30, \h31, \h32, \h33
-	.byte	\h34, \h35, \h36, \h37, \h38, \h39, \h3a, \h3b, \h3c, \h3d, \h3e, \h3f, \h40, \h41, \h42, \h43, \tone_type, \eg_flag
-	.byte	\h46, \h47, \h48, \h49, \h4a, \h4b, \h4c, \h4d, \h4e, \h4f, \h50, \h51, \h52, \h53
-.endm
 .macro SOUND_NAME_HEAD name, tone_class, h11, mod_src, h13, h14, h15, h16, h17, h18, h19, h1a, h1b, h1c, h1d, h1e, h1f, h20, h21, h22, h23, h24, h25, h26, h27, h28, h29, h2a, h2b, h2c, h2d, h2e, h2f, h30, h31, h32, h33, h34, h35, h36, h37, h38, h39, h3a, h3b, h3c, h3d, h3e, h3f, h40, h41, h42, h43, tone_type, eg_flag, h46, h47, h48, h49, h4a, h4b, h4c, h4d, h4e, h4f, h50, h51, h52, h53
 	.ascii	"\name"
 	.byte	\tone_class, \h11, \mod_src, \h13, \h14, \h15, \h16, \h17, \h18, \h19, \h1a, \h1b, \h1c, \h1d, \h1e, \h1f, \h20, \h21

@@ -147,14 +147,6 @@
 	.ascii	"\name"
 	.byte	\n10, \n11
 .endm
-# The same record in three lines, PMR_NAME_HEAD, `.ascii "<name>"`, PMR_NAME_TAIL: what the program builds'
-# data sources still write (kn7000/tools/gen_data_s.py; moving them is register row N-f67b155c's rest).
-.macro PMR_NAME_HEAD
-	.byte	0x40, 18
-.endm
-.macro PMR_NAME_TAIL n10, n11
-	.byte	\n10, \n11
-.endm
 # A part record, 72 bytes: tags 0x00-0x0F (PART1-16), 0x10-0x12 (RIGHT1, RIGHT2, LEFT), 0x1B (CHORD), 0x1C and
 # (KN7000) 0x1F.  Fields (offset, name: parameter id, evidence):
 #   +0x00 voice_prog        0xC00000 program change; kind 6 reads the {prog, bank LSB, bank MSB} triple
