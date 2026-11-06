@@ -5651,10 +5651,10 @@ loc_484A39A0:
     call    DrawString_entry, [d2,d3,a2,a3], 0x30
 loc_484A39E5:
     ret     [d2,d3,a2,a3], 0x3c
-
-func_484A39E8:
+# TestModeKeyDivert  (CPU 0x484a39e8)
+TestModeKeyDivert:
     add     -8, sp
-func_484A39E8_entry:
+TestModeKeyDivert_entry:
     call    func_4849FB93_entry, 0, 8
     extbu   d0
     cmp     0xf6, d0
@@ -57971,6 +57971,6 @@ func_484C1B08:
     movbu   d0, (0xd, sp)
     mov     sp, a0
     add     0xc, a0
-    call    func_485838DC_entry, [d2,d3,a2,a3], 0x10
+    call    PcComCommand_entry, [d2,d3,a2,a3], 0x10
     add     0x120, sp
     ret     0, 0

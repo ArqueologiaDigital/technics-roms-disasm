@@ -5667,10 +5667,10 @@ loc_485838D7:
     mov     1, d0
 loc_485838D9:
     retf    [d2,a2], 8
-
-func_485838DC:
+# PcComCommand  (CPU 0x485838dc)
+PcComCommand:
     movm    [d2,d3,a2,a3], (sp)
-func_485838DC_entry:
+PcComCommand_entry:
     add     -0x11c, sp
     mov     a0, a2
     clr     d2
