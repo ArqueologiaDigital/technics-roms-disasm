@@ -127,8 +127,10 @@ Kit uses 1, like Standard Kit1.  The other 21 head bytes have no traced reader.
 
 **Voice records** (`kn7000/src/include/voice_record.inc`). The 0x8E-byte record of the tone
 generator's voice-resource banks, the same unit `VoiceRecFetchBanked` 0x484496C9 returns and
-`TgPartLocalEditRecPtr` 0x4C00C2C8 shadows: a 16-byte header (13-byte name; `+0x0D` picks the
-sub-record, `VoiceSubRecFetch` 0x4844978B, 0xFF = none), two 0x1C-byte sub-records at `+0x10`
+`TgPartLocalEditRecPtr` 0x4C00C2C8 shadows: a 16-byte header (13-byte name; `+0x0D` is the layer
+mask: `VoiceSubRecFetch` 0x4844978B passes it with the layer number to func_484494E2, which returns that
+layer's sub-record index or 0xFF = none -- bit 0 enables layer 0, bit 2 layer 1, see the user kit above;
+this sentence said until 2026-11-06 that the byte itself picks the sub-record), two 0x1C-byte sub-records at `+0x10`
 (`VoiceSubRecFetch`: `+0x10 + n*0x1C`) and two 0x23-byte element records at `+0x48`
 (`TgPartLocalEditElemRecPtr` 0x4C00C2F9). `VOICE_HEAD`, `VOICE_SUB` and `VOICE_ELEM` type each
 part; the sub-record and element fields keep neutral names (offset in the sub-record), since no
