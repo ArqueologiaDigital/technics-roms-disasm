@@ -260,7 +260,12 @@ class Run:
         # added) pairs every later word with the wrong routine, which the named ones show
         # the audit, leave one out: would the table pass on its other named words, and is
         # the word left out right?  (the words that let a table pass cannot audit it)
-        if not bad and agree - 1 >= self.a.table_agree:
+        if self.a.table_agree < 0:
+            # no check (--table-agree -1): what the named words of every table say
+            self.table_stats["unchecked: named words alike"] += agree
+            self.table_stats["unchecked: named words unlike"] += bad
+            agree, bad = self.a.table_agree, 0
+        elif not bad and agree - 1 >= self.a.table_agree:
             self.table_stats["audit: named word, table passes without it, right"] += agree
         elif bad == 1 and agree >= self.a.table_agree:
             self.table_stats["audit: named word, table passes without it, wrong"] += 1
@@ -602,7 +607,8 @@ def main():
     ap.add_argument("--no-pointers", dest="pointers", action="store_false",
                     help="call sites only: no pairs from routine addresses held as operands or in paired tables")
     ap.add_argument("--table-agree", type=int, default=2,
-                    help="how many words of two paired tables both images must name alike, none unlike (default 2)")
+                    help="how many words of two paired tables both images must name alike, none unlike (default 2; "
+                         "-1 uses every table unchecked, to measure what the check refuses)")
     ap.add_argument("--table-max", type=lambda v: int(v, 0), default=0x400,
                     help="how far into two paired data tables table_pairs walks (default 0x400 bytes)")
     ap.add_argument("--no-ram-runs", dest="ram_runs", action="store_false",
