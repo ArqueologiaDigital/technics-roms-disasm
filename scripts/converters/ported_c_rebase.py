@@ -46,6 +46,12 @@ THREE STEPS (repository root, tree built with `make`)
                  pointer table the port re-ordered, which no piecewise BASE expresses); the label gets
                  an extern and its TREE address in the link script.  Then --regen again.
 
+  --ram-self DIR (after --name-pointers) in the blob that lies in the work-RAM image
+                 (naka_sequencer_channels), a run of `uint16_t field_X` halfword pairs whose needed
+                 32-bit values are the RAM addresses of the blob's own elements becomes one
+                 `uint32_t <member>_RamPtrs[N]` spelled NAKA_WRAM(<member>[k]) (BASE-relative, so each
+                 tree compiles its own value).  Then --regen again.
+
 The tool never reads the ROM: the needed bytes are the committed C + committed json of before the edit.
 `make gate` then certifies the image.
 
@@ -466,6 +472,95 @@ def do_name_pointers(tree, need_dir):
     print('%s: %d pointer elements named' % (tree, total))
 
 
+WRAM_DEST = 0x3D524          # Boot_InitWorkRAM's first copy: RAM 0x3D524.. from ROM WorkRamInit_Image
+
+
+def do_ram_self(tree, need_dir):
+    """In the blob that lies in the work-RAM image (naka_sequencer_channels: Boot_InitWorkRAM copies
+    ROM WorkRamInit_Image.. to RAM 0x3D524..), a run of `uint16_t field_X` pairs whose needed 32-bit
+    values are RAM addresses of the same blob's own bytes is a pointer array: it becomes one
+    `uint32_t <member before>_RamPtrs[N]` spelled NAKA_WRAM(<member>[k]) -- the RAM copy of that member
+    element, BASE-relative, so each tree compiles its own value.  (The runs were typed as halfwords
+    because the old C model split every word it could not explain.)"""
+    syms = tree_syms(tree)
+    img = syms.get('WorkRamInit_Image')
+    d = json.load(open(json_path(tree)))
+    name = 'naka_sequencer_channels.bin'
+    if img is None or name not in d or not d[name].get('raw'):
+        print('%s: nothing to do' % tree)
+        return
+    src, inc, ld = rule(tree, name)
+    text = open(src, 'rb').read().decode('latin-1')
+    base = int(re.search(r'^#define BASE\s+0x([0-9A-Fa-f]+)u', text, re.M).group(1), 16)
+    stype = re.search(r'__builtin_offsetof\((\w+), field\)', text).group(1)
+    need = open(os.path.join(need_dir, name), 'rb').read()
+    mem = dwarf_members(tree, name)
+    ram0 = WRAM_DEST + base - img                  # RAM address of the blob's offset 0
+    size = len(need)
+    rawpos = {int(o) for o in d[name]['raw']}
+
+    def where(v):
+        """RAM address -> 'member[k]' / 'member' of this blob, or None"""
+        o = v - ram0
+        if not 0 <= o < size:
+            return None
+        for i, (off, nm, ty) in enumerate(mem):
+            end = mem[i + 1][0] if i + 1 < len(mem) else size
+            if off <= o < end:
+                mt = re.fullmatch(r'uint32_t\[(\d+)\]', ty)
+                if o == off and not mt:
+                    return nm
+                if mt and (o - off) % 4 == 0:
+                    return '%s[%d]' % (nm, (o - off) // 4)
+                return None
+        return None
+    runs, i = [], 0
+    while i < len(mem) - 1:
+        j = i
+        while j + 1 < len(mem) and re.fullmatch(r'field_[0-9a-f]+', mem[j][1]) and mem[j][2] == 'uint16_t' \
+                and mem[j + 1][2] == 'uint16_t' and mem[j + 1][0] == mem[j][0] + 2 and mem[j][0] % 4 == mem[i][0] % 4:
+            v = int.from_bytes(need[mem[j][0]:mem[j][0] + 4], 'little')
+            if where(v) is None:
+                break
+            j += 2
+        if j - i >= 8 and any(mem[i][0] <= r < mem[j][0] for r in rawpos):
+            runs.append((i, j))
+            i = j
+        else:
+            i += 1
+    if not runs:
+        print('%s: no RAM pointer runs' % tree)
+        return
+    for i, j in reversed(runs):
+        start, n = mem[i][0], (j - i) // 2
+        prev = mem[i - 1][1] if i else 'Blob'
+        arr = '%s_RamPtrs' % prev
+        vals = [where(int.from_bytes(need[start + 4 * k:start + 4 * k + 4], 'little')) for k in range(n)]
+        names = [mem[k][1] for k in range(i, j)]
+        # declarations
+        decl = re.compile(r'(?:    uint16_t (?:%s);\n)+' % '|'.join(names))
+        m = decl.search(text)
+        assert m and m.group(0).count('\n') == len(names), arr
+        text = text[:m.start()] + ('    /* %s: %d x u32, the work-RAM (RAM 0x%X..) addresses of this blob\'s own\n'
+                                   '     * elements (NAKA_WRAM); read as halfword pairs field_%04x..field_%04x before */\n'
+                                   '    uint32_t %s[%d];\n' % (arr, n, ram0 + start, start, mem[j - 1][0], arr, n)) + text[m.end():]
+        # initializers: the .field_X = ..., lines (with the blank lines between them)
+        ini = re.compile(r'(?:    \.(?:%s) = [^\n]*,\n\n?)+' % '|'.join(names))
+        m = ini.search(text)
+        assert m, arr
+        body = '    .%s = {\n%s    },\n\n' % (arr, ''.join('        NAKA_WRAM(%s),\n' % v for v in vals))
+        text = text[:m.start()] + body + text[m.end():]
+        print('  %-36s %s[%d] at +0x%x: %s' % (name, arr, n, start, ', '.join(sorted(set(vals)))))
+    if '#define NAKA_WRAM(' not in text:
+        m = re.search(r'#define SELF\(field\) \\\n[^\n]*\n', text)
+        text = text[:m.end()] + ('\n/* the RAM address of a member\'s work-RAM copy: Boot_InitWorkRAM copies ROM WorkRamInit_Image\n'
+                                 ' * (0x%06X in %s) .. to RAM 0x%X .., and this blob starts BASE - WorkRamInit_Image into it */\n'
+                                 '#define NAKA_WRAM(field) \\\n'
+                                 '    ((uint32_t)(0x%Xu + (BASE - 0x%08Xu) + __builtin_offsetof(%s, field)))\n'
+                                 % (img, tree, WRAM_DEST, WRAM_DEST, img, stype)) + text[m.end():]
+    open(src, 'wb').write(text.encode('latin-1'))
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split('\n')[1])
     ap.add_argument('--tree', required=True, choices=['v6', 'v5'])
@@ -474,6 +569,7 @@ def main():
     g.add_argument('--set-base', action='store_true')
     g.add_argument('--regen', metavar='DIR')
     g.add_argument('--name-pointers', metavar='DIR')
+    g.add_argument('--ram-self', metavar='DIR')
     ap.add_argument('--need-dir', metavar='DIR', help='with --set-base: where slices imply several bases, '
                     'try each against the --need output and keep the one with the fewest raw bytes')
     a = ap.parse_args()
@@ -483,6 +579,8 @@ def main():
         do_set_base(a.tree, a.need_dir)
     elif a.name_pointers:
         do_name_pointers(a.tree, a.name_pointers)
+    elif a.ram_self:
+        do_ram_self(a.tree, a.ram_self)
     else:
         do_regen(a.tree, a.regen)
 
