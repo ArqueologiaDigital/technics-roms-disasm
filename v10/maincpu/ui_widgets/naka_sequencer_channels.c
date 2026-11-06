@@ -1865,44 +1865,12 @@ typedef struct __attribute__((packed)) {
     uint16_t field_0d5a;
     /* MidiPart_ConfigNameTable: 110 pointers (cut from ptrs_3 by split_naka_pointer_arrays.py) */
     uint32_t MidiPart_ConfigNameTable[110];
-    uint16_t field_0f14;
-    uint16_t field_0f16;
-    uint16_t field_0f18;
-    uint16_t field_0f1a;
-    uint16_t field_0f1c;
-    uint16_t field_0f1e;
-    uint16_t field_0f20;
-    uint16_t field_0f22;
-    uint16_t field_0f24;
-    uint16_t field_0f26;
-    uint16_t field_0f28;
-    uint16_t field_0f2a;
-    uint16_t field_0f2c;
-    uint16_t field_0f2e;
-    uint16_t field_0f30;
-    uint16_t field_0f32;
-    uint16_t field_0f34;
-    uint16_t field_0f36;
-    uint16_t field_0f38;
-    uint16_t field_0f3a;
-    uint16_t field_0f3c;
-    uint16_t field_0f3e;
-    uint16_t field_0f40;
-    uint8_t bytes_0f42[6];  /* 4 pointers */
-    /* 9 pointers */
-    /* zero padding */
-    /* NAKA_TYPE_AcTitleMenu */
-    /* zero padding */
-    /* zero padding */
-    /* zero padding */
-    /* zero padding */
-    /* zero padding */
-    /* zero padding */
-    /* zero padding */
-    /* zero padding */
-    /* zero padding */
-    /* zero padding */
-    /* zero padding */
+    /* AcTrackMixerProc's column -> part map: the power-on image of RAM 0x3EBE8 (Boot_InitWorkRAM
+     * copies WorkRamInit_Image to RAM 0x3D524).  TrackMixer_Init installs it as the PsMixer grid
+     * array (Util_StoreGridArrayBase), PsMixer_ReadWordArrayEntry reads word [page*8 + column] as
+     * the column's part, TrackMixer_UpdateHandler writes word [track] (0..15).  32 words: these 26
+     * and TrackMixer_GridRowMapEnd (scripts/converters/naka_type_trackmixer_map.py) */
+    uint16_t TrackMixer_ColumnPartMap[26];
     /* last 6 words (0x00FF) of the grid map TrackMixer_Init installs at RAM 0x3EBE8 */
     uint16_t TrackMixer_GridRowMapEnd[6];
     /* per-drawbar slider bitmap base (9 drawbars) + an unreferenced word */
@@ -1957,134 +1925,12 @@ typedef struct __attribute__((packed)) {
     naka_cls_AcIndexToggle_t Root_NamingSymbolToggleView;
     /* Naka_DrawbarReg_Table: 69 pointers (cut from ptrs_7 by split_naka_pointer_arrays.py) */
     uint32_t Naka_DrawbarReg_Table[69];
-    uint16_t field_1624;
-    uint16_t field_1626;
-    uint16_t field_1628;
-    uint16_t field_162a;
-    uint16_t field_162c;
-    uint16_t field_162e;
-    uint16_t field_1630;
-    uint16_t field_1632;
-    uint16_t field_1634;
-    uint16_t field_1636;
-    uint16_t field_1638;
-    uint16_t field_163a;
-    uint16_t field_163c;
-    uint16_t field_163e;
-    uint16_t field_1640;
-    uint16_t field_1642;
-    uint16_t field_1644;
-    uint16_t field_1646;
-    uint16_t field_1648;
-    uint16_t field_164a;
-    uint16_t field_164c;
-    uint16_t field_164e;
-    uint16_t field_1650;
-    uint16_t field_1652;
-    uint16_t field_1654;
-    uint16_t field_1656;
-    uint16_t field_1658;
-    uint16_t field_165a;
-    uint16_t field_165c;
-    uint16_t field_165e;
-    uint16_t field_1660;
-    uint16_t field_1662;
-    uint16_t field_1664;
-    uint16_t field_1666;
-    uint16_t field_1668;
-    uint16_t field_166a;
-    uint16_t field_166c;
-    uint16_t field_166e;
-    uint16_t field_1670;
-    uint16_t field_1672;
-    uint16_t field_1674;
-    uint16_t field_1676;
-    uint16_t field_1678;
-    uint16_t field_167a;
-    uint16_t field_167c;
-    uint16_t field_167e;
-    uint16_t field_1680;
-    uint16_t field_1682;
-    uint16_t field_1684;
-    uint16_t field_1686;
-    uint16_t field_1688;
-    uint16_t field_168a;
-    uint16_t field_168c;
-    uint16_t field_168e;
-    uint16_t field_1690;
-    uint16_t field_1692;
-    uint16_t field_1694;
-    uint16_t field_1696;
-    uint16_t field_1698;
-    uint16_t field_169a;
-    uint16_t field_169c;
-    uint16_t field_169e;
-    uint16_t field_16a0;
-    uint16_t field_16a2;
-    uint16_t field_16a4;
-    uint16_t field_16a6;
-    uint16_t field_16a8;
-    uint16_t field_16aa;
-    uint16_t field_16ac;
-    uint16_t field_16ae;
-    uint16_t field_16b0;
-    uint16_t field_16b2;
-    uint16_t field_16b4;
-    uint16_t field_16b6;
-    uint16_t field_16b8;
-    uint16_t field_16ba;
-    uint16_t field_16bc;
-    uint16_t field_16be;
-    uint16_t field_16c0;
-    uint16_t field_16c2;
-    uint16_t field_16c4;
-    uint16_t field_16c6;
-    uint16_t field_16c8;
-    uint16_t field_16ca;
-    uint16_t field_16cc;
-    uint16_t field_16ce;
-    uint16_t field_16d0;
-    uint16_t field_16d2;
-    uint16_t field_16d4;
-    uint16_t field_16d6;
-    uint16_t field_16d8;
-    uint16_t field_16da;
-    uint16_t field_16dc;
-    uint16_t field_16de;
-    uint16_t field_16e0;
-    uint16_t field_16e2;
-    uint16_t field_16e4;
-    uint16_t field_16e6;
-    uint16_t field_16e8;
-    uint16_t field_16ea;
-    uint16_t field_16ec;
-    uint16_t field_16ee;
-    uint16_t field_16f0;
-    uint16_t field_16f2;
-    uint16_t field_16f4;
-    uint16_t field_16f6;
-    uint16_t field_16f8;
-    uint16_t field_16fa;
-    uint16_t field_16fc;
-    uint16_t field_16fe;
-    uint16_t field_1700;
-    uint16_t field_1702;
-    uint16_t field_1704;
-    uint16_t field_1706;
-    uint16_t field_1708;
-    uint16_t field_170a;
-    uint16_t field_170c;
-    uint16_t field_170e;
-    uint16_t field_1710;
-    uint16_t field_1712;
-    uint16_t field_1714;
-    uint16_t field_1716;
-    uint16_t field_1718;
-    uint16_t field_171a;
-    uint16_t field_171c;
-    uint16_t field_171e;
-    uint16_t field_1720;
-    uint16_t field_1722;
+    /* the chord-name lookup's first level: the power-on image of RAM 0x3F2F8, 64 RAM pointers, one
+     * per chord type.  MainChordPre_AppendChordSuffix loads 0x3F2F8 and follows [4*DISPLAY_CHORD_TYPE],
+     * then [4*DISPLAY_CHORD_ROOT] in the root table it points at (RAM 0x3F228 / 0x3F25C / 0x3F290 /
+     * 0x3F2C4), then [4*DISPLAY_CHORD_BASS], and appends that string
+     * (scripts/converters/naka_type_trackmixer_map.py) */
+    uint32_t ChordName_TypeRootTables[64];
     uint16_t Normal_Window;
     uint16_t field_1726;
     uint16_t normal_Window;
@@ -3378,53 +3224,10 @@ const naka_sequencer_channels_t naka_sequencer_channels_data
         NAKA_ADDR(TrackName6_Unassigned),
     },
 
-    .field_0f14 = 0x001D,
-
-    .field_0f16 = 0x001D,
-
-    .field_0f18 = 0x001D,
-
-    .field_0f1a = 0x001D,
-
-    .field_0f1c = 0x001D,
-
-    .field_0f1e = 0x001D,
-
-    .field_0f20 = 0x001D,
-
-    .field_0f22 = 0x001D,
-
-    .field_0f24 = 0x001D,
-
-    .field_0f26 = 0x001D,
-
-    .field_0f28 = 0x001D,
-
-    .field_0f2a = 0x001D,
-
-    .field_0f2c = 0x001D,
-
-    .field_0f2e = 0x001D,
-
-    .field_0f30 = 0x001D,
-
-    .field_0f32 = 0x001D,
-
-    .field_0f34 = 0x0016,
-
-    .field_0f36 = 0x0014,
-
-    .field_0f38 = 0x0013,
-
-    .field_0f3a = 0x0012,
-
-    .field_0f3c = 0x0015,
-
-    .field_0f3e = 0x0017,
-
-    .field_0f40 = 0x0011,
-
-    .bytes_0f42 = { 0x10, 0x00, 0xFF, 0x00, 0xFF, 0x00 },
+    .TrackMixer_ColumnPartMap = {
+        0x001D, 0x001D, 0x001D, 0x001D, 0x001D, 0x001D, 0x001D, 0x001D, 0x001D, 0x001D, 0x001D, 0x001D, 0x001D,
+        0x001D, 0x001D, 0x001D, 0x0016, 0x0014, 0x0013, 0x0012, 0x0015, 0x0017, 0x0011, 0x0010, 0x00FF, 0x00FF,
+    },
 
     .TrackMixer_GridRowMapEnd = {
         0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF, 0x00FF,
@@ -3630,261 +3433,24 @@ const naka_sequencer_channels_t naka_sequencer_channels_data
         NAKA_ADDR(SeqChanContainer_ChordTypeRef_B),
     },
 
-    .field_1624 = 0xF228,
-
-    .field_1626 = 0x0003,
-
-    .field_1628 = 0xF228,
-
-    .field_162a = 0x0003,
-
-    .field_162c = 0xF228,
-
-    .field_162e = 0x0003,
-
-    .field_1630 = 0xF228,
-
-    .field_1632 = 0x0003,
-
-    .field_1634 = 0xF228,
-
-    .field_1636 = 0x0003,
-
-    .field_1638 = 0xF25C,
-
-    .field_163a = 0x0003,
-
-    .field_163c = 0xF25C,
-
-    .field_163e = 0x0003,
-
-    .field_1640 = 0xF25C,
-
-    .field_1642 = 0x0003,
-
-    .field_1644 = 0xF290,
-
-    .field_1646 = 0x0003,
-
-    .field_1648 = 0xF25C,
-
-    .field_164a = 0x0003,
-
-    .field_164c = 0xF228,
-
-    .field_164e = 0x0003,
-
-    .field_1650 = 0xF228,
-
-    .field_1652 = 0x0003,
-
-    .field_1654 = 0xF228,
-
-    .field_1656 = 0x0003,
-
-    .field_1658 = 0xF2C4,
-
-    .field_165a = 0x0003,
-
-    .field_165c = 0xF2C4,
-
-    .field_165e = 0x0003,
-
-    .field_1660 = 0xF228,
-
-    .field_1662 = 0x0003,
-
-    .field_1664 = 0xF228,
-
-    .field_1666 = 0x0003,
-
-    .field_1668 = 0xF25C,
-
-    .field_166a = 0x0003,
-
-    .field_166c = 0xF228,
-
-    .field_166e = 0x0003,
-
-    .field_1670 = 0xF25C,
-
-    .field_1672 = 0x0003,
-
-    .field_1674 = 0xF290,
-
-    .field_1676 = 0x0003,
-
-    .field_1678 = 0xF25C,
-
-    .field_167a = 0x0003,
-
-    .field_167c = 0xF25C,
-
-    .field_167e = 0x0003,
-
-    .field_1680 = 0xF228,
-
-    .field_1682 = 0x0003,
-
-    .field_1684 = 0xF228,
-
-    .field_1686 = 0x0003,
-
-    .field_1688 = 0xF2C4,
-
-    .field_168a = 0x0003,
-
-    .field_168c = 0xF228,
-
-    .field_168e = 0x0003,
-
-    .field_1690 = 0xF290,
-
-    .field_1692 = 0x0003,
-
-    .field_1694 = 0xF228,
-
-    .field_1696 = 0x0003,
-
-    .field_1698 = 0xF228,
-
-    .field_169a = 0x0003,
-
-    .field_169c = 0xF228,
-
-    .field_169e = 0x0003,
-
-    .field_16a0 = 0xF228,
-
-    .field_16a2 = 0x0003,
-
-    .field_16a4 = 0xF228,
-
-    .field_16a6 = 0x0003,
-
-    .field_16a8 = 0xF228,
-
-    .field_16aa = 0x0003,
-
-    .field_16ac = 0xF228,
-
-    .field_16ae = 0x0003,
-
-    .field_16b0 = 0xF228,
-
-    .field_16b2 = 0x0003,
-
-    .field_16b4 = 0xF228,
-
-    .field_16b6 = 0x0003,
-
-    .field_16b8 = 0xF228,
-
-    .field_16ba = 0x0003,
-
-    .field_16bc = 0xF228,
-
-    .field_16be = 0x0003,
-
-    .field_16c0 = 0xF25C,
-
-    .field_16c2 = 0x0003,
-
-    .field_16c4 = 0xF228,
-
-    .field_16c6 = 0x0003,
-
-    .field_16c8 = 0xF228,
-
-    .field_16ca = 0x0003,
-
-    .field_16cc = 0xF228,
-
-    .field_16ce = 0x0003,
-
-    .field_16d0 = 0xF228,
-
-    .field_16d2 = 0x0003,
-
-    .field_16d4 = 0xF228,
-
-    .field_16d6 = 0x0003,
-
-    .field_16d8 = 0xF228,
-
-    .field_16da = 0x0003,
-
-    .field_16dc = 0xF228,
-
-    .field_16de = 0x0003,
-
-    .field_16e0 = 0xF228,
-
-    .field_16e2 = 0x0003,
-
-    .field_16e4 = 0xF228,
-
-    .field_16e6 = 0x0003,
-
-    .field_16e8 = 0xF228,
-
-    .field_16ea = 0x0003,
-
-    .field_16ec = 0xF228,
-
-    .field_16ee = 0x0003,
-
-    .field_16f0 = 0xF228,
-
-    .field_16f2 = 0x0003,
-
-    .field_16f4 = 0xF228,
-
-    .field_16f6 = 0x0003,
-
-    .field_16f8 = 0xF228,
-
-    .field_16fa = 0x0003,
-
-    .field_16fc = 0xF228,
-
-    .field_16fe = 0x0003,
-
-    .field_1700 = 0xF228,
-
-    .field_1702 = 0x0003,
-
-    .field_1704 = 0xF228,
-
-    .field_1706 = 0x0003,
-
-    .field_1708 = 0xF228,
-
-    .field_170a = 0x0003,
-
-    .field_170c = 0xF228,
-
-    .field_170e = 0x0003,
-
-    .field_1710 = 0xF228,
-
-    .field_1712 = 0x0003,
-
-    .field_1714 = 0xF228,
-
-    .field_1716 = 0x0003,
-
-    .field_1718 = 0xF228,
-
-    .field_171a = 0x0003,
-
-    .field_171c = 0xF228,
-
-    .field_171e = 0x0003,
-
-    .field_1720 = 0xF228,
-
-    .field_1722 = 0x0003,
+    .ChordName_TypeRootTables = {
+        0x0003F228, 0x0003F228, 0x0003F228, 0x0003F228,
+        0x0003F228, 0x0003F25C, 0x0003F25C, 0x0003F25C,
+        0x0003F290, 0x0003F25C, 0x0003F228, 0x0003F228,
+        0x0003F228, 0x0003F2C4, 0x0003F2C4, 0x0003F228,
+        0x0003F228, 0x0003F25C, 0x0003F228, 0x0003F25C,
+        0x0003F290, 0x0003F25C, 0x0003F25C, 0x0003F228,
+        0x0003F228, 0x0003F2C4, 0x0003F228, 0x0003F290,
+        0x0003F228, 0x0003F228, 0x0003F228, 0x0003F228,
+        0x0003F228, 0x0003F228, 0x0003F228, 0x0003F228,
+        0x0003F228, 0x0003F228, 0x0003F228, 0x0003F25C,
+        0x0003F228, 0x0003F228, 0x0003F228, 0x0003F228,
+        0x0003F228, 0x0003F228, 0x0003F228, 0x0003F228,
+        0x0003F228, 0x0003F228, 0x0003F228, 0x0003F228,
+        0x0003F228, 0x0003F228, 0x0003F228, 0x0003F228,
+        0x0003F228, 0x0003F228, 0x0003F228, 0x0003F228,
+        0x0003F228, 0x0003F228, 0x0003F228, 0x0003F228,
+    },
 
     .Normal_Window = NAKA_NONE,
 
