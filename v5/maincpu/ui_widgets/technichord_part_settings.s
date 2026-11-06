@@ -675,8 +675,7 @@ Murai_ViewableTable_003:
 	.long	NakaWidget_Sdpart_81_AcIndexEditSw
 	.long	NakaWidget_Sdpart_82_AcLswPartEditBox
 	.long	NakaWidget_Sdpart_83_AcLswPartEditBox
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x00, 0x00
+	.long	0	; NULL after the 84 entries of Viewable slot 0x3
 Murai_ViewableTable_004:	.incbin "includes/generated/naka_technichord_part.bin", 0x394A, 0x14
 ; [nakarest] naka_technichord_part+0x395e  +0x395e..+0x3a3a (0xe8562c, 220 B)
 ; [nakarest] the table itself: Viewable slot 0x5 (table 0xe8562c, 54 entries, InitializeMurai),
@@ -728,8 +727,7 @@ Murai_ViewableTable_0EF:
 	.long	NakaWidget_AllInitial
 	.long	NakaWidget_Welcom_5_Label
 	.long	NakaWidget_Welcom_6_IvIntWelcome
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x00, 0x00
+	.long	0	; NULL after the 7 entries of Viewable slot 0xEF
 Murai_ViewableTable_0F0:	.incbin "includes/generated/naka_technichord_part.bin", 0x3D0A, 0x1C
 ; [nakarest] naka_technichord_part+0x3d26  +0x3d26..+0x3d7c (0xe859f4, 86 B)
 ; [nakarest] the table itself: ResName slot 0x302 (table 0xe859f4, 20 entries, InitializeMurai),

@@ -211,8 +211,7 @@ Root_ViewableTable_000:
 	.long	NakaWidget_PanelSimulator_48_AcTrackSwitch
 	.long	NakaWidget_MemDumpWindow
 	.long	NakaWidget_PanelSimulator_50_DbMemoryDump
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x00, 0x00
+	.long	0	; NULL after the 51 entries of Viewable slot 0x0
 Root_ViewableTable_0FF:	.incbin "includes/generated/naka_debug_naming.bin", 0x946, 0x28
 ; [nakarest] naka_debug_naming+0x96e  +0x96e..+0xa40 (0xeb346c, 210 B)
 ; [nakarest] the table itself: ResName slot 0x300 (table 0xeb346c, 51 entries, InitializeRoot),

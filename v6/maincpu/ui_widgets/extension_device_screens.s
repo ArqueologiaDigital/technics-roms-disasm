@@ -635,8 +635,7 @@ NakaWidget_EXT:
 	.long	NakaWidget_TEST2OKNG
 	.long	NakaWidget_TEST2_21_Label
 	.long	NakaWidget_TEST2_22_Label
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x00, 0x00
+	.long	0	; NULL after the 23 entries of Viewable slot 0xF5
 	.incbin "includes/generated/naka_extension_device.bin", 0x1532, 0x8
 ; [nakarest] naka_extension_device+0x153a  +0x153a..+0x154a (0xed7d06, 16 B)
 ; [nakarest] the table itself: Viewable slot 0xf7 (table 0xed7d06, 3 entries, InitializeToshi),
@@ -661,8 +660,7 @@ NakaWidget_EXT:
 	.long	NakaWidget_TEST6_6_Label
 	.long	NakaWidget_TEST6NG
 	.long	NakaWidget_TEST6_8_Label
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x00, 0x00
+	.long	0	; NULL after the 9 entries of Viewable slot 0xF9
 	.incbin "includes/generated/naka_extension_device.bin", 0x1682, 0x8
 ; [nakarest] naka_extension_device+0x168a  +0x168a..+0x178c (0xed7e56, 258 B)
 ; [nakarest] the table itself: ResName slot 0x301 (table 0xed7e56, 63 entries, InitializeToshi),

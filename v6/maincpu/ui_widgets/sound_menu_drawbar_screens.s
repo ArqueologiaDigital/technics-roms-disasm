@@ -108,10 +108,7 @@ NakaData_SoundMenuDrawbar:	.incbin "includes/generated/naka_sound_menu_drawbar.b
 	.long	ClassName_AcDrawbarName	; AcDrawbarName name
 	.long	ClassPropdata_AcDrawbarName	; AcDrawbarName propdata
 	.long	ClassProps_AcDrawbarName
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.space	24, 0	; entry 36 of Class slot 0x161, all zero: the count is 36, so ClassProc never reads it
 ClassPropdata_AcDrawbarName:
 	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0xAE, 0x4
 ; [nakarest] naka_sound_menu_drawbar+0xb2  +0xb2..+0xc0 (0xe81094, 14 B)
@@ -413,8 +410,7 @@ Murai_ClassCount_161:
 ; [nakarest] naka_sound_menu_drawbar+0x302  +0x302..+0x306 (0xe812e4, 4 B)
 ; [nakarest] the table itself: ResEvent slot 0x1c1 (table 0xe812e4, 10 entries,
 ; [nakarest] InitializeMurai), 10 entry pointers x 4 bytes.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x24, 0x00
+	.short	36	; the entry count of Class slot 0x161, which RegObjTable reads from this word (InitializeMurai)
 ; port: v7's label Murai_ResEventTable_1C1 is not in v6 -- no v6 bytes correspond to what it named
 ; [nakarest] Naka_EventDispatch_Table  +0x306..+0x32e (0xe812e8, 40 B)
 ; [nakarest] 4 B at 0xe8130c: the end marker of ResEvent slot 0x1c1 (table 0xe812e4, 10 entries, InitializeMurai) -- a zero word after entry 9, the last, as every ResEvent table ends.
