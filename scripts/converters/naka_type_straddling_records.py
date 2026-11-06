@@ -29,6 +29,13 @@ numeric address inside its own blob, at the start of an untyped member that hold
 string (plus 0x00 / 0xFF padding), gets that member as `char <Record>_<Field>[N] = "..."` and the field as
 `SELF(<Record>_<Field>)` -- the old EditSw records whose `str` points at the text right after the record.
 
+In v6 / v5 (lane open12/v6v5-port3) the field still holds v7's number, which the tree's C-divergence
+json relocates to the tree's own address; the string's blob offset is that number minus v7's BASE of the
+same file (the trees share v7's layout), and the string bytes are read from the tree's built bin.  SELF()
+then compiles to the tree's address, so the compiled blob changes there: the file is written only when,
+over the bytes the tree's slices place, the new blob needs no raw json byte and fewer relocations
+(ported_c_rebase.entry), and a json `--regen` then drops the relocation.
+
 Then scripts/converters/naka_gui_symbolize.py names the values (OBJ_ links, NAKA_XYWH, VF_ flags ...).
 --apply recompiles each changed file and writes it only if the compiled blob is identical.
 
@@ -143,6 +150,28 @@ def presplit(cb, at, data):
     return None
 
 
+def ported_ok(tree, name, built, before, after):
+    """v6 / v5: does AFTER need no raw json byte and fewer relocations than BEFORE, over the bytes of
+    BUILT (the tree's patched bin, what its image needs) that the tree's slices place?"""
+    import ported_c_rebase as R
+    cover = R.placed(tree).get(name, [])
+
+    def ent(raw):
+        need = bytearray(built)
+        mask = bytearray(len(need))
+        for a, b in cover:
+            for i in range(a, min(len(need), b if b is not None else len(need))):
+                mask[i] = 1
+        for i in range(len(need)):
+            if not mask[i]:
+                need[i] = raw[i] if i < len(raw) else 0
+        return R.entry(raw, bytes(need)) or {'raw': {}, 'reloc': []}
+    e0, e1 = ent(before), ent(after)
+    print('    json over the placed bytes: raw %d -> %d, reloc %d -> %d'
+          % (len(e0['raw']), len(e1['raw']), len(e0['reloc']), len(e1['reloc'])))
+    return not e1['raw'] and len(e1['reloc']) < len(e0['reloc'])
+
+
 def record_strings(tree, apply):
     """The --strings pass (docstring)."""
     total = 0
@@ -155,7 +184,13 @@ def record_strings(tree, apply):
         binp, ld = S.bin_rule(tree, p)
         if binp is None:
             continue
-        data = open(binp if tree in ('v10', 'v9') else S.bin_rule('v10', p.replace('/%s/' % tree, '/v10/'))[0], 'rb').read()
+        ported = tree in ('v6', 'v5')
+        if ported:
+            v7_txt = open(p.replace('/%s/' % tree, '/v7/'), encoding='latin-1').read()
+            base = int(re.search(r'^#define BASE\s+0x([0-9A-Fa-f]+)u', v7_txt, re.M).group(1), 16)
+            data = open(binp, 'rb').read()
+        else:
+            data = open(binp if tree in ('v10', 'v9') else S.bin_rule('v10', p.replace('/%s/' % tree, '/v10/'))[0], 'rb').read()
         try:
             cb = CM.CBlob(p)
         except (KeyError, SystemExit) as ex:
@@ -189,8 +224,14 @@ def record_strings(tree, apply):
             cb.retype(o, o + n, [CM.string_member(name, b)], data)
         txt = cb.render()
         u8 = lambda t: t.encode('latin-1').decode('utf-8', 'surrogateescape')
-        same = S.compile_c(p, ld, u8(txt)) == S.compile_c(p, ld, u8(base_txt))
-        print('%-32s %d record strings %s' % (os.path.basename(p), len(done), 'IDENTICAL' if same else 'DIFFERS'))
+        if ported:
+            same = ported_ok(tree, os.path.basename(binp), data, S.compile_c(p, ld, u8(base_txt)),
+                             S.compile_c(p, ld, u8(txt)))
+        else:
+            same = S.compile_c(p, ld, u8(txt)) == S.compile_c(p, ld, u8(base_txt))
+        print('%-32s %d record strings %s' % (os.path.basename(p), len(done),
+                                               ('ACCEPTED' if same else 'REFUSED') if ported else
+                                               ('IDENTICAL' if same else 'DIFFERS')))
         for d in done:
             print('    %s -> %s %r' % (d[1], d[5], d[6]))
         if same and apply:
