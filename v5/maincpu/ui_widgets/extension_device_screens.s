@@ -845,19 +845,13 @@ ResName_Slot44_0_MsaModeScreen:
 	aligned_string ""
 	.long	Toshi_ResName_CTPMMD + 126
 	.long	Toshi_ResName_CTPMMD + 124
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x14, 0x81
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0xed, 0x00
+	.long	ResName_Slot45_18_Window + 40
 	.long	Toshi_ResName_CTPMMD + 120
 	.long	Toshi_ResName_CTPMMD + 118
 	.long	Toshi_ResName_CTPMMD + 112
 	.long	Toshi_ResName_CTPMMD + 110
 	.long	Toshi_ResName_CTPMMD + 108
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x04, 0x81
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0xed, 0x00
+	.long	ResName_Slot45_18_Window + 24
 	.long	Toshi_ResName_CTPMMD + 104
 	.long	Toshi_ResName_CTPMMD + 102
 	.long	Toshi_ResName_CTPMMD + 100
