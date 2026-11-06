@@ -25,9 +25,14 @@ not change):
     naka_widget_tables_1.bin drops by 8;
   * the v7 C-divergence json's recorded size of naka_widget_tables_1.bin follows.
 
-Run it once per tree (v10, v9, v7: their files are identical here), then
+Run it once per tree (v10, v9, v7: their files are identical here; v6 and v5, whose C is v7's with
+their own bases: v6's addresses here are v7's, v5's are 0x18 lower), then
 `naka_gui_symbolize.py --tree <t> --apply` (it refreshes the slot enum's comments) and `make gate`.
-It refuses to run on a tree it has already converted.
+It refuses to run on a tree it has already converted (v10 / v9 / v7 since 2026-11-06, v6 / v5 since
+lane open12/v6v5-port3 ran it).  The addresses it checks and writes are the tree's own: the two blobs'
+`#define BASE`s, the record's and its captions' labels (symbols/maincpu_<tree>_symbols_reference.txt)
+and RAM_Rhythm_PsWideToggle_OnOff (the tree's naka_ram_cells.h).  The `Base ROM address` header lines
+move by the same 8 bytes (v5's keep v7's value, as all of that tree's carried headers do).
 
 RUN (repository root, built tree)
     python3 scripts/converters/naka_join_perf3rhythmsel.py --tree v10
@@ -57,9 +62,25 @@ def sub1(pat, rep, text, what):
     return new
 
 
+def tree_syms(tree):
+    syms = {}
+    for ln in open(os.path.join(ROOT, 'symbols', 'maincpu_%s_symbols_reference.txt' % tree)):
+        p = ln.split()
+        if len(p) == 2 and not ln.startswith('#'):
+            syms[p[0]] = int(p[1], 16)
+    return syms
+
+
+def c_base(text, what):
+    m = re.search(r'^#define BASE  0x([0-9A-F]{8})u$', text, re.M)
+    if not m:
+        sys.exit('naka_join_perf3rhythmsel: no single #define BASE in ' + what)
+    return int(m.group(1), 16)
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--tree', required=True, choices=['v10', 'v9', 'v7'])
+    ap.add_argument('--tree', required=True, choices=['v10', 'v9', 'v7', 'v6', 'v5'])
     a = ap.parse_args()
     uw = os.path.join(ROOT, a.tree, 'maincpu', 'ui_widgets')
     gen = os.path.join(ROOT, a.tree, 'maincpu', 'includes', 'generated')
@@ -70,7 +91,15 @@ def main():
     if 'naka_dispatch_t w119;' not in dp:
         sys.exit('naka_join_perf3rhythmsel: %s already converted' % a.tree)
 
-    # The record's 42 bytes, from the two compiled blobs (v7 reads its own: its C is v10's here).
+    # The tree's own addresses: the blobs' bases, the record's labels, its onoff cell.
+    syms = tree_syms(a.tree)
+    dp_base, t1_base = c_base(dp, dp_c), c_base(t1, t1_c)
+    assert syms['NakaWidget_Perf3RhythmSel'] == dp_base + 0x2FB8, hex(syms['NakaWidget_Perf3RhythmSel'])
+    assert syms['NakaWidget_Perf3RhythmSel_Tail'] == t1_base, hex(syms['NakaWidget_Perf3RhythmSel_Tail'])
+    cells = open(os.path.join(uw, 'naka_ram_cells.h'), encoding='latin-1').read()
+    onoff_cell = int(re.search(r'^#define RAM_Rhythm_PsWideToggle_OnOff\s+0x([0-9A-F]+)u', cells, re.M).group(1), 16)
+
+    # The record's 42 bytes, from the two compiled blobs (each tree reads its own).
     b1 = open(os.path.join(gen, 'naka_direct_play.bin'), 'rb').read()
     b2 = open(os.path.join(gen, 'naka_widget_tables_1.bin'), 'rb').read()
     assert len(b1) == 12250 and len(b2) == 12878, (len(b1), len(b2))
@@ -80,8 +109,9 @@ def main():
         struct.unpack('<IHHHHHhhhhIIIIHH', rec)
     assert cls == 0x01600045 and (sup, sub, nxt, prv) == (0, 0xFFFF, 10, 8) and flag == 0x0008
     assert (x1, y1, x2, y2) == (244, 216, 315, 238) and font == 0
-    assert (stron, stroff) == (0xE24066, 0xE2405E), (hex(stron), hex(stroff))
-    assert onoff == 0x0003DEA0 and (es1, es2) == (6, 7)
+    assert (stron, stroff) == (syms['NakaWidget_Perf3RhythmSel_StrOn'], syms['NakaWidget_Perf3RhythmSel_StrOff']) \
+        == (t1_base + 16, t1_base + 8), (hex(stron), hex(stroff))
+    assert onoff == onoff_cell and (es1, es2) == (6, 7)
 
     # naka_direct_play.c: the struct members ...
     dp = sub1(r'^    naka_dispatch_t w119;  /\* 0x45 \*/\n    uint8_t pad_482\[2\];  /\* zero padding \*/\n'
@@ -117,8 +147,10 @@ def main():
     wr(dp_ld, ld)
 
     # naka_widget_tables_1.c: the tail goes, BASE moves 8 bytes up.
-    t1 = sub1(r'^#define BASE  0x00E24056u$', '#define BASE  0x00E2405Eu', t1, 'BASE')
-    t1 = sub1(r'^ \* Base ROM address: 0xE24056$', ' * Base ROM address: 0xE2405E', t1, 'header base')
+    t1 = sub1(r'^#define BASE  0x%08Xu$' % t1_base, '#define BASE  0x%08Xu' % (t1_base + 8), t1, 'BASE')
+    hb = re.search(r'^ \* Base ROM address: 0x([0-9A-F]{6})$', t1, re.M)
+    t1 = sub1(r'^ \* Base ROM address: 0x%s$' % hb.group(1), ' * Base ROM address: 0x%06X' % (int(hb.group(1), 16) + 8),
+              t1, 'header base')
     t1 = sub1(r'^ \* Total size: 12878 bytes$', ' * Total size: 12870 bytes', t1, 'header size')
     t1 = sub1(r'sizeof\(naka_widget_tables_1_t\) == 12878,\n    "naka_widget_tables_1 must be exactly 12878 bytes"',
               'sizeof(naka_widget_tables_1_t) == 12870,\n    "naka_widget_tables_1 must be exactly 12870 bytes"',
@@ -169,11 +201,11 @@ def main():
     s = re.sub(r'"includes/generated/naka_widget_tables_1\.bin", 0x([0-9A-Fa-f]+),', shift, s)
     wr(t1_s, s)
 
-    if a.tree == 'v7':
-        jp = os.path.join(ROOT, 'v7', 'maincpu', 'includes', 'v7_c_divergence.json')
+    jp = os.path.join(ROOT, a.tree, 'maincpu', 'includes', '%s_c_divergence.json' % a.tree)
+    if os.path.exists(jp) and re.search(r'"naka_widget_tables_1\.bin":', rd(jp)):
         jt = rd(jp)
         jt = sub1(r'("naka_widget_tables_1\.bin":\s*\{\s*"raw":\s*\{\},\s*"reloc":\s*\[\],\s*"size":\s*)12878',
-                  '\\g<1>12870', jt, 'v7 json size')
+                  '\\g<1>12870', jt, 'json size')
         wr(jp, jt)
     print('naka_join_perf3rhythmsel %s: record typed, %d tables_1 .incbin offsets moved' % (a.tree, n[0]))
 

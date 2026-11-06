@@ -10,7 +10,6 @@ SECTIONS {
 }
 
 CRTC_LINE_COMPARE = 0x00000018;
-INTETC45 = 0x000000EE;
 NakaStr_DataFile1of2 = 0x00E000C3;
 NakaStr_DataFilePck = 0x00E00113;
 NakaWidget_Perf3RhythmSel_StrOff = 0x00E2405E;

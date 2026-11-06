@@ -5,8 +5,8 @@
 # scripts/analysis/l2_symbol_reference.py --regen
 # Do not hand-edit: rename in the sources and regenerate.
 #
-#   symbols .................. 54,183
-#   semantic names ........... 53,860 (99.4%)
+#   symbols .................. 54,182
+#   semantic names ........... 53,859 (99.4%)
 #   positional names ......... 323
 #
 LED_patterns_indicating_firmware_version 00E00000
@@ -4100,7 +4100,6 @@ NakaWidget_Perf3ModernBluegrass 00E23F80
 NakaWidget_Perf3StyleSel 00E23FC8
 NakaWidget_Perf3SoundSel 00E23FFE
 NakaWidget_Perf3RhythmSel 00E24034
-NakaWidget_Perf3RhythmSel_Tail 00E24056
 NakaWidget_Perf3RhythmSel_StrOff 00E2405E
 NakaWidget_Perf3RhythmSel_StrOn 00E24066
 NakaHdr_Perf2MeasureBoxData 00E2406E

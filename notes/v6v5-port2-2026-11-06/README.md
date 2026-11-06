@@ -87,7 +87,7 @@ and `make gate-wsa1` exit 0, 0 FAIL lines.
   Naka_DrawbarReg_Table is 12 wallpaper-palette pointers (entries 0-11), 5 other pointers (12-16:
   EditSw_PageMap2, EditSw_PageMap4, VariScreen_EditSwLayout6, VariScreen_EditSwLayout8, EditSw_SplitMap10)
   and four 13-entry blocks (17-29, 30-42, 43-55, 56-68), which end the 69-entry table exactly.  The 64
-  pointers after it (Naka_DrawbarReg_Table_RamPtrs) are one per CHORD TYPE (DISPLAY_CHORD_TYPE, 0-63, the
+  pointers after it (ChordName_TypeRootTables) are one per CHORD TYPE (DISPLAY_CHORD_TYPE, 0-63, the
   64 chord-type names of MainChordPre_ChordTypeNames); each names one block; the block is indexed by the
   chord ROOT (DISPLAY_CHORD_ROOT) and gives a 16-entry note-name table, which the BASS note
   (DISPLAY_CHORD_BASS) indexes: the bass-note name MainChordPre appends to the chord display after

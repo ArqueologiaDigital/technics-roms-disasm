@@ -21,8 +21,14 @@ RAM_<Record>_<Field>.  The C member of such a cell was cut as `uint16_t <Record>
 
 Values come from the compiled blob; the file is recompiled and compared before it is written.
 
+The addresses are the tree's own: a member's ROM address is that of the tree's slice that places its
+offset (ported_c_rebase.slice_bases; v6 / v5 place the blob piecewise), its RAM address the tree's
+Boot_InitWorkRAM copy of it (gen_naka_gui_headers.work_ram_images, the first image), and the RAM_ cells
+are the tree's naka_ram_cells.h (v6 / v5 have their own addresses there).  v6 / v5 since lane
+open12/v6v5-port3.
+
 RUN (repository root, built tree)
-    python3 scripts/converters/naka_widen_ram_cells.py --tree v10 [--dry-run]      # also v9, v7
+    python3 scripts/converters/naka_widen_ram_cells.py --tree v10 [--dry-run]      # also v9, v7, v6, v5
 """
 import argparse
 import collections
@@ -34,8 +40,20 @@ import subprocess
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.join(ROOT, 'scripts', 'converters'))
+sys.path.insert(0, os.path.join(ROOT, 'scripts', 'generators'))
 LLVM = '/home/fsanches/compartilhado/llvm-project/build/bin'
-BLOB_BASE, IMG_ROM, IMG_RAM, IMG_END = 0xEEE078, 0xEED8C8, 0x3D524, 0xEEFA66
+
+
+def tree_image(tree):
+    """(blob offset -> TREE ROM address, first image's RAM dest, ROM source, size)."""
+    import bisect
+    import gen_naka_gui_headers as H
+    import ported_c_rebase as R
+    pieces = R.slice_bases(tree)['naka_sequencer_channels.bin']
+    offs = [o for o, _ in pieces]
+    (d, r, n), _ = H.work_ram_images(tree, H.tree_syms(tree))
+    return (lambda o: pieces[max(bisect.bisect_right(offs, o) - 1, 0)][1] + o), d, r, n
 
 
 def compile_c(tree, path, out):
@@ -89,7 +107,7 @@ def asm_cell_letters(tree, letters):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--tree', required=True, choices=['v10', 'v9', 'v7'])
+    ap.add_argument('--tree', required=True, choices=['v10', 'v9', 'v7', 'v6', 'v5'])
     ap.add_argument('--dry-run', action='store_true')
     ap.add_argument('--scratch', default=os.path.join(os.environ.get('TMPDIR', '/home/fsanches/compartilhado/tmp'),
                                                       'naka_widen_ram_cells'))
@@ -104,11 +122,13 @@ def main():
     by_addr = asm_cell_letters(a.tree, cl)
     os.makedirs(a.scratch, exist_ok=True)
     before = compile_c(a.tree, p, os.path.join(a.scratch, 'before.bin'))
+    rom_of, IMG_RAM, IMG_ROM, img_n = tree_image(a.tree)
+    IMG_END = IMG_ROM + img_n
     pairs = []
     why = collections.Counter()
     for m in re.finditer(r'^    uint16_t (\w+);\n    uint16_t field_([0-9a-f]{4});\n', s, re.M):
         name, off = m.group(1), int(m.group(2), 16) - 2
-        rom = BLOB_BASE + off
+        rom = rom_of(off)
         if not (IMG_ROM <= rom < IMG_END - 3):
             why['outside the first image'] += 1
             continue
