@@ -613,20 +613,20 @@ Audio_CheckInitStatus:
 	or	hl, (3409:16)
 	ld	wa, hl
 	cp	wa, 0:i3
-	jr	z, AudioInit_ClearStatusBit8
+	jr	z, AudioInit_NoPlayTracks
 	orw	(0xc4d8:16), 256
-	jr	AudioInit_CheckGroupB_Presence
-AudioInit_ClearStatusBit8:
+	jr	AudioInit_CheckRecTracks
+AudioInit_NoPlayTracks:
 	andw	(0xc4d8:16), 0xfeff
-AudioInit_CheckGroupB_Presence:
+AudioInit_CheckRecTracks:
 	ld	bc, (SEQ_REC_TRACKS:16)
 	or	bc, (3407:16)
 	ld	wa, bc
 	cp	wa, 0:i3
-	jr	z, AudioInit_ClearStatusBit9
+	jr	z, AudioInit_NoRecTracks
 	orw	(0xc4d8:16), 512
 	jr	AudioInit_ChannelLoop_Init
-AudioInit_ClearStatusBit9:
+AudioInit_NoRecTracks:
 	andw	(0xc4d8:16), 0xfdff
 AudioInit_ChannelLoop_Init:
 	ld	e, 0x0:opc
@@ -692,7 +692,7 @@ AudioInit_CheckVoiceChanged:
 	ld	ix, hl
 	or	ix, bc
 	and	ix, wa
-	jr	nz, AudioInit_CheckGroupA
+	jr	nz, AudioInit_CheckPlayTrack
 AudioInit_VoiceUnchanged:
 	ld	a, e
 	extz	wa
@@ -707,22 +707,22 @@ AudioInit_VoiceUnchanged:
 	add	xwa, xix
 	ld	(xwa), 0xff
 	jrl	AudioInit_ChannelLoop_Next
-AudioInit_CheckGroupA:
+AudioInit_CheckPlayTrack:
 	ld	wa, (0xc4d8:16)
 	bit	8, wa
-	jrl	z, AudioInit_CheckGroupB_Channel
+	jrl	z, AudioInit_CheckRecTrack
 	ld	a, e
 	extz	wa
 	add	wa, wa
 	lda	xix, (Bit16Mask_Table:24)
 	ld	wa, (xix+wa)
 	and	wa, hl
-	jrl	z, AudioInit_CheckGroupB_Channel
+	jrl	z, AudioInit_CheckRecTrack
 	ld	a, d
 	cp	a, 0xe
-	jr	z, AudioInit_GroupA_TypeE
+	jr	z, AudioInit_PlayTrack_Apc
 	cp	a, 0xd
-	jrl	nz, AudioInit_GroupA_OtherType
+	jrl	nz, AudioInit_PlayTrack_OtherAssign
 	orw	(0xc4d8:16), 32
 	ld	a, e
 	extz	wa
@@ -746,8 +746,8 @@ AudioInit_CheckGroupA:
 	lda	xix, (AudioInit_SlotOrderMap:24)
 	ld	a, (xix+wa)
 	ld	(xiy), a
-	jrl	AudioInit_CheckGroupB_Channel
-AudioInit_GroupA_TypeE:
+	jrl	AudioInit_CheckRecTrack
+AudioInit_PlayTrack_Apc:
 	orw	(0xc4d8:16), 64
 	ld	a, e
 	extz	wa
@@ -771,10 +771,10 @@ AudioInit_GroupA_TypeE:
 	lda	xix, (AudioInit_SlotOrderMap:24)
 	ld	a, (xix+wa)
 	ld	(xiy), a
-	jrl	AudioInit_CheckGroupB_Channel
-AudioInit_GroupA_OtherType:
+	jrl	AudioInit_CheckRecTrack
+AudioInit_PlayTrack_OtherAssign:
 	cp	(CURRENT_TITLE:16), 138
-	jr	nz, AudioInit_GroupA_DefaultMapping
+	jr	nz, AudioInit_PlayTrack_DefaultMapping
 	ld	a, e
 	extz	wa
 	lda	xix, (0xc1c2:16)
@@ -792,7 +792,7 @@ AudioInit_GroupA_OtherType:
 	lda	xix, (Bit16Mask_Table:24)
 	ld	wa, (xix+wa)
 	and	wa, (3928:16)
-	jr	z, AudioInit_GroupA_NoAuxMapping
+	jr	z, AudioInit_PlayTrack_NoAuxMapping
 	ld	a, e
 	extz	wa
 	lda	xix, (0xc1d2:16)
@@ -805,7 +805,7 @@ AudioInit_GroupA_OtherType:
 	ld	a, (xix+wa)
 	ld	(xiy), a
 	jr	AudioInit_StoreChannelMapping
-AudioInit_GroupA_NoAuxMapping:
+AudioInit_PlayTrack_NoAuxMapping:
 	ld	a, e
 	extz	wa
 	lda	xix, (0xc1d2:16)
@@ -814,7 +814,7 @@ AudioInit_GroupA_NoAuxMapping:
 	add	xiy, xix
 	ld	(xiy), 0xff
 	jr	AudioInit_StoreChannelMapping
-AudioInit_GroupA_DefaultMapping:
+AudioInit_PlayTrack_DefaultMapping:
 	ld	a, e
 	extz	wa
 	lda	xix, (0xc1c2:16)
@@ -832,7 +832,7 @@ AudioInit_GroupA_DefaultMapping:
 	lda	xix, (Bit16Mask_Table:24)
 	ld	wa, (xix+wa)
 	and	wa, (0xf1d0:16)
-	jr	z, AudioInit_GroupA_NoSecondary
+	jr	z, AudioInit_PlayTrack_NoSecondary
 	ld	a, e
 	extz	wa
 	lda	xix, (0xc1d2:16)
@@ -845,7 +845,7 @@ AudioInit_GroupA_DefaultMapping:
 	ld	a, (xix+wa)
 	ld	(xiy), a
 	jr	AudioInit_StoreChannelMapping
-AudioInit_GroupA_NoSecondary:
+AudioInit_PlayTrack_NoSecondary:
 	ld	a, e
 	extz	wa
 	lda	xix, (0xc1d2:16)
@@ -862,7 +862,7 @@ AudioInit_StoreChannelMapping:
 	add	xiy, xix
 	ldto_berp	A, 0xe2
 	ld	(xiy), a
-AudioInit_CheckGroupB_Channel:
+AudioInit_CheckRecTrack:
 	ld	wa, (0xc4d8:16)
 	bit	9, wa
 	jrl	z, AudioInit_ChannelLoop_Next
@@ -875,19 +875,19 @@ AudioInit_CheckGroupB_Channel:
 	jrl	z, AudioInit_ChannelLoop_Next
 	incw	1, (xsp)
 	cp	(0xc4de:16), 255
-	jr	nz, AudioInit_GroupB_CheckType
+	jr	nz, AudioInit_RecTrack_CheckType
 	ld	a, d
 	extz	wa
 	lda	xix, (AudioInit_SlotOrderMap:24)
 	ld	(0xc4de:16), (xix+wa)
-AudioInit_GroupB_CheckType:
+AudioInit_RecTrack_CheckType:
 	ld	a, d
 	cp	a, 0x10
-	jrl	z, AudioInit_GroupB_Type10
+	jrl	z, AudioInit_RecTrack_Rhythm
 	cp	a, 0xe
-	jr	z, AudioInit_GroupB_TypeE
+	jr	z, AudioInit_RecTrack_Apc
 	cp	a, 0xd
-	jrl	nz, AudioInit_GroupB_DefaultMapping
+	jrl	nz, AudioInit_RecTrack_OtherAssign
 	orw	(0xc4d8:16), 2
 	ld	a, e
 	extz	wa
@@ -912,7 +912,7 @@ AudioInit_GroupB_CheckType:
 	ld	a, (xix+wa)
 	ld	(xiy), a
 	jrl	AudioInit_ChannelLoop_Next
-AudioInit_GroupB_TypeE:
+AudioInit_RecTrack_Apc:
 	orw	(0xc4d8:16), 4
 	ld	a, e
 	extz	wa
@@ -937,7 +937,7 @@ AudioInit_GroupB_TypeE:
 	ld	a, (xix+wa)
 	ld	(xiy), a
 	jr	AudioInit_ChannelLoop_Next
-AudioInit_GroupB_Type10:
+AudioInit_RecTrack_Rhythm:
 	orw	(0xc4d8:16), 8
 	ld	a, e
 	extz	wa
@@ -952,7 +952,7 @@ AudioInit_GroupB_Type10:
 	add	xwa, xix
 	ld	(xwa), 0xff
 	jr	AudioInit_ChannelLoop_Next
-AudioInit_GroupB_DefaultMapping:
+AudioInit_RecTrack_OtherAssign:
 	ld	a, e
 	extz	wa
 	lda	xix, (0xc1c2:16)

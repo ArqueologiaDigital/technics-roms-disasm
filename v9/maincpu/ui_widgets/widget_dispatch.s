@@ -7364,7 +7364,7 @@ AudioInit_ChannelMapB:
 	.byte 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
 ; 20 x u8 slot map (0,2,1,7,8,9,10,11,4,5,6,3,15,0x15,0x15,0xFF,0x15,12,13,14).
 ; Read with `ld a, (xix+wa)` at 18 sites: AudioInit_ChannelLoop_Body (0xFDF0DB),
-; AudioInit_CheckGroupA/B, AudioInit_GroupA/B_* and PanelTag98_ApplyFieldsAndVolume.
+; AudioInit_CheckPlayTrack / CheckRecTrack, AudioInit_PlayTrack_* / RecTrack_* and PanelTag98_ApplyFieldsAndVolume.
 AudioInit_SlotOrderMap:
 	.byte 0x00, 0x02, 0x01, 0x07, 0x08, 0x09, 0x0a, 0x0b
 	.byte 0x04, 0x05, 0x06, 0x03, 0x0f, 0x15, 0x15, 0xff
