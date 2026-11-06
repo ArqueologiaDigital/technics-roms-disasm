@@ -1,0 +1,267 @@
+armed: 10 counting breakpoints, 4 title breakpoints
+[  1.02] breakpoints
+SNAPFILE 0 home
+[ 20.02] SNAP home
+pre-A-home T InterruptTitle d0=2 d1=0
+COUNT pre-A-home KeyFifoRead    0
+COUNT pre-A-home M3Dispatch     0
+COUNT pre-A-home KeyRoute       0
+COUNT pre-A-home KeyToPart      0
+COUNT pre-A-home PartNotePost   0
+COUNT pre-A-home M3ToTg         0
+COUNT pre-A-home TgcNoteOnSend  0
+COUNT pre-A-home TgcBufWrite    0
+COUNT pre-A-home TgPartKeyEvent 0
+COUNT pre-A-home TgLevelResolve 0
+COUNT pre-A-home TG-port-writes 0
+[ 20.52] open window A-home
+[ 21.02] DOWN C4
+[ 22.02] UP C4
+COUNT A-home KeyFifoRead    5547
+   A-home H KeyFifoRead
+   A-home H KeyFifoRead
+   A-home H KeyFifoRead
+   A-home H KeyFifoRead
+   A-home H KeyFifoRead
+   A-home H KeyFifoRead
+COUNT A-home M3Dispatch     2
+   A-home H M3Dispatch d0=10700000 d1=0000423c
+   A-home H M3Dispatch d0=10700000 d1=0000003c
+COUNT A-home KeyRoute       2
+   A-home H KeyRoute d0=10700000 d1=0000423c
+   A-home H KeyRoute d0=10700000 d1=0000003c
+COUNT A-home KeyToPart      2
+   A-home H KeyToPart d0=10700000 d1=0000423c
+   A-home H KeyToPart d0=10700000 d1=0000003c
+COUNT A-home PartNotePost   2
+   A-home H PartNotePost d0=00000010 d1=00000014
+   A-home H PartNotePost d0=00000010 d1=00000014
+COUNT A-home M3ToTg         5
+   A-home H M3ToTg d0=10900000 d1=1000423c
+   A-home H M3ToTg d0=10700000 d1=0000423c
+   A-home H M3ToTg d0=10900000 d1=1000003c
+   A-home H M3ToTg d0=10b0007b d1=10000000
+   A-home H M3ToTg d0=10700000 d1=0000003c
+COUNT A-home TgcNoteOnSend  2
+   A-home H TgcNoteOnSend d0=00000001 d1=00000010
+   A-home H TgcNoteOnSend d0=00000001 d1=00000010
+COUNT A-home TgcBufWrite    4
+   A-home H TgcBufWrite 04 b0 10 c8 00 00
+   A-home H TgcBufWrite 04 90 10 3c 42 20
+   A-home H TgcBufWrite 04 90 10 3c 00 dd
+   A-home H TgcBufWrite 04 b0 10 7b 00 21
+COUNT A-home TgPartKeyEvent 2
+   A-home H TgPartKeyEvent d0=00000090 d1=00000010
+   A-home H TgPartKeyEvent d0=00000090 d1=00000010
+COUNT A-home TgLevelResolve 0
+COUNT A-home TG-port-writes 118
+[ 23.02] close window A-home
+[ 24.02] DOWN PROGRAM MENUS
+[ 24.32] UP PROGRAM MENUS
+SNAPFILE 1 after PROGRAM MENUS
+[ 25.52] SNAP after PROGRAM MENUS
+[ 26.02] DOWN LCDR 2
+[ 26.32] UP LCDR 2
+SNAPFILE 2 after LCDR 2
+[ 27.52] SNAP after LCDR 2
+COUNT pre-open KeyFifoRead    0
+COUNT pre-open M3Dispatch     0
+COUNT pre-open KeyRoute       0
+COUNT pre-open KeyToPart      0
+COUNT pre-open PartNotePost   0
+COUNT pre-open M3ToTg         0
+COUNT pre-open TgcNoteOnSend  0
+COUNT pre-open TgcBufWrite    0
+COUNT pre-open TgPartKeyEvent 0
+COUNT pre-open TgLevelResolve 0
+COUNT pre-open TG-port-writes 0
+REDIRECT armed to 0xD6
+[ 28.02] redirect armed
+[ 28.22] DOWN LCDL 3
+[ 28.52] UP LCDL 3
+SNAPFILE 3 opened
+[ 32.02] SNAP opened
+[ 33.02] DOWN LCDR 2
+[ 33.32] UP LCDR 2
+SNAPFILE 4 after LCDR 2
+[ 35.52] SNAP after LCDR 2
+pre-B-opened T ChangeTitle d0=f0093 d1=0 REDIRECT -> d6
+pre-B-opened T InterruptTitle d0=12b d1=0
+COUNT pre-B-opened KeyFifoRead    0
+COUNT pre-B-opened M3Dispatch     0
+COUNT pre-B-opened KeyRoute       0
+COUNT pre-B-opened KeyToPart      0
+COUNT pre-B-opened PartNotePost   0
+COUNT pre-B-opened M3ToTg         0
+COUNT pre-B-opened TgcNoteOnSend  0
+COUNT pre-B-opened TgcBufWrite    0
+COUNT pre-B-opened TgPartKeyEvent 0
+COUNT pre-B-opened TgLevelResolve 0
+COUNT pre-B-opened TG-port-writes 0
+[ 36.02] open window B-opened
+[ 36.52] DOWN C4
+[ 37.02] iolog on
+[ 37.52] UP C4
+COUNT B-opened KeyFifoRead    5548
+   B-opened H KeyFifoRead
+   B-opened H KeyFifoRead
+   B-opened H KeyFifoRead
+   B-opened H KeyFifoRead
+   B-opened H KeyFifoRead
+   B-opened H KeyFifoRead
+COUNT B-opened M3Dispatch     2
+   B-opened H M3Dispatch d0=10700000 d1=0000423c
+   B-opened H M3Dispatch d0=10700000 d1=0000003c
+COUNT B-opened KeyRoute       2
+   B-opened H KeyRoute d0=10700000 d1=0000423c
+   B-opened H KeyRoute d0=10700000 d1=0000003c
+COUNT B-opened KeyToPart      2
+   B-opened H KeyToPart d0=10700000 d1=0000423c
+   B-opened H KeyToPart d0=10700000 d1=0000003c
+COUNT B-opened PartNotePost   2
+   B-opened H PartNotePost d0=00000010 d1=00000014
+   B-opened H PartNotePost d0=00000010 d1=00000014
+COUNT B-opened M3ToTg         5
+   B-opened H M3ToTg d0=10900000 d1=1000423c
+   B-opened H M3ToTg d0=10700000 d1=0000423c
+   B-opened H M3ToTg d0=10900000 d1=1000003c
+   B-opened H M3ToTg d0=10b0007b d1=10000000
+   B-opened H M3ToTg d0=10700000 d1=0000003c
+COUNT B-opened TgcNoteOnSend  2
+   B-opened H TgcNoteOnSend d0=00000001 d1=00000010
+   B-opened H TgcNoteOnSend d0=00000001 d1=00000010
+COUNT B-opened TgcBufWrite    3
+   B-opened H TgcBufWrite 04 90 10 3c 42 20
+   B-opened H TgcBufWrite 04 90 10 3c 00 dd
+   B-opened H TgcBufWrite 04 b0 10 7b 00 21
+COUNT B-opened TgPartKeyEvent 2
+   B-opened H TgPartKeyEvent d0=00000090 d1=00000010
+   B-opened H TgPartKeyEvent d0=00000090 d1=00000010
+COUNT B-opened TgLevelResolve 0
+COUNT B-opened TG-port-writes 118
+[ 38.52] close window B-opened
+COUNT pre-B0-opened-nokey KeyFifoRead    0
+COUNT pre-B0-opened-nokey M3Dispatch     0
+COUNT pre-B0-opened-nokey KeyRoute       0
+COUNT pre-B0-opened-nokey KeyToPart      0
+COUNT pre-B0-opened-nokey PartNotePost   0
+COUNT pre-B0-opened-nokey M3ToTg         0
+COUNT pre-B0-opened-nokey TgcNoteOnSend  0
+COUNT pre-B0-opened-nokey TgcBufWrite    0
+COUNT pre-B0-opened-nokey TgPartKeyEvent 0
+COUNT pre-B0-opened-nokey TgLevelResolve 0
+COUNT pre-B0-opened-nokey TG-port-writes 0
+[ 39.02] open window B0-opened-nokey
+COUNT B0-opened-nokey KeyFifoRead    5556
+   B0-opened-nokey H KeyFifoRead
+   B0-opened-nokey H KeyFifoRead
+   B0-opened-nokey H KeyFifoRead
+   B0-opened-nokey H KeyFifoRead
+   B0-opened-nokey H KeyFifoRead
+   B0-opened-nokey H KeyFifoRead
+COUNT B0-opened-nokey M3Dispatch     0
+COUNT B0-opened-nokey KeyRoute       0
+COUNT B0-opened-nokey KeyToPart      0
+COUNT B0-opened-nokey PartNotePost   0
+COUNT B0-opened-nokey M3ToTg         0
+COUNT B0-opened-nokey TgcNoteOnSend  0
+COUNT B0-opened-nokey TgcBufWrite    0
+COUNT B0-opened-nokey TgPartKeyEvent 0
+COUNT B0-opened-nokey TgLevelResolve 0
+COUNT B0-opened-nokey TG-port-writes 0
+[ 41.52] close window B0-opened-nokey
+SNAPFILE 5 after-B
+[ 42.02] SNAP after-B
+IO GPIO 36008004 := 00000086 mask 000000FF            x26
+IO GPIO 36008004 := 000000A6 mask 000000FF            x26
+IO TG1 reg 0010 := 9180                               x1
+IO TG1 reg 0011 := 9100                               x1
+IO TG1 reg 0014 := AE00                               x1
+IO TG1 reg 0015 := AE00                               x1
+IO TG1 reg 0018 := 22B0                               x1
+IO TG1 reg 0019 := 22B0                               x1
+IO TG1 reg FC08 := 0000                               x52
+IO TG1 reg FC09 := 0000                               x52
+IO TG1 reg FC0A := 0000                               x52
+IO TG1 reg FC0B := 0000                               x52
+IO TG1 reg FC12 := 0000                               x6
+IO TG2 reg 0010 := 9180                               x1
+IO TG2 reg 0011 := 9100                               x1
+IO TG2 reg 0014 := AE00                               x1
+IO TG2 reg 0015 := AE00                               x1
+IO TG2 reg 0018 := 22B0                               x1
+IO TG2 reg 0019 := 22B0                               x1
+IO TG2 reg FC08 := 0000                               x52
+IO TG2 reg FC09 := 0000                               x52
+IO TG2 reg FC0A := 0000                               x52
+IO TG2 reg FC0B := 0000                               x52
+IO TG2 reg FC12 := 0000                               x11
+IO distinct 24
+[ 42.02] iolog off
+[ 42.52] DOWN EXIT
+[ 42.82] UP EXIT
+SNAPFILE 6 after-exit
+[ 46.02] SNAP after-exit
+COUNT pre-C-after-exit KeyFifoRead    0
+COUNT pre-C-after-exit M3Dispatch     0
+COUNT pre-C-after-exit KeyRoute       0
+COUNT pre-C-after-exit KeyToPart      0
+COUNT pre-C-after-exit PartNotePost   0
+COUNT pre-C-after-exit M3ToTg         0
+COUNT pre-C-after-exit TgcNoteOnSend  0
+COUNT pre-C-after-exit TgcBufWrite    0
+COUNT pre-C-after-exit TgPartKeyEvent 0
+COUNT pre-C-after-exit TgLevelResolve 0
+COUNT pre-C-after-exit TG-port-writes 0
+[ 47.02] open window C-after-exit
+[ 47.52] DOWN C4
+[ 48.52] UP C4
+COUNT C-after-exit KeyFifoRead    5548
+   C-after-exit H KeyFifoRead
+   C-after-exit H KeyFifoRead
+   C-after-exit H KeyFifoRead
+   C-after-exit H KeyFifoRead
+   C-after-exit H KeyFifoRead
+   C-after-exit H KeyFifoRead
+COUNT C-after-exit M3Dispatch     2
+   C-after-exit H M3Dispatch d0=10700000 d1=0000423c
+   C-after-exit H M3Dispatch d0=10700000 d1=0000003c
+COUNT C-after-exit KeyRoute       2
+   C-after-exit H KeyRoute d0=10700000 d1=0000423c
+   C-after-exit H KeyRoute d0=10700000 d1=0000003c
+COUNT C-after-exit KeyToPart      2
+   C-after-exit H KeyToPart d0=10700000 d1=0000423c
+   C-after-exit H KeyToPart d0=10700000 d1=0000003c
+COUNT C-after-exit PartNotePost   2
+   C-after-exit H PartNotePost d0=00000010 d1=00000014
+   C-after-exit H PartNotePost d0=00000010 d1=00000014
+COUNT C-after-exit M3ToTg         5
+   C-after-exit H M3ToTg d0=10900000 d1=1000423c
+   C-after-exit H M3ToTg d0=10700000 d1=0000423c
+   C-after-exit H M3ToTg d0=10900000 d1=1000003c
+   C-after-exit H M3ToTg d0=10b0007b d1=10000000
+   C-after-exit H M3ToTg d0=10700000 d1=0000003c
+COUNT C-after-exit TgcNoteOnSend  2
+   C-after-exit H TgcNoteOnSend d0=00000001 d1=00000010
+   C-after-exit H TgcNoteOnSend d0=00000001 d1=00000010
+COUNT C-after-exit TgcBufWrite    3
+   C-after-exit H TgcBufWrite 04 90 10 3c 42 20
+   C-after-exit H TgcBufWrite 04 90 10 3c 00 dd
+   C-after-exit H TgcBufWrite 04 b0 10 7b 00 21
+COUNT C-after-exit TgPartKeyEvent 2
+   C-after-exit H TgPartKeyEvent d0=00000090 d1=00000010
+   C-after-exit H TgPartKeyEvent d0=00000090 d1=00000010
+COUNT C-after-exit TgLevelResolve 0
+COUNT C-after-exit TG-port-writes 118
+[ 49.52] close window C-after-exit
+COUNT end KeyFifoRead    0
+COUNT end M3Dispatch     0
+COUNT end KeyRoute       0
+COUNT end KeyToPart      0
+COUNT end PartNotePost   0
+COUNT end M3ToTg         0
+COUNT end TgcNoteOnSend  0
+COUNT end TgcBufWrite    0
+COUNT end TgPartKeyEvent 0
+COUNT end TgLevelResolve 0
+COUNT end TG-port-writes 0
