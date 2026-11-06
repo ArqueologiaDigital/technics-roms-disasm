@@ -1,12 +1,16 @@
 /**
  * gui_display_struct_data.c -- GUI Display Structure Data for Sound Editor
  *
- * ROM address: 0xE0CFDE - 0xE0E406 (5161 bytes)
- * Label: GUI_DisplayStructData
+ * ROM address: 0xE0D004 - 0xE0E406 (4611 bytes; v10 addresses)
+ * Label: Scoop_ViewableTable_020 (the first of the 8-byte Viewable parameter blocks)
+ *
+ * Until 2026-11-06 this blob began 0x226 bytes earlier, with 16 "display parameter records" and
+ * a "17th record header" framed 6 bytes early: they were the 16 IvDirmdScreen records of Viewable
+ * slots 0x30..0x3F and the tail of NakaWidget_seamplfo1, now NAKA_REC_IvDirmdScreen calls in
+ * kn5000_<tree>_program.s and includes/gui_format_strings.s
+ * (scripts/converters/naka_move_dirmd_screens_to_asm.py).
  *
  * Contains all configuration data for the Sound Editor (SE) GUI:
- *   - 16 display parameter records defining SE screen viewport properties
- *   - 17th record header with DRAM address for SE master screen table
  *   - 33 pointer pairs linking to individual SE screen descriptors
  *   - 33 screen name entries (semenu, setonton1, seampamp1, sefilenv1, ...)
  *   - Title tag strings (TT_SEMENU, TT_SETONTON1, ..., MD_SOUNDEDIT)
@@ -19,36 +23,9 @@
 
 #include <stdint.h>
 
-/* -- Display parameter record (34 bytes) -------------------------------- */
-
-typedef struct __attribute__((packed)) {
-    uint16_t screen_id;      /*  +0: screen identifier (0x01A0 = SE screens) */
-    uint32_t dram_addr;       /*  +2: DRAM address for this display slot */
-    uint16_t timer_interval;  /*  +6: refresh interval (90 = ~16ms x 90) */
-    uint16_t flags;           /*  +8: display flags */
-    uint16_t prev_sibling;    /* +10: previous sibling (0xFFFF = none) */
-    uint16_t next_sibling;    /* +12: next sibling (0xFFFF = none) */
-    uint16_t parent_idx;      /* +14: parent index (0xFFFF = root) */
-    uint16_t child_idx;       /* +16: first child (0xFFFF = leaf) */
-    uint16_t line_spacing;    /* +18: vertical line spacing in pixels */
-    uint16_t x_origin;        /* +20: viewport X origin */
-    uint16_t y_origin;        /* +22: viewport Y origin */
-    uint16_t width;           /* +24: viewport width (319 = 320-1) */
-    uint16_t height;          /* +26: viewport height (239 = 240-1) */
-    uint16_t bg_color;        /* +28: background palette index */
-    uint16_t reserved_1e;     /* +30: reserved */
-    uint16_t reserved_20;     /* +32: reserved */
-} gui_display_record_t;       /* 34 bytes */
-
-_Static_assert(sizeof(gui_display_record_t) == 34,
-    "gui_display_record_t must be exactly 34 bytes");
-
 /* -- Complete data layout ------------------------------------------------ */
 
 typedef struct __attribute__((packed)) {
-    gui_display_record_t display_records[16];  /* 544 bytes */
-    uint16_t rec17_screen_id;                  /*   2 bytes */
-    uint32_t rec17_dram_addr;                  /*   4 bytes */
     uint8_t  screen_ptr_pairs[264];
     uint8_t  screen_name_entries[636];
     uint8_t  title_tag_strings[422];
@@ -60,307 +37,11 @@ typedef struct __attribute__((packed)) {
     uint8_t  final_dispatch[535];
 } gui_display_struct_data_t;
 
-_Static_assert(sizeof(gui_display_struct_data_t) == 5161,
-    "gui_display_struct_data_t must be exactly 5161 bytes");
+_Static_assert(sizeof(gui_display_struct_data_t) == 4611,
+    "gui_display_struct_data_t must be exactly 4611 bytes");
 
 const gui_display_struct_data_t gui_display_struct_data
     __attribute__((section(".text"), used)) = {
-
-    /* --- 16 Display Parameter Records ---------------------------------- */
-    .display_records = {
-        [ 0] = {
-            .screen_id     = 0x01A0,
-            .dram_addr     = 0x0003D56C,
-            .timer_interval = 0x005A,
-            .flags         = 0x0160,
-            .prev_sibling  = 0xFFFF,
-            .next_sibling  = 0xFFFF,
-            .parent_idx    = 0xFFFF,
-            .child_idx     = 0xFFFF,
-            .line_spacing  = 0x000A,
-            .x_origin      = 0x0000,
-            .y_origin      = 0x0000,
-            .width         = 319,
-            .height        = 239,
-            .bg_color      = 0x00FF,
-            .reserved_1e   = 0x0000,
-            .reserved_20   = 0x0000,
-        },
-        [ 1] = {
-            .screen_id     = 0x01A0,
-            .dram_addr     = 0x0003D570,
-            .timer_interval = 0x005A,
-            .flags         = 0x0160,
-            .prev_sibling  = 0xFFFF,
-            .next_sibling  = 0xFFFF,
-            .parent_idx    = 0xFFFF,
-            .child_idx     = 0xFFFF,
-            .line_spacing  = 0x000A,
-            .x_origin      = 0x0000,
-            .y_origin      = 0x0000,
-            .width         = 319,
-            .height        = 239,
-            .bg_color      = 0x00FF,
-            .reserved_1e   = 0x0000,
-            .reserved_20   = 0x0000,
-        },
-        [ 2] = {
-            .screen_id     = 0x01A0,
-            .dram_addr     = 0x0003D574,
-            .timer_interval = 0x005A,
-            .flags         = 0x0160,
-            .prev_sibling  = 0xFFFF,
-            .next_sibling  = 0xFFFF,
-            .parent_idx    = 0xFFFF,
-            .child_idx     = 0xFFFF,
-            .line_spacing  = 0x000A,
-            .x_origin      = 0x0000,
-            .y_origin      = 0x0000,
-            .width         = 319,
-            .height        = 239,
-            .bg_color      = 0x00FF,
-            .reserved_1e   = 0x0000,
-            .reserved_20   = 0x0000,
-        },
-        [ 3] = {
-            .screen_id     = 0x01A0,
-            .dram_addr     = 0x0003D578,
-            .timer_interval = 0x005A,
-            .flags         = 0x0160,
-            .prev_sibling  = 0xFFFF,
-            .next_sibling  = 0xFFFF,
-            .parent_idx    = 0xFFFF,
-            .child_idx     = 0xFFFF,
-            .line_spacing  = 0x000A,
-            .x_origin      = 0x0000,
-            .y_origin      = 0x0000,
-            .width         = 319,
-            .height        = 239,
-            .bg_color      = 0x00FF,
-            .reserved_1e   = 0x0000,
-            .reserved_20   = 0x0000,
-        },
-        [ 4] = {
-            .screen_id     = 0x01A0,
-            .dram_addr     = 0x0003D57C,
-            .timer_interval = 0x005A,
-            .flags         = 0x0160,
-            .prev_sibling  = 0xFFFF,
-            .next_sibling  = 0xFFFF,
-            .parent_idx    = 0xFFFF,
-            .child_idx     = 0xFFFF,
-            .line_spacing  = 0x000A,
-            .x_origin      = 0x0000,
-            .y_origin      = 0x0000,
-            .width         = 319,
-            .height        = 239,
-            .bg_color      = 0x00FF,
-            .reserved_1e   = 0x0000,
-            .reserved_20   = 0x0000,
-        },
-        [ 5] = {
-            .screen_id     = 0x01A0,
-            .dram_addr     = 0x0003D580,
-            .timer_interval = 0x005A,
-            .flags         = 0x0160,
-            .prev_sibling  = 0xFFFF,
-            .next_sibling  = 0xFFFF,
-            .parent_idx    = 0xFFFF,
-            .child_idx     = 0xFFFF,
-            .line_spacing  = 0x000A,
-            .x_origin      = 0x0000,
-            .y_origin      = 0x0000,
-            .width         = 319,
-            .height        = 239,
-            .bg_color      = 0x00FF,
-            .reserved_1e   = 0x0000,
-            .reserved_20   = 0x0000,
-        },
-        [ 6] = {
-            .screen_id     = 0x01A0,
-            .dram_addr     = 0x0003D584,
-            .timer_interval = 0x005A,
-            .flags         = 0x0160,
-            .prev_sibling  = 0xFFFF,
-            .next_sibling  = 0xFFFF,
-            .parent_idx    = 0xFFFF,
-            .child_idx     = 0xFFFF,
-            .line_spacing  = 0x000A,
-            .x_origin      = 0x0000,
-            .y_origin      = 0x0000,
-            .width         = 319,
-            .height        = 239,
-            .bg_color      = 0x00FF,
-            .reserved_1e   = 0x0000,
-            .reserved_20   = 0x0000,
-        },
-        [ 7] = {
-            .screen_id     = 0x01A0,
-            .dram_addr     = 0x0003D588,
-            .timer_interval = 0x005A,
-            .flags         = 0x0160,
-            .prev_sibling  = 0xFFFF,
-            .next_sibling  = 0xFFFF,
-            .parent_idx    = 0xFFFF,
-            .child_idx     = 0xFFFF,
-            .line_spacing  = 0x000A,
-            .x_origin      = 0x0000,
-            .y_origin      = 0x0000,
-            .width         = 319,
-            .height        = 239,
-            .bg_color      = 0x00FF,
-            .reserved_1e   = 0x0000,
-            .reserved_20   = 0x0000,
-        },
-        [ 8] = {
-            .screen_id     = 0x01A0,
-            .dram_addr     = 0x0003D58C,
-            .timer_interval = 0x005A,
-            .flags         = 0x0160,
-            .prev_sibling  = 0xFFFF,
-            .next_sibling  = 0xFFFF,
-            .parent_idx    = 0xFFFF,
-            .child_idx     = 0xFFFF,
-            .line_spacing  = 0x000A,
-            .x_origin      = 0x0000,
-            .y_origin      = 0x0000,
-            .width         = 319,
-            .height        = 239,
-            .bg_color      = 0x00FF,
-            .reserved_1e   = 0x0000,
-            .reserved_20   = 0x0000,
-        },
-        [ 9] = {
-            .screen_id     = 0x01A0,
-            .dram_addr     = 0x0003D590,
-            .timer_interval = 0x005A,
-            .flags         = 0x0160,
-            .prev_sibling  = 0xFFFF,
-            .next_sibling  = 0xFFFF,
-            .parent_idx    = 0xFFFF,
-            .child_idx     = 0xFFFF,
-            .line_spacing  = 0x000A,
-            .x_origin      = 0x0000,
-            .y_origin      = 0x0000,
-            .width         = 319,
-            .height        = 239,
-            .bg_color      = 0x00FF,
-            .reserved_1e   = 0x0000,
-            .reserved_20   = 0x0000,
-        },
-        [10] = {
-            .screen_id     = 0x01A0,
-            .dram_addr     = 0x0003D594,
-            .timer_interval = 0x005A,
-            .flags         = 0x0160,
-            .prev_sibling  = 0xFFFF,
-            .next_sibling  = 0xFFFF,
-            .parent_idx    = 0xFFFF,
-            .child_idx     = 0xFFFF,
-            .line_spacing  = 0x000A,
-            .x_origin      = 0x0000,
-            .y_origin      = 0x0000,
-            .width         = 319,
-            .height        = 239,
-            .bg_color      = 0x00FF,
-            .reserved_1e   = 0x0000,
-            .reserved_20   = 0x0000,
-        },
-        [11] = {
-            .screen_id     = 0x01A0,
-            .dram_addr     = 0x0003D598,
-            .timer_interval = 0x005A,
-            .flags         = 0x0160,
-            .prev_sibling  = 0xFFFF,
-            .next_sibling  = 0xFFFF,
-            .parent_idx    = 0xFFFF,
-            .child_idx     = 0xFFFF,
-            .line_spacing  = 0x000A,
-            .x_origin      = 0x0000,
-            .y_origin      = 0x0000,
-            .width         = 319,
-            .height        = 239,
-            .bg_color      = 0x00FF,
-            .reserved_1e   = 0x0000,
-            .reserved_20   = 0x0000,
-        },
-        [12] = {
-            .screen_id     = 0x01A0,
-            .dram_addr     = 0x0003D59C,
-            .timer_interval = 0x005A,
-            .flags         = 0x0160,
-            .prev_sibling  = 0xFFFF,
-            .next_sibling  = 0xFFFF,
-            .parent_idx    = 0xFFFF,
-            .child_idx     = 0xFFFF,
-            .line_spacing  = 0x000A,
-            .x_origin      = 0x0000,
-            .y_origin      = 0x0000,
-            .width         = 319,
-            .height        = 239,
-            .bg_color      = 0x00FF,
-            .reserved_1e   = 0x0000,
-            .reserved_20   = 0x0000,
-        },
-        [13] = {
-            .screen_id     = 0x01A0,
-            .dram_addr     = 0x0003D5A0,
-            .timer_interval = 0x005A,
-            .flags         = 0x0160,
-            .prev_sibling  = 0xFFFF,
-            .next_sibling  = 0xFFFF,
-            .parent_idx    = 0xFFFF,
-            .child_idx     = 0xFFFF,
-            .line_spacing  = 0x000A,
-            .x_origin      = 0x0000,
-            .y_origin      = 0x0000,
-            .width         = 319,
-            .height        = 239,
-            .bg_color      = 0x00FF,
-            .reserved_1e   = 0x0000,
-            .reserved_20   = 0x0000,
-        },
-        [14] = {
-            .screen_id     = 0x01A0,
-            .dram_addr     = 0x0003D5A4,
-            .timer_interval = 0x005A,
-            .flags         = 0x0160,
-            .prev_sibling  = 0xFFFF,
-            .next_sibling  = 0xFFFF,
-            .parent_idx    = 0xFFFF,
-            .child_idx     = 0xFFFF,
-            .line_spacing  = 0x000A,
-            .x_origin      = 0x0000,
-            .y_origin      = 0x0000,
-            .width         = 319,
-            .height        = 239,
-            .bg_color      = 0x00FF,
-            .reserved_1e   = 0x0000,
-            .reserved_20   = 0x0000,
-        },
-        [15] = {
-            .screen_id     = 0x01A0,
-            .dram_addr     = 0x0003D5A8,
-            .timer_interval = 0x005A,
-            .flags         = 0x0160,
-            .prev_sibling  = 0xFFFF,
-            .next_sibling  = 0xFFFF,
-            .parent_idx    = 0xFFFF,
-            .child_idx     = 0xFFFF,
-            .line_spacing  = 0x000A,
-            .x_origin      = 0x0000,
-            .y_origin      = 0x0000,
-            .width         = 319,
-            .height        = 239,
-            .bg_color      = 0x00FF,
-            .reserved_1e   = 0x0000,
-            .reserved_20   = 0x0000,
-        },
-    },
-
-    /* --- 17th Record Header --------------------------------------------- */
-    .rec17_screen_id = 0x01A0,
-    .rec17_dram_addr = 0x0003D5AC,
 
     /* --- 33 Screen Pointer Pairs (ptr + zero each) --- */
     .screen_ptr_pairs = {

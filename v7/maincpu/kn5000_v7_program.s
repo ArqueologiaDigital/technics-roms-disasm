@@ -80,7 +80,7 @@
 
 GUI_FormatStrings:		.include "includes/gui_format_strings.s"
 ; -----------------------------------------------------------------------------
-; GUI_DisplayStructData .. the end of ToneGen_ParamTable: the data of the Scoop
+; NakaWidget_sefillpq1 .. the end of ToneGen_ParamTable: the data of the Scoop
 ; and sound-editor objects, cut at every address the code loads or names
 ; (scripts/lanes/sys/gui_tables.py: object parameter blocks passed to
 ; RegisterObjectTable, 18-entry code-pointer tables the SeWrtSndTitleFunc_OnDraw /
@@ -90,130 +90,143 @@ GUI_FormatStrings:		.include "includes/gui_format_strings.s"
 ; these readers (ToneGen_ParamTable is not tone-generator data:
 ; scripts/analysis/v7_tonegen_paramtable_is_a_jumptable.py).
 ; -----------------------------------------------------------------------------
-; purpose not established.
-; tried: `lda`/`ld` of a 24- or 32-bit immediate, and any little-endian 24-bit copy of an address from 0x120 B before this slice to its end, anywhere in the ROM: none found
-GUI_DisplayStructData:	.incbin "includes/generated/gui_display_struct_data.bin", 0x0, 0x6
-NakaWidget_sefillpq1:	.incbin "includes/generated/gui_display_struct_data.bin", 0x6, 0x22
-NakaWidget_sefilhpq1:	.incbin "includes/generated/gui_display_struct_data.bin", 0x28, 0x22
-NakaWidget_sefill241:	.incbin "includes/generated/gui_display_struct_data.bin", 0x4A, 0x22
-NakaWidget_sefilh241:	.incbin "includes/generated/gui_display_struct_data.bin", 0x6C, 0x22
-NakaWidget_sefilbpf1:	.incbin "includes/generated/gui_display_struct_data.bin", 0x8E, 0x22
-NakaWidget_sefilbcf1:	.incbin "includes/generated/gui_display_struct_data.bin", 0xB0, 0x22
-NakaWidget_sefilfil2:	.incbin "includes/generated/gui_display_struct_data.bin", 0xD2, 0x22
-NakaWidget_sefilenv1:	.incbin "includes/generated/gui_display_struct_data.bin", 0xF4, 0x22
-NakaWidget_sefilenv2:	.incbin "includes/generated/gui_display_struct_data.bin", 0x116, 0x22
-NakaWidget_sefillfo1:	.incbin "includes/generated/gui_display_struct_data.bin", 0x138, 0x22
-NakaWidget_sedigeff:	.incbin "includes/generated/gui_display_struct_data.bin", 0x15A, 0x22
-NakaWidget_sectr2:	.incbin "includes/generated/gui_display_struct_data.bin", 0x17C, 0x22
-NakaWidget_sectr3:	.incbin "includes/generated/gui_display_struct_data.bin", 0x19E, 0x22
-NakaWidget_secopy:	.incbin "includes/generated/gui_display_struct_data.bin", 0x1C0, 0x22
-NakaWidget_sewrtmem:	.incbin "includes/generated/gui_display_struct_data.bin", 0x1E2, 0x22
-NakaWidget_sewrtsnd:	.incbin "includes/generated/gui_display_struct_data.bin", 0x204, 0x22
+NakaWidget_sefillpq1:
+	NAKA_REC_IvDirmdScreen super=NAKA_INDEX_NONE, sub=NAKA_INDEX_NONE, next=NAKA_INDEX_NONE, prev=NAKA_INDEX_NONE, flag=VF_Fixed | VF_Const, x=0, y=0, w=320, h=240, color=CL_White, border=BD_None, exit=TITLE_PS, window=0x3d570
+NakaWidget_sefilhpq1:
+	NAKA_REC_IvDirmdScreen super=NAKA_INDEX_NONE, sub=NAKA_INDEX_NONE, next=NAKA_INDEX_NONE, prev=NAKA_INDEX_NONE, flag=VF_Fixed | VF_Const, x=0, y=0, w=320, h=240, color=CL_White, border=BD_None, exit=TITLE_PS, window=0x3d574
+NakaWidget_sefill241:
+	NAKA_REC_IvDirmdScreen super=NAKA_INDEX_NONE, sub=NAKA_INDEX_NONE, next=NAKA_INDEX_NONE, prev=NAKA_INDEX_NONE, flag=VF_Fixed | VF_Const, x=0, y=0, w=320, h=240, color=CL_White, border=BD_None, exit=TITLE_PS, window=0x3d578
+NakaWidget_sefilh241:
+	NAKA_REC_IvDirmdScreen super=NAKA_INDEX_NONE, sub=NAKA_INDEX_NONE, next=NAKA_INDEX_NONE, prev=NAKA_INDEX_NONE, flag=VF_Fixed | VF_Const, x=0, y=0, w=320, h=240, color=CL_White, border=BD_None, exit=TITLE_PS, window=0x3d57c
+NakaWidget_sefilbpf1:
+	NAKA_REC_IvDirmdScreen super=NAKA_INDEX_NONE, sub=NAKA_INDEX_NONE, next=NAKA_INDEX_NONE, prev=NAKA_INDEX_NONE, flag=VF_Fixed | VF_Const, x=0, y=0, w=320, h=240, color=CL_White, border=BD_None, exit=TITLE_PS, window=0x3d580
+NakaWidget_sefilbcf1:
+	NAKA_REC_IvDirmdScreen super=NAKA_INDEX_NONE, sub=NAKA_INDEX_NONE, next=NAKA_INDEX_NONE, prev=NAKA_INDEX_NONE, flag=VF_Fixed | VF_Const, x=0, y=0, w=320, h=240, color=CL_White, border=BD_None, exit=TITLE_PS, window=0x3d584
+NakaWidget_sefilfil2:
+	NAKA_REC_IvDirmdScreen super=NAKA_INDEX_NONE, sub=NAKA_INDEX_NONE, next=NAKA_INDEX_NONE, prev=NAKA_INDEX_NONE, flag=VF_Fixed | VF_Const, x=0, y=0, w=320, h=240, color=CL_White, border=BD_None, exit=TITLE_PS, window=0x3d588
+NakaWidget_sefilenv1:
+	NAKA_REC_IvDirmdScreen super=NAKA_INDEX_NONE, sub=NAKA_INDEX_NONE, next=NAKA_INDEX_NONE, prev=NAKA_INDEX_NONE, flag=VF_Fixed | VF_Const, x=0, y=0, w=320, h=240, color=CL_White, border=BD_None, exit=TITLE_PS, window=0x3d58c
+NakaWidget_sefilenv2:
+	NAKA_REC_IvDirmdScreen super=NAKA_INDEX_NONE, sub=NAKA_INDEX_NONE, next=NAKA_INDEX_NONE, prev=NAKA_INDEX_NONE, flag=VF_Fixed | VF_Const, x=0, y=0, w=320, h=240, color=CL_White, border=BD_None, exit=TITLE_PS, window=0x3d590
+NakaWidget_sefillfo1:
+	NAKA_REC_IvDirmdScreen super=NAKA_INDEX_NONE, sub=NAKA_INDEX_NONE, next=NAKA_INDEX_NONE, prev=NAKA_INDEX_NONE, flag=VF_Fixed | VF_Const, x=0, y=0, w=320, h=240, color=CL_White, border=BD_None, exit=TITLE_PS, window=0x3d594
+NakaWidget_sedigeff:
+	NAKA_REC_IvDirmdScreen super=NAKA_INDEX_NONE, sub=NAKA_INDEX_NONE, next=NAKA_INDEX_NONE, prev=NAKA_INDEX_NONE, flag=VF_Fixed | VF_Const, x=0, y=0, w=320, h=240, color=CL_White, border=BD_None, exit=TITLE_PS, window=0x3d598
+NakaWidget_sectr2:
+	NAKA_REC_IvDirmdScreen super=NAKA_INDEX_NONE, sub=NAKA_INDEX_NONE, next=NAKA_INDEX_NONE, prev=NAKA_INDEX_NONE, flag=VF_Fixed | VF_Const, x=0, y=0, w=320, h=240, color=CL_White, border=BD_None, exit=TITLE_PS, window=0x3d59c
+NakaWidget_sectr3:
+	NAKA_REC_IvDirmdScreen super=NAKA_INDEX_NONE, sub=NAKA_INDEX_NONE, next=NAKA_INDEX_NONE, prev=NAKA_INDEX_NONE, flag=VF_Fixed | VF_Const, x=0, y=0, w=320, h=240, color=CL_White, border=BD_None, exit=TITLE_PS, window=0x3d5a0
+NakaWidget_secopy:
+	NAKA_REC_IvDirmdScreen super=NAKA_INDEX_NONE, sub=NAKA_INDEX_NONE, next=NAKA_INDEX_NONE, prev=NAKA_INDEX_NONE, flag=VF_Fixed | VF_Const, x=0, y=0, w=320, h=240, color=CL_White, border=BD_None, exit=TITLE_PS, window=0x3d5a4
+NakaWidget_sewrtmem:
+	NAKA_REC_IvDirmdScreen super=NAKA_INDEX_NONE, sub=NAKA_INDEX_NONE, next=NAKA_INDEX_NONE, prev=NAKA_INDEX_NONE, flag=VF_Fixed | VF_Const, x=0, y=0, w=320, h=240, color=CL_White, border=BD_None, exit=TITLE_PS, window=0x3d5a8
+NakaWidget_sewrtsnd:
 ; 32 parameter blocks of 8 B, one per object 0x20..0x3f (class 0x01600010, proc ViewableProc),
 ; registered by InitializeScoop+0x16F: the block address is the +10 data field of the 14-byte
 ; descriptor {+0 class, +4 proc, +8 u16, +10 data} RegisterObjectTable copies to 0x27ED2 + 14*index
-GUI_DisplayStructData_0x226:	.incbin "includes/generated/gui_display_struct_data.bin", 0x226, 0x8
-Scoop_ViewableTable_021:	.incbin "includes/generated/gui_display_struct_data.bin", 0x22E, 0x8
-Scoop_ViewableTable_022:	.incbin "includes/generated/gui_display_struct_data.bin", 0x236, 0x8
-Scoop_ViewableTable_023:	.incbin "includes/generated/gui_display_struct_data.bin", 0x23E, 0x8
-Scoop_ViewableTable_024:	.incbin "includes/generated/gui_display_struct_data.bin", 0x246, 0x8
-Scoop_ViewableTable_025:	.incbin "includes/generated/gui_display_struct_data.bin", 0x24E, 0x8
-Scoop_ViewableTable_026:	.incbin "includes/generated/gui_display_struct_data.bin", 0x256, 0x8
-Scoop_ViewableTable_027:	.incbin "includes/generated/gui_display_struct_data.bin", 0x25E, 0x8
-Scoop_ViewableTable_028:	.incbin "includes/generated/gui_display_struct_data.bin", 0x266, 0x8
-Scoop_ViewableTable_029:	.incbin "includes/generated/gui_display_struct_data.bin", 0x26E, 0x8
-Scoop_ViewableTable_02A:	.incbin "includes/generated/gui_display_struct_data.bin", 0x276, 0x8
-Scoop_ViewableTable_02B:	.incbin "includes/generated/gui_display_struct_data.bin", 0x27E, 0x8
-Scoop_ViewableTable_02C:	.incbin "includes/generated/gui_display_struct_data.bin", 0x286, 0x8
-Scoop_ViewableTable_02D:	.incbin "includes/generated/gui_display_struct_data.bin", 0x28E, 0x8
-Scoop_ViewableTable_02E:	.incbin "includes/generated/gui_display_struct_data.bin", 0x296, 0x8
-Scoop_ViewableTable_02F:	.incbin "includes/generated/gui_display_struct_data.bin", 0x29E, 0x8
-Scoop_ViewableTable_030:	.incbin "includes/generated/gui_display_struct_data.bin", 0x2A6, 0x8
-Scoop_ViewableTable_031:	.incbin "includes/generated/gui_display_struct_data.bin", 0x2AE, 0x8
-Scoop_ViewableTable_032:	.incbin "includes/generated/gui_display_struct_data.bin", 0x2B6, 0x8
-Scoop_ViewableTable_033:	.incbin "includes/generated/gui_display_struct_data.bin", 0x2BE, 0x8
-Scoop_ViewableTable_034:	.incbin "includes/generated/gui_display_struct_data.bin", 0x2C6, 0x8
-Scoop_ViewableTable_035:	.incbin "includes/generated/gui_display_struct_data.bin", 0x2CE, 0x8
-Scoop_ViewableTable_036:	.incbin "includes/generated/gui_display_struct_data.bin", 0x2D6, 0x8
-Scoop_ViewableTable_037:	.incbin "includes/generated/gui_display_struct_data.bin", 0x2DE, 0x8
-Scoop_ViewableTable_038:	.incbin "includes/generated/gui_display_struct_data.bin", 0x2E6, 0x8
-Scoop_ViewableTable_039:	.incbin "includes/generated/gui_display_struct_data.bin", 0x2EE, 0x8
-Scoop_ViewableTable_03A:	.incbin "includes/generated/gui_display_struct_data.bin", 0x2F6, 0x8
-Scoop_ViewableTable_03B:	.incbin "includes/generated/gui_display_struct_data.bin", 0x2FE, 0x8
-Scoop_ViewableTable_03C:	.incbin "includes/generated/gui_display_struct_data.bin", 0x306, 0x8
-Scoop_ViewableTable_03D:	.incbin "includes/generated/gui_display_struct_data.bin", 0x30E, 0x8
-Scoop_ViewableTable_03E:	.incbin "includes/generated/gui_display_struct_data.bin", 0x316, 0x8
-Scoop_ViewableTable_03F:	.incbin "includes/generated/gui_display_struct_data.bin", 0x31E, 0x8
+	NAKA_REC_IvDirmdScreen super=NAKA_INDEX_NONE, sub=NAKA_INDEX_NONE, next=NAKA_INDEX_NONE, prev=NAKA_INDEX_NONE, flag=VF_Fixed | VF_Const, x=0, y=0, w=320, h=240, color=CL_White, border=BD_None, exit=TITLE_PS, window=0x3d5ac
+Scoop_ViewableTable_020:	.incbin "includes/generated/gui_display_struct_data.bin", 0x0, 0x8
+Scoop_ViewableTable_021:	.incbin "includes/generated/gui_display_struct_data.bin", 0x8, 0x8
+Scoop_ViewableTable_022:	.incbin "includes/generated/gui_display_struct_data.bin", 0x10, 0x8
+Scoop_ViewableTable_023:	.incbin "includes/generated/gui_display_struct_data.bin", 0x18, 0x8
+Scoop_ViewableTable_024:	.incbin "includes/generated/gui_display_struct_data.bin", 0x20, 0x8
+Scoop_ViewableTable_025:	.incbin "includes/generated/gui_display_struct_data.bin", 0x28, 0x8
+Scoop_ViewableTable_026:	.incbin "includes/generated/gui_display_struct_data.bin", 0x30, 0x8
+Scoop_ViewableTable_027:	.incbin "includes/generated/gui_display_struct_data.bin", 0x38, 0x8
+Scoop_ViewableTable_028:	.incbin "includes/generated/gui_display_struct_data.bin", 0x40, 0x8
+Scoop_ViewableTable_029:	.incbin "includes/generated/gui_display_struct_data.bin", 0x48, 0x8
+Scoop_ViewableTable_02A:	.incbin "includes/generated/gui_display_struct_data.bin", 0x50, 0x8
+Scoop_ViewableTable_02B:	.incbin "includes/generated/gui_display_struct_data.bin", 0x58, 0x8
+Scoop_ViewableTable_02C:	.incbin "includes/generated/gui_display_struct_data.bin", 0x60, 0x8
+Scoop_ViewableTable_02D:	.incbin "includes/generated/gui_display_struct_data.bin", 0x68, 0x8
+Scoop_ViewableTable_02E:	.incbin "includes/generated/gui_display_struct_data.bin", 0x70, 0x8
+Scoop_ViewableTable_02F:	.incbin "includes/generated/gui_display_struct_data.bin", 0x78, 0x8
+Scoop_ViewableTable_030:	.incbin "includes/generated/gui_display_struct_data.bin", 0x80, 0x8
+Scoop_ViewableTable_031:	.incbin "includes/generated/gui_display_struct_data.bin", 0x88, 0x8
+Scoop_ViewableTable_032:	.incbin "includes/generated/gui_display_struct_data.bin", 0x90, 0x8
+Scoop_ViewableTable_033:	.incbin "includes/generated/gui_display_struct_data.bin", 0x98, 0x8
+Scoop_ViewableTable_034:	.incbin "includes/generated/gui_display_struct_data.bin", 0xA0, 0x8
+Scoop_ViewableTable_035:	.incbin "includes/generated/gui_display_struct_data.bin", 0xA8, 0x8
+Scoop_ViewableTable_036:	.incbin "includes/generated/gui_display_struct_data.bin", 0xB0, 0x8
+Scoop_ViewableTable_037:	.incbin "includes/generated/gui_display_struct_data.bin", 0xB8, 0x8
+Scoop_ViewableTable_038:	.incbin "includes/generated/gui_display_struct_data.bin", 0xC0, 0x8
+Scoop_ViewableTable_039:	.incbin "includes/generated/gui_display_struct_data.bin", 0xC8, 0x8
+Scoop_ViewableTable_03A:	.incbin "includes/generated/gui_display_struct_data.bin", 0xD0, 0x8
+Scoop_ViewableTable_03B:	.incbin "includes/generated/gui_display_struct_data.bin", 0xD8, 0x8
+Scoop_ViewableTable_03C:	.incbin "includes/generated/gui_display_struct_data.bin", 0xE0, 0x8
+Scoop_ViewableTable_03D:	.incbin "includes/generated/gui_display_struct_data.bin", 0xE8, 0x8
+Scoop_ViewableTable_03E:	.incbin "includes/generated/gui_display_struct_data.bin", 0xF0, 0x8
+Scoop_ViewableTable_03F:	.incbin "includes/generated/gui_display_struct_data.bin", 0xF8, 0x8
 ; 32 parameter blocks of 18-20 B (address differences), one per object 0x320..0x33f (class 0x0160000F, proc ResNameProc),
 ; registered by InitializeScoop+0x194: the block address is the +10 data field of the 14-byte
 ; descriptor {+0 class, +4 proc, +8 u16, +10 data} RegisterObjectTable copies to 0x27ED2 + 14*index
-GUI_DisplayStructData_0x326:	.incbin "includes/generated/gui_display_struct_data.bin", 0x326, 0x12
-Scoop_ResNameTable_321:		.incbin "includes/generated/gui_display_struct_data.bin", 0x338, 0x12
-Scoop_ResNameTable_322:		.incbin "includes/generated/gui_display_struct_data.bin", 0x34A, 0x14
-Scoop_ResNameTable_323:		.incbin "includes/generated/gui_display_struct_data.bin", 0x35E, 0x14
-Scoop_ResNameTable_324:		.incbin "includes/generated/gui_display_struct_data.bin", 0x372, 0x14
-Scoop_ResNameTable_325:		.incbin "includes/generated/gui_display_struct_data.bin", 0x386, 0x14
-Scoop_ResNameTable_326:		.incbin "includes/generated/gui_display_struct_data.bin", 0x39A, 0x14
-Scoop_ResNameTable_327:		.incbin "includes/generated/gui_display_struct_data.bin", 0x3AE, 0x14
-Scoop_ResNameTable_328:		.incbin "includes/generated/gui_display_struct_data.bin", 0x3C2, 0x14
-Scoop_ResNameTable_329:		.incbin "includes/generated/gui_display_struct_data.bin", 0x3D6, 0x14
-Scoop_ResNameTable_32A:		.incbin "includes/generated/gui_display_struct_data.bin", 0x3EA, 0x14
-Scoop_ResNameTable_32B:		.incbin "includes/generated/gui_display_struct_data.bin", 0x3FE, 0x14
-Scoop_ResNameTable_32C:		.incbin "includes/generated/gui_display_struct_data.bin", 0x412, 0x14
-Scoop_ResNameTable_32D:		.incbin "includes/generated/gui_display_struct_data.bin", 0x426, 0x14
-Scoop_ResNameTable_32E:		.incbin "includes/generated/gui_display_struct_data.bin", 0x43A, 0x14
-Scoop_ResNameTable_32F:		.incbin "includes/generated/gui_display_struct_data.bin", 0x44E, 0x14
-Scoop_ResNameTable_330:		.incbin "includes/generated/gui_display_struct_data.bin", 0x462, 0x14
-Scoop_ResNameTable_331:		.incbin "includes/generated/gui_display_struct_data.bin", 0x476, 0x14
-Scoop_ResNameTable_332:		.incbin "includes/generated/gui_display_struct_data.bin", 0x48A, 0x14
-Scoop_ResNameTable_333:		.incbin "includes/generated/gui_display_struct_data.bin", 0x49E, 0x14
-Scoop_ResNameTable_334:		.incbin "includes/generated/gui_display_struct_data.bin", 0x4B2, 0x14
-Scoop_ResNameTable_335:		.incbin "includes/generated/gui_display_struct_data.bin", 0x4C6, 0x14
-Scoop_ResNameTable_336:		.incbin "includes/generated/gui_display_struct_data.bin", 0x4DA, 0x14
-Scoop_ResNameTable_337:		.incbin "includes/generated/gui_display_struct_data.bin", 0x4EE, 0x14
-Scoop_ResNameTable_338:		.incbin "includes/generated/gui_display_struct_data.bin", 0x502, 0x14
-Scoop_ResNameTable_339:		.incbin "includes/generated/gui_display_struct_data.bin", 0x516, 0x14
-Scoop_ResNameTable_33A:		.incbin "includes/generated/gui_display_struct_data.bin", 0x52A, 0x14
-Scoop_ResNameTable_33B:		.incbin "includes/generated/gui_display_struct_data.bin", 0x53E, 0x12
-Scoop_ResNameTable_33C:		.incbin "includes/generated/gui_display_struct_data.bin", 0x550, 0x12
-Scoop_ResNameTable_33D:		.incbin "includes/generated/gui_display_struct_data.bin", 0x562, 0x12
-Scoop_ResNameTable_33E:		.incbin "includes/generated/gui_display_struct_data.bin", 0x574, 0x14
-Scoop_ResNameTable_33F:		.incbin "includes/generated/gui_display_struct_data.bin", 0x588, 0x14
+GUI_DisplayStructData_0x326:	.incbin "includes/generated/gui_display_struct_data.bin", 0x100, 0x12
+Scoop_ResNameTable_321:		.incbin "includes/generated/gui_display_struct_data.bin", 0x112, 0x12
+Scoop_ResNameTable_322:		.incbin "includes/generated/gui_display_struct_data.bin", 0x124, 0x14
+Scoop_ResNameTable_323:		.incbin "includes/generated/gui_display_struct_data.bin", 0x138, 0x14
+Scoop_ResNameTable_324:		.incbin "includes/generated/gui_display_struct_data.bin", 0x14C, 0x14
+Scoop_ResNameTable_325:		.incbin "includes/generated/gui_display_struct_data.bin", 0x160, 0x14
+Scoop_ResNameTable_326:		.incbin "includes/generated/gui_display_struct_data.bin", 0x174, 0x14
+Scoop_ResNameTable_327:		.incbin "includes/generated/gui_display_struct_data.bin", 0x188, 0x14
+Scoop_ResNameTable_328:		.incbin "includes/generated/gui_display_struct_data.bin", 0x19C, 0x14
+Scoop_ResNameTable_329:		.incbin "includes/generated/gui_display_struct_data.bin", 0x1B0, 0x14
+Scoop_ResNameTable_32A:		.incbin "includes/generated/gui_display_struct_data.bin", 0x1C4, 0x14
+Scoop_ResNameTable_32B:		.incbin "includes/generated/gui_display_struct_data.bin", 0x1D8, 0x14
+Scoop_ResNameTable_32C:		.incbin "includes/generated/gui_display_struct_data.bin", 0x1EC, 0x14
+Scoop_ResNameTable_32D:		.incbin "includes/generated/gui_display_struct_data.bin", 0x200, 0x14
+Scoop_ResNameTable_32E:		.incbin "includes/generated/gui_display_struct_data.bin", 0x214, 0x14
+Scoop_ResNameTable_32F:		.incbin "includes/generated/gui_display_struct_data.bin", 0x228, 0x14
+Scoop_ResNameTable_330:		.incbin "includes/generated/gui_display_struct_data.bin", 0x23C, 0x14
+Scoop_ResNameTable_331:		.incbin "includes/generated/gui_display_struct_data.bin", 0x250, 0x14
+Scoop_ResNameTable_332:		.incbin "includes/generated/gui_display_struct_data.bin", 0x264, 0x14
+Scoop_ResNameTable_333:		.incbin "includes/generated/gui_display_struct_data.bin", 0x278, 0x14
+Scoop_ResNameTable_334:		.incbin "includes/generated/gui_display_struct_data.bin", 0x28C, 0x14
+Scoop_ResNameTable_335:		.incbin "includes/generated/gui_display_struct_data.bin", 0x2A0, 0x14
+Scoop_ResNameTable_336:		.incbin "includes/generated/gui_display_struct_data.bin", 0x2B4, 0x14
+Scoop_ResNameTable_337:		.incbin "includes/generated/gui_display_struct_data.bin", 0x2C8, 0x14
+Scoop_ResNameTable_338:		.incbin "includes/generated/gui_display_struct_data.bin", 0x2DC, 0x14
+Scoop_ResNameTable_339:		.incbin "includes/generated/gui_display_struct_data.bin", 0x2F0, 0x14
+Scoop_ResNameTable_33A:		.incbin "includes/generated/gui_display_struct_data.bin", 0x304, 0x14
+Scoop_ResNameTable_33B:		.incbin "includes/generated/gui_display_struct_data.bin", 0x318, 0x12
+Scoop_ResNameTable_33C:		.incbin "includes/generated/gui_display_struct_data.bin", 0x32A, 0x12
+Scoop_ResNameTable_33D:		.incbin "includes/generated/gui_display_struct_data.bin", 0x33C, 0x12
+Scoop_ResNameTable_33E:		.incbin "includes/generated/gui_display_struct_data.bin", 0x34E, 0x14
+Scoop_ResNameTable_33F:		.incbin "includes/generated/gui_display_struct_data.bin", 0x362, 0x14
 ; purpose not established.
 ; tried: `lda`/`ld` of a 24- or 32-bit immediate, and any little-endian 24-bit copy of an address from 0x120 B before this slice to its end, anywhere in the ROM: none found
-GUI_DisplayStructData_0x59C:		.incbin "includes/generated/gui_display_struct_data.bin", 0x59C, 0xE
-InitializeScoop_Str_TT_SEMENU:		.incbin "includes/generated/gui_display_struct_data.bin", 0x5AA, 0xA	; "TT_SEMENU"
-InitializeScoop_Str_TT_SEEASY:		.incbin "includes/generated/gui_display_struct_data.bin", 0x5B4, 0xA	; "TT_SEEASY"
-InitializeScoop_Str_TT_SETONTON1:	.incbin "includes/generated/gui_display_struct_data.bin", 0x5BE, 0xE	; "TT_SETONTON1"
-InitializeScoop_Str_TT_SETONTON2:	.incbin "includes/generated/gui_display_struct_data.bin", 0x5CC, 0xE	; "TT_SETONTON2"
-InitializeScoop_Str_TT_SETONRAN1:	.incbin "includes/generated/gui_display_struct_data.bin", 0x5DA, 0xE	; "TT_SETONRAN1"
-InitializeScoop_Str_TT_SETONRAN2:	.incbin "includes/generated/gui_display_struct_data.bin", 0x5E8, 0xE	; "TT_SETONRAN2"
-InitializeScoop_Str_TT_SETONHYB1:	.incbin "includes/generated/gui_display_struct_data.bin", 0x5F6, 0xE	; "TT_SETONHYB1"
-InitializeScoop_Str_TT_SEPITPIT1:	.incbin "includes/generated/gui_display_struct_data.bin", 0x604, 0xE	; "TT_SEPITPIT1"
-InitializeScoop_Str_TT_SEPITENV1:	.incbin "includes/generated/gui_display_struct_data.bin", 0x612, 0xE	; "TT_SEPITENV1"
-InitializeScoop_Str_TT_SEPITENV2:	.incbin "includes/generated/gui_display_struct_data.bin", 0x620, 0xE	; "TT_SEPITENV2"
-InitializeScoop_Str_TT_SEPITLFO1:	.incbin "includes/generated/gui_display_struct_data.bin", 0x62E, 0xE	; "TT_SEPITLFO1"
-InitializeScoop_Str_TT_SEAMPAMP1:	.incbin "includes/generated/gui_display_struct_data.bin", 0x63C, 0xE	; "TT_SEAMPAMP1"
-InitializeScoop_Str_TT_SEAMPAMP2:	.incbin "includes/generated/gui_display_struct_data.bin", 0x64A, 0xE	; "TT_SEAMPAMP2"
-InitializeScoop_Str_TT_SEAMPENV1:	.incbin "includes/generated/gui_display_struct_data.bin", 0x658, 0xE	; "TT_SEAMPENV1"
-InitializeScoop_Str_TT_SEAMPENV2:	.incbin "includes/generated/gui_display_struct_data.bin", 0x666, 0xE	; "TT_SEAMPENV2"
-InitializeScoop_Str_TT_SEAMPLFO1:	.incbin "includes/generated/gui_display_struct_data.bin", 0x674, 0xE	; "TT_SEAMPLFO1"
-InitializeScoop_Str_TT_SEFILLPQ1:	.incbin "includes/generated/gui_display_struct_data.bin", 0x682, 0xE	; "TT_SEFILLPQ1"
-InitializeScoop_Str_TT_SEFILHPQ1:	.incbin "includes/generated/gui_display_struct_data.bin", 0x690, 0xE	; "TT_SEFILHPQ1"
-InitializeScoop_Str_TT_SEFILL241:	.incbin "includes/generated/gui_display_struct_data.bin", 0x69E, 0xE	; "TT_SEFILL241"
-InitializeScoop_Str_TT_SEFILH241:	.incbin "includes/generated/gui_display_struct_data.bin", 0x6AC, 0xE	; "TT_SEFILH241"
-InitializeScoop_Str_TT_SEFILBPF1:	.incbin "includes/generated/gui_display_struct_data.bin", 0x6BA, 0xE	; "TT_SEFILBPF1"
-InitializeScoop_Str_TT_SEFILBCF1:	.incbin "includes/generated/gui_display_struct_data.bin", 0x6C8, 0xE	; "TT_SEFILBCF1"
-InitializeScoop_Str_TT_SEFILFIL2:	.incbin "includes/generated/gui_display_struct_data.bin", 0x6D6, 0xE	; "TT_SEFILFIL2"
-InitializeScoop_Str_TT_SEFILENV1:	.incbin "includes/generated/gui_display_struct_data.bin", 0x6E4, 0xE	; "TT_SEFILENV1"
-InitializeScoop_Str_TT_SEFILENV2:	.incbin "includes/generated/gui_display_struct_data.bin", 0x6F2, 0xE	; "TT_SEFILENV2"
-InitializeScoop_Str_TT_SEFILLFO1:	.incbin "includes/generated/gui_display_struct_data.bin", 0x700, 0xE	; "TT_SEFILLFO1"
-InitializeScoop_Str_TT_SEDIGEFF:	.incbin "includes/generated/gui_display_struct_data.bin", 0x70E, 0xC	; "TT_SEDIGEFF"
-InitializeScoop_Str_TT_SECTR2:		.incbin "includes/generated/gui_display_struct_data.bin", 0x71A, 0xA	; "TT_SECTR2"
-InitializeScoop_Str_TT_SECTR3:		.incbin "includes/generated/gui_display_struct_data.bin", 0x724, 0xA	; "TT_SECTR3"
-InitializeScoop_Str_TT_SECOPY:		.incbin "includes/generated/gui_display_struct_data.bin", 0x72E, 0xA	; "TT_SECOPY"
-InitializeScoop_Str_TT_SEWRTMEM:	.incbin "includes/generated/gui_display_struct_data.bin", 0x738, 0xC	; "TT_SEWRTMEM"
-InitializeScoop_Str_TT_SEWRTSND:	.incbin "includes/generated/gui_display_struct_data.bin", 0x744, 0xC	; "TT_SEWRTSND"
+GUI_DisplayStructData_0x59C:		.incbin "includes/generated/gui_display_struct_data.bin", 0x376, 0xE
+InitializeScoop_Str_TT_SEMENU:		.incbin "includes/generated/gui_display_struct_data.bin", 0x384, 0xA	; "TT_SEMENU"
+InitializeScoop_Str_TT_SEEASY:		.incbin "includes/generated/gui_display_struct_data.bin", 0x38E, 0xA	; "TT_SEEASY"
+InitializeScoop_Str_TT_SETONTON1:	.incbin "includes/generated/gui_display_struct_data.bin", 0x398, 0xE	; "TT_SETONTON1"
+InitializeScoop_Str_TT_SETONTON2:	.incbin "includes/generated/gui_display_struct_data.bin", 0x3A6, 0xE	; "TT_SETONTON2"
+InitializeScoop_Str_TT_SETONRAN1:	.incbin "includes/generated/gui_display_struct_data.bin", 0x3B4, 0xE	; "TT_SETONRAN1"
+InitializeScoop_Str_TT_SETONRAN2:	.incbin "includes/generated/gui_display_struct_data.bin", 0x3C2, 0xE	; "TT_SETONRAN2"
+InitializeScoop_Str_TT_SETONHYB1:	.incbin "includes/generated/gui_display_struct_data.bin", 0x3D0, 0xE	; "TT_SETONHYB1"
+InitializeScoop_Str_TT_SEPITPIT1:	.incbin "includes/generated/gui_display_struct_data.bin", 0x3DE, 0xE	; "TT_SEPITPIT1"
+InitializeScoop_Str_TT_SEPITENV1:	.incbin "includes/generated/gui_display_struct_data.bin", 0x3EC, 0xE	; "TT_SEPITENV1"
+InitializeScoop_Str_TT_SEPITENV2:	.incbin "includes/generated/gui_display_struct_data.bin", 0x3FA, 0xE	; "TT_SEPITENV2"
+InitializeScoop_Str_TT_SEPITLFO1:	.incbin "includes/generated/gui_display_struct_data.bin", 0x408, 0xE	; "TT_SEPITLFO1"
+InitializeScoop_Str_TT_SEAMPAMP1:	.incbin "includes/generated/gui_display_struct_data.bin", 0x416, 0xE	; "TT_SEAMPAMP1"
+InitializeScoop_Str_TT_SEAMPAMP2:	.incbin "includes/generated/gui_display_struct_data.bin", 0x424, 0xE	; "TT_SEAMPAMP2"
+InitializeScoop_Str_TT_SEAMPENV1:	.incbin "includes/generated/gui_display_struct_data.bin", 0x432, 0xE	; "TT_SEAMPENV1"
+InitializeScoop_Str_TT_SEAMPENV2:	.incbin "includes/generated/gui_display_struct_data.bin", 0x440, 0xE	; "TT_SEAMPENV2"
+InitializeScoop_Str_TT_SEAMPLFO1:	.incbin "includes/generated/gui_display_struct_data.bin", 0x44E, 0xE	; "TT_SEAMPLFO1"
+InitializeScoop_Str_TT_SEFILLPQ1:	.incbin "includes/generated/gui_display_struct_data.bin", 0x45C, 0xE	; "TT_SEFILLPQ1"
+InitializeScoop_Str_TT_SEFILHPQ1:	.incbin "includes/generated/gui_display_struct_data.bin", 0x46A, 0xE	; "TT_SEFILHPQ1"
+InitializeScoop_Str_TT_SEFILL241:	.incbin "includes/generated/gui_display_struct_data.bin", 0x478, 0xE	; "TT_SEFILL241"
+InitializeScoop_Str_TT_SEFILH241:	.incbin "includes/generated/gui_display_struct_data.bin", 0x486, 0xE	; "TT_SEFILH241"
+InitializeScoop_Str_TT_SEFILBPF1:	.incbin "includes/generated/gui_display_struct_data.bin", 0x494, 0xE	; "TT_SEFILBPF1"
+InitializeScoop_Str_TT_SEFILBCF1:	.incbin "includes/generated/gui_display_struct_data.bin", 0x4A2, 0xE	; "TT_SEFILBCF1"
+InitializeScoop_Str_TT_SEFILFIL2:	.incbin "includes/generated/gui_display_struct_data.bin", 0x4B0, 0xE	; "TT_SEFILFIL2"
+InitializeScoop_Str_TT_SEFILENV1:	.incbin "includes/generated/gui_display_struct_data.bin", 0x4BE, 0xE	; "TT_SEFILENV1"
+InitializeScoop_Str_TT_SEFILENV2:	.incbin "includes/generated/gui_display_struct_data.bin", 0x4CC, 0xE	; "TT_SEFILENV2"
+InitializeScoop_Str_TT_SEFILLFO1:	.incbin "includes/generated/gui_display_struct_data.bin", 0x4DA, 0xE	; "TT_SEFILLFO1"
+InitializeScoop_Str_TT_SEDIGEFF:	.incbin "includes/generated/gui_display_struct_data.bin", 0x4E8, 0xC	; "TT_SEDIGEFF"
+InitializeScoop_Str_TT_SECTR2:		.incbin "includes/generated/gui_display_struct_data.bin", 0x4F4, 0xA	; "TT_SECTR2"
+InitializeScoop_Str_TT_SECTR3:		.incbin "includes/generated/gui_display_struct_data.bin", 0x4FE, 0xA	; "TT_SECTR3"
+InitializeScoop_Str_TT_SECOPY:		.incbin "includes/generated/gui_display_struct_data.bin", 0x508, 0xA	; "TT_SECOPY"
+InitializeScoop_Str_TT_SEWRTMEM:	.incbin "includes/generated/gui_display_struct_data.bin", 0x512, 0xC	; "TT_SEWRTMEM"
+InitializeScoop_Str_TT_SEWRTSND:	.incbin "includes/generated/gui_display_struct_data.bin", 0x51E, 0xC	; "TT_SEWRTSND"
 ; parameter block of object 0x146 (class 0x01600003, proc MainFunctionProc), registered by InitializeScoop+0x125
 ; (+10 data field of a RegisterObjectTable descriptor, registry 0x27ED2 + 14*index); the slice runs to the next boundary, 136 B; the proc's read length was not measured
 GUI_DisplayStructData_0x750:
@@ -250,10 +263,10 @@ GUI_DisplayStructData_0x750:
 	.long	SeCopyTitleFunc
 	.long	SeWrtMemTitleFunc
 	.long	SeWrtSndTitleFunc
-	.incbin "includes/generated/gui_display_struct_data.bin", 0x7d4, 0x4
+	.incbin "includes/generated/gui_display_struct_data.bin", 0x5AE, 0x4
 ; parameter block of object 0x446 (class 0x01600003, proc MainFunctionProc), registered by InitializeScoop+0x14A
 ; (+10 data field of a RegisterObjectTable descriptor, registry 0x27ED2 + 14*index); the slice runs to the next boundary, 768 B; the proc's read length was not measured
-GUI_DisplayStructData_0x7D8:	.incbin "includes/generated/gui_display_struct_data.bin", 0x7D8, 0x300
+GUI_DisplayStructData_0x7D8:	.incbin "includes/generated/gui_display_struct_data.bin", 0x5B2, 0x300
 ; ---------------------------------------------------------------------------------------------------------------
 ; Sound-editor title method tables: SeXxxTitleFunc copies its 16-byte table to the stack and calls DirmdEmulator
 ; (audio/presentation_sound_nav.s) with the event, which calls one of the four methods through DirmdEmulator_CaseTable:
@@ -744,22 +757,22 @@ GUI_DisplayStructData_0x1100:	.long SeMenu_SwitchNop
 	.long 0
 ; data read by SeMenu_ApplyPartEdit_Helper11+0x23 (0xF08A09)
 ; evidence: `lda xde, (this)` then `ld E,(XDE+WA) / mul L,0x1c`
-GUI_DisplayStructData_0x1110:	.incbin "includes/generated/gui_display_struct_data.bin", 0x1110, 0xD
+GUI_DisplayStructData_0x1110:	.incbin "includes/generated/gui_display_struct_data.bin", 0xEEA, 0xD
 ; data read by SeMenu_DrawPartRangeGraph+0x20 (0xF08C8E)
 ; evidence: `lda xbc, (this)` then `ld WA,(XBC+WA) / ld (XSP),WA`
-GUI_DisplayStructData_0x111D:	.incbin "includes/generated/gui_display_struct_data.bin", 0x111D, 0xC
+GUI_DisplayStructData_0x111D:	.incbin "includes/generated/gui_display_struct_data.bin", 0xEF7, 0xC
 ; data read by SeMenu_NameCharIndexToChar+0xB (0xF074B9)
 ; evidence: `lda xde, (this)` then `ld A,(XDE+WA) / ld (XBC),A`
-GUI_DisplayStructData_0x1129:	.incbin "includes/generated/gui_display_struct_data.bin", 0x1129, 0x61
+GUI_DisplayStructData_0x1129:	.incbin "includes/generated/gui_display_struct_data.bin", 0xF03, 0x61
 ; data read by SeMenu_CharToNameCharIndex+0xC (0xF074D2)
 ; evidence: `lda xde, (this)` then `ld A,(XDE+WA) / ld (XBC),A`
-GUI_DisplayStructData_0x118A:	.incbin "includes/generated/gui_display_struct_data.bin", 0x118A, 0x82
+GUI_DisplayStructData_0x118A:	.incbin "includes/generated/gui_display_struct_data.bin", 0xF64, 0x82
 ; object named by 1 line(s) of code outside this file; what that code does with it:
 ; evidence: audio/semenu_routines.s:6021 `ld xiy, GUI_DisplayStructData_0x120C`
-GUI_DisplayStructData_0x120C:	.incbin "includes/generated/gui_display_struct_data.bin", 0x120C, 0x3
+GUI_DisplayStructData_0x120C:	.incbin "includes/generated/gui_display_struct_data.bin", 0xFE6, 0x3
 ; object named by 1 line(s) of code outside this file; what that code does with it:
 ; evidence: audio/semenu_routines.s:6026 `ld xiy, GUI_DisplayStructData_0x120F`
-GUI_DisplayStructData_0x120F:	.incbin "includes/generated/gui_display_struct_data.bin", 0x120F, 0x13
+GUI_DisplayStructData_0x120F:	.incbin "includes/generated/gui_display_struct_data.bin", 0xFE9, 0x13
 ; table of 4-byte code pointers, 72 B = 18 entries to the next address the code names
 ; evidence: SePitPit1TitleFunc_DispatchSwitch+0x1E (0xF09AC4) loads it into XDE, adds BC*4 and calls the entry (`exts xbc / add xbc,xde / ld xhl,(xbc) / call (xhl)`)
 SePitPit1TitleFunc_SwitchHandlers:
@@ -846,10 +859,10 @@ SePitLfo1TitleFunc_SwitchHandlers:
 	.long 0
 ; data read by SePitLfo1TitleFunc_DispatchSwitch+0x19C (0xF09CCC)
 ; evidence: `lda xde, (this)` then `ld A,(XDE+WA) / ld (XBC),A`
-GUI_DisplayStructData_0x1342:	.incbin "includes/generated/gui_display_struct_data.bin", 0x1342, 0x20
+GUI_DisplayStructData_0x1342:	.incbin "includes/generated/gui_display_struct_data.bin", 0x111C, 0x20
 ; data read by SePitLfo1TitleFunc_DispatchSwitch+0x1D4 (0xF09D04)
 ; evidence: `lda xbc, (this)` then `ld C,(XBC+WA) / ld (XSP+0x0e),C`
-GUI_DisplayStructData_0x1362:	.incbin "includes/generated/gui_display_struct_data.bin", 0x1362, 0xD
+GUI_DisplayStructData_0x1362:	.incbin "includes/generated/gui_display_struct_data.bin", 0x113C, 0xD
 ; table of 4-byte code pointers, 72 B = 18 entries to the next address the code names
 ; evidence: SeCtr2TitleFunc_DispatchSwitch+0x1E (0xF0BD23) loads it into XDE, adds BC*4 and calls the entry (`exts xbc / add xbc,xde / ld xhl,(xbc) / call (xhl)`)
 SeCtr2TitleFunc_SwitchHandlers:
@@ -894,7 +907,7 @@ SeCtr3TitleFunc_SwitchHandlers:
 	.long 0
 ; table of 4-byte code pointers, 72 B = 18 entries to the next address the code names
 ; evidence: SeMenuTitleFunc_DispatchSwitch+0x66 (0xF0BF82) loads it into XDE, adds BC*4 and calls the entry (`exts xbc / add xbc,xde / ld xhl,(xbc) / call (xhl)`)
-GUI_DisplayStructData_0x13FF:	.incbin "includes/generated/gui_display_struct_data.bin", 0x13FF, 0x2A
+GUI_DisplayStructData_0x13FF:	.incbin "includes/generated/gui_display_struct_data.bin", 0x11D9, 0x2A
 ; the rest of the code-pointer table at GUI_DisplayStructData_0x13FF, from entry 10 byte 2 on;
 ; the table runs across this boundary (label of the next source)
 ToneGen_ParamTable:	.incbin "includes/generated/tonegen_param_table.bin", 0x0, 0x1E

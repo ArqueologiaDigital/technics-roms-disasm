@@ -9612,7 +9612,7 @@ Sprintf_HexDigitsUpper:
 ; ui_widgets/sequencer_channel_containers.s (to 0xEEFA65).  The code reads
 ; the RAM copy, not these bytes: RAM 0x3D528 / 0x3D52C are Heap_Alloc's and
 ; Free's variables; 213 more cells up to 0x3D991 are named by 32-bit pointers
-; in the NAKA widget descriptors (GUI_FormatStrings, GUI_DisplayStructData,
+; in the NAKA widget descriptors (GUI_FormatStrings, the IvDirmdScreen records after it,
 ; NAKA_PerfReg_Container_Root, NakaNode_* ...), i.e. per-widget state.
 ; Each line's comment gives the RAM address of its first byte.  The three
 ; 0x00FF0000 words at 0xEEDBE8/0xEEDCA0/0xEEDCE8 were typed as `.long` pointers

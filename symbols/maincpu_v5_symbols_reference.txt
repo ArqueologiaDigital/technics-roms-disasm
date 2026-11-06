@@ -6,8 +6,8 @@
 # Do not hand-edit: rename in the sources and regenerate.
 #
 #   symbols .................. 54,159
-#   semantic names ........... 53,836 (99.4%)
-#   positional names ......... 323
+#   semantic names ........... 53,837 (99.4%)
+#   positional names ......... 322
 #
 LED_patterns_indicating_firmware_version 00E00000
 LED_patterns_firmware_v8_plus 00E00008
@@ -702,7 +702,7 @@ NakaWidget_sectr3 00E0D17C
 NakaWidget_secopy 00E0D19E
 NakaWidget_sewrtmem 00E0D1C0
 NakaWidget_sewrtsnd 00E0D1E2
-GUI_DisplayStructData_0x226 00E0D204
+Scoop_ViewableTable_020 00E0D204
 Scoop_ViewableTable_021 00E0D20C
 Scoop_ViewableTable_022 00E0D214
 Scoop_ViewableTable_023 00E0D21C

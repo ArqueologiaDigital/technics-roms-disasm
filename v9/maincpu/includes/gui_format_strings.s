@@ -90,5 +90,6 @@ NakaWidget_seampenv1:
 	NAKA_REC_IvDirmdScreen super=NAKA_INDEX_NONE, sub=NAKA_INDEX_NONE, next=NAKA_INDEX_NONE, prev=NAKA_INDEX_NONE, flag=VF_Fixed | VF_Const, x=0, y=0, w=320, h=240, color=CL_White, border=BD_None, exit=TITLE_PS, window=0x3d564
 NakaWidget_seampenv2:
 	NAKA_REC_IvDirmdScreen super=NAKA_INDEX_NONE, sub=NAKA_INDEX_NONE, next=NAKA_INDEX_NONE, prev=NAKA_INDEX_NONE, flag=VF_Fixed | VF_Const, x=0, y=0, w=320, h=240, color=CL_White, border=BD_None, exit=TITLE_PS, window=0x3d568
-NakaWidget_seamplfo1:	.byte	0x5a, 0x00, 0x60, 0x01, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte 0x0a, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3f, 0x01, 0xef, 0x00, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00
+NakaWidget_seamplfo1:
+	NAKA_REC_IvDirmdScreen super=NAKA_INDEX_NONE, sub=NAKA_INDEX_NONE, next=NAKA_INDEX_NONE, prev=NAKA_INDEX_NONE, flag=VF_Fixed | VF_Const, x=0, y=0, w=320, h=240, color=CL_White, border=BD_None, exit=TITLE_PS, window=0x3d56c
+
