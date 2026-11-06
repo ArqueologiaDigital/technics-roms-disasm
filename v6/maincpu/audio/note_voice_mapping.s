@@ -22745,7 +22745,7 @@ SndParam_ApplyProgramChangeAsync:
 	lda	xbc, (xsp + 6)
 	calr	SndParam_ApplyMaskClamp
 	ld	wa, 5:i3
-	call	TaskSched_WaitForEvent
+	call	TaskEvent_Wait
 	ld	a, (xsp + 8)
 	extz	wa
 	ld	c, (xsp + 6)
@@ -22760,7 +22760,7 @@ SndParam_ApplyProgramChangeAsync:
 	calr	SndParam_StoreDRAMInit
 	ldfr_berp	L, 0xfb
 	ld	wa, 5:i3
-	call	TaskSched_SignalEvent
+	call	TaskEvent_Signal
 	cpib_erp	0xfb, 0
 	jr	z, ApplyProgramChangeAs_RestoreReg
 	lda	xwa, (Msg_SoundNameError:24)
@@ -22785,7 +22785,7 @@ ApplyProgramChangeAs_Prologue:
 	lda	xbc, (xsp + 4)
 	calr	SndParam_ApplyMaskClamp
 	ld	wa, 5:i3
-	call	TaskSched_WaitForEvent
+	call	TaskEvent_Wait
 	ld	a, (xsp + 6)
 	extz	wa
 	ld	c, (xsp + 4)
@@ -22800,7 +22800,7 @@ ApplyProgramChangeAs_Prologue:
 	calr	SndParam_StoreDRAMInit
 	ldfr_berp	L, 0xfb
 	ld	wa, 5:i3
-	call	TaskSched_SignalEvent
+	call	TaskEvent_Signal
 	cpib_erp	0xfb, 0
 	jr	z, ApplyProgramChangeAs_ClearByte
 	ld	(xsp + 2), 0x0
@@ -22824,7 +22824,7 @@ ApplyProgramChangeAs_Prologue2:
 	ld	(xsp + 6), c
 	ld	(xsp + 8), a
 	ld	wa, 5:i3
-	call	TaskSched_WaitForEvent
+	call	TaskEvent_Wait
 	ld	a, (xsp + 8)
 	extz	wa
 	ld	c, (xsp + 6)
@@ -22839,7 +22839,7 @@ ApplyProgramChangeAs_Prologue2:
 	calr	SndParam_StoreDRAMInit
 	ldfr_berp	L, 0xfb
 	ld	wa, 5:i3
-	call	TaskSched_SignalEvent
+	call	TaskEvent_Signal
 	cpib_erp	0xfb, 0
 	jr	z, ApplyProgramChangeAs_RestoreReg2
 	lda	xwa, (Msg_SNameError:24)
@@ -23215,7 +23215,7 @@ SndParam_ApplyMaskAndCheck:
 	jr	nz, SndParam_ReturnResult
 SndParam_DispatchProcessParam:
 	ld	wa, 5:i3
-	call	TaskSched_WaitForEvent
+	call	TaskEvent_Wait
 	ld	a, (xsp + 6)
 	extz	wa
 	ld	c, (xsp + 4)
@@ -23230,7 +23230,7 @@ SndParam_DispatchProcessParam:
 	calr	SndParam_StoreDRAMInit
 	ldfr_berp	L, 0xfb
 	ld	wa, 5:i3
-	call	TaskSched_SignalEvent
+	call	TaskEvent_Signal
 	ld	a, 0x2:opc
 	cpib_erp	0xfb, 0
 	jr	nz, SndParam_StoreResult
@@ -26541,7 +26541,7 @@ Sprintf_Locked:
 	dec	4, xsp
 	pushw	iz
 	ld	wa, 7:i3
-	call	Audio_Lock_Acquire
+	call	Kernel_SemaWait
 	ld	xwa, (xsp + 10)
 	ld	(0x03c21c:24), xwa
 	ld	xwa, (xsp + 10)
@@ -26560,7 +26560,7 @@ Sprintf_Locked:
 	lda	xsp, (xsp + 12)
 	ld	iz, hl
 	ld	wa, 7:i3
-	call	Audio_Lock_Release
+	call	Kernel_SemaSignal
 	ld	hl, iz
 	popw	iz
 	inc	4, xsp
@@ -26594,7 +26594,7 @@ Free:
 	or	xwa, xwa
 	ret	z
 	ld	wa, 1:i3
-	call	TaskSched_WaitForEvent
+	call	TaskEvent_Wait
 	ld	xbc, (xsp + 4)
 	dec	6, xbc
 	ld	xwa, (0x03d52c:24)
@@ -26604,7 +26604,7 @@ Free:
 	ld	(xbc), xwa
 	ld	(0x03d52c:24), xbc
 	ld	wa, 1:i3
-	jp	TaskSched_SignalEvent
+	jp	TaskEvent_Signal
 Free_Skip:
 	ld	xix, (0x03d52c:24)
 	ld	xde, xix
@@ -26621,7 +26621,7 @@ Free_Compare2:
 	cp	xbc, xix
 	jr	nz, Free_LoadReg
 	ld	wa, 1:i3
-	jp	TaskSched_SignalEvent
+	jp	TaskEvent_Signal
 Free_LoadReg:
 	ld	hl, (xbc + 4)
 	extz	xhl
@@ -26646,7 +26646,7 @@ Free_LoadReg_Skip:
 Free_LoadReg_Join:
 	ld	(0x03d52c:24), xbc
 	ld	wa, 1:i3
-	jp	TaskSched_SignalEvent
+	jp	TaskEvent_Signal
 Free_OrBits:
 	or	xix, xix
 	jr	z, Free_LoadReg2
@@ -26680,7 +26680,7 @@ Free_LoadReg4:
 	ld	(xde), xbc
 Free_InitVal:
 	ld	wa, 1:i3
-	jp	TaskSched_SignalEvent
+	jp	TaskEvent_Signal
 ; Math_DivModSigned32: signed 32/32 divide or modulo of XWA by XBC, result in XHL: D = 1 the quotient, D = 0 the
 ;   remainder (with the dividend's sign).  Toshiba's C runtime SDivMod (LDIVL.ASM); entered through
 ;   Math_RemainderSigned32 (C9H_remls) and Math_DivideSigned32 (C9H_divls); calls Math_DivideU32.
@@ -27095,7 +27095,7 @@ Malloc:
 	ld	(xsp + 8), wa
 	add	(xsp + 8), wa
 	ld	wa, 1:i3
-	call	TaskSched_WaitForEvent
+	call	TaskEvent_Wait
 	ld	xiz, (0x03d52c:24)
 	or	xiz, xiz
 	jr	z, Malloc_OrBits
@@ -27149,7 +27149,7 @@ Malloc_LoadParam2:
 	cp	xwa, 0xffffffff
 	jr	nz, Malloc_LoadParam2_Skip
 	ld	wa, 1:i3
-	call	TaskSched_SignalEvent
+	call	TaskEvent_Signal
 	ld	xhl, 0:i3
 	jr	Malloc_Epilogue
 Malloc_LoadParam2_Skip:
@@ -27159,7 +27159,7 @@ Malloc_LoadParam2_Skip:
 	ld	(xiz + 4), wa
 Malloc_DoSignalEv:
 	ld	wa, 1:i3
-	call	TaskSched_SignalEvent
+	call	TaskEvent_Signal
 	inc	6, xiz
 	ld	xhl, xiz
 Malloc_Epilogue:

@@ -2097,7 +2097,7 @@ ApTaskControl:
 	cp xbc, EVT_SLEEP_AP_TASK
 	jr nz, ApTaskCtrl_ReturnZero
 	ld wa, 1:i3
-	call TaskSched_WakeBySlotID
+	call Kernel_ReadyTask
 	jr ApTaskCtrl_ResumeTask
 
 ApTaskCtrl_HandleAC:
@@ -2105,12 +2105,12 @@ ApTaskCtrl_HandleAC:
 	call MainFuncCall
 
 ApTaskCtrl_ResumeTask:
-	call TaskSched_Resume
+	call Kernel_BlockSelf
 	jr ApTaskCtrl_ReturnZero
 
 ApTaskCtrl_HandleAD:
 	ld wa, 1:i3
-	call TaskSched_WakeBySlotID
+	call Kernel_ReadyTask
 
 ApTaskCtrl_ReturnZero:
 	ld xhl, 0:i3
@@ -2133,15 +2133,15 @@ MainTaskControl:
 
 MainTaskCtrl_HandleAF:
 	ld wa, 4:i3
-	call TaskSched_WakeBySlotID
+	call Kernel_ReadyTask
 	jr MainTaskCtrl_ReturnZero
 
 MainTaskCtrl_HandleAC:
 	ld wa, 4:i3
-	call TaskSched_WakeBySlotID
+	call Kernel_ReadyTask
 
 MainTaskCtrl_ResumeTask:
-	call TaskSched_Resume
+	call Kernel_BlockSelf
 	jr MainTaskCtrl_ReturnZero
 
 MainTaskCtrl_HandleB0:

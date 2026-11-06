@@ -629,8 +629,9 @@ HamaStr_rot_rdq_X:	aligned_string "rot_rdq_X"
 ```
 
 and `v10/maincpu/kn5000_v10_program.s:1234-1268` is the wrapper table those
-names point at (`snd_msg_X: jp TaskMsg_Send`, `wai_flg_X: jp
-TaskSched_WaitForEvent`, and so on).  `rot_rdq / set_flg / wai_flg / sig_sem /
+names point at (`snd_msg_X: jp MsgQueue_Send`, `wai_flg_X: jp
+TaskEvent_Wait`, and so on; `TaskMsg_Send` / `TaskSched_WaitForEvent` until 2026-11-06, when the main
+CPU's kernel became `wsa1/kernel/kernel.s` too, `wsa1/notes/open10-kernel4-probes/`).  `rot_rdq / set_flg / wai_flg / sig_sem /
 preq_sem / wai_sem / ref_sem / snd_msg / rcv_msg / prcv_msg / get_tid /
 pdly_tim` is the µITRON service-call vocabulary; `snd_msg`/`rcv_msg`/`prcv_msg`
 are the ITRON-2 mailbox calls.  The `_X` suffix is Technics' wrapper marker.

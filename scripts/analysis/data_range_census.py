@@ -89,21 +89,22 @@ ANCHOR_SLACK = 6
 # the tree (`../hdae5000/shared/...`).  `defsym` (v8): the --defsym the Makefile passes.
 # v6, v5, v8, v140 and the three older HD-AE5000 versions were added on 2026-10-31 (lane
 # hdae-ledgers); before that the census measured thirteen images.  The three sub-CPU payloads take
-# wsa1/kernel/ (kernel.s, the kernel they share with both SX-WSA1R CPUs) since 2026-11-06.
+# wsa1/kernel/ (kernel.s, the kernel they share with both SX-WSA1R CPUs) since 2026-11-06, and so do
+# the main-CPU programs v10, v9 (v8) and v7 since the same day (lane open10/kernel4).
 IMAGES = [
     dict(key="v10", title="KN5000 maincpu v10", mirror="v10/maincpu",
-         root="kn5000_v10_program.s", ld="maincpu.ld", incs=[""],
+         root="kn5000_v10_program.s", ld="maincpu.ld", incs=[""], xmirrors=["wsa1/kernel"],
          rom="original_ROMs/kn5000_v10_program.rom", base=0xE00000, size=2097152),
     dict(key="v9", title="KN5000 maincpu v9", mirror="v9/maincpu",
-         root="kn5000_v9_program.s", ld="maincpu.ld", incs=[""],
+         root="kn5000_v9_program.s", ld="maincpu.ld", incs=[""], xmirrors=["wsa1/kernel"],
          rom="original_ROMs/kn5000_v9_program.rom", base=0xE00000, size=2097152),
     dict(key="v7", title="KN5000 maincpu v7", mirror="v7/maincpu",
-         root="kn5000_v7_program.s", ld="maincpu.ld", incs=[""],
+         root="kn5000_v7_program.s", ld="maincpu.ld", incs=[""], xmirrors=["wsa1/kernel"],
          rom="original_ROMs/kn5000_v7_program.rom", base=0xE00000, size=2097152),
     # v8 is the v9 tree assembled with --defsym FW_VERSION_BYTE=0x08 (one byte differs, at
     # 0xFFFFE8); its reference image is copied, git-ignored, from the private romset by make.
     dict(key="v8", title="KN5000 maincpu v8", mirror="v9/maincpu",
-         root="kn5000_v9_program.s", ld="maincpu.ld", incs=[""], defsym=["FW_VERSION_BYTE=0x08"],
+         root="kn5000_v9_program.s", ld="maincpu.ld", incs=[""], xmirrors=["wsa1/kernel"], defsym=["FW_VERSION_BYTE=0x08"],
          rom="original_ROMs/kn5000_v8_program.rom", base=0xE00000, size=2097152),
     # v6 was ported from v7 and v5 from v6 (scripts/converters/port_maincpu_version.py); their
     # reference images are git-ignored copies, like v8's.

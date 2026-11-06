@@ -141,7 +141,10 @@ EXTRA_INC = {"hdae5000_v2_01i": ["hdae5000"], "hdae5000_v1_15i": ["hdae5000"],
 # Source files OUTSIDE the root that its build assembles (-I wsa1/kernel, 2026-11-06): the sub-CPU
 # payload's kernel is wsa1/kernel/kernel.s, shared with both SX-WSA1R CPUs.  It is scanned as the
 # KN5000 build sees it (wsa1/notes/asm_source.py cpu_view: the WSA1-only branches blanked).
-EXTRA_SRC = {"v142/subcpu": ["wsa1/kernel/kernel.s"]}
+# Since 2026-11-06 (lane open10/kernel4) the main-CPU trees build it too, as KERNEL_KN5000 = 2.
+EXTRA_SRC = {"v142/subcpu": ["wsa1/kernel/kernel.s"], "v10/maincpu": ["wsa1/kernel/kernel.s"],
+             "v9/maincpu": ["wsa1/kernel/kernel.s"], "v7/maincpu": ["wsa1/kernel/kernel.s"]}
+EXTRA_CPU = {"v142/subcpu": 1, "v10/maincpu": 2, "v9/maincpu": 2, "v7/maincpu": 2}
 # Number of '; Was: .incbin' fossil comments each root carries (selftest step 2).
 FOSSIL_WAS = {"hdae5000": 10, "hdae5000_v2_01i": 8, "hdae5000_v1_15i": 6, "hdae5000_v1_10i": 6}
 # ⚠ NOTE ON THE 9TH KN5000 IMAGE: `kn5000_subprogram_v142_compressed` (the 9th
@@ -459,7 +462,8 @@ def measure_kn5000_root(root):
         sys.path.insert(0, os.path.join(REPO, "wsa1", "notes"))
         from asm_source import cpu_view
         xp = os.path.join(REPO, x)
-        td, mc = scan_directives(xp, cpu_view(open(xp, encoding="utf-8").read().split("\n"), kn5000=True))
+        td, mc = scan_directives(xp, cpu_view(open(xp, encoding="utf-8").read().split("\n"),
+                                                kn5000=EXTRA_CPU[root.rstrip("/")]))
         typed += td
         macro_calls += mc
     # A ported tree's C data compiles from the newer tree's C; its <tree>_c_divergence.json

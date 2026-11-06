@@ -100,7 +100,7 @@ CONTRADICTED** (`l2_name_vs_return_value.py`, which exits non-zero while one sta
 | `NakaWidget_ReturnZero` | 00FA4AFD | 0x0 | **0x1600006** |
 | `PostEvent_ReturnZero` | 00FA9856 | 0x0 | **0x1** |
 
-Verified by hand at 0xFA9C6A: the routine falls through `lds wa, 7` / `call TaskSched_SignalEvent`
+Verified by hand at 0xFA9C6A: the routine falls through `lds wa, 7` / `call TaskEvent_Signal`
 / **`lds hl, 1`** into its `ret`. It returns 1. The check calibrates against cases where the name is
 right -- 27/27 on `ReturnOne`, 3/3 on `ReturnFFFF` -- so it can fail rather than merely agree.
 

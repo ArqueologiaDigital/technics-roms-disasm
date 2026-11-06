@@ -6,12 +6,15 @@
 # (`make gate` first).  It writes no snapshot and no badge.
 # 2026-11-06 (lane open9/kernel-a3): prom_a and prom_c join the data-range images, because
 # wsa1/kernel/kernel.s is now assembled into the KN5000 sub-CPU payloads as well.
+# 2026-11-06 (lane open10/kernel4): BATTERY_IMAGES overrides the data-range image list; the main-CPU
+# kernel join reads v10,v9,v8,v7,v6,v5 as well (kernel.s became a source of the main program too).
 set -e
+IMAGES=${BATTERY_IMAGES:-v142,v141,v140,subboot,prom_a,prom_c}
 OUT=${1:?usage: census_battery.sh OUTDIR}
 mkdir -p "$OUT"
 python3 scripts/analysis/kn5000_source_coverage.py                         > "$OUT/source_coverage.txt"
 python3 scripts/analysis/data_incbin_census.py                             > "$OUT/data_incbin.txt"
-python3 scripts/analysis/data_range_census.py --images v142,v141,v140,subboot,prom_a,prom_c --json "$OUT/data_range.json" > "$OUT/data_range.txt"
+python3 scripts/analysis/data_range_census.py --images "$IMAGES" --json "$OUT/data_range.json" > "$OUT/data_range.txt"
 python3 scripts/analysis/doc_quality_census.py --json "$OUT/doc_quality.json" > "$OUT/doc_quality.txt"
 DISPATCH_CENSUS_DIR="$OUT/dispatch-work" python3 scripts/analysis/dispatch_table_census/build_maps.py > "$OUT/dispatch_maps.txt"
 DISPATCH_CENSUS_DIR="$OUT/dispatch-work" python3 scripts/analysis/dispatch_table_census/census.py --json "$OUT/dispatch.json" --report > "$OUT/dispatch.txt"

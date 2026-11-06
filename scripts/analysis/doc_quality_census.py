@@ -152,10 +152,10 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 
 # key: (model, dialect, assembler cwd, -I dirs, roots, (lo, hi) address range, a list of such ranges, or None)
 IMAGES = collections.OrderedDict([
-    ("v10", ("kn5000", "tlcs", ".", ["v10/maincpu"], ["v10/maincpu/kn5000_v10_program.s"], (0xE00000, 0x1000000))),
-    ("v9", ("kn5000", "tlcs", ".", ["v9/maincpu"], ["v9/maincpu/kn5000_v9_program.s"], (0xE00000, 0x1000000))),
-    ("v8", ("kn5000", "tlcs", ".", ["v9/maincpu"], ["v9/maincpu/kn5000_v9_program.s"], (0xE00000, 0x1000000))),
-    ("v7", ("kn5000", "tlcs", ".", ["v7/maincpu"], ["v7/maincpu/kn5000_v7_program.s"], (0xE00000, 0x1000000))),
+    ("v10", ("kn5000", "tlcs", ".", ["v10/maincpu", "wsa1/kernel"], ["v10/maincpu/kn5000_v10_program.s"], (0xE00000, 0x1000000))),
+    ("v9", ("kn5000", "tlcs", ".", ["v9/maincpu", "wsa1/kernel"], ["v9/maincpu/kn5000_v9_program.s"], (0xE00000, 0x1000000))),
+    ("v8", ("kn5000", "tlcs", ".", ["v9/maincpu", "wsa1/kernel"], ["v9/maincpu/kn5000_v9_program.s"], (0xE00000, 0x1000000))),
+    ("v7", ("kn5000", "tlcs", ".", ["v7/maincpu", "wsa1/kernel"], ["v7/maincpu/kn5000_v7_program.s"], (0xE00000, 0x1000000))),
     ("v6", ("kn5000", "tlcs", ".", ["v6/maincpu"], ["v6/maincpu/kn5000_v6_program.s"], (0xE00000, 0x1000000))),
     ("v5", ("kn5000", "tlcs", ".", ["v5/maincpu"], ["v5/maincpu/kn5000_v5_program.s"], (0xE00000, 0x1000000))),
     ("v142", ("kn5000", "tlcs", ".", ["v142/subcpu", "wsa1/kernel"], ["v142/subcpu/kn5000_subprogram_v142.s"], (0x400, 0x3EF00))),
@@ -295,15 +295,23 @@ def resolve(inc, cur_dir, idirs, cwd):
 sys.path.insert(0, os.path.join(ROOT, "wsa1", "notes"))
 from asm_source import cpu_view  # noqa: E402
 SHARED_COND = {"wsa1/kernel/kernel.s"}
+# ...and since 2026-11-06 (lane open10/kernel4) the KN5000 MAIN program's kernel too: KERNEL_KN5000 is a
+# processor number, 0 the WSA1, 1 the KN5000 sub-CPU, 2 the KN5000 main CPU (v10, v9 and its v8 build, v7).
+KERNEL_CPU = {"v10": 2, "v9": 2, "v8": 2, "v7": 2}
 
 
-def file_lines(p, model):
+def kernel_cpu(key):
+    return KERNEL_CPU.get(key, 1 if IMAGES[key][0] == "kn5000" else 0)
+
+
+def file_lines(p, cpu):
     raw = open(os.path.join(ROOT, p), "rb").read().decode("latin-1").split("\n")
-    return cpu_view(raw, kn5000=(model == "kn5000")) if p in SHARED_COND else raw
+    return cpu_view(raw, kn5000=cpu) if p in SHARED_COND else raw
 
 
 def image_files(key, tracked):
     model, dialect, cwd, idirs, roots, rng = IMAGES[key]
+    cpu = kernel_cpu(key)
     if isinstance(roots, str):
         roots = sorted(os.path.relpath(p, ROOT) for p in glob.glob(os.path.join(ROOT, roots)))
     seen, order, untracked = set(), [], []
@@ -318,7 +326,7 @@ def image_files(key, tracked):
             continue
         order.append(p)
         incs = []
-        for raw in file_lines(p, model):
+        for raw in file_lines(p, cpu):
             m = INCLUDE.match(raw)
             if m:
                 r = resolve(m.group(1), os.path.dirname(p), idirs, cwd)
@@ -333,9 +341,9 @@ def image_files(key, tracked):
 class Parsed:
     """One file: raw lines and statements [(lineno, kind, label_or_None, body)]."""
 
-    def __init__(self, path, mn, model=None):
+    def __init__(self, path, mn, cpu=0):
         self.path = path
-        self.lines = file_lines(path, model)
+        self.lines = file_lines(path, cpu)
         self.macros = {}                # name -> has_instruction
         stmts, cur, has_ins = [], None, False
         for i, ln in enumerate(self.lines):
@@ -431,9 +439,9 @@ def measure(key, cache, tracked, per_file=False):
     files, untracked = image_files(key, tracked)
     parsed = []
     for f in files:
-        ck = (f, model) if f in SHARED_COND else f
+        ck = (f, kernel_cpu(key)) if f in SHARED_COND else f
         if ck not in cache:
-            cache[ck] = Parsed(f, mn, model)
+            cache[ck] = Parsed(f, mn, kernel_cpu(key))
         parsed.append(cache[ck])
     macros = {}
     insn_macros = set()

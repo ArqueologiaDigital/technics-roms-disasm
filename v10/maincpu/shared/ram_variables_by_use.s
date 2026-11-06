@@ -2,7 +2,7 @@
 ; line per variable, sorted by address.  Each comment says what the uses show: who writes it, with what,
 ; and how it is read (scripts/analysis/kn5000_ram_evidence.py prints that evidence for an address).
 ; Added by scripts/tools/add_kn5000_ram_names.py, which also rewrites the numeric operands.
-	.equ BOOT_STAGE,			0x0400	; boot progress: Boot_PostSelfTest stores 2 before TaskSched_Init and 3 after it, Boot_DisplayScreen 6 after the first screen group and 0x80 after the last; NMI_ClearGuardAndHalt stores 0.  Only NMI_StorePayloadChecksums reads it: it stores the power-fail checksums only at 0x80 (boot complete, power-fail save armed)
+	.equ BOOT_STAGE,			0x0400	; boot progress: Boot_PostSelfTest stores 2 before Kernel_InitRam and 3 after it, Boot_DisplayScreen 6 after the first screen group and 0x80 after the last; NMI_ClearGuardAndHalt stores 0.  Only NMI_StorePayloadChecksums reads it: it stores the power-fail checksums only at 0x80 (boot complete, power-fail save armed)
 	.equ BOOT_CONFIG_FLAGS,			0x0406	; bit 7 = boot finished normally (Boot_SetConfigFlag7 sets it in Boot_DisplayScreen, Boot_ClearConfigFlag7 clears it at the start of Boot_InitPeripherals)
 	.equ ACC_CLOCK,				0x0415	; accompaniment clock within the beat, 0..95 (INTTR4_CheckSeqEnable counts it, ClkTick_Src2FineBeatCheck by 4 per MIDI clock)
 	.equ ACC_BEAT,				0x0416	; beat within the measure; INTTR4_SeqAutoStart compares it with ACC_BEATS_PER_BAR - 1, the BeatLed_*Masks show it on the START/STOP BEAT LEDs
@@ -14,7 +14,7 @@
 	.equ ACC_BAR_COUNT,			0x0434	; bars the accompaniment clock has completed (INTTR4_SeqTick_CheckBeat counts them; synchro start waits for 1)
 	.equ ACC_SECTION_BAR,			0x0435	; bar within the style section, back to 0 after STYLE_SECTION_LAST_MEASURE (INTTR4_SeqTick_CheckBeat)
 	.equ MIDI_RX_CONTEXT,			0x0438	; [28 bytes] XWA, XBC, XDE, XHL, XIX, XIY, XIZ saved by MIDI_RX_CONTEXT_SAVE and put back by MIDI_RX_CONTEXT_RESTORE
-	.equ TASK_CURRENT,			0x0487	; word: the TCB of the running task, 0 while the scheduler runs (TaskSched_FoundReadyTask sets it, TaskSched_Dispatch saves XSP at its +4)
+	.equ TASK_CURRENT,			0x0487	; word: the TCB of the running task, 0 while the scheduler runs (Kernel_Dispatch__switch_to sets it, Kernel_Dispatch saves XSP at its +4)
 	.equ INTERCPU_XFER_PTR,			0x05da	; the source address of the inter-CPU transfer in progress (InterCPU_Send_WaitAck, E1Bulk_WaitAck; inter-cpu-protocol.md)
 	.equ INTERCPU_XFER_COUNT,		0x05de	; word: its byte count
 	.equ INTERCPU_XFER_STATE,		0x05e0	; 0 = idle, 1 while a packet or E2 header is sent, 2 for an E1 bulk transfer's first phase (INTTC2_HANDLER clears it)

@@ -36024,15 +36024,15 @@ CmpStepTitle_OnSwitchIn:
 CmpStepTitle_Method3Nop:
 	ret
 
-; Acquires audio lock 8 (Audio_Lock_Acquire).
+; Acquires audio lock 8 (Kernel_SemaWait).
 AccAudio_LockAcquire:
 	ldw wa, 0x8
-	jp Audio_Lock_Acquire
+	jp Kernel_SemaWait
 
-; Releases audio lock 8 (Audio_Lock_Release).
+; Releases audio lock 8 (Kernel_SemaSignal).
 AccAudio_LockRelease:
 	ldw wa, 0x8
-	jp Audio_Lock_Release
+	jp Kernel_SemaSignal
 ; Calls GraphicsRender_ProcessEntries with XWA = XIY and XBC = XIX.
 ; Called from AccScreen_DataBlock_Code, AccDraw_Secondary_Helper5, AccDraw_Secondary_Helper6 and
 ; AccDraw_Secondary_Helper8.

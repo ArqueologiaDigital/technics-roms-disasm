@@ -104,16 +104,16 @@ rebuilt_ROMs/kn5000_v9_program.llvm.rom original_ROMs/kn5000_v9_program.rom` is
 silent), one per encoding class. Every address below is a DWARF source-statement
 row of a `-g` rebuild that was itself verified byte-identical to the original ROM:
 
-| address | ROM bytes | unidasm | llvm-mc spelling | in |
-|---|---|---|---|---|
+| address  | ROM bytes  | unidasm      | llvm-mc spelling   | in                                                                                            |
+|----------|------------|--------------|--------------------|-----------------------------------------------------------------------------------------------|
 | 0xEF0898 | `c7 fb 61` | `inc 1,QIZH` | `incb_erp 0xfb, 1` | `Boot_CallInitHandlers__handler_loop+0x1b` (`v9/maincpu/shared/boot_call_init_handlers.s:75`) |
-| 0xF0699A | `c7 fb 61` | `inc 1,QIZH` | `inc1b_erp 0xfb` | `SeMenu_SetupMenuDisplay_Data2+0x16` |
-| 0xEF4476 | `d7 fa 61` | `inc 1,QIZ` | `inc1w_erp 0xfa` | `FDC_WriteSectors_TrackLoop+0x18` |
-| 0xF6D11B | `d7 fa 64` | `inc 4,QIZ` | `inc4w_erp 0xfa` | `StylCnv_Type3_CopyBlockLoop+0x27` |
-| 0xEF3FE9 | `e7 34 64` | `inc 4,XBC3` | `inc4_lerp 0x34` | `SLIDE_Decompress_4K_FillRing+0x23` |
-| 0xEF0C50 | `c9 61` | `inc 1,A` | `inc 1, a` | `INTT1_StoreCounters+0x12` |
-| 0xEF1982 | `d8 61` | `inc 1,WA` | `inc 1, wa` | `TaskSched_Init+0xb` |
-| 0xEF46CF | `e8 61` | `inc 1,XWA` | `inc 1, xwa` | `FloppyChange_Debounce1_Loop+0x0` |
+| 0xF0699A | `c7 fb 61` | `inc 1,QIZH` | `inc1b_erp 0xfb`   | `SeMenu_SetupMenuDisplay_Data2+0x16`                                                          |
+| 0xEF4476 | `d7 fa 61` | `inc 1,QIZ`  | `inc1w_erp 0xfa`   | `FDC_WriteSectors_TrackLoop+0x18`                                                             |
+| 0xF6D11B | `d7 fa 64` | `inc 4,QIZ`  | `inc4w_erp 0xfa`   | `StylCnv_Type3_CopyBlockLoop+0x27`                                                            |
+| 0xEF3FE9 | `e7 34 64` | `inc 4,XBC3` | `inc4_lerp 0x34`   | `SLIDE_Decompress_4K_FillRing+0x23`                                                           |
+| 0xEF0C50 | `c9 61`    | `inc 1,A`    | `inc 1, a`         | `INTT1_StoreCounters+0x12`                                                                    |
+| 0xEF1982 | `d8 61`    | `inc 1,WA`   | `inc 1, wa`        | `Kernel_InitRam+0xb`                                                                          |
+| 0xEF46CF | `e8 61`    | `inc 1,XWA`  | `inc 1, xwa`       | `FloppyChange_Debounce1_Loop+0x0`                                                             |
 
 End-to-end check that the assembler emits the same bytes through a real object
 file, not only in `--show-encoding`:

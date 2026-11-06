@@ -52,13 +52,14 @@ MC = os.environ.get("LLVM_MC") or os.path.join(
 # `llvm-mc -filetype=obj` invocations in the Makefile.  v8 is the v9 root with
 # the version byte preset, so it is assembled here with the same --defsym.
 IMAGES = [
-    ("v10/maincpu",  "v10/maincpu/kn5000_v10_program.s"),
-    ("v9/maincpu",   "v9/maincpu/kn5000_v9_program.s"),
-    ("v9/maincpu",   "v9/maincpu/kn5000_v9_program.s", ("--defsym", "FW_VERSION_BYTE=0x08")),
-    ("v7/maincpu",   "v7/maincpu/kn5000_v7_program.s"),
+    ("v10/maincpu",  "v10/maincpu/kn5000_v10_program.s", (), ("-I", "wsa1/kernel")),
+    ("v9/maincpu",   "v9/maincpu/kn5000_v9_program.s", (), ("-I", "wsa1/kernel")),
+    ("v9/maincpu",   "v9/maincpu/kn5000_v9_program.s", ("--defsym", "FW_VERSION_BYTE=0x08"), ("-I", "wsa1/kernel")),
+    ("v7/maincpu",   "v7/maincpu/kn5000_v7_program.s", (), ("-I", "wsa1/kernel")),
     ("v6/maincpu",   "v6/maincpu/kn5000_v6_program.s"),
     ("v5/maincpu",   "v5/maincpu/kn5000_v5_program.s"),
-    # the sub-CPU payloads' kernel is the SX-WSA1R's shared wsa1/kernel/kernel.s (2026-11-06)
+    # the sub-CPU payloads' kernel is the SX-WSA1R's shared wsa1/kernel/kernel.s (2026-11-06), and the
+    # main-CPU programs' (v10, v9, v8, v7) since the same day (lane open10/kernel4)
     ("v142/subcpu",  "v142/subcpu/kn5000_subprogram_v142.s", (), ("-I", "wsa1/kernel")),
     ("v141/subcpu",  "v141/subcpu/kn5000_subprogram_v141.s", (), ("-I", "wsa1/kernel")),
     ("v140/subcpu",  "v140/subcpu/kn5000_subprogram_v140.s", (), ("-I", "wsa1/kernel")),
