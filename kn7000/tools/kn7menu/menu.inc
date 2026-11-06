@@ -184,6 +184,8 @@
 .equ V_LCDSAVE,     M_VARS+0x134    # the firmware's start address (REG[042h]-[044h], words), for LcdGive
 .equ V_LCDSTART,    M_VARS+0x138    # MFB's: V_LCDSAVE + MFB_OFS / 2
 .equ V_LCDRESET,    M_VARS+0x13C    # times something else set the start address and LcdCheck set it back
+.equ V_CHGMODE,     M_VARS+0x140    # ChangeMode (its prologue), from FindEnd, or 0: end with RQ_END
+.equ V_RQSTATE,     M_VARS+0x144    # STYLE CONVERT's state byte that request 4 dispatches on (893 0x5004E3F8)
 
 .equ RD_ALL,        1               # V_REDRAW: the whole screen
 .equ RD_STATUS,     2               #   the progress screen's status lines only
@@ -194,7 +196,7 @@
 .equ ST_MENU,       4               # the list: waiting for the buttons
 .equ ST_READ,       5               # reading the chosen KN7APP.BIN to STAGE, a cluster or so per call
 .equ ST_FAIL,       6               # cannot go on: the reason stays on screen; EXIT, or 15 s, ends it
-.equ ST_END,        7               # answered 0xFE
+.equ ST_END,        7               # ended: answered RQ_QUIET (or 0xFE)
 .equ ST_TOC,        8               # KN7MENU.TOC: read, checked, applied (one call)
 .equ TOC_NONE,      0               # V_TOCST: no KN7MENU.TOC in the root
 .equ TOC_USED,      1               #   read and applied
@@ -232,6 +234,12 @@
 .equ QUIT_MS,       1500            # hold EXIT this long to leave
 .equ QUIT_CALLS,    30
 .equ RQ_SHOW,       5               # the request the menu answers: show the text, call again
+.equ RQ_QUIET,      4               # the last answer, after ChangeMode(1, 0): with V_RQSTATE at 1 the firmware returns
+                                    # at once, opening no title (README.md "Ending")
+.equ EG_CHGMODE,    29              # sig_reqloop: the `call ChangeMode` (dd, rel32)
+.equ EG_TITLE49,    42              #   the `call ChangeTitle` of request 0
+.equ EG_TITLE4C,    70              #   the `call ChangeTitle` of 0xFE
+.equ EG_RQ4,        0x423           # sig_rq4, from the head of sig_reqloop
 
 # ---- the buttons, as B_* bit numbers (ButtonTab in menu.s) ----------------------------------------
 .equ B_L1,          0               # LCDL 1..5: the five rows

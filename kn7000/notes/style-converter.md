@@ -81,11 +81,11 @@ plain copy of the file to `0x502B8000`.
 |---------|--------------------------------------------------------------------------------------------------------------------|------------------------|
 | 1       | copies 4 bytes from the mailbox to `0x50150831`, calls again                                                       |                        |
 | 2       | directory and file-name services, sub-code in byte 1: 0x00, 0x10, 0x40, and 0x80 (a name pattern with `.` `*` `?`) |                        |
-| 4       | file I/O for the converter: fmmopen, fmmread, fmmseek, fmmtell, fmmrewind, fmmclose (`0x48479D64`)                 | 0x48 `_TT_STYLCNVCNVT` |
+| 4       | by the state byte (893 `0x5004E3F8`): 3, 4, 6 file I/O, fmmopen .. fmmclose (`0x48479D64`); 1, 2: see below        | 0x48 `_TT_STYLCNVCNVT` |
 | 3       | `0x48479818`, then a selection screen (`0x4847A60F`)                                                               | 0x4B `_TT_STYLCNVSEL`  |
 | 5       | shows a text; for TECHNICS V1.0 the firmware's own "Insert Style Disk of Technics KN 1000/750" (RAM `0x500011B0`)  | 0x4A `_TT_STYLCNVTXT`  |
 | 0       | conversion finished: the STORE screen; for TECHNICS `0x4847A857` and ChangeMode(1) instead                         | 0x49 `_TT_STYLCNVSTOR` |
-| 0xFE    | error                                                                                                              | 0x4C `_TT_STYLCNVCONT` |
+| 0xFE    | end: sets `0x5004ED99` (893), so title 0x4C first shows message 0x4A, "ERROR!" (below)                             | 0x4C `_TT_STYLCNVCONT` |
 | other   | `0x4847A6DA`                                                                                                       | 0x4C `_TT_STYLCNVCONT` |
 
 Title numbers: `title_pool.py` (title = pool index + 1, checked on `_TT_DEBUG` 0xFF,
@@ -115,6 +115,12 @@ the following. Sources, command files and results are in that repository's `kn70
   = 20252 in `tools/cnv_romdump/test/dump.cmd.in`'s end line). Counting calls is therefore no clock;
   the dumper reads the kernel's millisecond counter instead (`0x500D3C58` on 941), found through
   its tick handler's code.
+- **Ending without the message (2026-11-06, program 893, read in `src/b893/program/region1_03.s`).** The message
+  box after 0xFE is InterruptTitle(3, 0x4A): message 0x4A of `TT_MESSAGE` is the one-text window `Other` with
+  "ERROR!", whatever the converter did. Request 4 dispatches on STYLE CONVERT's state byte (`0x5004E3F8`), which
+  requests 2 and 5 write. With the byte at 1 or 2 it returns at once, posting nothing, unless the title is
+  "Continue Next?". The program menu (`tools/kn7menu`, README "Ending") ends with ChangeMode(1, 0), then the byte
+  at 1 and request 4: the main screen, no message. MAME only so far.
 - **Request 0xFE ends it.** The firmware stops calling and shows its message box (title 0x4C).
   EXIT then brings up "Continue Next?" with YES and NO. **YES calls the converter again**, the
   loaded file and its variables intact (it is not reloaded). **NO returns to the main screen.**
