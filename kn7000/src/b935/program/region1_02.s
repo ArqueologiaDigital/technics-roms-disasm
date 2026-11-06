@@ -29109,8 +29109,8 @@ loc_48450262:
 loc_48450277:
     clr     d0
     ret     [d2,d3,a2], 0x2c
-
-func_4845027B:
+# SoundTableKeyMapOn  (CPU 0x4845027b)
+SoundTableKeyMapOn:
     movm    [d2], (sp)
     add     -0x14, sp
     mov     d0, d1
@@ -31744,11 +31744,11 @@ loc_4845168B:
     movbu   d0, (a3)
 loc_484516A7:
     ret     [d2,d3,a2,a3], 0x34
-
-func_484516AA:
+# KeyZoneNoteResolve  (CPU 0x484516aa)
+KeyZoneNoteResolve:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x24, sp
-func_484516AA_entry:
+KeyZoneNoteResolve_entry:
     mov     d0, d2
     clr     d0
     movbu   d0, (0x1d, sp)
@@ -33578,7 +33578,7 @@ loc_484525C9:
     mov     (0x2c, sp), a0
     mov     (0x1c, sp), a1
     mov     d3, d0
-    call    func_484516AA_entry, [d2,d3,a2,a3], 0x34
+    call    KeyZoneNoteResolve_entry, [d2,d3,a2,a3], 0x34
     bra     loc_484525DC
 loc_484525D5:
     mov     (0x28, sp), a0
@@ -34964,7 +34964,7 @@ loc_484530E1:
     mov     (0x1c, sp), a0
     mov     a3, a1
     mov     (0x14, sp), d0
-    call    func_484516AA_entry, [d2,d3,a2,a3], 0x34
+    call    KeyZoneNoteResolve_entry, [d2,d3,a2,a3], 0x34
 loc_484530EB:
     mov     a2, a0
     mov     (0x34, sp), d0
