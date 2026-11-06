@@ -22,7 +22,11 @@ its end, so no other offset moves), the record's label and its head bytes go in 
 plain `.long` / `.short` rows, and scripts/converters/naka_asm_records.py --apply then writes the whole
 record as one macro call from the ROM bytes.  The image does not change (make gate).
 
-RUN (repository root, built tree), per tree v10, v9, v7 (their files are the same here):
+v6 and v5 (lane open12/v6v5-port3) have the same records with the same words; only their blob bases
+differ, and no address is written here (the comment patterns accept any address), so the same rewrites
+apply.
+
+RUN (repository root, built tree), per tree v10, v9, v7, v6, v5 (their files are the same here):
     python3 scripts/converters/naka_move_edge_heads_to_asm.py --tree v10
     make <tree's program ROM>     (the C blobs and the ELF the next step reads)
     python3 scripts/converters/naka_asm_records.py --tree v10 --apply
@@ -53,7 +57,7 @@ def sub1(pat, rep, text, what):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--tree', required=True, choices=['v10', 'v9', 'v7'])
+    ap.add_argument('--tree', required=True, choices=['v10', 'v9', 'v7', 'v6', 'v5'])
     a = ap.parse_args()
     mc = os.path.join(ROOT, a.tree, 'maincpu')
     p = lambda *x: os.path.join(mc, *x)
@@ -116,13 +120,23 @@ def main():
              '; record of ui_widgets/naka_sound_technichord_dispatch.s.\n', s, 'SdmenuPage incbin')
     wr(db_s, s)
     s = rd(tc_s)
+    # (the field comments of the old rows give way to one line; v10 / v9 / v7 were tidied so by hand in
+    # f3220ffc9, v6 / v5 get the same text from here)
     s = sub1(r'^; Tail of the NAKA record whose header \(naka_header type 0x25\) is at 0x[0-9A-Fa-f]+,\n'
-             r'; in the previous file; a 32-bit pointer to that record is at 0x[0-9A-Fa-f]+\.\n',
-             'NakaWidget_SdmenuPage:\n'
+             r'; in the previous file; a 32-bit pointer to that record is at 0x[0-9A-Fa-f]+\.\n'
+             r'(\t\.short 0xffff, 0x2\n\t\.short 0xffff, 0x8\n)\t\.short 0xf5\t; X-left coord of the button\n'
+             r'\t\.short 0x6\t; y-top coord of the button\n\t\.short 0x13b, 0x17\t; x-right coord of the button\n'
+             r'\t\.short 0xf3, 0xc1\t; y-botton coord\n\t\.short 0xffff\n'
+             r'\t\.long 0x3e664\t; <-- the LSByte here affects the page number\n\t\.short 0x1\n'
+             r'\t\.short 0x2\t; total number of pages\n',
              '; element 1 of Viewable slot 0x2 (Sdmenu), an AcWindowPage; its first 6 bytes were the end of\n'
              '; naka_sound_menu_drawbar.c until 2026-11-06 (scripts/converters/naka_move_edge_heads_to_asm.py)\n'
+             '; (the rect is the box of the page indicator; pagemax = 2, the number of pages)\n'
+             'NakaWidget_SdmenuPage:\n'
              '\t.long 0x01600025\n'
-             '\t.short 0\n', s, 'SdmenuPage tail')
+             '\t.short 0\n'
+             '\\1\t.short 0xf5\n\t.short 0x6\n\t.short 0x13b, 0x17\n\t.short 0xf3, 0xc1\n\t.short 0xffff\n'
+             '\t.long 0x3e664\n\t.short 0x1\n\t.short 0x2\n', s, 'SdmenuPage tail')
     wr(tc_s, s)
     print('naka_move_edge_heads_to_asm %s: NakaWidget_N1 and NakaWidget_SdmenuPage moved to the asm' % a.tree)
 
