@@ -48,8 +48,6 @@ NakaParam_PmBankScreen	0xed21bc	extensions/extension_data.s
 NakaParam_PmBankScreen_Empty	0xed21c0	extensions/extension_data.s
 Boot_GetButtonComboCode	0xef0627	kn5000_v7_program.s
 VoiceSlot_StatusRet_Helper3_Skip	0xefeef9	display/scoop_display.s
-DisplayStr_TempoString	0xefef10	display/scoop_display.s
-DisplayStr_BytecodeBlock_C_Tbl2	0xefef29	display/scoop_display.s
 FloppyIO_WaitReadComplete	0xf233f4	sequencer/smf_playback.s
 FloppyIO_ReadNextByte_UpdateRemaining	0xf23747	sequencer/smf_tonegen_core.s
 SMF_MTrk_FileSizeReadFailed	0xf23f7e	sequencer/smf_tonegen_core.s

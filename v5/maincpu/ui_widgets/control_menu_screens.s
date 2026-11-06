@@ -431,9 +431,8 @@ NakaWidget_MSCTSEL_13_AcMstStyle2GridBox:
 	.short	IDX_NakaWidget_MSCTSEL_16_AcIndexWideES	; AcMstStyle2GridBox next
 	.short	NAKA_INDEX_NONE	; AcMstStyle2GridBox prev
 	.short	VF_Const	; AcMstStyle2GridBox flag
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x28, 0x00, 0x40, 0x00, 0x35, 0x01
-	.long	SeqByteBlock_PathNormalize_Skip16
+	.short	40, 64, 309, 212	; AcMstStyle2GridBox rect (x1, y1, x2, y2)
+	.short	CL_WallPattern	; AcMstStyle2GridBox color
 	.short	BD_None	; AcMstStyle2GridBox border
 	.short	1	; AcMstStyle2GridBox index
 	.long	idCHARA6	; AcMstStyle2GridBox font
