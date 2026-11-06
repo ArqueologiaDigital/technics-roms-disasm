@@ -19,24 +19,24 @@ there); the other items' evidence is in the note that listed them.
 
 ## Items
 
-| item                                | outcome | where                                                            | in one line                                                                                                                        |
-|-------------------------------------|---------|------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------|
-| L-mn10300-names-b935-initial-sp     | CLOSED  | this README, `tools/port_symbols.py`                             | INITIAL_SP 935 0x50021CCC, 893 0x50021CC8 (was 941's value / unported); the records above it named `DspPresetRamRecords`           |
-| L-mn10300-names-port-entry          | CLOSED  | this README, `tools/port_names_by_code.py`                       | call entries are candidates; on 935 the rule finds DspFullReinit, DspWritePMWord, DspWriteDMWord (3 of the 4 hand-placed names)    |
-| L-mn10300-names-sd-frame-labels     | CLOSED  | `kn7000_manual.sym`, `../kn7000-names-probes/names_sd_frames.py` | SdFrameR2Cmd0/5/3/6/7 at 0x50007E94 + 10 k, TickHookArg0..3 at 0x4874D11C; the data labels follow at the next `make data-src*`     |
-| L-mn10300-names-kn2400-titles       | BLOCKED | this README, `../kn7000-names-probes/names_kn2400_titles.py`     | 25 titles TitleNameTable names and gui_ids.inc lacks, listed; writing them is `gen_data_s.py` (lane mn10300-data2)                 |
-| N-89cedbdb                          | CLOSED  | `../sibling-name-port/README.md`, `names_choice_func_lists.py`   | both names right: one choice-parameter template, the string lists differ (TECHNICS/SMF vs SD-AUDIO/SD-SOUND)                       |
-| N-61c32961                          | BLOCKED | `../callee-walk/README.md`, `../mn10300-data/README.md`          | the indexed `sentinel_lists` form is `gen_data_s.py` (lane mn10300-data2)                                                          |
-| N-fb88572c                          | BLOCKED | `../gui-data-region/README.md`                                   | the frozen `gui_object_names.tsv` read by `obj_names()` is `gen_data_s.py` and its data directories (lane mn10300-data2)           |
-| N-83177c3d                          | CLOSED  | `../ic18-rhythm-rom.md`                                          | ToneKeyFind's general tail; 3,386 notes resolved; Standard-Kit-1 key agreement 92.5 % -> 93.9 %                                    |
-| N-c052c027                          | CLOSED  | `../ic18-rhythm-rom.md`                                          | NoteConvApply traced past the fold: 11 mode-1 and 10 mode-0 tables over the 41 chord types                                         |
-| N-e779328f                          | CLOSED  | `../ic18-rhythm-rom.md`                                          | EQ words to TG register classes 0x40000000..0x50000000; a variation's +2/+3 are the DSP units' style parts (key 0xB048)            |
-| N-c6900716                          | OPEN    | `../presentation-control-probes/song-records.md`                 | 0xA0 / 0xA1 / 0x200000 named; 17 ids left with the next step                                                                       |
-| N-abdfdef8                          | CLOSED  | `../presentation-control-probes/song-records.md` section 7       | the 47 descriptors are the PC COMMUNICATION protocol: request layout, CRC-7, replies                                               |
-| N-42bc8729                          | CLOSED  | `../sp7001-build-diff.md` "The last 24"                          | 24 of 24: 5 by the evaluator's fixes (1,321 of 1,340), 19 by `oldbuilds_baseext_unresolved_calls.py` (vtable slots, run-time sets) |
-| N-44e56012                          | OPEN    | `../work-ram-map.md`                                             | key-bed path traced, no work-RAM gate on it; next step a MAME break on TgcNoteOnSend / TgcBufWrite                                 |
-| N-e140c8dc                          | CLOSED  | `../../../notes/floppy-leftovers-2026-10-31/README.md`           | KN6000 1,768 -> 36 B, KN7000 5,270 -> 5,045 B (the rest: RAM nothing wrote [INFERENCE], bit density by address mod 8)              |
-| O-kn6000-floppy-unknown-dump-397763 | CLOSED  | the same                                                         | the 126 x 1,768 B group is 3 x 36 B                                                                                                |
+| item                                | outcome | where                                                            | in one line                                                                                                                                               |
+|-------------------------------------|---------|------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| L-mn10300-names-b935-initial-sp     | CLOSED  | this README, `tools/port_symbols.py`                             | INITIAL_SP 935 0x50021CCC, 893 0x50021CC8 (was 941's value / unported); the records above it named `DspPresetRamRecords`                                  |
+| L-mn10300-names-port-entry          | CLOSED  | this README, `tools/port_names_by_code.py`                       | call entries are candidates; on 935 the rule finds DspFullReinit, DspWritePMWord, DspWriteDMWord (3 of the 4 hand-placed names)                           |
+| L-mn10300-names-sd-frame-labels     | CLOSED  | `kn7000_manual.sym`, `../kn7000-names-probes/names_sd_frames.py` | SdFrameR2Cmd0/5/3/6/7 at 0x50007E94 + 10 k, TickHookArg0..3 at 0x4874D11C; 941's data regenerated, the other builds' at the next `make data-and-code-src` |
+| L-mn10300-names-kn2400-titles       | BLOCKED | this README, `../kn7000-names-probes/names_kn2400_titles.py`     | 25 titles TitleNameTable names and gui_ids.inc lacks, listed; writing them is `gen_data_s.py` (lane mn10300-data2)                                        |
+| N-89cedbdb                          | CLOSED  | `../sibling-name-port/README.md`, `names_choice_func_lists.py`   | both names right: one choice-parameter template, the string lists differ (TECHNICS/SMF vs SD-AUDIO/SD-SOUND)                                              |
+| N-61c32961                          | BLOCKED | `../callee-walk/README.md`, `../mn10300-data/README.md`          | the indexed `sentinel_lists` form is `gen_data_s.py` (lane mn10300-data2)                                                                                 |
+| N-fb88572c                          | BLOCKED | `../gui-data-region/README.md`                                   | the frozen `gui_object_names.tsv` read by `obj_names()` is `gen_data_s.py` and its data directories (lane mn10300-data2)                                  |
+| N-83177c3d                          | CLOSED  | `../ic18-rhythm-rom.md`                                          | ToneKeyFind's general tail; 3,386 notes resolved; Standard-Kit-1 key agreement 92.5 % -> 93.9 %                                                           |
+| N-c052c027                          | CLOSED  | `../ic18-rhythm-rom.md`                                          | NoteConvApply traced past the fold: 11 mode-1 and 10 mode-0 tables over the 41 chord types                                                                |
+| N-e779328f                          | CLOSED  | `../ic18-rhythm-rom.md`                                          | EQ words to TG register classes 0x40000000..0x50000000; a variation's +2/+3 are the DSP units' style parts (key 0xB048)                                   |
+| N-c6900716                          | OPEN    | `../presentation-control-probes/song-records.md`                 | 0xA0 / 0xA1 / 0x200000 named; 17 ids left with the next step                                                                                              |
+| N-abdfdef8                          | CLOSED  | `../presentation-control-probes/song-records.md` section 7       | the 47 descriptors are the PC COMMUNICATION protocol: request layout, CRC-7, replies                                                                      |
+| N-42bc8729                          | CLOSED  | `../sp7001-build-diff.md` "The last 24"                          | 24 of 24: 5 by the evaluator's fixes (1,321 of 1,340), 19 by `oldbuilds_baseext_unresolved_calls.py` (vtable slots, run-time sets)                        |
+| N-44e56012                          | OPEN    | `../work-ram-map.md`                                             | key-bed path traced, no work-RAM gate on it; next step a MAME break on TgcNoteOnSend / TgcBufWrite                                                        |
+| N-e140c8dc                          | CLOSED  | `../../../notes/floppy-leftovers-2026-10-31/README.md`           | KN6000 1,768 -> 36 B, KN7000 5,270 -> 5,045 B (the rest: RAM nothing wrote [INFERENCE], bit density by address mod 8)                                     |
+| O-kn6000-floppy-unknown-dump-397763 | CLOSED  | the same                                                         | the 126 x 1,768 B group is 3 x 36 B                                                                                                                       |
 
 ## INITIAL_SP and the records above it (L-mn10300-names-b935-initial-sp)
 
@@ -108,9 +108,10 @@ mode 2, u16 response type 2, 0x40|n, four argument bytes, CRC 0xFF} with n = 0, 
 data typer had cut them as a 9-byte record (`SdReadBlockCmd_Var_2`) and a 41-byte table starting
 at frame 0's CRC byte (`SdReadBlockCmd_Table`).  `kn7000_manual.sym` now names the five frames
 and 941's four tick-hook words (`TickHookArg0..3`, the twins of IC18's); `gen_data_s.py` takes a
-symbol-file name at a data address as the label (`self.fixed`), so the data sources and the code
-that reads them change at the next `make data-and-code-src` (lane mn10300-data2's regeneration;
-the names port to 942 / 935 / 893 through `make symbols-*`).
+symbol-file name at a data address as the label (`self.fixed`); regenerated for 941
+(commit "regen: KN7000 941 data and program sources"), the five frames are now typed as five
+10-byte `REC_SdCommandSend_ArgA0` records and the code reads `(TickHookArg0)` ..; 942 / 935 /
+893 take the names (already ported by `make symbols-*`) at their next `make data-and-code-src`.
 
 ## Handed over (gen_data_s.py, lane mn10300-data2)
 
