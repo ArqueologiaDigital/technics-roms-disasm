@@ -29109,11 +29109,11 @@ loc_48450262:
 loc_48450277:
     clr     d0
     ret     [d2,d3,a2], 0x2c
-
-func_4845027B:
+# SoundTableKeyMapOn  (CPU 0x4845027b)
+SoundTableKeyMapOn:
     movm    [d2], (sp)
     add     -0x14, sp
-func_4845027B_entry:
+SoundTableKeyMapOn_entry:
     mov     d0, d1
     mov     0xff, d2
     and     d1, d2
@@ -31504,7 +31504,7 @@ loc_4845147A:
     mov     0x00c00000, d0
     call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d2
-    call    func_4845027B_entry, [d2], 0x18
+    call    SoundTableKeyMapOn_entry, [d2], 0x18
     exth    d0
     cmp     0, d0
     beq     loc_484514DD
@@ -31632,7 +31632,7 @@ loc_4845157B:
     mov     0x00c00000, d0
     call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d2
-    call    func_4845027B_entry, [d2], 0x18
+    call    SoundTableKeyMapOn_entry, [d2], 0x18
     exth    d0
     cmp     d3, d0
     beq     loc_484515DD
@@ -31713,11 +31713,11 @@ loc_4845162D:
     movbu   d0, (a2)
 loc_48451646:
     ret     [d2,d3,a2,a3], 0x30
-
-func_48451649:
+# KeyZoneNoteResolve  (CPU 0x48451649)
+KeyZoneNoteResolve:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x20, sp
-func_48451649_entry:
+KeyZoneNoteResolve_entry:
     mov     d0, d2
     movhu   d2, (0x1c, sp)
     movhu   (0x1c, sp), d0
@@ -31745,7 +31745,7 @@ loc_48451665:
     mov     0x00c00000, d0
     call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d2
-    call    func_4845027B_entry, [d2], 0x18
+    call    SoundTableKeyMapOn_entry, [d2], 0x18
     exth    d0
     cmp     d3, d0
     beq     loc_484516C6
@@ -33535,7 +33535,7 @@ loc_48452542:
     mov     (0x2c, sp), a0
     mov     (0x1c, sp), a1
     mov     d3, d0
-    call    func_48451649_entry, [d2,d3,a2,a3], 0x30
+    call    KeyZoneNoteResolve_entry, [d2,d3,a2,a3], 0x30
     bra     loc_48452555
 loc_4845254E:
     mov     (0x28, sp), a0
@@ -34921,7 +34921,7 @@ loc_4845305A:
     mov     (0x1c, sp), a0
     mov     a3, a1
     mov     (0x14, sp), d0
-    call    func_48451649_entry, [d2,d3,a2,a3], 0x30
+    call    KeyZoneNoteResolve_entry, [d2,d3,a2,a3], 0x30
 loc_48453064:
     mov     a2, a0
     mov     (0x34, sp), d0
