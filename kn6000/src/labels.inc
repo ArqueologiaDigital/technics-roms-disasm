@@ -67624,7 +67624,7 @@
 .equ DspHostPortError, 0x50005d98
 .equ DspReadyWaitEnabled, 0x50005d99
 .equ func_4C154BC3_entry_L363_Table, 0x50005d9c
-.equ func_4C155072_Table, 0x500060dc
+.equ FxParamListTable, 0x500060dc
 .equ func_4C157DE2_entry_L1b41_Records, 0x5000641c
 .equ func_4C157DE2_entry_L1b41_Records_2, 0x500064f4
 .equ func_4C157DE2_entry_L2ad7_Table, 0x500065f4

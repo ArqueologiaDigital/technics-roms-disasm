@@ -6573,13 +6573,13 @@ Str_SOLO_50:	.asciz "-SOLO"
 Str_empty_868:	.asciz "     "
 Str_USER_BANK_1c:	.asciz "USER BANK: %1c"
 	.align	4, 0xFF	# pad after Str_USER_BANK_1c
-Str_empty_524:	.asciz "    "
+Str_empty_520:	.asciz "    "
 Str_MUTE_4:	.asciz "MUTE"
 Str_REC_9:	.asciz "REC"
 	.align	4, 0xFF	# pad after Str_REC_9
 
 AcCmpRecMuteBoxProc_Ld6_Table:
-	.long	Str_empty_524
+	.long	Str_empty_520
 	.long	Str_MUTE_4
 	.long	Str_REC_9
 
@@ -7600,41 +7600,41 @@ Str_3s_s_V_3d_5d:	.asciz " %3s          %s V%3d %5d"
 	.align	4, 0xFF	# pad after Str_3s_s_V_3d_5d
 Str_3s_7:	.asciz " %3s                          "
 	.align	4, 0xFF	# pad after Str_3s_7
-Str_empty_523:	.asciz "   "
+Str_empty_519:	.asciz "   "
 data_4C208B88:
 # census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6500_program.rom", 0x208B88, 0x208B8C
-Str_empty_522:	.asciz " \xAD "
+Str_empty_518:	.asciz " \xAD "
 data_4C208B90:
 # census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6500_program.rom", 0x208B90, 0x208B94
-Str_empty_521:	.asciz " \xAC "
+Str_empty_517:	.asciz " \xAC "
 data_4C208B98:
 # census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6500_program.rom", 0x208B98, 0x208B9C
-Str_empty_520:	.asciz " \xAB "
+Str_empty_516:	.asciz " \xAB "
 data_4C208BA0:
 # census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6500_program.rom", 0x208BA0, 0x208BA4
-Str_empty_519:	.asciz " \xAA "
-Str_empty_518:	.asciz " \xA6 "
-Str_empty_517:	.asciz " \xA1 "
+Str_empty_515:	.asciz " \xAA "
+Str_empty_514:	.asciz " \xA6 "
+Str_empty_513:	.asciz " \xA1 "
 Str_x2:	.asciz "\xA1x2"
 Str_x3:	.asciz "\xA1x3"
 Str_x4:	.asciz "\xA1x4"
 
 ptrs_4C208BBC:
-	.long	Str_empty_523
-	.long	data_4C208B88
-	.long	Str_empty_522
-	.long	data_4C208B90
-	.long	Str_empty_521
-	.long	data_4C208B98
-	.long	Str_empty_520
-	.long	data_4C208BA0
 	.long	Str_empty_519
+	.long	data_4C208B88
 	.long	Str_empty_518
+	.long	data_4C208B90
 	.long	Str_empty_517
+	.long	data_4C208B98
+	.long	Str_empty_516
+	.long	data_4C208BA0
+	.long	Str_empty_515
+	.long	Str_empty_514
+	.long	Str_empty_513
 	.long	Str_x2
 	.long	Str_x3
 	.long	Str_x4
@@ -7690,7 +7690,7 @@ Str_TRANSPOSE_A_80:	.asciz "TRANSPOSE:A ~80"
 Str_TRANSPOSE_B_a0_80:	.asciz "TRANSPOSE:B~a0~80"
 Str_TRANSPOSE_B_80:	.asciz "TRANSPOSE:B ~80"
 Str_TRANSPOSE_C_80:	.asciz "TRANSPOSE:C ~80"
-Str_empty_516:	.asciz "             "
+Str_empty_512:	.asciz "             "
 
 func_4C0CF694_Table:
 	.long	Str_TRANSPOSE_7fC
@@ -7718,7 +7718,7 @@ func_4C0CF694_Table:
 	.long	Str_TRANSPOSE_B_a0_80
 	.long	Str_TRANSPOSE_B_80
 	.long	Str_TRANSPOSE_C_80
-	.long	Str_empty_516
+	.long	Str_empty_512
 
 Str_s_SOUND_s:	.asciz " %s    SOUND       %s   "
 	.align	4, 0xFF	# pad after Str_s_SOUND_s
@@ -37465,7 +37465,7 @@ AcFileSfxBoxProc_Lea_Table:
 	.long	Str_ALL_CUSTOM_STYLE_3
 
 Str_NEXT_PAGE:	.asciz "   NEXT PAGE    "
-Str_empty_515:	.asciz "   ---------    "
+Str_empty_511:	.asciz "   ---------    "
 Str_This_is:	.asciz "    This is     "
 Str_temporary:	.asciz "   temporary    "
 Str_message:	.asciz "    message.    "
@@ -37473,7 +37473,7 @@ Str_message:	.asciz "    message.    "
 
 AcFileSfxBoxProc_L1d3_Table:
 	.long	Str_NEXT_PAGE
-	.long	Str_empty_515
+	.long	Str_empty_511
 	.long	Str_This_is
 	.long	Str_temporary
 	.long	Str_message

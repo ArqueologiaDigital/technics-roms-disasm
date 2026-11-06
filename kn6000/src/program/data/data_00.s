@@ -112,7 +112,7 @@ data_4C176284:
 # census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x176284, 0x176288
 Str_C_18:	.asciz "C"
-Str_empty_939:	.asciz "."
+Str_empty_928:	.asciz "."
 data_4C17628C:
 	.space	1, 0x00
 data_4C17628D:
@@ -568,12 +568,12 @@ AcNamingWindowProc_L34f_Table:
 	.long	GetEditSwPointInit_Table+332
 	.long	GetEditSwPointInit_Table+796
 
-Str_empty_934:	.asciz " "
-Str_empty_930:	.asciz "_"
+Str_empty_921:	.asciz " "
+Str_empty_920:	.asciz "_"
 
 AcNamingWindowProc_Lbf_Table:
-	.long	Str_empty_934
-	.long	Str_empty_930
+	.long	Str_empty_921
+	.long	Str_empty_920
 
 Str_7f_3:	.asciz "~7f"
 Str_empty_970:	.asciz " "
@@ -780,7 +780,7 @@ data_4C176CC8:
 data_4C176CC9:
 	.space	1, 0x00
 
-Str_empty_929:	.asciz "_"
+Str_empty_919:	.asciz "_"
 Str_0_16:	.asciz "0"
 Str_1_34:	.asciz "1"
 Str_2_35:	.asciz "2"
@@ -810,7 +810,7 @@ ptrs_4C176CE4:
 	.long	data_4C176CC7
 	.long	data_4C176CC8
 	.long	data_4C176CC9
-	.long	Str_empty_929
+	.long	Str_empty_919
 	.long	Str_0_16
 	.long	Str_1_34
 	.long	Str_2_35
@@ -823,22 +823,22 @@ ptrs_4C176CE4:
 	.long	Str_9_12
 	.long	data_4C176CE0
 
-Str_empty_928:	.asciz "!"
-Str_empty_921:	.asciz "#"
-Str_empty_920:	.asciz "$"
-Str_empty_919:	.asciz "%"
-Str_empty_918:	.asciz "&"
-Str_empty_917:	.asciz "?"
+Str_empty_918:	.asciz "!"
+Str_empty_917:	.asciz "#"
+Str_empty_916:	.asciz "$"
+Str_empty_915:	.asciz "%"
+Str_empty_914:	.asciz "&"
+Str_empty_913:	.asciz "?"
 Str_40_2:	.asciz "~40"
 Str_5c:	.asciz "~5c"
-Str_empty_916:	.asciz "^"
+Str_empty_912:	.asciz "^"
 Str_22:	.asciz "~22"
 Str_27:	.asciz "~27"
-Str_empty_915:	.asciz "`"
+Str_empty_911:	.asciz "`"
 data_4C176D6C:
 	.space	1, 0x00
-Str_empty_914:	.asciz " "
-Str_empty_913:	.asciz "_"
+Str_empty_910:	.asciz " "
+Str_empty_909:	.asciz "_"
 Str_0_15:	.asciz "0"
 Str_1_33:	.asciz "1"
 Str_2_34:	.asciz "2"
@@ -856,21 +856,21 @@ data_4C176D86:
 .incbin_range "baserom/kn6000_program.rom", 0x176D86, 0x176D88
 
 ptrs_4C176D88:
-	.long	Str_empty_928
-	.long	Str_empty_921
-	.long	Str_empty_920
-	.long	Str_empty_919
 	.long	Str_empty_918
 	.long	Str_empty_917
-	.long	Str_40_2
-	.long	Str_5c
 	.long	Str_empty_916
-	.long	Str_22
-	.long	Str_27
 	.long	Str_empty_915
-	.long	data_4C176D6C
 	.long	Str_empty_914
 	.long	Str_empty_913
+	.long	Str_40_2
+	.long	Str_5c
+	.long	Str_empty_912
+	.long	Str_22
+	.long	Str_27
+	.long	Str_empty_911
+	.long	data_4C176D6C
+	.long	Str_empty_910
+	.long	Str_empty_909
 	.long	Str_0_15
 	.long	Str_1_33
 	.long	Str_2_34
@@ -884,15 +884,15 @@ ptrs_4C176D88:
 	.long	data_4C176D85
 	.long	data_4C176D86
 
-Str_empty_912:	.asciz "("
-Str_empty_911:	.asciz ")"
-Str_empty_910:	.asciz "<"
-Str_empty_909:	.asciz ">"
-Str_empty_908:	.asciz "["
-Str_empty_907:	.asciz "]"
-Str_empty_906:	.asciz "{"
-Str_empty_905:	.asciz "}"
-Str_empty_904:	.asciz "|"
+Str_empty_908:	.asciz "("
+Str_empty_907:	.asciz ")"
+Str_empty_906:	.asciz "<"
+Str_empty_905:	.asciz ">"
+Str_empty_904:	.asciz "["
+Str_empty_903:	.asciz "]"
+Str_empty_902:	.asciz "{"
+Str_empty_901:	.asciz "}"
+Str_empty_900:	.asciz "|"
 data_4C176E06:
 	.space	1, 0x00
 data_4C176E07:
@@ -901,15 +901,15 @@ data_4C176E08:
 	.space	1, 0x00
 data_4C176E09:
 	.space	1, 0x00
-Str_empty_903:	.asciz ","
-Str_empty_902:	.asciz "."
-Str_empty_901:	.asciz ":"
-Str_empty_900:	.asciz ";"
-Str_empty_899:	.asciz "+"
-Str_empty_898:	.asciz "-"
-Str_empty_897:	.asciz "*"
-Str_empty_896:	.asciz "/"
-Str_empty_895:	.asciz "="
+Str_empty_899:	.asciz ","
+Str_empty_898:	.asciz "."
+Str_empty_897:	.asciz ":"
+Str_empty_896:	.asciz ";"
+Str_empty_895:	.asciz "+"
+Str_empty_894:	.asciz "-"
+Str_empty_893:	.asciz "*"
+Str_empty_892:	.asciz "/"
+Str_empty_891:	.asciz "="
 Str_8b:	.asciz "~8b"
 Str_8d:	.asciz "~8d"
 data_4C176E24:
@@ -919,28 +919,28 @@ data_4C176E25:
 .incbin_range "baserom/kn6000_program.rom", 0x176E25, 0x176E28
 
 ptrs_4C176E28:
-	.long	Str_empty_912
-	.long	Str_empty_911
-	.long	Str_empty_910
-	.long	Str_empty_909
 	.long	Str_empty_908
 	.long	Str_empty_907
 	.long	Str_empty_906
 	.long	Str_empty_905
 	.long	Str_empty_904
-	.long	data_4C176E06
-	.long	data_4C176E07
-	.long	data_4C176E08
-	.long	data_4C176E09
 	.long	Str_empty_903
 	.long	Str_empty_902
 	.long	Str_empty_901
 	.long	Str_empty_900
+	.long	data_4C176E06
+	.long	data_4C176E07
+	.long	data_4C176E08
+	.long	data_4C176E09
 	.long	Str_empty_899
 	.long	Str_empty_898
 	.long	Str_empty_897
 	.long	Str_empty_896
 	.long	Str_empty_895
+	.long	Str_empty_894
+	.long	Str_empty_893
+	.long	Str_empty_892
+	.long	Str_empty_891
 	.long	Str_8b
 	.long	Str_8d
 	.long	data_4C176E24
@@ -10364,7 +10364,7 @@ data_4C193AA8:
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
 	.long	ResourceIdLeaf_4C18FF44
 	.long	0
-Str_empty_894:	.asciz " "
+Str_empty_890:	.asciz " "
 # census: opaque -- unknown-dump: 6 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x193AB2, 0x193AB8
 Str_4_27:	.asciz "4"
@@ -10826,7 +10826,7 @@ func_4C02C891_entry_L122_Table:
 	.long	0
 	.long	0
 	.long	0
-	.long	Str_empty_894
+	.long	Str_empty_890
 	.long	Str_4_27
 	.long	0
 	.long	0
@@ -22391,13 +22391,13 @@ AcSplitBoxProc_L78_Table:
 Str_SPLIT_s_d:	.asciz "SPLIT:%s%d"
 	.align	4, 0xFF	# pad after Str_SPLIT_s_d
 Str_empty_840:	.asciz "           "
-Str_empty_893:	.asciz "        "
+Str_empty_889:	.asciz "        "
 Str_FADE_IN_2:	.asciz "FADE IN "
 Str_FADE_OUT_2:	.asciz "FADE OUT"
 	.align	4, 0xFF	# pad after Str_FADE_OUT_2
 
 AcFadeBoxProc_Lb0_Table:
-	.long	Str_empty_893
+	.long	Str_empty_889
 	.long	Str_FADE_IN_2
 	.long	Str_FADE_OUT_2
 
@@ -22809,28 +22809,28 @@ AcPartSelectProc_L67_Table:
 	.long	Str_APC_3
 	.long	Str_CONTROL_3
 
-Str_empty_892:	.asciz "     "
+Str_empty_888:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x1B7916, 0x1B7922
-Str_empty_891:	.asciz "  \x95  "
+Str_empty_887:	.asciz "  \x95  "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x1B7928, 0x1B7934
-Str_empty_890:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1B793A, 0x1B7946
-Str_empty_889:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1B794C, 0x1B7958
-Str_empty_888:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1B795E, 0x1B796A
-Str_empty_887:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1B7970, 0x1B797C
 Str_empty_886:	.asciz "  \x95  "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x1B793A, 0x1B7946
+Str_empty_885:	.asciz "  \x95  "
+# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x1B794C, 0x1B7958
+Str_empty_884:	.asciz "  \x95  "
+# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x1B795E, 0x1B796A
+Str_empty_883:	.asciz "     "
+# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x1B7970, 0x1B797C
+Str_empty_882:	.asciz "  \x95  "
+# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x1B7982, 0x1B798E
-Str_empty_885:	.asciz "     "
+Str_empty_881:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x1B7994, 0x1B79A0
 data_4C1B79A0:
@@ -22845,28 +22845,28 @@ data_4C1B79B2:
 Str_BASS2:	.asciz "BASS2"
 # census: opaque -- unknown-dump: 6 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x1B79BE, 0x1B79C4
-Str_empty_884:	.asciz "     "
+Str_empty_880:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x1B79CA, 0x1B79D6
-Str_empty_883:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1B79DC, 0x1B79E8
-Str_empty_882:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1B79EE, 0x1B79FA
-Str_empty_881:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1B7A00, 0x1B7A0C
-Str_empty_880:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1B7A12, 0x1B7A1E
 Str_empty_879:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1B7A24, 0x1B7A30
+.incbin_range "baserom/kn6000_program.rom", 0x1B79DC, 0x1B79E8
 Str_empty_878:	.asciz "  \x95  "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x1B79EE, 0x1B79FA
+Str_empty_877:	.asciz "  \x95  "
+# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x1B7A00, 0x1B7A0C
+Str_empty_876:	.asciz "  \x95  "
+# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x1B7A12, 0x1B7A1E
+Str_empty_875:	.asciz "     "
+# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x1B7A24, 0x1B7A30
+Str_empty_874:	.asciz "  \x95  "
+# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x1B7A36, 0x1B7A42
-Str_empty_877:	.asciz "     "
+Str_empty_873:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x1B7A48, 0x1B7A54
 data_4C1B7A54:
@@ -22881,68 +22881,68 @@ data_4C1B7A66:
 Str_BASS2_2:	.asciz "BASS2"
 # census: opaque -- unknown-dump: 6 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x1B7A72, 0x1B7A78
-Str_empty_876:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1B7A7E, 0x1B7A8A
-Str_empty_875:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1B7A90, 0x1B7A9C
-Str_empty_874:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1B7AA2, 0x1B7AAE
-Str_empty_873:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1B7AB4, 0x1B7AC0
 Str_empty_871:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1B7AC6, 0x1B7AD2
+.incbin_range "baserom/kn6000_program.rom", 0x1B7A7E, 0x1B7A8A
 Str_empty_870:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1B7AD8, 0x1B7AE4
+.incbin_range "baserom/kn6000_program.rom", 0x1B7A90, 0x1B7A9C
 Str_empty_869:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1B7AEA, 0x1B7AF6
+.incbin_range "baserom/kn6000_program.rom", 0x1B7AA2, 0x1B7AAE
 Str_empty_868:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1B7AFC, 0x1B7B08
+.incbin_range "baserom/kn6000_program.rom", 0x1B7AB4, 0x1B7AC0
 Str_empty_867:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x1B7B0E, 0x1B7B1A
+.incbin_range "baserom/kn6000_program.rom", 0x1B7AC6, 0x1B7AD2
 Str_empty_866:	.asciz "     "
+# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x1B7AD8, 0x1B7AE4
+Str_empty_865:	.asciz "     "
+# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x1B7AEA, 0x1B7AF6
+Str_empty_864:	.asciz "     "
+# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x1B7AFC, 0x1B7B08
+Str_empty_863:	.asciz "     "
+# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x1B7B0E, 0x1B7B1A
+Str_empty_862:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x1B7B20, 0x1B7B2C
 
 AcAcdnTabProc_L43d_Table:
-	.long	Str_empty_892
-	.long	Str_empty_891
-	.long	Str_empty_890
-	.long	Str_empty_889
 	.long	Str_empty_888
 	.long	Str_empty_887
 	.long	Str_empty_886
 	.long	Str_empty_885
-	.long	data_4C1B79A0
-	.long	data_4C1B79B2
 	.long	Str_empty_884
 	.long	Str_empty_883
 	.long	Str_empty_882
 	.long	Str_empty_881
+	.long	data_4C1B79A0
+	.long	data_4C1B79B2
 	.long	Str_empty_880
 	.long	Str_empty_879
 	.long	Str_empty_878
 	.long	Str_empty_877
-	.long	data_4C1B7A54
-	.long	data_4C1B7A66
 	.long	Str_empty_876
 	.long	Str_empty_875
 	.long	Str_empty_874
 	.long	Str_empty_873
+	.long	data_4C1B7A54
+	.long	data_4C1B7A66
 	.long	Str_empty_871
 	.long	Str_empty_870
 	.long	Str_empty_869
 	.long	Str_empty_868
 	.long	Str_empty_867
 	.long	Str_empty_866
+	.long	Str_empty_865
+	.long	Str_empty_864
+	.long	Str_empty_863
+	.long	Str_empty_862
 
 Str_GERMAN_7:	.asciz "GERMAN"
 Str_ITALIAN:	.asciz "ITALIAN"
@@ -23464,7 +23464,7 @@ Str_DECAY_TIME_2:	.asciz "DECAY TIME"
 Str_RELEASE_TIME_6:	.asciz "RELEASE TIME"
 # census: opaque -- unknown-dump: 2 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x1B8AC2, 0x1B8AC4
-Str_empty_865:	.asciz "%"
+Str_empty_861:	.asciz "%"
 # census: opaque -- unknown-dump: 171 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x1B8AC6, 0x1B8B71
 Str_VIBRATO_DEPTH_4:	.asciz "VIBRATO DEPTH"
@@ -23477,15 +23477,15 @@ Str_DECAY_TIME_3:	.asciz "DECAY TIME"
 Str_RELEASE_TIME_7:	.asciz "RELEASE TIME"
 # census: opaque -- unknown-dump: 2 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x1B8BCE, 0x1B8BD0
-Str_empty_864:	.asciz "%"
+Str_empty_860:	.asciz "%"
 # census: opaque -- unknown-dump: 158 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x1B8BD2, 0x1B8C70
 
 AcMixerScreenProc_La6_Table:
 	.long	data_4C1B864C
-	.long	Str_empty_865
+	.long	Str_empty_861
 	.long	data_4C1B88C8
-	.long	Str_empty_864
+	.long	Str_empty_860
 
 TtSqmixer_L64_Table_p100_0:	# REC_TtSqmixer_L64_Table_p100 (1 bytes), then 63 x u16 the code indexes from +0 (read by func_4C0745B9 0x4C0745B9 `movhu (d0, a0), d0`)
 	REC_TtSqmixer_L64_Table_p100	x0="\x10"
@@ -25899,20 +25899,20 @@ Str_MUTE_KEYS_ON:	.asciz "  MUTE KEYS : ON  "
 Str_MUTE_KEYS_OFF:	.asciz "  MUTE KEYS : OFF "
 	.align	4, 0xFF	# pad after Str_MUTE_KEYS_OFF
 Str_NX_SOUND_ON:	.asciz "   NX SOUND ON    "
-Str_empty_863:	.asciz "        --        "
+Str_empty_859:	.asciz "        --        "
 Str_GM_LEVEL2_ON:	.asciz "   GM LEVEL2 ON   "
-Str_empty_862:	.asciz "        --        "
-Str_empty_861:	.asciz "        --        "
-Str_empty_860:	.asciz "        --        "
-	.align	4, 0xFF	# pad after Str_empty_860
+Str_empty_858:	.asciz "        --        "
+Str_empty_857:	.asciz "        --        "
+Str_empty_845:	.asciz "        --        "
+	.align	4, 0xFF	# pad after Str_empty_845
 
 func_4C079DC5_La0_Table:
 	.long	Str_NX_SOUND_ON
-	.long	Str_empty_863
+	.long	Str_empty_859
 	.long	Str_GM_LEVEL2_ON
-	.long	Str_empty_862
-	.long	Str_empty_861
-	.long	Str_empty_860
+	.long	Str_empty_858
+	.long	Str_empty_857
+	.long	Str_empty_845
 data_4C1C709C:
 	# a string, 4 bytes with its pad, read by AcFavCategoryProc_L277 0x4C07A462 `call strcpy_entry, [a2], 4` (+0, arg a1); AcFavCategoryProc_L277 0x4C07A462 `mov data_4C1C709C, a1` (+0, as a base); handed to strcpy
 	.asciz	""

@@ -3804,13 +3804,13 @@
 	.ascii	"\x1"
 .endm
 
-# REC_func_4C050837_entry_L4_Records: 12-byte records (func_4C050837_entry_L4_Records, 1 records); fields, and what reads them:
+# REC_func_4C050837_entry_L4_Records: 12-byte records (func_4C050837_entry_L4_Records, 3 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   proc         ptr            func_4C050837_entry_L4 0x4C050840 `mov (a0), a2`
+#   +0   f0           u32            func_4C050837_entry_L4 0x4C050840 `mov (a0), a2`
 #   +4   index        u32            func_4C050837_entry_L4 0x4C050840 `mov (4, a0), d3`
 #   +8   x8           u8[4]          no reader seen
-.macro REC_func_4C050837_entry_L4_Records proc=0, index=0, x8
-	.long	\proc
+.macro REC_func_4C050837_entry_L4_Records f0=0, index=0, x8
+	.long	\f0
 	.long	\index
 	.ascii	"\x8"
 .endm

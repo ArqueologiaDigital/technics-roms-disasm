@@ -38073,78 +38073,78 @@ func_4C15517F_entry_L363_Table:
 	.long	0
 	.long	0
 	.long	0
-func_4C15562E_Table:
+FxParamListTable:
 	.long	0
-	.long	data_4C3244AF
-	.long	data_4C3244E8
-	.long	data_4C32453D
-	.long	data_4C324592
-	.long	data_4C3245F5
-	.long	data_4C324658
-	.long	data_4C3244E8
-	.long	data_4C3246D2
-	.long	data_4C324719
-	.long	data_4C32476E
-	.long	data_4C324592
-	.long	data_4C324809
-	.long	data_4C3245F5
-	.long	data_4C324658
-	.long	data_4C32485E
-	.long	Str_empty_258
-	.long	Str_empty_258
-	.long	Str_empty_258
-	.long	Str_empty_258
-	.long	Str_empty_258
-	.long	Str_empty_258
-	.long	Str_empty_258
-	.long	Str_empty_258
-	.long	Str_empty_258
-	.long	Str_empty_258
-	.long	Str_empty_258
-	.long	Str_empty_258
-	.long	Str_empty_258
-	.long	Str_empty_258
-	.long	Str_empty_258
-	.long	Str_empty_258
-	.long	data_4C3248DD
-	.long	data_4C324940
-	.long	data_4C3249A3
-	.long	data_4C324A06
-	.long	data_4C324A4D
-	.long	data_4C324A94
+	.long	FxParamList_001
+	.long	FxParamList_002
+	.long	FxParamList_003
+	.long	FxParamList_004
+	.long	FxParamList_005
+	.long	FxParamList_006
+	.long	FxParamList_002
+	.long	FxParamList_008
+	.long	FxParamList_009
+	.long	FxParamList_010
+	.long	FxParamList_004
+	.long	FxParamList_012
+	.long	FxParamList_005
+	.long	FxParamList_006
+	.long	FxParamList_015
+	.long	FxParamList_016
+	.long	FxParamList_016
+	.long	FxParamList_016
+	.long	FxParamList_016
+	.long	FxParamList_016
+	.long	FxParamList_016
+	.long	FxParamList_016
+	.long	FxParamList_016
+	.long	FxParamList_016
+	.long	FxParamList_016
+	.long	FxParamList_016
+	.long	FxParamList_016
+	.long	FxParamList_016
+	.long	FxParamList_016
+	.long	FxParamList_016
+	.long	FxParamList_016
+	.long	FxParamList_032
+	.long	FxParamList_033
+	.long	FxParamList_034
+	.long	FxParamList_035
+	.long	FxParamList_036
+	.long	FxParamList_037
 	.long	0
-	.long	data_4C324ACD
-	.long	data_4C324B92
-	.long	data_4C324BCB
+	.long	FxParamList_039
+	.long	FxParamList_040
+	.long	FxParamList_041
 	.long	0
 	.long	0
-	.long	data_4C3244AF
-	.long	data_4C3244E8
+	.long	FxParamList_001
+	.long	FxParamList_002
 	.long	0
 	.long	0
-	.long	data_4C324C12
+	.long	FxParamList_048
 	.long	0
-	.long	data_4C324C59
-	.long	data_4C324CD9
-	.long	data_4C324CA0
-	.long	data_4C324D20
-	.long	data_4C324D9F
+	.long	FxParamList_050
+	.long	FxParamList_051
+	.long	FxParamList_052
+	.long	FxParamList_053
+	.long	FxParamList_054
 	.long	0
-	.long	data_4C324DD8
-	.long	data_4C324E3B
+	.long	FxParamList_056
+	.long	FxParamList_057
 	.long	0
 	.long	0
 	.long	0
 	.long	0
 	.long	0
 	.long	0
-	.long	data_4C325C09
+	.long	FxParamList_064
 	.long	0
-	.long	data_4C325C96
-	.long	data_4C325D4D
-	.long	data_4C325DDA
+	.long	FxParamList_066
+	.long	FxParamList_067
+	.long	FxParamList_068
 	.long	0
-	.long	data_4C325E91
+	.long	FxParamList_070
 	.long	0
 	.long	0
 	.long	0
@@ -38153,19 +38153,19 @@ func_4C15562E_Table:
 	.long	0
 	.long	0
 	.long	0
-	.long	data_4C324E4A
-	.long	data_4C325F10
-	.long	data_4C325FB9
-	.long	data_4C32554B
-	.long	data_4C3255FC
+	.long	FxParamList_079
+	.long	FxParamList_080
+	.long	FxParamList_081
+	.long	FxParamList_082
+	.long	FxParamList_083
 	.long	0
 	.long	0
 	.long	0
 	.long	0
-	.long	data_4C3258EF
-	.long	data_4C32594D
-	.long	data_4C325977
-	.long	data_4C3259D5
+	.long	FxParamList_088
+	.long	FxParamList_089
+	.long	FxParamList_090
+	.long	FxParamList_091
 	.long	0
 	.long	0
 	.long	0
@@ -38174,10 +38174,10 @@ func_4C15562E_Table:
 	.long	0
 	.long	0
 	.long	0
-	.long	data_4C325A33
-	.long	data_4C325A6C
-	.long	data_4C325AA5
-	.long	data_4C325ADE
+	.long	FxParamList_100
+	.long	FxParamList_101
+	.long	FxParamList_102
+	.long	FxParamList_103
 	.long	0
 	.long	0
 	.long	0
@@ -38194,32 +38194,32 @@ func_4C15562E_Table:
 	.long	0
 	.long	0
 	.long	0
-	.long	data_4C3258C4
-	.long	data_4C325BA4
-	.long	data_4C325BB3
-	.long	data_4C325BDE
-	.long	Str_empty_257
+	.long	FxParamList_120
+	.long	FxParamList_121
+	.long	FxParamList_122
+	.long	FxParamList_123
+	.long	FxParamList_124
 	.long	0
 	.long	0
 	.long	0
-	.long	data_4C324F01
-	.long	data_4C324F80
-	.long	data_4C324FFF
-	.long	data_4C325062
-	.long	data_4C3250C5
-	.long	data_4C325128
-	.long	data_4C32518B
-	.long	data_4C32520A
-	.long	data_4C325289
-	.long	data_4C325308
-	.long	data_4C325387
+	.long	FxParamList_128
+	.long	FxParamList_129
+	.long	FxParamList_130
+	.long	FxParamList_131
+	.long	FxParamList_132
+	.long	FxParamList_133
+	.long	FxParamList_134
+	.long	FxParamList_135
+	.long	FxParamList_136
+	.long	FxParamList_137
+	.long	FxParamList_138
 	.long	0
-	.long	Str_empty_260
+	.long	FxParamList_140
 	.long	0
 	.long	0
 	.long	0
-	.long	data_4C325485
-	.long	Str_empty_259
+	.long	FxParamList_144
+	.long	FxParamList_145
 	.long	0
 	.long	0
 	.long	0
@@ -38266,7 +38266,7 @@ func_4C15562E_Table:
 	.long	0
 	.long	0
 	.long	0
-	.long	Str_empty_258
+	.long	FxParamList_016
 	.long	0
 	.long	0
 	.long	0

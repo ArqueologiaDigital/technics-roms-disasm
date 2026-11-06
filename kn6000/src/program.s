@@ -594169,7 +594169,7 @@ func_4C155072_entry:
 	movhu	d0, (0xc, sp)
 	movhu	(0xc, sp), d0
 	asl2	d0
-	mov	func_4C155072_Table, a0
+	mov	FxParamListTable, a0
 	mov	(d0, a0), d1
 	mov	d1, (0, sp)
 	bra	func_4C155072_entry_L41

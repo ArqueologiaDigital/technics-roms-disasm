@@ -34989,205 +34989,1110 @@ func_4C155564_entry_Lac_Table:	# 226 x u8, 0..255; read by DspEffectTypeValid : 
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [192]
 	tab_u8	255, 255, 255, 2, 0, 0, 0, 0, 0, 0, 0, 0, 192, 4, 255, 255	# [208]
 	tab_u8	255, 255	# [224]
-data_4C3244AF:
-# census: opaque -- unknown-dump: 57 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x3244AF, 0x3244E8
-data_4C3244E8:
-# census: opaque -- unknown-dump: 85 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x3244E8, 0x32453D
-data_4C32453D:
-# census: opaque -- unknown-dump: 85 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x32453D, 0x324592
-data_4C324592:
-# census: opaque -- unknown-dump: 99 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x324592, 0x3245F5
-data_4C3245F5:
-# census: opaque -- unknown-dump: 99 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x3245F5, 0x324658
-data_4C324658:
-# census: opaque -- unknown-dump: 122 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x324658, 0x3246D2
-data_4C3246D2:
-# census: opaque -- unknown-dump: 71 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x3246D2, 0x324719
-data_4C324719:
-# census: opaque -- unknown-dump: 85 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x324719, 0x32476E
-data_4C32476E:
-# census: opaque -- unknown-dump: 155 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x32476E, 0x324809
-data_4C324809:
-# census: opaque -- unknown-dump: 85 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x324809, 0x32485E
-data_4C32485E:
-# census: opaque -- unknown-dump: 127 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x32485E, 0x3248DD
-data_4C3248DD:
-# census: opaque -- unknown-dump: 99 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x3248DD, 0x324940
-data_4C324940:
-# census: opaque -- unknown-dump: 99 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x324940, 0x3249A3
-data_4C3249A3:
-# census: opaque -- unknown-dump: 99 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x3249A3, 0x324A06
-data_4C324A06:
-# census: opaque -- unknown-dump: 71 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x324A06, 0x324A4D
-data_4C324A4D:
-# census: opaque -- unknown-dump: 71 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x324A4D, 0x324A94
-data_4C324A94:
-# census: opaque -- unknown-dump: 57 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x324A94, 0x324ACD
-data_4C324ACD:
-# census: opaque -- unknown-dump: 197 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x324ACD, 0x324B92
-data_4C324B92:
-# census: opaque -- unknown-dump: 57 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x324B92, 0x324BCB
-data_4C324BCB:
-# census: opaque -- unknown-dump: 71 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x324BCB, 0x324C12
-data_4C324C12:
-# census: opaque -- unknown-dump: 71 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x324C12, 0x324C59
-data_4C324C59:
-# census: opaque -- unknown-dump: 71 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x324C59, 0x324CA0
-data_4C324CA0:
-# census: opaque -- unknown-dump: 57 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x324CA0, 0x324CD9
-data_4C324CD9:
-# census: opaque -- unknown-dump: 71 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x324CD9, 0x324D20
-data_4C324D20:
-# census: opaque -- unknown-dump: 127 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x324D20, 0x324D9F
-data_4C324D9F:
-# census: opaque -- unknown-dump: 57 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x324D9F, 0x324DD8
-data_4C324DD8:
-# census: opaque -- unknown-dump: 99 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x324DD8, 0x324E3B
-data_4C324E3B:
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x324E3B, 0x324E4A
-data_4C324E4A:
-# census: opaque -- unknown-dump: 183 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x324E4A, 0x324F01
-data_4C324F01:
-# census: opaque -- unknown-dump: 127 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x324F01, 0x324F80
-data_4C324F80:
-# census: opaque -- unknown-dump: 127 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x324F80, 0x324FFF
-data_4C324FFF:
-# census: opaque -- unknown-dump: 99 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x324FFF, 0x325062
-data_4C325062:
-# census: opaque -- unknown-dump: 99 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x325062, 0x3250C5
-data_4C3250C5:
-# census: opaque -- unknown-dump: 99 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x3250C5, 0x325128
-data_4C325128:
-# census: opaque -- unknown-dump: 99 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x325128, 0x32518B
-data_4C32518B:
-# census: opaque -- unknown-dump: 127 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x32518B, 0x32520A
-data_4C32520A:
-# census: opaque -- unknown-dump: 127 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x32520A, 0x325289
-data_4C325289:
-# census: opaque -- unknown-dump: 127 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x325289, 0x325308
-data_4C325308:
-# census: opaque -- unknown-dump: 127 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x325308, 0x325387
-data_4C325387:
-# census: opaque -- unknown-dump: 127 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x325387, 0x325406
 
-Str_empty_260:	.asciz " "
-# census: opaque -- unknown-dump: 125 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x325408, 0x325485
-data_4C325485:
-# census: opaque -- unknown-dump: 71 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x325485, 0x3254CC
-Str_empty_259:	.asciz " "
-# census: opaque -- unknown-dump: 125 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x3254CE, 0x32554B
-data_4C32554B:
-# census: opaque -- unknown-dump: 177 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x32554B, 0x3255FC
-data_4C3255FC:
-# census: opaque -- unknown-dump: 69 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x3255FC, 0x325641
-Str_empty_258:	.asciz "!"
-# census: opaque -- unknown-dump: 641 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x325643, 0x3258C4
-data_4C3258C4:
-# census: opaque -- unknown-dump: 43 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x3258C4, 0x3258EF
-data_4C3258EF:
-# census: opaque -- unknown-dump: 94 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x3258EF, 0x32594D
-data_4C32594D:
-# census: opaque -- unknown-dump: 42 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x32594D, 0x325977
-data_4C325977:
-# census: opaque -- unknown-dump: 94 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x325977, 0x3259D5
-data_4C3259D5:
-# census: opaque -- unknown-dump: 94 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x3259D5, 0x325A33
-data_4C325A33:
-# census: opaque -- unknown-dump: 57 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x325A33, 0x325A6C
-data_4C325A6C:
-# census: opaque -- unknown-dump: 57 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x325A6C, 0x325AA5
-data_4C325AA5:
-# census: opaque -- unknown-dump: 57 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x325AA5, 0x325ADE
-data_4C325ADE:
-# census: opaque -- unknown-dump: 57 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x325ADE, 0x325B17
-Str_empty_257:	.asciz "\""
-# census: opaque -- unknown-dump: 139 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x325B19, 0x325BA4
-data_4C325BA4:
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x325BA4, 0x325BB3
-data_4C325BB3:
-# census: opaque -- unknown-dump: 43 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x325BB3, 0x325BDE
-data_4C325BDE:
-# census: opaque -- unknown-dump: 43 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x325BDE, 0x325C09
-data_4C325C09:
-# census: opaque -- unknown-dump: 141 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x325C09, 0x325C96
-data_4C325C96:
-# census: opaque -- unknown-dump: 183 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x325C96, 0x325D4D
-data_4C325D4D:
-# census: opaque -- unknown-dump: 141 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x325D4D, 0x325DDA
-data_4C325DDA:
-# census: opaque -- unknown-dump: 183 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x325DDA, 0x325E91
-data_4C325E91:
-# census: opaque -- unknown-dump: 127 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x325E91, 0x325F10
-data_4C325F10:
-# census: opaque -- unknown-dump: 169 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x325F10, 0x325FB9
-data_4C325FB9:
-# census: opaque -- unknown-dump: 171 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6500_program.rom", 0x325FB9, 0x326064
+FxParamList_001:	# the effect DSP's parameter list of DSP types 1, 44 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0xF0, addr=0xC005	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x0, op2=0x0, addr=0x9800	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x14, op1=0x0, op2=0x0, addr=0xC028	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC006	# parameter 3
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_002:	# the effect DSP's parameter list of DSP types 2, 7, 45 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0xC8, addr=0xC007	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x0, op2=0x0, addr=0x9801	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x0, op2=0x0, addr=0x9800	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x05, op1=0x0, op2=0x33333333, addr=0xC005	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x14, op1=0x0, op2=0x0, addr=0xC028	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC008	# parameter 5
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_003:	# the effect DSP's parameter list of DSP type 3 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x18, op1=0x4CCCCCCC, op2=0x6F5C28F5, addr=0xC004	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x05, op1=0x0, op2=0x7FFFFFFF, addr=0xC00F, addr2=0xC01C	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x05, op1=0x0, op2=0x7FFFFFFF, addr=0xC010, addr2=0xC01D	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x3C4B, addr=0x8424	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x3C4B, addr=0x8450	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC011	# parameter 5
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_004:	# the effect DSP's parameter list of DSP types 4, 11 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x60, addr=0xC007	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x0, op2=0x0, addr=0x9800, addr2=0x9801	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x828F5C29, op2=0x7D70A3D7, addr=0xC006, addr2=0xC00A	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x0B, op1=0x64, op2=0x12C, addr=0x8424, addr2=0x8440	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x07, op1=0x40000000, op2=0x0, addr=0xC004, addr2=0xC005	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x14, op1=0x0, op2=0x0, addr=0xC028	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC009	# parameter 6
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_005:	# the effect DSP's parameter list of DSP types 5, 13 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x05, op1=0x0, op2=0xCCCCCCC, addr=0xC005	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x0, op2=0x0, addr=0x9800, addr2=0x9801	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x828F5C29, op2=0x7D70A3D7, addr=0xC008	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x05, op1=0x4CCCCCCC, op2=0x6F5C28F5, addr=0xC004	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x07, op1=0x40000000, op2=0x0, addr=0xC006, addr2=0xC007	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x14, op1=0x0, op2=0x0, addr=0xC028	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC00E	# parameter 6
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_006:	# the effect DSP's parameter list of DSP types 6, 14 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0xC8, addr=0xC005	# parameter 0
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0xE9, addr=0xC006
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0xFA, addr=0xC007
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0xFFFFFF59, addr=0xC00B
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0xFFFFFF2E, addr=0xC00C
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0xFFFFFF09, addr=0xC00D
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x0, op2=0x0, addr=0x9800	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x14, op1=0x0, op2=0x0, addr=0xC028	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC009	# parameter 3
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_008:	# the effect DSP's parameter list of DSP type 8 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x0E, op1=0x0, op2=0x0, addr=0x9804	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x2, op2=0xE, addr=0xC004	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x05, op1=0x0, op2=0x228F5C28, addr=0xC00C	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x0E, op1=0x0, op2=0x0, addr=0x9803	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x2, op2=0x0, addr=0xC00F	# parameter 4
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_009:	# the effect DSP's parameter list of DSP type 9 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x3C4B, addr=0x840C	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x3C4B, addr=0x8429	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC007	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC009	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x2, op2=0xE, addr=0xC004	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC008	# parameter 5
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_010:	# the effect DSP's parameter list of DSP type 10 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x1B, op1=0x0, op2=0x1, addr=0x840D	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x1B, op1=0x0, op2=0x1, addr=0x8411	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x1B, op1=0x0, op2=0x1, addr=0x8415	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x1B, op1=0x0, op2=0x2A5, addr=0x8419	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x1C, op1=0x0, op2=0x7FFFFFFF, addr=0xC00C, addr2=0xC011	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x1C, op1=0x0, op2=0x7FFFFFFF, addr=0xC00D, addr2=0xC012	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x1C, op1=0x0, op2=0x7FFFFFFF, addr=0xC00E, addr2=0xC013	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x1C, op1=0x0, op2=0x7FFFFFFF, addr=0xC00F, addr2=0xC014	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC007	# parameter 8
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x2, op2=0xE, addr=0xC004	# parameter 9
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC010	# parameter 10
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_012:	# the effect DSP's parameter list of DSP type 12 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x3C4B, addr=0x840C	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x3C4B, addr=0x8429	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC007	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC009	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x2, op2=0xE, addr=0xC004	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC008	# parameter 5
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_015:	# the effect DSP's parameter list of DSP type 15 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC004	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x0, op2=0x0, addr=0xC008	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x2B, addr=0xC00F	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9809	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC014	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x3F, addr=0xC01A	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9806	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC010	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC01E	# parameter 8
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_032:	# the effect DSP's parameter list of DSP type 32 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x12, op1=0x4, op2=0x0, addr=0xC006	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x11, op1=0x4, op2=0x0, addr=0xC006	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x0, op2=0x0, addr=0xC004	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x1, op2=0x0, addr=0xC005	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC00A	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x2, op2=0x0, addr=0xC00C	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC00D	# parameter 6
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_033:	# the effect DSP's parameter list of DSP type 33 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x12, op1=0x4, op2=0x0, addr=0xC006	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x11, op1=0x4, op2=0x0, addr=0xC006	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x0, op2=0x0, addr=0xC004	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x1, op2=0x0, addr=0xC005	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC00A	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x2, op2=0x0, addr=0xC00D	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC013	# parameter 6
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_034:	# the effect DSP's parameter list of DSP type 34 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x12, op1=0x2, op2=0x0, addr=0xC006	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x11, op1=0x2, op2=0x0, addr=0xC006	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x0, op2=0x0, addr=0xC004	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x1, op2=0x0, addr=0xC005	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC00A	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x2, op2=0x0, addr=0xC00C	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC00D	# parameter 6
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_035:	# the effect DSP's parameter list of DSP type 35 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x00, op1=0x1, op2=0x0, addr=0xC004	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x1, op2=0x0, addr=0xC006	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x1, op2=0x0, addr=0xC007	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x7FFCB923, addr=0xC00A	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC00B	# parameter 4
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_036:	# the effect DSP's parameter list of DSP type 36 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x12, op1=0x2, op2=0x0, addr=0xC006	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x11, op1=0x2, op2=0x0, addr=0xC006	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x0, op2=0x0, addr=0xC004	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x1, op2=0x0, addr=0xC005	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC00A	# parameter 4
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_037:	# the effect DSP's parameter list of DSP type 37 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x05, op1=0x0, op2=0x3333333, addr=0xC006	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x0D, op1=0x0, op2=0x0, addr=0xC008	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x0D, op1=0x1, op2=0x0, addr=0xC00A	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC00B	# parameter 3
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_039:	# the effect DSP's parameter list of DSP type 39 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x16, op1=0x0, op2=0x0, addr=0xC004	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x0, op2=0x2, addr=0xC004	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x0, addr=0xC007	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x1, addr=0xC007	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x2, addr=0xC007	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x0, addr=0xC00C	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x1, addr=0xC00C	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x2, addr=0xC00C	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x0, addr=0xC011	# parameter 8
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x1, addr=0xC011	# parameter 9
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x2, addr=0xC011	# parameter 10
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x1, op2=0x0, addr=0xC016	# parameter 11
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x1, op2=0x2, addr=0xC016	# parameter 12
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC019	# parameter 13
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_040:	# the effect DSP's parameter list of DSP type 40 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x05, op1=0x0, op2=0x40000000, addr=0xC006, addr2=0xC008	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x0, op2=0x0, addr=0x9800, addr2=0x9801	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x14, op1=0x0, op2=0x0, addr=0xC028	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC007	# parameter 3
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_041:	# the effect DSP's parameter list of DSP type 41 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x12, op1=0x1, op2=0x0, addr=0xC006	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x11, op1=0x1, op2=0x0, addr=0xC006	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x0, op2=0x0, addr=0xC004	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x1, op2=0x0, addr=0xC005	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC00A	# parameter 4
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_048:	# the effect DSP's parameter list of DSP type 48 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x05, op1=0x0, op2=0x40000000, addr=0xC006, addr2=0xC008	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x0, op2=0x0, addr=0x9800, addr2=0x9801	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x07, op1=0x40000000, op2=0x0, addr=0xC004, addr2=0xC005	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x14, op1=0x0, op2=0x0, addr=0xC028	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC007	# parameter 4
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_050:	# the effect DSP's parameter list of DSP type 50 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0xC8, addr=0xC006	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x0, op2=0x0, addr=0x9800, addr2=0x9801	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x07, op1=0x40000000, op2=0x0, addr=0xC004, addr2=0xC005	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x14, op1=0x0, op2=0x0, addr=0xC028	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC007	# parameter 4
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_052:	# the effect DSP's parameter list of DSP type 52 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x17, op1=0x0, op2=0x0, addr=0xC006	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x17, op1=0x1, op2=0x0, addr=0xC009	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x17, op1=0x2, op2=0x0, addr=0xC006	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC00E	# parameter 3
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_051:	# the effect DSP's parameter list of DSP type 51 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x05, op1=0x10624DD, op2=0x30000000, addr=0xC004	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x17, op1=0x0, op2=0x0, addr=0xC008	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x17, op1=0x1, op2=0x0, addr=0xC00B	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x17, op1=0x2, op2=0x0, addr=0xC008	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC010	# parameter 4
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_053:	# the effect DSP's parameter list of DSP type 53 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC004	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x0, op2=0x0, addr=0xC008	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x2B, addr=0xC00F	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9809	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC014	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x3F, addr=0xC01A	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9806	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC010	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC01E	# parameter 8
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_054:	# the effect DSP's parameter list of DSP type 54 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x04, op1=0x1, op2=0x0, addr=0x9800, addr2=0x9801	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x07, op1=0x40000000, op2=0x0, addr=0xC004, addr2=0xC005	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x14, op1=0x0, op2=0x0, addr=0xC028	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC006	# parameter 3
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_056:	# the effect DSP's parameter list of DSP type 56 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x50, addr=0xC007	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x0, op2=0x0, addr=0x9800	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x0, op2=0x0, addr=0x9802	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x0, op2=0x0, addr=0x9801	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x07, op1=0x40000000, op2=0x0, addr=0xC005, addr2=0xC006	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x14, op1=0x0, op2=0x0, addr=0xC028	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC009	# parameter 6
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_057:	# the effect DSP's parameter list of DSP type 57 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC010	# parameter 0
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_079:	# the effect DSP's parameter list of DSP type 79 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x16, op1=0x0, op2=0x0, addr=0xC004	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x0, op2=0x2, addr=0xC004	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x0, addr=0xC007	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x1, addr=0xC007	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x2, addr=0xC007	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x0, addr=0xC00C	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x1, addr=0xC00C	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x2, addr=0xC00C	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x0, addr=0xC011	# parameter 8
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x1, addr=0xC011	# parameter 9
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x2, addr=0xC011	# parameter 10
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x1, op2=0x0, addr=0xC016	# parameter 11
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x1, op2=0x2, addr=0xC016	# parameter 12
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_128:	# the effect DSP's parameter list of DSP type 128 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC004	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x0, op2=0x0, addr=0xC008	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x2B, addr=0xC00F	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9809	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC014	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x3F, addr=0xC01A	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9806	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC010	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC01E	# parameter 8
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_129:	# the effect DSP's parameter list of DSP type 129 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC004	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x0, op2=0x0, addr=0xC008	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x2B, addr=0xC00F	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9809	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC014	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x3F, addr=0xC01A	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9806	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC010	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC01E	# parameter 8
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_130:	# the effect DSP's parameter list of DSP type 130 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x12, op1=0x4, op2=0x0, addr=0xC006	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x11, op1=0x4, op2=0x0, addr=0xC006	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x0, op2=0x0, addr=0xC004	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x1, op2=0x0, addr=0xC005	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC00A	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x2, op2=0x0, addr=0xC00C	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC012	# parameter 6
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_131:	# the effect DSP's parameter list of DSP type 131 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x12, op1=0x4, op2=0x0, addr=0xC006	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x11, op1=0x4, op2=0x0, addr=0xC006	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x0, op2=0x0, addr=0xC004	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x1, op2=0x0, addr=0xC005	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC00A	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x2, op2=0x0, addr=0xC00C	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC012	# parameter 6
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_132:	# the effect DSP's parameter list of DSP type 132 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x12, op1=0x4, op2=0x0, addr=0xC006	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x11, op1=0x4, op2=0x0, addr=0xC006	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x0, op2=0x0, addr=0xC004	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x1, op2=0x0, addr=0xC005	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC00A	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x2, op2=0x0, addr=0xC00D	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC013	# parameter 6
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_133:	# the effect DSP's parameter list of DSP type 133 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x12, op1=0x4, op2=0x0, addr=0xC006	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x11, op1=0x4, op2=0x0, addr=0xC006	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x0, op2=0x0, addr=0xC004	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x1, op2=0x0, addr=0xC005	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC00A	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x2, op2=0x0, addr=0xC00D	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC013	# parameter 6
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_134:	# the effect DSP's parameter list of DSP type 134 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC004	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x0, op2=0x0, addr=0xC008	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x2B, addr=0xC00F	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9809	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC014	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x3F, addr=0xC01A	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9806	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC010	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC01E	# parameter 8
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_135:	# the effect DSP's parameter list of DSP type 135 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC004	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x0, op2=0x0, addr=0xC008	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x2B, addr=0xC00F	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9809	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC014	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x3F, addr=0xC01A	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9806	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC010	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC01E	# parameter 8
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_136:	# the effect DSP's parameter list of DSP type 136 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC004	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x0, op2=0x0, addr=0xC008	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x2B, addr=0xC00F	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9809	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC014	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x3F, addr=0xC01A	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9806	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC010	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC01E	# parameter 8
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_137:	# the effect DSP's parameter list of DSP type 137 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC004	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x0, op2=0x0, addr=0xC008	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x2B, addr=0xC00F	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9809	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC014	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x3F, addr=0xC01A	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9806	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC010	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC01E	# parameter 8
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_138:	# the effect DSP's parameter list of DSP type 138 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC004	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x0, op2=0x0, addr=0xC008	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x2B, addr=0xC00F	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9809	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC014	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x3F, addr=0xC01A	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9806	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC010	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC01E	# parameter 8
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_140:	# the effect DSP's parameter list of DSP type 140 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x20, op1=0x0, op2=0x0, addr=0x9800	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x20, op1=0x1, op2=0x0, addr=0x9800	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x20, op1=0x2, op2=0x0, addr=0x9800	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x07, op1=0x40000000, op2=0x0, addr=0xC004, addr2=0xC000	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x18, op1=0x7FFCB923, op2=0xCCCCCCC, addr=0xC00A	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x18, op1=0x1CAC083, op2=0x26666666, addr=0xC006	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x40000000, addr=0xC005	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x14, op1=0x0, op2=0x0, addr=0xC028	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC018	# parameter 8
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_144:	# the effect DSP's parameter list of DSP type 144 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x18, op1=0x7FFCB923, op2=0xCCCCCCC, addr=0xC00C	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x18, op1=0x1CAC083, op2=0x26666666, addr=0xC007	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x18, op1=0x26666666, op2=0x7FFCB923, addr=0xC006	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x40000000, addr=0xC008	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC012	# parameter 4
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_145:	# the effect DSP's parameter list of DSP type 145 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x20, op1=0x0, op2=0x0, addr=0x9800	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x20, op1=0x1, op2=0x0, addr=0x9800	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x20, op1=0x2, op2=0x0, addr=0x9800	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x07, op1=0x40000000, op2=0x0, addr=0xC004, addr2=0xC000	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x18, op1=0x7FFCB923, op2=0xCCCCCCC, addr=0xC00A	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x18, op1=0x1CAC083, op2=0x26666666, addr=0xC006	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x40000000, addr=0xC005	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x14, op1=0x0, op2=0x0, addr=0xC028	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC010	# parameter 8
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_082:	# the effect DSP's parameter list of DSP type 82 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0xF0, addr=0xC005	# parameter 0
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x4, addr=0xC009
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x3, op2=0x0, addr=0x9800	# parameter 1
+	FXL_ENTRY	kind=0x04, op1=0x4, op2=0x0, addr=0x9803
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x0, op2=0x0, addr=0xC00A	# parameter 2
+	FXL_ENTRY	kind=0x16, op1=0x0, op2=0x0, addr=0xC015
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x0, op2=0x2, addr=0xC00A	# parameter 3
+	FXL_ENTRY	kind=0x16, op1=0x0, op2=0x2, addr=0xC015
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x1, op2=0x0, addr=0xC00D	# parameter 4
+	FXL_ENTRY	kind=0x16, op1=0x1, op2=0x0, addr=0xC018
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x1, op2=0x2, addr=0xC00D	# parameter 5
+	FXL_ENTRY	kind=0x16, op1=0x1, op2=0x2, addr=0xC018
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC013, addr2=0xC01E	# parameter 6
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_083:	# the effect DSP's parameter list of DSP type 83 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0xF0, addr=0xC005	# parameter 0
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x4, addr=0xC009
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x3, op2=0x0, addr=0x9800	# parameter 1
+	FXL_ENTRY	kind=0x04, op1=0x4, op2=0x0, addr=0x9803
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC00D, addr2=0xC011	# parameter 2
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_016:	# the effect DSP's parameter list of DSP types 16, 17, 18, 19, 20, 21, 22, 23, ... (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x21, op1=0x0, op2=0x0, addr=0xC01A, addr2=0xC01E	# parameter 0
+	FXL_ENTRY	kind=0x21, op1=0x1, op2=0x0, addr=0xC013
+	FXL_END
+	FXL_ENTRY	kind=0x1D, op1=0x1, op2=0x0, addr=0x8463	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x3, op2=0x0, addr=0xC014	# parameter 2
+	FXL_ENTRY	kind=0x16, op1=0x3, op2=0x0, addr=0xC017, addr2=0xC01B
+	FXL_END
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x210624DD, addr=0x9808	# parameter 3
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x8B43958, addr=0x9809
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x34DD2F1A, addr=0x980A
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x9FBE76C, addr=0x980B
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x2, op2=0x0, addr=0xC026, addr2=0xC028	# parameter 4
+	FXL_END
+	FXL_END	# the list's end
+FxParamListOrphan_4C3256C9:	# the effect DSP's parameter list of no type: nothing points at it [INFERENCE: an older type's copy]: group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x21, op1=0xE9CE0760, op2=0x31F8A090, addr=0xC012	# parameter 0
+	FXL_ENTRY	kind=0x21, op1=0xE9CE0760, op2=0x31F8A090, addr=0xC015
+	FXL_END
+	FXL_ENTRY	kind=0x1D, op1=0x1, op2=0x0, addr=0x845A	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x63, op1=0x2, op2=0x15, addr=0xC030	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x420C49BA, addr=0x9808	# parameter 3
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x116872B0, addr=0x9809
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x69BA5E35, addr=0x980A
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x13F7CED9, addr=0x980B
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x2, op2=0x0, addr=0xC01E, addr2=0xC01F	# parameter 4
+	FXL_END
+	FXL_END	# the list's end
+FxParamListOrphan_4C325744:	# the effect DSP's parameter list of no type: nothing points at it [INFERENCE: an older type's copy]: group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x02, op1=0x2, op2=0x0, addr=0xC01E, addr2=0xC01F	# parameter 0
+	FXL_END
+	FXL_END	# the list's end
+FxParamListOrphan_4C325753:	# the effect DSP's parameter list of no type: nothing points at it [INFERENCE: an older type's copy]: group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x21, op1=0x0, op2=0x40000000, addr=0xC012	# parameter 0
+	FXL_ENTRY	kind=0x21, op1=0x0, op2=0x40000000, addr=0xC015
+	FXL_END
+	FXL_ENTRY	kind=0x1D, op1=0x1, op2=0x0, addr=0x845A	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x63, op1=0x2, op2=0x15, addr=0xC030	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x420C49BA, addr=0x9808	# parameter 3
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x116872B0, addr=0x9809
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x69BA5E35, addr=0x980A
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x13F7CED9, addr=0x980B
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x2, op2=0x0, addr=0xC01E, addr2=0xC01F	# parameter 4
+	FXL_END
+	FXL_END	# the list's end
+FxParamListOrphan_4C3257CE:	# the effect DSP's parameter list of no type: nothing points at it [INFERENCE: an older type's copy]: group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x21, op1=0xD2CD9E84, op2=0x62617C1B, addr=0xC012	# parameter 0
+	FXL_ENTRY	kind=0x21, op1=0xD2CD9E84, op2=0x62617C1B, addr=0xC015
+	FXL_END
+	FXL_ENTRY	kind=0x1D, op1=0x1, op2=0x0, addr=0x845A	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x63, op1=0x2, op2=0x15, addr=0xC030	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x420C49BA, addr=0x9808	# parameter 3
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x116872B0, addr=0x9809
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x69BA5E35, addr=0x980A
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x13F7CED9, addr=0x980B
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x2, op2=0x0, addr=0xC01E, addr2=0xC01F	# parameter 4
+	FXL_END
+	FXL_END	# the list's end
+FxParamListOrphan_4C325849:	# the effect DSP's parameter list of no type: nothing points at it [INFERENCE: an older type's copy]: group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x21, op1=0xD2CD9E84, op2=0x62617C1B, addr=0xC012	# parameter 0
+	FXL_ENTRY	kind=0x21, op1=0xD2CD9E84, op2=0x62617C1B, addr=0xC015
+	FXL_END
+	FXL_ENTRY	kind=0x1D, op1=0x1, op2=0x0, addr=0x845A	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x63, op1=0x2, op2=0x15, addr=0xC030	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x420C49BA, addr=0x9808	# parameter 3
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x116872B0, addr=0x9809
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x69BA5E35, addr=0x980A
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x13F7CED9, addr=0x980B
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x2, op2=0x0, addr=0xC01E, addr2=0xC01F	# parameter 4
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_120:	# the effect DSP's parameter list of DSP type 120 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x10, op1=0x0, op2=0xF0, addr=0x9800	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x10, op1=0x0, op2=0xF0, addr=0x9801	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC007	# parameter 2
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_088:	# the effect DSP's parameter list of DSP type 88 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFF5B, op2=0xFFFFF98E, addr=0x841D	# parameter 0
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFF92, op2=0xFFFFFBB4, addr=0x8422
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFF9C, op2=0xFFFFFC18, addr=0x8428
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFFA2, op2=0xFFFFFC59, addr=0x844A
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFFC9, op2=0xFFFFFDDB, addr=0x8450
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFFB8, op2=0xFFFFFD30, addr=0x8455
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x2, op2=0x0, addr=0xC003	# parameter 1
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_089:	# the effect DSP's parameter list of DSP type 89 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFCE0, op2=0xFFFFE0C0, addr=0x841D	# parameter 0
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFF38, op2=0xFFFFF82E, addr=0x8450
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x2, op2=0x0, addr=0xC003	# parameter 1
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_090:	# the effect DSP's parameter list of DSP type 90 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFF1F, op2=0xFFFFF736, addr=0x841D	# parameter 0
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFF6A, op2=0xFFFFFA24, addr=0x8422
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFF74, op2=0xFFFFFA88, addr=0x8428
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFF85, op2=0xFFFFFB2D, addr=0x844A
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFFB0, op2=0xFFFFFCE1, addr=0x8450
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFFA4, op2=0xFFFFFC68, addr=0x8455
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x2, op2=0x0, addr=0xC003	# parameter 1
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_091:	# the effect DSP's parameter list of DSP type 91 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFEFC, op2=0xFFFFF5D8, addr=0x841D	# parameter 0
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFF4C, op2=0xFFFFF8F8, addr=0x8422
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFF58, op2=0xFFFFF970, addr=0x8428
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFF6C, op2=0xFFFFFA38, addr=0x844A
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFFA0, op2=0xFFFFFC40, addr=0x8450
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFF92, op2=0xFFFFFBB0, addr=0x8455
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x2, op2=0x0, addr=0xC003	# parameter 1
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_100:	# the effect DSP's parameter list of DSP type 100 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC00C	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x2, op2=0x0, addr=0xC018	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x3, op2=0x0, addr=0xC01E	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC021	# parameter 3
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_101:	# the effect DSP's parameter list of DSP type 101 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC00C	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x2, op2=0x0, addr=0xC018	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x3, op2=0x0, addr=0xC01E	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC021	# parameter 3
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_102:	# the effect DSP's parameter list of DSP type 102 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC00C	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x2, op2=0x0, addr=0xC018	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x3, op2=0x0, addr=0xC01E	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC021	# parameter 3
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_103:	# the effect DSP's parameter list of DSP type 103 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC00C	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x2, op2=0x0, addr=0xC018	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x3, op2=0x0, addr=0xC01E	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC021	# parameter 3
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_124:	# the effect DSP's parameter list of DSP type 124 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x22, op1=0x0, op2=0x0, addr=0xC021	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x22, op1=0x1, op2=0x0, addr=0xC021	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x22, op1=0x2, op2=0x0, addr=0xC021	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x22, op1=0x0, op2=0x0, addr=0xC023	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x22, op1=0x1, op2=0x0, addr=0xC023	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x22, op1=0x2, op2=0x0, addr=0xC023	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x22, op1=0x0, op2=0x0, addr=0xC025	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x22, op1=0x1, op2=0x0, addr=0xC025	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x22, op1=0x2, op2=0x0, addr=0xC025	# parameter 8
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC037	# parameter 9
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_121:	# the effect DSP's parameter list of DSP type 121 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC025	# parameter 0
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_122:	# the effect DSP's parameter list of DSP type 122 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x16, op1=0x1, op2=0x0, addr=0xC00B	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x1, op2=0x2, addr=0xC00B	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC013	# parameter 2
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_123:	# the effect DSP's parameter list of DSP type 123 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x16, op1=0x1, op2=0x0, addr=0xC016	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x1, op2=0x2, addr=0xC016	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC01E	# parameter 2
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_064:	# the effect DSP's parameter list of DSP type 64 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x1F, op1=0x1, op2=0x0, addr=0xC005, addr2=0xC00D	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x33AE, addr=0x8407	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x33AE, addr=0x842F	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC004	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC00C	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x1F, op1=0x0, op2=0x0, addr=0xC00A, addr2=0xC00F	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0xF0, addr=0xC009	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x0, op2=0x0, addr=0x9800	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x14, op1=0x0, op2=0x0, addr=0xC028	# parameter 8
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC008	# parameter 9
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_066:	# the effect DSP's parameter list of DSP type 66 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x1F, op1=0x1, op2=0x0, addr=0xC006, addr2=0xC00F	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x33AE, addr=0x8406	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x33AE, addr=0x8431	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC004	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC00E	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x1F, op1=0x1, op2=0x0, addr=0xC00C, addr2=0xC013	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x60, addr=0xC00A	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x0, op2=0x0, addr=0x9800	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x8A3D70A4, op2=0x75C28F5C, addr=0xC009, addr2=0xC011	# parameter 8
+	FXL_END
+	FXL_ENTRY	kind=0x0B, op1=0x64, op2=0x12C, addr=0x841D, addr2=0x843A	# parameter 9
+	FXL_END
+	FXL_ENTRY	kind=0x63, op1=0x40000000, op2=0x0, addr=0xC018	# parameter 10
+	FXL_END
+	FXL_ENTRY	kind=0x14, op1=0x0, op2=0x0, addr=0xC028	# parameter 11
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC005	# parameter 12
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_067:	# the effect DSP's parameter list of DSP type 67 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x1F, op1=0x1, op2=0x0, addr=0xC005, addr2=0xC00C	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x33AE, addr=0x8406	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x33AE, addr=0x8433	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC004	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC00B	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0xF0, addr=0xC00A	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x0, op2=0x0, addr=0x9800, addr2=0x9801	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x07, op1=0x40000000, op2=0x0, addr=0xC007, addr2=0xC009	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x14, op1=0x0, op2=0x0, addr=0xC028	# parameter 8
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC008	# parameter 9
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_068:	# the effect DSP's parameter list of DSP type 68 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x1F, op1=0x1, op2=0x0, addr=0xC006, addr2=0xC013	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x33AE, addr=0x8406	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x33AE, addr=0x8434	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC004	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC012	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x1F, op1=0x1, op2=0x0, addr=0xC010, addr2=0xC019	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x05, op1=0x0, op2=0xCCCCCCC, addr=0xC009	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x0, op2=0x0, addr=0x9800	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x8A3D70A4, op2=0x75C28F5C, addr=0xC00C	# parameter 8
+	FXL_END
+	FXL_ENTRY	kind=0x05, op1=0x4CCCCCCC, op2=0x7020C49B, addr=0xC008	# parameter 9
+	FXL_END
+	FXL_ENTRY	kind=0x63, op1=0x40000000, op2=0x0, addr=0xC01E	# parameter 10
+	FXL_END
+	FXL_ENTRY	kind=0x14, op1=0x0, op2=0x0, addr=0xC028	# parameter 11
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC005	# parameter 12
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_070:	# the effect DSP's parameter list of DSP type 70 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x17, op1=0x0, op2=0x0, addr=0xC006	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x17, op1=0x1, op2=0x0, addr=0xC009	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x17, op1=0x2, op2=0x0, addr=0xC006	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x1F, op1=0x1, op2=0x0, addr=0xC00F, addr2=0xC013	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x33AE, addr=0x8420	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x33AE, addr=0x843C	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC00E	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC012	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC011	# parameter 8
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_080:	# the effect DSP's parameter list of DSP type 80 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x12, op1=0x4, op2=0x0, addr=0xC007	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x11, op1=0x4, op2=0x0, addr=0xC007	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x0, op2=0x0, addr=0xC005	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x1, op2=0x0, addr=0xC006	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC004	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x2, op2=0x0, addr=0xC00C	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x1F, op1=0x1, op2=0x0, addr=0xC011, addr2=0xC018	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x33AE, addr=0x8428	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x33AE, addr=0x8440	# parameter 8
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC00D	# parameter 9
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC015	# parameter 10
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC013	# parameter 11
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_081:	# the effect DSP's parameter list of DSP type 81 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x12, op1=0x4, op2=0x0, addr=0xC007	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x11, op1=0x4, op2=0x0, addr=0xC007	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x0, op2=0x0, addr=0xC005	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x1, op2=0x0, addr=0xC006	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC004	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x2, op2=0x0, addr=0xC00C	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x1F, op1=0x1, op2=0x0, addr=0xC011, addr2=0xC018	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x33AE, addr=0x8428	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x33AE, addr=0x8440	# parameter 8
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC00D	# parameter 9
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC015	# parameter 10
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC013	# parameter 11
+	FXL_END
+	FXL_END	# the list's end
+	.align	4, 0xFF	# pad after FxParamList_081
 
 ptrs_4C326064:
 	.long	func_4C15CF05

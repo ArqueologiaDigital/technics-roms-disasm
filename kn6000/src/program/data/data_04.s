@@ -16230,205 +16230,1110 @@ func_4C154FA8_entry_Lac_Table:	# 226 x u8, 0..255; read by DspEffectTypeValid : 
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [192]
 	tab_u8	255, 255, 255, 2, 0, 0, 0, 0, 0, 0, 0, 0, 192, 4, 255, 255	# [208]
 	tab_u8	255, 255	# [224]
-data_4C398C2B:
-# census: opaque -- unknown-dump: 57 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x398C2B, 0x398C64
-data_4C398C64:
-# census: opaque -- unknown-dump: 85 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x398C64, 0x398CB9
-data_4C398CB9:
-# census: opaque -- unknown-dump: 85 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x398CB9, 0x398D0E
-data_4C398D0E:
-# census: opaque -- unknown-dump: 99 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x398D0E, 0x398D71
-data_4C398D71:
-# census: opaque -- unknown-dump: 99 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x398D71, 0x398DD4
-data_4C398DD4:
-# census: opaque -- unknown-dump: 122 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x398DD4, 0x398E4E
-data_4C398E4E:
-# census: opaque -- unknown-dump: 71 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x398E4E, 0x398E95
-data_4C398E95:
-# census: opaque -- unknown-dump: 85 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x398E95, 0x398EEA
-data_4C398EEA:
-# census: opaque -- unknown-dump: 155 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x398EEA, 0x398F85
-data_4C398F85:
-# census: opaque -- unknown-dump: 85 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x398F85, 0x398FDA
-data_4C398FDA:
-# census: opaque -- unknown-dump: 127 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x398FDA, 0x399059
-data_4C399059:
-# census: opaque -- unknown-dump: 99 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x399059, 0x3990BC
-data_4C3990BC:
-# census: opaque -- unknown-dump: 99 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3990BC, 0x39911F
-data_4C39911F:
-# census: opaque -- unknown-dump: 99 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x39911F, 0x399182
-data_4C399182:
-# census: opaque -- unknown-dump: 71 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x399182, 0x3991C9
-data_4C3991C9:
-# census: opaque -- unknown-dump: 71 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3991C9, 0x399210
-data_4C399210:
-# census: opaque -- unknown-dump: 57 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x399210, 0x399249
-data_4C399249:
-# census: opaque -- unknown-dump: 197 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x399249, 0x39930E
-data_4C39930E:
-# census: opaque -- unknown-dump: 57 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x39930E, 0x399347
-data_4C399347:
-# census: opaque -- unknown-dump: 71 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x399347, 0x39938E
-data_4C39938E:
-# census: opaque -- unknown-dump: 71 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x39938E, 0x3993D5
-data_4C3993D5:
-# census: opaque -- unknown-dump: 71 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3993D5, 0x39941C
-data_4C39941C:
-# census: opaque -- unknown-dump: 57 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x39941C, 0x399455
-data_4C399455:
-# census: opaque -- unknown-dump: 71 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x399455, 0x39949C
-data_4C39949C:
-# census: opaque -- unknown-dump: 127 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x39949C, 0x39951B
-data_4C39951B:
-# census: opaque -- unknown-dump: 57 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x39951B, 0x399554
-data_4C399554:
-# census: opaque -- unknown-dump: 99 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x399554, 0x3995B7
-data_4C3995B7:
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3995B7, 0x3995C6
-data_4C3995C6:
-# census: opaque -- unknown-dump: 183 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3995C6, 0x39967D
-data_4C39967D:
-# census: opaque -- unknown-dump: 127 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x39967D, 0x3996FC
-data_4C3996FC:
-# census: opaque -- unknown-dump: 127 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3996FC, 0x39977B
-data_4C39977B:
-# census: opaque -- unknown-dump: 99 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x39977B, 0x3997DE
-data_4C3997DE:
-# census: opaque -- unknown-dump: 99 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3997DE, 0x399841
-data_4C399841:
-# census: opaque -- unknown-dump: 99 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x399841, 0x3998A4
-data_4C3998A4:
-# census: opaque -- unknown-dump: 99 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3998A4, 0x399907
-data_4C399907:
-# census: opaque -- unknown-dump: 127 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x399907, 0x399986
-data_4C399986:
-# census: opaque -- unknown-dump: 127 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x399986, 0x399A05
-data_4C399A05:
-# census: opaque -- unknown-dump: 127 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x399A05, 0x399A84
-data_4C399A84:
-# census: opaque -- unknown-dump: 127 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x399A84, 0x399B03
-data_4C399B03:
-# census: opaque -- unknown-dump: 127 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x399B03, 0x399B82
 
-Str_empty_258:	.asciz " "
-# census: opaque -- unknown-dump: 125 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x399B84, 0x399C01
-data_4C399C01:
-# census: opaque -- unknown-dump: 71 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x399C01, 0x399C48
-Str_empty_257:	.asciz " "
-# census: opaque -- unknown-dump: 125 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x399C4A, 0x399CC7
-data_4C399CC7:
-# census: opaque -- unknown-dump: 177 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x399CC7, 0x399D78
-data_4C399D78:
-# census: opaque -- unknown-dump: 69 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x399D78, 0x399DBD
-Str_empty_256:	.asciz "!"
-# census: opaque -- unknown-dump: 641 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x399DBF, 0x39A040
-data_4C39A040:
-# census: opaque -- unknown-dump: 43 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x39A040, 0x39A06B
-data_4C39A06B:
-# census: opaque -- unknown-dump: 94 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x39A06B, 0x39A0C9
-data_4C39A0C9:
-# census: opaque -- unknown-dump: 42 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x39A0C9, 0x39A0F3
-data_4C39A0F3:
-# census: opaque -- unknown-dump: 94 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x39A0F3, 0x39A151
-data_4C39A151:
-# census: opaque -- unknown-dump: 94 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x39A151, 0x39A1AF
-data_4C39A1AF:
-# census: opaque -- unknown-dump: 57 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x39A1AF, 0x39A1E8
-data_4C39A1E8:
-# census: opaque -- unknown-dump: 57 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x39A1E8, 0x39A221
-data_4C39A221:
-# census: opaque -- unknown-dump: 57 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x39A221, 0x39A25A
-data_4C39A25A:
-# census: opaque -- unknown-dump: 57 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x39A25A, 0x39A293
-Str_empty_255:	.asciz "\""
-# census: opaque -- unknown-dump: 139 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x39A295, 0x39A320
-data_4C39A320:
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x39A320, 0x39A32F
-data_4C39A32F:
-# census: opaque -- unknown-dump: 43 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x39A32F, 0x39A35A
-data_4C39A35A:
-# census: opaque -- unknown-dump: 43 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x39A35A, 0x39A385
-data_4C39A385:
-# census: opaque -- unknown-dump: 141 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x39A385, 0x39A412
-data_4C39A412:
-# census: opaque -- unknown-dump: 183 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x39A412, 0x39A4C9
-data_4C39A4C9:
-# census: opaque -- unknown-dump: 141 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x39A4C9, 0x39A556
-data_4C39A556:
-# census: opaque -- unknown-dump: 183 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x39A556, 0x39A60D
-data_4C39A60D:
-# census: opaque -- unknown-dump: 127 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x39A60D, 0x39A68C
-data_4C39A68C:
-# census: opaque -- unknown-dump: 169 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x39A68C, 0x39A735
-data_4C39A735:
-# census: opaque -- unknown-dump: 171 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x39A735, 0x39A7E0
+FxParamList_001:	# the effect DSP's parameter list of DSP types 1, 44 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0xF0, addr=0xC005	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x0, op2=0x0, addr=0x9800	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x14, op1=0x0, op2=0x0, addr=0xC028	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC006	# parameter 3
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_002:	# the effect DSP's parameter list of DSP types 2, 7, 45 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0xC8, addr=0xC007	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x0, op2=0x0, addr=0x9801	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x0, op2=0x0, addr=0x9800	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x05, op1=0x0, op2=0x33333333, addr=0xC005	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x14, op1=0x0, op2=0x0, addr=0xC028	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC008	# parameter 5
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_003:	# the effect DSP's parameter list of DSP type 3 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x18, op1=0x4CCCCCCC, op2=0x6F5C28F5, addr=0xC004	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x05, op1=0x0, op2=0x7FFFFFFF, addr=0xC00F, addr2=0xC01C	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x05, op1=0x0, op2=0x7FFFFFFF, addr=0xC010, addr2=0xC01D	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x3C4B, addr=0x8424	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x3C4B, addr=0x8450	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC011	# parameter 5
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_004:	# the effect DSP's parameter list of DSP types 4, 11 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x60, addr=0xC007	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x0, op2=0x0, addr=0x9800, addr2=0x9801	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x828F5C29, op2=0x7D70A3D7, addr=0xC006, addr2=0xC00A	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x0B, op1=0x64, op2=0x12C, addr=0x8424, addr2=0x8440	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x07, op1=0x40000000, op2=0x0, addr=0xC004, addr2=0xC005	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x14, op1=0x0, op2=0x0, addr=0xC028	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC009	# parameter 6
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_005:	# the effect DSP's parameter list of DSP types 5, 13 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x05, op1=0x0, op2=0xCCCCCCC, addr=0xC005	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x0, op2=0x0, addr=0x9800, addr2=0x9801	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x828F5C29, op2=0x7D70A3D7, addr=0xC008	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x05, op1=0x4CCCCCCC, op2=0x6F5C28F5, addr=0xC004	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x07, op1=0x40000000, op2=0x0, addr=0xC006, addr2=0xC007	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x14, op1=0x0, op2=0x0, addr=0xC028	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC00E	# parameter 6
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_006:	# the effect DSP's parameter list of DSP types 6, 14 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0xC8, addr=0xC005	# parameter 0
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0xE9, addr=0xC006
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0xFA, addr=0xC007
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0xFFFFFF59, addr=0xC00B
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0xFFFFFF2E, addr=0xC00C
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0xFFFFFF09, addr=0xC00D
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x0, op2=0x0, addr=0x9800	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x14, op1=0x0, op2=0x0, addr=0xC028	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC009	# parameter 3
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_008:	# the effect DSP's parameter list of DSP type 8 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x0E, op1=0x0, op2=0x0, addr=0x9804	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x2, op2=0xE, addr=0xC004	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x05, op1=0x0, op2=0x228F5C28, addr=0xC00C	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x0E, op1=0x0, op2=0x0, addr=0x9803	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x2, op2=0x0, addr=0xC00F	# parameter 4
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_009:	# the effect DSP's parameter list of DSP type 9 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x3C4B, addr=0x840C	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x3C4B, addr=0x8429	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC007	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC009	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x2, op2=0xE, addr=0xC004	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC008	# parameter 5
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_010:	# the effect DSP's parameter list of DSP type 10 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x1B, op1=0x0, op2=0x1, addr=0x840D	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x1B, op1=0x0, op2=0x1, addr=0x8411	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x1B, op1=0x0, op2=0x1, addr=0x8415	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x1B, op1=0x0, op2=0x2A5, addr=0x8419	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x1C, op1=0x0, op2=0x7FFFFFFF, addr=0xC00C, addr2=0xC011	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x1C, op1=0x0, op2=0x7FFFFFFF, addr=0xC00D, addr2=0xC012	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x1C, op1=0x0, op2=0x7FFFFFFF, addr=0xC00E, addr2=0xC013	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x1C, op1=0x0, op2=0x7FFFFFFF, addr=0xC00F, addr2=0xC014	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC007	# parameter 8
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x2, op2=0xE, addr=0xC004	# parameter 9
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC010	# parameter 10
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_012:	# the effect DSP's parameter list of DSP type 12 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x3C4B, addr=0x840C	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x3C4B, addr=0x8429	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC007	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC009	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x2, op2=0xE, addr=0xC004	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC008	# parameter 5
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_015:	# the effect DSP's parameter list of DSP type 15 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC004	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x0, op2=0x0, addr=0xC008	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x2B, addr=0xC00F	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9809	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC014	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x3F, addr=0xC01A	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9806	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC010	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC01E	# parameter 8
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_032:	# the effect DSP's parameter list of DSP type 32 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x12, op1=0x4, op2=0x0, addr=0xC006	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x11, op1=0x4, op2=0x0, addr=0xC006	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x0, op2=0x0, addr=0xC004	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x1, op2=0x0, addr=0xC005	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC00A	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x2, op2=0x0, addr=0xC00C	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC00D	# parameter 6
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_033:	# the effect DSP's parameter list of DSP type 33 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x12, op1=0x4, op2=0x0, addr=0xC006	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x11, op1=0x4, op2=0x0, addr=0xC006	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x0, op2=0x0, addr=0xC004	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x1, op2=0x0, addr=0xC005	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC00A	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x2, op2=0x0, addr=0xC00D	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC013	# parameter 6
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_034:	# the effect DSP's parameter list of DSP type 34 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x12, op1=0x2, op2=0x0, addr=0xC006	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x11, op1=0x2, op2=0x0, addr=0xC006	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x0, op2=0x0, addr=0xC004	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x1, op2=0x0, addr=0xC005	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC00A	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x2, op2=0x0, addr=0xC00C	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC00D	# parameter 6
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_035:	# the effect DSP's parameter list of DSP type 35 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x00, op1=0x1, op2=0x0, addr=0xC004	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x1, op2=0x0, addr=0xC006	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x1, op2=0x0, addr=0xC007	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x7FFCB923, addr=0xC00A	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC00B	# parameter 4
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_036:	# the effect DSP's parameter list of DSP type 36 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x12, op1=0x2, op2=0x0, addr=0xC006	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x11, op1=0x2, op2=0x0, addr=0xC006	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x0, op2=0x0, addr=0xC004	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x1, op2=0x0, addr=0xC005	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC00A	# parameter 4
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_037:	# the effect DSP's parameter list of DSP type 37 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x05, op1=0x0, op2=0x3333333, addr=0xC006	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x0D, op1=0x0, op2=0x0, addr=0xC008	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x0D, op1=0x1, op2=0x0, addr=0xC00A	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC00B	# parameter 3
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_039:	# the effect DSP's parameter list of DSP type 39 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x16, op1=0x0, op2=0x0, addr=0xC004	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x0, op2=0x2, addr=0xC004	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x0, addr=0xC007	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x1, addr=0xC007	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x2, addr=0xC007	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x0, addr=0xC00C	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x1, addr=0xC00C	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x2, addr=0xC00C	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x0, addr=0xC011	# parameter 8
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x1, addr=0xC011	# parameter 9
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x2, addr=0xC011	# parameter 10
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x1, op2=0x0, addr=0xC016	# parameter 11
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x1, op2=0x2, addr=0xC016	# parameter 12
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC019	# parameter 13
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_040:	# the effect DSP's parameter list of DSP type 40 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x05, op1=0x0, op2=0x40000000, addr=0xC006, addr2=0xC008	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x0, op2=0x0, addr=0x9800, addr2=0x9801	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x14, op1=0x0, op2=0x0, addr=0xC028	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC007	# parameter 3
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_041:	# the effect DSP's parameter list of DSP type 41 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x12, op1=0x1, op2=0x0, addr=0xC006	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x11, op1=0x1, op2=0x0, addr=0xC006	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x0, op2=0x0, addr=0xC004	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x1, op2=0x0, addr=0xC005	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC00A	# parameter 4
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_048:	# the effect DSP's parameter list of DSP type 48 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x05, op1=0x0, op2=0x40000000, addr=0xC006, addr2=0xC008	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x0, op2=0x0, addr=0x9800, addr2=0x9801	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x07, op1=0x40000000, op2=0x0, addr=0xC004, addr2=0xC005	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x14, op1=0x0, op2=0x0, addr=0xC028	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC007	# parameter 4
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_050:	# the effect DSP's parameter list of DSP type 50 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0xC8, addr=0xC006	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x0, op2=0x0, addr=0x9800, addr2=0x9801	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x07, op1=0x40000000, op2=0x0, addr=0xC004, addr2=0xC005	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x14, op1=0x0, op2=0x0, addr=0xC028	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC007	# parameter 4
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_052:	# the effect DSP's parameter list of DSP type 52 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x17, op1=0x0, op2=0x0, addr=0xC006	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x17, op1=0x1, op2=0x0, addr=0xC009	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x17, op1=0x2, op2=0x0, addr=0xC006	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC00E	# parameter 3
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_051:	# the effect DSP's parameter list of DSP type 51 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x05, op1=0x10624DD, op2=0x30000000, addr=0xC004	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x17, op1=0x0, op2=0x0, addr=0xC008	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x17, op1=0x1, op2=0x0, addr=0xC00B	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x17, op1=0x2, op2=0x0, addr=0xC008	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC010	# parameter 4
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_053:	# the effect DSP's parameter list of DSP type 53 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC004	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x0, op2=0x0, addr=0xC008	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x2B, addr=0xC00F	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9809	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC014	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x3F, addr=0xC01A	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9806	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC010	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC01E	# parameter 8
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_054:	# the effect DSP's parameter list of DSP type 54 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x04, op1=0x1, op2=0x0, addr=0x9800, addr2=0x9801	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x07, op1=0x40000000, op2=0x0, addr=0xC004, addr2=0xC005	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x14, op1=0x0, op2=0x0, addr=0xC028	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC006	# parameter 3
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_056:	# the effect DSP's parameter list of DSP type 56 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x50, addr=0xC007	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x0, op2=0x0, addr=0x9800	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x0, op2=0x0, addr=0x9802	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x0, op2=0x0, addr=0x9801	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x07, op1=0x40000000, op2=0x0, addr=0xC005, addr2=0xC006	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x14, op1=0x0, op2=0x0, addr=0xC028	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC009	# parameter 6
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_057:	# the effect DSP's parameter list of DSP type 57 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC010	# parameter 0
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_079:	# the effect DSP's parameter list of DSP type 79 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x16, op1=0x0, op2=0x0, addr=0xC004	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x0, op2=0x2, addr=0xC004	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x0, addr=0xC007	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x1, addr=0xC007	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x2, addr=0xC007	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x0, addr=0xC00C	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x1, addr=0xC00C	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x2, addr=0xC00C	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x0, addr=0xC011	# parameter 8
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x1, addr=0xC011	# parameter 9
+	FXL_END
+	FXL_ENTRY	kind=0x0F, op1=0x0, op2=0x2, addr=0xC011	# parameter 10
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x1, op2=0x0, addr=0xC016	# parameter 11
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x1, op2=0x2, addr=0xC016	# parameter 12
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_128:	# the effect DSP's parameter list of DSP type 128 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC004	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x0, op2=0x0, addr=0xC008	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x2B, addr=0xC00F	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9809	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC014	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x3F, addr=0xC01A	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9806	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC010	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC01E	# parameter 8
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_129:	# the effect DSP's parameter list of DSP type 129 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC004	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x0, op2=0x0, addr=0xC008	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x2B, addr=0xC00F	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9809	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC014	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x3F, addr=0xC01A	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9806	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC010	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC01E	# parameter 8
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_130:	# the effect DSP's parameter list of DSP type 130 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x12, op1=0x4, op2=0x0, addr=0xC006	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x11, op1=0x4, op2=0x0, addr=0xC006	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x0, op2=0x0, addr=0xC004	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x1, op2=0x0, addr=0xC005	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC00A	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x2, op2=0x0, addr=0xC00C	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC012	# parameter 6
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_131:	# the effect DSP's parameter list of DSP type 131 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x12, op1=0x4, op2=0x0, addr=0xC006	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x11, op1=0x4, op2=0x0, addr=0xC006	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x0, op2=0x0, addr=0xC004	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x1, op2=0x0, addr=0xC005	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC00A	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x2, op2=0x0, addr=0xC00C	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC012	# parameter 6
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_132:	# the effect DSP's parameter list of DSP type 132 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x12, op1=0x4, op2=0x0, addr=0xC006	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x11, op1=0x4, op2=0x0, addr=0xC006	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x0, op2=0x0, addr=0xC004	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x1, op2=0x0, addr=0xC005	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC00A	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x2, op2=0x0, addr=0xC00D	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC013	# parameter 6
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_133:	# the effect DSP's parameter list of DSP type 133 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x12, op1=0x4, op2=0x0, addr=0xC006	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x11, op1=0x4, op2=0x0, addr=0xC006	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x0, op2=0x0, addr=0xC004	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x1, op2=0x0, addr=0xC005	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC00A	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x2, op2=0x0, addr=0xC00D	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC013	# parameter 6
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_134:	# the effect DSP's parameter list of DSP type 134 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC004	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x0, op2=0x0, addr=0xC008	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x2B, addr=0xC00F	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9809	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC014	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x3F, addr=0xC01A	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9806	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC010	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC01E	# parameter 8
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_135:	# the effect DSP's parameter list of DSP type 135 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC004	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x0, op2=0x0, addr=0xC008	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x2B, addr=0xC00F	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9809	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC014	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x3F, addr=0xC01A	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9806	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC010	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC01E	# parameter 8
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_136:	# the effect DSP's parameter list of DSP type 136 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC004	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x0, op2=0x0, addr=0xC008	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x2B, addr=0xC00F	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9809	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC014	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x3F, addr=0xC01A	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9806	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC010	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC01E	# parameter 8
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_137:	# the effect DSP's parameter list of DSP type 137 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC004	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x0, op2=0x0, addr=0xC008	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x2B, addr=0xC00F	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9809	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC014	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x3F, addr=0xC01A	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9806	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC010	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC01E	# parameter 8
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_138:	# the effect DSP's parameter list of DSP type 138 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC004	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x0, op2=0x0, addr=0xC008	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x2B, addr=0xC00F	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9809	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC014	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x3F, addr=0xC01A	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x2, op2=0x0, addr=0x9806	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x08, op1=0x0, op2=0x0, addr=0xC010	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC01E	# parameter 8
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_140:	# the effect DSP's parameter list of DSP type 140 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x20, op1=0x0, op2=0x0, addr=0x9800	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x20, op1=0x1, op2=0x0, addr=0x9800	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x20, op1=0x2, op2=0x0, addr=0x9800	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x07, op1=0x40000000, op2=0x0, addr=0xC004, addr2=0xC000	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x18, op1=0x7FFCB923, op2=0xCCCCCCC, addr=0xC00A	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x18, op1=0x1CAC083, op2=0x26666666, addr=0xC006	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x40000000, addr=0xC005	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x14, op1=0x0, op2=0x0, addr=0xC028	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC018	# parameter 8
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_144:	# the effect DSP's parameter list of DSP type 144 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x18, op1=0x7FFCB923, op2=0xCCCCCCC, addr=0xC00C	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x18, op1=0x1CAC083, op2=0x26666666, addr=0xC007	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x18, op1=0x26666666, op2=0x7FFCB923, addr=0xC006	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x40000000, addr=0xC008	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC012	# parameter 4
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_145:	# the effect DSP's parameter list of DSP type 145 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x20, op1=0x0, op2=0x0, addr=0x9800	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x20, op1=0x1, op2=0x0, addr=0x9800	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x20, op1=0x2, op2=0x0, addr=0x9800	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x07, op1=0x40000000, op2=0x0, addr=0xC004, addr2=0xC000	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x18, op1=0x7FFCB923, op2=0xCCCCCCC, addr=0xC00A	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x18, op1=0x1CAC083, op2=0x26666666, addr=0xC006	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x40000000, addr=0xC005	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x14, op1=0x0, op2=0x0, addr=0xC028	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC010	# parameter 8
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_082:	# the effect DSP's parameter list of DSP type 82 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0xF0, addr=0xC005	# parameter 0
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x4, addr=0xC009
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x3, op2=0x0, addr=0x9800	# parameter 1
+	FXL_ENTRY	kind=0x04, op1=0x4, op2=0x0, addr=0x9803
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x0, op2=0x0, addr=0xC00A	# parameter 2
+	FXL_ENTRY	kind=0x16, op1=0x0, op2=0x0, addr=0xC015
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x0, op2=0x2, addr=0xC00A	# parameter 3
+	FXL_ENTRY	kind=0x16, op1=0x0, op2=0x2, addr=0xC015
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x1, op2=0x0, addr=0xC00D	# parameter 4
+	FXL_ENTRY	kind=0x16, op1=0x1, op2=0x0, addr=0xC018
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x1, op2=0x2, addr=0xC00D	# parameter 5
+	FXL_ENTRY	kind=0x16, op1=0x1, op2=0x2, addr=0xC018
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC013, addr2=0xC01E	# parameter 6
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_083:	# the effect DSP's parameter list of DSP type 83 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0xF0, addr=0xC005	# parameter 0
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x4, addr=0xC009
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x3, op2=0x0, addr=0x9800	# parameter 1
+	FXL_ENTRY	kind=0x04, op1=0x4, op2=0x0, addr=0x9803
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC00D, addr2=0xC011	# parameter 2
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_016:	# the effect DSP's parameter list of DSP types 16, 17, 18, 19, 20, 21, 22, 23, ... (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x21, op1=0x0, op2=0x0, addr=0xC01A, addr2=0xC01E	# parameter 0
+	FXL_ENTRY	kind=0x21, op1=0x1, op2=0x0, addr=0xC013
+	FXL_END
+	FXL_ENTRY	kind=0x1D, op1=0x1, op2=0x0, addr=0x8463	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x3, op2=0x0, addr=0xC014	# parameter 2
+	FXL_ENTRY	kind=0x16, op1=0x3, op2=0x0, addr=0xC017, addr2=0xC01B
+	FXL_END
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x210624DD, addr=0x9808	# parameter 3
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x8B43958, addr=0x9809
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x34DD2F1A, addr=0x980A
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x9FBE76C, addr=0x980B
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x2, op2=0x0, addr=0xC026, addr2=0xC028	# parameter 4
+	FXL_END
+	FXL_END	# the list's end
+FxParamListOrphan_4C399E45:	# the effect DSP's parameter list of no type: nothing points at it [INFERENCE: an older type's copy]: group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x21, op1=0xE9CE0760, op2=0x31F8A090, addr=0xC012	# parameter 0
+	FXL_ENTRY	kind=0x21, op1=0xE9CE0760, op2=0x31F8A090, addr=0xC015
+	FXL_END
+	FXL_ENTRY	kind=0x1D, op1=0x1, op2=0x0, addr=0x845A	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x63, op1=0x2, op2=0x15, addr=0xC030	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x420C49BA, addr=0x9808	# parameter 3
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x116872B0, addr=0x9809
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x69BA5E35, addr=0x980A
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x13F7CED9, addr=0x980B
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x2, op2=0x0, addr=0xC01E, addr2=0xC01F	# parameter 4
+	FXL_END
+	FXL_END	# the list's end
+FxParamListOrphan_4C399EC0:	# the effect DSP's parameter list of no type: nothing points at it [INFERENCE: an older type's copy]: group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x02, op1=0x2, op2=0x0, addr=0xC01E, addr2=0xC01F	# parameter 0
+	FXL_END
+	FXL_END	# the list's end
+FxParamListOrphan_4C399ECF:	# the effect DSP's parameter list of no type: nothing points at it [INFERENCE: an older type's copy]: group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x21, op1=0x0, op2=0x40000000, addr=0xC012	# parameter 0
+	FXL_ENTRY	kind=0x21, op1=0x0, op2=0x40000000, addr=0xC015
+	FXL_END
+	FXL_ENTRY	kind=0x1D, op1=0x1, op2=0x0, addr=0x845A	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x63, op1=0x2, op2=0x15, addr=0xC030	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x420C49BA, addr=0x9808	# parameter 3
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x116872B0, addr=0x9809
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x69BA5E35, addr=0x980A
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x13F7CED9, addr=0x980B
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x2, op2=0x0, addr=0xC01E, addr2=0xC01F	# parameter 4
+	FXL_END
+	FXL_END	# the list's end
+FxParamListOrphan_4C399F4A:	# the effect DSP's parameter list of no type: nothing points at it [INFERENCE: an older type's copy]: group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x21, op1=0xD2CD9E84, op2=0x62617C1B, addr=0xC012	# parameter 0
+	FXL_ENTRY	kind=0x21, op1=0xD2CD9E84, op2=0x62617C1B, addr=0xC015
+	FXL_END
+	FXL_ENTRY	kind=0x1D, op1=0x1, op2=0x0, addr=0x845A	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x63, op1=0x2, op2=0x15, addr=0xC030	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x420C49BA, addr=0x9808	# parameter 3
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x116872B0, addr=0x9809
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x69BA5E35, addr=0x980A
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x13F7CED9, addr=0x980B
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x2, op2=0x0, addr=0xC01E, addr2=0xC01F	# parameter 4
+	FXL_END
+	FXL_END	# the list's end
+FxParamListOrphan_4C399FC5:	# the effect DSP's parameter list of no type: nothing points at it [INFERENCE: an older type's copy]: group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x21, op1=0xD2CD9E84, op2=0x62617C1B, addr=0xC012	# parameter 0
+	FXL_ENTRY	kind=0x21, op1=0xD2CD9E84, op2=0x62617C1B, addr=0xC015
+	FXL_END
+	FXL_ENTRY	kind=0x1D, op1=0x1, op2=0x0, addr=0x845A	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x63, op1=0x2, op2=0x15, addr=0xC030	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x420C49BA, addr=0x9808	# parameter 3
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x116872B0, addr=0x9809
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x69BA5E35, addr=0x980A
+	FXL_ENTRY	kind=0x18, op1=0x0, op2=0x13F7CED9, addr=0x980B
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x2, op2=0x0, addr=0xC01E, addr2=0xC01F	# parameter 4
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_120:	# the effect DSP's parameter list of DSP type 120 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x10, op1=0x0, op2=0xF0, addr=0x9800	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x10, op1=0x0, op2=0xF0, addr=0x9801	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC007	# parameter 2
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_088:	# the effect DSP's parameter list of DSP type 88 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFF5B, op2=0xFFFFF98E, addr=0x841D	# parameter 0
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFF92, op2=0xFFFFFBB4, addr=0x8422
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFF9C, op2=0xFFFFFC18, addr=0x8428
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFFA2, op2=0xFFFFFC59, addr=0x844A
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFFC9, op2=0xFFFFFDDB, addr=0x8450
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFFB8, op2=0xFFFFFD30, addr=0x8455
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x2, op2=0x0, addr=0xC003	# parameter 1
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_089:	# the effect DSP's parameter list of DSP type 89 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFCE0, op2=0xFFFFE0C0, addr=0x841D	# parameter 0
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFF38, op2=0xFFFFF82E, addr=0x8450
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x2, op2=0x0, addr=0xC003	# parameter 1
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_090:	# the effect DSP's parameter list of DSP type 90 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFF1F, op2=0xFFFFF736, addr=0x841D	# parameter 0
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFF6A, op2=0xFFFFFA24, addr=0x8422
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFF74, op2=0xFFFFFA88, addr=0x8428
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFF85, op2=0xFFFFFB2D, addr=0x844A
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFFB0, op2=0xFFFFFCE1, addr=0x8450
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFFA4, op2=0xFFFFFC68, addr=0x8455
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x2, op2=0x0, addr=0xC003	# parameter 1
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_091:	# the effect DSP's parameter list of DSP type 91 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFEFC, op2=0xFFFFF5D8, addr=0x841D	# parameter 0
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFF4C, op2=0xFFFFF8F8, addr=0x8422
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFF58, op2=0xFFFFF970, addr=0x8428
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFF6C, op2=0xFFFFFA38, addr=0x844A
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFFA0, op2=0xFFFFFC40, addr=0x8450
+	FXL_ENTRY	kind=0x15, op1=0xFFFFFF92, op2=0xFFFFFBB0, addr=0x8455
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x2, op2=0x0, addr=0xC003	# parameter 1
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_100:	# the effect DSP's parameter list of DSP type 100 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC00C	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x2, op2=0x0, addr=0xC018	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x3, op2=0x0, addr=0xC01E	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC021	# parameter 3
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_101:	# the effect DSP's parameter list of DSP type 101 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC00C	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x2, op2=0x0, addr=0xC018	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x3, op2=0x0, addr=0xC01E	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC021	# parameter 3
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_102:	# the effect DSP's parameter list of DSP type 102 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC00C	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x2, op2=0x0, addr=0xC018	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x3, op2=0x0, addr=0xC01E	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC021	# parameter 3
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_103:	# the effect DSP's parameter list of DSP type 103 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC00C	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x2, op2=0x0, addr=0xC018	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x3, op2=0x0, addr=0xC01E	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC021	# parameter 3
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_124:	# the effect DSP's parameter list of DSP type 124 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x22, op1=0x0, op2=0x0, addr=0xC021	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x22, op1=0x1, op2=0x0, addr=0xC021	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x22, op1=0x2, op2=0x0, addr=0xC021	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x22, op1=0x0, op2=0x0, addr=0xC023	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x22, op1=0x1, op2=0x0, addr=0xC023	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x22, op1=0x2, op2=0x0, addr=0xC023	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x22, op1=0x0, op2=0x0, addr=0xC025	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x22, op1=0x1, op2=0x0, addr=0xC025	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x22, op1=0x2, op2=0x0, addr=0xC025	# parameter 8
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC037	# parameter 9
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_121:	# the effect DSP's parameter list of DSP type 121 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC025	# parameter 0
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_122:	# the effect DSP's parameter list of DSP type 122 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x16, op1=0x1, op2=0x0, addr=0xC00B	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x1, op2=0x2, addr=0xC00B	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC013	# parameter 2
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_123:	# the effect DSP's parameter list of DSP type 123 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x16, op1=0x1, op2=0x0, addr=0xC016	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x16, op1=0x1, op2=0x2, addr=0xC016	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC01E	# parameter 2
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_064:	# the effect DSP's parameter list of DSP type 64 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x1F, op1=0x1, op2=0x0, addr=0xC005, addr2=0xC00D	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x33AE, addr=0x8407	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x33AE, addr=0x842F	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC004	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC00C	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x1F, op1=0x0, op2=0x0, addr=0xC00A, addr2=0xC00F	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0xF0, addr=0xC009	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x0, op2=0x0, addr=0x9800	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x14, op1=0x0, op2=0x0, addr=0xC028	# parameter 8
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC008	# parameter 9
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_066:	# the effect DSP's parameter list of DSP type 66 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x1F, op1=0x1, op2=0x0, addr=0xC006, addr2=0xC00F	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x33AE, addr=0x8406	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x33AE, addr=0x8431	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC004	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC00E	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x1F, op1=0x1, op2=0x0, addr=0xC00C, addr2=0xC013	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0x60, addr=0xC00A	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x0, op2=0x0, addr=0x9800	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x8A3D70A4, op2=0x75C28F5C, addr=0xC009, addr2=0xC011	# parameter 8
+	FXL_END
+	FXL_ENTRY	kind=0x0B, op1=0x64, op2=0x12C, addr=0x841D, addr2=0x843A	# parameter 9
+	FXL_END
+	FXL_ENTRY	kind=0x63, op1=0x40000000, op2=0x0, addr=0xC018	# parameter 10
+	FXL_END
+	FXL_ENTRY	kind=0x14, op1=0x0, op2=0x0, addr=0xC028	# parameter 11
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC005	# parameter 12
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_067:	# the effect DSP's parameter list of DSP type 67 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x1F, op1=0x1, op2=0x0, addr=0xC005, addr2=0xC00C	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x33AE, addr=0x8406	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x33AE, addr=0x8433	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC004	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC00B	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x03, op1=0x0, op2=0xF0, addr=0xC00A	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x0, op2=0x0, addr=0x9800, addr2=0x9801	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x07, op1=0x40000000, op2=0x0, addr=0xC007, addr2=0xC009	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x14, op1=0x0, op2=0x0, addr=0xC028	# parameter 8
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC008	# parameter 9
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_068:	# the effect DSP's parameter list of DSP type 68 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x1F, op1=0x1, op2=0x0, addr=0xC006, addr2=0xC013	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x33AE, addr=0x8406	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x33AE, addr=0x8434	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC004	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC012	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x1F, op1=0x1, op2=0x0, addr=0xC010, addr2=0xC019	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x05, op1=0x0, op2=0xCCCCCCC, addr=0xC009	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x04, op1=0x0, op2=0x0, addr=0x9800	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x8A3D70A4, op2=0x75C28F5C, addr=0xC00C	# parameter 8
+	FXL_END
+	FXL_ENTRY	kind=0x05, op1=0x4CCCCCCC, op2=0x7020C49B, addr=0xC008	# parameter 9
+	FXL_END
+	FXL_ENTRY	kind=0x63, op1=0x40000000, op2=0x0, addr=0xC01E	# parameter 10
+	FXL_END
+	FXL_ENTRY	kind=0x14, op1=0x0, op2=0x0, addr=0xC028	# parameter 11
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC005	# parameter 12
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_070:	# the effect DSP's parameter list of DSP type 70 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x17, op1=0x0, op2=0x0, addr=0xC006	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x17, op1=0x1, op2=0x0, addr=0xC009	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x17, op1=0x2, op2=0x0, addr=0xC006	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x1F, op1=0x1, op2=0x0, addr=0xC00F, addr2=0xC013	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x33AE, addr=0x8420	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x33AE, addr=0x843C	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC00E	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC012	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC011	# parameter 8
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_080:	# the effect DSP's parameter list of DSP type 80 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x12, op1=0x4, op2=0x0, addr=0xC007	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x11, op1=0x4, op2=0x0, addr=0xC007	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x0, op2=0x0, addr=0xC005	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x1, op2=0x0, addr=0xC006	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC004	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x2, op2=0x0, addr=0xC00C	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x1F, op1=0x1, op2=0x0, addr=0xC011, addr2=0xC018	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x33AE, addr=0x8428	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x33AE, addr=0x8440	# parameter 8
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC00D	# parameter 9
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC015	# parameter 10
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC013	# parameter 11
+	FXL_END
+	FXL_END	# the list's end
+FxParamList_081:	# the effect DSP's parameter list of DSP type 81 (FxParamListTable[type]): group n = parameter n's entries (func_4C155072 / func_4C155C08 -> func_4C157DE2; FXL_ENTRY in src/include/data_tables.inc)
+	FXL_ENTRY	kind=0x12, op1=0x4, op2=0x0, addr=0xC007	# parameter 0
+	FXL_END
+	FXL_ENTRY	kind=0x11, op1=0x4, op2=0x0, addr=0xC007	# parameter 1
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x0, op2=0x0, addr=0xC005	# parameter 2
+	FXL_END
+	FXL_ENTRY	kind=0x0C, op1=0x1, op2=0x0, addr=0xC006	# parameter 3
+	FXL_END
+	FXL_ENTRY	kind=0x00, op1=0x0, op2=0x0, addr=0xC004	# parameter 4
+	FXL_END
+	FXL_ENTRY	kind=0x01, op1=0x2, op2=0x0, addr=0xC00C	# parameter 5
+	FXL_END
+	FXL_ENTRY	kind=0x1F, op1=0x1, op2=0x0, addr=0xC011, addr2=0xC018	# parameter 6
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x33AE, addr=0x8428	# parameter 7
+	FXL_END
+	FXL_ENTRY	kind=0x06, op1=0x0, op2=0x33AE, addr=0x8440	# parameter 8
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC00D	# parameter 9
+	FXL_END
+	FXL_ENTRY	kind=0x19, op1=0x851EB852, op2=0x7AE147AE, addr=0xC015	# parameter 10
+	FXL_END
+	FXL_ENTRY	kind=0x02, op1=0x0, op2=0x0, addr=0xC013	# parameter 11
+	FXL_END
+	FXL_END	# the list's end
+	.align	4, 0xFF	# pad after FxParamList_081
 
 ptrs_4C39A7E0:
 	.long	func_4C15C949
@@ -39841,7955 +40746,4 @@ zlib_4C3C5A18:	# DemoSong02: its event memory, 7936 bytes, stored as a zlib stre
 	.endzlib
 	.align	4, 0xFF	# pad after zlib_4C3C5A18
 zlib_4C3C6C14:	# DemoSong03: its event memory, 25344 bytes, stored as a zlib stream of 13007 bytes (inflated by the program); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
-	.zlib	6
-
-# 99 cells of 256 bytes.  Tracks typed event by event: 15 of 15.
-# DemoSong03_Events
-	sq_cell	0x80, 0, 2	# cell 1: song 1 track 1, 1 of 10
-	sq_beat
-	sq_cc	0, 0, 16, 11, 127
-	sq_pc	0, 0, 66, 20, 32
-	sq_cc	0, 0, 16, 7, 119
-	sq_cc	0, 0, 16, 10, 29
-	sq_cc	0, 0, 16, 91, 35
-	sq_beat
-	sq_beat
-	sq_note	95, 0, 53, 78, 37, 0
-	sq_beat
-	sq_note	31, 0, 55, 93, 29, 0
-	sq_note	63, 0, 57, 110, 30, 0
-	sq_note	89, 0, 58, 124, 44, 0
-	sq_beat
-	sq_note	88, 0, 58, 100, 34, 0
-	sq_beat
-	sq_note	89, 0, 58, 123, 60, 0
-	sq_beat
-	sq_note	58, 0, 57, 83, 32, 0
-	sq_note	92, 0, 58, 83, 59, 0
-	sq_beat
-	sq_note	59, 0, 60, 94, 31, 0
-	sq_note	92, 0, 62, 124, 70, 0
-	sq_beat
-	sq_note	63, 0, 62, 100, 32, 0
-	sq_beat
-	sq_note	63, 0, 62, 124, 3, 1
-	sq_beat
-	sq_note	65, 0, 61, 86, 29, 0
-	sq_beat
-	sq_note	0, 0, 62, 92, 58, 0
-	sq_note	60, 0, 63, 112, 29, 0
-	sq_note	95, 0, 65, 124, 49, 0
-	sq_beat
-	sq_beat
-	sq_note	0, 0, 65, 124, 66, 0
-	sq_note	64, 0, 64, 94, 35, 0
-	sq_beat
-	sq_note	0, 0, 65, 108, 70, 0
-	sq_note	64, 0, 64, 94, 35, 0
-	sq_beat
-	sq_note	0, 0, 65, 111, 68, 0
-	sq_note	63, 0, 70, 96, 33, 0
-	sq_beat
-	sq_note	0, 0, 65, 124, 38, 0
-	sq_beat
-	sq_beat
-	sq_note	59, 0, 61, 98, 24, 0
-	sq_note	94, 0, 62, 88, 54, 0
-	sq_beat
-	sq_note	59, 0, 63, 101, 44, 0
-	sq_beat
-	sq_note	60, 0, 63, 101, 40, 0
-	sq_beat
-	sq_note	55, 0, 62, 96, 31, 0
-	sq_note	93, 0, 60, 98, 66, 0
-	sq_beat
-	sq_note	63, 0, 61, 70, 20, 0
-	sq_note	79, 0, 62, 98, 20, 0
-	sq_note	94, 0, 63, 124, 30, 0
-	sq_beat
-	sq_note	94, 0, 62, 95, 43, 0
-	sq_beat
-	.byte	0x5b, 0x90, 0x3e	# bytes 1..3 of `sq_note	91, 0, 62, 101, 53, 0` (the event spans two cells)
-	sq_cell	0x80, 1, 3	# cell 2: song 1 track 1, 2 of 10
-	.byte	0x65, 0x35, 0x00	# bytes 4..6 of `sq_note	91, 0, 62, 101, 53, 0` (the event spans two cells)
-	sq_beat
-	sq_note	63, 0, 60, 96, 36, 0
-	sq_beat
-	sq_note	1, 0, 58, 94, 72, 0
-	sq_note	67, 0, 62, 100, 18, 1
-	sq_beat
-	sq_beat
-	sq_note	2, 0, 60, 112, 46, 0
-	sq_note	59, 0, 55, 95, 29, 1
-	sq_beat
-	sq_note	93, 0, 57, 92, 91, 0
-	sq_beat
-	sq_note	91, 0, 58, 81, 56, 0
-	sq_beat
-	sq_note	59, 0, 60, 93, 72, 3
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	65, 0, 57, 93, 22, 0
-	sq_beat
-	sq_note	0, 0, 58, 84, 49, 0
-	sq_note	68, 0, 67, 87, 36, 0
-	sq_beat
-	sq_note	68, 0, 65, 81, 21, 1
-	sq_beat
-	sq_beat
-	sq_note	4, 0, 63, 78, 36, 0
-	sq_beat
-	sq_note	1, 0, 62, 83, 43, 0
-	sq_beat
-	sq_note	1, 0, 60, 83, 41, 0
-	sq_beat
-	sq_note	2, 0, 58, 87, 43, 0
-	sq_beat
-	sq_note	5, 0, 57, 87, 60, 0
-	sq_note	73, 0, 58, 86, 33, 0
-	sq_beat
-	sq_note	67, 0, 60, 97, 22, 1
-	sq_beat
-	sq_note	94, 0, 62, 93, 69, 0
-	sq_beat
-	sq_note	71, 0, 63, 90, 17, 0
-	sq_beat
-	sq_note	4, 0, 62, 95, 55, 0
-	sq_note	65, 0, 60, 122, 38, 0
-	sq_beat
-	sq_cc	36, 0, 16, 10, 64
-	sq_cc	36, 0, 16, 7, 119
-	sq_pc	36, 0, 71, 20, 32
-	sq_cc	86, 0, 16, 11, 127
-	sq_beat
-	sq_cc	12, 0, 16, 91, 65
-	sq_note	94, 0, 52, 123, 66, 0
-	sq_beat
-	sq_note	66, 0, 53, 69, 54, 0
-	sq_beat
-	sq_note	25, 0, 55, 46, 60, 0
-	sq_note	87, 0, 57, 69, 57, 2
-	sq_beat
-	sq_cc	62, 0, 16, 11, 127
-	sq_cc	68, 0, 16, 11, 126
-	sq_cc	74, 0, 16, 11, 125
-	.byte	0x4e, 0xb0, 0x10	# bytes 1..3 of `sq_cc	78, 0, 16, 11, 124` (the event spans two cells)
-	sq_cell	0x80, 2, 4	# cell 3: song 1 track 1, 3 of 10
-	.byte	0x0b, 0x7c	# bytes 4..5 of `sq_cc	78, 0, 16, 11, 124` (the event spans two cells)
-	sq_cc	82, 0, 16, 11, 123
-	sq_cc	84, 0, 16, 11, 122
-	sq_cc	88, 0, 16, 11, 121
-	sq_cc	92, 0, 16, 11, 120
-	sq_cc	94, 0, 16, 11, 119
-	sq_beat
-	sq_cc	2, 0, 16, 11, 118
-	sq_cc	4, 0, 16, 11, 117
-	sq_cc	8, 0, 16, 11, 116
-	sq_cc	12, 0, 16, 11, 115
-	sq_cc	14, 0, 16, 11, 114
-	sq_cc	18, 0, 16, 11, 113
-	sq_cc	22, 0, 16, 11, 112
-	sq_cc	24, 0, 16, 11, 111
-	sq_cc	28, 0, 16, 11, 110
-	sq_cc	32, 0, 16, 11, 109
-	sq_cc	34, 0, 16, 11, 108
-	sq_cc	38, 0, 16, 11, 107
-	sq_cc	42, 0, 16, 11, 106
-	sq_cc	44, 0, 16, 11, 105
-	sq_cc	48, 0, 16, 11, 104
-	sq_cc	52, 0, 16, 11, 103
-	sq_cc	54, 0, 16, 11, 102
-	sq_cc	58, 0, 16, 11, 101
-	sq_cc	62, 0, 16, 11, 100
-	sq_cc	64, 0, 16, 11, 99
-	sq_cc	68, 0, 16, 11, 98
-	sq_cc	70, 0, 16, 11, 97
-	sq_cc	74, 0, 16, 11, 96
-	sq_cc	78, 0, 16, 11, 95
-	sq_cc	80, 0, 16, 11, 94
-	sq_cc	84, 0, 16, 11, 93
-	sq_cc	88, 0, 16, 11, 92
-	sq_cc	90, 0, 16, 11, 91
-	sq_cc	94, 0, 16, 11, 90
-	sq_beat
-	sq_cc	2, 0, 16, 11, 89
-	sq_cc	4, 0, 16, 11, 88
-	sq_cc	8, 0, 16, 11, 87
-	sq_cc	12, 0, 16, 11, 86
-	sq_cc	14, 0, 16, 11, 85
-	sq_cc	18, 0, 16, 11, 84
-	sq_cc	22, 0, 16, 11, 83
-	sq_cc	24, 0, 16, 11, 82
-	sq_cc	28, 0, 16, 11, 81
-	sq_cc	32, 0, 16, 11, 80
-	sq_cc	34, 0, 16, 11, 79
-	sq_cc	38, 0, 16, 11, 78
-	sq_cc	40, 0, 16, 11, 77
-	sq_cc	44, 0, 16, 11, 76
-	sq_cc	48, 0, 16, 11, 75
-	.byte	0x32, 0xb0	# bytes 1..2 of `sq_cc	50, 0, 16, 11, 74` (the event spans two cells)
-	sq_cell	0x80, 3, 5	# cell 4: song 1 track 1, 4 of 10
-	.byte	0x10, 0x0b, 0x4a	# bytes 3..5 of `sq_cc	50, 0, 16, 11, 74` (the event spans two cells)
-	sq_cc	54, 0, 16, 11, 73
-	sq_cc	82, 0, 16, 11, 127
-	sq_beat
-	sq_note	4, 0, 55, 127, 46, 0
-	sq_note	52, 0, 57, 103, 78, 0
-	sq_beat
-	sq_note	38, 0, 62, 117, 79, 0
-	sq_beat
-	sq_note	25, 0, 60, 99, 9, 0
-	sq_note	35, 0, 62, 85, 12, 0
-	sq_note	45, 0, 60, 95, 93, 0
-	sq_beat
-	sq_note	52, 0, 57, 114, 42, 0
-	sq_beat
-	sq_note	3, 0, 55, 89, 9, 0
-	sq_note	10, 0, 57, 81, 11, 0
-	sq_note	23, 0, 55, 83, 70, 0
-	sq_note	93, 0, 53, 89, 72, 0
-	sq_beat
-	sq_note	66, 0, 52, 76, 13, 0
-	sq_note	78, 0, 51, 62, 8, 0
-	sq_note	85, 0, 50, 76, 49, 2
-	sq_beat
-	sq_cc	42, 0, 16, 11, 126
-	sq_cc	60, 0, 16, 11, 124
-	sq_cc	70, 0, 16, 11, 121
-	sq_cc	78, 0, 16, 11, 119
-	sq_cc	88, 0, 16, 11, 117
-	sq_beat
-	sq_cc	2, 0, 16, 11, 114
-	sq_cc	10, 0, 16, 11, 113
-	sq_cc	20, 0, 16, 11, 110
-	sq_cc	28, 0, 16, 11, 108
-	sq_cc	38, 0, 16, 11, 106
-	sq_cc	48, 0, 16, 11, 103
-	sq_cc	56, 0, 16, 11, 101
-	sq_cc	66, 0, 16, 11, 99
-	sq_cc	74, 0, 16, 11, 97
-	sq_cc	84, 0, 16, 11, 95
-	sq_cc	92, 0, 16, 11, 93
-	sq_beat
-	sq_cc	6, 0, 16, 11, 90
-	sq_cc	16, 0, 16, 11, 88
-	sq_cc	24, 0, 16, 11, 86
-	sq_cc	34, 0, 16, 11, 84
-	sq_cc	42, 0, 16, 11, 82
-	sq_cc	52, 0, 16, 11, 79
-	sq_cc	62, 0, 16, 11, 77
-	sq_cc	70, 0, 16, 11, 75
-	sq_cc	80, 0, 16, 11, 72
-	sq_cc	88, 0, 16, 11, 70
-	sq_beat
-	sq_cc	2, 0, 16, 11, 68
-	sq_cc	12, 0, 16, 11, 127
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cell	0x80, 4, 6	# cell 5: song 1 track 1, 5 of 10
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_pc	78, 0, 56, 4, 32
-	sq_cc	78, 0, 16, 7, 111
-	sq_cc	78, 0, 16, 10, 64
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	82, 0, 67, 112, 95, 0
-	sq_beat
-	sq_note	92, 0, 67, 108, 39, 4
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	46, 0, 66, 75, 11, 0
-	sq_note	60, 0, 65, 82, 14, 0
-	sq_note	77, 0, 64, 97, 53, 0
-	sq_beat
-	sq_note	44, 0, 65, 100, 48, 0
-	sq_beat
-	sq_note	7, 0, 67, 97, 68, 0
-	sq_note	80, 0, 69, 88, 87, 0
-	sq_beat
-	sq_note	81, 0, 71, 102, 67, 0
-	sq_beat
-	sq_note	60, 0, 72, 95, 57, 0
-	sq_beat
-	sq_note	27, 0, 69, 103, 45, 0
-	sq_note	90, 0, 71, 108, 79, 0
-	sq_beat
-	sq_note	76, 0, 70, 56, 17, 0
-	sq_beat
-	sq_note	1, 0, 69, 77, 22, 0
-	sq_note	17, 0, 68, 67, 15, 0
-	sq_note	41, 0, 67, 62, 55, 0
-	sq_beat
-	sq_note	8, 0, 65, 73, 61, 3
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	82, 0, 67, 108, 61, 0
-	sq_beat
-	sq_note	51, 0, 69, 39, 10, 0
-	sq_note	59, 0, 71, 51, 10, 0
-	sq_note	67, 0, 72, 68, 11, 0
-	sq_note	82, 0, 74, 90, 2, 4
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_bend	16, 0, 0, 63
-	sq_bend	18, 0, 64, 60
-	sq_bend	18, 0, 0, 62
-	sq_bend	22, 0, 0, 59
-	sq_bend	25, 0, 0, 55
-	sq_bend	25, 0, 0, 57
-	sq_bend	28, 0, 64, 53
-	sq_bend	32, 0, 0, 47
-	sq_bend	32, 0, 64, 50
-	sq_bend	36, 0, 64, 40
-	sq_bend	36, 0, 0, 44
-	.byte	0x26	# bytes 1..1 of `sq_bend	38, 0, 64, 37` (the event spans two cells)
-	sq_cell	0x80, 5, 7	# cell 6: song 1 track 1, 6 of 10
-	.byte	0xe0, 0x40, 0x25	# bytes 2..4 of `sq_bend	38, 0, 64, 37` (the event spans two cells)
-	sq_bend	42, 0, 64, 34
-	sq_bend	42, 0, 0, 36
-	sq_bend	44, 0, 0, 33
-	sq_note	46, 0, 76, 119, 72, 0
-	sq_bend	54, 0, 64, 37
-	sq_bend	58, 0, 0, 41
-	sq_bend	58, 0, 0, 39
-	sq_bend	61, 0, 64, 44
-	sq_bend	65, 0, 64, 50
-	sq_bend	67, 0, 64, 53
-	sq_bend	71, 0, 64, 58
-	sq_bend	71, 0, 64, 55
-	sq_bend	75, 0, 0, 61
-	sq_bend	75, 0, 0, 60
-	sq_bend	77, 0, 0, 62
-	sq_bend	84, 0, 0, 63
-	sq_bend	84, 0, 64, 62
-	sq_bend	87, 0, 0, 64
-	sq_beat
-	sq_note	34, 0, 72, 97, 60, 0
-	sq_beat
-	sq_note	11, 0, 74, 112, 75, 0
-	sq_note	92, 0, 71, 97, 86, 0
-	sq_beat
-	sq_note	88, 0, 72, 107, 69, 0
-	sq_beat
-	sq_note	67, 0, 71, 92, 57, 0
-	sq_beat
-	sq_note	32, 0, 69, 88, 51, 0
-	sq_note	89, 0, 67, 78, 84, 0
-	sq_beat
-	sq_note	79, 0, 65, 80, 30, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_pc	38, 0, 73, 20, 32
-	sq_cc	83, 0, 16, 7, 82
-	sq_cc	94, 0, 16, 10, 99
-	sq_beat
-	sq_a	25, 1, 16, 0, 32, 0, 95, 1
-	sq_cc	25, 0, 16, 95, 27
-	sq_cc	36, 0, 16, 91, 85
-	sq_beat
-	sq_note	40, 0, 77, 104, 84, 0
-	sq_beat
-	sq_note	45, 0, 80, 95, 57, 1
-	sq_beat
-	sq_beat
-	sq_note	9, 0, 82, 104, 2, 1
-	sq_beat
-	sq_note	14, 0, 80, 105, 12, 0
-	sq_bend	38, 0, 0, 12
-	sq_note	39, 0, 84, 102, 1, 1
-	sq_bend	54, 0, 64, 25
-	sq_bend	59, 0, 0, 37
-	sq_bend	62, 0, 64, 49
-	sq_bend	66, 0, 0, 54
-	sq_bend	69, 0, 0, 55
-	sq_bend	74, 0, 64, 56
-	sq_bend	77, 0, 0, 58
-	.byte	0x51, 0xe0	# bytes 1..2 of `sq_bend	81, 0, 0, 59` (the event spans two cells)
-	sq_cell	0x80, 6, 8	# cell 7: song 1 track 1, 7 of 10
-	.byte	0x00, 0x3b	# bytes 3..4 of `sq_bend	81, 0, 0, 59` (the event spans two cells)
-	sq_bend	86, 0, 0, 64
-	sq_beat
-	sq_note	40, 0, 86, 105, 92, 0
-	sq_beat
-	sq_note	39, 0, 84, 97, 90, 0
-	sq_beat
-	sq_bend	43, 0, 0, 16
-	sq_note	43, 0, 82, 102, 15, 1
-	sq_bend	47, 0, 0, 18
-	sq_bend	54, 0, 0, 22
-	sq_bend	59, 0, 0, 31
-	sq_bend	63, 0, 64, 37
-	sq_bend	66, 0, 0, 49
-	sq_bend	71, 0, 0, 55
-	sq_bend	75, 0, 0, 57
-	sq_bend	78, 0, 64, 63
-	sq_beat
-	sq_bend	24, 0, 0, 63
-	sq_bend	28, 0, 0, 62
-	sq_bend	31, 0, 0, 60
-	sq_bend	35, 0, 0, 58
-	sq_bend	40, 0, 0, 57
-	sq_bend	43, 0, 64, 54
-	sq_bend	47, 0, 0, 53
-	sq_bend	50, 0, 0, 41
-	sq_bend	54, 0, 64, 26
-	sq_bend	59, 0, 0, 22
-	sq_bend	63, 0, 0, 12
-	sq_bend	66, 0, 0, 6
-	sq_bend	70, 0, 0, 1
-	sq_bend	81, 0, 0, 5
-	sq_bend	86, 0, 0, 12
-	sq_bend	88, 0, 0, 30
-	sq_bend	93, 0, 0, 51
-	sq_beat
-	sq_bend	2, 0, 0, 64
-	sq_note	4, 0, 79, 117, 24, 1
-	sq_beat
-	sq_note	43, 0, 75, 92, 45, 1
-	sq_beat
-	sq_cc	2, 0, 16, 1, 6
-	sq_cc	5, 0, 16, 1, 20
-	sq_cc	9, 0, 16, 1, 36
-	sq_cc	12, 0, 16, 1, 56
-	sq_cc	16, 0, 16, 1, 64
-	sq_cc	21, 0, 16, 1, 76
-	sq_cc	28, 0, 16, 1, 81
-	sq_cc	31, 0, 16, 1, 83
-	sq_cc	35, 0, 16, 1, 97
-	sq_cc	40, 0, 16, 1, 103
-	sq_cc	43, 0, 16, 1, 111
-	sq_cc	51, 0, 16, 1, 113
-	sq_cc	54, 0, 16, 1, 115
-	sq_cc	59, 0, 16, 1, 117
-	sq_cc	62, 0, 16, 1, 120
-	sq_cc	66, 0, 16, 1, 127
-	sq_cc	86, 0, 16, 1, 120
-	sq_cc	89, 0, 16, 1, 114
-	sq_cc	93, 0, 16, 1, 96
-	sq_beat
-	.byte	0x02, 0xb0, 0x10, 0x01	# bytes 1..4 of `sq_cc	2, 0, 16, 1, 48` (the event spans two cells)
-	sq_cell	0x80, 7, 9	# cell 8: song 1 track 1, 8 of 10
-	.byte	0x30	# bytes 5..5 of `sq_cc	2, 0, 16, 1, 48` (the event spans two cells)
-	sq_cc	9, 0, 16, 1, 10
-	sq_cc	12, 0, 16, 1, 0
-	sq_note	16, 0, 77, 104, 62, 0
-	sq_note	93, 0, 79, 107, 44, 0
-	sq_beat
-	sq_bend	47, 0, 64, 62
-	sq_bend	50, 0, 64, 57
-	sq_bend	54, 0, 64, 54
-	sq_bend	59, 0, 0, 44
-	sq_bend	63, 0, 0, 37
-	sq_bend	66, 0, 0, 19
-	sq_note	68, 0, 80, 111, 66, 0
-	sq_bend	71, 0, 0, 4
-	sq_bend	74, 0, 0, 2
-	sq_bend	78, 0, 0, 0
-	sq_bend	81, 0, 0, 9
-	sq_bend	86, 0, 0, 17
-	sq_bend	90, 0, 0, 44
-	sq_beat
-	sq_bend	2, 0, 0, 55
-	sq_bend	5, 0, 64, 58
-	sq_bend	9, 0, 0, 64
-	sq_note	35, 0, 79, 102, 18, 0
-	sq_note	53, 0, 78, 91, 9, 0
-	sq_note	69, 0, 77, 104, 47, 0
-	sq_beat
-	sq_note	31, 0, 77, 89, 22, 1
-	sq_cc	52, 0, 16, 1, 10
-	sq_cc	55, 0, 16, 1, 19
-	sq_cc	63, 0, 16, 1, 28
-	sq_cc	66, 0, 16, 1, 32
-	sq_cc	71, 0, 16, 1, 37
-	sq_cc	74, 0, 16, 1, 49
-	sq_cc	78, 0, 16, 1, 67
-	sq_cc	86, 0, 16, 1, 70
-	sq_cc	87, 0, 16, 1, 74
-	sq_cc	93, 0, 16, 1, 77
-	sq_beat
-	sq_cc	2, 0, 16, 1, 85
-	sq_cc	5, 0, 16, 1, 97
-	sq_cc	9, 0, 16, 1, 101
-	sq_cc	21, 0, 16, 1, 105
-	sq_cc	26, 0, 16, 1, 106
-	sq_cc	28, 0, 16, 1, 110
-	sq_cc	33, 0, 16, 1, 113
-	sq_cc	36, 0, 16, 1, 115
-	sq_cc	41, 0, 16, 1, 118
-	sq_cc	47, 0, 16, 1, 120
-	sq_cc	55, 0, 16, 1, 121
-	sq_cc	63, 0, 16, 1, 127
-	sq_cc	74, 0, 16, 1, 121
-	sq_cc	78, 0, 16, 1, 114
-	sq_cc	81, 0, 16, 1, 95
-	sq_cc	86, 0, 16, 1, 62
-	.byte	0x5d, 0xb0, 0x10, 0x01	# bytes 1..4 of `sq_cc	93, 0, 16, 1, 35` (the event spans two cells)
-	sq_cell	0x80, 8, 10	# cell 9: song 1 track 1, 9 of 10
-	.byte	0x23	# bytes 5..5 of `sq_cc	93, 0, 16, 1, 35` (the event spans two cells)
-	sq_cc	95, 0, 16, 1, 14
-	sq_beat
-	sq_cc	5, 0, 16, 1, 5
-	sq_cc	9, 0, 16, 1, 0
-	sq_beat
-	sq_note	12, 0, 75, 109, 46, 0
-	sq_note	89, 0, 77, 109, 37, 0
-	sq_beat
-	sq_bend	31, 0, 64, 61
-	sq_bend	36, 0, 64, 56
-	sq_bend	40, 0, 64, 53
-	sq_bend	43, 0, 64, 42
-	sq_bend	47, 0, 0, 26
-	sq_bend	50, 0, 0, 17
-	sq_bend	54, 0, 0, 1
-	sq_bend	59, 0, 0, 0
-	sq_note	59, 0, 79, 120, 42, 0
-	sq_bend	69, 0, 0, 14
-	sq_bend	74, 0, 0, 31
-	sq_bend	78, 0, 0, 36
-	sq_bend	82, 0, 0, 45
-	sq_bend	86, 0, 64, 52
-	sq_bend	89, 0, 0, 55
-	sq_bend	93, 0, 0, 62
-	sq_beat
-	sq_bend	0, 0, 0, 64
-	sq_note	35, 0, 75, 101, 36, 0
-	sq_beat
-	sq_note	3, 0, 72, 54, 73, 1
-	sq_beat
-	sq_cc	45, 0, 16, 7, 114
-	sq_note	93, 0, 70, 103, 14, 0
-	sq_beat
-	sq_note	91, 0, 72, 108, 23, 0
-	sq_beat
-	sq_note	40, 0, 65, 115, 39, 0
-	sq_bend	59, 0, 64, 65
-	sq_bend	62, 0, 64, 69
-	sq_note	62, 0, 63, 92, 25, 0
-	sq_bend	66, 0, 0, 73
-	sq_bend	71, 0, 64, 85
-	sq_bend	74, 0, 0, 95
-	sq_bend	78, 0, 127, 127
-	sq_bend	86, 0, 0, 71
-	sq_bend	89, 0, 0, 64
-	sq_beat
-	sq_note	2, 0, 63, 125, 5, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	24, 0, 64, 103, 19, 0
-	sq_note	37, 0, 65, 79, 76, 0
-	sq_beat
-	sq_note	37, 0, 63, 67, 94, 0
-	sq_beat
-	sq_note	37, 0, 62, 55, 94, 0
-	sq_beat
-	sq_note	50, 0, 59, 125, 36, 0
-	sq_note	86, 0, 60, 80, 24, 0
-	sq_beat
-	sq_note	14, 0, 59, 77, 21, 0
-	sq_note	36, 0, 60, 73, 22, 0
-	.byte	0x3a	# bytes 1..1 of `sq_note	58, 0, 59, 70, 20, 0` (the event spans two cells)
-	sq_cell	0x80, 9, 65535	# cell 10: song 1 track 1, 10 of 10
-	.byte	0x90, 0x3b, 0x46, 0x14, 0x00	# bytes 2..6 of `sq_note	58, 0, 59, 70, 20, 0` (the event spans two cells)
-	sq_note	78, 0, 60, 67, 23, 0
-	sq_beat
-	sq_note	5, 0, 59, 64, 16, 0
-	sq_note	22, 0, 60, 61, 21, 0
-	sq_note	43, 0, 59, 56, 23, 0
-	sq_note	65, 0, 60, 48, 17, 0
-	sq_note	82, 0, 59, 36, 13, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_end
-# after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	144, 66, 75, 11, 0	# a tick-first event cut at the start (its tick is gone)
-	sq_note	60, 0, 65, 82, 14, 0
-	sq_note	77, 0, 64, 97, 53, 0
-	sq_beat
-	sq_note	44, 0, 65, 100, 48, 0
-	sq_beat
-	sq_note	7, 0, 67, 97, 68, 0
-	sq_note	80, 0, 69, 88, 87, 0
-	sq_beat
-	sq_note	81, 0, 71, 102, 67, 0
-	sq_beat
-	sq_note	60, 0, 72, 95, 57, 0
-	sq_beat
-	sq_note	27, 0, 69, 103, 45, 0
-	sq_note	90, 0, 71, 108, 79, 0
-	sq_beat
-	sq_note	76, 0, 70, 56, 17, 0
-	sq_beat
-	sq_note	1, 0, 69, 77, 22, 0
-	sq_note	17, 0, 68, 67, 15, 0
-	sq_note	41, 0, 67, 62, 55, 0
-	sq_beat
-	sq_note	8, 0, 65, 73, 61, 3
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	82, 0, 67, 108, 61, 0
-	sq_beat
-	sq_note	51, 0, 69, 39, 10, 0
-	sq_note	59, 0, 71, 51, 10, 0
-	sq_note	67, 0, 72, 68, 11, 0
-	sq_note	82, 0, 74, 90, 2, 4
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_bend	16, 0, 0, 63
-	sq_bend	18, 0, 64, 60
-	sq_bend	18, 0, 0, 62
-	sq_bend	22, 0, 0, 59
-	sq_bend	25, 0, 0, 55
-	sq_bend	25, 0, 0, 57
-	sq_bend	28, 0, 64, 53
-	sq_bend	32, 0, 0, 47
-	sq_bend	32, 0, 64, 50
-	sq_bend	36, 0, 64, 40
-	sq_bend	36, 0, 0, 44
-	.byte	38	# data bytes of an event cut by the end
-	sq_cell	0x80, 0, 12	# cell 11: song 1 track 2, 1 of 8
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	0, 0, 17, 11, 127
-	sq_pc	0, 0, 65, 4, 32
-	sq_cc	0, 0, 17, 7, 119
-	sq_cc	0, 0, 17, 10, 49
-	sq_cc	24, 0, 17, 91, 35
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	7, 0, 53, 77, 34, 0
-	sq_note	41, 0, 55, 81, 29, 0
-	sq_note	75, 0, 57, 88, 29, 0
-	sq_beat
-	sq_note	5, 0, 58, 106, 43, 0
-	sq_note	95, 0, 58, 107, 47, 0
-	sq_beat
-	sq_note	93, 0, 58, 106, 56, 0
-	sq_beat
-	sq_note	61, 0, 57, 84, 26, 0
-	sq_note	92, 0, 58, 91, 59, 0
-	sq_beat
-	sq_note	57, 0, 60, 97, 35, 0
-	sq_note	91, 0, 62, 115, 79, 0
-	sq_beat
-	sq_note	87, 0, 62, 96, 52, 0
-	sq_beat
-	sq_note	62, 0, 62, 119, 40, 0
-	sq_beat
-	sq_note	58, 0, 61, 75, 44, 0
-	sq_note	94, 0, 62, 86, 54, 0
-	sq_beat
-	sq_note	51, 0, 63, 100, 51, 0
-	sq_note	92, 0, 65, 113, 39, 0
-	sq_beat
-	sq_note	94, 0, 65, 121, 70, 0
-	sq_beat
-	sq_note	64, 0, 64, 83, 35, 0
-	sq_note	92, 0, 65, 104, 68, 0
-	sq_beat
-	sq_note	59, 0, 64, 78, 34, 0
-	sq_note	89, 0, 65, 107, 73, 0
-	sq_beat
-	sq_note	63, 0, 70, 86, 35, 0
-	sq_note	95, 0, 65, 116, 47, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	52, 0, 54, 77, 38, 0
-	sq_note	91, 0, 55, 92, 52, 0
-	sq_beat
-	sq_note	68, 0, 63, 115, 35, 0
-	sq_beat
-	sq_note	63, 0, 62, 109, 22, 1
-	sq_beat
-	sq_note	89, 0, 60, 99, 40, 0
-	sq_beat
-	.byte	0x5b, 0x90, 0x3a	# bytes 1..3 of `sq_note	91, 0, 58, 92, 37, 0` (the event spans two cells)
-	sq_cell	0x80, 11, 13	# cell 12: song 1 track 2, 2 of 8
-	.byte	0x5c, 0x25, 0x00	# bytes 4..6 of `sq_note	91, 0, 58, 92, 37, 0` (the event spans two cells)
-	sq_beat
-	sq_note	95, 0, 57, 90, 41, 0
-	sq_beat
-	sq_note	95, 0, 55, 87, 43, 0
-	sq_beat
-	sq_beat
-	sq_note	2, 0, 53, 80, 60, 0
-	sq_note	70, 0, 55, 82, 33, 0
-	sq_beat
-	sq_note	62, 0, 57, 96, 25, 1
-	sq_beat
-	sq_note	90, 0, 58, 86, 63, 0
-	sq_beat
-	sq_note	62, 0, 60, 82, 27, 0
-	sq_note	88, 0, 58, 97, 59, 0
-	sq_beat
-	sq_note	63, 0, 57, 124, 32, 0
-	sq_beat
-	sq_cc	36, 0, 17, 10, 99
-	sq_cc	36, 0, 17, 7, 102
-	sq_pc	36, 0, 73, 4, 32
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	84, 0, 17, 91, 62
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	38, 0, 77, 88, 92, 0
-	sq_beat
-	sq_note	38, 0, 81, 93, 87, 0
-	sq_beat
-	sq_note	32, 0, 82, 90, 86, 0
-	sq_beat
-	sq_note	24, 0, 86, 85, 17, 0
-	sq_note	37, 0, 84, 107, 3, 3
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	43, 0, 86, 87, 50, 0
-	sq_note	89, 0, 84, 100, 46, 0
-	sq_beat
-	sq_beat
-	sq_note	34, 0, 81, 93, 16, 0
-	sq_note	49, 0, 80, 83, 10, 0
-	sq_note	60, 0, 79, 78, 12, 0
-	sq_note	67, 0, 78, 80, 14, 0
-	sq_note	84, 0, 77, 81, 52, 1
-	sq_beat
-	sq_beat
-	sq_note	35, 0, 81, 69, 47, 0
-	sq_note	83, 0, 79, 63, 15, 4
-	sq_note	92, 0, 81, 58, 6, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_pc	78, 0, 26, 48, 32
-	sq_cc	78, 0, 17, 7, 92
-	sq_cc	78, 0, 17, 10, 39
-	sq_cc	78, 0, 17, 91, 80
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	.byte	0x51	# bytes 1..1 of `sq_note	81, 0, 48, 50, 46, 1` (the event spans two cells)
-	sq_cell	0x80, 12, 14	# cell 13: song 1 track 2, 3 of 8
-	.byte	0x90, 0x30, 0x32, 0x2e, 0x01	# bytes 2..6 of `sq_note	81, 0, 48, 50, 46, 1` (the event spans two cells)
-	sq_beat
-	sq_note	32, 0, 64, 84, 78, 0
-	sq_note	34, 0, 55, 50, 77, 0
-	sq_note	34, 0, 60, 56, 78, 0
-	sq_beat
-	sq_note	29, 0, 64, 73, 16, 0
-	sq_note	32, 0, 55, 45, 10, 0
-	sq_note	32, 0, 60, 51, 10, 0
-	sq_note	80, 0, 48, 40, 53, 0
-	sq_beat
-	sq_note	33, 0, 55, 50, 14, 0
-	sq_note	33, 0, 60, 60, 11, 0
-	sq_note	33, 0, 64, 85, 14, 0
-	sq_beat
-	sq_note	33, 0, 64, 88, 20, 0
-	sq_note	34, 0, 55, 45, 13, 0
-	sq_note	34, 0, 60, 65, 11, 0
-	sq_note	80, 0, 48, 50, 53, 1
-	sq_beat
-	sq_note	31, 0, 64, 84, 79, 0
-	sq_note	34, 0, 55, 50, 76, 0
-	sq_note	34, 0, 60, 56, 79, 0
-	sq_beat
-	sq_note	29, 0, 64, 73, 16, 0
-	sq_note	31, 0, 55, 45, 10, 0
-	sq_note	32, 0, 60, 51, 9, 0
-	sq_note	80, 0, 48, 40, 54, 0
-	sq_beat
-	sq_note	33, 0, 55, 50, 14, 0
-	sq_note	33, 0, 60, 60, 11, 0
-	sq_note	33, 0, 64, 85, 14, 0
-	sq_beat
-	sq_note	31, 0, 64, 88, 21, 0
-	sq_note	34, 0, 55, 45, 13, 0
-	sq_note	34, 0, 60, 65, 13, 0
-	sq_note	81, 0, 48, 50, 50, 1
-	sq_beat
-	sq_note	32, 0, 64, 84, 78, 0
-	sq_note	33, 0, 55, 50, 79, 0
-	sq_note	33, 0, 60, 56, 82, 0
-	sq_beat
-	sq_note	29, 0, 64, 73, 17, 0
-	sq_note	32, 0, 55, 45, 9, 0
-	sq_note	32, 0, 60, 51, 9, 0
-	sq_note	77, 0, 59, 68, 67, 0
-	sq_note	83, 0, 62, 69, 65, 0
-	sq_note	88, 0, 64, 69, 65, 0
-	sq_note	94, 0, 67, 69, 67, 0
-	sq_beat
-	sq_note	2, 0, 71, 69, 67, 0
-	.byte	0x48	# bytes 1..1 of `sq_note	72, 0, 55, 64, 83, 0` (the event spans two cells)
-	sq_cell	0x80, 13, 15	# cell 14: song 1 track 2, 4 of 8
-	.byte	0x90, 0x37, 0x40, 0x53, 0x00	# bytes 2..6 of `sq_note	72, 0, 55, 64, 83, 0` (the event spans two cells)
-	sq_note	76, 0, 58, 64, 80, 0
-	sq_note	78, 0, 61, 64, 80, 0
-	sq_note	81, 0, 64, 64, 84, 0
-	sq_note	82, 0, 67, 64, 88, 0
-	sq_beat
-	sq_note	80, 0, 50, 34, 18, 1
-	sq_beat
-	sq_note	33, 0, 57, 50, 76, 0
-	sq_note	33, 0, 62, 56, 79, 0
-	sq_note	33, 0, 65, 84, 76, 0
-	sq_beat
-	sq_note	29, 0, 65, 73, 16, 0
-	sq_note	32, 0, 57, 45, 9, 0
-	sq_note	32, 0, 62, 51, 9, 0
-	sq_note	81, 0, 55, 40, 51, 0
-	sq_beat
-	sq_note	33, 0, 53, 50, 12, 0
-	sq_note	33, 0, 59, 60, 7, 0
-	sq_note	34, 0, 62, 85, 12, 0
-	sq_beat
-	sq_note	31, 0, 62, 88, 20, 0
-	sq_note	35, 0, 53, 45, 13, 0
-	sq_note	35, 0, 59, 65, 11, 0
-	sq_note	81, 0, 50, 50, 51, 1
-	sq_beat
-	sq_note	33, 0, 57, 50, 79, 0
-	sq_note	33, 0, 62, 56, 82, 0
-	sq_note	33, 0, 65, 84, 80, 0
-	sq_beat
-	sq_note	29, 0, 65, 73, 18, 0
-	sq_note	31, 0, 57, 45, 10, 0
-	sq_note	31, 0, 62, 51, 10, 0
-	sq_note	79, 0, 50, 40, 10, 0
-	sq_note	90, 0, 50, 24, 45, 0
-	sq_beat
-	sq_note	33, 0, 57, 50, 14, 0
-	sq_note	33, 0, 61, 60, 8, 0
-	sq_note	34, 0, 65, 85, 14, 0
-	sq_beat
-	sq_note	32, 0, 65, 88, 20, 0
-	sq_note	33, 0, 57, 45, 13, 0
-	sq_note	33, 0, 61, 65, 12, 0
-	sq_note	79, 0, 50, 50, 47, 1
-	sq_beat
-	sq_note	32, 0, 65, 84, 77, 0
-	sq_note	33, 0, 57, 50, 74, 0
-	sq_note	33, 0, 60, 56, 78, 0
-	sq_beat
-	sq_note	30, 0, 65, 73, 18, 0
-	sq_note	32, 0, 57, 45, 10, 0
-	.byte	0x20	# bytes 1..1 of `sq_note	32, 0, 60, 51, 10, 0` (the event spans two cells)
-	sq_cell	0x80, 14, 16	# cell 15: song 1 track 2, 5 of 8
-	.byte	0x90, 0x3c, 0x33, 0x0a, 0x00	# bytes 2..6 of `sq_note	32, 0, 60, 51, 10, 0` (the event spans two cells)
-	sq_note	79, 0, 55, 40, 55, 0
-	sq_beat
-	sq_note	33, 0, 53, 50, 14, 0
-	sq_note	33, 0, 59, 60, 9, 0
-	sq_note	34, 0, 62, 85, 14, 0
-	sq_beat
-	sq_note	32, 0, 62, 88, 20, 0
-	sq_note	33, 0, 53, 45, 15, 0
-	sq_note	33, 0, 59, 65, 13, 0
-	sq_note	80, 0, 50, 50, 47, 1
-	sq_beat
-	sq_note	31, 0, 65, 84, 8, 1
-	sq_note	32, 0, 57, 50, 1, 1
-	sq_note	32, 0, 60, 56, 90, 0
-	sq_beat
-	sq_note	33, 0, 48, 67, 52, 0
-	sq_note	83, 0, 59, 45, 42, 0
-	sq_note	84, 0, 53, 58, 63, 0
-	sq_note	85, 0, 47, 51, 20, 1
-	sq_beat
-	sq_note	14, 0, 62, 82, 51, 1
-	sq_note	47, 0, 59, 82, 26, 0
-	sq_note	77, 0, 53, 73, 35, 0
-	sq_beat
-	sq_note	15, 0, 50, 68, 26, 0
-	sq_note	47, 0, 47, 61, 23, 0
-	sq_note	80, 0, 50, 50, 54, 1
-	sq_beat
-	sq_note	31, 0, 65, 84, 14, 1
-	sq_note	32, 0, 57, 50, 6, 1
-	sq_note	32, 0, 60, 56, 94, 0
-	sq_beat
-	sq_note	33, 0, 48, 67, 51, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_pc	36, 0, 4, 48, 32
-	sq_cc	36, 0, 17, 7, 77
-	sq_cc	36, 0, 17, 10, 79
-	sq_beat
-	sq_beat
-	sq_cc	60, 0, 17, 91, 70
-	sq_beat
-	sq_note	36, 0, 53, 66, 74, 1
-	sq_note	36, 0, 56, 55, 66, 1
-	sq_note	36, 0, 60, 46, 68, 1
-	sq_note	36, 0, 63, 64, 62, 1
-	sq_note	36, 0, 67, 29, 65, 1
-	sq_note	36, 0, 68, 65, 64, 1
-	sq_cc	56, 0, 17, 64, 0
-	sq_cc	95, 0, 17, 64, 127
-	sq_beat
-	sq_cell	0x80, 15, 17	# cell 16: song 1 track 2, 6 of 8
-	sq_beat
-	sq_beat
-	sq_cc	33, 0, 17, 64, 0
-	sq_note	36, 0, 46, 74, 94, 0
-	sq_note	36, 0, 56, 63, 37, 1
-	sq_note	36, 0, 60, 69, 34, 1
-	sq_note	36, 0, 62, 57, 39, 1
-	sq_note	36, 0, 64, 60, 39, 1
-	sq_note	36, 0, 67, 67, 43, 1
-	sq_cc	65, 0, 17, 64, 127
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	32, 0, 17, 64, 0
-	sq_note	36, 0, 51, 72, 57, 1
-	sq_note	36, 0, 58, 63, 76, 1
-	sq_note	36, 0, 60, 61, 74, 1
-	sq_note	36, 0, 62, 67, 77, 1
-	sq_note	36, 0, 65, 79, 74, 1
-	sq_note	36, 0, 67, 69, 77, 1
-	sq_note	36, 0, 70, 78, 74, 1
-	sq_beat
-	sq_cc	1, 0, 17, 64, 127
-	sq_beat
-	sq_beat
-	sq_cc	32, 0, 17, 64, 0
-	sq_note	36, 0, 44, 53, 64, 1
-	sq_note	36, 0, 51, 71, 56, 1
-	sq_note	36, 0, 55, 44, 57, 1
-	sq_note	36, 0, 58, 65, 61, 1
-	sq_note	36, 0, 60, 67, 58, 1
-	sq_note	36, 0, 63, 71, 61, 1
-	sq_cc	62, 0, 17, 64, 127
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	34, 0, 17, 64, 0
-	sq_note	36, 0, 41, 55, 78, 1
-	sq_note	36, 0, 48, 57, 84, 1
-	sq_note	36, 0, 56, 61, 72, 1
-	sq_note	36, 0, 60, 64, 72, 1
-	sq_note	36, 0, 65, 67, 72, 1
-	sq_note	36, 0, 68, 61, 70, 1
-	sq_cc	64, 0, 17, 64, 127
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	31, 0, 17, 64, 0
-	sq_note	36, 0, 43, 90, 10, 2
-	sq_note	36, 0, 53, 76, 69, 1
-	sq_note	36, 0, 59, 74, 89, 1
-	sq_note	36, 0, 64, 78, 85, 1
-	sq_note	36, 0, 68, 79, 79, 1
-	sq_cc	77, 0, 17, 64, 127
-	sq_beat
-	sq_beat
-	sq_beat
-	.byte	0x21, 0xb0, 0x11, 0x40	# bytes 1..4 of `sq_cc	33, 0, 17, 64, 0` (the event spans two cells)
-	sq_cell	0x80, 16, 18	# cell 17: song 1 track 2, 7 of 8
-	.byte	0x00	# bytes 5..5 of `sq_cc	33, 0, 17, 64, 0` (the event spans two cells)
-	sq_note	36, 0, 48, 97, 70, 0
-	sq_beat
-	sq_note	4, 0, 55, 87, 9, 0
-	sq_note	4, 0, 60, 87, 7, 0
-	sq_note	4, 0, 63, 70, 7, 0
-	sq_note	4, 0, 65, 69, 6, 0
-	sq_note	4, 0, 67, 70, 11, 0
-	sq_beat
-	sq_note	4, 0, 48, 84, 11, 1
-	sq_note	36, 0, 55, 75, 81, 0
-	sq_note	36, 0, 60, 77, 80, 0
-	sq_note	36, 0, 63, 73, 79, 0
-	sq_note	36, 0, 65, 69, 79, 0
-	sq_note	36, 0, 67, 72, 78, 0
-	sq_beat
-	sq_note	36, 0, 48, 64, 66, 0
-	sq_beat
-	sq_note	4, 0, 55, 93, 11, 0
-	sq_note	4, 0, 60, 88, 12, 0
-	sq_note	4, 0, 63, 89, 12, 0
-	sq_note	4, 0, 65, 87, 12, 0
-	sq_note	4, 0, 67, 78, 18, 0
-	sq_beat
-	sq_note	36, 0, 55, 92, 27, 0
-	sq_note	36, 0, 60, 78, 25, 0
-	sq_note	36, 0, 63, 78, 29, 0
-	sq_note	36, 0, 65, 87, 26, 0
-	sq_note	36, 0, 67, 81, 30, 0
-	sq_cc	53, 0, 17, 64, 127
-	sq_beat
-	sq_note	4, 0, 48, 76, 23, 0
-	sq_cc	25, 0, 17, 64, 0
-	sq_note	36, 0, 41, 78, 26, 1
-	sq_note	36, 0, 56, 67, 37, 1
-	sq_note	36, 0, 60, 72, 37, 1
-	sq_note	36, 0, 63, 82, 31, 1
-	sq_note	36, 0, 67, 58, 40, 1
-	sq_note	36, 0, 68, 71, 41, 1
-	sq_cc	78, 0, 17, 64, 127
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	35, 0, 17, 64, 0
-	sq_note	36, 0, 46, 71, 67, 1
-	sq_note	36, 0, 56, 61, 78, 1
-	sq_note	36, 0, 62, 70, 89, 1
-	sq_note	36, 0, 67, 68, 84, 1
-	sq_note	36, 0, 70, 84, 85, 1
-	sq_beat
-	sq_cc	12, 0, 17, 64, 127
-	sq_beat
-	sq_beat
-	.byte	0x1b, 0xb0, 0x11	# bytes 1..3 of `sq_cc	27, 0, 17, 64, 0` (the event spans two cells)
-	sq_cell	0x80, 17, 65535	# cell 18: song 1 track 2, 8 of 8
-	.byte	0x40, 0x00	# bytes 4..5 of `sq_cc	27, 0, 17, 64, 0` (the event spans two cells)
-	sq_note	36, 0, 51, 70, 75, 1
-	sq_note	36, 0, 58, 82, 75, 1
-	sq_note	36, 0, 60, 77, 75, 1
-	sq_note	36, 0, 62, 81, 77, 1
-	sq_note	36, 0, 65, 85, 72, 1
-	sq_note	36, 0, 67, 79, 77, 1
-	sq_cc	57, 0, 17, 64, 127
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	34, 0, 17, 64, 0
-	sq_note	36, 0, 44, 52, 60, 1
-	sq_note	36, 0, 51, 69, 63, 1
-	sq_note	36, 0, 55, 64, 51, 1
-	sq_note	36, 0, 58, 76, 73, 1
-	sq_note	36, 0, 60, 78, 80, 1
-	sq_note	36, 0, 63, 81, 76, 1
-	sq_cc	80, 0, 17, 64, 127
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	31, 0, 17, 64, 0
-	sq_note	36, 0, 41, 68, 69, 1
-	sq_note	36, 0, 56, 77, 72, 1
-	sq_note	36, 0, 60, 79, 69, 1
-	sq_note	36, 0, 63, 85, 67, 1
-	sq_note	36, 0, 68, 76, 67, 1
-	sq_cc	61, 0, 17, 64, 127
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	21, 0, 17, 64, 0
-	sq_note	36, 0, 48, 78, 83, 0
-	sq_note	36, 0, 52, 54, 76, 1
-	sq_note	36, 0, 58, 77, 78, 1
-	sq_note	36, 0, 60, 80, 76, 1
-	sq_note	36, 0, 64, 63, 82, 1
-	sq_cc	61, 0, 17, 64, 127
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_end
-# after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	1, 115	# data bytes of an event cut at the start
-	sq_cc	41, 0, 16, 1, 118
-	sq_cc	47, 0, 16, 1, 120
-	sq_cc	55, 0, 16, 1, 121
-	sq_cc	63, 0, 16, 1, 127
-	sq_cc	74, 0, 16, 1, 121
-	sq_cc	78, 0, 16, 1, 114
-	sq_cc	81, 0, 16, 1, 95
-	sq_cc	86, 0, 16, 1, 62
-	.byte	93, 176, 16, 1	# the first 4 bytes of a tick-first event, cut by the end
-	sq_cell	0x80, 0, 20	# cell 19: song 1 track 3, 1 of 8
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	0, 0, 18, 11, 127
-	sq_pc	0, 0, 59, 0, 32
-	sq_cc	0, 0, 18, 7, 112
-	sq_cc	0, 0, 18, 10, 79
-	sq_cc	48, 0, 18, 91, 92
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	63, 0, 69, 96, 33, 0
-	sq_note	63, 0, 72, 96, 31, 0
-	sq_note	64, 0, 75, 96, 33, 0
-	sq_note	64, 0, 77, 96, 36, 0
-	sq_beat
-	sq_beat
-	sq_note	0, 0, 69, 96, 32, 0
-	sq_note	0, 0, 72, 96, 32, 0
-	sq_note	0, 0, 75, 96, 30, 0
-	sq_note	0, 0, 77, 96, 34, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	64, 0, 57, 46, 39, 0
-	sq_beat
-	sq_note	0, 0, 58, 63, 29, 0
-	sq_note	64, 0, 63, 88, 33, 0
-	sq_note	67, 0, 67, 96, 30, 0
-	sq_beat
-	sq_note	64, 0, 62, 88, 22, 1
-	sq_note	64, 0, 65, 86, 22, 1
-	sq_beat
-	sq_beat
-	sq_note	1, 0, 60, 75, 30, 0
-	sq_note	1, 0, 63, 88, 28, 0
-	sq_beat
-	sq_note	0, 0, 58, 78, 21, 0
-	sq_note	0, 0, 62, 85, 30, 0
-	sq_note	95, 0, 57, 73, 37, 0
-	sq_beat
-	sq_note	0, 0, 60, 90, 31, 0
-	sq_beat
-	sq_note	0, 0, 55, 77, 36, 0
-	sq_note	0, 0, 58, 92, 25, 0
-	sq_beat
-	sq_note	0, 0, 53, 75, 71, 0
-	sq_note	0, 0, 57, 90, 66, 0
-	sq_note	64, 0, 58, 84, 35, 0
-	sq_note	64, 0, 55, 87, 25, 0
-	sq_beat
-	sq_note	67, 0, 63, 66, 25, 1
-	sq_beat
-	sq_beat
-	.byte	0x03, 0x90	# bytes 1..2 of `sq_note	3, 0, 65, 67, 69, 0` (the event spans two cells)
-	sq_cell	0x80, 19, 21	# cell 20: song 1 track 3, 2 of 8
-	.byte	0x41, 0x43, 0x45, 0x00	# bytes 3..6 of `sq_note	3, 0, 65, 67, 69, 0` (the event spans two cells)
-	sq_note	67, 0, 67, 76, 30, 0
-	sq_beat
-	sq_note	5, 0, 65, 64, 54, 0
-	sq_beat
-	sq_note	1, 0, 63, 44, 20, 0
-	sq_pc	39, 0, 48, 16, 32
-	sq_cc	47, 0, 18, 7, 119
-	sq_cc	51, 0, 18, 10, 29
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	36, 0, 18, 91, 100
-	sq_note	83, 0, 81, 46, 89, 0
-	sq_beat
-	sq_note	66, 0, 82, 53, 0, 1
-	sq_beat
-	sq_beat
-	sq_note	28, 0, 84, 55, 92, 0
-	sq_beat
-	sq_note	14, 0, 86, 60, 93, 0
-	sq_beat
-	sq_note	1, 0, 84, 65, 85, 0
-	sq_note	86, 0, 81, 62, 5, 1
-	sq_beat
-	sq_note	82, 0, 82, 58, 90, 0
-	sq_beat
-	sq_note	71, 0, 84, 59, 90, 0
-	sq_beat
-	sq_note	53, 0, 86, 61, 1, 1
-	sq_beat
-	sq_note	43, 0, 93, 67, 4, 1
-	sq_beat
-	sq_note	35, 0, 89, 57, 16, 1
-	sq_beat
-	sq_note	32, 0, 86, 65, 92, 0
-	sq_beat
-	sq_note	30, 0, 85, 62, 94, 0
-	sq_beat
-	sq_note	19, 0, 88, 50, 86, 1
-	sq_beat
-	sq_beat
-	sq_note	6, 0, 86, 42, 88, 0
-	sq_note	93, 0, 89, 62, 89, 0
-	sq_beat
-	sq_note	85, 0, 88, 60, 90, 0
-	sq_beat
-	sq_note	77, 0, 91, 73, 66, 0
-	sq_beat
-	sq_beat
-	sq_note	82, 0, 88, 63, 88, 0
-	sq_beat
-	sq_note	72, 0, 86, 55, 91, 0
-	sq_beat
-	sq_note	66, 0, 88, 48, 87, 0
-	sq_beat
-	sq_note	56, 0, 93, 49, 68, 1
-	sq_beat
-	sq_beat
-	sq_note	33, 0, 88, 53, 89, 0
-	sq_beat
-	sq_note	25, 0, 86, 43, 81, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_pc	78, 0, 12, 0, 32
-	sq_cc	78, 0, 18, 7, 108
-	.byte	0x4e, 0xb0, 0x12	# bytes 1..3 of `sq_cc	78, 0, 18, 10, 89` (the event spans two cells)
-	sq_cell	0x80, 20, 22	# cell 21: song 1 track 3, 3 of 8
-	.byte	0x0a, 0x59	# bytes 4..5 of `sq_cc	78, 0, 18, 10, 89` (the event spans two cells)
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	78, 0, 18, 91, 64
-	sq_note	91, 0, 67, 38, 13, 0
-	sq_beat
-	sq_note	11, 0, 76, 64, 20, 0
-	sq_note	25, 0, 67, 42, 19, 0
-	sq_note	43, 0, 76, 60, 11, 0
-	sq_note	60, 0, 67, 38, 13, 0
-	sq_note	78, 0, 76, 56, 15, 0
-	sq_note	95, 0, 67, 40, 18, 0
-	sq_beat
-	sq_note	20, 0, 76, 52, 12, 0
-	sq_note	39, 0, 67, 40, 8, 0
-	sq_note	59, 0, 76, 48, 16, 0
-	sq_note	77, 0, 67, 35, 14, 0
-	sq_beat
-	sq_note	1, 0, 76, 44, 14, 0
-	sq_note	19, 0, 67, 33, 17, 0
-	sq_note	39, 0, 76, 40, 13, 0
-	sq_note	60, 0, 67, 26, 15, 0
-	sq_note	77, 0, 76, 36, 10, 0
-	sq_beat
-	sq_note	4, 0, 67, 20, 10, 0
-	sq_note	23, 0, 76, 24, 19, 0
-	sq_note	43, 0, 67, 15, 18, 0
-	sq_note	63, 0, 76, 20, 15, 0
-	sq_beat
-	sq_beat
-	sq_note	29, 0, 67, 65, 22, 0
-	sq_note	35, 0, 76, 61, 18, 0
-	sq_note	80, 0, 67, 68, 59, 0
-	sq_note	80, 0, 76, 67, 59, 0
-	sq_beat
-	sq_note	73, 0, 76, 60, 27, 0
-	sq_note	93, 0, 79, 54, 22, 0
-	sq_beat
-	sq_note	13, 0, 76, 49, 18, 0
-	sq_note	33, 0, 79, 43, 16, 0
-	sq_note	91, 0, 67, 38, 14, 0
-	sq_beat
-	sq_note	10, 0, 76, 64, 20, 0
-	sq_note	24, 0, 67, 42, 21, 0
-	sq_note	43, 0, 76, 60, 13, 0
-	sq_note	61, 0, 67, 38, 14, 0
-	sq_note	77, 0, 76, 56, 16, 0
-	sq_beat
-	sq_note	0, 0, 67, 40, 16, 0
-	sq_note	20, 0, 76, 52, 10, 0
-	sq_note	39, 0, 67, 40, 10, 0
-	sq_note	59, 0, 76, 48, 14, 0
-	.byte	0x51, 0x90	# bytes 1..2 of `sq_note	81, 0, 71, 49, 15, 0` (the event spans two cells)
-	sq_cell	0x80, 21, 23	# cell 22: song 1 track 3, 4 of 8
-	.byte	0x47, 0x31, 0x0f, 0x00	# bytes 3..6 of `sq_note	81, 0, 71, 49, 15, 0` (the event spans two cells)
-	sq_note	93, 0, 76, 47, 20, 0
-	sq_beat
-	sq_note	13, 0, 71, 43, 19, 0
-	sq_note	26, 0, 76, 41, 17, 0
-	sq_note	43, 0, 71, 37, 9, 0
-	sq_note	53, 0, 76, 35, 12, 0
-	sq_note	75, 0, 70, 16, 5, 0
-	sq_note	77, 0, 73, 16, 9, 0
-	sq_note	81, 0, 76, 29, 13, 0
-	sq_beat
-	sq_note	92, 0, 66, 38, 13, 0
-	sq_beat
-	sq_note	17, 0, 77, 48, 13, 0
-	sq_note	25, 0, 69, 42, 19, 0
-	sq_note	44, 0, 77, 60, 12, 0
-	sq_note	61, 0, 69, 38, 13, 0
-	sq_note	78, 0, 77, 56, 15, 0
-	sq_note	94, 0, 69, 40, 16, 0
-	sq_beat
-	sq_note	19, 0, 77, 52, 13, 0
-	sq_note	39, 0, 69, 40, 9, 0
-	sq_note	60, 0, 77, 48, 14, 0
-	sq_note	77, 0, 69, 35, 5, 0
-	sq_note	80, 0, 65, 19, 8, 0
-	sq_beat
-	sq_note	0, 0, 74, 44, 17, 0
-	sq_note	19, 0, 65, 33, 16, 0
-	sq_note	39, 0, 74, 40, 12, 0
-	sq_note	61, 0, 65, 26, 13, 0
-	sq_note	79, 0, 74, 36, 10, 0
-	sq_beat
-	sq_note	5, 0, 65, 20, 9, 0
-	sq_note	23, 0, 74, 24, 18, 0
-	sq_note	42, 0, 65, 15, 18, 0
-	sq_note	62, 0, 74, 20, 16, 0
-	sq_beat
-	sq_beat
-	sq_note	29, 0, 69, 65, 24, 0
-	sq_note	34, 0, 77, 61, 19, 0
-	sq_note	79, 0, 77, 67, 10, 0
-	sq_note	81, 0, 69, 68, 8, 0
-	sq_note	90, 0, 69, 52, 51, 0
-	sq_note	90, 0, 77, 51, 49, 0
-	sq_beat
-	sq_note	72, 0, 77, 60, 27, 0
-	sq_note	92, 0, 81, 54, 23, 0
-	sq_beat
-	sq_note	13, 0, 77, 49, 15, 0
-	sq_note	33, 0, 81, 43, 16, 0
-	.byte	0x5a, 0x90, 0x45	# bytes 1..3 of `sq_note	90, 0, 69, 38, 14, 0` (the event spans two cells)
-	sq_cell	0x80, 22, 24	# cell 23: song 1 track 3, 5 of 8
-	.byte	0x26, 0x0e, 0x00	# bytes 4..6 of `sq_note	90, 0, 69, 38, 14, 0` (the event spans two cells)
-	sq_beat
-	sq_note	10, 0, 77, 64, 20, 0
-	sq_note	25, 0, 69, 42, 19, 0
-	sq_note	43, 0, 77, 60, 14, 0
-	sq_note	59, 0, 69, 38, 15, 0
-	sq_note	78, 0, 77, 56, 16, 0
-	sq_note	95, 0, 69, 40, 16, 0
-	sq_beat
-	sq_note	19, 0, 77, 52, 11, 0
-	sq_note	39, 0, 69, 40, 11, 0
-	sq_note	58, 0, 77, 48, 15, 0
-	sq_note	76, 0, 65, 35, 11, 0
-	sq_beat
-	sq_note	1, 0, 74, 44, 14, 0
-	sq_note	19, 0, 65, 33, 18, 0
-	sq_note	40, 0, 74, 40, 14, 0
-	sq_note	60, 0, 65, 26, 15, 0
-	sq_note	77, 0, 74, 36, 10, 0
-	sq_beat
-	sq_note	5, 0, 65, 20, 9, 0
-	sq_note	23, 0, 74, 24, 20, 0
-	sq_note	43, 0, 65, 15, 15, 0
-	sq_note	63, 0, 77, 20, 16, 0
-	sq_note	80, 0, 72, 50, 7, 0
-	sq_note	93, 0, 77, 48, 12, 0
-	sq_beat
-	sq_note	11, 0, 72, 46, 18, 0
-	sq_note	27, 0, 77, 44, 9, 0
-	sq_note	47, 0, 72, 41, 15, 0
-	sq_note	62, 0, 77, 39, 14, 0
-	sq_note	80, 0, 72, 37, 15, 0
-	sq_note	95, 0, 77, 35, 7, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_pc	36, 0, 93, 64, 32
-	sq_cc	36, 0, 18, 7, 75
-	sq_cc	36, 0, 18, 10, 49
-	sq_a	89, 1, 18, 0, 32, 0, 95, 1
-	sq_cc	89, 0, 18, 95, 0
-	sq_beat
-	sq_beat
-	sq_cc	60, 0, 18, 91, 70
-	sq_beat
-	sq_note	36, 0, 53, 66, 91, 2
-	sq_note	36, 0, 56, 55, 91, 2
-	sq_note	36, 0, 60, 46, 91, 2
-	.byte	0x24, 0x90, 0x3f, 0x40	# bytes 1..4 of `sq_note	36, 0, 63, 64, 91, 2` (the event spans two cells)
-	sq_cell	0x80, 23, 25	# cell 24: song 1 track 3, 6 of 8
-	.byte	0x5b, 0x02	# bytes 5..6 of `sq_note	36, 0, 63, 64, 91, 2` (the event spans two cells)
-	sq_note	36, 0, 67, 29, 91, 2
-	sq_note	36, 0, 68, 65, 91, 2
-	sq_cc	56, 0, 18, 64, 0
-	sq_cc	95, 0, 18, 64, 127
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	33, 0, 18, 64, 0
-	sq_note	36, 0, 46, 74, 92, 2
-	sq_note	36, 0, 56, 63, 92, 2
-	sq_note	36, 0, 60, 69, 92, 2
-	sq_note	36, 0, 62, 57, 92, 2
-	sq_note	36, 0, 64, 60, 92, 2
-	sq_note	36, 0, 67, 67, 92, 2
-	sq_cc	65, 0, 18, 64, 127
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	32, 0, 18, 64, 0
-	sq_note	36, 0, 51, 72, 90, 2
-	sq_note	36, 0, 58, 63, 90, 2
-	sq_note	36, 0, 60, 61, 90, 2
-	sq_note	36, 0, 62, 67, 90, 2
-	sq_note	36, 0, 65, 79, 90, 2
-	sq_note	36, 0, 67, 69, 90, 2
-	sq_note	36, 0, 70, 78, 90, 2
-	sq_beat
-	sq_cc	1, 0, 18, 64, 127
-	sq_beat
-	sq_beat
-	sq_cc	32, 0, 18, 64, 0
-	sq_note	36, 0, 44, 53, 87, 2
-	sq_note	36, 0, 51, 71, 87, 2
-	sq_note	36, 0, 55, 44, 87, 2
-	sq_note	36, 0, 58, 65, 87, 2
-	sq_note	36, 0, 60, 67, 87, 2
-	sq_note	36, 0, 63, 71, 87, 2
-	sq_cc	62, 0, 18, 64, 127
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	34, 0, 18, 64, 0
-	sq_note	36, 0, 41, 55, 86, 2
-	sq_note	36, 0, 48, 57, 86, 2
-	sq_note	36, 0, 56, 61, 86, 2
-	sq_note	36, 0, 60, 64, 86, 2
-	sq_note	36, 0, 65, 67, 86, 2
-	sq_note	36, 0, 68, 61, 86, 2
-	sq_cc	64, 0, 18, 64, 127
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	31, 0, 18, 64, 0
-	sq_note	36, 0, 43, 90, 86, 2
-	sq_note	36, 0, 53, 76, 86, 2
-	.byte	0x24, 0x90, 0x3b, 0x4a, 0x56	# bytes 1..5 of `sq_note	36, 0, 59, 74, 86, 2` (the event spans two cells)
-	sq_cell	0x80, 24, 26	# cell 25: song 1 track 3, 7 of 8
-	.byte	0x02	# bytes 6..6 of `sq_note	36, 0, 59, 74, 86, 2` (the event spans two cells)
-	sq_note	36, 0, 64, 78, 86, 2
-	sq_note	36, 0, 68, 79, 86, 2
-	sq_cc	77, 0, 18, 64, 127
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	33, 0, 18, 64, 0
-	sq_note	36, 0, 48, 97, 82, 5
-	sq_note	36, 0, 55, 87, 82, 5
-	sq_note	36, 0, 60, 87, 82, 5
-	sq_note	36, 0, 63, 70, 82, 5
-	sq_note	36, 0, 65, 69, 82, 5
-	sq_note	36, 0, 67, 70, 82, 5
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	53, 0, 18, 64, 127
-	sq_beat
-	sq_cc	25, 0, 18, 64, 0
-	sq_note	36, 0, 41, 78, 90, 2
-	sq_note	36, 0, 56, 67, 90, 2
-	sq_note	36, 0, 60, 72, 90, 2
-	sq_note	36, 0, 63, 82, 90, 2
-	sq_note	36, 0, 67, 58, 90, 2
-	sq_note	36, 0, 68, 71, 90, 2
-	sq_cc	78, 0, 18, 64, 127
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	35, 0, 18, 64, 0
-	sq_note	36, 0, 46, 71, 88, 2
-	sq_note	36, 0, 56, 61, 88, 2
-	sq_note	36, 0, 62, 70, 88, 2
-	sq_note	36, 0, 67, 68, 88, 2
-	sq_note	36, 0, 70, 84, 88, 2
-	sq_beat
-	sq_cc	12, 0, 18, 64, 127
-	sq_beat
-	sq_beat
-	sq_cc	27, 0, 18, 64, 0
-	sq_note	36, 0, 51, 70, 91, 2
-	sq_note	36, 0, 58, 82, 91, 2
-	sq_note	36, 0, 60, 77, 91, 2
-	sq_note	36, 0, 62, 81, 91, 2
-	sq_note	36, 0, 65, 85, 91, 2
-	sq_note	36, 0, 67, 79, 91, 2
-	sq_cc	57, 0, 18, 64, 127
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	34, 0, 18, 64, 0
-	sq_note	36, 0, 44, 52, 92, 2
-	sq_note	36, 0, 51, 69, 92, 2
-	sq_note	36, 0, 55, 64, 92, 2
-	sq_note	36, 0, 58, 76, 92, 2
-	sq_note	36, 0, 60, 78, 92, 2
-	.byte	0x24, 0x90	# bytes 1..2 of `sq_note	36, 0, 63, 81, 92, 2` (the event spans two cells)
-	sq_cell	0x80, 25, 65535	# cell 26: song 1 track 3, 8 of 8
-	.byte	0x3f, 0x51, 0x5c, 0x02	# bytes 3..6 of `sq_note	36, 0, 63, 81, 92, 2` (the event spans two cells)
-	sq_cc	80, 0, 18, 64, 127
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	31, 0, 18, 64, 0
-	sq_note	36, 0, 41, 68, 92, 2
-	sq_note	36, 0, 56, 77, 92, 2
-	sq_note	36, 0, 60, 79, 92, 2
-	sq_note	36, 0, 63, 85, 92, 2
-	sq_note	36, 0, 68, 76, 92, 2
-	sq_cc	61, 0, 18, 64, 127
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	21, 0, 18, 64, 0
-	sq_note	36, 0, 48, 51, 91, 2
-	sq_note	36, 0, 52, 51, 91, 2
-	sq_note	36, 0, 58, 51, 91, 2
-	sq_note	36, 0, 60, 51, 91, 2
-	sq_note	36, 0, 64, 51, 91, 2
-	sq_cc	61, 0, 18, 64, 127
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_end
-# after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	0, 12	# data bytes of an event cut at the start
-	sq_bend	88, 0, 0, 30
-	sq_bend	93, 0, 0, 51
-	sq_beat
-	sq_bend	2, 0, 0, 64
-	sq_note	4, 0, 79, 117, 24, 1
-	sq_beat
-	sq_note	43, 0, 75, 92, 45, 1
-	sq_beat
-	sq_cc	2, 0, 16, 1, 6
-	sq_cc	5, 0, 16, 1, 20
-	sq_cc	9, 0, 16, 1, 36
-	sq_cc	12, 0, 16, 1, 56
-	sq_cc	16, 0, 16, 1, 64
-	sq_cc	21, 0, 16, 1, 76
-	sq_cc	28, 0, 16, 1, 81
-	sq_cc	31, 0, 16, 1, 83
-	sq_cc	35, 0, 16, 1, 97
-	sq_cc	40, 0, 16, 1, 103
-	sq_cc	43, 0, 16, 1, 111
-	sq_cc	51, 0, 16, 1, 113
-	sq_cc	54, 0, 16, 1, 115
-	sq_cc	59, 0, 16, 1, 117
-	sq_cc	62, 0, 16, 1, 120
-	sq_cc	66, 0, 16, 1, 127
-	sq_cc	86, 0, 16, 1, 120
-	sq_cc	89, 0, 16, 1, 114
-	sq_cc	93, 0, 16, 1, 96
-	sq_beat
-	.byte	2, 176, 16, 1	# the first 4 bytes of a tick-first event, cut by the end
-	sq_cell	0x80, 0, 28	# cell 27: song 1 track 4, 1 of 5
-	sq_beat
-	sq_cc	0, 0, 3, 11, 127
-	sq_pc	0, 0, 59, 33, 32
-	sq_cc	0, 0, 3, 7, 102
-	sq_cc	0, 0, 3, 10, 99
-	sq_cc	24, 0, 3, 91, 37
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	60, 0, 69, 101, 23, 0
-	sq_note	60, 0, 72, 101, 21, 0
-	sq_note	60, 0, 75, 114, 19, 0
-	sq_note	60, 0, 67, 114, 23, 0
-	sq_beat
-	sq_note	95, 0, 72, 101, 22, 0
-	sq_note	95, 0, 75, 114, 21, 0
-	sq_beat
-	sq_note	1, 0, 67, 114, 19, 0
-	sq_note	1, 0, 69, 101, 19, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	64, 0, 45, 84, 31, 0
-	sq_beat
-	sq_note	0, 0, 46, 81, 33, 0
-	sq_note	64, 0, 55, 98, 34, 0
-	sq_beat
-	sq_note	64, 0, 53, 93, 21, 1
-	sq_beat
-	sq_beat
-	sq_note	0, 0, 51, 88, 28, 0
-	sq_beat
-	sq_note	0, 0, 50, 83, 24, 0
-	sq_beat
-	sq_note	0, 0, 48, 79, 24, 0
-	sq_beat
-	sq_note	0, 0, 46, 75, 26, 0
-	sq_beat
-	sq_note	0, 0, 45, 71, 66, 0
-	sq_note	67, 0, 46, 86, 24, 0
-	sq_beat
-	sq_note	64, 0, 48, 74, 21, 1
-	sq_beat
-	sq_beat
-	sq_note	0, 0, 50, 81, 63, 0
-	sq_note	64, 0, 51, 84, 23, 0
-	sq_beat
-	sq_note	0, 0, 50, 85, 57, 0
-	sq_note	95, 0, 48, 90, 18, 0
-	sq_beat
-	sq_pc	37, 0, 48, 16, 32
-	sq_cc	40, 0, 3, 10, 9
-	sq_cc	40, 0, 3, 7, 119
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	36, 0, 3, 91, 100
-	sq_cell	0x80, 27, 29	# cell 28: song 1 track 4, 2 of 5
-	sq_note	72, 0, 57, 26, 88, 0
-	sq_beat
-	sq_note	63, 0, 58, 31, 4, 1
-	sq_beat
-	sq_beat
-	sq_note	25, 0, 60, 43, 77, 0
-	sq_beat
-	sq_note	8, 0, 65, 46, 83, 0
-	sq_note	92, 0, 64, 44, 80, 0
-	sq_beat
-	sq_note	81, 0, 60, 36, 1, 1
-	sq_beat
-	sq_note	81, 0, 58, 33, 55, 2
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	43, 0, 60, 34, 92, 0
-	sq_beat
-	sq_note	37, 0, 62, 43, 90, 0
-	sq_beat
-	sq_note	30, 0, 65, 50, 88, 0
-	sq_beat
-	sq_note	29, 0, 64, 45, 90, 0
-	sq_beat
-	sq_note	21, 0, 67, 57, 82, 1
-	sq_beat
-	sq_beat
-	sq_note	10, 0, 65, 47, 78, 1
-	sq_beat
-	sq_note	89, 0, 64, 46, 90, 0
-	sq_beat
-	sq_note	81, 0, 67, 37, 53, 0
-	sq_beat
-	sq_beat
-	sq_note	77, 0, 65, 47, 82, 1
-	sq_beat
-	sq_beat
-	sq_note	61, 0, 64, 43, 48, 3
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	18, 0, 62, 31, 28, 2
-	sq_cc	56, 0, 3, 11, 127
-	sq_cc	58, 0, 3, 11, 126
-	sq_cc	60, 0, 3, 11, 125
-	sq_cc	62, 0, 3, 11, 124
-	sq_cc	64, 0, 3, 11, 122
-	sq_cc	66, 0, 3, 11, 121
-	sq_cc	68, 0, 3, 11, 120
-	sq_cc	70, 0, 3, 11, 118
-	sq_cc	72, 0, 3, 11, 117
-	sq_cc	74, 0, 3, 11, 116
-	sq_cc	76, 0, 3, 11, 115
-	sq_cc	78, 0, 3, 11, 113
-	sq_cc	80, 0, 3, 11, 112
-	sq_cc	82, 0, 3, 11, 111
-	sq_cc	84, 0, 3, 11, 109
-	sq_cc	86, 0, 3, 11, 108
-	sq_cc	88, 0, 3, 11, 107
-	sq_cc	90, 0, 3, 11, 106
-	sq_cc	92, 0, 3, 11, 104
-	sq_cc	94, 0, 3, 11, 103
-	sq_beat
-	sq_cc	0, 0, 3, 11, 102
-	sq_cc	2, 0, 3, 11, 100
-	sq_cc	4, 0, 3, 11, 99
-	.byte	0x06, 0xb0	# bytes 1..2 of `sq_cc	6, 0, 3, 11, 98` (the event spans two cells)
-	sq_cell	0x80, 28, 30	# cell 29: song 1 track 4, 3 of 5
-	.byte	0x03, 0x0b, 0x62	# bytes 3..5 of `sq_cc	6, 0, 3, 11, 98` (the event spans two cells)
-	sq_cc	8, 0, 3, 11, 97
-	sq_cc	10, 0, 3, 11, 95
-	sq_cc	12, 0, 3, 11, 94
-	sq_cc	14, 0, 3, 11, 93
-	sq_cc	16, 0, 3, 11, 91
-	sq_cc	18, 0, 3, 11, 90
-	sq_cc	20, 0, 3, 11, 89
-	sq_cc	22, 0, 3, 11, 87
-	sq_cc	24, 0, 3, 11, 86
-	sq_cc	26, 0, 3, 11, 85
-	sq_cc	28, 0, 3, 11, 84
-	sq_cc	30, 0, 3, 11, 82
-	sq_cc	32, 0, 3, 11, 81
-	sq_cc	34, 0, 3, 11, 80
-	sq_cc	36, 0, 3, 11, 78
-	sq_cc	38, 0, 3, 11, 77
-	sq_cc	40, 0, 3, 11, 76
-	sq_cc	42, 0, 3, 11, 75
-	sq_cc	44, 0, 3, 11, 73
-	sq_cc	46, 0, 3, 11, 72
-	sq_cc	48, 0, 3, 11, 71
-	sq_cc	50, 0, 3, 11, 69
-	sq_cc	52, 0, 3, 11, 68
-	sq_cc	54, 0, 3, 11, 67
-	sq_cc	56, 0, 3, 11, 66
-	sq_cc	58, 0, 3, 11, 64
-	sq_cc	60, 0, 3, 11, 63
-	sq_cc	62, 0, 3, 11, 62
-	sq_cc	64, 0, 3, 11, 60
-	sq_cc	66, 0, 3, 11, 59
-	sq_cc	68, 0, 3, 11, 58
-	sq_cc	70, 0, 3, 11, 56
-	sq_cc	72, 0, 3, 11, 55
-	sq_cc	74, 0, 3, 11, 54
-	sq_cc	76, 0, 3, 11, 53
-	sq_cc	78, 0, 3, 11, 51
-	sq_cc	80, 0, 3, 11, 50
-	sq_cc	82, 0, 3, 11, 49
-	sq_cc	84, 0, 3, 11, 47
-	sq_cc	86, 0, 3, 11, 46
-	sq_cc	88, 0, 3, 11, 45
-	sq_cc	90, 0, 3, 11, 44
-	sq_cc	92, 0, 3, 11, 42
-	sq_cc	94, 0, 3, 11, 41
-	sq_beat
-	sq_cc	0, 0, 3, 11, 40
-	sq_cc	2, 0, 3, 11, 38
-	sq_cc	4, 0, 3, 11, 37
-	sq_cc	6, 0, 3, 11, 36
-	sq_cc	8, 0, 3, 11, 35
-	.byte	0x0a, 0xb0	# bytes 1..2 of `sq_cc	10, 0, 3, 11, 33` (the event spans two cells)
-	sq_cell	0x80, 29, 31	# cell 30: song 1 track 4, 4 of 5
-	.byte	0x03, 0x0b, 0x21	# bytes 3..5 of `sq_cc	10, 0, 3, 11, 33` (the event spans two cells)
-	sq_cc	12, 0, 3, 11, 32
-	sq_cc	14, 0, 3, 11, 31
-	sq_cc	16, 0, 3, 11, 29
-	sq_cc	18, 0, 3, 11, 28
-	sq_cc	20, 0, 3, 11, 27
-	sq_cc	22, 0, 3, 11, 26
-	sq_cc	24, 0, 3, 11, 24
-	sq_cc	26, 0, 3, 11, 23
-	sq_cc	28, 0, 3, 11, 22
-	sq_cc	30, 0, 3, 11, 20
-	sq_cc	32, 0, 3, 11, 19
-	sq_cc	34, 0, 3, 11, 18
-	sq_cc	36, 0, 3, 11, 16
-	sq_cc	38, 0, 3, 11, 15
-	sq_cc	40, 0, 3, 11, 14
-	sq_cc	42, 0, 3, 11, 13
-	sq_cc	44, 0, 3, 11, 11
-	sq_cc	46, 0, 3, 11, 10
-	sq_cc	48, 0, 3, 11, 9
-	sq_cc	50, 0, 3, 11, 7
-	sq_cc	52, 0, 3, 11, 6
-	sq_cc	54, 0, 3, 11, 5
-	sq_cc	56, 0, 3, 11, 4
-	sq_cc	58, 0, 3, 11, 0
-	sq_beat
-	sq_cc	72, 0, 3, 11, 127
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_pc	36, 0, 11, 16, 32
-	sq_cc	36, 0, 3, 7, 119
-	sq_cc	36, 0, 3, 10, 29
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	18, 0, 65, 94, 93, 0
-	sq_beat
-	.byte	0x28, 0x90, 0x44, 0x56	# bytes 1..4 of `sq_note	40, 0, 68, 86, 48, 1` (the event spans two cells)
-	sq_cell	0x80, 30, 65535	# cell 31: song 1 track 4, 5 of 5
-	.byte	0x30, 0x01	# bytes 5..6 of `sq_note	40, 0, 68, 86, 48, 1` (the event spans two cells)
-	sq_beat
-	sq_beat
-	sq_note	15, 0, 70, 93, 4, 1
-	sq_beat
-	sq_note	40, 0, 72, 95, 71, 0
-	sq_beat
-	sq_note	46, 0, 75, 105, 46, 0
-	sq_press	54, 0, 1
-	sq_press	57, 0, 6
-	sq_press	65, 0, 0
-	sq_beat
-	sq_note	19, 0, 74, 96, 46, 0
-	sq_note	86, 0, 72, 91, 55, 0
-	sq_beat
-	sq_press	0, 0, 20
-	sq_press	0, 0, 11
-	sq_press	4, 0, 24
-	sq_press	7, 0, 16
-	sq_press	11, 0, 0
-	sq_press	11, 0, 5
-	sq_note	74, 0, 70, 97, 18, 1
-	sq_beat
-	sq_beat
-	sq_note	7, 0, 65, 57, 15, 0
-	sq_note	23, 0, 67, 86, 2, 1
-	sq_beat
-	sq_note	50, 0, 63, 87, 25, 1
-	sq_beat
-	sq_beat
-	sq_note	6, 0, 65, 90, 58, 0
-	sq_note	89, 0, 67, 94, 42, 0
-	sq_beat
-	sq_note	39, 0, 68, 103, 71, 0
-	sq_beat
-	sq_note	38, 0, 67, 92, 69, 0
-	sq_beat
-	sq_note	37, 0, 65, 79, 76, 0
-	sq_beat
-	sq_note	43, 0, 64, 41, 19, 0
-	sq_note	64, 0, 65, 58, 23, 0
-	sq_note	81, 0, 64, 44, 39, 2
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_end
-# after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	108, 61, 0	# data bytes of an event cut at the start
-	sq_beat
-	sq_note	51, 0, 69, 39, 10, 0
-	sq_note	59, 0, 71, 51, 10, 0
-	sq_note	67, 0, 72, 68, 11, 0
-	sq_note	82, 0, 74, 90, 2, 4
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_bend	16, 0, 0, 63
-	sq_bend	18, 0, 64, 60
-	sq_bend	18, 0, 0, 62
-	sq_bend	22, 0, 0, 59
-	sq_bend	25, 0, 0, 55
-	sq_bend	25, 0, 0, 57
-	sq_bend	28, 0, 64, 53
-	sq_bend	32, 0, 0, 47
-	sq_bend	32, 0, 64, 50
-	sq_bend	36, 0, 64, 40
-	sq_bend	36, 0, 0, 44
-	.byte	38	# data bytes of an event cut by the end
-	sq_cell	0x80, 0, 33	# cell 32: song 1 track 5, 1 of 11
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	0, 0, 4, 11, 127
-	sq_pc	0, 0, 25, 0, 32
-	sq_cc	0, 0, 4, 7, 119
-	sq_cc	0, 0, 4, 10, 39
-	sq_cc	0, 0, 4, 91, 25
-	sq_note	2, 0, 53, 38, 89, 0
-	sq_note	4, 0, 58, 38, 87, 0
-	sq_note	4, 0, 62, 38, 89, 0
-	sq_note	4, 0, 65, 38, 91, 0
-	sq_beat
-	sq_note	0, 0, 58, 53, 24, 0
-	sq_note	3, 0, 53, 53, 25, 0
-	sq_note	3, 0, 62, 54, 21, 0
-	sq_note	5, 0, 65, 55, 23, 0
-	sq_beat
-	sq_note	0, 0, 53, 28, 92, 0
-	sq_note	4, 0, 58, 30, 90, 0
-	sq_note	4, 0, 65, 31, 92, 0
-	sq_note	7, 0, 62, 32, 89, 0
-	sq_beat
-	sq_note	1, 0, 53, 58, 21, 0
-	sq_note	4, 0, 58, 60, 19, 0
-	sq_note	4, 0, 62, 61, 21, 0
-	sq_note	4, 0, 65, 61, 23, 0
-	sq_beat
-	sq_note	1, 0, 53, 38, 93, 0
-	sq_note	4, 0, 58, 38, 90, 0
-	sq_note	4, 0, 62, 38, 91, 0
-	sq_note	4, 0, 65, 38, 92, 0
-	sq_beat
-	sq_note	1, 0, 58, 53, 23, 0
-	sq_note	3, 0, 53, 53, 24, 0
-	sq_note	3, 0, 62, 54, 20, 0
-	sq_note	4, 0, 65, 55, 23, 0
-	sq_beat
-	sq_note	0, 0, 53, 28, 94, 0
-	sq_note	4, 0, 58, 30, 94, 0
-	sq_note	4, 0, 65, 31, 94, 0
-	sq_note	7, 0, 62, 32, 91, 0
-	sq_beat
-	sq_note	1, 0, 53, 55, 20, 0
-	sq_note	4, 0, 58, 57, 19, 0
-	sq_note	4, 0, 62, 57, 20, 0
-	sq_note	4, 0, 65, 57, 23, 0
-	sq_beat
-	sq_note	2, 0, 53, 38, 92, 0
-	sq_note	4, 0, 58, 38, 91, 0
-	sq_note	4, 0, 62, 38, 93, 0
-	.byte	0x04, 0x90, 0x41	# bytes 1..3 of `sq_note	4, 0, 65, 38, 94, 0` (the event spans two cells)
-	sq_cell	0x80, 32, 34	# cell 33: song 1 track 5, 2 of 11
-	.byte	0x26, 0x5e, 0x00	# bytes 4..6 of `sq_note	4, 0, 65, 38, 94, 0` (the event spans two cells)
-	sq_beat
-	sq_note	1, 0, 58, 53, 23, 0
-	sq_note	3, 0, 53, 53, 25, 0
-	sq_note	3, 0, 62, 54, 22, 0
-	sq_note	4, 0, 65, 55, 23, 0
-	sq_note	95, 0, 53, 28, 94, 0
-	sq_beat
-	sq_note	4, 0, 58, 30, 94, 0
-	sq_note	5, 0, 65, 31, 93, 0
-	sq_note	7, 0, 62, 32, 91, 0
-	sq_beat
-	sq_note	2, 0, 53, 55, 17, 0
-	sq_note	4, 0, 58, 55, 18, 0
-	sq_note	4, 0, 62, 56, 20, 0
-	sq_note	5, 0, 65, 56, 19, 0
-	sq_beat
-	sq_note	2, 0, 53, 38, 91, 0
-	sq_note	3, 0, 58, 38, 91, 0
-	sq_note	3, 0, 62, 38, 93, 0
-	sq_note	5, 0, 65, 38, 92, 0
-	sq_beat
-	sq_note	1, 0, 58, 53, 25, 0
-	sq_note	3, 0, 53, 53, 28, 0
-	sq_note	3, 0, 62, 54, 24, 0
-	sq_note	4, 0, 65, 55, 23, 0
-	sq_note	95, 0, 53, 28, 94, 0
-	sq_beat
-	sq_note	3, 0, 58, 30, 92, 0
-	sq_note	5, 0, 65, 31, 91, 0
-	sq_note	8, 0, 62, 32, 88, 0
-	sq_beat
-	sq_note	1, 0, 53, 57, 19, 0
-	sq_note	3, 0, 58, 58, 18, 0
-	sq_note	4, 0, 62, 58, 21, 0
-	sq_note	5, 0, 65, 59, 22, 0
-	sq_beat
-	sq_note	1, 0, 51, 38, 90, 0
-	sq_note	2, 0, 55, 38, 89, 0
-	sq_note	2, 0, 60, 38, 92, 0
-	sq_note	5, 0, 63, 38, 91, 0
-	sq_beat
-	sq_note	0, 0, 55, 53, 25, 0
-	sq_note	2, 0, 51, 53, 26, 0
-	sq_note	2, 0, 60, 54, 22, 0
-	sq_note	4, 0, 63, 55, 22, 0
-	sq_note	95, 0, 53, 28, 93, 0
-	sq_beat
-	sq_note	3, 0, 57, 30, 90, 0
-	sq_note	5, 0, 65, 31, 91, 0
-	.byte	0x07, 0x90, 0x3c, 0x20	# bytes 1..4 of `sq_note	7, 0, 60, 32, 88, 0` (the event spans two cells)
-	sq_cell	0x80, 33, 35	# cell 34: song 1 track 5, 3 of 11
-	.byte	0x58, 0x00	# bytes 5..6 of `sq_note	7, 0, 60, 32, 88, 0` (the event spans two cells)
-	sq_beat
-	sq_note	2, 0, 53, 58, 18, 0
-	sq_note	2, 0, 57, 60, 18, 0
-	sq_note	4, 0, 60, 61, 19, 0
-	sq_note	5, 0, 65, 61, 20, 0
-	sq_beat
-	sq_note	2, 0, 53, 38, 83, 0
-	sq_note	4, 0, 58, 38, 81, 0
-	sq_note	4, 0, 62, 38, 81, 0
-	sq_note	5, 0, 65, 38, 80, 0
-	sq_beat
-	sq_note	1, 0, 58, 53, 23, 0
-	sq_note	2, 0, 53, 53, 26, 0
-	sq_note	2, 0, 62, 54, 23, 0
-	sq_note	4, 0, 65, 55, 22, 0
-	sq_note	95, 0, 50, 28, 94, 0
-	sq_beat
-	sq_note	2, 0, 55, 30, 95, 0
-	sq_note	5, 0, 62, 31, 92, 0
-	sq_note	7, 0, 58, 32, 90, 0
-	sq_beat
-	sq_note	2, 0, 50, 55, 20, 0
-	sq_note	4, 0, 55, 57, 18, 0
-	sq_note	4, 0, 58, 57, 21, 0
-	sq_note	5, 0, 62, 57, 23, 0
-	sq_beat
-	sq_note	2, 0, 52, 38, 91, 0
-	sq_note	4, 0, 55, 38, 89, 0
-	sq_note	4, 0, 58, 38, 90, 0
-	sq_note	5, 0, 64, 38, 91, 0
-	sq_beat
-	sq_note	1, 0, 55, 53, 24, 0
-	sq_note	2, 0, 52, 53, 26, 0
-	sq_note	2, 0, 58, 54, 21, 0
-	sq_note	4, 0, 64, 55, 22, 0
-	sq_note	95, 0, 52, 28, 93, 0
-	sq_beat
-	sq_note	4, 0, 55, 30, 92, 0
-	sq_note	5, 0, 64, 31, 93, 0
-	sq_note	7, 0, 58, 32, 91, 0
-	sq_beat
-	sq_note	1, 0, 52, 55, 20, 0
-	sq_note	4, 0, 55, 55, 19, 0
-	sq_note	4, 0, 58, 56, 19, 0
-	sq_note	5, 0, 64, 56, 23, 0
-	sq_beat
-	sq_note	1, 0, 51, 38, 93, 0
-	sq_note	4, 0, 57, 38, 90, 0
-	sq_note	4, 0, 60, 38, 91, 0
-	.byte	0x06, 0x90, 0x3f, 0x26, 0x5d	# bytes 1..5 of `sq_note	6, 0, 63, 38, 93, 0` (the event spans two cells)
-	sq_cell	0x80, 34, 36	# cell 35: song 1 track 5, 4 of 11
-	.byte	0x00	# bytes 6..6 of `sq_note	6, 0, 63, 38, 93, 0` (the event spans two cells)
-	sq_beat
-	sq_note	1, 0, 57, 53, 27, 0
-	sq_note	3, 0, 51, 53, 26, 0
-	sq_note	3, 0, 60, 54, 22, 0
-	sq_note	5, 0, 63, 55, 23, 0
-	sq_note	95, 0, 51, 28, 94, 0
-	sq_beat
-	sq_note	4, 0, 57, 30, 92, 0
-	sq_note	4, 0, 63, 31, 94, 0
-	sq_note	7, 0, 60, 32, 92, 0
-	sq_beat
-	sq_note	1, 0, 51, 57, 20, 0
-	sq_note	4, 0, 57, 58, 19, 0
-	sq_note	5, 0, 60, 58, 20, 0
-	sq_note	5, 0, 63, 59, 21, 0
-	sq_beat
-	sq_note	1, 0, 53, 38, 91, 0
-	sq_note	4, 0, 58, 38, 88, 0
-	sq_note	4, 0, 62, 38, 90, 0
-	sq_note	5, 0, 65, 38, 92, 0
-	sq_beat
-	sq_note	1, 0, 58, 53, 23, 0
-	sq_note	3, 0, 53, 53, 25, 0
-	sq_note	3, 0, 62, 54, 21, 0
-	sq_note	5, 0, 65, 55, 23, 0
-	sq_note	95, 0, 53, 28, 94, 0
-	sq_beat
-	sq_note	4, 0, 58, 30, 93, 0
-	sq_note	5, 0, 65, 31, 94, 0
-	sq_note	7, 0, 62, 32, 92, 0
-	sq_beat
-	sq_note	1, 0, 53, 58, 20, 0
-	sq_note	4, 0, 58, 60, 19, 0
-	sq_note	5, 0, 62, 61, 21, 0
-	sq_note	5, 0, 65, 61, 22, 0
-	sq_beat
-	sq_note	1, 0, 53, 38, 92, 0
-	sq_note	4, 0, 58, 38, 91, 0
-	sq_note	4, 0, 62, 38, 91, 0
-	sq_note	5, 0, 65, 38, 92, 0
-	sq_beat
-	sq_note	1, 0, 58, 53, 23, 0
-	sq_note	3, 0, 53, 53, 25, 0
-	sq_note	3, 0, 62, 54, 22, 0
-	sq_note	4, 0, 65, 55, 23, 0
-	sq_beat
-	sq_note	1, 0, 53, 28, 93, 0
-	sq_note	4, 0, 58, 30, 94, 0
-	sq_note	5, 0, 65, 31, 93, 0
-	sq_note	7, 0, 62, 32, 91, 0
-	sq_cell	0x80, 35, 37	# cell 36: song 1 track 5, 5 of 11
-	sq_beat
-	sq_note	1, 0, 53, 55, 20, 0
-	sq_note	4, 0, 58, 57, 18, 0
-	sq_note	4, 0, 62, 57, 19, 0
-	sq_note	5, 0, 65, 57, 20, 0
-	sq_beat
-	sq_note	2, 0, 53, 38, 92, 0
-	sq_note	4, 0, 58, 38, 92, 0
-	sq_note	4, 0, 62, 38, 94, 0
-	sq_note	5, 0, 65, 38, 93, 0
-	sq_beat
-	sq_note	1, 0, 58, 53, 25, 0
-	sq_note	3, 0, 53, 53, 28, 0
-	sq_note	3, 0, 62, 54, 23, 0
-	sq_note	4, 0, 65, 55, 22, 0
-	sq_note	95, 0, 53, 28, 92, 0
-	sq_beat
-	sq_note	3, 0, 58, 30, 92, 0
-	sq_note	5, 0, 65, 31, 90, 0
-	sq_note	7, 0, 62, 32, 89, 0
-	sq_beat
-	sq_note	2, 0, 53, 55, 18, 0
-	sq_note	3, 0, 58, 55, 18, 0
-	sq_note	4, 0, 62, 56, 21, 0
-	sq_note	5, 0, 65, 56, 21, 0
-	sq_beat
-	sq_note	2, 0, 53, 38, 83, 0
-	sq_note	4, 0, 58, 38, 81, 0
-	sq_note	4, 0, 62, 38, 81, 0
-	sq_note	5, 0, 65, 38, 81, 0
-	sq_note	95, 0, 56, 53, 25, 0
-	sq_beat
-	sq_note	2, 0, 51, 53, 25, 0
-	sq_note	2, 0, 60, 54, 22, 0
-	sq_note	2, 0, 63, 55, 22, 0
-	sq_note	95, 0, 50, 28, 94, 0
-	sq_beat
-	sq_note	3, 0, 53, 30, 95, 0
-	sq_note	5, 0, 62, 31, 93, 0
-	sq_note	7, 0, 59, 32, 91, 0
-	sq_beat
-	sq_note	2, 0, 50, 57, 19, 0
-	sq_note	4, 0, 53, 58, 18, 0
-	sq_note	4, 0, 59, 58, 20, 0
-	sq_note	5, 0, 62, 59, 21, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_pc	39, 0, 48, 16, 32
-	sq_cc	51, 0, 4, 7, 119
-	.byte	0x3b, 0xb0, 0x04, 0x0a	# bytes 1..4 of `sq_cc	59, 0, 4, 10, 44` (the event spans two cells)
-	sq_cell	0x80, 36, 38	# cell 37: song 1 track 5, 6 of 11
-	.byte	0x2c	# bytes 5..5 of `sq_cc	59, 0, 4, 10, 44` (the event spans two cells)
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	40, 0, 4, 91, 100
-	sq_note	77, 0, 48, 31, 87, 0
-	sq_beat
-	sq_note	67, 0, 50, 35, 4, 1
-	sq_beat
-	sq_beat
-	sq_note	29, 0, 52, 43, 79, 0
-	sq_beat
-	sq_note	12, 0, 58, 47, 86, 0
-	sq_beat
-	sq_note	0, 0, 57, 46, 82, 0
-	sq_note	86, 0, 52, 41, 91, 0
-	sq_beat
-	sq_note	80, 0, 50, 36, 61, 2
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	47, 0, 52, 27, 86, 0
-	sq_beat
-	sq_note	38, 0, 53, 33, 78, 1
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	14, 0, 60, 36, 72, 1
-	sq_beat
-	sq_beat
-	sq_note	4, 0, 58, 30, 80, 1
-	sq_beat
-	sq_note	85, 0, 60, 24, 50, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	65, 0, 59, 26, 43, 3
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	15, 0, 58, 24, 28, 2
-	sq_cc	72, 0, 4, 11, 127
-	sq_cc	74, 0, 4, 11, 126
-	sq_cc	76, 0, 4, 11, 125
-	sq_cc	78, 0, 4, 11, 124
-	sq_cc	80, 0, 4, 11, 123
-	sq_cc	82, 0, 4, 11, 121
-	sq_cc	84, 0, 4, 11, 120
-	sq_cc	86, 0, 4, 11, 119
-	sq_cc	88, 0, 4, 11, 118
-	sq_cc	90, 0, 4, 11, 117
-	sq_cc	92, 0, 4, 11, 115
-	sq_cc	94, 0, 4, 11, 114
-	sq_beat
-	sq_cc	0, 0, 4, 11, 113
-	sq_cc	2, 0, 4, 11, 112
-	sq_cc	4, 0, 4, 11, 111
-	sq_cc	6, 0, 4, 11, 109
-	sq_cc	8, 0, 4, 11, 108
-	sq_cc	10, 0, 4, 11, 107
-	sq_cc	12, 0, 4, 11, 106
-	sq_cc	14, 0, 4, 11, 105
-	sq_cc	16, 0, 4, 11, 103
-	sq_cc	18, 0, 4, 11, 102
-	sq_cc	20, 0, 4, 11, 101
-	sq_cc	22, 0, 4, 11, 100
-	sq_cc	24, 0, 4, 11, 99
-	sq_cc	26, 0, 4, 11, 97
-	.byte	0x1c	# bytes 1..1 of `sq_cc	28, 0, 4, 11, 96` (the event spans two cells)
-	sq_cell	0x80, 37, 39	# cell 38: song 1 track 5, 7 of 11
-	.byte	0xb0, 0x04, 0x0b, 0x60	# bytes 2..5 of `sq_cc	28, 0, 4, 11, 96` (the event spans two cells)
-	sq_cc	30, 0, 4, 11, 95
-	sq_cc	32, 0, 4, 11, 94
-	sq_cc	34, 0, 4, 11, 92
-	sq_cc	36, 0, 4, 11, 91
-	sq_cc	38, 0, 4, 11, 90
-	sq_cc	40, 0, 4, 11, 89
-	sq_cc	42, 0, 4, 11, 88
-	sq_cc	44, 0, 4, 11, 86
-	sq_cc	46, 0, 4, 11, 85
-	sq_cc	48, 0, 4, 11, 84
-	sq_cc	50, 0, 4, 11, 83
-	sq_cc	52, 0, 4, 11, 82
-	sq_cc	54, 0, 4, 11, 80
-	sq_cc	56, 0, 4, 11, 79
-	sq_cc	58, 0, 4, 11, 78
-	sq_cc	60, 0, 4, 11, 77
-	sq_cc	62, 0, 4, 11, 76
-	sq_cc	64, 0, 4, 11, 74
-	sq_cc	66, 0, 4, 11, 73
-	sq_cc	68, 0, 4, 11, 72
-	sq_cc	70, 0, 4, 11, 71
-	sq_cc	72, 0, 4, 11, 70
-	sq_cc	74, 0, 4, 11, 68
-	sq_cc	76, 0, 4, 11, 67
-	sq_cc	78, 0, 4, 11, 66
-	sq_cc	80, 0, 4, 11, 65
-	sq_cc	82, 0, 4, 11, 64
-	sq_cc	84, 0, 4, 11, 62
-	sq_cc	86, 0, 4, 11, 61
-	sq_cc	88, 0, 4, 11, 60
-	sq_cc	90, 0, 4, 11, 59
-	sq_cc	92, 0, 4, 11, 57
-	sq_cc	94, 0, 4, 11, 56
-	sq_beat
-	sq_cc	0, 0, 4, 11, 55
-	sq_cc	2, 0, 4, 11, 54
-	sq_cc	4, 0, 4, 11, 53
-	sq_cc	6, 0, 4, 11, 51
-	sq_cc	8, 0, 4, 11, 50
-	sq_cc	10, 0, 4, 11, 49
-	sq_cc	12, 0, 4, 11, 48
-	sq_cc	14, 0, 4, 11, 47
-	sq_cc	16, 0, 4, 11, 45
-	sq_cc	18, 0, 4, 11, 44
-	sq_cc	20, 0, 4, 11, 43
-	sq_cc	22, 0, 4, 11, 42
-	sq_cc	24, 0, 4, 11, 41
-	sq_cc	26, 0, 4, 11, 39
-	sq_cc	28, 0, 4, 11, 38
-	sq_cc	30, 0, 4, 11, 37
-	.byte	0x20	# bytes 1..1 of `sq_cc	32, 0, 4, 11, 36` (the event spans two cells)
-	sq_cell	0x80, 38, 40	# cell 39: song 1 track 5, 8 of 11
-	.byte	0xb0, 0x04, 0x0b, 0x24	# bytes 2..5 of `sq_cc	32, 0, 4, 11, 36` (the event spans two cells)
-	sq_cc	34, 0, 4, 11, 35
-	sq_cc	36, 0, 4, 11, 33
-	sq_cc	38, 0, 4, 11, 32
-	sq_cc	40, 0, 4, 11, 31
-	sq_cc	42, 0, 4, 11, 30
-	sq_cc	44, 0, 4, 11, 28
-	sq_cc	46, 0, 4, 11, 27
-	sq_cc	48, 0, 4, 11, 26
-	sq_cc	50, 0, 4, 11, 25
-	sq_cc	52, 0, 4, 11, 24
-	sq_cc	54, 0, 4, 11, 22
-	sq_cc	56, 0, 4, 11, 21
-	sq_cc	58, 0, 4, 11, 20
-	sq_cc	60, 0, 4, 11, 19
-	sq_cc	62, 0, 4, 11, 18
-	sq_cc	64, 0, 4, 11, 16
-	sq_cc	66, 0, 4, 11, 15
-	sq_cc	68, 0, 4, 11, 14
-	sq_cc	70, 0, 4, 11, 13
-	sq_cc	72, 0, 4, 11, 12
-	sq_cc	74, 0, 4, 11, 10
-	sq_cc	76, 0, 4, 11, 9
-	sq_cc	78, 0, 4, 11, 8
-	sq_cc	80, 0, 4, 11, 7
-	sq_cc	82, 0, 4, 11, 6
-	sq_cc	84, 0, 4, 11, 4
-	sq_cc	86, 0, 4, 11, 3
-	sq_cc	88, 0, 4, 11, 2
-	sq_cc	90, 0, 4, 11, 1
-	sq_beat
-	sq_cc	81, 0, 4, 11, 127
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_pc	78, 0, 33, 32, 32
-	sq_cc	78, 0, 4, 7, 104
-	sq_cc	78, 0, 4, 10, 64
-	sq_beat
-	sq_cc	0, 0, 4, 11, 127
-	sq_beat
-	sq_cc	24, 0, 4, 91, 0
-	sq_beat
-	sq_note	76, 0, 43, 70, 40, 0
-	sq_beat
-	sq_note	19, 0, 42, 24, 16, 0
-	sq_note	30, 0, 41, 13, 14, 0
-	sq_note	45, 0, 40, 7, 15, 0
-	sq_note	57, 0, 39, 2, 14, 0
-	sq_note	66, 0, 38, 1, 15, 0
-	sq_note	78, 0, 36, 52, 62, 1
-	sq_beat
-	sq_beat
-	.byte	0x4f, 0x90, 0x28, 0x33, 0x4b	# bytes 1..5 of `sq_note	79, 0, 40, 51, 75, 0` (the event spans two cells)
-	sq_cell	0x80, 39, 41	# cell 40: song 1 track 5, 9 of 11
-	.byte	0x00	# bytes 6..6 of `sq_note	79, 0, 40, 51, 75, 0` (the event spans two cells)
-	sq_beat
-	sq_note	78, 0, 43, 63, 79, 0
-	sq_beat
-	sq_note	78, 0, 36, 41, 23, 1
-	sq_beat
-	sq_beat
-	sq_note	30, 0, 36, 54, 33, 0
-	sq_note	78, 0, 40, 65, 88, 0
-	sq_beat
-	sq_note	79, 0, 43, 48, 86, 0
-	sq_beat
-	sq_note	79, 0, 36, 41, 69, 1
-	sq_beat
-	sq_beat
-	sq_note	78, 0, 40, 67, 81, 0
-	sq_beat
-	sq_note	78, 0, 39, 57, 84, 0
-	sq_beat
-	sq_note	78, 0, 38, 51, 52, 1
-	sq_beat
-	sq_beat
-	sq_note	78, 0, 41, 61, 84, 0
-	sq_beat
-	sq_note	78, 0, 45, 52, 86, 0
-	sq_beat
-	sq_note	78, 0, 43, 48, 30, 1
-	sq_beat
-	sq_beat
-	sq_note	31, 0, 43, 50, 21, 0
-	sq_note	79, 0, 50, 70, 74, 1
-	sq_beat
-	sq_beat
-	sq_note	79, 0, 38, 54, 18, 1
-	sq_beat
-	sq_beat
-	sq_note	30, 0, 38, 59, 26, 0
-	sq_note	79, 0, 41, 70, 75, 0
-	sq_beat
-	sq_note	79, 0, 45, 61, 79, 0
-	sq_beat
-	sq_note	78, 0, 43, 38, 37, 1
-	sq_beat
-	sq_beat
-	sq_note	33, 0, 43, 76, 21, 0
-	sq_note	80, 0, 43, 57, 76, 0
-	sq_beat
-	sq_note	78, 0, 31, 43, 74, 0
-	sq_beat
-	sq_note	79, 0, 38, 58, 34, 1
-	sq_beat
-	sq_beat
-	sq_note	29, 0, 41, 55, 52, 0
-	sq_note	77, 0, 43, 67, 70, 0
-	sq_beat
-	sq_note	79, 0, 38, 81, 73, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_pc	36, 0, 35, 0, 32
-	sq_cc	36, 0, 4, 7, 101
-	sq_cc	36, 0, 4, 10, 64
-	sq_beat
-	sq_cc	10, 0, 4, 91, 0
-	sq_beat
-	sq_beat
-	sq_note	36, 0, 41, 86, 22, 1
-	sq_beat
-	sq_beat
-	sq_note	4, 0, 41, 79, 7, 0
-	sq_note	36, 0, 48, 83, 90, 0
-	sq_beat
-	.byte	0x24, 0x90, 0x2e, 0x4d	# bytes 1..4 of `sq_note	36, 0, 46, 77, 73, 1` (the event spans two cells)
-	sq_cell	0x80, 40, 42	# cell 41: song 1 track 5, 10 of 11
-	.byte	0x49, 0x01	# bytes 5..6 of `sq_note	36, 0, 46, 77, 73, 1` (the event spans two cells)
-	sq_beat
-	sq_beat
-	sq_note	4, 0, 34, 83, 93, 0
-	sq_beat
-	sq_note	4, 0, 38, 70, 10, 0
-	sq_note	36, 0, 39, 77, 46, 1
-	sq_beat
-	sq_beat
-	sq_note	4, 0, 50, 94, 17, 0
-	sq_note	36, 0, 51, 74, 14, 1
-	sq_beat
-	sq_note	36, 0, 44, 92, 5, 2
-	sq_beat
-	sq_beat
-	sq_note	68, 0, 39, 57, 18, 0
-	sq_beat
-	sq_note	4, 0, 40, 77, 15, 0
-	sq_note	36, 0, 41, 78, 83, 2
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	36, 0, 43, 88, 2, 1
-	sq_beat
-	sq_note	36, 0, 31, 89, 77, 0
-	sq_beat
-	sq_note	36, 0, 43, 73, 72, 0
-	sq_beat
-	sq_note	36, 0, 36, 87, 50, 0
-	sq_beat
-	sq_note	4, 0, 48, 79, 11, 0
-	sq_beat
-	sq_note	4, 0, 36, 71, 13, 0
-	sq_note	36, 0, 48, 84, 72, 0
-	sq_beat
-	sq_note	4, 0, 43, 82, 16, 0
-	sq_note	36, 0, 36, 75, 58, 0
-	sq_beat
-	sq_note	4, 0, 48, 96, 13, 0
-	sq_beat
-	sq_note	4, 0, 36, 77, 23, 0
-	sq_note	36, 0, 48, 81, 60, 0
-	sq_beat
-	sq_note	4, 0, 40, 82, 18, 0
-	sq_note	36, 0, 41, 87, 39, 1
-	sq_beat
-	sq_beat
-	sq_note	4, 0, 41, 81, 12, 0
-	sq_note	36, 0, 48, 86, 52, 0
-	sq_beat
-	sq_note	4, 0, 47, 82, 21, 0
-	sq_note	36, 0, 46, 86, 94, 0
-	sq_beat
-	sq_note	36, 0, 34, 77, 0, 1
-	sq_beat
-	sq_note	36, 0, 41, 81, 55, 0
-	sq_beat
-	sq_note	4, 0, 40, 73, 9, 0
-	sq_note	36, 0, 39, 95, 54, 1
-	sq_beat
-	sq_beat
-	sq_note	4, 0, 46, 98, 12, 1
-	sq_beat
-	sq_note	36, 0, 32, 87, 69, 1
-	sq_beat
-	sq_note	36, 0, 44, 80, 29, 1
-	sq_beat
-	sq_note	68, 0, 39, 66, 13, 0
-	sq_beat
-	sq_note	4, 0, 40, 79, 10, 0
-	sq_cell	0x80, 41, 65535	# cell 42: song 1 track 5, 11 of 11
-	sq_note	36, 0, 41, 75, 82, 2
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	36, 0, 36, 52, 88, 2
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_end
-# after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	224, 64, 53	# a tick-first event cut at the start (its tick is gone)
-	sq_bend	71, 0, 64, 58
-	sq_bend	71, 0, 64, 55
-	sq_bend	75, 0, 0, 61
-	sq_bend	75, 0, 0, 60
-	sq_bend	77, 0, 0, 62
-	sq_bend	84, 0, 0, 63
-	sq_bend	84, 0, 64, 62
-	sq_bend	87, 0, 0, 64
-	sq_beat
-	sq_note	34, 0, 72, 97, 60, 0
-	sq_beat
-	sq_note	11, 0, 74, 112, 75, 0
-	sq_note	92, 0, 71, 97, 86, 0
-	sq_beat
-	sq_note	88, 0, 72, 107, 69, 0
-	sq_beat
-	sq_note	67, 0, 71, 92, 57, 0
-	sq_beat
-	sq_note	32, 0, 69, 88, 51, 0
-	sq_note	89, 0, 67, 78, 84, 0
-	sq_beat
-	sq_note	79, 0, 65, 80, 30, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_pc	38, 0, 73, 20, 32
-	sq_cc	83, 0, 16, 7, 82
-	sq_cc	94, 0, 16, 10, 99
-	sq_beat
-	sq_a	25, 1, 16, 0, 32, 0, 95, 1
-	sq_cc	25, 0, 16, 95, 27
-	sq_cc	36, 0, 16, 91, 85
-	sq_beat
-	sq_note	40, 0, 77, 104, 84, 0
-	sq_beat
-	sq_note	45, 0, 80, 95, 57, 1
-	sq_beat
-	sq_beat
-	sq_note	9, 0, 82, 104, 2, 1
-	sq_beat
-	sq_note	14, 0, 80, 105, 12, 0
-	sq_bend	38, 0, 0, 12
-	sq_note	39, 0, 84, 102, 1, 1
-	sq_bend	54, 0, 64, 25
-	sq_bend	59, 0, 0, 37
-	sq_bend	62, 0, 64, 49
-	sq_bend	66, 0, 0, 54
-	sq_bend	69, 0, 0, 55
-	sq_bend	74, 0, 64, 56
-	sq_bend	77, 0, 0, 58
-	.byte	81, 224	# the first 2 bytes of a tick-first event, cut by the end
-	sq_cell	0x80, 0, 44	# cell 43: song 1 track 6, 1 of 10
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	0, 0, 5, 11, 127
-	sq_pc	0, 0, 32, 16, 32
-	sq_cc	0, 0, 5, 7, 112
-	sq_cc	0, 0, 5, 10, 64
-	sq_cc	0, 0, 5, 91, 0
-	sq_note	1, 0, 46, 93, 79, 0
-	sq_beat
-	sq_note	0, 0, 41, 83, 76, 0
-	sq_beat
-	sq_note	1, 0, 38, 71, 79, 0
-	sq_beat
-	sq_note	0, 0, 34, 74, 81, 0
-	sq_note	95, 0, 46, 92, 85, 0
-	sq_beat
-	sq_beat
-	sq_note	1, 0, 41, 78, 79, 0
-	sq_beat
-	sq_note	2, 0, 38, 74, 80, 0
-	sq_beat
-	sq_note	2, 0, 34, 72, 83, 0
-	sq_beat
-	sq_note	3, 0, 46, 96, 65, 0
-	sq_beat
-	sq_note	1, 0, 41, 74, 71, 0
-	sq_beat
-	sq_note	0, 0, 43, 79, 72, 0
-	sq_beat
-	sq_note	0, 0, 45, 87, 70, 0
-	sq_beat
-	sq_note	2, 0, 46, 96, 80, 0
-	sq_beat
-	sq_note	1, 0, 41, 86, 72, 0
-	sq_note	95, 0, 38, 86, 84, 0
-	sq_beat
-	sq_beat
-	sq_note	1, 0, 34, 89, 74, 0
-	sq_beat
-	sq_note	4, 0, 36, 63, 82, 0
-	sq_beat
-	sq_note	2, 0, 41, 74, 79, 0
-	sq_beat
-	sq_note	1, 0, 36, 62, 86, 0
-	sq_beat
-	sq_note	2, 0, 41, 77, 70, 0
-	sq_beat
-	sq_note	1, 0, 34, 55, 85, 0
-	sq_beat
-	sq_note	1, 0, 41, 73, 87, 0
-	sq_beat
-	sq_note	3, 0, 46, 92, 80, 0
-	sq_beat
-	sq_note	1, 0, 41, 73, 83, 0
-	sq_note	95, 0, 36, 68, 93, 0
-	sq_beat
-	sq_beat
-	sq_note	1, 0, 43, 78, 91, 0
-	sq_beat
-	sq_note	3, 0, 48, 81, 84, 0
-	sq_beat
-	sq_note	1, 0, 43, 87, 80, 0
-	sq_beat
-	sq_note	0, 0, 41, 91, 88, 0
-	sq_beat
-	sq_note	1, 0, 39, 80, 90, 0
-	sq_beat
-	sq_note	2, 0, 38, 71, 76, 0
-	sq_beat
-	.byte	0x02, 0x90, 0x24, 0x46	# bytes 1..4 of `sq_note	2, 0, 36, 70, 70, 0` (the event spans two cells)
-	sq_cell	0x80, 43, 45	# cell 44: song 1 track 6, 2 of 10
-	.byte	0x46, 0x00	# bytes 5..6 of `sq_note	2, 0, 36, 70, 70, 0` (the event spans two cells)
-	sq_beat
-	sq_note	0, 0, 46, 89, 79, 0
-	sq_beat
-	sq_note	1, 0, 41, 76, 77, 0
-	sq_beat
-	sq_note	0, 0, 38, 65, 70, 0
-	sq_note	95, 0, 34, 67, 83, 0
-	sq_beat
-	sq_beat
-	sq_note	1, 0, 46, 84, 80, 0
-	sq_beat
-	sq_note	1, 0, 41, 73, 80, 0
-	sq_beat
-	sq_note	1, 0, 38, 73, 89, 0
-	sq_beat
-	sq_note	2, 0, 34, 66, 92, 0
-	sq_beat
-	sq_note	3, 0, 46, 98, 78, 0
-	sq_beat
-	sq_note	3, 0, 41, 85, 69, 0
-	sq_beat
-	sq_note	0, 0, 43, 88, 68, 0
-	sq_beat
-	sq_note	3, 0, 45, 87, 60, 0
-	sq_note	92, 0, 46, 86, 72, 0
-	sq_beat
-	sq_note	66, 0, 41, 82, 17, 0
-	sq_beat
-	sq_note	2, 0, 44, 102, 85, 0
-	sq_beat
-	sq_note	1, 0, 43, 107, 75, 1
-	sq_beat
-	sq_note	94, 0, 43, 94, 40, 0
-	sq_beat
-	sq_press	15, 0, 1
-	sq_press	19, 0, 3
-	sq_press	25, 0, 0
-	sq_note	79, 0, 41, 90, 24, 1
-	sq_beat
-	sq_beat
-	sq_note	24, 0, 39, 79, 48, 0
-	sq_beat
-	sq_note	22, 0, 38, 93, 31, 0
-	sq_beat
-	sq_note	17, 0, 36, 83, 29, 0
-	sq_beat
-	sq_note	9, 0, 34, 90, 28, 0
-	sq_beat
-	sq_note	13, 0, 33, 90, 58, 0
-	sq_note	87, 0, 34, 79, 24, 0
-	sq_beat
-	sq_note	77, 0, 36, 100, 23, 1
-	sq_beat
-	sq_beat
-	sq_note	15, 0, 38, 92, 53, 0
-	sq_note	75, 0, 39, 91, 24, 0
-	sq_beat
-	sq_note	19, 0, 38, 86, 49, 0
-	sq_note	80, 0, 36, 102, 17, 0
-	sq_beat
-	sq_pc	40, 0, 48, 16, 32
-	sq_cc	42, 0, 5, 7, 110
-	sq_cc	50, 0, 5, 10, 99
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	60, 0, 5, 91, 100
-	sq_note	72, 0, 48, 35, 87, 0
-	sq_beat
-	sq_note	63, 0, 50, 42, 2, 1
-	sq_beat
-	sq_cell	0x80, 44, 46	# cell 45: song 1 track 6, 3 of 10
-	sq_beat
-	sq_note	24, 0, 52, 49, 79, 0
-	sq_beat
-	sq_note	8, 0, 58, 59, 86, 0
-	sq_note	92, 0, 57, 58, 83, 0
-	sq_beat
-	sq_note	82, 0, 52, 46, 91, 0
-	sq_beat
-	sq_note	75, 0, 50, 39, 61, 2
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	42, 0, 52, 32, 86, 0
-	sq_beat
-	sq_note	34, 0, 53, 44, 79, 1
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	10, 0, 60, 27, 72, 1
-	sq_note	11, 0, 57, 38, 73, 1
-	sq_beat
-	sq_note	95, 0, 58, 32, 80, 1
-	sq_beat
-	sq_note	1, 0, 55, 35, 72, 1
-	sq_beat
-	sq_note	81, 0, 60, 28, 53, 0
-	sq_note	85, 0, 57, 30, 46, 0
-	sq_beat
-	sq_beat
-	sq_note	77, 0, 60, 43, 80, 1
-	sq_note	81, 0, 57, 43, 76, 1
-	sq_beat
-	sq_beat
-	sq_note	61, 0, 59, 40, 48, 3
-	sq_note	64, 0, 53, 40, 69, 5
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	11, 0, 58, 34, 26, 2
-	sq_cc	72, 0, 5, 11, 127
-	sq_cc	74, 0, 5, 11, 126
-	sq_cc	76, 0, 5, 11, 125
-	sq_cc	78, 0, 5, 11, 124
-	sq_cc	80, 0, 5, 11, 122
-	sq_cc	82, 0, 5, 11, 121
-	sq_cc	84, 0, 5, 11, 120
-	sq_cc	86, 0, 5, 11, 118
-	sq_cc	88, 0, 5, 11, 117
-	sq_cc	90, 0, 5, 11, 116
-	sq_cc	92, 0, 5, 11, 114
-	sq_cc	94, 0, 5, 11, 113
-	sq_beat
-	sq_cc	0, 0, 5, 11, 112
-	sq_cc	2, 0, 5, 11, 110
-	sq_cc	4, 0, 5, 11, 109
-	sq_cc	6, 0, 5, 11, 108
-	sq_cc	8, 0, 5, 11, 106
-	sq_cc	10, 0, 5, 11, 105
-	sq_cc	12, 0, 5, 11, 104
-	sq_cc	14, 0, 5, 11, 102
-	sq_cc	16, 0, 5, 11, 101
-	sq_cc	18, 0, 5, 11, 100
-	sq_cc	20, 0, 5, 11, 98
-	.byte	0x16, 0xb0, 0x05, 0x0b	# bytes 1..4 of `sq_cc	22, 0, 5, 11, 97` (the event spans two cells)
-	sq_cell	0x80, 45, 47	# cell 46: song 1 track 6, 4 of 10
-	.byte	0x61	# bytes 5..5 of `sq_cc	22, 0, 5, 11, 97` (the event spans two cells)
-	sq_cc	24, 0, 5, 11, 96
-	sq_cc	26, 0, 5, 11, 94
-	sq_cc	28, 0, 5, 11, 93
-	sq_cc	30, 0, 5, 11, 92
-	sq_cc	32, 0, 5, 11, 90
-	sq_cc	34, 0, 5, 11, 89
-	sq_cc	36, 0, 5, 11, 88
-	sq_cc	38, 0, 5, 11, 86
-	sq_cc	40, 0, 5, 11, 85
-	sq_cc	42, 0, 5, 11, 84
-	sq_cc	44, 0, 5, 11, 82
-	sq_cc	46, 0, 5, 11, 81
-	sq_cc	48, 0, 5, 11, 80
-	sq_cc	50, 0, 5, 11, 78
-	sq_cc	52, 0, 5, 11, 77
-	sq_cc	54, 0, 5, 11, 76
-	sq_cc	56, 0, 5, 11, 74
-	sq_cc	58, 0, 5, 11, 73
-	sq_cc	60, 0, 5, 11, 72
-	sq_cc	62, 0, 5, 11, 70
-	sq_cc	64, 0, 5, 11, 69
-	sq_cc	66, 0, 5, 11, 68
-	sq_cc	68, 0, 5, 11, 66
-	sq_cc	70, 0, 5, 11, 65
-	sq_cc	72, 0, 5, 11, 64
-	sq_cc	74, 0, 5, 11, 62
-	sq_cc	76, 0, 5, 11, 61
-	sq_cc	78, 0, 5, 11, 60
-	sq_cc	80, 0, 5, 11, 58
-	sq_cc	82, 0, 5, 11, 57
-	sq_cc	84, 0, 5, 11, 56
-	sq_cc	86, 0, 5, 11, 54
-	sq_cc	88, 0, 5, 11, 53
-	sq_cc	90, 0, 5, 11, 52
-	sq_cc	92, 0, 5, 11, 50
-	sq_cc	94, 0, 5, 11, 49
-	sq_beat
-	sq_cc	0, 0, 5, 11, 48
-	sq_cc	2, 0, 5, 11, 46
-	sq_cc	4, 0, 5, 11, 45
-	sq_cc	6, 0, 5, 11, 44
-	sq_cc	8, 0, 5, 11, 42
-	sq_cc	10, 0, 5, 11, 41
-	sq_cc	12, 0, 5, 11, 40
-	sq_cc	14, 0, 5, 11, 38
-	sq_cc	16, 0, 5, 11, 37
-	sq_cc	18, 0, 5, 11, 36
-	sq_cc	20, 0, 5, 11, 34
-	sq_cc	22, 0, 5, 11, 33
-	sq_cc	24, 0, 5, 11, 32
-	.byte	0x1a, 0xb0, 0x05, 0x0b	# bytes 1..4 of `sq_cc	26, 0, 5, 11, 30` (the event spans two cells)
-	sq_cell	0x80, 46, 48	# cell 47: song 1 track 6, 5 of 10
-	.byte	0x1e	# bytes 5..5 of `sq_cc	26, 0, 5, 11, 30` (the event spans two cells)
-	sq_cc	28, 0, 5, 11, 29
-	sq_cc	30, 0, 5, 11, 28
-	sq_cc	32, 0, 5, 11, 26
-	sq_cc	34, 0, 5, 11, 25
-	sq_cc	36, 0, 5, 11, 24
-	sq_cc	38, 0, 5, 11, 22
-	sq_cc	40, 0, 5, 11, 21
-	sq_cc	42, 0, 5, 11, 20
-	sq_cc	44, 0, 5, 11, 18
-	sq_cc	46, 0, 5, 11, 17
-	sq_cc	48, 0, 5, 11, 16
-	sq_cc	50, 0, 5, 11, 14
-	sq_cc	52, 0, 5, 11, 13
-	sq_cc	54, 0, 5, 11, 12
-	sq_cc	56, 0, 5, 11, 10
-	sq_cc	58, 0, 5, 11, 9
-	sq_cc	60, 0, 5, 11, 8
-	sq_cc	62, 0, 5, 11, 6
-	sq_cc	64, 0, 5, 11, 5
-	sq_cc	66, 0, 5, 11, 4
-	sq_cc	68, 0, 5, 11, 2
-	sq_cc	70, 0, 5, 11, 1
-	sq_beat
-	sq_cc	78, 0, 5, 11, 127
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_pc	78, 0, 48, 16, 32
-	sq_cc	78, 0, 5, 7, 92
-	sq_cc	78, 0, 5, 10, 24
-	sq_cc	78, 0, 5, 91, 127
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	80, 0, 84, 98, 1, 2
-	sq_beat
-	sq_beat
-	sq_note	81, 0, 83, 78, 83, 1
-	sq_beat
-	sq_beat
-	sq_note	72, 0, 81, 76, 5, 2
-	sq_beat
-	sq_beat
-	sq_note	79, 0, 79, 62, 0, 2
-	sq_beat
-	sq_beat
-	sq_note	84, 0, 76, 71, 0, 3
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	5, 0, 73, 79, 88, 0
-	sq_note	95, 0, 74, 78, 33, 2
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	38, 0, 77, 84, 70, 0
-	sq_beat
-	sq_note	11, 0, 81, 90, 74, 0
-	sq_note	88, 0, 79, 90, 82, 3
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	90, 0, 86, 71, 1, 2
-	sq_beat
-	sq_beat
-	.byte	0x5f, 0x90, 0x55, 0x4b	# bytes 1..4 of `sq_note	95, 0, 85, 75, 74, 1` (the event spans two cells)
-	sq_cell	0x80, 47, 49	# cell 48: song 1 track 6, 6 of 10
-	.byte	0x4a, 0x01	# bytes 5..6 of `sq_note	95, 0, 85, 75, 74, 1` (the event spans two cells)
-	sq_beat
-	sq_beat
-	sq_note	78, 0, 84, 63, 92, 1
-	sq_beat
-	sq_beat
-	sq_note	81, 0, 83, 67, 89, 1
-	sq_beat
-	sq_beat
-	sq_note	84, 0, 81, 86, 81, 0
-	sq_beat
-	sq_note	65, 0, 79, 76, 59, 0
-	sq_beat
-	sq_note	30, 0, 77, 86, 51, 0
-	sq_note	85, 0, 76, 71, 89, 0
-	sq_beat
-	sq_note	81, 0, 74, 45, 73, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_pc	36, 0, 9, 0, 38
-	sq_cc	36, 0, 5, 7, 110
-	sq_note	36, 0, 18, 85, 7, 0
-	sq_note	36, 0, 57, 68, 7, 0
-	sq_note	67, 0, 18, 36, 9, 0
-	sq_beat
-	sq_note	4, 0, 18, 74, 9, 0
-	sq_cc	8, 0, 5, 91, 25
-	sq_note	36, 0, 46, 39, 9, 0
-	sq_note	68, 0, 18, 15, 8, 0
-	sq_beat
-	sq_note	4, 0, 18, 41, 9, 0
-	sq_note	36, 0, 46, 42, 10, 0
-	sq_note	68, 0, 18, 12, 11, 0
-	sq_beat
-	sq_note	3, 0, 18, 42, 10, 0
-	sq_note	36, 0, 36, 84, 9, 0
-	sq_note	36, 0, 51, 67, 35, 0
-	sq_beat
-	sq_note	4, 0, 38, 73, 12, 0
-	sq_note	4, 0, 44, 37, 7, 0
-	sq_note	36, 0, 51, 62, 34, 0
-	sq_beat
-	sq_note	4, 0, 38, 25, 6, 0
-	sq_note	36, 0, 38, 73, 11, 0
-	sq_note	36, 0, 44, 37, 13, 0
-	sq_note	36, 0, 51, 62, 31, 0
-	sq_beat
-	sq_note	4, 0, 36, 67, 7, 0
-	sq_note	36, 0, 36, 81, 7, 0
-	sq_note	36, 0, 51, 66, 31, 0
-	sq_beat
-	sq_note	4, 0, 38, 73, 12, 0
-	sq_note	4, 0, 44, 37, 14, 0
-	sq_note	36, 0, 51, 66, 28, 0
-	sq_beat
-	sq_note	4, 0, 38, 25, 13, 0
-	.byte	0x24, 0x90	# bytes 1..2 of `sq_note	36, 0, 38, 73, 11, 0` (the event spans two cells)
-	sq_cell	0x80, 48, 50	# cell 49: song 1 track 6, 7 of 10
-	.byte	0x26, 0x49, 0x0b, 0x00	# bytes 3..6 of `sq_note	36, 0, 38, 73, 11, 0` (the event spans two cells)
-	sq_note	36, 0, 44, 37, 11, 0
-	sq_note	36, 0, 51, 56, 23, 0
-	sq_beat
-	sq_note	4, 0, 38, 47, 12, 0
-	sq_note	36, 0, 36, 84, 9, 0
-	sq_note	36, 0, 51, 67, 35, 0
-	sq_beat
-	sq_note	4, 0, 38, 73, 14, 0
-	sq_note	4, 0, 44, 37, 6, 0
-	sq_note	36, 0, 51, 62, 32, 0
-	sq_beat
-	sq_note	4, 0, 38, 25, 7, 0
-	sq_note	36, 0, 38, 73, 11, 0
-	sq_note	36, 0, 44, 37, 13, 0
-	sq_note	36, 0, 51, 62, 29, 0
-	sq_beat
-	sq_note	4, 0, 36, 67, 7, 0
-	sq_note	36, 0, 36, 81, 8, 0
-	sq_note	36, 0, 51, 66, 34, 0
-	sq_beat
-	sq_note	4, 0, 38, 73, 12, 0
-	sq_note	4, 0, 44, 37, 14, 0
-	sq_note	36, 0, 51, 66, 24, 0
-	sq_beat
-	sq_note	4, 0, 38, 25, 10, 0
-	sq_note	36, 0, 38, 62, 12, 0
-	sq_note	36, 0, 44, 37, 12, 0
-	sq_note	36, 0, 51, 56, 24, 0
-	sq_note	68, 0, 38, 26, 14, 0
-	sq_beat
-	sq_note	4, 0, 40, 72, 13, 0
-	sq_note	36, 0, 36, 84, 8, 0
-	sq_note	36, 0, 51, 67, 32, 0
-	sq_beat
-	sq_note	4, 0, 38, 73, 14, 0
-	sq_note	4, 0, 44, 37, 6, 0
-	sq_note	36, 0, 51, 62, 37, 0
-	sq_beat
-	sq_note	4, 0, 38, 25, 10, 0
-	sq_note	36, 0, 38, 73, 12, 0
-	sq_note	36, 0, 44, 37, 12, 0
-	sq_note	36, 0, 51, 62, 29, 0
-	sq_beat
-	sq_note	3, 0, 36, 67, 10, 0
-	sq_note	36, 0, 36, 81, 7, 0
-	sq_note	36, 0, 51, 66, 30, 0
-	sq_beat
-	sq_note	4, 0, 38, 73, 12, 0
-	sq_note	4, 0, 44, 37, 14, 0
-	sq_note	36, 0, 51, 66, 27, 0
-	sq_beat
-	.byte	0x04	# bytes 1..1 of `sq_note	4, 0, 38, 25, 13, 0` (the event spans two cells)
-	sq_cell	0x80, 49, 51	# cell 50: song 1 track 6, 8 of 10
-	.byte	0x90, 0x26, 0x19, 0x0d, 0x00	# bytes 2..6 of `sq_note	4, 0, 38, 25, 13, 0` (the event spans two cells)
-	sq_note	36, 0, 38, 73, 12, 0
-	sq_note	36, 0, 44, 37, 12, 0
-	sq_note	36, 0, 51, 56, 24, 0
-	sq_beat
-	sq_note	4, 0, 38, 47, 13, 0
-	sq_note	36, 0, 36, 84, 7, 0
-	sq_note	36, 0, 51, 67, 32, 0
-	sq_beat
-	sq_note	4, 0, 38, 73, 12, 0
-	sq_note	4, 0, 44, 37, 8, 0
-	sq_note	36, 0, 51, 62, 34, 0
-	sq_beat
-	sq_note	4, 0, 38, 25, 10, 0
-	sq_note	36, 0, 38, 73, 11, 0
-	sq_note	36, 0, 44, 37, 14, 0
-	sq_note	36, 0, 51, 62, 29, 0
-	sq_beat
-	sq_note	4, 0, 36, 67, 12, 0
-	sq_note	36, 0, 36, 96, 9, 0
-	sq_note	36, 0, 37, 87, 9, 0
-	sq_note	36, 0, 49, 94, 9, 0
-	sq_beat
-	sq_note	68, 0, 47, 75, 9, 0
-	sq_beat
-	sq_note	3, 0, 47, 39, 12, 0
-	sq_note	35, 0, 45, 81, 10, 0
-	sq_note	67, 0, 45, 49, 8, 0
-	sq_beat
-	sq_note	3, 0, 43, 66, 8, 0
-	sq_note	36, 0, 36, 84, 8, 0
-	sq_note	36, 0, 51, 67, 35, 0
-	sq_beat
-	sq_note	4, 0, 38, 82, 16, 0
-	sq_note	4, 0, 44, 37, 6, 0
-	sq_note	36, 0, 51, 62, 33, 0
-	sq_beat
-	sq_note	4, 0, 38, 34, 9, 0
-	sq_note	36, 0, 38, 82, 12, 0
-	sq_note	36, 0, 44, 37, 15, 0
-	sq_note	36, 0, 51, 62, 31, 0
-	sq_beat
-	sq_note	4, 0, 36, 67, 9, 0
-	sq_note	36, 0, 51, 66, 31, 0
-	sq_note	36, 0, 36, 81, 7, 0
-	sq_beat
-	sq_note	4, 0, 38, 82, 13, 0
-	sq_note	4, 0, 44, 37, 15, 0
-	sq_note	36, 0, 51, 66, 28, 0
-	sq_beat
-	sq_note	4, 0, 38, 34, 12, 0
-	sq_note	36, 0, 38, 82, 15, 0
-	sq_cell	0x80, 50, 52	# cell 51: song 1 track 6, 9 of 10
-	sq_note	36, 0, 44, 37, 15, 0
-	sq_note	36, 0, 51, 56, 25, 0
-	sq_beat
-	sq_note	3, 0, 38, 56, 13, 0
-	sq_note	36, 0, 36, 84, 9, 0
-	sq_note	36, 0, 51, 67, 36, 0
-	sq_beat
-	sq_note	4, 0, 38, 82, 13, 0
-	sq_note	4, 0, 44, 37, 5, 0
-	sq_note	36, 0, 51, 62, 37, 0
-	sq_beat
-	sq_note	4, 0, 38, 34, 8, 0
-	sq_note	36, 0, 38, 82, 13, 0
-	sq_note	36, 0, 44, 37, 16, 0
-	sq_note	36, 0, 51, 62, 32, 0
-	sq_beat
-	sq_note	4, 0, 36, 67, 12, 0
-	sq_note	36, 0, 36, 81, 9, 0
-	sq_note	36, 0, 51, 66, 33, 0
-	sq_beat
-	sq_note	4, 0, 38, 82, 12, 0
-	sq_note	4, 0, 44, 37, 14, 0
-	sq_note	36, 0, 51, 66, 28, 0
-	sq_beat
-	sq_note	4, 0, 38, 34, 13, 0
-	sq_note	36, 0, 38, 71, 14, 0
-	sq_note	36, 0, 44, 37, 14, 0
-	sq_note	36, 0, 51, 56, 26, 0
-	sq_note	68, 0, 38, 35, 12, 0
-	sq_beat
-	sq_note	4, 0, 40, 77, 13, 0
-	sq_note	36, 0, 36, 84, 9, 0
-	sq_note	36, 0, 51, 67, 36, 0
-	sq_beat
-	sq_note	4, 0, 38, 82, 12, 0
-	sq_note	4, 0, 44, 37, 7, 0
-	sq_note	36, 0, 51, 62, 34, 0
-	sq_beat
-	sq_note	4, 0, 38, 34, 8, 0
-	sq_note	36, 0, 38, 82, 12, 0
-	sq_note	36, 0, 44, 37, 15, 0
-	sq_note	36, 0, 51, 62, 29, 0
-	sq_beat
-	sq_note	4, 0, 36, 67, 9, 0
-	sq_note	36, 0, 36, 81, 8, 0
-	sq_note	36, 0, 51, 66, 32, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cell	0x80, 51, 65535	# cell 52: song 1 track 6, 10 of 10
-	sq_beat
-	sq_end
-# after the end of track: stale events of an earlier version of the song (stale_tokens)
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_end
-	.byte	70, 117, 5, 0	# data bytes of an event cut at the start
-	sq_bend	73, 0, 0, 63
-	sq_bend	74, 0, 64, 62
-	sq_bend	76, 0, 0, 61
-	sq_cell	0x80, 0, 54	# cell 53: song 1 track 7, 1 of 6
-	sq_beat
-	sq_cc	0, 0, 6, 11, 127
-	sq_pc	0, 0, 66, 20, 32
-	sq_cc	0, 0, 6, 7, 78
-	sq_cc	0, 0, 6, 10, 16
-	sq_cc	1, 0, 6, 91, 35
-	sq_beat
-	sq_beat
-	sq_note	92, 0, 41, 78, 37, 0
-	sq_beat
-	sq_note	33, 0, 43, 82, 29, 0
-	sq_note	64, 0, 45, 90, 30, 0
-	sq_note	90, 0, 46, 97, 44, 0
-	sq_beat
-	sq_note	90, 0, 46, 100, 35, 0
-	sq_beat
-	sq_note	91, 0, 46, 106, 60, 0
-	sq_beat
-	sq_note	60, 0, 45, 83, 32, 0
-	sq_note	94, 0, 46, 83, 59, 0
-	sq_beat
-	sq_note	60, 0, 48, 94, 31, 0
-	sq_note	94, 0, 50, 109, 69, 0
-	sq_beat
-	sq_note	66, 0, 50, 96, 31, 0
-	sq_beat
-	sq_note	65, 0, 50, 119, 1, 1
-	sq_beat
-	sq_note	66, 0, 49, 74, 30, 0
-	sq_beat
-	sq_note	2, 0, 50, 80, 58, 0
-	sq_note	62, 0, 51, 96, 29, 0
-	sq_note	95, 0, 53, 116, 49, 0
-	sq_beat
-	sq_beat
-	sq_note	2, 0, 53, 115, 68, 0
-	sq_note	67, 0, 52, 85, 36, 0
-	sq_beat
-	sq_note	2, 0, 53, 98, 66, 0
-	sq_note	66, 0, 52, 89, 36, 0
-	sq_beat
-	sq_note	2, 0, 53, 109, 68, 0
-	sq_note	65, 0, 58, 93, 33, 0
-	sq_beat
-	sq_note	2, 0, 53, 124, 26, 0
-	sq_beat
-	sq_beat
-	sq_note	61, 0, 49, 98, 24, 0
-	sq_note	95, 0, 50, 88, 54, 0
-	sq_beat
-	sq_note	57, 0, 60, 104, 34, 0
-	sq_note	60, 0, 51, 101, 44, 0
-	sq_beat
-	sq_note	61, 0, 51, 101, 40, 0
-	sq_note	62, 0, 60, 100, 38, 0
-	sq_beat
-	sq_note	53, 0, 58, 96, 32, 0
-	sq_note	57, 0, 50, 96, 31, 0
-	sq_note	94, 0, 57, 87, 67, 0
-	sq_note	95, 0, 48, 98, 65, 0
-	sq_beat
-	.byte	0x41, 0x90, 0x31, 0x39, 0x15	# bytes 1..5 of `sq_note	65, 0, 49, 57, 21, 0` (the event spans two cells)
-	sq_cell	0x80, 53, 55	# cell 54: song 1 track 7, 2 of 6
-	.byte	0x00	# bytes 6..6 of `sq_note	65, 0, 49, 57, 21, 0` (the event spans two cells)
-	sq_note	65, 0, 58, 57, 20, 0
-	sq_note	80, 0, 59, 59, 19, 0
-	sq_note	81, 0, 50, 68, 20, 0
-	sq_note	95, 0, 51, 100, 30, 0
-	sq_beat
-	sq_note	4, 0, 60, 112, 28, 0
-	sq_beat
-	sq_note	0, 0, 50, 95, 43, 0
-	sq_note	4, 0, 58, 99, 48, 0
-	sq_note	93, 0, 50, 101, 53, 0
-	sq_beat
-	sq_note	9, 0, 58, 96, 59, 0
-	sq_note	65, 0, 48, 96, 36, 0
-	sq_note	72, 0, 57, 87, 33, 0
-	sq_beat
-	sq_note	3, 0, 46, 88, 72, 0
-	sq_note	14, 0, 55, 96, 53, 0
-	sq_note	69, 0, 50, 100, 78, 0
-	sq_note	77, 0, 58, 108, 80, 0
-	sq_beat
-	sq_beat
-	sq_note	4, 0, 48, 112, 46, 0
-	sq_note	60, 0, 43, 95, 29, 1
-	sq_beat
-	sq_note	95, 0, 45, 92, 91, 0
-	sq_beat
-	sq_note	93, 0, 46, 81, 56, 0
-	sq_beat
-	sq_note	61, 0, 48, 93, 72, 3
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	67, 0, 45, 93, 22, 0
-	sq_beat
-	sq_note	2, 0, 46, 84, 48, 0
-	sq_note	70, 0, 55, 87, 35, 0
-	sq_beat
-	sq_note	70, 0, 53, 81, 21, 1
-	sq_beat
-	sq_beat
-	sq_note	5, 0, 51, 78, 36, 0
-	sq_beat
-	sq_note	3, 0, 50, 83, 43, 0
-	sq_beat
-	sq_note	3, 0, 48, 83, 41, 0
-	sq_beat
-	sq_note	3, 0, 46, 87, 42, 0
-	sq_beat
-	sq_note	7, 0, 45, 87, 60, 0
-	sq_note	75, 0, 46, 86, 33, 0
-	sq_beat
-	sq_note	69, 0, 48, 97, 23, 1
-	sq_beat
-	sq_beat
-	sq_note	0, 0, 50, 93, 69, 0
-	sq_note	73, 0, 51, 109, 17, 0
-	sq_beat
-	sq_note	5, 0, 50, 104, 55, 0
-	sq_note	67, 0, 48, 123, 37, 0
-	sq_cell	0x80, 54, 56	# cell 55: song 1 track 7, 3 of 6
-	sq_beat
-	sq_cc	36, 0, 6, 10, 114
-	sq_cc	36, 0, 6, 7, 110
-	sq_pc	36, 0, 48, 20, 32
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	36, 0, 6, 91, 64
-	sq_note	72, 0, 41, 48, 1, 1
-	sq_beat
-	sq_note	62, 0, 43, 51, 6, 1
-	sq_beat
-	sq_beat
-	sq_note	25, 0, 45, 57, 95, 0
-	sq_beat
-	sq_note	8, 0, 50, 60, 86, 0
-	sq_note	90, 0, 48, 64, 88, 0
-	sq_beat
-	sq_note	80, 0, 45, 57, 8, 1
-	sq_beat
-	sq_note	74, 0, 43, 50, 69, 2
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	44, 0, 45, 47, 94, 0
-	sq_beat
-	sq_note	33, 0, 46, 50, 87, 1
-	sq_beat
-	sq_beat
-	sq_note	24, 0, 49, 54, 92, 0
-	sq_beat
-	sq_note	17, 0, 52, 57, 4, 1
-	sq_beat
-	sq_note	9, 0, 41, 52, 83, 1
-	sq_beat
-	sq_note	92, 0, 43, 57, 85, 1
-	sq_beat
-	sq_beat
-	sq_note	81, 0, 45, 47, 53, 0
-	sq_beat
-	sq_beat
-	sq_note	73, 0, 52, 60, 0, 1
-	sq_beat
-	sq_note	66, 0, 50, 63, 46, 0
-	sq_beat
-	sq_note	12, 0, 48, 57, 49, 0
-	sq_note	58, 0, 47, 54, 68, 1
-	sq_beat
-	sq_beat
-	sq_note	30, 0, 43, 58, 44, 0
-	sq_note	71, 0, 45, 64, 42, 0
-	sq_beat
-	sq_note	15, 0, 47, 69, 44, 0
-	sq_note	57, 0, 52, 77, 51, 0
-	sq_beat
-	sq_note	12, 0, 50, 62, 18, 2
-	sq_cc	90, 0, 6, 11, 127
-	sq_cc	92, 0, 6, 11, 126
-	sq_cc	94, 0, 6, 11, 125
-	sq_beat
-	sq_cc	0, 0, 6, 11, 124
-	sq_cc	2, 0, 6, 11, 123
-	sq_cc	4, 0, 6, 11, 121
-	sq_cc	6, 0, 6, 11, 120
-	sq_cc	8, 0, 6, 11, 119
-	sq_cc	10, 0, 6, 11, 118
-	sq_cc	12, 0, 6, 11, 117
-	sq_cc	14, 0, 6, 11, 115
-	sq_cc	16, 0, 6, 11, 114
-	.byte	0x12, 0xb0	# bytes 1..2 of `sq_cc	18, 0, 6, 11, 113` (the event spans two cells)
-	sq_cell	0x80, 55, 57	# cell 56: song 1 track 7, 4 of 6
-	.byte	0x06, 0x0b, 0x71	# bytes 3..5 of `sq_cc	18, 0, 6, 11, 113` (the event spans two cells)
-	sq_cc	20, 0, 6, 11, 112
-	sq_cc	22, 0, 6, 11, 111
-	sq_cc	24, 0, 6, 11, 109
-	sq_cc	26, 0, 6, 11, 108
-	sq_cc	28, 0, 6, 11, 107
-	sq_cc	30, 0, 6, 11, 106
-	sq_cc	32, 0, 6, 11, 105
-	sq_cc	34, 0, 6, 11, 103
-	sq_cc	36, 0, 6, 11, 102
-	sq_cc	38, 0, 6, 11, 101
-	sq_cc	40, 0, 6, 11, 100
-	sq_cc	42, 0, 6, 11, 99
-	sq_cc	44, 0, 6, 11, 97
-	sq_cc	46, 0, 6, 11, 96
-	sq_cc	48, 0, 6, 11, 95
-	sq_cc	50, 0, 6, 11, 94
-	sq_cc	52, 0, 6, 11, 92
-	sq_cc	54, 0, 6, 11, 91
-	sq_cc	56, 0, 6, 11, 90
-	sq_cc	58, 0, 6, 11, 89
-	sq_cc	60, 0, 6, 11, 88
-	sq_cc	62, 0, 6, 11, 86
-	sq_cc	64, 0, 6, 11, 85
-	sq_cc	66, 0, 6, 11, 84
-	sq_cc	68, 0, 6, 11, 83
-	sq_cc	70, 0, 6, 11, 82
-	sq_cc	72, 0, 6, 11, 80
-	sq_cc	74, 0, 6, 11, 79
-	sq_cc	76, 0, 6, 11, 78
-	sq_cc	78, 0, 6, 11, 77
-	sq_cc	80, 0, 6, 11, 76
-	sq_cc	82, 0, 6, 11, 74
-	sq_cc	84, 0, 6, 11, 73
-	sq_cc	86, 0, 6, 11, 72
-	sq_cc	88, 0, 6, 11, 71
-	sq_cc	90, 0, 6, 11, 70
-	sq_cc	92, 0, 6, 11, 68
-	sq_cc	94, 0, 6, 11, 67
-	sq_beat
-	sq_cc	0, 0, 6, 11, 66
-	sq_cc	2, 0, 6, 11, 65
-	sq_cc	4, 0, 6, 11, 64
-	sq_cc	6, 0, 6, 11, 62
-	sq_cc	8, 0, 6, 11, 61
-	sq_cc	10, 0, 6, 11, 60
-	sq_cc	12, 0, 6, 11, 59
-	sq_cc	14, 0, 6, 11, 57
-	sq_cc	16, 0, 6, 11, 56
-	sq_cc	18, 0, 6, 11, 55
-	sq_cc	20, 0, 6, 11, 54
-	.byte	0x16, 0xb0	# bytes 1..2 of `sq_cc	22, 0, 6, 11, 53` (the event spans two cells)
-	sq_cell	0x80, 56, 58	# cell 57: song 1 track 7, 5 of 6
-	.byte	0x06, 0x0b, 0x35	# bytes 3..5 of `sq_cc	22, 0, 6, 11, 53` (the event spans two cells)
-	sq_cc	24, 0, 6, 11, 51
-	sq_cc	26, 0, 6, 11, 50
-	sq_cc	28, 0, 6, 11, 49
-	sq_cc	30, 0, 6, 11, 48
-	sq_cc	32, 0, 6, 11, 47
-	sq_cc	34, 0, 6, 11, 45
-	sq_cc	36, 0, 6, 11, 44
-	sq_cc	38, 0, 6, 11, 43
-	sq_cc	40, 0, 6, 11, 42
-	sq_cc	42, 0, 6, 11, 41
-	sq_cc	44, 0, 6, 11, 39
-	sq_cc	46, 0, 6, 11, 38
-	sq_cc	48, 0, 6, 11, 37
-	sq_cc	50, 0, 6, 11, 36
-	sq_cc	52, 0, 6, 11, 35
-	sq_cc	54, 0, 6, 11, 33
-	sq_cc	56, 0, 6, 11, 32
-	sq_cc	58, 0, 6, 11, 31
-	sq_cc	60, 0, 6, 11, 30
-	sq_cc	62, 0, 6, 11, 28
-	sq_cc	64, 0, 6, 11, 27
-	sq_cc	66, 0, 6, 11, 26
-	sq_cc	68, 0, 6, 11, 25
-	sq_cc	70, 0, 6, 11, 24
-	sq_cc	72, 0, 6, 11, 22
-	sq_cc	74, 0, 6, 11, 21
-	sq_cc	76, 0, 6, 11, 20
-	sq_cc	78, 0, 6, 11, 19
-	sq_cc	80, 0, 6, 11, 18
-	sq_cc	82, 0, 6, 11, 16
-	sq_cc	84, 0, 6, 11, 15
-	sq_cc	86, 0, 6, 11, 14
-	sq_cc	88, 0, 6, 11, 13
-	sq_cc	90, 0, 6, 11, 12
-	sq_cc	92, 0, 6, 11, 10
-	sq_cc	94, 0, 6, 11, 9
-	sq_beat
-	sq_cc	0, 0, 6, 11, 8
-	sq_cc	2, 0, 6, 11, 7
-	sq_cc	4, 0, 6, 11, 6
-	sq_cc	6, 0, 6, 11, 4
-	sq_cc	8, 0, 6, 11, 3
-	sq_cc	10, 0, 6, 11, 2
-	sq_cc	12, 0, 6, 11, 1
-	sq_cc	87, 0, 6, 11, 127
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cell	0x80, 57, 65535	# cell 58: song 1 track 7, 6 of 6
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_end
-# after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	0	# data bytes of an event cut at the start
-	sq_note	4, 0, 62, 56, 21, 0
-	sq_note	5, 0, 65, 56, 21, 0
-	sq_beat
-	sq_note	2, 0, 53, 38, 83, 0
-	sq_note	4, 0, 58, 38, 81, 0
-	sq_note	4, 0, 62, 38, 81, 0
-	sq_note	5, 0, 65, 38, 81, 0
-	sq_note	95, 0, 56, 53, 25, 0
-	sq_beat
-	sq_note	2, 0, 51, 53, 25, 0
-	sq_note	2, 0, 60, 54, 22, 0
-	sq_note	2, 0, 63, 55, 22, 0
-	sq_note	95, 0, 50, 28, 94, 0
-	sq_beat
-	sq_note	3, 0, 53, 30, 95, 0
-	sq_note	5, 0, 62, 31, 93, 0
-	sq_note	7, 0, 59, 32, 91, 0
-	sq_beat
-	sq_note	2, 0, 50, 57, 19, 0
-	sq_note	4, 0, 53, 58, 18, 0
-	sq_note	4, 0, 59, 58, 20, 0
-	sq_note	5, 0, 62, 59, 21, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_pc	39, 0, 48, 16, 32
-	sq_cc	51, 0, 4, 7, 119
-	.byte	59, 176, 4, 10	# the first 4 bytes of a tick-first event, cut by the end
-	sq_cell	0x80, 0, 60	# cell 59: song 1 track 8, 1 of 7
-	sq_8n	0, 0, 82, 1
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	0, 0, 7, 11, 127
-	sq_pc	0, 0, 65, 4, 32
-	sq_cc	0, 0, 7, 7, 92
-	sq_cc	0, 0, 7, 10, 39
-	sq_cc	27, 0, 7, 91, 35
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	10, 0, 41, 64, 32, 0
-	sq_note	44, 0, 43, 68, 31, 0
-	sq_note	78, 0, 45, 75, 29, 0
-	sq_beat
-	sq_note	8, 0, 46, 73, 44, 0
-	sq_beat
-	sq_note	2, 0, 46, 80, 48, 0
-	sq_beat
-	sq_note	1, 0, 46, 75, 57, 0
-	sq_note	65, 0, 45, 70, 26, 0
-	sq_beat
-	sq_note	0, 0, 46, 62, 59, 0
-	sq_note	60, 0, 48, 72, 35, 0
-	sq_note	94, 0, 50, 72, 78, 0
-	sq_beat
-	sq_note	91, 0, 50, 62, 52, 0
-	sq_beat
-	sq_note	66, 0, 50, 69, 40, 0
-	sq_beat
-	sq_note	61, 0, 49, 62, 30, 0
-	sq_beat
-	sq_note	1, 0, 50, 73, 39, 0
-	sq_note	55, 0, 51, 71, 31, 0
-	sq_note	95, 0, 53, 74, 39, 0
-	sq_beat
-	sq_beat
-	sq_note	2, 0, 53, 79, 62, 0
-	sq_note	67, 0, 52, 73, 23, 0
-	sq_note	95, 0, 53, 69, 59, 0
-	sq_beat
-	sq_note	62, 0, 52, 74, 21, 0
-	sq_note	92, 0, 53, 72, 55, 0
-	sq_beat
-	sq_note	57, 0, 58, 67, 29, 0
-	sq_note	90, 0, 53, 68, 59, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	61, 0, 58, 90, 42, 0
-	sq_beat
-	sq_note	65, 0, 57, 93, 28, 1
-	sq_beat
-	sq_beat
-	sq_note	11, 0, 55, 80, 40, 0
-	sq_beat
-	sq_note	9, 0, 53, 100, 30, 0
-	sq_beat
-	.byte	0x07, 0x90, 0x33	# bytes 1..3 of `sq_note	7, 0, 51, 104, 29, 0` (the event spans two cells)
-	sq_cell	0x80, 59, 61	# cell 60: song 1 track 8, 2 of 7
-	.byte	0x68, 0x1d, 0x00	# bytes 4..6 of `sq_note	7, 0, 51, 104, 29, 0` (the event spans two cells)
-	sq_beat
-	sq_note	8, 0, 50, 102, 29, 0
-	sq_beat
-	sq_note	11, 0, 48, 105, 65, 0
-	sq_note	84, 0, 50, 97, 27, 0
-	sq_beat
-	sq_note	72, 0, 51, 103, 26, 1
-	sq_beat
-	sq_beat
-	sq_note	5, 0, 53, 95, 62, 0
-	sq_note	68, 0, 55, 106, 36, 0
-	sq_beat
-	sq_note	16, 0, 53, 92, 70, 0
-	sq_note	80, 0, 51, 116, 25, 0
-	sq_beat
-	sq_cc	36, 0, 7, 10, 74
-	sq_cc	36, 0, 7, 7, 111
-	sq_pc	36, 0, 60, 4, 32
-	sq_beat
-	sq_beat
-	sq_8n	0, 0, 84, 0
-	sq_beat
-	sq_beat
-	sq_cc	36, 0, 7, 91, 100
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	14, 0, 7, 11, 52
-	sq_cc	16, 0, 7, 11, 53
-	sq_cc	18, 0, 7, 11, 54
-	sq_note	19, 0, 64, 33, 86, 1
-	sq_cc	20, 0, 7, 11, 55
-	sq_cc	22, 0, 7, 11, 56
-	sq_cc	24, 0, 7, 11, 58
-	sq_cc	26, 0, 7, 11, 59
-	sq_cc	28, 0, 7, 11, 60
-	sq_cc	30, 0, 7, 11, 61
-	sq_cc	32, 0, 7, 11, 62
-	sq_cc	34, 0, 7, 11, 63
-	sq_cc	36, 0, 7, 11, 65
-	sq_cc	38, 0, 7, 11, 66
-	sq_cc	40, 0, 7, 11, 67
-	sq_cc	42, 0, 7, 11, 68
-	sq_cc	44, 0, 7, 11, 69
-	sq_cc	46, 0, 7, 11, 71
-	sq_cc	48, 0, 7, 11, 72
-	sq_cc	50, 0, 7, 11, 73
-	sq_cc	52, 0, 7, 11, 74
-	sq_cc	54, 0, 7, 11, 75
-	sq_cc	56, 0, 7, 11, 77
-	sq_cc	58, 0, 7, 11, 78
-	sq_cc	60, 0, 7, 11, 79
-	sq_cc	62, 0, 7, 11, 80
-	sq_cc	64, 0, 7, 11, 81
-	sq_cc	66, 0, 7, 11, 82
-	sq_cc	68, 0, 7, 11, 84
-	sq_cc	70, 0, 7, 11, 85
-	.byte	0x48	# bytes 1..1 of `sq_cc	72, 0, 7, 11, 86` (the event spans two cells)
-	sq_cell	0x80, 60, 62	# cell 61: song 1 track 8, 3 of 7
-	.byte	0xb0, 0x07, 0x0b, 0x56	# bytes 2..5 of `sq_cc	72, 0, 7, 11, 86` (the event spans two cells)
-	sq_cc	74, 0, 7, 11, 87
-	sq_cc	76, 0, 7, 11, 88
-	sq_cc	78, 0, 7, 11, 90
-	sq_cc	80, 0, 7, 11, 91
-	sq_cc	82, 0, 7, 11, 92
-	sq_cc	84, 0, 7, 11, 93
-	sq_cc	86, 0, 7, 11, 94
-	sq_cc	88, 0, 7, 11, 95
-	sq_cc	90, 0, 7, 11, 97
-	sq_cc	92, 0, 7, 11, 98
-	sq_cc	94, 0, 7, 11, 99
-	sq_beat
-	sq_cc	0, 0, 7, 11, 100
-	sq_cc	2, 0, 7, 11, 101
-	sq_cc	4, 0, 7, 11, 103
-	sq_cc	6, 0, 7, 11, 104
-	sq_cc	8, 0, 7, 11, 105
-	sq_cc	10, 0, 7, 11, 106
-	sq_cc	12, 0, 7, 11, 107
-	sq_cc	14, 0, 7, 11, 109
-	sq_cc	16, 0, 7, 11, 110
-	sq_cc	18, 0, 7, 11, 111
-	sq_cc	20, 0, 7, 11, 112
-	sq_cc	22, 0, 7, 11, 113
-	sq_cc	24, 0, 7, 11, 114
-	sq_cc	26, 0, 7, 11, 116
-	sq_cc	28, 0, 7, 11, 117
-	sq_cc	30, 0, 7, 11, 118
-	sq_cc	32, 0, 7, 11, 119
-	sq_cc	34, 0, 7, 11, 120
-	sq_cc	36, 0, 7, 11, 122
-	sq_cc	38, 0, 7, 11, 123
-	sq_cc	40, 0, 7, 11, 124
-	sq_cc	42, 0, 7, 11, 125
-	sq_cc	44, 0, 7, 11, 127
-	sq_beat
-	sq_note	6, 0, 62, 25, 88, 0
-	sq_note	93, 0, 65, 28, 89, 0
-	sq_beat
-	sq_note	85, 0, 64, 24, 90, 0
-	sq_beat
-	sq_note	77, 0, 67, 15, 66, 0
-	sq_beat
-	sq_beat
-	sq_note	82, 0, 64, 37, 88, 0
-	sq_beat
-	sq_note	72, 0, 62, 28, 91, 0
-	sq_beat
-	sq_note	66, 0, 64, 32, 87, 0
-	sq_beat
-	sq_note	56, 0, 69, 41, 68, 1
-	sq_beat
-	sq_beat
-	sq_note	33, 0, 64, 35, 89, 0
-	sq_beat
-	sq_note	25, 0, 62, 28, 75, 0
-	sq_beat
-	sq_8n	0, 0, 0, 1
-	sq_cell	0x80, 61, 63	# cell 62: song 1 track 8, 4 of 7
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_pc	85, 0, 48, 16, 32
-	sq_cc	85, 0, 7, 7, 41
-	sq_cc	85, 0, 7, 10, 104
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	13, 0, 7, 91, 120
-	sq_note	85, 0, 48, 62, 41, 9
-	sq_note	85, 0, 55, 62, 54, 9
-	sq_note	85, 0, 64, 62, 41, 9
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	84, 0, 55, 40, 0, 1
-	sq_note	85, 0, 71, 62, 84, 0
-	sq_note	86, 0, 64, 62, 87, 1
-	sq_beat
-	sq_note	85, 0, 58, 60, 4, 1
-	sq_note	85, 0, 61, 38, 1, 1
-	sq_note	86, 0, 67, 60, 2, 1
-	sq_beat
-	sq_note	86, 0, 57, 61, 78, 3
-	sq_note	86, 0, 65, 61, 70, 3
-	sq_note	86, 0, 62, 39, 87, 1
-	sq_beat
-	sq_beat
-	sq_note	85, 0, 61, 46, 88, 0
-	sq_beat
-	sq_note	85, 0, 60, 41, 90, 0
-	sq_beat
-	sq_note	85, 0, 64, 27, 91, 3
-	sq_note	85, 0, 67, 49, 91, 3
-	sq_note	85, 0, 59, 27, 88, 3
-	sq_note	85, 0, 53, 49, 90, 3
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	85, 0, 57, 31, 71, 5
-	sq_note	85, 0, 62, 53, 92, 1
-	sq_note	85, 0, 65, 48, 71, 5
-	sq_beat
-	sq_beat
-	sq_note	86, 0, 61, 30, 88, 1
-	sq_beat
-	sq_beat
-	sq_note	85, 0, 60, 43, 88, 1
-	sq_beat
-	sq_beat
-	sq_note	85, 0, 53, 36, 93, 1
-	sq_note	85, 0, 64, 45, 91, 1
-	sq_note	85, 0, 67, 57, 84, 1
-	sq_note	85, 0, 59, 50, 92, 1
-	sq_beat
-	sq_beat
-	sq_note	86, 0, 57, 65, 2, 2
-	sq_note	86, 0, 62, 66, 95, 1
-	.byte	0x56, 0x90, 0x41, 0x3f, 0x03	# bytes 1..5 of `sq_note	86, 0, 65, 63, 3, 2` (the event spans two cells)
-	sq_cell	0x80, 62, 64	# cell 63: song 1 track 8, 5 of 7
-	.byte	0x02	# bytes 6..6 of `sq_note	86, 0, 65, 63, 3, 2` (the event spans two cells)
-	sq_beat
-	sq_beat
-	sq_8n	0, 0, 0, 1
-	sq_note	85, 0, 53, 60, 49, 1
-	sq_note	86, 0, 56, 62, 44, 1
-	sq_note	89, 0, 59, 70, 46, 1
-	sq_note	89, 0, 64, 83, 94, 0
-	sq_beat
-	sq_8n	0, 0, 120, 0
-	sq_note	86, 0, 62, 31, 44, 0
-	sq_beat
-	sq_8n	0, 0, 112, 0
-	sq_beat
-	sq_8n	0, 0, 103, 0
-	sq_8n	12, 0, 95, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_8n	84, 0, 37, 1
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_pc	66, 0, 75, 4, 32
-	sq_cc	66, 0, 7, 7, 95
-	sq_beat
-	sq_cc	90, 0, 7, 11, 127
-	sq_beat
-	sq_8n	0, 0, 6, 1
-	sq_beat
-	sq_8n	0, 0, 94, 0
-	sq_note	67, 0, 76, 102, 48, 0
-	sq_beat
-	sq_note	24, 0, 78, 104, 39, 0
-	sq_note	66, 0, 79, 105, 60, 1
-	sq_beat
-	sq_beat
-	sq_8n	0, 0, 87, 0
-	sq_note	34, 0, 78, 86, 16, 0
-	sq_note	52, 0, 79, 87, 17, 0
-	sq_note	73, 0, 81, 93, 62, 1
-	sq_beat
-	sq_beat
-	sq_note	60, 0, 88, 114, 7, 0
-	sq_note	67, 0, 86, 117, 40, 1
-	sq_beat
-	sq_beat
-	sq_note	19, 0, 88, 104, 43, 0
-	sq_note	67, 0, 81, 79, 5, 1
-	sq_beat
-	sq_beat
-	sq_note	12, 0, 83, 86, 6, 0
-	sq_note	17, 0, 81, 98, 40, 0
-	sq_note	62, 0, 79, 84, 94, 0
-	sq_beat
-	sq_note	67, 0, 71, 69, 78, 1
-	sq_beat
-	sq_beat
-	sq_note	65, 0, 81, 49, 5, 0
-	.byte	0x41, 0x90, 0x4e	# bytes 1..3 of `sq_note	65, 0, 78, 105, 43, 0` (the event spans two cells)
-	sq_cell	0x80, 63, 65	# cell 64: song 1 track 8, 6 of 7
-	.byte	0x69, 0x2b, 0x00	# bytes 4..6 of `sq_note	65, 0, 78, 105, 43, 0` (the event spans two cells)
-	sq_beat
-	sq_note	18, 0, 74, 76, 44, 0
-	sq_note	66, 0, 71, 73, 16, 1
-	sq_beat
-	sq_note	83, 0, 69, 69, 30, 1
-	sq_beat
-	sq_beat
-	sq_note	24, 0, 71, 74, 7, 0
-	sq_note	33, 0, 69, 75, 14, 0
-	sq_note	50, 0, 68, 95, 19, 4
-	sq_beat
-	sq_cc	38, 0, 7, 11, 127
-	sq_cc	44, 0, 7, 11, 126
-	sq_cc	48, 0, 7, 11, 125
-	sq_cc	54, 0, 7, 11, 124
-	sq_cc	58, 0, 7, 11, 123
-	sq_cc	64, 0, 7, 11, 122
-	sq_cc	68, 0, 7, 11, 121
-	sq_cc	74, 0, 7, 11, 120
-	sq_cc	78, 0, 7, 11, 119
-	sq_cc	84, 0, 7, 11, 118
-	sq_cc	88, 0, 7, 11, 117
-	sq_cc	94, 0, 7, 11, 116
-	sq_beat
-	sq_cc	2, 0, 7, 11, 115
-	sq_cc	8, 0, 7, 11, 114
-	sq_cc	12, 0, 7, 11, 113
-	sq_cc	18, 0, 7, 11, 112
-	sq_cc	22, 0, 7, 11, 111
-	sq_cc	28, 0, 7, 11, 110
-	sq_cc	32, 0, 7, 11, 109
-	sq_cc	38, 0, 7, 11, 108
-	sq_cc	42, 0, 7, 11, 107
-	sq_cc	48, 0, 7, 11, 106
-	sq_cc	52, 0, 7, 11, 105
-	sq_cc	58, 0, 7, 11, 104
-	sq_cc	62, 0, 7, 11, 103
-	sq_cc	68, 0, 7, 11, 102
-	sq_cc	72, 0, 7, 11, 101
-	sq_cc	78, 0, 7, 11, 100
-	sq_cc	82, 0, 7, 11, 99
-	sq_cc	88, 0, 7, 11, 98
-	sq_cc	92, 0, 7, 11, 97
-	sq_beat
-	sq_cc	2, 0, 7, 11, 96
-	sq_cc	6, 0, 7, 11, 95
-	sq_cc	12, 0, 7, 11, 94
-	sq_cc	16, 0, 7, 11, 93
-	sq_cc	22, 0, 7, 11, 92
-	sq_cc	26, 0, 7, 11, 91
-	sq_cc	32, 0, 7, 11, 90
-	sq_cc	36, 0, 7, 11, 89
-	sq_cc	42, 0, 7, 11, 88
-	sq_cc	46, 0, 7, 11, 87
-	sq_cell	0x80, 64, 65535	# cell 65: song 1 track 8, 7 of 7
-	sq_cc	50, 0, 7, 11, 86
-	sq_cc	56, 0, 7, 11, 85
-	sq_cc	60, 0, 7, 11, 84
-	sq_cc	66, 0, 7, 11, 83
-	sq_cc	70, 0, 7, 11, 82
-	sq_cc	76, 0, 7, 11, 81
-	sq_cc	80, 0, 7, 11, 80
-	sq_cc	86, 0, 7, 11, 79
-	sq_cc	90, 0, 7, 11, 78
-	sq_beat
-	sq_cc	0, 0, 7, 11, 77
-	sq_cc	4, 0, 7, 11, 76
-	sq_cc	10, 0, 7, 11, 75
-	sq_cc	14, 0, 7, 11, 74
-	sq_cc	20, 0, 7, 11, 73
-	sq_cc	24, 0, 7, 11, 72
-	sq_cc	30, 0, 7, 11, 71
-	sq_cc	34, 0, 7, 11, 70
-	sq_cc	40, 0, 7, 11, 69
-	sq_cc	44, 0, 7, 11, 68
-	sq_cc	50, 0, 7, 11, 67
-	sq_cc	54, 0, 7, 11, 66
-	sq_cc	60, 0, 7, 11, 65
-	sq_cc	64, 0, 7, 11, 64
-	sq_cc	70, 0, 7, 11, 63
-	sq_cc	74, 0, 7, 11, 62
-	sq_cc	80, 0, 7, 11, 61
-	sq_cc	84, 0, 7, 11, 60
-	sq_cc	90, 0, 7, 11, 59
-	sq_cc	94, 0, 7, 11, 58
-	sq_beat
-	sq_cc	4, 0, 7, 11, 57
-	sq_cc	8, 0, 7, 11, 56
-	sq_cc	14, 0, 7, 11, 55
-	sq_cc	18, 0, 7, 11, 54
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_end
-# after the end of track: stale events of an earlier version of the song (stale_tokens)
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_end
-	.byte	0	# data bytes of an event cut at the start
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# data bytes of an event cut by the end
-	sq_cell	0x80, 0, 67	# cell 66: song 1 track 9, 1 of 5
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_pc	0, 0, 67, 0, 32
-	sq_cc	0, 0, 8, 10, 8
-	sq_cc	0, 0, 8, 11, 127
-	sq_cc	0, 0, 8, 91, 25
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	69, 0, 41, 107, 23, 0
-	sq_beat
-	sq_note	94, 0, 41, 110, 25, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	78, 0, 45, 94, 23, 0
-	sq_beat
-	sq_note	12, 0, 46, 89, 32, 0
-	sq_note	83, 0, 55, 98, 28, 0
-	sq_beat
-	sq_note	74, 0, 53, 97, 19, 1
-	sq_beat
-	sq_beat
-	sq_note	14, 0, 51, 73, 28, 0
-	sq_beat
-	sq_note	8, 0, 50, 93, 26, 0
-	sq_beat
-	sq_note	10, 0, 48, 95, 25, 0
-	sq_beat
-	sq_note	8, 0, 46, 94, 22, 0
-	sq_beat
-	sq_note	12, 0, 45, 95, 56, 0
-	sq_note	83, 0, 46, 93, 22, 0
-	sq_beat
-	sq_note	77, 0, 48, 97, 19, 1
-	sq_beat
-	sq_beat
-	sq_note	6, 0, 50, 93, 50, 0
-	sq_note	57, 0, 51, 79, 36, 0
-	sq_beat
-	sq_note	8, 0, 50, 80, 56, 0
-	sq_note	75, 0, 48, 93, 22, 0
-	sq_beat
-	sq_cc	36, 0, 8, 10, 79
-	sq_cc	36, 0, 8, 7, 95
-	sq_pc	36, 0, 69, 0, 32
-	sq_beat
-	sq_beat
-	sq_cc	36, 0, 8, 91, 110
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	10, 0, 8, 11, 127
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	73, 0, 76, 54, 88, 0
-	sq_beat
-	sq_note	66, 0, 74, 38, 44, 0
-	sq_beat
-	.byte	0x0c, 0x90, 0x48	# bytes 1..3 of `sq_note	12, 0, 72, 31, 49, 0` (the event spans two cells)
-	sq_cell	0x80, 66, 68	# cell 67: song 1 track 9, 2 of 5
-	.byte	0x1f, 0x31, 0x00	# bytes 4..6 of `sq_note	12, 0, 72, 31, 49, 0` (the event spans two cells)
-	sq_note	58, 0, 71, 24, 56, 2
-	sq_cc	68, 0, 8, 11, 127
-	sq_cc	76, 0, 8, 11, 126
-	sq_cc	84, 0, 8, 11, 125
-	sq_cc	92, 0, 8, 11, 124
-	sq_beat
-	sq_cc	4, 0, 8, 11, 123
-	sq_cc	10, 0, 8, 11, 122
-	sq_cc	18, 0, 8, 11, 121
-	sq_cc	26, 0, 8, 11, 120
-	sq_cc	34, 0, 8, 11, 119
-	sq_cc	42, 0, 8, 11, 118
-	sq_cc	48, 0, 8, 11, 117
-	sq_cc	56, 0, 8, 11, 116
-	sq_cc	64, 0, 8, 11, 115
-	sq_cc	72, 0, 8, 11, 114
-	sq_cc	78, 0, 8, 11, 113
-	sq_cc	86, 0, 8, 11, 112
-	sq_cc	94, 0, 8, 11, 111
-	sq_beat
-	sq_cc	6, 0, 8, 11, 110
-	sq_cc	14, 0, 8, 11, 109
-	sq_cc	20, 0, 8, 11, 108
-	sq_cc	28, 0, 8, 11, 107
-	sq_cc	36, 0, 8, 11, 106
-	sq_cc	44, 0, 8, 11, 105
-	sq_cc	52, 0, 8, 11, 104
-	sq_cc	58, 0, 8, 11, 103
-	sq_cc	66, 0, 8, 11, 102
-	sq_cc	74, 0, 8, 11, 101
-	sq_cc	82, 0, 8, 11, 100
-	sq_cc	88, 0, 8, 11, 99
-	sq_beat
-	sq_cc	0, 0, 8, 11, 98
-	sq_beat
-	sq_beat
-	sq_cc	6, 0, 8, 11, 127
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_pc	60, 0, 56, 68, 32
-	sq_cc	60, 0, 8, 7, 107
-	sq_cc	60, 0, 8, 10, 109
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	18, 0, 8, 91, 80
-	.byte	0x3c, 0x90, 0x48, 0x71	# bytes 1..4 of `sq_note	60, 0, 72, 113, 37, 1` (the event spans two cells)
-	sq_cell	0x80, 67, 69	# cell 68: song 1 track 9, 3 of 5
-	.byte	0x25, 0x01	# bytes 5..6 of `sq_note	60, 0, 72, 113, 37, 1` (the event spans two cells)
-	sq_beat
-	sq_beat
-	sq_note	12, 0, 72, 120, 44, 0
-	sq_note	60, 0, 74, 117, 43, 0
-	sq_beat
-	sq_note	12, 0, 72, 113, 39, 0
-	sq_note	60, 0, 69, 113, 41, 0
-	sq_beat
-	sq_note	12, 0, 65, 105, 39, 0
-	sq_note	60, 0, 65, 103, 80, 1
-	sq_beat
-	sq_beat
-	sq_note	60, 0, 62, 87, 22, 1
-	sq_beat
-	sq_press	30, 0, 4
-	sq_press	32, 0, 7
-	sq_press	34, 0, 9
-	sq_press	36, 0, 12
-	sq_press	38, 0, 14
-	sq_press	40, 0, 17
-	sq_press	42, 0, 19
-	sq_press	44, 0, 22
-	sq_press	46, 0, 24
-	sq_press	48, 0, 27
-	sq_press	50, 0, 29
-	sq_press	52, 0, 32
-	sq_press	54, 0, 34
-	sq_press	56, 0, 37
-	sq_press	58, 0, 39
-	sq_beat
-	sq_press	48, 0, 1
-	sq_note	60, 0, 60, 112, 9, 1
-	sq_beat
-	sq_beat
-	sq_note	12, 0, 65, 109, 51, 0
-	sq_note	60, 0, 69, 114, 45, 0
-	sq_beat
-	sq_note	12, 0, 67, 117, 44, 0
-	sq_note	60, 0, 65, 106, 56, 0
-	sq_beat
-	sq_note	12, 0, 64, 102, 53, 0
-	sq_note	60, 0, 65, 89, 48, 3
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_pc	48, 0, 25, 8, 32
-	sq_cc	48, 0, 8, 7, 112
-	sq_note	66, 0, 45, 67, 59, 1
-	sq_note	86, 0, 52, 52, 51, 0
-	sq_beat
-	sq_note	13, 0, 64, 102, 21, 1
-	sq_cc	20, 0, 8, 64, 127
-	sq_note	37, 0, 60, 78, 44, 0
-	sq_note	62, 0, 52, 54, 24, 0
-	sq_note	86, 0, 55, 63, 51, 0
-	sq_beat
-	.byte	0x11, 0x90, 0x34, 0x20, 0x12	# bytes 1..5 of `sq_note	17, 0, 52, 32, 18, 0` (the event spans two cells)
-	sq_cell	0x80, 68, 70	# cell 69: song 1 track 9, 4 of 5
-	.byte	0x00	# bytes 6..6 of `sq_note	17, 0, 52, 32, 18, 0` (the event spans two cells)
-	sq_note	37, 0, 54, 58, 73, 1
-	sq_cc	56, 0, 8, 64, 0
-	sq_note	63, 0, 45, 50, 27, 1
-	sq_note	86, 0, 50, 58, 6, 1
-	sq_beat
-	sq_note	15, 0, 62, 83, 3, 1
-	sq_note	40, 0, 57, 56, 72, 0
-	sq_cc	56, 0, 8, 64, 127
-	sq_beat
-	sq_note	65, 0, 45, 73, 51, 1
-	sq_cc	66, 0, 8, 64, 0
-	sq_note	87, 0, 52, 50, 56, 0
-	sq_beat
-	sq_cc	0, 0, 8, 64, 127
-	sq_note	19, 0, 64, 88, 82, 0
-	sq_note	42, 0, 60, 80, 50, 0
-	sq_note	67, 0, 52, 50, 19, 0
-	sq_note	90, 0, 55, 76, 44, 0
-	sq_beat
-	sq_note	18, 0, 52, 51, 11, 0
-	sq_note	39, 0, 54, 67, 38, 1
-	sq_cc	53, 0, 8, 64, 0
-	sq_note	63, 0, 45, 60, 8, 1
-	sq_note	85, 0, 50, 39, 51, 0
-	sq_beat
-	sq_note	14, 0, 62, 64, 64, 0
-	sq_cc	15, 0, 8, 64, 127
-	sq_note	38, 0, 57, 63, 39, 0
-	sq_note	65, 0, 50, 35, 7, 0
-	sq_beat
-	sq_note	38, 0, 40, 43, 35, 1
-	sq_note	45, 0, 47, 52, 85, 0
-	sq_note	47, 0, 52, 65, 72, 0
-	sq_cc	54, 0, 8, 64, 0
-	sq_note	57, 0, 55, 69, 55, 0
-	sq_note	59, 0, 59, 79, 57, 0
-	sq_note	63, 0, 64, 99, 44, 0
-	sq_cc	80, 0, 8, 64, 127
-	sq_beat
-	sq_note	62, 0, 52, 72, 31, 0
-	sq_note	64, 0, 55, 88, 25, 0
-	sq_note	65, 0, 47, 66, 47, 0
-	sq_note	67, 0, 59, 90, 23, 0
-	sq_beat
-	sq_note	17, 0, 40, 51, 7, 0
-	sq_note	36, 0, 50, 45, 65, 0
-	sq_cc	38, 0, 8, 64, 0
-	sq_note	38, 0, 54, 71, 64, 0
-	sq_note	39, 0, 57, 84, 61, 0
-	.byte	0x28, 0x90, 0x2f, 0x42, 0x40	# bytes 1..5 of `sq_note	40, 0, 47, 66, 64, 1` (the event spans two cells)
-	sq_cell	0x80, 69, 65535	# cell 70: song 1 track 9, 5 of 5
-	.byte	0x01	# bytes 6..6 of `sq_note	40, 0, 47, 66, 64, 1` (the event spans two cells)
-	sq_note	41, 0, 40, 61, 44, 0
-	sq_note	41, 0, 62, 93, 58, 0
-	sq_cc	71, 0, 8, 64, 127
-	sq_beat
-	sq_beat
-	sq_note	35, 0, 48, 48, 0, 1
-	sq_note	43, 0, 52, 60, 87, 0
-	sq_note	50, 0, 55, 60, 72, 0
-	sq_cc	50, 0, 8, 64, 0
-	sq_note	55, 0, 59, 55, 67, 0
-	sq_note	62, 0, 64, 93, 56, 0
-	sq_cc	82, 0, 8, 64, 127
-	sq_beat
-	sq_note	75, 0, 47, 55, 71, 0
-	sq_note	84, 0, 50, 63, 67, 0
-	sq_cc	91, 0, 8, 64, 0
-	sq_note	92, 0, 54, 66, 59, 0
-	sq_beat
-	sq_note	1, 0, 57, 66, 55, 0
-	sq_note	8, 0, 62, 87, 50, 0
-	sq_cc	21, 0, 8, 64, 127
-	sq_beat
-	sq_note	28, 0, 40, 54, 31, 4
-	sq_note	38, 0, 47, 54, 21, 4
-	sq_note	39, 0, 52, 70, 16, 4
-	sq_note	49, 0, 56, 74, 8, 4
-	sq_cc	52, 0, 8, 64, 0
-	sq_note	56, 0, 59, 80, 5, 4
-	sq_note	66, 0, 64, 95, 94, 3
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_end
-# after the end of track: stale events of an earlier version of the song (stale_tokens)
-	sq_note	94, 0, 62, 93, 69, 0
-	sq_beat
-	sq_note	71, 0, 63, 90, 17, 0
-	sq_beat
-	sq_note	4, 0, 62, 95, 55, 0
-	sq_note	65, 0, 60, 122, 38, 0
-	sq_beat
-	sq_cc	36, 0, 16, 10, 64
-	sq_cc	36, 0, 16, 7, 119
-	sq_pc	36, 0, 71, 20, 32
-	sq_cc	86, 0, 16, 11, 127
-	sq_beat
-	sq_cc	12, 0, 16, 91, 65
-	sq_note	94, 0, 52, 123, 66, 0
-	sq_beat
-	sq_note	66, 0, 53, 69, 54, 0
-	sq_beat
-	sq_note	25, 0, 55, 46, 60, 0
-	sq_note	87, 0, 57, 69, 57, 2
-	sq_beat
-	sq_cc	62, 0, 16, 11, 127
-	sq_cc	68, 0, 16, 11, 126
-	sq_cc	74, 0, 16, 11, 125
-	.byte	78, 176, 16	# the first 3 bytes of a tick-first event, cut by the end
-	sq_cell	0x80, 0, 72	# cell 71: song 1 track 10, 1 of 9
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	0, 0, 9, 11, 127
-	sq_pc	0, 0, 40, 0, 38
-	sq_cc	0, 0, 9, 7, 111
-	sq_cc	0, 0, 9, 91, 27
-	sq_note	2, 0, 36, 72, 10, 0
-	sq_note	2, 0, 38, 76, 10, 0
-	sq_note	75, 0, 38, 1, 21, 0
-	sq_note	86, 0, 38, 4, 5, 0
-	sq_beat
-	sq_note	0, 0, 36, 45, 9, 0
-	sq_note	2, 0, 38, 111, 9, 0
-	sq_note	2, 0, 44, 69, 9, 0
-	sq_note	63, 0, 39, 38, 11, 0
-	sq_beat
-	sq_note	0, 0, 36, 72, 14, 0
-	sq_note	0, 0, 38, 95, 14, 0
-	sq_note	75, 0, 38, 1, 12, 0
-	sq_note	86, 0, 38, 5, 20, 0
-	sq_note	95, 0, 36, 45, 14, 0
-	sq_beat
-	sq_note	0, 0, 38, 112, 5, 0
-	sq_note	0, 0, 44, 69, 11, 0
-	sq_note	63, 0, 39, 38, 9, 0
-	sq_beat
-	sq_note	2, 0, 36, 72, 10, 0
-	sq_note	2, 0, 38, 76, 10, 0
-	sq_note	75, 0, 38, 1, 10, 0
-	sq_note	86, 0, 38, 4, 10, 0
-	sq_beat
-	sq_note	0, 0, 36, 45, 8, 0
-	sq_note	2, 0, 38, 111, 8, 0
-	sq_note	2, 0, 44, 69, 8, 0
-	sq_note	63, 0, 39, 38, 11, 0
-	sq_beat
-	sq_note	0, 0, 36, 72, 14, 0
-	sq_note	0, 0, 38, 95, 14, 0
-	sq_note	75, 0, 38, 1, 12, 0
-	sq_note	86, 0, 38, 5, 21, 0
-	sq_note	95, 0, 36, 45, 14, 0
-	sq_beat
-	sq_note	0, 0, 38, 112, 5, 0
-	sq_note	0, 0, 44, 69, 11, 0
-	sq_note	63, 0, 39, 38, 9, 0
-	sq_beat
-	sq_note	2, 0, 36, 72, 10, 0
-	sq_note	2, 0, 38, 76, 10, 0
-	sq_note	75, 0, 38, 1, 11, 0
-	sq_note	86, 0, 38, 4, 10, 0
-	sq_beat
-	.byte	0x00	# bytes 1..1 of `sq_note	0, 0, 36, 45, 8, 0` (the event spans two cells)
-	sq_cell	0x80, 71, 73	# cell 72: song 1 track 10, 2 of 9
-	.byte	0x90, 0x24, 0x2d, 0x08, 0x00	# bytes 2..6 of `sq_note	0, 0, 36, 45, 8, 0` (the event spans two cells)
-	sq_note	2, 0, 38, 111, 9, 0
-	sq_note	2, 0, 44, 69, 9, 0
-	sq_note	63, 0, 39, 38, 10, 0
-	sq_beat
-	sq_note	0, 0, 36, 72, 12, 0
-	sq_note	0, 0, 38, 95, 12, 0
-	sq_note	75, 0, 38, 1, 12, 0
-	sq_note	86, 0, 38, 5, 12, 0
-	sq_note	95, 0, 36, 45, 12, 0
-	sq_beat
-	sq_note	0, 0, 38, 112, 9, 0
-	sq_note	0, 0, 44, 69, 9, 0
-	sq_note	63, 0, 39, 38, 9, 0
-	sq_beat
-	sq_note	2, 0, 36, 72, 9, 0
-	sq_note	2, 0, 38, 76, 9, 0
-	sq_note	75, 0, 38, 1, 12, 0
-	sq_note	86, 0, 38, 4, 11, 0
-	sq_beat
-	sq_note	0, 0, 36, 45, 9, 0
-	sq_note	2, 0, 38, 111, 9, 0
-	sq_note	2, 0, 44, 69, 9, 0
-	sq_note	63, 0, 39, 38, 11, 0
-	sq_beat
-	sq_note	0, 0, 36, 72, 14, 0
-	sq_note	0, 0, 38, 95, 14, 0
-	sq_note	75, 0, 38, 1, 19, 0
-	sq_note	86, 0, 38, 5, 5, 0
-	sq_note	95, 0, 36, 45, 14, 0
-	sq_beat
-	sq_note	0, 0, 38, 112, 11, 0
-	sq_note	0, 0, 44, 69, 11, 0
-	sq_note	63, 0, 39, 38, 9, 0
-	sq_beat
-	sq_note	2, 0, 36, 72, 9, 0
-	sq_note	2, 0, 38, 76, 9, 0
-	sq_note	75, 0, 38, 1, 11, 0
-	sq_note	86, 0, 38, 4, 11, 0
-	sq_beat
-	sq_note	0, 0, 36, 45, 9, 0
-	sq_note	2, 0, 38, 111, 9, 0
-	sq_note	2, 0, 44, 69, 9, 0
-	sq_note	63, 0, 39, 38, 11, 0
-	sq_beat
-	sq_note	0, 0, 36, 72, 13, 0
-	sq_note	0, 0, 38, 95, 13, 0
-	sq_note	75, 0, 38, 1, 11, 0
-	sq_note	86, 0, 38, 5, 10, 0
-	.byte	0x5f, 0x90, 0x24	# bytes 1..3 of `sq_note	95, 0, 36, 45, 12, 0` (the event spans two cells)
-	sq_cell	0x80, 72, 74	# cell 73: song 1 track 10, 3 of 9
-	.byte	0x2d, 0x0c, 0x00	# bytes 4..6 of `sq_note	95, 0, 36, 45, 12, 0` (the event spans two cells)
-	sq_beat
-	sq_note	0, 0, 38, 112, 10, 0
-	sq_note	0, 0, 44, 69, 10, 0
-	sq_note	63, 0, 39, 38, 9, 0
-	sq_beat
-	sq_note	2, 0, 36, 72, 10, 0
-	sq_note	2, 0, 38, 76, 10, 0
-	sq_note	75, 0, 38, 1, 11, 0
-	sq_note	86, 0, 38, 4, 8, 0
-	sq_beat
-	sq_note	0, 0, 36, 45, 8, 0
-	sq_note	2, 0, 38, 111, 9, 0
-	sq_note	2, 0, 44, 69, 9, 0
-	sq_note	63, 0, 39, 38, 10, 0
-	sq_beat
-	sq_note	0, 0, 36, 72, 13, 0
-	sq_note	0, 0, 38, 95, 13, 0
-	sq_note	75, 0, 38, 1, 10, 0
-	sq_note	86, 0, 38, 5, 21, 0
-	sq_note	95, 0, 36, 45, 14, 0
-	sq_beat
-	sq_note	0, 0, 38, 112, 5, 0
-	sq_note	0, 0, 44, 69, 11, 0
-	sq_note	63, 0, 39, 38, 9, 0
-	sq_beat
-	sq_note	2, 0, 36, 72, 9, 0
-	sq_note	2, 0, 38, 76, 9, 0
-	sq_note	75, 0, 38, 1, 11, 0
-	sq_note	86, 0, 38, 4, 11, 0
-	sq_beat
-	sq_note	0, 0, 36, 45, 9, 0
-	sq_note	2, 0, 38, 111, 9, 0
-	sq_note	2, 0, 44, 69, 9, 0
-	sq_note	63, 0, 39, 38, 11, 0
-	sq_beat
-	sq_note	0, 0, 36, 72, 13, 0
-	sq_note	0, 0, 38, 95, 13, 0
-	sq_note	75, 0, 38, 1, 12, 0
-	sq_note	86, 0, 38, 5, 20, 0
-	sq_note	95, 0, 36, 45, 14, 0
-	sq_beat
-	sq_note	0, 0, 38, 112, 5, 0
-	sq_note	0, 0, 44, 69, 11, 0
-	sq_note	63, 0, 39, 38, 9, 0
-	sq_beat
-	sq_note	2, 0, 36, 72, 10, 0
-	sq_note	2, 0, 38, 76, 10, 0
-	sq_note	75, 0, 38, 1, 22, 0
-	sq_note	86, 0, 38, 4, 5, 0
-	sq_beat
-	.byte	0x00, 0x90, 0x24	# bytes 1..3 of `sq_note	0, 0, 36, 45, 9, 0` (the event spans two cells)
-	sq_cell	0x80, 73, 75	# cell 74: song 1 track 10, 4 of 9
-	.byte	0x2d, 0x09, 0x00	# bytes 4..6 of `sq_note	0, 0, 36, 45, 9, 0` (the event spans two cells)
-	sq_note	2, 0, 38, 111, 9, 0
-	sq_note	2, 0, 44, 69, 9, 0
-	sq_note	63, 0, 39, 38, 11, 0
-	sq_beat
-	sq_note	0, 0, 36, 72, 13, 0
-	sq_note	0, 0, 38, 95, 13, 0
-	sq_note	75, 0, 38, 1, 12, 0
-	sq_note	86, 0, 38, 5, 12, 0
-	sq_note	95, 0, 36, 45, 14, 0
-	sq_beat
-	sq_note	0, 0, 38, 112, 11, 0
-	sq_note	0, 0, 44, 69, 11, 0
-	sq_note	63, 0, 39, 38, 9, 0
-	sq_beat
-	sq_note	2, 0, 36, 72, 9, 0
-	sq_note	2, 0, 38, 76, 9, 0
-	sq_note	75, 0, 38, 1, 11, 0
-	sq_note	86, 0, 38, 4, 11, 0
-	sq_beat
-	sq_note	0, 0, 36, 45, 9, 0
-	sq_note	2, 0, 38, 111, 9, 0
-	sq_note	2, 0, 44, 69, 9, 0
-	sq_note	63, 0, 39, 38, 11, 0
-	sq_beat
-	sq_note	0, 0, 36, 72, 13, 0
-	sq_note	0, 0, 38, 95, 13, 0
-	sq_note	75, 0, 38, 1, 12, 0
-	sq_note	86, 0, 38, 5, 11, 0
-	sq_note	95, 0, 36, 45, 14, 0
-	sq_beat
-	sq_note	0, 0, 38, 112, 11, 0
-	sq_note	0, 0, 44, 69, 11, 0
-	sq_note	63, 0, 39, 38, 9, 0
-	sq_beat
-	sq_note	2, 0, 36, 72, 10, 0
-	sq_note	2, 0, 38, 76, 10, 0
-	sq_note	75, 0, 38, 1, 21, 0
-	sq_note	86, 0, 38, 4, 5, 0
-	sq_beat
-	sq_note	0, 0, 36, 45, 9, 0
-	sq_note	2, 0, 38, 111, 9, 0
-	sq_note	2, 0, 44, 69, 9, 0
-	sq_note	63, 0, 39, 38, 11, 0
-	sq_beat
-	sq_note	0, 0, 36, 72, 14, 0
-	sq_note	0, 0, 38, 95, 14, 0
-	sq_note	75, 0, 38, 1, 12, 0
-	sq_note	86, 0, 38, 5, 10, 0
-	.byte	0x5f, 0x90, 0x24, 0x2d, 0x0d	# bytes 1..5 of `sq_note	95, 0, 36, 45, 13, 0` (the event spans two cells)
-	sq_cell	0x80, 74, 76	# cell 75: song 1 track 10, 5 of 9
-	.byte	0x00	# bytes 6..6 of `sq_note	95, 0, 36, 45, 13, 0` (the event spans two cells)
-	sq_beat
-	sq_note	0, 0, 38, 112, 10, 0
-	sq_note	0, 0, 44, 69, 10, 0
-	sq_note	63, 0, 39, 38, 9, 0
-	sq_beat
-	sq_note	2, 0, 36, 72, 10, 0
-	sq_note	2, 0, 38, 76, 10, 0
-	sq_note	75, 0, 38, 1, 12, 0
-	sq_note	86, 0, 38, 4, 12, 0
-	sq_beat
-	sq_note	0, 0, 36, 45, 10, 0
-	sq_note	2, 0, 38, 111, 9, 0
-	sq_note	2, 0, 44, 69, 9, 0
-	sq_note	63, 0, 39, 38, 10, 0
-	sq_beat
-	sq_note	0, 0, 36, 72, 13, 0
-	sq_note	0, 0, 38, 95, 13, 0
-	sq_note	75, 0, 38, 1, 12, 0
-	sq_note	86, 0, 38, 5, 10, 0
-	sq_note	95, 0, 36, 45, 13, 0
-	sq_beat
-	sq_note	0, 0, 38, 112, 10, 0
-	sq_note	0, 0, 44, 69, 10, 0
-	sq_note	63, 0, 39, 38, 9, 0
-	sq_beat
-	sq_note	2, 0, 36, 72, 9, 0
-	sq_note	2, 0, 38, 76, 9, 0
-	sq_note	75, 0, 38, 1, 22, 0
-	sq_note	86, 0, 38, 4, 5, 0
-	sq_beat
-	sq_note	0, 0, 36, 45, 10, 0
-	sq_note	2, 0, 38, 111, 9, 0
-	sq_note	2, 0, 44, 69, 9, 0
-	sq_note	63, 0, 39, 38, 11, 0
-	sq_beat
-	sq_note	0, 0, 36, 72, 14, 0
-	sq_note	0, 0, 38, 95, 14, 0
-	sq_note	75, 0, 38, 1, 12, 0
-	sq_note	86, 0, 38, 5, 11, 0
-	sq_note	95, 0, 36, 45, 14, 0
-	sq_beat
-	sq_note	0, 0, 38, 112, 11, 0
-	sq_note	0, 0, 44, 69, 11, 0
-	sq_note	63, 0, 39, 38, 9, 0
-	sq_beat
-	sq_note	2, 0, 36, 72, 7, 0
-	sq_note	2, 0, 38, 76, 7, 0
-	sq_note	75, 0, 38, 1, 12, 0
-	sq_note	86, 0, 38, 4, 12, 0
-	sq_beat
-	.byte	0x00, 0x90, 0x24, 0x2d, 0x0a	# bytes 1..5 of `sq_note	0, 0, 36, 45, 10, 0` (the event spans two cells)
-	sq_cell	0x80, 75, 77	# cell 76: song 1 track 10, 6 of 9
-	.byte	0x00	# bytes 6..6 of `sq_note	0, 0, 36, 45, 10, 0` (the event spans two cells)
-	sq_note	2, 0, 38, 111, 9, 0
-	sq_note	2, 0, 44, 69, 9, 0
-	sq_note	63, 0, 39, 38, 11, 0
-	sq_beat
-	sq_note	0, 0, 36, 72, 11, 0
-	sq_note	0, 0, 38, 95, 11, 0
-	sq_note	75, 0, 38, 1, 12, 0
-	sq_note	86, 0, 38, 5, 10, 0
-	sq_note	95, 0, 36, 45, 12, 0
-	sq_beat
-	sq_note	0, 0, 38, 112, 9, 0
-	sq_note	0, 0, 44, 69, 9, 0
-	sq_note	63, 0, 39, 38, 9, 0
-	sq_beat
-	sq_note	2, 0, 36, 72, 9, 0
-	sq_note	2, 0, 38, 76, 9, 0
-	sq_note	75, 0, 38, 1, 11, 0
-	sq_note	86, 0, 38, 4, 12, 0
-	sq_beat
-	sq_note	0, 0, 36, 45, 8, 0
-	sq_note	2, 0, 38, 111, 7, 0
-	sq_note	2, 0, 44, 69, 7, 0
-	sq_note	63, 0, 39, 38, 11, 0
-	sq_beat
-	sq_note	0, 0, 36, 72, 12, 0
-	sq_note	0, 0, 38, 95, 12, 0
-	sq_note	75, 0, 38, 1, 11, 0
-	sq_note	86, 0, 38, 5, 20, 0
-	sq_note	95, 0, 36, 45, 13, 0
-	sq_beat
-	sq_note	0, 0, 38, 112, 5, 0
-	sq_note	0, 0, 44, 69, 10, 0
-	sq_note	63, 0, 39, 38, 7, 0
-	sq_beat
-	sq_note	2, 0, 36, 72, 10, 0
-	sq_note	2, 0, 38, 76, 10, 0
-	sq_beat
-	sq_note	0, 0, 39, 93, 11, 0
-	sq_note	0, 0, 36, 45, 9, 0
-	sq_note	2, 0, 44, 69, 8, 0
-	sq_note	64, 0, 38, 88, 10, 0
-	sq_beat
-	sq_note	0, 0, 39, 109, 9, 0
-	sq_note	0, 0, 36, 72, 10, 0
-	sq_note	64, 0, 38, 97, 10, 0
-	sq_note	67, 0, 44, 69, 9, 0
-	sq_note	68, 0, 36, 45, 12, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cell	0x80, 76, 78	# cell 77: song 1 track 10, 7 of 9
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_pc	24, 0, 9, 0, 38
-	sq_cc	24, 0, 9, 7, 98
-	sq_cc	48, 0, 9, 91, 33
-	sq_beat
-	sq_beat
-	sq_note	87, 0, 46, 113, 22, 0
-	sq_beat
-	sq_note	18, 0, 44, 81, 24, 0
-	sq_note	86, 0, 45, 55, 18, 0
-	sq_beat
-	sq_note	23, 0, 36, 84, 22, 0
-	sq_note	25, 0, 51, 99, 17, 0
-	sq_note	26, 0, 52, 89, 12, 0
-	sq_beat
-	sq_note	23, 0, 51, 101, 14, 0
-	sq_note	24, 0, 37, 124, 21, 0
-	sq_note	89, 0, 51, 68, 8, 0
-	sq_beat
-	sq_note	21, 0, 51, 90, 15, 0
-	sq_beat
-	sq_note	23, 0, 44, 105, 20, 0
-	sq_note	23, 0, 51, 101, 11, 0
-	sq_note	87, 0, 51, 59, 5, 0
-	sq_beat
-	sq_note	19, 0, 51, 91, 14, 0
-	sq_beat
-	sq_note	19, 0, 44, 102, 19, 0
-	sq_note	21, 0, 51, 102, 15, 0
-	sq_note	24, 0, 37, 124, 16, 0
-	sq_note	86, 0, 51, 83, 9, 0
-	sq_beat
-	sq_note	23, 0, 51, 91, 17, 0
-	sq_note	87, 0, 46, 119, 25, 0
-	sq_beat
-	sq_note	22, 0, 51, 89, 15, 0
-	sq_note	23, 0, 44, 101, 23, 0
-	sq_note	82, 0, 51, 83, 7, 0
-	sq_beat
-	sq_note	20, 0, 51, 95, 14, 0
-	sq_beat
-	sq_note	23, 0, 44, 105, 15, 0
-	sq_note	24, 0, 37, 124, 15, 0
-	sq_note	24, 0, 51, 101, 13, 0
-	sq_note	88, 0, 51, 77, 8, 0
-	sq_beat
-	sq_note	23, 0, 51, 81, 21, 0
-	sq_note	93, 0, 46, 115, 20, 0
-	sq_beat
-	sq_note	26, 0, 44, 98, 17, 0
-	sq_note	28, 0, 51, 79, 15, 0
-	sq_note	86, 0, 51, 54, 8, 0
-	sq_beat
-	sq_note	22, 0, 51, 99, 18, 0
-	sq_beat
-	sq_cell	0x80, 77, 79	# cell 78: song 1 track 10, 8 of 9
-	sq_note	22, 0, 44, 104, 16, 0
-	sq_note	23, 0, 51, 102, 14, 0
-	sq_note	24, 0, 37, 124, 16, 0
-	sq_note	89, 0, 51, 53, 9, 0
-	sq_beat
-	sq_note	22, 0, 51, 80, 26, 0
-	sq_note	89, 0, 46, 107, 20, 0
-	sq_beat
-	sq_note	23, 0, 44, 91, 14, 0
-	sq_note	25, 0, 51, 67, 13, 0
-	sq_note	86, 0, 52, 118, 13, 0
-	sq_beat
-	sq_note	89, 0, 44, 80, 10, 0
-	sq_beat
-	sq_note	25, 0, 51, 78, 10, 0
-	sq_beat
-	sq_note	21, 0, 51, 80, 11, 0
-	sq_note	83, 0, 44, 89, 9, 0
-	sq_beat
-	sq_note	23, 0, 51, 74, 12, 0
-	sq_note	86, 0, 49, 111, 8, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_pc	60, 0, 56, 68, 32
-	sq_cc	60, 0, 9, 7, 72
-	sq_cc	60, 0, 9, 10, 64
-	sq_beat
-	sq_beat
-	sq_cc	24, 0, 9, 91, 108
-	sq_note	63, 0, 65, 93, 92, 0
-	sq_beat
-	sq_note	60, 0, 64, 61, 75, 0
-	sq_beat
-	sq_note	63, 0, 67, 92, 1, 1
-	sq_beat
-	sq_note	61, 0, 69, 99, 95, 0
-	sq_beat
-	sq_note	59, 0, 70, 99, 1, 1
-	sq_beat
-	sq_note	59, 0, 72, 106, 2, 1
-	sq_beat
-	sq_note	60, 0, 74, 115, 6, 1
-	sq_beat
-	sq_note	63, 0, 76, 114, 6, 1
-	sq_beat
-	sq_note	65, 0, 77, 107, 13, 1
-	sq_beat
-	sq_press	26, 0, 0
-	sq_press	28, 0, 4
-	sq_press	30, 0, 8
-	sq_press	32, 0, 12
-	sq_press	34, 0, 16
-	sq_press	36, 0, 21
-	sq_press	38, 0, 25
-	sq_press	40, 0, 29
-	sq_press	42, 0, 33
-	sq_press	44, 0, 38
-	sq_press	46, 0, 42
-	sq_press	48, 0, 46
-	sq_cell	0x80, 78, 65535	# cell 79: song 1 track 10, 9 of 9
-	sq_press	50, 0, 50
-	sq_press	52, 0, 54
-	sq_press	54, 0, 59
-	sq_press	56, 0, 63
-	sq_press	58, 0, 67
-	sq_beat
-	sq_press	42, 0, 0
-	sq_note	63, 0, 72, 97, 67, 3
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	60, 0, 72, 91, 0, 1
-	sq_beat
-	sq_note	62, 0, 70, 77, 91, 0
-	sq_beat
-	sq_note	63, 0, 69, 64, 50, 1
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_end
-# after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	69, 35, 5, 0	# data bytes of an event cut at the start
-	sq_note	80, 0, 65, 19, 8, 0
-	sq_beat
-	sq_note	0, 0, 74, 44, 17, 0
-	sq_note	19, 0, 65, 33, 16, 0
-	sq_note	39, 0, 74, 40, 12, 0
-	sq_note	61, 0, 65, 26, 13, 0
-	sq_note	79, 0, 74, 36, 10, 0
-	sq_beat
-	sq_note	5, 0, 65, 20, 9, 0
-	sq_note	23, 0, 74, 24, 18, 0
-	sq_note	42, 0, 65, 15, 18, 0
-	sq_note	62, 0, 74, 20, 16, 0
-	sq_beat
-	sq_beat
-	sq_note	29, 0, 69, 65, 24, 0
-	sq_note	34, 0, 77, 61, 19, 0
-	sq_note	79, 0, 77, 67, 10, 0
-	sq_note	81, 0, 69, 68, 8, 0
-	sq_note	90, 0, 69, 52, 51, 0
-	sq_note	90, 0, 77, 51, 49, 0
-	sq_beat
-	sq_note	72, 0, 77, 60, 27, 0
-	sq_note	92, 0, 81, 54, 23, 0
-	sq_beat
-	sq_note	13, 0, 77, 49, 15, 0
-	sq_note	33, 0, 81, 43, 16, 0
-	.byte	90, 144, 69	# the first 3 bytes of a tick-first event, cut by the end
-	sq_cell	0x80, 0, 81	# cell 80: song 1 track 11, 1 of 4
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	0, 0, 10, 11, 127
-	sq_pc	0, 0, 9, 0, 38
-	sq_cc	0, 0, 10, 7, 119
-	sq_cc	0, 0, 10, 91, 30
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	0, 0, 37, 92, 31, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	0, 0, 37, 92, 43, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	0, 0, 37, 92, 38, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	95, 0, 37, 92, 32, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	0, 0, 37, 92, 28, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	0, 0, 37, 92, 37, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	1, 0, 37, 92, 30, 0
-	sq_beat
-	sq_note	64, 0, 25, 94, 35, 1
-	sq_beat
-	sq_beat
-	sq_note	1, 0, 40, 102, 62, 0
-	sq_beat
-	sq_note	0, 0, 46, 43, 55, 0
-	sq_note	64, 0, 44, 13, 22, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	0, 0, 37, 94, 39, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	0, 0, 37, 94, 35, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	0, 0, 37, 95, 39, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	0, 0, 37, 95, 42, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	0, 0, 37, 95, 45, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	94, 0, 37, 95, 45, 0
-	sq_beat
-	sq_beat
-	sq_note	95, 0, 38, 83, 13, 0
-	sq_beat
-	sq_note	31, 0, 38, 32, 18, 0
-	sq_note	63, 0, 38, 39, 13, 0
-	sq_beat
-	sq_note	4, 0, 38, 51, 45, 0
-	sq_note	68, 0, 40, 64, 17, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	.byte	0x18, 0xc0, 0x00, 0x00	# bytes 1..4 of `sq_pc	24, 0, 0, 0, 32` (the event spans two cells)
-	sq_cell	0x80, 80, 82	# cell 81: song 1 track 11, 2 of 4
-	.byte	0x20	# bytes 5..5 of `sq_pc	24, 0, 0, 0, 32` (the event spans two cells)
-	sq_cc	24, 0, 10, 7, 112
-	sq_cc	24, 0, 10, 10, 29
-	sq_note	25, 0, 94, 78, 36, 0
-	sq_note	25, 0, 59, 67, 33, 0
-	sq_note	25, 0, 63, 52, 31, 0
-	sq_note	26, 0, 54, 42, 33, 0
-	sq_note	27, 0, 58, 64, 32, 0
-	sq_note	27, 0, 82, 68, 35, 0
-	sq_cc	42, 0, 10, 64, 127
-	sq_cc	64, 0, 10, 64, 0
-	sq_beat
-	sq_beat
-	sq_note	21, 0, 90, 66, 39, 0
-	sq_note	22, 0, 78, 64, 38, 0
-	sq_note	23, 0, 59, 71, 35, 0
-	sq_note	23, 0, 58, 54, 35, 0
-	sq_note	23, 0, 63, 53, 33, 0
-	sq_note	25, 0, 54, 39, 34, 0
-	sq_beat
-	sq_note	85, 0, 58, 60, 12, 3
-	sq_note	85, 0, 59, 75, 11, 3
-	sq_note	85, 0, 63, 49, 9, 3
-	sq_note	86, 0, 53, 48, 9, 3
-	sq_note	87, 0, 77, 68, 63, 1
-	sq_note	87, 0, 89, 73, 2, 1
-	sq_beat
-	sq_cc	17, 0, 10, 64, 127
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	85, 0, 63, 59, 20, 2
-	sq_note	86, 0, 94, 86, 42, 0
-	sq_note	86, 0, 58, 68, 22, 2
-	sq_note	86, 0, 59, 81, 21, 2
-	sq_cc	87, 0, 10, 64, 0
-	sq_note	87, 0, 82, 69, 42, 0
-	sq_note	87, 0, 53, 60, 22, 2
-	sq_beat
-	sq_cc	18, 0, 10, 64, 127
-	sq_beat
-	sq_beat
-	sq_note	1, 0, 89, 56, 14, 0
-	sq_note	13, 0, 90, 69, 11, 0
-	sq_cc	14, 0, 10, 64, 0
-	sq_note	29, 0, 91, 90, 33, 0
-	sq_note	93, 0, 94, 119, 22, 0
-	sq_beat
-	sq_note	34, 0, 90, 102, 37, 0
-	sq_note	95, 0, 89, 93, 17, 1
-	sq_beat
-	sq_note	87, 0, 87, 71, 30, 0
-	sq_cc	90, 0, 10, 64, 127
-	sq_beat
-	sq_note	28, 0, 83, 71, 30, 0
-	sq_cell	0x80, 81, 83	# cell 82: song 1 track 11, 3 of 4
-	sq_note	86, 0, 80, 111, 21, 0
-	sq_beat
-	sq_note	31, 0, 79, 67, 24, 0
-	sq_note	92, 0, 73, 53, 19, 0
-	sq_beat
-	sq_note	31, 0, 74, 63, 25, 0
-	sq_note	87, 0, 55, 72, 25, 4
-	sq_note	87, 0, 62, 87, 21, 4
-	sq_note	87, 0, 58, 68, 21, 4
-	sq_note	87, 0, 63, 65, 22, 4
-	sq_note	88, 0, 77, 93, 17, 4
-	sq_beat
-	sq_cc	1, 0, 10, 64, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_pc	60, 0, 56, 68, 32
-	sq_cc	60, 0, 10, 7, 72
-	sq_cc	60, 0, 10, 10, 19
-	sq_beat
-	sq_beat
-	sq_cc	12, 0, 10, 91, 110
-	sq_note	60, 0, 48, 86, 76, 1
-	sq_note	60, 0, 58, 86, 73, 1
-	sq_note	60, 0, 62, 86, 85, 0
-	sq_beat
-	sq_note	60, 0, 55, 58, 78, 0
-	sq_note	60, 0, 61, 58, 81, 0
-	sq_note	60, 0, 64, 58, 78, 0
-	sq_beat
-	sq_note	60, 0, 57, 86, 95, 1
-	sq_note	60, 0, 60, 86, 0, 1
-	sq_note	60, 0, 64, 86, 2, 1
-	sq_note	60, 0, 48, 86, 78, 0
-	sq_note	60, 0, 55, 86, 1, 1
-	sq_beat
-	sq_note	60, 0, 62, 93, 3, 1
-	sq_beat
-	sq_note	60, 0, 58, 101, 94, 0
-	sq_note	60, 0, 63, 101, 0, 2
-	sq_beat
-	sq_note	60, 0, 57, 108, 0, 3
-	sq_beat
-	sq_note	60, 0, 62, 115, 92, 0
-	sq_beat
-	sq_note	60, 0, 60, 90, 3, 1
-	sq_beat
-	sq_note	60, 0, 53, 78, 3, 1
-	sq_note	60, 0, 59, 78, 25, 1
-	sq_beat
-	sq_press	32, 0, 0
-	sq_press	34, 0, 4
-	.byte	0x24	# bytes 1..1 of `sq_press	36, 0, 9` (the event spans two cells)
-	sq_cell	0x80, 82, 65535	# cell 83: song 1 track 11, 4 of 4
-	.byte	0xd0, 0x09	# bytes 2..3 of `sq_press	36, 0, 9` (the event spans two cells)
-	sq_press	38, 0, 14
-	sq_press	40, 0, 18
-	sq_press	42, 0, 23
-	sq_press	44, 0, 28
-	sq_press	46, 0, 33
-	sq_press	48, 0, 37
-	sq_press	50, 0, 42
-	sq_press	52, 0, 47
-	sq_press	54, 0, 51
-	sq_press	56, 0, 56
-	sq_press	58, 0, 61
-	sq_note	60, 0, 56, 47, 27, 0
-	sq_beat
-	sq_press	51, 0, 0
-	sq_note	60, 0, 53, 97, 3, 1
-	sq_note	60, 0, 57, 97, 15, 1
-	sq_note	60, 0, 60, 97, 18, 1
-	sq_beat
-	sq_note	60, 0, 50, 95, 60, 0
-	sq_note	60, 0, 65, 95, 66, 0
-	sq_beat
-	sq_note	60, 0, 58, 95, 93, 1
-	sq_note	69, 0, 50, 95, 89, 0
-	sq_note	69, 0, 65, 95, 80, 0
-	sq_beat
-	sq_note	60, 0, 48, 93, 1, 1
-	sq_note	60, 0, 55, 93, 91, 0
-	sq_note	60, 0, 64, 93, 79, 0
-	sq_beat
-	sq_note	60, 0, 51, 88, 5, 1
-	sq_note	60, 0, 60, 88, 5, 1
-	sq_note	60, 0, 65, 88, 48, 3
-	sq_beat
-	sq_note	60, 0, 49, 83, 91, 0
-	sq_note	60, 0, 58, 83, 94, 0
-	sq_beat
-	sq_note	60, 0, 48, 78, 50, 1
-	sq_note	60, 0, 57, 78, 50, 1
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_end
-# after the end of track: stale events of an earlier version of the song (stale_tokens)
-	sq_beat
-	sq_note	36, 0, 53, 66, 91, 2
-	sq_note	36, 0, 56, 55, 91, 2
-	sq_note	36, 0, 60, 46, 91, 2
-	.byte	36, 144, 63, 64	# the first 4 bytes of a tick-first event, cut by the end
-	sq_cell	0x80, 0, 85	# cell 84: song 1 track 12, 1 of 6
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_pc	24, 0, 65, 28, 32
-	sq_cc	24, 0, 11, 7, 119
-	sq_cc	24, 0, 11, 10, 99
-	sq_cc	54, 0, 11, 11, 127
-	sq_bend	57, 0, 64, 63
-	sq_bend	57, 0, 0, 63
-	sq_bend	59, 0, 0, 62
-	sq_bend	62, 0, 64, 60
-	sq_bend	64, 0, 0, 59
-	sq_bend	67, 0, 0, 57
-	sq_bend	69, 0, 64, 54
-	sq_bend	70, 0, 64, 51
-	sq_bend	72, 0, 64, 45
-	sq_bend	74, 0, 0, 39
-	sq_bend	77, 0, 64, 31
-	sq_bend	79, 0, 0, 23
-	sq_bend	79, 0, 0, 13
-	sq_bend	82, 0, 0, 3
-	sq_bend	84, 0, 0, 0
-	sq_note	91, 0, 70, 117, 0, 1
-	sq_bend	94, 0, 0, 8
-	sq_beat
-	sq_bend	0, 0, 0, 17
-	sq_bend	3, 0, 0, 26
-	sq_bend	5, 0, 0, 35
-	sq_bend	8, 0, 0, 44
-	sq_bend	8, 0, 0, 51
-	sq_bend	11, 0, 0, 55
-	sq_bend	13, 0, 64, 58
-	sq_bend	15, 0, 0, 61
-	sq_bend	18, 0, 0, 63
-	sq_bend	18, 0, 0, 64
-	sq_note	92, 0, 70, 105, 22, 1
-	sq_beat
-	sq_note	39, 0, 70, 117, 5, 0
-	sq_bend	73, 0, 0, 63
-	sq_bend	74, 0, 64, 62
-	sq_bend	76, 0, 0, 61
-	sq_cell	0x80, 84, 86	# cell 85: song 1 track 12, 2 of 6
-	sq_bend	78, 0, 0, 60
-	sq_bend	81, 0, 64, 58
-	sq_bend	83, 0, 0, 57
-	sq_bend	83, 0, 0, 56
-	sq_bend	86, 0, 0, 55
-	sq_bend	88, 0, 0, 54
-	sq_bend	90, 0, 0, 53
-	sq_bend	93, 0, 64, 51
-	sq_bend	95, 0, 0, 50
-	sq_beat
-	sq_bend	0, 0, 64, 49
-	sq_bend	9, 0, 0, 52
-	sq_bend	12, 0, 64, 53
-	sq_bend	12, 0, 64, 54
-	sq_bend	14, 0, 0, 56
-	sq_bend	17, 0, 64, 57
-	sq_bend	19, 0, 0, 59
-	sq_bend	22, 0, 64, 60
-	sq_bend	22, 0, 0, 62
-	sq_bend	24, 0, 64, 62
-	sq_bend	27, 0, 64, 63
-	sq_bend	29, 0, 0, 64
-	sq_note	32, 0, 70, 119, 48, 0
-	sq_note	85, 0, 70, 99, 57, 0
-	sq_beat
-	sq_bend	20, 0, 64, 63
-	sq_bend	20, 0, 64, 62
-	sq_bend	23, 0, 64, 61
-	sq_bend	25, 0, 64, 60
-	sq_bend	27, 0, 64, 58
-	sq_bend	30, 0, 0, 57
-	sq_bend	32, 0, 0, 55
-	sq_bend	32, 0, 0, 53
-	sq_bend	35, 0, 64, 50
-	sq_bend	37, 0, 0, 47
-	sq_bend	40, 0, 64, 44
-	sq_bend	42, 0, 64, 42
-	sq_bend	43, 0, 0, 41
-	sq_bend	45, 0, 0, 40
-	sq_note	49, 0, 71, 42, 7, 0
-	sq_note	54, 0, 69, 55, 11, 0
-	sq_bend	55, 0, 64, 42
-	sq_bend	57, 0, 0, 44
-	sq_bend	60, 0, 64, 44
-	sq_note	65, 0, 67, 67, 13, 0
-	sq_bend	65, 0, 64, 46
-	sq_bend	67, 0, 64, 47
-	sq_bend	67, 0, 64, 48
-	sq_bend	74, 0, 0, 51
-	sq_note	76, 0, 65, 77, 7, 0
-	sq_bend	77, 0, 0, 52
-	sq_bend	77, 0, 0, 53
-	sq_bend	80, 0, 0, 54
-	sq_bend	82, 0, 64, 54
-	sq_bend	84, 0, 0, 56
-	sq_bend	87, 0, 64, 56
-	sq_bend	89, 0, 0, 57
-	sq_bend	89, 0, 64, 57
-	sq_note	91, 0, 66, 89, 46, 0
-	sq_bend	92, 0, 0, 58
-	sq_beat
-	.byte	0x04, 0xe0	# bytes 1..2 of `sq_bend	4, 0, 0, 59` (the event spans two cells)
-	sq_cell	0x80, 85, 87	# cell 86: song 1 track 12, 3 of 6
-	.byte	0x00, 0x3b	# bytes 3..4 of `sq_bend	4, 0, 0, 59` (the event spans two cells)
-	sq_bend	6, 0, 64, 59
-	sq_bend	6, 0, 0, 60
-	sq_bend	8, 0, 64, 61
-	sq_bend	11, 0, 0, 64
-	sq_note	41, 0, 65, 73, 43, 0
-	sq_note	85, 0, 66, 61, 15, 0
-	sq_beat
-	sq_note	9, 0, 67, 85, 15, 0
-	sq_note	31, 0, 68, 113, 94, 0
-	sq_beat
-	sq_note	36, 0, 67, 110, 41, 0
-	sq_note	91, 0, 66, 94, 35, 0
-	sq_beat
-	sq_note	32, 0, 65, 108, 19, 0
-	sq_note	48, 0, 66, 70, 18, 0
-	sq_note	65, 0, 65, 85, 24, 0
-	sq_note	88, 0, 63, 91, 42, 0
-	sq_beat
-	sq_note	27, 0, 61, 83, 66, 1
-	sq_beat
-	sq_cc	38, 0, 11, 11, 124
-	sq_cc	44, 0, 11, 11, 122
-	sq_cc	50, 0, 11, 11, 120
-	sq_cc	56, 0, 11, 11, 119
-	sq_cc	62, 0, 11, 11, 117
-	sq_cc	70, 0, 11, 11, 115
-	sq_cc	76, 0, 11, 11, 113
-	sq_cc	82, 0, 11, 11, 111
-	sq_cc	88, 0, 11, 11, 109
-	sq_cc	94, 0, 11, 11, 107
-	sq_beat
-	sq_cc	6, 0, 11, 11, 105
-	sq_cc	12, 0, 11, 11, 103
-	sq_cc	18, 0, 11, 11, 102
-	sq_cc	24, 0, 11, 11, 100
-	sq_cc	30, 0, 11, 11, 98
-	sq_cc	38, 0, 11, 11, 96
-	sq_cc	44, 0, 11, 11, 94
-	sq_cc	50, 0, 11, 11, 92
-	sq_cc	56, 0, 11, 11, 127
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	23, 0, 63, 76, 59, 0
-	sq_note	79, 0, 65, 89, 48, 0
-	sq_beat
-	sq_note	29, 0, 67, 97, 59, 0
-	sq_note	87, 0, 70, 107, 73, 0
-	sq_beat
-	sq_bend	64, 0, 93, 64
-	sq_bend	66, 0, 116, 66
-	sq_note	67, 0, 72, 119, 71, 2
-	sq_bend	68, 0, 11, 69
-	sq_bend	70, 0, 35, 71
-	sq_bend	72, 0, 58, 73
-	sq_bend	74, 0, 81, 75
-	sq_bend	76, 0, 104, 77
-	.byte	0x4e, 0xe0, 0x00	# bytes 1..3 of `sq_bend	78, 0, 0, 80` (the event spans two cells)
-	sq_cell	0x80, 86, 88	# cell 87: song 1 track 12, 4 of 6
-	.byte	0x50	# bytes 4..4 of `sq_bend	78, 0, 0, 80` (the event spans two cells)
-	sq_bend	80, 0, 23, 82
-	sq_bend	82, 0, 46, 84
-	sq_bend	84, 0, 69, 86
-	sq_bend	86, 0, 92, 88
-	sq_bend	88, 0, 116, 90
-	sq_cc	90, 0, 11, 11, 126
-	sq_bend	90, 0, 11, 93
-	sq_bend	92, 0, 34, 95
-	sq_bend	94, 0, 58, 97
-	sq_beat
-	sq_cc	0, 0, 11, 11, 124
-	sq_bend	0, 0, 81, 99
-	sq_bend	2, 0, 104, 101
-	sq_bend	4, 0, 127, 103
-	sq_bend	6, 0, 23, 106
-	sq_bend	8, 0, 46, 108
-	sq_cc	10, 0, 11, 11, 122
-	sq_bend	10, 0, 69, 110
-	sq_bend	12, 0, 92, 112
-	sq_bend	14, 0, 115, 114
-	sq_bend	16, 0, 11, 117
-	sq_bend	18, 0, 34, 119
-	sq_cc	20, 0, 11, 11, 119
-	sq_bend	20, 0, 57, 121
-	sq_bend	22, 0, 80, 123
-	sq_bend	24, 0, 127, 127
-	sq_cc	28, 0, 11, 11, 117
-	sq_cc	38, 0, 11, 11, 114
-	sq_cc	48, 0, 11, 11, 111
-	sq_cc	58, 0, 11, 11, 108
-	sq_cc	66, 0, 11, 11, 106
-	sq_cc	76, 0, 11, 11, 103
-	sq_cc	86, 0, 11, 11, 100
-	sq_beat
-	sq_cc	0, 0, 11, 11, 98
-	sq_cc	8, 0, 11, 11, 95
-	sq_cc	18, 0, 11, 11, 93
-	sq_cc	28, 0, 11, 11, 97
-	sq_cc	32, 0, 11, 11, 99
-	sq_cc	36, 0, 11, 11, 102
-	sq_cc	40, 0, 11, 11, 104
-	sq_cc	44, 0, 11, 11, 106
-	sq_cc	50, 0, 11, 11, 110
-	sq_cc	54, 0, 11, 11, 112
-	sq_cc	58, 0, 11, 11, 115
-	sq_cc	62, 0, 11, 11, 117
-	sq_cc	66, 0, 11, 11, 119
-	sq_cc	70, 0, 11, 11, 122
-	sq_cc	74, 0, 11, 11, 124
-	sq_cc	78, 0, 11, 11, 126
-	sq_cc	82, 0, 11, 11, 127
-	sq_beat
-	sq_note	42, 0, 73, 52, 20, 0
-	sq_bend	48, 0, 64, 125
-	sq_bend	48, 0, 0, 120
-	sq_bend	51, 0, 0, 114
-	sq_bend	53, 0, 0, 107
-	.byte	0x38	# bytes 1..1 of `sq_bend	56, 0, 0, 99` (the event spans two cells)
-	sq_cell	0x80, 87, 89	# cell 88: song 1 track 12, 5 of 6
-	.byte	0xe0, 0x00, 0x63	# bytes 2..4 of `sq_bend	56, 0, 0, 99` (the event spans two cells)
-	sq_bend	58, 0, 0, 91
-	sq_bend	58, 0, 0, 83
-	sq_bend	61, 0, 0, 75
-	sq_note	61, 0, 72, 64, 15, 0
-	sq_bend	63, 0, 0, 70
-	sq_bend	66, 0, 64, 65
-	sq_bend	68, 0, 0, 64
-	sq_note	75, 0, 71, 73, 17, 0
-	sq_note	92, 0, 70, 95, 62, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_pc	60, 0, 58, 0, 32
-	sq_cc	60, 0, 11, 7, 58
-	sq_cc	60, 0, 11, 10, 64
-	sq_beat
-	sq_cc	48, 0, 11, 91, 25
-	sq_beat
-	sq_note	60, 0, 48, 93, 1, 1
-	sq_beat
-	sq_note	60, 0, 36, 57, 0, 1
-	sq_beat
-	sq_note	60, 0, 41, 97, 0, 1
-	sq_beat
-	sq_note	60, 0, 50, 107, 0, 1
-	sq_beat
-	sq_note	60, 0, 48, 100, 0, 1
-	sq_beat
-	sq_note	60, 0, 47, 83, 9, 1
-	sq_beat
-	sq_note	60, 0, 46, 105, 95, 0
-	sq_beat
-	sq_note	60, 0, 45, 85, 5, 1
-	sq_beat
-	sq_note	60, 0, 44, 65, 19, 1
-	sq_beat
-	sq_beat
-	sq_note	60, 0, 45, 97, 87, 0
-	sq_beat
-	sq_note	60, 0, 38, 73, 0, 1
-	sq_beat
-	sq_note	60, 0, 43, 99, 3, 1
-	sq_beat
-	sq_note	60, 0, 36, 83, 50, 0
-	sq_beat
-	sq_note	60, 0, 29, 63, 51, 3
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cell	0x80, 88, 65535	# cell 89: song 1 track 12, 6 of 6
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_end
-# after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	16, 11, 120	# data bytes of an event cut at the start
-	sq_cc	94, 0, 16, 11, 119
-	sq_beat
-	sq_cc	2, 0, 16, 11, 118
-	sq_cc	4, 0, 16, 11, 117
-	sq_cc	8, 0, 16, 11, 116
-	sq_cc	12, 0, 16, 11, 115
-	sq_cc	14, 0, 16, 11, 114
-	sq_cc	18, 0, 16, 11, 113
-	sq_cc	22, 0, 16, 11, 112
-	sq_cc	24, 0, 16, 11, 111
-	sq_cc	28, 0, 16, 11, 110
-	sq_cc	32, 0, 16, 11, 109
-	sq_cc	34, 0, 16, 11, 108
-	sq_cc	38, 0, 16, 11, 107
-	sq_cc	42, 0, 16, 11, 106
-	sq_cc	44, 0, 16, 11, 105
-	sq_cc	48, 0, 16, 11, 104
-	sq_cc	52, 0, 16, 11, 103
-	sq_cc	54, 0, 16, 11, 102
-	sq_cc	58, 0, 16, 11, 101
-	sq_cc	62, 0, 16, 11, 100
-	sq_cc	64, 0, 16, 11, 99
-	sq_cc	68, 0, 16, 11, 98
-	sq_cc	70, 0, 16, 11, 97
-	sq_cc	74, 0, 16, 11, 96
-	sq_cc	78, 0, 16, 11, 95
-	sq_cc	80, 0, 16, 11, 94
-	sq_cc	84, 0, 16, 11, 93
-	sq_cc	88, 0, 16, 11, 92
-	sq_cc	90, 0, 16, 11, 91
-	sq_cc	94, 0, 16, 11, 90
-	sq_beat
-	sq_cc	2, 0, 16, 11, 89
-	sq_cc	4, 0, 16, 11, 88
-	sq_cc	8, 0, 16, 11, 87
-	sq_cc	12, 0, 16, 11, 86
-	sq_cc	14, 0, 16, 11, 85
-	sq_cc	18, 0, 16, 11, 84
-	sq_cc	22, 0, 16, 11, 83
-	sq_cc	24, 0, 16, 11, 82
-	sq_cc	28, 0, 16, 11, 81
-	sq_cc	32, 0, 16, 11, 80
-	sq_cc	34, 0, 16, 11, 79
-	sq_cc	38, 0, 16, 11, 78
-	sq_cc	40, 0, 16, 11, 77
-	sq_cc	44, 0, 16, 11, 76
-	sq_cc	48, 0, 16, 11, 75
-	.byte	50, 176	# the first 2 bytes of a tick-first event, cut by the end
-	sq_cell	0x80, 0, 91	# cell 90: song 1 track 13, 1 of 6
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_pc	85, 0, 72, 0, 38
-	sq_cc	85, 0, 12, 7, 119
-	sq_note	85, 0, 58, 124, 54, 0
-	sq_cc	85, 0, 12, 91, 64
-	sq_beat
-	sq_note	11, 0, 57, 124, 7, 1
-	sq_note	66, 0, 46, 90, 14, 0
-	sq_note	76, 0, 45, 20, 13, 0
-	sq_note	89, 0, 45, 40, 5, 0
-	sq_beat
-	sq_note	4, 0, 45, 70, 5, 0
-	sq_note	15, 0, 45, 49, 5, 0
-	sq_note	29, 0, 45, 77, 14, 0
-	sq_note	42, 0, 46, 111, 15, 0
-	sq_note	53, 0, 45, 67, 9, 0
-	sq_note	62, 0, 45, 42, 5, 0
-	sq_note	75, 0, 45, 74, 5, 0
-	sq_note	88, 0, 45, 43, 5, 0
-	sq_beat
-	sq_note	5, 0, 45, 63, 10, 0
-	sq_note	15, 0, 45, 52, 5, 0
-	sq_note	27, 0, 45, 76, 5, 0
-	sq_note	38, 0, 46, 124, 13, 0
-	sq_note	51, 0, 45, 77, 12, 0
-	sq_note	63, 0, 45, 51, 14, 0
-	.byte	0x4d, 0x90, 0x2d, 0x57, 0x0b	# bytes 1..5 of `sq_note	77, 0, 45, 87, 11, 0` (the event spans two cells)
-	sq_cell	0x80, 90, 92	# cell 91: song 1 track 13, 2 of 6
-	.byte	0x00	# bytes 6..6 of `sq_note	77, 0, 45, 87, 11, 0` (the event spans two cells)
-	sq_note	87, 0, 46, 124, 14, 0
-	sq_note	87, 0, 73, 124, 14, 0
-	sq_beat
-	sq_note	13, 0, 73, 123, 13, 0
-	sq_note	39, 0, 72, 105, 13, 0
-	sq_note	63, 0, 72, 124, 14, 0
-	sq_note	87, 0, 48, 101, 17, 0
-	sq_note	89, 0, 60, 103, 24, 0
-	sq_beat
-	sq_note	40, 0, 49, 98, 14, 0
-	sq_note	42, 0, 61, 100, 16, 0
-	sq_note	63, 0, 50, 91, 15, 0
-	sq_note	86, 0, 51, 112, 15, 0
-	sq_note	87, 0, 62, 97, 24, 0
-	sq_beat
-	sq_note	40, 0, 52, 100, 16, 0
-	sq_note	40, 0, 63, 107, 18, 0
-	sq_note	87, 0, 50, 97, 14, 0
-	sq_note	87, 0, 64, 92, 23, 0
-	sq_beat
-	sq_note	38, 0, 51, 100, 14, 0
-	sq_note	39, 0, 65, 93, 20, 0
-	sq_note	85, 0, 66, 103, 22, 0
-	sq_note	87, 0, 54, 100, 18, 0
-	sq_beat
-	sq_note	41, 0, 55, 98, 12, 0
-	sq_note	41, 0, 67, 98, 16, 0
-	sq_note	87, 0, 48, 101, 19, 0
-	sq_note	88, 0, 60, 97, 25, 0
-	sq_beat
-	sq_note	37, 0, 61, 86, 20, 0
-	sq_note	39, 0, 49, 98, 13, 0
-	sq_note	63, 0, 50, 91, 15, 0
-	sq_note	86, 0, 51, 112, 16, 0
-	sq_note	86, 0, 62, 88, 25, 0
-	sq_beat
-	sq_note	39, 0, 52, 100, 15, 0
-	sq_note	39, 0, 63, 102, 17, 0
-	sq_note	87, 0, 50, 97, 13, 0
-	sq_note	88, 0, 64, 88, 23, 0
-	sq_beat
-	sq_note	37, 0, 51, 100, 15, 0
-	sq_note	40, 0, 65, 97, 19, 0
-	sq_note	87, 0, 54, 100, 18, 0
-	sq_note	87, 0, 66, 90, 18, 0
-	sq_beat
-	sq_note	39, 0, 55, 98, 14, 0
-	sq_note	42, 0, 67, 87, 18, 0
-	sq_note	87, 0, 48, 101, 17, 0
-	.byte	0x59	# bytes 1..1 of `sq_note	89, 0, 60, 85, 23, 0` (the event spans two cells)
-	sq_cell	0x80, 91, 93	# cell 92: song 1 track 13, 3 of 6
-	.byte	0x90, 0x3c, 0x55, 0x17, 0x00	# bytes 2..6 of `sq_note	89, 0, 60, 85, 23, 0` (the event spans two cells)
-	sq_beat
-	sq_note	39, 0, 61, 89, 17, 0
-	sq_note	40, 0, 49, 98, 14, 0
-	sq_note	64, 0, 50, 91, 14, 0
-	sq_note	85, 0, 51, 112, 16, 0
-	sq_note	85, 0, 62, 85, 23, 0
-	sq_beat
-	sq_note	40, 0, 52, 100, 17, 0
-	sq_note	40, 0, 63, 102, 16, 0
-	sq_note	89, 0, 50, 108, 16, 0
-	sq_note	89, 0, 61, 101, 19, 0
-	sq_note	89, 0, 62, 102, 11, 0
-	sq_beat
-	sq_note	38, 0, 58, 81, 52, 0
-	sq_note	39, 0, 44, 20, 6, 0
-	sq_note	48, 0, 44, 27, 7, 0
-	sq_note	59, 0, 62, 69, 5, 0
-	sq_note	61, 0, 44, 25, 8, 0
-	sq_note	64, 0, 62, 109, 6, 0
-	sq_note	74, 0, 44, 32, 6, 0
-	sq_note	85, 0, 44, 29, 9, 0
-	sq_note	91, 0, 57, 93, 33, 1
-	sq_beat
-	sq_note	3, 0, 44, 39, 7, 0
-	sq_note	13, 0, 44, 36, 9, 0
-	sq_note	25, 0, 44, 42, 8, 0
-	sq_note	38, 0, 44, 35, 9, 0
-	sq_note	40, 0, 62, 122, 13, 0
-	sq_note	49, 0, 44, 42, 8, 0
-	sq_note	61, 0, 44, 37, 10, 0
-	sq_note	73, 0, 44, 26, 8, 0
-	sq_note	84, 0, 111, 89, 5, 0
-	sq_note	87, 0, 48, 101, 18, 0
-	sq_note	90, 0, 60, 103, 23, 0
-	sq_beat
-	sq_note	41, 0, 49, 98, 15, 0
-	sq_note	41, 0, 61, 100, 19, 0
-	sq_note	62, 0, 50, 91, 15, 0
-	sq_note	86, 0, 51, 112, 15, 0
-	sq_note	87, 0, 62, 97, 24, 0
-	sq_beat
-	sq_note	40, 0, 52, 100, 16, 0
-	sq_note	40, 0, 63, 107, 16, 0
-	sq_note	85, 0, 64, 92, 24, 0
-	sq_note	89, 0, 50, 97, 11, 0
-	sq_beat
-	.byte	0x27, 0x90, 0x33, 0x64, 0x0b	# bytes 1..5 of `sq_note	39, 0, 51, 100, 11, 0` (the event spans two cells)
-	sq_cell	0x80, 92, 94	# cell 93: song 1 track 13, 4 of 6
-	.byte	0x00	# bytes 6..6 of `sq_note	39, 0, 51, 100, 11, 0` (the event spans two cells)
-	sq_note	41, 0, 65, 93, 19, 0
-	sq_note	87, 0, 54, 100, 18, 0
-	sq_note	87, 0, 66, 103, 22, 0
-	sq_note	87, 0, 57, 82, 27, 1
-	sq_beat
-	sq_note	39, 0, 55, 98, 12, 0
-	sq_note	39, 0, 67, 98, 17, 0
-	sq_note	89, 0, 50, 102, 20, 0
-	sq_note	89, 0, 62, 88, 13, 0
-	sq_beat
-	sq_note	40, 0, 50, 114, 19, 0
-	sq_note	65, 0, 62, 84, 13, 0
-	sq_note	88, 0, 60, 98, 14, 0
-	sq_beat
-	sq_note	14, 0, 80, 76, 11, 0
-	sq_note	25, 0, 80, 66, 5, 0
-	sq_note	38, 0, 52, 44, 25, 0
-	sq_note	38, 0, 80, 93, 5, 0
-	sq_note	49, 0, 80, 74, 5, 0
-	sq_note	61, 0, 80, 107, 5, 0
-	sq_note	73, 0, 80, 79, 5, 0
-	sq_note	87, 0, 52, 72, 21, 0
-	sq_note	87, 0, 80, 117, 13, 0
-	sq_beat
-	sq_note	34, 0, 57, 115, 63, 0
-	sq_note	57, 0, 81, 80, 12, 0
-	sq_note	79, 0, 83, 58, 8, 0
-	sq_note	87, 0, 32, 59, 7, 0
-	sq_note	87, 0, 52, 71, 9, 0
-	sq_note	88, 0, 83, 118, 5, 0
-	sq_note	95, 0, 58, 114, 74, 0
-	sq_beat
-	sq_note	23, 0, 32, 27, 8, 0
-	sq_note	24, 0, 82, 104, 12, 0
-	sq_note	55, 0, 32, 49, 8, 0
-	sq_note	57, 0, 81, 109, 9, 0
-	sq_note	87, 0, 48, 101, 18, 0
-	sq_note	91, 0, 60, 85, 21, 0
-	sq_beat
-	sq_note	39, 0, 61, 89, 18, 0
-	sq_note	40, 0, 49, 98, 17, 0
-	sq_note	63, 0, 50, 91, 14, 0
-	sq_note	86, 0, 51, 112, 16, 0
-	sq_note	86, 0, 62, 85, 25, 0
-	sq_beat
-	sq_note	39, 0, 52, 100, 18, 0
-	sq_note	39, 0, 63, 102, 17, 0
-	.byte	0x57, 0x90, 0x32	# bytes 1..3 of `sq_note	87, 0, 50, 97, 13, 0` (the event spans two cells)
-	sq_cell	0x80, 93, 95	# cell 94: song 1 track 13, 5 of 6
-	.byte	0x61, 0x0d, 0x00	# bytes 4..6 of `sq_note	87, 0, 50, 97, 13, 0` (the event spans two cells)
-	sq_note	87, 0, 64, 82, 24, 0
-	sq_beat
-	sq_note	39, 0, 51, 100, 13, 0
-	sq_note	39, 0, 65, 88, 18, 0
-	sq_note	85, 0, 66, 87, 23, 0
-	sq_note	85, 0, 57, 100, 23, 1
-	sq_note	88, 0, 54, 100, 20, 0
-	sq_beat
-	sq_note	38, 0, 67, 92, 17, 0
-	sq_note	40, 0, 55, 98, 12, 0
-	sq_note	86, 0, 48, 101, 18, 0
-	sq_note	89, 0, 60, 103, 25, 0
-	sq_beat
-	sq_note	39, 0, 49, 98, 17, 0
-	sq_note	41, 0, 61, 100, 19, 0
-	sq_note	63, 0, 50, 91, 15, 0
-	sq_note	85, 0, 51, 112, 16, 0
-	sq_note	88, 0, 62, 97, 25, 0
-	sq_beat
-	sq_note	40, 0, 52, 100, 18, 0
-	sq_note	40, 0, 63, 107, 20, 0
-	sq_note	86, 0, 50, 97, 12, 0
-	sq_note	86, 0, 64, 92, 22, 0
-	sq_beat
-	sq_note	39, 0, 51, 100, 13, 0
-	sq_note	39, 0, 65, 93, 21, 0
-	sq_note	83, 0, 58, 89, 7, 1
-	sq_note	86, 0, 66, 103, 15, 0
-	sq_note	87, 0, 54, 100, 14, 0
-	sq_beat
-	sq_note	89, 0, 50, 102, 21, 0
-	sq_note	89, 0, 62, 88, 14, 0
-	sq_beat
-	sq_note	40, 0, 50, 114, 19, 0
-	sq_note	65, 0, 62, 84, 12, 0
-	sq_note	88, 0, 60, 98, 14, 0
-	sq_beat
-	sq_note	14, 0, 80, 76, 10, 0
-	sq_note	25, 0, 80, 66, 5, 0
-	sq_note	38, 0, 52, 44, 26, 0
-	sq_note	38, 0, 80, 93, 5, 0
-	sq_note	49, 0, 80, 74, 5, 0
-	sq_note	61, 0, 80, 107, 5, 0
-	sq_note	73, 0, 80, 79, 5, 0
-	sq_note	87, 0, 52, 72, 21, 0
-	sq_note	87, 0, 80, 117, 13, 0
-	sq_beat
-	sq_note	34, 0, 57, 115, 63, 0
-	.byte	0x39, 0x90, 0x51, 0x50, 0x0c	# bytes 1..5 of `sq_note	57, 0, 81, 80, 12, 0` (the event spans two cells)
-	sq_cell	0x80, 94, 65535	# cell 95: song 1 track 13, 6 of 6
-	.byte	0x00	# bytes 6..6 of `sq_note	57, 0, 81, 80, 12, 0` (the event spans two cells)
-	sq_note	87, 0, 32, 30, 7, 0
-	sq_note	87, 0, 52, 30, 9, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_pc	66, 0, 56, 0, 38
-	sq_cc	66, 0, 12, 7, 119
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	27, 0, 36, 127, 80, 0
-	sq_beat
-	sq_note	68, 0, 31, 124, 12, 0
-	sq_beat
-	sq_beat
-	sq_note	65, 0, 31, 127, 12, 0
-	sq_beat
-	sq_note	57, 0, 36, 117, 67, 0
-	sq_beat
-	sq_note	77, 0, 36, 127, 3, 1
-	sq_beat
-	sq_beat
-	sq_note	20, 0, 36, 127, 10, 1
-	sq_note	57, 0, 104, 98, 51, 0
-	sq_beat
-	sq_note	35, 0, 104, 100, 76, 0
-	sq_beat
-	sq_note	66, 0, 105, 90, 39, 0
-	sq_beat
-	sq_note	32, 0, 107, 79, 59, 0
-	sq_beat
-	sq_note	29, 0, 106, 39, 60, 0
-	sq_beat
-	sq_cc	90, 0, 12, 7, 95
-	sq_beat
-	sq_cc	18, 0, 12, 7, 93
-	sq_cc	42, 0, 12, 7, 91
-	sq_cc	66, 0, 12, 7, 89
-	sq_cc	90, 0, 12, 7, 87
-	sq_beat
-	sq_beat
-	sq_end
-# after the end of track: stale events of an earlier version of the song (stale_tokens)
-	sq_note	36, 0, 67, 79, 91, 2
-	sq_cc	57, 0, 18, 64, 127
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	34, 0, 18, 64, 0
-	sq_note	36, 0, 44, 52, 92, 2
-	sq_note	36, 0, 51, 69, 92, 2
-	sq_note	36, 0, 55, 64, 92, 2
-	sq_note	36, 0, 58, 76, 92, 2
-	sq_note	36, 0, 60, 78, 92, 2
-	.byte	36, 144	# the first 2 bytes of a tick-first event, cut by the end
-	sq_cell	0x80, 0, 97	# cell 96: song 1 track 14, 1 of 2
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	24, 0, 13, 91, 0
-	sq_cc	24, 0, 13, 7, 116
-	sq_cc	24, 0, 13, 10, 64
-	sq_pc	27, 0, 32, 16, 32
-	sq_beat
-	sq_note	27, 0, 46, 90, 84, 1
-	sq_beat
-	sq_beat
-	sq_note	27, 0, 34, 69, 49, 0
-	sq_note	87, 0, 34, 90, 26, 0
-	sq_beat
-	sq_note	24, 0, 33, 62, 61, 0
-	sq_note	89, 0, 31, 82, 25, 0
-	sq_beat
-	sq_note	24, 0, 32, 88, 88, 0
-	sq_beat
-	sq_note	24, 0, 34, 79, 87, 0
-	sq_beat
-	sq_note	24, 0, 35, 73, 95, 0
-	sq_beat
-	sq_note	24, 0, 39, 85, 53, 0
-	sq_note	89, 0, 32, 78, 38, 0
-	sq_beat
-	sq_note	25, 0, 46, 78, 76, 0
-	sq_beat
-	sq_note	24, 0, 44, 86, 71, 0
-	sq_note	87, 0, 32, 69, 10, 0
-	sq_beat
-	sq_note	24, 0, 39, 76, 90, 0
-	sq_beat
-	sq_note	24, 0, 32, 83, 0, 1
-	sq_beat
-	sq_note	24, 0, 31, 79, 90, 0
-	sq_beat
-	sq_note	24, 0, 33, 66, 92, 0
-	sq_beat
-	sq_note	24, 0, 35, 85, 92, 0
-	sq_beat
-	sq_note	24, 0, 38, 79, 61, 0
-	sq_note	89, 0, 31, 79, 24, 0
-	sq_beat
-	sq_cell	0x80, 96, 65535	# cell 97: song 1 track 14, 2 of 2
-	sq_note	24, 0, 43, 82, 87, 0
-	sq_beat
-	sq_note	24, 0, 44, 85, 94, 0
-	sq_beat
-	sq_note	24, 0, 41, 77, 86, 0
-	sq_beat
-	sq_note	24, 0, 43, 72, 45, 0
-	sq_note	65, 0, 36, 51, 53, 1
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_end
-# after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	0	# data bytes of an event cut at the start
-	sq_beat
-	sq_note	1, 0, 36, 62, 86, 0
-	sq_beat
-	sq_note	2, 0, 41, 77, 70, 0
-	sq_beat
-	sq_note	1, 0, 34, 55, 85, 0
-	sq_beat
-	sq_note	1, 0, 41, 73, 87, 0
-	sq_beat
-	sq_note	3, 0, 46, 92, 80, 0
-	sq_beat
-	sq_note	1, 0, 41, 73, 83, 0
-	sq_note	95, 0, 36, 68, 93, 0
-	sq_beat
-	sq_beat
-	sq_note	1, 0, 43, 78, 91, 0
-	sq_beat
-	sq_note	3, 0, 48, 81, 84, 0
-	sq_beat
-	sq_note	1, 0, 43, 87, 80, 0
-	sq_beat
-	sq_note	0, 0, 41, 91, 88, 0
-	sq_beat
-	sq_note	1, 0, 39, 80, 90, 0
-	sq_beat
-	sq_note	2, 0, 38, 71, 76, 0
-	sq_beat
-	.byte	2, 144, 36, 70	# the first 4 bytes of a tick-first event, cut by the end
-	sq_cell	0x80, 0, 99	# cell 98: song 1 track 15, 1 of 2
-	sq_cc	0, 0, 14, 10, 1
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	0, 0, 14, 10, 2
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	0, 0, 14, 10, 11
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	0, 0, 14, 10, 3
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	0, 0, 14, 10, 4
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	48, 0, 14, 10, 5
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	0, 0, 14, 10, 12
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	0, 0, 14, 10, 6
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	0, 0, 14, 10, 7
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	48, 0, 14, 10, 8
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	0, 0, 14, 10, 9
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cell	0x80, 98, 65535	# cell 99: song 1 track 15, 2 of 2
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	0, 0, 14, 10, 13
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_cc	0, 0, 14, 10, 10
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_end
-# after the end of track: stale events of an earlier version of the song (stale_tokens)
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_end
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	7, 0, 53, 77, 34, 0
-	sq_note	41, 0, 55, 81, 29, 0
-	sq_note	75, 0, 57, 88, 29, 0
-	sq_beat
-	sq_note	5, 0, 58, 106, 43, 0
-	sq_note	95, 0, 58, 107, 47, 0
-	sq_beat
-	sq_note	93, 0, 58, 106, 56, 0
-	sq_beat
-	sq_note	61, 0, 57, 84, 26, 0
-	sq_note	92, 0, 58, 91, 59, 0
-	sq_beat
-	sq_note	57, 0, 60, 97, 35, 0
-	sq_note	91, 0, 62, 115, 79, 0
-	sq_beat
-	sq_note	87, 0, 62, 96, 52, 0
-	sq_beat
-	sq_note	62, 0, 62, 119, 40, 0
-	sq_beat
-	sq_note	58, 0, 61, 75, 44, 0
-	sq_note	94, 0, 62, 86, 54, 0
-	sq_beat
-	sq_note	51, 0, 63, 100, 51, 0
-	sq_note	92, 0, 65, 113, 39, 0
-	sq_beat
-	sq_note	94, 0, 65, 121, 70, 0
-	sq_beat
-	sq_note	64, 0, 64, 83, 35, 0
-	sq_note	92, 0, 65, 104, 68, 0
-	sq_beat
-	sq_note	59, 0, 64, 78, 34, 0
-	sq_note	89, 0, 65, 107, 73, 0
-	sq_beat
-	sq_note	63, 0, 70, 86, 35, 0
-	sq_note	95, 0, 65, 116, 47, 0
-	sq_beat
-	sq_beat
-	sq_beat
-	sq_note	52, 0, 54, 77, 38, 0
-	sq_note	91, 0, 55, 92, 52, 0
-	sq_beat
-	sq_note	68, 0, 63, 115, 35, 0
-	sq_beat
-	sq_note	63, 0, 62, 109, 22, 1
-	sq_beat
-	sq_note	89, 0, 60, 99, 40, 0
-	sq_beat
-	.byte	91, 144, 58	# the first 3 bytes of a tick-first event, cut by the end
-	.endzlib
-	.align	4, 0xFF	# pad after zlib_4C3C6C14
-zlib_4C3C9EE4:	# DemoSong04: its event memory, 11008 bytes, stored as a zlib stream of 4842 bytes (inflated by the program); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
 	.zlib	6

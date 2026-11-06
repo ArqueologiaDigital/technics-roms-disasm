@@ -9,7 +9,7 @@ func_4C001885_Var:	# u32, a constant; read / written by func_4C001885 0x4C001885
 localeconv_Records:	# 1 x LconvMonetary (40 bytes each); read by localeconv 0x4C00246C `mov (0x10, a1), a0`; localeconv 0x4C00246C `mov (0x14, a1), a0`; localeconv 0x4C00246C `mov (0x18, a1), a0` (+12)
 	LconvMonetary	locale=Str_C_19, int_curr_symbol=data_4C17627E, currency_symbol=data_4C17627F, mon_decimal_point=data_4C176280, mon_thousands_sep=data_4C176281, mon_grouping=data_4C176282, positive_sign=data_4C176283, negative_sign=data_4C176284, int_frac_digits=127, frac_digits=127, p_cs_precedes=127, p_sep_by_space=127, n_cs_precedes=127, n_sep_by_space=127, p_sign_posn=127, n_sign_posn=127
 localeconv_Records_2:	# 2 x LconvNumeric (16 bytes each); read by localeconv 0x4C00246C `mov (0xc, a1), a0`; localeconv 0x4C00246C `mov (4, a1), a0`; localeconv 0x4C00246C `mov (8, a1), a0`
-	LconvNumeric	locale=Str_C_18, decimal_point=Str_empty_939, thousands_sep=data_4C17628C, grouping=data_4C17628D
+	LconvNumeric	locale=Str_C_18, decimal_point=Str_empty_928, thousands_sep=data_4C17628C, grouping=data_4C17628D
 	LconvNumeric	
 
 localeconv_Table:	# 4 x u32, 0..2576980378; read by localeconv 0x4C00246C: `mov (localeconv_Table), d0`
@@ -7658,10 +7658,10 @@ func_4C051751_Table:	# 15 x u16, 496..4638; read by func_4C051751 0x4C051751: `m
 	tab_u16	4126, 4382, 4638	# [12]
 	.space	4, 0xFF
 
-func_4C0506C7_entry_L4_Records:	# 1 x REC_func_4C0506C7_entry_L4_Records (12 bytes each); read by func_4C0506C7_entry_L4 0x4C0506D0 `mov (4, a0), d3`; func_4C0506C7_entry_L4 0x4C0506D0 `mov (a0), a2`
-	REC_func_4C0506C7_entry_L4_Records	proc=WORK_RAM_BASE, index=0x80000, x8="\x01\x02\x00\x00"
-# census: opaque -- unknown-dump: 24 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x359908, 0x359920
+func_4C0506C7_entry_L4_Records:	# 3 x REC_func_4C0506C7_entry_L4_Records (12 bytes each); read by func_4C0506C7_entry_L4 0x4C0506D0 `mov (4, a0), d3`; func_4C0506C7_entry_L4 0x4C0506D0 `mov (a0), a2`
+	REC_func_4C0506C7_entry_L4_Records	f0=0x50000000, index=0x80000, x8="\x01\x02\x00\x00"
+	REC_func_4C0506C7_entry_L4_Records	f0=0x58000000, index=0x5040100, x8="\x01\x00\x00\x00"
+	REC_func_4C0506C7_entry_L4_Records	f0=0x54000000, index=0x5040100, x8="\x01\x00\x00\x00"
 func_4C050787_entry_L4_Records:	# 1 x REC_func_4C050787_entry_L4_Records (12 bytes each); read by func_4C050787_entry_L4 0x4C05078D `mov (4, a1), d0`; func_4C050787_entry_L4 0x4C05078D `mov (a1), a0`; func_4C050787_entry_L4 0x4C05078D `movbu (a1), d1` (+1)
 	REC_func_4C050787_entry_L4_Records	addr=0x44000000, index=32768, f8=4, x9="\x00\x00\x00"
 
