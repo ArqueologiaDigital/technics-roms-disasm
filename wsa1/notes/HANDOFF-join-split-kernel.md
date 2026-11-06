@@ -3,6 +3,31 @@
 Written at 99% context. Everything needed to continue is here or in a committed script; nothing
 load-bearing lives only in a transcript.
 
+## Status 2026-11-06 (lane open9/kernel-a3): A3 DONE -- one kernel source for three processors
+
+The owner answered the A3 question below on 2026-11-06: **"Yes: one kernel source for three CPUs,
+with conditional blocks through most routines."**  Done on that basis; every figure and the design
+are in `notes/open9-a3-probes/README.md`.
+
+* ★ `kernel/kernel.s` is the kernel of prom_a, prom_c AND the KN5000 sub-CPU payload v1.42 (v1.41 and
+  v1.40 are generated from it and include the same file).  All six rebuild byte for byte
+  (`make gate`, `make gate-wsa1`).  `kernel/kernel_kn5000_subcpu.inc` is the third RAM map and sets
+  `KERNEL_KN5000 = 1`; the WSA1 .inc files set 0.
+* Pairing redone on proven boundaries (`notes/open9-a3-probes/kernel_a3_pairing.py --selftest`):
+  26 pairs, the SAME ROM order on both products, 10 WSA1 stack faces and 7 KN5000 routines without a
+  partner.  A2's out-of-order run and several of its sites (Kernel_SemaSignal at TaskEvent_Wait,
+  MsgQueue_Send at TaskSched_Wait) were artefacts of its approximate windows.
+* Merge (`kernel_a3_merge.py --report` / `--verify`, 12 checks): of the KN5000's 1,137 kernel
+  instructions, 801 are written once for all three processors, 30 are spelled per CPU, 306 are
+  KN5000-only; 110 WSA1 instructions are WSA1-only.  109 `.if KERNEL_KN5000` blocks, 25
+  `.if KERNEL_KN5000 == 0`.  62 KN5000 labels took kernel.s's names
+  (`scripts/renaming/rename_kernel_a3.sed`); each paired routine records its old names.
+* ⚠ This SUPERSEDES two rules below for the KN5000 sub-CPU kernel only: A1's "symbolic `.equ` per CPU,
+  NOT `.if/.else`" (still true between the two WSA1 CPUs) and constraint 2 as far as that kernel's own
+  text and labels are concerned (its comments all moved, verbatim but for the renames; `--verify`).
+* Follow-up, out of scope: the KN5000 MAIN CPU's separate build of the kernel (FINDINGS sec 7) -- the
+  A3 README says what joining it as a fourth processor would take.
+
 ## Status 2026-10-31 (lane open4/wsa1-e): B3 DONE, A4 DONE (KN5000 sub-CPU), A3 BLOCKED (owner decision)
 
 Register item N-8c52a3ed.  Probes and tools: `notes/open4-e-probes/README.md`.
@@ -27,6 +52,7 @@ Register item N-8c52a3ed.  Probes and tools: `notes/open4-e-probes/README.md`.
   (the "1,256 KB monolith" this file quotes is out of date), one boot ROM's worth of code.
   WSA1's half (prom_c per subject) was done before (`notes/prom_c_split.py`).
 * ⚠ **A3 -- the shared kernel source for the KN5000 sub-CPU: BLOCKED on an owner decision.**
+  (★ ANSWERED and DONE 2026-11-06 -- see the status section above.)
   `notes/open4-e-probes/kernel_a3_shareability.py` (--selftest): of 26 kernel routines, ONE
   (`Kernel_ResumeTask`, 9 instructions) can be emitted for the KN5000 by `.equ` alone; 24 have WSA1
   instructions with no KN5000 partner (93 in all, a lower bound) and 7 have instructions of a

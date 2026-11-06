@@ -641,7 +641,8 @@ Task descriptors are 12 bytes `{entry PC, stack top, initial SR, priority}` at
 `Boot_InitPeripherals`/`0x1DC34`/`0x8800`/3, then `0xF52D92`, then a `jr $` stub
 that is never spawned, then `0xF9806C`, then `0xFAA2FA`).  The spawner is
 `Show_ScreenGroup` (`:2264`) — a **mislabel**: it is `sta_tsk`, byte-identical to
-the sub-CPU's `TaskSched_SpawnTask` (`v142/subcpu/kn5000_subprogram_v142.s:868`),
+the sub-CPU's `Kernel_StartTask` (`TaskSched_SpawnTask` until 2026-11-06, when the sub-CPU kernel
+became `wsa1/kernel/kernel.s`; then at `v142/subcpu/kn5000_subprogram_v142.s:868`),
 and `kn5000_v10_program.s:661`'s comment *"Show screen group 4"* is wrong too.
 
 If anyone wants a clean reference copy of this kernel to compare a KN7000 trace

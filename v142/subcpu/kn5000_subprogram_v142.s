@@ -31,9 +31,9 @@
 	.equ	Voice_GlobalFlags, Payload_Bss_Start+0x24cd
 ; Task1_StackTop / Task2_StackTop / Task3_StackTop: the initial stack tops in the +4 field of the
 ;   three TaskSched_TaskDescriptorTable records (that table's header gives the DRAM partition).
-;   Task 1's is also the boot stack PostReset_InitAudio loads before it calls TaskSched_Init.
-; TaskSched_StackTop: the scheduler's own stack, reloaded by TaskSched_Init, TaskSched_Dispatch
-;   and TaskSched_ExitCurrentTask; it sits between task 3's stack and task 2's.
+;   Task 1's is also the boot stack PostReset_InitAudio loads before it calls Kernel_InitRam.
+; TaskSched_StackTop: the scheduler's own stack, reloaded by Kernel_InitRam, Kernel_Dispatch
+;   and Kernel_ExitTask; it sits between task 3's stack and task 2's.
 	.equ	Task1_StackTop, Payload_Bss_Start+0x1824
 	.equ	Task2_StackTop, Payload_Bss_Start+0x1daa
 	.equ	Task3_StackTop, Payload_Bss_Start+0x1c26

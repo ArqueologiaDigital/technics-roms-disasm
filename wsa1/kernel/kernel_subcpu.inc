@@ -17,6 +17,10 @@
 ;   The other processor's is in kernel_maincpu.inc, and the two differ in
 ;   every row but one -- same kernel, different RAM.
 
+; kernel.s also builds the KN5000 sub-CPU's kernel (kernel_kn5000_subcpu.inc), whose text differs;
+; 0 here selects the WSA1 side of every `.if KERNEL_KN5000` block (2026-11-06).
+.equ KERNEL_KN5000, 0
+
 .equ KERNEL_STACK_TOP,           0x0000FA00	; the kernel's own stack; different RAM maps
 .equ KERNEL_CURRENT_TASK,        0x00000091	; word cell: pointer to the running task's control block, 0 = none
 .equ KERNEL_PENDING_TICKS,       0x00000090	; byte cell: timer-3 ticks not yet serviced (INTT3_KernelTick raises it)

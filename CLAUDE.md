@@ -133,7 +133,9 @@ make website            # gallery + rom-status; pass DOCS_DIR=/abs/path/technics
 - **LLVM assembly** (authoritative, in `*/` directories): `.s` files using LLVM/GNU syntax for TLCS-900
   - `v10/maincpu/kn5000_v10_program.s` + 156 more `.s` files under `v10/maincpu/`
     (likewise `v9/maincpu/`, `v7/maincpu/`)
-  - `v142/subcpu/kn5000_subprogram_v142.s`, `subcpu/boot/kn5000_subcpu_boot.s`
+  - `v142/subcpu/kn5000_subprogram_v142.s`, `subcpu/boot/kn5000_subcpu_boot.s`; the payload's kernel
+    (and v141's / v140's) is `wsa1/kernel/kernel.s`, shared with both SX-WSA1R CPUs since 2026-11-06
+    (`-I wsa1/kernel`, `.if KERNEL_KN5000` blocks; `wsa1/notes/open9-a3-probes/README.md`)
   - `hdae5000/hd-ae5000_v2_06i.s`, `table_data/kn5000_table_data.s` + shared includes
   - `custom_data/kn5000_custom_data.s`
 - **ASL sources** (archived in `archive/asl/`): Original ASL syntax, read only by the guarded
@@ -208,9 +210,9 @@ Symbol reference files in `symbols/` provide address-to-name mappings for extern
 | `symbols/maincpu_v7_symbols_reference.txt`      | Main CPU v7                                       | 53,559  | 0xE00000 - 0xFFFFE8                                        |
 | `symbols/maincpu_v6_symbols_reference.txt`      | Main CPU v6                                       | 53,863  | 0xE00000 - 0xFFFFE8                                        |
 | `symbols/maincpu_v5_symbols_reference.txt`      | Main CPU v5                                       | 53,826  | 0xE00000 - 0xFFFFE8                                        |
-| `symbols/subcpu_symbols_reference.txt`          | Sub CPU payload v1.42                             | 5,064   | 0x000400 - 0x0451CC (past the image: DRAM `.equ` symbols)  |
-| `symbols/subcpu_v141_symbols_reference.txt`     | Sub CPU payload v1.41                             | 5,063   | 0x000400 - 0x0451B4 (past the image: DRAM `.equ` symbols)  |
-| `symbols/subcpu_v140_symbols_reference.txt`     | Sub CPU payload v1.40                             | 5,063   | 0x000400 - 0x045180 (past the image: DRAM `.equ` symbols)  |
+| `symbols/subcpu_symbols_reference.txt`          | Sub CPU payload v1.42                             | 5,070   | 0x000400 - 0x0451CC (past the image: DRAM `.equ` symbols)  |
+| `symbols/subcpu_v141_symbols_reference.txt`     | Sub CPU payload v1.41                             | 5,069   | 0x000400 - 0x0451B4 (past the image: DRAM `.equ` symbols)  |
+| `symbols/subcpu_v140_symbols_reference.txt`     | Sub CPU payload v1.40                             | 5,069   | 0x000400 - 0x045180 (past the image: DRAM `.equ` symbols)  |
 | `symbols/subcpu_boot_symbols_reference.txt`     | Sub CPU boot                                      | 200     | 0xFF8000 - 0x1000000 (last row is the linker `end` marker) |
 | `symbols/table_data_symbols_reference.txt`      | Table data                                        | 4,762   | 0x800000 - 0x9FFEF0                                        |
 | `symbols/hdae5000_symbols_reference.txt`        | HDAE5000 expansion                                | 7,197   | 0x280000 - 0x300000 (last row is the linker `end` marker)  |
@@ -220,6 +222,9 @@ Symbol reference files in `symbols/` provide address-to-name mappings for extern
 
 The two HD-AE5000 v1 rows were added 2026-10-30 (lane open/hdae-v1), from
 `l2_symbol_reference.py --regen --only hdae5000_v1_15i,hdae5000_v1_10i`.
+The three sub-CPU payload rows were regenerated 2026-11-06 (lane open9/kernel-a3), when the payload's
+kernel became `wsa1/kernel/kernel.s` and 62 of its labels took that file's names
+(`scripts/renaming/rename_kernel_a3.sed`); `KERNEL_*` equates are not rows.
 
 **In sync as of 2026-10-24** (counts above from that day's
 `python3 scripts/analysis/l2_symbol_reference.py --check`, which reports 100 %

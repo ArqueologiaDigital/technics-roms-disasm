@@ -414,7 +414,9 @@ DATA_DIR = ("\t.short", "\t.long", "\t.byte", "\t.ascii", "\t.incbin", "\t.space
 def kernel_lines():
     """[(label_or_None, prom_a_addr, prom_c_addr, is_data), ...] in ROM order."""
     rows, pending = [], None
-    for line in open(KERNEL_S):
+    # kernel.s is also the KN5000 sub-CPU's source since 2026-11-06: read the WSA1 build's lines
+    from asm_source import cpu_view
+    for line in cpu_view(open(KERNEL_S, encoding="utf-8").read().split("\n")):
         m = re.match(r'^([A-Za-z_][A-Za-z0-9_]*):', line)
         if m:
             if pending is None or not pending.startswith("sub_"):

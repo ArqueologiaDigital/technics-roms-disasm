@@ -1044,6 +1044,15 @@ def cmd_verify():
         origin |= {l.rstrip() for l in tail}
     origin |= {l.rstrip() for l in kernel_header().split("\n")}
     origin |= {l for v in CORRECTIONS.values() for l in v}
+    # ★ 2026-11-06 (A3): kernel.s is also the KN5000 sub-CPU's kernel.  The comment lines that
+    #   merge moved in from v142/subcpu/core/03_task_scheduler_kernel.s, its banners and its
+    #   name records, and the header lines it added, have a third origin; their own checker is
+    #   notes/open9-a3-probes/kernel_a3_merge.py --verify, which proves every one of them came
+    #   from that file.  Accepting them here keeps this check about prom_a and prom_c.
+    sys.path.insert(0, os.path.join(ROOT, "notes", "open9-a3-probes"))
+    import kernel_a3_merge as A3
+    origin |= A3.kn_origin_lines()
+    origin |= {l.rstrip() for _, _, add in A3.KS_EDITS for l in add.split("\n")}
     stray = []
     for l in kern:
         t = l.rstrip()

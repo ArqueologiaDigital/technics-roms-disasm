@@ -24,6 +24,10 @@
 ; on this symbol rather than being unconditional.
 .equ KERNEL_MEM_OPS_PROVIDED, 1
 
+; kernel.s also builds the KN5000 sub-CPU's kernel (kernel_kn5000_subcpu.inc), whose text differs;
+; 0 here selects the WSA1 side of every `.if KERNEL_KN5000` block (2026-11-06).
+.equ KERNEL_KN5000, 0
+
 .equ KERNEL_STACK_TOP,           0x0060EB80	; the kernel's own stack; different RAM maps
 .equ KERNEL_CURRENT_TASK,        0x000000BF	; word cell: pointer to the running task's control block, 0 = none
 .equ KERNEL_PENDING_TICKS,       0x000000BE	; byte cell: timer-3 ticks not yet serviced (INTT3_KernelTick raises it)

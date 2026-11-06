@@ -158,9 +158,9 @@ IMAGES = collections.OrderedDict([
     ("v7", ("kn5000", "tlcs", ".", ["v7/maincpu"], ["v7/maincpu/kn5000_v7_program.s"], (0xE00000, 0x1000000))),
     ("v6", ("kn5000", "tlcs", ".", ["v6/maincpu"], ["v6/maincpu/kn5000_v6_program.s"], (0xE00000, 0x1000000))),
     ("v5", ("kn5000", "tlcs", ".", ["v5/maincpu"], ["v5/maincpu/kn5000_v5_program.s"], (0xE00000, 0x1000000))),
-    ("v142", ("kn5000", "tlcs", ".", ["v142/subcpu"], ["v142/subcpu/kn5000_subprogram_v142.s"], (0x400, 0x3EF00))),
-    ("v141", ("kn5000", "tlcs", ".", ["v141/subcpu"], ["v141/subcpu/kn5000_subprogram_v141.s"], (0x400, 0x3EF00))),
-    ("v140", ("kn5000", "tlcs", ".", ["v140/subcpu"], ["v140/subcpu/kn5000_subprogram_v140.s"], (0x400, 0x3EF00))),
+    ("v142", ("kn5000", "tlcs", ".", ["v142/subcpu", "wsa1/kernel"], ["v142/subcpu/kn5000_subprogram_v142.s"], (0x400, 0x3EF00))),
+    ("v141", ("kn5000", "tlcs", ".", ["v141/subcpu", "wsa1/kernel"], ["v141/subcpu/kn5000_subprogram_v141.s"], (0x400, 0x3EF00))),
+    ("v140", ("kn5000", "tlcs", ".", ["v140/subcpu", "wsa1/kernel"], ["v140/subcpu/kn5000_subprogram_v140.s"], (0x400, 0x3EF00))),
     ("subboot", ("kn5000", "tlcs", ".", ["subcpu/boot"], ["subcpu/boot/kn5000_subcpu_boot.s"], (0xFE0000, 0x1000000))),
     ("tabledata", ("kn5000", "tlcs", ".", ["table_data"], ["table_data/kn5000_table_data.s"], (0x800000, 0xA00000))),
     ("customdata", ("kn5000", "tlcs", ".", ["custom_data"], ["custom_data/kn5000_custom_data.s"], (0x300000, 0x400000))),
@@ -289,6 +289,19 @@ def resolve(inc, cur_dir, idirs, cwd):
     return None
 
 
+# wsa1/kernel/kernel.s is ONE source for three processors (2026-11-06): the WSA1 images and the KN5000
+# sub-CPU payloads each read it as their own build does, with the other processor's `.if KERNEL_KN5000`
+# branches blanked (wsa1/notes/asm_source.py cpu_view; line numbers are kept).
+sys.path.insert(0, os.path.join(ROOT, "wsa1", "notes"))
+from asm_source import cpu_view  # noqa: E402
+SHARED_COND = {"wsa1/kernel/kernel.s"}
+
+
+def file_lines(p, model):
+    raw = open(os.path.join(ROOT, p), "rb").read().decode("latin-1").split("\n")
+    return cpu_view(raw, kn5000=(model == "kn5000")) if p in SHARED_COND else raw
+
+
 def image_files(key, tracked):
     model, dialect, cwd, idirs, roots, rng = IMAGES[key]
     if isinstance(roots, str):
@@ -305,8 +318,8 @@ def image_files(key, tracked):
             continue
         order.append(p)
         incs = []
-        for raw in open(os.path.join(ROOT, p), "rb").read().split(b"\n"):
-            m = INCLUDE.match(raw.decode("latin-1"))
+        for raw in file_lines(p, model):
+            m = INCLUDE.match(raw)
             if m:
                 r = resolve(m.group(1), os.path.dirname(p), idirs, cwd)
                 if r:
@@ -320,9 +333,9 @@ def image_files(key, tracked):
 class Parsed:
     """One file: raw lines and statements [(lineno, kind, label_or_None, body)]."""
 
-    def __init__(self, path, mn):
+    def __init__(self, path, mn, model=None):
         self.path = path
-        self.lines = open(os.path.join(ROOT, path), "rb").read().decode("latin-1").split("\n")
+        self.lines = file_lines(path, model)
         self.macros = {}                # name -> has_instruction
         stmts, cur, has_ins = [], None, False
         for i, ln in enumerate(self.lines):
@@ -418,9 +431,10 @@ def measure(key, cache, tracked, per_file=False):
     files, untracked = image_files(key, tracked)
     parsed = []
     for f in files:
-        if f not in cache:
-            cache[f] = Parsed(f, mn)
-        parsed.append(cache[f])
+        ck = (f, model) if f in SHARED_COND else f
+        if ck not in cache:
+            cache[ck] = Parsed(f, mn, model)
+        parsed.append(cache[ck])
     macros = {}
     insn_macros = set()
     for p in parsed:

@@ -138,6 +138,10 @@ ROMS = {
 # v2.06i (includes/generated/HDAE5000_Logo.bin and the like) resolve from hdae5000/.
 EXTRA_INC = {"hdae5000_v2_01i": ["hdae5000"], "hdae5000_v1_15i": ["hdae5000"],
              "hdae5000_v1_10i": ["hdae5000_v1_15i", "hdae5000"]}
+# Source files OUTSIDE the root that its build assembles (-I wsa1/kernel, 2026-11-06): the sub-CPU
+# payload's kernel is wsa1/kernel/kernel.s, shared with both SX-WSA1R CPUs.  It is scanned as the
+# KN5000 build sees it (wsa1/notes/asm_source.py cpu_view: the WSA1-only branches blanked).
+EXTRA_SRC = {"v142/subcpu": ["wsa1/kernel/kernel.s"]}
 # Number of '; Was: .incbin' fossil comments each root carries (selftest step 2).
 FOSSIL_WAS = {"hdae5000": 10, "hdae5000_v2_01i": 8, "hdae5000_v1_15i": 6, "hdae5000_v1_10i": 6}
 # ⚠ NOTE ON THE 9TH KN5000 IMAGE: `kn5000_subprogram_v142_compressed` (the 9th
@@ -330,12 +334,13 @@ MACRO_INVOKE = {
 }
 
 
-def scan_directives(path):
+def scan_directives(path, lines=None):
     """-> (typed_data_bytes, macro_call_count) for one .s file, comment-stripped,
-    counting `.incbin` lines as 0 (handled separately by the caller)."""
+    counting `.incbin` lines as 0 (handled separately by the caller).  `lines`, when
+    given, are the file's lines as one build sees them (EXTRA_SRC)."""
     total = 0
     macro_calls = 0
-    for line in strip_comment_lines(path):
+    for line in (strip_comment_lines(path) if lines is None else [strip_comment(l) for l in lines]):
         if ".incbin" in line:
             continue
         m = DIRECTIVE_RE.match(line)
@@ -449,6 +454,13 @@ def measure_kn5000_root(root):
         pd = port_todo_bytes(f)
         typed += td - pd
         verbatim += pd
+        macro_calls += mc
+    for x in EXTRA_SRC.get(root.rstrip("/"), ()):
+        sys.path.insert(0, os.path.join(REPO, "wsa1", "notes"))
+        from asm_source import cpu_view
+        xp = os.path.join(REPO, x)
+        td, mc = scan_directives(xp, cpu_view(open(xp, encoding="utf-8").read().split("\n"), kn5000=True))
+        typed += td
         macro_calls += mc
     # A ported tree's C data compiles from the newer tree's C; its <tree>_c_divergence.json
     # (scripts/build/apply_c_divergence.py) overwrites single bytes of the compiled bins with
