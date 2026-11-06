@@ -1,6 +1,6 @@
 # The SX-KN7000 board's memory-mapped devices outside the CPU, by name: the floppy controller, the
-# tone generator's host ports, the SD card's SPI port and power controller, the board strap and the LCD
-# controller.  Hand-written source (lane mn10300-names, 2026-11-02), copied from the IC18 boot ROM's
+# tone generator's host ports, the SD card's SPI port, the IC25 output latch (SD power, SPSW and the D/A
+# converter's mode port; kn7000/notes/audio-mute-probes/), the board strap and the LCD controller.  Hand-written source (lane mn10300-names, 2026-11-02), copied from the IC18 boot ROM's
 # own .equ rows (kn7000/tools/gen_ic18_s.py; evidence in kn7000/notes/ic18-boot-rom.md), which name
 # them from the boot ROM's use and the 941 program's; kn7000/tools/check_sfr_names.py keeps the two
 # in agreement.  Read by gen_program_s.py for the KN7000 program builds only: the siblings' boards are
