@@ -37589,8 +37589,22 @@ names_50005794:
 	.long	data_4C18DDF9
 	.long	0
 	.space	72, 0x00
-# census: opaque -- unknown-dump: 52 bytes of words that look like addresses in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x37CD28, 0x37CD5C
+
+names_50005814:	# 12 string pointers, typed by value (every word 0 or a printable string of this region); reader not traced
+	.long	Str_chara1_fnt
+	.long	Str_chara2_fnt
+	.long	Str_chara3_fnt
+	.long	Str_chara4_fnt
+	.long	Str_chara5_fnt
+	.long	Str_chara1p_fnt
+	.long	Str_chara6_fnt
+	.long	Str_chara1w_fnt
+	.long	Str_chara2w_fnt
+	.long	Str_chara5w_fnt
+	.long	Str_chara7w_fnt
+	.long	Str_chara7_fnt
+# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6500_program.rom", 0x37CD58, 0x37CD5C
 	.space	76, 0x00
 
 func_4C0525B8_entry_L58_Var:	# u32, initial value of a RAM variable; read / written by func_4C0525B8_entry_L58 0x4C052612: `mov d0, (func_4C0525B8_entry_L58_Var)`

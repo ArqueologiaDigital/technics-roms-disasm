@@ -10047,12 +10047,24 @@ Str_ALPHAB_10:	.asciz "ALPHAB."
 Str_LIST_10:	.asciz "LIST"
 Str_S_OUTPUT_10:	.asciz "S-OUTPUT"
 Str_MIXER_10:	.asciz "MIXER"
-# census: opaque -- unknown-dump: 7 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF510, 0x0AF517
+Str_C_L_S_12:	.asciz "C.L.S."
 Str_SETUP_10:	.asciz "SETUP &"
 Str_TOOLS_10:	.asciz "TOOLS"
-# census: opaque -- unknown-dump: 51 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF525, 0x0AF558
+	.align	4, 0xFF	# pad after Str_TOOLS_10
+
+names_978AF528:	# 12 string pointers, typed by value (every word 0 or a printable string of this region); reader not traced
+	.long	Str_BASICS_11
+	.long	Str_JUKE_BOX_13
+	.long	Str_LOAD_BY_10
+	.long	Str_NUMBER_10
+	.long	Str_NEWS_10
+	.long	Str_ALPHAB_10
+	.long	Str_LIST_10
+	.long	Str_S_OUTPUT_10
+	.long	Str_MIXER_10
+	.long	Str_C_L_S_12
+	.long	Str_SETUP_10
+	.long	Str_TOOLS_10
 
 func_97827B50_Var_278:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
 	REC_func_97827B50_ArgA1	f0=15, f2=216, f4=68, f6=236

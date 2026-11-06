@@ -20190,8 +20190,22 @@ names_500057FC:
 	.long	data_4C18D405
 	.long	0
 	.space	72, 0x00
-# census: opaque -- unknown-dump: 52 bytes of words that look like addresses in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3F30DC, 0x3F3110
+
+names_5000587C:	# 12 string pointers, typed by value (every word 0 or a printable string of this region); reader not traced
+	.long	Str_chara1_fnt
+	.long	Str_chara2_fnt
+	.long	Str_chara3_fnt
+	.long	Str_chara4_fnt
+	.long	Str_chara5_fnt
+	.long	Str_chara1p_fnt
+	.long	Str_chara6_fnt
+	.long	Str_chara1w_fnt
+	.long	Str_chara2w_fnt
+	.long	Str_chara5w_fnt
+	.long	Str_chara7w_fnt
+	.long	Str_chara7_fnt
+# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x3F310C, 0x3F3110
 	.space	76, 0x00
 
 func_4C051B09_entry_L21_Table:	# 4 x u8, 0..255; read by func_4C051B09_entry_L21 0x4C051B2F: `movbu (func_4C051B09_entry_L21_Table), d0`; func_4C051B09_entry_L93 0x4C051BA1: `movbu (func_4C051B09_entry_L21_Table), d1` ...

@@ -627,8 +627,63 @@ names_48544C14:
 	.long	data_4841A5B3
 	.long	0
 	.space	804, 0x00
-# census: opaque -- unknown-dump: 216 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x145014, 0x1450EC
+
+names_48545014:	# 53 string pointers, typed by value (every word 0 or a printable string of this region); reader not traced
+	.long	Str_music1_bmp
+	.long	Str_music2_bmp
+	.long	Str_technics_bmp
+	.long	Str_slide_bmp
+	.long	Str_slmove_bmp
+	.long	Str_mixctr_bmp
+	.long	Str_mixpoint_bmp
+	.long	Str_fwd_bmp
+	.long	Str_bwd_bmp
+	.long	Str_pause_bmp
+	.long	Str_startstop_bmp
+	.long	Str_before_bmp
+	.long	Str_next_bmp
+	.long	Str_11bass_bmp
+	.long	Str_03brass_bmp
+	.long	Str_15drum_bmp
+	.long	Str_04flute_bmp
+	.long	Str_01guitar_bmp
+	.long	Str_07world_bmp
+	.long	Str_06mallet_bmp
+	.long	Str_16mema_bmp
+	.long	Str_17memb_bmp
+	.long	Str_08organ_bmp
+	.long	Str_09orch_bmp
+	.long	Str_00piano_bmp
+	.long	Str_05sax_bmp
+	.long	Str_02string_bmp
+	.long	Str_10synth_bmp
+	.long	Str_12draw_bmp
+	.long	Str_13accod_bmp
+	.long	Str_ledswon_bmp
+	.long	Str_ledswoff_bmp
+	.long	Str_14gmsp_bmp
+	.long	Str_18metro_bmp
+	.long	Str_19mic_bmp
+	.long	Str_20upright_bmp
+	.long	Str_21elec_bmp
+	.long	Str_22modern_bmp
+	.long	Str_23rhythm_bmp
+	.long	Str_24mem_bmp
+	.long	Str_25pianomix_bmp
+	.long	Str_26orchmix_bmp
+	.long	Str_27saxwood_bmp
+	.long	Str_28syndance_bmp
+	.long	Str_29guitharpsi_bmp
+	.long	Str_slide_bmp_2
+	.long	Str_slmove_bmp_2
+	.long	Str_slide65_bmp
+	.long	Str_slmove65_bmp
+	.long	Str_fwdnext_bmp
+	.long	Str_bwdbefore_bmp
+	.long	Str_startpause_bmp
+	.long	Str_stop_bmp
+# census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x1450E8, 0x1450EC
 	.space	808, 0x00
 
 GetFontCount_Table:	# 2 x u16, 12..65535; read by GetFontCount 0x486056B9: `movhu (GetFontCount_Table), d0`
@@ -714,8 +769,83 @@ names_4854541C:
 	.long	data_4841AB73
 	.long	0
 	.space	724, 0x00
-# census: opaque -- unknown-dump: 296 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x14581C, 0x145944
+
+names_4854581C:	# 73 string pointers, typed by value (every word 0 or a printable string of this region); reader not traced
+	.long	Str_Round1_bmp
+	.long	Str_Round1_bmp_2
+	.long	Str_Round1_bmp_3
+	.long	Str_Round1_bmp_4
+	.long	Text_Round2a_bmp
+	.long	Text_Round2a_bmp+12
+	.long	Text_Round2a_bmp+24
+	.long	Text_Round2a_bmp+36
+	.long	Text_Round2a_bmp+48
+	.long	Text_Round2a_bmp+60
+	.long	Text_Round2a_bmp+72
+	.long	Text_Round2a_bmp+84
+	.long	Text_Round2a_bmp+96
+	.long	Text_Round2a_bmp+108
+	.long	Text_Round2a_bmp+120
+	.long	Text_Round2a_bmp+132
+	.long	Str_Round14a_bmp
+	.long	Str_Round14b_bmp
+	.long	Str_Round14c_bmp
+	.long	Str_Round14d_bmp
+	.long	Str_Round1s_bmp
+	.long	Str_Round1s_bmp_2
+	.long	Str_Round1s_bmp_3
+	.long	Str_Round1s_bmp_4
+	.long	Text_Round2sa_bmp
+	.long	Text_Round2sa_bmp+13
+	.long	Text_Round2sa_bmp+26
+	.long	Text_Round2sa_bmp+39
+	.long	Text_Round2sa_bmp+52
+	.long	Text_Round2sa_bmp+65
+	.long	Text_Round2sa_bmp+78
+	.long	Text_Round2sa_bmp+91
+	.long	Text_Round2sa_bmp+104
+	.long	Text_Round2sa_bmp+117
+	.long	Text_Round2sa_bmp+130
+	.long	Text_Round2sa_bmp+143
+	.long	Str_Round14sa_bmp
+	.long	Str_Round14sb_bmp
+	.long	Str_Round14sc_bmp
+	.long	Str_Round14sd_bmp
+	.long	Str_Right12_bmp
+	.long	Str_Right16_bmp
+	.long	Str_Right24_bmp
+	.long	Str_Right32_bmp
+	.long	Str_Right48_bmp
+	.long	Str_Left12_bmp
+	.long	Str_Left16_bmp
+	.long	Str_Left24_bmp
+	.long	Str_Left32_bmp
+	.long	Str_Left48_bmp
+	.long	Text_LOnOff16_bmp
+	.long	Text_LOnOff16_bmp+13
+	.long	Text_LOnOff16_bmp+26
+	.long	Text_LOnOff16_bmp+39
+	.long	Text_LOnOff16_bmp+52
+	.long	Text_LOnOff16_bmp+65
+	.long	Text_LOnOff16_bmp+78
+	.long	Text_LOnOff16_bmp+91
+	.long	Str_LeftSw_bmp
+	.long	Str_RightSw_bmp
+	.long	Str_EditA_bmp
+	.long	Str_EditB_bmp
+	.long	Str_EditC_bmp
+	.long	Str_EditD_bmp
+	.long	Str_Edit95A_bmp
+	.long	Str_Edit95B_bmp
+	.long	Str_Edit95C_bmp
+	.long	Str_Edit95D_bmp
+	.long	Str_EditDA_bmp
+	.long	Str_EditDB_bmp
+	.long	Str_EditDC_bmp
+	.long	Str_EditDD_bmp
+	.long	Str_Mixertab_bmp
+# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x145940, 0x145944
 	.space	728, 0x00
 
 GetIconCount_Table:	# 2 x u16, 240..65535; read by GetIconCount 0x486056A7: `movhu (GetIconCount_Table), d0`
@@ -964,8 +1094,251 @@ names_48545C20:
 	.long	Text_i100+685
 	.long	data_4841B331
 	.long	0
-# census: opaque -- unknown-dump: 1080 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x145FE8, 0x146420
+	.space	56, 0x00
+
+names_48546020:	# 240 string pointers, typed by value (every word 0 or a printable string of this region); reader not traced
+	.long	Str_kari_bmp
+	.long	Str_kari_bmp_2
+	.long	Str_i0_bmp
+	.long	Str_i1_bmp
+	.long	Str_i2_bmp
+	.long	Str_i3o_bmp
+	.long	Str_i4o_bmp
+	.long	Str_i5_bmp
+	.long	Str_i6o_bmp
+	.long	Str_i7_bmp
+	.long	Str_i8_bmp
+	.long	Str_i9_bmp
+	.long	Text_i10_bmp
+	.long	Text_i10_bmp+8
+	.long	Text_i10_bmp+16
+	.long	Text_i10_bmp+24
+	.long	Text_i10_bmp+32
+	.long	Text_i10_bmp+40
+	.long	Text_i10_bmp+48
+	.long	Text_i10_bmp+56
+	.long	Text_i10_bmp+64
+	.long	Text_i10_bmp+72
+	.long	Text_i10_bmp+80
+	.long	Text_i10_bmp+88
+	.long	Text_i10_bmp+96
+	.long	Text_i10_bmp+104
+	.long	Text_i10_bmp+112
+	.long	Text_i10_bmp+120
+	.long	Text_i10_bmp+128
+	.long	Text_i10_bmp+136
+	.long	Text_i10_bmp+144
+	.long	Text_i10_bmp+152
+	.long	Text_i10_bmp+160
+	.long	Text_i10_bmp+168
+	.long	Text_i10_bmp+176
+	.long	Text_i10_bmp+184
+	.long	Text_i10_bmp+192
+	.long	Text_i10_bmp+200
+	.long	Text_i10_bmp+208
+	.long	Text_i10_bmp+216
+	.long	Text_i10_bmp+224
+	.long	Text_i10_bmp+232
+	.long	Text_i10_bmp+240
+	.long	Text_i10_bmp+248
+	.long	Text_i10_bmp+256
+	.long	Text_i10_bmp+264
+	.long	Text_i10_bmp+272
+	.long	Text_i10_bmp+280
+	.long	Text_i10_bmp+288
+	.long	Text_i10_bmp+296
+	.long	Text_i10_bmp+304
+	.long	Text_i10_bmp+312
+	.long	Text_i10_bmp+320
+	.long	Text_i10_bmp+328
+	.long	Text_i10_bmp+336
+	.long	Text_i10_bmp+344
+	.long	Text_i10_bmp+352
+	.long	Text_i10_bmp+360
+	.long	Text_i10_bmp+368
+	.long	Text_i10_bmp+376
+	.long	Text_i10_bmp+384
+	.long	Text_i10_bmp+392
+	.long	Text_i10_bmp+400
+	.long	Text_i10_bmp+408
+	.long	Text_i10_bmp+416
+	.long	Text_i10_bmp+424
+	.long	Text_i10_bmp+432
+	.long	Text_i10_bmp+440
+	.long	Text_i10_bmp+448
+	.long	Text_i10_bmp+456
+	.long	Text_i10_bmp+464
+	.long	Text_i10_bmp+472
+	.long	Text_i10_bmp+480
+	.long	Text_i10_bmp+488
+	.long	Text_i10_bmp+496
+	.long	Str_i73o_bmp
+	.long	Str_i74o_bmp
+	.long	Text_i75_bmp
+	.long	Text_i75_bmp+8
+	.long	Text_i75_bmp+16
+	.long	Text_i75_bmp+24
+	.long	Text_i75_bmp+32
+	.long	Text_i75_bmp+40
+	.long	Text_i75_bmp+48
+	.long	Text_i75_bmp+56
+	.long	Text_i75_bmp+64
+	.long	Str_i84o_bmp
+	.long	Str_i85_bmp
+	.long	Str_i86_bmp
+	.long	Str_i87_bmp
+	.long	Str_i88_bmp
+	.long	Str_i89_bmp
+	.long	Str_i90o_bmp
+	.long	Str_i91o_bmp
+	.long	Str_i92o_bmp
+	.long	Str_i93o_bmp
+	.long	Str_i94_bmp
+	.long	Str_i95_bmp
+	.long	Str_i96o_bmp
+	.long	Str_i97_bmp
+	.long	Str_i98_bmp
+	.long	Str_i99_bmp
+	.long	Str_i100_bmp
+	.long	Str_i101_bmp
+	.long	Str_i102_bmp
+	.long	Str_i103_bmp
+	.long	Str_i104_bmp
+	.long	Str_i105_bmp
+	.long	Str_i106_bmp
+	.long	Str_i107o_bmp
+	.long	Text_i108_bmp
+	.long	Text_i108_bmp+9
+	.long	Text_i108_bmp+18
+	.long	Text_i108_bmp+27
+	.long	Text_i108_bmp+36
+	.long	Text_i108_bmp+45
+	.long	Text_i108_bmp+54
+	.long	Text_i108_bmp+63
+	.long	Text_i108_bmp+72
+	.long	Text_i108_bmp+81
+	.long	Text_i108_bmp+90
+	.long	Text_i108_bmp+99
+	.long	Text_i108_bmp+108
+	.long	Text_i108_bmp+117
+	.long	Text_i108_bmp+126
+	.long	Text_i108_bmp+135
+	.long	Text_i108_bmp+144
+	.long	Text_i108_bmp+153
+	.long	Text_i108_bmp+162
+	.long	Text_i108_bmp+171
+	.long	Text_i108_bmp+180
+	.long	Text_i108_bmp+189
+	.long	Text_i108_bmp+198
+	.long	Text_i108_bmp+207
+	.long	Text_i108_bmp+216
+	.long	Text_i108_bmp+225
+	.long	Text_i108_bmp+234
+	.long	Text_i108_bmp+243
+	.long	Text_i108_bmp+252
+	.long	Text_i108_bmp+261
+	.long	Text_i108_bmp+270
+	.long	Text_i108_bmp+279
+	.long	Text_i108_bmp+288
+	.long	Text_i108_bmp+297
+	.long	Text_i108_bmp+306
+	.long	Text_i108_bmp+315
+	.long	Text_i108_bmp+324
+	.long	Text_i108_bmp+333
+	.long	Text_i108_bmp+342
+	.long	Text_i108_bmp+351
+	.long	Text_i108_bmp+360
+	.long	Text_i108_bmp+369
+	.long	Text_i108_bmp+378
+	.long	Text_i108_bmp+387
+	.long	Text_i108_bmp+396
+	.long	Text_i108_bmp+405
+	.long	Text_i108_bmp+414
+	.long	Text_i108_bmp+423
+	.long	Text_i108_bmp+432
+	.long	Text_i108_bmp+441
+	.long	Text_i108_bmp+450
+	.long	Text_i108_bmp+459
+	.long	Text_i108_bmp+468
+	.long	Text_i108_bmp+477
+	.long	Text_i108_bmp+486
+	.long	Text_i108_bmp+495
+	.long	Text_i108_bmp+504
+	.long	Text_i108_bmp+513
+	.long	Text_i108_bmp+522
+	.long	Text_i108_bmp+531
+	.long	Text_i108_bmp+540
+	.long	Text_i108_bmp+549
+	.long	Text_i108_bmp+558
+	.long	Text_i108_bmp+567
+	.long	Text_i108_bmp+576
+	.long	Text_i108_bmp+585
+	.long	Text_i108_bmp+594
+	.long	Text_i108_bmp+603
+	.long	Text_i108_bmp+612
+	.long	Text_i108_bmp+621
+	.long	Text_i108_bmp+630
+	.long	Text_i108_bmp+639
+	.long	Text_i108_bmp+648
+	.long	Text_i108_bmp+657
+	.long	Text_i108_bmp+666
+	.long	Text_i108_bmp+675
+	.long	Text_i108_bmp+684
+	.long	Text_i108_bmp+693
+	.long	Text_i108_bmp+702
+	.long	Text_i108_bmp+711
+	.long	Text_i108_bmp+720
+	.long	Text_i108_bmp+729
+	.long	Text_i108_bmp+738
+	.long	Text_i108_bmp+747
+	.long	Text_i108_bmp+756
+	.long	Text_i108_bmp+765
+	.long	Text_i108_bmp+774
+	.long	Text_i108_bmp+783
+	.long	Text_i108_bmp+792
+	.long	Text_i108_bmp+801
+	.long	Text_i108_bmp+810
+	.long	Text_i108_bmp+819
+	.long	Text_i108_bmp+828
+	.long	Text_i108_bmp+837
+	.long	Text_i108_bmp+846
+	.long	Text_i108_bmp+855
+	.long	Text_i108_bmp+864
+	.long	Text_i108_bmp+873
+	.long	Text_i108_bmp+882
+	.long	Text_i108_bmp+891
+	.long	Text_i108_bmp+900
+	.long	Text_i108_bmp+909
+	.long	Text_i108_bmp+918
+	.long	Text_i108_bmp+927
+	.long	Text_i108_bmp+936
+	.long	Text_i108_bmp+945
+	.long	Text_i108_bmp+954
+	.long	Text_i108_bmp+963
+	.long	Text_i108_bmp+972
+	.long	Text_i108_bmp+981
+	.long	Text_i108_bmp+990
+	.long	Text_i108_bmp+999
+	.long	Text_i108_bmp+1008
+	.long	Text_i108_bmp+1017
+	.long	Text_i108_bmp+1026
+	.long	Text_i108_bmp+1035
+	.long	Text_i108_bmp+1044
+	.long	Text_i108_bmp+1053
+	.long	Text_i108_bmp+1062
+	.long	Text_i108_bmp+1071
+	.long	Text_i108_bmp+1080
+	.long	Text_i108_bmp+1089
+	.long	Text_i108_bmp+1098
+	.long	Text_i108_bmp+1107
+	.long	Text_i108_bmp+1116
+	.long	Text_i108_bmp+1125
+	.long	Text_i108_bmp+1134
+	.long	Text_i108_bmp+1143
+	.long	Text_i108_bmp+1152
+	.long	Text_i108_bmp+1161
+# census: opaque -- unknown-dump: 64 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x1463E0, 0x146420
 data_48546420:
 	.space	1, 0x00
 data_48546421:
@@ -990,6 +1363,7 @@ data_4854642A:
 	.space	1, 0x00
 data_4854642B:
 	.align	4, 0x00
+
 ptrs_4854642C:
 	.long	loc_486094E3
 	.long	loc_486094E3

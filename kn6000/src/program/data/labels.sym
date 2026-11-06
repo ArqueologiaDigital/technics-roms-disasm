@@ -2753,6 +2753,8 @@
 0x4C18D1B1  Str_slmove_bmp  11
 0x4C18D1BC  Str_mixctr_bmp  11
 0x4C18D1C7  Str_mixpoint_bmp  13
+0x4C18D1D4  Str_fwd_bmp  8
+0x4C18D1DC  Str_bwd_bmp  8
 0x4C18D1E4  Str_pause_bmp  10
 0x4C18D1EE  Str_start_bmp  10
 0x4C18D1F8  Str_before_bmp  11
@@ -18334,6 +18336,7 @@
 0x4C200F4E  Str_ACTION_4  8
 0x4C200F58  func_4C0ABAED_entry_L33_Records  40
 0x4C200F80  names_4C200F80  32
+0x4C200FA8  names_4C200FA8  28
 0x4C200FD0  data_4C200FD0  0
 0x4C200FD1  data_4C200FD1  0
 0x4C200FD2  data_4C200FD2  0
@@ -44254,11 +44257,14 @@
 0x4C329FDC  SupportClassTable  672
 0x4C32A27C  Str_empty_288  2
 0x4C32A280  names_4C32A280  196
+0x4C32A680  names_4C32A680  188
 0x4C32AA80  GetFontCount_Table  4
 0x4C32AA84  Str_I_2  2
 0x4C32AA88  names_4C32AA88  300
+0x4C32AE88  names_4C32AE88  292
 0x4C32B288  GetIconCount_Table  4
 0x4C32B28C  names_4C32B28C  856
+0x4C32B68C  names_4C32B68C  848
 0x4C32BA8C  V_PanelSimulator_Viewables  232
 0x4C32BB78  V_TtSoftver_Viewables  16
 0x4C32BB8C  data_4C32BB8C  0
@@ -50494,6 +50500,7 @@
 0x50005718  func_4C0064C6_entry_L7d_Table  4
 0x5000571C  func_4C01B35A_Table  224
 0x500057FC  names_500057FC  56
+0x5000587C  names_5000587C  48
 0x500058FC  func_4C051B09_entry_L21_Table  4
 0x50005900  func_4C0557E9_Var  4
 0x50005904  TechnicsPadsResourceInit_Var  4

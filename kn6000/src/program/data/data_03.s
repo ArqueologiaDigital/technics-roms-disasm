@@ -2284,8 +2284,57 @@ names_4C32A280:
 	.long	data_4C18D181
 	.long	0
 	.space	828, 0x00
-# census: opaque -- unknown-dump: 192 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x32A680, 0x32A740
+
+names_4C32A680:	# 47 string pointers, typed by value (every word 0 or a printable string of this region); reader not traced
+	.long	Str_music1_bmp
+	.long	Str_music2_bmp
+	.long	Str_technics_bmp
+	.long	Str_slide_bmp
+	.long	Str_slmove_bmp
+	.long	Str_mixctr_bmp
+	.long	Str_mixpoint_bmp
+	.long	Str_fwd_bmp
+	.long	Str_bwd_bmp
+	.long	Str_pause_bmp
+	.long	Str_start_bmp
+	.long	Str_before_bmp
+	.long	Str_next_bmp
+	.long	Str_11bass_bmp
+	.long	Str_03brass_bmp
+	.long	Str_15drum_bmp
+	.long	Str_04flute_bmp
+	.long	Str_01guitar_bmp
+	.long	Str_07world_bmp
+	.long	Str_06mallet_bmp
+	.long	Str_16mema_bmp
+	.long	Str_17memb_bmp
+	.long	Str_08organ_bmp
+	.long	Str_09orch_bmp
+	.long	Str_00piano_bmp
+	.long	Str_05sax_bmp
+	.long	Str_02string_bmp
+	.long	Str_10synth_bmp
+	.long	Str_12draw_bmp
+	.long	Str_13accod_bmp
+	.long	Str_ledswon_bmp
+	.long	Str_ledswoff_bmp
+	.long	Str_14gmsp_bmp
+	.long	Str_18metro_bmp
+	.long	Str_19mic_bmp
+	.long	Str_20upright_bmp
+	.long	Str_21elec_bmp
+	.long	Str_22modern_bmp
+	.long	Str_23rhythm_bmp
+	.long	Str_24mem_bmp
+	.long	Str_25pianomix_bmp
+	.long	Str_26orchmix_bmp
+	.long	Str_27saxwood_bmp
+	.long	Str_28syndance_bmp
+	.long	Str_29guitharpsi_bmp
+	.long	Str_slide_bmp_2
+	.long	Str_slmove_bmp_2
+# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x32A73C, 0x32A740
 	.space	832, 0x00
 
 GetFontCount_Table:	# 2 x u16, 12..65535; read by GetFontCount 0x4C020577: `movhu (GetFontCount_Table), d0`
@@ -2371,8 +2420,83 @@ names_4C32AA88:
 	.long	data_4C18D6F3
 	.long	0
 	.space	724, 0x00
-# census: opaque -- unknown-dump: 296 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x32AE88, 0x32AFB0
+
+names_4C32AE88:	# 73 string pointers, typed by value (every word 0 or a printable string of this region); reader not traced
+	.long	Str_Round1_bmp
+	.long	Str_Round1_bmp_2
+	.long	Str_Round1_bmp_3
+	.long	Str_Round1_bmp_4
+	.long	Text_Round2a_bmp
+	.long	Text_Round2a_bmp+12
+	.long	Text_Round2a_bmp+24
+	.long	Text_Round2a_bmp+36
+	.long	Text_Round2a_bmp+48
+	.long	Text_Round2a_bmp+60
+	.long	Text_Round2a_bmp+72
+	.long	Text_Round2a_bmp+84
+	.long	Text_Round2a_bmp+96
+	.long	Text_Round2a_bmp+108
+	.long	Text_Round2a_bmp+120
+	.long	Text_Round2a_bmp+132
+	.long	Str_Round14a_bmp
+	.long	Str_Round14b_bmp
+	.long	Str_Round14c_bmp
+	.long	Str_Round14d_bmp
+	.long	Str_Round1s_bmp
+	.long	Str_Round1s_bmp_2
+	.long	Str_Round1s_bmp_3
+	.long	Str_Round1s_bmp_4
+	.long	Text_Round2sa_bmp
+	.long	Text_Round2sa_bmp+13
+	.long	Text_Round2sa_bmp+26
+	.long	Text_Round2sa_bmp+39
+	.long	Text_Round2sa_bmp+52
+	.long	Text_Round2sa_bmp+65
+	.long	Text_Round2sa_bmp+78
+	.long	Text_Round2sa_bmp+91
+	.long	Text_Round2sa_bmp+104
+	.long	Text_Round2sa_bmp+117
+	.long	Text_Round2sa_bmp+130
+	.long	Text_Round2sa_bmp+143
+	.long	Str_Round14sa_bmp
+	.long	Str_Round14sb_bmp
+	.long	Str_Round14sc_bmp
+	.long	Str_Round14sd_bmp
+	.long	Str_Right12_bmp
+	.long	Str_Right16_bmp
+	.long	Str_Right24_bmp
+	.long	Str_Right32_bmp
+	.long	Str_Right48_bmp
+	.long	Str_Left12_bmp
+	.long	Str_Left16_bmp
+	.long	Str_Left24_bmp
+	.long	Str_Left32_bmp
+	.long	Str_Left48_bmp
+	.long	Text_LOnOff16_bmp
+	.long	Text_LOnOff16_bmp+13
+	.long	Text_LOnOff16_bmp+26
+	.long	Text_LOnOff16_bmp+39
+	.long	Text_LOnOff16_bmp+52
+	.long	Text_LOnOff16_bmp+65
+	.long	Text_LOnOff16_bmp+78
+	.long	Text_LOnOff16_bmp+91
+	.long	Str_LeftSw_bmp
+	.long	Str_RightSw_bmp
+	.long	Str_EditA_bmp
+	.long	Str_EditB_bmp
+	.long	Str_EditC_bmp
+	.long	Str_EditD_bmp
+	.long	Str_Edit95A_bmp
+	.long	Str_Edit95B_bmp
+	.long	Str_Edit95C_bmp
+	.long	Str_Edit95D_bmp
+	.long	Str_EditDA_bmp
+	.long	Str_EditDB_bmp
+	.long	Str_EditDC_bmp
+	.long	Str_EditDD_bmp
+	.long	Str_Mixertab_bmp
+# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x32AFAC, 0x32AFB0
 	.space	728, 0x00
 
 GetIconCount_Table:	# 2 x u16, 212..65535; read by GetIconCount 0x4C020565: `movhu (GetIconCount_Table), d0`
@@ -2594,8 +2718,222 @@ names_4C32B28C:
 	.long	data_4C18DE25
 	.long	0
 	.space	168, 0x00
-# census: opaque -- unknown-dump: 852 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x32B68C, 0x32B9E0
+
+names_4C32B68C:	# 212 string pointers, typed by value (every word 0 or a printable string of this region); reader not traced
+	.long	Str_kari_bmp
+	.long	Str_kari_bmp_2
+	.long	Str_i0_bmp
+	.long	Str_i1_bmp
+	.long	Str_i2_bmp
+	.long	Str_i3o_bmp
+	.long	Str_i4o_bmp
+	.long	Str_i5_bmp
+	.long	Str_i6o_bmp
+	.long	Str_i7_bmp
+	.long	Str_i8_bmp
+	.long	Str_i9_bmp
+	.long	Text_i10_bmp
+	.long	Text_i10_bmp+8
+	.long	Text_i10_bmp+16
+	.long	Text_i10_bmp+24
+	.long	Text_i10_bmp+32
+	.long	Text_i10_bmp+40
+	.long	Text_i10_bmp+48
+	.long	Text_i10_bmp+56
+	.long	Text_i10_bmp+64
+	.long	Text_i10_bmp+72
+	.long	Text_i10_bmp+80
+	.long	Text_i10_bmp+88
+	.long	Text_i10_bmp+96
+	.long	Text_i10_bmp+104
+	.long	Text_i10_bmp+112
+	.long	Text_i10_bmp+120
+	.long	Text_i10_bmp+128
+	.long	Text_i10_bmp+136
+	.long	Text_i10_bmp+144
+	.long	Text_i10_bmp+152
+	.long	Text_i10_bmp+160
+	.long	Text_i10_bmp+168
+	.long	Text_i10_bmp+176
+	.long	Text_i10_bmp+184
+	.long	Text_i10_bmp+192
+	.long	Text_i10_bmp+200
+	.long	Text_i10_bmp+208
+	.long	Text_i10_bmp+216
+	.long	Text_i10_bmp+224
+	.long	Text_i10_bmp+232
+	.long	Text_i10_bmp+240
+	.long	Text_i10_bmp+248
+	.long	Text_i10_bmp+256
+	.long	Text_i10_bmp+264
+	.long	Text_i10_bmp+272
+	.long	Text_i10_bmp+280
+	.long	Text_i10_bmp+288
+	.long	Text_i10_bmp+296
+	.long	Text_i10_bmp+304
+	.long	Text_i10_bmp+312
+	.long	Text_i10_bmp+320
+	.long	Text_i10_bmp+328
+	.long	Text_i10_bmp+336
+	.long	Text_i10_bmp+344
+	.long	Text_i10_bmp+352
+	.long	Text_i10_bmp+360
+	.long	Text_i10_bmp+368
+	.long	Text_i10_bmp+376
+	.long	Text_i10_bmp+384
+	.long	Text_i10_bmp+392
+	.long	Text_i10_bmp+400
+	.long	Text_i10_bmp+408
+	.long	Text_i10_bmp+416
+	.long	Text_i10_bmp+424
+	.long	Text_i10_bmp+432
+	.long	Text_i10_bmp+440
+	.long	Text_i10_bmp+448
+	.long	Text_i10_bmp+456
+	.long	Text_i10_bmp+464
+	.long	Text_i10_bmp+472
+	.long	Text_i10_bmp+480
+	.long	Text_i10_bmp+488
+	.long	Text_i10_bmp+496
+	.long	Str_i73o_bmp
+	.long	Str_i74o_bmp
+	.long	Text_i75_bmp
+	.long	Text_i75_bmp+8
+	.long	Text_i75_bmp+16
+	.long	Text_i75_bmp+24
+	.long	Text_i75_bmp+32
+	.long	Text_i75_bmp+40
+	.long	Text_i75_bmp+48
+	.long	Text_i75_bmp+56
+	.long	Text_i75_bmp+64
+	.long	Str_i84o_bmp
+	.long	Str_i85_bmp
+	.long	Str_i86_bmp
+	.long	Str_i87_bmp
+	.long	Str_i88_bmp
+	.long	Str_i89_bmp
+	.long	Str_i90o_bmp
+	.long	Str_i91o_bmp
+	.long	Str_i92o_bmp
+	.long	Str_i93o_bmp
+	.long	Str_i94_bmp
+	.long	Str_i95_bmp
+	.long	Str_i96o_bmp
+	.long	Str_i97_bmp
+	.long	Str_i98_bmp
+	.long	Str_i99_bmp
+	.long	Str_i100_bmp
+	.long	Str_i101_bmp
+	.long	Str_i102_bmp
+	.long	Str_i103_bmp
+	.long	Str_i104_bmp
+	.long	Str_i105_bmp
+	.long	Str_i106_bmp
+	.long	Str_i107o_bmp
+	.long	Text_i108_bmp
+	.long	Text_i108_bmp+9
+	.long	Text_i108_bmp+18
+	.long	Text_i108_bmp+27
+	.long	Text_i108_bmp+36
+	.long	Text_i108_bmp+45
+	.long	Text_i108_bmp+54
+	.long	Text_i108_bmp+63
+	.long	Text_i108_bmp+72
+	.long	Text_i108_bmp+81
+	.long	Text_i108_bmp+90
+	.long	Text_i108_bmp+99
+	.long	Text_i108_bmp+108
+	.long	Text_i108_bmp+117
+	.long	Text_i108_bmp+126
+	.long	Text_i108_bmp+135
+	.long	Text_i108_bmp+144
+	.long	Text_i108_bmp+153
+	.long	Text_i108_bmp+162
+	.long	Text_i108_bmp+171
+	.long	Text_i108_bmp+180
+	.long	Text_i108_bmp+189
+	.long	Text_i108_bmp+198
+	.long	Text_i108_bmp+207
+	.long	Text_i108_bmp+216
+	.long	Text_i108_bmp+225
+	.long	Text_i108_bmp+234
+	.long	Text_i108_bmp+243
+	.long	Text_i108_bmp+252
+	.long	Text_i108_bmp+261
+	.long	Text_i108_bmp+270
+	.long	Text_i108_bmp+279
+	.long	Text_i108_bmp+288
+	.long	Text_i108_bmp+297
+	.long	Text_i108_bmp+306
+	.long	Text_i108_bmp+315
+	.long	Text_i108_bmp+324
+	.long	Text_i108_bmp+333
+	.long	Text_i108_bmp+342
+	.long	Text_i108_bmp+351
+	.long	Text_i108_bmp+360
+	.long	Text_i108_bmp+369
+	.long	Text_i108_bmp+378
+	.long	Text_i108_bmp+387
+	.long	Text_i108_bmp+396
+	.long	Text_i108_bmp+405
+	.long	Text_i108_bmp+414
+	.long	Text_i108_bmp+423
+	.long	Text_i108_bmp+432
+	.long	Text_i108_bmp+441
+	.long	Text_i108_bmp+450
+	.long	Text_i108_bmp+459
+	.long	Text_i108_bmp+468
+	.long	Text_i108_bmp+477
+	.long	Text_i108_bmp+486
+	.long	Text_i108_bmp+495
+	.long	Text_i108_bmp+504
+	.long	Text_i108_bmp+513
+	.long	Text_i108_bmp+522
+	.long	Text_i108_bmp+531
+	.long	Text_i108_bmp+540
+	.long	Text_i108_bmp+549
+	.long	Text_i108_bmp+558
+	.long	Text_i108_bmp+567
+	.long	Text_i108_bmp+576
+	.long	Text_i108_bmp+585
+	.long	Text_i108_bmp+594
+	.long	Text_i108_bmp+603
+	.long	Text_i108_bmp+612
+	.long	Text_i108_bmp+621
+	.long	Text_i108_bmp+630
+	.long	Text_i108_bmp+639
+	.long	Text_i108_bmp+648
+	.long	Text_i108_bmp+657
+	.long	Text_i108_bmp+666
+	.long	Text_i108_bmp+675
+	.long	Text_i108_bmp+684
+	.long	Text_i108_bmp+693
+	.long	Text_i108_bmp+702
+	.long	Text_i108_bmp+711
+	.long	Text_i108_bmp+720
+	.long	Text_i108_bmp+729
+	.long	Text_i108_bmp+738
+	.long	Text_i108_bmp+747
+	.long	Text_i108_bmp+756
+	.long	Text_i108_bmp+765
+	.long	Text_i108_bmp+774
+	.long	Text_i108_bmp+783
+	.long	Text_i108_bmp+792
+	.long	Text_i108_bmp+801
+	.long	Text_i108_bmp+810
+	.long	Text_i108_bmp+819
+	.long	Text_i108_bmp+828
+	.long	Text_i108_bmp+837
+	.long	Text_i108_bmp+846
+	.long	Text_i108_bmp+855
+	.long	Text_i108_bmp+864
+	.long	Text_i108_bmp+873
+	.long	Text_i108_bmp+882
+	.long	Text_i108_bmp+891
+	.long	Text_i108_bmp+900
+	.long	Text_i108_bmp+909
+# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x32B9DC, 0x32B9E0
 	.space	172, 0x00
 
 # 58 objects of block V_PanelSimulator; object <name> is index <name>_ix, id <name>_id = (0x0 << 16) | <name>_ix
@@ -7658,12 +7996,12 @@ func_4C051751_Table:	# 15 x u16, 496..4638; read by func_4C051751 0x4C051751: `m
 	tab_u16	4126, 4382, 4638	# [12]
 	.space	4, 0xFF
 
-func_4C0506C7_entry_L4_Records:	# 3 x REC_func_4C0506C7_entry_L4_Records (12 bytes each); read by func_4C0506C7_entry_L4 0x4C0506D0 `mov (4, a0), d3`; func_4C0506C7_entry_L4 0x4C0506D0 `mov (a0), a2`
-	REC_func_4C0506C7_entry_L4_Records	f0=0x50000000, index=0x80000, x8="\x01\x02\x00\x00"
-	REC_func_4C0506C7_entry_L4_Records	f0=0x58000000, index=0x5040100, x8="\x01\x00\x00\x00"
-	REC_func_4C0506C7_entry_L4_Records	f0=0x54000000, index=0x5040100, x8="\x01\x00\x00\x00"
-func_4C050787_entry_L4_Records:	# 1 x REC_func_4C050787_entry_L4_Records (12 bytes each); read by func_4C050787_entry_L4 0x4C05078D `mov (4, a1), d0`; func_4C050787_entry_L4 0x4C05078D `mov (a1), a0`; func_4C050787_entry_L4 0x4C05078D `movbu (a1), d1` (+1)
-	REC_func_4C050787_entry_L4_Records	addr=0x44000000, index=32768, f8=4, x9="\x00\x00\x00"
+func_4C0506C7_entry_L4_Records:	# 3 x RamTestRegion (12 bytes each); read by func_4C0506C7_entry_L4 0x4C0506D0 `mov (4, a0), d3`; func_4C0506C7_entry_L4 0x4C0506D0 `mov (a0), a2`
+	RamTestRegion	base=0x50000000, length=0x80000, x8="\x01\x02\x00\x00"
+	RamTestRegion	base=0x58000000, length=0x5040100, x8="\x01\x00\x00\x00"
+	RamTestRegion	base=0x54000000, length=0x5040100, x8="\x01\x00\x00\x00"
+func_4C050787_entry_L4_Records:	# 1 x RamTestByteRegion (12 bytes each); read by func_4C050787_entry_L4 0x4C05078D `mov (4, a1), d0`; func_4C050787_entry_L4 0x4C05078D `mov (a1), a0`; func_4C050787_entry_L4 0x4C05078D `movbu (a1), d1` (+1)
+	RamTestByteRegion	base=0x44000000, length=32768, fail_bit=4, x9="\x00\x00\x00"
 
 ptrs_4C35992C:
 	.long	loc_4C05A425
@@ -19379,21 +19717,21 @@ func_4C099DB7_entry_L47_Table:	# 51 x u8, 0..127; read by func_4C099DB7_entry : 
 	tab_u8	42, 45, 47, 50, 54, 57, 61, 65, 69, 73, 78, 83, 88, 94, 100, 106	# [32]
 	tab_u8	113, 120, 127	# [48]
 
-TgPartEditLfoLoadA_Records:	# 14 x REC_TgPartEditLfoLoadA_Records (39 bytes each); read by TgPartEditLfoLoadA 0x4C08D1C0 `movbu (0x12, a2), d1`; TgPartEditLfoLoadA 0x4C08D1C0 `movbu (0xe, a2), d1`; TgPartEditLfoLoadA 0x4C08D1C0 `movbu (1, a2), d1` (+62)
-	REC_TgPartEditLfoLoadA_Records	f0=15, f1=25, x5="\x00", x15="\x00\x00\x00", flags__=68, x20="\x00\x00\x00\x00\x88", f26=10, f27=100, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"	# [0]
-	REC_TgPartEditLfoLoadA_Records	f0=12, f1=37, x5="\x00", x15="\x00\x00\x00", flags__=196, x20="\x00\x00\x00\x00\xC8", f26=17, f27=100, f28=1, x29="\xC4\x00\x00\x00\x00\xC8\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f0=12, f1=37, x5="\x00", x15="\x00\x00\x00", flags__=68, x20="\x00\x00\x00\x00\x88", f26=10, f27=100, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f0=10, f1=40, x5="\x00", x15="\x00\x00\x00", flags__=200, x20="\x00\x00\x00\x00\xC4", f26=8, f27=100, f28=1, x29="\xC8\x00\x00\x00\x00\xC4\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f0=25, f1=32, f3=25, f4=33, x5="\x00", x15="\x00\x00\x00", flags__=136, x20="\x00\x00\x00\x00D", f26=10, f28=4, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f0=20, f1=20, f3=15, f4=22, x5="\x00", x15="\x00\x00\x00", flags__=200, x20="\x00\x00\x00\x00\xC4", f26=2, x29="\xC8\x00\x00\x00\x00\xC4\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	x5="\x00", index=40, f7=24, x15="\x00\x00\x00", flags__=32, x20="\x00\x00\x00\x00\"", f27=80, x29=" \x00\x00\x00\x00\"\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f0=28, f1=40, f3=34, f4=25, x5="\x00", index=25, x15="\x00\x00\x00", flags__=228, x20="\x00\x00\x00\x00\xEA", x29="\xE4\x00\x00\x00\x00\xEA\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	x5="\x00", x15="\x00\x00\x00", x20="\x00\x00\x00\x00\x00", f27=80, f28=10, x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"	# [8]
-	REC_TgPartEditLfoLoadA_Records	x5="\x00", f9=27, f10=20, f11=22, x15="\x00\x00\x00", x20="\x00\x00\x00\x00\x00", x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f0=20, f1=50, flags=178, x5="\x00", x15="\x00\x00\x00", f18=30, flags__=128, x20="\x00\x00\x00\x00\x88", x29="\x80\x00\x00\x00\x00\x88\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	f0=20, f1=50, flags=178, x5="\x00", f14=5, x15="\x00\x00\x00", f18=30, flags__=128, x20="\x00\x00\x00\x00\x88", x29="\x80\x00\x00\x00\x00\x88\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	x5="\x00", x15="\x00\x00\x00", x20="\x00\x00\x00\x00\x00", x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-	REC_TgPartEditLfoLoadA_Records	x5="\x00", x15="\x00\x00\x00", x20="\x00\x00\x00\x00\x00", x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+TgPartEditLfoLoadA_Records:	# 14 x ToneTypeFeature (39 bytes each); read by TgPartEditLfoLoadA 0x4C08D1C0 `movbu (0x12, a2), d1`; TgPartEditLfoLoadA 0x4C08D1C0 `movbu (0xe, a2), d1`; TgPartEditLfoLoadA 0x4C08D1C0 `movbu (1, a2), d1` (+62)
+	ToneTypeFeature	t0_a=15, t0_b=25, note_flags="\x00", x15="\x00\x00\x00", seg0_flags=68, x20="\x00\x00\x00\x00\x88", seg1_c=10, seg1_param=100, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"	# [0]
+	ToneTypeFeature	t0_a=12, t0_b=37, note_flags="\x00", x15="\x00\x00\x00", seg0_flags=196, x20="\x00\x00\x00\x00\xC8", seg1_c=17, seg1_param=100, seg1_e=1, x29="\xC4\x00\x00\x00\x00\xC8\x00\x00\x00\x00"
+	ToneTypeFeature	t0_a=12, t0_b=37, note_flags="\x00", x15="\x00\x00\x00", seg0_flags=68, x20="\x00\x00\x00\x00\x88", seg1_c=10, seg1_param=100, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"
+	ToneTypeFeature	t0_a=10, t0_b=40, note_flags="\x00", x15="\x00\x00\x00", seg0_flags=200, x20="\x00\x00\x00\x00\xC4", seg1_c=8, seg1_param=100, seg1_e=1, x29="\xC8\x00\x00\x00\x00\xC4\x00\x00\x00\x00"
+	ToneTypeFeature	t0_a=25, t0_b=32, t1_a=25, t1_b=33, note_flags="\x00", x15="\x00\x00\x00", seg0_flags=136, x20="\x00\x00\x00\x00D", seg1_c=10, seg1_e=4, x29="D\x00\x00\x00\x00\x88\x00\x00\x00\x00"
+	ToneTypeFeature	t0_a=20, t0_b=20, t1_a=15, t1_b=22, note_flags="\x00", x15="\x00\x00\x00", seg0_flags=200, x20="\x00\x00\x00\x00\xC4", seg1_c=2, x29="\xC8\x00\x00\x00\x00\xC4\x00\x00\x00\x00"
+	ToneTypeFeature	note_flags="\x00", t2_a=40, t2_b=24, x15="\x00\x00\x00", seg0_flags=32, x20="\x00\x00\x00\x00\"", seg1_param=80, x29=" \x00\x00\x00\x00\"\x00\x00\x00\x00"
+	ToneTypeFeature	t0_a=28, t0_b=40, t1_a=34, t1_b=25, note_flags="\x00", t2_a=25, x15="\x00\x00\x00", seg0_flags=228, x20="\x00\x00\x00\x00\xEA", x29="\xE4\x00\x00\x00\x00\xEA\x00\x00\x00\x00"
+	ToneTypeFeature	note_flags="\x00", x15="\x00\x00\x00", x20="\x00\x00\x00\x00\x00", seg1_param=80, seg1_e=10, x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"	# [8]
+	ToneTypeFeature	note_flags="\x00", t3_a=27, t3_b=20, t3_c=22, x15="\x00\x00\x00", x20="\x00\x00\x00\x00\x00", x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+	ToneTypeFeature	t0_a=20, t0_b=50, t0_flags=178, note_flags="\x00", x15="\x00\x00\x00", lfo_p7=30, seg0_flags=128, x20="\x00\x00\x00\x00\x88", x29="\x80\x00\x00\x00\x00\x88\x00\x00\x00\x00"
+	ToneTypeFeature	t0_a=20, t0_b=50, t0_flags=178, note_flags="\x00", lfo_p6=5, x15="\x00\x00\x00", lfo_p7=30, seg0_flags=128, x20="\x00\x00\x00\x00\x88", x29="\x80\x00\x00\x00\x00\x88\x00\x00\x00\x00"
+	ToneTypeFeature	note_flags="\x00", x15="\x00\x00\x00", x20="\x00\x00\x00\x00\x00", x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+	ToneTypeFeature	note_flags="\x00", x15="\x00\x00\x00", x20="\x00\x00\x00\x00\x00", x29="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
 
 func_4C09248D_entry_L7d_Table:	# 31 x u8, 0..70; read by func_4C09248D_entry : `movbu	(d0, a0), d0`; func_4C0926B3_entry : `movbu	(d0, a0), d0` ...
 	tab_u8	70, 64, 58, 53, 48, 44, 40, 36, 33, 30, 27, 24, 22, 20, 18, 16	# [0]
@@ -39703,329 +40041,4 @@ User12_ApFunctions:
 	IDNAME	FN_LEDHideOffFunc, LEDHideOffFunc, User12_ApFunctions, 0x12c
 	IDNAME	FN_InitShowHideFunc, InitShowHideFunc, User12_ApFunctions, 0x12c
 	IDNAME	FN_BoardRomTestRunFunc, BoardRomTestRunFunc, User12_ApFunctions, 0x12c
-	.space	4, 0x00
-
-User12_ApFunctionNames:
-	.long	FnName_SystemInitOkFunc
-	.long	FnName_SystemInitMDFunc
-	.long	FnName_AttnLngCheck
-	.long	FnName_SysSureLngCheck
-	.long	FnName_SureLngCheck
-	.long	FnName_SysIniNoFunc
-	.long	FnName_SysIniYesFunc
-	.long	FnName_CtlIniLngCheck
-	.long	FnName_TouchSenseFunc
-	.long	FnName_TchSensGridCheck
-	.long	FnName_TouchFilter
-	.long	FnName_MSAFilter
-	.long	FnName_PmemNormLngCheck
-	.long	FnName_PmemExpLngCheck
-	.long	FnName_PmExpFilter1GridCheck
-	.long	FnName_PmExpFilter2GridCheck
-	.long	FnName_PmExpFilter
-	.long	FnName_PmemModeFilter
-	.long	FnName_FadeSetGridCheck
-	.long	FnName_FadeIOFilter
-	.long	FnName_DispTimeSetGridCheck
-	.long	FnName_DispTimeSetOKFunc
-	.long	FnName_FSWAssGridCheck
-	.long	FnName_FSWAssGridFilter
-	.long	FnName_WallHomeEditCheck
-	.long	FnName_WallMenuEditCheck
-	.long	FnName_WallOthEditCheck
-	.long	FnName_WallSetOKFunc
-	.long	FnName_WallPresetCheck
-	.long	FnName_WallSetBitmapCheck
-	.long	FnName_ParaLoadOptGridCheck
-	.long	FnName_ParaLoadOptOKFunc
-	.long	FnName_FDCstopBitmapCheck
-	.long	FnName_SineWaveFilter
-	.long	FnName_DataProtectGridCheck
-	.long	FnName_DataProtectOKFunc
-	.long	FnName_InOutTestFilter
-	.long	FnName_RomTestRunFunc
-	.long	FnName_RamTestRunFunc
-	.long	FnName_DeviceTestRunFunc
-	.long	FnName_TestMode4RunFunc
-	.long	FnName_TestMode4StopFunc
-	.long	FnName_WaveRomTestRunFunc
-	.long	FnName_TestRgbwbRunFunc
-	.long	FnName_TestCrosstarlRunFunc
-	.long	FnName_TestSampleRunFunc
-	.long	FnName_TestContrastRunFunc
-	.long	FnName_LangSetOKFunc
-	.long	FnName_LangSetMenuCheck
-	.long	FnName_LangSetChkFunc
-	.long	FnName_AcIndexWideToggleFunc
-	.long	FnName_CusMemOKFunc
-	.long	FnName_HelpMenuCheck
-	.long	FnName_HelpLang1Check
-	.long	FnName_HelpLang2Check
-	.long	FnName_HelpLang3Check
-	.long	FnName_HelpLang4Check
-	.long	FnName_HelpLangMenuCheck
-	.long	FnName_PrgMenuSelect
-	.long	FnName_APCModeSelect
-	.long	FnName_WallSetHideFunc
-	.long	FnName_DataPrtHideFunc
-	.long	FnName_LangSetHideFunc
-	.long	FnName_CusPanModeHideFunc
-	.long	FnName_HelpShowHideFunc
-	.long	FnName_LEDHideOffFunc
-	.long	FnName_InitShowHideFunc
-	.long	FnName_BoardRomTestRunFunc
-# census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3834E4, 0x3834E8
-
-ClassFields_AcFSWAssGridBox:
-	.long	Field_AcFSWAssGridBox_fixedcol
-	.long	Field_AcFSWAssGridBox_fixedrow
-	.long	Field_AcFSWAssGridBox_func
-	.long	Field_AcFSWAssGridBox_end
-ClassFields_SineWaveWindow:
-	.long	Field_SineWaveWindow_func
-	.long	Field_SineWaveWindow_font
-	.long	Field_SineWaveWindow_fontcolor
-	.long	Field_SineWaveWindow_nowswno
-	.long	Field_SineWaveWindow_oldswno
-	.long	Field_SineWaveWindow_end
-ClassFields_PmemModeBox:
-	.long	Field_PmemModeBox_func
-	.long	Field_PmemModeBox_font
-	.long	Field_PmemModeBox_fontcolo
-	.long	Field_PmemModeBox_newpmemmode
-	.long	Field_PmemModeBox_oldpmemmode
-	.long	Field_PmemModeBox_end
-ClassFields_MSAModeBox:
-	.long	Field_MSAModeBox_func
-	.long	Field_MSAModeBox_font
-	.long	Field_MSAModeBox_fontcolo
-	.long	Field_MSAModeBox_newmsamode
-	.long	Field_MSAModeBox_oldmsamode
-	.long	Field_MSAModeBox_end
-ClassFields_AcPmExpFilterGridBox:
-	.long	Field_AcPmExpFilterGridBox_fixedcol
-	.long	Field_AcPmExpFilterGridBox_fixedrow
-	.long	Field_AcPmExpFilterGridBox_func
-	.long	Field_AcPmExpFilterGridBox_end
-ClassFields_AcFadeSetGridBox:
-	.long	Field_AcFadeSetGridBox_fixedcol
-	.long	Field_AcFadeSetGridBox_fixedrow
-	.long	Field_AcFadeSetGridBox_func
-	.long	Field_AcFadeSetGridBox_end
-ClassFields_AcDispTimeSetGridBox:
-	.long	Field_AcDispTimeSetGridBox_fixedcol
-	.long	Field_AcDispTimeSetGridBox_fixedrow
-	.long	Field_AcDispTimeSetGridBox_func
-	.long	Field_AcDispTimeSetGridBox_end
-ClassFields_AcParaLoadOptGridBox:
-	.long	Field_AcParaLoadOptGridBox_fixedcol
-	.long	Field_AcParaLoadOptGridBox_fixedrow
-	.long	Field_AcParaLoadOptGridBox_func
-	.long	Field_AcParaLoadOptGridBox_end
-ClassFields_AcItimatuWindow:
-	.long	Field_AcItimatuWindow_end
-ClassFields_AcTchSensGridBox:
-	.long	Field_AcTchSensGridBox_fixedcol
-	.long	Field_AcTchSensGridBox_fixedrow
-	.long	Field_AcTchSensGridBox_func
-	.long	Field_AcTchSensGridBox_end
-ClassFields_AcTestMenuPage:
-	.long	Field_AcTestMenuPage_pagemin
-	.long	Field_AcTestMenuPage_pagemax
-	.long	Field_AcTestMenuPage_end
-ClassFields_InOutTestWindow:
-	.long	Field_InOutTestWindow_func
-	.long	Field_InOutTestWindow_font
-	.long	Field_InOutTestWindow_fontcolor
-	.long	Field_InOutTestWindow_nowswno
-	.long	Field_InOutTestWindow_oldswno
-	.long	Field_InOutTestWindow_end
-ClassFields_AcIndexWideToggle:
-	.long	Field_AcIndexWideToggle_index
-	.long	Field_AcIndexWideToggle_tag
-	.long	Field_AcIndexWideToggle_func
-	.long	Field_AcIndexWideToggle_end
-ClassFields_CusMemModeBox:
-	.long	Field_CusMemModeBox_func
-	.long	Field_CusMemModeBox_font
-	.long	Field_CusMemModeBox_fontcolo
-	.long	Field_CusMemModeBox_end
-ClassFields_PsHelpTblBox:
-	.long	Field_PsHelpTblBox_func
-	.long	Field_PsHelpTblBox_end
-ClassFields_TestMode8Box:
-	.long	Field_TestMode8Box_func
-	.long	Field_TestMode8Box_font
-	.long	Field_TestMode8Box_fontcolo
-	.long	Field_TestMode8Box_end
-ClassFields_AcWindowPageInit:
-	.long	Field_AcWindowPageInit_pagemin
-	.long	Field_AcWindowPageInit_pagemax
-	.long	Field_AcWindowPageInit_end
-ClassFields_BoardTestWindow:
-	.long	Field_BoardTestWindow_func
-	.long	Field_BoardTestWindow_font
-	.long	Field_BoardTestWindow_fontcolor
-	.long	Field_BoardTestWindow_end
-
-# 18 classes; a class id is (0x16c << 16) | its index here (ClassProc 0x4C01D283 reads entry id & 0xFFFF, 0x18 bytes each)
-.equ User12_Classes_SLOT, 0x16c
-User12_Classes:
-	CLASS	Class_AcFSWAssGridBox, CLASS_AcFSWAssGridBox, User12_Classes, proc=AcFSWAssGridBoxProc, parent=CLASS_PsGridBox, allsize=80, selfsize=12, cname=ClassName_AcFSWAssGridBox, sig=ClassSig_AcFSWAssGridBox, fields=ClassFields_AcFSWAssGridBox	# fixedcol:X fixedrow:X func:j
-	CLASS	Class_SineWaveWindow, CLASS_SineWaveWindow, User12_Classes, proc=SineWaveWindowProc, parent=CLASS_Window, allsize=64, selfsize=20, cname=ClassName_SineWaveWindow, sig=ClassSig_SineWaveWindow, fields=ClassFields_SineWaveWindow	# func:k font:c fontcolor:^ nowswno:n oldswno:n
-	CLASS	Class_PmemModeBox, CLASS_PmemModeBox, User12_Classes, proc=PmemModeBoxProc, parent=CLASS_VwBox, allsize=52, selfsize=20, cname=ClassName_PmemModeBox, sig=ClassSig_PmemModeBox, fields=ClassFields_PmemModeBox	# func:k font:c fontcolo:^ newpmemmode:n oldpmemmode:n
-	CLASS	Class_MSAModeBox, CLASS_MSAModeBox, User12_Classes, proc=MSAModeBoxProc, parent=CLASS_VwBox, allsize=52, selfsize=20, cname=ClassName_MSAModeBox, sig=ClassSig_MSAModeBox, fields=ClassFields_MSAModeBox	# func:k font:c fontcolo:^ newmsamode:n oldmsamode:n
-	CLASS	Class_AcPmExpFilterGridBox, CLASS_AcPmExpFilterGridBox, User12_Classes, proc=AcPmExpFilterGridBoxProc, parent=CLASS_PsGridBox, allsize=80, selfsize=12, cname=ClassName_AcPmExpFilterGridBox, sig=ClassSig_AcPmExpFilterGridBox, fields=ClassFields_AcPmExpFilterGridBox	# fixedcol:X fixedrow:X func:j
-	CLASS	Class_AcFadeSetGridBox, CLASS_AcFadeSetGridBox, User12_Classes, proc=AcFadeSetGridBoxProc, parent=CLASS_PsGridBox, allsize=80, selfsize=12, cname=ClassName_AcFadeSetGridBox, sig=ClassSig_AcFadeSetGridBox, fields=ClassFields_AcFadeSetGridBox	# fixedcol:X fixedrow:X func:j
-	CLASS	Class_AcDispTimeSetGridBox, CLASS_AcDispTimeSetGridBox, User12_Classes, proc=AcDispTimeSetGridBoxProc, parent=CLASS_PsGridBox, allsize=80, selfsize=12, cname=ClassName_AcDispTimeSetGridBox, sig=ClassSig_AcDispTimeSetGridBox, fields=ClassFields_AcDispTimeSetGridBox	# fixedcol:X fixedrow:X func:j
-	CLASS	Class_AcParaLoadOptGridBox, CLASS_AcParaLoadOptGridBox, User12_Classes, proc=AcParaLoadOptGridBoxProc, parent=CLASS_PsGridBox, allsize=80, selfsize=12, cname=ClassName_AcParaLoadOptGridBox, sig=ClassSig_AcParaLoadOptGridBox, fields=ClassFields_AcParaLoadOptGridBox	# fixedcol:X fixedrow:X func:j
-	CLASS	Class_AcItimatuWindow, CLASS_AcItimatuWindow, User12_Classes, proc=AcItimatuWindowProc, parent=CLASS_Window, allsize=44, selfsize=0, cname=ClassName_AcItimatuWindow, sig=ClassSig_AcItimatuWindow, fields=ClassFields_AcItimatuWindow
-	CLASS	Class_AcTchSensGridBox, CLASS_AcTchSensGridBox, User12_Classes, proc=AcTchSensGridBoxProc, parent=CLASS_PsGridBox, allsize=80, selfsize=12, cname=ClassName_AcTchSensGridBox, sig=ClassSig_AcTchSensGridBox, fields=ClassFields_AcTchSensGridBox	# fixedcol:X fixedrow:X func:j
-	CLASS	Class_AcTestMenuPage, CLASS_AcTestMenuPage, User12_Classes, proc=AcTestMenuPageProc, parent=CLASS_PsPageBox, allsize=40, selfsize=4, cname=ClassName_AcTestMenuPage, sig=ClassSig_AcTestMenuPage, fields=ClassFields_AcTestMenuPage	# pagemin:A pagemax:A
-	CLASS	Class_InOutTestWindow, CLASS_InOutTestWindow, User12_Classes, proc=InOutTestWindowProc, parent=CLASS_Window, allsize=64, selfsize=20, cname=ClassName_InOutTestWindow, sig=ClassSig_InOutTestWindow, fields=ClassFields_InOutTestWindow	# func:k font:c fontcolor:^ nowswno:n oldswno:n
-	CLASS	Class_AcIndexWideToggle, CLASS_AcIndexWideToggle, User12_Classes, proc=AcIndexWideToggleProc, parent=CLASS_PsWideToggle, allsize=56, selfsize=8, cname=ClassName_AcIndexWideToggle, sig=ClassSig_AcIndexWideToggle, fields=ClassFields_AcIndexWideToggle	# index:A tag:A func:j
-	CLASS	Class_CusMemModeBox, CLASS_CusMemModeBox, User12_Classes, proc=CusMemModeBoxProc, parent=CLASS_VwBox, allsize=44, selfsize=12, cname=ClassName_CusMemModeBox, sig=ClassSig_CusMemModeBox, fields=ClassFields_CusMemModeBox	# func:k font:c fontcolo:^
-	CLASS	Class_PsHelpTblBox, CLASS_PsHelpTblBox, User12_Classes, proc=PsHelpTblBoxProc, parent=CLASS_PsParaBox, allsize=44, selfsize=4, cname=ClassName_PsHelpTblBox, sig=ClassSig_PsHelpTblBox, fields=ClassFields_PsHelpTblBox	# func:j
-	CLASS	Class_TestMode8Box, CLASS_TestMode8Box, User12_Classes, proc=TestMode8BoxProc, parent=CLASS_VwBox, allsize=44, selfsize=12, cname=ClassName_TestMode8Box, sig=ClassSig_TestMode8Box, fields=ClassFields_TestMode8Box	# func:k font:c fontcolo:^
-	CLASS	Class_AcWindowPageInit, CLASS_AcWindowPageInit, User12_Classes, proc=AcWindowPageInitProc, parent=CLASS_PsPageBox, allsize=40, selfsize=4, cname=ClassName_AcWindowPageInit, sig=ClassSig_AcWindowPageInit, fields=ClassFields_AcWindowPageInit	# pagemin:A pagemax:A
-	CLASS	Class_BoardTestWindow, CLASS_BoardTestWindow, User12_Classes, proc=BoardTestWindowProc, parent=CLASS_Window, allsize=56, selfsize=12, cname=ClassName_BoardTestWindow, sig=ClassSig_BoardTestWindow, fields=ClassFields_BoardTestWindow	# func:k font:c fontcolor:^
-	.space	24, 0x00
-
-InitializeUser12_Table:	# 2 x u16, 18..65535; read by InitializeUser12 0x4C106BC2: `movhu (InitializeUser12_Table), d0`
-	tab_u16	18, 65535
-
-# 3 ResEvent names; an resevent id is (0x18c << 16) | its index
-User12_ResEvents:
-	IDNAME	EV_TESTDISK, Str_EV_TESTDISK, User12_ResEvents, 0x18c
-	IDNAME	EV_LSWDATA, Str_EV_LSWDATA, User12_ResEvents, 0x18c
-	IDNAME	EV_TEST4, Str_EV_TEST4, User12_ResEvents, 0x18c
-	.space	4, 0x00
-
-InitializeUser12_Table_2:	# 2 x u16, 3..65535; read by InitializeUser12 0x4C106BC2: `movhu (InitializeUser12_Table_2), d0`
-	tab_u16	3, 65535
-
-# 34 ResMethod names; an resmethod id is (0x1ac << 16) | its index
-User12_ResMethods:
-	IDNAME	MT_SvariIni, Str_MT_SvariIni, User12_ResMethods, 0x1ac
-	IDNAME	MT_SvariSet, Str_MT_SvariSet, User12_ResMethods, 0x1ac
-	IDNAME	MT_KEYINFO, Str_MT_KEYINFO, User12_ResMethods, 0x1ac
-	IDNAME	MT_KEYINFO1, Str_MT_KEYINFO1, User12_ResMethods, 0x1ac
-	IDNAME	MT_KEYINFO2, Str_MT_KEYINFO2, User12_ResMethods, 0x1ac
-	IDNAME	MT_KEYINFO3, Str_MT_KEYINFO3, User12_ResMethods, 0x1ac
-	IDNAME	MT_KEYINFO4, Str_MT_KEYINFO4, User12_ResMethods, 0x1ac
-	IDNAME	MT_KEYINFO5, Str_MT_KEYINFO5, User12_ResMethods, 0x1ac
-	IDNAME	MT_KEYINFO6, Str_MT_KEYINFO6, User12_ResMethods, 0x1ac
-	IDNAME	MT_KEYINFO7, Str_MT_KEYINFO7, User12_ResMethods, 0x1ac
-	IDNAME	MT_KEYINFO8, Str_MT_KEYINFO8, User12_ResMethods, 0x1ac
-	IDNAME	MT_KEYINFO9, Str_MT_KEYINFO9, User12_ResMethods, 0x1ac
-	IDNAME	MT_MICCK, Str_MT_MICCK, User12_ResMethods, 0x1ac
-	IDNAME	MT_NOTEOFF, Str_MT_NOTEOFF, User12_ResMethods, 0x1ac
-	IDNAME	MT_SYSINI, Str_MT_SYSINI, User12_ResMethods, 0x1ac
-	IDNAME	MT_FLASHWRITE, Str_MT_FLASHWRITE, User12_ResMethods, 0x1ac
-	IDNAME	MT_FLASHLOAD, Str_MT_FLASHLOAD, User12_ResMethods, 0x1ac
-	IDNAME	MT_WALLINI, Str_MT_WALLINI, User12_ResMethods, 0x1ac
-	IDNAME	MT_DISKCKRUN, Str_MT_DISKCKRUN, User12_ResMethods, 0x1ac
-	IDNAME	MT_DISKCKSTOP, Str_MT_DISKCKSTOP, User12_ResMethods, 0x1ac
-	IDNAME	MT_RGBWB, Str_MT_RGBWB, User12_ResMethods, 0x1ac
-	IDNAME	MT_CROSSTALK, Str_MT_CROSSTALK, User12_ResMethods, 0x1ac
-	IDNAME	MT_SAMPLE, Str_MT_SAMPLE, User12_ResMethods, 0x1ac
-	IDNAME	MT_CONTRAST, Str_MT_CONTRAST, User12_ResMethods, 0x1ac
-	IDNAME	MT_MD8INI, Str_MT_MD8INI, User12_ResMethods, 0x1ac
-	IDNAME	MT_ENGLISH, Str_MT_ENGLISH, User12_ResMethods, 0x1ac
-	IDNAME	MT_FRENCH, Str_MT_FRENCH, User12_ResMethods, 0x1ac
-	IDNAME	MT_GERMAN, Str_MT_GERMAN, User12_ResMethods, 0x1ac
-	IDNAME	MT_SPANISH, Str_MT_SPANISH, User12_ResMethods, 0x1ac
-	IDNAME	MT_GetLang, Str_MT_GetLang, User12_ResMethods, 0x1ac
-	IDNAME	MT_SetLang, Str_MT_SetLang, User12_ResMethods, 0x1ac
-	IDNAME	MT_ChkLang, Str_MT_ChkLang, User12_ResMethods, 0x1ac
-	IDNAME	MT_ChkToggleEditSw, Str_MT_ChkToggleEditSw, User12_ResMethods, 0x1ac
-	IDNAME	MT_HELPSET, Str_MT_HELPSET, User12_ResMethods, 0x1ac
-	.space	4, 0x00
-
-Str_empty_282:	.asciz "\""
-	.align	4, 0xFF	# pad after Str_empty_282
-
-# 18 Function procedures; a function id is (0x10c << 16) | its index (the names are the parallel table at slot 0x30c)
-User12_Functions:
-	IDNAME	FN_AcFSWAssGridBoxProc, AcFSWAssGridBoxProc, User12_Functions, 0x10c
-	IDNAME	FN_SineWaveWindowProc, SineWaveWindowProc, User12_Functions, 0x10c
-	IDNAME	FN_PmemModeBoxProc, PmemModeBoxProc, User12_Functions, 0x10c
-	IDNAME	FN_MSAModeBoxProc, MSAModeBoxProc, User12_Functions, 0x10c
-	IDNAME	FN_AcPmExpFilterGridBoxProc, AcPmExpFilterGridBoxProc, User12_Functions, 0x10c
-	IDNAME	FN_AcFadeSetGridBoxProc, AcFadeSetGridBoxProc, User12_Functions, 0x10c
-	IDNAME	FN_AcDispTimeSetGridBoxProc, AcDispTimeSetGridBoxProc, User12_Functions, 0x10c
-	IDNAME	FN_AcParaLoadOptGridBoxProc, AcParaLoadOptGridBoxProc, User12_Functions, 0x10c
-	IDNAME	FN_AcTchSensGridBoxProc, AcTchSensGridBoxProc, User12_Functions, 0x10c
-	IDNAME	FN_AcItimatuWindowProc, AcItimatuWindowProc, User12_Functions, 0x10c
-	IDNAME	FN_AcTestMenuPageProc, AcTestMenuPageProc, User12_Functions, 0x10c
-	IDNAME	FN_InOutTestWindowProc, InOutTestWindowProc, User12_Functions, 0x10c
-	IDNAME	FN_AcIndexWideToggleProc, AcIndexWideToggleProc, User12_Functions, 0x10c
-	IDNAME	FN_CusMemModeBoxProc, CusMemModeBoxProc, User12_Functions, 0x10c
-	IDNAME	FN_PsHelpTblBoxProc, PsHelpTblBoxProc, User12_Functions, 0x10c
-	IDNAME	FN_TestMode8BoxProc, TestMode8BoxProc, User12_Functions, 0x10c
-	IDNAME	FN_AcWindowPageInitProc, AcWindowPageInitProc, User12_Functions, 0x10c
-	IDNAME	FN_BoardTestWindowProc, BoardTestWindowProc, User12_Functions, 0x10c
-	.space	4, 0x00
-
-User12_FunctionNames:
-	.long	FnName_AcFSWAssGridBoxProc
-	.long	FnName_SineWaveWindowProc
-	.long	FnName_PmemModeBoxProc
-	.long	FnName_MSAModeBoxProc
-	.long	FnName_AcPmExpFilterGridBoxProc
-	.long	FnName_AcFadeSetGridBoxProc
-	.long	FnName_AcDispTimeSetGridBoxProc
-	.long	FnName_AcParaLoadOptGridBoxProc
-	.long	FnName_AcTchSensGridBoxProc
-	.long	FnName_AcItimatuWindowProc
-	.long	FnName_AcTestMenuPageProc
-	.long	FnName_InOutTestWindowProc
-	.long	FnName_AcIndexWideToggleProc
-	.long	FnName_CusMemModeBoxProc
-	.long	FnName_PsHelpTblBoxProc
-	.long	FnName_TestMode8BoxProc
-	.long	FnName_AcWindowPageInitProc
-	.long	FnName_BoardTestWindowProc
-# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x383910, 0x383914
-
-# 36 MainFunction procedures; a function id is (0x14c << 16) | its index (the names are the parallel table at slot 0x34c)
-User12_MainFunctions:
-	IDNAME	FN_RhyStopFunc, RhyStopFunc, User12_MainFunctions, 0x14c
-	IDNAME	FN_MainSvariIni, MainSvariIni, User12_MainFunctions, 0x14c
-	IDNAME	FN_MainSvariSet, MainSvariSet, User12_MainFunctions, 0x14c
-	IDNAME	FN_MainSysControl, MainSysControl, User12_MainFunctions, 0x14c
-	IDNAME	FN_TEST2FUNC, TEST2FUNC, User12_MainFunctions, 0x14c
-	IDNAME	FN_TEST3FUNC, TEST3FUNC, User12_MainFunctions, 0x14c
-	IDNAME	FN_TEST4FUNC, TEST4FUNC, User12_MainFunctions, 0x14c
-	IDNAME	FN_TEST5FUNC, TEST5FUNC, User12_MainFunctions, 0x14c
-	IDNAME	FN_TEST6FUNC, TEST6FUNC, User12_MainFunctions, 0x14c
-	IDNAME	FN_TEST7FUNC, TEST7FUNC, User12_MainFunctions, 0x14c
-	IDNAME	FN_MainTimeFlashFunc, MainTimeFlashFunc, User12_MainFunctions, 0x14c
-	IDNAME	FN_MainWallSetFlashFunc, MainWallSetFlashFunc, User12_MainFunctions, 0x14c
-	IDNAME	FN_MainFlashFunc, MainFlashFunc, User12_MainFunctions, 0x14c
-	IDNAME	FN_MainDtPrtFlashFunc, MainDtPrtFlashFunc, User12_MainFunctions, 0x14c
-	IDNAME	FN_TestModeFunc, TestModeFunc, User12_MainFunctions, 0x14c
-	IDNAME	FN_RomTestFunc, RomTestFunc, User12_MainFunctions, 0x14c
-	IDNAME	FN_RamTestFunc, RamTestFunc, User12_MainFunctions, 0x14c
-	IDNAME	FN_DeviceTestFunc, DeviceTestFunc, User12_MainFunctions, 0x14c
-	IDNAME	FN_TestDiskFunc, TestDiskFunc, User12_MainFunctions, 0x14c
-	IDNAME	FN_WaveRomTestFunc, WaveRomTestFunc, User12_MainFunctions, 0x14c
-	IDNAME	FN_TestRgbwbFunc, TestRgbwbFunc, User12_MainFunctions, 0x14c
-	IDNAME	FN_TestCrosstalkFunc, TestCrosstalkFunc, User12_MainFunctions, 0x14c
-	IDNAME	FN_TestSampleFunc, TestSampleFunc, User12_MainFunctions, 0x14c
-	IDNAME	FN_TestContrastFunc, TestContrastFunc, User12_MainFunctions, 0x14c
-	IDNAME	FN_LangSetFlashFunc, LangSetFlashFunc, User12_MainFunctions, 0x14c
-	IDNAME	FN_TestMICFunc, TestMICFunc, User12_MainFunctions, 0x14c
-	IDNAME	FN_LangSetChkMain, LangSetChkMain, User12_MainFunctions, 0x14c
-	IDNAME	FN_FadeInOutTitleFunc, FadeInOutTitleFunc, User12_MainFunctions, 0x14c
-	IDNAME	FN_MSATitleFunc, MSATitleFunc, User12_MainFunctions, 0x14c
-	IDNAME	FN_PmemModeTitleFunc, PmemModeTitleFunc, User12_MainFunctions, 0x14c
-	IDNAME	FN_CustomPanelFlashFunc, CustomPanelFlashFunc, User12_MainFunctions, 0x14c
-	IDNAME	FN_HelpMainFunc, HelpMainFunc, User12_MainFunctions, 0x14c
-	IDNAME	FN_TestMode8Func, TestMode8Func, User12_MainFunctions, 0x14c
-	IDNAME	FN_HelpMenuFunc, HelpMenuFunc, User12_MainFunctions, 0x14c
-	IDNAME	FN_MainNoteOff, MainNoteOff, User12_MainFunctions, 0x14c
-	IDNAME	FN_BoardTestFunc, BoardTestFunc, User12_MainFunctions, 0x14c
 	.space	4, 0x00
