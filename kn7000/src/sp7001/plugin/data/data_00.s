@@ -2886,7 +2886,7 @@ Str_73298125:	.asciz "73298125"
 
 	.space	3, 0xFF
 
-func_483ECCFF_Table:	# 16 x u8, 255..255; read by KssSdCardCheck 0x483ECCFF: `movbu  (a1), d0`
+func_483ECCFF_Table:	# 16 x u8, 255..255; read by KssMasterCodeCheck 0x483ECD5F: `movbu  (a1), d0`
 	tab_u8	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
 
 Str_StrList:	.asciz "StrList"
@@ -4250,8 +4250,8 @@ PLUG_ResNames:
 
 	.long	Str_empty_56
 
-func_483ECB8F_Table:	# 1 x u32, 1212122826..1212122826; read by func_483ECB8F 0x483ECB8F: `mov   (d0, a0), a1`
-	tab_u32	1212122826
+func_483ECB8F_Table:	# 1 pointers; read by func_483ECB8F 0x483ECB8F: `mov   (d0, a0), a1`
+	.long	Str_CUSTOM_LYRCS_PLUG_iN
 
 ptr_483FA0AC:
 	.long	Str_HELP_WORKSHOP_KN7000
@@ -5066,7 +5066,7 @@ ptr_502990B8:
 ptr_502990BC:
 	.long	Str_PtrStrList
 
-ptrs_502990C0:
+PtrStrListVtbl:
 	.long	loc_483ED2D0
 	.long	loc_483ED343
 	.long	loc_483ED393
@@ -5079,7 +5079,7 @@ ptrs_502990C0:
 	.long	loc_483ED797
 	.long	PtrStrListClear
 	.long	loc_483ED524
-ptrs_502990F0:
+StrListVtbl:
 	.long	loc_483ED5C9
 	.long	loc_483ED643
 	.long	loc_483ED660
@@ -5232,7 +5232,7 @@ word_502992DC:
 word_502992E0:
 	.long	0x00000005	# initial value
 
-ptr_502992E4:
+KssContext:
 	.long	loc_483EC486
 	.long	KssWorkRam+0x9EC	# a pointer into the cleared work RAM
 	.long	KssWorkRam+0x934	# a pointer into the cleared work RAM
@@ -5315,30 +5315,37 @@ ptr_502992E4:
 
 	.long	0xFFFFFF53	# initial value
 
-names_50299424:
-	.long	KssKeystreamRecords, Str_7p4fsohg399udb61uiue
-	.long	Str_db61nlekuwbbl5qp7p4f, Str_l5qpl97hlmpbqc99db61
-	.long	Str_qc99gopqp33v6efdl5qp, Str_6efd4s9ioiirfqmlqc99
-	.long	Str_fqmlfevjij8gk3kl6efd, Str_k3klagvtl6lmog2bfqml
-	.long	Str_og2b6u9ww5quu8ugk3kl, Str_u8ugblkdmj1m6r32og2b
-
+ptr_50299424:
+	.long	KssKeystreamRecords
+ptr_50299428:
+	.long	Str_7p4fsohg399udb61uiue
+	.long	Str_db61nlekuwbbl5qp7p4f
+	.long	Str_l5qpl97hlmpbqc99db61
+	.long	Str_qc99gopqp33v6efdl5qp
+	.long	Str_6efd4s9ioiirfqmlqc99
+	.long	Str_fqmlfevjij8gk3kl6efd
+	.long	Str_k3klagvtl6lmog2bfqml
+	.long	Str_og2b6u9ww5quu8ugk3kl
+	.long	Str_u8ugblkdmj1m6r32og2b
 	.long	Str_6r32d47p14su7j8gu8ug
 	.long	Str_7j8ggipi9cua7j8g6r32
 	.long	Str_ern7vfa7lbonern77j8g
 	.long	Str_mgfs7u1i2olj97sqern7
 	.long	Str_97sqp2792do7mvmemgfs
 	.long	Str_mvmew844njk8j8og97sq
-
-names_50299464:
-	.long	Str_j8ogwlphhecumj2kmvme, Str_mj2kghum4cdkfrhhj8og
-	.long	Str_frhhpku5d99w8jthmj2k, Str_8jthgff676lkwhjqfrhh
-	.long	Str_whjqhsm19b564rlr8jth, Str_4rlrtara3p7sfgfqwhjq
-	.long	Str_fgfql39ipkur4qrs4rlr, Str_4qrsnwaavg1hktk9fgfq
-	.long	Str_ktk9d9frapb5j5gu4qrs, Str_j5guniuhum49uiuektk9
-
+	.long	Str_j8ogwlphhecumj2kmvme
+	.long	Str_mj2kghum4cdkfrhhj8og
+	.long	Str_frhhpku5d99w8jthmj2k
+	.long	Str_8jthgff676lkwhjqfrhh
+	.long	Str_whjqhsm19b564rlr8jth
+	.long	Str_4rlrtara3p7sfgfqwhjq
+	.long	Str_fgfql39ipkur4qrs4rlr
+	.long	Str_4qrsnwaavg1hktk9fgfq
+	.long	Str_ktk9d9frapb5j5gu4qrs
+	.long	Str_j5guniuhum49uiuektk9
 	.long	Str_m2ht1bvqgap26ucfj5gu
 KssKeyStringsPtr:
-	.long	names_50299424
+	.long	ptr_50299424
 ptr_50299494:
-	.long	names_50299424+4
+	.long	ptr_50299428
 .mnbase 0x48000000

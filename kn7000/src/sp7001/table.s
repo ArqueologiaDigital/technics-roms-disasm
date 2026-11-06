@@ -9,7 +9,7 @@
 # 0x200, then 84 asset segments. Segment names and comments come from
 # tools/table_segments.py; the JPEG segments are files in src/table/.
 # Reference image: kn7000_table_sp7001.rom, SHA-1 482e73af2c84a257ebc835292943cb159b6d1d07.
-# Plug-in: 144 code chunks converted to MN10300 assembly; its data is typed (src/sp7001/plugin/data/).
+# Plug-in: 146 code chunks converted to MN10300 assembly; its data is typed (src/sp7001/plugin/data/).
 
 .include "src/table/style_macros.inc"   # the style format's record and event macros
 
@@ -116,7 +116,7 @@
 .equ func_483EBC0F, 0x483EBC0F
 .equ func_483EBC0F_entry, 0x483EBC12
 .equ KssUnhandledException, 0x483EBCC9
-.equ func_483EBCC9_entry, 0x483EBCCC
+.equ KssUnhandledException_entry, 0x483EBCCC
 .equ loc_483EBD8D, 0x483EBD8D
 .equ KssRsprintf, 0x483EBD8F
 .equ KssRsprintf_entry, 0x483EBD92
@@ -131,7 +131,7 @@
 .equ KssThrowBug_entry, 0x483EBFC5
 .equ loc_483EBFF2, 0x483EBFF2
 .equ KssTraceForward, 0x483EC03A
-.equ func_483EC03A_entry, 0x483EC03D
+.equ KssTraceForward_entry, 0x483EC03D
 .equ loc_483EC077, 0x483EC077
 .equ func_483EC079, 0x483EC079
 .equ func_483EC079_entry, 0x483EC07C
@@ -27295,7 +27295,7 @@ TableRomImageEnd:
     beq     0x483e9eb0
     mov     0xc2, d0
     mov     (ptr_50299058), a0
-    call    func_483EC03A_entry, 0, 0x1c
+    call    KssTraceForward_entry, 0, 0x1c
     clr     d0
     ret     [d2,d3,a2,a3], 0x84
     cmp     0, d0
@@ -27308,8 +27308,8 @@ TableRomImageEnd:
     beq     0x483e9edc
     mov     0xc5, d0
     mov     (ptr_50299058), a0
-    call    func_483EC03A_entry, 0, 0x1c
-    call    func_483EBCC9_entry, 0, 0x20
+    call    KssTraceForward_entry, 0, 0x1c
+    call    KssUnhandledException_entry, 0, 0x20
     clr     d0
     ret     [d2,d3,a2,a3], 0x84
     mov     (KssFrameworkObj), a0
@@ -28315,7 +28315,7 @@ TableRomImageEnd:
     calls   (a0)
     clr     d0
     jmp     0x483eb2d6
-    call    func_483EBCC9_entry, 0, 0x20
+    call    KssUnhandledException_entry, 0, 0x20
     clr     d0
     jmp     0x483eb2d6
     mov     sp, a3
@@ -28922,8 +28922,8 @@ TableRomImageEnd:
     beq     0x483eb40e
     mov     0x12b, d0
     mov     (ptr_5029907C), a0
-    call    func_483EC03A_entry, 0, 0x1c
-    call    func_483EBCC9_entry, 0, 0x20
+    call    KssTraceForward_entry, 0, 0x1c
+    call    KssUnhandledException_entry, 0, 0x20
     clr     d0
     ret     [d2,d3,a2], 0x2c
     mov     (KssWorkRam+0xA44), a0
@@ -28940,8 +28940,8 @@ TableRomImageEnd:
     beq     0x483eb446
     mov     0x12d, d0
     mov     (ptr_5029907C), a0
-    call    func_483EC03A_entry, 0, 0x1c
-    call    func_483EBCC9_entry, 0, 0x20
+    call    KssTraceForward_entry, 0, 0x1c
+    call    KssUnhandledException_entry, 0, 0x20
     clr     d0
     ret     [d2,d3,a2], 0x2c
     inc     d2
@@ -29643,7 +29643,7 @@ TableRomImageEnd:
 # KssUnhandledException  (CPU 0x483EBCC9)
 #   KssContext+0x20 (25): logs the pending exception (KssActivationStatus), runs KssTraceForward, and shows 'Unbekannter Fehler' / 'Druecken Sie OK um zur Hauptseite zu wechseln' through KssDialogShow
     add     -0x20, sp
-# func_483EBCC9_entry:   (register-save `call` entry)
+# KssUnhandledException_entry:   (register-save `call` entry)
     mov     (KssActivationStatus), d0
     cmp     0, d0
     bne     0x483ebcd9
@@ -29676,7 +29676,7 @@ TableRomImageEnd:
     beq     0x483ebd53
     mov     0x10a, d0
     mov     (ptr_5029908C), a0
-    call    func_483EC03A_entry, 0, 0x1c
+    call    KssTraceForward_entry, 0, 0x1c
     bra     0x483ebd8a
     mov     2, d0
     mov     0x10b, d1
@@ -29758,7 +29758,7 @@ TableRomImageEnd:
     beq     0x483ebe4c
     mov     0x15c, d0
     mov     (ptr_5029908C), a0
-    call    func_483EC03A_entry, 0, 0x1c
+    call    KssTraceForward_entry, 0, 0x1c
     bra     0x483ebe7f
     mov     (KssWorkRam+0xA44), a0
     mov     (0x78, a0), a0
@@ -29773,7 +29773,7 @@ TableRomImageEnd:
     beq     0x483ebe7f
     mov     0x15f, d0
     mov     (ptr_5029908C), a0
-    call    func_483EC03A_entry, 0, 0x1c
+    call    KssTraceForward_entry, 0, 0x1c
     ret     0, 0x10
 # loc_483EBE82:   (label)
     movm    [d2], (sp)
@@ -29916,7 +29916,7 @@ TableRomImageEnd:
 # KssTraceForward  (CPU 0x483EC03A)
 #   KssContext+0x78 (85): when KssActivationStatus == 1 logs '%H forwarded', else '%H stack trace' (the frame-exit trace of the exception scheme)
     add     -0x1c, sp
-# func_483EC03A_entry:   (register-save `call` entry)
+# KssTraceForward_entry:   (register-save `call` entry)
     mov     d0, d1
     mov     (KssActivationStatus), d0
     cmp     1, d0
@@ -30858,7 +30858,7 @@ TableRomImageEnd:
     beq     0x483ec8e8
     mov     0x46, d0
     mov     (ptr_502990B4), a0
-    call    func_483EC03A_entry, 0, 0x1c
+    call    KssTraceForward_entry, 0, 0x1c
     ret     [a2], 0x1c
     mov     (KssWorkRam+0xA44), a0
     mov     (0x1dc, a0), a0
@@ -30868,7 +30868,7 @@ TableRomImageEnd:
     beq     0x483ec90e
     mov     0x47, d0
     mov     (ptr_502990B4), a0
-    call    func_483EC03A_entry, 0, 0x1c
+    call    KssTraceForward_entry, 0, 0x1c
     ret     [a2], 0x1c
     mov     (KssWorkRam+0xA44), a0
     mov     0x1a, d0
@@ -30882,7 +30882,7 @@ TableRomImageEnd:
     beq     0x483ec943
     mov     0x49, d0
     mov     (ptr_502990B4), a0
-    call    func_483EC03A_entry, 0, 0x1c
+    call    KssTraceForward_entry, 0, 0x1c
     ret     [a2], 0x1c
     mov     (KssWorkRam+0xA44), a0
     mov     0x10, d0
@@ -30896,7 +30896,7 @@ TableRomImageEnd:
     beq     0x483ec977
     mov     0x4b, d0
     mov     (ptr_502990B4), a0
-    call    func_483EC03A_entry, 0, 0x1c
+    call    KssTraceForward_entry, 0, 0x1c
     bra     0x483ec9b8
     mov     (KssWorkRam+0xA44), a0
     mov     (0x1a0, a0), a0
@@ -30906,7 +30906,7 @@ TableRomImageEnd:
     beq     0x483ec99c
     mov     0x4c, d0
     mov     (ptr_502990B4), a0
-    call    func_483EC03A_entry, 0, 0x1c
+    call    KssTraceForward_entry, 0, 0x1c
     bra     0x483ec9b8
     call    func_483EE372_entry, [d2], 0x18
     mov     (KssActivationStatus), d0
@@ -30914,7 +30914,7 @@ TableRomImageEnd:
     beq     0x483ec9b8
     mov     0x4d, d0
     mov     (ptr_502990B4), a0
-    call    func_483EC03A_entry, 0, 0x1c
+    call    KssTraceForward_entry, 0, 0x1c
     ret     [a2], 0x1c
 # loc_483EC9BB:   (label)
     movm    [d2,d3,a2,a3], (sp)
@@ -31130,7 +31130,7 @@ TableRomImageEnd:
     beq     0x483ecbfb
     mov     0xd2, d0
     mov     (ptr_502990B4), a0
-    call    func_483EC03A_entry, 0, 0x1c
+    call    KssTraceForward_entry, 0, 0x1c
     bra     0x483ecc04
     mov     (KssWorkRam+0x9EC), a0
     mov     d2, d0
@@ -31145,7 +31145,7 @@ TableRomImageEnd:
     beq     0x483ecbfa
     mov     0xd4, d0
     mov     (ptr_502990B4), a0
-    call    func_483EC03A_entry, 0, 0x1c
+    call    KssTraceForward_entry, 0, 0x1c
     bra     0x483ecc04
     inc     d2
     mov     (word_483FA100), d0
@@ -31262,7 +31262,8 @@ TableRomImageEnd:
 # loc_483ECCD4  (CPU 0x483ECCD4)
     mov     Str_Aug_23_2003_20_56_19, a0
     rets
-# KssStrUpper:   (KssContext+0xDC (1): a..z -> A..Z in place)
+# KssStrUpper  (CPU 0x483ECCDC)
+#   KssContext+0xDC (1): a..z -> A..Z in place
     bra     0x483eccf4
     movbu   (a0), d0
     extb    d0
@@ -31405,7 +31406,7 @@ TableRomImageEnd:
     beq     0x483ece54
     mov     0x1e, d0
     mov     (ptr_502990B8), a0
-    call    func_483EC03A_entry, 0, 0x1c
+    call    KssTraceForward_entry, 0, 0x1c
     ret     [d2,d3,a2,a3], 0x24
     mov     (a3), a0
     mov     (ptr_483FA0B4), a1
@@ -31417,7 +31418,7 @@ TableRomImageEnd:
     beq     0x483ece7c
     mov     0x1f, d0
     mov     (ptr_502990B8), a0
-    call    func_483EC03A_entry, 0, 0x1c
+    call    KssTraceForward_entry, 0, 0x1c
     ret     [d2,d3,a2,a3], 0x24
     mov     (a3), a0
     mov     (func_483ECB8F_Table), a1
@@ -31430,7 +31431,7 @@ TableRomImageEnd:
     beq     0x483ecea5
     mov     0x20, d0
     mov     (ptr_502990B8), a0
-    call    func_483EC03A_entry, 0, 0x1c
+    call    KssTraceForward_entry, 0, 0x1c
     ret     [d2,d3,a2,a3], 0x24
     mov     (a3), a0
     mov     (ptr_483FA0B0), a1
@@ -31443,7 +31444,7 @@ TableRomImageEnd:
     beq     0x483ececf
     mov     0x21, d0
     mov     (ptr_502990B8), a0
-    call    func_483EC03A_entry, 0, 0x1c
+    call    KssTraceForward_entry, 0, 0x1c
     ret     [d2,d3,a2,a3], 0x24
     mov     (a3), a0
     mov     (ptr_483FA0B8), a1
@@ -31457,7 +31458,7 @@ TableRomImageEnd:
     beq     0x483ecf2f
     mov     0x22, d0
     mov     (ptr_502990B8), a0
-    call    func_483EC03A_entry, 0, 0x1c
+    call    KssTraceForward_entry, 0, 0x1c
     ret     [d2,d3,a2,a3], 0x24
     mov     (KssFrameworkObj), a0
     mov     d2, d0
@@ -31503,7 +31504,7 @@ TableRomImageEnd:
     beq     0x483ecf75
     mov     0x28, d0
     mov     (ptr_502990B8), a0
-    call    func_483EC03A_entry, 0, 0x1c
+    call    KssTraceForward_entry, 0, 0x1c
     ret     [d2,d3,a2,a3], 0x24
     mov     (a3), a0
     mov     2, d0
@@ -31515,7 +31516,7 @@ TableRomImageEnd:
     beq     0x483ecf99
     mov     0x29, d0
     mov     (ptr_502990B8), a0
-    call    func_483EC03A_entry, 0, 0x1c
+    call    KssTraceForward_entry, 0, 0x1c
     ret     [d2,d3,a2,a3], 0x24
     mov     (a3), a0
     clr     d0
@@ -31527,7 +31528,7 @@ TableRomImageEnd:
     beq     0x483ecfbc
     mov     0x2a, d0
     mov     (ptr_502990B8), a0
-    call    func_483EC03A_entry, 0, 0x1c
+    call    KssTraceForward_entry, 0, 0x1c
     ret     [d2,d3,a2,a3], 0x24
     mov     (KssFrameworkObj), a0
     clr     d0
@@ -31573,7 +31574,7 @@ TableRomImageEnd:
     beq     0x483ed04f
     mov     0x2e, d0
     mov     (ptr_502990B8), a0
-    call    func_483EC03A_entry, 0, 0x1c
+    call    KssTraceForward_entry, 0, 0x1c
     ret     [d2,d3,a2,a3], 0x24
     mov     (a3), a0
     mov     (ptr_483FA0BC), a1
@@ -31586,7 +31587,7 @@ TableRomImageEnd:
     beq     0x483ed078
     mov     0x2f, d0
     mov     (ptr_502990B8), a0
-    call    func_483EC03A_entry, 0, 0x1c
+    call    KssTraceForward_entry, 0, 0x1c
     ret     [d2,d3,a2,a3], 0x24
     mov     (a3), a0
     mov     (ptr_483FA0C0), a1
@@ -31599,7 +31600,7 @@ TableRomImageEnd:
     beq     0x483ed0a2
     mov     0x30, d0
     mov     (ptr_502990B8), a0
-    call    func_483EC03A_entry, 0, 0x1c
+    call    KssTraceForward_entry, 0, 0x1c
     ret     [d2,d3,a2,a3], 0x24
     mov     (a3), a0
     mov     (ptrs_483FA0C4), a1
@@ -31612,7 +31613,7 @@ TableRomImageEnd:
     beq     0x483ed0cc
     mov     0x31, d0
     mov     (ptr_502990B8), a0
-    call    func_483EC03A_entry, 0, 0x1c
+    call    KssTraceForward_entry, 0, 0x1c
     ret     [d2,d3,a2,a3], 0x24
     mov     (KssFrameworkObj), a0
     clr     d0
@@ -31677,7 +31678,7 @@ TableRomImageEnd:
     beq     0x483ed195
     mov     0x38, d0
     mov     (ptr_502990B8), a0
-    call    func_483EC03A_entry, 0, 0x1c
+    call    KssTraceForward_entry, 0, 0x1c
     ret     [d2,d3,a2,a3], 0x24
     mov     (0x30, sp), a0
     mov     d2, d0
@@ -31690,7 +31691,7 @@ TableRomImageEnd:
     beq     0x483ed214
     mov     0x39, d0
     mov     (ptr_502990B8), a0
-    call    func_483EC03A_entry, 0, 0x1c
+    call    KssTraceForward_entry, 0, 0x1c
     ret     [d2,d3,a2,a3], 0x24
     mov     (0x30, sp), a0
     mov     (a0), a0
@@ -31791,7 +31792,7 @@ TableRomImageEnd:
     inc     d1
     cmp     d2, d1
     blt     0x483ed2a4
-    mov     ptrs_502990C0, d0
+    mov     PtrStrListVtbl, d0
     mov     d0, (a2)
     mov     d2, (0xc, a2)
     clr     d0
@@ -32088,7 +32089,8 @@ TableRomImageEnd:
     call    StrListCreate_entry, [a2,a3], 0x1c
     mov     a2, a0
     ret     [a2,a3], 0x18
-# PtrStrListClear:   (PtrStrListVtbl+0x28: count := 0)
+# PtrStrListClear  (CPU 0x483ED553)
+#   PtrStrListVtbl+0x28: count := 0
     add     -0xc, sp
     clr     d0
     mov     d0, (0x10, a0)
@@ -32112,7 +32114,7 @@ TableRomImageEnd:
     call    KssThrowBug_entry, [d2,a2], 0x24
     bra     0x483ed5c6
     mov     0x18, a1
-    mov     ptrs_502990F0, d0
+    mov     StrListVtbl, d0
     mov     d0, (a2)
     add     a3, a1
     clr     d0
@@ -33712,7 +33714,7 @@ TableRomImageEnd:
     beq     0x483ee363
     mov     0x7a, d0
     mov     (ptr_502991BC), a0
-    call    func_483EC03A_entry, 0, 0x1c
+    call    KssTraceForward_entry, 0, 0x1c
     mov     -1, d0
     bra     0x483ee36d
     inc     d2
@@ -33742,7 +33744,7 @@ TableRomImageEnd:
     beq     0x483ee3be
     mov     0x89, d0
     mov     (ptr_502991BC), a0
-    call    func_483EC03A_entry, 0, 0x1c
+    call    KssTraceForward_entry, 0, 0x1c
     mov     -1, d0
     bra     0x483ee3c8
     inc     d2
@@ -34038,7 +34040,7 @@ TableRomImageEnd:
     beq     0x483ee6e3
     mov     0xc8, d0
     mov     (ptr_502991C4), a0
-    call    func_483EC03A_entry, 0, 0x1c
+    call    KssTraceForward_entry, 0, 0x1c
     ret     [d2,d3,a2,a3], 0x94
     mov     (KssFrameworkObj), d0
     mov     0x2e1c, a1
@@ -34303,7 +34305,7 @@ TableRomImageEnd:
     beq     0x483ee99d
     mov     0x11d, d0
     mov     (ptr_502991C4), a0
-    call    func_483EC03A_entry, 0, 0x1c
+    call    KssTraceForward_entry, 0, 0x1c
     ret     [d2,d3,a2,a3], 0x44
     mov     0, a3
     clr     d3
@@ -34527,7 +34529,7 @@ TableRomImageEnd:
     mov     a2, d1
     add     0x20, d1
     mov     (KssFrameworkObj), a0
-    mov     ptr_502992E4, a1
+    mov     KssContext, a1
     mov     0x5029b000, a2
     calls   (a2)
     mov     (0x20, sp), d0
