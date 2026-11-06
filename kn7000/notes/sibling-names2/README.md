@@ -74,6 +74,11 @@ Each regeneration ended in a fixed point: after `aligned-names`, `data-and-code-
 `data-and-code-src` reached its own fixpoint in 2 to 3 rounds.  All four images rebuild
 byte-identical (`make -C <model> verify`).
 
+`make doc-quality` (`docs/coverage/doc-quality-2026-11-06-15`, against -14: nothing rose) reads
+the same change: (e) placeholder routine names KN6000 5,678 -> 5,671, KN6500 5,704 -> 5,698,
+KN2400 6,538 -> 6,517; (b) operands spelled as a number outside the image KN6000 14,501 -> 14,498,
+KN6500 14,522 -> 14,519, KN2400 15,810 -> 15,787.
+
 ## Name sources measured and not adopted
 
 `../sibling-names2-probes/name-source-trials.txt` (`name_source_trial.sh`, the tool with the rules
