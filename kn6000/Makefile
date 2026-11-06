@@ -134,7 +134,7 @@ symbols-check:
 # ---- regenerate src/program.s (needs unidasm) ------------------------------------
 program-src: $(TOOLS)/gen_image_s.py $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_ported.sym src/symbols.inc $(SFR_INC) baserom/$(ROM)
 	$(PYTHON) $(TOOLS)/gen_image_s.py --rom baserom/$(ROM) --base $(BASE) $(CODE) --reflection-tables \
-	    --sym $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_ported.sym $(FN_SYM) --inc src/symbols.inc --labels-inc src/labels.inc \
+	    --sym $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_ported.sym $(NEW_SYM) $(FN_SYM) --inc src/symbols.inc --labels-inc src/labels.inc \
 	    --sfr-inc $(SFR_INC) --out src/program.s --unidasm $(UNIDASM) --stats notes/conversion-stats.txt $(DATA) $(IDS) --decode-gaps $(TYPED) \
 	    --title $(TITLE) --title 'Panasonic MN10300, linked at 0x4C000000. See README.md.'
 
@@ -189,7 +189,7 @@ PORT_SIBLINGS := --also-a KN6500 ../kn6500/baserom/kn6500_program.rom 0x4c000000
 .PHONY: ported-names
 ported-names: $(TOOLS)/port_names_by_code.py $(TOOLS)/gen_image_s.py src/labels.inc baserom/$(ROM)
 	$(PYTHON) $(TOOLS)/port_names_by_code.py $(PORT_FROM) --b-rom baserom/$(ROM) --b-base $(BASE) \
-	    $(subst --code,--b-code,$(CODE)) --b-sym $(MODEL).sym $(MODEL)_manual.sym \
+	    $(subst --code,--b-code,$(CODE)) --b-sym $(MODEL).sym $(MODEL)_manual.sym $(NEW_SYM) \
 	    --b-labels src/labels.inc --out $(MODEL)_ported.sym --unidasm $(UNIDASM) --fuzzy $(PORT_SIBLINGS) $(if $(PORT_CACHE),--cache $(PORT_CACHE)) \
 	    --title "$(MODEL): names carried over from KN7000 program 941 and the sibling images (same code, relinked)"
 
@@ -236,6 +236,32 @@ customdata-src: $(TOOLS)/gen_customdata_s.py baserom/01ctmini.ic18
 	    --title 'Technics SX-KN6000 / SX-KN6500 factory CUSTOM STYLE memory (IC18, bank 0x96820000) - byte-exact.' \
 	    --title 'Reference: 01ctmini.ic18, the 0x1E0000-byte bank inflated from 01CTMINI.AST of the' \
 	    --title 'MAME softlist kn6000_flop floppy idd6000 (../kn7000/tools/ast_file.py).'
+
+# ---- names carried along call sites and RAM operands; RAM names from their users ----------
+# (lane open11/sibling-names, 2026-11-06; ../kn7000/notes/sibling-names/README.md)
+# aligned-names: ../kn7000/tools/port_names_by_alignment.py carries KN7000 941 names onto the
+# routines the two images' same-named routines call at aligned call sites, and onto same-body
+# routines (short ones, twins) whose RAM operands the aligned anchors pair; it writes the RAM
+# address pairs to notes/ram-map-kn7000.tsv.  ram-names: ../kn7000/tools/name_ram_by_use.py names
+# the RAM addresses a named accessor (GetX / SetX / IsX) is the only access of, and those whose
+# every direct reference lies in one named routine (R_Ram).  Order: aligned-names,
+# data-and-code-src, ram-names, data-and-code-src.  The committed .sym files are the result.
+ALIGNED_SYM := $(MODEL)_aligned.sym
+RAM_SYM     := $(MODEL)_ram.sym
+NEW_SYM     := $(wildcard $(ALIGNED_SYM) $(RAM_SYM))
+.PHONY: aligned-names ram-names
+aligned-names: $(TOOLS)/port_names_by_alignment.py $(TOOLS)/fn_similarity.py src/labels.inc baserom/$(ROM)
+	$(PYTHON) $(TOOLS)/port_names_by_alignment.py $(PORT_FROM) --b-rom baserom/$(ROM) --b-base $(BASE) \
+	    $(subst --code,--b-code,$(CODE)) --b-sym $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_ported.sym $(FN_SYM) \
+	    $(wildcard $(RAM_SYM)) --b-labels src/labels.inc --out $(ALIGNED_SYM) --ram-map notes/ram-map-kn7000.tsv \
+	    --report notes/aligned-names-report.md --unidasm $(UNIDASM) $(if $(PORT_CACHE),--cache $(PORT_CACHE)) \
+	    --title "$(MODEL): KN7000 941 names carried along aligned call sites and RAM operands"
+ram-names: $(TOOLS)/name_ram_by_use.py src/program.s
+	$(PYTHON) $(TOOLS)/name_ram_by_use.py --src src/program.s \
+	    --sym $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_ported.sym $(wildcard $(ALIGNED_SYM)) $(FN_SYM) \
+	    --taken src/labels.inc src/symbols.inc $(wildcard src/program/data/labels.sym src/constants.inc src/program/data/gui_code_ids.inc) \
+	    --out $(RAM_SYM) --report notes/ram-names-report.md \
+	    --title "$(MODEL): RAM addresses named after the named routines that use them"
 
 clean:
 	rm -rf build
