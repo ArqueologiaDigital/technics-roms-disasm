@@ -1004,6 +1004,7 @@
 #define RAM_IvSdpart_PartRow                                 0x0003E99Eu
 #define RAM_Part_CaptionStrPtrs                              0x0003E9A0u
 #define RAM_MidiPart_ConfigNameTable                         0x0003EA30u
+#define RAM_TrackMixer_ColumnPartMap                         0x0003EBE8u
 #define RAM_TrackMixer_GridRowMapEnd                         0x0003EC1Cu
 #define RAM_DrawbarBitmap_SliderBitmapPtrs_Unreferenced      0x0003EC4Cu
 #define RAM_RecordChain_CurrentRecord                        0x0003EC4Eu
@@ -1418,6 +1419,7 @@
 #define RAM_Root_NamingSymbolToggleView_index                0x0003F1E0u
 #define RAM_Root_NamingSymbolToggleView_tag                  0x0003F1E2u
 #define RAM_Naka_DrawbarReg_Table                            0x0003F1E4u
+#define RAM_ChordName_TypeRootTables                         0x0003F2F8u
 #define RAM_Normal_Window                                    0x0003F3F8u
 #define RAM_normal_Window                                    0x0003F3FCu
 #define RAM_normal_AcLswBox_Value                            0x0003F400u
