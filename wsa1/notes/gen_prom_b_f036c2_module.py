@@ -12,7 +12,7 @@ QUESTION IT ANSWERS
     0x0B, exactly the interpreter-A text-record shape used throughout this
     file, and DL.walk() confirms it: 51 records, ZERO DRIFT, from 0xF036EE
     all the way to 0xF03892 -- which is not an arbitrary stopping point, it
-    is the ALREADY call-site-verified start of `DL_T0neLayerSoundEditTrigGer`
+    is the ALREADY call-site-verified start of `DL_ToneLayerSoundEditTrigGer`
     ("entered at: 0xF03892", a few lines below in this same file). So both
     ends of the recovered list are independently anchored: a real pointer
     table's own extent on one side, a real call site on the other.
@@ -33,7 +33,7 @@ WHAT THIS SCRIPT DOES
 VERIFICATION
     --selftest: the target text is present verbatim, the 11 pointer values
     are recomputed straight from the ROM, the display list frames end-to-end
-    with zero drift onto the independently-documented DL_T0neLayerSoundEdit-
+    with zero drift onto the independently-documented DL_ToneLayerSoundEdit-
     TrigGer, no record is a same-byte fill run, every opcode is a documented
     interpreter-A handler, and the byte accounting balances. The byte gate
     (`make gate-wsa1`) is what actually certifies the emitted bytes.
@@ -58,7 +58,7 @@ ROM = "original_ROMs/wsa1_prom_b.ic13"
 
 ARR_START, ARR_END = 0xF036C2, 0xF036EE          # real 44-byte pointer table
 DL_START, DL_END = 0xF036EE, 0xF03892
-CITED_END = "DL_T0neLayerSoundEditTrigGer"
+CITED_END = "DL_ToneLayerSoundEditTrigGer"
 
 OLD_HEADER = "; Data_F036C2 -- 127 bytes, EMITTED AS DATA (not promoted to code)."
 NEW_HEADER = "; Data_F036C2 -- 44 bytes, EMITTED AS DATA (not promoted to code)."
@@ -110,7 +110,7 @@ def build_dl_text(b):
            "; The 83 bytes here had been folded into Data_F036C2 above (now\n"
            "; shrunk to its real 44-byte, 11-entry pointer-table extent);\n"
            "; walking from here lands with ZERO DRIFT on the ALREADY call-\n"
-           "; verified DL_T0neLayerSoundEditTrigGer (\"entered at: 0x%06X\"),\n"
+           "; verified DL_ToneLayerSoundEditTrigGer (\"entered at: 0x%06X\"),\n"
            "; a few lines below.  notes/gen_prom_b_f036c2_module.py\n"
            % (DL_START, DL_END - 1, len(recs), DL_END - DL_START, DL_END),
            "; ------------------------------------------------------------------\n"]
@@ -139,7 +139,7 @@ def main():
     if "--selftest" in sys.argv:
         print("gen_prom_b_f036c2_module.py --selftest")
         text = image_text(ROOT, S_FILE)      # the image, not its root file
-        check("CITED end DL_T0neLayerSoundEditTrigGer present verbatim", CITED_END in text, True)
+        check("CITED end DL_ToneLayerSoundEditTrigGer present verbatim", CITED_END in text, True)
         check("Data_F036C2 header present verbatim", OLD_HEADER in text, True)
         check("Data_F036C2 old rows present verbatim", OLD_ROWS in text, True)
         check("target .incbin directive present verbatim", OLD_INCBIN in text, True)

@@ -1,3 +1,9 @@
+; ⚠ CAPTIONS TYPED WITH 0x30.  Some captions in this file
+;   spell capital O with character code 0x30, the digit zero: `C0NTR0LLER`, `S0UND`, `C0MBI`, `0VERALL`,
+;   `T0UCH`.  They are the ROM's own bytes and stay as they are, as do the comments that quote them; six of
+;   the machine's seven Latin faces draw cells 0x30 and 0x4F alike (notes/prom_b_screens_round8.py
+;   --glyphs).  Label names spell the word with O (owner decision 2026-11-06, notes/zero-for-o/README.md).
+;
 
 	push XIZ                                             ; F9C000  3e
 	ld XIZ,XSP                                           ; F9C001  ef 8e
@@ -7957,7 +7963,7 @@ ExitKey_System:
 	push XWA                                             ; FA003A  38
 	jr .LFA0049                                          ; FA003B  68 0c
 .LFA003D:
-	lda xbc, (DL_0verallT0uchSensitivity:24)                     ; FA003D  f2 4b 20 fa 31
+	lda xbc, (DL_OverallTouchSensitivity:24)                     ; FA003D  f2 4b 20 fa 31
 	push XBC                                             ; FA0042  39
 	lda xwa, (DL_TestSystemTuneScaleInitial:24)                     ; FA0043  f2 21 1f fa 30
 	push XWA                                             ; FA0048  38
@@ -12526,7 +12532,7 @@ DL_TestSystemTuneScaleInitial:
 	dl_value_glyph	glyph=105, x=288, y=186
 	dl_text8x8_packed	x=0, y=116, text="\020"
 ; ---------------------------------------------------------------------
-; DL_0verallT0uchSensitivity -- 37 bytes, kind=display_list
+; DL_OverallTouchSensitivity -- 37 bytes, kind=display_list
 ;
 ; Boundary evidence (notes/prom_a_fa1404_identify.py, function solve(),
 ; asserted by its own --selftest): frames as A records between 0xFA204B and 0xFA2070
@@ -12536,8 +12542,8 @@ DL_TestSystemTuneScaleInitial:
 ; (SYSTEM menu: TUNE & SCALE, CONTROLLER ASSIGN, RE-MAP EDIT, MIXER, ...)
 ; and notes/prom_a_fa1404_identify.py --fine for the full object list.
 ; ---------------------------------------------------------------------
-; DL_0verallT0uchSensitivity: the display list whose text records draw "0VERALL T0UCH" / "SENSITIVITY" (notes/prom_a_dl_text_names.py).
-DL_0verallT0uchSensitivity:
+; DL_OverallTouchSensitivity: the display list whose text records draw "0VERALL T0UCH" / "SENSITIVITY" (notes/prom_a_dl_text_names.py).
+DL_OverallTouchSensitivity:
 	dl_text8x10	x=40, y=107, text="0VERALL T0UCH"
 	dl_text8x10	x=40, y=121, text="SENSITIVITY"
 	dl_value_glyph	glyph=8, x=8, y=108

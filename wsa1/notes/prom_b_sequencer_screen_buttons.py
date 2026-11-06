@@ -12,7 +12,7 @@ QUESTION IT ANSWERS
       ViewB 0x06  T_ScreenEnter_RealtimeRecordScreen_Fwd  enter posts Draw_RealtimeRecordSong...        RealtimeRecordScreen
       ViewB 0x08  T_ScreenEnter_CycleRecordScreen_Fwd  Draw_CycleRecordCurrentMeasure                CycleRecordScreen
       ViewB 0x0C  T_ScreenEnter_MetronomeBalanceScreen_Fwd  Draw_MetronomeBalance (DL_MetronomeBalance)   MetronomeBalanceScreen
-      ViewB 0x12  T_ScreenEnter_SeqPlayScreen_Fwd  Draw_SequencerPlayS0ngCycleMeasure            SeqPlayScreen
+      ViewB 0x12  T_ScreenEnter_SeqPlayScreen_Fwd  Draw_SequencerPlaySongCycleMeasure            SeqPlayScreen
       ViewB 0x14  T_ScreenEnter_CyclePlayScreen_Fwd  Draw_CyclePlayCurrentMeasureCycle             CyclePlayScreen
       ViewB 0x26  T_F40DE0  Draw_CyclePlayCurrentMeasureEdit              CyclePlayEditScreen
       ViewB 0x29  T_ScreenEnter_CyclePlayEditScreen29_Fwd  enter = Fwd_F57410 -> the 0x26 enter routine;

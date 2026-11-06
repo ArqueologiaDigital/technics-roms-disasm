@@ -23,7 +23,7 @@ WHAT IT NAMES
              argument -- calling one of those a PanelButton anything is the
              mistake the distinction exists to prevent.
   HANDLERS   the targets of those tables, one per (control, page):
-             LcdKeyRow1_DiskMenu, ExitKey_MidiFileL0ad,
+             LcdKeyRow1_DiskMenu, ExitKey_MidiFileLoad,
              ExitKey_DiskSaveFile_Pages3_4 -- the `<Control>_<Screen>` form
              rounds 11 and 12 applied to 131 labels in prom_b.  Most of these
              addresses HAVE NO LABEL AT ALL: the ROM's own table points at them
@@ -167,10 +167,10 @@ SCREEN_DECLARED = {
            "its page 0 draws the list at 0xF58A21, whose first record reads "
            "\"MIDI FILE SAVE : FILE NAMING\", and its page 1 the list at "
            "0xF59222, \"MIDI FILE SAVE : FILE SELECTI0N\""),
-    0x73: ("L0adSingleC0mbination",
+    0x73: ("LoadSingleCombination",
            "its page 1 draws the list at 0xF58F55, whose first record reads "
            "\"LOAD SINGLE COMBINATION\""),
-    0x74: ("L0adSingleS0und",
+    0x74: ("LoadSingleSound",
            "its page 0 draws the list at 0xF58C53, whose first record reads "
            "\"LOAD SINGLE SOUND\""),
 }
@@ -903,7 +903,7 @@ def apply_():
             ";   notes/FINDINGS-prom_a-panel-control-map.md.",
             ";   ★ AND EACH TABLE'S SCREEN IS NAMED TOO, from the screen object that",
             ";   installs the reader as its BUTTON method -- so the handlers read",
-            ";   LcdKeyRow1_DiskMenu and ExitKey_MidiFileL0ad rather than carrying a",
+            ";   LcdKeyRow1_DiskMenu and ExitKey_MidiFileLoad rather than carrying a",
             ";   table address.  This module owns ten screens: the DISK MENU, MIDI",
             ";   FILE LOAD / SAVE / DIRECT PLAY, DISK LOAD FILE / SAVE FILE, LOAD",
             ";   SINGLE SOUND / COMBINATION, and the two floppy-format screens.",

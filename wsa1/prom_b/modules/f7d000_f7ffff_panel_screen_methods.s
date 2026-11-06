@@ -635,27 +635,27 @@ ScreenNull_Quantize:
 ;           have one.
 ;           [round7-entrypoints]
 ; ---------------------------------------------------------------------
-ScreenEnter_Vel0cityChange:
-	call	Paint_Vel0cityChange	; F7D150  call 0xf7f8a9
+ScreenEnter_VelocityChange:
+	call	Paint_VelocityChange	; F7D150  call 0xf7f8a9
 	ret	; F7D154  ret
 ; Evidence: the +4 word of screen object F43080 (prom_a's PanelScreen_VtableTable);
 ;           its body is `call 0xF7F94F` then `ret`.  [round7-entrypoints]
-ScreenLeave_Vel0cityChange:
-	call	ScreenLeaveBody_Vel0cityChange	; F7D155  call 0xf7f94f
+ScreenLeave_VelocityChange:
+	call	ScreenLeaveBody_VelocityChange	; F7D155  call 0xf7f94f
 	ret	; F7D159  ret
 ; Evidence: the +8 word of screen object F43080 (prom_a's PanelScreen_VtableTable);
 ;           its body loads the 32-word button tables at 0xF7DAD8 / 0xF7DB58 and calls T_F41B08.  [round7-entrypoints]
-ScreenButton_Vel0cityChange:
-	ld	xix, ButtonTable_Vel0cityChange_StageZero	; F7D15A  ld XIX,0x00f7dad8
+ScreenButton_VelocityChange:
+	ld	xix, ButtonTable_VelocityChange_StageZero	; F7D15A  ld XIX,0x00f7dad8
 	cp	(UI_ScreenStage:16), 0x00	; F7D15F  cp (0x207e),0x00
-	jr	z, ScreenButton_Vel0cityChange_Skip9	; F7D164  jr Z,0xf7d16b
-	ld	xix, ButtonTable_Vel0cityChange_StageNonZero	; F7D166  ld XIX,0x00f7db58
-ScreenButton_Vel0cityChange_Skip9:
+	jr	z, ScreenButton_VelocityChange_Skip9	; F7D164  jr Z,0xf7d16b
+	ld	xix, ButtonTable_VelocityChange_StageNonZero	; F7D166  ld XIX,0x00f7db58
+ScreenButton_VelocityChange_Skip9:
 	call	T_PanelButton_CallTableEntry	; F7D16B  call 0xf41b08
 	ret	; F7D16F  ret
 ; Evidence: the +0x0C word of screen object F43080 (prom_a's PanelScreen_VtableTable);
 ;           its body is a no-op (`ret`, or `calr` to a `ret` then `ret`).  NO READER of +0x0C exists in either image.  [round7-entrypoints]
-ScreenNull_Vel0cityChange:
+ScreenNull_VelocityChange:
 	ret	; F7D170  ret
 
 ; ---------------------------------------------------------------------
@@ -684,27 +684,27 @@ ScreenNull_Vel0cityChange:
 ;           have one.
 ;           [round7-entrypoints]
 ; ---------------------------------------------------------------------
-ScreenEnter_Transp0se:
-	call	Paint_Transp0se	; F7D171  call 0xf7fbf8
+ScreenEnter_Transpose:
+	call	Paint_Transpose	; F7D171  call 0xf7fbf8
 	ret	; F7D175  ret
 ; Evidence: the +4 word of screen object F43100 (prom_a's PanelScreen_VtableTable);
 ;           its body is `call 0xF7FC99` then `ret`.  [round7-entrypoints]
-ScreenLeave_Transp0se:
-	call	ScreenLeaveBody_Transp0se	; F7D176  call 0xf7fc99
+ScreenLeave_Transpose:
+	call	ScreenLeaveBody_Transpose	; F7D176  call 0xf7fc99
 	ret	; F7D17A  ret
 ; Evidence: the +8 word of screen object F43100 (prom_a's PanelScreen_VtableTable);
 ;           its body loads the 32-word button tables at 0xF7DBD8 / 0xF7DC58 and calls T_F41B08.  [round7-entrypoints]
-ScreenButton_Transp0se:
-	ld	xix, ButtonTable_Transp0se_StageZero	; F7D17B  ld XIX,0x00f7dbd8
+ScreenButton_Transpose:
+	ld	xix, ButtonTable_Transpose_StageZero	; F7D17B  ld XIX,0x00f7dbd8
 	cp	(UI_ScreenStage:16), 0x00	; F7D180  cp (0x207e),0x00
-	jr	z, ScreenButton_Transp0se_Skip10	; F7D185  jr Z,0xf7d18c
-	ld	xix, ButtonTable_Transp0se_StageNonZero	; F7D187  ld XIX,0x00f7dc58
-ScreenButton_Transp0se_Skip10:
+	jr	z, ScreenButton_Transpose_Skip10	; F7D185  jr Z,0xf7d18c
+	ld	xix, ButtonTable_Transpose_StageNonZero	; F7D187  ld XIX,0x00f7dc58
+ScreenButton_Transpose_Skip10:
 	call	T_PanelButton_CallTableEntry	; F7D18C  call 0xf41b08
 	ret	; F7D190  ret
 ; Evidence: the +0x0C word of screen object F43100 (prom_a's PanelScreen_VtableTable);
 ;           its body is a no-op (`ret`, or `calr` to a `ret` then `ret`).  NO READER of +0x0C exists in either image.  [round7-entrypoints]
-ScreenNull_Transp0se:
+ScreenNull_Transpose:
 	ret	; F7D191  ret
 
 ; ---------------------------------------------------------------------
@@ -728,41 +728,41 @@ ScreenNull_Transp0se:
 ;           have one.
 ;           [round7-entrypoints]
 ; ---------------------------------------------------------------------
-ScreenEnter_AfterT0uchSetting:
-	call	Paint_AfterT0uchSetting	; F7D192  call 0xf7e3f5
+ScreenEnter_AfterTouchSetting:
+	call	Paint_AfterTouchSetting	; F7D192  call 0xf7e3f5
 	ret	; F7D196  ret
 ; Evidence: the +4 word of screen object F43180 (prom_a's PanelScreen_VtableTable);
 ;           its body is a no-op (`ret`, or `calr` to a `ret` then `ret`).  [round7-entrypoints]
-ScreenLeave_AfterT0uchSetting:
-	call	ScreenLeave_AfterT0uchSetting_Nop	; F7D197  call 0xf7e43f
+ScreenLeave_AfterTouchSetting:
+	call	ScreenLeave_AfterTouchSetting_Nop	; F7D197  call 0xf7e43f
 	ret	; F7D19B  ret
 ; Evidence: the +8 word of screen object F43180 (prom_a's PanelScreen_VtableTable);
 ;           its body is transcribed below.  [round7-entrypoints]
-ScreenButton_AfterT0uchSetting:
+ScreenButton_AfterTouchSetting:
 	cp	hl, 15	; F7D19C  cp HL,0x000f
-	jr	z, ScreenButton_AfterT0uchSetting_Skip12	; F7D1A0  jr Z,0xf7d1c6
+	jr	z, ScreenButton_AfterTouchSetting_Skip12	; F7D1A0  jr Z,0xf7d1c6
 	cp	hl, 10	; F7D1A2  cp HL,0x000a
-	jr	z, ScreenButton_AfterT0uchSetting_Skip11	; F7D1A6  jr Z,0xf7d1ae
+	jr	z, ScreenButton_AfterTouchSetting_Skip11	; F7D1A6  jr Z,0xf7d1ae
 	cp	hl, 11	; F7D1A8  cp HL,0x000b
-	jr	nz, ScreenButton_AfterT0uchSetting_Return2	; F7D1AC  jr NZ,0xf7d1d3
-ScreenButton_AfterT0uchSetting_Skip11:
+	jr	nz, ScreenButton_AfterTouchSetting_Return2	; F7D1AC  jr NZ,0xf7d1d3
+ScreenButton_AfterTouchSetting_Skip11:
 	ld	bc, hl	; F7D1AE  ld BC,HL
-	call	T_AfterT0uchSetting_SetRecordEnable	; F7D1B0  call 0xf42bec
-	call	AfterT0uchSetting_EraseRecordValue	; F7D1B4  call 0xf7e430
+	call	T_AfterTouchSetting_SetRecordEnable	; F7D1B0  call 0xf42bec
+	call	AfterTouchSetting_EraseRecordValue	; F7D1B4  call 0xf7e430
 	ld	a, (32706:16)	; F7D1B8  ld A,(0x7fc2)
 	ld	(DisplayListB_Stage:16), a	; F7D1BC  ld (0x12f6),A
 	call	Draw_AfterTouchRecord	; F7D1C0  call 0xf7e421
-	jr	ScreenButton_AfterT0uchSetting_Return2	; F7D1C4  jr T,0xf7d1d3
-ScreenButton_AfterT0uchSetting_Skip12:
+	jr	ScreenButton_AfterTouchSetting_Return2	; F7D1C4  jr T,0xf7d1d3
+ScreenButton_AfterTouchSetting_Skip12:
 	bit	7, w	; F7D1C6  bit 0x07,W
-	jr	nz, ScreenButton_AfterT0uchSetting_Return2	; F7D1C9  jr NZ,0xf7d1d3
+	jr	nz, ScreenButton_AfterTouchSetting_Return2	; F7D1C9  jr NZ,0xf7d1d3
 	ldw	(UI_Request:16), 32772	; F7D1CB  ld (0x2070),0x8004
-	jr	ScreenButton_AfterT0uchSetting_Return2	; F7D1D1  jr T,0xf7d1d3
-ScreenButton_AfterT0uchSetting_Return2:
+	jr	ScreenButton_AfterTouchSetting_Return2	; F7D1D1  jr T,0xf7d1d3
+ScreenButton_AfterTouchSetting_Return2:
 	ret	; F7D1D3  ret
 ; Evidence: the +0x0C word of screen object F43180 (prom_a's PanelScreen_VtableTable);
 ;           its body is a no-op (`ret`, or `calr` to a `ret` then `ret`).  NO READER of +0x0C exists in either image.  [round7-entrypoints]
-ScreenNull_AfterT0uchSetting:
+ScreenNull_AfterTouchSetting:
 	ret	; F7D1D4  ret
 
 ; ---------------------------------------------------------------------
@@ -818,7 +818,7 @@ ScreenNull_AdvanceDelay:
 ; Screen object F430F0 -- the panel screen whose own title text reads "S0NG C0PY"
 ; Reached by: prom_a PanelScreen_VtableTable holds 0xF430F0 at 0xF86FE9, and its
 ;             three readers take +0 Enter, +4 Leave, +8 Button.
-; Enter is `call 0xF80261` -- Paint_S0ngC0py.
+; Enter is `call 0xF80261` -- Paint_SongCopy.
 ;        That routine draws display list 0xF3BF80, whose leading
 ;        op-0x1C records spell
 ;        "S0NG C0PY" -- that text is where this name comes from and it is
@@ -840,34 +840,34 @@ ScreenNull_AdvanceDelay:
 ;           have one.
 ;           [round7-entrypoints]
 ; ---------------------------------------------------------------------
-ScreenEnter_S0ngC0py:
-	call	Paint_S0ngC0py	; F7D1F6  call 0xf80261
+ScreenEnter_SongCopy:
+	call	Paint_SongCopy	; F7D1F6  call 0xf80261
 	ret	; F7D1FA  ret
 ; Evidence: the +4 word of screen object F430F0 (prom_a's PanelScreen_VtableTable);
 ;           its body is a no-op (`ret`, or `calr` to a `ret` then `ret`).  [round7-entrypoints]
-ScreenLeave_S0ngC0py:
-	call	ScreenLeave_S0ngC0py_Nop	; F7D1FB  call 0xf803c8
+ScreenLeave_SongCopy:
+	call	ScreenLeave_SongCopy_Nop	; F7D1FB  call 0xf803c8
 	ret	; F7D1FF  ret
 ; Evidence: the +8 word of screen object F430F0 (prom_a's PanelScreen_VtableTable);
 ;           its body loads the 32-word button tables at 0xF7DDD8 / 0xF7DE58 and calls T_F41B08.  [round7-entrypoints]
-ScreenButton_S0ngC0py:
-	ld	xix, ButtonTable_S0ngC0py_StageZero	; F7D200  ld XIX,0x00f7ddd8
+ScreenButton_SongCopy:
+	ld	xix, ButtonTable_SongCopy_StageZero	; F7D200  ld XIX,0x00f7ddd8
 	cp	(UI_ScreenStage:16), 0x00	; F7D205  cp (0x207e),0x00
-	jr	z, ScreenButton_S0ngC0py_Skip14	; F7D20A  jr Z,0xf7d211
-	ld	xix, ButtonTable_S0ngC0py_StageNonZero	; F7D20C  ld XIX,0x00f7de58
-ScreenButton_S0ngC0py_Skip14:
+	jr	z, ScreenButton_SongCopy_Skip14	; F7D20A  jr Z,0xf7d211
+	ld	xix, ButtonTable_SongCopy_StageNonZero	; F7D20C  ld XIX,0x00f7de58
+ScreenButton_SongCopy_Skip14:
 	call	T_PanelButton_CallTableEntry	; F7D211  call 0xf41b08
 	ret	; F7D215  ret
 ; Evidence: the +0x0C word of screen object F430F0 (prom_a's PanelScreen_VtableTable);
 ;           its body is a no-op (`ret`, or `calr` to a `ret` then `ret`).  NO READER of +0x0C exists in either image.  [round7-entrypoints]
-ScreenNull_S0ngC0py:
+ScreenNull_SongCopy:
 	ret	; F7D216  ret
 
 ; ---------------------------------------------------------------------
 ; Screen object F43120 -- the panel screen whose own title text reads "N0TE CHANGE"
 ; Reached by: prom_a PanelScreen_VtableTable holds 0xF43120 at 0xF86FF5, and its
 ;             three readers take +0 Enter, +4 Leave, +8 Button.
-; Enter is `call 0xF80439` -- Paint_N0teChange.
+; Enter is `call 0xF80439` -- Paint_NoteChange.
 ;        That routine draws display list 0xF3AEAF, whose leading
 ;        op-0x1C records spell
 ;        "N0TE CHANGE" -- that text is where this name comes from and it is
@@ -889,34 +889,34 @@ ScreenNull_S0ngC0py:
 ;           have one.
 ;           [round7-entrypoints]
 ; ---------------------------------------------------------------------
-ScreenEnter_N0teChange:
-	call	Paint_N0teChange	; F7D217  call 0xf80439
+ScreenEnter_NoteChange:
+	call	Paint_NoteChange	; F7D217  call 0xf80439
 	ret	; F7D21B  ret
 ; Evidence: the +4 word of screen object F43120 (prom_a's PanelScreen_VtableTable);
 ;           its body is `call 0xF804EC` then `ret`.  [round7-entrypoints]
-ScreenLeave_N0teChange:
-	call	ScreenLeaveBody_N0teChange	; F7D21C  call 0xf804ec
+ScreenLeave_NoteChange:
+	call	ScreenLeaveBody_NoteChange	; F7D21C  call 0xf804ec
 	ret	; F7D220  ret
 ; Evidence: the +8 word of screen object F43120 (prom_a's PanelScreen_VtableTable);
 ;           its body loads the 32-word button tables at 0xF7DED8 / 0xF7DF58 and calls T_F41B08.  [round7-entrypoints]
-ScreenButton_N0teChange:
-	ld	xix, ButtonTable_N0teChange_StageZero	; F7D221  ld XIX,0x00f7ded8
+ScreenButton_NoteChange:
+	ld	xix, ButtonTable_NoteChange_StageZero	; F7D221  ld XIX,0x00f7ded8
 	cp	(UI_ScreenStage:16), 0x00	; F7D226  cp (0x207e),0x00
-	jr	z, ScreenButton_N0teChange_Skip15	; F7D22B  jr Z,0xf7d232
-	ld	xix, ButtonTable_N0teChange_StageNonZero	; F7D22D  ld XIX,0x00f7df58
-ScreenButton_N0teChange_Skip15:
+	jr	z, ScreenButton_NoteChange_Skip15	; F7D22B  jr Z,0xf7d232
+	ld	xix, ButtonTable_NoteChange_StageNonZero	; F7D22D  ld XIX,0x00f7df58
+ScreenButton_NoteChange_Skip15:
 	call	T_PanelButton_CallTableEntry	; F7D232  call 0xf41b08
 	ret	; F7D236  ret
 ; Evidence: the +0x0C word of screen object F43120 (prom_a's PanelScreen_VtableTable);
 ;           its body is a no-op (`ret`, or `calr` to a `ret` then `ret`).  NO READER of +0x0C exists in either image.  [round7-entrypoints]
-ScreenNull_N0teChange:
+ScreenNull_NoteChange:
 	ret	; F7D237  ret
 
 ; ---------------------------------------------------------------------
 ; Screen object F430C0 -- the panel screen whose own title text reads "MEASURE C0PY"
 ; Reached by: prom_a PanelScreen_VtableTable holds 0xF430C0 at 0xF86FC5, and its
 ;             three readers take +0 Enter, +4 Leave, +8 Button.
-; Enter is `call 0xF8076C` -- Paint_MeasureC0py.
+; Enter is `call 0xF8076C` -- Paint_MeasureCopy.
 ;        That routine draws display list 0xF3BBA5, whose leading
 ;        op-0x1C records spell
 ;        "MEASURE C0PY" -- that text is where this name comes from and it is
@@ -938,27 +938,27 @@ ScreenNull_N0teChange:
 ;           have one.
 ;           [round7-entrypoints]
 ; ---------------------------------------------------------------------
-ScreenEnter_MeasureC0py:
-	call	Paint_MeasureC0py	; F7D238  call 0xf8076c
+ScreenEnter_MeasureCopy:
+	call	Paint_MeasureCopy	; F7D238  call 0xf8076c
 	ret	; F7D23C  ret
 ; Evidence: the +4 word of screen object F430C0 (prom_a's PanelScreen_VtableTable);
 ;           its body is `call 0xF80809` then `ret`.  [round7-entrypoints]
-ScreenLeave_MeasureC0py:
-	call	ScreenLeaveBody_MeasureC0py	; F7D23D  call 0xf80809
+ScreenLeave_MeasureCopy:
+	call	ScreenLeaveBody_MeasureCopy	; F7D23D  call 0xf80809
 	ret	; F7D241  ret
 ; Evidence: the +8 word of screen object F430C0 (prom_a's PanelScreen_VtableTable);
 ;           its body loads the 32-word button tables at 0xF7DFD8 / 0xF7E058 and calls T_F41B08.  [round7-entrypoints]
-ScreenButton_MeasureC0py:
-	ld	xix, ButtonTable_MeasureC0py_StageZero	; F7D242  ld XIX,0x00f7dfd8
+ScreenButton_MeasureCopy:
+	ld	xix, ButtonTable_MeasureCopy_StageZero	; F7D242  ld XIX,0x00f7dfd8
 	cp	(UI_ScreenStage:16), 0x00	; F7D247  cp (0x207e),0x00
-	jr	z, ScreenButton_MeasureC0py_Skip16	; F7D24C  jr Z,0xf7d253
-	ld	xix, ButtonTable_MeasureC0py_StageNonZero	; F7D24E  ld XIX,0x00f7e058
-ScreenButton_MeasureC0py_Skip16:
+	jr	z, ScreenButton_MeasureCopy_Skip16	; F7D24C  jr Z,0xf7d253
+	ld	xix, ButtonTable_MeasureCopy_StageNonZero	; F7D24E  ld XIX,0x00f7e058
+ScreenButton_MeasureCopy_Skip16:
 	call	T_PanelButton_CallTableEntry	; F7D253  call 0xf41b08
 	ret	; F7D257  ret
 ; Evidence: the +0x0C word of screen object F430C0 (prom_a's PanelScreen_VtableTable);
 ;           its body is a no-op (`ret`, or `calr` to a `ret` then `ret`).  NO READER of +0x0C exists in either image.  [round7-entrypoints]
-ScreenNull_MeasureC0py:
+ScreenNull_MeasureCopy:
 	ret	; F7D258  ret
 
 ; ---------------------------------------------------------------------
@@ -1014,7 +1014,7 @@ ScreenNull_MeasureInsert:
 ; Screen object F431A0 -- the panel screen whose own title text reads "S0NG SELECT & NAME"
 ; Reached by: prom_a PanelScreen_VtableTable holds 0xF431A0 at 0xF86F75, and its
 ;             three readers take +0 Enter, +4 Leave, +8 Button.
-; Enter is `call 0xF80E2E` -- Paint_S0ngSelectName.
+; Enter is `call 0xF80E2E` -- Paint_SongSelectName.
 ;        That routine draws display list 0xF3C1AD, whose leading
 ;        op-0x1C records spell
 ;        "S0NG SELECT & NAME" -- that text is where this name comes from and it is
@@ -1031,22 +1031,22 @@ ScreenNull_MeasureInsert:
 ;           have one.
 ;           [round7-entrypoints]
 ; ---------------------------------------------------------------------
-ScreenEnter_S0ngSelectName:
-	call	Paint_S0ngSelectName	; F7D27A  call 0xf80e2e
+ScreenEnter_SongSelectName:
+	call	Paint_SongSelectName	; F7D27A  call 0xf80e2e
 	ret	; F7D27E  ret
 ; Evidence: the +4 word of screen object F431A0 (prom_a's PanelScreen_VtableTable);
 ;           its body is `call 0xF80EAF` then `ret`.  [round7-entrypoints]
-ScreenLeave_S0ngSelectName:
-	call	ScreenLeaveBody_S0ngSelectName	; F7D27F  call 0xf80eaf
+ScreenLeave_SongSelectName:
+	call	ScreenLeaveBody_SongSelectName	; F7D27F  call 0xf80eaf
 	ret	; F7D283  ret
 ; Evidence: the +8 word of screen object F431A0 (prom_a's PanelScreen_VtableTable);
 ;           its body is `call 0xF80EB4` then `ret`.  [round7-entrypoints]
-ScreenButton_S0ngSelectName:
-	call	ScreenButtonBody_S0ngSelectName	; F7D284  call 0xf80eb4
+ScreenButton_SongSelectName:
+	call	ScreenButtonBody_SongSelectName	; F7D284  call 0xf80eb4
 	ret	; F7D288  ret
 ; Evidence: the +0x0C word of screen object F431A0 (prom_a's PanelScreen_VtableTable);
 ;           its body is a no-op (`ret`, or `calr` to a `ret` then `ret`).  NO READER of +0x0C exists in either image.  [round7-entrypoints]
-ScreenNull_S0ngSelectName:
+ScreenNull_SongSelectName:
 	ret	; F7D289  ret
 
 ; ---------------------------------------------------------------------
@@ -2007,7 +2007,7 @@ ButtonTable_Quantize_StageNonZero:
 	keymap_end
 
 ; --- table 16 of 32: 21 distinct targets; named by the `ld XIX` at 0xF7D15A
-; ButtonTable_Vel0cityChange_StageZero -- the 32 panel-button handlers of this screen
+; ButtonTable_VelocityChange_StageZero -- the 32 panel-button handlers of this screen
 ; Evidence: the +8 Button stub at 0xF7D15A loads it when (0x207E) is zero.
 ;           Round 7 established that the 32 tables are indexed
 ;           by the panel BUTTON NUMBER (two independent 5-bit masks
@@ -2018,44 +2018,44 @@ ButtonTable_Quantize_StageNonZero:
 ;           (wsa1/notes/FINDINGS-prom_ab-screen-stage-and-flags.md).
 ;           Promoted from the framed `Table_<address>` spelling by
 ;           notes/prom_b_screens_round8.py --promote --apply
-ButtonTable_Vel0cityChange_StageZero:
+ButtonTable_VelocityChange_StageZero:
 	keymap_begin
-	on_key	KEY_SoftKeyCol1,	ButtonTable_Vel0cityChange_StageZero_Nop0
-	on_key	KEY_SoftKeyCol2,	ButtonTable_Vel0cityChange_StageZero_Nop1
-	on_key	KEY_SoftKeyCol3,	ButtonTable_Vel0cityChange_StageZero_Nop2
-	on_key	KEY_SoftKeyCol4,	ButtonTable_Vel0cityChange_StageZero_Nop3
-	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_Vel0cityChange_StageZero
-	on_key	KEY_SoftKeyCol6,	ButtonTable_Vel0cityChange_StageZero_Nop5
-	on_key	KEY_SoftKeyCol7,	ButtonTable_Vel0cityChange_StageZero_Nop6
-	on_key	KEY_SoftKeyCol8,	ButtonTable_Vel0cityChange_StageZero_Nop7
-	on_key	KEY_LcdRow1,		LcdKeyRow1_Vel0cityChange_StageZero
-	on_key	KEY_LcdRow2,		LcdKeyRow2_Vel0cityChange_StageZero
-	on_key	KEY_LcdRow3,		LcdKeyRow3_Vel0cityChange_StageZero
-	on_key	KEY_LcdRow4,		LcdKeyRow4_Vel0cityChange_StageZero
-	on_key	KEY_LcdRow5,		ButtonTable_Vel0cityChange_StageZero_Nop12
-	on_key	KEY_MinusPlus,		ButtonTable_Vel0cityChange_StageZero_Nop13
-	on_key	KEY_Code0E,		ButtonTable_Vel0cityChange_StageZero_Nop14
-	on_key	KEY_Exit,		ExitKey_Vel0cityChange_StageZero
-	on_key	KEY_Page,		ButtonTable_Vel0cityChange_StageZero_Nop16
-	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_Vel0cityChange_StageZero_Nop16
-	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_Vel0cityChange_StageZero_Nop16
-	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_Vel0cityChange_StageZero_Nop16
-	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_Vel0cityChange_StageZero_Nop16
-	on_key	KEY_SoftKeyCol5Alt,	Vel0cityChange_StageZero_Button21
-	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_Vel0cityChange_StageZero_Nop22
-	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_Vel0cityChange_StageZero_Nop22
-	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_Vel0cityChange_StageZero_Nop22
-	on_key	KEY_PageAlt,		ButtonTable_Vel0cityChange_StageZero_Nop22
-	on_key	KEY_Code1A,		ButtonTable_Vel0cityChange_StageZero_Nop22
-	on_key	KEY_NumberPad,		NumberPadKey_Vel0cityChange_StageZero
-	on_key	KEY_Code1C,		ButtonTable_Vel0cityChange_StageZero_Nop28
-	on_key	KEY_Code1D,		ButtonTable_Vel0cityChange_StageZero_Nop28
-	on_key	KEY_Compare,		ButtonTable_Vel0cityChange_StageZero_Nop28
-	on_key	KEY_Code1F,		ButtonTable_Vel0cityChange_StageZero_Nop28
+	on_key	KEY_SoftKeyCol1,	ButtonTable_VelocityChange_StageZero_Nop0
+	on_key	KEY_SoftKeyCol2,	ButtonTable_VelocityChange_StageZero_Nop1
+	on_key	KEY_SoftKeyCol3,	ButtonTable_VelocityChange_StageZero_Nop2
+	on_key	KEY_SoftKeyCol4,	ButtonTable_VelocityChange_StageZero_Nop3
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_VelocityChange_StageZero
+	on_key	KEY_SoftKeyCol6,	ButtonTable_VelocityChange_StageZero_Nop5
+	on_key	KEY_SoftKeyCol7,	ButtonTable_VelocityChange_StageZero_Nop6
+	on_key	KEY_SoftKeyCol8,	ButtonTable_VelocityChange_StageZero_Nop7
+	on_key	KEY_LcdRow1,		LcdKeyRow1_VelocityChange_StageZero
+	on_key	KEY_LcdRow2,		LcdKeyRow2_VelocityChange_StageZero
+	on_key	KEY_LcdRow3,		LcdKeyRow3_VelocityChange_StageZero
+	on_key	KEY_LcdRow4,		LcdKeyRow4_VelocityChange_StageZero
+	on_key	KEY_LcdRow5,		ButtonTable_VelocityChange_StageZero_Nop12
+	on_key	KEY_MinusPlus,		ButtonTable_VelocityChange_StageZero_Nop13
+	on_key	KEY_Code0E,		ButtonTable_VelocityChange_StageZero_Nop14
+	on_key	KEY_Exit,		ExitKey_VelocityChange_StageZero
+	on_key	KEY_Page,		ButtonTable_VelocityChange_StageZero_Nop16
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_VelocityChange_StageZero_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_VelocityChange_StageZero_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_VelocityChange_StageZero_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_VelocityChange_StageZero_Nop16
+	on_key	KEY_SoftKeyCol5Alt,	VelocityChange_StageZero_Button21
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_VelocityChange_StageZero_Nop22
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_VelocityChange_StageZero_Nop22
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_VelocityChange_StageZero_Nop22
+	on_key	KEY_PageAlt,		ButtonTable_VelocityChange_StageZero_Nop22
+	on_key	KEY_Code1A,		ButtonTable_VelocityChange_StageZero_Nop22
+	on_key	KEY_NumberPad,		NumberPadKey_VelocityChange_StageZero
+	on_key	KEY_Code1C,		ButtonTable_VelocityChange_StageZero_Nop28
+	on_key	KEY_Code1D,		ButtonTable_VelocityChange_StageZero_Nop28
+	on_key	KEY_Compare,		ButtonTable_VelocityChange_StageZero_Nop28
+	on_key	KEY_Code1F,		ButtonTable_VelocityChange_StageZero_Nop28
 	keymap_end
 
 ; --- table 17 of 32: 17 distinct targets; named by the `ld XIX` at 0xF7D166
-; ButtonTable_Vel0cityChange_StageNonZero -- the 32 panel-button handlers of this screen
+; ButtonTable_VelocityChange_StageNonZero -- the 32 panel-button handlers of this screen
 ; Evidence: the +8 Button stub at 0xF7D15A loads it when (0x207E) is non-zero.
 ;           Round 7 established that the 32 tables are indexed
 ;           by the panel BUTTON NUMBER (two independent 5-bit masks
@@ -2066,44 +2066,44 @@ ButtonTable_Vel0cityChange_StageZero:
 ;           (wsa1/notes/FINDINGS-prom_ab-screen-stage-and-flags.md).
 ;           Promoted from the framed `Table_<address>` spelling by
 ;           notes/prom_b_screens_round8.py --promote --apply
-ButtonTable_Vel0cityChange_StageNonZero:
+ButtonTable_VelocityChange_StageNonZero:
 	keymap_begin
-	on_key	KEY_SoftKeyCol1,	ButtonTable_Vel0cityChange_StageNonZero_Nop0
-	on_key	KEY_SoftKeyCol2,	ButtonTable_Vel0cityChange_StageNonZero_Nop1
-	on_key	KEY_SoftKeyCol3,	ButtonTable_Vel0cityChange_StageNonZero_Nop2
-	on_key	KEY_SoftKeyCol4,	ButtonTable_Vel0cityChange_StageNonZero_Nop3
-	on_key	KEY_SoftKeyCol5,	ButtonTable_Vel0cityChange_StageNonZero_Nop4
-	on_key	KEY_SoftKeyCol6,	ButtonTable_Vel0cityChange_StageNonZero_Nop5
-	on_key	KEY_SoftKeyCol7,	ButtonTable_Vel0cityChange_StageNonZero_Nop6
-	on_key	KEY_SoftKeyCol8,	ButtonTable_Vel0cityChange_StageNonZero_Nop7
-	on_key	KEY_LcdRow1,		ButtonTable_Vel0cityChange_StageNonZero_Nop8
-	on_key	KEY_LcdRow2,		LcdKeyRow2_Vel0cityChange_StageNonZero
-	on_key	KEY_LcdRow3,		LcdKeyRow3_Vel0cityChange_StageNonZero
-	on_key	KEY_LcdRow4,		ButtonTable_Vel0cityChange_StageNonZero_Nop11
-	on_key	KEY_LcdRow5,		ButtonTable_Vel0cityChange_StageNonZero_Nop12
-	on_key	KEY_MinusPlus,		ButtonTable_Vel0cityChange_StageNonZero_Nop13
-	on_key	KEY_Code0E,		ButtonTable_Vel0cityChange_StageNonZero_Nop14
-	on_key	KEY_Exit,		ExitKey_Vel0cityChange_StageNonZero
-	on_key	KEY_Page,		ButtonTable_Vel0cityChange_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_Vel0cityChange_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_Vel0cityChange_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_Vel0cityChange_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_Vel0cityChange_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol5Alt,	ButtonTable_Vel0cityChange_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_Vel0cityChange_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_Vel0cityChange_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_Vel0cityChange_StageNonZero_Nop16
-	on_key	KEY_PageAlt,		ButtonTable_Vel0cityChange_StageNonZero_Nop16
-	on_key	KEY_Code1A,		ButtonTable_Vel0cityChange_StageNonZero_Nop16
-	on_key	KEY_NumberPad,		ButtonTable_Vel0cityChange_StageNonZero_Nop16
-	on_key	KEY_Code1C,		ButtonTable_Vel0cityChange_StageNonZero_Nop16
-	on_key	KEY_Code1D,		ButtonTable_Vel0cityChange_StageNonZero_Nop16
-	on_key	KEY_Compare,		ButtonTable_Vel0cityChange_StageNonZero_Nop16
-	on_key	KEY_Code1F,		ButtonTable_Vel0cityChange_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol1,	ButtonTable_VelocityChange_StageNonZero_Nop0
+	on_key	KEY_SoftKeyCol2,	ButtonTable_VelocityChange_StageNonZero_Nop1
+	on_key	KEY_SoftKeyCol3,	ButtonTable_VelocityChange_StageNonZero_Nop2
+	on_key	KEY_SoftKeyCol4,	ButtonTable_VelocityChange_StageNonZero_Nop3
+	on_key	KEY_SoftKeyCol5,	ButtonTable_VelocityChange_StageNonZero_Nop4
+	on_key	KEY_SoftKeyCol6,	ButtonTable_VelocityChange_StageNonZero_Nop5
+	on_key	KEY_SoftKeyCol7,	ButtonTable_VelocityChange_StageNonZero_Nop6
+	on_key	KEY_SoftKeyCol8,	ButtonTable_VelocityChange_StageNonZero_Nop7
+	on_key	KEY_LcdRow1,		ButtonTable_VelocityChange_StageNonZero_Nop8
+	on_key	KEY_LcdRow2,		LcdKeyRow2_VelocityChange_StageNonZero
+	on_key	KEY_LcdRow3,		LcdKeyRow3_VelocityChange_StageNonZero
+	on_key	KEY_LcdRow4,		ButtonTable_VelocityChange_StageNonZero_Nop11
+	on_key	KEY_LcdRow5,		ButtonTable_VelocityChange_StageNonZero_Nop12
+	on_key	KEY_MinusPlus,		ButtonTable_VelocityChange_StageNonZero_Nop13
+	on_key	KEY_Code0E,		ButtonTable_VelocityChange_StageNonZero_Nop14
+	on_key	KEY_Exit,		ExitKey_VelocityChange_StageNonZero
+	on_key	KEY_Page,		ButtonTable_VelocityChange_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_VelocityChange_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_VelocityChange_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_VelocityChange_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_VelocityChange_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol5Alt,	ButtonTable_VelocityChange_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_VelocityChange_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_VelocityChange_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_VelocityChange_StageNonZero_Nop16
+	on_key	KEY_PageAlt,		ButtonTable_VelocityChange_StageNonZero_Nop16
+	on_key	KEY_Code1A,		ButtonTable_VelocityChange_StageNonZero_Nop16
+	on_key	KEY_NumberPad,		ButtonTable_VelocityChange_StageNonZero_Nop16
+	on_key	KEY_Code1C,		ButtonTable_VelocityChange_StageNonZero_Nop16
+	on_key	KEY_Code1D,		ButtonTable_VelocityChange_StageNonZero_Nop16
+	on_key	KEY_Compare,		ButtonTable_VelocityChange_StageNonZero_Nop16
+	on_key	KEY_Code1F,		ButtonTable_VelocityChange_StageNonZero_Nop16
 	keymap_end
 
 ; --- table 18 of 32: 21 distinct targets; named by the `ld XIX` at 0xF7D17B
-; ButtonTable_Transp0se_StageZero -- the 32 panel-button handlers of this screen
+; ButtonTable_Transpose_StageZero -- the 32 panel-button handlers of this screen
 ; Evidence: the +8 Button stub at 0xF7D17B loads it when (0x207E) is zero.
 ;           Round 7 established that the 32 tables are indexed
 ;           by the panel BUTTON NUMBER (two independent 5-bit masks
@@ -2114,44 +2114,44 @@ ButtonTable_Vel0cityChange_StageNonZero:
 ;           (wsa1/notes/FINDINGS-prom_ab-screen-stage-and-flags.md).
 ;           Promoted from the framed `Table_<address>` spelling by
 ;           notes/prom_b_screens_round8.py --promote --apply
-ButtonTable_Transp0se_StageZero:
+ButtonTable_Transpose_StageZero:
 	keymap_begin
-	on_key	KEY_SoftKeyCol1,	ButtonTable_Transp0se_StageZero_Nop0
-	on_key	KEY_SoftKeyCol2,	ButtonTable_Transp0se_StageZero_Nop1
-	on_key	KEY_SoftKeyCol3,	ButtonTable_Transp0se_StageZero_Nop2
-	on_key	KEY_SoftKeyCol4,	ButtonTable_Transp0se_StageZero_Nop3
-	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_Transp0se_StageZero
-	on_key	KEY_SoftKeyCol6,	ButtonTable_Transp0se_StageZero_Nop5
-	on_key	KEY_SoftKeyCol7,	ButtonTable_Transp0se_StageZero_Nop6
-	on_key	KEY_SoftKeyCol8,	ButtonTable_Transp0se_StageZero_Nop7
-	on_key	KEY_LcdRow1,		LcdKeyRow1_Transp0se_StageZero
-	on_key	KEY_LcdRow2,		LcdKeyRow2_Transp0se_StageZero
-	on_key	KEY_LcdRow3,		LcdKeyRow3_Transp0se_StageZero
-	on_key	KEY_LcdRow4,		LcdKeyRow4_Transp0se_StageZero
-	on_key	KEY_LcdRow5,		ButtonTable_Transp0se_StageZero_Nop12
-	on_key	KEY_MinusPlus,		ButtonTable_Transp0se_StageZero_Nop13
-	on_key	KEY_Code0E,		ButtonTable_Transp0se_StageZero_Nop14
-	on_key	KEY_Exit,		ExitKey_Transp0se_StageZero
-	on_key	KEY_Page,		ButtonTable_Transp0se_StageZero_Nop16
-	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_Transp0se_StageZero_Nop16
-	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_Transp0se_StageZero_Nop16
-	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_Transp0se_StageZero_Nop16
-	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_Transp0se_StageZero_Nop16
-	on_key	KEY_SoftKeyCol5Alt,	Transp0se_StageZero_Button21
-	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_Transp0se_StageZero_Nop22
-	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_Transp0se_StageZero_Nop22
-	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_Transp0se_StageZero_Nop22
-	on_key	KEY_PageAlt,		ButtonTable_Transp0se_StageZero_Nop22
-	on_key	KEY_Code1A,		ButtonTable_Transp0se_StageZero_Nop22
-	on_key	KEY_NumberPad,		NumberPadKey_Transp0se_StageZero
-	on_key	KEY_Code1C,		ButtonTable_Transp0se_StageZero_Nop28
-	on_key	KEY_Code1D,		ButtonTable_Transp0se_StageZero_Nop28
-	on_key	KEY_Compare,		ButtonTable_Transp0se_StageZero_Nop28
-	on_key	KEY_Code1F,		ButtonTable_Transp0se_StageZero_Nop28
+	on_key	KEY_SoftKeyCol1,	ButtonTable_Transpose_StageZero_Nop0
+	on_key	KEY_SoftKeyCol2,	ButtonTable_Transpose_StageZero_Nop1
+	on_key	KEY_SoftKeyCol3,	ButtonTable_Transpose_StageZero_Nop2
+	on_key	KEY_SoftKeyCol4,	ButtonTable_Transpose_StageZero_Nop3
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_Transpose_StageZero
+	on_key	KEY_SoftKeyCol6,	ButtonTable_Transpose_StageZero_Nop5
+	on_key	KEY_SoftKeyCol7,	ButtonTable_Transpose_StageZero_Nop6
+	on_key	KEY_SoftKeyCol8,	ButtonTable_Transpose_StageZero_Nop7
+	on_key	KEY_LcdRow1,		LcdKeyRow1_Transpose_StageZero
+	on_key	KEY_LcdRow2,		LcdKeyRow2_Transpose_StageZero
+	on_key	KEY_LcdRow3,		LcdKeyRow3_Transpose_StageZero
+	on_key	KEY_LcdRow4,		LcdKeyRow4_Transpose_StageZero
+	on_key	KEY_LcdRow5,		ButtonTable_Transpose_StageZero_Nop12
+	on_key	KEY_MinusPlus,		ButtonTable_Transpose_StageZero_Nop13
+	on_key	KEY_Code0E,		ButtonTable_Transpose_StageZero_Nop14
+	on_key	KEY_Exit,		ExitKey_Transpose_StageZero
+	on_key	KEY_Page,		ButtonTable_Transpose_StageZero_Nop16
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_Transpose_StageZero_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_Transpose_StageZero_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_Transpose_StageZero_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_Transpose_StageZero_Nop16
+	on_key	KEY_SoftKeyCol5Alt,	Transpose_StageZero_Button21
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_Transpose_StageZero_Nop22
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_Transpose_StageZero_Nop22
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_Transpose_StageZero_Nop22
+	on_key	KEY_PageAlt,		ButtonTable_Transpose_StageZero_Nop22
+	on_key	KEY_Code1A,		ButtonTable_Transpose_StageZero_Nop22
+	on_key	KEY_NumberPad,		NumberPadKey_Transpose_StageZero
+	on_key	KEY_Code1C,		ButtonTable_Transpose_StageZero_Nop28
+	on_key	KEY_Code1D,		ButtonTable_Transpose_StageZero_Nop28
+	on_key	KEY_Compare,		ButtonTable_Transpose_StageZero_Nop28
+	on_key	KEY_Code1F,		ButtonTable_Transpose_StageZero_Nop28
 	keymap_end
 
 ; --- table 19 of 32: 17 distinct targets; named by the `ld XIX` at 0xF7D187
-; ButtonTable_Transp0se_StageNonZero -- the 32 panel-button handlers of this screen
+; ButtonTable_Transpose_StageNonZero -- the 32 panel-button handlers of this screen
 ; Evidence: the +8 Button stub at 0xF7D17B loads it when (0x207E) is non-zero.
 ;           Round 7 established that the 32 tables are indexed
 ;           by the panel BUTTON NUMBER (two independent 5-bit masks
@@ -2162,40 +2162,40 @@ ButtonTable_Transp0se_StageZero:
 ;           (wsa1/notes/FINDINGS-prom_ab-screen-stage-and-flags.md).
 ;           Promoted from the framed `Table_<address>` spelling by
 ;           notes/prom_b_screens_round8.py --promote --apply
-ButtonTable_Transp0se_StageNonZero:
+ButtonTable_Transpose_StageNonZero:
 	keymap_begin
-	on_key	KEY_SoftKeyCol1,	ButtonTable_Transp0se_StageNonZero_Nop0
-	on_key	KEY_SoftKeyCol2,	ButtonTable_Transp0se_StageNonZero_Nop1
-	on_key	KEY_SoftKeyCol3,	ButtonTable_Transp0se_StageNonZero_Nop2
-	on_key	KEY_SoftKeyCol4,	ButtonTable_Transp0se_StageNonZero_Nop3
-	on_key	KEY_SoftKeyCol5,	ButtonTable_Transp0se_StageNonZero_Nop4
-	on_key	KEY_SoftKeyCol6,	ButtonTable_Transp0se_StageNonZero_Nop5
-	on_key	KEY_SoftKeyCol7,	ButtonTable_Transp0se_StageNonZero_Nop6
-	on_key	KEY_SoftKeyCol8,	ButtonTable_Transp0se_StageNonZero_Nop7
-	on_key	KEY_LcdRow1,		ButtonTable_Transp0se_StageNonZero_Nop8
-	on_key	KEY_LcdRow2,		LcdKeyRow2_Transp0se_StageNonZero
-	on_key	KEY_LcdRow3,		LcdKeyRow3_Transp0se_StageNonZero
-	on_key	KEY_LcdRow4,		ButtonTable_Transp0se_StageNonZero_Nop11
-	on_key	KEY_LcdRow5,		ButtonTable_Transp0se_StageNonZero_Nop12
-	on_key	KEY_MinusPlus,		ButtonTable_Transp0se_StageNonZero_Nop13
-	on_key	KEY_Code0E,		ButtonTable_Transp0se_StageNonZero_Nop14
-	on_key	KEY_Exit,		ExitKey_Transp0se_StageNonZero
-	on_key	KEY_Page,		ButtonTable_Transp0se_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_Transp0se_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_Transp0se_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_Transp0se_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_Transp0se_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol5Alt,	ButtonTable_Transp0se_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_Transp0se_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_Transp0se_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_Transp0se_StageNonZero_Nop16
-	on_key	KEY_PageAlt,		ButtonTable_Transp0se_StageNonZero_Nop16
-	on_key	KEY_Code1A,		ButtonTable_Transp0se_StageNonZero_Nop16
-	on_key	KEY_NumberPad,		ButtonTable_Transp0se_StageNonZero_Nop16
-	on_key	KEY_Code1C,		ButtonTable_Transp0se_StageNonZero_Nop16
-	on_key	KEY_Code1D,		ButtonTable_Transp0se_StageNonZero_Nop16
-	on_key	KEY_Compare,		ButtonTable_Transp0se_StageNonZero_Nop16
-	on_key	KEY_Code1F,		ButtonTable_Transp0se_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol1,	ButtonTable_Transpose_StageNonZero_Nop0
+	on_key	KEY_SoftKeyCol2,	ButtonTable_Transpose_StageNonZero_Nop1
+	on_key	KEY_SoftKeyCol3,	ButtonTable_Transpose_StageNonZero_Nop2
+	on_key	KEY_SoftKeyCol4,	ButtonTable_Transpose_StageNonZero_Nop3
+	on_key	KEY_SoftKeyCol5,	ButtonTable_Transpose_StageNonZero_Nop4
+	on_key	KEY_SoftKeyCol6,	ButtonTable_Transpose_StageNonZero_Nop5
+	on_key	KEY_SoftKeyCol7,	ButtonTable_Transpose_StageNonZero_Nop6
+	on_key	KEY_SoftKeyCol8,	ButtonTable_Transpose_StageNonZero_Nop7
+	on_key	KEY_LcdRow1,		ButtonTable_Transpose_StageNonZero_Nop8
+	on_key	KEY_LcdRow2,		LcdKeyRow2_Transpose_StageNonZero
+	on_key	KEY_LcdRow3,		LcdKeyRow3_Transpose_StageNonZero
+	on_key	KEY_LcdRow4,		ButtonTable_Transpose_StageNonZero_Nop11
+	on_key	KEY_LcdRow5,		ButtonTable_Transpose_StageNonZero_Nop12
+	on_key	KEY_MinusPlus,		ButtonTable_Transpose_StageNonZero_Nop13
+	on_key	KEY_Code0E,		ButtonTable_Transpose_StageNonZero_Nop14
+	on_key	KEY_Exit,		ExitKey_Transpose_StageNonZero
+	on_key	KEY_Page,		ButtonTable_Transpose_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_Transpose_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_Transpose_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_Transpose_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_Transpose_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol5Alt,	ButtonTable_Transpose_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_Transpose_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_Transpose_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_Transpose_StageNonZero_Nop16
+	on_key	KEY_PageAlt,		ButtonTable_Transpose_StageNonZero_Nop16
+	on_key	KEY_Code1A,		ButtonTable_Transpose_StageNonZero_Nop16
+	on_key	KEY_NumberPad,		ButtonTable_Transpose_StageNonZero_Nop16
+	on_key	KEY_Code1C,		ButtonTable_Transpose_StageNonZero_Nop16
+	on_key	KEY_Code1D,		ButtonTable_Transpose_StageNonZero_Nop16
+	on_key	KEY_Compare,		ButtonTable_Transpose_StageNonZero_Nop16
+	on_key	KEY_Code1F,		ButtonTable_Transpose_StageNonZero_Nop16
 	keymap_end
 
 ; --- table 20 of 32: 21 distinct targets; named by the `ld XIX` at 0xF7D1DF
@@ -2295,7 +2295,7 @@ ButtonTable_AdvanceDelay_StageNonZero:
 	keymap_end
 
 ; --- table 22 of 32: 13 distinct targets; named by the `ld XIX` at 0xF7D200
-; ButtonTable_S0ngC0py_StageZero -- the 32 panel-button handlers of this screen
+; ButtonTable_SongCopy_StageZero -- the 32 panel-button handlers of this screen
 ; Evidence: the +8 Button stub at 0xF7D200 loads it when (0x207E) is zero.
 ;           Round 7 established that the 32 tables are indexed
 ;           by the panel BUTTON NUMBER (two independent 5-bit masks
@@ -2306,44 +2306,44 @@ ButtonTable_AdvanceDelay_StageNonZero:
 ;           (wsa1/notes/FINDINGS-prom_ab-screen-stage-and-flags.md).
 ;           Promoted from the framed `Table_<address>` spelling by
 ;           notes/prom_b_screens_round8.py --promote --apply
-ButtonTable_S0ngC0py_StageZero:
+ButtonTable_SongCopy_StageZero:
 	keymap_begin
-	on_key	KEY_SoftKeyCol1,	SoftKeyCol1_S0ngC0py_StageZero
-	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_S0ngC0py_StageZero
-	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_S0ngC0py_StageZero
-	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_S0ngC0py_StageZero
-	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_S0ngC0py_StageZero
-	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_S0ngC0py_StageZero
-	on_key	KEY_SoftKeyCol7,	SoftKeyCol7_S0ngC0py_StageZero
-	on_key	KEY_SoftKeyCol8,	SoftKeyCol8_S0ngC0py_StageZero
-	on_key	KEY_LcdRow1,		ButtonTable_S0ngC0py_StageZero_Nop8
-	on_key	KEY_LcdRow2,		LcdKeyRow2_S0ngC0py_StageZero
-	on_key	KEY_LcdRow3,		ButtonTable_S0ngC0py_StageZero_Nop10
-	on_key	KEY_LcdRow4,		ButtonTable_S0ngC0py_StageZero_Nop10
-	on_key	KEY_LcdRow5,		ButtonTable_S0ngC0py_StageZero_Nop10
-	on_key	KEY_MinusPlus,		ButtonTable_S0ngC0py_StageZero_Nop10
-	on_key	KEY_Code0E,		ButtonTable_S0ngC0py_StageZero_Nop10
-	on_key	KEY_Exit,		ExitKey_S0ngC0py_StageZero
-	on_key	KEY_Page,		ButtonTable_S0ngC0py_StageZero_Nop16
-	on_key	KEY_SoftKeyCol1Alt,	SoftKeyCol1_S0ngC0py_StageZero
-	on_key	KEY_SoftKeyCol2Alt,	SoftKeyCol2_S0ngC0py_StageZero
-	on_key	KEY_SoftKeyCol3Alt,	SoftKeyCol3_S0ngC0py_StageZero
-	on_key	KEY_SoftKeyCol4Alt,	SoftKeyCol4_S0ngC0py_StageZero
-	on_key	KEY_SoftKeyCol5Alt,	SoftKeyCol5_S0ngC0py_StageZero
-	on_key	KEY_SoftKeyCol6Alt,	SoftKeyCol6_S0ngC0py_StageZero
-	on_key	KEY_SoftKeyCol7Alt,	SoftKeyCol7_S0ngC0py_StageZero
-	on_key	KEY_SoftKeyCol8Alt,	SoftKeyCol8_S0ngC0py_StageZero
-	on_key	KEY_PageAlt,		ButtonTable_S0ngC0py_StageZero_Nop16
-	on_key	KEY_Code1A,		ButtonTable_S0ngC0py_StageZero_Nop16
-	on_key	KEY_NumberPad,		ButtonTable_S0ngC0py_StageZero_Nop16
-	on_key	KEY_Code1C,		ButtonTable_S0ngC0py_StageZero_Nop16
-	on_key	KEY_Code1D,		ButtonTable_S0ngC0py_StageZero_Nop16
-	on_key	KEY_Compare,		ButtonTable_S0ngC0py_StageZero_Nop16
-	on_key	KEY_Code1F,		ButtonTable_S0ngC0py_StageZero_Nop16
+	on_key	KEY_SoftKeyCol1,	SoftKeyCol1_SongCopy_StageZero
+	on_key	KEY_SoftKeyCol2,	SoftKeyCol2_SongCopy_StageZero
+	on_key	KEY_SoftKeyCol3,	SoftKeyCol3_SongCopy_StageZero
+	on_key	KEY_SoftKeyCol4,	SoftKeyCol4_SongCopy_StageZero
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_SongCopy_StageZero
+	on_key	KEY_SoftKeyCol6,	SoftKeyCol6_SongCopy_StageZero
+	on_key	KEY_SoftKeyCol7,	SoftKeyCol7_SongCopy_StageZero
+	on_key	KEY_SoftKeyCol8,	SoftKeyCol8_SongCopy_StageZero
+	on_key	KEY_LcdRow1,		ButtonTable_SongCopy_StageZero_Nop8
+	on_key	KEY_LcdRow2,		LcdKeyRow2_SongCopy_StageZero
+	on_key	KEY_LcdRow3,		ButtonTable_SongCopy_StageZero_Nop10
+	on_key	KEY_LcdRow4,		ButtonTable_SongCopy_StageZero_Nop10
+	on_key	KEY_LcdRow5,		ButtonTable_SongCopy_StageZero_Nop10
+	on_key	KEY_MinusPlus,		ButtonTable_SongCopy_StageZero_Nop10
+	on_key	KEY_Code0E,		ButtonTable_SongCopy_StageZero_Nop10
+	on_key	KEY_Exit,		ExitKey_SongCopy_StageZero
+	on_key	KEY_Page,		ButtonTable_SongCopy_StageZero_Nop16
+	on_key	KEY_SoftKeyCol1Alt,	SoftKeyCol1_SongCopy_StageZero
+	on_key	KEY_SoftKeyCol2Alt,	SoftKeyCol2_SongCopy_StageZero
+	on_key	KEY_SoftKeyCol3Alt,	SoftKeyCol3_SongCopy_StageZero
+	on_key	KEY_SoftKeyCol4Alt,	SoftKeyCol4_SongCopy_StageZero
+	on_key	KEY_SoftKeyCol5Alt,	SoftKeyCol5_SongCopy_StageZero
+	on_key	KEY_SoftKeyCol6Alt,	SoftKeyCol6_SongCopy_StageZero
+	on_key	KEY_SoftKeyCol7Alt,	SoftKeyCol7_SongCopy_StageZero
+	on_key	KEY_SoftKeyCol8Alt,	SoftKeyCol8_SongCopy_StageZero
+	on_key	KEY_PageAlt,		ButtonTable_SongCopy_StageZero_Nop16
+	on_key	KEY_Code1A,		ButtonTable_SongCopy_StageZero_Nop16
+	on_key	KEY_NumberPad,		ButtonTable_SongCopy_StageZero_Nop16
+	on_key	KEY_Code1C,		ButtonTable_SongCopy_StageZero_Nop16
+	on_key	KEY_Code1D,		ButtonTable_SongCopy_StageZero_Nop16
+	on_key	KEY_Compare,		ButtonTable_SongCopy_StageZero_Nop16
+	on_key	KEY_Code1F,		ButtonTable_SongCopy_StageZero_Nop16
 	keymap_end
 
 ; --- table 23 of 32: 6 distinct targets; named by the `ld XIX` at 0xF7D20C
-; ButtonTable_S0ngC0py_StageNonZero -- the 32 panel-button handlers of this screen
+; ButtonTable_SongCopy_StageNonZero -- the 32 panel-button handlers of this screen
 ; Evidence: the +8 Button stub at 0xF7D200 loads it when (0x207E) is non-zero.
 ;           Round 7 established that the 32 tables are indexed
 ;           by the panel BUTTON NUMBER (two independent 5-bit masks
@@ -2354,44 +2354,44 @@ ButtonTable_S0ngC0py_StageZero:
 ;           (wsa1/notes/FINDINGS-prom_ab-screen-stage-and-flags.md).
 ;           Promoted from the framed `Table_<address>` spelling by
 ;           notes/prom_b_screens_round8.py --promote --apply
-ButtonTable_S0ngC0py_StageNonZero:
+ButtonTable_SongCopy_StageNonZero:
 	keymap_begin
-	on_key	KEY_SoftKeyCol1,	ButtonTable_S0ngC0py_StageNonZero_Nop0
-	on_key	KEY_SoftKeyCol2,	ButtonTable_S0ngC0py_StageNonZero_Nop0
-	on_key	KEY_SoftKeyCol3,	ButtonTable_S0ngC0py_StageNonZero_Nop0
-	on_key	KEY_SoftKeyCol4,	ButtonTable_S0ngC0py_StageNonZero_Nop0
-	on_key	KEY_SoftKeyCol5,	ButtonTable_S0ngC0py_StageNonZero_Nop0
-	on_key	KEY_SoftKeyCol6,	ButtonTable_S0ngC0py_StageNonZero_Nop0
-	on_key	KEY_SoftKeyCol7,	ButtonTable_S0ngC0py_StageNonZero_Nop0
-	on_key	KEY_SoftKeyCol8,	ButtonTable_S0ngC0py_StageNonZero_Nop0
-	on_key	KEY_LcdRow1,		ButtonTable_S0ngC0py_StageNonZero_Nop0
-	on_key	KEY_LcdRow2,		LcdKeyRow2_S0ngC0py_StageNonZero
-	on_key	KEY_LcdRow3,		LcdKeyRow3_S0ngC0py_StageNonZero
-	on_key	KEY_LcdRow4,		ButtonTable_S0ngC0py_StageNonZero_Nop11
-	on_key	KEY_LcdRow5,		ButtonTable_S0ngC0py_StageNonZero_Nop11
-	on_key	KEY_MinusPlus,		ButtonTable_S0ngC0py_StageNonZero_Nop11
-	on_key	KEY_Code0E,		ButtonTable_S0ngC0py_StageNonZero_Nop11
-	on_key	KEY_Exit,		ExitKey_S0ngC0py_StageNonZero
-	on_key	KEY_Page,		ButtonTable_S0ngC0py_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_S0ngC0py_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_S0ngC0py_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_S0ngC0py_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_S0ngC0py_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol5Alt,	ButtonTable_S0ngC0py_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_S0ngC0py_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_S0ngC0py_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_S0ngC0py_StageNonZero_Nop16
-	on_key	KEY_PageAlt,		ButtonTable_S0ngC0py_StageNonZero_Nop16
-	on_key	KEY_Code1A,		ButtonTable_S0ngC0py_StageNonZero_Nop16
-	on_key	KEY_NumberPad,		ButtonTable_S0ngC0py_StageNonZero_Nop16
-	on_key	KEY_Code1C,		ButtonTable_S0ngC0py_StageNonZero_Nop16
-	on_key	KEY_Code1D,		ButtonTable_S0ngC0py_StageNonZero_Nop16
-	on_key	KEY_Compare,		ButtonTable_S0ngC0py_StageNonZero_Nop16
-	on_key	KEY_Code1F,		ButtonTable_S0ngC0py_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol1,	ButtonTable_SongCopy_StageNonZero_Nop0
+	on_key	KEY_SoftKeyCol2,	ButtonTable_SongCopy_StageNonZero_Nop0
+	on_key	KEY_SoftKeyCol3,	ButtonTable_SongCopy_StageNonZero_Nop0
+	on_key	KEY_SoftKeyCol4,	ButtonTable_SongCopy_StageNonZero_Nop0
+	on_key	KEY_SoftKeyCol5,	ButtonTable_SongCopy_StageNonZero_Nop0
+	on_key	KEY_SoftKeyCol6,	ButtonTable_SongCopy_StageNonZero_Nop0
+	on_key	KEY_SoftKeyCol7,	ButtonTable_SongCopy_StageNonZero_Nop0
+	on_key	KEY_SoftKeyCol8,	ButtonTable_SongCopy_StageNonZero_Nop0
+	on_key	KEY_LcdRow1,		ButtonTable_SongCopy_StageNonZero_Nop0
+	on_key	KEY_LcdRow2,		LcdKeyRow2_SongCopy_StageNonZero
+	on_key	KEY_LcdRow3,		LcdKeyRow3_SongCopy_StageNonZero
+	on_key	KEY_LcdRow4,		ButtonTable_SongCopy_StageNonZero_Nop11
+	on_key	KEY_LcdRow5,		ButtonTable_SongCopy_StageNonZero_Nop11
+	on_key	KEY_MinusPlus,		ButtonTable_SongCopy_StageNonZero_Nop11
+	on_key	KEY_Code0E,		ButtonTable_SongCopy_StageNonZero_Nop11
+	on_key	KEY_Exit,		ExitKey_SongCopy_StageNonZero
+	on_key	KEY_Page,		ButtonTable_SongCopy_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_SongCopy_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_SongCopy_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_SongCopy_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_SongCopy_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol5Alt,	ButtonTable_SongCopy_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_SongCopy_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_SongCopy_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_SongCopy_StageNonZero_Nop16
+	on_key	KEY_PageAlt,		ButtonTable_SongCopy_StageNonZero_Nop16
+	on_key	KEY_Code1A,		ButtonTable_SongCopy_StageNonZero_Nop16
+	on_key	KEY_NumberPad,		ButtonTable_SongCopy_StageNonZero_Nop16
+	on_key	KEY_Code1C,		ButtonTable_SongCopy_StageNonZero_Nop16
+	on_key	KEY_Code1D,		ButtonTable_SongCopy_StageNonZero_Nop16
+	on_key	KEY_Compare,		ButtonTable_SongCopy_StageNonZero_Nop16
+	on_key	KEY_Code1F,		ButtonTable_SongCopy_StageNonZero_Nop16
 	keymap_end
 
 ; --- table 24 of 32: 20 distinct targets; named by the `ld XIX` at 0xF7D221
-; ButtonTable_N0teChange_StageZero -- the 32 panel-button handlers of this screen
+; ButtonTable_NoteChange_StageZero -- the 32 panel-button handlers of this screen
 ; Evidence: the +8 Button stub at 0xF7D221 loads it when (0x207E) is zero.
 ;           Round 7 established that the 32 tables are indexed
 ;           by the panel BUTTON NUMBER (two independent 5-bit masks
@@ -2402,44 +2402,44 @@ ButtonTable_S0ngC0py_StageNonZero:
 ;           (wsa1/notes/FINDINGS-prom_ab-screen-stage-and-flags.md).
 ;           Promoted from the framed `Table_<address>` spelling by
 ;           notes/prom_b_screens_round8.py --promote --apply
-ButtonTable_N0teChange_StageZero:
+ButtonTable_NoteChange_StageZero:
 	keymap_begin
-	on_key	KEY_SoftKeyCol1,	ButtonTable_N0teChange_StageZero_Nop0
-	on_key	KEY_SoftKeyCol2,	ButtonTable_N0teChange_StageZero_Nop1
-	on_key	KEY_SoftKeyCol3,	ButtonTable_N0teChange_StageZero_Nop2
-	on_key	KEY_SoftKeyCol4,	ButtonTable_N0teChange_StageZero_Nop3
-	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_N0teChange_StageZero
-	on_key	KEY_SoftKeyCol6,	ButtonTable_N0teChange_StageZero_Nop5
-	on_key	KEY_SoftKeyCol7,	ButtonTable_N0teChange_StageZero_Nop6
-	on_key	KEY_SoftKeyCol8,	ButtonTable_N0teChange_StageZero_Nop7
-	on_key	KEY_LcdRow1,		ButtonTable_N0teChange_StageZero_Nop7
-	on_key	KEY_LcdRow2,		LcdKeyRow2_N0teChange_StageZero
-	on_key	KEY_LcdRow3,		LcdKeyRow3_N0teChange_StageZero
-	on_key	KEY_LcdRow4,		LcdKeyRow4_N0teChange_StageZero
-	on_key	KEY_LcdRow5,		ButtonTable_N0teChange_StageZero_Nop12
-	on_key	KEY_MinusPlus,		ButtonTable_N0teChange_StageZero_Nop13
-	on_key	KEY_Code0E,		ButtonTable_N0teChange_StageZero_Nop14
-	on_key	KEY_Exit,		ExitKey_N0teChange_StageZero
-	on_key	KEY_Page,		ButtonTable_N0teChange_StageZero_Nop16
-	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_N0teChange_StageZero_Nop16
-	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_N0teChange_StageZero_Nop16
-	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_N0teChange_StageZero_Nop16
-	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_N0teChange_StageZero_Nop16
-	on_key	KEY_SoftKeyCol5Alt,	N0teChange_StageZero_Button21
-	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_N0teChange_StageZero_Nop22
-	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_N0teChange_StageZero_Nop22
-	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_N0teChange_StageZero_Nop22
-	on_key	KEY_PageAlt,		ButtonTable_N0teChange_StageZero_Nop22
-	on_key	KEY_Code1A,		ButtonTable_N0teChange_StageZero_Nop22
-	on_key	KEY_NumberPad,		NumberPadKey_N0teChange_StageZero
-	on_key	KEY_Code1C,		ButtonTable_N0teChange_StageZero_Nop28
-	on_key	KEY_Code1D,		ButtonTable_N0teChange_StageZero_Nop28
-	on_key	KEY_Compare,		ButtonTable_N0teChange_StageZero_Nop28
-	on_key	KEY_Code1F,		ButtonTable_N0teChange_StageZero_Nop28
+	on_key	KEY_SoftKeyCol1,	ButtonTable_NoteChange_StageZero_Nop0
+	on_key	KEY_SoftKeyCol2,	ButtonTable_NoteChange_StageZero_Nop1
+	on_key	KEY_SoftKeyCol3,	ButtonTable_NoteChange_StageZero_Nop2
+	on_key	KEY_SoftKeyCol4,	ButtonTable_NoteChange_StageZero_Nop3
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_NoteChange_StageZero
+	on_key	KEY_SoftKeyCol6,	ButtonTable_NoteChange_StageZero_Nop5
+	on_key	KEY_SoftKeyCol7,	ButtonTable_NoteChange_StageZero_Nop6
+	on_key	KEY_SoftKeyCol8,	ButtonTable_NoteChange_StageZero_Nop7
+	on_key	KEY_LcdRow1,		ButtonTable_NoteChange_StageZero_Nop7
+	on_key	KEY_LcdRow2,		LcdKeyRow2_NoteChange_StageZero
+	on_key	KEY_LcdRow3,		LcdKeyRow3_NoteChange_StageZero
+	on_key	KEY_LcdRow4,		LcdKeyRow4_NoteChange_StageZero
+	on_key	KEY_LcdRow5,		ButtonTable_NoteChange_StageZero_Nop12
+	on_key	KEY_MinusPlus,		ButtonTable_NoteChange_StageZero_Nop13
+	on_key	KEY_Code0E,		ButtonTable_NoteChange_StageZero_Nop14
+	on_key	KEY_Exit,		ExitKey_NoteChange_StageZero
+	on_key	KEY_Page,		ButtonTable_NoteChange_StageZero_Nop16
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_NoteChange_StageZero_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_NoteChange_StageZero_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_NoteChange_StageZero_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_NoteChange_StageZero_Nop16
+	on_key	KEY_SoftKeyCol5Alt,	NoteChange_StageZero_Button21
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_NoteChange_StageZero_Nop22
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_NoteChange_StageZero_Nop22
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_NoteChange_StageZero_Nop22
+	on_key	KEY_PageAlt,		ButtonTable_NoteChange_StageZero_Nop22
+	on_key	KEY_Code1A,		ButtonTable_NoteChange_StageZero_Nop22
+	on_key	KEY_NumberPad,		NumberPadKey_NoteChange_StageZero
+	on_key	KEY_Code1C,		ButtonTable_NoteChange_StageZero_Nop28
+	on_key	KEY_Code1D,		ButtonTable_NoteChange_StageZero_Nop28
+	on_key	KEY_Compare,		ButtonTable_NoteChange_StageZero_Nop28
+	on_key	KEY_Code1F,		ButtonTable_NoteChange_StageZero_Nop28
 	keymap_end
 
 ; --- table 25 of 32: 6 distinct targets; named by the `ld XIX` at 0xF7D22D
-; ButtonTable_N0teChange_StageNonZero -- the 32 panel-button handlers of this screen
+; ButtonTable_NoteChange_StageNonZero -- the 32 panel-button handlers of this screen
 ; Evidence: the +8 Button stub at 0xF7D221 loads it when (0x207E) is non-zero.
 ;           Round 7 established that the 32 tables are indexed
 ;           by the panel BUTTON NUMBER (two independent 5-bit masks
@@ -2450,44 +2450,44 @@ ButtonTable_N0teChange_StageZero:
 ;           (wsa1/notes/FINDINGS-prom_ab-screen-stage-and-flags.md).
 ;           Promoted from the framed `Table_<address>` spelling by
 ;           notes/prom_b_screens_round8.py --promote --apply
-ButtonTable_N0teChange_StageNonZero:
+ButtonTable_NoteChange_StageNonZero:
 	keymap_begin
-	on_key	KEY_SoftKeyCol1,	ButtonTable_N0teChange_StageNonZero_Nop0
-	on_key	KEY_SoftKeyCol2,	ButtonTable_N0teChange_StageNonZero_Nop0
-	on_key	KEY_SoftKeyCol3,	ButtonTable_N0teChange_StageNonZero_Nop0
-	on_key	KEY_SoftKeyCol4,	ButtonTable_N0teChange_StageNonZero_Nop0
-	on_key	KEY_SoftKeyCol5,	ButtonTable_N0teChange_StageNonZero_Nop0
-	on_key	KEY_SoftKeyCol6,	ButtonTable_N0teChange_StageNonZero_Nop0
-	on_key	KEY_SoftKeyCol7,	ButtonTable_N0teChange_StageNonZero_Nop0
-	on_key	KEY_SoftKeyCol8,	ButtonTable_N0teChange_StageNonZero_Nop0
-	on_key	KEY_LcdRow1,		ButtonTable_N0teChange_StageNonZero_Nop0
-	on_key	KEY_LcdRow2,		ButtonTable_N0teChange_StageNonZero_Nop0
-	on_key	KEY_LcdRow3,		ButtonTable_N0teChange_StageNonZero_Nop0
-	on_key	KEY_LcdRow4,		LcdKeyRow4_N0teChange_StageNonZero
-	on_key	KEY_LcdRow5,		LcdKeyRow5_N0teChange_StageNonZero
-	on_key	KEY_MinusPlus,		ButtonTable_N0teChange_StageNonZero_Nop13
-	on_key	KEY_Code0E,		ButtonTable_N0teChange_StageNonZero_Nop13
-	on_key	KEY_Exit,		ExitKey_N0teChange_StageNonZero
-	on_key	KEY_Page,		ButtonTable_N0teChange_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_N0teChange_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_N0teChange_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_N0teChange_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_N0teChange_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol5Alt,	ButtonTable_N0teChange_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_N0teChange_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_N0teChange_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_N0teChange_StageNonZero_Nop16
-	on_key	KEY_PageAlt,		ButtonTable_N0teChange_StageNonZero_Nop16
-	on_key	KEY_Code1A,		ButtonTable_N0teChange_StageNonZero_Nop16
-	on_key	KEY_NumberPad,		ButtonTable_N0teChange_StageNonZero_Nop16
-	on_key	KEY_Code1C,		ButtonTable_N0teChange_StageNonZero_Nop16
-	on_key	KEY_Code1D,		ButtonTable_N0teChange_StageNonZero_Nop16
-	on_key	KEY_Compare,		ButtonTable_N0teChange_StageNonZero_Nop16
-	on_key	KEY_Code1F,		ButtonTable_N0teChange_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol1,	ButtonTable_NoteChange_StageNonZero_Nop0
+	on_key	KEY_SoftKeyCol2,	ButtonTable_NoteChange_StageNonZero_Nop0
+	on_key	KEY_SoftKeyCol3,	ButtonTable_NoteChange_StageNonZero_Nop0
+	on_key	KEY_SoftKeyCol4,	ButtonTable_NoteChange_StageNonZero_Nop0
+	on_key	KEY_SoftKeyCol5,	ButtonTable_NoteChange_StageNonZero_Nop0
+	on_key	KEY_SoftKeyCol6,	ButtonTable_NoteChange_StageNonZero_Nop0
+	on_key	KEY_SoftKeyCol7,	ButtonTable_NoteChange_StageNonZero_Nop0
+	on_key	KEY_SoftKeyCol8,	ButtonTable_NoteChange_StageNonZero_Nop0
+	on_key	KEY_LcdRow1,		ButtonTable_NoteChange_StageNonZero_Nop0
+	on_key	KEY_LcdRow2,		ButtonTable_NoteChange_StageNonZero_Nop0
+	on_key	KEY_LcdRow3,		ButtonTable_NoteChange_StageNonZero_Nop0
+	on_key	KEY_LcdRow4,		LcdKeyRow4_NoteChange_StageNonZero
+	on_key	KEY_LcdRow5,		LcdKeyRow5_NoteChange_StageNonZero
+	on_key	KEY_MinusPlus,		ButtonTable_NoteChange_StageNonZero_Nop13
+	on_key	KEY_Code0E,		ButtonTable_NoteChange_StageNonZero_Nop13
+	on_key	KEY_Exit,		ExitKey_NoteChange_StageNonZero
+	on_key	KEY_Page,		ButtonTable_NoteChange_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_NoteChange_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_NoteChange_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_NoteChange_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_NoteChange_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol5Alt,	ButtonTable_NoteChange_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_NoteChange_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_NoteChange_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_NoteChange_StageNonZero_Nop16
+	on_key	KEY_PageAlt,		ButtonTable_NoteChange_StageNonZero_Nop16
+	on_key	KEY_Code1A,		ButtonTable_NoteChange_StageNonZero_Nop16
+	on_key	KEY_NumberPad,		ButtonTable_NoteChange_StageNonZero_Nop16
+	on_key	KEY_Code1C,		ButtonTable_NoteChange_StageNonZero_Nop16
+	on_key	KEY_Code1D,		ButtonTable_NoteChange_StageNonZero_Nop16
+	on_key	KEY_Compare,		ButtonTable_NoteChange_StageNonZero_Nop16
+	on_key	KEY_Code1F,		ButtonTable_NoteChange_StageNonZero_Nop16
 	keymap_end
 
 ; --- table 26 of 32: 21 distinct targets; named by the `ld XIX` at 0xF7D242
-; ButtonTable_MeasureC0py_StageZero -- the 32 panel-button handlers of this screen
+; ButtonTable_MeasureCopy_StageZero -- the 32 panel-button handlers of this screen
 ; Evidence: the +8 Button stub at 0xF7D242 loads it when (0x207E) is zero.
 ;           Round 7 established that the 32 tables are indexed
 ;           by the panel BUTTON NUMBER (two independent 5-bit masks
@@ -2498,44 +2498,44 @@ ButtonTable_N0teChange_StageNonZero:
 ;           (wsa1/notes/FINDINGS-prom_ab-screen-stage-and-flags.md).
 ;           Promoted from the framed `Table_<address>` spelling by
 ;           notes/prom_b_screens_round8.py --promote --apply
-ButtonTable_MeasureC0py_StageZero:
+ButtonTable_MeasureCopy_StageZero:
 	keymap_begin
-	on_key	KEY_SoftKeyCol1,	ButtonTable_MeasureC0py_StageZero_Nop0
-	on_key	KEY_SoftKeyCol2,	ButtonTable_MeasureC0py_StageZero_Nop1
-	on_key	KEY_SoftKeyCol3,	ButtonTable_MeasureC0py_StageZero_Nop2
-	on_key	KEY_SoftKeyCol4,	ButtonTable_MeasureC0py_StageZero_Nop3
-	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_MeasureC0py_StageZero
-	on_key	KEY_SoftKeyCol6,	ButtonTable_MeasureC0py_StageZero_Nop5
-	on_key	KEY_SoftKeyCol7,	ButtonTable_MeasureC0py_StageZero_Nop6
-	on_key	KEY_SoftKeyCol8,	ButtonTable_MeasureC0py_StageZero_Nop7
-	on_key	KEY_LcdRow1,		LcdKeyRow1_MeasureC0py_StageZero
-	on_key	KEY_LcdRow2,		LcdKeyRow2_MeasureC0py_StageZero
-	on_key	KEY_LcdRow3,		LcdKeyRow3_MeasureC0py_StageZero
-	on_key	KEY_LcdRow4,		LcdKeyRow4_MeasureC0py_StageZero
-	on_key	KEY_LcdRow5,		ButtonTable_MeasureC0py_StageZero_Nop12
-	on_key	KEY_MinusPlus,		ButtonTable_MeasureC0py_StageZero_Nop13
-	on_key	KEY_Code0E,		ButtonTable_MeasureC0py_StageZero_Nop14
-	on_key	KEY_Exit,		ExitKey_MeasureC0py_StageZero
-	on_key	KEY_Page,		ButtonTable_MeasureC0py_StageZero_Nop16
-	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_MeasureC0py_StageZero_Nop16
-	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_MeasureC0py_StageZero_Nop16
-	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_MeasureC0py_StageZero_Nop16
-	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_MeasureC0py_StageZero_Nop16
-	on_key	KEY_SoftKeyCol5Alt,	MeasureC0py_StageZero_Button21
-	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_MeasureC0py_StageZero_Nop22
-	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_MeasureC0py_StageZero_Nop22
-	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_MeasureC0py_StageZero_Nop22
-	on_key	KEY_PageAlt,		ButtonTable_MeasureC0py_StageZero_Nop22
-	on_key	KEY_Code1A,		ButtonTable_MeasureC0py_StageZero_Nop22
-	on_key	KEY_NumberPad,		NumberPadKey_MeasureC0py_StageZero
-	on_key	KEY_Code1C,		ButtonTable_MeasureC0py_StageZero_Nop28
-	on_key	KEY_Code1D,		ButtonTable_MeasureC0py_StageZero_Nop28
-	on_key	KEY_Compare,		ButtonTable_MeasureC0py_StageZero_Nop28
-	on_key	KEY_Code1F,		ButtonTable_MeasureC0py_StageZero_Nop28
+	on_key	KEY_SoftKeyCol1,	ButtonTable_MeasureCopy_StageZero_Nop0
+	on_key	KEY_SoftKeyCol2,	ButtonTable_MeasureCopy_StageZero_Nop1
+	on_key	KEY_SoftKeyCol3,	ButtonTable_MeasureCopy_StageZero_Nop2
+	on_key	KEY_SoftKeyCol4,	ButtonTable_MeasureCopy_StageZero_Nop3
+	on_key	KEY_SoftKeyCol5,	SoftKeyCol5_MeasureCopy_StageZero
+	on_key	KEY_SoftKeyCol6,	ButtonTable_MeasureCopy_StageZero_Nop5
+	on_key	KEY_SoftKeyCol7,	ButtonTable_MeasureCopy_StageZero_Nop6
+	on_key	KEY_SoftKeyCol8,	ButtonTable_MeasureCopy_StageZero_Nop7
+	on_key	KEY_LcdRow1,		LcdKeyRow1_MeasureCopy_StageZero
+	on_key	KEY_LcdRow2,		LcdKeyRow2_MeasureCopy_StageZero
+	on_key	KEY_LcdRow3,		LcdKeyRow3_MeasureCopy_StageZero
+	on_key	KEY_LcdRow4,		LcdKeyRow4_MeasureCopy_StageZero
+	on_key	KEY_LcdRow5,		ButtonTable_MeasureCopy_StageZero_Nop12
+	on_key	KEY_MinusPlus,		ButtonTable_MeasureCopy_StageZero_Nop13
+	on_key	KEY_Code0E,		ButtonTable_MeasureCopy_StageZero_Nop14
+	on_key	KEY_Exit,		ExitKey_MeasureCopy_StageZero
+	on_key	KEY_Page,		ButtonTable_MeasureCopy_StageZero_Nop16
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_MeasureCopy_StageZero_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_MeasureCopy_StageZero_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_MeasureCopy_StageZero_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_MeasureCopy_StageZero_Nop16
+	on_key	KEY_SoftKeyCol5Alt,	MeasureCopy_StageZero_Button21
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_MeasureCopy_StageZero_Nop22
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_MeasureCopy_StageZero_Nop22
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_MeasureCopy_StageZero_Nop22
+	on_key	KEY_PageAlt,		ButtonTable_MeasureCopy_StageZero_Nop22
+	on_key	KEY_Code1A,		ButtonTable_MeasureCopy_StageZero_Nop22
+	on_key	KEY_NumberPad,		NumberPadKey_MeasureCopy_StageZero
+	on_key	KEY_Code1C,		ButtonTable_MeasureCopy_StageZero_Nop28
+	on_key	KEY_Code1D,		ButtonTable_MeasureCopy_StageZero_Nop28
+	on_key	KEY_Compare,		ButtonTable_MeasureCopy_StageZero_Nop28
+	on_key	KEY_Code1F,		ButtonTable_MeasureCopy_StageZero_Nop28
 	keymap_end
 
 ; --- table 27 of 32: 16 distinct targets; named by the `ld XIX` at 0xF7D24E
-; ButtonTable_MeasureC0py_StageNonZero -- the 32 panel-button handlers of this screen
+; ButtonTable_MeasureCopy_StageNonZero -- the 32 panel-button handlers of this screen
 ; Evidence: the +8 Button stub at 0xF7D242 loads it when (0x207E) is non-zero.
 ;           Round 7 established that the 32 tables are indexed
 ;           by the panel BUTTON NUMBER (two independent 5-bit masks
@@ -2546,40 +2546,40 @@ ButtonTable_MeasureC0py_StageZero:
 ;           (wsa1/notes/FINDINGS-prom_ab-screen-stage-and-flags.md).
 ;           Promoted from the framed `Table_<address>` spelling by
 ;           notes/prom_b_screens_round8.py --promote --apply
-ButtonTable_MeasureC0py_StageNonZero:
+ButtonTable_MeasureCopy_StageNonZero:
 	keymap_begin
-	on_key	KEY_SoftKeyCol1,	ButtonTable_MeasureC0py_StageNonZero_Nop0
-	on_key	KEY_SoftKeyCol2,	ButtonTable_MeasureC0py_StageNonZero_Nop1
-	on_key	KEY_SoftKeyCol3,	ButtonTable_MeasureC0py_StageNonZero_Nop2
-	on_key	KEY_SoftKeyCol4,	ButtonTable_MeasureC0py_StageNonZero_Nop3
-	on_key	KEY_SoftKeyCol5,	ButtonTable_MeasureC0py_StageNonZero_Nop4
-	on_key	KEY_SoftKeyCol6,	ButtonTable_MeasureC0py_StageNonZero_Nop5
-	on_key	KEY_SoftKeyCol7,	ButtonTable_MeasureC0py_StageNonZero_Nop6
-	on_key	KEY_SoftKeyCol8,	ButtonTable_MeasureC0py_StageNonZero_Nop7
-	on_key	KEY_LcdRow1,		LcdKeyRow1_MeasureC0py_StageNonZero
-	on_key	KEY_LcdRow2,		ButtonTable_MeasureC0py_StageNonZero_Nop9
-	on_key	KEY_LcdRow3,		ButtonTable_MeasureC0py_StageNonZero_Nop10
-	on_key	KEY_LcdRow4,		ButtonTable_MeasureC0py_StageNonZero_Nop10
-	on_key	KEY_LcdRow5,		LcdKeyRow5_MeasureC0py_StageNonZero
-	on_key	KEY_MinusPlus,		ButtonTable_MeasureC0py_StageNonZero_Nop13
-	on_key	KEY_Code0E,		ButtonTable_MeasureC0py_StageNonZero_Nop14
-	on_key	KEY_Exit,		ExitKey_MeasureC0py_StageNonZero
-	on_key	KEY_Page,		ButtonTable_MeasureC0py_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_MeasureC0py_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_MeasureC0py_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_MeasureC0py_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_MeasureC0py_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol5Alt,	ButtonTable_MeasureC0py_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_MeasureC0py_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_MeasureC0py_StageNonZero_Nop16
-	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_MeasureC0py_StageNonZero_Nop16
-	on_key	KEY_PageAlt,		ButtonTable_MeasureC0py_StageNonZero_Nop16
-	on_key	KEY_Code1A,		ButtonTable_MeasureC0py_StageNonZero_Nop16
-	on_key	KEY_NumberPad,		ButtonTable_MeasureC0py_StageNonZero_Nop16
-	on_key	KEY_Code1C,		ButtonTable_MeasureC0py_StageNonZero_Nop16
-	on_key	KEY_Code1D,		ButtonTable_MeasureC0py_StageNonZero_Nop16
-	on_key	KEY_Compare,		ButtonTable_MeasureC0py_StageNonZero_Nop16
-	on_key	KEY_Code1F,		ButtonTable_MeasureC0py_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol1,	ButtonTable_MeasureCopy_StageNonZero_Nop0
+	on_key	KEY_SoftKeyCol2,	ButtonTable_MeasureCopy_StageNonZero_Nop1
+	on_key	KEY_SoftKeyCol3,	ButtonTable_MeasureCopy_StageNonZero_Nop2
+	on_key	KEY_SoftKeyCol4,	ButtonTable_MeasureCopy_StageNonZero_Nop3
+	on_key	KEY_SoftKeyCol5,	ButtonTable_MeasureCopy_StageNonZero_Nop4
+	on_key	KEY_SoftKeyCol6,	ButtonTable_MeasureCopy_StageNonZero_Nop5
+	on_key	KEY_SoftKeyCol7,	ButtonTable_MeasureCopy_StageNonZero_Nop6
+	on_key	KEY_SoftKeyCol8,	ButtonTable_MeasureCopy_StageNonZero_Nop7
+	on_key	KEY_LcdRow1,		LcdKeyRow1_MeasureCopy_StageNonZero
+	on_key	KEY_LcdRow2,		ButtonTable_MeasureCopy_StageNonZero_Nop9
+	on_key	KEY_LcdRow3,		ButtonTable_MeasureCopy_StageNonZero_Nop10
+	on_key	KEY_LcdRow4,		ButtonTable_MeasureCopy_StageNonZero_Nop10
+	on_key	KEY_LcdRow5,		LcdKeyRow5_MeasureCopy_StageNonZero
+	on_key	KEY_MinusPlus,		ButtonTable_MeasureCopy_StageNonZero_Nop13
+	on_key	KEY_Code0E,		ButtonTable_MeasureCopy_StageNonZero_Nop14
+	on_key	KEY_Exit,		ExitKey_MeasureCopy_StageNonZero
+	on_key	KEY_Page,		ButtonTable_MeasureCopy_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol1Alt,	ButtonTable_MeasureCopy_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol2Alt,	ButtonTable_MeasureCopy_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol3Alt,	ButtonTable_MeasureCopy_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol4Alt,	ButtonTable_MeasureCopy_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol5Alt,	ButtonTable_MeasureCopy_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol6Alt,	ButtonTable_MeasureCopy_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol7Alt,	ButtonTable_MeasureCopy_StageNonZero_Nop16
+	on_key	KEY_SoftKeyCol8Alt,	ButtonTable_MeasureCopy_StageNonZero_Nop16
+	on_key	KEY_PageAlt,		ButtonTable_MeasureCopy_StageNonZero_Nop16
+	on_key	KEY_Code1A,		ButtonTable_MeasureCopy_StageNonZero_Nop16
+	on_key	KEY_NumberPad,		ButtonTable_MeasureCopy_StageNonZero_Nop16
+	on_key	KEY_Code1C,		ButtonTable_MeasureCopy_StageNonZero_Nop16
+	on_key	KEY_Code1D,		ButtonTable_MeasureCopy_StageNonZero_Nop16
+	on_key	KEY_Compare,		ButtonTable_MeasureCopy_StageNonZero_Nop16
+	on_key	KEY_Code1F,		ButtonTable_MeasureCopy_StageNonZero_Nop16
 	keymap_end
 
 ; --- table 28 of 32: 21 distinct targets; named by the `ld XIX` at 0xF7D263
@@ -3040,7 +3040,7 @@ TrackClear_DrawTrackSelection_Return:
 	ret	; F7E3F4  ret
 
 ; ---------------------------------------------------------------------
-; Paint_AfterT0uchSetting -- paints the panel screen whose own title text
+; Paint_AfterTouchSetting -- paints the panel screen whose own title text
 ;                            reads "AFTER T0UCH SETTING"
 ;
 ; Reached by: the +0 method stub of screen object 0xF43180, which prom_a's
@@ -3054,11 +3054,11 @@ TrackClear_DrawTrackSelection_Return:
 ;           prom_a had named independently: notes/prom_b_screens_round8.py
 ;           --calibrate.
 ; ---------------------------------------------------------------------
-Paint_AfterT0uchSetting:
+Paint_AfterTouchSetting:
 	call	T_CallbackQueue_ResetAndRestartTask2	; F7E3F5  call 0xf42e80
 	call	LCD_ScreenRedraw_Begin	; F7E3F9  call 0xf7e2d9
 	ld	(LCD_CurrentLayer:16), 0	; F7E3FD  ld (0x2540),0x00
-	ld	xiy, DL_AfterT0uchSettingSelectWhetherOrNotAfter	; F7E402  ld XIY,0x00f3bab9
+	ld	xiy, DL_AfterTouchSettingSelectWhetherOrNotAfter	; F7E402  ld XIY,0x00f3bab9
 	ld	xix, DL_AfterTouchRecord	; F7E407  ld XIX,0x00f3bb7e
 	call	T_DisplayList_Run	; F7E40C  call 0xf417f0
 	ld	a, (32706:16)	; F7E410  ld A,(0x7fc2)
@@ -3071,22 +3071,22 @@ Paint_AfterT0uchSetting:
 ;           0xF7E418, and from nothing else the scans see.
 Draw_AfterTouchRecord:
 	ld	xiy, DL_AfterTouchRecord	; F7E421  ld XIY,0x00f3bb7e
-	ld	xix, AfterT0uchSetting_EraseRecordValue_DL	; F7E426  ld XIX,0x00f3bb8d
+	ld	xix, AfterTouchSetting_EraseRecordValue_DL	; F7E426  ld XIX,0x00f3bb8d
 	call	T_DisplayListB_Run	; F7E42B  call 0xf417f4
 	ret	; F7E42F  ret
 
 ; Evidence: reached from call from prom_b 0xF7D1B4, and from nothing else
 ;           the scans see.
-; AfterT0uchSetting_EraseRecordValue: Runs AfterT0uchSetting_EraseRecordValue_DL, one op-0x1B record = SWI7 LCD_Svc_1B_EraseRect over
-;   (184,130)-(248,138): erases the AFTER TOUCH RECORD value cell. ScreenButton_AfterT0uchSetting calls it for codes
-;   10/11 after T_AfterT0uchSetting_SetRecordEnable and before Draw_AfterTouchRecord redraws DISABLE / ENABLE. Basis:
+; AfterTouchSetting_EraseRecordValue: Runs AfterTouchSetting_EraseRecordValue_DL, one op-0x1B record = SWI7 LCD_Svc_1B_EraseRect over
+;   (184,130)-(248,138): erases the AFTER TOUCH RECORD value cell. ScreenButton_AfterTouchSetting calls it for codes
+;   10/11 after T_AfterTouchSetting_SetRecordEnable and before Draw_AfterTouchRecord redraws DISABLE / ENABLE. Basis:
 ;   caller + body. (notes/naming-pilot-2026-10-06/proposals_wave7_z.json)
-AfterT0uchSetting_EraseRecordValue:
-	ld	xiy, AfterT0uchSetting_EraseRecordValue_DL	; F7E430  ld XIY,0x00f3bb8d
+AfterTouchSetting_EraseRecordValue:
+	ld	xiy, AfterTouchSetting_EraseRecordValue_DL	; F7E430  ld XIY,0x00f3bb8d
 	ld	xix, DLTable_DisableEnable	; F7E435  ld XIX,0x00f3bb97
 	call	T_DisplayList_Run	; F7E43A  call 0xf417f0
 	ret	; F7E43E  ret
-ScreenLeave_AfterT0uchSetting_Nop:
+ScreenLeave_AfterTouchSetting_Nop:
 	ret	; F7E43F  ret
 
 ; ---------------------------------------------------------------------
@@ -3153,7 +3153,7 @@ Paint_TrackAssign_Skip4:
 	ld	a, (3078:16)	; F7E4DF  ld A,(0x0c06)
 	ld	(DisplayListB_Stage+2:16), a	; F7E4E3  ld (0x12f8),A
 	ld	xiy, Paint_TrackAssign_DL3	; F7E4E7  ld XIY,0x00f3ba91
-	ld	xix, DL_AfterT0uchSettingSelectWhetherOrNotAfter	; F7E4EC  ld XIX,0x00f3bab9
+	ld	xix, DL_AfterTouchSettingSelectWhetherOrNotAfter	; F7E4EC  ld XIX,0x00f3bab9
 	call	T_DisplayListB_Run	; F7E4F1  call 0xf417f4
 	calr	LCD_ScreenRedraw_End	; F7E4F5  calr 0xf7e2e7
 Paint_TrackAssign_Return:
@@ -3782,12 +3782,12 @@ Paint_TrackAssignPresets_Skip3:
 	ld	xiy, Paint_TrackAssignPresets_DL1	; F7E647  ld XIY,0x00f3a429
 	ld	xix, Data_F3A433	; F7E64C  ld XIX,0x00f3a433
 	call	T_DisplayListB_Run	; F7E651  call 0xf417f4
-	ld	xiy, DL_S0ng	; F7E655  ld XIY,0x00f3a417
+	ld	xiy, DL_Song	; F7E655  ld XIY,0x00f3a417
 	ld	xix, DL_All	; F7E65A  ld XIX,0x00f3a41f
 	call	T_DisplayList_Run	; F7E65F  call 0xf417f0
 Paint_TrackAssignPresets_Join:
 	ld	xiy, Paint_TrackAssignPresets_DL2	; F7E663  ld XIY,0x00f3a40d
-	ld	xix, DL_S0ng	; F7E668  ld XIX,0x00f3a417
+	ld	xix, DL_Song	; F7E668  ld XIX,0x00f3a417
 	call	T_DisplayList_Run	; F7E66D  call 0xf417f0
 	call	TrackAssignPresets_MoveFieldHighlight	; F7E671  call 0xf7e770
 	call	LCD_ScreenRedraw_End	; F7E675  call 0xf7e2e7
@@ -4829,7 +4829,7 @@ Paint_Edit_Skip:
 	calr	LCD_ScreenRedraw_Begin	; F7E997  calr 0xf7e2d9
 	cp	(0x0c10:16), 0x00	; F7E99A  cp (0x0c10),0x00
 	jr	nz, Paint_Edit_Skip2	; F7E99F  jr NZ,0xf7e9b1
-	ld	xiy, DL_EditSeqN0teEditS0ngClear	; F7E9A1  ld XIY,0x00f39d3e
+	ld	xiy, DL_EditSeqNoteEditSongClear	; F7E9A1  ld XIY,0x00f39d3e
 	ld	xix, DL_EditSeqSongCopyCopyErase	; F7E9A6  ld XIX,0x00f39e87
 	call	T_DisplayList_Run	; F7E9AB  call 0xf417f0
 	jr	Paint_Edit_Join	; F7E9AF  jr T,0xf7e9bf
@@ -5486,7 +5486,7 @@ Paint_SongClear:
 	ldw	(PanelDial_DownButton:16), 770	; F7EAF6  ld (0x209b),0x0302  <- arms prom_a PanelButton_Accept's substitution for panel button code 0x0D (0xF86615); see the 0xF7D2D8 banner
 	ldw	(9830:16), 65535	; F7EAFC  ld (0x2666),0xffff
 	ldw	(9834:16), 65535	; F7EB02  ld (0x266a),0xffff
-	ld	xiy, DL_SongClearKbSongS0ngAll	; F7EB08  ld XIY,0x00f399d5
+	ld	xiy, DL_SongClearKbSongSongAll	; F7EB08  ld XIY,0x00f399d5
 	ld	xix, Paint_SongClear_DL1	; F7EB0D  ld XIX,0x00f39a73
 	call	T_DisplayList_Run	; F7EB12  call 0xf417f0
 Paint_SongClear_Skip:
@@ -5501,7 +5501,7 @@ Paint_SongClear_Skip:
 	ld	(DisplayListB_Stage+7:16), a	; F7EB33  ld (0x12fd),A
 Paint_SongClear_Skip2:
 	ld	xiy, Paint_SongClear_DL1	; F7EB37  ld XIY,0x00f39a73
-	ld	xix, DL_SongClearKbSongAttenti0n	; F7EB3C  ld XIX,0x00f39a7d
+	ld	xix, DL_SongClearKbSongAttention	; F7EB3C  ld XIX,0x00f39a7d
 	call	T_DisplayList_Run	; F7EB41  call 0xf417f0
 	cp	(0x0e02:16), 0x0a	; F7EB45  cp (0x0e02),0x0a
 	jr	nz, Paint_SongClear_Skip3	; F7EB4A  jr NZ,0xf7eb5c
@@ -5510,7 +5510,7 @@ Paint_SongClear_Skip2:
 	call	T_DisplayList_Run	; F7EB56  call 0xf417f0
 	jr	Paint_SongClear_Join	; F7EB5A  jr T,0xf7ebcf
 Paint_SongClear_Skip3:
-	ld	xiy, DL_SongClearKbSongS0ngAll	; F7EB5C  ld XIY,0x00f399d5
+	ld	xiy, DL_SongClearKbSongSongAll	; F7EB5C  ld XIY,0x00f399d5
 	ld	xix, Paint_SongClear_DL1	; F7EB61  ld XIX,0x00f39a73
 	call	T_DisplayList_Run	; F7EB66  call 0xf417f0
 	ld	xiy, Paint_SongClear_DL3	; F7EB6A  ld XIY,0x00f3998e
@@ -5520,7 +5520,7 @@ Paint_SongClear_Skip3:
 Paint_SongClear_Skip4:
 	bit	4, (UI_ScreenFlags:16)	; F7EB7A  bit 4,(0x2095)
 	jr	nz, Paint_SongClear_Skip5	; F7EB7E  jr NZ,0xf7eb8e
-	ld	xiy, DL_SongClearKbSongAttenti0n	; F7EB80  ld XIY,0x00f39a7d
+	ld	xiy, DL_SongClearKbSongAttention	; F7EB80  ld XIY,0x00f39a7d
 	ld	xix, Paint_SongClear_DL4	; F7EB85  ld XIX,0x00f39bf8
 	call	T_DisplayList_Run	; F7EB8A  call 0xf417f0
 Paint_SongClear_Skip5:
@@ -5534,11 +5534,11 @@ Paint_SongClear_Skip5:
 	call	T_DisplayList_Run	; F7EBAD  call 0xf417f0
 	jr	Paint_SongClear_Join	; F7EBB1  jr T,0xf7ebcf
 Paint_SongClear_Skip6:
-	ld	xiy, DL_SongClearKbSongAttenti0n	; F7EBB3  ld XIY,0x00f39a7d
+	ld	xiy, DL_SongClearKbSongAttention	; F7EBB3  ld XIY,0x00f39a7d
 	ld	xix, Paint_SongClear_DL4	; F7EBB8  ld XIX,0x00f39bf8
 	call	T_DisplayList_Run	; F7EBBD  call 0xf417f0
 	ld	xiy, Paint_SongClear_DL6	; F7EBC1  ld XIY,0x00f39c02
-	ld	xix, DL_TrackClearAttenti0nUsing	; F7EBC6  ld XIX,0x00f39c35
+	ld	xix, DL_TrackClearAttentionUsing	; F7EBC6  ld XIX,0x00f39c35
 	call	T_DisplayListB_Run	; F7EBCB  call 0xf417f4
 Paint_SongClear_Join:
 	calr	LCD_ScreenRedraw_End	; F7EBCF  calr 0xf7e2e7
@@ -5853,8 +5853,8 @@ Paint_TrackClear_Skip:
 Paint_TrackClear_Skip2:
 	calr	LCD_ScreenRedraw_Begin	; F7ECBF  calr 0xf7e2d9
 	ld	(LCD_CurrentLayer:16), 2	; F7ECC2  ld (0x2540),0x02
-	ld	xiy, DL_TrackClearAttenti0nUsing	; F7ECC7  ld XIY,0x00f39c35
-	ld	xix, DL_EditSeqN0teEditS0ngClear	; F7ECCC  ld XIX,0x00f39d3e
+	ld	xiy, DL_TrackClearAttentionUsing	; F7ECC7  ld XIY,0x00f39c35
+	ld	xix, DL_EditSeqNoteEditSongClear	; F7ECCC  ld XIX,0x00f39d3e
 	call	T_DisplayList_Run	; F7ECD1  call 0xf417f0
 	call	TrackGrid_DrawPartLabels	; F7ECD5  call 0xf7e354
 	ld	(LCD_CurrentLayer:16), 0	; F7ECD9  ld (0x2540),0x00
@@ -8494,7 +8494,7 @@ Paint_PanelWrite:
 	calr	LCD_ScreenRedraw_Begin	; F7F53E  calr 0xf7e2d9
 	ld	(LCD_CurrentLayer:16), 0	; F7F541  ld (0x2540),0x00
 	ld	xiy, DL_PanelWritePanelWriteReplacesTheSoundsAnd	; F7F546  ld XIY,0x00f3ad88
-	ld	xix, DL_N0teChangeTargetNoteTrack	; F7F54B  ld XIX,0x00f3aeaf
+	ld	xix, DL_NoteChangeTargetNoteTrack	; F7F54B  ld XIX,0x00f3aeaf
 	call	T_DisplayList_Run	; F7F550  call 0xf417f0
 	calr	LCD_ScreenRedraw_End	; F7F554  calr 0xf7e2e7
 	ret	; F7F557  ret
@@ -9310,7 +9310,7 @@ BlinkArgPtrs_F7F88D:
 
 
 ; ---------------------------------------------------------------------
-; Paint_Vel0cityChange -- paints the panel screen whose own title text reads
+; Paint_VelocityChange -- paints the panel screen whose own title text reads
 ;                         "VEL0CITY CHANGE"
 ;
 ; Reached by: the +0 method stub of screen object 0xF43080, which prom_a's
@@ -9323,27 +9323,27 @@ BlinkArgPtrs_F7F88D:
 ;           rule is round 7's, calibrated on seven screens prom_a had named
 ;           independently: notes/prom_b_screens_round8.py --calibrate.
 ; ---------------------------------------------------------------------
-Paint_Vel0cityChange:
+Paint_VelocityChange:
 	call	T_CallbackQueue_ResetAndRestartTask2	; F7F8A9  call 0xf42e80
 	cp	(UI_ScreenStage:16), 0x00	; F7F8AD  cp (0x207e),0x00
-	jr	nz, Paint_Vel0cityChange_Skip	; F7F8B2  jr NZ,0xf7f8cf
-	call	T_Vel0cityChange_InitFields	; F7F8B4  call 0xf428e0
+	jr	nz, Paint_VelocityChange_Skip	; F7F8B2  jr NZ,0xf7f8cf
+	call	T_VelocityChange_InitFields	; F7F8B4  call 0xf428e0
 	or	(UI_RequestBits:16), 0x01	; F7F8B8  or (0x2075),0x01
 	ldw	(PanelDial_DownButton:16), 1156	; F7F8BD  ld (0x209b),0x0484  <- arms prom_a PanelButton_Accept's substitution for panel button code 0x0D (0xF86615); see the 0xF7D2D8 banner
 	ldw	(9830:16), 65535	; F7F8C3  ld (0x2666),0xffff
 	ldw	(9834:16), 65535	; F7F8C9  ld (0x266a),0xffff
-Paint_Vel0cityChange_Skip:
+Paint_VelocityChange_Skip:
 	calr	LCD_ScreenRedraw_Begin	; F7F8CF  calr 0xf7e2d9
 	ld	(LCD_CurrentLayer:16), 0	; F7F8D2  ld (0x2540),0x00
 	cp	(UI_ScreenStage:16), 0x00	; F7F8D7  cp (0x207e),0x00
-	jr	nz, Paint_Vel0cityChange_Skip2	; F7F8DC  jr NZ,0xf7f8ee
-	ld	xiy, DL_Vel0cityChangeTrackFirstMeasure	; F7F8DE  ld XIY,0x00f3aa54
+	jr	nz, Paint_VelocityChange_Skip2	; F7F8DC  jr NZ,0xf7f8ee
+	ld	xiy, DL_VelocityChangeTrackFirstMeasure	; F7F8DE  ld XIY,0x00f3aa54
 	ld	xix, DL_F3AB3B	; F7F8E3  ld XIX,0x00f3ab3b
 	call	T_DisplayList_Run	; F7F8E8  call 0xf417f0
-	jr	Paint_Vel0cityChange_Join	; F7F8EC  jr T,0xf7f918
-Paint_Vel0cityChange_Skip2:
-	ld	xiy, DL_Vel0cityChangeTrackFirstMeasure	; F7F8EE  ld XIY,0x00f3aa54
-	ld	xix, DL_Vel0cityChangeTrackFirstMeasure + 0xAA	; F7F8F3  ld XIX,0x00f3aafe
+	jr	Paint_VelocityChange_Join	; F7F8EC  jr T,0xf7f918
+Paint_VelocityChange_Skip2:
+	ld	xiy, DL_VelocityChangeTrackFirstMeasure	; F7F8EE  ld XIY,0x00f3aa54
+	ld	xix, DL_VelocityChangeTrackFirstMeasure + 0xAA	; F7F8F3  ld XIX,0x00f3aafe
 	call	T_DisplayList_Run	; F7F8F8  call 0xf417f0
 	ld	xiy, DL_F3AB9C	; F7F8FC  ld XIY,0x00f3ab9c
 	ld	xix, DL_QuantizeTrackStrengthFirstMeasure	; F7F901  ld XIX,0x00f3abdb
@@ -9351,10 +9351,10 @@ Paint_Vel0cityChange_Skip2:
 	ld	xiy, DL_AreYouSure	; F7F90A  ld XIY,0x00f3a461
 	ld	xix, DL_TrackMergeOkTrackTrackTrack	; F7F90F  ld XIX,0x00f3a47f
 	call	T_DisplayList_Run	; F7F914  call 0xf417f0
-Paint_Vel0cityChange_Join:
+Paint_VelocityChange_Join:
 	ld	(LCD_CurrentLayer:16), 0	; F7F918  ld (0x2540),0x00
 	calr	ButtonTable_SequencerMedley_Nop	; F7F91D  calr 0xf7e2d8
-	calr	Vel0cityChange_FormatSignedValue	; F7F920  calr 0xf7f935
+	calr	VelocityChange_FormatSignedValue	; F7F920  calr 0xf7f935
 	ld	xiy, DL_F3AB3B	; F7F923  ld XIY,0x00f3ab3b
 	ld	xix, DLBoxes_F3AB74	; F7F928  ld XIX,0x00f3ab74
 	call	T_DisplayListB_Run	; F7F92D  call 0xf417f4
@@ -9363,11 +9363,11 @@ Paint_Vel0cityChange_Join:
 
 ; Evidence: reached from calr from prom_b 0xF7F920; calr from prom_b
 ;           0xF7FA03, and from nothing else the scans see.
-; Vel0cityChange_FormatSignedValue: Formats the VEL0CITY CHANGE value (0x0C24) as a sign cell + 3 right-justified
+; VelocityChange_FormatSignedValue: Formats the VEL0CITY CHANGE value (0x0C24) as a sign cell + 3 right-justified
 ;   digits at 0x2660 (T_Value_ToSignedAsciiDigits3_RightJustified with DE = 127); the BC/HL/XIY/A it then loads are
-;   not used by either caller. Paint_Vel0cityChange and Vel0cityChange_DrawValues call it before the value list runs.
+;   not used by either caller. Paint_VelocityChange and VelocityChange_DrawValues call it before the value list runs.
 ;   Basis: callers + body. (notes/naming-pilot-2026-10-06/proposals_wave3_g.json)
-Vel0cityChange_FormatSignedValue:
+VelocityChange_FormatSignedValue:
 	ld	a, (3108:16)	; F7F935  ld A,(0x0c24)
 	xor	w, w	; F7F939  xor W,W
 	ldw	de, 127	; F7F93B  ld DE,0x007f
@@ -9379,7 +9379,7 @@ Vel0cityChange_FormatSignedValue:
 	ret	; F7F94E  ret
 
 ; ---------------------------------------------------------------------
-; ScreenLeaveBody_Vel0cityChange -- the whole body of the Vel0cityChange
+; ScreenLeaveBody_VelocityChange -- the whole body of the VelocityChange
 ;                                   screen's Leave method
 ;
 ; Reached by: the +4 method stub of screen object 0xF43080, which prom_a's
@@ -9391,21 +9391,21 @@ Vel0cityChange_FormatSignedValue:
 ;           0xF7F94F` then `ret` and nothing else calls this address. The
 ;           screen's own name is round 7's, from its title text.
 ; ---------------------------------------------------------------------
-ScreenLeaveBody_Vel0cityChange:
-	call	T_Vel0cityChange_OnLeave	; F7F94F  call 0xf428e4
+ScreenLeaveBody_VelocityChange:
+	call	T_VelocityChange_OnLeave	; F7F94F  call 0xf428e4
 	ret	; F7F953  ret
-ButtonTable_Vel0cityChange_StageZero_Nop0:
+ButtonTable_VelocityChange_StageZero_Nop0:
 	ret	; F7F954  ret   <- button table 0xF7DAD8 entry 0 (VEL0CITY CHANGE)
-ButtonTable_Vel0cityChange_StageZero_Nop1:
+ButtonTable_VelocityChange_StageZero_Nop1:
 	ret	; F7F955  ret   <- button table 0xF7DAD8 entry 1 (VEL0CITY CHANGE)
-ButtonTable_Vel0cityChange_StageZero_Nop2:
+ButtonTable_VelocityChange_StageZero_Nop2:
 	ret	; F7F956  ret   <- button table 0xF7DAD8 entry 2 (VEL0CITY CHANGE)
-ButtonTable_Vel0cityChange_StageZero_Nop3:
+ButtonTable_VelocityChange_StageZero_Nop3:
 	ret	; F7F957  ret   <- button table 0xF7DAD8 entry 3 (VEL0CITY CHANGE)
 
 ; ---------------------------------------------------------------------
-; SoftKeyCol5_Vel0cityChange_StageZero -- the 5th of the eight SOFT KEYS in the
-;           row under the LCD, on the Vel0cityChange_StageZero screen
+; SoftKeyCol5_VelocityChange_StageZero -- the 5th of the eight SOFT KEYS in the
+;           row under the LCD, on the VelocityChange_StageZero screen
 ; Reached by: SW41 "SOFT KEY col 5 lower" (matrix segment 5 bit 0, wire 0xC5)
 ;           -> PanelWireGroupMap_Variant2[0x65] = group 0x05 -> record
 ;           0xF8B6E4 {class 0xA9, code 0x04} -> delivered code 0x84; SW42
@@ -9415,7 +9415,7 @@ ButtonTable_Vel0cityChange_StageZero_Nop3:
 ;           PanelButton_Route then does `and L,0x1f` at 0xF861AE and prom_a
 ;           PanelButton_CallTableEntry masks it AGAIN and indexes the table -- `and L,0x1f /
 ;           sla 0x02,L / ld XIX,(XIX+L) / call (XIX)` at 0xF8BDEA-0xF8BDF5 --
-;           so this is slot 0x04 of ButtonTable_Vel0cityChange_StageZero.
+;           so this is slot 0x04 of ButtonTable_VelocityChange_StageZero.
 ; Note:     bit 7 of the delivered code picks WHICH SWITCH OF THE COLUMN: set
 ;           = the even matrix bit, clear = the odd one. ⚠ That the even bit is
 ;           the LOWER key of the pair is round 9's POSITION-grade reading of
@@ -9443,32 +9443,32 @@ ButtonTable_Vel0cityChange_StageZero_Nop3:
 ;           reads notes/wave7_panel_button_codes.py (layer 1) and
 ;           notes/wave7_panel_event_index.py (layer 2).
 ; ---------------------------------------------------------------------
-SoftKeyCol5_Vel0cityChange_StageZero:
+SoftKeyCol5_VelocityChange_StageZero:
 	bit	1, (UI_RequestBits:16)	; F7F958  bit 1,(0x2075)
-	jr	z, ScreenLeaveBody_Vel0cityChange_Skip	; F7F95C  jr Z,0xf7f962
+	jr	z, ScreenLeaveBody_VelocityChange_Skip	; F7F95C  jr Z,0xf7f962
 	call	T_Blink_Stop	; F7F95E  call 0xf42e24
-ScreenLeaveBody_Vel0cityChange_Skip:
+ScreenLeaveBody_VelocityChange_Skip:
 	or	(UI_RequestBits:16), 0x08	; F7F962  or (0x2075),0x08
 	ld	(3608:16), 1	; F7F967  ld (0x0e18),0x01
 	bit	7, w	; F7F96C  bit 0x07,W
-	jr	z, ScreenLeaveBody_Vel0cityChange_Skip2	; F7F96F  jr Z,0xf7f977
-	call	T_Vel0cityChange_StepFieldDown	; F7F971  call 0xf428fc
-	jr	ScreenLeaveBody_Vel0cityChange_Join	; F7F975  jr T,0xf7f97b
-ScreenLeaveBody_Vel0cityChange_Skip2:
-	call	T_Vel0cityChange_StepFieldUp	; F7F977  call 0xf428f8
-ScreenLeaveBody_Vel0cityChange_Join:
-	calr	Vel0cityChange_DrawValues	; F7F97B  calr 0xf7f9fb
+	jr	z, ScreenLeaveBody_VelocityChange_Skip2	; F7F96F  jr Z,0xf7f977
+	call	T_VelocityChange_StepFieldDown	; F7F971  call 0xf428fc
+	jr	ScreenLeaveBody_VelocityChange_Join	; F7F975  jr T,0xf7f97b
+ScreenLeaveBody_VelocityChange_Skip2:
+	call	T_VelocityChange_StepFieldUp	; F7F977  call 0xf428f8
+ScreenLeaveBody_VelocityChange_Join:
+	calr	VelocityChange_DrawValues	; F7F97B  calr 0xf7f9fb
 	ret	; F7F97E  ret
-ButtonTable_Vel0cityChange_StageZero_Nop5:
+ButtonTable_VelocityChange_StageZero_Nop5:
 	ret	; F7F97F  ret   <- button table 0xF7DAD8 entry 5 (VEL0CITY CHANGE)
-ButtonTable_Vel0cityChange_StageZero_Nop6:
+ButtonTable_VelocityChange_StageZero_Nop6:
 	ret	; F7F980  ret   <- button table 0xF7DAD8 entry 6 (VEL0CITY CHANGE)
-ButtonTable_Vel0cityChange_StageZero_Nop7:
+ButtonTable_VelocityChange_StageZero_Nop7:
 	ret	; F7F981  ret   <- button table 0xF7DAD8 entry 7 (VEL0CITY CHANGE)
 
 ; ---------------------------------------------------------------------
-; LcdKeyRow1_Vel0cityChange_StageZero -- row 1 of the five key pairs flanking
-;           the LCD, on the Vel0cityChange_StageZero screen
+; LcdKeyRow1_VelocityChange_StageZero -- row 1 of the five key pairs flanking
+;           the LCD, on the VelocityChange_StageZero screen
 ; Reached by: SW25 "LCD RIGHT 1 (top)" (matrix segment 3 bit 0, wire 0xC3) ->
 ;           PanelWireGroupMap_Variant2[0x63] = group 0x03 -> record 0xF8B6A2
 ;           {class 0xA9, code 0x08} -> delivered code 0x08; SW73 "LCD LEFT 1
@@ -9478,7 +9478,7 @@ ButtonTable_Vel0cityChange_StageZero_Nop7:
 ;           PanelButton_Route then does `and L,0x1f` at 0xF861AE and prom_a
 ;           PanelButton_CallTableEntry masks it AGAIN and indexes the table -- `and L,0x1f /
 ;           sla 0x02,L / ld XIX,(XIX+L) / call (XIX)` at 0xF8BDEA-0xF8BDF5 --
-;           so this is slot 0x08 of ButtonTable_Vel0cityChange_StageZero.
+;           so this is slot 0x08 of ButtonTable_VelocityChange_StageZero.
 ; Note:     bit 7 of the delivered code picks THE SIDE OF THE DISPLAY: set =
 ;           the CP2 column (SW73-77), clear = the CP1 column (SW25-29).
 ; Variant:  ⚠ VARIANT 2 = the SX-WSA1R, and the chain above is variant 2's;
@@ -9502,23 +9502,23 @@ ButtonTable_Vel0cityChange_StageZero_Nop7:
 ;           reads notes/wave7_panel_button_codes.py (layer 1) and
 ;           notes/wave7_panel_event_index.py (layer 2).
 ; ---------------------------------------------------------------------
-LcdKeyRow1_Vel0cityChange_StageZero:
+LcdKeyRow1_VelocityChange_StageZero:
 	bit	7, w	; F7F982  bit 0x07,W
-	jr	z, ScreenLeaveBody_Vel0cityChange_Return	; F7F985  jr Z,0xf7f99b
+	jr	z, ScreenLeaveBody_VelocityChange_Return	; F7F985  jr Z,0xf7f99b
 	cp	(0x0db8:16), 0x01	; F7F987  cp (0x0db8),0x01
-	jr	z, ScreenLeaveBody_Vel0cityChange_Return	; F7F98C  jr Z,0xf7f99b
+	jr	z, ScreenLeaveBody_VelocityChange_Return	; F7F98C  jr Z,0xf7f99b
 	calr	Blink_DisableThenStop	; F7F98E  calr 0xf7f245
-	call	T_Vel0cityChange_StageZero_LcdKeyRow1	; F7F991  call 0xf428e8
-	calr	Vel0cityChange_DrawValues	; F7F995  calr 0xf7f9fb
-	calr	Vel0cityChange_RedrawFields	; F7F998  calr 0xf7f99c
-ScreenLeaveBody_Vel0cityChange_Return:
+	call	T_VelocityChange_StageZero_LcdKeyRow1	; F7F991  call 0xf428e8
+	calr	VelocityChange_DrawValues	; F7F995  calr 0xf7f9fb
+	calr	VelocityChange_RedrawFields	; F7F998  calr 0xf7f99c
+ScreenLeaveBody_VelocityChange_Return:
 	ret	; F7F99B  ret
 
 ; Evidence: reached from calr from prom_b 0xF7F998; calr from prom_b
 ;           0xF7F9D2, and from nothing else the scans see.
-; Vel0cityChange_RedrawFields: clears the value area (DL_F39551) and redraws the page's fields with
+; VelocityChange_RedrawFields: clears the value area (DL_F39551) and redraws the page's fields with
 ;   T_DLB_Handler_Array8 -- ld xiy, DL_F3AB3B + 0x2E (notes/prom_ab_stage_zero_names.py).
-Vel0cityChange_RedrawFields:
+VelocityChange_RedrawFields:
 	ld	(LCD_CurrentLayer:16), 1	; F7F99C  ld (0x2540),0x01
 	calr	ButtonTable_SequencerMedley_Nop	; F7F9A1  calr 0xf7e2d8
 	ld	xiy, DL_F39551	; F7F9A4  ld XIY,0x00f39551
@@ -9529,8 +9529,8 @@ Vel0cityChange_RedrawFields:
 	ret	; F7F9BB  ret
 
 ; ---------------------------------------------------------------------
-; LcdKeyRow2_Vel0cityChange_StageZero -- row 2 of the five key pairs flanking
-;           the LCD, on the Vel0cityChange_StageZero screen
+; LcdKeyRow2_VelocityChange_StageZero -- row 2 of the five key pairs flanking
+;           the LCD, on the VelocityChange_StageZero screen
 ; Reached by: SW26 "LCD RIGHT 2" (matrix segment 3 bit 1, wire 0xC3) ->
 ;           PanelWireGroupMap_Variant2[0x63] = group 0x03 -> record 0xF8B6A6
 ;           {class 0xA9, code 0x09} -> delivered code 0x09; SW74 "LCD LEFT 2"
@@ -9540,7 +9540,7 @@ Vel0cityChange_RedrawFields:
 ;           PanelButton_Route then does `and L,0x1f` at 0xF861AE and prom_a
 ;           PanelButton_CallTableEntry masks it AGAIN and indexes the table -- `and L,0x1f /
 ;           sla 0x02,L / ld XIX,(XIX+L) / call (XIX)` at 0xF8BDEA-0xF8BDF5 --
-;           so this is slot 0x09 of ButtonTable_Vel0cityChange_StageZero.
+;           so this is slot 0x09 of ButtonTable_VelocityChange_StageZero.
 ; Note:     bit 7 of the delivered code picks THE SIDE OF THE DISPLAY: set =
 ;           the CP2 column (SW73-77), clear = the CP1 column (SW25-29).
 ; Variant:  ⚠ VARIANT 2 = the SX-WSA1R, and the chain above is variant 2's;
@@ -9564,25 +9564,25 @@ Vel0cityChange_RedrawFields:
 ;           reads notes/wave7_panel_button_codes.py (layer 1) and
 ;           notes/wave7_panel_event_index.py (layer 2).
 ; ---------------------------------------------------------------------
-LcdKeyRow2_Vel0cityChange_StageZero:
+LcdKeyRow2_VelocityChange_StageZero:
 	bit	7, w	; F7F9BC  bit 0x07,W
-	jr	z, LcdKeyRow2_Vel0cityChange_StageZero_Skip	; F7F9BF  jr Z,0xf7f9d7
+	jr	z, LcdKeyRow2_VelocityChange_StageZero_Skip	; F7F9BF  jr Z,0xf7f9d7
 	cp	(0x0db8:16), 0x02	; F7F9C1  cp (0x0db8),0x02
-	jr	z, LcdKeyRow2_Vel0cityChange_StageZero_Return	; F7F9C6  jr Z,0xf7f9de
+	jr	z, LcdKeyRow2_VelocityChange_StageZero_Return	; F7F9C6  jr Z,0xf7f9de
 	calr	Blink_EnableThenStop_Copy	; F7F9C8  calr 0xf7f237
-	call	T_Vel0cityChange_StageZero_LcdKeyRow2	; F7F9CB  call 0xf428ec
-	calr	Vel0cityChange_DrawValues	; F7F9CF  calr 0xf7f9fb
-	calr	Vel0cityChange_RedrawFields	; F7F9D2  calr 0xf7f99c
-	jr	LcdKeyRow2_Vel0cityChange_StageZero_Return	; F7F9D5  jr T,0xf7f9de
-LcdKeyRow2_Vel0cityChange_StageZero_Skip:
+	call	T_VelocityChange_StageZero_LcdKeyRow2	; F7F9CB  call 0xf428ec
+	calr	VelocityChange_DrawValues	; F7F9CF  calr 0xf7f9fb
+	calr	VelocityChange_RedrawFields	; F7F9D2  calr 0xf7f99c
+	jr	LcdKeyRow2_VelocityChange_StageZero_Return	; F7F9D5  jr T,0xf7f9de
+LcdKeyRow2_VelocityChange_StageZero_Skip:
 	calr	Blink_DisableThenStop	; F7F9D7  calr 0xf7f245
-	call	T_Vel0cityChange_LcdKeyRow2	; F7F9DA  call 0xf42900
-LcdKeyRow2_Vel0cityChange_StageZero_Return:
+	call	T_VelocityChange_LcdKeyRow2	; F7F9DA  call 0xf42900
+LcdKeyRow2_VelocityChange_StageZero_Return:
 	ret	; F7F9DE  ret
 
 ; ---------------------------------------------------------------------
-; LcdKeyRow3_Vel0cityChange_StageZero -- row 3 of the five key pairs flanking
-;           the LCD, on the Vel0cityChange_StageZero screen
+; LcdKeyRow3_VelocityChange_StageZero -- row 3 of the five key pairs flanking
+;           the LCD, on the VelocityChange_StageZero screen
 ; Reached by: SW27 "LCD RIGHT 3" (matrix segment 3 bit 2, wire 0xC3) ->
 ;           PanelWireGroupMap_Variant2[0x63] = group 0x03 -> record 0xF8B6AA
 ;           {class 0xA9, code 0x0A} -> delivered code 0x0A; SW75 "LCD LEFT 3"
@@ -9592,7 +9592,7 @@ LcdKeyRow2_Vel0cityChange_StageZero_Return:
 ;           PanelButton_Route then does `and L,0x1f` at 0xF861AE and prom_a
 ;           PanelButton_CallTableEntry masks it AGAIN and indexes the table -- `and L,0x1f /
 ;           sla 0x02,L / ld XIX,(XIX+L) / call (XIX)` at 0xF8BDEA-0xF8BDF5 --
-;           so this is slot 0x0A of ButtonTable_Vel0cityChange_StageZero.
+;           so this is slot 0x0A of ButtonTable_VelocityChange_StageZero.
 ; Note:     bit 7 of the delivered code picks THE SIDE OF THE DISPLAY: set =
 ;           the CP2 column (SW73-77), clear = the CP1 column (SW25-29).
 ; Variant:  ⚠ VARIANT 2 = the SX-WSA1R, and the chain above is variant 2's;
@@ -9616,37 +9616,37 @@ LcdKeyRow2_Vel0cityChange_StageZero_Return:
 ;           reads notes/wave7_panel_button_codes.py (layer 1) and
 ;           notes/wave7_panel_event_index.py (layer 2).
 ; ---------------------------------------------------------------------
-LcdKeyRow3_Vel0cityChange_StageZero:
+LcdKeyRow3_VelocityChange_StageZero:
 	bit	7, w	; F7F9DF  bit 0x07,W
-	jr	z, LcdKeyRow3_Vel0cityChange_StageZero_Return2	; F7F9E2  jr Z,0xf7f9fa
+	jr	z, LcdKeyRow3_VelocityChange_StageZero_Return2	; F7F9E2  jr Z,0xf7f9fa
 	cp	(0x0db8:16), 0x03	; F7F9E4  cp (0x0db8),0x03
-	jr	z, LcdKeyRow3_Vel0cityChange_StageZero_Return2	; F7F9E9  jr Z,0xf7f9fa
+	jr	z, LcdKeyRow3_VelocityChange_StageZero_Return2	; F7F9E9  jr Z,0xf7f9fa
 	calr	Blink_EnableThenStop_Copy	; F7F9EB  calr 0xf7f237
-	call	T_Vel0cityChange_StageZero_LcdKeyRow3	; F7F9EE  call 0xf428f0
-	calr	Vel0cityChange_DrawValues	; F7F9F2  calr 0xf7f9fb
-	calr	Vel0cityChange_RedrawFields	; F7F9F5  calr 0xf7f99c
-	jr	LcdKeyRow3_Vel0cityChange_StageZero_Return2	; F7F9F8  jr T,0xf7f9fa
-LcdKeyRow3_Vel0cityChange_StageZero_Return2:
+	call	T_VelocityChange_StageZero_LcdKeyRow3	; F7F9EE  call 0xf428f0
+	calr	VelocityChange_DrawValues	; F7F9F2  calr 0xf7f9fb
+	calr	VelocityChange_RedrawFields	; F7F9F5  calr 0xf7f99c
+	jr	LcdKeyRow3_VelocityChange_StageZero_Return2	; F7F9F8  jr T,0xf7f9fa
+LcdKeyRow3_VelocityChange_StageZero_Return2:
 	ret	; F7F9FA  ret
 
 ; Evidence: reached from calr from prom_b 0xF7F97B; calr from prom_b
 ;           0xF7F995, and from nothing else the scans see.
-; Vel0cityChange_DrawValues: VEL0CITY CHANGE: on layer 0, formats (0x0C24) as signed digits (Vel0cityChange_FormatSignedValue) and runs
+; VelocityChange_DrawValues: VEL0CITY CHANGE: on layer 0, formats (0x0C24) as signed digits (VelocityChange_FormatSignedValue) and runs
 ;   DL_F3AB3B up to its cursor-box record: the track (0-16/ALL, DisplayListB_Stage+0), two 3-digit values (+1, +3) and
 ;   a signed value (+5). Every VEL0CITY CHANGE field key calls it after changing a field. Basis: callers + body.
 ;   (wsa1/notes/naming-pilot-2026-10-06/proposals_prom_b.json)
-Vel0cityChange_DrawValues:
+VelocityChange_DrawValues:
 	ld	(LCD_CurrentLayer:16), 0	; F7F9FB  ld (0x2540),0x00
 	calr	ButtonTable_SequencerMedley_Nop	; F7FA00  calr 0xf7e2d8
-	calr	Vel0cityChange_FormatSignedValue	; F7FA03  calr 0xf7f935
+	calr	VelocityChange_FormatSignedValue	; F7FA03  calr 0xf7f935
 	ld	xiy, DL_F3AB3B	; F7FA06  ld XIY,0x00f3ab3b
 	ld	xix, DL_F3AB3B + 0x2E	; F7FA0B  ld XIX,0x00f3ab69
 	call	T_DisplayListB_Run	; F7FA10  call 0xf417f4
 	ret	; F7FA14  ret
 
 ; ---------------------------------------------------------------------
-; LcdKeyRow4_Vel0cityChange_StageZero -- row 4 of the five key pairs flanking
-;           the LCD, on the Vel0cityChange_StageZero screen
+; LcdKeyRow4_VelocityChange_StageZero -- row 4 of the five key pairs flanking
+;           the LCD, on the VelocityChange_StageZero screen
 ; Reached by: SW28 "LCD RIGHT 4" (matrix segment 3 bit 3, wire 0xC3) ->
 ;           PanelWireGroupMap_Variant2[0x63] = group 0x03 -> record 0xF8B6AE
 ;           {class 0xA9, code 0x0B} -> delivered code 0x0B; SW76 "LCD LEFT 4"
@@ -9656,7 +9656,7 @@ Vel0cityChange_DrawValues:
 ;           PanelButton_Route then does `and L,0x1f` at 0xF861AE and prom_a
 ;           PanelButton_CallTableEntry masks it AGAIN and indexes the table -- `and L,0x1f /
 ;           sla 0x02,L / ld XIX,(XIX+L) / call (XIX)` at 0xF8BDEA-0xF8BDF5 --
-;           so this is slot 0x0B of ButtonTable_Vel0cityChange_StageZero.
+;           so this is slot 0x0B of ButtonTable_VelocityChange_StageZero.
 ; Note:     bit 7 of the delivered code picks THE SIDE OF THE DISPLAY: set =
 ;           the CP2 column (SW73-77), clear = the CP1 column (SW25-29).
 ; Variant:  ⚠ VARIANT 2 = the SX-WSA1R, and the chain above is variant 2's;
@@ -9680,28 +9680,28 @@ Vel0cityChange_DrawValues:
 ;           reads notes/wave7_panel_button_codes.py (layer 1) and
 ;           notes/wave7_panel_event_index.py (layer 2).
 ; ---------------------------------------------------------------------
-LcdKeyRow4_Vel0cityChange_StageZero:
+LcdKeyRow4_VelocityChange_StageZero:
 	bit	7, w	; F7FA15  bit 0x07,W
-	jr	z, LcdKeyRow4_Vel0cityChange_StageZero_Return	; F7FA18  jr Z,0xf7fa30
+	jr	z, LcdKeyRow4_VelocityChange_StageZero_Return	; F7FA18  jr Z,0xf7fa30
 	cp	(0x0db8:16), 0x04	; F7FA1A  cp (0x0db8),0x04
-	jr	z, LcdKeyRow4_Vel0cityChange_StageZero_Return	; F7FA1F  jr Z,0xf7fa30
+	jr	z, LcdKeyRow4_VelocityChange_StageZero_Return	; F7FA1F  jr Z,0xf7fa30
 	calr	Blink_EnableThenStop_Copy	; F7FA21  calr 0xf7f237
-	call	T_Vel0cityChange_StageZero_LcdKeyRow4	; F7FA24  call 0xf428f4
-	calr	Vel0cityChange_DrawValues	; F7FA28  calr 0xf7f9fb
-	calr	Vel0cityChange_RedrawFields	; F7FA2B  calr 0xf7f99c
-	jr	LcdKeyRow4_Vel0cityChange_StageZero_Return	; F7FA2E  jr T,0xf7fa30
-LcdKeyRow4_Vel0cityChange_StageZero_Return:
+	call	T_VelocityChange_StageZero_LcdKeyRow4	; F7FA24  call 0xf428f4
+	calr	VelocityChange_DrawValues	; F7FA28  calr 0xf7f9fb
+	calr	VelocityChange_RedrawFields	; F7FA2B  calr 0xf7f99c
+	jr	LcdKeyRow4_VelocityChange_StageZero_Return	; F7FA2E  jr T,0xf7fa30
+LcdKeyRow4_VelocityChange_StageZero_Return:
 	ret	; F7FA30  ret
-ButtonTable_Vel0cityChange_StageZero_Nop12:
+ButtonTable_VelocityChange_StageZero_Nop12:
 	ret	; F7FA31  ret   <- button table 0xF7DAD8 entry 12 (VEL0CITY CHANGE)
-ButtonTable_Vel0cityChange_StageZero_Nop13:
+ButtonTable_VelocityChange_StageZero_Nop13:
 	ret	; F7FA32  ret   <- button table 0xF7DAD8 entry 13 (VEL0CITY CHANGE)
-ButtonTable_Vel0cityChange_StageZero_Nop14:
+ButtonTable_VelocityChange_StageZero_Nop14:
 	ret	; F7FA33  ret   <- button table 0xF7DAD8 entry 14 (VEL0CITY CHANGE)
 
 ; ---------------------------------------------------------------------
-; ExitKey_Vel0cityChange_StageZero -- the EXIT key on the
-;           Vel0cityChange_StageZero screen
+; ExitKey_VelocityChange_StageZero -- the EXIT key on the
+;           VelocityChange_StageZero screen
 ; Reached by: code 0x0F from SW32 EXIT (segment 3 bit 7, wire 0xC3, pair
 ;           position 1) -- then prom_a PanelButton_Route `and L,0x1f` at
 ;           0xF861AE, then slot 0x0F of the screen's button table.
@@ -9719,20 +9719,20 @@ ButtonTable_Vel0cityChange_StageZero_Nop14:
 ;           delivered at; 20 of 20 in-span EXIT handlers do the same.
 ;           Re-derived by notes/prom_b_panel_names_round11.py --selftest.
 ; ---------------------------------------------------------------------
-ExitKey_Vel0cityChange_StageZero:
+ExitKey_VelocityChange_StageZero:
 	bit	7, w	; F7FA34  bit 0x07,W
-	jr	z, ExitKey_Vel0cityChange_StageZero_Skip	; F7FA37  jr Z,0xf7fa3b
-	jr	ExitKey_Vel0cityChange_StageZero_Return2	; F7FA39  jr T,0xf7fa41
-ExitKey_Vel0cityChange_StageZero_Skip:
+	jr	z, ExitKey_VelocityChange_StageZero_Skip	; F7FA37  jr Z,0xf7fa3b
+	jr	ExitKey_VelocityChange_StageZero_Return2	; F7FA39  jr T,0xf7fa41
+ExitKey_VelocityChange_StageZero_Skip:
 	ldw	(UI_Request:16), 32794	; F7FA3B  ld (0x2070),0x801a
-ExitKey_Vel0cityChange_StageZero_Return2:
+ExitKey_VelocityChange_StageZero_Return2:
 	ret	; F7FA41  ret
-ButtonTable_Vel0cityChange_StageZero_Nop16:
+ButtonTable_VelocityChange_StageZero_Nop16:
 	ret	; F7FA42  ret   <- button table 0xF7DAD8 entry 16 (VEL0CITY CHANGE) and 4 more slot(s)
 
 ; ---------------------------------------------------------------------
-; Vel0cityChange_StageZero_Button21 -- panel button slot 0x15 of
-;           Vel0cityChange_StageZero, NOT NAMED
+; VelocityChange_StageZero_Button21 -- panel button slot 0x15 of
+;           VelocityChange_StageZero, NOT NAMED
 ; Unknown:  NO NAME. This routine is registered ONLY at slot 0x15, which is
 ;           the VARIANT-1 already-held rewrite of base code 0x04 (`add
 ;           (XIX-1),0x11` at prom_a 0xF8AE7E/0xF8AEF1). The SX-WSA1R is
@@ -9748,28 +9748,28 @@ ButtonTable_Vel0cityChange_StageZero_Nop16:
 ;           notes/prom_b_panel_names_round12.py --0x0d (slot 0x0D) and --plan
 ;           (the rest).
 ; ---------------------------------------------------------------------
-Vel0cityChange_StageZero_Button21:
+VelocityChange_StageZero_Button21:
 	bit	1, (UI_RequestBits:16)	; F7FA43  bit 1,(0x2075)
-	jr	z, Vel0cityChange_StageZero_Button21_Skip2	; F7FA47  jr Z,0xf7fa4d
+	jr	z, VelocityChange_StageZero_Button21_Skip2	; F7FA47  jr Z,0xf7fa4d
 	call	T_Blink_Stop	; F7FA49  call 0xf42e24
-Vel0cityChange_StageZero_Button21_Skip2:
+VelocityChange_StageZero_Button21_Skip2:
 	or	(UI_RequestBits:16), 0x08	; F7FA4D  or (0x2075),0x08
 	ld	(3608:16), 4	; F7FA52  ld (0x0e18),0x04
 	bit	7, w	; F7FA57  bit 0x07,W
-	jr	z, Vel0cityChange_StageZero_Button21_Skip3	; F7FA5A  jr Z,0xf7fa62
-	call	T_Vel0cityChange_StepFieldDown	; F7FA5C  call 0xf428fc
-	jr	Vel0cityChange_StageZero_Button21_Join	; F7FA60  jr T,0xf7fa66
-Vel0cityChange_StageZero_Button21_Skip3:
-	call	T_Vel0cityChange_StepFieldUp	; F7FA62  call 0xf428f8
-Vel0cityChange_StageZero_Button21_Join:
-	calr	Vel0cityChange_DrawValues	; F7FA66  calr 0xf7f9fb
+	jr	z, VelocityChange_StageZero_Button21_Skip3	; F7FA5A  jr Z,0xf7fa62
+	call	T_VelocityChange_StepFieldDown	; F7FA5C  call 0xf428fc
+	jr	VelocityChange_StageZero_Button21_Join	; F7FA60  jr T,0xf7fa66
+VelocityChange_StageZero_Button21_Skip3:
+	call	T_VelocityChange_StepFieldUp	; F7FA62  call 0xf428f8
+VelocityChange_StageZero_Button21_Join:
+	calr	VelocityChange_DrawValues	; F7FA66  calr 0xf7f9fb
 	ret	; F7FA69  ret
-ButtonTable_Vel0cityChange_StageZero_Nop22:
+ButtonTable_VelocityChange_StageZero_Nop22:
 	ret	; F7FA6A  ret   <- button table 0xF7DAD8 entry 22 (VEL0CITY CHANGE) and 4 more slot(s)
 
 ; ---------------------------------------------------------------------
-; NumberPadKey_Vel0cityChange_StageZero -- the NUMBER PAD on the
-;           Vel0cityChange_StageZero screen
+; NumberPadKey_VelocityChange_StageZero -- the NUMBER PAD on the
+;           VelocityChange_StageZero screen
 ; Reached by: code 0x1B from SW9..SW16 NUMBER PAD "0"..NUMBER PAD "7" (segment
 ;           1 bits 0-7, wire 0xC1, one 8-bit field, no pair position);
 ;           SW17..SW20 NUMBER PAD "8"..ENTER (segment 2 bits 0-3, wire 0xC2,
@@ -9788,33 +9788,33 @@ ButtonTable_Vel0cityChange_StageZero_Nop22:
 ;           handlers do it. Re-derived by notes/prom_b_panel_names_round11.py
 ;           --selftest.
 ; ---------------------------------------------------------------------
-NumberPadKey_Vel0cityChange_StageZero:
-	calr	Vel0cityChange_StageZero_NumberPadKey	; F7FA6B  calr 0xf7faa2
+NumberPadKey_VelocityChange_StageZero:
+	calr	VelocityChange_StageZero_NumberPadKey	; F7FA6B  calr 0xf7faa2
 	ret	; F7FA6E  ret
-ButtonTable_Vel0cityChange_StageZero_Nop28:
+ButtonTable_VelocityChange_StageZero_Nop28:
 	ret	; F7FA6F  ret   <- button table 0xF7DAD8 entry 28 (VEL0CITY CHANGE) and 3 more slot(s)
-ButtonTable_Vel0cityChange_StageNonZero_Nop0:
+ButtonTable_VelocityChange_StageNonZero_Nop0:
 	ret	; F7FA70  ret   <- button table 0xF7DB58 entry 0 (VEL0CITY CHANGE)
-ButtonTable_Vel0cityChange_StageNonZero_Nop1:
+ButtonTable_VelocityChange_StageNonZero_Nop1:
 	ret	; F7FA71  ret   <- button table 0xF7DB58 entry 1 (VEL0CITY CHANGE)
-ButtonTable_Vel0cityChange_StageNonZero_Nop2:
+ButtonTable_VelocityChange_StageNonZero_Nop2:
 	ret	; F7FA72  ret   <- button table 0xF7DB58 entry 2 (VEL0CITY CHANGE)
-ButtonTable_Vel0cityChange_StageNonZero_Nop3:
+ButtonTable_VelocityChange_StageNonZero_Nop3:
 	ret	; F7FA73  ret   <- button table 0xF7DB58 entry 3 (VEL0CITY CHANGE)
-ButtonTable_Vel0cityChange_StageNonZero_Nop4:
+ButtonTable_VelocityChange_StageNonZero_Nop4:
 	ret	; F7FA74  ret   <- button table 0xF7DB58 entry 4 (VEL0CITY CHANGE)
-ButtonTable_Vel0cityChange_StageNonZero_Nop5:
+ButtonTable_VelocityChange_StageNonZero_Nop5:
 	ret	; F7FA75  ret   <- button table 0xF7DB58 entry 5 (VEL0CITY CHANGE)
-ButtonTable_Vel0cityChange_StageNonZero_Nop6:
+ButtonTable_VelocityChange_StageNonZero_Nop6:
 	ret	; F7FA76  ret   <- button table 0xF7DB58 entry 6 (VEL0CITY CHANGE)
-ButtonTable_Vel0cityChange_StageNonZero_Nop7:
+ButtonTable_VelocityChange_StageNonZero_Nop7:
 	ret	; F7FA77  ret   <- button table 0xF7DB58 entry 7 (VEL0CITY CHANGE)
-ButtonTable_Vel0cityChange_StageNonZero_Nop8:
+ButtonTable_VelocityChange_StageNonZero_Nop8:
 	ret	; F7FA78  ret   <- button table 0xF7DB58 entry 8 (VEL0CITY CHANGE)
 
 ; ---------------------------------------------------------------------
-; LcdKeyRow2_Vel0cityChange_StageNonZero -- row 2 of the five key pairs
-;           flanking the LCD, on the Vel0cityChange_StageNonZero screen
+; LcdKeyRow2_VelocityChange_StageNonZero -- row 2 of the five key pairs
+;           flanking the LCD, on the VelocityChange_StageNonZero screen
 ; Reached by: SW26 "LCD RIGHT 2" (matrix segment 3 bit 1, wire 0xC3) ->
 ;           PanelWireGroupMap_Variant2[0x63] = group 0x03 -> record 0xF8B6A6
 ;           {class 0xA9, code 0x09} -> delivered code 0x09; SW74 "LCD LEFT 2"
@@ -9824,7 +9824,7 @@ ButtonTable_Vel0cityChange_StageNonZero_Nop8:
 ;           PanelButton_Route then does `and L,0x1f` at 0xF861AE and prom_a
 ;           PanelButton_CallTableEntry masks it AGAIN and indexes the table -- `and L,0x1f /
 ;           sla 0x02,L / ld XIX,(XIX+L) / call (XIX)` at 0xF8BDEA-0xF8BDF5 --
-;           so this is slot 0x09 of ButtonTable_Vel0cityChange_StageNonZero.
+;           so this is slot 0x09 of ButtonTable_VelocityChange_StageNonZero.
 ; Note:     bit 7 of the delivered code picks THE SIDE OF THE DISPLAY: set =
 ;           the CP2 column (SW73-77), clear = the CP1 column (SW25-29).
 ; Variant:  ⚠ VARIANT 2 = the SX-WSA1R, and the chain above is variant 2's;
@@ -9848,17 +9848,17 @@ ButtonTable_Vel0cityChange_StageNonZero_Nop8:
 ;           reads notes/wave7_panel_button_codes.py (layer 1) and
 ;           notes/wave7_panel_event_index.py (layer 2).
 ; ---------------------------------------------------------------------
-LcdKeyRow2_Vel0cityChange_StageNonZero:
+LcdKeyRow2_VelocityChange_StageNonZero:
 	bit	7, w	; F7FA79  bit 0x07,W
-	jr	nz, LcdKeyRow2_Vel0cityChange_StageNonZero_Return3	; F7FA7C  jr NZ,0xf7fa87
+	jr	nz, LcdKeyRow2_VelocityChange_StageNonZero_Return3	; F7FA7C  jr NZ,0xf7fa87
 	and	(UI_RequestBits:16), 0x6f	; F7FA7E  and (0x2075),0x6f
-	call	T_Vel0cityChange_LcdKeyRow2	; F7FA83  call 0xf42900
-LcdKeyRow2_Vel0cityChange_StageNonZero_Return3:
+	call	T_VelocityChange_LcdKeyRow2	; F7FA83  call 0xf42900
+LcdKeyRow2_VelocityChange_StageNonZero_Return3:
 	ret	; F7FA87  ret
 
 ; ---------------------------------------------------------------------
-; LcdKeyRow3_Vel0cityChange_StageNonZero -- row 3 of the five key pairs
-;           flanking the LCD, on the Vel0cityChange_StageNonZero screen
+; LcdKeyRow3_VelocityChange_StageNonZero -- row 3 of the five key pairs
+;           flanking the LCD, on the VelocityChange_StageNonZero screen
 ; Reached by: SW27 "LCD RIGHT 3" (matrix segment 3 bit 2, wire 0xC3) ->
 ;           PanelWireGroupMap_Variant2[0x63] = group 0x03 -> record 0xF8B6AA
 ;           {class 0xA9, code 0x0A} -> delivered code 0x0A; SW75 "LCD LEFT 3"
@@ -9868,7 +9868,7 @@ LcdKeyRow2_Vel0cityChange_StageNonZero_Return3:
 ;           PanelButton_Route then does `and L,0x1f` at 0xF861AE and prom_a
 ;           PanelButton_CallTableEntry masks it AGAIN and indexes the table -- `and L,0x1f /
 ;           sla 0x02,L / ld XIX,(XIX+L) / call (XIX)` at 0xF8BDEA-0xF8BDF5 --
-;           so this is slot 0x0A of ButtonTable_Vel0cityChange_StageNonZero.
+;           so this is slot 0x0A of ButtonTable_VelocityChange_StageNonZero.
 ; Note:     bit 7 of the delivered code picks THE SIDE OF THE DISPLAY: set =
 ;           the CP2 column (SW73-77), clear = the CP1 column (SW25-29).
 ; Variant:  ⚠ VARIANT 2 = the SX-WSA1R, and the chain above is variant 2's;
@@ -9892,24 +9892,24 @@ LcdKeyRow2_Vel0cityChange_StageNonZero_Return3:
 ;           reads notes/wave7_panel_button_codes.py (layer 1) and
 ;           notes/wave7_panel_event_index.py (layer 2).
 ; ---------------------------------------------------------------------
-LcdKeyRow3_Vel0cityChange_StageNonZero:
+LcdKeyRow3_VelocityChange_StageNonZero:
 	bit	7, w	; F7FA88  bit 0x07,W
-	jr	nz, LcdKeyRow3_Vel0cityChange_StageNonZero_Return4	; F7FA8B  jr NZ,0xf7fa91
-	call	T_Vel0cityChange_StepFieldUp	; F7FA8D  call 0xf428f8
-LcdKeyRow3_Vel0cityChange_StageNonZero_Return4:
+	jr	nz, LcdKeyRow3_VelocityChange_StageNonZero_Return4	; F7FA8B  jr NZ,0xf7fa91
+	call	T_VelocityChange_StepFieldUp	; F7FA8D  call 0xf428f8
+LcdKeyRow3_VelocityChange_StageNonZero_Return4:
 	ret	; F7FA91  ret
-ButtonTable_Vel0cityChange_StageNonZero_Nop11:
+ButtonTable_VelocityChange_StageNonZero_Nop11:
 	ret	; F7FA92  ret   <- button table 0xF7DB58 entry 11 (VEL0CITY CHANGE)
-ButtonTable_Vel0cityChange_StageNonZero_Nop12:
+ButtonTable_VelocityChange_StageNonZero_Nop12:
 	ret	; F7FA93  ret   <- button table 0xF7DB58 entry 12 (VEL0CITY CHANGE)
-ButtonTable_Vel0cityChange_StageNonZero_Nop13:
+ButtonTable_VelocityChange_StageNonZero_Nop13:
 	ret	; F7FA94  ret   <- button table 0xF7DB58 entry 13 (VEL0CITY CHANGE)
-ButtonTable_Vel0cityChange_StageNonZero_Nop14:
+ButtonTable_VelocityChange_StageNonZero_Nop14:
 	ret	; F7FA95  ret   <- button table 0xF7DB58 entry 14 (VEL0CITY CHANGE)
 
 ; ---------------------------------------------------------------------
-; ExitKey_Vel0cityChange_StageNonZero -- the EXIT key on the
-;           Vel0cityChange_StageNonZero screen
+; ExitKey_VelocityChange_StageNonZero -- the EXIT key on the
+;           VelocityChange_StageNonZero screen
 ; Reached by: code 0x0F from SW32 EXIT (segment 3 bit 7, wire 0xC3, pair
 ;           position 1) -- then prom_a PanelButton_Route `and L,0x1f` at
 ;           0xF861AE, then slot 0x0F of the screen's button table.
@@ -9927,38 +9927,38 @@ ButtonTable_Vel0cityChange_StageNonZero_Nop14:
 ;           delivered at; 20 of 20 in-span EXIT handlers do the same.
 ;           Re-derived by notes/prom_b_panel_names_round11.py --selftest.
 ; ---------------------------------------------------------------------
-ExitKey_Vel0cityChange_StageNonZero:
+ExitKey_VelocityChange_StageNonZero:
 	bit	7, w	; F7FA96  bit 0x07,W
-	jr	nz, ExitKey_Vel0cityChange_StageNonZero_Return5	; F7FA99  jr NZ,0xf7fa9f
-	call	T_Vel0cityChange_StepFieldUp	; F7FA9B  call 0xf428f8
-ExitKey_Vel0cityChange_StageNonZero_Return5:
+	jr	nz, ExitKey_VelocityChange_StageNonZero_Return5	; F7FA99  jr NZ,0xf7fa9f
+	call	T_VelocityChange_StepFieldUp	; F7FA9B  call 0xf428f8
+ExitKey_VelocityChange_StageNonZero_Return5:
 	ret	; F7FA9F  ret
-ButtonTable_Vel0cityChange_StageNonZero_Nop16:
+ButtonTable_VelocityChange_StageNonZero_Nop16:
 	ret	; F7FAA0  ret   <- button table 0xF7DB58 entry 16 (VEL0CITY CHANGE) and 15 more slot(s)
 	ret	; F7FAA1  ret
 
 ; Evidence: reached from calr from prom_b 0xF7FA6B, and from nothing else
 ;           the scans see.
-; Vel0cityChange_StageZero_NumberPadKey: the NumberPadKey action of Vel0cityChange_StageZero -- called only by NumberPadKey_Vel0cityChange_StageZero.
-Vel0cityChange_StageZero_NumberPadKey:
+; VelocityChange_StageZero_NumberPadKey: the NumberPadKey action of VelocityChange_StageZero -- called only by NumberPadKey_VelocityChange_StageZero.
+VelocityChange_StageZero_NumberPadKey:
 	ld	a, (8807:16)	; F7FAA2  ld A,(0x2267)
 	cp	a, 9	; F7FAA6  cp A,0x09
-	jr	ule, Vel0cityChange_StageZero_NumberPadKey_Skip	; F7FAA9  jr ULE,0xf7fab7
+	jr	ule, VelocityChange_StageZero_NumberPadKey_Skip	; F7FAA9  jr ULE,0xf7fab7
 	cp	a, 15	; F7FAAB  cp A,0x0f
-	jr	z, Vel0cityChange_StageZero_NumberPadKey_Skip2	; F7FAAE  jr Z,0xf7fabc
+	jr	z, VelocityChange_StageZero_NumberPadKey_Skip2	; F7FAAE  jr Z,0xf7fabc
 	cp	a, 128	; F7FAB0  cp A,0x80
-	jr	z, Vel0cityChange_StageZero_NumberPadKey_Skip3	; F7FAB3  jr Z,0xf7fac1
-	jr	Vel0cityChange_StageZero_NumberPadKey_Join	; F7FAB5  jr T,0xf7fac4
-Vel0cityChange_StageZero_NumberPadKey_Skip:
+	jr	z, VelocityChange_StageZero_NumberPadKey_Skip3	; F7FAB3  jr Z,0xf7fac1
+	jr	VelocityChange_StageZero_NumberPadKey_Join	; F7FAB5  jr T,0xf7fac4
+VelocityChange_StageZero_NumberPadKey_Skip:
 	calr	Blink_SetEnable_1_9	; F7FAB7  calr 0xf7fac8
-	jr	Vel0cityChange_StageZero_NumberPadKey_Join	; F7FABA  jr T,0xf7fac4
-Vel0cityChange_StageZero_NumberPadKey_Skip2:
-	calr	Vel0cityChange_KeypadCommit	; F7FABC  calr 0xf7fad2
-	jr	Vel0cityChange_StageZero_NumberPadKey_Join	; F7FABF  jr T,0xf7fac4
-Vel0cityChange_StageZero_NumberPadKey_Skip3:
-	calr	Vel0cityChange_KeypadSign	; F7FAC1  calr 0xf7fba4
-Vel0cityChange_StageZero_NumberPadKey_Join:
-	calr	Vel0cityChange_BlinkSelectedField	; F7FAC4  calr 0xf7fbb7
+	jr	VelocityChange_StageZero_NumberPadKey_Join	; F7FABA  jr T,0xf7fac4
+VelocityChange_StageZero_NumberPadKey_Skip2:
+	calr	VelocityChange_KeypadCommit	; F7FABC  calr 0xf7fad2
+	jr	VelocityChange_StageZero_NumberPadKey_Join	; F7FABF  jr T,0xf7fac4
+VelocityChange_StageZero_NumberPadKey_Skip3:
+	calr	VelocityChange_KeypadSign	; F7FAC1  calr 0xf7fba4
+VelocityChange_StageZero_NumberPadKey_Join:
+	calr	VelocityChange_BlinkSelectedField	; F7FAC4  calr 0xf7fbb7
 	ret	; F7FAC7  ret
 
 ; Evidence: reached from calr from prom_b 0xF7FAB7, and from nothing else
@@ -9971,110 +9971,110 @@ Blink_SetEnable_1_9:
 
 ; Evidence: reached from calr from prom_b 0xF7FABC, and from nothing else
 ;           the scans see.
-; Vel0cityChange_KeypadCommit: VEL0CITY CHANGE, keypad code 0x0F: field 4 converts signed (T_AsciiField_ToSignedValue,
+; VelocityChange_KeypadCommit: VEL0CITY CHANGE, keypad code 0x0F: field 4 converts signed (T_AsciiField_ToSignedValue,
 ;   -127..+127 by the sign cell (0x2820)) into (0x0C1E), saved 0x6034BC, (0x0C24) and Stage+5; fields 2/3 convert
 ;   1..999 into first (0x0C20, also (0x0C18), saved 0x6034B2) / last (0x0C22) measure, keeping first <= last, saved
-;   count 0x6034B4; then T_Blink_Stop and Vel0cityChange_DrawValues. Twin of AdvanceDelay_KeypadCommit. Basis: caller
+;   count 0x6034B4; then T_Blink_Stop and VelocityChange_DrawValues. Twin of AdvanceDelay_KeypadCommit. Basis: caller
 ;   + body + siblings. (notes/naming-pilot-2026-10-06/proposals_wave8_b8.json)
-Vel0cityChange_KeypadCommit:
+VelocityChange_KeypadCommit:
 	cp	(0x0db8:16), 0x04	; F7FAD2  cp (0x0db8),0x04
-	jr	nz, Vel0cityChange_KeypadCommit_Skip	; F7FAD7  jr NZ,0xf7fae9
+	jr	nz, VelocityChange_KeypadCommit_Skip	; F7FAD7  jr NZ,0xf7fae9
 	ld	(10278:16), 3	; F7FAD9  ld (0x2826),0x03
 	ld	(10276:16), 0	; F7FADE  ld (0x2824),0x00
 	call	T_AsciiField_ToSignedValue	; F7FAE3  call 0xf432f4
-	jr	Vel0cityChange_KeypadCommit_Join	; F7FAE7  jr T,0xf7faf2
-Vel0cityChange_KeypadCommit_Skip:
+	jr	VelocityChange_KeypadCommit_Join	; F7FAE7  jr T,0xf7faf2
+VelocityChange_KeypadCommit_Skip:
 	ld	(10278:16), 3	; F7FAE9  ld (0x2826),0x03
 	call	T_AsciiDigits3_ToValue	; F7FAEE  call 0xf432f0
-Vel0cityChange_KeypadCommit_Join:
+VelocityChange_KeypadCommit_Join:
 	cp	(0x0db8:16), 0x02	; F7FAF2  cp (0x0db8),0x02
-	jr	z, Vel0cityChange_KeypadCommit_Skip2	; F7FAF7  jr Z,0xf7fb0b
+	jr	z, VelocityChange_KeypadCommit_Skip2	; F7FAF7  jr Z,0xf7fb0b
 	cp	(0x0db8:16), 0x03	; F7FAF9  cp (0x0db8),0x03
-	jr	z, Vel0cityChange_KeypadCommit_Skip4	; F7FAFE  jr Z,0xf7fb38
+	jr	z, VelocityChange_KeypadCommit_Skip4	; F7FAFE  jr Z,0xf7fb38
 	cp	(0x0db8:16), 0x04	; F7FB00  cp (0x0db8),0x04
-	jrl	z, Vel0cityChange_KeypadCommit_Skip6	; F7FB05  jrl Z,0xf7fb76
-	jrl	Vel0cityChange_KeypadCommit_Return	; F7FB08  jrl T,0xf7fba3
-Vel0cityChange_KeypadCommit_Skip2:
+	jrl	z, VelocityChange_KeypadCommit_Skip6	; F7FB05  jrl Z,0xf7fb76
+	jrl	VelocityChange_KeypadCommit_Return	; F7FB08  jrl T,0xf7fba3
+VelocityChange_KeypadCommit_Skip2:
 	cp	wa, 1:i3	; F7FB0B  cp WA,1
-	jrl	lt, Vel0cityChange_KeypadCommit_Return	; F7FB0D  jrl LT,0xf7fba3
+	jrl	lt, VelocityChange_KeypadCommit_Return	; F7FB0D  jrl LT,0xf7fba3
 	cp	wa, 999	; F7FB10  cp WA,0x03e7
-	jrl	gt, Vel0cityChange_KeypadCommit_Return	; F7FB14  jrl GT,0xf7fba3
+	jrl	gt, VelocityChange_KeypadCommit_Return	; F7FB14  jrl GT,0xf7fba3
 	ld	(3096:16), wa	; F7FB17  ld (0x0c18),WA
 	ld	(6304946:24), wa	; F7FB1B  ld (0x6034b2),WA
 	ld	(DisplayListB_Stage+1:16), wa	; F7FB20  ld (0x12f7),WA
 	cp	wa, (0x0c22:16)	; F7FB24  cp WA,(0x0c22)
-	jr	ule, Vel0cityChange_KeypadCommit_Skip3	; F7FB28  jr ULE,0xf7fb32
+	jr	ule, VelocityChange_KeypadCommit_Skip3	; F7FB28  jr ULE,0xf7fb32
 	ld	(3106:16), wa	; F7FB2A  ld (0x0c22),WA
 	ld	(DisplayListB_Stage+3:16), wa	; F7FB2E  ld (0x12f9),WA
-Vel0cityChange_KeypadCommit_Skip3:
+VelocityChange_KeypadCommit_Skip3:
 	ld	(3104:16), wa	; F7FB32  ld (0x0c20),WA
-	jr	Vel0cityChange_KeypadCommit_Join2	; F7FB36  jr T,0xf7fb65
-Vel0cityChange_KeypadCommit_Skip4:
+	jr	VelocityChange_KeypadCommit_Join2	; F7FB36  jr T,0xf7fb65
+VelocityChange_KeypadCommit_Skip4:
 	cp	wa, 1:i3	; F7FB38  cp WA,1
-	jr	lt, Vel0cityChange_KeypadCommit_Return	; F7FB3A  jr LT,0xf7fba3
+	jr	lt, VelocityChange_KeypadCommit_Return	; F7FB3A  jr LT,0xf7fba3
 	cp	wa, 999	; F7FB3C  cp WA,0x03e7
-	jr	gt, Vel0cityChange_KeypadCommit_Return	; F7FB40  jr GT,0xf7fba3
+	jr	gt, VelocityChange_KeypadCommit_Return	; F7FB40  jr GT,0xf7fba3
 	ld	(3106:16), wa	; F7FB42  ld (0x0c22),WA
 	ld	(DisplayListB_Stage+3:16), wa	; F7FB46  ld (0x12f9),WA
 	cp	wa, (0x0c20:16)	; F7FB4A  cp WA,(0x0c20)
-	jr	nc, Vel0cityChange_KeypadCommit_Skip5	; F7FB4E  jr NC,0xf7fb61
+	jr	nc, VelocityChange_KeypadCommit_Skip5	; F7FB4E  jr NC,0xf7fb61
 	ld	(3104:16), wa	; F7FB50  ld (0x0c20),WA
 	ld	(3096:16), wa	; F7FB54  ld (0x0c18),WA
 	ld	(6304946:24), wa	; F7FB58  ld (0x6034b2),WA
 	ld	(DisplayListB_Stage+1:16), wa	; F7FB5D  ld (0x12f7),WA
-Vel0cityChange_KeypadCommit_Skip5:
+VelocityChange_KeypadCommit_Skip5:
 	ld	(3106:16), wa	; F7FB61  ld (0x0c22),WA
-Vel0cityChange_KeypadCommit_Join2:
+VelocityChange_KeypadCommit_Join2:
 	ld	wa, (3106:16)	; F7FB65  ld WA,(0x0c22)
 	sub	wa, (0x0c20:16)	; F7FB69  sub WA,(0x0c20)
 	inc	1, wa	; F7FB6D  inc 1,WA
 	ld	(6304948:24), wa	; F7FB6F  ld (0x6034b4),WA
-	jr	Vel0cityChange_KeypadCommit_Join4	; F7FB74  jr T,0xf7fb9c
-Vel0cityChange_KeypadCommit_Skip6:
+	jr	VelocityChange_KeypadCommit_Join4	; F7FB74  jr T,0xf7fb9c
+VelocityChange_KeypadCommit_Skip6:
 	cp	(0x2820:16), 0x2b	; F7FB76  cp (0x2820),0x2b
-	jr	z, Vel0cityChange_KeypadCommit_Skip7	; F7FB7B  jr Z,0xf7fb85
+	jr	z, VelocityChange_KeypadCommit_Skip7	; F7FB7B  jr Z,0xf7fb85
 	cp	wa, 65409	; F7FB7D  cp WA,0xff81
-	jr	lt, Vel0cityChange_KeypadCommit_Return	; F7FB81  jr LT,0xf7fba3
-	jr	Vel0cityChange_KeypadCommit_Join3	; F7FB83  jr T,0xf7fb8b
-Vel0cityChange_KeypadCommit_Skip7:
+	jr	lt, VelocityChange_KeypadCommit_Return	; F7FB81  jr LT,0xf7fba3
+	jr	VelocityChange_KeypadCommit_Join3	; F7FB83  jr T,0xf7fb8b
+VelocityChange_KeypadCommit_Skip7:
 	cp	wa, 127	; F7FB85  cp WA,0x007f
-	jr	gt, Vel0cityChange_KeypadCommit_Return	; F7FB89  jr GT,0xf7fba3
-Vel0cityChange_KeypadCommit_Join3:
+	jr	gt, VelocityChange_KeypadCommit_Return	; F7FB89  jr GT,0xf7fba3
+VelocityChange_KeypadCommit_Join3:
 	ld	(3102:16), a	; F7FB8B  ld (0x0c1e),A
 	ld	(6304956:24), a	; F7FB8F  ld (0x6034bc),A
 	ld	(3108:16), a	; F7FB94  ld (0x0c24),A
 	ld	(DisplayListB_Stage+5:16), a	; F7FB98  ld (0x12fb),A
-Vel0cityChange_KeypadCommit_Join4:
+VelocityChange_KeypadCommit_Join4:
 	call	T_Blink_Stop	; F7FB9C  call 0xf42e24
-	calr	Vel0cityChange_DrawValues	; F7FBA0  calr 0xf7f9fb
-Vel0cityChange_KeypadCommit_Return:
+	calr	VelocityChange_DrawValues	; F7FBA0  calr 0xf7f9fb
+VelocityChange_KeypadCommit_Return:
 	ret	; F7FBA3  ret
 
 ; Evidence: reached from calr from prom_b 0xF7FAC1, and from nothing else
 ;           the scans see.
-; Vel0cityChange_KeypadSign: VEL0CITY CHANGE, keypad code 0x80: while blinking ((0x2075) bit 1) and unless field 4
+; VelocityChange_KeypadSign: VEL0CITY CHANGE, keypad code 0x80: while blinking ((0x2075) bit 1) and unless field 4
 ;   (the signed value) is selected, puts '+' back in the sign cell (0x2820). Twin of prom_a AdvanceDelay_KeypadSign.
 ;   Basis: caller + body + siblings. (notes/naming-pilot-2026-10-06/proposals_wave8_b8.json)
-Vel0cityChange_KeypadSign:
+VelocityChange_KeypadSign:
 	bit	1, (UI_RequestBits:16)	; F7FBA4  bit 1,(0x2075)
-	jr	z, Vel0cityChange_KeypadSign_Return	; F7FBA8  jr Z,0xf7fbb6
+	jr	z, VelocityChange_KeypadSign_Return	; F7FBA8  jr Z,0xf7fbb6
 	cp	(0x0db8:16), 0x04	; F7FBAA  cp (0x0db8),0x04
-	jr	z, Vel0cityChange_KeypadSign_Return	; F7FBAF  jr Z,0xf7fbb6
+	jr	z, VelocityChange_KeypadSign_Return	; F7FBAF  jr Z,0xf7fbb6
 	ld	(10272:16), 43	; F7FBB1  ld (0x2820),0x2b
-Vel0cityChange_KeypadSign_Return:
+VelocityChange_KeypadSign_Return:
 	ret	; F7FBB6  ret
 
 ; Evidence: reached from calr from prom_b 0xF7FAC4, and from nothing else
 ;           the scans see.
-; Vel0cityChange_BlinkSelectedField: VEL0CITY CHANGE: unless (0x2075) bit 1 is clear or (0x2267) = 0x0F, starts the
-;   field blink on layer 0 with template BlinkArgPtrs_F7FBE4[(0x0DB8)]. Vel0cityChange_StageZero_NumberPadKey's common
+; VelocityChange_BlinkSelectedField: VEL0CITY CHANGE: unless (0x2075) bit 1 is clear or (0x2267) = 0x0F, starts the
+;   field blink on layer 0 with template BlinkArgPtrs_F7FBE4[(0x0DB8)]. VelocityChange_StageZero_NumberPadKey's common
 ;   tail. Twin of AdvanceDelay_BlinkSelectedField. Basis: caller + body + siblings. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave8_b8.json)
-Vel0cityChange_BlinkSelectedField:
+VelocityChange_BlinkSelectedField:
 	bit	1, (UI_RequestBits:16)	; F7FBB7  bit 1,(0x2075)
-	jr	z, Vel0cityChange_BlinkSelectedField_Return	; F7FBBB  jr Z,0xf7fbe3
+	jr	z, VelocityChange_BlinkSelectedField_Return	; F7FBBB  jr Z,0xf7fbe3
 	cp	(0x2267:16), 0x0f	; F7FBBD  cp (0x2267),0x0f
-	jr	z, Vel0cityChange_BlinkSelectedField_Return	; F7FBC2  jr Z,0xf7fbe3
+	jr	z, VelocityChange_BlinkSelectedField_Return	; F7FBC2  jr Z,0xf7fbe3
 	xor	xwa, xwa	; F7FBC4  xor XWA,XWA
 	ld	a, (3512:16)	; F7FBC6  ld A,(0x0db8)
 	sla	xwa, 2	; F7FBCA  sla 0x02,XWA
@@ -10084,7 +10084,7 @@ Vel0cityChange_BlinkSelectedField:
 	push	xiy	; F7FBDC  push XIY
 	call	T_Blink_Command	; F7FBDD  call 0xf42e20
 	inc	4, xsp	; F7FBE1  inc 4,XSP
-Vel0cityChange_BlinkSelectedField_Return:
+VelocityChange_BlinkSelectedField_Return:
 	ret	; F7FBE3  ret
 ; ---------------------------------------------------------------------
 ; BlinkArgPtrs_F7FBE4 -- pointers to blink templates, read through
@@ -10108,7 +10108,7 @@ BlinkArgPtrs_F7FBE4:
 
 
 ; ---------------------------------------------------------------------
-; Paint_Transp0se -- paints the panel screen whose own title text reads
+; Paint_Transpose -- paints the panel screen whose own title text reads
 ;                    "TRANSP0SE"
 ;
 ; Reached by: the +0 method stub of screen object 0xF43100, which prom_a's
@@ -10121,38 +10121,38 @@ BlinkArgPtrs_F7FBE4:
 ;           is round 7's, calibrated on seven screens prom_a had named
 ;           independently: notes/prom_b_screens_round8.py --calibrate.
 ; ---------------------------------------------------------------------
-Paint_Transp0se:
+Paint_Transpose:
 	call	T_CallbackQueue_ResetAndRestartTask2	; F7FBF8  call 0xf42e80
 	cp	(UI_ScreenStage:16), 0x00	; F7FBFC  cp (0x207e),0x00
-	jr	nz, Paint_Transp0se_Join	; F7FC01  jr NZ,0xf7fc36
-	call	T_Transp0se_InitFields	; F7FC03  call 0xf42a38
+	jr	nz, Paint_Transpose_Join	; F7FC01  jr NZ,0xf7fc36
+	call	T_Transpose_InitFields	; F7FC03  call 0xf42a38
 	or	(UI_RequestBits:16), 0x01	; F7FC07  or (0x2075),0x01
 	ldw	(PanelDial_DownButton:16), 1156	; F7FC0C  ld (0x209b),0x0484  <- arms prom_a PanelButton_Accept's substitution for panel button code 0x0D (0xF86615); see the 0xF7D2D8 banner
 	ldw	(9830:16), 65535	; F7FC12  ld (0x2666),0xffff
 	ldw	(9834:16), 65535	; F7FC18  ld (0x266a),0xffff
 	ld	a, (3574:16)	; F7FC1E  ld A,(0x0df6)
 	cp	a, 2:i3	; F7FC22  cp A,2
-	jr	z, Paint_Transp0se_Skip	; F7FC24  jr Z,0xf7fc33
+	jr	z, Paint_Transpose_Skip	; F7FC24  jr Z,0xf7fc33
 	cp	a, 3:i3	; F7FC26  cp A,3
-	jr	z, Paint_Transp0se_Skip	; F7FC28  jr Z,0xf7fc33
+	jr	z, Paint_Transpose_Skip	; F7FC28  jr Z,0xf7fc33
 	cp	a, 4:i3	; F7FC2A  cp A,4
-	jr	z, Paint_Transp0se_Skip	; F7FC2C  jr Z,0xf7fc33
+	jr	z, Paint_Transpose_Skip	; F7FC2C  jr Z,0xf7fc33
 	calr	Blink_DisableThenStop	; F7FC2E  calr 0xf7f245
-	jr	Paint_Transp0se_Join	; F7FC31  jr T,0xf7fc36
-Paint_Transp0se_Skip:
+	jr	Paint_Transpose_Join	; F7FC31  jr T,0xf7fc36
+Paint_Transpose_Skip:
 	calr	Blink_EnableThenStop_Copy	; F7FC33  calr 0xf7f237
-Paint_Transp0se_Join:
+Paint_Transpose_Join:
 	calr	LCD_ScreenRedraw_Begin	; F7FC36  calr 0xf7e2d9
 	ld	(LCD_CurrentLayer:16), 0	; F7FC39  ld (0x2540),0x00
 	cp	(UI_ScreenStage:16), 0x00	; F7FC3E  cp (0x207e),0x00
-	jr	nz, Paint_Transp0se_Skip2	; F7FC43  jr NZ,0xf7fc55
-	ld	xiy, DL_Transp0seTrackFirstMeasure	; F7FC45  ld XIY,0x00f3b102
+	jr	nz, Paint_Transpose_Skip2	; F7FC43  jr NZ,0xf7fc55
+	ld	xiy, DL_TransposeTrackFirstMeasure	; F7FC45  ld XIY,0x00f3b102
 	ld	xix, DL_F3B1E3	; F7FC4A  ld XIX,0x00f3b1e3
 	call	T_DisplayList_Run	; F7FC4F  call 0xf417f0
-	jr	Paint_Transp0se_Join2	; F7FC53  jr T,0xf7fc7f
-Paint_Transp0se_Skip2:
-	ld	xiy, DL_Transp0seTrackFirstMeasure	; F7FC55  ld XIY,0x00f3b102
-	ld	xix, DL_Transp0seTrackFirstMeasure + 0xA4	; F7FC5A  ld XIX,0x00f3b1a6
+	jr	Paint_Transpose_Join2	; F7FC53  jr T,0xf7fc7f
+Paint_Transpose_Skip2:
+	ld	xiy, DL_TransposeTrackFirstMeasure	; F7FC55  ld XIY,0x00f3b102
+	ld	xix, DL_TransposeTrackFirstMeasure + 0xA4	; F7FC5A  ld XIX,0x00f3b1a6
 	call	T_DisplayList_Run	; F7FC5F  call 0xf417f0
 	ld	xiy, DL_F3AB9C	; F7FC63  ld XIY,0x00f3ab9c
 	ld	xix, DL_QuantizeTrackStrengthFirstMeasure	; F7FC68  ld XIX,0x00f3abdb
@@ -10160,7 +10160,7 @@ Paint_Transp0se_Skip2:
 	ld	xiy, DL_AreYouSure	; F7FC71  ld XIY,0x00f3a461
 	ld	xix, DL_TrackMergeOkTrackTrackTrack	; F7FC76  ld XIX,0x00f3a47f
 	call	T_DisplayList_Run	; F7FC7B  call 0xf417f0
-Paint_Transp0se_Join2:
+Paint_Transpose_Join2:
 	ld	(LCD_CurrentLayer:16), 0	; F7FC7F  ld (0x2540),0x00
 	calr	ButtonTable_SequencerMedley_Nop	; F7FC84  calr 0xf7e2d8
 	ld	xiy, DL_F3B1E3	; F7FC87  ld XIY,0x00f3b1e3
@@ -10170,7 +10170,7 @@ Paint_Transp0se_Join2:
 	ret	; F7FC98  ret
 
 ; ---------------------------------------------------------------------
-; ScreenLeaveBody_Transp0se -- the whole body of the Transp0se screen's
+; ScreenLeaveBody_Transpose -- the whole body of the Transpose screen's
 ;                              Leave method
 ;
 ; Reached by: the +4 method stub of screen object 0xF43100, which prom_a's
@@ -10182,21 +10182,21 @@ Paint_Transp0se_Join2:
 ;           0xF7FC99` then `ret` and nothing else calls this address. The
 ;           screen's own name is round 7's, from its title text.
 ; ---------------------------------------------------------------------
-ScreenLeaveBody_Transp0se:
-	call	T_Transp0se_OnLeave	; F7FC99  call 0xf42a3c
+ScreenLeaveBody_Transpose:
+	call	T_Transpose_OnLeave	; F7FC99  call 0xf42a3c
 	ret	; F7FC9D  ret
-ButtonTable_Transp0se_StageZero_Nop0:
+ButtonTable_Transpose_StageZero_Nop0:
 	ret	; F7FC9E  ret   <- button table 0xF7DBD8 entry 0 (TRANSP0SE)
-ButtonTable_Transp0se_StageZero_Nop1:
+ButtonTable_Transpose_StageZero_Nop1:
 	ret	; F7FC9F  ret   <- button table 0xF7DBD8 entry 1 (TRANSP0SE)
-ButtonTable_Transp0se_StageZero_Nop2:
+ButtonTable_Transpose_StageZero_Nop2:
 	ret	; F7FCA0  ret   <- button table 0xF7DBD8 entry 2 (TRANSP0SE)
-ButtonTable_Transp0se_StageZero_Nop3:
+ButtonTable_Transpose_StageZero_Nop3:
 	ret	; F7FCA1  ret   <- button table 0xF7DBD8 entry 3 (TRANSP0SE)
 
 ; ---------------------------------------------------------------------
-; SoftKeyCol5_Transp0se_StageZero -- the 5th of the eight SOFT KEYS in the row
-;           under the LCD, on the Transp0se_StageZero screen
+; SoftKeyCol5_Transpose_StageZero -- the 5th of the eight SOFT KEYS in the row
+;           under the LCD, on the Transpose_StageZero screen
 ; Reached by: SW41 "SOFT KEY col 5 lower" (matrix segment 5 bit 0, wire 0xC5)
 ;           -> PanelWireGroupMap_Variant2[0x65] = group 0x05 -> record
 ;           0xF8B6E4 {class 0xA9, code 0x04} -> delivered code 0x84; SW42
@@ -10206,7 +10206,7 @@ ButtonTable_Transp0se_StageZero_Nop3:
 ;           PanelButton_Route then does `and L,0x1f` at 0xF861AE and prom_a
 ;           PanelButton_CallTableEntry masks it AGAIN and indexes the table -- `and L,0x1f /
 ;           sla 0x02,L / ld XIX,(XIX+L) / call (XIX)` at 0xF8BDEA-0xF8BDF5 --
-;           so this is slot 0x04 of ButtonTable_Transp0se_StageZero.
+;           so this is slot 0x04 of ButtonTable_Transpose_StageZero.
 ; Note:     bit 7 of the delivered code picks WHICH SWITCH OF THE COLUMN: set
 ;           = the even matrix bit, clear = the odd one. ⚠ That the even bit is
 ;           the LOWER key of the pair is round 9's POSITION-grade reading of
@@ -10234,32 +10234,32 @@ ButtonTable_Transp0se_StageZero_Nop3:
 ;           reads notes/wave7_panel_button_codes.py (layer 1) and
 ;           notes/wave7_panel_event_index.py (layer 2).
 ; ---------------------------------------------------------------------
-SoftKeyCol5_Transp0se_StageZero:
+SoftKeyCol5_Transpose_StageZero:
 	bit	1, (UI_RequestBits:16)	; F7FCA2  bit 1,(0x2075)
-	jr	z, ScreenLeaveBody_Transp0se_Skip	; F7FCA6  jr Z,0xf7fcac
+	jr	z, ScreenLeaveBody_Transpose_Skip	; F7FCA6  jr Z,0xf7fcac
 	call	T_Blink_Stop	; F7FCA8  call 0xf42e24
-ScreenLeaveBody_Transp0se_Skip:
+ScreenLeaveBody_Transpose_Skip:
 	or	(UI_RequestBits:16), 0x08	; F7FCAC  or (0x2075),0x08
 	ld	(3608:16), 1	; F7FCB1  ld (0x0e18),0x01
 	bit	7, w	; F7FCB6  bit 0x07,W
-	jr	z, ScreenLeaveBody_Transp0se_Skip2	; F7FCB9  jr Z,0xf7fcc1
-	call	T_Transp0se_StepSelectedFieldDown	; F7FCBB  call 0xf42a54
-	jr	ScreenLeaveBody_Transp0se_Join	; F7FCBF  jr T,0xf7fcc5
-ScreenLeaveBody_Transp0se_Skip2:
-	call	T_Transp0se_StepFieldUp	; F7FCC1  call 0xf42a50
-ScreenLeaveBody_Transp0se_Join:
-	calr	Transp0se_DrawValues	; F7FCC5  calr 0xf7fd45
+	jr	z, ScreenLeaveBody_Transpose_Skip2	; F7FCB9  jr Z,0xf7fcc1
+	call	T_Transpose_StepSelectedFieldDown	; F7FCBB  call 0xf42a54
+	jr	ScreenLeaveBody_Transpose_Join	; F7FCBF  jr T,0xf7fcc5
+ScreenLeaveBody_Transpose_Skip2:
+	call	T_Transpose_StepFieldUp	; F7FCC1  call 0xf42a50
+ScreenLeaveBody_Transpose_Join:
+	calr	Transpose_DrawValues	; F7FCC5  calr 0xf7fd45
 	ret	; F7FCC8  ret
-ButtonTable_Transp0se_StageZero_Nop5:
+ButtonTable_Transpose_StageZero_Nop5:
 	ret	; F7FCC9  ret   <- button table 0xF7DBD8 entry 5 (TRANSP0SE)
-ButtonTable_Transp0se_StageZero_Nop6:
+ButtonTable_Transpose_StageZero_Nop6:
 	ret	; F7FCCA  ret   <- button table 0xF7DBD8 entry 6 (TRANSP0SE)
-ButtonTable_Transp0se_StageZero_Nop7:
+ButtonTable_Transpose_StageZero_Nop7:
 	ret	; F7FCCB  ret   <- button table 0xF7DBD8 entry 7 (TRANSP0SE)
 
 ; ---------------------------------------------------------------------
-; LcdKeyRow1_Transp0se_StageZero -- row 1 of the five key pairs flanking the
-;           LCD, on the Transp0se_StageZero screen
+; LcdKeyRow1_Transpose_StageZero -- row 1 of the five key pairs flanking the
+;           LCD, on the Transpose_StageZero screen
 ; Reached by: SW25 "LCD RIGHT 1 (top)" (matrix segment 3 bit 0, wire 0xC3) ->
 ;           PanelWireGroupMap_Variant2[0x63] = group 0x03 -> record 0xF8B6A2
 ;           {class 0xA9, code 0x08} -> delivered code 0x08; SW73 "LCD LEFT 1
@@ -10269,7 +10269,7 @@ ButtonTable_Transp0se_StageZero_Nop7:
 ;           PanelButton_Route then does `and L,0x1f` at 0xF861AE and prom_a
 ;           PanelButton_CallTableEntry masks it AGAIN and indexes the table -- `and L,0x1f /
 ;           sla 0x02,L / ld XIX,(XIX+L) / call (XIX)` at 0xF8BDEA-0xF8BDF5 --
-;           so this is slot 0x08 of ButtonTable_Transp0se_StageZero.
+;           so this is slot 0x08 of ButtonTable_Transpose_StageZero.
 ; Note:     bit 7 of the delivered code picks THE SIDE OF THE DISPLAY: set =
 ;           the CP2 column (SW73-77), clear = the CP1 column (SW25-29).
 ; Variant:  ⚠ VARIANT 2 = the SX-WSA1R, and the chain above is variant 2's;
@@ -10293,23 +10293,23 @@ ButtonTable_Transp0se_StageZero_Nop7:
 ;           reads notes/wave7_panel_button_codes.py (layer 1) and
 ;           notes/wave7_panel_event_index.py (layer 2).
 ; ---------------------------------------------------------------------
-LcdKeyRow1_Transp0se_StageZero:
+LcdKeyRow1_Transpose_StageZero:
 	bit	7, w	; F7FCCC  bit 0x07,W
-	jr	z, ScreenLeaveBody_Transp0se_Return	; F7FCCF  jr Z,0xf7fce5
+	jr	z, ScreenLeaveBody_Transpose_Return	; F7FCCF  jr Z,0xf7fce5
 	cp	(0x0df6:16), 0x01	; F7FCD1  cp (0x0df6),0x01
-	jr	z, ScreenLeaveBody_Transp0se_Return	; F7FCD6  jr Z,0xf7fce5
+	jr	z, ScreenLeaveBody_Transpose_Return	; F7FCD6  jr Z,0xf7fce5
 	calr	Blink_DisableThenStop	; F7FCD8  calr 0xf7f245
-	call	T_Transp0se_SelectField1	; F7FCDB  call 0xf42a40
-	calr	Transp0se_DrawValues	; F7FCDF  calr 0xf7fd45
-	calr	Transp0se_RedrawFields	; F7FCE2  calr 0xf7fce6
-ScreenLeaveBody_Transp0se_Return:
+	call	T_Transpose_SelectField1	; F7FCDB  call 0xf42a40
+	calr	Transpose_DrawValues	; F7FCDF  calr 0xf7fd45
+	calr	Transpose_RedrawFields	; F7FCE2  calr 0xf7fce6
+ScreenLeaveBody_Transpose_Return:
 	ret	; F7FCE5  ret
 
 ; Evidence: reached from calr from prom_b 0xF7FCE2; calr from prom_b
 ;           0xF7FD1C, and from nothing else the scans see.
-; Transp0se_RedrawFields: clears the value area (DL_F39551) and redraws the page's fields with
+; Transpose_RedrawFields: clears the value area (DL_F39551) and redraws the page's fields with
 ;   T_DLB_Handler_Array8 -- ld xiy, DL_F3B1E3 + 0x2E (notes/prom_ab_stage_zero_names.py).
-Transp0se_RedrawFields:
+Transpose_RedrawFields:
 	ld	(LCD_CurrentLayer:16), 1	; F7FCE6  ld (0x2540),0x01
 	calr	ButtonTable_SequencerMedley_Nop	; F7FCEB  calr 0xf7e2d8
 	ld	xiy, DL_F39551	; F7FCEE  ld XIY,0x00f39551
@@ -10320,8 +10320,8 @@ Transp0se_RedrawFields:
 	ret	; F7FD05  ret
 
 ; ---------------------------------------------------------------------
-; LcdKeyRow2_Transp0se_StageZero -- row 2 of the five key pairs flanking the
-;           LCD, on the Transp0se_StageZero screen
+; LcdKeyRow2_Transpose_StageZero -- row 2 of the five key pairs flanking the
+;           LCD, on the Transpose_StageZero screen
 ; Reached by: SW26 "LCD RIGHT 2" (matrix segment 3 bit 1, wire 0xC3) ->
 ;           PanelWireGroupMap_Variant2[0x63] = group 0x03 -> record 0xF8B6A6
 ;           {class 0xA9, code 0x09} -> delivered code 0x09; SW74 "LCD LEFT 2"
@@ -10331,7 +10331,7 @@ Transp0se_RedrawFields:
 ;           PanelButton_Route then does `and L,0x1f` at 0xF861AE and prom_a
 ;           PanelButton_CallTableEntry masks it AGAIN and indexes the table -- `and L,0x1f /
 ;           sla 0x02,L / ld XIX,(XIX+L) / call (XIX)` at 0xF8BDEA-0xF8BDF5 --
-;           so this is slot 0x09 of ButtonTable_Transp0se_StageZero.
+;           so this is slot 0x09 of ButtonTable_Transpose_StageZero.
 ; Note:     bit 7 of the delivered code picks THE SIDE OF THE DISPLAY: set =
 ;           the CP2 column (SW73-77), clear = the CP1 column (SW25-29).
 ; Variant:  ⚠ VARIANT 2 = the SX-WSA1R, and the chain above is variant 2's;
@@ -10355,25 +10355,25 @@ Transp0se_RedrawFields:
 ;           reads notes/wave7_panel_button_codes.py (layer 1) and
 ;           notes/wave7_panel_event_index.py (layer 2).
 ; ---------------------------------------------------------------------
-LcdKeyRow2_Transp0se_StageZero:
+LcdKeyRow2_Transpose_StageZero:
 	bit	7, w	; F7FD06  bit 0x07,W
-	jr	z, LcdKeyRow2_Transp0se_StageZero_Skip	; F7FD09  jr Z,0xf7fd21
+	jr	z, LcdKeyRow2_Transpose_StageZero_Skip	; F7FD09  jr Z,0xf7fd21
 	cp	(0x0df6:16), 0x02	; F7FD0B  cp (0x0df6),0x02
-	jr	z, LcdKeyRow2_Transp0se_StageZero_Return	; F7FD10  jr Z,0xf7fd28
+	jr	z, LcdKeyRow2_Transpose_StageZero_Return	; F7FD10  jr Z,0xf7fd28
 	calr	Blink_EnableThenStop_Copy	; F7FD12  calr 0xf7f237
-	call	T_Transp0se_SelectField2	; F7FD15  call 0xf42a44
-	calr	Transp0se_DrawValues	; F7FD19  calr 0xf7fd45
-	calr	Transp0se_RedrawFields	; F7FD1C  calr 0xf7fce6
-	jr	LcdKeyRow2_Transp0se_StageZero_Return	; F7FD1F  jr T,0xf7fd28
-LcdKeyRow2_Transp0se_StageZero_Skip:
+	call	T_Transpose_SelectField2	; F7FD15  call 0xf42a44
+	calr	Transpose_DrawValues	; F7FD19  calr 0xf7fd45
+	calr	Transpose_RedrawFields	; F7FD1C  calr 0xf7fce6
+	jr	LcdKeyRow2_Transpose_StageZero_Return	; F7FD1F  jr T,0xf7fd28
+LcdKeyRow2_Transpose_StageZero_Skip:
 	calr	Blink_DisableThenStop	; F7FD21  calr 0xf7f245
-	call	T_Transp0se_LcdKeyRow2	; F7FD24  call 0xf42a58
-LcdKeyRow2_Transp0se_StageZero_Return:
+	call	T_Transpose_LcdKeyRow2	; F7FD24  call 0xf42a58
+LcdKeyRow2_Transpose_StageZero_Return:
 	ret	; F7FD28  ret
 
 ; ---------------------------------------------------------------------
-; LcdKeyRow3_Transp0se_StageZero -- row 3 of the five key pairs flanking the
-;           LCD, on the Transp0se_StageZero screen
+; LcdKeyRow3_Transpose_StageZero -- row 3 of the five key pairs flanking the
+;           LCD, on the Transpose_StageZero screen
 ; Reached by: SW27 "LCD RIGHT 3" (matrix segment 3 bit 2, wire 0xC3) ->
 ;           PanelWireGroupMap_Variant2[0x63] = group 0x03 -> record 0xF8B6AA
 ;           {class 0xA9, code 0x0A} -> delivered code 0x0A; SW75 "LCD LEFT 3"
@@ -10383,7 +10383,7 @@ LcdKeyRow2_Transp0se_StageZero_Return:
 ;           PanelButton_Route then does `and L,0x1f` at 0xF861AE and prom_a
 ;           PanelButton_CallTableEntry masks it AGAIN and indexes the table -- `and L,0x1f /
 ;           sla 0x02,L / ld XIX,(XIX+L) / call (XIX)` at 0xF8BDEA-0xF8BDF5 --
-;           so this is slot 0x0A of ButtonTable_Transp0se_StageZero.
+;           so this is slot 0x0A of ButtonTable_Transpose_StageZero.
 ; Note:     bit 7 of the delivered code picks THE SIDE OF THE DISPLAY: set =
 ;           the CP2 column (SW73-77), clear = the CP1 column (SW25-29).
 ; Variant:  ⚠ VARIANT 2 = the SX-WSA1R, and the chain above is variant 2's;
@@ -10407,26 +10407,26 @@ LcdKeyRow2_Transp0se_StageZero_Return:
 ;           reads notes/wave7_panel_button_codes.py (layer 1) and
 ;           notes/wave7_panel_event_index.py (layer 2).
 ; ---------------------------------------------------------------------
-LcdKeyRow3_Transp0se_StageZero:
+LcdKeyRow3_Transpose_StageZero:
 	bit	7, w	; F7FD29  bit 0x07,W
-	jr	z, LcdKeyRow3_Transp0se_StageZero_Return2	; F7FD2C  jr Z,0xf7fd44
+	jr	z, LcdKeyRow3_Transpose_StageZero_Return2	; F7FD2C  jr Z,0xf7fd44
 	cp	(0x0df6:16), 0x03	; F7FD2E  cp (0x0df6),0x03
-	jr	z, LcdKeyRow3_Transp0se_StageZero_Return2	; F7FD33  jr Z,0xf7fd44
+	jr	z, LcdKeyRow3_Transpose_StageZero_Return2	; F7FD33  jr Z,0xf7fd44
 	calr	Blink_EnableThenStop_Copy	; F7FD35  calr 0xf7f237
-	call	T_Transp0se_SelectField3	; F7FD38  call 0xf42a48
-	calr	Transp0se_DrawValues	; F7FD3C  calr 0xf7fd45
-	calr	Transp0se_RedrawFields	; F7FD3F  calr 0xf7fce6
-	jr	LcdKeyRow3_Transp0se_StageZero_Return2	; F7FD42  jr T,0xf7fd44
-LcdKeyRow3_Transp0se_StageZero_Return2:
+	call	T_Transpose_SelectField3	; F7FD38  call 0xf42a48
+	calr	Transpose_DrawValues	; F7FD3C  calr 0xf7fd45
+	calr	Transpose_RedrawFields	; F7FD3F  calr 0xf7fce6
+	jr	LcdKeyRow3_Transpose_StageZero_Return2	; F7FD42  jr T,0xf7fd44
+LcdKeyRow3_Transpose_StageZero_Return2:
 	ret	; F7FD44  ret
 
 ; Evidence: reached from calr from prom_b 0xF7FCC5; calr from prom_b
 ;           0xF7FCDF, and from nothing else the scans see.
-; Transp0se_DrawValues: TRANSP0SE: on layer 0, runs DL_F3B1E3 up to its cursor-box record: the track (0-16/ALL,
+; Transpose_DrawValues: TRANSP0SE: on layer 0, runs DL_F3B1E3 up to its cursor-box record: the track (0-16/ALL,
 ;   DisplayListB_Stage+0), two 3-digit values (+1, +3) and a signed value (+5). Every TRANSP0SE field key calls it
-;   after changing a field, then Transp0se_RedrawFields. Basis: callers + body. (wsa1/notes/naming-
+;   after changing a field, then Transpose_RedrawFields. Basis: callers + body. (wsa1/notes/naming-
 ;   pilot-2026-10-06/proposals_prom_b.json)
-Transp0se_DrawValues:
+Transpose_DrawValues:
 	ld	(LCD_CurrentLayer:16), 0	; F7FD45  ld (0x2540),0x00
 	calr	ButtonTable_SequencerMedley_Nop	; F7FD4A  calr 0xf7e2d8
 	ld	xiy, DL_F3B1E3	; F7FD4D  ld XIY,0x00f3b1e3
@@ -10435,8 +10435,8 @@ Transp0se_DrawValues:
 	ret	; F7FD5B  ret
 
 ; ---------------------------------------------------------------------
-; LcdKeyRow4_Transp0se_StageZero -- row 4 of the five key pairs flanking the
-;           LCD, on the Transp0se_StageZero screen
+; LcdKeyRow4_Transpose_StageZero -- row 4 of the five key pairs flanking the
+;           LCD, on the Transpose_StageZero screen
 ; Reached by: SW28 "LCD RIGHT 4" (matrix segment 3 bit 3, wire 0xC3) ->
 ;           PanelWireGroupMap_Variant2[0x63] = group 0x03 -> record 0xF8B6AE
 ;           {class 0xA9, code 0x0B} -> delivered code 0x0B; SW76 "LCD LEFT 4"
@@ -10446,7 +10446,7 @@ Transp0se_DrawValues:
 ;           PanelButton_Route then does `and L,0x1f` at 0xF861AE and prom_a
 ;           PanelButton_CallTableEntry masks it AGAIN and indexes the table -- `and L,0x1f /
 ;           sla 0x02,L / ld XIX,(XIX+L) / call (XIX)` at 0xF8BDEA-0xF8BDF5 --
-;           so this is slot 0x0B of ButtonTable_Transp0se_StageZero.
+;           so this is slot 0x0B of ButtonTable_Transpose_StageZero.
 ; Note:     bit 7 of the delivered code picks THE SIDE OF THE DISPLAY: set =
 ;           the CP2 column (SW73-77), clear = the CP1 column (SW25-29).
 ; Variant:  ⚠ VARIANT 2 = the SX-WSA1R, and the chain above is variant 2's;
@@ -10470,27 +10470,27 @@ Transp0se_DrawValues:
 ;           reads notes/wave7_panel_button_codes.py (layer 1) and
 ;           notes/wave7_panel_event_index.py (layer 2).
 ; ---------------------------------------------------------------------
-LcdKeyRow4_Transp0se_StageZero:
+LcdKeyRow4_Transpose_StageZero:
 	bit	7, w	; F7FD5C  bit 0x07,W
-	jr	z, LcdKeyRow4_Transp0se_StageZero_Return	; F7FD5F  jr Z,0xf7fd77
+	jr	z, LcdKeyRow4_Transpose_StageZero_Return	; F7FD5F  jr Z,0xf7fd77
 	cp	(0x0df6:16), 0x04	; F7FD61  cp (0x0df6),0x04
-	jr	z, LcdKeyRow4_Transp0se_StageZero_Return	; F7FD66  jr Z,0xf7fd77
+	jr	z, LcdKeyRow4_Transpose_StageZero_Return	; F7FD66  jr Z,0xf7fd77
 	calr	Blink_EnableThenStop_Copy	; F7FD68  calr 0xf7f237
-	call	T_Transp0se_SelectField4	; F7FD6B  call 0xf42a4c
-	calr	Transp0se_DrawValues	; F7FD6F  calr 0xf7fd45
-	calr	Transp0se_RedrawFields	; F7FD72  calr 0xf7fce6
-	jr	LcdKeyRow4_Transp0se_StageZero_Return	; F7FD75  jr T,0xf7fd77
-LcdKeyRow4_Transp0se_StageZero_Return:
+	call	T_Transpose_SelectField4	; F7FD6B  call 0xf42a4c
+	calr	Transpose_DrawValues	; F7FD6F  calr 0xf7fd45
+	calr	Transpose_RedrawFields	; F7FD72  calr 0xf7fce6
+	jr	LcdKeyRow4_Transpose_StageZero_Return	; F7FD75  jr T,0xf7fd77
+LcdKeyRow4_Transpose_StageZero_Return:
 	ret	; F7FD77  ret
-ButtonTable_Transp0se_StageZero_Nop12:
+ButtonTable_Transpose_StageZero_Nop12:
 	ret	; F7FD78  ret   <- button table 0xF7DBD8 entry 12 (TRANSP0SE)
-ButtonTable_Transp0se_StageZero_Nop13:
+ButtonTable_Transpose_StageZero_Nop13:
 	ret	; F7FD79  ret   <- button table 0xF7DBD8 entry 13 (TRANSP0SE)
-ButtonTable_Transp0se_StageZero_Nop14:
+ButtonTable_Transpose_StageZero_Nop14:
 	ret	; F7FD7A  ret   <- button table 0xF7DBD8 entry 14 (TRANSP0SE)
 
 ; ---------------------------------------------------------------------
-; ExitKey_Transp0se_StageZero -- the EXIT key on the Transp0se_StageZero screen
+; ExitKey_Transpose_StageZero -- the EXIT key on the Transpose_StageZero screen
 ; Reached by: code 0x0F from SW32 EXIT (segment 3 bit 7, wire 0xC3, pair
 ;           position 1) -- then prom_a PanelButton_Route `and L,0x1f` at
 ;           0xF861AE, then slot 0x0F of the screen's button table.
@@ -10508,20 +10508,20 @@ ButtonTable_Transp0se_StageZero_Nop14:
 ;           delivered at; 20 of 20 in-span EXIT handlers do the same.
 ;           Re-derived by notes/prom_b_panel_names_round11.py --selftest.
 ; ---------------------------------------------------------------------
-ExitKey_Transp0se_StageZero:
+ExitKey_Transpose_StageZero:
 	bit	7, w	; F7FD7B  bit 0x07,W
-	jr	z, ExitKey_Transp0se_StageZero_Skip	; F7FD7E  jr Z,0xf7fd82
-	jr	ExitKey_Transp0se_StageZero_Return2	; F7FD80  jr T,0xf7fd88
-ExitKey_Transp0se_StageZero_Skip:
+	jr	z, ExitKey_Transpose_StageZero_Skip	; F7FD7E  jr Z,0xf7fd82
+	jr	ExitKey_Transpose_StageZero_Return2	; F7FD80  jr T,0xf7fd88
+ExitKey_Transpose_StageZero_Skip:
 	ldw	(UI_Request:16), 32794	; F7FD82  ld (0x2070),0x801a
-ExitKey_Transp0se_StageZero_Return2:
+ExitKey_Transpose_StageZero_Return2:
 	ret	; F7FD88  ret
-ButtonTable_Transp0se_StageZero_Nop16:
+ButtonTable_Transpose_StageZero_Nop16:
 	ret	; F7FD89  ret   <- button table 0xF7DBD8 entry 16 (TRANSP0SE) and 4 more slot(s)
 
 ; ---------------------------------------------------------------------
-; Transp0se_StageZero_Button21 -- panel button slot 0x15 of
-;           Transp0se_StageZero, NOT NAMED
+; Transpose_StageZero_Button21 -- panel button slot 0x15 of
+;           Transpose_StageZero, NOT NAMED
 ; Unknown:  NO NAME. This routine is registered ONLY at slot 0x15, which is
 ;           the VARIANT-1 already-held rewrite of base code 0x04 (`add
 ;           (XIX-1),0x11` at prom_a 0xF8AE7E/0xF8AEF1). The SX-WSA1R is
@@ -10537,27 +10537,27 @@ ButtonTable_Transp0se_StageZero_Nop16:
 ;           notes/prom_b_panel_names_round12.py --0x0d (slot 0x0D) and --plan
 ;           (the rest).
 ; ---------------------------------------------------------------------
-Transp0se_StageZero_Button21:
+Transpose_StageZero_Button21:
 	bit	1, (UI_RequestBits:16)	; F7FD8A  bit 1,(0x2075)
-	jr	z, Transp0se_StageZero_Button21_Skip2	; F7FD8E  jr Z,0xf7fd94
+	jr	z, Transpose_StageZero_Button21_Skip2	; F7FD8E  jr Z,0xf7fd94
 	call	T_Blink_Stop	; F7FD90  call 0xf42e24
-Transp0se_StageZero_Button21_Skip2:
+Transpose_StageZero_Button21_Skip2:
 	or	(UI_RequestBits:16), 0x08	; F7FD94  or (0x2075),0x08
 	ld	(3608:16), 4	; F7FD99  ld (0x0e18),0x04
 	bit	7, w	; F7FD9E  bit 0x07,W
-	jr	z, Transp0se_StageZero_Button21_Skip3	; F7FDA1  jr Z,0xf7fda9
-	call	T_Transp0se_StepSelectedFieldDown	; F7FDA3  call 0xf42a54
-	jr	Transp0se_StageZero_Button21_Join	; F7FDA7  jr T,0xf7fdad
-Transp0se_StageZero_Button21_Skip3:
-	call	T_Transp0se_StepFieldUp	; F7FDA9  call 0xf42a50
-Transp0se_StageZero_Button21_Join:
-	calr	Transp0se_DrawValues	; F7FDAD  calr 0xf7fd45
+	jr	z, Transpose_StageZero_Button21_Skip3	; F7FDA1  jr Z,0xf7fda9
+	call	T_Transpose_StepSelectedFieldDown	; F7FDA3  call 0xf42a54
+	jr	Transpose_StageZero_Button21_Join	; F7FDA7  jr T,0xf7fdad
+Transpose_StageZero_Button21_Skip3:
+	call	T_Transpose_StepFieldUp	; F7FDA9  call 0xf42a50
+Transpose_StageZero_Button21_Join:
+	calr	Transpose_DrawValues	; F7FDAD  calr 0xf7fd45
 	ret	; F7FDB0  ret
-ButtonTable_Transp0se_StageZero_Nop22:
+ButtonTable_Transpose_StageZero_Nop22:
 	ret	; F7FDB1  ret   <- button table 0xF7DBD8 entry 22 (TRANSP0SE) and 4 more slot(s)
 
 ; ---------------------------------------------------------------------
-; NumberPadKey_Transp0se_StageZero -- the NUMBER PAD on the Transp0se_StageZero
+; NumberPadKey_Transpose_StageZero -- the NUMBER PAD on the Transpose_StageZero
 ;           screen
 ; Reached by: code 0x1B from SW9..SW16 NUMBER PAD "0"..NUMBER PAD "7" (segment
 ;           1 bits 0-7, wire 0xC1, one 8-bit field, no pair position);
@@ -10577,33 +10577,33 @@ ButtonTable_Transp0se_StageZero_Nop22:
 ;           handlers do it. Re-derived by notes/prom_b_panel_names_round11.py
 ;           --selftest.
 ; ---------------------------------------------------------------------
-NumberPadKey_Transp0se_StageZero:
-	calr	Transp0se_StageZero_NumberPadKey	; F7FDB2  calr 0xf7fde9
+NumberPadKey_Transpose_StageZero:
+	calr	Transpose_StageZero_NumberPadKey	; F7FDB2  calr 0xf7fde9
 	ret	; F7FDB5  ret
-ButtonTable_Transp0se_StageZero_Nop28:
+ButtonTable_Transpose_StageZero_Nop28:
 	ret	; F7FDB6  ret   <- button table 0xF7DBD8 entry 28 (TRANSP0SE) and 3 more slot(s)
-ButtonTable_Transp0se_StageNonZero_Nop0:
+ButtonTable_Transpose_StageNonZero_Nop0:
 	ret	; F7FDB7  ret   <- button table 0xF7DC58 entry 0 (TRANSP0SE)
-ButtonTable_Transp0se_StageNonZero_Nop1:
+ButtonTable_Transpose_StageNonZero_Nop1:
 	ret	; F7FDB8  ret   <- button table 0xF7DC58 entry 1 (TRANSP0SE)
-ButtonTable_Transp0se_StageNonZero_Nop2:
+ButtonTable_Transpose_StageNonZero_Nop2:
 	ret	; F7FDB9  ret   <- button table 0xF7DC58 entry 2 (TRANSP0SE)
-ButtonTable_Transp0se_StageNonZero_Nop3:
+ButtonTable_Transpose_StageNonZero_Nop3:
 	ret	; F7FDBA  ret   <- button table 0xF7DC58 entry 3 (TRANSP0SE)
-ButtonTable_Transp0se_StageNonZero_Nop4:
+ButtonTable_Transpose_StageNonZero_Nop4:
 	ret	; F7FDBB  ret   <- button table 0xF7DC58 entry 4 (TRANSP0SE)
-ButtonTable_Transp0se_StageNonZero_Nop5:
+ButtonTable_Transpose_StageNonZero_Nop5:
 	ret	; F7FDBC  ret   <- button table 0xF7DC58 entry 5 (TRANSP0SE)
-ButtonTable_Transp0se_StageNonZero_Nop6:
+ButtonTable_Transpose_StageNonZero_Nop6:
 	ret	; F7FDBD  ret   <- button table 0xF7DC58 entry 6 (TRANSP0SE)
-ButtonTable_Transp0se_StageNonZero_Nop7:
+ButtonTable_Transpose_StageNonZero_Nop7:
 	ret	; F7FDBE  ret   <- button table 0xF7DC58 entry 7 (TRANSP0SE)
-ButtonTable_Transp0se_StageNonZero_Nop8:
+ButtonTable_Transpose_StageNonZero_Nop8:
 	ret	; F7FDBF  ret   <- button table 0xF7DC58 entry 8 (TRANSP0SE)
 
 ; ---------------------------------------------------------------------
-; LcdKeyRow2_Transp0se_StageNonZero -- row 2 of the five key pairs flanking the
-;           LCD, on the Transp0se_StageNonZero screen
+; LcdKeyRow2_Transpose_StageNonZero -- row 2 of the five key pairs flanking the
+;           LCD, on the Transpose_StageNonZero screen
 ; Reached by: SW26 "LCD RIGHT 2" (matrix segment 3 bit 1, wire 0xC3) ->
 ;           PanelWireGroupMap_Variant2[0x63] = group 0x03 -> record 0xF8B6A6
 ;           {class 0xA9, code 0x09} -> delivered code 0x09; SW74 "LCD LEFT 2"
@@ -10613,7 +10613,7 @@ ButtonTable_Transp0se_StageNonZero_Nop8:
 ;           PanelButton_Route then does `and L,0x1f` at 0xF861AE and prom_a
 ;           PanelButton_CallTableEntry masks it AGAIN and indexes the table -- `and L,0x1f /
 ;           sla 0x02,L / ld XIX,(XIX+L) / call (XIX)` at 0xF8BDEA-0xF8BDF5 --
-;           so this is slot 0x09 of ButtonTable_Transp0se_StageNonZero.
+;           so this is slot 0x09 of ButtonTable_Transpose_StageNonZero.
 ; Note:     bit 7 of the delivered code picks THE SIDE OF THE DISPLAY: set =
 ;           the CP2 column (SW73-77), clear = the CP1 column (SW25-29).
 ; Variant:  ⚠ VARIANT 2 = the SX-WSA1R, and the chain above is variant 2's;
@@ -10637,17 +10637,17 @@ ButtonTable_Transp0se_StageNonZero_Nop8:
 ;           reads notes/wave7_panel_button_codes.py (layer 1) and
 ;           notes/wave7_panel_event_index.py (layer 2).
 ; ---------------------------------------------------------------------
-LcdKeyRow2_Transp0se_StageNonZero:
+LcdKeyRow2_Transpose_StageNonZero:
 	bit	7, w	; F7FDC0  bit 0x07,W
-	jr	nz, LcdKeyRow2_Transp0se_StageNonZero_Return3	; F7FDC3  jr NZ,0xf7fdce
+	jr	nz, LcdKeyRow2_Transpose_StageNonZero_Return3	; F7FDC3  jr NZ,0xf7fdce
 	and	(UI_RequestBits:16), 0x6f	; F7FDC5  and (0x2075),0x6f
-	call	T_Transp0se_LcdKeyRow2	; F7FDCA  call 0xf42a58
-LcdKeyRow2_Transp0se_StageNonZero_Return3:
+	call	T_Transpose_LcdKeyRow2	; F7FDCA  call 0xf42a58
+LcdKeyRow2_Transpose_StageNonZero_Return3:
 	ret	; F7FDCE  ret
 
 ; ---------------------------------------------------------------------
-; LcdKeyRow3_Transp0se_StageNonZero -- row 3 of the five key pairs flanking the
-;           LCD, on the Transp0se_StageNonZero screen
+; LcdKeyRow3_Transpose_StageNonZero -- row 3 of the five key pairs flanking the
+;           LCD, on the Transpose_StageNonZero screen
 ; Reached by: SW27 "LCD RIGHT 3" (matrix segment 3 bit 2, wire 0xC3) ->
 ;           PanelWireGroupMap_Variant2[0x63] = group 0x03 -> record 0xF8B6AA
 ;           {class 0xA9, code 0x0A} -> delivered code 0x0A; SW75 "LCD LEFT 3"
@@ -10657,7 +10657,7 @@ LcdKeyRow2_Transp0se_StageNonZero_Return3:
 ;           PanelButton_Route then does `and L,0x1f` at 0xF861AE and prom_a
 ;           PanelButton_CallTableEntry masks it AGAIN and indexes the table -- `and L,0x1f /
 ;           sla 0x02,L / ld XIX,(XIX+L) / call (XIX)` at 0xF8BDEA-0xF8BDF5 --
-;           so this is slot 0x0A of ButtonTable_Transp0se_StageNonZero.
+;           so this is slot 0x0A of ButtonTable_Transpose_StageNonZero.
 ; Note:     bit 7 of the delivered code picks THE SIDE OF THE DISPLAY: set =
 ;           the CP2 column (SW73-77), clear = the CP1 column (SW25-29).
 ; Variant:  ⚠ VARIANT 2 = the SX-WSA1R, and the chain above is variant 2's;
@@ -10681,23 +10681,23 @@ LcdKeyRow2_Transp0se_StageNonZero_Return3:
 ;           reads notes/wave7_panel_button_codes.py (layer 1) and
 ;           notes/wave7_panel_event_index.py (layer 2).
 ; ---------------------------------------------------------------------
-LcdKeyRow3_Transp0se_StageNonZero:
+LcdKeyRow3_Transpose_StageNonZero:
 	bit	7, w	; F7FDCF  bit 0x07,W
-	jr	nz, LcdKeyRow3_Transp0se_StageNonZero_Return4	; F7FDD2  jr NZ,0xf7fdd8
-	call	T_Transp0se_ReturnToStageZero	; F7FDD4  call 0xf42a5c
-LcdKeyRow3_Transp0se_StageNonZero_Return4:
+	jr	nz, LcdKeyRow3_Transpose_StageNonZero_Return4	; F7FDD2  jr NZ,0xf7fdd8
+	call	T_Transpose_ReturnToStageZero	; F7FDD4  call 0xf42a5c
+LcdKeyRow3_Transpose_StageNonZero_Return4:
 	ret	; F7FDD8  ret
-ButtonTable_Transp0se_StageNonZero_Nop11:
+ButtonTable_Transpose_StageNonZero_Nop11:
 	ret	; F7FDD9  ret   <- button table 0xF7DC58 entry 11 (TRANSP0SE)
-ButtonTable_Transp0se_StageNonZero_Nop12:
+ButtonTable_Transpose_StageNonZero_Nop12:
 	ret	; F7FDDA  ret   <- button table 0xF7DC58 entry 12 (TRANSP0SE)
-ButtonTable_Transp0se_StageNonZero_Nop13:
+ButtonTable_Transpose_StageNonZero_Nop13:
 	ret	; F7FDDB  ret   <- button table 0xF7DC58 entry 13 (TRANSP0SE)
-ButtonTable_Transp0se_StageNonZero_Nop14:
+ButtonTable_Transpose_StageNonZero_Nop14:
 	ret	; F7FDDC  ret   <- button table 0xF7DC58 entry 14 (TRANSP0SE)
 
 ; ---------------------------------------------------------------------
-; ExitKey_Transp0se_StageNonZero -- the EXIT key on the Transp0se_StageNonZero
+; ExitKey_Transpose_StageNonZero -- the EXIT key on the Transpose_StageNonZero
 ;           screen
 ; Reached by: code 0x0F from SW32 EXIT (segment 3 bit 7, wire 0xC3, pair
 ;           position 1) -- then prom_a PanelButton_Route `and L,0x1f` at
@@ -10716,38 +10716,38 @@ ButtonTable_Transp0se_StageNonZero_Nop14:
 ;           delivered at; 20 of 20 in-span EXIT handlers do the same.
 ;           Re-derived by notes/prom_b_panel_names_round11.py --selftest.
 ; ---------------------------------------------------------------------
-ExitKey_Transp0se_StageNonZero:
+ExitKey_Transpose_StageNonZero:
 	bit	7, w	; F7FDDD  bit 0x07,W
-	jr	nz, ExitKey_Transp0se_StageNonZero_Return5	; F7FDE0  jr NZ,0xf7fde6
-	call	T_Transp0se_ReturnToStageZero	; F7FDE2  call 0xf42a5c
-ExitKey_Transp0se_StageNonZero_Return5:
+	jr	nz, ExitKey_Transpose_StageNonZero_Return5	; F7FDE0  jr NZ,0xf7fde6
+	call	T_Transpose_ReturnToStageZero	; F7FDE2  call 0xf42a5c
+ExitKey_Transpose_StageNonZero_Return5:
 	ret	; F7FDE6  ret
-ButtonTable_Transp0se_StageNonZero_Nop16:
+ButtonTable_Transpose_StageNonZero_Nop16:
 	ret	; F7FDE7  ret   <- button table 0xF7DC58 entry 16 (TRANSP0SE) and 15 more slot(s)
 	ret	; F7FDE8  ret
 
 ; Evidence: reached from calr from prom_b 0xF7FDB2, and from nothing else
 ;           the scans see.
-; Transp0se_StageZero_NumberPadKey: the NumberPadKey action of Transp0se_StageZero -- called only by NumberPadKey_Transp0se_StageZero.
-Transp0se_StageZero_NumberPadKey:
+; Transpose_StageZero_NumberPadKey: the NumberPadKey action of Transpose_StageZero -- called only by NumberPadKey_Transpose_StageZero.
+Transpose_StageZero_NumberPadKey:
 	ld	a, (8807:16)	; F7FDE9  ld A,(0x2267)
 	cp	a, 9	; F7FDED  cp A,0x09
-	jr	ule, Transp0se_StageZero_NumberPadKey_Skip	; F7FDF0  jr ULE,0xf7fdfe
+	jr	ule, Transpose_StageZero_NumberPadKey_Skip	; F7FDF0  jr ULE,0xf7fdfe
 	cp	a, 15	; F7FDF2  cp A,0x0f
-	jr	z, Transp0se_StageZero_NumberPadKey_Skip2	; F7FDF5  jr Z,0xf7fe03
+	jr	z, Transpose_StageZero_NumberPadKey_Skip2	; F7FDF5  jr Z,0xf7fe03
 	cp	a, 128	; F7FDF7  cp A,0x80
-	jr	z, Transp0se_StageZero_NumberPadKey_Skip3	; F7FDFA  jr Z,0xf7fe08
-	jr	Transp0se_StageZero_NumberPadKey_Join	; F7FDFC  jr T,0xf7fe0b
-Transp0se_StageZero_NumberPadKey_Skip:
+	jr	z, Transpose_StageZero_NumberPadKey_Skip3	; F7FDFA  jr Z,0xf7fe08
+	jr	Transpose_StageZero_NumberPadKey_Join	; F7FDFC  jr T,0xf7fe0b
+Transpose_StageZero_NumberPadKey_Skip:
 	calr	Blink_SetEnable_1_10	; F7FDFE  calr 0xf7fe0f
-	jr	Transp0se_StageZero_NumberPadKey_Join	; F7FE01  jr T,0xf7fe0b
-Transp0se_StageZero_NumberPadKey_Skip2:
-	calr	Transp0se_KeypadCommit	; F7FE03  calr 0xf7fe19
-	jr	Transp0se_StageZero_NumberPadKey_Join	; F7FE06  jr T,0xf7fe0b
-Transp0se_StageZero_NumberPadKey_Skip3:
-	calr	Transp0se_KeypadSign	; F7FE08  calr 0xf7fed3
-Transp0se_StageZero_NumberPadKey_Join:
-	calr	Transp0se_BlinkSelectedField	; F7FE0B  calr 0xf7fee6
+	jr	Transpose_StageZero_NumberPadKey_Join	; F7FE01  jr T,0xf7fe0b
+Transpose_StageZero_NumberPadKey_Skip2:
+	calr	Transpose_KeypadCommit	; F7FE03  calr 0xf7fe19
+	jr	Transpose_StageZero_NumberPadKey_Join	; F7FE06  jr T,0xf7fe0b
+Transpose_StageZero_NumberPadKey_Skip3:
+	calr	Transpose_KeypadSign	; F7FE08  calr 0xf7fed3
+Transpose_StageZero_NumberPadKey_Join:
+	calr	Transpose_BlinkSelectedField	; F7FE0B  calr 0xf7fee6
 	ret	; F7FE0E  ret
 
 ; Evidence: reached from calr from prom_b 0xF7FDFE, and from nothing else
@@ -10760,105 +10760,105 @@ Blink_SetEnable_1_10:
 
 ; Evidence: reached from calr from prom_b 0xF7FE03, and from nothing else
 ;           the scans see.
-; Transp0se_KeypadCommit: TRANSP0SE, keypad code 0x0F: field 4 converts signed (-127..+127 by the sign cell (0x2820))
+; Transpose_KeypadCommit: TRANSP0SE, keypad code 0x0F: field 4 converts signed (-127..+127 by the sign cell (0x2820))
 ;   into (0x0DFC), Stage+5 and (0x129C); fields 2/3 convert 1..999 into (0x0DF8) / (0x0DFA), keeping (0x0DF8) <=
-;   (0x0DFA), with (0x0E08) = (0x0E00) := (0x0DFA) - (0x0DF8) + 1; then T_Blink_Stop and Transp0se_DrawValues. Twin of
+;   (0x0DFA), with (0x0E08) = (0x0E00) := (0x0DFA) - (0x0DF8) + 1; then T_Blink_Stop and Transpose_DrawValues. Twin of
 ;   AdvanceDelay_KeypadCommit. Basis: caller + body + siblings. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave8_b8.json)
-Transp0se_KeypadCommit:
+Transpose_KeypadCommit:
 	cp	(0x0df6:16), 0x04	; F7FE19  cp (0x0df6),0x04
-	jr	nz, Transp0se_KeypadCommit_Skip	; F7FE1E  jr NZ,0xf7fe30
+	jr	nz, Transpose_KeypadCommit_Skip	; F7FE1E  jr NZ,0xf7fe30
 	ld	(10278:16), 3	; F7FE20  ld (0x2826),0x03
 	ld	(10276:16), 0	; F7FE25  ld (0x2824),0x00
 	call	T_AsciiField_ToSignedValue	; F7FE2A  call 0xf432f4
-	jr	Transp0se_KeypadCommit_Join	; F7FE2E  jr T,0xf7fe39
-Transp0se_KeypadCommit_Skip:
+	jr	Transpose_KeypadCommit_Join	; F7FE2E  jr T,0xf7fe39
+Transpose_KeypadCommit_Skip:
 	ld	(10278:16), 3	; F7FE30  ld (0x2826),0x03
 	call	T_AsciiDigits3_ToValue	; F7FE35  call 0xf432f0
-Transp0se_KeypadCommit_Join:
+Transpose_KeypadCommit_Join:
 	cp	(0x0df6:16), 0x02	; F7FE39  cp (0x0df6),0x02
-	jr	z, Transp0se_KeypadCommit_Skip2	; F7FE3E  jr Z,0xf7fe51
+	jr	z, Transpose_KeypadCommit_Skip2	; F7FE3E  jr Z,0xf7fe51
 	cp	(0x0df6:16), 0x03	; F7FE40  cp (0x0df6),0x03
-	jr	z, Transp0se_KeypadCommit_Skip4	; F7FE45  jr Z,0xf7fe73
+	jr	z, Transpose_KeypadCommit_Skip4	; F7FE45  jr Z,0xf7fe73
 	cp	(0x0df6:16), 0x04	; F7FE47  cp (0x0df6),0x04
-	jr	z, Transp0se_KeypadCommit_Skip5	; F7FE4C  jr Z,0xf7fea7
-	jrl	Transp0se_KeypadCommit_Return	; F7FE4E  jrl T,0xf7fed2
-Transp0se_KeypadCommit_Skip2:
+	jr	z, Transpose_KeypadCommit_Skip5	; F7FE4C  jr Z,0xf7fea7
+	jrl	Transpose_KeypadCommit_Return	; F7FE4E  jrl T,0xf7fed2
+Transpose_KeypadCommit_Skip2:
 	cp	wa, 1:i3	; F7FE51  cp WA,1
-	jr	lt, Transp0se_KeypadCommit_Return	; F7FE53  jr LT,0xf7fed2
+	jr	lt, Transpose_KeypadCommit_Return	; F7FE53  jr LT,0xf7fed2
 	cp	wa, 999	; F7FE55  cp WA,0x03e7
-	jr	gt, Transp0se_KeypadCommit_Return	; F7FE59  jr GT,0xf7fed2
+	jr	gt, Transpose_KeypadCommit_Return	; F7FE59  jr GT,0xf7fed2
 	ld	(3576:16), wa	; F7FE5B  ld (0x0df8),WA
 	ld	(DisplayListB_Stage+1:16), wa	; F7FE5F  ld (0x12f7),WA
 	cp	wa, (0x0dfa:16)	; F7FE63  cp WA,(0x0dfa)
-	jr	ule, Transp0se_KeypadCommit_Skip3	; F7FE67  jr ULE,0xf7fe71
+	jr	ule, Transpose_KeypadCommit_Skip3	; F7FE67  jr ULE,0xf7fe71
 	ld	(3578:16), wa	; F7FE69  ld (0x0dfa),WA
 	ld	(DisplayListB_Stage+3:16), wa	; F7FE6D  ld (0x12f9),WA
-Transp0se_KeypadCommit_Skip3:
-	jr	Transp0se_KeypadCommit_Join2	; F7FE71  jr T,0xf7fe93
-Transp0se_KeypadCommit_Skip4:
+Transpose_KeypadCommit_Skip3:
+	jr	Transpose_KeypadCommit_Join2	; F7FE71  jr T,0xf7fe93
+Transpose_KeypadCommit_Skip4:
 	cp	wa, 1:i3	; F7FE73  cp WA,1
-	jr	lt, Transp0se_KeypadCommit_Return	; F7FE75  jr LT,0xf7fed2
+	jr	lt, Transpose_KeypadCommit_Return	; F7FE75  jr LT,0xf7fed2
 	cp	wa, 999	; F7FE77  cp WA,0x03e7
-	jr	gt, Transp0se_KeypadCommit_Return	; F7FE7B  jr GT,0xf7fed2
+	jr	gt, Transpose_KeypadCommit_Return	; F7FE7B  jr GT,0xf7fed2
 	ld	(3578:16), wa	; F7FE7D  ld (0x0dfa),WA
 	ld	(DisplayListB_Stage+3:16), wa	; F7FE81  ld (0x12f9),WA
 	cp	wa, (0x0df8:16)	; F7FE85  cp WA,(0x0df8)
-	jr	nc, Transp0se_KeypadCommit_Join2	; F7FE89  jr NC,0xf7fe93
+	jr	nc, Transpose_KeypadCommit_Join2	; F7FE89  jr NC,0xf7fe93
 	ld	(3576:16), wa	; F7FE8B  ld (0x0df8),WA
 	ld	(DisplayListB_Stage+1:16), wa	; F7FE8F  ld (0x12f7),WA
-Transp0se_KeypadCommit_Join2:
+Transpose_KeypadCommit_Join2:
 	ld	wa, (3578:16)	; F7FE93  ld WA,(0x0dfa)
 	sub	wa, (0x0df8:16)	; F7FE97  sub WA,(0x0df8)
 	inc	1, wa	; F7FE9B  inc 1,WA
 	ld	(3592:16), wa	; F7FE9D  ld (0x0e08),WA
 	ld	(3584:16), wa	; F7FEA1  ld (0x0e00),WA
-	jr	Transp0se_KeypadCommit_Join4	; F7FEA5  jr T,0xf7fecb
-Transp0se_KeypadCommit_Skip5:
+	jr	Transpose_KeypadCommit_Join4	; F7FEA5  jr T,0xf7fecb
+Transpose_KeypadCommit_Skip5:
 	cp	(0x2820:16), 0x2b	; F7FEA7  cp (0x2820),0x2b
-	jr	z, Transp0se_KeypadCommit_Skip6	; F7FEAC  jr Z,0xf7feb6
+	jr	z, Transpose_KeypadCommit_Skip6	; F7FEAC  jr Z,0xf7feb6
 	cp	wa, 65409	; F7FEAE  cp WA,0xff81
-	jr	lt, Transp0se_KeypadCommit_Return	; F7FEB2  jr LT,0xf7fed2
-	jr	Transp0se_KeypadCommit_Join3	; F7FEB4  jr T,0xf7febc
-Transp0se_KeypadCommit_Skip6:
+	jr	lt, Transpose_KeypadCommit_Return	; F7FEB2  jr LT,0xf7fed2
+	jr	Transpose_KeypadCommit_Join3	; F7FEB4  jr T,0xf7febc
+Transpose_KeypadCommit_Skip6:
 	cp	wa, 127	; F7FEB6  cp WA,0x007f
-	jr	gt, Transp0se_KeypadCommit_Return	; F7FEBA  jr GT,0xf7fed2
-Transp0se_KeypadCommit_Join3:
+	jr	gt, Transpose_KeypadCommit_Return	; F7FEBA  jr GT,0xf7fed2
+Transpose_KeypadCommit_Join3:
 	ld	(3580:16), a	; F7FEBC  ld (0x0dfc),A
 	ld	(DisplayListB_Stage+5:16), a	; F7FEC0  ld (0x12fb),A
 	ld	(4764:16), a	; F7FEC4  ld (0x129c),A
 	ldw	de, 127	; F7FEC8  ld DE,0x007f
-Transp0se_KeypadCommit_Join4:
+Transpose_KeypadCommit_Join4:
 	call	T_Blink_Stop	; F7FECB  call 0xf42e24
-	calr	Transp0se_DrawValues	; F7FECF  calr 0xf7fd45
-Transp0se_KeypadCommit_Return:
+	calr	Transpose_DrawValues	; F7FECF  calr 0xf7fd45
+Transpose_KeypadCommit_Return:
 	ret	; F7FED2  ret
 
 ; Evidence: reached from calr from prom_b 0xF7FE08, and from nothing else
 ;           the scans see.
-; Transp0se_KeypadSign: TRANSP0SE, keypad code 0x80: while blinking ((0x2075) bit 1) and unless field 4 (the signed
+; Transpose_KeypadSign: TRANSP0SE, keypad code 0x80: while blinking ((0x2075) bit 1) and unless field 4 (the signed
 ;   value) is selected, puts '+' back in the sign cell (0x2820). Twin of AdvanceDelay_KeypadSign. Basis: caller + body
 ;   + siblings. (notes/naming-pilot-2026-10-06/proposals_wave8_b8.json)
-Transp0se_KeypadSign:
+Transpose_KeypadSign:
 	bit	1, (UI_RequestBits:16)	; F7FED3  bit 1,(0x2075)
-	jr	z, Transp0se_KeypadSign_Return	; F7FED7  jr Z,0xf7fee5
+	jr	z, Transpose_KeypadSign_Return	; F7FED7  jr Z,0xf7fee5
 	cp	(0x0df6:16), 0x04	; F7FED9  cp (0x0df6),0x04
-	jr	z, Transp0se_KeypadSign_Return	; F7FEDE  jr Z,0xf7fee5
+	jr	z, Transpose_KeypadSign_Return	; F7FEDE  jr Z,0xf7fee5
 	ld	(10272:16), 43	; F7FEE0  ld (0x2820),0x2b
-Transp0se_KeypadSign_Return:
+Transpose_KeypadSign_Return:
 	ret	; F7FEE5  ret
 
 ; Evidence: reached from calr from prom_b 0xF7FE0B, and from nothing else
 ;           the scans see.
-; Transp0se_BlinkSelectedField: TRANSP0SE: unless (0x2075) bit 1 is clear or (0x2267) = 0x0F, starts the field blink
-;   on layer 0 with template BlinkArgPtrs_F7FF13[(0x0DF6)]. Transp0se_StageZero_NumberPadKey's common tail. Twin of
+; Transpose_BlinkSelectedField: TRANSP0SE: unless (0x2075) bit 1 is clear or (0x2267) = 0x0F, starts the field blink
+;   on layer 0 with template BlinkArgPtrs_F7FF13[(0x0DF6)]. Transpose_StageZero_NumberPadKey's common tail. Twin of
 ;   AdvanceDelay_BlinkSelectedField. Basis: caller + body + siblings. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave8_b8.json)
-Transp0se_BlinkSelectedField:
+Transpose_BlinkSelectedField:
 	bit	1, (UI_RequestBits:16)	; F7FEE6  bit 1,(0x2075)
-	jr	z, Transp0se_BlinkSelectedField_Return	; F7FEEA  jr Z,0xf7ff12
+	jr	z, Transpose_BlinkSelectedField_Return	; F7FEEA  jr Z,0xf7ff12
 	cp	(0x2267:16), 0x0f	; F7FEEC  cp (0x2267),0x0f
-	jr	z, Transp0se_BlinkSelectedField_Return	; F7FEF1  jr Z,0xf7ff12
+	jr	z, Transpose_BlinkSelectedField_Return	; F7FEF1  jr Z,0xf7ff12
 	xor	xwa, xwa	; F7FEF3  xor XWA,XWA
 	ld	a, (3574:16)	; F7FEF5  ld A,(0x0df6)
 	sla	xwa, 2	; F7FEF9  sla 0x02,XWA
@@ -10868,7 +10868,7 @@ Transp0se_BlinkSelectedField:
 	push	xiy	; F7FF0B  push XIY
 	call	T_Blink_Command	; F7FF0C  call 0xf42e20
 	inc	4, xsp	; F7FF10  inc 4,XSP
-Transp0se_BlinkSelectedField_Return:
+Transpose_BlinkSelectedField_Return:
 	ret	; F7FF12  ret
 ; ---------------------------------------------------------------------
 ; BlinkArgPtrs_F7FF13 -- pointers to blink templates, read through

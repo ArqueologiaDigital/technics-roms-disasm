@@ -3,7 +3,7 @@
 
 QUESTION IT ANSWERS
   Many screens' button tables are only partly named.  For example, Dispatch_FF4049[8] is
-  LcdKeyRow1_L0adSingleS0und_Page0, but slots 0-7 are sub_.  A table index is a panel button code (32-slot
+  LcdKeyRow1_LoadSingleSound_Page0, but slots 0-7 are sub_.  A table index is a panel button code (32-slot
   tables, read through PanelButton_CallTableEntry / PanelButton_Route) or a PanelCode_ToSlotAndFlags slot
   (23-slot tables).  Dispatch_FF4049's header gives the code map: [00]..[07] soft-key columns 1-8, [08]..[0C] the
   LCD-row buttons, [0F] EXIT, [10] PAGE, [1B] the number pad, [1E] COMPARE, [0D] the -1/+1 pair, [0E] nothing,

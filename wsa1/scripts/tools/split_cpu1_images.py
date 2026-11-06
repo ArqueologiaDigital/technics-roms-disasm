@@ -96,7 +96,7 @@ MODULE_NAMES = {
         0xF8DA00: "callback_queue",                    # Task2_CallbackDispatcher, CallbackQueue_*
         0xF8DC00: "analog_scan",                       # AnalogScan_*
         0xF8E000: "link_port",                         # Link_*, INT0/INTTC2/INTTC3, uDMA helpers
-        0xF8E800: "lcd_swi7_and_combination_screens",  # LCD_* / SWI7 services, then C0mbinati0nM0de_* screens
+        0xF8E800: "lcd_swi7_and_combination_screens",  # LCD_* / SWI7 services, then CombinationMode_* screens
         0xF94C00: "debug_monitor_and_param_scripts",   # DebugMonitor_*, TestMode_*, ParamImage_*, Script_*
         0xF99400: "screen_field_redraw_request",       # PanelScreen_RequestRedrawIfFieldQueued, alone
         0xF99800: "midi_settings_screens",             # SysexBulkDump, MidiTotalMode, MidiInputOutputFilter, ...
@@ -129,7 +129,7 @@ MODULE_NAMES = {
         0xF0C800: "midi_screen_display_lists",         # banner: a UI SCREEN MODULE; MidiTotalMode, filter lists
         0xF0E800: "blink_and_dsp_effect_editor",       # banner: THE FIELD-BLINK ENGINE; DspEffect_*, EffectEditor_*
         0xF1B400: "fonts",                             # banner: THE TWELVE CHARACTER GENERATORS
-        0xF27C00: "mode_screen_display_lists",         # DL records; ModeScreen_*, C0mbinati0nM0de_*
+        0xF27C00: "mode_screen_display_lists",         # DL records; ModeScreen_*, CombinationMode_*
         0xF2C800: "test_mode_display_lists",           # GATE ARRAY / PANEL CPU / SINE WAVE CHECK lists
         0xF2D000: "screen_field_lists",                # ScreenFieldListPtrs, ScreenFieldList_*
         0xF2D800: "messages_and_display_list_interpreter",  # DL_PleaseWait, DL_Error*, DisplayListB_*, DLHandler_*

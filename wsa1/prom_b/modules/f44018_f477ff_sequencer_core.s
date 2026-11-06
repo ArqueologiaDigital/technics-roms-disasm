@@ -419,7 +419,7 @@ BStore_BootPhase3_Skip2:
 ; --------------------------------------------------------------------------
 ; Seq_ApplySongBeatsPerBar: Copies the song's beats per bar (workspace 0x6034D7) to TransportA_BeatsPerBar, (0xC3) and
 ;   the TIME SIG. field (0x0DE3). Run after a song is loaded or reset: BStore_BootPhase3, SeqFile_Load(AllBanks),
-;   S0ngSelectName_LoadSongFromBank, and BStore_ResetWorkspaceToDefault right after 0x6034D7 := 4. Basis: callers + body. (notes/naming-
+;   SongSelectName_LoadSongFromBank, and BStore_ResetWorkspaceToDefault right after 0x6034D7 := 4. Basis: callers + body. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave2_e.json)
 Seq_ApplySongBeatsPerBar:		; <- T_Seq_ApplySongBeatsPerBar
 	ld	a, (6304983:24)	; F44131  ld A,(0x6034d7)

@@ -373,7 +373,7 @@ Dispatch_Code80_PaintTable:
 	.long SoundEditController_PaintPage2	; [0x9B]
 	.long TouchCurve_DrawThumbnail + 0xBD	; [0x9C]   (default `ret`)
 	.long SoundEditCopy_Paint	; [0x9D]
-	.long Draw_Mem0ryWriteSoundEditName	; [0x9E]
+	.long Draw_MemoryWriteSoundEditName	; [0x9E]
 	.long Draw_Write	; [0x9F]
 	.long ToneEditPage_A0_Paint	; [0xA0]  <- also selector 0xC0
 	.long Draw_ToneTemplateLevelKeyTune	; [0xA1]  <- also selector 0xC1
@@ -1294,8 +1294,8 @@ ModelingPage_PaintFieldReadout_Return:
 ;              0xF5C6C9 0xF5C74D 0xF5C89B +5 more
 ; Touches: (0x2540) (0x27F5)  |  0xF02064 0xF020AA 0xF021E4 0xF02469
 ;          0xF02671 0xF027AF +17 more
-; Calls:   T_UiPaint_PageLabelBackdrop Draw_M0delingSoundEditToneDriver Draw_ToneDriverResonator T_DisplayList_Run T_DisplayListB_Run 0xF09AF1
-;          0xF5BAB8 ToneEditPage_A0_PaintSlotOrdinals ToneEditPage_A0_PaintGroupBrackets 0xF5BB00 SoundEditModelingDriverWaveform_PaintRows DisplayList_Run_ResoDriverNatorPositionMovement_Page22P0siti0nM0vementWidth +4
+; Calls:   T_UiPaint_PageLabelBackdrop Draw_ModelingSoundEditToneDriver Draw_ToneDriverResonator T_DisplayList_Run T_DisplayListB_Run 0xF09AF1
+;          0xF5BAB8 ToneEditPage_A0_PaintSlotOrdinals ToneEditPage_A0_PaintGroupBrackets 0xF5BB00 SoundEditModelingDriverWaveform_PaintRows DisplayList_Run_ResoDriverNatorPositionMovement_Page22PositionMovementWidth +4
 ;          more
 ; Evidence: reached by a `call`/`calr` decoded in this transcription (the
 ;           sites are listed above), so 0xF5BFBD is an instruction boundary.
@@ -1313,7 +1313,7 @@ SoundEdit_PaintPageLabelBackdrop:
 	ret	; F5BFC6  ret
 ; ToneEditPage_A0_Paint: Dispatch_Code80_PaintTable[code 0xA0] -- Dispatch_Code80_Bracketed, the full paint.
 ToneEditPage_A0_Paint:
-	call	Draw_M0delingSoundEditToneDriver	; F5BFC7  call 0xf5c338
+	call	Draw_ModelingSoundEditToneDriver	; F5BFC7  call 0xf5c338
 	call	Draw_ToneDriverResonator	; F5BFCB  call 0xf5c360
 	cp	(SoundEdit_SoundKind:16), 0x01	; F5BFCF  cp (0x27f5),0x01
 	jr	z, ToneEditPage_A0_Paint_Skip	; F5BFD4  jr Z,0xf5bfe4
@@ -1362,9 +1362,9 @@ ToneEditPage_A0_Paint_Join:
 	call	ToneEditPage_A0_PaintGroupBrackets	; F5C067  call 0xf5cbd9
 	ret	; F5C06B  ret
 Draw_DriverDriverWaveformReso:
-	call	Draw_M0delingSoundEditToneDriver	; F5C06C  call 0xf5c338
+	call	Draw_ModelingSoundEditToneDriver	; F5C06C  call 0xf5c338
 	ld	xiy, DL_DriverDriverWaveformReso	; F5C070  ld XIY,0x00f02469
-	ld	xix, DL_Page12P0siti0nParameterP0siti0n	; F5C075  ld XIX,0x00f02671
+	ld	xix, DL_Page12PositionParameterPosition	; F5C075  ld XIX,0x00f02671
 	call	T_DisplayList_Run	; F5C07A  call 0xf417f0
 	call	UiPaint_Solo	; F5C07E  call 0xf5bab8
 	call	UiPaint_Ordinals	; F5C082  call 0xf5bb00
@@ -1376,24 +1376,24 @@ Draw_DriverDriverWaveformReso:
 	ret	; F5C09D  ret
 ; ToneEditPage_A3_Paint: Dispatch_Code80_PaintTable[code 0xA3] -- Dispatch_Code80_Bracketed, the full paint.
 ToneEditPage_A3_Paint:
-	call	Draw_M0delingSoundEditToneDriver	; F5C09E  call 0xf5c338
-	call	DisplayList_Run_ResoDriverNatorPositionMovement_Page22P0siti0nM0vementWidth	; F5C0A2  call 0xf5c374
-	ld	xiy, DL_Page12P0siti0nParameterP0siti0n	; F5C0A6  ld XIY,0x00f02671
+	call	Draw_ModelingSoundEditToneDriver	; F5C09E  call 0xf5c338
+	call	DisplayList_Run_ResoDriverNatorPositionMovement_Page22PositionMovementWidth	; F5C0A2  call 0xf5c374
+	ld	xiy, DL_Page12PositionParameterPosition	; F5C0A6  ld XIY,0x00f02671
 	ld	xix, DL_ResoDriverNatorPositionMovement	; F5C0AB  ld XIX,0x00f027af
 	call	T_DisplayList_Run	; F5C0B0  call 0xf417f0
 	call	SoundEdit_PaintPageLabelBackdrop	; F5C0B4  call 0xf5bfbd
 	call	UiPaint_Solo	; F5C0B8  call 0xf5bab8
 	call	UiPaint_Ordinals	; F5C0BC  call 0xf5bb00
 	ld	(LCD_CurrentLayer:16), 0	; F5C0C0  ld (0x2540),0x00
-	ld	xiy, DL_P0siti0n	; F5C0C5  ld XIY,0x00f03441
+	ld	xiy, DL_Position	; F5C0C5  ld XIY,0x00f03441
 	ld	xix, DLText_FixMove	; F5C0CA  ld XIX,0x00f03478
 	call	T_DisplayListB_Run	; F5C0CF  call 0xf417f4
 	ret	; F5C0D3  ret
 ; ToneEditPage_A4_Paint: Dispatch_Code80_PaintTable[code 0xA4] -- Dispatch_Code80_Bracketed, the full paint.
 ToneEditPage_A4_Paint:
-	call	Draw_M0delingSoundEditToneDriver	; F5C0D4  call 0xf5c338
-	call	DisplayList_Run_ResoDriverNatorPositionMovement_Page22P0siti0nM0vementWidth	; F5C0D8  call 0xf5c374
-	ld	xiy, DL_Page22P0siti0nM0vementWidth	; F5C0DC  ld XIY,0x00f02942
+	call	Draw_ModelingSoundEditToneDriver	; F5C0D4  call 0xf5c338
+	call	DisplayList_Run_ResoDriverNatorPositionMovement_Page22PositionMovementWidth	; F5C0D8  call 0xf5c374
+	ld	xiy, DL_Page22PositionMovementWidth	; F5C0DC  ld XIY,0x00f02942
 	ld	xix, DL_Page13FitMutKeyDeResoTing	; F5C0E1  ld XIX,0x00f02a46
 	call	T_DisplayList_Run	; F5C0E6  call 0xf417f0
 	call	SoundEdit_PaintPageLabelBackdrop	; F5C0EA  call 0xf5bfbd
@@ -1406,7 +1406,7 @@ ToneEditPage_A4_Paint:
 	ret	; F5C109  ret
 ; ToneEditPage_A5_Paint: Dispatch_Code80_PaintTable[code 0xA5] -- Dispatch_Code80_Bracketed, the full paint.
 ToneEditPage_A5_Paint:
-	call	DisplayList_Run_M0delingSoundEditToneDriver	; F5C10A  call 0xf5c34c
+	call	DisplayList_Run_ModelingSoundEditToneDriver	; F5C10A  call 0xf5c34c
 	call	DisplayList_Run_MainDriverResonatorSubResonator_Page23TouchDepthSubFittingMutingSubGain	; F5C10E  call 0xf5c388
 	ld	xiy, DL_Page13FitMutKeyDeResoTing	; F5C112  ld XIY,0x00f02a46
 	ld	xix, DL_MainDriverResonatorSubResonator	; F5C117  ld XIX,0x00f02b47
@@ -1427,7 +1427,7 @@ ToneEditPage_A5_Paint:
 ;              0xF5CDEB
 ; Touches: (0x2540) (0x27B5) (0x27F5)  |  0xF02D08 0xF02DFB 0xF02EF9
 ;          0xF02F22 0xF03595 0xF0359F +15 more
-; Calls:   T_DisplayList_Run T_DisplayListB_Run DisplayList_Run_M0delingSoundEditToneDriver DisplayList_Run_MainDriverResonatorSubResonator_Page23TouchDepthSubFittingMutingSubGain SoundEdit_PaintPageLabelBackdrop 0xF5BAB8
+; Calls:   T_DisplayList_Run T_DisplayListB_Run DisplayList_Run_ModelingSoundEditToneDriver DisplayList_Run_MainDriverResonatorSubResonator_Page23TouchDepthSubFittingMutingSubGain SoundEdit_PaintPageLabelBackdrop 0xF5BAB8
 ;          0xF5BB00 ToneEditPage_PaintMainAndSubFocus ToneEditPage_A8_PaintField5Switch ModelingPage_PaintFields11And12
 ; Evidence: reached by a `call`/`calr` decoded in this transcription (the
 ;           sites are listed above), so 0xF5C144 is an instruction boundary.
@@ -1455,7 +1455,7 @@ ToneEditPage_PaintMainAndSubFocus_Return:
 	ret	; F5C171  ret
 ; ToneEditPage_A6_Paint: Dispatch_Code80_PaintTable[code 0xA6] -- Dispatch_Code80_Bracketed, the full paint.
 ToneEditPage_A6_Paint:
-	call	DisplayList_Run_M0delingSoundEditToneDriver	; F5C172  call 0xf5c34c
+	call	DisplayList_Run_ModelingSoundEditToneDriver	; F5C172  call 0xf5c34c
 	call	DisplayList_Run_MainDriverResonatorSubResonator_Page23TouchDepthSubFittingMutingSubGain	; F5C176  call 0xf5c388
 	ld	xiy, DL_Page23TouchDepthSubFittingMutingSubGain	; F5C17A  ld XIY,0x00f02d08
 	ld	xix, DL_MutingKeyFollowSlopeRange	; F5C17F  ld XIX,0x00f02dfb
@@ -1471,7 +1471,7 @@ ToneEditPage_A6_Paint:
 	ret	; F5C1AB  ret
 ; ToneEditPage_A7_Paint: Dispatch_Code80_PaintTable[code 0xA7] -- Dispatch_Code80_Bracketed, the full paint.
 ToneEditPage_A7_Paint:
-	call	DisplayList_Run_M0delingSoundEditToneDriver	; F5C1AC  call 0xf5c34c
+	call	DisplayList_Run_ModelingSoundEditToneDriver	; F5C1AC  call 0xf5c34c
 	call	DisplayList_Run_MainDriverResonatorSubResonator_Page23TouchDepthSubFittingMutingSubGain	; F5C1B0  call 0xf5c388
 	cp	(SoundEdit_SoundKind:16), 0x01	; F5C1B4  cp (0x27f5),0x01
 	jr	z, ToneEditPage_A7_Paint_Skip	; F5C1B9  jr Z,0xf5c1de
@@ -1533,7 +1533,7 @@ Draw_Serial_Join2:
 ; Called from: in-module: 0xF5C274 0xF5CE60
 ; Touches: (0x2540) (0x27AB) (0x27F5)  |  0xF022F7 0xF02329 0xF0245F
 ;          0xF02469 0xF06481 0xF06495 +7 more
-; Calls:   T_DisplayList_Run Draw_M0delingSoundEditToneDriver Draw_ToneDriverResonator 0xF5BAB8 SoundEdit_PaintSlotOrdinals T_DisplayListB_Run
+; Calls:   T_DisplayList_Run Draw_ModelingSoundEditToneDriver Draw_ToneDriverResonator 0xF5BAB8 SoundEdit_PaintSlotOrdinals T_DisplayListB_Run
 ; Evidence: reached by a `call`/`calr` decoded in this transcription (the
 ;           sites are listed above), so 0xF5C27D is an instruction boundary.
 ;           The name IS the address.
@@ -1559,7 +1559,7 @@ ToneEditPage_A8_PaintField5Switch_Skip:
 ToneEditPage_A8_PaintField5Switch_Return:
 	ret	; F5C2A7  ret
 Draw_ToneTemplateLevelKeyTune:
-	call	Draw_M0delingSoundEditToneDriver	; F5C2A8  call 0xf5c338
+	call	Draw_ModelingSoundEditToneDriver	; F5C2A8  call 0xf5c338
 	call	Draw_ToneDriverResonator	; F5C2AC  call 0xf5c360
 	ld	xiy, DL_ToneTemplateLevelKeyTune	; F5C2B0  ld XIY,0x00f02329
 	ld	xix, Draw_ToneTemplateLevelKeyTune_DL1	; F5C2B5  ld XIX,0x00f0245f
@@ -1596,26 +1596,26 @@ Draw_ToneTemplateLevelKeyTune_Skip3:
 	ret	; F5C337  ret
 
 ; --------------------------------------------------------------------------
-; Draw_M0delingSoundEditToneDriver
+; Draw_ModelingSoundEditToneDriver
 ; Called from: in-module: 0xF5BFC7 0xF5C06C 0xF5C09E 0xF5C0D4 0xF5C2A8
 ; Touches: (0x2540)  |  0xF01F96 0xF02064
 ; Calls:   T_DisplayList_Run
 ; Evidence: reached by a `call`/`calr` decoded in this transcription (the
 ;           sites are listed above), so 0xF5C338 is an instruction boundary.
-; Name:    from the one text-named display list it STARTS, DL_M0delingSoundEditToneDriver (the
+; Name:    from the one text-named display list it STARTS, DL_ModelingSoundEditToneDriver (the
 ;          interpreter's XIY or last-pushed operand); it claims that list, not
 ;          a screen or a purpose (scripts/renaming/rename_wsa1_dl_drawers.py).
 ; Unknown: what the routine is FOR.
 ; --------------------------------------------------------------------------
-Draw_M0delingSoundEditToneDriver:
+Draw_ModelingSoundEditToneDriver:
 	ld	(LCD_CurrentLayer:16), 0	; F5C338  ld (0x2540),0x00
-	ld	xiy, DL_M0delingSoundEditToneDriver	; F5C33D  ld XIY,0x00f01f96
+	ld	xiy, DL_ModelingSoundEditToneDriver	; F5C33D  ld XIY,0x00f01f96
 	ld	xix, ToneEditPage_A0_Paint_DL1	; F5C342  ld XIX,0x00f02064
 	call	T_DisplayList_Run	; F5C347  call 0xf417f0
 	ret	; F5C34B  ret
 
 ; --------------------------------------------------------------------------
-; DisplayList_Run_M0delingSoundEditToneDriver
+; DisplayList_Run_ModelingSoundEditToneDriver
 ; Called from: in-module: 0xF5C10A 0xF5C172 0xF5C1AC
 ; Touches: (0x2540)  |  0xF01F96 0xF0203E
 ; Calls:   T_DisplayList_Run
@@ -1625,10 +1625,10 @@ Draw_M0delingSoundEditToneDriver:
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-DisplayList_Run_M0delingSoundEditToneDriver:
+DisplayList_Run_ModelingSoundEditToneDriver:
 	ld	(LCD_CurrentLayer:16), 0	; F5C34C  ld (0x2540),0x00
-	ld	xiy, DL_M0delingSoundEditToneDriver	; F5C351  ld XIY,0x00f01f96
-	ld	xix, DL_M0delingSoundEditToneDriver + 0xA8	; F5C356  ld XIX,0x00f0203e
+	ld	xiy, DL_ModelingSoundEditToneDriver	; F5C351  ld XIY,0x00f01f96
+	ld	xix, DL_ModelingSoundEditToneDriver + 0xA8	; F5C356  ld XIX,0x00f0203e
 	call	T_DisplayList_Run	; F5C35B  call 0xf417f0
 	ret	; F5C35F  ret
 
@@ -1652,7 +1652,7 @@ Draw_ToneDriverResonator:
 	ret	; F5C373  ret
 
 ; --------------------------------------------------------------------------
-; DisplayList_Run_ResoDriverNatorPositionMovement_Page22P0siti0nM0vementWidth
+; DisplayList_Run_ResoDriverNatorPositionMovement_Page22PositionMovementWidth
 ; Called from: in-module: 0xF5C0A2 0xF5C0D8
 ; Touches: (0x2540)  |  0xF027AF 0xF02942
 ; Calls:   T_DisplayList_Run
@@ -1662,10 +1662,10 @@ Draw_ToneDriverResonator:
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-DisplayList_Run_ResoDriverNatorPositionMovement_Page22P0siti0nM0vementWidth:
+DisplayList_Run_ResoDriverNatorPositionMovement_Page22PositionMovementWidth:
 	ld	(LCD_CurrentLayer:16), 0	; F5C374  ld (0x2540),0x00
 	ld	xiy, DL_ResoDriverNatorPositionMovement	; F5C379  ld XIY,0x00f027af
-	ld	xix, DL_Page22P0siti0nM0vementWidth	; F5C37E  ld XIX,0x00f02942
+	ld	xix, DL_Page22PositionMovementWidth	; F5C37E  ld XIX,0x00f02942
 	call	T_DisplayList_Run	; F5C383  call 0xf417f0
 	ret	; F5C387  ret
 
@@ -1806,13 +1806,13 @@ ToneEditPage_A0_PaintSlotOrdinals_Join2:
 	djnz8	c, -84	; F5C487  djnz C,0xf5c436
 	ret	; F5C48A  ret
 	ld	(LCD_CurrentLayer:16), 0	; F5C48B  ld (0x2540),0x00
-	ld	xiy, DL_T0neSelectSoundEdit	; F5C490  ld XIY,0x00f039a9
+	ld	xiy, DL_ToneSelectSoundEdit	; F5C490  ld XIY,0x00f039a9
 	ld	xix, SoundEdit_PaintSlotOrdinals_DL	; F5C495  ld XIX,0x00f039d9
 	call	T_DisplayList_Run	; F5C49A  call 0xf417f0
 	ret	; F5C49E  ret
 
 ; --------------------------------------------------------------------------
-; DisplayList_Run_T0neLayerSoundEditTrigGer
+; DisplayList_Run_ToneLayerSoundEditTrigGer
 ; Called from: in-module: 0xF5D40E
 ; Touches: (0x2540)  |  0xF03892 0xF03943
 ; Calls:   T_DisplayList_Run
@@ -1822,35 +1822,35 @@ ToneEditPage_A0_PaintSlotOrdinals_Join2:
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-DisplayList_Run_T0neLayerSoundEditTrigGer:
+DisplayList_Run_ToneLayerSoundEditTrigGer:
 	ld	(LCD_CurrentLayer:16), 0	; F5C49F  ld (0x2540),0x00
-	ld	xiy, DL_T0neLayerSoundEditTrigGer	; F5C4A4  ld XIY,0x00f03892
-	ld	xix, DL_T0neLayerSoundEditTrigGer + 0xB1	; F5C4A9  ld XIX,0x00f03943
+	ld	xiy, DL_ToneLayerSoundEditTrigGer	; F5C4A4  ld XIY,0x00f03892
+	ld	xix, DL_ToneLayerSoundEditTrigGer + 0xB1	; F5C4A9  ld XIX,0x00f03943
 	call	T_DisplayList_Run	; F5C4AE  call 0xf417f0
 	ld	(LCD_CurrentLayer:16), 0	; F5C4B2  ld (0x2540),0x00
 	ret	; F5C4B7  ret
 
 ; --------------------------------------------------------------------------
-; DisplayList_Run_T0neLayerSoundEditTrigGer_T0neSelectSoundEdit
+; DisplayList_Run_ToneLayerSoundEditTrigGer_ToneSelectSoundEdit
 ; Called from: in-module: 0xF5D4C3 0xF5D519
 ; Touches: (0x2540)  |  0xF03892 0xF039A9 0xF03D68 0xF03F31 0xF051C2
 ;          0xF05286
-; Calls:   T_DisplayList_Run Draw_PitchSoundEditEnvPitchLf0 0xF5BAB8 SoundEdit_PaintSlotOrdinals T_DisplayListB_Run
+; Calls:   T_DisplayList_Run Draw_PitchSoundEditEnvPitchLfo 0xF5BAB8 SoundEdit_PaintSlotOrdinals T_DisplayListB_Run
 ; Evidence: reached by a `call`/`calr` decoded in this transcription (the
 ;           sites are listed above), so 0xF5C4B8 is an instruction boundary.
 ;           The name IS the address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-DisplayList_Run_T0neLayerSoundEditTrigGer_T0neSelectSoundEdit:
+DisplayList_Run_ToneLayerSoundEditTrigGer_ToneSelectSoundEdit:
 	ld	(LCD_CurrentLayer:16), 0	; F5C4B8  ld (0x2540),0x00
-	ld	xiy, DL_T0neLayerSoundEditTrigGer	; F5C4BD  ld XIY,0x00f03892
-	ld	xix, DL_T0neSelectSoundEdit	; F5C4C2  ld XIX,0x00f039a9
+	ld	xiy, DL_ToneLayerSoundEditTrigGer	; F5C4BD  ld XIY,0x00f03892
+	ld	xix, DL_ToneSelectSoundEdit	; F5C4C2  ld XIX,0x00f039a9
 	call	T_DisplayList_Run	; F5C4C7  call 0xf417f0
 	ld	(LCD_CurrentLayer:16), 0	; F5C4CB  ld (0x2540),0x00
 	ret	; F5C4D0  ret
 Draw_KeyDeToneKeyScalingShift:
-	call	Draw_PitchSoundEditEnvPitchLf0	; F5C4D1  call 0xf5c4ff
+	call	Draw_PitchSoundEditEnvPitchLfo	; F5C4D1  call 0xf5c4ff
 	ld	xiy, DL_KeyDeToneKeyScalingShift	; F5C4D5  ld XIY,0x00f03d68
 	ld	xix, DL_StartPitchStopPitchTotal	; F5C4DA  ld XIX,0x00f03f31
 	call	T_DisplayList_Run	; F5C4DF  call 0xf417f0
@@ -1863,42 +1863,42 @@ Draw_KeyDeToneKeyScalingShift:
 	ret	; F5C4FE  ret
 
 ; --------------------------------------------------------------------------
-; Draw_PitchSoundEditEnvPitchLf0
+; Draw_PitchSoundEditEnvPitchLfo
 ; Called from: in-module: 0xF5C4D1 0xF5C513 0xF5D55F 0xF5D57A
 ; Touches: (0x2540)  |  0xF03C95 0xF03D4A
-; Calls:   T_DisplayList_Run Draw_PitchSoundEditEnvPitchLf0
+; Calls:   T_DisplayList_Run Draw_PitchSoundEditEnvPitchLfo
 ; Evidence: reached by a `call`/`calr` decoded in this transcription (the
 ;           sites are listed above), so 0xF5C4FF is an instruction boundary.
-; Name:    from the one text-named display list it STARTS, DL_PitchSoundEditEnvPitchLf0 (the
+; Name:    from the one text-named display list it STARTS, DL_PitchSoundEditEnvPitchLfo (the
 ;          interpreter's XIY or last-pushed operand); it claims that list, not
 ;          a screen or a purpose (scripts/renaming/rename_wsa1_dl_drawers.py).
 ; Unknown: what the routine is FOR.
 ; --------------------------------------------------------------------------
-Draw_PitchSoundEditEnvPitchLf0:
+Draw_PitchSoundEditEnvPitchLfo:
 	ld	(LCD_CurrentLayer:16), 0	; F5C4FF  ld (0x2540),0x00
-	ld	xiy, DL_PitchSoundEditEnvPitchLf0	; F5C504  ld XIY,0x00f03c95
+	ld	xiy, DL_PitchSoundEditEnvPitchLfo	; F5C504  ld XIY,0x00f03c95
 	ld	xix, DL_F03D4A	; F5C509  ld XIX,0x00f03d4a
 	call	T_DisplayList_Run	; F5C50E  call 0xf417f0
 	ret	; F5C512  ret
 ; SoundEditPitchLfo_Paint: Dispatch_Code80_PaintTable[code 0x8A] -- Dispatch_Code80_Bracketed, the full paint.
 SoundEditPitchLfo_Paint:
-	call	Draw_PitchSoundEditEnvPitchLf0	; F5C513  call 0xf5c4ff
+	call	Draw_PitchSoundEditEnvPitchLfo	; F5C513  call 0xf5c4ff
 
 ; --------------------------------------------------------------------------
-; Draw_Lf01Lf02Lf03Lf04Lf0WaveDelay
+; Draw_Lfo1Lfo2Lfo3Lfo4LfoWaveDelay
 ; Called from: in-module: 0xF5D61D 0xF5D626
 ; Touches: (0x2540)  |  0xF053B6 0xF05407 0xF06601 0xF067A6
 ; Calls:   T_DisplayList_Run SoundEditLfo_PaintOrdinals 0xF5BAB8 SoundEditLfo_DrawRowLinks SoundEditLfo_DrawField0RowLine T_DisplayListB_Run
 ; Evidence: reached by a `call`/`calr` decoded in this transcription (the
 ;           sites are listed above), so 0xF5C517 is an instruction boundary.
-; Name:    from the one text-named display list it STARTS, DL_Lf01Lf02Lf03Lf04Lf0WaveDelay (the
+; Name:    from the one text-named display list it STARTS, DL_Lfo1Lfo2Lfo3Lfo4LfoWaveDelay (the
 ;          interpreter's XIY or last-pushed operand); it claims that list, not
 ;          a screen or a purpose (scripts/renaming/rename_wsa1_dl_drawers.py).
 ; Unknown: what the routine is FOR.
 ; --------------------------------------------------------------------------
-Draw_Lf01Lf02Lf03Lf04Lf0WaveDelay:
-	ld	xiy, DL_Lf01Lf02Lf03Lf04Lf0WaveDelay	; F5C517  ld XIY,0x00f06601
-	ld	xix, DL_Lf01Lf02Lf03Lf04Lf0WaveDelay + 0x1A5	; F5C51C  ld XIX,0x00f067a6
+Draw_Lfo1Lfo2Lfo3Lfo4LfoWaveDelay:
+	ld	xiy, DL_Lfo1Lfo2Lfo3Lfo4LfoWaveDelay	; F5C517  ld XIY,0x00f06601
+	ld	xix, DL_Lfo1Lfo2Lfo3Lfo4LfoWaveDelay + 0x1A5	; F5C51C  ld XIX,0x00f067a6
 	call	T_DisplayList_Run	; F5C521  call 0xf417f0
 	call	SoundEditLfo_PaintOrdinals	; F5C525  call 0xf5c549
 	call	UiPaint_Solo	; F5C529  call 0xf5bab8
@@ -3119,25 +3119,25 @@ SoundEditEnvelope1_RepaintField_Skip10:
 	ld	xiy, Data_F04F46	; F5D144  ld XIY,0x00f04f46
 	call	RunDisplayListBFromPointerArray	; F5D149  call 0xf09ae1
 	ret	; F5D14D  ret
-Draw_Mem0ryWriteSoundEditName:
+Draw_MemoryWriteSoundEditName:
 	ld	(LCD_CurrentLayer:16), 0	; F5D14E  ld (0x2540),0x00
 	cp	(SoundEdit_SoundKind:16), 0x01	; F5D153  cp (0x27f5),0x01
-	jr	z, Draw_Mem0ryWriteSoundEditName_Skip11	; F5D158  jr Z,0xf5d178
-	ld	xiy, DL_Mem0ryWriteSoundEditName	; F5D15A  ld XIY,0x00f0564b
+	jr	z, Draw_MemoryWriteSoundEditName_Skip11	; F5D158  jr Z,0xf5d178
+	ld	xiy, DL_MemoryWriteSoundEditName	; F5D15A  ld XIY,0x00f0564b
 	ld	xix, DLTable_F0574D	; F5D15F  ld XIX,0x00f0574d
 	call	T_DisplayList_Run	; F5D164  call 0xf417f0
 	ld	xiy, DL_F057C0	; F5D168  ld XIY,0x00f057c0
 	ld	xix, DL_MemoryBank	; F5D16D  ld XIX,0x00f057e3
 	call	T_DisplayListB_Run	; F5D172  call 0xf417f4
-	jr	Draw_Mem0ryWriteSoundEditName_Join6	; F5D176  jr T,0xf5d194
-Draw_Mem0ryWriteSoundEditName_Skip11:
-	ld	xiy, DL_Mem0ryWriteSoundEditName	; F5D178  ld XIY,0x00f0564b
-	ld	xix, DL_Mem0ryWriteSoundEditName + 0xF5	; F5D17D  ld XIX,0x00f05740
+	jr	Draw_MemoryWriteSoundEditName_Join6	; F5D176  jr T,0xf5d194
+Draw_MemoryWriteSoundEditName_Skip11:
+	ld	xiy, DL_MemoryWriteSoundEditName	; F5D178  ld XIY,0x00f0564b
+	ld	xix, DL_MemoryWriteSoundEditName + 0xF5	; F5D17D  ld XIX,0x00f05740
 	call	T_DisplayList_Run	; F5D182  call 0xf417f0
 	ld	xiy, DL_MemoryBank	; F5D186  ld XIY,0x00f057e3
 	ld	xix, DLText_UserDrumKits	; F5D18B  ld XIX,0x00f05801
 	call	T_DisplayListB_Run	; F5D190  call 0xf417f4
-Draw_Mem0ryWriteSoundEditName_Join6:
+Draw_MemoryWriteSoundEditName_Join6:
 	call	SoundEditMemoryWrite_DrawSlotSoundName	; F5D194  call 0xf5d199
 	ret	; F5D198  ret
 
@@ -3199,15 +3199,15 @@ Draw_Write:
 	cp	(0x27f6:16), 0x02	; F5D1F4  cp (0x27f6),0x02
 	jr	z, Draw_Write_Skip3	; F5D1F9  jr Z,0xf5d209
 	ld	xiy, DL_Write	; F5D1FB  ld XIY,0x00f0582e
-	ld	xix, DL_SoundEditS0undNaming	; F5D200  ld XIX,0x00f05850
+	ld	xix, DL_SoundEditSoundNaming	; F5D200  ld XIX,0x00f05850
 	call	T_DisplayList_Run	; F5D205  call 0xf417f0
 Draw_Write_Skip3:
-	ld	xiy, DL_SoundEditS0undNaming	; F5D209  ld XIY,0x00f05850
+	ld	xiy, DL_SoundEditSoundNaming	; F5D209  ld XIY,0x00f05850
 	ld	xix, Draw_Write_DL2	; F5D20E  ld XIX,0x00f05a2e
 	call	T_DisplayList_Run	; F5D213  call 0xf417f0
 	jr	Draw_Write_Join2	; F5D217  jr T,0xf5d227
 Draw_Write_Skip4:
-	ld	xiy, DL_ClrP0siti0nAbcInsDelAA	; F5D219  ld XIY,0x00f0587c
+	ld	xiy, DL_ClrPositionAbcInsDelAA	; F5D219  ld XIY,0x00f0587c
 	ld	xix, Draw_Write_DL2	; F5D21E  ld XIX,0x00f05a2e
 	call	T_DisplayList_Run	; F5D223  call 0xf417f0
 Draw_Write_Join2:
@@ -3255,7 +3255,7 @@ SoundEditDrumMenu_Paint:
 	call	T_DisplayList_Run	; F5D2AA  call 0xf417f0
 	ld	(LCD_CurrentLayer:16), 0	; F5D2AE  ld (0x2540),0x00
 	ld	xiy, DL_EffectSendOutputDspEffect	; F5D2B3  ld XIY,0x00f01e72
-	ld	xix, DL_M0delingSoundEditToneDriver	; F5D2B8  ld XIX,0x00f01f96
+	ld	xix, DL_ModelingSoundEditToneDriver	; F5D2B8  ld XIX,0x00f01f96
 	call	T_DisplayList_Run	; F5D2BD  call 0xf417f0
 	ld	(LCD_CurrentLayer:16), 0	; F5D2C1  ld (0x2540),0x00
 	ld	xiy, DL_F33538	; F5D2C6  ld XIY,0x00f33538
@@ -3349,7 +3349,7 @@ SoundEditNaming_RepaintField_Return2:
 ;              0xF5D3C1
 ; Touches: (0x2530) (0x2532) (0x2534) (0x2536) (0x2540) (0x27A7)  |
 ;          0xF05B34 0xF05B54 0xF05F78 0xF06048 0xF060DA 0xF328DC +2 more
-; Calls:   DisplayList_Run_T0neLayerSoundEditTrigGer T_DisplayList_Run T_DisplayListB_Run SoundEditToneLayerPanning_PaintPanAmounts SoundEditToneLayerPanning_DrawChordTriggers 0xF5BAB8
+; Calls:   DisplayList_Run_ToneLayerSoundEditTrigGer T_DisplayList_Run T_DisplayListB_Run SoundEditToneLayerPanning_PaintPanAmounts SoundEditToneLayerPanning_DrawChordTriggers 0xF5BAB8
 ;          SoundEdit_PaintSlotOrdinals
 ; Evidence: reached by a `call`/`calr` decoded in this transcription (the
 ;           sites are listed above), so 0xF5D3C6 is an instruction boundary.
@@ -3391,7 +3391,7 @@ Dispatch_Code80_RepaintFieldNoAction:
 	ret	; F5D40D  ret
 ; SoundEditToneLayerPanning_Paint: Dispatch_Code80_PaintTable[code 0x83] -- Dispatch_Code80_Bracketed, the full paint.
 SoundEditToneLayerPanning_Paint:
-	call	DisplayList_Run_T0neLayerSoundEditTrigGer	; F5D40E  call 0xf5c49f
+	call	DisplayList_Run_ToneLayerSoundEditTrigGer	; F5D40E  call 0xf5c49f
 	ldw	bc, ModelingPage_Fields+16	; F5D412  ld BC,0x27b6
 	ld	d, (xbc)	; F5D415  ld D,(XBC)
 	cp	d, 0:i3	; F5D417  cp D,0
@@ -3503,8 +3503,8 @@ SoundEditToneLayerPanning_PaintPanAmounts_Loop:
 ; Called from: in-module: 0xF5D49A
 ; Touches: (0x2350) (0x2352) (0x2540)  |  0xF03F31 0xF03F77 0xF0426B
 ;          0xF04323 0xF04344 0xF04358 +11 more
-; Calls:   0xF09AE1 DisplayList_Run_T0neLayerSoundEditTrigGer_T0neSelectSoundEdit T_DisplayList_Run KeyboardIcon_Draw 0xF5BAB8 0xF5BB00
-;          T_DisplayListB_Run Draw_PitchSoundEditEnvPitchLf0 SoundEdit_PaintPageLabelBackdrop Draw_Page12EnvelopeKeyoffCurSor Draw_Page22KeyFollowEnvelopeKeyFollowTouchAttack SoundEditFilter_PaintHeader
+; Calls:   0xF09AE1 DisplayList_Run_ToneLayerSoundEditTrigGer_ToneSelectSoundEdit T_DisplayList_Run KeyboardIcon_Draw 0xF5BAB8 0xF5BB00
+;          T_DisplayListB_Run Draw_PitchSoundEditEnvPitchLfo SoundEdit_PaintPageLabelBackdrop Draw_Page12EnvelopeKeyoffCurSor Draw_Page22KeyFollowEnvelopeKeyFollowTouchAttack SoundEditFilter_PaintHeader
 ;          +1 more
 ; Evidence: reached by a `call`/`calr` decoded in this transcription (the
 ;           sites are listed above), so 0xF5D4A7 is an instruction boundary.
@@ -3530,7 +3530,7 @@ SoundEditToneLayerPanning_PaintPanAmountField_Return:
 	ret	; F5D4C2  ret
 ; SoundEditToneLayerKeyLayer_Paint: Dispatch_Code80_PaintTable[code 0x84] -- Dispatch_Code80_Bracketed, the full paint.
 SoundEditToneLayerKeyLayer_Paint:
-	call	DisplayList_Run_T0neLayerSoundEditTrigGer_T0neSelectSoundEdit	; F5D4C3  call 0xf5c4b8
+	call	DisplayList_Run_ToneLayerSoundEditTrigGer_ToneSelectSoundEdit	; F5D4C3  call 0xf5c4b8
 	ld	(LCD_CurrentLayer:16), 0	; F5D4C7  ld (0x2540),0x00
 	ld	xiy, SoundEditToneLayerKeyLayer_Paint_DL1	; F5D4CC  ld XIY,0x00f060e4
 	ld	xix, SoundEditToneLayerVelocityLayer_Paint_DL1	; F5D4D1  ld XIX,0x00f06154
@@ -3551,7 +3551,7 @@ SoundEditToneLayerKeyLayer_Paint:
 	ret	; F5D518  ret
 ; SoundEditToneLayerVelocityLayer_Paint: Dispatch_Code80_PaintTable[code 0x85] -- Dispatch_Code80_Bracketed, the full paint.
 SoundEditToneLayerVelocityLayer_Paint:
-	call	DisplayList_Run_T0neLayerSoundEditTrigGer_T0neSelectSoundEdit	; F5D519  call 0xf5c4b8
+	call	DisplayList_Run_ToneLayerSoundEditTrigGer_ToneSelectSoundEdit	; F5D519  call 0xf5c4b8
 	ld	(LCD_CurrentLayer:16), 0	; F5D51D  ld (0x2540),0x00
 	ld	xiy, SoundEditToneLayerVelocityLayer_Paint_DL1	; F5D522  ld XIY,0x00f06154
 	ld	xix, DL_EffectBlockEff1Eff2RevMain	; F5D527  ld XIX,0x00f06224
@@ -3568,7 +3568,7 @@ SoundEditToneLayerVelocityLayer_Paint:
 	call	T_DisplayListB_Run	; F5D55A  call 0xf417f4
 	ret	; F5D55E  ret
 Draw_StartPitchStopPitchTotal:
-	call	Draw_PitchSoundEditEnvPitchLf0	; F5D55F  call 0xf5c4ff
+	call	Draw_PitchSoundEditEnvPitchLfo	; F5D55F  call 0xf5c4ff
 	ld	xiy, DL_StartPitchStopPitchTotal	; F5D563  ld XIY,0x00f03f31
 	ld	xix, SoundEditAmp_PaintHeader_DL	; F5D568  ld XIX,0x00f03f77
 	call	T_DisplayList_Run	; F5D56D  call 0xf417f0
@@ -3577,7 +3577,7 @@ Draw_StartPitchStopPitchTotal:
 	ret	; F5D579  ret
 ; SoundEditPitchEnvelope2_Paint: Dispatch_Code80_PaintTable[code 0x89] -- Dispatch_Code80_Bracketed, the full paint.
 SoundEditPitchEnvelope2_Paint:
-	call	Draw_PitchSoundEditEnvPitchLf0	; F5D57A  call 0xf5c4ff
+	call	Draw_PitchSoundEditEnvPitchLfo	; F5D57A  call 0xf5c4ff
 	call	Draw_Page22KeyFollowEnvelopeKeyFollowTouchAttack	; F5D57E  call 0xf5d5c8
 	ret	; F5D582  ret
 ; SoundEditFilterKeyFollow_Paint: Dispatch_Code80_PaintTable[code 0x96] -- Dispatch_Code80_Bracketed, the full paint.
@@ -3592,7 +3592,7 @@ SoundEditFilterKeyFollow_Paint:
 	call	T_DisplayList_Run	; F5D5A4  call 0xf417f0
 	ld	(LCD_CurrentLayer:16), 0	; F5D5A8  ld (0x2540),0x00
 	ld	xiy, DL_FilterKeyFollow	; F5D5AD  ld XIY,0x00f065e0
-	ld	xix, DL_Lf01Lf02Lf03Lf04Lf0WaveDelay	; F5D5B2  ld XIX,0x00f06601
+	ld	xix, DL_Lfo1Lfo2Lfo3Lfo4LfoWaveDelay	; F5D5B2  ld XIX,0x00f06601
 	call	T_DisplayList_Run	; F5D5B7  call 0xf417f0
 	call	SoundEdit_PaintPageLabelBackdrop	; F5D5BB  call 0xf5bfbd
 	call	SoundEditFilterKeyFollow_PaintKeyboardAndValues	; F5D5BF  call 0xf5c772
@@ -3607,7 +3607,7 @@ SoundEditFilterEnvelope2_Paint:
 ; Touches: (0x2350) (0x2352) (0x2540) (0x27F5)  |  0xF04B6C 0xF04CA9
 ;          0xF04CBD 0xF328DC 0xF32918 0xF3294B +18 more
 ; Calls:   T_DisplayList_Run SoundEdit_PaintPageLabelBackdrop KeyboardIcon_Draw 0xF5BAB8 0xF5BB00 T_DisplayListB_Run
-;          SoundEditFilter_PaintHeader Draw_Lf01Lf02Lf03Lf04Lf0WaveDelay SoundEditAmp_PaintHeader SoundEditToneLayerPanning_PaintPanAmounts SoundEditToneLayerPanning_DrawChordTriggers 0xF09AE1
+;          SoundEditFilter_PaintHeader Draw_Lfo1Lfo2Lfo3Lfo4LfoWaveDelay SoundEditAmp_PaintHeader SoundEditToneLayerPanning_PaintPanAmounts SoundEditToneLayerPanning_DrawChordTriggers 0xF09AE1
 ;          +2 more
 ; Evidence: reached by a `call`/`calr` decoded in this transcription (the
 ;           sites are listed above), so 0xF5D5C8 is an instruction boundary.
@@ -3638,12 +3638,12 @@ Draw_Page22KeyFollowEnvelopeKeyFollowTouchAttack:
 ; SoundEditFilterLfo_Paint: Dispatch_Code80_PaintTable[code 0x99] -- Dispatch_Code80_Bracketed, the full paint.
 SoundEditFilterLfo_Paint:
 	call	SoundEditFilter_PaintHeader	; F5D619  call 0xf5c929
-	call	Draw_Lf01Lf02Lf03Lf04Lf0WaveDelay	; F5D61D  call 0xf5c517
+	call	Draw_Lfo1Lfo2Lfo3Lfo4LfoWaveDelay	; F5D61D  call 0xf5c517
 	ret	; F5D621  ret
 ; SoundEditAmpLfo_Paint: Dispatch_Code80_PaintTable[code 0x8F] -- Dispatch_Code80_Bracketed, the full paint.
 SoundEditAmpLfo_Paint:
 	call	SoundEditAmp_PaintHeader	; F5D622  call 0xf5c727
-	call	Draw_Lf01Lf02Lf03Lf04Lf0WaveDelay	; F5D626  call 0xf5c517
+	call	Draw_Lfo1Lfo2Lfo3Lfo4LfoWaveDelay	; F5D626  call 0xf5c517
 	ret	; F5D62A  ret
 ; SoundEditToneLayerPanning_RepaintField: Dispatch_Code80_RepaintFieldTable[code 0x83] -- Dispatch_Code80, the partial repaint.
 SoundEditToneLayerPanning_RepaintField:
@@ -3768,14 +3768,14 @@ SoundEditController_PaintHeader_Copy:
 	cp	(SoundEdit_SoundKind:16), 0x01	; F5D77F  cp (0x27f5),0x01
 	jr	z, SoundEditController_PaintHeader_Copy_Skip	; F5D784  jr Z,0xf5d79b
 	ld	(LCD_CurrentLayer:16), 0	; F5D786  ld (0x2540),0x00
-	ld	xiy, DL_C0ntr0llerSoundEditDepth	; F5D78B  ld XIY,0x00f32c2a
+	ld	xiy, DL_ControllerSoundEditDepth	; F5D78B  ld XIY,0x00f32c2a
 	ld	xix, DL_1st2nd	; F5D790  ld XIX,0x00f32d03
 	call	T_DisplayList_Run	; F5D795  call 0xf417f0
 	jr	SoundEditController_PaintHeader_Copy_Return	; F5D799  jr T,0xf5d7c1
 SoundEditController_PaintHeader_Copy_Skip:
 	ld	(LCD_CurrentLayer:16), 0	; F5D79B  ld (0x2540),0x00
-	ld	xiy, DL_C0ntr0llerSoundEditDepth	; F5D7A0  ld XIY,0x00f32c2a
-	ld	xix, DL_C0ntr0llerSoundEditDepth + 0x9E	; F5D7A5  ld XIX,0x00f32cc8
+	ld	xiy, DL_ControllerSoundEditDepth	; F5D7A0  ld XIY,0x00f32c2a
+	ld	xix, DL_ControllerSoundEditDepth + 0x9E	; F5D7A5  ld XIX,0x00f32cc8
 	call	T_DisplayList_Run	; F5D7AA  call 0xf417f0
 	ld	(LCD_CurrentLayer:16), 0	; F5D7AE  ld (0x2540),0x00
 	ld	xiy, DL_1st2nd	; F5D7B3  ld XIY,0x00f32d03
@@ -6653,7 +6653,7 @@ MeasureInsert_InsertWithinTrack_Return:
 ; SongEdit_CopyMeasures: The MEASURE COPY job: source track (0x0C70) (or 0x7F, all tracks), destination track
 ;   (0x0C71), source measure (0x0C73), destination measure (0x0C75), count (0x0C77), all range-checked (error 3);
 ;   error 9 when only one side is the master track (part 0x20); per track SongEdit_CopyMeasuresToTrack copies. Run by
-;   MeasureC0py_LcdKeyRow1, which stages the fields, and by MeasureC0py_RepeatCopy. Basis: callers + body. (notes/naming-
+;   MeasureCopy_LcdKeyRow1, which stages the fields, and by MeasureCopy_RepeatCopy. Basis: callers + body. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave4_n.json)
 SongEdit_CopyMeasures:		; <- T_SongEdit_CopyMeasures
 	and	(0x0d45:16), 0xfc	; F5F221  and (0x0d45),0xfc
@@ -8594,66 +8594,66 @@ TrackMerge_DetachSourceTrack:
 	ret	; F60597  ret
 
 ; --------------------------------------------------------------------------
-; Vel0cityChange_Execute
-; Called from: T_Vel0cityChange_Execute (x1)
+; VelocityChange_Execute
+; Called from: T_VelocityChange_Execute (x1)
 ; Touches: (0x0C70) (0x0C73) (0x0C77) (0x0C7A) (0x0C7B) (0x0C8A) (0x0C8E)
 ;          (0x0CA2) (0x0CA3) (0x0D18) +1 more  |  0x603422
-; Calls:   T_BStore_LoadGeometry Vel0cityChange_ApplyToTrack
-; Evidence: thunk slot T_Vel0cityChange_Execute holds `jp 0x00F60598`, and 0xF60598 is an
+; Calls:   T_BStore_LoadGeometry VelocityChange_ApplyToTrack
+; Evidence: thunk slot T_VelocityChange_Execute holds `jp 0x00F60598`, and 0xF60598 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; Vel0cityChange_Execute: The VEL0CITY CHANGE job (Vel0cityChange_LcdKeyRow2, through T_Vel0cityChange_Execute): track (0x0C70)
+; VelocityChange_Execute: The VEL0CITY CHANGE job (VelocityChange_LcdKeyRow2, through T_VelocityChange_Execute): track (0x0C70)
 ;   1..(0x0CA2) or 0x7F = all, measures (0x0C73)/(0x0C77) 1..999, mode (0x0C7A) 0 = add the signed value (0x0C7B) (not
-;   0x80), 1 = set it (0..127), else error 3; per track Vel0cityChange_ApplyToTrack rewrites the velocity byte (+3) of each 0x9n event,
+;   0x80), 1 = set it (0..127), else error 3; per track VelocityChange_ApplyToTrack rewrites the velocity byte (+3) of each 0x9n event,
 ;   clamped 0..127. Basis: caller + body. (notes/naming-pilot-2026-10-06/proposals_wave5_q.json)
-Vel0cityChange_Execute:		; <- T_Vel0cityChange_Execute
+VelocityChange_Execute:		; <- T_VelocityChange_Execute
 	call	T_BStore_LoadGeometry	; F60598  call 0xf427c4
 	ld	a, (3184:16)	; F6059C  ld A,(0x0c70)
 	cp	a, 1:i3	; F605A0  cp A,1
-	jr	c, Vel0cityChange_Execute_Skip3	; F605A2  jr C,0xf605ed
+	jr	c, VelocityChange_Execute_Skip3	; F605A2  jr C,0xf605ed
 	cp	a, 127	; F605A4  cp A,0x7f
-	jr	z, Vel0cityChange_Execute_Skip	; F605A7  jr Z,0xf605af
+	jr	z, VelocityChange_Execute_Skip	; F605A7  jr Z,0xf605af
 	cp	a, (0x0ca2:16)	; F605A9  cp A,(0x0ca2)
-	jr	ugt, Vel0cityChange_Execute_Skip3	; F605AD  jr UGT,0xf605ed
-Vel0cityChange_Execute_Skip:
+	jr	ugt, VelocityChange_Execute_Skip3	; F605AD  jr UGT,0xf605ed
+VelocityChange_Execute_Skip:
 	ld	wa, (3187:16)	; F605AF  ld WA,(0x0c73)
 	cp	wa, 1:i3	; F605B3  cp WA,1
-	jr	c, Vel0cityChange_Execute_Skip3	; F605B5  jr C,0xf605ed
+	jr	c, VelocityChange_Execute_Skip3	; F605B5  jr C,0xf605ed
 	cp	wa, 999	; F605B7  cp WA,0x03e7
-	jr	ugt, Vel0cityChange_Execute_Skip3	; F605BB  jr UGT,0xf605ed
+	jr	ugt, VelocityChange_Execute_Skip3	; F605BB  jr UGT,0xf605ed
 	ld	wa, (3191:16)	; F605BD  ld WA,(0x0c77)
 	cp	wa, 1:i3	; F605C1  cp WA,1
-	jr	c, Vel0cityChange_Execute_Skip3	; F605C3  jr C,0xf605ed
+	jr	c, VelocityChange_Execute_Skip3	; F605C3  jr C,0xf605ed
 	cp	wa, 999	; F605C5  cp WA,0x03e7
-	jr	ugt, Vel0cityChange_Execute_Skip3	; F605C9  jr UGT,0xf605ed
+	jr	ugt, VelocityChange_Execute_Skip3	; F605C9  jr UGT,0xf605ed
 	ld	a, (3194:16)	; F605CB  ld A,(0x0c7a)
 	cp	a, 0:i3	; F605CF  cp A,0
-	jr	nz, Vel0cityChange_Execute_Skip2	; F605D1  jr NZ,0xf605de
+	jr	nz, VelocityChange_Execute_Skip2	; F605D1  jr NZ,0xf605de
 	ld	a, (3195:16)	; F605D3  ld A,(0x0c7b)
 	cp	a, 128	; F605D7  cp A,0x80
-	jr	z, Vel0cityChange_Execute_Skip3	; F605DA  jr Z,0xf605ed
-	jr	Vel0cityChange_Execute_Join	; F605DC  jr T,0xf605f5
-Vel0cityChange_Execute_Skip2:
+	jr	z, VelocityChange_Execute_Skip3	; F605DA  jr Z,0xf605ed
+	jr	VelocityChange_Execute_Join	; F605DC  jr T,0xf605f5
+VelocityChange_Execute_Skip2:
 	cp	a, 1:i3	; F605DE  cp A,1
-	jr	nz, Vel0cityChange_Execute_Skip3	; F605E0  jr NZ,0xf605ed
+	jr	nz, VelocityChange_Execute_Skip3	; F605E0  jr NZ,0xf605ed
 	ld	a, (3195:16)	; F605E2  ld A,(0x0c7b)
 	bit	7, a	; F605E6  bit 0x07,A
-	jr	nz, Vel0cityChange_Execute_Skip3	; F605E9  jr NZ,0xf605ed
-	jr	Vel0cityChange_Execute_Join	; F605EB  jr T,0xf605f5
-Vel0cityChange_Execute_Skip3:
+	jr	nz, VelocityChange_Execute_Skip3	; F605E9  jr NZ,0xf605ed
+	jr	VelocityChange_Execute_Join	; F605EB  jr T,0xf605f5
+VelocityChange_Execute_Skip3:
 	ld	(BStore_ErrorCode:16), 3	; F605ED  ld (0x0d4a),0x03
-	jrl	Vel0cityChange_ApplyToTrack_Join7	; F605F2  jrl T,0xf60791
-Vel0cityChange_Execute_Join:
+	jrl	VelocityChange_ApplyToTrack_Join7	; F605F2  jrl T,0xf60791
+VelocityChange_Execute_Join:
 	ld	(BStore_ErrorCode:16), 0	; F605F5  ld (0x0d4a),0x00
 	and	(0x0c8a:16), 0xbf	; F605FA  and (0x0c8a),0xbf
 	cp	(0x0c70:16), 0x7f	; F605FF  cp (0x0c70),0x7f
-	jr	nz, Vel0cityChange_Execute_Skip4	; F60604  jr NZ,0xf60608
-	jr	Vel0cityChange_Execute_Join2	; F60606  jr T,0xf60637
-Vel0cityChange_Execute_Skip4:
+	jr	nz, VelocityChange_Execute_Skip4	; F60604  jr NZ,0xf60608
+	jr	VelocityChange_Execute_Join2	; F60606  jr T,0xf60637
+VelocityChange_Execute_Skip4:
 	xor	hl, hl	; F60608  xor HL,HL
 	ld	l, (3184:16)	; F6060A  ld L,(0x0c70)
 	dec	1, l	; F6060E  dec 1,L
@@ -8662,19 +8662,19 @@ Vel0cityChange_Execute_Skip4:
 	ld	a, (xix+hl)	; F60616  ld A,(XIX+HL)
 	pop	xix	; F6061B  pop XIX
 	cp	a, 32	; F6061C  cp A,0x20
-	jr	z, Vel0cityChange_Execute_Skip5	; F6061F  jr Z,0xf6062f
+	jr	z, VelocityChange_Execute_Skip5	; F6061F  jr Z,0xf6062f
 	ld	a, (3184:16)	; F60621  ld A,(0x0c70)
 	ld	(3214:16), a	; F60625  ld (0x0c8e),A
-	calr	Vel0cityChange_ApplyToTrack	; F60629  calr 0xf6068d
-	jrl	Vel0cityChange_ApplyToTrack_Join7	; F6062C  jrl T,0xf60791
-Vel0cityChange_Execute_Skip5:
+	calr	VelocityChange_ApplyToTrack	; F60629  calr 0xf6068d
+	jrl	VelocityChange_ApplyToTrack_Join7	; F6062C  jrl T,0xf60791
+VelocityChange_Execute_Skip5:
 	ld	(BStore_ErrorCode:16), 9	; F6062F  ld (0x0d4a),0x09
-	jrl	Vel0cityChange_ApplyToTrack_Join7	; F60634  jrl T,0xf60791
-Vel0cityChange_Execute_Join2:
+	jrl	VelocityChange_ApplyToTrack_Join7	; F60634  jrl T,0xf60791
+VelocityChange_Execute_Join2:
 	xor	hl, hl	; F60637  xor HL,HL
-Vel0cityChange_Execute_Join3:
+VelocityChange_Execute_Join3:
 	cp	l, (0x0ca3:16)	; F60639  cp L,(0x0ca3)
-	jr	ugt, Vel0cityChange_Execute_Skip8	; F6063D  jr UGT,0xf60682
+	jr	ugt, VelocityChange_Execute_Skip8	; F6063D  jr UGT,0xf60682
 	ld	h, l	; F6063F  ld H,L
 	inc	1, h	; F60641  inc 1,H
 	ld	(3214:16), h	; F60643  ld (0x0c8e),H
@@ -8686,29 +8686,29 @@ Vel0cityChange_Execute_Join3:
 	pop	xix	; F60655  pop XIX
 	popw	hl	; F60656  pop HL
 	cp	a, 32	; F60657  cp A,0x20
-	jr	z, Vel0cityChange_Execute_Skip6	; F6065A  jr Z,0xf60661
+	jr	z, VelocityChange_Execute_Skip6	; F6065A  jr Z,0xf60661
 	pushw	hl	; F6065C  push HL
-	calr	Vel0cityChange_ApplyToTrack	; F6065D  calr 0xf6068d
+	calr	VelocityChange_ApplyToTrack	; F6065D  calr 0xf6068d
 	popw	hl	; F60660  pop HL
-Vel0cityChange_Execute_Skip6:
+VelocityChange_Execute_Skip6:
 	cp	(BStore_ErrorCode:16), 0x00	; F60661  cp (0x0d4a),0x00
-	jr	z, Vel0cityChange_Execute_Skip7	; F60666  jr Z,0xf6067e
+	jr	z, VelocityChange_Execute_Skip7	; F60666  jr Z,0xf6067e
 	cp	(BStore_ErrorCode:16), 0x01	; F60668  cp (0x0d4a),0x01
-	jr	z, Vel0cityChange_Execute_Skip7	; F6066D  jr Z,0xf6067e
+	jr	z, VelocityChange_Execute_Skip7	; F6066D  jr Z,0xf6067e
 	cp	(0x0d18:16), 0x00	; F6066F  cp (0x0d18),0x00
-	jr	nz, Vel0cityChange_Execute_Skip7	; F60674  jr NZ,0xf6067e
+	jr	nz, VelocityChange_Execute_Skip7	; F60674  jr NZ,0xf6067e
 	ld	a, (BStore_ErrorCode:16)	; F60676  ld A,(0x0d4a)
 	ld	(3352:16), a	; F6067A  ld (0x0d18),A
-Vel0cityChange_Execute_Skip7:
+VelocityChange_Execute_Skip7:
 	inc	1, hl	; F6067E  inc 1,HL
-	jr	Vel0cityChange_Execute_Join3	; F60680  jr T,0xf60639
-Vel0cityChange_Execute_Skip8:
+	jr	VelocityChange_Execute_Join3	; F60680  jr T,0xf60639
+VelocityChange_Execute_Skip8:
 	ld	a, (3352:16)	; F60682  ld A,(0x0d18)
 	ld	(BStore_ErrorCode:16), a	; F60686  ld (0x0d4a),A
-	jrl	Vel0cityChange_ApplyToTrack_Join7	; F6068A  jrl T,0xf60791
+	jrl	VelocityChange_ApplyToTrack_Join7	; F6068A  jrl T,0xf60791
 
 ; --------------------------------------------------------------------------
-; Vel0cityChange_ApplyToTrack
+; VelocityChange_ApplyToTrack
 ; Called from: in-module: 0xF60629 0xF6065D
 ; Touches: (0x0C73) (0x0C77) (0x0C7A) (0x0C7B) (0x0C8E) (0x0C90) (0x0D1C)
 ;          (0x0D4A) (0x126E)
@@ -8719,92 +8719,92 @@ Vel0cityChange_Execute_Skip8:
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; Vel0cityChange_ApplyToTrack: VEL0CITY CHANGE on track (0x0C8E): seeks measure (0x0C73) and, for (0x0C77) measures,
+; VelocityChange_ApplyToTrack: VEL0CITY CHANGE on track (0x0C8E): seeks measure (0x0C73) and, for (0x0C77) measures,
 ;   sets the velocity byte (+3) of each 0x9n event to (0x0C7B) (mode (0x0C7A) = 1) or adds the signed (0x0C7B) clamped
-;   to 0..127. Vel0cityChange_Execute calls it for one track or for each track of ALL. Basis: caller + caller header +
+;   to 0..127. VelocityChange_Execute calls it for one track or for each track of ALL. Basis: caller + caller header +
 ;   body. (notes/naming-pilot-2026-10-06/proposals_wave6_t.json)
-Vel0cityChange_ApplyToTrack:
+VelocityChange_ApplyToTrack:
 	call	T_Seq_FindMasterTrack	; F6068D  call 0xf427a0
 	ld	a, (3214:16)	; F60691  ld A,(0x0c8e)
 	ld	de, (3187:16)	; F60695  ld DE,(0x0c73)
 	ld	(3216:16), de	; F60699  ld (0x0c90),DE
 	call	T_BStore_SeekMeasure	; F6069D  call 0xf42774
 	cp	(BStore_ErrorCode:16), 0x00	; F606A1  cp (0x0d4a),0x00
-	jrl	nz, Vel0cityChange_ApplyToTrack_Return	; F606A6  jrl NZ,0xf60790
+	jrl	nz, VelocityChange_ApplyToTrack_Return	; F606A6  jrl NZ,0xf60790
 	xor	de, de	; F606A9  xor DE,DE
-Vel0cityChange_ApplyToTrack_Join:
+VelocityChange_ApplyToTrack_Join:
 	cp	de, (0x0c77:16)	; F606AB  cp DE,(0x0c77)
-	jr	nz, Vel0cityChange_ApplyToTrack_Skip	; F606AF  jr NZ,0xf606b4
-	jrl	Vel0cityChange_ApplyToTrack_Return	; F606B1  jrl T,0xf60790
-Vel0cityChange_ApplyToTrack_Skip:
+	jr	nz, VelocityChange_ApplyToTrack_Skip	; F606AF  jr NZ,0xf606b4
+	jrl	VelocityChange_ApplyToTrack_Return	; F606B1  jrl T,0xf60790
+VelocityChange_ApplyToTrack_Skip:
 	xor	bc, bc	; F606B4  xor BC,BC
-Vel0cityChange_ApplyToTrack_Join2:
+VelocityChange_ApplyToTrack_Join2:
 	cp	c, (0x0d1c:16)	; F606B6  cp C,(0x0d1c)
-	jr	nz, Vel0cityChange_ApplyToTrack_Join3	; F606BA  jr NZ,0xf606bf
-	jrl	Vel0cityChange_ApplyToTrack_Join6	; F606BC  jrl T,0xf60760
-Vel0cityChange_ApplyToTrack_Join3:
+	jr	nz, VelocityChange_ApplyToTrack_Join3	; F606BA  jr NZ,0xf606bf
+	jrl	VelocityChange_ApplyToTrack_Join6	; F606BC  jrl T,0xf60760
+VelocityChange_ApplyToTrack_Join3:
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F606BF  ld XHL,(0x126e)
 	ld	a, (xhl+iy)	; F606C3  ld A,(XHL+IY)
 	cp	a, 130	; F606C8  cp A,0x82
-	jr	nz, Vel0cityChange_ApplyToTrack_Skip2	; F606CB  jr NZ,0xf606d0
-	jrl	Vel0cityChange_ApplyToTrack_Return	; F606CD  jrl T,0xf60790
-Vel0cityChange_ApplyToTrack_Skip2:
+	jr	nz, VelocityChange_ApplyToTrack_Skip2	; F606CB  jr NZ,0xf606d0
+	jrl	VelocityChange_ApplyToTrack_Return	; F606CD  jrl T,0xf60790
+VelocityChange_ApplyToTrack_Skip2:
 	cp	a, 129	; F606D0  cp A,0x81
-	jrl	z, Vel0cityChange_ApplyToTrack_Skip9	; F606D3  jrl Z,0xf60757
+	jrl	z, VelocityChange_ApplyToTrack_Skip9	; F606D3  jrl Z,0xf60757
 	and	a, 240	; F606D6  and A,0xf0
 	cp	a, 144	; F606D9  cp A,0x90
-	jr	nz, Vel0cityChange_ApplyToTrack_Join5	; F606DC  jr NZ,0xf60747
+	jr	nz, VelocityChange_ApplyToTrack_Join5	; F606DC  jr NZ,0xf60747
 	call	T_BStore_CursorAdvance	; F606DE  call 0xf4279c
 	cp	(BStore_ErrorCode:16), 0x00	; F606E2  cp (0x0d4a),0x00
-	jr	z, Vel0cityChange_ApplyToTrack_Skip3	; F606E7  jr Z,0xf606ec
-	jrl	Vel0cityChange_ApplyToTrack_Return	; F606E9  jrl T,0xf60790
-Vel0cityChange_ApplyToTrack_Skip3:
+	jr	z, VelocityChange_ApplyToTrack_Skip3	; F606E7  jr Z,0xf606ec
+	jrl	VelocityChange_ApplyToTrack_Return	; F606E9  jrl T,0xf60790
+VelocityChange_ApplyToTrack_Skip3:
 	call	T_BStore_CursorAdvance	; F606EC  call 0xf4279c
 	cp	(BStore_ErrorCode:16), 0x00	; F606F0  cp (0x0d4a),0x00
-	jr	z, Vel0cityChange_ApplyToTrack_Skip4	; F606F5  jr Z,0xf606fa
-	jrl	Vel0cityChange_ApplyToTrack_Return	; F606F7  jrl T,0xf60790
-Vel0cityChange_ApplyToTrack_Skip4:
+	jr	z, VelocityChange_ApplyToTrack_Skip4	; F606F5  jr Z,0xf606fa
+	jrl	VelocityChange_ApplyToTrack_Return	; F606F7  jrl T,0xf60790
+VelocityChange_ApplyToTrack_Skip4:
 	call	T_BStore_CursorAdvance	; F606FA  call 0xf4279c
 	cp	(BStore_ErrorCode:16), 0x00	; F606FE  cp (0x0d4a),0x00
-	jr	z, Vel0cityChange_ApplyToTrack_Skip5	; F60703  jr Z,0xf60708
-	jrl	Vel0cityChange_ApplyToTrack_Return	; F60705  jrl T,0xf60790
-Vel0cityChange_ApplyToTrack_Skip5:
+	jr	z, VelocityChange_ApplyToTrack_Skip5	; F60703  jr Z,0xf60708
+	jrl	VelocityChange_ApplyToTrack_Return	; F60705  jrl T,0xf60790
+VelocityChange_ApplyToTrack_Skip5:
 	xor	wa, wa	; F60708  xor WA,WA
 	ld	a, (3195:16)	; F6070A  ld A,(0x0c7b)
 	cp	(0x0c7a:16), 0x01	; F6070E  cp (0x0c7a),0x01
-	jr	nz, Vel0cityChange_ApplyToTrack_Skip6	; F60713  jr NZ,0xf60720
+	jr	nz, VelocityChange_ApplyToTrack_Skip6	; F60713  jr NZ,0xf60720
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F60715  ld XHL,(0x126e)
 	ld	(xhl+iy), a	; F60719  ld (XHL+IY),A
-	jr	Vel0cityChange_ApplyToTrack_Join5	; F6071E  jr T,0xf60747
-Vel0cityChange_ApplyToTrack_Skip6:
+	jr	VelocityChange_ApplyToTrack_Join5	; F6071E  jr T,0xf60747
+VelocityChange_ApplyToTrack_Skip6:
 	exts	wa	; F60720  exts WA
 	ld	ix, wa	; F60722  ld IX,WA
 	xor	w, w	; F60724  xor W,W
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F60726  ld XHL,(0x126e)
 	ld	a, (xhl+iy)	; F6072A  ld A,(XHL+IY)
 	add	wa, ix	; F6072F  add WA,IX
-	jr	pl, Vel0cityChange_ApplyToTrack_Skip7	; F60731  jr P/PL,0xf60737
+	jr	pl, VelocityChange_ApplyToTrack_Skip7	; F60731  jr P/PL,0xf60737
 	xor	a, a	; F60733  xor A,A
-	jr	Vel0cityChange_ApplyToTrack_Join4	; F60735  jr T,0xf6073e
-Vel0cityChange_ApplyToTrack_Skip7:
+	jr	VelocityChange_ApplyToTrack_Join4	; F60735  jr T,0xf6073e
+VelocityChange_ApplyToTrack_Skip7:
 	cp	a, 127	; F60737  cp A,0x7f
-	jr	ule, Vel0cityChange_ApplyToTrack_Join4	; F6073A  jr ULE,0xf6073e
+	jr	ule, VelocityChange_ApplyToTrack_Join4	; F6073A  jr ULE,0xf6073e
 	ld	a, 127:opc	; F6073C  ld A,0x7f
-Vel0cityChange_ApplyToTrack_Join4:
+VelocityChange_ApplyToTrack_Join4:
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F6073E  ld XHL,(0x126e)
 	ld	(xhl+iy), a	; F60742  ld (XHL+IY),A
-Vel0cityChange_ApplyToTrack_Join5:
+VelocityChange_ApplyToTrack_Join5:
 	call	T_BStore_CursorAdvance	; F60747  call 0xf4279c
 	cp	(BStore_ErrorCode:16), 0x00	; F6074B  cp (0x0d4a),0x00
-	jr	z, Vel0cityChange_ApplyToTrack_Skip8	; F60750  jr Z,0xf60754
-	jr	Vel0cityChange_ApplyToTrack_Return	; F60752  jr T,0xf60790
-Vel0cityChange_ApplyToTrack_Skip8:
-	jrl	Vel0cityChange_ApplyToTrack_Join3	; F60754  jrl T,0xf606bf
-Vel0cityChange_ApplyToTrack_Skip9:
+	jr	z, VelocityChange_ApplyToTrack_Skip8	; F60750  jr Z,0xf60754
+	jr	VelocityChange_ApplyToTrack_Return	; F60752  jr T,0xf60790
+VelocityChange_ApplyToTrack_Skip8:
+	jrl	VelocityChange_ApplyToTrack_Join3	; F60754  jrl T,0xf606bf
+VelocityChange_ApplyToTrack_Skip9:
 	inc	1, c	; F60757  inc 1,C
 	call	T_BStore_CursorAdvance	; F60759  call 0xf4279c
-	jrl	Vel0cityChange_ApplyToTrack_Join2	; F6075D  jrl T,0xf606b6
-Vel0cityChange_ApplyToTrack_Join6:
+	jrl	VelocityChange_ApplyToTrack_Join2	; F6075D  jrl T,0xf606b6
+VelocityChange_ApplyToTrack_Join6:
 	inc	1, de	; F60760  inc 1,DE
 	push	xiz	; F60762  push XIZ
 	ld	xiz, (BStore_CursorBlockAddr:16)	; F60763  ld XIZ,(0x126e)
@@ -8826,11 +8826,11 @@ Vel0cityChange_ApplyToTrack_Join6:
 	ld	(BStore_CursorBlockAddr:16), xiz	; F60781  ld (0x126e),XIZ
 	pop	xiz	; F60785  pop XIZ
 	cp	(BStore_ErrorCode:16), 0x00	; F60786  cp (0x0d4a),0x00
-	jr	nz, Vel0cityChange_ApplyToTrack_Return	; F6078B  jr NZ,0xf60790
-	jrl	Vel0cityChange_ApplyToTrack_Join	; F6078D  jrl T,0xf606ab
-Vel0cityChange_ApplyToTrack_Return:
+	jr	nz, VelocityChange_ApplyToTrack_Return	; F6078B  jr NZ,0xf60790
+	jrl	VelocityChange_ApplyToTrack_Join	; F6078D  jrl T,0xf606ab
+VelocityChange_ApplyToTrack_Return:
 	ret	; F60790  ret
-Vel0cityChange_ApplyToTrack_Join7:
+VelocityChange_ApplyToTrack_Join7:
 	call	T_BStore_ErrorToStatusByte_Sub_BStore_ErrorStatusTable_60	; F60791  call 0xf42820
 	call	T_F40A1C	; F60795  call 0xf40a1c
 	ret	; F60799  ret
@@ -9114,14 +9114,14 @@ SongEdit_ResetJobFields_Copy:
 	ld	(3589:16), 100	; F60A9E  ld (0x0e05),0x64
 	ldw	wa, 1	; F60AA3  ld WA,0x0001
 	ld	(3566:16), a	; F60AA6  ld (0x0dee),A
-	ld	(N0teChange_FromMeasure:16), wa	; F60AAA  ld (0x0df0),WA
-	ld	(N0teChange_ToMeasure:16), wa	; F60AAE  ld (0x0df2),WA
+	ld	(NoteChange_FromMeasure:16), wa	; F60AAA  ld (0x0df0),WA
+	ld	(NoteChange_ToMeasure:16), wa	; F60AAE  ld (0x0df2),WA
 	ld	(3584:16), wa	; F60AB2  ld (0x0e00),WA
 	xor	a, a	; F60AB6  xor A,A
-	ld	(N0teChange_FromNote:16), a	; F60AB8  ld (0x0df4),A
-	ld	(N0teChange_ToNote:16), a	; F60ABC  ld (0x0df5),A
-	ld	wa, (N0teChange_ToMeasure:16)	; F60AC0  ld WA,(0x0df2)
-	sub	wa, (N0teChange_FromMeasure:16)	; F60AC4  sub WA,(0x0df0)
+	ld	(NoteChange_FromNote:16), a	; F60AB8  ld (0x0df4),A
+	ld	(NoteChange_ToNote:16), a	; F60ABC  ld (0x0df5),A
+	ld	wa, (NoteChange_ToMeasure:16)	; F60AC0  ld WA,(0x0df2)
+	sub	wa, (NoteChange_FromMeasure:16)	; F60AC4  sub WA,(0x0df0)
 	inc	1, wa	; F60AC8  inc 1,WA
 	ld	(4766:16), wa	; F60ACA  ld (0x129e),WA
 	ldw	wa, 1	; F60ACE  ld WA,0x0001
@@ -9202,49 +9202,49 @@ Seq_LoadTimeSigAtCurrentMeasure_Skip2:
 	ret	; F60B4D  ret
 
 ; --------------------------------------------------------------------------
-; Transp0se_Execute
-; Called from: T_Transp0se_Execute (x1)
+; Transpose_Execute
+; Called from: T_Transpose_Execute (x1)
 ; Touches: (0x0C70) (0x0C73) (0x0C77) (0x0C8E) (0x0CA3) (0x0D18) (0x0D4A)  |
 ;          0x603422
-; Calls:   T_BStore_LoadGeometry Transp0se_ApplyToTrack T_BStore_ErrorToStatusByte T_F40A1C
-; Evidence: thunk slot T_Transp0se_Execute holds `jp 0x00F60B4E`, and 0xF60B4E is an
+; Calls:   T_BStore_LoadGeometry Transpose_ApplyToTrack T_BStore_ErrorToStatusByte T_F40A1C
+; Evidence: thunk slot T_Transpose_Execute holds `jp 0x00F60B4E`, and 0xF60B4E is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; Transp0se_Execute: The TRANSP0SE job (Transp0se_LcdKeyRow2 stages track (0x0DF7), measure (0x0DF8), count (0x0E00)
-;   and calls T_Transp0se_Execute): track 1..(0x0CA3) or 17 = all, measures 1..999 (error 3), master part 0x20 error 9; per track
-;   Transp0se_ApplyToTrack adds the signed (0x0DFC) to the note byte (+2) of each 0x9n event, clamped 0..127. Basis: caller +
+; Transpose_Execute: The TRANSP0SE job (Transpose_LcdKeyRow2 stages track (0x0DF7), measure (0x0DF8), count (0x0E00)
+;   and calls T_Transpose_Execute): track 1..(0x0CA3) or 17 = all, measures 1..999 (error 3), master part 0x20 error 9; per track
+;   Transpose_ApplyToTrack adds the signed (0x0DFC) to the note byte (+2) of each 0x9n event, clamped 0..127. Basis: caller +
 ;   body. (notes/naming-pilot-2026-10-06/proposals_wave5_q.json)
-Transp0se_Execute:		; <- T_Transp0se_Execute
+Transpose_Execute:		; <- T_Transpose_Execute
 	call	T_BStore_LoadGeometry	; F60B4E  call 0xf427c4
 	ld	a, (3184:16)	; F60B52  ld A,(0x0c70)
 	cp	a, 1:i3	; F60B56  cp A,1
-	jr	c, Transp0se_Execute_Skip4	; F60B58  jr C,0xf60b83
+	jr	c, Transpose_Execute_Skip4	; F60B58  jr C,0xf60b83
 	cp	a, 17	; F60B5A  cp A,0x11
-	jr	z, Transp0se_Execute_Skip3	; F60B5D  jr Z,0xf60b65
+	jr	z, Transpose_Execute_Skip3	; F60B5D  jr Z,0xf60b65
 	cp	a, (0x0ca3:16)	; F60B5F  cp A,(0x0ca3)
-	jr	ugt, Transp0se_Execute_Skip4	; F60B63  jr UGT,0xf60b83
-Transp0se_Execute_Skip3:
+	jr	ugt, Transpose_Execute_Skip4	; F60B63  jr UGT,0xf60b83
+Transpose_Execute_Skip3:
 	ld	wa, (3187:16)	; F60B65  ld WA,(0x0c73)
 	cp	wa, 1:i3	; F60B69  cp WA,1
-	jr	c, Transp0se_Execute_Skip4	; F60B6B  jr C,0xf60b83
+	jr	c, Transpose_Execute_Skip4	; F60B6B  jr C,0xf60b83
 	cp	wa, 999	; F60B6D  cp WA,0x03e7
-	jr	ugt, Transp0se_Execute_Skip4	; F60B71  jr UGT,0xf60b83
+	jr	ugt, Transpose_Execute_Skip4	; F60B71  jr UGT,0xf60b83
 	ld	wa, (3191:16)	; F60B73  ld WA,(0x0c77)
 	cp	wa, 1:i3	; F60B77  cp WA,1
-	jr	c, Transp0se_Execute_Skip4	; F60B79  jr C,0xf60b83
+	jr	c, Transpose_Execute_Skip4	; F60B79  jr C,0xf60b83
 	cp	wa, 999	; F60B7B  cp WA,0x03e7
-	jr	ugt, Transp0se_Execute_Skip4	; F60B7F  jr UGT,0xf60b83
-	jr	Transp0se_Execute_Join	; F60B81  jr T,0xf60b8b
-Transp0se_Execute_Skip4:
+	jr	ugt, Transpose_Execute_Skip4	; F60B7F  jr UGT,0xf60b83
+	jr	Transpose_Execute_Join	; F60B81  jr T,0xf60b8b
+Transpose_Execute_Skip4:
 	ld	(BStore_ErrorCode:16), 3	; F60B83  ld (0x0d4a),0x03
-	jrl	Transp0se_Execute_Join4	; F60B88  jrl T,0xf60c23
-Transp0se_Execute_Join:
+	jrl	Transpose_Execute_Join4	; F60B88  jrl T,0xf60c23
+Transpose_Execute_Join:
 	cp	(0x0c70:16), 0x11	; F60B8B  cp (0x0c70),0x11
-	jr	z, Transp0se_Execute_Skip6	; F60B90  jr Z,0xf60bc8
+	jr	z, Transpose_Execute_Skip6	; F60B90  jr Z,0xf60bc8
 	xor	xhl, xhl	; F60B92  xor XHL,XHL
 	ld	l, (3184:16)	; F60B94  ld L,(0x0c70)
 	dec	1, hl	; F60B98  dec 1,HL
@@ -9253,22 +9253,22 @@ Transp0se_Execute_Join:
 	ld	a, (xix+hl)	; F60BA0  ld A,(XIX+HL)
 	pop	xix	; F60BA5  pop XIX
 	cp	a, 32	; F60BA6  cp A,0x20
-	jr	z, Transp0se_Execute_Skip5	; F60BA9  jr Z,0xf60bad
-	jr	Transp0se_Execute_Join2	; F60BAB  jr T,0xf60bb5
-Transp0se_Execute_Skip5:
+	jr	z, Transpose_Execute_Skip5	; F60BA9  jr Z,0xf60bad
+	jr	Transpose_Execute_Join2	; F60BAB  jr T,0xf60bb5
+Transpose_Execute_Skip5:
 	ld	(BStore_ErrorCode:16), 9	; F60BAD  ld (0x0d4a),0x09
-	jrl	Transp0se_Execute_Join4	; F60BB2  jrl T,0xf60c23
-Transp0se_Execute_Join2:
+	jrl	Transpose_Execute_Join4	; F60BB2  jrl T,0xf60c23
+Transpose_Execute_Join2:
 	ld	a, (3184:16)	; F60BB5  ld A,(0x0c70)
 	ld	(3214:16), a	; F60BB9  ld (0x0c8e),A
 	ld	(BStore_ErrorCode:16), 0	; F60BBD  ld (0x0d4a),0x00
-	call	Transp0se_ApplyToTrack	; F60BC2  call 0xf60c2c
-	jr	Transp0se_Execute_Join4	; F60BC6  jr T,0xf60c23
-Transp0se_Execute_Skip6:
+	call	Transpose_ApplyToTrack	; F60BC2  call 0xf60c2c
+	jr	Transpose_Execute_Join4	; F60BC6  jr T,0xf60c23
+Transpose_Execute_Skip6:
 	xor	xhl, xhl	; F60BC8  xor XHL,XHL
-Transp0se_Execute_Join3:
+Transpose_Execute_Join3:
 	cp	l, 16	; F60BCA  cp L,0x10
-	jrl	ugt, Transp0se_Execute_Skip9	; F60BCD  jrl UGT,0xf60c1b
+	jrl	ugt, Transpose_Execute_Skip9	; F60BCD  jrl UGT,0xf60c1b
 	ld	a, l	; F60BD0  ld A,L
 	inc	1, a	; F60BD2  inc 1,A
 	ld	(3214:16), a	; F60BD4  ld (0x0c8e),A
@@ -9280,34 +9280,34 @@ Transp0se_Execute_Join3:
 	pop	xix	; F60BE6  pop XIX
 	pop	xhl	; F60BE7  pop XHL
 	cp	a, 32	; F60BE8  cp A,0x20
-	jr	z, Transp0se_Execute_Skip7	; F60BEB  jr Z,0xf60bf3
+	jr	z, Transpose_Execute_Skip7	; F60BEB  jr Z,0xf60bf3
 	push	xhl	; F60BED  push XHL
-	call	Transp0se_ApplyToTrack	; F60BEE  call 0xf60c2c
+	call	Transpose_ApplyToTrack	; F60BEE  call 0xf60c2c
 	pop	xhl	; F60BF2  pop XHL
-Transp0se_Execute_Skip7:
+Transpose_Execute_Skip7:
 	cp	(BStore_ErrorCode:16), 0x00	; F60BF3  cp (0x0d4a),0x00
-	jr	z, Transp0se_Execute_Skip8	; F60BF8  jr Z,0xf60c17
+	jr	z, Transpose_Execute_Skip8	; F60BF8  jr Z,0xf60c17
 	cp	(BStore_ErrorCode:16), 0x01	; F60BFA  cp (0x0d4a),0x01
-	jr	z, Transp0se_Execute_Skip8	; F60BFF  jr Z,0xf60c17
+	jr	z, Transpose_Execute_Skip8	; F60BFF  jr Z,0xf60c17
 	cp	(BStore_ErrorCode:16), 0x08	; F60C01  cp (0x0d4a),0x08
-	jr	z, Transp0se_Execute_Skip8	; F60C06  jr Z,0xf60c17
+	jr	z, Transpose_Execute_Skip8	; F60C06  jr Z,0xf60c17
 	cp	(0x0d18:16), 0x00	; F60C08  cp (0x0d18),0x00
-	jr	nz, Transp0se_Execute_Skip8	; F60C0D  jr NZ,0xf60c17
+	jr	nz, Transpose_Execute_Skip8	; F60C0D  jr NZ,0xf60c17
 	ld	a, (BStore_ErrorCode:16)	; F60C0F  ld A,(0x0d4a)
 	ld	(3352:16), a	; F60C13  ld (0x0d18),A
-Transp0se_Execute_Skip8:
+Transpose_Execute_Skip8:
 	inc	1, l	; F60C17  inc 1,L
-	jr	Transp0se_Execute_Join3	; F60C19  jr T,0xf60bca
-Transp0se_Execute_Skip9:
+	jr	Transpose_Execute_Join3	; F60C19  jr T,0xf60bca
+Transpose_Execute_Skip9:
 	ld	a, (3352:16)	; F60C1B  ld A,(0x0d18)
 	ld	(BStore_ErrorCode:16), a	; F60C1F  ld (0x0d4a),A
-Transp0se_Execute_Join4:
+Transpose_Execute_Join4:
 	call	T_BStore_ErrorToStatusByte	; F60C23  call 0xf4278c
 	call	T_F40A1C	; F60C27  call 0xf40a1c
 	ret	; F60C2B  ret
 
 ; --------------------------------------------------------------------------
-; Transp0se_ApplyToTrack
+; Transpose_ApplyToTrack
 ; Called from: in-module: 0xF60BC2 0xF60BEE
 ; Touches: (0x0C73) (0x0C77) (0x0C8E) (0x0C90) (0x0CB4) (0x0CBA) (0x0CBC)
 ;          (0x0CBE) (0x0CCC) (0x0CCE) +6 more
@@ -9318,20 +9318,20 @@ Transp0se_Execute_Join4:
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; Transp0se_ApplyToTrack: TRANSP0SE on track (0x0C8E): nothing when the amount (0x0DFC) is 0; seeks measure (0x0C73)
+; Transpose_ApplyToTrack: TRANSP0SE on track (0x0C8E): nothing when the amount (0x0DFC) is 0; seeks measure (0x0C73)
 ;   and, for (0x0C77) measures, adds the signed (0x0DFC) to the note byte (+2) of each 0x9n event, clamped to 0..127.
-;   Transp0se_Execute calls it for one track or each non-master track of ALL. Basis: caller + caller header + body.
+;   Transpose_Execute calls it for one track or each non-master track of ALL. Basis: caller + caller header + body.
 ;   (notes/naming-pilot-2026-10-06/proposals_wave6_t.json)
-Transp0se_ApplyToTrack:
+Transpose_ApplyToTrack:
 	ld	(BStore_ErrorCode:16), 0	; F60C2C  ld (0x0d4a),0x00
 	xor	wa, wa	; F60C31  xor WA,WA
 	cp	(0x0dfc:16), 0x00	; F60C33  cp (0x0dfc),0x00
-	jrl	z, Transp0se_ApplyToTrack_Return	; F60C38  jrl Z,0xf60d3d
+	jrl	z, Transpose_ApplyToTrack_Return	; F60C38  jrl Z,0xf60d3d
 	ld	a, (3214:16)	; F60C3B  ld A,(0x0c8e)
 	ld	(3354:16), a	; F60C3F  ld (0x0d1a),A
 	call	T_BStore_ValidateSavedCursor	; F60C43  call 0xf42770
 	cp	(BStore_ErrorCode:16), 0x00	; F60C47  cp (0x0d4a),0x00
-	jrl	nz, Transp0se_ApplyToTrack_Return	; F60C4C  jrl NZ,0xf60d3d
+	jrl	nz, Transpose_ApplyToTrack_Return	; F60C4C  jrl NZ,0xf60d3d
 	ld	(3278:16), iy	; F60C4F  ld (0x0cce),IY
 	ld	wa, (BStore_CursorBlock:16)	; F60C53  ld WA,(0x345c)
 	ld	(3276:16), wa	; F60C57  ld (0x0ccc),WA
@@ -9341,7 +9341,7 @@ Transp0se_ApplyToTrack:
 	ld	(3216:16), de	; F60C67  ld (0x0c90),DE
 	call	T_BStore_SeekMeasure	; F60C6B  call 0xf42774
 	cp	(BStore_ErrorCode:16), 0x00	; F60C6F  cp (0x0d4a),0x00
-	jrl	nz, Transp0se_ApplyToTrack_Return	; F60C74  jrl NZ,0xf60d3d
+	jrl	nz, Transpose_ApplyToTrack_Return	; F60C74  jrl NZ,0xf60d3d
 	ld	(3258:16), iy	; F60C77  ld (0x0cba),IY
 	ld	wa, (BStore_CursorBlock:16)	; F60C7B  ld WA,(0x345c)
 	ld	(3252:16), wa	; F60C7F  ld (0x0cb4),WA
@@ -9349,60 +9349,60 @@ Transp0se_ApplyToTrack:
 	ld	(3260:16), wa	; F60C87  ld (0x0cbc),WA
 	ld	ix, iy	; F60C8B  ld IX,IY
 	xor	de, de	; F60C8D  xor DE,DE
-Transp0se_ApplyToTrack_Join:
+Transpose_ApplyToTrack_Join:
 	cp	de, (0x0c77:16)	; F60C8F  cp DE,(0x0c77)
-	jrl	z, Transp0se_ApplyToTrack_Return	; F60C93  jrl Z,0xf60d3d
+	jrl	z, Transpose_ApplyToTrack_Return	; F60C93  jrl Z,0xf60d3d
 	xor	c, c	; F60C96  xor C,C
-Transp0se_ApplyToTrack_Join2:
+Transpose_ApplyToTrack_Join2:
 	cp	c, (0x0d1c:16)	; F60C98  cp C,(0x0d1c)
-	jrl	z, Transp0se_ApplyToTrack_Skip4	; F60C9C  jrl Z,0xf60d1d
-Transp0se_ApplyToTrack_Join3:
+	jrl	z, Transpose_ApplyToTrack_Skip4	; F60C9C  jrl Z,0xf60d1d
+Transpose_ApplyToTrack_Join3:
 	push	xhl	; F60C9F  push XHL
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F60CA0  ld XHL,(0x126e)
 	ld	a, (xhl+iy)	; F60CA4  ld A,(XHL+IY)
 	pop	xhl	; F60CA9  pop XHL
 	cp	a, 130	; F60CAA  cp A,0x82
-	jrl	z, Transp0se_ApplyToTrack_Return	; F60CAD  jrl Z,0xf60d3d
+	jrl	z, Transpose_ApplyToTrack_Return	; F60CAD  jrl Z,0xf60d3d
 	cp	a, 129	; F60CB0  cp A,0x81
-	jr	z, Transp0se_ApplyToTrack_Skip3	; F60CB3  jr Z,0xf60d0d
+	jr	z, Transpose_ApplyToTrack_Skip3	; F60CB3  jr Z,0xf60d0d
 	ld	w, 240:opc	; F60CB5  ld W,0xf0
 	and	w, a	; F60CB7  and W,A
 	cp	w, 144	; F60CB9  cp W,0x90
-	jr	nz, Transp0se_ApplyToTrack_Skip2	; F60CBC  jr NZ,0xf60cff
+	jr	nz, Transpose_ApplyToTrack_Skip2	; F60CBC  jr NZ,0xf60cff
 	call	T_BStore_CursorAdvance	; F60CBE  call 0xf4279c
 	cp	(BStore_ErrorCode:16), 0x00	; F60CC2  cp (0x0d4a),0x00
-	jrl	nz, Transp0se_ApplyToTrack_Return	; F60CC7  jrl NZ,0xf60d3d
+	jrl	nz, Transpose_ApplyToTrack_Return	; F60CC7  jrl NZ,0xf60d3d
 	call	T_BStore_CursorAdvance	; F60CCA  call 0xf4279c
 	cp	(BStore_ErrorCode:16), 0x00	; F60CCE  cp (0x0d4a),0x00
-	jrl	nz, Transp0se_ApplyToTrack_Return	; F60CD3  jrl NZ,0xf60d3d
+	jrl	nz, Transpose_ApplyToTrack_Return	; F60CD3  jrl NZ,0xf60d3d
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F60CD6  ld XHL,(0x126e)
 	ld	a, (xhl+iy)	; F60CDA  ld A,(XHL+IY)
 	xor	w, w	; F60CDF  xor W,W
 	ld	l, (3580:16)	; F60CE1  ld L,(0x0dfc)
 	exts	hl	; F60CE5  exts HL
 	add	wa, hl	; F60CE7  add WA,HL
-	jr	pl, Transp0se_ApplyToTrack_Skip	; F60CE9  jr P/PL,0xf60cef
+	jr	pl, Transpose_ApplyToTrack_Skip	; F60CE9  jr P/PL,0xf60cef
 	xor	a, a	; F60CEB  xor A,A
-	jr	Transp0se_ApplyToTrack_Join4	; F60CED  jr T,0xf60cf6
-Transp0se_ApplyToTrack_Skip:
+	jr	Transpose_ApplyToTrack_Join4	; F60CED  jr T,0xf60cf6
+Transpose_ApplyToTrack_Skip:
 	cp	a, 127	; F60CEF  cp A,0x7f
-	jr	ule, Transp0se_ApplyToTrack_Join4	; F60CF2  jr ULE,0xf60cf6
+	jr	ule, Transpose_ApplyToTrack_Join4	; F60CF2  jr ULE,0xf60cf6
 	ld	a, 127:opc	; F60CF4  ld A,0x7f
-Transp0se_ApplyToTrack_Join4:
+Transpose_ApplyToTrack_Join4:
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F60CF6  ld XHL,(0x126e)
 	ld	(xhl+iy), a	; F60CFA  ld (XHL+IY),A
-Transp0se_ApplyToTrack_Skip2:
+Transpose_ApplyToTrack_Skip2:
 	call	T_BStore_CursorAdvance	; F60CFF  call 0xf4279c
 	cp	(BStore_ErrorCode:16), 0x00	; F60D03  cp (0x0d4a),0x00
-	jrl	nz, Transp0se_ApplyToTrack_Return	; F60D08  jrl NZ,0xf60d3d
-	jr	Transp0se_ApplyToTrack_Join3	; F60D0B  jr T,0xf60c9f
-Transp0se_ApplyToTrack_Skip3:
+	jrl	nz, Transpose_ApplyToTrack_Return	; F60D08  jrl NZ,0xf60d3d
+	jr	Transpose_ApplyToTrack_Join3	; F60D0B  jr T,0xf60c9f
+Transpose_ApplyToTrack_Skip3:
 	call	T_BStore_CursorAdvance	; F60D0D  call 0xf4279c
 	cp	(BStore_ErrorCode:16), 0x00	; F60D11  cp (0x0d4a),0x00
-	jr	nz, Transp0se_ApplyToTrack_Return	; F60D16  jr NZ,0xf60d3d
+	jr	nz, Transpose_ApplyToTrack_Return	; F60D16  jr NZ,0xf60d3d
 	inc	1, c	; F60D18  inc 1,C
-	jrl	Transp0se_ApplyToTrack_Join2	; F60D1A  jrl T,0xf60c98
-Transp0se_ApplyToTrack_Skip4:
+	jrl	Transpose_ApplyToTrack_Join2	; F60D1A  jrl T,0xf60c98
+Transpose_ApplyToTrack_Skip4:
 	inc	1, de	; F60D1D  inc 1,DE
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F60D1F  ld XHL,(0x126e)
 	push	xhl	; F60D23  push XHL
@@ -9416,67 +9416,67 @@ Transp0se_ApplyToTrack_Skip4:
 	pop	xhl	; F60D2E  pop XHL
 	ld	(BStore_CursorBlockAddr:16), xhl	; F60D2F  ld (0x126e),XHL
 	cp	(BStore_ErrorCode:16), 0x00	; F60D33  cp (0x0d4a),0x00
-	jr	nz, Transp0se_ApplyToTrack_Return	; F60D38  jr NZ,0xf60d3d
-	jrl	Transp0se_ApplyToTrack_Join	; F60D3A  jrl T,0xf60c8f
-Transp0se_ApplyToTrack_Return:
+	jr	nz, Transpose_ApplyToTrack_Return	; F60D38  jr NZ,0xf60d3d
+	jrl	Transpose_ApplyToTrack_Join	; F60D3A  jrl T,0xf60c8f
+Transpose_ApplyToTrack_Return:
 	ret	; F60D3D  ret
 
 ; --------------------------------------------------------------------------
-; N0teChange_Execute
-; Called from: T_N0teChange_Execute (x1)
+; NoteChange_Execute
+; Called from: T_NoteChange_Execute (x1)
 ; Touches: (0x0C70) (0x0C73) (0x0C77) (0x0C8E) (0x0CA3) (0x0D18) (0x0D4A)
 ;          (0x0DF4) (0x0DF5)  |  0x603422
-; Calls:   T_BStore_LoadGeometry N0teChange_ApplyToTrack T_BStore_ErrorToStatusByte T_F40A1C
-; Evidence: thunk slot T_N0teChange_Execute holds `jp 0x00F60D3E`, and 0xF60D3E is an
+; Calls:   T_BStore_LoadGeometry NoteChange_ApplyToTrack T_BStore_ErrorToStatusByte T_F40A1C
+; Evidence: thunk slot T_NoteChange_Execute holds `jp 0x00F60D3E`, and 0xF60D3E is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; N0teChange_Execute: The N0TE CHANGE job (N0teChange_LcdKeyRow4, through T_N0teChange_Execute): track 1..(0x0CA3) or 17 = all,
-;   measures 1..999, N0teChange_FromNote / N0teChange_ToNote 0..127 (error 3), nothing when they are equal; per track
-;   N0teChange_ApplyToTrack rewrites every 0x9n event whose note byte is FromNote to ToNote. Basis: caller + body. (notes/naming-
+; NoteChange_Execute: The N0TE CHANGE job (NoteChange_LcdKeyRow4, through T_NoteChange_Execute): track 1..(0x0CA3) or 17 = all,
+;   measures 1..999, NoteChange_FromNote / NoteChange_ToNote 0..127 (error 3), nothing when they are equal; per track
+;   NoteChange_ApplyToTrack rewrites every 0x9n event whose note byte is FromNote to ToNote. Basis: caller + body. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave5_q.json)
-N0teChange_Execute:		; <- T_N0teChange_Execute
+NoteChange_Execute:		; <- T_NoteChange_Execute
 	call	T_BStore_LoadGeometry	; F60D3E  call 0xf427c4
 	ld	a, (3184:16)	; F60D42  ld A,(0x0c70)
 	cp	a, 1:i3	; F60D46  cp A,1
-	jr	c, N0teChange_Execute_Skip6	; F60D48  jr C,0xf60d8b
+	jr	c, NoteChange_Execute_Skip6	; F60D48  jr C,0xf60d8b
 	cp	a, 17	; F60D4A  cp A,0x11
-	jr	z, N0teChange_Execute_Skip5	; F60D4D  jr Z,0xf60d55
+	jr	z, NoteChange_Execute_Skip5	; F60D4D  jr Z,0xf60d55
 	cp	a, (0x0ca3:16)	; F60D4F  cp A,(0x0ca3)
-	jr	ugt, N0teChange_Execute_Skip6	; F60D53  jr UGT,0xf60d8b
-N0teChange_Execute_Skip5:
+	jr	ugt, NoteChange_Execute_Skip6	; F60D53  jr UGT,0xf60d8b
+NoteChange_Execute_Skip5:
 	ld	wa, (3187:16)	; F60D55  ld WA,(0x0c73)
 	cp	wa, 1:i3	; F60D59  cp WA,1
-	jr	c, N0teChange_Execute_Skip6	; F60D5B  jr C,0xf60d8b
+	jr	c, NoteChange_Execute_Skip6	; F60D5B  jr C,0xf60d8b
 	cp	wa, 999	; F60D5D  cp WA,0x03e7
-	jr	ugt, N0teChange_Execute_Skip6	; F60D61  jr UGT,0xf60d8b
+	jr	ugt, NoteChange_Execute_Skip6	; F60D61  jr UGT,0xf60d8b
 	ld	wa, (3191:16)	; F60D63  ld WA,(0x0c77)
 	cp	wa, 1:i3	; F60D67  cp WA,1
-	jr	c, N0teChange_Execute_Skip6	; F60D69  jr C,0xf60d8b
+	jr	c, NoteChange_Execute_Skip6	; F60D69  jr C,0xf60d8b
 	cp	wa, 999	; F60D6B  cp WA,0x03e7
-	jr	ugt, N0teChange_Execute_Skip6	; F60D6F  jr UGT,0xf60d8b
-	ld	a, (N0teChange_FromNote:16)	; F60D71  ld A,(0x0df4)
+	jr	ugt, NoteChange_Execute_Skip6	; F60D6F  jr UGT,0xf60d8b
+	ld	a, (NoteChange_FromNote:16)	; F60D71  ld A,(0x0df4)
 	cp	a, 0:i3	; F60D75  cp A,0
-	jr	c, N0teChange_Execute_Skip6	; F60D77  jr C,0xf60d8b
+	jr	c, NoteChange_Execute_Skip6	; F60D77  jr C,0xf60d8b
 	cp	a, 127	; F60D79  cp A,0x7f
-	jr	ugt, N0teChange_Execute_Skip6	; F60D7C  jr UGT,0xf60d8b
-	ld	a, (N0teChange_ToNote:16)	; F60D7E  ld A,(0x0df5)
+	jr	ugt, NoteChange_Execute_Skip6	; F60D7C  jr UGT,0xf60d8b
+	ld	a, (NoteChange_ToNote:16)	; F60D7E  ld A,(0x0df5)
 	cp	a, 0:i3	; F60D82  cp A,0
-	jr	c, N0teChange_Execute_Skip6	; F60D84  jr C,0xf60d8b
+	jr	c, NoteChange_Execute_Skip6	; F60D84  jr C,0xf60d8b
 	cp	a, 127	; F60D86  cp A,0x7f
-	jr	ule, N0teChange_Execute_Skip7	; F60D89  jr ULE,0xf60d93
-N0teChange_Execute_Skip6:
+	jr	ule, NoteChange_Execute_Skip7	; F60D89  jr ULE,0xf60d93
+NoteChange_Execute_Skip6:
 	ld	(BStore_ErrorCode:16), 3	; F60D8B  ld (0x0d4a),0x03
-	jrl	N0teChange_Execute_Join7	; F60D90  jrl T,0xf60e37
-N0teChange_Execute_Skip7:
-	ld	a, (N0teChange_FromNote:16)	; F60D93  ld A,(0x0df4)
-	cp	a, (N0teChange_ToNote:16)	; F60D97  cp A,(0x0df5)
-	jrl	z, N0teChange_Execute_Join7	; F60D9B  jrl Z,0xf60e37
+	jrl	NoteChange_Execute_Join7	; F60D90  jrl T,0xf60e37
+NoteChange_Execute_Skip7:
+	ld	a, (NoteChange_FromNote:16)	; F60D93  ld A,(0x0df4)
+	cp	a, (NoteChange_ToNote:16)	; F60D97  cp A,(0x0df5)
+	jrl	z, NoteChange_Execute_Join7	; F60D9B  jrl Z,0xf60e37
 	cp	(0x0c70:16), 0x11	; F60D9E  cp (0x0c70),0x11
-	jr	z, N0teChange_Execute_Skip9	; F60DA3  jr Z,0xf60ddc
+	jr	z, NoteChange_Execute_Skip9	; F60DA3  jr Z,0xf60ddc
 	xor	xhl, xhl	; F60DA5  xor XHL,XHL
 	ld	l, (3184:16)	; F60DA7  ld L,(0x0c70)
 	dec	1, hl	; F60DAB  dec 1,HL
@@ -9485,22 +9485,22 @@ N0teChange_Execute_Skip7:
 	ld	a, (xix+hl)	; F60DB3  ld A,(XIX+HL)
 	pop	xix	; F60DB8  pop XIX
 	cp	a, 32	; F60DB9  cp A,0x20
-	jr	z, N0teChange_Execute_Skip8	; F60DBC  jr Z,0xf60dc0
-	jr	N0teChange_Execute_Join5	; F60DBE  jr T,0xf60dc8
-N0teChange_Execute_Skip8:
+	jr	z, NoteChange_Execute_Skip8	; F60DBC  jr Z,0xf60dc0
+	jr	NoteChange_Execute_Join5	; F60DBE  jr T,0xf60dc8
+NoteChange_Execute_Skip8:
 	ld	(BStore_ErrorCode:16), 9	; F60DC0  ld (0x0d4a),0x09
-	jrl	N0teChange_Execute_Join7	; F60DC5  jrl T,0xf60e37
-N0teChange_Execute_Join5:
+	jrl	NoteChange_Execute_Join7	; F60DC5  jrl T,0xf60e37
+NoteChange_Execute_Join5:
 	ld	a, (3184:16)	; F60DC8  ld A,(0x0c70)
 	ld	(3214:16), a	; F60DCC  ld (0x0c8e),A
 	ld	(BStore_ErrorCode:16), 0	; F60DD0  ld (0x0d4a),0x00
-	call	N0teChange_ApplyToTrack	; F60DD5  call 0xf60e40
-	jrl	N0teChange_Execute_Join7	; F60DD9  jrl T,0xf60e37
-N0teChange_Execute_Skip9:
+	call	NoteChange_ApplyToTrack	; F60DD5  call 0xf60e40
+	jrl	NoteChange_Execute_Join7	; F60DD9  jrl T,0xf60e37
+NoteChange_Execute_Skip9:
 	xor	xhl, xhl	; F60DDC  xor XHL,XHL
-N0teChange_Execute_Join6:
+NoteChange_Execute_Join6:
 	cp	l, 16	; F60DDE  cp L,0x10
-	jrl	ugt, N0teChange_Execute_Skip12	; F60DE1  jrl UGT,0xf60e2f
+	jrl	ugt, NoteChange_Execute_Skip12	; F60DE1  jrl UGT,0xf60e2f
 	ld	a, l	; F60DE4  ld A,L
 	inc	1, a	; F60DE6  inc 1,A
 	ld	(3214:16), a	; F60DE8  ld (0x0c8e),A
@@ -9512,34 +9512,34 @@ N0teChange_Execute_Join6:
 	pop	xix	; F60DFA  pop XIX
 	pop	xhl	; F60DFB  pop XHL
 	cp	a, 32	; F60DFC  cp A,0x20
-	jr	z, N0teChange_Execute_Skip10	; F60DFF  jr Z,0xf60e07
+	jr	z, NoteChange_Execute_Skip10	; F60DFF  jr Z,0xf60e07
 	push	xhl	; F60E01  push XHL
-	call	N0teChange_ApplyToTrack	; F60E02  call 0xf60e40
+	call	NoteChange_ApplyToTrack	; F60E02  call 0xf60e40
 	pop	xhl	; F60E06  pop XHL
-N0teChange_Execute_Skip10:
+NoteChange_Execute_Skip10:
 	cp	(BStore_ErrorCode:16), 0x00	; F60E07  cp (0x0d4a),0x00
-	jr	z, N0teChange_Execute_Skip11	; F60E0C  jr Z,0xf60e2b
+	jr	z, NoteChange_Execute_Skip11	; F60E0C  jr Z,0xf60e2b
 	cp	(BStore_ErrorCode:16), 0x01	; F60E0E  cp (0x0d4a),0x01
-	jr	z, N0teChange_Execute_Skip11	; F60E13  jr Z,0xf60e2b
+	jr	z, NoteChange_Execute_Skip11	; F60E13  jr Z,0xf60e2b
 	cp	(BStore_ErrorCode:16), 0x08	; F60E15  cp (0x0d4a),0x08
-	jr	z, N0teChange_Execute_Skip11	; F60E1A  jr Z,0xf60e2b
+	jr	z, NoteChange_Execute_Skip11	; F60E1A  jr Z,0xf60e2b
 	cp	(0x0d18:16), 0x00	; F60E1C  cp (0x0d18),0x00
-	jr	nz, N0teChange_Execute_Skip11	; F60E21  jr NZ,0xf60e2b
+	jr	nz, NoteChange_Execute_Skip11	; F60E21  jr NZ,0xf60e2b
 	ld	a, (BStore_ErrorCode:16)	; F60E23  ld A,(0x0d4a)
 	ld	(3352:16), a	; F60E27  ld (0x0d18),A
-N0teChange_Execute_Skip11:
+NoteChange_Execute_Skip11:
 	inc	1, l	; F60E2B  inc 1,L
-	jr	N0teChange_Execute_Join6	; F60E2D  jr T,0xf60dde
-N0teChange_Execute_Skip12:
+	jr	NoteChange_Execute_Join6	; F60E2D  jr T,0xf60dde
+NoteChange_Execute_Skip12:
 	ld	a, (3352:16)	; F60E2F  ld A,(0x0d18)
 	ld	(BStore_ErrorCode:16), a	; F60E33  ld (0x0d4a),A
-N0teChange_Execute_Join7:
+NoteChange_Execute_Join7:
 	call	T_BStore_ErrorToStatusByte	; F60E37  call 0xf4278c
 	call	T_F40A1C	; F60E3B  call 0xf40a1c
 	ret	; F60E3F  ret
 
 ; --------------------------------------------------------------------------
-; N0teChange_ApplyToTrack
+; NoteChange_ApplyToTrack
 ; Called from: in-module: 0xF60DD5 0xF60E02
 ; Touches: (0x0C73) (0x0C77) (0x0C8E) (0x0C90) (0x0CB4) (0x0CBA) (0x0CBC)
 ;          (0x0CBE) (0x0CCC) (0x0CCE) +9 more
@@ -9550,21 +9550,21 @@ N0teChange_Execute_Join7:
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; N0teChange_ApplyToTrack: N0TE CHANGE on track (0x0C8E): nothing when N0teChange_FromNote = N0teChange_ToNote; seeks
+; NoteChange_ApplyToTrack: N0TE CHANGE on track (0x0C8E): nothing when NoteChange_FromNote = NoteChange_ToNote; seeks
 ;   measure (0x0C73) and, for (0x0C77) measures, rewrites the note byte (+2) of each 0x9n event that equals FromNote
-;   to ToNote. N0teChange_Execute calls it for one track or each track of ALL. Basis: caller + caller header + body.
+;   to ToNote. NoteChange_Execute calls it for one track or each track of ALL. Basis: caller + caller header + body.
 ;   (notes/naming-pilot-2026-10-06/proposals_wave6_t.json)
-N0teChange_ApplyToTrack:
+NoteChange_ApplyToTrack:
 	ld	(BStore_ErrorCode:16), 0	; F60E40  ld (0x0d4a),0x00
-	ld	a, (N0teChange_FromNote:16)	; F60E45  ld A,(0x0df4)
-	cp	a, (N0teChange_ToNote:16)	; F60E49  cp A,(0x0df5)
-	jrl	z, N0teChange_ApplyToTrack_Return	; F60E4D  jrl Z,0xf60f37
+	ld	a, (NoteChange_FromNote:16)	; F60E45  ld A,(0x0df4)
+	cp	a, (NoteChange_ToNote:16)	; F60E49  cp A,(0x0df5)
+	jrl	z, NoteChange_ApplyToTrack_Return	; F60E4D  jrl Z,0xf60f37
 	xor	wa, wa	; F60E50  xor WA,WA
 	ld	a, (3214:16)	; F60E52  ld A,(0x0c8e)
 	ld	(3354:16), a	; F60E56  ld (0x0d1a),A
 	call	T_BStore_ValidateSavedCursor	; F60E5A  call 0xf42770
 	cp	(BStore_ErrorCode:16), 0x00	; F60E5E  cp (0x0d4a),0x00
-	jrl	nz, N0teChange_ApplyToTrack_Return	; F60E63  jrl NZ,0xf60f37
+	jrl	nz, NoteChange_ApplyToTrack_Return	; F60E63  jrl NZ,0xf60f37
 	ld	(3278:16), iy	; F60E66  ld (0x0cce),IY
 	ld	wa, (BStore_CursorBlock:16)	; F60E6A  ld WA,(0x345c)
 	ld	(3276:16), wa	; F60E6E  ld (0x0ccc),WA
@@ -9574,7 +9574,7 @@ N0teChange_ApplyToTrack:
 	ld	(3216:16), de	; F60E7E  ld (0x0c90),DE
 	call	T_BStore_SeekMeasure	; F60E82  call 0xf42774
 	cp	(BStore_ErrorCode:16), 0x00	; F60E86  cp (0x0d4a),0x00
-	jrl	nz, N0teChange_ApplyToTrack_Return	; F60E8B  jrl NZ,0xf60f37
+	jrl	nz, NoteChange_ApplyToTrack_Return	; F60E8B  jrl NZ,0xf60f37
 	ld	(3258:16), iy	; F60E8E  ld (0x0cba),IY
 	ld	wa, (BStore_CursorBlock:16)	; F60E92  ld WA,(0x345c)
 	ld	(3252:16), wa	; F60E96  ld (0x0cb4),WA
@@ -9582,50 +9582,50 @@ N0teChange_ApplyToTrack:
 	ld	(3260:16), wa	; F60E9E  ld (0x0cbc),WA
 	ld	ix, iy	; F60EA2  ld IX,IY
 	xor	de, de	; F60EA4  xor DE,DE
-N0teChange_ApplyToTrack_Join:
+NoteChange_ApplyToTrack_Join:
 	cp	de, (0x0c77:16)	; F60EA6  cp DE,(0x0c77)
-	jrl	z, N0teChange_ApplyToTrack_Return	; F60EAA  jrl Z,0xf60f37
+	jrl	z, NoteChange_ApplyToTrack_Return	; F60EAA  jrl Z,0xf60f37
 	xor	c, c	; F60EAD  xor C,C
-N0teChange_ApplyToTrack_Join2:
+NoteChange_ApplyToTrack_Join2:
 	cp	c, (0x0d1c:16)	; F60EAF  cp C,(0x0d1c)
-	jr	z, N0teChange_ApplyToTrack_Skip3	; F60EB3  jr Z,0xf60f1e
-N0teChange_ApplyToTrack_Join3:
+	jr	z, NoteChange_ApplyToTrack_Skip3	; F60EB3  jr Z,0xf60f1e
+NoteChange_ApplyToTrack_Join3:
 	push	xhl	; F60EB5  push XHL
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F60EB6  ld XHL,(0x126e)
 	ld	a, (xhl+iy)	; F60EBA  ld A,(XHL+IY)
 	pop	xhl	; F60EBF  pop XHL
 	cp	a, 130	; F60EC0  cp A,0x82
-	jr	z, N0teChange_ApplyToTrack_Return	; F60EC3  jr Z,0xf60f37
+	jr	z, NoteChange_ApplyToTrack_Return	; F60EC3  jr Z,0xf60f37
 	cp	a, 129	; F60EC5  cp A,0x81
-	jr	z, N0teChange_ApplyToTrack_Skip2	; F60EC8  jr Z,0xf60f0e
+	jr	z, NoteChange_ApplyToTrack_Skip2	; F60EC8  jr Z,0xf60f0e
 	ld	w, 240:opc	; F60ECA  ld W,0xf0
 	and	w, a	; F60ECC  and W,A
 	cp	w, 144	; F60ECE  cp W,0x90
-	jr	nz, N0teChange_ApplyToTrack_Skip	; F60ED1  jr NZ,0xf60f01
+	jr	nz, NoteChange_ApplyToTrack_Skip	; F60ED1  jr NZ,0xf60f01
 	call	T_BStore_CursorAdvance	; F60ED3  call 0xf4279c
 	cp	(BStore_ErrorCode:16), 0x00	; F60ED7  cp (0x0d4a),0x00
-	jr	nz, N0teChange_ApplyToTrack_Return	; F60EDC  jr NZ,0xf60f37
+	jr	nz, NoteChange_ApplyToTrack_Return	; F60EDC  jr NZ,0xf60f37
 	call	T_BStore_CursorAdvance	; F60EDE  call 0xf4279c
 	cp	(BStore_ErrorCode:16), 0x00	; F60EE2  cp (0x0d4a),0x00
-	jr	nz, N0teChange_ApplyToTrack_Return	; F60EE7  jr NZ,0xf60f37
+	jr	nz, NoteChange_ApplyToTrack_Return	; F60EE7  jr NZ,0xf60f37
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F60EE9  ld XHL,(0x126e)
 	ld	a, (xhl+iy)	; F60EED  ld A,(XHL+IY)
-	cp	a, (N0teChange_FromNote:16)	; F60EF2  cp A,(0x0df4)
-	jr	nz, N0teChange_ApplyToTrack_Skip	; F60EF6  jr NZ,0xf60f01
-	ld	a, (N0teChange_ToNote:16)	; F60EF8  ld A,(0x0df5)
+	cp	a, (NoteChange_FromNote:16)	; F60EF2  cp A,(0x0df4)
+	jr	nz, NoteChange_ApplyToTrack_Skip	; F60EF6  jr NZ,0xf60f01
+	ld	a, (NoteChange_ToNote:16)	; F60EF8  ld A,(0x0df5)
 	ld	(xhl+iy), a	; F60EFC  ld (XHL+IY),A
-N0teChange_ApplyToTrack_Skip:
+NoteChange_ApplyToTrack_Skip:
 	call	T_BStore_CursorAdvance	; F60F01  call 0xf4279c
 	cp	(BStore_ErrorCode:16), 0x00	; F60F05  cp (0x0d4a),0x00
-	jr	nz, N0teChange_ApplyToTrack_Return	; F60F0A  jr NZ,0xf60f37
-	jr	N0teChange_ApplyToTrack_Join3	; F60F0C  jr T,0xf60eb5
-N0teChange_ApplyToTrack_Skip2:
+	jr	nz, NoteChange_ApplyToTrack_Return	; F60F0A  jr NZ,0xf60f37
+	jr	NoteChange_ApplyToTrack_Join3	; F60F0C  jr T,0xf60eb5
+NoteChange_ApplyToTrack_Skip2:
 	call	T_BStore_CursorAdvance	; F60F0E  call 0xf4279c
 	cp	(BStore_ErrorCode:16), 0x00	; F60F12  cp (0x0d4a),0x00
-	jr	nz, N0teChange_ApplyToTrack_Return	; F60F17  jr NZ,0xf60f37
+	jr	nz, NoteChange_ApplyToTrack_Return	; F60F17  jr NZ,0xf60f37
 	inc	1, c	; F60F19  inc 1,C
-	jrl	N0teChange_ApplyToTrack_Join2	; F60F1B  jrl T,0xf60eaf
-N0teChange_ApplyToTrack_Skip3:
+	jrl	NoteChange_ApplyToTrack_Join2	; F60F1B  jrl T,0xf60eaf
+NoteChange_ApplyToTrack_Skip3:
 	inc	1, de	; F60F1E  inc 1,DE
 	ld	xhl, (BStore_CursorBlockAddr:16)	; F60F20  ld XHL,(0x126e)
 	push	xhl	; F60F24  push XHL
@@ -9638,8 +9638,8 @@ N0teChange_ApplyToTrack_Skip3:
 	pop	xde	; F60F2E  pop XDE
 	pop	xhl	; F60F2F  pop XHL
 	ld	(BStore_CursorBlockAddr:16), xhl	; F60F30  ld (0x126e),XHL
-	jrl	N0teChange_ApplyToTrack_Join	; F60F34  jrl T,0xf60ea6
-N0teChange_ApplyToTrack_Return:
+	jrl	NoteChange_ApplyToTrack_Join	; F60F34  jrl T,0xf60ea6
+NoteChange_ApplyToTrack_Return:
 	ret	; F60F37  ret
 	ld	a, (3586:16)	; F60F38  ld A,(0x0e02)
 	pushw	wa	; F60F3C  push WA
@@ -9665,7 +9665,7 @@ N0teChange_ApplyToTrack_Return:
 ; BStore_EmptyBank: Empties song bank (0x0E02): frees the chains of tracks 1..16 (live directory when it is
 ;   BStore_CurrentBank, else the bank copy 0x610000+bank*0xC00+0x100), then resets that copy's 17 directory entries,
 ;   saved cursors (+0x7E 0xFFFF, +0xA0 5), +0x1E dword and password word +0x1C; on the current bank also the live
-;   copies. Run by SongClear_ClearBank and by S0ngC0py_Execute for an ALL copy. Basis: callers + body. (notes/naming-
+;   copies. Run by SongClear_ClearBank and by SongCopy_Execute for an ALL copy. Basis: callers + body. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave5_q.json)
 BStore_EmptyBank:
 	call	T_BStore_LoadGeometry	; F60F4F  call 0xf427c4
@@ -9890,67 +9890,67 @@ SongClear_ResetAllBanks_Loop2:
 	ret	; F61199  ret
 
 ; --------------------------------------------------------------------------
-; S0ngC0py_Execute
-; Called from: T_S0ngC0py_Execute (x1)
+; SongCopy_Execute
+; Called from: T_SongCopy_Execute (x1)
 ; Touches: (0x0C70) (0x0E02) (0x0E0C) (0x0E0D) (0x0E0E) (0x0E0F) (0x0E10)
 ;          (0x0E19) (0x126E) (0x134C) +8 more  |  0x000005 0x00001E 0x000022
 ;          0x00007E 0x0000A0 0x000100 +5 more
-; Calls:   BStore_EmptyBank S0ngC0py_CopyAllTracks S0ngC0py_ClearDestTrack S0ngC0py_AllocDestHeadBlock T_BStore_SeekBlock T_BStore_AllocBlock_Veneer
-; Evidence: thunk slot T_S0ngC0py_Execute holds `jp 0x00F6119A`, and 0xF6119A is an
+; Calls:   BStore_EmptyBank SongCopy_CopyAllTracks SongCopy_ClearDestTrack SongCopy_AllocDestHeadBlock T_BStore_SeekBlock T_BStore_AllocBlock_Veneer
+; Evidence: thunk slot T_SongCopy_Execute holds `jp 0x00F6119A`, and 0xF6119A is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; S0ngC0py_Execute: The SONG COPY job (S0ngC0py_LcdKeyRow2's confirm press, T_S0ngC0py_Execute): ALL (S0ngC0py_FromTrack 0x12)
-;   empties bank ToSong-1 (BStore_EmptyBank) and copies the song (S0ngC0py_CopyAllTracks); otherwise copies track FromTrack of
+; SongCopy_Execute: The SONG COPY job (SongCopy_LcdKeyRow2's confirm press, T_SongCopy_Execute): ALL (SongCopy_FromTrack 0x12)
+;   empties bank ToSong-1 (BStore_EmptyBank) and copies the song (SongCopy_CopyAllTracks); otherwise copies track FromTrack of
 ;   FromSong onto ToTrack of ToSong: status 29 when only one side is track 0x11 or master part 0x20, clears the
-;   destination (S0ngC0py_ClearDestTrack), duplicates the chain block by block, status 15 when blocks run out. Basis:
+;   destination (SongCopy_ClearDestTrack), duplicates the chain block by block, status 15 when blocks run out. Basis:
 ;   caller + body. (notes/naming-pilot-2026-10-06/proposals_wave5_q.json)
-S0ngC0py_Execute:		; <- T_S0ngC0py_Execute
+SongCopy_Execute:		; <- T_SongCopy_Execute
 	ld	(UI_StatusCode:16), 35	; F6119A  ld (0x2880),0x23
-	cp	(S0ngC0py_FromTrack:16), 0x12	; F6119F  cp (0x0e0e),0x12
-	jr	nz, S0ngC0py_Execute_Skip	; F611A4  jr NZ,0xf611d0
-	ld	a, (S0ngC0py_ToSong:16)	; F611A6  ld A,(0x0e0d)
-	cp	a, (S0ngC0py_FromSong:16)	; F611AA  cp A,(0x0e0c)
+	cp	(SongCopy_FromTrack:16), 0x12	; F6119F  cp (0x0e0e),0x12
+	jr	nz, SongCopy_Execute_Skip	; F611A4  jr NZ,0xf611d0
+	ld	a, (SongCopy_ToSong:16)	; F611A6  ld A,(0x0e0d)
+	cp	a, (SongCopy_FromSong:16)	; F611AA  cp A,(0x0e0c)
 	jrl	z, sub_F610E3_Return	; F611AE  jrl Z,0xf615c1
 	ld	a, (3586:16)	; F611B1  ld A,(0x0e02)
 	pushw	wa	; F611B5  push WA
-	ld	a, (S0ngC0py_ToSong:16)	; F611B6  ld A,(0x0e0d)
+	ld	a, (SongCopy_ToSong:16)	; F611B6  ld A,(0x0e0d)
 	dec	1, a	; F611BA  dec 1,A
 	ld	(3586:16), a	; F611BC  ld (0x0e02),A
 	call	BStore_EmptyBank	; F611C0  call 0xf60f4f
 	popw	wa	; F611C4  pop WA
 	ld	(3586:16), a	; F611C5  ld (0x0e02),A
-	call	S0ngC0py_CopyAllTracks	; F611C9  call 0xf615c2
+	call	SongCopy_CopyAllTracks	; F611C9  call 0xf615c2
 	jrl	sub_F610E3_Return	; F611CD  jrl T,0xf615c1
-S0ngC0py_Execute_Skip:
-	cp	(S0ngC0py_FromTrack:16), 0x11	; F611D0  cp (0x0e0e),0x11
-	jr	nz, S0ngC0py_Execute_Skip2	; F611D5  jr NZ,0xf611e0
-	cp	(S0ngC0py_ToTrack:16), 0x11	; F611D7  cp (0x0e0f),0x11
-	jr	nz, S0ngC0py_Execute_Skip3	; F611DC  jr NZ,0xf611e7
-	jr	S0ngC0py_Execute_Join	; F611DE  jr T,0xf611f5
-S0ngC0py_Execute_Skip2:
-	cp	(S0ngC0py_ToTrack:16), 0x11	; F611E0  cp (0x0e0f),0x11
-	jr	nz, S0ngC0py_Execute_Join	; F611E5  jr NZ,0xf611f5
-S0ngC0py_Execute_Skip3:
+SongCopy_Execute_Skip:
+	cp	(SongCopy_FromTrack:16), 0x11	; F611D0  cp (0x0e0e),0x11
+	jr	nz, SongCopy_Execute_Skip2	; F611D5  jr NZ,0xf611e0
+	cp	(SongCopy_ToTrack:16), 0x11	; F611D7  cp (0x0e0f),0x11
+	jr	nz, SongCopy_Execute_Skip3	; F611DC  jr NZ,0xf611e7
+	jr	SongCopy_Execute_Join	; F611DE  jr T,0xf611f5
+SongCopy_Execute_Skip2:
+	cp	(SongCopy_ToTrack:16), 0x11	; F611E0  cp (0x0e0f),0x11
+	jr	nz, SongCopy_Execute_Join	; F611E5  jr NZ,0xf611f5
+SongCopy_Execute_Skip3:
 	ld	(UI_StatusCode:16), 29	; F611E7  ld (0x2880),0x1d
 	ldw	(UI_Request:16), 16555	; F611EC  ld (0x2070),0x40ab
 	jrl	sub_F610E3_Return	; F611F2  jrl T,0xf615c1
-S0ngC0py_Execute_Join:
-	ld	a, (S0ngC0py_FromSong:16)	; F611F5  ld A,(0x0e0c)
-	cp	a, (S0ngC0py_ToSong:16)	; F611F9  cp A,(0x0e0d)
-	jr	nz, S0ngC0py_Execute_Skip4	; F611FD  jr NZ,0xf6120a
-	ld	a, (S0ngC0py_FromTrack:16)	; F611FF  ld A,(0x0e0e)
-	cp	a, (S0ngC0py_ToTrack:16)	; F61203  cp A,(0x0e0f)
+SongCopy_Execute_Join:
+	ld	a, (SongCopy_FromSong:16)	; F611F5  ld A,(0x0e0c)
+	cp	a, (SongCopy_ToSong:16)	; F611F9  cp A,(0x0e0d)
+	jr	nz, SongCopy_Execute_Skip4	; F611FD  jr NZ,0xf6120a
+	ld	a, (SongCopy_FromTrack:16)	; F611FF  ld A,(0x0e0e)
+	cp	a, (SongCopy_ToTrack:16)	; F61203  cp A,(0x0e0f)
 	jrl	z, sub_F610E3_Return	; F61207  jrl Z,0xf615c1
-S0ngC0py_Execute_Skip4:
+SongCopy_Execute_Skip4:
 	ld	xde, 6356992	; F6120A  ld XDE,0x00610000
 	push	xbc	; F6120F  push XBC
 	xor	xbc, xbc	; F61210  xor XBC,XBC
 	xor	xhl, xhl	; F61212  xor XHL,XHL
-	ld	l, (S0ngC0py_FromSong:16)	; F61214  ld L,(0x0e0c)
+	ld	l, (SongCopy_FromSong:16)	; F61214  ld L,(0x0e0c)
 	dec	1, l	; F61218  dec 1,L
 	ld	c, l	; F6121A  ld C,L
 	sla	xhl, 11	; F6121C  sla 0x0b,XHL
@@ -9960,14 +9960,14 @@ S0ngC0py_Execute_Skip4:
 	add	xde, xhl	; F61225  add XDE,XHL
 	ld	xhl, 34	; F61227  ld XHL,0x00000022
 	add	xhl, xde	; F6122C  add XHL,XDE
-	ld	c, (S0ngC0py_FromSong:16)	; F6122E  ld C,(0x0e0c)
+	ld	c, (SongCopy_FromSong:16)	; F6122E  ld C,(0x0e0c)
 	dec	1, c	; F61232  dec 1,C
 	cp	c, (BStore_CurrentBank:16)	; F61234  cp C,(0x360a)
-	jr	nz, S0ngC0py_Execute_Skip5	; F61238  jr NZ,0xf6123f
+	jr	nz, SongCopy_Execute_Skip5	; F61238  jr NZ,0xf6123f
 	ld	xhl, BStore_TrackToPart	; F6123A  ld XHL,0x00603422
-S0ngC0py_Execute_Skip5:
+SongCopy_Execute_Skip5:
 	xor	bc, bc	; F6123F  xor BC,BC
-	ld	c, (S0ngC0py_FromTrack:16)	; F61241  ld C,(0x0e0e)
+	ld	c, (SongCopy_FromTrack:16)	; F61241  ld C,(0x0e0e)
 	dec	1, c	; F61245  dec 1,C
 	ld	a, (xhl+bc)	; F61247  ld A,(XHL+BC)
 	ld	(4940:16), a	; F6124C  ld (0x134c),A
@@ -9975,7 +9975,7 @@ S0ngC0py_Execute_Skip5:
 	push	xbc	; F61257  push XBC
 	xor	xbc, xbc	; F61258  xor XBC,XBC
 	xor	xhl, xhl	; F6125A  xor XHL,XHL
-	ld	l, (S0ngC0py_ToSong:16)	; F6125C  ld L,(0x0e0d)
+	ld	l, (SongCopy_ToSong:16)	; F6125C  ld L,(0x0e0d)
 	dec	1, l	; F61260  dec 1,L
 	ld	c, l	; F61262  ld C,L
 	sla	xhl, 11	; F61264  sla 0x0b,XHL
@@ -9986,53 +9986,53 @@ S0ngC0py_Execute_Skip5:
 	ldfr_lerp	xhl, 0x38	; F61270  ld XDE3,XHL
 	ld	xhl, 34	; F61273  ld XHL,0x00000022
 	m_rd_add_rrx RLX, 0x38, r3	; F61278  add XHL,XDE3
-	ld	a, (S0ngC0py_ToSong:16)	; F6127B  ld A,(0x0e0d)
+	ld	a, (SongCopy_ToSong:16)	; F6127B  ld A,(0x0e0d)
 	dec	1, a	; F6127F  dec 1,A
 	cp	a, (BStore_CurrentBank:16)	; F61281  cp A,(0x360a)
-	jr	nz, S0ngC0py_Execute_Skip6	; F61285  jr NZ,0xf6128c
+	jr	nz, SongCopy_Execute_Skip6	; F61285  jr NZ,0xf6128c
 	ld	xhl, BStore_TrackToPart	; F61287  ld XHL,0x00603422
-S0ngC0py_Execute_Skip6:
+SongCopy_Execute_Skip6:
 	xor	wa, wa	; F6128C  xor WA,WA
-	ld	a, (S0ngC0py_ToTrack:16)	; F6128E  ld A,(0x0e0f)
+	ld	a, (SongCopy_ToTrack:16)	; F6128E  ld A,(0x0e0f)
 	dec	1, a	; F61292  dec 1,A
 	ld	a, (xhl+wa)	; F61294  ld A,(XHL+WA)
 	ld	(4941:16), a	; F61299  ld (0x134d),A
 	cp	a, 32	; F6129D  cp A,0x20
-	jr	z, S0ngC0py_Execute_Skip7	; F612A0  jr Z,0xf612ab
+	jr	z, SongCopy_Execute_Skip7	; F612A0  jr Z,0xf612ab
 	cp	(0x134c:16), 0x20	; F612A2  cp (0x134c),0x20
-	jr	z, S0ngC0py_Execute_Skip8	; F612A7  jr Z,0xf612b2
-	jr	S0ngC0py_Execute_Join2	; F612A9  jr T,0xf612c0
-S0ngC0py_Execute_Skip7:
+	jr	z, SongCopy_Execute_Skip8	; F612A7  jr Z,0xf612b2
+	jr	SongCopy_Execute_Join2	; F612A9  jr T,0xf612c0
+SongCopy_Execute_Skip7:
 	cp	(0x134c:16), 0x20	; F612AB  cp (0x134c),0x20
-	jr	z, S0ngC0py_Execute_Join2	; F612B0  jr Z,0xf612c0
-S0ngC0py_Execute_Skip8:
+	jr	z, SongCopy_Execute_Join2	; F612B0  jr Z,0xf612c0
+SongCopy_Execute_Skip8:
 	ld	(UI_StatusCode:16), 29	; F612B2  ld (0x2880),0x1d
 	ldw	(UI_Request:16), 16555	; F612B7  ld (0x2070),0x40ab
 	jrl	sub_F610E3_Return	; F612BD  jrl T,0xf615c1
-S0ngC0py_Execute_Join2:
+SongCopy_Execute_Join2:
 	ld	xhl, 34	; F612C0  ld XHL,0x00000022
 	m_rd_add_rrx RLX, 0x38, r3	; F612C5  add XHL,XDE3
 	ldfr_lerp	xhl, 0x38	; F612C8  ld XDE3,XHL
-	ld	l, (S0ngC0py_ToSong:16)	; F612CB  ld L,(0x0e0d)
+	ld	l, (SongCopy_ToSong:16)	; F612CB  ld L,(0x0e0d)
 	dec	1, l	; F612CF  dec 1,L
 	cp	l, (BStore_CurrentBank:16)	; F612D1  cp L,(0x360a)
-	jr	nz, S0ngC0py_Execute_Skip9	; F612D5  jr NZ,0xf612de
+	jr	nz, SongCopy_Execute_Skip9	; F612D5  jr NZ,0xf612de
 	.byte 0xE7, 0x38, 0x03, 0x22, 0x34, 0x60, 0x00	; F612D7  ld XDE3,0x00603422   [llvm-mc cannot encode this]
-S0ngC0py_Execute_Skip9:
+SongCopy_Execute_Skip9:
 	cpw	(BStore_FreeCount:24), 0x0000	; F612DE  cp (0x6034ba),0x0000
 	jrl	z, sub_F610E3_Skip20	; F612E5  jrl Z,0xf615a4
-	ld	l, (S0ngC0py_ToSong:16)	; F612E8  ld L,(0x0e0d)
+	ld	l, (SongCopy_ToSong:16)	; F612E8  ld L,(0x0e0d)
 	dec	1, l	; F612EC  dec 1,L
 	ld	(3600:16), l	; F612EE  ld (0x0e10),L
-	ld	l, (S0ngC0py_ToTrack:16)	; F612F2  ld L,(0x0e0f)
+	ld	l, (SongCopy_ToTrack:16)	; F612F2  ld L,(0x0e0f)
 	dec	1, l	; F612F6  dec 1,L
 	ld	(3609:16), l	; F612F8  ld (0x0e19),L
-	call	S0ngC0py_ClearDestTrack	; F612FC  call 0xf61907
+	call	SongCopy_ClearDestTrack	; F612FC  call 0xf61907
 	ld	xde, 6356992	; F61300  ld XDE,0x00610000
 	push	xbc	; F61305  push XBC
 	xor	xbc, xbc	; F61306  xor XBC,XBC
 	xor	xhl, xhl	; F61308  xor XHL,XHL
-	ld	l, (S0ngC0py_FromSong:16)	; F6130A  ld L,(0x0e0c)
+	ld	l, (SongCopy_FromSong:16)	; F6130A  ld L,(0x0e0c)
 	dec	1, l	; F6130E  dec 1,L
 	ld	c, l	; F61310  ld C,L
 	sla	xhl, 11	; F61312  sla 0x0b,XHL
@@ -10042,13 +10042,13 @@ S0ngC0py_Execute_Skip9:
 	add	xde, xhl	; F6131B  add XDE,XHL
 	ld	xhl, 256	; F6131D  ld XHL,0x00000100
 	add	xhl, xde	; F61322  add XHL,XDE
-	ld	c, (S0ngC0py_FromSong:16)	; F61324  ld C,(0x0e0c)
+	ld	c, (SongCopy_FromSong:16)	; F61324  ld C,(0x0e0c)
 	dec	1, c	; F61328  dec 1,C
 	cp	c, (BStore_CurrentBank:16)	; F6132A  cp C,(0x360a)
-	jr	nz, S0ngC0py_Execute_Skip10	; F6132E  jr NZ,0xf61335
+	jr	nz, SongCopy_Execute_Skip10	; F6132E  jr NZ,0xf61335
 	ld	xhl, 6305024	; F61330  ld XHL,0x00603500
-S0ngC0py_Execute_Skip10:
-	ld	c, (S0ngC0py_FromTrack:16)	; F61335  ld C,(0x0e0e)
+SongCopy_Execute_Skip10:
+	ld	c, (SongCopy_FromTrack:16)	; F61335  ld C,(0x0e0e)
 	dec	1, c	; F61339  dec 1,C
 	ld	b, c	; F6133B  ld B,C
 	sla	b, 1	; F6133D  sla 0x01,B
@@ -10062,13 +10062,13 @@ S0ngC0py_Execute_Skip10:
 	jrl	z, sub_F610E3_Entry	; F61355  jrl Z,0xf614a3
 	cp	hl, 65535	; F61358  cp HL,0xffff
 	jrl	z, sub_F610E3_Entry	; F6135C  jrl Z,0xf614a3
-	ld	a, (S0ngC0py_ToTrack:16)	; F6135F  ld A,(0x0e0f)
+	ld	a, (SongCopy_ToTrack:16)	; F6135F  ld A,(0x0e0f)
 	dec	1, a	; F61363  dec 1,A
 	ld	(3184:16), a	; F61365  ld (0x0c70),A
 	push	xhl	; F61369  push XHL
 	push	xbc	; F6136A  push XBC
 	push	xde	; F6136B  push XDE
-	call	S0ngC0py_AllocDestHeadBlock	; F6136C  call 0xf61880
+	call	SongCopy_AllocDestHeadBlock	; F6136C  call 0xf61880
 	pop	xde	; F61370  pop XDE
 	pop	xbc	; F61371  pop XBC
 	pop	xhl	; F61372  pop XHL
@@ -10079,11 +10079,11 @@ S0ngC0py_Execute_Skip10:
 	inc	5, xix	; F61382  inc 5,XIX
 	inc	5, xiy	; F61384  inc 5,XIY
 	ldir85	; F61386  ldir
-S0ngC0py_Execute_Join3:
+SongCopy_Execute_Join3:
 	sub	xiy, 256	; F61388  sub XIY,0x00000100
 	ld	hl, (xiy+3)	; F6138E  ld HL,(XIY+0x03)
 	cp	hl, 65535	; F61391  cp HL,0xffff
-	jr	z, S0ngC0py_Execute_Skip11	; F61395  jr Z,0xf613f0
+	jr	z, SongCopy_Execute_Skip11	; F61395  jr Z,0xf613f0
 	call	T_BStore_SeekBlock	; F61397  call 0xf427bc
 	ld	xiy, (BStore_CursorBlockAddr:16)	; F6139B  ld XIY,(0x126e)
 	cpw	(BStore_FreeCount:24), 0x0000	; F6139F  cp (0x6034ba),0x0000
@@ -10108,13 +10108,13 @@ S0ngC0py_Execute_Join3:
 	add	xiy, 5	; F613E3  add XIY,0x00000005
 	ldw	bc, 251	; F613E9  ld BC,0x00fb
 	ldir85	; F613EC  ldir
-	jr	S0ngC0py_Execute_Join3	; F613EE  jr T,0xf61388
-S0ngC0py_Execute_Skip11:
+	jr	SongCopy_Execute_Join3	; F613EE  jr T,0xf61388
+SongCopy_Execute_Skip11:
 	ld	xde, 6356992	; F613F0  ld XDE,0x00610000
 	push	xbc	; F613F5  push XBC
 	xor	xbc, xbc	; F613F6  xor XBC,XBC
 	xor	xwa, xwa	; F613F8  xor XWA,XWA
-	ld	a, (S0ngC0py_ToSong:16)	; F613FA  ld A,(0x0e0d)
+	ld	a, (SongCopy_ToSong:16)	; F613FA  ld A,(0x0e0d)
 	dec	1, a	; F613FE  dec 1,A
 	ld	c, a	; F61400  ld C,A
 	sla	xwa, 11	; F61402  sla 0x0b,XWA
@@ -10129,18 +10129,18 @@ S0ngC0py_Execute_Skip11:
 	sla	a, 1	; F6141A  sla 0x01,A
 	ld	ix, (BStore_CursorBlock:16)	; F6141D  ld IX,(0x345c)
 	ld	(xhl+wa), ix	; F61421  ld (XHL+WA),IX
-	ld	b, (S0ngC0py_ToSong:16)	; F61426  ld B,(0x0e0d)
+	ld	b, (SongCopy_ToSong:16)	; F61426  ld B,(0x0e0d)
 	dec	1, b	; F6142A  dec 1,B
 	cp	b, (BStore_CurrentBank:16)	; F6142C  cp B,(0x360a)
-	jr	nz, S0ngC0py_Execute_Skip12	; F61430  jr NZ,0xf6143c
+	jr	nz, SongCopy_Execute_Skip12	; F61430  jr NZ,0xf6143c
 	ld	xhl, 6304894	; F61432  ld XHL,0x0060347e
 	ld	(xhl+wa), ix	; F61437  ld (XHL+WA),IX
-S0ngC0py_Execute_Skip12:
+SongCopy_Execute_Skip12:
 	ld	xhl, 6356992	; F6143C  ld XHL,0x00610000
 	push	xwa	; F61441  push XWA
 	xor	xwa, xwa	; F61442  xor XWA,XWA
 	xor	xbc, xbc	; F61444  xor XBC,XBC
-	ld	c, (S0ngC0py_FromSong:16)	; F61446  ld C,(0x0e0c)
+	ld	c, (SongCopy_FromSong:16)	; F61446  ld C,(0x0e0c)
 	dec	1, c	; F6144A  dec 1,C
 	ld	a, c	; F6144C  ld A,C
 	sla	xbc, 11	; F6144E  sla 0x0b,XBC
@@ -10150,13 +10150,13 @@ S0ngC0py_Execute_Skip12:
 	add	xhl, xbc	; F61457  add XHL,XBC
 	ld	xbc, 160	; F61459  ld XBC,0x000000a0
 	add	xhl, xbc	; F6145E  add XHL,XBC
-	ld	c, (S0ngC0py_FromSong:16)	; F61460  ld C,(0x0e0c)
+	ld	c, (SongCopy_FromSong:16)	; F61460  ld C,(0x0e0c)
 	dec	1, c	; F61464  dec 1,C
 	cp	c, (BStore_CurrentBank:16)	; F61466  cp C,(0x360a)
-	jr	nz, S0ngC0py_Execute_Skip13	; F6146A  jr NZ,0xf61471
+	jr	nz, SongCopy_Execute_Skip13	; F6146A  jr NZ,0xf61471
 	ld	xhl, 6304928	; F6146C  ld XHL,0x006034a0
-S0ngC0py_Execute_Skip13:
-	ld	c, (S0ngC0py_FromTrack:16)	; F61471  ld C,(0x0e0e)
+SongCopy_Execute_Skip13:
+	ld	c, (SongCopy_FromTrack:16)	; F61471  ld C,(0x0e0e)
 	dec	1, c	; F61475  dec 1,C
 	xor	b, b	; F61477  xor B,B
 	ld	c, (xhl+bc)	; F61479  ld C,(XHL+BC)
@@ -10164,7 +10164,7 @@ S0ngC0py_Execute_Skip13:
 	add	xhl, xde	; F61483  add XHL,XDE
 	sra	wa, 1	; F61485  sra 0x01,WA
 	ld	(xhl+wa), c	; F61488  ld (XHL+WA),C
-	ld	b, (S0ngC0py_ToSong:16)	; F6148D  ld B,(0x0e0d)
+	ld	b, (SongCopy_ToSong:16)	; F6148D  ld B,(0x0e0d)
 	dec	1, b	; F61491  dec 1,B
 	cp	b, (BStore_CurrentBank:16)	; F61493  cp B,(0x360a)
 	jr	nz, sub_F610E3_Entry	; F61497  jr NZ,0xf614a3
@@ -10174,7 +10174,7 @@ sub_F610E3_Entry:
 	.byte 0xE7, 0x38, 0x03, 0x00, 0x00, 0x61, 0x00	; F614A3  ld XDE3,0x00610000   [llvm-mc cannot encode this]
 	xor	xbc, xbc	; F614AA  xor XBC,XBC
 	xor	xhl, xhl	; F614AC  xor XHL,XHL
-	ld	l, (S0ngC0py_ToSong:16)	; F614AE  ld L,(0x0e0d)
+	ld	l, (SongCopy_ToSong:16)	; F614AE  ld L,(0x0e0d)
 	dec	1, l	; F614B2  dec 1,L
 	ld	c, l	; F614B4  ld C,L
 	sla	xhl, 11	; F614B6  sla 0x0b,XHL
@@ -10183,18 +10183,18 @@ sub_F610E3_Entry:
 	m_rd_add_rrx RLX, 0x38, r3	; F614BE  add XHL,XDE3
 	ld	xbc, 34	; F614C1  ld XBC,0x00000022
 	add	xhl, xbc	; F614C6  add XHL,XBC
-	ld	c, (S0ngC0py_ToSong:16)	; F614C8  ld C,(0x0e0d)
+	ld	c, (SongCopy_ToSong:16)	; F614C8  ld C,(0x0e0d)
 	dec	1, c	; F614CC  dec 1,C
 	cp	c, (BStore_CurrentBank:16)	; F614CE  cp C,(0x360a)
 	jr	nz, sub_F610E3_Skip14	; F614D2  jr NZ,0xf614d9
 	ld	xhl, BStore_TrackToPart	; F614D4  ld XHL,0x00603422
 sub_F610E3_Skip14:
-	ld	c, (S0ngC0py_ToTrack:16)	; F614D9  ld C,(0x0e0f)
+	ld	c, (SongCopy_ToTrack:16)	; F614D9  ld C,(0x0e0f)
 	dec	1, c	; F614DD  dec 1,C
 	xor	b, b	; F614DF  xor B,B
 	xor	xix, xix	; F614E1  xor XIX,XIX
 	xor	xwa, xwa	; F614E3  xor XWA,XWA
-	ld	a, (S0ngC0py_FromSong:16)	; F614E5  ld A,(0x0e0c)
+	ld	a, (SongCopy_FromSong:16)	; F614E5  ld A,(0x0e0c)
 	dec	1, a	; F614E9  dec 1,A
 	ld	xix, xwa	; F614EB  ld XIX,XWA
 	sla	xwa, 11	; F614ED  sla 0x0b,XWA
@@ -10203,12 +10203,12 @@ sub_F610E3_Skip14:
 	m_rd_add_rrx RLX, 0x38, r0	; F614F5  add XWA,XDE3
 	ld	xix, 34	; F614F8  ld XIX,0x00000022
 	add	xix, xwa	; F614FD  add XIX,XWA
-	ld	a, (S0ngC0py_FromTrack:16)	; F614FF  ld A,(0x0e0e)
+	ld	a, (SongCopy_FromTrack:16)	; F614FF  ld A,(0x0e0e)
 	dec	1, a	; F61503  dec 1,A
 	xor	w, w	; F61505  xor W,W
 	ld	a, (xix+wa)	; F61507  ld A,(XIX+WA)
 	ld	(xhl+bc), a	; F6150C  ld (XHL+BC),A
-	ld	w, (S0ngC0py_ToSong:16)	; F61511  ld W,(0x0e0d)
+	ld	w, (SongCopy_ToSong:16)	; F61511  ld W,(0x0e0d)
 	dec	1, w	; F61515  dec 1,W
 	cp	w, (BStore_CurrentBank:16)	; F61517  cp W,(0x360a)
 	jrl	nz, sub_F610E3_Skip15	; F6151B  jrl NZ,0xf61528
@@ -10218,7 +10218,7 @@ sub_F610E3_Skip15:
 	ld	xde, 6356992	; F61528  ld XDE,0x00610000
 	xor	xwa, xwa	; F6152D  xor XWA,XWA
 	xor	xix, xix	; F6152F  xor XIX,XIX
-	ld	a, (S0ngC0py_ToSong:16)	; F61531  ld A,(0x0e0d)
+	ld	a, (SongCopy_ToSong:16)	; F61531  ld A,(0x0e0d)
 	dec	1, a	; F61535  dec 1,A
 	ld	xix, xwa	; F61537  ld XIX,XWA
 	sla	xwa, 11	; F61539  sla 0x0b,XWA
@@ -10226,7 +10226,7 @@ sub_F610E3_Skip15:
 	add	xwa, xix	; F6153F  add XWA,XIX
 	add	xde, xwa	; F61541  add XDE,XWA
 	add	xde, 30	; F61543  add XDE,0x0000001e
-	ld	c, (S0ngC0py_ToTrack:16)	; F61549  ld C,(0x0e0f)
+	ld	c, (SongCopy_ToTrack:16)	; F61549  ld C,(0x0e0f)
 	dec	1, c	; F6154D  dec 1,C
 	ld	a, c	; F6154F  ld A,C
 	ld	hl, (xde)	; F61551  ld HL,(XDE)
@@ -10244,7 +10244,7 @@ sub_F610E3_Skip16:
 sub_F610E3_Skip17:
 	ld	(xde), hl	; F6156B  ld (XDE),HL
 sub_F610E3_Join4:
-	ld	a, (S0ngC0py_ToSong:16)	; F6156D  ld A,(0x0e0d)
+	ld	a, (SongCopy_ToSong:16)	; F6156D  ld A,(0x0e0d)
 	dec	1, a	; F61571  dec 1,A
 	cp	a, (BStore_CurrentBank:16)	; F61573  cp A,(0x360a)
 	jr	nz, sub_F610E3_Return	; F61577  jr NZ,0xf615c1
@@ -10267,46 +10267,46 @@ sub_F610E3_Skip19:
 sub_F610E3_Join5:
 	jr	sub_F610E3_Return	; F615A2  jr T,0xf615c1
 sub_F610E3_Skip20:
-	ld	a, (S0ngC0py_ToSong:16)	; F615A4  ld A,(0x0e0d)
+	ld	a, (SongCopy_ToSong:16)	; F615A4  ld A,(0x0e0d)
 	dec	1, a	; F615A8  dec 1,A
 	ld	(3600:16), a	; F615AA  ld (0x0e10),A
-	ld	a, (S0ngC0py_ToTrack:16)	; F615AE  ld A,(0x0e0f)
+	ld	a, (SongCopy_ToTrack:16)	; F615AE  ld A,(0x0e0f)
 	dec	1, a	; F615B2  dec 1,A
 	ld	(3609:16), a	; F615B4  ld (0x0e19),A
-	call	S0ngC0py_ClearDestTrack	; F615B8  call 0xf61907
+	call	SongCopy_ClearDestTrack	; F615B8  call 0xf61907
 	ld	(UI_StatusCode:16), 15	; F615BC  ld (0x2880),0x0f
 sub_F610E3_Return:
 	ret	; F615C1  ret
 
 ; --------------------------------------------------------------------------
-; S0ngC0py_CopyAllTracks
+; SongCopy_CopyAllTracks
 ; Called from: in-module: 0xF611C9
 ; Touches: (0x0C70) (0x0E02) (0x0E0C) (0x0E0D) (0x126E) (0x2880) (0x345C)
 ;          (0x360A) (0x360C) (0x360E) +1 more  |  0x000005 0x000011 0x00001E
 ;          0x000022 0x00007E 0x0000A0 +7 more
-; Calls:   S0ngC0py_AllocDestHeadBlock T_BStore_SeekBlock T_BStore_AllocBlock_Veneer BStore_EmptyBank
+; Calls:   SongCopy_AllocDestHeadBlock T_BStore_SeekBlock T_BStore_AllocBlock_Veneer BStore_EmptyBank
 ; Evidence: reached by a `call`/`calr` decoded in this transcription (the
 ;           sites are listed above), so 0xF615C2 is an instruction boundary.
 ;           The name IS the address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; S0ngC0py_CopyAllTracks: SONG COPY with ALL: for each of the 17 tracks in use in FromSong (live directory if current
-;   bank, else bank copy +0x100), starts the ToSong chain (S0ngC0py_AllocDestHeadBlock), duplicates it block by block
+; SongCopy_CopyAllTracks: SONG COPY with ALL: for each of the 17 tracks in use in FromSong (live directory if current
+;   bank, else bank copy +0x100), starts the ToSong chain (SongCopy_AllocDestHeadBlock), duplicates it block by block
 ;   (251 bytes each) and stores its end cursor (+0x7E/+0xA0); then copies the track-to-part map (+0x22) and the +0x1E
 ;   long. Out of blocks: empties ToSong (BStore_EmptyBank) and UI_StatusCode = 15. Basis: caller + caller header +
 ;   body. (notes/naming-pilot-2026-10-06/proposals_wave6_t.json)
-S0ngC0py_CopyAllTracks:
+SongCopy_CopyAllTracks:
 	xor	a, a	; F615C2  xor A,A
 	ld	(3184:16), a	; F615C4  ld (0x0c70),A
-S0ngC0py_CopyAllTracks_Loop:
+SongCopy_CopyAllTracks_Loop:
 	cpw	(BStore_FreeCount:24), 0x0000	; F615C8  cp (0x6034ba),0x0000
-	jrl	z, S0ngC0py_CopyAllTracks_Skip10	; F615CF  jrl Z,0xf61862
+	jrl	z, SongCopy_CopyAllTracks_Skip10	; F615CF  jrl Z,0xf61862
 	ld	xde, 6356992	; F615D2  ld XDE,0x00610000
 	push	xbc	; F615D7  push XBC
 	xor	xbc, xbc	; F615D8  xor XBC,XBC
 	xor	xwa, xwa	; F615DA  xor XWA,XWA
-	ld	a, (S0ngC0py_FromSong:16)	; F615DC  ld A,(0x0e0c)
+	ld	a, (SongCopy_FromSong:16)	; F615DC  ld A,(0x0e0c)
 	dec	1, a	; F615E0  dec 1,A
 	ld	c, a	; F615E2  ld C,A
 	sla	xwa, 11	; F615E4  sla 0x0b,XWA
@@ -10316,12 +10316,12 @@ S0ngC0py_CopyAllTracks_Loop:
 	add	xde, xwa	; F615ED  add XDE,XWA
 	ld	xwa, 256	; F615EF  ld XWA,0x00000100
 	add	xde, xwa	; F615F4  add XDE,XWA
-	ld	a, (S0ngC0py_FromSong:16)	; F615F6  ld A,(0x0e0c)
+	ld	a, (SongCopy_FromSong:16)	; F615F6  ld A,(0x0e0c)
 	dec	1, a	; F615FA  dec 1,A
 	cp	a, (BStore_CurrentBank:16)	; F615FC  cp A,(0x360a)
-	jr	nz, S0ngC0py_CopyAllTracks_Skip	; F61600  jr NZ,0xf61607
+	jr	nz, SongCopy_CopyAllTracks_Skip	; F61600  jr NZ,0xf61607
 	ld	xde, 6305024	; F61602  ld XDE,0x00603500
-S0ngC0py_CopyAllTracks_Skip:
+SongCopy_CopyAllTracks_Skip:
 	xor	xwa, xwa	; F61607  xor XWA,XWA
 	ld	a, (3184:16)	; F61609  ld A,(0x0c70)
 	ld	w, a	; F6160D  ld W,A
@@ -10329,15 +10329,15 @@ S0ngC0py_CopyAllTracks_Skip:
 	add	a, w	; F61612  add A,W
 	xor	w, w	; F61614  xor W,W
 	bit	7, (xde+wa)	; F61616  bit 7,(XDE+WA)
-	jrl	z, S0ngC0py_CopyAllTracks_Skip5	; F6161B  jrl Z,0xf6175f
+	jrl	z, SongCopy_CopyAllTracks_Skip5	; F6161B  jrl Z,0xf6175f
 	inc	1, wa	; F6161E  inc 1,WA
 	ld	hl, (xde+wa)	; F61620  ld HL,(XDE+WA)
 	cp	hl, 0:i3	; F61625  cp HL,0
-	jrl	z, S0ngC0py_CopyAllTracks_Skip5	; F61627  jrl Z,0xf6175f
+	jrl	z, SongCopy_CopyAllTracks_Skip5	; F61627  jrl Z,0xf6175f
 	cp	hl, 65535	; F6162A  cp HL,0xffff
-	jrl	z, S0ngC0py_CopyAllTracks_Skip5	; F6162E  jrl Z,0xf6175f
+	jrl	z, SongCopy_CopyAllTracks_Skip5	; F6162E  jrl Z,0xf6175f
 	pushw	hl	; F61631  push HL
-	call	S0ngC0py_AllocDestHeadBlock	; F61632  call 0xf61880
+	call	SongCopy_AllocDestHeadBlock	; F61632  call 0xf61880
 	ld	xix, (BStore_CursorBlockAddr:16)	; F61636  ld XIX,(0x126e)
 	popw	hl	; F6163A  pop HL
 	call	T_BStore_SeekBlock	; F6163B  call 0xf427bc
@@ -10346,15 +10346,15 @@ S0ngC0py_CopyAllTracks_Skip:
 	inc	5, xix	; F61646  inc 5,XIX
 	inc	5, xiy	; F61648  inc 5,XIY
 	ldir85	; F6164A  ldir
-S0ngC0py_CopyAllTracks_Join:
+SongCopy_CopyAllTracks_Join:
 	sub	xiy, 256	; F6164C  sub XIY,0x00000100
 	ld	hl, (xiy+3)	; F61652  ld HL,(XIY+0x03)
 	cp	hl, 65535	; F61655  cp HL,0xffff
-	jr	z, S0ngC0py_CopyAllTracks_Skip2	; F61659  jr Z,0xf616b4
+	jr	z, SongCopy_CopyAllTracks_Skip2	; F61659  jr Z,0xf616b4
 	call	T_BStore_SeekBlock	; F6165B  call 0xf427bc
 	ld	xiy, (BStore_CursorBlockAddr:16)	; F6165F  ld XIY,(0x126e)
 	cpw	(BStore_FreeCount:24), 0x0000	; F61663  cp (0x6034ba),0x0000
-	jrl	z, S0ngC0py_CopyAllTracks_Skip10	; F6166A  jrl Z,0xf61862
+	jrl	z, SongCopy_CopyAllTracks_Skip10	; F6166A  jrl Z,0xf61862
 	push	xiy	; F6166D  push XIY
 	call	T_BStore_AllocBlock_Veneer	; F6166E  call 0xf42884
 	pop	xiy	; F61672  pop XIY
@@ -10375,13 +10375,13 @@ S0ngC0py_CopyAllTracks_Join:
 	add	xiy, 5	; F616A7  add XIY,0x00000005
 	ldw	bc, 251	; F616AD  ld BC,0x00fb
 	ldir85	; F616B0  ldir
-	jr	S0ngC0py_CopyAllTracks_Join	; F616B2  jr T,0xf6164c
-S0ngC0py_CopyAllTracks_Skip2:
+	jr	SongCopy_CopyAllTracks_Join	; F616B2  jr T,0xf6164c
+SongCopy_CopyAllTracks_Skip2:
 	ld	xde, 6356992	; F616B4  ld XDE,0x00610000
 	push	xbc	; F616B9  push XBC
 	xor	xbc, xbc	; F616BA  xor XBC,XBC
 	xor	xwa, xwa	; F616BC  xor XWA,XWA
-	ld	a, (S0ngC0py_ToSong:16)	; F616BE  ld A,(0x0e0d)
+	ld	a, (SongCopy_ToSong:16)	; F616BE  ld A,(0x0e0d)
 	dec	1, a	; F616C2  dec 1,A
 	ld	c, a	; F616C4  ld C,A
 	sla	xwa, 11	; F616C6  sla 0x0b,XWA
@@ -10396,18 +10396,18 @@ S0ngC0py_CopyAllTracks_Skip2:
 	sla	a, 1	; F616DE  sla 0x01,A
 	ld	ix, (BStore_CursorBlock:16)	; F616E1  ld IX,(0x345c)
 	ld	(xhl+wa), ix	; F616E5  ld (XHL+WA),IX
-	ld	b, (S0ngC0py_ToSong:16)	; F616EA  ld B,(0x0e0d)
+	ld	b, (SongCopy_ToSong:16)	; F616EA  ld B,(0x0e0d)
 	dec	1, b	; F616EE  dec 1,B
 	cp	b, (BStore_CurrentBank:16)	; F616F0  cp B,(0x360a)
-	jr	nz, S0ngC0py_CopyAllTracks_Skip3	; F616F4  jr NZ,0xf61700
+	jr	nz, SongCopy_CopyAllTracks_Skip3	; F616F4  jr NZ,0xf61700
 	ld	xhl, 6304894	; F616F6  ld XHL,0x0060347e
 	ld	(xhl+wa), ix	; F616FB  ld (XHL+WA),IX
-S0ngC0py_CopyAllTracks_Skip3:
+SongCopy_CopyAllTracks_Skip3:
 	ld	xhl, 6356992	; F61700  ld XHL,0x00610000
 	push	xwa	; F61705  push XWA
 	xor	xwa, xwa	; F61706  xor XWA,XWA
 	xor	xbc, xbc	; F61708  xor XBC,XBC
-	ld	c, (S0ngC0py_FromSong:16)	; F6170A  ld C,(0x0e0c)
+	ld	c, (SongCopy_FromSong:16)	; F6170A  ld C,(0x0e0c)
 	dec	1, c	; F6170E  dec 1,C
 	ld	a, c	; F61710  ld A,C
 	sla	xbc, 11	; F61712  sla 0x0b,XBC
@@ -10417,32 +10417,32 @@ S0ngC0py_CopyAllTracks_Skip3:
 	add	xhl, xbc	; F6171B  add XHL,XBC
 	ld	xbc, 160	; F6171D  ld XBC,0x000000a0
 	add	xhl, xbc	; F61722  add XHL,XBC
-	ld	c, (S0ngC0py_FromSong:16)	; F61724  ld C,(0x0e0c)
+	ld	c, (SongCopy_FromSong:16)	; F61724  ld C,(0x0e0c)
 	dec	1, c	; F61728  dec 1,C
 	cp	c, (BStore_CurrentBank:16)	; F6172A  cp C,(0x360a)
-	jr	nz, S0ngC0py_CopyAllTracks_Skip4	; F6172E  jr NZ,0xf61735
+	jr	nz, SongCopy_CopyAllTracks_Skip4	; F6172E  jr NZ,0xf61735
 	ld	xhl, 6304928	; F61730  ld XHL,0x006034a0
-S0ngC0py_CopyAllTracks_Skip4:
+SongCopy_CopyAllTracks_Skip4:
 	sra	a, 1	; F61735  sra 0x01,A
 	ld	c, (xhl+wa)	; F61738  ld C,(XHL+WA)
 	ld	xhl, 160	; F6173D  ld XHL,0x000000a0
 	add	xhl, xde	; F61742  add XHL,XDE
 	ld	(xhl+wa), c	; F61744  ld (XHL+WA),C
-	ld	b, (S0ngC0py_ToSong:16)	; F61749  ld B,(0x0e0d)
+	ld	b, (SongCopy_ToSong:16)	; F61749  ld B,(0x0e0d)
 	dec	1, b	; F6174D  dec 1,B
 	cp	b, (BStore_CurrentBank:16)	; F6174F  cp B,(0x360a)
-	jr	nz, S0ngC0py_CopyAllTracks_Skip5	; F61753  jr NZ,0xf6175f
+	jr	nz, SongCopy_CopyAllTracks_Skip5	; F61753  jr NZ,0xf6175f
 	ld	xhl, 6304928	; F61755  ld XHL,0x006034a0
 	ld	(xhl+wa), c	; F6175A  ld (XHL+WA),C
-S0ngC0py_CopyAllTracks_Skip5:
+SongCopy_CopyAllTracks_Skip5:
 	inc	1, (3184:16)	; F6175F  inc 1,(0x0c70)
 	cp	(0x0c70:16), 0x11	; F61763  cp (0x0c70),0x11
-	jrl	c, S0ngC0py_CopyAllTracks_Loop	; F61768  jrl C,0xf615c8
+	jrl	c, SongCopy_CopyAllTracks_Loop	; F61768  jrl C,0xf615c8
 	ld	xde, 6356992	; F6176B  ld XDE,0x00610000
 	push	xbc	; F61770  push XBC
 	xor	xbc, xbc	; F61771  xor XBC,XBC
 	xor	xwa, xwa	; F61773  xor XWA,XWA
-	ld	a, (S0ngC0py_FromSong:16)	; F61775  ld A,(0x0e0c)
+	ld	a, (SongCopy_FromSong:16)	; F61775  ld A,(0x0e0c)
 	dec	1, a	; F61779  dec 1,A
 	ld	xiy, xwa	; F6177B  ld XIY,XWA
 	ld	c, a	; F6177D  ld C,A
@@ -10452,16 +10452,16 @@ S0ngC0py_CopyAllTracks_Skip5:
 	pop	xbc	; F61787  pop XBC
 	add	xiy, xde	; F61788  add XIY,XDE
 	add	xiy, 34	; F6178A  add XIY,0x00000022
-	ld	a, (S0ngC0py_FromSong:16)	; F61790  ld A,(0x0e0c)
+	ld	a, (SongCopy_FromSong:16)	; F61790  ld A,(0x0e0c)
 	dec	1, a	; F61794  dec 1,A
 	cp	a, (BStore_CurrentBank:16)	; F61796  cp A,(0x360a)
-	jr	nz, S0ngC0py_CopyAllTracks_Skip6	; F6179A  jr NZ,0xf617a1
+	jr	nz, SongCopy_CopyAllTracks_Skip6	; F6179A  jr NZ,0xf617a1
 	ld	xiy, BStore_TrackToPart	; F6179C  ld XIY,0x00603422
-S0ngC0py_CopyAllTracks_Skip6:
+SongCopy_CopyAllTracks_Skip6:
 	push	xbc	; F617A1  push XBC
 	xor	xbc, xbc	; F617A2  xor XBC,XBC
 	xor	xwa, xwa	; F617A4  xor XWA,XWA
-	ld	a, (S0ngC0py_ToSong:16)	; F617A6  ld A,(0x0e0d)
+	ld	a, (SongCopy_ToSong:16)	; F617A6  ld A,(0x0e0d)
 	dec	1, a	; F617AA  dec 1,A
 	ld	xix, xwa	; F617AC  ld XIX,XWA
 	ld	c, a	; F617AE  ld C,A
@@ -10473,20 +10473,20 @@ S0ngC0py_CopyAllTracks_Skip6:
 	add	xix, 34	; F617BB  add XIX,0x00000022
 	ldw	bc, 17	; F617C1  ld BC,0x0011
 	ldir85	; F617C4  ldir
-	ld	a, (S0ngC0py_ToSong:16)	; F617C6  ld A,(0x0e0d)
+	ld	a, (SongCopy_ToSong:16)	; F617C6  ld A,(0x0e0d)
 	dec	1, a	; F617CA  dec 1,A
 	cp	a, (BStore_CurrentBank:16)	; F617CC  cp A,(0x360a)
-	jr	nz, S0ngC0py_CopyAllTracks_Skip7	; F617D0  jr NZ,0xf617e2
+	jr	nz, SongCopy_CopyAllTracks_Skip7	; F617D0  jr NZ,0xf617e2
 	sub	xiy, 17	; F617D2  sub XIY,0x00000011
 	ld	xix, BStore_TrackToPart	; F617D8  ld XIX,0x00603422
 	ldw	bc, 17	; F617DD  ld BC,0x0011
 	ldir85	; F617E0  ldir
-S0ngC0py_CopyAllTracks_Skip7:
+SongCopy_CopyAllTracks_Skip7:
 	ld	xde, 6356992	; F617E2  ld XDE,0x00610000
 	push	xbc	; F617E7  push XBC
 	xor	xbc, xbc	; F617E8  xor XBC,XBC
 	xor	xwa, xwa	; F617EA  xor XWA,XWA
-	ld	a, (S0ngC0py_FromSong:16)	; F617EC  ld A,(0x0e0c)
+	ld	a, (SongCopy_FromSong:16)	; F617EC  ld A,(0x0e0c)
 	dec	1, a	; F617F0  dec 1,A
 	ld	xiy, xwa	; F617F2  ld XIY,XWA
 	ld	c, a	; F617F4  ld C,A
@@ -10496,28 +10496,28 @@ S0ngC0py_CopyAllTracks_Skip7:
 	pop	xbc	; F617FE  pop XBC
 	add	xiy, xde	; F617FF  add XIY,XDE
 	add	xiy, 30	; F61801  add XIY,0x0000001e
-	ld	c, (S0ngC0py_FromSong:16)	; F61807  ld C,(0x0e0c)
+	ld	c, (SongCopy_FromSong:16)	; F61807  ld C,(0x0e0c)
 	dec	1, c	; F6180B  dec 1,C
 	cp	c, (BStore_CurrentBank:16)	; F6180D  cp C,(0x360a)
-	jr	nz, S0ngC0py_CopyAllTracks_Skip8	; F61811  jr NZ,0xf61818
+	jr	nz, SongCopy_CopyAllTracks_Skip8	; F61811  jr NZ,0xf61818
 	ld	xiy, 13836	; F61813  ld XIY,0x0000360c
-S0ngC0py_CopyAllTracks_Skip8:
-	ld	c, (S0ngC0py_ToSong:16)	; F61818  ld C,(0x0e0d)
+SongCopy_CopyAllTracks_Skip8:
+	ld	c, (SongCopy_ToSong:16)	; F61818  ld C,(0x0e0d)
 	dec	1, c	; F6181C  dec 1,C
 	cp	c, (BStore_CurrentBank:16)	; F6181E  cp C,(0x360a)
-	jr	nz, S0ngC0py_CopyAllTracks_Skip9	; F61822  jr NZ,0xf6183c
+	jr	nz, SongCopy_CopyAllTracks_Skip9	; F61822  jr NZ,0xf6183c
 	ld	xwa, (xiy)	; F61824  ld XWA,(XIY)
 	ld	(13836:16), xwa	; F61826  ld (0x360c),XWA
 	ld	(14162:16), 0	; F6182A  ld (0x3752),0x00
 	bit	0, (0x360e:16)	; F6182F  bit 0,(0x360e)
-	jr	z, S0ngC0py_CopyAllTracks_Return	; F61833  jr Z,0xf6187f
+	jr	z, SongCopy_CopyAllTracks_Return	; F61833  jr Z,0xf6187f
 	ld	(14162:16), 1	; F61835  ld (0x3752),0x01
-	jr	S0ngC0py_CopyAllTracks_Return	; F6183A  jr T,0xf6187f
-S0ngC0py_CopyAllTracks_Skip9:
+	jr	SongCopy_CopyAllTracks_Return	; F6183A  jr T,0xf6187f
+SongCopy_CopyAllTracks_Skip9:
 	push	xbc	; F6183C  push XBC
 	xor	xbc, xbc	; F6183D  xor XBC,XBC
 	xor	xwa, xwa	; F6183F  xor XWA,XWA
-	ld	a, (S0ngC0py_ToSong:16)	; F61841  ld A,(0x0e0d)
+	ld	a, (SongCopy_ToSong:16)	; F61841  ld A,(0x0e0d)
 	dec	1, a	; F61845  dec 1,A
 	ld	xix, xwa	; F61847  ld XIX,XWA
 	ld	c, a	; F61849  ld C,A
@@ -10529,22 +10529,22 @@ S0ngC0py_CopyAllTracks_Skip9:
 	add	xix, 30	; F61856  add XIX,0x0000001e
 	ld	xwa, (xiy)	; F6185C  ld XWA,(XIY)
 	ld	(xix), xwa	; F6185E  ld (XIX),XWA
-	jr	S0ngC0py_CopyAllTracks_Return	; F61860  jr T,0xf6187f
-S0ngC0py_CopyAllTracks_Skip10:
+	jr	SongCopy_CopyAllTracks_Return	; F61860  jr T,0xf6187f
+SongCopy_CopyAllTracks_Skip10:
 	ld	a, (3586:16)	; F61862  ld A,(0x0e02)
 	pushw	wa	; F61866  push WA
-	ld	a, (S0ngC0py_ToSong:16)	; F61867  ld A,(0x0e0d)
+	ld	a, (SongCopy_ToSong:16)	; F61867  ld A,(0x0e0d)
 	dec	1, a	; F6186B  dec 1,A
 	ld	(3586:16), a	; F6186D  ld (0x0e02),A
 	call	BStore_EmptyBank	; F61871  call 0xf60f4f
 	popw	wa	; F61875  pop WA
 	ld	(3586:16), a	; F61876  ld (0x0e02),A
 	ld	(UI_StatusCode:16), 15	; F6187A  ld (0x2880),0x0f
-S0ngC0py_CopyAllTracks_Return:
+SongCopy_CopyAllTracks_Return:
 	ret	; F6187F  ret
 
 ; --------------------------------------------------------------------------
-; S0ngC0py_AllocDestHeadBlock
+; SongCopy_AllocDestHeadBlock
 ; Called from: in-module: 0xF6136C 0xF61632
 ; Touches: (0x0C70) (0x0E0D) (0x126E) (0x345C) (0x360A)  |  0x000100
 ;          0x603500 0x610000
@@ -10555,14 +10555,14 @@ S0ngC0py_CopyAllTracks_Return:
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; S0ngC0py_AllocDestHeadBlock: When a block is free: allocates one (BStore_AllocBlock), marks it in use with PREVIOUS
+; SongCopy_AllocDestHeadBlock: When a block is free: allocates one (BStore_AllocBlock), marks it in use with PREVIOUS
 ;   0 and NEXT 0xFFFF, (0x345C) := it, and makes it the head of directory entry (0x0C70) (0-based) in ToSong's bank
-;   copy, and in the live directory when ToSong is the current bank. S0ngC0py_Execute (single track, (0x0C70) =
-;   ToTrack-1) and S0ngC0py_CopyAllTracks call it before duplicating a chain. Basis: callers + body. (notes/naming-
+;   copy, and in the live directory when ToSong is the current bank. SongCopy_Execute (single track, (0x0C70) =
+;   ToTrack-1) and SongCopy_CopyAllTracks call it before duplicating a chain. Basis: callers + body. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave6_t.json)
-S0ngC0py_AllocDestHeadBlock:
+SongCopy_AllocDestHeadBlock:
 	cpw	(BStore_FreeCount:24), 0x0000	; F61880  cp (0x6034ba),0x0000
-	jr	z, S0ngC0py_AllocDestHeadBlock_Return	; F61887  jr Z,0xf61906
+	jr	z, SongCopy_AllocDestHeadBlock_Return	; F61887  jr Z,0xf61906
 	call	T_BStore_AllocBlock_Veneer	; F61889  call 0xf42884
 	ld	(BStore_CursorBlock:16), ix	; F6188D  ld (0x345c),IX
 	ld	hl, ix	; F61891  ld HL,IX
@@ -10575,7 +10575,7 @@ S0ngC0py_AllocDestHeadBlock:
 	push	xbc	; F618AD  push XBC
 	xor	xbc, xbc	; F618AE  xor XBC,XBC
 	xor	xwa, xwa	; F618B0  xor XWA,XWA
-	ld	a, (S0ngC0py_ToSong:16)	; F618B2  ld A,(0x0e0d)
+	ld	a, (SongCopy_ToSong:16)	; F618B2  ld A,(0x0e0d)
 	dec	1, a	; F618B6  dec 1,A
 	ld	c, a	; F618B8  ld C,A
 	sla	xwa, 11	; F618BA  sla 0x0b,XWA
@@ -10594,19 +10594,19 @@ S0ngC0py_AllocDestHeadBlock:
 	or	(xde+wa), 0x80	; F618DB  or (XDE+WA),0x80
 	inc	1, wa	; F618E1  inc 1,WA
 	ld	(xde+wa), ix	; F618E3  ld (XDE+WA),IX
-	ld	c, (S0ngC0py_ToSong:16)	; F618E8  ld C,(0x0e0d)
+	ld	c, (SongCopy_ToSong:16)	; F618E8  ld C,(0x0e0d)
 	dec	1, c	; F618EC  dec 1,C
 	cp	c, (BStore_CurrentBank:16)	; F618EE  cp C,(0x360a)
-	jr	nz, S0ngC0py_AllocDestHeadBlock_Return	; F618F2  jr NZ,0xf61906
+	jr	nz, SongCopy_AllocDestHeadBlock_Return	; F618F2  jr NZ,0xf61906
 	ld	xde, 6305024	; F618F4  ld XDE,0x00603500
 	ld	(xde+wa), ix	; F618F9  ld (XDE+WA),IX
 	dec	1, wa	; F618FE  dec 1,WA
 	or	(xde+wa), 0x80	; F61900  or (XDE+WA),0x80
-S0ngC0py_AllocDestHeadBlock_Return:
+SongCopy_AllocDestHeadBlock_Return:
 	ret	; F61906  ret
 
 ; --------------------------------------------------------------------------
-; S0ngC0py_ClearDestTrack
+; SongCopy_ClearDestTrack
 ; Called from: in-module: 0xF612FC 0xF615B8
 ; Touches: (0x0CA4) (0x0E10) (0x0E19) (0x360A)  |  0x000022 0x00007E
 ;          0x000100 0x003460 0x60347E 0x603500 +1 more
@@ -10617,12 +10617,12 @@ S0ngC0py_AllocDestHeadBlock_Return:
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; S0ngC0py_ClearDestTrack: Clears track (0x0E19)+1 of song bank (0x0E10): frees its chain (BStore_FreeChain) and
+; SongCopy_ClearDestTrack: Clears track (0x0E19)+1 of song bank (0x0E10): frees its chain (BStore_FreeChain) and
 ;   empties its directory entry (the live one for BStore_CurrentBank, else the bank copy's), resets its saved cursor
-;   in the bank copy (and live). S0ngC0py_Execute's two callers set (0x0E10) := ToSong-1, (0x0E19) := ToTrack-1:
+;   in the bank copy (and live). SongCopy_Execute's two callers set (0x0E10) := ToSong-1, (0x0E19) := ToTrack-1:
 ;   before a track copy and after running out of blocks. Basis: caller + body. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave5_q.json)
-S0ngC0py_ClearDestTrack:
+SongCopy_ClearDestTrack:
 	push	xwa	; F61907  push XWA
 	push	xhl	; F61908  push XHL
 	push	xbc	; F61909  push XBC
@@ -10643,22 +10643,22 @@ S0ngC0py_ClearDestTrack:
 	add	xhl, xde	; F6192C  add XHL,XDE
 	ld	c, (3600:16)	; F6192E  ld C,(0x0e10)
 	cp	c, (BStore_CurrentBank:16)	; F61932  cp C,(0x360a)
-	jr	nz, S0ngC0py_ClearDestTrack_Skip	; F61936  jr NZ,0xf6193d
+	jr	nz, SongCopy_ClearDestTrack_Skip	; F61936  jr NZ,0xf6193d
 	ld	xhl, 6305024	; F61938  ld XHL,0x00603500
-S0ngC0py_ClearDestTrack_Skip:
+SongCopy_ClearDestTrack_Skip:
 	ld	c, (3609:16)	; F6193D  ld C,(0x0e19)
 	ld	b, c	; F61941  ld B,C
 	sla	b, 1	; F61943  sla 0x01,B
 	add	c, b	; F61946  add C,B
 	xor	b, b	; F61948  xor B,B
 	bit	7, (xhl+bc)	; F6194A  bit 7,(XHL+BC)
-	jrl	z, S0ngC0py_ClearDestTrack_Epilogue	; F6194F  jrl Z,0xf61a10
+	jrl	z, SongCopy_ClearDestTrack_Epilogue	; F6194F  jrl Z,0xf61a10
 	inc	1, bc	; F61952  inc 1,BC
 	ld	wa, (xhl+bc)	; F61954  ld WA,(XHL+BC)
 	cp	wa, 0:i3	; F61959  cp WA,0
-	jrl	z, S0ngC0py_ClearDestTrack_Epilogue	; F6195B  jrl Z,0xf61a10
+	jrl	z, SongCopy_ClearDestTrack_Epilogue	; F6195B  jrl Z,0xf61a10
 	cp	wa, 65535	; F6195E  cp WA,0xffff
-	jrl	z, S0ngC0py_ClearDestTrack_Epilogue	; F61962  jrl Z,0xf61a10
+	jrl	z, SongCopy_ClearDestTrack_Epilogue	; F61962  jrl Z,0xf61a10
 	ld	iy, wa	; F61965  ld IY,WA
 	ld	wa, (BStore_BlockLimit:16)	; F61967  ld WA,(0x0ca4)
 	push	xhl	; F6196B  push XHL
@@ -10673,12 +10673,12 @@ S0ngC0py_ClearDestTrack_Skip:
 	ld	(xhl+bc), 0x00	; F6197E  ld (XHL+BC),0x00
 	ld	a, (3600:16)	; F61984  ld A,(0x0e10)
 	cp	a, (BStore_CurrentBank:16)	; F61988  cp A,(0x360a)
-	jr	nz, S0ngC0py_ClearDestTrack_Skip2	; F6198C  jr NZ,0xf619a2
+	jr	nz, SongCopy_ClearDestTrack_Skip2	; F6198C  jr NZ,0xf619a2
 	ld	xhl, 6305024	; F6198E  ld XHL,0x00603500
 	ld	(xhl+bc), 0x00	; F61993  ld (XHL+BC),0x00
 	inc	1, bc	; F61999  inc 1,BC
 	ldw	(xhl+bc), 0xffff	; F6199B  ld (XHL+BC),0xffff
-S0ngC0py_ClearDestTrack_Skip2:
+SongCopy_ClearDestTrack_Skip2:
 	ld	xhl, 126	; F619A2  ld XHL,0x0000007e
 	add	xhl, xde	; F619A7  add XHL,XDE
 	xor	bc, bc	; F619A9  xor BC,BC
@@ -10689,23 +10689,23 @@ S0ngC0py_ClearDestTrack_Skip2:
 	add	xhl, 34	; F619BC  add XHL,0x00000022
 	ld	(xhl+bc), 0x05	; F619C2  ld (XHL+BC),0x05
 	cp	a, (BStore_CurrentBank:16)	; F619C8  cp A,(0x360a)
-	jr	nz, S0ngC0py_ClearDestTrack_Skip3	; F619CC  jr NZ,0xf619ec
+	jr	nz, SongCopy_ClearDestTrack_Skip3	; F619CC  jr NZ,0xf619ec
 	ld	xhl, 6304894	; F619CE  ld XHL,0x0060347e
 	sla	bc, 1	; F619D3  sla 0x01,BC
 	ldw	(xhl+bc), 0xffff	; F619D6  ld (XHL+BC),0xffff
 	sra	bc, 1	; F619DD  sra 0x01,BC
 	add	xhl, 34	; F619E0  add XHL,0x00000022
 	ld	(xhl+bc), 0x05	; F619E6  ld (XHL+BC),0x05
-S0ngC0py_ClearDestTrack_Skip3:
+SongCopy_ClearDestTrack_Skip3:
 	cp	a, (BStore_CurrentBank:16)	; F619EC  cp A,(0x360a)
-	jr	nz, S0ngC0py_ClearDestTrack_Epilogue	; F619F0  jr NZ,0xf61a10
+	jr	nz, SongCopy_ClearDestTrack_Epilogue	; F619F0  jr NZ,0xf61a10
 	ld	xhl, 13408	; F619F2  ld XHL,0x00003460
 	sla	bc, 1	; F619F7  sla 0x01,BC
 	ldw	(xhl+bc), 0xffff	; F619FA  ld (XHL+BC),0xffff
 	sra	bc, 1	; F61A01  sra 0x01,BC
 	add	xhl, 34	; F61A04  add XHL,0x00000022
 	ld	(xhl+bc), 0x05	; F61A0A  ld (XHL+BC),0x05
-S0ngC0py_ClearDestTrack_Epilogue:
+SongCopy_ClearDestTrack_Epilogue:
 	pop	xiy	; F61A10  pop XIY
 	pop	xde	; F61A11  pop XDE
 	pop	xbc	; F61A12  pop XBC

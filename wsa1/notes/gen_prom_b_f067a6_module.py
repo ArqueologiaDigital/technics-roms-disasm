@@ -142,8 +142,11 @@ PART 2 -- `--dl-names`: FRAMED -> CONTENT for prom_b's display lists
   ⚠ WHAT THIS DOES AND DOES NOT CLAIM.  It claims the list DRAWS those words --
   which is what the records say and nothing more.  It does not claim to know the
   screen's function, and it does not touch a list with no text.  The ROM writes
-  the digit 0 for the letter O in its large titles ('C0NTR0LLER', 'M0DELING'),
-  and the names keep that spelling rather than silently correcting the ROM.
+  the digit 0 for the letter O in its large titles ('C0NTR0LLER', 'M0DELING').
+  The names kept that spelling until 2026-11-06; the owner then decided that a
+  name spells the word (DL_ModelingSoundEditToneDriver), so camel()
+  reads the caption through caption_o_for_zero.o_for_zero().  The `.ascii` records
+  and the Evidence lines that quote them keep the ROM's zeros.
 
 RUN
   python3 notes/gen_prom_b_f067a6_module.py             # the assembly
@@ -166,6 +169,7 @@ import textwrap
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "notes"))
 from asm_source import image_path, write_part  # noqa: E402
+from caption_o_for_zero import o_for_zero  # noqa: E402  (names read 0-for-O as O)
 sys.path.insert(0, os.path.join(ROOT, "notes"))
 sys.path.insert(0, os.path.join(ROOT, "scripts", "analysis"))
 AUTOFORCE = os.path.join(ROOT, "notes", "llvm_roundtrip_autoforce.py")
@@ -1407,8 +1411,9 @@ SLUG_MAX = 40
 
 
 def camel(s):
+    # the caption with the ROM's 0-for-O read as O (caption_o_for_zero.py; owner decision 2026-11-06)
     out = []
-    for w in re.split(r"[^A-Za-z0-9]+", s):
+    for w in re.split(r"[^A-Za-z0-9]+", o_for_zero(s)):
         if w:
             out.append(w[0].upper() + w[1:].lower())
     return "".join(out)

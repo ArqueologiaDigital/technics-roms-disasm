@@ -2090,7 +2090,7 @@ def _rewrite_round8_header(lines, old, new, bucket="T1"):
 #      emitted as `.byte`, which this scan cannot see, and round 10 promoted it
 #      on exactly that ground.  The scan's own check has been re-worded to say
 #      what it measures.  prom_b's
-#      display lists carry captions -- `DL_C0mbinati0nM0dePage22Sound`,
+#      display lists carry captions -- `DL_CombinationModePage22Sound`,
 #      `DL_TransmissionDesDonnEsDeSyst` -- and prom_a's do not: its 86
 #      `DisplayList_*` objects are single five-byte records.
 #      ⚠ AND A SCAN THAT LOOKED FOR PRINTABLE RUNS IN COMMENTS INSTEAD FOUND

@@ -3569,7 +3569,7 @@ sub_FC1B6C:
 ; Called from: prom_b T_SoundName_Lookup (`jp`)
 ;          prom_a sub_F90989 (`call` through T_SoundName_Lookup) at 0xF90A56
 ;          prom_a InstallPainter_SoundMode (`call` through T_SoundName_Lookup) at 0xF90E62
-;          prom_a C0mbinati0nM0de_ShowSelectedPartSoundName (`call` through T_SoundName_Lookup) at 0xF9190A
+;          prom_a CombinationMode_ShowSelectedPartSoundName (`call` through T_SoundName_Lookup) at 0xF9190A
 ;          ... and 2 more
 ;
 ;     0xFC1BAE loads 0xFC1C49, where the ROM reads:
@@ -3698,7 +3698,7 @@ Msg0716_Str_SoundName:
 ; CombiName_Lookup -- loads a pointer straight at ROM TEXT.  NOT NAMED.
 ;
 ; Called from: prom_b T_CombiName_Lookup (`jp`)
-;          prom_a C0mbinati0nM0de_ShowSelectedPartSoundName (`call` through T_CombiName_Lookup) at 0xF91D01
+;          prom_a CombinationMode_ShowSelectedPartSoundName (`call` through T_CombiName_Lookup) at 0xF91D01
 ;          prom_a GroupCombiDisplayHold_DrawMemberNames (`call` through T_CombiName_Lookup) at 0xF93F35
 ;          prom_a CombiName_CopyToBuffer (`call` through T_CombiName_Lookup) at 0xF9F727
 ;          ... and 1 more

@@ -97,7 +97,7 @@
 ; from code there needs an ASCII rule with a null this round does not have (at
 ; 20 bytes the rule misses most of those runs; at 10 it has three false
 ; positives).  Above that, only 2 thunk slot(s) point anywhere into
-; 0xF6D002-0xF77FFF at all -- T_MidiFileL0ad_LcdKeyRow1 -> 0xF6F400, T_MidiFileSave_WriteSeqBankSmf -> 0xF6F404, so a split there would rest on a linear decode.
+; 0xF6D002-0xF77FFF at all -- T_MidiFileLoad_LcdKeyRow1 -> 0xF6F400, T_MidiFileSave_WriteSeqBankSmf -> 0xF6F404, so a split there would rest on a linear decode.
 ;
 ; REGENERATE:  python3 notes/gen_prom_b_f65000_module.py
 ; CHECKS:      python3 notes/gen_prom_b_f65000_module.py --checks

@@ -34,8 +34,8 @@ Record macros: `wsa1/include/wsa1_gui.inc`. Key names: the `KEY_*` equates there
 | mode   | 0x17 | `ModeEnter_SoundEdit`                         | SOUND EDIT / · WRITE / COPY                                  | 0    |                                                        |
 | mode   | 0x21 | `InstallPainter_SoundMode_Entry`              | SOUND MODE / 1 / 2                                           | 19   |                                                        |
 | screen | 0x01 | `InstallPainter_SoundMode_Entry`              | SOUND MODE / 1 / 2                                           | 19   | screen 0xA1, screen 0xA6                               |
-| mode   | 0x22 | `InstallPainter_C0mbinati0nM0de_Entry`        | C0MBINATI0N M0DE / PAGE2/2 / SOUND:                          | 0    |                                                        |
-| screen | 0x02 | `InstallPainter_C0mbinati0nM0de_Entry`        | C0MBINATI0N M0DE / PAGE2/2 / SOUND:                          | 0    | screen 0xA1, screen 0xA5, screen 0xA6                  |
+| mode   | 0x22 | `InstallPainter_CombinationMode_Entry`        | C0MBINATI0N M0DE / PAGE2/2 / SOUND:                          | 0    |                                                        |
+| screen | 0x02 | `InstallPainter_CombinationMode_Entry`        | C0MBINATI0N M0DE / PAGE2/2 / SOUND:                          | 0    | screen 0xA1, screen 0xA5, screen 0xA6                  |
 | mode   | 0x24 | `Paint_Sequencer`                             | SEQUENCER / REALTIME / EDIT                                  | 14   |                                                        |
 | screen | 0x04 | `Paint_Sequencer`                             | SEQUENCER / REALTIME / EDIT                                  | 14   | mode 0x2F, screen 0x0F, screen 0x10, screen 0x13       |
 | mode   | 0x26 | `ScreenEnter_RealtimeRecordScreen_Fwd`        |                                                              | 20   |                                                        |
@@ -44,12 +44,12 @@ Record macros: `wsa1/include/wsa1_gui.inc`. Key names: the `KEY_*` equates there
 | screen | 0x07 | `ScreenEnterBody_CombiEditMixer`              | MIXER / SOUND:                                               | 0    |                                                        |
 | mode   | 0x28 | `ScreenEnter_CycleRecordScreen_Fwd`           |                                                              | 7    |                                                        |
 | screen | 0x08 | `ScreenEnter_CycleRecordScreen_Fwd`           |                                                              | 7    | mode 0x26, screen 0x06                                 |
-| mode   | 0x2B | `ScreenEnter_AfterT0uchSetting`               | AFTER T0UCH SETTING / Select whether or not After Touch / is | 0    |                                                        |
-| screen | 0x0B | `ScreenEnter_AfterT0uchSetting`               | AFTER T0UCH SETTING / Select whether or not After Touch / is | 0    | mode 0x24, screen 0x04                                 |
+| mode   | 0x2B | `ScreenEnter_AfterTouchSetting`               | AFTER T0UCH SETTING / Select whether or not After Touch / is | 0    |                                                        |
+| screen | 0x0B | `ScreenEnter_AfterTouchSetting`               | AFTER T0UCH SETTING / Select whether or not After Touch / is | 0    | mode 0x24, screen 0x04                                 |
 | mode   | 0x2C | `ScreenEnter_MetronomeBalanceScreen_Fwd`      |                                                              | 3    |                                                        |
 | screen | 0x0C | `ScreenEnter_MetronomeBalanceScreen_Fwd`      |                                                              | 3    | mode 0x26, screen 0x06                                 |
-| mode   | 0x2D | `ScreenEnter_S0ngSelectName`                  | S0NG SELECT & NAME / KB / S0NG                               | 0    |                                                        |
-| screen | 0x0D | `ScreenEnter_S0ngSelectName`                  | S0NG SELECT & NAME / KB / S0NG                               | 0    | mode 0x24, screen 0x04                                 |
+| mode   | 0x2D | `ScreenEnter_SongSelectName`                  | S0NG SELECT & NAME / KB / S0NG                               | 0    |                                                        |
+| screen | 0x0D | `ScreenEnter_SongSelectName`                  | S0NG SELECT & NAME / KB / S0NG                               | 0    | mode 0x24, screen 0x04                                 |
 | mode   | 0x2E | `ScreenEnter_StepRecord`                      |                                                              | 0    |                                                        |
 | screen | 0x0E | `ScreenEnter_StepRecord`                      |                                                              | 0    | mode 0x24, screen 0x04                                 |
 | mode   | 0x2F | `ScreenEnter_StepRecordPartSelect`            | STEP RECORD / : PART SELECT / Press the up/down button under | 17   |                                                        |
@@ -63,11 +63,11 @@ Record macros: `wsa1/include/wsa1_gui.inc`. Key names: the `KEY_*` equates there
 | screen | 0x1A | `ScreenEnter_Edit`                            | EDIT / SEQ. / N0TE                                           | 16   | screen 0x1B, screen 0x1C, screen 0x1D, screen 0x1E +11 |
 | screen | 0x1B | `ScreenEnter_SongClear`                       | SONG / CLEAR / KB                                            | 7    | screen 0x1A                                            |
 | screen | 0x1C | `ScreenEnter_TrackClear`                      | TRACK / CLEAR / Press                                        | 21   | screen 0x1A                                            |
-| screen | 0x1D | `ScreenEnter_Vel0cityChange`                  | VEL0CITY CHANGE / TRACK           : / FIRST MEASURE   :      | 11   | screen 0x1A                                            |
+| screen | 0x1D | `ScreenEnter_VelocityChange`                  | VEL0CITY CHANGE / TRACK           : / FIRST MEASURE   :      | 11   | screen 0x1A                                            |
 | screen | 0x1E | `ScreenEnter_Quantize`                        | QUANTIZE / TRACK         : / STRENGTH :                      | 11   | mode 0x26, screen 0x06, screen 0x1A                    |
 | screen | 0x1F | `ScreenEnter_TrackMerge`                      | TRACK MERGE / OK / TRACK  :                                  | 8    | screen 0x1A                                            |
 | screen | 0x20 | `ScreenEnter_MeasureErase`                    | MEASURE ERASE / TRACK           : / FIRST MEASURE   :        | 11   | screen 0x1A                                            |
-| screen | 0x21 | `ScreenEnter_MeasureC0py`                     | MEASURE C0PY / FROM TRACK / TO TRACK                         | 11   | screen 0x1A                                            |
+| screen | 0x21 | `ScreenEnter_MeasureCopy`                     | MEASURE C0PY / FROM TRACK / TO TRACK                         | 11   | screen 0x1A                                            |
 | screen | 0x22 | `ScreenEnter_MeasureInsert`                   | MEASURE INSERT / FROM TRACK / TO TRACK                       | 11   | screen 0x1A                                            |
 | screen | 0x23 | `ScreenEnter_MeasureDelete`                   | MEASURE DELETE / TRACK           : / FIRST MEASURE   :       | 10   | screen 0x1A                                            |
 | screen | 0x24 | `ShowScreen_NoteEditPartSelect`               | NOTE / EDIT / :                                              | 17   | screen 0x1A, screen 0x25, screen 0x28                  |
@@ -76,10 +76,10 @@ Record macros: `wsa1/include/wsa1_gui.inc`. Key names: the `KEY_*` equates there
 | screen | 0x27 | `ShowScreen_DrumEditPartSelect`               | DRUM / EDIT / :                                              | 17   | screen 0x1A, screen 0x25, screen 0x28                  |
 | screen | 0x28 | `EditScreen_EnterDrumEdit`                    |                                                              | 20   | screen 0x26, screen 0x29                               |
 | screen | 0x29 | `ScreenEnter_CyclePlayEditScreen29_Fwd`       |                                                              | 6    | screen 0x25, screen 0x28                               |
-| screen | 0x2A | `ScreenEnter_S0ngC0py`                        | S0NG C0PY / FROM / TO                                        | 21   | screen 0x1A                                            |
-| screen | 0x2B | `ScreenEnter_Transp0se`                       | TRANSP0SE / TRACK           : / FIRST MEASURE   :            | 11   | screen 0x1A                                            |
+| screen | 0x2A | `ScreenEnter_SongCopy`                        | S0NG C0PY / FROM / TO                                        | 21   | screen 0x1A                                            |
+| screen | 0x2B | `ScreenEnter_Transpose`                       | TRANSP0SE / TRACK           : / FIRST MEASURE   :            | 11   | screen 0x1A                                            |
 | screen | 0x2C | `ScreenEnter_AdvanceDelay`                    | ADVANCE/DELAY / TRACK           : / FIRST MEASURE   :        | 11   | screen 0x1A                                            |
-| screen | 0x2D | `ScreenEnter_N0teChange`                      | N0TE CHANGE / TARGET NOTE / TRACK         :                  | 10   | screen 0x1A                                            |
+| screen | 0x2D | `ScreenEnter_NoteChange`                      | N0TE CHANGE / TARGET NOTE / TRACK         :                  | 10   | screen 0x1A                                            |
 | screen | 0x2E | `ScreenEnter_PanelWrite`                      | PANEL WRITE / PANEL WRITE replaces the sounds and / settings | 0    | screen 0x1A                                            |
 | screen | 0x33 | `ScreenEnter_CombiEditMenuRedirect`           |                                                              | 0    |                                                        |
 | screen | 0x34 | `ScreenEnter_CombiEditMenu`                   | C0MBINATI0N EDIT / INTERNAL / CONFIGURE                      | 0    |                                                        |
@@ -93,14 +93,14 @@ Record macros: `wsa1/include/wsa1_gui.inc`. Key names: the `KEY_*` equates there
 | screen | 0x3C | `Screen_CombinationNaming_Enter`              | MEM0RY WRITE / COMBI.EDIT / 0K                               | 0    |                                                        |
 | screen | 0x40 | `Paint_DiskMenu`                              | MIDI FILE LOAD / MIDI FILE SAVE / LOAD                       | 5    |                                                        |
 | screen | 0x45 | `Paint_MidiFileDirectPlay`                    | PLAY ·                                                       | 6    |                                                        |
-| screen | 0x47 | `Paint_DiskL0adFile`                          | SAVE / SAVE FILE / SAVE ·                                    | 6    |                                                        |
-| screen | 0x49 | `Paint_MidiFileL0ad`                          | MIDI FILE L0AD / : / L0AD ·                                  | 6    |                                                        |
+| screen | 0x47 | `Paint_DiskLoadFile`                          | SAVE / SAVE FILE / SAVE ·                                    | 6    |                                                        |
+| screen | 0x49 | `Paint_MidiFileLoad`                          | MIDI FILE L0AD / : / L0AD ·                                  | 6    |                                                        |
 | screen | 0x4C | `PageDispatch_DiskSaveFile`                   | DISK SAVE : FILE NAMING                                      | 63   |                                                        |
 | screen | 0x4E | `PageDispatch_MidiFileSave`                   | SAVE                                                         | 25   |                                                        |
 | screen | 0x50 | `Paint_FloppyDiskFormatSelectType`            | COMPOSER LOAD                                                | 5    |                                                        |
 | screen | 0x51 | `Paint_FloppyDiskFormatAreYouSure`            | ATTENTION! / Using DISK FORMAT will erase / any current data | 3    |                                                        |
-| screen | 0x53 | `PageDispatch_L0adSingleC0mbination`          | LOAD SINGLE COMBINATION / DISK / 0K                          | 0    |                                                        |
-| screen | 0x54 | `PageDispatch_L0adSingleS0und`                | LOAD SINGLE SOUND / DISK / 0K                                | 0    |                                                        |
+| screen | 0x53 | `PageDispatch_LoadSingleCombination`          | LOAD SINGLE COMBINATION / DISK / 0K                          | 0    |                                                        |
+| screen | 0x54 | `PageDispatch_LoadSingleSound`                | LOAD SINGLE SOUND / DISK / 0K                                | 0    |                                                        |
 | screen | 0x5B | `Screen_SoundGroupNaming_Enter`               | SOUND GROUP NAMING / SYSTEM / WRITE                          | 0    |                                                        |
 | screen | 0x5C | `Screen_CombinationGroupNaming_Enter`         | COMBINATION GROUP NAMING / SYSTEM / WRITE                    | 0    |                                                        |
 | screen | 0x5D | `Screen_SoundMute_Enter`                      |                                                              | 0    |                                                        |
@@ -240,7 +240,7 @@ Object `T_ModeEnter_StepRecord` (`PanelScreen_VtableTable` entry 6). Enter `Mode
 
 Draws:
 
-- `DL_EditSeqN0teEditS0ngClear`: "EDIT"; "SEQ."; "N0TE"; "EDIT"
+- `DL_EditSeqNoteEditSongClear`: "EDIT"; "SEQ."; "N0TE"; "EDIT"
 - `DL_EditSeqSongCopyCopyErase`: "EDIT"; "SEQ."; "SONG"; "COPY"
 
 ## mode 0x07: `ModeEnter_Edit`
@@ -249,7 +249,7 @@ Object `T_ModeEnter_Edit` (`PanelScreen_VtableTable` entry 7). Enter `ModeEnter_
 
 Draws:
 
-- `DL_EditSeqN0teEditS0ngClear`: "EDIT"; "SEQ."; "N0TE"; "EDIT"
+- `DL_EditSeqNoteEditSongClear`: "EDIT"; "SEQ."; "N0TE"; "EDIT"
 - `DL_EditSeqSongCopyCopyErase`: "EDIT"; "SEQ."; "SONG"; "COPY"
 
 ## mode 0x08: `ModeEnter_SeqPlay_Fwd`
@@ -299,7 +299,7 @@ Object `T_ModeEnter_SoundCopy_Call` (`PanelScreen_VtableTable` entry 21). Enter 
 Draws:
 
 - `DL_MidiFileLoadMidiFileSave`: "MIDI FILE LOAD"; "MIDI FILE SAVE"; "LOAD"; "SINGLE SOUND"
-- `DL_DiskDiskL0adDiskSaveMidiFile`: "DISK"; "DISK L0AD"; "DISK SAVE"; "MIDI FILE"
+- `DL_DiskDiskLoadDiskSaveMidiFile`: "DISK"; "DISK L0AD"; "DISK SAVE"; "MIDI FILE"
 - `DL_LoadSingleSoundLoadSingleCombi`: "LOAD"; "SINGLE SOUND"; "LOAD"; "SINGLE COMBI."
 - `DL_F58162`: "YES ·"; "NO  ·"
 
@@ -361,7 +361,7 @@ Keys (`DisplayListPtrs_F90CD8`):
 | `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol7`    | `SoftKeyCol7_Int`                       |                                                         |
 | `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol8`    | `SoftKeyCol8_Midi`                      |                                                         |
 | `DisplayListPtrs_F90CD8` | `KEY_LcdRow1`        | `LcdKeyRow1_SoundMode`                  |                                                         |
-| `DisplayListPtrs_F90CD8` | `KEY_LcdRow4`        | `LcdKeyRow4_SoundModeOrC0mbinati0nM0de` |                                                         |
+| `DisplayListPtrs_F90CD8` | `KEY_LcdRow4`        | `LcdKeyRow4_SoundModeOrCombinationMode` |                                                         |
 | `DisplayListPtrs_F90CD8` | `KEY_Exit`           | `ExitKey_SoundMode`                     |                                                         |
 | `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol1Alt` | `SoftKeyCol1_Oct_AltCode`               |                                                         |
 | `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol2Alt` | `SoftKeyCol2_LvlVol_AltCode`            |                                                         |
@@ -411,7 +411,7 @@ Keys (`DisplayListPtrs_F90CD8`):
 | `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol7`    | `SoftKeyCol7_Int`                       |                                                         |
 | `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol8`    | `SoftKeyCol8_Midi`                      |                                                         |
 | `DisplayListPtrs_F90CD8` | `KEY_LcdRow1`        | `LcdKeyRow1_SoundMode`                  |                                                         |
-| `DisplayListPtrs_F90CD8` | `KEY_LcdRow4`        | `LcdKeyRow4_SoundModeOrC0mbinati0nM0de` |                                                         |
+| `DisplayListPtrs_F90CD8` | `KEY_LcdRow4`        | `LcdKeyRow4_SoundModeOrCombinationMode` |                                                         |
 | `DisplayListPtrs_F90CD8` | `KEY_Exit`           | `ExitKey_SoundMode`                     |                                                         |
 | `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol1Alt` | `SoftKeyCol1_Oct_AltCode`               |                                                         |
 | `DisplayListPtrs_F90CD8` | `KEY_SoftKeyCol2Alt` | `SoftKeyCol2_LvlVol_AltCode`            |                                                         |
@@ -424,54 +424,54 @@ Keys (`DisplayListPtrs_F90CD8`):
 
 Reached from: screen 0xA1 `KEY_Exit` (`ExitKey_GroupSoundDisplayHold`); screen 0xA1 `KEY_LcdRow1` (`LcdKeyRow1_GroupSoundDisplayHold`); screen 0xA1 `KEY_LcdRow2` (`LcdKeyRow2_GroupSoundDisplayHold`); screen 0xA1 `KEY_LcdRow3` (`LcdKeyRow3_GroupSoundDisplayHold`); screen 0xA1 `KEY_LcdRow4` (`LcdKeyRow4_GroupSoundDisplayHold`); screen 0xA1 `KEY_NumberPad` (`NumberPadKey_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol1Alt` (`SoftKeyCol1_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol1` (`SoftKeyCol1_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol2Alt` (`SoftKeyCol2_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol2` (`SoftKeyCol2_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol3Alt` (`SoftKeyCol3_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol3` (`SoftKeyCol3_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol4Alt` (`SoftKeyCol4_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol4` (`SoftKeyCol4_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol5Alt` (`SoftKeyCol5_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol5` (`SoftKeyCol5_GroupSoundDisplayHold`); screen 0xA6 `KEY_LcdRow1` (`LcdKeyRow1_GroupCombiDisplayHold`); screen 0xA6 `KEY_LcdRow2` (`LcdKeyRow2_GroupCombiDisplayHold`); screen 0xA6 `KEY_LcdRow3` (`LcdKeyRow3_GroupCombiDisplayHold`); screen 0xA6 `KEY_LcdRow4` (`LcdKeyRow4_GroupCombiDisplayHold`); screen 0xA6 `KEY_NumberPad` (`NumberPadKey_GroupCombiDisplayHold`).
 
-## mode 0x22: `InstallPainter_C0mbinati0nM0de_Entry`
+## mode 0x22: `InstallPainter_CombinationMode_Entry`
 
-Object `T_InstallPainter_C0mbinati0nM0de_Entry` (`PanelScreen_VtableTable` entry 34). Enter `InstallPainter_C0mbinati0nM0de_Entry`, Leave `ScreenLeave_C0mbinati0nM0de`, Button `ScreenButton_C0mbinati0nM0de`.
+Object `T_InstallPainter_CombinationMode_Entry` (`PanelScreen_VtableTable` entry 34). Enter `InstallPainter_CombinationMode_Entry`, Leave `ScreenLeave_CombinationMode`, Button `ScreenButton_CombinationMode`.
 
 Draws:
 
-- `DL_C0mbinati0nM0dePage22Sound`: "C0MBINATI0N M0DE"; "PAGE2/2"; "SOUND:"; "SOUND"
+- `DL_CombinationModePage22Sound`: "C0MBINATI0N M0DE"; "PAGE2/2"; "SOUND:"; "SOUND"
 - `DL_F296CC`
 - `DL_F29672`
 - `DL_F2967C`
-- `Paint_C0mbinati0nM0dePage2Sound1_DL`
-- `Paint_C0mbinati0nM0dePage2Sound2_DL`
-- `Paint_C0mbinati0nM0dePage2Sound3_DL`
-- `Paint_C0mbinati0nM0dePage2Sound4_DL`
-- `Paint_C0mbinati0nM0dePage2Sound5_DL`
-- `Paint_C0mbinati0nM0dePage2Sound6_DL`
-- `Paint_C0mbinati0nM0dePage2Sound7_DL`
-- `C0mbinati0nM0de_DrawPart8Sound_DL`
-- `C0mbinati0nM0de_DrawPart1Int_DL`
-- `C0mbinati0nM0de_DrawPart2Int_DL`
-- `C0mbinati0nM0de_DrawPart3Int_DL`
-- `C0mbinati0nM0de_DrawPart4Int_DL`
+- `Paint_CombinationModePage2Sound1_DL`
+- `Paint_CombinationModePage2Sound2_DL`
+- `Paint_CombinationModePage2Sound3_DL`
+- `Paint_CombinationModePage2Sound4_DL`
+- `Paint_CombinationModePage2Sound5_DL`
+- `Paint_CombinationModePage2Sound6_DL`
+- `Paint_CombinationModePage2Sound7_DL`
+- `CombinationMode_DrawPart8Sound_DL`
+- `CombinationMode_DrawPart1Int_DL`
+- `CombinationMode_DrawPart2Int_DL`
+- `CombinationMode_DrawPart3Int_DL`
+- `CombinationMode_DrawPart4Int_DL`
 - ... 28 more
 
 Enter requests: request screen 0xAB (InstallPainter_MessageScreen).
 
-## screen 0x02: `InstallPainter_C0mbinati0nM0de_Entry`
+## screen 0x02: `InstallPainter_CombinationMode_Entry`
 
-Object `T_InstallPainter_C0mbinati0nM0de_Entry` (`PanelScreen_VtableTable` entry 34). Enter `InstallPainter_C0mbinati0nM0de_Entry`, Leave `ScreenLeave_C0mbinati0nM0de`, Button `ScreenButton_C0mbinati0nM0de`.
+Object `T_InstallPainter_CombinationMode_Entry` (`PanelScreen_VtableTable` entry 34). Enter `InstallPainter_CombinationMode_Entry`, Leave `ScreenLeave_CombinationMode`, Button `ScreenButton_CombinationMode`.
 
 Draws:
 
-- `DL_C0mbinati0nM0dePage22Sound`: "C0MBINATI0N M0DE"; "PAGE2/2"; "SOUND:"; "SOUND"
+- `DL_CombinationModePage22Sound`: "C0MBINATI0N M0DE"; "PAGE2/2"; "SOUND:"; "SOUND"
 - `DL_F296CC`
 - `DL_F29672`
 - `DL_F2967C`
-- `Paint_C0mbinati0nM0dePage2Sound1_DL`
-- `Paint_C0mbinati0nM0dePage2Sound2_DL`
-- `Paint_C0mbinati0nM0dePage2Sound3_DL`
-- `Paint_C0mbinati0nM0dePage2Sound4_DL`
-- `Paint_C0mbinati0nM0dePage2Sound5_DL`
-- `Paint_C0mbinati0nM0dePage2Sound6_DL`
-- `Paint_C0mbinati0nM0dePage2Sound7_DL`
-- `C0mbinati0nM0de_DrawPart8Sound_DL`
-- `C0mbinati0nM0de_DrawPart1Int_DL`
-- `C0mbinati0nM0de_DrawPart2Int_DL`
-- `C0mbinati0nM0de_DrawPart3Int_DL`
-- `C0mbinati0nM0de_DrawPart4Int_DL`
+- `Paint_CombinationModePage2Sound1_DL`
+- `Paint_CombinationModePage2Sound2_DL`
+- `Paint_CombinationModePage2Sound3_DL`
+- `Paint_CombinationModePage2Sound4_DL`
+- `Paint_CombinationModePage2Sound5_DL`
+- `Paint_CombinationModePage2Sound6_DL`
+- `Paint_CombinationModePage2Sound7_DL`
+- `CombinationMode_DrawPart8Sound_DL`
+- `CombinationMode_DrawPart1Int_DL`
+- `CombinationMode_DrawPart2Int_DL`
+- `CombinationMode_DrawPart3Int_DL`
+- `CombinationMode_DrawPart4Int_DL`
 - ... 28 more
 
 Enter requests: request screen 0xAB (InstallPainter_MessageScreen).
@@ -513,7 +513,7 @@ Keys (`Sequencer_ButtonTable`):
 | `Sequencer_ButtonTable` | `KEY_LcdRow1`     | `LcdKeyRow1_Sequencer`  | mode change 0x05; mode change 0x07                                                                |
 | `Sequencer_ButtonTable` | `KEY_LcdRow2`     | `LcdKeyRow2_Sequencer`  | go to screen 0x0E (ScreenEnter_StepRecord); go to screen 0x10 (ScreenEnter_TrackAssign)           |
 | `Sequencer_ButtonTable` | `KEY_LcdRow3`     | `LcdKeyRow3_Sequencer`  | go to screen 0x13 (ScreenEnter_SequencerMedley); mode change 0x06                                 |
-| `Sequencer_ButtonTable` | `KEY_LcdRow4`     | `LcdKeyRow4_Sequencer`  | go to screen 0x0B (ScreenEnter_AfterT0uchSetting); go to screen 0x0D (ScreenEnter_S0ngSelectName) |
+| `Sequencer_ButtonTable` | `KEY_LcdRow4`     | `LcdKeyRow4_Sequencer`  | go to screen 0x0B (ScreenEnter_AfterTouchSetting); go to screen 0x0D (ScreenEnter_SongSelectName) |
 | `Sequencer_ButtonTable` | `KEY_LcdRow5`     | `LcdKeyRow5_Sequencer`  |                                                                                                   |
 | `Sequencer_ButtonTable` | `KEY_Exit`        | `ExitKey_Sequencer`     | mode change 0x01                                                                                  |
 
@@ -552,7 +552,7 @@ Keys (`Sequencer_ButtonTable`):
 | `Sequencer_ButtonTable` | `KEY_LcdRow1`     | `LcdKeyRow1_Sequencer`  | mode change 0x05; mode change 0x07                                                                |
 | `Sequencer_ButtonTable` | `KEY_LcdRow2`     | `LcdKeyRow2_Sequencer`  | go to screen 0x0E (ScreenEnter_StepRecord); go to screen 0x10 (ScreenEnter_TrackAssign)           |
 | `Sequencer_ButtonTable` | `KEY_LcdRow3`     | `LcdKeyRow3_Sequencer`  | go to screen 0x13 (ScreenEnter_SequencerMedley); mode change 0x06                                 |
-| `Sequencer_ButtonTable` | `KEY_LcdRow4`     | `LcdKeyRow4_Sequencer`  | go to screen 0x0B (ScreenEnter_AfterT0uchSetting); go to screen 0x0D (ScreenEnter_S0ngSelectName) |
+| `Sequencer_ButtonTable` | `KEY_LcdRow4`     | `LcdKeyRow4_Sequencer`  | go to screen 0x0B (ScreenEnter_AfterTouchSetting); go to screen 0x0D (ScreenEnter_SongSelectName) |
 | `Sequencer_ButtonTable` | `KEY_LcdRow5`     | `LcdKeyRow5_Sequencer`  |                                                                                                   |
 | `Sequencer_ButtonTable` | `KEY_Exit`        | `ExitKey_Sequencer`     | mode change 0x01                                                                                  |
 
@@ -700,25 +700,25 @@ Keys (`ScreenButtons_CycleRecordScreen`):
 
 Reached from: mode 0x26 `KEY_LcdRow2` (`LcdKeyRow2_RealtimeRecordScreen`); screen 0x06 `KEY_LcdRow2` (`LcdKeyRow2_RealtimeRecordScreen`).
 
-## mode 0x2B: `ScreenEnter_AfterT0uchSetting`
+## mode 0x2B: `ScreenEnter_AfterTouchSetting`
 
-Object `T_ScreenEnter_AfterT0uchSetting` (`PanelScreen_VtableTable` entry 43). Enter `ScreenEnter_AfterT0uchSetting`, Leave `ScreenLeave_AfterT0uchSetting`, Button `ScreenButton_AfterT0uchSetting`.
-
-Draws:
-
-- `DL_AfterT0uchSettingSelectWhetherOrNotAfter`: "AFTER T0UCH SETTING"; "Select whether or not After Touch"; "is recorded by the Sequencer."; "EN"
-- `DL_AfterTouchRecord`
-- `AfterT0uchSetting_EraseRecordValue_DL`
-
-## screen 0x0B: `ScreenEnter_AfterT0uchSetting`
-
-Object `T_ScreenEnter_AfterT0uchSetting` (`PanelScreen_VtableTable` entry 43). Enter `ScreenEnter_AfterT0uchSetting`, Leave `ScreenLeave_AfterT0uchSetting`, Button `ScreenButton_AfterT0uchSetting`.
+Object `T_ScreenEnter_AfterTouchSetting` (`PanelScreen_VtableTable` entry 43). Enter `ScreenEnter_AfterTouchSetting`, Leave `ScreenLeave_AfterTouchSetting`, Button `ScreenButton_AfterTouchSetting`.
 
 Draws:
 
-- `DL_AfterT0uchSettingSelectWhetherOrNotAfter`: "AFTER T0UCH SETTING"; "Select whether or not After Touch"; "is recorded by the Sequencer."; "EN"
+- `DL_AfterTouchSettingSelectWhetherOrNotAfter`: "AFTER T0UCH SETTING"; "Select whether or not After Touch"; "is recorded by the Sequencer."; "EN"
 - `DL_AfterTouchRecord`
-- `AfterT0uchSetting_EraseRecordValue_DL`
+- `AfterTouchSetting_EraseRecordValue_DL`
+
+## screen 0x0B: `ScreenEnter_AfterTouchSetting`
+
+Object `T_ScreenEnter_AfterTouchSetting` (`PanelScreen_VtableTable` entry 43). Enter `ScreenEnter_AfterTouchSetting`, Leave `ScreenLeave_AfterTouchSetting`, Button `ScreenButton_AfterTouchSetting`.
+
+Draws:
+
+- `DL_AfterTouchSettingSelectWhetherOrNotAfter`: "AFTER T0UCH SETTING"; "Select whether or not After Touch"; "is recorded by the Sequencer."; "EN"
+- `DL_AfterTouchRecord`
+- `AfterTouchSetting_EraseRecordValue_DL`
 
 Reached from: mode 0x24 `KEY_LcdRow4` (`LcdKeyRow4_Sequencer`); screen 0x04 `KEY_LcdRow4` (`LcdKeyRow4_Sequencer`).
 
@@ -748,26 +748,26 @@ Keys (`ScreenButtons_MetronomeBalanceScreen`):
 
 Reached from: mode 0x26 `KEY_LcdRow1` (`LcdKeyRow1_RealtimeRecordScreen`); screen 0x06 `KEY_LcdRow1` (`LcdKeyRow1_RealtimeRecordScreen`).
 
-## mode 0x2D: `ScreenEnter_S0ngSelectName`
+## mode 0x2D: `ScreenEnter_SongSelectName`
 
-Object `T_ScreenEnter_S0ngSelectName` (`PanelScreen_VtableTable` entry 45). Enter `ScreenEnter_S0ngSelectName`, Leave `ScreenLeave_S0ngSelectName`, Button `ScreenButton_S0ngSelectName`.
+Object `T_ScreenEnter_SongSelectName` (`PanelScreen_VtableTable` entry 45). Enter `ScreenEnter_SongSelectName`, Leave `ScreenLeave_SongSelectName`, Button `ScreenButton_SongSelectName`.
 
 Draws:
 
-- `DL_S0ngSelectNameKbS0ngName`: "S0NG SELECT & NAME"; "KB"; "S0NG"; ":"
+- `DL_SongSelectNameKbSongName`: "S0NG SELECT & NAME"; "KB"; "S0NG"; ":"
 - `DL_F3C351`
-- `S0ngSelectName_DrawValues_DL`
+- `SongSelectName_DrawValues_DL`
 - `DL_F3C367`
 
-## screen 0x0D: `ScreenEnter_S0ngSelectName`
+## screen 0x0D: `ScreenEnter_SongSelectName`
 
-Object `T_ScreenEnter_S0ngSelectName` (`PanelScreen_VtableTable` entry 45). Enter `ScreenEnter_S0ngSelectName`, Leave `ScreenLeave_S0ngSelectName`, Button `ScreenButton_S0ngSelectName`.
+Object `T_ScreenEnter_SongSelectName` (`PanelScreen_VtableTable` entry 45). Enter `ScreenEnter_SongSelectName`, Leave `ScreenLeave_SongSelectName`, Button `ScreenButton_SongSelectName`.
 
 Draws:
 
-- `DL_S0ngSelectNameKbS0ngName`: "S0NG SELECT & NAME"; "KB"; "S0NG"; ":"
+- `DL_SongSelectNameKbSongName`: "S0NG SELECT & NAME"; "KB"; "S0NG"; ":"
 - `DL_F3C351`
-- `S0ngSelectName_DrawValues_DL`
+- `SongSelectName_DrawValues_DL`
 - `DL_F3C367`
 
 Reached from: mode 0x24 `KEY_LcdRow4` (`LcdKeyRow4_Sequencer`); screen 0x04 `KEY_LcdRow4` (`LcdKeyRow4_Sequencer`).
@@ -893,7 +893,7 @@ Draws:
 - `DL_TrackAssignPresetsTechnicsSetUp1116`: "TRACK"; "ASSIGN"; "PRESETS"; "TECHNICS SET-UP1 ( 1-16)"
 - `DL_All`: "ALL"
 - `Paint_TrackAssignPresets_DL1`
-- `DL_S0ng`: "S0NG"
+- `DL_Song`: "S0NG"
 - `Paint_TrackAssignPresets_DL2`
 - `TrackAssignPresets_MoveFieldHighlight_DL`
 
@@ -959,9 +959,9 @@ Object `T_ScreenEnter_SequencerMedley` (`PanelScreen_VtableTable` entry 51). Ent
 
 Draws:
 
-- `DL_SequencerMedleyStartFirstS0ng`: "SEQUENCER MEDLEY"; "START"; "FIRST S0NG"; "STOP"
+- `DL_SequencerMedleyStartFirstSong`: "SEQUENCER MEDLEY"; "START"; "FIRST S0NG"; "STOP"
 - `DL_SelectIntFd`: "SELECT"; "INT"; "FD"
-- `DL_FirstS0ngLastS0ng`
+- `DL_FirstSongLastSong`
 - `SequencerMedley_DrawPlayState_DL1`
 - `SequencerMedley_DrawPlayState_DL2`: "N0W PLAYING S0NG"; ":"
 - `SequencerMedley_DrawPlayState_DL3`
@@ -1016,7 +1016,7 @@ Object `T_ScreenEnter_Edit` (`PanelScreen_VtableTable` entry 58). Enter `ScreenE
 
 Draws:
 
-- `DL_EditSeqN0teEditS0ngClear`: "EDIT"; "SEQ."; "N0TE"; "EDIT"
+- `DL_EditSeqNoteEditSongClear`: "EDIT"; "SEQ."; "N0TE"; "EDIT"
 - `DL_EditSeqSongCopyCopyErase`: "EDIT"; "SEQ."; "SONG"; "COPY"
 
 Keys (`ButtonTable_Edit_0C10Zero`, `ButtonTable_Edit_0C10NonZero`):
@@ -1025,13 +1025,13 @@ Keys (`ButtonTable_Edit_0C10Zero`, `ButtonTable_Edit_0C10NonZero`):
 |--------------------------------|---------------|-------------------------------|-----------------------------------------------------------------------------------------------|
 | `ButtonTable_Edit_0C10Zero`    | `KEY_LcdRow1` | `LcdKeyRow1_Edit_0C10Zero`    | go to screen 0x1B (ScreenEnter_SongClear); go to screen 0x24 (ShowScreen_NoteEditPartSelect)  |
 | `ButtonTable_Edit_0C10Zero`    | `KEY_LcdRow2` | `LcdKeyRow2_Edit_0C10Zero`    | go to screen 0x1C (ScreenEnter_TrackClear); go to screen 0x27 (ShowScreen_DrumEditPartSelect) |
-| `ButtonTable_Edit_0C10Zero`    | `KEY_LcdRow3` | `LcdKeyRow3_Edit_0C10Zero`    | go to screen 0x1E (ScreenEnter_Quantize); go to screen 0x2D (ScreenEnter_N0teChange)          |
-| `ButtonTable_Edit_0C10Zero`    | `KEY_LcdRow4` | `LcdKeyRow4_Edit_0C10Zero`    | go to screen 0x2B (ScreenEnter_Transp0se); go to screen 0x2C (ScreenEnter_AdvanceDelay)       |
-| `ButtonTable_Edit_0C10Zero`    | `KEY_LcdRow5` | `LcdKeyRow5_Edit_0C10Zero`    | go to screen 0x1D (ScreenEnter_Vel0cityChange); go to screen 0x2E (ScreenEnter_PanelWrite)    |
+| `ButtonTable_Edit_0C10Zero`    | `KEY_LcdRow3` | `LcdKeyRow3_Edit_0C10Zero`    | go to screen 0x1E (ScreenEnter_Quantize); go to screen 0x2D (ScreenEnter_NoteChange)          |
+| `ButtonTable_Edit_0C10Zero`    | `KEY_LcdRow4` | `LcdKeyRow4_Edit_0C10Zero`    | go to screen 0x2B (ScreenEnter_Transpose); go to screen 0x2C (ScreenEnter_AdvanceDelay)       |
+| `ButtonTable_Edit_0C10Zero`    | `KEY_LcdRow5` | `LcdKeyRow5_Edit_0C10Zero`    | go to screen 0x1D (ScreenEnter_VelocityChange); go to screen 0x2E (ScreenEnter_PanelWrite)    |
 | `ButtonTable_Edit_0C10Zero`    | `KEY_Exit`    | `ExitKey_Edit_0C10Zero`       | mode change 0x03                                                                              |
 | `ButtonTable_Edit_0C10Zero`    | `KEY_Page`    | `PageKey_Edit_0C10Zero`       |                                                                                               |
 | `ButtonTable_Edit_0C10Zero`    | `KEY_PageAlt` | `PageKey_Edit_0C10Zero`       |                                                                                               |
-| `ButtonTable_Edit_0C10NonZero` | `KEY_LcdRow1` | `LcdKeyRow1_Edit_0C10NonZero` | go to screen 0x21 (ScreenEnter_MeasureC0py); go to screen 0x2A (ScreenEnter_S0ngC0py)         |
+| `ButtonTable_Edit_0C10NonZero` | `KEY_LcdRow1` | `LcdKeyRow1_Edit_0C10NonZero` | go to screen 0x21 (ScreenEnter_MeasureCopy); go to screen 0x2A (ScreenEnter_SongCopy)         |
 | `ButtonTable_Edit_0C10NonZero` | `KEY_LcdRow2` | `LcdKeyRow2_Edit_0C10NonZero` | go to screen 0x20 (ScreenEnter_MeasureErase)                                                  |
 | `ButtonTable_Edit_0C10NonZero` | `KEY_LcdRow3` | `LcdKeyRow3_Edit_0C10NonZero` | go to screen 0x1F (ScreenEnter_TrackMerge); go to screen 0x23 (ScreenEnter_MeasureDelete)     |
 | `ButtonTable_Edit_0C10NonZero` | `KEY_LcdRow4` | `LcdKeyRow4_Edit_0C10NonZero` | go to screen 0x22 (ScreenEnter_MeasureInsert)                                                 |
@@ -1040,7 +1040,7 @@ Keys (`ButtonTable_Edit_0C10Zero`, `ButtonTable_Edit_0C10NonZero`):
 | `ButtonTable_Edit_0C10NonZero` | `KEY_Page`    | `PageKey_Edit_0C10NonZero`    |                                                                                               |
 | `ButtonTable_Edit_0C10NonZero` | `KEY_PageAlt` | `PageKey_Edit_0C10NonZero`    |                                                                                               |
 
-Reached from: screen 0x1B `KEY_Exit` (`ExitKey_SongClear`); screen 0x1B `KEY_LcdRow5` (`LcdKeyRow5_SongClear`); screen 0x1C `KEY_Exit` (`ExitKey_TrackClear_StageZero`); screen 0x1D `KEY_Exit` (`ExitKey_Vel0cityChange_StageZero`); screen 0x1E `KEY_Exit` (`ExitKey_Quantize_StageZero`); screen 0x1F `KEY_Exit` (`ExitKey_TrackMerge_StageZero`); screen 0x20 `KEY_Exit` (`ExitKey_MeasureErase_StageZero`); screen 0x21 `KEY_Exit` (`ExitKey_MeasureC0py_StageZero`); screen 0x22 `KEY_Exit` (`ExitKey_MeasureInsert_StageZero`); screen 0x23 `KEY_Exit` (`ExitKey_MeasureDelete_StageZero`); screen 0x24 `KEY_Exit` (`ExitKey_EditPartSelect`); screen 0x27 `KEY_Exit` (`ExitKey_EditPartSelect`); screen 0x2A `KEY_Exit` (`ExitKey_S0ngC0py_StageZero`); screen 0x2B `KEY_Exit` (`ExitKey_Transp0se_StageZero`); screen 0x2C `KEY_Exit` (`ExitKey_AdvanceDelay_StageZero`); screen 0x2D `KEY_Exit` (`ExitKey_N0teChange_StageZero`).
+Reached from: screen 0x1B `KEY_Exit` (`ExitKey_SongClear`); screen 0x1B `KEY_LcdRow5` (`LcdKeyRow5_SongClear`); screen 0x1C `KEY_Exit` (`ExitKey_TrackClear_StageZero`); screen 0x1D `KEY_Exit` (`ExitKey_VelocityChange_StageZero`); screen 0x1E `KEY_Exit` (`ExitKey_Quantize_StageZero`); screen 0x1F `KEY_Exit` (`ExitKey_TrackMerge_StageZero`); screen 0x20 `KEY_Exit` (`ExitKey_MeasureErase_StageZero`); screen 0x21 `KEY_Exit` (`ExitKey_MeasureCopy_StageZero`); screen 0x22 `KEY_Exit` (`ExitKey_MeasureInsert_StageZero`); screen 0x23 `KEY_Exit` (`ExitKey_MeasureDelete_StageZero`); screen 0x24 `KEY_Exit` (`ExitKey_EditPartSelect`); screen 0x27 `KEY_Exit` (`ExitKey_EditPartSelect`); screen 0x2A `KEY_Exit` (`ExitKey_SongCopy_StageZero`); screen 0x2B `KEY_Exit` (`ExitKey_Transpose_StageZero`); screen 0x2C `KEY_Exit` (`ExitKey_AdvanceDelay_StageZero`); screen 0x2D `KEY_Exit` (`ExitKey_NoteChange_StageZero`).
 
 ## screen 0x1B: `ScreenEnter_SongClear`
 
@@ -1048,11 +1048,11 @@ Object `T_ScreenEnter_SongClear` (`PanelScreen_VtableTable` entry 59). Enter `Sc
 
 Draws:
 
-- `DL_SongClearKbSongS0ngAll`: "SONG"; "CLEAR"; "KB"; "SONG"
+- `DL_SongClearKbSongSongAll`: "SONG"; "CLEAR"; "KB"; "SONG"
 - `Paint_SongClear_DL1`
 - `Paint_SongClear_DL2`: ":"; "ALL S0NGS"; "100%"
 - `Paint_SongClear_DL3`
-- `DL_SongClearKbSongAttenti0n`: "SONG"; "CLEAR"; "KB"; "."
+- `DL_SongClearKbSongAttention`: "SONG"; "CLEAR"; "KB"; "."
 - `Paint_SongClear_DL4`
 - `Paint_SongClear_DL5`: ":"; "ALL S0NGS"; "100%"
 - `Paint_SongClear_DL6`
@@ -1081,7 +1081,7 @@ Draws:
 
 - `DL_TrackClearPressTheUpDown`: "TRACK"; "CLEAR"; "Press"; "the"
 - `DL_F3934C`: "1"; "2"; "3"; "4"
-- `DL_TrackClearAttenti0nUsing`: "TRACK"; "CLEAR"; "ATTENTI0N!"; "Using"
+- `DL_TrackClearAttentionUsing`: "TRACK"; "CLEAR"; "ATTENTI0N!"; "Using"
 - `DL_F3A0D1`
 - `Data_F3A0E4`
 - `TrackGrid_DrawPartLabels_DL`
@@ -1114,32 +1114,32 @@ Keys (`ButtonTable_TrackClear_StageZero`, `ButtonTable_TrackClear_StageNonZero`)
 
 Reached from: screen 0x1A `KEY_LcdRow2` (`LcdKeyRow2_Edit_0C10Zero`).
 
-## screen 0x1D: `ScreenEnter_Vel0cityChange`
+## screen 0x1D: `ScreenEnter_VelocityChange`
 
-Object `T_ScreenEnter_Vel0cityChange` (`PanelScreen_VtableTable` entry 61). Enter `ScreenEnter_Vel0cityChange`, Leave `ScreenLeave_Vel0cityChange`, Button `ScreenButton_Vel0cityChange`.
+Object `T_ScreenEnter_VelocityChange` (`PanelScreen_VtableTable` entry 61). Enter `ScreenEnter_VelocityChange`, Leave `ScreenLeave_VelocityChange`, Button `ScreenButton_VelocityChange`.
 
 Draws:
 
-- `DL_Vel0cityChangeTrackFirstMeasure`: "VEL0CITY CHANGE"; "TRACK           :"; "FIRST MEASURE   :"; "LAST MEASURE    :"
+- `DL_VelocityChangeTrackFirstMeasure`: "VEL0CITY CHANGE"; "TRACK           :"; "FIRST MEASURE   :"; "LAST MEASURE    :"
 - `DL_F3AB9C`: "YES"; "NO"
 - `DL_AreYouSure`: "Are You Sure ?"
 - `DL_F3AB3B`
 
-Keys (`ButtonTable_Vel0cityChange_StageZero`, `ButtonTable_Vel0cityChange_StageNonZero`):
+Keys (`ButtonTable_VelocityChange_StageZero`, `ButtonTable_VelocityChange_StageNonZero`):
 
 | key map                                   | key                  | handler                                  | requests                                           |
 |-------------------------------------------|----------------------|------------------------------------------|----------------------------------------------------|
-| `ButtonTable_Vel0cityChange_StageZero`    | `KEY_SoftKeyCol5`    | `SoftKeyCol5_Vel0cityChange_StageZero`   |                                                    |
-| `ButtonTable_Vel0cityChange_StageZero`    | `KEY_LcdRow1`        | `LcdKeyRow1_Vel0cityChange_StageZero`    |                                                    |
-| `ButtonTable_Vel0cityChange_StageZero`    | `KEY_LcdRow2`        | `LcdKeyRow2_Vel0cityChange_StageZero`    | request screen 0xAB (InstallPainter_MessageScreen) |
-| `ButtonTable_Vel0cityChange_StageZero`    | `KEY_LcdRow3`        | `LcdKeyRow3_Vel0cityChange_StageZero`    |                                                    |
-| `ButtonTable_Vel0cityChange_StageZero`    | `KEY_LcdRow4`        | `LcdKeyRow4_Vel0cityChange_StageZero`    |                                                    |
-| `ButtonTable_Vel0cityChange_StageZero`    | `KEY_Exit`           | `ExitKey_Vel0cityChange_StageZero`       | go to screen 0x1A (ScreenEnter_Edit)               |
-| `ButtonTable_Vel0cityChange_StageZero`    | `KEY_SoftKeyCol5Alt` | `Vel0cityChange_StageZero_Button21`      |                                                    |
-| `ButtonTable_Vel0cityChange_StageZero`    | `KEY_NumberPad`      | `NumberPadKey_Vel0cityChange_StageZero`  |                                                    |
-| `ButtonTable_Vel0cityChange_StageNonZero` | `KEY_LcdRow2`        | `LcdKeyRow2_Vel0cityChange_StageNonZero` | request screen 0xAB (InstallPainter_MessageScreen) |
-| `ButtonTable_Vel0cityChange_StageNonZero` | `KEY_LcdRow3`        | `LcdKeyRow3_Vel0cityChange_StageNonZero` |                                                    |
-| `ButtonTable_Vel0cityChange_StageNonZero` | `KEY_Exit`           | `ExitKey_Vel0cityChange_StageNonZero`    |                                                    |
+| `ButtonTable_VelocityChange_StageZero`    | `KEY_SoftKeyCol5`    | `SoftKeyCol5_VelocityChange_StageZero`   |                                                    |
+| `ButtonTable_VelocityChange_StageZero`    | `KEY_LcdRow1`        | `LcdKeyRow1_VelocityChange_StageZero`    |                                                    |
+| `ButtonTable_VelocityChange_StageZero`    | `KEY_LcdRow2`        | `LcdKeyRow2_VelocityChange_StageZero`    | request screen 0xAB (InstallPainter_MessageScreen) |
+| `ButtonTable_VelocityChange_StageZero`    | `KEY_LcdRow3`        | `LcdKeyRow3_VelocityChange_StageZero`    |                                                    |
+| `ButtonTable_VelocityChange_StageZero`    | `KEY_LcdRow4`        | `LcdKeyRow4_VelocityChange_StageZero`    |                                                    |
+| `ButtonTable_VelocityChange_StageZero`    | `KEY_Exit`           | `ExitKey_VelocityChange_StageZero`       | go to screen 0x1A (ScreenEnter_Edit)               |
+| `ButtonTable_VelocityChange_StageZero`    | `KEY_SoftKeyCol5Alt` | `VelocityChange_StageZero_Button21`      |                                                    |
+| `ButtonTable_VelocityChange_StageZero`    | `KEY_NumberPad`      | `NumberPadKey_VelocityChange_StageZero`  |                                                    |
+| `ButtonTable_VelocityChange_StageNonZero` | `KEY_LcdRow2`        | `LcdKeyRow2_VelocityChange_StageNonZero` | request screen 0xAB (InstallPainter_MessageScreen) |
+| `ButtonTable_VelocityChange_StageNonZero` | `KEY_LcdRow3`        | `LcdKeyRow3_VelocityChange_StageNonZero` |                                                    |
+| `ButtonTable_VelocityChange_StageNonZero` | `KEY_Exit`           | `ExitKey_VelocityChange_StageNonZero`    |                                                    |
 
 Reached from: screen 0x1A `KEY_LcdRow5` (`LcdKeyRow5_Edit_0C10Zero`).
 
@@ -1232,34 +1232,34 @@ Keys (`ButtonTable_MeasureErase_StageZero`, `ButtonTable_MeasureErase_StageNonZe
 
 Reached from: screen 0x1A `KEY_LcdRow2` (`LcdKeyRow2_Edit_0C10NonZero`).
 
-## screen 0x21: `ScreenEnter_MeasureC0py`
+## screen 0x21: `ScreenEnter_MeasureCopy`
 
-Object `T_ScreenEnter_MeasureC0py` (`PanelScreen_VtableTable` entry 65). Enter `ScreenEnter_MeasureC0py`, Leave `ScreenLeave_MeasureC0py`, Button `ScreenButton_MeasureC0py`.
+Object `T_ScreenEnter_MeasureCopy` (`PanelScreen_VtableTable` entry 65). Enter `ScreenEnter_MeasureCopy`, Leave `ScreenLeave_MeasureCopy`, Button `ScreenButton_MeasureCopy`.
 
 Draws:
 
 - `DL_F3BCCB`
-- `DL_MeasureC0pyFromTrackToTrack`: "MEASURE C0PY"; "FROM TRACK"; "TO TRACK"; ":"
-- `Paint_MeasureC0py_DL`: "OK"
+- `DL_MeasureCopyFromTrackToTrack`: "MEASURE C0PY"; "FROM TRACK"; "TO TRACK"; ":"
+- `Paint_MeasureCopy_DL`: "OK"
 - `DL_F3BD90`: "YES"; "NO"
 - `DL_AreYouSure`: "Are You Sure ?"
 - `DL_F3BD07`
 
-Keys (`ButtonTable_MeasureC0py_StageZero`, `ButtonTable_MeasureC0py_StageNonZero`):
+Keys (`ButtonTable_MeasureCopy_StageZero`, `ButtonTable_MeasureCopy_StageNonZero`):
 
 | key map                                | key                  | handler                               | requests                                           |
 |----------------------------------------|----------------------|---------------------------------------|----------------------------------------------------|
-| `ButtonTable_MeasureC0py_StageZero`    | `KEY_SoftKeyCol5`    | `SoftKeyCol5_MeasureC0py_StageZero`   |                                                    |
-| `ButtonTable_MeasureC0py_StageZero`    | `KEY_LcdRow1`        | `LcdKeyRow1_MeasureC0py_StageZero`    | request screen 0xAB (InstallPainter_MessageScreen) |
-| `ButtonTable_MeasureC0py_StageZero`    | `KEY_LcdRow2`        | `LcdKeyRow2_MeasureC0py_StageZero`    |                                                    |
-| `ButtonTable_MeasureC0py_StageZero`    | `KEY_LcdRow3`        | `LcdKeyRow3_MeasureC0py_StageZero`    |                                                    |
-| `ButtonTable_MeasureC0py_StageZero`    | `KEY_LcdRow4`        | `LcdKeyRow4_MeasureC0py_StageZero`    |                                                    |
-| `ButtonTable_MeasureC0py_StageZero`    | `KEY_Exit`           | `ExitKey_MeasureC0py_StageZero`       | go to screen 0x1A (ScreenEnter_Edit)               |
-| `ButtonTable_MeasureC0py_StageZero`    | `KEY_SoftKeyCol5Alt` | `MeasureC0py_StageZero_Button21`      |                                                    |
-| `ButtonTable_MeasureC0py_StageZero`    | `KEY_NumberPad`      | `NumberPadKey_MeasureC0py_StageZero`  |                                                    |
-| `ButtonTable_MeasureC0py_StageNonZero` | `KEY_LcdRow1`        | `LcdKeyRow1_MeasureC0py_StageNonZero` | request screen 0xAB (InstallPainter_MessageScreen) |
-| `ButtonTable_MeasureC0py_StageNonZero` | `KEY_LcdRow5`        | `LcdKeyRow5_MeasureC0py_StageNonZero` |                                                    |
-| `ButtonTable_MeasureC0py_StageNonZero` | `KEY_Exit`           | `ExitKey_MeasureC0py_StageNonZero`    |                                                    |
+| `ButtonTable_MeasureCopy_StageZero`    | `KEY_SoftKeyCol5`    | `SoftKeyCol5_MeasureCopy_StageZero`   |                                                    |
+| `ButtonTable_MeasureCopy_StageZero`    | `KEY_LcdRow1`        | `LcdKeyRow1_MeasureCopy_StageZero`    | request screen 0xAB (InstallPainter_MessageScreen) |
+| `ButtonTable_MeasureCopy_StageZero`    | `KEY_LcdRow2`        | `LcdKeyRow2_MeasureCopy_StageZero`    |                                                    |
+| `ButtonTable_MeasureCopy_StageZero`    | `KEY_LcdRow3`        | `LcdKeyRow3_MeasureCopy_StageZero`    |                                                    |
+| `ButtonTable_MeasureCopy_StageZero`    | `KEY_LcdRow4`        | `LcdKeyRow4_MeasureCopy_StageZero`    |                                                    |
+| `ButtonTable_MeasureCopy_StageZero`    | `KEY_Exit`           | `ExitKey_MeasureCopy_StageZero`       | go to screen 0x1A (ScreenEnter_Edit)               |
+| `ButtonTable_MeasureCopy_StageZero`    | `KEY_SoftKeyCol5Alt` | `MeasureCopy_StageZero_Button21`      |                                                    |
+| `ButtonTable_MeasureCopy_StageZero`    | `KEY_NumberPad`      | `NumberPadKey_MeasureCopy_StageZero`  |                                                    |
+| `ButtonTable_MeasureCopy_StageNonZero` | `KEY_LcdRow1`        | `LcdKeyRow1_MeasureCopy_StageNonZero` | request screen 0xAB (InstallPainter_MessageScreen) |
+| `ButtonTable_MeasureCopy_StageNonZero` | `KEY_LcdRow5`        | `LcdKeyRow5_MeasureCopy_StageNonZero` |                                                    |
+| `ButtonTable_MeasureCopy_StageNonZero` | `KEY_Exit`           | `ExitKey_MeasureCopy_StageNonZero`    |                                                    |
 
 Reached from: screen 0x1A `KEY_LcdRow1` (`LcdKeyRow1_Edit_0C10NonZero`).
 
@@ -1512,81 +1512,81 @@ Keys (`ScreenButtons_CyclePlayEditScreen29`):
 
 Reached from: screen 0x25 `KEY_Exit` (`ExitKey_NoteEdit`); screen 0x25 `KEY_LcdRow1` (`LcdKeyRow1_NoteEdit`); screen 0x25 `KEY_LcdRow2` (`LcdKeyRow2_NoteEdit`); screen 0x25 `KEY_LcdRow3` (`LcdKeyRow3_NoteEdit`); screen 0x25 `KEY_LcdRow4` (`LcdKeyRow4_NoteEdit`); screen 0x25 `KEY_SoftKeyCol1Alt` (`NoteEdit_Button17`); screen 0x25 `KEY_SoftKeyCol1` (`SoftKeyCol1_NoteEdit`); screen 0x25 `KEY_SoftKeyCol2Alt` (`NoteEdit_Button18`); screen 0x25 `KEY_SoftKeyCol2` (`SoftKeyCol2_NoteEdit`); screen 0x25 `KEY_SoftKeyCol3Alt` (`NoteEdit_Button19`); screen 0x25 `KEY_SoftKeyCol3` (`SoftKeyCol3_NoteEdit`); screen 0x25 `KEY_SoftKeyCol4Alt` (`NoteEdit_Button20`); screen 0x25 `KEY_SoftKeyCol4` (`SoftKeyCol4_NoteEdit`); screen 0x25 `KEY_SoftKeyCol5Alt` (`NoteEdit_Button21`); screen 0x25 `KEY_SoftKeyCol5` (`SoftKeyCol5_NoteEdit`); screen 0x25 `KEY_SoftKeyCol6Alt` (`NoteEdit_Button22`); screen 0x25 `KEY_SoftKeyCol6` (`SoftKeyCol6_NoteEdit`); screen 0x25 `KEY_SoftKeyCol7Alt` (`NoteEdit_Button23`); screen 0x25 `KEY_SoftKeyCol7` (`SoftKeyCol7_NoteEdit`); screen 0x25 `KEY_SoftKeyCol8Alt` (`NoteEdit_Button24`); screen 0x25 `KEY_SoftKeyCol8` (`SoftKeyCol8_NoteEdit`); screen 0x28 `KEY_Exit` (`ExitKey_DrumEdit`); screen 0x28 `KEY_LcdRow1` (`LcdKeyRow1_DrumEdit`); screen 0x28 `KEY_LcdRow2` (`LcdKeyRow2_DrumEdit`); screen 0x28 `KEY_LcdRow3` (`LcdKeyRow3_DrumEdit`); screen 0x28 `KEY_LcdRow4` (`LcdKeyRow4_DrumEdit`); screen 0x28 `KEY_SoftKeyCol1Alt` (`DrumEdit_Button17`); screen 0x28 `KEY_SoftKeyCol1` (`SoftKeyCol1_DrumEdit`); screen 0x28 `KEY_SoftKeyCol2Alt` (`DrumEdit_Button18`); screen 0x28 `KEY_SoftKeyCol2` (`SoftKeyCol2_DrumEdit`); screen 0x28 `KEY_SoftKeyCol3Alt` (`DrumEdit_Button19`); screen 0x28 `KEY_SoftKeyCol3` (`SoftKeyCol3_DrumEdit`); screen 0x28 `KEY_SoftKeyCol4Alt` (`DrumEdit_Button20`); screen 0x28 `KEY_SoftKeyCol4` (`SoftKeyCol4_DrumEdit`); screen 0x28 `KEY_SoftKeyCol5Alt` (`DrumEdit_Button21`); screen 0x28 `KEY_SoftKeyCol5` (`SoftKeyCol5_DrumEdit`); screen 0x28 `KEY_SoftKeyCol6Alt` (`DrumEdit_Button22`); screen 0x28 `KEY_SoftKeyCol6` (`SoftKeyCol6_DrumEdit`); screen 0x28 `KEY_SoftKeyCol7Alt` (`DrumEdit_Button23`); screen 0x28 `KEY_SoftKeyCol7` (`SoftKeyCol7_DrumEdit`); screen 0x28 `KEY_SoftKeyCol8` (`SoftKeyCol8_DrumEdit`).
 
-## screen 0x2A: `ScreenEnter_S0ngC0py`
+## screen 0x2A: `ScreenEnter_SongCopy`
 
-Object `T_ScreenEnter_S0ngC0py` (`PanelScreen_VtableTable` entry 74). Enter `ScreenEnter_S0ngC0py`, Leave `ScreenLeave_S0ngC0py`, Button `ScreenButton_S0ngC0py`.
+Object `T_ScreenEnter_SongCopy` (`PanelScreen_VtableTable` entry 74). Enter `ScreenEnter_SongCopy`, Leave `ScreenLeave_SongCopy`, Button `ScreenButton_SongCopy`.
 
 Draws:
 
-- `DL_S0ngC0pyFromToSongSongOk`: "S0NG C0PY"; "FROM"; "TO"; "SONG"
+- `DL_SongCopyFromToSongSongOk`: "S0NG C0PY"; "FROM"; "TO"; "SONG"
 - `DL_FromToSongNoTrAllSongNoTrAll`: "FROM"; "TO"; "SONG NO   TR/ALL    SONG NO   TR/ALL"; "<    >    <    >    <    >    <    >"
 - `DL_F3AB9C`: "YES"; "NO"
 - `DL_ACurrentTrackWillBeClearedAutomaticaly`: "A current"; "track will be"; "."; "cleared automaticaly"
-- `Paint_S0ngC0py_DL`
+- `Paint_SongCopy_DL`
 - `DL_AreYouSure`: "Are You Sure ?"
-- `S0ngC0py_DrawFromSong_DL1`
-- `S0ngC0py_DrawFromSong_DL2`
-- `S0ngC0py_DrawToSong_DL`
+- `SongCopy_DrawFromSong_DL1`
+- `SongCopy_DrawFromSong_DL2`
+- `SongCopy_DrawToSong_DL`
 - `DL_AllAll`: "ALL"; "ALL"
-- `S0ngC0py_DrawTracks_DL`
+- `SongCopy_DrawTracks_DL`
 - `DL_TrackTrack`: "TRACK"; "TRACK"
 
-Keys (`ButtonTable_S0ngC0py_StageZero`, `ButtonTable_S0ngC0py_StageNonZero`):
+Keys (`ButtonTable_SongCopy_StageZero`, `ButtonTable_SongCopy_StageNonZero`):
 
 | key map                             | key                  | handler                            | requests                                           |
 |-------------------------------------|----------------------|------------------------------------|----------------------------------------------------|
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol1`    | `SoftKeyCol1_S0ngC0py_StageZero`   |                                                    |
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol2`    | `SoftKeyCol2_S0ngC0py_StageZero`   |                                                    |
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol3`    | `SoftKeyCol3_S0ngC0py_StageZero`   |                                                    |
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol4`    | `SoftKeyCol4_S0ngC0py_StageZero`   |                                                    |
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol5`    | `SoftKeyCol5_S0ngC0py_StageZero`   |                                                    |
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol6`    | `SoftKeyCol6_S0ngC0py_StageZero`   |                                                    |
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol7`    | `SoftKeyCol7_S0ngC0py_StageZero`   |                                                    |
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol8`    | `SoftKeyCol8_S0ngC0py_StageZero`   |                                                    |
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_LcdRow2`        | `LcdKeyRow2_S0ngC0py_StageZero`    | request screen 0xAB (InstallPainter_MessageScreen) |
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_Exit`           | `ExitKey_S0ngC0py_StageZero`       | go to screen 0x1A (ScreenEnter_Edit)               |
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol1Alt` | `SoftKeyCol1_S0ngC0py_StageZero`   |                                                    |
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol2Alt` | `SoftKeyCol2_S0ngC0py_StageZero`   |                                                    |
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol3Alt` | `SoftKeyCol3_S0ngC0py_StageZero`   |                                                    |
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol4Alt` | `SoftKeyCol4_S0ngC0py_StageZero`   |                                                    |
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol5Alt` | `SoftKeyCol5_S0ngC0py_StageZero`   |                                                    |
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol6Alt` | `SoftKeyCol6_S0ngC0py_StageZero`   |                                                    |
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol7Alt` | `SoftKeyCol7_S0ngC0py_StageZero`   |                                                    |
-| `ButtonTable_S0ngC0py_StageZero`    | `KEY_SoftKeyCol8Alt` | `SoftKeyCol8_S0ngC0py_StageZero`   |                                                    |
-| `ButtonTable_S0ngC0py_StageNonZero` | `KEY_LcdRow2`        | `LcdKeyRow2_S0ngC0py_StageNonZero` | request screen 0xAB (InstallPainter_MessageScreen) |
-| `ButtonTable_S0ngC0py_StageNonZero` | `KEY_LcdRow3`        | `LcdKeyRow3_S0ngC0py_StageNonZero` |                                                    |
-| `ButtonTable_S0ngC0py_StageNonZero` | `KEY_Exit`           | `ExitKey_S0ngC0py_StageNonZero`    |                                                    |
+| `ButtonTable_SongCopy_StageZero`    | `KEY_SoftKeyCol1`    | `SoftKeyCol1_SongCopy_StageZero`   |                                                    |
+| `ButtonTable_SongCopy_StageZero`    | `KEY_SoftKeyCol2`    | `SoftKeyCol2_SongCopy_StageZero`   |                                                    |
+| `ButtonTable_SongCopy_StageZero`    | `KEY_SoftKeyCol3`    | `SoftKeyCol3_SongCopy_StageZero`   |                                                    |
+| `ButtonTable_SongCopy_StageZero`    | `KEY_SoftKeyCol4`    | `SoftKeyCol4_SongCopy_StageZero`   |                                                    |
+| `ButtonTable_SongCopy_StageZero`    | `KEY_SoftKeyCol5`    | `SoftKeyCol5_SongCopy_StageZero`   |                                                    |
+| `ButtonTable_SongCopy_StageZero`    | `KEY_SoftKeyCol6`    | `SoftKeyCol6_SongCopy_StageZero`   |                                                    |
+| `ButtonTable_SongCopy_StageZero`    | `KEY_SoftKeyCol7`    | `SoftKeyCol7_SongCopy_StageZero`   |                                                    |
+| `ButtonTable_SongCopy_StageZero`    | `KEY_SoftKeyCol8`    | `SoftKeyCol8_SongCopy_StageZero`   |                                                    |
+| `ButtonTable_SongCopy_StageZero`    | `KEY_LcdRow2`        | `LcdKeyRow2_SongCopy_StageZero`    | request screen 0xAB (InstallPainter_MessageScreen) |
+| `ButtonTable_SongCopy_StageZero`    | `KEY_Exit`           | `ExitKey_SongCopy_StageZero`       | go to screen 0x1A (ScreenEnter_Edit)               |
+| `ButtonTable_SongCopy_StageZero`    | `KEY_SoftKeyCol1Alt` | `SoftKeyCol1_SongCopy_StageZero`   |                                                    |
+| `ButtonTable_SongCopy_StageZero`    | `KEY_SoftKeyCol2Alt` | `SoftKeyCol2_SongCopy_StageZero`   |                                                    |
+| `ButtonTable_SongCopy_StageZero`    | `KEY_SoftKeyCol3Alt` | `SoftKeyCol3_SongCopy_StageZero`   |                                                    |
+| `ButtonTable_SongCopy_StageZero`    | `KEY_SoftKeyCol4Alt` | `SoftKeyCol4_SongCopy_StageZero`   |                                                    |
+| `ButtonTable_SongCopy_StageZero`    | `KEY_SoftKeyCol5Alt` | `SoftKeyCol5_SongCopy_StageZero`   |                                                    |
+| `ButtonTable_SongCopy_StageZero`    | `KEY_SoftKeyCol6Alt` | `SoftKeyCol6_SongCopy_StageZero`   |                                                    |
+| `ButtonTable_SongCopy_StageZero`    | `KEY_SoftKeyCol7Alt` | `SoftKeyCol7_SongCopy_StageZero`   |                                                    |
+| `ButtonTable_SongCopy_StageZero`    | `KEY_SoftKeyCol8Alt` | `SoftKeyCol8_SongCopy_StageZero`   |                                                    |
+| `ButtonTable_SongCopy_StageNonZero` | `KEY_LcdRow2`        | `LcdKeyRow2_SongCopy_StageNonZero` | request screen 0xAB (InstallPainter_MessageScreen) |
+| `ButtonTable_SongCopy_StageNonZero` | `KEY_LcdRow3`        | `LcdKeyRow3_SongCopy_StageNonZero` |                                                    |
+| `ButtonTable_SongCopy_StageNonZero` | `KEY_Exit`           | `ExitKey_SongCopy_StageNonZero`    |                                                    |
 
 Reached from: screen 0x1A `KEY_LcdRow1` (`LcdKeyRow1_Edit_0C10NonZero`).
 
-## screen 0x2B: `ScreenEnter_Transp0se`
+## screen 0x2B: `ScreenEnter_Transpose`
 
-Object `T_ScreenEnter_Transp0se` (`PanelScreen_VtableTable` entry 75). Enter `ScreenEnter_Transp0se`, Leave `ScreenLeave_Transp0se`, Button `ScreenButton_Transp0se`.
+Object `T_ScreenEnter_Transpose` (`PanelScreen_VtableTable` entry 75). Enter `ScreenEnter_Transpose`, Leave `ScreenLeave_Transpose`, Button `ScreenButton_Transpose`.
 
 Draws:
 
-- `DL_Transp0seTrackFirstMeasure`: "TRANSP0SE"; "TRACK           :"; "FIRST MEASURE   :"; "LAST MEASURE    :"
+- `DL_TransposeTrackFirstMeasure`: "TRANSP0SE"; "TRACK           :"; "FIRST MEASURE   :"; "LAST MEASURE    :"
 - `DL_F3AB9C`: "YES"; "NO"
 - `DL_AreYouSure`: "Are You Sure ?"
 - `DL_F3B1E3`
 
 Enter requests: go to screen 0x1A (ScreenEnter_Edit).
 
-Keys (`ButtonTable_Transp0se_StageZero`, `ButtonTable_Transp0se_StageNonZero`):
+Keys (`ButtonTable_Transpose_StageZero`, `ButtonTable_Transpose_StageNonZero`):
 
 | key map                              | key                  | handler                             | requests                                           |
 |--------------------------------------|----------------------|-------------------------------------|----------------------------------------------------|
-| `ButtonTable_Transp0se_StageZero`    | `KEY_SoftKeyCol5`    | `SoftKeyCol5_Transp0se_StageZero`   |                                                    |
-| `ButtonTable_Transp0se_StageZero`    | `KEY_LcdRow1`        | `LcdKeyRow1_Transp0se_StageZero`    |                                                    |
-| `ButtonTable_Transp0se_StageZero`    | `KEY_LcdRow2`        | `LcdKeyRow2_Transp0se_StageZero`    | request screen 0xAB (InstallPainter_MessageScreen) |
-| `ButtonTable_Transp0se_StageZero`    | `KEY_LcdRow3`        | `LcdKeyRow3_Transp0se_StageZero`    |                                                    |
-| `ButtonTable_Transp0se_StageZero`    | `KEY_LcdRow4`        | `LcdKeyRow4_Transp0se_StageZero`    |                                                    |
-| `ButtonTable_Transp0se_StageZero`    | `KEY_Exit`           | `ExitKey_Transp0se_StageZero`       | go to screen 0x1A (ScreenEnter_Edit)               |
-| `ButtonTable_Transp0se_StageZero`    | `KEY_SoftKeyCol5Alt` | `Transp0se_StageZero_Button21`      |                                                    |
-| `ButtonTable_Transp0se_StageZero`    | `KEY_NumberPad`      | `NumberPadKey_Transp0se_StageZero`  |                                                    |
-| `ButtonTable_Transp0se_StageNonZero` | `KEY_LcdRow2`        | `LcdKeyRow2_Transp0se_StageNonZero` | request screen 0xAB (InstallPainter_MessageScreen) |
-| `ButtonTable_Transp0se_StageNonZero` | `KEY_LcdRow3`        | `LcdKeyRow3_Transp0se_StageNonZero` |                                                    |
-| `ButtonTable_Transp0se_StageNonZero` | `KEY_Exit`           | `ExitKey_Transp0se_StageNonZero`    |                                                    |
+| `ButtonTable_Transpose_StageZero`    | `KEY_SoftKeyCol5`    | `SoftKeyCol5_Transpose_StageZero`   |                                                    |
+| `ButtonTable_Transpose_StageZero`    | `KEY_LcdRow1`        | `LcdKeyRow1_Transpose_StageZero`    |                                                    |
+| `ButtonTable_Transpose_StageZero`    | `KEY_LcdRow2`        | `LcdKeyRow2_Transpose_StageZero`    | request screen 0xAB (InstallPainter_MessageScreen) |
+| `ButtonTable_Transpose_StageZero`    | `KEY_LcdRow3`        | `LcdKeyRow3_Transpose_StageZero`    |                                                    |
+| `ButtonTable_Transpose_StageZero`    | `KEY_LcdRow4`        | `LcdKeyRow4_Transpose_StageZero`    |                                                    |
+| `ButtonTable_Transpose_StageZero`    | `KEY_Exit`           | `ExitKey_Transpose_StageZero`       | go to screen 0x1A (ScreenEnter_Edit)               |
+| `ButtonTable_Transpose_StageZero`    | `KEY_SoftKeyCol5Alt` | `Transpose_StageZero_Button21`      |                                                    |
+| `ButtonTable_Transpose_StageZero`    | `KEY_NumberPad`      | `NumberPadKey_Transpose_StageZero`  |                                                    |
+| `ButtonTable_Transpose_StageNonZero` | `KEY_LcdRow2`        | `LcdKeyRow2_Transpose_StageNonZero` | request screen 0xAB (InstallPainter_MessageScreen) |
+| `ButtonTable_Transpose_StageNonZero` | `KEY_LcdRow3`        | `LcdKeyRow3_Transpose_StageNonZero` |                                                    |
+| `ButtonTable_Transpose_StageNonZero` | `KEY_Exit`           | `ExitKey_Transpose_StageNonZero`    |                                                    |
 
 Reached from: screen 0x1A `KEY_LcdRow4` (`LcdKeyRow4_Edit_0C10Zero`).
 
@@ -1620,32 +1620,32 @@ Keys (`ButtonTable_AdvanceDelay_StageZero`, `ButtonTable_AdvanceDelay_StageNonZe
 
 Reached from: screen 0x1A `KEY_LcdRow4` (`LcdKeyRow4_Edit_0C10Zero`).
 
-## screen 0x2D: `ScreenEnter_N0teChange`
+## screen 0x2D: `ScreenEnter_NoteChange`
 
-Object `T_ScreenEnter_N0teChange` (`PanelScreen_VtableTable` entry 77). Enter `ScreenEnter_N0teChange`, Leave `ScreenLeave_N0teChange`, Button `ScreenButton_N0teChange`.
+Object `T_ScreenEnter_NoteChange` (`PanelScreen_VtableTable` entry 77). Enter `ScreenEnter_NoteChange`, Leave `ScreenLeave_NoteChange`, Button `ScreenButton_NoteChange`.
 
 Draws:
 
-- `DL_N0teChangeTargetNoteTrack`: "N0TE CHANGE"; "TARGET NOTE"; "TRACK         :"; ":"
-- `Paint_N0teChange_DL1`: "OK"
-- `Paint_N0teChange_DL2`: "YES"; "NO"
+- `DL_NoteChangeTargetNoteTrack`: "N0TE CHANGE"; "TARGET NOTE"; "TRACK         :"; ":"
+- `Paint_NoteChange_DL1`: "OK"
+- `Paint_NoteChange_DL2`: "YES"; "NO"
 - `DL_AreYouSure`: "Are You Sure ?"
 - `DL_F3AFE7`
 
-Keys (`ButtonTable_N0teChange_StageZero`, `ButtonTable_N0teChange_StageNonZero`):
+Keys (`ButtonTable_NoteChange_StageZero`, `ButtonTable_NoteChange_StageNonZero`):
 
 | key map                               | key                  | handler                              | requests                                           |
 |---------------------------------------|----------------------|--------------------------------------|----------------------------------------------------|
-| `ButtonTable_N0teChange_StageZero`    | `KEY_SoftKeyCol5`    | `SoftKeyCol5_N0teChange_StageZero`   |                                                    |
-| `ButtonTable_N0teChange_StageZero`    | `KEY_LcdRow2`        | `LcdKeyRow2_N0teChange_StageZero`    |                                                    |
-| `ButtonTable_N0teChange_StageZero`    | `KEY_LcdRow3`        | `LcdKeyRow3_N0teChange_StageZero`    |                                                    |
-| `ButtonTable_N0teChange_StageZero`    | `KEY_LcdRow4`        | `LcdKeyRow4_N0teChange_StageZero`    | request screen 0xAB (InstallPainter_MessageScreen) |
-| `ButtonTable_N0teChange_StageZero`    | `KEY_Exit`           | `ExitKey_N0teChange_StageZero`       | go to screen 0x1A (ScreenEnter_Edit)               |
-| `ButtonTable_N0teChange_StageZero`    | `KEY_SoftKeyCol5Alt` | `N0teChange_StageZero_Button21`      |                                                    |
-| `ButtonTable_N0teChange_StageZero`    | `KEY_NumberPad`      | `NumberPadKey_N0teChange_StageZero`  |                                                    |
-| `ButtonTable_N0teChange_StageNonZero` | `KEY_LcdRow4`        | `LcdKeyRow4_N0teChange_StageNonZero` | request screen 0xAB (InstallPainter_MessageScreen) |
-| `ButtonTable_N0teChange_StageNonZero` | `KEY_LcdRow5`        | `LcdKeyRow5_N0teChange_StageNonZero` |                                                    |
-| `ButtonTable_N0teChange_StageNonZero` | `KEY_Exit`           | `ExitKey_N0teChange_StageNonZero`    |                                                    |
+| `ButtonTable_NoteChange_StageZero`    | `KEY_SoftKeyCol5`    | `SoftKeyCol5_NoteChange_StageZero`   |                                                    |
+| `ButtonTable_NoteChange_StageZero`    | `KEY_LcdRow2`        | `LcdKeyRow2_NoteChange_StageZero`    |                                                    |
+| `ButtonTable_NoteChange_StageZero`    | `KEY_LcdRow3`        | `LcdKeyRow3_NoteChange_StageZero`    |                                                    |
+| `ButtonTable_NoteChange_StageZero`    | `KEY_LcdRow4`        | `LcdKeyRow4_NoteChange_StageZero`    | request screen 0xAB (InstallPainter_MessageScreen) |
+| `ButtonTable_NoteChange_StageZero`    | `KEY_Exit`           | `ExitKey_NoteChange_StageZero`       | go to screen 0x1A (ScreenEnter_Edit)               |
+| `ButtonTable_NoteChange_StageZero`    | `KEY_SoftKeyCol5Alt` | `NoteChange_StageZero_Button21`      |                                                    |
+| `ButtonTable_NoteChange_StageZero`    | `KEY_NumberPad`      | `NumberPadKey_NoteChange_StageZero`  |                                                    |
+| `ButtonTable_NoteChange_StageNonZero` | `KEY_LcdRow4`        | `LcdKeyRow4_NoteChange_StageNonZero` | request screen 0xAB (InstallPainter_MessageScreen) |
+| `ButtonTable_NoteChange_StageNonZero` | `KEY_LcdRow5`        | `LcdKeyRow5_NoteChange_StageNonZero` |                                                    |
+| `ButtonTable_NoteChange_StageNonZero` | `KEY_Exit`           | `ExitKey_NoteChange_StageNonZero`    |                                                    |
 
 Reached from: screen 0x1A `KEY_LcdRow3` (`LcdKeyRow3_Edit_0C10Zero`).
 
@@ -1893,7 +1893,7 @@ Object `T_Paint_DiskMenu` (`PanelScreen_VtableTable` entry 96). Enter `Paint_Dis
 Draws:
 
 - `DL_MidiFileLoadMidiFileSave`: "MIDI FILE LOAD"; "MIDI FILE SAVE"; "LOAD"; "SINGLE SOUND"
-- `DL_DiskDiskL0adDiskSaveMidiFile`: "DISK"; "DISK L0AD"; "DISK SAVE"; "MIDI FILE"
+- `DL_DiskDiskLoadDiskSaveMidiFile`: "DISK"; "DISK L0AD"; "DISK SAVE"; "MIDI FILE"
 - `DL_LoadSingleSoundLoadSingleCombi`: "LOAD"; "SINGLE SOUND"; "LOAD"; "SINGLE COMBI."
 - `DL_F58162`: "YES ·"; "NO  ·"
 
@@ -1917,8 +1917,8 @@ Draws:
 - `Paint_MidiFileDirectPlay_DL`
 - `DL_Play`: "PLAY ·"
 - `DL_MidiFileDirectPlayPlayAsGm`: "MIDI FILE DIRECT PLAY"; "PLAY AS GM   :"; "MIXER"
-- `DL_ToS0ngNumberL0adAsGm`: ":"; ":"; ":"; ":"
-- `DL_DiskDiskL0adDiskSaveMidiFile`: "DISK"; "DISK L0AD"; "DISK SAVE"; "MIDI FILE"
+- `DL_ToSongNumberLoadAsGm`: ":"; ":"; ":"; ":"
+- `DL_DiskDiskLoadDiskSaveMidiFile`: "DISK"; "DISK L0AD"; "DISK SAVE"; "MIDI FILE"
 - `DL_Disk`: "DISK"
 - `DL_Stop`: "STOP ·"
 - `DL_F59567`
@@ -1937,20 +1937,20 @@ Keys (`Dispatch_FF3880`):
 | `Dispatch_FF3880` | `KEY_LcdRow5` | `LcdKeyRow5_MidiFileDirectPlay` |          |
 | `Dispatch_FF3880` | `KEY_Exit`    | `ExitKey_MidiFileDirectPlay`    |          |
 
-## screen 0x47: `Paint_DiskL0adFile`
+## screen 0x47: `Paint_DiskLoadFile`
 
-Object `T_Paint_DiskL0adFile` (`PanelScreen_VtableTable` entry 103). Enter `Paint_DiskL0adFile`, Leave `ScreenLeave_DiskL0adFile`, Button `PanelButtonDispatch_DiskL0adFile`.
+Object `T_Paint_DiskLoadFile` (`PanelScreen_VtableTable` entry 103). Enter `Paint_DiskLoadFile`, Leave `ScreenLeave_DiskLoadFile`, Button `PanelButtonDispatch_DiskLoadFile`.
 
 Draws:
 
-- `DL_SaveSaveFileSaveSave0pti0n`: "SAVE"; "SAVE FILE"; "SAVE ·"; "SAVE 0PTI0N"
-- `DL_LoadL0adFileLoadL0ad0pti0n`: "LOAD"; "L0AD FILE"; "LOAD ·"; "L0AD 0PTI0N"
+- `DL_SaveSaveFileSaveSaveOption`: "SAVE"; "SAVE FILE"; "SAVE ·"; "SAVE 0PTI0N"
+- `DL_LoadLoadFileLoadLoadOption`: "LOAD"; "L0AD FILE"; "LOAD ·"; "L0AD 0PTI0N"
 - `DL_F583AB`
 - `DL_FloppyDisk`: "FLOPPY"; "DISK"; "01 :"; "02 :"
 - `DL_F5840A`
 - `DL_F583E5`
-- `DL_ToS0ngNumber`: "TO S0NG NUMBER  :"
-- `DL_FromS0ngNumber`: "FROM S0NG NUMBER :"
+- `DL_ToSongNumber`: "TO S0NG NUMBER  :"
+- `DL_FromSongNumber`: "FROM S0NG NUMBER :"
 - `DL_F59C4B`: "1-10"
 
 Enter requests: repaint.
@@ -1959,21 +1959,21 @@ Keys (`Dispatch_FF3900`):
 
 | key map           | key           | handler                   | requests |
 |-------------------|---------------|---------------------------|----------|
-| `Dispatch_FF3900` | `KEY_LcdRow1` | `LcdKeyRow1_DiskL0adFile` |          |
-| `Dispatch_FF3900` | `KEY_LcdRow2` | `LcdKeyRow2_DiskL0adFile` |          |
-| `Dispatch_FF3900` | `KEY_LcdRow3` | `LcdKeyRow3_DiskL0adFile` |          |
-| `Dispatch_FF3900` | `KEY_LcdRow4` | `LcdKeyRow4_DiskL0adFile` |          |
-| `Dispatch_FF3900` | `KEY_LcdRow5` | `LcdKeyRow5_DiskL0adFile` |          |
-| `Dispatch_FF3900` | `KEY_Exit`    | `ExitKey_DiskL0adFile`    |          |
+| `Dispatch_FF3900` | `KEY_LcdRow1` | `LcdKeyRow1_DiskLoadFile` |          |
+| `Dispatch_FF3900` | `KEY_LcdRow2` | `LcdKeyRow2_DiskLoadFile` |          |
+| `Dispatch_FF3900` | `KEY_LcdRow3` | `LcdKeyRow3_DiskLoadFile` |          |
+| `Dispatch_FF3900` | `KEY_LcdRow4` | `LcdKeyRow4_DiskLoadFile` |          |
+| `Dispatch_FF3900` | `KEY_LcdRow5` | `LcdKeyRow5_DiskLoadFile` |          |
+| `Dispatch_FF3900` | `KEY_Exit`    | `ExitKey_DiskLoadFile`    |          |
 
-## screen 0x49: `Paint_MidiFileL0ad`
+## screen 0x49: `Paint_MidiFileLoad`
 
-Object `T_Paint_MidiFileL0ad` (`PanelScreen_VtableTable` entry 105). Enter `Paint_MidiFileL0ad`, Leave `ScreenLeave_MidiFileL0ad`, Button `PanelButtonDispatch_MidiFileL0ad`.
+Object `T_Paint_MidiFileLoad` (`PanelScreen_VtableTable` entry 105). Enter `Paint_MidiFileLoad`, Leave `ScreenLeave_MidiFileLoad`, Button `PanelButtonDispatch_MidiFileLoad`.
 
 Draws:
 
-- `Paint_MidiFileL0ad_DL`
-- `DL_MidiFileL0adL0ad`: "MIDI FILE L0AD"; ":"; "L0AD ·"; ":"
+- `Paint_MidiFileLoad_DL`
+- `DL_MidiFileLoadLoad`: "MIDI FILE L0AD"; ":"; "L0AD ·"; ":"
 - `DL_F593F3`
 - `DL_F5953B`
 - `DL_F59948`
@@ -1984,12 +1984,12 @@ Keys (`Dispatch_FF3980`):
 
 | key map           | key           | handler                   | requests |
 |-------------------|---------------|---------------------------|----------|
-| `Dispatch_FF3980` | `KEY_LcdRow1` | `LcdKeyRow1_MidiFileL0ad` |          |
-| `Dispatch_FF3980` | `KEY_LcdRow2` | `LcdKeyRow2_MidiFileL0ad` |          |
-| `Dispatch_FF3980` | `KEY_LcdRow3` | `LcdKeyRow3_MidiFileL0ad` |          |
-| `Dispatch_FF3980` | `KEY_LcdRow4` | `LcdKeyRow4_MidiFileL0ad` |          |
-| `Dispatch_FF3980` | `KEY_LcdRow5` | `LcdKeyRow5_MidiFileL0ad` |          |
-| `Dispatch_FF3980` | `KEY_Exit`    | `ExitKey_MidiFileL0ad`    |          |
+| `Dispatch_FF3980` | `KEY_LcdRow1` | `LcdKeyRow1_MidiFileLoad` |          |
+| `Dispatch_FF3980` | `KEY_LcdRow2` | `LcdKeyRow2_MidiFileLoad` |          |
+| `Dispatch_FF3980` | `KEY_LcdRow3` | `LcdKeyRow3_MidiFileLoad` |          |
+| `Dispatch_FF3980` | `KEY_LcdRow4` | `LcdKeyRow4_MidiFileLoad` |          |
+| `Dispatch_FF3980` | `KEY_LcdRow5` | `LcdKeyRow5_MidiFileLoad` |          |
+| `Dispatch_FF3980` | `KEY_Exit`    | `ExitKey_MidiFileLoad`    |          |
 
 ## screen 0x4C: `PageDispatch_DiskSaveFile`
 
@@ -2001,14 +2001,14 @@ Draws:
 - `DL_DiskSaveFileNaming`: "DISK SAVE : FILE NAMING"
 - `DL_F5879C`
 - `DL_FloppyDisk`: "FLOPPY"; "DISK"; "01 :"; "02 :"
-- `DL_SaveSaveFileDelSave0pti0n`: "SAVE"; "SAVE FILE"; "DEL  ·"; "SAVE 0PTI0N"
-- `DL_SaveSaveFileSaveSave0pti0n`: "SAVE"; "SAVE FILE"; "SAVE ·"; "SAVE 0PTI0N"
+- `DL_SaveSaveFileDelSaveOption`: "SAVE"; "SAVE FILE"; "DEL  ·"; "SAVE 0PTI0N"
+- `DL_SaveSaveFileSaveSaveOption`: "SAVE"; "SAVE FILE"; "SAVE ·"; "SAVE 0PTI0N"
 - `DL_F583AB`
 - `DL_F5840A`
 - `DL_F583E5`
 - `DL_AttentionAFileAlreadyExistsAtThe`: "ATTENTION!"; "A file already exists at the"; "chosen location.If you proceed"; "it will be replaced by the file"
 - `DL_DiskSave`: "DISK SAVE"
-- `DL_LoadL0adFileLoadL0ad0pti0n`: "LOAD"; "L0AD FILE"; "LOAD ·"; "L0AD 0PTI0N"
+- `DL_LoadLoadFileLoadLoadOption`: "LOAD"; "L0AD FILE"; "LOAD ·"; "L0AD 0PTI0N"
 - `DL_F58162`: "YES ·"; "NO  ·"
 - `DL_F5999A`: "Please set the PASSWORD"
 - `DL_DiskSavePasswordSave`: "DISK SAVE:PASSWORD"; "· SAVE"
@@ -2098,15 +2098,15 @@ Draws:
 - `DL_F5879C`
 - `ScreenEnter_MidiFileSave_Page1_DL1`: "SAVE ·"
 - `DL_F5920E`: "DEL  ·"
-- `DL_MidiFileSaveFileSelecti0n`: "MIDI FILE SAVE : FILE SELECTI0N"; ":"; "· FROM S0NG NUMBER :"; "· WSA    HEADER"
+- `DL_MidiFileSaveFileSelectionFromSongNumber`: "MIDI FILE SAVE : FILE SELECTI0N"; ":"; "· FROM S0NG NUMBER :"; "· WSA    HEADER"
 - `ScreenEnter_MidiFileSave_Page1_DL2`
-- `DL_MidiFileL0adL0ad`: "MIDI FILE L0AD"; ":"; "L0AD ·"; ":"
+- `DL_MidiFileLoadLoad`: "MIDI FILE L0AD"; ":"; "L0AD ·"; ":"
 - `DL_F5953B`
 - `DL_F5993E`
 - `ScreenEnter_MidiFileSave_Page1_DL3`
 - `DL_MidiFileSaveFileDelete`: "MIDI FILE SAVE : FILE DELETE"
 - `DL_MidiFileSave`: "MIDI FILE SAVE"
-- `DL_LoadL0adFileLoadL0ad0pti0n`: "LOAD"; "L0AD FILE"; "LOAD ·"; "L0AD 0PTI0N"
+- `DL_LoadLoadFileLoadLoadOption`: "LOAD"; "L0AD FILE"; "LOAD ·"; "L0AD 0PTI0N"
 - ... 5 more
 
 Keys (`ScreenButtonHandlers_MidiFileSave`):
@@ -2146,8 +2146,8 @@ Object `T_Paint_FloppyDiskFormatSelectType` (`PanelScreen_VtableTable` entry 112
 Draws:
 
 - `DL_ComposerLoad`: "COMPOSER LOAD"
-- `DL_FloppyDiskFormatSelectTheF0rmatTypeForYo`: "FLOPPY DISK FORMAT"; "Select the F0RMAT type for your disk."; "· 2DD:720K Byte format for 2DD disk."; "· 2HD:1.44M Byte format for 2HD disk."
-- `DL_DiskDiskL0adDiskSaveMidiFile`: "DISK"; "DISK L0AD"; "DISK SAVE"; "MIDI FILE"
+- `DL_FloppyDiskFormatSelectTheFormatTypeForYo`: "FLOPPY DISK FORMAT"; "Select the F0RMAT type for your disk."; "· 2DD:720K Byte format for 2DD disk."; "· 2HD:1.44M Byte format for 2HD disk."
+- `DL_DiskDiskLoadDiskSaveMidiFile`: "DISK"; "DISK L0AD"; "DISK SAVE"; "MIDI FILE"
 - `DL_Disk`: "DISK"
 
 Keys (`ScreenButtonHandlers_FloppyDiskFormatSelectType`):
@@ -2168,7 +2168,7 @@ Draws:
 
 - `DL_AttentionUsingDiskFormatWillErase`: "ATTENTION!"; "Using DISK FORMAT will erase"; "any current data on the disk."; "Are You Sure?"
 - `DL_FloppyDiskFormat`: "FLOPPY DISK FORMAT"
-- `DL_LoadL0adFileLoadL0ad0pti0n`: "LOAD"; "L0AD FILE"; "LOAD ·"; "L0AD 0PTI0N"
+- `DL_LoadLoadFileLoadLoadOption`: "LOAD"; "L0AD FILE"; "LOAD ·"; "L0AD 0PTI0N"
 - `DL_F58162`: "YES ·"; "NO  ·"
 - `DL_DiskSaveFileDelete`: "DISK SAVE : FILE DELETE"
 - `DL_F5920E`: "DEL  ·"
@@ -2183,39 +2183,39 @@ Keys (`ScreenButtonHandlers_FloppyDiskFormatAreYouSure`):
 | `ScreenButtonHandlers_FloppyDiskFormatAreYouSure` | `KEY_LcdRow4` | `LcdKeyRow4_FloppyDiskFormatAreYouSure` |          |
 | `ScreenButtonHandlers_FloppyDiskFormatAreYouSure` | `KEY_Exit`    | `ExitKey_FloppyDiskFormatAreYouSure`    |          |
 
-## screen 0x53: `PageDispatch_L0adSingleC0mbination`
+## screen 0x53: `PageDispatch_LoadSingleCombination`
 
-Object `T_PageDispatch_L0adSingleC0mbination` (`PanelScreen_VtableTable` entry 115). Enter `PageDispatch_L0adSingleC0mbination`, Leave `ScreenLeave_L0adSingleC0mbination`, Button `PanelButtonDispatch_L0adSingleC0mbination`.
+Object `T_PageDispatch_LoadSingleCombination` (`PanelScreen_VtableTable` entry 115). Enter `PageDispatch_LoadSingleCombination`, Leave `ScreenLeave_LoadSingleCombination`, Button `PanelButtonDispatch_LoadSingleCombination`.
 
 Draws:
 
-- `ScreenEnter_L0adSingleC0mbination_Page0_DL`
-- `DL_LoadSingleCombinationDiskGr0upSingleUser1FileBankUser1C0mbi`: "LOAD SINGLE COMBINATION"; "DISK"; "0K"; "GR0UP/SINGLE"
+- `ScreenEnter_LoadSingleCombination_Page0_DL`
+- `DL_LoadSingleCombinationDiskGroupSingleUser1FileBankUser1Combi`: "LOAD SINGLE COMBINATION"; "DISK"; "0K"; "GR0UP/SINGLE"
 - `DL_F590F1`
 - `DL_F590E7`
 - `DL_F590DD`
 - `DL_F5910F`
 - `DL_F591A6`
-- `DL_LoadSingleCombinationDiskGr0upSingleUser1FileBankUser1S0und`: "LOAD SINGLE COMBINATION"; "DISK"; "0K"; "GR0UP/SINGLE"
+- `DL_LoadSingleCombinationDiskGroupSingleUser1FileBankUser1Sound`: "LOAD SINGLE COMBINATION"; "DISK"; "0K"; "GR0UP/SINGLE"
 - `DL_F59150`
 - `DL_F591B1`
 
 Enter requests: repaint.
 
-## screen 0x54: `PageDispatch_L0adSingleS0und`
+## screen 0x54: `PageDispatch_LoadSingleSound`
 
-Object `T_PageDispatch_L0adSingleS0und` (`PanelScreen_VtableTable` entry 116). Enter `PageDispatch_L0adSingleS0und`, Leave `ScreenLeave_L0adSingleS0und`, Button `PanelButtonDispatch_L0adSingleS0und`.
+Object `T_PageDispatch_LoadSingleSound` (`PanelScreen_VtableTable` entry 116). Enter `PageDispatch_LoadSingleSound`, Leave `ScreenLeave_LoadSingleSound`, Button `PanelButtonDispatch_LoadSingleSound`.
 
 Draws:
 
-- `ScreenEnter_L0adSingleS0und_Page0_DL`
-- `DL_LoadSingleSoundDiskGr0upSingleFileBankS0und`: "LOAD SINGLE SOUND"; "DISK"; "0K"; "GR0UP/SINGLE"
-- `DL_LoadSingleCombinationDiskGr0upSingleUser1FileBankUser1S0und`: "LOAD SINGLE COMBINATION"; "DISK"; "0K"; "GR0UP/SINGLE"
+- `ScreenEnter_LoadSingleSound_Page0_DL`
+- `DL_LoadSingleSoundDiskGroupSingleFileBankSound`: "LOAD SINGLE SOUND"; "DISK"; "0K"; "GR0UP/SINGLE"
+- `DL_LoadSingleCombinationDiskGroupSingleUser1FileBankUser1Sound`: "LOAD SINGLE COMBINATION"; "DISK"; "0K"; "GR0UP/SINGLE"
 - `DL_F590F1`
 - `DL_F590E7`
 - `DL_F591A6`
-- `ScreenEnter_L0adSingleS0und_Page1_DL`
-- `DL_LoadSingleSoundDiskGr0upSingleFileBankS0undGr0up`: "LOAD SINGLE SOUND"; "DISK"; "0K"; "GR0UP/SINGLE"
+- `ScreenEnter_LoadSingleSound_Page1_DL`
+- `DL_LoadSingleSoundDiskGroupSingleFileBankSoundGroup`: "LOAD SINGLE SOUND"; "DISK"; "0K"; "GR0UP/SINGLE"
 - `DL_F590DD`
 - `DL_F59150`
 - `DL_F5910F`
@@ -2376,9 +2376,9 @@ Object `T_Paint_MidiMenu` (`PanelScreen_VtableTable` entry 144). Enter `Paint_Mi
 Draws:
 
 - `DL_F0C917`: "ITEM"; "VALUE"
-- `DL_MidiT0talM0deC0nfigurePr0g`: "MIDI"; "T0TAL M0DE"; "C0NFIGURE"; "."
-- `DL_RealtimeMessageInput0utput`: "REALTIME"; "MESSAGE"; "INPUT&0UTPUT"; "FILTER"
-- `DL_Input0utputFilterMidiT0talM0de`: "INPUT&0UTPUT"; "FILTER"
+- `DL_MidiTotalModeConfigureProg`: "MIDI"; "T0TAL M0DE"; "C0NFIGURE"; "."
+- `DL_RealtimeMessageInputOutput`: "REALTIME"; "MESSAGE"; "INPUT&0UTPUT"; "FILTER"
+- `DL_InputOutputFilterMidiTotalMode`: "INPUT&0UTPUT"; "FILTER"
 
 Keys (`JumpTable_F99F96`):
 
@@ -2532,7 +2532,7 @@ Object `T_Paint_MidiInputOutputFilter` (`PanelScreen_VtableTable` entry 158). En
 Draws:
 
 - `DL_F0CDE7`
-- `DL_InputOutputFilterMidiPr0gramChange`: "INPUT&OUTPUT"; "FILTER"; "MIDI"; "PR0GRAM CHANGE   :"
+- `DL_InputOutputFilterMidiProgramChange`: "INPUT&OUTPUT"; "FILTER"; "MIDI"; "PR0GRAM CHANGE   :"
 - `DL_TotalModeMidiMidiInputMode`: "TOTAL"; "MODE"; "MIDI"; "MIDI INPUT MODE :"
 - `DL_F0C917`: "ITEM"; "VALUE"
 - `DL_F0CE5F`
@@ -2661,7 +2661,7 @@ Draws:
 - `DL_F3294B`
 - `DL_TriggerDelayTriggerDelay`: "TRIGGER"; "DELAY"; "TRIGGER"; "DELAY"
 - `DL_F328DC`
-- `DL_T0neLayerSoundEditTrigGer`: "T0NE LAYER"; "SOUND EDIT"; "TRIG"; "GER"
+- `DL_ToneLayerSoundEditTrigGer`: "T0NE LAYER"; "SOUND EDIT"; "TRIG"; "GER"
 - `SoundEdit_PaintSlotOrdinals_DL`
 - `Data_F039ED`: "1st"; "2nd"; "3rd"; "4th"
 
@@ -2696,10 +2696,10 @@ Draws:
 - `DL_Page22KeyFollowSlopeRange`: "PAGE2/2"; "KEY FOLLOW"; "0"; "1"
 - `DL_F04344`
 - `DL_FilterKeyFollow`: "FILTER KEY FOLLOW"
-- `DL_T0neLayerSoundEditTrigGer`: "T0NE LAYER"; "SOUND EDIT"; "TRIG"; "GER"
+- `DL_ToneLayerSoundEditTrigGer`: "T0NE LAYER"; "SOUND EDIT"; "TRIG"; "GER"
 - `DL_KeyDeToneKeyScalingShift`: "KEY"; "DE-"; "TONE"; "KEY SCALING"
 - `Draw_KeyDeToneKeyScalingShift_DL`
-- `DL_PitchSoundEditEnvPitchLf0`: "PITCH"; "SOUND EDIT"; "ENV ·"; "PITCH ·"
+- `DL_PitchSoundEditEnvPitchLfo`: "PITCH"; "SOUND EDIT"; "ENV ·"; "PITCH ·"
 - `DL_Page12EnvelopeKeyoffCurSor`: "PAGE1/2"; "ENVELOPE"; "KEYOFF"; "CUR"
 - `Draw_Page12EnvelopeKeyoffCurSor_DL1`
 - `Draw_Page12EnvelopeKeyoffCurSor_DL2`
@@ -2735,10 +2735,10 @@ Draws:
 - `DL_Page22KeyFollowSlopeRange`: "PAGE2/2"; "KEY FOLLOW"; "0"; "1"
 - `DL_F04344`
 - `DL_FilterKeyFollow`: "FILTER KEY FOLLOW"
-- `DL_T0neLayerSoundEditTrigGer`: "T0NE LAYER"; "SOUND EDIT"; "TRIG"; "GER"
+- `DL_ToneLayerSoundEditTrigGer`: "T0NE LAYER"; "SOUND EDIT"; "TRIG"; "GER"
 - `DL_KeyDeToneKeyScalingShift`: "KEY"; "DE-"; "TONE"; "KEY SCALING"
 - `Draw_KeyDeToneKeyScalingShift_DL`
-- `DL_PitchSoundEditEnvPitchLf0`: "PITCH"; "SOUND EDIT"; "ENV ·"; "PITCH ·"
+- `DL_PitchSoundEditEnvPitchLfo`: "PITCH"; "SOUND EDIT"; "ENV ·"; "PITCH ·"
 - `SoundEdit_PaintSlotOrdinals_DL`
 - `Data_F039ED`: "1st"; "2nd"; "3rd"; "4th"
 - `DL_Page12EnvelopeKeyoffCurSor`: "PAGE1/2"; "ENVELOPE"; "KEYOFF"; "CUR"
@@ -2771,13 +2771,13 @@ Draws:
 
 - `DL_DriverDriverWaveformReso`: "DRIVER"; "DRIVER WAVEFORM"; "RESO"; "NATOR"
 - `DL_F338EB`
-- `DL_Page12P0siti0nParameterP0siti0n`: "PAGE1/2"; "P0SITI0N PARAMETER"; "P0SITI0N  :"; "."
-- `DL_P0siti0n`
-- `DL_Page22P0siti0nM0vementWidth`: "PAGE2/2"; "P0SITI0N M0VEMENT"; "WIDTH :"; "SPEED :"
+- `DL_Page12PositionParameterPosition`: "PAGE1/2"; "P0SITI0N PARAMETER"; "P0SITI0N  :"; "."
+- `DL_Position`
+- `DL_Page22PositionMovementWidth`: "PAGE2/2"; "P0SITI0N M0VEMENT"; "WIDTH :"; "SPEED :"
 - `ToneEditPage_A4_Paint_DL`
 - `DL_Page13FitMutKeyDeResoTing`: "PAGE1/3"; "FIT"; "MUT"; "KEY"
 - `ToneEditPage_A5_Paint_DL`
-- `DL_M0delingSoundEditToneDriver`: "M0DELING"; "SOUND EDIT"; "TONE"; "DRIVER"
+- `DL_ModelingSoundEditToneDriver`: "M0DELING"; "SOUND EDIT"; "TONE"; "DRIVER"
 - `SoundEditModelingDriverWaveform_PaintRows_DL1`: "0-"
 - `SoundEditModelingDriverWaveform_PaintRows_DL2`
 - `ToneEditPage_A3_RepaintField_DL`
@@ -2812,7 +2812,7 @@ Draws:
 
 - `DL_KeyDeToneKeyScalingShift`: "KEY"; "DE-"; "TONE"; "KEY SCALING"
 - `Draw_KeyDeToneKeyScalingShift_DL`
-- `DL_PitchSoundEditEnvPitchLf0`: "PITCH"; "SOUND EDIT"; "ENV ·"; "PITCH ·"
+- `DL_PitchSoundEditEnvPitchLfo`: "PITCH"; "SOUND EDIT"; "ENV ·"; "PITCH ·"
 - `SoundEdit_PaintSlotOrdinals_DL`
 - `Data_F039ED`: "1st"; "2nd"; "3rd"; "4th"
 
@@ -2843,8 +2843,8 @@ Draws:
 - `DL_Page22KeyFollowSlopeRange`: "PAGE2/2"; "KEY FOLLOW"; "0"; "1"
 - `DL_F04344`
 - `DL_FilterKeyFollow`: "FILTER KEY FOLLOW"
-- `DL_PitchSoundEditEnvPitchLf0`: "PITCH"; "SOUND EDIT"; "ENV ·"; "PITCH ·"
-- `DL_Lf01Lf02Lf03Lf04Lf0WaveDelay`: "LF01"; "LF02"; "LF03"; "LF04"
+- `DL_PitchSoundEditEnvPitchLfo`: "PITCH"; "SOUND EDIT"; "ENV ·"; "PITCH ·"
+- `DL_Lfo1Lfo2Lfo3Lfo4LfoWaveDelay`: "LF01"; "LF02"; "LF03"; "LF04"
 - `DL_F053B6`
 - `DL_Page12EnvelopeKeyoffCurSor`: "PAGE1/2"; "ENVELOPE"; "KEYOFF"; "CUR"
 - `Draw_Page12EnvelopeKeyoffCurSor_DL1`
@@ -2887,8 +2887,8 @@ Draws:
 - `DL_Page22KeyFollowSlopeRange`: "PAGE2/2"; "KEY FOLLOW"; "0"; "1"
 - `DL_F04344`
 - `DL_FilterKeyFollow`: "FILTER KEY FOLLOW"
-- `DL_PitchSoundEditEnvPitchLf0`: "PITCH"; "SOUND EDIT"; "ENV ·"; "PITCH ·"
-- `DL_Lf01Lf02Lf03Lf04Lf0WaveDelay`: "LF01"; "LF02"; "LF03"; "LF04"
+- `DL_PitchSoundEditEnvPitchLfo`: "PITCH"; "SOUND EDIT"; "ENV ·"; "PITCH ·"
+- `DL_Lfo1Lfo2Lfo3Lfo4LfoWaveDelay`: "LF01"; "LF02"; "LF03"; "LF04"
 - `DL_F053B6`
 - `DL_Page22KeyFollowEnvelopeKeyFollowTouchAttack`: "PAGE2/2"; "KEY"; "FOLLOW"; "("
 - `Draw_Page22KeyFollowEnvelopeKeyFollowTouchAttack_DL1`
@@ -3489,7 +3489,7 @@ Draws:
 - `DL_Page22AfterTouchCtrlPedal`: "PAGE2/2"; "__"; "__"; "__"
 - `DL_F3341C`
 - `DL_F32FC8`
-- `DL_Lf01Lf02Lf03Lf04Lf0WaveDelay`: "LF01"; "LF02"; "LF03"; "LF04"
+- `DL_Lfo1Lfo2Lfo3Lfo4LfoWaveDelay`: "LF01"; "LF02"; "LF03"; "LF04"
 - `DL_F053B6`
 - `DL_Page22KeyFollowSlopeRange`: "PAGE2/2"; "KEY FOLLOW"; "0"; "1"
 - ... 3 more
@@ -3586,7 +3586,7 @@ Draws:
 - `DigitalEffect_Values`
 - `SoundEditDigitalEffect_RepaintField_DL`
 - `DL_Page22AfterTouchCtrlPedal`: "PAGE2/2"; "__"; "__"; "__"
-- `DL_C0ntr0llerSoundEditDepth`: "C0NTR0LLER"; "SOUND EDIT"; "DEPTH"; "FUNCTION"
+- `DL_ControllerSoundEditDepth`: "C0NTR0LLER"; "SOUND EDIT"; "DEPTH"; "FUNCTION"
 - `DL_1st2nd`: "1st 2nd"
 - `SoundEditController_RepaintFieldPage1_DL1`
 - `SoundEditController_RepaintFieldPage1_DL2`
@@ -3673,16 +3673,16 @@ Keys (`PanelOpTable_FCFC44`):
 
 Object `T_ScreenEnter_SoundEditMemoryWrite` (`PanelScreen_VtableTable` entry 190). Enter `ScreenEnter_SoundEditMemoryWrite`, Leave `T_F42364_Nop`, Button `ScreenButton_SoundEditMemoryWrite`.
 
-Painted by `Draw_Mem0ryWriteSoundEditName` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditMemoryWrite_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0x9E`.
+Painted by `Draw_MemoryWriteSoundEditName` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditMemoryWrite_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0x9E`.
 
 Draws:
 
-- `DL_Mem0ryWriteSoundEditName`: "MEM0RY WRITE"; "SOUND EDIT"; "0K"; "NAME:"
+- `DL_MemoryWriteSoundEditName`: "MEM0RY WRITE"; "SOUND EDIT"; "0K"; "NAME:"
 - `DL_F057C0`
 - `DL_MemoryBank`
 - `DL_Write`: "WRITE"
-- `DL_SoundEditS0undNaming`: "SOUND EDIT"; "S0UND NAMING"
-- `DL_ClrP0siti0nAbcInsDelAA`: "A B C D E F G H I J K L M N O"; "P Q R S T U V W X Y Z a b c d e"; "f g h i j k l m n o p q r s t u"; "v w x y z 0 1 2 3 4 5 6 7 8 9 !"
+- `DL_SoundEditSoundNaming`: "SOUND EDIT"; "S0UND NAMING"
+- `DL_ClrPositionAbcInsDelAA`: "A B C D E F G H I J K L M N O"; "P Q R S T U V W X Y Z a b c d e"; "f g h i j k l m n o p q r s t u"; "v w x y z 0 1 2 3 4 5 6 7 8 9 !"
 - `Draw_Write_DL1`
 - `DL_F05A68`
 - `Draw_Write_DL2`
@@ -3753,7 +3753,7 @@ Draws:
 - `GroupCombiDisplayHold_DrawNumberRange_DL2`
 - ... 2 more
 
-Enter requests: go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry).
+Enter requests: go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_CombinationMode_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry).
 
 Reached from: screen 0xA1 `KEY_SoftKeyCol6Alt` (`SoftKeyCol6_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol6` (`SoftKeyCol6_GroupSoundDisplayHold`).
 
@@ -3765,7 +3765,7 @@ Painted by `Draw_ToneTemplateLevelKeyTune` (`Dispatch_Code80_PaintTable`), one f
 
 Draws:
 
-- `DL_GroupSoundDisplayHoldGr0up`: "GROUP:"; "SOUND"; "DISPLAY"; "HOLD"
+- `DL_GroupSoundDisplayHoldGroup`: "GROUP:"; "SOUND"; "DISPLAY"; "HOLD"
 - `GroupDisplayHold_ClearNameSlots_DL`
 - `GroupCombiDisplayHold_DrawNumberRange_DL1`
 - `GroupCombiDisplayHold_DrawNumberRange_DL2`
@@ -3783,35 +3783,35 @@ Draws:
 - `BankLegend_DrawUser_DL2`
 - ... 3 more
 
-Enter requests: go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry).
+Enter requests: go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_CombinationMode_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry).
 
 Keys (`ScreenButtonHandlers_GroupSoundDisplayHold`):
 
 | key map                                      | key                  | handler                              | requests                                                                                                                                                                     |
 |----------------------------------------------|----------------------|--------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol1`    | `SoftKeyCol1_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry) |
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol2`    | `SoftKeyCol2_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry) |
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol3`    | `SoftKeyCol3_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry) |
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol4`    | `SoftKeyCol4_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry) |
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol1`    | `SoftKeyCol1_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_CombinationMode_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry) |
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol2`    | `SoftKeyCol2_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_CombinationMode_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry) |
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol3`    | `SoftKeyCol3_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_CombinationMode_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry) |
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol4`    | `SoftKeyCol4_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_CombinationMode_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry) |
 | `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol5`    | `SoftKeyCol5_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry)                                                           |
 | `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol6`    | `SoftKeyCol6_GroupSoundDisplayHold`  | go to screen 0xA0 (InstallPainter_SoundGroupMenu_Entry)                                                                                                                      |
 | `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol7`    | `SoftKeyCol7_GroupSoundDisplayHold`  |                                                                                                                                                                              |
 | `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol8`    | `SoftKeyCol8_GroupSoundDisplayHold`  |                                                                                                                                                                              |
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_LcdRow1`        | `LcdKeyRow1_GroupSoundDisplayHold`   | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry)                                                                 |
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_LcdRow2`        | `LcdKeyRow2_GroupSoundDisplayHold`   | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry)                                                                 |
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_LcdRow3`        | `LcdKeyRow3_GroupSoundDisplayHold`   | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry)                                                                 |
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_LcdRow4`        | `LcdKeyRow4_GroupSoundDisplayHold`   | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry)                                                                 |
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_LcdRow1`        | `LcdKeyRow1_GroupSoundDisplayHold`   | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_CombinationMode_Entry)                                                                 |
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_LcdRow2`        | `LcdKeyRow2_GroupSoundDisplayHold`   | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_CombinationMode_Entry)                                                                 |
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_LcdRow3`        | `LcdKeyRow3_GroupSoundDisplayHold`   | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_CombinationMode_Entry)                                                                 |
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_LcdRow4`        | `LcdKeyRow4_GroupSoundDisplayHold`   | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_CombinationMode_Entry)                                                                 |
 | `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_LcdRow5`        | `.LF92FC6`                           |                                                                                                                                                                              |
 | `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_Exit`           | `ExitKey_GroupSoundDisplayHold`      | go to screen 0x01 (InstallPainter_SoundMode_Entry)                                                                                                                           |
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol1Alt` | `SoftKeyCol1_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry) |
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol2Alt` | `SoftKeyCol2_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry) |
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol3Alt` | `SoftKeyCol3_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry) |
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol4Alt` | `SoftKeyCol4_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry) |
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol1Alt` | `SoftKeyCol1_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_CombinationMode_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry) |
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol2Alt` | `SoftKeyCol2_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_CombinationMode_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry) |
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol3Alt` | `SoftKeyCol3_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_CombinationMode_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry) |
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol4Alt` | `SoftKeyCol4_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_CombinationMode_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry) |
 | `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol5Alt` | `SoftKeyCol5_GroupSoundDisplayHold`  | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry)                                                           |
 | `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol6Alt` | `SoftKeyCol6_GroupSoundDisplayHold`  | go to screen 0xA0 (InstallPainter_SoundGroupMenu_Entry)                                                                                                                      |
 | `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol7Alt` | `SoftKeyCol7_GroupSoundDisplayHold`  |                                                                                                                                                                              |
 | `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_SoftKeyCol8Alt` | `SoftKeyCol8_GroupSoundDisplayHold`  |                                                                                                                                                                              |
-| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_NumberPad`      | `NumberPadKey_GroupSoundDisplayHold` | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry)                                                                 |
+| `ScreenButtonHandlers_GroupSoundDisplayHold` | `KEY_NumberPad`      | `NumberPadKey_GroupSoundDisplayHold` | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_CombinationMode_Entry)                                                                 |
 
 Reached from: screen 0xA1 `KEY_SoftKeyCol1Alt` (`SoftKeyCol1_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol1` (`SoftKeyCol1_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol2Alt` (`SoftKeyCol2_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol2` (`SoftKeyCol2_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol3Alt` (`SoftKeyCol3_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol3` (`SoftKeyCol3_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol4Alt` (`SoftKeyCol4_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol4` (`SoftKeyCol4_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol5Alt` (`SoftKeyCol5_GroupSoundDisplayHold`); screen 0xA1 `KEY_SoftKeyCol5` (`SoftKeyCol5_GroupSoundDisplayHold`).
 
@@ -3839,7 +3839,7 @@ Draws:
 - `BankLegend_DrawUser_DL3`
 - `BankLegend_DrawUser_DL4`
 
-Enter requests: go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry).
+Enter requests: go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_CombinationMode_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry).
 
 ## screen 0xA3: `ScreenEnter_DrawbarScreen`
 
@@ -3890,7 +3890,7 @@ Draws:
 - `BankLegend_DrawUser_DL3`
 - `BankLegend_DrawUser_DL4`
 
-Enter requests: go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry).
+Enter requests: go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_CombinationMode_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry).
 
 Keys (`ScreenButtonHandlers_CombinationGroupMenu`):
 
@@ -3903,7 +3903,7 @@ Keys (`ScreenButtonHandlers_CombinationGroupMenu`):
 | `ScreenButtonHandlers_CombinationGroupMenu` | `KEY_LcdRow1`        | `LcdKeyRow1_CombinationGroupMenu`  |                                                                |
 | `ScreenButtonHandlers_CombinationGroupMenu` | `KEY_LcdRow2`        | `LcdKeyRow2_CombinationGroupMenu`  |                                                                |
 | `ScreenButtonHandlers_CombinationGroupMenu` | `KEY_LcdRow3`        | `LcdKeyRow3_CombinationGroupMenu`  |                                                                |
-| `ScreenButtonHandlers_CombinationGroupMenu` | `KEY_Exit`           | `ExitKey_CombinationGroupMenu`     | go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry)       |
+| `ScreenButtonHandlers_CombinationGroupMenu` | `KEY_Exit`           | `ExitKey_CombinationGroupMenu`     | go to screen 0x02 (InstallPainter_CombinationMode_Entry)       |
 | `ScreenButtonHandlers_CombinationGroupMenu` | `KEY_SoftKeyCol1Alt` | `SoftKeyCol1_CombinationGroupMenu` |                                                                |
 | `ScreenButtonHandlers_CombinationGroupMenu` | `KEY_SoftKeyCol4Alt` | `SoftKeyCol4_CombinationGroupMenu` |                                                                |
 | `ScreenButtonHandlers_CombinationGroupMenu` | `KEY_SoftKeyCol5Alt` | `SoftKeyCol5_CombinationGroupMenu` |                                                                |
@@ -3919,7 +3919,7 @@ Painted by `ToneEditPage_A6_Paint` (`Dispatch_Code80_PaintTable`), one field at 
 
 Draws:
 
-- `DL_GroupCombiDisplayHoldGr0up`: "GROUP:"; "COMBI."; "DISPLAY"; "HOLD"
+- `DL_GroupCombiDisplayHoldGroup`: "GROUP:"; "COMBI."; "DISPLAY"; "HOLD"
 - `GroupDisplayHold_ClearNameSlots_DL`
 - `GroupCombiDisplayHold_DrawNumberRange_DL1`
 - `GroupCombiDisplayHold_DrawNumberRange_DL2`
@@ -3936,7 +3936,7 @@ Draws:
 - `BankLegend_DrawUser_DL3`
 - `BankLegend_DrawUser_DL4`
 
-Enter requests: go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry).
+Enter requests: go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_CombinationMode_Entry); go to screen 0xA1 (InstallPainter_GroupSoundDisplayHold_Entry).
 
 Keys (`ScreenButtonHandlers_GroupCombiDisplayHold`):
 
@@ -3948,19 +3948,19 @@ Keys (`ScreenButtonHandlers_GroupCombiDisplayHold`):
 | `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_SoftKeyCol6`    | `SoftKeyCol6_GroupCombiDisplayHold`  | go to screen 0xA5 (InstallPainter_CombinationGroupMenu_Entry)                                                |
 | `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_SoftKeyCol7`    | `SoftKeyCol7_GroupCombiDisplayHold`  |                                                                                                              |
 | `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_SoftKeyCol8`    | `SoftKeyCol8_GroupCombiDisplayHold`  |                                                                                                              |
-| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_LcdRow1`        | `LcdKeyRow1_GroupCombiDisplayHold`   | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry) |
-| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_LcdRow2`        | `LcdKeyRow2_GroupCombiDisplayHold`   | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry) |
-| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_LcdRow3`        | `LcdKeyRow3_GroupCombiDisplayHold`   | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry) |
-| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_LcdRow4`        | `LcdKeyRow4_GroupCombiDisplayHold`   | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry) |
+| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_LcdRow1`        | `LcdKeyRow1_GroupCombiDisplayHold`   | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_CombinationMode_Entry) |
+| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_LcdRow2`        | `LcdKeyRow2_GroupCombiDisplayHold`   | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_CombinationMode_Entry) |
+| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_LcdRow3`        | `LcdKeyRow3_GroupCombiDisplayHold`   | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_CombinationMode_Entry) |
+| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_LcdRow4`        | `LcdKeyRow4_GroupCombiDisplayHold`   | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_CombinationMode_Entry) |
 | `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_LcdRow5`        | `.LF93B75`                           |                                                                                                              |
-| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_Exit`           | `ExitKey_GroupCombiDisplayHold`      | go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry)                                                     |
+| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_Exit`           | `ExitKey_GroupCombiDisplayHold`      | go to screen 0x02 (InstallPainter_CombinationMode_Entry)                                                     |
 | `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_SoftKeyCol1Alt` | `SoftKeyCol1_GroupCombiDisplayHold`  |                                                                                                              |
 | `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_SoftKeyCol4Alt` | `SoftKeyCol4_GroupCombiDisplayHold`  |                                                                                                              |
 | `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_SoftKeyCol5Alt` | `SoftKeyCol5_GroupCombiDisplayHold`  |                                                                                                              |
 | `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_SoftKeyCol6Alt` | `SoftKeyCol6_GroupCombiDisplayHold`  | go to screen 0xA5 (InstallPainter_CombinationGroupMenu_Entry)                                                |
 | `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_SoftKeyCol7Alt` | `SoftKeyCol7_GroupCombiDisplayHold`  |                                                                                                              |
 | `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_SoftKeyCol8Alt` | `SoftKeyCol8_GroupCombiDisplayHold`  |                                                                                                              |
-| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_NumberPad`      | `NumberPadKey_GroupCombiDisplayHold` | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_C0mbinati0nM0de_Entry) |
+| `ScreenButtonHandlers_GroupCombiDisplayHold` | `KEY_NumberPad`      | `NumberPadKey_GroupCombiDisplayHold` | go to screen 0x01 (InstallPainter_SoundMode_Entry); go to screen 0x02 (InstallPainter_CombinationMode_Entry) |
 
 Reached from: screen 0xA5 `KEY_SoftKeyCol6Alt` (`SoftKeyCol6_CombinationGroupMenu`); screen 0xA5 `KEY_SoftKeyCol6` (`SoftKeyCol6_CombinationGroupMenu`).
 
@@ -3988,7 +3988,7 @@ Object `T_InstallPainter_MessageScreen` (`PanelScreen_VtableTable` entry 203). E
 
 Painted by `SoundEditDrumMenu_Paint` (`Dispatch_Code80_PaintTable`), one field at a time by `SoundEditDrumMenu_RepaintField` (`Dispatch_Code80_RepaintFieldTable`): the Enter method stores CPU 2's replies (it is re-run for each one through `ScreenCode80_Handlers` by `Cpu2Reply_HandleNext`) and then calls the painter with `pushw 0xAB`.
 
-Reached from: mode 0x26 `KEY_LcdRow2` (`LcdKeyRow2_RealtimeRecordScreen`); mode 0x28 `KEY_LcdRow5` (`LcdKeyRow5_CycleRecordScreen`); screen 0x06 `KEY_LcdRow2` (`LcdKeyRow2_RealtimeRecordScreen`); screen 0x08 `KEY_LcdRow5` (`LcdKeyRow5_CycleRecordScreen`); screen 0x11 `KEY_SoftKeyCol6` (`SoftKeyCol6_TrackAssignPresets`); screen 0x13 `KEY_LcdRow4` (`LcdKeyRow4_SequencerMedley`); screen 0x1B `KEY_LcdRow4` (`LcdKeyRow4_SongClear`); screen 0x1C `KEY_LcdRow2` (`LcdKeyRow2_TrackClear_StageNonZero`); screen 0x1C `KEY_LcdRow2` (`LcdKeyRow2_TrackClear_StageZero`); screen 0x1D `KEY_LcdRow2` (`LcdKeyRow2_Vel0cityChange_StageNonZero`); screen 0x1D `KEY_LcdRow2` (`LcdKeyRow2_Vel0cityChange_StageZero`); screen 0x1E `KEY_LcdRow3` (`LcdKeyRow3_Quantize_StageNonZero`); screen 0x1E `KEY_LcdRow3` (`LcdKeyRow3_Quantize_StageZero`); screen 0x1F `KEY_LcdRow2` (`LcdKeyRow2_TrackMerge_StageNonZero`); screen 0x1F `KEY_LcdRow2` (`LcdKeyRow2_TrackMerge_StageZero`); screen 0x20 `KEY_LcdRow2` (`LcdKeyRow2_MeasureErase_StageNonZero`); screen 0x20 `KEY_LcdRow2` (`LcdKeyRow2_MeasureErase_StageZero`); screen 0x21 `KEY_LcdRow1` (`LcdKeyRow1_MeasureC0py_StageNonZero`); screen 0x21 `KEY_LcdRow1` (`LcdKeyRow1_MeasureC0py_StageZero`); screen 0x22 `KEY_LcdRow1` (`LcdKeyRow1_MeasureInsert_StageNonZero`); screen 0x22 `KEY_LcdRow1` (`LcdKeyRow1_MeasureInsert_StageZero`); screen 0x23 `KEY_LcdRow3` (`LcdKeyRow3_MeasureDelete_StageNonZero`); screen 0x23 `KEY_LcdRow3` (`LcdKeyRow3_MeasureDelete_StageZero`); screen 0x2A `KEY_LcdRow2` (`LcdKeyRow2_S0ngC0py_StageNonZero`); screen 0x2A `KEY_LcdRow2` (`LcdKeyRow2_S0ngC0py_StageZero`); screen 0x2B `KEY_LcdRow2` (`LcdKeyRow2_Transp0se_StageNonZero`); screen 0x2B `KEY_LcdRow2` (`LcdKeyRow2_Transp0se_StageZero`); screen 0x2C `KEY_LcdRow3` (`LcdKeyRow3_AdvanceDelay_StageNonZero`); screen 0x2C `KEY_LcdRow3` (`LcdKeyRow3_AdvanceDelay_StageZero`); screen 0x2D `KEY_LcdRow4` (`LcdKeyRow4_N0teChange_StageNonZero`); screen 0x2D `KEY_LcdRow4` (`LcdKeyRow4_N0teChange_StageZero`).
+Reached from: mode 0x26 `KEY_LcdRow2` (`LcdKeyRow2_RealtimeRecordScreen`); mode 0x28 `KEY_LcdRow5` (`LcdKeyRow5_CycleRecordScreen`); screen 0x06 `KEY_LcdRow2` (`LcdKeyRow2_RealtimeRecordScreen`); screen 0x08 `KEY_LcdRow5` (`LcdKeyRow5_CycleRecordScreen`); screen 0x11 `KEY_SoftKeyCol6` (`SoftKeyCol6_TrackAssignPresets`); screen 0x13 `KEY_LcdRow4` (`LcdKeyRow4_SequencerMedley`); screen 0x1B `KEY_LcdRow4` (`LcdKeyRow4_SongClear`); screen 0x1C `KEY_LcdRow2` (`LcdKeyRow2_TrackClear_StageNonZero`); screen 0x1C `KEY_LcdRow2` (`LcdKeyRow2_TrackClear_StageZero`); screen 0x1D `KEY_LcdRow2` (`LcdKeyRow2_VelocityChange_StageNonZero`); screen 0x1D `KEY_LcdRow2` (`LcdKeyRow2_VelocityChange_StageZero`); screen 0x1E `KEY_LcdRow3` (`LcdKeyRow3_Quantize_StageNonZero`); screen 0x1E `KEY_LcdRow3` (`LcdKeyRow3_Quantize_StageZero`); screen 0x1F `KEY_LcdRow2` (`LcdKeyRow2_TrackMerge_StageNonZero`); screen 0x1F `KEY_LcdRow2` (`LcdKeyRow2_TrackMerge_StageZero`); screen 0x20 `KEY_LcdRow2` (`LcdKeyRow2_MeasureErase_StageNonZero`); screen 0x20 `KEY_LcdRow2` (`LcdKeyRow2_MeasureErase_StageZero`); screen 0x21 `KEY_LcdRow1` (`LcdKeyRow1_MeasureCopy_StageNonZero`); screen 0x21 `KEY_LcdRow1` (`LcdKeyRow1_MeasureCopy_StageZero`); screen 0x22 `KEY_LcdRow1` (`LcdKeyRow1_MeasureInsert_StageNonZero`); screen 0x22 `KEY_LcdRow1` (`LcdKeyRow1_MeasureInsert_StageZero`); screen 0x23 `KEY_LcdRow3` (`LcdKeyRow3_MeasureDelete_StageNonZero`); screen 0x23 `KEY_LcdRow3` (`LcdKeyRow3_MeasureDelete_StageZero`); screen 0x2A `KEY_LcdRow2` (`LcdKeyRow2_SongCopy_StageNonZero`); screen 0x2A `KEY_LcdRow2` (`LcdKeyRow2_SongCopy_StageZero`); screen 0x2B `KEY_LcdRow2` (`LcdKeyRow2_Transpose_StageNonZero`); screen 0x2B `KEY_LcdRow2` (`LcdKeyRow2_Transpose_StageZero`); screen 0x2C `KEY_LcdRow3` (`LcdKeyRow3_AdvanceDelay_StageNonZero`); screen 0x2C `KEY_LcdRow3` (`LcdKeyRow3_AdvanceDelay_StageZero`); screen 0x2D `KEY_LcdRow4` (`LcdKeyRow4_NoteChange_StageNonZero`); screen 0x2D `KEY_LcdRow4` (`LcdKeyRow4_NoteChange_StageZero`).
 
 ## screen 0xAD: `ScreenEnter_CreatorSelectController`
 
@@ -4074,7 +4074,7 @@ Object `T_ScreenEnter_WriteProtectError` (`PanelScreen_VtableTable` entry 211). 
 
 Draws:
 
-- `DL_Err0rTheS0undOrC0mbinati0n`: "ERR0R!"; "The S0UND or C0MBINATI0N"; "memories are write protected."; "YES"
+- `DL_ErrorTheSoundOrCombination`: "ERR0R!"; "The S0UND or C0MBINATI0N"; "memories are write protected."; "YES"
 
 ## screen 0xB4: `ScreenEnter_CombiEditInternalSound_B4`
 
@@ -4132,7 +4132,7 @@ Draws:
 
 - `DL_F1A84F`
 - `ExitKey_Effect2OutputConflict_DL`
-- `DL_Err0rTheS0undOrC0mbinati0n`: "ERR0R!"; "The S0UND or C0MBINATI0N"; "memories are write protected."; "YES"
+- `DL_ErrorTheSoundOrCombination`: "ERR0R!"; "The S0UND or C0MBINATI0N"; "memories are write protected."; "YES"
 
 Reached from: mode 0x21 `KEY_SoftKeyCol5Alt` (`SoftKeyCol5_Eff2_AltCode`); mode 0x21 `KEY_SoftKeyCol5` (`SoftKeyCol5_Eff2`); screen 0x01 `KEY_SoftKeyCol5Alt` (`SoftKeyCol5_Eff2_AltCode`); screen 0x01 `KEY_SoftKeyCol5` (`SoftKeyCol5_Eff2`).
 
@@ -4177,13 +4177,13 @@ Draws:
 - `DL_F030E6`
 - `DL_DriverDriverWaveformReso`: "DRIVER"; "DRIVER WAVEFORM"; "RESO"; "NATOR"
 - `DL_F338EB`
-- `DL_Page12P0siti0nParameterP0siti0n`: "PAGE1/2"; "P0SITI0N PARAMETER"; "P0SITI0N  :"; "."
-- `DL_P0siti0n`
-- `DL_Page22P0siti0nM0vementWidth`: "PAGE2/2"; "P0SITI0N M0VEMENT"; "WIDTH :"; "SPEED :"
+- `DL_Page12PositionParameterPosition`: "PAGE1/2"; "P0SITI0N PARAMETER"; "P0SITI0N  :"; "."
+- `DL_Position`
+- `DL_Page22PositionMovementWidth`: "PAGE2/2"; "P0SITI0N M0VEMENT"; "WIDTH :"; "SPEED :"
 - `ToneEditPage_A4_Paint_DL`
 - `DL_Page13FitMutKeyDeResoTing`: "PAGE1/3"; "FIT"; "MUT"; "KEY"
 - `ToneEditPage_A5_Paint_DL`
-- `DL_M0delingSoundEditToneDriver`: "M0DELING"; "SOUND EDIT"; "TONE"; "DRIVER"
+- `DL_ModelingSoundEditToneDriver`: "M0DELING"; "SOUND EDIT"; "TONE"; "DRIVER"
 - `DL_ToneDriverResonator`: "TONE"; "DRIVER"; "RESONATOR"
 - `SoundEditCopy_Frame`: "COPY"; "SOUND EDIT"; "FROM"; "TO"
 - ... 40 more
@@ -4224,13 +4224,13 @@ Painted by `ToneEditPage_A3_Paint` (`Dispatch_Code80_PaintTable`), one field at 
 
 Draws:
 
-- `DL_Page12P0siti0nParameterP0siti0n`: "PAGE1/2"; "P0SITI0N PARAMETER"; "P0SITI0N  :"; "."
-- `DL_P0siti0n`
-- `DL_Page22P0siti0nM0vementWidth`: "PAGE2/2"; "P0SITI0N M0VEMENT"; "WIDTH :"; "SPEED :"
+- `DL_Page12PositionParameterPosition`: "PAGE1/2"; "P0SITI0N PARAMETER"; "P0SITI0N  :"; "."
+- `DL_Position`
+- `DL_Page22PositionMovementWidth`: "PAGE2/2"; "P0SITI0N M0VEMENT"; "WIDTH :"; "SPEED :"
 - `ToneEditPage_A4_Paint_DL`
 - `DL_Page13FitMutKeyDeResoTing`: "PAGE1/3"; "FIT"; "MUT"; "KEY"
 - `ToneEditPage_A5_Paint_DL`
-- `DL_M0delingSoundEditToneDriver`: "M0DELING"; "SOUND EDIT"; "TONE"; "DRIVER"
+- `DL_ModelingSoundEditToneDriver`: "M0DELING"; "SOUND EDIT"; "TONE"; "DRIVER"
 - `DL_ResoDriverNatorPositionMovement`: "~"; "RESO"; "DRIVER"; "NATOR"
 - `DL_MainDriverResonatorSubResonator`: "MAIN"; "DRIVER"; "RESONATOR"; "SUB"
 - `ToneEditPage_PaintMainAndSubFocus_DL1`
@@ -4266,11 +4266,11 @@ Painted by `ToneEditPage_A4_Paint` (`Dispatch_Code80_PaintTable`), one field at 
 
 Draws:
 
-- `DL_Page22P0siti0nM0vementWidth`: "PAGE2/2"; "P0SITI0N M0VEMENT"; "WIDTH :"; "SPEED :"
+- `DL_Page22PositionMovementWidth`: "PAGE2/2"; "P0SITI0N M0VEMENT"; "WIDTH :"; "SPEED :"
 - `ToneEditPage_A4_Paint_DL`
 - `DL_Page13FitMutKeyDeResoTing`: "PAGE1/3"; "FIT"; "MUT"; "KEY"
 - `ToneEditPage_A5_Paint_DL`
-- `DL_M0delingSoundEditToneDriver`: "M0DELING"; "SOUND EDIT"; "TONE"; "DRIVER"
+- `DL_ModelingSoundEditToneDriver`: "M0DELING"; "SOUND EDIT"; "TONE"; "DRIVER"
 - `DL_ResoDriverNatorPositionMovement`: "~"; "RESO"; "DRIVER"; "NATOR"
 - `DL_MainDriverResonatorSubResonator`: "MAIN"; "DRIVER"; "RESONATOR"; "SUB"
 - `ToneEditPage_PaintMainAndSubFocus_DL1`
@@ -4310,7 +4310,7 @@ Draws:
 
 - `DL_Page13FitMutKeyDeResoTing`: "PAGE1/3"; "FIT"; "MUT"; "KEY"
 - `ToneEditPage_A5_Paint_DL`
-- `DL_M0delingSoundEditToneDriver`: "M0DELING"; "SOUND EDIT"; "TONE"; "DRIVER"
+- `DL_ModelingSoundEditToneDriver`: "M0DELING"; "SOUND EDIT"; "TONE"; "DRIVER"
 - `DL_MainDriverResonatorSubResonator`: "MAIN"; "DRIVER"; "RESONATOR"; "SUB"
 - `ToneEditPage_PaintMainAndSubFocus_DL1`
 - `ToneEditPage_PaintMainAndSubFocus_DL2`
@@ -4363,7 +4363,7 @@ Draws:
 - `DL_Parallel`: "PARALLEL"
 - `DL_EffectBlockEff1Eff2RevMain`: "EFFECT"; "BLOCK"; "EFF1"; "EFF2"
 - `Draw_Serial_DL2`
-- `DL_M0delingSoundEditToneDriver`: "M0DELING"; "SOUND EDIT"; "TONE"; "DRIVER"
+- `DL_ModelingSoundEditToneDriver`: "M0DELING"; "SOUND EDIT"; "TONE"; "DRIVER"
 - `DL_MainDriverResonatorSubResonator`: "MAIN"; "DRIVER"; "RESONATOR"; "SUB"
 - `ToneEditPage_PaintMainAndSubFocus_DL1`
 - `ToneEditPage_PaintMainAndSubFocus_DL2`
@@ -4404,7 +4404,7 @@ Draws:
 - `DL_Parallel`: "PARALLEL"
 - `DL_EffectBlockEff1Eff2RevMain`: "EFFECT"; "BLOCK"; "EFF1"; "EFF2"
 - `Draw_Serial_DL2`
-- `DL_M0delingSoundEditToneDriver`: "M0DELING"; "SOUND EDIT"; "TONE"; "DRIVER"
+- `DL_ModelingSoundEditToneDriver`: "M0DELING"; "SOUND EDIT"; "TONE"; "DRIVER"
 - `DL_MainDriverResonatorSubResonator`: "MAIN"; "DRIVER"; "RESONATOR"; "SUB"
 - `ToneEditPage_PaintMainAndSubFocus_DL1`
 - `ToneEditPage_PaintMainAndSubFocus_DL2`
@@ -4511,8 +4511,8 @@ Draws:
 - `DL_F05A84`
 - `SoundEditNaming_RepaintField_DL2`
 - `DL_Write`: "WRITE"
-- `DL_SoundEditS0undNaming`: "SOUND EDIT"; "S0UND NAMING"
-- `DL_ClrP0siti0nAbcInsDelAA`: "A B C D E F G H I J K L M N O"; "P Q R S T U V W X Y Z a b c d e"; "f g h i j k l m n o p q r s t u"; "v w x y z 0 1 2 3 4 5 6 7 8 9 !"
+- `DL_SoundEditSoundNaming`: "SOUND EDIT"; "S0UND NAMING"
+- `DL_ClrPositionAbcInsDelAA`: "A B C D E F G H I J K L M N O"; "P Q R S T U V W X Y Z a b c d e"; "f g h i j k l m n o p q r s t u"; "v w x y z 0 1 2 3 4 5 6 7 8 9 !"
 - `Draw_Write_DL1`
 - `Draw_Write_DL2`
 - `Draw_Write_DL3`
@@ -4559,7 +4559,7 @@ Draws:
 - `SoundEditDigitalEffect_RepaintField_DL`
 - `SoundEditController_PaintPage1_DL`: "PAGE1/2"; "1"; "2"; "3"
 - `DL_Page22AfterTouchCtrlPedal`: "PAGE2/2"; "__"; "__"; "__"
-- `DL_C0ntr0llerSoundEditDepth`: "C0NTR0LLER"; "SOUND EDIT"; "DEPTH"; "FUNCTION"
+- `DL_ControllerSoundEditDepth`: "C0NTR0LLER"; "SOUND EDIT"; "DEPTH"; "FUNCTION"
 - ... 1 more
 
 Keys (`PanelOpTable_FCF773`):

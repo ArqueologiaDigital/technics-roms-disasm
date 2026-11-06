@@ -1588,33 +1588,33 @@ TrackAssign_StageZero_LcdKeyRow5_Return8:
 	ret	; F66579  ret
 
 ; --------------------------------------------------------------------------
-; AfterT0uchSetting_SetRecordEnable
-; Called from: T_AfterT0uchSetting_SetRecordEnable (x1)
+; AfterTouchSetting_SetRecordEnable
+; Called from: T_AfterTouchSetting_SetRecordEnable (x1)
 ; Touches: (0x7FC2)
-; Evidence: thunk slot T_AfterT0uchSetting_SetRecordEnable holds `jp 0x00F6657A`, and 0xF6657A is an
+; Evidence: thunk slot T_AfterTouchSetting_SetRecordEnable holds `jp 0x00F6657A`, and 0xF6657A is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; AfterT0uchSetting_SetRecordEnable: AFTER T0UCH SETTING: LCD key row 3 (code 10) sets (0x7FC2) bit 0, row 4 (code 11)
-;   clears it; CP2-side presses (W bit 7) are ignored. ScreenButton_AfterT0uchSetting calls it with BC = the code and
+; AfterTouchSetting_SetRecordEnable: AFTER T0UCH SETTING: LCD key row 3 (code 10) sets (0x7FC2) bit 0, row 4 (code 11)
+;   clears it; CP2-side presses (W bit 7) are ignored. ScreenButton_AfterTouchSetting calls it with BC = the code and
 ;   then redraws (0x7FC2) through DL_AfterTouchRecord (AND mask 0x01) and DLTable_DisableEnable, so bit 0 is the
 ;   'AFTER TOUCH RECORD : EN / DIS' setting. Basis: caller + screen text + body. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave5_r.json)
-AfterT0uchSetting_SetRecordEnable:		; <- T_AfterT0uchSetting_SetRecordEnable
+AfterTouchSetting_SetRecordEnable:		; <- T_AfterTouchSetting_SetRecordEnable
 	bit	7, w	; F6657A  bit 0x07,W
-	jr	nz, AfterT0uchSetting_SetRecordEnable_Return9	; F6657D  jr NZ,0xf66597
+	jr	nz, AfterTouchSetting_SetRecordEnable_Return9	; F6657D  jr NZ,0xf66597
 	cp	bc, 10	; F6657F  cp BC,0x000a
-	jr	z, AfterT0uchSetting_SetRecordEnable_Skip18	; F66583  jr Z,0xf66592
+	jr	z, AfterTouchSetting_SetRecordEnable_Skip18	; F66583  jr Z,0xf66592
 	cp	bc, 11	; F66585  cp BC,0x000b
-	jr	nz, AfterT0uchSetting_SetRecordEnable_Return9	; F66589  jr NZ,0xf66597
+	jr	nz, AfterTouchSetting_SetRecordEnable_Return9	; F66589  jr NZ,0xf66597
 	and	(0x7fc2:16), 0xfe	; F6658B  and (0x7fc2),0xfe
-	jr	AfterT0uchSetting_SetRecordEnable_Return9	; F66590  jr T,0xf66597
-AfterT0uchSetting_SetRecordEnable_Skip18:
+	jr	AfterTouchSetting_SetRecordEnable_Return9	; F66590  jr T,0xf66597
+AfterTouchSetting_SetRecordEnable_Skip18:
 	or	(0x7fc2:16), 0x01	; F66592  or (0x7fc2),0x01
-AfterT0uchSetting_SetRecordEnable_Return9:
+AfterTouchSetting_SetRecordEnable_Return9:
 	ret	; F66597  ret
 
 ; --------------------------------------------------------------------------

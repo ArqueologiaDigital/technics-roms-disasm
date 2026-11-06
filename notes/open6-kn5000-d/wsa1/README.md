@@ -143,18 +143,23 @@ tables `SelectorRoutines_F558AE..F55BAE`. The tree now spells these as `keymap_b
 `ScreenButtons_RealtimeRecordScreen`), whose lines carry no ROM address, so the overlay cannot place them. The
 generator's docstring says so.
 
-## Lead 6: the MidiFileL0ad_ prefix (digit zero). WRONG, not renamed
+## Lead 6: the MidiFileL0ad_ prefix (digit zero). WRONG, not renamed (`MidiFileLoad_` since 2026-11-06, below)
 
-The prefix is the screen name `MidiFileL0ad` (screen 0x49). It is CamelCase of the ROM's own caption "MIDI FILE
-L0AD", which has a digit zero (prom_b 0xF5930F, `DL_MidiFileL0adL0ad`; probe R5). This follows the tree's rule, also
+The prefix is the screen name `MidiFileL0ad` (now `MidiFileLoad`) (screen 0x49). It is CamelCase of the ROM's own caption "MIDI FILE
+L0AD", which has a digit zero (prom_b 0xF5930F, `DL_MidiFileL0adL0ad`, now `DL_MidiFileLoadLoad`; probe R5). This follows the tree's rule, also
 stated on the website's wsa1-menu-map page, that labels derived from captions keep the ROM's spelling, as in
-`DiskL0adFile` ("DISK L0AD", 0xF58022) and `L0adSingleS0und`.
+`DiskL0adFile` ("DISK L0AD", 0xF58022; now `DiskLoadFile`) and `L0adSingleS0und` (now `LoadSingleSound`).
 
-The four labels the lead names are `MidiFileL0ad_LcdKeyRow1`, `T_MidiFileL0ad_LcdKeyRow1`,
-`MidiFileL0ad_SelectSeqBankAndReadSmf` and `_Skip`. They belong to a family of 16 names that includes
-`Paint_MidiFileL0ad`, `ExitKey_MidiFileL0ad` and `PanelButtonDispatch_MidiFileL0ad`. Renaming only these four would
+The four labels the lead names are `MidiFileL0ad_LcdKeyRow1` (now `MidiFileLoad_LcdKeyRow1`), `T_MidiFileL0ad_LcdKeyRow1` (now `T_MidiFileLoad_LcdKeyRow1`),
+`MidiFileL0ad_SelectSeqBankAndReadSmf` (now `MidiFileLoad_SelectSeqBankAndReadSmf`) and `_Skip`. They belong to a family of 16 names that includes
+`Paint_MidiFileL0ad` (now `Paint_MidiFileLoad`), `ExitKey_MidiFileL0ad` (now `ExitKey_MidiFileLoad`) and `PanelButtonDispatch_MidiFileL0ad` (now `PanelButtonDispatch_MidiFileLoad`). Renaming only these four would
 split the family. Renaming the whole family to `MidiFileLoad` would collide with nothing, but it would depart from
 the ROM-spelling rule for every caption-derived name, and that is an owner decision (open question below).
+
+**Update 2026-11-06.** The owner decided: "Normalise: rename across the whole tree, L0ad->Load, S0und->Sound,
+C0py->Copy, F0rmat->Format, and so on." Lane open9/zero-for-o renamed all 992 such names, this family with them
+(`wsa1/notes/zero-for-o/README.md`, `scripts/renaming/rename_wsa1_zero_for_o.sed`). The ROM's caption bytes keep
+their zeros.
 
 ## Renamed labels
 
@@ -202,8 +207,9 @@ it still held ELFs from before the joint link. Fix: `all: $(MAINCPU_ELFS)` in `w
 
 ## Open questions
 
-- Owner: should caption-derived WSA1 names keep the ROM's 0-for-O spelling (`MidiFileL0ad`, `L0adSingleS0und`,
-  `DL_*F0rmat*`), or be normalised tree-wide? The tree has kept the spelling until now.
+- RESOLVED 2026-11-06 (owner: normalise). Was: should caption-derived WSA1 names keep the ROM's 0-for-O spelling
+  (`MidiFileL0ad`, now `MidiFileLoad`; `L0adSingleS0und`, now `LoadSingleSound`; `DL_*F0rmat*`, now `DL_*Format*`), or be
+  normalised tree-wide? Done by lane open9/zero-for-o: `wsa1/notes/zero-for-o/README.md`.
 - Screen 0x52 and (0x21E8) bit 2, behind `sub_FF657B`'s eight-press counter.
 - The meaning of the request 0x0201 that YES posts after a format.
 
@@ -224,5 +230,5 @@ sentence under the table:
     on 0x51 row 3 is YES (format) and row 4 NO.
 
 **Renamed labels quoted on the website**: none. A read-only grep of `../technics-docs` for every old name in the table
-above, and for `MidiFileL0ad`, found only the unchanged `Paint_MidiFileL0ad` and `ScreenEnterBody_CombiEditMixer`
+above, and for `MidiFileL0ad` (now `MidiFileLoad`), found only the unchanged `Paint_MidiFileL0ad` (now `Paint_MidiFileLoad`) and `ScreenEnterBody_CombiEditMixer`
 in `wsa1-menu-map.md`.

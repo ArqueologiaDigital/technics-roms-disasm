@@ -68,7 +68,7 @@
 ;   notes/FINDINGS-prom_a-panel-control-map.md.
 ;   ★ AND EACH TABLE'S SCREEN IS NAMED TOO, from the screen object that
 ;   installs the reader as its BUTTON method -- so the handlers read
-;   LcdKeyRow1_DiskMenu and ExitKey_MidiFileL0ad rather than carrying a
+;   LcdKeyRow1_DiskMenu and ExitKey_MidiFileLoad rather than carrying a
 ;   table address.  This module owns ten screens: the DISK MENU, MIDI
 ;   FILE LOAD / SAVE / DIRECT PLAY, DISK LOAD FILE / SAVE FILE, LOAD
 ;   SINGLE SOUND / COMBINATION, and the two floppy-format screens.
@@ -274,14 +274,14 @@ Dispatch_FF3900:
 	on_key	KEY_SoftKeyCol6,	DispatchMatrix_NoAction
 	on_key	KEY_SoftKeyCol7,	DispatchMatrix_NoAction
 	on_key	KEY_SoftKeyCol8,	DispatchMatrix_NoAction
-	on_key	KEY_LcdRow1,		LcdKeyRow1_DiskL0adFile
-	on_key	KEY_LcdRow2,		LcdKeyRow2_DiskL0adFile
-	on_key	KEY_LcdRow3,		LcdKeyRow3_DiskL0adFile
-	on_key	KEY_LcdRow4,		LcdKeyRow4_DiskL0adFile
-	on_key	KEY_LcdRow5,		LcdKeyRow5_DiskL0adFile
+	on_key	KEY_LcdRow1,		LcdKeyRow1_DiskLoadFile
+	on_key	KEY_LcdRow2,		LcdKeyRow2_DiskLoadFile
+	on_key	KEY_LcdRow3,		LcdKeyRow3_DiskLoadFile
+	on_key	KEY_LcdRow4,		LcdKeyRow4_DiskLoadFile
+	on_key	KEY_LcdRow5,		LcdKeyRow5_DiskLoadFile
 	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
 	on_key	KEY_Code0E,		DispatchMatrix_NoAction
-	on_key	KEY_Exit,		ExitKey_DiskL0adFile
+	on_key	KEY_Exit,		ExitKey_DiskLoadFile
 	on_key	KEY_Page,		DispatchMatrix_NoAction
 	on_key	KEY_SoftKeyCol1Alt,	DispatchMatrix_NoAction
 	on_key	KEY_SoftKeyCol2Alt,	DispatchMatrix_NoAction
@@ -345,14 +345,14 @@ Dispatch_FF3980:
 	on_key	KEY_SoftKeyCol6,	DispatchMatrix_NoAction
 	on_key	KEY_SoftKeyCol7,	DispatchMatrix_NoAction
 	on_key	KEY_SoftKeyCol8,	DispatchMatrix_NoAction
-	on_key	KEY_LcdRow1,		LcdKeyRow1_MidiFileL0ad
-	on_key	KEY_LcdRow2,		LcdKeyRow2_MidiFileL0ad
-	on_key	KEY_LcdRow3,		LcdKeyRow3_MidiFileL0ad
-	on_key	KEY_LcdRow4,		LcdKeyRow4_MidiFileL0ad
-	on_key	KEY_LcdRow5,		LcdKeyRow5_MidiFileL0ad
+	on_key	KEY_LcdRow1,		LcdKeyRow1_MidiFileLoad
+	on_key	KEY_LcdRow2,		LcdKeyRow2_MidiFileLoad
+	on_key	KEY_LcdRow3,		LcdKeyRow3_MidiFileLoad
+	on_key	KEY_LcdRow4,		LcdKeyRow4_MidiFileLoad
+	on_key	KEY_LcdRow5,		LcdKeyRow5_MidiFileLoad
 	on_key	KEY_MinusPlus,		DispatchMatrix_NoAction
 	on_key	KEY_Code0E,		DispatchMatrix_NoAction
-	on_key	KEY_Exit,		ExitKey_MidiFileL0ad
+	on_key	KEY_Exit,		ExitKey_MidiFileLoad
 	on_key	KEY_Page,		DispatchMatrix_NoAction
 	on_key	KEY_SoftKeyCol1Alt,	DispatchMatrix_NoAction
 	on_key	KEY_SoftKeyCol2Alt,	DispatchMatrix_NoAction
@@ -967,14 +967,14 @@ ScreenButtonHandlers_FloppyDiskFormatAreYouSure:
 Table_FF4039:
 	.byte 0x08, 0x00, 0x09, 0x00, 0x28, 0x00, 0x29, 0x00                      ; FF4039
 ; ---------------------------------------------------------------------
-; ScreenEnterPages_L0adSingleS0und -- TWO handler pointers, indexed by the page byte (0x2229)
+; ScreenEnterPages_LoadSingleSound -- TWO handler pointers, indexed by the page byte (0x2229)
 ; Read by: 0xFF672D.  ENTRY COUNT 2, from `cp (0x2229),0x02 / jr NC`.
 ; ---------------------------------------------------------------------
-; ScreenEnterPages_L0adSingleS0und: PageDispatch_L0adSingleS0und's per-page ENTER table, indexed by UI_ScreenPage (0..1)
+; ScreenEnterPages_LoadSingleSound: PageDispatch_LoadSingleSound's per-page ENTER table, indexed by UI_ScreenPage (0..1)
 ;   (notes/prom_a_page_enter_names.py).
-ScreenEnterPages_L0adSingleS0und:
-	.long ScreenEnter_L0adSingleS0und_Page0                                 ; FF4041  [  0]
-	.long ScreenEnter_L0adSingleS0und_Page1                                 ; FF4045  [  1]
+ScreenEnterPages_LoadSingleSound:
+	.long ScreenEnter_LoadSingleSound_Page0                                 ; FF4041  [  0]
+	.long ScreenEnter_LoadSingleSound_Page1                                 ; FF4045  [  1]
 ; ---------------------------------------------------------------------
 ; Dispatch_FF4049 -- a 2 x 32 handler matrix: page by control index
 ;
@@ -982,7 +982,7 @@ ScreenEnterPages_L0adSingleS0und:
 ;          matrix readers do but carries NO bound of its own.
 ; ★ ENTRY COUNT 64 rests on two things and both are named: the extent between
 ;          this base and the next reader-named base (0xFF4149) is 256 bytes =
-;          64 entries; and the sibling table ScreenEnterPages_L0adSingleS0und, which is indexed
+;          64 entries; and the sibling table ScreenEnterPages_LoadSingleSound, which is indexed
 ;          by the SAME page byte, is bounded at 2 by its own reader -- so two
 ;          rows is what the page byte can address.
 ; ---------------------------------------------------------------------
@@ -1020,31 +1020,31 @@ ScreenEnterPages_L0adSingleS0und:
 ; ⚠ A live index names the CONTROL, not the FUNCTION.
 ; ---------------------------------------------------------------------
 Dispatch_FF4049:
-	.long SoftKeyCol1_L0adSingle_AllPages                                 ; FF4049  [  0]
-	.long SoftKeyCol2_L0adSingleS0und_Page0                                 ; FF404D  [  1]
-	.long SoftKeyCols3_4_L0adSingleS0und_Page0                                 ; FF4051  [  2]
-	.long SoftKeyCols3_4_L0adSingleS0und_Page0                                 ; FF4055  [  3]
-	.long SoftKeyCol5_L0adSingleS0und_Page0                                 ; FF4059  [  4]
-	.long SoftKeyCol6_L0adSingle_Page0                                 ; FF405D  [  5]
-	.long SoftKeyCols7_8_L0adSingleS0und_Page0                                 ; FF4061  [  6]
-	.long SoftKeyCols7_8_L0adSingleS0und_Page0                                 ; FF4065  [  7]
-	.long LcdKeyRow1_L0adSingleS0und_Page0           ; FF4069  [  8]
+	.long SoftKeyCol1_LoadSingle_AllPages                                 ; FF4049  [  0]
+	.long SoftKeyCol2_LoadSingleSound_Page0                                 ; FF404D  [  1]
+	.long SoftKeyCols3_4_LoadSingleSound_Page0                                 ; FF4051  [  2]
+	.long SoftKeyCols3_4_LoadSingleSound_Page0                                 ; FF4055  [  3]
+	.long SoftKeyCol5_LoadSingleSound_Page0                                 ; FF4059  [  4]
+	.long SoftKeyCol6_LoadSingle_Page0                                 ; FF405D  [  5]
+	.long SoftKeyCols7_8_LoadSingleSound_Page0                                 ; FF4061  [  6]
+	.long SoftKeyCols7_8_LoadSingleSound_Page0                                 ; FF4065  [  7]
+	.long LcdKeyRow1_LoadSingleSound_Page0           ; FF4069  [  8]
 	.long DispatchMatrix_NoAction                                 ; FF406D  [  9]
 	.long DispatchMatrix_NoAction                                 ; FF4071  [ 10]
 	.long DispatchMatrix_NoAction                                 ; FF4075  [ 11]
 	.long DispatchMatrix_NoAction                                 ; FF4079  [ 12]
 	.long DispatchMatrix_NoAction                                 ; FF407D  [ 13]
 	.long DispatchMatrix_NoAction                                 ; FF4081  [ 14]
-	.long ExitKey_L0adSingleS0und_Pages0_1           ; FF4085  [ 15]
+	.long ExitKey_LoadSingleSound_Pages0_1           ; FF4085  [ 15]
 	.long DispatchMatrix_NoAction                                 ; FF4089  [ 16]
-	.long SoftKeyCol1_L0adSingle_AllPages                                 ; FF408D  [ 17]
-	.long SoftKeyCol2_L0adSingleS0und_Page0                                 ; FF4091  [ 18]
-	.long SoftKeyCols3_4_L0adSingleS0und_Page0                                 ; FF4095  [ 19]
-	.long SoftKeyCols3_4_L0adSingleS0und_Page0                                 ; FF4099  [ 20]
-	.long SoftKeyCol5_L0adSingleS0und_Page0                                 ; FF409D  [ 21]
-	.long SoftKeyCol6_L0adSingle_Page0                                 ; FF40A1  [ 22]
-	.long SoftKeyCols7_8_L0adSingleS0und_Page0                                 ; FF40A5  [ 23]
-	.long SoftKeyCols7_8_L0adSingleS0und_Page0                                 ; FF40A9  [ 24]
+	.long SoftKeyCol1_LoadSingle_AllPages                                 ; FF408D  [ 17]
+	.long SoftKeyCol2_LoadSingleSound_Page0                                 ; FF4091  [ 18]
+	.long SoftKeyCols3_4_LoadSingleSound_Page0                                 ; FF4095  [ 19]
+	.long SoftKeyCols3_4_LoadSingleSound_Page0                                 ; FF4099  [ 20]
+	.long SoftKeyCol5_LoadSingleSound_Page0                                 ; FF409D  [ 21]
+	.long SoftKeyCol6_LoadSingle_Page0                                 ; FF40A1  [ 22]
+	.long SoftKeyCols7_8_LoadSingleSound_Page0                                 ; FF40A5  [ 23]
+	.long SoftKeyCols7_8_LoadSingleSound_Page0                                 ; FF40A9  [ 24]
 	.long DispatchMatrix_NoAction                                 ; FF40AD  [ 25]
 	.long DispatchMatrix_NoAction                                 ; FF40B1  [ 26]
 	.long DispatchMatrix_NoAction                                 ; FF40B5  [ 27]
@@ -1052,31 +1052,31 @@ Dispatch_FF4049:
 	.long DispatchMatrix_NoAction                                 ; FF40BD  [ 29]
 	.long DispatchMatrix_NoAction                                 ; FF40C1  [ 30]
 	.long DispatchMatrix_NoAction                                 ; FF40C5  [ 31]
-	.long SoftKeyCol1_L0adSingle_AllPages                                 ; FF40C9  [ 32]
-	.long SoftKeyCol2_L0adSingleS0und_Page1                                 ; FF40CD  [ 33]
-	.long SoftKeyCols3_4_L0adSingle_Page1                                 ; FF40D1  [ 34]
-	.long SoftKeyCols3_4_L0adSingle_Page1                                 ; FF40D5  [ 35]
-	.long SoftKeyCols5_6_L0adSingleS0und_Page1                                 ; FF40D9  [ 36]
-	.long SoftKeyCols5_6_L0adSingleS0und_Page1                                 ; FF40DD  [ 37]
-	.long SoftKeyCols7_8_L0adSingle_Page1                                 ; FF40E1  [ 38]
-	.long SoftKeyCols7_8_L0adSingle_Page1                                 ; FF40E5  [ 39]
-	.long LcdKeyRow1_L0adSingleS0und_Page1           ; FF40E9  [ 40]
+	.long SoftKeyCol1_LoadSingle_AllPages                                 ; FF40C9  [ 32]
+	.long SoftKeyCol2_LoadSingleSound_Page1                                 ; FF40CD  [ 33]
+	.long SoftKeyCols3_4_LoadSingle_Page1                                 ; FF40D1  [ 34]
+	.long SoftKeyCols3_4_LoadSingle_Page1                                 ; FF40D5  [ 35]
+	.long SoftKeyCols5_6_LoadSingleSound_Page1                                 ; FF40D9  [ 36]
+	.long SoftKeyCols5_6_LoadSingleSound_Page1                                 ; FF40DD  [ 37]
+	.long SoftKeyCols7_8_LoadSingle_Page1                                 ; FF40E1  [ 38]
+	.long SoftKeyCols7_8_LoadSingle_Page1                                 ; FF40E5  [ 39]
+	.long LcdKeyRow1_LoadSingleSound_Page1           ; FF40E9  [ 40]
 	.long DispatchMatrix_NoAction                                 ; FF40ED  [ 41]
 	.long DispatchMatrix_NoAction                                 ; FF40F1  [ 42]
 	.long DispatchMatrix_NoAction                                 ; FF40F5  [ 43]
 	.long DispatchMatrix_NoAction                                 ; FF40F9  [ 44]
 	.long DispatchMatrix_NoAction                                 ; FF40FD  [ 45]
 	.long DispatchMatrix_NoAction                                 ; FF4101  [ 46]
-	.long ExitKey_L0adSingleS0und_Pages0_1           ; FF4105  [ 47]
+	.long ExitKey_LoadSingleSound_Pages0_1           ; FF4105  [ 47]
 	.long DispatchMatrix_NoAction                                 ; FF4109  [ 48]
-	.long SoftKeyCol1_L0adSingle_AllPages                                 ; FF410D  [ 49]
-	.long SoftKeyCol2_L0adSingleS0und_Page1                                 ; FF4111  [ 50]
-	.long SoftKeyCols3_4_L0adSingle_Page1                                 ; FF4115  [ 51]
-	.long SoftKeyCols3_4_L0adSingle_Page1                                 ; FF4119  [ 52]
-	.long SoftKeyCols5_6_L0adSingleS0und_Page1                                 ; FF411D  [ 53]
-	.long SoftKeyCols5_6_L0adSingleS0und_Page1                                 ; FF4121  [ 54]
-	.long SoftKeyCols7_8_L0adSingle_Page1                                 ; FF4125  [ 55]
-	.long SoftKeyCols7_8_L0adSingle_Page1                                 ; FF4129  [ 56]
+	.long SoftKeyCol1_LoadSingle_AllPages                                 ; FF410D  [ 49]
+	.long SoftKeyCol2_LoadSingleSound_Page1                                 ; FF4111  [ 50]
+	.long SoftKeyCols3_4_LoadSingle_Page1                                 ; FF4115  [ 51]
+	.long SoftKeyCols3_4_LoadSingle_Page1                                 ; FF4119  [ 52]
+	.long SoftKeyCols5_6_LoadSingleSound_Page1                                 ; FF411D  [ 53]
+	.long SoftKeyCols5_6_LoadSingleSound_Page1                                 ; FF4121  [ 54]
+	.long SoftKeyCols7_8_LoadSingle_Page1                                 ; FF4125  [ 55]
+	.long SoftKeyCols7_8_LoadSingle_Page1                                 ; FF4129  [ 56]
 	.long DispatchMatrix_NoAction                                 ; FF412D  [ 57]
 	.long DispatchMatrix_NoAction                                 ; FF4131  [ 58]
 	.long DispatchMatrix_NoAction                                 ; FF4135  [ 59]
@@ -1085,19 +1085,19 @@ Dispatch_FF4049:
 	.long DispatchMatrix_NoAction                                 ; FF4141  [ 62]
 	.long DispatchMatrix_NoAction                                 ; FF4145  [ 63]
 ; ---------------------------------------------------------------------
-; ScreenEnterPages_L0adSingleC0mbination -- TWO handler pointers, indexed by the page byte (0x2229)
+; ScreenEnterPages_LoadSingleCombination -- TWO handler pointers, indexed by the page byte (0x2229)
 ; Read by: 0xFF6DB7.  ENTRY COUNT 2, from `cp (0x2229),0x02 / jr NC`.
 ; ---------------------------------------------------------------------
-; ScreenEnterPages_L0adSingleC0mbination: PageDispatch_L0adSingleC0mbination's per-page ENTER table, indexed by UI_ScreenPage (0..1)
+; ScreenEnterPages_LoadSingleCombination: PageDispatch_LoadSingleCombination's per-page ENTER table, indexed by UI_ScreenPage (0..1)
 ;   (notes/prom_a_page_enter_names.py).
-ScreenEnterPages_L0adSingleC0mbination:
-	.long ScreenEnter_L0adSingleC0mbination_Page0                                 ; FF4149  [  0]
-	.long ScreenEnter_L0adSingleC0mbination_Page1                                 ; FF414D  [  1]
+ScreenEnterPages_LoadSingleCombination:
+	.long ScreenEnter_LoadSingleCombination_Page0                                 ; FF4149  [  0]
+	.long ScreenEnter_LoadSingleCombination_Page1                                 ; FF414D  [  1]
 ; ---------------------------------------------------------------------
 ; Dispatch_FF4151 -- a 2 x 32 handler matrix.  Read by 0xFF6F21, and the entry
 ; count rests on the same two things as Dispatch_FF4049's: the 256-byte extent
 ; to the next reader-named base, and the bound of 2 that its sibling
-; ScreenEnterPages_L0adSingleC0mbination carries on the same page byte.
+; ScreenEnterPages_LoadSingleCombination carries on the same page byte.
 ; ---------------------------------------------------------------------
 ; ---------------------------------------------------------------------
 ; ★ CONTROL LEGEND, added 2026-08-31. The header above ends "⚠ Not one entry
@@ -1133,31 +1133,31 @@ ScreenEnterPages_L0adSingleC0mbination:
 ; ⚠ A live index names the CONTROL, not the FUNCTION.
 ; ---------------------------------------------------------------------
 Dispatch_FF4151:
-	.long SoftKeyCol1_L0adSingle_AllPages                                 ; FF4151  [  0]
+	.long SoftKeyCol1_LoadSingle_AllPages                                 ; FF4151  [  0]
 	.long DispatchMatrix_NoAction                                 ; FF4155  [  1]
-	.long SoftKeyCols3_4_L0adSingleC0mbination_Page0                                 ; FF4159  [  2]
-	.long SoftKeyCols3_4_L0adSingleC0mbination_Page0                                 ; FF415D  [  3]
+	.long SoftKeyCols3_4_LoadSingleCombination_Page0                                 ; FF4159  [  2]
+	.long SoftKeyCols3_4_LoadSingleCombination_Page0                                 ; FF415D  [  3]
 	.long DispatchMatrix_NoAction                                 ; FF4161  [  4]
-	.long SoftKeyCol6_L0adSingle_Page0                                 ; FF4165  [  5]
-	.long SoftKeyCols7_8_L0adSingleC0mbination_Page0                                 ; FF4169  [  6]
-	.long SoftKeyCols7_8_L0adSingleC0mbination_Page0                                 ; FF416D  [  7]
-	.long LcdKeyRow1_L0adSingleC0mbination_Page0     ; FF4171  [  8]
+	.long SoftKeyCol6_LoadSingle_Page0                                 ; FF4165  [  5]
+	.long SoftKeyCols7_8_LoadSingleCombination_Page0                                 ; FF4169  [  6]
+	.long SoftKeyCols7_8_LoadSingleCombination_Page0                                 ; FF416D  [  7]
+	.long LcdKeyRow1_LoadSingleCombination_Page0     ; FF4171  [  8]
 	.long DispatchMatrix_NoAction                                 ; FF4175  [  9]
 	.long DispatchMatrix_NoAction                                 ; FF4179  [ 10]
 	.long DispatchMatrix_NoAction                                 ; FF417D  [ 11]
 	.long DispatchMatrix_NoAction                                 ; FF4181  [ 12]
 	.long DispatchMatrix_NoAction                                 ; FF4185  [ 13]
 	.long DispatchMatrix_NoAction                                 ; FF4189  [ 14]
-	.long ExitKey_L0adSingleC0mbination_Pages0_1     ; FF418D  [ 15]
+	.long ExitKey_LoadSingleCombination_Pages0_1     ; FF418D  [ 15]
 	.long DispatchMatrix_NoAction                                 ; FF4191  [ 16]
-	.long SoftKeyCol1_L0adSingle_AllPages                                 ; FF4195  [ 17]
+	.long SoftKeyCol1_LoadSingle_AllPages                                 ; FF4195  [ 17]
 	.long DispatchMatrix_NoAction                                 ; FF4199  [ 18]
-	.long SoftKeyCols3_4_L0adSingleC0mbination_Page0                                 ; FF419D  [ 19]
-	.long SoftKeyCols3_4_L0adSingleC0mbination_Page0                                 ; FF41A1  [ 20]
+	.long SoftKeyCols3_4_LoadSingleCombination_Page0                                 ; FF419D  [ 19]
+	.long SoftKeyCols3_4_LoadSingleCombination_Page0                                 ; FF41A1  [ 20]
 	.long DispatchMatrix_NoAction                                 ; FF41A5  [ 21]
-	.long SoftKeyCol6_L0adSingle_Page0                                 ; FF41A9  [ 22]
-	.long SoftKeyCols7_8_L0adSingleC0mbination_Page0                                 ; FF41AD  [ 23]
-	.long SoftKeyCols7_8_L0adSingleC0mbination_Page0                                 ; FF41B1  [ 24]
+	.long SoftKeyCol6_LoadSingle_Page0                                 ; FF41A9  [ 22]
+	.long SoftKeyCols7_8_LoadSingleCombination_Page0                                 ; FF41AD  [ 23]
+	.long SoftKeyCols7_8_LoadSingleCombination_Page0                                 ; FF41B1  [ 24]
 	.long DispatchMatrix_NoAction                                 ; FF41B5  [ 25]
 	.long DispatchMatrix_NoAction                                 ; FF41B9  [ 26]
 	.long DispatchMatrix_NoAction                                 ; FF41BD  [ 27]
@@ -1165,31 +1165,31 @@ Dispatch_FF4151:
 	.long DispatchMatrix_NoAction                                 ; FF41C5  [ 29]
 	.long DispatchMatrix_NoAction                                 ; FF41C9  [ 30]
 	.long DispatchMatrix_NoAction                                 ; FF41CD  [ 31]
-	.long SoftKeyCol1_L0adSingle_AllPages                                 ; FF41D1  [ 32]
+	.long SoftKeyCol1_LoadSingle_AllPages                                 ; FF41D1  [ 32]
 	.long DispatchMatrix_NoAction                                 ; FF41D5  [ 33]
-	.long SoftKeyCols3_4_L0adSingle_Page1                                 ; FF41D9  [ 34]
-	.long SoftKeyCols3_4_L0adSingle_Page1                                 ; FF41DD  [ 35]
+	.long SoftKeyCols3_4_LoadSingle_Page1                                 ; FF41D9  [ 34]
+	.long SoftKeyCols3_4_LoadSingle_Page1                                 ; FF41DD  [ 35]
 	.long DispatchMatrix_NoAction                                 ; FF41E1  [ 36]
 	.long DispatchMatrix_NoAction                                 ; FF41E5  [ 37]
-	.long SoftKeyCols7_8_L0adSingle_Page1                                 ; FF41E9  [ 38]
-	.long SoftKeyCols7_8_L0adSingle_Page1                                 ; FF41ED  [ 39]
-	.long LcdKeyRow1_L0adSingleC0mbination_Page1     ; FF41F1  [ 40]
+	.long SoftKeyCols7_8_LoadSingle_Page1                                 ; FF41E9  [ 38]
+	.long SoftKeyCols7_8_LoadSingle_Page1                                 ; FF41ED  [ 39]
+	.long LcdKeyRow1_LoadSingleCombination_Page1     ; FF41F1  [ 40]
 	.long DispatchMatrix_NoAction                                 ; FF41F5  [ 41]
 	.long DispatchMatrix_NoAction                                 ; FF41F9  [ 42]
 	.long DispatchMatrix_NoAction                                 ; FF41FD  [ 43]
 	.long DispatchMatrix_NoAction                                 ; FF4201  [ 44]
 	.long DispatchMatrix_NoAction                                 ; FF4205  [ 45]
 	.long DispatchMatrix_NoAction                                 ; FF4209  [ 46]
-	.long ExitKey_L0adSingleC0mbination_Pages0_1     ; FF420D  [ 47]
+	.long ExitKey_LoadSingleCombination_Pages0_1     ; FF420D  [ 47]
 	.long DispatchMatrix_NoAction                                 ; FF4211  [ 48]
-	.long SoftKeyCol1_L0adSingle_AllPages                                 ; FF4215  [ 49]
+	.long SoftKeyCol1_LoadSingle_AllPages                                 ; FF4215  [ 49]
 	.long DispatchMatrix_NoAction                                 ; FF4219  [ 50]
-	.long SoftKeyCols3_4_L0adSingle_Page1                                 ; FF421D  [ 51]
-	.long SoftKeyCols3_4_L0adSingle_Page1                                 ; FF4221  [ 52]
+	.long SoftKeyCols3_4_LoadSingle_Page1                                 ; FF421D  [ 51]
+	.long SoftKeyCols3_4_LoadSingle_Page1                                 ; FF4221  [ 52]
 	.long DispatchMatrix_NoAction                                 ; FF4225  [ 53]
 	.long DispatchMatrix_NoAction                                 ; FF4229  [ 54]
-	.long SoftKeyCols7_8_L0adSingle_Page1                                 ; FF422D  [ 55]
-	.long SoftKeyCols7_8_L0adSingle_Page1                                 ; FF4231  [ 56]
+	.long SoftKeyCols7_8_LoadSingle_Page1                                 ; FF422D  [ 55]
+	.long SoftKeyCols7_8_LoadSingle_Page1                                 ; FF4231  [ 56]
 	.long DispatchMatrix_NoAction                                 ; FF4235  [ 57]
 	.long DispatchMatrix_NoAction                                 ; FF4239  [ 58]
 	.long DispatchMatrix_NoAction                                 ; FF423D  [ 59]
@@ -1263,7 +1263,7 @@ Text_FF4291:
 ; ---------------------------------------------------------------------
 ; RESOLVED 2026-10-04: U1 / U2 / UD1 / UD2 are USER 1 / USER 2 / USER1 DRUM / USER2 DRUM.  prom_b DLText_F59128 holds those
 ;   long forms in the same order, and DL_F590F1's first record reads them by the same index (0x2728).  Read by
-;   L0adSingle_DrawBankAndNumber.
+;   LoadSingle_DrawBankAndNumber.
 Text_UserBankAbbrevs:
 	.byte 0x55, 0x31, 0x20, 0x2d, 0x55, 0x32, 0x20, 0x2d, 0x55, 0x44, 0x31, 0x2d, 0x55, 0x44, 0x32, 0x2d  ; FF42A1
 ; DispatchMatrix_NoAction: the bare `ret` that 459 of the 654 slots of this module's dispatch tables name -- a
@@ -1349,7 +1349,7 @@ Paint_DiskMenu:
 	pushw 0x00                                           ; FF42D4  0b 00 00
 	lda xbc, (DL_MidiFileLoadMidiFileSave:24)            ; FF42D7  f2 b0 80 f5 31
 	push XBC                                             ; FF42DC  39
-	lda xwa, (DL_DiskDiskL0adDiskSaveMidiFile:24)        ; FF42DD  f2 14 80 f5 30
+	lda xwa, (DL_DiskDiskLoadDiskSaveMidiFile:24)        ; FF42DD  f2 14 80 f5 30
 	push XWA                                             ; FF42E2  38
 	call DisplayList_RunOnLayer_SaveRegs                                      ; FF42E3  1d d3 75 ff
 	inc 8,XSP                                            ; FF42E7  ef 60
@@ -1728,14 +1728,14 @@ Paint_MidiFileDirectPlay:
 	pushw 0x00                                           ; FF449E  0b 00 00
 	lda xbc, (0xf59340:24)                               ; FF44A1  f2 40 93 f5 31
 	push XBC                                             ; FF44A6  39
-	lda xwa, (DL_ToS0ngNumberL0adAsGm:24)                ; FF44A7  f2 3b 93 f5 30
+	lda xwa, (DL_ToSongNumberLoadAsGm:24)                ; FF44A7  f2 3b 93 f5 30
 	push XWA                                             ; FF44AC  38
 	lda xiy, (.LFF44B5:24)                               ; FF44AD  f2 b5 44 ff 35
 	push XIY                                             ; FF44B2  3d
 	jp (xix)                                             ; FF44B3  b4 d8
 .LFF44B5:
 	pushw 0x00                                           ; FF44B5  0b 00 00
-	lda xbc, (DL_DiskDiskL0adDiskSaveMidiFile:24)        ; FF44B8  f2 14 80 f5 31
+	lda xbc, (DL_DiskDiskLoadDiskSaveMidiFile:24)        ; FF44B8  f2 14 80 f5 31
 	push XBC                                             ; FF44BD  39
 	lda xwa, (DL_Disk:24)                                ; FF44BE  f2 00 80 f5 30
 	push XWA                                             ; FF44C3  38
@@ -2215,7 +2215,7 @@ MidiFileList_CopyEntryToFileName:
 	unlk XIZ                                             ; FF4783  ee 0d
 	ret                                                  ; FF4785  0e
 ; ---------------------------------------------------------------------
-; Paint_DiskL0adFile -- paints the screen whose own text reads "L0AD FILE" / "L0AD 0PTI0N" over the FLOPPY DISK file list
+; Paint_DiskLoadFile -- paints the screen whose own text reads "L0AD FILE" / "L0AD 0PTI0N" over the FLOPPY DISK file list
 ;
 ; Called from: prom_b T_F423A0 (`jp`)
 ;
@@ -2252,7 +2252,7 @@ MidiFileList_CopyEntryToFileName:
 ; Named by notes/prom_a_understanding_round7.py --apply; the byte gate
 ;          is blind to this name, --verify reads it back.
 ; ---------------------------------------------------------------------
-Paint_DiskL0adFile:
+Paint_DiskLoadFile:
 	push XIX                                             ; FF4786  3c
 	lda xix, (DisplayList_RunOnLayer_SaveRegs:24)                             ; FF4787  f2 d3 75 ff 34
 	ld (0x21fa:16), 0x00                                 ; FF478C  f1 fa 21 00 00
@@ -2289,9 +2289,9 @@ Paint_DiskL0adFile:
 	call T_CallbackQueue_ResetAndRestartTask2            ; FF47F4  1d 80 2e f4
 	call LCD_BlankAndSetPanel3Layer_SaveRegs                                      ; FF47F8  1d 04 76 ff
 	pushw 0x00                                           ; FF47FC  0b 00 00
-	lda xbc, (DL_SaveSaveFileSaveSave0pti0n:24)          ; FF47FF  f2 f8 81 f5 31
+	lda xbc, (DL_SaveSaveFileSaveSaveOption:24)          ; FF47FF  f2 f8 81 f5 31
 	push XBC                                             ; FF4804  39
-	lda xwa, (DL_LoadL0adFileLoadL0ad0pti0n:24)          ; FF4805  f2 b0 81 f5 30
+	lda xwa, (DL_LoadLoadFileLoadLoadOption:24)          ; FF4805  f2 b0 81 f5 30
 	push XWA                                             ; FF480A  38
 	lda xiy, (.LFF4813:24)                               ; FF480B  f2 13 48 ff 35
 	push XIY                                             ; FF4810  3d
@@ -2327,14 +2327,14 @@ Paint_DiskL0adFile:
 	pushw 0x00                                           ; FF4867  0b 00 00
 	lda xbc, (DL_F583E5:24)                              ; FF486A  f2 e5 83 f5 31
 	push XBC                                             ; FF486F  39
-	lda xwa, (DL_ToS0ngNumber:24)                        ; FF4870  f2 d0 83 f5 30
+	lda xwa, (DL_ToSongNumber:24)                        ; FF4870  f2 d0 83 f5 30
 	push XWA                                             ; FF4875  38
 	lda xiy, (.LFF487E:24)                               ; FF4876  f2 7e 48 ff 35
 	push XIY                                             ; FF487B  3d
 	jp (xix)                                             ; FF487C  b4 d8
 .LFF487E:
 	pushw 0x00                                           ; FF487E  0b 00 00
-	lda xbc, (DL_FromS0ngNumber:24)                      ; FF4881  f2 ba 83 f5 31
+	lda xbc, (DL_FromSongNumber:24)                      ; FF4881  f2 ba 83 f5 31
 	push XBC                                             ; FF4886  39
 	lda xwa, (DL_F583AB:24)                              ; FF4887  f2 ab 83 f5 30
 	push XWA                                             ; FF488C  38
@@ -2354,7 +2354,7 @@ Paint_DiskL0adFile:
 	jr .LFF48EA                                          ; FF48B4  68 34
 .LFF48B6:
 	pushw 0x00                                           ; FF48B6  0b 00 00
-	lda xbc, (DL_FromS0ngNumber:24)                      ; FF48B9  f2 ba 83 f5 31
+	lda xbc, (DL_FromSongNumber:24)                      ; FF48B9  f2 ba 83 f5 31
 	push XBC                                             ; FF48BE  39
 	lda xwa, (DL_F583AB:24)                              ; FF48BF  f2 ab 83 f5 30
 	push XWA                                             ; FF48C4  38
@@ -2469,7 +2469,7 @@ DiskEntry_GetContentType:
 	unlk XIZ                                             ; FF4983  ee 0d
 	ret                                                  ; FF4985  0e
 ; ---------------------------------------------------------------------
-; ScreenLeave_DiskL0adFile -- the LEAVE method of the screen object at
+; ScreenLeave_DiskLoadFile -- the LEAVE method of the screen object at
 ;          PanelScreen_VtableTable entry 0x67, i.e. SCREEN ID 0x47 through
 ;          PanelScreen_VtableTable_ViewB
 ;
@@ -2484,12 +2484,12 @@ DiskEntry_GetContentType:
 ;          current, and +8 by PanelButton_Route (0xF8621E) with the current
 ;          id and a button index -- three different call sites, checked as
 ;          V1-V6 in PanelScreen_VtableTable's own header.
-; Screen:   DiskL0adFile -- the same object's +0 ENTER method carries the
-;          label Paint_DiskL0adFile, a name an earlier round derived from the
+; Screen:   DiskLoadFile -- the same object's +0 ENTER method carries the
+;          label Paint_DiskLoadFile, a name an earlier round derived from the
 ;          screen's own text.
 ; Was `sub_FF4986`.
 ; ---------------------------------------------------------------------
-ScreenLeave_DiskL0adFile:
+ScreenLeave_DiskLoadFile:
 	ld c, (UI_ScreenLatch:16)                                   ; FF4986  c1 7a 20 23
 	cp	c, (UI_ScreenLatch_Previous:16)                               ; FF498A  c1 7b 20 f3
 	jr z, .LFF4994                                       ; FF498E  66 04
@@ -2497,7 +2497,7 @@ ScreenLeave_DiskL0adFile:
 .LFF4994:
 	ret                                                  ; FF4994  0e
 ; ---------------------------------------------------------------------
-; PanelButtonDispatch_DiskL0adFile -- run Dispatch_FF3900's handler for one
+; PanelButtonDispatch_DiskLoadFile -- run Dispatch_FF3900's handler for one
 ;          PANEL CONTROL
 ;
 ; Inputs:   (XIZ+0x08) = the 5-bit panel control index; (XIZ+0x0A) =
@@ -2510,15 +2510,15 @@ ScreenLeave_DiskL0adFile:
 ;          a return address before `jp (XBC)`.
 ; Control legend: notes/FINDINGS-prom_a-panel-control-map.md, and
 ;          `python3 notes/prom_a_panel_control_map.py --map`.
-; Screen:   DiskL0adFile -- the screen object at PanelScreen_VtableTable
+; Screen:   DiskLoadFile -- the screen object at PanelScreen_VtableTable
 ;          entry 0x67, i.e. SCREEN ID 0x47 through
 ;          PanelScreen_VtableTable_ViewB names this reader as its BUTTON
 ;          method and 0xFF4786 as its ENTER method, and that address carries
-;          the label Paint_DiskL0adFile -- a name an earlier round derived
+;          the label Paint_DiskLoadFile -- a name an earlier round derived
 ;          from the screen's own text.
 ; Was `sub_FF4995`, named by notes/prom_a_naming_wave8_apply.py.
 ; ---------------------------------------------------------------------
-PanelButtonDispatch_DiskL0adFile:
+PanelButtonDispatch_DiskLoadFile:
 	link XIZ,0x0000                                      ; FF4995  ee 0c 00 00
 	pushw hl                                             ; FF4999  2b
 	ld H,(XIZ+0x08)                                      ; FF499A  8e 08 26
@@ -2540,7 +2540,7 @@ PanelButtonDispatch_DiskL0adFile:
 	unlk XIZ                                             ; FF49BD  ee 0d
 	ret                                                  ; FF49BF  0e
 ; ---------------------------------------------------------------------
-; LcdKeyRow1_DiskL0adFile -- what Dispatch_FF3900 runs for panel control 0x08
+; LcdKeyRow1_DiskLoadFile -- what Dispatch_FF3900 runs for panel control 0x08
 ;
 ; Reached from: Dispatch_FF3900 entry [8] -- and from no other slot of any
 ;          32-entry control table in prom_a. A target reached at two
@@ -2555,15 +2555,15 @@ PanelButtonDispatch_DiskL0adFile:
 ;          SLOT_CONTROL slot for slot; what is new here is only that THIS
 ;          module's tables are tied to it. See
 ;          notes/FINDINGS-prom_a-panel-control-map.md.
-; Screen:   DiskL0adFile -- the screen object at PanelScreen_VtableTable
+; Screen:   DiskLoadFile -- the screen object at PanelScreen_VtableTable
 ;          entry 0x67, i.e. SCREEN ID 0x47 through
 ;          PanelScreen_VtableTable_ViewB names this reader as its BUTTON
 ;          method and 0xFF4786 as its ENTER method, and that address carries
-;          the label Paint_DiskL0adFile -- a name an earlier round derived
+;          the label Paint_DiskLoadFile -- a name an earlier round derived
 ;          from the screen's own text.
 ; Unknown:  what this screen does with the button.
 ; ---------------------------------------------------------------------
-LcdKeyRow1_DiskL0adFile:
+LcdKeyRow1_DiskLoadFile:
 	link XIZ,0x0000                                      ; FF49C0  ee 0c 00 00
 	push XIX                                             ; FF49C4  3c
 	lda xix, (Var7FD6_IsBitClear:24)                             ; FF49C5  f2 3b 75 ff 34
@@ -2626,7 +2626,7 @@ LcdKeyRow1_DiskL0adFile:
 	ld (UI_Request_Hi:16), 0x40                                 ; FF4A49  f1 71 20 00 40
 	jr .LFF4A7F                                          ; FF4A4E  68 2f
 .LFF4A50:
-	calr DiskL0adFile_LcdKeyRow1                                      ; FF4A50  1e 11 2b
+	calr DiskLoadFile_LcdKeyRow1                                      ; FF4A50  1e 11 2b
 	jr .LFF4A7F                                          ; FF4A53  68 2a
 .LFF4A55:
 	lda xbc, (DL_F5843F:24)                              ; FF4A55  f2 3f 84 f5 31
@@ -2647,7 +2647,7 @@ LcdKeyRow1_DiskL0adFile:
 	unlk XIZ                                             ; FF4A80  ee 0d
 	ret                                                  ; FF4A82  0e
 ; ---------------------------------------------------------------------
-; LcdKeyRow2_DiskL0adFile -- what Dispatch_FF3900 runs for panel control 0x09
+; LcdKeyRow2_DiskLoadFile -- what Dispatch_FF3900 runs for panel control 0x09
 ;
 ; Reached from: Dispatch_FF3900 entry [9] -- and from no other slot of any
 ;          32-entry control table in prom_a. A target reached at two
@@ -2661,23 +2661,23 @@ LcdKeyRow1_DiskL0adFile:
 ;          SLOT_CONTROL slot for slot; what is new here is only that THIS
 ;          module's tables are tied to it. See
 ;          notes/FINDINGS-prom_a-panel-control-map.md.
-; Screen:   DiskL0adFile -- the screen object at PanelScreen_VtableTable
+; Screen:   DiskLoadFile -- the screen object at PanelScreen_VtableTable
 ;          entry 0x67, i.e. SCREEN ID 0x47 through
 ;          PanelScreen_VtableTable_ViewB names this reader as its BUTTON
 ;          method and 0xFF4786 as its ENTER method, and that address carries
-;          the label Paint_DiskL0adFile -- a name an earlier round derived
+;          the label Paint_DiskLoadFile -- a name an earlier round derived
 ;          from the screen's own text.
 ; Unknown:  what this screen does with the button.
 ; ---------------------------------------------------------------------
-LcdKeyRow2_DiskL0adFile:
+LcdKeyRow2_DiskLoadFile:
 	link XIZ,0x0000                                      ; FF4A83  ee 0c 00 00
 	pushw	(xiz+8)                                      ; FF4A87  9e 08 04
-	calr LcdKeyRow3_DiskL0adFile                                      ; FF4A8A  1e 04 00
+	calr LcdKeyRow3_DiskLoadFile                                      ; FF4A8A  1e 04 00
 	popw bc                                              ; FF4A8D  49
 	unlk XIZ                                             ; FF4A8E  ee 0d
 	ret                                                  ; FF4A90  0e
 ; ---------------------------------------------------------------------
-; LcdKeyRow3_DiskL0adFile -- what Dispatch_FF3900 runs for panel control 0x0A
+; LcdKeyRow3_DiskLoadFile -- what Dispatch_FF3900 runs for panel control 0x0A
 ;
 ; Reached from: Dispatch_FF3900 entry [10] -- and from no other slot of any
 ;          32-entry control table in prom_a. A target reached at two
@@ -2691,16 +2691,16 @@ LcdKeyRow2_DiskL0adFile:
 ;          SLOT_CONTROL slot for slot; what is new here is only that THIS
 ;          module's tables are tied to it. See
 ;          notes/FINDINGS-prom_a-panel-control-map.md.
-; Screen:   DiskL0adFile -- the screen object at PanelScreen_VtableTable
+; Screen:   DiskLoadFile -- the screen object at PanelScreen_VtableTable
 ;          entry 0x67, i.e. SCREEN ID 0x47 through
 ;          PanelScreen_VtableTable_ViewB names this reader as its BUTTON
 ;          method and 0xFF4786 as its ENTER method, and that address carries
-;          the label Paint_DiskL0adFile -- a name an earlier round derived
+;          the label Paint_DiskLoadFile -- a name an earlier round derived
 ;          from the screen's own text.
 ; Unknown:  what this screen does with the button.
 ; Was `sub_FF4A91`.
 ; ---------------------------------------------------------------------
-LcdKeyRow3_DiskL0adFile:
+LcdKeyRow3_DiskLoadFile:
 	link XIZ,0x0000                                      ; FF4A91  ee 0c 00 00
 	ld BC,(XIZ+0x08)                                     ; FF4A95  9e 08 21
 	and BC,0x0080                                        ; FF4A98  d9 cc 80 00
@@ -2722,7 +2722,7 @@ LcdKeyRow3_DiskL0adFile:
 	unlk XIZ                                             ; FF4AC8  ee 0d
 	ret                                                  ; FF4ACA  0e
 ; ---------------------------------------------------------------------
-; LcdKeyRow4_DiskL0adFile -- what Dispatch_FF3900 runs for panel control 0x0B
+; LcdKeyRow4_DiskLoadFile -- what Dispatch_FF3900 runs for panel control 0x0B
 ;
 ; Reached from: Dispatch_FF3900 entry [11] -- and from no other slot of any
 ;          32-entry control table in prom_a. A target reached at two
@@ -2736,11 +2736,11 @@ LcdKeyRow3_DiskL0adFile:
 ;          SLOT_CONTROL slot for slot; what is new here is only that THIS
 ;          module's tables are tied to it. See
 ;          notes/FINDINGS-prom_a-panel-control-map.md.
-; Screen:   DiskL0adFile -- the screen object at PanelScreen_VtableTable
+; Screen:   DiskLoadFile -- the screen object at PanelScreen_VtableTable
 ;          entry 0x67, i.e. SCREEN ID 0x47 through
 ;          PanelScreen_VtableTable_ViewB names this reader as its BUTTON
 ;          method and 0xFF4786 as its ENTER method, and that address carries
-;          the label Paint_DiskL0adFile -- a name an earlier round derived
+;          the label Paint_DiskLoadFile -- a name an earlier round derived
 ;          from the screen's own text.
 ; Unknown:  what this screen does with the button.
 ; Was `sub_FF4ACB`.
@@ -2756,7 +2756,7 @@ LcdKeyRow3_DiskL0adFile:
 ;   record of how the gap was closed.
 ; ---------------------------------------------------------------------
 ; ---------------------------------------------------------------------
-; LcdKeyRow4_DiskL0adFile -- a screen painter this round REFUSED to name.
+; LcdKeyRow4_DiskLoadFile -- a screen painter this round REFUSED to name.
 ;
 ; It hands 14 display list(s) to the interpreter ON THE STACK.
 ;     site 0xFF4AEE  list 0xF5844A-0xF58455 (11 B, leaves by call)
@@ -2784,14 +2784,14 @@ LcdKeyRow3_DiskL0adFile:
 ; Evidence: the two 24-bit immediates of the 12-byte push idiom at
 ;          the cited site; the record walk from <start> lands exactly
 ;          on <end>; the text is the `.ascii` the interpreter draws.
-; NOT NAMED because it and LcdKeyRow5_DiskL0adFile draw the SAME caption set (FROM S0NG
+; NOT NAMED because it and LcdKeyRow5_DiskLoadFile draw the SAME caption set (FROM S0NG
 ;          NUMBER, TO S0NG NUMBER, 1-10) and nothing in their own lists
 ;          tells the two apart.
 ;          A wrong name passes the byte gate forever, so this keeps
 ;          sub_XXXXXX and states the gap.
 ; Recorded by notes/prom_a_understanding_round7.py --apply.
 ; ---------------------------------------------------------------------
-LcdKeyRow4_DiskL0adFile:
+LcdKeyRow4_DiskLoadFile:
 	link XIZ,0x0000                                      ; FF4ACB  ee 0c 00 00
 	pushw hl                                             ; FF4ACF  2b
 	push XIX                                             ; FF4AD0  3c
@@ -2838,22 +2838,22 @@ LcdKeyRow4_DiskL0adFile:
 	pushw 0x00                                           ; FF4B3E  0b 00 00
 	cp	(UI_ScreenLatch:16), 0x4c                            ; FF4B41  c1 7a 20 3f 4c
 	jr nz, .LFF4B56                                      ; FF4B46  6e 0e
-	lda xbc, (DL_ToS0ngNumber:24)                        ; FF4B48  f2 d0 83 f5 31
+	lda xbc, (DL_ToSongNumber:24)                        ; FF4B48  f2 d0 83 f5 31
 	push XBC                                             ; FF4B4D  39
-	lda xwa, (DL_FromS0ngNumber:24)                      ; FF4B4E  f2 ba 83 f5 30
+	lda xwa, (DL_FromSongNumber:24)                      ; FF4B4E  f2 ba 83 f5 30
 	push XWA                                             ; FF4B53  38
 	jr .LFF4B62                                          ; FF4B54  68 0c
 .LFF4B56:
 	lda xbc, (DL_F583E5:24)                              ; FF4B56  f2 e5 83 f5 31
 	push XBC                                             ; FF4B5B  39
-	lda xwa, (DL_ToS0ngNumber:24)                        ; FF4B5C  f2 d0 83 f5 30
+	lda xwa, (DL_ToSongNumber:24)                        ; FF4B5C  f2 d0 83 f5 30
 	push XWA                                             ; FF4B61  38
 .LFF4B62:
 	call DisplayList_RunOnLayer_SaveRegs                                      ; FF4B62  1d d3 75 ff
 	inc 8,XSP                                            ; FF4B66  ef 60
 	inc 2,XSP                                            ; FF4B68  ef 62
 	pushw 0x00                                           ; FF4B6A  0b 00 00
-	lda xbc, (DL_FromS0ngNumber:24)                      ; FF4B6D  f2 ba 83 f5 31
+	lda xbc, (DL_FromSongNumber:24)                      ; FF4B6D  f2 ba 83 f5 31
 	push XBC                                             ; FF4B72  39
 	lda xwa, (DL_F583AB:24)                              ; FF4B73  f2 ab 83 f5 30
 	push XWA                                             ; FF4B78  38
@@ -2909,13 +2909,13 @@ LcdKeyRow4_DiskL0adFile:
 	pushw 0x00                                           ; FF4BF1  0b 00 00
 	cp	(UI_ScreenLatch:16), 0x4c                            ; FF4BF4  c1 7a 20 3f 4c
 	jr nz, .LFF4C30                                      ; FF4BF9  6e 35
-	lda xbc, (DL_ToS0ngNumber:24)                        ; FF4BFB  f2 d0 83 f5 31
+	lda xbc, (DL_ToSongNumber:24)                        ; FF4BFB  f2 d0 83 f5 31
 	push XBC                                             ; FF4C00  39
-	lda xwa, (DL_FromS0ngNumber:24)                      ; FF4C01  f2 ba 83 f5 30
+	lda xwa, (DL_FromSongNumber:24)                      ; FF4C01  f2 ba 83 f5 30
 	push XWA                                             ; FF4C06  38
 	call DisplayList_RunOnLayer_SaveRegs                                      ; FF4C07  1d d3 75 ff
 	pushw 0x00                                           ; FF4C0B  0b 00 00
-	lda xbc, (DL_FromS0ngNumber:24)                      ; FF4C0E  f2 ba 83 f5 31
+	lda xbc, (DL_FromSongNumber:24)                      ; FF4C0E  f2 ba 83 f5 31
 	push XBC                                             ; FF4C13  39
 	lda xwa, (DL_F583AB:24)                              ; FF4C14  f2 ab 83 f5 30
 	push XWA                                             ; FF4C19  38
@@ -2926,7 +2926,7 @@ LcdKeyRow4_DiskL0adFile:
 	add XSP,0x00000014                                   ; FF4C28  ef c8 14 00 00 00
 	jr .LFF4C70                                          ; FF4C2E  68 40
 .LFF4C30:
-	lda xbc, (DL_FromS0ngNumber:24)                      ; FF4C30  f2 ba 83 f5 31
+	lda xbc, (DL_FromSongNumber:24)                      ; FF4C30  f2 ba 83 f5 31
 	push XBC                                             ; FF4C35  39
 	lda xwa, (DL_F583AB:24)                              ; FF4C36  f2 ab 83 f5 30
 	push XWA                                             ; FF4C3B  38
@@ -2943,7 +2943,7 @@ LcdKeyRow4_DiskL0adFile:
 	pushw 0x00                                           ; FF4C55  0b 00 00
 	lda xbc, (DL_F583E5:24)                              ; FF4C58  f2 e5 83 f5 31
 	push XBC                                             ; FF4C5D  39
-	lda xwa, (DL_ToS0ngNumber:24)                        ; FF4C5E  f2 d0 83 f5 30
+	lda xwa, (DL_ToSongNumber:24)                        ; FF4C5E  f2 d0 83 f5 30
 	push XWA                                             ; FF4C63  38
 	cp h, 0x00:i3                                          ; FF4C64  ce d8
 	jr z, .LFF4CBD                                       ; FF4C66  66 55
@@ -2972,13 +2972,13 @@ LcdKeyRow4_DiskL0adFile:
 	pushw 0x00                                           ; FF4C97  0b 00 00
 	lda xbc, (DL_F583E5:24)                              ; FF4C9A  f2 e5 83 f5 31
 	push XBC                                             ; FF4C9F  39
-	lda xwa, (DL_ToS0ngNumber:24)                        ; FF4CA0  f2 d0 83 f5 30
+	lda xwa, (DL_ToSongNumber:24)                        ; FF4CA0  f2 d0 83 f5 30
 	push XWA                                             ; FF4CA5  38
 	call DisplayList_RunOnLayer_SaveRegs                                      ; FF4CA6  1d d3 75 ff
 	inc 8,XSP                                            ; FF4CAA  ef 60
 	inc 2,XSP                                            ; FF4CAC  ef 62
 	pushw 0x00                                           ; FF4CAE  0b 00 00
-	lda xbc, (DL_FromS0ngNumber:24)                      ; FF4CB1  f2 ba 83 f5 31
+	lda xbc, (DL_FromSongNumber:24)                      ; FF4CB1  f2 ba 83 f5 31
 	push XBC                                             ; FF4CB6  39
 	lda xwa, (DL_F583AB:24)                              ; FF4CB7  f2 ab 83 f5 30
 	push XWA                                             ; FF4CBC  38
@@ -3052,7 +3052,7 @@ LcdKeyRow4_DiskL0adFile:
 	unlk XIZ                                             ; FF4D5A  ee 0d
 	ret                                                  ; FF4D5C  0e
 ; ---------------------------------------------------------------------
-; LcdKeyRow5_DiskL0adFile -- what Dispatch_FF3900 runs for panel control 0x0C
+; LcdKeyRow5_DiskLoadFile -- what Dispatch_FF3900 runs for panel control 0x0C
 ;
 ; Reached from: Dispatch_FF3900 entry [12] -- and from no other slot of any
 ;          32-entry control table in prom_a. A target reached at two
@@ -3066,11 +3066,11 @@ LcdKeyRow4_DiskL0adFile:
 ;          SLOT_CONTROL slot for slot; what is new here is only that THIS
 ;          module's tables are tied to it. See
 ;          notes/FINDINGS-prom_a-panel-control-map.md.
-; Screen:   DiskL0adFile -- the screen object at PanelScreen_VtableTable
+; Screen:   DiskLoadFile -- the screen object at PanelScreen_VtableTable
 ;          entry 0x67, i.e. SCREEN ID 0x47 through
 ;          PanelScreen_VtableTable_ViewB names this reader as its BUTTON
 ;          method and 0xFF4786 as its ENTER method, and that address carries
-;          the label Paint_DiskL0adFile -- a name an earlier round derived
+;          the label Paint_DiskLoadFile -- a name an earlier round derived
 ;          from the screen's own text.
 ; Unknown:  what this screen does with the button.
 ; Was `sub_FF4D5D`.
@@ -3086,7 +3086,7 @@ LcdKeyRow4_DiskL0adFile:
 ;   record of how the gap was closed.
 ; ---------------------------------------------------------------------
 ; ---------------------------------------------------------------------
-; LcdKeyRow5_DiskL0adFile -- a screen painter this round REFUSED to name.
+; LcdKeyRow5_DiskLoadFile -- a screen painter this round REFUSED to name.
 ;
 ; It hands 14 display list(s) to the interpreter ON THE STACK.
 ;     site 0xFF4D7F  list 0xF5844A-0xF58455 (11 B, leaves by call)
@@ -3114,14 +3114,14 @@ LcdKeyRow4_DiskL0adFile:
 ; Evidence: the two 24-bit immediates of the 12-byte push idiom at
 ;          the cited site; the record walk from <start> lands exactly
 ;          on <end>; the text is the `.ascii` the interpreter draws.
-; NOT NAMED because it and LcdKeyRow4_DiskL0adFile draw the SAME caption set (FROM S0NG
+; NOT NAMED because it and LcdKeyRow4_DiskLoadFile draw the SAME caption set (FROM S0NG
 ;          NUMBER, TO S0NG NUMBER, 1-10) and nothing in their own lists
 ;          tells the two apart.
 ;          A wrong name passes the byte gate forever, so this keeps
 ;          sub_XXXXXX and states the gap.
 ; Recorded by notes/prom_a_understanding_round7.py --apply.
 ; ---------------------------------------------------------------------
-LcdKeyRow5_DiskL0adFile:
+LcdKeyRow5_DiskLoadFile:
 	link XIZ,0x0000                                      ; FF4D5D  ee 0c 00 00
 	pushw hl                                             ; FF4D61  2b
 	push XIX                                             ; FF4D62  3c
@@ -3168,22 +3168,22 @@ LcdKeyRow5_DiskL0adFile:
 	pushw 0x00                                           ; FF4DD2  0b 00 00
 	cp	(UI_ScreenLatch:16), 0x4c                            ; FF4DD5  c1 7a 20 3f 4c
 	jr nz, .LFF4DEA                                      ; FF4DDA  6e 0e
-	lda xbc, (DL_ToS0ngNumber:24)                        ; FF4DDC  f2 d0 83 f5 31
+	lda xbc, (DL_ToSongNumber:24)                        ; FF4DDC  f2 d0 83 f5 31
 	push XBC                                             ; FF4DE1  39
-	lda xwa, (DL_FromS0ngNumber:24)                      ; FF4DE2  f2 ba 83 f5 30
+	lda xwa, (DL_FromSongNumber:24)                      ; FF4DE2  f2 ba 83 f5 30
 	push XWA                                             ; FF4DE7  38
 	jr .LFF4DF6                                          ; FF4DE8  68 0c
 .LFF4DEA:
 	lda xbc, (DL_F583E5:24)                              ; FF4DEA  f2 e5 83 f5 31
 	push XBC                                             ; FF4DEF  39
-	lda xwa, (DL_ToS0ngNumber:24)                        ; FF4DF0  f2 d0 83 f5 30
+	lda xwa, (DL_ToSongNumber:24)                        ; FF4DF0  f2 d0 83 f5 30
 	push XWA                                             ; FF4DF5  38
 .LFF4DF6:
 	call DisplayList_RunOnLayer_SaveRegs                                      ; FF4DF6  1d d3 75 ff
 	inc 8,XSP                                            ; FF4DFA  ef 60
 	inc 2,XSP                                            ; FF4DFC  ef 62
 	pushw 0x00                                           ; FF4DFE  0b 00 00
-	lda xbc, (DL_FromS0ngNumber:24)                      ; FF4E01  f2 ba 83 f5 31
+	lda xbc, (DL_FromSongNumber:24)                      ; FF4E01  f2 ba 83 f5 31
 	push XBC                                             ; FF4E06  39
 	lda xwa, (DL_F583AB:24)                              ; FF4E07  f2 ab 83 f5 30
 	push XWA                                             ; FF4E0C  38
@@ -3244,13 +3244,13 @@ LcdKeyRow5_DiskL0adFile:
 	pushw 0x00                                           ; FF4E8D  0b 00 00
 	cp	(UI_ScreenLatch:16), 0x4c                            ; FF4E90  c1 7a 20 3f 4c
 	jr nz, .LFF4ECC                                      ; FF4E95  6e 35
-	lda xbc, (DL_ToS0ngNumber:24)                        ; FF4E97  f2 d0 83 f5 31
+	lda xbc, (DL_ToSongNumber:24)                        ; FF4E97  f2 d0 83 f5 31
 	push XBC                                             ; FF4E9C  39
-	lda xwa, (DL_FromS0ngNumber:24)                      ; FF4E9D  f2 ba 83 f5 30
+	lda xwa, (DL_FromSongNumber:24)                      ; FF4E9D  f2 ba 83 f5 30
 	push XWA                                             ; FF4EA2  38
 	call DisplayList_RunOnLayer_SaveRegs                                      ; FF4EA3  1d d3 75 ff
 	pushw 0x00                                           ; FF4EA7  0b 00 00
-	lda xbc, (DL_FromS0ngNumber:24)                      ; FF4EAA  f2 ba 83 f5 31
+	lda xbc, (DL_FromSongNumber:24)                      ; FF4EAA  f2 ba 83 f5 31
 	push XBC                                             ; FF4EAF  39
 	lda xwa, (DL_F583AB:24)                              ; FF4EB0  f2 ab 83 f5 30
 	push XWA                                             ; FF4EB5  38
@@ -3261,7 +3261,7 @@ LcdKeyRow5_DiskL0adFile:
 	add XSP,0x00000014                                   ; FF4EC4  ef c8 14 00 00 00
 	jr .LFF4F0C                                          ; FF4ECA  68 40
 .LFF4ECC:
-	lda xbc, (DL_FromS0ngNumber:24)                      ; FF4ECC  f2 ba 83 f5 31
+	lda xbc, (DL_FromSongNumber:24)                      ; FF4ECC  f2 ba 83 f5 31
 	push XBC                                             ; FF4ED1  39
 	lda xwa, (DL_F583AB:24)                              ; FF4ED2  f2 ab 83 f5 30
 	push XWA                                             ; FF4ED7  38
@@ -3278,7 +3278,7 @@ LcdKeyRow5_DiskL0adFile:
 	pushw 0x00                                           ; FF4EF1  0b 00 00
 	lda xbc, (DL_F583E5:24)                              ; FF4EF4  f2 e5 83 f5 31
 	push XBC                                             ; FF4EF9  39
-	lda xwa, (DL_ToS0ngNumber:24)                        ; FF4EFA  f2 d0 83 f5 30
+	lda xwa, (DL_ToSongNumber:24)                        ; FF4EFA  f2 d0 83 f5 30
 	push XWA                                             ; FF4EFF  38
 	cp h, 0x00:i3                                          ; FF4F00  ce d8
 	jr z, .LFF4F53                                       ; FF4F02  66 4f
@@ -3304,13 +3304,13 @@ LcdKeyRow5_DiskL0adFile:
 	pushw 0x00                                           ; FF4F2D  0b 00 00
 	lda xbc, (DL_F583E5:24)                              ; FF4F30  f2 e5 83 f5 31
 	push XBC                                             ; FF4F35  39
-	lda xwa, (DL_ToS0ngNumber:24)                        ; FF4F36  f2 d0 83 f5 30
+	lda xwa, (DL_ToSongNumber:24)                        ; FF4F36  f2 d0 83 f5 30
 	push XWA                                             ; FF4F3B  38
 	call DisplayList_RunOnLayer_SaveRegs                                      ; FF4F3C  1d d3 75 ff
 	inc 8,XSP                                            ; FF4F40  ef 60
 	inc 2,XSP                                            ; FF4F42  ef 62
 	pushw 0x00                                           ; FF4F44  0b 00 00
-	lda xbc, (DL_FromS0ngNumber:24)                      ; FF4F47  f2 ba 83 f5 31
+	lda xbc, (DL_FromSongNumber:24)                      ; FF4F47  f2 ba 83 f5 31
 	push XBC                                             ; FF4F4C  39
 	lda xwa, (DL_F583AB:24)                              ; FF4F4D  f2 ab 83 f5 30
 	push XWA                                             ; FF4F52  38
@@ -3373,7 +3373,7 @@ LcdKeyRow5_DiskL0adFile:
 	unlk XIZ                                             ; FF4FDC  ee 0d
 	ret                                                  ; FF4FDE  0e
 ; ---------------------------------------------------------------------
-; ExitKey_DiskL0adFile -- what Dispatch_FF3900 runs for panel control 0x0F
+; ExitKey_DiskLoadFile -- what Dispatch_FF3900 runs for panel control 0x0F
 ;
 ; Reached from: Dispatch_FF3900 entry [15] -- and from no other slot of any
 ;          32-entry control table in prom_a. A target reached at two
@@ -3386,15 +3386,15 @@ LcdKeyRow5_DiskL0adFile:
 ;          SLOT_CONTROL slot for slot; what is new here is only that THIS
 ;          module's tables are tied to it. See
 ;          notes/FINDINGS-prom_a-panel-control-map.md.
-; Screen:   DiskL0adFile -- the screen object at PanelScreen_VtableTable
+; Screen:   DiskLoadFile -- the screen object at PanelScreen_VtableTable
 ;          entry 0x67, i.e. SCREEN ID 0x47 through
 ;          PanelScreen_VtableTable_ViewB names this reader as its BUTTON
 ;          method and 0xFF4786 as its ENTER method, and that address carries
-;          the label Paint_DiskL0adFile -- a name an earlier round derived
+;          the label Paint_DiskLoadFile -- a name an earlier round derived
 ;          from the screen's own text.
 ; Unknown:  what this screen does with the button.
 ; ---------------------------------------------------------------------
-ExitKey_DiskL0adFile:
+ExitKey_DiskLoadFile:
 	link XIZ,0x0000                                      ; FF4FDF  ee 0c 00 00
 	ld BC,(XIZ+0x08)                                     ; FF4FE3  9e 08 21
 	and BC,0x0080                                        ; FF4FE6  d9 cc 80 00
@@ -3407,7 +3407,7 @@ ExitKey_DiskL0adFile:
 T_F423AC_Nop:
 	ret                                                  ; FF4FF9  0e
 ; ---------------------------------------------------------------------
-; Paint_MidiFileL0ad -- paints the screen whose own text reads "MIDI FILE L0AD"
+; Paint_MidiFileLoad -- paints the screen whose own text reads "MIDI FILE L0AD"
 ;
 ; Called from: prom_b T_F42400 (`jp`)
 ;
@@ -3434,7 +3434,7 @@ T_F423AC_Nop:
 ; Named by notes/prom_a_understanding_round7.py --apply; the byte gate
 ;          is blind to this name, --verify reads it back.
 ; ---------------------------------------------------------------------
-Paint_MidiFileL0ad:
+Paint_MidiFileLoad:
 	push XIX                                             ; FF4FFA  3c
 	lda xix, (UI_ScreenPage:16)                                ; FF4FFB  f1 29 22 34
 	call T_CallbackQueue_ResetAndRestartTask2            ; FF4FFF  1d 80 2e f4
@@ -3471,15 +3471,15 @@ Paint_MidiFileL0ad:
 	calr MidiFile_CountFileList                                      ; FF5062  1e 83 00
 	call LCD_BlankAndSetPanel3Layer_SaveRegs                                      ; FF5065  1d 04 76 ff
 	pushw 0x00                                           ; FF5069  0b 00 00
-	lda xbc, (Paint_MidiFileL0ad_DL:24)                              ; FF506C  f2 e9 93 f5 31
+	lda xbc, (Paint_MidiFileLoad_DL:24)                              ; FF506C  f2 e9 93 f5 31
 	push XBC                                             ; FF5071  39
-	lda xwa, (DL_MidiFileL0adL0ad:24)                    ; FF5072  f2 0b 93 f5 30
+	lda xwa, (DL_MidiFileLoadLoad:24)                    ; FF5072  f2 0b 93 f5 30
 	push XWA                                             ; FF5077  38
 	call DisplayList_RunOnLayer_SaveRegs                                      ; FF5078  1d d3 75 ff
 	pushw 0x02                                           ; FF507C  0b 02 00
 	lda xbc, (DL_F593F3:24)                              ; FF507F  f2 f3 93 f5 31
 	push XBC                                             ; FF5084  39
-	lda xwa, (Paint_MidiFileL0ad_DL:24)                              ; FF5085  f2 e9 93 f5 30
+	lda xwa, (Paint_MidiFileLoad_DL:24)                              ; FF5085  f2 e9 93 f5 30
 	push XWA                                             ; FF508A  38
 	call DisplayList_RunOnLayer_SaveRegs                                      ; FF508B  1d d3 75 ff
 	pushw 0x00                                           ; FF508F  0b 00 00
@@ -3543,7 +3543,7 @@ MidiFile_CountFileList:
 	popw hl                                              ; FF5116  4b
 	ret                                                  ; FF5117  0e
 ; MidiFile_DrawFileList: MidiFile_DrawFileList(rows, rowOffset): per row, the ' NN:' tag and the 8-character name of
-;   entry (0x272E) + row from 0x60A480, plus the 'MID' / blank tag. Paint_MidiFileL0ad / _DirectPlay / MidiFileSave
+;   entry (0x272E) + row from 0x60A480, plus the 'MID' / blank tag. Paint_MidiFileLoad / _DirectPlay / MidiFileSave
 ;   page 1 call it with (10, 0); MidiFile_LcdKeyRow4/5 after scrolling. Basis: callers + body. (wsa1/notes/naming-
 ;   pilot-2026-10-06/proposals_prom_a.json)
 MidiFile_DrawFileList:
@@ -3641,7 +3641,7 @@ MidiFile_DrawFileList:
 	unlk XIZ                                             ; FF5209  ee 0d
 	ret                                                  ; FF520B  0e
 ; ---------------------------------------------------------------------
-; ScreenLeave_MidiFileL0ad -- the LEAVE method of the screen object at
+; ScreenLeave_MidiFileLoad -- the LEAVE method of the screen object at
 ;          PanelScreen_VtableTable entry 0x69, i.e. SCREEN ID 0x49 through
 ;          PanelScreen_VtableTable_ViewB
 ;
@@ -3656,12 +3656,12 @@ MidiFile_DrawFileList:
 ;          current, and +8 by PanelButton_Route (0xF8621E) with the current
 ;          id and a button index -- three different call sites, checked as
 ;          V1-V6 in PanelScreen_VtableTable's own header.
-; Screen:   MidiFileL0ad -- the same object's +0 ENTER method carries the
-;          label Paint_MidiFileL0ad, a name an earlier round derived from the
+; Screen:   MidiFileLoad -- the same object's +0 ENTER method carries the
+;          label Paint_MidiFileLoad, a name an earlier round derived from the
 ;          screen's own text.
 ; Was `sub_FF520C`.
 ; ---------------------------------------------------------------------
-ScreenLeave_MidiFileL0ad:
+ScreenLeave_MidiFileLoad:
 	ld c, (UI_ScreenLatch:16)                                   ; FF520C  c1 7a 20 23
 	cp	c, (UI_ScreenLatch_Previous:16)                               ; FF5210  c1 7b 20 f3
 	jr z, .LFF522E                                       ; FF5214  66 18
@@ -3673,7 +3673,7 @@ ScreenLeave_MidiFileL0ad:
 .LFF522E:
 	ret                                                  ; FF522E  0e
 ; ---------------------------------------------------------------------
-; PanelButtonDispatch_MidiFileL0ad -- run Dispatch_FF3980's handler for one
+; PanelButtonDispatch_MidiFileLoad -- run Dispatch_FF3980's handler for one
 ;          PANEL CONTROL
 ;
 ; Inputs:   (XIZ+0x08) = the 5-bit panel control index; (XIZ+0x0A) =
@@ -3686,15 +3686,15 @@ ScreenLeave_MidiFileL0ad:
 ;          a return address before `jp (XBC)`.
 ; Control legend: notes/FINDINGS-prom_a-panel-control-map.md, and
 ;          `python3 notes/prom_a_panel_control_map.py --map`.
-; Screen:   MidiFileL0ad -- the screen object at PanelScreen_VtableTable
+; Screen:   MidiFileLoad -- the screen object at PanelScreen_VtableTable
 ;          entry 0x69, i.e. SCREEN ID 0x49 through
 ;          PanelScreen_VtableTable_ViewB names this reader as its BUTTON
 ;          method and 0xFF4FFA as its ENTER method, and that address carries
-;          the label Paint_MidiFileL0ad -- a name an earlier round derived
+;          the label Paint_MidiFileLoad -- a name an earlier round derived
 ;          from the screen's own text.
 ; Was `sub_FF522F`, named by notes/prom_a_naming_wave8_apply.py.
 ; ---------------------------------------------------------------------
-PanelButtonDispatch_MidiFileL0ad:
+PanelButtonDispatch_MidiFileLoad:
 	link XIZ,0x0000                                      ; FF522F  ee 0c 00 00
 	pushw hl                                             ; FF5233  2b
 	ld H,(XIZ+0x08)                                      ; FF5234  8e 08 26
@@ -3716,7 +3716,7 @@ PanelButtonDispatch_MidiFileL0ad:
 	unlk XIZ                                             ; FF5257  ee 0d
 	ret                                                  ; FF5259  0e
 ; ---------------------------------------------------------------------
-; LcdKeyRow1_MidiFileL0ad -- what Dispatch_FF3980 runs for panel control 0x08
+; LcdKeyRow1_MidiFileLoad -- what Dispatch_FF3980 runs for panel control 0x08
 ;
 ; Reached from: Dispatch_FF3980 entry [8] -- and from no other slot of any
 ;          32-entry control table in prom_a. A target reached at two
@@ -3731,15 +3731,15 @@ PanelButtonDispatch_MidiFileL0ad:
 ;          SLOT_CONTROL slot for slot; what is new here is only that THIS
 ;          module's tables are tied to it. See
 ;          notes/FINDINGS-prom_a-panel-control-map.md.
-; Screen:   MidiFileL0ad -- the screen object at PanelScreen_VtableTable
+; Screen:   MidiFileLoad -- the screen object at PanelScreen_VtableTable
 ;          entry 0x69, i.e. SCREEN ID 0x49 through
 ;          PanelScreen_VtableTable_ViewB names this reader as its BUTTON
 ;          method and 0xFF4FFA as its ENTER method, and that address carries
-;          the label Paint_MidiFileL0ad -- a name an earlier round derived
+;          the label Paint_MidiFileLoad -- a name an earlier round derived
 ;          from the screen's own text.
 ; Unknown:  what this screen does with the button.
 ; ---------------------------------------------------------------------
-LcdKeyRow1_MidiFileL0ad:
+LcdKeyRow1_MidiFileLoad:
 	link XIZ,0x0000                                      ; FF525A  ee 0c 00 00
 	pushw hl                                             ; FF525E  2b
 	push XIX                                             ; FF525F  3c
@@ -3763,7 +3763,7 @@ LcdKeyRow1_MidiFileL0ad:
 	popw wa                                              ; FF5291  48
 	cp C,0x20                                            ; FF5292  cb cf 20
 	jr z, .LFF52DD                                       ; FF5295  66 46
-	call T_MidiFileL0ad_LcdKeyRow1                                        ; FF5297  1d 80 33 f4
+	call T_MidiFileLoad_LcdKeyRow1                                        ; FF5297  1d 80 33 f4
 	call SC1_CmdEFAndClearHeldButtons                                      ; FF529B  1d 59 79 ff
 	cp	(UI_StatusCode:16), 0x23                            ; FF529F  c1 80 28 3f 23
 	jr z, .LFF52B0                                       ; FF52A4  66 0a
@@ -3796,7 +3796,7 @@ LcdKeyRow1_MidiFileL0ad:
 	unlk XIZ                                             ; FF52DF  ee 0d
 	ret                                                  ; FF52E1  0e
 ; ---------------------------------------------------------------------
-; LcdKeyRow2_MidiFileL0ad -- what Dispatch_FF3980 runs for panel control 0x09
+; LcdKeyRow2_MidiFileLoad -- what Dispatch_FF3980 runs for panel control 0x09
 ;
 ; Reached from: Dispatch_FF3980 entry [9] -- and from no other slot of any
 ;          32-entry control table in prom_a. A target reached at two
@@ -3810,16 +3810,16 @@ LcdKeyRow1_MidiFileL0ad:
 ;          SLOT_CONTROL slot for slot; what is new here is only that THIS
 ;          module's tables are tied to it. See
 ;          notes/FINDINGS-prom_a-panel-control-map.md.
-; Screen:   MidiFileL0ad -- the screen object at PanelScreen_VtableTable
+; Screen:   MidiFileLoad -- the screen object at PanelScreen_VtableTable
 ;          entry 0x69, i.e. SCREEN ID 0x49 through
 ;          PanelScreen_VtableTable_ViewB names this reader as its BUTTON
 ;          method and 0xFF4FFA as its ENTER method, and that address carries
-;          the label Paint_MidiFileL0ad -- a name an earlier round derived
+;          the label Paint_MidiFileLoad -- a name an earlier round derived
 ;          from the screen's own text.
 ; Unknown:  what this screen does with the button.
 ; Was `sub_FF52E2`.
 ; ---------------------------------------------------------------------
-LcdKeyRow2_MidiFileL0ad:
+LcdKeyRow2_MidiFileLoad:
 	link XIZ,0x0000                                      ; FF52E2  ee 0c 00 00
 	ld BC,(XIZ+0x08)                                     ; FF52E6  9e 08 21
 	and BC,0x0080                                        ; FF52E9  d9 cc 80 00
@@ -3833,7 +3833,7 @@ LcdKeyRow2_MidiFileL0ad:
 	unlk XIZ                                             ; FF52FF  ee 0d
 	ret                                                  ; FF5301  0e
 ; ---------------------------------------------------------------------
-; LcdKeyRow3_MidiFileL0ad -- what Dispatch_FF3980 runs for panel control 0x0A
+; LcdKeyRow3_MidiFileLoad -- what Dispatch_FF3980 runs for panel control 0x0A
 ;
 ; Reached from: Dispatch_FF3980 entry [10] -- and from no other slot of any
 ;          32-entry control table in prom_a. A target reached at two
@@ -3847,23 +3847,23 @@ LcdKeyRow2_MidiFileL0ad:
 ;          SLOT_CONTROL slot for slot; what is new here is only that THIS
 ;          module's tables are tied to it. See
 ;          notes/FINDINGS-prom_a-panel-control-map.md.
-; Screen:   MidiFileL0ad -- the screen object at PanelScreen_VtableTable
+; Screen:   MidiFileLoad -- the screen object at PanelScreen_VtableTable
 ;          entry 0x69, i.e. SCREEN ID 0x49 through
 ;          PanelScreen_VtableTable_ViewB names this reader as its BUTTON
 ;          method and 0xFF4FFA as its ENTER method, and that address carries
-;          the label Paint_MidiFileL0ad -- a name an earlier round derived
+;          the label Paint_MidiFileLoad -- a name an earlier round derived
 ;          from the screen's own text.
 ; Unknown:  what this screen does with the button.
 ; ---------------------------------------------------------------------
-LcdKeyRow3_MidiFileL0ad:
+LcdKeyRow3_MidiFileLoad:
 	link XIZ,0x0000                                      ; FF5302  ee 0c 00 00
 	pushw	(xiz+8)                                      ; FF5306  9e 08 04
-	calr LcdKeyRow2_MidiFileL0ad                                      ; FF5309  1e d6 ff
+	calr LcdKeyRow2_MidiFileLoad                                      ; FF5309  1e d6 ff
 	popw bc                                              ; FF530C  49
 	unlk XIZ                                             ; FF530D  ee 0d
 	ret                                                  ; FF530F  0e
 ; ---------------------------------------------------------------------
-; LcdKeyRow4_MidiFileL0ad -- what Dispatch_FF3980 runs for panel control 0x0B
+; LcdKeyRow4_MidiFileLoad -- what Dispatch_FF3980 runs for panel control 0x0B
 ;
 ; Reached from: Dispatch_FF3980 entry [11] -- and from no other slot of any
 ;          32-entry control table in prom_a. A target reached at two
@@ -3877,15 +3877,15 @@ LcdKeyRow3_MidiFileL0ad:
 ;          SLOT_CONTROL slot for slot; what is new here is only that THIS
 ;          module's tables are tied to it. See
 ;          notes/FINDINGS-prom_a-panel-control-map.md.
-; Screen:   MidiFileL0ad -- the screen object at PanelScreen_VtableTable
+; Screen:   MidiFileLoad -- the screen object at PanelScreen_VtableTable
 ;          entry 0x69, i.e. SCREEN ID 0x49 through
 ;          PanelScreen_VtableTable_ViewB names this reader as its BUTTON
 ;          method and 0xFF4FFA as its ENTER method, and that address carries
-;          the label Paint_MidiFileL0ad -- a name an earlier round derived
+;          the label Paint_MidiFileLoad -- a name an earlier round derived
 ;          from the screen's own text.
 ; Unknown:  what this screen does with the button.
 ; ---------------------------------------------------------------------
-LcdKeyRow4_MidiFileL0ad:
+LcdKeyRow4_MidiFileLoad:
 	link XIZ,0x0000                                      ; FF5310  ee 0c 00 00
 	push XIX                                             ; FF5314  3c
 	lda xix, (Disk_SeqBank:16)                                ; FF5315  f1 2b 27 34
@@ -3960,7 +3960,7 @@ LcdKeyRow4_MidiFileL0ad:
 	unlk XIZ                                             ; FF53C3  ee 0d
 	ret                                                  ; FF53C5  0e
 ; ---------------------------------------------------------------------
-; LcdKeyRow5_MidiFileL0ad -- what Dispatch_FF3980 runs for panel control 0x0C
+; LcdKeyRow5_MidiFileLoad -- what Dispatch_FF3980 runs for panel control 0x0C
 ;
 ; Reached from: Dispatch_FF3980 entry [12] -- and from no other slot of any
 ;          32-entry control table in prom_a. A target reached at two
@@ -3974,15 +3974,15 @@ LcdKeyRow4_MidiFileL0ad:
 ;          SLOT_CONTROL slot for slot; what is new here is only that THIS
 ;          module's tables are tied to it. See
 ;          notes/FINDINGS-prom_a-panel-control-map.md.
-; Screen:   MidiFileL0ad -- the screen object at PanelScreen_VtableTable
+; Screen:   MidiFileLoad -- the screen object at PanelScreen_VtableTable
 ;          entry 0x69, i.e. SCREEN ID 0x49 through
 ;          PanelScreen_VtableTable_ViewB names this reader as its BUTTON
 ;          method and 0xFF4FFA as its ENTER method, and that address carries
-;          the label Paint_MidiFileL0ad -- a name an earlier round derived
+;          the label Paint_MidiFileLoad -- a name an earlier round derived
 ;          from the screen's own text.
 ; Unknown:  what this screen does with the button.
 ; ---------------------------------------------------------------------
-LcdKeyRow5_MidiFileL0ad:
+LcdKeyRow5_MidiFileLoad:
 	link XIZ,0x0000                                      ; FF53C6  ee 0c 00 00
 	push XIX                                             ; FF53CA  3c
 	lda xix, (Disk_SeqBank:16)                                ; FF53CB  f1 2b 27 34
@@ -4053,7 +4053,7 @@ LcdKeyRow5_MidiFileL0ad:
 	unlk XIZ                                             ; FF546C  ee 0d
 	ret                                                  ; FF546E  0e
 ; ---------------------------------------------------------------------
-; ExitKey_MidiFileL0ad -- what Dispatch_FF3980 runs for panel control 0x0F
+; ExitKey_MidiFileLoad -- what Dispatch_FF3980 runs for panel control 0x0F
 ;
 ; Reached from: Dispatch_FF3980 entry [15] -- and from no other slot of any
 ;          32-entry control table in prom_a. A target reached at two
@@ -4066,15 +4066,15 @@ LcdKeyRow5_MidiFileL0ad:
 ;          SLOT_CONTROL slot for slot; what is new here is only that THIS
 ;          module's tables are tied to it. See
 ;          notes/FINDINGS-prom_a-panel-control-map.md.
-; Screen:   MidiFileL0ad -- the screen object at PanelScreen_VtableTable
+; Screen:   MidiFileLoad -- the screen object at PanelScreen_VtableTable
 ;          entry 0x69, i.e. SCREEN ID 0x49 through
 ;          PanelScreen_VtableTable_ViewB names this reader as its BUTTON
 ;          method and 0xFF4FFA as its ENTER method, and that address carries
-;          the label Paint_MidiFileL0ad -- a name an earlier round derived
+;          the label Paint_MidiFileLoad -- a name an earlier round derived
 ;          from the screen's own text.
 ; Unknown:  what this screen does with the button.
 ; ---------------------------------------------------------------------
-ExitKey_MidiFileL0ad:
+ExitKey_MidiFileLoad:
 	link XIZ,0x0000                                      ; FF546F  ee 0c 00 00
 	ld BC,(XIZ+0x08)                                     ; FF5473  9e 08 21
 	and BC,0x0080                                        ; FF5476  d9 cc 80 00
@@ -4187,7 +4187,7 @@ ScreenEnter_DiskSaveFile_Page1:   ; entry: named by 1 `.long` operand, first at 
 	jr z, .LFF557C                                       ; FF556C  66 0e
 	lda xbc, (DL_FloppyDisk:24)                          ; FF556E  f2 88 82 f5 31
 	push XBC                                             ; FF5573  39
-	lda xwa, (DL_SaveSaveFileDelSave0pti0n:24)           ; FF5574  f2 40 82 f5 30
+	lda xwa, (DL_SaveSaveFileDelSaveOption:24)           ; FF5574  f2 40 82 f5 30
 	push XWA                                             ; FF5579  38
 ; ---------------------------------------------------------------------
 ; Paint_DiskSaveFile -- paints the screen whose own text reads "SAVE FILE" / "SAVE 0PTI0N" over the FLOPPY DISK file list
@@ -4223,9 +4223,9 @@ ScreenEnter_DiskSaveFile_Page1:   ; entry: named by 1 `.long` operand, first at 
 Paint_DiskSaveFile:
 	jr .LFF5588                                          ; FF557A  68 0c
 .LFF557C:
-	lda xbc, (DL_SaveSaveFileDelSave0pti0n:24)           ; FF557C  f2 40 82 f5 31
+	lda xbc, (DL_SaveSaveFileDelSaveOption:24)           ; FF557C  f2 40 82 f5 31
 	push XBC                                             ; FF5581  39
-	lda xwa, (DL_SaveSaveFileSaveSave0pti0n:24)          ; FF5582  f2 f8 81 f5 30
+	lda xwa, (DL_SaveSaveFileSaveSaveOption:24)          ; FF5582  f2 f8 81 f5 30
 	push XWA                                             ; FF5587  38
 .LFF5588:
 	call DisplayList_RunOnLayer_SaveRegs                                      ; FF5588  1d d3 75 ff
@@ -4262,7 +4262,7 @@ ScreenEnter_DiskSaveFile_Page2:   ; entry: named by 1 `.long` operand, first at 
 	jp (xix)                                             ; FF55E5  b4 d8
 .LFF55E7:
 	pushw 0x00                                           ; FF55E7  0b 00 00
-	lda xbc, (DL_LoadL0adFileLoadL0ad0pti0n:24)          ; FF55EA  f2 b0 81 f5 31
+	lda xbc, (DL_LoadLoadFileLoadLoadOption:24)          ; FF55EA  f2 b0 81 f5 31
 	push XBC                                             ; FF55EF  39
 	lda xwa, (DL_F58162:24)                              ; FF55F0  f2 62 81 f5 30
 	push XWA                                             ; FF55F5  38
@@ -4357,7 +4357,7 @@ ScreenEnter_DiskSaveFile_Page5:   ; entry: named by 1 `.long` operand, first at 
 	jp (xix)                                             ; FF56E3  b4 d8
 .LFF56E5:
 	pushw 0x00                                           ; FF56E5  0b 00 00
-	lda xbc, (DL_LoadL0adFileLoadL0ad0pti0n:24)          ; FF56E8  f2 b0 81 f5 31
+	lda xbc, (DL_LoadLoadFileLoadLoadOption:24)          ; FF56E8  f2 b0 81 f5 31
 	push XBC                                             ; FF56ED  39
 	lda xwa, (DL_F58162:24)                              ; FF56EE  f2 62 81 f5 30
 	push XWA                                             ; FF56F3  38
@@ -4934,7 +4934,7 @@ LcdKeyRow3_DiskSaveFile_Page1:
 LcdKeyRow4_DiskSaveFile_Page1:
 	link XIZ,0x0000                                      ; FF5AB6  ee 0c 00 00
 	pushw	(xiz+8)                                      ; FF5ABA  9e 08 04
-	calr LcdKeyRow4_DiskL0adFile                                      ; FF5ABD  1e 0b f0
+	calr LcdKeyRow4_DiskLoadFile                                      ; FF5ABD  1e 0b f0
 	popw bc                                              ; FF5AC0  49
 	unlk XIZ                                             ; FF5AC1  ee 0d
 	ret                                                  ; FF5AC3  0e
@@ -4966,7 +4966,7 @@ LcdKeyRow4_DiskSaveFile_Page1:
 LcdKeyRow5_DiskSaveFile_Page1:
 	link XIZ,0x0000                                      ; FF5AC4  ee 0c 00 00
 	pushw	(xiz+8)                                      ; FF5AC8  9e 08 04
-	calr LcdKeyRow5_DiskL0adFile                                      ; FF5ACB  1e 8f f2
+	calr LcdKeyRow5_DiskLoadFile                                      ; FF5ACB  1e 8f f2
 	popw bc                                              ; FF5ACE  49
 	unlk XIZ                                             ; FF5ACF  ee 0d
 	ret                                                  ; FF5AD1  0e
@@ -5473,7 +5473,7 @@ ScreenEnter_MidiFileSave_Page1:   ; entry: named by 1 `.long` operand, first at 
 	push XWA                                             ; FF5D4C  38
 	jr .LFF5D5B                                          ; FF5D4D  68 0c
 .LFF5D4F:
-	lda xbc, (DL_MidiFileSaveFileSelecti0n:24)           ; FF5D4F  f2 22 92 f5 31
+	lda xbc, (DL_MidiFileSaveFileSelectionFromSongNumber:24)           ; FF5D4F  f2 22 92 f5 31
 	push XBC                                             ; FF5D54  39
 	lda xwa, (ScreenEnter_MidiFileSave_Page1_DL1:24)                              ; FF5D55  f2 18 92 f5 30
 	push XWA                                             ; FF5D5A  38
@@ -5485,14 +5485,14 @@ ScreenEnter_MidiFileSave_Page1:   ; entry: named by 1 `.long` operand, first at 
 	pushw 0x00                                           ; FF5D63  0b 00 00
 	lda xbc, (ScreenEnter_MidiFileSave_Page1_DL2:24)                              ; FF5D66  f2 01 93 f5 31
 	push XBC                                             ; FF5D6B  39
-	lda xwa, (DL_MidiFileSaveFileSelecti0n:24)           ; FF5D6C  f2 22 92 f5 30
+	lda xwa, (DL_MidiFileSaveFileSelectionFromSongNumber:24)           ; FF5D6C  f2 22 92 f5 30
 	push XWA                                             ; FF5D71  38
 	lda xiy, (.LFF5D7A:24)                               ; FF5D72  f2 7a 5d ff 35
 	push XIY                                             ; FF5D77  3d
 	jp (xix)                                             ; FF5D78  b4 d8
 .LFF5D7A:
 	pushw 0x02                                           ; FF5D7A  0b 02 00
-	lda xbc, (DL_MidiFileL0adL0ad:24)                    ; FF5D7D  f2 0b 93 f5 31
+	lda xbc, (DL_MidiFileLoadLoad:24)                    ; FF5D7D  f2 0b 93 f5 31
 	push XBC                                             ; FF5D82  39
 	lda xwa, (ScreenEnter_MidiFileSave_Page1_DL2:24)                              ; FF5D83  f2 01 93 f5 30
 	push XWA                                             ; FF5D88  38
@@ -5545,7 +5545,7 @@ ScreenEnter_MidiFileSave_Page2:   ; entry: named by 1 `.long` operand, first at 
 	jp (xix)                                             ; FF5E0F  b4 d8
 .LFF5E11:
 	pushw 0x00                                           ; FF5E11  0b 00 00
-	lda xbc, (DL_LoadL0adFileLoadL0ad0pti0n:24)          ; FF5E14  f2 b0 81 f5 31
+	lda xbc, (DL_LoadLoadFileLoadLoadOption:24)          ; FF5E14  f2 b0 81 f5 31
 	push XBC                                             ; FF5E19  39
 	lda xwa, (DL_F58162:24)                              ; FF5E1A  f2 62 81 f5 30
 	push XWA                                             ; FF5E1F  38
@@ -5575,7 +5575,7 @@ ScreenEnter_MidiFileSave_Page3:   ; entry: named by 1 `.long` operand, first at 
 	call T_Playback_StopAllAndIgnoreMidiStart                                        ; FF5E55  1d 94 25 f4
 	call LCD_BlankAndSetPanel3Layer_SaveRegs                                      ; FF5E59  1d 04 76 ff
 	pushw 0x00                                           ; FF5E5D  0b 00 00
-	lda xbc, (DL_LoadSingleSoundDiskGr0upSingleFileBankS0undGr0up:24) ; FF5E60  f2 d7 8a f5 31
+	lda xbc, (DL_LoadSingleSoundDiskGroupSingleFileBankSoundGroup:24) ; FF5E60  f2 d7 8a f5 31
 	push XBC                                             ; FF5E65  39
 	lda xwa, (DL_MidiFileSaveFileDelete:24)              ; FF5E66  f2 b7 8a f5 30
 	push XWA                                             ; FF5E6B  38
@@ -5584,7 +5584,7 @@ ScreenEnter_MidiFileSave_Page3:   ; entry: named by 1 `.long` operand, first at 
 	jp (xix)                                             ; FF5E72  b4 d8
 .LFF5E74:
 	pushw 0x00                                           ; FF5E74  0b 00 00
-	lda xbc, (DL_LoadL0adFileLoadL0ad0pti0n:24)          ; FF5E77  f2 b0 81 f5 31
+	lda xbc, (DL_LoadLoadFileLoadLoadOption:24)          ; FF5E77  f2 b0 81 f5 31
 	push XBC                                             ; FF5E7C  39
 	lda xwa, (DL_F58162:24)                              ; FF5E7D  f2 62 81 f5 30
 	push XWA                                             ; FF5E82  38
@@ -6338,7 +6338,7 @@ LcdKeyRow5_MidiFileSave_Page1:
 	pop XIX                                              ; FF6384  5c
 	unlk XIZ                                             ; FF6385  ee 0d
 	ret                                                  ; FF6387  0e
-; MidiFile_LcdKeyRow4: the LcdKeyRow4 action of MidiFileDirectPlay, MidiFileL0ad, MidiFileSave_Page1 -- called only by LcdKeyRow4_MidiFileDirectPlay, LcdKeyRow4_MidiFileL0ad, LcdKeyRow4_MidiFileSave_Page1.
+; MidiFile_LcdKeyRow4: the LcdKeyRow4 action of MidiFileDirectPlay, MidiFileLoad, MidiFileSave_Page1 -- called only by LcdKeyRow4_MidiFileDirectPlay, LcdKeyRow4_MidiFileLoad, LcdKeyRow4_MidiFileSave_Page1.
 MidiFile_LcdKeyRow4:
 	link XIZ,0x0000                                      ; FF6388  ee 0c 00 00
 	push XIX                                             ; FF638C  3c
@@ -6367,7 +6367,7 @@ MidiFile_LcdKeyRow4:
 	pop XIX                                              ; FF63C4  5c
 	unlk XIZ                                             ; FF63C5  ee 0d
 	ret                                                  ; FF63C7  0e
-; MidiFile_LcdKeyRow5: the LcdKeyRow5 action of MidiFileDirectPlay, MidiFileL0ad, MidiFileSave_Page1 -- called only by LcdKeyRow5_MidiFileDirectPlay, LcdKeyRow5_MidiFileL0ad, LcdKeyRow5_MidiFileSave_Page1.
+; MidiFile_LcdKeyRow5: the LcdKeyRow5 action of MidiFileDirectPlay, MidiFileLoad, MidiFileSave_Page1 -- called only by LcdKeyRow5_MidiFileDirectPlay, LcdKeyRow5_MidiFileLoad, LcdKeyRow5_MidiFileSave_Page1.
 MidiFile_LcdKeyRow5:
 	link XIZ,0xfffe                                      ; FF63C8  ee 0c fe ff
 	pushw hl                                             ; FF63CC  2b
@@ -6646,11 +6646,11 @@ Paint_FloppyDiskFormatSelectType:
 	pushw 0x00                                           ; FF651E  0b 00 00
 	lda xbc, (DL_ComposerLoad:24)                        ; FF6521  f2 04 99 f5 31
 	push XBC                                             ; FF6526  39
-	lda xwa, (DL_FloppyDiskFormatSelectTheF0rmatTypeForYo:24) ; FF6527  f2 5b 98 f5 30
+	lda xwa, (DL_FloppyDiskFormatSelectTheFormatTypeForYo:24) ; FF6527  f2 5b 98 f5 30
 	push XWA                                             ; FF652C  38
 	call DisplayList_RunOnLayer_SaveRegs                                      ; FF652D  1d d3 75 ff
 	pushw 0x00                                           ; FF6531  0b 00 00
-	lda xbc, (DL_DiskDiskL0adDiskSaveMidiFile:24)        ; FF6534  f2 14 80 f5 31
+	lda xbc, (DL_DiskDiskLoadDiskSaveMidiFile:24)        ; FF6534  f2 14 80 f5 31
 	push XBC                                             ; FF6539  39
 	lda xwa, (DL_Disk:24)                                ; FF653A  f2 00 80 f5 30
 	push XWA                                             ; FF653F  38
@@ -6760,7 +6760,7 @@ sub_FF657B:   ; entry: named by 2 `.long` operands, first at 0xFF3F45
 ; Body:     DiskScreen_RowOption := 0; on the key event with (XIZ+8) bit 7
 ;          set: (0x21E8) bit 3 cleared, UI_Request := 0x8051 (screen 0x51).
 ; Evidence: the screen's row 3 caption is "2DD:720K Byte format for 2DD
-;          disk." at y = 113 (DL_FloppyDiskFormatSelectTheF0rmatTypeForYo);
+;          disk." at y = 113 (DL_FloppyDiskFormatSelectTheFormatTypeForYo);
 ;          Paint_FloppyDiskFormatAreYouSure titles screen 0x51 "(2DD)" when
 ;          (0x21E8) bit 3 is clear and "(2HD)" when it is set.
 ; Was LcdKeyRow3_MidiFileSave_Page4 (kn5000-wxn).
@@ -6877,7 +6877,7 @@ Paint_FloppyDiskFormatAreYouSure:
 	jp (xix)                                             ; FF663B  b4 d8
 .LFF663D:
 	pushw 0x00                                           ; FF663D  0b 00 00
-	lda xbc, (DL_LoadL0adFileLoadL0ad0pti0n:24)          ; FF6640  f2 b0 81 f5 31
+	lda xbc, (DL_LoadLoadFileLoadLoadOption:24)          ; FF6640  f2 b0 81 f5 31
 	push XBC                                             ; FF6645  39
 	lda xwa, (DL_F58162:24)                              ; FF6646  f2 62 81 f5 30
 	push XWA                                             ; FF664B  38
@@ -7063,7 +7063,7 @@ ExitKey_FloppyDiskFormatAreYouSure:
 T_F423FC_Nop:
 	ret                                                  ; FF672C  0e
 ; ---------------------------------------------------------------------
-; PageDispatch_L0adSingleS0und -- run ScreenEnterPages_L0adSingleS0und's entry for the CURRENT
+; PageDispatch_LoadSingleSound -- run ScreenEnterPages_LoadSingleSound's entry for the CURRENT
 ;          PAGE
 ;
 ; ★ NOT a panel-control table.  This reader indexes with the page
@@ -7074,28 +7074,28 @@ T_F423FC_Nop:
 ;          width-1), and `add XBC,0x00FF4041` at 0xFF673C names the table.
 ;          The entry is CALLED: a return address is pushed before
 ;          `jp (XBC)`.
-; Screen:   L0adSingleS0und -- the screen object at PanelScreen_VtableTable
+; Screen:   LoadSingleSound -- the screen object at PanelScreen_VtableTable
 ;          entry 0x74, i.e. SCREEN ID 0x54 through
 ;          PanelScreen_VtableTable_ViewB names this reader as its ENTER
 ;          method, and its BUTTON method is that screen's control table.
 ; Was `sub_FF672D`, named by notes/prom_a_naming_wave8_apply.py.
 ; ---------------------------------------------------------------------
-PageDispatch_L0adSingleS0und:
+PageDispatch_LoadSingleSound:
 	cp	(UI_ScreenPage:16), 0x02                            ; FF672D  c1 29 22 3f 02
 	jr nc, .LFF674C                                      ; FF6732  6f 18
 	ld c, 0x04:opc                                          ; FF6734  23 04
 	mul	bc, (UI_ScreenPage:16)                              ; FF6736  c1 29 22 43
 	extz XBC                                             ; FF673A  e9 12
-	add XBC,ScreenEnterPages_L0adSingleS0und                              ; FF673C  e9 c8 41 40 ff 00
+	add XBC,ScreenEnterPages_LoadSingleSound                              ; FF673C  e9 c8 41 40 ff 00
 	ld XBC,(XBC)                                         ; FF6742  a1 21
 	lda xiy, (.LFF674C:24)                               ; FF6744  f2 4c 67 ff 35
 	push XIY                                             ; FF6749  3d
 	jp (xbc)                                             ; FF674A  b1 d8
 .LFF674C:
 	ret                                                  ; FF674C  0e
-; ScreenEnter_L0adSingleS0und_Page0: ScreenEnterPages_L0adSingleS0und[0] -- what PageDispatch_L0adSingleS0und, the ENTER method of the L0adSingleS0und screen, runs
+; ScreenEnter_LoadSingleSound_Page0: ScreenEnterPages_LoadSingleSound[0] -- what PageDispatch_LoadSingleSound, the ENTER method of the LoadSingleSound screen, runs
 ;   when UI_ScreenPage is 0 (notes/prom_a_page_enter_names.py).
-ScreenEnter_L0adSingleS0und_Page0:   ; entry: named by 1 `.long` operand, first at 0xFF4041
+ScreenEnter_LoadSingleSound_Page0:   ; entry: named by 1 `.long` operand, first at 0xFF4041
 	pushw hl                                             ; FF674D  2b
 	push XIX                                             ; FF674E  3c
 	lda xix, (DisplayList_RunOnLayer_SaveRegs:24)                             ; FF674F  f2 d3 75 ff 34
@@ -7130,18 +7130,18 @@ ScreenEnter_L0adSingleS0und_Page0:   ; entry: named by 1 `.long` operand, first 
 	ld (LoadSingle_SelectedItem:16), a                                   ; FF67AD  f1 38 27 41
 .LFF67B1:
 	pushw 0x00                                           ; FF67B1  0b 00 00
-	lda xbc, (ScreenEnter_L0adSingleS0und_Page0_DL:24)                              ; FF67B4  f2 f0 8d f5 31
+	lda xbc, (ScreenEnter_LoadSingleSound_Page0_DL:24)                              ; FF67B4  f2 f0 8d f5 31
 	push XBC                                             ; FF67B9  39
-	lda xwa, (DL_LoadSingleSoundDiskGr0upSingleFileBankS0und:24) ; FF67BA  f2 53 8c f5 30
+	lda xwa, (DL_LoadSingleSoundDiskGroupSingleFileBankSound:24) ; FF67BA  f2 53 8c f5 30
 	push XWA                                             ; FF67BF  38
 	lda xiy, (.LFF67C8:24)                               ; FF67C0  f2 c8 67 ff 35
 	push XIY                                             ; FF67C5  3d
 	jp (xix)                                             ; FF67C6  b4 d8
 .LFF67C8:
 	pushw 0x02                                           ; FF67C8  0b 02 00
-	lda xbc, (DL_LoadSingleCombinationDiskGr0upSingleUser1FileBankUser1S0und:24) ; FF67CB  f2 04 8e f5 31
+	lda xbc, (DL_LoadSingleCombinationDiskGroupSingleUser1FileBankUser1Sound:24) ; FF67CB  f2 04 8e f5 31
 	push XBC                                             ; FF67D0  39
-	lda xwa, (ScreenEnter_L0adSingleS0und_Page0_DL:24)                              ; FF67D1  f2 f0 8d f5 30
+	lda xwa, (ScreenEnter_LoadSingleSound_Page0_DL:24)                              ; FF67D1  f2 f0 8d f5 30
 	push XWA                                             ; FF67D6  38
 	lda xiy, (.LFF67DF:24)                               ; FF67D7  f2 df 67 ff 35
 	push XIY                                             ; FF67DC  3d
@@ -7156,11 +7156,11 @@ ScreenEnter_L0adSingleS0und_Page0:   ; entry: named by 1 `.long` operand, first 
 	push XIY                                             ; FF67F3  3d
 	jp (xix)                                             ; FF67F4  b4 d8
 .LFF67F6:
-	calr L0adSingleS0und_DrawGroupName                                      ; FF67F6  1e 2b 0a
-	calr L0adSingleS0und_DrawGroupSounds                                      ; FF67F9  1e 9a 0a
+	calr LoadSingleSound_DrawGroupName                                      ; FF67F6  1e 2b 0a
+	calr LoadSingleSound_DrawGroupSounds                                      ; FF67F9  1e 9a 0a
 	push 0x00                                            ; FF67FC  09 00
 	push	(0x2735:16)                                  ; FF67FE  c1 35 27 04
-	calr L0adSingle_DrawBankAndNumber                                      ; FF6802  1e 31 0c
+	calr LoadSingle_DrawBankAndNumber                                      ; FF6802  1e 31 0c
 	call Disk_FormatSelectedEntry_SaveRegs                                      ; FF6805  1d 76 77 ff
 	lda xbc, (0xf5911e:24)                               ; FF6809  f2 1e 91 f5 31
 	push XBC                                             ; FF680E  39
@@ -7176,26 +7176,26 @@ ScreenEnter_L0adSingleS0und_Page0:   ; entry: named by 1 `.long` operand, first 
 	pop XIX                                              ; FF6832  5c
 	popw hl                                              ; FF6833  4b
 	ret                                                  ; FF6834  0e
-; ScreenEnter_L0adSingleS0und_Page1: ScreenEnterPages_L0adSingleS0und[1] -- what PageDispatch_L0adSingleS0und, the ENTER method of the L0adSingleS0und screen, runs
+; ScreenEnter_LoadSingleSound_Page1: ScreenEnterPages_LoadSingleSound[1] -- what PageDispatch_LoadSingleSound, the ENTER method of the LoadSingleSound screen, runs
 ;   when UI_ScreenPage is 1 (notes/prom_a_page_enter_names.py).
-ScreenEnter_L0adSingleS0und_Page1:   ; entry: named by 1 `.long` operand, first at 0xFF4045
+ScreenEnter_LoadSingleSound_Page1:   ; entry: named by 1 `.long` operand, first at 0xFF4045
 	push XIX                                             ; FF6835  3c
 	lda xix, (DisplayList_RunOnLayer_SaveRegs:24)                             ; FF6836  f2 d3 75 ff 34
 	call T_CallbackQueue_ResetAndRestartTask2            ; FF683B  1d 80 2e f4
 	call LCD_BlankAndSetPanel3Layer_SaveRegs                                      ; FF683F  1d 04 76 ff
 	pushw 0x00                                           ; FF6843  0b 00 00
-	lda xbc, (ScreenEnter_L0adSingleS0und_Page1_DL:24)                              ; FF6846  f2 49 8c f5 31
+	lda xbc, (ScreenEnter_LoadSingleSound_Page1_DL:24)                              ; FF6846  f2 49 8c f5 31
 	push XBC                                             ; FF684B  39
-	lda xwa, (DL_LoadSingleSoundDiskGr0upSingleFileBankS0undGr0up:24) ; FF684C  f2 d7 8a f5 30
+	lda xwa, (DL_LoadSingleSoundDiskGroupSingleFileBankSoundGroup:24) ; FF684C  f2 d7 8a f5 30
 	push XWA                                             ; FF6851  38
 	lda xiy, (.LFF685A:24)                               ; FF6852  f2 5a 68 ff 35
 	push XIY                                             ; FF6857  3d
 	jp (xix)                                             ; FF6858  b4 d8
 .LFF685A:
 	pushw 0x02                                           ; FF685A  0b 02 00
-	lda xbc, (DL_LoadSingleSoundDiskGr0upSingleFileBankS0und:24) ; FF685D  f2 53 8c f5 31
+	lda xbc, (DL_LoadSingleSoundDiskGroupSingleFileBankSound:24) ; FF685D  f2 53 8c f5 31
 	push XBC                                             ; FF6862  39
-	lda xwa, (ScreenEnter_L0adSingleS0und_Page1_DL:24)                              ; FF6863  f2 49 8c f5 30
+	lda xwa, (ScreenEnter_LoadSingleSound_Page1_DL:24)                              ; FF6863  f2 49 8c f5 30
 	push XWA                                             ; FF6868  38
 	lda xiy, (.LFF6871:24)                               ; FF6869  f2 71 68 ff 35
 	push XIY                                             ; FF686E  3d
@@ -7212,7 +7212,7 @@ ScreenEnter_L0adSingleS0und_Page1:   ; entry: named by 1 `.long` operand, first 
 .LFF6888:
 	push 0x00                                            ; FF6888  09 00
 	push	(0x273a:16)                                  ; FF688A  c1 3a 27 04
-	calr L0adSingleS0und_DrawGroupList                                      ; FF688E  1e c2 08
+	calr LoadSingleSound_DrawGroupList                                      ; FF688E  1e c2 08
 	call Disk_FormatSelectedEntry_SaveRegs                                      ; FF6891  1d 76 77 ff
 	ld c, (0x2727:16)                                   ; FF6895  c1 27 27 23
 	inc 1,C                                              ; FF6899  cb 61
@@ -7231,7 +7231,7 @@ ScreenEnter_L0adSingleS0und_Page1:   ; entry: named by 1 `.long` operand, first 
 	pop XIX                                              ; FF68C8  5c
 	ret                                                  ; FF68C9  0e
 ; ---------------------------------------------------------------------
-; ScreenLeave_L0adSingleS0und -- the LEAVE method of the screen object at
+; ScreenLeave_LoadSingleSound -- the LEAVE method of the screen object at
 ;          PanelScreen_VtableTable entry 0x74, i.e. SCREEN ID 0x54 through
 ;          PanelScreen_VtableTable_ViewB
 ;
@@ -7242,17 +7242,17 @@ ScreenEnter_L0adSingleS0und_Page1:   ; entry: named by 1 `.long` operand, first 
 ;          checks V1-V6): +0 ENTER is called by PanelScreen_CallEnter_A/B, +4
 ;          LEAVE by PanelScreen_CallLeave_A/B with the id that just STOPPED
 ;          being current, +8 BUTTON by PanelButton_Route (0xF8621E).
-; Screen:   L0adSingleS0und -- inherited from the +0 ENTER label
-;          PageDispatch_L0adSingleS0und, not from any text this pass read.
+; Screen:   LoadSingleSound -- inherited from the +0 ENTER label
+;          PageDispatch_LoadSingleSound, not from any text this pass read.
 ; Was `sub_FF68CA`.
 ; ---------------------------------------------------------------------
-ScreenLeave_L0adSingleS0und:
+ScreenLeave_LoadSingleSound:
 	call DiskScreen_LeaveOnScreenChange                                      ; FF68CA  1d 6c 79 ff
 	call T_Disk_PortA3_Release_Call_Call                                        ; FF68CE  1d 90 25 f4
 	ld (0x21fa:16), 0x00                                 ; FF68D2  f1 fa 21 00 00
 	ret                                                  ; FF68D7  0e
 ; ---------------------------------------------------------------------
-; PanelButtonDispatch_L0adSingleS0und -- run Dispatch_FF4049's handler for
+; PanelButtonDispatch_LoadSingleSound -- run Dispatch_FF4049's handler for
 ;          one PANEL CONTROL
 ;
 ; Inputs:   (XIZ+0x08) = the 5-bit panel control index; (XIZ+0x0A) =
@@ -7266,14 +7266,14 @@ ScreenLeave_L0adSingleS0und:
 ;          a return address before `jp (XBC)`.
 ; Control legend: notes/FINDINGS-prom_a-panel-control-map.md, and
 ;          `python3 notes/prom_a_panel_control_map.py --map`.
-; Screen:   L0adSingleS0und -- the screen object at PanelScreen_VtableTable
+; Screen:   LoadSingleSound -- the screen object at PanelScreen_VtableTable
 ;          entry 0x74, i.e. SCREEN ID 0x54 through
 ;          PanelScreen_VtableTable_ViewB names this reader as its BUTTON
 ;          method, and its page 0 draws the list at 0xF58C53, whose first
 ;          record reads "LOAD SINGLE SOUND".
 ; Was `sub_FF68D8`, named by notes/prom_a_naming_wave8_apply.py.
 ; ---------------------------------------------------------------------
-PanelButtonDispatch_L0adSingleS0und:
+PanelButtonDispatch_LoadSingleSound:
 	link XIZ,0x0000                                      ; FF68D8  ee 0c 00 00
 	pushw hl                                             ; FF68DC  2b
 	ld H,(XIZ+0x08)                                      ; FF68DD  8e 08 26
@@ -7293,10 +7293,10 @@ PanelButtonDispatch_L0adSingleS0und:
 	popw hl                                              ; FF6902  4b
 	unlk XIZ                                             ; FF6903  ee 0d
 	ret                                                  ; FF6905  0e
-; SoftKeyCol1_L0adSingle_AllPages: slot 0 (and its held form 0x11) of all four pages of both screens: PanelDial_SetButtonPair(0, 0x80),
+; SoftKeyCol1_LoadSingle_AllPages: slot 0 (and its held form 0x11) of all four pages of both screens: PanelDial_SetButtonPair(0, 0x80),
 ;   UI_ScreenItem_StepByDial, Disk_FormatSelectedEntry_SaveRegs, then the string-table list DL_F5910F -- steps the
 ;   selected disk file entry.
-SoftKeyCol1_L0adSingle_AllPages:   ; entry: named by 8 `.long` operands, first at 0xFF4049
+SoftKeyCol1_LoadSingle_AllPages:   ; entry: named by 8 `.long` operands, first at 0xFF4049
 	pushw 0x80                                           ; FF6906  0b 80 00
 	pushw 0x00                                           ; FF6909  0b 00 00
 	calr PanelDial_SetButtonPair                                      ; FF690C  1e 1b 08
@@ -7307,9 +7307,9 @@ SoftKeyCol1_L0adSingle_AllPages:   ; entry: named by 8 `.long` operands, first a
 	call DLB_Handler_StringTable_Veneer                                      ; FF691D  1d 56 76 ff
 	inc 8,XSP                                            ; FF6921  ef 60
 	ret                                                  ; FF6923  0e
-; SoftKeyCol2_L0adSingleS0und_Page1: Dispatch_FF4049+128[1] -- the SoftKeyCol2 handler of L0adSingleS0und_Page1; the table's other named entries sit at their own
+; SoftKeyCol2_LoadSingleSound_Page1: Dispatch_FF4049+128[1] -- the SoftKeyCol2 handler of LoadSingleSound_Page1; the table's other named entries sit at their own
 ;   controls' slots and name the same screen (notes/prom_ab_button_table_siblings.py).
-SoftKeyCol2_L0adSingleS0und_Page1:   ; entry: named by 2 `.long` operands, first at 0xFF40CD
+SoftKeyCol2_LoadSingleSound_Page1:   ; entry: named by 2 `.long` operands, first at 0xFF40CD
 	link XIZ,0x0000                                      ; FF6924  ee 0c 00 00
 	push XIX                                             ; FF6928  3c
 	lda xix, (LoadSingle_SourceBank:16)                                ; FF6929  f1 28 27 34
@@ -7339,7 +7339,7 @@ SoftKeyCol2_L0adSingleS0und_Page1:   ; entry: named by 2 `.long` operands, first
 	call DLB_Handler_StringTable_Veneer                                      ; FF6962  1d 56 76 ff
 	push 0x00                                            ; FF6966  09 00
 	push	(0x273a:16)                                  ; FF6968  c1 3a 27 04
-	calr L0adSingleS0und_DrawGroupList                                      ; FF696C  1e e4 07
+	calr LoadSingleSound_DrawGroupList                                      ; FF696C  1e e4 07
 	calr Var2728_Is2or3                                      ; FF696F  1e b3 0b
 	inc 8,XSP                                            ; FF6972  ef 60
 	inc 2,XSP                                            ; FF6974  ef 62
@@ -7365,9 +7365,9 @@ SoftKeyCol2_L0adSingleS0und_Page1:   ; entry: named by 2 `.long` operands, first
 	pop XIX                                              ; FF69B5  5c
 	unlk XIZ                                             ; FF69B6  ee 0d
 	ret                                                  ; FF69B8  0e
-; SoftKeyCols3_4_L0adSingle_Page1: slots 2 and 3 of page 1 of both screens: steps (0x2727) within 0..15 (0..0 for a drum bank) and shows it 1-based
+; SoftKeyCols3_4_LoadSingle_Page1: slots 2 and 3 of page 1 of both screens: steps (0x2727) within 0..15 (0..0 for a drum bank) and shows it 1-based
 ;   through (0x2730), the decimal readout of DL_F5910F's second record.
-SoftKeyCols3_4_L0adSingle_Page1:   ; entry: named by 8 `.long` operands, first at 0xFF40D1
+SoftKeyCols3_4_LoadSingle_Page1:   ; entry: named by 8 `.long` operands, first at 0xFF40D1
 	link XIZ,0x0000                                      ; FF69B9  ee 0c 00 00
 	pushw hl                                             ; FF69BD  2b
 	pushw de                                             ; FF69BE  2a
@@ -7414,9 +7414,9 @@ SoftKeyCols3_4_L0adSingle_Page1:   ; entry: named by 8 `.long` operands, first a
 	popw hl                                              ; FF6A13  4b
 	unlk XIZ                                             ; FF6A14  ee 0d
 	ret                                                  ; FF6A16  0e
-; SoftKeyCols5_6_L0adSingleS0und_Page1: slots 4 and 5 of L0adSingleS0und page 1: (0x2736) = 0 / 1 (2 / 3 for a drum bank) by the argument's bit 7
+; SoftKeyCols5_6_LoadSingleSound_Page1: slots 4 and 5 of LoadSingleSound page 1: (0x2736) = 0 / 1 (2 / 3 for a drum bank) by the argument's bit 7
 ;   (the direction) -- USER 1 / USER 2 (/ USER1 DRUM / USER2 DRUM) in DLText_F59128 -- then redraws the (0x2736) string-table record at 0xF59100.
-SoftKeyCols5_6_L0adSingleS0und_Page1:   ; entry: named by 4 `.long` operands, first at 0xFF40D9
+SoftKeyCols5_6_LoadSingleSound_Page1:   ; entry: named by 4 `.long` operands, first at 0xFF40D9
 	link XIZ,0x0000                                      ; FF6A17  ee 0c 00 00
 	push XIX                                             ; FF6A1B  3c
 	lda xix, (LoadSingle_DestBank:16)                                ; FF6A1C  f1 36 27 34
@@ -7449,14 +7449,14 @@ SoftKeyCols5_6_L0adSingleS0und_Page1:   ; entry: named by 4 `.long` operands, fi
 	call DLB_Handler_StringTable_Veneer                                      ; FF6A59  1d 56 76 ff
 	push 0x00                                            ; FF6A5D  09 00
 	push	(0x273a:16)                                  ; FF6A5F  c1 3a 27 04
-	calr L0adSingleS0und_DrawGroupList                                      ; FF6A63  1e ed 06
+	calr LoadSingleSound_DrawGroupList                                      ; FF6A63  1e ed 06
 	inc 6,XSP                                            ; FF6A66  ef 66
 	pop XIX                                              ; FF6A68  5c
 	unlk XIZ                                             ; FF6A69  ee 0d
 	ret                                                  ; FF6A6B  0e
-; SoftKeyCols7_8_L0adSingle_Page1: slots 6 and 7 of page 1 of both screens: moves the cursor row (0x2739, 0..7) and scrolls the list top (0x273A, up to 8)
+; SoftKeyCols7_8_LoadSingle_Page1: slots 6 and 7 of page 1 of both screens: moves the cursor row (0x2739, 0..7) and scrolls the list top (0x273A, up to 8)
 ;   when the cursor is at an end; refused for a drum bank.  DL_F5915B is the row highlight (source 0x2739).
-SoftKeyCols7_8_L0adSingle_Page1:   ; entry: named by 8 `.long` operands, first at 0xFF40E1
+SoftKeyCols7_8_LoadSingle_Page1:   ; entry: named by 8 `.long` operands, first at 0xFF40E1
 	link XIZ,0x0000                                      ; FF6A6C  ee 0c 00 00
 	push XIX                                             ; FF6A70  3c
 	lda xix, (0x273a:16)                                ; FF6A71  f1 3a 27 34
@@ -7497,12 +7497,12 @@ SoftKeyCols7_8_L0adSingle_Page1:   ; entry: named by 8 `.long` operands, first a
 .LFF6AD0:
 	ld C,(XIX)                                           ; FF6AD0  84 23
 	pushw bc                                             ; FF6AD2  29
-	calr L0adSingleS0und_DrawGroupList                                      ; FF6AD3  1e 7d 06
+	calr LoadSingleSound_DrawGroupList                                      ; FF6AD3  1e 7d 06
 	jr .LFF6ADE                                          ; FF6AD6  68 06
 .LFF6AD8:
 	ld C,(XIX)                                           ; FF6AD8  84 23
 	pushw bc                                             ; FF6ADA  29
-	calr L0adSingleC0mbination_DrawGroupList                                      ; FF6ADB  1e 55 08
+	calr LoadSingleCombination_DrawGroupList                                      ; FF6ADB  1e 55 08
 .LFF6ADE:
 	popw bc                                              ; FF6ADE  49
 	jr .LFF6AE5                                          ; FF6ADF  68 04
@@ -7521,7 +7521,7 @@ SoftKeyCols7_8_L0adSingle_Page1:   ; entry: named by 8 `.long` operands, first a
 	unlk XIZ                                             ; FF6AFB  ee 0d
 	ret                                                  ; FF6AFD  0e
 ; ---------------------------------------------------------------------
-; LcdKeyRow1_L0adSingleS0und_Page1 -- what Dispatch_FF4049 runs for panel
+; LcdKeyRow1_LoadSingleSound_Page1 -- what Dispatch_FF4049 runs for panel
 ;          control 0x08
 ;
 ; Reached from: Dispatch_FF4049 entry [40] (page 1, control 0x08) -- and from
@@ -7538,14 +7538,14 @@ SoftKeyCols7_8_L0adSingle_Page1:   ; entry: named by 8 `.long` operands, first a
 ;          SLOT_CONTROL slot for slot; what is new here is only that THIS
 ;          module's tables are tied to it. See
 ;          notes/FINDINGS-prom_a-panel-control-map.md.
-; Screen:   L0adSingleS0und -- the screen object at PanelScreen_VtableTable
+; Screen:   LoadSingleSound -- the screen object at PanelScreen_VtableTable
 ;          entry 0x74, i.e. SCREEN ID 0x54 through
 ;          PanelScreen_VtableTable_ViewB names this reader as its BUTTON
 ;          method, and its page 0 draws the list at 0xF58C53, whose first
 ;          record reads "LOAD SINGLE SOUND".
 ; Unknown:  what this screen does with the button.
 ; ---------------------------------------------------------------------
-LcdKeyRow1_L0adSingleS0und_Page1:
+LcdKeyRow1_LoadSingleSound_Page1:
 	link XIZ,0x0000                                      ; FF6AFE  ee 0c 00 00
 	ld BC,(XIZ+0x08)                                     ; FF6B02  9e 08 21
 	and BC,0x0080                                        ; FF6B05  d9 cc 80 00
@@ -7567,9 +7567,9 @@ LcdKeyRow1_L0adSingleS0und_Page1:
 .LFF6B32:
 	unlk XIZ                                             ; FF6B32  ee 0d
 	ret                                                  ; FF6B34  0e
-; SoftKeyCol2_L0adSingleS0und_Page0: Dispatch_FF4049+0[1] -- the SoftKeyCol2 handler of L0adSingleS0und_Page0; the table's other named entries sit at their own
+; SoftKeyCol2_LoadSingleSound_Page0: Dispatch_FF4049+0[1] -- the SoftKeyCol2 handler of LoadSingleSound_Page0; the table's other named entries sit at their own
 ;   controls' slots and name the same screen (notes/prom_ab_button_table_siblings.py).
-SoftKeyCol2_L0adSingleS0und_Page0:   ; entry: named by 2 `.long` operands, first at 0xFF404D
+SoftKeyCol2_LoadSingleSound_Page0:   ; entry: named by 2 `.long` operands, first at 0xFF404D
 	link XIZ,0x0000                                      ; FF6B35  ee 0c 00 00
 	pushw hl                                             ; FF6B39  2b
 	push XIX                                             ; FF6B3A  3c
@@ -7625,19 +7625,19 @@ SoftKeyCol2_L0adSingleS0und_Page0:   ; entry: named by 2 `.long` operands, first
 	lda xbc, (0xf59100:24)                               ; FF6BB2  f2 00 91 f5 31
 	push XBC                                             ; FF6BB7  39
 	call DLB_Handler_StringTable_Veneer                                      ; FF6BB8  1d 56 76 ff
-	calr L0adSingleS0und_DrawGroupName                                      ; FF6BBC  1e 65 06
-	calr L0adSingleS0und_DrawGroupSounds                                      ; FF6BBF  1e d4 06
+	calr LoadSingleSound_DrawGroupName                                      ; FF6BBC  1e 65 06
+	calr LoadSingleSound_DrawGroupSounds                                      ; FF6BBF  1e d4 06
 	push 0x00                                            ; FF6BC2  09 00
 	push	(0x2735:16)                                  ; FF6BC4  c1 35 27 04
-	calr L0adSingle_DrawBankAndNumber                                      ; FF6BC8  1e 6b 08
+	calr LoadSingle_DrawBankAndNumber                                      ; FF6BC8  1e 6b 08
 	inc 6,XSP                                            ; FF6BCB  ef 66
 	pop XIX                                              ; FF6BCD  5c
 	popw hl                                              ; FF6BCE  4b
 	unlk XIZ                                             ; FF6BCF  ee 0d
 	ret                                                  ; FF6BD1  0e
-; SoftKeyCols3_4_L0adSingleS0und_Page0: slots 2 and 3 of L0adSingleS0und page 0: steps (0x2735) down (argument bit 7 set) or up within 0..0x7F, 0..1 when
-;   Var2728_Is2or3 (a drum bank), then L0adSingle_DrawBankAndNumber((0x2735)).
-SoftKeyCols3_4_L0adSingleS0und_Page0:   ; entry: named by 4 `.long` operands, first at 0xFF4051
+; SoftKeyCols3_4_LoadSingleSound_Page0: slots 2 and 3 of LoadSingleSound page 0: steps (0x2735) down (argument bit 7 set) or up within 0..0x7F, 0..1 when
+;   Var2728_Is2or3 (a drum bank), then LoadSingle_DrawBankAndNumber((0x2735)).
+SoftKeyCols3_4_LoadSingleSound_Page0:   ; entry: named by 4 `.long` operands, first at 0xFF4051
 	link XIZ,0x0000                                      ; FF6BD2  ee 0c 00 00
 	pushw hl                                             ; FF6BD6  2b
 	pushw de                                             ; FF6BD7  2a
@@ -7674,16 +7674,16 @@ SoftKeyCols3_4_L0adSingleS0und_Page0:   ; entry: named by 4 `.long` operands, fi
 .LFF6C17:
 	ld C,(XIX)                                           ; FF6C17  84 23
 	pushw bc                                             ; FF6C19  29
-	calr L0adSingle_DrawBankAndNumber                                      ; FF6C1A  1e 19 08
+	calr LoadSingle_DrawBankAndNumber                                      ; FF6C1A  1e 19 08
 	popw bc                                              ; FF6C1D  49
 	pop XIX                                              ; FF6C1E  5c
 	popw de                                              ; FF6C1F  4a
 	popw hl                                              ; FF6C20  4b
 	unlk XIZ                                             ; FF6C21  ee 0d
 	ret                                                  ; FF6C23  0e
-; SoftKeyCol5_L0adSingleS0und_Page0: Dispatch_FF4049+0[4] -- the SoftKeyCol5 handler of L0adSingleS0und_Page0; the table's other named entries sit at their own
+; SoftKeyCol5_LoadSingleSound_Page0: Dispatch_FF4049+0[4] -- the SoftKeyCol5 handler of LoadSingleSound_Page0; the table's other named entries sit at their own
 ;   controls' slots and name the same screen (notes/prom_ab_button_table_siblings.py).
-SoftKeyCol5_L0adSingleS0und_Page0:   ; entry: named by 2 `.long` operands, first at 0xFF4059
+SoftKeyCol5_LoadSingleSound_Page0:   ; entry: named by 2 `.long` operands, first at 0xFF4059
 	link XIZ,0x0000                                      ; FF6C24  ee 0c 00 00
 	pushw hl                                             ; FF6C28  2b
 	push XIX                                             ; FF6C29  3c
@@ -7715,7 +7715,7 @@ SoftKeyCol5_L0adSingleS0und_Page0:   ; entry: named by 2 `.long` operands, first
 	lda xbc, (0xf59100:24)                               ; FF6C61  f2 00 91 f5 31
 	push XBC                                             ; FF6C66  39
 	call DLB_Handler_StringTable_Veneer                                      ; FF6C67  1d 56 76 ff
-	calr L0adSingleS0und_DrawGroupName                                      ; FF6C6B  1e b6 05
+	calr LoadSingleSound_DrawGroupName                                      ; FF6C6B  1e b6 05
 	ld C,(XIX)                                           ; FF6C6E  84 23
 	mul C,0x02                                           ; FF6C70  cb 08 02
 	extz XBC                                             ; FF6C73  e9 12
@@ -7731,14 +7731,14 @@ SoftKeyCol5_L0adSingleS0und_Page0:   ; entry: named by 2 `.long` operands, first
 	jr nc, .LFF6C96                                      ; FF6C90  6f 04
 	ld (LoadSingle_SelectedItem:16), a                                   ; FF6C92  f1 38 27 41
 .LFF6C96:
-	calr L0adSingleS0und_DrawGroupSounds                                      ; FF6C96  1e fd 05
+	calr LoadSingleSound_DrawGroupSounds                                      ; FF6C96  1e fd 05
 	pop XIX                                              ; FF6C99  5c
 	popw hl                                              ; FF6C9A  4b
 	unlk XIZ                                             ; FF6C9B  ee 0d
 	ret                                                  ; FF6C9D  0e
-; SoftKeyCol6_L0adSingle_Page0: slot 5 of page 0 of both screens: steps (0x2737) within 0..15 (forced 0 for a drum bank), then the group's name and
-;   members -- L0adSingleS0und_DrawGroupName / _DrawGroupSounds when UI_ScreenLatch is 0x54, else the C0mbination pair.
-SoftKeyCol6_L0adSingle_Page0:   ; entry: named by 4 `.long` operands, first at 0xFF405D
+; SoftKeyCol6_LoadSingle_Page0: slot 5 of page 0 of both screens: steps (0x2737) within 0..15 (forced 0 for a drum bank), then the group's name and
+;   members -- LoadSingleSound_DrawGroupName / _DrawGroupSounds when UI_ScreenLatch is 0x54, else the Combination pair.
+SoftKeyCol6_LoadSingle_Page0:   ; entry: named by 4 `.long` operands, first at 0xFF405D
 	link XIZ,0x0000                                      ; FF6C9E  ee 0c 00 00
 	push XIX                                             ; FF6CA2  3c
 	lda xix, (0x2737:16)                                ; FF6CA3  f1 37 27 34
@@ -7767,19 +7767,19 @@ SoftKeyCol6_L0adSingle_Page0:   ; entry: named by 4 `.long` operands, first at 0
 .LFF6CD7:
 	cp	(UI_ScreenLatch:16), 0x54                            ; FF6CD7  c1 7a 20 3f 54
 	jr nz, .LFF6CE6                                      ; FF6CDC  6e 08
-	calr L0adSingleS0und_DrawGroupSounds                                      ; FF6CDE  1e b5 05
-	calr L0adSingleS0und_DrawGroupName                                      ; FF6CE1  1e 40 05
+	calr LoadSingleSound_DrawGroupSounds                                      ; FF6CDE  1e b5 05
+	calr LoadSingleSound_DrawGroupName                                      ; FF6CE1  1e 40 05
 	jr .LFF6CEC                                          ; FF6CE4  68 06
 .LFF6CE6:
-	calr L0adSingleC0mbination_DrawGroupCombinations                                      ; FF6CE6  1e b0 06
-	calr L0adSingleC0mbination_DrawGroupName                                      ; FF6CE9  1e 71 05
+	calr LoadSingleCombination_DrawGroupCombinations                                      ; FF6CE6  1e b0 06
+	calr LoadSingleCombination_DrawGroupName                                      ; FF6CE9  1e 71 05
 .LFF6CEC:
 	pop XIX                                              ; FF6CEC  5c
 	unlk XIZ                                             ; FF6CED  ee 0d
 	ret                                                  ; FF6CEF  0e
-; SoftKeyCols7_8_L0adSingleS0und_Page0: slots 6 and 7 of L0adSingleS0und page 0: steps (0x2738) within 0..T_SoundGroup_MaxMemberIndex_ByStack(bank
+; SoftKeyCols7_8_LoadSingleSound_Page0: slots 6 and 7 of LoadSingleSound page 0: steps (0x2738) within 0..T_SoundGroup_MaxMemberIndex_ByStack(bank
 ;   Table_FF4039[(0x2736)], group (0x2737)) and redraws the member highlight (DL_F591A6 / DL_F591B1, source 0x2738).
-SoftKeyCols7_8_L0adSingleS0und_Page0:   ; entry: named by 4 `.long` operands, first at 0xFF4061
+SoftKeyCols7_8_LoadSingleSound_Page0:   ; entry: named by 4 `.long` operands, first at 0xFF4061
 	link XIZ,0x0000                                      ; FF6CF0  ee 0c 00 00
 	pushw hl                                             ; FF6CF4  2b
 	push XIX                                             ; FF6CF5  3c
@@ -7818,7 +7818,7 @@ SoftKeyCols7_8_L0adSingleS0und_Page0:   ; entry: named by 4 `.long` operands, fi
 	jr nc, .LFF6D50                                      ; FF6D49  6f 05
 	incm8 0x01, (xix)                                    ; FF6D4B  84 61
 .LFF6D4D:
-	calr L0adSingleS0und_DrawGroupSounds                                      ; FF6D4D  1e 46 05
+	calr LoadSingleSound_DrawGroupSounds                                      ; FF6D4D  1e 46 05
 .LFF6D50:
 	lda xbc, (DL_F591A6:24)                              ; FF6D50  f2 a6 91 f5 31
 	push XBC                                             ; FF6D55  39
@@ -7831,7 +7831,7 @@ SoftKeyCols7_8_L0adSingleS0und_Page0:   ; entry: named by 4 `.long` operands, fi
 	unlk XIZ                                             ; FF6D62  ee 0d
 	ret                                                  ; FF6D64  0e
 ; ---------------------------------------------------------------------
-; LcdKeyRow1_L0adSingleS0und_Page0 -- what Dispatch_FF4049 runs for panel
+; LcdKeyRow1_LoadSingleSound_Page0 -- what Dispatch_FF4049 runs for panel
 ;          control 0x08
 ;
 ; Reached from: Dispatch_FF4049 entry [8] -- and from no other slot of any
@@ -7847,14 +7847,14 @@ SoftKeyCols7_8_L0adSingleS0und_Page0:   ; entry: named by 4 `.long` operands, fi
 ;          SLOT_CONTROL slot for slot; what is new here is only that THIS
 ;          module's tables are tied to it. See
 ;          notes/FINDINGS-prom_a-panel-control-map.md.
-; Screen:   L0adSingleS0und -- the screen object at PanelScreen_VtableTable
+; Screen:   LoadSingleSound -- the screen object at PanelScreen_VtableTable
 ;          entry 0x74, i.e. SCREEN ID 0x54 through
 ;          PanelScreen_VtableTable_ViewB names this reader as its BUTTON
 ;          method, and its page 0 draws the list at 0xF58C53, whose first
 ;          record reads "LOAD SINGLE SOUND".
 ; Unknown:  what this screen does with the button.
 ; ---------------------------------------------------------------------
-LcdKeyRow1_L0adSingleS0und_Page0:
+LcdKeyRow1_LoadSingleSound_Page0:
 	link XIZ,0x0000                                      ; FF6D65  ee 0c 00 00
 	ld BC,(XIZ+0x08)                                     ; FF6D69  9e 08 21
 	and BC,0x0080                                        ; FF6D6C  d9 cc 80 00
@@ -7877,7 +7877,7 @@ LcdKeyRow1_L0adSingleS0und_Page0:
 	unlk XIZ                                             ; FF6D99  ee 0d
 	ret                                                  ; FF6D9B  0e
 ; ---------------------------------------------------------------------
-; ExitKey_L0adSingleS0und_Pages0_1 -- what Dispatch_FF4049 runs for panel
+; ExitKey_LoadSingleSound_Pages0_1 -- what Dispatch_FF4049 runs for panel
 ;          control 0x0F
 ;
 ; Reached from: Dispatch_FF4049 entry [15], Dispatch_FF4049 entry [47] (page
@@ -7892,14 +7892,14 @@ LcdKeyRow1_L0adSingleS0und_Page0:
 ;          SLOT_CONTROL slot for slot; what is new here is only that THIS
 ;          module's tables are tied to it. See
 ;          notes/FINDINGS-prom_a-panel-control-map.md.
-; Screen:   L0adSingleS0und -- the screen object at PanelScreen_VtableTable
+; Screen:   LoadSingleSound -- the screen object at PanelScreen_VtableTable
 ;          entry 0x74, i.e. SCREEN ID 0x54 through
 ;          PanelScreen_VtableTable_ViewB names this reader as its BUTTON
 ;          method, and its page 0 draws the list at 0xF58C53, whose first
 ;          record reads "LOAD SINGLE SOUND".
 ; Unknown:  what this screen does with the button.
 ; ---------------------------------------------------------------------
-ExitKey_L0adSingleS0und_Pages0_1:
+ExitKey_LoadSingleSound_Pages0_1:
 	link XIZ,0x0000                                      ; FF6D9C  ee 0c 00 00
 	ld BC,(XIZ+0x08)                                     ; FF6DA0  9e 08 21
 	and BC,0x0080                                        ; FF6DA3  d9 cc 80 00
@@ -7912,7 +7912,7 @@ ExitKey_L0adSingleS0und_Pages0_1:
 T_F423EC_Nop:
 	ret                                                  ; FF6DB6  0e
 ; ---------------------------------------------------------------------
-; PageDispatch_L0adSingleC0mbination -- run ScreenEnterPages_L0adSingleC0mbination's entry for the
+; PageDispatch_LoadSingleCombination -- run ScreenEnterPages_LoadSingleCombination's entry for the
 ;          CURRENT PAGE
 ;
 ; ★ NOT a panel-control table.  This reader indexes with the page
@@ -7923,28 +7923,28 @@ T_F423EC_Nop:
 ;          width-1), and `add XBC,0x00FF4149` at 0xFF6DC6 names the table.
 ;          The entry is CALLED: a return address is pushed before
 ;          `jp (XBC)`.
-; Screen:   L0adSingleC0mbination -- the screen object at
+; Screen:   LoadSingleCombination -- the screen object at
 ;          PanelScreen_VtableTable entry 0x73, i.e. SCREEN ID 0x53 through
 ;          PanelScreen_VtableTable_ViewB names this reader as its ENTER
 ;          method, and its BUTTON method is that screen's control table.
 ; Was `sub_FF6DB7`, named by notes/prom_a_naming_wave8_apply.py.
 ; ---------------------------------------------------------------------
-PageDispatch_L0adSingleC0mbination:
+PageDispatch_LoadSingleCombination:
 	cp	(UI_ScreenPage:16), 0x02                            ; FF6DB7  c1 29 22 3f 02
 	jr nc, .LFF6DD6                                      ; FF6DBC  6f 18
 	ld c, 0x04:opc                                          ; FF6DBE  23 04
 	mul	bc, (UI_ScreenPage:16)                              ; FF6DC0  c1 29 22 43
 	extz XBC                                             ; FF6DC4  e9 12
-	add XBC,ScreenEnterPages_L0adSingleC0mbination                              ; FF6DC6  e9 c8 49 41 ff 00
+	add XBC,ScreenEnterPages_LoadSingleCombination                              ; FF6DC6  e9 c8 49 41 ff 00
 	ld XBC,(XBC)                                         ; FF6DCC  a1 21
 	lda xiy, (.LFF6DD6:24)                               ; FF6DCE  f2 d6 6d ff 35
 	push XIY                                             ; FF6DD3  3d
 	jp (xbc)                                             ; FF6DD4  b1 d8
 .LFF6DD6:
 	ret                                                  ; FF6DD6  0e
-; ScreenEnter_L0adSingleC0mbination_Page0: ScreenEnterPages_L0adSingleC0mbination[0] -- what PageDispatch_L0adSingleC0mbination, the ENTER method of the L0adSingleC0mbination screen, runs
+; ScreenEnter_LoadSingleCombination_Page0: ScreenEnterPages_LoadSingleCombination[0] -- what PageDispatch_LoadSingleCombination, the ENTER method of the LoadSingleCombination screen, runs
 ;   when UI_ScreenPage is 0 (notes/prom_a_page_enter_names.py).
-ScreenEnter_L0adSingleC0mbination_Page0:   ; entry: named by 1 `.long` operand, first at 0xFF4149
+ScreenEnter_LoadSingleCombination_Page0:   ; entry: named by 1 `.long` operand, first at 0xFF4149
 	push XIX                                             ; FF6DD7  3c
 	lda xix, (DisplayList_RunOnLayer_SaveRegs:24)                             ; FF6DD8  f2 d3 75 ff 34
 	ld (0x21fa:16), 0x00                                 ; FF6DDD  f1 fa 21 00 00
@@ -7963,9 +7963,9 @@ ScreenEnter_L0adSingleC0mbination_Page0:   ; entry: named by 1 `.long` operand, 
 	call T_CallbackQueue_ResetAndRestartTask2            ; FF6E0A  1d 80 2e f4
 	call LCD_BlankAndSetPanel3Layer_SaveRegs                                      ; FF6E0E  1d 04 76 ff
 	pushw 0x00                                           ; FF6E12  0b 00 00
-	lda xbc, (ScreenEnter_L0adSingleC0mbination_Page0_DL:24)                              ; FF6E15  f2 c9 90 f5 31
+	lda xbc, (ScreenEnter_LoadSingleCombination_Page0_DL:24)                              ; FF6E15  f2 c9 90 f5 31
 	push XBC                                             ; FF6E1A  39
-	lda xwa, (DL_LoadSingleCombinationDiskGr0upSingleUser1FileBankUser1C0mbi:24) ; FF6E1B  f2 55 8f f5 30
+	lda xwa, (DL_LoadSingleCombinationDiskGroupSingleUser1FileBankUser1Combi:24) ; FF6E1B  f2 55 8f f5 30
 	push XWA                                             ; FF6E20  38
 	lda xiy, (.LFF6E29:24)                               ; FF6E21  f2 29 6e ff 35
 	push XIY                                             ; FF6E26  3d
@@ -7983,17 +7983,17 @@ ScreenEnter_L0adSingleC0mbination_Page0:   ; entry: named by 1 `.long` operand, 
 	pushw 0x02                                           ; FF6E40  0b 02 00
 	lda xbc, (DL_F590DD:24)                              ; FF6E43  f2 dd 90 f5 31
 	push XBC                                             ; FF6E48  39
-	lda xwa, (ScreenEnter_L0adSingleC0mbination_Page0_DL:24)                              ; FF6E49  f2 c9 90 f5 30
+	lda xwa, (ScreenEnter_LoadSingleCombination_Page0_DL:24)                              ; FF6E49  f2 c9 90 f5 30
 	push XWA                                             ; FF6E4E  38
 	lda xiy, (.LFF6E57:24)                               ; FF6E4F  f2 57 6e ff 35
 	push XIY                                             ; FF6E54  3d
 	jp (xix)                                             ; FF6E55  b4 d8
 .LFF6E57:
-	calr L0adSingleC0mbination_DrawGroupName                                      ; FF6E57  1e 03 04
-	calr L0adSingleC0mbination_DrawGroupCombinations                                      ; FF6E5A  1e 3c 05
+	calr LoadSingleCombination_DrawGroupName                                      ; FF6E57  1e 03 04
+	calr LoadSingleCombination_DrawGroupCombinations                                      ; FF6E5A  1e 3c 05
 	push 0x00                                            ; FF6E5D  09 00
 	push	(0x2735:16)                                  ; FF6E5F  c1 35 27 04
-	calr L0adSingle_DrawBankAndNumber                                      ; FF6E63  1e d0 05
+	calr LoadSingle_DrawBankAndNumber                                      ; FF6E63  1e d0 05
 	call Disk_FormatSelectedEntry_SaveRegs                                      ; FF6E66  1d 76 77 ff
 	lda xbc, (0xf5911e:24)                               ; FF6E6A  f2 1e 91 f5 31
 	push XBC                                             ; FF6E6F  39
@@ -8008,17 +8008,17 @@ ScreenEnter_L0adSingleC0mbination_Page0:   ; entry: named by 1 `.long` operand, 
 	add XSP,0x0000002c                                   ; FF6E8D  ef c8 2c 00 00 00
 	pop XIX                                              ; FF6E93  5c
 	ret                                                  ; FF6E94  0e
-; ScreenEnter_L0adSingleC0mbination_Page1: ScreenEnterPages_L0adSingleC0mbination[1] -- what PageDispatch_L0adSingleC0mbination, the ENTER method of the L0adSingleC0mbination screen, runs
+; ScreenEnter_LoadSingleCombination_Page1: ScreenEnterPages_LoadSingleCombination[1] -- what PageDispatch_LoadSingleCombination, the ENTER method of the LoadSingleCombination screen, runs
 ;   when UI_ScreenPage is 1 (notes/prom_a_page_enter_names.py).
-ScreenEnter_L0adSingleC0mbination_Page1:   ; entry: named by 1 `.long` operand, first at 0xFF414D
+ScreenEnter_LoadSingleCombination_Page1:   ; entry: named by 1 `.long` operand, first at 0xFF414D
 	call T_CallbackQueue_ResetAndRestartTask2            ; FF6E95  1d 80 2e f4
 	call LCD_BlankAndSetPanel3Layer_SaveRegs                                      ; FF6E99  1d 04 76 ff
 	ld (LoadSingle_DestBank:16), 0x00                                 ; FF6E9D  f1 36 27 00 00
 	ld (LoadSingle_SourceBank:16), 0x00                                 ; FF6EA2  f1 28 27 00 00
 	pushw 0x00                                           ; FF6EA7  0b 00 00
-	lda xbc, (DL_LoadSingleCombinationDiskGr0upSingleUser1FileBankUser1C0mbi:24) ; FF6EAA  f2 55 8f f5 31
+	lda xbc, (DL_LoadSingleCombinationDiskGroupSingleUser1FileBankUser1Combi:24) ; FF6EAA  f2 55 8f f5 31
 	push XBC                                             ; FF6EAF  39
-	lda xwa, (DL_LoadSingleCombinationDiskGr0upSingleUser1FileBankUser1S0und:24) ; FF6EB0  f2 04 8e f5 30
+	lda xwa, (DL_LoadSingleCombinationDiskGroupSingleUser1FileBankUser1Sound:24) ; FF6EB0  f2 04 8e f5 30
 	push XWA                                             ; FF6EB5  38
 	call DisplayList_RunOnLayer_SaveRegs                                      ; FF6EB6  1d d3 75 ff
 	pushw 0x00                                           ; FF6EBA  0b 00 00
@@ -8030,7 +8030,7 @@ ScreenEnter_L0adSingleC0mbination_Page1:   ; entry: named by 1 `.long` operand, 
 	ld (LCD_CurrentLayer:16), 0x00                                 ; FF6ECD  f1 40 25 00 00
 	push 0x00                                            ; FF6ED2  09 00
 	push	(0x273a:16)                                  ; FF6ED4  c1 3a 27 04
-	calr L0adSingleC0mbination_DrawGroupList                                      ; FF6ED8  1e 58 04
+	calr LoadSingleCombination_DrawGroupList                                      ; FF6ED8  1e 58 04
 	call Disk_FormatSelectedEntry_SaveRegs                                      ; FF6EDB  1d 76 77 ff
 	ld c, (0x2727:16)                                   ; FF6EDF  c1 27 27 23
 	inc 1,C                                              ; FF6EE3  cb 61
@@ -8048,7 +8048,7 @@ ScreenEnter_L0adSingleC0mbination_Page1:   ; entry: named by 1 `.long` operand, 
 	add XSP,0x00000022                                   ; FF6F0C  ef c8 22 00 00 00
 	ret                                                  ; FF6F12  0e
 ; ---------------------------------------------------------------------
-; ScreenLeave_L0adSingleC0mbination -- the LEAVE method of the screen object
+; ScreenLeave_LoadSingleCombination -- the LEAVE method of the screen object
 ;          at PanelScreen_VtableTable entry 0x73, i.e. SCREEN ID 0x53 through
 ;          PanelScreen_VtableTable_ViewB
 ;
@@ -8059,18 +8059,18 @@ ScreenEnter_L0adSingleC0mbination_Page1:   ; entry: named by 1 `.long` operand, 
 ;          checks V1-V6): +0 ENTER is called by PanelScreen_CallEnter_A/B, +4
 ;          LEAVE by PanelScreen_CallLeave_A/B with the id that just STOPPED
 ;          being current, +8 BUTTON by PanelButton_Route (0xF8621E).
-; Screen:   L0adSingleC0mbination -- inherited from the +0 ENTER label
-;          PageDispatch_L0adSingleC0mbination, not from any text this pass
+; Screen:   LoadSingleCombination -- inherited from the +0 ENTER label
+;          PageDispatch_LoadSingleCombination, not from any text this pass
 ;          read.
 ; Was `sub_FF6F13`.
 ; ---------------------------------------------------------------------
-ScreenLeave_L0adSingleC0mbination:
+ScreenLeave_LoadSingleCombination:
 	call DiskScreen_LeaveOnScreenChange                                      ; FF6F13  1d 6c 79 ff
 	call T_Disk_PortA3_Release_Call_Call                                        ; FF6F17  1d 90 25 f4
 	ld (0x21fa:16), 0x00                                 ; FF6F1B  f1 fa 21 00 00
 	ret                                                  ; FF6F20  0e
 ; ---------------------------------------------------------------------
-; PanelButtonDispatch_L0adSingleC0mbination -- run Dispatch_FF4151's handler
+; PanelButtonDispatch_LoadSingleCombination -- run Dispatch_FF4151's handler
 ;          for one PANEL CONTROL
 ;
 ; Inputs:   (XIZ+0x08) = the 5-bit panel control index; (XIZ+0x0A) =
@@ -8084,14 +8084,14 @@ ScreenLeave_L0adSingleC0mbination:
 ;          a return address before `jp (XBC)`.
 ; Control legend: notes/FINDINGS-prom_a-panel-control-map.md, and
 ;          `python3 notes/prom_a_panel_control_map.py --map`.
-; Screen:   L0adSingleC0mbination -- the screen object at
+; Screen:   LoadSingleCombination -- the screen object at
 ;          PanelScreen_VtableTable entry 0x73, i.e. SCREEN ID 0x53 through
 ;          PanelScreen_VtableTable_ViewB names this reader as its BUTTON
 ;          method, and its page 1 draws the list at 0xF58F55, whose first
 ;          record reads "LOAD SINGLE COMBINATION".
 ; Was `sub_FF6F21`, named by notes/prom_a_naming_wave8_apply.py.
 ; ---------------------------------------------------------------------
-PanelButtonDispatch_L0adSingleC0mbination:
+PanelButtonDispatch_LoadSingleCombination:
 	link XIZ,0x0000                                      ; FF6F21  ee 0c 00 00
 	pushw hl                                             ; FF6F25  2b
 	ld H,(XIZ+0x08)                                      ; FF6F26  8e 08 26
@@ -8112,7 +8112,7 @@ PanelButtonDispatch_L0adSingleC0mbination:
 	unlk XIZ                                             ; FF6F4C  ee 0d
 	ret                                                  ; FF6F4E  0e
 ; ---------------------------------------------------------------------
-; LcdKeyRow1_L0adSingleC0mbination_Page1 -- what Dispatch_FF4151 runs for
+; LcdKeyRow1_LoadSingleCombination_Page1 -- what Dispatch_FF4151 runs for
 ;          panel control 0x08
 ;
 ; Reached from: Dispatch_FF4151 entry [40] (page 1, control 0x08) -- and from
@@ -8129,14 +8129,14 @@ PanelButtonDispatch_L0adSingleC0mbination:
 ;          SLOT_CONTROL slot for slot; what is new here is only that THIS
 ;          module's tables are tied to it. See
 ;          notes/FINDINGS-prom_a-panel-control-map.md.
-; Screen:   L0adSingleC0mbination -- the screen object at
+; Screen:   LoadSingleCombination -- the screen object at
 ;          PanelScreen_VtableTable entry 0x73, i.e. SCREEN ID 0x53 through
 ;          PanelScreen_VtableTable_ViewB names this reader as its BUTTON
 ;          method, and its page 1 draws the list at 0xF58F55, whose first
 ;          record reads "LOAD SINGLE COMBINATION".
 ; Unknown:  what this screen does with the button.
 ; ---------------------------------------------------------------------
-LcdKeyRow1_L0adSingleC0mbination_Page1:
+LcdKeyRow1_LoadSingleCombination_Page1:
 	link XIZ,0x0000                                      ; FF6F4F  ee 0c 00 00
 	ld BC,(XIZ+0x08)                                     ; FF6F53  9e 08 21
 	and BC,0x0080                                        ; FF6F56  d9 cc 80 00
@@ -8158,9 +8158,9 @@ LcdKeyRow1_L0adSingleC0mbination_Page1:
 .LFF6F83:
 	unlk XIZ                                             ; FF6F83  ee 0d
 	ret                                                  ; FF6F85  0e
-; SoftKeyCols3_4_L0adSingleC0mbination_Page0: slots 2 and 3 of L0adSingleC0mbination page 0: the same step of (0x2735) within 0..0x7F, then
-;   L0adSingle_DrawBankAndNumber((0x2735)).
-SoftKeyCols3_4_L0adSingleC0mbination_Page0:   ; entry: named by 4 `.long` operands, first at 0xFF4159
+; SoftKeyCols3_4_LoadSingleCombination_Page0: slots 2 and 3 of LoadSingleCombination page 0: the same step of (0x2735) within 0..0x7F, then
+;   LoadSingle_DrawBankAndNumber((0x2735)).
+SoftKeyCols3_4_LoadSingleCombination_Page0:   ; entry: named by 4 `.long` operands, first at 0xFF4159
 	link XIZ,0x0000                                      ; FF6F86  ee 0c 00 00
 	push XIX                                             ; FF6F8A  3c
 	lda xix, (0x2735:16)                                ; FF6F8B  f1 35 27 34
@@ -8184,13 +8184,13 @@ SoftKeyCols3_4_L0adSingleC0mbination_Page0:   ; entry: named by 4 `.long` operan
 .LFF6FB5:
 	ld C,(XIX)                                           ; FF6FB5  84 23
 	pushw bc                                             ; FF6FB7  29
-	calr L0adSingle_DrawBankAndNumber                                      ; FF6FB8  1e 7b 04
+	calr LoadSingle_DrawBankAndNumber                                      ; FF6FB8  1e 7b 04
 	popw bc                                              ; FF6FBB  49
 	pop XIX                                              ; FF6FBC  5c
 	unlk XIZ                                             ; FF6FBD  ee 0d
 	ret                                                  ; FF6FBF  0e
-; SoftKeyCols7_8_L0adSingleC0mbination_Page0: the same as SoftKeyCols7_8_L0adSingleS0und_Page0 with T_CombiGroup_MaxMemberIndex_ByStack.
-SoftKeyCols7_8_L0adSingleC0mbination_Page0:   ; entry: named by 4 `.long` operands, first at 0xFF4169
+; SoftKeyCols7_8_LoadSingleCombination_Page0: the same as SoftKeyCols7_8_LoadSingleSound_Page0 with T_CombiGroup_MaxMemberIndex_ByStack.
+SoftKeyCols7_8_LoadSingleCombination_Page0:   ; entry: named by 4 `.long` operands, first at 0xFF4169
 	link XIZ,0x0000                                      ; FF6FC0  ee 0c 00 00
 	pushw hl                                             ; FF6FC4  2b
 	push XIX                                             ; FF6FC5  3c
@@ -8240,7 +8240,7 @@ SoftKeyCols7_8_L0adSingleC0mbination_Page0:   ; entry: named by 4 `.long` operan
 	unlk XIZ                                             ; FF702F  ee 0d
 	ret                                                  ; FF7031  0e
 ; ---------------------------------------------------------------------
-; LcdKeyRow1_L0adSingleC0mbination_Page0 -- what Dispatch_FF4151 runs for
+; LcdKeyRow1_LoadSingleCombination_Page0 -- what Dispatch_FF4151 runs for
 ;          panel control 0x08
 ;
 ; Reached from: Dispatch_FF4151 entry [8] -- and from no other slot of any
@@ -8256,14 +8256,14 @@ SoftKeyCols7_8_L0adSingleC0mbination_Page0:   ; entry: named by 4 `.long` operan
 ;          SLOT_CONTROL slot for slot; what is new here is only that THIS
 ;          module's tables are tied to it. See
 ;          notes/FINDINGS-prom_a-panel-control-map.md.
-; Screen:   L0adSingleC0mbination -- the screen object at
+; Screen:   LoadSingleCombination -- the screen object at
 ;          PanelScreen_VtableTable entry 0x73, i.e. SCREEN ID 0x53 through
 ;          PanelScreen_VtableTable_ViewB names this reader as its BUTTON
 ;          method, and its page 1 draws the list at 0xF58F55, whose first
 ;          record reads "LOAD SINGLE COMBINATION".
 ; Unknown:  what this screen does with the button.
 ; ---------------------------------------------------------------------
-LcdKeyRow1_L0adSingleC0mbination_Page0:
+LcdKeyRow1_LoadSingleCombination_Page0:
 	link XIZ,0x0000                                      ; FF7032  ee 0c 00 00
 	ld BC,(XIZ+0x08)                                     ; FF7036  9e 08 21
 	and BC,0x0080                                        ; FF7039  d9 cc 80 00
@@ -8286,7 +8286,7 @@ LcdKeyRow1_L0adSingleC0mbination_Page0:
 	unlk XIZ                                             ; FF7066  ee 0d
 	ret                                                  ; FF7068  0e
 ; ---------------------------------------------------------------------
-; ExitKey_L0adSingleC0mbination_Pages0_1 -- what Dispatch_FF4151 runs for
+; ExitKey_LoadSingleCombination_Pages0_1 -- what Dispatch_FF4151 runs for
 ;          panel control 0x0F
 ;
 ; Reached from: Dispatch_FF4151 entry [15], Dispatch_FF4151 entry [47] (page
@@ -8301,14 +8301,14 @@ LcdKeyRow1_L0adSingleC0mbination_Page0:
 ;          SLOT_CONTROL slot for slot; what is new here is only that THIS
 ;          module's tables are tied to it. See
 ;          notes/FINDINGS-prom_a-panel-control-map.md.
-; Screen:   L0adSingleC0mbination -- the screen object at
+; Screen:   LoadSingleCombination -- the screen object at
 ;          PanelScreen_VtableTable entry 0x73, i.e. SCREEN ID 0x53 through
 ;          PanelScreen_VtableTable_ViewB names this reader as its BUTTON
 ;          method, and its page 1 draws the list at 0xF58F55, whose first
 ;          record reads "LOAD SINGLE COMBINATION".
 ; Unknown:  what this screen does with the button.
 ; ---------------------------------------------------------------------
-ExitKey_L0adSingleC0mbination_Pages0_1:
+ExitKey_LoadSingleCombination_Pages0_1:
 	link XIZ,0x0000                                      ; FF7069  ee 0c 00 00
 	ld BC,(XIZ+0x08)                                     ; FF706D  9e 08 21
 	and BC,0x0080                                        ; FF7070  d9 cc 80 00
@@ -8432,12 +8432,12 @@ PanelDial_SetButtonPair:
 	unlk XIZ                                             ; FF7150  ee 0d
 	ret                                                  ; FF7152  0e
 ; ---------------------------------------------------------------------
-; L0adSingleS0und_DrawGroupList -- loads a pointer straight at ROM TEXT.  NOT NAMED.
+; LoadSingleSound_DrawGroupList -- loads a pointer straight at ROM TEXT.  NOT NAMED.
 ;
-; Called from: prom_a PageDispatch_L0adSingleS0und (`calr`) at 0xFF688E
-;          prom_a PanelButtonDispatch_L0adSingleS0und (`calr`) at 0xFF696C
-;          prom_a PanelButtonDispatch_L0adSingleS0und (`calr`) at 0xFF6A63
-;          prom_a PanelButtonDispatch_L0adSingleS0und (`calr`) at 0xFF6AD3
+; Called from: prom_a PageDispatch_LoadSingleSound (`calr`) at 0xFF688E
+;          prom_a PanelButtonDispatch_LoadSingleSound (`calr`) at 0xFF696C
+;          prom_a PanelButtonDispatch_LoadSingleSound (`calr`) at 0xFF6A63
+;          prom_a PanelButtonDispatch_LoadSingleSound (`calr`) at 0xFF6AD3
 ;
 ;     0xFF71A5 loads 0xFF4291, where the ROM reads:
 ;        "                U1 -U2 -UD1-UD2-"
@@ -8450,11 +8450,11 @@ PanelDial_SetButtonPair:
 ;          from evidence instead of a search.
 ; Recorded by notes/prom_a_understanding_round7.py --apply-strings.
 ; ---------------------------------------------------------------------
-; L0adSingleS0und_DrawGroupList: Draws the page's 8-row list of sound-group names of bank Table_FF4039[(0x2736)],
+; LoadSingleSound_DrawGroupList: Draws the page's 8-row list of sound-group names of bank Table_FF4039[(0x2736)],
 ;   starting at group arg (callers pass (0x273A)), rows 0x0D36 + n*0x230; when Var2728_Is2or3, only group 0's name and
 ;   seven blank rows. Shared by the L0AD SINGLE SOUND page-1 enter and soft-key handlers. Basis: callers + body.
 ;   (notes/naming-pilot-2026-10-06/proposals_wave2_e.json)
-L0adSingleS0und_DrawGroupList:
+LoadSingleSound_DrawGroupList:
 	link XIZ,0xfffe                                      ; FF7153  ee 0c fe ff
 	pushw hl                                             ; FF7157  2b
 	pushw de                                             ; FF7158  2a
@@ -8535,8 +8535,8 @@ L0adSingleS0und_DrawGroupList:
 	popw hl                                              ; FF7220  4b
 	unlk XIZ                                             ; FF7221  ee 0d
 	ret                                                  ; FF7223  0e
-; L0adSingleS0und_DrawGroupName: T_SoundGroupName_CopyToBuffer(bank Table_FF4039[(0x2736)], group (0x2737)) into 0x2940, drawn at 0x0C1E.
-L0adSingleS0und_DrawGroupName:
+; LoadSingleSound_DrawGroupName: T_SoundGroupName_CopyToBuffer(bank Table_FF4039[(0x2736)], group (0x2737)) into 0x2940, drawn at 0x0C1E.
+LoadSingleSound_DrawGroupName:
 	lda xbc, (NameList_SourceGroup:16)                                ; FF7224  f1 40 29 31
 	push XBC                                             ; FF7228  39
 	ld a, 0x02:opc                                          ; FF7229  21 02
@@ -8556,8 +8556,8 @@ L0adSingleS0und_DrawGroupName:
 	call LCD_SwiTextCall_SaveRegs                                      ; FF7252  1d 95 78 ff
 	add XSP,0x00000012                                   ; FF7256  ef c8 12 00 00 00
 	ret                                                  ; FF725C  0e
-; L0adSingleC0mbination_DrawGroupName: the same with T_CombiGroupName_CopyToBuffer.
-L0adSingleC0mbination_DrawGroupName:
+; LoadSingleCombination_DrawGroupName: the same with T_CombiGroupName_CopyToBuffer.
+LoadSingleCombination_DrawGroupName:
 	lda xbc, (NameList_SourceGroup:16)                                ; FF725D  f1 40 29 31
 	push XBC                                             ; FF7261  39
 	ld a, 0x02:opc                                          ; FF7262  21 02
@@ -8578,12 +8578,12 @@ L0adSingleC0mbination_DrawGroupName:
 	add XSP,0x00000012                                   ; FF728F  ef c8 12 00 00 00
 	ret                                                  ; FF7295  0e
 ; ---------------------------------------------------------------------
-; L0adSingleS0und_DrawGroupSounds -- loads a pointer straight at ROM TEXT.  NOT NAMED.
+; LoadSingleSound_DrawGroupSounds -- loads a pointer straight at ROM TEXT.  NOT NAMED.
 ;
-; Called from: prom_a PageDispatch_L0adSingleS0und (`calr`) at 0xFF67F9
-;          prom_a PanelButtonDispatch_L0adSingleS0und (`calr`) at 0xFF6BBF
-;          prom_a PanelButtonDispatch_L0adSingleS0und (`calr`) at 0xFF6C96
-;          prom_a PanelButtonDispatch_L0adSingleS0und (`calr`) at 0xFF6CDE
+; Called from: prom_a PageDispatch_LoadSingleSound (`calr`) at 0xFF67F9
+;          prom_a PanelButtonDispatch_LoadSingleSound (`calr`) at 0xFF6BBF
+;          prom_a PanelButtonDispatch_LoadSingleSound (`calr`) at 0xFF6C96
+;          prom_a PanelButtonDispatch_LoadSingleSound (`calr`) at 0xFF6CDE
 ;          ... and 1 more
 ;
 ;     0xFF72D9 loads 0xFF4291, where the ROM reads:
@@ -8597,9 +8597,9 @@ L0adSingleC0mbination_DrawGroupName:
 ;          from evidence instead of a search.
 ; Recorded by notes/prom_a_understanding_round7.py --apply-strings.
 ; ---------------------------------------------------------------------
-; L0adSingleS0und_DrawGroupSounds: eight lines from 0x0EEE, 0x208 apart: member k's name (T_SoundName_CopyToBuffer, bank Table_FF4039[(0x2736)],
+; LoadSingleSound_DrawGroupSounds: eight lines from 0x0EEE, 0x208 apart: member k's name (T_SoundName_CopyToBuffer, bank Table_FF4039[(0x2736)],
 ;   group (0x2737)) up to T_SoundGroup_MaxMemberIndex_ByStack, Text_FF4291 after it.
-L0adSingleS0und_DrawGroupSounds:
+LoadSingleSound_DrawGroupSounds:
 	link XIZ,0xfffe                                      ; FF7296  ee 0c fe ff
 	pushw hl                                             ; FF729A  2b
 	pushw de                                             ; FF729B  2a
@@ -8666,12 +8666,12 @@ L0adSingleS0und_DrawGroupSounds:
 	popw hl                                              ; FF732F  4b
 	unlk XIZ                                             ; FF7330  ee 0d
 	ret                                                  ; FF7332  0e
-; L0adSingleC0mbination_DrawGroupList: Draws the page's 8-row list of combination-group names of bank
+; LoadSingleCombination_DrawGroupList: Draws the page's 8-row list of combination-group names of bank
 ;   Table_FF4039[(0x2736)] from group arg (callers pass (0x273A)), rows at 0x0D36 + n*0x230
-;   (CombiGroupName_CopyToBuffer, 16 chars). The COMBINATION twin of L0adSingleS0und_DrawGroupList; run on page-1
+;   (CombiGroupName_CopyToBuffer, 16 chars). The COMBINATION twin of LoadSingleSound_DrawGroupList; run on page-1
 ;   entry and by the shared scroll keys. Basis: callers + body + sibling. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave3_h.json)
-L0adSingleC0mbination_DrawGroupList:
+LoadSingleCombination_DrawGroupList:
 	link XIZ,0xfffe                                      ; FF7333  ee 0c fe ff
 	pushw hl                                             ; FF7337  2b
 	pushw de                                             ; FF7338  2a
@@ -8713,10 +8713,10 @@ L0adSingleC0mbination_DrawGroupList:
 	unlk XIZ                                             ; FF7396  ee 0d
 	ret                                                  ; FF7398  0e
 ; ---------------------------------------------------------------------
-; L0adSingleC0mbination_DrawGroupCombinations -- loads a pointer straight at ROM TEXT.  NOT NAMED.
+; LoadSingleCombination_DrawGroupCombinations -- loads a pointer straight at ROM TEXT.  NOT NAMED.
 ;
-; Called from: prom_a PanelButtonDispatch_L0adSingleS0und (`calr`) at 0xFF6CE6
-;          prom_a PageDispatch_L0adSingleC0mbination (`calr`) at 0xFF6E5A
+; Called from: prom_a PanelButtonDispatch_LoadSingleSound (`calr`) at 0xFF6CE6
+;          prom_a PageDispatch_LoadSingleCombination (`calr`) at 0xFF6E5A
 ;
 ;     0xFF73DC loads 0xFF4291, where the ROM reads:
 ;        "                U1 -U2 -UD1-UD2-"
@@ -8729,8 +8729,8 @@ L0adSingleC0mbination_DrawGroupList:
 ;          from evidence instead of a search.
 ; Recorded by notes/prom_a_understanding_round7.py --apply-strings.
 ; ---------------------------------------------------------------------
-; L0adSingleC0mbination_DrawGroupCombinations: the same over a combination group (T_CombiGroup_MaxMemberIndex_ByStack).
-L0adSingleC0mbination_DrawGroupCombinations:
+; LoadSingleCombination_DrawGroupCombinations: the same over a combination group (T_CombiGroup_MaxMemberIndex_ByStack).
+LoadSingleCombination_DrawGroupCombinations:
 	link XIZ,0xfffe                                      ; FF7399  ee 0c fe ff
 	pushw hl                                             ; FF739D  2b
 	pushw de                                             ; FF739E  2a
@@ -8798,12 +8798,12 @@ L0adSingleC0mbination_DrawGroupCombinations:
 	unlk XIZ                                             ; FF7433  ee 0d
 	ret                                                  ; FF7435  0e
 ; ---------------------------------------------------------------------
-; L0adSingle_DrawBankAndNumber -- loads a pointer straight at ROM TEXT.  NOT NAMED.
+; LoadSingle_DrawBankAndNumber -- loads a pointer straight at ROM TEXT.  NOT NAMED.
 ;
-; Called from: prom_a PageDispatch_L0adSingleS0und (`calr`) at 0xFF6802
-;          prom_a PanelButtonDispatch_L0adSingleS0und (`calr`) at 0xFF6BC8
-;          prom_a PanelButtonDispatch_L0adSingleS0und (`calr`) at 0xFF6C1A
-;          prom_a PageDispatch_L0adSingleC0mbination (`calr`) at 0xFF6E63
+; Called from: prom_a PageDispatch_LoadSingleSound (`calr`) at 0xFF6802
+;          prom_a PanelButtonDispatch_LoadSingleSound (`calr`) at 0xFF6BC8
+;          prom_a PanelButtonDispatch_LoadSingleSound (`calr`) at 0xFF6C1A
+;          prom_a PageDispatch_LoadSingleCombination (`calr`) at 0xFF6E63
 ;          ... and 1 more
 ;
 ;     0xFF744E loads 0xFF42A1, where the ROM reads:
@@ -8817,9 +8817,9 @@ L0adSingleC0mbination_DrawGroupCombinations:
 ;          from evidence instead of a search.
 ; Recorded by notes/prom_a_understanding_round7.py --apply-strings.
 ; ---------------------------------------------------------------------
-; L0adSingle_DrawBankAndNumber: (n): Text_UserBankAbbrevs[(0x2728)]'s 4 characters, then n + 1 in 1..3 digits, drawn at 0x19A5.  Called by the
+; LoadSingle_DrawBankAndNumber: (n): Text_UserBankAbbrevs[(0x2728)]'s 4 characters, then n + 1 in 1..3 digits, drawn at 0x19A5.  Called by the
 ;   SoftKeyCols3_4 page-0 handlers with (0x2735).
-L0adSingle_DrawBankAndNumber:
+LoadSingle_DrawBankAndNumber:
 	link XIZ,0xfff6                                      ; FF7436  ee 0c f6 ff
 	pushw hl                                             ; FF743A  2b
 	pushw de                                             ; FF743B  2a
@@ -8953,8 +8953,8 @@ Var7FD6_IsBitClear:
 .LFF7561:
 	unlk XIZ                                             ; FF7561  ee 0d
 	ret                                                  ; FF7563  0e
-; DiskL0adFile_LcdKeyRow1: the LcdKeyRow1 action of DiskL0adFile -- called only by LcdKeyRow1_DiskL0adFile.
-DiskL0adFile_LcdKeyRow1:
+; DiskLoadFile_LcdKeyRow1: the LcdKeyRow1 action of DiskLoadFile -- called only by LcdKeyRow1_DiskLoadFile.
+DiskLoadFile_LcdKeyRow1:
 	pushw hl                                             ; FF7564  2b
 	res	3, (UI_RequestBits:16)                               ; FF7565  f1 75 20 b3
 	ld h, (Disk_ContentType:16)                                   ; FF7569  c1 25 27 26
@@ -9081,19 +9081,19 @@ LCD_BlankAndSetPanel3Layer_SaveRegs:
 ;
 ; Called from: prom_a Paint_DiskMenu (`call`) at 0xFF4312
 ;          prom_a Paint_MidiFileDirectPlay (`call`) at 0xFF4572
-;          prom_a Paint_DiskL0adFile (`call`) at 0xFF48EA
-;          prom_a PanelButtonDispatch_DiskL0adFile (`call`) at 0xFF4A77
-;          prom_a LcdKeyRow3_DiskL0adFile (`call`) at 0xFF4AC0
-;          prom_a LcdKeyRow4_DiskL0adFile (`call`) at 0xFF4D54
-;          prom_a LcdKeyRow5_DiskL0adFile (`call`) at 0xFF4FD6
-;          prom_a Paint_MidiFileL0ad (`call`) at 0xFF50DE
+;          prom_a Paint_DiskLoadFile (`call`) at 0xFF48EA
+;          prom_a PanelButtonDispatch_DiskLoadFile (`call`) at 0xFF4A77
+;          prom_a LcdKeyRow3_DiskLoadFile (`call`) at 0xFF4AC0
+;          prom_a LcdKeyRow4_DiskLoadFile (`call`) at 0xFF4D54
+;          prom_a LcdKeyRow5_DiskLoadFile (`call`) at 0xFF4FD6
+;          prom_a Paint_MidiFileLoad (`call`) at 0xFF50DE
 ;          prom_a PageDispatch_DiskSaveFile (`call`) at 0xFF553A
 ;          prom_a Paint_DiskSaveFile (`call`) at 0xFF55B3, 0xFF5615, 0xFF5713
 ;          prom_a PageDispatch_MidiFileSave (`call`) at 0xFF5D1B, 0xFF5DDC, 0xFF5E3F, 0xFF5EA2
 ;          prom_a Paint_FloppyDiskFormatSelectType (`call`) at 0xFF6544
 ;          prom_a Paint_FloppyDiskFormatAreYouSure (`call`) at 0xFF669F
-;          prom_a PageDispatch_L0adSingleS0und (`call`) at 0xFF6828, 0xFF68BE
-;          prom_a PageDispatch_L0adSingleC0mbination (`call`) at 0xFF6E89, 0xFF6F08
+;          prom_a PageDispatch_LoadSingleSound (`call`) at 0xFF6828, 0xFF68BE
+;          prom_a PageDispatch_LoadSingleCombination (`call`) at 0xFF6E89, 0xFF6F08
 ; Issues:  SWI7 service 0x0C at 0xFF761D -- LCD_Svc_0C_SetLayersOn, rebuild DISP ON: C bits 0/1/2 = layers 1/2/3 steady on
 ; Evidence: `push XIZ/XIX/XHL/XDE`, `ld C,0x07`, service 0x0C, then the four pops.
 ;           Same effect as LCD_ScreenRedraw_End; the pushes are what distinguish it.
@@ -9664,7 +9664,7 @@ DiskScreen_LeaveOnScreenChange:
 	pop XIX                                              ; FF7989  5c
 	pop XIZ                                              ; FF798A  5e
 	ret                                                  ; FF798B  0e
-; DiskFileScreen_LeaveCommon: the shared Leave of the disk file screens (ScreenLeave_MidiFileSave / _MidiFileL0ad /
+; DiskFileScreen_LeaveCommon: the shared Leave of the disk file screens (ScreenLeave_MidiFileSave / _MidiFileLoad /
 ;   _MidiFileDirectPlay / _DiskSaveFile): release port A3, DiskScreen_LeaveOnScreenChange, clear (0x220F) and (0x220C), set bit 4 of (0x34D4), clear bit 3 of (0x34BB).
 DiskFileScreen_LeaveCommon:
 	push XIZ                                             ; FF798C  3e

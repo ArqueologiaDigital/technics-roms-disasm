@@ -52,6 +52,7 @@ from prom_b_apply_diskfile_name import RENAMES as DF_RENAMES  # noqa: E402
 from prom_b_apply_effect_editor_name import RENAMES as ED_RENAMES  # noqa: E402
 from prom_b_apply_chordnote_names import RENAMES as CN_RENAMES  # noqa: E402
 from prom_b_names_session_53b889a2 import RENAMES as S53_RENAMES  # noqa: E402  2026-10-03 passes
+from prom_ab_names_zero_for_o import RENAMES as ZFO_RENAMES, WORDS as ZFO_WORDS  # noqa: E402  2026-11-06 0-for-O
 
 LABEL = re.compile(r"^([A-Za-z_][A-Za-z0-9_]*):")
 
@@ -118,6 +119,8 @@ def main():
     ren.update(dict(ED_RENAMES))
     ren.update(dict(CN_RENAMES))
     ren.update(dict(S53_RENAMES))
+    ren.update(dict(ZFO_RENAMES))
+    ren.update(dict(ZFO_WORDS))
     old = [l.rstrip("\n") for l in base_lines(rev)]
     new = [l.rstrip("\n") for l in image_lines(ROOT, REL)]
     have = collections.Counter(new)

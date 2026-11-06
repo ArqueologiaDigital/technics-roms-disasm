@@ -7,7 +7,7 @@ From round-1 pack prom_a-s00 (read and applied 2026-10-03; evidence lines in
 
 | address | name | holds | evidence (prom_a) |
 |---|---|---|---|
-| 0x2208 | `Medley_FirstSong` | the first song of the medley, as index (shown + 1) | SequencerMedley_KeypadCommit stores value - 1 here for field 1, keeping first <= last; Draw_FirstS0ngLastS0ng |
+| 0x2208 | `Medley_FirstSong` | the first song of the medley, as index (shown + 1) | SequencerMedley_KeypadCommit stores value - 1 here for field 1, keeping first <= last; Draw_FirstSongLastSong |
 | 0x2209 | `Medley_LastSong` | the last song | the same, field 2 |
 | 0x220A | `Medley_PlayingSong` | the song now playing (shown + 1 after 'N0W PLAYING S0NG') | SequencerMedley_DrawPlayState |
 | 0x220B | `Medley_Source` | 0 INT, 1 FD, 2 HD: the SELECT box filled; with Medley_FileType it bounds the song number (10 / 20 / 100) | SequencerMedley_DrawSourceBox (`(0x1303)=(0x220B)`), SequencerMedley_KeypadCommit |
@@ -19,7 +19,7 @@ From round-1 pack prom_a-s00 (read and applied 2026-10-03; evidence lines in
 
 | address | name | holds | evidence (prom_a) |
 |---|---|---|---|
-| 0x222D | `NameEdit_CursorPos` | the character position the name cursor is on (0..5 for a song name) | S0ngSelectName_CursorLeft / _CursorRight step it; SongName_CharIndexAtCursor and SongName_StoreCharAtCursor index the name with it (18 routines, other name editors among them) |
+| 0x222D | `NameEdit_CursorPos` | the character position the name cursor is on (0..5 for a song name) | SongSelectName_CursorLeft / _CursorRight step it; SongName_CharIndexAtCursor and SongName_StoreCharAtCursor index the name with it (18 routines, other name editors among them) |
 | 0x21F9 | `NameEdit_CharIndex` | the index, in the editor's character set, of the character at the cursor | SongName_CharIndexAtCursor sets it (CharSet_F81768 lookup); SongName_NextCharAtCursor / _PrevCharAtCursor step it (clamped 0..0x24) |
 
 ## 3. The song-edit screens (same pack)
@@ -27,17 +27,17 @@ From round-1 pack prom_a-s00 (read and applied 2026-10-03; evidence lines in
 | address | name | holds | evidence (prom_a) |
 |---|---|---|---|
 | 0x0DE5 | `AdvanceDelay_Field` | the selected field; field 4 is the only signed one | AdvanceDelay_KeypadCommit / _KeypadSign / _BlinkSelectedField / _SelectField1 |
-| 0x0DED | `N0teChange_Field` | the selected field (2/3 measures, 4/5 notes) | N0teChange_KeypadCommit, _BlinkSelectedField |
-| 0x0DF0 | `N0teChange_FromMeasure` | field 2, 1..999 | N0teChange_KeypadCommit (also staged at (0x12FC)) |
-| 0x0DF2 | `N0teChange_ToMeasure` | field 3, 1..999 | N0teChange_KeypadCommit ((0x12FF)) |
-| 0x0DF4 | `N0teChange_FromNote` | field 4, note 0..127 | N0teChange_KeypadCommit ((0x12FB)) |
-| 0x0DF5 | `N0teChange_ToNote` | field 5, note 0..127 | N0teChange_KeypadCommit ((0x12FE)) |
-| 0x0DBC | `MeasureC0py_Field` | the selected field | MeasureC0py_KeypadCommit, _BlinkSelectedField |
+| 0x0DED | `NoteChange_Field` | the selected field (2/3 measures, 4/5 notes) | NoteChange_KeypadCommit, _BlinkSelectedField |
+| 0x0DF0 | `NoteChange_FromMeasure` | field 2, 1..999 | NoteChange_KeypadCommit (also staged at (0x12FC)) |
+| 0x0DF2 | `NoteChange_ToMeasure` | field 3, 1..999 | NoteChange_KeypadCommit ((0x12FF)) |
+| 0x0DF4 | `NoteChange_FromNote` | field 4, note 0..127 | NoteChange_KeypadCommit ((0x12FB)) |
+| 0x0DF5 | `NoteChange_ToNote` | field 5, note 0..127 | NoteChange_KeypadCommit ((0x12FE)) |
+| 0x0DBC | `MeasureCopy_Field` | the selected field | MeasureCopy_KeypadCommit, _BlinkSelectedField |
 | 0x0DDA | `MeasureInsert_Field` | the selected field | MeasureInsert_KeypadCommit, _BlinkSelectedField |
-| 0x0E0C | `S0ngC0py_FromSong` | the source song (1-based: its name is read from bank value - 1) | S0ngC0py_DrawFromSong |
-| 0x0E0D | `S0ngC0py_ToSong` | the destination song | S0ngC0py_DrawToSong |
-| 0x0E0E | `S0ngC0py_FromTrack` | the source track; 0x12 = ALL (both columns read 'ALL') | S0ngC0py_DrawTracks |
-| 0x0E0F | `S0ngC0py_ToTrack` | the destination track | S0ngC0py_DrawTracks |
+| 0x0E0C | `SongCopy_FromSong` | the source song (1-based: its name is read from bank value - 1) | SongCopy_DrawFromSong |
+| 0x0E0D | `SongCopy_ToSong` | the destination song | SongCopy_DrawToSong |
+| 0x0E0E | `SongCopy_FromTrack` | the source track; 0x12 = ALL (both columns read 'ALL') | SongCopy_DrawTracks |
+| 0x0E0F | `SongCopy_ToTrack` | the destination track | SongCopy_DrawTracks |
 
 The zero-for-O spelling follows the routines (the ROM's own text reads N0TE, C0PY, S0NG).  Not named:
 ADVANCE/DELAY's three values (0x0DE8 / 0x0DEA / 0x0DEC -- which is which is not read here) and MEASURE

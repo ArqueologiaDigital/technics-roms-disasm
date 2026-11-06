@@ -1,3 +1,9 @@
+; ⚠ CAPTIONS TYPED WITH 0x30.  Some captions in this file
+;   spell capital O with character code 0x30, the digit zero: `REC0RD`, `S0NG`, `T0UCH`.  They are the ROM's
+;   own bytes and stay as they are, as do the comments that quote them; six of the machine's seven Latin
+;   faces draw cells 0x30 and 0x4F alike (notes/prom_b_screens_round8.py --glyphs).  Label names spell the
+;   word with O (owner decision 2026-11-06, notes/zero-for-o/README.md).
+;
 
 ; ==============================================================================
 ; 0xFE8000-0xFEB32F -- CPU 1's SCREEN AND DISPATCH module

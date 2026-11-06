@@ -11,7 +11,7 @@ QUESTION IT ANSWERS
   Decoded from the ROM below, rows and columns:
       row 36  col 5 TUNE & SCALE       col 24 INITIAL
       row 68  col 5 C0NTR0LLER (82: ASSIGN)    row 75 col 24 RE-MAP EDIT
-      row 115 col 5 TEST  / rows 107-121 col 5 0VERALL T0UCH SENSITIVITY (DL_0verallT0uchSensitivity)
+      row 115 col 5 TEST  / rows 107-121 col 5 0VERALL T0UCH SENSITIVITY (DL_OverallTouchSensitivity)
                                        col 24 S0UND/C0MBI MANAGER
       row 153 col 5 MIXER              col 24 DRUMS MAP
       row 192 col 5 DSP EFFECT         rows 185-199 col 24 MAIN OUT EQUALIZER

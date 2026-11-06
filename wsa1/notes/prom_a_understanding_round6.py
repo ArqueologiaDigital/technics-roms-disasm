@@ -19,7 +19,7 @@ QUESTION IT ANSWERS
     "reached by nothing we can see" count from 805 routines to 302.
 
 ★★ THE TRAP I FELL INTO, AND THE CHECK THAT CAUGHT IT.  Round 5 retracted
-    `Paint_MasterTrackClear` (0xF81AB5) and `Paint_C0mbinati0nM0de` (0xF9167C)
+    `Paint_MasterTrackClear` (0xF81AB5) and `Paint_CombinationMode` (0xF9167C)
     because the namer credited a display-list site to the nearest preceding
     LABEL instead of scoping it to the routine's own `ret`.  The first draft of
     --painters here, scoped label-to-next-label, PROPOSED BOTH NAMES AGAIN, plus
@@ -158,7 +158,7 @@ WHAT THIS FILE DOES NOT CLAIM
       exception (--services checks the ordering at all five shared call sites).
       It is not claimed that no other routine ever calls either.
     * `SongName_*` rests on the buffer at 0x6034CA being drawn six characters
-      wide by Paint_S0ngSelectName's callee and initialised from six `_` bytes;
+      wide by Paint_SongSelectName's callee and initialised from six `_` bytes;
       "Song" is the ROM's own word from that screen's lists.  Which screens
       SHARE the buffer is not established.
     * `ShowScreen_*` claims the bracket and the painter it calls, nothing about
@@ -337,7 +337,7 @@ def body(img, name):
 
     This is the scoping round 5's retraction demands: a label-to-next-label
     extent credits a later, UNLABELLED routine's work to this label, which is
-    how `Paint_MasterTrackClear` and `Paint_C0mbinati0nM0de` were named and then
+    how `Paint_MasterTrackClear` and `Paint_CombinationMode` were named and then
     retracted.  Returns [(addr, mnemonic, text-without-comment, line)].
     """
     i, end, _ea = img.routines[name]
@@ -726,7 +726,7 @@ NAMES = [
      "SongName_ResetToUnderscores fills it with the six ROM bytes at 0xF81948,\n"
      "which are `5F 5F 5F 5F 5F 5F` = `______`, and the 37 characters that can\n"
      "stand in it are CharSet_F81768 = `_` + `A`-`Z` + `0`-`9`.  `Song` is the\n"
-     "ROM's own word: this routine's caller at 0xF80E71 is Paint_S0ngSelectName."),
+     "ROM's own word: this routine's caller at 0xF80E71 is Paint_SongSelectName."),
     ("sub_F818EA", "SongName_ResetToUnderscores",
      "blank all three copies of the six-character name buffer",
      "three `ldir` runs of BC = 6 from the same source 0xF81948 (`______`) to\n"
@@ -1372,7 +1372,7 @@ def selftest():
           "sub_F9167C" not in got)
     # the walker, proved on lists the tree has already converted and labelled
     t, fr = dl_text(0xF3BF80, 0xF3BFF8)
-    check("the walker reproduces DL_S0ngC0pyFromToSongSongOk's own text",
+    check("the walker reproduces DL_SongCopyFromToSongSongOk's own text",
           fr and t[:2] == ["S0NG C0PY", "FROM"])
     t, fr = dl_text(0xF01800, 0xF01873)
     check("the walker reproduces the SOUND EDIT list documented in FINDINGS",

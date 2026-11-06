@@ -233,7 +233,7 @@ def block1(d):
 ; still `.incbin`.  The layout below is that description, emitted.
 ; Verify: python3 notes/gen_prom_b_res3xx_spans.py --selftest
 ; ------------------------------------------------------------------
-C0mbinati0nM0de_RepaintPage1Fields_DL:"""
+CombinationMode_RepaintPage1Fields_DL:"""
     out = hdr.split("\n")
     out += emit_record(d, 0xF286A2, "string table")
     out.append("")

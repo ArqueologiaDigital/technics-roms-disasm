@@ -20,6 +20,7 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "notes"))
 from asm_source import image_path  # noqa: E402  (the image, not the master)
+from caption_o_for_zero import o_for_zero  # noqa: E402  (names read 0-for-O as O)
 A = open(image_path(ROOT, "prom_a/wsa1_prom_a.s"), "rb").read().decode("latin-1")
 B = open(image_path(ROOT, "prom_b/wsa1_prom_b.s"), "rb").read().decode("latin-1")
 SLUG_MIN, SLUG_MAX = 24, 60
@@ -27,7 +28,8 @@ ASC = re.compile(r'\.ascii\s+"((?:[^"\\]|\\.)*)"')
 
 
 def camel(s):
-    return "".join(w[0].upper() + w[1:].lower() for w in re.split(r"[^A-Za-z0-9]+", s) if w)
+    # the caption with the ROM's 0-for-O read as O (caption_o_for_zero.py; owner decision 2026-11-06)
+    return "".join(w[0].upper() + w[1:].lower() for w in re.split(r"[^A-Za-z0-9]+", o_for_zero(s)) if w)
 
 
 def literals():

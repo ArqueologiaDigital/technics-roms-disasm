@@ -136,7 +136,7 @@ BStore_AllocBlock_Veneer:		; <- T_BStore_AllocBlock_Veneer
 ; --------------------------------------------------------------------------
 ; BStore_FreeChain_Veneer: Veneer: `jr` to `calr BStore_FreeChain / ret` -- frees the chain starting at block IY back
 ;   onto the free list (BStore_FreeHead, BStore_FreeCount += blocks). Slot T_BStore_FreeChain_Veneer (x7): SongEdit_ClearTrack,
-;   BStore_TruncateChainAfterBlock, BStore_EmptyBank, S0ngC0py_ClearDestTrack; sibling of BStore_AllocBlock_Veneer.
+;   BStore_TruncateChainAfterBlock, BStore_EmptyBank, SongCopy_ClearDestTrack; sibling of BStore_AllocBlock_Veneer.
 ;   Basis: body (veneer) + callers. (notes/naming-pilot-2026-10-06/proposals_wave6_s.json)
 BStore_FreeChain_Veneer:		; <- T_BStore_FreeChain_Veneer
 	jr	BStore_LatchHeapBase_Veneer_Join2	; F7A404  jr T,0xf7a412

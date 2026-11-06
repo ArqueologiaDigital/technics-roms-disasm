@@ -28,7 +28,7 @@ WHY THIS IS THE LANE'S JOB, AND WHY IT WAS LEFT
   and REFUSED -- see notes/prom_a_screen_titles_probe.py, whose CALIBRATION
   shows the first (or the left-margin) title an ENTER method paints is a shared
   banner or a field label more often than the screen's name: Paint_Sequencer
-  paints "REALTIME" first, Paint_DiskL0adFile paints "SAVE".  Following the
+  paints "REALTIME" first, Paint_DiskLoadFile paints "SAVE".  Following the
   delegation, as FINDINGS-prom_a-panel-control-map.md section 6 advised, does
   not fix it -- the title is data-driven, read from a record by a helper.  So
   the ~90 screens whose ENTER is still `sub_` stay `sub_`, on purpose.
@@ -301,7 +301,7 @@ def selftest():
     print("%s round 9 anchor: entry 0xF9 +0 -> Paint_PanelCpuCheck"
           % ("ok  " if ok else "FAIL"))
     fails += not ok
-    for enter, want in (("Paint_MidiFileL0ad", "MidiFileL0ad"),
+    for enter, want in (("Paint_MidiFileLoad", "MidiFileLoad"),
                         ("ShowScreen_NoteEditPartSelect", "NoteEditPartSelect"),
                         ("Screen_CombinationNaming_Enter", "CombinationNaming"),
                         ("InstallPainter_SoundGroupMenu_Entry", "SoundGroupMenu"),

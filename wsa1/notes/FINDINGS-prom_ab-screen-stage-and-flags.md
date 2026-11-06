@@ -66,12 +66,12 @@ the census as `byte lda x3`.
 **Bit 4.**
 
 - **Who sets it.** The value-change handlers, e.g. `SoundBank_Select*`, `*_StepItem`,
-  `*_AdjustBank` and `S0ngSelectName_NextSong`.
+  `*_AdjustBank` and `SongSelectName_NextSong`.
 - **How it reaches the redraw.** `PanelState_SyncScreenFlags` copies it into `UI_Request_Hi` bit 4, and
   `UI_Request_Hi` is published into (0x2072) when quiet. `PanelScreen_RunRedraw` re-Enters the
   current screen on (0x2072) bit 4.
 - **What the Paint routines do with it.** When the bit is set, the Paint routines skip the screen
-  clear: `bit 4,(0x2095) / jr nz` over `PromB_LCD_ScreenRedraw_Begin` in `Paint_S0ngSelectName` and
+  clear: `bit 4,(0x2095) / jr nz` over `PromB_LCD_ScreenRedraw_Begin` in `Paint_SongSelectName` and
   `Paint_StepRecordPartSelect`, and over `LCD_ScreenRedraw_Begin` in prom_b's `Paint_SongClear`.
 - **Who clears it.**
   - `PanelTask_Step` clears it right after `PanelScreen_RunRedraw` (0xF86087).

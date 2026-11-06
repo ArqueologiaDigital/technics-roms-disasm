@@ -34,7 +34,7 @@ FLAGS = r'(?:0x2095|8341|UI_ScreenFlags)'
 LAB = re.compile(r'^([A-Za-z_.$][\w.$]*):')
 JR = re.compile(r'^\s*(?:jr|jrl)\s+(z|nz),\s*([\w.$]+)', re.I)
 # a list is DRAWN from its start operand XIY; XIX is the end bound (FINDINGS-ui-display-list-interpreter-b.md),
-# so `ld XIX,DL_SongClearKbSongAttenti0n` in Paint_SongClear's zero branch draws nothing of that list
+# so `ld XIX,DL_SongClearKbSongAttention` in Paint_SongClear's zero branch draws nothing of that list
 CONFIRM = re.compile(r'\bld\s+xiy,\s*DL_(?:AreYouSure|\w*Attent?i0?o?n\w*)\b', re.I)
 
 

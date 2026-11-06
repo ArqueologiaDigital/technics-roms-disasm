@@ -213,6 +213,7 @@ sys.path.insert(0, os.path.join(ROOT, "notes"))
 import prom_a_understanding_round6 as R6          # noqa: E402  Image/body/references
 import prom_a_dl_stack_map as SM                  # noqa: E402  the 12-byte idiom
 import wave7_documentation_metrics as MET         # noqa: E402  the FRAMED grader
+from caption_o_for_zero import o_for_zero  # noqa: E402  (names read 0-for-O as O)
 
 # ⚠ A WRITE THROUGH THIS NAME IS GUARDED AND WILL REFUSE while the text
 # it is handed is the whole image: write_part() sees the master's
@@ -506,13 +507,14 @@ def painters():
 
 
 def camel(caption):
-    """The ROM's caption as one CamelCase run, KEEPING ITS SPELLING.
+    """The ROM's caption as one CamelCase run, with the 0-for-O read as O.
 
-    The firmware's font draws capital O as `0` in some lists and as `O` in
-    others, so `L0ad` and `Load` are both literal.  --morphemes is what keeps
-    them literal.
+    The firmware types capital O as `0` in some captions and as `O` in
+    others; the font draws both the same.  Until 2026-11-06 this kept the
+    zero (`L0ad` beside `Load`); the owner then decided that names spell the
+    word, so the caption goes through caption_o_for_zero.o_for_zero().
     """
-    toks = [t for t in re.split(r'[^0-9A-Za-z]+', caption) if t]
+    toks = [t for t in re.split(r'[^0-9A-Za-z]+', o_for_zero(caption)) if t]
     return "".join(t[0].upper() + t[1:].lower() for t in toks)
 
 
@@ -579,11 +581,13 @@ def morphemes(new, caps):
     the ROM text that named it.  Round 3 of this wave invented the morpheme
     "Home", which occurs zero times in all four images; this is what makes that
     impossible.  `Paint_` is a structural verb and is exempt.
-    ⚠ Digits are NOT stripped: the ROM writes `L0AD` and `MEM0RY`, so `L0ad` is
-    checked as `l0ad` and fails if the ROM spells it `LOAD`.
+    ⚠ Digits are NOT stripped: the ROM writes `L0AD` and `MEM0RY`.  Until
+    2026-11-06 a name kept them (`L0ad`, now `Load`, checked as `l0ad`); since the
+    owner's decision the name spells the word and the ROM text is read through
+    o_for_zero() before the comparison, so `L0AD` and `LOAD` both match `Load`.
     """
     body = new.split("_", 1)[1]
-    text = " ".join(caps).lower()
+    text = o_for_zero(" ".join(caps)).lower()
     return [m for m in re.findall(r'[A-Z0-9]?[a-z0-9]+', body)
             if m.lower() not in text]
 
@@ -632,10 +636,10 @@ NAMES = [
      'paints the "COMBINATION NAMING" screen\'s "WRITE" state'),
     ("sub_FF4408", "Paint_MidiFileDirectPlay",
      'paints the screen whose own text reads "MIDI FILE DIRECT PLAY"'),
-    ("sub_FF4786", "Paint_DiskL0adFile",
+    ("sub_FF4786", "Paint_DiskLoadFile",
      'paints the screen whose own text reads "L0AD FILE" / "L0AD 0PTI0N" over the '
      'FLOPPY DISK file list'),
-    ("sub_FF4FFA", "Paint_MidiFileL0ad",
+    ("sub_FF4FFA", "Paint_MidiFileLoad",
      'paints the screen whose own text reads "MIDI FILE L0AD"'),
     ("sub_FF557A", "Paint_DiskSaveFile",
      'paints the screen whose own text reads "SAVE FILE" / "SAVE 0PTI0N" over the '

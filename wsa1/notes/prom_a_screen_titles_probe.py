@@ -31,9 +31,9 @@ HOW
 
 WHAT THE CALIBRATION SHOWS (run it)
   Of the sixteen `Paint_*` screens, the first painted title matches the known
-  name for only a couple (MidiFileL0ad, MidiFileDirectPlay).  The rest paint a
+  name for only a couple (MidiFileLoad, MidiFileDirectPlay).  The rest paint a
   SHARED BANNER or a FIELD LABEL first: Paint_Sequencer paints "REALTIME",
-  Paint_DiskL0adFile paints "SAVE", Paint_MidiInputOutputFilter paints
+  Paint_DiskLoadFile paints "SAVE", Paint_MidiInputOutputFilter paints
   "MIDI CH".  The screen name lived in the reader's dispatch context or in a
   human's reading of the whole screen, not in the first text the painter draws;
   a left-margin-x tie-break does not rescue it either.  ★ So a title is DATA

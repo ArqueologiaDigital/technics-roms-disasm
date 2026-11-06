@@ -865,46 +865,46 @@ ROWS = [
      "ModelingPage_Fields+5 / +8 + (0x27A3), then the slot's TouchCurve_ListPtrs list.  Called by\n"
      "Draw_Page12LevelTouchCurveLevel and SoundEditAmpLevel1_RepaintField."),
     # prom_a 0xFF6906-0xFF74C3: the LOAD SINGLE SOUND / COMBINATION pages' shared key handlers.  Dispatch_FF4049 holds
-    # L0adSingleS0und's two 32-slot pages, Dispatch_FF4151 L0adSingleC0mbination's (their ExitKey_ entries name them);
+    # LoadSingleSound's two 32-slot pages, Dispatch_FF4151 LoadSingleCombination's (their ExitKey_ entries name them);
     # a routine in both, or in two key slots, was refused by notes/prom_ab_button_table_siblings.py and is read here.
-    ("FF6906", "SoftKeyCol1_L0adSingle_AllPages",
+    ("FF6906", "SoftKeyCol1_LoadSingle_AllPages",
      "slot 0 (and its held form 0x11) of all four pages of both screens: PanelDial_SetButtonPair(0, 0x80),\n"
      "UI_ScreenItem_StepByDial, Disk_FormatSelectedEntry_SaveRegs, then the string-table list DL_F5910F -- steps the\n"
      "selected disk file entry."),
-    ("FF6BD2", "SoftKeyCols3_4_L0adSingleS0und_Page0",
-     "slots 2 and 3 of L0adSingleS0und page 0: steps (0x2735) down (argument bit 7 set) or up within 0..0x7F, 0..1 when\n"
-     "Var2728_Is2or3 (a drum bank), then L0adSingle_DrawBankAndNumber((0x2735))."),
-    ("FF6F86", "SoftKeyCols3_4_L0adSingleC0mbination_Page0",
-     "slots 2 and 3 of L0adSingleC0mbination page 0: the same step of (0x2735) within 0..0x7F, then\n"
-     "L0adSingle_DrawBankAndNumber((0x2735))."),
-    ("FF6C9E", "SoftKeyCol6_L0adSingle_Page0",
+    ("FF6BD2", "SoftKeyCols3_4_LoadSingleSound_Page0",
+     "slots 2 and 3 of LoadSingleSound page 0: steps (0x2735) down (argument bit 7 set) or up within 0..0x7F, 0..1 when\n"
+     "Var2728_Is2or3 (a drum bank), then LoadSingle_DrawBankAndNumber((0x2735))."),
+    ("FF6F86", "SoftKeyCols3_4_LoadSingleCombination_Page0",
+     "slots 2 and 3 of LoadSingleCombination page 0: the same step of (0x2735) within 0..0x7F, then\n"
+     "LoadSingle_DrawBankAndNumber((0x2735))."),
+    ("FF6C9E", "SoftKeyCol6_LoadSingle_Page0",
      "slot 5 of page 0 of both screens: steps (0x2737) within 0..15 (forced 0 for a drum bank), then the group's name and\n"
-     "members -- L0adSingleS0und_DrawGroupName / _DrawGroupSounds when UI_ScreenLatch is 0x54, else the C0mbination pair."),
-    ("FF6CF0", "SoftKeyCols7_8_L0adSingleS0und_Page0",
-     "slots 6 and 7 of L0adSingleS0und page 0: steps (0x2738) within 0..T_SoundGroup_MaxMemberIndex_ByStack(bank\n"
+     "members -- LoadSingleSound_DrawGroupName / _DrawGroupSounds when UI_ScreenLatch is 0x54, else the Combination pair."),
+    ("FF6CF0", "SoftKeyCols7_8_LoadSingleSound_Page0",
+     "slots 6 and 7 of LoadSingleSound page 0: steps (0x2738) within 0..T_SoundGroup_MaxMemberIndex_ByStack(bank\n"
      "Table_FF4039[(0x2736)], group (0x2737)) and redraws the member highlight (DL_F591A6 / DL_F591B1, source 0x2738)."),
-    ("FF6FC0", "SoftKeyCols7_8_L0adSingleC0mbination_Page0",
-     "the same as SoftKeyCols7_8_L0adSingleS0und_Page0 with T_CombiGroup_MaxMemberIndex_ByStack."),
-    ("FF69B9", "SoftKeyCols3_4_L0adSingle_Page1",
+    ("FF6FC0", "SoftKeyCols7_8_LoadSingleCombination_Page0",
+     "the same as SoftKeyCols7_8_LoadSingleSound_Page0 with T_CombiGroup_MaxMemberIndex_ByStack."),
+    ("FF69B9", "SoftKeyCols3_4_LoadSingle_Page1",
      "slots 2 and 3 of page 1 of both screens: steps (0x2727) within 0..15 (0..0 for a drum bank) and shows it 1-based\n"
      "through (0x2730), the decimal readout of DL_F5910F's second record."),
-    ("FF6A17", "SoftKeyCols5_6_L0adSingleS0und_Page1",
-     "slots 4 and 5 of L0adSingleS0und page 1: (0x2736) = 0 / 1 (2 / 3 for a drum bank) by the argument's bit 7\n"
+    ("FF6A17", "SoftKeyCols5_6_LoadSingleSound_Page1",
+     "slots 4 and 5 of LoadSingleSound page 1: (0x2736) = 0 / 1 (2 / 3 for a drum bank) by the argument's bit 7\n"
      "(the direction) -- USER 1 / USER 2 (/ USER1 DRUM / USER2 DRUM) in DLText_F59128 -- then redraws the (0x2736) string-table record at 0xF59100."),
-    ("FF6A6C", "SoftKeyCols7_8_L0adSingle_Page1",
+    ("FF6A6C", "SoftKeyCols7_8_LoadSingle_Page1",
      "slots 6 and 7 of page 1 of both screens: moves the cursor row (0x2739, 0..7) and scrolls the list top (0x273A, up to 8)\n"
      "when the cursor is at an end; refused for a drum bank.  DL_F5915B is the row highlight (source 0x2739)."),
-    ("FF7436", "L0adSingle_DrawBankAndNumber",
+    ("FF7436", "LoadSingle_DrawBankAndNumber",
      "(n): Text_UserBankAbbrevs[(0x2728)]'s 4 characters, then n + 1 in 1..3 digits, drawn at 0x19A5.  Called by the\n"
      "SoftKeyCols3_4 page-0 handlers with (0x2735)."),
-    ("FF7224", "L0adSingleS0und_DrawGroupName",
+    ("FF7224", "LoadSingleSound_DrawGroupName",
      "T_SoundGroupName_CopyToBuffer(bank Table_FF4039[(0x2736)], group (0x2737)) into 0x2940, drawn at 0x0C1E."),
-    ("FF725D", "L0adSingleC0mbination_DrawGroupName",
+    ("FF725D", "LoadSingleCombination_DrawGroupName",
      "the same with T_CombiGroupName_CopyToBuffer."),
-    ("FF7296", "L0adSingleS0und_DrawGroupSounds",
+    ("FF7296", "LoadSingleSound_DrawGroupSounds",
      "eight lines from 0x0EEE, 0x208 apart: member k's name (T_SoundName_CopyToBuffer, bank Table_FF4039[(0x2736)],\n"
      "group (0x2737)) up to T_SoundGroup_MaxMemberIndex_ByStack, Text_FF4291 after it."),
-    ("FF7399", "L0adSingleC0mbination_DrawGroupCombinations",
+    ("FF7399", "LoadSingleCombination_DrawGroupCombinations",
      "the same over a combination group (T_CombiGroup_MaxMemberIndex_ByStack)."),
     # prom_a 0xFC0BDA-0xFC1918: Msg0716_HandlerTables entries and the pending-part pass.  A part's object record (XIZ) holds
     # at +0 the address of its 8-byte RAM slot 0x0600 + 8n and at +4 its bit 1 << (n mod 16) (FINDINGS-prom_a-msg0716-module.md).
@@ -1018,25 +1018,25 @@ ROWS = [
      "field 5 of the page; steps with SeqJob_StepMeasure."),
     ("F7B74C", "MeasureInsert_StepRepeat",
      "field 6 of the page; steps with SeqJob_StepValueInRange, 0..127."),
-    ("F7B8DC", "MeasureC0py_InitFields",
-     "Paint_MeasureC0py's stage-0 init (thunk T_MeasureC0py_InitFields): MeasureC0py_LoadSavedFields, MeasureC0py_Field = 1.  MEASURE C0PY: the same six fields"),
-    ("F7BC73", "MeasureC0py_LoadSavedFields",
+    ("F7B8DC", "MeasureCopy_InitFields",
+     "Paint_MeasureCopy's stage-0 init (thunk T_MeasureCopy_InitFields): MeasureCopy_LoadSavedFields, MeasureCopy_Field = 1.  MEASURE C0PY: the same six fields"),
+    ("F7BC73", "MeasureCopy_LoadSavedFields",
      "copies the job's saved fields from battery RAM 0x6034xx into the working cells and the display stage."),
-    ("F7B95A", "MeasureC0py_StepFieldUp",
-     "(0x0C4E) = W, (0x0C4F) = 0 (up), then field MeasureC0py_Field 1..6 -> MeasureC0py_StepFromTrack / MeasureC0py_StepFirstMeasure / MeasureC0py_StepLastMeasure / MeasureC0py_StepToTrack / MeasureC0py_StepStartMeasure / MeasureC0py_StepRepeat.  (field order: the page text, checked against each stepper's helper; notes/prom_b_seqjob_field_names.py for the pattern)"),
-    ("F7B9AB", "MeasureC0py_StepFieldDown",
+    ("F7B95A", "MeasureCopy_StepFieldUp",
+     "(0x0C4E) = W, (0x0C4F) = 0 (up), then field MeasureCopy_Field 1..6 -> MeasureCopy_StepFromTrack / MeasureCopy_StepFirstMeasure / MeasureCopy_StepLastMeasure / MeasureCopy_StepToTrack / MeasureCopy_StepStartMeasure / MeasureCopy_StepRepeat.  (field order: the page text, checked against each stepper's helper; notes/prom_b_seqjob_field_names.py for the pattern)"),
+    ("F7B9AB", "MeasureCopy_StepFieldDown",
      "the same with (0x0C4F) = 0x80 (down)."),
-    ("F7BA16", "MeasureC0py_StepFromTrack",
+    ("F7BA16", "MeasureCopy_StepFromTrack",
      "field 1 of the page; steps with SeqJob_StepTrack."),
-    ("F7BA7F", "MeasureC0py_StepFirstMeasure",
+    ("F7BA7F", "MeasureCopy_StepFirstMeasure",
      "field 2 of the page; steps with SeqJob_StepMeasure."),
-    ("F7BAB5", "MeasureC0py_StepLastMeasure",
+    ("F7BAB5", "MeasureCopy_StepLastMeasure",
      "field 3 of the page; steps with SeqJob_StepMeasure."),
-    ("F7BAEF", "MeasureC0py_StepToTrack",
+    ("F7BAEF", "MeasureCopy_StepToTrack",
      "field 4 of the page; steps with SeqJob_StepTrack."),
-    ("F7BB58", "MeasureC0py_StepStartMeasure",
+    ("F7BB58", "MeasureCopy_StepStartMeasure",
      "field 5 of the page; steps with SeqJob_StepMeasure."),
-    ("F7BB6D", "MeasureC0py_StepRepeat",
+    ("F7BB6D", "MeasureCopy_StepRepeat",
      "field 6 of the page; steps with SeqJob_StepValueInRange, 0..127."),
     ("F7BFEA", "Quantize_InitFields",
      "Paint_Quantize's stage-0 init (thunk T_Quantize_InitFields): copies the saved fields from battery RAM 0x603477.. into the working cells."),
@@ -1418,8 +1418,8 @@ ROWS = [
      "backs onto the tag; 0x601F05 += the beat, 0x601F07 = the tick.  Called by EditCursor_NextBeat."),
     ("FE98E7", "EditCursor_SeekToTick",
      "EditCursor_SeekPastTick's twin that stops at the first event whose tick is >= EditCursor_Tick (`jr c`)."),
-    ("F7C869", "N0teChange_StageDisplayFields",
-     "N0TE CHANGE's fields into DisplayListB_Stage for its page: the track (0x0DEE), N0teChange_FromMeasure /\n"
+    ("F7C869", "NoteChange_StageDisplayFields",
+     "N0TE CHANGE's fields into DisplayListB_Stage for its page: the track (0x0DEE), NoteChange_FromMeasure /\n"
      "_ToMeasure, the two notes split into octave and note name by `divs WA,12`; (0x129E) = the measure count,\n"
      "To - From + 1."),
     ("FA14E3", "Initial_SelectPreviousItem",
@@ -1994,15 +1994,15 @@ ROWS = [
      "(frame with the source at +1): every node of that source's list copied into the frame with velocity 0 -- a\n"
      "note-off for each sounding note; A = the low byte of their ORed voice masks."),
     ("FC54C6", "NoteRouting_RebuildForSong",
-     "T_NoteRouting_RebuildForSong (BStore_BootPhase3, S0ngSelectName_Leave, ScreenEnter_CyclePlayEditScreen): NoteRouting_BuildTrackRouting first, then\n"
+     "T_NoteRouting_RebuildForSong (BStore_BootPhase3, SongSelectName_Leave, ScreenEnter_CyclePlayEditScreen): NoteRouting_BuildTrackRouting first, then\n"
      "block +0 = (0x4C22) | (0x4C21), NoteRouting_BuildByPanelMode[PanelMode] with 0, NoteRouting_UpdateActivePartMask,\n"
      "NoteRouting_CommitChanges."),
     ("FC5518", "NoteRouting_Rebuild",
-     "T_NoteRouting_Rebuild (C0mbinati0nM0de_StepSelectedPart, ModeLeave_SeqPlay, MainTask_PhaseVector): the same without\n"
+     "T_NoteRouting_Rebuild (CombinationMode_StepSelectedPart, ModeLeave_SeqPlay, MainTask_PhaseVector): the same without\n"
      "NoteRouting_BuildTrackRouting, the per-mode builder called with 1."),
     ("FC5566", "NoteRouting_SetSoloAndRebuild",
-     "T_NoteRouting_SetSoloAndRebuild: (0x602498) bit 5 = the argument (LcdKeyRow1_C0mbinati0nM0de_Page2 -- the SOLO key --,\n"
-     "ScreenLeaveBody_C0mbinati0nM0de, CombiEdit_CompareOn), then the rebuild with 0."),
+     "T_NoteRouting_SetSoloAndRebuild: (0x602498) bit 5 = the argument (LcdKeyRow1_CombinationMode_Page2 -- the SOLO key --,\n"
+     "ScreenLeaveBody_CombinationMode, CombiEdit_CompareOn), then the rebuild with 0."),
     ("FC5C7C", "NoteRouting_CommitChanges",
      "by (0x4C04): bits 0xA0 NoteRouting_QueueMidiInChanges, 0xC0 NoteRouting_QueueTrackChanges, 0x20 NoteRouting_QueueMidiOutSchemeChange and NoteRouting_QueuePartTransmitChanges, 0x40 NoteRouting_QueueTrackPartChanges; then\n"
      "T_NoteRouting_ApplyQueuedChanges, the 0x29A-byte block copied to 0x602600, (0x4C04) = 0."),
@@ -2538,7 +2538,7 @@ ROWS = [
      "Draw_CyclePlayCurrentMeasureCycle / _CurrentMeasureEdit and Draw_CycleRecordCurrentMeasure.  Basis: body + SWI7 table."),
     ("F55C3D", "LCD_ShowAllLayers_Copy",
      "C = 7, `swi 7` service 0x0C: display layers 1, 2 and 3 steady on (prom_a's LCD_ShowAllLayers_StackFrame does the\n"
-     "same from a stack frame); called from Draw_CycleMasterS0ngMeasureTimeSig.  Basis: body + SWI7 table."),
+     "same from a stack frame); called from Draw_CycleMasterSongMeasureTimeSig.  Basis: body + SWI7 table."),
     ("F5BF21", "LCD_ShowAllLayers_Copy2",
      "the same as LCD_ShowAllLayers_Copy; called from Dispatch_Code80_Bracketed.  Basis: body + SWI7 table."),
     ("F4F000", "LCD_BlitValueBar_StackArgs",

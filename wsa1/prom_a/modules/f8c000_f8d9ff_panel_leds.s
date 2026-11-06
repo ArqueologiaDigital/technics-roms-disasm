@@ -66,7 +66,7 @@ CmdList_F8C046:
 ; PanelLed_OnClass20Event -- pass-B handler (classes 0x20-0x3F): request the six-way-select LEDs on codes 0x18-0x1A
 ; Evidence: T_PanelLed_OnClass20Event is in UiListB_Class20..3F; CmdList_F8C05B holds keys 0x18/0x19/0x1A -> (0x213A) |= 0x0080, the id
 ;   DispatchTable_F8C2B2 maps to PanelLed_ShowSixWaySelect.  Codes 0x19/0x1A come from v1 group 0x08's [0x20,0x19]
-;   events (sub_F8AA24 may make it 0x1A; PanelEvent_StampPartIntoClass20 adds the part), 0x18 from LcdKeyRow4_SoundModeOrC0mbinati0nM0de.
+;   events (sub_F8AA24 may make it 0x1A; PanelEvent_StampPartIntoClass20 adds the part), 0x18 from LcdKeyRow4_SoundModeOrCombinationMode.
 PanelLed_OnClass20Event:   ; entry: prom_b routine directory
 	ld a, (UiEvent_Byte1:16)                                   ; F8C04E  c1 b8 20 21
 	ld XIY,CmdList_F8C05B                                ; F8C052  45 5b c0 f8 00

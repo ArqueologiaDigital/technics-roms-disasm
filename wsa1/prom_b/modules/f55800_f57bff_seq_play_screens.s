@@ -1105,7 +1105,7 @@ LCD_BlankThenSetPanel3Layer_Layer0:
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
 ; LCD_ShowAllLayers_Copy: C = 7, `swi 7` service 0x0C: display layers 1, 2 and 3 steady on (prom_a's LCD_ShowAllLayers_StackFrame does the
-;   same from a stack frame); called from Draw_CycleMasterS0ngMeasureTimeSig.  Basis: body + SWI7 table.
+;   same from a stack frame); called from Draw_CycleMasterSongMeasureTimeSig.  Basis: body + SWI7 table.
 LCD_ShowAllLayers_Copy:
 	ld	c, 7:opc	; F55C3D  ld C,0x07
 	ld	a, 12:opc	; F55C3F  ld A,0x0c
@@ -1143,9 +1143,9 @@ SeqScreen_DrawCountInMeasure_Join:
 	call	T_DLB_Handler_StringTable	; F55C5C  call 0xf417f8
 SeqScreen_DrawCountInMeasure_Return:
 	ret	; F55C60  ret
-Draw_SequencerPlayS0ngCycleMeasure:
+Draw_SequencerPlaySongCycleMeasure:
 	calr	LCD_BlankThenSetPanel3Layer_Layer0	; F55C61  calr 0xf55c2f
-	ld	xiy, DL_SequencerPlayS0ngCycleMeasure	; F55C64  ld XIY,0x00f349c7
+	ld	xiy, DL_SequencerPlaySongCycleMeasure	; F55C64  ld XIY,0x00f349c7
 	ld	xix, Data_F34C6E	; F55C69  ld XIX,0x00f34c6e
 	call	T_DisplayList_Run	; F55C6E  call 0xf417f0
 	ld	xiy, DL_F341B6	; F55C72  ld XIY,0x00f341b6
@@ -1155,10 +1155,10 @@ Draw_SequencerPlayS0ngCycleMeasure:
 	calr	SeqScreen_DrawTrackPartLabels	; F55C85  calr 0xf55d67
 	calr	SeqScreen_QueueTrackRecPlayLabels	; F55C88  calr 0xf55d90
 	ret	; F55C8B  ret
-Draw_CycleMasterS0ngMeasureTimeSig:
+Draw_CycleMasterSongMeasureTimeSig:
 	calr	SeqPlayScreen_StageValues	; F55C8C  calr 0xf57453
 	ld	(LCD_CurrentLayer:16), 2	; F55C8F  ld (0x2540),0x02
-	ld	xiy, DL_CycleMasterS0ngMeasureTimeSig	; F55C94  ld XIY,0x00f34970
+	ld	xiy, DL_CycleMasterSongMeasureTimeSig	; F55C94  ld XIY,0x00f34970
 	ld	xix, DLText_OffOn_F349BB	; F55C99  ld XIX,0x00f349bb
 	call	T_DisplayListB_Run	; F55C9E  call 0xf417f4
 	ld	wa, (13650:16)	; F55CA2  ld WA,(0x3552)
@@ -3871,7 +3871,7 @@ ScreenEnter_SeqPlayScreen_Skip3:
 	call	T_Queue2E00_AppendRegs	; F56C04  call 0xf40f3c
 	call	T_NoteRouting_Rebuild	; F56C08  call 0xf411bc
 ScreenEnter_SeqPlayScreen_Skip4:
-	ld	xwa, Draw_SequencerPlayS0ngCycleMeasure	; F56C0C  ld XWA,0x00f55c61
+	ld	xwa, Draw_SequencerPlaySongCycleMeasure	; F56C0C  ld XWA,0x00f55c61
 	push	xwa	; F56C11  push XWA
 	call	T_CallbackQueue_Post	; F56C12  call 0xf42e84
 	inc	4, xsp	; F56C16  inc 4,XSP
@@ -3879,7 +3879,7 @@ ScreenEnter_SeqPlayScreen_Skip4:
 	call	T_Kernel_SemaSignal	; F56C1A  call 0xf42d88
 ScreenEnter_SeqPlayScreen_Skip5:
 	call	T_Seq_LoadTimeSigAtCurrentMeasure	; F56C1E  call 0xf42704
-	ld	xwa, Draw_CycleMasterS0ngMeasureTimeSig	; F56C22  ld XWA,0x00f55c8c
+	ld	xwa, Draw_CycleMasterSongMeasureTimeSig	; F56C22  ld XWA,0x00f55c8c
 	push	xwa	; F56C27  push XWA
 	call	T_CallbackQueue_Post	; F56C28  call 0xf42e84
 	inc	4, xsp	; F56C2C  inc 4,XSP
@@ -3949,7 +3949,7 @@ LcdKeyRow1_SeqPlayScreen_Skip3:
 	ld	a, (13835:16)	; F56C91  ld A,(0x360b)
 	and	a, 1	; F56C95  and A,0x01
 	ld	(UI_DrawScratch+7:16), a	; F56C98  ld (0x2647),A
-	ld	xwa, Draw_CycleMasterS0ngMeasureTimeSig	; F56C9C  ld XWA,0x00f55c8c
+	ld	xwa, Draw_CycleMasterSongMeasureTimeSig	; F56C9C  ld XWA,0x00f55c8c
 	push	xwa	; F56CA1  push XWA
 	call	T_CallbackQueue_Post	; F56CA2  call 0xf42e84
 	inc	4, xsp	; F56CA6  inc 4,XSP
@@ -3961,7 +3961,7 @@ LcdKeyRow1_SeqPlayScreen_Skip4:
 	ldw	(PanelDial_DownButton:16), 34953	; F56CB5  ld (0x209b),0x8889  <- arms prom_a PanelButton_Accept's substitution for panel button code 0x0D (0xF86615); see the 0xF7D2D8 banner
 	call	T_SeqPlayScreen_LcdKeyRow1	; F56CBB  call 0xf40d0c
 	call	T_Seq_LoadTimeSigAtCurrentMeasure	; F56CBF  call 0xf42704
-	ld	xwa, Draw_CycleMasterS0ngMeasureTimeSig	; F56CC3  ld XWA,0x00f55c8c
+	ld	xwa, Draw_CycleMasterSongMeasureTimeSig	; F56CC3  ld XWA,0x00f55c8c
 	push	xwa	; F56CC8  push XWA
 	call	T_CallbackQueue_Post	; F56CC9  call 0xf42e84
 	inc	4, xsp	; F56CCD  inc 4,XSP
@@ -3998,7 +3998,7 @@ LcdKeyRow2_SeqPlayScreen_Skip5:
 	ldw	(PanelDial_DownButton:16), 34953	; F56CFC  ld (0x209b),0x8889  <- arms prom_a PanelButton_Accept's substitution for panel button code 0x0D (0xF86615); see the 0xF7D2D8 banner
 	call	T_SeqPlayScreen_LcdKeyRow2	; F56D02  call 0xf40d10
 	call	T_Seq_LoadTimeSigAtCurrentMeasure	; F56D06  call 0xf42704
-	ld	xwa, Draw_CycleMasterS0ngMeasureTimeSig	; F56D0A  ld XWA,0x00f55c8c
+	ld	xwa, Draw_CycleMasterSongMeasureTimeSig	; F56D0A  ld XWA,0x00f55c8c
 	push	xwa	; F56D0F  push XWA
 	call	T_CallbackQueue_Post	; F56D10  call 0xf42e84
 	inc	4, xsp	; F56D14  inc 4,XSP
@@ -4057,7 +4057,7 @@ SeqPlayScreen_LcdKeyRow3:
 SeqPlayScreen_LcdKeyRow3_Skip:
 	calr	SeqMasterTrack_SwitchOff	; F56D52  calr 0xf56da8
 SeqPlayScreen_LcdKeyRow3_Join:
-	ld	xwa, Draw_CycleMasterS0ngMeasureTimeSig	; F56D55  ld XWA,0x00f55c8c
+	ld	xwa, Draw_CycleMasterSongMeasureTimeSig	; F56D55  ld XWA,0x00f55c8c
 	push	xwa	; F56D5A  push XWA
 	call	T_CallbackQueue_Post	; F56D5B  call 0xf42e84
 	inc	4, xsp	; F56D5F  inc 4,XSP
@@ -5797,14 +5797,14 @@ Seq_SavePlayingTrackMask:
 ; more, no fewer (python3 notes/promb-2026-09-25/stage_values_probe.py):
 ;
 ;   routine                            caller   list its caller runs      cells
-;   SeqPlayScreen_StageValues          F55C8C   DL_CycleMasterS0ngMeasureTimeSig   6/6
+;   SeqPlayScreen_StageValues          F55C8C   DL_CycleMasterSongMeasureTimeSig   6/6
 ;   RealtimeRecordScreen_StageValues   F55D3D   RealtimeRecordScreen_DrawValues_DL .. 0xF343B6              7/7
 ;   CyclePlayScreen_StageValues        F55EEA   DL_F34FF2 .. Data_F35035           5/5
 ;   CyclePlayEditScreen_StageValues    F55E8F   DL_F352F9 .. DLText_OffOn_F3533C           5/5
 ;   CycleRecordScreen_StageValues      F55F45   CycleRecordScreen_DrawValues_DL .. Data_F351F9           6/6
 ;
 ; The screen names are those of the CAPTION list the same screen's other arm
-; runs (DL_SequencerPlayS0ngCycleMeasure, DL_RealtimeRecordSongMeasure..., 
+; runs (DL_SequencerPlaySongCycleMeasure, DL_RealtimeRecordSongMeasure..., 
 ; DL_CyclePlayCurrentMeasureCycle, DL_CyclePlayCurrentMeasureEdit,
 ; DL_CycleRecordCurrentMeasure), which earlier rounds named from their own text.
 ; Which firmware variable each SOURCE cell is (0x3552, 0x0DE3, 0x360A, ...) is
@@ -5815,8 +5815,8 @@ Seq_SavePlayingTrackMask:
 ; --------------------------------------------------------------------------
 ; SeqPlayScreen_StageValues
 ; Called from: 0xF55C8C (`calr`), the values arm of the screen whose captions
-;          are DL_SequencerPlayS0ngCycleMeasure; that arm then runs
-;          DL_CycleMasterS0ngMeasureTimeSig with DisplayListB_Run.
+;          are DL_SequencerPlaySongCycleMeasure; that arm then runs
+;          DL_CycleMasterSongMeasureTimeSig with DisplayListB_Run.
 ; Writes:  (0x2644) <- word (0x3552)      read at the "MEASURE =" field
 ;          (0x2646) <- (0x0DE3)           read at the "TIME SIG.=" field
 ;          (0x2647) <- (0x360B) AND 1     the "CYCLE:" OFF/ON string index
@@ -5826,7 +5826,7 @@ Seq_SavePlayingTrackMask:
 ;                    string right after that number (`ldir` of 3 words)
 ; Preserves: XIX, XIY, WA, BC.
 ; Evidence: the six destinations are exactly the six source variables of
-;          DL_CycleMasterS0ngMeasureTimeSig's six records.
+;          DL_CycleMasterSongMeasureTimeSig's six records.
 ; --------------------------------------------------------------------------
 SeqPlayScreen_StageValues:
 	push	xix	; F57453  push XIX

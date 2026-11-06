@@ -143,8 +143,8 @@ produces a confident wrong name the byte gate cannot see:
 
 `DL-RUN` is the trap: the routine's shape is `ld XIY,<start> / ld XIX,<end> /
 call <a display-list runner>`, and the "string" is where the LIST ENDS, not
-anything the routine says. `DisplayList_Run_T0neLayerSoundEditTrigGer_T0neSelectSoundEdit`, `Draw_Page22KeyFollowEnvelopeKeyFollowTouchAttack`, `LCD_ClearCurrentLayer` and
-`AfterT0uchSetting_EraseRecordValue` are all in that column and were all deliberately left unnamed.
+anything the routine says. `DisplayList_Run_ToneLayerSoundEditTrigGer_ToneSelectSoundEdit`, `Draw_Page22KeyFollowEnvelopeKeyFollowTouchAttack`, `LCD_ClearCurrentLayer` and
+`AfterTouchSetting_EraseRecordValue` are all in that column and were all deliberately left unnamed.
 
 ### `prom_b_effect_param_map.py` — ★ EffectNames entry k IS algorithm k
 **"Is entry k of EffectNames_F147AC the name of DSP effect algorithm k?"** Yes.

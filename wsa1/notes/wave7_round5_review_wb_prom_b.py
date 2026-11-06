@@ -193,7 +193,7 @@ def c3_captions():
     # (caption text as the ROM spells it, the IX the named list prints at)
     cases = [(" REALTIME COMMANDS : ", 0x0B7F, "DL_RealtimeCommandsClock"),
              (" CLOCK  :", 0x17A3, "DL_RealtimeCommandsClock"),
-             ("P0SITI0N  :", 0x1236, "DL_P0siti0n"),
+             ("P0SITI0N  :", 0x1236, "DL_Position"),
              ("MEMORY BANK:", 0x1373, "DL_MemoryBank"),
              ("LAST MEASURE    :", 0x175C, "DL_LastMeasure"),
              ("AFTER TOUCH RECORD :", 0x1467, "DL_AfterTouchRecord")]

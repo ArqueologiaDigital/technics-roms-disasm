@@ -38,7 +38,7 @@ MINLEN = int(sys.argv[sys.argv.index("--minlen") + 1]) if "--minlen" in sys.argv
 BR = re.compile(r'^((?:jr|jrl|djnz)\b.*?)0x[0-9a-f]+\s*$')   # local branches only: a call / jp target must be EQUAL
 FILES = {"wsa1:a": image_path(ROOT, "prom_a/wsa1_prom_a.s"), "wsa1:b": image_path(ROOT, "prom_b/wsa1_prom_b.s")}
 SKIP = (0xF00C4D, 0xF01800)
-OLD = (0xF6F000, 0xF6F400)   # the older build's block ends where MidiFileL0ad_LcdKeyRow1 starts (the banner)
+OLD = (0xF6F000, 0xF6F400)   # the older build's block ends where MidiFileLoad_LcdKeyRow1 starts (the banner)
 LOCAL = re.compile(r'_(Skip|Join|Loop|Return|Epilogue|Resume|Nop)\d*$')
 
 

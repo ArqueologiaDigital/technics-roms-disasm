@@ -26,9 +26,11 @@ QUESTION IT ANSWERS
       proposed name must occur verbatim in the ASCII the routine's own lists
       contain.  Round 3 of this wave invented the morpheme "Home", which occurs
       ZERO times in all four images; this check is what makes that impossible
-      here.  It is also why the names keep the ROM's own spelling -- the
+      here.  It is also why the names kept the ROM's own spelling -- the
       firmware's font draws capital O as `0` in some lists and as `O` in others,
-      so `Paint_S0ngC0py` and `Paint_NoteEdit` are both literal.
+      so `Paint_S0ngC0py` (now `Paint_SongCopy`) and `Paint_NoteEdit` were both
+      literal.  Since the owner's decision of 2026-11-06 names spell O, and the guard
+      reads the ROM text through caption_o_for_zero.o_for_zero() first.
 
     ⚠ THE THREE THAT DID NOT, AND THAT IS THE FINDING.  A lever worked to its
       limit and reporting "one" is a result; the tree has paid for guesses.
@@ -381,17 +383,17 @@ def painters():
 # morpheme of every new label is checked against the ROM by --morphemes.
 # --------------------------------------------------------------------------
 PAINTER_NAMES = {
-    "sub_F80261": "Paint_S0ngC0py",
-    "sub_F80439": "Paint_N0teChange",
-    "sub_F8076C": "Paint_MeasureC0py",
+    "sub_F80261": "Paint_SongCopy",
+    "sub_F80439": "Paint_NoteChange",
+    "sub_F8076C": "Paint_MeasureCopy",
     "sub_F80AC9": "Paint_MeasureInsert",
-    "sub_F80E2E": "Paint_S0ngSelectName",
+    "sub_F80E2E": "Paint_SongSelectName",
     "sub_F80F5A": "Paint_StepRecordPartSelect",
     "sub_F81048": "Paint_SequencerMedley",
     "sub_F81AB5": "Paint_MasterTrackClear",
     "sub_F81BD4": "Paint_StepRecordTrackClrMeas",
     "sub_F9113F": "Paint_Drawbar",
-    "sub_F9167C": "Paint_C0mbinati0nM0de",
+    "sub_F9167C": "Paint_CombinationMode",
     "sub_F927A6": "Paint_SoundGroupMenu",
     "sub_F928DB": "Paint_Drum",
     "sub_F92CE7": "Paint_GroupSoundDisplayHold",
@@ -462,6 +464,13 @@ def split_camel(name):
     return [w for w in re.findall(r'[A-Z][a-z0-9]*|[0-9]+', tail) if re.search(r'[A-Za-z]', w)]
 
 
+def _o_pool(text):
+    """The ROM text with its 0-for-O read as O (caption_o_for_zero.py), so a
+    name that spells the word matches the caption that typed it with 0x30."""
+    from caption_o_for_zero import o_for_zero
+    return o_for_zero(text)
+
+
 def morpheme_check(verbose=False):
     """every alphabetic morpheme of every proposed name must occur VERBATIM in the
     ASCII of a display list the routine itself runs.  Returns list of failures."""
@@ -471,7 +480,7 @@ def morpheme_check(verbose=False):
     rows = []
     for old, new in sorted(PAINTER_NAMES.items()):
         pool = "".join("".join(r[4]) for r in p.get(old, p.get(new, []))).upper()
-        pool = re.sub(r'[^A-Z0-9]', '', pool)
+        pool = re.sub(r'[^A-Z0-9]', '', _o_pool(pool))
         miss = [w for w in split_camel(new) if w.upper() not in pool]
         rows.append((old, new, len(pool), miss))
         if miss:
@@ -479,7 +488,7 @@ def morpheme_check(verbose=False):
     for old, new in sorted(LIST_NAMES.items()):
         a = int(old.split("_")[1], 16)
         txt = prom_a_lists().get(a, ("", []))[1]
-        pool = re.sub(r'[^A-Z0-9]', '', "".join(txt).upper())
+        pool = re.sub(r'[^A-Z0-9]', '', _o_pool("".join(txt).upper()))
         miss = [w for w in split_camel(new) if w.upper() not in pool]
         rows.append((old, new, len(pool), miss))
         if miss:

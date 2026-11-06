@@ -14003,7 +14003,7 @@ StepRecord_AppendLatchedHoldEvent:
 ; notes/prom_b_module_frontier.py ranks whole thunk RUNS by the contiguous
 ; unconverted extent of their targets, and by that measure this span is
 ; THIRTEENTH of fourteen: it owns exactly two `jp` slots of the 0xF40000 routine
-; directory, T_MidiFileL0ad_LcdKeyRow1 -> 0xF6F400 and T_MidiFileSave_WriteSeqBankSmf -> 0xF6F404, an extent of 4 bytes.
+; directory, T_MidiFileLoad_LcdKeyRow1 -> 0xF6F400 and T_MidiFileSave_WriteSeqBankSmf -> 0xF6F404, an extent of 4 bytes.
 ; That tool is blind to a module entered by DIRECT CALL, and this one is.
 ; notes/prom_b_span_frontier.py ranks the `.incbin` SPANS instead, by how many
 ; DISTINCT addresses inside them an ALREADY-TRANSCRIBED instruction calls or
