@@ -10,33 +10,33 @@ there); the other items' evidence is in the note that listed them.
 
 ## Tools changed
 
-| tool                          | change                                                                                                                                                                                                                                         |
-|-------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `tools/port_symbols.py`       | `RESET_LOADED`: `INITIAL_SP` takes the stack top the new build's reset code loads (its one `mov imm32, aN ; mov aN, sp`), `BootStack` that minus 0x800; the old build's value is checked against its own reset first                     |
-| `tools/gen_program_s.py`      | the `mov X, aN` before `mov aN, sp` spells X as `INITIAL_SP` even where a manual name takes the same address for what lies above the stack (`DspPresetRamRecords` in 941 / 942)                                                               |
+| tool                          | change                                                                                                                                                                                                                                  |
+|-------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `tools/port_symbols.py`       | `RESET_LOADED`: `INITIAL_SP` takes the stack top the new build's reset code loads (its one `mov imm32, aN ; mov aN, sp`), `BootStack` that minus 0x800; the old build's value is checked against its own reset first                    |
+| `tools/gen_program_s.py`      | the `mov X, aN` before `mov aN, sp` spells X as `INITIAL_SP` even where a manual name takes the same address for what lies above the stack (`DspPresetRamRecords` in 941 / 942)                                                         |
 | `tools/port_names_by_code.py` | B's `func_<ADDR>_entry` labels (the call entry after an `add -N, sp` / `movm` prologue) are candidates too, so a name A gives the call entry is carried; with `--b-src` the entry's address is taken from B's decode (`prologue_entry`) |
-| `floppy/tools/kd/kn_sqt.py`   | `stale_tokens` reads older-layer cuts, 0xFF fill and song-record copies (`../../../notes/floppy-leftovers-2026-10-31/README.md`, "layer cuts")                                                                                               |
+| `floppy/tools/kd/kn_sqt.py`   | `stale_tokens` reads older-layer cuts, 0xFF fill and song-record copies (`../../../notes/floppy-leftovers-2026-10-31/README.md`, "layer cuts")                                                                                          |
 
 ## Items
 
-| item                                | outcome | where                                                                     | in one line                                                                                                                       |
-|-------------------------------------|---------|---------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------|
-| L-mn10300-names-b935-initial-sp     | CLOSED  | this README, `tools/port_symbols.py`                                      | INITIAL_SP 935 0x50021CCC, 893 0x50021CC8 (was 941's value / unported); the records above it named `DspPresetRamRecords`          |
-| L-mn10300-names-port-entry          | CLOSED  | this README, `tools/port_names_by_code.py`                                | call entries are candidates; on 935 the rule finds DspFullReinit, DspWritePMWord, DspWriteDMWord (3 of the 4 hand-placed names)   |
-| L-mn10300-names-sd-frame-labels     | CLOSED  | `kn7000_manual.sym`, `../kn7000-names-probes/names_sd_frames.py`          | SdFrameR2Cmd0/5/3/6/7 at 0x50007E94 + 10 k, TickHookArg0..3 at 0x4874D11C; the data labels follow at the next `make data-src*`    |
-| L-mn10300-names-kn2400-titles       | BLOCKED | this README, `../kn7000-names-probes/names_kn2400_titles.py`              | 25 titles TitleNameTable names and gui_ids.inc lacks, listed; writing them is `gen_data_s.py` (lane mn10300-data2)               |
-| N-89cedbdb                          | CLOSED  | `../sibling-name-port/README.md`, `names_choice_func_lists.py`            | both names right: one choice-parameter template, the string lists differ (TECHNICS/SMF vs SD-AUDIO/SD-SOUND)                     |
-| N-61c32961                          | BLOCKED | `../callee-walk/README.md`, `../mn10300-data/README.md`                   | the indexed `sentinel_lists` form is `gen_data_s.py` (lane mn10300-data2)                                                        |
-| N-fb88572c                          | BLOCKED | `../gui-data-region/README.md`                                            | the frozen `gui_object_names.tsv` read by `obj_names()` is `gen_data_s.py` and its data directories (lane mn10300-data2)         |
-| N-83177c3d                          | CLOSED  | `../ic18-rhythm-rom.md`                                                   | ToneKeyFind's general tail; 3,386 notes resolved; Standard-Kit-1 key agreement 92.5 % -> 93.9 %                                   |
-| N-c052c027                          | CLOSED  | `../ic18-rhythm-rom.md`                                                   | NoteConvApply traced past the fold: 11 mode-1 and 10 mode-0 tables over the 41 chord types                                       |
-| N-e779328f                          | CLOSED  | `../ic18-rhythm-rom.md`                                                   | EQ words to TG register classes 0x40000000..0x50000000; a variation's +2/+3 are the DSP units' style parts (key 0xB048)          |
-| N-c6900716                          | OPEN    | `../presentation-control-probes/song-records.md`                          | 0xA0 / 0xA1 / 0x200000 named; 17 ids left with the next step                                                                     |
-| N-abdfdef8                          | CLOSED  | `../presentation-control-probes/song-records.md` section 7                | the 47 descriptors are the PC COMMUNICATION protocol: request layout, CRC-7, replies                                              |
-| N-42bc8729                          | see report | `../sp7001-build-diff.md`                                              | (filled in below)                                                                                                                 |
-| N-44e56012                          | OPEN    | `../work-ram-map.md`                                                      | key-bed path traced, no work-RAM gate on it; next step a MAME break on TgcNoteOnSend / TgcBufWrite                               |
-| N-e140c8dc                          | CLOSED  | `../../../notes/floppy-leftovers-2026-10-31/README.md`                    | KN6000 1,768 -> 36 B, KN7000 5,270 -> 5,045 B (the rest: RAM nothing wrote [INFERENCE], bit density by address mod 8)          |
-| O-kn6000-floppy-unknown-dump-397763 | CLOSED  | the same                                                                  | the 126 x 1,768 B group is 3 x 36 B                                                                                               |
+| item                                | outcome | where                                                            | in one line                                                                                                                        |
+|-------------------------------------|---------|------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------|
+| L-mn10300-names-b935-initial-sp     | CLOSED  | this README, `tools/port_symbols.py`                             | INITIAL_SP 935 0x50021CCC, 893 0x50021CC8 (was 941's value / unported); the records above it named `DspPresetRamRecords`           |
+| L-mn10300-names-port-entry          | CLOSED  | this README, `tools/port_names_by_code.py`                       | call entries are candidates; on 935 the rule finds DspFullReinit, DspWritePMWord, DspWriteDMWord (3 of the 4 hand-placed names)    |
+| L-mn10300-names-sd-frame-labels     | CLOSED  | `kn7000_manual.sym`, `../kn7000-names-probes/names_sd_frames.py` | SdFrameR2Cmd0/5/3/6/7 at 0x50007E94 + 10 k, TickHookArg0..3 at 0x4874D11C; the data labels follow at the next `make data-src*`     |
+| L-mn10300-names-kn2400-titles       | BLOCKED | this README, `../kn7000-names-probes/names_kn2400_titles.py`     | 25 titles TitleNameTable names and gui_ids.inc lacks, listed; writing them is `gen_data_s.py` (lane mn10300-data2)                 |
+| N-89cedbdb                          | CLOSED  | `../sibling-name-port/README.md`, `names_choice_func_lists.py`   | both names right: one choice-parameter template, the string lists differ (TECHNICS/SMF vs SD-AUDIO/SD-SOUND)                       |
+| N-61c32961                          | BLOCKED | `../callee-walk/README.md`, `../mn10300-data/README.md`          | the indexed `sentinel_lists` form is `gen_data_s.py` (lane mn10300-data2)                                                          |
+| N-fb88572c                          | BLOCKED | `../gui-data-region/README.md`                                   | the frozen `gui_object_names.tsv` read by `obj_names()` is `gen_data_s.py` and its data directories (lane mn10300-data2)           |
+| N-83177c3d                          | CLOSED  | `../ic18-rhythm-rom.md`                                          | ToneKeyFind's general tail; 3,386 notes resolved; Standard-Kit-1 key agreement 92.5 % -> 93.9 %                                    |
+| N-c052c027                          | CLOSED  | `../ic18-rhythm-rom.md`                                          | NoteConvApply traced past the fold: 11 mode-1 and 10 mode-0 tables over the 41 chord types                                         |
+| N-e779328f                          | CLOSED  | `../ic18-rhythm-rom.md`                                          | EQ words to TG register classes 0x40000000..0x50000000; a variation's +2/+3 are the DSP units' style parts (key 0xB048)            |
+| N-c6900716                          | OPEN    | `../presentation-control-probes/song-records.md`                 | 0xA0 / 0xA1 / 0x200000 named; 17 ids left with the next step                                                                       |
+| N-abdfdef8                          | CLOSED  | `../presentation-control-probes/song-records.md` section 7       | the 47 descriptors are the PC COMMUNICATION protocol: request layout, CRC-7, replies                                               |
+| N-42bc8729                          | CLOSED  | `../sp7001-build-diff.md` "The last 24"                          | 24 of 24: 5 by the evaluator's fixes (1,321 of 1,340), 19 by `oldbuilds_baseext_unresolved_calls.py` (vtable slots, run-time sets) |
+| N-44e56012                          | OPEN    | `../work-ram-map.md`                                             | key-bed path traced, no work-RAM gate on it; next step a MAME break on TgcNoteOnSend / TgcBufWrite                                 |
+| N-e140c8dc                          | CLOSED  | `../../../notes/floppy-leftovers-2026-10-31/README.md`           | KN6000 1,768 -> 36 B, KN7000 5,270 -> 5,045 B (the rest: RAM nothing wrote [INFERENCE], bit density by address mod 8)              |
+| O-kn6000-floppy-unknown-dump-397763 | CLOSED  | the same                                                         | the 126 x 1,768 B group is 3 x 36 B                                                                                                |
 
 ## INITIAL_SP and the records above it (L-mn10300-names-b935-initial-sp)
 
@@ -49,14 +49,17 @@ reset code loads its stack top in exactly one `mov imm32, aN ; mov aN, sp`
 (`port_symbols.reset_sp`), so `INITIAL_SP` (and `BootStack`, 0x800 below it in all four
 builds) is now ported from that instruction:
 
-| build | reset loads  | INITIAL_SP before | after        | DspPresetRamRecords |
-|-------|--------------|-------------------|--------------|---------------------|
-| 941   | 0x50021CF8   | 0x50021CF8        | 0x50021CF8   | 0x50021CF8          |
-| 942   | 0x50021D08   | 0x50021D08        | 0x50021D08   | 0x50021D08          |
-| 935   | 0x50021CCC   | 0x50021CF8        | 0x50021CCC   | 0x50021CF8          |
-| 893   | 0x50021CC8   | unported          | 0x50021CC8   | 0x50021CF4          |
+| build | reset loads | INITIAL_SP before | after      | DspPresetRamRecords |
+|-------|-------------|-------------------|------------|---------------------|
+| 941   | 0x50021CF8  | 0x50021CF8        | 0x50021CF8 | 0x50021CF8          |
+| 942   | 0x50021D08  | 0x50021D08        | 0x50021D08 | 0x50021D08          |
+| 935   | 0x50021CCC  | 0x50021CF8        | 0x50021CCC | 0x50021CF8          |
+| 893   | 0x50021CC8  | unported          | 0x50021CC8 | 0x50021CF4          |
 
-`../kn7000-names-probes/names_reset_sp_check.py` checks each row against the image.
+`../kn7000-names-probes/names_reset_sp_check.py` checks each row against the image.  In 935 and 893
+the regenerated source also spells one store `mov d0, (INITIAL_SP)`: a word those builds keep
+at the first address above the stack (0x50021CCC / 0x50021CC8, in code 941 rewrote); it is the
+address of the stack top, not the stack, and has no name of its own yet.
 
 ## Call entries in port_names_by_code.py (L-mn10300-names-port-entry)
 
@@ -78,6 +81,24 @@ starts.  The command (scratch output, the source label list replaced by the four
 
 with `ENTRIES.s` holding the lines `func_4840B10B_entry:`, `func_4840B1CD_entry:`,
 `func_4840B22F_entry:`, `func_4840B3F5_entry:`.
+
+The real runs (`make ported-names-935 ported-names-893`, and `make ported-names` in each
+sibling) count the call entries as candidates now (935: 10,933 unnamed entries, was 6,619).
+935 / 893 gain no name: the four host-port names are hand-placed there already.  The siblings
+gain names, from the entries and from this lane's new 941 names (rows of `*_ported.sym`, before
+-> after; the second figure is how many of the new rows are names this lane added to
+`kn7000_manual.sym`):
+
+| image  | before | after | new rows that are this lane's names |
+|--------|--------|-------|-------------------------------------|
+| KN6000 | 778    | 806   | 9                                   |
+| KN6500 | 803    | 831   | 9                                   |
+| KN2400 | 746    | 767   | 13                                  |
+| HD-SX3 | 52     | 52    | 0                                   |
+
+`JpegEngine`, `JpegBitRefill`, `JpegSetup` and `PanelBusyWait3000`, all named at 941's call
+entry, are among the rest.  Counted with `grep -c '^0x' <model>/<model>_ported.sym` at a385de42f and after the
+lane's regeneration commit.
 
 ## SD frames and the tick hook's words (L-mn10300-names-sd-frame-labels)
 
