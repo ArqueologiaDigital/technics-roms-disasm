@@ -83,6 +83,12 @@ are where the reached code stops: past them, no traced path enters and no named 
   above names the address: 551 names. `gen_symbols.py` finds only the reflection tables whose
   procedures it can pair; these tables are the ones the InitializeUserNN routines register
   (`../kn6000/notes/data-region.md`).
+- `kn6000_aligned.sym` (`make aligned-names`, generated; lane open11/sibling-names) holds KN7000 941 names
+  carried along aligned call sites and RAM operands of the routines both images name
+  (`../kn7000/tools/port_names_by_alignment.py`); each row gives its evidence.  The routine and RAM
+  pairs it found are `notes/routine-map-kn7000.tsv` and `notes/ram-map-kn7000.tsv`.
+- `kn6000_ram.sym` (`make ram-names`, generated) names RAM addresses after a named accessor (GetX /
+  SetX) or the one named routine that spells them (`R_Ram`; `../kn7000/tools/name_ram_by_use.py`).
 - `src/labels.inc` is generated with the source. It holds every other label the source defines:
   `func_<ADDR>` for an entry no table names, `<name>_entry` for a register-save `call` entry,
   and `<entry>_L<offset>` for a branch target. `../kn2400/README.md` explains these
@@ -124,15 +130,18 @@ and what is still a blob: `../kn6000/notes/data-region.md`.
 
 ## Open work
 
-- Names: 10,098 entries are still `func_<ADDR>` (2026-11-02). `make ported-names` carries
-  unique, non-trivial matches from the KN7000 (exact, or with `--fuzzy` near-exact), then
-  from the two other siblings' reflection and hand names (`--also-a`, lane mn10300-names:
-  KN6500 0, KN2400 0 more names; what the siblings name and this image does not is their own code).
-  What is left is per-subsystem naming (callers, strings, MILK messages).
+- Names: 9,917 entries are still `func_<ADDR>` (2026-11-06; 5,678 routine starts, the rest their
+  `_entry` labels; `../kn7000/notes/sibling-names-probes/sibling_name_census.py`). `make ported-names`
+  carries unique, non-trivial matches from the KN7000; `make aligned-names` (lane open11/sibling-names)
+  108 more, along the call sites and RAM operands of the routines both images name
+  (`kn6000_aligned.sym`, `notes/aligned-names-report.md`, `../kn7000/notes/sibling-names/README.md`).
+  What is left is per-subsystem naming (callers, strings, MILK messages), and 941 names given later,
+  which `notes/routine-map-kn7000.tsv` carries by a re-run.
 - RAM addresses: the on-chip registers and board latches are names
-  (`../kn7000/src/include/mn103002a_sfr.inc`), and a `kn6000_manual.sym` name of a RAM
-  address is spelled in the code; 19,019 RAM operands over 2,944 addresses are still numbers
-  (`../kn7000/notes/mn10300-names/README.md`, "RAM addresses").
+  (`../kn7000/src/include/mn103002a_sfr.inc`); `make ram-names` and `aligned-names` name 8 + 25 + 458 RAM
+  addresses (from the KN7000 by aligned operand / a named accessor / the one named routine that spells
+  them: `kn6000_aligned.sym`, `kn6000_ram.sym`); 17,752 work-RAM operands over 2,524 addresses (20,128 / 2,996 before, measured the same way) are still numbers
+  (`../kn7000/notes/sibling-names/README.md`).
 - Part of the data region is still `.incbin_range` (`../kn6000/notes/data-region.md`, "What is
   still generic"): generic 0; the census-opaque pieces fell from 2,175 / 39,985 to 1,145 / 24,654 bytes with
   lane mn10300-data's passes (2026-11-02; what is left and why: `../kn7000/notes/mn10300-data/README.md`

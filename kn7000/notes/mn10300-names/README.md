@@ -144,7 +144,10 @@ there is little to port yet.  The mechanism is in place: `gen_image_s.py` spells
 name in a `*_manual.sym` file now reaches the code.  Next step (OPEN): name the KN7000's RAM
 variables by subsystem from work-ram-map.md's census, then carry them to the siblings along
 the routine pairs `port_names_by_code.py` already matches (the two routines' operands line
-up instruction by instruction).
+up instruction by instruction).  (2026-11-06, lane open11/sibling-names: the carrying half is built,
+`tools/port_names_by_alignment.py`, which writes each sibling's KN7000 RAM pairs to
+`<model>/notes/ram-map-kn7000.tsv`; the sibling figures are re-measured by a committed probe,
+and the ones above were not reproducible: `../sibling-names/README.md`.)
 
 ## Left for lane mn10300-data (files this lane did not edit)
 

@@ -14201,7 +14201,7 @@ vsprintf_core_entry_L95:
 	mov	(0xa4, sp), a0
 	mov	(0x34, sp), a1
 	mov	(0x30, sp), d0
-	call	func_9780836B_entry, [d2,d3,a2,a3], 0x2c
+	call	PfParseSpec_entry, [d2,d3,a2,a3], 0x2c
 	mov	a0, (0xa4, sp)
 	nop
 	cmp	0, a0
@@ -14744,11 +14744,11 @@ PfOutPad_entry_L2e:
 PfOutPad_entry_L3e:
 	ret	[d2,a2,a3], 0x1c
 
-func_9780836B:
+PfParseSpec:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x1c, sp
 
-func_9780836B_entry:
+PfParseSpec_entry:
 	mov	d1, d3
 	mov	d0, d2
 	mov	a1, (0x38, sp)
@@ -14758,15 +14758,15 @@ func_9780836B_entry:
 	clr	d0
 	mov	d0, (a1)
 	mov	func_9780836B_entry_L10_Records, a3
-func_9780836B_entry_L10:
+PfParseSpec_entry_L10:
 	movbu	(a2), d1
 	extb	d1
 	cmp	0, d1
 	nop
-	blt	func_9780836B_entry_L8f
+	blt	PfParseSpec_entry_L8f
 	cmp	0x6c, d1
 	nop
-	bgt	func_9780836B_entry_L8f
+	bgt	PfParseSpec_entry_L8f
 	inc	d1
 	mov	0xf, d0
 	and	d1, d0
@@ -14777,23 +14777,23 @@ func_9780836B_entry_L10:
 	nop
 	cmp	d1, d0
 	nop
-	beq	func_9780836B_entry_L46
+	beq	PfParseSpec_entry_L46
 	setlb
 	cmp	0, d0
 	nop
-	beq	func_9780836B_entry_L8f
+	beq	PfParseSpec_entry_L8f
 	add	8, a0
 	cmp	func_9780836B_entry_L10_Records+128, a0
 	nop
-	blt	func_9780836B_entry_L41
+	blt	PfParseSpec_entry_L41
 	mov	a3, a0
-func_9780836B_entry_L41:
+PfParseSpec_entry_L41:
 	mov	(a0), d0
 	nop
 	cmp	d1, d0
 	nop
 	lne
-func_9780836B_entry_L46:
+PfParseSpec_entry_L46:
 	mov	(4, a0), a0
 	jmp	(a0)
 loc_978083BB:
@@ -14801,64 +14801,64 @@ loc_978083BB:
 	nop
 	or	0x01, d0
 	mov	d0, (a1)
-	bra	func_9780836B_entry_L9d
+	bra	PfParseSpec_entry_L9d
 loc_978083C3:
 	mov	(a1), d0
 	nop
 	or	0x02, d0
 	mov	d0, (a1)
-	bra	func_9780836B_entry_L9d
+	bra	PfParseSpec_entry_L9d
 loc_978083CB:
 	mov	(a1), d0
 	nop
 	or	0x04, d0
 	mov	d0, (a1)
-	bra	func_9780836B_entry_L9d
+	bra	PfParseSpec_entry_L9d
 loc_978083D3:
 	mov	(a1), d0
 	nop
 	or	0x08, d0
 	mov	d0, (a1)
-	bra	func_9780836B_entry_L9d
+	bra	PfParseSpec_entry_L9d
 loc_978083DB:
 	mov	(a1), d0
 	nop
 	or	0x10, d0
 	mov	d0, (a1)
-	bra	func_9780836B_entry_L9d
+	bra	PfParseSpec_entry_L9d
 loc_978083E3:
 	mov	(a1), d0
 	nop
 	or	0x20, d0
 	mov	d0, (a1)
-	bra	func_9780836B_entry_L9d
+	bra	PfParseSpec_entry_L9d
 loc_978083EB:
 	mov	(a1), d0
 	nop
 	or	0x80, d0
 	mov	d0, (a1)
-	bra	func_9780836B_entry_L9d
+	bra	PfParseSpec_entry_L9d
 loc_978083F3:
 	mov	(a1), d0
 	nop
 	or	0x40, d0
 	mov	d0, (a1)
-	bra	func_9780836B_entry_L9d
+	bra	PfParseSpec_entry_L9d
 loc_978083FB:
 	mov	0, a0
-	bra	func_9780836B_entry_La1
-func_9780836B_entry_L8f:
+	bra	PfParseSpec_entry_La1
+PfParseSpec_entry_L8f:
 	mov	a1, (0x18, sp)
 	mov	(0x38, sp), a1
 	mov	d3, d1
 	mov	d2, d0
 	mov	a2, a0
 	call	PfParseWidthPrecSize_entry, [d2,d3,a2,a3], 0x24
-	bra	func_9780836B_entry_La1
-func_9780836B_entry_L9d:
+	bra	PfParseSpec_entry_La1
+PfParseSpec_entry_L9d:
 	inc	a2
-	jmp	func_9780836B_entry_L10
-func_9780836B_entry_La1:
+	jmp	PfParseSpec_entry_L10
+PfParseSpec_entry_La1:
 	ret	[d2,d3,a2,a3], 0x2c
 
 PfParseWidthPrecSize:
@@ -19179,7 +19179,7 @@ func_9780A1EB_entry:
 func_9780A1EB_entry_L14:
 	retf	[d2], 4
 
-func_9780A204:
+LibI16ToF64:
 	exth	d0
 	jmp	LibI32ToF64
 
@@ -78386,7 +78386,7 @@ KssTextProc_L365:
 	mov	(0x24, sp), a1
 	mov	(0x20, a1), d0
 	calls	(a0)	# host GetCharHeight (registry slot 0x100, entry 86)
-	call	func_9780A204, 0, 0
+	call	LibI16ToF64, 0, 0
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
 	mov	0x33333333, d0
