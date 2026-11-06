@@ -56,6 +56,14 @@ never edited by hand.  Regenerate v6 first (its README), then:
     python3 scripts/converters/ported_c_rebase.py --tree v5 --regen $TMPDIR/need-v5
     python3 scripts/converters/ported_c_rebase.py --tree v5 --name-pointers $TMPDIR/need-v5
     python3 scripts/converters/ported_c_rebase.py --tree v5 --regen $TMPDIR/need-v5
+    python3 scripts/converters/port_todo_naka.py --tree v5
+    python3 scripts/converters/disassemble_port_todo.py --tree v5 --rom $V5 --apply
+    python3 scripts/tools/port_todo_hand.py --tree v5
+    python3 scripts/converters/naka_asm_records.py --tree v5 --gen
+    make all
+    python3 scripts/converters/ported_c_rebase.py --tree v5 --need $TMPDIR/need-v5-b
+    python3 scripts/converters/ported_c_rebase.py --tree v5 --ram-self $TMPDIR/need-v5-b
+    python3 scripts/converters/ported_c_rebase.py --tree v5 --regen $TMPDIR/need-v5-b
 
 v5 inherits v6's hand edits through the port (`FIRMWARE_VERSION` is `.byte FW_VERSION_BYTE`,
 the porter moves its default to 0x05; `AccTone_JumpTableData` is already code), so
@@ -89,6 +97,20 @@ work-RAM cell addresses (`gen_naka_gui_headers.py`), and the re-ordered function
 name their strings.  Those were most of the json's raw bytes: they were pointers at unaligned offsets,
 which a relocation cannot express.  `--need` must run before the C changes, on the tree built with the
 json of the steps before; the tool reads no ROM bytes.
+
+The last steps (2026-11-06, lane open10/v6v5-port; `notes/v6v5-port-2026-11-06/README.md`) take the
+`; TODO(port)` rows from 4,284 B to 7 B.  `port_todo_naka.py` writes the rows that are NAKA objects the
+firmware registers (nakarest_objtab_map.py places them: Viewable / ResName / function-name table entries,
+widget records as `NAKA_REC_<Class>` or per field, class definitions, propname blocks, their strings,
+the work-RAM cells the tree's own records point at, the count words RegObjTable reads, the NULL after a
+table, and the rest of a pointer table the newer tree's `.long` lines begin) as what they are, with new
+labels named from the registrations.  `disassemble_port_todo.py` now decodes a code block together with
+the porter's further markers and its neighbour lines when an instruction straddles its edge, decodes the
+three regions of `HAND_REGIONS` (code the source tree spells as bytes), and writes the case-offset tables
+that hold rows as `.short Case - Base` (base from the reader).  `port_todo_hand.py` is the list of rows
+read by hand, with the evidence for each.  `ported_c_rebase.py --ram-self` spells
+naka_sequencer_channels' 64 work-RAM self-pointers as `NAKA_WRAM(Naka_DrawbarReg_Table[k])`.  The rows
+left are halves of pointers a C slice boundary cuts (`@lo16` is an error in data).
 
 ## Build
 

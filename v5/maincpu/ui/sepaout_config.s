@@ -238,10 +238,17 @@ DemoRhyTtlFunc_CaseTable:
 	.short	DemoRhyTtlFunc_Exit - DemoRhythm_DispatchTable
 MiddleFuncCall_CaseTable:
 	.short	MiddleFuncCall_DispatchData - MiddleFuncCall_DispatchData
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x12, 0x00, 0x90, 0x00, 0x90, 0x00, 0x2d, 0x00
-	.byte	0x3b, 0x00, 0x65, 0x00, 0x73, 0x00, 0x49, 0x00
-	.byte	0x57, 0x00, 0x81, 0x00, 0x87, 0x00
+	.short	MiddleFuncCall_OnSongNameSet - MiddleFuncCall_DispatchData
+	.short	SqTrSel_CaseC - MiddleFuncCall_DispatchData
+	.short	SqTrSel_CaseC - MiddleFuncCall_DispatchData
+	.short	MiddleFuncCall_OnTrAsTrackInc - MiddleFuncCall_DispatchData
+	.short	MiddleFuncCall_OnTrAsTrackDec - MiddleFuncCall_DispatchData
+	.short	MiddleFuncCall_OnTrAsPartInc - MiddleFuncCall_DispatchData
+	.short	MiddleFuncCall_OnTrAsPartDec - MiddleFuncCall_DispatchData
+	.short	MiddleFuncCall_OnTrAsPageInc - MiddleFuncCall_DispatchData
+	.short	MiddleFuncCall_OnTrAsPageDec - MiddleFuncCall_DispatchData
+	.short	MiddleFuncCall_OnAmdCall - MiddleFuncCall_DispatchData
+	.short	MiddleFuncCall_OnDirectPlayMute - MiddleFuncCall_DispatchData
 SongBankLookup_BuildAudioCmd_Str_Fmt3d_FmtPct:	.incbin "includes/generated/sepaout_config.bin", 0x21C, 0x6
 ; Demo_SongViewIdTable: 18 x u32 NAKA view ids of the demo song selectors DemoSong0..DemoSong17 (0xE10001-0xE10006,
 ;   0xE20001-0xE20006, 0xE30001-0xE30006), indexed by DEMO_ACTIVE_ENTRY; SeqInit_PostDispatchEvent sends

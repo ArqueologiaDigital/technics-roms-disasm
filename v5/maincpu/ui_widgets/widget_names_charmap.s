@@ -2618,8 +2618,7 @@ IconIDProc_EntryCount:	.incbin "includes/generated/naka_widget_names_charmap.bin
 ; request buffer, and EVT_SET_PROPERTY_EX by Strcmp-ing the given name with each entry up to the NULL; entries 13-176 are the
 ; `.long IconName_iN` lines and the incbin after this slice.
 IconIDProc_NameTable:
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x7e, 0x1f, 0xeb, 0x00
+	.long	IconName_Default + 8
 	.long	IconName_Default
 	.long	IconName_i0
 	.long	IconName_i1

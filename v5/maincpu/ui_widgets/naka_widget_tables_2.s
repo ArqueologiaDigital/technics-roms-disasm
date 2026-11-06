@@ -175,10 +175,12 @@ NakaObj_MidiComputerConn_Table:
 ;
 ; Typed in naka_widget_tables_2.c as char East_ResNames_35A[36].
 ; -----------------------------------------------------------------------------
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x06, 0xaa, 0xe5, 0x00, 0x04, 0xaa, 0xe5, 0x00
-	.byte	0x02, 0xaa, 0xe5, 0x00, 0x00, 0xaa, 0xe5, 0x00
-	.byte	0xfe, 0xa9, 0xe5, 0x00, 0xfc, 0xa9, 0xe5, 0x00
+	.long	East_ResNames_35A + 12
+	.long	East_ResNames_35A + 10
+	.long	East_ResNames_35A + 8
+	.long	East_ResNames_35A + 6
+	.long	East_ResNames_35A + 4
+	.long	East_ResNames_35A + 2
 	.long	East_ResNames_35A
 East_ResNames_35A:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x66E, 0x24
 ; -----------------------------------------------------------------------------
@@ -200,16 +202,23 @@ NakaObj_MidiPmemOutput_Table:
 ;
 ; Typed in naka_widget_tables_2.c as char East_ResNames_35B[78].
 ; -----------------------------------------------------------------------------
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x9e, 0xaa, 0xe5, 0x00, 0x9c, 0xaa, 0xe5, 0x00
-	.byte	0x9a, 0xaa, 0xe5, 0x00, 0x98, 0xaa, 0xe5, 0x00
-	.byte	0x96, 0xaa, 0xe5, 0x00, 0x94, 0xaa, 0xe5, 0x00
-	.byte	0x92, 0xaa, 0xe5, 0x00, 0x90, 0xaa, 0xe5, 0x00
-	.byte	0x84, 0xaa, 0xe5, 0x00, 0x76, 0xaa, 0xe5, 0x00
-	.byte	0x74, 0xaa, 0xe5, 0x00, 0x72, 0xaa, 0xe5, 0x00
-	.byte	0x70, 0xaa, 0xe5, 0x00, 0x6e, 0xaa, 0xe5, 0x00
-	.byte	0x6c, 0xaa, 0xe5, 0x00, 0x6a, 0xaa, 0xe5, 0x00
-	.byte	0x68, 0xaa, 0xe5, 0x00
+	.long	East_ResNames_35B + 56
+	.long	East_ResNames_35B + 54
+	.long	East_ResNames_35B + 52
+	.long	East_ResNames_35B + 50
+	.long	East_ResNames_35B + 48
+	.long	East_ResNames_35B + 46
+	.long	East_ResNames_35B + 44
+	.long	East_ResNames_35B + 42
+	.long	East_ResNames_35B + 30
+	.long	East_ResNames_35B + 16
+	.long	East_ResNames_35B + 14
+	.long	East_ResNames_35B + 12
+	.long	East_ResNames_35B + 10
+	.long	East_ResNames_35B + 8
+	.long	East_ResNames_35B + 6
+	.long	East_ResNames_35B + 4
+	.long	East_ResNames_35B + 2
 	.long	East_ResNames_35B
 East_ResNames_35B:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x6DA, 0x4E
 ; -----------------------------------------------------------------------------
@@ -287,10 +296,12 @@ East_ResNameTable_3EC:
 ;
 ; Typed in naka_widget_tables_2.c as char East_ResNames_3EC[26].
 ; -----------------------------------------------------------------------------
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x70, 0xac, 0xe5, 0x00, 0x6e, 0xac, 0xe5, 0x00
-	.byte	0x6c, 0xac, 0xe5, 0x00, 0x6a, 0xac, 0xe5, 0x00
-	.byte	0x68, 0xac, 0xe5, 0x00, 0x66, 0xac, 0xe5, 0x00
+	.long	East_ResNames_3EC + 12
+	.long	East_ResNames_3EC + 10
+	.long	East_ResNames_3EC + 8
+	.long	East_ResNames_3EC + 6
+	.long	East_ResNames_3EC + 4
+	.long	East_ResNames_3EC + 2
 	.long	East_ResNames_3EC
 East_ResNames_3EC:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x8D8, 0x1A
 ; -----------------------------------------------------------------------------
@@ -1136,12 +1147,15 @@ MidiPart_OctaveTable:
 ; MidiPart_OctaveTable_Strings[44].
 ; -----------------------------------------------------------------------------
 	.long	MidiPart_OctaveStr_m2
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x46, 0xee, 0xe7, 0x00, 0x42, 0xee, 0xe7, 0x00
-	.byte	0x3e, 0xee, 0xe7, 0x00, 0x3a, 0xee, 0xe7, 0x00
-	.byte	0x36, 0xee, 0xe7, 0x00, 0x32, 0xee, 0xe7, 0x00
-	.byte	0x2e, 0xee, 0xe7, 0x00, 0x2a, 0xee, 0xe7, 0x00
-	.byte	0x26, 0xee, 0xe7, 0x00
+	.long	MidiPart_OctaveTable_Strings + 36
+	.long	MidiPart_OctaveTable_Strings + 32
+	.long	MidiPart_OctaveTable_Strings + 28
+	.long	MidiPart_OctaveTable_Strings + 24
+	.long	MidiPart_OctaveTable_Strings + 20
+	.long	MidiPart_OctaveTable_Strings + 16
+	.long	MidiPart_OctaveTable_Strings + 12
+	.long	MidiPart_OctaveTable_Strings + 8
+	.long	MidiPart_OctaveTable_Strings + 4
 	.long	MidiPart_OctaveTable_Strings
 MidiPart_OctaveTable_Strings:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x24A96, 0x28
 MidiPart_OctaveStr_m2:		.incbin "includes/generated/naka_widget_tables_2.bin", 0x24ABE, 0x4
@@ -3518,12 +3532,10 @@ Transpose_ValueDisplay_Table:
 	.long	Transpose_String_Zero
 	.long	Transpose_String_Plus1
 	.long	Transpose_String_Plus2
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x86, 0x06, 0xe8, 0x00
+	.long	Transpose_String_Error + 6
 	.long	Transpose_String_Error
 	.long	Transpose_String_Minus3
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x74, 0x06, 0xe8, 0x00
+	.long	Transpose_ValueDisplay_Table_Strings + 6
 	.long	Transpose_ValueDisplay_Table_Strings
 Transpose_ValueDisplay_Table_Strings:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x262E2, 0xC
 Transpose_String_Minus3:		.incbin "includes/generated/naka_widget_tables_2.bin", 0x262EE, 0x6
@@ -3790,10 +3802,18 @@ ClassProps_PsLabelBox:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x
 ; Typed in naka_widget_tables_2.c as uint32_t ClassProps_IvSdtecd1[1]
 ; and char ClassProps_IvSdtecd1_Names[].
 ; -----------------------------------------------------------------------------
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x80, 0x0b, 0xe8, 0x00, 0x00, 0xff, 0x86, 0x0b
-	.byte	0xe8, 0x00, 0x00, 0xff, 0x8c, 0x0b, 0xe8, 0x00
-	.byte	0x00, 0xff, 0x92, 0x0b, 0xe8, 0x00, 0x00, 0xff
+	.long	NakaClass_IvSdtecd_PropName_End
+NakaClass_IvSdtecd_PropName_End:
+	aligned_string ""
+	.long	NakaClass_IvSdtecd1_PropName_End
+NakaClass_IvSdtecd1_PropName_End:
+	aligned_string ""
+	.long	NakaClass_IvSdscltyp2_PropName_End
+NakaClass_IvSdscltyp2_PropName_End:
+	aligned_string ""
+	.long	NakaClass_AcWelcomScreen_PropName_End
+NakaClass_AcWelcomScreen_PropName_End:
+	aligned_string ""
 ClassProps_IvSdtecd1:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x267F6, 0x6
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] ClassProps_IvSdscltyp2
@@ -3874,7 +3894,6 @@ ClassProps_PsMixerControl:	.incbin "includes/generated/naka_widget_tables_2.bin"
 ; ClassProps_IvPageOverWrite[3] and char
 ; ClassProps_IvPageOverWrite_Names[].
 ; -----------------------------------------------------------------------------
-; TODO(port): v6 bytes with no v7 line -- disassemble
 ClassProps_IvPageOverWrite:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x26820, 0x1C
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] ClassProps_IvDrawbar
@@ -3953,8 +3972,9 @@ ClassProps_AcResetPage:	.incbin "includes/generated/naka_widget_tables_2.bin", 0
 ; Typed in naka_widget_tables_2.c as uint32_t ClassProps_PsVariBox[6]
 ; and char ClassProps_PsVariBox_Names[].
 ; -----------------------------------------------------------------------------
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xea, 0x0b, 0xe8, 0x00, 0x00, 0xff
+	.long	NakaClass_AcResetPage_PropName_End
+NakaClass_AcResetPage_PropName_End:
+	aligned_string ""
 ClassProps_PsVariBox:		.incbin "includes/generated/naka_widget_tables_2.bin", 0x26860, 0x18
 TextInput_Prop_NullTerm:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x26878, 0x2A
 ; -----------------------------------------------------------------------------
@@ -4014,8 +4034,9 @@ ClassProps_AcDrawEditBox:	.incbin "includes/generated/naka_widget_tables_2.bin",
 ; Typed in naka_widget_tables_2.c as uint32_t ClassProps_AcLswPartPan[3]
 ; and char ClassProps_AcLswPartPan_Names[].
 ; -----------------------------------------------------------------------------
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x44, 0x0c, 0xe8, 0x00, 0x00, 0xff
+	.long	NakaClass_AcDrawEditBox_PropName_End
+NakaClass_AcDrawEditBox_PropName_End:
+	aligned_string ""
 ClassProps_AcLswPartPan:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x268BA, 0x1A
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] ClassProps_AcPresentationBox
@@ -4085,8 +4106,10 @@ ClassProps_AcPleaseWait:	.incbin "includes/generated/naka_widget_tables_2.bin", 
 ; Typed in naka_widget_tables_2.c as uint32_t
 ; ClassProps_AcDrawSetting[3] and char ClassProps_AcDrawSetting_Names[].
 ; -----------------------------------------------------------------------------
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xa8, 0x0c, 0xe8, 0x00, 0x00, 0xff
+ClassProps_AcPleaseWait_2:
+	.long	NakaClass_AcPleaseWait_PropName_End
+NakaClass_AcPleaseWait_PropName_End:
+	aligned_string ""
 ClassProps_AcDrawSetting:	.incbin "includes/generated/naka_widget_tables_2.bin", 0x2691E, 0x18
 ; -----------------------------------------------------------------------------
 ; [naka_s_headers] ClassProps_AcDrawbarName

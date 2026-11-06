@@ -11429,7 +11429,7 @@ SqStep_ShowCursorEventPopup_Code_Skip41:
 	cp	(0x0d65:16), 3
 	jrl	z, SqStep_ShowCursorEventPopup_Skip75
 	ld	(0x0def:16), 7
-	call	SqStep_ShowTempoPopup
+	call	DisplayStr_RedrawStatusAndTempoLine
 	jp	SqStep_ShowCursorEventPopup_Return
 SqStep_ShowCursorEventPopup_Skip75:
 	ld	(0x0def:16), 17
@@ -14499,12 +14499,12 @@ DisplayStr_BytecodeBlock_C:
 DisplayStr_ShowTempoLine:
 	call	DisplayStr_BlankLineBuffer
 	ld	xix, 3786
-	ld	xiy, DisplayStr_ShowTempoLine_Data
+	ld	xiy, Str_TempoEq
 	cp	(PANEL_STYLE:16), 7
 	jrl	nz, DisplayStr_ShowTempoLine_Skip
 	cp	(PANEL_STYLE+1:16), 2
 	jrl	nz, DisplayStr_ShowTempoLine_Skip
-	ld	xiy, 0xefedbf
+	ld	xiy, DisplayStr_BytecodeBlock_C_Tbl
 DisplayStr_ShowTempoLine_Skip:
 	ld	xix, 0xecf
 	ldw	bc, 25
@@ -14513,25 +14513,31 @@ DisplayStr_ShowTempoLine_Skip:
 	call	DisplayStr_WriteTempoValue
 	call	Display_UpdateRegion3
 	ret
-DisplayStr_ShowTempoLine_Data:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x20, 0x20, 0x54, 0x45, 0x4d, 0x50, 0x4f, 0x20
-	.byte	0x20, 0x15, 0x3d, 0x20, 0x20, 0x20, 0x20, 0x20
-	.byte	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20
-	.byte	0x20, 0x20, 0x20, 0x54, 0x45, 0x4d, 0x50, 0x4f
-	.byte	0x20, 0x20, 0x93, 0x3d, 0x20, 0x20, 0x20, 0x20
-	.byte	0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20
-	.byte	0x20, 0x20
-SqStep_ShowTempoPopup:
+; Str_TempoEq / DisplayStr_BytecodeBlock_C_Tbl: the 25-character TEMPO templates DisplayStr_ShowTempoLine copies
+;   to 0x0ECF: glyph 0x15, or 0x93 when (PANEL_STYLE) = 7 and (PANEL_STYLE+1) = 2.
+Str_TempoEq:
+	.ascii	"  TEMPO  "
+	.byte	0x15
+	.ascii	"=              "
+DisplayStr_BytecodeBlock_C_Tbl:
+	.ascii	"  TEMPO  "
+	.byte	0x93
+	.ascii	"=              "
+; DisplayStr_RedrawStatusAndTempoLine: TEMPO line for a tempo event stored at the song-data cursor: marks the status
+;   bar (region 0) for redraw, blanks the text line, copies the 25-character ' TEMPO <glyph>=' template to 0x0ECF
+;   (DisplayStr_TempoString, or DisplayStr_BytecodeBlock_C_Tbl2 with glyph 0x93 when (0xFC5A) = 7 and (0xFC5B) = 2),
+;   marks region 5, writes the tempo (DisplayStr_WriteTempoValue) and marks region 3: DisplayStr_ShowTempoLine with
+;   the region-0 redraw in front.  Basis: callers + body (SqStep_ShowCursorEventPopup calls it, as in v7).
+DisplayStr_RedrawStatusAndTempoLine:
 	call	Display_UpdateRegion0
 	call	DisplayStr_BlankLineBuffer
-	ld	xiy, Str_TempoEq
+	ld	xiy, DisplayStr_TempoString
 	cp	(PANEL_STYLE:16), 7
-	jrl	nz, DisplayStr_BytecodeBlock_C_Skip
+	jrl	nz, DisplayStr_RedrawStatusAndTempoLine_Helper3_Skip
 	cp	(PANEL_STYLE+1:16), 2
-	jrl	nz, DisplayStr_BytecodeBlock_C_Skip
-	ld	xiy, DisplayStr_BytecodeBlock_C_Tbl
-DisplayStr_BytecodeBlock_C_Skip:
+	jrl	nz, DisplayStr_RedrawStatusAndTempoLine_Helper3_Skip
+	ld	xiy, DisplayStr_BytecodeBlock_C_Tbl2
+DisplayStr_RedrawStatusAndTempoLine_Helper3_Skip:
 	ld	xix, 3791
 	ldw	bc, 25
 	ldir85
@@ -14539,43 +14545,16 @@ DisplayStr_BytecodeBlock_C_Skip:
 	call	DisplayStr_WriteTempoValue
 	call	Display_UpdateRegion3
 	ret
-	; Lcd text, 25 B.  Read by DisplayStr_BytecodeBlock_C (0xEFEE47): `ld xiy, Str_TempoEq`
-	; reader DisplayStr_BytecodeBlock_C: `ld xiy, Str_TempoEq`
-Str_TempoEq:
-	; Byte data, 25 B.  Read by DisplayStr_BytecodeBlock_C (0xEFEE47): `ld xiy, DisplayStr_BytecodeBlock_C_Tbl`
-	; copies 25 byte(s) per use (`ld bc, 25` + ldir) into the LCD text buffer
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x20, 0x20, 0x54
-	ld	xiy, 0x204f504d
-	ld	w, 21:opc
-	push	xiy
-	ld	w, 32:opc
-	ld	w, 32:opc
-	ld	w, 32:opc
-	ld	w, 32:opc
-	ld	w, 32:opc
-	ld	w, 32:opc
-	ld	w, 32:opc
-DisplayStr_BytecodeBlock_C_Tbl:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x20, 0x20, 0x54
-	ld	xiy, 0x204f504d
-; port: v7's label DisplayStr_RedrawStatusAndTempoLine_Helper3_Skip is not in v6 -- no v6 bytes correspond to what it named
-	; Lcd text, 25 B.  Read by DisplayStr_BytecodeBlock_C (0xEFEE47): `ld xiy, DisplayStr_TempoString`
-	; reader DisplayStr_BytecodeBlock_C: `ld xiy, DisplayStr_TempoString`
-	ld	w, 147:opc
-	push	xiy
-	ld	w, 32:opc
-	ld	w, 32:opc
-	ld	w, 32:opc
-	ld	w, 32:opc
-	ld	w, 32:opc
-	ld	w, 32:opc
-	ld	w, 32:opc
-; port: v7's label DisplayStr_TempoString is not in v6 -- no v6 bytes correspond to what it named
-	; Byte data, 25 B.  Read by DisplayStr_BytecodeBlock_C (0xEFEE47): `ld xiy, DisplayStr_BytecodeBlock_C_Tbl2`
-	; copies 25 byte(s) per use (`ld bc, 25` + ldir) into the LCD text buffer
-; port: v7's label DisplayStr_BytecodeBlock_C_Tbl2 is not in v6 -- no v6 bytes correspond to what it named
+; DisplayStr_TempoString / DisplayStr_BytecodeBlock_C_Tbl2: the same two templates, read by
+;   DisplayStr_RedrawStatusAndTempoLine.
+DisplayStr_TempoString:
+	.ascii	"  TEMPO  "
+	.byte	0x15
+	.ascii	"=              "
+DisplayStr_BytecodeBlock_C_Tbl2:
+	.ascii	"  TEMPO  "
+	.byte	0x93
+	.ascii	"=              "
 ; DisplayMode_RedrawWithBlankLine: Redraws region 0, blanks the LCD text line at 0x0ECA (30 bytes, then 25) and
 ;   redraws regions 5, 3 and 4. Basis: callers + body -- both callers set the pop-up id (0x0DEF) to 8 and call it;
 ;   DMA_ChannelHandler_2 reuses the tail without region 0 when already in that pop-up.

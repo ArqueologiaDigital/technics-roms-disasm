@@ -358,42 +358,86 @@ WndScroll_UpperCharTable:	.incbin "includes/generated/naka_disk_warning.bin", 0x
 WndScroll_UpperCharText:
 ; WndScroll_LowerCharTable -- 39 x u32: character set 1 of the naming window: "a".."z", "_", "0".."9", "SPC", "".
 ; AcNaming_PageCharLists[1] points here; read like WndScroll_UpperCharTable (ui/ui_window_procs.s).
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0xff, 0x53, 0x50, 0x43, 0x00, 0x39, 0x00
-	.byte	0x38, 0x00, 0x37, 0x00, 0x36, 0x00, 0x35, 0x00
-	.byte	0x34, 0x00, 0x33, 0x00, 0x32, 0x00, 0x31, 0x00
-	.byte	0x30, 0x00, 0x5f, 0x00, 0x5a, 0x00, 0x59, 0x00
-	.byte	0x58, 0x00, 0x57, 0x00, 0x56, 0x00, 0x55, 0x00
-	.byte	0x54, 0x00, 0x53, 0x00, 0x52, 0x00, 0x51, 0x00
-	.byte	0x50, 0x00, 0x4f, 0x00, 0x4e, 0x00, 0x4d, 0x00
-	.byte	0x4c, 0x00, 0x4b, 0x00, 0x4a, 0x00, 0x49, 0x00
-	.byte	0x48, 0x00, 0x47, 0x00, 0x46, 0x00, 0x45, 0x00
-	.byte	0x44, 0x00, 0x43, 0x00, 0x42, 0x00, 0x41, 0x00
+	aligned_string ""
+	.asciz	"SPC"
+	.asciz	"9"
+	.asciz	"8"
+	.asciz	"7"
+	.asciz	"6"
+	.asciz	"5"
+	.asciz	"4"
+	.asciz	"3"
+	.asciz	"2"
+	.asciz	"1"
+	.asciz	"0"
+	.asciz	"_"
+	.asciz	"Z"
+	.asciz	"Y"
+	.asciz	"X"
+	.asciz	"W"
+	.asciz	"V"
+	.asciz	"U"
+	.asciz	"T"
+	.asciz	"S"
+	.asciz	"R"
+	.asciz	"Q"
+	.asciz	"P"
+	.asciz	"O"
+	.asciz	"N"
+	.asciz	"M"
+	.asciz	"L"
+	.asciz	"K"
+	.asciz	"J"
+	.asciz	"I"
+	.asciz	"H"
+	.asciz	"G"
+	.asciz	"F"
+	.asciz	"E"
+	.asciz	"D"
+	.asciz	"C"
+	.asciz	"B"
+	.asciz	"A"
 WndScroll_LowerCharTable:
 ; WndScroll_LowerCharText -- 80 x char: "" (+0xFF), "SPC", then "9".."0", "_", "z".."a" as 2-byte strings,
 ; the items WndScroll_LowerCharTable points at.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xea, 0x9c, 0xea, 0x00, 0xe8, 0x9c, 0xea, 0x00
-	.byte	0xe6, 0x9c, 0xea, 0x00, 0xe4, 0x9c, 0xea, 0x00
-	.byte	0xe2, 0x9c, 0xea, 0x00, 0xe0, 0x9c, 0xea, 0x00
-	.byte	0xde, 0x9c, 0xea, 0x00, 0xdc, 0x9c, 0xea, 0x00
-	.byte	0xda, 0x9c, 0xea, 0x00, 0xd8, 0x9c, 0xea, 0x00
-	.byte	0xd6, 0x9c, 0xea, 0x00, 0xd4, 0x9c, 0xea, 0x00
-	.byte	0xd2, 0x9c, 0xea, 0x00, 0xd0, 0x9c, 0xea, 0x00
-	.byte	0xce, 0x9c, 0xea, 0x00, 0xcc, 0x9c, 0xea, 0x00
-	.byte	0xca, 0x9c, 0xea, 0x00, 0xc8, 0x9c, 0xea, 0x00
-	.byte	0xc6, 0x9c, 0xea, 0x00, 0xc4, 0x9c, 0xea, 0x00
-	.byte	0xc2, 0x9c, 0xea, 0x00, 0xc0, 0x9c, 0xea, 0x00
-	.byte	0xbe, 0x9c, 0xea, 0x00, 0xbc, 0x9c, 0xea, 0x00
-	.byte	0xba, 0x9c, 0xea, 0x00, 0xb8, 0x9c, 0xea, 0x00
-	.byte	0xb6, 0x9c, 0xea, 0x00
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0xb4, 0x9c, 0xea, 0x00, 0xb2, 0x9c, 0xea, 0x00
-	.byte	0xb0, 0x9c, 0xea, 0x00, 0xae, 0x9c, 0xea, 0x00
-	.byte	0xac, 0x9c, 0xea, 0x00, 0xaa, 0x9c, 0xea, 0x00
-	.byte	0xa8, 0x9c, 0xea, 0x00, 0xa6, 0x9c, 0xea, 0x00
-	.byte	0xa4, 0x9c, 0xea, 0x00, 0xa2, 0x9c, 0xea, 0x00
-	.byte	0x9e, 0x9c, 0xea, 0x00
+	.long	WndScroll_LowerCharText + 78
+	.long	WndScroll_LowerCharText + 76
+	.long	WndScroll_LowerCharText + 74
+	.long	WndScroll_LowerCharText + 72
+	.long	WndScroll_LowerCharText + 70
+	.long	WndScroll_LowerCharText + 68
+	.long	WndScroll_LowerCharText + 66
+	.long	WndScroll_LowerCharText + 64
+	.long	WndScroll_LowerCharText + 62
+	.long	WndScroll_LowerCharText + 60
+	.long	WndScroll_LowerCharText + 58
+	.long	WndScroll_LowerCharText + 56
+	.long	WndScroll_LowerCharText + 54
+	.long	WndScroll_LowerCharText + 52
+	.long	WndScroll_LowerCharText + 50
+	.long	WndScroll_LowerCharText + 48
+	.long	WndScroll_LowerCharText + 46
+	.long	WndScroll_LowerCharText + 44
+	.long	WndScroll_LowerCharText + 42
+	.long	WndScroll_LowerCharText + 40
+	.long	WndScroll_LowerCharText + 38
+	.long	WndScroll_LowerCharText + 36
+	.long	WndScroll_LowerCharText + 34
+	.long	WndScroll_LowerCharText + 32
+	.long	WndScroll_LowerCharText + 30
+	.long	WndScroll_LowerCharText + 28
+	.long	WndScroll_LowerCharText + 26
+	.long	WndScroll_LowerCharText + 24
+	.long	WndScroll_LowerCharText + 22
+	.long	WndScroll_LowerCharText + 20
+	.long	WndScroll_LowerCharText + 18
+	.long	WndScroll_LowerCharText + 16
+	.long	WndScroll_LowerCharText + 14
+	.long	WndScroll_LowerCharText + 12
+	.long	WndScroll_LowerCharText + 10
+	.long	WndScroll_LowerCharText + 8
+	.long	WndScroll_LowerCharText + 6
+	.long	WndScroll_LowerCharText + 2
 	.long	WndScroll_LowerCharText
 WndScroll_LowerCharText:	.incbin "includes/generated/naka_disk_warning.bin", 0x1104, 0x50
 ; WndScroll_SymbolPageChars -- 33 x u32: page 2 (symbols) of the name-entry character pages; [i] = symbol i as text,
@@ -864,17 +908,25 @@ DbDebugMenu_PageWindowIds:	.incbin "includes/generated/naka_disk_warning.bin", 0
 PsTrkSw_AssignNamePtrs:
 ; PsTrkSw_AssignNames -- 20 x char[4]: the names PsTrkSw_AssignNamePtrs points at, element k = value 19-k
 ; ("P15" first, "RT1" last); drawn by PsTrkSw_Confirm_DrawSecondary (ui/ui_widget_defs.s).
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0xd8, 0xa6, 0xea, 0x00, 0xd4, 0xa6, 0xea, 0x00
-	.byte	0xd0, 0xa6, 0xea, 0x00, 0xcc, 0xa6, 0xea, 0x00
-	.byte	0xc8, 0xa6, 0xea, 0x00, 0xc4, 0xa6, 0xea, 0x00
-	.byte	0xc0, 0xa6, 0xea, 0x00, 0xbc, 0xa6, 0xea, 0x00
-	.byte	0xb8, 0xa6, 0xea, 0x00, 0xb4, 0xa6, 0xea, 0x00
-	.byte	0xb0, 0xa6, 0xea, 0x00, 0xac, 0xa6, 0xea, 0x00
-	.byte	0xa8, 0xa6, 0xea, 0x00, 0xa4, 0xa6, 0xea, 0x00
-	.byte	0xa0, 0xa6, 0xea, 0x00, 0x9c, 0xa6, 0xea, 0x00
-	.byte	0x98, 0xa6, 0xea, 0x00, 0x94, 0xa6, 0xea, 0x00
-	.byte	0x90, 0xa6, 0xea, 0x00
+	.long	PsTrkSw_AssignNames + 76
+	.long	PsTrkSw_AssignNames + 72
+	.long	PsTrkSw_AssignNames + 68
+	.long	PsTrkSw_AssignNames + 64
+	.long	PsTrkSw_AssignNames + 60
+	.long	PsTrkSw_AssignNames + 56
+	.long	PsTrkSw_AssignNames + 52
+	.long	PsTrkSw_AssignNames + 48
+	.long	PsTrkSw_AssignNames + 44
+	.long	PsTrkSw_AssignNames + 40
+	.long	PsTrkSw_AssignNames + 36
+	.long	PsTrkSw_AssignNames + 32
+	.long	PsTrkSw_AssignNames + 28
+	.long	PsTrkSw_AssignNames + 24
+	.long	PsTrkSw_AssignNames + 20
+	.long	PsTrkSw_AssignNames + 16
+	.long	PsTrkSw_AssignNames + 12
+	.long	PsTrkSw_AssignNames + 8
+	.long	PsTrkSw_AssignNames + 4
 	.long	PsTrkSw_AssignNames
 PsTrkSw_AssignNames:	.incbin "includes/generated/naka_disk_warning.bin", 0x1AF4, 0x50
 ; PsTrkSw_SelectStateLabels -- 5 x u32: track-switch label per select state 0-4: "", "REC", "PLAY", "MUTE", "CLR"
@@ -1935,10 +1987,14 @@ NakaClass_VwMenuBox_PropNames:	.incbin "includes/generated/naka_disk_warning.bin
 NakaClass_VwMenuBox_PropNameText:	.incbin "includes/generated/naka_disk_warning.bin", 0x393C, 0xC
 ; NakaClass_VwEditSwBox_PropNames -- 3 x u32: name pointers of class VwEditSwBox (0x160003e)'s own properties, one per letter of its propdata "fX":
 ; "style", "str", ended by "". +20 (propname) of entry 62 of Root_ClassTable_160; ClassProc_OnGetPropNameSp reads entry [property].
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0xf2, 0xc4, 0xea, 0x00, 0xee, 0xc4, 0xea, 0x00
-	.byte	0xec, 0xc4, 0xea, 0x00, 0x00, 0xff, 0x73, 0x74
-	.byte	0x72, 0x00
+	.long	NakaClass_VwEditSwBox_PropName_style
+	.long	NakaClass_VwEditSwBox_PropName_str
+	.long	NakaClass_VwEditSwBox_PropName_End
+NakaClass_VwEditSwBox_PropName_End:
+	aligned_string ""
+NakaClass_VwEditSwBox_PropName_str:
+	.asciz	"str"
+NakaClass_VwEditSwBox_PropName_style:
 	.asciz	"style"
 NakaClass_VwEditSwBox_PropNames:	.incbin "includes/generated/naka_disk_warning.bin", 0x3948, 0xC
 ; NakaClass_VwEditSwBox_PropNameText -- 12 x char: the property-name strings NakaClass_VwEditSwBox_PropNames points at, "" first, each NUL-terminated and 0xff-padded to even
@@ -1967,63 +2023,83 @@ NakaClass_AcWindowMenu_PropNameText:	.incbin "includes/generated/naka_disk_warni
 ; "func", "data", ended by "". +20 (propname) of entry 67 of Root_ClassTable_160; ClassProc_OnGetPropNameSp reads entry [property].
 NakaClass_AcBitEditBox_PropNames:	.incbin "includes/generated/naka_disk_warning.bin", 0x39E2, 0xC
 ; NakaClass_AcBitEditBox_PropNameText -- 14 x char: the property-name strings NakaClass_AcBitEditBox_PropNames points at, "" first, each NUL-terminated and 0xff-padded to even
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0xff
+	aligned_string ""
 	aligned_string "data"
 	aligned_string "func"
 NakaClass_AcFuncToggle_PropNames:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x9e, 0xc5, 0xea, 0x00, 0x9c, 0xc5, 0xea, 0x00
-	.byte	0x00, 0xff
+	.long	NakaClass_AcFuncToggle_PropName_func
+	.long	NakaClass_AcFuncToggle_PropName_End
+NakaClass_AcFuncToggle_PropName_End:
+	aligned_string ""
+NakaClass_AcFuncToggle_PropName_func:
 	aligned_string "func"
 NakaClass_PsWideToggle_PropNames:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xae, 0xc5, 0xea, 0x00, 0xac, 0xc5, 0xea, 0x00
-	.byte	0x00, 0xff
+	.long	NakaClass_PsWideToggle_PropName_editsw2
+	.long	NakaClass_PsWideToggle_PropName_End
+NakaClass_PsWideToggle_PropName_End:
+	aligned_string ""
+NakaClass_PsWideToggle_PropName_editsw2:
 	.asciz	"editsw2"
 NakaClass_DbMemo_PropNames:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xba, 0xc5, 0xea, 0x00, 0x00, 0xff
+	.long	NakaClass_DbMemo_PropName_End
+NakaClass_DbMemo_PropName_End:
+	aligned_string ""
 NakaClass_IvExit_PropNames:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xc0, 0xc5, 0xea, 0x00, 0x00, 0xff
+	.long	NakaClass_IvExit_PropName_End
+NakaClass_IvExit_PropName_End:
+	aligned_string ""
 NakaClass_IvExitMode_PropNames:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xcc, 0xc5, 0xea, 0x00, 0xca, 0xc5, 0xea, 0x00
-	.byte	0x00, 0xff
+	.long	NakaClass_IvExitMode_PropName_mode
+	.long	NakaClass_IvExitMode_PropName_End
+NakaClass_IvExitMode_PropName_End:
+	aligned_string ""
+NakaClass_IvExitMode_PropName_mode:
 	aligned_string "mode"
 NakaClass_IvExitScreen_PropNames:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xdc, 0xc5, 0xea, 0x00, 0xda, 0xc5, 0xea, 0x00
-	.byte	0x00, 0xff
+	.long	NakaClass_IvExitScreen_PropName_screen
+	.long	NakaClass_IvExitScreen_PropName_End
+NakaClass_IvExitScreen_PropName_End:
+	aligned_string ""
+NakaClass_IvExitScreen_PropName_screen:
 	aligned_string "screen"
 NakaClass_IvFixWin_PropNames:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xee, 0xc5, 0xea, 0x00, 0xec, 0xc5, 0xea, 0x00
-	.byte	0x00, 0xff
+	.long	NakaClass_IvFixWin_PropName_window
+	.long	NakaClass_IvFixWin_PropName_End
+NakaClass_IvFixWin_PropName_End:
+	aligned_string ""
+NakaClass_IvFixWin_PropName_window:
 	aligned_string "window"
 NakaClass_AcNamingWindow_PropNames:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xfa, 0xc5, 0xea, 0x00, 0x00, 0xff
+	.long	NakaClass_AcNamingWindow_PropName_End
+NakaClass_AcNamingWindow_PropName_End:
+	aligned_string ""
 NakaClass_PsCursorBox_PropNames:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x06, 0xc6, 0xea, 0x00, 0x04, 0xc6, 0xea, 0x00
-	.byte	0x00, 0xff
+	.long	NakaClass_PsCursorBox_PropName_cursor
+	.long	NakaClass_PsCursorBox_PropName_End
+NakaClass_PsCursorBox_PropName_End:
+	aligned_string ""
+NakaClass_PsCursorBox_PropName_cursor:
 	aligned_string "cursor"
 NakaClass_IvNaming_PropNames:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x18, 0xc6, 0xea, 0x00, 0x16, 0xc6, 0xea, 0x00
-	.byte	0x00, 0xff
+	.long	NakaClass_IvNaming_PropName_func
+	.long	NakaClass_IvNaming_PropName_End
+NakaClass_IvNaming_PropName_End:
+	aligned_string ""
+NakaClass_IvNaming_PropName_func:
 	aligned_string "func"
 NakaClass_AcIndexToggle_PropNames:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x30, 0xc6, 0xea, 0x00, 0x2c, 0xc6, 0xea, 0x00
-	.byte	0x2a, 0xc6, 0xea, 0x00, 0x00, 0xff, 0x74, 0x61
-	.byte	0x67, 0x00
+	.long	NakaClass_AcIndexToggle_PropName_index
+	.long	NakaClass_AcIndexToggle_PropName_tag
+	.long	NakaClass_AcIndexToggle_PropName_End
+NakaClass_AcIndexToggle_PropName_End:
+	aligned_string ""
+NakaClass_AcIndexToggle_PropName_tag:
+	.asciz	"tag"
+NakaClass_AcIndexToggle_PropName_index:
 	.asciz	"index"
 NakaClass_AcRamBox_PropNames:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x4a, 0xc6, 0xea, 0x00, 0x44, 0xc6, 0xea, 0x00
+	.long	NakaClass_AcBitEditBox_PropNameText + 8
+	.long	NakaClass_AcBitEditBox_PropNameText + 2
 	.long	NakaClass_AcBitEditBox_PropNameText
 NakaClass_AcBitEditBox_PropNameText:	.incbin "includes/generated/naka_disk_warning.bin", 0x39EE, 0xE
 ; NakaClass_AcFuncToggle_PropNames -- 2 x u32: name pointers of class AcFuncToggle (0x1600044)'s own properties, one per letter of its propdata "j":

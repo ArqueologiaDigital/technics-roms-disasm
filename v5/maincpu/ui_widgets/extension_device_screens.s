@@ -516,12 +516,7 @@ NakaWidget_EXT:
 ; [nakarest] naka_extension_device+0x1002  +0x1002..+0x1102 (0xed77ce, 256 B)
 ; [nakarest] the table itself: Viewable slot 0x1 (table 0xed77ce, 63 entries, InitializeToshi),
 ; [nakarest] 63 entry pointers x 4 bytes.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x6a, 0x00, 0x60, 0x01, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0x0a, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x3f, 0x01, 0xef, 0x00, 0xff, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0xa0, 0x01, 0xba, 0xf6
-	.byte	0x03, 0x00
+	NAKA_REC_IvScreen super=NAKA_INDEX_NONE, sub=NAKA_INDEX_NONE, next=NAKA_INDEX_NONE, prev=NAKA_INDEX_NONE, flag=VF_Fixed | VF_Const, x=0, y=0, w=320, h=240, color=CL_White, border=BD_None, exit=TITLE_PS, window=0x3f6ba
 	.incbin "includes/generated/naka_extension_device.bin", 0x1002, 0x100
 ; [nakarest] naka_extension_device+0x1102  +0x1102..+0x112a (0xed78ce, 40 B)
 ; [nakarest] the table itself: Viewable slot 0x40 (table 0xed78ce, 9 entries, InitializeToshi),
@@ -640,8 +635,7 @@ NakaWidget_EXT:
 	.long	NakaWidget_TEST2OKNG
 	.long	NakaWidget_TEST2_21_Label
 	.long	NakaWidget_TEST2_22_Label
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x00, 0x00
+	.long	0	; NULL after the 23 entries of Viewable slot 0xF5
 	.incbin "includes/generated/naka_extension_device.bin", 0x1532, 0x8
 ; [nakarest] naka_extension_device+0x153a  +0x153a..+0x154a (0xed7d06, 16 B)
 ; [nakarest] the table itself: Viewable slot 0xf7 (table 0xed7d06, 3 entries, InitializeToshi),
@@ -666,8 +660,7 @@ NakaWidget_EXT:
 	.long	NakaWidget_TEST6_6_Label
 	.long	NakaWidget_TEST6NG
 	.long	NakaWidget_TEST6_8_Label
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x00, 0x00
+	.long	0	; NULL after the 9 entries of Viewable slot 0xF9
 	.incbin "includes/generated/naka_extension_device.bin", 0x1682, 0x8
 ; [nakarest] naka_extension_device+0x168a  +0x168a..+0x178c (0xed7e56, 258 B)
 ; [nakarest] the table itself: ResName slot 0x301 (table 0xed7e56, 63 entries, InitializeToshi),
@@ -688,51 +681,119 @@ NakaWidget_EXT:
 ; [nakarest] naka_extension_device+0x1870  +0x1870..+0x18ba (0xed803c, 74 B)
 ; [nakarest] the table itself: ResName slot 0x341 (table 0xed803c, 17 entries, InitializeToshi),
 ; [nakarest] 17 entry pointers x 4 bytes.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff
+	aligned_string ""
+	aligned_string ""
+	aligned_string ""
+	aligned_string ""
+	aligned_string ""
+	aligned_string ""
+	aligned_string ""
+	aligned_string ""
 	.asciz	"ControlMenu"
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xa2, 0x7f, 0xed, 0x00
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0xa0, 0x7f, 0xed, 0x00, 0x98, 0x7f, 0xed, 0x00
-	.byte	0x96, 0x7f, 0xed, 0x00, 0x94, 0x7f, 0xed, 0x00
-	.byte	0x92, 0x7f, 0xed, 0x00
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x90, 0x7f, 0xed, 0x00, 0x84, 0x7f, 0xed, 0x00
-	.byte	0x82, 0x7f, 0xed, 0x00, 0x80, 0x7f, 0xed, 0x00
-	.byte	0x7e, 0x7f, 0xed, 0x00, 0x7c, 0x7f, 0xed, 0x00
-	.byte	0x7a, 0x7f, 0xed, 0x00, 0x78, 0x7f, 0xed, 0x00
-	.byte	0x76, 0x7f, 0xed, 0x00, 0x74, 0x7f, 0xed, 0x00
-	.byte	0x72, 0x7f, 0xed, 0x00, 0x70, 0x7f, 0xed, 0x00
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff
-	.byte	0x00, 0xff, 0x00, 0xff
+	.long	ResName_ControlIni
+	.long	ResName_ControlIni_1_AcIndexWideES
+	.long	ResName_SYSINI
+	.long	ResName_ControlIni_3_AcFuncEditSw
+	.long	ResName_ControlIni_4_IvShowHide
+	.long	ResName_ControlIni_5_AcLanguageText
+	.long	ResName_ControlIni_6_TtlScreen
+	.long	ResName_SYSINISURE
+	.long	ResName_ControlIni_8_Label
+	.long	ResName_ControlIni_9_Icon
+	.long	ResName_ControlIni_10_Box
+	.long	ResName_ControlIni_11_AcLanguageText
+	.long	ResName_ControlIni_12_AcLanguageText
+	.long	ResName_ControlIni_13_AcLanguageText
+	.long	ResName_ControlIni_14_AcFuncEditSw
+	.long	ResName_ControlIni_15_AcFuncEditSw
+	.long	ResName_ControlIni_16_IvShowHide
+	.long	Toshi_ResName_CTINIT_EndStr
+Toshi_ResName_CTINIT_EndStr:
+	aligned_string ""
+ResName_ControlIni_16_IvShowHide:
+	aligned_string ""
+ResName_ControlIni_15_AcFuncEditSw:
+	aligned_string ""
+ResName_ControlIni_14_AcFuncEditSw:
+	aligned_string ""
+ResName_ControlIni_13_AcLanguageText:
+	aligned_string ""
+ResName_ControlIni_12_AcLanguageText:
+	aligned_string ""
+ResName_ControlIni_11_AcLanguageText:
+	aligned_string ""
+ResName_ControlIni_10_Box:
+	aligned_string ""
+ResName_ControlIni_9_Icon:
+	aligned_string ""
+ResName_ControlIni_8_Label:
+	aligned_string ""
+ResName_SYSINISURE:
 	aligned_string "SYSINISURE"
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff
+ResName_ControlIni_6_TtlScreen:
+	aligned_string ""
+ResName_ControlIni_5_AcLanguageText:
+	aligned_string ""
+ResName_ControlIni_4_IvShowHide:
+	aligned_string ""
+ResName_ControlIni_3_AcFuncEditSw:
+	aligned_string ""
+ResName_SYSINI:
 	aligned_string "SYSINI"
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x00, 0xff
+ResName_ControlIni_1_AcIndexWideES:
+	aligned_string ""
+ResName_ControlIni:
 	aligned_string "ControlIni"
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0xd6, 0x7f, 0xed, 0x00, 0xd4, 0x7f, 0xed, 0x00
-	.byte	0xd2, 0x7f, 0xed, 0x00, 0xd0, 0x7f, 0xed, 0x00
-	.byte	0xce, 0x7f, 0xed, 0x00, 0xcc, 0x7f, 0xed, 0x00
-	.byte	0xca, 0x7f, 0xed, 0x00, 0x00, 0xff, 0x00, 0xff
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff
+	.long	ResName_ControlFsw
+	.long	ResName_ControlFsw_1_AcFSWAssGridBox
+	.long	ResName_ControlFsw_2_Label
+	.long	ResName_ControlFsw_3_Label
+	.long	ResName_ControlFsw_4_AcIndexWideES
+	.long	ResName_ControlFsw_5_AcIndexWideES
+	.long	Toshi_ResName_CTFSWAS_EndStr
+Toshi_ResName_CTFSWAS_EndStr:
+	aligned_string ""
+ResName_ControlFsw_5_AcIndexWideES:
+	aligned_string ""
+ResName_ControlFsw_4_AcIndexWideES:
+	aligned_string ""
+ResName_ControlFsw_3_Label:
+	aligned_string ""
+ResName_ControlFsw_2_Label:
+	aligned_string ""
+ResName_ControlFsw_1_AcFSWAssGridBox:
+	aligned_string ""
+ResName_ControlFsw:
 	aligned_string "ControlFsw"
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x16, 0x80, 0xed, 0x00, 0x14, 0x80, 0xed, 0x00
-	.byte	0x12, 0x80, 0xed, 0x00, 0x10, 0x80, 0xed, 0x00
-	.byte	0x0e, 0x80, 0xed, 0x00, 0x0c, 0x80, 0xed, 0x00
-	.byte	0x0a, 0x80, 0xed, 0x00, 0x08, 0x80, 0xed, 0x00
-	.byte	0x06, 0x80, 0xed, 0x00, 0x00, 0xff, 0x00, 0xff
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff
-	.byte	0x00, 0xff, 0x00, 0xff
+	.long	ResName_ControlSns
+	.long	ResName_ControlSns_1_AcTchSensGridBox
+	.long	ResName_ControlSns_2_Label
+	.long	ResName_ControlSns_3_Label
+	.long	ResName_ControlSns_4_AcIndexWideES
+	.long	ResName_ControlSns_5_AcIndexWideES
+	.long	ResName_ControlSns_6_Label
+	.long	ResName_ControlSns_7_Label
+	.long	Toshi_ResName_CTTOUCH_EndStr
+Toshi_ResName_CTTOUCH_EndStr:
+	aligned_string ""
+ResName_ControlSns_7_Label:
+	aligned_string ""
+ResName_ControlSns_6_Label:
+	aligned_string ""
+ResName_ControlSns_5_AcIndexWideES:
+	aligned_string ""
+ResName_ControlSns_4_AcIndexWideES:
+	aligned_string ""
+ResName_ControlSns_3_Label:
+	aligned_string ""
+ResName_ControlSns_2_Label:
+	aligned_string ""
+ResName_ControlSns_1_AcTchSensGridBox:
+	aligned_string ""
+ResName_ControlSns:
 	aligned_string "ControlSns"
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x98, 0x80, 0xed, 0x00, 0x96, 0x80, 0xed, 0x00
+	.long	ResName_Slot44_0_MsaModeScreen
+	.long	ResName_Slot44_1_Label
 	.incbin "includes/generated/naka_extension_device.bin", 0x1870, 0x4A
 ; [nakarest] naka_extension_device+0x18ba  +0x18ba..+0x18f6 (0xed8086, 60 B)
 ; [nakarest] name strings, entries 0-16 of ResName slot 0x341 (table 0xed803c, 17 entries,
@@ -761,24 +822,50 @@ NakaWidget_EXT:
 ; [nakarest] naka_extension_device+0x1a34  +0x1a34..+0x1a62 (0xed8200, 46 B)
 ; [nakarest] name strings, entries 0-18 of ResName slot 0x345 (table 0xed81ae, 19 entries,
 ; [nakarest] InitializeToshi) (names for Viewable slot 0x45): "", "", "", "", "", "PMEM2", ....
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x18, 0x81
-	.byte	0xed, 0x00, 0x16, 0x81, 0xed, 0x00, 0x14, 0x81
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0xed, 0x00, 0x12, 0x81, 0xed, 0x00, 0x10, 0x81
-	.byte	0xed, 0x00, 0x0a, 0x81, 0xed, 0x00, 0x08, 0x81
-	.byte	0xed, 0x00, 0x06, 0x81, 0xed, 0x00, 0x04, 0x81
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0xed, 0x00, 0x02, 0x81, 0xed, 0x00, 0x00, 0x81
-	.byte	0xed, 0x00, 0xfe, 0x80, 0xed, 0x00, 0xfc, 0x80
-	.byte	0xed, 0x00, 0xf6, 0x80, 0xed, 0x00, 0xf4, 0x80
-	.byte	0xed, 0x00, 0xf2, 0x80, 0xed, 0x00, 0xf0, 0x80
-	.byte	0xed, 0x00, 0xee, 0x80, 0xed, 0x00, 0xec, 0x80
-	.byte	0xed, 0x00, 0xea, 0x80, 0xed, 0x00, 0x00, 0xff
+	aligned_string ""
+	aligned_string ""
+	aligned_string ""
+	aligned_string ""
+	aligned_string ""
+	aligned_string ""
+	aligned_string ""
+	aligned_string ""
+	aligned_string ""
+	aligned_string ""
+	aligned_string ""
+	aligned_string ""
+	aligned_string ""
+	aligned_string ""
+	aligned_string ""
+	aligned_string ""
+	aligned_string ""
+ResName_Slot44_1_Label:
+	aligned_string ""
+ResName_Slot44_0_MsaModeScreen:
+	aligned_string ""
+	.long	Toshi_ResName_CTPMMD + 126
+	.long	Toshi_ResName_CTPMMD + 124
+	.long	ResName_Slot45_18_Window + 40
+	.long	Toshi_ResName_CTPMMD + 120
+	.long	Toshi_ResName_CTPMMD + 118
+	.long	Toshi_ResName_CTPMMD + 112
+	.long	Toshi_ResName_CTPMMD + 110
+	.long	Toshi_ResName_CTPMMD + 108
+	.long	ResName_Slot45_18_Window + 24
+	.long	Toshi_ResName_CTPMMD + 104
+	.long	Toshi_ResName_CTPMMD + 102
+	.long	Toshi_ResName_CTPMMD + 100
+	.long	Toshi_ResName_CTPMMD + 98
+	.long	Toshi_ResName_CTPMMD + 92
+	.long	Toshi_ResName_CTPMMD + 90
+	.long	Toshi_ResName_CTPMMD + 88
+	.long	Toshi_ResName_CTPMMD + 86
+	.long	Toshi_ResName_CTPMMD + 84
+	.long	ResName_Slot45_18_Window
+	.long	Toshi_ResName_CTPMMD_EndStr
+Toshi_ResName_CTPMMD_EndStr:
+	aligned_string ""
+ResName_Slot45_18_Window:
 	.incbin "includes/generated/naka_extension_device.bin", 0x1A34, 0x2E
 ; [nakarest] naka_extension_device+0x1a62  +0x1a62..+0x1a68 (0xed822e, 6 B)
 ; [nakarest] the table itself: ResName slot 0x346 (table 0xed822e, 0 entries, InitializeToshi),
@@ -841,50 +928,143 @@ NakaWidget_EXT:
 ; [nakarest] naka_extension_device+0x1cec  +0x1cec..+0x1d0e (0xed84b8, 34 B)
 ; [nakarest] the table itself: ResName slot 0x3c5 (table 0xed84b8, 7 entries, InitializeToshi),
 ; [nakarest] 7 entry pointers x 4 bytes.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x98, 0x83, 0xed, 0x00, 0x96, 0x83, 0xed, 0x00
-	.byte	0x94, 0x83, 0xed, 0x00, 0x92, 0x83, 0xed, 0x00
-	.byte	0x90, 0x83, 0xed, 0x00, 0x8e, 0x83, 0xed, 0x00
-	.byte	0x8c, 0x83, 0xed, 0x00, 0x8a, 0x83, 0xed, 0x00
-	.byte	0x88, 0x83, 0xed, 0x00, 0x00, 0xff, 0x00, 0xff
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff
-	.byte	0x00, 0xff, 0x00, 0xff
+	.long	ResName_MSSONGLIST
+	.long	ResName_MSSONGLIST_1_AcMstSugAlpGridBox
+	.long	ResName_MSSONGLIST_2_Label
+	.long	ResName_MSSONGLIST_3_AcIndexWideES
+	.long	ResName_MSSONGLIST_4_Box
+	.long	ResName_MSSONGLIST_5_Label
+	.long	ResName_MSSONGLIST_6_VwEditSwBox
+	.long	ResName_MSSONGLIST_7_Label
+	.long	Toshi_ResName_MSSONGLIST_EndStr
+Toshi_ResName_MSSONGLIST_EndStr:
+	aligned_string ""
+ResName_MSSONGLIST_7_Label:
+	aligned_string ""
+ResName_MSSONGLIST_6_VwEditSwBox:
+	aligned_string ""
+ResName_MSSONGLIST_5_Label:
+	aligned_string ""
+ResName_MSSONGLIST_4_Box:
+	aligned_string ""
+ResName_MSSONGLIST_3_AcIndexWideES:
+	aligned_string ""
+ResName_MSSONGLIST_2_Label:
+	aligned_string ""
+ResName_MSSONGLIST_1_AcMstSugAlpGridBox:
+	aligned_string ""
+ResName_MSSONGLIST:
 	aligned_string "MSSONGLIST"
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xd2, 0x83, 0xed, 0x00, 0xd0, 0x83, 0xed, 0x00
-	.byte	0xce, 0x83, 0xed, 0x00, 0xcc, 0x83, 0xed, 0x00
-	.byte	0xca, 0x83, 0xed, 0x00, 0xc8, 0x83, 0xed, 0x00
-	.byte	0xc6, 0x83, 0xed, 0x00, 0xc4, 0x83, 0xed, 0x00
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff
+	.long	ResName_MSSTLSEL
+	.long	ResName_MSSTLSEL_1_AcMstStyleAlpGridBox
+	.long	ResName_MSSTLSEL_2_Box
+	.long	ResName_MSSTLSEL_3_Label
+	.long	ResName_MSSTLSEL_4_AcIndexWideES
+	.long	ResName_MSSTLSEL_5_VwEditSwBox
+	.long	ResName_MSSTLSEL_6_Label
+	.long	Toshi_ResName_MSALPSEL_EndStr
+Toshi_ResName_MSALPSEL_EndStr:
+	aligned_string ""
+ResName_MSSTLSEL_6_Label:
+	aligned_string ""
+ResName_MSSTLSEL_5_VwEditSwBox:
+	aligned_string ""
+ResName_MSSTLSEL_4_AcIndexWideES:
+	aligned_string ""
+ResName_MSSTLSEL_3_Label:
+	aligned_string ""
+ResName_MSSTLSEL_2_Box:
+	aligned_string ""
+ResName_MSSTLSEL_1_AcMstStyleAlpGridBox:
+	aligned_string ""
+ResName_MSSTLSEL:
 	aligned_string "MSSTLSEL"
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x04, 0x84, 0xed, 0x00, 0x02, 0x84, 0xed, 0x00
-	.byte	0x00, 0x84, 0xed, 0x00, 0xfe, 0x83, 0xed, 0x00
-	.byte	0xfc, 0x83, 0xed, 0x00, 0xfa, 0x83, 0xed, 0x00
-	.byte	0xf8, 0x83, 0xed, 0x00, 0x00, 0xff, 0x00, 0xff
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff
+	.long	ResName_PMBANK
+	.long	ResName_PMBANK_1_Icon
+	.long	ResName_PMBANK_2_StringBox
+	.long	ResName_PMBANK_3_PsPageBox
+	.long	ResName_PMBANK_4_Label
+	.long	ResName_PMBANK_5_IvIntEasySet
+	.long	Toshi_ResName_PMBKSEL_EndStr
+Toshi_ResName_PMBKSEL_EndStr:
+	aligned_string ""
+ResName_PMBANK_5_IvIntEasySet:
+	aligned_string ""
+ResName_PMBANK_4_Label:
+	aligned_string ""
+ResName_PMBANK_3_PsPageBox:
+	aligned_string ""
+ResName_PMBANK_2_StringBox:
+	aligned_string ""
+ResName_PMBANK_1_Icon:
+	aligned_string ""
+ResName_PMBANK:
 	aligned_string "PMBANK"
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x5e, 0x84, 0xed, 0x00, 0x5c, 0x84, 0xed, 0x00
-	.byte	0x5a, 0x84, 0xed, 0x00, 0x58, 0x84, 0xed, 0x00
-	.byte	0x56, 0x84, 0xed, 0x00, 0x54, 0x84, 0xed, 0x00
-	.byte	0x52, 0x84, 0xed, 0x00, 0x50, 0x84, 0xed, 0x00
-	.byte	0x4e, 0x84, 0xed, 0x00, 0x4c, 0x84, 0xed, 0x00
-	.byte	0x4a, 0x84, 0xed, 0x00, 0x48, 0x84, 0xed, 0x00
-	.byte	0x46, 0x84, 0xed, 0x00, 0x44, 0x84, 0xed, 0x00
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff
-	.byte	0x00, 0xff
+	.long	ResName_PMVIEW
+	.long	ResName_PMVIEW_1_AcPmBkEditBox
+	.long	ResName_PMVIEW_2_AcIndexWideES
+	.long	ResName_PMVIEW_3_PsPageBox
+	.long	ResName_PMVIEW_4_Label
+	.long	ResName_PMVIEW_5_Label
+	.long	ResName_PMVIEW_6_Label
+	.long	ResName_PMVIEW_7_Label
+	.long	ResName_PMVIEW_8_Label
+	.long	ResName_PMVIEW_9_Label
+	.long	ResName_PMVIEW_10_EditSw
+	.long	ResName_PMVIEW_11_EditSw
+	.long	ResName_PMVIEW_12_IvIntEasySet
+	.long	Toshi_ResName_PMVIEW_EndStr
+Toshi_ResName_PMVIEW_EndStr:
+	aligned_string ""
+ResName_PMVIEW_12_IvIntEasySet:
+	aligned_string ""
+ResName_PMVIEW_11_EditSw:
+	aligned_string ""
+ResName_PMVIEW_10_EditSw:
+	aligned_string ""
+ResName_PMVIEW_9_Label:
+	aligned_string ""
+ResName_PMVIEW_8_Label:
+	aligned_string ""
+ResName_PMVIEW_7_Label:
+	aligned_string ""
+ResName_PMVIEW_6_Label:
+	aligned_string ""
+ResName_PMVIEW_5_Label:
+	aligned_string ""
+ResName_PMVIEW_4_Label:
+	aligned_string ""
+ResName_PMVIEW_3_PsPageBox:
+	aligned_string ""
+ResName_PMVIEW_2_AcIndexWideES:
+	aligned_string ""
+ResName_PMVIEW_1_AcPmBkEditBox:
+	aligned_string ""
+ResName_PMVIEW:
 	aligned_string "PMVIEW"
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x94, 0x84, 0xed, 0x00, 0x92, 0x84, 0xed, 0x00
-	.byte	0x90, 0x84, 0xed, 0x00, 0x8e, 0x84, 0xed, 0x00
-	.byte	0x8c, 0x84, 0xed, 0x00, 0x8a, 0x84, 0xed, 0x00
-	.byte	0x88, 0x84, 0xed, 0x00, 0x86, 0x84, 0xed, 0x00
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff
+	.long	ResName_PMNAME
+	.long	ResName_PMNAME_1_IvNaming
+	.long	ResName_PMNAME_2_AcFuncEditSw
+	.long	ResName_PMNAME_3_Label
+	.long	ResName_PMNAME_4_PmBkNoBox
+	.long	ResName_PMNAME_5_EditSw
+	.long	ResName_PMNAME_6_IvExit
+	.long	Toshi_ResName_PMNAME_EndStr
+Toshi_ResName_PMNAME_EndStr:
+	aligned_string ""
+ResName_PMNAME_6_IvExit:
+	aligned_string ""
+ResName_PMNAME_5_EditSw:
+	aligned_string ""
+ResName_PMNAME_4_PmBkNoBox:
+	aligned_string ""
+ResName_PMNAME_3_Label:
+	aligned_string ""
+ResName_PMNAME_2_AcFuncEditSw:
+	aligned_string ""
+ResName_PMNAME_1_IvNaming:
+	aligned_string ""
+ResName_PMNAME:
 	aligned_string "PMNAME"
 	.incbin "includes/generated/naka_extension_device.bin", 0x1CEC, 0x22
 ; [nakarest] naka_extension_device+0x1d0e  +0x1d0e..+0x1d24 (0xed84da, 22 B)
@@ -899,21 +1079,35 @@ NakaWidget_EXT:
 ; [nakarest] naka_extension_device+0x1d54  +0x1d54..+0x1d8e (0xed8520, 58 B)
 ; [nakarest] the table itself: ResName slot 0x3d1 (table 0xed8520, 13 entries, InitializeToshi),
 ; [nakarest] 13 entry pointers x 4 bytes.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff
-	.byte	0x00, 0xff, 0x00, 0xff
+	aligned_string ""
+	aligned_string ""
+	aligned_string ""
+	aligned_string ""
+	aligned_string ""
+	aligned_string ""
 	aligned_string "PMBKNAME"
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xe4, 0x84, 0xed, 0x00, 0xe2, 0x84, 0xed, 0x00
-	.byte	0xe0, 0x84, 0xed, 0x00, 0x00, 0xff, 0x00, 0xff
+	.long	ResName_SVARI
+	.long	ResName_SVARI_1_IvIntVari
+	.long	Toshi_ResName_SVARI_EndStr
+Toshi_ResName_SVARI_EndStr:
+	aligned_string ""
+ResName_SVARI_1_IvIntVari:
+	aligned_string ""
+ResName_SVARI:
 	.asciz	"SVARI"
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x85, 0xed, 0x00, 0xfe, 0x84, 0xed, 0x00
-	.byte	0xfc, 0x84, 0xed, 0x00, 0xfa, 0x84, 0xed, 0x00
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff
+	.long	ResName_RVARI
+	.long	ResName_RVARI_1_AcTempoBox
+	.long	ResName_RVARI_2_IvIntVari
+	.long	Toshi_ResName_RVARI_EndStr
+Toshi_ResName_RVARI_EndStr:
+	aligned_string ""
+ResName_RVARI_2_IvIntVari:
+	aligned_string ""
+ResName_RVARI_1_AcTempoBox:
+	aligned_string ""
+ResName_RVARI:
 	.asciz	"RVARI"
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x6c, 0x85, 0xed, 0x00
+	.long	Toshi_ResName_TEST1 + 102
 	.incbin "includes/generated/naka_extension_device.bin", 0x1D54, 0x3A
 ; [nakarest] naka_extension_device+0x1d8e  +0x1d8e..+0x1dae (0xed855a, 32 B)
 ; [nakarest] name strings, entries 0-12 of ResName slot 0x3d1 (table 0xed8520, 13 entries,
@@ -1246,24 +1440,36 @@ PanelButton_HelpCodeMaps:
 ; PanelInput_InitPedalRecords copies them to RAM 0x8EB6/0x8EBA/0x8EBE; PanelInput_ScanPedalPorts feeds PG.3-2, PG.7-4
 ; and PD.6 to PanelInput_UpdatePedalRecord, which queues {index, state, changed bits} when the debounced state changes.
 	.long	PanelButton_HelpCodeByBit
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0xf0, 0x9d, 0xed, 0x00, 0xf8, 0x9d, 0xed, 0x00
-	.byte	0x00, 0x9e, 0xed, 0x00, 0x08, 0x9e, 0xed, 0x00
-	.byte	0x10, 0x9e, 0xed, 0x00, 0x18, 0x9e, 0xed, 0x00
-	.byte	0x20, 0x9e, 0xed, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x28, 0x9e, 0xed, 0x00
-	.byte	0x30, 0x9e, 0xed, 0x00, 0x38, 0x9e, 0xed, 0x00
+	.long	PanelButton_HelpCodeByBit + 8
+	.long	PanelButton_HelpCodeByBit + 16
+	.long	PanelButton_HelpCodeByBit + 24
+	.long	PanelButton_HelpCodeByBit + 32
+	.long	PanelButton_HelpCodeByBit + 40
+	.long	PanelButton_HelpCodeByBit + 48
+	.long	PanelButton_HelpCodeByBit + 56
+	.long	0
+	.long	0
+	.long	PanelButton_HelpCodeByBit + 64
+	.long	PanelButton_HelpCodeByBit + 72
+	.long	PanelButton_HelpCodeByBit + 80
 	.long	ExtDevScreen_UserInitWallpaper_Flag
 	.long	PanelButton_HelpCodeMaps14To25
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x50, 0x9e, 0xed, 0x00, 0x58, 0x9e, 0xed, 0x00
-	.byte	0x60, 0x9e, 0xed, 0x00, 0x68, 0x9e, 0xed, 0x00
-	.byte	0x70, 0x9e, 0xed, 0x00, 0x78, 0x9e, 0xed, 0x00
-	.byte	0x80, 0x9e, 0xed, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x88, 0x9e, 0xed, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.long	PanelButton_HelpCodeMaps14To25 + 8
+	.long	PanelButton_HelpCodeMaps14To25 + 16
+	.long	PanelButton_HelpCodeMaps14To25 + 24
+	.long	PanelButton_HelpCodeMaps14To25 + 32
+	.long	PanelButton_HelpCodeMaps14To25 + 40
+	.long	PanelButton_HelpCodeMaps14To25 + 48
+	.long	PanelButton_HelpCodeMaps14To25 + 56
+	.long	0
+	.long	0
+	.long	0
+	.long	PanelButton_HelpCodeMaps14To25 + 64
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
 PanelInput_PedalRecordDefaults:	.incbin "includes/generated/naka_extension_device.bin", 0x3854, 0xC
 ; [nakarest] PanelInput_InitFuncTable  +0x3860..+0x3870 (0xeda02c, 16 B)
 ; [nakarest] purpose not established: layout of 16 B at 0xeda02c not derived; readers below

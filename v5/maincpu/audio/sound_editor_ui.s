@@ -9346,12 +9346,10 @@ SeMenu_CompareAndApply_Data4:
 ;  SeTitle_StaticScreenTable, indexed by title id - 0x20): draws the page's fixed captions and frames. Basis: the
 ;  table index and RegTitle (scripts/renaming/name_se_title_methods.py).
 SeAmpAmp2_DrawStaticScreen:
-	.byte	0x1d, 0x09, 0xef, 0xf0, 0x1d, 0x53, 0xef, 0xf0
-	.byte	0x1d, 0x7c
-SeMenu_CompareAndApply_Data6:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xfa
-	.byte 0xf0
+	call	SeMenu_DrawSoloButton
+	call	SeMenu_DrawPartSelector
+	call	SeAmp_DrawSectionFrame
+	.set	SeMenu_CompareAndApply_Data6, SeAmpAmp2_DrawStaticScreen + 10	; inside an instruction
 	call	SeMenu_PresetManager_Save
 	ld	(COLORBLIT_MODE:24), 2
 	ld	xiy, SeAmpAmp2_SeFilFil2_MidlineAndStripFrame
@@ -11391,25 +11389,21 @@ SeMenu_DrawPartRadioButtons_OffBounds:
 	.long	SeMenu_DrawPartRadioButtons_Part3Off
 	.long	SeMenu_DrawPartRadioButtons_Part4Off
 	.long	SeMenu_DrawPartRadioButtons_OffBounds
+; v5's two-part ON radio buttons (v6 has no such lists): SeBitmap_RadioOn and "1ST" on row y 119, then
+;   SeBitmap_RadioOn and "2ND" on row y 149; the bounds table SeMenu_DrawPartRadioButtons_Records2_Data2
+;   right after them delimits the two lists for GraphicsRender_ProcessEntries.
 SeMenu_DrawPartRadioButtons_Records2_Data:
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x03, 0x0c
-	.long	SeBitmap_RadioOn
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x9a, 0x12, 0x02, 0x00, 0x0c, 0x00, 0x17, 0x09
-	.byte	0x21, 0x00, 0x7a, 0x00, 0x31, 0x53, 0x54, 0x03
-	.byte	0x0c
-	.long	SeBitmap_RadioOn
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x4a, 0x17, 0x02, 0x00, 0x0c, 0x00, 0x17, 0x09
-	.byte	0x21, 0x00, 0x98, 0x00, 0x32, 0x4e, 0x44
+	sd_blit	SeBitmap_RadioOn, 119*40+2, 2, 12
+	sd_ptext	0x17, 9, 33, 122, "1ST"
+SeMenu_DrawPartRadioButtons_Records2_Data2_Item2:
+	sd_blit	SeBitmap_RadioOn, 149*40+2, 2, 12
+	sd_ptext	0x17, 9, 33, 152, "2ND"
 SeMenu_DrawPartRadioButtons_Records2_Data2:
 	.long	SeMenu_DrawPartRadioButtons_Records2_Data
 ; static record list (2 records), read by GraphicsRender_ProcessEntries; end SeMenu_DrawTwoPartRadioButtons_Part2On
 ; evidence: bounds at SeMenu_DrawTwoPartRadioButtons_Records
 	.long	SeMenu_DrawPartRadioButtons_Records2_Data
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0xc4, 0x17, 0xf1, 0x00
+	.long	SeMenu_DrawPartRadioButtons_Records2_Data2_Item2
 	.long	SeMenu_DrawPartRadioButtons_Records2_Data2
 ; SeMenu_DrawTwoPartRadioButtons_Part1On: Part 1's ON radio button of the two-part (USER KIT) layout: SeBitmap_RadioOn
 ;   and the "1ST" label at y 119, drawn by SeMenu_DrawTwoPartRadioButtons when part 1 is on in mask 0x65E; entry 1

@@ -81,57 +81,70 @@ NakaData_SoundMenuDrawbar:	.incbin "includes/generated/naka_sound_menu_drawbar.b
 ; [nakarest] propdata strings (the +16 field signature) of class 35 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): AcDrawbarName "ue".
 	.long	AcSndEMenuProc
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x40, 0x00, 0x60, 0x01, 0x36, 0x00, 0x00, 0x00
-	.byte	0xa4, 0x10, 0xe8, 0x00, 0xa2, 0x10, 0xe8, 0x00
+	.long	NAKA_CLASS_AcModeMenu	; AcSndEMenu parent
+	.short	54	; AcSndEMenu allsize
+	.short	0	; AcSndEMenu selfsize
+	.long	ClassName_AcSndEMenu	; AcSndEMenu name
+	.long	ClassPropdata_AcSndEMenu	; AcSndEMenu propdata
 	.long	ClassProps_AcPleaseWait
 	.long	AcPleaseWaitProc
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x12, 0x00, 0x60, 0x01, 0x24, 0x00, 0x00, 0x00
-	.byte	0x94, 0x10, 0xe8, 0x00, 0x92, 0x10, 0xe8, 0x00
-	.byte	0xbc, 0x0c, 0xe8, 0x00
+	.long	NAKA_CLASS_PsParaBox	; AcPleaseWait parent
+	.short	36	; AcPleaseWait allsize
+	.short	0	; AcPleaseWait selfsize
+	.long	ClassName_AcPleaseWait	; AcPleaseWait name
+	.long	ClassPropdata_AcPleaseWait	; AcPleaseWait propdata
+	.long	ClassProps_AcPleaseWait_2	; AcPleaseWait propname
 	.long	AcDrawSettingProc
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x26, 0x00, 0x60, 0x01, 0x2c, 0x00, 0x04, 0x00
-	.byte	0x84, 0x10, 0xe8, 0x00, 0x80, 0x10, 0xe8, 0x00
+	.long	NAKA_CLASS_PsToggleBox	; AcDrawSetting parent
+	.short	44	; AcDrawSetting allsize
+	.short	4	; AcDrawSetting selfsize
+	.long	ClassName_AcDrawSetting	; AcDrawSetting name
+	.long	ClassPropdata_AcDrawSetting	; AcDrawSetting propdata
 	.long	ClassProps_AcDrawSetting
 	.long	AcDrawbarNameProc
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x12, 0x00, 0x60, 0x01, 0x28, 0x00, 0x04, 0x00
-	.byte	0x72, 0x10, 0xe8, 0x00, 0x6e, 0x10, 0xe8, 0x00
+	.long	NAKA_CLASS_PsParaBox	; AcDrawbarName parent
+	.short	40	; AcDrawbarName allsize
+	.short	4	; AcDrawbarName selfsize
+	.long	ClassName_AcDrawbarName	; AcDrawbarName name
+	.long	ClassPropdata_AcDrawbarName	; AcDrawbarName propdata
 	.long	ClassProps_AcDrawbarName
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.space	24, 0	; entry 36 of Class slot 0x161, all zero: the count is 36, so ClassProc never reads it
+ClassPropdata_AcDrawbarName:
 	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0xAE, 0x4
 ; [nakarest] naka_sound_menu_drawbar+0xb2  +0xb2..+0xc0 (0xe81094, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 35 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): AcDrawbarName.
+ClassName_AcDrawbarName:
 	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0xB2, 0xE
 ; [nakarest] naka_sound_menu_drawbar+0xc0  +0xc0..+0xc4 (0xe810a2, 4 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 34 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): AcDrawSetting "AA".
+ClassPropdata_AcDrawSetting:
 	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0xC0, 0x4
 ; [nakarest] naka_sound_menu_drawbar+0xc4  +0xc4..+0xd2 (0xe810a6, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 34 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): AcDrawSetting.
+ClassName_AcDrawSetting:
 	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0xC4, 0xE
 ; [nakarest] naka_sound_menu_drawbar+0xd2  +0xd2..+0xd4 (0xe810b4, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 33 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): AcPleaseWait "".
+ClassPropdata_AcPleaseWait:
 	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0xD2, 0x2
 ; [nakarest] naka_sound_menu_drawbar+0xd4  +0xd4..+0xe2 (0xe810b6, 14 B)
 ; [nakarest] class-name strings (the +12 name) of classes 33 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): AcPleaseWait.
+ClassName_AcPleaseWait:
 	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0xD4, 0xE
 ; [nakarest] naka_sound_menu_drawbar+0xe2  +0xe2..+0xe4 (0xe810c4, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 32 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): AcSndEMenu "".
+ClassPropdata_AcSndEMenu:
 	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0xE2, 0x2
 ; [nakarest] naka_sound_menu_drawbar+0xe4  +0xe4..+0xf0 (0xe810c6, 12 B)
 ; [nakarest] class-name strings (the +12 name) of classes 32 of Class slot 0x161 (table
 ; [nakarest] 0xe80cf6, 37 entries, InitializeMurai): AcSndEMenu.
+ClassName_AcSndEMenu:
 	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0xE4, 0xC
 ; [nakarest] naka_sound_menu_drawbar+0xf0  +0xf0..+0xf2 (0xe810d2, 2 B)
 ; [nakarest] propdata strings (the +16 field signature) of class 31 of Class slot 0x161 (table
@@ -397,8 +410,7 @@ Murai_ClassCount_161:
 ; [nakarest] naka_sound_menu_drawbar+0x302  +0x302..+0x306 (0xe812e4, 4 B)
 ; [nakarest] the table itself: ResEvent slot 0x1c1 (table 0xe812e4, 10 entries,
 ; [nakarest] InitializeMurai), 10 entry pointers x 4 bytes.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x24, 0x00
+	.short	36	; the entry count of Class slot 0x161, which RegObjTable reads from this word (InitializeMurai)
 ; port: v7's label Murai_ResEventTable_1C1 is not in v6 -- no v6 bytes correspond to what it named
 ; [nakarest] Naka_EventDispatch_Table  +0x306..+0x32e (0xe812e8, 40 B)
 ; [nakarest] 4 B at 0xe8130c: the end marker of ResEvent slot 0x1c1 (table 0xe812e4, 10 entries, InitializeMurai) -- a zero word after entry 9, the last, as every ResEvent table ends.
@@ -489,30 +501,45 @@ Murai_FunctionTable_401:
 ; [nakarest] InitializeMurai), 37 entry pointers x 4 bytes (starts 0xe8158c, 144 of its 148
 ; [nakarest] bytes are here or later).
 	.long	NakaInst_IvSdpartProc
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x44, 0x18, 0xe8, 0x00
+	.long	FuncNameStr_AcLswPartEditBoxProc
 ; port: v7's label Naka_Event_Table2 is not in v6 -- no v6 bytes correspond to what it named
 ; Murai_FunctionNameListEnd -- 1 x char[2]: "" + 0xFF pad, entry 37 (one past the count) of Murai_FunctionTable_401
 ; Murai_FunctionTable_401 (registry slot 0x401 = 0x101 + 0x300, 37 entries, InitializeMurai) names the procedures
 ; of Murai_FunctionTable_101, whose entry 37 is the NULL end; FunctionProc answers EVT_GET_NAME with names[index].
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x2e, 0x18, 0xe8, 0x00, 0x20, 0x18, 0xe8, 0x00
-	.byte	0x10, 0x18, 0xe8, 0x00, 0xfe, 0x17, 0xe8, 0x00
-	.byte	0xea, 0x17, 0xe8, 0x00, 0xda, 0x17, 0xe8, 0x00
-	.byte	0xcc, 0x17, 0xe8, 0x00, 0xbe, 0x17, 0xe8, 0x00
-	.byte	0xae, 0x17, 0xe8, 0x00, 0x9a, 0x17, 0xe8, 0x00
-	.byte	0x86, 0x17, 0xe8, 0x00, 0x76, 0x17, 0xe8, 0x00
-	.byte	0x64, 0x17, 0xe8, 0x00, 0x56, 0x17, 0xe8, 0x00
-	.byte	0x42, 0x17, 0xe8, 0x00, 0x34, 0x17, 0xe8, 0x00
-	.byte	0x24, 0x17, 0xe8, 0x00, 0x14, 0x17, 0xe8, 0x00
-	.byte	0x02, 0x17, 0xe8, 0x00, 0xf0, 0x16, 0xe8, 0x00
-	.byte	0xe0, 0x16, 0xe8, 0x00, 0xd2, 0x16, 0xe8, 0x00
-	.byte	0xb8, 0x16, 0xe8, 0x00, 0xa4, 0x16, 0xe8, 0x00
-	.byte	0x90, 0x16, 0xe8, 0x00, 0x7e, 0x16, 0xe8, 0x00
-	.byte	0x6c, 0x16, 0xe8, 0x00, 0x56, 0x16, 0xe8, 0x00
-	.byte	0x42, 0x16, 0xe8, 0x00, 0x30, 0x16, 0xe8, 0x00
-	.byte	0x20, 0x16, 0xe8, 0x00, 0x0e, 0x16, 0xe8, 0x00
-	.byte	0xfc, 0x15, 0xe8, 0x00, 0xea, 0x15, 0xe8, 0x00
+	.long	FuncNameStr_AcVolPartEditBoxProc
+	.long	FuncNameStr_IvMesageProc
+	.long	FuncNameStr_IvAccordionProc
+	.long	FuncNameStr_IvAccordionXProc
+	.long	FuncNameStr_AcAccordionTabProc
+	.long	FuncNameStr_PsLabelBoxProc
+	.long	FuncNameStr_IvSdtecdProc
+	.long	FuncNameStr_IvSdtecd1Proc
+	.long	FuncNameStr_IvSdscltyp2Proc
+	.long	FuncNameStr_AcWelcomScreenProc
+	.long	FuncNameStr_PsMixerControlProc
+	.long	FuncNameStr_AcPartMixerProc
+	.long	FuncNameStr_AcTrackMixerProc
+	.long	FuncNameStr_IvSoftverProc
+	.long	FuncNameStr_IvPageOverWriteProc
+	.long	FuncNameStr_IvDrawbarProc
+	.long	FuncNameStr_IvDrawbar1Proc
+	.long	FuncNameStr_IvDrawbar2Proc
+	.long	FuncNameStr_IvDrawbarNormProc
+	.long	FuncNameStr_IvDrawbarSndEProc
+	.long	FuncNameStr_AcResetPageProc
+	.long	FuncNameStr_PsVariBoxProc
+	.long	FuncNameStr_AcPresentationControlProc
+	.long	FuncNameStr_IvDemofeature1Proc
+	.long	FuncNameStr_IvDemofeature2Proc
+	.long	FuncNameStr_AcDrawEditBoxProc
+	.long	FuncNameStr_AcLswPartPanProc
+	.long	FuncNameStr_AcPresentationBoxProc
+	.long	FuncNameStr_VwUserBitmapSpProc
+	.long	FuncNameStr_AcFdemoScreenProc
+	.long	FuncNameStr_AcSndEMenuProc
+	.long	FuncNameStr_AcPleaseWaitProc
+	.long	FuncNameStr_AcDrawSettingProc
+	.long	FuncNameStr_AcDrawbarNameProc
 	.long	Murai_FunctionNameListEnd
 Murai_FunctionNameListEnd:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x642, 0x2
 ; [nakarest] naka_sound_menu_drawbar+0x644  +0x644..+0x8c0 (0xe81626, 636 B)
@@ -523,40 +550,75 @@ Murai_FunctionNameListEnd:	.incbin "includes/generated/naka_sound_menu_drawbar.b
 ; [nakarest] NakaInst_IvSdpartProc  +0x8c0..+0x8ce (0xe818a2, 14 B)
 ; [nakarest] name string, entry 0 of Function slot 0x401 (table 0xe8158c, 37 entries,
 ; [nakarest] InitializeMurai) (names for Function slot 0x101): "IvSdpartProc".
+FuncNameStr_AcDrawbarNameProc:
 	.asciz	"AcDrawbarNameProc"
+FuncNameStr_AcDrawSettingProc:
 	.asciz	"AcDrawSettingProc"
+FuncNameStr_AcPleaseWaitProc:
 	aligned_string "AcPleaseWaitProc"
+FuncNameStr_AcSndEMenuProc:
 	aligned_string "AcSndEMenuProc"
+FuncNameStr_AcFdemoScreenProc:
 	.asciz	"AcFdemoScreenProc"
+FuncNameStr_VwUserBitmapSpProc:
 	aligned_string "VwUserBitmapSpProc"
+FuncNameStr_AcPresentationBoxProc:
 	.asciz	"AcPresentationBoxProc"
+FuncNameStr_AcLswPartPanProc:
 	aligned_string "AcLswPartPanProc"
+FuncNameStr_AcDrawEditBoxProc:
 	.asciz	"AcDrawEditBoxProc"
+FuncNameStr_IvDemofeature2Proc:
 	aligned_string "IvDemofeature2Proc"
+FuncNameStr_IvDemofeature1Proc:
 	aligned_string "IvDemofeature1Proc"
+FuncNameStr_AcPresentationControlProc:
 	.asciz	"AcPresentationControlProc"
+FuncNameStr_PsVariBoxProc:
 	.asciz	"PsVariBoxProc"
+FuncNameStr_AcResetPageProc:
 	.asciz	"AcResetPageProc"
+FuncNameStr_IvDrawbarSndEProc:
 	.asciz	"IvDrawbarSndEProc"
+FuncNameStr_IvDrawbarNormProc:
 	.asciz	"IvDrawbarNormProc"
+FuncNameStr_IvDrawbar2Proc:
 	aligned_string "IvDrawbar2Proc"
+FuncNameStr_IvDrawbar1Proc:
 	aligned_string "IvDrawbar1Proc"
+FuncNameStr_IvDrawbarProc:
 	.asciz	"IvDrawbarProc"
+FuncNameStr_IvPageOverWriteProc:
 	.asciz	"IvPageOverWriteProc"
+FuncNameStr_IvSoftverProc:
 	.asciz	"IvSoftverProc"
+FuncNameStr_AcTrackMixerProc:
 	aligned_string "AcTrackMixerProc"
+FuncNameStr_AcPartMixerProc:
 	.asciz	"AcPartMixerProc"
+FuncNameStr_PsMixerControlProc:
 	aligned_string "PsMixerControlProc"
+FuncNameStr_AcWelcomScreenProc:
 	aligned_string "AcWelcomScreenProc"
+FuncNameStr_IvSdscltyp2Proc:
 	.asciz	"IvSdscltyp2Proc"
+FuncNameStr_IvSdtecd1Proc:
 	.asciz	"IvSdtecd1Proc"
+FuncNameStr_IvSdtecdProc:
 	aligned_string "IvSdtecdProc"
+FuncNameStr_PsLabelBoxProc:
 	aligned_string "PsLabelBoxProc"
+FuncNameStr_AcAccordionTabProc:
 	aligned_string "AcAccordionTabProc"
+FuncNameStr_IvAccordionXProc:
 	aligned_string "IvAccordionXProc"
+FuncNameStr_IvAccordionProc:
 	.asciz	"IvAccordionProc"
+FuncNameStr_IvMesageProc:
 	aligned_string "IvMesageProc"
+FuncNameStr_AcVolPartEditBoxProc:
 	aligned_string "AcVolPartEditBoxProc"
+FuncNameStr_AcLswPartEditBoxProc:
 	aligned_string "AcLswPartEditBoxProc"
 NakaInst_IvSdpartProc:	.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x8C0, 0xE
 ; [nakarest] NakaContainer_SoundMenu_Root  +0x8ce..+0x8f8 (0xe818b0, 42 B)

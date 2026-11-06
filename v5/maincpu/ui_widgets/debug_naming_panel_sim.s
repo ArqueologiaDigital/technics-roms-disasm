@@ -183,9 +183,9 @@ Root_ViewableTable_000:
 	.long	NakaWidget_PanelSimulator_20_AcIndexEditSw
 	.long	NakaWidget_PanelSimulator_21_Label
 	.long	NakaWidget_NamingCursorBox
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x5c, 0xf1, 0x03, 0x00, 0x88, 0xf1, 0x03, 0x00
-	.byte	0xb4, 0xf1, 0x03, 0x00
+	.long	0x3f15c	; RAM: the work-RAM copy of element 23
+	.long	0x3f188	; RAM: the work-RAM copy of element 24
+	.long	0x3f1b4	; RAM: the work-RAM copy of element 25
 	.long	NakaWidget_PanelSimulator_26_AcIndexEditSw
 	.long	NakaWidget_PanelSimulator_27_AcIndexEditSw
 	.long	NakaWidget_PanelSimulator_28_AcIndexEditSw
@@ -211,8 +211,7 @@ Root_ViewableTable_000:
 	.long	NakaWidget_PanelSimulator_48_AcTrackSwitch
 	.long	NakaWidget_MemDumpWindow
 	.long	NakaWidget_PanelSimulator_50_DbMemoryDump
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x00, 0x00
+	.long	0	; NULL after the 51 entries of Viewable slot 0x0
 Root_ViewableTable_0FF:	.incbin "includes/generated/naka_debug_naming.bin", 0x946, 0x28
 ; [nakarest] naka_debug_naming+0x96e  +0x96e..+0xa40 (0xeb346c, 210 B)
 ; [nakarest] the table itself: ResName slot 0x300 (table 0xeb346c, 51 entries, InitializeRoot),

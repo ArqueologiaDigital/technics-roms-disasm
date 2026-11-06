@@ -1952,134 +1952,9 @@ typedef struct __attribute__((packed)) {
     naka_cls_AcIndexToggle_t Root_NamingSymbolToggleView;
     /* Naka_DrawbarReg_Table: 69 pointers (cut from ptrs_7 by split_naka_pointer_arrays.py) */
     uint32_t Naka_DrawbarReg_Table[69];
-    uint16_t field_1624;
-    uint16_t field_1626;
-    uint16_t field_1628;
-    uint16_t field_162a;
-    uint16_t field_162c;
-    uint16_t field_162e;
-    uint16_t field_1630;
-    uint16_t field_1632;
-    uint16_t field_1634;
-    uint16_t field_1636;
-    uint16_t field_1638;
-    uint16_t field_163a;
-    uint16_t field_163c;
-    uint16_t field_163e;
-    uint16_t field_1640;
-    uint16_t field_1642;
-    uint16_t field_1644;
-    uint16_t field_1646;
-    uint16_t field_1648;
-    uint16_t field_164a;
-    uint16_t field_164c;
-    uint16_t field_164e;
-    uint16_t field_1650;
-    uint16_t field_1652;
-    uint16_t field_1654;
-    uint16_t field_1656;
-    uint16_t field_1658;
-    uint16_t field_165a;
-    uint16_t field_165c;
-    uint16_t field_165e;
-    uint16_t field_1660;
-    uint16_t field_1662;
-    uint16_t field_1664;
-    uint16_t field_1666;
-    uint16_t field_1668;
-    uint16_t field_166a;
-    uint16_t field_166c;
-    uint16_t field_166e;
-    uint16_t field_1670;
-    uint16_t field_1672;
-    uint16_t field_1674;
-    uint16_t field_1676;
-    uint16_t field_1678;
-    uint16_t field_167a;
-    uint16_t field_167c;
-    uint16_t field_167e;
-    uint16_t field_1680;
-    uint16_t field_1682;
-    uint16_t field_1684;
-    uint16_t field_1686;
-    uint16_t field_1688;
-    uint16_t field_168a;
-    uint16_t field_168c;
-    uint16_t field_168e;
-    uint16_t field_1690;
-    uint16_t field_1692;
-    uint16_t field_1694;
-    uint16_t field_1696;
-    uint16_t field_1698;
-    uint16_t field_169a;
-    uint16_t field_169c;
-    uint16_t field_169e;
-    uint16_t field_16a0;
-    uint16_t field_16a2;
-    uint16_t field_16a4;
-    uint16_t field_16a6;
-    uint16_t field_16a8;
-    uint16_t field_16aa;
-    uint16_t field_16ac;
-    uint16_t field_16ae;
-    uint16_t field_16b0;
-    uint16_t field_16b2;
-    uint16_t field_16b4;
-    uint16_t field_16b6;
-    uint16_t field_16b8;
-    uint16_t field_16ba;
-    uint16_t field_16bc;
-    uint16_t field_16be;
-    uint16_t field_16c0;
-    uint16_t field_16c2;
-    uint16_t field_16c4;
-    uint16_t field_16c6;
-    uint16_t field_16c8;
-    uint16_t field_16ca;
-    uint16_t field_16cc;
-    uint16_t field_16ce;
-    uint16_t field_16d0;
-    uint16_t field_16d2;
-    uint16_t field_16d4;
-    uint16_t field_16d6;
-    uint16_t field_16d8;
-    uint16_t field_16da;
-    uint16_t field_16dc;
-    uint16_t field_16de;
-    uint16_t field_16e0;
-    uint16_t field_16e2;
-    uint16_t field_16e4;
-    uint16_t field_16e6;
-    uint16_t field_16e8;
-    uint16_t field_16ea;
-    uint16_t field_16ec;
-    uint16_t field_16ee;
-    uint16_t field_16f0;
-    uint16_t field_16f2;
-    uint16_t field_16f4;
-    uint16_t field_16f6;
-    uint16_t field_16f8;
-    uint16_t field_16fa;
-    uint16_t field_16fc;
-    uint16_t field_16fe;
-    uint16_t field_1700;
-    uint16_t field_1702;
-    uint16_t field_1704;
-    uint16_t field_1706;
-    uint16_t field_1708;
-    uint16_t field_170a;
-    uint16_t field_170c;
-    uint16_t field_170e;
-    uint16_t field_1710;
-    uint16_t field_1712;
-    uint16_t field_1714;
-    uint16_t field_1716;
-    uint16_t field_1718;
-    uint16_t field_171a;
-    uint16_t field_171c;
-    uint16_t field_171e;
-    uint16_t field_1720;
-    uint16_t field_1722;
+    /* Naka_DrawbarReg_Table_RamPtrs: 64 x u32, the work-RAM (RAM 0x3F2F8..) addresses of this blob's own
+     * elements (NAKA_WRAM); read as halfword pairs field_1624..field_1722 before */
+    uint32_t Naka_DrawbarReg_Table_RamPtrs[64];
     uint16_t Normal_Window;
     uint16_t field_1726;
     uint16_t normal_Window;
@@ -2482,6 +2357,11 @@ typedef struct __attribute__((packed)) {
 
 #define SELF(field) \
     ((uint32_t)(BASE + __builtin_offsetof(naka_sequencer_channels_t, field)))
+
+/* the RAM address of a member's work-RAM copy: Boot_InitWorkRAM copies ROM WorkRamInit_Image
+ * (0xEED7CC in v6) .. to RAM 0x3D524 .., and this blob starts BASE - WorkRamInit_Image into it */
+#define NAKA_WRAM(field) \
+    ((uint32_t)(0x3D524u + (BASE - 0x00EED7CCu) + __builtin_offsetof(naka_sequencer_channels_t, field)))
 
 _Static_assert(sizeof(naka_sequencer_channels_t) == 7894,
     "naka_sequencer_channels must be exactly 7894 bytes (v7 has no part-control event queue)");
@@ -3621,261 +3501,72 @@ const naka_sequencer_channels_t naka_sequencer_channels_data
         NAKA_ADDR(SeqChanContainer_ChordTypeRef_B),
     },
 
-    .field_1624 = 0xF228,
-
-    .field_1626 = 0x0003,
-
-    .field_1628 = 0xF228,
-
-    .field_162a = 0x0003,
-
-    .field_162c = 0xF228,
-
-    .field_162e = 0x0003,
-
-    .field_1630 = 0xF228,
-
-    .field_1632 = 0x0003,
-
-    .field_1634 = 0xF228,
-
-    .field_1636 = 0x0003,
-
-    .field_1638 = 0xF25C,
-
-    .field_163a = 0x0003,
-
-    .field_163c = 0xF25C,
-
-    .field_163e = 0x0003,
-
-    .field_1640 = 0xF25C,
-
-    .field_1642 = 0x0003,
-
-    .field_1644 = 0xF290,
-
-    .field_1646 = 0x0003,
-
-    .field_1648 = 0xF25C,
-
-    .field_164a = 0x0003,
-
-    .field_164c = 0xF228,
-
-    .field_164e = 0x0003,
-
-    .field_1650 = 0xF228,
-
-    .field_1652 = 0x0003,
-
-    .field_1654 = 0xF228,
-
-    .field_1656 = 0x0003,
-
-    .field_1658 = 0xF2C4,
-
-    .field_165a = 0x0003,
-
-    .field_165c = 0xF2C4,
-
-    .field_165e = 0x0003,
-
-    .field_1660 = 0xF228,
-
-    .field_1662 = 0x0003,
-
-    .field_1664 = 0xF228,
-
-    .field_1666 = 0x0003,
-
-    .field_1668 = 0xF25C,
-
-    .field_166a = 0x0003,
-
-    .field_166c = 0xF228,
-
-    .field_166e = 0x0003,
-
-    .field_1670 = 0xF25C,
-
-    .field_1672 = 0x0003,
-
-    .field_1674 = 0xF290,
-
-    .field_1676 = 0x0003,
-
-    .field_1678 = 0xF25C,
-
-    .field_167a = 0x0003,
-
-    .field_167c = 0xF25C,
-
-    .field_167e = 0x0003,
-
-    .field_1680 = 0xF228,
-
-    .field_1682 = 0x0003,
-
-    .field_1684 = 0xF228,
-
-    .field_1686 = 0x0003,
-
-    .field_1688 = 0xF2C4,
-
-    .field_168a = 0x0003,
-
-    .field_168c = 0xF228,
-
-    .field_168e = 0x0003,
-
-    .field_1690 = 0xF290,
-
-    .field_1692 = 0x0003,
-
-    .field_1694 = 0xF228,
-
-    .field_1696 = 0x0003,
-
-    .field_1698 = 0xF228,
-
-    .field_169a = 0x0003,
-
-    .field_169c = 0xF228,
-
-    .field_169e = 0x0003,
-
-    .field_16a0 = 0xF228,
-
-    .field_16a2 = 0x0003,
-
-    .field_16a4 = 0xF228,
-
-    .field_16a6 = 0x0003,
-
-    .field_16a8 = 0xF228,
-
-    .field_16aa = 0x0003,
-
-    .field_16ac = 0xF228,
-
-    .field_16ae = 0x0003,
-
-    .field_16b0 = 0xF228,
-
-    .field_16b2 = 0x0003,
-
-    .field_16b4 = 0xF228,
-
-    .field_16b6 = 0x0003,
-
-    .field_16b8 = 0xF228,
-
-    .field_16ba = 0x0003,
-
-    .field_16bc = 0xF228,
-
-    .field_16be = 0x0003,
-
-    .field_16c0 = 0xF25C,
-
-    .field_16c2 = 0x0003,
-
-    .field_16c4 = 0xF228,
-
-    .field_16c6 = 0x0003,
-
-    .field_16c8 = 0xF228,
-
-    .field_16ca = 0x0003,
-
-    .field_16cc = 0xF228,
-
-    .field_16ce = 0x0003,
-
-    .field_16d0 = 0xF228,
-
-    .field_16d2 = 0x0003,
-
-    .field_16d4 = 0xF228,
-
-    .field_16d6 = 0x0003,
-
-    .field_16d8 = 0xF228,
-
-    .field_16da = 0x0003,
-
-    .field_16dc = 0xF228,
-
-    .field_16de = 0x0003,
-
-    .field_16e0 = 0xF228,
-
-    .field_16e2 = 0x0003,
-
-    .field_16e4 = 0xF228,
-
-    .field_16e6 = 0x0003,
-
-    .field_16e8 = 0xF228,
-
-    .field_16ea = 0x0003,
-
-    .field_16ec = 0xF228,
-
-    .field_16ee = 0x0003,
-
-    .field_16f0 = 0xF228,
-
-    .field_16f2 = 0x0003,
-
-    .field_16f4 = 0xF228,
-
-    .field_16f6 = 0x0003,
-
-    .field_16f8 = 0xF228,
-
-    .field_16fa = 0x0003,
-
-    .field_16fc = 0xF228,
-
-    .field_16fe = 0x0003,
-
-    .field_1700 = 0xF228,
-
-    .field_1702 = 0x0003,
-
-    .field_1704 = 0xF228,
-
-    .field_1706 = 0x0003,
-
-    .field_1708 = 0xF228,
-
-    .field_170a = 0x0003,
-
-    .field_170c = 0xF228,
-
-    .field_170e = 0x0003,
-
-    .field_1710 = 0xF228,
-
-    .field_1712 = 0x0003,
-
-    .field_1714 = 0xF228,
-
-    .field_1716 = 0x0003,
-
-    .field_1718 = 0xF228,
-
-    .field_171a = 0x0003,
-
-    .field_171c = 0xF228,
-
-    .field_171e = 0x0003,
-
-    .field_1720 = 0xF228,
-
-    .field_1722 = 0x0003,
+    .Naka_DrawbarReg_Table_RamPtrs = {
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[29]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[29]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[29]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[42]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[29]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[55]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[55]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[29]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[29]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[42]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[29]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[29]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[55]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[42]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[29]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+    },
 
     .Normal_Window = NAKA_NONE,
 

@@ -345,13 +345,17 @@ Yoko_ResNameTable_371:
 ;
 ; Typed in naka_widget_tables_1.c as char Yoko_ResNames_371[42].
 ; -----------------------------------------------------------------------------
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x6a, 0x47, 0xe2, 0x00, 0x68, 0x47, 0xe2, 0x00
-	.byte	0x66, 0x47, 0xe2, 0x00, 0x64, 0x47, 0xe2, 0x00
-	.byte	0x62, 0x47, 0xe2, 0x00, 0x60, 0x47, 0xe2, 0x00
-	.byte	0x5e, 0x47, 0xe2, 0x00, 0x56, 0x47, 0xe2, 0x00
-	.byte	0x4c, 0x47, 0xe2, 0x00, 0x4a, 0x47, 0xe2, 0x00
-	.byte	0x48, 0x47, 0xe2, 0x00
+	.long	Yoko_ResNames_371 + 36
+	.long	Yoko_ResNames_371 + 34
+	.long	Yoko_ResNames_371 + 32
+	.long	Yoko_ResNames_371 + 30
+	.long	Yoko_ResNames_371 + 28
+	.long	Yoko_ResNames_371 + 26
+	.long	Yoko_ResNames_371 + 24
+	.long	Yoko_ResNames_371 + 16
+	.long	Yoko_ResNames_371 + 6
+	.long	Yoko_ResNames_371 + 4
+	.long	Yoko_ResNames_371 + 2
 	.long	Yoko_ResNames_371
 Yoko_ResNames_371:	.incbin "includes/generated/naka_widget_tables_1.bin", 0x708, 0x2A
 ; -----------------------------------------------------------------------------
@@ -391,15 +395,22 @@ Yoko_ResNameTable_373:
 ;
 ; Typed in naka_widget_tables_1.c as char Yoko_ResNames_373[54].
 ; -----------------------------------------------------------------------------
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x22, 0x48, 0xe2, 0x00, 0x20, 0x48, 0xe2, 0x00
-	.byte	0x1e, 0x48, 0xe2, 0x00, 0x1c, 0x48, 0xe2, 0x00
-	.byte	0x1a, 0x48, 0xe2, 0x00, 0x18, 0x48, 0xe2, 0x00
-	.byte	0x16, 0x48, 0xe2, 0x00, 0x14, 0x48, 0xe2, 0x00
-	.byte	0x12, 0x48, 0xe2, 0x00, 0x10, 0x48, 0xe2, 0x00
-	.byte	0x0e, 0x48, 0xe2, 0x00, 0x0c, 0x48, 0xe2, 0x00
-	.byte	0xfe, 0x47, 0xe2, 0x00, 0xfc, 0x47, 0xe2, 0x00
-	.byte	0xfa, 0x47, 0xe2, 0x00, 0xf8, 0x47, 0xe2, 0x00
+	.long	Yoko_ResNames_373 + 44
+	.long	Yoko_ResNames_373 + 42
+	.long	Yoko_ResNames_373 + 40
+	.long	Yoko_ResNames_373 + 38
+	.long	Yoko_ResNames_373 + 36
+	.long	Yoko_ResNames_373 + 34
+	.long	Yoko_ResNames_373 + 32
+	.long	Yoko_ResNames_373 + 30
+	.long	Yoko_ResNames_373 + 28
+	.long	Yoko_ResNames_373 + 26
+	.long	Yoko_ResNames_373 + 24
+	.long	Yoko_ResNames_373 + 22
+	.long	Yoko_ResNames_373 + 8
+	.long	Yoko_ResNames_373 + 6
+	.long	Yoko_ResNames_373 + 4
+	.long	Yoko_ResNames_373 + 2
 	.long	Yoko_ResNames_373
 Yoko_ResNames_373:	.incbin "includes/generated/naka_widget_tables_1.bin", 0x7B8, 0x36
 ; -----------------------------------------------------------------------------
@@ -477,22 +488,36 @@ Yoko_ResNameTable_378:
 ;
 ; Typed in naka_widget_tables_1.c as char Yoko_ResNames_378[70].
 ; -----------------------------------------------------------------------------
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x1c, 0x4a, 0xe2, 0x00, 0x1a, 0x4a, 0xe2, 0x00
-	.byte	0x18, 0x4a, 0xe2, 0x00, 0x16, 0x4a, 0xe2, 0x00
-	.byte	0x14, 0x4a, 0xe2, 0x00, 0x12, 0x4a, 0xe2, 0x00
-	.byte	0x10, 0x4a, 0xe2, 0x00, 0x0e, 0x4a, 0xe2, 0x00
-	.byte	0x0c, 0x4a, 0xe2, 0x00, 0x0a, 0x4a, 0xe2, 0x00
-	.byte	0x08, 0x4a, 0xe2, 0x00, 0x06, 0x4a, 0xe2, 0x00
-	.byte	0x04, 0x4a, 0xe2, 0x00, 0x02, 0x4a, 0xe2, 0x00
-	.byte	0x00, 0x4a, 0xe2, 0x00, 0xfe, 0x49, 0xe2, 0x00
-	.byte	0xfc, 0x49, 0xe2, 0x00, 0xfa, 0x49, 0xe2, 0x00
-	.byte	0xf8, 0x49, 0xe2, 0x00, 0xf6, 0x49, 0xe2, 0x00
-	.byte	0xf4, 0x49, 0xe2, 0x00, 0xf2, 0x49, 0xe2, 0x00
-	.byte	0xf0, 0x49, 0xe2, 0x00, 0xee, 0x49, 0xe2, 0x00
-	.byte	0xec, 0x49, 0xe2, 0x00, 0xea, 0x49, 0xe2, 0x00
-	.byte	0xe8, 0x49, 0xe2, 0x00, 0xe6, 0x49, 0xe2, 0x00
-	.byte	0xe4, 0x49, 0xe2, 0x00, 0xe2, 0x49, 0xe2, 0x00
+	.long	Yoko_ResNames_378 + 60
+	.long	Yoko_ResNames_378 + 58
+	.long	Yoko_ResNames_378 + 56
+	.long	Yoko_ResNames_378 + 54
+	.long	Yoko_ResNames_378 + 52
+	.long	Yoko_ResNames_378 + 50
+	.long	Yoko_ResNames_378 + 48
+	.long	Yoko_ResNames_378 + 46
+	.long	Yoko_ResNames_378 + 44
+	.long	Yoko_ResNames_378 + 42
+	.long	Yoko_ResNames_378 + 40
+	.long	Yoko_ResNames_378 + 38
+	.long	Yoko_ResNames_378 + 36
+	.long	Yoko_ResNames_378 + 34
+	.long	Yoko_ResNames_378 + 32
+	.long	Yoko_ResNames_378 + 30
+	.long	Yoko_ResNames_378 + 28
+	.long	Yoko_ResNames_378 + 26
+	.long	Yoko_ResNames_378 + 24
+	.long	Yoko_ResNames_378 + 22
+	.long	Yoko_ResNames_378 + 20
+	.long	Yoko_ResNames_378 + 18
+	.long	Yoko_ResNames_378 + 16
+	.long	Yoko_ResNames_378 + 14
+	.long	Yoko_ResNames_378 + 12
+	.long	Yoko_ResNames_378 + 10
+	.long	Yoko_ResNames_378 + 8
+	.long	Yoko_ResNames_378 + 6
+	.long	Yoko_ResNames_378 + 4
+	.long	Yoko_ResNames_378 + 2
 	.long	Yoko_ResNames_378
 Yoko_ResNames_378:	.incbin "includes/generated/naka_widget_tables_1.bin", 0x9A2, 0x46
 ; -----------------------------------------------------------------------------
@@ -1380,15 +1405,21 @@ MuteChSel_Dispatch_PtrTable:
 ; Typed in naka_widget_tables_1.c as char
 ; MuteChSel_Dispatch_Strings[96].
 ; -----------------------------------------------------------------------------
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x92, 0x65, 0xe2, 0x00, 0x8c, 0x65, 0xe2, 0x00
-	.byte	0x86, 0x65, 0xe2, 0x00, 0x80, 0x65, 0xe2, 0x00
-	.byte	0x7a, 0x65, 0xe2, 0x00, 0x74, 0x65, 0xe2, 0x00
-	.byte	0x6e, 0x65, 0xe2, 0x00, 0x68, 0x65, 0xe2, 0x00
-	.byte	0x62, 0x65, 0xe2, 0x00, 0x5c, 0x65, 0xe2, 0x00
-	.byte	0x56, 0x65, 0xe2, 0x00, 0x50, 0x65, 0xe2, 0x00
-	.byte	0x4a, 0x65, 0xe2, 0x00, 0x44, 0x65, 0xe2, 0x00
-	.byte	0x3e, 0x65, 0xe2, 0x00
+	.long	MuteChSel_Dispatch_Strings + 90
+	.long	MuteChSel_Dispatch_Strings + 84
+	.long	MuteChSel_Dispatch_Strings + 78
+	.long	MuteChSel_Dispatch_Strings + 72
+	.long	MuteChSel_Dispatch_Strings + 66
+	.long	MuteChSel_Dispatch_Strings + 60
+	.long	MuteChSel_Dispatch_Strings + 54
+	.long	MuteChSel_Dispatch_Strings + 48
+	.long	MuteChSel_Dispatch_Strings + 42
+	.long	MuteChSel_Dispatch_Strings + 36
+	.long	MuteChSel_Dispatch_Strings + 30
+	.long	MuteChSel_Dispatch_Strings + 24
+	.long	MuteChSel_Dispatch_Strings + 18
+	.long	MuteChSel_Dispatch_Strings + 12
+	.long	MuteChSel_Dispatch_Strings + 6
 	.long	MuteChSel_Dispatch_Strings
 MuteChSel_Dispatch_Strings:	.incbin "includes/generated/naka_widget_tables_1.bin", 0x24FA, 0x60
 ; -----------------------------------------------------------------------------
@@ -1500,15 +1531,21 @@ MuteChSet_Dispatch_PtrTable:
 ; Typed in naka_widget_tables_1.c as char
 ; MuteChSet_Dispatch_Strings[128].
 ; -----------------------------------------------------------------------------
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x46, 0x67, 0xe2, 0x00, 0x3e, 0x67, 0xe2, 0x00
-	.byte	0x36, 0x67, 0xe2, 0x00, 0x2e, 0x67, 0xe2, 0x00
-	.byte	0x26, 0x67, 0xe2, 0x00, 0x1e, 0x67, 0xe2, 0x00
-	.byte	0x16, 0x67, 0xe2, 0x00, 0x0e, 0x67, 0xe2, 0x00
-	.byte	0x06, 0x67, 0xe2, 0x00, 0xfe, 0x66, 0xe2, 0x00
-	.byte	0xf6, 0x66, 0xe2, 0x00, 0xee, 0x66, 0xe2, 0x00
-	.byte	0xe6, 0x66, 0xe2, 0x00, 0xde, 0x66, 0xe2, 0x00
-	.byte	0xd6, 0x66, 0xe2, 0x00
+	.long	MuteChSet_Dispatch_Strings + 120
+	.long	MuteChSet_Dispatch_Strings + 112
+	.long	MuteChSet_Dispatch_Strings + 104
+	.long	MuteChSet_Dispatch_Strings + 96
+	.long	MuteChSet_Dispatch_Strings + 88
+	.long	MuteChSet_Dispatch_Strings + 80
+	.long	MuteChSet_Dispatch_Strings + 72
+	.long	MuteChSet_Dispatch_Strings + 64
+	.long	MuteChSet_Dispatch_Strings + 56
+	.long	MuteChSet_Dispatch_Strings + 48
+	.long	MuteChSet_Dispatch_Strings + 40
+	.long	MuteChSet_Dispatch_Strings + 32
+	.long	MuteChSet_Dispatch_Strings + 24
+	.long	MuteChSet_Dispatch_Strings + 16
+	.long	MuteChSet_Dispatch_Strings + 8
 	.long	MuteChSet_Dispatch_Strings
 MuteChSet_Dispatch_Strings:	.incbin "includes/generated/naka_widget_tables_1.bin", 0x2690, 0x80
 ; -----------------------------------------------------------------------------
