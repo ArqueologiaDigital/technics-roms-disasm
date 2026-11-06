@@ -115,9 +115,9 @@ while [ $# -gt 0 ]; do
       python3 -I "$HERE/syms.py" "$LOADER" "$B" "$B/syms.lua"
       BIN="$B/KN7APP.BIN"; ESYMS="$B/syms.lua"
     fi
-    python3 -I "$HERE/mkfallback.py" "$OUT/$E-tree" "$BIN" "$LOADER/releases" > /dev/null
+    python3 -I "$HERE/mkfallback.py" "$OUT/fallback-$E-tree" "$BIN" "$LOADER/releases" > /dev/null || { say "$E FAIL: mkfallback.py"; continue; }
     say "$E: menu $(sha1sum < "$BIN" | cut -c1-40)"
-    SYMS="$ESYMS" mame "$OUT/$E" "$OUT/$E-tree" end
+    SYMS="$ESYMS" mame "$OUT/$E" "$OUT/fallback-$E-tree" end
     rm -f -- "$OUT/$E/sd.img" "$OUT/$E/floppy.img"
     ;;
   buttons)

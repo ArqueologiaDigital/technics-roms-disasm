@@ -1,0 +1,27 @@
+run_menu_tests: emulator md5 8b9865bd; floppy b7a67de602694fd2; card image 3a6227294a56e751; bios v13
+run_menu_tests: menu KN7APP.BIN 7f0c53b99660560ee3e324d98ae4e619b832b3e0 (15210 bytes)
+run_menu_tests: end: menu 7f0c53b99660560ee3e324d98ae4e619b832b3e0
+  menu_test: OK press 1 not taken at t=53 s; again
+  menu_test: menu      PASS  "KN7000 PROGRAM MENU 1.0", menu state 4, 8 programs
+  menu_test: leave     PASS  menu state 7, last answer 4 (RQ_QUIET 4), calls 73 then none in 3 s: true; LCD start 25A7F (the firmware's 25A7F); mode/title E0006/F004A, then E0001/F0001@0.47; now E0001/F0001; message word 0000
+  menu_test: taps      PASS  IC23 writes from the converter's code 0 (the firmware's own: 952168), pools 0, loader area foreign 0, converter RAM foreign 0 (/home/fsanches/compartilhado/tmp/kn7menu-leave-agent/t3/end/taps.txt)
+  menu_test: 3 checks, 0 failed (t=75 s); presses the emulated panel lost and the harness repeated: 0
+run_menu_tests: end PASS  3 checks passed, 0 failed (/home/fsanches/compartilhado/tmp/kn7menu-leave-agent/t3/end/session.txt)
+run_menu_tests: emulator md5 8b9865bd; floppy b7a67de602694fd2; card image 3a6227294a56e751; bios v13
+run_menu_tests: menu KN7APP.BIN 7f0c53b99660560ee3e324d98ae4e619b832b3e0 (15210 bytes)
+run_menu_tests: end-END_WITH_FE: menu a7e12da730951f77d39e1337702c933bf9a26d58
+  menu_test: OK press 1 not taken at t=53 s; again
+  menu_test: menu      PASS  "KN7000 PROGRAM MENU 1.0", menu state 4, 8 programs
+  menu_test: leave     FAIL  menu state 7, last answer 254 (RQ_QUIET 4), calls 73 then none in 3 s: true; LCD start 25A7F (the firmware's 25A7F); mode/title E0006/F004A, then E0006/F004C@0.45 E0006/F0003@0.50 E0006/F004C@4.52; now E0006/F004C; message word 004A
+  menu_test: taps      PASS  IC23 writes from the converter's code 0 (the firmware's own: 952168), pools 0, loader area foreign 0, converter RAM foreign 0 (/home/fsanches/compartilhado/tmp/kn7menu-leave-agent/t3/end-END_WITH_FE/taps.txt)
+  menu_test: 3 checks, 1 failed (t=74 s); presses the emulated panel lost and the harness repeated: 0
+run_menu_tests: end FAIL  2 checks passed, 1 failed (/home/fsanches/compartilhado/tmp/kn7menu-leave-agent/t3/end-END_WITH_FE/session.txt)
+run_menu_tests: emulator md5 8b9865bd; floppy b7a67de602694fd2; card image 3a6227294a56e751; bios v13
+run_menu_tests: menu KN7APP.BIN 7f0c53b99660560ee3e324d98ae4e619b832b3e0 (15210 bytes)
+run_menu_tests: end-END_FE_AFTER_MODE: menu 5d19a3db41df359bd6cec66d0e52aabac58fcf13
+  menu_test: OK press 1 not taken at t=53 s; again
+  menu_test: menu      PASS  "KN7000 PROGRAM MENU 1.0", menu state 4, 8 programs
+  menu_test: leave     FAIL  menu state 7, last answer 254 (RQ_QUIET 4), calls 73 then none in 3 s: true; LCD start 25A7F (the firmware's 25A7F); mode/title E0006/F004A, then E0001/F0001@0.47 E0001/F004C@0.60 E0001/F0003@0.67 E0001/F004C@4.67; now E0001/F004C; message word 004A
+  menu_test: taps      PASS  IC23 writes from the converter's code 0 (the firmware's own: 952168), pools 0, loader area foreign 0, converter RAM foreign 0 (/home/fsanches/compartilhado/tmp/kn7menu-leave-agent/t3/end-END_FE_AFTER_MODE/taps.txt)
+  menu_test: 3 checks, 1 failed (t=74 s); presses the emulated panel lost and the harness repeated: 0
+run_menu_tests: end FAIL  2 checks passed, 1 failed (/home/fsanches/compartilhado/tmp/kn7menu-leave-agent/t3/end-END_FE_AFTER_MODE/session.txt)

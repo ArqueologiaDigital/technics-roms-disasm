@@ -40,7 +40,7 @@ buttons left and right of the display.
 | PAGE UP, PAGE DOWN          | the page before, the page after                                                 |
 | right button 1, **BACK**    | in a folder: the folder above it (the label shows only in a folder)             |
 | right button 5, **RUN**     | read the selected program's `KN7APP.BIN`, check it, start it (**OPEN**: folder) |
-| right button 4, **LEAVE**   | end the conversion (when let go): the firmware's message, then "Continue Next?" |
+| right button 4, **LEAVE**   | leave (when let go): the firmware's main screen, no message (Ending)            |
 | EXIT, held 1.5 s and let go | the same as LEAVE                                                               |
 
 Under each program's name the row shows its folder and what it is (`C:\AW\   Eric Chahi's 1991 cinematic
@@ -314,14 +314,90 @@ about 20 times a second through each. The menu uses all but LCDR 3, which it has
 are not read. On the unit, other firmware might act on a button where MAME's does not: the IC23 record
 before and after (SURVEY2, now on the menu) would show it.
 
-Two things the tests taught about ending: the menu answers 0xFE only when EXIT (held 1.5 s) or LEAVE is
-**let go**, so the press never reaches the firmware's message that follows; and after the message
-(about 3 s) the firmware puts up "Continue Next?" by itself, where EXIT cancels instead of confirming.
+Two things the tests taught about ending: the menu ends only when EXIT (held 1.5 s) or LEAVE is
+**let go**, so the press never reaches the screen the firmware opens next; and, when a conversion ends with
+0xFE, after the message (about 4 s) the firmware puts up "Continue Next?" by itself, where EXIT cancels instead
+of confirming.
+
+## Ending
+
+LEAVE and EXIT (held 1.5 s), each when let go, end the menu; so does a failure screen, once EXIT has been held
+(or after 15 s). What the user sees on the instrument:
+
+1. The menu's screen goes, and the firmware's own frame is on the LCD again (`LcdGive`).
+2. The firmware's main screen comes up, as after NO on "Continue Next?". There is no message and no "Continue
+   Next?".
+3. To have the menu again: DISK MENU, STYLE CONVERT, `KN7LOAD.CNV`, OK, as at first. The firmware loads the loader
+   from the floppy afresh, and the loader loads the menu.
+
+A program started from the menu still ends its own way. DSPTONE (`../dsptone`, `te_answer`) and the ROM dumper's
+passes 5-9 (released binaries) end with 0xFE, so they still show "ERROR!" (next paragraphs) before "Continue Next?",
+where YES brings the menu back; Another World goes back to the menu by itself.
+
+**The red ERROR (until 2026-11-06).** The menu used to end with request 0xFE, and the firmware answered every 0xFE with
+a red "ERROR!", for about 4 s, before "Continue Next?" (`end`, below). Program 893 (`src/b893/program/region1_03.s`, `region1_04.s`,
+`data/data_00.s`; 941 has the same code at other addresses):
+
+- The request loop (`0x4847977E`) serves 0xFE with `movbu 0xff, (0x5004ED99)` and ChangeTitle(0x4C, `_TT_STYLCNVCONT`,
+  "Continue Next?").
+- On its activation, `StylCnvContTtlFunc` (`0x4847944A`) calls InterruptTitle(3, 0x4A) while that byte is not 0,
+  then clears it.
+- InterruptTitle(3, n) posts `EV_INTERRUPT_TITLE` to title 3, `TT_MESSAGE`. Its `TtMessage` (`0x48489C68`) keeps n
+  at `0x5006B59C`, and `IvMessageProc` takes record n of `func_48489C68_Table` (113 records of 16 bytes). Record 0x4A
+  is of kind 4, which `func_48489CCA_Table` maps to the window `Other` (`0x0050000E`, a single text). Its text,
+  `ptrs_485D7E74`, is "ERROR!" in every language ("ERREUR!" in French).
+
+So the message names no error: the firmware shows it for any 0xFE, from any converter. (Record 0x0F, "Memory full",
+is the one for a failed style install, `0x5004ED98` = 1.)
+
+**How the menu ends now.** It asks for the main screen itself and then gives the firmware a request it serves by
+returning, without opening a title:
+
+- `ChangeMode(1, 0)` (`0x4842B301`) posts the change to mode 1, `MD_NORMAL`, the main screen. It is what the firmware
+  itself calls for NO on "Continue Next?" and when its own `TECHNICS.CNV` finishes (request 0, after installing the
+  converted style). It only posts an event. When the event is served, title 0x4A, where the menu ran, closes with the
+  firmware's own clean-up for leaving STYLE CONVERT (`MidiRealtimeModeSet(0)`, as for NO).
+- The last answer is request 4 (`RQ_QUIET`), with STYLE CONVERT's state byte (`0x5004E3F8`) set to 1 first. Request 4
+  dispatches on that byte (`0x48479BA1`). At 1 (and at 2) it returns at once unless the title is "Continue Next?":
+  it posts nothing, and it does not set `0x5004ED99`. Requests 2 and 5 write this byte in the course of a conversion
+  (request 5 leaves it at 5). The firmware zeroes it each time STYLE CONVERT is entered from DISK MENU.
+
+The menu finds both by their code (`FindEnd`, as it finds the panel): the head of the request loop
+(`sig_reqloop`, one hit in the program flash), with the request-4 dispatch exactly `EG_RQ4` bytes after it
+(`sig_rq4`). Both ChangeTitle calls must go to the same place, and ChangeMode somewhere else, starting with its
+prologue (`sig_prolog`). The state byte must be in work RAM. If any of this fails, the menu ends with 0xFE as
+before. `test/endsig.py` does the same on each program build:
+
+| build        | head of the loop | ChangeMode   | state byte   | the byte 0xFE sets |
+|--------------|------------------|--------------|--------------|--------------------|
+| 893 (v1.3)   | `0x4847977E`     | `0x4842B301` | `0x5004E3F8` | `0x5004ED99`       |
+| 935 (v1.5)   | `0x484798FF`     | `0x4842B301` | `0x5004E3FC` | `0x5004ED9D`       |
+| 941 (v1.6)   | `0x48479941`     | `0x4842B343` | `0x5004E3FC` | `0x5004ED9D`       |
+| 942 (SP7001) | `0x48479930`     | `0x4842B345` | `0x5004E40C` | `0x5004EDAD`       |
+
+The 929 image here is only its upper half, and the signature is not in it.
+
+**What else was considered.**
+
+- *0xFE, with ChangeMode(1, 0) posted first* (test build `END_FE_AFTER_MODE`). The firmware still sets `0x5004ED99`
+  and posts ChangeTitle(0x4C) after the menu's event: in MAME the main screen came up 0.47 s after LEAVE, then
+  "Continue Next?" opened over it at 0.60 s, the message at 0.67 s (message 0x4A), "Continue Next?" again at 4.67 s.
+- *Request 0, conversion finished.* For a converter that is not `TECHNICS.CNV` the firmware opens STORAGE DATA
+  (title 0x49), the screen that stores a converted style. For `TECHNICS.CNV` (a halfword at `0x5004ED6C`, set from the
+  converter's name) it first runs `func_4847A68F`, which installs the converted style (`func_48437DAF`, a copy to
+  `0x840327E8`), and only then ChangeMode. Both write the instrument's memory.
+- *Request 5, or any other, after ChangeMode.* The firmware's own ChangeTitle (0x4A, 0x46, ...) follows the menu's
+  event, and title 0x4A calls the converter again on its activation.
+- *Going straight to "Continue Next?"*, without the message: ChangeTitle(0x4C) from the menu, then the same quiet
+  request 4. YES would then call the menu again rather than load it afresh, because the loader reloads only after
+  0xFE (`loader.s`, `LV_STATE` 3), and the released loader is not changed. LEAVE means leave, so the menu goes to
+  the main screen.
 
 ## Memory
 
 Everything the menu writes is in the RAM a converter may use, `0x502BA000`-`0x50379FFF`, off the
-firmware's mailbox page and clear of the loader's resident area below `APP_BASE`: the range Another
+firmware's mailbox page and clear of the loader's resident area below `APP_BASE`, but one byte as it ends: STYLE
+CONVERT's state byte, set to 1 (Ending). It writes it with the address it found in the firmware's code: the range Another
 World measured untouched by the firmware on programs 893 and 941 (technics-anotherworld
 `kn7000/README-CNV.md`, "Memory"). `guard.py` checks the map at every build (`menu.inc`):
 
@@ -380,6 +456,8 @@ The menu keeps every guarantee the loader's other applications keep:
   read in the loader's table, no panel bitmaps (found as Another World finds them: two code sites that
   must agree, one hit each), a card that is not FAT16. EXIT held, or 15 s without the panel, ends it.
 - **The buttons** it reads change nothing in the firmware while the converter runs (next section).
+- **Its ending** calls one firmware routine besides the sector read, ChangeMode, which only posts an event, and
+  writes one byte of STYLE CONVERT's state (Ending); both are found by code, else it ends with 0xFE.
 
 ## What is new on the unit
 
@@ -398,6 +476,7 @@ ROM dumper, 2026-10-19 and 20, and Another World from the root):
 | answering request 1 after request 5, in one session               | **no**: the trampoline's last answer; the program's own requests follow                                                                                                                        |
 | copying a program over the code that ran, and the cache handling  | **no** (Caches)                                                                                                                                                                                |
 | a program reading its files from a folder (`AW\AWR11.AW`)         | **no**: the firmware's FAT library walks folder paths for its own SD screens; through `SV_OPEN` from a converter, only in MAME                                                                 |
+| ending with ChangeMode(1, 0) and request 4 (Ending)               | **no**: MAME only; the firmware's own path for NO and for `TECHNICS.CNV`, called from a converter for the first time                                                                           |
 | "Continue Next?" YES reloading `C:\KN7APP.BIN`                    | the loader's own path, unchanged (in MAME here after the menu and after pass 9); on the unit only if YES was ever answered there                                                               |
 
 ## How it was tested
@@ -411,12 +490,37 @@ each press in the firmware's own switch bitmap; it reads the menu's state from R
 `test/syms.py`, which reads `menu.inc`, `kn7cnv.inc` and the maps) and the LCD from its frame buffer.
 
     T=~/compartilhado/tmp/kn7menu-tests        # EMU=a copy of kn7000-emulator (kn7000, roms/, plugins/, the card image)
-    test/run_menu_tests.sh $T guard card fallback buttons cputime
+    test/run_menu_tests.sh $T guard card fallback buttons cputime end
 
 Its write taps run through every case: any write into CS1 (IC23, both views) or the user-memory pools from
 the converter's code (the loader, the menu, a program, the trampoline), any write into the loader's resident
 area but the loader's own, and any write into the converter's RAM while the menu runs that is neither the
 menu's nor a sector read the menu asked for, into its destination (`taps.txt` in each run).
+
+### Results (2026-11-06): the ending
+
+The menu `KN7APP.BIN` `7f0c53b99660560ee3e324d98ae4e619b832b3e0` (15,210 bytes), on the same emulator as the tests
+below it (md5 `8b9865bd`), `-bios v13`. `test/results-2026-11-06/`:
+- `guard`, `card`, `fallback` (`guard-card-fallback-summary.txt`): guard clean, 12 of 12 planted references; `card`
+  10 of 10, `fallback` 7 of 7. `findend`: ChangeMode `0x4842B301`, state byte `0x5004E3F8` (5 while the menu runs).
+  EXIT held: the main screen (mode `E0001`, title `F0001`) 2.15 s after the press began, which is the 2 s hold and
+  the release; LEAVE: 0.47 s after the press. The mode and title words show no message (`F0003`) and no "Continue
+  Next?" (`F004C`). The menu's last answer is 4, the converter is not called again, and the LCD's start address is
+  the firmware's. After EXIT, DISK MENU, STYLE CONVERT and OK start the menu again. While EXIT is held, the title word reads `F0046`
+  for 0.05 s (the firmware's reaction to EXIT; the menu's next request 5 puts `F004A` back).
+- `end` (`end-summary.txt`) on the fallback card, three builds, LEAVE:
+
+| build                          | after LEAVE (mode/title words, seconds)                            | message word `0x5006B59C` | ends on                    |
+|--------------------------------|--------------------------------------------------------------------|---------------------------|----------------------------|
+| this menu                      | `E0001/F0001` 0.47                                                 | 0                         | the main screen            |
+| `END_WITH_FE` (the old ending) | `F004C` 0.45, `F0003` 0.50, `F004C` 4.52 (mode `E0006` throughout) | `0x4A`                    | "Continue Next?"           |
+| `END_FE_AFTER_MODE`            | `E0001/F0001` 0.47, then `F004C` 0.60, `F0003` 0.67, `F004C` 4.67  | `0x4A`                    | "Continue Next?" over main |
+
+The firmware's frame 2 s after LEAVE (`end-*-leave-2s.png`, display memory from 0, as the firmware draws it): the
+main screen for this menu; for both 0xFE builds, the message window, an orange box, over the boot logo still in
+that memory. That is the "stale" picture of the earlier snapshots: it is what the firmware draws. MAME draws the box
+without its text; the unit shows "ERROR!" in it. (The main screen too has the logo's green letters behind it in MAME's
+display memory.)
 
 ### Results (2026-10-27): the table of contents and the menu folders
 
@@ -503,6 +607,7 @@ The same branch's game from the root without the menu, `run_cnv_tests.sh` unchan
 | `test/syms.py`           | the menu's addresses and constants for the Lua scripts                                                 |
 | `test/mkfallback.py`     | the fallback test card: malformed and missing manifests and icons, damaged binaries                    |
 | `test/guard_selftest.s`  | twelve references `guard.py` must find, three it must allow                                            |
+| `test/endsig.py`         | what `FindEnd` finds on each program build (Ending)                                                    |
 
 Another World's side is on technics-anotherworld branch `launcher-folders`: `src/cnv_main.s` (`LaunchFolder`,
 `AppPath`), `src/platformcnv.inc` (`AW_PATHS`), `tools/cnv_layout.py`, and its tests through the menu,
