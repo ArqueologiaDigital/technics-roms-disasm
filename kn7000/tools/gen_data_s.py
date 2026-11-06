@@ -235,7 +235,7 @@ FEATURES = {k: True for k in ("ptr_starts", "array_end", "mem_ptrs", "loop_index
                               "top_tested", "fld_slots", "fx_streams", "pow10_table", "euc_text",
                               "sibling_trie", "builtin_pads", "widget_vars", "maps128", "sentinel_lists", "chord_voicings", "index_bounds", "fx_presets", "table_terminators", "msg_readers", "count_notes", "doubles_text", "table_ptrs",
                               # lane mn10300-data2 (wave 10)
-                              "support_values", "sibling_support", "boot_sectors", "panel_700", "style_lists", "reclaim_strings", "curated_counts")}
+                              "support_values", "sibling_support", "boot_sectors", "panel_700", "style_lists", "reclaim_strings", "curated_counts", "nv_not_ptrs")}
 for _k in os.environ.get("GEN_DATA_S_OFF", "").split(","):
     if _k.strip():
         FEATURES[_k.strip()] = False
@@ -1097,6 +1097,44 @@ class Gen:
             self.add(pa, 8 * len(pairs), lab, "style genre pairs", render)
             npairs += 1
         print(f"gen_data_s: style genres: {npairs} style lists, {nlists} setup lists")
+        # the eras' and the letters' setup lists: StyleEra {name, setups, era} (12 bytes; func_4847D644 walks
+        # the eras, func_4847D639 reads the first one's +4) and StyleLetter {letter, setups} (8 bytes;
+        # func_4847C977 counts +4's list up to 0xFFFF, func_4847D083 `movhu (a2), d0` / `cmp 0xffff, d0` / `add
+        # 2, a2` walks it): u16 MusicStylistSetup numbers ended by 0xFFFF, of any length
+        nset = 0
+        for tname, stride, kind in (("StyleEraTable", 12, "era"), ("StyleAlphabetTable", 8, "letter"),
+                                    ("StyleEraTableKN2400", 12, "era"), ("StyleAlphabetTableKN2400", 8, "letter")):
+            t0 = m.sym_by_name.get(tname)
+            if t0 is None:
+                t0 = next((a for a, n in self.fixed.items() if n == tname), None)
+            if t0 is None or not self.in_data(t0):
+                continue
+            k = 0
+            while k < 64 and isptr(m.u32(t0 + stride * k)) and isptr(m.u32(t0 + stride * k + 4)):
+                sa = m.u32(t0 + stride * k + 4)
+                nm = (m.cstr(m.u32(t0 + stride * k)) or "").strip()
+                k += 1
+                if sa % 2 or not self.free(sa, 2):
+                    continue
+                vals = []
+                while len(vals) < 2048 and self.free(sa + 2 * len(vals), 2):
+                    v = int.from_bytes(m.rom[self.off(sa) + 2 * len(vals):self.off(sa) + 2 * len(vals) + 2], "little")
+                    vals.append(v)
+                    if v == 0xFFFF:
+                        break
+                if not vals or vals[-1] != 0xFFFF:
+                    continue
+                cur = self.fixed.get(sa)
+                lab = cur if cur and not self.GUESSED.match(cur) and not cur.startswith("func_") else self.rename_at(
+                    sa, f"StyleSetups_{kind.capitalize()}_{sanitize(nm, 30) or k - 1}")
+                self.add(sa, 2 * len(vals), lab, "style list",
+                         lambda g, it, vals=vals, nm=nm, kind=kind, tname=tname: [
+                             f"{it.label}:\t# the setups (u16 MusicStylistSetup numbers) under {kind} \"{nm}\" of {tname},"
+                             f" then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)"]
+                         + ["\t.word\t" + ", ".join(f"{v}" if v != 0xFFFF else "0xffff" for v in vals[i:i + 16])
+                            for i in range(0, len(vals), 16)])
+                nset += 1
+        print(f"gen_data_s: style eras / letters: {nset} setup lists")
 
     def boot_sectors(self):
         """(FEATURES["boot_sectors"], lane mn10300-data2, N-044cdbc6) The first 32 bytes of a FAT
@@ -5013,6 +5051,12 @@ class Gen:
                 p = m.u32(self.addr_of(o + 8 * n))
                 s = m.cstr(p) if p and self.in_data(p) else None
                 if not s or not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]{1,40}", s):
+                    break
+                v = m.u32(self.addr_of(o + 8 * n) + 4)
+                if FEATURES.get("nv_not_ptrs", True) and v and self.in_data(v) and m.cstr(v) \
+                        and re.fullmatch(r"[A-Za-z_][A-Za-z0-9_ ]{1,40}", m.cstr(v)):
+                    # (lane mn10300-data2) the "value" is a name too: a pointer table of names read two words
+                    # at a time (941 0x5000190C: "PT10", "PT11" ... after func_4848F914_Table's "PT 1".."PT 9")
                     break
                 n += 1
             if n >= 4:
