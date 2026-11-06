@@ -89,7 +89,58 @@ NAMES = {
     # PanelSelfTestScanEntry 0x484A0D07: `movbu (d1, a2), d2` / `cmp 0xf0, d0` ... `cmp 0xf6, d0` picks the
     # test case by +0; the case then uses +1 (`movbu (1, a2), d3`) -- kn7000_manual.sym: switch# -> [LED reg, value]
     "PanelSwitchClassTable": ("PanelTestSwitch", {0: "test_class", 1: "test_arg"}),
+    # (lane mn10300-data3, N-2468beef) the C library's locale categories (ANSI C struct lconv): localeconv
+    # 0x4C00206A copies the current numeric category's +4 / +8 / +0xC to the static lconv's decimal_point /
+    # thousands_sep / grouping (0x50008270 / 74 / 78) and the monetary category's +4 .. +0x1C (pointers) and
+    # +0x20 .. +0x27 (bytes) to its int_curr_symbol .. negative_sign (0x5000827C .. 94) and int_frac_digits ..
+    # n_sign_posn (0x50008298 .. 9F), the C89 order; +0 the category's locale name, which localeconv skips
+    "localeconv_Records": ("LconvMonetary", {
+        0: "locale", 4: "int_curr_symbol", 8: "currency_symbol", 12: "mon_decimal_point", 16: "mon_thousands_sep",
+        20: "mon_grouping", 24: "positive_sign", 28: "negative_sign", 32: "int_frac_digits", 33: "frac_digits",
+        34: "p_cs_precedes", 35: "p_sep_by_space", 36: "n_cs_precedes", 37: "n_sep_by_space", 38: "p_sign_posn",
+        39: "n_sign_posn"}),
+    "localeconv_Records_2": ("LconvNumeric", {0: "locale", 4: "decimal_point", 8: "thousands_sep", 12: "grouping"}),
+    # DrawStringCentered 0x48425896's a1: the point the text is centred on, copied to the text position and
+    # moved left by half the text width (`movhu (a0)` / `movhu (2, a0)`, LibDiv32, `sub d0, d2`)
+    "DrawStringCentered_ArgA1": ("TextCentre", {0: "x", 2: "y"}),
+    # DrawBitmapSP2 0x484248DE / Draw2BpFile 0x4842829F: a0 = the point the bitmap is drawn at, read as x / y by
+    # the _Impl routines they hand it on to (DrawIcons, DrawIcons_Impl `movhu (a0)` / `movhu (2, a0)`)
+    "DrawBitmapSP2_ArgA0": ("BitmapOrigin", {0: "x", 2: "y"}),
+    "Draw2BpFile_ArgA0": ("BmpFileOrigin", {0: "x", 2: "y"}),
+    # the voice directory's hash chains: VoiceDir*Find take the bucket from VoiceDir*Find_Table[hash], compare
+    # the key at +4 (`mov (4, a2), d1` / `movhu (4, a2), d1`, then the KeyEqual routine) and follow +0 (`mov
+    # (a2), a2`) to the next node; VoiceDirPartRefFind answers the node + 8 (`mov 8, a0` / `add a2, a0`)
+    "VoiceDirPartRefFind_Table_p0": ("VoiceDirPartRefNode", {0: "next", 4: "key", 8: "value"}),
+    "VoiceDirRemapFind_Table_p0": ("VoiceDirRemapNode", {0: "next", 4: "key"}),
+    "VoiceDirRefFind_Table_p0": ("VoiceDirRefNode", {0: "next", 4: "key"}),
+    "VoiceDirIndexFind_Table_p0": ("VoiceDirIndexNode", {0: "next", 4: "key"}),
+    "VoiceDirClassFind_Table_p0": ("VoiceDirClassNode", {0: "next", 4: "key"}),
+    # GetGenreName 0x48435A9F memcpys 16 bytes of the genre's record (then a NUL at +0x10); GetGenreStyleCount
+    # 0x48435AD9 answers +0x11; func_48435AFF bounds the style index by +0x11 and reads the style's word from
+    # +0x14's list (`mov (0x14, a0), a0` / `asl2` / `mov (d0, a0), d0`)
+    "GenreStyleTable": ("GenreStyleEntry", {0: "name", 17: "style_count", 20: "styles"}),
+    # GetEditSwPointInit 0x48417B30's second bank (entry id bit 7 set: `lsr 7` / `and 1`), the same {x, y} as
+    # GetEditSwPointInit_Table's: its label in the builds since the table split
+    "GetEditSwPointInit_Records": ("EditSwPoint", {0: "x", 2: "y"}),
+    "GetEditSwPointInit_Table_2": ("EditSwPoint", {0: "x", 2: "y"}),
 }
+# (lane mn10300-data3, N-2468beef) kinds whose array labels differ by build or model (the reader routines are
+# address-named): (label pattern, (kind, fields)), looked up after the exact keys.
+import re as _re
+NAMES_RE = [
+    # the one-touch / panel-memory field maps: {offset in the live panel parameters, offset in the record,
+    # mask}.  941 func_4C02A0C4 (KN6000 func_4C04B9F8) stores live[+0] & +2 into record[+1] (`movbu (a1)` /
+    # `movbu (1, a1)` / `movbu (2, a1)` / `and d0, d1` / `movbu d1, (d2, a0)`, `add 3, a1`); the merger
+    # (941 func_4C02AD3C, KN2400 func_50157736) the other way, live[+0] = live[+0] & ~mask | record[+1] & mask
+    (_re.compile(r"func_4C02A0C4_(Records|Table)(_\d+)?|func_4C02A11E_(Records|Table)(_\d+)?|func_4C02A0B1_(Records|Table)(_\d+)?"
+                 r"|func_4C02AD(3C|96|29)_Table(_\d+)?|func_4C04B9F8_entry_L[0-9a-f]+_Table(_\d+)?"
+                 r"|func_4C04BB68_entry_L[0-9a-f]+_Table(_\d+)?|func_4C04C58C_entry_L[0-9a-f]+_Table(_\d+)?"
+                 r"|func_4C04C6FC_entry_L[0-9a-f]+_Table(_\d+)?|func_50157736_Table(_\d+)?"),
+     (3, ("PanelMemFieldMap", {0: "param_off", 1: "rec_off", 2: "mask"}))),
+    # the EQ edit boxes' value labels: EQQEditCheck 0x4856B28E / EQGainEditCheck / EQFcEditCheck strcpy the
+    # entry the value picks into the box's text (`call strcpy_entry`)
+    (_re.compile(r"EQ\w*EditCheck(_L[0-9a-f]+)?_Records(_\d+)?"), (None, ("EqEditLabel", {0: "label"}))),
+]
 
 
 # The sibling firmwares (gen_data_s.py profiles kn6000, kn6500, kn2400): the same kinds of record,
@@ -193,6 +244,8 @@ def lookup3(label, stride):
     """(kind name, {offset: field name}, new label or None) for the array `label`."""
     mn = MODEL_NAMES.get(MODEL, {})
     e = mn.get((label, stride)) or mn.get(label) or NAMES.get((label, stride)) or NAMES.get(label)
+    if e is None:
+        e = next((k for rx, (st, k) in NAMES_RE if rx.fullmatch(label or "") and st in (None, stride)), None)
     if e is None:
         return None, {}, None
     return (e + (None,))[:3]
