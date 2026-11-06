@@ -1976,12 +1976,8 @@ typedef struct __attribute__((packed)) {
     char I0Bmp_str[8];
     char TrashBmp_str[10];
     char TrashBmp_str_2[10];
-    naka_dispatch_t w190;  /* 0x33 */
-    uint16_t field_566a;
-    uint8_t pad_0[2];  /* zero padding */
-    uint16_t field_566e;
-    uint16_t field_5670;
-    uint16_t field_5672;
+    /* element 0 of Viewable slot 0x0: Screen (class id 0x01600033) */
+    naka_cls_Screen_t NakaWidget_PanelSimulator;
     /* zero padding */
     /* zero padding */
     /* Bitmap record, element 1 of Viewable slot 0x0 (PanelSimulator): draws bitmap 1 at (6, 34) */
@@ -6677,25 +6673,19 @@ const naka_widget_names_charmap_t naka_widget_names_charmap_data
 
     .TrashBmp_str_2 = "trash.bmp",
 
-    .w190 = {
-        .header    = NAKA_HDR(0x33),
-        .field_04   = NAKA_NONE,
-        .field_06   = 0x0001,
-        .name_ptr   = 0xFFFFFFFF,
-        .inst_ptr   = NAKA_ADDR(SCREEN_BPP),
-        .link_ptr   = 0x013F0000,
-        .proc_addr  = 0x000200EF,
+    .NakaWidget_PanelSimulator = {
+        .class_ = 0x01600033,
+        .super = 0xFFFF,
+        .sub = 0x0001,
+        .next = 0xFFFF,
+        .prev = 0xFFFF,
+        .flag = 0x0008,
+        .rect = { 0, 0, 319, 239 },
+        .color = 0x0002,
+        .border = 0x0001,
+        .exit = 0x01A00000,
+        .window = 0x0003F0AC,
     },
-
-    .field_566a = 0x0001,
-
-    .pad_0 = { 0 },
-
-    .field_566e = 0x01A0,
-
-    .field_5670 = 0xF0AC,
-
-    .field_5672 = 0x0003,
 
     .NakaDbg_PanelSimBitmap = {
         .class_ = NAKA_CLASS(Bitmap),
