@@ -28,7 +28,13 @@ WHAT IT WRITES (in each run of rows; the labels, comments and blank lines inside
     * a string Map places (resource name, class name, propdata, propname, record text), or one any
       typed pointer points at -> `aligned_string "..."` / `.asciz "..."`;
     * any other 4 bytes whose value is the address of a label of the tree, of a Map object or of a
-      string -> `.long <target>` (the same rule as port_todo_typed.py, with new labels).
+      string -> `.long <target>` (the same rule as port_todo_typed.py, with new labels);
+    * a block of rows that is the rest of a pointer table -- a `.long <symbol>` line of the newer
+      tree stands right before or after it, and every word is a ROM address or 0 -> `.long` each;
+    * the entry count word RegObjTable reads, a zero Class-table slot past the count, and the NULL
+      word after a registered table -> `.short` / `.space` / `.long 0`, said so;
+    * a work-RAM image byte run -> one `.long` / `.short` per cell the tree's own records point at
+      (`r` view ids and AcRamBox / AcRamEditBox values 32-bit, the rest 16-bit).
     A pointer's target is its label; where it has none, a new label is placed (named from Map:
     NakaWidget_<screen>_<k>_<Class>, ResName_<screen>_<k>_<Class>, ClassName_<Class>,
     ClassPropdata_<Class>, ClassProps_<Class>, NakaClass_<Class>_PropName_<field>, ...); a target
@@ -406,6 +412,7 @@ class Tree:
         """every block's runs of rows: [(start, bytes, rel, [line numbers])]"""
         self.blocks = []
         self.runs = []
+        self.neighbours = {}
         for path in S.tree_files(self.tree):
             rel = os.path.relpath(path, os.path.join(ROOT, self.tree, "maincpu"))
             L = S.rd(path).split("\n")
@@ -424,7 +431,15 @@ class Tree:
                     else:
                         items.append(("line", None, L[j], j))
                     j += 1
+                def near(k, step):
+                    while 0 <= k < len(L):
+                        c = L[k].split(";")[0].strip()
+                        if c and not LABEL_LINE.match(L[k]):
+                            return c
+                        k += step
+                    return ""
                 self.blocks.append((path, rel, i, j, items))
+                self.neighbours[(rel, i)] = (near(i - 1, -1), near(j, 1))
                 for kind, a, bs, ln in items:
                     if kind == "row" and a is not None:
                         if self.runs and self.runs[-1][0] + len(self.runs[-1][1]) == a:
@@ -496,7 +511,16 @@ class Tree:
         return [(0, 4, "proc", ptr), (4, 4, "parent", parent), (8, 2, "allsize", str), (10, 2, "selfsize", str),
                 (12, 4, "name", ptr), (16, 4, "propdata", ptr), (20, 4, "propname", ptr)]
 
-    def type_run(self, a, bs, cuts):
+    def pointer_table(self, a, bs, nb):
+        """the run is the rest of a pointer table: a `.long <symbol>` line of the newer tree stands
+        right before or after it, its length is a multiple of 4 and every word is a ROM address or 0"""
+        sym = re.compile(r"^\.long\s+[A-Za-z_][\w.$]*(\s*[-+]\s*\w+)?$")
+        if not any(sym.match(x) for x in nb) or len(bs) % 4:
+            return False
+        ws = [int.from_bytes(bs[i:i + 4], "little") for i in range(0, len(bs), 4)]
+        return all(w == 0 or BASE <= w < END for w in ws) and any(w for w in ws)
+
+    def type_run(self, a, bs, cuts, table=False):
         """-> [(address, length, line or None)] covering a..a+len(bs); None = stays a row.
         cuts: sorted addresses no item may straddle (a label must stand there)."""
         end = a + len(bs)
@@ -575,6 +599,12 @@ class Tree:
                     else:
                         out.append((p, n, "\t.asciz\t%s" % text_of(txt)))
                     p += n
+                    continue
+            if table and u32 is not None and fits(p, 4) and (p - a) % 4 == 0:
+                sp = "0" if u32 == 0 else self.spell_target(u32, True, self.pointer_hint(p, u32))
+                if sp:
+                    out.append((p, 4, "\t.long\t%s" % sp))
+                    p += 4
                     continue
             if u32 is not None and fits(p, 4) and self.plausible(u32):
                 sp = self.spell_target(u32, not (self.run_at(u32) or u32 in self.line_start),
@@ -655,9 +685,12 @@ def convert(tree, listing=False):
         cl = sorted(cuts)
         for path, rel, i, j, seq in per_block:
             res = []
+            nb = T.neighbours.get((rel, i), ("", ""))
+            nbytes = [q for q in seq if q[0] == "bytes"]
             for kind, a, x, com in seq:
                 if kind == "bytes":
-                    its = T.type_run(a, x, cl)
+                    tab = len(nbytes) == 1 and T.pointer_table(a, x, nb)
+                    its = T.type_run(a, x, cl, tab)
                     starts |= {p for p, n, ln in its}
                     res.append((kind, a, x, com, its))
                 else:
