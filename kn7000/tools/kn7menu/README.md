@@ -404,7 +404,7 @@ World measured untouched by the firmware on programs 893 and 941 (technics-anoth
 | range                     | what                                                                    |
 |---------------------------|-------------------------------------------------------------------------|
 | `0x502B8000`-`0x502B9FFF` | KN7LOAD.CNV, its variables and service table: read only (five services) |
-| `0x502BA000`-`0x502BD971` | the menu's image (14,706 bytes; `IMAGE_MAX` `0x502C0000`)               |
+| `0x502BA000`-`0x502BDB69` | the menu's image (15,210 bytes; `IMAGE_MAX` `0x502C0000`)               |
 | `0x502C0000`-`0x502C03FF` | `M_VARS`: variables                                                     |
 | `0x502C1000`-`0x502C37FF` | `PROG_TAB`: 64 program records of 160 bytes                             |
 | `0x502C3800`-`0x502C38FF` | `ORDER`: the sorted list                                                |
