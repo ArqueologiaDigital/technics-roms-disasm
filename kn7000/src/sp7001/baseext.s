@@ -6,13 +6,13 @@
 #
 # Linked for, and loaded at, CPU 0x5029B000: the table-flash XAPR plug-in's
 # loader reads the whole 0x1D000-byte file there and calls its first byte
-# (XapEntry). Code 0x000000..0x01321E (398 chunks as MN10300 assembly), data to
+# (XapEntry). Code 0x000000..0x01321E (399 chunks as MN10300 assembly), data to
 # 0x016B4C, then 0xFF. 11 routines are named as byte-identical copies
 # of the firmware's (its own copy of the same C runtime).
 
 .mnbase 0x5029B000   # CPU address of output offset 0 (for PC-relative ops)
 
-# 416 symbols (CPU addresses)
+# 420 symbols (CPU addresses)
 .equ XapEntry, 0x5029B000
 .equ func_5029B037_entry, 0x5029B03A
 .equ LibF64UnpackedToI32, 0x5029B04E
@@ -89,12 +89,12 @@
 .equ func_5029D3C7, 0x5029D3C7
 .equ func_5029D3E0, 0x5029D3E0
 .equ func_5029D3F7, 0x5029D3F7
-.equ func_5029D3FB, 0x5029D3FB
+.equ XapQsort, 0x5029D3FB
 .equ func_5029D3FD_entry, 0x5029D400
 .equ func_5029D4CB, 0x5029D4CB
 .equ func_5029D4E1, 0x5029D4E1
 .equ func_5029D513, 0x5029D513
-.equ func_5029D51B, 0x5029D51B
+.equ XapAcKssNamingWindowProc, 0x5029D51B
 .equ func_5029E159, 0x5029E159
 .equ func_5029E16B, 0x5029E16B
 .equ func_5029E17D, 0x5029E17D
@@ -107,9 +107,9 @@
 .equ func_5029E4FC, 0x5029E4FC
 .equ func_5029E652, 0x5029E652
 .equ func_5029E6CB, 0x5029E6CB
-.equ func_5029EABF, 0x5029EABF
-.equ func_5029ED47, 0x5029ED47
-.equ func_5029ED9F, 0x5029ED9F
+.equ XapAcKssNamingEditSwProc, 0x5029EABF
+.equ XapIvKssNamingProc, 0x5029ED47
+.equ XapAp_Ce_WinNamingHistory, 0x5029ED9F
 .equ func_5029EEFC, 0x5029EEFC
 .equ func_5029EEFE_entry, 0x5029EF01
 .equ func_5029EFFB, 0x5029EFFB
@@ -176,6 +176,7 @@
 .equ func_502A0B85, 0x502A0B85
 .equ func_502A1070, 0x502A1070
 .equ func_502A1072, 0x502A1072
+.equ XapNameCmp, 0x502A144D
 .equ func_502A1469, 0x502A1469
 .equ func_502A146B_entry, 0x502A146E
 .equ func_502A1504, 0x502A1504
@@ -187,7 +188,7 @@
 .equ func_502A193C, 0x502A193C
 .equ func_502A193E_entry, 0x502A1941
 .equ func_502A19F1, 0x502A19F1
-.equ func_502A19F3, 0x502A19F3
+.equ XapAcKssListProc, 0x502A19F3
 .equ func_502A22B9, 0x502A22B9
 .equ func_502A22E1, 0x502A22E1
 .equ func_502A2309, 0x502A2309
@@ -245,8 +246,8 @@
 .equ func_502A3872, 0x502A3872
 .equ func_502A3876, 0x502A3876
 .equ func_502A3911, 0x502A3911
-.equ func_502A393D, 0x502A393D
-.equ func_502A3F14, 0x502A3F14
+.equ XapAp_Ce_WinSelSong, 0x502A393D
+.equ XapAp_Lst_WinSelSong, 0x502A3F14
 .equ func_502A404D, 0x502A404D
 .equ func_502A4055, 0x502A4055
 .equ func_502A4057_entry, 0x502A405A
@@ -264,7 +265,7 @@
 .equ func_502A45D7, 0x502A45D7
 .equ func_502A45DD_entry, 0x502A45E0
 .equ func_502A4867_entry, 0x502A486A
-.equ func_502A4A60, 0x502A4A60
+.equ XapAp_Ce_WinSfxSelect, 0x502A4A60
 .equ func_502A4F06, 0x502A4F06
 .equ func_502A4F0B, 0x502A4F0B
 .equ func_502A4F0F, 0x502A4F0F
@@ -287,11 +288,11 @@
 .equ func_502A543B, 0x502A543B
 .equ func_502A543D_entry, 0x502A5440
 .equ func_502A54FD_entry, 0x502A5500
-.equ func_502A56AF, 0x502A56AF
-.equ func_502A5ABA, 0x502A5ABA
+.equ XapAp_Ce_SelDir, 0x502A56AF
+.equ XapAp_Lst_SelDir, 0x502A5ABA
 .equ func_502A5AFC_entry, 0x502A5AFF
 .equ func_502A5C34_entry, 0x502A5C37
-.equ func_502A5CE6, 0x502A5CE6
+.equ XapAp_Ce_WinLoadSave, 0x502A5CE6
 .equ func_502A6F5F, 0x502A6F5F
 .equ func_502A6F5F_entry, 0x502A6F62
 .equ func_502A6FC1, 0x502A6FC1
@@ -315,9 +316,9 @@
 .equ func_502A73F8_entry, 0x502A73FB
 .equ func_502A7491_entry, 0x502A7494
 .equ func_502A74B5_entry, 0x502A74B8
-.equ func_502A7524, 0x502A7524
+.equ XapAp_Ce_JukeBox, 0x502A7524
 .equ func_502A7814_entry, 0x502A7817
-.equ func_502A791F, 0x502A791F
+.equ XapKssXLyricsBoxProc, 0x502A791F
 .equ func_502A83E2_entry, 0x502A83E5
 .equ func_502A89B1_entry, 0x502A89B4
 .equ func_502A8A3E_entry, 0x502A8A41
@@ -334,35 +335,35 @@
 .equ func_502A95DA, 0x502A95DA
 .equ func_502A95E0, 0x502A95E0
 .equ func_502A97D4_entry, 0x502A97D7
-.equ func_502A9808, 0x502A9808
-.equ func_502AA46D, 0x502AA46D
+.equ XapAp_Ce_Fd2Sd, 0x502A9808
+.equ XapAp_Lst_Fd2Sd, 0x502AA46D
 .equ func_502AA4FC_entry, 0x502AA4FF
 .equ func_502AA63F_entry, 0x502AA642
-.equ func_502AA90E, 0x502AA90E
-.equ func_502AAE4D, 0x502AAE4D
-.equ func_502AB042, 0x502AB042
+.equ XapAp_Ce_WinAlphaSort, 0x502AA90E
+.equ XapAp_Lst_WinAlphaSort, 0x502AAE4D
+.equ XapListSourceInit, 0x502AB042
 .equ func_502AB044_entry, 0x502AB047
-.equ func_502AB07A, 0x502AB07A
-.equ func_502AB097, 0x502AB097
+.equ XapListSourceDestroy, 0x502AB07A
+.equ XapListSourceGet, 0x502AB097
 .equ func_502AB099_entry, 0x502AB09C
-.equ func_502AB0AB, 0x502AB0AB
-.equ func_502AB0AB_entry, 0x502AB0AE
-.equ func_502AB0B6, 0x502AB0B6
-.equ func_502AB0D9, 0x502AB0D9
-.equ func_502AB0F2, 0x502AB0F2
-.equ func_502AB0F8, 0x502AB0F8
-.equ func_502AB113, 0x502AB113
-.equ func_502AB137, 0x502AB137
-.equ func_502AB152, 0x502AB152
-.equ func_502AB160, 0x502AB160
-.equ func_502AB165, 0x502AB165
-.equ func_502AB16C, 0x502AB16C
-.equ func_502AB17A, 0x502AB17A
-.equ func_502AB17F, 0x502AB17F
+.equ XapListSourceCount, 0x502AB0AB
+.equ XapListSourceCount_entry, 0x502AB0AE
+.equ XapListSourceNewIter, 0x502AB0B6
+.equ XapListIterInit, 0x502AB0D9
+.equ XapListIterDestroy, 0x502AB0F2
+.equ XapListIterHasNext, 0x502AB0F8
+.equ XapListIterNext, 0x502AB113
+.equ XapListIterIndex, 0x502AB137
+.equ XapListIterGet, 0x502AB152
+.equ XapListIterSetPos, 0x502AB160
+.equ XapListIterSkip, 0x502AB165
+.equ XapListIterCount, 0x502AB16C
+.equ XapListIterSource, 0x502AB17A
+.equ XapAp_Ce_WinLbn, 0x502AB17F
 .equ func_502AB57C, 0x502AB57C
-.equ func_502ABD03, 0x502ABD03
-.equ func_502ABE9C, 0x502ABE9C
-.equ func_502AC0FC, 0x502AC0FC
+.equ XapAp_Ce_WinSettings1, 0x502ABD03
+.equ XapAp_Ce_WinSettings2, 0x502ABE9C
+.equ XapAp_Eb_WinSettings, 0x502AC0FC
 .equ func_502AC1B5, 0x502AC1B5
 .equ func_502AC1B7, 0x502AC1B7
 .equ func_502AC272, 0x502AC272
@@ -411,7 +412,7 @@
 .equ func_502AC94A, 0x502AC94A
 .equ func_502AC953, 0x502AC953
 .equ func_502AC95C, 0x502AC95C
-.equ func_502AC967, 0x502AC967
+.equ XapAp_Ce_Cls, 0x502AC967
 .equ func_502ACC8A, 0x502ACC8A
 .equ func_502ACD1D, 0x502ACD1D
 .equ func_502ACDDD, 0x502ACDDD
@@ -419,14 +420,17 @@
 .equ func_502ACECB, 0x502ACECB
 .equ func_502ACF4D, 0x502ACF4D
 .equ func_502ACFC1, 0x502ACFC1
-.equ func_502AD0A2, 0x502AD0A2
+.equ XapAp_Lst_Cls, 0x502AD0A2
 .equ func_502AD273, 0x502AD273
 .equ func_502AD29D_entry, 0x502AD2A0
-.equ func_502AD91F, 0x502AD91F
-.equ func_502ADBD2, 0x502ADBD2
+.equ XapAp_Ce_ClsDir, 0x502AD91F
+.equ XapAp_Lst_ClsDir, 0x502ADBD2
 .equ func_502ADC0F_entry, 0x502ADC12
-.equ func_502ADC50, 0x502ADC50
-.equ func_502ADD6A, 0x502ADD6A
+.equ XapAcKssScreenMenuProc, 0x502ADC50
+.equ XapAcKssEditBoxProc, 0x502ADD6A
+.equ XapListSourceVtbl, 0x502B1DA8
+.equ XapListIterVtbl, 0x502B1DD8
+.equ XapExportTable, 0x502B1E50
 .equ XapFrameworkObj, 0x502B4044
 .equ XapContext, 0x502B4048
 
@@ -5207,7 +5211,8 @@
 # func_5029D3F7  (CPU 0x5029D3F7)
     exth    d0
     jmp     LibI32ToF64
-# func_5029D3FB  (CPU 0x5029D3FB)
+# XapQsort  (CPU 0x5029D3FB)
+#   (a0 = base, d0 = count, d1 = element size, a1 = compare) [INFERENCE: quicksort: partitions with the compare routine and recurses on both parts]; its only caller outside itself sorts 0x34-byte records with XapNameCmp; also the export word at XapExportTable+0x238
     movm    [d2,d3,a2,a3], (sp)
 # func_5029D3FD  (CPU 0x5029D3FD)
     add     -0x24, sp
@@ -5364,7 +5369,8 @@
 # func_5029D513  (CPU 0x5029D513)
     mov     0x502b2098, a0
     rets
-# func_5029D51B  (CPU 0x5029D51B)
+# XapAcKssNamingWindowProc  (CPU 0x5029D51B)
+#   export slot +0x018: the base plug-in's AcKssNamingWindowProc forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
     movm    [d2,d3,a2,a3], (sp)
     add     -0x80, sp
     mov     d0, (0x98, sp)
@@ -7105,7 +7111,8 @@
     mov     (0x9c, sp), d1
     calls   (a1)
     ret     [d2,d3,a2,a3], 0x90
-# func_5029EABF  (CPU 0x5029EABF)
+# XapAcKssNamingEditSwProc  (CPU 0x5029EABF)
+#   export slot +0x020: the base plug-in's AcKssNamingEditSwProc forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
     movm    [d2,d3,a2,a3], (sp)
     add     -0x20, sp
     mov     d0, d2
@@ -7339,7 +7346,8 @@
     mov     a0, (0x10, sp)
     calls   (a1)
     ret     [d2,d3,a2,a3], 0x30
-# func_5029ED47  (CPU 0x5029ED47)
+# XapIvKssNamingProc  (CPU 0x5029ED47)
+#   export slot +0x01c: the base plug-in's IvKssNamingProc forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
     movm    [d2], (sp)
     add     -0x14, sp
     mov     d0, d2
@@ -7368,7 +7376,8 @@
     mov     a0, (0x10, sp)
     calls   (a1)
     ret     [d2], 0x18
-# func_5029ED9F  (CPU 0x5029ED9F)
+# XapAp_Ce_WinNamingHistory  (CPU 0x5029ED9F)
+#   export slot +0x024: the base plug-in's Ap_Ce_WinNamingHistory forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
     movm    [d2,d3,a2], (sp)
     add     -0x18, sp
     mov     d0, d2
@@ -10944,6 +10953,8 @@
     mov     (0x20, sp), d0
     add     0x154, sp
     ret     [d2,d3,a2,a3], 0x10
+# XapNameCmp  (CPU 0x502A144D)
+#   XapQsort's compare routine (its only one): strcmp (PAPI_Functions[213]) of the two records
     movm    [a2,a3], (sp)
     add     -0x10, sp
     mov     a1, a3
@@ -11471,7 +11482,8 @@
     ret     [a2,a3], 0x20
 # func_502A19F1  (CPU 0x502A19F1)
     rets
-# func_502A19F3  (CPU 0x502A19F3)
+# XapAcKssListProc  (CPU 0x502A19F3)
+#   export slot +0x004: the base plug-in's AcKssListProc forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
     movm    [d2,d3,a2,a3], (sp)
     add     -0x2b8, sp
     mov     d0, (0x2d0, sp)
@@ -14542,7 +14554,8 @@
     mov     d2, a0
     mov     (d1, a0), a0
     ret     [d2], 4
-# func_502A393D  (CPU 0x502A393D)
+# XapAp_Ce_WinSelSong  (CPU 0x502A393D)
+#   export slot +0x050: the base plug-in's Ap_Ce_WinSelSong forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
     movm    [d2,d3,a2,a3], (sp)
     add     -0x38, sp
     mov     (0x502b4048), a0
@@ -14604,7 +14617,7 @@
     mov     0x502b28b8, a3
     mov     (0xb0, a0), a1
     mov     a3, a0
-    call    func_502AB0D9, 0, 0
+    call    XapListIterInit, 0, 0
     mov     (0x502b4048), a1
     mov     (0x44, a1), a0
     mov     (a0), d0
@@ -14622,7 +14635,7 @@
     mov     (0xac, a1), a1
     mov     0x502b28c8, a2
     mov     a2, a0
-    call    func_502AB0D9, 0, 0
+    call    XapListIterInit, 0, 0
     mov     (0x502b4048), a1
     mov     (0x44, a1), a0
     mov     (a0), d0
@@ -15008,7 +15021,8 @@
     mov     a0, (0x10, sp)
     calls   (a1)
     ret     [d2,d3,a2,a3], 0x48
-# func_502A3F14  (CPU 0x502A3F14)
+# XapAp_Lst_WinSelSong  (CPU 0x502A3F14)
+#   export slot +0x04c: the base plug-in's Ap_Lst_WinSelSong forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
     movm    [d2,d3,a2,a3], (sp)
     add     -0x14, sp
     mov     (0x502b4048), a0
@@ -15962,7 +15976,8 @@
     mov     0x02f00039, d0
     calls   (a0)
     ret     [d2,d3,a2], 0x20
-# func_502A4A60  (CPU 0x502A4A60)
+# XapAp_Ce_WinSfxSelect  (CPU 0x502A4A60)
+#   export slot +0x054: the base plug-in's Ap_Ce_WinSfxSelect forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
     movm    [d2,d3,a2,a3], (sp)
     add     -0x14, sp
     mov     d0, (0x2c, sp)
@@ -17091,7 +17106,8 @@
     mov     0x02f00060, d0
     calls   (a0)
     ret     [d2,d3,a2], 0x20
-# func_502A56AF  (CPU 0x502A56AF)
+# XapAp_Ce_SelDir  (CPU 0x502A56AF)
+#   export slot +0x044: the base plug-in's Ap_Ce_SelDir forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
     movm    [d2,d3,a2], (sp)
     add     -0x30, sp
     mov     d0, d3
@@ -17137,7 +17153,7 @@
     mov     0x502b2ae0, a2
     mov     (0xac, a0), a1
     mov     a2, a0
-    call    func_502AB0D9, 0, 0
+    call    XapListIterInit, 0, 0
     mov     (0x502b4044), a0
     mov     0x02f0001b, d0
     mov     (0x1c, a0), a0
@@ -17399,7 +17415,8 @@
     mov     a0, (0x10, sp)
     calls   (a1)
     ret     [d2,d3,a2], 0x3c
-# func_502A5ABA  (CPU 0x502A5ABA)
+# XapAp_Lst_SelDir  (CPU 0x502A5ABA)
+#   export slot +0x048: the base plug-in's Ap_Lst_SelDir forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
     movm    [d2], (sp)
     add     -0x14, sp
     mov     d0, d2
@@ -17570,7 +17587,8 @@
     mov     a2, (0x10, sp)
     calls   (a1)
     ret     [d2,a2], 0x20
-# func_502A5CE6  (CPU 0x502A5CE6)
+# XapAp_Ce_WinLoadSave  (CPU 0x502A5CE6)
+#   export slot +0x058: the base plug-in's Ap_Ce_WinLoadSave forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
     movm    [d2,d3,a2,a3], (sp)
     add     -0x54, sp
     mov     d0, (0x6c, sp)
@@ -19525,7 +19543,8 @@
     mov     (0x1c, sp), d0
     mov     d0, (0x502b1d50)
     ret     0, 0x14
-# func_502A7524  (CPU 0x502A7524)
+# XapAp_Ce_JukeBox  (CPU 0x502A7524)
+#   export slot +0x05c: the base plug-in's Ap_Ce_JukeBox forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
     movm    [d2,d3,a2,a3], (sp)
     add     -0x1c, sp
     mov     d0, a2
@@ -19851,7 +19870,8 @@
     mov     0x02f0010d, d0
     calls   (a0)
     ret     [a2], 0x18
-# func_502A791F  (CPU 0x502A791F)
+# XapKssXLyricsBoxProc  (CPU 0x502A791F)
+#   export slot +0x14c: the base plug-in's KssXLyricsBoxProc forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
     movm    [d2,d3,a2,a3], (sp)
     add     -0x28, sp
     mov     d0, (0x40, sp)
@@ -22293,7 +22313,8 @@
     clr     d0
     mov     d0, (0x502b4d54)
     ret     0, 0xc
-# func_502A9808  (CPU 0x502A9808)
+# XapAp_Ce_Fd2Sd  (CPU 0x502A9808)
+#   export slot +0x168: the base plug-in's Ap_Ce_Fd2Sd forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
     movm    [d2,d3,a2,a3], (sp)
     add     -0x54, sp
     mov     d0, (0x6c, sp)
@@ -23326,7 +23347,8 @@
     mov     (0x6c, sp), d0
     calls   (a1)
     ret     [d2,d3,a2,a3], 0x64
-# func_502AA46D  (CPU 0x502AA46D)
+# XapAp_Lst_Fd2Sd  (CPU 0x502AA46D)
+#   export slot +0x16c: the base plug-in's Ap_Lst_Fd2Sd forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
     add     -0x14, sp
     cmp     0x2f50001, d1
     beq     0x502aa47b
@@ -23697,7 +23719,8 @@
     mov     a2, (0x10, sp)
     calls   (a1)
     ret     [d2,d3,a2,a3], 0x28
-# func_502AA90E  (CPU 0x502AA90E)
+# XapAp_Ce_WinAlphaSort  (CPU 0x502AA90E)
+#   export slot +0x198: the base plug-in's Ap_Ce_WinAlphaSort forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
     movm    [d2,d3,a2,a3], (sp)
     add     -0x1c, sp
     mov     (0x502b4048), a0
@@ -23758,7 +23781,7 @@
     mov     a3, a1
     mov     0x502b3d50, a2
     mov     a2, a0
-    call    func_502AB0D9, 0, 0
+    call    XapListIterInit, 0, 0
     mov     (0x502b4048), a1
     mov     (0x44, a1), a0
     mov     (a0), d0
@@ -24137,7 +24160,8 @@
     mov     a0, (0x10, sp)
     calls   (a1)
     ret     [d2,d3,a2,a3], 0x2c
-# func_502AAE4D  (CPU 0x502AAE4D)
+# XapAp_Lst_WinAlphaSort  (CPU 0x502AAE4D)
+#   export slot +0x19c: the base plug-in's Ap_Lst_WinAlphaSort forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
     movm    [d2,d3,a2,a3], (sp)
     add     -0x18, sp
     mov     d0, (0x30, sp)
@@ -24303,7 +24327,8 @@
     mov     d3, (8, sp)
     calls   (a3)
     ret     [d2,d3,a2,a3], 0x48
-# func_502AB042  (CPU 0x502AB042)
+# XapListSourceInit  (CPU 0x502AB042)
+#   (a0 = object, d0 = item size, a1 = get-item routine, d1 = count routine) +0 XapListSourceVtbl, +4 magic 0xEF133AA1, +8 buffer malloc_X(d0 + 1), +0xC d0, +0x10 a1, +0x14 d1; export slot +0x10 (the base plug-in builds KssWorkRam+0xA20 / +0xA08 with it)
     movm    [d2,a2], (sp)
 # func_502AB044  (CPU 0x502AB044)
     add     -0xc, sp
@@ -24325,7 +24350,8 @@
     calls   (a0)
     mov     a0, (8, a2)
     ret     [d2,a2], 0x14
-# func_502AB07A  (CPU 0x502AB07A)
+# XapListSourceDestroy  (CPU 0x502AB07A)
+#   vtbl+0x00: magic := 0, free_X the buffer
     add     -0xc, sp
     clr     d0
     mov     d0, (4, a0)
@@ -24335,7 +24361,8 @@
     mov     (0x138, a1), a1
     calls   (a1)
     ret     0, 0xc
-# func_502AB097  (CPU 0x502AB097)
+# XapListSourceGet  (CPU 0x502AB097)
+#   vtbl+0x14: (d0 = index) calls the get-item routine (+0x10) on the buffer, returns the buffer
     movm    [a2], (sp)
 # func_502AB099  (CPU 0x502AB099)
     add     -0x10, sp
@@ -24347,13 +24374,15 @@
     calls   (a1)
     mov     (a2), a0
     ret     [a2], 0x14
-# func_502AB0AB  (CPU 0x502AB0AB)
+# XapListSourceCount  (CPU 0x502AB0AB)
+#   vtbl+0x20: calls the count routine (+0x14)
     add     -8, sp
-# func_502AB0AB_entry:   (register-save `call` entry)
+# XapListSourceCount_entry:   (register-save `call` entry)
     mov     (0x14, a0), a0
     calls   (a0)
     ret     0, 8
-# func_502AB0B6  (CPU 0x502AB0B6)
+# XapListSourceNewIter  (CPU 0x502AB0B6)
+#   vtbl+0x2C: malloc_X(0x10), XapListIterInit over this source
     movm    [a2,a3], (sp)
     add     -0x10, sp
     mov     a0, a3
@@ -24364,10 +24393,11 @@
     calls   (a0)
     mov     a0, a2
     mov     a3, a1
-    call    func_502AB0D9, 0, 0
+    call    XapListIterInit, 0, 0
     mov     a2, a0
     ret     [a2,a3], 0x18
-# func_502AB0D9  (CPU 0x502AB0D9)
+# XapListIterInit  (CPU 0x502AB0D9)
+#   (a0 = object, a1 = source) +0 XapListIterVtbl, +4 magic 0xA4723BBC, +8 index 0, +0xC the source; export slot +0x14
     mov     0x502b1dd8, d0
     mov     d0, (a0)
     clr     d0
@@ -24376,11 +24406,13 @@
     mov     0xa4723bbc, d0
     mov     d0, (4, a0)
     rets
-# func_502AB0F2  (CPU 0x502AB0F2)
+# XapListIterDestroy  (CPU 0x502AB0F2)
+#   vtbl+0x00: magic := 0
     clr     d0
     mov     d0, (4, a0)
     rets
-# func_502AB0F8  (CPU 0x502AB0F8)
+# XapListIterHasNext  (CPU 0x502AB0F8)
+#   vtbl+0x04: 1 while index < the source's count
     movm    [d2,a2], (sp)
     add     -8, sp
     mov     a0, a2
@@ -24394,7 +24426,8 @@
     bge     0x502ab110
     mov     1, d0
     ret     [d2,a2], 0x10
-# func_502AB113  (CPU 0x502AB113)
+# XapListIterNext  (CPU 0x502AB113)
+#   vtbl+0x08: the source's get-item routine for index, index += 1, returns the source's buffer
     movm    [a2,a3], (sp)
     add     -0x10, sp
     mov     a0, a2
@@ -24413,7 +24446,8 @@
     mov     (a3), a0
     mov     (8, a0), a0
     ret     [a2,a3], 0x18
-# func_502AB137  (CPU 0x502AB137)
+# XapListIterIndex  (CPU 0x502AB137)
+#   vtbl+0x0C: index, or -1 at the end
     movm    [d2,a2], (sp)
     add     -8, sp
     mov     a0, a2
@@ -24428,29 +24462,35 @@
     bge     0x502ab14f
     mov     (a2), d0
     ret     [d2,a2], 0x10
-# func_502AB152  (CPU 0x502AB152)
+# XapListIterGet  (CPU 0x502AB152)
+#   vtbl+0x24: (d0) XapListSourceGet of the source
     add     -0x10, sp
     mov     (0xc, a0), a0
     call    func_502AB099_entry, [a2], 0x14
     ret     0, 0x10
-# func_502AB160  (CPU 0x502AB160)
+# XapListIterSetPos  (CPU 0x502AB160)
+#   vtbl+0x28: index := d0
     mov     d0, (8, a0)
     rets
-# func_502AB165  (CPU 0x502AB165)
+# XapListIterSkip  (CPU 0x502AB165)
+#   vtbl+0x30: index += d0
     add     8, a0
     mov     (a0), d1
     add     d0, d1
     mov     d1, (a0)
     rets
-# func_502AB16C  (CPU 0x502AB16C)
+# XapListIterCount  (CPU 0x502AB16C)
+#   vtbl+0x44: XapListSourceCount of the source
     add     -0xc, sp
     mov     (0xc, a0), a0
-    call    func_502AB0AB_entry, 0, 8
+    call    XapListSourceCount_entry, 0, 8
     ret     0, 0xc
-# func_502AB17A  (CPU 0x502AB17A)
+# XapListIterSource  (CPU 0x502AB17A)
+#   vtbl+0x48: the source (+0xC)
     mov     (0xc, a0), a0
     rets
-# func_502AB17F  (CPU 0x502AB17F)
+# XapAp_Ce_WinLbn  (CPU 0x502AB17F)
+#   export slot +0x1bc: the base plug-in's Ap_Ce_WinLbn forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
     movm    [d2,d3,a2,a3], (sp)
     add     -0x14, sp
     mov     (0x502b4048), a0
@@ -25330,7 +25370,8 @@
     mov     0x02f000b3, d0
     calls   (a0)
     ret     [d2,a2,a3], 0x94
-# func_502ABD03  (CPU 0x502ABD03)
+# XapAp_Ce_WinSettings1  (CPU 0x502ABD03)
+#   export slot +0x134: the base plug-in's Ap_Ce_WinSettings1 forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
     movm    [d2,a2,a3], (sp)
     add     -0x1c, sp
     mov     (0x502b4048), a0
@@ -25473,7 +25514,8 @@
     mov     a0, (0x10, sp)
     calls   (a2)
     ret     [d2,a2,a3], 0x28
-# func_502ABE9C  (CPU 0x502ABE9C)
+# XapAp_Ce_WinSettings2  (CPU 0x502ABE9C)
+#   export slot +0x138: the base plug-in's Ap_Ce_WinSettings2 forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
     movm    [d2,d3,a2,a3], (sp)
     add     -0x20, sp
     mov     d0, a3
@@ -25661,7 +25703,8 @@
     mov     a0, (0x10, sp)
     calls   (a1)
     ret     [d2,d3,a2,a3], 0x30
-# func_502AC0FC  (CPU 0x502AC0FC)
+# XapAp_Eb_WinSettings  (CPU 0x502AC0FC)
+#   export slot +0x13c: the base plug-in's Ap_Eb_WinSettings forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
     movm    [d2,d3], (sp)
     add     -0x10, sp
     cmp     0x6003a, d1
@@ -26485,7 +26528,8 @@
     and     0xff, d0
     add     -1, d0
     rets
-# func_502AC967  (CPU 0x502AC967)
+# XapAp_Ce_Cls  (CPU 0x502AC967)
+#   export slot +0x1d4: the base plug-in's Ap_Ce_Cls forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
     movm    [d2,d3,a2,a3], (sp)
     add     -0x64, sp
     mov     (0x502b4048), a0
@@ -26547,7 +26591,7 @@
     mov     a3, a1
     mov     0x502b3fa8, a2
     mov     a2, a0
-    call    func_502AB0D9, 0, 0
+    call    XapListIterInit, 0, 0
     mov     (0x502b4044), a0
     mov     0x02f001b6, d0
     mov     (0x1c, a0), a0
@@ -27138,7 +27182,8 @@
     mov     a0, (0x10, sp)
     calls   (a1)
     ret     [d2,d3,a2,a3], 0x74
-# func_502AD0A2  (CPU 0x502AD0A2)
+# XapAp_Lst_Cls  (CPU 0x502AD0A2)
+#   export slot +0x1d8: the base plug-in's Ap_Lst_Cls forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
     movm    [d2,d3,a2,a3], (sp)
     add     -0x14, sp
     mov     (0x502b4048), a0
@@ -27773,7 +27818,8 @@
     mov     0x02f001b1, d0
     calls   (a0)
     ret     [d2,d3,a2,a3], 0x50
-# func_502AD91F  (CPU 0x502AD91F)
+# XapAp_Ce_ClsDir  (CPU 0x502AD91F)
+#   export slot +0x1cc: the base plug-in's Ap_Ce_ClsDir forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
     movm    [d2,d3,a2,a3], (sp)
     add     -0x44, sp
     mov     d0, (0x5c, sp)
@@ -27825,7 +27871,7 @@
     mov     a3, a1
     mov     0x502b4028, a2
     mov     a2, a0
-    call    func_502AB0D9, 0, 0
+    call    XapListIterInit, 0, 0
     mov     (0x502b4044), a1
     mov     0x02f0013f, d0
     mov     (0x1c, a1), a0
@@ -27983,7 +28029,8 @@
     mov     (0x5c, sp), d0
     calls   (a1)
     ret     [d2,d3,a2,a3], 0x54
-# func_502ADBD2  (CPU 0x502ADBD2)
+# XapAp_Lst_ClsDir  (CPU 0x502ADBD2)
+#   export slot +0x1d0: the base plug-in's Ap_Lst_ClsDir forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
     movm    [d2,d3], (sp)
     add     -0x14, sp
     mov     d0, d2
@@ -28028,7 +28075,8 @@
     mov     (0x2a4, a0), a0
     calls   (a0)
     ret     0, 0x10
-# func_502ADC50  (CPU 0x502ADC50)
+# XapAcKssScreenMenuProc  (CPU 0x502ADC50)
+#   export slot +0x008: the base plug-in's AcKssScreenMenuProc forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
     movm    [d2,d3,a2,a3], (sp)
     add     -0x14, sp
     mov     d0, d3
@@ -28121,7 +28169,8 @@
     mov     a0, (0x10, sp)
     calls   (a1)
     ret     [d2,d3,a2,a3], 0x24
-# func_502ADD6A  (CPU 0x502ADD6A)
+# XapAcKssEditBoxProc  (CPU 0x502ADD6A)
+#   export slot +0x00c: the base plug-in's AcKssEditBoxProc forwards here (through func_483E856E) (oldbuilds_baseext_unresolved_calls.py)
     movm    [d2,d3,a2,a3], (sp)
     add     -0x3c, sp
     mov     d0, (0x54, sp)
@@ -29862,23 +29911,23 @@
     .space 4, 0xFF
     .space 16, 0x00
 # pointer table (CPU 0x502B1830, 4 entries)
-    .long 0x502B0740, 0x502B0768, 0x502B07B4, func_502AB07A
+    .long 0x502B0740, 0x502B0768, 0x502B07B4, XapListSourceDestroy
     .space 16, 0x00
-    .long func_502AB097
+    .long XapListSourceGet
     .space 8, 0x00
-    .long func_502AB0AB
+    .long XapListSourceCount
     .space 8, 0x00
 # pointer table (CPU 0x502B1868, 5 entries)
-    .long func_502AB0B6, func_502AB0F2, func_502AB0F8, func_502AB113
-    .long func_502AB137
+    .long XapListSourceNewIter, XapListIterDestroy, XapListIterHasNext, XapListIterNext
+    .long XapListIterIndex
     .space 20, 0x00
 # pointer table (CPU 0x502B1890, 2 entries)
-    .long func_502AB152, func_502AB160
+    .long XapListIterGet, XapListIterSetPos
     .space 4, 0x00
-    .long func_502AB165
+    .long XapListIterSkip
     .space 16, 0x00
 # pointer table (CPU 0x502B18B0, 3 entries)
-    .long func_502AB16C, func_502AB17A, 0x502B07C0
+    .long XapListIterCount, XapListIterSource, 0x502B07C0
     .space 8, 0x00
 # pointer table (CPU 0x502B18C4, 3 entries)
     .long 0x502B091C, 0x502B09A4, 0x502B09C8
@@ -29886,13 +29935,13 @@
     .long 0x502B0B04
     .space 4, 0xFF
 # pointer table (CPU 0x502B18DC, 145 entries)
-    .long 0x502B0B14, 0x502B0B24, func_5029D513, func_502A19F3
-    .long func_502ADC50, func_502ADD6A, func_502AB042, func_502AB0D9
-    .long func_5029D51B, func_5029ED47, func_5029EABF, func_5029ED9F
+    .long 0x502B0B14, 0x502B0B24, func_5029D513, XapAcKssListProc
+    .long XapAcKssScreenMenuProc, XapAcKssEditBoxProc, XapListSourceInit, XapListIterInit
+    .long XapAcKssNamingWindowProc, XapIvKssNamingProc, XapAcKssNamingEditSwProc, XapAp_Ce_WinNamingHistory
     .long func_5029EEFC, func_5029EFFB, func_502A5021, func_502A5029
-    .long func_502A404D, func_502A4055, func_502A543B, func_502A56AF
-    .long func_502A5ABA, func_502A3F14, func_502A393D, func_502A4A60
-    .long func_502A5CE6, func_502A7524, 0x502B155C, func_5029F48D
+    .long func_502A404D, func_502A4055, func_502A543B, XapAp_Ce_SelDir
+    .long XapAp_Lst_SelDir, XapAp_Lst_WinSelSong, XapAp_Ce_WinSelSong, XapAp_Ce_WinSfxSelect
+    .long XapAp_Ce_WinLoadSave, XapAp_Ce_JukeBox, 0x502B155C, func_5029F48D
     .long func_502A059E, func_502A07F3, func_502A09C1, func_502A19F1
     .long func_5029F516, func_5029F52C, func_5029F571, func_5029F574
     .long func_5029F4B8, func_5029F4D6, func_5029F4F4, func_5029F516
@@ -29905,24 +29954,24 @@
     .long func_502A0AED, func_502A0B6C, func_502A15C3, func_502A1070
     .long func_502A1469, func_502A1504, func_502A17F4, func_502A193C
     .long func_502A33DE, func_502A330A, func_502A3420, func_502A3477
-    .long func_502A351C, func_502A362E, func_502A3709, func_502ABD03
-    .long func_502ABE9C, func_502AC0FC, func_502A3876, 0x502B404C
-    .long func_502A3911, func_502A791F, func_502A945D, func_502A95DA
+    .long func_502A351C, func_502A362E, func_502A3709, XapAp_Ce_WinSettings1
+    .long XapAp_Ce_WinSettings2, XapAp_Eb_WinSettings, func_502A3876, 0x502B404C
+    .long func_502A3911, XapKssXLyricsBoxProc, func_502A945D, func_502A95DA
     .long 0x502B4D38, 0x502B4D54, 0x502B4D58, 0x502B20B8
-    .long func_502A9808, func_502AA46D, func_502A6F5F, func_502A6FC1
+    .long XapAp_Ce_Fd2Sd, XapAp_Lst_Fd2Sd, func_502A6F5F, func_502A6FC1
     .long func_502A72E6, func_502A7289, func_502A7044, func_502A70A0
     .long func_502A70FC, func_502A7176, func_502A722E, func_502A7340
-    .long func_502AA90E, func_502AAE4D, func_502A2EB4, func_502A2F14
+    .long XapAp_Ce_WinAlphaSort, XapAp_Lst_WinAlphaSort, func_502A2EB4, func_502A2F14
     .long func_502A329A, func_502A2FC6, func_502A32B1, func_502A32A2
-    .long func_502A3260, func_502AB17F, func_502AC1B5, func_5029F42A
-    .long func_5029F45A, func_502AD91F, func_502ADBD2, func_502AC967
-    .long func_502AD0A2, func_502AC272, func_502AC327, func_502AC400
+    .long func_502A3260, XapAp_Ce_WinLbn, func_502AC1B5, func_5029F42A
+    .long func_5029F45A, XapAp_Ce_ClsDir, XapAp_Lst_ClsDir, XapAp_Ce_Cls
+    .long XapAp_Lst_Cls, func_502AC272, func_502AC327, func_502AC400
     .long func_502AC494, func_502AC87E, func_502AC8B5, func_502AC8EC
     .long func_502AC50B, func_502AC530, func_502AC599, func_502AC600
     .long func_502AC6C1, func_502AC775, func_502AC7C6, func_502AC7EC
     .long func_502AC7FD, func_502AC82B, func_502AC859, func_502AC861
     .long func_502AC2D8, func_502AC31D, func_502AC320, func_5029B1EB
-    .long func_5029D3FB
+    .long XapQsort
     .space 4, 0x00
     .byte 0xC6, 0xB8, 0x47, 0x3F, 0x03   # data (CPU 0x502B1B24)
     .space 3, 0x00

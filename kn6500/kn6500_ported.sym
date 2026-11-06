@@ -3,18 +3,18 @@
 ; how a name qualifies. Columns: B address, name, ; the A address it was carried
 ; from and the number of instructions that matched (entry to first return).
 ;
-; 710 names carried (3871 candidates in A, 14862 routine starts in A, 6623 unnamed entries in B)
+; 737 names carried (3889 candidates in A, 14867 routine starts in A, 10956 unnamed entries in B)
 ; not carried: 588 A signatures with fewer than 8 unmasked instructions; 4 with a twin among A's routine starts;
 ; 0 whose name is taken in B
-; --fuzzy, whole bodies (tools/fn_similarity.py): 84 more names carried (50 exact, 23 skeleton, 11 fuzzy); not carried:
+; --fuzzy, whole bodies (tools/fn_similarity.py): 85 more names carried (50 exact, 24 skeleton, 11 fuzzy); not carried:
 ;       9 an aligned callee or string disagrees
-;     176 below the class thresholds or ambiguous
-;      15 best match in B is named or already carried
+;     177 below the class thresholds or ambiguous
+;       8 best match in B is named or already carried
 ;    1276 name already in B
 ;       0 name used twice in A
-;     719 no candidate in B
-;     459 not the best match back in A
-;     423 too little unmasked content
+;     723 no candidate in B
+;     447 not the best match back in A
+;     427 too little unmasked content
 ; then from KN6000 (--also-a), into what is still unnamed: 8 names by signature, 1 by whole body (0 exact, 1 skeleton, 0 fuzzy); 1320 candidates, 12051 routine starts
 ; then from KN2400 (--also-a), into what is still unnamed: 0 names by signature, 0 by whole body (0 exact, 0 skeleton, 0 fuzzy); 2370 candidates, 14195 routine starts
 0x4C000080  LibF64Pow	; = 0x4C000000, 262 insns
@@ -78,6 +78,8 @@
 0x4C004A88  strcat	; = 0x4C003985, 31 insns
 0x4C004AB6  memmove	; = 0x4C0039B3, 37 insns
 0x4C004AEC  strncpy	; = 0x4C0039E9, 32 insns
+0x4C004B1D  JpegEngine	; = 0x4840E721, 19 insns
+0x4C006032  JpegBitRefill	; = 0x4840FC3A, 20 insns
 0x4C007A69  PartHasDspUnit	; = KN6000 0x4C007A5B, 30 insns
 0x4C007EF9  Malloc	; = 0x48416625, 77 insns
 0x4C007FAD  Free	; = 0x484166D9, whole body 117 insns, exact (ratios 1.000/1.000, 4 callees or strings agree)
@@ -114,6 +116,7 @@
 0x4C0242E1  PanelService	; = 0x484ABB58, 13 insns
 0x4C0246B7  PanelBusyWait30	; = 0x484AC031, 15 insns
 0x4C0246D4  PanelBusyWait60	; = 0x484AC04E, 15 insns
+0x4C024732  PanelBusyWait3000	; = 0x484AC0AC, 14 insns
 0x4C02474E  PanelBusyWait6000	; = 0x484AC0C8, 15 insns
 0x4C0247BE  PanelTypeProbeShadow	; = 0x484AC138, whole body 37 insns, exact (ratios 1.000/1.000, 0 callees or strings agree)
 0x4C024825  PanelTransaction	; = 0x484AC2A5, 35 insns
@@ -127,12 +130,16 @@
 0x4C025502  PanelErrorRecovery	; = 0x484AD00C, 59 insns
 0x4C025607  PanelFrameDecode	; = 0x484AD111, 12 insns
 0x4C025959  PanelTxFifoToRing	; = 0x484AD45F, whole body 56 insns, exact (ratios 1.000/1.000, 1 callees or strings agree)
+0x4C026019  KeybedPollPass	; = 0x4C014E41, 22 insns
 0x4C027CFB  M3SetPmemNumber	; = 0x4C016C5C, whole body 15 insns, skeleton (ratios 1.000/0.933, 0 callees or strings agree)
 0x4C03201D  PartDspUnitFind	; = 0x4C021259, 22 insns
+0x4C03D0D5  PmemRecallBankA	; = 0x4C0219BF, 9 insns
 0x4C047980  PanelCtrlValueGet	; = 0x484AD65F, 12 insns
 0x4C04799C  PanelCtrlDispatch	; = 0x484AD67B, 18 insns
 0x4C0479D7  PanelCtrlLatch00	; = 0x484AD6B0, 15 insns
 0x4C047A67  PanelCtrlLatch30	; = 0x484AD740, 17 insns
+0x4C04B799  MsaOnRhythmVariation	; = 0x4C029CF5, 13 insns
+0x4C04C6C8  MsaModeApply	; = 0x4C02AD08, 21 insns
 0x4C04EE23  PanelSwEventPush	; = 0x484ADA59, 27 insns
 0x4C053F71  PadCopyBuiltinToUser	; = 0x48431D21, whole body 97 insns, exact (ratios 1.000/1.000, 4 callees or strings agree)
 0x4C0546EB  UserPadSynchroSet	; = 0x4843248B, 22 insns
@@ -182,6 +189,8 @@
 0x4C057A6F  MemStyleAreaStreamsVerify	; = 0x4843579E, whole body 78 insns, exact (ratios 1.000/1.000, 2 callees or strings agree)
 0x4C057CCF  GetGenreName	; = 0x48435A9F, 26 insns
 0x4C057D09  GetGenreStyleCount	; = 0x48435AD9, 17 insns
+0x4C057E39  StylePartToTgPart	; = 0x48435C29, 9 insns
+0x4C057F93  StyleIdArrayStore	; = 0x48435D83, 26 insns
 0x4C058067  StyleIdQueueDequeue	; = 0x48435E84, 26 insns
 0x4C0582E6  ChordTypeIsMinor	; = 0x484361BC, 13 insns
 0x4C058302  NoteConvRuleByte1Get	; = 0x484361D8, 11 insns
@@ -201,6 +210,7 @@
 0x4C05F5A5  StylePatternNoteRestart	; = 0x4843D558, whole body 111 insns, exact (ratios 1.000/1.000, 3 callees or strings agree)
 0x4C05FCAE  MemStyleExportSize	; = 0x4843DDD2, 25 insns
 0x4C05FD0C  CustStyleVarRecDataSet	; = 0x4843DE30, 11 insns
+0x4C05FD2C  StyleRefIdMark	; = 0x4843DE50, 29 insns
 0x4C05FD69  StyleRefIdApply	; = 0x4843DE8D, 22 insns
 0x4C05FDA3  MemStyleExportToCustom	; = 0x4843DEC7, 144 insns
 0x4C05FEDC  CustStyleImportToMem	; = 0x4843E000, 139 insns
@@ -228,6 +238,7 @@
 0x4C063D58  StyleTemplateRebuild	; = 0x48441DEB, 89 insns
 0x4C064035  StyleDspKeyDecode	; = 0x484420C8, 16 insns
 0x4C06405C  StyleDspUnitsApply	; = 0x484420EF, 35 insns
+0x4C0640D1  StyleVarDspPartsApply	; = 0x48442164, 41 insns
 0x4C0656EC  RhythmIntroSelect	; = 0x484437DA, 11 insns
 0x4C0658FD  RhythmEndingSelect	; = 0x484439EB, whole body 47 insns, exact (ratios 1.000/1.000, 0 callees or strings agree)
 0x4C0688D6  MetronomeNoteEvent	; = 0x48446C98, 9 insns
@@ -271,6 +282,8 @@
 0x4C07AB94  HpRecordProgram	; = 0x4849701C, 10 insns
 0x4C07ABBC  HpRecordLoad	; = 0x48497044, 31 insns
 0x4C07AC12  HmpBufferAlloc	; = 0x4849709A, 12 insns
+0x4C07B6EF  KeybedEventToM3	; = 0x48447FCD, 33 insns
+0x4C07B799  KeybedFifoRead	; = 0x48448077, 12 insns
 0x4C07BB01  VoiceBankSourcePresentAlt	; = 0x48448C21, 10 insns
 0x4C07BBF5  SoundNameGet	; = 0x48448D15, whole body 55 insns, skeleton (ratios 1.000/0.982, 1 callees or strings agree)
 0x4C07BD5C  SoundIconFetch	; = 0x48448E7C, 18 insns
@@ -367,6 +380,7 @@
 0x4C08E1C0  TgLocalEditResetAll	; = 0x4C00E5D2, 12 insns
 0x4C08E868  TgPartElemMaskGet	; = 0x4C00ECEA, 10 insns
 0x4C08E87D  TgPartElemEnabled	; = 0x4C00ECFF, 15 insns
+0x4C08F635  TgPartClassRegCollect	; = 0x4C00FBCA, 58 insns
 0x4C09224D  TgVoiceListReleaseByNote	; = 0x4C010042, 16 insns
 0x4C092273  TgVoiceListCollectByNote	; = 0x4C010068, 15 insns
 0x4C092297  TgVoiceListReleasePart	; = 0x4C01008C, 11 insns
@@ -431,6 +445,7 @@
 0x4C09D127  SoundEditRefGet	; = 0x48572DDC, 46 insns
 0x4C09D1B6  SoundEditRefSet	; = 0x48572E6B, 37 insns
 0x4C09D23C  SoundEditRefInvalidatePost	; = 0x48572EF1, 12 insns
+0x4C09ECA7  GetChordToneList	; = 0x4844E9F1, 24 insns
 0x4C09FF3E  TVocalistWorkstation	; = 0x484D60E7, 41 insns
 0x4C0A0276  VocalistGrid	; = 0x484D641F, 87 insns
 0x4C0A0D01  VocalistPage1OK	; = 0x484D6EAA, 28 insns
@@ -650,6 +665,7 @@
 0x4C0D11BC  SeqStepPage7ShowHide	; = 0x4853EDFC, 46 insns
 0x4C0D1528  DpMuteFunc	; = 0x484F9DDC, 29 insns
 0x4C0D3434  NameGetFuncCall	; = 0x484FBE8B, 51 insns
+0x4C0D98D1  KeybedM3Dispatch	; = 0x48451AA7, whole body 71 insns, skeleton (ratios 1.000/0.986, 1 callees or strings agree)
 0x4C0FDE5D  R12OctaveFunc	; = 0x4856D47C, 105 insns
 0x4C0FE092  AcAPCRadioBoxProc	; = 0x4856D6B1, 25 insns
 0x4C0FE0D3  ApcSelFunc	; = 0x4856D6F2, 22 insns
@@ -768,12 +784,22 @@
 0x4C14F907  fmmformat	; = 0x48532AEF, 14 insns
 0x4C15063F  ZArenaAlloc	; = 0x4853411A, 55 insns
 0x4C1506C2  ZArenaFree	; = 0x4853419D, 49 insns
+0x4C154AA9  DspEffectAssign	; = 0x4840562C, 126 insns
+0x4C154C26  DspAllocParamBlock	; = 0x484057A9, 11 insns
+0x4C154C92  DspEffectSelect	; = 0x48405815, 22 insns
+0x4C155184  DspManagerInit	; = 0x48405D4F, 364 insns
+0x4C155567  DspEffectTypeValid	; = 0x48406132, 84 insns
+0x4C156FE1  DspStreamReadU16	; = 0x48407BAC, 18 insns
+0x4C15700D  DspRecordInterpreter	; = 0x48407BD8, 200 insns
 0x4C157B7F  DspWaitReady	; = 0x48404D25, 27 insns
 0x4C157D98  DspPortReadChecked	; = 0x48404F78, 11 insns
 0x4C157DB7  DspPortReadSlow	; = 0x48404F97, 21 insns
+0x4C157E16  DspFullReinit	; = 0x48404FF6, 44 insns
 0x4C157EA3  DspSetIndex	; = 0x48405083, 8 insns
 0x4C157EBC  DspSetIndexSlow	; = 0x4840509C, 8 insns
+0x4C157ED8  DspWritePMWord	; = 0x484050B8, 12 insns
 0x4C157F02  DspIndexWritePMWord	; = 0x484050E2, 16 insns
+0x4C157F3A  DspWriteDMWord	; = 0x4840511A, 13 insns
 0x4C157F63  DspWriteDMWordSlow	; = 0x48405143, 14 insns
 0x4C157F8F  DspIndexWriteBytes32	; = 0x4840516F, 29 insns
 0x4C157FE5  DspIndexReadBytes32	; = 0x484051C5, 37 insns
@@ -812,7 +838,9 @@
 0x4C1635A9  StylCnvStorBnkSel	; = 0x4849F16F, 50 insns
 0x4C1636EA  PsParaListBoxProc	; = 0x4849F2B0, 78 insns
 0x4C163B79  PsSCTxtBoxProc	; = 0x4849F73F, 39 insns
+0x4C16785C  FlashWordProgram	; = 0x4847F721, 16 insns
 0x4C167895  FlashSectorErase	; = 0x4847F75A, 26 insns
+0x4C167B32  FlashProgram128Words	; = 0x4847F9F7, 10 insns
 0x4C16AD7A  SmfHeaderNormalize	; = 0x48482C54, 62 insns
 0x4C16CCB8  CustomStyleIndexFromParam	; = 0x4848453B, 25 insns
 0x4C16CCF5  CustomStyleBlockFetch	; = 0x48484578, 20 insns

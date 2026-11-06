@@ -2605,8 +2605,7 @@ P_09SKYDIV_SQT_p2:
 	sq_beat
 	sq_note	83, 0, 67, 99, 68, 1
 	sq_note	83, 0, 64, 91, 65, 1
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"09SKYDIV.sqt.p2.ref", 0x10fb, 5
+	.byte	83, 144, 72, 93, 69	; the first 5 bytes of a tick-first event, cut by the end
 	sq_cell	0xff, 15, 22	; cell 18: song 1 track 1, 6 of 8
 	.byte	0x3c, 0x63, 0x30, 0x01	; bytes 3..6 of `sq_note	7, 0, 60, 99, 48, 1` (the event spans two cells)
 	sq_beat
@@ -3959,8 +3958,7 @@ P_09SKYDIV_SQT_p2:
 	sq_note	91, 0, 64, 93, 54, 0
 	sq_note	92, 0, 67, 99, 54, 0
 	sq_beat
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"09SKYDIV.sqt.p2.ref", 0x19fc, 4
+	.byte	74, 144, 67, 95	; the first 4 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 3, 28	; cell 27: song 1 track 4, 2 of 3
 	sq_beat
 	sq_beat
@@ -4261,11 +4259,10 @@ P_09SKYDIV_SQT_p2:
 	sq_beat
 	sq_end
 ; after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	29, 0, 43	; data bytes of an event cut at the start
-	k5_note	0x90, 67, 102, 27, 0, 91
-	k5_note	0x90, 64, 89, 56, 0, 92
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"09SKYDIV.sqt.p2.ref", 0x1b42, 5
+	.byte	29, 0	; data bytes of an event cut at the start
+	sq_note	43, 0, 67, 102, 27, 0
+	sq_note	91, 0, 64, 89, 56, 0
+	sq_note	92, 0, 67, 85, 56, 0
 	sq_beat
 	sq_note	70, 0, 64, 100, 15, 0
 	sq_note	71, 0, 67, 102, 13, 0
@@ -4331,8 +4328,7 @@ P_09SKYDIV_SQT_p2:
 	sq_beat
 	sq_note	10, 0, 67, 41, 4, 1
 	sq_note	16, 0, 64, 97, 19, 0
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"09SKYDIV.sqt.p2.ref", 0x1bfb, 5
+	.byte	16, 144, 65, 59, 6	; the first 5 bytes of a tick-first event, cut by the end
 
 	.if	(. - P_09SKYDIV_SQT_p2) - 7168
 	.error	"09SKYDIV.SQT part 2: the payload is not 7168 bytes"

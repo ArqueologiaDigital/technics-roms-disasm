@@ -233,7 +233,7 @@ func_484C1B0A_entry:
     movhu   d0, (0x18, sp)
     mov     a1, a0
     mov     (8, a0), a0
-    call    func_484C335D_entry, [d2], 0xc
+    call    PcComCrc7Check_entry, [d2], 0xc
     cmp     0, d0
     blt     loc_484C1B22
     bra     loc_484C1B56
@@ -241,7 +241,7 @@ loc_484C1B22:
     mov     sp, a0
     add     0x1c, a0
     mov     1, d0
-    call    func_484C3441_entry, 0, 0x14
+    call    PcComReplyStatus_entry, 0, 0x14
     mov     d0, (0x10, sp)
     mov     sp, a0
     add     0x1c, a0
@@ -323,7 +323,7 @@ loc_484C1BCA:
     mov     sp, a0
     add     0x1c, a0
     mov     1, d0
-    call    func_484C3441_entry, 0, 0x14
+    call    PcComReplyStatus_entry, 0, 0x14
     mov     d0, (0x10, sp)
     mov     sp, a0
     add     0x1c, a0
@@ -361,14 +361,14 @@ func_484C1C0D:
     movbu   d0, (0x50151bd6)
     mov     a1, a0
     mov     (8, a0), a0
-    call    func_484C335D_entry, [d2], 0xc
+    call    PcComCrc7Check_entry, [d2], 0xc
     cmp     0, d0
     blt     loc_484C1C30
     bra     loc_484C1C66
 loc_484C1C30:
     mov     0x50151758, a0
     mov     1, d0
-    call    func_484C3441_entry, 0, 0x14
+    call    PcComReplyStatus_entry, 0, 0x14
     mov     d0, (0x14, sp)
     mov     0xff, d0
     mov     0x50151758, a0
@@ -386,7 +386,7 @@ loc_484C1C66:
     movbu   d0, (0x1c, sp)
     mov     sp, a0
     add     0x1c, a0
-    call    func_48582669_entry, [d2,d3,a2,a3], 0x10
+    call    PcComCommand_entry, [d2,d3,a2,a3], 0x10
     movhu   d0, (0x18, sp)
     movhu   (0x18, sp), d0
     exth    d0
@@ -396,7 +396,7 @@ loc_484C1C66:
 loc_484C1C82:
     mov     0x50151758, a0
     mov     2, d0
-    call    func_484C3441_entry, 0, 0x14
+    call    PcComReplyStatus_entry, 0, 0x14
     mov     d0, (0x14, sp)
     mov     0xff, d0
     mov     0x50151758, a0
@@ -427,14 +427,14 @@ func_484C1CD1:
     movbu   d0, (0x50151bd6)
     mov     a1, a0
     mov     (8, a0), a0
-    call    func_484C335D_entry, [d2], 0xc
+    call    PcComCrc7Check_entry, [d2], 0xc
     cmp     0, d0
     blt     loc_484C1CF4
     bra     loc_484C1D2A
 loc_484C1CF4:
     mov     0x50151758, a0
     mov     1, d0
-    call    func_484C3441_entry, 0, 0x14
+    call    PcComReplyStatus_entry, 0, 0x14
     mov     d0, (0x14, sp)
     mov     0xff, d0
     mov     0x50151758, a0
@@ -456,7 +456,7 @@ loc_484C1D2A:
     movbu   d0, (0x1d, sp)
     mov     sp, a0
     add     0x1c, a0
-    call    func_48582669_entry, [d2,d3,a2,a3], 0x10
+    call    PcComCommand_entry, [d2,d3,a2,a3], 0x10
     movhu   d0, (0x18, sp)
     movhu   (0x18, sp), d0
     exth    d0
@@ -466,7 +466,7 @@ loc_484C1D2A:
 loc_484C1D53:
     mov     0x50151758, a0
     mov     2, d0
-    call    func_484C3441_entry, 0, 0x14
+    call    PcComReplyStatus_entry, 0, 0x14
     mov     d0, (0x14, sp)
     mov     0xff, d0
     mov     0x50151758, a0
@@ -499,14 +499,14 @@ func_484C1DA2:
     movbu   d0, (0x50151bd6)
     mov     a1, a0
     mov     (8, a0), a0
-    call    func_484C335D_entry, [d2], 0xc
+    call    PcComCrc7Check_entry, [d2], 0xc
     cmp     0, d0
     blt     loc_484C1DC8
     bra     loc_484C1DFF
 loc_484C1DC8:
     mov     0x50151758, a0
     mov     1, d0
-    call    func_484C3441_entry, 0, 0x14
+    call    PcComReplyStatus_entry, 0, 0x14
     mov     d0, (0x1c, sp)
     mov     0xff, d0
     mov     0x50151758, a0
@@ -558,7 +558,7 @@ loc_484C1DFF:
     mov     0x50151758, a1
     mov     0x1388, d0
     mov     0x23, d1
-    call    func_484C37F6_entry, 0, 0x24
+    call    PcComAwait_entry, 0, 0x24
     mov     d0, (0x1c, sp)
     cmp     0, d0
     blt     loc_484C1E8F
@@ -572,7 +572,7 @@ loc_484C1E8F:
 loc_484C1EA0:
     mov     sp, a0
     add     0x24, a0
-    call    func_48582669_entry, [d2,d3,a2,a3], 0x10
+    call    PcComCommand_entry, [d2,d3,a2,a3], 0x10
     movhu   d0, (0x20, sp)
     movhu   (0x20, sp), d0
     exth    d0
@@ -583,7 +583,7 @@ loc_484C1EB7:
     mov     sp, a0
     add     0x138, a0
     clr     d0
-    call    func_484C33E2_entry, 0, 0x10
+    call    PcComReplyDone_entry, 0, 0x10
     mov     d0, (0x1c, sp)
     mov     sp, a0
     add     0x138, a0
@@ -599,7 +599,7 @@ loc_484C1EDE:
     add     0x138, a0
     movhu   (0x20, sp), d0
     exth    d0
-    call    func_484C3441_entry, 0, 0x14
+    call    PcComReplyStatus_entry, 0, 0x14
     mov     d0, (0x1c, sp)
     mov     sp, a0
     add     0x138, a0
@@ -615,7 +615,7 @@ loc_484C1F06:
     add     0x138, a1
     mov     0x1388, d0
     mov     0x23, d1
-    call    func_484C37F6_entry, 0, 0x24
+    call    PcComAwait_entry, 0, 0x24
     mov     d0, (0x1c, sp)
     cmp     0, d0
     blt     loc_484C1F23
@@ -646,14 +646,14 @@ func_484C1F40_entry:
     movbu   d0, (0x50151bd6)
     mov     a1, a0
     mov     (8, a0), a0
-    call    func_484C335D_entry, [d2], 0xc
+    call    PcComCrc7Check_entry, [d2], 0xc
     cmp     0, d0
     blt     loc_484C1F68
     bra     loc_484C1F9F
 loc_484C1F68:
     mov     0x50151758, a0
     mov     1, d0
-    call    func_484C3441_entry, 0, 0x14
+    call    PcComReplyStatus_entry, 0, 0x14
     mov     d0, (0x1c, sp)
     mov     0xff, d0
     mov     0x50151758, a0
@@ -710,7 +710,7 @@ loc_484C1F9F:
     mov     d0, (0x134, sp)
     mov     sp, a0
     add     0x24, a0
-    call    func_48582669_entry, [d2,d3,a2,a3], 0x10
+    call    PcComCommand_entry, [d2,d3,a2,a3], 0x10
     movhu   d0, (0x20, sp)
     movhu   (0x20, sp), d0
     exth    d0
@@ -721,7 +721,7 @@ loc_484C2037:
     mov     sp, a0
     add     0x138, a0
     clr     d0
-    call    func_484C33E2_entry, 0, 0x10
+    call    PcComReplyDone_entry, 0, 0x10
     mov     d0, (0x1c, sp)
     mov     sp, a0
     add     0x138, a0
@@ -737,7 +737,7 @@ loc_484C205E:
     add     0x138, a0
     movhu   (0x20, sp), d0
     exth    d0
-    call    func_484C3441_entry, 0, 0x14
+    call    PcComReplyStatus_entry, 0, 0x14
     mov     d0, (0x1c, sp)
     mov     sp, a0
     add     0x138, a0
@@ -753,7 +753,7 @@ loc_484C2086:
     add     0x138, a1
     mov     0x1388, d0
     mov     0x23, d1
-    call    func_484C37F6_entry, 0, 0x24
+    call    PcComAwait_entry, 0, 0x24
     mov     d0, (0x1c, sp)
     cmp     0, d0
     blt     loc_484C20A3
@@ -780,14 +780,14 @@ func_484C20C0:
     movbu   d0, (0x50151bd6)
     mov     a1, a0
     mov     (8, a0), a0
-    call    func_484C335D_entry, [d2], 0xc
+    call    PcComCrc7Check_entry, [d2], 0xc
     cmp     0, d0
     blt     loc_484C20E2
     bra     loc_484C2119
 loc_484C20E2:
     mov     0x50151758, a0
     mov     1, d0
-    call    func_484C3441_entry, 0, 0x14
+    call    PcComReplyStatus_entry, 0, 0x14
     mov     d0, (0x1c, sp)
     mov     0xff, d0
     mov     0x50151758, a0
@@ -870,7 +870,7 @@ loc_484C2159:
     mov     0x50151758, a1
     mov     0x1388, d0
     mov     0x23, d1
-    call    func_484C37F6_entry, 0, 0x24
+    call    PcComAwait_entry, 0, 0x24
     mov     d0, (0x1c, sp)
     cmp     0, d0
     blt     loc_484C21F1
@@ -884,7 +884,7 @@ loc_484C21F1:
 loc_484C2204:
     mov     sp, a0
     add     0x24, a0
-    call    func_48582669_entry, [d2,d3,a2,a3], 0x10
+    call    PcComCommand_entry, [d2,d3,a2,a3], 0x10
     movhu   d0, (0x20, sp)
     movhu   (0x20, sp), d0
     exth    d0
@@ -895,7 +895,7 @@ loc_484C221B:
     mov     sp, a0
     add     0x138, a0
     clr     d0
-    call    func_484C33E2_entry, 0, 0x10
+    call    PcComReplyDone_entry, 0, 0x10
     mov     d0, (0x1c, sp)
     mov     sp, a0
     add     0x138, a0
@@ -911,7 +911,7 @@ loc_484C2242:
     add     0x138, a0
     movhu   (0x20, sp), d0
     exth    d0
-    call    func_484C3441_entry, 0, 0x14
+    call    PcComReplyStatus_entry, 0, 0x14
     mov     d0, (0x1c, sp)
     mov     sp, a0
     add     0x138, a0
@@ -927,7 +927,7 @@ loc_484C226A:
     add     0x138, a1
     mov     0x1388, d0
     mov     0x23, d1
-    call    func_484C37F6_entry, 0, 0x24
+    call    PcComAwait_entry, 0, 0x24
     mov     d0, (0x1c, sp)
     cmp     0, d0
     blt     loc_484C2287
@@ -956,14 +956,14 @@ func_484C22A4_entry:
     movbu   d0, (0x50151bd6)
     mov     a1, a0
     mov     (8, a0), a0
-    call    func_484C335D_entry, [d2], 0xc
+    call    PcComCrc7Check_entry, [d2], 0xc
     cmp     0, d0
     blt     loc_484C22C8
     bra     loc_484C22FF
 loc_484C22C8:
     mov     0x50151758, a0
     mov     1, d0
-    call    func_484C3441_entry, 0, 0x14
+    call    PcComReplyStatus_entry, 0, 0x14
     mov     d0, (0x1c, sp)
     mov     0xff, d0
     mov     0x50151758, a0
@@ -1020,7 +1020,7 @@ loc_484C22FF:
     mov     d0, (0x134, sp)
     mov     sp, a0
     add     0x24, a0
-    call    func_48582669_entry, [d2,d3,a2,a3], 0x10
+    call    PcComCommand_entry, [d2,d3,a2,a3], 0x10
     movhu   d0, (0x20, sp)
     movhu   (0x20, sp), d0
     exth    d0
@@ -1031,7 +1031,7 @@ loc_484C2397:
     mov     sp, a0
     add     0x138, a0
     clr     d0
-    call    func_484C33E2_entry, 0, 0x10
+    call    PcComReplyDone_entry, 0, 0x10
     mov     d0, (0x1c, sp)
     mov     sp, a0
     add     0x138, a0
@@ -1047,7 +1047,7 @@ loc_484C23BE:
     add     0x138, a0
     movhu   (0x20, sp), d0
     exth    d0
-    call    func_484C3441_entry, 0, 0x14
+    call    PcComReplyStatus_entry, 0, 0x14
     mov     d0, (0x1c, sp)
     mov     sp, a0
     add     0x138, a0
@@ -1063,7 +1063,7 @@ loc_484C23E6:
     add     0x138, a1
     mov     0x1388, d0
     mov     0x23, d1
-    call    func_484C37F6_entry, 0, 0x24
+    call    PcComAwait_entry, 0, 0x24
     mov     d0, (0x1c, sp)
     cmp     0, d0
     blt     loc_484C2403
@@ -1092,14 +1092,14 @@ func_484C2420_entry:
     movbu   d0, (0x50151bd6)
     mov     a1, a0
     mov     (8, a0), a0
-    call    func_484C335D_entry, [d2], 0xc
+    call    PcComCrc7Check_entry, [d2], 0xc
     cmp     0, d0
     blt     loc_484C2444
     bra     loc_484C247B
 loc_484C2444:
     mov     0x50151758, a0
     mov     1, d0
-    call    func_484C3441_entry, 0, 0x14
+    call    PcComReplyStatus_entry, 0, 0x14
     mov     d0, (0x1c, sp)
     mov     0xff, d0
     mov     0x50151758, a0
@@ -1156,7 +1156,7 @@ loc_484C247B:
     mov     d0, (0x134, sp)
     mov     sp, a0
     add     0x24, a0
-    call    func_48582669_entry, [d2,d3,a2,a3], 0x10
+    call    PcComCommand_entry, [d2,d3,a2,a3], 0x10
     movhu   d0, (0x20, sp)
     movhu   (0x20, sp), d0
     exth    d0
@@ -1167,7 +1167,7 @@ loc_484C2513:
     mov     sp, a0
     add     0x138, a0
     clr     d0
-    call    func_484C33E2_entry, 0, 0x10
+    call    PcComReplyDone_entry, 0, 0x10
     mov     d0, (0x1c, sp)
     mov     sp, a0
     add     0x138, a0
@@ -1183,7 +1183,7 @@ loc_484C253A:
     add     0x138, a0
     movhu   (0x20, sp), d0
     exth    d0
-    call    func_484C3441_entry, 0, 0x14
+    call    PcComReplyStatus_entry, 0, 0x14
     mov     d0, (0x1c, sp)
     mov     sp, a0
     add     0x138, a0
@@ -1199,7 +1199,7 @@ loc_484C2562:
     add     0x138, a1
     mov     0x1388, d0
     mov     0x23, d1
-    call    func_484C37F6_entry, 0, 0x24
+    call    PcComAwait_entry, 0, 0x24
     mov     d0, (0x1c, sp)
     cmp     0, d0
     blt     loc_484C257F
@@ -1226,14 +1226,14 @@ func_484C259C:
     movbu   d0, (0x50151bd6)
     mov     a1, a0
     mov     (8, a0), a0
-    call    func_484C335D_entry, [d2], 0xc
+    call    PcComCrc7Check_entry, [d2], 0xc
     cmp     0, d0
     blt     loc_484C25BE
     bra     loc_484C25F5
 loc_484C25BE:
     mov     0x50151758, a0
     mov     1, d0
-    call    func_484C3441_entry, 0, 0x14
+    call    PcComReplyStatus_entry, 0, 0x14
     mov     d0, (0x1c, sp)
     mov     0xff, d0
     mov     0x50151758, a0
@@ -1293,7 +1293,7 @@ loc_484C25F5:
     mov     0x50151758, a1
     mov     0x1388, d0
     mov     0x23, d1
-    call    func_484C37F6_entry, 0, 0x24
+    call    PcComAwait_entry, 0, 0x24
     mov     d0, (0x1c, sp)
     cmp     0, d0
     blt     loc_484C269F
@@ -1307,7 +1307,7 @@ loc_484C269F:
 loc_484C26B2:
     mov     sp, a0
     add     0x24, a0
-    call    func_48582669_entry, [d2,d3,a2,a3], 0x10
+    call    PcComCommand_entry, [d2,d3,a2,a3], 0x10
     movhu   d0, (0x20, sp)
     movhu   (0x20, sp), d0
     exth    d0
@@ -1318,7 +1318,7 @@ loc_484C26C9:
     mov     sp, a0
     add     0x138, a0
     clr     d0
-    call    func_484C33E2_entry, 0, 0x10
+    call    PcComReplyDone_entry, 0, 0x10
     mov     d0, (0x1c, sp)
     mov     sp, a0
     add     0x138, a0
@@ -1334,7 +1334,7 @@ loc_484C26F0:
     add     0x138, a0
     movhu   (0x20, sp), d0
     exth    d0
-    call    func_484C3441_entry, 0, 0x14
+    call    PcComReplyStatus_entry, 0, 0x14
     mov     d0, (0x1c, sp)
     mov     sp, a0
     add     0x138, a0
@@ -1350,7 +1350,7 @@ loc_484C2718:
     add     0x138, a1
     mov     0x1388, d0
     mov     0x23, d1
-    call    func_484C37F6_entry, 0, 0x24
+    call    PcComAwait_entry, 0, 0x24
     mov     d0, (0x1c, sp)
     cmp     0, d0
     blt     loc_484C2735
@@ -1377,14 +1377,14 @@ func_484C2752:
     movbu   d0, (0x50151bd6)
     mov     a1, a0
     mov     (8, a0), a0
-    call    func_484C335D_entry, [d2], 0xc
+    call    PcComCrc7Check_entry, [d2], 0xc
     cmp     0, d0
     blt     loc_484C2774
     bra     loc_484C27AB
 loc_484C2774:
     mov     0x50151758, a0
     mov     1, d0
-    call    func_484C3441_entry, 0, 0x14
+    call    PcComReplyStatus_entry, 0, 0x14
     mov     d0, (0x1c, sp)
     mov     0xff, d0
     mov     0x50151758, a0
@@ -1444,7 +1444,7 @@ loc_484C27AB:
     mov     0x50151758, a1
     mov     0x1388, d0
     mov     0x23, d1
-    call    func_484C37F6_entry, 0, 0x24
+    call    PcComAwait_entry, 0, 0x24
     mov     d0, (0x1c, sp)
     cmp     0, d0
     blt     loc_484C2855
@@ -1460,7 +1460,7 @@ loc_484C2855:
 loc_484C2876:
     mov     sp, a0
     add     0x24, a0
-    call    func_48582669_entry, [d2,d3,a2,a3], 0x10
+    call    PcComCommand_entry, [d2,d3,a2,a3], 0x10
     movhu   d0, (0x20, sp)
     movhu   (0x20, sp), d0
     exth    d0
@@ -1471,7 +1471,7 @@ loc_484C288D:
     mov     sp, a0
     add     0x138, a0
     clr     d0
-    call    func_484C33E2_entry, 0, 0x10
+    call    PcComReplyDone_entry, 0, 0x10
     mov     d0, (0x1c, sp)
     mov     sp, a0
     add     0x138, a0
@@ -1487,7 +1487,7 @@ loc_484C28B4:
     add     0x138, a0
     movhu   (0x20, sp), d0
     exth    d0
-    call    func_484C3441_entry, 0, 0x14
+    call    PcComReplyStatus_entry, 0, 0x14
     mov     d0, (0x1c, sp)
     mov     sp, a0
     add     0x138, a0
@@ -1503,7 +1503,7 @@ loc_484C28DC:
     add     0x138, a1
     mov     0x1388, d0
     mov     0x23, d1
-    call    func_484C37F6_entry, 0, 0x24
+    call    PcComAwait_entry, 0, 0x24
     mov     d0, (0x1c, sp)
     cmp     0, d0
     blt     loc_484C28F9
@@ -1532,14 +1532,14 @@ func_484C2916_entry:
     movbu   d0, (0x50151bd6)
     mov     a1, a0
     mov     (8, a0), a0
-    call    func_484C335D_entry, [d2], 0xc
+    call    PcComCrc7Check_entry, [d2], 0xc
     cmp     0, d0
     blt     loc_484C293A
     bra     loc_484C2971
 loc_484C293A:
     mov     0x50151758, a0
     mov     1, d0
-    call    func_484C3441_entry, 0, 0x14
+    call    PcComReplyStatus_entry, 0, 0x14
     mov     d0, (0x1c, sp)
     mov     0xff, d0
     mov     0x50151758, a0
@@ -1596,7 +1596,7 @@ loc_484C2971:
     mov     d0, (0x134, sp)
     mov     sp, a0
     add     0x24, a0
-    call    func_48582669_entry, [d2,d3,a2,a3], 0x10
+    call    PcComCommand_entry, [d2,d3,a2,a3], 0x10
     movhu   d0, (0x20, sp)
     movhu   (0x20, sp), d0
     exth    d0
@@ -1607,7 +1607,7 @@ loc_484C2A09:
     mov     sp, a0
     add     0x138, a0
     clr     d0
-    call    func_484C33E2_entry, 0, 0x10
+    call    PcComReplyDone_entry, 0, 0x10
     mov     d0, (0x1c, sp)
     mov     sp, a0
     add     0x138, a0
@@ -1623,7 +1623,7 @@ loc_484C2A30:
     add     0x138, a0
     movhu   (0x20, sp), d0
     exth    d0
-    call    func_484C3441_entry, 0, 0x14
+    call    PcComReplyStatus_entry, 0, 0x14
     mov     d0, (0x1c, sp)
     mov     sp, a0
     add     0x138, a0
@@ -1639,7 +1639,7 @@ loc_484C2A58:
     add     0x138, a1
     mov     0x1388, d0
     mov     0x23, d1
-    call    func_484C37F6_entry, 0, 0x24
+    call    PcComAwait_entry, 0, 0x24
     mov     d0, (0x1c, sp)
     cmp     0, d0
     blt     loc_484C2A75
@@ -1666,14 +1666,14 @@ func_484C2A92:
     movbu   d0, (0x50151bd6)
     mov     a1, a0
     mov     (8, a0), a0
-    call    func_484C335D_entry, [d2], 0xc
+    call    PcComCrc7Check_entry, [d2], 0xc
     cmp     0, d0
     blt     loc_484C2AB4
     bra     loc_484C2AEB
 loc_484C2AB4:
     mov     0x50151758, a0
     mov     1, d0
-    call    func_484C3441_entry, 0, 0x14
+    call    PcComReplyStatus_entry, 0, 0x14
     mov     d0, (0x1c, sp)
     mov     0xff, d0
     mov     0x50151758, a0
@@ -1733,7 +1733,7 @@ loc_484C2AEB:
     mov     0x50151758, a1
     mov     0x1388, d0
     mov     0x23, d1
-    call    func_484C37F6_entry, 0, 0x24
+    call    PcComAwait_entry, 0, 0x24
     mov     d0, (0x1c, sp)
     cmp     0, d0
     blt     loc_484C2B95
@@ -1747,7 +1747,7 @@ loc_484C2B95:
 loc_484C2BA8:
     mov     sp, a0
     add     0x24, a0
-    call    func_48582669_entry, [d2,d3,a2,a3], 0x10
+    call    PcComCommand_entry, [d2,d3,a2,a3], 0x10
     movhu   d0, (0x20, sp)
     movhu   (0x20, sp), d0
     exth    d0
@@ -1758,7 +1758,7 @@ loc_484C2BBF:
     mov     sp, a0
     add     0x138, a0
     clr     d0
-    call    func_484C33E2_entry, 0, 0x10
+    call    PcComReplyDone_entry, 0, 0x10
     mov     d0, (0x1c, sp)
     mov     sp, a0
     add     0x138, a0
@@ -1774,7 +1774,7 @@ loc_484C2BE6:
     add     0x138, a0
     movhu   (0x20, sp), d0
     exth    d0
-    call    func_484C3441_entry, 0, 0x14
+    call    PcComReplyStatus_entry, 0, 0x14
     mov     d0, (0x1c, sp)
     mov     sp, a0
     add     0x138, a0
@@ -1790,7 +1790,7 @@ loc_484C2C0E:
     add     0x138, a1
     mov     0x1388, d0
     mov     0x23, d1
-    call    func_484C37F6_entry, 0, 0x24
+    call    PcComAwait_entry, 0, 0x24
     mov     d0, (0x1c, sp)
     cmp     0, d0
     blt     loc_484C2C2B
@@ -1817,14 +1817,14 @@ func_484C2C48:
     movbu   d0, (0x50151bd6)
     mov     a1, a0
     mov     (8, a0), a0
-    call    func_484C335D_entry, [d2], 0xc
+    call    PcComCrc7Check_entry, [d2], 0xc
     cmp     0, d0
     blt     loc_484C2C6A
     bra     loc_484C2CA1
 loc_484C2C6A:
     mov     0x50151758, a0
     mov     1, d0
-    call    func_484C3441_entry, 0, 0x14
+    call    PcComReplyStatus_entry, 0, 0x14
     mov     d0, (0x1c, sp)
     mov     0xff, d0
     mov     0x50151758, a0
@@ -1884,7 +1884,7 @@ loc_484C2CA1:
     mov     0x50151758, a1
     mov     0x1388, d0
     mov     0x23, d1
-    call    func_484C37F6_entry, 0, 0x24
+    call    PcComAwait_entry, 0, 0x24
     mov     d0, (0x1c, sp)
     cmp     0, d0
     blt     loc_484C2D4B
@@ -1898,7 +1898,7 @@ loc_484C2D4B:
 loc_484C2D5E:
     mov     sp, a0
     add     0x24, a0
-    call    func_48582669_entry, [d2,d3,a2,a3], 0x10
+    call    PcComCommand_entry, [d2,d3,a2,a3], 0x10
     movhu   d0, (0x20, sp)
     movhu   (0x20, sp), d0
     exth    d0
@@ -1909,7 +1909,7 @@ loc_484C2D75:
     mov     sp, a0
     add     0x138, a0
     clr     d0
-    call    func_484C33E2_entry, 0, 0x10
+    call    PcComReplyDone_entry, 0, 0x10
     mov     d0, (0x1c, sp)
     mov     sp, a0
     add     0x138, a0
@@ -1925,7 +1925,7 @@ loc_484C2D9C:
     add     0x138, a0
     movhu   (0x20, sp), d0
     exth    d0
-    call    func_484C3441_entry, 0, 0x14
+    call    PcComReplyStatus_entry, 0, 0x14
     mov     d0, (0x1c, sp)
     mov     sp, a0
     add     0x138, a0
@@ -1941,7 +1941,7 @@ loc_484C2DC4:
     add     0x138, a1
     mov     0x1388, d0
     mov     0x23, d1
-    call    func_484C37F6_entry, 0, 0x24
+    call    PcComAwait_entry, 0, 0x24
     mov     d0, (0x1c, sp)
     cmp     0, d0
     blt     loc_484C2DE1
@@ -2011,7 +2011,7 @@ loc_484C2E5C:
     mov     sp, a0
     add     0x1c, a0
     mov     (0x48, sp), d0
-    call    func_484C3441_entry, 0, 0x14
+    call    PcComReplyStatus_entry, 0, 0x14
     mov     d0, (0x18, sp)
     mov     sp, a0
     add     0x1c, a0
@@ -2026,7 +2026,7 @@ loc_484C2E5C:
     add     0x1c, a1
     mov     0x1388, d0
     mov     0x23, d1
-    call    func_484C37F6_entry, 0, 0x24
+    call    PcComAwait_entry, 0, 0x24
     mov     d0, (0x18, sp)
     cmp     0, d0
     blt     loc_484C2E98
@@ -2058,14 +2058,14 @@ loc_484C2EAB:
     and     0x7f, d0
     movbu   d0, (0x50151765)
     mov     0x50151758, a0
-    call    func_484C330A_entry, [d2], 0xc
+    call    PcComCrc7Put_entry, [d2], 0xc
     mov     0x50151758, a0
     call    func_484B3987_entry, 0, 0x20
     mov     0x50151346, a0
     mov     0x50151758, a1
     mov     0x1388, d0
     mov     0x23, d1
-    call    func_484C37F6_entry, 0, 0x24
+    call    PcComAwait_entry, 0, 0x24
     mov     d0, (0x18, sp)
     cmp     0, d0
     blt     loc_484C2F24
@@ -2103,7 +2103,7 @@ func_484C2F3E_entry:
     mov     0x50151758, a1
     mov     0x1388, d0
     mov     0x30, d1
-    call    func_484C37F6_entry, 0, 0x24
+    call    PcComAwait_entry, 0, 0x24
     mov     d0, (0x18, sp)
     cmp     0, d0
     blt     loc_484C2F88
@@ -2148,7 +2148,7 @@ func_484C2FC4_entry:
     mov     0x50151758, a1
     mov     0x1388, d0
     mov     0x23, d1
-    call    func_484C37F6_entry, 0, 0x24
+    call    PcComAwait_entry, 0, 0x24
     mov     d0, (0x18, sp)
     cmp     0, d0
     blt     loc_484C3006
@@ -2185,7 +2185,7 @@ func_484C301C_entry:
     mov     0x50151758, a1
     mov     0x1388, d0
     mov     0x2d, d1
-    call    func_484C37F6_entry, 0, 0x24
+    call    PcComAwait_entry, 0, 0x24
     mov     d0, (0x18, sp)
     cmp     0, d0
     blt     loc_484C3069
@@ -2227,7 +2227,7 @@ func_484C309A_entry:
     mov     0x50151758, a1
     mov     0x1388, d0
     mov     0x23, d1
-    call    func_484C37F6_entry, 0, 0x24
+    call    PcComAwait_entry, 0, 0x24
     mov     d0, (0x18, sp)
     cmp     0, d0
     blt     loc_484C30E5
@@ -2551,11 +2551,11 @@ func_484C32E0_entry:
     mov     d1, (0, sp)
     mov     d1, d0
     ret     0, 4
-
-func_484C330A:
+# PcComCrc7Put  (CPU 0x484c330a)
+PcComCrc7Put:
     movm    [d2], (sp)
     add     -8, sp
-func_484C330A_entry:
+PcComCrc7Put_entry:
     mov     a0, (0x14, sp)
     clr     d0
     movbu   d0, (4, sp)
@@ -2592,11 +2592,11 @@ loc_484C3348:
     mov     (0, sp), d1
     movbu   d0, (d1, a0)
     ret     [d2], 0xc
-
-func_484C335D:
+# PcComCrc7Check  (CPU 0x484c335d)
+PcComCrc7Check:
     movm    [d2], (sp)
     add     -8, sp
-func_484C335D_entry:
+PcComCrc7Check_entry:
     mov     a0, (0x14, sp)
     clr     d0
     movbu   d0, (4, sp)
@@ -2660,10 +2660,10 @@ func_484C33BA_entry:
     mov     d0, (0x14, sp)
     mov     (0x14, sp), d0
     ret     0, 0x1c
-
-func_484C33E2:
+# PcComReplyDone  (CPU 0x484c33e2)
+PcComReplyDone:
     add     -0x10, sp
-func_484C33E2_entry:
+PcComReplyDone_entry:
     mov     a0, (0x18, sp)
     clr     d0
     mov     d0, (0xc, sp)
@@ -2672,7 +2672,7 @@ func_484C33E2_entry:
     add     d0, d1
     mov     d1, (0xc, sp)
     mov     (0x18, sp), a0
-    call    func_484C330A_entry, [d2], 0xc
+    call    PcComCrc7Put_entry, [d2], 0xc
     mov     (0xc, sp), d0
     ret     0, 0x10
 
@@ -2706,10 +2706,10 @@ func_484C3439:
     mov     a0, (8, sp)
     movbu   (6, a0), d0
     ret     0, 0
-
-func_484C3441:
+# PcComReplyStatus  (CPU 0x484c3441)
+PcComReplyStatus:
     add     -0x14, sp
-func_484C3441_entry:
+PcComReplyStatus_entry:
     mov     d0, (0x20, sp)
     mov     a0, (0x1c, sp)
     clr     d0
@@ -2723,7 +2723,7 @@ func_484C3441_entry:
     extbu   d0
     call    func_484C3428, 0, 0
     mov     (0x1c, sp), a0
-    call    func_484C330A_entry, [d2], 0xc
+    call    PcComCrc7Put_entry, [d2], 0xc
     mov     (0x10, sp), d0
     ret     0, 0x14
 
@@ -2858,7 +2858,7 @@ func_484C3526_entry:
     add     d0, d1
     mov     d1, (0x10, sp)
     mov     (0x1c, sp), a0
-    call    func_484C330A_entry, [d2], 0xc
+    call    PcComCrc7Put_entry, [d2], 0xc
     mov     (0x10, sp), d0
     ret     0, 0x14
 
@@ -2889,7 +2889,7 @@ func_484C359D_entry:
     add     d0, d1
     mov     d1, (0xc, sp)
     mov     (0x18, sp), a0
-    call    func_484C330A_entry, [d2], 0xc
+    call    PcComCrc7Put_entry, [d2], 0xc
     mov     (0xc, sp), d0
     ret     0, 0x10
 
@@ -2987,7 +2987,7 @@ func_484C3630_entry:
     add     d0, d1
     mov     d1, (0x14, sp)
     mov     (0x24, sp), a0
-    call    func_484C330A_entry, [d2], 0xc
+    call    PcComCrc7Put_entry, [d2], 0xc
     mov     (0x14, sp), d0
     ret     0, 0x18
 
@@ -3062,7 +3062,7 @@ func_484C36D6_entry:
     add     d0, d1
     mov     d1, (0x14, sp)
     mov     (0x24, sp), a0
-    call    func_484C330A_entry, [d2], 0xc
+    call    PcComCrc7Put_entry, [d2], 0xc
     mov     (0x14, sp), d0
     ret     0, 0x18
 
@@ -3188,10 +3188,10 @@ loc_484C37F1:
     mov     -1, d0
 loc_484C37F3:
     ret     0, 0
-
-func_484C37F6:
+# PcComAwait  (CPU 0x484c37f6)
+PcComAwait:
     add     -0x24, sp
-func_484C37F6_entry:
+PcComAwait_entry:
     movbu   d1, (0x38, sp)
     mov     a1, (0x30, sp)
     mov     a0, (0x2c, sp)
@@ -3305,7 +3305,7 @@ loc_484C38D8:
     jmp     loc_484C3812
 loc_484C38EC:
     mov     (0x2c, sp), a0
-    call    func_484C335D_entry, [d2], 0xc
+    call    PcComCrc7Check_entry, [d2], 0xc
     cmp     0, d0
     blt     loc_484C38F9
     bra     loc_484C3912

@@ -42861,8 +42861,8 @@ loc_48435BDB:
 func_48435BDE:
     movbu   d0, (0x50034c39)
     retf    0, 0
-
-func_48435BE7:
+# StylePartToTgPart  (CPU 0x48435be7)
+StylePartToTgPart:
     extbu   d0
     cmp     0x20, d0
     bcc     loc_48435BF7
@@ -43052,7 +43052,7 @@ StyleIdArrayHandler_entry:
     mov     d2, d0
     and     0xffffff0f, d0
     extbu   d0
-    call    func_48435BE7, 0, 0
+    call    StylePartToTgPart, 0, 0
     mov     d0, a3
     exth    d0
     cmp     0, d0

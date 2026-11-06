@@ -9215,11 +9215,11 @@ loc_4C004633:
     bra     loc_4C0045BC
 loc_4C00463E:
     ret     [d2,d3,a2,a3], 0x20
-
-func_4C004641:
+# TgPartEqVoicesApply  (lib CPU 0x4c004641)
+TgPartEqVoicesApply:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x18, sp
-func_4C004641_entry:
+TgPartEqVoicesApply_entry:
     mov     a0, a2
     add     6, a2
     movbu   (a2), d1
@@ -41698,7 +41698,7 @@ loc_4C014AF5:
     mov     d0, (0x10, sp)
     mov     a2, d0
     mov     (0x30, sp), d1
-    call    func_48451A96_entry, [d2,d3], 0x1c
+    call    KeybedM3Dispatch_entry, [d2,d3], 0x1c
     ret     [d2,d3,a2], 0x24
 loc_4C014B08:
     mov     a2, d0
@@ -41855,7 +41855,7 @@ loc_4C014C33:
     mov     d0, (0x10, sp)
     mov     a2, d0
     mov     (0x30, sp), d1
-    call    func_48451A96_entry, [d2,d3], 0x1c
+    call    KeybedM3Dispatch_entry, [d2,d3], 0x1c
     ret     [d2,d3,a2], 0x24
 loc_4C014C46:
     mov     a2, d0
@@ -41975,7 +41975,7 @@ loc_4C014D35:
     mov     d0, (0x10, sp)
     mov     a2, d0
     mov     (0x30, sp), d1
-    call    func_48451A96_entry, [d2,d3], 0x1c
+    call    KeybedM3Dispatch_entry, [d2,d3], 0x1c
     ret     [d2,d3,a2], 0x24
 loc_4C014D48:
     mov     a2, d0
@@ -42155,18 +42155,18 @@ loc_4C014E82:
     bne     loc_4C014E82
 loc_4C014E98:
     ret     [a2,a3], 0x20
-
-func_4C014E9B:
+# KeybedPollPass  (lib CPU 0x4c014e9b)
+KeybedPollPass:
     movm    [a2,a3], (sp)
     add     -0x1c, sp
-func_4C014E9B_entry:
+KeybedPollPass_entry:
     mov     sp, a3
     add     0x14, a3
     mov     sp, a2
     add     0x18, a2
     mov     a3, a0
     mov     a2, a1
-    call    func_48447FBC_entry, [d2,d3,a2,a3], 0x28
+    call    KeybedEventToM3_entry, [d2,d3,a2,a3], 0x28
     cmp     -1, d0
     beq     loc_4C014ECC
 loc_4C014EB3:
@@ -42177,7 +42177,7 @@ loc_4C014EB3:
     call    func_4C01B734_entry, [d2,d3,a2,a3], 0x30
     mov     a3, a0
     mov     a2, a1
-    call    func_48447FBC_entry, [d2,d3,a2,a3], 0x28
+    call    KeybedEventToM3_entry, [d2,d3,a2,a3], 0x28
     cmp     -1, d0
     bne     loc_4C014EB3
 loc_4C014ECC:
@@ -45325,7 +45325,7 @@ loc_4C0168E5:
     call    M3SendProcess_entry, [d2,d3], 0x18
     mov     (0x58, sp), d0
     mov     (0x28, sp), d1
-    call    func_4C029D4F_entry, [d2,d3,a2], 0x24
+    call    MsaOnRhythmVariation_entry, [d2,d3,a2], 0x24
     jmp     loc_4C01699E
 loc_4C016913:
     btst    0x08, d2
@@ -45344,7 +45344,7 @@ loc_4C016913:
     call    M3SendProcess_entry, [d2,d3], 0x18
     mov     (0x58, sp), d0
     mov     (0x28, sp), d1
-    call    func_4C029D4F_entry, [d2,d3,a2], 0x24
+    call    MsaOnRhythmVariation_entry, [d2,d3,a2], 0x24
     bra     loc_4C01699E
 loc_4C016945:
     btst    0x04, d2
@@ -47202,7 +47202,7 @@ func_4C017987_entry:
     bne     loc_4C0179A9
     mov     (0x30, sp), d1
     mov     d3, d0
-    call    func_4C029D4F_entry, [d2,d3,a2], 0x24
+    call    MsaOnRhythmVariation_entry, [d2,d3,a2], 0x24
 loc_4C0179A9:
     mov     d2, d0
     ret     [d2,d3], 0x20
@@ -47222,7 +47222,7 @@ func_4C0179AD_entry:
     bne     loc_4C0179CF
     mov     (0x30, sp), d1
     mov     d3, d0
-    call    func_4C029D4F_entry, [d2,d3,a2], 0x24
+    call    MsaOnRhythmVariation_entry, [d2,d3,a2], 0x24
 loc_4C0179CF:
     mov     d2, d0
     ret     [d2,d3], 0x20
@@ -49852,7 +49852,7 @@ loc_4C018F48:
     call    M3SendProcess_entry, [d2,d3], 0x18
     mov     (0x20, sp), d1
     mov     d2, d0
-    call    func_4C029D4F_entry, [d2,d3,a2], 0x24
+    call    MsaOnRhythmVariation_entry, [d2,d3,a2], 0x24
     bra     loc_4C018FC3
 loc_4C018F75:
     btst    0x08, d3
@@ -51147,7 +51147,7 @@ loc_4C019A57:
     call    M3SendProcess_entry, [d2,d3], 0x18
     mov     (0x20, sp), d1
     mov     d2, d0
-    call    func_4C029D4F_entry, [d2,d3,a2], 0x24
+    call    MsaOnRhythmVariation_entry, [d2,d3,a2], 0x24
     bra     loc_4C019AAD
 loc_4C019A88:
     btst    0x08, d3
@@ -52358,7 +52358,7 @@ loc_4C01A3FB:
     call    func_4C015717_entry, [d2,d3,a2,a3], 0x28
     mov     (0x18, sp), d1
     mov     d2, d0
-    call    func_4C029D4F_entry, [d2,d3,a2], 0x24
+    call    MsaOnRhythmVariation_entry, [d2,d3,a2], 0x24
     bra     loc_4C01A44B
 loc_4C01A429:
     btst    0x08, d3
@@ -54798,7 +54798,7 @@ loc_4C01B779:
     movbu   (0x40, sp), d0
     mov     d0, (0x10, sp)
     mov     (0x38, sp), d0
-    call    func_48451A96_entry, [d2,d3], 0x1c
+    call    KeybedM3Dispatch_entry, [d2,d3], 0x1c
     ret     [d2,d3,a2,a3], 0x30
 loc_4C01B78A:
     mov     (0x38, sp), d0

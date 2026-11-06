@@ -8324,8 +8324,7 @@ P_01PIANOD_SQT_p2:
 	sq_cc	3, 0, 16, 1, 34
 	sq_cc	6, 0, 16, 1, 38
 	sq_cc	9, 0, 16, 1, 41
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"01PIANOD.sqt.p2.ref", 0x70fc, 4
+	.byte	9, 176, 16, 1	; the first 4 bytes of a tick-first event, cut by the end
 	sq_cell	0x84, 0, 115	; cell 114: song 1 track 9, 1 of 5
 	sq_beat
 	sq_beat

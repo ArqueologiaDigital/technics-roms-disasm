@@ -218,8 +218,8 @@ All 338 keys of the 169 styles are presets whose own key matches. 0x0044 is "Lim
 "Single Rotor", "Wah1", "Comp+Dst+Delay", "Bright Twin" and so on. The source's comment names the
 two presets: `style_units 0x11, 0x91, 0x44, 0x00 # EFF4 "Shallow2", EFF5 "Limiter1", TOTAL MODE`.
 [`rhythm_style_semantics.py`](mn10300-names-probes/rhythm_style_semantics.py) section 4 prints the
-list. The parts the units serve come from the bound variation's bytes +2/+3 (`func_48442164`: key
-0xB048 and the per-part switch 0x0020005F / 0x00B0005F); that was not traced further.
+list. The parts the units serve come from the bound variation's bytes +2/+3 (`func_48442164`,
+"A variation record" below).
 
 **A part set-up** (15 bytes, `style_part`). Byte `k` is the value of field `k` of the firmware's
 part-field table 0x485B77D4. That table holds one (status, controller) pair per field.
@@ -257,8 +257,25 @@ EFFECT" and so on. The GUI's formatters agree: `func_4848BC9A` prints an FC thro
 The four EQ fields are read together by the tone generator's `func_4C00807E`. It takes the two
 (FC, gain) pairs at part record +0x21/+0x23 and +0x22/+0x24, looks each FC up in 0x4C008071's table
 (132 exponential words) and computes the filter coefficients in double precision (`LibF64Div`,
-`LibF64Mul`). So they are a two-band part equaliser. Which register the coefficients reach was not
-traced.
+`LibF64Mul`). So they are a two-band part equaliser. The coefficients reach the tone generator's
+per-voice filter-coefficient registers (2026-11-06,
+[`rhythm_part_eq_and_units.py`](ic18-rhythm-rom-probes/rhythm_part_eq_and_units.py) part A):
+
+- `func_4C00807E` writes five 20-bit words to the part record (0x500B5340 + part x 0x54C) at
+  +0x28, +0x2C, +0x30, +0x34 and +0x38, and a normalising shift (`asl 3` / `LibDiv32` by 6 of the
+  halvings it needed) to the byte at +0x3C;
+- when a part's EQ changes (a case of the TG controller handler `func_4C02E85D`), the library collects the part's voices (`TgVoiceListCollectPartAll`) and `func_4C0045E7` merges the five words
+  into each voice record (`TgVoiceRecordPtr`) at +0x64 .. +0x74, keeping the top 12 bits, then calls
+  `TgVoiceReg4000GroupWrite` (lib 0x4C037BA8);
+- that writes the five words through `TgVoiceRegWrite` as register classes 0x40000000, 0x44000000,
+  0x48000000, 0x4C000000 and 0x50000000 of the voice's slot (hi16 to 0x98050000 / lo16 to
+  0x98050002 on the MAIN TG, 0x98040000 on the SUB TG).  The note-on paths (`TgElemNoteOnStd`,
+  `TgKitElemNoteOn`, `TgElemNoteOnFresh` and four unnamed routines) copy part +0x28 into a new
+  voice's +0x64 (`[INFERENCE]` from `add 0x28` / `add 0x64` on the two pointers), so every note
+  starts with them.
+
+What the TG does with classes 0x40-0x50 (the filter topology, the coefficients' fixed-point format)
+needs the tone generator's datasheet.  The probe finds no load of the byte at +0x3C in the library.
 
 **`fold_root`.** `func_484419BB` reads field 0 of the part template 0x5003A2BC, and `func_4843D558`
 passes it to the key conversion `func_4843CEF3` -> `func_48436229`. There the note follows the
@@ -271,8 +288,8 @@ instead:
 
 So with 8 the pattern moves up for roots C to G# and down for A, A# and B, which keeps an
 accompaniment part within a fifth of where it was written. The value does not matter on the drum
-parts, where every note's rule is `NcrNone`. This is read from that one branch of
-`func_48436229`; the routine's other branches were not followed.
+parts, where every note's rule is `NcrNone`. The routine's other branches are in "What the
+conversion tables do" below.
 
 Fields 15-23 of the table (CC64, CC1, CC11, channel pressure, pitch bend, CC16, CC17, CC13) are not
 in a style's set-up. They start from the default template 0x485B7804.
@@ -331,17 +348,38 @@ VARIATION 1-4 and FILL IN 1/2 buttons, the bar counts and the count block.
 
 `StyleRecordBindBuiltin` (0x484336DB) binds the current one into the pattern player's view:
 
-| offset     | size  | field                         | evidence                                                                                    |
-|------------|-------|-------------------------------|---------------------------------------------------------------------------------------------|
-| `+0`       | 1     | bars - 1                      | `0x50122DCE`; `StyleBoundRecByteCeInc` + 1 -> `0x5003A452` (`func_48442293`)                |
-| `+1`       | 1     | beats a bar - 1               | `0x50122DCF`; `StyleBoundRecByteCfLow3` + 1 -> `0x5003A454`                                 |
-| `+2`, `+3` | 1, 1  | two part numbers, 0xFF = none | `0x50122DD4`; `func_48442164` stores them as key 0xB048 [INFERENCE: the sound units' parts] |
-| `+4`       | u16BE | set-up length L               | `0x50122DCC`                                                                                |
-| `+6`       | L     | set-up events                 | `0x50122DC8`; replayed into the part table by `func_48441DEB`                               |
-| `+6+L`     | u24BE | stream length S               |                                                                                             |
-| `+9+L`     | S     | the event stream              | start `0x50122DC0`, end `0x50122DC4` = start + S - 1, the 0xF5                              |
+| offset     | size  | field                                                       | evidence                                                                     |
+|------------|-------|-------------------------------------------------------------|------------------------------------------------------------------------------|
+| `+0`       | 1     | bars - 1                                                    | `0x50122DCE`; `StyleBoundRecByteCeInc` + 1 -> `0x5003A452` (`func_48442293`) |
+| `+1`       | 1     | beats a bar - 1                                             | `0x50122DCF`; `StyleBoundRecByteCfLow3` + 1 -> `0x5003A454`                  |
+| `+2`, `+3` | 1, 1  | the style parts DSP units EFF4 / EFF5 serve, 0xFF = default | `0x50122DD4`; `func_48442164` (below)                                        |
+| `+4`       | u16BE | set-up length L                                             | `0x50122DCC`                                                                 |
+| `+6`       | L     | set-up events                                               | `0x50122DC8`; replayed into the part table by `func_48441DEB`                |
+| `+6+L`     | u24BE | stream length S                                             |                                                                              |
+| `+9+L`     | S     | the event stream                                            | start `0x50122DC0`, end `0x50122DC4` = start + S - 1, the 0xF5               |
 
-Bytes 2/3 are `FF FF` in 2710 of the 3380 variations and `FF 02`-`FF 07` in the rest. The set-up
+Bytes 2/3 are `FF FF` in 2710 of the 3380 variations and `FF 02`-`FF 07` in the rest. They are
+the style parts that the DSP effect units the style sets (EFF4 / EFF5, `style_units` above) apply
+to (2026-11-06, [`rhythm_part_eq_and_units.py`](ic18-rhythm-rom-probes/rhythm_part_eq_and_units.py)
+part B). `func_48442164` runs when the style's units are applied (`func_4844223A`, after
+`StyleDspUnitsApply`, and at the other six call sites) and reads them through `0x50122DD4`:
+
+- a byte of 8 or more (0xFF) takes a default: style part 2 (Acc1) for +2, part 3 (Acc2) for +3,
+  and the other one when the named part is that default (+3 = 2 moves +2's default to 3);
+- `func_48435C29` maps each style part to its TG part (table 0x485B6DA8: Drum 0x19, Bass 0x18,
+  Acc1-Acc5 0x13-0x17, Perc 0x1A); nothing more happens when either is invalid or the
+  units' flag 0x5003A43C is 0;
+- it queues (`StyleIdArrayStore`) key 0xB048 = `(part_of_+3 << 8) | part_of_+2`, then for each of
+  the two TG parts parameter 0x0020005F ("SOUND DSP" ON / OFF in the parameter dump `func_48500C71`)
+  = 1 when the variation named the part and 0 when it took the default, and parameter 0x00B0005F
+  ("SOUND DSP DEPTH") = 80.
+
+So in the 670 variations that name a part (always in +3, parts 2-7) that part's SOUND DSP is on;
+in the other 2,710 the default parts get depth 80 with the switch off. Key 0xB048 itself has no
+reader by its literal value in program 941 (the unit PART keys `SndUnitRefreshGroups56` reads are
+0xB040 / 0xB050) and no `M3HookDispatch` handler (the class-0x00 list holds only {0xFF00, 0xD000});
+`[INFERENCE]` it is the style's record of the two parts, which the DSP unit code reads through
+another key. The set-up
 events are only CC (22,351) and program changes (4,947). In the source, `var_head` writes the
 first six bytes from the bars, the beats and the two parts, with the length as a label difference.
 The set-up events follow, one per line (below). Then come `var_events` (the stream length as a label
@@ -416,10 +454,62 @@ deltas, and why a beat is 96 ticks. An event with no position byte before it is 
 
 Every note on parts 0 and 7 has rule 0. Part 1, the bass, mostly has `NcrRootShiftOnly` and
 `NcrMelodyBasic`; the chord parts have the `Chord` rules. The 128 entries, their flags and their
-names are the same in the KN2400, KN6000 and KN6500 programs. Entries 25-79 and 84-127 repeat
-tables 17 and 80. [`rhythm_style_semantics.py`](mn10300-names-probes/rhythm_style_semantics.py)
-section 3 prints the counts. `[INFERENCE]` What each conversion table does to a key was not
-followed further than `func_48436229`.
+names are the same in the KN2400, KN6000 and KN6500 programs. Entries 26-79 repeat table 17,
+84-95 and 104-127 table 80, 25 table 22, 81 and 99 the unnamed table of 15. [`rhythm_style_semantics.py`](mn10300-names-probes/rhythm_style_semantics.py)
+section 3 prints the counts. What each table does to a key is the next section.
+
+**What the conversion tables do** (2026-11-06,
+[`rhythm_noteconv_tables.py`](ic18-rhythm-rom-probes/rhythm_noteconv_tables.py)). The patterns are
+written over a C chord: a key's pitch class is read as a degree of C. A rule entry is
+`{mode, alt_chord, flag2, flag3, u32 table}`, and a table is a name pointer followed by signed
+offsets. `StyleNoteKeyConvert` (0x4843CEF3) hands `NoteConvApply` (0x48436229) the note's
+`{rule, fold_root, bass, root, type, on_bass, ..., state ptr, composer_part}`: root 1-12 (C = 1)
+and type 1-41 from `GetCurrentChord`, or from the second chord record `func_4844DDC6` copies when
+the rule's `alt_chord` byte is set (only rule 2); `bass` is 1 on style part 1; `composer_part` is
+1 when the rhythm genre is not 0 and the part is the one `func_4843BD55` selected (set from the
+COMPOSER's step screen `TT_CMSTEP`, 0xFF = none; [INFERENCE] the part being recorded).
+`NoteConvApply` then:
+
+- rule >= 0x80, or no table (rules 0, 3-14): the key unchanged, chord or not;
+- root 0 (no chord): 0xFF, no note;
+- type 0: the chord's root in the key's octave (`key - key % 12 + root - 1`, folded by `fold_root`);
+- `composer_part`: only the root shift (`root - 1`, folded), and with `flag2` clear a written E
+  (pitch class 4) becomes Eb on a minor-family chord (`ChordTypeMinorTable`); `flag3` set: no
+  shift at all;
+- the bass part when the chord's bass note (+5, a slash chord) is not its root, or the state
+  byte 0x50038D95 is set (cleared on use): the bass note in the key's octave, folded, and an octave up
+  when that lands more than 11 - `fold_root` semitones below the key;
+- otherwise the table. **Mode 1** (11 tables, 496 bytes: 41 types x 12 pitch classes): the key
+  moves by `offset[type][key % 12]`, then by the root (`root - 1`, an octave lower above
+  `fold_root`). **Mode 0** (10 tables, 5,908 bytes: 41 types x 12 roots x 12 pitch classes): the key
+  moves by `offset[type][root][key % 12]` only, which holds the root shift and the inversion;
+- last, for the bass part, an octave up when the result is more than an octave below the key; the
+  result is folded into 0..127 by octaves (`func_48436197`).
+
+The chord types are the 41 names `AcChordBoxProc` prints (0x485A0D45; type t is name t - 1, which
+the minor-family table confirms: its 13 types are the 13 minor / dim / (#9) names): 1 Maj, 2 7,
+3 Maj7, 4 aug, 5 min, 6 min7, 7 dim, 8 m7(b5), 9 mM7, 10 7sus4, 11 6, 12 aug7, ... 40 add9,
+41 madd9. What the tables do, read from their offsets:
+
+| table (rules)                                                                       | mode | what it does to a key written over C                                                                                                                                                        |
+|-------------------------------------------------------------------------------------|------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| "Root Shift Only" (1, 2)                                                            | 1    | every offset 0: transposed by the root only                                                                                                                                                 |
+| unnamed (15, 81, 99), "Melody Basic" (16)                                           | 1    | the scale follows the chord: on 7 Eb -1, A +1, B -1 (B -> Bb); on min E -> Eb, B -> Bb, A and Ab -> C (avoid notes go up); dim and m7(b5) pull every tone onto the chord; 15 also adds 9ths |
+| "Melody In 7th G>Bb" (17, 26-79)                                                    | 1    | as Melody Basic, and on 7th chords G (and F#) go up to Bb                                                                                                                                   |
+| "Melody In 7th C>Bb" (18)                                                           | 1    | as Melody Basic, and on 7th chords C goes down to Bb                                                                                                                                        |
+| "Maj incl. F for Gospel etc" (19)                                                   | 1    | as Melody Basic, and F is raised to G on 7 and min (F is kept on Maj)                                                                                                                       |
+| "Maj incl. A for walking Bass" (20)                                                 | 1    | A is kept on 7 and min (a walking bass's 6th); on 7, C -> Bb                                                                                                                                |
+| "Maj incl.Bb for MAJ=7th" (21)                                                      | 1    | a 7 chord moves only B -> Bb: the written Bb is the 7th                                                                                                                                     |
+| "Natural=MelodicDown" (22, 25)                                                      | 1    | on min: E -> Eb, A -> Ab, B -> Bb (natural minor)                                                                                                                                           |
+| "Harmonic Minor" (23)                                                               | 1    | on min: E -> Eb, A -> Ab, Bb -> B (harmonic minor)                                                                                                                                          |
+| "Merodic Min Ascend" (24)                                                           | 1    | on min: E -> Eb, Ab -> A, Bb -> B (melodic minor)                                                                                                                                           |
+| "Basic Chord 100%" (80, 84-95, 104-127)                                             | 0    | every written scale tone onto a chord tone (Maj {0, 4, 7}, 7 {4, 7, 10}, min {0, 3, 7} above the root), an inversion per root that stays within A3..C#5                                     |
+| "Keep near C" (82)                                                                  | 0    | all seven scale tones kept (transposed diatonically), the octave chosen per root to stay within Ab3..E5                                                                                     |
+| "HardRock Chord" (83)                                                               | 0    | onto the root and fifth only, {0, 7}: a power chord                                                                                                                                         |
+| "Chord CEGB" / "CDEG" / "DEGB" / "CEGA" / "ADGC" / "EGAD" / "CEAD" (96-98, 100-103) | 0    | a written four-note voicing mapped tone by tone onto the chord's tones, keeping its shape (CEGA: Maj {0, 4, 7, 9}; DEGB: Maj {2, 4, 7, 11}), per root inside about G3..E5                   |
+
+The probe prints every table's offsets per chord type (mode 1) and the intervals and range the
+written scale lands on per type over the 12 roots (mode 0).
 
 **In the source**, one event per line, one macro per kind (defined in `rhythm.s`):
 
@@ -451,10 +541,18 @@ Beat", 20 "Hi-Hat Accent", 21 "H.H.Half Open", 24 "Piccolo Snare", 104 "Shaker O
 
 The styles play 40 kit sounds. 30 of them are tones of the internal archive: Live Standard Kit,
 Standard Kit 2, Standard Kit 1, Jazz Kit and so on. Voice Kit is the one COUNT INTRO uses. The other
-10 have no tone there: eight LSB-4 variants, {34, 0} and {127, 0}, 3,386 notes in all. Which tone
-`ToneKeyFind` falls back to for them was not traced, so the probe counts them as not matching. Of
-the 203,802 drum notes, 188,420 (92.5 %, a lower bound) play a voice that has Standard Kit 1's name
-for that key in the note's own kit. The rest are the kits' own sounds on
+10 have no tone there: eight LSB-4 variants, {34, 0} and {127, 0}, 3,386 notes in all.
+`ToneKeyFind` (0x4856FC51, through `ToneRecordFind`) gives them another kit (2026-11-06,
+[`rhythm_kit_tone_fallback.py`](ic18-rhythm-rom-probes/rhythm_kit_tone_fallback.py)). After the
+archive sources 1-4 and the internal hash fail, the kit bank (MSB 0x26) takes none of the per-MSB
+rules and reaches the general tail (0x4856FF17), which tries {MSB, LSB & 0xF8, program},
+{MSB, 0, program}, {MSB, 0, program & 0xF8}, {MSB, 0, 0} and last 0x207F7F. So each LSB-4 kit
+plays the LSB-0 kit of its program ({26, 4} Analog Kit 2, {32, 4} Jazz Kit, {31, 4} Techno Kit,
+{48, 4} Orchestral Kit, {72, 4} Bongo&Conga Kit, {27, 4} Soul Kit, {0, 4} Standard Kit 1,
+{56, 4} Sound Effect Kit), {34, 0} plays Jazz Kit (program 32) and {127, 0} Standard Kit 1. With
+that, 191,448 of the 203,802 drum notes (93.9 %; 188,420, 92.5 %, counting the ten as not
+matching) play a voice that has Standard Kit 1's name for that key in the kit they sound. The rest
+are the kits' own sounds on
 the same keys: the brush kits put "Brush Tap", "Brush Slap" and "Brush Swirl" on 38-40, the
 orchestral kit "Orch.S.Drum 1" on 38, and the bongo / conga and voice kits have their own sets. So
 one layout holds, and its names are Standard Kit 1's.
@@ -545,14 +643,22 @@ Settled on 2026-11-02 (lane mn10300-names, agent `rhythm`; the probes are in
 - 0x484335BF returns a count-in pattern record: renamed `StyleCountInRecordGet` (was
   `StyleVariationNameGet`).
 
+Settled on 2026-11-06 (lane kn7000-names; probes in
+[`ic18-rhythm-rom-probes/`](ic18-rhythm-rom-probes/), prefix `rhythm_`):
+
+- `ToneKeyFind`'s fallback for the ten kit sounds the internal archive has no tone for: the LSB-0
+  kit of the same program, {34, 0} -> Jazz Kit, {127, 0} -> Standard Kit 1 (N-83177c3d, "Drum
+  keys");
+- what each NoteConvRules table does to a key: every branch of `NoteConvApply` and all 21 tables
+  (N-c052c027, "What the conversion tables do");
+- the part EQ's coefficients reach the per-voice TG register classes 0x40000000-0x50000000
+  (`TgVoiceReg4000GroupWrite`), and a variation's bytes +2/+3 are the parts of DSP units EFF4 /
+  EFF5, with their SOUND DSP switch and depth (N-e779328f, the part set-up and "A variation record").
+  What the TG does with those coefficient words needs its datasheet; key 0xB048 has no literal
+  reader (`[INFERENCE]` above).
+
 Still open:
 
-- which tone `ToneKeyFind` falls back to for the ten kit sounds the internal archive has no tone
-  for ({26, 4} ... {127, 0}, 3,386 notes);
-- what each NoteConvRules table does to a key: `func_48436229` and its tables were read only as far
-  as the octave fold;
-- which register the part EQ's coefficients (`func_4C00807E`) reach, and the role of a variation's
-  bytes +2/+3 (`func_48442164`, key 0xB048);
 - which chip answers at the IC18/IC20 site of the owner's unit has not been checked (see the dump's
   README).
 

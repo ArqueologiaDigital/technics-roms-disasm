@@ -3134,9 +3134,10 @@ P_02TANZEN_SQT_p2:
 	sq_beat
 	sq_end
 ; after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	63, 88, 7, 0, 49	; data bytes of an event cut at the start
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"02TANZEN.sqt.p2.ref", 0x2ef4, 12
+	.byte	63, 88, 7, 0	; data bytes of an event cut at the start
+	sq_note	49, 0, 68, 85, 10, 0
+	sq_beat
+	sq_note	0, 0, 53, 81, 44, 0
 	sq_cell	0x80, 0, 49	; cell 48: song 1 track 5, 1 of 3
 	sq_sys	0, 0xf1, 2, 0, 0, 2, 127
 	sq_8n	0, 0, 2, 1

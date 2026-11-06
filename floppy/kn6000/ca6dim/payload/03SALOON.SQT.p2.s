@@ -1382,11 +1382,10 @@ P_03SALOON_SQT_p2:
 	sq_beat
 	sq_end
 ; after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	0, 54	; data bytes of an event cut at the start
-	k5_note	0x90, 74, 67, 25, 0, 54
-	k5_note	0x90, 79, 81, 25, 0, 54
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"03SALOON.sqt.p2.ref", 0x1319, 5
+	.byte	0	; data bytes of an event cut at the start
+	sq_note	54, 0, 74, 67, 25, 0
+	sq_note	54, 0, 79, 81, 25, 0
+	sq_note	54, 0, 82, 76, 23, 0
 	sq_beat
 	sq_note	6, 0, 74, 78, 21, 0
 	sq_note	6, 0, 79, 93, 23, 0
@@ -1430,8 +1429,7 @@ P_03SALOON_SQT_p2:
 	sq_note	53, 0, 74, 73, 30, 0
 	sq_note	53, 0, 77, 89, 27, 0
 	sq_beat
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"03SALOON.sqt.p2.ref", 0x13fd, 3
+	.byte	5, 144, 74	; the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0xff, 0, 22	; cell 21: song 1 track 6, 1 of 86
 	sq_note	1, 0, 48, 111, 13, 0
 	sq_note	1, 0, 74, 105, 15, 0

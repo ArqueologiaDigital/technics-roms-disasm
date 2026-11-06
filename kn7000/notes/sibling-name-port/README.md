@@ -43,8 +43,14 @@ each such name, the rules are run on the other image's routine as if the name we
 
 The run of 2026-11-02 (lane mn10300-names) leaves one `wrong` pick: KN2400's
 `FilePriorityFunc` picks the KN7000's `SdcPanelSwAsFunc`, the two bodies equal and each the
-only one of its kind on its side, so the two images' names disagree there (both come from
-reflection tables; not settled).
+only one of its kind on its side.  It is a template twin, not a naming error (settled 2026-11-06,
+lane kn7000-names, `../kn7000-names-probes/names_choice_func_lists.py`): both are MILK
+choice-parameter handlers, whose MT_GetRamString copies choice (obj+0x10) out of a string-pointer
+table and whose MT_GetMax returns the last choice number.  The masked comparison hides the table.
+KN2400 `FilePriorityFunc` lists {TECHNICS, SMF} (max 1; the KN2400 has no CUSTOM STYLE), the
+KN7000's `FilePriorityFunc` {TECHNICS, SMF, CUSTOM STYLE} (max 2) and its `SdcPanelSwAsFunc`
+{SD-AUDIO, SD-SOUND} (max 1).  Two two-entry lists give equal bodies; each image's name is
+right for its own routine.  (KN2400 `SdcPanelSwAsFunc` is a `clr d0; retf` stub.)
 
 The 2026-10-24 run had 19 `wrong` picks, all from KN2400 and all but `FilePriorityFunc` in its
 SD-card screen table (`Sdc*`); for example KN2400's "`SdcSoundTtlJgFunc` (0x48718C9E)" was the
@@ -87,4 +93,5 @@ the same reflection names in another case.  `differs.tsv` lists the current rows
 
 - (settled 2026-11-02) Which SD-card reflection table was mispaired: the KN2400's (above).
 - (done 2026-11-02) `SndCmdStreamWrite` renamed to the firmware's `TgcBufWrite`.
-- KN2400 `FilePriorityFunc` = KN7000 `SdcPanelSwAsFunc` by body: which image's name is right.
+- (settled 2026-11-06) KN2400 `FilePriorityFunc` = KN7000 `SdcPanelSwAsFunc` by body: both names are right, the
+  bodies differ only in their choice lists (above).

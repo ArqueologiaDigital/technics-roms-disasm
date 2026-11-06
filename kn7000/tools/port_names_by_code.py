@@ -45,6 +45,12 @@
 #   a source gen_program_s.py wrote (a KN7000 build ported from 941), from the
 #   func_<ADDR> labels its .s files define (--b-src FILE ...); with --b-src, the
 #   entries an earlier run named are read back from --out itself.
+#   Both forms also take each func_<ADDR>_entry label, the register-save `call` entry
+#   a few bytes after an `add -N, sp` / `movm` prologue: A may name a routine there
+#   rather than at its prologue (941's DspFullReinit, DspWritePMWord, DspWriteDMWord,
+#   DspRegWrite), and a signature from the prologue never equals one from the entry.
+#   A name carried onto such an entry sits on the entry, as in A (lane kn7000-names,
+#   2026-11-06).
 import argparse
 import os
 import re
@@ -112,6 +118,21 @@ def all_entries(img):
             if t is not None:
                 out.add(t)
     return out
+
+
+def prologue_entry(img, cpu):
+    """The call entry after the register-save prologue at cpu (`movm [..], (sp)` and / or
+    `add -N, sp`): the address of the first instruction that is neither, or None."""
+    o = img.off(cpu)
+    if o is None:
+        return None
+    k = 0
+    for oo, b, mnem, ops in img.decode(o, min(img.code_end(o), o + 16)):
+        if (mnem == "movm" and b[:1] == b"\xcf") or (mnem == "add" and re.fullmatch(r"-0x[0-9a-f]+, sp", ops)):
+            k += 1
+            continue
+        return img.cpu(oo) if k else None
+    return None
 
 
 def load(paths):
@@ -233,12 +254,19 @@ def main():
         sys.exit("port_names_by_code: give exactly one of --b-labels and --b-src")
     if a.b_labels:
         for nm, v in re.findall(r"^\.equ\s+(\w+),\s*0x([0-9a-fA-F]+)", open(a.b_labels).read(), re.M):
-            if re.fullmatch(r"func_[0-9A-F]{8}", nm) or nm in before:
+            if re.fullmatch(r"func_[0-9A-F]{8}(_entry)?", nm) or nm in before:
                 b_entries[int(v, 16)] = nm
     else:
         for path in a.b_src:              # .s files hold raw ROM bytes: read them as bytes
             for m in re.finditer(rb"^func_([0-9A-F]{8}):", open(path, "rb").read(), re.M):
                 b_entries[int(m.group(1), 16)] = "func_" + m.group(1).decode()
+        # func_<ADDR>_entry labels: their address is the label's, which the source does not
+        # spell; gen_program_s.py writes them right after the prologue, so take it from B's decode
+        for path in a.b_src:
+            for m in re.finditer(rb"^func_([0-9A-F]{8})_entry:", open(path, "rb").read(), re.M):
+                e = prologue_entry(B, int(m.group(1), 16))
+                if e is not None:
+                    b_entries.setdefault(e, "func_" + m.group(1).decode() + "_entry")
         if os.path.exists(a.out):
             b_entries.update(load([a.out]))
 

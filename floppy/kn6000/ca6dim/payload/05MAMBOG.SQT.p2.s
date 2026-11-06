@@ -5029,9 +5029,11 @@ P_05MAMBOG_SQT_p2:
 	sq_beat
 	sq_end
 ; after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	16, 1, 102, 14	; data bytes of an event cut at the start
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"05MAMBOG.sqt.p2.ref", 0x55f1, 15
+	.byte	16, 1, 102	; data bytes of an event cut at the start
+	sq_cc	14, 0, 16, 1, 105
+	sq_cc	17, 0, 16, 1, 107
+	sq_cc	20, 0, 16, 1, 109
+	.byte	20	; data bytes of an event cut by the end
 	sq_cell	0x80, 0, 88	; cell 87: song 1 track 11, 1 of 12
 	sq_cc	0, 0, 6, 11, 127
 	sq_beat
@@ -5875,9 +5877,8 @@ P_05MAMBOG_SQT_p2:
 	sq_beat
 	sq_end
 ; after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	16, 1, 50, 32	; data bytes of an event cut at the start
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"05MAMBOG.sqt.p2.ref", 0x6136, 4
+	.byte	16, 1, 50	; data bytes of an event cut at the start
+	sq_cc	32, 0, 16, 1, 43
 	sq_cc	32, 0, 16, 1, 35
 	sq_cc	35, 0, 16, 1, 25
 	sq_cc	39, 0, 16, 1, 15
@@ -5919,8 +5920,7 @@ P_05MAMBOG_SQT_p2:
 	sq_cc	34, 0, 16, 1, 0
 	sq_note	51, 0, 74, 103, 91, 0
 	sq_beat
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"05MAMBOG.sqt.p2.ref", 0x61fe, 2
+	.byte	52, 144	; the first 2 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 100	; cell 99: song 1 track 12, 1 of 40
 	sq_cc	0, 0, 7, 11, 127
 	sq_beat
@@ -8008,8 +8008,7 @@ P_05MAMBOG_SQT_p2:
 	sq_beat
 	sq_end
 ; after the end of track: stale events of an earlier version of the song (stale_tokens)
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"05MAMBOG.sqt.p2.ref", 0x89ba, 4
+	.byte	176, 16, 1, 88	; a tick-first event cut at the start (its tick is gone)
 	sq_cc	43, 0, 16, 1, 85
 	sq_cc	46, 0, 16, 1, 80
 	sq_cc	47, 0, 16, 1, 75
@@ -8607,7 +8606,8 @@ P_05MAMBOG_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; data bytes of an event cut by the end
+	.byte	0	; data bytes of an event cut at the start
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	; data bytes of an event cut by the end
 	sq_cell	0x80, 0, 144	; cell 143: song 1 track 14, 1 of 4
 	sq_cc	0, 0, 10, 11, 127
 	sq_beat
@@ -9137,8 +9137,7 @@ P_05MAMBOG_SQT_p2:
 	sq_bend	88, 0, 64, 49
 	sq_bend	88, 0, 0, 43
 	sq_bend	91, 0, 0, 37
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"05MAMBOG.sqt.p2.ref", 0x91fd, 3
+	.byte	95, 224, 0	; the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0xff, 0, 148	; cell 147: song 1 track 15, 1 of 21
 	sq_cc	0, 0, 11, 11, 127
 	sq_beat
@@ -10377,9 +10376,8 @@ P_05MAMBOG_SQT_p2:
 	sq_beat
 	sq_end
 ; after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	39, 35	; data bytes of an event cut at the start
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"05MAMBOG.sqt.p2.ref", 0xa637, 3
+	.byte	39	; data bytes of an event cut at the start
+	sq_bend	35, 0, 64, 34
 	sq_bend	38, 0, 0, 29
 	sq_bend	38, 0, 0, 25
 	sq_bend	41, 0, 0, 19
@@ -10427,8 +10425,7 @@ P_05MAMBOG_SQT_p2:
 	sq_note	52, 0, 71, 99, 60, 0
 	sq_beat
 	sq_bend	2, 0, 0, 63
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"05MAMBOG.sqt.p2.ref", 0xa6fe, 2
+	.byte	5, 224	; the first 2 bytes of a tick-first event, cut by the end
 	sq_cell	0xff, 0, 169	; cell 168: song 1 track 16, 1 of 15
 	sq_cc	0, 0, 12, 11, 127
 	sq_beat
@@ -11403,9 +11400,8 @@ P_05MAMBOG_SQT_p2:
 	sq_beat
 	sq_end
 ; after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	1, 122, 74	; data bytes of an event cut at the start
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"05MAMBOG.sqt.p2.ref", 0xb532, 4
+	.byte	1, 122	; data bytes of an event cut at the start
+	sq_cc	74, 0, 16, 1, 127
 	sq_beat
 	sq_cc	15, 0, 16, 1, 117
 	sq_cc	15, 0, 16, 1, 106
@@ -11449,8 +11445,7 @@ P_05MAMBOG_SQT_p2:
 	sq_cc	22, 0, 16, 1, 105
 	sq_cc	25, 0, 16, 1, 103
 	sq_cc	29, 0, 16, 1, 99
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"05MAMBOG.sqt.p2.ref", 0xb5fc, 4
+	.byte	29, 176, 16, 1	; the first 4 bytes of a tick-first event, cut by the end
 
 	.if	(. - P_05MAMBOG_SQT_p2) - 46592
 	.error	"05MAMBOG.SQT part 2: the payload is not 46592 bytes"

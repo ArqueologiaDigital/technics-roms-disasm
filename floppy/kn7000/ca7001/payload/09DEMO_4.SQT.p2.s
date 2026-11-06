@@ -912,8 +912,7 @@ P_09DEMO_4_SQT_p2:
 	sq_note	5, 0, 60, 96, 21, 0
 	sq_note	6, 0, 64, 89, 23, 0
 	sq_note	71, 0, 67, 98, 38, 0
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"09DEMO_4.sqt.p2.ref", 0xafc, 4
+	.byte	71, 144, 60, 98	; the first 4 bytes of a tick-first event, cut by the end
 	sq_cell	0xe0, 0, 65535	; cell 12: song 1 track 3, 1 of 1
 	sq_beat
 	sq_beat
@@ -1695,8 +1694,7 @@ P_09DEMO_4_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_beat
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"09DEMO_4.sqt.p2.ref", 0x10fe, 2
+	.byte	82, 144	; the first 2 bytes of a tick-first event, cut by the end
 	sq_cell	0xa4, 0, 19	; cell 18: song 1 track 6, 1 of 2
 	sq_sys	0, 0xf1, 2, 0, 0, 2, 127
 	sq_8n	0, 0, 72, 1
@@ -1908,11 +1906,10 @@ P_09DEMO_4_SQT_p2:
 	sq_beat
 	sq_end
 ; after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	0, 14	; data bytes of an event cut at the start
-	k5_note	0x90, 62, 83, 32, 0, 67
-	k5_note	0x90, 60, 86, 25, 0, 69
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"09DEMO_4.sqt.p2.ref", 0x1257, 5
+	.byte	0	; data bytes of an event cut at the start
+	sq_note	14, 0, 62, 83, 32, 0
+	sq_note	67, 0, 60, 86, 25, 0
+	sq_note	69, 0, 64, 95, 23, 0
 	sq_beat
 	sq_note	74, 0, 67, 110, 14, 0
 	sq_beat
@@ -1948,8 +1945,7 @@ P_09DEMO_4_SQT_p2:
 	sq_note	8, 0, 69, 106, 65, 0
 	sq_note	77, 0, 67, 83, 23, 0
 	sq_beat
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"09DEMO_4.sqt.p2.ref", 0x12fc, 4
+	.byte	4, 144, 69, 100	; the first 4 bytes of a tick-first event, cut by the end
 
 	.if	(. - P_09DEMO_4_SQT_p2) - 4864
 	.error	"09DEMO_4.SQT part 2: the payload is not 4864 bytes"

@@ -3456,6 +3456,7 @@ class EmitCtx:
         self.func_labels = []      # sorted (addr, name) of function labels, for name_code
         self.sfr = load_sfr()
         self.sfr_addrs = sorted(self.sfr)
+        self.sp_top = {}           # {address: name} of the stack top the reset loads (see emit_block)
 
     def ref(self, a):
         """The name an address operand prints as, or None."""
@@ -3592,7 +3593,7 @@ def emit_block(insns, name, lo, delta, ctx, annotated):
     lines = []
     unlabelled = []
     hi = delta + insns[-1][0] + len(insns[-1][1]) if insns else lo
-    for addr, b, mnem, ops in insns:
+    for k, (addr, b, mnem, ops) in enumerate(insns):
         cpu = delta + addr
         lab = name if cpu == lo else ctx.label_of.get(cpu)
         # a blank line opens each function: before its register-save prologue
@@ -3624,6 +3625,10 @@ def emit_block(insns, name, lo, delta, ctx, annotated):
                 else:
                     ctx.long_calls += 1
             text = f"    {mnem:8s}{ctx.symbolise(mnem, good, cpu)}".rstrip()
+            m = re.fullmatch(r"(0x[0-9a-f]{8}), (a\d)", good) if mnem == "mov" else None
+            if m and int(m.group(1), 16) in ctx.sp_top and k + 1 < len(insns) \
+                    and insns[k + 1][2:] == ("mov", f"{m.group(2)}, sp"):
+                text = f"    {mnem:8s}{ctx.sp_top[int(m.group(1), 16)]}, {m.group(2)}"
         else:
             ctx.escapes.append((cpu, mnem, ops))
             hexb = ", ".join(f"0x{x:02X}" for x in b)
@@ -4477,6 +4482,10 @@ def main():
     if clash:
         sys.exit("gen_program_s: labels that disagree with symbols.inc:\n  " + "\n  ".join(clash))
     ctx = EmitCtx(names, label_of, A, data_names, read_data_labels())
+    # the stack top the reset loads (`mov X, aN` / `mov aN, sp`) keeps the symbol file's name
+    # even where a manual name takes the same address for what lies above the stack
+    # (941 / 942: DspPresetRamRecords starts at INITIAL_SP; 935 / 893 they differ)
+    ctx.sp_top = {a: nm for a, nm in sym_by_addr.items() if nm == "INITIAL_SP"}
     data_locs = read_data_loc_names()
     for a in data_code_refs:              # one that is no instruction start (or has another name)
         if data_locs is not None and label_of.get(a) == f"func_{a:08X}" and f"loc_{a:08X}" not in data_locs:

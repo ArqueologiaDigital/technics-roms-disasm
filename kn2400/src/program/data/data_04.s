@@ -7862,8 +7862,7 @@ zlib_485B3BD4:	# DemoSong01: its event memory, 22528 bytes, stored as a zlib str
 	sq_note	15, 0, 65, 97, 9, 0
 	sq_note	25, 0, 64, 91, 13, 0
 	sq_note	35, 0, 63, 86, 10, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	46, 144, 62, 80
+	.byte	46, 144, 62, 80	# the first 4 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 4	# cell 3: song 1 track 2, 1 of 4
 	sq_pc	71, 0, 26, 4, 32
 	sq_beat
@@ -8433,8 +8432,7 @@ zlib_485B3BD4:	# DemoSong01: its event memory, 22528 bytes, stored as a zlib str
 	sq_beat
 	sq_note	48, 0, 36, 83, 7, 0
 	sq_note	52, 0, 38, 76, 8, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	57, 144, 40, 76
+	.byte	57, 144, 40, 76	# the first 4 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 10	# cell 9: song 1 track 4, 1 of 3
 	sq_beat
 	sq_beat
@@ -9119,16 +9117,14 @@ zlib_485B3BD4:	# DemoSong01: its event memory, 22528 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	64, 84, 21	# data bytes of an event cut at the start
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	224, 0, 81
+	.byte	64, 84	# data bytes of an event cut at the start
+	sq_bend	21, 0, 0, 81
 	sq_bend	22, 0, 0, 64
 	sq_note	52, 0, 67, 127, 23, 0
 	sq_note	79, 0, 67, 127, 7, 0
 	sq_beat
 	sq_bend	13, 0, 0, 79
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	14, 224, 0
+	.byte	14, 224, 0	# the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 19	# cell 18: song 1 track 6, 1 of 5
 	sq_beat
 	sq_pc	59, 0, 48, 8, 32
@@ -9440,9 +9436,8 @@ zlib_485B3BD4:	# DemoSong01: its event memory, 22528 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	73, 22, 0, 48	# data bytes of an event cut at the start
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 52, 73, 22, 0
+	.byte	73, 22, 0	# data bytes of an event cut at the start
+	sq_note	48, 0, 52, 73, 22, 0
 	sq_beat
 	sq_note	48, 0, 49, 73, 18, 0
 	sq_note	49, 0, 64, 73, 17, 0
@@ -9469,8 +9464,7 @@ zlib_485B3BD4:	# DemoSong01: its event memory, 22528 bytes, stored as a zlib str
 	sq_beat
 	sq_note	0, 0, 42, 90, 48, 0
 	sq_note	0, 0, 58, 97, 48, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	0, 144, 54
+	.byte	0, 144, 54	# the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 24	# cell 23: song 1 track 7, 1 of 10
 	sq_pc	71, 0, 0, 0, 32
 	sq_beat
@@ -10336,8 +10330,7 @@ zlib_485B3BD4:	# DemoSong01: its event memory, 22528 bytes, stored as a zlib str
 	sq_note	15, 0, 65, 97, 9, 0
 	sq_note	25, 0, 64, 91, 13, 0
 	sq_note	35, 0, 63, 86, 10, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	46, 144, 62, 80
+	.byte	46, 144, 62, 80	# the first 4 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 39	# cell 38: song 1 track 9, 1 of 8
 	sq_beat
 	sq_beat
@@ -10924,8 +10917,7 @@ zlib_485B3BD4:	# DemoSong01: its event memory, 22528 bytes, stored as a zlib str
 	sq_beat
 	sq_note	48, 0, 36, 83, 7, 0
 	sq_note	52, 0, 38, 76, 8, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	57, 144, 40, 76
+	.byte	57, 144, 40, 76	# the first 4 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 47	# cell 46: song 1 track 10, 1 of 13
 	sq_note	48, 0, 44, 104, 9, 0
 	sq_beat
@@ -11604,9 +11596,8 @@ zlib_485B3BD4:	# DemoSong01: its event memory, 22528 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	k5_note	0x90, 60, 120, 88, 0, 88
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 64, 114, 70, 0
+	.byte	144, 60, 120, 88, 0	# a tick-first event cut at the start (its tick is gone)
+	sq_note	88, 0, 64, 114, 70, 0
 	sq_beat
 	sq_note	2, 0, 71, 124, 73, 0
 	sq_cc	27, 0, 17, 64, 120
@@ -12034,9 +12025,12 @@ zlib_485B3BD4:	# DemoSong01: its event memory, 22528 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	91, 0, 3, 48	# data bytes of an event cut at the start
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 31, 92, 0, 3, 129, 129, 129, 129
+	.byte	91, 0, 3	# data bytes of an event cut at the start
+	sq_note	48, 0, 31, 92, 0, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
 	sq_cell	0x80, 0, 67	# cell 66: song 1 track 12, 1 of 10
 	sq_cc	48, 0, 11, 7, 88
 	sq_cc	48, 0, 11, 10, 64
@@ -12948,8 +12942,7 @@ zlib_485B3BD4:	# DemoSong01: its event memory, 22528 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 28, 99, 6, 0
+	.byte	144, 28, 99, 6, 0	# a tick-first event cut at the start (its tick is gone)
 	sq_beat
 	sq_note	0, 0, 31, 93, 23, 0
 	sq_note	27, 0, 33, 110, 26, 0
@@ -13253,8 +13246,7 @@ zlib_485B3BD4:	# DemoSong01: its event memory, 22528 bytes, stored as a zlib str
 	sq_beat
 	sq_note	24, 0, 33, 102, 78, 0
 	sq_cc	68, 0, 8, 64, 127
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	89, 176, 8
+	.byte	89, 176, 8	# the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 86	# cell 85: song 1 track 15, 1 of 4
 	sq_cc	48, 0, 14, 7, 72
 	sq_cc	48, 0, 14, 10, 127
@@ -13645,8 +13637,7 @@ zlib_485B3BD4:	# DemoSong01: its event memory, 22528 bytes, stored as a zlib str
 	sq_beat
 	sq_beat
 	sq_note	41, 0, 69, 104, 48, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	41, 144, 65, 104, 48
+	.byte	41, 144, 65, 104, 48	# the first 5 bytes of a tick-first event, cut by the end
 	.endzlib
 	.align	4, 0xFF	# pad after zlib_485B3BD4
 zlib_485B6430:	# DemoSong02: its event memory, 41984 bytes, stored as a zlib stream of 9404 bytes (inflated by func_486D4A2A); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
@@ -14259,9 +14250,8 @@ zlib_485B6430:	# DemoSong02: its event memory, 41984 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	90, 48	# data bytes of an event cut at the start
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	176, 16, 1, 54
+	.byte	90	# data bytes of an event cut at the start
+	sq_cc	48, 0, 16, 1, 54
 	sq_bend	52, 0, 0, 106
 	sq_bend	55, 0, 64, 83
 	sq_bend	57, 0, 0, 73
@@ -14279,8 +14269,7 @@ zlib_485B6430:	# DemoSong02: its event memory, 41984 bytes, stored as a zlib str
 	sq_bend	68, 0, 64, 90
 	sq_bend	70, 0, 0, 97
 	sq_bend	71, 0, 0, 103
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	73, 224, 0
+	.byte	73, 224, 0	# the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 11	# cell 10: song 1 track 2, 1 of 35
 	sq_beat
 	sq_note	0, 0, 71, 124, 12, 0
@@ -16210,8 +16199,7 @@ zlib_485B6430:	# DemoSong02: its event memory, 41984 bytes, stored as a zlib str
 	sq_note	2, 0, 59, 111, 48, 0
 	sq_note	2, 0, 70, 125, 12, 0
 	sq_note	3, 0, 62, 102, 46, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	5, 144, 68
+	.byte	5, 144, 68	# the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 50	# cell 49: song 1 track 4, 1 of 3
 	sq_beat
 	sq_beat
@@ -16437,9 +16425,8 @@ zlib_485B6430:	# DemoSong02: its event memory, 41984 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	127, 127, 23	# data bytes of an event cut at the start
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	224, 0, 64
+	.byte	127, 127	# data bytes of an event cut at the start
+	sq_bend	23, 0, 0, 64
 	sq_note	44, 0, 72, 96, 19, 0
 	sq_note	89, 0, 74, 127, 19, 0
 	sq_beat
@@ -16463,8 +16450,7 @@ zlib_485B6430:	# DemoSong02: its event memory, 41984 bytes, stored as a zlib str
 	sq_bend	34, 0, 127, 127
 	sq_bend	42, 0, 0, 66
 	sq_bend	44, 0, 0, 64
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	48, 144, 50, 103, 90
+	.byte	48, 144, 50, 103, 90	# the first 5 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 53	# cell 52: song 1 track 6, 1 of 4
 	sq_beat
 	sq_beat
@@ -16720,9 +16706,8 @@ zlib_485B6430:	# DemoSong02: its event memory, 41984 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	74, 7, 77	# data bytes of an event cut at the start
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	176, 6, 74, 6
+	.byte	74, 7	# data bytes of an event cut at the start
+	sq_cc	77, 0, 6, 74, 6
 	sq_cc	79, 0, 6, 74, 5
 	sq_cc	81, 0, 6, 74, 4
 	sq_cc	84, 0, 6, 74, 3
@@ -16756,8 +16741,7 @@ zlib_485B6430:	# DemoSong02: its event memory, 41984 bytes, stored as a zlib str
 	sq_cc	76, 0, 6, 74, 12
 	sq_cc	79, 0, 6, 74, 11
 	sq_cc	82, 0, 6, 74, 10
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	85, 176, 6
+	.byte	85, 176, 6	# the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 57	# cell 56: song 1 track 7, 1 of 80
 	sq_beat
 	sq_beat
@@ -21348,8 +21332,7 @@ zlib_485B6430:	# DemoSong02: its event memory, 41984 bytes, stored as a zlib str
 	sq_note	1, 0, 52, 99, 94, 0
 	sq_note	1, 0, 69, 125, 12, 0
 	sq_note	2, 0, 55, 90, 95, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	3, 144, 68, 125, 12
+	.byte	3, 144, 68, 125, 12	# the first 5 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 143	# cell 142: song 1 track 9, 1 of 10
 	sq_beat
 	sq_beat
@@ -22135,9 +22118,8 @@ zlib_485B6430:	# DemoSong02: its event memory, 41984 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	6, 74, 71, 77	# data bytes of an event cut at the start
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	176, 6, 74, 72
+	.byte	6, 74, 71	# data bytes of an event cut at the start
+	sq_cc	77, 0, 6, 74, 72
 	sq_cc	77, 0, 6, 74, 73
 	sq_cc	78, 0, 6, 74, 74
 	sq_cc	78, 0, 6, 74, 75
@@ -22309,8 +22291,7 @@ zlib_485B6430:	# DemoSong02: its event memory, 41984 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	176, 8, 74, 112
+	.byte	176, 8, 74, 112	# a tick-first event cut at the start (its tick is gone)
 	sq_cc	87, 0, 8, 74, 116
 	sq_cc	90, 0, 8, 74, 119
 	sq_cc	93, 0, 8, 74, 123
@@ -22320,8 +22301,7 @@ zlib_485B6430:	# DemoSong02: its event memory, 41984 bytes, stored as a zlib str
 	sq_cc	6, 0, 8, 74, 118
 	sq_cc	9, 0, 8, 74, 113
 	sq_cc	12, 0, 8, 74, 108
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	15, 176, 8
+	.byte	15, 176, 8	# the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 156	# cell 155: song 1 track 16, 1 of 10
 	sq_beat
 	sq_beat
@@ -22862,14 +22842,14 @@ zlib_485B6430:	# DemoSong02: its event memory, 41984 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	0, 50	# data bytes of an event cut at the start
-	k5_note	0x90, 60, 87, 48, 0, 50
-	k5_note	0x90, 67, 125, 12, 0, 51
-	k5_note	0x90, 55, 76, 45, 0, 52
-	k5_note	0x90, 66, 125, 12, 0, 53
-	k5_note	0x90, 52, 72, 42, 0, 94
-	k5_note	0x90, 43, 84, 94, 0, 95
-	.byte	144	# the first 1 bytes of a KN5000-order event, cut by the end
+	.byte	0	# data bytes of an event cut at the start
+	sq_note	50, 0, 60, 87, 48, 0
+	sq_note	50, 0, 67, 125, 12, 0
+	sq_note	51, 0, 55, 76, 45, 0
+	sq_note	52, 0, 66, 125, 12, 0
+	sq_note	53, 0, 52, 72, 42, 0
+	sq_note	94, 0, 43, 84, 94, 0
+	.byte	95, 144	# the first 2 bytes of a tick-first event, cut by the end
 	.endzlib
 zlib_485B88EC:	# DemoSong03: its event memory, 13568 bytes, stored as a zlib stream of 8191 bytes (inflated by func_486D4A2A); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
 	.zlib	6
@@ -23520,13 +23500,11 @@ zlib_485B88EC:	# DemoSong03: its event memory, 13568 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	176, 16, 1, 3
+	.byte	176, 16, 1, 3	# a tick-first event cut at the start (its tick is gone)
 	sq_cc	36, 0, 16, 11, 116
 	sq_cc	41, 0, 16, 1, 6
 	sq_cc	44, 0, 16, 1, 8
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	47, 176
+	.byte	47, 176	# the first 2 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 14	# cell 13: song 1 track 3, 1 of 9
 	sq_beat
 	sq_beat
@@ -24021,9 +23999,8 @@ zlib_485B88EC:	# DemoSong03: its event memory, 13568 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	49, 34	# data bytes of an event cut at the start
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	176, 17, 11, 48
+	.byte	49	# data bytes of an event cut at the start
+	sq_cc	34, 0, 17, 11, 48
 	sq_cc	37, 0, 17, 11, 46
 	sq_cc	39, 0, 17, 11, 45
 	sq_cc	42, 0, 17, 11, 41
@@ -24037,8 +24014,7 @@ zlib_485B88EC:	# DemoSong03: its event memory, 13568 bytes, stored as a zlib str
 	sq_note	94, 0, 78, 55, 85, 15
 	sq_beat
 	sq_cc	11, 0, 17, 11, 35
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	22, 176
+	.byte	22, 176	# the first 2 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 23	# cell 22: song 1 track 4, 1 of 3
 	sq_beat
 	sq_beat
@@ -24324,8 +24300,7 @@ zlib_485B88EC:	# DemoSong03: its event memory, 13568 bytes, stored as a zlib str
 	sq_cc	72, 0, 16, 11, 98
 	sq_cc	84, 0, 16, 11, 97
 	sq_beat
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	0, 176
+	.byte	0, 176	# the first 2 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 26	# cell 25: song 1 track 5, 1 of 6
 	sq_beat
 	sq_beat
@@ -24707,8 +24682,7 @@ zlib_485B88EC:	# DemoSong03: its event memory, 13568 bytes, stored as a zlib str
 	sq_cc	33, 0, 5, 11, 93
 	sq_cc	40, 0, 5, 11, 94
 	sq_cc	43, 0, 5, 11, 96
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	49, 176, 5
+	.byte	49, 176, 5	# the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 32	# cell 31: song 1 track 6, 1 of 2
 	sq_beat
 	sq_beat
@@ -24868,8 +24842,7 @@ zlib_485B88EC:	# DemoSong03: its event memory, 13568 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	176, 3, 11, 101
+	.byte	176, 3, 11, 101	# a tick-first event cut at the start (its tick is gone)
 	sq_cc	60, 0, 3, 11, 104
 	sq_cc	72, 0, 3, 11, 106
 	sq_cc	84, 0, 3, 11, 109
@@ -25069,10 +25042,9 @@ zlib_485B88EC:	# DemoSong03: its event memory, 13568 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	50, 16, 0, 47	# data bytes of an event cut at the start
-	k5_note	0x90, 42, 21, 14, 0, 95
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 51, 53, 16, 0
+	.byte	50, 16, 0	# data bytes of an event cut at the start
+	sq_note	47, 0, 42, 21, 14, 0
+	sq_note	95, 0, 51, 53, 16, 0
 	sq_beat
 	sq_note	0, 0, 42, 84, 20, 0
 	sq_note	47, 0, 51, 45, 15, 0
@@ -25088,8 +25060,7 @@ zlib_485B88EC:	# DemoSong03: its event memory, 13568 bytes, stored as a zlib str
 	sq_note	47, 0, 42, 25, 13, 0
 	sq_note	47, 0, 51, 46, 17, 0
 	sq_note	47, 0, 36, 67, 12, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	95, 144, 51
+	.byte	95, 144, 51	# the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 65535	# cell 34: song 1 track 14, 1 of 1
 	sq_beat
 	sq_beat
@@ -25202,7 +25173,8 @@ zlib_485B88EC:	# DemoSong03: its event memory, 13568 bytes, stored as a zlib str
 	sq_beat
 	sq_beat
 	sq_end
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# data bytes of an event cut by the end
+	.byte	0	# data bytes of an event cut at the start
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# data bytes of an event cut by the end
 	sq_cell	0x80, 0, 36	# cell 35: song 1 track 15, 1 of 6
 	sq_note	0, 0, 38, 45, 11, 0
 	sq_note	23, 0, 38, 48, 13, 0
@@ -25537,9 +25509,8 @@ zlib_485B88EC:	# DemoSong03: its event memory, 13568 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	11, 15, 58	# data bytes of an event cut at the start
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	176, 5, 11, 13
+	.byte	11, 15	# data bytes of an event cut at the start
+	sq_cc	58, 0, 5, 11, 13
 	sq_cc	68, 0, 5, 11, 10
 	sq_cc	78, 0, 5, 11, 9
 	sq_cc	86, 0, 5, 11, 6
@@ -25553,8 +25524,7 @@ zlib_485B88EC:	# DemoSong03: its event memory, 13568 bytes, stored as a zlib str
 	sq_beat
 	sq_beat
 	sq_end
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	69, 64, 42, 1
+	.byte	69, 64, 42, 1	# data bytes of an event cut at the start
 	sq_note	90, 0, 45, 66, 6, 4
 	sq_note	91, 0, 61, 59, 6, 4
 	sq_beat
@@ -25597,8 +25567,7 @@ zlib_485B88EC:	# DemoSong03: its event memory, 13568 bytes, stored as a zlib str
 	sq_note	3, 0, 52, 53, 92, 11
 	sq_note	4, 0, 36, 63, 92, 11
 	sq_cc	5, 0, 5, 11, 102
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	5, 144, 55, 72, 72
+	.byte	5, 144, 55, 72, 72	# the first 5 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 42	# cell 41: song 1 track 16, 1 of 13
 	sq_beat
 	sq_beat
@@ -26287,8 +26256,7 @@ zlib_485B88EC:	# DemoSong03: its event memory, 13568 bytes, stored as a zlib str
 	sq_cc	16, 0, 17, 11, 108
 	sq_cc	24, 0, 17, 11, 111
 	sq_cc	35, 0, 17, 11, 118
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	45, 176, 17, 11
+	.byte	45, 176, 17, 11	# the first 4 bytes of a tick-first event, cut by the end
 	.endzlib
 	.align	4, 0xFF	# pad after zlib_485B88EC
 zlib_485BA8EC:	# DemoSong04: its event memory, 9472 bytes, stored as a zlib stream of 2895 bytes (inflated by func_486D4A2A); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
@@ -26451,9 +26419,8 @@ zlib_485BA8EC:	# DemoSong04: its event memory, 9472 bytes, stored as a zlib stre
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	74, 12, 67	# data bytes of an event cut at the start
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	176, 6, 74, 11
+	.byte	74, 12	# data bytes of an event cut at the start
+	sq_cc	67, 0, 6, 74, 11
 	sq_cc	69, 0, 6, 74, 10
 	sq_cc	71, 0, 6, 74, 9
 	sq_cc	73, 0, 6, 74, 8
@@ -26467,7 +26434,8 @@ zlib_485BA8EC:	# DemoSong04: its event memory, 9472 bytes, stored as a zlib stre
 	sq_beat
 	sq_beat
 	sq_end
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# data bytes of an event cut by the end
+	.byte	0	# data bytes of an event cut at the start
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# data bytes of an event cut by the end
 	sq_cell	0x80, 0, 4	# cell 3: song 1 track 3, 1 of 11
 	sq_note	0, 0, 45, 90, 67, 3
 	sq_note	20, 0, 52, 87, 2, 2
@@ -27055,8 +27023,7 @@ zlib_485BA8EC:	# DemoSong04: its event memory, 9472 bytes, stored as a zlib stre
 	sq_cc	88, 0, 6, 74, 1
 	sq_beat
 	sq_cc	0, 0, 6, 74, 123
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	0, 144, 73, 119
+	.byte	0, 144, 73, 119	# the first 4 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 15	# cell 14: song 1 track 4, 1 of 2
 	sq_beat
 	sq_beat
@@ -27244,8 +27211,7 @@ zlib_485BA8EC:	# DemoSong04: its event memory, 9472 bytes, stored as a zlib stre
 	sq_cc	34, 0, 6, 74, 27
 	sq_cc	36, 0, 6, 74, 26
 	sq_cc	38, 0, 6, 74, 25
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	41, 176, 6
+	.byte	41, 176, 6	# the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 17	# cell 16: song 1 track 5, 1 of 3
 	sq_beat
 	sq_beat
@@ -27482,8 +27448,7 @@ zlib_485BA8EC:	# DemoSong04: its event memory, 9472 bytes, stored as a zlib stre
 	sq_cc	21, 0, 6, 74, 37
 	sq_cc	23, 0, 6, 74, 30
 	sq_note	24, 0, 73, 125, 24, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	25, 176, 6
+	.byte	25, 176, 6	# the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 20	# cell 19: song 1 track 6, 1 of 2
 	sq_beat
 	sq_beat
@@ -27658,8 +27623,7 @@ zlib_485BA8EC:	# DemoSong04: its event memory, 9472 bytes, stored as a zlib stre
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	176, 6, 74, 20
+	.byte	176, 6, 74, 20	# a tick-first event cut at the start (its tick is gone)
 	sq_cc	51, 0, 6, 74, 19
 	sq_cc	53, 0, 6, 74, 18
 	sq_cc	55, 0, 6, 74, 17
@@ -27673,8 +27637,7 @@ zlib_485BA8EC:	# DemoSong04: its event memory, 9472 bytes, stored as a zlib stre
 	sq_cc	71, 0, 6, 74, 9
 	sq_note	71, 0, 73, 125, 24, 0
 	sq_cc	73, 0, 6, 74, 8
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	75, 176, 6, 74
+	.byte	75, 176, 6, 74	# the first 4 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 22	# cell 21: song 1 track 7, 1 of 2
 	sq_beat
 	sq_beat
@@ -27855,10 +27818,9 @@ zlib_485BA8EC:	# DemoSong04: its event memory, 9472 bytes, stored as a zlib stre
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	64, 48	# data bytes of an event cut at the start
-	k5_note	0x90, 43, 95, 24, 0, 72
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 36, 103, 24, 0
+	.byte	64	# data bytes of an event cut at the start
+	sq_note	48, 0, 43, 95, 24, 0
+	sq_note	72, 0, 36, 103, 24, 0
 	sq_beat
 	sq_note	0, 0, 29, 103, 7, 1
 	sq_beat
@@ -27868,8 +27830,7 @@ zlib_485BA8EC:	# DemoSong04: its event memory, 9472 bytes, stored as a zlib stre
 	sq_note	0, 0, 31, 118, 37, 0
 	sq_note	48, 0, 31, 89, 14, 0
 	sq_beat
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	0, 144
+	.byte	0, 144	# the first 2 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 24	# cell 23: song 1 track 8, 1 of 2
 	sq_8n	0, 0, 90, 0
 	sq_8n	0, 10, 0, 64
@@ -28042,8 +28003,7 @@ zlib_485BA8EC:	# DemoSong04: its event memory, 9472 bytes, stored as a zlib stre
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 40, 107, 55, 0
+	.byte	144, 40, 107, 55, 0	# a tick-first event cut at the start (its tick is gone)
 	sq_beat
 	sq_note	47, 0, 33, 119, 63, 0
 	sq_beat
@@ -28069,8 +28029,7 @@ zlib_485BA8EC:	# DemoSong04: its event memory, 9472 bytes, stored as a zlib stre
 	sq_beat
 	sq_note	48, 0, 45, 123, 15, 0
 	sq_note	72, 0, 45, 94, 5, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	95, 144, 35, 125, 59
+	.byte	95, 144, 35, 125, 59	# the first 5 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 65535	# cell 25: song 1 track 9, 1 of 1
 	sq_pc	0, 0, 101, 64, 32
 	sq_cc	0, 0, 8, 7, 56
@@ -28344,9 +28303,8 @@ zlib_485BA8EC:	# DemoSong04: its event memory, 9472 bytes, stored as a zlib stre
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	k5_note	0x90, 49, 84, 13, 0, 48
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 36, 123, 14, 0
+	.byte	144, 49, 84, 13, 0	# a tick-first event cut at the start (its tick is gone)
+	sq_note	48, 0, 36, 123, 14, 0
 	sq_beat
 	sq_note	47, 0, 42, 50, 14, 0
 	sq_note	95, 0, 38, 127, 19, 0
@@ -28363,8 +28321,7 @@ zlib_485BA8EC:	# DemoSong04: its event memory, 9472 bytes, stored as a zlib stre
 	sq_note	0, 0, 38, 127, 17, 0
 	sq_note	47, 0, 46, 124, 51, 0
 	sq_beat
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	0, 144, 42, 104, 14
+	.byte	0, 144, 42, 104, 14	# the first 5 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 28	# cell 27: song 1 track 15, 1 of 11
 	sq_note	0, 0, 42, 39, 12, 0
 	sq_note	95, 0, 42, 46, 11, 0
@@ -28909,9 +28866,8 @@ zlib_485BA8EC:	# DemoSong04: its event memory, 9472 bytes, stored as a zlib stre
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	74, 49, 21	# data bytes of an event cut at the start
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	176, 6, 74, 32
+	.byte	74, 49	# data bytes of an event cut at the start
+	sq_cc	21, 0, 6, 74, 32
 	sq_note	24, 0, 73, 125, 24, 0
 	sq_cc	25, 0, 6, 74, 30
 	sq_cc	29, 0, 6, 74, 29
@@ -28956,8 +28912,7 @@ zlib_485BA8EC:	# DemoSong04: its event memory, 9472 bytes, stored as a zlib stre
 	sq_cc	5, 0, 6, 74, 95
 	sq_cc	6, 0, 6, 74, 93
 	sq_cc	6, 0, 6, 74, 92
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	7, 176, 6, 74
+	.byte	7, 176, 6, 74	# the first 4 bytes of a tick-first event, cut by the end
 	.endzlib
 	.align	4, 0xFF	# pad after zlib_485BA8EC
 zlib_485BB43C:	# DemoSong05: its event memory, 47872 bytes, stored as a zlib stream of 25251 bytes (inflated by func_486D4A2A); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
@@ -29577,9 +29532,8 @@ zlib_485BB43C:	# DemoSong05: its event memory, 47872 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	11, 77, 66	# data bytes of an event cut at the start
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	176, 16, 11, 81
+	.byte	11, 77	# data bytes of an event cut at the start
+	sq_cc	66, 0, 16, 11, 81
 	sq_cc	72, 0, 16, 11, 85
 	sq_cc	78, 0, 16, 11, 89
 	sq_cc	84, 0, 16, 11, 93
@@ -29620,8 +29574,7 @@ zlib_485BB43C:	# DemoSong05: its event memory, 47872 bytes, stored as a zlib str
 	sq_note	5, 0, 88, 126, 61, 0
 	sq_note	6, 0, 79, 91, 59, 0
 	sq_beat
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	0, 144, 89, 110
+	.byte	0, 144, 89, 110	# the first 4 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 12	# cell 11: song 1 track 2, 1 of 27
 	sq_beat
 	sq_note	7, 0, 84, 58, 83, 3
@@ -31071,17 +31024,15 @@ zlib_485BB43C:	# DemoSong05: its event memory, 47872 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	0, 56	# data bytes of an event cut at the start
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 81, 104, 9, 0
+	.byte	0	# data bytes of an event cut at the start
+	sq_note	56, 0, 81, 104, 9, 0
 	sq_beat
 	sq_note	4, 0, 81, 98, 48, 0
 	sq_note	56, 0, 83, 107, 41, 0
 	sq_beat
 	sq_note	6, 0, 84, 110, 33, 0
 	sq_note	53, 0, 85, 106, 11, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	55, 144, 86, 119, 27
+	.byte	55, 144, 86, 119, 27	# the first 5 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 39	# cell 38: song 1 track 3, 1 of 12
 	sq_beat
 	sq_beat
@@ -31834,8 +31785,7 @@ zlib_485BB43C:	# DemoSong05: its event memory, 47872 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	176, 14, 11, 107
+	.byte	176, 14, 11, 107	# a tick-first event cut at the start (its tick is gone)
 	sq_beat
 	sq_cc	1, 0, 14, 11, 108
 	sq_cc	4, 0, 14, 11, 109
@@ -32360,8 +32310,7 @@ zlib_485BB43C:	# DemoSong05: its event memory, 47872 bytes, stored as a zlib str
 	sq_note	5, 0, 53, 46, 68, 3
 	sq_note	5, 0, 56, 73, 69, 3
 	sq_cc	5, 0, 17, 74, 30
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	8, 144
+	.byte	8, 144	# the first 2 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 58	# cell 57: song 1 track 5, 1 of 8
 	sq_beat
 	sq_note	3, 0, 51, 85, 86, 0
@@ -36068,8 +36017,7 @@ zlib_485BB43C:	# DemoSong05: its event memory, 47872 bytes, stored as a zlib str
 	sq_beat
 	sq_cc	0, 0, 17, 74, 40
 	sq_cc	1, 0, 17, 74, 47
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	4, 176, 17
+	.byte	4, 176, 17	# the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 122	# cell 121: song 1 track 9, 1 of 12
 	sq_beat
 	sq_beat
@@ -36826,9 +36774,8 @@ zlib_485BB43C:	# DemoSong05: its event memory, 47872 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	87, 46	# data bytes of an event cut at the start
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	176, 17, 74, 85
+	.byte	87	# data bytes of an event cut at the start
+	sq_cc	46, 0, 17, 74, 85
 	sq_cc	52, 0, 17, 74, 83
 	sq_cc	57, 0, 17, 74, 81
 	sq_cc	60, 0, 17, 74, 79
@@ -37355,8 +37302,7 @@ zlib_485BB43C:	# DemoSong05: its event memory, 47872 bytes, stored as a zlib str
 	sq_beat
 	sq_cc	0, 0, 16, 11, 50
 	sq_cc	6, 0, 16, 11, 49
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	12, 176
+	.byte	12, 176	# the first 2 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 141	# cell 140: song 1 track 11, 1 of 9
 	sq_beat
 	sq_beat
@@ -37903,8 +37849,7 @@ zlib_485BB43C:	# DemoSong05: its event memory, 47872 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	176, 17, 74, 64
+	.byte	176, 17, 74, 64	# a tick-first event cut at the start (its tick is gone)
 	sq_cc	5, 0, 17, 74, 28
 	sq_note	5, 0, 55, 76, 67, 3
 	sq_note	5, 0, 58, 76, 68, 3
@@ -38301,8 +38246,8 @@ zlib_485BB43C:	# DemoSong05: its event memory, 47872 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	14, 11, 90, 73	# data bytes of an event cut at the start
-	.byte	176, 14, 11	# the first 3 bytes of a KN5000-order event, cut by the end
+	.byte	14, 11, 90	# data bytes of an event cut at the start
+	.byte	73, 176, 14, 11	# the first 4 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 154	# cell 153: song 1 track 13, 1 of 6
 	sq_beat
 	sq_beat
@@ -38727,13 +38672,12 @@ zlib_485BB43C:	# DemoSong05: its event memory, 47872 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	124, 13, 0, 25	# data bytes of an event cut at the start
-	k5_note	0x90, 74, 63, 9, 0, 25
-	k5_note	0x90, 70, 64, 6, 0, 25
-	k5_note	0x90, 67, 64, 6, 0, 27
-	k5_note	0x90, 62, 65, 5, 0, 28
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	176, 17, 64, 0
+	.byte	124, 13, 0	# data bytes of an event cut at the start
+	sq_note	25, 0, 74, 63, 9, 0
+	sq_note	25, 0, 70, 64, 6, 0
+	sq_note	25, 0, 67, 64, 6, 0
+	sq_note	27, 0, 62, 65, 5, 0
+	sq_cc	28, 0, 17, 64, 0
 	sq_note	47, 0, 55, 40, 63, 0
 	sq_note	48, 0, 58, 67, 28, 0
 	sq_note	49, 0, 62, 42, 26, 0
@@ -38751,8 +38695,7 @@ zlib_485BB43C:	# DemoSong05: its event memory, 47872 bytes, stored as a zlib str
 	sq_note	24, 0, 55, 33, 27, 0
 	sq_note	25, 0, 58, 45, 26, 0
 	sq_note	25, 0, 72, 124, 12, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	26, 144, 62
+	.byte	26, 144, 62	# the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 160	# cell 159: song 1 track 14, 1 of 19
 	sq_beat
 	sq_beat
@@ -39757,23 +39700,22 @@ zlib_485BB43C:	# DemoSong05: its event memory, 47872 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	13, 0, 30	# data bytes of an event cut at the start
-	k5_note	0x90, 72, 56, 20, 0, 50
-	k5_note	0x90, 72, 125, 8, 0, 50
-	k5_note	0x90, 72, 71, 14, 0, 51
-	k5_note	0x90, 68, 72, 7, 0, 52
-	k5_note	0x90, 65, 73, 6, 0, 53
-	k5_note	0x90, 60, 74, 6, 0, 53
-	k5_note	0x90, 56, 75, 5, 0, 54
-	k5_note	0x90, 53, 75, 5, 0, 73
-	k5_note	0x90, 53, 74, 67, 0, 73
-	k5_note	0x90, 56, 74, 70, 0, 75
-	k5_note	0x90, 60, 75, 69, 0, 76
-	k5_note	0x90, 65, 75, 69, 0, 76
-	k5_note	0x90, 68, 76, 70, 0, 76
-	k5_note	0x90, 72, 76, 13, 0, 76
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 72, 124, 70, 0
+	.byte	13, 0	# data bytes of an event cut at the start
+	sq_note	30, 0, 72, 56, 20, 0
+	sq_note	50, 0, 72, 125, 8, 0
+	sq_note	50, 0, 72, 71, 14, 0
+	sq_note	51, 0, 68, 72, 7, 0
+	sq_note	52, 0, 65, 73, 6, 0
+	sq_note	53, 0, 60, 74, 6, 0
+	sq_note	53, 0, 56, 75, 5, 0
+	sq_note	54, 0, 53, 75, 5, 0
+	sq_note	73, 0, 53, 74, 67, 0
+	sq_note	73, 0, 56, 74, 70, 0
+	sq_note	75, 0, 60, 75, 69, 0
+	sq_note	76, 0, 65, 75, 69, 0
+	sq_note	76, 0, 68, 76, 70, 0
+	sq_note	76, 0, 72, 76, 13, 0
+	sq_note	76, 0, 72, 124, 70, 0
 	sq_beat
 	sq_note	46, 0, 53, 74, 27, 0
 	sq_note	47, 0, 56, 75, 26, 0
@@ -39788,8 +39730,7 @@ zlib_485BB43C:	# DemoSong05: its event memory, 47872 bytes, stored as a zlib str
 	sq_note	71, 0, 65, 38, 23, 0
 	sq_note	73, 0, 60, 39, 20, 0
 	sq_note	73, 0, 56, 40, 18, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	73, 144
+	.byte	73, 144	# the first 2 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 179	# cell 178: song 1 track 15, 1 of 10
 	sq_beat
 	sq_beat
@@ -40446,8 +40387,7 @@ zlib_485BB43C:	# DemoSong05: its event memory, 47872 bytes, stored as a zlib str
 	sq_note	70, 0, 72, 125, 12, 0
 	sq_note	73, 0, 72, 69, 83, 0
 	sq_note	74, 0, 68, 71, 49, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	75, 144
+	.byte	75, 144	# the first 2 bytes of a tick-first event, cut by the end
 	.endzlib
 	.align	4, 0xFF	# pad after zlib_485BB43C
 zlib_485C16E0:	# DemoSong06: its event memory, 65024 bytes, stored as a zlib stream of 28059 bytes (inflated by func_486D4A2A); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)

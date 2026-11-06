@@ -22,6 +22,14 @@
 #                                itself referenced, or lies strictly inside a run of
 #                                referenced addresses that all moved by one delta
 #   anything else              : unchanged (I/O, fixed windows)
+# A memory-map constant the reset code loads is taken from the new build's reset
+# code instead (RESET_LOADED): INITIAL_SP is the value of the one
+# `mov imm32, aN ; mov aN, sp` of the image (941 0x50021CF8, 942 0x50021D08,
+# 935 0x50021CCC, 893 0x50021CC8).  The vote cannot place it: in 941 / 942 the
+# stack top is also the start of the records after it (DspPresetRamRecords),
+# and in 935 / 893 the stack top moved (-0x2C / -0x30) while those records did
+# not (0 / -4), so the vote carried the records' address (2026-11-06,
+# notes/mn10300-names-probes/ramgui_reset_layout.py).
 # An entry that cannot be ported (its bytes were deleted, or its RAM delta is
 # ambiguous) is written commented-out with the reason, never guessed.
 #
@@ -146,6 +154,27 @@ class Porter:
         return a, None
 
 
+# `mov imm32, aN` (fc dc+n imm32) followed by `mov aN, sp` (f2 f0+(n << 2)): the reset's stack load
+RESET_SP = re.compile(rb"\xfc([\xdc-\xdf])(....)\xf2([\xf0\xf4\xf8\xfc])", re.S)
+
+
+def reset_sp(img):
+    """The stack top an image's reset code loads: the value of its one `mov imm32, aN ;
+    mov aN, sp` whose two registers agree and whose value is in work RAM; exit if not one."""
+    vals = {struct.unpack("<I", m.group(2))[0] for m in RESET_SP.finditer(img)
+            if m.group(1)[0] - 0xDC == (m.group(3)[0] - 0xF0) >> 2}
+    vals = {v for v in vals if space(v) == "ram"}
+    if len(vals) != 1:
+        sys.exit(f"port_symbols: the image has {len(vals)} reset stack loads, not 1: "
+                 + ", ".join(f"0x{v:08X}" for v in sorted(vals)))
+    return vals.pop()
+
+
+# names whose value is what the reset code loads, not a ported RAM address
+RESET_LOADED = {"INITIAL_SP": reset_sp,
+                # the 0x800-byte boot stack under it (0x800 in all four builds: work-ram-map.md)
+                "BootStack": lambda img: reset_sp(img) - 0x800}
+
 LINE = re.compile(r"^(\s*)0x([0-9A-Fa-f]+)(\s+)(\S+)(.*)$")
 
 
@@ -230,6 +259,11 @@ def main():
         ind, hexa, sep, name, rest = m.groups()
         a = int(hexa, 16)
         n, why = (override[name], None) if name in override else P.port(a)
+        if name in RESET_LOADED:
+            old_v = RESET_LOADED[name](P.A)
+            if old_v != a:
+                sys.exit(f"port_symbols: {name} is 0x{a:08X} but the old build's reset loads 0x{old_v:08X}")
+            n, why = RESET_LOADED[name](P.B), None
         sp = space(a)
         if n is None:
             stats[sp + " unported"] += 1

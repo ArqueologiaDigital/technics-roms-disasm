@@ -4200,11 +4200,11 @@ loc_48442103:
     call    StyleIdArrayStore, [d2,d3], 8
 loc_4844211F:
     ret     [d2,d3,a2], 0x1c
-
-func_48442122:
+# StyleVarDspPartsApply  (CPU 0x48442122)
+StyleVarDspPartsApply:
     movm    [d2,d3], (sp)
     add     -0x14, sp
-func_48442122_entry:
+StyleVarDspPartsApply_entry:
     call    func_48433EFF, 0, 0
     movbu   (a0), d1
     movbu   (1, a0), d2
@@ -4240,7 +4240,7 @@ loc_4844214B:
 loc_48442163:
     extbu   d1
     mov     d1, d0
-    call    func_48435BE7, 0, 0
+    call    StylePartToTgPart, 0, 0
     mov     d0, d1
     exth    d1
     cmp     0, d1
@@ -4250,7 +4250,7 @@ loc_48442175:
     movbu   d0, (0x10, sp)
     extbu   d2
     mov     d2, d0
-    call    func_48435BE7, 0, 0
+    call    StylePartToTgPart, 0, 0
     mov     d0, d1
     exth    d1
     cmp     0, d1
@@ -4298,7 +4298,7 @@ func_484421F8_entry:
     beq     loc_48442218
     movbu   d0, (0x5003a438)
     call    StyleDspUnitsApply_entry, [d2,d3,a2], 0x1c
-    call    func_48442122_entry, [d2,d3], 0x1c
+    call    StyleVarDspPartsApply_entry, [d2,d3], 0x1c
 loc_48442218:
     ret     [d2], 0xc
 
@@ -4966,7 +4966,7 @@ loc_484428C2:
     call    func_48435BDE, 0, 0
     call    StyleDspUnitsApply_entry, [d2,d3,a2], 0x1c
 loc_484428EA:
-    call    func_48442122_entry, [d2,d3], 0x1c
+    call    StyleVarDspPartsApply_entry, [d2,d3], 0x1c
     movhu   (0x5003a46e), d0
     exth    d0
     call    StyleTemplateRebuild_entry, [d2,d3,a2,a3], 0x28
@@ -5455,7 +5455,7 @@ func_48442E24_entry:
     beq     loc_48442E53
     call    func_484419A9_entry, [d2,d3,a2], 0x28
     call    StyleDspUnitsApply_entry, [d2,d3,a2], 0x1c
-    call    func_48442122_entry, [d2,d3], 0x1c
+    call    StyleVarDspPartsApply_entry, [d2,d3], 0x1c
     movhu   (0x5003a46e), d0
     exth    d0
     call    StyleTemplateRebuild_entry, [d2,d3,a2,a3], 0x28
@@ -5479,7 +5479,7 @@ func_48442E56_entry:
     beq     loc_48442EBC
     call    func_484419A9_entry, [d2,d3,a2], 0x28
     call    func_4843D0A8_entry, [d2,a2], 0x20
-    call    func_48442122_entry, [d2,d3], 0x1c
+    call    StyleVarDspPartsApply_entry, [d2,d3], 0x1c
     movhu   (0x5003a46e), d0
     exth    d0
     call    StyleTemplateRebuild_entry, [d2,d3,a2,a3], 0x28
@@ -6748,7 +6748,7 @@ func_48443B1B_entry:
     call    func_484419A9_entry, [d2,d3,a2], 0x28
     call    func_4843D0A8_entry, [d2,a2], 0x20
     call    StyleDspUnitsApply_entry, [d2,d3,a2], 0x1c
-    call    func_48442122_entry, [d2,d3], 0x1c
+    call    StyleVarDspPartsApply_entry, [d2,d3], 0x1c
     mov     (0x5003a458), d0
     call    SndArgRecordIfOn_entry, [d2], 0x10
     movhu   d0, (0x5003a46e)
@@ -6781,7 +6781,7 @@ func_48443B99_entry:
     call    func_484419A9_entry, [d2,d3,a2], 0x28
     call    func_4843D0A8_entry, [d2,a2], 0x20
     call    StyleDspUnitsApply_entry, [d2,d3,a2], 0x1c
-    call    func_48442122_entry, [d2,d3], 0x1c
+    call    StyleVarDspPartsApply_entry, [d2,d3], 0x1c
     mov     (0x5003a458), d0
     call    SndArgRecordIfOn_entry, [d2], 0x10
     movhu   d0, (0x5003a46e)
@@ -6811,7 +6811,7 @@ func_48443C18_entry:
     mov     (0x5003a458), d0
     movbu   (0x5003a460), d1
     call    StyleNameAndRecordSelect_entry, [d2], 0x18
-    call    func_48442122_entry, [d2,d3], 0x1c
+    call    StyleVarDspPartsApply_entry, [d2,d3], 0x1c
     mov     (0x5003a458), d0
     call    SndArgRecordIfOn_entry, [d2], 0x10
     movhu   d0, (0x5003a46e)
@@ -13182,16 +13182,16 @@ func_48447F73:
     mov     0x24, d0
     movbu   d0, (0x5003a548)
     retf    0, 0
-
-func_48447F8B:
+# KeybedEventToM3  (CPU 0x48447f8b)
+KeybedEventToM3:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x18, sp
-func_48447F8B_entry:
+KeybedEventToM3_entry:
     mov     a1, a3
     mov     a0, a2
     mov     sp, a0
     add     0x10, a0
-    call    func_48448035_entry, [d2,d3,a2,a3], 0x2c
+    call    KeybedFifoRead_entry, [d2,d3,a2,a3], 0x2c
     exth    d0
     cmp     -1, d0
     bne     loc_48447FA3
@@ -13236,7 +13236,7 @@ loc_48447FF1:
     mov     sp, a3
     add     0xc, a3
     mov     a3, a0
-    call    func_48448035_entry, [d2,d3,a2,a3], 0x2c
+    call    KeybedFifoRead_entry, [d2,d3,a2,a3], 0x2c
     exth    d0
     cmp     -1, d0
     beq     loc_48448032
@@ -13264,17 +13264,17 @@ loc_48448008:
     cmp     0x10, d0
     bge     loc_48448032
     mov     a3, a0
-    call    func_48448035_entry, [d2,d3,a2,a3], 0x2c
+    call    KeybedFifoRead_entry, [d2,d3,a2,a3], 0x2c
     exth    d0
     cmp     -1, d0
     bne     loc_48448008
 loc_48448032:
     ret     [d2,a2,a3], 0x40
-
-func_48448035:
+# KeybedFifoRead  (CPU 0x48448035)
+KeybedFifoRead:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x1c, sp
-func_48448035_entry:
+KeybedFifoRead_entry:
     movbu   (func_48448035_Table), d0
     mov     a0, a3
     cmp     0, d0
@@ -13446,13 +13446,13 @@ func_484481BF_entry:
     mov     sp, a2
     add     0xc, a2
     mov     a2, a0
-    call    func_48448035_entry, [d2,d3,a2,a3], 0x2c
+    call    KeybedFifoRead_entry, [d2,d3,a2,a3], 0x2c
     exth    d0
     cmp     -1, d0
     beq     loc_484481DD
 loc_484481D2:
     mov     a2, a0
-    call    func_48448035_entry, [d2,d3,a2,a3], 0x2c
+    call    KeybedFifoRead_entry, [d2,d3,a2,a3], 0x2c
     exth    d0
     cmp     -1, d0
     bne     loc_484481D2
@@ -13482,7 +13482,7 @@ loc_484481F6:
 func_4844820C:
     add     -0xc, sp
 func_4844820C_entry:
-    call    func_48448035_entry, [d2,d3,a2,a3], 0x2c
+    call    KeybedFifoRead_entry, [d2,d3,a2,a3], 0x2c
     ret     0, 0xc
 
 func_48448217:
@@ -26652,7 +26652,7 @@ loc_4844EDDF:
     mov     d0, (0x10, sp)
     mov     (0x18, sp), d0
     mov     (0x14, sp), d1
-    call    func_484519DE_entry, [d2,d3], 0x1c
+    call    KeybedM3Dispatch_entry, [d2,d3], 0x1c
     cmp     a3, a2
     bcs     loc_4844EDDF
 loc_4844EE0D:
@@ -26704,7 +26704,7 @@ loc_4844EE27:
     mov     a0, d0
     and     0xff000000, d0
     or      0x00900000, d0
-    call    func_484519DE_entry, [d2,d3], 0x1c
+    call    KeybedM3Dispatch_entry, [d2,d3], 0x1c
     mov     (0x1c, sp), a0
     add     2, a2
     movbu   (a0), d0
@@ -26794,7 +26794,7 @@ loc_4844EEEA:
     mov     a0, d0
     and     0xff000000, d0
     or      0x00900000, d0
-    call    func_484519DE_entry, [d2,d3], 0x1c
+    call    KeybedM3Dispatch_entry, [d2,d3], 0x1c
 loc_4844EF48:
     mov     (0x28, sp), a0
     mov     (0x1c, sp), d1
@@ -26888,7 +26888,7 @@ loc_4844EFA8:
     mov     a1, d0
     and     0xff000000, d0
     or      0x00900000, d0
-    call    func_484519DE_entry, [d2,d3], 0x1c
+    call    KeybedM3Dispatch_entry, [d2,d3], 0x1c
 loc_4844F00E:
     mov     (0x1c, sp), a0
     mov     (0x20, sp), d1
@@ -26943,7 +26943,7 @@ loc_4844F036:
     and     0xffffff00, d1
     or      d2, d1
     and     0xffff00ff, d1
-    call    func_484519DE_entry, [d2,d3], 0x1c
+    call    KeybedM3Dispatch_entry, [d2,d3], 0x1c
     jmp     loc_4844F1C7
 loc_4844F098:
     movbu   (a0), d0
@@ -26994,7 +26994,7 @@ loc_4844F0C1:
     clr     d0
     mov     d0, (0x10, sp)
     mov     d2, d0
-    call    func_484519DE_entry, [d2,d3], 0x1c
+    call    KeybedM3Dispatch_entry, [d2,d3], 0x1c
     mov     (0x254, sp), a0
     mov     1, d0
     movhu   (a0), d2
@@ -27022,7 +27022,7 @@ loc_4844F0C1:
     mov     d2, d1
     clr     d3
     mov     d3, (0x10, sp)
-    call    func_484519DE_entry, [d2,d3], 0x1c
+    call    KeybedM3Dispatch_entry, [d2,d3], 0x1c
     bra     loc_4844F1C7
 loc_4844F15B:
     movbu   (a0), d0
@@ -27063,7 +27063,7 @@ loc_4844F15B:
     asl     8, d1
     or      d1, d2
     mov     d2, d1
-    call    func_484519DE_entry, [d2,d3], 0x1c
+    call    KeybedM3Dispatch_entry, [d2,d3], 0x1c
 loc_4844F1C7:
     add     0x23c, sp
     ret     [d2,d3,a2,a3], 0x10
@@ -32143,14 +32143,14 @@ loc_484519BE:
 loc_484519DA:
     clr     d0
     ret     [d2,d3,a2,a3], 0x34
-
-func_484519DE:
+# KeybedM3Dispatch  (CPU 0x484519de)
+KeybedM3Dispatch:
     movm    [d2,d3], (sp)
     add     -0x14, sp
-func_484519DE_entry:
+KeybedM3Dispatch_entry:
     mov     d1, d3
     mov     d0, d2
-    call    func_484A381D_entry, 0, 8
+    call    TestModeKeyDivert_entry, 0, 8
     cmp     0, d0
     beq     loc_484519FD
     mov     d3, d1
@@ -35380,7 +35380,7 @@ loc_48453425:
     exth    d1
     asl     24, d1
     or      d2, d1
-    call    func_484519DE_entry, [d2,d3], 0x1c
+    call    KeybedM3Dispatch_entry, [d2,d3], 0x1c
 loc_48453453:
     mov     (0x14, sp), a0
     movbu   (a0), d0
@@ -35418,7 +35418,7 @@ loc_48453464:
     clr     d1
     mov     d1, (0x10, sp)
     mov     d2, d1
-    call    func_484519DE_entry, [d2,d3], 0x1c
+    call    KeybedM3Dispatch_entry, [d2,d3], 0x1c
 loc_484534A4:
     ret     [d2,d3,a2,a3], 0x28
 

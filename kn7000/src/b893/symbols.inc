@@ -4,6 +4,7 @@
 .equ TABLE_ROM_BASE, 0x48000000   # table flash mapping
 .equ BOOTROM_BASE, 0x4C000000   # library/kernel code (undumped internal ROM)
 .equ WORK_RAM_BASE, 0x50000000   # work RAM
+.equ INITIAL_SP, 0x50021CC8   # initial stack pointer
 .equ PICTURE_FLASH, 0x57800000   # picture flash (separate device)
 .equ CUSTOM_FLASH_READ, 0x56000000   # custom-data flash read view (idd7000-programmed; u32 dir archive @+0x200)
 .equ CUSTOM_FLASH_BANK, 0x56020000   # compressed custom-style bank in the custom flash (Huffman/LZH; decoded on style-load)

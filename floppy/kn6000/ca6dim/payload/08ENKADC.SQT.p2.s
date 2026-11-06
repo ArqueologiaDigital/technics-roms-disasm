@@ -1962,8 +1962,22 @@ P_08ENKADC_SQT_p2:
 	sq_beat
 	sq_end
 ; after the end of track: stale events of an earlier version of the song (stale_tokens)
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"08ENKADC.sqt.p2.ref", 0x110b, 237
+	; the image of song-record bytes +0x57B..+0x667: 220 of these 237 equal song 1's in part 1
+	.byte	128, 128, 128, 128, 128, 0, 0, 35, 8, 0, 0, 0, 0, 128, 128, 128
+	.byte	0, 0, 0, 0, 0, 9, 72, 0, 0, 120, 71, 32, 192, 2, 0, 0
+	.byte	0, 0, 80, 80, 64, 64, 0, 64, 64, 64, 64, 64, 64, 64, 64, 108
+	.byte	64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0, 0, 136, 128, 128
+	.byte	0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 0
+	.byte	0, 35, 15, 128, 0, 0, 128, 128, 128, 128, 0, 0, 0, 0, 0, 10
+	.byte	72, 0, 0, 32, 71, 53, 224, 2, 0, 0, 0, 0, 85, 80, 60, 64
+	.byte	0, 64, 64, 64, 64, 64, 64, 64, 64, 108, 64, 28, 64, 64, 64, 128
+	.byte	2, 64, 0, 0, 0, 0, 0, 136, 128, 128, 0, 0, 0, 128, 128, 128
+	.byte	128, 128, 128, 128, 128, 128, 128, 128, 128, 0, 0, 35, 10, 0, 0, 0
+	.byte	0, 128, 128, 128, 0, 0, 0, 0, 0, 11, 72, 0, 0, 32, 71, 53
+	.byte	224, 2, 0, 0, 0, 0, 85, 80, 60, 64, 0, 64, 64, 64, 64, 64
+	.byte	64, 64, 64, 108, 64, 28, 64, 64, 64, 128, 2, 64, 0, 0, 0, 0
+	.byte	0, 136, 128, 128, 0, 0, 0, 128, 128, 128, 128, 128, 128, 128, 128, 128
+	.byte	128, 128, 128, 0, 0, 35, 11, 0, 0, 0, 0, 128, 128
 	k5_ev	0x80, 0, 0, 0
 	.byte	0, 0, 12, 72	; data bytes of an event cut by the end
 	sq_cell	0x80, 0, 20	; cell 19: song 1 track 6, 1 of 21
@@ -6849,12 +6863,10 @@ P_08ENKADC_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"08ENKADC.sqt.p2.ref", 0x6eee, 4
+	.byte	69, 91, 40, 0	; data bytes of an event cut at the start
 	sq_note	48, 0, 67, 85, 30, 0
 	sq_note	48, 0, 52, 93, 16, 0
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"08ENKADC.sqt.p2.ref", 0x6efe, 2
+	.byte	48, 144	; the first 2 bytes of a tick-first event, cut by the end
 	sq_cell	0xe0, 0, 113	; cell 112: song 1 track 8, 1 of 13
 	sq_beat
 	sq_beat
@@ -10154,9 +10166,8 @@ P_08ENKADC_SQT_p2:
 	sq_beat
 	sq_end
 ; after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	16, 1, 50, 60	; data bytes of an event cut at the start
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"08ENKADC.sqt.p2.ref", 0x8e8e, 4
+	.byte	16, 1, 50	; data bytes of an event cut at the start
+	sq_cc	60, 0, 16, 1, 51
 	sq_cc	67, 0, 16, 1, 47
 	sq_cc	70, 0, 16, 1, 43
 	sq_cc	71, 0, 16, 1, 38
@@ -12679,8 +12690,7 @@ P_08ENKADC_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"08ENKADC.sqt.p2.ref", 0xbebf, 2
+	.byte	1, 59	; data bytes of an event cut at the start
 	sq_cc	73, 0, 15, 1, 61
 	sq_cc	75, 0, 15, 1, 63
 	sq_cc	77, 0, 15, 1, 66
@@ -12693,8 +12703,7 @@ P_08ENKADC_SQT_p2:
 	sq_cc	88, 0, 15, 1, 82
 	sq_cc	89, 0, 15, 1, 84
 	sq_cc	92, 0, 15, 1, 85
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"08ENKADC.sqt.p2.ref", 0xbefd, 3
+	.byte	93, 176, 15	; the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 193	; cell 192: song 1 track 15, 1 of 12
 	sq_cc	0, 0, 13, 11, 100
 	sq_note	49, 0, 76, 100, 12, 0
@@ -14336,8 +14345,7 @@ P_08ENKADC_SQT_p2:
 	sq_cc	29, 0, 15, 1, 100
 	sq_cc	31, 0, 15, 1, 99
 	sq_cc	33, 0, 15, 1, 97
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"08ENKADC.sqt.p2.ref", 0xd1fd, 3
+	.byte	33, 176, 15	; the first 3 bytes of a tick-first event, cut by the end
 
 	.if	(. - P_08ENKADC_SQT_p2) - 53760
 	.error	"08ENKADC.SQT part 2: the payload is not 53760 bytes"
