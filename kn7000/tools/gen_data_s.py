@@ -235,7 +235,7 @@ FEATURES = {k: True for k in ("ptr_starts", "array_end", "mem_ptrs", "loop_index
                               "top_tested", "fld_slots", "fx_streams", "pow10_table", "euc_text",
                               "sibling_trie", "builtin_pads", "widget_vars", "maps128", "sentinel_lists", "chord_voicings", "index_bounds", "fx_presets", "table_terminators", "msg_readers", "count_notes", "doubles_text", "table_ptrs",
                               # lane mn10300-data2 (wave 10)
-                              "support_values", "sibling_support", "boot_sectors", "panel_700", "style_lists")}
+                              "support_values", "sibling_support", "boot_sectors", "panel_700", "style_lists", "reclaim_strings", "curated_counts")}
 for _k in os.environ.get("GEN_DATA_S_OFF", "").split(","):
     if _k.strip():
         FEATURES[_k.strip()] = False
@@ -1025,9 +1025,10 @@ class Gen:
                     self.support_value_names(i, p, nn, d)
 
     def style_genre_lists(self):
-        """(FEATURES["style_lists"], lane mn10300-data2) What a StyleGenre record's +4 points at: a list of
-        {char *name, u16 *styles} pairs, ended by a pair whose +4 is 0, and each pair's style list, four
-        u16 style numbers and the end marker 0xFFFF.  941 StyleListBoxGetItem 0x4847C216: `asl 3` /
+        """(FEATURES["style_lists"], lane mn10300-data2) What a StyleGenre record's +4 points at: its styles,
+        GenreStyle {char *name, u16 *setups} pairs (data_struct_names.py), ended by a pair whose +4 is 0, and
+        each style's setups, four u16 MusicStylistSetup numbers (StyleRecordTable records; 1,080 = 270
+        styles x 4) and the end marker 0xFFFF.  941 StyleListBoxGetItem 0x4847C216: `asl 3` /
         `add StyleGenreTable, a0` / `mov (4, a0), d0` (the pairs), pair i's `mov (4, a0), d0` (its
         styles), `movhu (d0, a1), d3` four times (`cmp 4, d2` / `blt`), then the next pair's `mov (0xc,
         a0), d0` / `cmp 0, d0` (the end); func_4847BA42 `mov (d0, a3), a1` / memcpy(.., 0x10) (the pair's
@@ -1078,23 +1079,24 @@ class Gen:
             for sa, (vals, nm) in sorted(lists.items()):
                 cur = self.fixed.get(sa)
                 lab = cur if cur and not self.GUESSED.match(cur) else self.rename_at(
-                    sa, f"StyleList_{tag}_{sanitize(nm, 30) or 'unnamed'}")
+                    sa, f"StyleSetups_{tag}_{sanitize(nm, 30) or 'unnamed'}")
                 self.add(sa, 2 * len(vals), lab, "style list",
                          lambda g, it, vals=vals, nm=nm: [
-                             f"{it.label}:\t# style numbers (u16) of \"{nm.strip()}\", then 0xFFFF; StyleListBoxGetItem reads four"]
+                             f"{it.label}:\t# the setups of style \"{nm.strip()}\" (u16 MusicStylistSetup numbers: StyleRecordTable"
+                             f" records), then 0xFFFF; StyleListBoxGetItem reads four"]
                          + ["\t.word\t" + ", ".join(f"{v}" if v != 0xFFFF else "0xffff" for v in vals)])
                 nlists += 1
 
             def render(g, it, pairs=pairs, gname=gname):
-                out = [f"{it.label}:\t# StyleGenre \"{gname.strip()}\"'s {len(pairs) - 1} {{char *name, u16 *styles}} pairs, then"
-                       f" the pair whose styles is 0 (StyleListBoxGetItem: `mov (0xc, a0), d0` / `cmp 0, d0`)"]
+                out = [f"{it.label}:\t# StyleGenre \"{gname.strip()}\"'s {len(pairs) - 1} styles, GenreStyle {{char *name, u16"
+                       f" *setups}}, then the one whose setups is 0 (StyleListBoxGetItem: `mov (0xc, a0), d0` / `cmp 0, d0`)"]
                 out += [f"\t.long\t{g.ref(na)}, {g.ref(sa)}" for na, sa in pairs]
                 return out
             cur = self.fixed.get(pa)
-            lab = cur if cur and not self.GUESSED.match(cur) else self.rename_at(pa, f"StyleGenre_{tag}_Pairs")
+            lab = cur if cur and not self.GUESSED.match(cur) else self.rename_at(pa, f"StyleGenre_{tag}_Styles")
             self.add(pa, 8 * len(pairs), lab, "style genre pairs", render)
             npairs += 1
-        print(f"gen_data_s: style genres: {npairs} pair lists, {nlists} style lists")
+        print(f"gen_data_s: style genres: {npairs} style lists, {nlists} setup lists")
 
     def boot_sectors(self):
         """(FEATURES["boot_sectors"], lane mn10300-data2, N-044cdbc6) The first 32 bytes of a FAT
@@ -1895,6 +1897,15 @@ class Gen:
                     m_ += 1
                 if m_ == ixb[0]:
                     n, ix_note = m_, f"; {m_} records: the index is bounded by {ixb[2]}"
+            cnt = DN.options(self.label_at.get(a) or self.fixed.get(a) or "").get("count") \
+                if FEATURES.get("curated_counts", True) else None
+            if cnt and cnt[0] > n:
+                # (lane mn10300-data2) a count data_struct_names.OPTIONS states, with its evidence (a bound in a callee)
+                m_ = n
+                while m_ < cnt[0] and self.free(a + m_ * s, s) and not any(x in hard for x in range(a + m_ * s, a + m_ * s + s)):
+                    m_ += 1
+                if m_ == cnt[0]:
+                    n, ix_note = m_, f"; {m_} records: {cnt[1]}"
             end_note = ""
             lb = self.loop_end(a, s, n)
             if lb is not None:
@@ -3814,6 +3825,8 @@ class Gen:
             nxt = named[kx] if kx < len(named) else DATA_END
             if nxt < o + size:
                 continue        # another list or a named address inside: not one list
+            if not self.free(a, size) and FEATURES.get("reclaim_strings", True):
+                self.reclaim_guessed_strings(a, max(size, full if nxt >= o + full and S > foff + w else size))
             if nxt >= o + full and self.free(a, full) and S > foff + w:
                 size = full
             if not self.free(a, size):
@@ -3855,6 +3868,38 @@ class Gen:
                     out.append(line + (f"\t# end" if r_ == n else ""))
                 return out + padl
             self.add(a, size + pad, lab, "sentinel list", render)
+
+    def reclaim_guessed_strings(self, a, size):
+        """(FEATURES["reclaim_strings"], lane mn10300-data2) Give back the bytes of [a, a + size) when
+        every item there is a string an earlier pass took by its look alone (typed_refs: a referenced
+        address whose bytes up to a NUL are printable; its label a guessed one, Str_ ...), so that a
+        reader-typed list can have them: a record's head byte read as a one-character string
+        (`Str_p_20` = 0x85 0x20 0x70 0x00, the first word of a PanelButtonDispatch record; opaque group
+        false-string).  Returns True when the span is free afterwards."""
+        o = self.off(a)
+        self.build_index()
+        import bisect
+        i = max(0, bisect.bisect_right(self.starts, o) - 1)
+        hit = []
+        while i < len(self.ranges) and self.ranges[i][0] < o + size:
+            s, e, _x = self.ranges[i]
+            if e > o:
+                it = self.items[s]
+                if it.kind != "string" or not (it.label and self.GUESSED.match(it.label)) or s < o or e > o + size \
+                        or it.start in self.fixed_by_code or (self.fixed.get(it.start) == it.label
+                                                               and it.label in self.code_names):
+                    return False
+                hit.append(s)
+            i += 1
+        for s in hit:
+            it = self.items.pop(s)
+            self.claimed[s:s + it.size] = bytes(it.size)
+            self.ranges = [r for r in self.ranges if r[0] != s]
+            if self.label_at.get(it.start) == it.label:
+                del self.label_at[it.start]
+        self.reclaimed = getattr(self, "reclaimed", 0) + len(hit)
+        self.build_index()
+        return self.free(a, size)
 
     def chord_voicings(self):
         """(FEATURES["chord_voicings"], lane mn10300-data) The chord voicings and their inversions.  A
