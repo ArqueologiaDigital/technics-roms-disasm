@@ -97,36 +97,45 @@
 
 # The 0x80-byte style record at container +0x70 (CustStyleRecPtr 0x4843E107): the 13-byte
 # name + 3 NUL, four 13-byte variation-name fields, the 20 variation indices 0..19
-# (+0x50; CustStyleImportToMem renormalises them) and two u16BE fields at +0x70 (not traced;
-# the ROM template has 0x0010 0x0023).
-.macro TCMP_STYLE name, vname1, vname2, vname3, vname4, w70, w72
+# (+0x50; CustStyleImportToMem renormalises them) and at +0x70 the style's two DSP-unit preset
+# keys, a built-in style's `style_units` (+0x0D there): StyleNameCommitMem / StyleNameCommitCustom
+# store record + 0x70 as the units pointer 0x50034C20, StyleDspUnitsApply 0x484420EF decodes it
+# (StyleDspKeyDecode: {lo, hi} pairs, 7 bits a byte) into the keys of units EFF4 (0xB044) and EFF5
+# (0xB054), bit 7 of byte +0x71 = TOTAL MODE (0xB001); func_4843A47C copies a built-in style's four
+# bytes here.  The macro spells the four bytes as two u16BE words (units4 = +0x70/+0x71, units5 =
+# +0x72/+0x73); most factory styles have 0x1000 0x2300, keys 0x0010 / 0x0023.
+.macro TCMP_STYLE name, vname1, vname2, vname3, vname4, units4, units5
 	.ascii	"\name"
 	.ascii	"\vname1", "\vname2", "\vname3", "\vname4"
 	.byte	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
 	.space	12
-	.be16	\w70, \w72
+	.be16	\units4, \units5
 	.space	12
 .endm
 
 # The first 0x20 bytes of a 0xE0-byte variation record (CustStyleVarRecPtr 0x4843E10C:
 # container +0xF0 + var*0xE0); eight PART_SETUP blocks follow.
-#   kind      +0x00  content byte (0x58 / 0x7C / 0x33 ... here)
-#   b1, b2    +0x01 / +0x02  not traced
+#   src_lo    +0x00  \ the built-in style the variation was copied from: func_4843B386 (the
+#   src_hi    +0x01   | copy of a built-in variation into a MEMORY style) writes key & 0x7F, key >> 7
+#   src_ext   +0x02  /  and 0; func_4843511C reads them back as ((b1 << 8 | b0) & 0xF00) >> 1 | b0 & 0x7F
+#                       for StyleBuiltinNameResolve.  0 0 0 in a variation written from scratch
 #   flags     +0x03  bit 4 = the "B" half of a paired variation (MemStyleVarRecInit)
 #   p0..p7    +0x04..+0x0B  one byte per part (MemStyleVarRecInit clamps them to 1 for
 #             variations 12..19)
 #   bars      +0x10  \ MemStyleVarBarCount 0x4843C445: the stream holds
 #   meter     +0x11  /   (bars + 1) * ((meter & 7) + 1) beat markers
 #   stream    +0x15  u24BE offset of the variation's event stream in the container
-#   t18, t19  +0x18 / +0x19  not traced (0xFF 0xFF in most variations)
-.macro TCMP_VAR kind, b1, b2, flags, p0, p1, p2, p3, p4, p5, p6, p7, bars, meter, stream, t18, t19
-	.byte	\kind, \b1, \b2, \flags
+#   eff4, eff5 +0x18 / +0x19  the style parts the DSP units EFF4 / EFF5 apply to, 0xFF = the default
+#             (Acc1 / Acc2): StyleRecordBindMem / StyleRecordBindCustom point 0x50122DD4 at +0x18, which
+#             func_48442164 reads as a built-in variation's +2 / +3; func_4843B386 copies those there
+.macro TCMP_VAR src_lo, src_hi, src_ext, flags, p0, p1, p2, p3, p4, p5, p6, p7, bars, meter, stream, eff4, eff5
+	.byte	\src_lo, \src_hi, \src_ext, \flags
 	.byte	\p0, \p1, \p2, \p3, \p4, \p5, \p6, \p7
 	.space	4
 	.byte	\bars, \meter
 	.space	3
 	.be24	\stream
-	.byte	\t18, \t19
+	.byte	\eff4, \eff5
 	.space	6
 .endm
 
@@ -134,8 +143,11 @@
 # (24 {status, controller} pairs: B0 FF, CC7, the program change's 3 bytes, CC94, CC91,
 # CC93, CC10, CC96, CC82, CC83, CC80, CC81, CC92, CC64, CC1, CC11, channel pressure, pitch
 # bend's 2 bytes, CC16, CC17, CC13).  The first 15 are the built-in styles' 15-byte part
-# set-up (src/ic18/rhythm.s, style_part).  [INFERENCE] that this block is the table's 24
-# fields in its order: the stride is 0x18 and the first 15 match; no reader was traced.
+# set-up (src/ic18/rhythm.s, style_part).  Reader: StyleRecordBindMem / StyleRecordBindCustom
+# put var + 0x20 + k * 0x18 in 0x50034BAC[k]; StyleTemplateLoadParts 0x4844187A copies 15 bytes
+# of each into the part template 0x5003A37C, whose fields StylePartFieldEmit sends as table
+# 0x485B77D4 says.  Bytes 15..23 are never read, and are 0 in every factory set-up
+# (notes/custom-data-ic21-probes/tcmp_var_fields.py); their names follow the table.
 .macro PART_SETUP mode, volume, prog, bank_lsb, bank_msb, cc94, reverb, chorus, pan, cc96, cc82, cc83, cc80, cc81, cc92, sustain, modulation, expression, pressure, bend_lsb, bend_msb, cc16, cc17, cc13
 	.byte	\mode, \volume, \prog, \bank_lsb, \bank_msb, \cc94, \reverb, \chorus, \pan, \cc96, \cc82, \cc83
 	.byte	\cc80, \cc81, \cc92, \sustain, \modulation, \expression, \pressure, \bend_lsb, \bend_msb, \cc16, \cc17, \cc13
