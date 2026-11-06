@@ -60,11 +60,14 @@ Source share 99.8 % -> 100.0 % in both trees (150 / 163 B of 2,097,152).
   small others.  Next step: `notes/kn5000-c-2026-11-02/probes/cdiv_members.py` per bin, then give v6 / v5
   RAM names for the RamPtrs (port v7's `ram_variables_by_use.s` values through the porter's operand map).
 - Hand-over from lane kn5000-notes (main 55860e8d7, merged before the final gates): after the json was
-  regenerated, `naka_type_straddling_records.py --tree v6 / v5 --apply` typed naka_widget_names_charmap.c's
-  record (NakaWidget_PanelSimulator) in both trees and refused naka_technichord_part.c's 8 ("DIFFERS": the
-  retyped C would compile to another blob, because these trees' C holds v10's values there and the json's
-  6 / 8 raw bytes patch them).  Next step: give naka_technichord_part.c its own v6 / v5 values in those
-  records (the json raw bytes say which), then rerun the tool.
+  regenerated, `naka_type_straddling_records.py --tree v6 / v5 --apply` refused naka_technichord_part.c's 8
+  records ("DIFFERS": the retyped C would compile to another blob, because these trees' C holds v10's values
+  there and the json's 6 / 8 raw bytes patch them).  It typed naka_widget_names_charmap.c's record
+  (NakaWidget_PanelSimulator), but `make gate`'s gui-check then failed: `naka_gui_symbolize.py --tree v6
+  --apply` refuses to spell that record ("DIFFERS", the same cause) and `--check` reports it stale.  The
+  charmap typing was therefore reverted (both trees; the commit that did it is 607f48c77).  Next step: give
+  those records their own v6 / v5 values in the C (the json raw bytes say which), then rerun
+  naka_type_straddling_records.py and naka_gui_symbolize.py.
 - The 52-byte blocks inside `Naka_DrawbarReg_Table[69]` that the RamPtrs point at (entries 16, 29, 42, 55)
   are typed as table entries by the C; what they are (likely view records kept in work RAM) is not traced.
 
