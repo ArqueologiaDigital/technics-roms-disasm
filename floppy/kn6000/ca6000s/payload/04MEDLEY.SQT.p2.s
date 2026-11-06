@@ -1758,9 +1758,8 @@ P_04MEDLEY_SQT_p2:
 	sq_beat
 	sq_end
 ; after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	0, 83	; data bytes of an event cut at the start
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"04MEDLEY.sqt.p2.ref", 0x1eb2, 3
+	.byte	0	; data bytes of an event cut at the start
+	sq_bend	83, 0, 64, 44
 	sq_bend	85, 0, 64, 42
 	sq_bend	88, 0, 0, 41
 	sq_bend	90, 0, 64, 40
@@ -1780,8 +1779,7 @@ P_04MEDLEY_SQT_p2:
 	sq_bend	38, 0, 0, 64
 	sq_note	59, 0, 62, 102, 59, 0
 	sq_beat
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"04MEDLEY.sqt.p2.ref", 0x1efd, 3
+	.byte	32, 144, 60	; the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0x88, 0, 33	; cell 32: song 1 track 2, 1 of 20
 	sq_beat
 	sq_beat
@@ -3035,8 +3033,7 @@ P_04MEDLEY_SQT_p2:
 	sq_beat
 	sq_end
 ; after the end of track: stale events of an earlier version of the song (stale_tokens)
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"04MEDLEY.sqt.p2.ref", 0x322d, 3
+	.byte	224, 64, 56	; a tick-first event cut at the start (its tick is gone)
 	sq_bend	88, 0, 0, 55
 	sq_bend	90, 0, 0, 54
 	sq_bend	90, 0, 0, 53
@@ -3956,8 +3953,7 @@ P_04MEDLEY_SQT_p2:
 	sq_beat
 	sq_end
 ; after the end of track: stale events of an earlier version of the song (stale_tokens)
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"04MEDLEY.sqt.p2.ref", 0x3d4e, 5
+	.byte	144, 50, 102, 70, 1	; a tick-first event cut at the start (its tick is gone)
 	sq_beat
 	sq_beat
 	sq_note	92, 0, 50, 108, 92, 1
@@ -4027,8 +4023,7 @@ P_04MEDLEY_SQT_p2:
 	sq_bend	77, 0, 64, 53
 	sq_bend	79, 0, 0, 51
 	sq_bend	82, 0, 64, 47
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"04MEDLEY.sqt.p2.ref", 0x3dfd, 3
+	.byte	84, 224, 0	; the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0x88, 0, 64	; cell 63: song 1 track 4, 1 of 3
 	sq_sys	0, 0xf1, 6, 0, 64, 0, 2
 	sq_note	0, 0, 36, 90, 9, 0

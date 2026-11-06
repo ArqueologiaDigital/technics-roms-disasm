@@ -6991,8 +6991,7 @@ P_02MOMENT_SQT_p2:
 ; after the end of track: stale events of an earlier version of the song (stale_tokens)
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"02MOMENT.sqt.p2.ref", 0x5b76, 138
+	.fill	138, 1, 0xff	; song memory no save wrote (it is 0xFF until written)
 	sq_cell	0xff, 0, 94	; cell 93: song 1 track 7, 1 of 70
 	sq_note	7, 0, 49, 114, 88, 2
 	sq_note	7, 0, 69, 63, 29, 0
@@ -19581,10 +19580,9 @@ P_02MOMENT_SQT_p2:
 	sq_beat
 	sq_end
 ; after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	74, 99, 34, 0, 53	; data bytes of an event cut at the start
-	k5_note	0x90, 82, 98, 33, 0, 53
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"02MOMENT.sqt.p2.ref", 0x12ccc, 5
+	.byte	74, 99, 34, 0	; data bytes of an event cut at the start
+	sq_note	53, 0, 82, 98, 33, 0
+	sq_note	53, 0, 77, 110, 28, 0
 	sq_beat
 	sq_note	5, 0, 77, 78, 21, 0
 	sq_note	5, 0, 82, 76, 22, 0
@@ -19594,8 +19592,7 @@ P_02MOMENT_SQT_p2:
 	sq_note	52, 0, 77, 89, 26, 0
 	sq_beat
 	sq_note	5, 0, 74, 95, 33, 0
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"02MOMENT.sqt.p2.ref", 0x12cfd, 3
+	.byte	5, 144, 77	; the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0xff, 0, 303	; cell 302: song 1 track 16, 1 of 72
 	sq_cc	0, 0, 12, 11, 127
 	sq_note	7, 0, 71, 98, 28, 0

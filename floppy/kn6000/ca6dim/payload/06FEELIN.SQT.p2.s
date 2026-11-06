@@ -3470,8 +3470,7 @@ P_06FEELIN_SQT_p2:
 	sq_beat
 	sq_beat
 	sq_end
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"06FEELIN.sqt.p2.ref", 0x2078, 136
+	.fill	136, 1, 0xff	; song memory no save wrote (it is 0xFF until written)
 	sq_cell	0x80, 0, 35	; cell 34: song 1 track 8, 1 of 27
 	sq_beat
 	sq_beat
@@ -5050,9 +5049,8 @@ P_06FEELIN_SQT_p2:
 	sq_beat
 	sq_end
 ; after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	59, 72	; data bytes of an event cut at the start
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"06FEELIN.sqt.p2.ref", 0x3b1a, 3
+	.byte	59	; data bytes of an event cut at the start
+	sq_bend	72, 0, 0, 64
 	sq_cc	82, 0, 16, 1, 10
 	sq_cc	85, 0, 16, 1, 21
 	sq_cc	86, 0, 16, 1, 30
@@ -8102,8 +8100,7 @@ P_06FEELIN_SQT_p2:
 	sq_beat
 	sq_end
 ; after the end of track: stale events of an earlier version of the song (stale_tokens)
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"06FEELIN.sqt.p2.ref", 0x6cd7, 4
+	.byte	176, 16, 1, 68	; a tick-first event cut at the start (its tick is gone)
 	sq_cc	32, 0, 16, 1, 63
 	sq_cc	35, 0, 16, 1, 57
 	sq_cc	36, 0, 16, 1, 51
@@ -8111,8 +8108,7 @@ P_06FEELIN_SQT_p2:
 	sq_cc	42, 0, 16, 1, 35
 	sq_cc	42, 0, 16, 1, 26
 	sq_cc	45, 0, 16, 1, 16
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"06FEELIN.sqt.p2.ref", 0x6cfe, 2
+	.byte	45, 176	; the first 2 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 111	; cell 110: song 1 track 11, 1 of 25
 	sq_cc	0, 0, 6, 11, 127
 	sq_beat
@@ -9621,9 +9617,8 @@ P_06FEELIN_SQT_p2:
 	sq_beat
 	sq_end
 ; after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	16, 1, 52, 14	; data bytes of an event cut at the start
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"06FEELIN.sqt.p2.ref", 0x8585, 4
+	.byte	16, 1, 52	; data bytes of an event cut at the start
+	sq_cc	14, 0, 16, 1, 47
 	sq_cc	17, 0, 16, 1, 41
 	sq_cc	17, 0, 16, 1, 35
 	sq_cc	20, 0, 16, 1, 27
@@ -9650,8 +9645,7 @@ P_06FEELIN_SQT_p2:
 	sq_bend	65, 0, 0, 59
 	sq_bend	65, 0, 64, 55
 	sq_bend	68, 0, 0, 53
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"06FEELIN.sqt.p2.ref", 0x85fd, 3
+	.byte	71, 224, 0	; the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 136	; cell 135: song 1 track 12, 1 of 3
 	sq_cc	0, 0, 7, 11, 127
 	sq_beat
@@ -10220,8 +10214,8 @@ P_06FEELIN_SQT_p2:
 	sq_beat
 	sq_end
 ; after the end of track: stale events of an earlier version of the song (stale_tokens)
-	k5_note	0x90, 36, 96, 44, 0, 3
-	.byte	144, 42, 93, 13, 0	; the first 5 bytes of a KN5000-order event, cut by the end
+	.byte	144, 36, 96, 44, 0	; a tick-first event cut at the start (its tick is gone)
+	sq_note	3, 0, 42, 93, 13, 0
 	sq_cell	0x80, 0, 139	; cell 138: song 1 track 13, 1 of 9
 	sq_cc	0, 0, 8, 11, 127
 	sq_note	8, 0, 96, 90, 95, 1
@@ -11065,8 +11059,7 @@ P_06FEELIN_SQT_p2:
 	sq_note	52, 0, 70, 104, 90, 0
 	sq_beat
 	sq_beat
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"06FEELIN.sqt.p2.ref", 0x91fb, 5
+	.byte	3, 144, 70, 109, 52	; the first 5 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 148	; cell 147: song 1 track 14, 1 of 3
 	sq_cc	0, 0, 10, 11, 127
 	sq_beat
@@ -11647,8 +11640,7 @@ P_06FEELIN_SQT_p2:
 	sq_cc	83, 0, 16, 1, 26
 	sq_cc	86, 0, 16, 1, 30
 	sq_cc	86, 0, 16, 1, 33
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"06FEELIN.sqt.p2.ref", 0x94fe, 2
+	.byte	89, 176	; the first 2 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 151	; cell 150: song 1 track 15, 1 of 11
 	sq_cc	0, 0, 11, 11, 127
 	sq_beat
@@ -15148,8 +15140,7 @@ P_06FEELIN_SQT_p2:
 	sq_bend	38, 0, 0, 47
 	sq_bend	41, 0, 0, 39
 	sq_bend	44, 0, 0, 28
-	; census: opaque -- unknown-dump: stale cell bytes that neither event order explains (left over)
-	.incbin	"06FEELIN.sqt.p2.ref", 0xd0fe, 2
+	.byte	45, 224	; the first 2 bytes of a tick-first event, cut by the end
 
 	.if	(. - P_06FEELIN_SQT_p2) - 53504
 	.error	"06FEELIN.SQT part 2: the payload is not 53504 bytes"

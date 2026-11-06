@@ -1089,8 +1089,8 @@ P_09x7dDEMO_SQT_p2:
 	sq_beat
 	sq_end
 ; after the end of track: stale events of an earlier version of the song (stale_tokens)
-	k5_note	0x90, 45, 72, 93, 36, 0
-	.byte	144, 45, 77, 99	; the first 4 bytes of a KN5000-order event, cut by the end
+	.byte	144, 45, 72, 93, 36	; a tick-first event cut at the start (its tick is gone)
+	.byte	0, 144, 45, 77, 99	; the first 5 bytes of a tick-first event, cut by the end
 	sq_cell	0xff, 0, 22	; cell 21: song 1 track 2, 1 of 12
 	sq_beat
 	sq_beat
