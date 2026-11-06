@@ -2251,8 +2251,8 @@ NakaInstTable8_NullTerm:	aligned_string ""
 ; NAKA widget records: elements 24-62 of Toshi_Viewable_NORMAL (object-
 ; registry slot 1, 63 entries, registered by InitializeToshi -- see
 ; extensions/extension_init.s).  Every entry of that table from 25 to 62
-; points at one of the records below, in order; element 24 begins in
-; ui_widgets/normal_mode_layout.s and only its last 14 bytes are here.
+; points at one of the records below, in order, and element 24 is the first
+; record below (NakaWidget_N1).
 ;
 ; Common part (`naka_node`): the 4-byte NAKA header, then four element
 ; indices into the SAME viewable table -- parent, first child, next
@@ -2293,9 +2293,10 @@ NakaInstTable8_NullTerm:	aligned_string ""
 	; data-as-code (v10_data_as_code_census.py, STRICT rule): 0xED3A77-0xED3A92 (27 B), unreached CODE-territory, was disassembled as 22 plausible-but-dead instruction lines; per=100% dist=13 near NakaInst_MainVariSet+1583
 	; data-as-code (v10_data_as_code_census.py, STRICT rule): 0xED3B25-0xED3B36 (17 B), unreached CODE-territory, was disassembled as 12 plausible-but-dead instruction lines; per=100% dist=10 near NakaInst_MainVariSet+1757
 	; data-as-code (v10_data_as_code_census.py, STRICT rule): 0xED3C1F-0xED3C34 (21 B), unreached CODE-territory, was disassembled as 18 plausible-but-dead instruction lines; per=100% dist=11 near NakaInst_MainVariSet+2007
-	; element 24 (0x35), +0x16..+0x23 -- begun in normal_mode_layout.s
-	.short 245, 0, 0
-	.long 0x0003f404, 0x0003f408
+; element 24 (0x35), the "N1" Window; its first 22 bytes were the end of naka_normal_mode.c until
+; 2026-11-06 (scripts/converters/naka_move_edge_heads_to_asm.py)
+NakaWidget_N1:
+	NAKA_REC_Window super=NAKA_INDEX_NONE, sub=IDX_Toshi_NORMAL_Elem25, next=NAKA_INDEX_NONE, prev=NAKA_INDEX_NONE, flag=VF_Const, x=0, y=127, w=320, h=110, color=CL_WallPattern, border=BD_None, modal=0x0, parent=0x3f404, child=0x3f408
 Toshi_NORMAL_Elem25:
 	NAKA_REC_AcMixerVol super=IDX_NakaWidget_N1, sub=NAKA_INDEX_NONE, next=IDX_Toshi_NORMAL_Elem26, prev=NAKA_INDEX_NONE, flag=VF_Const, x=277, y=128, w=39, h=108, color=CL_Silver, border=BD_3D_UP2, index=0xffff, part=PT_Part1, editsw=ES_Bottom8
 Toshi_NORMAL_Elem26:
