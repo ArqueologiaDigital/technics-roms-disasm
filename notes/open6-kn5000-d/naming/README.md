@@ -149,48 +149,48 @@ in every tree.  Headers for 24 main routines: `open6_naming_patches.py --zc1` (t
 selection" wording of the old headers).  `VoiceSlot_*` labels outside scoop_display.s (note_voice_mapping.s,
 accompaniment_engine.s, demo_seq_bridge.s) are other families and were not touched.
 
-| old (v10 unless noted)                        | new                                       | from the body                             |
-|-----------------------------------------------|-------------------------------------------|-------------------------------------------|
-| `VoiceSlot_UpdateCurrentPointer`              | `SeqBlock_Select`                         | SEQ_BLOCK_PTR = pool + (IY - 1) * 256     |
-| `VoiceSlot_ComputeWordIndex`                  | `SeqTrack_WordIndex`                      | IZ = 2 * (SEQ_CURSOR_TRACK - 1)           |
-| `VoiceSlot_ComputeIndex`                      | `SeqTrack_TripleIndex`                    | IZ = 3 * (SEQ_CURSOR_TRACK - 1)           |
-| `VoiceSlot_ReadCurrentParams`                 | `SeqTrack_ReadCursorByte`                 | A = byte at the cursor                    |
-| `VoiceSlot_WriteCurrentParam`                 | `SeqTrack_WriteCursorByte`                | byte at the cursor = W                    |
-| `VoiceSlot_FlagCheck`                         | `SeqTrack_PeekNextByte`                   | SeqTrack_PeekAhead with 0x0DF5 = 1        |
-| `VoiceSlot_FlagCheckBody`                     | `SeqTrack_PeekSecondByte`                 | ... with 0x0DF5 = 2                       |
-| `VoiceSlot_FlagCheckDone`                     | `SeqTrack_PeekAhead`                      | byte (0x0DF5) past the cursor, next block |
-| `VoiceSlot_FinalRetZ_0x11`                    | `SeqTrack_PeekNextByte_SaveRegs`          | A = E; PeekNextByte, XIY XIZ XHL kept     |
-| `VoiceSlot_FinalRetZ_0x1E`                    | `SeqTrack_ReadCursorByteOfTrack`          | cursor byte of track E (1-based)          |
-| `VoiceSlot_StatusCheck`                       | `SeqEvent_CheckStatusByte`                | W = 0 when A starts an event              |
-| `VoiceSlot_CompareRet`                        | `SeqTrack_StepEvent`                      | W = 0 one event on, W = 1 one event back  |
-| `VoiceSlot_LoadAndDispatch`                   | `SeqTrack_NextEvent`                      |                                           |
-| `VoiceSlot_DispatchRet`                       | `SeqTrack_NextEventKeepWrapCount`         |                                           |
-| `VoiceSlot_CompareAndBranch`                  | `SeqTrack_PrevEvent`                      |                                           |
-| `VoiceSlot_StepCursorBack`                    | `SeqTrack_PrevEventKeepWrapCount`         |                                           |
-| `VoiceSlot_SubrRetZ`                          | `SeqTrack_DecWrapCount`                   | SQSTEP_WRAP_COUNT - 1, not below 0        |
-| `VoiceSlot_SkipByteAndRead`                   | `SeqTrack_SkipByteAndRead`                |                                           |
-| `VoiceSlot_SkipWrapMarkers`                   | `SeqTrack_SkipWrapMarkers`                |                                           |
-| `VoiceSlot_TableSetup_Helper`                 | `SeqTrack_SkipWrapMarkers`                | v6 / v5 spelling of the same routine      |
-| `VoiceSlot_CheckCursorAtTrackStart`           | `SeqTrack_CheckCursorAtStart`             |                                           |
-| `VoiceSlot_ReadParamsWithSaveRestore_Helper3` | `SeqTrack_CheckEventFollows`              |                                           |
-| `VoiceSlot_InitAndProcess`                    | `SeqTrack_WriteBytesAtCursor`             | BC bytes from (0x1101), cursor advanced   |
-| `VoiceSlot_RetZ`                              | `SeqTrack_DeleteBytesAtCursor`            | W bytes (SqStep_DeleteEventAtCursor)      |
-| `VoiceSlot_SaveState`                         | `SeqCursor_Save`                          |                                           |
-| `VoiceSlot_RestoreState`                      | `SeqCursor_Restore`                       |                                           |
-| `VoiceSlot_CompareSavedMarkerCount`           | `SeqCursor_CompareSavedWrapCount`         | step-edit screens built on them           |
-| `VoiceSlot_TableSetup`                        | `SqStep_RebuildGridRows`                  | bit 0 of 0x0DD3: rows around the cursor   |
-| `VoiceSlot_StatusRet`                         | `SqStep_ShowCursorEventPopup`             | the pop-up for the event at the cursor    |
-| `VoiceSlot_IndexDone`                         | `SqStep_ShowCursorMarkerPopup`            | 0x81 / 0x82 / 0x84 at the cursor          |
-| `VoiceSlot_ReadParamsWithSaveRestore`         | `SqStep_WritePopupValueToEvent`           |                                           |
-| `VoiceSlot_StatusRet_Helper`                  | `SqStep_AuditionCursorNotes`              | 0x90 at the cursor: notes to SeqBuf       |
-| `VoiceSlot_StatusRet_Helper4`                 | `ParamPopup_EmptyStub4`                   | lone `ret`s among the ParamPopup_*        |
-| `VoiceSlot_StatusRet_Helper5`                 | `ParamPopup_EmptyStub5`                   |                                           |
-| `VoiceSlot_StatusRet_Helper6`                 | `ParamPopup_EmptyStub6`                   |                                           |
-| `VoiceSlot_StatusRet_Helper7`                 | `ParamPopup_EmptyStub7`                   |                                           |
-| `VoiceSlot_StatusRet_Helper8`                 | `ParamPopup_EmptyStub8`                   |                                           |
-| `VoiceSlot_StatusRet_Helper10`                | `ParamPopup_EmptyStub10`                  | v6 / v5                                   |
-| `VoiceSlot_StatusRet_Helper11`                | `SqStep_ShowTempoPopup`                   | v6 / v5: "TEMPO=" line, Str_TempoEq       |
-| `VoiceSlot_StatusRet_Tbl2`                    | `SqStep_ShowCursorEventPopup_NoteCodeMap` | 12 x u8 -> 0x0D61, note-event case        |
+| old (v10 unless noted)                        | new                                       | from the body                                                                                                         |
+|-----------------------------------------------|-------------------------------------------|-----------------------------------------------------------------------------------------------------------------------|
+| `VoiceSlot_UpdateCurrentPointer`              | `SeqBlock_Select`                         | SEQ_BLOCK_PTR = pool + (IY - 1) * 256                                                                                 |
+| `VoiceSlot_ComputeWordIndex`                  | `SeqTrack_WordIndex`                      | IZ = 2 * (SEQ_CURSOR_TRACK - 1)                                                                                       |
+| `VoiceSlot_ComputeIndex`                      | `SeqTrack_TripleIndex`                    | IZ = 3 * (SEQ_CURSOR_TRACK - 1)                                                                                       |
+| `VoiceSlot_ReadCurrentParams`                 | `SeqTrack_ReadCursorByte`                 | A = byte at the cursor                                                                                                |
+| `VoiceSlot_WriteCurrentParam`                 | `SeqTrack_WriteCursorByte`                | byte at the cursor = W                                                                                                |
+| `VoiceSlot_FlagCheck`                         | `SeqTrack_PeekNextByte`                   | SeqTrack_PeekAhead with 0x0DF5 = 1                                                                                    |
+| `VoiceSlot_FlagCheckBody`                     | `SeqTrack_PeekSecondByte`                 | ... with 0x0DF5 = 2                                                                                                   |
+| `VoiceSlot_FlagCheckDone`                     | `SeqTrack_PeekAhead`                      | byte (0x0DF5) past the cursor, next block                                                                             |
+| `VoiceSlot_FinalRetZ_0x11`                    | `SeqTrack_PeekNextByte_SaveRegs`          | A = E; PeekNextByte, XIY XIZ XHL kept                                                                                 |
+| `VoiceSlot_FinalRetZ_0x1E`                    | `SeqTrack_ReadCursorByteOfTrack`          | cursor byte of track E (1-based)                                                                                      |
+| `VoiceSlot_StatusCheck`                       | `SeqEvent_CheckStatusByte`                | W = 0 when A starts an event                                                                                          |
+| `VoiceSlot_CompareRet`                        | `SeqTrack_StepEvent`                      | W = 0 one event on, W = 1 one event back                                                                              |
+| `VoiceSlot_LoadAndDispatch`                   | `SeqTrack_NextEvent`                      |                                                                                                                       |
+| `VoiceSlot_DispatchRet`                       | `SeqTrack_NextEventKeepWrapCount`         |                                                                                                                       |
+| `VoiceSlot_CompareAndBranch`                  | `SeqTrack_PrevEvent`                      |                                                                                                                       |
+| `VoiceSlot_StepCursorBack`                    | `SeqTrack_PrevEventKeepWrapCount`         |                                                                                                                       |
+| `VoiceSlot_SubrRetZ`                          | `SeqTrack_DecWrapCount`                   | SQSTEP_WRAP_COUNT - 1, not below 0                                                                                    |
+| `VoiceSlot_SkipByteAndRead`                   | `SeqTrack_SkipByteAndRead`                |                                                                                                                       |
+| `VoiceSlot_SkipWrapMarkers`                   | `SeqTrack_SkipWrapMarkers`                |                                                                                                                       |
+| `VoiceSlot_TableSetup_Helper`                 | `SeqTrack_SkipWrapMarkers`                | v6 / v5 spelling of the same routine                                                                                  |
+| `VoiceSlot_CheckCursorAtTrackStart`           | `SeqTrack_CheckCursorAtStart`             |                                                                                                                       |
+| `VoiceSlot_ReadParamsWithSaveRestore_Helper3` | `SeqTrack_CheckEventFollows`              |                                                                                                                       |
+| `VoiceSlot_InitAndProcess`                    | `SeqTrack_WriteBytesAtCursor`             | BC bytes from (0x1101), cursor advanced                                                                               |
+| `VoiceSlot_RetZ`                              | `SeqTrack_DeleteBytesAtCursor`            | W bytes (SqStep_DeleteEventAtCursor)                                                                                  |
+| `VoiceSlot_SaveState`                         | `SeqCursor_Save`                          |                                                                                                                       |
+| `VoiceSlot_RestoreState`                      | `SeqCursor_Restore`                       |                                                                                                                       |
+| `VoiceSlot_CompareSavedMarkerCount`           | `SeqCursor_CompareSavedWrapCount`         | step-edit screens built on them                                                                                       |
+| `VoiceSlot_TableSetup`                        | `SqStep_RebuildGridRows`                  | bit 0 of 0x0DD3: rows around the cursor                                                                               |
+| `VoiceSlot_StatusRet`                         | `SqStep_ShowCursorEventPopup`             | the pop-up for the event at the cursor                                                                                |
+| `VoiceSlot_IndexDone`                         | `SqStep_ShowCursorMarkerPopup`            | 0x81 / 0x82 / 0x84 at the cursor                                                                                      |
+| `VoiceSlot_ReadParamsWithSaveRestore`         | `SqStep_WritePopupValueToEvent`           |                                                                                                                       |
+| `VoiceSlot_StatusRet_Helper`                  | `SqStep_AuditionCursorNotes`              | 0x90 at the cursor: notes to SeqBuf                                                                                   |
+| `VoiceSlot_StatusRet_Helper4`                 | `ParamPopup_EmptyStub4`                   | lone `ret`s among the ParamPopup_*                                                                                    |
+| `VoiceSlot_StatusRet_Helper5`                 | `ParamPopup_EmptyStub5`                   |                                                                                                                       |
+| `VoiceSlot_StatusRet_Helper6`                 | `ParamPopup_EmptyStub6`                   |                                                                                                                       |
+| `VoiceSlot_StatusRet_Helper7`                 | `ParamPopup_EmptyStub7`                   |                                                                                                                       |
+| `VoiceSlot_StatusRet_Helper8`                 | `ParamPopup_EmptyStub8`                   |                                                                                                                       |
+| `VoiceSlot_StatusRet_Helper10`                | `ParamPopup_EmptyStub10`                  | v6 / v5                                                                                                               |
+| `VoiceSlot_StatusRet_Helper11`                | `SqStep_ShowTempoPopup`                   | v6 / v5: "TEMPO=" line; since 2026-11-06 v7's `DisplayStr_RedrawStatusAndTempoLine` (scripts/tools/port_todo_hand.py) |
+| `VoiceSlot_StatusRet_Tbl2`                    | `SqStep_ShowCursorEventPopup_NoteCodeMap` | 12 x u8 -> 0x0D61, note-event case                                                                                    |
 
 ## What is left
 
