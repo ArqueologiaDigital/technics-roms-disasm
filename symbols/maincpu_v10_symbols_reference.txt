@@ -5,8 +5,8 @@
 # scripts/analysis/l2_symbol_reference.py --regen
 # Do not hand-edit: rename in the sources and regenerate.
 #
-#   symbols .................. 54,073
-#   semantic names ........... 53,784 (99.5%)
+#   symbols .................. 54,083
+#   semantic names ........... 53,794 (99.5%)
 #   positional names ......... 289
 #
 LED_patterns_indicating_firmware_version 00E00000
@@ -3400,7 +3400,9 @@ HamaStr_HamaListProc 00E1F774
 FDTest_DiagList_Total 00E1F794
 FDTest_String_Total 00E1F7C8
 FDTest_DiagList_NG 00E1F7D2
+FDTest_String_DiagList_NG 00E1F806
 FDTest_DiagList_OK 00E1F810
+FDTest_String_DiagList_OK 00E1F844
 FDTest_Separator1 00E1F84E
 FDTest_Panel_Param 00E1F868
 FDTest_Label_Tilde80 00E1F88E
@@ -3420,8 +3422,10 @@ FDTest_Divider1 00E1F9DE
 FDTest_ConsoleArea1 00E1F9F8
 FDTest_String_Console1 00E1FA2E
 FDTest_Label_MemoryDump 00E1FA36
+FDTest_String_MemoryDump 00E1FA56
 FDTest_StatusBar1 00E1FA62
 FDTest_Container_DebugHDAE2 00E1FA7C
+FDTest_String_DebugHDAE2 00E1FAA6
 FDTest_MenuItem_Load2 00E1FABE
 FDTest_String_Load2 00E1FAEA
 FDTest_MenuItem_Go2 00E1FAF0
@@ -3429,6 +3433,7 @@ FDTest_String_Go2 00E1FB1C
 FDTest_NavWidget2 00E1FB20
 FDTest_Divider2 00E1FB3A
 FDTest_ConsoleArea2 00E1FB54
+FDTest_String_ConsoleArea2 00E1FB8A
 FDTest_StatusBar_Memory 00E1FB92
 FDTest_Label_Console2 00E1FBA8
 String_CONSOLE 00E1FBC8
@@ -7021,19 +7026,24 @@ MenuStr_PartSetting 00E819D0
 NakaMenuItem_Mixer 00E819DE
 MenuStr_Mixer 00E81A14
 NakaMenuItem_MasterTuning 00E81A1A
+MenuStr_MasterTuning 00E81A50
 NakaMenuItem_KeyScaling 00E81A5E
 MenuStr_KeyScaling 00E81A94
 NakaMenuItem_ReverbEqPresets 00E81AA0
 MenuStr_ReverbEqPresets 00E81AD6
 NakaMenuItem_Reverb 00E81AEA
+MenuStr_Reverb 00E81B20
 NakaMenuItem_Equalizer 00E81B28
+MenuStr_Equalizer 00E81B5E
 NakaMenuItem_DspEffect 00E81B68
+MenuStr_DspEffect 00E81B9E
 NakaMenuItem_AcousticIllusion 00E81BAA
 MenuStr_AcousticIllusion 00E81BE0
 NakaWidget_SoundEdit 00E81BF2
 MenuStr_SoundEdit 00E81C28
 NakaWidget_Sdmenu2 00E81C34
 NakaMenuItem_LeftHold 00E81C58
+MenuStr_LeftHold 00E81C8E
 NakaMenuItem_TechniChord 00E81C98
 NakaInst_TECHNI_CHORD 00E81CCE
 NakaWidget_Sdpart 00E81CDC
