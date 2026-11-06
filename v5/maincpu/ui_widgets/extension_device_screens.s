@@ -1446,26 +1446,36 @@ PanelButton_HelpCodeMaps:
 ; PanelInput_InitPedalRecords copies them to RAM 0x8EB6/0x8EBA/0x8EBE; PanelInput_ScanPedalPorts feeds PG.3-2, PG.7-4
 ; and PD.6 to PanelInput_UpdatePedalRecord, which queues {index, state, changed bits} when the debounced state changes.
 	.long	PanelButton_HelpCodeByBit
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0xf0, 0x9d, 0xed, 0x00, 0xf8, 0x9d, 0xed, 0x00
+	.long	PanelButton_HelpCodeByBit + 8
+	.long	PanelButton_HelpCodeByBit + 16
 	.long	PanelButton_HelpCodeByBit + 24
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x08, 0x9e, 0xed, 0x00, 0x10, 0x9e, 0xed, 0x00
-	.byte	0x18, 0x9e, 0xed, 0x00, 0x20, 0x9e, 0xed, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x28, 0x9e, 0xed, 0x00, 0x30, 0x9e, 0xed, 0x00
-	.byte	0x38, 0x9e, 0xed, 0x00
+	.long	PanelButton_HelpCodeByBit + 32
+	.long	PanelButton_HelpCodeByBit + 40
+	.long	PanelButton_HelpCodeByBit + 48
+	.long	PanelButton_HelpCodeByBit + 56
+	.long	0
+	.long	0
+	.long	PanelButton_HelpCodeByBit + 64
+	.long	PanelButton_HelpCodeByBit + 72
+	.long	PanelButton_HelpCodeByBit + 80
 	.long	ExtDevScreen_UserInitWallpaper_Flag
 	.long	PanelButton_HelpCodeMaps14To25
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x50, 0x9e, 0xed, 0x00, 0x58, 0x9e, 0xed, 0x00
-	.byte	0x60, 0x9e, 0xed, 0x00, 0x68, 0x9e, 0xed, 0x00
-	.byte	0x70, 0x9e, 0xed, 0x00, 0x78, 0x9e, 0xed, 0x00
-	.byte	0x80, 0x9e, 0xed, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x88, 0x9e, 0xed, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.long	PanelButton_HelpCodeMaps14To25 + 8
+	.long	PanelButton_HelpCodeMaps14To25 + 16
+	.long	PanelButton_HelpCodeMaps14To25 + 24
+	.long	PanelButton_HelpCodeMaps14To25 + 32
+	.long	PanelButton_HelpCodeMaps14To25 + 40
+	.long	PanelButton_HelpCodeMaps14To25 + 48
+	.long	PanelButton_HelpCodeMaps14To25 + 56
+	.long	0
+	.long	0
+	.long	0
+	.long	PanelButton_HelpCodeMaps14To25 + 64
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
 PanelInput_PedalRecordDefaults:	.incbin "includes/generated/naka_extension_device.bin", 0x3854, 0xC
 ; [nakarest] PanelInput_InitFuncTable  +0x3860..+0x3870 (0xeda02c, 16 B)
 ; [nakarest] purpose not established: layout of 16 B at 0xeda02c not derived; readers below
