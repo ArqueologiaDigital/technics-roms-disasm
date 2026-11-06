@@ -90,7 +90,9 @@ local function loader_tap(base)       -- 0x502B8000-0x502B9FFF: the loader's own
     elseif p >= S.APP_BASE and p < S.CNV_END then kind = "MENU"; T.loader_bad = T.loader_bad + 1
     elseif p >= S.T_BASE and p < S.T_END then kind = "TRAMPOLINE"; T.loader_bad = T.loader_bad + 1
     elseif p < S.CNV_BASE or p >= S.APP_BASE then
-      if u32(S.SVC) ~= 0x53374E4B then kind = "loading" else kind = "FOREIGN"; T.loader_bad = T.loader_bad + 1 end
+      if u32(S.SVC) ~= 0x53374E4B then kind = "loading"
+      elseif (data & mask) == 0 and u32(0x500009A0) == 0x000F0047 then kind = "zeroing"   -- STYLE CONVERT's list (title
+      else kind = "FOREIGN"; T.loader_bad = T.loader_bad + 1 end   -- 0x47) zeroes the area before it loads the loader again
     end
     bump(T.loader, string.format("%-8s pc=%08X", kind, p))
   end)
