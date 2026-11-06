@@ -50,6 +50,16 @@ THE EDITS (lane open11/v6v5-port2, 2026-11-06): the last rows, halves of pointer
      (row e6 ff, then `ExtData_ChordTypeTable_Top: .short 0x00ec`).  ExtData_ChordTypeTable_Top keeps
      its address, mid-entry, as `.set ... MainChordPre_ChordTypeNames + 4 * 39 + 2` (the link scripts
      of naka_perf_style / naka_extension_device name it).
+  8. sound_menu_drawbar_screens.s (v6, v5): InitializeMurai's ResEvent table (slot 0x1c1).  v6 / v5 have
+     no EV_MPVERSION: the table is 9 names and a 0 word (Murai_ResEventCount_1C1 = 9), and the names are
+     the port's `.asciz` lines.  The C slice placed v7's table (EV_READPRESENTATION .. EV_MPVERSION,
+     SELF pointers into v7's strings), which the C-divergence json patched as raw bytes.  The table is
+     written as `.long Str_EV_<name>` and the strings get those labels (the Str_EV_ convention of
+     extension_data.s).
+  9. disk_warning_strings.s (v6, v5): NakaClass_AcBitEditBox_PropNames, the 3 property-name pointers of
+     class AcBitEditBox ("func", "data", ""), whose strings the port wrote as `aligned_string` lines:
+     written as `.long` to labelled strings, as NakaClass_AcFuncToggle_PropNames right after it already
+     is (the C slice held v7's SELF pointers into v7's text).
 
 RUN
     python3 scripts/tools/port_todo_hand.py --tree v6     (or v5)
@@ -154,6 +164,44 @@ RADIO_NEW = ("; v5's two-part ON radio buttons (v6 has no such lists): SeBitmap_
              "\tsd_blit\tSeBitmap_RadioOn, 149*40+2, 2, 12\n"
              "\tsd_ptext\t0x17, 9, 33, 152, \"2ND\"\n")
 
+EV_NAMES = ("ACCORDIONTAB", "READPRESENTATION", "READACTION", "READSONG", "ALLINITIAL", "STARTSONG", "ENDSONG",
+            "EXECPRESENTATION", "TONEMODE")
+EV_TABLE_OLD = 'Naka_EventDispatch_Table:\t.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x306, 0x28\n'
+EV_TABLE_NEW = ("; v6 / v5: 9 names and the 0 end word (no EV_MPVERSION); the names are the strings below\n"
+                "Naka_EventDispatch_Table:\n" + "".join("\t.long\tStr_EV_%s\n" % n for n in EV_NAMES) + "\t.long\t0\n")
+
+
+def ev_table(tree, s):
+    if EV_TABLE_OLD not in s:
+        return None
+    assert s.count(EV_TABLE_OLD) == 1
+    s = s.replace(EV_TABLE_OLD, EV_TABLE_NEW)
+    a = s.index("Naka_EventDispatch_Table:\n")
+    b = s.index("Murai_ResEventCount_1C1:", a)
+    seg = s[a:b]
+    for n in EV_NAMES:
+        m = re.search(r'^(\t(?:\.asciz\t|aligned_string )"EV_%s"\n)' % n, seg, re.M)
+        assert m, n
+        seg = seg[:m.start()] + "Str_EV_%s:\n" % n + seg[m.start():]
+    return s[:a] + seg + s[b:]
+
+
+BIT_OLD = ('NakaClass_AcBitEditBox_PropNames:\t.incbin "includes/generated/naka_disk_warning.bin", 0x39E2, 0xC\n',
+           '\taligned_string ""\n\taligned_string "data"\n\taligned_string "func"\nNakaClass_AcFuncToggle_PropNames:\n')
+BIT_NEW = ('NakaClass_AcBitEditBox_PropNames:\n\t.long\tNakaClass_AcBitEditBox_PropName_func\n'
+           '\t.long\tNakaClass_AcBitEditBox_PropName_data\n\t.long\tNakaClass_AcBitEditBox_PropName_End\n',
+           'NakaClass_AcBitEditBox_PropName_End:\n\taligned_string ""\nNakaClass_AcBitEditBox_PropName_data:\n'
+           '\taligned_string "data"\nNakaClass_AcBitEditBox_PropName_func:\n\taligned_string "func"\n'
+           'NakaClass_AcFuncToggle_PropNames:\n')
+
+
+def bit_propnames(tree, s):
+    if BIT_OLD[0] not in s:
+        return None
+    assert s.count(BIT_OLD[0]) == 1 and s.count(BIT_OLD[1]) == 1
+    return s.replace(BIT_OLD[0], BIT_NEW[0]).replace(BIT_OLD[1], BIT_NEW[1])
+
+
 SRC = {"v6": "v7", "v5": "v6"}
 
 
@@ -214,6 +262,8 @@ EDITS = [
     ("WidgetName_PtrBlock_E re-cut", ("v6", "v5"), "ui_widgets/widget_names_charmap.s", cut_e),
     ("WidgetName_PtrBlock_N1 re-cut", ("v5",), "ui_widgets/widget_names_charmap.s", cut_n1),
     ("chord-type entry 39 whole", ("v5",), "extensions/extension_data.s", text_edit(CHORD_OLD, CHORD_NEW)),
+    ("ResEvent 0x1c1 name table", ("v6", "v5"), "ui_widgets/sound_menu_drawbar_screens.s", ev_table),
+    ("AcBitEditBox property names", ("v6", "v5"), "ui_widgets/disk_warning_strings.s", bit_propnames),
 ]
 
 # names an edit gives the tree that its port_dropped_labels.txt listed as missing

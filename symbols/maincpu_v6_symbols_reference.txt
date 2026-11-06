@@ -5,8 +5,8 @@
 # scripts/analysis/l2_symbol_reference.py --regen
 # Do not hand-edit: rename in the sources and regenerate.
 #
-#   symbols .................. 54,171
-#   semantic names ........... 53,848 (99.4%)
+#   symbols .................. 54,183
+#   semantic names ........... 53,860 (99.4%)
 #   positional names ......... 323
 #
 LED_patterns_indicating_firmware_version 00E00000
@@ -7024,6 +7024,15 @@ ClassPropdata_IvSdpart 00E812B4
 ClassName_IvSdpart 00E812B6
 Murai_ClassCount_161 00E812C0
 Naka_EventDispatch_Table 00E812C2
+Str_EV_TONEMODE 00E812EA
+Str_EV_EXECPRESENTATION 00E812F6
+Str_EV_ENDSONG 00E8130A
+Str_EV_STARTSONG 00E81316
+Str_EV_ALLINITIAL 00E81324
+Str_EV_READSONG 00E81332
+Str_EV_READACTION 00E8133E
+Str_EV_READPRESENTATION 00E8134C
+Str_EV_ACCORDIONTAB 00E81360
 Murai_ResEventCount_1C1 00E81370
 Naka_Event_Table3 00E81372
 InitializeMurai_Data 00E814BE
@@ -10075,6 +10084,9 @@ NakaClass_AcScreenMenu_PropNameText 00EAC55A
 NakaClass_AcWindowMenu_PropNames 00EAC56E
 NakaClass_AcWindowMenu_PropNameText 00EAC57E
 NakaClass_AcBitEditBox_PropNames 00EAC592
+NakaClass_AcBitEditBox_PropName_End 00EAC59E
+NakaClass_AcBitEditBox_PropName_data 00EAC5A0
+NakaClass_AcBitEditBox_PropName_func 00EAC5A6
 NakaClass_AcFuncToggle_PropNames 00EAC5AC
 NakaClass_AcFuncToggle_PropName_End 00EAC5B4
 NakaClass_AcFuncToggle_PropName_func 00EAC5B6
@@ -10413,7 +10425,7 @@ WidgetName_InitPtrTable 00EAFEF6
 WidgetName_PtrBlock_A 00EAFF0C
 WidgetName_PtrBlock_B1 00EAFF24
 WidgetName_PtrBlock_B2 00EAFF25
-WidgetName_PtrBlock_E 00EAFF44
+WidgetName_PtrBlock_E 00EAFF46
 WidgetName_PtrBlock_F1 00EAFF68
 WidgetName_PtrBlock_F2 00EAFF6B
 WidgetName_PtrBlock_G 00EAFF70

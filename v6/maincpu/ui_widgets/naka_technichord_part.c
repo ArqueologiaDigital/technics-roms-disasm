@@ -431,24 +431,10 @@ typedef struct __attribute__((packed)) {
     naka_cls_AcResetPage_t Sdmixer_AcResetPage;
     /* element 2 of Viewable slot 0x8: AcPartMixer (class id 0x0161000D) */
     naka_cls_AcPartMixer_t Sdmixer_AcPartMixer;
-    naka_dispatch_t w47;  /* 0x47 */
-    uint16_t field_1ad8;
-    uint16_t field_1ada;
-    uint16_t field_1adc;
-    uint16_t field_1ade;
-    uint16_t field_1ae0;
-    uint16_t field_1ae2;
-    uint8_t pad_234[4];  /* zero padding */
-    uint32_t Naka_PresentationRootState_ptr;
-    uint16_t field_1aec;
-    uint8_t pad_235[2];  /* zero padding */
-    uint16_t field_1af0;
-    uint16_t field_1af2;
-    uint16_t field_1af4;
-    uint16_t field_1af6;
-    uint32_t TechniChord_str_2_ptr;
-    uint16_t field_1afc;
-    uint8_t pad_236[2];  /* zero padding */
+    /* element 3 of Viewable slot 0x8: IvExit (class id 0x01600047) */
+    naka_cls_IvExit_t NakaWidget_Sdmixer_3_IvExit;
+    /* element 0 of Viewable slot 0xD: TtlScreen (class id 0x01600034) */
+    naka_cls_TtlScreen_t NakaWidget_Sdtecd;
     char TechniChord_str_2[14];
     /* element 1 of Viewable slot 0xD "SdtecdPage": AcWindowPage (class id 0x01600025) */
     naka_cls_AcWindowPage_t SdtecdPage;
@@ -529,24 +515,10 @@ typedef struct __attribute__((packed)) {
     naka_cls_AcResetPage_t Sqmixer_AcResetPage;
     /* element 2 of Viewable slot 0xA5: AcTrackMixer (class id 0x0161000E) */
     naka_cls_AcTrackMixer_t Sqmixer_AcTrackMixer;
-    naka_dispatch_t w53;  /* 0x47 */
-    uint16_t field_20bc;
-    uint16_t field_20be;
-    uint16_t field_20c0;
-    uint16_t field_20c2;
-    uint16_t field_20c4;
-    uint16_t field_20c6;
-    uint8_t pad_287[4];  /* zero padding */
-    uint32_t Naka_PresentationRootState_ptr_2;
-    uint16_t field_20d0;
-    uint8_t pad_288[2];  /* zero padding */
-    uint16_t field_20d4;
-    uint16_t field_20d6;
-    uint16_t field_20d8;
-    uint16_t field_20da;
-    uint32_t FeaturePresentation_str_ptr;
-    uint16_t field_20e0;
-    uint8_t pad_289[2];  /* zero padding */
+    /* element 3 of Viewable slot 0xA5: IvExit (class id 0x01600047) */
+    naka_cls_IvExit_t NakaWidget_Sqmixer_3_IvExit;
+    /* element 0 of Viewable slot 0xE4: AcFdemoScreen (class id 0x0161001F) */
+    naka_cls_AcFdemoScreen_t NakaWidget_Demofeature;
     char FeaturePresentation_str[22];
     /* element 1 of Viewable slot 0xE4: AcPresentationBox (class id 0x0161001D) */
     naka_cls_AcPresentationBox_t StartTheInternalDemo_AcPresentationBox;
@@ -602,19 +574,10 @@ typedef struct __attribute__((packed)) {
     /* element 6 of Viewable slot 0xEA: Label (class id 0x0160002B) */
     naka_cls_Label_t Percussive_Label;
     char Percussive_text[12];
-    naka_dispatch_t w66;  /* 0x47 */
-    uint16_t field_2474;
-    uint8_t pad_312[2];  /* zero padding */
-    uint16_t field_2478;
-    uint16_t field_247a;
-    uint16_t field_247c;
-    uint32_t NakaData_DescriptorPad1_ptr;
-    char str_423[2];
-    uint16_t field_2484;
-    char P_str[2];
-    uint32_t TONE_str_ptr;
-    uint8_t pad_313[4];  /* zero padding */
-    uint16_t field_2490;
+    /* element 7 of Viewable slot 0xEA: IvExit (class id 0x01600047) */
+    naka_cls_IvExit_t NakaWidget_Drawbar_7_IvExit;
+    /* element 8 of Viewable slot 0xEA: Label (class id 0x0160002B) */
+    naka_cls_Label_t NakaWidget_Drawbar_8_Label;
     char TONE_str[6];
     /* element 9 of Viewable slot 0xEA: IvPageOverWrite (class id 0x01610010) */
     naka_cls_IvPageOverWrite_t NakaWidget_Drawbar_9_IvPageOverWrite;
@@ -885,12 +848,16 @@ typedef struct __attribute__((packed)) {
     naka_cls_AcLanguageText_t Other_AcLanguageText;
     /* element 15 of Viewable slot 0xEE "CheckMessage": Window (class id 0x01600035) */
     naka_cls_Window_t CheckMessage;
-    naka_slider_t w91;  /* NAKA_TYPE_EditSw */
+    /* element 16 of Viewable slot 0xEE: EditSw (class id 0x01600030) */
+    naka_cls_EditSw_t NakaWidget_Mesage_16_EditSw;
+    uint8_t bytes_33da[4];
     /* element 17 of Viewable slot 0xEE: AcRamBox (class id 0x0160004F) */
     naka_cls_AcRamBox_t CheckMessage_AcRamBox;
     /* element 18 of Viewable slot 0xEE: AcRamBox (class id 0x0160004F) */
     naka_cls_AcRamBox_t CheckMessage_AcRamBox_2;
-    naka_slider_t w92;  /* NAKA_TYPE_EditSw */
+    /* element 19 of Viewable slot 0xEE: EditSw (class id 0x01600030) */
+    naka_cls_EditSw_t NakaWidget_Mesage_19_EditSw;
+    uint8_t bytes_345e[4];
     /* element 20 of Viewable slot 0xEE "NoMessage": Window (class id 0x01600035) */
     naka_cls_Window_t NoMessage;
     /* element 21 of Viewable slot 0xEE: AcRamBox (class id 0x0160004F) */
@@ -1357,7 +1324,7 @@ enum Murai_ViewableTable_008_objects {
     OBJ_Sdmixer,                       /*  0 TtlScreen "Sdmixer" */
       OBJ_Sdmixer_AcResetPage,         /*  1 AcResetPage */
       OBJ_Sdmixer_AcPartMixer,         /*  2 AcPartMixer */
-      OBJ_NakaWidget_Sdmixer_3_IvExit, /*  3 IvExit, record outside the C sources (NakaWidget_Sdmixer_3_IvExit) */
+      OBJ_NakaWidget_Sdmixer_3_IvExit, /*  3 IvExit */
 };
 
 /* Viewable table Murai_ViewableTable_00D, registry slot 0xD, 29 elements.
@@ -1367,7 +1334,7 @@ enum Murai_ViewableTable_008_objects {
  * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Murai_ViewableTable_00D, OBJ_x). */
 #define Murai_ViewableTable_00D_SLOT 0x00Du
 enum Murai_ViewableTable_00D_objects {
-    OBJ_NakaWidget_Sdtecd,                   /*  0 TtlScreen, record outside the C sources (NakaWidget_Sdtecd) */
+    OBJ_NakaWidget_Sdtecd,                   /*  0 TtlScreen */
       OBJ_SdtecdPage,                        /*  1 AcWindowPage "SdtecdPage" */
       OBJ_NakaWidget_Sdtecd_2_IvPageControl, /*  2 IvPageControl */
       OBJ_NakaWidget_Sdtecd_3_IvPageControl, /*  3 IvPageControl */
@@ -1408,7 +1375,7 @@ enum Murai_ViewableTable_0A5_objects {
     OBJ_Sqmixer,                       /*  0 TtlScreen "Sqmixer" */
       OBJ_Sqmixer_AcResetPage,         /*  1 AcResetPage */
       OBJ_Sqmixer_AcTrackMixer,        /*  2 AcTrackMixer */
-      OBJ_NakaWidget_Sqmixer_3_IvExit, /*  3 IvExit, record outside the C sources (NakaWidget_Sqmixer_3_IvExit) */
+      OBJ_NakaWidget_Sqmixer_3_IvExit, /*  3 IvExit */
 };
 
 /* Viewable table Murai_ViewableTable_0E4, registry slot 0xE4, 15 elements.
@@ -1418,7 +1385,7 @@ enum Murai_ViewableTable_0A5_objects {
  * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Murai_ViewableTable_0E4, OBJ_x). */
 #define Murai_ViewableTable_0E4_SLOT 0x0E4u
 enum Murai_ViewableTable_0E4_objects {
-    OBJ_NakaWidget_Demofeature,                   /*  0 AcFdemoScreen, record outside the C sources (NakaWidget_Demofeature) */
+    OBJ_NakaWidget_Demofeature,                   /*  0 AcFdemoScreen */
       OBJ_StartTheInternalDemo_AcPresentationBox, /*  1 AcPresentationBox */
     OBJ_Demofeature1,                             /*  2 Window "Demofeature1" */
       OBJ_Demofeature1_IvDemofeature1,            /*  3 IvDemofeature1 */
@@ -1449,8 +1416,8 @@ enum Murai_ViewableTable_0EA_objects {
         OBJ_White23,                              /*  4 Label "White23" */
         OBJ_Black23,                              /*  5 Label "Black23" */
       OBJ_Percussive_Label,                       /*  6 Label */
-        OBJ_NakaWidget_Drawbar_7_IvExit,          /*  7 IvExit, record outside the C sources (NakaWidget_Drawbar_7_IvExit) */
-      OBJ_NakaWidget_Drawbar_8_Label,             /*  8 Label, record outside the C sources (NakaWidget_Drawbar_8_Label) */
+        OBJ_NakaWidget_Drawbar_7_IvExit,          /*  7 IvExit */
+      OBJ_NakaWidget_Drawbar_8_Label,             /*  8 Label */
       OBJ_NakaWidget_Drawbar_9_IvPageOverWrite,   /*  9 IvPageOverWrite */
       OBJ_Drawbar_IvPageOverWrite,                /* 10 IvPageOverWrite */
       OBJ_Drawbar_IvDrawbar,                      /* 11 IvDrawbar */
@@ -1557,10 +1524,10 @@ enum Murai_ViewableTable_0EE_objects {
     OBJ_Other,                         /* 13 Window "Other" */
       OBJ_Other_AcLanguageText,        /* 14 AcLanguageText */
     OBJ_CheckMessage,                  /* 15 Window "CheckMessage" */
-      OBJ_NakaWidget_Mesage_16_EditSw, /* 16 EditSw, record outside the C sources (NakaWidget_Mesage_16_EditSw) */
+      OBJ_NakaWidget_Mesage_16_EditSw, /* 16 EditSw */
       OBJ_CheckMessage_AcRamBox,       /* 17 AcRamBox */
       OBJ_CheckMessage_AcRamBox_2,     /* 18 AcRamBox */
-      OBJ_NakaWidget_Mesage_19_EditSw, /* 19 EditSw, record outside the C sources (NakaWidget_Mesage_19_EditSw) */
+      OBJ_NakaWidget_Mesage_19_EditSw, /* 19 EditSw */
     OBJ_NoMessage,                     /* 20 Window "NoMessage" */
       OBJ_NoMessage_AcRamBox,          /* 21 AcRamBox */
     OBJ_PleaseWait,                    /* 22 Window "PleaseWait" */
@@ -4372,49 +4339,35 @@ const naka_technichord_part_t naka_technichord_part_data
         .align = AL_Center,
     },
 
-    .w47 = {
-        .header    = NAKA_HDR(0x47),
-        .field_04   = 0x0000,
-        .field_06   = NAKA_NONE,
-        .name_ptr   = 0x0002FFFF,
-        .inst_ptr   = NAKA_ADDR(CRTC_LINE_COMPARE),
-        .link_ptr   = 0x001F0000,
-        .proc_addr  = 0x0034001F,
+    .NakaWidget_Sdmixer_3_IvExit = {
+        .class_ = NAKA_CLASS(IvExit),
+        .super = OBJ_Sdmixer,
+        .sub = NAKA_NONE,
+        .next = NAKA_NONE,
+        .prev = OBJ_Sdmixer_AcPartMixer,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
     },
 
-    .field_1ad8 = 0x0160,
-
-    .field_1ada = NAKA_NONE,
-
-    .field_1adc = 0x0001,
-
-    .field_1ade = NAKA_NONE,
-
-    .field_1ae0 = NAKA_NONE,
-
-    .field_1ae2 = 0x000A,
-
-    .pad_234 = { 0 },
-
-    .Naka_PresentationRootState_ptr = NAKA_ADDR(Naka_PresentationRootState),
-
-    .field_1aec = 0x00F8,
-
-    .pad_235 = { 0 },
-
-    .field_1af0 = 0x0002,
-
-    .field_1af2 = 0x01A0,
-
-    .field_1af4 = 0xE7C2,
-
-    .field_1af6 = 0x0003,
-
-    .TechniChord_str_2_ptr = SELF(TechniChord_str_2),
-
-    .field_1afc = 0x0018,
-
-    .pad_236 = { 0 },
+    /* ==== SCREEN TITLE_SDTECD "TECHNI-CHORD" -- "TT_SDTECD", title id 0xD, function NAKA_APFUNC_DefaultFunction ====
+     * Path: MENU SOUND button (mode MD_SOUND) > "TECHNI-CHORD"
+     * EXIT -> TITLE_SDMENU
+     * Opened from: TITLE_SDMENU ("TECHNI-CHORD") */
+    .NakaWidget_Sdtecd = {
+        .class_ = NAKA_CLASS(TtlScreen),
+        .super = NAKA_NONE,
+        .sub = OBJ_SdtecdPage,
+        .next = NAKA_NONE,
+        .prev = NAKA_NONE,
+        .flag = VF_Fixed | VF_Const,
+        .rect = NAKA_XYWH(0, 0, 22, 240),
+        .color = CL_Gray,
+        .border = BD_None,
+        .exit = TITLE_SDMENU,
+        .window = RAM_Sdtecd_Window,
+        .title = SELF(TechniChord_str_2),
+        .icon = idICON_i22,
+    },
 
     .TechniChord_str_2 = ALIGNED_STRING("TECHNI-CHORD"),
 
@@ -4988,49 +4941,35 @@ const naka_technichord_part_t naka_technichord_part_data
         .align = AL_Center,
     },
 
-    .w53 = {
-        .header    = NAKA_HDR(0x47),
-        .field_04   = 0x0000,
-        .field_06   = NAKA_NONE,
-        .name_ptr   = 0x0002FFFF,
-        .inst_ptr   = NAKA_ADDR(CRTC_LINE_COMPARE),
-        .link_ptr   = 0x001F0000,
-        .proc_addr  = 0x001F001F,
+    .NakaWidget_Sqmixer_3_IvExit = {
+        .class_ = NAKA_CLASS(IvExit),
+        .super = OBJ_Sqmixer,
+        .sub = NAKA_NONE,
+        .next = NAKA_NONE,
+        .prev = OBJ_Sqmixer_AcTrackMixer,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(0, 0, 32, 32),
     },
 
-    .field_20bc = 0x0161,
-
-    .field_20be = NAKA_NONE,
-
-    .field_20c0 = 0x0001,
-
-    .field_20c2 = NAKA_NONE,
-
-    .field_20c4 = NAKA_NONE,
-
-    .field_20c6 = 0x000A,
-
-    .pad_287 = { 0 },
-
-    .Naka_PresentationRootState_ptr_2 = NAKA_ADDR(Naka_PresentationRootState),
-
-    .field_20d0 = 0x00FC,
-
-    .pad_288 = { 0 },
-
-    .field_20d4 = 0x00E0,
-
-    .field_20d6 = 0x01A0,
-
-    .field_20d8 = 0xE81A,
-
-    .field_20da = 0x0003,
-
-    .FeaturePresentation_str_ptr = SELF(FeaturePresentation_str),
-
-    .field_20e0 = 0x00AB,
-
-    .pad_289 = { 0 },
+    /* ==== SCREEN TITLE_DEMOFEATURE "FEATURE PRESENTATION" -- "TT_DEMOFEATURE", title id 0xE4, function NAKA_APFUNC_DefaultFunction ====
+     * Path: DEMO button (mode MD_DEMO) > "FEATURE PRESENTATION"
+     * EXIT -> TITLE_DEMOMENU
+     * Opened from: TITLE_DEMOMENU ("FEATURE PRESENTATION") */
+    .NakaWidget_Demofeature = {
+        .class_ = NAKA_CLASS(AcFdemoScreen),
+        .super = NAKA_NONE,
+        .sub = OBJ_StartTheInternalDemo_AcPresentationBox,
+        .next = NAKA_NONE,
+        .prev = NAKA_NONE,
+        .flag = VF_Fixed | VF_Const,
+        .rect = NAKA_XYWH(0, 0, 22, 240),
+        .color = CL_Blue,
+        .border = BD_None,
+        .exit = TITLE_DEMOMENU,
+        .window = RAM_Demofeature_Window,
+        .title = SELF(FeaturePresentation_str),
+        .icon = idICON_i169,
+    },
 
     .FeaturePresentation_str = ALIGNED_STRING("FEATURE PRESENTATION"),
 
@@ -5379,39 +5318,31 @@ const naka_technichord_part_t naka_technichord_part_data
 
     .Percussive_text = ALIGNED_STRING("PERCUSSIVE"),
 
-    .w66 = {
-        .header    = NAKA_HDR(0x47),
-        .field_04   = 0x0006,
-        .field_06   = NAKA_NONE,
-        .name_ptr   = 0xFFFFFFFF,
-        .inst_ptr   = 0x00DC0018,
-        .link_ptr   = 0x00FB0020,
-        .proc_addr  = 0x002B003F,
+    .NakaWidget_Drawbar_7_IvExit = {
+        .class_ = NAKA_CLASS(IvExit),
+        .super = OBJ_Percussive_Label,
+        .sub = NAKA_NONE,
+        .next = NAKA_NONE,
+        .prev = NAKA_NONE,
+        .flag = VF_Const | VF_InvisibleBox,
+        .rect = NAKA_XYWH(220, 32, 32, 32),
     },
 
-    .field_2474 = 0x0160,
-
-    .pad_312 = { 0 },
-
-    .field_2478 = NAKA_NONE,
-
-    .field_247a = 0x0009,
-
-    .field_247c = 0x0006,
-
-    .NakaData_DescriptorPad1_ptr = NAKA_ADDR(NakaData_DescriptorPad1),
-
-    .str_423 = ">",
-
-    .field_2484 = 0x0109,
-
-    .P_str = "P",
-
-    .TONE_str_ptr = SELF(TONE_str),
-
-    .pad_313 = { 0 },
-
-    .field_2490 = 0x00FF,
+/* not a pointer: the two halfwords 8, 230 (08 00 E6 00), the same in v10, v7, v6 and v5 while the
+     * label NakaData_DescriptorPad1 it was read as moves (0xE60008 in v10 / v7, 0xE6000E in v6,
+     * 0xE5FFF6 in v5) */
+    .NakaWidget_Drawbar_8_Label = {
+        .class_ = NAKA_CLASS(Label),
+        .super = OBJ_Drawbar,
+        .sub = NAKA_NONE,
+        .next = OBJ_NakaWidget_Drawbar_9_IvPageOverWrite,
+        .prev = OBJ_Percussive_Label,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(230, 62, 36, 19),
+        .str = SELF(TONE_str),
+        .font = idCHARA1,
+        .fontcolor = CL_White,
+    },
 
     .TONE_str = ALIGNED_STRING("TONE"),
 
@@ -6979,28 +6910,23 @@ const naka_technichord_part_t naka_technichord_part_data
         .child = RAM_CheckMessage_Child,
     },
 
-    .w91 = {
-        .header       = NAKA_HDR(NAKA_TYPE_EditSw),
-        .parent_idx     = 0x000F,
-        .prev_sibling   = NAKA_NONE,
-        .self_idx       = 0x0011,
-        .next_sibling   = NAKA_NONE,
-        .x_offset       = 0x0008,
-        .y_offset       = 0x0127,
-        .field_10       = 0x00E5,
-        .field_12       = 0x0132,
-        .field_14       = 0x00F7,
-        .handler        = 0x00E850A8,
-        .field_1a       = 0x0000,
-        .field_1c       = 0x0000,
-        .field_1e       = 0x00F4,
-        .handler_id     = 0x0007,
-        .field_22       = 0x0012,
-        .field_24       = 0x0121,
-        .link_idx       = NAKA_NONE,
-        .field_28       = 0x387E,
-        .field_2a       = 0x0031,
+    .NakaWidget_Mesage_16_EditSw = {
+        .class_ = NAKA_CLASS(EditSw),
+        .super = OBJ_CheckMessage,
+        .sub = NAKA_NONE,
+        .next = OBJ_CheckMessage_AcRamBox,
+        .prev = NAKA_NONE,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(295, 229, 12, 19),
+        .str = 0x00E850A8,
+        .font = idCHARA1,
+        .fontcolor = CL_EditSw,
+        .editsw = ES_Bottom8,
+        .func = NAKA_APFUNC_CheckLanguage,
+        .index = 0xFFFF,
     },
+
+    .bytes_33da = { 0x7E, 0x38, 0x31, 0x00 },
 
     .CheckMessage_AcRamBox = {
         .class_ = NAKA_CLASS(AcRamBox),
@@ -7038,28 +6964,23 @@ const naka_technichord_part_t naka_technichord_part_data
         .data = RAM_CheckMessage_AcRamBox_2_Value,
     },
 
-    .w92 = {
-        .header       = NAKA_HDR(NAKA_TYPE_EditSw),
-        .parent_idx     = 0x000F,
-        .prev_sibling   = NAKA_NONE,
-        .self_idx       = NAKA_NONE,
-        .next_sibling   = 0x0012,
-        .x_offset       = 0x0008,
-        .y_offset       = 0x00D7,
-        .field_10       = 0x00E5,
-        .field_12       = 0x00E2,
-        .field_14       = 0x00EF,
-        .handler        = 0x00E8512C,
-        .field_1a       = 0x0000,
-        .field_1c       = 0x0000,
-        .field_1e       = 0x00F4,
-        .handler_id     = 0x0005,
-        .field_22       = 0x0013,
-        .field_24       = 0x0121,
-        .link_idx       = NAKA_NONE,
-        .field_28       = 0x387E,
-        .field_2a       = 0x0031,
+    .NakaWidget_Mesage_19_EditSw = {
+        .class_ = NAKA_CLASS(EditSw),
+        .super = OBJ_CheckMessage,
+        .sub = NAKA_NONE,
+        .next = NAKA_NONE,
+        .prev = OBJ_CheckMessage_AcRamBox_2,
+        .flag = VF_Const,
+        .rect = NAKA_XYWH(215, 229, 12, 11),
+        .str = 0x00E8512C,
+        .font = idCHARA1,
+        .fontcolor = CL_EditSw,
+        .editsw = ES_Bottom6,
+        .func = NAKA_APFUNC_CheckMessage,
+        .index = 0xFFFF,
     },
+
+    .bytes_345e = { 0x7E, 0x38, 0x31, 0x00 },
 
     /* ==== VIEW OBJ_NoMessage: Window, the top of an object tree that no title shows
      * directly (a window, page or popup another view or procedure opens) ==== */
@@ -7588,7 +7509,7 @@ const naka_technichord_part_t naka_technichord_part_data
         SELF(Sdmixer),
         SELF(Sdmixer_AcResetPage),
         SELF(Sdmixer_AcPartMixer),
-        SELF(w47),
+        SELF(NakaWidget_Sdmixer_3_IvExit),
         0x00000000,
     },
 
@@ -7629,7 +7550,7 @@ const naka_technichord_part_t naka_technichord_part_data
         SELF(Sqmixer),
         SELF(Sqmixer_AcResetPage),
         SELF(Sqmixer_AcTrackMixer),
-        SELF(w53),
+        SELF(NakaWidget_Sqmixer_3_IvExit),
         0x00000000,
     },
 
@@ -7660,7 +7581,7 @@ const naka_technichord_part_t naka_technichord_part_data
         SELF(White23),
         SELF(Black23),
         SELF(Percussive_Label),
-        SELF(w66),
+        SELF(NakaWidget_Drawbar_7_IvExit),
         NAKA_ADDR(NakaWidget_Drawbar_8_Label),
         SELF(NakaWidget_Drawbar_9_IvPageOverWrite),
         SELF(Drawbar_IvPageOverWrite),
@@ -7758,10 +7679,10 @@ const naka_technichord_part_t naka_technichord_part_data
         SELF(Other),
         SELF(Other_AcLanguageText),
         SELF(CheckMessage),
-        SELF(w91),
+        SELF(NakaWidget_Mesage_16_EditSw),
         SELF(CheckMessage_AcRamBox),
         SELF(CheckMessage_AcRamBox_2),
-        SELF(w92),
+        SELF(NakaWidget_Mesage_19_EditSw),
         SELF(NoMessage),
         SELF(NoMessage_AcRamBox),
         SELF(PleaseWait),

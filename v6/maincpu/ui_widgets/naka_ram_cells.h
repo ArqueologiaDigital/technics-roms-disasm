@@ -1913,4 +1913,16 @@
 #define RAM_NakaWidget_SVARI_Nowswno                         0x0003F614u
 #define RAM_NakaWidget_SVARI_Nowvari                         0x0003F616u
 
+/* Main-CPU RAM variables that this tree's NAKA C names (sequencer edit parameters in the RAM
+ * address tables of naka_widget_descriptors.c, ...): the .equ of v6/maincpu/shared/
+ * ram_variables_by_use.s / ram_variables.s with that tree's value; their comments there say
+ * what the code shows each one is. */
+#define SQEDT_ADVDLY_TRACK                                   0x000025EAu
+#define SQEDT_NOTECNG_TRACK                                  0x000025F4u
+#define SQEDT_TRNS_TRACK                                     0x00002602u
+#define SQEDT_MDEL_TRACK                                     0x0000F1D6u
+#define SQEDT_MERS_TRACK                                     0x0000F1DBu
+#define SQEDT_QTZ_TRACK                                      0x0000F1F1u
+#define SQEDT_VELOCNG_TRACK                                  0x0000F228u
+
 #endif /* NAKA_RAM_CELLS_H */
