@@ -124,25 +124,33 @@ def image_files(root, primary):
 # cpu_view() is that filter.  ⚠ It BLANKS the inactive lines (and the
 # KERNEL_KN5000 directives) instead of dropping them, so a line number in the
 # view is a line number in the file.  Any other conditional passes through.
-_KCOND = re.compile(r'^\s*\.if\s+KERNEL_KN5000\s*(==\s*0\s*)?$')
-# kernel.s pulls in include/tlcs900_mem_ops.inc under `.ifndef KERNEL_MEM_OPS_PROVIDED`;
-# kernel_kn5000_subcpu.inc always defines that symbol, so the KN5000 view drops the block
+_KCOND = re.compile(r'^\s*\.if\s+KERNEL_KN5000\s*(?:(==|!=)\s*([0-9]+)\s*)?$')
+# ★ A FOURTH PROCESSOR (2026-11-06, lane open10/kernel4): the KN5000 MAIN CPU builds its kernel
+# from kernel.s too, and KERNEL_KN5000 is now a processor number -- 0 the SX-WSA1R (both CPUs),
+# 1 the KN5000 sub-CPU, 2 the KN5000 main CPU.  `.if KERNEL_KN5000` is both KN5000 processors;
+# `.if KERNEL_KN5000 == N` / `!= N` select one.  cpu_view(kn5000=...) takes the number (True = 1,
+# the sub-CPU, as before; False = 0).
 _KMEMOPS = re.compile(r'^\s*\.ifndef\s+KERNEL_MEM_OPS_PROVIDED\s*$')
 _OTHER_IF = re.compile(r'^\s*\.if(n?def|n?eq|ne|ge|gt|le|lt|b|nb|c|nc)?\b')
 
 
 def cpu_view(lines, kn5000=False):
-    """The lines one processor's build assembles, inactive KERNEL_KN5000 branches blanked."""
+    """The lines one processor's build assembles, inactive KERNEL_KN5000 branches blanked.
+    kn5000: the KERNEL_KN5000 value of that build (False/0 the WSA1, True/1 the KN5000 sub-CPU,
+    2 the KN5000 main CPU)."""
+    cpu = int(kn5000)
     out, stack = [], []          # stack entries: [is_kernel_cond, active]
     for ln in lines:
         s = ln.strip()
-        if kn5000 and _KMEMOPS.match(ln):
+        if cpu and _KMEMOPS.match(ln):
             stack.append([True, False])
             out.append("")
             continue
         m = _KCOND.match(ln)
         if m:
-            stack.append([True, (m.group(1) is None) == bool(kn5000)])
+            op, n = m.group(1), m.group(2)
+            act = bool(cpu) if op is None else (cpu == int(n)) if op == "==" else (cpu != int(n))
+            stack.append([True, act])
             out.append("")
             continue
         if s == ".else" and stack and stack[-1][0]:

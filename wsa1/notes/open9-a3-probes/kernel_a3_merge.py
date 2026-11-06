@@ -845,6 +845,33 @@ def apply_edits(text):
     return text
 
 
+# ★ LATER EDITS to kernel.s's own lines, made after this merge by other lanes (dated).  --verify's
+#   "the merge only inserts" check applies them to BASE after KS_EDITS, exactly as written; anything
+#   else that rewrites a BASE line still fails it.  (date, lane, how, anchor, new) as in KS_EDITS.
+#   (BASE is the WSA1-only kernel.s of 34bc0c5fe: an edit to a KN5000 line the merge inserted is not
+#   one of these -- checks 3 and 4 see those, through the KN5000 view.)
+# lane open10/kernel4 (L-kernel-a3-softtimer-boot-header): prom_a's SoftTimer_Request_Boot header now
+# reads +2 off the shared callee, as prom_c's and the KN5000's do.
+LATER_EDITS = [
+    ("2026-11-06", "open10/kernel4", "replace",
+     '; Layout:  the fields are read off the CALLEE, so only two of the three are\n;          established:\n',
+     '; Layout:  the fields are read off the CALLEE -- SoftTimer_Register, one text in\n;          this file for both WSA1 CPUs -- and all three are read there:\n'),
+    ("2026-11-06", "open10/kernel4", "replace",
+     ';            +2  LE16  0x0001  ⚠ NOT established.  Do not assume it is the\n;                              reload value: the software-timer SLOT layout is\n;                              (+0 countdown, +2 reload, +4 callback), and this\n;                              block is a REQUEST with a different +0, so the\n;                              two layouts must not be conflated.\n',
+     ";            +2  LE16  0x0001  the PERIOD in ticks: SoftTimer_Register copies it\n;                              into BOTH slot+0 (the countdown) and slot+2 (the\n;                              reload) -- `ld WA,(XIX+0x02)`, `ld (XIY+0x00),WA`,\n;                              `ld (XIY+0x02),WA` -- as prom_c's and the KN5000's\n;                              headers below read it.  The request and the slot\n;                              still differ at +0: slot number here, countdown\n;                              there.  (Until 2026-11-06 this line left +2 open;\n;                              lane open10/kernel4 read it off the shared callee.)\n"),
+    ("2026-11-06", "open10/kernel4", "replace",
+     'copied into BOTH slot+0 and slot+2   ⚠ role not established\n',
+     'copied into BOTH slot+0 and slot+2   the period: countdown and reload\n'),
+]
+
+
+def apply_later_edits(text):
+    for _, _, how, anchor, add in LATER_EDITS:
+        assert text.count(anchor) == 1, anchor[:60]
+        text = text.replace(anchor, anchor + add if how == "insert-after" else add)
+    return text
+
+
 KN_INCLUDE = [
     "; ============================================================================",
     "; The multitasking kernel: Kernel_InitRam .. Kernel_KillTask, 0x01FDDA-0x02083A in v1.42",
@@ -927,10 +954,10 @@ def cmd_verify():
     kl, wl, klo, khi, wstart, M, body, stats = merge()
     new = open(os.path.join(REPO, KS_FILE), encoding="utf-8").read().split("\n")
     # 1. kernel.s's own text: every BASE line is still there, in order -- the merge only INSERTED
-    wl = apply_edits("\n".join(wl)).split("\n")      # BASE plus the KS_EDITS, nothing else
+    wl = apply_later_edits(apply_edits("\n".join(wl))).split("\n")   # BASE + KS_EDITS + LATER_EDITS, nothing else
     miss = subseq([l.rstrip() for l in wl], [l.rstrip() for l in new])
-    check("every one of BASE kernel.s's %d lines (with the %d KS_EDITS) is in kernel.s, in order -- the merge only inserts"
-          % (len(wl), len(KS_EDITS)), miss is None,
+    check("every one of BASE kernel.s's %d lines (with the %d KS_EDITS and %d LATER_EDITS) is in kernel.s, in order"
+          " -- the merge only inserts" % (len(wl), len(KS_EDITS), len(LATER_EDITS)), miss is None,
           "" if miss is None else "first missing BASE line %d: %r" % (miss + 1, wl[miss][:70]))
     # 2. the WSA1 view: what prom_a/prom_c assemble is BASE's text plus comments
     wv = [l for l in view(False) if l.strip() and not l.strip().startswith(";")]

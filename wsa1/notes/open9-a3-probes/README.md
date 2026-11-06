@@ -118,24 +118,40 @@ payload trees include the shared source and hold no copy; the Makefile makes the
 | checker                                                     | before (34bc0c5fe)                                  | after                        | why                                                                                                                                                                 |
 |-------------------------------------------------------------|-----------------------------------------------------|------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `open4-e-probes/kernel_a3_shareability.py --selftest`       | ok                                                  | ok                           | unchanged: it now reads kernel.s through cpu_view (the WSA1 build), as before                                                                                       |
-| `kernel_join_probe.py --verify`                             | 4 FAIL (2 missing, 244 stray, 14 + 14 literal)      | the same 4 FAIL, same counts | the KN5000-origin comments are accepted; the four failures pre-date A3 (left open, see "New items")                                                                 |
+| `kernel_join_probe.py --verify`                             | 4 FAIL (2 missing, 244 stray, 14 + 14 literal)      | the same 4 FAIL, same counts | the KN5000-origin comments are accepted; the four failures pre-date A3 (fixed by lane open10/kernel4: "New items" 1)                                                |
 | `kernel_structural_match.py --selftest`                     | 1 FAIL (S7)                                         | the same 1 FAIL              | unchanged; S7 looks for two spellings both trees have since respelled (`m_ld_rm MWD+r4, 0x00, r3`, `ld hl, (xix + 256)`), so it fails at base too                   |
 | `scripts/tools/split_v142_subcpu_core.py --check 130735749` | FAIL at base (v142 / v141 / v140 expansions differ) | FAIL                         | it compares the core's expansion with the pre-split monolith; later legitimate edits to core/ already broke it before A3, and A3 moves the kernel text out of core/ |
 
 ## New items found on the way
 
-1. `kernel_join_probe.py --verify` fails 4 checks at base 34bc0c5fe already: prom_a's
+1. RESOLVED 2026-11-06 (lane open10/kernel4, L-kernel-a3-join-probe-stale): `kernel_join_probe.py
+   --verify` passes, 16 of 16.  The four failures were post-merge edits, now dated beside CORRECTIONS:
+   POST_MERGE_EDITS (8180b9b1d, 2026-10-03: sub_F85EC2 named SoftTimer_RotateLevel3, the 2 "missing"
+   lines; b9e3a0657, 2026-08-30: the header paragraph rewritten when the macro block moved to
+   include/tlcs900_mem_ops.inc) and RESPELLINGS for the 14 + 14 literal mismatches (c56231510
+   `ldw_d16`, f305c6c95 `ldio`, 166c9dc3e `stw_dpi`).  231 of the 244 "stray" lines were that include
+   file's own comments: the reverse check read kernel.s's expansion, and now reads kernel.s.  An
+   unlisted edit still fails (checked by mutating two comment lines).
+   Was: `kernel_join_probe.py --verify` fails 4 checks at base 34bc0c5fe already: prom_a's
    SoftTimer_Request_Boot header gained "-- SoftTimer_RotateLevel3" after the A1 merge (2 lines
    "missing"), the macro-block comment of kernel.s was rewritten on 2026-08-30 (244 "stray"), and 14
    operands were respelled (`(KERNEL_PENDING_TICKS:8)` ...), which its literal comparison does not
-   parse.  Next step: teach the check those three post-merge edits (a dated list beside CORRECTIONS).
-2. prom_a's SoftTimer_Request_Boot header says field +2 is "NOT established"; prom_c's and the KN5000's
+   parse.
+2. RESOLVED 2026-11-06 (lane open10/kernel4, L-kernel-a3-softtimer-boot-header): prom_a's header now reads
+   +2 off the shared callee (`ld WA,(XIX+0x02)` stored to slot+0 and slot+2, the period), and
+   `data_range_census.py --images v142,prom_a,prom_c` grades the 8 bytes KNOWN-A ("documented + evidence")
+   in all three again (v141 / v140 assemble the same source).  The edit is dated in kernel_a3_merge.py's
+   LATER_EDITS and kernel_join_probe.py's POST_MERGE_EDITS, so both --verify still pass.
+   Was: prom_a's SoftTimer_Request_Boot header says field +2 is "NOT established"; prom_c's and the KN5000's
    headers (now beside it) both read it off the callee: it is copied into the slot's countdown AND
    reload, i.e. the period.  `data_range_census.py` caps a header that admits ignorance at grade B, so
    in the three payloads those 8 bytes moved KNOWN-A -> KNOWN-B.  Next step: reconcile prom_a's header
    with the other two (a WSA1 documentation edit).
 
 ## Follow-up: the KN5000 MAIN CPU's kernel (out of scope here)
+
+★ DONE 2026-11-06 by lane open10/kernel4 (L-kernel-a3-kn5000-maincpu): `../open10-kernel4-probes/README.md`.
+The main CPU builds its kernel from kernel.s as `KERNEL_KN5000 = 2`; the plan below is kept as written.
 
 FINDINGS sec 7: the main program ROM carries a separate build of the same kernel (v10 at about
 0xEF1977-0xEF23AA, `TaskSched_Init` ... `TaskSched_TCBTemplate`; v9 and v7 likewise), with its own

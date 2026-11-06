@@ -17924,7 +17924,7 @@ EventHandler_ObjectDispatch:
 	cpw (0x03ef4e:24), 0
 	jr z, EventHandler_ContinueProc
 	ld wa, 3:i3
-	call TaskSched_YieldToQueue
+	call Kernel_YieldRotate
 
 EventHandler_ContinueProc:
 	lda xwa, (xsp + 8)
@@ -17946,7 +17946,7 @@ EventHandler_DispatchLoop:
 ;   walks up), and the class record's proc (+0 of the 24-byte record in the class table's data
 ;   array) is called with XWA/XBC/XDE.  FOCUS_OBJECT / FOCUS_EVENT / FOCUS_PARAM hold the event
 ;   being dispatched and are restored afterwards, as is 0x2bc14, so the call nests.  When the
-;   word at 0x3ef4e is non-zero it yields to ready queue 3 (TaskSched_YieldToQueue) before
+;   word at 0x3ef4e is non-zero it yields to ready queue 3 (Kernel_YieldRotate) before
 ;   returning.
 SendEvent:
 	lda xsp, (xsp - 24)
@@ -18026,7 +18026,7 @@ EventRoute_ObjectDispatch:
 	cpw (0x03ef4e:24), 0
 	jr z, EventRoute_DispatchJump
 	ld wa, 3:i3
-	call TaskSched_YieldToQueue
+	call Kernel_YieldRotate
 
 EventRoute_DispatchJump:
 	ld xhl, xiz
@@ -18044,7 +18044,7 @@ PostEvent:
 	ld (xsp + 8), xbc
 	ld xiz, xwa
 	ld wa, 4:i3
-	call TaskSched_WaitForEvent
+	call TaskEvent_Wait
 	ld bc, (0x02ec34:24)
 	ld de, (0x02ec36:24)
 	ld wa, de
@@ -18058,7 +18058,7 @@ PostEvent:
 
 EventRoute_CheckOwner:
 	ld wa, 4:i3
-	call TaskSched_SignalEvent
+	call TaskEvent_Signal
 	pop xiz
 	inc 8, xsp
 
@@ -18087,9 +18087,9 @@ PostEvent_Prologue:
 
 PostEvent_AllocSlot:
 	ld wa, 4:i3
-	call TaskSched_SignalEvent
+	call TaskEvent_Signal
 	ld wa, 2:i3
-	call TaskSched_SignalEvent
+	call TaskEvent_Signal
 	pop xiz
 	inc 8, xsp
 	ret
@@ -18101,12 +18101,12 @@ GetEvent:
 	ld (xsp + 10), xbc
 	ld xiz, xwa
 	ld wa, 4:i3
-	call TaskSched_WaitForEvent
+	call TaskEvent_Wait
 	ld wa, (0x02ec34:24)
 	cp wa, (0x02ec36:24)
 	jr nz, PostEvent_FillSlot
 	ld wa, 4:i3
-	call TaskSched_SignalEvent
+	call TaskEvent_Signal
 	ld hl, 0:i3
 	jr GetEvent_Prologue
 
@@ -18145,7 +18145,7 @@ PostEvent_ReturnOne:
 
 PostEvent_Return:
 	ld wa, 4:i3
-	call TaskSched_SignalEvent
+	call TaskEvent_Signal
 	ld hl, 1:i3
 
 GetEvent_Prologue:
@@ -18162,7 +18162,7 @@ DeleteEvent:
 	ld (xsp + 4), xbc
 	ld xiz, xwa
 	ld wa, 4:i3
-	call TaskSched_WaitForEvent
+	call TaskEvent_Wait
 	ld bc, (0x02ec36:24)
 	ld wa, (0x02ec34:24)
 	cp wa, bc
@@ -18208,7 +18208,7 @@ GetEvent_ReturnOne:
 	ld wa, 4:i3
 
 GetEvent_Return:
-	call TaskSched_SignalEvent
+	call TaskEvent_Signal
 	pop xiz
 	inc 4, xsp
 	ret
@@ -18220,7 +18220,7 @@ DeleteSpecificEvent:
 	ld (xsp + 8), xbc
 	ld xiz, xwa
 	ld wa, 4:i3
-	call TaskSched_WaitForEvent
+	call TaskEvent_Wait
 	ld bc, (0x02ec36:24)
 	ld wa, (0x02ec34:24)
 	cp wa, bc
@@ -18269,7 +18269,7 @@ DeleteEvent_Return:
 	ld wa, 4:i3
 
 DeleteEvent_Epilogue:
-	call TaskSched_SignalEvent
+	call TaskEvent_Signal
 	pop xiz
 	inc 8, xsp
 	ret
@@ -18307,14 +18307,14 @@ EventDispatch_Direct:
 	ld (xsp + 20), xwa			; save target workspace
 	; --- Check if ring buffer is empty ---
 	ld	wa, 4:i3
-	call TaskSched_WaitForEvent				; acquire lock/semaphore (id=4)
+	call TaskEvent_Wait				; acquire lock/semaphore (id=4)
 	ld	bc, (0x02ec36:24)
 	ld	de, (0x02ec34:24)
 	cp de, bc				; compare read/write positions
 	jr nz, DeleteSpecEvent_Prologue			; buffer not empty, process events
 	; --- Buffer empty: release lock, dispatch directly ---
 	ld	wa, 4:i3
-	call TaskSched_SignalEvent				; release lock/semaphore (id=4)
+	call TaskEvent_Signal				; release lock/semaphore (id=4)
 	ld xwa, (xsp + 20)			; restore target
 	ld xbc, (xsp + 16)			; restore event code
 	ld xde, (xsp + 12)			; restore event param
@@ -18389,7 +18389,7 @@ DeleteSpecEvent_Return:
 DeleteSpecEvent_Epilogue:
 	; --- Done scanning: release lock and reassemble event param ---
 	ld	wa, 4:i3
-	call TaskSched_SignalEvent				; release lock/semaphore
+	call TaskEvent_Signal				; release lock/semaphore
 	ld c, (xsp + 6)				; C = param byte 0
 	cpl c					; C = ~param byte 0
 	ldto_berp	a, 251
@@ -18552,16 +18552,16 @@ MainPostEvent:
 
 MainPostEvent_VirtDispatch_Prologue:
 	ld wa, 7:i3
-	call TaskSched_SignalEvent
+	call TaskEvent_Signal
 	call Boot_CheckConfigFlag7
 	cp hl, 0:i3
 	jrl z, MainGetEvent_ScanMatch
 	ld wa, 3:i3
-	call TaskSched_YieldToQueue
+	call Kernel_YieldRotate
 	ld wa, 7:i3
 
 MainPostEvent_Allocate:
-	call TaskSched_WaitForEvent
+	call TaskEvent_Wait
 	ld wa, (0x02f83a:24)
 	ld de, wa
 	inc 1, de
@@ -18598,7 +18598,7 @@ MainGetEvent_Prologue:
 
 MainGetEvent_ScanLoop:
 	ld wa, 7:i3
-	call TaskSched_SignalEvent
+	call TaskEvent_Signal
 
 MainGetEvent_ScanMatch:
 	pop xiz
@@ -18612,12 +18612,12 @@ MainGetEvent:
 	ld (xsp + 8), xbc
 	ld xiz, xwa
 	ld wa, 7:i3
-	call TaskSched_WaitForEvent
+	call TaskEvent_Wait
 	ld wa, (0x02f838:24)
 	cp wa, (0x02f83a:24)
 	jr nz, MainGetEvent_ScanDone
 	ld wa, 7:i3
-	call TaskSched_SignalEvent
+	call TaskEvent_Signal
 	ld hl, 0:i3
 	jr MainGetEvent_Return
 
@@ -18646,7 +18646,7 @@ MainGetEvent_ReturnOne:
 
 MainGetEvent_ReturnOneAlt:
 	ld wa, 7:i3
-	call TaskSched_SignalEvent
+	call TaskEvent_Signal
 	ld hl, 1:i3
 
 MainGetEvent_Return:
@@ -18660,7 +18660,7 @@ MainDeleteEvent:
 	ld (xsp + 4), xbc
 	ld xiz, xwa
 	ld wa, 7:i3
-	call TaskSched_WaitForEvent
+	call TaskEvent_Wait
 	ld bc, (0x02f83a:24)
 	ld wa, (0x02f838:24)
 	cp wa, bc
@@ -18706,7 +18706,7 @@ MainDeleteEvent_ReturnAlt:
 	ld wa, 7:i3
 
 MainDeleteEvent_Epilogue:
-	call TaskSched_SignalEvent
+	call TaskEvent_Signal
 	pop xiz
 	inc 4, xsp
 	ret
@@ -18718,7 +18718,7 @@ MainDeleteSpecificEvent:
 	ld (xsp + 8), xbc
 	ld xiz, xwa
 	ld wa, 7:i3
-	call TaskSched_WaitForEvent
+	call TaskEvent_Wait
 	ld bc, (0x02f83a:24)
 	ld wa, (0x02f838:24)
 	cp wa, bc
@@ -18767,7 +18767,7 @@ MainDeleteSpecEvent_Return:
 	ld wa, 7:i3
 
 MainDeleteSpecEvent_Epilogue:
-	call TaskSched_SignalEvent
+	call TaskEvent_Signal
 	pop xiz
 	inc 8, xsp
 	ret
@@ -18790,16 +18790,16 @@ ApPostEvent:
 
 ObjectSearch_CheckLoop:
 	ld wa, 4:i3
-	call TaskSched_SignalEvent
+	call TaskEvent_Signal
 	call Boot_CheckConfigFlag7
 	cp hl, 0:i3
 	jrl z, ApDeliveryEvent_Prologue
 	ld wa, 3:i3
-	call TaskSched_YieldToQueue
+	call Kernel_YieldRotate
 	ld wa, 4:i3
 
 ObjectSearch_Continue:
-	call TaskSched_WaitForEvent
+	call TaskEvent_Wait
 	ld wa, (0x02ec36:24)
 	ld de, wa
 	inc 1, de
@@ -18836,9 +18836,9 @@ ApPostEvent_ReturnZero:
 
 ApPostEvent_Return:
 	ld wa, 4:i3
-	call TaskSched_SignalEvent
+	call TaskEvent_Signal
 	ld wa, 2:i3
-	call TaskSched_SignalEvent
+	call TaskEvent_Signal
 
 ApDeliveryEvent_Prologue:
 	pop xiz
@@ -18862,16 +18862,16 @@ ApDeliveryEvent:
 
 ApDeliveryEvent_ScanLoop:
 	ld wa, 4:i3
-	call TaskSched_SignalEvent
+	call TaskEvent_Signal
 	call Boot_CheckConfigFlag7
 	cp hl, 0:i3
 	jrl z, ApTimer_Deliver
 	ld wa, 3:i3
-	call TaskSched_YieldToQueue
+	call Kernel_YieldRotate
 	ld wa, 4:i3
 
 ApDeliveryEvent_Deliver:
-	call TaskSched_WaitForEvent
+	call TaskEvent_Wait
 	ld wa, (0x02ec36:24)
 	ld de, wa
 	inc 1, de
@@ -18930,9 +18930,9 @@ ApTimer_Prologue:
 
 ApTimer_ScanLoop:
 	ld wa, 4:i3
-	call TaskSched_SignalEvent
+	call TaskEvent_Signal
 	ld wa, 2:i3
-	call TaskSched_SignalEvent
+	call TaskEvent_Signal
 	ld xwa, (xsp + 4)
 	or xwa, xwa
 	jr z, ApTimer_Deliver
@@ -19356,7 +19356,7 @@ KillApTimer_CheckNextEntry_Epilogue:
 	retd 0x8
 ; DrawTask_Main: Entry point of task (screen group) 5, the draw task: loops forever taking draw commands from the draw
 ;   ring (DrawTask_Dispatch -> DrawRing_TryTake under event 3) and calling each command's function (+0) with XWA = the
-;   command, lowering its priority (TaskSched_ChangePriority 5, 3) while word 0x3EF4E is non-zero. Basis: callers +
+;   command, lowering its priority (Kernel_SetTaskLevel 5, 3) while word 0x3EF4E is non-zero. Basis: callers +
 ;   body.
 DrawTask_Main:
 	push xiz
@@ -19368,7 +19368,7 @@ DrawTask_EventLoop:
 	jr z, DrawTask_FuncDispatch
 	ld wa, 5:i3
 	ld bc, 3:i3
-	call TaskSched_ChangePriority
+	call Kernel_SetTaskLevel
 
 ; DrawTask function dispatch with priority
 DrawTask_FuncDispatch:
@@ -19383,14 +19383,14 @@ DrawTask_FuncDispatch:
 	jr z, DrawTask_EventLoop
 	ld wa, 5:i3
 	ld bc, 3:i3
-	call TaskSched_ChangePriority
+	call Kernel_SetTaskLevel
 	jr DrawTask_EventLoop
 
 DrawTask_DequeueLoop:
 	ld wa, (0x030450:24)
 	ld (DRAW_ENABLED:24), wa
 	ld wa, 1:i3
-	call Audio_Lock_Acquire
+	call Kernel_SemaWait
 	jr DrawTask_EventLoop
 
 InitDrawTask:
@@ -19398,19 +19398,19 @@ InitDrawTask:
 
 DrawTask_DequeueLoop_Check:
 	ld wa, 3:i3
-	call TaskSched_WaitForEvent
+	call TaskEvent_Wait
 	calr DrawRing_Init
 	ld wa, 3:i3
-	jp TaskSched_SignalEvent
+	jp TaskEvent_Signal
 
 DrawTask_Dispatch:
 	push xiz
 	ld wa, 3:i3
-	call TaskSched_WaitForEvent
+	call TaskEvent_Wait
 	calr DrawRing_TryTake
 	ld xiz, xhl
 	ld wa, 3:i3
-	call TaskSched_SignalEvent
+	call TaskEvent_Signal
 	ld xhl, xiz
 	pop xiz
 	ret
@@ -19421,10 +19421,10 @@ DrawTask_Dispatch:
 ; ============================================================================
 ; Input:  XWA = the command (a DrawQueue_Alloc record pointer)
 ; Output: XHL = the ring slot it was stored in
-; Under event 3 (TaskSched_WaitForEvent / SignalEvent) it calls DrawRing_TryPost, which
+; Under event 3 (TaskEvent_Wait / SignalEvent) it calls DrawRing_TryPost, which
 ; stores XWA at the ring's write index (RAM 0x03247C, 0x80 bytes of u32 entries; fields
 ; at -10 alloc, -8 read, -4 write, -2 free bytes) when more than 4 bytes are free, and
-; returns 0 when the ring is full; then it lowers its priority (TaskSched_ChangePriority
+; returns 0 when the ring is full; then it lowers its priority (Kernel_SetTaskLevel
 ; 5, 2) and tries again.  The draw task takes entries with DrawRing_TryTake and runs them
 ; through DrawTask_FuncDispatch.  Named DisplayCmd_DequeueAndExecute until 2026-10-02.
 ; ============================================================================
@@ -19435,17 +19435,17 @@ DrawRing_Post:
 
 DrawRing_Post_Retry:
 	ld wa, 3:i3
-	call TaskSched_WaitForEvent
+	call TaskEvent_Wait
 	ld xwa, (xsp + 4)
 	calr DrawRing_TryPost
 	ld xiz, xhl
 	ld wa, 3:i3
-	call TaskSched_SignalEvent
+	call TaskEvent_Signal
 	or xiz, xiz
 	jr nz, DrawRing_Post_Check
 	ld wa, 5:i3
 	ld bc, 2:i3
-	call TaskSched_ChangePriority
+	call Kernel_SetTaskLevel
 
 DrawRing_Post_Check:
 	or xiz, xiz
@@ -19503,7 +19503,7 @@ DrawRing_TryPost_Store:
 	add xhl, xde
 	push xhl
 	ld a, 0x1:opc
-	call Audio_Lock_Release
+	call Kernel_SemaSignal
 	pop xhl
 	ret
 
@@ -19539,7 +19539,7 @@ DrawQueue_Alloc:
 	push xiz
 	ld iz, wa
 	ld wa, 4:i3
-	call Audio_Lock_Acquire
+	call Kernel_SemaWait
 	ld de, iz
 	extz xde
 	lda xhl, (DRAW_QUEUE:24)
@@ -19564,7 +19564,7 @@ DrawFunc_Prologue:
 ; DrawFunc handler with audio lock release
 DrawFunc_CallHandler:
 	ld wa, 4:i3
-	call Audio_Lock_Release
+	call Kernel_SemaSignal
 	ld xhl, xiz
 	pop xiz
 	ret
@@ -19586,7 +19586,7 @@ DrawFunc:
 
 DrawFunc_CheckStack:
 	ld wa, 3:i3
-	call TaskSched_WaitForEvent
+	call TaskEvent_Wait
 	calr DisplayCmd_Return
 	jr DrawFunc_DispatchDone
 
@@ -19602,7 +19602,7 @@ DrawFunc_DispatchDone:
 	or xhl, xhl
 	jr nz, DrawFunc_Dispatch
 	ld wa, 3:i3
-	call TaskSched_SignalEvent
+	call TaskEvent_Signal
 	ldw wa, 0x8
 	calr DrawQueue_Alloc
 	ld xwa, xhl
@@ -19699,7 +19699,7 @@ InitializeGraphics:
 	push xiz
 	calr InitDrawTask
 	ld wa, 5:i3
-	call TaskSched_SpawnTask
+	call Kernel_StartTask
 	ldw (0x03ef92:24), 0x0001
 	call InitPaletteRGB
 	ld wa, 0:i3
@@ -19959,7 +19959,7 @@ SetChangeRect:
 	jr z, SetChangeRect_ClampLeft
 	ld wa, 5:i3
 	ld bc, 3:i3
-	call TaskSched_ChangePriority
+	call Kernel_SetTaskLevel
 
 SetChangeRect_ClampLeft:
 	ldw (DISPLAY_UPDATE_FLAG:24), 0x0001

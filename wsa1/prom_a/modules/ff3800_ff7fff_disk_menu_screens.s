@@ -883,7 +883,7 @@ ScreenButtonHandlers_FloppyDiskFormatSelectType:
 	on_key	KEY_SoftKeyCol1,	DispatchMatrix_NoAction
 	on_key	KEY_SoftKeyCol2,	DispatchMatrix_NoAction
 	on_key	KEY_SoftKeyCol3,	DispatchMatrix_NoAction
-	on_key	KEY_SoftKeyCol4,	sub_FF657B
+	on_key	KEY_SoftKeyCol4,	HiddenKey_FloppyDiskFormatSelectType
 	on_key	KEY_SoftKeyCol5,	DispatchMatrix_NoAction
 	on_key	KEY_SoftKeyCol6,	DispatchMatrix_NoAction
 	on_key	KEY_SoftKeyCol7,	DispatchMatrix_NoAction
@@ -901,7 +901,7 @@ ScreenButtonHandlers_FloppyDiskFormatSelectType:
 	on_key	KEY_SoftKeyCol2Alt,	DispatchMatrix_NoAction
 	on_key	KEY_SoftKeyCol3Alt,	DispatchMatrix_NoAction
 	on_key	KEY_SoftKeyCol4Alt,	DispatchMatrix_NoAction
-	on_key	KEY_SoftKeyCol5Alt,	sub_FF657B
+	on_key	KEY_SoftKeyCol5Alt,	HiddenKey_FloppyDiskFormatSelectType
 	on_key	KEY_SoftKeyCol6Alt,	DispatchMatrix_NoAction
 	on_key	KEY_SoftKeyCol7Alt,	DispatchMatrix_NoAction
 	on_key	KEY_SoftKeyCol8Alt,	DispatchMatrix_NoAction
@@ -6726,7 +6726,34 @@ PanelButtonDispatch_FloppyDiskFormatSelectType:
 	popw hl                                              ; FF6577  4b
 	unlk XIZ                                             ; FF6578  ee 0d
 	ret                                                  ; FF657A  0e
-sub_FF657B:   ; entry: named by 2 `.long` operands, first at 0xFF3F45
+; ---------------------------------------------------------------------
+; HiddenKey_FloppyDiskFormatSelectType -- a HIDDEN key count on FLOPPY DISK FORMAT (screen 0x50) that leads
+;          nowhere in this build
+;
+; Reached from: ScreenButtonHandlers_FloppyDiskFormatSelectType, for KEY_SoftKeyCol4 and
+;          KEY_SoftKeyCol5Alt -- the BUTTON method of screen 0x50
+;          (PanelButtonDispatch_FloppyDiskFormatSelectType) reads that table.
+; Body:     only while (0x21E8) bit 2 is set, and only on the key event with
+;          (XIZ+8) bit 7 set: DiskScreen_RowOption counts the presses, 0..8;
+;          the press after the eighth posts UI_Request := 0x8052 and zeroes the
+;          count.  Paint_FloppyDiskFormatSelectType and both format choices
+;          (LcdKeyRow3/4_FloppyDiskFormatSelectType) also zero it.
+; Screen 0x52: PanelScreen_VtableTable_ViewB[0x52] is PanelScreen_NullVtable,
+;          whose Enter, Leave and Button methods all reach one `ret` -- an empty
+;          screen.  So the ninth press would switch the panel to a screen that
+;          paints and does nothing.
+; (0x21E8) bit 2: NO instruction in prom_a or prom_b sets it.  The 19 that name
+;          the byte directly only read it, clear bits or set bits 3, 6, 7;
+;          the eleven pointer loads to 0x21E7 / 0x21E8 are used as (XIX) only,
+;          and the one to 0x21E8 (Playback_SilenceAll) touches bit 6.  The gate is
+;          therefore closed in this firmware, short of a block move or a computed
+;          address nobody has found: a test feature left behind with its screen
+;          removed (inference).
+; Evidence: wsa1/notes/open10-kernel4-probes/format_screen_requests.py (A1-A3),
+;          byte-exact on the EPROMs.  Register item N-1e4a337c.
+; Was `sub_FF657B`.
+; ---------------------------------------------------------------------
+HiddenKey_FloppyDiskFormatSelectType:
 	link XIZ,0x0000                                      ; FF657B  ee 0c 00 00
 	push XIX                                             ; FF657F  3c
 	lda xix, (DiskScreen_RowOption:16)                                ; FF6580  f1 30 27 34
@@ -7000,7 +7027,14 @@ PanelButtonDispatch_FloppyDiskFormatAreYouSure:
 ;          DiskFormat_Execute_Entry: DiskFormat_Execute, Ring_InitTenOfFourteen),
 ;          then UI_Request := 0x0201.
 ; Evidence: "YES" is drawn at y = 111, LCD row 3 (DL_F58162).
-; Unknown:  what request 0x0201 selects.
+; Request: 0x0201 is a MODE request, not a screen: (0x2071) bit 1 runs
+;          PanelScreen_ApplyModeChange, and PanelMode_Normalise turns mode 1 into
+;          the current play mode -- 1, or 2 when (0x7F02) & 0xF0 == 0x10 -- whose
+;          screen is ViewB[1] (SOUND MODE) or ViewB[2] (COMBINATION MODE).  So
+;          after the format the panel goes back to the play screen, as EXIT on
+;          the DISK menu does with the same request (ExitKey_DiskMenu).
+;          wsa1/notes/open10-kernel4-probes/format_screen_requests.py (B1-B3);
+;          register item N-813b5071.
 ; Was LcdKeyRow3_MidiFileSave_Page5 (kn5000-wxn).
 ; ---------------------------------------------------------------------
 LcdKeyRow3_FloppyDiskFormatAreYouSure:

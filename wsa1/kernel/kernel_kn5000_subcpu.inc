@@ -23,6 +23,8 @@
 ;
 ; ★ Read together, these equates ARE the KN5000 sub-CPU's kernel RAM map, 0x1044-0x10D3.
 
+; KERNEL_KN5000 is a processor number since 2026-11-06 (lane open10/kernel4): 0 the SX-WSA1R, 1 this
+; sub-CPU, 2 the KN5000 main CPU (kernel_kn5000_maincpu.inc).  `.if KERNEL_KN5000` = both KN5000 CPUs.
 .equ KERNEL_KN5000, 1
 
 ; the KN5000 tree defines no TLCS-900 byte-emitter macros and kernel.s uses none, so
@@ -58,3 +60,4 @@
 .equ KERNEL_EVENT_COUNT,         2	; how many event flags this CPU has
 .equ KERNEL_EVENT_FLAG_IMAGE,    TaskSched_EventFlagInit	; ROM: the power-on image of KERNEL_EVENT_FLAGS
 .equ KERNEL_PRIORITY_OUT,        0x0131	; byte: the running task's id << 5, written by Kernel_Dispatch (0xFF while idle)
+.equ KERNEL_TICK_TREG3,          0x1D	; 8-bit timer 3's compare value, the kernel tick's period (the main CPU's is 0x07; 2026-11-06, lane open10/kernel4)

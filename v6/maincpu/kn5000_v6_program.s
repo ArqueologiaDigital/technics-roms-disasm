@@ -1318,7 +1318,7 @@ Boot_PostSelfTest:
 	ld xwa, 0:i3
 	ld (SYSTEM_TIMESTAMP:16), xwa
 	ld (1024:16), 2
-	call TaskSched_Init
+	call Kernel_InitRam
 	ld (1024:16), 3
 Boot_InitPeripherals:
 	calr Boot_ClearConfigFlag7
@@ -1431,7 +1431,7 @@ Boot_DisplayScreen:
 	extz	wa
 	calr	Boot_HandleComboDisplay
 	ld	wa, 4:i3
-	call	TaskSched_SpawnTask	; start task 4, MainTitle_TeardownAndLoop
+	call	Kernel_StartTask	; start task 4, MainTitle_TeardownAndLoop
 	calr	Boot_SetConfigFlag7
 	jp	MainLoop
 ; port: v7's label Boot_GetButtonComboCode is not in v6 -- no v6 bytes correspond to what it named
@@ -1991,37 +1991,37 @@ ferror_ext:
 	jp FileIO_ReturnError
 
 rot_rdq_X:
-	jp TaskSched_YieldToQueue
+	jp Kernel_YieldRotate
 
 set_flg_X:
-	jp TaskSched_SignalEvent
+	jp TaskEvent_Signal
 
 wai_flg_X:
-	jp TaskSched_WaitForEvent
+	jp TaskEvent_Wait
 
 sig_sem_X:
-	jp Audio_Lock_Release
+	jp Kernel_SemaSignal
 
 preq_sem_X:
-	jp AudioLock_TryAcquire
+	jp Kernel_SemaTryWait
 
 wai_sem_X:
-	jp Audio_Lock_Acquire
+	jp Kernel_SemaWait
 
 ref_sem_X:
-	jp AudioLock_GetCount
+	jp TaskSem_GetCount
 
 snd_msg_X:
-	jp TaskMsg_Send
+	jp MsgQueue_Send
 
 rcv_msg_X:
-	jp TaskMsg_Receive
+	jp MsgQueue_ReceiveBlocking
 
 prcv_msg_X:
-	jp TaskMsg_TryReceive
+	jp MsgQueue_Receive_NoBlock
 
 get_tid_X:
-	jp TaskSched_GetCurrentGroup
+	jp TaskSched_GetCurrentTaskId
 
 pdly_tim_X:
 	jp TaskSched_DelayTicks

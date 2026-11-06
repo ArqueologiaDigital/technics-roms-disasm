@@ -104,7 +104,7 @@ SectorCache_AgeOverflowFlag:	.incbin "includes/generated/naka_sequencer_channels
 FDC_DiskTypeState:	.incbin "includes/generated/naka_sequencer_channels.bin", 0x70E, 0x6
 ; DiskStream_State -- 1 x struct: the streaming reader SndTable_LookupA/D set up: SourceMode 0 = FileRead
 ; from a file opened "rb", 1 = raw sector commands; ByteLength = file size (handle +71) or sectors << 9;
-; BufferPtr = RAM 0x22D72, the message block DiskStream_ReaderTask hands to TaskMsg_Send.
+; BufferPtr = RAM 0x22D72, the message block DiskStream_ReaderTask hands to MsgQueue_Send.
 DiskStream_State:	.incbin "includes/generated/naka_sequencer_channels.bin", 0x714, 0xA
 ; East_ReverbMidiMenuWorkCells -- 1 x struct (54 cells): power-on values of the InitializeEast view work cells
 ; Reverb/EQ presets, MIDI menu. Boot_InitWorkRAM copies them to RAM 0x3e3f2..0x3e46e; each cell is the RAM
@@ -419,7 +419,7 @@ Cheap_HardDiskMenuView:	.incbin "includes/generated/naka_sequencer_channels.bin"
 ; so ViewableProc and the AcMonoIndexToggle class proc use the RAM copy; first word = class id 0x1650005.
 Cheap_SingleBankToggleView:	.incbin "includes/generated/naka_sequencer_channels.bin", 0x1250, 0x2A
 ; KeyScan_EnabledFlag -- 1 x uint16_t: 1 after KeyScan_Enable, 0 after KeyScan_Disable; while non-zero
-; the event handler yields (TaskSched_YieldToQueue) and DrawTask changes priority between work items.
+; the event handler yields (Kernel_YieldRotate) and DrawTask changes priority between work items.
 KeyScan_EnabledFlag:	.incbin "includes/generated/naka_sequencer_channels.bin", 0x127A, 0x2
 ; Dial_State -- 1 x struct: the data-dial routing (shared/ram_variables.s DIAL_*): Enable (SetDialEnable),
 ; the XWA target, XBC event and XDE parameter SetDialUp / SetDialDown store for each direction, and
