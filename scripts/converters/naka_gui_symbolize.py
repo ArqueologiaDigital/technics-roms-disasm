@@ -64,7 +64,7 @@ LINKS = ('super', 'sub', 'next', 'prev')
 
 # ------------------------------------------------------------------ names
 class Names:
-    def __init__(self, m):
+    def __init__(self, m, tree='v10'):
         self.m = m
         self.cls = G.class_ids('v10')
         self.cls_by_id = {v: n for n, v in self.cls.items()}
@@ -75,8 +75,9 @@ class Names:
                 if re.match(r'^[A-Za-z_]\w*$', n):
                     d.setdefault(v, n)
             self.prop[ch] = d
-        self.cells = {}           # RAM address -> cell name (naka_ram_cells.h)
-        txt = G.read(os.path.join(ROOT, 'v10', 'maincpu', 'ui_widgets', 'naka_ram_cells.h'))
+        self.cells = {}           # RAM address -> cell name (the tree's naka_ram_cells.h: v6 / v5 place
+        #                           some cells lower, so v10's address of a name is not theirs)
+        txt = G.read(os.path.join(ROOT, tree, 'maincpu', 'ui_widgets', 'naka_ram_cells.h'))
         for n, v in re.findall(r'^#define RAM_(\w+)\s+(0x[0-9A-F]+)u', txt, re.M):
             self.cells.setdefault(int(v, 16), n)
         self.ids = {}             # prefix -> {value: name}
@@ -568,7 +569,7 @@ def main():
         return
     files = [os.path.abspath(p) for p in a.files] or G.tree_files(a.tree)
     m = O.Map('v10')
-    nm = Names(m)
+    nm = Names(m, a.tree)
     tabs = Tables(m)
     letters = G.class_letters('v10')
     generated = G.read(os.path.join(ROOT, 'v10', 'maincpu', 'ui_widgets', 'naka_classes.h'))

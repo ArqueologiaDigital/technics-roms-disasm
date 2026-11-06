@@ -209,6 +209,25 @@ The `func_` count is the number of function labels that no symbol file names:
   - `0x485785B0` and `0x485788D8` (SD AUDIO player) as above; next step unchanged.
   After the regeneration `oldbuilds_b893_func_census.py b893` prints 6,320 `func_` labels: twin-unnamed
   6,306, near-twin 10, own 4 (0x484101FD, 0x48451649, 0x485785B0, 0x485788D8).
+
+  **Update 2026-11-06 (lane kn7000-research2, N-99771106).**  `0x48451649` is named
+  **`KeyZoneNoteResolve`** (`kn7000_b893_own.sym`), as are its 941 twin `func_484516EC` and 935's
+  `0x484516AA`, by port.  The key-bed router (893 `func_48452422` / `func_48452E82`) calls it for a zone.
+  It does nothing for a zone outside 0..0x23.  Otherwise it copies key and velocity and reads the zone's
+  part and that part's SOUND.  A TABLE tone (a kit: `func_48449207` = 2, tone record `+0x10 & 0xC0` =
+  0x40) has its key mapped by `func_48449462` (893 `func_48449420`) through the table that the tone
+  record's `+0x11` selects, when M3 0x2025 is 1.  Any other sound gets TRANSPOSE (M3 0x000003 - 64, when
+  M3 0x2013 is 1) plus `func_48451060(8, zone)`.  893's edit: the kit test is a call of
+  **`SoundTableKeyMapOn`** (893 `0x4845027B` = 941 `0x484502BD`, the same code, named in
+  `kn7000_manual.sym`; 941 and 935 inline the test).  A kit it rejects falls through to TRANSPOSE,
+  where 941 and 935 return with the key unchanged.  `func_48449207` and `func_48449462` keep their
+  `func_` names because the data source spells labels derived from them (`func_48449462_Records`,
+  `_Table`).  The names proposed for the data regeneration are `SoundKindGet` and `TableToneKeyMap`.
+  `0x484101FD` was already named (`DspUnitsResetUnused`, `kn7000_b893_own.sym`) when this lane started.
+  `oldbuilds_b893_func_census.py b893` at this lane's regeneration prints 6,316 `func_` labels:
+  twin-unnamed 6,304, near-twin 10, own 2 (`0x485785B0`, `0x485788D8`).  Next step for those two: they are edited members of the SD AUDIO player family (`func_4857890C`,
+  `func_4857895B`, ... next to them), which 941 leaves unnamed too (`0x485790A9`.. there).  Name that
+  family in 941 from its callers, the SD AUDIO soft keys, and then place 893's two edited routines in it.
 - ~~`scripts/analysis/semantic_score.py` and `doc_quality_census.py` include neither 942 nor these
   builds.~~ **CLOSED 2026-10-31** (lane open4/misc): 942 has been rated since rules 4 (2026-10-24), and
   both scripts now list `program935` and `program893` as well (semantic score rules 6).  At the lane's

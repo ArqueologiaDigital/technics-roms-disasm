@@ -14,6 +14,10 @@
 #   +0x00  16-byte header: the 13-byte name, then three bytes; +0x0D selects which of the two
 #          sub-records applies (VoiceSubRecFetch 0x4844978B: 0xFF = no override; bits 1 / 2 keep
 #          the +0x10 / +0x2C sub-record, TgPartLocalEditRecBuild 0x4C00C783)
+#          On a TABLE tone's note-on (a kit: TgNoteOnTableTone 0x4C03600D) +0x0D bit 0 stages layer 0
+#          and bit 2 layer 1 (TgTableToneStage 0x4C035EA5 with d1 = 0 / 1); the archive's 1,618
+#          records hold 0x01 / 0x05 / 0x21 / 0x25, the CUSTOM user kit's 128 0x01 / 0x05 / 0x21
+#          (notes/custom-data-ic21-probes/kit_tone_census.py); bit 5: no reader traced
 #   +0x10  two 0x1C-byte sub-records (VoiceSubRecFetch: record +0x10 + n*0x1C)
 #   +0x48  two 0x23-byte element records (TgPartLocalEditElemRecPtr 0x4C00C2F9: +0x48 +
 #          elem*0x23; 0x10 + 2*0x1C + 2*0x23 = 0x8E)

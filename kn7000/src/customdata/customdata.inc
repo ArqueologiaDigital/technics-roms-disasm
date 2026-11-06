@@ -64,8 +64,30 @@
 	.byte	\first, \blocks
 .endm
 
-# One {program, bank LSB, bank MSB} reference of the custom-sound block (+0x27 + i*3;
-# CustomVoiceRecFetch re-resolves an absent voice through VoiceRecFetchBanked with it).
+# The custom-sound block is a TABLE tone (a user drum kit) laid out like the table flash's kits
+# (src/table/voices/internal_archive.s, Tone_StandardKit1 ...): the tone record's 0x27-byte head,
+# then one 3-byte entry per note, then the voice records those entries name.  For a part whose
+# sound is the custom kit (bank kind 0x19, 941 0x48448D4D) func_4844A413 returns the block (when
+# the slot has none: ToneRecordFind's tone 0x26) and the library stores it as the part's tone
+# record (tone block 0x500CE404 + part * 0x130, lib 0x4C0390E8: what TgPartToneDescPtr returns);
+# TgNoteOnTableTone 0x4C03600D reads the entry at +0x27 + note * 3 and, through
+# TgPartVoiceRecFetchSel, the voice record it names; that record's +0x0D bits 0 / 2 enable its two
+# layers (TgTableToneStage 0x4C035EA5).  (Lane kn7000-research2, 2026-11-06.)
+# The head: the 16-character name, the tone class +0x10 (0x40 = TABLE: TgNoteOn 0x4C036832; the
+# key-bed side's func_48449207 classes the sound 2 from it), the key map +0x11 (0..6: which of the
+# seven tables of func_48449462_Records maps a played key when M3 0x2025 is 1 -- func_48449462 reads
+# tone record +0x11 through func_484495E8, for KeyZoneNoteResolve 0x484516EC; the factory kits use
+# 0 .. 6, Standard Kit1 and this User Kit 1), then 21 bytes no traced routine reads.
+# (`tone_head_table`, src/table/style_macros.inc, is the same layout without the name;
+# notes/custom-data-ic21-probes/kit_tone_census.py lists the factory kits' heads.)
+.macro CSOUND_HEAD name, tone_class, key_map, b12, b13, b14, b15, b16, b17, b18, b19, b1a, b1b, b1c, b1d, b1e, b1f, b20, b21, b22, b23, b24, b25, b26
+	.ascii	"\name"
+	.byte	\tone_class, \key_map, \b12, \b13, \b14, \b15, \b16, \b17, \b18, \b19, \b1a, \b1b, \b1c, \b1d, \b1e, \b1f
+	.byte	\b20, \b21, \b22, \b23, \b24, \b25, \b26
+.endm
+# One note's entry of the custom-sound block (+0x27 + note * 3): the {program, bank LSB, bank MSB}
+# of the voice record that plays that note.  TgNoteOnTableTone reads it for the note played;
+# CustomVoiceRecFetch re-resolves an absent voice through VoiceRecFetchBanked with it.
 .macro VOICE_REF prog, bank_lsb, bank_msb
 	.byte	\prog, \bank_lsb, \bank_msb
 .endm

@@ -89,6 +89,29 @@ runs over every tree) also write into the committed tree and are not in the sequ
     python3 scripts/converters/naka_type_straddling_records.py --tree v6 --apply
     python3 scripts/converters/naka_gui_symbolize.py --tree v6 --apply
     python3 scripts/converters/naka_gui_symbolize.py --tree v6 --headers --apply
+    # lane open12/v6v5-port3: the work cells by the tree's own lines, then wave 11's NAKA converters
+    make all
+    python3 scripts/converters/ported_c_rebase.py --tree v6 --need $TMPDIR/need-v6-d
+    python3 scripts/generators/gen_naka_gui_headers.py
+    python3 scripts/converters/ported_c_rebase.py --tree v6 --regen $TMPDIR/need-v6-d
+    python3 scripts/converters/naka_join_perf3rhythmsel.py --tree v6
+    make all
+    python3 scripts/converters/naka_gui_symbolize.py --tree v6 --apply
+    python3 scripts/converters/naka_gui_symbolize.py --tree v6 --headers --apply
+    python3 scripts/converters/naka_move_edge_heads_to_asm.py --tree v6
+    make all
+    python3 scripts/converters/naka_asm_records.py --tree v6 --apply
+    python3 scripts/converters/naka_type_trackmixer_map.py --tree v6
+    sed -i -f scripts/renaming/rename_v6v5_chordname_typeroottables.sed v6/maincpu/ui_widgets/naka_sequencer_channels.c
+    python3 scripts/converters/naka_widen_ram_cells.py --tree v6
+    python3 scripts/converters/naka_case_tables_retype.py --apply          # every tree; a no-op where done
+    make all
+    python3 scripts/converters/ported_c_rebase.py --tree v6 --need $TMPDIR/need-v6-e
+    python3 scripts/converters/ported_c_rebase.py --tree v6 --regen $TMPDIR/need-v6-e
+    python3 scripts/converters/naka_type_straddling_records.py --tree v6 --strings --apply
+    python3 scripts/converters/ported_c_rebase.py --tree v6 --regen $TMPDIR/need-v6-e
+    python3 scripts/converters/port_unplaced_names.py --tree v6 --apply
+    python3 scripts/converters/naka_gui_symbolize.py --tree v6 --apply
 
 `port_hand_edits.py` makes `FIRMWARE_VERSION` the byte `FW_VERSION_BYTE` (v7 spells it `reti`)
 and decodes `AccTone_JumpTableData` as the call/ret thunks it is (v10's spelling and names).
@@ -140,6 +163,18 @@ operands take them).  `ported_c_rebase.py --ram-self-pieces` makes NAKA_WRAM pie
 entries 17 / 30 / 43 / 56, the bass-note spelling blocks MainChordPre_AppendChordSuffix reads),
 `--own-values` gives the C the tree's own RAM names, link-script addresses, literals and `#define`s, and
 `--hand-c` the two initializers that were read as pointers but are coordinate pairs.
+
+The steps after that (2026-11-06, lane open12/v6v5-port3; `notes/v6v5-port3-2026-11-06/README.md`) leave the
+C-divergence json no raw byte and bring the tree's NAKA C level with v7's (`naka_gui_census.py`: no numeric ROM
+address or RAM cell, field_XX 171 as in v7).  `gen_naka_gui_headers.py` places the work cells of
+Murai_SoundMenuWorkCells by the tree's own `; work cell:` lines (the tree has no MPVersion window cell, so the five
+cells after it sit 4 bytes lower than v10's layout says).  Wave 11's converters (`naka_join_perf3rhythmsel.py`,
+`naka_move_edge_heads_to_asm.py`, `naka_type_trackmixer_map.py`, `naka_widen_ram_cells.py`) read the tree's own
+addresses; `naka_case_tables_retype.py` and `naka_type_straddling_records.py --strings` (whose v6 / v5 values are
+relocated v7 numbers, so the check is that the json needs fewer relocations and no raw byte) cover the tree;
+`port_unplaced_names.py` gives the numbers no slice places (the IvMPver class, which the tree lacks) v7's names;
+`naka_gui_symbolize.py` names RAM cells from the tree's own header.  A json-only change rebuilds nothing: remove
+`rebuilt_ROMs/kn5000_v6_program.llvm.elf` (and the bins concerned) before `make all` to check it.
 
 ## Build
 

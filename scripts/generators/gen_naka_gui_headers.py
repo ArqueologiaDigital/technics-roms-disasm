@@ -35,12 +35,15 @@ sources (v9 = v10 in all GUI files but one pointer; v7/v6/v5 patch the compiled 
       4 bytes shorter, and the second image is copied to 0xE29E instead of 0xE35E), so their copies
       carry their own addresses (ram_mapper below), and their C compiles to their own pointers
       instead of patching them (since 2026-11-02, lane open6/kn5000-c).  v6/v5 lack one class (IvMPver,
-0x01610024); no C record of theirs uses it.
+0x01610024); no C record of theirs uses it.  Their Murai_SoundMenuWorkCells are assembly lines, one per
+      cell, and lack the MPVersion window cell, so the cells after it are placed by those lines
+      (asm_cell_anchors; since 2026-11-06, lane open12/v6v5-port3).
 
 RUN (repository root; needs rebuilt_ROMs/kn5000_v10_program.llvm.elf)
     python3 scripts/generators/gen_naka_gui_headers.py            # write all five trees' copies
     python3 scripts/generators/gen_naka_gui_headers.py --check    # exit 1 if any copy is stale
 """
+import glob
 import json
 import os
 import re
@@ -361,20 +364,109 @@ def work_ram_images(tree, syms):
     return out
 
 
+WORK_CELL = re.compile(r'^\t\.(long|short|byte)\t\S+\t; work cell: (\S+) (\S+) \(\w+\)$')
+
+
+def _cell_matches(v10_name, rec):
+    """does the asm cell line's record name (NakaWidget_Softver) name the v10 C cell (Softver_Window)?"""
+    stem = re.sub(r'^Naka(?:Widget|MenuItem|Container)_', '', rec).lower()
+    return v10_name.split('_')[0].lower() in stem or stem.split('_')[0] in v10_name.lower()
+
+
+def asm_cell_anchors(tree, s10, st):
+    """[(v10 ROM address, TREE ROM address or None)] for the work cells TREE spells as assembly lines
+    (`.long|.short <value>\t; work cell: <record> <field> (<Class>)` after a label, the port's spelling
+    of a cell block that v10 holds as a local struct of naka_sequencer_channels.c, <label>_t).  The
+    tree's lines and v10's struct fields are aligned in order by size and record name (a dynamic
+    programme; a field TREE's lines lack is None: v6 / v5 have no MPVersion window cell, so their
+    Murai_SoundMenuWorkCells is 4 bytes shorter and the cells after it sit 4 bytes lower).  v10, v9
+    and v7 hold these blocks as .incbin slices and get no anchors here."""
+    src = open(os.path.join(ROOT, 'v10', 'maincpu', 'ui_widgets', 'naka_sequencer_channels.c'),
+               encoding='latin-1').read()
+    size = {'uint8_t': 1, 'char': 1, 'uint16_t': 2, 'uint32_t': 4, 'int16_t': 2, 'int32_t': 4,
+            'long': 4, 'short': 2, 'byte': 1}
+    out = []
+    for p in sorted(glob.glob(os.path.join(ROOT, tree, 'maincpu', '**', '*.s'), recursive=True)):
+        lines = open(p, 'rb').read().decode('latin-1').split('\n')
+        for i, ln in enumerate(lines):
+            m = re.match(r'^(\w+):\s*$', ln)
+            if not m or m.group(1) not in st or m.group(1) not in s10:
+                continue
+            cells, off = [], 0
+            for ln2 in lines[i + 1:]:
+                if ln2.startswith(';'):
+                    continue
+                c = WORK_CELL.match(ln2)
+                if not c:
+                    break
+                cells.append((size[c.group(1)], c.group(2), off))
+                off += size[c.group(1)]
+            if not cells:
+                continue
+            td = re.search(r'typedef struct __attribute__\(\(packed\)\) \{([^{}]*)\} %s_t;' % m.group(1), src)
+            if not td:
+                raise SystemExit('%s: %s has work-cell lines but v10 has no %s_t' % (tree, m.group(1), m.group(1)))
+            fl, o = [], 0
+            for ty, nm in re.findall(r'^\s*(u?int(?:8|16|32)_t|char)\s+(\w+);', td.group(1), re.M):
+                fl.append((size[ty], nm, o))
+                o += size[ty]
+            # align: a pair costs 0 (same size, names agree) or 1 (same size); a gap 2
+            n, k, INF = len(fl), len(cells), 1 << 30
+            D = [[INF] * (k + 1) for _ in range(n + 1)]
+            D[0][0] = 0
+            for x in range(n + 1):
+                for y in range(k + 1):
+                    d = D[x][y]
+                    if d >= INF:
+                        continue
+                    if x < n:
+                        D[x + 1][y] = min(D[x + 1][y], d + 2)
+                    if y < k:
+                        D[x][y + 1] = min(D[x][y + 1], d + 2)
+                    if x < n and y < k and fl[x][0] == cells[y][0]:
+                        c1 = 0 if _cell_matches(fl[x][1], cells[y][1]) else 1
+                        D[x + 1][y + 1] = min(D[x + 1][y + 1], d + c1)
+            x, y, pairs = n, k, []
+            while x or y:
+                if x and y and fl[x - 1][0] == cells[y - 1][0] and \
+                        D[x][y] == D[x - 1][y - 1] + (0 if _cell_matches(fl[x - 1][1], cells[y - 1][1]) else 1):
+                    pairs.append((fl[x - 1][2], cells[y - 1][2]))
+                    x, y = x - 1, y - 1
+                elif x and D[x][y] == D[x - 1][y] + 2:
+                    pairs.append((fl[x - 1][2], None))
+                    x -= 1
+                else:
+                    raise SystemExit('%s: %s line %d has no v10 field' % (tree, m.group(1), y))
+            b10, bt = s10[m.group(1)], st[m.group(1)]
+            out += [(b10 + o10, None if ot is None else bt + ot) for o10, ot in reversed(pairs)]
+    return out
+
+
 def ram_mapper(tree):
     """v10 work-RAM address -> TREE's address of the same cell.  A cell of an image is placed by the
     nearest label at or before its ROM image byte that both trees define inside that image (the
-    image's own label at worst): TREE's ROM address of the byte, then TREE's copy destination.  An
-    address outside both images is returned as it is."""
+    image's own label at worst), or by the tree's own work-cell line for it (asm_cell_anchors):
+    TREE's ROM address of the byte, then TREE's copy destination.  An address outside both images is
+    returned as it is.  f.absent is the set of v10 addresses of cells TREE's image does not have."""
     if tree in ('v10', 'v9'):
-        return lambda a: a
+        f = (lambda a: a)
+        f.absent = set()
+        return f
     s10, st = tree_syms('v10'), tree_syms(tree)
     i10, it = work_ram_images('v10', s10), work_ram_images(tree, st)
-    anchors = []
+    cell = asm_cell_anchors(tree, s10, st)
+    anchors, absent = [], set()
     for (d10, r10, n10), (dt, rt, nt) in zip(i10, it):
-        labs = sorted((v, k) for k, v in s10.items() if r10 <= v < r10 + n10 and k in st
-                      and rt <= st[k] < rt + nt)
-        anchors.append(([v for v, _ in labs], [st[k] for _, k in labs]))
+        labs = {v: st[k] for k, v in s10.items() if r10 <= v < r10 + n10 and k in st
+                and rt <= st[k] < rt + nt}
+        for v, t in cell:
+            if r10 <= v < r10 + n10:
+                if t is None:
+                    absent.add(v - r10 + d10)
+                else:
+                    labs[v] = t
+        labs = sorted(labs.items())
+        anchors.append(([v for v, _ in labs], [t for _, t in labs]))
 
     def f(a):
         for (d10, r10, n10), (dt, rt, nt), (av, at) in zip(i10, it, anchors):
@@ -384,6 +476,7 @@ def ram_mapper(tree):
                 k = bisect.bisect_right(av, rom) - 1
                 return (at[k] + rom - av[k] if k >= 0 else rom - r10 + rt) - rt + dt
         return a
+    f.absent = absent
     return f
 
 
@@ -406,14 +499,17 @@ def ram_cells_h(tree='v10'):
     else:
         out += [' * %s addresses: the cell names are v10\'s, and each address is where %s\'s own' % (tree, tree),
                 ' * Boot_InitWorkRAM puts that cell (gen_naka_gui_headers.py ram_mapper: the nearest label both',
-                ' * trees define inside the image, symbols/maincpu_%s_symbols_reference.txt).' % tree]
+                ' * trees define inside the image, symbols/maincpu_%s_symbols_reference.txt, or the tree\'s own' % tree,
+                ' * `; work cell:` line for the cell, asm_cell_anchors).']
     out += [' */',
             '',
             '#ifndef NAKA_RAM_CELLS_H',
             '#define NAKA_RAM_CELLS_H',
             '']
     for n, a in cells:
-        out.append('#define RAM_%-48s 0x%08Xu' % (n, f(a)))
+        out.append('#define RAM_%-48s 0x%08Xu' % (n, f(a)) + (
+            '  /* not in this tree\'s work-RAM image: no work-cell line of the tree is this cell */'
+            if a in f.absent else ''))
     out += ['',
             '/* Cells of the image part the C does not spell (the asm\'s WorkRamInit_Image, RAM 0x3D524..0x3DCD3,',
             ' * and the second image, ROM 0xEEFA66 -> RAM 0xE35E): named after the widget field that keeps its',

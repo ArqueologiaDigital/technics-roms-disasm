@@ -137,7 +137,7 @@
 # The KN7000, KN6000 / KN6500 and KN2400 boards all drive them (kn7000_mame kn7000.cpp models
 # 0x36008004 on both boards; notes/io-map.md); every access is bset / bclr / btst or a byte / half
 # store.  Named as the IC18 boot ROM names them (P<offset>).
-.equ P04, 0x36008004                     # bit 1 the SD card's SPI chip select (low = selected), bit 3 the power latch, bit 4 the FDC's TC (active low), bit 5 toggled every 96 ms by 941's TickJobsTask; bits 0 / 6 panel-link strobes
+.equ P04, 0x36008004                     # bit 1 the SD card's SPI chip select (low = selected), bit 2 PMUT (the power amplifiers' mute, low = muted: low from reset to the end of BootPanelResetCheck and in the NMI handler), bit 3 the power latch, bit 4 the FDC's TC (active low), bit 5 toggled every 96 ms by 941's TickJobsTask, bit 7 the DSP's reset; bits 0 / 6 panel-link strobes.  On the KN7000 service manual's MAIN 1/5 sheet these bits are the CPU's pins P21 (SD.CS), P22 (PMUT), P24 (FDC.TC), P25 (SELE.LED), P27 (DSP.RST): [INFERENCE] the CPU's own port 2 (kn7000/notes/audio-mute-probes/README.md)
 .equ P05, 0x36008005                     # P04's high byte: bit 0 set by PanelLinkInit
 .equ P24, 0x36008024                     # bit 0 a panel-link strobe (with P64 it switches what serial 0 is wired to: kn7000_mame notes/FINDINGS-usb-subsystem.md); bit 4 set by FdcHwInit; bit 6 set by PanelLinkInit
 .equ P25, 0x36008025                     # bit 0 a panel-link strobe

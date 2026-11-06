@@ -334,6 +334,13 @@ Each gap between referenced bases equals count x stride. The strides come from t
   321.2).  Opening the screen writes no DSP port and no TG register but the idle FC08..FC0B; it moves
   only GPIO 0x36008004 bit 1 (the SD chip select, the folder scan) and 0x36008024 / 0x36008064; while the
   screen stays up the I/O writes equal the PICTURE LIST's.  So no code path the emulation runs silences
-  the keys; [INFERENCE] the silence comes from hardware the driver does not model.  Next step: trace the
-  service manual's MUTE lines (CN506 to the amplifier, the ACP / FAJ board; `picload-silence-probes/README.md`)
-  to the CPU line that drives them and watch that line in MAME on this screen, or measure on the instrument.
+  the keys; [INFERENCE] the silence comes from hardware the driver does not model.
+  **Mute lines, 2026-11-06 (lane kn7000-research2; `audio-mute-probes/README.md`):** the service manual's
+  MUTE line to the power amplifiers (CN506 pin 1 = +15PM, switched by the PMUT net) comes from CPU pin 148,
+  P04 (0x36008004) bit 2; the speaker / headphone switch SPSW and the D/A converter's mode port are bits of
+  the latch at 0x98060000.  The firmware clears PMUT only at reset and in the NMI handler (set at the end of
+  `BootPanelResetCheck`), sends the D/A converter two mode words at boot only, and drives SPSW from M3 id
+  0x600009; in MAME (941 and 893) none of them changes from boot through SD PICTURE LOAD and a key on it.
+  So the silence is made by no mute line either.  BLOCKED on the instrument: play a key on SD PICTURE LOAD
+  with a card holding pictures and note whether the sound stops for the whole screen or only while the
+  card is read (the emulated card answers at once).
