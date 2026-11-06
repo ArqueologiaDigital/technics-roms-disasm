@@ -7760,17 +7760,24 @@ AccAutoPlay_Configure_Return:
 	ret
 
 AccAutoPlay_Configure_Extended:
-	.byte	0x00, 0x00, 0xf1, 0xb6, 0x33, 0xc9, 0x6e, 0x0c
-	.byte	0xc1, 0xe1, 0x33, 0x3c, 0xfe, 0xc1, 0xe0, 0x33
-	.byte 0x3c, 0xfe, 0x68, 0x1f
+	nop
+	nop
+	bit	1, (0x33b6:16)
+	jr	nz, AccAutoPlay_Configure_Final
+	and	(0x33e1:16), 0xfe
+	and	(0x33e0:16), 0xfe
+	jr	AccAutoPlay_Configure_Return2
 AccAutoPlay_Configure_Final:
-	.byte	0xf1, 0xe0, 0x33, 0xc8, 0x6e, 0x19, 0xf1, 0xe1
-	.byte	0x33, 0xc8, 0x66, 0x13, 0xf1, 0xb5, 0x33, 0xcf
-	.byte 0x66, 0x03, 0x1e, 0x07, 0x01
+	bit	0, (0x33e0:16)
+	jr	nz, AccAutoPlay_Configure_Return2
+	bit	0, (0x33e1:16)
+	jr	z, AccAutoPlay_Configure_Return2
+	bit	7, (0x33b5:16)
+	jr	z, AccAutoPlay_Configure_Done
+	calr	AccSynchro_StopOnChordRelease
 AccAutoPlay_Configure_Done:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xc1, 0xe1, 0x33, 0x3c, 0xfe, 0xc1, 0xe0, 0x33
-	.byte	0x3c, 0xfe
+	and	(0x33e1:16), 0xfe
+	and	(0x33e0:16), 0xfe
 AccAutoPlay_Configure_Return2:
 	ret
 	nop
@@ -14065,20 +14072,11 @@ AccPatch_CheckAndInitDemo_Ret:
 	ret
 
 AccPatch_SlotConfigByteData:
-	; framing ported from v10's source for the same label (same span length, statement for statement); 36 of 58 slots byte-identical
 	ret
 	ret
-	.byte 0xc1	; v10 does not spell this byte either
-	.byte	0xe3	; v10 does not spell this byte either
-	.byte 0x36	; v10 does not spell this byte either
-	.byte 0x04	; v10 does not spell this byte either
-	.byte 0xc1	; v10 does not spell this byte either
-	.byte	0x1e	; v10 does not spell this byte either
-	ldw	ix, 61700
-	; v10 does not spell this byte either
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x1e
-	ldw	ix, 0
+	push	(0x36e3:16)
+	push	(0x341e:16)
+	ld	(0x341e:16), 0
 AccPatch_SlotConfigByteData_Loop:
 	; v10 does not spell this byte either
 	cp	(0x341e:16), 12

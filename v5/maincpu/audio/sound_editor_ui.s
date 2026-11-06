@@ -9346,12 +9346,10 @@ SeMenu_CompareAndApply_Data4:
 ;  SeTitle_StaticScreenTable, indexed by title id - 0x20): draws the page's fixed captions and frames. Basis: the
 ;  table index and RegTitle (scripts/renaming/name_se_title_methods.py).
 SeAmpAmp2_DrawStaticScreen:
-	.byte	0x1d, 0x09, 0xef, 0xf0, 0x1d, 0x53, 0xef, 0xf0
-	.byte	0x1d, 0x7c
-SeMenu_CompareAndApply_Data6:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xfa
-	.byte 0xf0
+	call	SeMenu_DrawSoloButton
+	call	SeMenu_DrawPartSelector
+	call	SeAmp_DrawSectionFrame
+	.set	SeMenu_CompareAndApply_Data6, SeAmpAmp2_DrawStaticScreen + 10	; inside an instruction
 	call	SeMenu_PresetManager_Save
 	ld	(COLORBLIT_MODE:24), 2
 	ld	xiy, SeAmpAmp2_SeFilFil2_MidlineAndStripFrame
