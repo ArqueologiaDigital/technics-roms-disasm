@@ -84959,11 +84959,11 @@ func_486128AB_entry_Lf8:
 func_486128AB_entry_L114:
 	ret	[d2,d3,a2,a3], 0x34
 
-func_486129C7:
+KeyZoneNoteResolve:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x24, sp
 
-func_486129C7_entry:
+KeyZoneNoteResolve_entry:
 	mov	d0, d2
 	clr	d0
 	movbu	d0, (0x1d, sp)
@@ -84975,9 +84975,9 @@ func_486129C7_entry:
 	call	func_48610FD9, 0, 0
 	exth	d0
 	cmp	0, d0
-	bne	func_486129C7_entry_L1b
+	bne	KeyZoneNoteResolve_entry_L1b
 	ret	[d2,d3,a2,a3], 0x34
-func_486129C7_entry_L1b:
+KeyZoneNoteResolve_entry_L1b:
 	movbu	(a3), d0
 	exthu	d2
 	movbu	d0, (a2)
@@ -85009,12 +85009,12 @@ func_486129C7_entry_L1b:
 	call	func_4860A7C8, 0, 0x14
 	extbu	d0
 	cmp	2, d0
-	bne	func_486129C7_entry_L9a
+	bne	KeyZoneNoteResolve_entry_L9a
 	mov	0x2025, d0
 	clr	d1
 	call	func_50143A7C_entry, 0, 0x10
 	cmp	1, d0
-	bne	func_486129C7_entry_Ld4
+	bne	KeyZoneNoteResolve_entry_Ld4
 	extbu	d3
 	mov	d3, (0x10, sp)
 	extbu	d2
@@ -85026,19 +85026,19 @@ func_486129C7_entry_L1b:
 	clr	d0
 	call	func_4860AA20_entry, [d2], 0x18
 	movbu	d0, (a2)
-	bra	func_486129C7_entry_Ld4
-func_486129C7_entry_L9a:
+	bra	KeyZoneNoteResolve_entry_Ld4
+KeyZoneNoteResolve_entry_L9a:
 	mov	0x2013, d0
 	clr	d1
 	call	func_50143A7C_entry, 0, 0x10
 	cmp	1, d0
-	bne	func_486129C7_entry_Lb8
+	bne	KeyZoneNoteResolve_entry_Lb8
 	mov	3, d0
 	clr	d1
 	call	func_50143A7C_entry, 0, 0x10
 	add	-0x40, d0
 	movbu	d0, (0x1d, sp)
-func_486129C7_entry_Lb8:
+KeyZoneNoteResolve_entry_Lb8:
 	movbu	(a2), d1
 	movbu	(0x1d, sp), d0
 	extb	d1
@@ -85054,7 +85054,7 @@ func_486129C7_entry_Lb8:
 	extb	d1
 	add	d1, d0
 	movbu	d0, (a2)
-func_486129C7_entry_Ld4:
+KeyZoneNoteResolve_entry_Ld4:
 	ret	[d2,d3,a2,a3], 0x34
 loc_48612AA3:
 	add	-8, sp
@@ -86799,7 +86799,7 @@ func_486137C6_entry_L11b:
 	mov	(0x2c, sp), a0
 	mov	(0x1c, sp), a1
 	mov	d3, d0
-	call	func_486129C7_entry, [d2,d3,a2,a3], 0x34
+	call	KeyZoneNoteResolve_entry, [d2,d3,a2,a3], 0x34
 	bra	func_486137C6_entry_L12e
 func_486137C6_entry_L127:
 	mov	(0x24, sp), a0
@@ -88102,7 +88102,7 @@ func_48614159_entry_L1d3:
 	mov	(0x1c, sp), a0
 	mov	a3, a1
 	mov	(0x14, sp), d0
-	call	func_486129C7_entry, [d2,d3,a2,a3], 0x34
+	call	KeyZoneNoteResolve_entry, [d2,d3,a2,a3], 0x34
 func_48614159_entry_L1dd:
 	mov	a2, a0
 	mov	(0x34, sp), d0

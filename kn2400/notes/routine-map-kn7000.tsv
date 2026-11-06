@@ -749,7 +749,7 @@
 0x48612539	0x4845127C	-	-	call sites, A unnamed
 0x4861286A	0x4845158D	-	-	call sites, A unnamed
 0x486128AB	0x484515CE	-	-	call sites, A unnamed
-0x486129C7	0x484516EC	-	-	call sites, A unnamed
+0x486129C7	0x484516EC	KeyZoneNoteResolve	KeyZoneNoteResolve	carried
 0x48612AD1	0x484517F6	-	-	call sites, A unnamed
 0x48612D82	0x48451AA7	KeybedM3Dispatch	KeybedM3Dispatch	same name
 0x48612E3E	0x48451B63	-	-	call sites, A unnamed

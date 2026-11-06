@@ -10,8 +10,8 @@
 - RAM address pairs: 2123: 1620 by aligned operands (of 1632 B addresses seen in them), 503 between two of one delta (runs; the premise on the voted pairs: 1125 right, 2 wrong); named from A: 7; RAM audit 15 right, 0 wrong
 - not carried (last reason per call-site pair):
   -   1816 A's callee is unnamed too (the pair anchors the next round)
-  -    230 A's callee is unnamed too
-  -     23 body skeleton similarity below 0.6
+  -    229 A's callee is unnamed too
+  -     24 body skeleton similarity below 0.6
   -     14 one aligned call site only
   -      2 the bodies' callees or strings disagree
   -      2 the name is taken in B
