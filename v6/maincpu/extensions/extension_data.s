@@ -1413,8 +1413,7 @@ Toshi_ApFunctionName_Table:
 	.long FuncNameStr_PmemExpLngCheck
 	.long FuncNameStr_NullTerm
 FuncNameStr_NullTerm:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0xff
+	aligned_string ""
 FuncNameStr_PmemExpLngCheck:	aligned_string "PmemExpLngCheck"
 FuncNameStr_PmemNormLngCheck:	aligned_string "PmemNormLngCheck"
 FuncNameStr_CtlIniLngCheck:	aligned_string "CtlIniLngCheck"
@@ -1477,21 +1476,35 @@ NakaParam_VariScreen:
 	.long NakaParam_VariScreen_Empty	; NormScreen: 0 variables
 NakaParam_VariScreen_Empty:
 	aligned_string ""
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x36, 0x20, 0xed, 0x00, 0x30, 0x20, 0xed, 0x00
-	.byte	0x26, 0x20, 0xed, 0x00, 0x20, 0x20, 0xed, 0x00
-	.byte	0x1a, 0x20, 0xed, 0x00, 0x12, 0x20, 0xed, 0x00
-	.byte	0x0a, 0x20, 0xed, 0x00, 0x02, 0x20, 0xed, 0x00
-	.byte	0xfa, 0x1f, 0xed, 0x00, 0xf8, 0x1f, 0xed, 0x00
-	.byte	0x00, 0xff
+	.long	NakaClass_VariScreen_PropName_func
+	.long	NakaClass_VariScreen_PropName_font
+	.long	NakaClass_VariScreen_PropName_fontcolor
+	.long	NakaClass_VariScreen_PropName_page
+	.long	NakaClass_VariScreen_PropName_part
+	.long	NakaClass_VariScreen_PropName_varisu
+	.long	NakaClass_VariScreen_PropName_nowswno
+	.long	NakaClass_VariScreen_PropName_nowvari
+	.long	NakaClass_VariScreen_PropName_oldvari
+	.long	NakaClass_VariScreen_PropName_End
+NakaClass_VariScreen_PropName_End:
+	aligned_string ""
+NakaClass_VariScreen_PropName_oldvari:
 	.asciz	"oldvari"
+NakaClass_VariScreen_PropName_nowvari:
 	.asciz	"nowvari"
+NakaClass_VariScreen_PropName_nowswno:
 	.asciz	"nowswno"
+NakaClass_VariScreen_PropName_varisu:
 	aligned_string "varisu"
+NakaClass_VariScreen_PropName_part:
 	aligned_string "part"
+NakaClass_VariScreen_PropName_page:
 	aligned_string "page"
+NakaClass_VariScreen_PropName_fontcolor:
 	.asciz	"fontcolor"
+NakaClass_VariScreen_PropName_font:
 	aligned_string "font"
+NakaClass_VariScreen_PropName_func:
 	aligned_string "func"
 NakaParam_RVariScreen:
 	.long ClassVar_VariScreen_func	; VariScreen: 9 variables
@@ -1521,8 +1534,7 @@ ClassVar_VariScreen_func:	aligned_string "func"
 ; port: v7's label ParamStr_Table_09 is not in v6 -- no v6 bytes correspond to what it named
 	.long ParamStr09_Empty
 ParamStr09_Empty:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0xff
+	aligned_string ""
 ; port: v7's label ParamStr09_oldvari is not in v6 -- no v6 bytes correspond to what it named
 ; port: v7's label ParamStr09_nowvari is not in v6 -- no v6 bytes correspond to what it named
 ; port: v7's label ParamStr09_nowswno is not in v6 -- no v6 bytes correspond to what it named

@@ -12745,7 +12745,7 @@ AccVoice_IncrementBarWithSave_Helper:
 	dec	2, xsp
 	push	xiz
 	bit	0, (0x32ab:16)
-	jrl	z, 174
+	jrl	z, AccVoice_BarCounterBytecodeData_Skip32
 	ld	a, (0x3253:16)
 	cp	a, 1:i3
 	jr	z, AccVoice_BarCounterBytecodeData_Skip7
@@ -12795,21 +12795,37 @@ AccVoice_BarCounterBytecodeData_Skip8:
 	ld	xwa, (0x336e:16)
 	call	AccInit_AllPartPositions_Wrap
 	ld	xwa, (0x336e:16)
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x1d, 0x67
 ; port: v7's label AccVoice_BarCounterBytecodeData_Skip9 is not in v6 -- no v6 bytes correspond to what it named
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xe1, 0xf5, 0xc1, 0x74, 0x32, 0x3e, 0x3f, 0x78
-	.byte	0x80, 0x00, 0xe1, 0x3a, 0x33, 0x21, 0x89, 0x10
-	.byte	0x21, 0xbf, 0x04, 0x41, 0x89, 0x11, 0x21, 0xbf
-	.byte	0x05, 0x41, 0x8f, 0x04, 0x21, 0xc9, 0x8b, 0xd9
-	.byte	0x12, 0x8f, 0x05, 0x21, 0xd8, 0x12, 0xd8, 0xee
-	.byte	0x08, 0xd9, 0xe0, 0xd8, 0xcf, 0x08, 0x02, 0x66
-	.byte	0x1e, 0x8f, 0x04, 0x21, 0xc9, 0x8b, 0xd9, 0x12
-	.byte	0x8f, 0x05, 0x21, 0xd8, 0x12, 0xd8, 0xee, 0x08
-	.byte	0xd9, 0xe0, 0xd8, 0xcf, 0x18, 0x03, 0x66, 0x07
+	call	AccTuning_CopyAllPartsFromStyle_Wrap
+	or	(0x3274:16), 0x3f
+	jrl	AccVoice_BarCounterBytecodeData_Join2_Skip
+AccVoice_BarCounterBytecodeData_Skip32:
+	ld	xbc, (0x333a:16)
+	ld	a, (xbc+16)
+	ld	(xsp+4), a
+	ld	a, (xbc+17)
+	ld	(xsp+5), a
+	ld	a, (xsp+4)
+	ld	c, a
+	extz	bc
+	ld	a, (xsp+5)
+	extz	wa
+	sll	wa, 8
+	or	wa, bc
+	cp	wa, 0x208
+	jr	z, AccVoice_BarCounterBytecodeData_Skip31
+	ld	a, (xsp+4)
+	ld	c, a
+	extz	bc
+	ld	a, (xsp+5)
+	extz	wa
+	sll	wa, 8
+	or	wa, bc
+	cp	wa, 0x318
+	jr	z, AccVoice_BarCounterBytecodeData_Skip31
 	lda	xwa, (xsp+4)
 	call	AccTone_ValidateAndClamp
+AccVoice_BarCounterBytecodeData_Skip31:
 	ld	a, (xsp+4)
 	ld	e, a
 	extz	de
@@ -13171,11 +13187,10 @@ AccTuning_ComplexBytecodeData_Loop2:
 	cp	a, 1:i3
 	jr	nz, AccTuning_ComplexBytecodeData_Skip4
 AccTuning_ComplexBytecodeData_Join:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xc1, 0x1c, 0x33, 0x21, 0xc9, 0x06, 0xc1, 0x5b
 ; port: v7's label AccTuning_ComplexBytecodeData_Skip2 is not in v6 -- no v6 bytes correspond to what it named
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x32, 0xc9
+	ld	a, (0x331c:16)
+	cpl	a
+	and	(0x325b:16), a
 ; port: v7's label AccTuning_ComplexBytecodeData_Skip3 is not in v6 -- no v6 bytes correspond to what it named
 	ld	a, (0x433:16)
 	cp	a, (0x32b0:16)
@@ -15043,12 +15058,15 @@ AccPatch_WriteRhythm_Done:
 	ret
 
 AccPatch_ChannelToParamTable:
+	.asciz	""
 ; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x00, 0x00, 0xd7, 0x00, 0xd4, 0x00
-	.byte	0xd5, 0x00, 0xd6, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0xdc, 0x2b, 0x00, 0x00, 0xdc, 0x2c, 0x00, 0x00
-	.byte	0xdc, 0x2d, 0x00, 0x00, 0xdc, 0x2e, 0x00, 0x00
+	.byte	0x00, 0x00, 0x00, 0xd7, 0x00, 0xd4, 0x00, 0xd5
+	.byte	0x00, 0xd6, 0x00, 0x00, 0x00, 0x00, 0x00
+	.asciz	""
+; TODO(port): v6 bytes with no v7 line -- disassemble
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xdc
+	.byte	0x2b, 0x00, 0x00, 0xdc, 0x2c, 0x00, 0x00, 0xdc
+	.byte	0x2d, 0x00, 0x00, 0xdc, 0x2e, 0x00, 0x00
 AccPatch_WriteRhythmParams:
 	calr AccPatch_FetchVolumeForChannel
 	push_a
@@ -27656,10 +27674,8 @@ SeqRec_CommitData:
 	cp c, 0xf0
 	jr c, SeqRec_Validate
 
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xb0, 0x00
-; port: v7's label SeqRec_CommitFinalize is not in v6 -- no v6 bytes correspond to what it named
-	nop
+	; port: v7's label SeqRec_CommitFinalize is not in v6 -- no v6 bytes correspond to what it named
+	ld	(xwa), 0
 	ld	(xwa+1), 0
 	ret
 
@@ -28217,10 +28233,10 @@ VoiceParam_B0_Handler:
 	res	7, a
 	cp	a, 22
 	jr	ule, VoiceParam_B0_Handler_Skip
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xc1, 0xe2, 0x38, 0x21, 0xc9
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x30, 0x07, 0xc9, 0xcf, 0x19, 0x6e, 0x58
+	ld	a, (0x38e2:16)
+	res	7, a
+	cp	a, 25
+	jr	nz, VoiceParam_B0_Process_Join_Skip2
 VoiceParam_B0_Handler_Skip:
 
 	ld	a, (0x38e3:16)
@@ -28273,6 +28289,7 @@ VoiceParam_B0_Process_Join:
 VoiceParam_B0_Process_Join_Skip:
 	ld	(0x38e0:16), 0
 	ret
+VoiceParam_B0_Process_Join_Skip2:
 	ld	(0x38e0:16), 0
 	ret
 VoiceParam_D0Handler:
@@ -34082,28 +34099,53 @@ CmpStepTitleFunc:
 	ret
 
 CmpStepTitle_OnPaint:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xc1, 0x7f, 0x8c, 0x3f, 0xb6, 0x66, 0x19, 0x30
-	.byte	0xff, 0x00, 0x1d, 0x4e, 0x0f, 0xfb, 0x30, 0xf5
-	.byte	0x00, 0x1d, 0x48, 0x0f, 0xfb, 0x1d, 0xb5, 0x0f
-	.byte	0xfb, 0x30, 0xff, 0x00, 0x1d, 0x54, 0x0f, 0xfb
+	cp	(PREVIOUS_TITLE:16), 182
+	jr	z, CmpStepTitle_OnPaint_Draw
+	ldw	wa, 255
+	call	GraphicsRender_ByteData
+	ldw	wa, 245
+	call	Display_SetBackgroundColor
+	call	Display_LoadFixedPaletteBands
+	ldw	wa, 255
+	call	Display_FillPaletteBandFromEntry
 CmpStepTitle_OnPaint_Draw:
+	push	xde
+	push	xhl
+	push	xix
+	push	xiz
+	call	CmpStep_DrawScreen
+	pop	xiz
+	pop	xix
+	pop	xhl
+	pop	xde
+	ret
 ; CmpStepTitle_OnHide: CmpStepTitleFunc_ProcTable[1], which DirmdEmulator calls on EVT_HIDE: CmpStep_OnHide with
 ;   XDE/XHL/XIX/XIZ preserved.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x3a, 0x3b, 0x3c, 0x3e, 0x1d, 0x6f, 0x9f, 0xf6
-	.byte	0x5e, 0x5c, 0x5b, 0x5a, 0x0e
 CmpStepTitle_OnHide:
+	push	xde
+	push	xhl
+	push	xix
+	push	xiz
+	call	CmpStep_OnHide
+	pop	xiz
+	pop	xix
+	pop	xhl
+	pop	xde
+	ret
 ; CmpStepTitle_OnSwitchIn: CmpStepTitleFunc_ProcTable[2], which DirmdEmulator calls on EVT_SW_IN: CmpStep_DispatchSwitch
 ;   with XDE/XHL/XIX/XIZ preserved.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x3a, 0x3b, 0x3c, 0x3e, 0x1d, 0x41, 0xa0, 0xf6
-	.byte	0x5e, 0x5c, 0x5b, 0x5a, 0x0e
 CmpStepTitle_OnSwitchIn:
+	push	xde
+	push	xhl
+	push	xix
+	push	xiz
+	call	CmpStep_DispatchSwitch
+	pop	xiz
+	pop	xix
+	pop	xhl
+	pop	xde
+	ret
 ; CmpStepTitle_Method3Nop: CmpStepTitleFunc_ProcTable[3], a lone `ret`; DirmdEmulator calls only methods 0-2.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x3a, 0x3b, 0x3c, 0x3e, 0x1d, 0x4c, 0xa0, 0xf6
-	.byte	0x5e, 0x5c, 0x5b, 0x5a, 0x0e
 CmpStepTitle_Method3Nop:
 	ret
 AccAudio_LockAcquire:
@@ -34171,6 +34213,7 @@ AccGraphics_BoundOp04:
 	call	ColorBlit_Variant_ByteData
 	pop	xwa
 	ret
+CmpStep_DrawScreen:
 	push	xiz
 	calr	AccDraw_Secondary_Helper7
 	pop	xiz

@@ -425,25 +425,42 @@ NakaWidget_MSCTSEL_10_AcIndexWideES:		.incbin "includes/generated/naka_ctrl_menu
 NakaWidget_MSCTSEL_11_Label:			.incbin "includes/generated/naka_ctrl_menu_body.bin", 0x1818, 0x2E
 NakaWidget_STYLE2:				.incbin "includes/generated/naka_ctrl_menu_body.bin", 0x1846, 0x24
 NakaWidget_MSCTSEL_13_AcMstStyle2GridBox:
+	.long	NAKA_CLASS_AcMstStyle2GridBox	; AcMstStyle2GridBox class
+	.short	IDX_NakaWidget_STYLE2	; AcMstStyle2GridBox super
+	.short	IDX_NakaWidget_MSCTSEL_14_Box	; AcMstStyle2GridBox sub
+	.short	IDX_NakaWidget_MSCTSEL_16_AcIndexWideES	; AcMstStyle2GridBox next
+	.short	NAKA_INDEX_NONE	; AcMstStyle2GridBox prev
+	.short	VF_Const	; AcMstStyle2GridBox flag
 ; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x17, 0x00, 0x62, 0x01, 0x0c, 0x00, 0x0e, 0x00
-	.byte	0x10, 0x00, 0xff, 0xff, 0x08, 0x00, 0x28, 0x00
-	.byte	0x40, 0x00, 0x35, 0x01
+	.byte	0x28, 0x00, 0x40, 0x00, 0x35, 0x01
 	.long	SeqByteBlock_PathNormalize_Skip16
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0x00, 0x01, 0x00, 0x06, 0x00, 0x00, 0x00
-	.byte	0xff, 0x00, 0x01, 0x00, 0x09, 0x00, 0x02, 0x00
-	.byte	0x00, 0x00, 0x42, 0xf5, 0x03, 0x00, 0x44, 0xf5
-	.byte	0x03, 0x00, 0x46, 0xf5, 0x03, 0x00, 0x4a, 0xf5
-	.byte	0x03, 0x00, 0x4e, 0xf5, 0x03, 0x00, 0xb4, 0x56
-	.byte	0xed, 0x00, 0xa2, 0x56, 0xed, 0x00, 0x13, 0x00
-	.byte	0x22, 0x01, 0x52, 0xf5, 0x03, 0x00, 0x54, 0xf5
-	.byte	0x03, 0x00, 0x56, 0xf5, 0x03, 0x00, 0x58, 0xf5
-	.byte	0x03, 0x00, 0x5a, 0xf5, 0x03, 0x00, 0x5c, 0xf5
-	.byte	0x03, 0x00, 0x5e, 0xf5, 0x03, 0x00
+	.short	BD_None	; AcMstStyle2GridBox border
+	.short	1	; AcMstStyle2GridBox index
+	.long	idCHARA6	; AcMstStyle2GridBox font
+	.short	CL_White	; AcMstStyle2GridBox fontcolor
+	.short	AL_LeftJustify	; AcMstStyle2GridBox align
+	.short	9	; AcMstStyle2GridBox row
+	.short	2	; AcMstStyle2GridBox col
+	.short	0x0	; AcMstStyle2GridBox vertline
+	.long	0x3f542	; AcMstStyle2GridBox selrow
+	.long	0x3f544	; AcMstStyle2GridBox selcol
+	.long	0x3f546	; AcMstStyle2GridBox pcol
+	.long	0x3f54a	; AcMstStyle2GridBox prow
+	.long	0x3f54e	; AcMstStyle2GridBox crow
+	.long	NakaText_MSCTSEL_13_fixedcol	; AcMstStyle2GridBox fixedcol
+	.long	NakaText_MSCTSEL_13_fixedrow	; AcMstStyle2GridBox fixedrow
+	.long	NAKA_APFUNC_MstStyle2GridCheck	; AcMstStyle2GridBox func
+	.long	0x3f552	; AcMstStyle2GridBox nowstylesubctgdtno
+	.long	0x3f554	; AcMstStyle2GridBox nowstylesubctgmaxpage
+	.long	0x3f556	; AcMstStyle2GridBox nowstylesubctgpage
+	.long	0x3f558	; AcMstStyle2GridBox nowstylesubctg
+	.long	0x3f55a	; AcMstStyle2GridBox nowstyle
+	.long	0x3f55c	; AcMstStyle2GridBox nowstylesubsubdtno1
+	.long	0x3f55e	; AcMstStyle2GridBox nowstylesubsubdtno2
+NakaText_MSCTSEL_13_fixedrow:
 	.asciz	" | | | || | | | |"
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x7c, 0x20, 0x00, 0xff
+NakaText_MSCTSEL_13_fixedcol:
+	aligned_string "| "
 NakaWidget_MSCTSEL_14_Box:			.incbin "includes/generated/naka_ctrl_menu_body.bin", 0x18E6, 0x1A
 NakaWidget_MSCTSEL_15_Label:			.incbin "includes/generated/naka_ctrl_menu_body.bin", 0x1900, 0x26
 NakaWidget_MSCTSEL_16_AcIndexWideES:		.incbin "includes/generated/naka_ctrl_menu_body.bin", 0x1926, 0x2A
@@ -470,23 +487,11 @@ NakaWidget_MSSCTSEL_7_VwEditSwBox:		.incbin "includes/generated/naka_ctrl_menu_b
 NakaWidget_MSSCTSEL_8_Label:			.incbin "includes/generated/naka_ctrl_menu_body.bin", 0x1B4C, 0x2E
 NakaWidget_SONG2:				.incbin "includes/generated/naka_ctrl_menu_body.bin", 0x1B7A, 0x24
 NakaWidget_MSSCTSEL_10_AcMstSong2GridBox:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x19, 0x00, 0x62, 0x01, 0x09, 0x00, 0xff, 0xff
-	.byte	0x0b, 0x00, 0xff, 0xff, 0x08, 0x00, 0x28, 0x00
-	.byte	0x3f, 0x00, 0x35, 0x01, 0xd3, 0x00, 0xf5, 0x00
-	.byte	0x00, 0x00, 0x01, 0x00, 0x06, 0x00, 0x00, 0x00
-	.byte	0xff, 0x00, 0x01, 0x00, 0x09, 0x00, 0x02, 0x00
-	.byte	0x00, 0x00, 0x8c, 0xf5, 0x03, 0x00, 0x8e, 0xf5
-	.byte	0x03, 0x00, 0x90, 0xf5, 0x03, 0x00, 0x94, 0xf5
-	.byte	0x03, 0x00, 0x98, 0xf5, 0x03, 0x00, 0xe8, 0x59
-	.byte	0xed, 0x00, 0xd6, 0x59, 0xed, 0x00, 0x15, 0x00
-	.byte	0x22, 0x01, 0x9c, 0xf5, 0x03, 0x00, 0x9e, 0xf5
-	.byte	0x03, 0x00, 0xa0, 0xf5, 0x03, 0x00, 0xa2, 0xf5
-	.byte	0x03, 0x00, 0xa4, 0xf5, 0x03, 0x00, 0xa6, 0xf5
-	.byte	0x03, 0x00, 0xa8, 0xf5, 0x03, 0x00
+	NAKA_REC_AcMstSong2GridBox super=IDX_NakaWidget_SONG2, sub=NAKA_INDEX_NONE, next=IDX_NakaWidget_MSSCTSEL_11_AcIndexWideES, prev=NAKA_INDEX_NONE, flag=VF_Const, x=40, y=63, w=270, h=149, color=CL_WallPattern, border=BD_None, index=1, font=idCHARA6, fontcolor=CL_White, align=AL_LeftJustify, row=9, col=2, vertline=0x0, selrow=0x3f58c, selcol=0x3f58e, pcol=0x3f590, prow=0x3f594, crow=0x3f598, fixedcol=NakaText_MSSCTSEL_10_fixedcol, fixedrow=NakaText_MSSCTSEL_10_fixedrow, func=NAKA_APFUNC_MstSong2GridCheck, nowsongsubctgdtno=0x3f59c, nowsongsubctgmaxpage=0x3f59e, nowsongsubctgpage=0x3f5a0, nowsongsubctg=0x3f5a2, nowsong=0x3f5a4, nowsongsubsubdtno1=0x3f5a6, nowsongsubsubdtno2=0x3f5a8
+NakaText_MSSCTSEL_10_fixedrow:
 	aligned_string " | | | || | | | "
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x7c, 0x20, 0x00, 0xff
+NakaText_MSSCTSEL_10_fixedcol:
+	aligned_string "| "
 NakaWidget_MSSCTSEL_11_AcIndexWideES:		.incbin "includes/generated/naka_ctrl_menu_body.bin", 0x1C1A, 0x2A
 NakaWidget_MSSCTSEL_12_Box:			.incbin "includes/generated/naka_ctrl_menu_body.bin", 0x1C44, 0x1A
 NakaWidget_MSSCTSEL_13_Label:			.incbin "includes/generated/naka_ctrl_menu_body.bin", 0x1C5E, 0x26
@@ -503,23 +508,11 @@ NakaWidget_MSSCTSEL_16_Label:			.incbin "includes/generated/naka_ctrl_menu_body.
 ; [nakarest] element 1); "(ALPHBETICAL)" (Label.str of element 2); ....
 NakaWidget_MSSONGLIST:				.incbin "includes/generated/naka_ctrl_menu_body.bin", 0x1D04, 0x3E
 NakaWidget_MSSONGLIST_1_AcMstSugAlpGridBox:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x13, 0x00, 0x62, 0x01, 0x00, 0x00, 0xff, 0xff
-	.byte	0x02, 0x00, 0xff, 0xff, 0x08, 0x00, 0x28, 0x00
-	.byte	0x3e, 0x00, 0x35, 0x01, 0xd3, 0x00, 0xf5, 0x00
-	.byte	0x00, 0x00, 0x01, 0x00, 0x06, 0x00, 0x00, 0x00
-	.byte	0xff, 0x00, 0x00, 0x00, 0x09, 0x00, 0x02, 0x00
-	.byte	0x00, 0x00, 0xae, 0xf5, 0x03, 0x00, 0xb0, 0xf5
-	.byte	0x03, 0x00, 0xb2, 0xf5, 0x03, 0x00, 0xb6, 0xf5
-	.byte	0x03, 0x00, 0xba, 0xf5, 0x03, 0x00, 0x90, 0x5b
-	.byte	0xed, 0x00, 0x7a, 0x5b, 0xed, 0x00, 0x0f, 0x00
-	.byte	0x22, 0x01, 0xbe, 0xf5, 0x03, 0x00, 0xc0, 0xf5
-	.byte	0x03, 0x00, 0xc2, 0xf5, 0x03, 0x00, 0xc4, 0xf5
-	.byte	0x03, 0x00, 0xc6, 0xf5, 0x03, 0x00, 0xc8, 0xf5
-	.byte	0x03, 0x00, 0xca, 0xf5, 0x03, 0x00
+	NAKA_REC_AcMstSugAlpGridBox super=IDX_NakaWidget_MSSONGLIST, sub=NAKA_INDEX_NONE, next=IDX_NakaWidget_MSSONGLIST_2_Label, prev=NAKA_INDEX_NONE, flag=VF_Const, x=40, y=62, w=270, h=150, color=CL_WallPattern, border=BD_None, index=1, font=idCHARA6, fontcolor=CL_White, align=AL_Center, row=9, col=2, vertline=0x0, selrow=0x3f5ae, selcol=0x3f5b0, pcol=0x3f5b2, prow=0x3f5b6, crow=0x3f5ba, fixedcol=NakaText_MSSONGLIST_1_fixedcol, fixedrow=NakaText_MSSONGLIST_1_fixedrow, func=NAKA_APFUNC_MstSugAlpGridCheck, nowalph=0x3f5be, nowalphtop=0x3f5c0, nowalphdtno=0x3f5c2, nowalphmaxpage=0x3f5c4, nowalphpage=0x3f5c6, nowalphselsong=0x3f5c8, nowttlselsong=0x3f5ca
+NakaText_MSSONGLIST_1_fixedrow:
 	aligned_string " | | | | | | | | | |"
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x7c, 0x20, 0x00, 0xff
+NakaText_MSSONGLIST_1_fixedcol:
+	aligned_string "| "
 NakaWidget_MSSONGLIST_2_Label:			.incbin "includes/generated/naka_ctrl_menu_body.bin", 0x1DC2, 0x2E
 NakaWidget_MSSONGLIST_3_AcIndexWideES:		.incbin "includes/generated/naka_ctrl_menu_body.bin", 0x1DF0, 0x2A
 NakaWidget_MSSONGLIST_4_Box:			.incbin "includes/generated/naka_ctrl_menu_body.bin", 0x1E1A, 0x1A
@@ -606,7 +599,6 @@ NakaWidget_PMBKNAME_6_IvExit:		.incbin "includes/generated/naka_ctrl_menu_body.b
 ; oldvari (RAM 0x3F612..0x3F61C, power-on values in the Toshi work cells of the work-RAM image); window -> 0x3F60E.
 ; Reached as view 0xE80000 through GetViewInstance; VariScreenProc reads the cells through +44..+64.
 NakaWidget_SVARI:
-; TODO(port): v6 bytes with no v7 line -- disassemble
 	NAKA_REC_VariScreen super=NAKA_INDEX_NONE, sub=IDX_NakaWidget_SVARI_1_IvIntVari, next=NAKA_INDEX_NONE, prev=NAKA_INDEX_NONE, flag=VF_Fixed | VF_Const, x=0, y=0, w=320, h=240, color=CL_White, border=BD_Single1, exit=TITLE_PS, window=0x3f60a, func=NAKA_APFUNC_DefaultFunction, font=idCHARA1, fontcolor=CL_Black, page=0x3f60e, part=0x3f610, varisu=0x3f612, nowswno=0x3f614, nowvari=0x3f616, oldvari=0x3f618
 NakaWidget_SVARI_1_IvIntVari:	.incbin "includes/generated/naka_ctrl_menu_body.bin", 0x2580, 0x18
 ; [nakarest] naka_ctrl_menu_body+0x2598  +0x2598..+0x2618 (0xed647e, 128 B)
@@ -614,7 +606,6 @@ NakaWidget_SVARI_1_IvIntVari:	.incbin "includes/generated/naka_ctrl_menu_body.bi
 ; [nakarest] InitializeToshi) ("RVARI"): RVariScreen (68 B), AcTempoBox (36 B), IvIntVari (24
 ; [nakarest] B).
 NakaWidget_RVARI:
-; TODO(port): v6 bytes with no v7 line -- disassemble
 	NAKA_REC_RVariScreen super=NAKA_INDEX_NONE, sub=IDX_NakaWidget_RVARI_1_AcTempoBox, next=NAKA_INDEX_NONE, prev=NAKA_INDEX_NONE, flag=VF_Fixed | VF_Const, x=0, y=0, w=320, h=240, color=CL_White, border=BD_Single1, exit=TITLE_PS, window=0x3f61a, func=NAKA_APFUNC_DefaultFunction, font=idCHARA1, fontcolor=CL_Black, page=0x3f61e, part=0x3f620, varisu=0x3f622, nowswno=0x3f624, nowvari=0x3f626, oldvari=0x3f628
 NakaWidget_RVARI_1_AcTempoBox:	.incbin "includes/generated/naka_ctrl_menu_body.bin", 0x25DC, 0x24
 NakaWidget_RVARI_2_IvIntVari:	.incbin "includes/generated/naka_ctrl_menu_body.bin", 0x2600, 0x18

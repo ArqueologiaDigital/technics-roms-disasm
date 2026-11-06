@@ -142,94 +142,272 @@ East_SendSwitchView:	.incbin "includes/generated/naka_sequencer_channels.bin", 0
 Murai_SoundMenuWorkCells:
 ; LswLeftHold_OnOffStrPtrs -- 2 x uint32_t: string pointers "OFF" / "ON " that LswLeftHold copies out for
 ; EVT_GET_LSW_STRING (index (xde+4) checked 0..1, `sla bc, 2`, `ld xbc, (xde+bc)`, Strcpy).
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xff, 0xff, 0xff, 0xff, 0x01, 0x00, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0x00, 0x00, 0x00, 0x00, 0xff, 0xff
-	.byte	0xff, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0x01, 0x00, 0x00, 0x00, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x01, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0x01, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0x01, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0x01, 0x00, 0x00, 0x00
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0x01, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0x01, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0xff, 0xff, 0xff, 0xff, 0x01, 0x00, 0x00, 0x00
-	.byte	0xff, 0xff, 0xff, 0xff, 0x01, 0x00, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x01, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0x01, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff
-	.byte	0x01, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff
-	.byte	0x01, 0x00, 0xff, 0xff, 0xff, 0xff, 0x01, 0x00
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0x01, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff
-	.byte	0x01, 0x00, 0xff, 0xff, 0xff, 0xff, 0x00, 0x00
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0x00, 0x00, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0x01, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0x00, 0x00, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00, 0x00
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0x43, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
-	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	.long	0xffffffff	; work cell: NakaContainer_SoundMenu_Root window (TtlScreen)
+	.short	0x1	; work cell: NakaWidget_SdmenuPage page (AcWindowPage)
+	.long	0xffffffff	; work cell: NakaWidget_Sdmenu1 parent (Window)
+	.long	0xffffffff	; work cell: NakaWidget_Sdmenu1 child (Window)
+	.short	0x0	; work cell: NakaMenuItem_PartSetting selected (AcTitleMenu)
+	.short	0x0	; work cell: NakaMenuItem_Mixer selected (AcTitleMenu)
+	.short	0x0	; work cell: NakaMenuItem_MasterTuning selected (AcTitleMenu)
+	.short	0x0	; work cell: NakaMenuItem_KeyScaling selected (AcTitleMenu)
+	.short	0x0	; work cell: NakaMenuItem_ReverbEqPresets selected (AcTitleMenu)
+	.short	0x0	; work cell: NakaMenuItem_Reverb selected (AcTitleMenu)
+	.short	0x0	; work cell: NakaMenuItem_Equalizer selected (AcTitleMenu)
+	.short	0x0	; work cell: NakaMenuItem_DspEffect selected (AcTitleMenu)
+	.short	0x0	; work cell: NakaMenuItem_AcousticIllusion selected (AcTitleMenu)
+	.short	0x0	; work cell: NakaWidget_SoundEdit selected (AcSndEMenu)
+	.long	0xffffffff	; work cell: NakaWidget_Sdmenu2 parent (Window)
+	.long	0xffffffff	; work cell: NakaWidget_Sdmenu2 child (Window)
+	.short	0x0	; work cell: NakaMenuItem_LeftHold selected (AcTitleMenu)
+	.short	0x0	; work cell: NakaMenuItem_TechniChord selected (AcTitleMenu)
+	.long	0xffffffff	; work cell: NakaWidget_Sdpart window (TtlScreen)
+	.short	0x0	; work cell: NakaWidget_Sdpart_12_AcStrRadioBox selected (AcStrRadioBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_13_AcStrRadioBox selected (AcStrRadioBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_14_AcStrRadioBox selected (AcStrRadioBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_15_AcStrRadioBox selected (AcStrRadioBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_16_AcStrRadioBox selected (AcStrRadioBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_17_AcStrRadioBox selected (AcStrRadioBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_18_AcStrRadioBox selected (AcStrRadioBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_19_AcStrRadioBox selected (AcStrRadioBox)
+	.long	0xffffffff	; work cell: NakaWidget_SdpartMain parent (Window)
+	.long	0xffffffff	; work cell: NakaWidget_SdpartMain child (Window)
+	.short	0x0	; work cell: NakaWidget_Sdpart_30_AcLswPartEditBox selected (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_30_AcLswPartEditBox data (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_31_AcLswPartEditBox selected (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_31_AcLswPartEditBox data (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_32_AcLswPartEditBox selected (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_32_AcLswPartEditBox data (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_33_AcLswPartEditBox selected (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_33_AcLswPartEditBox data (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_34_AcLswPartEditBox selected (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_34_AcLswPartEditBox data (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_36_AcLswPartEditBox selected (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_36_AcLswPartEditBox data (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_37_AcLswPartEditBox selected (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_37_AcLswPartEditBox data (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_38_AcLswPartEditBox selected (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_38_AcLswPartEditBox data (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_39_AcLswPartEditBox selected (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_39_AcLswPartEditBox data (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_40_AcLswPartEditBox selected (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_40_AcLswPartEditBox data (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_41_AcLswPartEditBox selected (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_41_AcLswPartEditBox data (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_42_AcVolPartEditBox selected (AcVolPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_42_AcVolPartEditBox data (AcVolPartEditBox)
+	.long	0xffffffff	; work cell: NakaWidget_SdpartVol parent (Window)
+	.long	0xffffffff	; work cell: NakaWidget_SdpartVol child (Window)
+	.short	0x1	; work cell: NakaWidget_Sdpart_46_AcVolPartEditBox selected (AcVolPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_46_AcVolPartEditBox data (AcVolPartEditBox)
+	.long	0xffffffff	; work cell: NakaWidget_SdpartPan parent (Window)
+	.long	0xffffffff	; work cell: NakaWidget_SdpartPan child (Window)
+	.short	0x1	; work cell: NakaWidget_Sdpart_49_AcLswPartEditBox selected (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_49_AcLswPartEditBox data (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_51_AcLswPartPan data (AcLswPartPan)
+	.long	0xffffffff	; work cell: NakaWidget_SdpartEff parent (Window)
+	.long	0xffffffff	; work cell: NakaWidget_SdpartEff child (Window)
+	.short	0x1	; work cell: NakaWidget_Sdpart_55_AcLswPartEditBox selected (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_55_AcLswPartEditBox data (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_56_AcLswPartEditBox selected (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_56_AcLswPartEditBox data (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_57_AcLswPartEditBox selected (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_57_AcLswPartEditBox data (AcLswPartEditBox)
+	.long	0xffffffff	; work cell: NakaWidget_SdpartSus parent (Window)
+	.long	0xffffffff	; work cell: NakaWidget_SdpartSus child (Window)
+	.short	0x1	; work cell: NakaWidget_Sdpart_62_AcLswPartEditBox selected (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_62_AcLswPartEditBox data (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_63_AcLswPartEditBox selected (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_63_AcLswPartEditBox data (AcLswPartEditBox)
+	.long	0xffffffff	; work cell: NakaWidget_SdpartKey parent (Window)
+	.long	0xffffffff	; work cell: NakaWidget_SdpartKey child (Window)
+	.short	0x1	; work cell: NakaWidget_Sdpart_66_AcLswPartEditBox selected (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_66_AcLswPartEditBox data (AcLswPartEditBox)
+	.long	0xffffffff	; work cell: NakaWidget_SdpartTun parent (Window)
+	.long	0xffffffff	; work cell: NakaWidget_SdpartTun child (Window)
+	.short	0x1	; work cell: NakaWidget_Sdpart_70_AcLswPartEditBox selected (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_70_AcLswPartEditBox data (AcLswPartEditBox)
+	.long	0xffffffff	; work cell: NakaWidget_SdpartBnd parent (Window)
+	.long	0xffffffff	; work cell: NakaWidget_SdpartBnd child (Window)
+	.short	0x1	; work cell: NakaWidget_Sdpart_74_AcLswPartEditBox selected (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_74_AcLswPartEditBox data (AcLswPartEditBox)
+	.long	0xffffffff	; work cell: NakaWidget_SdpartOth parent (Window)
+	.long	0xffffffff	; work cell: NakaWidget_SdpartOth child (Window)
+	.short	0x1	; work cell: NakaWidget_Sdpart_78_AcLswPartEditBox selected (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_78_AcLswPartEditBox data (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_79_AcLswPartEditBox selected (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_79_AcLswPartEditBox data (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_80_AcLswPartEditBox selected (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_80_AcLswPartEditBox data (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_82_AcLswPartEditBox selected (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_82_AcLswPartEditBox data (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_83_AcLswPartEditBox selected (AcLswPartEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdpart_83_AcLswPartEditBox data (AcLswPartEditBox)
+	.long	0xffffffff	; work cell: NakaWidget_Sdmtune window (TtlScreen)
+	.short	0x1	; work cell: NakaWidget_Sdmtune_1_AcLswEditBox selected (AcLswEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdmtune_1_AcLswEditBox data (AcLswEditBox)
+	.long	0xffffffff	; work cell: NakaWidget_Sdscltyp window (TtlScreen)
+	.short	0x1	; work cell: NakaWidget_SdscltypPage page (AcWindowPage)
+	.long	0xffffffff	; work cell: NakaWidget_Sdscltyp1 parent (Window)
+	.long	0xffffffff	; work cell: NakaWidget_Sdscltyp1 child (Window)
+	.short	0x1	; work cell: NakaWidget_ScalingType selected (AcLswEditBox)
+	.short	0x0	; work cell: NakaWidget_ScalingType data (AcLswEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdscltyp_8_AcLswEditBox selected (AcLswEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdscltyp_8_AcLswEditBox data (AcLswEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdscltyp_9_AcLswBox data (AcLswBox)
+	.short	0x0	; work cell: NakaWidget_Sdscltyp_10_AcLswEditBox selected (AcLswEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdscltyp_10_AcLswEditBox data (AcLswEditBox)
+	.long	0xffffffff	; work cell: NakaWidget_Sdscltyp2 parent (Window)
+	.long	0xffffffff	; work cell: NakaWidget_Sdscltyp2 child (Window)
+	.short	0x1	; work cell: NakaWidget_ScalingKey1 selected (AcLswEditBox)
+	.short	0x0	; work cell: NakaWidget_ScalingKey1 data (AcLswEditBox)
+	.short	0x0	; work cell: NakaWidget_ScalingKey2 selected (AcLswEditBox)
+	.short	0x0	; work cell: NakaWidget_ScalingKey2 data (AcLswEditBox)
+	.short	0x0	; work cell: NakaWidget_ScalingKey3 selected (AcLswEditBox)
+	.short	0x0	; work cell: NakaWidget_ScalingKey3 data (AcLswEditBox)
+	.short	0x0	; work cell: NakaWidget_ScalingKey4 selected (AcLswEditBox)
+	.short	0x0	; work cell: NakaWidget_ScalingKey4 data (AcLswEditBox)
+	.short	0x0	; work cell: NakaWidget_ScalingKey5 selected (AcLswEditBox)
+	.short	0x0	; work cell: NakaWidget_ScalingKey5 data (AcLswEditBox)
+	.short	0x0	; work cell: NakaWidget_ScalingKey6 selected (AcLswEditBox)
+	.short	0x0	; work cell: NakaWidget_ScalingKey6 data (AcLswEditBox)
+	.short	0x0	; work cell: NakaWidget_ScalingKey7 selected (AcLswEditBox)
+	.short	0x0	; work cell: NakaWidget_ScalingKey7 data (AcLswEditBox)
+	.short	0x0	; work cell: NakaWidget_ScalingKey8 selected (AcLswEditBox)
+	.short	0x0	; work cell: NakaWidget_ScalingKey8 data (AcLswEditBox)
+	.short	0x0	; work cell: NakaWidget_ScalingKey9 selected (AcLswEditBox)
+	.short	0x0	; work cell: NakaWidget_ScalingKey9 data (AcLswEditBox)
+	.short	0x0	; work cell: NakaWidget_ScalingKey10 selected (AcLswEditBox)
+	.short	0x0	; work cell: NakaWidget_ScalingKey10 data (AcLswEditBox)
+	.short	0x0	; work cell: NakaWidget_ScalingKey11 selected (AcLswEditBox)
+	.short	0x0	; work cell: NakaWidget_ScalingKey11 data (AcLswEditBox)
+	.short	0x0	; work cell: NakaWidget_ScalingKey12 selected (AcLswEditBox)
+	.short	0x0	; work cell: NakaWidget_ScalingKey12 data (AcLswEditBox)
+	.long	0xffffffff	; work cell: NakaWidget_Sdlfthld window (TtlScreen)
+	.short	0x1	; work cell: NakaWidget_Sdlfthld_2_AcLswEditBox selected (AcLswEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdlfthld_2_AcLswEditBox data (AcLswEditBox)
+	.long	0xffffffff	; work cell: NakaWidget_Sdmixer window (TtlScreen)
+	.short	0x1	; work cell: NakaWidget_Sdmixer_1_AcResetPage page (AcResetPage)
+	.long	0xffffffff	; work cell: NakaWidget_Sdtecd window (TtlScreen)
+	.short	0x1	; work cell: NakaWidget_SdtecdPage page (AcWindowPage)
+	.long	0xffffffff	; work cell: NakaWidget_Sdtecd1 parent (Window)
+	.long	0xffffffff	; work cell: NakaWidget_Sdtecd1 child (Window)
+	.short	0x0	; work cell: NakaWidget_TcClose selected (PsLabelBox)
+	.short	0x1	; work cell: NakaWidget_TcClose dialfocus (PsLabelBox)
+	.short	0x0	; work cell: NakaWidget_TcOpen1 selected (PsLabelBox)
+	.short	0x0	; work cell: NakaWidget_TcOpen1 dialfocus (PsLabelBox)
+	.short	0x0	; work cell: NakaWidget_TcOpen2 selected (PsLabelBox)
+	.short	0x0	; work cell: NakaWidget_TcOpen2 dialfocus (PsLabelBox)
+	.short	0x0	; work cell: NakaWidget_TcDuet1 selected (PsLabelBox)
+	.short	0x0	; work cell: NakaWidget_TcDuet1 dialfocus (PsLabelBox)
+	.short	0x0	; work cell: NakaWidget_TcDuet2 selected (PsLabelBox)
+	.short	0x0	; work cell: NakaWidget_TcDuet2 dialfocus (PsLabelBox)
+	.short	0x0	; work cell: NakaWidget_TcCountry selected (PsLabelBox)
+	.short	0x0	; work cell: NakaWidget_TcCountry dialfocus (PsLabelBox)
+	.short	0x0	; work cell: NakaWidget_TcTheatre selected (PsLabelBox)
+	.short	0x0	; work cell: NakaWidget_TcTheatre dialfocus (PsLabelBox)
+	.short	0x0	; work cell: NakaWidget_TcHymn selected (PsLabelBox)
+	.short	0x0	; work cell: NakaWidget_TcHymn dialfocus (PsLabelBox)
+	.short	0x0	; work cell: NakaWidget_TcBigBandBrass selected (PsLabelBox)
+	.short	0x0	; work cell: NakaWidget_TcBigBandBrass dialfocus (PsLabelBox)
+	.short	0x0	; work cell: NakaWidget_TcBigBandReeds selected (PsLabelBox)
+	.short	0x0	; work cell: NakaWidget_TcBigBandReeds dialfocus (PsLabelBox)
+	.short	0x0	; work cell: NakaWidget_TcOctave selected (PsLabelBox)
+	.short	0x0	; work cell: NakaWidget_TcOctave dialfocus (PsLabelBox)
+	.short	0x0	; work cell: NakaWidget_TcBlock selected (PsLabelBox)
+	.short	0x0	; work cell: NakaWidget_TcBlock dialfocus (PsLabelBox)
+	.short	0x0	; work cell: NakaWidget_TcHardRock selected (PsLabelBox)
+	.short	0x0	; work cell: NakaWidget_TcHardRock dialfocus (PsLabelBox)
+	.short	0x0	; work cell: NakaWidget_TcFanfare selected (PsLabelBox)
+	.short	0x0	; work cell: NakaWidget_TcFanfare dialfocus (PsLabelBox)
+	.long	0xffffffff	; work cell: NakaWidget_Sdtecd2 parent (Window)
+	.long	0xffffffff	; work cell: NakaWidget_Sdtecd2 child (Window)
+	.short	0x1	; work cell: NakaWidget_Sdtecd_27_AcLswEditBox selected (AcLswEditBox)
+	.short	0x0	; work cell: NakaWidget_Sdtecd_27_AcLswEditBox data (AcLswEditBox)
+	.long	0xffffffff	; work cell: NakaWidget_Sqmixer window (TtlScreen)
+	.short	0x1	; work cell: NakaWidget_Sqmixer_1_AcResetPage page (AcResetPage)
+	.long	0xffffffff	; work cell: NakaWidget_Demofeature window (AcFdemoScreen)
+	.short	0x0	; work cell: NakaWidget_Demofeature_1_AcPresentationBox selected (AcPresentationBox)
+	.long	0xffffffff	; work cell: NakaWidget_Demofeature1 parent (Window)
+	.long	0xffffffff	; work cell: NakaWidget_Demofeature1 child (Window)
+	.long	0xffffffff	; work cell: NakaWidget_Demofeature2 parent (Window)
+	.long	0xffffffff	; work cell: NakaWidget_Demofeature2 child (Window)
+	.short	0x0	; work cell: NakaWidget_Demofeature_7_AcPresentationBox selected (AcPresentationBox)
+	.long	0xffffffff	; work cell: NakaWidget_PlainScreen window (Screen)
+	.long	0xffffffff	; work cell: NakaWidget_PresentationControl parent (AcPresentationControl)
+	.long	0xffffffff	; work cell: NakaWidget_PresentationControl child (AcPresentationControl)
+	.long	0xffffffff	; work cell: NakaWidget_LoadingPresentation window (Screen)
+	.long	0xffffffff	; work cell: NakaWidget_Drawbar window (TtlScreen)
+	.short	0x0	; work cell: NakaWidget_DrawPerc4 onoff (AcIndexToggle)
+	.short	0x0	; work cell: NakaWidget_DrawPerc223 onoff (AcIndexToggle)
+	.short	0x0	; work cell: NakaWidget_DrawSetting onoff (AcDrawSetting)
+	.long	0xffffffff	; work cell: NakaWidget_Drawbar1 parent (Window)
+	.long	0xffffffff	; work cell: NakaWidget_Drawbar1 child (Window)
+	.long	0xffffffff	; work cell: NakaWidget_Drawbar2 parent (Window)
+	.long	0xffffffff	; work cell: NakaWidget_Drawbar2 child (Window)
+	.short	0x1	; work cell: NakaWidget_Drawbar_23_AcDrawEditBox selected (AcDrawEditBox)
+	.short	0x0	; work cell: NakaWidget_Drawbar_23_AcDrawEditBox data (AcDrawEditBox)
+	.short	0x0	; work cell: NakaWidget_Drawbar_24_AcDrawEditBox selected (AcDrawEditBox)
+	.short	0x0	; work cell: NakaWidget_Drawbar_24_AcDrawEditBox data (AcDrawEditBox)
+	.short	0x0	; work cell: NakaWidget_Drawbar_25_AcDrawEditBox selected (AcDrawEditBox)
+	.short	0x0	; work cell: NakaWidget_Drawbar_25_AcDrawEditBox data (AcDrawEditBox)
+	.short	0x0	; work cell: NakaWidget_Drawbar_26_AcDrawEditBox selected (AcDrawEditBox)
+	.short	0x0	; work cell: NakaWidget_Drawbar_26_AcDrawEditBox data (AcDrawEditBox)
+	.long	0xffffffff	; work cell: NakaWidget_DrawbarNorm parent (Window)
+	.long	0xffffffff	; work cell: NakaWidget_DrawbarNorm child (Window)
+	.short	0x0	; work cell: NakaWidget_DrawTremolo onoff (AcIndexToggle)
+	.long	0xffffffff	; work cell: NakaWidget_DrawbarSndE parent (Window)
+	.long	0xffffffff	; work cell: NakaWidget_DrawbarSndE child (Window)
+	.short	0x0	; work cell: NakaWidget_Drawbar_40_AcTitleMenu selected (AcTitleMenu)
+	.long	0xffffffff	; work cell: NakaWidget_Accordion window (Screen)
+	.long	0xffffffff	; work cell: NakaWidget_Accordion1 parent (Window)
+	.long	0xffffffff	; work cell: NakaWidget_Accordion1 child (Window)
+	.short	0x0	; work cell: NakaWidget_Accordion_12_AcIndexToggle onoff (AcIndexToggle)
+	.short	0x0	; work cell: NakaWidget_Accordion_13_AcIndexToggle onoff (AcIndexToggle)
+	.short	0x0	; work cell: NakaWidget_Accordion_14_AcAccordionTab onoff (AcAccordionTab)
+	.short	0x0	; work cell: NakaWidget_Accordion_15_AcAccordionTab onoff (AcAccordionTab)
+	.short	0x0	; work cell: NakaWidget_Accordion_16_AcAccordionTab onoff (AcAccordionTab)
+	.short	0x0	; work cell: NakaWidget_Accordion_17_AcAccordionTab onoff (AcAccordionTab)
+	.short	0x0	; work cell: NakaWidget_Accordion_18_AcAccordionTab onoff (AcAccordionTab)
+	.short	0x0	; work cell: NakaWidget_Accordion_19_AcAccordionTab onoff (AcAccordionTab)
+	.short	0x0	; work cell: NakaWidget_Accordion_20_AcAccordionTab onoff (AcAccordionTab)
+	.short	0x0	; work cell: NakaWidget_Accordion_21_AcAccordionTab onoff (AcAccordionTab)
+	.long	0xffffffff	; work cell: NakaWidget_Accordion2 parent (Window)
+	.long	0xffffffff	; work cell: NakaWidget_Accordion2 child (Window)
+	.short	0x0	; work cell: NakaWidget_Accordion_26_AcIndexToggle onoff (AcIndexToggle)
+	.short	0x0	; work cell: NakaWidget_Accordion_27_AcIndexToggle onoff (AcIndexToggle)
+	.short	0x0	; work cell: NakaWidget_Accordion_28_AcAccordionTab onoff (AcAccordionTab)
+	.short	0x0	; work cell: NakaWidget_Accordion_29_AcAccordionTab onoff (AcAccordionTab)
+	.short	0x0	; work cell: NakaWidget_Accordion_30_AcAccordionTab onoff (AcAccordionTab)
+	.short	0x0	; work cell: NakaWidget_Accordion_31_AcAccordionTab onoff (AcAccordionTab)
+	.short	0x0	; work cell: NakaWidget_Accordion_32_AcAccordionTab onoff (AcAccordionTab)
+	.short	0x0	; work cell: NakaWidget_Accordion_33_AcAccordionTab onoff (AcAccordionTab)
+	.short	0x0	; work cell: NakaWidget_Accordion_34_AcAccordionTab onoff (AcAccordionTab)
+	.short	0x0	; work cell: NakaWidget_Accordion_35_AcAccordionTab onoff (AcAccordionTab)
+	.long	0xffffffff	; work cell: NakaWidget_Mesage window (IvScreen)
+	.long	0xffffffff	; work cell: NakaWidget_Completed parent (Window)
+	.long	0xffffffff	; work cell: NakaWidget_Completed child (Window)
+	.long	0xffffffff	; work cell: NakaWidget_Reminder parent (Window)
+	.long	0xffffffff	; work cell: NakaWidget_Reminder child (Window)
+	.long	0xffffffff	; work cell: NakaWidget_Error parent (Window)
+	.long	0xffffffff	; work cell: NakaWidget_Error child (Window)
+	.long	0xffffffff	; work cell: NakaWidget_Other parent (Window)
+	.long	0xffffffff	; work cell: NakaWidget_Other child (Window)
+	.long	0xffffffff	; work cell: NakaWidget_CheckMessage parent (Window)
+	.long	0xffffffff	; work cell: NakaWidget_CheckMessage child (Window)
+	.long	0x0	; work cell: NakaWidget_Mesage_17_AcRamBox data (AcRamBox)
+	.long	0x0	; work cell: NakaWidget_Mesage_18_AcRamBox data (AcRamBox)
+	.long	0xffffffff	; work cell: NakaWidget_NoMessage parent (Window)
+	.long	0xffffffff	; work cell: NakaWidget_NoMessage child (Window)
+	.long	0x43	; work cell: NakaWidget_Mesage_21_AcRamBox data (AcRamBox)
+	.long	0xffffffff	; work cell: NakaWidget_PleaseWait parent (Window)
+	.long	0xffffffff	; work cell: NakaWidget_PleaseWait child (Window)
+	.long	0xffffffff	; work cell: NakaWidget_Welcom window (AcWelcomScreen)
+	.long	0xffffffff	; work cell: NakaWidget_AllInitial window (Screen)
+	.long	0xffffffff	; work cell: NakaWidget_Softver window (TtlScreen)
+	.short	0x0	; work cell: NakaWidget_MainProgram selected (PsEditBox)
+	.short	0x0	; work cell: NakaWidget_MainTable selected (PsEditBox)
+	.short	0x0	; work cell: NakaWidget_SubProgram selected (PsEditBox)
+	.short	0x0	; work cell: NakaWidget_SoundTable selected (PsEditBox)
 LswLeftHold_OnOffStrPtrs:	.incbin "includes/generated/naka_sequencer_channels.bin", 0xC48, 0x8
 ; IvSdpart_PartNameStrPtrs -- 30 x uint32_t: part-name strings (" RIGHT 1 " ... "  RHYTHM  ", blank) indexed
 ; by IvSdpart_PartRow; IvSdpart_ShowHide / _Refresh / scrolling send the selected one with EVT_PARA_DRAW

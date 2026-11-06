@@ -860,14 +860,22 @@ East_ResNameTable_318:
 ; [nakarest] naka_midi_reverb+0x4378  +0x4378..+0x439c (0xe5a1b0, 36 B)
 ; [nakarest] name strings, entries 0-11 of ResName slot 0x318 (table 0xe5a17a, 12 entries,
 ; [nakarest] InitializeEast) (names for Viewable slot 0x18): "", "", "", "", "", "", ....
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xcc, 0xa1, 0xe5, 0x00, 0xca, 0xa1, 0xe5, 0x00
-	.byte	0xc8, 0xa1, 0xe5, 0x00, 0xc6, 0xa1, 0xe5, 0x00
-	.byte	0xc4, 0xa1, 0xe5, 0x00, 0xc2, 0xa1, 0xe5, 0x00
-	.byte	0xc0, 0xa1, 0xe5, 0x00, 0xbe, 0xa1, 0xe5, 0x00
-	.byte	0xbc, 0xa1, 0xe5, 0x00, 0xba, 0xa1, 0xe5, 0x00
-	.byte	0xb8, 0xa1, 0xe5, 0x00, 0xb6, 0xa1, 0xe5, 0x00
-	.byte	0xb4, 0xa1, 0xe5, 0x00, 0x00, 0xff
+	.long	East_ResNameTable_318 + 76
+	.long	East_ResNameTable_318 + 74
+	.long	East_ResNameTable_318 + 72
+	.long	East_ResNameTable_318 + 70
+	.long	East_ResNameTable_318 + 68
+	.long	East_ResNameTable_318 + 66
+	.long	East_ResNameTable_318 + 64
+	.long	East_ResNameTable_318 + 62
+	.long	East_ResNameTable_318 + 60
+	.long	East_ResNameTable_318 + 58
+	.long	East_ResNameTable_318 + 56
+	.long	ResName_ReverbPreset_11_AcStrRadioBox
+	.long	East_ResNameTable_318_EndStr
+East_ResNameTable_318_EndStr:
+	aligned_string ""
+ResName_ReverbPreset_11_AcStrRadioBox:
 	.incbin "includes/generated/naka_midi_reverb.bin", 0x4378, 0x24
 ; [nakarest] naka_midi_reverb+0x439c  +0x439c..+0x43d2 (0xe5a1d4, 54 B)
 ; [nakarest] the table itself: ResName slot 0x319 (table 0xe5a1d4, 12 entries, InitializeEast),
@@ -877,14 +885,22 @@ East_ResNameTable_319:
 ; [nakarest] name strings, entries 0-11 of ResName slot 0x319 (table 0xe5a1d4, 12 entries,
 ; [nakarest] InitializeEast) (names for Viewable slot 0x19): "EqOnOffBox", "", "", "", "", "",
 ; [nakarest] ....
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x30, 0xa2, 0xe5, 0x00, 0x2e, 0xa2, 0xe5, 0x00
-	.byte	0x2c, 0xa2, 0xe5, 0x00, 0x2a, 0xa2, 0xe5, 0x00
-	.byte	0x28, 0xa2, 0xe5, 0x00, 0x26, 0xa2, 0xe5, 0x00
-	.byte	0x24, 0xa2, 0xe5, 0x00, 0x22, 0xa2, 0xe5, 0x00
-	.byte	0x20, 0xa2, 0xe5, 0x00, 0x1e, 0xa2, 0xe5, 0x00
-	.byte	0x1c, 0xa2, 0xe5, 0x00, 0x10, 0xa2, 0xe5, 0x00
-	.byte	0x0e, 0xa2, 0xe5, 0x00, 0x00, 0xff
+	.long	East_ResNameTable_319 + 86
+	.long	East_ResNameTable_319 + 84
+	.long	East_ResNameTable_319 + 82
+	.long	East_ResNameTable_319 + 80
+	.long	East_ResNameTable_319 + 78
+	.long	East_ResNameTable_319 + 76
+	.long	East_ResNameTable_319 + 74
+	.long	East_ResNameTable_319 + 72
+	.long	East_ResNameTable_319 + 70
+	.long	East_ResNameTable_319 + 68
+	.long	East_ResNameTable_319 + 66
+	.long	ResName_EqOnOffBox
+	.long	East_ResNameTable_319_EndStr
+East_ResNameTable_319_EndStr:
+	aligned_string ""
+ResName_EqOnOffBox:
 	.incbin "includes/generated/naka_midi_reverb.bin", 0x43D2, 0x30
 ; [nakarest] naka_midi_reverb+0x4402  +0x4402..+0x4438 (0xe5a23a, 54 B)
 ; [nakarest] the table itself: ResName slot 0x31a (table 0xe5a23a, 12 entries, InitializeEast),
@@ -894,14 +910,22 @@ East_ResNameTable_31A:
 ; [nakarest] name strings, entries 0-11 of ResName slot 0x31a (table 0xe5a23a, 12 entries,
 ; [nakarest] InitializeEast) (names for Viewable slot 0x1a): "", "RevEqOnOffBox", "", "", "",
 ; [nakarest] "", ....
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x98, 0xa2, 0xe5, 0x00, 0x96, 0xa2, 0xe5, 0x00
-	.byte	0x94, 0xa2, 0xe5, 0x00, 0x92, 0xa2, 0xe5, 0x00
-	.byte	0x90, 0xa2, 0xe5, 0x00, 0x8e, 0xa2, 0xe5, 0x00
-	.byte	0x8c, 0xa2, 0xe5, 0x00, 0x8a, 0xa2, 0xe5, 0x00
-	.byte	0x88, 0xa2, 0xe5, 0x00, 0x86, 0xa2, 0xe5, 0x00
-	.byte	0x78, 0xa2, 0xe5, 0x00, 0x76, 0xa2, 0xe5, 0x00
-	.byte	0x74, 0xa2, 0xe5, 0x00, 0x00, 0xff
+	.long	East_ResNameTable_31A + 88
+	.long	East_ResNameTable_31A + 86
+	.long	East_ResNameTable_31A + 84
+	.long	East_ResNameTable_31A + 82
+	.long	East_ResNameTable_31A + 80
+	.long	East_ResNameTable_31A + 78
+	.long	East_ResNameTable_31A + 76
+	.long	East_ResNameTable_31A + 74
+	.long	East_ResNameTable_31A + 72
+	.long	East_ResNameTable_31A + 70
+	.long	East_ResNameTable_31A + 56
+	.long	ResName_ReverbEqualizerPreset_11_IvCatchEvent
+	.long	East_ResNameTable_31A_EndStr
+East_ResNameTable_31A_EndStr:
+	aligned_string ""
+ResName_ReverbEqualizerPreset_11_IvCatchEvent:
 	.incbin "includes/generated/naka_midi_reverb.bin", 0x4438, 0x38
 ; [nakarest] naka_midi_reverb+0x4470  +0x4470..+0x44c6 (0xe5a2a8, 86 B)
 ; [nakarest] the table itself: ResName slot 0x350 (table 0xe5a2a8, 20 entries, InitializeEast),

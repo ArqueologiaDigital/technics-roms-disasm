@@ -223,19 +223,25 @@ ChordTypeStr_Type02:		aligned_string "7    "
 ChordTypeStr_Type01:		aligned_string "     "
 ChordTypeStr_Type00:		aligned_string "     "
 SeqChanContainer_ChordTypeRef_A:
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x84, 0x01, 0xed, 0x00, 0x80, 0x01, 0xed, 0x00
-	.byte	0x7a, 0x01, 0xed, 0x00
+	.long	SeqChanContainer_ChordTypeRef_A_Str0
+	.long	SeqChanContainer_ChordTypeRef_A_Str1
+	.long	SeqChanContainer_ChordTypeRef_A_Str2
 	.byte	0x76, 0x01, 0xed, 0x00, 0x70, 0x01, 0xed, 0x00, 0x6c, 0x01, 0xed, 0x00, 0x68, 0x01, 0xed, 0x00
 	.byte	0x62, 0x01, 0xed, 0x00, 0x5e, 0x01, 0xed, 0x00, 0x58, 0x01, 0xed, 0x00, 0x54, 0x01, 0xed, 0x00
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x4e, 0x01, 0xed, 0x00, 0x4a, 0x01, 0xed, 0x00
-	.byte	0x46, 0x01, 0xed, 0x00, 0x42, 0x01, 0xed, 0x00
-	.byte	0x3e, 0x01, 0xed, 0x00
+	.long	SeqChanContainer_ChordTypeRef_A_Str11
+	.long	SeqChanContainer_ChordTypeRef_A_Str12
+	.long	SeqChanContainer_ChordTypeRef_A_Str13
+	.long	SeqChanContainer_ChordTypeRef_A_Str14
+	.long	SeqChanContainer_ChordTypeRef_A_Str15
+SeqChanContainer_ChordTypeRef_A_Str15:
 	.byte 0x20, 0x20, 0x00, 0xff
+SeqChanContainer_ChordTypeRef_A_Str14:
 	.byte 0x20, 0x20, 0x00, 0xff
+SeqChanContainer_ChordTypeRef_A_Str13:
 	.byte 0x20, 0x20, 0x00, 0xff
+SeqChanContainer_ChordTypeRef_A_Str12:
 	.byte 0x42, 0x20, 0x00, 0xff
+SeqChanContainer_ChordTypeRef_A_Str11:
 	aligned_string "B~a0"
 	aligned_string "A "
 	aligned_string "A~a0"
@@ -246,8 +252,11 @@ SeqChanContainer_ChordTypeRef_A:
 	aligned_string "E "
 	aligned_string "E~a0"
 	.byte 0x44, 0x20, 0x00, 0xff
+SeqChanContainer_ChordTypeRef_A_Str2:
 	.byte 0x44, 0x7e, 0x61, 0x30, 0x00, 0xff
+SeqChanContainer_ChordTypeRef_A_Str1:
 	.byte 0x43, 0x20, 0x00, 0xff
+SeqChanContainer_ChordTypeRef_A_Str0:
 	.byte 0x20, 0x20, 0x00, 0xff
 SeqChanContainer_ChordTypeRef_B:
 	.long	NoteStr0_Blank_3
@@ -1459,8 +1468,7 @@ Toshi_ApFunctionName_Table:
 	.long FuncNameStr_PmemExpLngCheck
 	.long FuncNameStr_NullTerm
 FuncNameStr_NullTerm:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0xff
+	aligned_string ""
 FuncNameStr_PmemExpLngCheck:	aligned_string "PmemExpLngCheck"
 FuncNameStr_PmemNormLngCheck:	aligned_string "PmemNormLngCheck"
 FuncNameStr_CtlIniLngCheck:	aligned_string "CtlIniLngCheck"
@@ -1523,21 +1531,35 @@ NakaParam_VariScreen:
 	.long NakaParam_VariScreen_Empty	; NormScreen: 0 variables
 NakaParam_VariScreen_Empty:
 	aligned_string ""
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x1e, 0x20, 0xed, 0x00, 0x18, 0x20, 0xed, 0x00
-	.byte	0x0e, 0x20, 0xed, 0x00, 0x08, 0x20, 0xed, 0x00
-	.byte	0x02, 0x20, 0xed, 0x00, 0xfa, 0x1f, 0xed, 0x00
-	.byte	0xf2, 0x1f, 0xed, 0x00, 0xea, 0x1f, 0xed, 0x00
-	.byte	0xe2, 0x1f, 0xed, 0x00, 0xe0, 0x1f, 0xed, 0x00
-	.byte	0x00, 0xff
+	.long	NakaClass_VariScreen_PropName_func
+	.long	NakaClass_VariScreen_PropName_font
+	.long	NakaClass_VariScreen_PropName_fontcolor
+	.long	NakaClass_VariScreen_PropName_page
+	.long	NakaClass_VariScreen_PropName_part
+	.long	NakaClass_VariScreen_PropName_varisu
+	.long	NakaClass_VariScreen_PropName_nowswno
+	.long	NakaClass_VariScreen_PropName_nowvari
+	.long	NakaClass_VariScreen_PropName_oldvari
+	.long	NakaClass_VariScreen_PropName_End
+NakaClass_VariScreen_PropName_End:
+	aligned_string ""
+NakaClass_VariScreen_PropName_oldvari:
 	.asciz	"oldvari"
+NakaClass_VariScreen_PropName_nowvari:
 	.asciz	"nowvari"
+NakaClass_VariScreen_PropName_nowswno:
 	.asciz	"nowswno"
+NakaClass_VariScreen_PropName_varisu:
 	aligned_string "varisu"
+NakaClass_VariScreen_PropName_part:
 	aligned_string "part"
+NakaClass_VariScreen_PropName_page:
 	aligned_string "page"
+NakaClass_VariScreen_PropName_fontcolor:
 	.asciz	"fontcolor"
+NakaClass_VariScreen_PropName_font:
 	aligned_string "font"
+NakaClass_VariScreen_PropName_func:
 	aligned_string "func"
 NakaParam_RVariScreen:
 	.long ClassVar_VariScreen_func	; VariScreen: 9 variables
@@ -1567,8 +1589,7 @@ ClassVar_VariScreen_func:	aligned_string "func"
 ; port: v7's label ParamStr_Table_09 is not in v6 -- no v6 bytes correspond to what it named
 	.long ParamStr09_Empty
 ParamStr09_Empty:
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0x00, 0xff
+	aligned_string ""
 ; port: v7's label ParamStr09_oldvari is not in v6 -- no v6 bytes correspond to what it named
 ; port: v7's label ParamStr09_nowvari is not in v6 -- no v6 bytes correspond to what it named
 ; port: v7's label ParamStr09_nowswno is not in v6 -- no v6 bytes correspond to what it named

@@ -1000,28 +1000,47 @@ Cheap_ResNameTable_360:	.incbin "includes/generated/naka_disk_menu_file_io.bin",
 ; [nakarest] the table itself: ResName slot 0x361 (table 0xea7228, 128 entries,
 ; [nakarest] InitializeCheap), 128 entry pointers x 4 bytes.
 Cheap_ResNameTable_361:
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0xa8, 0x74, 0xea, 0x00, 0x9a, 0x74, 0xea, 0x00
-	.byte	0x98, 0x74, 0xea, 0x00, 0x96, 0x74, 0xea, 0x00
-	.byte	0x94, 0x74, 0xea, 0x00, 0x92, 0x74, 0xea, 0x00
-	.byte	0x90, 0x74, 0xea, 0x00, 0x84, 0x74, 0xea, 0x00
-	.byte	0x82, 0x74, 0xea, 0x00, 0x80, 0x74, 0xea, 0x00
-	.byte	0x7e, 0x74, 0xea, 0x00, 0x7c, 0x74, 0xea, 0x00
-	.byte	0x7a, 0x74, 0xea, 0x00, 0x78, 0x74, 0xea, 0x00
-	.byte	0x76, 0x74, 0xea, 0x00, 0x74, 0x74, 0xea, 0x00
-	.byte	0x72, 0x74, 0xea, 0x00, 0x70, 0x74, 0xea, 0x00
-	.byte	0x6e, 0x74, 0xea, 0x00, 0x6c, 0x74, 0xea, 0x00
-	.byte	0x60, 0x74, 0xea, 0x00, 0x5e, 0x74, 0xea, 0x00
-	.byte	0x5c, 0x74, 0xea, 0x00, 0x5a, 0x74, 0xea, 0x00
-	.byte	0x58, 0x74, 0xea, 0x00, 0x56, 0x74, 0xea, 0x00
-	.byte	0x54, 0x74, 0xea, 0x00, 0x52, 0x74, 0xea, 0x00
-	.byte	0x50, 0x74, 0xea, 0x00, 0x4e, 0x74, 0xea, 0x00
-	.byte	0x4c, 0x74, 0xea, 0x00, 0x4a, 0x74, 0xea, 0x00
-	.byte	0x48, 0x74, 0xea, 0x00, 0x46, 0x74, 0xea, 0x00
-	.byte	0x44, 0x74, 0xea, 0x00, 0x42, 0x74, 0xea, 0x00
-	.byte	0x40, 0x74, 0xea, 0x00, 0x3e, 0x74, 0xea, 0x00
-	.byte	0x3c, 0x74, 0xea, 0x00, 0x3a, 0x74, 0xea, 0x00
-	.byte	0x38, 0x74, 0xea, 0x00
+	.long	NakaWidget_DiskLoad_41_Label_Name + 114
+	.long	NakaWidget_DiskLoad_41_Label_Name + 100
+	.long	NakaWidget_DiskLoad_41_Label_Name + 98
+	.long	NakaWidget_DiskLoad_41_Label_Name + 96
+	.long	NakaWidget_DiskLoad_41_Label_Name + 94
+	.long	NakaWidget_DiskLoad_41_Label_Name + 92
+	.long	NakaWidget_DiskLoad_41_Label_Name + 90
+	.long	NakaWidget_DiskLoad_41_Label_Name + 78
+	.long	NakaWidget_DiskLoad_41_Label_Name + 76
+	.long	NakaWidget_DiskLoad_41_Label_Name + 74
+	.long	NakaWidget_DiskLoad_41_Label_Name + 72
+	.long	NakaWidget_DiskLoad_41_Label_Name + 70
+	.long	NakaWidget_DiskLoad_41_Label_Name + 68
+	.long	NakaWidget_DiskLoad_41_Label_Name + 66
+	.long	NakaWidget_DiskLoad_41_Label_Name + 64
+	.long	NakaWidget_DiskLoad_41_Label_Name + 62
+	.long	NakaWidget_DiskLoad_41_Label_Name + 60
+	.long	NakaWidget_DiskLoad_41_Label_Name + 58
+	.long	NakaWidget_DiskLoad_41_Label_Name + 56
+	.long	NakaWidget_DiskLoad_41_Label_Name + 54
+	.long	NakaWidget_DiskLoad_41_Label_Name + 42
+	.long	NakaWidget_DiskLoad_41_Label_Name + 40
+	.long	NakaWidget_DiskLoad_41_Label_Name + 38
+	.long	NakaWidget_DiskLoad_41_Label_Name + 36
+	.long	NakaWidget_DiskLoad_41_Label_Name + 34
+	.long	NakaWidget_DiskLoad_41_Label_Name + 32
+	.long	NakaWidget_DiskLoad_41_Label_Name + 30
+	.long	NakaWidget_DiskLoad_41_Label_Name + 28
+	.long	NakaWidget_DiskLoad_41_Label_Name + 26
+	.long	NakaWidget_DiskLoad_41_Label_Name + 24
+	.long	NakaWidget_DiskLoad_41_Label_Name + 22
+	.long	NakaWidget_DiskLoad_41_Label_Name + 20
+	.long	NakaWidget_DiskLoad_41_Label_Name + 18
+	.long	NakaWidget_DiskLoad_41_Label_Name + 16
+	.long	NakaWidget_DiskLoad_41_Label_Name + 14
+	.long	NakaWidget_DiskLoad_41_Label_Name + 12
+	.long	NakaWidget_DiskLoad_41_Label_Name + 10
+	.long	NakaWidget_DiskLoad_41_Label_Name + 8
+	.long	NakaWidget_DiskLoad_41_Label_Name + 6
+	.long	NakaWidget_DiskLoad_41_Label_Name + 4
+	.long	NakaWidget_DiskLoad_41_Label_Name + 2
 	.long NakaWidget_DiskLoad_41_Label_Name
 	.long NakaWidget_DiskLoad_42_Label_Name
 	.long NakaWidget_DiskLoad_43_Label_Name
@@ -1195,74 +1214,221 @@ Cheap_ResNameTable_367:
 ; [nakarest] naka_disk_menu_file_io+0x6418  +0x6418..+0x641e (0xea77e4, 6 B)
 ; [nakarest] the table itself: ResName slot 0x36a (table 0xea77e4, 0 entries, InitializeCheap),
 ; [nakarest] 0 entry pointers x 4 bytes.
-; TODO(port): v6 bytes with no v7 line -- disassemble
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0xc6, 0x76, 0xea, 0x00, 0xb8, 0x76, 0xea, 0x00
-	.byte	0xb6, 0x76, 0xea, 0x00, 0xb4, 0x76, 0xea, 0x00
-	.byte	0xb2, 0x76, 0xea, 0x00, 0xb0, 0x76, 0xea, 0x00
-	.byte	0xae, 0x76, 0xea, 0x00, 0xa2, 0x76, 0xea, 0x00
-	.byte	0xa0, 0x76, 0xea, 0x00, 0x9e, 0x76, 0xea, 0x00
-	.byte	0x9c, 0x76, 0xea, 0x00, 0x9a, 0x76, 0xea, 0x00
-	.byte	0x98, 0x76, 0xea, 0x00, 0x96, 0x76, 0xea, 0x00
-	.byte	0x94, 0x76, 0xea, 0x00, 0x92, 0x76, 0xea, 0x00
-	.byte	0x90, 0x76, 0xea, 0x00, 0x8e, 0x76, 0xea, 0x00
-	.byte	0x8c, 0x76, 0xea, 0x00, 0x8a, 0x76, 0xea, 0x00
-	.byte	0x88, 0x76, 0xea, 0x00
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x7c, 0x76, 0xea, 0x00, 0x7a, 0x76, 0xea, 0x00
-	.byte	0x78, 0x76, 0xea, 0x00, 0x76, 0x76, 0xea, 0x00
-	.byte	0x74, 0x76, 0xea, 0x00, 0x72, 0x76, 0xea, 0x00
-	.byte	0x70, 0x76, 0xea, 0x00, 0x6e, 0x76, 0xea, 0x00
-	.byte	0x6c, 0x76, 0xea, 0x00, 0x6a, 0x76, 0xea, 0x00
-	.byte	0x68, 0x76, 0xea, 0x00, 0x66, 0x76, 0xea, 0x00
-	.byte	0x64, 0x76, 0xea, 0x00, 0x62, 0x76, 0xea, 0x00
-	.byte	0x60, 0x76, 0xea, 0x00, 0x5e, 0x76, 0xea, 0x00
-	.byte	0x5c, 0x76, 0xea, 0x00, 0x5a, 0x76, 0xea, 0x00
-	.byte	0x58, 0x76, 0xea, 0x00, 0x56, 0x76, 0xea, 0x00
-	.byte	0x54, 0x76, 0xea, 0x00, 0x52, 0x76, 0xea, 0x00
-	.byte	0x50, 0x76, 0xea, 0x00, 0x4e, 0x76, 0xea, 0x00
-	.byte	0x4c, 0x76, 0xea, 0x00, 0x4a, 0x76, 0xea, 0x00
-	.byte	0x48, 0x76, 0xea, 0x00, 0x46, 0x76, 0xea, 0x00
-	.byte	0x44, 0x76, 0xea, 0x00
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x42, 0x76, 0xea, 0x00, 0x40, 0x76, 0xea, 0x00
-	.byte	0x3e, 0x76, 0xea, 0x00, 0x3c, 0x76, 0xea, 0x00
-	.byte	0x3a, 0x76, 0xea, 0x00, 0x38, 0x76, 0xea, 0x00
-	.byte	0x36, 0x76, 0xea, 0x00, 0x34, 0x76, 0xea, 0x00
-	.byte	0x32, 0x76, 0xea, 0x00, 0x30, 0x76, 0xea, 0x00
-	.byte	0x2e, 0x76, 0xea, 0x00, 0x22, 0x76, 0xea, 0x00
-	.byte	0x20, 0x76, 0xea, 0x00, 0x1e, 0x76, 0xea, 0x00
-	.byte	0x1c, 0x76, 0xea, 0x00
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x1a, 0x76, 0xea, 0x00, 0x18, 0x76, 0xea, 0x00
-	.byte	0x16, 0x76, 0xea, 0x00, 0x14, 0x76, 0xea, 0x00
-	.byte	0x12, 0x76, 0xea, 0x00, 0x10, 0x76, 0xea, 0x00
-	.byte	0x0e, 0x76, 0xea, 0x00, 0x00, 0xff, 0x00, 0xff
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff
+	.long	ResName_DiskSave
+	.long	ResName_DiskSavePage
+	.long	ResName_DiskSave_2_IvPageControl
+	.long	ResName_DiskSave_3_IvPageControl
+	.long	ResName_DiskSave_4_IvPageControl
+	.long	ResName_DiskSave_5_IvExit
+	.long	ResName_DiskSave_6_IvMainEditSw
+	.long	ResName_DiskSaveP1
+	.long	ResName_DiskSave_8_AcIndexWideES
+	.long	ResName_DiskSave_9_AcIndexEditSw
+	.long	ResName_DiskSave_10_AcIndexEditSw
+	.long	ResName_DiskSave_11_AcParaStrBox
+	.long	ResName_DiskSave_12_Label
+	.long	ResName_DiskSave_13_AcParaStrBox
+	.long	ResName_DiskSave_14_AcTitleMenu
+	.long	ResName_DiskSave_15_PsFileNameBox
+	.long	ResName_DiskSave_16_AcIndexEditSw
+	.long	ResName_DiskSave_17_Label
+	.long	ResName_DiskSave_18_AcFileSfxBox
+	.long	ResName_DiskSave_19_IvCatchEvent
+	.long	ResName_DiskSave_20_VwScreenTitle
+	.long	ResName_DiskSaveP2
+	.long	ResName_DiskSave_22_VwBox
+	.long	ResName_DiskSave_23_Label
+	.long	ResName_DiskSave_24_Label
+	.long	ResName_DiskSave_25_Label
+	.long	ResName_DiskSave_26_Label
+	.long	ResName_DiskSave_27_Label
+	.long	ResName_DiskSave_28_Label
+	.long	ResName_DiskSave_29_Label
+	.long	ResName_DiskSave_30_Label
+	.long	ResName_DiskSave_31_PsFileNameBox
+	.long	ResName_DiskSave_32_Line
+	.long	ResName_DiskSave_33_AcIndexEditSw
+	.long	ResName_DiskSave_34_Label
+	.long	ResName_DiskSave_35_AcParaStrBox
+	.long	ResName_DiskSave_36_Label
+	.long	ResName_DiskSave_37_AcIndexEditSw
+	.long	ResName_DiskSave_38_Label
+	.long	ResName_DiskSave_39_AcIndexEditSw
+	.long	ResName_DiskSave_40_Label
+	.long	ResName_DiskSave_41_AcIndexEditSw
+	.long	ResName_DiskSave_42_Label
+	.long	ResName_DiskSave_43_IvCatchEvent
+	.long	ResName_DiskSave_44_AcIndexEditSw
+	.long	ResName_DiskSave_45_Label
+	.long	ResName_DiskSave_46_AcIndexEditSw
+	.long	ResName_DiskSave_47_AcIndexEditSw
+	.long	ResName_DiskSave_48_AcIndexEditSw
+	.long	ResName_DiskSave_49_AcIndexEditSw
+	.long	ResName_DiskSave_50_AcIndexEditSw
+	.long	ResName_DiskSave_51_AcIndexEditSw
+	.long	ResName_DiskSave_52_Label
+	.long	ResName_DiskSave_53_Label
+	.long	ResName_DiskSave_54_Label
+	.long	ResName_DiskSave_55_Label
+	.long	ResName_DiskSave_56_Label
+	.long	ResName_DiskSave_57_Label
+	.long	ResName_DiskSave_58_VwScreenTitle
+	.long	ResName_DiskSave_59_AcIndexEditSw
+	.long	ResName_DiskSave_60_Label
+	.long	ResName_DiskSaveP3
+	.long	ResName_DiskSave_62_PsFileNameBox
+	.long	ResName_DiskSave_63_AcIndexWideES
+	.long	ResName_DiskSave_64_AcIndexEditSw
+	.long	ResName_DiskSave_65_AcParaStrBox
+	.long	ResName_DiskSave_66_Label
+	.long	ResName_DiskSave_67_Label
+	.long	ResName_DiskSave_68_Label
+	.long	ResName_DiskSave_69_VwScreenTitle
+	.long	ResName_DiskSave_70_IvCatchEvent
+	.long	Cheap_ResNameTable_367_EndStr
+Cheap_ResNameTable_367_EndStr:
+	aligned_string ""
+ResName_DiskSave_70_IvCatchEvent:
+	aligned_string ""
+ResName_DiskSave_69_VwScreenTitle:
+	aligned_string ""
+ResName_DiskSave_68_Label:
+	aligned_string ""
+ResName_DiskSave_67_Label:
+	aligned_string ""
+ResName_DiskSave_66_Label:
+	aligned_string ""
+ResName_DiskSave_65_AcParaStrBox:
+	aligned_string ""
+ResName_DiskSave_64_AcIndexEditSw:
+	aligned_string ""
+ResName_DiskSave_63_AcIndexWideES:
+	aligned_string ""
+ResName_DiskSave_62_PsFileNameBox:
+	aligned_string ""
+ResName_DiskSaveP3:
 	aligned_string "DiskSaveP3"
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff
+ResName_DiskSave_60_Label:
+	aligned_string ""
+ResName_DiskSave_59_AcIndexEditSw:
+	aligned_string ""
+ResName_DiskSave_58_VwScreenTitle:
+	aligned_string ""
+ResName_DiskSave_57_Label:
+	aligned_string ""
+ResName_DiskSave_56_Label:
+	aligned_string ""
+ResName_DiskSave_55_Label:
+	aligned_string ""
+ResName_DiskSave_54_Label:
+	aligned_string ""
+ResName_DiskSave_53_Label:
+	aligned_string ""
+ResName_DiskSave_52_Label:
+	aligned_string ""
+ResName_DiskSave_51_AcIndexEditSw:
+	aligned_string ""
+ResName_DiskSave_50_AcIndexEditSw:
+	aligned_string ""
+ResName_DiskSave_49_AcIndexEditSw:
+	aligned_string ""
+ResName_DiskSave_48_AcIndexEditSw:
+	aligned_string ""
+ResName_DiskSave_47_AcIndexEditSw:
+	aligned_string ""
+ResName_DiskSave_46_AcIndexEditSw:
+	aligned_string ""
+ResName_DiskSave_45_Label:
+	aligned_string ""
+ResName_DiskSave_44_AcIndexEditSw:
+	aligned_string ""
+ResName_DiskSave_43_IvCatchEvent:
+	aligned_string ""
+ResName_DiskSave_42_Label:
+	aligned_string ""
+ResName_DiskSave_41_AcIndexEditSw:
+	aligned_string ""
+ResName_DiskSave_40_Label:
+	aligned_string ""
+ResName_DiskSave_39_AcIndexEditSw:
+	aligned_string ""
+ResName_DiskSave_38_Label:
+	aligned_string ""
+ResName_DiskSave_37_AcIndexEditSw:
+	aligned_string ""
+ResName_DiskSave_36_Label:
+	aligned_string ""
+ResName_DiskSave_35_AcParaStrBox:
+	aligned_string ""
+ResName_DiskSave_34_Label:
+	aligned_string ""
+ResName_DiskSave_33_AcIndexEditSw:
+	aligned_string ""
+ResName_DiskSave_32_Line:
+	aligned_string ""
+ResName_DiskSave_31_PsFileNameBox:
+	aligned_string ""
+ResName_DiskSave_30_Label:
+	aligned_string ""
+ResName_DiskSave_29_Label:
+	aligned_string ""
+ResName_DiskSave_28_Label:
+	aligned_string ""
+ResName_DiskSave_27_Label:
+	aligned_string ""
+ResName_DiskSave_26_Label:
+	aligned_string ""
+ResName_DiskSave_25_Label:
+	aligned_string ""
+ResName_DiskSave_24_Label:
+	aligned_string ""
+ResName_DiskSave_23_Label:
+	aligned_string ""
+ResName_DiskSave_22_VwBox:
+	aligned_string ""
+ResName_DiskSaveP2:
 	aligned_string "DiskSaveP2"
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff
-	.byte	0x00, 0xff
+ResName_DiskSave_20_VwScreenTitle:
+	aligned_string ""
+ResName_DiskSave_19_IvCatchEvent:
+	aligned_string ""
+ResName_DiskSave_18_AcFileSfxBox:
+	aligned_string ""
+ResName_DiskSave_17_Label:
+	aligned_string ""
+ResName_DiskSave_16_AcIndexEditSw:
+	aligned_string ""
+ResName_DiskSave_15_PsFileNameBox:
+	aligned_string ""
+ResName_DiskSave_14_AcTitleMenu:
+	aligned_string ""
+ResName_DiskSave_13_AcParaStrBox:
+	aligned_string ""
+ResName_DiskSave_12_Label:
+	aligned_string ""
+ResName_DiskSave_11_AcParaStrBox:
+	aligned_string ""
+ResName_DiskSave_10_AcIndexEditSw:
+	aligned_string ""
+ResName_DiskSave_9_AcIndexEditSw:
+	aligned_string ""
+ResName_DiskSave_8_AcIndexWideES:
+	aligned_string ""
+ResName_DiskSaveP1:
 	aligned_string "DiskSaveP1"
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x00, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff
-	.byte	0x00, 0xff
+ResName_DiskSave_6_IvMainEditSw:
+	aligned_string ""
+ResName_DiskSave_5_IvExit:
+	aligned_string ""
+ResName_DiskSave_4_IvPageControl:
+	aligned_string ""
+ResName_DiskSave_3_IvPageControl:
+	aligned_string ""
+ResName_DiskSave_2_IvPageControl:
+	aligned_string ""
+ResName_DiskSavePage:
 	aligned_string "DiskSavePage"
+ResName_DiskSave:
 	aligned_string "DiskSave"
 Cheap_ResNameTable_36A:	.incbin "includes/generated/naka_disk_menu_file_io.bin", 0x6418, 0x6
 ; [nakarest] naka_disk_menu_file_io+0x641e  +0x641e..+0x6478 (0xea77ea, 90 B)
@@ -1277,18 +1443,27 @@ Cheap_ResNameTable_36B:	.incbin "includes/generated/naka_disk_menu_file_io.bin",
 ; [nakarest] the table itself: ResName slot 0x36c (table 0xea7878, 83 entries, InitializeCheap),
 ; [nakarest] 83 entry pointers x 4 bytes.
 Cheap_ResNameTable_36C:
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0xa4, 0x79, 0xea, 0x00, 0xa2, 0x79, 0xea, 0x00
-	.byte	0xa0, 0x79, 0xea, 0x00, 0x9e, 0x79, 0xea, 0x00
-	.byte	0x9c, 0x79, 0xea, 0x00, 0x9a, 0x79, 0xea, 0x00
-	.byte	0x98, 0x79, 0xea, 0x00, 0x96, 0x79, 0xea, 0x00
-	.byte	0x94, 0x79, 0xea, 0x00, 0x92, 0x79, 0xea, 0x00
-	.byte	0x90, 0x79, 0xea, 0x00, 0x8e, 0x79, 0xea, 0x00
-	.byte	0x8c, 0x79, 0xea, 0x00, 0x8a, 0x79, 0xea, 0x00
-	.byte	0x88, 0x79, 0xea, 0x00, 0x86, 0x79, 0xea, 0x00
-	.byte	0x84, 0x79, 0xea, 0x00, 0x82, 0x79, 0xea, 0x00
-	.byte	0x80, 0x79, 0xea, 0x00, 0x7e, 0x79, 0xea, 0x00
-	.byte	0x7c, 0x79, 0xea, 0x00
+	.long	NakaWidget_DiskSmfDirectPlay_21_IvOneShotTimer_Name + 42
+	.long	NakaWidget_DiskSmfDirectPlay_21_IvOneShotTimer_Name + 40
+	.long	NakaWidget_DiskSmfDirectPlay_21_IvOneShotTimer_Name + 38
+	.long	NakaWidget_DiskSmfDirectPlay_21_IvOneShotTimer_Name + 36
+	.long	NakaWidget_DiskSmfDirectPlay_21_IvOneShotTimer_Name + 34
+	.long	NakaWidget_DiskSmfDirectPlay_21_IvOneShotTimer_Name + 32
+	.long	NakaWidget_DiskSmfDirectPlay_21_IvOneShotTimer_Name + 30
+	.long	NakaWidget_DiskSmfDirectPlay_21_IvOneShotTimer_Name + 28
+	.long	NakaWidget_DiskSmfDirectPlay_21_IvOneShotTimer_Name + 26
+	.long	NakaWidget_DiskSmfDirectPlay_21_IvOneShotTimer_Name + 24
+	.long	NakaWidget_DiskSmfDirectPlay_21_IvOneShotTimer_Name + 22
+	.long	NakaWidget_DiskSmfDirectPlay_21_IvOneShotTimer_Name + 20
+	.long	NakaWidget_DiskSmfDirectPlay_21_IvOneShotTimer_Name + 18
+	.long	NakaWidget_DiskSmfDirectPlay_21_IvOneShotTimer_Name + 16
+	.long	NakaWidget_DiskSmfDirectPlay_21_IvOneShotTimer_Name + 14
+	.long	NakaWidget_DiskSmfDirectPlay_21_IvOneShotTimer_Name + 12
+	.long	NakaWidget_DiskSmfDirectPlay_21_IvOneShotTimer_Name + 10
+	.long	NakaWidget_DiskSmfDirectPlay_21_IvOneShotTimer_Name + 8
+	.long	NakaWidget_DiskSmfDirectPlay_21_IvOneShotTimer_Name + 6
+	.long	NakaWidget_DiskSmfDirectPlay_21_IvOneShotTimer_Name + 4
+	.long	NakaWidget_DiskSmfDirectPlay_21_IvOneShotTimer_Name + 2
 	.long NakaWidget_DiskSmfDirectPlay_21_IvOneShotTimer_Name
 	.long NakaWidget_DiskSmfDirectPlay_22_Label_Name
 	.long NakaWidget_DiskSmfDirectPlay_23_Label_Name
