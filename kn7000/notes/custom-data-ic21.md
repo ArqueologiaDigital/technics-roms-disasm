@@ -109,6 +109,22 @@ records of 0x8E bytes at `+0x1A7` (`CustomVoiceRecFetch`; 0x27 + 384 + 128 x 0x8
 It sits in `03custm3` slot 7 and is a user drum kit (header name "User Kit"; voice names such as
 "Electric SD", "Snare Drum 2", "Silent" for unused keys).
 
+**The block is a TABLE tone** (lane kn7000-research2, 2026-11-06; `CSOUND_HEAD` in
+`src/customdata/customdata.inc`).  For a part whose sound is the custom kit (bank kind 0x19,
+941 `0x48448D4D`) `func_4844A413` returns the block, and the tone library stores it as the part's tone
+record (tone block `0x500CE404 + part * 0x130`, library `0x4C0390E8`), the pointer `TgPartToneDescPtr`
+returns.  So the 0x27-byte header is a tone record's head: the 16-character name, the class `+0x10`
+= 0x40 (TABLE, the class `TgNoteOn` 0x4C036832 sends to `TgNoteOnTableTone`), then 22 bytes.  It is
+byte for byte the head of 20 of the table flash's 52 TABLE tones (its kits), Standard Kit1 among them
+(`custom-data-ic21-probes/kit_tone_census.py`).  `TgNoteOnTableTone` 0x4C03600D reads the 3-byte
+entry at `+0x27 + note * 3`, so the 128 references are **one per MIDI note**.  It also tests the voice
+record's `+0x0D`: bit 0 stages layer 0 and bit 2 layer 1.  The user kit's 128 records hold 0x01 (121),
+0x05 (3) and 0x21 (4), and the archive's 1,618 records hold the same values plus 0x25.  The head's `+0x11`
+is the **key map**: `func_48449462` reads tone record `+0x11` (through `func_484495E8`), and when it is
+below 7 it maps a played key through one of the seven tables `func_48449462_Records`.  This happens
+only when M3 0x2025 is 1, for `KeyZoneNoteResolve` 0x484516EC.  The factory kits use 0..6, and the User
+Kit uses 1, like Standard Kit1.  The other 21 head bytes have no traced reader.
+
 **Voice records** (`kn7000/src/include/voice_record.inc`). The 0x8E-byte record of the tone
 generator's voice-resource banks, the same unit `VoiceRecFetchBanked` 0x484496C9 returns and
 `TgPartLocalEditRecPtr` 0x4C00C2C8 shadows: a 16-byte header (13-byte name; `+0x0D` picks the
@@ -403,7 +419,14 @@ State after lane ic21-rest (2026-10-31):
 - Not closed by this lane (firmware tracing still to do; no blocker): the panel-memory fields named only
   by their parameter id (`m<id>`), see `notes/data-semantics-2026-10-29/kn67-field-names.md`; the voice
   record's single fields beyond those `voice_record.inc` names, and the custom-sound block's 0x27-byte
-  header; nine of the pad record's thirteen setting bytes.  (Status 2026-11-06, lane kn7000-research: the
+  header; nine of the pad record's thirteen setting bytes.  (Status 2026-11-06, lane kn7000-research2:
+  the header is a TABLE tone head, class `+0x10` and key map `+0x11` traced, 21 bytes unread; the
+  references are per note; the voice record's `+0x0D` bits 0 / 2 enable the two layers; section "The
+  slot record".  The voice record's sub-record and element bytes that `voice_record.inc` leaves by
+  offset are still to trace.  Next step: the TABLE voice's staged record keeps the sub-record at
+  `+0x3C`, the element at `+0x40` and the parameter record at `+0x44` (`TgTableToneStage`).  Follow
+  `TgPitchZoneFold`, `TgVoiceRoutePtrCalc` and `TgTableKeyOffProgram` for the class-0x40 path.  Check in
+  MAME by loading `03custm3` (CUSTOM slot 7), playing its kit, and breaking on `TgTableToneStage`.)  (Status 2026-11-06, lane kn7000-research: the
 pad record's `+0x13`, `+0x18`, `+0x19` and `+0x1A` are traced, section "TPAD"; the TCMP variation
   bytes `+0x00..+0x02` and `+0x18` / `+0x19`, the style record's `+0x70` and the reader of the part
   set-up are traced, section "The TCMP style container"; the macros in `src/customdata/customdata.inc`

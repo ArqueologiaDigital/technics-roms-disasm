@@ -15,7 +15,7 @@
 .equ SD_SPI_DATA, 0x9805000C             # the SPI shift register: a byte written goes out, the byte that came in is read back
 .equ SD_SPI_CLOCK, 0x9805000E            # the SPI clock-rate latch: rate | 0x80
 .equ TGA_INIT, 0x98050010                # [INFERENCE] tone generator A's start-up strobe: program 941's TgChipResetSideA writes 1 three times before it sets the key FIFO; SdSpiPortSetup writes 1 once, this ROM having no tone generator bring-up of its own
-.equ SD_POWER_CTRL, 0x98060000           # the power controller's port (SdPowerShadow keeps the last byte): bit 2 the SD card's supply
+.equ SD_POWER_CTRL, 0x98060000           # the sound-control latch IC25 (74AHC174; service manual MAIN 1/5 sheet 2), SdPowerShadow keeps the last byte: bit 0 USB.WAITM, bit 1 SPSW (the headphone / speaker switch), bit 2 SDMODE (to the SD board; read before as the SD card's supply), bits 3 / 4 / 5 the D/A converter IC311's ML / MC / MDI (kn7000/notes/audio-mute-probes/README.md); the name is the earlier reading's
 .equ BOARD_STRAP, 0x98070000             # board-revision strap, read only
 .equ LCDC, 0x9CC00000                    # the LCD controller's registers
 .equ LCDC_MISC, 0x9CC00001

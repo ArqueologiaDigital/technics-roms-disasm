@@ -15,10 +15,15 @@ private romsets. Run from this directory:
 | `panel_memory_map.py` | the writer's field-map tables; do the stored one-touch settings follow them (masks, 941 tails, KN6000 part 3)?                                                             | `python3 -I panel_memory_map.py ../../baserom/kn7000_program.rom $R/*.ic21 $K6`                                                        |
 | `residue_cover.py`    | how much of the residue repeats a typed record, is a whole stream or record, parses as events, or is left opaque?                                                          | `python3 -I notes/custom-data-ic21-probes/residue_cover.py baserom/customdata/*.ic21` (from `kn7000/`)                                 |
 | `tcmp_var_fields.py`  | which values do the TCMP variation bytes +0x00..+0x02, +0x18/+0x19, the part set-ups' bytes 15..23 and the style record's +0x70 take (their readers are in its docstring)? | `python3 -I notes/custom-data-ic21-probes/tcmp_var_fields.py build/customdata/*.ic21` (from `kn7000/`, after `make verify-customdata`) |
+| `kit_tone_census.py`  | is the custom-sound block's header a TABLE tone head like the table flash's kits, and which values does a voice record's `+0x0D` (TgNoteOnTableTone's layer bits) take?    | `python3 -I notes/custom-data-ic21-probes/kit_tone_census.py` (from `kn7000/`)                                                         |
 | `zlib104_drv.c`       | does zlib 1.0.4 itself reproduce an `.AST` payload (Python's zlib 1.3.1 does not)?                                                                                         | below                                                                                                                                  |
 
 What each prints, as measured 2026-10-29 (`tcmp_var_fields.py` 2026-11-06):
 
+- `kit_tone_census.py` (2026-11-06): 8 distinct TABLE heads over the archive's 52 kits; the CUSTOM User Kit's
+  is the 20-kit group of Standard Kit1 (`40 01 0f 03 40 05 00 ... 40 20 00 50`); `+0x11` (the key map) takes 0..6.
+  Voice record `+0x0D`: archive 1,618 records 0x01 1,320 / 0x05 135 / 0x21 146 / 0x25 17; User Kit 128 records
+  0x01 121 / 0x05 3 / 0x21 4.
 - `tcmp_var_fields.py`: 3,600 variation records, 28,800 part set-ups; `+0x00` 0 in 2,553 (0x58 in
   465), `+0x01` 0 in 2,611, `+0x02` 0 in all; `+0x18/+0x19` `ffff` in 3,380 (then `ff04` 81, `ff02` 37,
   `02ff` 31, ...); part set-up bytes 15..23 all zero (28,800 differ from the default template);

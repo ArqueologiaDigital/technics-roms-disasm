@@ -109,12 +109,13 @@ any code path this emulation runs.  [INFERENCE] It comes from something the driv
 the candidates are a hardware mute tied to the SD card access (GPIO 0x36008004 bit 1 is the only line
 the screen's opening moves that the home screen does not), the GPIO strobes 0x36008024 / 0x36008064
 (the driver's note: "strobe/select the sub-CPUs"), or tone-generator / DSP behaviour that differs from
-the emulation.  Next step, outside this repository's code: a measurement on the instrument (which stage goes quiet:
-the TG output or the DAC), or the service manual's schematics (`~/compartilhado/KN7000/service_manual/
-technics_sx-kn7000_keyboard.pdf`: a MUTE line on connector CN506 to the amplifier, pages 122-123; MUTE on
-the ACP / FAJ board, pages 126-127; the MUTE pin on pages 118-119 is IC406 PCM1734's, the D/A converter
-beside the USB audio lines, probably not the main path) traced to the CPU line that drives them, then a
-MAME watch of that line on this screen.
+the emulation.  **Followed up 2026-11-06 (lane kn7000-research2, `../audio-mute-probes/README.md`):** the
+schematics' MUTE line (CN506 pin 1, the +15PM rail that biases the power amplifiers) is switched by the
+PMUT net, CPU pin 148 = P04 (0x36008004) bit 2; the speaker / headphone switch SPSW and the D/A
+converter's mode port hang on the latch at 0x98060000.  The firmware moves PMUT only at reset, at the end
+of the boot and in the NMI handler, and in MAME none of the three lines changes on SD PICTURE LOAD (941
+and 893).  So no mute line makes the silence either; what is left needs the instrument (that README,
+section 4).
 
 ## N-e411f8fa / N-4b34dd8b: the APC / SEQUENCER VOLUME slider
 
