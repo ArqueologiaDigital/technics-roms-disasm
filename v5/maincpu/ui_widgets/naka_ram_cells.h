@@ -8,7 +8,8 @@
  * address a record's field holds; the cell's initial value is the C member of that name.
  * v5 addresses: the cell names are v10's, and each address is where v5's own
  * Boot_InitWorkRAM puts that cell (gen_naka_gui_headers.py ram_mapper: the nearest label both
- * trees define inside the image, symbols/maincpu_v5_symbols_reference.txt).
+ * trees define inside the image, symbols/maincpu_v5_symbols_reference.txt, or the tree's own
+ * `; work cell:` line for the cell, asm_cell_anchors).
  */
 
 #ifndef NAKA_RAM_CELLS_H
@@ -994,12 +995,12 @@
 #define RAM_PleaseWait_Child                                 0x0003E900u
 #define RAM_Welcom_Window                                    0x0003E904u
 #define RAM_AllInitial_Window                                0x0003E908u
-#define RAM_MPVersion_Window                                 0x0003E90Cu
-#define RAM_Softver_Window                                   0x0003E910u
-#define RAM_MainProgram_Selected                             0x0003E914u
-#define RAM_MainTable_Selected                               0x0003E916u
-#define RAM_SubProgram_Selected                              0x0003E918u
-#define RAM_SoundTable_Selected                              0x0003E91Au
+#define RAM_MPVersion_Window                                 0x0003E90Cu  /* not in this tree's work-RAM image: no work-cell line of the tree is this cell */
+#define RAM_Softver_Window                                   0x0003E90Cu
+#define RAM_MainProgram_Selected                             0x0003E910u
+#define RAM_MainTable_Selected                               0x0003E912u
+#define RAM_SubProgram_Selected                              0x0003E914u
+#define RAM_SoundTable_Selected                              0x0003E916u
 #define RAM_LswLeftHold_OnOffStrPtrs                         0x0003E918u
 #define RAM_IvSdpart_PartNameStrPtrs                         0x0003E920u
 #define RAM_IvSdpart_CurrentPage                             0x0003E998u

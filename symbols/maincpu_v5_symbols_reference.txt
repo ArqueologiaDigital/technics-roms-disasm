@@ -5,9 +5,9 @@
 # scripts/analysis/l2_symbol_reference.py --regen
 # Do not hand-edit: rename in the sources and regenerate.
 #
-#   symbols .................. 54,159
-#   semantic names ........... 53,837 (99.4%)
-#   positional names ......... 322
+#   symbols .................. 54,158
+#   semantic names ........... 53,835 (99.4%)
+#   positional names ......... 323
 #
 LED_patterns_indicating_firmware_version 00E00000
 LED_patterns_firmware_v8_plus 00E00008
@@ -702,7 +702,7 @@ NakaWidget_sectr3 00E0D17C
 NakaWidget_secopy 00E0D19E
 NakaWidget_sewrtmem 00E0D1C0
 NakaWidget_sewrtsnd 00E0D1E2
-Scoop_ViewableTable_020 00E0D204
+GUI_DisplayStructData_0x226 00E0D204
 Scoop_ViewableTable_021 00E0D20C
 Scoop_ViewableTable_022 00E0D214
 Scoop_ViewableTable_023 00E0D21C
@@ -4099,7 +4099,6 @@ NakaWidget_Perf3ModernBluegrass 00E23F68
 NakaWidget_Perf3StyleSel 00E23FB0
 NakaWidget_Perf3SoundSel 00E23FE6
 NakaWidget_Perf3RhythmSel 00E2401C
-NakaWidget_Perf3RhythmSel_Tail 00E2403E
 NakaWidget_Perf3RhythmSel_StrOff 00E24046
 NakaWidget_Perf3RhythmSel_StrOn 00E2404E
 NakaHdr_Perf2MeasureBoxData 00E24056
@@ -51170,27 +51169,27 @@ AudioInit_ClearAuxVoiceFlag 00FDE384
 AudioInit_CheckReverbFlag 00FDE38E
 AudioInit_ClearReverbFlag 00FDE399
 Audio_CheckInitStatus 00FDE3A4
-AudioInit_NoPlayTracks 00FDE3CB
-AudioInit_CheckRecTracks 00FDE3D1
-AudioInit_NoRecTracks 00FDE3E7
+AudioInit_ClearStatusBit8 00FDE3CB
+AudioInit_CheckGroupB_Presence 00FDE3D1
+AudioInit_ClearStatusBit9 00FDE3E7
 AudioInit_ChannelLoop_Init 00FDE3ED
 AudioInit_ChannelLoop_Body 00FDE3F5
 AudioInit_ChannelLoop_Body_Skip 00FDE431
 AudioInit_ChannelLoop_Body_Skip2 00FDE439
 AudioInit_CheckVoiceChanged 00FDE462
 AudioInit_VoiceUnchanged 00FDE48B
-AudioInit_CheckPlayTrack 00FDE4AC
-AudioInit_PlayTrack_Apc 00FDE51D
-AudioInit_PlayTrack_OtherAssign 00FDE562
-AudioInit_PlayTrack_NoAuxMapping 00FDE5BD
-AudioInit_PlayTrack_DefaultMapping 00FDE5D0
-AudioInit_PlayTrack_NoSecondary 00FDE624
+AudioInit_CheckGroupA 00FDE4AC
+AudioInit_GroupA_TypeE 00FDE51D
+AudioInit_GroupA_OtherType 00FDE562
+AudioInit_GroupA_NoAuxMapping 00FDE5BD
+AudioInit_GroupA_DefaultMapping 00FDE5D0
+AudioInit_GroupA_NoSecondary 00FDE624
 AudioInit_StoreChannelMapping 00FDE635
-AudioInit_CheckRecTrack 00FDE648
-AudioInit_RecTrack_CheckType 00FDE680
-AudioInit_RecTrack_Apc 00FDE6D8
-AudioInit_RecTrack_Rhythm 00FDE71C
-AudioInit_RecTrack_OtherAssign 00FDE742
+AudioInit_CheckGroupB_Channel 00FDE648
+AudioInit_GroupB_CheckType 00FDE680
+AudioInit_GroupB_TypeE 00FDE6D8
+AudioInit_GroupB_Type10 00FDE71C
+AudioInit_GroupB_DefaultMapping 00FDE742
 AudioInit_ChannelLoop_Next 00FDE77E
 AudioInit_ChannelLoop_Done 00FDE78C
 AudioInit_SetChangedFlag 00FDE798

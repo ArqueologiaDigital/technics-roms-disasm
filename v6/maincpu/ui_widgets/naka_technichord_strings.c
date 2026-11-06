@@ -2060,16 +2060,8 @@ typedef struct __attribute__((packed)) {
     char EditSw_code[10];
     char Fdm1_name[6];
     char Fdm2_str[6];
-    uint8_t pad_2052[2];  /* zero padding */
-    uint16_t field_19a66;
-    uint16_t field_19a68;
-    uint32_t ChordTypeStr_Flat9_Flat13_ptr;
-    uint16_t field_19a6e;
-    uint16_t field_19a70;
-    uint16_t field_19a72;
-    uint16_t field_19a74;
-    uint16_t field_19a76;
-    uint16_t field_19a78;
+    /* AcPresentationControlProc_CaseTable: 11 u16 case offsets of a compiled switch; the asm spells them `.short <Case> - <Base>` (scripts/converters/naka_case_tables_retype.py) */
+    uint16_t AcPresentationControlProc_CaseTable[11];
     uint32_t DemoDisk_LangPromptTable[6];  /* 6 pointers */
     char UntukMemulaiSuatuDemo_str[162];
     char Italian_str[8];
@@ -6401,25 +6393,10 @@ const naka_technichord_strings_t naka_technichord_strings_data
 
     .Fdm2_str = ALIGNED_STRING("Fdm2"),
 
-    .pad_2052 = { 0 },
-
-    .field_19a66 = 0x0128,
-
-    .field_19a68 = 0x0128,
-
-    .ChordTypeStr_Flat9_Flat13_ptr = NAKA_ADDR(ChordTypeStr_Flat9_Flat13),
-
-    .field_19a6e = 0x001D,
-
-    .field_19a70 = 0x001D,
-
-    .field_19a72 = 0x001D,
-
-    .field_19a74 = 0x0128,
-
-    .field_19a76 = 0x0124,
-
-    .field_19a78 = 0x0124,
+    .AcPresentationControlProc_CaseTable = {
+        0x0000, 0x0128, 0x0128, 0x002C, 0x00ED, 0x001D, 0x001D, 0x001D,
+        0x0128, 0x0124, 0x0124,
+    },
 
     .DemoDisk_LangPromptTable = {
         SELF(ToStartingAnExternal_str_3),

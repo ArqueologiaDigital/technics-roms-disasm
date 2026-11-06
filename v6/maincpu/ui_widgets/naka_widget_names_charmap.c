@@ -6724,7 +6724,7 @@ const naka_widget_names_charmap_t naka_widget_names_charmap_data
         .color = CL_Green,
         .border = BD_Single1,
         .exit = TITLE_PS,
-        .window = 0x0003F0A8,
+        .window = RAM_PanelSimulator_Window,
     },
 
     .NakaDbg_PanelSimBitmap = {

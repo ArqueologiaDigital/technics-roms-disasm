@@ -351,6 +351,9 @@ def do_regen(tree, need_dir):
         for i in range(len(need)):
             if not mask[i]:
                 need[i] = raw[i] if i < len(raw) else 0
+        # a bin whose C now compiles shorter (a record's head moved into the asm) keeps no unplaced tail
+        if len(need) > len(raw) and not any(mask[len(raw):]):
+            del need[len(raw):]
         e = entry(raw, bytes(need))
         old = len(d[name].get('raw', {}))
         if e is None:
