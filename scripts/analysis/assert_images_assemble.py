@@ -58,9 +58,10 @@ IMAGES = [
     ("v7/maincpu",   "v7/maincpu/kn5000_v7_program.s"),
     ("v6/maincpu",   "v6/maincpu/kn5000_v6_program.s"),
     ("v5/maincpu",   "v5/maincpu/kn5000_v5_program.s"),
-    ("v142/subcpu",  "v142/subcpu/kn5000_subprogram_v142.s"),
-    ("v141/subcpu",  "v141/subcpu/kn5000_subprogram_v141.s"),
-    ("v140/subcpu",  "v140/subcpu/kn5000_subprogram_v140.s"),
+    # the sub-CPU payloads' kernel is the SX-WSA1R's shared wsa1/kernel/kernel.s (2026-11-06)
+    ("v142/subcpu",  "v142/subcpu/kn5000_subprogram_v142.s", (), ("-I", "wsa1/kernel")),
+    ("v141/subcpu",  "v141/subcpu/kn5000_subprogram_v141.s", (), ("-I", "wsa1/kernel")),
+    ("v140/subcpu",  "v140/subcpu/kn5000_subprogram_v140.s", (), ("-I", "wsa1/kernel")),
     ("subcpu/boot",  "subcpu/boot/kn5000_subcpu_boot.s"),
     ("hdae5000",     "hdae5000/hd-ae5000_v2_06i.s"),
     # v2.01i takes what it does not hold itself from hdae5000/, through a second -I

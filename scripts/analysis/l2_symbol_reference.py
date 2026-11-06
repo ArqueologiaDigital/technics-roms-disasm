@@ -77,6 +77,15 @@ POSITIONAL = [re.compile(p) for p in (
     r'_0x[0-9A-Fa-f]+$', r'_[0-9A-F]{4,}$', r'^LABEL_', r'^(loc|sub|unk)_', r'^\.L')]
 
 
+# The shared kernel's per-CPU constants (wsa1/kernel/kernel_*.inc, KERNEL_UPPER_CASE) are equates,
+# not labels.  On the WSA1 they are absolute ('a', skipped below like every equate); the KN5000
+# sub-CPU's kernel_kn5000_subcpu.inc defines five of them as label expressions
+# (KERNEL_SEMA_COUNT_IMAGE = TaskSched_SemaphoreInit, ...), which the ELF then carries as text
+# symbols aliasing a label that already has its name.  They are dropped too (2026-11-06,
+# lane open9/kernel-a3): one name per address.
+KERNEL_EQUATE = re.compile(r'^KERNEL_[A-Z0-9_]+$')
+
+
 def elf_symbols(elf):
     out = subprocess.run([NM, "--defined-only", elf], capture_output=True, text=True, cwd=ROOT)
     if out.returncode != 0:
@@ -84,7 +93,7 @@ def elf_symbols(elf):
     syms = []
     for line in out.stdout.split("\n"):
         f = line.split()
-        if len(f) == 3 and f[1] in ("t", "T"):
+        if len(f) == 3 and f[1] in ("t", "T") and not KERNEL_EQUATE.match(f[2]):
             syms.append((int(f[0], 16), f[2]))
     return sorted(syms)
 

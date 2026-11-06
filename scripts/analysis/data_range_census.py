@@ -88,7 +88,8 @@ ANCHOR_SLACK = 6
 # so their lines are mapped like the tree's; a line of one is named by its path relative to
 # the tree (`../hdae5000/shared/...`).  `defsym` (v8): the --defsym the Makefile passes.
 # v6, v5, v8, v140 and the three older HD-AE5000 versions were added on 2026-10-31 (lane
-# hdae-ledgers); before that the census measured thirteen images.
+# hdae-ledgers); before that the census measured thirteen images.  The three sub-CPU payloads take
+# wsa1/kernel/ (kernel.s, the kernel they share with both SX-WSA1R CPUs) since 2026-11-06.
 IMAGES = [
     dict(key="v10", title="KN5000 maincpu v10", mirror="v10/maincpu",
          root="kn5000_v10_program.s", ld="maincpu.ld", incs=[""],
@@ -113,18 +114,18 @@ IMAGES = [
          root="kn5000_v5_program.s", ld="maincpu.ld", incs=[""],
          rom="original_ROMs/kn5000_v5_program.rom", base=0xE00000, size=2097152),
     dict(key="v142", title="KN5000 subcpu payload v1.42", mirror="v142/subcpu",
-         root="kn5000_subprogram_v142.s", ld="subcpu.ld", incs=[""],
+         root="kn5000_subprogram_v142.s", ld="subcpu.ld", incs=[""], xmirrors=["wsa1/kernel"],
          rom="original_ROMs/kn5000_subprogram_v142.rom", base=0x0400, size=196608,
          split=(256, 60416)),
     # v1.41 is generated from the v1.42 tree (scripts/generators/create_v141_subcpu_source.py)
     # and has the same layout and splice.
     dict(key="v141", title="KN5000 subcpu payload v1.41", mirror="v141/subcpu",
-         root="kn5000_subprogram_v141.s", ld="subcpu.ld", incs=[""],
+         root="kn5000_subprogram_v141.s", ld="subcpu.ld", incs=[""], xmirrors=["wsa1/kernel"],
          rom="original_ROMs/kn5000_subprogram_v141.rom", base=0x0400, size=196608,
          split=(256, 60416)),
     # v1.40 is generated from the v1.41 tree (scripts/generators/create_v140_subcpu_source.py).
     dict(key="v140", title="KN5000 subcpu payload v1.40", mirror="v140/subcpu",
-         root="kn5000_subprogram_v140.s", ld="subcpu.ld", incs=[""],
+         root="kn5000_subprogram_v140.s", ld="subcpu.ld", incs=[""], xmirrors=["wsa1/kernel"],
          rom="original_ROMs/kn5000_subprogram_v140.rom", base=0x0400, size=196608,
          split=(256, 60416)),
     dict(key="subboot", title="KN5000 subcpu boot IC30", mirror="subcpu/boot",

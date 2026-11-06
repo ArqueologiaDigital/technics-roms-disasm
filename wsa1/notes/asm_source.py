@@ -113,6 +113,55 @@ def image_files(root, primary):
     return out
 
 
+# ---------------------------------------------------------------------------
+# ★ ONE KERNEL SOURCE, THREE PROCESSORS (2026-11-06, lane open9/kernel-a3)
+# ---------------------------------------------------------------------------
+# kernel/kernel.s is also the KN5000 sub-CPU's kernel now, and the text only
+# that processor runs sits in `.if KERNEL_KN5000` blocks (`.else` = the WSA1
+# text; `.if KERNEL_KN5000 == 0` = WSA1 only).  The assembler never sees the
+# inactive branch; a text tool must not either, or every census over prom_a and
+# prom_c would count the KN5000's instructions and labels as theirs.
+# cpu_view() is that filter.  ⚠ It BLANKS the inactive lines (and the
+# KERNEL_KN5000 directives) instead of dropping them, so a line number in the
+# view is a line number in the file.  Any other conditional passes through.
+_KCOND = re.compile(r'^\s*\.if\s+KERNEL_KN5000\s*(==\s*0\s*)?$')
+# kernel.s pulls in include/tlcs900_mem_ops.inc under `.ifndef KERNEL_MEM_OPS_PROVIDED`;
+# kernel_kn5000_subcpu.inc always defines that symbol, so the KN5000 view drops the block
+_KMEMOPS = re.compile(r'^\s*\.ifndef\s+KERNEL_MEM_OPS_PROVIDED\s*$')
+_OTHER_IF = re.compile(r'^\s*\.if(n?def|n?eq|ne|ge|gt|le|lt|b|nb|c|nc)?\b')
+
+
+def cpu_view(lines, kn5000=False):
+    """The lines one processor's build assembles, inactive KERNEL_KN5000 branches blanked."""
+    out, stack = [], []          # stack entries: [is_kernel_cond, active]
+    for ln in lines:
+        s = ln.strip()
+        if kn5000 and _KMEMOPS.match(ln):
+            stack.append([True, False])
+            out.append("")
+            continue
+        m = _KCOND.match(ln)
+        if m:
+            stack.append([True, (m.group(1) is None) == bool(kn5000)])
+            out.append("")
+            continue
+        if s == ".else" and stack and stack[-1][0]:
+            stack[-1][1] = not stack[-1][1]
+            out.append("")
+            continue
+        if s == ".endif" and stack:
+            top = stack.pop()
+            if top[0]:
+                out.append("")
+                continue
+        elif _OTHER_IF.match(ln):
+            stack.append([False, True])
+        out.append(ln if all(a for k, a in stack if k) else "")
+    if any(k for k, _ in stack):
+        raise AssertionError("cpu_view: an `.if KERNEL_KN5000` is never closed")
+    return out
+
+
 def image_lines(root, primary, expand=True, skip=()):
     """The image's lines, newline-stripped, with each .include replaced INLINE
     by the lines of the file it names -- the token stream the assembler sees.
@@ -130,9 +179,10 @@ def image_lines(root, primary, expand=True, skip=()):
     files = image_files(root, primary) if expand else [
         os.path.join(root, primary)]
     if not expand:
-        return open(files[0], encoding="utf-8").read().split("\n")
+        return cpu_view(open(files[0], encoding="utf-8").read().split("\n"))
     skip = {os.path.normpath(os.path.join(root, s)) for s in skip}
-    text = {p: open(p, encoding="utf-8").read().split("\n") for p in files}
+    # every image here is a WSA1 image: the KN5000 side of kernel.s is blanked
+    text = {p: cpu_view(open(p, encoding="utf-8").read().split("\n")) for p in files}
     root_file = files[0]
 
     done = set()
