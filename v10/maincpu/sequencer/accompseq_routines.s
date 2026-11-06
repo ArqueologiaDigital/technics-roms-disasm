@@ -638,7 +638,7 @@ AccompSeq_InlineCodeBlock_Return:
 
 ; Appends a record to the ring buffer XHL at IY (AccompSeq_AdvanceBufferPtr after each byte):
 ; status (0x7e54), timing byte (AccompSeq_ResolveChannel), (0x7e56) passed through
-; AccompSeq_CheckVelocityFlags, (0x7e57), (0x7e58) (0 written as 1), (0x7e59) and the unconverted
+; AccompSeq_ConvertNote90, (0x7e57), (0x7e58) (0 written as 1), (0x7e59) and the unconverted
 ; (0x7e56); the write position goes to header +4.
 AccompSeq_ProcessNoteOn6:
 	ld a, (0x7e54:16)
@@ -647,7 +647,7 @@ AccompSeq_ProcessNoteOn6:
 	calr AccompSeq_ResolveChannel
 	ld a, (0x7e56:16)
 	ld e, a
-	call AccompSeq_CheckVelocityFlags
+	call AccompSeq_ConvertNote90
 	ld	(xhl+iy), a
 	calr AccompSeq_AdvanceBufferPtr
 	ld a, (0x7e57:16)
@@ -669,7 +669,7 @@ AccompSeq_NoteOn6_VelClamp:
 	ld (xhl + 4), iy
 	ret
 
-; AccompSeq_ProcessNoteOn6 with AccompSeq_CheckVelFlagsExtended, and (0x7e5a), (0x7e5b) written
+; AccompSeq_ProcessNoteOn6 with AccompSeq_ConvertNote91, and (0x7e5a), (0x7e5b) written
 ; before the last byte.
 AccompSeq_ProcessNoteOn8:
 	ld a, (0x7e54:16)
@@ -678,7 +678,7 @@ AccompSeq_ProcessNoteOn8:
 	calr AccompSeq_ResolveChannel
 	ld a, (0x7e56:16)
 	ld e, a
-	calr AccompSeq_CheckVelFlagsExtended
+	calr AccompSeq_ConvertNote91
 	ld	(xhl+iy), a
 	calr AccompSeq_AdvanceBufferPtr
 	ld a, (0x7e57:16)
@@ -808,63 +808,64 @@ AccompSeq_ResolveCh_Done:
 	ei 0
 	ret
 
-; Clears bits 1 and 2 of 0x33e5, sets bit 2 when A is 0x78 or more or the byte at (0x7e48) is 0xf0
-; or more, then Rhythm_TransposeWithMod_Tramp (XDE, XHL, XIY preserved).
-AccompSeq_CheckVelocityFlags:
-	and (0x33e5:16), 253
-	and (0x33e5:16), 251
+; Clears bits 1 and 2 of ACCSEQ_CONVERT_FLAGS, sets bit 2 (fixed note) when the note A is 0x78 or more
+; or the channel's program byte at (0x7e48) is 0xf0 or more, then Rhythm_PhraseConvertNote_Tramp (XDE, XHL, XIY preserved).
+AccompSeq_ConvertNote90:
+	and (ACCSEQ_CONVERT_FLAGS:16), 253
+	and (ACCSEQ_CONVERT_FLAGS:16), 251
 	cp a, 0x78
-	jr c, AccompSeq_VelFlags_CheckProgram
-	or (0x33e5:16), 4
+	jr c, AccompSeq_ConvNote90_CheckProgram
+	or (ACCSEQ_CONVERT_FLAGS:16), 4
 
-AccompSeq_VelFlags_CheckProgram:
+AccompSeq_ConvNote90_CheckProgram:
 	push xiy
 	ld xiy, (0x7e48:16)
 	ld w, (xiy)
 	cp w, 0xf0
-	jr c, AccompSeq_VelFlags_CallDispatch
-	or (0x33e5:16), 4
+	jr c, AccompSeq_ConvNote90_CallDispatch
+	or (ACCSEQ_CONVERT_FLAGS:16), 4
 
-AccompSeq_VelFlags_CallDispatch:
+AccompSeq_ConvNote90_CallDispatch:
 	pop xiy
 	push xde
 	push xhl
 	push xiy
-	call Rhythm_TransposeWithMod_Tramp
+	call Rhythm_PhraseConvertNote_Tramp
 	pop xiy
 	pop xhl
 	pop xde
 	ret
 
-; Sets bit 1 of 0x33e5 and copies 0x7e5a / 0x7e5b to 0x33e6 / 0x33e7; bit 2 of 0x33e5 as in
-; AccompSeq_CheckVelocityFlags; then Rhythm_TransposeWithMod_Tramp (XDE, XHL, XIY preserved).
-AccompSeq_CheckVelFlagsExtended:
-	or (0x33e5:16), 2
+; Sets bit 1 of ACCSEQ_CONVERT_FLAGS and copies the 0x91 note's rule bytes 0x7e5a / 0x7e5b to
+; ACCSEQ_NOTE_EXT1 / _EXT2; bit 2 as in
+; AccompSeq_ConvertNote90; then Rhythm_PhraseConvertNote_Tramp (XDE, XHL, XIY preserved).
+AccompSeq_ConvertNote91:
+	or (ACCSEQ_CONVERT_FLAGS:16), 2
 	pushw wa
 	ld a, (0x7e5a:16)
-	ld (0x33e6:16), a
+	ld (ACCSEQ_NOTE_EXT1:16), a
 	ld a, (0x7e5b:16)
-	ld (0x33e7:16), a
+	ld (ACCSEQ_NOTE_EXT2:16), a
 	popw wa
-	and (0x33e5:16), 251
+	and (ACCSEQ_CONVERT_FLAGS:16), 251
 	cp a, 0x78
-	jr c, AccompSeq_ExtVelFlags_CheckProg
-	or (0x33e5:16), 4
+	jr c, AccompSeq_ConvNote91_CheckProg
+	or (ACCSEQ_CONVERT_FLAGS:16), 4
 
-AccompSeq_ExtVelFlags_CheckProg:
+AccompSeq_ConvNote91_CheckProg:
 	push xiy
 	ld xiy, (0x7e48:16)
 	ld w, (xiy)
 	cp w, 0xf0
-	jr c, AccompSeq_ExtVelFlags_Dispatch
-	or (0x33e5:16), 4
+	jr c, AccompSeq_ConvNote91_Dispatch
+	or (ACCSEQ_CONVERT_FLAGS:16), 4
 
-AccompSeq_ExtVelFlags_Dispatch:
+AccompSeq_ConvNote91_Dispatch:
 	pop xiy
 	push xde
 	push xhl
 	push xiy
-	call Rhythm_TransposeWithMod_Tramp
+	call Rhythm_PhraseConvertNote_Tramp
 	pop xiy
 	pop xhl
 	pop xde
@@ -1909,7 +1910,7 @@ AccompSeq_ChordChange_Return:
 ; first byte is set, sets bit 0 of 0x7e5f if byte 0x433 equals (ACC_BEAT) + 1, else bit 1.  0x7e28 /
 ; 0x7e2a are saved and restored.
 AccompSeq_CompareChord:
-	bit 0, (0x3283:16)
+	bit 0, (ACC_RUN_FLAGS:16)
 	jr z, AccompSeq_CompareChord_Return
 	bit 2, (0x28b2:16)
 	jr nz, AccompSeq_CompareChord_Return

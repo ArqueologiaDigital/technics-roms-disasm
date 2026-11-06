@@ -1250,7 +1250,7 @@ SeqAcc_InitPlaybackState:
 	jr SeqAcc_InitPlayback_SetState0
 
 SeqAcc_InitPlayback_HasActiveVoices:
-	bit 1, (0x3283:16)
+	bit 1, (ACC_RUN_FLAGS:16)
 	jr z, SeqAcc_InitPlayback_FindVoices
 	set 4, (0x28b3:16)
 	jrl SeqAcc_InitPlayback_ReturnZero
@@ -1298,7 +1298,7 @@ SeqAcc_InitPlayback_SetState0:
 	ld (8956:16), 0
 
 SeqAcc_ClearStepCounter:
-	ld (8968:16), 0
+	ld (SEQ_CHORD_FROM_SONG:16), 0
 	jr SeqPlay_StateSetExit
 
 SeqAcc_InitPlayback_DrumActive:
@@ -2109,7 +2109,7 @@ SeqPlay_InitDemo_PartLoopNext:
 	inc1b_erp 0xfb
 	cp_erpb 0xfb, 0x10
 	jr ule, SeqPlay_InitDemo_PartLoop
-	ld (8968:16), 0
+	ld (SEQ_CHORD_FROM_SONG:16), 0
 	ld wa, (SEQ_TRACK_MASK:16)
 	ld (8982:16), wa
 	ld (8980:16), wa
@@ -2632,7 +2632,7 @@ SeqPlay_HandleEvent_SyncTiming:
 	jr z, SeqPlay_CheckSilentAndStop
 	ld e, (ACC_LANES_ENDING1:16)
 	ld c, (ACC_LANES_ENDING2:16)
-	ld a, (0x3328:16)
+	ld a, (ACC_LANES_ENDED:16)
 	cp e, 0:i3
 	jr nz, SeqPlay_HandleEvent_ClearAccFlag
 	cp c, 0:i3
@@ -9493,16 +9493,16 @@ BitMapOut_WriteAltIdx:
 
 VoiceAlloc_CompareLocalIdx:
 	ld xde, xwa
-	ld c, (8960:16)
+	ld c, (SEQ_CHORD_TYPE:16)
 	cp c, (xwa)
 	jr nz, BitMapOut_WriteMultiIdx
-	ld a, (8962:16)
+	ld a, (SEQ_CHORD_ROOT:16)
 	cp a, (xde + 1)
 	jr nz, BitMapOut_WriteMultiIdx
-	ld a, (8964:16)
+	ld a, (SEQ_CHORD_BASS:16)
 	cp a, (xde + 2)
 	jr nz, BitMapOut_WriteMultiIdx
-	ld a, (8966:16)
+	ld a, (SEQ_CHORD_FLAGS:16)
 	cp a, (xde + 3)
 	jr z, BitMapOut_CompletionJoin
 
@@ -9816,7 +9816,7 @@ AccompValidate_CheckBit7:
 
 AccompValidate_StoreResult:
 	ldto_berp A, 0xfb
-	ld (8968:16), a
+	ld (SEQ_CHORD_FROM_SONG:16), a
 	popw_erp 0xfa
 	ret
 
@@ -11138,7 +11138,7 @@ SeqNotify_ClearStartFlag:
 Seq_HandleModeTransition:
 	cpw (SEQ_TRACK_MASK:16), 0
 	jr nz, SeqModeTransit_ClearFlags
-	ld (8968:16), 0
+	ld (SEQ_CHORD_FROM_SONG:16), 0
 	res 3, (SEQ_RTMCFG:16)
 
 SeqModeTransit_ClearFlags:
@@ -19863,7 +19863,7 @@ SeqPlay_InitBuffers:
 	jr nz, SeqPlay_CheckMidiPending
 	cp (7518:16), 0
 	jr nz, SeqPlay_CheckMidiPending
-	bit 1, (0x3283:16)
+	bit 1, (ACC_RUN_FLAGS:16)
 	jr nz, SeqPlay_CheckMidiPending
 	calr SeqPlay_AllocBuffersAndInit
 	res 4, (0x28b3:16)

@@ -171,9 +171,9 @@ AccStyle_CheckRecordReturn:
 
 AccStyle_DetectChanges:
 	and (0x333b:16), 254
-	bit 0, (0x3283:16)
+	bit 0, (ACC_RUN_FLAGS:16)
 	jrl nz, AccStyle_DetectChanges_CompareParams
-	bit 1, (0x3283:16)
+	bit 1, (ACC_RUN_FLAGS:16)
 	jrl z, AccStyle_DetectChanges_CompareParams
 	bit 4, (SEQ_TRANSPORT_STATE:16)
 	jr z, AccStyle_DetectChanges_Init
@@ -182,7 +182,7 @@ AccStyle_DetectChanges:
 AccStyle_DetectChanges_Init:
 	ld (0x32e2:16), 0
 	call Rhythm_SendNoteOnMax
-	call AccompVoice_BulkReadRegisters
+	call AccNotes_ForgetAllSounding
 	call Rhythm_SendChanPressure
 	calr Rhythm_SendResetMsg
 	and (ACC_LANES_ENDING1:16), 192
@@ -319,17 +319,17 @@ AccStyle_DetectChanges_ClearFlags:
 	ret
 
 ; Switches the accompaniment to a new style: resets the voice state and the six ring buffers,
-; reads the voice registers back (AccompVoice_BulkReadRegisters), takes the bank ((ACC_PENDING_GROUP) & 7)
+; marks every sounding-note slot free (AccNotes_ForgetAllSounding), takes the bank ((ACC_PENDING_GROUP) & 7)
 ; into 0x32e6 / 0x32e8 and the style number (ACC_PENDING_STYLE) into 0x32e5 / 0x32e7 / 0x3370, initialises
 ; tuning, applies the style (standard for numbers below 0x80, extended otherwise), then
 ; AccBuf_InitKbd1WithMarkers, 0x458 = (ACC_BEATS_PER_BAR), 0x32ec = 1 and Rhythm_ProcessAllPartsAndLoad.
 ;   Clears bit 2 of 0x3283 and the byte 0x462 first.
 AccStyle_ApplyChanges:
 	calr AccStyle_ResetAllVoiceState
-	and (0x3283:16), 251
+	and (ACC_RUN_FLAGS:16), 251
 	ld (1122:16), 0
 	calr AccBuf_ResetAllPositions
-	call AccompVoice_BulkReadRegisters
+	call AccNotes_ForgetAllSounding
 	ld a, (ACC_PENDING_GROUP:16)
 	and a, 0x7f
 	and a, 0x7
@@ -367,7 +367,7 @@ AccStyle_ResetAllVoiceState:
 	ld (0x327f:16), a
 	ld (0x3280:16), a
 	ld (0x327d:16), wa
-	ld (0x3328:16), a
+	ld (ACC_LANES_ENDED:16), a
 	ld (ACC_LANE_BEAT_POS:16), a
 	ld (ACC_LANE_BEAT_POS+1:16), a
 	ld (0x32b1:16), a
@@ -1510,7 +1510,7 @@ AccVoice_HandleMarker83:
 	and w, a
 	jr nz, AccVoice_Marker83_Activate
 	ld a, (ACC_PART_BIT:16)
-	and a, (0x3328:16)
+	and a, (ACC_LANES_ENDED:16)
 	jr z, AccVoice_Marker83_CheckDeact
 
 AccVoice_Marker83_Activate:
@@ -1535,13 +1535,13 @@ AccVoice_Marker83_Return:
 AccVoice_ParkLaneAtEnd:
 	ld a, (ACC_PART_BIT:16)
 	or (ACC_LANES_PARKED:16), a
-	or (0x3328:16), a
+	or (ACC_LANES_ENDED:16), a
 	or (0x32f4:16), 1
 	ld a, (ACC_LANES_PARKED:16)
 	and a, 0x3f
 	cp a, 0x3f
 	jr nz, AccVoice_ParkLaneAtEnd_Return
-	or (0x3283:16), 4
+	or (ACC_RUN_FLAGS:16), 4
 	and (ACC_LANES_PARKED:16), 192
 
 AccVoice_ParkLaneAtEnd_Return:
@@ -2401,12 +2401,12 @@ AccKbd1_TimingReturn:
 
 ; Runs AccSlot_CheckAndUpdate on the eight 6-byte slots of part 1 at 0x3094..0x30c3.
 AccKbd1_ScanSlots:
-	ld xhl, 0x3094
+	ld xhl, ACC_DRUM1_NOTES
 
 AccKbd1_ScanSlots_Loop:
 	calr AccSlot_CheckAndUpdate
 	add xhl, 0x6
-	cp xhl, 0x30c4
+	cp xhl, ACC_DRUM1_NOTES+48
 	jr c, AccKbd1_ScanSlots_Loop
 	ret
 
@@ -2438,9 +2438,9 @@ AccSlot_CompareAndUpdate:
 	cp de, wa
 	jr ule, AccSlot_RestoreInterrupts
 	ld (xhl + 4), wa
-	cp (0x3372:16), wa
+	cp (ACC_NEXT_NOTE_OFF:16), wa
 	jr ule, AccSlot_RestoreInterrupts
-	ld (0x3372:16), wa
+	ld (ACC_NEXT_NOTE_OFF:16), wa
 
 AccSlot_RestoreInterrupts:
 	ei 0
@@ -2524,7 +2524,7 @@ AccKbd2_CheckActive:
 	and	w, a
 	jr	z, AccKbd2_CheckActive_Skip
 	or	(ACC_LANES_PARKED:16), a
-	or	(0x3328:16), a
+	or	(ACC_LANES_ENDED:16), a
 	jr	AccKbd2_CheckActive_Return
 AccKbd2_CheckActive_Skip:
 	ld	a, (ACC_PART_BIT:16)
@@ -2643,12 +2643,12 @@ AccKbd2_ProcessReturn:
 
 ; Runs AccSlot_CheckAndUpdate on the eight 6-byte slots of part 2 at 0x30c4..0x30f3.
 AccKbd2_ScanSlots:
-	ld xhl, 0x30c4
+	ld xhl, ACC_DRUM2_NOTES
 
 AccKbd2_ScanSlots_Loop:
 	calr AccSlot_CheckAndUpdate
 	add xhl, 0x6
-	cp xhl, 0x30f4
+	cp xhl, ACC_DRUM2_NOTES+48
 	jr c, AccKbd2_ScanSlots_Loop
 	ret
 
@@ -3292,12 +3292,12 @@ AccCh1_ProcessReturn:
 
 ; Runs AccSlot_CheckAndUpdate on the eight 9-byte note slots of part 4 at 0x30f4..0x313b.
 AccCh1_ScanSlots:
-	ld xhl, 0x30f4
+	ld xhl, ACC_BASS_NOTES
 
 AccCh1_ScanSlots_Loop:
 	call AccSlot_CheckAndUpdate
 	add xhl, 0x9
-	cp xhl, 0x313c
+	cp xhl, ACC_BASS_NOTES+72
 	jr c, AccCh1_ScanSlots_Loop
 	ret
 
@@ -3488,12 +3488,12 @@ AccCh2_ProcessReturn:
 
 ; Runs AccSlot_CheckAndUpdate on the eight 9-byte note slots of part 8 at 0x313c..0x3183.
 AccCh2_ScanSlots:
-	ld xhl, 0x313c
+	ld xhl, ACC_ACCOMP1_NOTES
 
 AccCh2_ScanSlots_Loop:
 	call AccSlot_CheckAndUpdate
 	add xhl, 0x9
-	cp xhl, 0x3184
+	cp xhl, ACC_ACCOMP1_NOTES+72
 	jr c, AccCh2_ScanSlots_Loop
 	ret
 
@@ -3682,12 +3682,12 @@ AccCh3_ProcessReturn:
 
 ; Runs AccSlot_CheckAndUpdate on the eight 9-byte note slots of part 16 at 0x3184..0x31cb.
 AccCh3_ScanSlots:
-	ld xhl, 0x3184
+	ld xhl, ACC_ACCOMP2_NOTES
 
 AccCh3_ScanSlots_Loop:
 	call AccSlot_CheckAndUpdate
 	add xhl, 0x9
-	cp xhl, 0x31cc
+	cp xhl, ACC_ACCOMP2_NOTES+72
 	jr c, AccCh3_ScanSlots_Loop
 	ret
 
@@ -3876,12 +3876,12 @@ AccCh4_ProcessReturn:
 
 ; Runs AccSlot_CheckAndUpdate on the eight 9-byte note slots of part 32 at 0x31cc..0x3213.
 AccCh4_ScanSlots:
-	ld xhl, 0x31cc
+	ld xhl, ACC_ACCOMP3_NOTES
 
 AccCh4_ScanSlots_Loop:
 	call AccSlot_CheckAndUpdate
 	add xhl, 0x9
-	cp xhl, 0x3214
+	cp xhl, ACC_ACCOMP3_NOTES+72
 	jr c, AccCh4_ScanSlots_Loop
 	ret
 
@@ -4045,7 +4045,7 @@ AccPart_Reactivate:
 	and w, a
 	jr z, AccPart_Reactivate_Inactive
 	or (ACC_LANES_PARKED:16), a
-	or (0x3328:16), a
+	or (ACC_LANES_ENDED:16), a
 	ld (ACC_CUR_BLOCK:16), 254
 	ld (ACC_CUR_READ_POS:16), 6
 	jr AccPart_ReactivateReturn
@@ -4068,7 +4068,7 @@ AccPart_ReactivateReturn:
 	ret
 
 AccTick_Main:
-	bit 2, (0x3283:16)
+	bit 2, (ACC_RUN_FLAGS:16)
 	jrl nz, AccTick_CheckCollect
 	calr AccTempo_BarCompare
 	bit 6, (0x32f4:16)
@@ -4090,7 +4090,7 @@ AccTick_AfterSync:
 	call AccSeq_ScanPattern
 	bit 0, (0x347a:16)
 	jr nz, AccTick_ProcessAccChannels
-	bit 0, (0x3283:16)
+	bit 0, (ACC_RUN_FLAGS:16)
 	jr z, AccTick_CheckNoteOn
 	ld wa, (0xc596:16)
 	and wa, 0x200
@@ -4133,7 +4133,7 @@ AccTick_FlushAndRepeat:
 	jrl AccTick_AfterSync
 
 AccTick_CheckCollect:
-	bit 2, (0x3283:16)
+	bit 2, (ACC_RUN_FLAGS:16)
 	jr z, AccTick_Return
 	call AccEnding_StopWhenSilent
 
@@ -4339,7 +4339,7 @@ AccSection_SwitchNowUnlessDeferred_Return:
 
 AccTick_ByteData:
 	call	Rhythm_SendNoteOnMax
-	call	AccompVoice_BulkReadRegisters
+	call	AccNotes_ForgetAllSounding
 	calr	AccBuf_WriteAllNotesOff
 	call	Rhythm_SendChanPressure
 	calr	AccBuf_ResetAll4
@@ -5064,9 +5064,9 @@ AccSection_StartIntro_SetMasks:
 	ld (ACC_LANES_ENDING1:16), a
 	ld (ACC_LANES_ENDING2:16), a
 	ld (0x335d:16), a
-	ld (0x3328:16), a
+	ld (ACC_LANES_ENDED:16), a
 	ld (ACC_LANES_PARKED:16), a
-	and (0x3283:16), 251
+	and (ACC_RUN_FLAGS:16), 251
 	jrl AccSection_StartIntro_Return
 
 AccSection_StartIntro_Mode2:
@@ -5080,9 +5080,9 @@ AccSection_StartIntro_Mode2:
 	ld (ACC_LANES_ENDING1:16), a
 	ld (ACC_LANES_ENDING2:16), a
 	ld (0x335d:16), a
-	ld (0x3328:16), a
+	ld (ACC_LANES_ENDED:16), a
 	ld (ACC_LANES_PARKED:16), a
-	and (0x3283:16), 251
+	and (ACC_RUN_FLAGS:16), 251
 	jr AccSection_StartIntro_Return
 
 AccSection_StartIntro_Mode3:
@@ -5096,9 +5096,9 @@ AccSection_StartIntro_Mode3:
 	ld (ACC_LANES_ENDING1:16), a
 	ld (ACC_LANES_ENDING2:16), a
 	ld (0x335d:16), a
-	ld (0x3328:16), a
+	ld (ACC_LANES_ENDED:16), a
 	ld (ACC_LANES_PARKED:16), a
-	and (0x3283:16), 251
+	and (ACC_RUN_FLAGS:16), 251
 
 AccSection_StartIntro_Return:
 	ret
@@ -5235,9 +5235,9 @@ AccSection_StartFillIn_SetForward:
 	ld (ACC_LANES_ENDING1:16), a
 	ld (ACC_LANES_ENDING2:16), a
 	ld (0x335d:16), a
-	ld (0x3328:16), a
+	ld (ACC_LANES_ENDED:16), a
 	ld (ACC_LANES_PARKED:16), a
-	and (0x3283:16), 251
+	and (ACC_RUN_FLAGS:16), 251
 	jr AccSection_StartFillIn_Return
 
 AccSection_StartFillIn_SetReverse:
@@ -5251,9 +5251,9 @@ AccSection_StartFillIn_SetReverse:
 	ld (ACC_LANES_ENDING1:16), a
 	ld (ACC_LANES_ENDING2:16), a
 	ld (0x335d:16), a
-	ld (0x3328:16), a
+	ld (ACC_LANES_ENDED:16), a
 	ld (ACC_LANES_PARKED:16), a
-	and (0x3283:16), 251
+	and (ACC_RUN_FLAGS:16), 251
 
 AccSection_StartFillIn_Return:
 	ret
@@ -5624,7 +5624,7 @@ AccVoice_SelectByMask:
 	or a, (ACC_LANES_FILLIN2:16)
 	or a, (ACC_LANES_ENDING1:16)
 	or a, (ACC_LANES_ENDING2:16)
-	or a, (0x3328:16)
+	or a, (ACC_LANES_ENDED:16)
 	andb_erp A, 0x31
 	jr nz, AccVoice_SelectByMask_Default
 
@@ -5738,7 +5738,7 @@ AccEnding_StopWhenSilent:
 	jrl nz, AccState_CollectReturn
 	bit 2, (ACC_TRANSPORT_STATE:16)
 	jrl z, AccState_CollectReturn
-	ld xhl, 0x3094
+	ld xhl, ACC_DRUM1_NOTES
 	xor iy, iy
 	ld	a, (xhl+iy)
 
@@ -5747,7 +5747,7 @@ AccState_CollectKbd1_Loop:
 	add iy, 0x6
 	cp iy, 0x30
 	jr c, AccState_CollectKbd1_Loop
-	ld xhl, 0x30c4
+	ld xhl, ACC_DRUM2_NOTES
 	xor iy, iy
 
 AccState_CollectKbd2_Loop:
@@ -5755,7 +5755,7 @@ AccState_CollectKbd2_Loop:
 	add iy, 0x6
 	cp iy, 0x30
 	jr c, AccState_CollectKbd2_Loop
-	ld xhl, 0x30f4
+	ld xhl, ACC_BASS_NOTES
 	xor iy, iy
 
 AccState_CollectAcc1_Loop:
@@ -5763,7 +5763,7 @@ AccState_CollectAcc1_Loop:
 	add iy, 0x9
 	cp iy, 0x48
 	jr c, AccState_CollectAcc1_Loop
-	ld xhl, 0x313c
+	ld xhl, ACC_ACCOMP1_NOTES
 	xor iy, iy
 
 AccState_CollectAcc2_Loop:
@@ -5771,7 +5771,7 @@ AccState_CollectAcc2_Loop:
 	add iy, 0x9
 	cp iy, 0x48
 	jr c, AccState_CollectAcc2_Loop
-	ld xhl, 0x3184
+	ld xhl, ACC_ACCOMP2_NOTES
 	xor iy, iy
 
 AccState_CollectAcc3_Loop:
@@ -5779,7 +5779,7 @@ AccState_CollectAcc3_Loop:
 	add iy, 0x9
 	cp iy, 0x48
 	jr c, AccState_CollectAcc3_Loop
-	ld xhl, 0x31cc
+	ld xhl, ACC_ACCOMP3_NOTES
 	xor iy, iy
 
 AccState_CollectAcc4_Loop:
@@ -5807,7 +5807,7 @@ AccState_Apply:
 	ld (DISPLAY_CHORD_ROOT:16), a
 	call AccDisplay_RefreshIfDiskActive
 	and (PANEL_STYLE+5:16), 207
-	and (0x3283:16), 251
+	and (ACC_RUN_FLAGS:16), 251
 	xor a, a
 	ld (ACC_LANES_ENDING1:16), a
 	ld (ACC_LANES_ENDING2:16), a
@@ -6137,28 +6137,28 @@ AccBuf_ResetOnePosition:
 ; 0x30f4, 0x313c, 0x3184 and 0x31cc.
 AccBuf_ResetByteData:
 	ld	a, 0:opc
-	ld	xhl, 0x30f4
+	ld	xhl, ACC_BASS_NOTES
 	xor	iy, iy
 AccBuf_ResetByteData_Loop:
 	ld	(xhl+iy), a
 	add iy, 9
 	cp	iy, 72
 	jr	c, AccBuf_ResetByteData_Loop
-	ld	xhl, 0x313c
+	ld	xhl, ACC_ACCOMP1_NOTES
 	xor	iy, iy
 AccBuf_ResetByteData_Loop2:
 	ld	(xhl+iy), a
 	add iy, 9
 	cp	iy, 72
 	jr	c, AccBuf_ResetByteData_Loop2
-	ld	xhl, 0x3184
+	ld	xhl, ACC_ACCOMP2_NOTES
 	xor	iy, iy
 AccBuf_ResetByteData_Loop3:
 	ld	(xhl+iy), a
 	add iy, 9
 	cp	iy, 72
 	jr	c, AccBuf_ResetByteData_Loop3
-	ld	xhl, 0x31cc
+	ld	xhl, ACC_ACCOMP3_NOTES
 	xor	iy, iy
 AccBuf_ResetByteData_Loop4:
 	ld	(xhl+iy), a
@@ -6205,7 +6205,7 @@ AccTempo_CalcPosition:
 
 AccSection_SwitchNow:
 	call Rhythm_SendNoteOnMax
-	call AccompVoice_BulkReadRegisters
+	call AccNotes_ForgetAllSounding
 	calr AccBuf_WriteAllNotesOff
 	call Rhythm_SendChanPressure
 	calr AccBuf_ResetAll4
@@ -8748,9 +8748,9 @@ AccSynchro_StartOrCancelStop:
 	jr z, AccSynchro_StartOrCancelStop_Return
 	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr nz, AccSynchro_StartOrCancelStop_Running
-	bit 0, (0x3283:16)
+	bit 0, (ACC_RUN_FLAGS:16)
 	jr z, AccSynchro_StartOrCancelStop_Now
-	bit 1, (0x3283:16)
+	bit 1, (ACC_RUN_FLAGS:16)
 	jr z, AccSynchro_StartOrCancelStop_Now
 	and (ACC_SYNCHRO_STATE:16), 239
 	or (ACC_SYNCHRO_STATE:16), 1
@@ -8786,9 +8786,9 @@ AccSynchro_StartOrCancelStopSong:
 	jr z, AccSynchro_StartOrCancelStopSong_Return
 	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr nz, AccSynchro_StartOrCancelStopSong_Running
-	bit 0, (0x3283:16)
+	bit 0, (ACC_RUN_FLAGS:16)
 	jr z, AccSynchro_StartOrCancelStopSong_Now
-	bit 1, (0x3283:16)
+	bit 1, (ACC_RUN_FLAGS:16)
 	jr z, AccSynchro_StartOrCancelStopSong_Now
 	and (ACC_SYNCHRO_STATE:16), 239
 	or (ACC_SYNCHRO_STATE:16), 2
@@ -9848,7 +9848,7 @@ AccPos_SaveOnStop_Padding:
 ; Unless bit 0 of 0x3283 is set: clears the positions 0x415 / 0x416 / 0x436 / 0x437 and 0x3479,
 ; sets bit 7 of 0x34cd and runs the sequencer dispatcher (Seq_DispatcherEntry).
 AccPos_ClearOnStart:
-	bit 0, (0x3283:16)
+	bit 0, (ACC_RUN_FLAGS:16)
 	jr nz, AccPos_ClearOnStart_Return
 	xor wa, wa
 	ei 6
@@ -9879,7 +9879,7 @@ AccReplay_HandlePendingStop:
 AccReplay_HandlePendingStop_Skip:
 	bit	1, (0x347a:16)
 	jr	z, AccReplay_HandlePendingStop_Return
-	ld	a, (0x3283:16)
+	ld	a, (ACC_RUN_FLAGS:16)
 	and	a, 3
 	cp	a, 0:i3
 	jr	nz, AccReplay_HandlePendingStop_Return
@@ -9924,29 +9924,29 @@ AccFlags_Sync_Padding:
 ; parts (0x30f4..0x31cc: 9-byte slots, 72 bytes, AccAccTiming_TableScan with 0x338c = 7, 4, 5, 6),
 ; then copies the result to 0x3372.
 AccTiming_InitAllParts:
-	ldw (0x3374:16), 0xff5f
-	ldw (0x337c:16), 6
-	ldw (0x337e:16), 48
-	ld xbc, 0x3094
+	ldw (ACC_NOTES_MIN_SCAN:16), 0xff5f
+	ldw (ACC_SLOT_STRIDE:16), 6
+	ldw (ACC_SLOT_TABLE_SIZE:16), 48
+	ld xbc, ACC_DRUM1_NOTES
 	calr AccKbdTiming_TableScan
-	ld xbc, 0x30c4
+	ld xbc, ACC_DRUM2_NOTES
 	calr AccKbdTiming_TableScan
-	ldw (0x337c:16), 9
-	ldw (0x337e:16), 72
-	ld (0x338c:16), 7
-	ld xbc, 0x30f4
+	ldw (ACC_SLOT_STRIDE:16), 9
+	ldw (ACC_SLOT_TABLE_SIZE:16), 72
+	ld (ACC_SLOT_CHANNEL:16), 7
+	ld xbc, ACC_BASS_NOTES
 	calr AccAccTiming_TableScan
-	ld (0x338c:16), 4
-	ld xbc, 0x313c
+	ld (ACC_SLOT_CHANNEL:16), 4
+	ld xbc, ACC_ACCOMP1_NOTES
 	calr AccAccTiming_TableScan
-	ld (0x338c:16), 5
-	ld xbc, 0x3184
+	ld (ACC_SLOT_CHANNEL:16), 5
+	ld xbc, ACC_ACCOMP2_NOTES
 	calr AccAccTiming_TableScan
-	ld (0x338c:16), 6
-	ld xbc, 0x31cc
+	ld (ACC_SLOT_CHANNEL:16), 6
+	ld xbc, ACC_ACCOMP3_NOTES
 	calr AccAccTiming_TableScan
-	ld wa, (0x3374:16)
-	ld (0x3372:16), wa
+	ld wa, (ACC_NOTES_MIN_SCAN:16)
+	ld (ACC_NEXT_NOTE_OFF:16), wa
 	jr AccTiming_InitAllParts_Return
 
 AccTiming_InitAllParts_Return:
@@ -9954,70 +9954,70 @@ AccTiming_InitAllParts_Return:
 
 AccTiming_MasterTick:
 	ld (0x3377:16), 95
-	ldw (0x337c:16), 6
-	ldw (0x337e:16), 48
+	ldw (ACC_SLOT_STRIDE:16), 6
+	ldw (ACC_SLOT_TABLE_SIZE:16), 48
 	ld a, (0x3385:16)
-	ld (0x3384:16), a
+	ld (ACC_SLOT_STEAL_INDEX:16), a
 	ld xhl, 0x2a94
-	ld xbc, 0x3094
+	ld xbc, ACC_DRUM1_NOTES
 	calr AccKbdTiming_ScanRingBuf
-	ld a, (0x3384:16)
+	ld a, (ACC_SLOT_STEAL_INDEX:16)
 	ld (0x3385:16), a
 	ld a, (0x3386:16)
-	ld (0x3384:16), a
+	ld (ACC_SLOT_STEAL_INDEX:16), a
 	ld xhl, 0x2b94
-	ld xbc, 0x30c4
+	ld xbc, ACC_DRUM2_NOTES
 	calr AccKbdTiming_ScanRingBuf
-	ld a, (0x3384:16)
+	ld a, (ACC_SLOT_STEAL_INDEX:16)
 	ld (0x3386:16), a
-	ldw (0x337c:16), 9
+	ldw (ACC_SLOT_STRIDE:16), 9
 	and (0x338d:16), 254
-	ldw (0x337e:16), 72
-	ld (0x338c:16), 7
+	ldw (ACC_SLOT_TABLE_SIZE:16), 72
+	ld (ACC_SLOT_CHANNEL:16), 7
 	ld a, (0x3387:16)
-	ld (0x3384:16), a
+	ld (ACC_SLOT_STEAL_INDEX:16), a
 	ld a, (ACC_CH_CC3:16)
 	ld (ACC_CUR_CC3:16), a
 	ld xhl, 0x2c94
-	ld xbc, 0x30f4
+	ld xbc, ACC_BASS_NOTES
 	calr AccAccTiming_ScanRingBuf
-	ld a, (0x3384:16)
+	ld a, (ACC_SLOT_STEAL_INDEX:16)
 	ld (0x3387:16), a
 	ld a, (ACC_CUR_CC3:16)
 	ld (ACC_CH_CC3:16), a
-	ld (0x338c:16), 4
+	ld (ACC_SLOT_CHANNEL:16), 4
 	ld a, (0x3388:16)
-	ld (0x3384:16), a
+	ld (ACC_SLOT_STEAL_INDEX:16), a
 	ld a, (ACC_CH_CC3+1:16)
 	ld (ACC_CUR_CC3:16), a
 	ld xhl, 0x2d94
-	ld xbc, 0x313c
+	ld xbc, ACC_ACCOMP1_NOTES
 	calr AccAccTiming_ScanRingBuf
-	ld a, (0x3384:16)
+	ld a, (ACC_SLOT_STEAL_INDEX:16)
 	ld (0x3388:16), a
 	ld a, (ACC_CUR_CC3:16)
 	ld (ACC_CH_CC3+1:16), a
-	ld (0x338c:16), 5
+	ld (ACC_SLOT_CHANNEL:16), 5
 	ld a, (0x3389:16)
-	ld (0x3384:16), a
+	ld (ACC_SLOT_STEAL_INDEX:16), a
 	ld a, (ACC_CH_CC3+2:16)
 	ld (ACC_CUR_CC3:16), a
 	ld xhl, 0x2e94
-	ld xbc, 0x3184
+	ld xbc, ACC_ACCOMP2_NOTES
 	calr AccAccTiming_ScanRingBuf
-	ld a, (0x3384:16)
+	ld a, (ACC_SLOT_STEAL_INDEX:16)
 	ld (0x3389:16), a
 	ld a, (ACC_CUR_CC3:16)
 	ld (ACC_CH_CC3+2:16), a
-	ld (0x338c:16), 6
+	ld (ACC_SLOT_CHANNEL:16), 6
 	ld a, (0x338a:16)
-	ld (0x3384:16), a
+	ld (ACC_SLOT_STEAL_INDEX:16), a
 	ld a, (ACC_CH_CC3+3:16)
 	ld (ACC_CUR_CC3:16), a
 	ld xhl, 0x2f94
-	ld xbc, 0x31cc
+	ld xbc, ACC_ACCOMP3_NOTES
 	calr AccAccTiming_ScanRingBuf
-	ld a, (0x3384:16)
+	ld a, (ACC_SLOT_STEAL_INDEX:16)
 	ld (0x338a:16), a
 	ld a, (ACC_CUR_CC3:16)
 	ld (ACC_CH_CC3+3:16), a
@@ -10103,17 +10103,17 @@ AccKbdTiming_NoteSlotScan:
 	xor iz, iz
 
 AccKbdTiming_SlotLoop:
-	cp iz, (0x337e:16)
+	cp iz, (ACC_SLOT_TABLE_SIZE:16)
 	jr nc, AccKbdTiming_SlotOverflow
 	bit	7, (xbc+iz)
 	jr z, AccKbdTiming_WriteNoteEvent
-	add iz, (0x337c:16)
+	add iz, (ACC_SLOT_STRIDE:16)
 	jr AccKbdTiming_SlotLoop
 
 AccKbdTiming_SlotOverflow:
 	pushw wa
 	xor xwa, xwa
-	ld a, (0x3384:16)
+	ld a, (ACC_SLOT_STEAL_INDEX:16)
 	sla xwa, 2
 	add xwa, AccTiming_SlotOffsetTables
 	ld iz, (xwa)
@@ -10131,10 +10131,10 @@ AccKbdTiming_SlotOverflow:
 	calr AccSeq_WriteByte
 	popw iz
 	popw wa
-	inc 1, (0x3384:16)
-	cp (0x3384:16), 8
+	inc 1, (ACC_SLOT_STEAL_INDEX:16)
+	cp (ACC_SLOT_STEAL_INDEX:16), 8
 	jr c, AccKbdTiming_SlotOverflow_Done
-	ld (0x3384:16), 0
+	ld (ACC_SLOT_STEAL_INDEX:16), 0
 
 AccKbdTiming_SlotOverflow_Done:
 	jr AccKbdTiming_WriteNoteEvent
@@ -10200,9 +10200,9 @@ AccKbdTiming_WriteNote_AddBase:
 
 AccKbdTiming_WriteNote_StoreTiming:
 	ld	(xbc+iz), wa
-	cp wa, (0x3372:16)
+	cp wa, (ACC_NEXT_NOTE_OFF:16)
 	jr nc, AccKbdTiming_WriteNote_UpdateReadPos
-	ld (0x3372:16), wa
+	ld (ACC_NEXT_NOTE_OFF:16), wa
 
 AccKbdTiming_WriteNote_UpdateReadPos:
 	ld (xhl + 6), ix
@@ -10377,7 +10377,7 @@ AccKbdTiming_TableScan:
 	xor iz, iz
 
 AccKbdTiming_TableScan_Loop:
-	cp iz, (0x337e:16)
+	cp iz, (ACC_SLOT_TABLE_SIZE:16)
 	jp nc, (AccKbdTiming_TableScan_Done:24)
 	bit	7, (xbc+iz)
 	jr z, AccKbdTiming_TableScan_NextSlot
@@ -10413,12 +10413,12 @@ AccKbdTiming_TableScan_Decrement:
 
 AccKbdTiming_TableScan_StoreTiming:
 	ld	(xbc+ix), wa
-	cp wa, (0x3374:16)
+	cp wa, (ACC_NOTES_MIN_SCAN:16)
 	jr nc, AccKbdTiming_TableScan_NextSlot
-	ld (0x3374:16), wa
+	ld (ACC_NOTES_MIN_SCAN:16), wa
 
 AccKbdTiming_TableScan_NextSlot:
-	add iz, (0x337c:16)
+	add iz, (ACC_SLOT_STRIDE:16)
 	jrl AccKbdTiming_TableScan_Loop
 
 AccKbdTiming_TableScan_Done:
@@ -10508,7 +10508,7 @@ AccAccTiming_CheckTimestamp:
 	cp (0x3a7a:16), 0
 	jr nz, AccAccTiming_NoteSlotScan
 	pushw wa
-	ld a, (0x338c:16)
+	ld a, (ACC_SLOT_CHANNEL:16)
 	ld (0x3a7c:16), a
 	popw wa
 	calr AccKbdTiming_CatchupReplay
@@ -10520,7 +10520,7 @@ AccAccTiming_NoteSlotScan:
 	xor iz, iz
 
 AccAccTiming_NoteSlot_Loop:
-	cp iz, (0x337e:16)
+	cp iz, (ACC_SLOT_TABLE_SIZE:16)
 	jr nc, AccAccTiming_NoteSlot_FindFree
 	bit	7, (xbc+iz)
 	jr z, AccAccTiming_NoteSlot_NextSlot
@@ -10531,14 +10531,14 @@ AccAccTiming_NoteSlot_Loop:
 	jr z, AccAccTiming_NoteSlot_SendNoteOff
 
 AccAccTiming_NoteSlot_NextSlot:
-	add iz, (0x337c:16)
+	add iz, (ACC_SLOT_STRIDE:16)
 	jr AccAccTiming_NoteSlot_Loop
 
 AccAccTiming_NoteSlot_SendNoteOff:
 	ld	a, (xbc+iz)
 	and	(xbc+iz), 0x7f
 	and a, 0xf0
-	or a, (0x338c:16)
+	or a, (ACC_SLOT_CHANNEL:16)
 	calr AccSeq_WriteByte
 	ld a, w
 	calr AccSeq_WriteByte
@@ -10558,17 +10558,17 @@ AccAccTiming_NoteSlot_FindFree:
 	xor iz, iz
 
 AccAccTiming_NoteSlot_FreeLoop:
-	cp iz, (0x337e:16)
+	cp iz, (ACC_SLOT_TABLE_SIZE:16)
 	jr nc, AccAccTiming_SlotOverflow
 	bit	7, (xbc+iz)
 	jr z, AccAccTiming_WriteNoteEvent
-	add iz, (0x337c:16)
+	add iz, (ACC_SLOT_STRIDE:16)
 	jr AccAccTiming_NoteSlot_FreeLoop
 
 AccAccTiming_SlotOverflow:
 	pushw wa
 	xor xwa, xwa
-	ld a, (0x3384:16)
+	ld a, (ACC_SLOT_STEAL_INDEX:16)
 	sla xwa, 2
 	add xwa, AccAccTiming_SlotOverflow_Data
 	ld iz, (xwa)
@@ -10578,7 +10578,7 @@ AccAccTiming_SlotOverflow:
 	inc 2, iz
 	ld	w, (xbc+iz)
 	and a, 0xf0
-	or a, (0x338c:16)
+	or a, (ACC_SLOT_CHANNEL:16)
 	calr AccSeq_WriteByte
 	ld a, w
 	calr AccSeq_WriteByte
@@ -10586,10 +10586,10 @@ AccAccTiming_SlotOverflow:
 	calr AccSeq_WriteByte
 	popw iz
 	popw wa
-	inc 1, (0x3384:16)
-	cp (0x3384:16), 8
+	inc 1, (ACC_SLOT_STEAL_INDEX:16)
+	cp (ACC_SLOT_STEAL_INDEX:16), 8
 	jr c, AccAccTiming_SlotOverflow_Done
-	ld (0x3384:16), 0
+	ld (ACC_SLOT_STEAL_INDEX:16), 0
 
 AccAccTiming_SlotOverflow_Done:
 	jr AccAccTiming_WriteNoteEvent
@@ -10600,7 +10600,7 @@ AccAccTiming_SkipEvent:
 	jrl AccAccTiming_EventLoop
 
 AccAccTiming_WriteNoteEvent:
-	or a, (0x338c:16)
+	or a, (ACC_SLOT_CHANNEL:16)
 	calr AccSeq_WriteByte
 	ld a, w
 	ld	(xbc+iz), a
@@ -10652,9 +10652,9 @@ AccAccTiming_WriteNote_ReadTimingHi:
 AccAccTiming_WriteNote_StoreTiming:
 	ld	(xbc+iz), wa
 	inc 2, iz
-	cp wa, (0x3372:16)
+	cp wa, (ACC_NEXT_NOTE_OFF:16)
 	jr nc, AccAccTiming_WriteNote_ExtraBytes
-	ld (0x3372:16), wa
+	ld (ACC_NEXT_NOTE_OFF:16), wa
 
 AccAccTiming_WriteNote_ExtraBytes:
 	popw wa
@@ -10696,7 +10696,7 @@ AccAccTiming_WriteNote_Done:
 
 AccAccTiming_WriteNonNote:
 	ld w, a
-	or a, (0x338c:16)
+	or a, (ACC_SLOT_CHANNEL:16)
 	calr AccSeq_WriteByte
 	ld	a, (xhl+ix)
 	inc 1, ix
@@ -10789,7 +10789,7 @@ AccAccTiming_TableScan:
 	xor iz, iz
 
 AccAccTiming_TableScan_Loop:
-	cp iz, (0x337e:16)
+	cp iz, (ACC_SLOT_TABLE_SIZE:16)
 	jp nc, (AccAccTiming_TableScan_Done:24)
 	bit	7, (xbc+iz)
 	jr z, AccAccTiming_TableScan_NextSlot
@@ -10808,7 +10808,7 @@ AccAccTiming_TableScan_Loop:
 	jr gt, AccAccTiming_TableScan_Decrement
 	ld a, 0xf0:opc
 	and a, (0x3381:16)
-	or a, (0x338c:16)
+	or a, (ACC_SLOT_CHANNEL:16)
 	calr AccSeq_WriteByte
 	ld a, (0x3382:16)
 	calr AccSeq_WriteByte
@@ -10825,12 +10825,12 @@ AccAccTiming_TableScan_Decrement:
 
 AccAccTiming_TableScan_StoreTiming:
 	ld	(xbc+ix), wa
-	cp wa, (0x3374:16)
+	cp wa, (ACC_NOTES_MIN_SCAN:16)
 	jr nc, AccAccTiming_TableScan_NextSlot
-	ld (0x3374:16), wa
+	ld (ACC_NOTES_MIN_SCAN:16), wa
 
 AccAccTiming_TableScan_NextSlot:
-	add iz, (0x337c:16)
+	add iz, (ACC_SLOT_STRIDE:16)
 	jrl AccAccTiming_TableScan_Loop
 
 AccAccTiming_TableScan_Done:
@@ -10922,7 +10922,7 @@ AccDir_ReadState:
 	ld (0x34a0:16), a
 	ld a, (0x34a5:16)
 	and a, 0xfe
-	bit 0, (0x3283:16)
+	bit 0, (ACC_RUN_FLAGS:16)
 	jr z, AccDir_ReadState_StoreFlags
 	or a, 0x1
 
@@ -14423,7 +14423,7 @@ AccVoice_LoadAllParts_Wrap:
 	pop	xiz
 	ret
 	push	xiz
-	call	AccompVoice_BulkReadRegisters
+	call	AccNotes_ForgetAllSounding
 	pop	xiz
 	ret
 	push	xiz
@@ -15951,7 +15951,7 @@ AccPatch_RebuildChannelSlot:
 	calr AccPatch_ComputeSeqPosition
 	ld (0x35fe:16), 0
 	calr AccPatch_WriteRhythmInit
-	bit 0, (0x3283:16)
+	bit 0, (ACC_RUN_FLAGS:16)
 	jr nz, AccPatch_RebuildChannel_Done
 	or (0x34cd:16), 128
 
@@ -16188,7 +16188,7 @@ RhythmProc_SavePrevState:
 	ld a, (CMP_RECORD_PART:16)
 	and a, 0x7f
 	ld (0x3510:16), a
-	ld a, (0x3283:16)
+	ld a, (ACC_RUN_FLAGS:16)
 	ld (0x3601:16), a
 	cp (CURRENT_MODE:16), 14
 	jr z, RhythmProc_SavePrevState_Done
@@ -17383,7 +17383,7 @@ AccPatch_SeqDispatch_CheckEmpty:
 	jrl AccPatch_SyncStateAndReturn
 
 AccPatch_SeqDispatch_CheckPlaying:
-	bit 0, (0x3283:16)
+	bit 0, (ACC_RUN_FLAGS:16)
 	jr nz, AccPatch_SeqDispatch_CheckStarted
 	call TempoRingBuf_ReInitAndRet
 	jrl AccPatch_SyncStateAndReturn
@@ -20063,7 +20063,7 @@ AccPlayback_CheckActiveStyle:
 	jr z, AccPlayback_CheckBit4
 	ld (0x34fd:16), 0
 	call TempoRingBuf_Init
-	bit 0, (0x3283:16)
+	bit 0, (ACC_RUN_FLAGS:16)
 	jr nz, AccPlayback_GetSlotAddr
 	or (0x34cd:16), 128
 
@@ -21624,7 +21624,7 @@ AccPlayback_ProcessOngoingEvents:
 	call AccPatch_InitSlotAndCopyData
 	calr ToneGen_AdvanceSeqList
 	ld (0x34fe:16), 0
-	bit 0, (0x3283:16)
+	bit 0, (ACC_RUN_FLAGS:16)
 	jr nz, ToneGen_NullRet
 	cp (0x34fa:16), 0
 	jr nz, ToneGen_NullRet
@@ -26030,7 +26030,7 @@ DrumKitExit_ExtraInit:
 	call AccWrap_PlayModeDispatch
 
 DrumKitExit_CheckAutoPlay:
-	bit 0, (0x3283:16)
+	bit 0, (ACC_RUN_FLAGS:16)
 	jr nz, DrumKitExit_Return
 	or (0x34cd:16), 128
 
@@ -26492,7 +26492,7 @@ CmpRealTtl_EnterTitle_Impl:
 	cp	(PREVIOUS_TITLE:16), 181
 	jr	z, RhythmFillIn_Select_Return
 	or	(0x8d88:16), 1
-	bit	0, (0x3283:16)
+	bit	0, (ACC_RUN_FLAGS:16)
 	jr	nz, RhythmFillIn_Select_Return
 	or	(0x34cd:16), 128
 	call	Seq_DispatcherEntry
@@ -26602,7 +26602,7 @@ RhythmSolo_Disable:
 
 RhythmSolo_UpdateStatus:
 	calr DrumKit_UpdateStatusFlags
-	bit 0, (0x3283:16)
+	bit 0, (ACC_RUN_FLAGS:16)
 	jr nz, RhythmSolo_Return
 	or (0x34cd:16), 128
 
@@ -26638,7 +26638,7 @@ RhythmVariation_Select:
 	ld	a, (xwa+hl)
 	ld (CMP_RECORD_PART:16), a
 	calr DrumKit_UpdateStatusFlags
-	bit 0, (0x3283:16)
+	bit 0, (ACC_RUN_FLAGS:16)
 	jr nz, RhythmVariation_PostDispatch
 	or (0x34cd:16), 128
 

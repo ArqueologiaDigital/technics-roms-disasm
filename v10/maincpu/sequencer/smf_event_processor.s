@@ -10931,9 +10931,9 @@ Rhythm_DispatchNote_Finalize:
 	pop xiz
 	ret
 
-; Alias entry: jumps to Rhythm_TransposeWithMod.
-Rhythm_TransposeWithMod_Tramp:
-	jp Rhythm_TransposeWithMod
+; Alias entry: jumps to Rhythm_PhraseConvertNote.
+Rhythm_PhraseConvertNote_Tramp:
+	jp Rhythm_PhraseConvertNote
 Rhythm_TransposeTrampBlock:
 	jp	Rhythm_DispatchNote_Helper
 
@@ -11115,14 +11115,14 @@ Seq_ReadTempoLookup:
 	ret
 
 Seq_ProcessAllInputState:
-	ld a, (0x3283:16)
+	ld a, (ACC_RUN_FLAGS:16)
 	and a, 0xfe
 	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr z, Seq_InputState_StoreFlag
 	or a, 0x1
 
 Seq_InputState_StoreFlag:
-	ld (0x3283:16), a
+	ld (ACC_RUN_FLAGS:16), a
 	calr AccKey_ScanAndSetDirty
 	calr AccState_ReadAccompParams
 	calr AudioMode_CheckAndUpdateStereo
@@ -11141,7 +11141,7 @@ Seq_InputState_StoreFlag:
 	add bc, hl
 	ld (0x327d:16), bc
 	ld (0x32e9:16), 24
-	bit 0, (0x3283:16)
+	bit 0, (ACC_RUN_FLAGS:16)
 	jr z, AccInput_CheckRecordMode
 	call AccTuning_DisableIfNoStyle
 	bit 0, (0x3363:16)
@@ -11206,15 +11206,15 @@ AccChord_ReadAndStoreKeys:
 	ld (ACC_CHORD_BASS:16), a
 	ld a, (CHORD_FLAGS:16)
 	ld (ACC_CHORD_FLAGS:16), a
-	cp (8968:16), 0
+	cp (SEQ_CHORD_FROM_SONG:16), 0
 	jr z, AccChord_CheckKeyOverride
-	ld a, (8962:16)
+	ld a, (SEQ_CHORD_ROOT:16)
 	ld (ACC_CHORD_ROOT:16), a
-	ld a, (8960:16)
+	ld a, (SEQ_CHORD_TYPE:16)
 	ld (ACC_CHORD_TYPE:16), a
-	ld a, (8964:16)
+	ld a, (SEQ_CHORD_BASS:16)
 	ld (ACC_CHORD_BASS:16), a
-	ld a, (8966:16)
+	ld a, (SEQ_CHORD_FLAGS:16)
 	ld (ACC_CHORD_FLAGS:16), a
 
 AccChord_CheckKeyOverride:
@@ -11278,17 +11278,17 @@ AccChord_CheckModeAndUpdate:
 	ld (ACC_CHORD_TYPE:16), a
 	ld (CHORD_TYPE:16), a
 	ld (DISPLAY_CHORD_TYPE:16), a
-	ld (8960:16), a
+	ld (SEQ_CHORD_TYPE:16), a
 	ld a, (ACC_CHORD_PREV_ROOT:16)
 	ld (ACC_CHORD_ROOT:16), a
 	ld (CHORD_ROOT:16), a
 	ld (DISPLAY_CHORD_ROOT:16), a
-	ld (8962:16), a
+	ld (SEQ_CHORD_ROOT:16), a
 	ld a, (ACC_CHORD_PREV_BASS:16)
 	ld (ACC_CHORD_BASS:16), a
 	ld (CHORD_BASS_ROOT:16), a
 	ld (DISPLAY_CHORD_BASS:16), a
-	ld (8964:16), a
+	ld (SEQ_CHORD_BASS:16), a
 	cp a, (ACC_CHORD_PREV_ROOT:16)
 	jr nz, AccChord_CompareNoteC
 	ld (DISPLAY_CHORD_BASS:16), 0
@@ -11297,7 +11297,7 @@ AccChord_CompareNoteC:
 	ld a, (ACC_CHORD_PREV_FLAGS:16)
 	ld (ACC_CHORD_FLAGS:16), a
 	ld (CHORD_FLAGS:16), a
-	ld (8966:16), a
+	ld (SEQ_CHORD_FLAGS:16), a
 	call Voice_InitSlotData
 	call Voice_FindAndAllocBestMatch
 	ld a, (PANEL_STYLE+3:16)

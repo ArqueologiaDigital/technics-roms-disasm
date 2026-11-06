@@ -241,7 +241,7 @@ sequencer) uses the same 9-bit path on a caller-supplied note list.
 
 - What sets `CHORD_FLAGS` / 0x32D7 bit 0 (no setter in the v10 recognizer; the 0x2306 override is the only path
   found).  Next step: trace the writers of 0x2306 (sequencer_engine.s `BitMapOut_*` / `NoteDisplay_*` callers).
-- `Rhythm_TransposeWithMod` (0xF55AD0, called through `AccompSeq_CheckVelFlags*`, accompseq_routines.s) is a second
+- `Rhythm_PhraseConvertNote` (0xF55AD0, called through `AccompSeq_CheckVelFlags*`, accompseq_routines.s) is a second
   converter with its own ext bytes (0x7E5A / 0x7E5B -> 0x33E6 / 0x33E7), the ACCOMP1 row map and no turnover; its
   caller (the composer / accompaniment sequencer) was not traced.
 - The fast path's tables (`Rhythm_VelocityTable_A`) differ from the full path's only at type 7 (row 0 instead of 9);

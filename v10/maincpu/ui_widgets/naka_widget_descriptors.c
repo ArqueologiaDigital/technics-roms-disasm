@@ -2738,7 +2738,7 @@ typedef struct __attribute__((packed)) {
      * AccPatch_Transpose_LookupTable_Data`), Rhythm_RootOnlyNote (v10/v9
      * 0xF55030, v7 0xF54C2C) (`ld xiy, AccPatch_Transpose_LookupTable_Data`),
      * Rhythm_NotePitchClass (v10/v9 0xF550BB, v7 0xF54CB7) (`ld xiy,
-     * AccPatch_Transpose_LookupTable_Data`), Rhythm_TranspMod_BaseApply (v10/v9
+     * AccPatch_Transpose_LookupTable_Data`), Rhythm_PhraseChordRow (v10/v9
      * 0xF55B44, v7 0xF55740) (`ld xiy, AccPatch_Transpose_LookupTable_Data`),
      * AccPlay_NoteAllocAndWrite (v10/v9 0xF722AB, v7 0xF71EA7) (`ld xix,
      * AccPatch_Transpose_LookupTable_Data`). 128 bytes to the next referenced
@@ -2751,7 +2751,7 @@ typedef struct __attribute__((packed)) {
      * Rhythm_ChordNoteDeltaRows`), Rhythm_VoiceMap_Inst2Bit3 (v10/v9
      * 0xF5524E, v7 0xF54E4A) (`ld xiy, Rhythm_ChordNoteDeltaRows`),
      * Rhythm_VelComp_Lookup (v10/v9 0xF5530D, v7 0xF54F09) (`ld xiy,
-     * Rhythm_ChordNoteDeltaRows`), Rhythm_TranspMod_BaseLookup
+     * Rhythm_ChordNoteDeltaRows`), Rhythm_PhraseConv_BaseLookup
      * (v10/v9 0xF55B5B, v7 0xF55757) (`ld xiy,
      * Rhythm_ChordNoteDeltaRows`). 456 bytes to the next referenced
      * object; the layout beyond that access is not established.

@@ -10780,8 +10780,8 @@ Rhythm_DispatchNote_Finalize:
 	pop xiz
 	ret
 
-Rhythm_TransposeWithMod_Tramp:
-	jp Rhythm_TransposeWithMod
+Rhythm_PhraseConvertNote_Tramp:
+	jp Rhythm_PhraseConvertNote
 Rhythm_TransposeTrampBlock:
 	jp	Rhythm_DispatchNote_Helper
 
@@ -10948,14 +10948,14 @@ Seq_ReadTempoLookup:
 	ld	(12975:16), wa
 	ret
 Seq_ProcessAllInputState:
-	ld a, (0x31e7:16)
+	ld a, (ACC_RUN_FLAGS:16)
 	and A,0xfe
 	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr z, .Lc_f53115
 	or A,0x01
 Seq_InputState_StoreFlag:
 .Lc_f53115:
-	ld (0x31e7:16), a
+	ld (ACC_RUN_FLAGS:16), a
 	calr AccKey_ScanAndSetDirty
 	calr AccState_ReadAccompParams
 	calr AudioMode_CheckAndUpdateStereo
@@ -10974,7 +10974,7 @@ Seq_InputState_StoreFlag:
 	add BC,HL
 	ld (0x31e1:16), bc
 	ld (0x324d:16), 0x18
-	bit 0, (0x31e7:16)
+	bit 0, (ACC_RUN_FLAGS:16)
 	jr z, AccInput_CheckRecordMode
 	call AccTuning_DisableIfNoStyle
 	bit 0, (0x32c7:16)
@@ -11044,15 +11044,15 @@ AccChord_ReadAndStoreKeys:
 	ld (ACC_CHORD_BASS:16), a
 	ld a, (CHORD_FLAGS:16)
 	ld (ACC_CHORD_FLAGS:16), a
-	cp (0x2308:16), 0x00
+	cp (SEQ_CHORD_FROM_SONG:16), 0x00
 	jr z, .Lc_f53209
-	ld a, (0x2302:16)
+	ld a, (SEQ_CHORD_ROOT:16)
 	ld (ACC_CHORD_ROOT:16), a
-	ld a, (0x2300:16)
+	ld a, (SEQ_CHORD_TYPE:16)
 	ld (ACC_CHORD_TYPE:16), a
-	ld a, (0x2304:16)
+	ld a, (SEQ_CHORD_BASS:16)
 	ld (ACC_CHORD_BASS:16), a
-	ld a, (0x2306:16)
+	ld a, (SEQ_CHORD_FLAGS:16)
 	ld (ACC_CHORD_FLAGS:16), a
 AccChord_CheckKeyOverride:
 .Lc_f53209:
@@ -11112,17 +11112,17 @@ AccChord_CheckModeAndUpdate:
 	ld	(ACC_CHORD_TYPE:16), a
 	ld	(CHORD_TYPE:16), a
 	ld	(DISPLAY_CHORD_TYPE:16), a
-	ld	(8960:16), a
+	ld	(SEQ_CHORD_TYPE:16), a
 	ld	a, (ACC_CHORD_PREV_ROOT:16)
 	ld	(ACC_CHORD_ROOT:16), a
 	ld	(CHORD_ROOT:16), a
 	ld	(DISPLAY_CHORD_ROOT:16), a
-	ld	(8962:16), a
+	ld	(SEQ_CHORD_ROOT:16), a
 	ld	a, (ACC_CHORD_PREV_BASS:16)
 	ld	(ACC_CHORD_BASS:16), a
 	ld	(CHORD_BASS_ROOT:16), a
 	ld	(DISPLAY_CHORD_BASS:16), a
-	ld	(8964:16), a
+	ld	(SEQ_CHORD_BASS:16), a
 	cp	a, (ACC_CHORD_PREV_ROOT:16)
 	jr	nz, AccChord_CompareNoteC	; -> 0xF532ED
 	ld	(DISPLAY_CHORD_BASS:16), 0
@@ -11130,7 +11130,7 @@ AccChord_CompareNoteC:
 	ldb_d8	a, (ACC_CHORD_PREV_FLAGS)
 	stb_d8	(ACC_CHORD_FLAGS), a
 	stb_d8	(CHORD_FLAGS), a
-	stb_d8	(8966), a
+	stb_d8	(SEQ_CHORD_FLAGS), a
 	call	Voice_InitSlotData
 	call	Voice_FindAndAllocBestMatch
 	ldb_d8	a, (PANEL_STYLE+3)
