@@ -55,20 +55,26 @@ index of every screen: what it draws, the handler on each key, and which key lea
 
 ## The sources that are not images
 
-| source | included by | contents |
-|---|---|---|
-| `kernel/kernel.s` | `prom_a` **and** `prom_c` | the multitasking kernel both CPUs run |
-| `kernel/kernel_maincpu.inc` | `prom_a` | the 21 values that are CPU 1's |
-| `kernel/kernel_subcpu.inc` | `prom_c` | the same 21 values for CPU 2 |
-| `dsp/dsp_channel_regs.s` | `prom_a` **and** `prom_c` | the DSP channel-register driver both CPUs run |
-| `dsp/dsp_channel_regs_maincpu.inc` | `prom_a` | the ONE value that is CPU 1's |
-| `dsp/dsp_channel_regs_subcpu.inc` | `prom_c` | the same one value for CPU 2 |
+| source                             | included by                                                                         | contents                                                                |
+|------------------------------------|-------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
+| `kernel/kernel.s`                  | `prom_a` **and** `prom_c` **and** the KN5000 sub-CPU payloads (v1.42, v1.41, v1.40) | the multitasking kernel all three processors run                        |
+| `kernel/kernel_maincpu.inc`        | `prom_a`                                                                            | the 21 values that are CPU 1's                                          |
+| `kernel/kernel_subcpu.inc`         | `prom_c`                                                                            | the same 21 values for CPU 2                                            |
+| `kernel/kernel_kn5000_subcpu.inc`  | `../v142/subcpu` (and v141, v140)                                                   | the KN5000 sub-CPU's 21 values, six of its own, and `KERNEL_KN5000 = 1` |
+| `dsp/dsp_channel_regs.s`           | `prom_a` **and** `prom_c`                                                           | the DSP channel-register driver both CPUs run                           |
+| `dsp/dsp_channel_regs_maincpu.inc` | `prom_a`                                                                            | the ONE value that is CPU 1's                                           |
+| `dsp/dsp_channel_regs_subcpu.inc`  | `prom_c`                                                                            | the same one value for CPU 2                                            |
 
 The two processors run **the same 2,180-byte kernel**, at `0xF85606` on CPU 1 and
 `0xF9816B` on CPU 2 — every pair of addresses differing by exactly `0x12B65`. It
 is written once. Everything that genuinely differs between the two copies is a
 `.equ` in one of the two `.inc` files: a stack top, two low-RAM cells, nine array
 bases and their sizes, and three ROM pointers.
+
+★ **Since 2026-11-06 a third processor builds from it:** the KN5000's sub-CPU, whose kernel is the
+same one with different text in places (an event-flag family, a lock-depth word in RAM, 16-bit
+addresses), so those runs sit in `.if KERNEL_KN5000` blocks; between the two WSA1 CPUs it is still
+equates only.  How it was paired, merged and checked: `notes/open9-a3-probes/README.md`.
 
 ★ **The byte gate is what makes that a proof.** One source assembling to bytes
 identical to *both* EPROMs is not a claim that two listings look alike; if a

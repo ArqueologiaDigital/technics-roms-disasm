@@ -251,13 +251,13 @@ MemClear_ExtRAM_Finish:
 
 ; ★ TASK 2 ENTRY POINT (0x01FC6F) -- was `Const_0x0E: .byte 0x0e`; 0x0E is the RET opcode and
 ; this byte is CODE, not a constant.  Evidence: record 2 of TaskSched_TaskDescriptorTable
-; holds 0x0001FC6F in its +0 (entry PC) field, which TaskSched_SpawnTask would copy into the
+; holds 0x0001FC6F in its +0 (entry PC) field, which Kernel_StartTask would copy into the
 ; saved-PC slot of task 2's context frame.  Task 2 is never spawned in v1.42: the only
-; TaskSched_SpawnTask call sites are TaskSched_ConfigAndDispatch (A = 1) and
+; Kernel_StartTask call sites are Kernel_InitRam__install (A = 1) and
 ; DSP_State_DmaLoadPresets (A = 3), and no numeric branch operand left in this image targets
 ; 0x01FFFD.  So this is an unused task slot whose body is a bare RET (if it ever ran, the RET
 ; would pop the first long above its fresh stack top 0x040C20, not a return address).
-; Task2_NeverSpawned: Entry PC of task 2 (TaskSched_TaskDescriptorTable record 2), a bare RET: TaskSched_SpawnTask is
+; Task2_NeverSpawned: Entry PC of task 2 (TaskSched_TaskDescriptorTable record 2), a bare RET: Kernel_StartTask is
 ;   only ever called with task 1 and task 3, so this slot is unused in v1.42. Basis: descriptor table + the SpawnTask
 ;   call sites.
 Task2_NeverSpawned:

@@ -1207,9 +1207,9 @@ DSP_TuneOffset_WriteSequence:
 	retd 0x4
 
 ; Seeds the DSP configuration-buffer POOL and starts the task that consumes it.
-;   TaskSched_SpawnTask(3)
-;   TaskMsgQ_Send(queue 1, 0x045324)
-;   TaskMsgQ_Send(queue 1, 0x045446)     [tail-jump]
+;   Kernel_StartTask(3)
+;   MsgQueue_Send(queue 1, 0x045324)
+;   MsgQueue_Send(queue 1, 0x045446)     [tail-jump]
 ; i.e. exactly TWO 0x122-byte buffers are ever in circulation.  Called once, from DSP_Reset
 ; (0x0360F9).  Task 3's body is the loop at 0x038E0F, reached through the thunk
 ; DSP_WaitForTaskSlot_Data (0x036327) = `jp 0x038E0F`.
@@ -1218,27 +1218,27 @@ DSP_TuneOffset_WriteSequence:
 ; The pool size of two is the reason DSP_State_ApplyBuf can wedge -- see [UNCERTAIN].
 DSP_State_DmaLoadPresets:
 	ld wa, 3:i3
-	call TaskSched_SpawnTask
+	call Kernel_StartTask
 	lda xwa, (Payload_Bss_Start+0x64ae:24)
 	ld xbc, xwa
 	ld wa, 1:i3
-	call TaskMsgQ_Send
+	call MsgQueue_Send
 	lda xwa, (Payload_Bss_Start+0x65d0:24)
 	ld xbc, xwa
 	ld wa, 1:i3
-	jp TaskMsgQ_Send
+	jp MsgQueue_Send
 ; TASK BODY (task id 3), not data -- the name is wrong, see [UNCERTAIN].  Never returns:
 ;   forever {
-;     XIZ = TaskMsgQ_Receive(queue 2);        // BLOCKING, no timeout
+;     XIZ = MsgQueue_ReceiveBlocking(queue 2);        // BLOCKING, no timeout
 ;     DSP_State_ApplyAll(XIZ);                // 0x036E3D: pushes the image to the DSPs
 ;     XIZ->[0x0120] = 0;                      // clear the "request pending" flag
-;     TaskMsgQ_Send(queue 1, XIZ);            // return the buffer to the free pool
+;     MsgQueue_Send(queue 1, XIZ);            // return the buffer to the free pool
 ;   }
 ; The only producer for queue 2 is DSP_State_ApplyBuf (0x038E31); the only consumer of queue 1
 ; is DSP_State_ApplyBuf.  Entered through the thunk at 0x036327.
 ; (Renamed DSP_State_InlineData -> DSP_State_ApplyTask; the thunk is Task3_EnterDspApplyLoop.)
-; DSP_State_ApplyTask: Task 3's body, never returns: forever XIZ = TaskMsgQ_Receive(queue 2), DSP_State_ApplyAll(XIZ),
-;   buf[0x120] = 0, TaskMsgQ_Send(queue 1, XIZ). Basis: task table + thunk + body -- record 3 of the task descriptor
+; DSP_State_ApplyTask: Task 3's body, never returns: forever XIZ = MsgQueue_ReceiveBlocking(queue 2), DSP_State_ApplyAll(XIZ),
+;   buf[0x120] = 0, MsgQueue_Send(queue 1, XIZ). Basis: task table + thunk + body -- record 3 of the task descriptor
 ;   table is Task3_EnterDspApplyLoop = `jp` here; DSP_State_DmaLoadPresets spawns task 3 and seeds queue 1 with the two
 ;   buffers.
 DSP_State_ApplyTask:
@@ -1247,7 +1247,7 @@ DSP_State_ApplyTask:
 ; branch target in the whole region with no symbol in the LLVM build -- genuinely new.
 DSP_State_ApplyTask_Loop:
 	ld	wa, 2:i3
-	call	TaskMsgQ_Receive
+	call	MsgQueue_ReceiveBlocking
 	ld	xiz, xhl
 	ld	xwa, xiz
 	call	DSP_State_ApplyAll
@@ -1255,16 +1255,16 @@ DSP_State_ApplyTask_Loop:
 	ld	xwa, xiz
 	ld	xbc, xwa
 	ld	wa, 1:i3
-	call	TaskMsgQ_Send
+	call	MsgQueue_Send
 	jr	t, DSP_State_ApplyTask_Loop
 
 ; Hands the caller's 0x91-word (290-byte) DSP configuration image to the apply task.
 ; In: XWA = address of the caller's image (callers pass 0x00448E, the live config block).
-; Grabs a buffer:  XHL = TaskMsgQ_TryReceive(queue 2)   -- non-blocking; if a request is still
+; Grabs a buffer:  XHL = MsgQueue_Receive_NoBlock(queue 2)   -- non-blocking; if a request is still
 ; queued it is RE-USED, i.e. the older request is silently overwritten.
-;                  if zero, XHL = TaskMsgQ_Receive(queue 1)  -- BLOCKING, NO TIMEOUT.
+;                  if zero, XHL = MsgQueue_ReceiveBlocking(queue 1)  -- BLOCKING, NO TIMEOUT.
 ; The chosen buffer address is parked in the global at 0x004A3A.  Then ldirw 0x91 words from
-; the caller's image into it, set buf[0x0120] = 1 ("request pending"), TaskMsgQ_Send(queue 2).
+; the caller's image into it, set buf[0x0120] = 1 ("request pending"), MsgQueue_Send(queue 2).
 ; Callers: DSP_ApplyAlgoForVoiceType (0x03608C), DSP_ApplyConfig (0x03616A, three call sites)
 ; and DSP_ReconfigAndStatus (0x0361C5).
 ; ** The blocking Receive at 0x038E44 is the one unbounded wait in this region. **
@@ -1272,12 +1272,12 @@ DSP_State_ApplyBuf:
 	push xiz
 	ld xiz, xwa
 	ld wa, 2:i3
-	call TaskMsgQ_TryReceive
+	call MsgQueue_Receive_NoBlock
 	ld (19002:16), xhl
 	or xhl, xhl
 	jr nz, DSP_State_ApplyBuf_DoCopy
 	ld wa, 1:i3
-	call TaskMsgQ_Receive
+	call MsgQueue_ReceiveBlocking
 	ld (19002:16), xhl
 
 ; Join point: a buffer has been obtained (from either queue); copy, flag, and post it.
@@ -1290,7 +1290,7 @@ DSP_State_ApplyBuf_DoCopy:
 	ldw	(xwa+288), 0x0001
 	ld xbc, (19002:16)
 	ld wa, 2:i3
-	call TaskMsgQ_Send
+	call MsgQueue_Send
 	pop xiz
 	ret
 
@@ -6145,7 +6145,7 @@ DSP_WriteParam_Return:
 	retd 0x4
 	ret
 
-; Already named.  Two instructions: `lds wa,1` then `jp TaskSem_Release`
+; Already named.  Two instructions: `lds wa,1` then `jp Kernel_SemaSignal`
 ; (0x020370).  It is a TAIL JUMP, so it re-enters the scheduler with priority 1 and only comes
 ; back when this task is next dispatched.  Called after every DSP2_SPI_BusIdle in the bytecode
 ; interpreter, the translator and DSP_MixerCoeff_Compute -- i.e. the DSP write path
@@ -6155,7 +6155,7 @@ DSP_WriteParam_Return:
 ; 0x1082), waking the task blocked on it if there is one, and only then switches tasks.
 DSP_Bytecode_NotifyStateChange:
 	ld wa, 1:i3
-	jp TaskSem_Release
+	jp Kernel_SemaSignal
 
 ; Already named.  Sets up and runs a canned DSP register-write program.
 ; In:  WA = chip id (0 = DSP1/uPD6383, 1 = DSP2/MN19413), BC = program index,

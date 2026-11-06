@@ -12,6 +12,14 @@ that did A4 and B3 (they live beside the code they rewrite, not here).
 | `../../../scripts/tools/split_v142_subcpu_core.py`       | A4: is the split v142 sub-CPU core the same text, moved, and does every cut fall between routines?                    | `python3 scripts/tools/split_v142_subcpu_core.py --check 130735749` (repo root)                                              |
 | `census_battery.sh`                                      | A4: did any census silently stop seeing a moved file?  Run before and after, diff the two directories                 | `bash wsa1/notes/open4-e-probes/census_battery.sh OUTDIR` (repo root, on a built tree)                                        |
 
+★ **A3 was unblocked and done on 2026-11-06** (owner: "one kernel source for three CPUs, with
+conditional blocks through most routines"; lane open9/kernel-a3).  The measurement below is what
+decided that equates alone were not enough; the join itself, its pairing on proven boundaries and its
+figures are in `../open9-a3-probes/README.md`.  ⚠ The A2 match sites `kernel_a3_shareability.py`
+uses are approximate (several routines share one); its per-routine table stays as the record of the
+2026-10-31 decision, and `--selftest` still passes unchanged, because it reads kernel.s as the WSA1
+build sees it (`asm_source.cpu_view`).
+
 ## What the A3 measurement says (2026-10-31)
 
 26 kernel routines of >= 8 instructions, prom_c against the KN5000 sub-CPU payload at A2's match

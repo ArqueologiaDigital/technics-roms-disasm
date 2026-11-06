@@ -5,6 +5,14 @@ both of the WSA1's TMP95C061s is also present, routine for routine, in the
 KN5000's TMP94C241 **sub-CPU payload** and, independently, in its **main
 program ROM**. One kernel, **four processors, two products.**
 
+> ★ **2026-11-06 (A3, lane open9/kernel-a3): for three of the four it is now ONE SOURCE FILE.**
+> The KN5000 sub-CPU payload (v1.42, v1.41, v1.40) builds its kernel from `kernel/kernel.s`, like
+> both WSA1 CPUs, byte for byte (`kernel/kernel_kn5000_subcpu.inc` is the third RAM map below, and
+> `.if KERNEL_KN5000` blocks carry the text that differs).  What is shared, measured on PROVEN
+> routine boundaries rather than this note's match windows (`notes/open9-a3-probes/`): 26 routines
+> pair, in the same ROM order; 801 of the KN5000's 1,137 kernel instructions are written once for
+> all three processors.  The main CPU's build (sec 7) is not joined.
+
 Everything below is reproduced by
 
 ```
@@ -185,6 +193,11 @@ target, different image, no kernel.
 
 ## 5. The order test (`--order`) — no threshold, no name, no score
 
+> ⚠ 2026-11-06: on proven routine boundaries (`notes/open9-a3-probes/kernel_a3_pairing.py`) the
+> sub-CPU's order is not "21 of 26 increasing" but **the same order, all 26 pairs**: the five
+> routines outside the run here were placed by this section's approximate windows.  The test below
+> stands as what it measured; the stronger statement is the pairing's.
+
 If the KN5000's scheduler were merely a similar piece of code, its routines
 would be laid out in its own order. Take the WSA1 kernel's routines in prom_c
 ROM order, ask each one *independently* where its best match is, and count how
@@ -335,6 +348,14 @@ same order, with different sizes. That is a second, independent structural
 signature — a coincidental resemblance has no reason to preserve the order of a
 RAM map. This table is what `kernel/kernel_maincpu.inc` and
 `kernel/kernel_subcpu.inc` would need a third and fourth sibling for.
+(★ The third exists since 2026-11-06: `kernel/kernel_kn5000_subcpu.inc`, the sub-CPU column above,
+every value checked by the payload's byte gate.  Corrections from doing it: the "byte cell below
+the map" (0x00F4 -> 0x103C) is the task control blocks minus one 12-byte stride, the one-based base;
+the semaphore rows (0x0128 / 0x012C -> 0x1074 / 0x1078, 0x013B / 0x013C -> 0x107F / 0x1080) paired the
+WSA1's semaphores with the KN5000's EVENT flags, which the WSA1 does not have -- its semaphores are
+the KN5000's 0x107E / 0x1082 (wait queues) and 0x1091 / 0x1092 (counts); and the node-pool row's
+0x1082 is the same mix-up (the pool is 0x10A6).  The alignment that settles it scores a pair higher
+when kernel.s's line gives the KN5000 bytes (`kernel_a3_merge.py`, `weighted_lcs`).)
 
 ---
 
@@ -409,6 +430,10 @@ call into the callback.
   `Kernel_ExitTask` (15) and `Kernel_BlockSelf` (19) are **undecidable on their
   own scores**. They are placed by the order constraint, and that placement is
   an inference, not a measurement.
+* (★ 2026-11-06: the sub-CPU half of the next bullet is SETTLED -- those routines now carry
+  kernel.s's names, renamed on the proven pairing, and two of the mismatches below were this note's
+  approximate sites, not wrong labels: `MsgQueue_Send` is TaskMsgQ_Send, `Kernel_SemaSignal` is
+  TaskSem_Release; `notes/open9-a3-probes/README.md`.  The main-CPU half still stands.)
 * **The sibling tree's labels in that block.** The structural match does not
   agree with all of them — the site matching WSA1 `MsgQueue_Send` is labelled
   `TaskSched_Wait` there, the one matching `Kernel_SemaSignal` is labelled

@@ -831,6 +831,9 @@ V7_SRC  = $(wildcard v7/maincpu/*.s v7/maincpu/*/*.s v7/maincpu/*/*/*.s)
 V142_SRC = $(wildcard v142/subcpu/*.s v142/subcpu/*/*.s)
 V141_SRC = $(wildcard v141/subcpu/*.s v141/subcpu/*/*.s)
 V140_SRC = $(wildcard v140/subcpu/*.s v140/subcpu/*/*.s)
+# The sub-CPU kernel is wsa1/kernel/kernel.s, shared with both SX-WSA1R CPUs since 2026-11-06
+# (wsa1/notes/open9-a3-probes/README.md); every payload version includes it through -I wsa1/kernel.
+SUBCPU_KERNEL_SRC = wsa1/kernel/kernel.s wsa1/kernel/kernel_kn5000_subcpu.inc
 SUBBOOT_SRC = $(wildcard subcpu/boot/*.s subcpu/boot/*/*.s)
 HDAE_SRC = $(wildcard hdae5000/*.s hdae5000/*/*.s)
 TABLEDATA_SRC = $(wildcard table_data/*.s table_data/*/*.s)
@@ -1098,9 +1101,9 @@ $(eval $(call PORTED_MAINCPU,v5,V5))
 .PHONY: v6-progress verify-v6-reference v5-progress verify-v5-reference
 
 # --- Subcpu payload ---
-rebuilt_ROMs/kn5000_subprogram_v142.llvm.o: $(V142_SRC) $(LLVM_MC)
+rebuilt_ROMs/kn5000_subprogram_v142.llvm.o: $(V142_SRC) $(SUBCPU_KERNEL_SRC) $(LLVM_MC)
 	mkdir -p rebuilt_ROMs
-	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I v142/subcpu -o $@ v142/subcpu/kn5000_subprogram_v142.s
+	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I v142/subcpu -I wsa1/kernel -o $@ v142/subcpu/kn5000_subprogram_v142.s
 
 rebuilt_ROMs/kn5000_subprogram_v142.llvm.elf: rebuilt_ROMs/kn5000_subprogram_v142.llvm.o v142/subcpu/subcpu.ld
 	$(LLVM_LLD) -T v142/subcpu/subcpu.ld -o $@ $<
@@ -1132,9 +1135,9 @@ rebuilt_ROMs/kn5000_subprogram_v142_compressed.rom: rebuilt_ROMs/kn5000_subprogr
 # Ported from the v1.42 tree (scripts/generators/create_v141_subcpu_source.py records
 # the semantic delta; notes/v141-subcpu-port/README.md says how it was measured).
 # Same layout as v142: image = [0x400..0x4FF] + [0xF000..0x3EEFF].
-rebuilt_ROMs/kn5000_subprogram_v141.llvm.o: $(V141_SRC) $(LLVM_MC)
+rebuilt_ROMs/kn5000_subprogram_v141.llvm.o: $(V141_SRC) $(SUBCPU_KERNEL_SRC) $(LLVM_MC)
 	mkdir -p rebuilt_ROMs
-	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I v141/subcpu -o $@ v141/subcpu/kn5000_subprogram_v141.s
+	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I v141/subcpu -I wsa1/kernel -o $@ v141/subcpu/kn5000_subprogram_v141.s
 
 rebuilt_ROMs/kn5000_subprogram_v141.llvm.elf: rebuilt_ROMs/kn5000_subprogram_v141.llvm.o v141/subcpu/subcpu.ld
 	$(LLVM_LLD) -T v141/subcpu/subcpu.ld -o $@ $<
@@ -1160,9 +1163,9 @@ rebuilt_ROMs/kn5000_subprogram_v141_compressed.rom: rebuilt_ROMs/kn5000_subprogr
 # Ported from the v1.41 tree (scripts/generators/create_v140_subcpu_source.py records
 # the semantic delta; notes/v140-subcpu-port/README.md says what the code change does).
 # Same layout as v142: image = [0x400..0x4FF] + [0xF000..0x3EEFF].
-rebuilt_ROMs/kn5000_subprogram_v140.llvm.o: $(V140_SRC) $(LLVM_MC)
+rebuilt_ROMs/kn5000_subprogram_v140.llvm.o: $(V140_SRC) $(SUBCPU_KERNEL_SRC) $(LLVM_MC)
 	mkdir -p rebuilt_ROMs
-	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I v140/subcpu -o $@ v140/subcpu/kn5000_subprogram_v140.s
+	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I v140/subcpu -I wsa1/kernel -o $@ v140/subcpu/kn5000_subprogram_v140.s
 
 rebuilt_ROMs/kn5000_subprogram_v140.llvm.elf: rebuilt_ROMs/kn5000_subprogram_v140.llvm.o v140/subcpu/subcpu.ld
 	$(LLVM_LLD) -T v140/subcpu/subcpu.ld -o $@ $<

@@ -108,13 +108,13 @@ RESET:
 PostReset_InitAudio:
 	lda xwa, (Task1_StackTop:24)
 	ld xsp, xwa
-	call TaskSched_Init
+	call Kernel_InitRam
 ; ★ TASK 1 ENTRY POINT (0x01FAB1).  The `call` above never returns here in the ordinary way:
 ; record 1 of TaskSched_TaskDescriptorTable holds this address in its +0 (entry PC) field, and
-; TaskSched_SpawnTask(1) -- issued by TaskSched_ConfigAndDispatch at the end of TaskSched_Init --
+; Kernel_StartTask(1) -- issued by Kernel_InitRam__install at the end of Kernel_InitRam --
 ; copies it into the saved-PC slot (+30) of a fresh 34-byte context frame built just below the
 ; record's stack top 0x04069A, the same value loaded into XSP two instructions up.
-; TaskSched_Dispatch then enters it through TaskSched_ContextRestore (7 x pop, pop sr, ret),
+; Kernel_Dispatch then enters it through Kernel_ResumeTask (7 x pop, pop sr, ret),
 ; so everything from here on -- Audio_System_Init and Audio_Main_Loop -- runs as task 1,
 ; ready-queue priority 3.  The return address the `call` pushed is simply abandoned.
 ; Task1_StartAudioSystem: Entry PC of task 1 (TaskSched_TaskDescriptorTable record 1): arms the audio-tick interrupt

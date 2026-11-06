@@ -1208,7 +1208,7 @@ DSP_Set_EqualizerOnOff:
 ; ALREADY NAMED -- doc header only.
 ; Blocking delay measured on the 32-bit free-running tick at 0x1040.
 ; Entry WA = delay in half-ticks: target = (0x1040) + ((WA + 1) >> 1). While (0x1040) is
-; below the target it calls TaskSched_PreemptiveYield(3) and re-tests.
+; below the target it calls Kernel_YieldRotate(3) and re-tests.
 ; ★ There is NO iteration cap. If the tick at 0x1040 stops advancing this never returns.
 ; Callers are outside the region (0x039128 and a tail jump at 0x039472, both in the DSP
 ; microprogram download path).
@@ -1222,10 +1222,10 @@ DSP_WaitForDelay:
 	cp (4160:16), xiz
 	jr nc, DSP_WaitForTaskSlot_Epilogue
 
-; TaskSched_PreemptiveYield(3); re-test.
+; Kernel_YieldRotate(3); re-test.
 DSP_WaitForTaskSlot_Loop:
 	ld wa, 3:i3
-	call TaskSched_PreemptiveYield
+	call Kernel_YieldRotate
 	cp (4160:16), xiz
 	jr c, DSP_WaitForTaskSlot_Loop
 
@@ -1236,7 +1236,7 @@ DSP_WaitForTaskSlot_Epilogue:
 
 ; --- 0x036327-0x03632A  DSP_WaitForTaskSlot_Data -- four bytes 1b 0f 8e 03
 ; ★ CORRECTED: this is TASK 3's ENTRY POINT, not "an unreachable tail jump".  Record 3 of
-; TaskSched_TaskDescriptorTable holds 0x00036327 in its +0 (entry PC) field; TaskSched_SpawnTask(3),
+; TaskSched_TaskDescriptorTable holds 0x00036327 in its +0 (entry PC) field; Kernel_StartTask(3),
 ; called from DSP_State_DmaLoadPresets, puts it in the saved-PC slot of task 3's first context
 ; frame, so the first dispatch of task 3 lands here and jumps to the task body
 ; DSP_State_ApplyTask (0x038E0F, formerly DSP_State_InlineData).  Renamed from
@@ -1247,11 +1247,11 @@ DSP_WaitForTaskSlot_Epilogue:
 Task3_EnterDspApplyLoop:
 	jp	DSP_State_ApplyTask
 
-; ALREADY NAMED -- doc header only. `TaskSched_Wait(1)` as a tail jump. Called at the top of
+; ALREADY NAMED -- doc header only. `Kernel_SemaWait(1)` as a tail jump. Called at the top of
 ; DSP2_Send_Command so the bit-bang burst starts on a fresh scheduler slice.
 DSP_WakeAudioTask:
 	ld wa, 1:i3
-	jp TaskSched_Wait
+	jp Kernel_SemaWait
 
 ; ----------------------------------------------------------------------------
 ; DSP_Send_Command - Send a command byte to DSP chip
@@ -6415,7 +6415,7 @@ Debug_Print_Word:	; 038375h
 ; Already correctly named in both sources; documented here only.
 ; A one-instruction thunk: `jp 0x036305` (DSP_WaitForDelay). Entry: WA = milliseconds.
 ; DSP_WaitForDelay computes target = (WA + 1) >> 1 added to the 32-bit tick counter at
-; 0x001040 and then loops calling TaskSched_PreemptiveYield(3) until 0x001040 reaches it.
+; 0x001040 and then loops calling Kernel_YieldRotate(3) until 0x001040 reaches it.
 ; This is a COOPERATIVE BLOCK, not a spin: the calling task is descheduled. It is the only
 ; thing in this region that can suspend the caller for a bounded-by-a-timer amount of
 ; time -- see the findings note about the sub->main stall.

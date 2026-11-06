@@ -1,5 +1,6 @@
 ; ==============================================================================
 ; Technics SX-WSA1R -- THE MULTITASKING KERNEL, ONE SOURCE FOR BOTH PROCESSORS
+;   (and, since 2026-11-06, for the KN5000's sub-CPU as well: "A THIRD PROCESSOR")
 ; ==============================================================================
 ;
 ; The WSA1R has two Toshiba TMP95C061s and they run THE SAME KERNEL.  Until now
@@ -15,6 +16,78 @@
 ;         .include "kernel/kernel.s"          ->  0xF9816B-0xF989EE
 ;
 ;     every pair of addresses differs by exactly 0x12B65, first slot to last
+;
+;     v142/subcpu/core/03_task_scheduler_kernel.s   the KN5000's SUB-CPU, TMP94C241F
+;         .include "kernel_kn5000_subcpu.inc"     (-I wsa1/kernel; v141 and v140,
+;         .include "kernel.s"                     generated from v142, do the same)
+;                                             ->  0x01FDDA-0x02083A in payload v1.42
+;
+; ==============================================================================
+; ★★ A THIRD PROCESSOR (2026-11-06, join/split phase A3, register item N-8c52a3ed)
+; ==============================================================================
+; The owner decided: "one kernel source for three CPUs, with conditional blocks
+; through most routines."  So the KN5000 sub-CPU payload builds its kernel from
+; this file too, and all three images rebuild byte for byte from it (`make gate`
+; for v1.42 / v1.41 / v1.40, `make gate-wsa1` for prom_a / prom_c).
+;
+;   HOW IT WAS JOINED, measured (wsa1/notes/open9-a3-probes/, README there):
+;     kernel_a3_pairing.py   pairs the KN5000 routines with these, routine
+;         against routine on proven boundaries: 26 pairs, in the SAME ROM ORDER
+;         on both products, the 10 WSA1 stack faces (*_StackArg) and 7 KN5000
+;         routines with no partner.
+;     kernel_a3_merge.py     aligns each pair instruction by instruction and
+;         writes an instruction ONCE when this file's line, with the KN5000's
+;         equates (kernel_kn5000_subcpu.inc), gives the KN5000's bytes, or names
+;         the paired target:
+;             941 WSA1 slots, 1,137 KN5000 slots;
+;             801 written once for all three processors;
+;              30 aligned but spelled per CPU -- 11 a 16-bit direct address
+;                 where the WSA1's RAM map fits in 8 bits, 15 a different
+;                 register, count or encoding, 4 a branch to a different place;
+;             306 KN5000-only and 110 WSA1-only instructions.
+;   `--report` re-derives every figure above; `--verify` checks that the merge
+;   only inserted into this file's text and moved every KN5000 comment line.
+;
+;   THE SHAPE, and why:
+;     * ONE SEQUENTIAL BODY, not per-routine files with a per-CPU order list.
+;       The order was measured first: it is the same on both products (A2's
+;       "21-long increasing run of 26" came from its approximate match sites),
+;       so one body emits both, and the KN5000-only routines simply stand at
+;       their place.  One file also keeps every tool that reads kernel.s by
+;       path working.
+;     * `.if KERNEL_KN5000` / `.else` / `.endif` round each run of instructions
+;       that differs, `.if KERNEL_KN5000 == 0` round what only the WSA1 has
+;       (its stack faces, prom_a's alias labels).  25 of the 26 paired routines
+;       have at least one such block; Kernel_ResumeTask has none.  The equates
+;       still carry every per-CPU VALUE: no shared line spells a RAM address.
+;     * Why equates alone could not do it (notes/open4-e-probes/
+;       kernel_a3_shareability.py): the KN5000 keeps its dispatch-inhibit depth
+;       in a RAM word (KERNEL_LOCK_DEPTH) and mirrors it into control register
+;       0x7C, where the TMP95C061 uses cr 0x3C alone; its RAM map needs 16-bit
+;       direct addresses; and it has whole routines the WSA1 lacks -- an
+;       event-flag family (TaskEvent_*), TaskSched_GetCurrentTaskId,
+;       TaskSched_Take_Pending_Count, TaskSem_GetCount -- plus a pending-wake
+;       count in each task control block (+10) that Kernel_ReadyTask and
+;       Kernel_BlockSelf maintain.
+;     * The KN5000's text in its blocks is ITS listing, with the kernel RAM
+;       literals spelled with the equates (4166 -> KERNEL_CURRENT_TASK, ...).
+;
+;   NAMES.  Where a KN5000 routine IS one of these, this file's name is now the
+;   one label in all three builds (62 KN5000 labels renamed:
+;   scripts/renaming/rename_kernel_a3.sed); each paired routine lists its old
+;   KN5000 names under its KN5000 banner.  The KN5000-only routines keep theirs.
+;
+;   COMMENTS.  The KN5000 headers moved here under the banner
+;     ; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
+;   after the WSA1 headers of the same routine; the KN5000 interior comments
+;   stand before the instruction they preceded.  ⚠ ADDRESSES IN THOSE COMMENTS
+;   ARE v1.42 PAYLOAD ADDRESSES (0x01FDDA ...); the per-line `; AAAAAA/CCCCCC`
+;   columns are prom_a/prom_c, and the KN5000 lines carry none (repo policy).
+;
+;   Not in this file: the KN5000 MAIN CPU's separate build of the same kernel
+;   (FINDINGS-kernel-in-the-kn5000.md sec 7, v10/v9/v7 around 0xEF1977); joining
+;   it would be a fourth processor and a fourth .inc (a follow-up, see the A3
+;   README).
 ;
 ; ★★ THE BYTE GATE IS THE PROOF, AND IT IS THE WHOLE POINT.
 ;
@@ -62,6 +135,10 @@
 ; ★ There is NO `.if CPU_MAINCPU` anywhere in this file, and that is deliberate.
 ;   Wrapping code in conditionals would duplicate every differing line at its
 ;   site; equates name each difference once and leave the body genuinely shared.
+;   ⚠ TRUE FOR THE TWO WSA1 CPUs, AND STILL TRUE BETWEEN THEM -- but since
+;   2026-11-06 this file is also the KN5000 sub-CPU's kernel, and between the
+;   WSA1 and the KN5000 there ARE `.if KERNEL_KN5000` blocks: see "A THIRD
+;   PROCESSOR" below for why equates alone could not carry it.
 ;
 ; ------------------------------------------------------------------------------
 ; WHAT THE MERGE DID TO THE TEXT -- so a reviewer can check it rather than trust it
@@ -337,15 +414,38 @@
 ;          DE is reloaded at 0xF981BD -- dead in this copy, as it is in prom_a's.
 ; --------------------------------------------------------------------------
 
+; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
+; KN5000 sub-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open9-a3-probes/):
+;    TaskSched_Init = Kernel_InitRam, TaskSched_Init_QueueHeaders = Kernel_InitRam__ready_queues,
+;    TaskSched_Init_TaskDescriptors = Kernel_InitRam__tcbs,
+;    TaskSched_Init_FreeList_A = Kernel_InitRam__soft_timers,
+;    TaskSched_Init_QueueGroup_C = Kernel_InitRam__sema_queues,
+;    TaskSched_Init_FreeList_B = Kernel_InitRam__free_nodes,
+;    TaskSched_Init_LinkFreeNodes = Kernel_InitRam__free_append,
+;    TaskSched_Init_QueueGroup_D = Kernel_InitRam__wait_queues,
+;    TaskSched_Init_QueueGroup_E = Kernel_InitRam__msg_queues.
 Kernel_InitRam:
 	ld XSP,KERNEL_STACK_TOP                      ; F85606/F9816B  a=47 80 eb 60 00 c=47 00 fa 00 00   c: ld XSP,0x0000fa00   the boot stack
 	xor WA,WA                                    ; F8560B/F98170  d8 d0   xor WA,WA
+.if KERNEL_KN5000
+	ld (KERNEL_CURRENT_TASK:16), wa
+.else
 	st_dd8w wa, KERNEL_CURRENT_TASK              ; F8560D/F98172  a=f0 bf 50 c=f0 91 50   c: ld (0x91),WA   (0xBF) = 0: no task is running
+.endif
 	inc 1,WA                                     ; F85610/F98175  d8 61   inc 1,WA
+.if KERNEL_KN5000
+	ldc_cr16 wa, 0x7C
+	ld (KERNEL_LOCK_DEPTH:16), wa
+.else
 	ldc_cr16	wa, 0x3c                     ; F85612/F98177  d8 2e 3c   ldc unknown,WA   critical-section depth := 1
+.endif
 	ldw hl, KERNEL_READY_HEADS                   ; F85615/F9817A  a=33 30 03 c=33 24 01   c: ld HL,0x0124   the THREE READY QUEUE heads
 	extz XHL                                     ; F85618/F9817D  eb 12   extz XHL
+.if KERNEL_KN5000
+	ld de, 4:i3
+.else
 	ldw de, 0x04                                 ; F8561A/F9817F  32 04 00   ld DE,0x0004   dead here -- DE is reloaded at 0xF85658
+.endif
 	ld b, KERNEL_READY_LEVELS:opc                   ; F8561D/F98182  a=22 03 c=22 02   c: ld B,0x02
 Kernel_InitRam__ready_queues:
 	ld IX,HL                                     ; F8561F/F98184  db 8c   ld IX,HL
@@ -358,6 +458,10 @@ Kernel_InitRam__ready_queues:
 	ld a, 0x00:opc                                  ; F85631/F98196  21 00   ld A,0x00
 Kernel_InitRam__tcbs:
 	ld (XIX+0x09),A                              ; F85633/F98198  bc 09 41   ld (XIX+0x09),A   +9 = state 0, which is what Kernel_StartTask requires
+.if KERNEL_KN5000
+	ld (xix + 10), 0x0
+	ld (xix + 11), 0x0
+.endif
 	add IX,0x000c                                ; F85636/F9819B  dc c8 0c 00   add IX,0x000c   stride 12: 0x0300 0x030C 0x0318 0x0324
 	djnz8 b, Kernel_InitRam__tcbs                ; F8563A/F9819F  ca 1c f6   djnz B,0xf98198
 	ldw ix, KERNEL_TIMERS                        ; F8563D/F981A2  a=34 c8 03 c=34 74 01   c: ld IX,0x0174   the TWO software timers
@@ -368,20 +472,45 @@ Kernel_InitRam__soft_timers:
 	ld (XIX+0x04),XWA                            ; F85649/F981AE  bc 04 60   ld (XIX+0x04),XWA   +4 = no callback; Kernel_ServiceSoftTimers skips on this
 	add IX,0x0008                                ; F8564C/F981B1  dc c8 08 00   add IX,0x0008
 	djnz8 b, Kernel_InitRam__soft_timers         ; F85650/F981B5  ca 1c f6   djnz B,0xf981ae
+.if KERNEL_KN5000
+	ld xhl, TaskSched_EventFlagInit
+	ldw de, KERNEL_EVENT_FLAGS
+	extz xde
+	ld bc, 2:i3
+	ldir83
+	ldw hl, KERNEL_EVENT_QUEUES
+	extz xhl
+	ld b, 0x2:opc
+TaskSched_Init_QueueGroup_B:
+	ld ix, hl
+	ld (xhl+), IX
+	ld (xhl+), IX
+	djnz8 b, TaskSched_Init_QueueGroup_B
+.endif
 	ld XHL,KERNEL_SEMA_COUNT_IMAGE               ; F85653/F981B8  a=43 ba 5e f8 00 c=43 0e 81 f9 00   c: ld XHL,0x00f9810e   the 8 ROM bytes after EntryPoint_Records
 	ldw de, KERNEL_SEMA_COUNTS                   ; F85658/F981BD  a=32 5c 03 c=32 3c 01   c: ld DE,0x013c
 	extz XDE                                     ; F8565B/F981C0  ea 12   extz XDE
+.if KERNEL_KN5000
+	ld bc, 4:i3
+.else
 	ldw bc, KERNEL_SEMA_COUNT                    ; F8565D/F981C2  a=31 08 00 c=31 04 00   c: ld BC,0x0004
+.endif
 	ldir83                                       ; F85660/F981C5  83 11   ldir   (XDE+) <- (XHL+), 8 bytes: RAM 0x035C-0x0363
 	ldw hl, KERNEL_SEMA_QUEUES                   ; F85662/F981C7  a=33 3c 03 c=33 2c 01   c: ld HL,0x012c   EIGHT more list heads
 	extz XHL                                     ; F85665/F981CA  eb 12   extz XHL
 	ld b, KERNEL_SEMA_COUNT:opc                     ; F85667/F981CC  a=22 08 c=22 04   c: ld B,0x04
 Kernel_InitRam__sema_queues:
+.if KERNEL_KN5000 == 0
 Kernel_InitRam__heads_033C:   ; <- prom_a's name for this address.
+.endif
 	ld IX,HL                                     ; F85669/F981CE  db 8c   ld IX,HL
 	ld (xhl+), ix                             ; F8566B/F981D0  f5 ed 54   ld (XHL+),IX
 	ld (xhl+), ix                             ; F8566E/F981D3  f5 ed 54   ld (XHL+),IX
+.if KERNEL_KN5000
+	djnz8 b, Kernel_InitRam__sema_queues
+.else
 	djnz8 b, Kernel_InitRam__heads_033C          ; F85671/F981D6  ca 1c f5   djnz B,0xf981ce
+.endif
 	ldw hl, KERNEL_NODE_POOL                     ; F85674/F981D9  a=33 84 03 c=33 50 01   c: ld HL,0x0150   EIGHT 8-byte nodes
 	extz XHL                                     ; F85677/F981DC  eb 12   extz XHL
 	ld b, KERNEL_NODE_COUNT:opc                     ; F85679/F981DE  a=22 08 c=22 04   c: ld B,0x04
@@ -399,7 +528,11 @@ Kernel_InitRam__free_nodes:
 Kernel_InitRam__free_append:
 	extz XIX                                     ; F8569A/F981FF  ec 12   extz XIX
 	extz XIY                                     ; F8569C/F98201  ed 12   extz XIY
+.if KERNEL_KN5000
+	xor xwa, xwa
+.else
 	extz XWA                                     ; F8569E/F98203  e8 12   extz XWA
+.endif
 	ld	(xix+0:8), iy                        ; F856A0/F98205  bc 00 55   ld (XIX+0x00),IY   ld (XIX+0x00),IY -- n->next = head
 	ld WA,(XIY+0x02)                             ; F856A3/F98208  9d 02 20   ld WA,(XIY+0x02)
 	ld (XIX+0x02),WA                             ; F856A6/F9820B  bc 02 50   ld (XIX+0x02),WA   n->prev = head->prev
@@ -423,7 +556,11 @@ Kernel_InitRam__msg_queues:
 	ld (xhl+), ix                             ; F856D0/F98235  f5 ed 54   ld (XHL+),IX
 	ld (xhl+), ix                             ; F856D3/F98238  f5 ed 54   ld (XHL+),IX
 	djnz8 b, Kernel_InitRam__msg_queues          ; F856D6/F9823B  ca 1c f5   djnz B,0xf98233
+.if KERNEL_KN5000
+	ld xwa, SoftTimer_Request_Boot
+.else
 	ld XIX,SoftTimer_Request_Boot                ; F856D9/F9823E  a=44 e0 56 f8 00 c=44 45 82 f9 00   c: ld XIX,0x00f98245   the argument for the call below
+.endif
 	jr Kernel_InitRam__install                   ; F856DE/F98243  68 08   jr T,0xf9824d   step over the argument block
 
 ; >>>>>> moved from prom_a/wsa1_prom_a.s -- CPU 1, the MAIN processor >>>>>>>>>>>>>
@@ -474,6 +611,20 @@ Kernel_InitRam__msg_queues:
 ;          0xF856E0 (SoftTimer_Request_Boot there), with 0x00F85EC2 in +4.
 ; --------------------------------------------------------------------------
 
+; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
+; KN5000 sub-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open9-a3-probes/):
+;    TaskSched_Init_ConfigData = SoftTimer_Request_Boot,
+;    TaskSched_ConfigAndDispatch = Kernel_InitRam__install.
+; Data, not code: Kernel_InitRam loads its ADDRESS ("ld xwa, 0x1FEDF" above) rather than
+; jumping to it, immediately before calling SoftTimer_Register -- this is that call's config
+; struct, not an instruction stream. It happens to disassemble as several short instructions
+; if fed to a byte-stream decoder (that reading was audited and refused, see notes/README.md),
+; which is why it is correctly left as .byte rather than converted.
+; Layout, from its only reader SoftTimer_Register (0x02072A), XIX = this struct:
+;   +0 byte  timer slot id (1)   `ld a,(xix+0) / mul a,8 / add wa,0x10C2` -> slot 0x10CA
+;   +1 byte  0                   not read
+;   +2 word  period in ticks (1) copied to BOTH the slot's down-counter (+0) and reload (+2)
+;   +4 long  callback            copied to the slot's +4; Kernel_ServiceSoftTimers calls it
 SoftTimer_Request_Boot:
 	.short 0x0001                                ; F856E0/F98245  01 00   slot number, read as a BYTE by SoftTimer_Register   slot index, read as a byte by 0xF85D78
 	.short 0x0001                                ; F856E2/F98247  01 00   copied into BOTH slot+0 and slot+2   ⚠ role not established
@@ -584,19 +735,42 @@ Kernel_InitRam__install:
 ;          converted.
 ; --------------------------------------------------------------------------
 
+.if KERNEL_KN5000
+	calr Timer3_Stop
+	ld (TREG3:8), 0x1D:io
+	ld	a, (INTET23:8)
+	and a, 0xF
+	or a, 0x20
+	ld	(INTET23:8), a
+	calr Timer3_Start
+.else
 Kernel_Start:
 	res_dd8 3, TRUN                              ; F856EC/F98251  f0 20 b3   res 3,(0x20)   TRUN bit 3 = timer 3 off
 	ld (T23MOD:8), 14:io                              ; F856EF/F98254  08 28 0e   ld (0x28),0x0e   T23MOD
 	ld (TREG3:8), 54:io                               ; F856F2/F98257  08 27 36   ld (0x27),0x36   TREG3
 	ld (INTET32:8), 32:io                             ; F856F5/F9825A  08 74 20   ld (0x74),0x20   INTET32
+.endif
 	ld a, 0x01:opc                                  ; F856F8/F9825D  21 01   ld A,0x01
+.if KERNEL_KN5000
+	calr Kernel_StartTask
+.else
 	call Kernel_StartTask                        ; F856FA/F9825F  a=1d d9 57 f8 c=1d 3e 83 f9   c: call 0xf9833e
 	ld a, 0x03:opc                                  ; F856FE/F98263  21 03   ld A,0x03
 	call Kernel_StartTask                        ; F85700/F98265  a=1d d9 57 f8 c=1d 3e 83 f9   c: call 0xf9833e
+.endif
 	ei 0x06                                      ; F85704/F98269  06 06   ei 0x06
+.if KERNEL_KN5000
+	ld (KERNEL_PENDING_TICKS:16), 0
+.else
 	ld (KERNEL_PENDING_TICKS:8), 0x00:io              ; F85706/F9826B  a=08 be 00 c=08 90 00   c: ld (0x90),0x00
+.endif
 	xor WA,WA                                    ; F85709/F9826E  d8 d0   xor WA,WA
+.if KERNEL_KN5000
+	ldc_cr16 wa, 0x7C
+	ld (KERNEL_LOCK_DEPTH:16), wa
+.else
 	ldc_cr16	wa, 0x3c                     ; F8570B/F98270  d8 2e 3c   ldc unknown,WA   the depth counter starts at 0
+.endif
 	jrl Kernel_Dispatch                          ; F8570E/F98273  78 04 00   jrl T,0xf9827a
 
 ; >>>>>> moved from prom_c/wsa1_prom_c.s -- CPU 2, the SUB processor >>>>>>>>>>>>>>
@@ -614,8 +788,14 @@ Kernel_Start:
 ;          interrupts off could never be left, which is the independent check.
 ; --------------------------------------------------------------------------
 
+; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
+; KN5000 sub-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open9-a3-probes/):
+;    TaskSched_Halt = Kernel_Idle, TaskSched_HaltLoop = Kernel_Idle__loop.
 Kernel_Idle:
 	ei 0x00                                      ; F85711/F98276  06 00   ei 0x00
+.if KERNEL_KN5000
+	ld (KERNEL_PRIORITY_OUT:16), 255
+.endif
 Kernel_Idle__loop:
 	jr Kernel_Idle__loop                         ; F85713/F98278  68 fe   jr T,0xf98278
 
@@ -684,18 +864,37 @@ Kernel_Idle__loop:
 ;          established -- INTT3_KernelTick is its only writer in this image.
 ; --------------------------------------------------------------------------
 
+; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
+; KN5000 sub-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open9-a3-probes/):
+;    TaskSched_Dispatch = Kernel_Dispatch, TaskSched_Dispatch_ScanQueues = Kernel_Dispatch__pick_task,
+;    TaskSched_Dispatch_ScanLoop = Kernel_Dispatch__scan,
+;    TaskSched_Dispatch_SwitchTo = Kernel_Dispatch__switch_to.
 Kernel_Dispatch:
+.if KERNEL_KN5000
+	ld (KERNEL_PRIORITY_OUT:16), 0
+	ld wa, (KERNEL_LOCK_DEPTH:16)
+.else
 	ldc_16_cr	wa, 0x3c                     ; F85715/F9827A  d8 2f 3c   ldc WA,unknown   outermost only: a non-zero depth means resume, not dispatch
+.endif
 	or WA,WA                                     ; F85718/F9827D  d8 e0   or WA,WA
 	jr nz, Kernel_ResumeTask                     ; F8571A/F9827F  6e 47   jr NZ,0xf982c8
 	xor WA,WA                                    ; F8571C/F98281  d8 d0   xor WA,WA
+.if KERNEL_KN5000
+	cp (KERNEL_CURRENT_TASK:16), wa
+	jr z, Kernel_Dispatch__pick_task
+	ld iy, (KERNEL_CURRENT_TASK:16)
+.else
 	cp	(KERNEL_CURRENT_TASK:8), wa          ; F8571E/F98283  a=d0 bf f8 c=d0 91 f8   c: cp (0x91),WA   (0xBF) = the task whose stack we are on, 0 = none
 	jr z, Kernel_Dispatch__drain_ticks           ; F85721/F98286  66 12   jr Z,0xf9829a
 	ld	iy, (KERNEL_CURRENT_TASK:8)          ; F85723/F98288  a=d0 bf 25 c=d0 91 25   c: ld IY,(0x91)
+.endif
 	extz XIY                                     ; F85726/F9828B  ed 12   extz XIY
 	ld (XIY+0x04),XSP                            ; F85728/F9828D  bd 04 67   ld (XIY+0x04),XSP   save its XSP into the TCB
 	ld XSP,KERNEL_STACK_TOP                      ; F8572B/F98290  a=47 80 eb 60 00 c=47 00 fa 00 00   c: ld XSP,0x0000fa00   and run the kernel on the boot stack
 	xor WA,WA                                    ; F85730/F98295  d8 d0   xor WA,WA
+.if KERNEL_KN5000
+	ld (KERNEL_CURRENT_TASK:16), wa
+.else
 	st_dd8w wa, KERNEL_CURRENT_TASK              ; F85732/F98297  a=f0 bf 50 c=f0 91 50   c: ld (0x91),WA
 Kernel_Dispatch__drain_ticks:
 	ld_sd8b a, KERNEL_PENDING_TICKS              ; F85735/F9829A  a=c0 be 21 c=c0 90 21   c: ld A,(0x90)   (0xBE) = pending timer ticks
@@ -705,6 +904,7 @@ Kernel_Dispatch__drain_ticks:
 	st_dd8b a, KERNEL_PENDING_TICKS              ; F8573E/F982A3  a=f0 be 41 c=f0 90 41   c: ld (0x90),A
 	calr Kernel_ServiceSoftTimers                ; F85741/F982A6  1e 28 00   calr 0xf982d1
 	jr Kernel_Dispatch__drain_ticks              ; F85744/F982A9  68 ef   jr T,0xf9829a
+.endif
 Kernel_Dispatch__pick_task:
 	ld b, KERNEL_READY_LEVELS:opc                   ; F85746/F982AB  a=22 03 c=22 02   c: ld B,0x02
 	ldw ix, KERNEL_READY_HEADS                   ; F85748/F982AD  a=34 30 03 c=34 24 01   c: ld IX,0x0124   the THREE ready-queue heads, 4 bytes each
@@ -717,8 +917,17 @@ Kernel_Dispatch__scan:
 	djnz8 b, Kernel_Dispatch__scan               ; F85756/F982BB  ca 1c f4   djnz B,0xf982b2
 	jr Kernel_Idle                               ; F85759/F982BE  68 b6   jr T,0xf98276
 Kernel_Dispatch__switch_to:
+.if KERNEL_KN5000
+	ld (KERNEL_CURRENT_TASK:16), hl
+.else
 	st_dd8w hl, KERNEL_CURRENT_TASK              ; F8575B/F982C0  a=f0 bf 53 c=f0 91 53   c: ld (0x91),HL
+.endif
 	extz XHL                                     ; F8575E/F982C3  eb 12   extz XHL
+.if KERNEL_KN5000
+	ld a, (xhl + 11)
+	sll a, 5
+	ld (KERNEL_PRIORITY_OUT:16), a
+.endif
 	ld XSP,(XHL+0x04)                            ; F85760/F982C5  ab 04 27   ld XSP,(XHL+0x04)   node+4 = that task's saved XSP
 
 ; >>>>>> moved from prom_c/wsa1_prom_c.s -- CPU 2, the SUB processor >>>>>>>>>>>>>>
@@ -743,6 +952,9 @@ Kernel_Dispatch__switch_to:
 ;          hand, for a task that has never run.
 ; --------------------------------------------------------------------------
 
+; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
+; KN5000 sub-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open9-a3-probes/):
+;    TaskSched_ContextRestore = Kernel_ResumeTask.
 Kernel_ResumeTask:
 	pop XIZ                                      ; F85763/F982C8  5e   pop XIZ   restore the task's registers and return into it
 	pop XIY                                      ; F85764/F982C9  5d   pop XIY
@@ -802,14 +1014,56 @@ Kernel_ResumeTask:
 ;          a name taken from the firmware.
 ; --------------------------------------------------------------------------
 
+; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
+; KN5000 sub-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open9-a3-probes/):
+;    TaskSched_SoftTimer_Service = Kernel_ServiceSoftTimers,
+;    TaskSched_SoftTimer_SlotLoop = Kernel_ServiceSoftTimers__next,
+;    TaskSched_SoftTimer_Next = Kernel_ServiceSoftTimers__step,
+;    TaskSched_SoftTimer_Fire = Kernel_ServiceSoftTimers__fire.
+; Software one-shot/periodic timer service. Walks the 1-entry timer table at 0x10CA
+; (8 bytes/entry: +0 = down-counter word, +2 = reload word, +4 = 32-bit callback address,
+; 0xFFFFFFFF = slot empty). For each armed slot it decrements +0; when the counter reaches
+; zero it reloads it from +2, pushes the loop-advance address 0x01FFA8 as a return address
+; and jumps to the callback, so the callback returns straight back into the walk.
+; Runs the whole walk inside a scheduler lock: 0x10D2 (the lock-depth word) is incremented
+; and mirrored into control register 0x7C on entry and decremented/mirrored on exit, with
+; the interrupt mask raised to level 0 (all masked) for the walk and back to 6 afterwards.
+; While the lock is non-zero Kernel_Dispatch refuses to context-switch (see 0x01FF21).
+; No caller was found by a whole-ROM branch-target scan; it is most likely reached through
+; a dynamically installed vector (see SoftTimer_Register 0x02072A). Register use: WA, XIX, B.
 Kernel_ServiceSoftTimers:
+.if KERNEL_KN5000
+; Software one-shot/periodic timer service. Walks the 1-entry timer table at 0x10CA
+; (8 bytes/entry: +0 = down-counter word, +2 = reload word, +4 = 32-bit callback address,
+; 0xFFFFFFFF = slot empty). For each armed slot it decrements +0; when the counter reaches
+; zero it reloads it from +2, pushes the loop-advance address 0x01FFA8 as a return address
+; and jumps to the callback, so the callback returns straight back into the walk.
+; Runs the whole walk inside a scheduler lock: 0x10D2 (the lock-depth word) is incremented
+; and mirrored into control register 0x7C on entry and decremented/mirrored on exit, with
+; the interrupt mask raised to level 0 (all masked) for the walk and back to 6 afterwards.
+; While the lock is non-zero Kernel_Dispatch refuses to context-switch (see 0x01FF21).
+; No caller was found by a whole-ROM branch-target scan; it is most likely reached through
+; a dynamically installed vector (see SoftTimer_Register 0x02072A). Register use: WA, XIX, B.
+	ld	wa, (KERNEL_LOCK_DEPTH:16)
+.else
 	ldc_16_cr	wa, 0x3c                     ; F8576C/F982D1  d8 2f 3c   ldc WA,unknown   enter a critical section: depth++
+.endif
 	inc 1,WA                                     ; F8576F/F982D4  d8 61   inc 1,WA
+.if KERNEL_KN5000
+	ld	(KERNEL_LOCK_DEPTH:16), wa
+	ldc_cr16	wa, 0x7c
+.else
 	ldc_cr16	wa, 0x3c                     ; F85771/F982D6  d8 2e 3c   ldc unknown,WA
+.endif
 	ei 0x00                                      ; F85774/F982D9  06 00   ei 0x00
 	ldw ix, KERNEL_TIMERS                        ; F85776/F982DB  a=34 c8 03 c=34 74 01   c: ld IX,0x0174   the software timers: 2 x 8 bytes at 0x03C8
 	extz XIX                                     ; F85779/F982DE  ec 12   extz XIX
+.if KERNEL_KN5000
+	ld	b, 1:opc
+.else
 	ld b, 0x02:opc                                  ; F8577B/F982E0  22 02   ld B,0x02
+.endif
+; Top of the per-slot walk; XIX = current 8-byte timer entry, B = slots remaining.
 Kernel_ServiceSoftTimers__next:
 	ld XWA,(XIX+0x04)                            ; F8577D/F982E2  ac 04 20   ld XWA,(XIX+0x04)
 	cp XWA,0xffffffff                            ; F85780/F982E5  e8 cf ff ff ff ff   cp XWA,0xffffffff   +4 = the callback, 0xFFFFFFFF = the slot is empty
@@ -819,18 +1073,37 @@ Kernel_ServiceSoftTimers__next:
 	ld	(xix+0:8), wa                        ; F8578D/F982F2  bc 00 50   ld (XIX+0x00),WA
 	or WA,WA                                     ; F85790/F982F5  d8 e0   or WA,WA
 	jr z, Kernel_ServiceSoftTimers__fire         ; F85792/F982F7  66 12   jr Z,0xf9830b
+; Advance XIX by 8 and djnz; also the synthetic return address pushed for a fired callback.
 Kernel_ServiceSoftTimers__step:
 	add IX,0x0008                                ; F85794/F982F9  dc c8 08 00   add IX,0x0008
 	djnz8 b, Kernel_ServiceSoftTimers__next      ; F85798/F982FD  ca 1c e2   djnz B,0xf982e2
+; Restore interrupt level 6, decrement lock depth 0x10D2, mirror to cr 0x7C, return.
+.if KERNEL_KN5000
+TaskSched_SoftTimer_Unlock:
+.endif
 	ei 0x06                                      ; F8579B/F98300  06 06   ei 0x06
+.if KERNEL_KN5000
+	ld	wa, (KERNEL_LOCK_DEPTH:16)
+.else
 	ldc_16_cr	wa, 0x3c                     ; F8579D/F98302  d8 2f 3c   ldc WA,unknown
+.endif
 	dec 1,WA                                     ; F857A0/F98305  d8 69   dec 1,WA
+.if KERNEL_KN5000
+	ld	(KERNEL_LOCK_DEPTH:16), wa
+	ldc_cr16	wa, 0x7c
+.else
 	ldc_cr16	wa, 0x3c                     ; F857A2/F98307  d8 2e 3c   ldc unknown,WA
+.endif
 	ret                                          ; F857A5/F9830A  0e   ret
+; Reload counter from +2, push 0x01FFA8, jp (XIX+4) -- i.e. tail-call the callback.
 Kernel_ServiceSoftTimers__fire:
 	ld WA,(XIX+0x02)                             ; F857A6/F9830B  9c 02 20   ld WA,(XIX+0x02)   +2 = the reload value
 	ld	(xix+0:8), wa                        ; F857A9/F9830E  bc 00 50   ld (XIX+0x00),WA
+.if KERNEL_KN5000
+	lda	xwa, (Kernel_ServiceSoftTimers__step:24)
+.else
 	ld XWA,Kernel_ServiceSoftTimers__step        ; F857AC/F98311  a=40 94 57 f8 00 c=40 f9 82 f9 00   c: ld XWA,0x00f982f9   push the loop's continuation, then jump to the callback
+.endif
 	push XWA                                     ; F857B1/F98316  38   push XWA
 	ld XWA,(XIX+0x04)                            ; F857B2/F98317  ac 04 20   ld XWA,(XIX+0x04)
 	jp (xwa)                                     ; F857B5/F9831A  b0 d8   jp T,XWA
@@ -886,16 +1159,33 @@ Kernel_ServiceSoftTimers__fire:
 ;          to trigger a switch is not established.
 ; --------------------------------------------------------------------------
 
+; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
+; KN5000 sub-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open9-a3-probes/):
+;    TaskSwitch_Countdown = IRQ_Epilogue, TaskSwitch_Expired = IRQ_Epilogue__enter_kernel.
 IRQ_Epilogue:
 	pushw wa                                     ; F857B7/F9831C  28   push WA   THE SHARED INTERRUPT EPILOGUE
+.if KERNEL_KN5000
+	ld wa, (KERNEL_LOCK_DEPTH:16)
+.else
 	ldc_16_cr	wa, 0x3c                     ; F857B8/F9831D  d8 2f 3c   ldc WA,unknown
+.endif
 	cp wa, 0x01:i3                                 ; F857BB/F98320  d8 d9   cp WA,1   depth == 1 means this interrupt was the outermost one
 	jr z, IRQ_Epilogue__enter_kernel             ; F857BD/F98322  66 02   jr Z,0xf98326
+.if KERNEL_KN5000
+	dec 1, wa
+	ld (KERNEL_LOCK_DEPTH:16), wa
+	ldc_cr16 wa, 0x7C
+.endif
 	popw wa                                      ; F857BF/F98324  48   pop WA
 	reti                                         ; F857C0/F98325  07   reti   nested: plain RETI, do not run the kernel
 IRQ_Epilogue__enter_kernel:
 	xor WA,WA                                    ; F857C1/F98326  d8 d0   xor WA,WA
+.if KERNEL_KN5000
+	ld (KERNEL_LOCK_DEPTH:16), wa
+	ldc_cr16 wa, 0x7C
+.else
 	ldc_cr16	wa, 0x3c                     ; F857C3/F98328  d8 2e 3c   ldc unknown,WA
+.endif
 	popw wa                                      ; F857C6/F9832B  48   pop WA
 	ei 0x00                                      ; F857C7/F9832C  06 00   ei 0x00
 	nop                                          ; F857C9/F9832E  00   nop
@@ -908,6 +1198,7 @@ IRQ_Epilogue__enter_kernel:
 	push XIY                                     ; F857D1/F98336  3d   push XIY
 	push XIZ                                     ; F857D2/F98337  3e   push XIZ
 	jrl Kernel_Dispatch                          ; F857D3/F98338  78 3f ff   jrl T,0xf9827a   into the kernel, on the interrupted task's stack
+.if KERNEL_KN5000 == 0
 
 ; >>>>>> moved from prom_a/wsa1_prom_a.s -- CPU 1, the MAIN processor >>>>>>>>>>>>>
 ; ==============================================================================
@@ -1027,6 +1318,7 @@ IRQ_Epilogue__enter_kernel:
 
 Kernel_StartTask_StackArg:
 	ld A,(XSP+0x04)                              ; F857D6/F9833B  8f 04 21   ld A,(XSP+0x04)   the task number, off the stack
+.endif
 
 ; >>>>>> moved from prom_a/wsa1_prom_a.s -- CPU 1, the MAIN processor >>>>>>>>>>>>>
 ; ---------------------------------------------------------------------
@@ -1074,6 +1366,9 @@ Kernel_StartTask_StackArg:
 ; The body, its evidence and its unknowns are in the block above.
 ; --------------------------------------------------------------------------
 
+; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
+; KN5000 sub-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open9-a3-probes/):
+;    TaskSched_SpawnTask = Kernel_StartTask.
 Kernel_StartTask:
 	push SR                                      ; F857D9/F9833E  02   push SR
 	ei 0x06                                      ; F857DA/F9833F  06 06   ei 0x06
@@ -1084,6 +1379,9 @@ Kernel_StartTask:
 	push XIX                                     ; F857E0/F98345  3c   push XIX
 	push XIY                                     ; F857E1/F98346  3d   push XIY
 	push XIZ                                     ; F857E2/F98347  3e   push XIZ   seven pushes: the same set Kernel_ResumeTask pops
+.if KERNEL_KN5000
+	ld w, a
+.endif
 	ld l, 0x0c:opc                                  ; F857E3/F98348  27 0c   ld L,0x0c
 	mul hl, a                                  ; F857E5/F9834A  c9 47   mul HL,A   HL = 12 * A
 	extz XHL                                     ; F857E7/F9834C  eb 12   extz XHL
@@ -1096,6 +1394,9 @@ Kernel_StartTask:
 	ld A,(XIX+0x09)                              ; F857FB/F98360  8c 09 21   ld A,(XIX+0x09)   +9 = the state byte
 	cp a, 0x00:i3                                  ; F857FE/F98363  c9 d8   cp A,0
 	jrl nz, Kernel_ResumeTask                    ; F85800/F98365  7e 60 ff   jrl NZ,0xf982c8   already live: undo the pushes and return
+.if KERNEL_KN5000
+	ld (xix + 11), w
+.endif
 	ld XIY,(XHL+0x04)                            ; F85803/F98368  ab 04 25   ld XIY,(XHL+0x04)   record+4 = the top of this task's stack
 	sub XIY,0x00000022                           ; F85806/F9836B  ed ca 22 00 00 00   sub XIY,0x00000022   room for 7 registers (0x1C) + SR (2) + PC (4)
 	ld WA,(XHL+0x08)                             ; F8580C/F98371  9b 08 20   ld WA,(XHL+0x08)   record+8 = the initial SR, 0x8800 in every record
@@ -1106,6 +1407,9 @@ Kernel_StartTask:
 	ld A,(XHL+0x0a)                              ; F8581B/F98380  8b 0a 21   ld A,(XHL+0x0a)   record+10 = the priority level, 1..3
 	ld (XIX+0x08),A                              ; F8581E/F98383  bc 08 41   ld (XIX+0x08),A   TCB+8 = that level
 	ld (XIX+0x09),0x04                           ; F85821/F98386  bc 09 00 04   ld (XIX+0x09),0x04   TCB+9 = state 4
+.if KERNEL_KN5000
+	ld (xix + 10), 0x0
+.endif
 	ld A,(XHL+0x0a)                              ; F85825/F9838A  8b 0a 21   ld A,(XHL+0x0a)
 	sll a, 0x02                                  ; F85828/F9838D  c9 ee 02   sll 0x02,A
 	extz WA                                      ; F8582B/F98390  d8 12   extz WA
@@ -1113,7 +1417,11 @@ Kernel_StartTask:
 	ld IY,WA                                     ; F85831/F98396  d8 8d   ld IY,WA
 	extz XIX                                     ; F85833/F98398  ec 12   extz XIX
 	extz XIY                                     ; F85835/F9839A  ed 12   extz XIY
+.if KERNEL_KN5000
+	xor xwa, xwa
+.else
 	extz XWA                                     ; F85837/F9839C  e8 12   extz XWA
+.endif
 	ld	(xix+0:8), iy                        ; F85839/F9839E  bc 00 55   ld (XIX+0x00),IY   ld (XIX+0x00),IY -- n->next = head
 	ld WA,(XIY+0x02)                             ; F8583C/F983A1  9d 02 20   ld WA,(XIY+0x02)   head->prev
 	ld (XIX+0x02),WA                             ; F8583F/F983A4  bc 02 50   ld (XIX+0x02),WA   n->prev = head->prev
@@ -1164,22 +1472,46 @@ Kernel_StartTask:
 ;          operand differences and 0 structural ones.
 ; --------------------------------------------------------------------------
 
+; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
+; KN5000 sub-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open9-a3-probes/):
+;    TaskSched_ExitCurrentTask = Kernel_ExitTask.
+; Terminate the calling task: back on the scheduler stack (SP = 0x40B1E, the value
+; Kernel_InitRam uses), the current TCB (pointer at 0x1046) gets state +0x09 = 0 and pending
+; count +0x0A = 0, 0x1046 is cleared, the TCB is unlinked from its queue and
+; Kernel_Dispatch picks the next task.  No caller in v1.42.
 Kernel_ExitTask:
 	ei 0x06                                      ; F8584A/F983AF  06 06   ei 0x06
 	ld XSP,KERNEL_STACK_TOP                      ; F8584C/F983B1  a=47 80 eb 60 00 c=47 00 fa 00 00   c: ld XSP,0x0000fa00   the BOOT stack -- the task's own stack is abandoned
+.if KERNEL_KN5000
+	ld ix, (KERNEL_CURRENT_TASK:16)
+.else
 	ld	ix, (KERNEL_CURRENT_TASK:8)          ; F85851/F983B6  a=d0 bf 24 c=d0 91 24   c: ld IX,(0x91)   ld IX,(0xBF) -- the running task's control block
+.endif
 	extz XIX                                     ; F85854/F983B9  ec 12   extz XIX
 	ld (XIX+0x09),0x00                           ; F85856/F983BB  bc 09 00 00   ld (XIX+0x09),0x00   state 0 = not live
+.if KERNEL_KN5000
+	ld (xix + 10), 0x0
+.endif
 	xor WA,WA                                    ; F8585A/F983BF  d8 d0   xor WA,WA
+.if KERNEL_KN5000
+	ld (KERNEL_CURRENT_TASK:16), wa
+.else
 	st_dd8w wa, KERNEL_CURRENT_TASK              ; F8585C/F983C1  a=f0 bf 50 c=f0 91 50   c: ld (0x91),WA   (0xBF) = 0: no task is running
+.endif
 	extz XIX                                     ; F8585F/F983C4  ec 12   extz XIX
+.if KERNEL_KN5000
+	xor xwa, xwa
+	xor xhl, xhl
+.else
 	extz XWA                                     ; F85861/F983C6  e8 12   extz XWA
 	extz XHL                                     ; F85863/F983C8  eb 12   extz XHL
+.endif
 	ld	wa, (xix+0:8)                        ; F85865/F983CA  9c 00 20   ld WA,(XIX+0x00)   ld WA,(XIX+0x00) -- next
 	ld HL,(XIX+0x02)                             ; F85868/F983CD  9c 02 23   ld HL,(XIX+0x02)   prev
 	ld	(xhl+0:8), wa                        ; F8586B/F983D0  bb 00 50   ld (XHL+0x00),WA   ld (XHL+0x00),WA -- prev->next = next
 	ld (XWA+0x02),HL                             ; F8586E/F983D3  b8 02 53   ld (XWA+0x02),HL   next->prev = prev
 	jrl Kernel_Dispatch                          ; F85871/F983D6  78 a1 fe   jrl T,0xf9827a
+.if KERNEL_KN5000 == 0
 
 ; >>>>>> moved from prom_a/wsa1_prom_a.s -- CPU 1, the MAIN processor >>>>>>>>>>>>>
 ; ---------------------------------------------------------------------
@@ -1217,6 +1549,28 @@ Kernel_ExitTask:
 
 Kernel_YieldRotate_StackArg:
 	ld A,(XSP+0x04)                              ; F85874/F983D9  8f 04 21   ld A,(XSP+0x04)   the queue level, off the stack
+.endif
+.if KERNEL_KN5000
+; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
+
+; HL = the running task's id (TCB +0x0B, the byte Kernel_StartTask stores), or 0 when the
+; scheduler lock depth at 0x10D2 is non-zero.  No caller in v1.42.
+TaskSched_GetCurrentTaskId:
+	ld hl, (KERNEL_LOCK_DEPTH:16)
+	or hl, hl
+	jr nz, TaskSched_ReturnZero
+	push xix
+	ld ix, (KERNEL_CURRENT_TASK:16)
+	extz xix
+	ld l, (xix + 11)
+	extz hl
+	pop xix
+	ret
+
+TaskSched_ReturnZero:
+	xor hl, hl
+	ret
+.endif
 
 ; >>>>>> moved from prom_a/wsa1_prom_a.s -- CPU 1, the MAIN processor >>>>>>>>>>>>>
 ; ==============================================================================
@@ -1287,6 +1641,9 @@ Kernel_YieldRotate_StackArg:
 ; The body, its evidence and its unknowns are in the block above.
 ; --------------------------------------------------------------------------
 
+; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
+; KN5000 sub-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open9-a3-probes/):
+;    TaskSched_PreemptiveYield = Kernel_YieldRotate.
 Kernel_YieldRotate:
 	push SR                                      ; F85877/F983DC  02   push SR
 	ei 0x06                                      ; F85878/F983DD  06 06   ei 0x06   raise the mask: list surgery
@@ -1306,15 +1663,24 @@ Kernel_YieldRotate:
 	cp IX,(XIY+0x02)                             ; F85891/F983F6  9d 02 f4   cp IX,(XIY+0x02)   == head->prev? then 0 or 1 element
 	jrl z, Kernel_ResumeTask                     ; F85894/F983F9  76 cc fe   jrl Z,0xf982c8   nothing to rotate: unwind and return
 	extz XIX                                     ; F85897/F983FC  ec 12   extz XIX
+.if KERNEL_KN5000
+	xor xwa, xwa
+	xor xhl, xhl
+.else
 	extz XWA                                     ; F85899/F983FE  e8 12   extz XWA
 	extz XHL                                     ; F8589B/F98400  eb 12   extz XHL
+.endif
 	ld	wa, (xix+0:8)                        ; F8589D/F98402  9c 00 20   ld WA,(XIX+0x00)   WA = n->next
 	ld HL,(XIX+0x02)                             ; F858A0/F98405  9c 02 23   ld HL,(XIX+0x02)   HL = n->prev
 	ld	(xhl+0:8), wa                        ; F858A3/F98408  bb 00 50   ld (XHL+0x00),WA   prev->next = next
 	ld (XWA+0x02),HL                             ; F858A6/F9840B  b8 02 53   ld (XWA+0x02),HL   next->prev = prev
 	extz XIX                                     ; F858A9/F9840E  ec 12   extz XIX
 	extz XIY                                     ; F858AB/F98410  ed 12   extz XIY
+.if KERNEL_KN5000
+	xor xwa, xwa
+.else
 	extz XWA                                     ; F858AD/F98412  e8 12   extz XWA
+.endif
 	ld	(xix+0:8), iy                        ; F858AF/F98414  bc 00 55   ld (XIX+0x00),IY   n->next = head
 	ld WA,(XIY+0x02)                             ; F858B2/F98417  9d 02 20   ld WA,(XIY+0x02)
 	ld (XIX+0x02),WA                             ; F858B5/F9841A  bc 02 50   ld (XIX+0x02),WA   n->prev = head->prev
@@ -1364,6 +1730,9 @@ Kernel_YieldRotate:
 ;          2 operand differences and 0 structural ones.
 ; --------------------------------------------------------------------------
 
+; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
+; KN5000 sub-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open9-a3-probes/):
+;    TaskQueue_Dequeue = Kernel_RotateQueue, TaskQueue_Dequeue_Return = Kernel_RotateQueue__ret.
 Kernel_RotateQueue:
 	push XWA                                     ; F858C0/F98425  38   push XWA
 	push XIX                                     ; F858C1/F98426  3c   push XIX
@@ -1378,15 +1747,24 @@ Kernel_RotateQueue:
 	cp IX,(XIY+0x02)                             ; F858D4/F98439  9d 02 f4   cp IX,(XIY+0x02)
 	jr z, Kernel_RotateQueue__ret                ; F858D7/F9843C  66 26   jr Z,0xf98464
 	extz XIX                                     ; F858D9/F9843E  ec 12   extz XIX
+.if KERNEL_KN5000
+	xor xwa, xwa
+	xor xhl, xhl
+.else
 	extz XWA                                     ; F858DB/F98440  e8 12   extz XWA
 	extz XHL                                     ; F858DD/F98442  eb 12   extz XHL
+.endif
 	ld	wa, (xix+0:8)                        ; F858DF/F98444  9c 00 20   ld WA,(XIX+0x00)
 	ld HL,(XIX+0x02)                             ; F858E2/F98447  9c 02 23   ld HL,(XIX+0x02)
 	ld	(xhl+0:8), wa                        ; F858E5/F9844A  bb 00 50   ld (XHL+0x00),WA
 	ld (XWA+0x02),HL                             ; F858E8/F9844D  b8 02 53   ld (XWA+0x02),HL
 	extz XIX                                     ; F858EB/F98450  ec 12   extz XIX
 	extz XIY                                     ; F858ED/F98452  ed 12   extz XIY
+.if KERNEL_KN5000
+	xor xwa, xwa
+.else
 	extz XWA                                     ; F858EF/F98454  e8 12   extz XWA
+.endif
 	ld	(xix+0:8), iy                        ; F858F1/F98456  bc 00 55   ld (XIX+0x00),IY
 	ld WA,(XIY+0x02)                             ; F858F4/F98459  9d 02 20   ld WA,(XIY+0x02)
 	ld (XIX+0x02),WA                             ; F858F7/F9845C  bc 02 50   ld (XIX+0x02),WA
@@ -1468,6 +1846,17 @@ Kernel_RotateQueue__ret:
 ;          operand differences and 0 structural ones.
 ; --------------------------------------------------------------------------
 
+; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
+; KN5000 sub-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open9-a3-probes/):
+;    TaskSched_Block_Self = Kernel_BlockSelf.
+; "Wait on my own pending count" - the counting half of a binary rendezvous.
+; Reads the current-task descriptor pointer from 0x1046. If the descriptor's pending count
+; (+0x0A) is non-zero it just decrements it and returns through Kernel_ResumeTask
+; (0x01FF72). Otherwise it unlinks the descriptor from its ready queue (next at +0, prev at
+; +2), sets state (+0x09) = 3 (BLOCKED) and jumps to Kernel_Dispatch (0x01FF21), which
+; picks another task. Entered with a full context already pushed (push SR + 7 long pushes),
+; matching the frame Kernel_ResumeTask pops.
+; Inputs: none. Clobbers: everything (it either reschedules or restores the pushed context).
 Kernel_BlockSelf:
 	push SR                                      ; F85904/F98469  02   push SR
 	ei 0x06                                      ; F85905/F9846A  06 06   ei 0x06
@@ -1478,16 +1867,37 @@ Kernel_BlockSelf:
 	push XIX                                     ; F8590B/F98470  3c   push XIX
 	push XIY                                     ; F8590C/F98471  3d   push XIY
 	push XIZ                                     ; F8590D/F98472  3e   push XIZ   the seven Kernel_ResumeTask will pop
+.if KERNEL_KN5000
+	ld	ix, (KERNEL_CURRENT_TASK:16)
+.else
 	ld	ix, (KERNEL_CURRENT_TASK:8)          ; F8590E/F98473  a=d0 bf 24 c=d0 91 24   c: ld IX,(0x91)   ld IX,(0xBF) -- the RUNNING task
+.endif
 	extz XIX                                     ; F85911/F98476  ec 12   extz XIX
+.if KERNEL_KN5000
+	ld8_src_rid8	xix, 0x0a, a	; ld a,(XIX+0x0a)
+	cp	a, 0:i3
+	jr	nz, TaskSched_Block_Self_Consume
+	extz	xix
+	xor	xwa, xwa
+	xor	xhl, xhl
+.else
 	extz XWA                                     ; F85913/F98478  e8 12   extz XWA
 	extz XHL                                     ; F85915/F9847A  eb 12   extz XHL
+.endif
 	ld	wa, (xix+0:8)                        ; F85917/F9847C  9c 00 20   ld WA,(XIX+0x00)   ld WA,(XIX+0x00) -- next
 	ld HL,(XIX+0x02)                             ; F8591A/F9847F  9c 02 23   ld HL,(XIX+0x02)   prev
 	ld	(xhl+0:8), wa                        ; F8591D/F98482  bb 00 50   ld (XHL+0x00),WA   ld (XHL+0x00),WA -- prev->next = next
 	ld (XWA+0x02),HL                             ; F85920/F98485  b8 02 53   ld (XWA+0x02),HL   next->prev = prev
 	ld (XIX+0x09),0x03                           ; F85923/F98488  bc 09 00 03   ld (XIX+0x09),0x03   state 3 -- the value a blocking receive writes
 	jrl Kernel_Dispatch                          ; F85927/F9848C  78 eb fd   jrl T,0xf9827a   (0xBF) is left set, so the dispatcher saves XSP into node+4
+; Pending count was non-zero: decrement it and fall out through ContextRestore.
+.if KERNEL_KN5000
+TaskSched_Block_Self_Consume:
+	dec	1, a
+	ld	(xix+10), a
+	jrl	Kernel_ResumeTask
+.endif
+.if KERNEL_KN5000 == 0
 
 ; >>>>>> moved from prom_a/wsa1_prom_a.s -- CPU 1, the MAIN processor >>>>>>>>>>>>>
 ; ---------------------------------------------------------------------
@@ -1527,6 +1937,7 @@ Kernel_BlockSelf:
 
 Kernel_ReadyTask_StackArg:
 	ld A,(XSP+0x04)                              ; F8592A/F9848F  8f 04 21   ld A,(XSP+0x04)   the task number, off the stack
+.endif
 
 ; >>>>>> moved from prom_a/wsa1_prom_a.s -- CPU 1, the MAIN processor >>>>>>>>>>>>>
 ; ---------------------------------------------------------------------
@@ -1565,6 +1976,16 @@ Kernel_ReadyTask_StackArg:
 ;          block above.
 ; --------------------------------------------------------------------------
 
+; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
+; KN5000 sub-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open9-a3-probes/):
+;    TaskSched_Wake_Task = Kernel_ReadyTask.
+; Wake task A (task-context version; ends by rescheduling).
+; Descriptor = 0x103C + 12*A. If state (+0x09) == 3 (BLOCKED) it is set to 4 (READY) and the
+; descriptor is linked at the tail of the ready queue whose head is 0x1068 + 4*(+0x08), then
+; control goes to Kernel_Dispatch (0x01FF21) so a higher-priority wakee runs at once.
+; If the task was not blocked the wake is remembered by incrementing its pending count
+; (+0x0A), which TASKSCHED_BLOCK_SELF will consume later.
+; Input: A = task id (1..3). Called with a full context frame already pushed.
 Kernel_ReadyTask:
 	push SR                                      ; F8592D/F98492  02   push SR
 	ei 0x06                                      ; F8592E/F98493  06 06   ei 0x06
@@ -1580,7 +2001,12 @@ Kernel_ReadyTask:
 	ld IX,WA                                     ; F8593E/F984A3  d8 8c   ld IX,WA
 	extz XIX                                     ; F85940/F984A5  ec 12   extz XIX
 	cp (XIX+0x09),0x03                           ; F85942/F984A7  8c 09 3f 03   cp (XIX+0x09),0x03   only a BLOCKED task is re-queued
+.if KERNEL_KN5000
+	jr	nz, TaskSched_Wake_Task_Count
+	ld	(xix+9), 4
+.else
 	jr nz, Kernel_ReadyTask__done                ; F85946/F984AB  6e 22   jr NZ,0xf984cf
+.endif
 	ld A,(XIX+0x08)                              ; F85948/F984AD  8c 08 21   ld A,(XIX+0x08)   +8 = the task's own priority level
 	sll a, 0x02                                  ; F8594B/F984B0  c9 ee 02   sll 0x02,A
 	extz WA                                      ; F8594E/F984B3  d8 12   extz WA
@@ -1588,7 +2014,11 @@ Kernel_ReadyTask:
 	ld IY,WA                                     ; F85954/F984B9  d8 8d   ld IY,WA
 	extz XIX                                     ; F85956/F984BB  ec 12   extz XIX
 	extz XIY                                     ; F85958/F984BD  ed 12   extz XIY
+.if KERNEL_KN5000
+	xor	xwa, xwa
+.else
 	extz XWA                                     ; F8595A/F984BF  e8 12   extz XWA
+.endif
 	ld	(xix+0:8), iy                        ; F8595C/F984C1  bc 00 55   ld (XIX+0x00),IY   ld (XIX+0x00),IY -- n->next = head
 	ld WA,(XIY+0x02)                             ; F8595F/F984C4  9d 02 20   ld WA,(XIY+0x02)
 	ld (XIX+0x02),WA                             ; F85962/F984C7  bc 02 50   ld (XIX+0x02),WA   n->prev = head->prev
@@ -1596,6 +2026,12 @@ Kernel_ReadyTask:
 	ld (XIY+0x02),IX                             ; F85967/F984CC  bd 02 54   ld (XIY+0x02),IX   head->prev = n
 Kernel_ReadyTask__done:
 	jrl Kernel_Dispatch                          ; F8596A/F984CF  78 a8 fd   jrl T,0xf9827a
+; Task was not blocked: bump pending count (+0x0A) and go to Dispatch.
+.if KERNEL_KN5000
+TaskSched_Wake_Task_Count:
+	incm8	1, (xix+10)
+	jrl	Kernel_Dispatch
+.endif
 
 ; >>>>>> moved from prom_a/wsa1_prom_a.s -- CPU 1, the MAIN processor >>>>>>>>>>>>>
 ; ==============================================================================
@@ -1678,6 +2114,14 @@ Kernel_ReadyTask__done:
 ;          differences and 0 structural ones.
 ; --------------------------------------------------------------------------
 
+; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
+; KN5000 sub-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open9-a3-probes/):
+;    TaskSched_Wake_Task_NoResched = Kernel_ReadyTask_NoDispatch,
+;    TaskSched_Wake_Task_NoResched_Ret = Kernel_ReadyTask_NoDispatch__done.
+; Same wake as 0x020185 but safe from interrupt context: it saves only XWA/XIX/XIY/SR,
+; never touches the scheduler stack and returns with a plain RET instead of dispatching.
+; Input: A = task id. Output: none. Use this one from ISRs; the caller is expected to reach
+; a scheduling point later (IRQ_Epilogue at 0x01FFD0 does that on interrupt exit).
 Kernel_ReadyTask_NoDispatch:
 	push XWA                                     ; F8596D/F984D2  38   push XWA
 	push XIX                                     ; F8596E/F984D3  3c   push XIX
@@ -1689,7 +2133,12 @@ Kernel_ReadyTask_NoDispatch:
 	ld IX,WA                                     ; F8597A/F984DF  d8 8c   ld IX,WA
 	extz XIX                                     ; F8597C/F984E1  ec 12   extz XIX
 	cp (XIX+0x09),0x03                           ; F8597E/F984E3  8c 09 3f 03   cp (XIX+0x09),0x03
+.if KERNEL_KN5000
+	jr	nz, TaskSched_Wake_Task_NoResched_Count
+	ld	(xix+9), 4
+.else
 	jr nz, Kernel_ReadyTask_NoDispatch__done     ; F85982/F984E7  6e 22   jr NZ,0xf9850b
+.endif
 	ld A,(XIX+0x08)                              ; F85984/F984E9  8c 08 21   ld A,(XIX+0x08)
 	sll a, 0x02                                  ; F85987/F984EC  c9 ee 02   sll 0x02,A
 	extz WA                                      ; F8598A/F984EF  d8 12   extz WA
@@ -1697,18 +2146,30 @@ Kernel_ReadyTask_NoDispatch:
 	ld IY,WA                                     ; F85990/F984F5  d8 8d   ld IY,WA
 	extz XIX                                     ; F85992/F984F7  ec 12   extz XIX
 	extz XIY                                     ; F85994/F984F9  ed 12   extz XIY
+.if KERNEL_KN5000
+	xor	xwa, xwa
+.else
 	extz XWA                                     ; F85996/F984FB  e8 12   extz XWA
+.endif
 	ld	(xix+0:8), iy                        ; F85998/F984FD  bc 00 55   ld (XIX+0x00),IY
 	ld WA,(XIY+0x02)                             ; F8599B/F98500  9d 02 20   ld WA,(XIY+0x02)
 	ld (XIX+0x02),WA                             ; F8599E/F98503  bc 02 50   ld (XIX+0x02),WA
 	ld (XWA),IX                                  ; F859A1/F98506  b0 54   ld (XWA),IX
 	ld (XIY+0x02),IX                             ; F859A3/F98508  bd 02 54   ld (XIY+0x02),IX
+; Common epilogue: pop SR, XIY, XIX, XWA, ret.
 Kernel_ReadyTask_NoDispatch__done:
 	pop SR                                       ; F859A6/F9850B  03   pop SR
 	pop XIY                                      ; F859A7/F9850C  5d   pop XIY
 	pop XIX                                      ; F859A8/F9850D  5c   pop XIX
 	pop XWA                                      ; F859A9/F9850E  58   pop XWA
 	ret                                          ; F859AA/F9850F  0e   ret
+; Not blocked: bump pending count and take the common epilogue.
+.if KERNEL_KN5000
+TaskSched_Wake_Task_NoResched_Count:
+	incm8	1, (xix+10)
+	jr	Kernel_ReadyTask_NoDispatch__done
+.endif
+.if KERNEL_KN5000 == 0
 
 ; >>>>>> moved from prom_a/wsa1_prom_a.s -- CPU 1, the MAIN processor >>>>>>>>>>>>>
 ; ---------------------------------------------------------------------
@@ -1747,6 +2208,215 @@ Kernel_ReadyTask_NoDispatch__done:
 
 Kernel_SemaSignal_StackArg:
 	ld A,(XSP+0x04)                              ; F859AB/F98510  8f 04 21   ld A,(XSP+0x04)
+.endif
+.if KERNEL_KN5000
+; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
+; Reads and clears task A's pending count: L = descriptor(0x103C + 12*A) + 0x0A, then that
+; field is zeroed. Returns through Kernel_ResumeTask (0x01FF72).
+; Input: A = task id. Output: L = the count that was pending.
+TaskSched_Take_Pending_Count:
+	push	sr
+	ei	6
+	push	xhl
+	push	xwa
+	push	xbc
+	push	xde
+	push	xix
+	push	xiy
+	push	xiz
+	mul	a, 12
+	add	wa, KERNEL_TCB_BASE-12
+	ld	ix, wa
+	extz	xix
+	ld	l, (xix+10)
+	ld	(xix+10), 0
+	jrl	Kernel_ResumeTask
+.endif
+.if KERNEL_KN5000
+; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
+; Signal event flag A (task-context version; ends by rescheduling).
+; Event A has a self-linked wait-queue head at 0x1074 + 4*A and a one-bit "already signalled"
+; flag in bit 0 of the byte at 0x107F + A. If the wait queue is empty the flag byte's bit 0
+; is set (the signal is latched for a future waiter); otherwise the first waiter is unlinked,
+; its state set to 4 (READY), it is appended to its priority's ready queue and Dispatch runs.
+; Only event ids 1 and 2 exist: Kernel_InitRam builds two heads at 0x1078/0x107C and seeds
+; both flag bytes 0x1080/0x1081 to 1 (pre-signalled) by copying the two 0x01 bytes at
+; 0x01FDBC.  Input: A = event id.
+TaskEvent_Signal:
+	push	sr
+	ei	6
+	push	xhl
+	push	xwa
+	push	xbc
+	push	xde
+	push	xix
+	push	xiy
+	push	xiz
+	ld	l, a
+	sll	a, 2
+	extz	wa
+	add	wa, KERNEL_EVENT_QUEUES-4
+	ld	iy, wa
+	extz	xiy
+	ld	ix, (xiy+0:8)	; ld ix,(XIY+0x00)
+	cp	ix, iy
+	jr	nz, TaskEvent_Signal_Wake
+	extz	hl
+	add	hl, KERNEL_EVENT_FLAGS-1
+	extz	xhl
+	setm	0, (xhl)
+	jrl	Kernel_ResumeTask
+; Unlink the head waiter, mark it READY, requeue by priority, jump to Dispatch.
+TaskEvent_Signal_Wake:
+	extz	xix
+	xor	xwa, xwa
+	xor	xhl, xhl
+	ld	wa, (xix+0:8)	; ld wa,(XIX+0x00)
+	ld16_src_rid8	xix, 0x02, hl	; ld hl,(XIX+0x02)
+	ld	(xhl+0:8), wa	; ld (XHL+0x00),wa
+	ld_dst16_rid8	xwa, 0x02, hl	; ld (XWA+0x02),hl
+	ld	(xix+9), 4
+	ld8_src_rid8	xix, 0x08, a	; ld a,(XIX+0x08)
+	sll	a, 2
+	extz	wa
+	add	wa, KERNEL_READY_HEADS-4
+	ld	iy, wa
+	extz	xix
+	extz	xiy
+	xor	xwa, xwa
+	ld	(xix+0:8), iy	; ld (XIX+0x00),iy
+	ld16_src_rid8	xiy, 0x02, wa	; ld wa,(XIY+0x02)
+	ld_dst16_rid8	xix, 0x02, wa	; ld (XIX+0x02),wa
+	ld	(xwa), ix
+	ld_dst16_rid8	xiy, 0x02, ix	; ld (XIY+0x02),ix
+	jrl	Kernel_Dispatch
+.endif
+.if KERNEL_KN5000
+; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
+; Interrupt-safe TaskEvent_Signal: identical logic, but saves only XWA/XIX/XIY/XHL/SR and
+; returns with RET rather than entering the dispatcher.  Input: A = event id.
+TaskEvent_Signal_NoResched:
+	push	xwa
+	push	xix
+	push	xiy
+	push	xhl
+	ld	l, a
+	sll	a, 2
+	extz	wa
+	add	wa, KERNEL_EVENT_QUEUES-4
+	ld	iy, wa
+	extz	xiy
+	push	sr
+	ei	6
+	ld	ix, (xiy+0:8)	; ld ix,(XIY+0x00)
+	cp	ix, iy
+	jr	nz, TaskEvent_Signal_NoResched_Wake
+	extz	hl
+	add	hl, KERNEL_EVENT_FLAGS-1
+	extz	xhl
+	setm	0, (xhl)
+; Common epilogue: pop SR, XHL, XIY, XIX, XWA, ret.
+TaskEvent_Signal_NoResched_Ret:
+	pop	sr
+	pop	xhl
+	pop	xiy
+	pop	xix
+	pop	xwa
+	ret
+; Queue non-empty: unlink waiter, state = 4, requeue on 0x1068 + 4*prio, take the epilogue.
+TaskEvent_Signal_NoResched_Wake:
+	extz	xix
+	xor	xwa, xwa
+	xor	xhl, xhl
+	ld	wa, (xix+0:8)	; ld wa,(XIX+0x00)
+	ld16_src_rid8	xix, 0x02, hl	; ld hl,(XIX+0x02)
+	ld	(xhl+0:8), wa	; ld (XHL+0x00),wa
+	ld_dst16_rid8	xwa, 0x02, hl	; ld (XWA+0x02),hl
+	ld	(xix+9), 4
+	ld8_src_rid8	xix, 0x08, a	; ld a,(XIX+0x08)
+	sll	a, 2
+	extz	wa
+	add	wa, KERNEL_READY_HEADS-4
+	ld	iy, wa
+	extz	xix
+	extz	xiy
+	xor	xwa, xwa
+	ld	(xix+0:8), iy	; ld (XIX+0x00),iy
+	ld16_src_rid8	xiy, 0x02, wa	; ld wa,(XIY+0x02)
+	ld_dst16_rid8	xix, 0x02, wa	; ld (XIX+0x02),wa
+	ld	(xwa), ix
+	ld_dst16_rid8	xiy, 0x02, ix	; ld (XIY+0x02),ix
+	pop	sr
+	pop	xhl
+	pop	xiy
+	pop	xix
+	pop	xwa
+	ret
+.endif
+.if KERNEL_KN5000
+; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
+; Wait on event flag A. If bit 0 of (0x107F + A) is set the latched signal is consumed
+; (bit cleared) and the caller resumes immediately through TaskSched_ContextRestore.
+; Otherwise the current task (descriptor pointer at 0x1046) is unlinked from its ready
+; queue, state set to 3 (BLOCKED), appended to the event wait queue at 0x1074 + 4*A, and
+; Kernel_Dispatch is entered.  Input: A = event id. Entered with a full context pushed.
+TaskEvent_Wait:
+	push	sr
+	ei	6
+	push	xhl
+	push	xwa
+	push	xbc
+	push	xde
+	push	xix
+	push	xiy
+	push	xiz
+	ld	e, a
+	extz	wa
+	add	wa, KERNEL_EVENT_FLAGS-1
+	extz	xwa
+	bitm	0, (xwa)
+	jr	z, TaskEvent_Wait_SuspendTask
+	resm	0, (xwa)
+	jrl	Kernel_ResumeTask
+; No latched signal: block the caller on the event queue and dispatch.
+TaskEvent_Wait_SuspendTask:
+	ld	ix, (KERNEL_CURRENT_TASK:16)
+	extz	xix
+	xor	xwa, xwa
+	xor	xhl, xhl
+	ld	wa, (xix+0:8)	; ld wa,(XIX+0x00)
+	ld16_src_rid8	xix, 0x02, hl	; ld hl,(XIX+0x02)
+	ld	(xhl+0:8), wa	; ld (XHL+0x00),wa
+	ld_dst16_rid8	xwa, 0x02, hl	; ld (XWA+0x02),hl
+	ld	(xix+9), 3
+	sll	e, 2
+	extz	de
+	add	de, KERNEL_EVENT_QUEUES-4
+	ld	iy, de
+	extz	xix
+	extz	xiy
+	xor	xwa, xwa
+	ld	(xix+0:8), iy	; ld (XIX+0x00),iy
+	ld16_src_rid8	xiy, 0x02, wa	; ld wa,(XIY+0x02)
+	ld_dst16_rid8	xix, 0x02, wa	; ld (XIX+0x02),wa
+	ld	(xwa), ix
+	ld_dst16_rid8	xiy, 0x02, ix	; ld (XIY+0x02),ix
+	jrl	Kernel_Dispatch
+.endif
+.if KERNEL_KN5000
+; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
+; Clears the latched-signal bit for event A: res 0,(0x107F + A), under interrupt level 6.
+; Input: A = event id. Clobbers WA/XWA.
+TaskEvent_Clear:
+	extz	wa
+	add	wa, KERNEL_EVENT_FLAGS-1
+	extz	xwa
+	push	sr
+	ei	6
+	resm	0, (xwa)
+	pop	sr
+	ret
+.endif
 
 ; >>>>>> moved from prom_a/wsa1_prom_a.s -- CPU 1, the MAIN processor >>>>>>>>>>>>>
 ; ---------------------------------------------------------------------
@@ -1787,6 +2457,21 @@ Kernel_SemaSignal_StackArg:
 ;          block above.
 ; --------------------------------------------------------------------------
 
+; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
+; KN5000 sub-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open9-a3-probes/):
+;    TaskSem_Release = Kernel_SemaSignal, TaskSem_Release_NoWaiter = Kernel_SemaSignal__return,
+;    TaskSem_Release_WakeWaiter = Kernel_SemaSignal__wake.
+; Semaphore release -- V() -- for semaphore A (1..4), task-context version that reschedules.
+; Saves the full context frame Kernel_ResumeTask pops, masks to level 6, and looks at the
+; semaphore's wait queue, head at 0x107E + 4*A (a circular list: empty when the head points at
+; itself).  Empty: the count byte at 0x1091 + A is incremented (not stored if it would wrap to
+; 0) and the context is restored.  Otherwise the first waiter is unlinked, its state (+0x09) set
+; to 4 = READY, linked at the tail of ready queue 0x1068 + 4*(+0x08), and Kernel_Dispatch
+; runs.  Same count and queue addresses as TaskSem_GetCount / Kernel_SemaWait / TaskSem_TryDec.
+; ★ Renamed 2026-09-25 from TaskSched_PreemptiveYield_INT: nothing here yields
+; unconditionally -- it only dispatches when it has woken a waiter.  The main-CPU v10 ROM holds
+; the same code: a 44-byte run at +39 here is byte-identical to Audio_Lock_Release+39 there
+; (scripts/analysis/v142_maincpu_shared_code_scan.py; ALIGNED = same offset in both routines).
 Kernel_SemaSignal:
 	push SR                                      ; F859AE/F98513  02   push SR
 	ei 0x06                                      ; F859AF/F98514  06 06   ei 0x06
@@ -1817,8 +2502,13 @@ Kernel_SemaSignal__return:
 	jrl Kernel_ResumeTask                        ; F859DE/F98543  78 82 fd   jrl T,0xf982c8
 Kernel_SemaSignal__wake:
 	extz XIX                                     ; F859E1/F98546  ec 12   extz XIX
+.if KERNEL_KN5000
+	xor xwa, xwa
+	xor xhl, xhl
+.else
 	extz XWA                                     ; F859E3/F98548  e8 12   extz XWA
 	extz XHL                                     ; F859E5/F9854A  eb 12   extz XHL
+.endif
 	ld	wa, (xix+0:8)                        ; F859E7/F9854C  9c 00 20   ld WA,(XIX+0x00)
 	ld HL,(XIX+0x02)                             ; F859EA/F9854F  9c 02 23   ld HL,(XIX+0x02)
 	ld	(xhl+0:8), wa                        ; F859ED/F98552  bb 00 50   ld (XHL+0x00),WA
@@ -1831,13 +2521,18 @@ Kernel_SemaSignal__wake:
 	ld IY,WA                                     ; F85A03/F98568  d8 8d   ld IY,WA
 	extz XIX                                     ; F85A05/F9856A  ec 12   extz XIX
 	extz XIY                                     ; F85A07/F9856C  ed 12   extz XIY
+.if KERNEL_KN5000
+	xor xwa, xwa
+.else
 	extz XWA                                     ; F85A09/F9856E  e8 12   extz XWA
+.endif
 	ld	(xix+0:8), iy                        ; F85A0B/F98570  bc 00 55   ld (XIX+0x00),IY
 	ld WA,(XIY+0x02)                             ; F85A0E/F98573  9d 02 20   ld WA,(XIY+0x02)
 	ld (XIX+0x02),WA                             ; F85A11/F98576  bc 02 50   ld (XIX+0x02),WA
 	ld (XWA),IX                                  ; F85A14/F98579  b0 54   ld (XWA),IX
 	ld (XIY+0x02),IX                             ; F85A16/F9857B  bd 02 54   ld (XIY+0x02),IX
 	jrl Kernel_Dispatch                          ; F85A19/F9857E  78 f9 fc   jrl T,0xf9827a
+.if KERNEL_KN5000 == 0
 
 ; >>>>>> moved from prom_a/wsa1_prom_a.s -- CPU 1, the MAIN processor >>>>>>>>>>>>>
 ; ---------------------------------------------------------------------
@@ -1878,6 +2573,7 @@ Kernel_SemaSignal_NoDispatch_StackArg:
 	push XWA                                     ; F85A1C/F98581  38   push XWA
 	ld A,(XSP+0x08)                              ; F85A1D/F98582  8f 08 21   ld A,(XSP+0x08)
 	jr Kernel_SemaSignal_NoDispatch__common      ; F85A20/F98585  68 01   jr T,0xf98588
+.endif
 
 ; >>>>>> moved from prom_a/wsa1_prom_a.s -- CPU 1, the MAIN processor >>>>>>>>>>>>>
 ; ---------------------------------------------------------------------
@@ -1918,6 +2614,18 @@ Kernel_SemaSignal_NoDispatch_StackArg:
 ;          block above.
 ; --------------------------------------------------------------------------
 
+; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
+; KN5000 sub-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open9-a3-probes/):
+;    TaskSem_Release_NoResched = Kernel_SemaSignal_NoDispatch,
+;    TaskSem_Release_NoResched_NoWaiter = Kernel_SemaSignal_NoDispatch__return,
+;    TaskSem_Release_NoResched_WakeWaiter = Kernel_SemaSignal_NoDispatch__wake.
+; The same V() without rescheduling: saves only XWA/XIX/XIY/XHL, masks to level 6 under
+; `push sr`, and on the wake path makes the waiter READY and links it but RETURNS to the caller
+; instead of dispatching (for a caller that must not be switched out here).  No caller found in
+; v1.42: the entry address as a 3-byte LE value occurs nowhere in the image, and no calr
+; displacement lands on it; it had no label until 2026-09-25.  Its wake path also occurs in the
+; main-CPU v10 ROM (runs of 16, 16 and 46 bytes inside AudioLock_Release_WakeWaiter, same
+; scan).
 Kernel_SemaSignal_NoDispatch:
 	push XWA                                     ; F85A22/F98587  38   push XWA
 Kernel_SemaSignal_NoDispatch__common:
@@ -1951,8 +2659,13 @@ Kernel_SemaSignal_NoDispatch__return:
 	ret                                          ; F85A54/F985B9  0e   ret
 Kernel_SemaSignal_NoDispatch__wake:
 	extz XIX                                     ; F85A55/F985BA  ec 12   extz XIX
+.if KERNEL_KN5000
+	xor xwa, xwa
+	xor xhl, xhl
+.else
 	extz XWA                                     ; F85A57/F985BC  e8 12   extz XWA
 	extz XHL                                     ; F85A59/F985BE  eb 12   extz XHL
+.endif
 	ld	wa, (xix+0:8)                        ; F85A5B/F985C0  9c 00 20   ld WA,(XIX+0x00)
 	ld HL,(XIX+0x02)                             ; F85A5E/F985C3  9c 02 23   ld HL,(XIX+0x02)
 	ld	(xhl+0:8), wa                        ; F85A61/F985C6  bb 00 50   ld (XHL+0x00),WA
@@ -1965,7 +2678,11 @@ Kernel_SemaSignal_NoDispatch__wake:
 	ld IY,WA                                     ; F85A77/F985DC  d8 8d   ld IY,WA
 	extz XIX                                     ; F85A79/F985DE  ec 12   extz XIX
 	extz XIY                                     ; F85A7B/F985E0  ed 12   extz XIY
+.if KERNEL_KN5000
+	xor xwa, xwa
+.else
 	extz XWA                                     ; F85A7D/F985E2  e8 12   extz XWA
+.endif
 	ld	(xix+0:8), iy                        ; F85A7F/F985E4  bc 00 55   ld (XIX+0x00),IY
 	ld WA,(XIY+0x02)                             ; F85A82/F985E7  9d 02 20   ld WA,(XIY+0x02)
 	ld (XIX+0x02),WA                             ; F85A85/F985EA  bc 02 50   ld (XIX+0x02),WA
@@ -1977,6 +2694,7 @@ Kernel_SemaSignal_NoDispatch__wake:
 	pop XIX                                      ; F85A90/F985F5  5c   pop XIX
 	pop XWA                                      ; F85A91/F985F6  58   pop XWA
 	ret                                          ; F85A92/F985F7  0e   ret
+.if KERNEL_KN5000 == 0
 
 ; >>>>>> moved from prom_a/wsa1_prom_a.s -- CPU 1, the MAIN processor >>>>>>>>>>>>>
 ; ---------------------------------------------------------------------
@@ -2010,6 +2728,7 @@ Kernel_SemaSignal_NoDispatch__wake:
 
 Kernel_SemaWait_StackArg:
 	ld A,(XSP+0x04)                              ; F85A93/F985F8  8f 04 21   ld A,(XSP+0x04)
+.endif
 
 ; >>>>>> moved from prom_a/wsa1_prom_a.s -- CPU 1, the MAIN processor >>>>>>>>>>>>>
 ; ---------------------------------------------------------------------
@@ -2053,6 +2772,15 @@ Kernel_SemaWait_StackArg:
 ;          block above.
 ; --------------------------------------------------------------------------
 
+; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
+; KN5000 sub-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open9-a3-probes/):
+;    TaskSched_Wait = Kernel_SemaWait, TaskSched_Wait_SuspendTask = Kernel_SemaWait__block.
+; Blocking semaphore wait -- P() -- for semaphore A (1..4), task context.  Saves the full context
+; frame Kernel_ResumeTask pops and masks to level 6.  Count byte at 0x1091 + A non-zero:
+; it is decremented and the context restored (the caller continues).  Zero: the current task
+; (pointer at 0x1046) is unlinked from its ready queue, its state (+0x09) set to 3 (BLOCKED),
+; linked at the tail of the semaphore's wait queue 0x107E + 4*A, and Kernel_Dispatch runs.
+; Siblings: Kernel_SemaTryWait (non-blocking), TaskSem_GetCount.
 Kernel_SemaWait:
 	push SR                                      ; F85A96/F985FB  02   push SR
 	ei 0x06                                      ; F85A97/F985FC  06 06   ei 0x06
@@ -2072,10 +2800,19 @@ Kernel_SemaWait:
 	decm8 0x01, (xwa)                            ; F85AAF/F98614  80 69   dec 1,(XWA)
 	jrl Kernel_ResumeTask                        ; F85AB1/F98616  78 af fc   jrl T,0xf982c8
 Kernel_SemaWait__block:
+.if KERNEL_KN5000
+	ld ix, (KERNEL_CURRENT_TASK:16)
+.else
 	ld	ix, (KERNEL_CURRENT_TASK:8)          ; F85AB4/F98619  a=d0 bf 24 c=d0 91 24   c: ld IX,(0x91)
+.endif
 	extz XIX                                     ; F85AB7/F9861C  ec 12   extz XIX
+.if KERNEL_KN5000
+	xor xwa, xwa
+	xor xhl, xhl
+.else
 	extz XWA                                     ; F85AB9/F9861E  e8 12   extz XWA
 	extz XHL                                     ; F85ABB/F98620  eb 12   extz XHL
+.endif
 	ld	wa, (xix+0:8)                        ; F85ABD/F98622  9c 00 20   ld WA,(XIX+0x00)
 	ld HL,(XIX+0x02)                             ; F85AC0/F98625  9c 02 23   ld HL,(XIX+0x02)
 	ld	(xhl+0:8), wa                        ; F85AC3/F98628  bb 00 50   ld (XHL+0x00),WA
@@ -2087,7 +2824,11 @@ Kernel_SemaWait__block:
 	ld IY,DE                                     ; F85AD6/F9863B  da 8d   ld IY,DE
 	extz XIX                                     ; F85AD8/F9863D  ec 12   extz XIX
 	extz XIY                                     ; F85ADA/F9863F  ed 12   extz XIY
+.if KERNEL_KN5000
+	xor xwa, xwa
+.else
 	extz XWA                                     ; F85ADC/F98641  e8 12   extz XWA
+.endif
 	ld	(xix+0:8), iy                        ; F85ADE/F98643  bc 00 55   ld (XIX+0x00),IY
 	ld WA,(XIY+0x02)                             ; F85AE1/F98646  9d 02 20   ld WA,(XIY+0x02)
 	ld (XIX+0x02),WA                             ; F85AE4/F98649  bc 02 50   ld (XIX+0x02),WA
@@ -2139,8 +2880,20 @@ Kernel_SemaWait__block:
 ;          3 operand differences and 0 structural ones.
 ; --------------------------------------------------------------------------
 
+; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
+; KN5000 sub-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open9-a3-probes/):
+;    TaskSem_TryDec = Kernel_SemaTryWait, TaskSem_TryDec_WouldBlock = Kernel_SemaTryWait__fail,
+;    TaskSem_TryDec_Return = Kernel_SemaTryWait__ret.
+; Non-blocking P() on semaphore A: under interrupt level 6, if the count at 0x1091 + A is 0
+; return HL = 0xFFFF, else decrement it and return HL = 0.  Named in TaskSem_GetCount's header;
+; no caller in v1.42.
 Kernel_SemaTryWait:
+.if KERNEL_KN5000 == 0
 	ld A,(XSP+0x04)                              ; F85AEF/F98654  8f 04 21   ld A,(XSP+0x04)   the semaphore number, off the stack
+.endif
+; Non-blocking P() on semaphore A: under interrupt level 6, if the count at 0x1091 + A is 0
+; return HL = 0xFFFF, else decrement it and return HL = 0.  Named in TaskSem_GetCount's header;
+; no caller in v1.42.
 	extz WA                                      ; F85AF2/F98657  d8 12   extz WA
 	add WA,KERNEL_SEMA_COUNTS-1                  ; F85AF4/F98659  a=d8 c8 5b 03 c=d8 c8 3b 01   c: add WA,0x013b   the count byte, 0x035C + (s-1)
 	extz XWA                                     ; F85AF8/F9865D  e8 12   extz XWA
@@ -2149,13 +2902,22 @@ Kernel_SemaTryWait:
 	cp (XWA),0x00                                ; F85AFD/F98662  80 3f 00   cp (XWA),0x00
 	jr z, Kernel_SemaTryWait__fail               ; F85B00/F98665  66 06   jr Z,0xf9866d
 	decm8 0x01, (xwa)                            ; F85B02/F98667  80 69   dec 1,(XWA)   take one
+.if KERNEL_KN5000
+	xor hl, hl
+.else
 	xor WA,WA                                    ; F85B04/F98669  d8 d0   xor WA,WA   0 = taken
+.endif
 	jr Kernel_SemaTryWait__ret                   ; F85B06/F9866B  68 03   jr T,0xf98670
 Kernel_SemaTryWait__fail:
+.if KERNEL_KN5000
+	ldw hl, 0xFFFF
+.else
 	ldw wa, 0xffff                               ; F85B08/F9866D  30 ff ff   ld WA,0xffff   0xFFFF = not taken; the count is untouched
+.endif
 Kernel_SemaTryWait__ret:
 	pop SR                                       ; F85B0B/F98670  03   pop SR
 	ret                                          ; F85B0C/F98671  0e   ret
+.if KERNEL_KN5000 == 0
 
 ; >>>>>> moved from prom_a/wsa1_prom_a.s -- CPU 1, the MAIN processor >>>>>>>>>>>>>
 ; ==== 0xF85B0D-0xF85C89 -- REACHABLE CODE ONLY, emitted by notes/gen_prom_a_cover_round1.py ====
@@ -2206,6 +2968,24 @@ sub_F85B0D:   ; <- prom_a's name for this address.  entry: prom_b routine direct
 	push XIZ                                     ; F85B19/F9867E  3e   push XIZ
 	ld XIZ,(XSP+0x24)                            ; F85B1A/F9867F  af 24 26   ld XIZ,(XSP+0x24)
 	jr MsgQueue_Send__common                     ; F85B1D/F98682  68 0a   jr T,0xf9868e
+.endif
+.if KERNEL_KN5000
+; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
+
+; Non-destructive read of semaphore A's count: HL = zero-extended byte at 0x1091 + A.
+; The four semaphores (ids 1..4) have their counts at 0x1092..0x1095, all seeded to 1 by
+; Kernel_InitRam (from the four 0x01 bytes at 0x01FDBE), and their wait-queue heads at
+; 0x107E + 4*A i.e. 0x1082/0x1086/0x108A/0x108E. Siblings: Kernel_SemaWait (0x02044F) is the
+; blocking P(), Kernel_SemaTryWait (0x0204A9) is the non-blocking one.
+; Input: A = semaphore id. Output: HL = current count.
+TaskSem_GetCount:
+	extz	wa
+	add	wa, KERNEL_SEMA_COUNTS-1
+	extz	xwa
+	ld	l, (xwa)
+	extz	hl
+	ret
+.endif
 
 ; >>>>>> moved from prom_c/wsa1_prom_c.s -- CPU 2, the SUB processor >>>>>>>>>>>>>>
 ; --------------------------------------------------------------------------
@@ -2217,8 +2997,14 @@ sub_F85B0D:   ; <- prom_a's name for this address.  entry: prom_b routine direct
 ;          block above.
 ; --------------------------------------------------------------------------
 
+; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
+; KN5000 sub-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open9-a3-probes/):
+;    TaskMsgQ_Send = MsgQueue_Send, TaskMsgQ_Send_PoolEmpty = MsgQueue_Send__no_node,
+;    TaskMsgQ_Send_DirectDeliver = MsgQueue_Send__wake.
 MsgQueue_Send:
+.if KERNEL_KN5000 == 0
 sub_F85B1F:   ; <- prom_a's name for this address.  entry: prom_b routine directory
+.endif
 	push SR                                      ; F85B1F/F98684  02   push SR
 	ei 0x06                                      ; F85B20/F98685  06 06   ei 0x06
 	push XHL                                     ; F85B22/F98687  3b   push XHL
@@ -2228,8 +3014,13 @@ sub_F85B1F:   ; <- prom_a's name for this address.  entry: prom_b routine direct
 	push XIX                                     ; F85B26/F9868B  3c   push XIX
 	push XIY                                     ; F85B27/F9868C  3d   push XIY
 	push XIZ                                     ; F85B28/F9868D  3e   push XIZ
+.if KERNEL_KN5000
+	ld xiz, xbc
+.endif
 MsgQueue_Send__common:
+.if KERNEL_KN5000 == 0
 .LF85B29:   ; <- prom_a's name for this address.
+.endif
 	sll a, 0x02                                  ; F85B29/F9868E  c9 ee 02   sll 0x02,A
 	ld C,A                                       ; F85B2C/F98691  c9 8b   ld C,A
 	extz WA                                      ; F85B2E/F98693  d8 12   extz WA
@@ -2244,10 +3035,19 @@ MsgQueue_Send__common:
 	ld	iy, (xix+0:8)                        ; F85B45/F986AA  9c 00 25   ld IY,(XIX+0x00)
 	cp IY,IX                                     ; F85B48/F986AD  dc f5   cp IY,IX
 	jrl z, MsgQueue_Send__no_node                ; F85B4A/F986AF  76 39 00   jrl Z,0xf986eb
+.if KERNEL_KN5000
+	ldw (xsp + 24), 0x0
+.else
 	ldw	(xsp+20), 0x0000                     ; F85B4D/F986B2  bf 14 02 00 00   ld (XSP+0x14),0x0000
+.endif
 	extz XIX                                     ; F85B52/F986B7  ec 12   extz XIX
+.if KERNEL_KN5000
+	xor xwa, xwa
+	xor xhl, xhl
+.else
 	extz XWA                                     ; F85B54/F986B9  e8 12   extz XWA
 	extz XHL                                     ; F85B56/F986BB  eb 12   extz XHL
+.endif
 	ld	wa, (xix+0:8)                        ; F85B58/F986BD  9c 00 20   ld WA,(XIX+0x00)
 	ld HL,(XIX+0x02)                             ; F85B5B/F986C0  9c 02 23   ld HL,(XIX+0x02)
 	ld	(xhl+0:8), wa                        ; F85B5E/F986C3  bb 00 50   ld (XHL+0x00),WA
@@ -2258,7 +3058,11 @@ MsgQueue_Send__common:
 	ld IY,BC                                     ; F85B6D/F986D2  d9 8d   ld IY,BC
 	extz XIX                                     ; F85B6F/F986D4  ec 12   extz XIX
 	extz XIY                                     ; F85B71/F986D6  ed 12   extz XIY
+.if KERNEL_KN5000
+	xor xwa, xwa
+.else
 	extz XWA                                     ; F85B73/F986D8  e8 12   extz XWA
+.endif
 	ld	(xix+0:8), iy                        ; F85B75/F986DA  bc 00 55   ld (XIX+0x00),IY
 	ld WA,(XIY+0x02)                             ; F85B78/F986DD  9d 02 20   ld WA,(XIY+0x02)
 	ld (XIX+0x02),WA                             ; F85B7B/F986E0  bc 02 50   ld (XIX+0x02),WA
@@ -2266,22 +3070,39 @@ MsgQueue_Send__common:
 	ld (XIY+0x02),IX                             ; F85B80/F986E5  bd 02 54   ld (XIY+0x02),IX
 	jrl Kernel_ResumeTask                        ; F85B83/F986E8  78 dd fb   jrl T,0xf982c8
 MsgQueue_Send__no_node:
+.if KERNEL_KN5000
+	ldw (xsp + 24), 0xFFFF
+.else
 .LF85B86:   ; <- prom_a's name for this address.
 	ldw	(xsp+20), 0xffff                     ; F85B86/F986EB  bf 14 02 ff ff   ld (XSP+0x14),0xffff
+.endif
 	jrl Kernel_ResumeTask                        ; F85B8B/F986F0  78 d5 fb   jrl T,0xf982c8
 MsgQueue_Send__wake:
+.if KERNEL_KN5000
+	ldw (xsp + 24), 0x0
+.else
 .LF85B8E:   ; <- prom_a's name for this address.
 	ldw	(xsp+20), 0x0000                     ; F85B8E/F986F3  bf 14 02 00 00   ld (XSP+0x14),0x0000
+.endif
 	extz XIX                                     ; F85B93/F986F8  ec 12   extz XIX
+.if KERNEL_KN5000
+	xor xwa, xwa
+	xor xhl, xhl
+.else
 	extz XWA                                     ; F85B95/F986FA  e8 12   extz XWA
 	extz XHL                                     ; F85B97/F986FC  eb 12   extz XHL
+.endif
 	ld	wa, (xix+0:8)                        ; F85B99/F986FE  9c 00 20   ld WA,(XIX+0x00)
 	ld HL,(XIX+0x02)                             ; F85B9C/F98701  9c 02 23   ld HL,(XIX+0x02)
 	ld	(xhl+0:8), wa                        ; F85B9F/F98704  bb 00 50   ld (XHL+0x00),WA
 	ld (XWA+0x02),HL                             ; F85BA2/F98707  b8 02 53   ld (XWA+0x02),HL
 	ld (XIX+0x09),0x04                           ; F85BA5/F9870A  bc 09 00 04   ld (XIX+0x09),0x04
 	ld XWA,(XIX+0x04)                            ; F85BA9/F9870E  ac 04 20   ld XWA,(XIX+0x04)
+.if KERNEL_KN5000
+	ld (xwa + 24), xiz
+.else
 	ld (XWA+0x04),XIZ                            ; F85BAC/F98711  b8 04 66   ld (XWA+0x04),XIZ
+.endif
 	ld A,(XIX+0x08)                              ; F85BAF/F98714  8c 08 21   ld A,(XIX+0x08)
 	sll a, 0x02                                  ; F85BB2/F98717  c9 ee 02   sll 0x02,A
 	extz WA                                      ; F85BB5/F9871A  d8 12   extz WA
@@ -2289,7 +3110,11 @@ MsgQueue_Send__wake:
 	ld IY,WA                                     ; F85BBB/F98720  d8 8d   ld IY,WA
 	extz XIX                                     ; F85BBD/F98722  ec 12   extz XIX
 	extz XIY                                     ; F85BBF/F98724  ed 12   extz XIY
+.if KERNEL_KN5000
+	xor xwa, xwa
+.else
 	extz XWA                                     ; F85BC1/F98726  e8 12   extz XWA
+.endif
 	ld	(xix+0:8), iy                        ; F85BC3/F98728  bc 00 55   ld (XIX+0x00),IY
 	ld WA,(XIY+0x02)                             ; F85BC6/F9872B  9d 02 20   ld WA,(XIY+0x02)
 	ld (XIX+0x02),WA                             ; F85BC9/F9872E  bc 02 50   ld (XIX+0x02),WA
@@ -2323,13 +3148,34 @@ MsgQueue_Send__wake:
 ;          What, if anything, reads the result is unknown -- no caller was found.
 ; --------------------------------------------------------------------------
 
+; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
+; KN5000 sub-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open9-a3-probes/):
+;    TaskMsgQ_Send_NoResched = MsgQueue_Send_NoDispatch,
+;    TaskMsgQ_Send_Guard_Return = MsgQueue_Send_NoDispatch__ret,
+;    TaskMsgQ_Send_Guard_PoolEmpty = MsgQueue_Send_NoDispatch__no_node,
+;    TaskMsgQ_Send_Guard_DirectDeliver = MsgQueue_Send_NoDispatch__wake.
+; MsgQueue_Send without rescheduling: saves six registers instead of the full context frame,
+; then the same queue logic (waiter list 0x1092 + 4*A, message list 0x109A + 4*A, free nodes
+; at 0x10C6); a waiting receiver is made READY and linked, and the routine RETURNS to its
+; caller.  Main-CPU twin: the code under TaskMsg_Send_NB_Return / _NB_WakeReceiver.  No
+; caller in v1.42.
 MsgQueue_Send_NoDispatch:
+.if KERNEL_KN5000 == 0
 sub_F85BD4:   ; <- prom_a's name for this address.  entry: prom_b routine directory
+.endif
 	push XWA                                     ; F85BD4/F98739  38   push XWA
 	push XIX                                     ; F85BD5/F9873A  3c   push XIX
 	push XIY                                     ; F85BD6/F9873B  3d   push XIY
+.if KERNEL_KN5000
+	push xiz
+.endif
 	push XHL                                     ; F85BD7/F9873C  3b   push XHL
+.if KERNEL_KN5000
+	push xbc
+	ld xiz, xbc
+.else
 	pushw bc                                     ; F85BD8/F9873D  29   push BC
+.endif
 	sll a, 0x02                                  ; F85BD9/F9873E  c9 ee 02   sll 0x02,A
 	ld C,A                                       ; F85BDC/F98741  c9 8b   ld C,A
 	extz WA                                      ; F85BDE/F98743  d8 12   extz WA
@@ -2346,10 +3192,19 @@ sub_F85BD4:   ; <- prom_a's name for this address.  entry: prom_b routine direct
 	ld	iy, (xix+0:8)                        ; F85BF8/F9875D  9c 00 25   ld IY,(XIX+0x00)
 	cp IY,IX                                     ; F85BFB/F98760  dc f5   cp IY,IX
 	jrl z, MsgQueue_Send_NoDispatch__no_node     ; F85BFD/F98762  76 3d 00   jrl Z,0xf987a2
+.if KERNEL_KN5000
+	ldw (xsp + 4), 0x0
+.else
 	ldw	(xsp+14), 0x0000                     ; F85C00/F98765  bf 0e 02 00 00   ld (XSP+0x0e),0x0000
+.endif
 	extz XIX                                     ; F85C05/F9876A  ec 12   extz XIX
+.if KERNEL_KN5000
+	xor xwa, xwa
+	xor xhl, xhl
+.else
 	extz XWA                                     ; F85C07/F9876C  e8 12   extz XWA
 	extz XHL                                     ; F85C09/F9876E  eb 12   extz XHL
+.endif
 	ld	wa, (xix+0:8)                        ; F85C0B/F98770  9c 00 20   ld WA,(XIX+0x00)
 	ld HL,(XIX+0x02)                             ; F85C0E/F98773  9c 02 23   ld HL,(XIX+0x02)
 	ld	(xhl+0:8), wa                        ; F85C11/F98776  bb 00 50   ld (XHL+0x00),WA
@@ -2360,7 +3215,11 @@ sub_F85BD4:   ; <- prom_a's name for this address.  entry: prom_b routine direct
 	ld IY,BC                                     ; F85C20/F98785  d9 8d   ld IY,BC
 	extz XIX                                     ; F85C22/F98787  ec 12   extz XIX
 	extz XIY                                     ; F85C24/F98789  ed 12   extz XIY
+.if KERNEL_KN5000
+	xor xwa, xwa
+.else
 	extz XWA                                     ; F85C26/F9878B  e8 12   extz XWA
+.endif
 	ld	(xix+0:8), iy                        ; F85C28/F9878D  bc 00 55   ld (XIX+0x00),IY
 	ld WA,(XIY+0x02)                             ; F85C2B/F98790  9d 02 20   ld WA,(XIY+0x02)
 	ld (XIX+0x02),WA                             ; F85C2E/F98793  bc 02 50   ld (XIX+0x02),WA
@@ -2368,27 +3227,49 @@ sub_F85BD4:   ; <- prom_a's name for this address.  entry: prom_b routine direct
 	ld (XIY+0x02),IX                             ; F85C33/F98798  bd 02 54   ld (XIY+0x02),IX
 MsgQueue_Send_NoDispatch__ret:
 	pop SR                                       ; F85C36/F9879B  03   pop SR
+.if KERNEL_KN5000
+	pop xbc
+.else
 	popw bc                                      ; F85C37/F9879C  49   pop BC
+.endif
 	pop XHL                                      ; F85C38/F9879D  5b   pop XHL
+.if KERNEL_KN5000
+	pop xiz
+.endif
 	pop XIY                                      ; F85C39/F9879E  5d   pop XIY
 	pop XIX                                      ; F85C3A/F9879F  5c   pop XIX
 	pop XWA                                      ; F85C3B/F987A0  58   pop XWA
 	ret                                          ; F85C3C/F987A1  0e   ret
 MsgQueue_Send_NoDispatch__no_node:
-	extpfx5 0xBF, 0x0E, 0x02, 0xFF, 0xFF         ; F85C3D/F987A2  bf 0e 02 ff ff   ld (XSP+0x0e),0xffff
+.if KERNEL_KN5000
+	ldw (xsp + 4), 0xFFFF
+.else
+	ldw	(xsp+14), 0xffff                     ; F85C3D/F987A2  bf 0e 02 ff ff   ld (XSP+0x0e),0xffff
+.endif
 	jr MsgQueue_Send_NoDispatch__ret             ; F85C42/F987A7  68 f2   jr T,0xf9879b
 MsgQueue_Send_NoDispatch__wake:
+.if KERNEL_KN5000 == 0
 sub_F85C44:   ; <- prom_a's name for this address.  entry: reachable-run entry
+.endif
 	extz XIX                                     ; F85C44/F987A9  ec 12   extz XIX
+.if KERNEL_KN5000
+	xor xwa, xwa
+	xor xhl, xhl
+.else
 	extz XWA                                     ; F85C46/F987AB  e8 12   extz XWA
 	extz XHL                                     ; F85C48/F987AD  eb 12   extz XHL
+.endif
 	ld	wa, (xix+0:8)                        ; F85C4A/F987AF  9c 00 20   ld WA,(XIX+0x00)
 	ld HL,(XIX+0x02)                             ; F85C4D/F987B2  9c 02 23   ld HL,(XIX+0x02)
 	ld	(xhl+0:8), wa                        ; F85C50/F987B5  bb 00 50   ld (XHL+0x00),WA
 	ld (XWA+0x02),HL                             ; F85C53/F987B8  b8 02 53   ld (XWA+0x02),HL
 	ld (XIX+0x09),0x04                           ; F85C56/F987BB  bc 09 00 04   ld (XIX+0x09),0x04
 	ld XWA,(XIX+0x04)                            ; F85C5A/F987BF  ac 04 20   ld XWA,(XIX+0x04)
+.if KERNEL_KN5000
+	ld (xwa + 24), xiz
+.else
 	ld (XWA+0x04),XIZ                            ; F85C5D/F987C2  b8 04 66   ld (XWA+0x04),XIZ
+.endif
 	ld A,(XIX+0x08)                              ; F85C60/F987C5  8c 08 21   ld A,(XIX+0x08)
 	sll a, 0x02                                  ; F85C63/F987C8  c9 ee 02   sll 0x02,A
 	extz WA                                      ; F85C66/F987CB  d8 12   extz WA
@@ -2396,19 +3277,31 @@ sub_F85C44:   ; <- prom_a's name for this address.  entry: reachable-run entry
 	ld IY,WA                                     ; F85C6C/F987D1  d8 8d   ld IY,WA
 	extz XIX                                     ; F85C6E/F987D3  ec 12   extz XIX
 	extz XIY                                     ; F85C70/F987D5  ed 12   extz XIY
+.if KERNEL_KN5000
+	xor xwa, xwa
+.else
 	extz XWA                                     ; F85C72/F987D7  e8 12   extz XWA
+.endif
 	ld	(xix+0:8), iy                        ; F85C74/F987D9  bc 00 55   ld (XIX+0x00),IY
 	ld WA,(XIY+0x02)                             ; F85C77/F987DC  9d 02 20   ld WA,(XIY+0x02)
 	ld (XIX+0x02),WA                             ; F85C7A/F987DF  bc 02 50   ld (XIX+0x02),WA
 	ld (XWA),IX                                  ; F85C7D/F987E2  b0 54   ld (XWA),IX
 	ld (XIY+0x02),IX                             ; F85C7F/F987E4  bd 02 54   ld (XIY+0x02),IX
 	pop SR                                       ; F85C82/F987E7  03   pop SR
+.if KERNEL_KN5000
+	pop xbc
+.else
 	popw bc                                      ; F85C83/F987E8  49   pop BC
+.endif
 	pop XHL                                      ; F85C84/F987E9  5b   pop XHL
+.if KERNEL_KN5000
+	pop xiz
+.endif
 	pop XIY                                      ; F85C85/F987EA  5d   pop XIY
 	pop XIX                                      ; F85C86/F987EB  5c   pop XIX
 	pop XWA                                      ; F85C87/F987EC  58   pop XWA
 	ret                                          ; F85C88/F987ED  0e   ret
+.if KERNEL_KN5000 == 0
 
 ; >>>>>> moved from prom_a/wsa1_prom_a.s -- CPU 1, the MAIN processor >>>>>>>>>>>>>
 ; ==============================================================================
@@ -2491,6 +3384,7 @@ sub_F85C44:   ; <- prom_a's name for this address.  entry: reachable-run entry
 
 MsgQueue_ReceiveBlocking_StackArg:
 	ld A,(XSP+0x04)                              ; F85C89/F987EE  8f 04 21   ld A,(XSP+0x04)   A = the queue number
+.endif
 
 ; >>>>>> moved from prom_c/wsa1_prom_c.s -- CPU 2, the SUB processor >>>>>>>>>>>>>>
 ; --------------------------------------------------------------------------
@@ -2502,6 +3396,10 @@ MsgQueue_ReceiveBlocking_StackArg:
 ;          block above.
 ; --------------------------------------------------------------------------
 
+; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
+; KN5000 sub-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open9-a3-probes/):
+;    TaskMsgQ_Receive = MsgQueue_ReceiveBlocking,
+;    TaskMsgQ_Receive_Empty = MsgQueue_ReceiveBlocking__block.
 MsgQueue_ReceiveBlocking:
 	push SR                                      ; F85C8C/F987F1  02   push SR
 	ei 0x06                                      ; F85C8D/F987F2  06 06   ei 0x06
@@ -2522,8 +3420,13 @@ MsgQueue_ReceiveBlocking:
 	cp IX,IY                                     ; F85CA8/F9880D  dd f4   cp IX,IY   == head? then the queue is EMPTY
 	jr z, MsgQueue_ReceiveBlocking__block        ; F85CAA/F9880F  66 3a   jr Z,0xf9884b
 	extz XIX                                     ; F85CAC/F98811  ec 12   extz XIX
+.if KERNEL_KN5000
+	xor xwa, xwa
+	xor xhl, xhl
+.else
 	extz XWA                                     ; F85CAE/F98813  e8 12   extz XWA
 	extz XHL                                     ; F85CB0/F98815  eb 12   extz XHL
+.endif
 	ld	wa, (xix+0:8)                        ; F85CB2/F98817  9c 00 20   ld WA,(XIX+0x00)   unlink the node
 	ld HL,(XIX+0x02)                             ; F85CB5/F9881A  9c 02 23   ld HL,(XIX+0x02)
 	ld	(xhl+0:8), wa                        ; F85CB8/F9881D  bb 00 50   ld (XHL+0x00),WA
@@ -2534,19 +3437,36 @@ MsgQueue_ReceiveBlocking:
 	ldw iy, KERNEL_FREE_LIST                     ; F85CC9/F9882E  a=35 c4 03 c=35 70 01   c: ld IY,0x0170   the free list
 	extz XIX                                     ; F85CCC/F98831  ec 12   extz XIX
 	extz XIY                                     ; F85CCE/F98833  ed 12   extz XIY
+.if KERNEL_KN5000
+	xor xwa, xwa
+.else
 	extz XWA                                     ; F85CD0/F98835  e8 12   extz XWA
+.endif
 	ld	(xix+0:8), iy                        ; F85CD2/F98837  bc 00 55   ld (XIX+0x00),IY   recycle it at the tail
 	ld WA,(XIY+0x02)                             ; F85CD5/F9883A  9d 02 20   ld WA,(XIY+0x02)
 	ld (XIX+0x02),WA                             ; F85CD8/F9883D  bc 02 50   ld (XIX+0x02),WA
 	ld (XWA),IX                                  ; F85CDB/F98840  b0 54   ld (XWA),IX
 	ld (XIY+0x02),IX                             ; F85CDD/F98842  bd 02 54   ld (XIY+0x02),IX
+.if KERNEL_KN5000
+	ld (xsp + 24), xiz
+.else
 	ld (XSP+0x04),XIZ                            ; F85CE0/F98845  bf 04 66   ld (XSP+0x04),XIZ   the payload IS the return value
+.endif
 	jrl Kernel_ResumeTask                        ; F85CE3/F98848  78 7d fa   jrl T,0xf982c8
 MsgQueue_ReceiveBlocking__block:
+.if KERNEL_KN5000
+	ld ix, (KERNEL_CURRENT_TASK:16)
+.else
 	ld	ix, (KERNEL_CURRENT_TASK:8)          ; F85CE6/F9884B  a=d0 bf 24 c=d0 91 24   c: ld IX,(0x91)   IX = the CURRENT task's node
+.endif
 	extz XIX                                     ; F85CE9/F9884E  ec 12   extz XIX
+.if KERNEL_KN5000
+	xor xwa, xwa
+	xor xhl, xhl
+.else
 	extz XWA                                     ; F85CEB/F98850  e8 12   extz XWA
 	extz XHL                                     ; F85CED/F98852  eb 12   extz XHL
+.endif
 	ld	wa, (xix+0:8)                        ; F85CEF/F98854  9c 00 20   ld WA,(XIX+0x00)   take it off its ready queue
 	ld HL,(XIX+0x02)                             ; F85CF2/F98857  9c 02 23   ld HL,(XIX+0x02)
 	ld	(xhl+0:8), wa                        ; F85CF5/F9885A  bb 00 50   ld (XHL+0x00),WA
@@ -2556,7 +3476,11 @@ MsgQueue_ReceiveBlocking__block:
 	ld IY,DE                                     ; F85D03/F98868  da 8d   ld IY,DE
 	extz XIX                                     ; F85D05/F9886A  ec 12   extz XIX
 	extz XIY                                     ; F85D07/F9886C  ed 12   extz XIY
+.if KERNEL_KN5000
+	xor xwa, xwa
+.else
 	extz XWA                                     ; F85D09/F9886E  e8 12   extz XWA
+.endif
 	ld	(xix+0:8), iy                        ; F85D0B/F98870  bc 00 55   ld (XIX+0x00),IY   park it there, at the tail
 	ld WA,(XIY+0x02)                             ; F85D0E/F98873  9d 02 20   ld WA,(XIY+0x02)
 	ld (XIX+0x02),WA                             ; F85D11/F98876  bc 02 50   ld (XIX+0x02),WA
@@ -2597,10 +3521,17 @@ MsgQueue_ReceiveBlocking__block:
 ;          differences and 0 structural ones.
 ; --------------------------------------------------------------------------
 
+; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
+; KN5000 sub-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open9-a3-probes/):
+;    TaskMsgQ_TryReceive = MsgQueue_Receive_NoBlock,
+;    TaskMsgQ_TryReceive_Empty = MsgQueue_Receive_NoBlock__empty,
+;    TaskMsgQ_TryReceive_Return = MsgQueue_Receive_NoBlock__ret.
 MsgQueue_Receive_NoBlock:
+.if KERNEL_KN5000 == 0
 sub_F85D1C:   ; <- prom_a's name for this address.  entry: prom_b routine directory
 	ld A,(XSP+0x04)                              ; F85D1C/F98881  8f 04 21   ld A,(XSP+0x04)
 	push XHL                                     ; F85D1F/F98884  3b   push XHL
+.endif
 	push XIX                                     ; F85D20/F98885  3c   push XIX
 	push XIZ                                     ; F85D21/F98886  3e   push XIZ
 	sll a, 0x02                                  ; F85D22/F98887  c9 ee 02   sll 0x02,A
@@ -2614,8 +3545,13 @@ sub_F85D1C:   ; <- prom_a's name for this address.  entry: prom_b routine direct
 	cp IX,IY                                     ; F85D35/F9889A  dd f4   cp IX,IY
 	jr z, MsgQueue_Receive_NoBlock__empty        ; F85D37/F9889C  66 38   jr Z,0xf988d6
 	extz XIX                                     ; F85D39/F9889E  ec 12   extz XIX
+.if KERNEL_KN5000
+	xor xwa, xwa
+	xor xhl, xhl
+.else
 	extz XWA                                     ; F85D3B/F988A0  e8 12   extz XWA
 	extz XHL                                     ; F85D3D/F988A2  eb 12   extz XHL
+.endif
 	ld	wa, (xix+0:8)                        ; F85D3F/F988A4  9c 00 20   ld WA,(XIX+0x00)
 	ld HL,(XIX+0x02)                             ; F85D42/F988A7  9c 02 23   ld HL,(XIX+0x02)
 	ld	(xhl+0:8), wa                        ; F85D45/F988AA  bb 00 50   ld (XHL+0x00),WA
@@ -2626,23 +3562,39 @@ sub_F85D1C:   ; <- prom_a's name for this address.  entry: prom_b routine direct
 	ldw iy, KERNEL_FREE_LIST                     ; F85D56/F988BB  a=35 c4 03 c=35 70 01   c: ld IY,0x0170
 	extz XIX                                     ; F85D59/F988BE  ec 12   extz XIX
 	extz XIY                                     ; F85D5B/F988C0  ed 12   extz XIY
+.if KERNEL_KN5000
+	xor xwa, xwa
+.else
 	extz XWA                                     ; F85D5D/F988C2  e8 12   extz XWA
+.endif
 	ld	(xix+0:8), iy                        ; F85D5F/F988C4  bc 00 55   ld (XIX+0x00),IY
 	ld WA,(XIY+0x02)                             ; F85D62/F988C7  9d 02 20   ld WA,(XIY+0x02)
 	ld (XIX+0x02),WA                             ; F85D65/F988CA  bc 02 50   ld (XIX+0x02),WA
 	ld (XWA),IX                                  ; F85D68/F988CD  b0 54   ld (XWA),IX
 	ld (XIY+0x02),IX                             ; F85D6A/F988CF  bd 02 54   ld (XIY+0x02),IX
+.if KERNEL_KN5000
+	ld xhl, xiz
+.else
 	ld XIY,XIZ                                   ; F85D6D/F988D2  ee 8d   ld XIY,XIZ
+.endif
 	jr MsgQueue_Receive_NoBlock__ret             ; F85D6F/F988D4  68 02   jr T,0xf988d8
 MsgQueue_Receive_NoBlock__empty:
+.if KERNEL_KN5000
+	xor xhl, xhl
+.else
 .LF85D71:   ; <- prom_a's name for this address.
 	xor XIY,XIY                                  ; F85D71/F988D6  ed d5   xor XIY,XIY
+.endif
 MsgQueue_Receive_NoBlock__ret:
+.if KERNEL_KN5000 == 0
 .LF85D73:   ; <- prom_a's name for this address.
+.endif
 	pop SR                                       ; F85D73/F988D8  03   pop SR
 	pop XIZ                                      ; F85D74/F988D9  5e   pop XIZ
 	pop XIX                                      ; F85D75/F988DA  5c   pop XIX
+.if KERNEL_KN5000 == 0
 	pop XHL                                      ; F85D76/F988DB  5b   pop XHL
+.endif
 	ret                                          ; F85D77/F988DC  0e   ret
 
 ; >>>>>> moved from prom_c/wsa1_prom_c.s -- CPU 2, the SUB processor >>>>>>>>>>>>>>
@@ -2666,8 +3618,13 @@ MsgQueue_Receive_NoBlock__ret:
 ;          0xFFFFFFFF for the whole run.
 ; --------------------------------------------------------------------------
 
+; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
+; KN5000 sub-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open9-a3-probes/):
+;    Task_ConfigTimer = SoftTimer_Register.
 SoftTimer_Register:
+.if KERNEL_KN5000 == 0
 sub_F85D78:   ; <- prom_a's name for this address.  entry: branch/call in converted code
+.endif
 	push SR                                      ; F85D78/F988DD  02   push SR
 	ei 0x06                                      ; F85D79/F988DE  06 06   ei 0x06
 	push XHL                                     ; F85D7B/F988E0  3b   push XHL
@@ -2677,6 +3634,9 @@ sub_F85D78:   ; <- prom_a's name for this address.  entry: branch/call in conver
 	push XIX                                     ; F85D7F/F988E4  3c   push XIX
 	push XIY                                     ; F85D80/F988E5  3d   push XIY
 	push XIZ                                     ; F85D81/F988E6  3e   push XIZ
+.if KERNEL_KN5000
+	ld xix, xwa
+.endif
 	ld	a, (xix+0:8)                         ; F85D82/F988E7  8c 00 21   ld A,(XIX+0x00)
 	mul A,0x08                                   ; F85D85/F988EA  c9 08 08   mul A,0x08
 	add WA,KERNEL_TIMERS-8                       ; F85D88/F988ED  a=d8 c8 c0 03 c=d8 c8 6c 01   c: add WA,0x016c
@@ -2688,6 +3648,7 @@ sub_F85D78:   ; <- prom_a's name for this address.  entry: branch/call in conver
 	ld XWA,(XIX+0x04)                            ; F85D99/F988FE  ac 04 20   ld XWA,(XIX+0x04)
 	ld (XIY+0x04),XWA                            ; F85D9C/F98901  bd 04 60   ld (XIY+0x04),XWA
 	jrl Kernel_Dispatch                          ; F85D9F/F98904  78 73 f9   jrl T,0xf9827a
+.if KERNEL_KN5000 == 0
 
 ; >>>>>> moved from prom_c/wsa1_prom_c.s -- CPU 2, the SUB processor >>>>>>>>>>>>>>
 ; --------------------------------------------------------------------------
@@ -2715,6 +3676,7 @@ Kernel_SetTaskLevel_StackArg:
 sub_F85DA2:   ; <- prom_a's name for this address.  entry: prom_b routine directory
 	ld A,(XSP+0x04)                              ; F85DA2/F98907  8f 04 21   ld A,(XSP+0x04)
 	ld W,(XSP+0x06)                              ; F85DA5/F9890A  8f 06 20   ld W,(XSP+0x06)
+.endif
 
 ; >>>>>> moved from prom_c/wsa1_prom_c.s -- CPU 2, the SUB processor >>>>>>>>>>>>>>
 ; --------------------------------------------------------------------------
@@ -2726,8 +3688,18 @@ sub_F85DA2:   ; <- prom_a's name for this address.  entry: prom_b routine direct
 ;          block above.
 ; --------------------------------------------------------------------------
 
+; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
+; KN5000 sub-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open9-a3-probes/):
+;    TaskSched_ChangePriority = Kernel_SetTaskLevel,
+;    Task_Reassign_NotRunning = Kernel_SetTaskLevel__store_only.
+; Give task A priority C: TCB = 0x103C + 12*A.  If the task is READY (state +0x09 == 4) it is
+; unlinked, its priority byte +0x08 set and it is relinked at the tail of ready queue
+; 0x1068 + 4*C, then Kernel_Dispatch runs; otherwise only +0x08 is written
+; (Kernel_SetTaskLevel__store_only).  Main-CPU twin: TaskSched_ChangePriority.  No caller in v1.42.
 Kernel_SetTaskLevel:
+.if KERNEL_KN5000 == 0
 sub_F85DA8:   ; <- prom_a's name for this address.  entry: prom_b routine directory
+.endif
 	push SR                                      ; F85DA8/F9890D  02   push SR
 	ei 0x06                                      ; F85DA9/F9890E  06 06   ei 0x06
 	push XHL                                     ; F85DAB/F98910  3b   push XHL
@@ -2737,7 +3709,11 @@ sub_F85DA8:   ; <- prom_a's name for this address.  entry: prom_b routine direct
 	push XIX                                     ; F85DAF/F98914  3c   push XIX
 	push XIY                                     ; F85DB0/F98915  3d   push XIY
 	push XIZ                                     ; F85DB1/F98916  3e   push XIZ
+.if KERNEL_KN5000
+	ld e, c
+.else
 	ld E,W                                       ; F85DB2/F98917  c8 8d   ld E,W
+.endif
 	mul A,0x0c                                   ; F85DB4/F98919  c9 08 0c   mul A,0x0c
 	add WA,KERNEL_TCB_BASE-12                    ; F85DB7/F9891C  a=d8 c8 f4 02 c=d8 c8 f4 00   c: add WA,0x00f4
 	ld IX,WA                                     ; F85DBB/F98920  d8 8c   ld IX,WA
@@ -2745,8 +3721,13 @@ sub_F85DA8:   ; <- prom_a's name for this address.  entry: prom_b routine direct
 	cp (XIX+0x09),0x04                           ; F85DBF/F98924  8c 09 3f 04   cp (XIX+0x09),0x04
 	jr nz, Kernel_SetTaskLevel__store_only       ; F85DC3/F98928  6e 37   jr NZ,0xf98961
 	extz XIX                                     ; F85DC5/F9892A  ec 12   extz XIX
+.if KERNEL_KN5000
+	xor xwa, xwa
+	xor xhl, xhl
+.else
 	extz XWA                                     ; F85DC7/F9892C  e8 12   extz XWA
 	extz XHL                                     ; F85DC9/F9892E  eb 12   extz XHL
+.endif
 	ld	wa, (xix+0:8)                        ; F85DCB/F98930  9c 00 20   ld WA,(XIX+0x00)
 	ld HL,(XIX+0x02)                             ; F85DCE/F98933  9c 02 23   ld HL,(XIX+0x02)
 	ld	(xhl+0:8), wa                        ; F85DD1/F98936  bb 00 50   ld (XHL+0x00),WA
@@ -2758,7 +3739,11 @@ sub_F85DA8:   ; <- prom_a's name for this address.  entry: prom_b routine direct
 	ld IY,DE                                     ; F85DE3/F98948  da 8d   ld IY,DE
 	extz XIX                                     ; F85DE5/F9894A  ec 12   extz XIX
 	extz XIY                                     ; F85DE7/F9894C  ed 12   extz XIY
+.if KERNEL_KN5000
+	xor xwa, xwa
+.else
 	extz XWA                                     ; F85DE9/F9894E  e8 12   extz XWA
+.endif
 	ld	(xix+0:8), iy                        ; F85DEB/F98950  bc 00 55   ld (XIX+0x00),IY
 	ld WA,(XIY+0x02)                             ; F85DEE/F98953  9d 02 20   ld WA,(XIY+0x02)
 	ld (XIX+0x02),WA                             ; F85DF1/F98956  bc 02 50   ld (XIX+0x02),WA
@@ -2766,7 +3751,9 @@ sub_F85DA8:   ; <- prom_a's name for this address.  entry: prom_b routine direct
 	ld (XIY+0x02),IX                             ; F85DF6/F9895B  bd 02 54   ld (XIY+0x02),IX
 	jrl Kernel_Dispatch                          ; F85DF9/F9895E  78 19 f9   jrl T,0xf9827a
 Kernel_SetTaskLevel__store_only:
+.if KERNEL_KN5000 == 0
 .LF85DFC:   ; <- prom_a's name for this address.
+.endif
 	ld (XIX+0x08),E                              ; F85DFC/F98961  bc 08 45   ld (XIX+0x08),E
 	jrl Kernel_ResumeTask                        ; F85DFF/F98964  78 61 f9   jrl T,0xf982c8
 
@@ -2783,14 +3770,26 @@ Kernel_SetTaskLevel__store_only:
 ;          differences and 0 structural ones.
 ; --------------------------------------------------------------------------
 
+; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
+; KN5000 sub-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open9-a3-probes/):
+;    TaskSched_ChangePriority_NoResched = Kernel_SetTaskLevel_NoDispatch,
+;    Task_Reassign_Guard_NotRunning = Kernel_SetTaskLevel_NoDispatch__store_only.
+; Kernel_SetTaskLevel without the context frame and without rescheduling: the same
+; relink under `push sr / ei 6`, then return to the caller.  No caller in v1.42.
 Kernel_SetTaskLevel_NoDispatch:
+.if KERNEL_KN5000 == 0
 sub_F85E02:   ; <- prom_a's name for this address.  entry: prom_b routine directory
+.endif
 	push XWA                                     ; F85E02/F98967  38   push XWA
 	push XIX                                     ; F85E03/F98968  3c   push XIX
 	push XIY                                     ; F85E04/F98969  3d   push XIY
 	push XHL                                     ; F85E05/F9896A  3b   push XHL
 	pushw de                                     ; F85E06/F9896B  2a   push DE
+.if KERNEL_KN5000
+	ld e, c
+.else
 	ld E,W                                       ; F85E07/F9896C  c8 8d   ld E,W
+.endif
 	mul A,0x0c                                   ; F85E09/F9896E  c9 08 0c   mul A,0x0c
 	add WA,KERNEL_TCB_BASE-12                    ; F85E0C/F98971  a=d8 c8 f4 02 c=d8 c8 f4 00   c: add WA,0x00f4
 	ld IX,WA                                     ; F85E10/F98975  d8 8c   ld IX,WA
@@ -2800,8 +3799,13 @@ sub_F85E02:   ; <- prom_a's name for this address.  entry: prom_b routine direct
 	cp (XIX+0x09),0x04                           ; F85E17/F9897C  8c 09 3f 04   cp (XIX+0x09),0x04
 	jr nz, Kernel_SetTaskLevel_NoDispatch__store_only ; F85E1B/F98980  6e 34   jr NZ,0xf989b6
 	extz XIX                                     ; F85E1D/F98982  ec 12   extz XIX
+.if KERNEL_KN5000
+	xor xwa, xwa
+	xor xhl, xhl
+.else
 	extz XWA                                     ; F85E1F/F98984  e8 12   extz XWA
 	extz XHL                                     ; F85E21/F98986  eb 12   extz XHL
+.endif
 	ld	wa, (xix+0:8)                        ; F85E23/F98988  9c 00 20   ld WA,(XIX+0x00)
 	ld HL,(XIX+0x02)                             ; F85E26/F9898B  9c 02 23   ld HL,(XIX+0x02)
 	ld	(xhl+0:8), wa                        ; F85E29/F9898E  bb 00 50   ld (XHL+0x00),WA
@@ -2813,15 +3817,27 @@ sub_F85E02:   ; <- prom_a's name for this address.  entry: prom_b routine direct
 	ld IY,DE                                     ; F85E3B/F989A0  da 8d   ld IY,DE
 	extz XIX                                     ; F85E3D/F989A2  ec 12   extz XIX
 	extz XIY                                     ; F85E3F/F989A4  ed 12   extz XIY
+.if KERNEL_KN5000
+	xor xwa, xwa
+.else
 	extz XWA                                     ; F85E41/F989A6  e8 12   extz XWA
+.endif
 	ld	(xix+0:8), iy                        ; F85E43/F989A8  bc 00 55   ld (XIX+0x00),IY
 	ld WA,(XIY+0x02)                             ; F85E46/F989AB  9d 02 20   ld WA,(XIY+0x02)
 	ld (XIX+0x02),WA                             ; F85E49/F989AE  bc 02 50   ld (XIX+0x02),WA
 	ld (XWA),IX                                  ; F85E4C/F989B1  b0 54   ld (XWA),IX
 	ld (XIY+0x02),IX                             ; F85E4E/F989B3  bd 02 54   ld (XIY+0x02),IX
+.if KERNEL_KN5000
+	jr Task_Reassign_Guard_Return
+.endif
 Kernel_SetTaskLevel_NoDispatch__store_only:
+.if KERNEL_KN5000 == 0
 .LF85E51:   ; <- prom_a's name for this address.
+.endif
 	ld (XIX+0x08),E                              ; F85E51/F989B6  bc 08 45   ld (XIX+0x08),E
+.if KERNEL_KN5000
+Task_Reassign_Guard_Return:
+.endif
 	pop SR                                       ; F85E54/F989B9  03   pop SR
 	popw de                                      ; F85E55/F989BA  4a   pop DE
 	pop XHL                                      ; F85E56/F989BB  5b   pop XHL
@@ -2829,6 +3845,7 @@ Kernel_SetTaskLevel_NoDispatch__store_only:
 	pop XIX                                      ; F85E58/F989BD  5c   pop XIX
 	pop XWA                                      ; F85E59/F989BE  58   pop XWA
 	ret                                          ; F85E5A/F989BF  0e   ret
+.if KERNEL_KN5000 == 0
 
 ; >>>>>> moved from prom_c/wsa1_prom_c.s -- CPU 2, the SUB processor >>>>>>>>>>>>>>
 ; --------------------------------------------------------------------------
@@ -2859,6 +3876,7 @@ Kernel_SetTaskLevel_NoDispatch__store_only:
 Kernel_KillTask_StackArg:
 sub_F85E5B:   ; <- prom_a's name for this address.  entry: prom_b routine directory
 	ld A,(XSP+0x04)                              ; F85E5B/F989C0  8f 04 21   ld A,(XSP+0x04)
+.endif
 
 ; >>>>>> moved from prom_c/wsa1_prom_c.s -- CPU 2, the SUB processor >>>>>>>>>>>>>>
 ; --------------------------------------------------------------------------
@@ -2870,8 +3888,24 @@ sub_F85E5B:   ; <- prom_a's name for this address.  entry: prom_b routine direct
 ;          block above.
 ; --------------------------------------------------------------------------
 
+; >>>>>> moved from v142/subcpu/core/03_task_scheduler_kernel.s -- the KN5000 SUB-CPU >>>>>>
+; KN5000 sub-CPU names until 2026-11-06 (it IS this routine: wsa1/notes/open9-a3-probes/):
+;    TaskSched_TerminateTask = Kernel_KillTask.
+; Terminate task A. Descriptor = 0x103C + 12*A; the descriptor is unlinked from whatever
+; doubly-linked list it is on (next +0 / prev +2) and both its state byte (+0x09) and its
+; pending count (+0x0A) are zeroed, i.e. the slot returns to the "never spawned" condition
+; that Kernel_StartTask (0x01FFFD) tests for. Runs at interrupt level 6, saves
+; WA/XIX/XIY/XHL, plain RET (it never kills the *running* task's stack, so the caller must
+; not be task A itself).  Input: A = task id.
+; 2026-09-25: CODE, converted from a .byte run (scripts/converters/convert_v142_byte_block.py:
+; llvm-mc and unidasm agree on every instruction boundary; each instruction re-assembles to its
+; own bytes, the few llvm-mc cannot spell stay .byte with unidasm's reading as a comment).
+; Renamed from RingBuf_Access_Opaque_A.
+; Note: its first four bytes were `.ascii "(<=;"` -- they are `push wa / push xix / push xiy / push xhl`, matching the pops at the end.
 Kernel_KillTask:
+.if KERNEL_KN5000 == 0
 sub_F85E5E:   ; <- prom_a's name for this address.  entry: prom_b routine directory
+.endif
 	pushw wa                                     ; F85E5E/F989C3  28   push WA
 	push XIX                                     ; F85E5F/F989C4  3c   push XIX
 	push XIY                                     ; F85E60/F989C5  3d   push XIY
@@ -2881,13 +3915,21 @@ sub_F85E5E:   ; <- prom_a's name for this address.  entry: prom_b routine direct
 	add WA,KERNEL_TCB_BASE-12                    ; F85E67/F989CC  a=d8 c8 f4 02 c=d8 c8 f4 00   c: add WA,0x00f4
 	ld IX,WA                                     ; F85E6B/F989D0  d8 8c   ld IX,WA
 	extz XIX                                     ; F85E6D/F989D2  ec 12   extz XIX
+.if KERNEL_KN5000
+	xor	xwa, xwa
+	xor	xhl, xhl
+.else
 	extz XWA                                     ; F85E6F/F989D4  e8 12   extz XWA
 	extz XHL                                     ; F85E71/F989D6  eb 12   extz XHL
+.endif
 	ld	wa, (xix+0:8)                        ; F85E73/F989D8  9c 00 20   ld WA,(XIX+0x00)
 	ld HL,(XIX+0x02)                             ; F85E76/F989DB  9c 02 23   ld HL,(XIX+0x02)
 	ld	(xhl+0:8), wa                        ; F85E79/F989DE  bb 00 50   ld (XHL+0x00),WA
 	ld (XWA+0x02),HL                             ; F85E7C/F989E1  b8 02 53   ld (XWA+0x02),HL
 	ld (XIX+0x09),0x00                           ; F85E7F/F989E4  bc 09 00 00   ld (XIX+0x09),0x00
+.if KERNEL_KN5000
+	ld	(xix+10), 0
+.endif
 	ei 0x00                                      ; F85E83/F989E8  06 00   ei 0x00
 	pop XHL                                      ; F85E85/F989EA  5b   pop XHL
 	pop XIY                                      ; F85E86/F989EB  5d   pop XIY

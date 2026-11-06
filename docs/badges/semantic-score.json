@@ -1,10 +1,10 @@
 {
- "date": "2026-11-02",
- "head": "fb8aaf94",
- "dirty": false,
+ "date": "2026-11-06",
+ "head": "7fbdeebd",
+ "dirty": true,
  "rules": 6,
- "entry_snapshot": "docs/coverage/dispatch-census-2026-10-31-03.json",
- "entry_snapshot_head": "973d2f80",
+ "entry_snapshot": "docs/coverage/dispatch-census-2026-11-02-01.json",
+ "entry_snapshot_head": "fb8aaf94",
  "score": {
   "kn5000": 96.96,
   "wsa1": 92.67,
@@ -15,18 +15,18 @@
  "components": {
   "kn5000": {
    "bytes": {
-    "num": 17817387,
+    "num": 17817363,
     "den": 18546688,
     "pct": 96.07
    },
    "names": {
-    "num": 300584,
-    "den": 310261,
+    "num": 300503,
+    "den": 310180,
     "pct": 96.88
    },
    "entry": {
-    "num": 4672,
-    "den": 4672,
+    "num": 4678,
+    "den": 4678,
     "pct": 100.0
    },
    "fields": {
@@ -47,8 +47,8 @@
     "pct": 83.18
    },
    "entry": {
-    "num": 772,
-    "den": 772,
+    "num": 774,
+    "den": 774,
     "pct": 100.0
    },
    "fields": {
@@ -103,18 +103,18 @@
   },
   "all": {
    "bytes": {
-    "num": 53597593,
+    "num": 53597569,
     "den": 54578542,
     "pct": 98.2
    },
    "names": {
-    "num": 400559,
-    "den": 460374,
+    "num": 400478,
+    "den": 460293,
     "pct": 87.01
    },
    "entry": {
-    "num": 5444,
-    "den": 5444,
+    "num": 5452,
+    "den": 5452,
     "pct": 100.0
    },
    "fields": {
@@ -137,8 +137,8 @@
     2097152
    ],
    "entry": [
-    711,
-    711
+    712,
+    712
    ]
   },
   "v9": {
@@ -153,8 +153,8 @@
     2097152
    ],
    "entry": [
-    711,
-    711
+    712,
+    712
    ]
   },
   "v8": {
@@ -169,8 +169,8 @@
     2097152
    ],
    "entry": [
-    711,
-    711
+    712,
+    712
    ]
   },
   "v7": {
@@ -185,8 +185,8 @@
     2097152
    ],
    "entry": [
-    710,
-    710
+    711,
+    711
    ]
   },
   "v6": {
@@ -201,8 +201,8 @@
     2097152
    ],
    "entry": [
-    717,
-    717
+    718,
+    718
    ]
   },
   "v5": {
@@ -217,19 +217,19 @@
     2097152
    ],
    "entry": [
-    717,
-    717
+    718,
+    718
    ]
   },
   "v142": {
    "names": {
-    "semantic": 4043,
-    "continuation": 1000,
+    "semantic": 4016,
+    "continuation": 1035,
     "generic": 3,
     "positional": 21
    },
    "bytes": [
-    195442,
+    195434,
     196608
    ],
    "entry": [
@@ -239,13 +239,13 @@
   },
   "v141": {
    "names": {
-    "semantic": 4042,
-    "continuation": 1000,
+    "semantic": 4015,
+    "continuation": 1035,
     "generic": 3,
     "positional": 21
    },
    "bytes": [
-    195442,
+    195434,
     196608
    ],
    "entry": [
@@ -255,13 +255,13 @@
   },
   "v140": {
    "names": {
-    "semantic": 4042,
-    "continuation": 1000,
+    "semantic": 4015,
+    "continuation": 1035,
     "generic": 3,
     "positional": 21
    },
    "bytes": [
-    195442,
+    195434,
     196608
    ],
    "entry": [
@@ -380,8 +380,8 @@
     524288
    ],
    "entry": [
-    434,
-    434
+    436,
+    436
    ]
   },
   "prom_b": {
