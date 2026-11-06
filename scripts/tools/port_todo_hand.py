@@ -33,10 +33,36 @@ THE EDITS (lane open10/v6v5-port, 2026-11-06)
      record lists v6 does not have -- `sd_blit SeBitmap_RadioOn` + `sd_ptext ... "1ST"` / "2ND" -- that
      the bounds table right after them (SeMenu_DrawPartRadioButtons_Records2_Data2) delimits; the
      sd_blit / sd_ptext macros of the same file give their layout.
-  Left as rows, on purpose: the halves of pointers that a C slice boundary cuts (widget_names_charmap.s
-  2 B in v6 / v5 and 3 B in v5, extension_data.s 2 B in v5): the assembler takes `@lo16` / `@hi16`
-  only in instruction immediates (`.short Sym@lo16` is an error), so those bytes cannot be spelled by
-  name.
+THE EDITS (lane open11/v6v5-port2, 2026-11-06): the last rows, halves of pointers a slice boundary cut
+  (the assembler takes `@lo16` / `@hi16` only in instruction immediates, so a half cannot be spelled by
+  name; instead the slice is re-cut so that the pointer is whole on the assembly side, `.long Name`):
+  5. widget_names_charmap.s, WidgetName_InitPtrTable (v6, v5): the entry before WidgetName_PtrBlock_E.
+     v7 cuts it between its slices D and E (v7's E starts 2 bytes into an entry); the port wrote v6's
+     five entries of v7's C / D as `.long Str_InitializeUser14..18` and the low half of the sixth as a
+     row (v6 f0 16, v5 d8 16), the high half from E's slice (eb 00).  The entry is Str_InitializeUser19
+     (v6 0xeb16f0, v5 0xeb16d8, the names run downwards as the entries count up); E's slice now starts
+     at the next entry (bin offset 0x2C0A, 34 B) and WidgetName_PtrBlock_E with it.
+  6. v5 widget_names_charmap.s: the entry after WidgetName_PtrBlock_N1, whose low byte (0xd6) was N1's
+     slice and its high three bytes (13 eb 00) a row: Str_MainDispatchEvent (0xeb13d6), the entry before
+     Str_MainSendEvent.  N1 keeps the 3 bytes that end the entry before it (0x2CCB, 3 B).
+  7. v5 extension_data.s: entry 39 of MainChordPre_ChordTypeNames, ChordTypeStr_Type39 (0xecffe6), which
+     v5 spells whole in this file (its entries 0-38 too) but the port had cut at v7's file boundary
+     (row e6 ff, then `ExtData_ChordTypeTable_Top: .short 0x00ec`).  ExtData_ChordTypeTable_Top keeps
+     its address, mid-entry, as `.set ... MainChordPre_ChordTypeNames + 4 * 39 + 2` (the link scripts
+     of naka_perf_style / naka_extension_device name it).
+  8. sound_menu_drawbar_screens.s (v6, v5): InitializeMurai's ResEvent table (slot 0x1c1).  v6 / v5 have
+     no EV_MPVERSION: the table is 9 names and a 0 word (Murai_ResEventCount_1C1 = 9), and the names are
+     the port's `.asciz` lines.  The C slice placed v7's table (EV_READPRESENTATION .. EV_MPVERSION,
+     SELF pointers into v7's strings), which the C-divergence json patched as raw bytes.  The table is
+     written as `.long Str_EV_<name>` and the strings get those labels (the Str_EV_ convention of
+     extension_data.s).
+  9. disk_warning_strings.s (v6, v5): NakaClass_AcBitEditBox_PropNames, the 3 property-name pointers of
+     class AcBitEditBox ("func", "data", ""), whose strings the port wrote as `aligned_string` lines:
+     written as `.long` to labelled strings, as NakaClass_AcFuncToggle_PropNames right after it already
+     is (the C slice held v7's SELF pointers into v7's text).
+  10. sound_editor_ui.s (v6, v5): UpdSeSel_DetailedUpdate's `add a, 48` is `add a, TT_SEFILLPQ1` (page
+     TT_SEFILLPQ1 + the new filter type 1..4), as lane kn5000-naka respelled it in v10 / v9 / v7
+     (notes/kn5000-naka-2026-11-06/README.md); TT_SEFILLPQ1 is 0x30 in every tree.
 
 RUN
     python3 scripts/tools/port_todo_hand.py --tree v6     (or v5)
@@ -141,6 +167,49 @@ RADIO_NEW = ("; v5's two-part ON radio buttons (v6 has no such lists): SeBitmap_
              "\tsd_blit\tSeBitmap_RadioOn, 149*40+2, 2, 12\n"
              "\tsd_ptext\t0x17, 9, 33, 152, \"2ND\"\n")
 
+EV_NAMES = ("ACCORDIONTAB", "READPRESENTATION", "READACTION", "READSONG", "ALLINITIAL", "STARTSONG", "ENDSONG",
+            "EXECPRESENTATION", "TONEMODE")
+EV_TABLE_OLD = 'Naka_EventDispatch_Table:\t.incbin "includes/generated/naka_sound_menu_drawbar.bin", 0x306, 0x28\n'
+EV_TABLE_NEW = ("; v6 / v5: 9 names and the 0 end word (no EV_MPVERSION); the names are the strings below\n"
+                "Naka_EventDispatch_Table:\n" + "".join("\t.long\tStr_EV_%s\n" % n for n in EV_NAMES) + "\t.long\t0\n")
+
+
+def ev_table(tree, s):
+    if EV_TABLE_OLD not in s:
+        return None
+    assert s.count(EV_TABLE_OLD) == 1
+    s = s.replace(EV_TABLE_OLD, EV_TABLE_NEW)
+    a = s.index("Naka_EventDispatch_Table:\n")
+    b = s.index("Murai_ResEventCount_1C1:", a)
+    seg = s[a:b]
+    for n in EV_NAMES:
+        m = re.search(r'^(\t(?:\.asciz\t|aligned_string )"EV_%s"\n)' % n, seg, re.M)
+        assert m, n
+        seg = seg[:m.start()] + "Str_EV_%s:\n" % n + seg[m.start():]
+    return s[:a] + seg + s[b:]
+
+
+BIT_OLD = ('NakaClass_AcBitEditBox_PropNames:\t.incbin "includes/generated/naka_disk_warning.bin", 0x39E2, 0xC\n',
+           '\taligned_string ""\n\taligned_string "data"\n\taligned_string "func"\nNakaClass_AcFuncToggle_PropNames:\n')
+BIT_NEW = ('NakaClass_AcBitEditBox_PropNames:\n\t.long\tNakaClass_AcBitEditBox_PropName_func\n'
+           '\t.long\tNakaClass_AcBitEditBox_PropName_data\n\t.long\tNakaClass_AcBitEditBox_PropName_End\n',
+           'NakaClass_AcBitEditBox_PropName_End:\n\taligned_string ""\nNakaClass_AcBitEditBox_PropName_data:\n'
+           '\taligned_string "data"\nNakaClass_AcBitEditBox_PropName_func:\n\taligned_string "func"\n'
+           'NakaClass_AcFuncToggle_PropNames:\n')
+
+
+def bit_propnames(tree, s):
+    if BIT_OLD[0] not in s:
+        return None
+    assert s.count(BIT_OLD[0]) == 1 and s.count(BIT_OLD[1]) == 1
+    return s.replace(BIT_OLD[0], BIT_NEW[0]).replace(BIT_OLD[1], BIT_NEW[1])
+
+
+SEFIL_OLD = "\tdec\t1, a\n\tld\t(xbc), a\n\tadd\ta, 48\n"
+SEFIL_NEW = ("\tdec\t1, a\n\tld\t(xbc), a\n"
+             "\tadd\ta, TT_SEFILLPQ1\t; page TT_SEFILLPQ1 + the new type 1..4: HPQ1, L241, H241, BPF1\n")
+
+
 SRC = {"v6": "v7", "v5": "v6"}
 
 
@@ -153,11 +222,57 @@ def text_edit(old, new):
     return f
 
 
+BIN = '"includes/generated/naka_widget_names_charmap.bin"'
+CUT_E = {
+    "v6": ("; TODO(port): v6 bytes with no v7 line -- disassemble\n\t.byte\t0xf0, 0x16\n", "v7"),
+    "v5": ("; TODO(port): v6 bytes with no v7 line -- disassemble\n\t.byte\t0xd8, 0x16\n", "v7"),
+}
+E_OLD = "WidgetName_PtrBlock_E:\t.incbin " + BIN + ", 0x2C08, 0x24\n"
+E_NEW = ("; port: the slice starts at the entry after Str_InitializeUser19 (v7's E starts 2 bytes into that entry)\n"
+         "WidgetName_PtrBlock_E:\t.incbin " + BIN + ", 0x2C0A, 0x22\n")
+
+
+def cut_e(tree, s):
+    row = CUT_E[tree][0]
+    if row not in s:
+        return None
+    assert s.count(row) == 1 and s.count(E_OLD) == 1
+    s = s.replace(row, "\t.long\tStr_InitializeUser19\n")
+    return s.replace(E_OLD, E_NEW)
+
+
+N1_OLD = "WidgetName_PtrBlock_N1:\t.incbin " + BIN + ", 0x2CCB, 0x4\n"
+N1_NEW = "WidgetName_PtrBlock_N1:\t.incbin " + BIN + ", 0x2CCB, 0x3\n"
+N1_ROW = "; TODO(port): v5 bytes with no v6 line -- disassemble\n\t.byte\t0x13, 0xeb, 0x00\n\t.long\tStr_MainSendEvent\n"
+
+
+def cut_n1(tree, s):
+    if N1_ROW not in s:
+        return None
+    assert s.count(N1_ROW) == 1 and s.count(N1_OLD) == 1
+    s = s.replace(N1_OLD, N1_NEW)
+    return s.replace(N1_ROW, "\t.long\tStr_MainDispatchEvent\n\t.long\tStr_MainSendEvent\n")
+
+
+CHORD_OLD = ("; TODO(port): v5 bytes with no v6 line -- disassemble\n"
+             "\t.byte\t0xe6, 0xff\n"
+             "ExtData_ChordTypeTable_Top:\n"
+             "\t.short\t0x00ec\t; high half of entry 39, begun in style_bitmaps.s\n")
+CHORD_NEW = ("\t.long\tChordTypeStr_Type39\n"
+             "; v5 holds the whole table here; ExtData_ChordTypeTable_Top is v7's file boundary, half way into entry 39\n"
+             "\t.set\tExtData_ChordTypeTable_Top, MainChordPre_ChordTypeNames + 4 * 39 + 2\n")
+
 EDITS = [
     ("scoop TEMPO templates", ("v6", "v5"), "display/scoop_display.s", scoop_tempo),
     ("AccPatch_ChannelToRecordPtr", ("v6", "v5"), "sequencer/accompaniment_engine.s", text_edit(ACC_OLD, ACC_NEW)),
     ("MSCTSEL_13 rect / color", ("v5",), "ui_widgets/control_menu_screens.s", text_edit(MSCTSEL_OLD, MSCTSEL_NEW)),
     ("two-part ON radio lists", ("v5",), "audio/sound_editor_ui.s", text_edit(RADIO_OLD, RADIO_NEW)),
+    ("WidgetName_PtrBlock_E re-cut", ("v6", "v5"), "ui_widgets/widget_names_charmap.s", cut_e),
+    ("WidgetName_PtrBlock_N1 re-cut", ("v5",), "ui_widgets/widget_names_charmap.s", cut_n1),
+    ("chord-type entry 39 whole", ("v5",), "extensions/extension_data.s", text_edit(CHORD_OLD, CHORD_NEW)),
+    ("ResEvent 0x1c1 name table", ("v6", "v5"), "ui_widgets/sound_menu_drawbar_screens.s", ev_table),
+    ("AcBitEditBox property names", ("v6", "v5"), "ui_widgets/disk_warning_strings.s", bit_propnames),
+    ("add a, TT_SEFILLPQ1", ("v6", "v5"), "audio/sound_editor_ui.s", text_edit(SEFIL_OLD, SEFIL_NEW)),
 ]
 
 # names an edit gives the tree that its port_dropped_labels.txt listed as missing

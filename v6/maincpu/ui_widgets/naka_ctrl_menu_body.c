@@ -3095,7 +3095,7 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
         .fixedrow = SELF(vC2_e9_fixedrow),
         .func = NAKA_APFUNC_MstStyle1SubGridCheck,
         .nowstylesubctgdtno = RAM_STYLE1_AcMstStyle1SubGridBox_Nowstylesubctgdtno,
-        .nowstylesubctgmaxpage = 0x0003F53A,
+        .nowstylesubctgmaxpage = 0x0003F536,
         .nowstylesubctgpage = RAM_STYLE1_AcMstStyle1SubGridBox_Nowstylesubctgpage,
     },
 

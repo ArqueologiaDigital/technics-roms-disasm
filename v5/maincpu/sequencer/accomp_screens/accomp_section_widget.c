@@ -33,5 +33,5 @@ _Static_assert(sizeof(screendata_accomp_section_widget_t) == 15,
 
 const screendata_accomp_section_widget_t accomp_section_widget
 	__attribute__((section(".text"), used)) = {
-	.widget_0 = { .opcode = 0x02, .subtype = 0x0f, .id = 0x391e, .flags = 0x0007, .ref_tag = 0x06, .handler = HANDLER_ADDR(Accomp_SectionParam_Names), .param = 20, .x = 133, .y = 27 },
+	.widget_0 = { .opcode = 0x02, .subtype = 0x0f, .id = 0x3902, .flags = 0x0007, .ref_tag = 0x06, .handler = HANDLER_ADDR(Accomp_SectionParam_Names), .param = 20, .x = 133, .y = 27 },
 };

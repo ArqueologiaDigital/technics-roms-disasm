@@ -1023,7 +1023,7 @@ _Static_assert(sizeof(naka_debug_naming_t) == 18112,
  * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Root_ViewableTable_000, OBJ_x). */
 #define Root_ViewableTable_000_SLOT 0x000u
 enum Root_ViewableTable_000_objects {
-    OBJ_NakaWidget_PanelSimulator,                  /*  0 Screen, record outside the C sources (NakaWidget_PanelSimulator) */
+    OBJ_NakaWidget_PanelSimulator,                  /*  0 Screen, record in naka_widget_names_charmap.c */
       OBJ_NakaDbg_PanelSimBitmap,                   /*  1 Bitmap, record in naka_widget_names_charmap.c */
       OBJ_PanelSimulatorForHk_Label,                /*  2 Label */
       OBJ_CheckTitle_AcTitleMenu,                   /*  3 AcTitleMenu */

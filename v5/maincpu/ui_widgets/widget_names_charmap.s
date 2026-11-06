@@ -1064,14 +1064,14 @@ WidgetName_PtrBlock_B2:	.incbin "includes/generated/naka_widget_names_charmap.bi
 	.long	Str_InitializeUser16
 	.long	Str_InitializeUser17
 	.long	Str_InitializeUser18
-; TODO(port): v6 bytes with no v7 line -- disassemble
-	.byte	0xd8, 0x16
+	.long	Str_InitializeUser19
 ; port: v7's label WidgetName_PtrBlock_D is not in v6 -- no v6 bytes correspond to what it named
 ; [nakarest] WidgetName_PtrBlock_E  +0x2c08..+0x2c2c (0xeb0078, 36 B)
 ; [nakarest] Continues the table itself: Function slot 0x400 (table 0xeafff2, 352 entries,
 ; [nakarest] InitializeRoot), 352 entry pointers x 4 bytes (starts 0xeafff2, 1274 of its 1408
 ; [nakarest] bytes are here or later).
-WidgetName_PtrBlock_E:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x2C08, 0x24
+; port: the slice starts at the entry after Str_InitializeUser19 (v7's E starts 2 bytes into that entry)
+WidgetName_PtrBlock_E:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x2C0A, 0x22
 ; [nakarest] WidgetName_PtrBlock_F1  +0x2c2c..+0x2c2f (0xeb009c, 3 B)
 ; [nakarest] Continues the table itself: Function slot 0x400 (table 0xeafff2, 352 entries,
 ; [nakarest] InitializeRoot), 352 entry pointers x 4 bytes (starts 0xeafff2, 1238 of its 1408
@@ -1136,7 +1136,7 @@ WidgetName_PtrBlock_M2:	.incbin "includes/generated/naka_widget_names_charmap.bi
 ; [nakarest] Continues the table itself: Function slot 0x400 (table 0xeafff2, 352 entries,
 ; [nakarest] InitializeRoot), 352 entry pointers x 4 bytes (starts 0xeafff2, 1079 of its 1408
 ; [nakarest] bytes are here or later).
-WidgetName_PtrBlock_N1:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x2CCB, 0x4
+WidgetName_PtrBlock_N1:	.incbin "includes/generated/naka_widget_names_charmap.bin", 0x2CCB, 0x3
 ; [nakarest] WidgetCharMap_DataEntry2  +0x2ccf..+0x2d56 (0xeb013f, 135 B)
 ; [nakarest] Continues the table itself: Function slot 0x400 (table 0xeafff2, 352 entries,
 ; [nakarest] InitializeRoot), 352 entry pointers x 4 bytes (starts 0xeafff2, 1075 of its 1408
@@ -1147,8 +1147,7 @@ WidgetName_PtrBlock_N1:	.incbin "includes/generated/naka_widget_names_charmap.bi
 ; [nakarest] Continues the table itself: Function slot 0x400 (table 0xeafff2, 352 entries,
 ; [nakarest] InitializeRoot), 352 entry pointers x 4 bytes (starts 0xeafff2, 940 of its 1408
 ; [nakarest] bytes are here or later).
-; TODO(port): v5 bytes with no v6 line -- disassemble
-	.byte	0x13, 0xeb, 0x00
+	.long	Str_MainDispatchEvent
 	.long	Str_MainSendEvent
 	.long	Str_MainPostEvent
 	.long	Str_MainGetEvent

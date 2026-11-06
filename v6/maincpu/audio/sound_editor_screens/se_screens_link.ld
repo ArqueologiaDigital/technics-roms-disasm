@@ -29,8 +29,8 @@ SE_Frequency_Values        = 0x00F13CF2;  /* " 65.4 69.3 73.4..." Hz values */
 SE_DrumChannel_Labels      = 0x00F12CCF;  /* "A:B:C:D:E:F:G:H:..." */
 
 /* Name Editor / Tuning System name tables */
-SE_TuningSystem_Names      = 0x00F132BF;  /* "OFF     PURE MAJPURE MIN..." */
-SE_NoteDivision_Names      = 0x00F133BF;  /* "NORM 1/2 1/4 1/8..." */
+SE_TuningSystem_Names      = 0x00F13196;  /* "OFF     PURE MAJPURE MIN..." */  /* v7: 0x00F132BF */
+SE_NoteDivision_Names      = 0x00F13296;  /* "NORM 1/2 1/4 1/8..." */  /* v7: 0x00F133BF */
 
 /* Parameter Grid control/trigger mode names */
 SE_ParamGrid_ControlNames  = 0x00F14658;  /* "CTRL  R  KEY ON KEY OFF..." */
@@ -47,8 +47,8 @@ SE_SetupSel3_EnableNames   = 0x00F14E4E;  /* "DISABLEENABLE" */
 /* ═══ ROM Cursor Coordinate Tables ═════════════════════════════════════ */
 
 SE_CompareScreen_CursorCoords   = 0x00F1305E;
-SE_NameEditor_CursorCoords_0    = 0x00F133DF;
-SE_NameEditor_CursorCoords_1    = 0x00F13407;
+SE_NameEditor_CursorCoords_0    = 0x00F132B6;  /* v7: 0x00F133DF */
+SE_NameEditor_CursorCoords_1    = 0x00F132DE;  /* v7: 0x00F13407 */
 SE_ParamGrid_CursorCoords       = 0x00F1468E;
 SE_Transport_CursorCoords       = 0x00F14DF0;
 SE_ApplyConfirm_CursorCoords    = 0x00F163FF;

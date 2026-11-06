@@ -3,6 +3,7 @@
  * Provides absolute symbol addresses for extern references in accomp screen C files.
  * These addresses point to data tables in accompaniment_engine.s.
  * v7 COPY: every address is 0x404 below its v9/v10 value.
+ * v6: each address is v6's own (scripts/converters/ported_c_rebase.py --own-values; v7's in the comment).
  */
 
 ENTRY(0)
@@ -13,6 +14,6 @@ SECTIONS {
 }
 
 /* Accompaniment display string name tables */
-Accomp_SectionParam_Names  = 0x00F6A89C;  /* "CONTROL PITCH BEND =..." */
-Accomp_PartOnOff_Names     = 0x00F6A923;  /* "OFF ON" */
-Accomp_Articulation_Names  = 0x00F6AA48;  /* "TENUNORMSTACCUTTACCOMP 1..." */
+Accomp_SectionParam_Names  = 0x00F6A872;  /* "CONTROL PITCH BEND =..." */  /* v7: 0x00F6A89C */
+Accomp_PartOnOff_Names     = 0x00F6A8F9;  /* "OFF ON" */  /* v7: 0x00F6A923 */
+Accomp_Articulation_Names  = 0x00F6AA1E;  /* "TENUNORMSTACCUTTACCOMP 1..." */  /* v7: 0x00F6AA48 */

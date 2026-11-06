@@ -208,8 +208,8 @@ Symbol reference files in `symbols/` provide address-to-name mappings for extern
 | `symbols/maincpu_v9_symbols_reference.txt`      | Main CPU v9                                       | 54,072  | 0xE00000 - 0xFFFFE8                                        |
 | `symbols/maincpu_v8_symbols_reference.txt`      | Main CPU v8 (same rows as v9: same source, link)  | 54,072  | 0xE00000 - 0xFFFFE8                                        |
 | `symbols/maincpu_v7_symbols_reference.txt`      | Main CPU v7                                       | 54,080  | 0xE00000 - 0xFFFFE8                                        |
-| `symbols/maincpu_v6_symbols_reference.txt`      | Main CPU v6                                       | 54,171  | 0xE00000 - 0xFFFFE8                                        |
-| `symbols/maincpu_v5_symbols_reference.txt`      | Main CPU v5                                       | 54,147  | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_v6_symbols_reference.txt`      | Main CPU v6                                       | 54,183  | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_v5_symbols_reference.txt`      | Main CPU v5                                       | 54,159  | 0xE00000 - 0xFFFFE8                                        |
 | `symbols/subcpu_symbols_reference.txt`          | Sub CPU payload v1.42                             | 5,070   | 0x000400 - 0x0451CC (past the image: DRAM `.equ` symbols)  |
 | `symbols/subcpu_v141_symbols_reference.txt`     | Sub CPU payload v1.41                             | 5,069   | 0x000400 - 0x0451B4 (past the image: DRAM `.equ` symbols)  |
 | `symbols/subcpu_v140_symbols_reference.txt`     | Sub CPU payload v1.40                             | 5,069   | 0x000400 - 0x045180 (past the image: DRAM `.equ` symbols)  |
@@ -1384,8 +1384,8 @@ delivers to Sub CPU `0x400` / `0xF000+` (`../technics-docs/subcpu-payload-proven
 | maincpu v9          | `v9/maincpu/kn5000_v9_program.s`                                 | 100.00%    | 100.0%                | 0 B           |
 | maincpu v8          | v9 source, `--defsym FW_VERSION_BYTE=0x08`                       | 100.00%    | as v9                 | as v9         |
 | maincpu v7          | `v7/maincpu/kn5000_v7_program.s`                                 | 100.00%    | 100.0%                | 0 B           |
-| maincpu v6          | `v6/maincpu/kn5000_v6_program.s` (ported from v7)                | 100.00%    | 100.0%                | 150 B         |
-| maincpu v5          | `v5/maincpu/kn5000_v5_program.s` (ported from v6)                | 100.00%    | 100.0%                | 163 B         |
+| maincpu v6          | `v6/maincpu/kn5000_v6_program.s` (ported from v7)                | 100.00%    | 100.0%                | 5 B           |
+| maincpu v5          | `v5/maincpu/kn5000_v5_program.s` (ported from v6)                | 100.00%    | 100.0%                | 5 B           |
 | subcpu payload v142 | `v142/subcpu/kn5000_subprogram_v142.s`                           | 100.00%    | 100.0%                | 0 B           |
 | subcpu payload v141 | `v141/subcpu/kn5000_subprogram_v141.s` (generated: v142 + EDITS) | 100.00%    | not measured          | 0 B           |
 | subcpu payload v140 | `v140/subcpu/kn5000_subprogram_v140.s` (generated: v141 + EDITS) | 100.00%    | not measured          | 0 B           |
@@ -1437,9 +1437,10 @@ in `make gate`. **maincpu v5** was made the same way from `v6/maincpu`
 
 **Source** and **Verbatim blob** are `python3 scripts/analysis/kn5000_source_coverage.py`,
 measured 2026-10-24 (the v7 row re-measured 2026-10-29, after the data-semantics lane
-kn5000-existing; the v6 and v5 rows 2026-11-06, lane open10/v6v5-port, after
-`port_todo_naka.py`, `disassemble_port_todo.py`, `port_todo_hand.py` and `ported_c_rebase.py --ram-self`
-(3,615 / 4,504 B before; `notes/v6v5-port-2026-11-06/`; 13,756 / 15,910 B before 2026-11-02's
+kn5000-existing; the v6 and v5 rows 2026-11-06, lane open11/v6v5-port2, after `port_todo_hand.py` edits 5-9,
+`port_ram_names.py` and `ported_c_rebase.py --ram-self-pieces / --own-values / --hand-c`: 5 B each, work-RAM cell
+addresses after RAM_MPVersion_Window (150 / 163 B before, `notes/v6v5-port2-2026-11-06/`; 3,615 / 4,504 B before
+lane open10/v6v5-port, `notes/v6v5-port-2026-11-06/`; 13,756 / 15,910 B before 2026-11-02's
 `ported_c_rebase.py`); the table_data row 2026-11-02, lane open6/misc2): the script splits every ROM byte into assembly, typed data (including
 `.incbin`s that a committed generator rebuilds from checked-in source), clang-compiled C and
 verbatim blob (an `.incbin` nothing regenerates); "source" is everything but the blob.

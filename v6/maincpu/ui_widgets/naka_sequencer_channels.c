@@ -1952,7 +1952,7 @@ typedef struct __attribute__((packed)) {
     naka_cls_AcIndexToggle_t Root_NamingSymbolToggleView;
     /* Naka_DrawbarReg_Table: 69 pointers (cut from ptrs_7 by split_naka_pointer_arrays.py) */
     uint32_t Naka_DrawbarReg_Table[69];
-    /* Naka_DrawbarReg_Table_RamPtrs: 64 x u32, the work-RAM (RAM 0x3F2F8..) addresses of this blob's own
+    /* Naka_DrawbarReg_Table_RamPtrs: 64 x u32, the work-RAM (RAM 0x3F2F4..) addresses of this blob's own
      * elements (NAKA_WRAM); read as halfword pairs field_1624..field_1722 before */
     uint32_t Naka_DrawbarReg_Table_RamPtrs[64];
     uint16_t Normal_Window;
@@ -2360,8 +2360,11 @@ typedef struct __attribute__((packed)) {
 
 /* the RAM address of a member's work-RAM copy: Boot_InitWorkRAM copies ROM WorkRamInit_Image
  * (0xEED7CC in v6) .. to RAM 0x3D524 .., and this blob starts BASE - WorkRamInit_Image into it */
+/* WRAM_BASE: v6 moved parts of this blob; from each slice offset on, its ROM address is that base +
+ * offset (slice_bases, scripts/converters/ported_c_rebase.py --ram-self-pieces) */
+#define WRAM_BASE(off) ((off) >= 0xC48u ? 0x00EEDF78u : BASE)
 #define NAKA_WRAM(field) \
-    ((uint32_t)(0x3D524u + (BASE - 0x00EED7CCu) + __builtin_offsetof(naka_sequencer_channels_t, field)))
+    ((uint32_t)(0x3D524u + (WRAM_BASE(__builtin_offsetof(naka_sequencer_channels_t, field)) - 0x00EED7CCu) + __builtin_offsetof(naka_sequencer_channels_t, field)))
 
 _Static_assert(sizeof(naka_sequencer_channels_t) == 7894,
     "naka_sequencer_channels must be exactly 7894 bytes (v7 has no part-control event queue)");
@@ -2375,7 +2378,7 @@ _Static_assert(sizeof(naka_sequencer_channels_t) == 7894,
  * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Root_ViewableTable_000, OBJ_x). */
 #define Root_ViewableTable_000_SLOT 0x000u
 enum Root_ViewableTable_000_objects {
-    OBJ_NakaWidget_PanelSimulator,                  /*  0 Screen, record outside the C sources (NakaWidget_PanelSimulator) */
+    OBJ_NakaWidget_PanelSimulator,                  /*  0 Screen, record in naka_widget_names_charmap.c */
       OBJ_NakaDbg_PanelSimBitmap,                   /*  1 Bitmap, record in naka_widget_names_charmap.c */
       OBJ_PanelSimulatorForHk_Label,                /*  2 Label, record in naka_debug_naming.c */
       OBJ_CheckTitle_AcTitleMenu,                   /*  3 AcTitleMenu, record in naka_debug_naming.c */
@@ -3502,70 +3505,70 @@ const naka_sequencer_channels_t naka_sequencer_channels_data
     },
 
     .Naka_DrawbarReg_Table_RamPtrs = {
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[29]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[29]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[29]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[42]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[29]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[55]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[55]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[29]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[29]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[42]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[29]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[29]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[55]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[42]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[29]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
-        NAKA_WRAM(Naka_DrawbarReg_Table[16]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[30]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[30]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[30]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[43]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[30]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[56]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[56]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[30]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[30]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[43]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[30]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[30]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[56]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[43]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[30]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
+        NAKA_WRAM(Naka_DrawbarReg_Table[17]),
     },
 
     .Normal_Window = NAKA_NONE,
