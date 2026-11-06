@@ -100,6 +100,19 @@ def opened_list(g, fn):
 
 def build(g):
     paths = g.menu_paths()
+    # routines that pass each TT_* index, for the titles no traced path reaches (lane kn5000-naka,
+    # 2026-11-06): those are opened by code that is itself outside every traced path (panel-button
+    # handlers, the self test, the sequencer's play-mode code ...), which the map names instead of
+    # saying nothing opens them
+    opener = collections.defaultdict(set)
+    for rout, ns in g.routine_opens.items():
+        for n in ns:
+            if rout:
+                opener[n].add(rout)
+    def openers(tid):
+        n = g.title_name(tid)
+        return sorted(opener.get('TT_' + n[6:], ())) if n.startswith('TITLE_') else []
+    unreached = [t for t in g.titles if t not in paths and openers(t)]
     into = collections.defaultdict(list)
     out_menu = collections.defaultdict(list)
     out_exit = collections.defaultdict(set)
@@ -123,9 +136,10 @@ def build(g):
          'title\'s procedure, or the function of a menu box, passing the title\'s `TT_*` index to',
          '`UI_ChangeTitleByIndex` / `UI_InterruptTitleByIndex` (`scripts/converters/name_title_index_operands.py`)',
          'or posting `EVT_CHANGE_TITLE` itself.', '',
-         '%d titles (%d with a path), %d modes, %d widget records in %d C files, %d menu entries, %d code'
+         '%d titles (%d with a path; %d of the others are opened by code that no traced path reaches),'
+         ' %d modes, %d widget records in %d C files, %d menu entries, %d code'
          ' transitions and %d EXIT links.'
-         % (len(g.titles), len(paths), len(g.modes), len(g.rec), len(g.files),
+         % (len(g.titles), len(paths), len(unreached), len(g.modes), len(g.rec), len(g.files),
             sum(1 for e in g.edges if e[3] == 'menu'), len(g.code_edges),
             sum(1 for e in g.edges if e[3] == 'exit')), '',
          '## Modes', '']
@@ -161,7 +175,13 @@ def build(g):
             L.append(md(d))
             L.append('')
         pth = G.title_path(g, tid, paths)
-        L.append('- Path: ' + (md(pth) if pth else 'none found (no data entry, and no traced code, opens it)'))
+        if pth:
+            L.append('- Path: ' + md(pth))
+        elif openers(tid):
+            L.append('- Path: none found (no data entry opens it; the code that does is reached by no traced path)')
+            L.append('- Opened by code in: ' + ', '.join('`%s`' % r for r in openers(tid)))
+        else:
+            L.append('- Path: none found (no data entry, and no traced code, opens it)')
         L.append('- Registered: `"%s"`, title id 0x%X, function `%s`, %s'
                  % (t['name'], t['index'], g.name_by_value.get(t['func'], '0x%08X' % (t['func'] or 0)),
                     t['file']))

@@ -45,8 +45,23 @@ PRIMITIVES = {'UI_ChangeTitleByIndex': ('a',), 'UI_InterruptTitleByIndex': ('a',
 #     UI_ChangeTitleByIndex(A), otherwise UI_PostRefreshEvent; either way C is stored in 0x698.  It is jumped
 #     to from inside its own file (tail calls), so the register walk never sees its entry as an entry and
 #     the fixpoint below does not find it: the sound editor's page changes all go through it.
+#   SeMenu_GoToPageOnEnabledPart (audio/semenu_routines.s; lane kn5000-naka, 2026-11-06): `ld (xsp+6), a`, makes
+#     sure the current part is enabled, then `ld a, (xsp+6); ld bc, 0` -> SeMenu_SendEvent, i.e.
+#     UI_ChangeTitleByIndex(A) on all three of its paths.  Callers pass 32 / 38 / 61 (sound_editor_ui.s).
 STACK_FORWARDERS = {'FileIO_DiskEventDispatch': ('a', 'c'), 'FileIO_GetDiskCapacity': ('a',),
-                    'SeMenu_SendEvent': ('a',)}
+                    'SeMenu_SendEvent': ('a',), 'SeMenu_GoToPageOnEnabledPart': ('a',)}
+# Index registers the code COMPUTES, which the walk cannot evaluate: (file name, instruction with its
+# whitespace collapsed) -> the titles it can yield, each read from the code around it (lane kn5000-naka,
+# 2026-11-06).  The value an instruction adds is spelled as the title it is based on, so the key holds both
+# spellings (v6 / v5 keep the number).
+#   sound_editor_ui.s, UpdSeSel_DetailedUpdate (the filter page's type step, before UpdSeSel_DetailedUpdate_Join9):
+#     A = the part's filter type byte (xbc); 2..5 -> `dec 1, a; ld (xbc), a; add a, TT_SEFILLPQ1` = page
+#     TT_SEFILLPQ1 + 1..4 (HPQ1, L241, H241, BPF1), then SeMenu_SendEvent with C = 0.  Type 0 opens TT_SEFILBCF1 on
+#     the other path (a constant the walk reads); type 1 redraws the LPQ1 page in place (pushw 48,
+#     SeTitle_DrawStaticScreen).
+_SEFIL_TYPES = ('TT_SEFILHPQ1', 'TT_SEFILL241', 'TT_SEFILH241', 'TT_SEFILBPF1')
+COMPUTED = {('sound_editor_ui.s', 'add a, TT_SEFILLPQ1'): _SEFIL_TYPES,
+            ('sound_editor_ui.s', 'add a, 48'): _SEFIL_TYPES}
 REGS = {'a': {'a', 'wa', 'xwa'}, 'c': {'c', 'bc', 'xbc'}}
 LABEL = re.compile(r'^([A-Za-z_.$][\w.$]*):')
 BRANCH = re.compile(r'^(jr|jrl|jp|djnz)\s+(?:(\w+)\s*,\s*)?(\(?[A-Za-z_.$][\w.$]*(?::24)?\)?)\s*$')
@@ -151,6 +166,10 @@ def walk(f, pos, reg, limit=400):
             continue
         seen.add(p)
         n += 1
+        comp = COMPUTED.get((os.path.basename(f.path), re.sub(r'\s+', ' ', f.ins[p][1])))
+        if comp and reg == 'a':
+            defs.extend((p, v) for v in comp)
+            continue
         d, v = defines(f.ins[p][1], reg)
         if d:
             if v is None:
