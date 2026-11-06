@@ -94,7 +94,10 @@ register ports, the DSP host ports 0x98000000 / 0x9C000000 and the GPIO block 0x
 PICTURE LIST until SD PICTURE LOAD is up, against the same window with a press that opens nothing;
 `runs/io_pl_1.txt`, `runs/io_ctl_1.txt`): no DSP port write in either; TG writes only to the idle
 registers FC08..FC0B (0) in both; the SD PICTURE LOAD opening adds GPIO 0x36008004 := 0x84 (bit 1 low,
-the SD card's chip select: the folder scan), 0x36008024 := 0 and 0x36008064 := 1.
+the SD card's chip select: the folder scan), 0x36008024 := 0 and 0x36008064 := 1.  Once the screen is up
+(`runs/io_pl_2.txt` against `runs/io_ctl_2.txt`, 5 s including a key) the writes are the same distinct
+set on SD PICTURE LOAD as on the PICTURE LIST: no further card access, the 0x36008004 bit 5 heartbeat,
+the key's six voice registers per TG and the idle class.
 
 **Reading.**  The emulated firmware does not gate the keyboard on this screen anywhere between the
 key-bed FIFO and the tone generators' registers, and it writes nothing to the TG or DSP that would
@@ -105,9 +108,12 @@ any code path this emulation runs.  [INFERENCE] It comes from something the driv
 the candidates are a hardware mute tied to the SD card access (GPIO 0x36008004 bit 1 is the only line
 the screen's opening moves that the home screen does not), the GPIO strobes 0x36008024 / 0x36008064
 (the driver's note: "strobe/select the sub-CPUs"), or tone-generator / DSP behaviour that differs from
-the emulation.  Next step, outside this repository: a measurement on the instrument (which signal goes
-quiet: the TG output or the DAC), or the service manual's schematic for what GPIO 0x36008004 bit 1 and
-the 0x36008024 / 0x36008064 lines drive.
+the emulation.  Next step, outside this repository's code: a measurement on the instrument (which stage goes quiet:
+the TG output or the DAC), or the service manual's schematics (`~/compartilhado/KN7000/service_manual/
+technics_sx-kn7000_keyboard.pdf`: a MUTE line on connector CN506 to the amplifier, pages 122-123; MUTE on
+the ACP / FAJ board, pages 126-127; the MUTE pin on pages 118-119 is IC406 PCM1734's, the D/A converter
+beside the USB audio lines, probably not the main path) traced to the CPU line that drives them, then a
+MAME watch of that line on this screen.
 
 ## N-e411f8fa / N-4b34dd8b: the APC / SEQUENCER VOLUME slider
 

@@ -334,5 +334,6 @@ Each gap between referenced bases equals count x stride. The strides come from t
   321.2).  Opening the screen writes no DSP port and no TG register but the idle FC08..FC0B; it moves
   only GPIO 0x36008004 bit 1 (the SD chip select, the folder scan) and 0x36008024 / 0x36008064; while the
   screen stays up the I/O writes equal the PICTURE LIST's.  So no code path the emulation runs silences
-  the keys; [INFERENCE] the silence comes from hardware the driver does not model.  **BLOCKED** on a
-  measurement on the instrument (which stage goes quiet) or the schematic of those GPIO lines.
+  the keys; [INFERENCE] the silence comes from hardware the driver does not model.  Next step: trace the
+  service manual's MUTE lines (CN506 to the amplifier, the ACP / FAJ board; `picload-silence-probes/README.md`)
+  to the CPU line that drives them and watch that line in MAME on this screen, or measure on the instrument.
