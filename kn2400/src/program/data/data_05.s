@@ -35966,25 +35966,43 @@ SetDialEnable_Var:	# u32, initial value of a RAM variable; read / written by Set
 CheckProgDial_Var:	# u32, initial value of a RAM variable; read / written by CheckProgDial 0x485EF123: `mov (CheckProgDial_Var), d0`; SetProgDial 0x485EF12C: `mov d0, (CheckProgDial_Var)`
 	.long	1
 
-names_50000714:
-	.long	Str_PART1_5, Str_PART2_3
-	.long	Str_PART3, Str_PART4
-	.long	Str_PART5, Str_PART6
-	.long	Str_PART7, Str_PART8
-	.long	Str_PART9, Str_PART10
-	.long	Str_PART11, Str_PART12
-	.long	Str_PART13, Str_PART14
-	.long	Str_PART15, Str_PART16
-	.long	Str_RIGHT1_2, Str_RIGHT2_2
-	.long	Str_LEFT_2, Str_ACCOMP1
-	.long	Str_ACCOMP2, Str_ACCOMP3
-	.long	Str_ACCOMP4, Str_ACCOMP5
-	.long	Str_BASS_2, Str_DRUM1
-	.long	Str_DRUM2, Str_CHORD_6
-# census: opaque -- unknown-dump: 32 bytes of words that look like addresses in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x1DDAA8, 0x1DDAC8
-
-ptrs_500007A4:
+AcMixerVolWideProc_L5c_Table:
+	.long	Text_PART1
+	.long	Text_PART1+6
+	.long	Text_PART1+12
+	.long	Text_PART1+18
+	.long	Text_PART1+24
+	.long	Text_PART1+30
+	.long	Text_PART1+36
+	.long	Text_PART1+42
+	.long	Text_PART1+48
+	.long	Text_PART10
+	.long	Text_PART10+7
+	.long	Text_PART10+14
+	.long	Text_PART10+21
+	.long	Text_PART10+28
+	.long	Text_PART10+35
+	.long	Text_PART10+42
+	.long	Text_PART10+49
+	.long	Text_PART10+56
+	.long	Str_LEFT_4
+	.long	Str_ACCOMP1
+	.long	Str_ACCOMP2
+	.long	Str_ACCOMP3
+	.long	Str_ACCOMP4
+	.long	Str_ACCOMP5
+	.long	Str_BASS_3
+	.long	Str_DRUM1
+	.long	Str_DRUM2
+	.long	Str_CHORD_6
+	.long	Str_ROOT_BASS
+	.long	Str_PADS_8
+	.long	Str_PADS_7
+	.long	Str_CONTROL_6
+	.long	Str_METRONOME_2
+	.long	Str_CHORD_FINDER_5
+	.long	Text_MIC
+	.long	Text_MIC+4
 	.long	ptrs_48410F2C
 	.long	ptrs_48410F2C
 	.long	ptrs_48410F2C
@@ -35998,7 +36016,6 @@ ptrs_500007A4:
 	.long	ptrs_48410FBC
 	.long	ptrs_48410F2C
 	.long	ptrs_48410FBC
-ptrs_500007D8:
 	.long	ptrs_48410F2C
 	.long	ptrs_48410F2C
 	.long	ptrs_48410F2C
@@ -36012,7 +36029,6 @@ ptrs_500007D8:
 	.long	ptrs_48410FBC
 	.long	ptrs_48410F2C
 	.long	ptrs_48410FBC
-ptrs_5000080C:
 	.long	ptrs_48410F2C
 	.long	ptrs_48410F2C
 	.long	ptrs_48410F2C
@@ -36026,7 +36042,6 @@ ptrs_5000080C:
 	.long	ptrs_48410F2C
 	.long	ptrs_48410F2C
 	.long	ptrs_48410FBC
-ptrs_50000840:
 	.long	ptrs_48410F2C
 	.long	ptrs_48410F2C
 	.long	ptrs_48410F2C
@@ -36041,70 +36056,70 @@ ptrs_50000840:
 	.long	ptrs_48410F2C
 	.long	ptrs_48410FBC
 AcChordBoxProc_L1ae_Table:
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007D8
-	.long	ptrs_500007D8
-	.long	ptrs_500007D8
-	.long	ptrs_5000080C
-	.long	ptrs_500007D8
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_50000840
-	.long	ptrs_50000840
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007D8
-	.long	ptrs_500007A4
-	.long	ptrs_500007D8
-	.long	ptrs_5000080C
-	.long	ptrs_500007D8
-	.long	ptrs_500007D8
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_50000840
-	.long	ptrs_500007A4
-	.long	ptrs_5000080C
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007D8
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+196
+	.long	AcMixerVolWideProc_L5c_Table+196
+	.long	AcMixerVolWideProc_L5c_Table+196
+	.long	AcMixerVolWideProc_L5c_Table+248
+	.long	AcMixerVolWideProc_L5c_Table+196
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+300
+	.long	AcMixerVolWideProc_L5c_Table+300
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+196
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+196
+	.long	AcMixerVolWideProc_L5c_Table+248
+	.long	AcMixerVolWideProc_L5c_Table+196
+	.long	AcMixerVolWideProc_L5c_Table+196
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+300
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+248
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+196
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
+	.long	AcMixerVolWideProc_L5c_Table+144
 
 AcTransposeBoxProc_La4_Var:	# u32, initial value of a RAM variable; read / written by AcTransposeBoxProc_La4 0x485F9263: `mov (AcTransposeBoxProc_La4_Var), d1`; AcTransposeBoxProc_Lca 0x485F9289: `mov d0, (AcTransposeBoxProc_La4_Var)`
 	.long	1
@@ -37190,57 +37205,82 @@ AcMixPartSoundProc_L114_Table:
 	.long	Text_PART_2_2+272
 	.long	Text_PART_2_2+280
 func_486517E0_entry_L4a_Table:
-	.long	Str_PT_1
-	.long	Str_PT_2
-	.long	Str_PT_3
-	.long	Str_PT_4
-	.long	Str_PT_5
-	.long	Str_PT_6
-	.long	Str_PT_7
-	.long	Str_PT_8
-	.long	Str_PT_9
-
-names_50001874:
-	.long	Str_PT10, 0x484656D6
-	.long	Str_PT12, 0x484656E0
-	.long	Str_PT14, 0x484656EA
-	.long	Str_PT16, 0x484656F4
-# census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x1DEBB8, 0x1DEBBC
-names_50001898:
-	.long	Str_LEFT_3, Str_ACP1_2
-	.long	Str_ACP2, Str_ACP3_2
-	.long	Str_ACP4, Str_ACP5_2
-	.long	Str_BASS_3, 0x48465721
-	.long	Str_DRM2, 0x4846572B
-	# 44 bytes of text with no NUL, 16 characters a row [INFERENCE: fixed-width names]; no instruction reads them (tools/data_readers.py)
-	.ascii	"0WFH5WFH:WFH?WFH"
-	.ascii	"DWFHIWFHNWFHSWFH"
-	.ascii	"XWFH]WFHbWFH"
-
+	.long	Text_PT_1
+	.long	Text_PT_1+5
+	.long	Text_PT_1+10
+	.long	Text_PT_1+15
+	.long	Text_PT_1+20
+	.long	Text_PT_1+25
+	.long	Text_PT_1+30
+	.long	Text_PT_1+35
+	.long	Text_PT_1+40
+	.long	Text_PT_1+45
+	.long	Text_PT_1+50
+	.long	Text_PT_1+55
+	.long	Text_PT_1+60
+	.long	Text_PT_1+65
+	.long	Text_PT_1+70
+	.long	Text_PT_1+75
+	.long	Text_PT_1+80
+	.long	Text_PT_1+85
+	.long	Text_PT_1+90
+	.long	Text_PT_1+95
+	.long	Text_PT_1+100
+	.long	Text_PT_1+105
+	.long	Text_PT_1+110
+	.long	Text_PT_1+115
+	.long	Text_PT_1+120
+	.long	Text_PT_1+125
+	.long	Text_PT_1+130
+	.long	Text_PT_1+135
+	.long	Text_PT_1+140
+	.long	Text_PT_1+145
+	.long	Text_PT_1+150
+	.long	Text_PT_1+155
+	.long	Text_PT_1+160
+	.long	Text_PT_1+165
+	.long	Text_PT_1+170
+	.long	Text_PT_1+175
+	.long	Text_PT_1+180
+	.long	Text_PT_1+185
+	.long	Str_MUSIC
 func_48651E87_L1d_Table:
-	.long	Str_TRACK_1
-	.long	Str_TRACK_2_2
-	.long	Str_TRACK_3_2
-	.long	Str_TRACK_4_2
-	.long	Str_TRACK_5_2
-	.long	Str_TRACK_6_2
-	.long	Str_TRACK_7_2
-	.long	Str_TRACK_8_2
-	.long	Str_TRACK_9_2
+	.long	Text_TRACK_1
+	.long	Text_TRACK_1+8
+	.long	Text_TRACK_1+16
+	.long	Text_TRACK_1+24
+	.long	Text_TRACK_1+32
+	.long	Text_TRACK_1+40
+	.long	Text_TRACK_1+48
+	.long	Text_TRACK_1+56
+	.long	Text_TRACK_1+64
+	.long	Text_TRACK_1+72
+	.long	Text_TRACK_1+80
+	.long	Text_TRACK_1+88
+	.long	Text_TRACK_1+96
+	.long	Text_TRACK_1+104
+	.long	Text_TRACK_1+112
+	.long	Text_TRACK_1+120
+func_486519B7_L23_Table:
+	.long	Str_TR_1
+	.long	Str_TR_2
+	.long	Str_TR_3
+	.long	Str_TR_4
+	.long	Str_TR_5
+	.long	Str_TR_6
+	.long	Str_TR_7
+	.long	Str_TR_8
+	.long	Str_TR_9
+	.long	Str_TR10
+	.long	Str_TR11
+	.long	Str_TR12
+	.long	Str_TR13
+	.long	Str_TR14
+	.long	Str_TR15
+	.long	Str_TR16
 
-names_50001910:
-	.long	Str_TRACK10, names_50001910_p0_0
-	.long	Str_TRACK12, names_50001910_p0_1
-	.long	Str_TRACK14, names_50001910_p0_2
-	.long	Str_TRACK16, names_50001910_p0_3
-# census: opaque -- unknown-dump: 32 bytes of printable bytes, not NUL-terminated text in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x1DEC54, 0x1DEC74
-names_50001950:
-	.long	Str_TR10, 0x4846581A
-	.long	Str_TR12, 0x48465824
-	.long	Str_TR14, 0x4846582E
-	.long	Str_TR16, 0xFFFFFF00
+TtSdapcrev_L1d_Table:	# 4 x u8, 0..255; read by TtSdapcrev_L1d 0x4865483E: `movbu (TtSdapcrev_L1d_Table), d0`; TtSdapcrev_L45 0x48654866: `movbu d0, (TtSdapcrev_L1d_Table)`
+	tab_u8	0, 255, 255, 255
 
 TtHomepage_window:	# u32, initial value of a RAM variable: the AcHpScreen TtHomepage's `window` (+0x24), loaded and dereferenced by ScreenProc 0x485EF333: `mov (0x24, a3), a0` -> `mov d0, (a0)`
 	.long	0xffffffff

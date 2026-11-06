@@ -13014,7 +13014,7 @@ loc_4848A24F:
     movbu   (0x500d3584), d0
     mov     (0x14, a0), a0
     asl2    d0
-    mov     ptrs_485E6638, a1
+    mov     CheckLanguage_Table, a1
     mov     (d0, a1), a1
     call    strcpy_entry, [a2], 4
     clr     d0
@@ -13100,7 +13100,7 @@ loc_4848A313:
     bra     loc_4848A365
 loc_4848A336:
     mov     (0x2c, sp), a0
-    mov     ptrs_485E6638+28, d0
+    mov     Str_MessageID_3d, d0
     mov     (0x14, a0), a0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
@@ -22138,7 +22138,7 @@ loc_4848FAED:
     mov     (0x20, sp), a0
     mov     a2, a1
     movhu   (a0), d0
-    mov     names_500019A0+28, a0
+    mov     func_4848FACE_Table_2, a0
     and     0x0f, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -22162,7 +22162,7 @@ loc_4848FBAA:
     mov     (0x20, sp), a0
     mov     a2, a1
     movhu   (a0), d0
-    mov     names_500019A0+28, a0
+    mov     func_4848FACE_Table_2, a0
     and     0x0f, d0
     asl2    d0
     mov     (d0, a0), a0
@@ -26191,7 +26191,7 @@ loc_48492400:
     mov     (0x24, sp), a0
     cmp     8, a0
     bne     loc_48492430
-    movbu   (names_500019E0+28), d0
+    movbu   (TtSdapcrev_Table), d0
     cmp     0, d0
     beq     loc_48492430
     clr     d0
@@ -26202,7 +26202,7 @@ loc_48492400:
     bra     loc_48492430
 loc_48492428:
     mov     (0x24, sp), d0
-    movbu   d0, (names_500019E0+28)
+    movbu   d0, (TtSdapcrev_Table)
 loc_48492430:
     clr     d0
     ret     0, 0x14

@@ -7,12 +7,12 @@
 
 Str_Error_u_3:	.asciz "Error : %u"
 	.align	4, 0xFF	# pad after Str_Error_u_3
-Str_empty_442:	.asciz "                          "
+Str_empty_478:	.asciz "                          "
 data_9783DEFF:
-	.align	4, 0x00	# pad after Str_empty_442
+	.align	4, 0x00	# pad after Str_empty_478
 
 ptrs_9783DF00:
-	.long	Str_empty_442
+	.long	Str_empty_478
 	.long	data_9783DEFF
 
 Str_Pio_Time_in_ns_u:	.asciz "Pio Time in ns : %u"
@@ -193,7 +193,7 @@ data_9783E564:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x03E564, 0x03E568
 
 Str_C:	.asciz "C"
-Str_empty_441:	.asciz "."
+Str_empty_442:	.asciz "."
 data_9783E56C:
 	.space	1, 0x00
 data_9783E56D:
@@ -6878,12 +6878,12 @@ KssNamingWindowProc_L4d8_Table:
 	.long	ptrs_978A0A60
 	.long	ptrs_978A0C58
 
-Str_empty_440:	.asciz " "
-Str_empty_439:	.asciz "_"
+Str_empty_441:	.asciz " "
+Str_empty_440:	.asciz "_"
 
 KssNamingWindowProc_L1a5_Table:
+	.long	Str_empty_441
 	.long	Str_empty_440
-	.long	Str_empty_439
 
 Str_7f:	.asciz "~7f"
 Str_empty_477:	.asciz " "
@@ -6893,20 +6893,20 @@ Str_empty_476:	.asciz " "
 Str_empty_475:	.asciz " "
 	.align	4, 0xFF	# pad after Str_empty_475
 Str_80:	.asciz "~80"
-Str_CURRENT_PANEL_4:	.asciz "CURRENT PANEL"
-Str_PANEL_MEMORY_4:	.asciz "PANEL MEMORY"
+Str_CURRENT_PANEL_8:	.asciz "CURRENT PANEL"
+Str_PANEL_MEMORY_8:	.asciz "PANEL MEMORY"
 Str_SEQUENCER_4:	.asciz "SEQUENCER"
-Str_COMPOSER_4:	.asciz "COMPOSER"
-Str_SOUND_MEMORY_4:	.asciz "SOUND MEMORY"
-Str_MANUAL_SEQ_PAD_4:	.asciz "MANUAL SEQ PAD"
-Str_EFFECT_8:	.asciz "EFFECT"
-Str_USER_MIDI_4:	.asciz "USER MIDI"
-Str_FAVORITES_4:	.asciz "FAVORITES"
-Str_HOME_PAGE_4:	.asciz "HOME PAGE"
+Str_COMPOSER_8:	.asciz "COMPOSER"
+Str_SOUND_MEMORY_8:	.asciz "SOUND MEMORY"
+Str_MANUAL_SEQ_PAD_8:	.asciz "MANUAL SEQ PAD"
+Str_EFFECT_12:	.asciz "EFFECT"
+Str_USER_MIDI_8:	.asciz "USER MIDI"
+Str_FAVORITES_8:	.asciz "FAVORITES"
+Str_HOME_PAGE_8:	.asciz "HOME PAGE"
 Str_CUSTOM_STYLES_4:	.asciz "CUSTOM STYLES"
 Str_MIDI_FILE_4:	.asciz "MIDI FILE"
 Str_CUSTOM_LYRICS_6:	.asciz "CUSTOM LYRICS"
-Str_INFO_FILE_4:	.asciz "INFO FILE"
+Str_INFO_FILE_8:	.asciz "INFO FILE"
 Str_USER_1_FILE_4:	.asciz "USER 1 FILE"
 Str_USER_2_FILE_4:	.asciz "USER 2 FILE"
 Str_USER_3_FILE_4:	.asciz "USER 3 FILE"
@@ -6926,20 +6926,20 @@ Str_OLD_RCM_4:	.asciz "OLD RCM"
 Str_NO_ENTRY_10:	.asciz " - NO ENTRY - "
 
 ptrs_978A0E7C:
-	.long	Str_CURRENT_PANEL_4
-	.long	Str_PANEL_MEMORY_4
+	.long	Str_CURRENT_PANEL_8
+	.long	Str_PANEL_MEMORY_8
 	.long	Str_SEQUENCER_4
-	.long	Str_COMPOSER_4
-	.long	Str_SOUND_MEMORY_4
-	.long	Str_MANUAL_SEQ_PAD_4
-	.long	Str_EFFECT_8
-	.long	Str_USER_MIDI_4
-	.long	Str_FAVORITES_4
-	.long	Str_HOME_PAGE_4
+	.long	Str_COMPOSER_8
+	.long	Str_SOUND_MEMORY_8
+	.long	Str_MANUAL_SEQ_PAD_8
+	.long	Str_EFFECT_12
+	.long	Str_USER_MIDI_8
+	.long	Str_FAVORITES_8
+	.long	Str_HOME_PAGE_8
 	.long	Str_CUSTOM_STYLES_4
 	.long	Str_MIDI_FILE_4
 	.long	Str_CUSTOM_LYRICS_6
-	.long	Str_INFO_FILE_4
+	.long	Str_INFO_FILE_8
 	.long	Str_USER_1_FILE_4
 	.long	Str_USER_2_FILE_4
 	.long	Str_USER_3_FILE_4
@@ -6958,20 +6958,20 @@ ptrs_978A0E7C:
 	.long	Str_OLD_RCM_4
 	.long	Str_NO_ENTRY_10
 
-Str_CURRENT_PANEL_3:	.asciz "CURRENT PANEL"
-Str_PANEL_MEMORY_3:	.asciz "PANEL MEMORY"
+Str_CURRENT_PANEL_7:	.asciz "CURRENT PANEL"
+Str_PANEL_MEMORY_7:	.asciz "PANEL MEMORY"
 Str_SEQUENCER_3:	.asciz "SEQUENCER"
-Str_COMPOSER_3:	.asciz "COMPOSER"
-Str_SOUND_MEMORY_3:	.asciz "SOUND MEMORY"
-Str_MANUAL_SEQ_PAD_3:	.asciz "MANUAL SEQ PAD"
-Str_EFFECT_7:	.asciz "EFFECT"
-Str_USER_MIDI_3:	.asciz "USER MIDI"
-Str_FAVORITES_3:	.asciz "FAVORITES"
-Str_HOME_PAGE_3:	.asciz "HOME PAGE"
+Str_COMPOSER_7:	.asciz "COMPOSER"
+Str_SOUND_MEMORY_7:	.asciz "SOUND MEMORY"
+Str_MANUAL_SEQ_PAD_7:	.asciz "MANUAL SEQ PAD"
+Str_EFFECT_11:	.asciz "EFFECT"
+Str_USER_MIDI_7:	.asciz "USER MIDI"
+Str_FAVORITES_7:	.asciz "FAVORITES"
+Str_HOME_PAGE_7:	.asciz "HOME PAGE"
 Str_CUSTOM_STYLES_3:	.asciz "CUSTOM STYLES"
 Str_MIDI_FILE_3:	.asciz "MIDI FILE"
 Str_CUSTOM_LYRICS_5:	.asciz "CUSTOM LYRICS"
-Str_INFO_FILE_3:	.asciz "INFO FILE"
+Str_INFO_FILE_7:	.asciz "INFO FILE"
 Str_USER_1_FILE_3:	.asciz "USER 1 FILE"
 Str_USER_2_FILE_3:	.asciz "USER 2 FILE"
 Str_USER_3_FILE_3:	.asciz "USER 3 FILE"
@@ -6991,20 +6991,20 @@ Str_OLD_RCM_3:	.asciz "OLD RCM"
 Str_Kein_Eintrag:	.asciz "-Kein Eintrag-"
 
 ptrs_978A105C:
-	.long	Str_CURRENT_PANEL_3
-	.long	Str_PANEL_MEMORY_3
+	.long	Str_CURRENT_PANEL_7
+	.long	Str_PANEL_MEMORY_7
 	.long	Str_SEQUENCER_3
-	.long	Str_COMPOSER_3
-	.long	Str_SOUND_MEMORY_3
-	.long	Str_MANUAL_SEQ_PAD_3
-	.long	Str_EFFECT_7
-	.long	Str_USER_MIDI_3
-	.long	Str_FAVORITES_3
-	.long	Str_HOME_PAGE_3
+	.long	Str_COMPOSER_7
+	.long	Str_SOUND_MEMORY_7
+	.long	Str_MANUAL_SEQ_PAD_7
+	.long	Str_EFFECT_11
+	.long	Str_USER_MIDI_7
+	.long	Str_FAVORITES_7
+	.long	Str_HOME_PAGE_7
 	.long	Str_CUSTOM_STYLES_3
 	.long	Str_MIDI_FILE_3
 	.long	Str_CUSTOM_LYRICS_5
-	.long	Str_INFO_FILE_3
+	.long	Str_INFO_FILE_7
 	.long	Str_USER_1_FILE_3
 	.long	Str_USER_2_FILE_3
 	.long	Str_USER_3_FILE_3
@@ -7023,20 +7023,20 @@ ptrs_978A105C:
 	.long	Str_OLD_RCM_3
 	.long	Str_Kein_Eintrag
 
-Str_CURRENT_PANEL_2:	.asciz "CURRENT PANEL"
-Str_PANEL_MEMORY_2:	.asciz "PANEL MEMORY"
+Str_CURRENT_PANEL_6:	.asciz "CURRENT PANEL"
+Str_PANEL_MEMORY_6:	.asciz "PANEL MEMORY"
 Str_SEQUENCER_2:	.asciz "SEQUENCER"
-Str_COMPOSER_2:	.asciz "COMPOSER"
-Str_SOUND_MEMORY_2:	.asciz "SOUND MEMORY"
-Str_MANUAL_SEQ_PAD_2:	.asciz "MANUAL SEQ PAD"
-Str_EFFECT_6:	.asciz "EFFECT"
-Str_USER_MIDI_2:	.asciz "USER MIDI"
-Str_FAVORITES_2:	.asciz "FAVORITES"
-Str_HOME_PAGE_2:	.asciz "HOME PAGE"
+Str_COMPOSER_6:	.asciz "COMPOSER"
+Str_SOUND_MEMORY_6:	.asciz "SOUND MEMORY"
+Str_MANUAL_SEQ_PAD_6:	.asciz "MANUAL SEQ PAD"
+Str_EFFECT_10:	.asciz "EFFECT"
+Str_USER_MIDI_6:	.asciz "USER MIDI"
+Str_FAVORITES_6:	.asciz "FAVORITES"
+Str_HOME_PAGE_6:	.asciz "HOME PAGE"
 Str_CUSTOM_STYLES_2:	.asciz "CUSTOM STYLES"
 Str_MIDI_FILE_2:	.asciz "MIDI FILE"
 Str_CUSTOM_LYRICS_4:	.asciz "CUSTOM LYRICS"
-Str_INFO_FILE_2:	.asciz "INFO FILE"
+Str_INFO_FILE_6:	.asciz "INFO FILE"
 Str_USER_1_FILE_2:	.asciz "USER 1 FILE"
 Str_USER_2_FILE_2:	.asciz "USER 2 FILE"
 Str_USER_3_FILE_2:	.asciz "USER 3 FILE"
@@ -7057,20 +7057,20 @@ Str_No_Entry_F:	.asciz "-No Entry(F)-"
 	.align	4, 0xFF	# pad after Str_No_Entry_F
 
 ptrs_978A123C:
-	.long	Str_CURRENT_PANEL_2
-	.long	Str_PANEL_MEMORY_2
+	.long	Str_CURRENT_PANEL_6
+	.long	Str_PANEL_MEMORY_6
 	.long	Str_SEQUENCER_2
-	.long	Str_COMPOSER_2
-	.long	Str_SOUND_MEMORY_2
-	.long	Str_MANUAL_SEQ_PAD_2
-	.long	Str_EFFECT_6
-	.long	Str_USER_MIDI_2
-	.long	Str_FAVORITES_2
-	.long	Str_HOME_PAGE_2
+	.long	Str_COMPOSER_6
+	.long	Str_SOUND_MEMORY_6
+	.long	Str_MANUAL_SEQ_PAD_6
+	.long	Str_EFFECT_10
+	.long	Str_USER_MIDI_6
+	.long	Str_FAVORITES_6
+	.long	Str_HOME_PAGE_6
 	.long	Str_CUSTOM_STYLES_2
 	.long	Str_MIDI_FILE_2
 	.long	Str_CUSTOM_LYRICS_4
-	.long	Str_INFO_FILE_2
+	.long	Str_INFO_FILE_6
 	.long	Str_USER_1_FILE_2
 	.long	Str_USER_2_FILE_2
 	.long	Str_USER_3_FILE_2
@@ -7089,20 +7089,20 @@ ptrs_978A123C:
 	.long	Str_OLD_RCM_2
 	.long	Str_No_Entry_F
 
-Str_CURRENT_PANEL:	.asciz "CURRENT PANEL"
-Str_PANEL_MEMORY:	.asciz "PANEL MEMORY"
+Str_CURRENT_PANEL_5:	.asciz "CURRENT PANEL"
+Str_PANEL_MEMORY_5:	.asciz "PANEL MEMORY"
 Str_SEQUENCER:	.asciz "SEQUENCER"
-Str_COMPOSER:	.asciz "COMPOSER"
-Str_SOUND_MEMORY:	.asciz "SOUND MEMORY"
-Str_MANUAL_SEQ_PAD:	.asciz "MANUAL SEQ PAD"
-Str_EFFECT_5:	.asciz "EFFECT"
-Str_USER_MIDI:	.asciz "USER MIDI"
-Str_FAVORITES:	.asciz "FAVORITES"
-Str_HOME_PAGE:	.asciz "HOME PAGE"
+Str_COMPOSER_5:	.asciz "COMPOSER"
+Str_SOUND_MEMORY_5:	.asciz "SOUND MEMORY"
+Str_MANUAL_SEQ_PAD_5:	.asciz "MANUAL SEQ PAD"
+Str_EFFECT_9:	.asciz "EFFECT"
+Str_USER_MIDI_5:	.asciz "USER MIDI"
+Str_FAVORITES_5:	.asciz "FAVORITES"
+Str_HOME_PAGE_5:	.asciz "HOME PAGE"
 Str_CUSTOM_STYLES:	.asciz "CUSTOM STYLES"
 Str_MIDI_FILE:	.asciz "MIDI FILE"
 Str_CUSTOM_LYRICS_3:	.asciz "CUSTOM LYRICS"
-Str_INFO_FILE:	.asciz "INFO FILE"
+Str_INFO_FILE_5:	.asciz "INFO FILE"
 Str_USER_1_FILE:	.asciz "USER 1 FILE"
 Str_USER_2_FILE:	.asciz "USER 2 FILE"
 Str_USER_3_FILE:	.asciz "USER 3 FILE"
@@ -7123,20 +7123,20 @@ Str_No_Entry_S:	.asciz "-No Entry(S)-"
 	.align	4, 0xFF	# pad after Str_No_Entry_S
 
 ptrs_978A141C:
-	.long	Str_CURRENT_PANEL
-	.long	Str_PANEL_MEMORY
+	.long	Str_CURRENT_PANEL_5
+	.long	Str_PANEL_MEMORY_5
 	.long	Str_SEQUENCER
-	.long	Str_COMPOSER
-	.long	Str_SOUND_MEMORY
-	.long	Str_MANUAL_SEQ_PAD
-	.long	Str_EFFECT_5
-	.long	Str_USER_MIDI
-	.long	Str_FAVORITES
-	.long	Str_HOME_PAGE
+	.long	Str_COMPOSER_5
+	.long	Str_SOUND_MEMORY_5
+	.long	Str_MANUAL_SEQ_PAD_5
+	.long	Str_EFFECT_9
+	.long	Str_USER_MIDI_5
+	.long	Str_FAVORITES_5
+	.long	Str_HOME_PAGE_5
 	.long	Str_CUSTOM_STYLES
 	.long	Str_MIDI_FILE
 	.long	Str_CUSTOM_LYRICS_3
-	.long	Str_INFO_FILE
+	.long	Str_INFO_FILE_5
 	.long	Str_USER_1_FILE
 	.long	Str_USER_2_FILE
 	.long	Str_USER_3_FILE
@@ -8131,36 +8131,127 @@ KssFileSfx_DISPProc_L131_Var_2:	# s16, a constant; read / written by KssFileSfx_
 
 Str_CDIR:	.asciz "CDIR"
 	.align	4, 0xFF	# pad after Str_CDIR
-Str_CURRENT_PANEL_5:	.asciz "CURRENT PANEL"
-Str_PANEL_MEMORY_5:	.asciz "PANEL MEMORY"
+Str_CURRENT_PANEL_4:	.asciz "CURRENT PANEL"
+Str_PANEL_MEMORY_4:	.asciz "PANEL MEMORY"
+Str_SEQUENCER_SMF_4:	.asciz "SEQUENCER/SMF"
+Str_COMPOSER_4:	.asciz "COMPOSER"
+Str_SOUND_MEMORY_4:	.asciz "SOUND MEMORY"
+Str_MANUAL_SEQ_PAD_4:	.asciz "MANUAL SEQ PAD"
+Str_EFFECT_8:	.asciz "EFFECT"
+Str_USER_MIDI_4:	.asciz "USER MIDI"
+Str_FAVORITES_4:	.asciz "FAVORITES"
+Str_HOME_PAGE_4:	.asciz "HOME PAGE"
+Str_CUST0M_STYLES_4:	.asciz "CUST0M STYLES"
+Str_CUST0M_LYRICS_4:	.asciz "CUST0M LYRICS"
+Str_INFO_FILE_4:	.asciz "INFO FILE"
+	.align	4, 0xFF	# pad after Str_INFO_FILE_4
+
+ptrs_978A2E34:
+	.long	Str_CURRENT_PANEL_4
+	.long	Str_PANEL_MEMORY_4
+	.long	Str_SEQUENCER_SMF_4
+	.long	Str_COMPOSER_4
+	.long	Str_SOUND_MEMORY_4
+	.long	Str_MANUAL_SEQ_PAD_4
+	.long	Str_EFFECT_8
+	.long	Str_USER_MIDI_4
+	.long	Str_FAVORITES_4
+	.long	Str_HOME_PAGE_4
+	.long	Str_CUST0M_STYLES_4
+	.long	Str_CUST0M_LYRICS_4
+	.long	Str_INFO_FILE_4
+
+Str_CURRENT_PANEL_3:	.asciz "CURRENT PANEL"
+Str_PANEL_MEMORY_3:	.asciz "PANEL MEMORY"
+Str_SEQUENCER_SMF_3:	.asciz "SEQUENCER/SMF"
+Str_COMPOSER_3:	.asciz "COMPOSER"
+Str_SOUND_MEMORY_3:	.asciz "SOUND MEMORY"
+Str_MANUAL_SEQ_PAD_3:	.asciz "MANUAL SEQ PAD"
+Str_EFFECT_7:	.asciz "EFFECT"
+Str_USER_MIDI_3:	.asciz "USER MIDI"
+Str_FAVORITES_3:	.asciz "FAVORITES"
+Str_HOME_PAGE_3:	.asciz "HOME PAGE"
+Str_CUST0M_STYLES_3:	.asciz "CUST0M STYLES"
+Str_CUST0M_LYRICS_3:	.asciz "CUST0M LYRICS"
+Str_INFO_FILE_3:	.asciz "INFO FILE"
+	.align	4, 0xFF	# pad after Str_INFO_FILE_3
+
+ptrs_978A2F04:
+	.long	Str_CURRENT_PANEL_3
+	.long	Str_PANEL_MEMORY_3
+	.long	Str_SEQUENCER_SMF_3
+	.long	Str_COMPOSER_3
+	.long	Str_SOUND_MEMORY_3
+	.long	Str_MANUAL_SEQ_PAD_3
+	.long	Str_EFFECT_7
+	.long	Str_USER_MIDI_3
+	.long	Str_FAVORITES_3
+	.long	Str_HOME_PAGE_3
+	.long	Str_CUST0M_STYLES_3
+	.long	Str_CUST0M_LYRICS_3
+	.long	Str_INFO_FILE_3
+
+Str_CURRENT_PANEL_2:	.asciz "CURRENT PANEL"
+Str_PANEL_MEMORY_2:	.asciz "PANEL MEMORY"
+Str_SEQUENCER_SMF_2:	.asciz "SEQUENCER/SMF"
+Str_COMPOSER_2:	.asciz "COMPOSER"
+Str_SOUND_MEMORY_2:	.asciz "SOUND MEMORY"
+Str_MANUAL_SEQ_PAD_2:	.asciz "MANUAL SEQ PAD"
+Str_EFFECT_6:	.asciz "EFFECT"
+Str_USER_MIDI_2:	.asciz "USER MIDI"
+Str_FAVORITES_2:	.asciz "FAVORITES"
+Str_HOME_PAGE_2:	.asciz "HOME PAGE"
+Str_CUST0M_STYLES_2:	.asciz "CUST0M STYLES"
+Str_CUST0M_LYRICS_2:	.asciz "CUST0M LYRICS"
+Str_INFO_FILE_2:	.asciz "INFO FILE"
+	.align	4, 0xFF	# pad after Str_INFO_FILE_2
+
+ptrs_978A2FD4:
+	.long	Str_CURRENT_PANEL_2
+	.long	Str_PANEL_MEMORY_2
+	.long	Str_SEQUENCER_SMF_2
+	.long	Str_COMPOSER_2
+	.long	Str_SOUND_MEMORY_2
+	.long	Str_MANUAL_SEQ_PAD_2
+	.long	Str_EFFECT_6
+	.long	Str_USER_MIDI_2
+	.long	Str_FAVORITES_2
+	.long	Str_HOME_PAGE_2
+	.long	Str_CUST0M_STYLES_2
+	.long	Str_CUST0M_LYRICS_2
+	.long	Str_INFO_FILE_2
+
+Str_CURRENT_PANEL:	.asciz "CURRENT PANEL"
+Str_PANEL_MEMORY:	.asciz "PANEL MEMORY"
 Str_SEQUENCER_SMF:	.asciz "SEQUENCER/SMF"
-Str_COMPOSER_5:	.asciz "COMPOSER"
-Str_SOUND_MEMORY_5:	.asciz "SOUND MEMORY"
-Str_MANUAL_SEQ_PAD_5:	.asciz "MANUAL SEQ PAD"
-Str_EFFECT_9:	.asciz "EFFECT"
-Str_USER_MIDI_5:	.asciz "USER MIDI"
-Str_FAVORITES_5:	.asciz "FAVORITES"
-Str_HOME_PAGE_5:	.asciz "HOME PAGE"
+Str_COMPOSER:	.asciz "COMPOSER"
+Str_SOUND_MEMORY:	.asciz "SOUND MEMORY"
+Str_MANUAL_SEQ_PAD:	.asciz "MANUAL SEQ PAD"
+Str_EFFECT_5:	.asciz "EFFECT"
+Str_USER_MIDI:	.asciz "USER MIDI"
+Str_FAVORITES:	.asciz "FAVORITES"
+Str_HOME_PAGE:	.asciz "HOME PAGE"
 Str_CUST0M_STYLES:	.asciz "CUST0M STYLES"
 Str_CUST0M_LYRICS:	.asciz "CUST0M LYRICS"
-Str_INFO_FILE_5:	.asciz "INFO FILE"
-	.align	4, 0xFF	# pad after Str_INFO_FILE_5
+Str_INFO_FILE:	.asciz "INFO FILE"
+	.align	4, 0xFF	# pad after Str_INFO_FILE
 
-names_978A31BC_p0_0:	# REC_names_978A31BC_p0 (1 bytes), then 169 x u32 the code indexes from +0 (read by KssSetSfx_DISPProc_L2e7 0x9781F37D `mov (d0, a0), a0`; KssSetSfx_DISPProc_L2e7 0x9781F37D `mov (d0, a0), d0`)
-	REC_names_978A31BC_p0	x0="\x98"
-	tab_u32	2794949165, 3013052973, 3247933997, 3398928941, 3617032749, 3868690989, 3986131501, 4153903661, 26708525, 194480686, 429361710, 664242734, 1134004782, 1163022933, 1344296014, 1279610433	# [0]
-	tab_u32	1312903168, 1293962309, 1380928837, 1163067481, 1313166673, 793920835, 4607315, 1347243843, 1380275023, 1431261952, 1293960270, 1380928837, 1095565401, 1279350094, 1363497760, 1145131040	# [16]
-	tab_u32	1179010304, 5522245, 1380275029, 1145654560, 1095106633, 1230131030, 5457236, 1162694472, 1195462688, 1430454341, 1295012947, 1498698528, 5457228, 1414747459, 1277185328, 1128878681	# [32]
-	tab_u32	1313407059, 1176522566, 4541513, 1761607679, 1989642798, 2207746606, 2442627630, 2593622574, 2811726382, 3063384622, 3180825134, 3348597294, 3516369454, 3684141614, 3919022638, 4153903662	# [48]
-	tab_u32	1134004782, 1163022933, 1344296014, 1279610433, 1312903168, 1293962309, 1380928837, 1163067481, 1313166673, 793920835, 4607315, 1347243843, 1380275023, 1431261952, 1293960270, 1380928837	# [64]
-	tab_u32	1095565401, 1279350094, 1363497760, 1145131040, 1179010304, 5522245, 1380275029, 1145654560, 1095106633, 1230131030, 5457236, 1162694472, 1195462688, 1430454341, 1295012947, 1498698528	# [80]
-	tab_u32	5457228, 1414747459, 1277185328, 1128878681, 1313407059, 1176522566, 4541513, 956301311, 1184336431, 1402440239, 1637321263, 1788316207, 2006420015, 2258078255, 2375518767, 2543290927	# [96]
-	tab_u32	2711063087, 2878835247, 3113716271, 3348597295, 1134004783, 1163022933, 1344296014, 1279610433, 1312903168, 1293962309, 1380928837, 1163067481, 1313166673, 793920835, 4607315, 1347243843	# [112]
-	tab_u32	1380275023, 1431261952, 1293960270, 1380928837, 1095565401, 1279350094, 1363497760, 1145131040, 1179010304, 5522245, 1380275029, 1145654560, 1095106633, 1230131030, 5457236, 1162694472	# [128]
-	tab_u32	1195462688, 1430454341, 1295012947, 1498698528, 5457228, 1414747459, 1277185328, 1128878681, 1313407059, 1176522566, 4541513, 150994943, 379030064, 597133872, 832014896, 983009840	# [144]
-	tab_u32	1201113648, 1452771888, 1570212400, 1737984560, 1905756720, 2073528880, 2308409904, 2543290928, 764906032	# [160]
+ptrs_978A30A4:
+	.long	Str_CURRENT_PANEL
+	.long	Str_PANEL_MEMORY
+	.long	Str_SEQUENCER_SMF
+	.long	Str_COMPOSER
+	.long	Str_SOUND_MEMORY
+	.long	Str_MANUAL_SEQ_PAD
+	.long	Str_EFFECT_5
+	.long	Str_USER_MIDI
+	.long	Str_FAVORITES
+	.long	Str_HOME_PAGE
+	.long	Str_CUST0M_STYLES
+	.long	Str_CUST0M_LYRICS
+	.long	Str_INFO_FILE
 
-Str_text:	.asciz "--"
+Str_empty_439:	.asciz "---"
 Str_YES_19:	.asciz "YES"
 Str_NO_23:	.asciz "NO"
 Str_SQT:	.asciz "SQT"
@@ -8170,87 +8261,85 @@ Str_3BK:	.asciz "3BK"
 Str_ALL:	.asciz "ALL"
 	.align	4, 0xFF	# pad after Str_ALL
 
-KssSetSfx_DISPProc_L822_Table_p0_0:	# REC_KssSetSfx_DISPProc_L822_Table_p0 (4 bytes)
-	REC_KssSetSfx_DISPProc_L822_Table_p0	text=names_978A31BC_p0_0+676
+ptrs_978A30F8:
+	.long	Str_empty_439
+	.long	Str_YES_19
+	.long	Str_NO_23
+	.long	Str_SQT
+	.long	Str_SMF_2
+	.long	Str_DEL_4
+	.long	Str_3BK
+	.long	Str_ALL
 
-names_978A30FC:
-	.long	Str_YES_19, Str_NO_23
-	.long	Str_SQT, Str_SMF_2
-	.long	Str_DEL_4, Str_3BK
-	.long	Str_ALL, 0x2D2D2D
+Text_table:	# 8 strings of 3 characters, NUL-terminated
+	.asciz	"---"
+	.asciz	"YES"
+	.asciz	"NO "
+	.asciz	"SQT"
+	.asciz	"SMF"
+	.asciz	"DEL"
+	.asciz	"3BK"
+	.asciz	"ALL"
 
-Str_YES_20:	.asciz "YES"
-Str_NO_24:	.asciz "NO "
-Str_SQT_2:	.asciz "SQT"
-Str_SMF_3:	.asciz "SMF"
-Str_DEL_5:	.asciz "DEL"
-Str_3BK_2:	.asciz "3BK"
-Str_ALL_2:	.asciz "ALL"
+ptrs_978A3138:
+	.long	Text_table
+	.long	Text_table+4
+	.long	Text_table+8
+	.long	Text_table+12
+	.long	Text_table+16
+	.long	Text_table+20
+	.long	Text_table+24
+	.long	Text_table+28
 
-KssSetSfx_DISPProc_L822_Table_p0_1:	# REC_KssSetSfx_DISPProc_L822_Table_p0 (4 bytes)
-	REC_KssSetSfx_DISPProc_L822_Table_p0	text=names_978A30FC+28
+Text_table_2:	# 8 strings of 3 characters, NUL-terminated
+	.asciz	"---"
+	.asciz	"YES"
+	.asciz	"NO "
+	.asciz	"SQT"
+	.asciz	"SMF"
+	.asciz	"DEL"
+	.asciz	"3BK"
+	.asciz	"ALL"
 
-names_978A313C:
-	.long	Str_YES_20, Str_NO_24
-	.long	Str_SQT_2, Str_SMF_3
-	.long	Str_DEL_5, Str_3BK_2
-	.long	Str_ALL_2, 0x2D2D2D
+ptrs_978A3178:
+	.long	Text_table_2
+	.long	Text_table_2+4
+	.long	Text_table_2+8
+	.long	Text_table_2+12
+	.long	Text_table_2+16
+	.long	Text_table_2+20
+	.long	Text_table_2+24
+	.long	Text_table_2+28
 
-Str_YES_21:	.asciz "YES"
-Str_NO_25:	.asciz "NO "
-Str_SQT_3:	.asciz "SQT"
-Str_SMF_4:	.asciz "SMF"
-Str_DEL_6:	.asciz "DEL"
-Str_3BK_3:	.asciz "3BK"
-Str_ALL_3:	.asciz "ALL"
+Text_table_3:	# 8 strings of 3 characters, NUL-terminated
+	.asciz	"---"
+	.asciz	"YES"
+	.asciz	"NO "
+	.asciz	"SQT"
+	.asciz	"SMF"
+	.asciz	"DEL"
+	.asciz	"3BK"
+	.asciz	"ALL"
 
-KssSetSfx_DISPProc_L822_Table_p0_2:	# REC_KssSetSfx_DISPProc_L822_Table_p0 (4 bytes)
-	REC_KssSetSfx_DISPProc_L822_Table_p0	text=names_978A313C+28
-
-names_978A317C:
-	.long	Str_YES_21, Str_NO_25
-	.long	Str_SQT_3, Str_SMF_4
-	.long	Str_DEL_6, Str_3BK_3
-	.long	Str_ALL_3, 0x2D2D2D
-
-Str_YES_22:	.asciz "YES"
-
-names_978A31BC_p0_1:	# REC_names_978A31BC_p0 (1 bytes)
-	REC_names_978A31BC_p0	x0="N"
-
-Str_O_2:	.asciz "O "
-Str_SQT_4:	.asciz "SQT"
-
-names_978A31BC_p0_2:	# REC_names_978A31BC_p0 (1 bytes)
-	REC_names_978A31BC_p0	x0="S"
-
-Str_MF:	.asciz "MF"
-Str_DEL_7:	.asciz "DEL"
-
-names_978A31BC_p0_3:	# REC_names_978A31BC_p0 (1 bytes)
-	REC_names_978A31BC_p0	x0="3"
-
-Str_BK:	.asciz "BK"
-Str_ALL_4:	.asciz "ALL"
-
-KssSetSfx_DISPProc_L822_Table_p0_3:	# REC_KssSetSfx_DISPProc_L822_Table_p0 (4 bytes)
-	REC_KssSetSfx_DISPProc_L822_Table_p0	text=names_978A317C+28
-
-names_978A31BC:
-	.long	Str_YES_22, names_978A31BC_p0_1
-	.long	Str_SQT_4, names_978A31BC_p0_2
-	.long	Str_DEL_7, names_978A31BC_p0_3
-	.long	Str_ALL_4, names_978A31BC_p0_0
-	# 3 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	names_978A31BC_p0_0+208
-	.long	names_978A31BC_p0_0+416
-	.long	names_978A31BC_p0_0+624
-
+ptrs_978A31B8:
+	.long	Text_table_3
+	.long	Text_table_3+4
+	.long	Text_table_3+8
+	.long	Text_table_3+12
+	.long	Text_table_3+16
+	.long	Text_table_3+20
+	.long	Text_table_3+24
+	.long	Text_table_3+28
+KssSetSfx_DISPProc_L2e7_Table:
+	.long	ptrs_978A2E34
+	.long	ptrs_978A2F04
+	.long	ptrs_978A2FD4
+	.long	ptrs_978A30A4
 KssSetSfx_DISPProc_L822_Table:
-	.long	KssSetSfx_DISPProc_L822_Table_p0_0
-	.long	KssSetSfx_DISPProc_L822_Table_p0_1
-	.long	KssSetSfx_DISPProc_L822_Table_p0_2
-	.long	KssSetSfx_DISPProc_L822_Table_p0_3
+	.long	ptrs_978A30F8
+	.long	ptrs_978A3138
+	.long	ptrs_978A3178
+	.long	ptrs_978A31B8
 
 KssSetSfx_DISPProc_L9a_Var:	# s16, a constant; read / written by KssSetSfx_DISPProc_L9a 0x9781F130: `movhu (KssSetSfx_DISPProc_L9a_Var), d0`
 	.word	8
@@ -9505,20 +9594,20 @@ WaitingFunc_entry_L2e_Table:
 func_978339B0_Table:	# 16 x u8, 255..255; read by func_978339B0_entry : `movbu	(a1), d0`
 	tab_u8	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
 
-Str_CURRENT_PANEL_6:	.asciz "CURRENT PANEL"
-Str_PANEL_MEMORY_6:	.asciz "PANEL MEMORY"
+Str_CURRENT_PANEL_9:	.asciz "CURRENT PANEL"
+Str_PANEL_MEMORY_9:	.asciz "PANEL MEMORY"
 Str_SEQUENCER_5:	.asciz "SEQUENCER"
-Str_COMPOSER_6:	.asciz "COMPOSER"
-Str_SOUND_MEMORY_6:	.asciz "SOUND MEMORY"
-Str_MANUAL_SEQ_PAD_6:	.asciz "MANUAL SEQ PAD"
-Str_EFFECT_10:	.asciz "EFFECT"
-Str_USER_MIDI_6:	.asciz "USER MIDI"
-Str_FAVORITES_6:	.asciz "FAVORITES"
-Str_HOME_PAGE_6:	.asciz "HOME PAGE"
+Str_COMPOSER_9:	.asciz "COMPOSER"
+Str_SOUND_MEMORY_9:	.asciz "SOUND MEMORY"
+Str_MANUAL_SEQ_PAD_9:	.asciz "MANUAL SEQ PAD"
+Str_EFFECT_13:	.asciz "EFFECT"
+Str_USER_MIDI_9:	.asciz "USER MIDI"
+Str_FAVORITES_9:	.asciz "FAVORITES"
+Str_HOME_PAGE_9:	.asciz "HOME PAGE"
 Str_CUSTOM_STYLES_5:	.asciz "CUSTOM STYLES"
 Str_MIDI_FILE_5:	.asciz "MIDI FILE"
 Str_CUSTOM_LYRICS_7:	.asciz "CUSTOM LYRICS"
-Str_INFO_FILE_6:	.asciz "INFO FILE"
+Str_INFO_FILE_9:	.asciz "INFO FILE"
 
 func_97833A24_Table:	# 57 x u8, 3..255; read by func_97833A24 : `movbu	(a1), d0`
 	tab_u8	168, 77, 138, 151, 182, 77, 138, 151, 195, 77, 138, 151, 205, 77, 138, 151	# [0]
@@ -9791,8 +9880,8 @@ Str_uuml:	.asciz "uuml"
 Str_yacute:	.asciz "yacute"
 Str_thorn:	.asciz "thorn"
 Str_yuml:	.asciz "yuml"
-Str_text_2:	.asciz ";"
-	.align	4, 0xFF	# pad after Str_text_2
+Str_text:	.asciz ";"
+	.align	4, 0xFF	# pad after Str_text
 Str_color:	.asciz "color"
 	.align	4, 0xFF	# pad after Str_color
 Str_color_i:	.asciz "color %i"
@@ -10341,7 +10430,7 @@ Str_rb:	.asciz "rb"
 localeconv_Records:	# 1 x REC_localeconv_Records (40 bytes each); read by localeconv 0x9780851A `mov (0x10, a1), a0`; localeconv 0x9780851A `mov (0x14, a1), a0`; localeconv 0x9780851A `mov (0x18, a1), a0` (+12)
 	REC_localeconv_Records	text=func_9780836B_entry_L10_Records+128, p4=func_9780836B_entry_L10_Records+130, p8=func_9780836B_entry_L10_Records+131, p12=func_9780836B_entry_L10_Records+132, p16=func_9780836B_entry_L10_Records+133, p20=func_9780836B_entry_L10_Records+134, p24=func_9780836B_entry_L10_Records+135, p28=data_9783E564, f32=127, f33=127, f34=127, f35=127, f36=127, f37=127, f38=127, f39=127
 localeconv_Records_2:	# 2 x REC_localeconv_Records_2 (16 bytes each); read by localeconv 0x9780851A `mov (0xc, a1), a0`; localeconv 0x9780851A `mov (4, a1), a0`; localeconv 0x9780851A `mov (8, a1), a0`
-	REC_localeconv_Records_2	text=Str_C, text_=Str_empty_441, p8=data_9783E56C, p12=data_9783E56D
+	REC_localeconv_Records_2	text=Str_C, text_=Str_empty_442, p8=data_9783E56C, p12=data_9783E56D
 	REC_localeconv_Records_2	
 
 localeconv_Table:	# 5 x u32, 0..2542003825; read by localeconv 0x9780851A: `mov (localeconv_Table), d0`
@@ -13898,7 +13987,7 @@ names_979113BC:
 	.long	Str_thorn, 254
 	.long	Str_yuml, 255
 	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	Str_text_2
+	.long	Str_text
 	.long	0
 
 func_978341C0_Var:	# u32, initial value of a RAM variable; read / written by func_978341C0 0x978341C0: `mov (func_978341C0_Var), d0`; func_978341C0_entry_L71 0x97834234: `mov d0, (func_978341C0_Var)`

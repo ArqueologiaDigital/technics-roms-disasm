@@ -32236,7 +32236,7 @@ AcMixerVolWideProc_L5c:
 	mov	(0x2c, sp), a0
 	exthu	d0
 	asl2	d0
-	mov	names_50000714, a1
+	mov	AcMixerVolWideProc_L5c_Table, a1
 	mov	(d0, a1), a1
 	call	strcpy_entry, [a2], 4
 	clr	d0
@@ -60421,7 +60421,7 @@ InitSptClassTable_entry:
 	mov	d0, (0x14, sp)
 	mov	0x36, d0
 	movhu	d0, (0x18, sp)
-	mov	data_48542B30, d0
+	mov	SupportClassTable, d0
 	mov	d0, (0x1c, sp)
 	mov	0xd, d0
 	mov	sp, a0
@@ -65854,7 +65854,7 @@ InitModeTitleTable_entry:
 	mov	d1, (4, a2)
 	mov	d2, d0
 	asl2	d0
-	mov	names_48413A68, a0
+	mov	InitModeTitleTable_Table_2, a0
 	mov	(d0, a0), d1
 	mov	d2, d0
 	asl	3, d0
@@ -140516,7 +140516,7 @@ func_48630F4F_entry_L1f:
 	clr	d0
 	bra	func_48630F4F_entry_L92
 func_48630F4F_entry_L67:
-	mov	data_4841E3E4, a1
+	mov	FatBootSector_720K_Default, a1
 	mov	0x200, d0
 	mov	a3, a0
 	call	memcpy_entry, [a2,a3], 8
@@ -141669,7 +141669,7 @@ func_4863182B_entry_L4f:
 	mov	0x200, d1
 	call	memset_entry, [a2], 4
 	mov	a2, a0
-	mov	Str_Technics_2, a1
+	mov	FatBootHead_720K, a1
 	mov	0x20, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	sp, a3
@@ -141957,7 +141957,7 @@ func_48631AF5_entry_L4f:
 	mov	0x200, d1
 	call	memset_entry, [a2], 4
 	mov	a2, a0
-	mov	Str_Technics, a1
+	mov	FatBootHead_1440K, a1
 	mov	0x20, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	sp, a3
@@ -192795,7 +192795,7 @@ CheckLanguage_L66:
 	movbu	(0x500a05a0), d0
 	mov	(0x14, a0), a0
 	asl2	d0
-	mov	names_4845EA08, a1
+	mov	CheckLanguage_L66_Table, a1
 	mov	(d0, a1), a1
 	call	strcpy_entry, [a2], 4
 	clr	d0
@@ -192881,7 +192881,7 @@ CheckMessage_L96:
 	bra	CheckMessage_Le8
 CheckMessage_Lb9:
 	mov	(0x2c, sp), a0
-	mov	names_4845EA08+28, d0
+	mov	Str_MessageID_3d, d0
 	mov	(0x14, a0), a0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
@@ -201820,7 +201820,7 @@ func_486519B7_L23:
 	and	0x07, d2
 	add	d2, d1
 	asl2	d1
-	mov	names_50001910+28, a0
+	mov	func_486519B7_L23_Table, a0
 	mov	(d1, a0), a0
 	mov	a2, a1
 	mov	a0, (0x10, sp)
@@ -201848,7 +201848,7 @@ func_486519B7_Leb:
 	and	0x07, d0
 	add	d0, d1
 	asl2	d1
-	mov	names_50001910+28, a0
+	mov	func_486519B7_L23_Table, a0
 	mov	(d1, a0), a0
 	mov	a2, a1
 	mov	a0, (0x10, sp)
@@ -206316,7 +206316,7 @@ TtSdapcrev_L1d:
 	mov	(0x24, sp), a0
 	cmp	8, a0
 	bne	TtSdapcrev_L4d
-	movbu	(names_50001950+28), d0
+	movbu	(TtSdapcrev_L1d_Table), d0
 	cmp	0, d0
 	beq	TtSdapcrev_L4d
 	clr	d0
@@ -206327,7 +206327,7 @@ TtSdapcrev_L1d:
 	bra	TtSdapcrev_L4d
 TtSdapcrev_L45:
 	mov	(0x24, sp), d0
-	movbu	d0, (names_50001950+28)
+	movbu	d0, (TtSdapcrev_L1d_Table)
 TtSdapcrev_L4d:
 	clr	d0
 	ret	0, 0x14
@@ -424992,7 +424992,7 @@ ApcToSMFConvGrid_L261:
 	movbu	(d0, a0), d0
 	asl2	d0
 	mov	d0, a0
-	add	names_484DBD94, a0
+	add	ApcToSMFConvGrid_L261_Table, a0
 	mov	(-0x4c, a0), a1
 	mov	a2, a0
 	call	strcpy_entry, [a2], 4
@@ -483786,7 +483786,7 @@ func_486FF583:
 	bge	func_486FF583_L45
 	jmp	func_486FF583_Lc1
 func_486FF583_L45:
-	mov	names_4850E1E0, a2
+	mov	func_486FF583_L6f_Table, a2
 	mov	sp, a0
 	mov	a0, d0
 	add	0x128, d0
@@ -484525,7 +484525,7 @@ func_486FFB68_L60:
 	mov	d0, (0x18, sp)
 	mov	sp, a2
 	add	0x1f8, a2
-	mov	names_4850E528, a3
+	mov	func_486FFB68_L8d_Table, a3
 func_486FFB68_L74:
 	mov	d3, d0
 	mov	(0x2ac, sp), a0

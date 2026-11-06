@@ -32249,7 +32249,7 @@ AcMixerVolWideProc_L5c:
 	mov	(0x2c, sp), a0
 	exthu	d0
 	asl2	d0
-	mov	names_5000045C, a1
+	mov	AcMixerVolWideProc_L5c_Table, a1
 	mov	(d0, a1), a1
 	call	strcpy_entry, [a2], 4
 	clr	d0
@@ -61344,7 +61344,7 @@ InitSptClassTable_entry:
 	mov	d0, (0x14, sp)
 	mov	0x37, d0
 	movhu	d0, (0x18, sp)
-	mov	data_4C2B5818, d0
+	mov	SupportClassTable, d0
 	mov	d0, (0x1c, sp)
 	mov	0x1c0, d0
 	mov	sp, a0
@@ -66505,7 +66505,7 @@ InitModeTitleTable_entry_L8:
 	lne
 	mov	d2, d0
 	asl2	d0
-	mov	names_4C187E74, a0
+	mov	InitModeTitleTable_entry_L8_Table_2, a0
 	mov	(d0, a0), a1
 	asl	4, d2
 	mov	d2, a0
@@ -66539,7 +66539,7 @@ InitModeTitleTable_entry_L43:
 	lne
 	mov	d2, d0
 	asl2	d0
-	mov	names_4C188ACC, a0
+	mov	InitModeTitleTable_entry_L43_Table_2, a0
 	mov	(d0, a0), a0
 	mov	0x1c, d0
 	nop
@@ -88439,7 +88439,7 @@ func_4C02FB64:
 
 func_4C02FB64_entry:
 	mov	0x84000020, a0
-	mov	Str_empty_1121, a1
+	mov	PanelMemory_4C19570C, a1
 	mov	0x7a0, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x84000000, a0
@@ -88454,7 +88454,7 @@ func_4C02FB90:
 func_4C02FB90_entry:
 	mov	0x5024fb58, a2
 	mov	a2, a0
-	mov	Str_empty_1121, a1
+	mov	PanelMemory_4C19570C, a1
 	mov	0x7a0, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	a2, d0
@@ -88494,7 +88494,7 @@ func_4C02FBBC_entry:
 	mul	d1, d2
 	add	d0, d2
 	mov	d2, a0
-	mov	Str_empty_1121, a1
+	mov	PanelMemory_4C19570C, a1
 	exthu	d3
 	mov	d3, d0
 	call	memcpy_entry, [a2,a3], 8
@@ -88558,7 +88558,7 @@ func_4C02FC99_entry_L8:
 	add	d2, d0
 	mov	2, a0
 	add	d0, a0
-	mov	Str_H_7, d1
+	mov	PanelMemory_4C19570C+20, d1
 	add	d2, d1
 	mov	2, a1
 	add	d1, a1
@@ -88573,7 +88573,7 @@ func_4C02FC99_entry_L30:
 	add	d2, d0
 	mov	2, a0
 	add	d0, a0
-	mov	data_4C1957FE, d1
+	mov	PanelMemory_4C19570C+242, d1
 	add	d2, d1
 	mov	2, a1
 	add	d1, a1
@@ -88588,7 +88588,7 @@ func_4C02FC99_entry_L56:
 	add	d2, d0
 	mov	2, a0
 	add	d0, a0
-	mov	data_4C19582E, d1
+	mov	PanelMemory_4C19570C+290, d1
 	add	d2, d1
 	mov	2, a1
 	add	d1, a1
@@ -88603,7 +88603,7 @@ func_4C02FC99_entry_L7e:
 	add	d2, d0
 	mov	2, a0
 	add	d0, a0
-	mov	func_4C0310AA_entry_La1_Table, d1
+	mov	PanelMemory_4C19570C+438, d1
 	add	d2, d1
 	mov	2, a1
 	add	d1, a1
@@ -88613,7 +88613,7 @@ func_4C02FC99_entry_L7e:
 	cmp	0x4a0, d2
 	blt	func_4C02FC99_entry_L7e
 	mov	0x84000678, a0
-	mov	func_4C02FD75_Table_5, a1
+	mov	PanelMemory_4C19570C+1624, a1
 	mov	2, d0
 	call	memcpy_entry, [a2,a3], 8
 	call	func_4C030743, 0, 0
@@ -88633,7 +88633,7 @@ func_4C02FD75_entry:
 	clr	d2
 	setlb
 	mov	2, a1
-	mov	Str_H_7, d0
+	mov	PanelMemory_4C19570C+20, d0
 	add	d2, d0
 	add	d0, a1
 	movbu	(0x3a, a1), d3
@@ -88650,7 +88650,7 @@ func_4C02FD75_entry:
 	clr	d1
 	setlb
 	mov	2, a1
-	mov	data_4C1957FE, d0
+	mov	PanelMemory_4C19570C+242, d0
 	add	d1, d0
 	add	d0, a1
 	movbu	(2, a1), d2
@@ -88667,7 +88667,7 @@ func_4C02FD75_entry:
 	clr	d2
 	setlb
 	mov	2, a1
-	mov	data_4C19582E, d0
+	mov	PanelMemory_4C19570C+290, d0
 	add	d2, d0
 	add	d0, a1
 	movbu	(0x3a, a1), d3
@@ -88684,7 +88684,7 @@ func_4C02FD75_entry:
 	clr	d1
 	setlb
 	mov	2, a1
-	mov	func_4C0310AA_entry_La1_Table, d0
+	mov	PanelMemory_4C19570C+438, d0
 	add	d1, d0
 	add	d0, a1
 	movbu	(0x3a, a1), d2
@@ -88698,10 +88698,10 @@ func_4C02FD75_entry:
 	movbu	d0, (0x3b, a0)
 	cmp	0x4a0, d1
 	llt
-	movbu	(func_4C02FD75_Table_5), d0
+	movbu	(PanelMemory_4C19570C+1624), d0
 	mov	0x84000710, a0
 	movbu	d0, (0x84000678)
-	mov	func_4C02FD75_Block, a1
+	mov	PanelMemory_4C19570C+1776, a1
 	mov	0xe, d0
 	call	memcpy_entry, [a2,a3], 8
 	call	func_4C030743, 0, 0
@@ -88741,7 +88741,7 @@ func_4C02FD75_entry_Lf2:
 	clr	d1
 	setlb
 	mov	2, a1
-	mov	Str_H_7, d0
+	mov	PanelMemory_4C19570C+20, d0
 	add	d1, d0
 	add	d0, a1
 	movbu	(0x3a, a1), d2
@@ -88760,7 +88760,7 @@ func_4C02FD75_entry_Lf2:
 	clr	d1
 	setlb
 	mov	2, a1
-	mov	data_4C1957FE, d0
+	mov	PanelMemory_4C19570C+242, d0
 	add	d1, d0
 	add	d0, a1
 	movbu	(2, a1), d2
@@ -88779,7 +88779,7 @@ func_4C02FD75_entry_Lf2:
 	clr	d1
 	setlb
 	mov	2, a1
-	mov	data_4C19582E, d0
+	mov	PanelMemory_4C19570C+290, d0
 	add	d1, d0
 	add	d0, a1
 	movbu	(0x3a, a1), d2
@@ -88798,7 +88798,7 @@ func_4C02FD75_entry_Lf2:
 	clr	d1
 	setlb
 	mov	2, a1
-	mov	func_4C0310AA_entry_La1_Table, d0
+	mov	PanelMemory_4C19570C+438, d0
 	add	d1, d0
 	add	d0, a1
 	movbu	(0x3a, a1), d2
@@ -88812,12 +88812,12 @@ func_4C02FD75_entry_Lf2:
 	movbu	d0, (0x3b, a0)
 	cmp	0x4a0, d1
 	llt
-	movbu	(func_4C02FD75_Table_5), d0
+	movbu	(PanelMemory_4C19570C+1624), d0
 	inc	a3
 	movbu	d0, (0x678, a2)
 	add	0x710, a2
 	mov	a2, a0
-	mov	func_4C02FD75_Block, a1
+	mov	PanelMemory_4C19570C+1776, a1
 	mov	0xe, d0
 	call	memcpy_entry, [a2,a3], 8
 	cmp	0x68, a3
@@ -90853,7 +90853,7 @@ func_4C0310AA_entry_L40:
 	movbu	(a2), d0
 	mov	d2, a1
 	movbu	d0, (0x21, sp)
-	add	Str_H_7, a1
+	add	PanelMemory_4C19570C+20, a1
 	mov	a3, a0
 	mov	-0x4a, d1
 	setlb
@@ -90898,7 +90898,7 @@ func_4C0310AA_entry_La1:
 	movbu	(a3), d0
 	mov	d2, a1
 	movbu	d0, (0x21, sp)
-	add	func_4C0310AA_entry_La1_Table, a1
+	add	PanelMemory_4C19570C+438, a1
 	mov	d3, a0
 	mov	-0x4a, d1
 	setlb
@@ -90999,7 +90999,7 @@ func_4C0310AA_entry_L191:
 	movbu	(a3), d0
 	mov	d2, a1
 	movbu	d0, (0x21, sp)
-	add	func_4C0310AA_entry_La1_Table, a1
+	add	PanelMemory_4C19570C+438, a1
 	mov	(0x14, sp), a0
 	mov	-0x4a, d1
 	setlb
@@ -91125,7 +91125,7 @@ func_4C0310AA_entry_L2b6:
 	movbu	(a3), d0
 	mov	d2, a1
 	movbu	d0, (0x21, sp)
-	add	Str_H_7, a1
+	add	PanelMemory_4C19570C+20, a1
 	mov	(0x14, sp), a0
 	mov	-0x4a, d1
 	setlb
@@ -91183,7 +91183,7 @@ func_4C0310AA_entry_L333:
 	movbu	(a3), d0
 	mov	d2, a1
 	movbu	d0, (0x21, sp)
-	add	func_4C0310AA_entry_La1_Table, a1
+	add	PanelMemory_4C19570C+438, a1
 	mov	(0x14, sp), a0
 	mov	-0x4a, d1
 	setlb
@@ -91301,7 +91301,7 @@ func_4C0310AA_entry_L447:
 	movbu	(a3), d0
 	mov	d2, a1
 	movbu	d0, (0x21, sp)
-	add	func_4C0310AA_entry_La1_Table, a1
+	add	PanelMemory_4C19570C+438, a1
 	mov	(0x14, sp), a0
 	mov	-0x4a, d1
 	setlb
@@ -91419,7 +91419,7 @@ func_4C0310AA_entry_L55b:
 	movbu	(a3), d0
 	mov	d2, a1
 	movbu	d0, (0x21, sp)
-	add	func_4C0310AA_entry_La1_Table, a1
+	add	PanelMemory_4C19570C+438, a1
 	mov	(0x14, sp), a0
 	mov	-0x4a, d1
 	setlb
@@ -91537,7 +91537,7 @@ func_4C0310AA_entry_L66f:
 	movbu	(a3), d0
 	mov	d2, a1
 	movbu	d0, (0x21, sp)
-	add	func_4C0310AA_entry_La1_Table, a1
+	add	PanelMemory_4C19570C+438, a1
 	mov	(0x14, sp), a0
 	mov	-0x4a, d1
 	setlb
@@ -92616,94 +92616,94 @@ func_4C0321C2_L6:
 	add	d0, d2
 	mov	2, a0
 	add	d2, a0
-	mov	data_4C195830, a1
+	mov	PanelMemory_4C19570C+292, a1
 	mov	0x48, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x4c, a0
 	add	d2, a0
-	mov	Str_empty_1120, a1
+	mov	PanelMemory_4C19570C+366, a1
 	mov	0x48, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x1b6, d2
 	add	a2, d2
 	mov	2, a0
 	add	d2, a0
-	mov	data_4C1958C4, a1
+	mov	PanelMemory_4C19570C+440, a1
 	mov	0x48, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x4c, a0
 	add	d2, a0
-	mov	func_4C0321C2_L6_Block, a1
+	mov	PanelMemory_4C19570C+514, a1
 	mov	0x48, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x96, a0
 	add	d2, a0
-	mov	func_4C0321C2_L6_Block_2, a1
+	mov	PanelMemory_4C19570C+588, a1
 	mov	0x48, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x12a, a0
 	add	d2, a0
-	mov	func_4C0321C2_L6_Block_3, a1
+	mov	PanelMemory_4C19570C+736, a1
 	mov	0x48, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x174, a0
 	add	d2, a0
-	mov	func_4C0321C2_L6_Block_4, a1
+	mov	PanelMemory_4C19570C+810, a1
 	mov	0x48, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x1be, a0
 	add	d2, a0
-	mov	func_4C0321C2_L6_Block_5, a1
+	mov	PanelMemory_4C19570C+884, a1
 	mov	0x48, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x208, a0
 	add	d2, a0
-	mov	func_4C0321C2_L6_Block_6, a1
+	mov	PanelMemory_4C19570C+958, a1
 	mov	0x48, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x252, a0
 	add	d2, a0
-	mov	func_4C0321C2_L6_Block_7, a1
+	mov	PanelMemory_4C19570C+1032, a1
 	mov	0x48, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x29c, a0
 	add	d2, a0
-	mov	func_4C0321C2_L6_Block_8, a1
+	mov	PanelMemory_4C19570C+1106, a1
 	mov	0x48, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x2e6, a0
 	add	d2, a0
-	mov	func_4C0321C2_L6_Block_9, a1
+	mov	PanelMemory_4C19570C+1180, a1
 	mov	0x48, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x330, a0
 	add	d2, a0
-	mov	func_4C0321C2_L6_Block_10, a1
+	mov	PanelMemory_4C19570C+1254, a1
 	mov	0x48, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x37a, a0
 	add	d2, a0
-	mov	func_4C0321C2_L6_Block_11, a1
+	mov	PanelMemory_4C19570C+1328, a1
 	mov	0x48, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x3c4, a0
 	add	d2, a0
-	mov	func_4C0321C2_L6_Block_12, a1
+	mov	PanelMemory_4C19570C+1402, a1
 	mov	0x48, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x40e, a0
 	add	d2, a0
-	mov	func_4C0321C2_L6_Block_13, a1
+	mov	PanelMemory_4C19570C+1476, a1
 	mov	0x48, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x458, a0
 	add	d2, a0
-	mov	func_4C0321C2_L6_Block_14, a1
+	mov	PanelMemory_4C19570C+1550, a1
 	mov	0x48, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x6f0, a0
 	add	a2, a0
-	mov	func_4C02FD75_Block, a1
+	mov	PanelMemory_4C19570C+1776, a1
 	mov	0xe, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	0x5b, d0
@@ -213025,7 +213025,7 @@ func_4C0764E1_Lb6:
 	mov	(0x20, sp), a0
 	mov	a2, a1
 	movhu	(a0), d0
-	mov	names_50001B30+28, a0
+	mov	func_4C0764E1_Lb6_Table, a0
 	and	0x0f, d0
 	asl2	d0
 	mov	(d0, a0), a0
@@ -216570,7 +216570,7 @@ CheckLanguage_L66:
 	movbu	(0x502502f8), d0
 	mov	(0x14, a0), a0
 	asl2	d0
-	mov	names_4C1C5580, a1
+	mov	CheckLanguage_L66_Table, a1
 	mov	(d0, a1), a1
 	call	strcpy_entry, [a2], 4
 	clr	d0
@@ -216656,7 +216656,7 @@ CheckMessage_L96:
 	bra	CheckMessage_Le8
 CheckMessage_Lb9:
 	mov	(0x2c, sp), a0
-	mov	names_4C1C5580+28, d0
+	mov	Str_MessageID_3d, d0
 	mov	(0x14, a0), a0
 	mov	a0, (8, sp)
 	mov	d0, (0xc, sp)
@@ -220966,10 +220966,10 @@ func_4C07B574:
 func_4C07B574_L1e:
 	call	func_4C032E75_entry, 0, 0xc
 func_4C07B574_L25:
-	movbu	(names_50001B70+28), d1
-	movbu	(names_50001B70+28), d0
+	movbu	(func_4C07B574_L25_Var), d1
+	movbu	(func_4C07B574_L25_Var), d0
 	inc	d0
-	movbu	d0, (names_50001B70+28)
+	movbu	d0, (func_4C07B574_L25_Var)
 	cmp	0, d1
 	bne	func_4C07B574_L3e
 	bra	func_4C07B574_L5f
@@ -221021,11 +221021,11 @@ func_4C07B574_La9:
 func_4C07B574_Lb3:
 	bset	0x02, (0x50276e4c)
 	clr	d0
-	movbu	d0, (names_50001B70+28)
-	movbu	(names_50001B70+29), d1
-	movbu	(names_50001B70+29), d0
+	movbu	d0, (func_4C07B574_L25_Var)
+	movbu	(func_4C07B574_Lb3_Table), d1
+	movbu	(func_4C07B574_Lb3_Table), d0
 	inc	d0
-	movbu	d0, (names_50001B70+29)
+	movbu	d0, (func_4C07B574_Lb3_Table)
 	cmp	0, d1
 	bne	func_4C07B574_Lda
 	bra	func_4C07B574_L12f
@@ -221071,7 +221071,7 @@ func_4C07B574_L118:
 func_4C07B574_L121:
 	bset	0x10, (0x50276e4c)
 	clr	d0
-	movbu	d0, (names_50001B70+29)
+	movbu	d0, (func_4C07B574_Lb3_Table)
 func_4C07B574_L12f:
 	and	0xf7ff, psw
 	nop
@@ -309714,7 +309714,7 @@ func_4C0AC04A:
 	mov	d2, (0x1c, sp)
 	cmp	d3, d2
 	blt	func_4C0AC04A_Lb8
-	mov	names_4C201BC0, a2
+	mov	func_4C0AC04A_L68_Table_2, a2
 	mov	sp, a0
 	mov	a0, d0
 	add	0xa8, d0
@@ -535020,7 +535020,7 @@ func_4C132A89_entry_L1f:
 	clr	d0
 	bra	func_4C132A89_entry_L92
 func_4C132A89_entry_L67:
-	mov	data_4C24636C, a1
+	mov	FatBootSector_720K_Default, a1
 	mov	0x200, d0
 	mov	a3, a0
 	call	memcpy_entry, [a2,a3], 8
@@ -535653,7 +535653,7 @@ func_4C132F88_entry_L4f:
 	mov	0x200, d1
 	call	memset_entry, [a2], 4
 	mov	a2, a0
-	mov	Str_Technics_2, a1
+	mov	FatBootHead_720K, a1
 	mov	0x20, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	sp, a3
@@ -535941,7 +535941,7 @@ func_4C133252_entry_L4f:
 	mov	0x200, d1
 	call	memset_entry, [a2], 4
 	mov	a2, a0
-	mov	Str_Technics, a1
+	mov	FatBootHead_1440K, a1
 	mov	0x20, d0
 	call	memcpy_entry, [a2,a3], 8
 	mov	sp, a3
@@ -580391,7 +580391,7 @@ func_4C14D176:
 	movm	[d2], (sp)
 
 func_4C14D176_entry:
-	mov	names_4C25A1D0+28, a1
+	mov	func_4C14D176_Table, a1
 	mov	0x50061200, a0
 	mov	-0x13, d1
 	setlb
@@ -580465,7 +580465,7 @@ func_4C14D22A:
 
 func_4C14D22A_entry:
 	movbu	(0x50061249), d1
-	movbu	(func_4C14D22A_Table), d0
+	movbu	(func_4C14D176_Table+73), d0
 	cmp	d0, d1
 	bne	func_4C14D22A_entry_L1c
 	call	GetMediaType_entry, [d2,a2,a3], 0x34
@@ -580480,7 +580480,7 @@ func_4C14D252:
 
 func_4C14D252_entry:
 	mov	(0x50061200), a2
-	mov	(names_4C25A1D0+28), a1
+	mov	(func_4C14D176_Table), a1
 	mov	0x50061200, a0
 	cmp	a1, a2
 	bne	func_4C14D252_entry_L22
@@ -580509,7 +580509,7 @@ FileDiskFreeSpace_entry_L2c:
 	ret	0, 0x10
 
 func_4C14D2B4:
-	mov	(names_4C25A1D0+28), d0
+	mov	(func_4C14D176_Table), d0
 	mov	d0, (0x50061200)
 	retf	0, 0
 
@@ -580519,7 +580519,7 @@ func_4C14D2C3:
 
 func_4C14D2C3_entry:
 	mov	(0x50061204), a2
-	mov	(func_4C14D2C3_Var), a1
+	mov	(func_4C14D176_Table+4), a1
 	mov	0x50061200, a0
 	cmp	a1, a2
 	bne	func_4C14D2C3_entry_L22
@@ -580535,7 +580535,7 @@ func_4C14D2F3:
 
 func_4C14D2F3_entry:
 	mov	0x50061208, d2
-	mov	func_4C14CC1C_Table, a3
+	mov	func_4C14D176_Table+8, a3
 	mov	d2, a0
 	mov	a3, a1
 	call	func_4C14CC1C, 0, 0

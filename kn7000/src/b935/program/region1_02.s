@@ -86594,7 +86594,7 @@ loc_4846FEB2:
     clr     d0
     bra     loc_4846FF25
 loc_4846FEFA:
-    mov     data_485BA354, a1
+    mov     FatBootSector_720K_Default, a1
     mov     0x200, d0
     mov     a3, a0
     call    memcpy_entry, [a2,a3], 8
@@ -87737,7 +87737,7 @@ loc_484707BE:
     mov     0x200, d1
     call    memset_entry, [a2], 4
     mov     a2, a0
-    mov     Str_Technics_2, a1
+    mov     FatBootHead_720K, a1
     mov     0x20, d0
     call    memcpy_entry, [a2,a3], 8
     mov     sp, a3
@@ -88024,7 +88024,7 @@ loc_48470A88:
     mov     0x200, d1
     call    memset_entry, [a2], 4
     mov     a2, a0
-    mov     Str_Technics, a1
+    mov     FatBootHead_1440K, a1
     mov     0x20, d0
     call    memcpy_entry, [a2,a3], 8
     mov     sp, a3

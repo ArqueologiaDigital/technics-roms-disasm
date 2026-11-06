@@ -18544,16 +18544,16 @@ ptrs_4C3108A0:
 	.long	loc_4C1167CB
 	.long	loc_4C1167D6
 
-Str_Technics_2:	.asciz "\xEB\x1C\x90Technics"
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x3108BC, 0x3108D0
+FatBootHead_720K:	# a FAT boot sector's first 32 bytes, a 720 KB disk's (1440 sectors of 512 bytes): func_4C132F88 0x4C132F88: memcpy(.., 0x20)
+	FAT_BOOT_HEAD	0xeb, 0x1c, 0x90, "Technics", 512, 2, 1, 2, 112, 1440, 0xf9, 3, 9, 2, 0
+	.byte	0xeb, 0xfe	# +0x1E: the boot code the jump at +0 lands on (EB 1C: +2 + 0x1C), x86 `jmp $`: a loop
 
 func_4C132F88_entry_L9e_Block:	# 3 bytes, copied whole by func_4C132F88_entry_L9e 0x4C13302B: memcpy(.., 3); func_4C132F88_entry_L149 0x4C1330D6: memcpy(.., 3)
 	tab_u8	249, 255, 255	# [0]
 
-Str_Technics:	.asciz "\xEB\x1C\x90Technics"
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x3108DF, 0x3108F3
+FatBootHead_1440K:	# a FAT boot sector's first 32 bytes, a 1440 KB disk's (2880 sectors of 512 bytes): func_4C133252 0x4C133252: memcpy(.., 0x20)
+	FAT_BOOT_HEAD	0xeb, 0x1c, 0x90, "Technics", 512, 1, 1, 2, 224, 2880, 0xf0, 9, 18, 2, 0
+	.byte	0xeb, 0xfe	# +0x1E: the boot code the jump at +0 lands on (EB 1C: +2 + 0x1C), x86 `jmp $`: a loop
 
 func_4C133252_entry_L9e_Block:	# 3 bytes, copied whole by func_4C133252_entry_L9e 0x4C1332F5: memcpy(.., 3); func_4C133252_entry_L11b 0x4C133372: memcpy(.., 3)
 	tab_u8	240, 255, 255	# [0]
@@ -33160,7 +33160,7 @@ func_4C155CFB_entry_L86_Table:	# 208 x u8, 0..4; read by func_4C155CFB_entry : `
 	tab_u8	1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [160]
 	tab_u8	1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [176]
 	tab_u8	0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [192]
-func_4C155564_entry_L58_Table:	# 208 x u8, 0..1; read by func_4C155564_entry : `movbu	(d0, a0), d0`
+func_4C155564_entry_L58_Table:	# 208 x u8, 0..1; read by DspEffectTypeValid : `movbu	(d0, a0), d0`
 	tab_u8	1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [16]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [32]
@@ -33174,7 +33174,7 @@ func_4C155564_entry_L58_Table:	# 208 x u8, 0..1; read by func_4C155564_entry : `
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [160]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [176]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [192]
-func_4C155564_entry_L6f_Table:	# 208 x u8, 0..1; read by func_4C155564_entry : `movbu	(d0, a0), d0`
+func_4C155564_entry_L6f_Table:	# 208 x u8, 0..1; read by DspEffectTypeValid : `movbu	(d0, a0), d0`
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
 	tab_u8	1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0	# [32]
@@ -33188,7 +33188,7 @@ func_4C155564_entry_L6f_Table:	# 208 x u8, 0..1; read by func_4C155564_entry : `
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [160]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [176]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [192]
-func_4C155564_entry_L86_Table:	# 208 x u8, 0..1; read by func_4C155564_entry : `movbu	(d0, a0), d0`
+func_4C155564_entry_L86_Table:	# 208 x u8, 0..1; read by DspEffectTypeValid : `movbu	(d0, a0), d0`
 	tab_u8	1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [32]
@@ -33202,7 +33202,7 @@ func_4C155564_entry_L86_Table:	# 208 x u8, 0..1; read by func_4C155564_entry : `
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [160]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [176]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [192]
-func_4C155564_entry_Lac_Table:	# 226 x u8, 0..255; read by func_4C155564_entry : `movbu	(d0, a0), d0`
+func_4C155564_entry_Lac_Table:	# 226 x u8, 0..255; read by DspEffectTypeValid : `movbu	(d0, a0), d0`
 	tab_u8	1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [32]
@@ -33339,13 +33339,13 @@ data_4C325387:
 # census: opaque -- unknown-dump: 127 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6500_program.rom", 0x325387, 0x325406
 
-Str_empty_270:	.asciz " "
+Str_empty_260:	.asciz " "
 # census: opaque -- unknown-dump: 125 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6500_program.rom", 0x325408, 0x325485
 data_4C325485:
 # census: opaque -- unknown-dump: 71 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6500_program.rom", 0x325485, 0x3254CC
-Str_empty_269:	.asciz " "
+Str_empty_259:	.asciz " "
 # census: opaque -- unknown-dump: 125 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6500_program.rom", 0x3254CE, 0x32554B
 data_4C32554B:
@@ -33354,7 +33354,7 @@ data_4C32554B:
 data_4C3255FC:
 # census: opaque -- unknown-dump: 69 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6500_program.rom", 0x3255FC, 0x325641
-Str_empty_268:	.asciz "!"
+Str_empty_258:	.asciz "!"
 # census: opaque -- unknown-dump: 641 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6500_program.rom", 0x325643, 0x3258C4
 data_4C3258C4:
@@ -33384,7 +33384,7 @@ data_4C325AA5:
 data_4C325ADE:
 # census: opaque -- unknown-dump: 57 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6500_program.rom", 0x325ADE, 0x325B17
-Str_empty_267:	.asciz "\""
+Str_empty_257:	.asciz "\""
 # census: opaque -- unknown-dump: 139 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6500_program.rom", 0x325B19, 0x325BA4
 data_4C325BA4:

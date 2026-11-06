@@ -9,7 +9,7 @@ func_4C001885_Var:	# u32, a constant; read / written by func_4C001885 0x4C001885
 localeconv_Records:	# 1 x REC_localeconv_Records (40 bytes each); read by localeconv 0x4C00246C `mov (0x10, a1), a0`; localeconv 0x4C00246C `mov (0x14, a1), a0`; localeconv 0x4C00246C `mov (0x18, a1), a0` (+12)
 	REC_localeconv_Records	text=Str_C_19, p4=data_4C17627E, p8=data_4C17627F, p12=data_4C176280, p16=data_4C176281, p20=data_4C176282, p24=data_4C176283, p28=data_4C176284, f32=127, f33=127, f34=127, f35=127, f36=127, f37=127, f38=127, f39=127
 localeconv_Records_2:	# 2 x REC_localeconv_Records_2 (16 bytes each); read by localeconv 0x4C00246C `mov (0xc, a1), a0`; localeconv 0x4C00246C `mov (4, a1), a0`; localeconv 0x4C00246C `mov (8, a1), a0`
-	REC_localeconv_Records_2	text=Str_C_18, text_=Str_empty_950, p8=data_4C17628C, p12=data_4C17628D
+	REC_localeconv_Records_2	text=Str_C_18, text_=Str_empty_939, p8=data_4C17628C, p12=data_4C17628D
 	REC_localeconv_Records_2	
 
 localeconv_Table:	# 4 x u32, 0..2576980378; read by localeconv 0x4C00246C: `mov (localeconv_Table), d0`
@@ -2170,150 +2170,120 @@ User00_MainFunctionNames:
 	.long	FnName_MainGetEffName
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x329FD8, 0x329FDC
-data_4C329FDC:
-	# 672 bytes the code takes the address of: InitSptClassTable 0x4C020C05 `call RegisterObjectTable, 0, 0` (+0, arg sp28); InitSptClassTable 0x4C020C05 `mov data_4C329FDC, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers); the callee walk: RegisterObjectTable (sp28): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
-	.long	swordProc	# +0
-	tab_u32	0x20000	# +4
-	.long	data_4C18BD4C, uwordProc	# +8
-	tab_u32	0x20000	# +16
-	.long	data_4C18BD58, ucharProc	# +20
-	tab_u32	0x10000	# +28
-	.long	data_4C18BD64, scharProc	# +32
-	tab_u32	0x10000	# +40
-	.long	data_4C18BD70, slongProc	# +44
-	tab_u32	0x40000	# +52
-	.long	data_4C18BD7C, ulongProc	# +56
-	tab_u32	0x40000	# +64
-	.long	data_4C18BD88, boolProc	# +68
-	tab_u32	0x40002	# +76
-	.long	data_4C18BD9C, ObjectIDProc	# +80
-	tab_u32	0x40000	# +88
-	.long	data_4C18BDB8, pFuncProc	# +92
-	tab_u32	0x40000	# +100
-	.long	data_4C18BDC4, pProcProc	# +104
-	tab_u32	0x40000	# +112
-	.long	data_4C18BDD0, pPropProc	# +116
-	tab_u32	0x40000	# +124
-	.long	data_4C18BDDC, pStringProc	# +128
-	tab_u32	0x40000	# +136
-	.long	data_4C18BDE8, ClassIDProc	# +140
-	tab_u32	0x40000	# +148
-	.long	data_4C18BDF4, ScreenIDProc	# +152
-	tab_u32	0x40000	# +160
-	.long	data_4C18BE00, EventIDProc	# +164
-	tab_u32	0x40000	# +172
-	.long	data_4C18BE0C, RECTWProc	# +176
-	tab_u32	0x80000	# +184
-	.long	data_4C18BE18, RectX1Proc	# +188
-	tab_u32	0x20000	# +196
-	.long	data_4C18BE24, RectY1Proc	# +200
-	tab_u32	0x20000	# +208
-	.long	data_4C18BE30, RectX2Proc	# +212
-	tab_u32	0x20000	# +220
-	.long	data_4C18BE3C, RectY2Proc	# +224
-	tab_u32	0x20000	# +232
-	.long	data_4C18BE48, POINTWProc	# +236
-	tab_u32	0x40000	# +244
-	.long	data_4C18BE54, PointXProc	# +248
-	tab_u32	0x20000	# +256
-	.long	data_4C18BE60, PointYProc	# +260
-	tab_u32	0x20000	# +268
-	.long	data_4C18BE6C, StringProc	# +272
-	tab_u32	0x40000	# +280
-	.long	data_4C18BE78, NameProc	# +284
-	tab_u32	0x40000	# +292
-	.long	data_4C18BE84, ConstFlagProc	# +296
-	tab_u32	0x40002	# +304
-	.long	data_4C18BEA4, ViewIDProc	# +308
-	tab_u32	0x20000	# +316
-	.long	data_4C18BEC0, uwordProc	# +320
-	tab_u32	0x20000	# +328
-	.long	data_4C18BD58, ViewFlagProc	# +332
-	tab_u32	0x20006	# +340
-	.long	names_4C18BF0C, ColorIDProc	# +344
-	tab_u32	0x20027	# +352
-	.long	names_4C18C0E8, BorderIDProc	# +356
-	tab_u32	0x2001A	# +364
-	.long	names_4C18C34C, ModeIDProc	# +368
-	tab_u32	0x40000	# +376
-	.long	data_4C18C428, TitleIDProc	# +380
-	tab_u32	0x40000	# +388
-	.long	data_4C18C434, IconIDProc	# +392
-	tab_u32	0x40000	# +400
-	.long	data_4C18C440, FontIDProc	# +404
-	tab_u32	0x40000	# +412
-	.long	data_4C18C44C, AlignmentIDProc	# +416
-	tab_u32	0x10003	# +424
-	.long	data_4C18C480, EditSwIDProc	# +428
-	tab_u32	0x2001C	# +436
-	.long	names_4C18C5C8, EditSwStyleIDProc	# +440
-	tab_u32	0x10011	# +448
-	.long	names_4C18C73C, LineModeIDProc	# +452
-	tab_u32	0x10002	# +460
-	.long	data_4C18C7E8, FrameIDProc	# +464
-	tab_u32	0x20002	# +472
-	.long	data_4C18C814, BitmapIDProc	# +476
-	tab_u32	0x40000	# +484
-	.long	data_4C18C830, ApFuncIDProc	# +488
-	tab_u32	0x40000	# +496
-	.long	data_4C18C83C, MainFuncIDProc	# +500
-	tab_u32	0x40000	# +508
-	.long	data_4C18C848, UserIDProc	# +512
-	tab_u32	0x20021	# +520
-	.long	names_4C18C980, pBoolProc	# +524
-	tab_u32	0x40002	# +532
-	.long	data_4C18CA9C, pSwordProc	# +536
-	tab_u32	0x40000	# +544
-	.long	data_4C18CAB8, pUwordProc	# +548
-	tab_u32	0x40000	# +556
-	.long	data_4C18CAC4, pScharProc	# +560
-	tab_u32	0x40000	# +568
-	.long	data_4C18CAD0, pUcharProc	# +572
-	tab_u32	0x40000	# +580
-	.long	data_4C18CADC, pSlongProc	# +584
-	tab_u32	0x40000	# +592
-	.long	data_4C18CAE8, pUlongProc	# +596
-	tab_u32	0x40000	# +604
-	.long	data_4C18CAF4, WindowIDProc	# +608
-	tab_u32	0x40000	# +616
-	.long	data_4C18CB00, PartIDProc	# +620
-	tab_u32	0x20025	# +628
-	.long	names_4C18CC7C, TrackIDProc	# +632
-	tab_u32	0x20011	# +640
-	.long	names_4C18CE5C, IntTimeIDProc	# +644
-	tab_u32	0x2000E	# +652
-	.long	names_4C18CF60	# +656
-	tab_u32	0x0, 0x0, 0x0	# +660
+
+# 55 SupportClass entries (registry slot 0x1c0; a support-class id is (0x1c0 << 16) | its index), then an empty one
+SupportClassTable:
+	SUPPORT_CLASS	swordProc, 0, 2, SptSword_ValueNames	# [0]
+	SUPPORT_CLASS	uwordProc, 0, 2, SptUword_ValueNames	# [1]
+	SUPPORT_CLASS	ucharProc, 0, 1, SptUchar_ValueNames	# [2]
+	SUPPORT_CLASS	scharProc, 0, 1, SptSchar_ValueNames	# [3]
+	SUPPORT_CLASS	slongProc, 0, 4, SptSlong_ValueNames	# [4]
+	SUPPORT_CLASS	ulongProc, 0, 4, SptUlong_ValueNames	# [5]
+	SUPPORT_CLASS	boolProc, 2, 4, SptBool_ValueNames	# [6]
+	SUPPORT_CLASS	ObjectIDProc, 0, 4, SptObjectID_ValueNames	# [7]
+	SUPPORT_CLASS	pFuncProc, 0, 4, SptPFunc_ValueNames	# [8]
+	SUPPORT_CLASS	pProcProc, 0, 4, SptPProc_ValueNames	# [9]
+	SUPPORT_CLASS	pPropProc, 0, 4, SptPProp_ValueNames	# [10]
+	SUPPORT_CLASS	pStringProc, 0, 4, SptPString_ValueNames	# [11]
+	SUPPORT_CLASS	ClassIDProc, 0, 4, SptClassID_ValueNames	# [12]
+	SUPPORT_CLASS	ScreenIDProc, 0, 4, SptScreenID_ValueNames	# [13]
+	SUPPORT_CLASS	EventIDProc, 0, 4, SptEventID_ValueNames	# [14]
+	SUPPORT_CLASS	RECTWProc, 0, 8, SptRECTW_ValueNames	# [15]
+	SUPPORT_CLASS	RectX1Proc, 0, 2, SptRectX1_ValueNames	# [16]
+	SUPPORT_CLASS	RectY1Proc, 0, 2, SptRectY1_ValueNames	# [17]
+	SUPPORT_CLASS	RectX2Proc, 0, 2, SptRectX2_ValueNames	# [18]
+	SUPPORT_CLASS	RectY2Proc, 0, 2, SptRectY2_ValueNames	# [19]
+	SUPPORT_CLASS	POINTWProc, 0, 4, SptPOINTW_ValueNames	# [20]
+	SUPPORT_CLASS	PointXProc, 0, 2, SptPointX_ValueNames	# [21]
+	SUPPORT_CLASS	PointYProc, 0, 2, SptPointY_ValueNames	# [22]
+	SUPPORT_CLASS	StringProc, 0, 4, SptString_ValueNames	# [23]
+	SUPPORT_CLASS	NameProc, 0, 4, SptName_ValueNames	# [24]
+	SUPPORT_CLASS	ConstFlagProc, 2, 4, SptConstFlag_ValueNames	# [25]
+	SUPPORT_CLASS	ViewIDProc, 0, 2, SptViewID_ValueNames	# [26]
+	SUPPORT_CLASS	uwordProc, 0, 2, SptUword_ValueNames	# [27]
+	SUPPORT_CLASS	ViewFlagProc, 6, 2, SptViewFlag_ValueNames	# [28]
+	SUPPORT_CLASS	ColorIDProc, 39, 2, SptColorID_ValueNames	# [29]
+	SUPPORT_CLASS	BorderIDProc, 26, 2, SptBorderID_ValueNames	# [30]
+	SUPPORT_CLASS	ModeIDProc, 0, 4, SptModeID_ValueNames	# [31]
+	SUPPORT_CLASS	TitleIDProc, 0, 4, SptTitleID_ValueNames	# [32]
+	SUPPORT_CLASS	IconIDProc, 0, 4, SptIconID_ValueNames	# [33]
+	SUPPORT_CLASS	FontIDProc, 0, 4, SptFontID_ValueNames	# [34]
+	SUPPORT_CLASS	AlignmentIDProc, 3, 1, SptAlignmentID_ValueNames	# [35]
+	SUPPORT_CLASS	EditSwIDProc, 28, 2, SptEditSwID_ValueNames	# [36]
+	SUPPORT_CLASS	EditSwStyleIDProc, 17, 1, SptEditSwStyleID_ValueNames	# [37]
+	SUPPORT_CLASS	LineModeIDProc, 2, 1, SptLineModeID_ValueNames	# [38]
+	SUPPORT_CLASS	FrameIDProc, 2, 2, SptFrameID_ValueNames	# [39]
+	SUPPORT_CLASS	BitmapIDProc, 0, 4, SptBitmapID_ValueNames	# [40]
+	SUPPORT_CLASS	ApFuncIDProc, 0, 4, SptApFuncID_ValueNames	# [41]
+	SUPPORT_CLASS	MainFuncIDProc, 0, 4, SptMainFuncID_ValueNames	# [42]
+	SUPPORT_CLASS	UserIDProc, 33, 2, SptUserID_ValueNames	# [43]
+	SUPPORT_CLASS	pBoolProc, 2, 4, SptPBool_ValueNames	# [44]
+	SUPPORT_CLASS	pSwordProc, 0, 4, SptPSword_ValueNames	# [45]
+	SUPPORT_CLASS	pUwordProc, 0, 4, SptPUword_ValueNames	# [46]
+	SUPPORT_CLASS	pScharProc, 0, 4, SptPSchar_ValueNames	# [47]
+	SUPPORT_CLASS	pUcharProc, 0, 4, SptPUchar_ValueNames	# [48]
+	SUPPORT_CLASS	pSlongProc, 0, 4, SptPSlong_ValueNames	# [49]
+	SUPPORT_CLASS	pUlongProc, 0, 4, SptPUlong_ValueNames	# [50]
+	SUPPORT_CLASS	WindowIDProc, 0, 4, SptWindowID_ValueNames	# [51]
+	SUPPORT_CLASS	PartIDProc, 37, 2, SptPartID_ValueNames	# [52]
+	SUPPORT_CLASS	TrackIDProc, 17, 2, SptTrackID_ValueNames	# [53]
+	SUPPORT_CLASS	IntTimeIDProc, 14, 2, SptIntTimeID_ValueNames	# [54]
+	SUPPORT_CLASS	0, 0, 0, 0	# [55]
 
 Str_empty_288:	.asciz "/"
 	.align	4, 0xFF	# pad after Str_empty_288
 
 names_4C32A280:
-	.long	Str_OnIcon, Str_GakuIcon
-	.long	Str_GoldTechnics, Str_SlideBase
-	.long	Str_SlideMove, Str_MixerControl
-	.long	Str_MixerPoint, Str_Forward
-	.long	Str_Backward, Str_Pause
-	.long	Str_Start, Str_Before
-	.long	Str_Next, Str_LiBass
-	.long	Str_LiBrass, Str_LiDrum
-	.long	Str_LiFlute, Str_LiGuitar
-	.long	Str_LiWorld, Str_LiMallet
-	.long	Str_LiMemA, Str_LiMemB
-	.long	Str_LiOrgan, Str_LiOrchPad
-	.long	Str_LiPiano, Str_LiSax
-	.long	Str_LiStrings, Str_LiSynth
-	.long	Str_LiDrawbar, Str_LiAccordion
-	.long	Str_LedSwOn, Str_LedSwOff
-	.long	Str_LiGMSpecial, Str_LiMetronome
-	.long	Str_LiMIC, Str_LiUpright
-	.long	Str_LiElectric, Str_LiModern
-	.long	Str_LiRhythm, Str_LiMem
-	.long	Str_LiPianoMix, Str_LiOrchMix
-	.long	Str_LiSaxWood, Str_LiDanceSyn
-	.long	Str_LiGuitHarpsi, Str_SlideBaseR
-	.long	Str_SlideMoveR, 0x4C18D181
-	.space	832, 0x00
+	.long	Str_OnIcon
+	.long	Str_GakuIcon
+	.long	Str_GoldTechnics
+	.long	Str_SlideBase
+	.long	Str_SlideMove
+	.long	Str_MixerControl
+	.long	Str_MixerPoint
+	.long	Str_Forward
+	.long	Str_Backward
+	.long	Str_Pause
+	.long	Str_Start
+	.long	Str_Before
+	.long	Str_Next
+	.long	Str_LiBass
+	.long	Str_LiBrass
+	.long	Str_LiDrum
+	.long	Str_LiFlute
+	.long	Str_LiGuitar
+	.long	Str_LiWorld
+	.long	Str_LiMallet
+	.long	Str_LiMemA
+	.long	Str_LiMemB
+	.long	Str_LiOrgan
+	.long	Str_LiOrchPad
+	.long	Str_LiPiano
+	.long	Str_LiSax
+	.long	Str_LiStrings
+	.long	Str_LiSynth
+	.long	Str_LiDrawbar
+	.long	Str_LiAccordion
+	.long	Str_LedSwOn
+	.long	Str_LedSwOff
+	.long	Str_LiGMSpecial
+	.long	Str_LiMetronome
+	.long	Str_LiMIC
+	.long	Str_LiUpright
+	.long	Str_LiElectric
+	.long	Str_LiModern
+	.long	Str_LiRhythm
+	.long	Str_LiMem
+	.long	Str_LiPianoMix
+	.long	Str_LiOrchMix
+	.long	Str_LiSaxWood
+	.long	Str_LiDanceSyn
+	.long	Str_LiGuitHarpsi
+	.long	Str_SlideBaseR
+	.long	Str_SlideMoveR
+	.long	data_4C18D181
+	.long	0
+	.space	828, 0x00
 # census: opaque -- unknown-dump: 192 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x32A680, 0x32A740
 	.space	832, 0x00
@@ -2325,44 +2295,82 @@ Str_I_2:	.asciz "I"
 	.align	4, 0xFF	# pad after Str_I_2
 
 names_4C32AA88:
-	.long	Str_Round1a, Str_Round1b
-	.long	Str_Round1c, Str_Round1d
-	.long	Str_Round2a, Str_Round2b
-	.long	Str_Round2c, Str_Round2d
-	.long	Str_Round5a, Str_Round5b
-	.long	Str_Round5c, Str_Round5d
-	.long	Str_Round9a, Str_Round9b
-	.long	Str_Round9c, Str_Round9d
-	.long	Str_Round14a, Str_Round14b
-	.long	Str_Round14c, Str_Round14d
-	.long	Str_Round1sa, Str_Round1sb
-	.long	Str_Round1sc, Str_Round1sd
-	.long	Str_Round2sa, Str_Round2sb
-	.long	Str_Round2sc, Str_Round2sd
-	.long	Str_Round5sa, Str_Round5sb
-	.long	Str_Round5sc, Str_Round5sd
-	.long	Str_Round9sa, Str_Round9sb
-	.long	Str_Round9sc, Str_Round9sd
-	.long	Str_Round14sa, Str_Round14sb
-	.long	Str_Round14sc, Str_Round14sd
-	.long	Str_Right12, Str_Right16
-	.long	Str_Right24, Str_Right32
-	.long	Str_Right48, Str_Left12
-	.long	Str_Left16, Str_Left24
-	.long	Str_Left32, Str_Left48
-	.long	Str_LOnOff16, Str_LOnOff24
-	.long	Str_LOnOff32, Str_LOnOff48
-	.long	Str_ROnOff16, Str_ROnOff24
-	.long	Str_ROnOff32, Str_ROnOff48
-	.long	Str_LeftSwitch, Str_RightSwitch
-	.long	Str_EditA, Str_EditB
-	.long	Str_EditC, Str_EditD
-	.long	Str_Edit95A, Str_Edit95B
-	.long	Str_Edit95C, Str_Edit95D
-	.long	Str_EditDA, Str_EditDB
-	.long	Str_EditDC, Str_EditDD
-	.long	Str_MixerTab, 0x4C18D6F3
-	.space	728, 0x00
+	.long	Text_Round1a
+	.long	Text_Round1a+8
+	.long	Text_Round1a+16
+	.long	Text_Round1a+24
+	.long	Text_Round1a+32
+	.long	Text_Round1a+40
+	.long	Text_Round1a+48
+	.long	Text_Round1a+56
+	.long	Text_Round1a+64
+	.long	Text_Round1a+72
+	.long	Text_Round1a+80
+	.long	Text_Round1a+88
+	.long	Text_Round1a+96
+	.long	Text_Round1a+104
+	.long	Text_Round1a+112
+	.long	Text_Round1a+120
+	.long	Text_Round14a
+	.long	Text_Round14a+9
+	.long	Text_Round14a+18
+	.long	Text_Round14a+27
+	.long	Text_Round14a+36
+	.long	Text_Round14a+45
+	.long	Text_Round14a+54
+	.long	Text_Round14a+63
+	.long	Text_Round14a+72
+	.long	Text_Round14a+81
+	.long	Text_Round14a+90
+	.long	Text_Round14a+99
+	.long	Text_Round14a+108
+	.long	Text_Round14a+117
+	.long	Text_Round14a+126
+	.long	Text_Round14a+135
+	.long	Text_Round14a+144
+	.long	Text_Round14a+153
+	.long	Text_Round14a+162
+	.long	Text_Round14a+171
+	.long	Str_Round14sa
+	.long	Str_Round14sb
+	.long	Str_Round14sc
+	.long	Str_Round14sd
+	.long	Str_Right12
+	.long	Str_Right16
+	.long	Str_Right24
+	.long	Str_Right32
+	.long	Str_Right48
+	.long	Str_Left12
+	.long	Str_Left16
+	.long	Str_Left24
+	.long	Str_Left32
+	.long	Str_Left48
+	.long	Text_LOnOff16
+	.long	Text_LOnOff16+9
+	.long	Text_LOnOff16+18
+	.long	Text_LOnOff16+27
+	.long	Text_LOnOff16+36
+	.long	Text_LOnOff16+45
+	.long	Text_LOnOff16+54
+	.long	Text_LOnOff16+63
+	.long	Str_LeftSwitch
+	.long	Str_RightSwitch
+	.long	Str_EditA
+	.long	Str_EditB
+	.long	Str_EditC
+	.long	Str_EditD
+	.long	Str_Edit95A
+	.long	Str_Edit95B
+	.long	Str_Edit95C
+	.long	Str_Edit95D
+	.long	Str_EditDA
+	.long	Str_EditDB
+	.long	Str_EditDC
+	.long	Str_EditDD
+	.long	Str_MixerTab
+	.long	data_4C18D6F3
+	.long	0
+	.space	724, 0x00
 # census: opaque -- unknown-dump: 296 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x32AE88, 0x32AFB0
 	.space	728, 0x00
@@ -2371,115 +2379,221 @@ GetIconCount_Table:	# 2 x u16, 212..65535; read by GetIconCount 0x4C020565: `mov
 	tab_u16	212, 65535
 
 names_4C32B28C:
-	.long	Str_None, Str_Default
-	.long	Str_i0, Str_i1
-	.long	Str_i2, Str_i3
-	.long	Str_i4, Str_i5
-	.long	Str_i6, Str_i7
-	.long	Str_i8, Str_i9
-	.long	Str_i10, Str_i11
-	.long	Str_i12, Str_i13
-	.long	Str_i14, Str_i15
-	.long	Str_i16, Str_i17
-	.long	Str_i18, Str_i19
-	.long	Str_i20, Str_i21
-	.long	Str_i22, Str_i23
-	.long	Str_i24, Str_i25
-	.long	Str_i26, Str_i27
-	.long	Str_i28, Str_i29
-	.long	Str_i30, Str_i31
-	.long	Str_i32, Str_i33
-	.long	Str_i34, Str_i35
-	.long	Str_i36, Str_i37
-	.long	Str_i38, Str_i39
-	.long	Str_i40, Str_i41
-	.long	Str_i42, Str_i43
-	.long	Str_i44, Str_i45
-	.long	Str_i46, Str_i47
-	.long	Str_i48, Str_i49
-	.long	Str_i50, Str_i51
-	.long	Str_i52, Str_i53
-	.long	Str_i54, Str_i55
-	.long	Str_i56, Str_i57
-	.long	Str_i58, Str_i59
-	.long	Str_i60, Str_i61
-	.long	Str_i62, Str_i63
-	.long	Str_i64, Str_i65
-	.long	Str_i66, Str_i67
-	.long	Str_i68, Str_i69
-	.long	Str_i70, Str_i71
-	.long	Str_i72, Str_i73
-	.long	Str_i74, Str_i75
-	.long	Str_i76, Str_i77
-	.long	Str_i78, Str_i79
-	.long	Str_i80, Str_i81
-	.long	Str_i82, Str_i83
-	.long	Str_i84, Str_i85
-	.long	Str_i86, Str_i87
-	.long	Str_i88, Str_i89
-	.long	Str_i90, Str_i91
-	.long	Str_i92, Str_i93
-	.long	Str_i94, Str_i95
-	.long	Str_i96, Str_i97
-	.long	Str_i98, Str_i99
-	.long	Str_i100, 0x4C18DC04
-	.long	Str_i102, 0x4C18DC0E
-	.long	Str_i104, 0x4C18DC18
-	.long	Str_i106, 0x4C18DC22
-	.long	Str_i108, 0x4C18DC2C
-	.long	Str_i110, 0x4C18DC36
-	.long	Str_i112, 0x4C18DC40
-	.long	Str_i114, 0x4C18DC4A
-	.long	Str_i116, 0x4C18DC54
-	.long	Str_i118, 0x4C18DC5E
-	.long	Str_i120, 0x4C18DC68
-	.long	Str_i122, 0x4C18DC72
-	.long	Str_i124, 0x4C18DC7C
-	.long	Str_i126, 0x4C18DC86
-	.long	Str_i128, 0x4C18DC90
-	.long	Str_i130, 0x4C18DC9A
-	.long	Str_i132, 0x4C18DCA4
-	.long	Str_i134, 0x4C18DCAE
-	.long	Str_i136, 0x4C18DCB8
-	.long	Str_i138, 0x4C18DCC2
-	.long	Str_i140, 0x4C18DCCC
-	.long	Str_i142, 0x4C18DCD6
-	.long	Str_i144, 0x4C18DCE0
-	.long	Str_i146, 0x4C18DCEA
-	.long	Str_i148, 0x4C18DCF4
-	.long	Str_i150, 0x4C18DCFE
-	.long	Str_i152, 0x4C18DD08
-	.long	Str_i154, 0x4C18DD12
-	.long	Str_i156, 0x4C18DD1C
-	.long	Str_i158, 0x4C18DD26
-	.long	Str_i160, 0x4C18DD30
-	.long	Str_i162, 0x4C18DD3A
-	.long	Str_i164, 0x4C18DD44
-	.long	Str_i166, 0x4C18DD4E
-	.long	Str_i168, 0x4C18DD58
-	.long	Str_i170, 0x4C18DD62
-	.long	Str_i172, 0x4C18DD6C
-	.long	Str_i174, 0x4C18DD76
-	.long	Str_i176, 0x4C18DD80
-	.long	Str_i178, 0x4C18DD8A
-	.long	Str_i180, 0x4C18DD94
-	.long	Str_i182, 0x4C18DD9E
-	.long	Str_i184, 0x4C18DDA8
-	.long	Str_i186, 0x4C18DDB2
-	.long	Str_i188, 0x4C18DDBC
-	.long	Str_i190, 0x4C18DDC6
-	.long	Str_i192, 0x4C18DDD0
-	.long	Str_i194, 0x4C18DDDA
-	.long	Str_i196, 0x4C18DDE4
-	.long	Str_i198, 0x4C18DDEE
-	.long	Str_i200, 0x4C18DDF8
-	.long	Str_i202, 0x4C18DE02
-	.long	Str_i204, 0x4C18DE0C
-	.long	Str_i206, 0x4C18DE16
-	.long	Str_i208, 0x4C18DE20
-# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x32B5DC, 0x32B5E0
-	.space	172, 0x00
+	.long	Str_None
+	.long	Str_Default
+	.long	Str_i0
+	.long	Str_i1
+	.long	Str_i2
+	.long	Str_i3
+	.long	Str_i4
+	.long	Str_i5
+	.long	Str_i6
+	.long	Str_i7
+	.long	Str_i8
+	.long	Str_i9
+	.long	Str_i10
+	.long	Str_i11
+	.long	Str_i12
+	.long	Str_i13
+	.long	Str_i14
+	.long	Str_i15
+	.long	Str_i16
+	.long	Str_i17
+	.long	Str_i18
+	.long	Str_i19
+	.long	Str_i20
+	.long	Str_i21
+	.long	Str_i22
+	.long	Str_i23
+	.long	Str_i24
+	.long	Str_i25
+	.long	Str_i26
+	.long	Str_i27
+	.long	Str_i28
+	.long	Str_i29
+	.long	Str_i30
+	.long	Str_i31
+	.long	Str_i32
+	.long	Str_i33
+	.long	Str_i34
+	.long	Str_i35
+	.long	Str_i36
+	.long	Str_i37
+	.long	Str_i38
+	.long	Str_i39
+	.long	Str_i40
+	.long	Str_i41
+	.long	Str_i42
+	.long	Str_i43
+	.long	Str_i44
+	.long	Str_i45
+	.long	Str_i46
+	.long	Str_i47
+	.long	Str_i48
+	.long	Str_i49
+	.long	Str_i50
+	.long	Str_i51
+	.long	Str_i52
+	.long	Str_i53
+	.long	Str_i54
+	.long	Str_i55
+	.long	Str_i56
+	.long	Str_i57
+	.long	Str_i58
+	.long	Str_i59
+	.long	Str_i60
+	.long	Str_i61
+	.long	Str_i62
+	.long	Str_i63
+	.long	Str_i64
+	.long	Str_i65
+	.long	Str_i66
+	.long	Str_i67
+	.long	Str_i68
+	.long	Str_i69
+	.long	Str_i70
+	.long	Str_i71
+	.long	Str_i72
+	.long	Str_i73
+	.long	Str_i74
+	.long	Str_i75
+	.long	Str_i76
+	.long	Str_i77
+	.long	Str_i78
+	.long	Str_i79
+	.long	Str_i80
+	.long	Str_i81
+	.long	Str_i82
+	.long	Str_i83
+	.long	Str_i84
+	.long	Str_i85
+	.long	Str_i86
+	.long	Str_i87
+	.long	Str_i88
+	.long	Str_i89
+	.long	Str_i90
+	.long	Str_i91
+	.long	Str_i92
+	.long	Str_i93
+	.long	Str_i94
+	.long	Str_i95
+	.long	Str_i96
+	.long	Str_i97
+	.long	Str_i98
+	.long	Str_i99
+	.long	Text_i100
+	.long	Text_i100+5
+	.long	Text_i100+10
+	.long	Text_i100+15
+	.long	Text_i100+20
+	.long	Text_i100+25
+	.long	Text_i100+30
+	.long	Text_i100+35
+	.long	Text_i100+40
+	.long	Text_i100+45
+	.long	Text_i100+50
+	.long	Text_i100+55
+	.long	Text_i100+60
+	.long	Text_i100+65
+	.long	Text_i100+70
+	.long	Text_i100+75
+	.long	Text_i100+80
+	.long	Text_i100+85
+	.long	Text_i100+90
+	.long	Text_i100+95
+	.long	Text_i100+100
+	.long	Text_i100+105
+	.long	Text_i100+110
+	.long	Text_i100+115
+	.long	Text_i100+120
+	.long	Text_i100+125
+	.long	Text_i100+130
+	.long	Text_i100+135
+	.long	Text_i100+140
+	.long	Text_i100+145
+	.long	Text_i100+150
+	.long	Text_i100+155
+	.long	Text_i100+160
+	.long	Text_i100+165
+	.long	Text_i100+170
+	.long	Text_i100+175
+	.long	Text_i100+180
+	.long	Text_i100+185
+	.long	Text_i100+190
+	.long	Text_i100+195
+	.long	Text_i100+200
+	.long	Text_i100+205
+	.long	Text_i100+210
+	.long	Text_i100+215
+	.long	Text_i100+220
+	.long	Text_i100+225
+	.long	Text_i100+230
+	.long	Text_i100+235
+	.long	Text_i100+240
+	.long	Text_i100+245
+	.long	Text_i100+250
+	.long	Text_i100+255
+	.long	Text_i100+260
+	.long	Text_i100+265
+	.long	Text_i100+270
+	.long	Text_i100+275
+	.long	Text_i100+280
+	.long	Text_i100+285
+	.long	Text_i100+290
+	.long	Text_i100+295
+	.long	Text_i100+300
+	.long	Text_i100+305
+	.long	Text_i100+310
+	.long	Text_i100+315
+	.long	Text_i100+320
+	.long	Text_i100+325
+	.long	Text_i100+330
+	.long	Text_i100+335
+	.long	Text_i100+340
+	.long	Text_i100+345
+	.long	Text_i100+350
+	.long	Text_i100+355
+	.long	Text_i100+360
+	.long	Text_i100+365
+	.long	Text_i100+370
+	.long	Text_i100+375
+	.long	Text_i100+380
+	.long	Text_i100+385
+	.long	Text_i100+390
+	.long	Text_i100+395
+	.long	Text_i100+400
+	.long	Text_i100+405
+	.long	Text_i100+410
+	.long	Text_i100+415
+	.long	Text_i100+420
+	.long	Text_i100+425
+	.long	Text_i100+430
+	.long	Text_i100+435
+	.long	Text_i100+440
+	.long	Text_i100+445
+	.long	Text_i100+450
+	.long	Text_i100+455
+	.long	Text_i100+460
+	.long	Text_i100+465
+	.long	Text_i100+470
+	.long	Text_i100+475
+	.long	Text_i100+480
+	.long	Text_i100+485
+	.long	Text_i100+490
+	.long	Text_i100+495
+	.long	Text_i100+500
+	.long	Text_i100+505
+	.long	Text_i100+510
+	.long	Text_i100+515
+	.long	Text_i100+520
+	.long	Text_i100+525
+	.long	Text_i100+530
+	.long	Text_i100+535
+	.long	Text_i100+540
+	.long	Text_i100+545
+	.long	data_4C18DE25
+	.long	0
+	.space	168, 0x00
 # census: opaque -- unknown-dump: 852 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x32B68C, 0x32B9E0
 	.space	172, 0x00
@@ -39716,16 +39830,16 @@ ptrs_4C385064:
 	.long	loc_4C116920
 	.long	loc_4C11692B
 
-Str_Technics_2:	.asciz "\xEB\x1C\x90Technics"
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x385080, 0x385094
+FatBootHead_720K:	# a FAT boot sector's first 32 bytes, a 720 KB disk's (1440 sectors of 512 bytes): func_4C132BF7 0x4C132BF7: memcpy(.., 0x20)
+	FAT_BOOT_HEAD	0xeb, 0x1c, 0x90, "Technics", 512, 2, 1, 2, 112, 1440, 0xf9, 3, 9, 2, 0
+	.byte	0xeb, 0xfe	# +0x1E: the boot code the jump at +0 lands on (EB 1C: +2 + 0x1C), x86 `jmp $`: a loop
 
 func_4C132BF7_entry_L9e_Block:	# 3 bytes, copied whole by func_4C132BF7_entry_L9e 0x4C132C9A: memcpy(.., 3); func_4C132BF7_entry_L149 0x4C132D45: memcpy(.., 3)
 	tab_u8	249, 255, 255	# [0]
 
-Str_Technics:	.asciz "\xEB\x1C\x90Technics"
-# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3850A3, 0x3850B7
+FatBootHead_1440K:	# a FAT boot sector's first 32 bytes, a 1440 KB disk's (2880 sectors of 512 bytes): func_4C132EC1 0x4C132EC1: memcpy(.., 0x20)
+	FAT_BOOT_HEAD	0xeb, 0x1c, 0x90, "Technics", 512, 1, 1, 2, 224, 2880, 0xf0, 9, 18, 2, 0
+	.byte	0xeb, 0xfe	# +0x1E: the boot code the jump at +0 lands on (EB 1C: +2 + 0x1C), x86 `jmp $`: a loop
 
 func_4C132EC1_entry_L9e_Block:	# 3 bytes, copied whole by func_4C132EC1_entry_L9e 0x4C132F64: memcpy(.., 3); func_4C132EC1_entry_L11b 0x4C132FE1: memcpy(.., 3)
 	tab_u8	240, 255, 255	# [0]
@@ -39889,195 +40003,3 @@ ptrs_4C3855C4:
 	.long	loc_4C13A217
 	.long	loc_4C13A21A
 	.long	loc_4C13A21D
-
-# 31 ApFunction procedures; a function id is (0x130 << 16) | its index (the names are the parallel table at slot 0x330)
-User16_ApFunctions:
-	IDNAME	FN_InsertOptionText, InsertOptionText, User16_ApFunctions, 0x130
-	IDNAME	FN_TypePriorityText, TypePriorityText, User16_ApFunctions, 0x130
-	IDNAME	FN_JumpInsertFunc, JumpInsertFunc, User16_ApFunctions, 0x130
-	IDNAME	FN_FilePriorityFunc, FilePriorityFunc, User16_ApFunctions, 0x130
-	IDNAME	FN_SetupOkFunc, SetupOkFunc, User16_ApFunctions, 0x130
-	IDNAME	FN_SetupExitFunc, SetupExitFunc, User16_ApFunctions, 0x130
-	IDNAME	FN_DiskAttention, DiskAttention, User16_ApFunctions, 0x130
-	IDNAME	FN_DiskSure, DiskSure, User16_ApFunctions, 0x130
-	IDNAME	FN_FormatText, FormatText, User16_ApFunctions, 0x130
-	IDNAME	FN_DeleteText, DeleteText, User16_ApFunctions, 0x130
-	IDNAME	FN_DeleteYes, DeleteYes, User16_ApFunctions, 0x130
-	IDNAME	FN_DeleteNo, DeleteNo, User16_ApFunctions, 0x130
-	IDNAME	FN_SaveText, SaveText, User16_ApFunctions, 0x130
-	IDNAME	FN_SaveYes, SaveYes, User16_ApFunctions, 0x130
-	IDNAME	FN_SaveNo, SaveNo, User16_ApFunctions, 0x130
-	IDNAME	FN_WaitingFunc, WaitingFunc, User16_ApFunctions, 0x130
-	IDNAME	FN_TechnicsFileNaming, TechnicsFileNaming, User16_ApFunctions, 0x130
-	IDNAME	FN_TechFileNamingCustom, TechFileNamingCustom, User16_ApFunctions, 0x130
-	IDNAME	FN_TechnicsFileRename, TechnicsFileRename, User16_ApFunctions, 0x130
-	IDNAME	FN_SmfFileNaming, SmfFileNaming, User16_ApFunctions, 0x130
-	IDNAME	FN_SmfFileRename, SmfFileRename, User16_ApFunctions, 0x130
-	IDNAME	FN_CstFileRename, CstFileRename, User16_ApFunctions, 0x130
-	IDNAME	FN_FormatDiskNaming, FormatDiskNaming, User16_ApFunctions, 0x130
-	IDNAME	FN_DiskMedleyShowHideFunc, DiskMedleyShowHideFunc, User16_ApFunctions, 0x130
-	IDNAME	FN_WakeUpPassword, WakeUpPassword, User16_ApFunctions, 0x130
-	IDNAME	FN_PasswordOk, PasswordOk, User16_ApFunctions, 0x130
-	IDNAME	FN_PasswordNo, PasswordNo, User16_ApFunctions, 0x130
-	IDNAME	FN_PasswordText, PasswordText, User16_ApFunctions, 0x130
-	IDNAME	FN_CheckPasswordText, CheckPasswordText, User16_ApFunctions, 0x130
-	IDNAME	FN_CheckPasswordOk, CheckPasswordOk, User16_ApFunctions, 0x130
-	IDNAME	FN_CheckPasswordNo, CheckPasswordNo, User16_ApFunctions, 0x130
-	.space	4, 0x00
-
-User16_ApFunctionNames:
-	.long	FnName_InsertOptionText
-	.long	FnName_TypePriorityText
-	.long	FnName_JumpInsertFunc
-	.long	FnName_FilePriorityFunc
-	.long	FnName_SetupOkFunc
-	.long	FnName_SetupExitFunc
-	.long	FnName_DiskAttention
-	.long	FnName_DiskSure
-	.long	FnName_FormatText
-	.long	FnName_DeleteText
-	.long	FnName_DeleteYes
-	.long	FnName_DeleteNo
-	.long	FnName_SaveText
-	.long	FnName_SaveYes
-	.long	FnName_SaveNo
-	.long	FnName_WaitingFunc
-	.long	FnName_TechnicsFileNaming
-	.long	FnName_TechFileNamingCustom
-	.long	FnName_TechnicsFileRename
-	.long	FnName_SmfFileNaming
-	.long	FnName_SmfFileRename
-	.long	FnName_CstFileRename
-	.long	FnName_FormatDiskNaming
-	.long	FnName_DiskMedleyShowHideFunc
-	.long	FnName_WakeUpPassword
-	.long	FnName_PasswordOk
-	.long	FnName_PasswordNo
-	.long	FnName_PasswordText
-	.long	FnName_CheckPasswordText
-	.long	FnName_CheckPasswordOk
-	.long	FnName_CheckPasswordNo
-# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3856D0, 0x3856D4
-
-ClassFields_PsFileNameBox:
-	.long	Field_PsFileNameBox_font
-	.long	Field_PsFileNameBox_fontcolor
-	.long	Field_PsFileNameBox_main_func
-	.long	Field_PsFileNameBox_column
-	.long	Field_PsFileNameBox_row
-	.long	Field_PsFileNameBox_sel_num
-	.long	Field_PsFileNameBox_dial
-	.long	Field_PsFileNameBox_auto_inc
-	.long	Field_PsFileNameBox_paintok
-	.long	Field_PsFileNameBox_aicok
-	.long	Field_PsFileNameBox_end
-ClassFields_PsFileNmTwoBox:
-	.long	Field_PsFileNmTwoBox_font
-	.long	Field_PsFileNmTwoBox_fontcolor
-	.long	Field_PsFileNmTwoBox_boxborder
-	.long	Field_PsFileNmTwoBox_main_func
-	.long	Field_PsFileNmTwoBox_row
-	.long	Field_PsFileNmTwoBox_spacewidth
-	.long	Field_PsFileNmTwoBox_topdown
-	.long	Field_PsFileNmTwoBox_bottomup
-	.long	Field_PsFileNmTwoBox_auto_inc
-	.long	Field_PsFileNmTwoBox_paintok
-	.long	Field_PsFileNmTwoBox_aicok
-	.long	Field_PsFileNmTwoBox_end
-ClassFields_PsOptionTwoBox:
-	.long	Field_PsOptionTwoBox_font
-	.long	Field_PsOptionTwoBox_fontcolor
-	.long	Field_PsOptionTwoBox_boxborder
-	.long	Field_PsOptionTwoBox_main_func
-	.long	Field_PsOptionTwoBox_row
-	.long	Field_PsOptionTwoBox_spacewidth
-	.long	Field_PsOptionTwoBox_stroffset
-	.long	Field_PsOptionTwoBox_auto_inc
-	.long	Field_PsOptionTwoBox_paintok
-	.long	Field_PsOptionTwoBox_aicok
-	.long	Field_PsOptionTwoBox_end
-ClassFields_PsPlayFileNameBox:
-	.long	Field_PsPlayFileNameBox_font
-	.long	Field_PsPlayFileNameBox_font2
-	.long	Field_PsPlayFileNameBox_fontcolor
-	.long	Field_PsPlayFileNameBox_fontcolor2
-	.long	Field_PsPlayFileNameBox_main_func
-	.long	Field_PsPlayFileNameBox_sel_num
-	.long	Field_PsPlayFileNameBox_row
-	.long	Field_PsPlayFileNameBox_column
-	.long	Field_PsPlayFileNameBox_stroffset
-	.long	Field_PsPlayFileNameBox_dial
-	.long	Field_PsPlayFileNameBox_auto_inc
-	.long	Field_PsPlayFileNameBox_paintok
-	.long	Field_PsPlayFileNameBox_aicok
-	.long	Field_PsPlayFileNameBox_end
-ClassFields_PsWindowToggle:
-	.long	Field_PsWindowToggle_onwin
-	.long	Field_PsWindowToggle_offwin
-	.long	Field_PsWindowToggle_main_func
-	.long	Field_PsWindowToggle_end
-ClassFields_AcTtlJgBox:
-	.long	Field_AcTtlJgBox_main_func
-	.long	Field_AcTtlJgBox_end
-ClassFields_AcParaStrBox:
-	.long	Field_AcParaStrBox_main_func
-	.long	Field_AcParaStrBox_paintok
-	.long	Field_AcParaStrBox_end
-ClassFields_PsIndexParaStrBox:
-	.long	Field_PsIndexParaStrBox_main_func
-	.long	Field_PsIndexParaStrBox_paintok
-	.long	Field_PsIndexParaStrBox_end
-ClassFields_AcFileSfxBox:
-	.long	Field_AcFileSfxBox_font
-	.long	Field_AcFileSfxBox_main_func
-	.long	Field_AcFileSfxBox_paintok
-	.long	Field_AcFileSfxBox_end
-ClassFields_AcMonoIndexToggle:
-	.long	Field_AcMonoIndexToggle_index
-	.long	Field_AcMonoIndexToggle_end
-ClassFields_IvOneShotTimer:
-	.long	Field_IvOneShotTimer_main_func
-	.long	Field_IvOneShotTimer_end
-ClassFields_VwScreenTitle:
-	.long	Field_VwScreenTitle_title
-	.long	Field_VwScreenTitle_icon
-	.long	Field_VwScreenTitle_page
-	.long	Field_VwScreenTitle_end
-ClassFields_VwOwScreenTitle:
-	.long	Field_VwOwScreenTitle_title
-	.long	Field_VwOwScreenTitle_icon
-	.long	Field_VwOwScreenTitle_page
-	.long	Field_VwOwScreenTitle_end
-ClassFields_Arrow:
-	.long	Field_Arrow_color
-	.long	Field_Arrow_frame_only
-	.long	Field_Arrow_dir
-	.long	Field_Arrow_tail_x_rate
-	.long	Field_Arrow_tail_y_rate
-	.long	Field_Arrow_end
-ClassFields_IvIndexSwCtrl:
-	.long	Field_IvIndexSwCtrl_index_min
-	.long	Field_IvIndexSwCtrl_index_max
-	.long	Field_IvIndexSwCtrl_dial
-	.long	Field_IvIndexSwCtrl_dial_inv
-	.long	Field_IvIndexSwCtrl_auto_inc
-	.long	Field_IvIndexSwCtrl_end
-ClassFields_AcRotStrBox:
-	.long	Field_AcRotStrBox_func
-	.long	Field_AcRotStrBox_interval
-	.long	Field_AcRotStrBox_length
-	.long	Field_AcRotStrBox_paintok
-	.long	Field_AcRotStrBox_end
-ClassFields_IvIndexSwDelay:
-	.long	Field_IvIndexSwDelay_index_min
-	.long	Field_IvIndexSwDelay_index_max
-	.long	Field_IvIndexSwDelay_interval
-	.long	Field_IvIndexSwDelay_send_index
-	.long	Field_IvIndexSwDelay_end
-ClassFields_IvWaitWinCtl:
-	.long	Field_IvWaitWinCtl_win
-	.long	Field_IvWaitWinCtl_end
-ClassFields_IvMainEditIndex:
-	.long	Field_IvMainEditIndex_main_func
-	.long	Field_IvMainEditIndex_end

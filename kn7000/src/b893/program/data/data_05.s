@@ -574,9 +574,8 @@
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	103, 11, 0, 52	# data bytes of an event cut at the start
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 65, 93, 13, 0
+	.byte	103, 11, 0	# data bytes of an event cut at the start
+	sq_note	52, 0, 65, 93, 13, 0
 	sq_beat
 	sq_note	47, 0, 46, 84, 78, 0
 	sq_note	48, 0, 62, 95, 70, 0
@@ -778,8 +777,7 @@
 	sq_note	51, 0, 54, 77, 5, 0
 	sq_note	51, 0, 58, 96, 5, 0
 	sq_note	54, 0, 65, 61, 5, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	95, 144
+	.byte	95, 144	# the first 2 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 12	# cell 11: song 1 track 4, 1 of 5
 	sq_beat
 	sq_beat
@@ -1110,8 +1108,7 @@
 	sq_beat
 	sq_note	42, 0, 75, 80, 56, 0
 	sq_note	45, 0, 72, 80, 41, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	47, 176, 7, 11
+	.byte	47, 176, 7, 11	# the first 4 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 17	# cell 16: song 1 track 5, 1 of 6
 	sq_beat
 	sq_beat
@@ -1694,13 +1691,13 @@
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	12, 0, 48	# data bytes of an event cut at the start
-	k5_note	0x90, 43, 110, 11, 0, 62
-	k5_note	0x90, 38, 110, 11, 0, 73
-	k5_note	0x90, 43, 126, 13, 0, 86
-	k5_note	0x90, 38, 127, 14, 0, 88
-	k5_note	0x90, 36, 127, 15, 0, 88
-	.byte	144	# the first 1 bytes of a KN5000-order event, cut by the end
+	.byte	12, 0	# data bytes of an event cut at the start
+	sq_note	48, 0, 43, 110, 11, 0
+	sq_note	62, 0, 38, 110, 11, 0
+	sq_note	73, 0, 43, 126, 13, 0
+	sq_note	86, 0, 38, 127, 14, 0
+	sq_note	88, 0, 36, 127, 15, 0
+	.byte	88, 144	# the first 2 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 25	# cell 24: song 1 track 7, 1 of 4
 	sq_beat
 	sq_beat
@@ -1952,10 +1949,9 @@
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	7, 11, 23, 45	# data bytes of an event cut at the start
-	k5_note	0x90, 75, 80, 56, 0, 57
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	176, 7, 11, 24
+	.byte	7, 11, 23	# data bytes of an event cut at the start
+	sq_note	45, 0, 75, 80, 56, 0
+	sq_cc	57, 0, 7, 11, 24
 	sq_cc	71, 0, 7, 11, 25
 	sq_cc	80, 0, 7, 11, 27
 	sq_note	92, 0, 73, 80, 49, 0
@@ -1988,8 +1984,7 @@
 	sq_note	39, 0, 75, 80, 57, 0
 	sq_note	40, 0, 72, 80, 55, 0
 	sq_cc	43, 0, 7, 11, 51
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	49, 176
+	.byte	49, 176	# the first 2 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 29	# cell 28: song 1 track 8, 1 of 2
 	sq_8n	0, 0, 122, 1
 	sq_8n	0, 10, 0, 64
@@ -2173,22 +2168,20 @@
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	0, 3	# data bytes of an event cut at the start
-	k5_note	0x90, 77, 80, 8, 0, 3
-	k5_note	0x90, 54, 96, 10, 0, 3
-	k5_note	0x90, 58, 106, 7, 0, 3
-	k5_note	0x90, 61, 104, 7, 0, 4
-	k5_note	0x90, 65, 96, 10, 0, 4
-	k5_note	0x90, 51, 107, 9, 0, 49
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	176, 5, 64, 0
+	.byte	0	# data bytes of an event cut at the start
+	sq_note	3, 0, 77, 80, 8, 0
+	sq_note	3, 0, 54, 96, 10, 0
+	sq_note	3, 0, 58, 106, 7, 0
+	sq_note	3, 0, 61, 104, 7, 0
+	sq_note	4, 0, 65, 96, 10, 0
+	sq_note	4, 0, 51, 107, 9, 0
+	sq_cc	49, 0, 5, 64, 0
 	sq_note	50, 0, 51, 97, 7, 0
 	sq_cc	86, 0, 5, 64, 127
 	sq_beat
 	sq_note	2, 0, 54, 93, 12, 0
 	sq_note	2, 0, 58, 104, 7, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	3, 144, 61
+	.byte	3, 144, 61	# the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 31	# cell 30: song 1 track 9, 1 of 4
 	sq_beat
 	sq_beat
@@ -2474,8 +2467,7 @@
 	sq_beat
 	sq_note	0, 0, 54, 99, 5, 0
 	sq_note	1, 0, 58, 97, 5, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	3, 144
+	.byte	3, 144	# the first 2 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 35	# cell 34: song 1 track 10, 1 of 2
 	sq_beat
 	sq_beat
@@ -2650,10 +2642,9 @@
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	127, 3	# data bytes of an event cut at the start
-	k5_note	0x90, 65, 95, 12, 0, 87
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	176, 5, 64, 0
+	.byte	127	# data bytes of an event cut at the start
+	sq_note	3, 0, 65, 95, 12, 0
+	sq_cc	87, 0, 5, 64, 0
 	sq_note	95, 0, 58, 87, 5, 0
 	sq_beat
 	sq_note	0, 0, 51, 95, 5, 0
@@ -3222,9 +3213,8 @@
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	11, 126, 21	# data bytes of an event cut at the start
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	176, 7, 11, 118
+	.byte	11, 126	# data bytes of an event cut at the start
+	sq_cc	21, 0, 7, 11, 118
 	sq_cc	26, 0, 7, 11, 104
 	sq_cc	29, 0, 7, 11, 95
 	sq_cc	32, 0, 7, 11, 90
@@ -3269,8 +3259,7 @@
 	sq_note	7, 0, 77, 80, 44, 0
 	sq_cc	15, 0, 7, 11, 6
 	sq_cc	20, 0, 7, 11, 8
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	29, 176, 7
+	.byte	29, 176, 7	# the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 48	# cell 47: song 1 track 16, 1 of 3
 	sq_beat
 	sq_beat
@@ -3483,8 +3472,7 @@
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 77, 80, 47, 0
+	.byte	144, 77, 80, 47, 0	# a tick-first event cut at the start (its tick is gone)
 	sq_beat
 	sq_cc	29, 0, 7, 11, 70
 	sq_note	40, 0, 75, 80, 58, 0
@@ -3512,8 +3500,7 @@
 	sq_beat
 	sq_note	38, 0, 75, 80, 56, 0
 	sq_note	40, 0, 70, 80, 55, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	90, 144
+	.byte	90, 144	# the first 2 bytes of a tick-first event, cut by the end
 	.endzlib
 	.align	4, 0xFF	# pad after zlib_487A45B0
 zlib_487A608C:	# DemoSong08: its event memory, 29184 bytes, stored as a zlib stream of 12756 bytes (inflated by func_48533758); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
@@ -3778,7 +3765,8 @@ zlib_487A608C:	# DemoSong08: its event memory, 29184 bytes, stored as a zlib str
 	sq_beat
 	sq_beat
 	sq_end
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# data bytes of an event cut by the end
+	.byte	0	# data bytes of an event cut at the start
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# data bytes of an event cut by the end
 	sq_cell	0x80, 0, 5	# cell 4: song 1 track 2, 1 of 9
 	sq_beat
 	sq_beat
@@ -4296,10 +4284,9 @@ zlib_487A608C:	# DemoSong08: its event memory, 29184 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	22, 0, 53	# data bytes of an event cut at the start
-	k5_note	0x90, 45, 99, 14, 0, 78
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 43, 109, 26, 0
+	.byte	22, 0	# data bytes of an event cut at the start
+	sq_note	53, 0, 45, 99, 14, 0
+	sq_note	78, 0, 43, 109, 26, 0
 	sq_beat
 	sq_press	4, 0, 27
 	sq_press	7, 0, 8
@@ -4317,7 +4304,8 @@ zlib_487A608C:	# DemoSong08: its event memory, 29184 bytes, stored as a zlib str
 	sq_beat
 	sq_beat
 	sq_end
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# data bytes of an event cut by the end
+	.byte	0	# data bytes of an event cut at the start
+	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# data bytes of an event cut by the end
 	sq_cell	0x80, 0, 14	# cell 13: song 1 track 4, 1 of 5
 	sq_beat
 	sq_beat
@@ -4707,8 +4695,7 @@ zlib_487A608C:	# DemoSong08: its event memory, 29184 bytes, stored as a zlib str
 	sq_note	14, 0, 61, 101, 19, 0
 	sq_note	38, 0, 62, 93, 28, 0
 	sq_note	63, 0, 65, 88, 19, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	82, 144, 67, 95
+	.byte	82, 144, 67, 95	# the first 4 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 19	# cell 18: song 1 track 5, 1 of 2
 	sq_beat
 	sq_beat
@@ -4909,8 +4896,7 @@ zlib_487A608C:	# DemoSong08: its event memory, 29184 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 62, 78, 16, 0
+	.byte	144, 62, 78, 16, 0	# a tick-first event cut at the start (its tick is gone)
 	sq_beat
 	sq_note	0, 0, 67, 83, 20, 0
 	sq_note	48, 0, 62, 85, 20, 0
@@ -4950,8 +4936,7 @@ zlib_487A608C:	# DemoSong08: its event memory, 29184 bytes, stored as a zlib str
 	sq_note	0, 0, 51, 109, 13, 0
 	sq_note	48, 0, 58, 67, 15, 0
 	sq_beat
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	0, 144, 63
+	.byte	0, 144, 63	# the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 21	# cell 20: song 1 track 6, 1 of 28
 	sq_beat
 	sq_beat
@@ -6319,11 +6304,10 @@ zlib_487A608C:	# DemoSong08: its event memory, 29184 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	11, 0, 23	# data bytes of an event cut at the start
-	k5_note	0x90, 50, 113, 12, 0, 47
-	k5_note	0x90, 50, 121, 10, 0, 71
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 50, 118, 9, 0
+	.byte	11, 0	# data bytes of an event cut at the start
+	sq_note	23, 0, 50, 113, 12, 0
+	sq_note	47, 0, 50, 121, 10, 0
+	sq_note	71, 0, 50, 118, 9, 0
 	sq_beat
 	sq_beat
 	sq_beat
@@ -6365,8 +6349,7 @@ zlib_487A608C:	# DemoSong08: its event memory, 29184 bytes, stored as a zlib str
 	sq_note	73, 0, 43, 126, 13, 0
 	sq_note	86, 0, 38, 127, 14, 0
 	sq_note	88, 0, 36, 127, 15, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	88, 144
+	.byte	88, 144	# the first 2 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 49	# cell 48: song 1 track 7, 1 of 3
 	sq_beat
 	sq_beat
@@ -6619,9 +6602,8 @@ zlib_487A608C:	# DemoSong08: its event memory, 29184 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	14, 0, 72	# data bytes of an event cut at the start
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 82, 17, 11, 0
+	.byte	14, 0	# data bytes of an event cut at the start
+	sq_note	72, 0, 82, 17, 11, 0
 	sq_beat
 	sq_note	0, 0, 82, 77, 10, 0
 	sq_note	48, 0, 82, 17, 17, 0
@@ -6648,8 +6630,7 @@ zlib_487A608C:	# DemoSong08: its event memory, 29184 bytes, stored as a zlib str
 	sq_note	48, 0, 82, 17, 17, 0
 	sq_note	72, 0, 82, 28, 14, 0
 	sq_beat
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	0, 144, 82, 84, 13
+	.byte	0, 144, 82, 84, 13	# the first 5 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 52	# cell 51: song 1 track 8, 1 of 14
 	sq_8n	0, 0, 122, 1
 	sq_8n	0, 10, 0, 64
@@ -7443,9 +7424,8 @@ zlib_487A608C:	# DemoSong08: its event memory, 29184 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	0, 76	# data bytes of an event cut at the start
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	224, 0, 4
+	.byte	0	# data bytes of an event cut at the start
+	sq_bend	76, 0, 0, 4
 	sq_bend	80, 0, 0, 14
 	sq_bend	84, 0, 0, 17
 	sq_bend	86, 0, 0, 21
@@ -7921,9 +7901,8 @@ zlib_487A608C:	# DemoSong08: its event memory, 29184 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	31, 85, 58, 0, 71	# data bytes of an event cut at the start
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 38, 92, 62, 0
+	.byte	31, 85, 58, 0	# data bytes of an event cut at the start
+	sq_note	71, 0, 38, 92, 62, 0
 	sq_beat
 	sq_note	48, 0, 31, 94, 29, 0
 	sq_beat
@@ -8205,8 +8184,8 @@ zlib_487A608C:	# DemoSong08: its event memory, 29184 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	17, 1, 47, 80	# data bytes of an event cut at the start
-	.byte	176	# the first 1 bytes of a KN5000-order event, cut by the end
+	.byte	17, 1, 47	# data bytes of an event cut at the start
+	.byte	80, 176	# the first 2 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 75	# cell 74: song 1 track 11, 1 of 12
 	sq_beat
 	sq_beat
@@ -8874,8 +8853,7 @@ zlib_487A608C:	# DemoSong08: its event memory, 29184 bytes, stored as a zlib str
 	sq_note	45, 0, 54, 95, 6, 0
 	sq_note	46, 0, 42, 46, 9, 0
 	sq_note	46, 0, 53, 76, 11, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	69, 144, 42
+	.byte	69, 144, 42	# the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 87	# cell 86: song 1 track 12, 1 of 2
 	sq_beat
 	sq_beat
@@ -9087,9 +9065,8 @@ zlib_487A608C:	# DemoSong08: its event memory, 29184 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	0, 92	# data bytes of an event cut at the start
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 70, 74, 64, 0
+	.byte	0	# data bytes of an event cut at the start
+	sq_note	92, 0, 70, 74, 64, 0
 	sq_beat
 	sq_note	63, 0, 69, 92, 65, 0
 	sq_beat
@@ -9598,9 +9575,8 @@ zlib_487A608C:	# DemoSong08: its event memory, 29184 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	k5_note	0x90, 65, 85, 93, 0, 45
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 60, 72, 70, 0
+	.byte	144, 65, 85, 93, 0	# a tick-first event cut at the start (its tick is gone)
+	sq_note	45, 0, 60, 72, 70, 0
 	sq_beat
 	sq_note	40, 0, 67, 93, 44, 0
 	sq_note	41, 0, 62, 86, 34, 0
@@ -10524,11 +10500,10 @@ zlib_487A608C:	# DemoSong08: its event memory, 29184 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	54, 104, 8, 0, 46	# data bytes of an event cut at the start
-	k5_note	0x90, 42, 60, 14, 0, 48
-	k5_note	0x90, 38, 108, 13, 0, 71
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 38, 113, 12, 0
+	.byte	54, 104, 8, 0	# data bytes of an event cut at the start
+	sq_note	46, 0, 42, 60, 14, 0
+	sq_note	48, 0, 38, 108, 13, 0
+	sq_note	71, 0, 38, 113, 12, 0
 	sq_beat
 	sq_beat
 	sq_note	2, 0, 36, 120, 16, 0
@@ -10549,8 +10524,7 @@ zlib_487A608C:	# DemoSong08: its event memory, 29184 bytes, stored as a zlib str
 	sq_beat
 	sq_beat
 	sq_beat
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	0, 144, 38
+	.byte	0, 144, 38	# the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 111	# cell 110: song 1 track 15, 1 of 5
 	sq_beat
 	sq_beat
@@ -10944,14 +10918,13 @@ zlib_487A608C:	# DemoSong08: its event memory, 29184 bytes, stored as a zlib str
 	sq_beat
 	sq_beat
 	sq_end
-	k5_note	0x90, 56, 112, 13, 0, 46
-	k5_note	0x90, 42, 51, 11, 0, 49
-	k5_note	0x90, 54, 96, 6, 0, 69
-	k5_note	0x90, 42, 59, 9, 0, 72
-	k5_note	0x90, 38, 113, 8, 0, 95
-	k5_note	0x90, 45, 120, 18, 0, 95
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 42, 104, 20, 0
+	.byte	144, 56, 112, 13, 0	# a tick-first event cut at the start (its tick is gone)
+	sq_note	46, 0, 42, 51, 11, 0
+	sq_note	49, 0, 54, 96, 6, 0
+	sq_note	69, 0, 42, 59, 9, 0
+	sq_note	72, 0, 38, 113, 8, 0
+	sq_note	95, 0, 45, 120, 18, 0
+	sq_note	95, 0, 42, 104, 20, 0
 	sq_beat
 	sq_note	1, 0, 56, 119, 14, 0
 	sq_note	43, 0, 54, 94, 8, 0
@@ -10964,8 +10937,7 @@ zlib_487A608C:	# DemoSong08: its event memory, 29184 bytes, stored as a zlib str
 	sq_note	5, 0, 36, 110, 17, 0
 	sq_note	45, 0, 54, 95, 6, 0
 	sq_note	46, 0, 42, 46, 9, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	69, 144, 42, 55, 9
+	.byte	69, 144, 42, 55, 9	# the first 5 bytes of a tick-first event, cut by the end
 	.endzlib
 zlib_487A9260:	# DemoSong09: its event memory, 10240 bytes, stored as a zlib stream of 5739 bytes (inflated by func_48533758); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
 	.zlib	6
@@ -11104,7 +11076,7 @@ zlib_487A9260:	# DemoSong09: its event memory, 10240 bytes, stored as a zlib str
 	sq_beat
 	sq_beat
 	sq_end
-	.byte	0	# data bytes of an event cut by the end
+	.byte	0	# data bytes of an event cut at the start
 	sq_cell	0x80, 0, 3	# cell 2: song 1 track 3, 1 of 4
 	sq_beat
 	sq_beat
@@ -11414,8 +11386,7 @@ zlib_487A9260:	# DemoSong09: its event memory, 10240 bytes, stored as a zlib str
 	sq_beat
 	sq_beat
 	sq_end
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	58
+	.byte	58	# data bytes of an event cut at the start
 	sq_bend	22, 0, 64, 57
 	sq_bend	30, 0, 0, 57
 	sq_bend	35, 0, 0, 56
@@ -11449,8 +11420,7 @@ zlib_487A9260:	# DemoSong09: its event memory, 10240 bytes, stored as a zlib str
 	sq_bend	38, 0, 0, 71
 	sq_bend	38, 0, 64, 72
 	sq_bend	40, 0, 0, 75
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	40, 224
+	.byte	40, 224	# the first 2 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 7	# cell 6: song 1 track 4, 1 of 3
 	sq_beat
 	sq_beat
@@ -11706,8 +11676,7 @@ zlib_487A9260:	# DemoSong09: its event memory, 10240 bytes, stored as a zlib str
 	sq_cc	57, 0, 13, 11, 115
 	sq_cc	72, 0, 13, 11, 108
 	sq_beat
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	84, 176, 13, 11
+	.byte	84, 176, 13, 11	# the first 4 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 10	# cell 9: song 1 track 5, 1 of 4
 	sq_beat
 	sq_beat
@@ -12923,8 +12892,7 @@ zlib_487A9260:	# DemoSong09: its event memory, 10240 bytes, stored as a zlib str
 	sq_8n	48, 0, 67, 0
 	sq_beat
 	sq_end
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	0
+	.byte	0	# data bytes of an event cut at the start
 	sq_note	69, 0, 76, 90, 18, 0
 	sq_note	93, 0, 74, 93, 21, 0
 	sq_note	94, 0, 48, 78, 82, 0
@@ -12958,8 +12926,7 @@ zlib_487A9260:	# DemoSong09: its event memory, 10240 bytes, stored as a zlib str
 	sq_note	0, 0, 50, 70, 60, 0
 	sq_note	15, 0, 64, 93, 17, 0
 	sq_note	38, 0, 62, 84, 15, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	60, 144, 60
+	.byte	60, 144, 60	# the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 65535	# cell 27: song 1 track 9, 1 of 1
 	sq_beat
 	sq_beat
@@ -13093,9 +13060,10 @@ zlib_487A9260:	# DemoSong09: its event memory, 10240 bytes, stored as a zlib str
 	sq_beat
 	sq_beat
 	sq_end
-	k5_note	0x90, 61, 86, 58, 1, 33
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 64, 79, 53, 1, 129, 76, 144, 34, 74, 6, 0
+	.byte	144, 61, 86, 58, 1	# a tick-first event cut at the start (its tick is gone)
+	sq_note	33, 0, 64, 79, 53, 1
+	sq_beat
+	sq_note	76, 0, 34, 74, 6, 0
 	sq_cell	0x80, 0, 29	# cell 28: song 1 track 10, 1 of 3
 	sq_beat
 	sq_beat
@@ -13444,8 +13412,7 @@ zlib_487A9260:	# DemoSong09: its event memory, 10240 bytes, stored as a zlib str
 	sq_beat
 	sq_beat
 	sq_end
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	14
+	.byte	14	# data bytes of an event cut at the start
 	sq_beat
 	sq_cc	1, 0, 17, 1, 19
 	sq_cc	3, 0, 17, 1, 23
@@ -13465,8 +13432,7 @@ zlib_487A9260:	# DemoSong09: its event memory, 10240 bytes, stored as a zlib str
 	sq_cc	29, 0, 17, 1, 89
 	sq_cc	31, 0, 17, 1, 90
 	sq_cc	31, 0, 17, 1, 91
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	36, 176, 17, 1
+	.byte	36, 176, 17, 1	# the first 4 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 34	# cell 33: song 1 track 13, 1 of 3
 	sq_beat
 	sq_beat
@@ -14102,8 +14068,7 @@ zlib_487A9260:	# DemoSong09: its event memory, 10240 bytes, stored as a zlib str
 	sq_beat
 	sq_beat
 	sq_end
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	42, 46, 17, 0
+	.byte	42, 46, 17, 0	# data bytes of an event cut at the start
 	sq_note	95, 0, 42, 82, 21, 0
 	sq_beat
 	sq_note	46, 0, 42, 42, 18, 0
@@ -15054,8 +15019,7 @@ zlib_487AA8CC:	# DemoSong10: its event memory, 22272 bytes, stored as a zlib str
 	sq_note	43, 0, 65, 86, 68, 0
 	sq_note	43, 0, 70, 107, 86, 0
 	sq_beat
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	35, 144
+	.byte	35, 144	# the first 2 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 16	# cell 15: song 1 track 4, 1 of 7
 	sq_beat
 	sq_beat
@@ -15527,14 +15491,12 @@ zlib_487AA8CC:	# DemoSong10: its event memory, 22272 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	42, 66, 13, 0, 72	# data bytes of an event cut at the start
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 38, 116, 6, 0
+	.byte	42, 66, 13, 0	# data bytes of an event cut at the start
+	sq_note	72, 0, 38, 116, 6, 0
 	sq_beat
 	sq_note	0, 0, 48, 119, 14, 0
 	sq_note	0, 0, 42, 105, 18, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	2, 144, 56
+	.byte	2, 144, 56	# the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 23	# cell 22: song 1 track 5, 1 of 14
 	sq_beat
 	sq_beat
@@ -16408,9 +16370,8 @@ zlib_487AA8CC:	# DemoSong10: its event memory, 22272 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	21, 0, 85	# data bytes of an event cut at the start
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 70, 96, 24, 0
+	.byte	21, 0	# data bytes of an event cut at the start
+	sq_note	85, 0, 70, 96, 24, 0
 	sq_beat
 	sq_note	13, 0, 67, 97, 17, 0
 	sq_note	34, 0, 65, 70, 18, 0
@@ -16432,8 +16393,7 @@ zlib_487AA8CC:	# DemoSong10: its event memory, 22272 bytes, stored as a zlib str
 	sq_beat
 	sq_note	47, 0, 65, 120, 83, 0
 	sq_beat
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	95, 144, 65, 116
+	.byte	95, 144, 65, 116	# the first 4 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 37	# cell 36: song 1 track 6, 1 of 2
 	sq_beat
 	sq_beat
@@ -16662,8 +16622,7 @@ zlib_487AA8CC:	# DemoSong10: its event memory, 22272 bytes, stored as a zlib str
 	sq_note	52, 0, 69, 90, 11, 0
 	sq_note	58, 0, 59, 109, 12, 0
 	sq_beat
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	5, 144, 69
+	.byte	5, 144, 69	# the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 39	# cell 38: song 1 track 7, 1 of 2
 	sq_beat
 	sq_beat
@@ -16895,8 +16854,7 @@ zlib_487AA8CC:	# DemoSong10: its event memory, 22272 bytes, stored as a zlib str
 	sq_note	0, 0, 51, 109, 13, 0
 	sq_note	48, 0, 58, 67, 15, 0
 	sq_beat
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	0, 144, 63
+	.byte	0, 144, 63	# the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 65535	# cell 40: song 1 track 8, 1 of 1
 	sq_8n	0, 0, 122, 1
 	sq_8n	0, 10, 0, 64
@@ -17099,8 +17057,13 @@ zlib_487AA8CC:	# DemoSong10: its event memory, 22272 bytes, stored as a zlib str
 	sq_beat
 	sq_beat
 	sq_end
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	63, 71, 64, 7, 129, 129, 129, 129, 129, 129
+	.byte	63, 71, 64, 7	# data bytes of an event cut at the start
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
 	sq_cell	0x80, 0, 65535	# cell 41: song 1 track 9, 1 of 1
 	sq_beat
 	sq_beat
@@ -17278,9 +17241,7 @@ zlib_487AA8CC:	# DemoSong10: its event memory, 22272 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	79	# data bytes of an event cut at the start
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	224, 0
+	.byte	79, 224, 0	# the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 43	# cell 42: song 1 track 10, 1 of 14
 	sq_beat
 	sq_beat
@@ -18021,9 +17982,8 @@ zlib_487AA8CC:	# DemoSong10: its event memory, 22272 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	k5_note	0x90, 42, 76, 11, 0, 95
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 42, 104, 22, 0
+	.byte	144, 42, 76, 11, 0	# a tick-first event cut at the start (its tick is gone)
+	sq_note	95, 0, 42, 104, 22, 0
 	sq_beat
 	sq_note	1, 0, 56, 124, 15, 0
 	sq_note	46, 0, 54, 91, 6, 0
@@ -18685,7 +18645,8 @@ zlib_487AA8CC:	# DemoSong10: its event memory, 22272 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	64, 76	# data bytes of an event cut at the start
+	.byte	64	# data bytes of an event cut at the start
+	.byte	76	# data bytes of an event cut by the end
 	sq_cell	0x80, 0, 69	# cell 68: song 1 track 12, 1 of 10
 	sq_beat
 	sq_beat
@@ -19239,14 +19200,13 @@ zlib_487AA8CC:	# DemoSong10: its event memory, 22272 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	k5_note	0x90, 56, 112, 13, 0, 46
-	k5_note	0x90, 42, 51, 11, 0, 49
-	k5_note	0x90, 54, 96, 6, 0, 69
-	k5_note	0x90, 42, 59, 9, 0, 72
-	k5_note	0x90, 38, 113, 8, 0, 95
-	k5_note	0x90, 45, 120, 18, 0, 95
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 42, 104, 20, 0
+	.byte	144, 56, 112, 13, 0	# a tick-first event cut at the start (its tick is gone)
+	sq_note	46, 0, 42, 51, 11, 0
+	sq_note	49, 0, 54, 96, 6, 0
+	sq_note	69, 0, 42, 59, 9, 0
+	sq_note	72, 0, 38, 113, 8, 0
+	sq_note	95, 0, 45, 120, 18, 0
+	sq_note	95, 0, 42, 104, 20, 0
 	sq_beat
 	sq_note	1, 0, 56, 119, 14, 0
 	sq_note	43, 0, 54, 94, 8, 0
@@ -19259,8 +19219,7 @@ zlib_487AA8CC:	# DemoSong10: its event memory, 22272 bytes, stored as a zlib str
 	sq_note	5, 0, 36, 110, 17, 0
 	sq_note	45, 0, 54, 95, 6, 0
 	sq_note	46, 0, 42, 46, 9, 0
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	69, 144, 42, 55, 9
+	.byte	69, 144, 42, 55, 9	# the first 5 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 79	# cell 78: song 1 track 13, 1 of 3
 	sq_beat
 	sq_beat
@@ -19563,8 +19522,7 @@ zlib_487AA8CC:	# DemoSong10: its event memory, 22272 bytes, stored as a zlib str
 	sq_beat
 	sq_note	48, 0, 35, 100, 39, 0
 	sq_beat
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	0, 144, 36
+	.byte	0, 144, 36	# the first 3 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 82	# cell 81: song 1 track 14, 1 of 3
 	sq_beat
 	sq_beat
@@ -19803,8 +19761,7 @@ zlib_487AA8CC:	# DemoSong10: its event memory, 22272 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	224, 64, 71
+	.byte	224, 64, 71	# a tick-first event cut at the start (its tick is gone)
 	sq_bend	64, 0, 64, 85
 	sq_bend	68, 0, 0, 95
 	sq_bend	72, 0, 64, 97
@@ -19861,8 +19818,7 @@ zlib_487AA8CC:	# DemoSong10: its event memory, 22272 bytes, stored as a zlib str
 	sq_bend	68, 0, 0, 61
 	sq_bend	71, 0, 0, 64
 	sq_beat
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	48, 144, 74, 119
+	.byte	48, 144, 74, 119	# the first 4 bytes of a tick-first event, cut by the end
 	sq_cell	0x80, 0, 85	# cell 84: song 1 track 15, 1 of 4
 	sq_beat
 	sq_beat
@@ -20151,9 +20107,8 @@ zlib_487AA8CC:	# DemoSong10: its event memory, 22272 bytes, stored as a zlib str
 	sq_beat
 	sq_end
 # after the end of track: stale events of an earlier version of the song (stale_tokens)
-	.byte	11, 0, 48	# data bytes of an event cut at the start
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	144, 67, 103, 15, 0
+	.byte	11, 0	# data bytes of an event cut at the start
+	sq_note	48, 0, 67, 103, 15, 0
 	sq_beat
 	sq_note	47, 0, 65, 116, 16, 0
 	sq_note	47, 0, 55, 105, 16, 0
@@ -20180,8 +20135,7 @@ zlib_487AA8CC:	# DemoSong10: its event memory, 22272 bytes, stored as a zlib str
 	sq_note	46, 0, 65, 109, 14, 0
 	sq_note	46, 0, 72, 109, 17, 0
 	sq_beat
-	# not events: stale cell bytes that neither event order explains (left over)
-	.byte	43, 144, 60, 105
+	.byte	43, 144, 60, 105	# the first 4 bytes of a tick-first event, cut by the end
 	.endzlib
 	.align	4, 0xFF	# pad after zlib_487AA8CC
 zlib_487AC8CC:	# DemoSong01: its panel-memory bank, 14976 bytes, stored as a zlib stream of 1062 bytes (inflated by func_48533758); kn7asm compresses it at level 6 (Python's zlib reproduces the firmware's stream byte-exactly)
@@ -23966,33 +23920,43 @@ SetDialEnable_Var:	# u32, initial value of a RAM variable; read / written by Set
 CheckProgDial_Var:	# u32, initial value of a RAM variable; read / written by CheckProgDial 0x484175BE: `mov (CheckProgDial_Var), d0`; SetProgDial 0x484175C7: `mov d0, (CheckProgDial_Var)`
 	.long	1
 
-names_50000714:
-	.long	Str_PART1_5, Str_PART2_3
-	.long	Str_PART3, Str_PART4
-	.long	Str_PART5, Str_PART6
-	.long	Str_PART7, Str_PART8
-	.long	Str_PART9, Str_PART10
-	.long	Str_PART11, Str_PART12
-	.long	Str_PART13, Str_PART14
-	.long	Str_PART15, Str_PART16
-	.long	Str_RIGHT1_5, Str_RIGHT2_5
-	.long	Str_LEFT_5, Str_ACCOMP1
-	.long	Str_ACCOMP2, Str_ACCOMP3
-	.long	Str_ACCOMP4, Str_ACCOMP5
-	.long	Str_BASS, Str_DRUM1
-	.long	Str_DRUM2, Str_CHORD_5
-
-ptrs_50000784:	# 8 pointers, typed by value (every word 0 or an address of this region); reader not traced
+AcMixerVolWideProc_Table:
+	.long	Text_PART1
+	.long	Text_PART1+6
+	.long	Text_PART1+12
+	.long	Text_PART1+18
+	.long	Text_PART1+24
+	.long	Text_PART1+30
+	.long	Text_PART1+36
+	.long	Text_PART1+42
+	.long	Text_PART1+48
+	.long	Text_PART10
+	.long	Text_PART10+7
+	.long	Text_PART10+14
+	.long	Text_PART10+21
+	.long	Text_PART10+28
+	.long	Text_PART10+35
+	.long	Text_PART10+42
+	.long	Text_PART10+49
+	.long	Text_PART10+56
+	.long	Str_LEFT_7
+	.long	Str_ACCOMP1
+	.long	Str_ACCOMP2
+	.long	Str_ACCOMP3
+	.long	Str_ACCOMP4
+	.long	Str_ACCOMP5
+	.long	Str_BASS_2
+	.long	Str_DRUM1
+	.long	Str_DRUM2
+	.long	Str_CHORD_5
 	.long	Str_ROOT_BASS
-	.long	Str_PADS_11
 	.long	Str_PADS_12
+	.long	Str_PADS_11
 	.long	Str_CONTROL_5
 	.long	Str_METRONOME
 	.long	Str_CHORD_FINDER_5
-	.long	Str_MIC_16
+	.long	Str_MIC_15
 	.long	Str_APC_7
-
-ptrs_500007A4:
 	.long	ptrs_4859FCFC
 	.long	ptrs_4859FCFC
 	.long	ptrs_4859FCFC
@@ -24006,7 +23970,6 @@ ptrs_500007A4:
 	.long	ptrs_4859FD8C
 	.long	ptrs_4859FCFC
 	.long	ptrs_4859FD8C
-ptrs_500007D8:
 	.long	ptrs_4859FCFC
 	.long	ptrs_4859FCFC
 	.long	ptrs_4859FCFC
@@ -24020,7 +23983,6 @@ ptrs_500007D8:
 	.long	ptrs_4859FD8C
 	.long	ptrs_4859FCFC
 	.long	ptrs_4859FD8C
-ptrs_5000080C:
 	.long	ptrs_4859FCFC
 	.long	ptrs_4859FCFC
 	.long	ptrs_4859FCFC
@@ -24034,7 +23996,6 @@ ptrs_5000080C:
 	.long	ptrs_4859FCFC
 	.long	ptrs_4859FCFC
 	.long	ptrs_4859FD8C
-ptrs_50000840:
 	.long	ptrs_4859FCFC
 	.long	ptrs_4859FCFC
 	.long	ptrs_4859FCFC
@@ -24049,70 +24010,70 @@ ptrs_50000840:
 	.long	ptrs_4859FCFC
 	.long	ptrs_4859FD8C
 AcChordBoxProc_Table_3:
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007D8
-	.long	ptrs_500007D8
-	.long	ptrs_500007D8
-	.long	ptrs_5000080C
-	.long	ptrs_500007D8
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_50000840
-	.long	ptrs_50000840
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007D8
-	.long	ptrs_500007A4
-	.long	ptrs_500007D8
-	.long	ptrs_5000080C
-	.long	ptrs_500007D8
-	.long	ptrs_500007D8
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_50000840
-	.long	ptrs_500007A4
-	.long	ptrs_5000080C
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007D8
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
-	.long	ptrs_500007A4
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+196
+	.long	AcMixerVolWideProc_Table+196
+	.long	AcMixerVolWideProc_Table+196
+	.long	AcMixerVolWideProc_Table+248
+	.long	AcMixerVolWideProc_Table+196
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+300
+	.long	AcMixerVolWideProc_Table+300
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+196
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+196
+	.long	AcMixerVolWideProc_Table+248
+	.long	AcMixerVolWideProc_Table+196
+	.long	AcMixerVolWideProc_Table+196
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+300
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+248
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+196
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
+	.long	AcMixerVolWideProc_Table+144
 
 AcTransposeBoxProc_Var:	# u32, initial value of a RAM variable; read / written by AcTransposeBoxProc 0x48421648: `mov (AcTransposeBoxProc_Var), d1`; AcTransposeBoxProc 0x48421648: `mov d0, (AcTransposeBoxProc_Var)`
 	.long	1
@@ -25283,59 +25244,62 @@ AcMixPartSoundProc_Table:
 	.long	Text_PART_2_2+272
 	.long	Text_PART_2_2+280
 func_4848F707_Table:
-	.long	Str_PT_1
-	.long	Str_PT_2
-	.long	Str_PT_3
-	.long	Str_PT_4
-	.long	Str_PT_5
-	.long	Str_PT_6
-	.long	Str_PT_7
-	.long	Str_PT_8
-	.long	Str_PT_9
-
-names_5000190C:
-	.long	Str_PT10, 0x485EC226
-	.long	Str_PT12, 0x485EC230
-	.long	Str_PT14, 0x485EC23A
-	.long	Str_PT16, 0x485EC244
-# census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x3B0B78, 0x3B0B7C
-names_50001930:
-	.long	Str_LEFT_6, Str_ACP1
-	.long	Str_ACP2, Str_ACP3
-	.long	Str_ACP4, Str_ACP5
-	.long	Str_BASS_2, 0x485EC271
-	.long	Str_DRM2, 0x485EC27B
-
-ptrs_50001958:	# 9 pointers, typed by value (every word 0 or an address of this region); reader not traced
-	.long	Str_R_BA
-	.long	Str_PADS_13
-	.long	Str_PADS_14
-	.long	Str_B_PD
-	.long	Str_text_32
-	.long	Str_text_33
-	.long	Str_text_34
-	.long	Str_text_35
-	.long	Str_text_36
-
+	.long	Text_PT_1
+	.long	Text_PT_1+5
+	.long	Text_PT_1+10
+	.long	Text_PT_1+15
+	.long	Text_PT_1+20
+	.long	Text_PT_1+25
+	.long	Text_PT_1+30
+	.long	Text_PT_1+35
+	.long	Text_PT_1+40
+	.long	Text_PT_1+45
+	.long	Text_PT_1+50
+	.long	Text_PT_1+55
+	.long	Text_PT_1+60
+	.long	Text_PT_1+65
+	.long	Text_PT_1+70
+	.long	Text_PT_1+75
+	.long	Text_PT_1+80
+	.long	Text_PT_1+85
+	.long	Text_PT_1+90
+	.long	Text_PT_1+95
+	.long	Text_PT_1+100
+	.long	Text_PT_1+105
+	.long	Text_PT_1+110
+	.long	Text_PT_1+115
+	.long	Text_PT_1+120
+	.long	Text_PT_1+125
+	.long	Text_PT_1+130
+	.long	Text_PT_1+135
+	.long	Text_PT_1+140
+	.long	Text_PT_1+145
+	.long	Text_PT_1+150
+	.long	Text_PT_1+155
+	.long	Text_PT_1+160
+	.long	Text_PT_1+165
+	.long	Text_PT_1+170
+	.long	Text_PT_1+175
+	.long	Text_PT_1+180
 func_4848FD75_Table:
-	.long	Str_TRACK_1
-	.long	Str_TRACK_2_2
-	.long	Str_TRACK_3_2
-	.long	Str_TRACK_4_2
-	.long	Str_TRACK_5_2
-	.long	Str_TRACK_6_2
-	.long	Str_TRACK_7_2
-	.long	Str_TRACK_8_2
-	.long	Str_TRACK_9_2
-
-names_500019A0:
-	.long	Str_TRACK10, names_500019A0_p0_0
-	.long	Str_TRACK12, names_500019A0_p0_1
-	.long	Str_TRACK14, names_500019A0_p0_2
-	.long	Str_TRACK16, names_500019A0_p0_3
-
-ptrs_500019C0:	# 8 pointers, typed by value (every word 0 or an address of this region); reader not traced
+	.long	Text_TRACK_1
+	.long	Text_TRACK_1+8
+	.long	Text_TRACK_1+16
+	.long	Text_TRACK_1+24
+	.long	Text_TRACK_1+32
+	.long	Text_TRACK_1+40
+	.long	Text_TRACK_1+48
+	.long	Text_TRACK_1+56
+	.long	Text_TRACK_1+64
+	.long	Text_TRACK_1+72
+	.long	Text_TRACK_1+80
+	.long	Text_TRACK_1+88
+	.long	Text_TRACK_1+96
+	.long	Text_TRACK_1+104
+	.long	Text_TRACK_1+112
+	.long	Text_TRACK_1+120
+func_4848F8C1_Table:
+	.long	Str_TR_1
 	.long	Str_TR_2
 	.long	Str_TR_3
 	.long	Str_TR_4
@@ -25344,12 +25308,16 @@ ptrs_500019C0:	# 8 pointers, typed by value (every word 0 or an address of this 
 	.long	Str_TR_7
 	.long	Str_TR_8
 	.long	Str_TR_9
+	.long	Str_TR10
+	.long	Str_TR11
+	.long	Str_TR12
+	.long	Str_TR13
+	.long	Str_TR14
+	.long	Str_TR15
+	.long	Str_TR16
 
-names_500019E0:
-	.long	Str_TR10, 0x485EC35F
-	.long	Str_TR12, 0x485EC369
-	.long	Str_TR14, 0x485EC373
-	.long	Str_TR16, 0xFFFFFF00
+TtSdapcrev_Table:	# 4 x u8, 0..255; read by TtSdapcrev 0x484921D6: `movbu (TtSdapcrev_Table), d0`; TtSdapcrev 0x484921D6: `movbu d0, (TtSdapcrev_Table)`
+	tab_u8	0, 255, 255, 255
 
 TtHomepage_window:	# u32, initial value of a RAM variable: the AcHpScreen TtHomepage's `window` (+0x24), loaded and dereferenced by ScreenProc 0x484177CE: `mov (0x24, a3), a0` -> `mov d0, (a0)`
 	.long	0xffffffff
@@ -33152,7 +33120,7 @@ DiskDriveCtrlHandler_ArgA0_3:	# REC_DiskDriveCtrlHandler_ArgA0 (4 bytes)
 Str_C_3:	.asciz "C"
 	.align	4, 0x00	# pad after Str_C_3
 Str_Q_3:	.asciz "\xB4Q"
-Str_P_15:	.asciz "P"
+Str_P_14:	.asciz "P"
 	.space	11, 0x00
 Str_F_2:	.asciz "F"
 	.align	4, 0x00	# pad after Str_F_2
@@ -35112,10 +35080,10 @@ PCCom_window:	# u32, initial value of a RAM variable: the TtlScreen PCCom's `win
 AMCOM_window:	# u32, initial value of a RAM variable: the TtlScreen AMCOM's `window` (+0x24), loaded and dereferenced by ScreenProc 0x484177CE: `mov (0x24, a3), a0` -> `mov d0, (a0)`
 	.long	0xffffffff
 
-func_48582669_Var:	# u8, initial value of a RAM variable; read / written by func_48582669 0x48582669: `movbu (func_48582669_Var), d0`; func_48582669 0x48582669: `movbu d0, (func_48582669_Var)` ...
+func_48582669_Var:	# u8, initial value of a RAM variable; read / written by PcComCommand 0x48582669: `movbu (func_48582669_Var), d0`; PcComCommand 0x48582669: `movbu d0, (func_48582669_Var)` ...
 	.byte	0
 
-func_48582669_Table_4:	# 3 x u8, 0..255; read by func_48582669 0x48582669: `movbu (func_48582669_Table_4), d0`; func_48582669 0x48582669: `movbu d0, (func_48582669_Table_4)`
+func_48582669_Table_4:	# 3 x u8, 0..255; read by PcComCommand 0x48582669: `movbu (func_48582669_Table_4), d0`; PcComCommand 0x48582669: `movbu d0, (func_48582669_Table_4)`
 	tab_u8	0, 255, 255
 
 demo1_1_window:	# u32, initial value of a RAM variable: the Screen demo1_1's `window` (+0x24), loaded and dereferenced by ScreenProc 0x484177CE: `mov (0x24, a3), a0` -> `mov d0, (a0)`
@@ -35373,7 +35341,7 @@ func_4840A049_Table:	# 4 x u16, 49193..65535; read by func_4840A049_entry 0x4840
 DspHostPortError:	# s8, initial value of a RAM variable; read / written by DspManagerInit 0x4840847C: `movbu (DspHostPortError), d0`; func_4840A221 0x4840A221: `movbu (DspHostPortError), d0` ...
 	.byte	-1
 
-func_4840AE62_Table:	# 3 x u8, 0..255; read by DspReadyWaitOn 0x4840AE62: `movbu d0, (func_4840AE62_Table)`; DspReadyWaitOff 0x4840AE6D: `movbu d0, (func_4840AE62_Table)` ...
+DspReadyWaitEnabled:	# 3 x u8, 0..255; read by DspReadyWaitOn 0x4840AE62: `movbu d0, (DspReadyWaitEnabled)`; DspReadyWaitOff 0x4840AE6D: `movbu d0, (DspReadyWaitEnabled)` ...
 	tab_u8	0, 255, 255
 
 DspDownloadAll_Table:
@@ -35602,22 +35570,22 @@ func_48408926_Table:
 	.long	func_48408926_Table_p0_1
 	.long	func_48408926_Table_p0_2
 	.long	func_48408926_Table_p0_4
-	.long	Str_empty_284
-	.long	Str_empty_284
-	.long	Str_empty_284
-	.long	Str_empty_284
-	.long	Str_empty_284
-	.long	Str_empty_284
-	.long	Str_empty_284
-	.long	Str_empty_284
-	.long	Str_empty_284
-	.long	Str_empty_284
-	.long	Str_empty_284
-	.long	Str_empty_284
-	.long	Str_empty_284
-	.long	Str_empty_284
-	.long	Str_empty_284
-	.long	Str_empty_284
+	.long	Str_empty_276
+	.long	Str_empty_276
+	.long	Str_empty_276
+	.long	Str_empty_276
+	.long	Str_empty_276
+	.long	Str_empty_276
+	.long	Str_empty_276
+	.long	Str_empty_276
+	.long	Str_empty_276
+	.long	Str_empty_276
+	.long	Str_empty_276
+	.long	Str_empty_276
+	.long	Str_empty_276
+	.long	Str_empty_276
+	.long	Str_empty_276
+	.long	Str_empty_276
 	.long	func_48408926_Table_p0_5
 	.long	func_48408926_Table_p0_6
 	.long	func_48408926_Table_p0_7
@@ -35710,7 +35678,7 @@ func_48408926_Table:
 	.long	func_48408926_Table_p0_s15_1
 	.long	func_48408926_Table_p0_s43_1
 	.long	func_48408926_Table_p0_s43_2
-	.long	Str_empty_283
+	.long	Str_empty_275
 	.long	0
 	.long	0
 	.long	0
@@ -35726,12 +35694,12 @@ func_48408926_Table:
 	.long	func_48408926_Table_p0_21
 	.long	func_48408926_Table_p0_22
 	.long	0
-	.long	Str_empty_286
+	.long	Str_empty_278
 	.long	0
 	.long	0
 	.long	0
 	.long	func_48408926_Table_p0_s71_7
-	.long	Str_empty_285
+	.long	Str_empty_277
 	.long	0
 	.long	0
 	.long	0
@@ -35778,7 +35746,7 @@ func_48408926_Table:
 	.long	0
 	.long	0
 	.long	0
-	.long	Str_empty_284
+	.long	Str_empty_276
 	.long	0
 	.long	0
 	.long	0
@@ -35957,16 +35925,22 @@ func_4842886A_Table:	# 4 x REC_func_4842886A_Table (56 bytes each); read by func
 	REC_func_4842886A_Table	key__=1, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x50000, f32=0xFFFFFFFF, f36=0x50000, Free_d1=0x5002FC4C, key___=-1, count=1, index_=0x50031470
 
 names_50007658:
-	.long	Str_CHARA1, Str_CHARA2
-	.long	Str_CHARA3, Str_CHARA4
-	.long	Str_CHARA5, Str_CHARA1P
-	.long	Str_CHARA6, Str_CHARA1W
-	.long	Str_CHARA2W, Str_CHARA5W
-	.long	Str_CHARA7W, Str_CHARA7
-
-ptrs_50007688:	# 33 pointers, typed by value (every word 0 or an address of this region); reader not traced
+	.long	Str_CHARA1
+	.long	Str_CHARA2
+	.long	Str_CHARA3
+	.long	Str_CHARA4
+	.long	Str_CHARA5
+	.long	Str_CHARA1P
+	.long	Str_CHARA6
+	.long	Str_CHARA1W
+	.long	Str_CHARA2W
+	.long	Str_CHARA5W
+	.long	Str_CHARA7W
+	.long	Str_CHARA7
 	.long	data_485B459D
 	.long	0
+
+ptrs_50007690:	# 31 pointers, typed by value (every word 0 or an address of this region); reader not traced
 	.long	0
 	.long	0
 	.long	0
@@ -36007,7 +35981,7 @@ TechnicsPadsResourceInit_Var:	# u32, initial value of a RAM variable; read / wri
 
 func_48447FD3_Table:	# 2 x u16, 1000..65535; read by func_48447FD3 0x48447FD3: `movhu (func_48447FD3_Table), d0`; func_48447FD3 0x48447FD3: `movhu d0, (func_48447FD3_Table)`
 	tab_u16	1000, 65535
-func_48448035_Table:	# 4 x u8, 0..255; read by func_48448035 0x48448035: `movbu (func_48448035_Table), d0`; func_48448035 0x48448035: `movbu d0, (func_48448035_Table)` ...
+func_48448035_Table:	# 4 x u8, 0..255; read by KeybedFifoRead 0x48448035: `movbu (func_48448035_Table), d0`; KeybedFifoRead 0x48448035: `movbu d0, (func_48448035_Table)` ...
 	tab_u8	0, 255, 255, 255
 
 func_48449420_Records:	# 7 x REC_func_48449420_Records (8 bytes each); read by func_48449420 0x48449420 `mov (4, a0), d1`; func_48449420 0x48449420 `mov (d0, a0), d0`
@@ -36286,7 +36260,7 @@ AcRhythmVerBoxProc_Table:	# 2 x s16, -1..0; read by AcRhythmVerBoxProc 0x4848875
 	tab_s16	0, -1
 AcAromVerBoxProc_Table:	# 2 x s16, -1..1111; read by AcAromVerBoxProc 0x484887FE: `movhu (AcAromVerBoxProc_Table), d0`; AcAromVerBoxProc 0x484887FE: `movhu d2, (AcAromVerBoxProc_Table)`
 	tab_s16	1111, -1
-func_48582669_Table_5:	# 4 x u8, 1..255; read by func_48582669 0x48582669: `movbu (func_48582669_Table_5), d0`
+func_48582669_Table_5:	# 4 x u8, 1..255; read by PcComCommand 0x48582669: `movbu (func_48582669_Table_5), d0`
 	tab_u8	1, 255, 255, 255
 
 func_484D7EB0_Var:	# u16, initial value of a RAM variable; read / written by func_484D7EB0 0x484D7EB0: `movhu d2, (func_484D7EB0_Var)`; VwMnameSeProc 0x484D8652: `movhu (func_484D7EB0_Var), d0` ...
@@ -36365,14 +36339,16 @@ AcNoteEditBoxProc_Table_5:	# 7 x u16, 0..65535; read by AcNoteEditBoxProc 0x4853
 
 SdCommandSend_Var:	# REC_SdCommandSend_ArgA0 (10 bytes): the layout SdCommandSend 0x4854BBBE reads through its argument a0 (passed by SdWorkerCmdHandler 0x4854A914 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +2 more calls)
 	REC_SdCommandSend_ArgA0	SdSpiClockSet_d0=2, SdResponseScan_d0=1, f4=66, x5="\x00\x00\x00\x00", f9=149
-SdReadBlockCmd_Var_2:	# REC_SdCardRegRead_ArgA1_s9 (9 bytes): the layout SdCardRegRead 0x4854AF0E reads through its argument a1 (passed by DiskDriveCtrlHandler 0x4854AC56 `call SdCardRegRead_entry, [d2,d3,a2,a3], 0x24`); the layout SdReadBlockCmd 0x4854BCD3 reads through its argument a0 (passed by SdWorkerCmdHandler 0x4854A914 `call SdReadBlockCmd_entry, [d2,d3,a2,a3], 0x2c`, +1 more calls)
-	REC_SdCardRegRead_ArgA1_s9	SdSpiClockSet_d0=2, SdResponseScan_d0=2, f4=64, x5="\x00\x00\x0F\x00"
-
-SdReadBlockCmd_Table:	# 41 x u8, 0..255; read by SdReadBlockCmd 0x4854BCD3: `movbu d0, (5, a2)`
-	tab_u8	255, 2, 0, 2, 0, 69, 0, 0, 0, 0, 255, 2, 0, 2, 0, 67	# [0]
-	tab_u8	0, 0, 1, 0, 255, 2, 0, 2, 0, 70, 0, 0, 0, 0, 255, 2	# [16]
-	tab_u8	0, 2, 0, 71, 0, 0, 0, 0, 255	# [32]
-
+SdFrameR2Cmd0:	# REC_SdCommandSend_ArgA0 (10 bytes) [INFERENCE: between two records of the kind, a whole number of records apart; no call the walk sees passes it]
+	REC_SdCommandSend_ArgA0	SdSpiClockSet_d0=2, SdResponseScan_d0=2, f4=64, x5="\x00\x00\x0F\x00", f9=255
+SdFrameR2Cmd5:	# REC_SdCommandSend_ArgA0 (10 bytes) [INFERENCE: between two records of the kind, a whole number of records apart; no call the walk sees passes it]
+	REC_SdCommandSend_ArgA0	SdSpiClockSet_d0=2, SdResponseScan_d0=2, f4=69, x5="\x00\x00\x00\x00", f9=255
+SdFrameR2Cmd3:	# REC_SdCommandSend_ArgA0 (10 bytes) [INFERENCE: between two records of the kind, a whole number of records apart; no call the walk sees passes it]
+	REC_SdCommandSend_ArgA0	SdSpiClockSet_d0=2, SdResponseScan_d0=2, f4=67, x5="\x00\x00\x01\x00", f9=255
+SdFrameR2Cmd6:	# REC_SdCommandSend_ArgA0 (10 bytes) [INFERENCE: between two records of the kind, a whole number of records apart; no call the walk sees passes it]
+	REC_SdCommandSend_ArgA0	SdSpiClockSet_d0=2, SdResponseScan_d0=2, f4=70, x5="\x00\x00\x00\x00", f9=255
+SdFrameR2Cmd7:	# REC_SdCommandSend_ArgA0 (10 bytes) [INFERENCE: between two records of the kind, a whole number of records apart; no call the walk sees passes it]
+	REC_SdCommandSend_ArgA0	SdSpiClockSet_d0=2, SdResponseScan_d0=2, f4=71, x5="\x00\x00\x00\x00", f9=255
 SdCommandSend_Var_4:	# REC_SdCommandSend_ArgA0 (10 bytes): the layout SdCommandSend 0x4854BBBE reads through its argument a0 (passed by SdWorkerCmdHandler 0x4854A914 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +2 more calls)
 	REC_SdCommandSend_ArgA0	SdSpiClockSet_d0=3, SdResponseScan_d0=1, f4=64, x5="\x00\x00\x00\x00", f9=149
 SdCommandSend_Var_7:	# REC_SdCommandSend_ArgA0 (10 bytes): the layout SdCommandSend 0x4854BBBE reads through its argument a0 (passed by SdWorkerCmdHandler 0x4854A914 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +2 more calls)
@@ -36382,13 +36358,13 @@ SdCommandSend_Var_10:	# REC_SdCommandSend_ArgA0 (10 bytes): the layout SdCommand
 
 SdReadBlockCmd_Var:	# u16, initial value of a RAM variable; read / written by SdReadBlockCmd 0x4854BCD3: `movhu (a3), d0`
 	.word	3
-SdReadBlockCmd_Var_3:	# u16, initial value of a RAM variable; read / written by SdReadBlockCmd 0x4854BCD3: `movhu (2, a3), d0`
+SdReadBlockCmd_Var_2:	# u16, initial value of a RAM variable; read / written by SdReadBlockCmd 0x4854BCD3: `movhu (2, a3), d0`
 	.word	1
 
 Str_Q_2:	.asciz "Q"
 	.space	3, 0x00
 
-SdReadBlockCmd_Var_4:	# u8, initial value of a RAM variable; read / written by SdReadBlockCmd 0x4854BCD3: `movbu d0, (5, a2)`
+SdReadBlockCmd_Var_3:	# u8, initial value of a RAM variable; read / written by SdReadBlockCmd 0x4854BCD3: `movbu d0, (5, a2)`
 	.byte	255
 SdWriteBlockCmd_Var:	# u16, initial value of a RAM variable; read / written by SdWriteBlockCmd 0x4854BEED: `movhu (a3), d0`
 	.word	3

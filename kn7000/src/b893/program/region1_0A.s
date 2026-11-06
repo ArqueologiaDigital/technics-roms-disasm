@@ -17774,7 +17774,7 @@ loc_4854AD3D:
     mov     1, d0
     movhu   d0, (0x50160620)
     mov     0x50160648, a0
-    mov     SdReadBlockCmd_Var_2, a1
+    mov     SdFrameR2Cmd0, a1
     call    SdCardRegRead_entry, [d2,d3,a2,a3], 0x24
     mov     d0, d2
     exthu   d0
