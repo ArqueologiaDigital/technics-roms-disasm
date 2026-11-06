@@ -1198,13 +1198,13 @@ Paint_MidiMenu:
 	jr z, .LF99F45                                       ; F99F35  66 0e
 	lda xbc, (DL_F0C917:24)                              ; F99F37  f2 17 c9 f0 31
 	push XBC                                             ; F99F3C  39
-	lda xwa, (DL_MidiT0talM0deC0nfigurePr0g:24)          ; F99F3D  f2 1f c8 f0 30
+	lda xwa, (DL_MidiTotalModeConfigureProg:24)          ; F99F3D  f2 1f c8 f0 30
 	push XWA                                             ; F99F42  38
 	jr .LF99F51                                          ; F99F43  68 0c
 .LF99F45:
-	lda xbc, (DL_RealtimeMessageInput0utput:24)          ; F99F45  f2 d5 c8 f0 31
+	lda xbc, (DL_RealtimeMessageInputOutput:24)          ; F99F45  f2 d5 c8 f0 31
 	push XBC                                             ; F99F4A  39
-	lda xwa, (DL_Input0utputFilterMidiT0talM0de:24)      ; F99F4B  f2 00 c8 f0 30
+	lda xwa, (DL_InputOutputFilterMidiTotalMode:24)      ; F99F4B  f2 00 c8 f0 30
 	push XWA                                             ; F99F50  38
 .LF99F51:
 	call T_DisplayList_Run_Stack                         ; F99F51  1d 00 2e f4
@@ -2734,7 +2734,7 @@ Paint_MidiInputOutputFilter:
 	call T_LCD_BlankThenSetPanel3Layer_Copy                                        ; F9A9E8  1d 10 2e f4
 	lda xbc, (DL_F0CDE7:24)                              ; F9A9EC  f2 e7 cd f0 31
 	push XBC                                             ; F9A9F1  39
-	lda xwa, (DL_InputOutputFilterMidiPr0gramChange:24)  ; F9A9F2  f2 ee cc f0 30
+	lda xwa, (DL_InputOutputFilterMidiProgramChange:24)  ; F9A9F2  f2 ee cc f0 30
 	push XWA                                             ; F9A9F7  38
 	call T_DisplayList_Run_Stack                         ; F9A9F8  1d 00 2e f4
 	lda xbc, (DL_TotalModeMidiMidiInputMode:24)          ; F9A9FC  f2 64 c9 f0 31
@@ -2984,7 +2984,7 @@ JumpTable_F9AB84:
 	.long MidiInputOutputFilter_ValueCase_Exclusive                                 ; F9ABA0  [  7]
 ; MidiInputOutputFilter_ValueCase_ProgramChange -- case 0 of MidiInputOutputFilter_StepValue:
 ;   MidiInputOutputFilter_EditProgramChange(H)
-; Evidence: JumpTable_F9AB84 entry [0]; row 0 of DL_InputOutputFilterMidiPr0gramChange is "PR0GRAM CHANGE   :" (IX
+; Evidence: JumpTable_F9AB84 entry [0]; row 0 of DL_InputOutputFilterMidiProgramChange is "PR0GRAM CHANGE   :" (IX
 ;   0x0739).
 MidiInputOutputFilter_ValueCase_ProgramChange:   ; entry: named by 1 `.long` operand, first at 0xF9AB84
 	push 0x00                                            ; F9ABA4  09 00
@@ -2993,7 +2993,7 @@ MidiInputOutputFilter_ValueCase_ProgramChange:   ; entry: named by 1 `.long` ope
 	jr .LF9ABEA                                          ; F9ABAB  68 3d
 ; MidiInputOutputFilter_ValueCase_BankSelect -- case 1 of MidiInputOutputFilter_StepValue:
 ;   MidiInputOutputFilter_EditBankSelect(H)
-; Evidence: JumpTable_F9AB84 entry [1]; row 1 of DL_InputOutputFilterMidiPr0gramChange is "BANK SELECT      :" (IX
+; Evidence: JumpTable_F9AB84 entry [1]; row 1 of DL_InputOutputFilterMidiProgramChange is "BANK SELECT      :" (IX
 ;   0x0A09).
 MidiInputOutputFilter_ValueCase_BankSelect:   ; entry: named by 1 `.long` operand, first at 0xF9AB88
 	push 0x00                                            ; F9ABAD  09 00
@@ -3002,7 +3002,7 @@ MidiInputOutputFilter_ValueCase_BankSelect:   ; entry: named by 1 `.long` operan
 	jr .LF9ABEA                                          ; F9ABB4  68 34
 ; MidiInputOutputFilter_ValueCase_PitchBend -- case 2 of MidiInputOutputFilter_StepValue:
 ;   MidiInputOutputFilter_EditPitchBend(H)
-; Evidence: JumpTable_F9AB84 entry [2]; row 2 of DL_InputOutputFilterMidiPr0gramChange is "PITCH BEND       :" (IX
+; Evidence: JumpTable_F9AB84 entry [2]; row 2 of DL_InputOutputFilterMidiProgramChange is "PITCH BEND       :" (IX
 ;   0x0CD9).
 MidiInputOutputFilter_ValueCase_PitchBend:   ; entry: named by 1 `.long` operand, first at 0xF9AB8C
 	push 0x00                                            ; F9ABB6  09 00
@@ -3011,7 +3011,7 @@ MidiInputOutputFilter_ValueCase_PitchBend:   ; entry: named by 1 `.long` operand
 	jr .LF9ABEA                                          ; F9ABBD  68 2b
 ; MidiInputOutputFilter_ValueCase_ControlChange -- case 3 of MidiInputOutputFilter_StepValue:
 ;   MidiInputOutputFilter_EditControlChange(H)
-; Evidence: JumpTable_F9AB84 entry [3]; row 3 of DL_InputOutputFilterMidiPr0gramChange is "C0NTR0L CHANGE   :" (IX
+; Evidence: JumpTable_F9AB84 entry [3]; row 3 of DL_InputOutputFilterMidiProgramChange is "C0NTR0L CHANGE   :" (IX
 ;   0x0FA9).
 MidiInputOutputFilter_ValueCase_ControlChange:   ; entry: named by 1 `.long` operand, first at 0xF9AB90
 	push 0x00                                            ; F9ABBF  09 00
@@ -3020,7 +3020,7 @@ MidiInputOutputFilter_ValueCase_ControlChange:   ; entry: named by 1 `.long` ope
 	jr .LF9ABEA                                          ; F9ABC6  68 22
 ; MidiInputOutputFilter_ValueCase_ResetAllCtrl -- case 4 of MidiInputOutputFilter_StepValue:
 ;   MidiInputOutputFilter_EditResetAllCtrl(H)
-; Evidence: JumpTable_F9AB84 entry [4]; row 4 of DL_InputOutputFilterMidiPr0gramChange is "RESET ALL CTRL" (IX
+; Evidence: JumpTable_F9AB84 entry [4]; row 4 of DL_InputOutputFilterMidiProgramChange is "RESET ALL CTRL" (IX
 ;   0x1279).
 MidiInputOutputFilter_ValueCase_ResetAllCtrl:   ; entry: named by 1 `.long` operand, first at 0xF9AB94
 	push 0x00                                            ; F9ABC8  09 00
@@ -3029,7 +3029,7 @@ MidiInputOutputFilter_ValueCase_ResetAllCtrl:   ; entry: named by 1 `.long` oper
 	jr .LF9ABEA                                          ; F9ABCF  68 19
 ; MidiInputOutputFilter_ValueCase_ChannelPressure -- case 5 of MidiInputOutputFilter_StepValue:
 ;   MidiInputOutputFilter_EditChannelPressure(H)
-; Evidence: JumpTable_F9AB84 entry [5]; row 5 of DL_InputOutputFilterMidiPr0gramChange is "CHANNEL PRESSURE :" (IX
+; Evidence: JumpTable_F9AB84 entry [5]; row 5 of DL_InputOutputFilterMidiProgramChange is "CHANNEL PRESSURE :" (IX
 ;   0x1549).
 MidiInputOutputFilter_ValueCase_ChannelPressure:   ; entry: named by 1 `.long` operand, first at 0xF9AB98
 	push 0x00                                            ; F9ABD1  09 00
@@ -3038,7 +3038,7 @@ MidiInputOutputFilter_ValueCase_ChannelPressure:   ; entry: named by 1 `.long` o
 	jr .LF9ABEA                                          ; F9ABD8  68 10
 ; MidiInputOutputFilter_ValueCase_SongSelect -- case 6 of MidiInputOutputFilter_StepValue:
 ;   MidiInputOutputFilter_EditSongSelect(H)
-; Evidence: JumpTable_F9AB84 entry [6]; row 6 of DL_InputOutputFilterMidiPr0gramChange is "S0NG SELECT      :" (IX
+; Evidence: JumpTable_F9AB84 entry [6]; row 6 of DL_InputOutputFilterMidiProgramChange is "S0NG SELECT      :" (IX
 ;   0x1819).
 MidiInputOutputFilter_ValueCase_SongSelect:   ; entry: named by 1 `.long` operand, first at 0xF9AB9C
 	push 0x00                                            ; F9ABDA  09 00
@@ -3047,7 +3047,7 @@ MidiInputOutputFilter_ValueCase_SongSelect:   ; entry: named by 1 `.long` operan
 	jr .LF9ABEA                                          ; F9ABE1  68 07
 ; MidiInputOutputFilter_ValueCase_Exclusive -- case 7 of MidiInputOutputFilter_StepValue:
 ;   MidiInputOutputFilter_EditExclusive(H)
-; Evidence: JumpTable_F9AB84 entry [7]; row 7 of DL_InputOutputFilterMidiPr0gramChange is "EXCLUSIVE        :" (IX
+; Evidence: JumpTable_F9AB84 entry [7]; row 7 of DL_InputOutputFilterMidiProgramChange is "EXCLUSIVE        :" (IX
 ;   0x1AE9).
 MidiInputOutputFilter_ValueCase_Exclusive:   ; entry: named by 1 `.long` operand, first at 0xF9ABA0
 	push 0x00                                            ; F9ABE3  09 00

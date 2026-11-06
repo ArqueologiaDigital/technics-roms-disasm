@@ -7084,15 +7084,15 @@ MessageScreen_ListPairs:
 	.long DL_Error28ThisSongIsTooLongToBeSaved       ; F992CD          end
 	.long DL_ErrorItIsNotPossibleToUse               ; F992D1  [id 0x36] start
 	.long DL_ErrorItIsNotPossibleToRecord            ; F992D5          end
-	.long DL_Err0rTheTypeOfInsertedDisk              ; F992D9  [id 0x37] start
-	.long DL_Err0rTheQuantityOfThisSong              ; F992DD          end
-	.long DL_Err0rTheQuantityOfThisSong              ; F992E1  [id 0x38] start
+	.long DL_ErrorTheTypeOfInsertedDisk              ; F992D9  [id 0x37] start
+	.long DL_ErrorTheQuantityOfThisSong              ; F992DD          end
+	.long DL_ErrorTheQuantityOfThisSong              ; F992E1  [id 0x38] start
 	.long DL_ErrorSpecialTracksSuchAs                ; F992E5          end
 	.long DL_ErrorItIsNotPossibleToRecord            ; F992E9  [id 0x39] start
-	.long DL_Err0rTheTypeOfInsertedDisk              ; F992ED          end
+	.long DL_ErrorTheTypeOfInsertedDisk              ; F992ED          end
 	.long DL_ErrorSpecialTracksSuchAs                ; F992F1  [id 0x3A] start
-	.long DL_ErrorAut0PunchRecordingHas              ; F992F5          end
-	.long DL_ErrorAut0PunchRecordingHas              ; F992F9  [id 0x3B] start
+	.long DL_ErrorAutoPunchRecordingHas              ; F992F5          end
+	.long DL_ErrorAutoPunchRecordingHas              ; F992F9  [id 0x3B] start
 	.long DL_ErrorTheComposerPatternYou              ; F992FD          end
 	.long DL_ErrorTheComposerPatternYou              ; F99301  [id 0x3C] start
 	.long DL_ErrorTheSongThatYouHaveTried            ; F99305          end

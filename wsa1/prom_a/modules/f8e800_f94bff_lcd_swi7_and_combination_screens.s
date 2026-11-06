@@ -6730,7 +6730,7 @@ DisplayListPtrs_F90CD8:
 	on_key	KEY_LcdRow1,		LcdKeyRow1_SoundMode
 	on_key	KEY_LcdRow2,		DisplayListPtrs_F90CD8_Nop9
 	on_key	KEY_LcdRow3,		DisplayListPtrs_F90CD8_Nop10
-	on_key	KEY_LcdRow4,		LcdKeyRow4_SoundModeOrC0mbinati0nM0de
+	on_key	KEY_LcdRow4,		LcdKeyRow4_SoundModeOrCombinationMode
 	on_key	KEY_LcdRow5,		DisplayListPtrs_F90CD8_Nop12
 	on_key	KEY_MinusPlus,		DisplayListPtrs_F90CD8_Nop13
 	on_key	KEY_Code0E,		DisplayListPtrs_F90CD8_Nop14
@@ -6868,7 +6868,7 @@ Paint_SoundModeFields:   ; entry: named by 1 `ld` operand, first at 0xF90DC8
 	call T_Value_ToAsciiDigits3                          ; F90E93  1d 00 1b f4
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F90E97  f1 40 25 00 00
 	ld XIY,DL_F29765                                     ; F90E9C  45 65 97 f2 00
-	ld XIX,Paint_C0mbinati0nM0dePage2Sound1_DL                                     ; F90EA1  44 83 97 f2 00
+	ld XIX,Paint_CombinationModePage2Sound1_DL                                     ; F90EA1  44 83 97 f2 00
 	call T_DisplayListB_Run                              ; F90EA6  1d f4 17 f4
 	calr PartRecord_GetPtr                                          ; F90EAA  1e 8c 36
 	bit	0, (ModeScreen_DirtyFields:16)                               ; F90EAD  f1 76 26 c8
@@ -7196,14 +7196,14 @@ Paint_Drawbar:
 ;          list's opcodes decoded or a caller that says what it is.
 ; ---------------------------------------------------------------------
 ; ModeScreen_DrawGmModeGlyph: On layer 0: GM mode ((0x7F4D) bit 2) set -> ModeScreen_DrawGmModeGlyph_DL2, glyph 0x1E at 0x0DB1; clear ->
-;   ModeScreen_DrawGmModeGlyph_DL1, the op-0E record over the same 3x24 cell. Called by Paint_SoundMode and Paint_C0mbinati0nM0dePage1.
+;   ModeScreen_DrawGmModeGlyph_DL1, the op-0E record over the same 3x24 cell. Called by Paint_SoundMode and Paint_CombinationModePage1.
 ;   Basis: callers + body (+ the GM-mode bit in two notes). (notes/naming-pilot-2026-10-06/proposals_wave2_e.json)
 ModeScreen_DrawGmModeGlyph:
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F911B6  f1 40 25 00 00
 	bit	2, (0x7f4d:16)                               ; F911BB  f1 4d 7f ca
 	jr nz, .LF911D1                                      ; F911BF  6e 10
 	ld XIY,ModeScreen_DrawGmModeGlyph_DL1                                     ; F911C1  45 30 89 f2 00
-	ld XIX,Paint_C0mbinati0nM0dePage1_DL1                                     ; F911C6  44 38 89 f2 00
+	ld XIX,Paint_CombinationModePage1_DL1                                     ; F911C6  44 38 89 f2 00
 	call T_DisplayList_Run                               ; F911CB  1d f0 17 f4
 	jr .LF911DF                                          ; F911CF  68 0e
 .LF911D1:
@@ -7277,7 +7277,7 @@ SoftKeyCol2_LvlVol_Join:
 .LF9125E:
 	calr PartRecord_GetPtr                                          ; F9125E  1e d8 32
 	ld e, (UI_PartIndex:16)                                   ; F91261  c1 50 22 25
-	calr C0mbinati0nM0de_StepPartVol                                          ; F91265  1e 61 14
+	calr CombinationMode_StepPartVol                                          ; F91265  1e 61 14
 .LF91268:
 	ret                                                  ; F91268  0e
 ; SoftKeyCol3_Pan -- soft-key column 3 (PAN) handler: step in W, then SoftKeyCol3_Pan_Step
@@ -7300,7 +7300,7 @@ SoftKeyCol3_Pan_Join:
 .LF9128C:
 	calr PartRecord_GetPtr                                          ; F9128C  1e aa 32
 	ld e, (UI_PartIndex:16)                                   ; F9128F  c1 50 22 25
-	calr C0mbinati0nM0de_StepPartPan                                          ; F91293  1e fd 13
+	calr CombinationMode_StepPartPan                                          ; F91293  1e fd 13
 .LF91296:
 	ret                                                  ; F91296  0e
 ; SoftKeyCol4_Eff1 -- soft-key column 4 (EFF1) handler: step in W, then SoftKeyCol4_Eff1_Step
@@ -7426,13 +7426,13 @@ SoftKeyCol6_Rev_Join:
 ; SoftKeyCol7_Int -- soft-key column 7 (INT) handler
 ; Evidence: entry [6] of DisplayListPtrs_F90CD8 (SOUND MODE) and of DisplayListPtrs_F914FB (COMBINATION page 1); code
 ;   6 = SOFT KEY column 7 (FINDINGS-prom_a-panel-control-map.md 1); both screens label column 7 "INT". (0x209B) =
-;   0x0686, or (0x2075),0x01, XIY = PartRecord_GetPtr, E = part, then C0mbinati0nM0de_SetPartInt.
+;   0x0686, or (0x2075),0x01, XIY = PartRecord_GetPtr, E = part, then CombinationMode_SetPartInt.
 SoftKeyCol7_Int:
 	ldw (PanelDial_DownButton:16), 0x0686                              ; F9139B  f1 9b 20 02 86 06
 	or	(UI_RequestBits:16), 0x01                            ; F913A1  c1 75 20 3e 01
 	calr PartRecord_GetPtr                                          ; F913A6  1e 90 31
 	ld e, (UI_PartIndex:16)                                   ; F913A9  c1 50 22 25
-	calr C0mbinati0nM0de_SetPartInt                                          ; F913AD  1e b5 12
+	calr CombinationMode_SetPartInt                                          ; F913AD  1e b5 12
 	ret                                                  ; F913B0  0e
 ; SoftKeyCol8_Midi -- soft-key column 8 (MIDI) handler: step in W, then SoftKeyCol8_Midi_Step
 ; Evidence: entry [7] of DisplayListPtrs_F90CD8 (SOUND MODE only); code 7 = SOFT KEY column 8; SOUND MODE labels it
@@ -7479,9 +7479,9 @@ DisplayListPtrs_F90CD8_Nop9:   ; entry: named by 1 `.long` operand, first at 0xF
 	ret                                                  ; F91405  0e
 DisplayListPtrs_F90CD8_Nop10:   ; entry: named by 1 `.long` operand, first at 0xF90D00
 	ret                                                  ; F91406  0e
-; LcdKeyRow4_SoundModeOrC0mbinati0nM0de: slot 11 (LCD key row 4) of both DisplayListPtrs_F90CD8 (SOUND MODE) and DisplayListPtrs_F914FB
+; LcdKeyRow4_SoundModeOrCombinationMode: slot 11 (LCD key row 4) of both DisplayListPtrs_F90CD8 (SOUND MODE) and DisplayListPtrs_F914FB
 ;   (COMBINATION MODE page 1).
-LcdKeyRow4_SoundModeOrC0mbinati0nM0de:   ; entry: named by 2 `.long` operands, first at 0xF90D04
+LcdKeyRow4_SoundModeOrCombinationMode:   ; entry: named by 2 `.long` operands, first at 0xF90D04
 	call PartRecord_GetSecondHalfPtr                                        ; F91407  1d 4d 45 f9
 	ld A,(XIY+0x18)                                      ; F9140B  8d 18 21
 	bit 0x07,W                                           ; F9140E  c8 33 07
@@ -7633,23 +7633,23 @@ GmMode_RepaintModeScreen:
 	or	(UI_Request_Hi:16), 0x10                            ; F914D3  c1 71 20 3e 10
 .LF914D8:
 	ret                                                  ; F914D8  0e
-; InstallPainter_C0mbinati0nM0de_Entry -- ENTER method of screen 2, a pure wrapper for InstallPainter_C0mbinati0nM0de
-; Evidence: PanelScreen_VtableTable_ViewB entry 2 (SCREEN ID 0x02) -> T_InstallPainter_C0mbinati0nM0de_Entry `jp 0xF914D9`; the body is `calr
-;   InstallPainter_C0mbinati0nM0de / ret`.
-InstallPainter_C0mbinati0nM0de_Entry:
-	calr InstallPainter_C0mbinati0nM0de                                          ; F914D9  1e 1f 01
+; InstallPainter_CombinationMode_Entry -- ENTER method of screen 2, a pure wrapper for InstallPainter_CombinationMode
+; Evidence: PanelScreen_VtableTable_ViewB entry 2 (SCREEN ID 0x02) -> T_InstallPainter_CombinationMode_Entry `jp 0xF914D9`; the body is `calr
+;   InstallPainter_CombinationMode / ret`.
+InstallPainter_CombinationMode_Entry:
+	calr InstallPainter_CombinationMode                                          ; F914D9  1e 1f 01
 	ret                                                  ; F914DC  0e
-; ScreenLeave_C0mbinati0nM0de -- LEAVE method of screen 2 (COMBINATION MODE)
-; Evidence: T_InstallPainter_C0mbinati0nM0de_Entry+4 = T_ScreenLeave_C0mbinati0nM0de `jp 0xF914DD`; body `calr ScreenLeaveBody_C0mbinati0nM0de / ret`.
-ScreenLeave_C0mbinati0nM0de:
-	calr ScreenLeaveBody_C0mbinati0nM0de                                          ; F914DD  1e 5c 09
+; ScreenLeave_CombinationMode -- LEAVE method of screen 2 (COMBINATION MODE)
+; Evidence: T_InstallPainter_CombinationMode_Entry+4 = T_ScreenLeave_CombinationMode `jp 0xF914DD`; body `calr ScreenLeaveBody_CombinationMode / ret`.
+ScreenLeave_CombinationMode:
+	calr ScreenLeaveBody_CombinationMode                                          ; F914DD  1e 5c 09
 	ret                                                  ; F914E0  0e
-; ScreenButton_C0mbinati0nM0de -- BUTTON method of screen 2: dispatch through the current page's 32-entry table
-; Evidence: T_ScreenButton_C0mbinati0nM0de `jp 0xF914E1`; `ld XIX,DisplayListPtrs_F914FB / cp (0x2687),0 / jr z` else
+; ScreenButton_CombinationMode -- BUTTON method of screen 2: dispatch through the current page's 32-entry table
+; Evidence: T_ScreenButton_CombinationMode `jp 0xF914E1`; `ld XIX,DisplayListPtrs_F914FB / cp (0x2687),0 / jr z` else
 ;   DisplayListPtrs_F9157B, then T_PanelButton_CallTableEntry (PanelButton_CallTableEntry).  (0x2687) == 0 is page 1
-;   (InstallPainter_C0mbinati0nM0de posts the "PAGE1/2" painter then); ⚠ the two tables' headers name the arms the
+;   (InstallPainter_CombinationMode posts the "PAGE1/2" painter then); ⚠ the two tables' headers name the arms the
 ;   other way round.
-ScreenButton_C0mbinati0nM0de:
+ScreenButton_CombinationMode:
 	ld XIX,DisplayListPtrs_F914FB                        ; F914E1  44 fb 14 f9 00
 	cp	(CombinationMode_Page:16), 0x00                            ; F914E6  c1 87 26 3f 00
 	jr z, .LF914F2                                       ; F914EB  66 05
@@ -7681,16 +7681,16 @@ DisplayListPtrs_F914FB:
 	.long SoftKeyCol5_Eff2                                 ; F9150B  [  4]
 	.long SoftKeyCol6_Rev                                 ; F9150F  [  5]
 	.long SoftKeyCol7_Int                                 ; F91513  [  6]
-	.long SoftKeyCol8_C0mbinati0nM0de                                 ; F91517  [  7]
+	.long SoftKeyCol8_CombinationMode                                 ; F91517  [  7]
 	.long DisplayListPtrs_F914FB_Nop8                                 ; F9151B  [  8]
 	.long DisplayListPtrs_F914FB_Nop8                                 ; F9151F  [  9]
 	.long DisplayListPtrs_F914FB_Nop8                                 ; F91523  [ 10]
-	.long LcdKeyRow4_SoundModeOrC0mbinati0nM0de                                 ; F91527  [ 11]
+	.long LcdKeyRow4_SoundModeOrCombinationMode                                 ; F91527  [ 11]
 	.long DisplayListPtrs_F914FB_Nop8                                 ; F9152B  [ 12]
 	.long DisplayListPtrs_F914FB_Nop8                                 ; F9152F  [ 13]
 	.long DisplayListPtrs_F914FB_Nop8                                 ; F91533  [ 14]
-	.long ExitKey_C0mbinati0nM0de                                 ; F91537  [ 15]
-	.long PageKey_C0mbinati0nM0de                                 ; F9153B  [ 16]
+	.long ExitKey_CombinationMode                                 ; F91537  [ 15]
+	.long PageKey_CombinationMode                                 ; F9153B  [ 16]
 	.long SoftKeyCol1_Oct_AltCode                                 ; F9153F  [ 17]
 	.long SoftKeyCol2_LvlVol_AltCode                                 ; F91543  [ 18]
 	.long SoftKeyCol3_Pan_AltCode                                 ; F91547  [ 19]
@@ -7698,7 +7698,7 @@ DisplayListPtrs_F914FB:
 	.long SoftKeyCol5_Eff2_AltCode                                 ; F9154F  [ 21]
 	.long SoftKeyCol6_Rev_AltCode                                 ; F91553  [ 22]
 	.long SoftKeyCol7_Int_AltCode                                 ; F91557  [ 23]
-	.long C0mbinati0nM0de_Button24                                 ; F9155B  [ 24]
+	.long CombinationMode_Button24                                 ; F9155B  [ 24]
 	.long DisplayListPtrs_F90CD8_Nop25                                 ; F9155F  [ 25]
 	.long DisplayListPtrs_F914FB_Nop26                                 ; F91563  [ 26]
 	.long DisplayListPtrs_F914FB_Nop27                                 ; F91567  [ 27]
@@ -7713,31 +7713,31 @@ DisplayListPtrs_F914FB:
 ; ---------------------------------------------------------------------
 
 DisplayListPtrs_F9157B:
-	.long SoftKeyCol1_C0mbinati0nM0de_Page2                                 ; F9157B  [  0]
-	.long SoftKeyCol2_C0mbinati0nM0de_Page2                                 ; F9157F  [  1]
-	.long SoftKeyCol3_C0mbinati0nM0de_Page2                                 ; F91583  [  2]
-	.long SoftKeyCol4_C0mbinati0nM0de_Page2                                 ; F91587  [  3]
-	.long SoftKeyCol5_C0mbinati0nM0de_Page2                                 ; F9158B  [  4]
-	.long SoftKeyCol6_C0mbinati0nM0de_Page2                                 ; F9158F  [  5]
-	.long SoftKeyCol7_C0mbinati0nM0de_Page2                                 ; F91593  [  6]
-	.long SoftKeyCol8_C0mbinati0nM0de                                 ; F91597  [  7]
-	.long LcdKeyRow1_C0mbinati0nM0de_Page2                                 ; F9159B  [  8]
-	.long LcdKeyRow2_C0mbinati0nM0de_Page2                                 ; F9159F  [  9]
-	.long LcdKeyRow3_C0mbinati0nM0de_Page2                                 ; F915A3  [ 10]
-	.long LcdKeyRow4_C0mbinati0nM0de_Page2                                 ; F915A7  [ 11]
+	.long SoftKeyCol1_CombinationMode_Page2                                 ; F9157B  [  0]
+	.long SoftKeyCol2_CombinationMode_Page2                                 ; F9157F  [  1]
+	.long SoftKeyCol3_CombinationMode_Page2                                 ; F91583  [  2]
+	.long SoftKeyCol4_CombinationMode_Page2                                 ; F91587  [  3]
+	.long SoftKeyCol5_CombinationMode_Page2                                 ; F9158B  [  4]
+	.long SoftKeyCol6_CombinationMode_Page2                                 ; F9158F  [  5]
+	.long SoftKeyCol7_CombinationMode_Page2                                 ; F91593  [  6]
+	.long SoftKeyCol8_CombinationMode                                 ; F91597  [  7]
+	.long LcdKeyRow1_CombinationMode_Page2                                 ; F9159B  [  8]
+	.long LcdKeyRow2_CombinationMode_Page2                                 ; F9159F  [  9]
+	.long LcdKeyRow3_CombinationMode_Page2                                 ; F915A3  [ 10]
+	.long LcdKeyRow4_CombinationMode_Page2                                 ; F915A7  [ 11]
 	.long DisplayListPtrs_F9157B_Nop12                                 ; F915AB  [ 12]
 	.long DisplayListPtrs_F9157B_Nop13                                 ; F915AF  [ 13]
 	.long DisplayListPtrs_F9157B_Nop14                                 ; F915B3  [ 14]
-	.long ExitKey_C0mbinati0nM0de                                 ; F915B7  [ 15]
-	.long PageKey_C0mbinati0nM0de                                 ; F915BB  [ 16]
-	.long C0mbinati0nM0de_Page2_Button17                                 ; F915BF  [ 17]
-	.long C0mbinati0nM0de_Page2_Button18                                 ; F915C3  [ 18]
-	.long C0mbinati0nM0de_Page2_Button19                                 ; F915C7  [ 19]
-	.long C0mbinati0nM0de_Page2_Button20                                 ; F915CB  [ 20]
-	.long C0mbinati0nM0de_Page2_Button21                                 ; F915CF  [ 21]
-	.long C0mbinati0nM0de_Page2_Button22                                 ; F915D3  [ 22]
-	.long C0mbinati0nM0de_Page2_Button23                                 ; F915D7  [ 23]
-	.long C0mbinati0nM0de_Button24                                 ; F915DB  [ 24]
+	.long ExitKey_CombinationMode                                 ; F915B7  [ 15]
+	.long PageKey_CombinationMode                                 ; F915BB  [ 16]
+	.long CombinationMode_Page2_Button17                                 ; F915BF  [ 17]
+	.long CombinationMode_Page2_Button18                                 ; F915C3  [ 18]
+	.long CombinationMode_Page2_Button19                                 ; F915C7  [ 19]
+	.long CombinationMode_Page2_Button20                                 ; F915CB  [ 20]
+	.long CombinationMode_Page2_Button21                                 ; F915CF  [ 21]
+	.long CombinationMode_Page2_Button22                                 ; F915D3  [ 22]
+	.long CombinationMode_Page2_Button23                                 ; F915D7  [ 23]
+	.long CombinationMode_Button24                                 ; F915DB  [ 24]
 	.long DisplayListPtrs_F9157B_Nop25                                 ; F915DF  [ 25]
 	.long DisplayListPtrs_F914FB_Nop26                                 ; F915E3  [ 26]
 	.long DisplayListPtrs_F914FB_Nop27                                 ; F915E7  [ 27]
@@ -7745,12 +7745,12 @@ DisplayListPtrs_F9157B:
 	.long DisplayListPtrs_F914FB_Nop29                                 ; F915EF  [ 29]
 	.long DisplayListPtrs_F914FB_Nop30                                 ; F915F3  [ 30]
 	.long DisplayListPtrs_F914FB_Nop31                                 ; F915F7  [ 31]
-; InstallPainter_C0mbinati0nM0de -- set up screen 2 and install the painter of its current page
+; InstallPainter_CombinationMode -- set up screen 2 and install the painter of its current page
 ; Evidence: on an id change: T_CallbackQueue_ResetAndRestartTask2, (0x2687) = 0, (0x2666) = (0x266A) = all ones,
 ;   (0x2250) = 0; or (0x2075),0x01.  Unless (0x2095) bit 4: page 1 ((0x2687)=0) -> (0x209B) = 0x0181 and post
-;   Paint_C0mbinati0nM0dePage1 (lists Paint_C0mbinati0nM0dePage1_DL1.. "PAGE1/2", "C0MBINATI0N M0DE"); page 2 -> PanelDial_BindToPartColumn and post
-;   Paint_C0mbinati0nM0dePage2. Then continues into InstallPainter_C0mbinati0nM0deFields.
-InstallPainter_C0mbinati0nM0de:
+;   Paint_CombinationModePage1 (lists Paint_CombinationModePage1_DL1.. "PAGE1/2", "C0MBINATI0N M0DE"); page 2 -> PanelDial_BindToPartColumn and post
+;   Paint_CombinationModePage2. Then continues into InstallPainter_CombinationModeFields.
+InstallPainter_CombinationMode:
 	ld a, (UI_ScreenId:16)                                   ; F915FB  c1 7c 20 21
 	cp (UI_ScreenId_Previous:16), a                                    ; F915FF  c1 7d 20 f9
 	jr z, .LF9163B                                       ; F91603  66 36
@@ -7769,33 +7769,33 @@ InstallPainter_C0mbinati0nM0de:
 .LF9163B:
 	or	(UI_RequestBits:16), 0x01                            ; F9163B  c1 75 20 3e 01
 	bit	4, (UI_ScreenFlags:16)                               ; F91640  f1 95 20 cc
-	jr nz, InstallPainter_C0mbinati0nM0de_Join                                    ; F91644  6e 36
+	jr nz, InstallPainter_CombinationMode_Join                                    ; F91644  6e 36
 	cp	(CombinationMode_Page:16), 0x00                            ; F91646  c1 87 26 3f 00
 	jr nz, .LF91667                                      ; F9164B  6e 1a
 	ldw (PanelDial_DownButton:16), 0x0181                              ; F9164D  f1 9b 20 02 81 01
-	ld XWA,Paint_C0mbinati0nM0dePage1                                    ; F91653  40 7e 1c f9 00
+	ld XWA,Paint_CombinationModePage1                                    ; F91653  40 7e 1c f9 00
 	push XWA                                             ; F91658  38
 	call T_CallbackQueue_Post                            ; F91659  1d 84 2e f4
 	inc 4,XSP                                            ; F9165D  ef 64
 	ld a, 0x01:opc                                          ; F9165F  21 01
 	call T_Kernel_SemaSignal                             ; F91661  1d 88 2d f4
-	jr InstallPainter_C0mbinati0nM0de_Join                                        ; F91665  68 15
+	jr InstallPainter_CombinationMode_Join                                        ; F91665  68 15
 .LF91667:
 	calr PanelDial_BindToPartColumn                                      ; F91667  1e 27 01
-	ld XWA,Draw_C0mbinati0nM0dePage22Sound                                    ; F9166A  40 aa 16 f9 00
+	ld XWA,Draw_CombinationModePage22Sound                                    ; F9166A  40 aa 16 f9 00
 	push XWA                                             ; F9166F  38
 	call T_CallbackQueue_Post                            ; F91670  1d 84 2e f4
 	inc 4,XSP                                            ; F91674  ef 64
 	ld a, 0x01:opc                                          ; F91676  21 01
-; (sub_F91678 removed 2026-10-04: no code names it and the line above falls through into it -- part of InstallPainter_C0mbinati0nM0de;
+; (sub_F91678 removed 2026-10-04: no code names it and the line above falls through into it -- part of InstallPainter_CombinationMode;
 ;  notes/prom_a_stray_label_removal.py)
 	call T_Kernel_SemaSignal                             ; F91678  1d 88 2d f4
-; InstallPainter_C0mbinati0nM0de_Join -- paints the screen whose own text reads "C0MBINATI0N M0DE", "PAGE2/2", "SOUND:"
+; InstallPainter_CombinationMode_Join -- paints the screen whose own text reads "C0MBINATI0N M0DE", "PAGE2/2", "SOUND:"
 ;
 ; It reaches the display-list interpreters at 0xF417F0 (A) and 0xF417F4 (B)
 ; 4 time(s); XIY = list start, XIX = list end.  1 of those 4 list(s)
 ; carry text, and those are the ones that name this routine:
-;     site 0xF916C1  interpreter A  list 0xF29135  DL_C0mbinati0nM0dePage22Sound
+;     site 0xF916C1  interpreter A  list 0xF29135  DL_CombinationModePage22Sound
 ;        text: "C0MBINATI0N M0DE"; "PAGE2/2"; "SOUND:"; "SOUND"; "SOLO"; "INT"
 ; Evidence: the list address is the `ld XIY,0x00F29135` IMMEDIATE at the
 ;          instruction two before the cited `call`, and the text quoted
@@ -7812,12 +7812,12 @@ InstallPainter_C0mbinati0nM0de:
 ; Unknown: whether this routine also handles input for the screen, and
 ;          whether any other routine paints it.  Neither was searched.
 ; ⚠⚠ NAME RETRACTED IN ROUND 5, AND THE REASON MATTERS MORE THAN THE NAME.
-;    This routine was called Paint_C0mbinati0nM0de. The screen text quoted above is real
+;    This routine was called Paint_CombinationMode. The screen text quoted above is real
 ;    and every morpheme of that name really is in it -- but the text belongs to a
 ;    DIFFERENT function. The namer credited each display-list site to the nearest
 ;    preceding label BY SOURCE LINE and never checked the routine's own `ret`, so a
 ;    site inside an unlabelled function was attributed to whatever label came before
-;    it. The routine that really owns that screen is InstallPainter_C0mbinati0nM0de, which installs the painter
+;    it. The routine that really owns that screen is InstallPainter_CombinationMode, which installs the painter
 ;    at 0xF916AA via `ld XWA,0x00f916aa` at 0xF9166A. 0xF9167C installs two OTHER
 ;    callbacks, and neither contains any text at all.
 ;    That is LOCATED, not IDENTIFIED -- the failure this tree has documented before.
@@ -7825,10 +7825,10 @@ InstallPainter_C0mbinati0nM0de:
 ;    not established is that THIS routine paints it.
 ; Unknown: what this routine is for. Its body contains ZERO display-list calls.
 ; ---------------------------------------------------------------------
-InstallPainter_C0mbinati0nM0de_Join:
+InstallPainter_CombinationMode_Join:
 	cp	(CombinationMode_Page:16), 0x00                            ; F9167C  c1 87 26 3f 00
 	jr nz, .LF91697                                      ; F91681  6e 14
-	ld XWA,C0mbinati0nM0de_RepaintPage1Fields                                    ; F91683  40 f2 1c f9 00
+	ld XWA,CombinationMode_RepaintPage1Fields                                    ; F91683  40 f2 1c f9 00
 	push XWA                                             ; F91688  38
 	call T_CallbackQueue_Post                            ; F91689  1d 84 2e f4
 	inc 4,XSP                                            ; F9168D  ef 64
@@ -7836,7 +7836,7 @@ InstallPainter_C0mbinati0nM0de_Join:
 	call T_Kernel_SemaSignal                             ; F91691  1d 88 2d f4
 	jr .LF916A9                                          ; F91695  68 12
 .LF91697:
-	ld XWA,Paint_C0mbinati0nM0dePage2Fields                                    ; F91697  40 25 17 f9 00
+	ld XWA,Paint_CombinationModePage2Fields                                    ; F91697  40 25 17 f9 00
 	push XWA                                             ; F9169C  38
 	call T_CallbackQueue_Post                            ; F9169D  1d 84 2e f4
 	inc 4,XSP                                            ; F916A1  ef 64
@@ -7844,14 +7844,14 @@ InstallPainter_C0mbinati0nM0de_Join:
 	call T_Kernel_SemaSignal                             ; F916A5  1d 88 2d f4
 .LF916A9:
 	ret                                                  ; F916A9  0e
-Draw_C0mbinati0nM0dePage22Sound:   ; entry: named by 1 `ld` operand, first at 0xF9166A
+Draw_CombinationModePage22Sound:   ; entry: named by 1 `ld` operand, first at 0xF9166A
 	xor C,C                                              ; F916AA  cb d3
 	ld a, 0x0c:opc                                          ; F916AC  21 0c
 	swi 7                                                ; F916AE  ff
 	ld a, 0x10:opc                                          ; F916AF  21 10
 	swi 7                                                ; F916B1  ff
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F916B2  f1 40 25 00 00
-	ld XIY,DL_C0mbinati0nM0dePage22Sound                 ; F916B7  45 35 91 f2 00
+	ld XIY,DL_CombinationModePage22Sound                 ; F916B7  45 35 91 f2 00
 	ld XIX,DL_F29672                                     ; F916BC  44 72 96 f2 00
 	call T_DisplayList_Run                               ; F916C1  1d f0 17 f4
 	ld (CombinationMode_EditRow:16), 0x00                                 ; F916C5  f1 78 26 00 00
@@ -7860,7 +7860,7 @@ Draw_C0mbinati0nM0dePage22Sound:   ; entry: named by 1 `ld` operand, first at 0x
 	ld XIX,0x00f296d6                                    ; F916D4  44 d6 96 f2 00
 	call T_DisplayList_Run                               ; F916D9  1d f0 17 f4
 	ld (CombinationMode_ShownPart:16), 0xff                                 ; F916DD  f1 7e 26 00 ff
-	calr C0mbinati0nM0de_ShowSelectedPart                                          ; F916E2  1e 48 0f
+	calr CombinationMode_ShowSelectedPart                                          ; F916E2  1e 48 0f
 	ld (CombinationMode_DirtySound:16), 0xff                                 ; F916E5  f1 79 26 00 ff
 	ld (CombinationMode_DirtyInt:16), 0xff                                 ; F916EA  f1 7a 26 00 ff
 	ld (CombinationMode_DirtyPan:16), 0xff                                 ; F916EF  f1 7b 26 00 ff
@@ -7877,14 +7877,14 @@ Draw_C0mbinati0nM0dePage22Sound:   ; entry: named by 1 `ld` operand, first at 0x
 	call T_DisplayList_Run                               ; F91720  1d f0 17 f4
 .LF91724:
 	ret                                                  ; F91724  0e
-; Paint_C0mbinati0nM0dePage2Fields -- redraw COMBINATION MODE page 2's dirty fields
-; Evidence: (0x2679) != 0 -> C0mbinati0nM0de_ShowSelectedPartSoundName first; then FieldRedraw_CallPerSetBit with
+; Paint_CombinationModePage2Fields -- redraw COMBINATION MODE page 2's dirty fields
+; Evidence: (0x2679) != 0 -> CombinationMode_ShowSelectedPartSoundName first; then FieldRedraw_CallPerSetBit with
 ;   FieldRedrawPtrs_F91865/_F91885/_F918A5/_F918C5 and masks (0x2679)/(0x267A)/(0x267B)/(0x267C) ((0x2540) layer
-;   0,1,0,0); clears the four masks; swi 7 fn 0x0C. Posted by InstallPainter_C0mbinati0nM0deFields when (0x2687) != 0.
-Paint_C0mbinati0nM0dePage2Fields:   ; entry: named by 1 `ld` operand, first at 0xF91697
+;   0,1,0,0); clears the four masks; swi 7 fn 0x0C. Posted by InstallPainter_CombinationModeFields when (0x2687) != 0.
+Paint_CombinationModePage2Fields:   ; entry: named by 1 `ld` operand, first at 0xF91697
 	cp	(CombinationMode_DirtySound:16), 0x00                            ; F91725  c1 79 26 3f 00
 	jr z, .LF9172F                                       ; F9172A  66 03
-	calr C0mbinati0nM0de_ShowSelectedPartSoundName                                          ; F9172C  1e b6 01
+	calr CombinationMode_ShowSelectedPartSoundName                                          ; F9172C  1e b6 01
 .LF9172F:
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F9172F  f1 40 25 00 00
 	ld XIY,FieldRedrawPtrs_F91865                        ; F91734  45 65 18 f9 00
@@ -7913,7 +7913,7 @@ Paint_C0mbinati0nM0dePage2Fields:   ; entry: named by 1 `ld` operand, first at 0
 ; PanelDial_BindToPartColumn -- point the dial at the soft-key column of the current part (0..7)
 ; Evidence: (0x2250) = k in 0..7 -> `ldw (0x209B),{0x0080,0x0181,...,0x0787}`, the same words the SoftKeyColN handlers
 ;   store; PanelEvent_Code21_Dial routes the dial as the (0x209B)/(0x209C) button pair.  Called by
-;   InstallPainter_C0mbinati0nM0de for page 2 (one column per part).
+;   InstallPainter_CombinationMode for page 2 (one column per part).
 PanelDial_BindToPartColumn:
 	ld a, (UI_PartIndex:16)                                   ; F91791  c1 50 22 21
 	cp a, 0x00:i3                                          ; F91795  c9 d8
@@ -7958,7 +7958,7 @@ PanelDial_BindToPartColumn:
 	ret                                                  ; F917F3  0e
 ; FieldRedraw_CallPerSetBit -- call routine k of the 8-entry table XIY for every set bit k of A
 ; Evidence: eight `bit k,A / jr z / ld XIX,(XIY+4k) / push XIY / push A / call (xix)` blocks, k = 0..7
-;   (0xF917F4-0xF91864); the module banner's "BITMASK dispatcher".  Called by Paint_C0mbinati0nM0dePage2Fields with
+;   (0xF917F4-0xF91864); the module banner's "BITMASK dispatcher".  Called by Paint_CombinationModePage2Fields with
 ;   the FieldRedrawPtrs_* tables.
 FieldRedraw_CallPerSetBit:
 	bit 0x00,A                                           ; F917F4  c9 33 00
@@ -8050,14 +8050,14 @@ FieldRedraw_CallPerSetBit:
 ; ---------------------------------------------------------------------
 
 FieldRedrawPtrs_F91865:
-	.long Paint_C0mbinati0nM0dePage2Sound1                                 ; F91865  [  0]
-	.long Paint_C0mbinati0nM0dePage2Sound2                                 ; F91869  [  1]
-	.long Paint_C0mbinati0nM0dePage2Sound3                                 ; F9186D  [  2]
-	.long Paint_C0mbinati0nM0dePage2Sound4                                 ; F91871  [  3]
-	.long Paint_C0mbinati0nM0dePage2Sound5                                 ; F91875  [  4]
-	.long Paint_C0mbinati0nM0dePage2Sound6                                 ; F91879  [  5]
-	.long Paint_C0mbinati0nM0dePage2Sound7                                 ; F9187D  [  6]
-	.long C0mbinati0nM0de_DrawPart8Sound                                 ; F91881  [  7]
+	.long Paint_CombinationModePage2Sound1                                 ; F91865  [  0]
+	.long Paint_CombinationModePage2Sound2                                 ; F91869  [  1]
+	.long Paint_CombinationModePage2Sound3                                 ; F9186D  [  2]
+	.long Paint_CombinationModePage2Sound4                                 ; F91871  [  3]
+	.long Paint_CombinationModePage2Sound5                                 ; F91875  [  4]
+	.long Paint_CombinationModePage2Sound6                                 ; F91879  [  5]
+	.long Paint_CombinationModePage2Sound7                                 ; F9187D  [  6]
+	.long CombinationMode_DrawPart8Sound                                 ; F91881  [  7]
 ; ---------------------------------------------------------------------
 ; FieldRedrawPtrs_F91885 -- 8 routine pointers, one per BIT
 ; Read by: 0xF91746 `ld XIY,0x00F91885`, handed to FieldRedraw_CallPerSetBit.
@@ -8074,14 +8074,14 @@ FieldRedrawPtrs_F91865:
 ; ---------------------------------------------------------------------
 
 FieldRedrawPtrs_F91885:
-	.long C0mbinati0nM0de_DrawPart1Int                                 ; F91885  [  0]
-	.long C0mbinati0nM0de_DrawPart2Int                                 ; F91889  [  1]
-	.long C0mbinati0nM0de_DrawPart3Int                                 ; F9188D  [  2]
-	.long C0mbinati0nM0de_DrawPart4Int                                 ; F91891  [  3]
-	.long C0mbinati0nM0de_DrawPart5Int                                 ; F91895  [  4]
-	.long C0mbinati0nM0de_DrawPart6Int                                 ; F91899  [  5]
-	.long C0mbinati0nM0de_DrawPart7Int                                 ; F9189D  [  6]
-	.long C0mbinati0nM0de_DrawPart8Int                                 ; F918A1  [  7]
+	.long CombinationMode_DrawPart1Int                                 ; F91885  [  0]
+	.long CombinationMode_DrawPart2Int                                 ; F91889  [  1]
+	.long CombinationMode_DrawPart3Int                                 ; F9188D  [  2]
+	.long CombinationMode_DrawPart4Int                                 ; F91891  [  3]
+	.long CombinationMode_DrawPart5Int                                 ; F91895  [  4]
+	.long CombinationMode_DrawPart6Int                                 ; F91899  [  5]
+	.long CombinationMode_DrawPart7Int                                 ; F9189D  [  6]
+	.long CombinationMode_DrawPart8Int                                 ; F918A1  [  7]
 ; ---------------------------------------------------------------------
 ; FieldRedrawPtrs_F918A5 -- 8 routine pointers, one per BIT
 ; Read by: 0xF91758 `ld XIY,0x00F918A5`, handed to FieldRedraw_CallPerSetBit.
@@ -8098,14 +8098,14 @@ FieldRedrawPtrs_F91885:
 ; ---------------------------------------------------------------------
 
 FieldRedrawPtrs_F918A5:
-	.long C0mbinati0nM0de_DrawPart1Pan                                 ; F918A5  [  0]
-	.long C0mbinati0nM0de_DrawPart2Pan                                 ; F918A9  [  1]
-	.long C0mbinati0nM0de_DrawPart3Pan                                 ; F918AD  [  2]
-	.long C0mbinati0nM0de_DrawPart4Pan                                 ; F918B1  [  3]
-	.long C0mbinati0nM0de_DrawPart5Pan                                 ; F918B5  [  4]
-	.long C0mbinati0nM0de_DrawPart6Pan                                 ; F918B9  [  5]
-	.long C0mbinati0nM0de_DrawPart7Pan                                 ; F918BD  [  6]
-	.long C0mbinati0nM0de_DrawPart8Pan                                 ; F918C1  [  7]
+	.long CombinationMode_DrawPart1Pan                                 ; F918A5  [  0]
+	.long CombinationMode_DrawPart2Pan                                 ; F918A9  [  1]
+	.long CombinationMode_DrawPart3Pan                                 ; F918AD  [  2]
+	.long CombinationMode_DrawPart4Pan                                 ; F918B1  [  3]
+	.long CombinationMode_DrawPart5Pan                                 ; F918B5  [  4]
+	.long CombinationMode_DrawPart6Pan                                 ; F918B9  [  5]
+	.long CombinationMode_DrawPart7Pan                                 ; F918BD  [  6]
+	.long CombinationMode_DrawPart8Pan                                 ; F918C1  [  7]
 ; ---------------------------------------------------------------------
 ; FieldRedrawPtrs_F918C5 -- 8 routine pointers, one per BIT
 ; Read by: 0xF9176A `ld XIY,0x00F918C5`, handed to FieldRedraw_CallPerSetBit.
@@ -8122,19 +8122,19 @@ FieldRedrawPtrs_F918A5:
 ; ---------------------------------------------------------------------
 
 FieldRedrawPtrs_F918C5:
-	.long C0mbinati0nM0de_DrawPart1Vol                                 ; F918C5  [  0]
-	.long C0mbinati0nM0de_DrawPart2Vol                                 ; F918C9  [  1]
-	.long C0mbinati0nM0de_DrawPart3Vol                                 ; F918CD  [  2]
-	.long C0mbinati0nM0de_DrawPart4Vol                                 ; F918D1  [  3]
-	.long C0mbinati0nM0de_DrawPart5Vol                                 ; F918D5  [  4]
-	.long C0mbinati0nM0de_DrawPart6Vol                                 ; F918D9  [  5]
-	.long C0mbinati0nM0de_DrawPart7Vol                                 ; F918DD  [  6]
-	.long C0mbinati0nM0de_DrawPart8Vol                                 ; F918E1  [  7]
-; C0mbinati0nM0de_ShowSelectedPartSoundName: COMBINATION MODE page 2: draws the selected part's sound name (part
-;   record 0xF2AB50[UI_PartIndex], T_SoundName_Lookup) at (0x9B, 0x1B), then C0mbinati0nM0de_ShowSelectedPart. Posted
-;   by the page-2 soft keys after they pick a part; run by Paint_C0mbinati0nM0dePage2Fields. Basis: callers + body.
+	.long CombinationMode_DrawPart1Vol                                 ; F918C5  [  0]
+	.long CombinationMode_DrawPart2Vol                                 ; F918C9  [  1]
+	.long CombinationMode_DrawPart3Vol                                 ; F918CD  [  2]
+	.long CombinationMode_DrawPart4Vol                                 ; F918D1  [  3]
+	.long CombinationMode_DrawPart5Vol                                 ; F918D5  [  4]
+	.long CombinationMode_DrawPart6Vol                                 ; F918D9  [  5]
+	.long CombinationMode_DrawPart7Vol                                 ; F918DD  [  6]
+	.long CombinationMode_DrawPart8Vol                                 ; F918E1  [  7]
+; CombinationMode_ShowSelectedPartSoundName: COMBINATION MODE page 2: draws the selected part's sound name (part
+;   record 0xF2AB50[UI_PartIndex], T_SoundName_Lookup) at (0x9B, 0x1B), then CombinationMode_ShowSelectedPart. Posted
+;   by the page-2 soft keys after they pick a part; run by Paint_CombinationModePage2Fields. Basis: callers + body.
 ;   (wsa1/notes/naming-pilot-2026-10-06/proposals_prom_a.json)
-C0mbinati0nM0de_ShowSelectedPartSoundName:
+CombinationMode_ShowSelectedPartSoundName:
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F918E5  f1 40 25 00 00
 	ld XIZ,0x00f2ab50                                    ; F918EA  46 50 ab f2 00
 	ld l, (UI_PartIndex:16)                                   ; F918EF  c1 50 22 27
@@ -8152,405 +8152,405 @@ C0mbinati0nM0de_ShowSelectedPartSoundName:
 	ldw (LCD_Y0:16), 0x1b                                ; F91919  f1 32 25 02 1b 00
 	ld a, 0x17:opc                                          ; F9191F  21 17
 	swi 7                                                ; F91921  ff
-	calr C0mbinati0nM0de_ShowSelectedPart                                          ; F91922  1e 08 0d
+	calr CombinationMode_ShowSelectedPart                                          ; F91922  1e 08 0d
 	ret                                                  ; F91925  0e
-; Paint_C0mbinati0nM0dePage2Sound1 -- draw part 1's sound number in COMBINATION MODE page 2's SOUND row
+; Paint_CombinationModePage2Sound1 -- draw part 1's sound number in COMBINATION MODE page 2's SOUND row
 ; Evidence: entry [0] of FieldRedrawPtrs_F91865 (bit 0 of (0x2679)); A = (0x76DD) << 3 | (0x76DE), +1 -- record 0 of
 ;   RecordPtrs_RAM76A2_Panel at +0x3B/+0x3C, the group/member pair Paint_SoundModeFields formats the same way -- to
 ;   (0x2640), then T_DisplayListB_Run.  Page 2's text reads "SOUND:".
-Paint_C0mbinati0nM0dePage2Sound1:   ; entry: named by 1 `.long` operand, first at 0xF91865
+Paint_CombinationModePage2Sound1:   ; entry: named by 1 `.long` operand, first at 0xF91865
 	ld a, (0x76dd:16)                                   ; F91926  c1 dd 76 21
 	sla a, 0x03                                          ; F9192A  c9 ec 03
 	or a, (0x76de:16)                                    ; F9192D  c1 de 76 e1
 	inc 1,A                                              ; F91931  c9 61
 	ld (UI_DrawScratch:16), a                                   ; F91933  f1 40 26 41
-	ld XIY,Paint_C0mbinati0nM0dePage2Sound1_DL                                     ; F91937  45 83 97 f2 00
+	ld XIY,Paint_CombinationModePage2Sound1_DL                                     ; F91937  45 83 97 f2 00
 	ld XIX,DLText_PartCodes                                   ; F9193C  44 a0 97 f2 00
 	call T_DisplayListB_Run                              ; F91941  1d f4 17 f4
 	ret                                                  ; F91945  0e
-; Paint_C0mbinati0nM0dePage2Sound2 -- draw part 2's sound number in COMBINATION MODE page 2's SOUND row
+; Paint_CombinationModePage2Sound2 -- draw part 2's sound number in COMBINATION MODE page 2's SOUND row
 ; Evidence: entry [1] of FieldRedrawPtrs_F91865 (bit 1 of (0x2679)); A = (0x771D) << 3 | (0x771E), +1 -- record 1 of
 ;   RecordPtrs_RAM76A2_Panel at +0x3B/+0x3C, the group/member pair Paint_SoundModeFields formats the same way -- to
 ;   (0x2640), then T_DisplayListB_Run.  Page 2's text reads "SOUND:".
-Paint_C0mbinati0nM0dePage2Sound2:   ; entry: named by 1 `.long` operand, first at 0xF91869
+Paint_CombinationModePage2Sound2:   ; entry: named by 1 `.long` operand, first at 0xF91869
 	ld a, (0x771d:16)                                   ; F91946  c1 1d 77 21
 	sla a, 0x03                                          ; F9194A  c9 ec 03
 	or a, (0x771e:16)                                    ; F9194D  c1 1e 77 e1
 	inc 1,A                                              ; F91951  c9 61
 	ld (UI_DrawScratch:16), a                                   ; F91953  f1 40 26 41
-	ld XIY,Paint_C0mbinati0nM0dePage2Sound2_DL                                     ; F91957  45 63 98 f2 00
-	ld XIX,Paint_C0mbinati0nM0dePage2Sound3_DL                                     ; F9195C  44 80 98 f2 00
+	ld XIY,Paint_CombinationModePage2Sound2_DL                                     ; F91957  45 63 98 f2 00
+	ld XIX,Paint_CombinationModePage2Sound3_DL                                     ; F9195C  44 80 98 f2 00
 	call T_DisplayListB_Run                              ; F91961  1d f4 17 f4
 	ret                                                  ; F91965  0e
-; Paint_C0mbinati0nM0dePage2Sound3 -- draw part 3's sound number in COMBINATION MODE page 2's SOUND row
+; Paint_CombinationModePage2Sound3 -- draw part 3's sound number in COMBINATION MODE page 2's SOUND row
 ; Evidence: entry [2] of FieldRedrawPtrs_F91865 (bit 2 of (0x2679)); A = (0x775D) << 3 | (0x775E), +1 -- record 2 of
 ;   RecordPtrs_RAM76A2_Panel at +0x3B/+0x3C, the group/member pair Paint_SoundModeFields formats the same way -- to
 ;   (0x2640), then T_DisplayListB_Run.  Page 2's text reads "SOUND:".
-Paint_C0mbinati0nM0dePage2Sound3:   ; entry: named by 1 `.long` operand, first at 0xF9186D
+Paint_CombinationModePage2Sound3:   ; entry: named by 1 `.long` operand, first at 0xF9186D
 	ld a, (0x775d:16)                                   ; F91966  c1 5d 77 21
 	sla a, 0x03                                          ; F9196A  c9 ec 03
 	or a, (0x775e:16)                                    ; F9196D  c1 5e 77 e1
 	inc 1,A                                              ; F91971  c9 61
 	ld (UI_DrawScratch:16), a                                   ; F91973  f1 40 26 41
-	ld XIY,Paint_C0mbinati0nM0dePage2Sound3_DL                                     ; F91977  45 80 98 f2 00
-	ld XIX,Paint_C0mbinati0nM0dePage2Sound4_DL                                     ; F9197C  44 9d 98 f2 00
+	ld XIY,Paint_CombinationModePage2Sound3_DL                                     ; F91977  45 80 98 f2 00
+	ld XIX,Paint_CombinationModePage2Sound4_DL                                     ; F9197C  44 9d 98 f2 00
 	call T_DisplayListB_Run                              ; F91981  1d f4 17 f4
 	ret                                                  ; F91985  0e
-; Paint_C0mbinati0nM0dePage2Sound4 -- draw part 4's sound number in COMBINATION MODE page 2's SOUND row
+; Paint_CombinationModePage2Sound4 -- draw part 4's sound number in COMBINATION MODE page 2's SOUND row
 ; Evidence: entry [3] of FieldRedrawPtrs_F91865 (bit 3 of (0x2679)); A = (0x779D) << 3 | (0x779E), +1 -- record 3 of
 ;   RecordPtrs_RAM76A2_Panel at +0x3B/+0x3C, the group/member pair Paint_SoundModeFields formats the same way -- to
 ;   (0x2640), then T_DisplayListB_Run.  Page 2's text reads "SOUND:".
-Paint_C0mbinati0nM0dePage2Sound4:   ; entry: named by 1 `.long` operand, first at 0xF91871
+Paint_CombinationModePage2Sound4:   ; entry: named by 1 `.long` operand, first at 0xF91871
 	ld a, (0x779d:16)                                   ; F91986  c1 9d 77 21
 	sla a, 0x03                                          ; F9198A  c9 ec 03
 	or a, (0x779e:16)                                    ; F9198D  c1 9e 77 e1
 	inc 1,A                                              ; F91991  c9 61
 	ld (UI_DrawScratch:16), a                                   ; F91993  f1 40 26 41
-	ld XIY,Paint_C0mbinati0nM0dePage2Sound4_DL                                     ; F91997  45 9d 98 f2 00
-	ld XIX,Paint_C0mbinati0nM0dePage2Sound5_DL                                     ; F9199C  44 ba 98 f2 00
+	ld XIY,Paint_CombinationModePage2Sound4_DL                                     ; F91997  45 9d 98 f2 00
+	ld XIX,Paint_CombinationModePage2Sound5_DL                                     ; F9199C  44 ba 98 f2 00
 	call T_DisplayListB_Run                              ; F919A1  1d f4 17 f4
 	ret                                                  ; F919A5  0e
-; Paint_C0mbinati0nM0dePage2Sound5 -- draw part 5's sound number in COMBINATION MODE page 2's SOUND row
+; Paint_CombinationModePage2Sound5 -- draw part 5's sound number in COMBINATION MODE page 2's SOUND row
 ; Evidence: entry [4] of FieldRedrawPtrs_F91865 (bit 4 of (0x2679)); A = (0x77DD) << 3 | (0x77DE), +1 -- record 4 of
 ;   RecordPtrs_RAM76A2_Panel at +0x3B/+0x3C, the group/member pair Paint_SoundModeFields formats the same way -- to
 ;   (0x2640), then T_DisplayListB_Run.  Page 2's text reads "SOUND:".
-Paint_C0mbinati0nM0dePage2Sound5:   ; entry: named by 1 `.long` operand, first at 0xF91875
+Paint_CombinationModePage2Sound5:   ; entry: named by 1 `.long` operand, first at 0xF91875
 	ld a, (0x77dd:16)                                   ; F919A6  c1 dd 77 21
 	sla a, 0x03                                          ; F919AA  c9 ec 03
 	or a, (0x77de:16)                                    ; F919AD  c1 de 77 e1
 	inc 1,A                                              ; F919B1  c9 61
 	ld (UI_DrawScratch:16), a                                   ; F919B3  f1 40 26 41
-	ld XIY,Paint_C0mbinati0nM0dePage2Sound5_DL                                     ; F919B7  45 ba 98 f2 00
-	ld XIX,Paint_C0mbinati0nM0dePage2Sound6_DL                                     ; F919BC  44 d7 98 f2 00
+	ld XIY,Paint_CombinationModePage2Sound5_DL                                     ; F919B7  45 ba 98 f2 00
+	ld XIX,Paint_CombinationModePage2Sound6_DL                                     ; F919BC  44 d7 98 f2 00
 	call T_DisplayListB_Run                              ; F919C1  1d f4 17 f4
 	ret                                                  ; F919C5  0e
-; Paint_C0mbinati0nM0dePage2Sound6 -- draw part 6's sound number in COMBINATION MODE page 2's SOUND row
+; Paint_CombinationModePage2Sound6 -- draw part 6's sound number in COMBINATION MODE page 2's SOUND row
 ; Evidence: entry [5] of FieldRedrawPtrs_F91865 (bit 5 of (0x2679)); A = (0x781D) << 3 | (0x781E), +1 -- record 5 of
 ;   RecordPtrs_RAM76A2_Panel at +0x3B/+0x3C, the group/member pair Paint_SoundModeFields formats the same way -- to
 ;   (0x2640), then T_DisplayListB_Run.  Page 2's text reads "SOUND:".
-Paint_C0mbinati0nM0dePage2Sound6:   ; entry: named by 1 `.long` operand, first at 0xF91879
+Paint_CombinationModePage2Sound6:   ; entry: named by 1 `.long` operand, first at 0xF91879
 	ld a, (0x781d:16)                                   ; F919C6  c1 1d 78 21
 	sla a, 0x03                                          ; F919CA  c9 ec 03
 	or a, (0x781e:16)                                    ; F919CD  c1 1e 78 e1
 	inc 1,A                                              ; F919D1  c9 61
 	ld (UI_DrawScratch:16), a                                   ; F919D3  f1 40 26 41
-	ld XIY,Paint_C0mbinati0nM0dePage2Sound6_DL                                     ; F919D7  45 d7 98 f2 00
-	ld XIX,Paint_C0mbinati0nM0dePage2Sound7_DL                                     ; F919DC  44 f4 98 f2 00
+	ld XIY,Paint_CombinationModePage2Sound6_DL                                     ; F919D7  45 d7 98 f2 00
+	ld XIX,Paint_CombinationModePage2Sound7_DL                                     ; F919DC  44 f4 98 f2 00
 	call T_DisplayListB_Run                              ; F919E1  1d f4 17 f4
 	ret                                                  ; F919E5  0e
-; Paint_C0mbinati0nM0dePage2Sound7 -- draw part 7's sound number in COMBINATION MODE page 2's SOUND row
+; Paint_CombinationModePage2Sound7 -- draw part 7's sound number in COMBINATION MODE page 2's SOUND row
 ; Evidence: entry [6] of FieldRedrawPtrs_F91865 (bit 6 of (0x2679)); A = (0x785D) << 3 | (0x785E), +1 -- record 6 of
 ;   RecordPtrs_RAM76A2_Panel at +0x3B/+0x3C, the group/member pair Paint_SoundModeFields formats the same way -- to
 ;   (0x2640), then T_DisplayListB_Run.  Page 2's text reads "SOUND:".
-Paint_C0mbinati0nM0dePage2Sound7:   ; entry: named by 1 `.long` operand, first at 0xF9187D
+Paint_CombinationModePage2Sound7:   ; entry: named by 1 `.long` operand, first at 0xF9187D
 	ld a, (0x785d:16)                                   ; F919E6  c1 5d 78 21
 	sla a, 0x03                                          ; F919EA  c9 ec 03
 	or a, (0x785e:16)                                    ; F919ED  c1 5e 78 e1
 	inc 1,A                                              ; F919F1  c9 61
 	ld (UI_DrawScratch:16), a                                   ; F919F3  f1 40 26 41
-	ld XIY,Paint_C0mbinati0nM0dePage2Sound7_DL                                     ; F919F7  45 f4 98 f2 00
-	ld XIX,C0mbinati0nM0de_DrawPart8Sound_DL                                     ; F919FC  44 11 99 f2 00
+	ld XIY,Paint_CombinationModePage2Sound7_DL                                     ; F919F7  45 f4 98 f2 00
+	ld XIX,CombinationMode_DrawPart8Sound_DL                                     ; F919FC  44 11 99 f2 00
 	call T_DisplayListB_Run                              ; F91A01  1d f4 17 f4
 	ret                                                  ; F91A05  0e
-; C0mbinati0nM0de_DrawPart8Sound -- COMBINATION MODE page 2, SOUND row, column PT8: draws part 8's sound as bank code + 3-digit number
+; CombinationMode_DrawPart8Sound -- COMBINATION MODE page 2, SOUND row, column PT8: draws part 8's sound as bank code + 3-digit number
 ; Evidence: entry [7] of FieldRedrawPtrs_F91865 (bit 7 of (0x2679), run by sub_F917F4 from sub_F91725, the page-2 field repaint sub_F9167C posts when (0x2687) != 0).
-; (0x2640) = ((0x789D) << 3 | (0x789E)) + 1 at 0xF91A06-0xF91A13; then C0mbinati0nM0de_DrawPart8Sound_DL..C0mbinati0nM0de_DrawPart1Int_DL (interpreter B, 0xF91A21) draws (0x789F) through DLText_PartCodes ("R1-", "U1-", ...) at (0x124,0x30) and (0x2640) as 3 digits at (0x124,0x3A).
-; 0x789D-0x789F are +0x3B..+0x3D of part record 8 (0x7862 = 0x76A2 + 7*0x40, entry 7 of the 0xF2AB50 table); x 0x124 is the PT8 column of DL_C0mbinati0nM0dePage22Sound.
-C0mbinati0nM0de_DrawPart8Sound:   ; entry: named by 1 `.long` operand, first at 0xF91881
+; (0x2640) = ((0x789D) << 3 | (0x789E)) + 1 at 0xF91A06-0xF91A13; then CombinationMode_DrawPart8Sound_DL..CombinationMode_DrawPart1Int_DL (interpreter B, 0xF91A21) draws (0x789F) through DLText_PartCodes ("R1-", "U1-", ...) at (0x124,0x30) and (0x2640) as 3 digits at (0x124,0x3A).
+; 0x789D-0x789F are +0x3B..+0x3D of part record 8 (0x7862 = 0x76A2 + 7*0x40, entry 7 of the 0xF2AB50 table); x 0x124 is the PT8 column of DL_CombinationModePage22Sound.
+CombinationMode_DrawPart8Sound:   ; entry: named by 1 `.long` operand, first at 0xF91881
 	ld a, (0x789d:16)                                   ; F91A06  c1 9d 78 21
 	sla a, 0x03                                          ; F91A0A  c9 ec 03
 	or a, (0x789e:16)                                    ; F91A0D  c1 9e 78 e1
 	inc 1,A                                              ; F91A11  c9 61
 	ld (UI_DrawScratch:16), a                                   ; F91A13  f1 40 26 41
-	ld XIY,C0mbinati0nM0de_DrawPart8Sound_DL                                     ; F91A17  45 11 99 f2 00
-	ld XIX,C0mbinati0nM0de_DrawPart1Int_DL                                     ; F91A1C  44 2e 99 f2 00
+	ld XIY,CombinationMode_DrawPart8Sound_DL                                     ; F91A17  45 11 99 f2 00
+	ld XIX,CombinationMode_DrawPart1Int_DL                                     ; F91A1C  44 2e 99 f2 00
 	call T_DisplayListB_Run                              ; F91A21  1d f4 17 f4
 	ret                                                  ; F91A25  0e
-; C0mbinati0nM0de_DrawPart1Int -- COMBINATION MODE page 2, INT row, column PT1: draws part 1's INT flag as a two-position indicator
+; CombinationMode_DrawPart1Int -- COMBINATION MODE page 2, INT row, column PT1: draws part 1's INT flag as a two-position indicator
 ; Evidence: entry [0] of FieldRedrawPtrs_F91885 (bit 0 of (0x267A), run by sub_F917F4 from the page-2 field repaint sub_F91725).
-; Runs C0mbinati0nM0de_DrawPart1Int_DL (interpreter B, two op-03 records): (0x76AF) AND 0x20 >> 5 indexes DLTable_F29944 for an swi 0x1B (LCD_Svc_1B_EraseRect) and the other table for an swi 0x05 (LCD_Svc_05_FillRect) -- one box up, one box down.
-; 0x76AF is +0x0D of part record 1 (0x76A2); bit 5 is the bit C0mbinati0nM0de_SetPartInt sets and clears. The row is labelled "INT" at (0x0D,0x49) in DL_C0mbinati0nM0dePage22Sound.
-C0mbinati0nM0de_DrawPart1Int:   ; entry: named by 1 `.long` operand, first at 0xF91885
-	ld XIY,C0mbinati0nM0de_DrawPart1Int_DL                                     ; F91A26  45 2e 99 f2 00
+; Runs CombinationMode_DrawPart1Int_DL (interpreter B, two op-03 records): (0x76AF) AND 0x20 >> 5 indexes DLTable_F29944 for an swi 0x1B (LCD_Svc_1B_EraseRect) and the other table for an swi 0x05 (LCD_Svc_05_FillRect) -- one box up, one box down.
+; 0x76AF is +0x0D of part record 1 (0x76A2); bit 5 is the bit CombinationMode_SetPartInt sets and clears. The row is labelled "INT" at (0x0D,0x49) in DL_CombinationModePage22Sound.
+CombinationMode_DrawPart1Int:   ; entry: named by 1 `.long` operand, first at 0xF91885
+	ld XIY,CombinationMode_DrawPart1Int_DL                                     ; F91A26  45 2e 99 f2 00
 	ld XIX,DLTable_F29944                                ; F91A2B  44 44 99 f2 00
 	call T_DisplayListB_Run                              ; F91A30  1d f4 17 f4
 	ret                                                  ; F91A34  0e
-; C0mbinati0nM0de_DrawPart2Int -- COMBINATION MODE page 2, INT row, column PT2: draws part 2's INT flag as a two-position indicator
+; CombinationMode_DrawPart2Int -- COMBINATION MODE page 2, INT row, column PT2: draws part 2's INT flag as a two-position indicator
 ; Evidence: entry [1] of FieldRedrawPtrs_F91885 (bit 1 of (0x267A), run by sub_F917F4 from the page-2 field repaint sub_F91725).
-; Runs C0mbinati0nM0de_DrawPart2Int_DL (interpreter B, two op-03 records): (0x76EF) AND 0x20 >> 5 indexes DLTable_F2997A for an swi 0x1B (LCD_Svc_1B_EraseRect) and the other table for an swi 0x05 (LCD_Svc_05_FillRect) -- one box up, one box down.
-; 0x76EF is +0x0D of part record 2 (0x76E2); bit 5 is the bit C0mbinati0nM0de_SetPartInt sets and clears. The row is labelled "INT" at (0x0D,0x49) in DL_C0mbinati0nM0dePage22Sound.
-C0mbinati0nM0de_DrawPart2Int:   ; entry: named by 1 `.long` operand, first at 0xF91889
-	ld XIY,C0mbinati0nM0de_DrawPart2Int_DL                                     ; F91A35  45 64 99 f2 00
+; Runs CombinationMode_DrawPart2Int_DL (interpreter B, two op-03 records): (0x76EF) AND 0x20 >> 5 indexes DLTable_F2997A for an swi 0x1B (LCD_Svc_1B_EraseRect) and the other table for an swi 0x05 (LCD_Svc_05_FillRect) -- one box up, one box down.
+; 0x76EF is +0x0D of part record 2 (0x76E2); bit 5 is the bit CombinationMode_SetPartInt sets and clears. The row is labelled "INT" at (0x0D,0x49) in DL_CombinationModePage22Sound.
+CombinationMode_DrawPart2Int:   ; entry: named by 1 `.long` operand, first at 0xF91889
+	ld XIY,CombinationMode_DrawPart2Int_DL                                     ; F91A35  45 64 99 f2 00
 	ld XIX,DLTable_F2997A                                ; F91A3A  44 7a 99 f2 00
 	call T_DisplayListB_Run                              ; F91A3F  1d f4 17 f4
 	ret                                                  ; F91A43  0e
-; C0mbinati0nM0de_DrawPart3Int -- COMBINATION MODE page 2, INT row, column PT3: draws part 3's INT flag as a two-position indicator
+; CombinationMode_DrawPart3Int -- COMBINATION MODE page 2, INT row, column PT3: draws part 3's INT flag as a two-position indicator
 ; Evidence: entry [2] of FieldRedrawPtrs_F91885 (bit 2 of (0x267A), run by sub_F917F4 from the page-2 field repaint sub_F91725).
-; Runs C0mbinati0nM0de_DrawPart3Int_DL (interpreter B, two op-03 records): (0x772F) AND 0x20 >> 5 indexes DLTable_F299B0 for an swi 0x1B (LCD_Svc_1B_EraseRect) and the other table for an swi 0x05 (LCD_Svc_05_FillRect) -- one box up, one box down.
-; 0x772F is +0x0D of part record 3 (0x7722); bit 5 is the bit C0mbinati0nM0de_SetPartInt sets and clears. The row is labelled "INT" at (0x0D,0x49) in DL_C0mbinati0nM0dePage22Sound.
-C0mbinati0nM0de_DrawPart3Int:   ; entry: named by 1 `.long` operand, first at 0xF9188D
-	ld XIY,C0mbinati0nM0de_DrawPart3Int_DL                                     ; F91A44  45 9a 99 f2 00
+; Runs CombinationMode_DrawPart3Int_DL (interpreter B, two op-03 records): (0x772F) AND 0x20 >> 5 indexes DLTable_F299B0 for an swi 0x1B (LCD_Svc_1B_EraseRect) and the other table for an swi 0x05 (LCD_Svc_05_FillRect) -- one box up, one box down.
+; 0x772F is +0x0D of part record 3 (0x7722); bit 5 is the bit CombinationMode_SetPartInt sets and clears. The row is labelled "INT" at (0x0D,0x49) in DL_CombinationModePage22Sound.
+CombinationMode_DrawPart3Int:   ; entry: named by 1 `.long` operand, first at 0xF9188D
+	ld XIY,CombinationMode_DrawPart3Int_DL                                     ; F91A44  45 9a 99 f2 00
 	ld XIX,DLTable_F299B0                                ; F91A49  44 b0 99 f2 00
 	call T_DisplayListB_Run                              ; F91A4E  1d f4 17 f4
 	ret                                                  ; F91A52  0e
-; C0mbinati0nM0de_DrawPart4Int -- COMBINATION MODE page 2, INT row, column PT4: draws part 4's INT flag as a two-position indicator
+; CombinationMode_DrawPart4Int -- COMBINATION MODE page 2, INT row, column PT4: draws part 4's INT flag as a two-position indicator
 ; Evidence: entry [3] of FieldRedrawPtrs_F91885 (bit 3 of (0x267A), run by sub_F917F4 from the page-2 field repaint sub_F91725).
-; Runs C0mbinati0nM0de_DrawPart4Int_DL (interpreter B, two op-03 records): (0x776F) AND 0x20 >> 5 indexes DLTable_F299E6 for an swi 0x1B (LCD_Svc_1B_EraseRect) and the other table for an swi 0x05 (LCD_Svc_05_FillRect) -- one box up, one box down.
-; 0x776F is +0x0D of part record 4 (0x7762); bit 5 is the bit C0mbinati0nM0de_SetPartInt sets and clears. The row is labelled "INT" at (0x0D,0x49) in DL_C0mbinati0nM0dePage22Sound.
-C0mbinati0nM0de_DrawPart4Int:   ; entry: named by 1 `.long` operand, first at 0xF91891
-	ld XIY,C0mbinati0nM0de_DrawPart4Int_DL                                     ; F91A53  45 d0 99 f2 00
+; Runs CombinationMode_DrawPart4Int_DL (interpreter B, two op-03 records): (0x776F) AND 0x20 >> 5 indexes DLTable_F299E6 for an swi 0x1B (LCD_Svc_1B_EraseRect) and the other table for an swi 0x05 (LCD_Svc_05_FillRect) -- one box up, one box down.
+; 0x776F is +0x0D of part record 4 (0x7762); bit 5 is the bit CombinationMode_SetPartInt sets and clears. The row is labelled "INT" at (0x0D,0x49) in DL_CombinationModePage22Sound.
+CombinationMode_DrawPart4Int:   ; entry: named by 1 `.long` operand, first at 0xF91891
+	ld XIY,CombinationMode_DrawPart4Int_DL                                     ; F91A53  45 d0 99 f2 00
 	ld XIX,DLTable_F299E6                                ; F91A58  44 e6 99 f2 00
 	call T_DisplayListB_Run                              ; F91A5D  1d f4 17 f4
 	ret                                                  ; F91A61  0e
-; C0mbinati0nM0de_DrawPart5Int -- COMBINATION MODE page 2, INT row, column PT5: draws part 5's INT flag as a two-position indicator
+; CombinationMode_DrawPart5Int -- COMBINATION MODE page 2, INT row, column PT5: draws part 5's INT flag as a two-position indicator
 ; Evidence: entry [4] of FieldRedrawPtrs_F91885 (bit 4 of (0x267A), run by sub_F917F4 from the page-2 field repaint sub_F91725).
-; Runs C0mbinati0nM0de_DrawPart5Int_DL (interpreter B, two op-03 records): (0x77AF) AND 0x20 >> 5 indexes DLTable_F29A1C for an swi 0x1B (LCD_Svc_1B_EraseRect) and the other table for an swi 0x05 (LCD_Svc_05_FillRect) -- one box up, one box down.
-; 0x77AF is +0x0D of part record 5 (0x77A2); bit 5 is the bit C0mbinati0nM0de_SetPartInt sets and clears. The row is labelled "INT" at (0x0D,0x49) in DL_C0mbinati0nM0dePage22Sound.
-C0mbinati0nM0de_DrawPart5Int:   ; entry: named by 1 `.long` operand, first at 0xF91895
-	ld XIY,C0mbinati0nM0de_DrawPart5Int_DL                                     ; F91A62  45 06 9a f2 00
+; Runs CombinationMode_DrawPart5Int_DL (interpreter B, two op-03 records): (0x77AF) AND 0x20 >> 5 indexes DLTable_F29A1C for an swi 0x1B (LCD_Svc_1B_EraseRect) and the other table for an swi 0x05 (LCD_Svc_05_FillRect) -- one box up, one box down.
+; 0x77AF is +0x0D of part record 5 (0x77A2); bit 5 is the bit CombinationMode_SetPartInt sets and clears. The row is labelled "INT" at (0x0D,0x49) in DL_CombinationModePage22Sound.
+CombinationMode_DrawPart5Int:   ; entry: named by 1 `.long` operand, first at 0xF91895
+	ld XIY,CombinationMode_DrawPart5Int_DL                                     ; F91A62  45 06 9a f2 00
 	ld XIX,DLTable_F29A1C                                ; F91A67  44 1c 9a f2 00
 	call T_DisplayListB_Run                              ; F91A6C  1d f4 17 f4
 	ret                                                  ; F91A70  0e
-; C0mbinati0nM0de_DrawPart6Int -- COMBINATION MODE page 2, INT row, column PT6: draws part 6's INT flag as a two-position indicator
+; CombinationMode_DrawPart6Int -- COMBINATION MODE page 2, INT row, column PT6: draws part 6's INT flag as a two-position indicator
 ; Evidence: entry [5] of FieldRedrawPtrs_F91885 (bit 5 of (0x267A), run by sub_F917F4 from the page-2 field repaint sub_F91725).
-; Runs C0mbinati0nM0de_DrawPart6Int_DL (interpreter B, two op-03 records): (0x77EF) AND 0x20 >> 5 indexes DLTable_F29A52 for an swi 0x1B (LCD_Svc_1B_EraseRect) and the other table for an swi 0x05 (LCD_Svc_05_FillRect) -- one box up, one box down.
-; 0x77EF is +0x0D of part record 6 (0x77E2); bit 5 is the bit C0mbinati0nM0de_SetPartInt sets and clears. The row is labelled "INT" at (0x0D,0x49) in DL_C0mbinati0nM0dePage22Sound.
-C0mbinati0nM0de_DrawPart6Int:   ; entry: named by 1 `.long` operand, first at 0xF91899
-	ld XIY,C0mbinati0nM0de_DrawPart6Int_DL                                     ; F91A71  45 3c 9a f2 00
+; Runs CombinationMode_DrawPart6Int_DL (interpreter B, two op-03 records): (0x77EF) AND 0x20 >> 5 indexes DLTable_F29A52 for an swi 0x1B (LCD_Svc_1B_EraseRect) and the other table for an swi 0x05 (LCD_Svc_05_FillRect) -- one box up, one box down.
+; 0x77EF is +0x0D of part record 6 (0x77E2); bit 5 is the bit CombinationMode_SetPartInt sets and clears. The row is labelled "INT" at (0x0D,0x49) in DL_CombinationModePage22Sound.
+CombinationMode_DrawPart6Int:   ; entry: named by 1 `.long` operand, first at 0xF91899
+	ld XIY,CombinationMode_DrawPart6Int_DL                                     ; F91A71  45 3c 9a f2 00
 	ld XIX,DLTable_F29A52                                ; F91A76  44 52 9a f2 00
 	call T_DisplayListB_Run                              ; F91A7B  1d f4 17 f4
 	ret                                                  ; F91A7F  0e
-; C0mbinati0nM0de_DrawPart7Int -- COMBINATION MODE page 2, INT row, column PT7: draws part 7's INT flag as a two-position indicator
+; CombinationMode_DrawPart7Int -- COMBINATION MODE page 2, INT row, column PT7: draws part 7's INT flag as a two-position indicator
 ; Evidence: entry [6] of FieldRedrawPtrs_F91885 (bit 6 of (0x267A), run by sub_F917F4 from the page-2 field repaint sub_F91725).
-; Runs C0mbinati0nM0de_DrawPart7Int_DL (interpreter B, two op-03 records): (0x782F) AND 0x20 >> 5 indexes DLTable_F29A88 for an swi 0x1B (LCD_Svc_1B_EraseRect) and the other table for an swi 0x05 (LCD_Svc_05_FillRect) -- one box up, one box down.
-; 0x782F is +0x0D of part record 7 (0x7822); bit 5 is the bit C0mbinati0nM0de_SetPartInt sets and clears. The row is labelled "INT" at (0x0D,0x49) in DL_C0mbinati0nM0dePage22Sound.
-C0mbinati0nM0de_DrawPart7Int:   ; entry: named by 1 `.long` operand, first at 0xF9189D
-	ld XIY,C0mbinati0nM0de_DrawPart7Int_DL                                     ; F91A80  45 72 9a f2 00
+; Runs CombinationMode_DrawPart7Int_DL (interpreter B, two op-03 records): (0x782F) AND 0x20 >> 5 indexes DLTable_F29A88 for an swi 0x1B (LCD_Svc_1B_EraseRect) and the other table for an swi 0x05 (LCD_Svc_05_FillRect) -- one box up, one box down.
+; 0x782F is +0x0D of part record 7 (0x7822); bit 5 is the bit CombinationMode_SetPartInt sets and clears. The row is labelled "INT" at (0x0D,0x49) in DL_CombinationModePage22Sound.
+CombinationMode_DrawPart7Int:   ; entry: named by 1 `.long` operand, first at 0xF9189D
+	ld XIY,CombinationMode_DrawPart7Int_DL                                     ; F91A80  45 72 9a f2 00
 	ld XIX,DLTable_F29A88                                ; F91A85  44 88 9a f2 00
 	call T_DisplayListB_Run                              ; F91A8A  1d f4 17 f4
 	ret                                                  ; F91A8E  0e
-; C0mbinati0nM0de_DrawPart8Int -- COMBINATION MODE page 2, INT row, column PT8: draws part 8's INT flag as a two-position indicator
+; CombinationMode_DrawPart8Int -- COMBINATION MODE page 2, INT row, column PT8: draws part 8's INT flag as a two-position indicator
 ; Evidence: entry [7] of FieldRedrawPtrs_F91885 (bit 7 of (0x267A), run by sub_F917F4 from the page-2 field repaint sub_F91725).
-; Runs C0mbinati0nM0de_DrawPart8Int_DL (interpreter B, two op-03 records): (0x786F) AND 0x20 >> 5 indexes DLTable_F29ABE for an swi 0x1B (LCD_Svc_1B_EraseRect) and the other table for an swi 0x05 (LCD_Svc_05_FillRect) -- one box up, one box down.
-; 0x786F is +0x0D of part record 8 (0x7862); bit 5 is the bit C0mbinati0nM0de_SetPartInt sets and clears. The row is labelled "INT" at (0x0D,0x49) in DL_C0mbinati0nM0dePage22Sound.
-C0mbinati0nM0de_DrawPart8Int:   ; entry: named by 1 `.long` operand, first at 0xF918A1
-	ld XIY,C0mbinati0nM0de_DrawPart8Int_DL                                     ; F91A8F  45 a8 9a f2 00
+; Runs CombinationMode_DrawPart8Int_DL (interpreter B, two op-03 records): (0x786F) AND 0x20 >> 5 indexes DLTable_F29ABE for an swi 0x1B (LCD_Svc_1B_EraseRect) and the other table for an swi 0x05 (LCD_Svc_05_FillRect) -- one box up, one box down.
+; 0x786F is +0x0D of part record 8 (0x7862); bit 5 is the bit CombinationMode_SetPartInt sets and clears. The row is labelled "INT" at (0x0D,0x49) in DL_CombinationModePage22Sound.
+CombinationMode_DrawPart8Int:   ; entry: named by 1 `.long` operand, first at 0xF918A1
+	ld XIY,CombinationMode_DrawPart8Int_DL                                     ; F91A8F  45 a8 9a f2 00
 	ld XIX,DLTable_F29ABE                                ; F91A94  44 be 9a f2 00
 	call T_DisplayListB_Run                              ; F91A99  1d f4 17 f4
 	ret                                                  ; F91A9D  0e
-; C0mbinati0nM0de_DrawPart1Pan -- COMBINATION MODE page 2, PAN row, column PT1: draws part 1's pan as text and as a 24x24 knob glyph
-; Evidence: entry [0] of FieldRedrawPtrs_F918A5 (bit 0 of (0x267B)); on layer (0x2540) = 2 runs C0mbinati0nM0de_DrawPart1Pan_DL (interpreter B): (0x76AA) AND 0x7F through DLText_PanL64CtrR63 at (0x00A,0x7B);
+; CombinationMode_DrawPart1Pan -- COMBINATION MODE page 2, PAN row, column PT1: draws part 1's pan as text and as a 24x24 knob glyph
+; Evidence: entry [0] of FieldRedrawPtrs_F918A5 (bit 0 of (0x267B)); on layer (0x2540) = 2 runs CombinationMode_DrawPart1Pan_DL (interpreter B): (0x76AA) AND 0x7F through DLText_PanL64CtrR63 at (0x00A,0x7B);
 ; then L = (0x76AA) AND 0x7F, IX = 0x1451, call T_DrawValueGlyph_24x24.
-; 0x76AA is +0x08 of part record 1, the byte C0mbinati0nM0de_StepPartPan steps; the row is labelled "PAN" at (0x0D,0x70) in DL_C0mbinati0nM0dePage22Sound.
-C0mbinati0nM0de_DrawPart1Pan:   ; entry: named by 1 `.long` operand, first at 0xF918A5
+; 0x76AA is +0x08 of part record 1, the byte CombinationMode_StepPartPan steps; the row is labelled "PAN" at (0x0D,0x70) in DL_CombinationModePage22Sound.
+CombinationMode_DrawPart1Pan:   ; entry: named by 1 `.long` operand, first at 0xF918A5
 	ld (LCD_CurrentLayer:16), 0x02                                 ; F91A9E  f1 40 25 00 02
-	ld XIY,C0mbinati0nM0de_DrawPart1Pan_DL                                     ; F91AA3  45 de 9a f2 00
-	ld XIX,C0mbinati0nM0de_DrawPart2Pan_DL                                     ; F91AA8  44 ef 9a f2 00
+	ld XIY,CombinationMode_DrawPart1Pan_DL                                     ; F91AA3  45 de 9a f2 00
+	ld XIX,CombinationMode_DrawPart2Pan_DL                                     ; F91AA8  44 ef 9a f2 00
 	call T_DisplayListB_Run                              ; F91AAD  1d f4 17 f4
 	ld l, (CombiPart_Pan:16)                                   ; F91AB1  c1 aa 76 27
 	and L,0x7f                                           ; F91AB5  cf cc 7f
 	ldw ix, 0x1451                                       ; F91AB8  34 51 14
 	call T_DrawValueGlyph_24x24                          ; F91ABB  1d 34 18 f4
 	ret                                                  ; F91ABF  0e
-; C0mbinati0nM0de_DrawPart2Pan -- COMBINATION MODE page 2, PAN row, column PT2: draws part 2's pan as text and as a 24x24 knob glyph
-; Evidence: entry [1] of FieldRedrawPtrs_F918A5 (bit 1 of (0x267B)); on layer (0x2540) = 2 runs C0mbinati0nM0de_DrawPart2Pan_DL (interpreter B): (0x76EA) AND 0x7F through DLText_PanL64CtrR63 at (0x032,0x7B);
+; CombinationMode_DrawPart2Pan -- COMBINATION MODE page 2, PAN row, column PT2: draws part 2's pan as text and as a 24x24 knob glyph
+; Evidence: entry [1] of FieldRedrawPtrs_F918A5 (bit 1 of (0x267B)); on layer (0x2540) = 2 runs CombinationMode_DrawPart2Pan_DL (interpreter B): (0x76EA) AND 0x7F through DLText_PanL64CtrR63 at (0x032,0x7B);
 ; then L = (0x76EA) AND 0x7F, IX = 0x1456, call T_DrawValueGlyph_24x24.
-; 0x76EA is +0x08 of part record 2, the byte C0mbinati0nM0de_StepPartPan steps; the row is labelled "PAN" at (0x0D,0x70) in DL_C0mbinati0nM0dePage22Sound.
-C0mbinati0nM0de_DrawPart2Pan:   ; entry: named by 1 `.long` operand, first at 0xF918A9
+; 0x76EA is +0x08 of part record 2, the byte CombinationMode_StepPartPan steps; the row is labelled "PAN" at (0x0D,0x70) in DL_CombinationModePage22Sound.
+CombinationMode_DrawPart2Pan:   ; entry: named by 1 `.long` operand, first at 0xF918A9
 	ld (LCD_CurrentLayer:16), 0x02                                 ; F91AC0  f1 40 25 00 02
-	ld XIY,C0mbinati0nM0de_DrawPart2Pan_DL                                     ; F91AC5  45 ef 9a f2 00
-	ld XIX,C0mbinati0nM0de_DrawPart3Pan_DL                                     ; F91ACA  44 00 9b f2 00
+	ld XIY,CombinationMode_DrawPart2Pan_DL                                     ; F91AC5  45 ef 9a f2 00
+	ld XIX,CombinationMode_DrawPart3Pan_DL                                     ; F91ACA  44 00 9b f2 00
 	call T_DisplayListB_Run                              ; F91ACF  1d f4 17 f4
 	ld l, (CombiPart_Pan+1*0x40:16)                                   ; F91AD3  c1 ea 76 27
 	and L,0x7f                                           ; F91AD7  cf cc 7f
 	ldw ix, 0x1456                                       ; F91ADA  34 56 14
 	call T_DrawValueGlyph_24x24                          ; F91ADD  1d 34 18 f4
 	ret                                                  ; F91AE1  0e
-; C0mbinati0nM0de_DrawPart3Pan -- COMBINATION MODE page 2, PAN row, column PT3: draws part 3's pan as text and as a 24x24 knob glyph
-; Evidence: entry [2] of FieldRedrawPtrs_F918A5 (bit 2 of (0x267B)); on layer (0x2540) = 2 runs C0mbinati0nM0de_DrawPart3Pan_DL (interpreter B): (0x772A) AND 0x7F through DLText_PanL64CtrR63 at (0x05A,0x7B);
+; CombinationMode_DrawPart3Pan -- COMBINATION MODE page 2, PAN row, column PT3: draws part 3's pan as text and as a 24x24 knob glyph
+; Evidence: entry [2] of FieldRedrawPtrs_F918A5 (bit 2 of (0x267B)); on layer (0x2540) = 2 runs CombinationMode_DrawPart3Pan_DL (interpreter B): (0x772A) AND 0x7F through DLText_PanL64CtrR63 at (0x05A,0x7B);
 ; then L = (0x772A) AND 0x7F, IX = 0x145B, call T_DrawValueGlyph_24x24.
-; 0x772A is +0x08 of part record 3, the byte C0mbinati0nM0de_StepPartPan steps; the row is labelled "PAN" at (0x0D,0x70) in DL_C0mbinati0nM0dePage22Sound.
-C0mbinati0nM0de_DrawPart3Pan:   ; entry: named by 1 `.long` operand, first at 0xF918AD
+; 0x772A is +0x08 of part record 3, the byte CombinationMode_StepPartPan steps; the row is labelled "PAN" at (0x0D,0x70) in DL_CombinationModePage22Sound.
+CombinationMode_DrawPart3Pan:   ; entry: named by 1 `.long` operand, first at 0xF918AD
 	ld (LCD_CurrentLayer:16), 0x02                                 ; F91AE2  f1 40 25 00 02
-	ld XIY,C0mbinati0nM0de_DrawPart3Pan_DL                                     ; F91AE7  45 00 9b f2 00
-	ld XIX,C0mbinati0nM0de_DrawPart4Pan_DL                                     ; F91AEC  44 11 9b f2 00
+	ld XIY,CombinationMode_DrawPart3Pan_DL                                     ; F91AE7  45 00 9b f2 00
+	ld XIX,CombinationMode_DrawPart4Pan_DL                                     ; F91AEC  44 11 9b f2 00
 	call T_DisplayListB_Run                              ; F91AF1  1d f4 17 f4
 	ld l, (CombiPart_Pan+2*0x40:16)                                   ; F91AF5  c1 2a 77 27
 	and L,0x7f                                           ; F91AF9  cf cc 7f
 	ldw ix, 0x145b                                       ; F91AFC  34 5b 14
 	call T_DrawValueGlyph_24x24                          ; F91AFF  1d 34 18 f4
 	ret                                                  ; F91B03  0e
-; C0mbinati0nM0de_DrawPart4Pan -- COMBINATION MODE page 2, PAN row, column PT4: draws part 4's pan as text and as a 24x24 knob glyph
-; Evidence: entry [3] of FieldRedrawPtrs_F918A5 (bit 3 of (0x267B)); on layer (0x2540) = 2 runs C0mbinati0nM0de_DrawPart4Pan_DL (interpreter B): (0x776A) AND 0x7F through DLText_PanL64CtrR63 at (0x082,0x7B);
+; CombinationMode_DrawPart4Pan -- COMBINATION MODE page 2, PAN row, column PT4: draws part 4's pan as text and as a 24x24 knob glyph
+; Evidence: entry [3] of FieldRedrawPtrs_F918A5 (bit 3 of (0x267B)); on layer (0x2540) = 2 runs CombinationMode_DrawPart4Pan_DL (interpreter B): (0x776A) AND 0x7F through DLText_PanL64CtrR63 at (0x082,0x7B);
 ; then L = (0x776A) AND 0x7F, IX = 0x1460, call T_DrawValueGlyph_24x24.
-; 0x776A is +0x08 of part record 4, the byte C0mbinati0nM0de_StepPartPan steps; the row is labelled "PAN" at (0x0D,0x70) in DL_C0mbinati0nM0dePage22Sound.
-C0mbinati0nM0de_DrawPart4Pan:   ; entry: named by 1 `.long` operand, first at 0xF918B1
+; 0x776A is +0x08 of part record 4, the byte CombinationMode_StepPartPan steps; the row is labelled "PAN" at (0x0D,0x70) in DL_CombinationModePage22Sound.
+CombinationMode_DrawPart4Pan:   ; entry: named by 1 `.long` operand, first at 0xF918B1
 	ld (LCD_CurrentLayer:16), 0x02                                 ; F91B04  f1 40 25 00 02
-	ld XIY,C0mbinati0nM0de_DrawPart4Pan_DL                                     ; F91B09  45 11 9b f2 00
-	ld XIX,C0mbinati0nM0de_DrawPart5Pan_DL                                     ; F91B0E  44 22 9b f2 00
+	ld XIY,CombinationMode_DrawPart4Pan_DL                                     ; F91B09  45 11 9b f2 00
+	ld XIX,CombinationMode_DrawPart5Pan_DL                                     ; F91B0E  44 22 9b f2 00
 	call T_DisplayListB_Run                              ; F91B13  1d f4 17 f4
 	ld l, (CombiPart_Pan+3*0x40:16)                                   ; F91B17  c1 6a 77 27
 	and L,0x7f                                           ; F91B1B  cf cc 7f
 	ldw ix, 0x1460                                       ; F91B1E  34 60 14
 	call T_DrawValueGlyph_24x24                          ; F91B21  1d 34 18 f4
 	ret                                                  ; F91B25  0e
-; C0mbinati0nM0de_DrawPart5Pan -- COMBINATION MODE page 2, PAN row, column PT5: draws part 5's pan as text and as a 24x24 knob glyph
-; Evidence: entry [4] of FieldRedrawPtrs_F918A5 (bit 4 of (0x267B)); on layer (0x2540) = 2 runs C0mbinati0nM0de_DrawPart5Pan_DL (interpreter B): (0x77AA) AND 0x7F through DLText_PanL64CtrR63 at (0x0AA,0x7B);
+; CombinationMode_DrawPart5Pan -- COMBINATION MODE page 2, PAN row, column PT5: draws part 5's pan as text and as a 24x24 knob glyph
+; Evidence: entry [4] of FieldRedrawPtrs_F918A5 (bit 4 of (0x267B)); on layer (0x2540) = 2 runs CombinationMode_DrawPart5Pan_DL (interpreter B): (0x77AA) AND 0x7F through DLText_PanL64CtrR63 at (0x0AA,0x7B);
 ; then L = (0x77AA) AND 0x7F, IX = 0x1465, call T_DrawValueGlyph_24x24.
-; 0x77AA is +0x08 of part record 5, the byte C0mbinati0nM0de_StepPartPan steps; the row is labelled "PAN" at (0x0D,0x70) in DL_C0mbinati0nM0dePage22Sound.
-C0mbinati0nM0de_DrawPart5Pan:   ; entry: named by 1 `.long` operand, first at 0xF918B5
+; 0x77AA is +0x08 of part record 5, the byte CombinationMode_StepPartPan steps; the row is labelled "PAN" at (0x0D,0x70) in DL_CombinationModePage22Sound.
+CombinationMode_DrawPart5Pan:   ; entry: named by 1 `.long` operand, first at 0xF918B5
 	ld (LCD_CurrentLayer:16), 0x02                                 ; F91B26  f1 40 25 00 02
-	ld XIY,C0mbinati0nM0de_DrawPart5Pan_DL                                     ; F91B2B  45 22 9b f2 00
-	ld XIX,C0mbinati0nM0de_DrawPart6Pan_DL                                     ; F91B30  44 33 9b f2 00
+	ld XIY,CombinationMode_DrawPart5Pan_DL                                     ; F91B2B  45 22 9b f2 00
+	ld XIX,CombinationMode_DrawPart6Pan_DL                                     ; F91B30  44 33 9b f2 00
 	call T_DisplayListB_Run                              ; F91B35  1d f4 17 f4
 	ld l, (CombiPart_Pan+4*0x40:16)                                   ; F91B39  c1 aa 77 27
 	and L,0x7f                                           ; F91B3D  cf cc 7f
 	ldw ix, 0x1465                                       ; F91B40  34 65 14
 	call T_DrawValueGlyph_24x24                          ; F91B43  1d 34 18 f4
 	ret                                                  ; F91B47  0e
-; C0mbinati0nM0de_DrawPart6Pan -- COMBINATION MODE page 2, PAN row, column PT6: draws part 6's pan as text and as a 24x24 knob glyph
-; Evidence: entry [5] of FieldRedrawPtrs_F918A5 (bit 5 of (0x267B)); on layer (0x2540) = 2 runs C0mbinati0nM0de_DrawPart6Pan_DL (interpreter B): (0x77EA) AND 0x7F through DLText_PanL64CtrR63 at (0x0D2,0x7B);
+; CombinationMode_DrawPart6Pan -- COMBINATION MODE page 2, PAN row, column PT6: draws part 6's pan as text and as a 24x24 knob glyph
+; Evidence: entry [5] of FieldRedrawPtrs_F918A5 (bit 5 of (0x267B)); on layer (0x2540) = 2 runs CombinationMode_DrawPart6Pan_DL (interpreter B): (0x77EA) AND 0x7F through DLText_PanL64CtrR63 at (0x0D2,0x7B);
 ; then L = (0x77EA) AND 0x7F, IX = 0x146A, call T_DrawValueGlyph_24x24.
-; 0x77EA is +0x08 of part record 6, the byte C0mbinati0nM0de_StepPartPan steps; the row is labelled "PAN" at (0x0D,0x70) in DL_C0mbinati0nM0dePage22Sound.
-C0mbinati0nM0de_DrawPart6Pan:   ; entry: named by 1 `.long` operand, first at 0xF918B9
+; 0x77EA is +0x08 of part record 6, the byte CombinationMode_StepPartPan steps; the row is labelled "PAN" at (0x0D,0x70) in DL_CombinationModePage22Sound.
+CombinationMode_DrawPart6Pan:   ; entry: named by 1 `.long` operand, first at 0xF918B9
 	ld (LCD_CurrentLayer:16), 0x02                                 ; F91B48  f1 40 25 00 02
-	ld XIY,C0mbinati0nM0de_DrawPart6Pan_DL                                     ; F91B4D  45 33 9b f2 00
-	ld XIX,C0mbinati0nM0de_DrawPart7Pan_DL                                     ; F91B52  44 44 9b f2 00
+	ld XIY,CombinationMode_DrawPart6Pan_DL                                     ; F91B4D  45 33 9b f2 00
+	ld XIX,CombinationMode_DrawPart7Pan_DL                                     ; F91B52  44 44 9b f2 00
 	call T_DisplayListB_Run                              ; F91B57  1d f4 17 f4
 	ld l, (CombiPart_Pan+5*0x40:16)                                   ; F91B5B  c1 ea 77 27
 	and L,0x7f                                           ; F91B5F  cf cc 7f
 	ldw ix, 0x146a                                       ; F91B62  34 6a 14
 	call T_DrawValueGlyph_24x24                          ; F91B65  1d 34 18 f4
 	ret                                                  ; F91B69  0e
-; C0mbinati0nM0de_DrawPart7Pan -- COMBINATION MODE page 2, PAN row, column PT7: draws part 7's pan as text and as a 24x24 knob glyph
-; Evidence: entry [6] of FieldRedrawPtrs_F918A5 (bit 6 of (0x267B)); on layer (0x2540) = 2 runs C0mbinati0nM0de_DrawPart7Pan_DL (interpreter B): (0x782A) AND 0x7F through DLText_PanL64CtrR63 at (0x0FA,0x7B);
+; CombinationMode_DrawPart7Pan -- COMBINATION MODE page 2, PAN row, column PT7: draws part 7's pan as text and as a 24x24 knob glyph
+; Evidence: entry [6] of FieldRedrawPtrs_F918A5 (bit 6 of (0x267B)); on layer (0x2540) = 2 runs CombinationMode_DrawPart7Pan_DL (interpreter B): (0x782A) AND 0x7F through DLText_PanL64CtrR63 at (0x0FA,0x7B);
 ; then L = (0x782A) AND 0x7F, IX = 0x146F, call T_DrawValueGlyph_24x24.
-; 0x782A is +0x08 of part record 7, the byte C0mbinati0nM0de_StepPartPan steps; the row is labelled "PAN" at (0x0D,0x70) in DL_C0mbinati0nM0dePage22Sound.
-C0mbinati0nM0de_DrawPart7Pan:   ; entry: named by 1 `.long` operand, first at 0xF918BD
+; 0x782A is +0x08 of part record 7, the byte CombinationMode_StepPartPan steps; the row is labelled "PAN" at (0x0D,0x70) in DL_CombinationModePage22Sound.
+CombinationMode_DrawPart7Pan:   ; entry: named by 1 `.long` operand, first at 0xF918BD
 	ld (LCD_CurrentLayer:16), 0x02                                 ; F91B6A  f1 40 25 00 02
-	ld XIY,C0mbinati0nM0de_DrawPart7Pan_DL                                     ; F91B6F  45 44 9b f2 00
-	ld XIX,C0mbinati0nM0de_DrawPart8Pan_DL                                     ; F91B74  44 55 9b f2 00
+	ld XIY,CombinationMode_DrawPart7Pan_DL                                     ; F91B6F  45 44 9b f2 00
+	ld XIX,CombinationMode_DrawPart8Pan_DL                                     ; F91B74  44 55 9b f2 00
 	call T_DisplayListB_Run                              ; F91B79  1d f4 17 f4
 	ld l, (CombiPart_Pan+6*0x40:16)                                   ; F91B7D  c1 2a 78 27
 	and L,0x7f                                           ; F91B81  cf cc 7f
 	ldw ix, 0x146f                                       ; F91B84  34 6f 14
 	call T_DrawValueGlyph_24x24                          ; F91B87  1d 34 18 f4
 	ret                                                  ; F91B8B  0e
-; C0mbinati0nM0de_DrawPart8Pan -- COMBINATION MODE page 2, PAN row, column PT8: draws part 8's pan as text and as a 24x24 knob glyph
-; Evidence: entry [7] of FieldRedrawPtrs_F918A5 (bit 7 of (0x267B)); on layer (0x2540) = 2 runs C0mbinati0nM0de_DrawPart8Pan_DL (interpreter B): (0x786A) AND 0x7F through DLText_PanL64CtrR63 at (0x122,0x7B);
+; CombinationMode_DrawPart8Pan -- COMBINATION MODE page 2, PAN row, column PT8: draws part 8's pan as text and as a 24x24 knob glyph
+; Evidence: entry [7] of FieldRedrawPtrs_F918A5 (bit 7 of (0x267B)); on layer (0x2540) = 2 runs CombinationMode_DrawPart8Pan_DL (interpreter B): (0x786A) AND 0x7F through DLText_PanL64CtrR63 at (0x122,0x7B);
 ; then L = (0x786A) AND 0x7F, IX = 0x1474, call T_DrawValueGlyph_24x24.
-; 0x786A is +0x08 of part record 8, the byte C0mbinati0nM0de_StepPartPan steps; the row is labelled "PAN" at (0x0D,0x70) in DL_C0mbinati0nM0dePage22Sound.
-C0mbinati0nM0de_DrawPart8Pan:   ; entry: named by 1 `.long` operand, first at 0xF918C1
+; 0x786A is +0x08 of part record 8, the byte CombinationMode_StepPartPan steps; the row is labelled "PAN" at (0x0D,0x70) in DL_CombinationModePage22Sound.
+CombinationMode_DrawPart8Pan:   ; entry: named by 1 `.long` operand, first at 0xF918C1
 	ld (LCD_CurrentLayer:16), 0x02                                 ; F91B8C  f1 40 25 00 02
-	ld XIY,C0mbinati0nM0de_DrawPart8Pan_DL                                     ; F91B91  45 55 9b f2 00
-	ld XIX,C0mbinati0nM0de_DrawPart1Vol_DL                                     ; F91B96  44 66 9b f2 00
+	ld XIY,CombinationMode_DrawPart8Pan_DL                                     ; F91B91  45 55 9b f2 00
+	ld XIX,CombinationMode_DrawPart1Vol_DL                                     ; F91B96  44 66 9b f2 00
 	call T_DisplayListB_Run                              ; F91B9B  1d f4 17 f4
 	ld l, (CombiPart_Pan+7*0x40:16)                                   ; F91B9F  c1 6a 78 27
 	and L,0x7f                                           ; F91BA3  cf cc 7f
 	ldw ix, 0x1474                                       ; F91BA6  34 74 14
 	call T_DrawValueGlyph_24x24                          ; F91BA9  1d 34 18 f4
 	ret                                                  ; F91BAD  0e
-; C0mbinati0nM0de_DrawPart1Vol -- COMBINATION MODE page 2, VOL row, column PT1: draws part 1's volume as 3 digits and as a level bitmap
-; Evidence: entry [0] of FieldRedrawPtrs_F918C5 (bit 0 of (0x267C)); runs C0mbinati0nM0de_DrawPart1Vol_DL (interpreter B: (0x76A5) AND 0x7F as 3 decimal digits at (0x00A,0xA7));
+; CombinationMode_DrawPart1Vol -- COMBINATION MODE page 2, VOL row, column PT1: draws part 1's volume as 3 digits and as a level bitmap
+; Evidence: entry [0] of FieldRedrawPtrs_F918C5 (bit 0 of (0x267C)); runs CombinationMode_DrawPart1Vol_DL (interpreter B: (0x76A5) AND 0x7F as 3 decimal digits at (0x00A,0xA7));
 ; then A = (0x76A5), IX = 0x1BA8, call LCD_BlitValueBar, which blits (swi 3, 5 bytes x 0x2E rows) entry A/8+1 (entry 0 for A = 0) of the 17-entry bitmap pointer table at 0xF29BC6.
-; 0x76A5 is +0x03 of part record 1, the byte C0mbinati0nM0de_StepPartVol steps; the row is labelled "VOL" at (0x0D,0x9B) in DL_C0mbinati0nM0dePage22Sound.
-C0mbinati0nM0de_DrawPart1Vol:   ; entry: named by 1 `.long` operand, first at 0xF918C5
-	ld XIY,C0mbinati0nM0de_DrawPart1Vol_DL                                     ; F91BAE  45 66 9b f2 00
-	ld XIX,C0mbinati0nM0de_DrawPart2Vol_DL                                     ; F91BB3  44 72 9b f2 00
+; 0x76A5 is +0x03 of part record 1, the byte CombinationMode_StepPartVol steps; the row is labelled "VOL" at (0x0D,0x9B) in DL_CombinationModePage22Sound.
+CombinationMode_DrawPart1Vol:   ; entry: named by 1 `.long` operand, first at 0xF918C5
+	ld XIY,CombinationMode_DrawPart1Vol_DL                                     ; F91BAE  45 66 9b f2 00
+	ld XIX,CombinationMode_DrawPart2Vol_DL                                     ; F91BB3  44 72 9b f2 00
 	call T_DisplayListB_Run                              ; F91BB8  1d f4 17 f4
 	ld a, (CombiPart_Volume:16)                                   ; F91BBC  c1 a5 76 21
 	ldw ix, 0x1ba8                                       ; F91BC0  34 a8 1b
 	call LCD_BlitValueBar                                        ; F91BC3  1d 8c 45 f9
 	ret                                                  ; F91BC7  0e
-; C0mbinati0nM0de_DrawPart2Vol -- COMBINATION MODE page 2, VOL row, column PT2: draws part 2's volume as 3 digits and as a level bitmap
-; Evidence: entry [1] of FieldRedrawPtrs_F918C5 (bit 1 of (0x267C)); runs C0mbinati0nM0de_DrawPart2Vol_DL (interpreter B: (0x76E5) AND 0x7F as 3 decimal digits at (0x032,0xA7));
+; CombinationMode_DrawPart2Vol -- COMBINATION MODE page 2, VOL row, column PT2: draws part 2's volume as 3 digits and as a level bitmap
+; Evidence: entry [1] of FieldRedrawPtrs_F918C5 (bit 1 of (0x267C)); runs CombinationMode_DrawPart2Vol_DL (interpreter B: (0x76E5) AND 0x7F as 3 decimal digits at (0x032,0xA7));
 ; then A = (0x76E5), IX = 0x1BAD, call LCD_BlitValueBar, which blits (swi 3, 5 bytes x 0x2E rows) entry A/8+1 (entry 0 for A = 0) of the 17-entry bitmap pointer table at 0xF29BC6.
-; 0x76E5 is +0x03 of part record 2, the byte C0mbinati0nM0de_StepPartVol steps; the row is labelled "VOL" at (0x0D,0x9B) in DL_C0mbinati0nM0dePage22Sound.
-C0mbinati0nM0de_DrawPart2Vol:   ; entry: named by 1 `.long` operand, first at 0xF918C9
-	ld XIY,C0mbinati0nM0de_DrawPart2Vol_DL                                     ; F91BC8  45 72 9b f2 00
-	ld XIX,C0mbinati0nM0de_DrawPart3Vol_DL                                     ; F91BCD  44 7e 9b f2 00
+; 0x76E5 is +0x03 of part record 2, the byte CombinationMode_StepPartVol steps; the row is labelled "VOL" at (0x0D,0x9B) in DL_CombinationModePage22Sound.
+CombinationMode_DrawPart2Vol:   ; entry: named by 1 `.long` operand, first at 0xF918C9
+	ld XIY,CombinationMode_DrawPart2Vol_DL                                     ; F91BC8  45 72 9b f2 00
+	ld XIX,CombinationMode_DrawPart3Vol_DL                                     ; F91BCD  44 7e 9b f2 00
 	call T_DisplayListB_Run                              ; F91BD2  1d f4 17 f4
 	ld a, (CombiPart_Volume+1*0x40:16)                                   ; F91BD6  c1 e5 76 21
 	ldw ix, 0x1bad                                       ; F91BDA  34 ad 1b
 	call LCD_BlitValueBar                                        ; F91BDD  1d 8c 45 f9
 	ret                                                  ; F91BE1  0e
-; C0mbinati0nM0de_DrawPart3Vol -- COMBINATION MODE page 2, VOL row, column PT3: draws part 3's volume as 3 digits and as a level bitmap
-; Evidence: entry [2] of FieldRedrawPtrs_F918C5 (bit 2 of (0x267C)); runs C0mbinati0nM0de_DrawPart3Vol_DL (interpreter B: (0x7725) AND 0x7F as 3 decimal digits at (0x05A,0xA7));
+; CombinationMode_DrawPart3Vol -- COMBINATION MODE page 2, VOL row, column PT3: draws part 3's volume as 3 digits and as a level bitmap
+; Evidence: entry [2] of FieldRedrawPtrs_F918C5 (bit 2 of (0x267C)); runs CombinationMode_DrawPart3Vol_DL (interpreter B: (0x7725) AND 0x7F as 3 decimal digits at (0x05A,0xA7));
 ; then A = (0x7725), IX = 0x1BB2, call LCD_BlitValueBar, which blits (swi 3, 5 bytes x 0x2E rows) entry A/8+1 (entry 0 for A = 0) of the 17-entry bitmap pointer table at 0xF29BC6.
-; 0x7725 is +0x03 of part record 3, the byte C0mbinati0nM0de_StepPartVol steps; the row is labelled "VOL" at (0x0D,0x9B) in DL_C0mbinati0nM0dePage22Sound.
-C0mbinati0nM0de_DrawPart3Vol:   ; entry: named by 1 `.long` operand, first at 0xF918CD
-	ld XIY,C0mbinati0nM0de_DrawPart3Vol_DL                                     ; F91BE2  45 7e 9b f2 00
-	ld XIX,C0mbinati0nM0de_DrawPart4Vol_DL                                     ; F91BE7  44 8a 9b f2 00
+; 0x7725 is +0x03 of part record 3, the byte CombinationMode_StepPartVol steps; the row is labelled "VOL" at (0x0D,0x9B) in DL_CombinationModePage22Sound.
+CombinationMode_DrawPart3Vol:   ; entry: named by 1 `.long` operand, first at 0xF918CD
+	ld XIY,CombinationMode_DrawPart3Vol_DL                                     ; F91BE2  45 7e 9b f2 00
+	ld XIX,CombinationMode_DrawPart4Vol_DL                                     ; F91BE7  44 8a 9b f2 00
 	call T_DisplayListB_Run                              ; F91BEC  1d f4 17 f4
 	ld a, (CombiPart_Volume+2*0x40:16)                                   ; F91BF0  c1 25 77 21
 	ldw ix, 0x1bb2                                       ; F91BF4  34 b2 1b
 	call LCD_BlitValueBar                                        ; F91BF7  1d 8c 45 f9
 	ret                                                  ; F91BFB  0e
-; C0mbinati0nM0de_DrawPart4Vol -- COMBINATION MODE page 2, VOL row, column PT4: draws part 4's volume as 3 digits and as a level bitmap
-; Evidence: entry [3] of FieldRedrawPtrs_F918C5 (bit 3 of (0x267C)); runs C0mbinati0nM0de_DrawPart4Vol_DL (interpreter B: (0x7765) AND 0x7F as 3 decimal digits at (0x082,0xA7));
+; CombinationMode_DrawPart4Vol -- COMBINATION MODE page 2, VOL row, column PT4: draws part 4's volume as 3 digits and as a level bitmap
+; Evidence: entry [3] of FieldRedrawPtrs_F918C5 (bit 3 of (0x267C)); runs CombinationMode_DrawPart4Vol_DL (interpreter B: (0x7765) AND 0x7F as 3 decimal digits at (0x082,0xA7));
 ; then A = (0x7765), IX = 0x1BB7, call LCD_BlitValueBar, which blits (swi 3, 5 bytes x 0x2E rows) entry A/8+1 (entry 0 for A = 0) of the 17-entry bitmap pointer table at 0xF29BC6.
-; 0x7765 is +0x03 of part record 4, the byte C0mbinati0nM0de_StepPartVol steps; the row is labelled "VOL" at (0x0D,0x9B) in DL_C0mbinati0nM0dePage22Sound.
-C0mbinati0nM0de_DrawPart4Vol:   ; entry: named by 1 `.long` operand, first at 0xF918D1
-	ld XIY,C0mbinati0nM0de_DrawPart4Vol_DL                                     ; F91BFC  45 8a 9b f2 00
-	ld XIX,C0mbinati0nM0de_DrawPart5Vol_DL                                     ; F91C01  44 96 9b f2 00
+; 0x7765 is +0x03 of part record 4, the byte CombinationMode_StepPartVol steps; the row is labelled "VOL" at (0x0D,0x9B) in DL_CombinationModePage22Sound.
+CombinationMode_DrawPart4Vol:   ; entry: named by 1 `.long` operand, first at 0xF918D1
+	ld XIY,CombinationMode_DrawPart4Vol_DL                                     ; F91BFC  45 8a 9b f2 00
+	ld XIX,CombinationMode_DrawPart5Vol_DL                                     ; F91C01  44 96 9b f2 00
 	call T_DisplayListB_Run                              ; F91C06  1d f4 17 f4
 	ld a, (CombiPart_Volume+3*0x40:16)                                   ; F91C0A  c1 65 77 21
 	ldw ix, 0x1bb7                                       ; F91C0E  34 b7 1b
 	call LCD_BlitValueBar                                        ; F91C11  1d 8c 45 f9
 	ret                                                  ; F91C15  0e
-; C0mbinati0nM0de_DrawPart5Vol -- COMBINATION MODE page 2, VOL row, column PT5: draws part 5's volume as 3 digits and as a level bitmap
-; Evidence: entry [4] of FieldRedrawPtrs_F918C5 (bit 4 of (0x267C)); runs C0mbinati0nM0de_DrawPart5Vol_DL (interpreter B: (0x77A5) AND 0x7F as 3 decimal digits at (0x0AA,0xA7));
+; CombinationMode_DrawPart5Vol -- COMBINATION MODE page 2, VOL row, column PT5: draws part 5's volume as 3 digits and as a level bitmap
+; Evidence: entry [4] of FieldRedrawPtrs_F918C5 (bit 4 of (0x267C)); runs CombinationMode_DrawPart5Vol_DL (interpreter B: (0x77A5) AND 0x7F as 3 decimal digits at (0x0AA,0xA7));
 ; then A = (0x77A5), IX = 0x1BBC, call LCD_BlitValueBar, which blits (swi 3, 5 bytes x 0x2E rows) entry A/8+1 (entry 0 for A = 0) of the 17-entry bitmap pointer table at 0xF29BC6.
-; 0x77A5 is +0x03 of part record 5, the byte C0mbinati0nM0de_StepPartVol steps; the row is labelled "VOL" at (0x0D,0x9B) in DL_C0mbinati0nM0dePage22Sound.
-C0mbinati0nM0de_DrawPart5Vol:   ; entry: named by 1 `.long` operand, first at 0xF918D5
-	ld XIY,C0mbinati0nM0de_DrawPart5Vol_DL                                     ; F91C16  45 96 9b f2 00
-	ld XIX,C0mbinati0nM0de_DrawPart6Vol_DL                                     ; F91C1B  44 a2 9b f2 00
+; 0x77A5 is +0x03 of part record 5, the byte CombinationMode_StepPartVol steps; the row is labelled "VOL" at (0x0D,0x9B) in DL_CombinationModePage22Sound.
+CombinationMode_DrawPart5Vol:   ; entry: named by 1 `.long` operand, first at 0xF918D5
+	ld XIY,CombinationMode_DrawPart5Vol_DL                                     ; F91C16  45 96 9b f2 00
+	ld XIX,CombinationMode_DrawPart6Vol_DL                                     ; F91C1B  44 a2 9b f2 00
 	call T_DisplayListB_Run                              ; F91C20  1d f4 17 f4
 	ld a, (CombiPart_Volume+4*0x40:16)                                   ; F91C24  c1 a5 77 21
 	ldw ix, 0x1bbc                                       ; F91C28  34 bc 1b
 	call LCD_BlitValueBar                                        ; F91C2B  1d 8c 45 f9
 	ret                                                  ; F91C2F  0e
-; C0mbinati0nM0de_DrawPart6Vol -- COMBINATION MODE page 2, VOL row, column PT6: draws part 6's volume as 3 digits and as a level bitmap
-; Evidence: entry [5] of FieldRedrawPtrs_F918C5 (bit 5 of (0x267C)); runs C0mbinati0nM0de_DrawPart6Vol_DL (interpreter B: (0x77E5) AND 0x7F as 3 decimal digits at (0x0D2,0xA7));
+; CombinationMode_DrawPart6Vol -- COMBINATION MODE page 2, VOL row, column PT6: draws part 6's volume as 3 digits and as a level bitmap
+; Evidence: entry [5] of FieldRedrawPtrs_F918C5 (bit 5 of (0x267C)); runs CombinationMode_DrawPart6Vol_DL (interpreter B: (0x77E5) AND 0x7F as 3 decimal digits at (0x0D2,0xA7));
 ; then A = (0x77E5), IX = 0x1BC1, call LCD_BlitValueBar, which blits (swi 3, 5 bytes x 0x2E rows) entry A/8+1 (entry 0 for A = 0) of the 17-entry bitmap pointer table at 0xF29BC6.
-; 0x77E5 is +0x03 of part record 6, the byte C0mbinati0nM0de_StepPartVol steps; the row is labelled "VOL" at (0x0D,0x9B) in DL_C0mbinati0nM0dePage22Sound.
-C0mbinati0nM0de_DrawPart6Vol:   ; entry: named by 1 `.long` operand, first at 0xF918D9
-	ld XIY,C0mbinati0nM0de_DrawPart6Vol_DL                                     ; F91C30  45 a2 9b f2 00
-	ld XIX,C0mbinati0nM0de_DrawPart7Vol_DL                                     ; F91C35  44 ae 9b f2 00
+; 0x77E5 is +0x03 of part record 6, the byte CombinationMode_StepPartVol steps; the row is labelled "VOL" at (0x0D,0x9B) in DL_CombinationModePage22Sound.
+CombinationMode_DrawPart6Vol:   ; entry: named by 1 `.long` operand, first at 0xF918D9
+	ld XIY,CombinationMode_DrawPart6Vol_DL                                     ; F91C30  45 a2 9b f2 00
+	ld XIX,CombinationMode_DrawPart7Vol_DL                                     ; F91C35  44 ae 9b f2 00
 	call T_DisplayListB_Run                              ; F91C3A  1d f4 17 f4
 	ld a, (CombiPart_Volume+5*0x40:16)                                   ; F91C3E  c1 e5 77 21
 	ldw ix, 0x1bc1                                       ; F91C42  34 c1 1b
 	call LCD_BlitValueBar                                        ; F91C45  1d 8c 45 f9
 	ret                                                  ; F91C49  0e
-; C0mbinati0nM0de_DrawPart7Vol -- COMBINATION MODE page 2, VOL row, column PT7: draws part 7's volume as 3 digits and as a level bitmap
-; Evidence: entry [6] of FieldRedrawPtrs_F918C5 (bit 6 of (0x267C)); runs C0mbinati0nM0de_DrawPart7Vol_DL (interpreter B: (0x7825) AND 0x7F as 3 decimal digits at (0x0FA,0xA7));
+; CombinationMode_DrawPart7Vol -- COMBINATION MODE page 2, VOL row, column PT7: draws part 7's volume as 3 digits and as a level bitmap
+; Evidence: entry [6] of FieldRedrawPtrs_F918C5 (bit 6 of (0x267C)); runs CombinationMode_DrawPart7Vol_DL (interpreter B: (0x7825) AND 0x7F as 3 decimal digits at (0x0FA,0xA7));
 ; then A = (0x7825), IX = 0x1BC6, call LCD_BlitValueBar, which blits (swi 3, 5 bytes x 0x2E rows) entry A/8+1 (entry 0 for A = 0) of the 17-entry bitmap pointer table at 0xF29BC6.
-; 0x7825 is +0x03 of part record 7, the byte C0mbinati0nM0de_StepPartVol steps; the row is labelled "VOL" at (0x0D,0x9B) in DL_C0mbinati0nM0dePage22Sound.
-C0mbinati0nM0de_DrawPart7Vol:   ; entry: named by 1 `.long` operand, first at 0xF918DD
-	ld XIY,C0mbinati0nM0de_DrawPart7Vol_DL                                     ; F91C4A  45 ae 9b f2 00
-	ld XIX,C0mbinati0nM0de_DrawPart8Vol_DL                                     ; F91C4F  44 ba 9b f2 00
+; 0x7825 is +0x03 of part record 7, the byte CombinationMode_StepPartVol steps; the row is labelled "VOL" at (0x0D,0x9B) in DL_CombinationModePage22Sound.
+CombinationMode_DrawPart7Vol:   ; entry: named by 1 `.long` operand, first at 0xF918DD
+	ld XIY,CombinationMode_DrawPart7Vol_DL                                     ; F91C4A  45 ae 9b f2 00
+	ld XIX,CombinationMode_DrawPart8Vol_DL                                     ; F91C4F  44 ba 9b f2 00
 	call T_DisplayListB_Run                              ; F91C54  1d f4 17 f4
 	ld a, (CombiPart_Volume+6*0x40:16)                                   ; F91C58  c1 25 78 21
 	ldw ix, 0x1bc6                                       ; F91C5C  34 c6 1b
 	call LCD_BlitValueBar                                        ; F91C5F  1d 8c 45 f9
 	ret                                                  ; F91C63  0e
-; C0mbinati0nM0de_DrawPart8Vol -- COMBINATION MODE page 2, VOL row, column PT8: draws part 8's volume as 3 digits and as a level bitmap
-; Evidence: entry [7] of FieldRedrawPtrs_F918C5 (bit 7 of (0x267C)); runs C0mbinati0nM0de_DrawPart8Vol_DL (interpreter B: (0x7865) AND 0x7F as 3 decimal digits at (0x122,0xA7));
+; CombinationMode_DrawPart8Vol -- COMBINATION MODE page 2, VOL row, column PT8: draws part 8's volume as 3 digits and as a level bitmap
+; Evidence: entry [7] of FieldRedrawPtrs_F918C5 (bit 7 of (0x267C)); runs CombinationMode_DrawPart8Vol_DL (interpreter B: (0x7865) AND 0x7F as 3 decimal digits at (0x122,0xA7));
 ; then A = (0x7865), IX = 0x1BCB, call LCD_BlitValueBar, which blits (swi 3, 5 bytes x 0x2E rows) entry A/8+1 (entry 0 for A = 0) of the 17-entry bitmap pointer table at 0xF29BC6.
-; 0x7865 is +0x03 of part record 8, the byte C0mbinati0nM0de_StepPartVol steps; the row is labelled "VOL" at (0x0D,0x9B) in DL_C0mbinati0nM0dePage22Sound.
-C0mbinati0nM0de_DrawPart8Vol:   ; entry: named by 1 `.long` operand, first at 0xF918E1
-	ld XIY,C0mbinati0nM0de_DrawPart8Vol_DL                                     ; F91C64  45 ba 9b f2 00
+; 0x7865 is +0x03 of part record 8, the byte CombinationMode_StepPartVol steps; the row is labelled "VOL" at (0x0D,0x9B) in DL_CombinationModePage22Sound.
+CombinationMode_DrawPart8Vol:   ; entry: named by 1 `.long` operand, first at 0xF918E1
+	ld XIY,CombinationMode_DrawPart8Vol_DL                                     ; F91C64  45 ba 9b f2 00
 	ld XIX,0x00f29bc6                                    ; F91C69  44 c6 9b f2 00
 	call T_DisplayListB_Run                              ; F91C6E  1d f4 17 f4
 	ld a, (CombiPart_Volume+7*0x40:16)                                   ; F91C72  c1 65 78 21
 	ldw ix, 0x1bcb                                       ; F91C76  34 cb 1b
 	call LCD_BlitValueBar                                        ; F91C79  1d 8c 45 f9
 	ret                                                  ; F91C7D  0e
-; Paint_C0mbinati0nM0dePage1 -- paints COMBINATION MODE page 1: the lists whose text reads "PAGE1/2", "C0MBINATI0N M0DE", "OCT" "VOL" "PAN" "EFF1" "EFF2" "REV" "INT", "PART"
-; Evidence: posted by sub_F915FB (`ld XWA,0x00F91C7E` at 0xF91653) only when (0x2687) == 0; clears with swi 0x0C (C=0) and swi 0x10, then (0xC4) != 2 runs Paint_C0mbinati0nM0dePage1_DL1..Paint_C0mbinati0nM0dePage1_DL3, (0xC4) == 2 runs Paint_C0mbinati0nM0dePage1_DL3..DL_C0mbinati0nM0dePage22Sound (layers 0 then 2).
+; Paint_CombinationModePage1 -- paints COMBINATION MODE page 1: the lists whose text reads "PAGE1/2", "C0MBINATI0N M0DE", "OCT" "VOL" "PAN" "EFF1" "EFF2" "REV" "INT", "PART"
+; Evidence: posted by sub_F915FB (`ld XWA,0x00F91C7E` at 0xF91653) only when (0x2687) == 0; clears with swi 0x0C (C=0) and swi 0x10, then (0xC4) != 2 runs Paint_CombinationModePage1_DL1..Paint_CombinationModePage1_DL3, (0xC4) == 2 runs Paint_CombinationModePage1_DL3..DL_CombinationModePage22Sound (layers 0 then 2).
 ; (0xC4) is the panel variant Variant_SetFromPB0 writes (2 = the SX-WSA1R). Afterwards marks every page-1 field dirty ((0x2676) |= 0xFF, (0x2677) |= 0x07), calls T_UiPaint_PageLabelBackdrop and ModeScreen_DrawGmModeGlyph.
 ; Page 2 ("PAGE2/2") is painted by sub_F916AA, the other arm of the same `cp (0x2687),0x00` in sub_F915FB.
-Paint_C0mbinati0nM0dePage1:   ; entry: named by 1 `ld` operand, first at 0xF91653
+Paint_CombinationModePage1:   ; entry: named by 1 `ld` operand, first at 0xF91653
 	xor C,C                                              ; F91C7E  cb d3
 	ld a, 0x0c:opc                                          ; F91C80  21 0c
 	swi 7                                                ; F91C82  ff
@@ -8559,22 +8559,22 @@ Paint_C0mbinati0nM0dePage1:   ; entry: named by 1 `ld` operand, first at 0xF9165
 	cp	(Variant_Flag:8), 0x02                               ; F91C86  c0 c4 3f 02
 	jr z, .LF91CB4                                       ; F91C8A  66 28
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F91C8C  f1 40 25 00 00
-	ld XIY,Paint_C0mbinati0nM0dePage1_DL1                                     ; F91C91  45 38 89 f2 00
-	ld XIX,Paint_C0mbinati0nM0dePage1_DL2                                     ; F91C96  44 f3 8d f2 00
+	ld XIY,Paint_CombinationModePage1_DL1                                     ; F91C91  45 38 89 f2 00
+	ld XIX,Paint_CombinationModePage1_DL2                                     ; F91C96  44 f3 8d f2 00
 	call T_DisplayList_Run                               ; F91C9B  1d f0 17 f4
 	ld (LCD_CurrentLayer:16), 0x02                                 ; F91C9F  f1 40 25 00 02
-	ld XIY,Paint_C0mbinati0nM0dePage1_DL2                                     ; F91CA4  45 f3 8d f2 00
-	ld XIX,Paint_C0mbinati0nM0dePage1_DL3                                     ; F91CA9  44 1b 8e f2 00
+	ld XIY,Paint_CombinationModePage1_DL2                                     ; F91CA4  45 f3 8d f2 00
+	ld XIX,Paint_CombinationModePage1_DL3                                     ; F91CA9  44 1b 8e f2 00
 	call T_DisplayList_Run                               ; F91CAE  1d f0 17 f4
 	jr .LF91CDA                                          ; F91CB2  68 26
 .LF91CB4:
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F91CB4  f1 40 25 00 00
-	ld XIY,Paint_C0mbinati0nM0dePage1_DL3                                     ; F91CB9  45 1b 8e f2 00
-	ld XIX,Paint_C0mbinati0nM0dePage1_DL4                                     ; F91CBE  44 21 91 f2 00
+	ld XIY,Paint_CombinationModePage1_DL3                                     ; F91CB9  45 1b 8e f2 00
+	ld XIX,Paint_CombinationModePage1_DL4                                     ; F91CBE  44 21 91 f2 00
 	call T_DisplayList_Run                               ; F91CC3  1d f0 17 f4
 	ld (LCD_CurrentLayer:16), 0x02                                 ; F91CC7  f1 40 25 00 02
-	ld XIY,Paint_C0mbinati0nM0dePage1_DL4                                     ; F91CCC  45 21 91 f2 00
-	ld XIX,DL_C0mbinati0nM0dePage22Sound                 ; F91CD1  44 35 91 f2 00
+	ld XIY,Paint_CombinationModePage1_DL4                                     ; F91CCC  45 21 91 f2 00
+	ld XIX,DL_CombinationModePage22Sound                 ; F91CD1  44 35 91 f2 00
 	call T_DisplayList_Run                               ; F91CD6  1d f0 17 f4
 .LF91CDA:
 	or	(ModeScreen_DirtyFields:16), 0xff                            ; F91CDA  c1 76 26 3e ff
@@ -8583,11 +8583,11 @@ Paint_C0mbinati0nM0dePage1:   ; entry: named by 1 `ld` operand, first at 0xF9165
 	call T_UiPaint_PageLabelBackdrop                                        ; F91CEA  1d 18 2e f4
 	calr ModeScreen_DrawGmModeGlyph                                          ; F91CEE  1e c5 f4
 	ret                                                  ; F91CF1  0e
-; C0mbinati0nM0de_RepaintPage1Fields -- COMBINATION MODE page 1 field refresh: redraws the combination name and number, then every field of the selected part whose dirty bit is set
-; Evidence: posted by sub_F9167C when (0x2687) == 0 (0xF91683) and by C0mbinati0nM0de_StepSelectedPart. Name: T_CombiName_Lookup (CombiName_Lookup, fallback Msg0716_Str_CombiName "Combi Name *****") drawn by swi 0x21 (LCD_Svc_21_DrawText16x24) at IX 0x09B4;
+; CombinationMode_RepaintPage1Fields -- COMBINATION MODE page 1 field refresh: redraws the combination name and number, then every field of the selected part whose dirty bit is set
+; Evidence: posted by sub_F9167C when (0x2687) == 0 (0xF91683) and by CombinationMode_StepSelectedPart. Name: T_CombiName_Lookup (CombiName_Lookup, fallback Msg0716_Str_CombiName "Combi Name *****") drawn by swi 0x21 (LCD_Svc_21_DrawText16x24) at IX 0x09B4;
 ; number: bank code (0x7F0A) and ((0x7F08) << 3 | (0x7F09)) + 1 through DL_F29765 (DLText_PartCodes). Then, from the record of part (0x2250) (PartRecord_GetPtr), per bit of (0x2676): 0 +0x03, 1 +0x08 (pan text 0xF28468), 2 +0x05, 3 +0x07, 4 +0x0D, 7 +0x06 (0/1),
 ; 5 (0x2250) itself, 6 ((0x78B2) - 0x1C) / 12 -- the octave the OCT column's soft key edits. Then ModeScreen_PaintDirtyFields2 for (0x2677), clears (0x2676)/(0x2677), swi 0x0C with C = 7.
-C0mbinati0nM0de_RepaintPage1Fields:   ; entry: named by 2 `ld` operands, first at 0xF91683
+CombinationMode_RepaintPage1Fields:   ; entry: named by 2 `ld` operands, first at 0xF91683
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F91CF2  f1 40 25 00 00
 	ld a, (0x7f03:16)                                   ; F91CF7  c1 03 7f 21
 	ld w, (0x7f04:16)                                   ; F91CFB  c1 04 7f 20
@@ -8613,7 +8613,7 @@ C0mbinati0nM0de_RepaintPage1Fields:   ; entry: named by 2 `ld` operands, first a
 	call T_Value_ToAsciiDigits3                          ; F91D34  1d 00 1b f4
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F91D38  f1 40 25 00 00
 	ld XIY,DL_F29765                                     ; F91D3D  45 65 97 f2 00
-	ld XIX,Paint_C0mbinati0nM0dePage2Sound1_DL                                     ; F91D42  44 83 97 f2 00
+	ld XIX,Paint_CombinationModePage2Sound1_DL                                     ; F91D42  44 83 97 f2 00
 	call T_DisplayListB_Run                              ; F91D47  1d f4 17 f4
 	calr PartRecord_GetPtr                                          ; F91D4B  1e eb 27
 	bit	0, (ModeScreen_DirtyFields:16)                               ; F91D4E  f1 76 26 c8
@@ -8666,7 +8666,7 @@ C0mbinati0nM0de_RepaintPage1Fields:   ; entry: named by 2 `ld` operands, first a
 	push XIY                                             ; F91DCC  3d
 	ld a, (UI_PartIndex:16)                                   ; F91DCD  c1 50 22 21
 	ld (UI_DrawScratch+5:16), a                                   ; F91DD1  f1 45 26 41
-	ld XIY,C0mbinati0nM0de_RepaintPage1Fields_DL                                     ; F91DD5  45 a2 86 f2 00
+	ld XIY,CombinationMode_RepaintPage1Fields_DL                                     ; F91DD5  45 a2 86 f2 00
 	call T_DLB_Handler_StringTable2                      ; F91DDA  1d fc 17 f4
 	pop XIY                                              ; F91DDE  5d
 .LF91DDF:
@@ -8707,25 +8707,25 @@ C0mbinati0nM0de_RepaintPage1Fields:   ; entry: named by 2 `ld` operands, first a
 	ld a, 0x0c:opc                                          ; F91E38  21 0c
 	swi 7                                                ; F91E3A  ff
 	ret                                                  ; F91E3B  0e
-; ScreenLeaveBody_C0mbinati0nM0de -- the whole body of the COMBINATION MODE screen's Leave method: switches SOLO off
-; Evidence: called only by sub_F914DD, the +4 slot of screen object T_InstallPainter_C0mbinati0nM0de_Entry (PanelScreen_VtableTable_ViewB entry 2, screen id 2), whose +0 Enter sub_F914D9 -> sub_F915FB installs the "C0MBINATI0N M0DE" painters.
-; Body: `and (0x267D),0xFE`, then push 0 / call T_NoteRouting_SetSoloAndRebuild (NoteRouting_SetSoloAndRebuild clears bit 5 of (0x602498)) -- the same pair LcdKeyRow1_C0mbinati0nM0de_Page2 uses for its SOLO-off arm.
-ScreenLeaveBody_C0mbinati0nM0de:
+; ScreenLeaveBody_CombinationMode -- the whole body of the COMBINATION MODE screen's Leave method: switches SOLO off
+; Evidence: called only by sub_F914DD, the +4 slot of screen object T_InstallPainter_CombinationMode_Entry (PanelScreen_VtableTable_ViewB entry 2, screen id 2), whose +0 Enter sub_F914D9 -> sub_F915FB installs the "C0MBINATI0N M0DE" painters.
+; Body: `and (0x267D),0xFE`, then push 0 / call T_NoteRouting_SetSoloAndRebuild (NoteRouting_SetSoloAndRebuild clears bit 5 of (0x602498)) -- the same pair LcdKeyRow1_CombinationMode_Page2 uses for its SOLO-off arm.
+ScreenLeaveBody_CombinationMode:
 	and	(CombinationMode_Solo:16), 0xfe                            ; F91E3C  c1 7d 26 3c fe
 	ld a, 0x00:opc                                          ; F91E41  21 00
 	push_a                                               ; F91E43  14
 	call T_NoteRouting_SetSoloAndRebuild                                        ; F91E44  1d ec 11 f4
 	inc 1,XSP                                            ; F91E48  ef 61
 	ret                                                  ; F91E4A  0e
-; SoftKeyCol1_C0mbinati0nM0de_Page2 -- SOFT KEY column 1 on COMBINATION MODE page 2: select part 1, or step its value if it is already selected
+; SoftKeyCol1_CombinationMode_Page2 -- SOFT KEY column 1 on COMBINATION MODE page 2: select part 1, or step its value if it is already selected
 ; Evidence: slot [0] of DisplayListPtrs_F9157B, the table sub_F914E1 (screen 2's +8 Button method) hands to T_PanelButton_CallTableEntry when (0x2687) != 0 -- page 2, painted by sub_F916AA ("PAGE2/2", columns PT1..PT8). Code 0 is SOFT KEY col 1 (notes/FINDINGS-prom_a-panel-control-map.md).
-; Body: sets the step magnitude in W to 1 (3 when (0x2075) bit 2 is set) -- the field T_Value_ApplyNibbleDeltaClamped reads, with bit 7 as the sign -- then falls into C0mbinati0nM0de_SelectOrEditPart1.
-SoftKeyCol1_C0mbinati0nM0de_Page2:   ; entry: named by 1 `.long` operand, first at 0xF9157B
+; Body: sets the step magnitude in W to 1 (3 when (0x2075) bit 2 is set) -- the field T_Value_ApplyNibbleDeltaClamped reads, with bit 7 as the sign -- then falls into CombinationMode_SelectOrEditPart1.
+SoftKeyCol1_CombinationMode_Page2:   ; entry: named by 1 `.long` operand, first at 0xF9157B
 	inc 1,W                                              ; F91E4B  c8 61
 	bit	2, (UI_RequestBits:16)                               ; F91E4D  f1 75 20 ca
-	jr z, SoftKeyCol1_C0mbinati0nM0de_Page2_Join                                     ; F91E51  66 02
+	jr z, SoftKeyCol1_CombinationMode_Page2_Join                                     ; F91E51  66 02
 	inc 2,W                                              ; F91E53  c8 62
-SoftKeyCol1_C0mbinati0nM0de_Page2_Join:
+SoftKeyCol1_CombinationMode_Page2_Join:
 	cp	(UI_PartIndex:16), 0x00                            ; F91E55  c1 50 22 3f 00
 	jr z, .LF91E9A                                       ; F91E5A  66 3e
 	bit	2, (UI_RequestBits:16)                               ; F91E5C  f1 75 20 ca
@@ -8741,7 +8741,7 @@ SoftKeyCol1_C0mbinati0nM0de_Page2_Join:
 	ld w, 0xff:opc                                          ; F91E7C  20 ff
 	call T_Queue2E00_AppendRegs                          ; F91E7E  1d 3c 0f f4
 	call T_NoteRouting_Rebuild                                        ; F91E82  1d bc 11 f4
-	ld XWA,C0mbinati0nM0de_ShowSelectedPartSoundName                                    ; F91E86  40 e5 18 f9 00
+	ld XWA,CombinationMode_ShowSelectedPartSoundName                                    ; F91E86  40 e5 18 f9 00
 	push XWA                                             ; F91E8B  38
 	call T_CallbackQueue_Post                            ; F91E8C  1d 84 2e f4
 	inc 4,XSP                                            ; F91E90  ef 64
@@ -8751,18 +8751,18 @@ SoftKeyCol1_C0mbinati0nM0de_Page2_Join:
 .LF91E9A:
 	ldw (PanelDial_DownButton:16), 0x80                                ; F91E9A  f1 9b 20 02 80 00
 	or	(UI_RequestBits:16), 0x09                            ; F91EA0  c1 75 20 3e 09
-	calr C0mbinati0nM0de_EditSelectedRow                                      ; F91EA5  1e 44 05
+	calr CombinationMode_EditSelectedRow                                      ; F91EA5  1e 44 05
 .LF91EA8:
 	ret                                                  ; F91EA8  0e
-; SoftKeyCol2_C0mbinati0nM0de_Page2 -- SOFT KEY column 2 on COMBINATION MODE page 2: select part 2, or step its value if it is already selected
+; SoftKeyCol2_CombinationMode_Page2 -- SOFT KEY column 2 on COMBINATION MODE page 2: select part 2, or step its value if it is already selected
 ; Evidence: slot [1] of DisplayListPtrs_F9157B, the table sub_F914E1 (screen 2's +8 Button method) hands to T_PanelButton_CallTableEntry when (0x2687) != 0 -- page 2, painted by sub_F916AA ("PAGE2/2", columns PT1..PT8). Code 1 is SOFT KEY col 2 (notes/FINDINGS-prom_a-panel-control-map.md).
-; Body: sets the step magnitude in W to 1 (3 when (0x2075) bit 2 is set) -- the field T_Value_ApplyNibbleDeltaClamped reads, with bit 7 as the sign -- then falls into C0mbinati0nM0de_SelectOrEditPart2.
-SoftKeyCol2_C0mbinati0nM0de_Page2:   ; entry: named by 1 `.long` operand, first at 0xF9157F
+; Body: sets the step magnitude in W to 1 (3 when (0x2075) bit 2 is set) -- the field T_Value_ApplyNibbleDeltaClamped reads, with bit 7 as the sign -- then falls into CombinationMode_SelectOrEditPart2.
+SoftKeyCol2_CombinationMode_Page2:   ; entry: named by 1 `.long` operand, first at 0xF9157F
 	inc 1,W                                              ; F91EA9  c8 61
 	bit	2, (UI_RequestBits:16)                               ; F91EAB  f1 75 20 ca
-	jr z, SoftKeyCol2_C0mbinati0nM0de_Page2_Join                                     ; F91EAF  66 02
+	jr z, SoftKeyCol2_CombinationMode_Page2_Join                                     ; F91EAF  66 02
 	inc 2,W                                              ; F91EB1  c8 62
-SoftKeyCol2_C0mbinati0nM0de_Page2_Join:
+SoftKeyCol2_CombinationMode_Page2_Join:
 	cp	(UI_PartIndex:16), 0x01                            ; F91EB3  c1 50 22 3f 01
 	jr z, .LF91EF8                                       ; F91EB8  66 3e
 	bit	2, (UI_RequestBits:16)                               ; F91EBA  f1 75 20 ca
@@ -8778,7 +8778,7 @@ SoftKeyCol2_C0mbinati0nM0de_Page2_Join:
 	ld w, 0xff:opc                                          ; F91EDA  20 ff
 	call T_Queue2E00_AppendRegs                          ; F91EDC  1d 3c 0f f4
 	call T_NoteRouting_Rebuild                                        ; F91EE0  1d bc 11 f4
-	ld XWA,C0mbinati0nM0de_ShowSelectedPartSoundName                                    ; F91EE4  40 e5 18 f9 00
+	ld XWA,CombinationMode_ShowSelectedPartSoundName                                    ; F91EE4  40 e5 18 f9 00
 	push XWA                                             ; F91EE9  38
 	call T_CallbackQueue_Post                            ; F91EEA  1d 84 2e f4
 	inc 4,XSP                                            ; F91EEE  ef 64
@@ -8788,18 +8788,18 @@ SoftKeyCol2_C0mbinati0nM0de_Page2_Join:
 .LF91EF8:
 	ldw (PanelDial_DownButton:16), 0x0181                              ; F91EF8  f1 9b 20 02 81 01
 	or	(UI_RequestBits:16), 0x09                            ; F91EFE  c1 75 20 3e 09
-	calr C0mbinati0nM0de_EditSelectedRow                                      ; F91F03  1e e6 04
+	calr CombinationMode_EditSelectedRow                                      ; F91F03  1e e6 04
 .LF91F06:
 	ret                                                  ; F91F06  0e
-; SoftKeyCol3_C0mbinati0nM0de_Page2 -- SOFT KEY column 3 on COMBINATION MODE page 2: select part 3, or step its value if it is already selected
+; SoftKeyCol3_CombinationMode_Page2 -- SOFT KEY column 3 on COMBINATION MODE page 2: select part 3, or step its value if it is already selected
 ; Evidence: slot [2] of DisplayListPtrs_F9157B, the table sub_F914E1 (screen 2's +8 Button method) hands to T_PanelButton_CallTableEntry when (0x2687) != 0 -- page 2, painted by sub_F916AA ("PAGE2/2", columns PT1..PT8). Code 2 is SOFT KEY col 3 (notes/FINDINGS-prom_a-panel-control-map.md).
-; Body: sets the step magnitude in W to 1 (3 when (0x2075) bit 2 is set) -- the field T_Value_ApplyNibbleDeltaClamped reads, with bit 7 as the sign -- then falls into C0mbinati0nM0de_SelectOrEditPart3.
-SoftKeyCol3_C0mbinati0nM0de_Page2:   ; entry: named by 1 `.long` operand, first at 0xF91583
+; Body: sets the step magnitude in W to 1 (3 when (0x2075) bit 2 is set) -- the field T_Value_ApplyNibbleDeltaClamped reads, with bit 7 as the sign -- then falls into CombinationMode_SelectOrEditPart3.
+SoftKeyCol3_CombinationMode_Page2:   ; entry: named by 1 `.long` operand, first at 0xF91583
 	inc 1,W                                              ; F91F07  c8 61
 	bit	2, (UI_RequestBits:16)                               ; F91F09  f1 75 20 ca
-	jr z, SoftKeyCol3_C0mbinati0nM0de_Page2_Join                                     ; F91F0D  66 02
+	jr z, SoftKeyCol3_CombinationMode_Page2_Join                                     ; F91F0D  66 02
 	inc 2,W                                              ; F91F0F  c8 62
-SoftKeyCol3_C0mbinati0nM0de_Page2_Join:
+SoftKeyCol3_CombinationMode_Page2_Join:
 	cp	(UI_PartIndex:16), 0x02                            ; F91F11  c1 50 22 3f 02
 	jr z, .LF91F56                                       ; F91F16  66 3e
 	bit	2, (UI_RequestBits:16)                               ; F91F18  f1 75 20 ca
@@ -8815,7 +8815,7 @@ SoftKeyCol3_C0mbinati0nM0de_Page2_Join:
 	ld w, 0xff:opc                                          ; F91F38  20 ff
 	call T_Queue2E00_AppendRegs                          ; F91F3A  1d 3c 0f f4
 	call T_NoteRouting_Rebuild                                        ; F91F3E  1d bc 11 f4
-	ld XWA,C0mbinati0nM0de_ShowSelectedPartSoundName                                    ; F91F42  40 e5 18 f9 00
+	ld XWA,CombinationMode_ShowSelectedPartSoundName                                    ; F91F42  40 e5 18 f9 00
 	push XWA                                             ; F91F47  38
 	call T_CallbackQueue_Post                            ; F91F48  1d 84 2e f4
 	inc 4,XSP                                            ; F91F4C  ef 64
@@ -8825,18 +8825,18 @@ SoftKeyCol3_C0mbinati0nM0de_Page2_Join:
 .LF91F56:
 	ldw (PanelDial_DownButton:16), 0x0282                              ; F91F56  f1 9b 20 02 82 02
 	or	(UI_RequestBits:16), 0x09                            ; F91F5C  c1 75 20 3e 09
-	calr C0mbinati0nM0de_EditSelectedRow                                      ; F91F61  1e 88 04
+	calr CombinationMode_EditSelectedRow                                      ; F91F61  1e 88 04
 .LF91F64:
 	ret                                                  ; F91F64  0e
-; SoftKeyCol4_C0mbinati0nM0de_Page2 -- SOFT KEY column 4 on COMBINATION MODE page 2: select part 4, or step its value if it is already selected
+; SoftKeyCol4_CombinationMode_Page2 -- SOFT KEY column 4 on COMBINATION MODE page 2: select part 4, or step its value if it is already selected
 ; Evidence: slot [3] of DisplayListPtrs_F9157B, the table sub_F914E1 (screen 2's +8 Button method) hands to T_PanelButton_CallTableEntry when (0x2687) != 0 -- page 2, painted by sub_F916AA ("PAGE2/2", columns PT1..PT8). Code 3 is SOFT KEY col 4 (notes/FINDINGS-prom_a-panel-control-map.md).
-; Body: sets the step magnitude in W to 1 (3 when (0x2075) bit 2 is set) -- the field T_Value_ApplyNibbleDeltaClamped reads, with bit 7 as the sign -- then falls into C0mbinati0nM0de_SelectOrEditPart4.
-SoftKeyCol4_C0mbinati0nM0de_Page2:   ; entry: named by 1 `.long` operand, first at 0xF91587
+; Body: sets the step magnitude in W to 1 (3 when (0x2075) bit 2 is set) -- the field T_Value_ApplyNibbleDeltaClamped reads, with bit 7 as the sign -- then falls into CombinationMode_SelectOrEditPart4.
+SoftKeyCol4_CombinationMode_Page2:   ; entry: named by 1 `.long` operand, first at 0xF91587
 	or W,0x01                                            ; F91F65  c8 ce 01
 	bit	2, (UI_RequestBits:16)                               ; F91F68  f1 75 20 ca
-	jr z, SoftKeyCol4_C0mbinati0nM0de_Page2_Join                                     ; F91F6C  66 02
+	jr z, SoftKeyCol4_CombinationMode_Page2_Join                                     ; F91F6C  66 02
 	inc 2,W                                              ; F91F6E  c8 62
-SoftKeyCol4_C0mbinati0nM0de_Page2_Join:
+SoftKeyCol4_CombinationMode_Page2_Join:
 	cp	(UI_PartIndex:16), 0x03                            ; F91F70  c1 50 22 3f 03
 	jr z, .LF91FB5                                       ; F91F75  66 3e
 	bit	2, (UI_RequestBits:16)                               ; F91F77  f1 75 20 ca
@@ -8852,7 +8852,7 @@ SoftKeyCol4_C0mbinati0nM0de_Page2_Join:
 	ld w, 0xff:opc                                          ; F91F97  20 ff
 	call T_Queue2E00_AppendRegs                          ; F91F99  1d 3c 0f f4
 	call T_NoteRouting_Rebuild                                        ; F91F9D  1d bc 11 f4
-	ld XWA,C0mbinati0nM0de_ShowSelectedPartSoundName                                    ; F91FA1  40 e5 18 f9 00
+	ld XWA,CombinationMode_ShowSelectedPartSoundName                                    ; F91FA1  40 e5 18 f9 00
 	push XWA                                             ; F91FA6  38
 	call T_CallbackQueue_Post                            ; F91FA7  1d 84 2e f4
 	inc 4,XSP                                            ; F91FAB  ef 64
@@ -8862,18 +8862,18 @@ SoftKeyCol4_C0mbinati0nM0de_Page2_Join:
 .LF91FB5:
 	ldw (PanelDial_DownButton:16), 0x0383                              ; F91FB5  f1 9b 20 02 83 03
 	or	(UI_RequestBits:16), 0x09                            ; F91FBB  c1 75 20 3e 09
-	calr C0mbinati0nM0de_EditSelectedRow                                      ; F91FC0  1e 29 04
+	calr CombinationMode_EditSelectedRow                                      ; F91FC0  1e 29 04
 .LF91FC3:
 	ret                                                  ; F91FC3  0e
-; SoftKeyCol5_C0mbinati0nM0de_Page2 -- SOFT KEY column 5 on COMBINATION MODE page 2: select part 5, or step its value if it is already selected
+; SoftKeyCol5_CombinationMode_Page2 -- SOFT KEY column 5 on COMBINATION MODE page 2: select part 5, or step its value if it is already selected
 ; Evidence: slot [4] of DisplayListPtrs_F9157B, the table sub_F914E1 (screen 2's +8 Button method) hands to T_PanelButton_CallTableEntry when (0x2687) != 0 -- page 2, painted by sub_F916AA ("PAGE2/2", columns PT1..PT8). Code 4 is SOFT KEY col 5 (notes/FINDINGS-prom_a-panel-control-map.md).
-; Body: sets the step magnitude in W to 1 (3 when (0x2075) bit 2 is set) -- the field T_Value_ApplyNibbleDeltaClamped reads, with bit 7 as the sign -- then falls into C0mbinati0nM0de_SelectOrEditPart5.
-SoftKeyCol5_C0mbinati0nM0de_Page2:   ; entry: named by 1 `.long` operand, first at 0xF9158B
+; Body: sets the step magnitude in W to 1 (3 when (0x2075) bit 2 is set) -- the field T_Value_ApplyNibbleDeltaClamped reads, with bit 7 as the sign -- then falls into CombinationMode_SelectOrEditPart5.
+SoftKeyCol5_CombinationMode_Page2:   ; entry: named by 1 `.long` operand, first at 0xF9158B
 	or W,0x01                                            ; F91FC4  c8 ce 01
 	bit	2, (UI_RequestBits:16)                               ; F91FC7  f1 75 20 ca
-	jr z, SoftKeyCol5_C0mbinati0nM0de_Page2_Join                                     ; F91FCB  66 02
+	jr z, SoftKeyCol5_CombinationMode_Page2_Join                                     ; F91FCB  66 02
 	inc 2,W                                              ; F91FCD  c8 62
-SoftKeyCol5_C0mbinati0nM0de_Page2_Join:
+SoftKeyCol5_CombinationMode_Page2_Join:
 	cp	(UI_PartIndex:16), 0x04                            ; F91FCF  c1 50 22 3f 04
 	jr z, .LF92014                                       ; F91FD4  66 3e
 	bit	2, (UI_RequestBits:16)                               ; F91FD6  f1 75 20 ca
@@ -8889,7 +8889,7 @@ SoftKeyCol5_C0mbinati0nM0de_Page2_Join:
 	ld w, 0xff:opc                                          ; F91FF6  20 ff
 	call T_Queue2E00_AppendRegs                          ; F91FF8  1d 3c 0f f4
 	call T_NoteRouting_Rebuild                                        ; F91FFC  1d bc 11 f4
-	ld XWA,C0mbinati0nM0de_ShowSelectedPartSoundName                                    ; F92000  40 e5 18 f9 00
+	ld XWA,CombinationMode_ShowSelectedPartSoundName                                    ; F92000  40 e5 18 f9 00
 	push XWA                                             ; F92005  38
 	call T_CallbackQueue_Post                            ; F92006  1d 84 2e f4
 	inc 4,XSP                                            ; F9200A  ef 64
@@ -8899,18 +8899,18 @@ SoftKeyCol5_C0mbinati0nM0de_Page2_Join:
 .LF92014:
 	ldw (PanelDial_DownButton:16), 0x0484                              ; F92014  f1 9b 20 02 84 04
 	or	(UI_RequestBits:16), 0x09                            ; F9201A  c1 75 20 3e 09
-	calr C0mbinati0nM0de_EditSelectedRow                                      ; F9201F  1e ca 03
+	calr CombinationMode_EditSelectedRow                                      ; F9201F  1e ca 03
 .LF92022:
 	ret                                                  ; F92022  0e
-; SoftKeyCol6_C0mbinati0nM0de_Page2 -- SOFT KEY column 6 on COMBINATION MODE page 2: select part 6, or step its value if it is already selected
+; SoftKeyCol6_CombinationMode_Page2 -- SOFT KEY column 6 on COMBINATION MODE page 2: select part 6, or step its value if it is already selected
 ; Evidence: slot [5] of DisplayListPtrs_F9157B, the table sub_F914E1 (screen 2's +8 Button method) hands to T_PanelButton_CallTableEntry when (0x2687) != 0 -- page 2, painted by sub_F916AA ("PAGE2/2", columns PT1..PT8). Code 5 is SOFT KEY col 6 (notes/FINDINGS-prom_a-panel-control-map.md).
-; Body: sets the step magnitude in W to 1 (3 when (0x2075) bit 2 is set) -- the field T_Value_ApplyNibbleDeltaClamped reads, with bit 7 as the sign -- then falls into C0mbinati0nM0de_SelectOrEditPart6.
-SoftKeyCol6_C0mbinati0nM0de_Page2:   ; entry: named by 1 `.long` operand, first at 0xF9158F
+; Body: sets the step magnitude in W to 1 (3 when (0x2075) bit 2 is set) -- the field T_Value_ApplyNibbleDeltaClamped reads, with bit 7 as the sign -- then falls into CombinationMode_SelectOrEditPart6.
+SoftKeyCol6_CombinationMode_Page2:   ; entry: named by 1 `.long` operand, first at 0xF9158F
 	or W,0x01                                            ; F92023  c8 ce 01
 	bit	2, (UI_RequestBits:16)                               ; F92026  f1 75 20 ca
-	jr z, SoftKeyCol6_C0mbinati0nM0de_Page2_Join                                     ; F9202A  66 02
+	jr z, SoftKeyCol6_CombinationMode_Page2_Join                                     ; F9202A  66 02
 	inc 2,W                                              ; F9202C  c8 62
-SoftKeyCol6_C0mbinati0nM0de_Page2_Join:
+SoftKeyCol6_CombinationMode_Page2_Join:
 	cp	(UI_PartIndex:16), 0x05                            ; F9202E  c1 50 22 3f 05
 	jr z, .LF92073                                       ; F92033  66 3e
 	bit	2, (UI_RequestBits:16)                               ; F92035  f1 75 20 ca
@@ -8926,7 +8926,7 @@ SoftKeyCol6_C0mbinati0nM0de_Page2_Join:
 	ld w, 0xff:opc                                          ; F92055  20 ff
 	call T_Queue2E00_AppendRegs                          ; F92057  1d 3c 0f f4
 	call T_NoteRouting_Rebuild                                        ; F9205B  1d bc 11 f4
-	ld XWA,C0mbinati0nM0de_ShowSelectedPartSoundName                                    ; F9205F  40 e5 18 f9 00
+	ld XWA,CombinationMode_ShowSelectedPartSoundName                                    ; F9205F  40 e5 18 f9 00
 	push XWA                                             ; F92064  38
 	call T_CallbackQueue_Post                            ; F92065  1d 84 2e f4
 	inc 4,XSP                                            ; F92069  ef 64
@@ -8936,18 +8936,18 @@ SoftKeyCol6_C0mbinati0nM0de_Page2_Join:
 .LF92073:
 	ldw (PanelDial_DownButton:16), 0x0585                              ; F92073  f1 9b 20 02 85 05
 	or	(UI_RequestBits:16), 0x09                            ; F92079  c1 75 20 3e 09
-	calr C0mbinati0nM0de_EditSelectedRow                                      ; F9207E  1e 6b 03
+	calr CombinationMode_EditSelectedRow                                      ; F9207E  1e 6b 03
 .LF92081:
 	ret                                                  ; F92081  0e
-; SoftKeyCol7_C0mbinati0nM0de_Page2 -- SOFT KEY column 7 on COMBINATION MODE page 2: select part 7, or step its value if it is already selected
+; SoftKeyCol7_CombinationMode_Page2 -- SOFT KEY column 7 on COMBINATION MODE page 2: select part 7, or step its value if it is already selected
 ; Evidence: slot [6] of DisplayListPtrs_F9157B, the table sub_F914E1 (screen 2's +8 Button method) hands to T_PanelButton_CallTableEntry when (0x2687) != 0 -- page 2, painted by sub_F916AA ("PAGE2/2", columns PT1..PT8). Code 6 is SOFT KEY col 7 (notes/FINDINGS-prom_a-panel-control-map.md).
-; Body: sets the step magnitude in W to 1 (3 when (0x2075) bit 2 is set) -- the field T_Value_ApplyNibbleDeltaClamped reads, with bit 7 as the sign -- then falls into C0mbinati0nM0de_SelectOrEditPart7.
-SoftKeyCol7_C0mbinati0nM0de_Page2:   ; entry: named by 1 `.long` operand, first at 0xF91593
+; Body: sets the step magnitude in W to 1 (3 when (0x2075) bit 2 is set) -- the field T_Value_ApplyNibbleDeltaClamped reads, with bit 7 as the sign -- then falls into CombinationMode_SelectOrEditPart7.
+SoftKeyCol7_CombinationMode_Page2:   ; entry: named by 1 `.long` operand, first at 0xF91593
 	or W,0x01                                            ; F92082  c8 ce 01
 	bit	2, (UI_RequestBits:16)                               ; F92085  f1 75 20 ca
-	jr z, SoftKeyCol7_C0mbinati0nM0de_Page2_Join                                     ; F92089  66 02
+	jr z, SoftKeyCol7_CombinationMode_Page2_Join                                     ; F92089  66 02
 	inc 2,W                                              ; F9208B  c8 62
-SoftKeyCol7_C0mbinati0nM0de_Page2_Join:
+SoftKeyCol7_CombinationMode_Page2_Join:
 	cp	(UI_PartIndex:16), 0x06                            ; F9208D  c1 50 22 3f 06
 	jr z, .LF920D2                                       ; F92092  66 3e
 	bit	2, (UI_RequestBits:16)                               ; F92094  f1 75 20 ca
@@ -8963,7 +8963,7 @@ SoftKeyCol7_C0mbinati0nM0de_Page2_Join:
 	ld w, 0xff:opc                                          ; F920B4  20 ff
 	call T_Queue2E00_AppendRegs                          ; F920B6  1d 3c 0f f4
 	call T_NoteRouting_Rebuild                                        ; F920BA  1d bc 11 f4
-	ld XWA,C0mbinati0nM0de_ShowSelectedPartSoundName                                    ; F920BE  40 e5 18 f9 00
+	ld XWA,CombinationMode_ShowSelectedPartSoundName                                    ; F920BE  40 e5 18 f9 00
 	push XWA                                             ; F920C3  38
 	call T_CallbackQueue_Post                            ; F920C4  1d 84 2e f4
 	inc 4,XSP                                            ; F920C8  ef 64
@@ -8973,18 +8973,18 @@ SoftKeyCol7_C0mbinati0nM0de_Page2_Join:
 .LF920D2:
 	ldw (PanelDial_DownButton:16), 0x0686                              ; F920D2  f1 9b 20 02 86 06
 	or	(UI_RequestBits:16), 0x09                            ; F920D8  c1 75 20 3e 09
-	calr C0mbinati0nM0de_EditSelectedRow                                      ; F920DD  1e 0c 03
+	calr CombinationMode_EditSelectedRow                                      ; F920DD  1e 0c 03
 .LF920E0:
 	ret                                                  ; F920E0  0e
-; SoftKeyCol8_C0mbinati0nM0de -- SOFT KEY column 8 on both COMBINATION MODE pages: PART down/up on page 1, select part 8 on page 2
+; SoftKeyCol8_CombinationMode -- SOFT KEY column 8 on both COMBINATION MODE pages: PART down/up on page 1, select part 8 on page 2
 ; Evidence: slot [7] of DisplayListPtrs_F914FB (used when (0x2687) == 0, page 1) and of DisplayListPtrs_F9157B ((0x2687) != 0, page 2); code 7 = SOFT KEY col 8.
-; Body: `or W,0x01` (+2 more when (0x2075) bit 2 is set) -- the step for T_Value_ApplyNibbleDeltaClamped -- then falls into C0mbinati0nM0de_SelectOrEditPart8OrStepPart.
-SoftKeyCol8_C0mbinati0nM0de:   ; entry: named by 2 `.long` operands, first at 0xF91517
+; Body: `or W,0x01` (+2 more when (0x2075) bit 2 is set) -- the step for T_Value_ApplyNibbleDeltaClamped -- then falls into CombinationMode_SelectOrEditPart8OrStepPart.
+SoftKeyCol8_CombinationMode:   ; entry: named by 2 `.long` operands, first at 0xF91517
 	or W,0x01                                            ; F920E1  c8 ce 01
 	bit	2, (UI_RequestBits:16)                               ; F920E4  f1 75 20 ca
-	jr z, SoftKeyCol8_C0mbinati0nM0de_Join                                     ; F920E8  66 02
+	jr z, SoftKeyCol8_CombinationMode_Join                                     ; F920E8  66 02
 	inc 2,W                                              ; F920EA  c8 62
-SoftKeyCol8_C0mbinati0nM0de_Join:
+SoftKeyCol8_CombinationMode_Join:
 	cp	(CombinationMode_Page:16), 0x00                            ; F920EC  c1 87 26 3f 00
 	jr z, .LF92148                                       ; F920F1  66 55
 	cp	(UI_PartIndex:16), 0x07                            ; F920F3  c1 50 22 3f 07
@@ -9002,7 +9002,7 @@ SoftKeyCol8_C0mbinati0nM0de_Join:
 	ld w, 0xff:opc                                          ; F9211A  20 ff
 	call T_Queue2E00_AppendRegs                          ; F9211C  1d 3c 0f f4
 	call T_NoteRouting_Rebuild                                        ; F92120  1d bc 11 f4
-	ld XWA,C0mbinati0nM0de_ShowSelectedPartSoundName                                    ; F92124  40 e5 18 f9 00
+	ld XWA,CombinationMode_ShowSelectedPartSoundName                                    ; F92124  40 e5 18 f9 00
 	push XWA                                             ; F92129  38
 	call T_CallbackQueue_Post                            ; F9212A  1d 84 2e f4
 	inc 4,XSP                                            ; F9212E  ef 64
@@ -9012,17 +9012,17 @@ SoftKeyCol8_C0mbinati0nM0de_Join:
 .LF92138:
 	ldw (PanelDial_DownButton:16), 0x0787                              ; F92138  f1 9b 20 02 87 07
 	or	(UI_RequestBits:16), 0x09                            ; F9213E  c1 75 20 3e 09
-	calr C0mbinati0nM0de_EditSelectedRow                                      ; F92143  1e a6 02
+	calr CombinationMode_EditSelectedRow                                      ; F92143  1e a6 02
 	jr .LF9214B                                          ; F92146  68 03
 .LF92148:
-	calr C0mbinati0nM0de_StepSelectedPart                                      ; F92148  1e 01 00
+	calr CombinationMode_StepSelectedPart                                      ; F92148  1e 01 00
 .LF9214B:
 	ret                                                  ; F9214B  0e
-; C0mbinati0nM0de_StepSelectedPart -- COMBINATION MODE page 1 PART down/up: steps the selected part (0x2250) by the key's signed step, clamped to 0..7, and repaints page 1
+; CombinationMode_StepSelectedPart -- COMBINATION MODE page 1 PART down/up: steps the selected part (0x2250) by the key's signed step, clamped to 0..7, and repaints page 1
 ; Evidence: A = (0x2250), B = 7, C = 0, call T_Value_ApplyNibbleDeltaClamped (sub_F8BD73: A + SignedNibbleDelta_Table[W], clamped to [C,B]). If changed: (0x2250) = A, T_Queue2E00_AppendRegs {E=0x90, D=0x10, A, W=0xFF}, T_NoteRouting_Rebuild,
-; (0x2676) |= 0xFF and (0x2677) |= 0x07 (every page-1 field dirty), T_CallbackQueue_ResetAndRestartTask2, post C0mbinati0nM0de_RepaintPage1Fields.
-; Called only by C0mbinati0nM0de_SelectOrEditPart8OrStepPart when (0x2687) == 0; page 1's lists carry the caption "PART".
-C0mbinati0nM0de_StepSelectedPart:
+; (0x2676) |= 0xFF and (0x2677) |= 0x07 (every page-1 field dirty), T_CallbackQueue_ResetAndRestartTask2, post CombinationMode_RepaintPage1Fields.
+; Called only by CombinationMode_SelectOrEditPart8OrStepPart when (0x2687) == 0; page 1's lists carry the caption "PART".
+CombinationMode_StepSelectedPart:
 	ldw (PanelDial_DownButton:16), 0x0787                              ; F9214C  f1 9b 20 02 87 07
 	or	(UI_RequestBits:16), 0x09                            ; F92152  c1 75 20 3e 09
 	ld a, (UI_PartIndex:16)                                   ; F92157  c1 50 22 21
@@ -9043,7 +9043,7 @@ C0mbinati0nM0de_StepSelectedPart:
 	or	(ModeScreen_DirtyFields:16), 0xff                            ; F9217D  c1 76 26 3e ff
 	or	(ModeScreen_DirtyFields2:16), 0x07                            ; F92182  c1 77 26 3e 07
 	call T_CallbackQueue_ResetAndRestartTask2            ; F92187  1d 80 2e f4
-	ld XWA,C0mbinati0nM0de_RepaintPage1Fields                                    ; F9218B  40 f2 1c f9 00
+	ld XWA,CombinationMode_RepaintPage1Fields                                    ; F9218B  40 f2 1c f9 00
 	push XWA                                             ; F92190  38
 	call T_CallbackQueue_Post                            ; F92191  1d 84 2e f4
 	inc 4,XSP                                            ; F92195  ef 64
@@ -9051,16 +9051,16 @@ C0mbinati0nM0de_StepSelectedPart:
 	call T_Kernel_SemaSignal                             ; F92199  1d 88 2d f4
 .LF9219D:
 	ret                                                  ; F9219D  0e
-; LcdKeyRow1_C0mbinati0nM0de_Page2 -- LCD row-1 keys on COMBINATION MODE page 2: the left key selects the SOUND row, the right key toggles SOLO
-; Evidence: slot [8] (code 0x08 = LCD row 1) of DisplayListPtrs_F9157B. W bit 7 set (pair position 0 = LEFT): (0x2678) = 1, post C0mbinati0nM0de_HighlightSoundRow.
-; W bit 7 clear (RIGHT): toggle (0x267D) bit 0, T_NoteRouting_SetSoloAndRebuild with the new state (NoteRouting_SetSoloAndRebuild sets/clears bit 5 of (0x602498)), post C0mbinati0nM0de_SoloIndicatorOff or C0mbinati0nM0de_SoloIndicatorOn.
+; LcdKeyRow1_CombinationMode_Page2 -- LCD row-1 keys on COMBINATION MODE page 2: the left key selects the SOUND row, the right key toggles SOLO
+; Evidence: slot [8] (code 0x08 = LCD row 1) of DisplayListPtrs_F9157B. W bit 7 set (pair position 0 = LEFT): (0x2678) = 1, post CombinationMode_HighlightSoundRow.
+; W bit 7 clear (RIGHT): toggle (0x267D) bit 0, T_NoteRouting_SetSoloAndRebuild with the new state (NoteRouting_SetSoloAndRebuild sets/clears bit 5 of (0x602498)), post CombinationMode_SoloIndicatorOff or CombinationMode_SoloIndicatorOn.
 ; Page 2's list draws "SOUND" at (0x07,0x22) on the left and "SOLO" at (0x121,0x22) on the right of LCD row 1.
-LcdKeyRow1_C0mbinati0nM0de_Page2:   ; entry: named by 1 `.long` operand, first at 0xF9159B
+LcdKeyRow1_CombinationMode_Page2:   ; entry: named by 1 `.long` operand, first at 0xF9159B
 	bit 0x07,W                                           ; F9219E  c8 33 07
 	jr z, .LF921C1                                       ; F921A1  66 1e
 	ld (CombinationMode_EditRow:16), 0x00                                 ; F921A3  f1 78 26 00 00
 	or	(CombinationMode_EditRow:16), 0x01                            ; F921A8  c1 78 26 3e 01
-	ld XWA,C0mbinati0nM0de_HighlightSoundRow                                    ; F921AD  40 0a 22 f9 00
+	ld XWA,CombinationMode_HighlightSoundRow                                    ; F921AD  40 0a 22 f9 00
 	push XWA                                             ; F921B2  38
 	call T_CallbackQueue_Post                            ; F921B3  1d 84 2e f4
 	inc 4,XSP                                            ; F921B7  ef 64
@@ -9075,7 +9075,7 @@ LcdKeyRow1_C0mbinati0nM0de_Page2:   ; entry: named by 1 `.long` operand, first a
 	push_a                                               ; F921CE  14
 	call T_NoteRouting_SetSoloAndRebuild                                        ; F921CF  1d ec 11 f4
 	inc 1,XSP                                            ; F921D3  ef 61
-	ld XWA,C0mbinati0nM0de_SoloIndicatorOff                                    ; F921D5  40 2c 22 f9 00
+	ld XWA,CombinationMode_SoloIndicatorOff                                    ; F921D5  40 2c 22 f9 00
 	push XWA                                             ; F921DA  38
 	call T_CallbackQueue_Post                            ; F921DB  1d 84 2e f4
 	inc 4,XSP                                            ; F921DF  ef 64
@@ -9088,7 +9088,7 @@ LcdKeyRow1_C0mbinati0nM0de_Page2:   ; entry: named by 1 `.long` operand, first a
 	push_a                                               ; F921F0  14
 	call T_NoteRouting_SetSoloAndRebuild                                        ; F921F1  1d ec 11 f4
 	inc 1,XSP                                            ; F921F5  ef 61
-	ld XWA,C0mbinati0nM0de_SoloIndicatorOn                                    ; F921F7  40 40 22 f9 00
+	ld XWA,CombinationMode_SoloIndicatorOn                                    ; F921F7  40 40 22 f9 00
 	push XWA                                             ; F921FC  38
 	call T_CallbackQueue_Post                            ; F921FD  1d 84 2e f4
 	inc 4,XSP                                            ; F92201  ef 64
@@ -9096,44 +9096,44 @@ LcdKeyRow1_C0mbinati0nM0de_Page2:   ; entry: named by 1 `.long` operand, first a
 	call T_Kernel_SemaSignal                             ; F92205  1d 88 2d f4
 .LF92209:
 	ret                                                  ; F92209  0e
-; C0mbinati0nM0de_HighlightSoundRow -- COMBINATION MODE page 2: marks SOUND as the row the soft keys edit
-; Evidence: on layer (0x2540) = 1 runs DL_F29686..C0mbinati0nM0de_HighlightSoundRow_DL (four op-1B EraseRect boxes at x 0x07-0x25, y 0x21 / 0x48 / 0x6F / 0x9A -- the SOUND / INT / PAN / VOL labels) then C0mbinati0nM0de_HighlightSoundRow_DL..C0mbinati0nM0de_HighlightIntRow_DL (op-05 FillRect over the y 0x21 box, the "SOUND" label at y 0x22).
-; Posted by LcdKeyRow1_C0mbinati0nM0de_Page2 right after it sets (0x2678) = 1, the bit C0mbinati0nM0de_EditSelectedRow dispatches on.
-C0mbinati0nM0de_HighlightSoundRow:   ; entry: named by 1 `ld` operand, first at 0xF921AD
+; CombinationMode_HighlightSoundRow -- COMBINATION MODE page 2: marks SOUND as the row the soft keys edit
+; Evidence: on layer (0x2540) = 1 runs DL_F29686..CombinationMode_HighlightSoundRow_DL (four op-1B EraseRect boxes at x 0x07-0x25, y 0x21 / 0x48 / 0x6F / 0x9A -- the SOUND / INT / PAN / VOL labels) then CombinationMode_HighlightSoundRow_DL..CombinationMode_HighlightIntRow_DL (op-05 FillRect over the y 0x21 box, the "SOUND" label at y 0x22).
+; Posted by LcdKeyRow1_CombinationMode_Page2 right after it sets (0x2678) = 1, the bit CombinationMode_EditSelectedRow dispatches on.
+CombinationMode_HighlightSoundRow:   ; entry: named by 1 `ld` operand, first at 0xF921AD
 	ld (LCD_CurrentLayer:16), 0x01                                 ; F9220A  f1 40 25 00 01
 	ld XIY,DL_F29686                                     ; F9220F  45 86 96 f2 00
-	ld XIX,C0mbinati0nM0de_HighlightSoundRow_DL                                     ; F92214  44 ae 96 f2 00
+	ld XIX,CombinationMode_HighlightSoundRow_DL                                     ; F92214  44 ae 96 f2 00
 	call T_DisplayList_Run                               ; F92219  1d f0 17 f4
-	ld XIY,C0mbinati0nM0de_HighlightSoundRow_DL                                     ; F9221D  45 ae 96 f2 00
-	ld XIX,C0mbinati0nM0de_HighlightIntRow_DL                                     ; F92222  44 b8 96 f2 00
+	ld XIY,CombinationMode_HighlightSoundRow_DL                                     ; F9221D  45 ae 96 f2 00
+	ld XIX,CombinationMode_HighlightIntRow_DL                                     ; F92222  44 b8 96 f2 00
 	call T_DisplayList_Run                               ; F92227  1d f0 17 f4
 	ret                                                  ; F9222B  0e
-; C0mbinati0nM0de_SoloIndicatorOff -- erases the box over the "SOLO" label on COMBINATION MODE page 2
+; CombinationMode_SoloIndicatorOff -- erases the box over the "SOLO" label on COMBINATION MODE page 2
 ; Evidence: (0x2540) = 1 then DL_F29672..DL_F2967C, one op-1B EraseRect (0x121,0x21)-(0x139,0x29) -- page 2's list draws "SOLO" at (0x121,0x22).
-; Posted by LcdKeyRow1_C0mbinati0nM0de_Page2 when it clears (0x267D) bit 0; sub_F916AA runs the same list unconditionally and C0mbinati0nM0de_SoloIndicatorOn's list when (0x267D) bit 0 is set.
-C0mbinati0nM0de_SoloIndicatorOff:   ; entry: named by 1 `ld` operand, first at 0xF921D5
+; Posted by LcdKeyRow1_CombinationMode_Page2 when it clears (0x267D) bit 0; sub_F916AA runs the same list unconditionally and CombinationMode_SoloIndicatorOn's list when (0x267D) bit 0 is set.
+CombinationMode_SoloIndicatorOff:   ; entry: named by 1 `ld` operand, first at 0xF921D5
 	ld (LCD_CurrentLayer:16), 0x01                                 ; F9222C  f1 40 25 00 01
 	ld XIY,DL_F29672                                     ; F92231  45 72 96 f2 00
 	ld XIX,DL_F2967C                                     ; F92236  44 7c 96 f2 00
 	call T_DisplayList_Run                               ; F9223B  1d f0 17 f4
 	ret                                                  ; F9223F  0e
-; C0mbinati0nM0de_SoloIndicatorOn -- fills the box over the "SOLO" label on COMBINATION MODE page 2
-; Evidence: DL_F2967C..DL_F29686, one op-05 FillRect (0x121,0x21)-(0x139,0x29); posted by LcdKeyRow1_C0mbinati0nM0de_Page2 when it sets (0x267D) bit 0.
-; Unlike C0mbinati0nM0de_SoloIndicatorOff it does not set (0x2540), so it draws on whatever layer is current when the callback runs.
-C0mbinati0nM0de_SoloIndicatorOn:   ; entry: named by 1 `ld` operand, first at 0xF921F7
+; CombinationMode_SoloIndicatorOn -- fills the box over the "SOLO" label on COMBINATION MODE page 2
+; Evidence: DL_F2967C..DL_F29686, one op-05 FillRect (0x121,0x21)-(0x139,0x29); posted by LcdKeyRow1_CombinationMode_Page2 when it sets (0x267D) bit 0.
+; Unlike CombinationMode_SoloIndicatorOff it does not set (0x2540), so it draws on whatever layer is current when the callback runs.
+CombinationMode_SoloIndicatorOn:   ; entry: named by 1 `ld` operand, first at 0xF921F7
 	ld XIY,DL_F2967C                                     ; F92240  45 7c 96 f2 00
 	ld XIX,DL_F29686                                     ; F92245  44 86 96 f2 00
 	call T_DisplayList_Run                               ; F9224A  1d f0 17 f4
 	ret                                                  ; F9224E  0e
-; LcdKeyRow2_C0mbinati0nM0de_Page2 -- LCD row-2 keys on COMBINATION MODE page 2: the left key selects the INT row, the right key does nothing
-; Evidence: slot [9] (code 0x09 = LCD row 2) of DisplayListPtrs_F9157B. W bit 7 set (pair position 0 = LEFT): (0x2678) = 8 and post C0mbinati0nM0de_HighlightIntRow; clear: `ret`.
-; Row 2's label on page 2 is "INT" (DL_C0mbinati0nM0dePage22Sound).
-LcdKeyRow2_C0mbinati0nM0de_Page2:   ; entry: named by 1 `.long` operand, first at 0xF9159F
+; LcdKeyRow2_CombinationMode_Page2 -- LCD row-2 keys on COMBINATION MODE page 2: the left key selects the INT row, the right key does nothing
+; Evidence: slot [9] (code 0x09 = LCD row 2) of DisplayListPtrs_F9157B. W bit 7 set (pair position 0 = LEFT): (0x2678) = 8 and post CombinationMode_HighlightIntRow; clear: `ret`.
+; Row 2's label on page 2 is "INT" (DL_CombinationModePage22Sound).
+LcdKeyRow2_CombinationMode_Page2:   ; entry: named by 1 `.long` operand, first at 0xF9159F
 	bit 0x07,W                                           ; F9224F  c8 33 07
 	jr z, .LF92270                                       ; F92252  66 1c
 	ld (CombinationMode_EditRow:16), 0x00                                 ; F92254  f1 78 26 00 00
 	or	(CombinationMode_EditRow:16), 0x08                            ; F92259  c1 78 26 3e 08
-	ld XWA,C0mbinati0nM0de_HighlightIntRow                                    ; F9225E  40 71 22 f9 00
+	ld XWA,CombinationMode_HighlightIntRow                                    ; F9225E  40 71 22 f9 00
 	push XWA                                             ; F92263  38
 	call T_CallbackQueue_Post                            ; F92264  1d 84 2e f4
 	inc 4,XSP                                            ; F92268  ef 64
@@ -9141,27 +9141,27 @@ LcdKeyRow2_C0mbinati0nM0de_Page2:   ; entry: named by 1 `.long` operand, first a
 	call T_Kernel_SemaSignal                             ; F9226C  1d 88 2d f4
 .LF92270:
 	ret                                                  ; F92270  0e
-; C0mbinati0nM0de_HighlightIntRow -- COMBINATION MODE page 2: marks INT as the row the soft keys edit
-; Evidence: on layer (0x2540) = 1 runs DL_F29686..C0mbinati0nM0de_HighlightSoundRow_DL (four op-1B EraseRect boxes at x 0x07-0x25, y 0x21 / 0x48 / 0x6F / 0x9A -- the SOUND / INT / PAN / VOL labels) then C0mbinati0nM0de_HighlightIntRow_DL..C0mbinati0nM0de_HighlightPanRow_DL (op-05 FillRect over the y 0x48 box, the "INT" label at y 0x49).
-; Posted by LcdKeyRow2_C0mbinati0nM0de_Page2 right after it sets (0x2678) = 8, the bit C0mbinati0nM0de_EditSelectedRow dispatches on.
-C0mbinati0nM0de_HighlightIntRow:   ; entry: named by 1 `ld` operand, first at 0xF9225E
+; CombinationMode_HighlightIntRow -- COMBINATION MODE page 2: marks INT as the row the soft keys edit
+; Evidence: on layer (0x2540) = 1 runs DL_F29686..CombinationMode_HighlightSoundRow_DL (four op-1B EraseRect boxes at x 0x07-0x25, y 0x21 / 0x48 / 0x6F / 0x9A -- the SOUND / INT / PAN / VOL labels) then CombinationMode_HighlightIntRow_DL..CombinationMode_HighlightPanRow_DL (op-05 FillRect over the y 0x48 box, the "INT" label at y 0x49).
+; Posted by LcdKeyRow2_CombinationMode_Page2 right after it sets (0x2678) = 8, the bit CombinationMode_EditSelectedRow dispatches on.
+CombinationMode_HighlightIntRow:   ; entry: named by 1 `ld` operand, first at 0xF9225E
 	ld (LCD_CurrentLayer:16), 0x01                                 ; F92271  f1 40 25 00 01
 	ld XIY,DL_F29686                                     ; F92276  45 86 96 f2 00
-	ld XIX,C0mbinati0nM0de_HighlightSoundRow_DL                                     ; F9227B  44 ae 96 f2 00
+	ld XIX,CombinationMode_HighlightSoundRow_DL                                     ; F9227B  44 ae 96 f2 00
 	call T_DisplayList_Run                               ; F92280  1d f0 17 f4
-	ld XIY,C0mbinati0nM0de_HighlightIntRow_DL                                     ; F92284  45 b8 96 f2 00
-	ld XIX,C0mbinati0nM0de_HighlightPanRow_DL                                     ; F92289  44 c2 96 f2 00
+	ld XIY,CombinationMode_HighlightIntRow_DL                                     ; F92284  45 b8 96 f2 00
+	ld XIX,CombinationMode_HighlightPanRow_DL                                     ; F92289  44 c2 96 f2 00
 	call T_DisplayList_Run                               ; F9228E  1d f0 17 f4
 	ret                                                  ; F92292  0e
-; LcdKeyRow3_C0mbinati0nM0de_Page2 -- LCD row-3 keys on COMBINATION MODE page 2: the left key selects the PAN row, the right key does nothing
-; Evidence: slot [10] (code 0x0A = LCD row 3) of DisplayListPtrs_F9157B. W bit 7 set (pair position 0 = LEFT): (0x2678) = 4 and post C0mbinati0nM0de_HighlightPanRow; clear: `ret`.
-; Row 3's label on page 2 is "PAN" (DL_C0mbinati0nM0dePage22Sound).
-LcdKeyRow3_C0mbinati0nM0de_Page2:   ; entry: named by 1 `.long` operand, first at 0xF915A3
+; LcdKeyRow3_CombinationMode_Page2 -- LCD row-3 keys on COMBINATION MODE page 2: the left key selects the PAN row, the right key does nothing
+; Evidence: slot [10] (code 0x0A = LCD row 3) of DisplayListPtrs_F9157B. W bit 7 set (pair position 0 = LEFT): (0x2678) = 4 and post CombinationMode_HighlightPanRow; clear: `ret`.
+; Row 3's label on page 2 is "PAN" (DL_CombinationModePage22Sound).
+LcdKeyRow3_CombinationMode_Page2:   ; entry: named by 1 `.long` operand, first at 0xF915A3
 	bit 0x07,W                                           ; F92293  c8 33 07
 	jr z, .LF922B4                                       ; F92296  66 1c
 	ld (CombinationMode_EditRow:16), 0x00                                 ; F92298  f1 78 26 00 00
 	or	(CombinationMode_EditRow:16), 0x04                            ; F9229D  c1 78 26 3e 04
-	ld XWA,C0mbinati0nM0de_HighlightPanRow                                    ; F922A2  40 b5 22 f9 00
+	ld XWA,CombinationMode_HighlightPanRow                                    ; F922A2  40 b5 22 f9 00
 	push XWA                                             ; F922A7  38
 	call T_CallbackQueue_Post                            ; F922A8  1d 84 2e f4
 	inc 4,XSP                                            ; F922AC  ef 64
@@ -9169,27 +9169,27 @@ LcdKeyRow3_C0mbinati0nM0de_Page2:   ; entry: named by 1 `.long` operand, first a
 	call T_Kernel_SemaSignal                             ; F922B0  1d 88 2d f4
 .LF922B4:
 	ret                                                  ; F922B4  0e
-; C0mbinati0nM0de_HighlightPanRow -- COMBINATION MODE page 2: marks PAN as the row the soft keys edit
-; Evidence: on layer (0x2540) = 1 runs DL_F29686..C0mbinati0nM0de_HighlightSoundRow_DL (four op-1B EraseRect boxes at x 0x07-0x25, y 0x21 / 0x48 / 0x6F / 0x9A -- the SOUND / INT / PAN / VOL labels) then C0mbinati0nM0de_HighlightPanRow_DL..DL_F296CC (op-05 FillRect over the y 0x6F box, the "PAN" label at y 0x70).
-; Posted by LcdKeyRow3_C0mbinati0nM0de_Page2 right after it sets (0x2678) = 4, the bit C0mbinati0nM0de_EditSelectedRow dispatches on.
-C0mbinati0nM0de_HighlightPanRow:   ; entry: named by 1 `ld` operand, first at 0xF922A2
+; CombinationMode_HighlightPanRow -- COMBINATION MODE page 2: marks PAN as the row the soft keys edit
+; Evidence: on layer (0x2540) = 1 runs DL_F29686..CombinationMode_HighlightSoundRow_DL (four op-1B EraseRect boxes at x 0x07-0x25, y 0x21 / 0x48 / 0x6F / 0x9A -- the SOUND / INT / PAN / VOL labels) then CombinationMode_HighlightPanRow_DL..DL_F296CC (op-05 FillRect over the y 0x6F box, the "PAN" label at y 0x70).
+; Posted by LcdKeyRow3_CombinationMode_Page2 right after it sets (0x2678) = 4, the bit CombinationMode_EditSelectedRow dispatches on.
+CombinationMode_HighlightPanRow:   ; entry: named by 1 `ld` operand, first at 0xF922A2
 	ld (LCD_CurrentLayer:16), 0x01                                 ; F922B5  f1 40 25 00 01
 	ld XIY,DL_F29686                                     ; F922BA  45 86 96 f2 00
-	ld XIX,C0mbinati0nM0de_HighlightSoundRow_DL                                     ; F922BF  44 ae 96 f2 00
+	ld XIX,CombinationMode_HighlightSoundRow_DL                                     ; F922BF  44 ae 96 f2 00
 	call T_DisplayList_Run                               ; F922C4  1d f0 17 f4
-	ld XIY,C0mbinati0nM0de_HighlightPanRow_DL                                     ; F922C8  45 c2 96 f2 00
+	ld XIY,CombinationMode_HighlightPanRow_DL                                     ; F922C8  45 c2 96 f2 00
 	ld XIX,DL_F296CC                                     ; F922CD  44 cc 96 f2 00
 	call T_DisplayList_Run                               ; F922D2  1d f0 17 f4
 	ret                                                  ; F922D6  0e
-; LcdKeyRow4_C0mbinati0nM0de_Page2 -- LCD row-4 keys on COMBINATION MODE page 2: the left key selects the VOL row, the right key does nothing
-; Evidence: slot [11] (code 0x0B = LCD row 4) of DisplayListPtrs_F9157B. W bit 7 set (pair position 0 = LEFT): (0x2678) = 2 and post C0mbinati0nM0de_HighlightVolRow; clear: `ret`.
-; Row 4's label on page 2 is "VOL" (DL_C0mbinati0nM0dePage22Sound).
-LcdKeyRow4_C0mbinati0nM0de_Page2:   ; entry: named by 1 `.long` operand, first at 0xF915A7
+; LcdKeyRow4_CombinationMode_Page2 -- LCD row-4 keys on COMBINATION MODE page 2: the left key selects the VOL row, the right key does nothing
+; Evidence: slot [11] (code 0x0B = LCD row 4) of DisplayListPtrs_F9157B. W bit 7 set (pair position 0 = LEFT): (0x2678) = 2 and post CombinationMode_HighlightVolRow; clear: `ret`.
+; Row 4's label on page 2 is "VOL" (DL_CombinationModePage22Sound).
+LcdKeyRow4_CombinationMode_Page2:   ; entry: named by 1 `.long` operand, first at 0xF915A7
 	bit 0x07,W                                           ; F922D7  c8 33 07
 	jr z, .LF922F8                                       ; F922DA  66 1c
 	ld (CombinationMode_EditRow:16), 0x00                                 ; F922DC  f1 78 26 00 00
 	or	(CombinationMode_EditRow:16), 0x02                            ; F922E1  c1 78 26 3e 02
-	ld XWA,C0mbinati0nM0de_HighlightVolRow                                    ; F922E6  40 f9 22 f9 00
+	ld XWA,CombinationMode_HighlightVolRow                                    ; F922E6  40 f9 22 f9 00
 	push XWA                                             ; F922EB  38
 	call T_CallbackQueue_Post                            ; F922EC  1d 84 2e f4
 	inc 4,XSP                                            ; F922F0  ef 64
@@ -9197,13 +9197,13 @@ LcdKeyRow4_C0mbinati0nM0de_Page2:   ; entry: named by 1 `.long` operand, first a
 	call T_Kernel_SemaSignal                             ; F922F4  1d 88 2d f4
 .LF922F8:
 	ret                                                  ; F922F8  0e
-; C0mbinati0nM0de_HighlightVolRow -- COMBINATION MODE page 2: marks VOL as the row the soft keys edit
-; Evidence: on layer (0x2540) = 1 runs DL_F29686..C0mbinati0nM0de_HighlightSoundRow_DL (four op-1B EraseRect boxes at x 0x07-0x25, y 0x21 / 0x48 / 0x6F / 0x9A -- the SOUND / INT / PAN / VOL labels) then DL_F296CC..0xF296D6 (op-05 FillRect over the y 0x9A box, the "VOL" label at y 0x9B).
-; Posted by LcdKeyRow4_C0mbinati0nM0de_Page2 right after it sets (0x2678) = 2, the bit C0mbinati0nM0de_EditSelectedRow dispatches on.
-C0mbinati0nM0de_HighlightVolRow:   ; entry: named by 1 `ld` operand, first at 0xF922E6
+; CombinationMode_HighlightVolRow -- COMBINATION MODE page 2: marks VOL as the row the soft keys edit
+; Evidence: on layer (0x2540) = 1 runs DL_F29686..CombinationMode_HighlightSoundRow_DL (four op-1B EraseRect boxes at x 0x07-0x25, y 0x21 / 0x48 / 0x6F / 0x9A -- the SOUND / INT / PAN / VOL labels) then DL_F296CC..0xF296D6 (op-05 FillRect over the y 0x9A box, the "VOL" label at y 0x9B).
+; Posted by LcdKeyRow4_CombinationMode_Page2 right after it sets (0x2678) = 2, the bit CombinationMode_EditSelectedRow dispatches on.
+CombinationMode_HighlightVolRow:   ; entry: named by 1 `ld` operand, first at 0xF922E6
 	ld (LCD_CurrentLayer:16), 0x01                                 ; F922F9  f1 40 25 00 01
 	ld XIY,DL_F29686                                     ; F922FE  45 86 96 f2 00
-	ld XIX,C0mbinati0nM0de_HighlightSoundRow_DL                                     ; F92303  44 ae 96 f2 00
+	ld XIX,CombinationMode_HighlightSoundRow_DL                                     ; F92303  44 ae 96 f2 00
 	call T_DisplayList_Run                               ; F92308  1d f0 17 f4
 	ld XIY,DL_F296CC                                     ; F9230C  45 cc 96 f2 00
 	ld XIX,0x00f296d6                                    ; F92311  44 d6 96 f2 00
@@ -9215,10 +9215,10 @@ DisplayListPtrs_F9157B_Nop13:   ; entry: named by 1 `.long` operand, first at 0x
 	ret                                                  ; F9231C  0e
 DisplayListPtrs_F9157B_Nop14:   ; entry: named by 1 `.long` operand, first at 0xF915B3
 	ret                                                  ; F9231D  0e
-; ExitKey_C0mbinati0nM0de -- EXIT on COMBINATION MODE: from page 2 returns to page 1; on page 1 only clears (0x2075) bit 3
+; ExitKey_CombinationMode -- EXIT on COMBINATION MODE: from page 2 returns to page 1; on page 1 only clears (0x2075) bit 3
 ; Evidence: slot [15] (code 0x0F = EXIT) of both DisplayListPtrs_F914FB and DisplayListPtrs_F9157B. `and (0x2075),0xF7`; then, if W bit 7 is clear (EXIT is pair position 1) and (0x2687) == 1:
 ; (0x2687) = 0 and (0x2071) |= 0x10, which PanelButton_Route turns into `or (0x2072),0x10` (redraw) at 0xF86230.
-ExitKey_C0mbinati0nM0de:   ; entry: named by 2 `.long` operands, first at 0xF91537
+ExitKey_CombinationMode:   ; entry: named by 2 `.long` operands, first at 0xF91537
 	and	(UI_RequestBits:16), 0xf7                            ; F9231E  c1 75 20 3c f7
 	bit 0x07,W                                           ; F92323  c8 33 07
 	jr nz, .LF92339                                      ; F92326  6e 11
@@ -9228,10 +9228,10 @@ ExitKey_C0mbinati0nM0de:   ; entry: named by 2 `.long` operands, first at 0xF915
 	or	(UI_Request_Hi:16), 0x10                            ; F92334  c1 71 20 3e 10
 .LF92339:
 	ret                                                  ; F92339  0e
-; PageKey_C0mbinati0nM0de -- PAGE v / PAGE ^ on COMBINATION MODE: v shows page 1 ((0x2687) = 0), ^ shows page 2 ((0x2687) = 1)
+; PageKey_CombinationMode -- PAGE v / PAGE ^ on COMBINATION MODE: v shows page 1 ((0x2687) = 0), ^ shows page 2 ((0x2687) = 1)
 ; Evidence: slot [16] (code 0x10 = PAGE) of both DisplayListPtrs_F914FB and DisplayListPtrs_F9157B. W bit 7 set (pair position 0 = PAGE v): if (0x2687) != 0, (0x2687) = 0; clear (PAGE ^): if (0x2687) != 1, (0x2687) = 1; each change sets (0x2071) bit 4 (redraw).
-; sub_F915FB paints with Paint_C0mbinati0nM0dePage1 ("PAGE1/2") when (0x2687) == 0 and with sub_F916AA ("PAGE2/2") otherwise; it also resets (0x2687) to 0 on entry.
-PageKey_C0mbinati0nM0de:   ; entry: named by 2 `.long` operands, first at 0xF9153B
+; sub_F915FB paints with Paint_CombinationModePage1 ("PAGE1/2") when (0x2687) == 0 and with sub_F916AA ("PAGE2/2") otherwise; it also resets (0x2687) to 0 on entry.
+PageKey_CombinationMode:   ; entry: named by 2 `.long` operands, first at 0xF9153B
 	bit 0x07,W                                           ; F9233A  c8 33 07
 	jr nz, .LF92352                                      ; F9233D  6e 13
 	cp	(CombinationMode_Page:16), 0x01                            ; F9233F  c1 87 26 3f 01
@@ -9246,78 +9246,78 @@ PageKey_C0mbinati0nM0de:   ; entry: named by 2 `.long` operands, first at 0xF915
 	or	(UI_Request_Hi:16), 0x10                            ; F9235E  c1 71 20 3e 10
 .LF92363:
 	ret                                                  ; F92363  0e
-; C0mbinati0nM0de_Page2_Button17 -- DisplayListPtrs_F9157B slot 0x11, NOT NAMED: slot 0x11 is only the VARIANT-1 already-held rewrite of base code 0x00 (SoftKeyCol1); it adjusts W and joins that
+; CombinationMode_Page2_Button17 -- DisplayListPtrs_F9157B slot 0x11, NOT NAMED: slot 0x11 is only the VARIANT-1 already-held rewrite of base code 0x00 (SoftKeyCol1); it adjusts W and joins that
 ;   handler.  The SX-WSA1R is variant 2, so the slot is never delivered here (wave7_panel_names_round11).
-C0mbinati0nM0de_Page2_Button17:   ; entry: named by 1 `.long` operand, first at 0xF915BF
+CombinationMode_Page2_Button17:   ; entry: named by 1 `.long` operand, first at 0xF915BF
 	add W,0x01                                           ; F92364  c8 c8 01
 	bit	2, (UI_RequestBits:16)                               ; F92367  f1 75 20 ca
 	jr z, .LF92370                                       ; F9236B  66 03
 	add W,0x06                                           ; F9236D  c8 c8 06
 .LF92370:
-	jp SoftKeyCol1_C0mbinati0nM0de_Page2_Join                                        ; F92370  1b 55 1e f9
-; C0mbinati0nM0de_Page2_Button18 -- DisplayListPtrs_F9157B slot 0x12, NOT NAMED: slot 0x12 is only the VARIANT-1 already-held rewrite of base code 0x01 (SoftKeyCol2); it adjusts W and joins that
+	jp SoftKeyCol1_CombinationMode_Page2_Join                                        ; F92370  1b 55 1e f9
+; CombinationMode_Page2_Button18 -- DisplayListPtrs_F9157B slot 0x12, NOT NAMED: slot 0x12 is only the VARIANT-1 already-held rewrite of base code 0x01 (SoftKeyCol2); it adjusts W and joins that
 ;   handler.  The SX-WSA1R is variant 2, so the slot is never delivered here (wave7_panel_names_round11).
-C0mbinati0nM0de_Page2_Button18:   ; entry: named by 1 `.long` operand, first at 0xF915C3
+CombinationMode_Page2_Button18:   ; entry: named by 1 `.long` operand, first at 0xF915C3
 	add W,0x01                                           ; F92374  c8 c8 01
 	bit	2, (UI_RequestBits:16)                               ; F92377  f1 75 20 ca
 	jr z, .LF92380                                       ; F9237B  66 03
 	add W,0x06                                           ; F9237D  c8 c8 06
 .LF92380:
-	jp SoftKeyCol2_C0mbinati0nM0de_Page2_Join                                        ; F92380  1b b3 1e f9
-; C0mbinati0nM0de_Page2_Button19 -- DisplayListPtrs_F9157B slot 0x13, NOT NAMED: slot 0x13 is only the VARIANT-1 already-held rewrite of base code 0x02 (SoftKeyCol3); it adjusts W and joins that
+	jp SoftKeyCol2_CombinationMode_Page2_Join                                        ; F92380  1b b3 1e f9
+; CombinationMode_Page2_Button19 -- DisplayListPtrs_F9157B slot 0x13, NOT NAMED: slot 0x13 is only the VARIANT-1 already-held rewrite of base code 0x02 (SoftKeyCol3); it adjusts W and joins that
 ;   handler.  The SX-WSA1R is variant 2, so the slot is never delivered here (wave7_panel_names_round11).
-C0mbinati0nM0de_Page2_Button19:   ; entry: named by 1 `.long` operand, first at 0xF915C7
+CombinationMode_Page2_Button19:   ; entry: named by 1 `.long` operand, first at 0xF915C7
 	add W,0x01                                           ; F92384  c8 c8 01
 	bit	2, (UI_RequestBits:16)                               ; F92387  f1 75 20 ca
 	jr z, .LF92390                                       ; F9238B  66 03
 	add W,0x06                                           ; F9238D  c8 c8 06
 .LF92390:
-	jp SoftKeyCol3_C0mbinati0nM0de_Page2_Join                                        ; F92390  1b 11 1f f9
-; C0mbinati0nM0de_Page2_Button20 -- DisplayListPtrs_F9157B slot 0x14, NOT NAMED: slot 0x14 is only the VARIANT-1 already-held rewrite of base code 0x03 (SoftKeyCol4); it adjusts W and joins that
+	jp SoftKeyCol3_CombinationMode_Page2_Join                                        ; F92390  1b 11 1f f9
+; CombinationMode_Page2_Button20 -- DisplayListPtrs_F9157B slot 0x14, NOT NAMED: slot 0x14 is only the VARIANT-1 already-held rewrite of base code 0x03 (SoftKeyCol4); it adjusts W and joins that
 ;   handler.  The SX-WSA1R is variant 2, so the slot is never delivered here (wave7_panel_names_round11).
-C0mbinati0nM0de_Page2_Button20:   ; entry: named by 1 `.long` operand, first at 0xF915CB
+CombinationMode_Page2_Button20:   ; entry: named by 1 `.long` operand, first at 0xF915CB
 	add W,0x01                                           ; F92394  c8 c8 01
 	bit	2, (UI_RequestBits:16)                               ; F92397  f1 75 20 ca
 	jr z, .LF923A0                                       ; F9239B  66 03
 	add W,0x06                                           ; F9239D  c8 c8 06
 .LF923A0:
-	jp SoftKeyCol4_C0mbinati0nM0de_Page2_Join                                        ; F923A0  1b 70 1f f9
-; C0mbinati0nM0de_Page2_Button21 -- DisplayListPtrs_F9157B slot 0x15, NOT NAMED: slot 0x15 is only the VARIANT-1 already-held rewrite of base code 0x04 (SoftKeyCol5); it adjusts W and joins that
+	jp SoftKeyCol4_CombinationMode_Page2_Join                                        ; F923A0  1b 70 1f f9
+; CombinationMode_Page2_Button21 -- DisplayListPtrs_F9157B slot 0x15, NOT NAMED: slot 0x15 is only the VARIANT-1 already-held rewrite of base code 0x04 (SoftKeyCol5); it adjusts W and joins that
 ;   handler.  The SX-WSA1R is variant 2, so the slot is never delivered here (wave7_panel_names_round11).
-C0mbinati0nM0de_Page2_Button21:   ; entry: named by 1 `.long` operand, first at 0xF915CF
+CombinationMode_Page2_Button21:   ; entry: named by 1 `.long` operand, first at 0xF915CF
 	add W,0x01                                           ; F923A4  c8 c8 01
 	bit	2, (UI_RequestBits:16)                               ; F923A7  f1 75 20 ca
 	jr z, .LF923B0                                       ; F923AB  66 03
 	add W,0x06                                           ; F923AD  c8 c8 06
 .LF923B0:
-	jp SoftKeyCol5_C0mbinati0nM0de_Page2_Join                                        ; F923B0  1b cf 1f f9
-; C0mbinati0nM0de_Page2_Button22 -- DisplayListPtrs_F9157B slot 0x16, NOT NAMED: slot 0x16 is only the VARIANT-1 already-held rewrite of base code 0x05 (SoftKeyCol6); it adjusts W and joins that
+	jp SoftKeyCol5_CombinationMode_Page2_Join                                        ; F923B0  1b cf 1f f9
+; CombinationMode_Page2_Button22 -- DisplayListPtrs_F9157B slot 0x16, NOT NAMED: slot 0x16 is only the VARIANT-1 already-held rewrite of base code 0x05 (SoftKeyCol6); it adjusts W and joins that
 ;   handler.  The SX-WSA1R is variant 2, so the slot is never delivered here (wave7_panel_names_round11).
-C0mbinati0nM0de_Page2_Button22:   ; entry: named by 1 `.long` operand, first at 0xF915D3
+CombinationMode_Page2_Button22:   ; entry: named by 1 `.long` operand, first at 0xF915D3
 	add W,0x01                                           ; F923B4  c8 c8 01
 	bit	2, (UI_RequestBits:16)                               ; F923B7  f1 75 20 ca
 	jr z, .LF923C0                                       ; F923BB  66 03
 	add W,0x06                                           ; F923BD  c8 c8 06
 .LF923C0:
-	jp SoftKeyCol6_C0mbinati0nM0de_Page2_Join                                        ; F923C0  1b 2e 20 f9
-; C0mbinati0nM0de_Page2_Button23 -- DisplayListPtrs_F9157B slot 0x17, NOT NAMED: slot 0x17 is only the VARIANT-1 already-held rewrite of base code 0x06 (SoftKeyCol7); it adjusts W and joins that
+	jp SoftKeyCol6_CombinationMode_Page2_Join                                        ; F923C0  1b 2e 20 f9
+; CombinationMode_Page2_Button23 -- DisplayListPtrs_F9157B slot 0x17, NOT NAMED: slot 0x17 is only the VARIANT-1 already-held rewrite of base code 0x06 (SoftKeyCol7); it adjusts W and joins that
 ;   handler.  The SX-WSA1R is variant 2, so the slot is never delivered here (wave7_panel_names_round11).
-C0mbinati0nM0de_Page2_Button23:   ; entry: named by 1 `.long` operand, first at 0xF915D7
+CombinationMode_Page2_Button23:   ; entry: named by 1 `.long` operand, first at 0xF915D7
 	add W,0x01                                           ; F923C4  c8 c8 01
 	bit	2, (UI_RequestBits:16)                               ; F923C7  f1 75 20 ca
 	jr z, .LF923D0                                       ; F923CB  66 03
 	add W,0x06                                           ; F923CD  c8 c8 06
 .LF923D0:
-	jp SoftKeyCol7_C0mbinati0nM0de_Page2_Join                                        ; F923D0  1b 8d 20 f9
-; C0mbinati0nM0de_Button24 -- slot 0x18 of both DisplayListPtrs_F914FB and _F9157B (COMBINATION MODE pages 1 and 2), NOT NAMED: slot 0x18 is only the VARIANT-1 already-held rewrite of base code 0x07 (SoftKeyCol8); it adjusts W and joins that
+	jp SoftKeyCol7_CombinationMode_Page2_Join                                        ; F923D0  1b 8d 20 f9
+; CombinationMode_Button24 -- slot 0x18 of both DisplayListPtrs_F914FB and _F9157B (COMBINATION MODE pages 1 and 2), NOT NAMED: slot 0x18 is only the VARIANT-1 already-held rewrite of base code 0x07 (SoftKeyCol8); it adjusts W and joins that
 ;   handler.  The SX-WSA1R is variant 2, so the slot is never delivered here (wave7_panel_names_round11).
-C0mbinati0nM0de_Button24:   ; entry: named by 2 `.long` operands, first at 0xF9155B
+CombinationMode_Button24:   ; entry: named by 2 `.long` operands, first at 0xF9155B
 	add W,0x01                                           ; F923D4  c8 c8 01
 	bit	2, (UI_RequestBits:16)                               ; F923D7  f1 75 20 ca
 	jr z, .LF923E0                                       ; F923DB  66 03
 	add W,0x06                                           ; F923DD  c8 c8 06
 .LF923E0:
-	jp SoftKeyCol8_C0mbinati0nM0de_Join                                        ; F923E0  1b ec 20 f9
+	jp SoftKeyCol8_CombinationMode_Join                                        ; F923E0  1b ec 20 f9
 DisplayListPtrs_F9157B_Nop25:   ; entry: named by 1 `.long` operand, first at 0xF915DF
 	ret                                                  ; F923E4  0e
 DisplayListPtrs_F914FB_Nop26:   ; entry: named by 2 `.long` operands, first at 0xF91563
@@ -9334,11 +9334,11 @@ DisplayListPtrs_F914FB_Nop31:   ; entry: named by 2 `.long` operands, first at 0
 	ret                                                  ; F923EA  0e
 sub_F923EB:
 	ret                                                  ; F923EB  0e
-; C0mbinati0nM0de_EditSelectedRow -- COMBINATION MODE page 2: steps the selected part's value in the highlighted row
-; Evidence: E = (0x2250), XIY = entry (0x2250) of the part-record pointer table at 0xF2AB50 (0x76A2 + 0x40*k); then by (0x2678): bit 0 -> C0mbinati0nM0de_StepPartSound, bit 3 -> C0mbinati0nM0de_SetPartInt,
-; bit 2 -> C0mbinati0nM0de_StepPartPan, bit 1 -> C0mbinati0nM0de_StepPartVol -- the SOUND / INT / PAN / VOL rows LcdKeyRow1..4_C0mbinati0nM0de_Page2 select.
-; Called by C0mbinati0nM0de_SelectOrEditPart1..7 and _SelectOrEditPart8OrStepPart when the key's part is already selected; W carries the step (bit 7 = direction).
-C0mbinati0nM0de_EditSelectedRow:
+; CombinationMode_EditSelectedRow -- COMBINATION MODE page 2: steps the selected part's value in the highlighted row
+; Evidence: E = (0x2250), XIY = entry (0x2250) of the part-record pointer table at 0xF2AB50 (0x76A2 + 0x40*k); then by (0x2678): bit 0 -> CombinationMode_StepPartSound, bit 3 -> CombinationMode_SetPartInt,
+; bit 2 -> CombinationMode_StepPartPan, bit 1 -> CombinationMode_StepPartVol -- the SOUND / INT / PAN / VOL rows LcdKeyRow1..4_CombinationMode_Page2 select.
+; Called by CombinationMode_SelectOrEditPart1..7 and _SelectOrEditPart8OrStepPart when the key's part is already selected; W carries the step (bit 7 = direction).
+CombinationMode_EditSelectedRow:
 	ld l, (UI_PartIndex:16)                                   ; F923EC  c1 50 22 27
 	ld E,L                                               ; F923F0  cf 8d
 	xor H,H                                              ; F923F2  ce d6
@@ -9355,24 +9355,24 @@ C0mbinati0nM0de_EditSelectedRow:
 	jr nz, .LF9242A                                      ; F92417  6e 11
 	jr .LF9242D                                          ; F92419  68 12
 .LF9241B:
-	calr C0mbinati0nM0de_StepPartSound                                      ; F9241B  1e 10 00
+	calr CombinationMode_StepPartSound                                      ; F9241B  1e 10 00
 	jr .LF9242D                                          ; F9241E  68 0d
 .LF92420:
-	calr C0mbinati0nM0de_SetPartInt                                          ; F92420  1e 42 02
+	calr CombinationMode_SetPartInt                                          ; F92420  1e 42 02
 	jr .LF9242D                                          ; F92423  68 08
 .LF92425:
-	calr C0mbinati0nM0de_StepPartPan                                          ; F92425  1e 6b 02
+	calr CombinationMode_StepPartPan                                          ; F92425  1e 6b 02
 	jr .LF9242D                                          ; F92428  68 03
 .LF9242A:
-	calr C0mbinati0nM0de_StepPartVol                                          ; F9242A  1e 9c 02
+	calr CombinationMode_StepPartVol                                          ; F9242A  1e 9c 02
 .LF9242D:
 	ret                                                  ; F9242D  0e
-; C0mbinati0nM0de_StepPartSound -- steps the selected part's sound one place: member within group, carrying into group and then bank at the ends
+; CombinationMode_StepPartSound -- steps the selected part's sound one place: member within group, carrying into group and then bank at the ends
 ; Evidence: XIY = PartRecord_GetSecondHalfPtr (0xF2ABD0 entry (0x2250) = record + 0x20); +0x1D bank, +0x1B group, +0x1C member go to (0x2682)/(0x2683)/(0x2684). The member steps within 0..T_SoundGroup_MaxMemberIndex_Get (Value_StepWordClamped clamps DE to [IY,IX]);
 ; at its limit the group steps (limit 0x0F; (0x08E8)-1 for bank 0x10; 1, or 0 for UD, in the drum banks), and at that limit the bank steps through ValueList_F92618 / ValueList_F92623 (chosen by (0x08EC) bit 0) --
 ; 00 01 08 09 [10] 20 28 29 18 19 1A, which DLText_PartCodes draws as R1- R2- U1- U2- [E1-] RD1 UD1 UD2 M1- M2- M3-.
-; Posts T_List2030_AppendRegs {E=part, D=0, A=bank, W=bank} and {E=part, D=0, A=group, W=member}; the record bytes are the +0x3B..+0x3D that C0mbinati0nM0de_DrawPart8Sound draws.
-C0mbinati0nM0de_StepPartSound:
+; Posts T_List2030_AppendRegs {E=part, D=0, A=bank, W=bank} and {E=part, D=0, A=group, W=member}; the record bytes are the +0x3B..+0x3D that CombinationMode_DrawPart8Sound draws.
+CombinationMode_StepPartSound:
 	and W,0x81                                           ; F9242E  c8 cc 81
 	push W                                               ; F92431  c8 04
 	calr PartRecord_GetSecondHalfPtr                                          ; F92433  1e 17 21
@@ -9584,11 +9584,11 @@ ValueList_F92618:
 
 ValueList_F92623:
 	.byte 0x00, 0x01, 0x08, 0x09, 0x20, 0x28, 0x29, 0x18, 0x19, 0x1a          ; F92623
-; C0mbinati0nM0de_ShowSelectedPart -- COMBINATION MODE page 2: draws "PART<n>" for the selected part and moves the highlight box to its PTn label
+; CombinationMode_ShowSelectedPart -- COMBINATION MODE page 2: draws "PART<n>" for the selected part and moves the highlight box to its PTn label
 ; Evidence: skipped when (0x2250) == (0x267E). Layer 0: record 0xF296D6 (T_DLB_Handler_StringTable2) draws entry (0x2250) & 7 of DLTable_F296E7 ("PART1".."PART8") at (0x4D,0x1B).
 ; Layer 1: record 0xF2970F ((0x267E) & 7, swi 0x1B EraseRect) and record 0xF2971A ((0x2250) & 7, swi 0x05 FillRect), both indexing DLTable_F29725 -- boxes at y 0xE2-0xEC under the PT1..PT8 labels (y 0xE4); then (0x267E) = (0x2250).
-; Called by sub_F916AA (the page-2 painter) and C0mbinati0nM0de_ShowSelectedPartSoundName (posted after a part is selected).
-C0mbinati0nM0de_ShowSelectedPart:
+; Called by sub_F916AA (the page-2 painter) and CombinationMode_ShowSelectedPartSoundName (posted after a part is selected).
+CombinationMode_ShowSelectedPart:
 	ld a, (UI_PartIndex:16)                                   ; F9262D  c1 50 22 21
 	cp	a, (CombinationMode_ShownPart:16)                               ; F92631  c1 7e 26 f1
 	jr z, .LF92664                                       ; F92635  66 2d
@@ -9604,10 +9604,10 @@ C0mbinati0nM0de_ShowSelectedPart:
 	ld (CombinationMode_ShownPart:16), a                                   ; F92660  f1 7e 26 41
 .LF92664:
 	ret                                                  ; F92664  0e
-; C0mbinati0nM0de_SetPartInt -- sets (key position 0) or clears (position 1) the INT flag, bit 5 of record +0x0D of the part in XIY, and posts the change
+; CombinationMode_SetPartInt -- sets (key position 0) or clears (position 1) the INT flag, bit 5 of record +0x0D of the part in XIY, and posts the change
 ; Evidence: A = (XIY+0x0D) & 0x20; W bit 7 set: `or (XIY+0x0D),0x20` unless already set; clear: `and (XIY+0x0D),0xDF` unless already clear; then T_Queue2E00_AppendRegs with D = 0x0D, W = 0x20 (the mask), A = the new bit, E = the caller's part.
-; Callers: C0mbinati0nM0de_EditSelectedRow (INT row, (0x2678) bit 3) and sub_F9139B (soft-key column 7, under "INT" in both the SOUND MODE and the page-1 column captions). C0mbinati0nM0de_DrawPart1Int..8Int draw this bit.
-C0mbinati0nM0de_SetPartInt:
+; Callers: CombinationMode_EditSelectedRow (INT row, (0x2678) bit 3) and sub_F9139B (soft-key column 7, under "INT" in both the SOUND MODE and the page-1 column captions). CombinationMode_DrawPart1Int..8Int draw this bit.
+CombinationMode_SetPartInt:
 	ld A,(XIY+0x0d)                                      ; F92665  8d 0d 21
 	and A,0x20                                           ; F92668  c9 cc 20
 	bit 0x07,W                                           ; F9266B  c8 33 07
@@ -9628,10 +9628,10 @@ C0mbinati0nM0de_SetPartInt:
 	call T_Queue2E00_AppendRegs                          ; F9268E  1d 3c 0f f4
 .LF92692:
 	ret                                                  ; F92692  0e
-; C0mbinati0nM0de_StepPartPan -- steps record +0x08 (pan) of the part in XIY by the key's step, clamped to 0..127, and posts the new value
+; CombinationMode_StepPartPan -- steps record +0x08 (pan) of the part in XIY by the key's step, clamped to 0..127, and posts the new value
 ; Evidence: A = (XIY+0x08), B = 0x7F, C = 0, D = 0x08, H = 0x7F, calr Value_StepAndPostIfChanged (T_Value_ApplyNibbleDeltaClamped; if the value changed, T_List2030_AppendRegs {E=caller's part, D=8, A=new, W=0x7F}) -- the record byte itself is not written here.
-; Callers: C0mbinati0nM0de_EditSelectedRow (PAN row) and sub_F91275 (soft-key column 3, under "PAN", when (0x207C) != 1). C0mbinati0nM0de_DrawPart1Pan..8Pan draw this byte.
-C0mbinati0nM0de_StepPartPan:
+; Callers: CombinationMode_EditSelectedRow (PAN row) and sub_F91275 (soft-key column 3, under "PAN", when (0x207C) != 1). CombinationMode_DrawPart1Pan..8Pan draw this byte.
+CombinationMode_StepPartPan:
 	ld A,(XIY+0x08)                                      ; F92693  8d 08 21
 	ld b, 0x7f:opc                                          ; F92696  22 7f
 	ld c, 0x00:opc                                          ; F92698  23 00
@@ -9661,10 +9661,10 @@ SoundMode_StepPan:
 	call T_Queue2E00_AppendRegs                          ; F926C4  1d 3c 0f f4
 .LF926C8:
 	ret                                                  ; F926C8  0e
-; C0mbinati0nM0de_StepPartVol -- steps record +0x03 (volume) of the part in XIY by the key's step, clamped to 0..127, and posts the new value
+; CombinationMode_StepPartVol -- steps record +0x03 (volume) of the part in XIY by the key's step, clamped to 0..127, and posts the new value
 ; Evidence: A = (XIY+0x03), B = 0x7F, C = 0, D = 3, H = 0x7F; a step magnitude of 7 is raised to 10 (`cp L,0x07 / inc 3,W` at 0xF926D9); calr Value_StepAndPostIfChanged (T_Value_ApplyNibbleDeltaClamped, then T_List2030_AppendRegs {E=part, D=3, A=new, W=0x7F} if changed).
-; Callers: C0mbinati0nM0de_EditSelectedRow (VOL row) and sub_F91247 (soft-key column 2, under "VOL", when (0x207C) != 1). C0mbinati0nM0de_DrawPart1Vol..8Vol draw this byte.
-C0mbinati0nM0de_StepPartVol:
+; Callers: CombinationMode_EditSelectedRow (VOL row) and sub_F91247 (soft-key column 2, under "VOL", when (0x207C) != 1). CombinationMode_DrawPart1Vol..8Vol draw this byte.
+CombinationMode_StepPartVol:
 	ld A,(XIY+0x03)                                      ; F926C9  8d 03 21
 	ld b, 0x7f:opc                                          ; F926CC  22 7f
 	ld c, 0x00:opc                                          ; F926CE  23 00
@@ -10467,7 +10467,7 @@ DisplayListPtrs_F914FB_Nop8:   ; entry: named by 67 `.long` operands, first at 0
 ; It reaches the display-list interpreters at 0xF417F0 (A) and 0xF417F4 (B)
 ; 1 time(s); XIY = list start, XIX = list end.  1 of those 1 list(s)
 ; carry text, and those are the ones that name this routine:
-;     site 0xF92D66  interpreter A  list 0xF2B574  DL_GroupSoundDisplayHoldGr0up
+;     site 0xF92D66  interpreter A  list 0xF2B574  DL_GroupSoundDisplayHoldGroup
 ;        text: "GROUP:"; "SOUND"; "DISPLAY"; "HOLD"; "GR0UP"; "MENU"
 ; Evidence: the list address is the `ld XIY,0x00F2B574` IMMEDIATE at the
 ;          instruction two before the cited `call`, and the text quoted
@@ -10505,7 +10505,7 @@ InstallPainter_GroupSoundDisplayHold:
 	bit	4, (UI_ScreenFlags:16)                               ; F92D1F  f1 95 20 cc
 	jr nz, .LF92D3C                                      ; F92D23  6e 17
 	or	(0x2673:16), 0x80                            ; F92D25  c1 73 26 3e 80
-	ld XIX,Draw_GroupSoundDisplayHoldGr0up                                    ; F92D2A  44 4f 2d f9 00
+	ld XIX,Draw_GroupSoundDisplayHoldGroup                                    ; F92D2A  44 4f 2d f9 00
 	push XIX                                             ; F92D2F  3c
 	call T_CallbackQueue_Post                            ; F92D30  1d 84 2e f4
 	inc 4,XSP                                            ; F92D34  ef 64
@@ -10519,15 +10519,15 @@ InstallPainter_GroupSoundDisplayHold:
 	ld a, 0x01:opc                                          ; F92D48  21 01
 	call T_Kernel_SemaSignal                             ; F92D4A  1d 88 2d f4
 	ret                                                  ; F92D4E  0e
-Draw_GroupSoundDisplayHoldGr0up:   ; entry: named by 1 `ld` operand, first at 0xF92D2A
+Draw_GroupSoundDisplayHoldGroup:   ; entry: named by 1 `ld` operand, first at 0xF92D2A
 	ld a, 0x0f:opc                                          ; F92D4F  21 0f
 	swi 7                                                ; F92D51  ff
 	xor C,C                                              ; F92D52  cb d3
 	ld a, 0x0c:opc                                          ; F92D54  21 0c
 	swi 7                                                ; F92D56  ff
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F92D57  f1 40 25 00 00
-	ld XIY,DL_GroupSoundDisplayHoldGr0up                 ; F92D5C  45 74 b5 f2 00
-	ld XIX,DL_GroupCombiDisplayHoldGr0up                 ; F92D61  44 36 b7 f2 00
+	ld XIY,DL_GroupSoundDisplayHoldGroup                 ; F92D5C  45 74 b5 f2 00
+	ld XIX,DL_GroupCombiDisplayHoldGroup                 ; F92D61  44 36 b7 f2 00
 	call T_DisplayList_Run                               ; F92D66  1d f0 17 f4
 	and	(0x2673:16), 0x7f                            ; F92D6A  c1 73 26 3c 7f
 	ret                                                  ; F92D6F  0e
@@ -10750,7 +10750,7 @@ SoftKeyCol5_GroupSoundDisplayHold:   ; entry: named by 2 `.long` operands, first
 	ret                                                  ; F92F37  0e
 ; SoftKeyCol6_GroupSoundDisplayHold -- the "GR0UP MENU" soft key of GROUP: SOUND DISPLAY HOLD: requests SOUND GROUP MENU (screen 0xA0)
 ; Evidence: slots [5] and [22] of ScreenButtonHandlers_GroupSoundDisplayHold; `ld (0x2070),0x80A0` = screen-request id 0xA0 with (0x2071) = 0x80; when (0x2092) bit 0, (0x2071) = 0x40 and (0x2075) |= 0x80.
-; DL_GroupSoundDisplayHoldGr0up draws "GR0UP" and "MENU" at IX 0x1EDF / 0x227A (x 0xB8 / 0xD0, y 0xC5 / 0xDC), over column 6. Screen 0xA0 is T_F41540 (InstallPainter_SoundGroupMenu_Entry).
+; DL_GroupSoundDisplayHoldGroup draws "GR0UP" and "MENU" at IX 0x1EDF / 0x227A (x 0xB8 / 0xD0, y 0xC5 / 0xDC), over column 6. Screen 0xA0 is T_F41540 (InstallPainter_SoundGroupMenu_Entry).
 SoftKeyCol6_GroupSoundDisplayHold:   ; entry: named by 2 `.long` operands, first at 0xF92C7A
 	ldw (UI_Request:16), 0x80a0                              ; F92F38  f1 70 20 02 a0 80
 	bit	0, (UI_ScreenHoldState:16)                               ; F92F3E  f1 92 20 c8
@@ -11056,7 +11056,7 @@ SoundBank_IsReMap:
 	ret                                                  ; F9319E  0e
 ; GroupSoundDisplayHold_DrawNumberRange -- draws the selected group's sound-number range "first-last" in a frame
 ; Evidence: A = SoundGroup_SelectedMaxMemberIndex, then `jr` into GroupCombiDisplayHold_DrawNumberRange's body at .LF931A7: first = 8*(0x2169)+1, last = 8*(0x2169)+A+1, each through T_Value_ToAsciiDigits3 and an interpreter-B record
-; (GroupCombiDisplayHold_DrawNumberRange_DL2 at IX 0x1D12, GroupCombiDisplayHold_DrawNumberRange_DL1 at IX 0x1D16), with GroupCombiDisplayHold_DrawNumberRange_DL3 drawing "-" at IX 0x1D15 and the frame. 8*group + member + 1 is the numbering C0mbinati0nM0de_DrawPart8Sound shows.
+; (GroupCombiDisplayHold_DrawNumberRange_DL2 at IX 0x1D12, GroupCombiDisplayHold_DrawNumberRange_DL1 at IX 0x1D16), with GroupCombiDisplayHold_DrawNumberRange_DL3 drawing "-" at IX 0x1D15 and the frame. 8*group + member + 1 is the numbering CombinationMode_DrawPart8Sound shows.
 ; Called only by GroupSoundDisplayHold_RepaintFields.
 GroupSoundDisplayHold_DrawNumberRange:
 	calr SoundGroup_SelectedMaxMemberIndex                                      ; F9319F  1e dd fd
@@ -11098,7 +11098,7 @@ GroupCombiDisplayHold_DrawNumberRange:
 	ret                                                  ; F9320C  0e
 ; GroupSoundDisplayHold_PickSound -- assigns the sound in LCD row HL (left key) or HL+4 (right key) of the shown page to the current part, then leaves for the mode screen unless DISPLAY HOLD is on
 ; Evidence: member = 8*(0x2670) + HL, +4 when W bit 7 is clear; ignored when above A (the max index). (0x216B) = member; T_List2030_AppendRegs {E=(0x2250), D=0, A=(0x216A), W=0x3F} and {E=(0x2250), D=0, A=(0x2169), W=member} --
-; the bank / group-member pair C0mbinati0nM0de_StepPartSound also posts. Then (0x2673) |= 8, T_Blink_Stop, posts DisplayHold_ShowGroupNumber and GroupSoundDisplayHold_HighlightSelected;
+; the bank / group-member pair CombinationMode_StepPartSound also posts. Then (0x2673) |= 8, T_Blink_Stop, posts DisplayHold_ShowGroupNumber and GroupSoundDisplayHold_HighlightSelected;
 ; if (0x267F) bit 0 is clear: (0x2070) = 0x8001 (SOUND MODE) when on screen 0xA1, else 0x8002 (COMBINATION MODE). With A != 8 on the last page ((0x2670) == (0x2672)) it calls GroupSoundDisplayHold_SelectMemberLastPage instead.
 ; Callers: LcdKeyRow1..4_GroupSoundDisplayHold.
 GroupSoundDisplayHold_PickSound:
@@ -12048,7 +12048,7 @@ ScreenButtonHandlers_GroupCombiDisplayHold:
 ; It reaches the display-list interpreters at 0xF417F0 (A) and 0xF417F4 (B)
 ; 1 time(s); XIY = list start, XIX = list end.  1 of those 1 list(s)
 ; carry text, and those are the ones that name this routine:
-;     site 0xF93938  interpreter A  list 0xF2B736  DL_GroupCombiDisplayHoldGr0up
+;     site 0xF93938  interpreter A  list 0xF2B736  DL_GroupCombiDisplayHoldGroup
 ;        text: "GROUP:"; "COMBI."; "DISPLAY"; "HOLD"; "GR0UP"; "MENU"
 ; Evidence: the list address is the `ld XIY,0x00F2B736` IMMEDIATE at the
 ;          instruction two before the cited `call`, and the text quoted
@@ -12086,7 +12086,7 @@ InstallPainter_GroupCombiDisplayHold:
 	bit	4, (UI_ScreenFlags:16)                               ; F938F1  f1 95 20 cc
 	jr nz, .LF9390E                                      ; F938F5  6e 17
 	or	(0x2673:16), 0x80                            ; F938F7  c1 73 26 3e 80
-	ld XIX,Draw_GroupCombiDisplayHoldGr0up                                    ; F938FC  44 21 39 f9 00
+	ld XIX,Draw_GroupCombiDisplayHoldGroup                                    ; F938FC  44 21 39 f9 00
 	push XIX                                             ; F93901  3c
 	call T_CallbackQueue_Post                            ; F93902  1d 84 2e f4
 	inc 4,XSP                                            ; F93906  ef 64
@@ -12100,14 +12100,14 @@ InstallPainter_GroupCombiDisplayHold:
 	ld a, 0x01:opc                                          ; F9391A  21 01
 	call T_Kernel_SemaSignal                             ; F9391C  1d 88 2d f4
 	ret                                                  ; F93920  0e
-Draw_GroupCombiDisplayHoldGr0up:   ; entry: named by 1 `ld` operand, first at 0xF938FC
+Draw_GroupCombiDisplayHoldGroup:   ; entry: named by 1 `ld` operand, first at 0xF938FC
 	ld a, 0x0f:opc                                          ; F93921  21 0f
 	swi 7                                                ; F93923  ff
 	xor C,C                                              ; F93924  cb d3
 	ld a, 0x0c:opc                                          ; F93926  21 0c
 	swi 7                                                ; F93928  ff
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F93929  f1 40 25 00 00
-	ld XIY,DL_GroupCombiDisplayHoldGr0up                 ; F9392E  45 36 b7 f2 00
+	ld XIY,DL_GroupCombiDisplayHoldGroup                 ; F9392E  45 36 b7 f2 00
 	ld XIX,0x00f2b8f9                                    ; F93933  44 f9 b8 f2 00
 	call T_DisplayList_Run                               ; F93938  1d f0 17 f4
 	and	(0x2673:16), 0x7f                            ; F9393C  c1 73 26 3c 7f

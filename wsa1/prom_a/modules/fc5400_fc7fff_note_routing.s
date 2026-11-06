@@ -128,7 +128,7 @@ NoteRouting_RebuildIfPending:
 	pop XIX                                              ; FC54C2  5c
 	unlk XIZ                                             ; FC54C3  ee 0d
 	ret                                                  ; FC54C5  0e
-; NoteRouting_RebuildForSong: T_NoteRouting_RebuildForSong (BStore_BootPhase3, S0ngSelectName_Leave, ScreenEnter_CyclePlayEditScreen): NoteRouting_BuildTrackRouting first, then
+; NoteRouting_RebuildForSong: T_NoteRouting_RebuildForSong (BStore_BootPhase3, SongSelectName_Leave, ScreenEnter_CyclePlayEditScreen): NoteRouting_BuildTrackRouting first, then
 ;   block +0 = (0x4C22) | (0x4C21), NoteRouting_BuildByPanelMode[PanelMode] with 0, NoteRouting_UpdateActivePartMask,
 ;   NoteRouting_CommitChanges.
 NoteRouting_RebuildForSong:
@@ -161,7 +161,7 @@ NoteRouting_RebuildForSong:
 	pop XIX                                              ; FC5514  5c
 	unlk XIZ                                             ; FC5515  ee 0d
 	ret                                                  ; FC5517  0e
-; NoteRouting_Rebuild: T_NoteRouting_Rebuild (C0mbinati0nM0de_StepSelectedPart, ModeLeave_SeqPlay, MainTask_PhaseVector): the same without
+; NoteRouting_Rebuild: T_NoteRouting_Rebuild (CombinationMode_StepSelectedPart, ModeLeave_SeqPlay, MainTask_PhaseVector): the same without
 ;   NoteRouting_BuildTrackRouting, the per-mode builder called with 1.
 NoteRouting_Rebuild:
 	link XIZ,0xfffc                                      ; FC5518  ee 0c fc ff
@@ -192,8 +192,8 @@ NoteRouting_Rebuild:
 	pop XIX                                              ; FC5562  5c
 	unlk XIZ                                             ; FC5563  ee 0d
 	ret                                                  ; FC5565  0e
-; NoteRouting_SetSoloAndRebuild: T_NoteRouting_SetSoloAndRebuild: (0x602498) bit 5 = the argument (LcdKeyRow1_C0mbinati0nM0de_Page2 -- the SOLO key --,
-;   ScreenLeaveBody_C0mbinati0nM0de, CombiEdit_CompareOn), then the rebuild with 0.
+; NoteRouting_SetSoloAndRebuild: T_NoteRouting_SetSoloAndRebuild: (0x602498) bit 5 = the argument (LcdKeyRow1_CombinationMode_Page2 -- the SOLO key --,
+;   ScreenLeaveBody_CombinationMode, CombiEdit_CompareOn), then the rebuild with 0.
 NoteRouting_SetSoloAndRebuild:
 	link XIZ,0xfffc                                      ; FC5566  ee 0c fc ff
 	push XIX                                             ; FC556A  3c

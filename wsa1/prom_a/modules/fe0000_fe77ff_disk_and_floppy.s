@@ -3497,7 +3497,7 @@ SysPartMidi_ResetBlock1Default_Call:
 	ret                                                  ; FE1BCD  0e
 ; BStore_Workspace_StoreParamImage: SysPartMidi_ResetBlock1Default, then copies the whole image 0x7600-0x7FFF (0x500
 ;   words) into the song workspace at 0x603600-0x603FFF. Its counterpart T_F42578 (sub_FE1BDE ->
-;   sub_F38843/sub_F38A09) copies ranges back after S0ngSelectName_LoadSongFromBank. Basis: callers + body + restore
+;   sub_F38843/sub_F38A09) copies ranges back after SongSelectName_LoadSongFromBank. Basis: callers + body + restore
 ;   twin. (notes/naming-pilot-2026-10-06/proposals_wave2_f.json)
 BStore_Workspace_StoreParamImage:
 	calr SysPartMidi_ResetBlock1Default                                          ; FE1BCE  1e de 12
@@ -3641,7 +3641,7 @@ Disk_TickCountdowns:
 	ret                                                  ; FE1C78  0e
 ; DiskLoadFile_Execute: Loads Disk_FileName as Disk_ContentType: DiskLoadFile_SendSongSelectAndLoad (MIDI Song Select out via DiskLoadFile_SendSongSelect
 ;   unless UI_ScreenLatch is 0x49 / 0x4E; status message 0x0A; DiskLoad_ByContentType; result to Disk_LastError and
-;   shown), then Ring_InitTenOfFourteen. Directory entry T_DiskLoadFile_Execute: DiskL0adFile_LcdKeyRow1 loads the selected file,
+;   shown), then Ring_InitTenOfFourteen. Directory entry T_DiskLoadFile_Execute: DiskLoadFile_LcdKeyRow1 loads the selected file,
 ;   SmfWrite_RestoreSongFromTempFile reloads the temp song. Load twin of DiskSaveFile_Execute_Entry next to it. Basis:
 ;   callers + body + twin. (notes/naming-pilot-2026-10-06/proposals_wave8_a8.json)
 DiskLoadFile_Execute:

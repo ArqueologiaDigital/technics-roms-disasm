@@ -48,7 +48,7 @@ What loads it:
 - 1 in `PanelEvent_Code03`;
 - the pending value, in `PanelState_TakePendingHoldTime`.
 
-The census also lists `.short 0x2073` once, in prom_b's `DL_T0neLayerSoundEditTrigGer`. It is not
+The census also lists `.short 0x2073` once, in prom_b's `DL_ToneLayerSoundEditTrigGer`. It is not
 this variable: it is the screen position word of an op-0x06 text record, between `.ascii` runs.
 
 **`UI_ScreenHoldPending` (0x209A)** is a one-shot preload. `PanelState_TakePendingHoldTime` moves

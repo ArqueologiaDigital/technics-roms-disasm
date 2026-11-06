@@ -45,8 +45,8 @@ THUNK = {m.group(1): m.group(2) for l in L for m in [re.match(r'^(T_\w+):\s*jp\s
 BACK = {v: k for k, v in THUNK.items()}
 JOBS = {"MeasureDelete": ["Track", "FirstMeasure", "LastMeasure"],
         "MeasureErase": ["Track", "FirstMeasure", "LastMeasure", "EraseData"],
-        "Vel0cityChange": ["Track", "FirstMeasure", "LastMeasure", "Velocity"],
-        "Transp0se": ["Track", "FirstMeasure", "LastMeasure", "Transpose"],
+        "VelocityChange": ["Track", "FirstMeasure", "LastMeasure", "Velocity"],
+        "Transpose": ["Track", "FirstMeasure", "LastMeasure", "Transpose"],
         "AdvanceDelay": ["Track", "FirstMeasure", "LastMeasure", "AdvanceDelay"]}
 STEP_TRACK, STEP_MEASURE = "SeqJob_StepTrack", "SeqJob_StepMeasure"
 # VELOCITY CHANGE steps its TRACK with the twin helper 0xF7CD01, whose up path tests 17 instead of 18 (see the rows)

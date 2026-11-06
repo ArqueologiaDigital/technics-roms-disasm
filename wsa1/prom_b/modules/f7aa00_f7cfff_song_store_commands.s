@@ -571,7 +571,7 @@ TrackMerge_SelectField3:		; <- T_TrackMerge_SelectField3
 ;   (0x0DBA): 1 TrackMerge_StepSourceTrack1, 2 TrackMerge_StepSourceTrack2, 3 TrackMerge_StepDestTrack.
 ;   SoftKeyCol5_TrackMerge_StageZero calls it for the UPPER switch (W bit 7 clear, so the steppers add); the lower one
 ;   calls the identical TrackMerge_StageZero_SoftKeyCol5. Basis: caller + body + sibling
-;   (N0teChange_StepSelectedFieldUp). (notes/naming-pilot-2026-10-06/proposals_wave7_z.json)
+;   (NoteChange_StepSelectedFieldUp). (notes/naming-pilot-2026-10-06/proposals_wave7_z.json)
 TrackMerge_StepSelectedFieldUp:		; <- T_TrackMerge_StepSelectedFieldUp
 	ld	(3150:16), w	; F7ACE6  ld (0x0c4e),W
 	and	w, 128	; F7ACEA  and W,0x80
@@ -2393,267 +2393,267 @@ MeasureInsert_LoadSavedFields_Return:
 	ret	; F7B8DB  ret
 
 ; --------------------------------------------------------------------------
-; MeasureC0py_InitFields
-; Called from: T_MeasureC0py_InitFields (x1)
+; MeasureCopy_InitFields
+; Called from: T_MeasureCopy_InitFields (x1)
 ; Touches: (0x0DBC) (0x12FF)
-; Calls:   MeasureC0py_LoadSavedFields
-; Evidence: thunk slot T_MeasureC0py_InitFields holds `jp 0x00F7B8DC`, and 0xF7B8DC is an
+; Calls:   MeasureCopy_LoadSavedFields
+; Evidence: thunk slot T_MeasureCopy_InitFields holds `jp 0x00F7B8DC`, and 0xF7B8DC is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; MeasureC0py_InitFields: Paint_MeasureC0py's stage-0 init (thunk T_MeasureC0py_InitFields): MeasureC0py_LoadSavedFields, MeasureC0py_Field = 1.  MEASURE C0PY: the same six fields
-MeasureC0py_InitFields:		; <- T_MeasureC0py_InitFields
-	calr	MeasureC0py_LoadSavedFields	; F7B8DC  calr 0xf7bc73
+; MeasureCopy_InitFields: Paint_MeasureCopy's stage-0 init (thunk T_MeasureCopy_InitFields): MeasureCopy_LoadSavedFields, MeasureCopy_Field = 1.  MEASURE C0PY: the same six fields
+MeasureCopy_InitFields:		; <- T_MeasureCopy_InitFields
+	calr	MeasureCopy_LoadSavedFields	; F7B8DC  calr 0xf7bc73
 	ld	a, 1:opc	; F7B8DF  ld A,0x01
-	ld	(MeasureC0py_Field:16), a	; F7B8E1  ld (0x0dbc),A
+	ld	(MeasureCopy_Field:16), a	; F7B8E1  ld (0x0dbc),A
 	ld	(DisplayListB_Stage+9:16), a	; F7B8E5  ld (0x12ff),A
 	ret	; F7B8E9  ret
 
 ; --------------------------------------------------------------------------
-; MeasureC0py_OnLeave
-; Called from: T_MeasureC0py_OnLeave (x1)
+; MeasureCopy_OnLeave
+; Called from: T_MeasureCopy_OnLeave (x1)
 ; Touches: (0x207A) (0x3010) (0x360C)
 ; Calls:   T_Seq_RequestRewind
-; Evidence: thunk slot T_MeasureC0py_OnLeave holds `jp 0x00F7B8EA`, and 0xF7B8EA is an
+; Evidence: thunk slot T_MeasureCopy_OnLeave holds `jp 0x00F7B8EA`, and 0xF7B8EA is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; MeasureC0py_OnLeave: the LEAVE work of MeasureC0py -- the one unnamed routine ScreenLeaveBody_MeasureC0py calls, and nothing else calls it
+; MeasureCopy_OnLeave: the LEAVE work of MeasureCopy -- the one unnamed routine ScreenLeaveBody_MeasureCopy calls, and nothing else calls it
 ;   (notes/prom_ab_screen_enter_leave_work.py).
-MeasureC0py_OnLeave:		; <- T_MeasureC0py_OnLeave
+MeasureCopy_OnLeave:		; <- T_MeasureCopy_OnLeave
 	cp	(UI_ScreenLatch:16), 0x21	; F7B8EA  cp (0x207a),0x21
-	jr	z, MeasureC0py_OnLeave_Return2	; F7B8EF  jr Z,0xf7b908
+	jr	z, MeasureCopy_OnLeave_Return2	; F7B8EF  jr Z,0xf7b908
 	ld	xwa, (12304:16)	; F7B8F1  ld XWA,(0x3010)
 	or	(0x360c:16), xwa	; F7B8F5  or (0x360c),XWA
 	ld	(6304798:24), xwa	; F7B8F9  ld (0x60341e),XWA
 	xor	xwa, xwa	; F7B8FE  xor XWA,XWA
 	ld	(12304:16), xwa	; F7B900  ld (0x3010),XWA
 	call	T_Seq_RequestRewind	; F7B904  call 0xf409e0
-MeasureC0py_OnLeave_Return2:
+MeasureCopy_OnLeave_Return2:
 	ret	; F7B908  ret
 
 ; --------------------------------------------------------------------------
-; MeasureC0py_SelectField1
-; Called from: T_MeasureC0py_SelectField1 (x1)
+; MeasureCopy_SelectField1
+; Called from: T_MeasureCopy_SelectField1 (x1)
 ; Touches: (0x0DBC) (0x2075)
-; Evidence: thunk slot T_MeasureC0py_SelectField1 holds `jp 0x00F7B909`, and 0xF7B909 is an
+; Evidence: thunk slot T_MeasureCopy_SelectField1 holds `jp 0x00F7B909`, and 0xF7B909 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; MeasureC0py_SelectField1: moves the MeasureC0py screen's cursor to field 1 -- stores 1 into MeasureC0py_Field
+; MeasureCopy_SelectField1: moves the MeasureCopy screen's cursor to field 1 -- stores 1 into MeasureCopy_Field
 ;   and requests the redraw, nothing else (notes/prom_b_select_field_names.py).
-MeasureC0py_SelectField1:		; <- T_MeasureC0py_SelectField1
-	ld	(MeasureC0py_Field:16), 1	; F7B909  ld (0x0dbc),0x01
+MeasureCopy_SelectField1:		; <- T_MeasureCopy_SelectField1
+	ld	(MeasureCopy_Field:16), 1	; F7B909  ld (0x0dbc),0x01
 	or	(UI_RequestBits:16), 0x09	; F7B90E  or (0x2075),0x09
 	ret	; F7B913  ret
 
 ; --------------------------------------------------------------------------
-; MeasureC0py_SelectField2
-; Called from: T_MeasureC0py_SelectField2 (x1)
+; MeasureCopy_SelectField2
+; Called from: T_MeasureCopy_SelectField2 (x1)
 ; Touches: (0x0DBC) (0x2075)
-; Evidence: thunk slot T_MeasureC0py_SelectField2 holds `jp 0x00F7B914`, and 0xF7B914 is an
+; Evidence: thunk slot T_MeasureCopy_SelectField2 holds `jp 0x00F7B914`, and 0xF7B914 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; MeasureC0py_SelectField2: moves the MeasureC0py screen's cursor to field 2 -- stores 2 into MeasureC0py_Field
+; MeasureCopy_SelectField2: moves the MeasureCopy screen's cursor to field 2 -- stores 2 into MeasureCopy_Field
 ;   and requests the redraw, nothing else (notes/prom_b_select_field_names.py).
-MeasureC0py_SelectField2:		; <- T_MeasureC0py_SelectField2
-	ld	(MeasureC0py_Field:16), 2	; F7B914  ld (0x0dbc),0x02
+MeasureCopy_SelectField2:		; <- T_MeasureCopy_SelectField2
+	ld	(MeasureCopy_Field:16), 2	; F7B914  ld (0x0dbc),0x02
 	or	(UI_RequestBits:16), 0x08	; F7B919  or (0x2075),0x08
 	or	(UI_RequestBits:16), 0x01	; F7B91E  or (0x2075),0x01
 	ret	; F7B923  ret
 
 ; --------------------------------------------------------------------------
-; MeasureC0py_SelectField3
-; Called from: T_MeasureC0py_SelectField3 (x1)
+; MeasureCopy_SelectField3
+; Called from: T_MeasureCopy_SelectField3 (x1)
 ; Touches: (0x0DBC) (0x2075)
-; Evidence: thunk slot T_MeasureC0py_SelectField3 holds `jp 0x00F7B924`, and 0xF7B924 is an
+; Evidence: thunk slot T_MeasureCopy_SelectField3 holds `jp 0x00F7B924`, and 0xF7B924 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; MeasureC0py_SelectField3: moves the MeasureC0py screen's cursor to field 3 -- stores 3 into MeasureC0py_Field
+; MeasureCopy_SelectField3: moves the MeasureCopy screen's cursor to field 3 -- stores 3 into MeasureCopy_Field
 ;   and requests the redraw, nothing else (notes/prom_b_select_field_names.py).
-MeasureC0py_SelectField3:		; <- T_MeasureC0py_SelectField3
-	ld	(MeasureC0py_Field:16), 3	; F7B924  ld (0x0dbc),0x03
+MeasureCopy_SelectField3:		; <- T_MeasureCopy_SelectField3
+	ld	(MeasureCopy_Field:16), 3	; F7B924  ld (0x0dbc),0x03
 	or	(UI_RequestBits:16), 0x08	; F7B929  or (0x2075),0x08
 	or	(UI_RequestBits:16), 0x01	; F7B92E  or (0x2075),0x01
 	ret	; F7B933  ret
 
 ; --------------------------------------------------------------------------
-; MeasureC0py_SelectField4
-; Called from: T_MeasureC0py_SelectField4 (x1)
+; MeasureCopy_SelectField4
+; Called from: T_MeasureCopy_SelectField4 (x1)
 ; Touches: (0x0DBC) (0x2075)
-; Evidence: thunk slot T_MeasureC0py_SelectField4 holds `jp 0x00F7B934`, and 0xF7B934 is an
+; Evidence: thunk slot T_MeasureCopy_SelectField4 holds `jp 0x00F7B934`, and 0xF7B934 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; MeasureC0py_SelectField4: moves the MeasureC0py screen's cursor to field 4 -- stores 4 into MeasureC0py_Field
+; MeasureCopy_SelectField4: moves the MeasureCopy screen's cursor to field 4 -- stores 4 into MeasureCopy_Field
 ;   and requests the redraw, nothing else (notes/prom_b_select_field_names.py).
-MeasureC0py_SelectField4:		; <- T_MeasureC0py_SelectField4
-	ld	(MeasureC0py_Field:16), 4	; F7B934  ld (0x0dbc),0x04
+MeasureCopy_SelectField4:		; <- T_MeasureCopy_SelectField4
+	ld	(MeasureCopy_Field:16), 4	; F7B934  ld (0x0dbc),0x04
 	or	(UI_RequestBits:16), 0x09	; F7B939  or (0x2075),0x09
 	ret	; F7B93E  ret
 
 ; --------------------------------------------------------------------------
-; MeasureC0py_SelectField5
-; Called from: T_MeasureC0py_SelectField5 (x1)
+; MeasureCopy_SelectField5
+; Called from: T_MeasureCopy_SelectField5 (x1)
 ; Touches: (0x0DBC) (0x2075)
-; Evidence: thunk slot T_MeasureC0py_SelectField5 holds `jp 0x00F7B93F`, and 0xF7B93F is an
+; Evidence: thunk slot T_MeasureCopy_SelectField5 holds `jp 0x00F7B93F`, and 0xF7B93F is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; MeasureC0py_SelectField5: moves the MeasureC0py screen's cursor to field 5 -- stores 5 into MeasureC0py_Field
+; MeasureCopy_SelectField5: moves the MeasureCopy screen's cursor to field 5 -- stores 5 into MeasureCopy_Field
 ;   and requests the redraw, nothing else (notes/prom_b_select_field_names.py).
-MeasureC0py_SelectField5:		; <- T_MeasureC0py_SelectField5
-	ld	(MeasureC0py_Field:16), 5	; F7B93F  ld (0x0dbc),0x05
+MeasureCopy_SelectField5:		; <- T_MeasureCopy_SelectField5
+	ld	(MeasureCopy_Field:16), 5	; F7B93F  ld (0x0dbc),0x05
 	or	(UI_RequestBits:16), 0x08	; F7B944  or (0x2075),0x08
 	or	(UI_RequestBits:16), 0x01	; F7B949  or (0x2075),0x01
 	ret	; F7B94E  ret
 
 ; --------------------------------------------------------------------------
-; MeasureC0py_SelectField6
-; Called from: T_MeasureC0py_SelectField6 (x1)
+; MeasureCopy_SelectField6
+; Called from: T_MeasureCopy_SelectField6 (x1)
 ; Touches: (0x0DBC) (0x2075)
-; Evidence: thunk slot T_MeasureC0py_SelectField6 holds `jp 0x00F7B94F`, and 0xF7B94F is an
+; Evidence: thunk slot T_MeasureCopy_SelectField6 holds `jp 0x00F7B94F`, and 0xF7B94F is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; MeasureC0py_SelectField6: moves the MeasureC0py screen's cursor to field 6 -- stores 6 into MeasureC0py_Field
+; MeasureCopy_SelectField6: moves the MeasureCopy screen's cursor to field 6 -- stores 6 into MeasureCopy_Field
 ;   and requests the redraw, nothing else (notes/prom_b_select_field_names.py).
-MeasureC0py_SelectField6:		; <- T_MeasureC0py_SelectField6
-	ld	(MeasureC0py_Field:16), 6	; F7B94F  ld (0x0dbc),0x06
+MeasureCopy_SelectField6:		; <- T_MeasureCopy_SelectField6
+	ld	(MeasureCopy_Field:16), 6	; F7B94F  ld (0x0dbc),0x06
 	or	(UI_RequestBits:16), 0x09	; F7B954  or (0x2075),0x09
 	ret	; F7B959  ret
 
 ; --------------------------------------------------------------------------
-; MeasureC0py_StepFieldUp
-; Called from: T_MeasureC0py_StepFieldUp (x2)
+; MeasureCopy_StepFieldUp
+; Called from: T_MeasureCopy_StepFieldUp (x2)
 ; Touches: (0x0C4E) (0x0C4F) (0x0DBC)
-; Calls:   MeasureC0py_StepFromTrack MeasureC0py_StepFirstMeasure MeasureC0py_StepLastMeasure MeasureC0py_StepToTrack MeasureC0py_StepStartMeasure MeasureC0py_StepRepeat
-; Evidence: thunk slot T_MeasureC0py_StepFieldUp holds `jp 0x00F7B95A`, and 0xF7B95A is an
+; Calls:   MeasureCopy_StepFromTrack MeasureCopy_StepFirstMeasure MeasureCopy_StepLastMeasure MeasureCopy_StepToTrack MeasureCopy_StepStartMeasure MeasureCopy_StepRepeat
+; Evidence: thunk slot T_MeasureCopy_StepFieldUp holds `jp 0x00F7B95A`, and 0xF7B95A is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; MeasureC0py_StepFieldUp: (0x0C4E) = W, (0x0C4F) = 0 (up), then field MeasureC0py_Field 1..6 -> MeasureC0py_StepFromTrack / MeasureC0py_StepFirstMeasure / MeasureC0py_StepLastMeasure / MeasureC0py_StepToTrack / MeasureC0py_StepStartMeasure / MeasureC0py_StepRepeat.  (field order: the page text, checked against each stepper's helper; notes/prom_b_seqjob_field_names.py for the pattern)
-MeasureC0py_StepFieldUp:		; <- T_MeasureC0py_StepFieldUp
+; MeasureCopy_StepFieldUp: (0x0C4E) = W, (0x0C4F) = 0 (up), then field MeasureCopy_Field 1..6 -> MeasureCopy_StepFromTrack / MeasureCopy_StepFirstMeasure / MeasureCopy_StepLastMeasure / MeasureCopy_StepToTrack / MeasureCopy_StepStartMeasure / MeasureCopy_StepRepeat.  (field order: the page text, checked against each stepper's helper; notes/prom_b_seqjob_field_names.py for the pattern)
+MeasureCopy_StepFieldUp:		; <- T_MeasureCopy_StepFieldUp
 	ld	(3150:16), w	; F7B95A  ld (0x0c4e),W
 	ld	(3151:16), 0	; F7B95E  ld (0x0c4f),0x00
-	cp	(MeasureC0py_Field:16), 0x01	; F7B963  cp (0x0dbc),0x01
-	jr	nz, MeasureC0py_StepFieldUp_Skip2	; F7B968  jr NZ,0xf7b96f
-	calr	MeasureC0py_StepFromTrack	; F7B96A  calr 0xf7ba16
-	jr	MeasureC0py_StepFieldUp_Return3	; F7B96D  jr T,0xf7b9aa
-MeasureC0py_StepFieldUp_Skip2:
-	cp	(MeasureC0py_Field:16), 0x02	; F7B96F  cp (0x0dbc),0x02
-	jr	nz, MeasureC0py_StepFieldUp_Skip3	; F7B974  jr NZ,0xf7b97b
-	calr	MeasureC0py_StepFirstMeasure	; F7B976  calr 0xf7ba7f
-	jr	MeasureC0py_StepFieldUp_Return3	; F7B979  jr T,0xf7b9aa
-MeasureC0py_StepFieldUp_Skip3:
-	cp	(MeasureC0py_Field:16), 0x03	; F7B97B  cp (0x0dbc),0x03
-	jr	nz, MeasureC0py_StepFieldUp_Skip4	; F7B980  jr NZ,0xf7b987
-	calr	MeasureC0py_StepLastMeasure	; F7B982  calr 0xf7bab5
-	jr	MeasureC0py_StepFieldUp_Return3	; F7B985  jr T,0xf7b9aa
-MeasureC0py_StepFieldUp_Skip4:
-	cp	(MeasureC0py_Field:16), 0x04	; F7B987  cp (0x0dbc),0x04
-	jr	nz, MeasureC0py_StepFieldUp_Skip5	; F7B98C  jr NZ,0xf7b993
-	calr	MeasureC0py_StepToTrack	; F7B98E  calr 0xf7baef
-	jr	MeasureC0py_StepFieldUp_Return3	; F7B991  jr T,0xf7b9aa
-MeasureC0py_StepFieldUp_Skip5:
-	cp	(MeasureC0py_Field:16), 0x05	; F7B993  cp (0x0dbc),0x05
-	jr	nz, MeasureC0py_StepFieldUp_Skip6	; F7B998  jr NZ,0xf7b99f
-	calr	MeasureC0py_StepStartMeasure	; F7B99A  calr 0xf7bb58
-	jr	MeasureC0py_StepFieldUp_Return3	; F7B99D  jr T,0xf7b9aa
-MeasureC0py_StepFieldUp_Skip6:
-	cp	(MeasureC0py_Field:16), 0x06	; F7B99F  cp (0x0dbc),0x06
-	jr	nz, MeasureC0py_StepFieldUp_Return3	; F7B9A4  jr NZ,0xf7b9aa
-	call	MeasureC0py_StepRepeat	; F7B9A6  call 0xf7bb6d
-MeasureC0py_StepFieldUp_Return3:
+	cp	(MeasureCopy_Field:16), 0x01	; F7B963  cp (0x0dbc),0x01
+	jr	nz, MeasureCopy_StepFieldUp_Skip2	; F7B968  jr NZ,0xf7b96f
+	calr	MeasureCopy_StepFromTrack	; F7B96A  calr 0xf7ba16
+	jr	MeasureCopy_StepFieldUp_Return3	; F7B96D  jr T,0xf7b9aa
+MeasureCopy_StepFieldUp_Skip2:
+	cp	(MeasureCopy_Field:16), 0x02	; F7B96F  cp (0x0dbc),0x02
+	jr	nz, MeasureCopy_StepFieldUp_Skip3	; F7B974  jr NZ,0xf7b97b
+	calr	MeasureCopy_StepFirstMeasure	; F7B976  calr 0xf7ba7f
+	jr	MeasureCopy_StepFieldUp_Return3	; F7B979  jr T,0xf7b9aa
+MeasureCopy_StepFieldUp_Skip3:
+	cp	(MeasureCopy_Field:16), 0x03	; F7B97B  cp (0x0dbc),0x03
+	jr	nz, MeasureCopy_StepFieldUp_Skip4	; F7B980  jr NZ,0xf7b987
+	calr	MeasureCopy_StepLastMeasure	; F7B982  calr 0xf7bab5
+	jr	MeasureCopy_StepFieldUp_Return3	; F7B985  jr T,0xf7b9aa
+MeasureCopy_StepFieldUp_Skip4:
+	cp	(MeasureCopy_Field:16), 0x04	; F7B987  cp (0x0dbc),0x04
+	jr	nz, MeasureCopy_StepFieldUp_Skip5	; F7B98C  jr NZ,0xf7b993
+	calr	MeasureCopy_StepToTrack	; F7B98E  calr 0xf7baef
+	jr	MeasureCopy_StepFieldUp_Return3	; F7B991  jr T,0xf7b9aa
+MeasureCopy_StepFieldUp_Skip5:
+	cp	(MeasureCopy_Field:16), 0x05	; F7B993  cp (0x0dbc),0x05
+	jr	nz, MeasureCopy_StepFieldUp_Skip6	; F7B998  jr NZ,0xf7b99f
+	calr	MeasureCopy_StepStartMeasure	; F7B99A  calr 0xf7bb58
+	jr	MeasureCopy_StepFieldUp_Return3	; F7B99D  jr T,0xf7b9aa
+MeasureCopy_StepFieldUp_Skip6:
+	cp	(MeasureCopy_Field:16), 0x06	; F7B99F  cp (0x0dbc),0x06
+	jr	nz, MeasureCopy_StepFieldUp_Return3	; F7B9A4  jr NZ,0xf7b9aa
+	call	MeasureCopy_StepRepeat	; F7B9A6  call 0xf7bb6d
+MeasureCopy_StepFieldUp_Return3:
 	ret	; F7B9AA  ret
 
 ; --------------------------------------------------------------------------
-; MeasureC0py_StepFieldDown
-; Called from: T_MeasureC0py_StepFieldDown (x2)
+; MeasureCopy_StepFieldDown
+; Called from: T_MeasureCopy_StepFieldDown (x2)
 ; Touches: (0x0C4E) (0x0C4F) (0x0DBC) (0x2071) (0x2075) (0x207E)
-; Calls:   MeasureC0py_StepFromTrack MeasureC0py_StepFirstMeasure MeasureC0py_StepLastMeasure MeasureC0py_StepToTrack MeasureC0py_StepStartMeasure MeasureC0py_StepRepeat
-; Evidence: thunk slot T_MeasureC0py_StepFieldDown holds `jp 0x00F7B9AB`, and 0xF7B9AB is an
+; Calls:   MeasureCopy_StepFromTrack MeasureCopy_StepFirstMeasure MeasureCopy_StepLastMeasure MeasureCopy_StepToTrack MeasureCopy_StepStartMeasure MeasureCopy_StepRepeat
+; Evidence: thunk slot T_MeasureCopy_StepFieldDown holds `jp 0x00F7B9AB`, and 0xF7B9AB is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; MeasureC0py_StepFieldDown: the same with (0x0C4F) = 0x80 (down).
-MeasureC0py_StepFieldDown:		; <- T_MeasureC0py_StepFieldDown
+; MeasureCopy_StepFieldDown: the same with (0x0C4F) = 0x80 (down).
+MeasureCopy_StepFieldDown:		; <- T_MeasureCopy_StepFieldDown
 	cp	(UI_ScreenStage:16), 0x01	; F7B9AB  cp (0x207e),0x01
-	jr	nz, MeasureC0py_StepFieldDown_Skip7	; F7B9B0  jr NZ,0xf7b9b4
-	jr	MeasureC0py_StepFieldDown_Join	; F7B9B2  jr T,0xf7ba05
-MeasureC0py_StepFieldDown_Skip7:
+	jr	nz, MeasureCopy_StepFieldDown_Skip7	; F7B9B0  jr NZ,0xf7b9b4
+	jr	MeasureCopy_StepFieldDown_Join	; F7B9B2  jr T,0xf7ba05
+MeasureCopy_StepFieldDown_Skip7:
 	ld	(3150:16), w	; F7B9B4  ld (0x0c4e),W
 	ld	(3151:16), 128	; F7B9B8  ld (0x0c4f),0x80
-	cp	(MeasureC0py_Field:16), 0x01	; F7B9BD  cp (0x0dbc),0x01
-	jr	nz, MeasureC0py_StepFieldDown_Skip8	; F7B9C2  jr NZ,0xf7b9c9
-	calr	MeasureC0py_StepFromTrack	; F7B9C4  calr 0xf7ba16
-	jr	MeasureC0py_StepFieldDown_Return4	; F7B9C7  jr T,0xf7ba04
-MeasureC0py_StepFieldDown_Skip8:
-	cp	(MeasureC0py_Field:16), 0x02	; F7B9C9  cp (0x0dbc),0x02
-	jr	nz, MeasureC0py_StepFieldDown_Skip9	; F7B9CE  jr NZ,0xf7b9d5
-	calr	MeasureC0py_StepFirstMeasure	; F7B9D0  calr 0xf7ba7f
-	jr	MeasureC0py_StepFieldDown_Return4	; F7B9D3  jr T,0xf7ba04
-MeasureC0py_StepFieldDown_Skip9:
-	cp	(MeasureC0py_Field:16), 0x03	; F7B9D5  cp (0x0dbc),0x03
-	jr	nz, MeasureC0py_StepFieldDown_Skip10	; F7B9DA  jr NZ,0xf7b9e1
-	calr	MeasureC0py_StepLastMeasure	; F7B9DC  calr 0xf7bab5
-	jr	MeasureC0py_StepFieldDown_Return4	; F7B9DF  jr T,0xf7ba04
-MeasureC0py_StepFieldDown_Skip10:
-	cp	(MeasureC0py_Field:16), 0x04	; F7B9E1  cp (0x0dbc),0x04
-	jr	nz, MeasureC0py_StepFieldDown_Skip11	; F7B9E6  jr NZ,0xf7b9ed
-	calr	MeasureC0py_StepToTrack	; F7B9E8  calr 0xf7baef
-	jr	MeasureC0py_StepFieldDown_Return4	; F7B9EB  jr T,0xf7ba04
-MeasureC0py_StepFieldDown_Skip11:
-	cp	(MeasureC0py_Field:16), 0x05	; F7B9ED  cp (0x0dbc),0x05
-	jr	nz, MeasureC0py_StepFieldDown_Skip12	; F7B9F2  jr NZ,0xf7b9f9
-	calr	MeasureC0py_StepStartMeasure	; F7B9F4  calr 0xf7bb58
-	jr	MeasureC0py_StepFieldDown_Return4	; F7B9F7  jr T,0xf7ba04
-MeasureC0py_StepFieldDown_Skip12:
-	cp	(MeasureC0py_Field:16), 0x06	; F7B9F9  cp (0x0dbc),0x06
-	jr	nz, MeasureC0py_StepFieldDown_Return4	; F7B9FE  jr NZ,0xf7ba04
-	call	MeasureC0py_StepRepeat	; F7BA00  call 0xf7bb6d
-MeasureC0py_StepFieldDown_Return4:
+	cp	(MeasureCopy_Field:16), 0x01	; F7B9BD  cp (0x0dbc),0x01
+	jr	nz, MeasureCopy_StepFieldDown_Skip8	; F7B9C2  jr NZ,0xf7b9c9
+	calr	MeasureCopy_StepFromTrack	; F7B9C4  calr 0xf7ba16
+	jr	MeasureCopy_StepFieldDown_Return4	; F7B9C7  jr T,0xf7ba04
+MeasureCopy_StepFieldDown_Skip8:
+	cp	(MeasureCopy_Field:16), 0x02	; F7B9C9  cp (0x0dbc),0x02
+	jr	nz, MeasureCopy_StepFieldDown_Skip9	; F7B9CE  jr NZ,0xf7b9d5
+	calr	MeasureCopy_StepFirstMeasure	; F7B9D0  calr 0xf7ba7f
+	jr	MeasureCopy_StepFieldDown_Return4	; F7B9D3  jr T,0xf7ba04
+MeasureCopy_StepFieldDown_Skip9:
+	cp	(MeasureCopy_Field:16), 0x03	; F7B9D5  cp (0x0dbc),0x03
+	jr	nz, MeasureCopy_StepFieldDown_Skip10	; F7B9DA  jr NZ,0xf7b9e1
+	calr	MeasureCopy_StepLastMeasure	; F7B9DC  calr 0xf7bab5
+	jr	MeasureCopy_StepFieldDown_Return4	; F7B9DF  jr T,0xf7ba04
+MeasureCopy_StepFieldDown_Skip10:
+	cp	(MeasureCopy_Field:16), 0x04	; F7B9E1  cp (0x0dbc),0x04
+	jr	nz, MeasureCopy_StepFieldDown_Skip11	; F7B9E6  jr NZ,0xf7b9ed
+	calr	MeasureCopy_StepToTrack	; F7B9E8  calr 0xf7baef
+	jr	MeasureCopy_StepFieldDown_Return4	; F7B9EB  jr T,0xf7ba04
+MeasureCopy_StepFieldDown_Skip11:
+	cp	(MeasureCopy_Field:16), 0x05	; F7B9ED  cp (0x0dbc),0x05
+	jr	nz, MeasureCopy_StepFieldDown_Skip12	; F7B9F2  jr NZ,0xf7b9f9
+	calr	MeasureCopy_StepStartMeasure	; F7B9F4  calr 0xf7bb58
+	jr	MeasureCopy_StepFieldDown_Return4	; F7B9F7  jr T,0xf7ba04
+MeasureCopy_StepFieldDown_Skip12:
+	cp	(MeasureCopy_Field:16), 0x06	; F7B9F9  cp (0x0dbc),0x06
+	jr	nz, MeasureCopy_StepFieldDown_Return4	; F7B9FE  jr NZ,0xf7ba04
+	call	MeasureCopy_StepRepeat	; F7BA00  call 0xf7bb6d
+MeasureCopy_StepFieldDown_Return4:
 	ret	; F7BA04  ret
-MeasureC0py_StepFieldDown_Join:
+MeasureCopy_StepFieldDown_Join:
 	and	(UI_RequestBits:16), 0xf6	; F7BA05  and (0x2075),0xf6
 	ld	(UI_ScreenStage:16), 0	; F7BA0A  ld (0x207e),0x00
 	or	(UI_Request_Hi:16), 0x10	; F7BA0F  or (0x2071),0x10
-	jr	MeasureC0py_StepFieldDown_Return4	; F7BA14  jr T,0xf7ba04
+	jr	MeasureCopy_StepFieldDown_Return4	; F7BA14  jr T,0xf7ba04
 
 ; --------------------------------------------------------------------------
-; MeasureC0py_StepFromTrack
+; MeasureCopy_StepFromTrack
 ; Called from: in-module: 0xF7B96A 0xF7B9C4
 ; Touches: (0x0C13) (0x0C14) (0x0C2F) (0x0C34) (0x0C35) (0x12F6) (0x12FB)
 ; Calls:   SeqJob_StepTrack
@@ -2663,29 +2663,29 @@ MeasureC0py_StepFieldDown_Join:
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; MeasureC0py_StepFromTrack: field 1 of the page; steps with SeqJob_StepTrack.
-MeasureC0py_StepFromTrack:
+; MeasureCopy_StepFromTrack: field 1 of the page; steps with SeqJob_StepTrack.
+MeasureCopy_StepFromTrack:
 	ld	a, (3091:16)	; F7BA16  ld A,(0x0c13)
 	ld	l, 1:opc	; F7BA1A  ld L,0x01
 	ld	h, 18:opc	; F7BA1C  ld H,0x12
 	calr	SeqJob_StepTrack	; F7BA1E  calr 0xf7cd30
 	cp	a, 18	; F7BA21  cp A,0x12
-	jr	z, MeasureC0py_StepFromTrack_Skip2	; F7BA24  jr Z,0xf7ba57
+	jr	z, MeasureCopy_StepFromTrack_Skip2	; F7BA24  jr Z,0xf7ba57
 	bit	3, (0x0c35:16)	; F7BA26  bit 3,(0x0c35)
-	jr	z, MeasureC0py_StepFromTrack_Skip	; F7BA2A  jr Z,0xf7ba3f
+	jr	z, MeasureCopy_StepFromTrack_Skip	; F7BA2A  jr Z,0xf7ba3f
 	ld	l, a	; F7BA2C  ld L,A
 	ld	(3124:16), l	; F7BA2E  ld (0x0c34),L
 	ld	(3092:16), l	; F7BA32  ld (0x0c14),L
 	ld	(6304884:24), l	; F7BA36  ld (0x603474),L
 	ld	(DisplayListB_Stage+5:16), a	; F7BA3B  ld (0x12fb),A
-MeasureC0py_StepFromTrack_Skip:
+MeasureCopy_StepFromTrack_Skip:
 	ld	(3091:16), a	; F7BA3F  ld (0x0c13),A
 	ld	(6304879:24), a	; F7BA43  ld (0x60346f),A
 	ld	(3119:16), a	; F7BA48  ld (0x0c2f),A
 	ld	(DisplayListB_Stage:16), a	; F7BA4C  ld (0x12f6),A
 	and	(0x0c35:16), 0xf7	; F7BA50  and (0x0c35),0xf7
-	jr	MeasureC0py_StepFromTrack_Return	; F7BA55  jr T,0xf7ba7e
-MeasureC0py_StepFromTrack_Skip2:
+	jr	MeasureCopy_StepFromTrack_Return	; F7BA55  jr T,0xf7ba7e
+MeasureCopy_StepFromTrack_Skip2:
 	ld	(3119:16), a	; F7BA57  ld (0x0c2f),A
 	ld	(3091:16), a	; F7BA5B  ld (0x0c13),A
 	ld	(6304879:24), a	; F7BA5F  ld (0x60346f),A
@@ -2695,11 +2695,11 @@ MeasureC0py_StepFromTrack_Skip2:
 	ld	(6304884:24), a	; F7BA70  ld (0x603474),A
 	ld	(DisplayListB_Stage+5:16), a	; F7BA75  ld (0x12fb),A
 	or	(0x0c35:16), 0x08	; F7BA79  or (0x0c35),0x08
-MeasureC0py_StepFromTrack_Return:
+MeasureCopy_StepFromTrack_Return:
 	ret	; F7BA7E  ret
 
 ; --------------------------------------------------------------------------
-; MeasureC0py_StepFirstMeasure
+; MeasureCopy_StepFirstMeasure
 ; Called from: in-module: 0xF7B976 0xF7B9D0
 ; Touches: (0x0C18) (0x0C30) (0x0C32) (0x12F7) (0x12F9)
 ; Calls:   SeqJob_StepMeasure
@@ -2709,18 +2709,18 @@ MeasureC0py_StepFromTrack_Return:
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; MeasureC0py_StepFirstMeasure: field 2 of the page; steps with SeqJob_StepMeasure.
-MeasureC0py_StepFirstMeasure:
+; MeasureCopy_StepFirstMeasure: field 2 of the page; steps with SeqJob_StepMeasure.
+MeasureCopy_StepFirstMeasure:
 	ld	wa, (3096:16)	; F7BA7F  ld WA,(0x0c18)
 	calr	SeqJob_StepMeasure	; F7BA83  calr 0xf7cd5f
 	ld	(3096:16), wa	; F7BA86  ld (0x0c18),WA
 	ld	(6304880:24), wa	; F7BA8A  ld (0x603470),WA
 	ld	(DisplayListB_Stage+1:16), wa	; F7BA8F  ld (0x12f7),WA
 	cp	wa, (0x0c32:16)	; F7BA93  cp WA,(0x0c32)
-	jr	ule, MeasureC0py_StepFirstMeasure_Skip	; F7BA97  jr ULE,0xf7baa1
+	jr	ule, MeasureCopy_StepFirstMeasure_Skip	; F7BA97  jr ULE,0xf7baa1
 	ld	(3122:16), wa	; F7BA99  ld (0x0c32),WA
 	ld	(DisplayListB_Stage+3:16), wa	; F7BA9D  ld (0x12f9),WA
-MeasureC0py_StepFirstMeasure_Skip:
+MeasureCopy_StepFirstMeasure_Skip:
 	ld	(3120:16), wa	; F7BAA1  ld (0x0c30),WA
 	ld	wa, (3122:16)	; F7BAA5  ld WA,(0x0c32)
 	sub	wa, (0x0c30:16)	; F7BAA9  sub WA,(0x0c30)
@@ -2729,7 +2729,7 @@ MeasureC0py_StepFirstMeasure_Skip:
 	ret	; F7BAB4  ret
 
 ; --------------------------------------------------------------------------
-; MeasureC0py_StepLastMeasure
+; MeasureCopy_StepLastMeasure
 ; Called from: in-module: 0xF7B982 0xF7B9DC
 ; Touches: (0x0C18) (0x0C30) (0x0C32) (0x12F7) (0x12F9)
 ; Calls:   SeqJob_StepMeasure
@@ -2739,19 +2739,19 @@ MeasureC0py_StepFirstMeasure_Skip:
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; MeasureC0py_StepLastMeasure: field 3 of the page; steps with SeqJob_StepMeasure.
-MeasureC0py_StepLastMeasure:
+; MeasureCopy_StepLastMeasure: field 3 of the page; steps with SeqJob_StepMeasure.
+MeasureCopy_StepLastMeasure:
 	ld	wa, (3122:16)	; F7BAB5  ld WA,(0x0c32)
 	calr	SeqJob_StepMeasure	; F7BAB9  calr 0xf7cd5f
 	ld	(3122:16), wa	; F7BABC  ld (0x0c32),WA
 	ld	(DisplayListB_Stage+3:16), wa	; F7BAC0  ld (0x12f9),WA
 	cp	wa, (0x0c30:16)	; F7BAC4  cp WA,(0x0c30)
-	jr	nc, MeasureC0py_StepLastMeasure_Skip	; F7BAC8  jr NC,0xf7badb
+	jr	nc, MeasureCopy_StepLastMeasure_Skip	; F7BAC8  jr NC,0xf7badb
 	ld	(3120:16), wa	; F7BACA  ld (0x0c30),WA
 	ld	(3096:16), wa	; F7BACE  ld (0x0c18),WA
 	ld	(6304880:24), wa	; F7BAD2  ld (0x603470),WA
 	ld	(DisplayListB_Stage+1:16), wa	; F7BAD7  ld (0x12f7),WA
-MeasureC0py_StepLastMeasure_Skip:
+MeasureCopy_StepLastMeasure_Skip:
 	ld	(3122:16), wa	; F7BADB  ld (0x0c32),WA
 	ld	wa, (3122:16)	; F7BADF  ld WA,(0x0c32)
 	sub	wa, (0x0c30:16)	; F7BAE3  sub WA,(0x0c30)
@@ -2760,7 +2760,7 @@ MeasureC0py_StepLastMeasure_Skip:
 	ret	; F7BAEE  ret
 
 ; --------------------------------------------------------------------------
-; MeasureC0py_StepToTrack
+; MeasureCopy_StepToTrack
 ; Called from: in-module: 0xF7B98E 0xF7B9E8
 ; Touches: (0x0C13) (0x0C14) (0x0C2F) (0x0C34) (0x0C35) (0x12F6) (0x12FB)
 ; Calls:   SeqJob_StepTrack
@@ -2770,29 +2770,29 @@ MeasureC0py_StepLastMeasure_Skip:
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; MeasureC0py_StepToTrack: field 4 of the page; steps with SeqJob_StepTrack.
-MeasureC0py_StepToTrack:
+; MeasureCopy_StepToTrack: field 4 of the page; steps with SeqJob_StepTrack.
+MeasureCopy_StepToTrack:
 	ld	a, (3092:16)	; F7BAEF  ld A,(0x0c14)
 	ld	l, 1:opc	; F7BAF3  ld L,0x01
 	ld	h, 18:opc	; F7BAF5  ld H,0x12
 	calr	SeqJob_StepTrack	; F7BAF7  calr 0xf7cd30
 	cp	a, 18	; F7BAFA  cp A,0x12
-	jr	z, MeasureC0py_StepToTrack_Skip2	; F7BAFD  jr Z,0xf7bb30
+	jr	z, MeasureCopy_StepToTrack_Skip2	; F7BAFD  jr Z,0xf7bb30
 	bit	3, (0x0c35:16)	; F7BAFF  bit 3,(0x0c35)
-	jr	z, MeasureC0py_StepToTrack_Skip	; F7BB03  jr Z,0xf7bb18
+	jr	z, MeasureCopy_StepToTrack_Skip	; F7BB03  jr Z,0xf7bb18
 	ld	l, a	; F7BB05  ld L,A
 	ld	(3119:16), l	; F7BB07  ld (0x0c2f),L
 	ld	(3091:16), l	; F7BB0B  ld (0x0c13),L
 	ld	(6304879:24), l	; F7BB0F  ld (0x60346f),L
 	ld	(DisplayListB_Stage:16), a	; F7BB14  ld (0x12f6),A
-MeasureC0py_StepToTrack_Skip:
+MeasureCopy_StepToTrack_Skip:
 	ld	(3092:16), a	; F7BB18  ld (0x0c14),A
 	ld	(6304884:24), a	; F7BB1C  ld (0x603474),A
 	ld	(3124:16), a	; F7BB21  ld (0x0c34),A
 	ld	(DisplayListB_Stage+5:16), a	; F7BB25  ld (0x12fb),A
 	and	(0x0c35:16), 0xf7	; F7BB29  and (0x0c35),0xf7
-	jr	MeasureC0py_StepToTrack_Return	; F7BB2E  jr T,0xf7bb57
-MeasureC0py_StepToTrack_Skip2:
+	jr	MeasureCopy_StepToTrack_Return	; F7BB2E  jr T,0xf7bb57
+MeasureCopy_StepToTrack_Skip2:
 	ld	(3124:16), a	; F7BB30  ld (0x0c34),A
 	ld	(3092:16), a	; F7BB34  ld (0x0c14),A
 	ld	(6304884:24), a	; F7BB38  ld (0x603474),A
@@ -2802,11 +2802,11 @@ MeasureC0py_StepToTrack_Skip2:
 	ld	(6304879:24), a	; F7BB49  ld (0x60346f),A
 	ld	(DisplayListB_Stage:16), a	; F7BB4E  ld (0x12f6),A
 	or	(0x0c35:16), 0x08	; F7BB52  or (0x0c35),0x08
-MeasureC0py_StepToTrack_Return:
+MeasureCopy_StepToTrack_Return:
 	ret	; F7BB57  ret
 
 ; --------------------------------------------------------------------------
-; MeasureC0py_StepStartMeasure
+; MeasureCopy_StepStartMeasure
 ; Called from: in-module: 0xF7B99A 0xF7B9F4
 ; Touches: (0x0C1A) (0x12FC)
 ; Calls:   SeqJob_StepMeasure
@@ -2816,8 +2816,8 @@ MeasureC0py_StepToTrack_Return:
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; MeasureC0py_StepStartMeasure: field 5 of the page; steps with SeqJob_StepMeasure.
-MeasureC0py_StepStartMeasure:
+; MeasureCopy_StepStartMeasure: field 5 of the page; steps with SeqJob_StepMeasure.
+MeasureCopy_StepStartMeasure:
 	ld	wa, (3098:16)	; F7BB58  ld WA,(0x0c1a)
 	calr	SeqJob_StepMeasure	; F7BB5C  calr 0xf7cd5f
 	ld	(3098:16), wa	; F7BB5F  ld (0x0c1a),WA
@@ -2826,7 +2826,7 @@ MeasureC0py_StepStartMeasure:
 	ret	; F7BB6C  ret
 
 ; --------------------------------------------------------------------------
-; MeasureC0py_StepRepeat
+; MeasureCopy_StepRepeat
 ; Called from: in-module: 0xF7B9A6 0xF7BA00
 ; Touches: (0x0E16) (0x12FE)
 ; Calls:   SeqJob_StepValueInRange
@@ -2836,8 +2836,8 @@ MeasureC0py_StepStartMeasure:
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; MeasureC0py_StepRepeat: field 6 of the page; steps with SeqJob_StepValueInRange, 0..127.
-MeasureC0py_StepRepeat:
+; MeasureCopy_StepRepeat: field 6 of the page; steps with SeqJob_StepValueInRange, 0..127.
+MeasureCopy_StepRepeat:
 	ld	a, (3606:16)	; F7BB6D  ld A,(0x0e16)
 	ld	l, 0:opc	; F7BB71  ld L,0x00
 	ld	h, 127:opc	; F7BB73  ld H,0x7f
@@ -2847,46 +2847,46 @@ MeasureC0py_StepRepeat:
 	ret	; F7BB81  ret
 
 ; --------------------------------------------------------------------------
-; MeasureC0py_ReturnToStageZero
-; Called from: T_MeasureC0py_ReturnToStageZero (x2)
+; MeasureCopy_ReturnToStageZero
+; Called from: T_MeasureCopy_ReturnToStageZero (x2)
 ; Touches: (0x2071) (0x2075) (0x207E)
-; Evidence: thunk slot T_MeasureC0py_ReturnToStageZero holds `jp 0x00F7BB82`, and 0xF7BB82 is an
+; Evidence: thunk slot T_MeasureCopy_ReturnToStageZero holds `jp 0x00F7BB82`, and 0xF7BB82 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; MeasureC0py_ReturnToStageZero: UI_ScreenStage = 0 and UI_Request_Hi |= 0x10 -- back to stage 0 of MeasureC0py_StageNonZero;
-;   called by ExitKey_MeasureC0py_StageNonZero, LcdKeyRow5_MeasureC0py_StageNonZero (notes/prom_ab_stage_zero_names.py).
-MeasureC0py_ReturnToStageZero:		; <- T_MeasureC0py_ReturnToStageZero
+; MeasureCopy_ReturnToStageZero: UI_ScreenStage = 0 and UI_Request_Hi |= 0x10 -- back to stage 0 of MeasureCopy_StageNonZero;
+;   called by ExitKey_MeasureCopy_StageNonZero, LcdKeyRow5_MeasureCopy_StageNonZero (notes/prom_ab_stage_zero_names.py).
+MeasureCopy_ReturnToStageZero:		; <- T_MeasureCopy_ReturnToStageZero
 	and	(UI_RequestBits:16), 0xf6	; F7BB82  and (0x2075),0xf6
 	ld	(UI_ScreenStage:16), 0	; F7BB87  ld (0x207e),0x00
 	or	(UI_Request_Hi:16), 0x10	; F7BB8C  or (0x2071),0x10
 	ret	; F7BB91  ret
 
 ; --------------------------------------------------------------------------
-; MeasureC0py_LcdKeyRow1
-; Called from: T_MeasureC0py_LcdKeyRow1 (x2)
+; MeasureCopy_LcdKeyRow1
+; Called from: T_MeasureCopy_LcdKeyRow1 (x2)
 ; Touches: (0x0C13) (0x0C14) (0x0C18) (0x0C1A) (0x0C1C) (0x0C30) (0x0C32)
 ;          (0x0C35) (0x0C70) (0x0C71) +11 more
-; Calls:   T_SongEdit_CopyMeasures MeasureC0py_RepeatCopy
-; Evidence: thunk slot T_MeasureC0py_LcdKeyRow1 holds `jp 0x00F7BB92`, and 0xF7BB92 is an
+; Calls:   T_SongEdit_CopyMeasures MeasureCopy_RepeatCopy
+; Evidence: thunk slot T_MeasureCopy_LcdKeyRow1 holds `jp 0x00F7BB92`, and 0xF7BB92 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; MeasureC0py_LcdKeyRow1: the LcdKeyRow1 action of MeasureC0py_StageNonZero, MeasureC0py_StageZero -- called only by LcdKeyRow1_MeasureC0py_StageNonZero, LcdKeyRow1_MeasureC0py_StageZero.
-MeasureC0py_LcdKeyRow1:		; <- T_MeasureC0py_LcdKeyRow1
+; MeasureCopy_LcdKeyRow1: the LcdKeyRow1 action of MeasureCopy_StageNonZero, MeasureCopy_StageZero -- called only by LcdKeyRow1_MeasureCopy_StageNonZero, LcdKeyRow1_MeasureCopy_StageZero.
+MeasureCopy_LcdKeyRow1:		; <- T_MeasureCopy_LcdKeyRow1
 	and	(UI_RequestBits:16), 0xf6	; F7BB92  and (0x2075),0xf6
 	cp	(UI_ScreenStage:16), 0x01	; F7BB97  cp (0x207e),0x01
-	jr	z, MeasureC0py_LcdKeyRow1_Skip	; F7BB9C  jr Z,0xf7bbab
+	jr	z, MeasureCopy_LcdKeyRow1_Skip	; F7BB9C  jr Z,0xf7bbab
 	ld	(UI_ScreenStage:16), 1	; F7BB9E  ld (0x207e),0x01
 	or	(UI_Request_Hi:16), 0x10	; F7BBA3  or (0x2071),0x10
 	jrl	sub_F7BB6D_Return	; F7BBA8  jrl T,0xf7bc72
-MeasureC0py_LcdKeyRow1_Skip:
+MeasureCopy_LcdKeyRow1_Skip:
 	ld	wa, (3096:16)	; F7BBAB  ld WA,(0x0c18)
 	ld	(3187:16), wa	; F7BBAF  ld (0x0c73),WA
 	ld	wa, (3098:16)	; F7BBB3  ld WA,(0x0c1a)
@@ -2900,30 +2900,30 @@ MeasureC0py_LcdKeyRow1_Skip:
 	ld	(3185:16), a	; F7BBD1  ld (0x0c71),A
 	ld	(3184:16), 127	; F7BBD5  ld (0x0c70),0x7f
 	bit	3, (0x0c35:16)	; F7BBDA  bit 3,(0x0c35)
-	jr	nz, MeasureC0py_LcdKeyRow1_Skip2	; F7BBDE  jr NZ,0xf7bbe8
+	jr	nz, MeasureCopy_LcdKeyRow1_Skip2	; F7BBDE  jr NZ,0xf7bbe8
 	ld	a, (3091:16)	; F7BBE0  ld A,(0x0c13)
 	ld	(3184:16), a	; F7BBE4  ld (0x0c70),A
-MeasureC0py_LcdKeyRow1_Skip2:
+MeasureCopy_LcdKeyRow1_Skip2:
 	ld	(UI_StatusCode:16), 255	; F7BBE8  ld (0x2880),0xff
 	ld	(BStore_ErrorCode:16), 0	; F7BBED  ld (0x0d4a),0x00
 	call	T_SongEdit_CopyMeasures	; F7BBF2  call 0xf426f8
 	cp	(UI_StatusCode:16), 0xff	; F7BBF6  cp (0x2880),0xff
 	jr	z, sub_F7BB6D_Skip7	; F7BBFB  jr Z,0xf7bc68
 	cp	(UI_StatusCode:16), 0x23	; F7BBFD  cp (0x2880),0x23
-	jr	nz, MeasureC0py_LcdKeyRow1_Skip3	; F7BC02  jr NZ,0xf7bc0f
-	call	MeasureC0py_RepeatCopy	; F7BC04  call 0xf7ce04
+	jr	nz, MeasureCopy_LcdKeyRow1_Skip3	; F7BC02  jr NZ,0xf7bc0f
+	call	MeasureCopy_RepeatCopy	; F7BC04  call 0xf7ce04
 	cp	(UI_StatusCode:16), 0xff	; F7BC08  cp (0x2880),0xff
 	jr	z, sub_F7BB6D_Skip7	; F7BC0D  jr Z,0xf7bc68
-MeasureC0py_LcdKeyRow1_Skip3:
+MeasureCopy_LcdKeyRow1_Skip3:
 	ldw	(UI_Request:16), 16555	; F7BC0F  ld (0x2070),0x40ab
 	ld	(UI_ScreenStage:16), 0	; F7BC15  ld (0x207e),0x00
 	cp	(UI_StatusCode:16), 0x23	; F7BC1A  cp (0x2880),0x23
 	jr	nz, sub_F7BB6D_Return	; F7BC1F  jr NZ,0xf7bc72
 	cp	(0x0c70:16), 0x7f	; F7BC21  cp (0x0c70),0x7f
-	jr	nz, MeasureC0py_LcdKeyRow1_Skip4	; F7BC26  jr NZ,0xf7bc30
+	jr	nz, MeasureCopy_LcdKeyRow1_Skip4	; F7BC26  jr NZ,0xf7bc30
 	ldw	(12304:16), 65535	; F7BC28  ld (0x3010),0xffff
 	jr	sub_F7BB6D_Return	; F7BC2E  jr T,0xf7bc72
-MeasureC0py_LcdKeyRow1_Skip4:
+MeasureCopy_LcdKeyRow1_Skip4:
 	ld	c, (3185:16)	; F7BC30  ld C,(0x0c71)
 	dec	1, c	; F7BC34  dec 1,C
 	ldfr_berp	a, 0x3c	; F7BC36  ld RL3,A
@@ -2931,18 +2931,18 @@ MeasureC0py_LcdKeyRow1_Skip4:
 	ld	de, (12304:16)	; F7BC3C  ld DE,(0x3010)
 	ld	a, c	; F7BC40  ld A,C
 	cp	a, 16	; F7BC42  cp A,0x10
-	jr	lt, MeasureC0py_LcdKeyRow1_Skip5	; F7BC45  jr LT,0xf7bc4e
+	jr	lt, MeasureCopy_LcdKeyRow1_Skip5	; F7BC45  jr LT,0xf7bc4e
 	ld	de, (12306:16)	; F7BC47  ld DE,(0x3012)
 	sub	a, 16	; F7BC4B  sub A,0x10
-MeasureC0py_LcdKeyRow1_Skip5:
+MeasureCopy_LcdKeyRow1_Skip5:
 	scf	; F7BC4E  scf
 	stcf_a_16	de	; F7BC4F  stcf A,DE
 	ldto_berp	a, 0x3c	; F7BC51  ld A,RL3
 	cp	c, 16	; F7BC54  cp C,0x10
-	jr	lt, MeasureC0py_LcdKeyRow1_Skip6	; F7BC57  jr LT,0xf7bc5f
+	jr	lt, MeasureCopy_LcdKeyRow1_Skip6	; F7BC57  jr LT,0xf7bc5f
 	ld	(12306:16), de	; F7BC59  ld (0x3012),DE
 	jr	sub_F7BB6D_Entry	; F7BC5D  jr T,0xf7bc63
-MeasureC0py_LcdKeyRow1_Skip6:
+MeasureCopy_LcdKeyRow1_Skip6:
 	ld	(12304:16), de	; F7BC5F  ld (0x3010),DE
 sub_F7BB6D_Entry:
 	ldto_werp	de, 0x3e	; F7BC63  ld DE,QHL3
@@ -2954,7 +2954,7 @@ sub_F7BB6D_Return:
 	ret	; F7BC72  ret
 
 ; --------------------------------------------------------------------------
-; MeasureC0py_LoadSavedFields
+; MeasureCopy_LoadSavedFields
 ; Called from: in-module: 0xF7B8DC
 ; Touches: (0x0C13) (0x0C14) (0x0C18) (0x0C1A) (0x0C1C) (0x0C2F) (0x0C30)
 ;          (0x0C32) (0x0C34) (0x0C35) +7 more
@@ -2964,13 +2964,13 @@ sub_F7BB6D_Return:
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; MeasureC0py_LoadSavedFields: copies the job's saved fields from battery RAM 0x6034xx into the working cells and the display stage.
-MeasureC0py_LoadSavedFields:
+; MeasureCopy_LoadSavedFields: copies the job's saved fields from battery RAM 0x6034xx into the working cells and the display stage.
+MeasureCopy_LoadSavedFields:
 	ld	a, (6304879:24)	; F7BC73  ld A,(0x60346f)
 	cp	a, 127	; F7BC78  cp A,0x7f
-	jr	nz, MeasureC0py_LoadSavedFields_Skip	; F7BC7B  jr NZ,0xf7bc81
+	jr	nz, MeasureCopy_LoadSavedFields_Skip	; F7BC7B  jr NZ,0xf7bc81
 	set	3, (0x0c35:16)	; F7BC7D  set 3,(0x0c35)
-MeasureC0py_LoadSavedFields_Skip:
+MeasureCopy_LoadSavedFields_Skip:
 	ld	(3091:16), a	; F7BC81  ld (0x0c13),A
 	ld	(3119:16), a	; F7BC85  ld (0x0c2f),A
 	ld	(DisplayListB_Stage:16), a	; F7BC89  ld (0x12f6),A
@@ -2999,26 +2999,26 @@ MeasureC0py_LoadSavedFields_Skip:
 	ld	(DisplayListB_Stage+8:16), a	; F7BCE7  ld (0x12fe),A
 	and	(0x0c35:16), 0xf7	; F7BCEB  and (0x0c35),0xf7
 	cp	(0x0c13:16), 0x12	; F7BCF0  cp (0x0c13),0x12
-	jr	nz, MeasureC0py_LoadSavedFields_Return	; F7BCF5  jr NZ,0xf7bcfc
+	jr	nz, MeasureCopy_LoadSavedFields_Return	; F7BCF5  jr NZ,0xf7bcfc
 	or	(0x0c35:16), 0x08	; F7BCF7  or (0x0c35),0x08
-MeasureC0py_LoadSavedFields_Return:
+MeasureCopy_LoadSavedFields_Return:
 	ret	; F7BCFC  ret
 
 ; --------------------------------------------------------------------------
-; Vel0cityChange_InitFields
-; Called from: T_Vel0cityChange_InitFields (x1)
+; VelocityChange_InitFields
+; Called from: T_VelocityChange_InitFields (x1)
 ; Touches: (0x0C16) (0x0C1E) (0x0C24) (0x0DB8) (0x12FB) (0x12FC)
-; Calls:   Vel0cityChange_LoadSavedFields
-; Evidence: thunk slot T_Vel0cityChange_InitFields holds `jp 0x00F7BCFD`, and 0xF7BCFD is an
+; Calls:   VelocityChange_LoadSavedFields
+; Evidence: thunk slot T_VelocityChange_InitFields holds `jp 0x00F7BCFD`, and 0xF7BCFD is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; Vel0cityChange_InitFields: Paint_Vel0cityChange's stage-0 init: Vel0cityChange_LoadSavedFields, field cursor (0x0db8) = 1 (notes/prom_b_seqjob_field_names.py)
-Vel0cityChange_InitFields:		; <- T_Vel0cityChange_InitFields
-	calr	Vel0cityChange_LoadSavedFields	; F7BCFD  calr 0xf7bf74
+; VelocityChange_InitFields: Paint_VelocityChange's stage-0 init: VelocityChange_LoadSavedFields, field cursor (0x0db8) = 1 (notes/prom_b_seqjob_field_names.py)
+VelocityChange_InitFields:		; <- T_VelocityChange_InitFields
+	calr	VelocityChange_LoadSavedFields	; F7BCFD  calr 0xf7bf74
 	ld	(3094:16), 0	; F7BD00  ld (0x0c16),0x00
 	ld	(6304950:24), 0	; F7BD05  ld (0x6034b6),0x00
 	xor	wa, wa	; F7BD0B  xor WA,WA
@@ -3030,57 +3030,57 @@ Vel0cityChange_InitFields:		; <- T_Vel0cityChange_InitFields
 	ret	; F7BD23  ret
 
 ; --------------------------------------------------------------------------
-; Vel0cityChange_OnLeave
-; Called from: T_Vel0cityChange_OnLeave (x1)
+; VelocityChange_OnLeave
+; Called from: T_VelocityChange_OnLeave (x1)
 ; Touches: (0x207A)
 ; Calls:   T_Seq_RequestRewind
-; Evidence: thunk slot T_Vel0cityChange_OnLeave holds `jp 0x00F7BD24`, and 0xF7BD24 is an
+; Evidence: thunk slot T_VelocityChange_OnLeave holds `jp 0x00F7BD24`, and 0xF7BD24 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; Vel0cityChange_OnLeave: the LEAVE work of Vel0cityChange -- the one unnamed routine ScreenLeaveBody_Vel0cityChange calls, and nothing else calls it
+; VelocityChange_OnLeave: the LEAVE work of VelocityChange -- the one unnamed routine ScreenLeaveBody_VelocityChange calls, and nothing else calls it
 ;   (notes/prom_ab_screen_enter_leave_work.py).
-Vel0cityChange_OnLeave:		; <- T_Vel0cityChange_OnLeave
+VelocityChange_OnLeave:		; <- T_VelocityChange_OnLeave
 	cp	(UI_ScreenLatch:16), 0x1d	; F7BD24  cp (0x207a),0x1d
-	jr	z, Vel0cityChange_OnLeave_Return2	; F7BD29  jr Z,0xf7bd2f
+	jr	z, VelocityChange_OnLeave_Return2	; F7BD29  jr Z,0xf7bd2f
 	call	T_Seq_RequestRewind	; F7BD2B  call 0xf409e0
-Vel0cityChange_OnLeave_Return2:
+VelocityChange_OnLeave_Return2:
 	ret	; F7BD2F  ret
 
 ; --------------------------------------------------------------------------
-; Vel0cityChange_StageZero_LcdKeyRow1
-; Called from: T_Vel0cityChange_StageZero_LcdKeyRow1 (x1)
+; VelocityChange_StageZero_LcdKeyRow1
+; Called from: T_VelocityChange_StageZero_LcdKeyRow1 (x1)
 ; Touches: (0x0DB8) (0x12FC) (0x2075)
-; Evidence: thunk slot T_Vel0cityChange_StageZero_LcdKeyRow1 holds `jp 0x00F7BD30`, and 0xF7BD30 is an
+; Evidence: thunk slot T_VelocityChange_StageZero_LcdKeyRow1 holds `jp 0x00F7BD30`, and 0xF7BD30 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; Vel0cityChange_StageZero_LcdKeyRow1: the LcdKeyRow1 action of Vel0cityChange_StageZero -- called only by LcdKeyRow1_Vel0cityChange_StageZero.
-Vel0cityChange_StageZero_LcdKeyRow1:		; <- T_Vel0cityChange_StageZero_LcdKeyRow1
+; VelocityChange_StageZero_LcdKeyRow1: the LcdKeyRow1 action of VelocityChange_StageZero -- called only by LcdKeyRow1_VelocityChange_StageZero.
+VelocityChange_StageZero_LcdKeyRow1:		; <- T_VelocityChange_StageZero_LcdKeyRow1
 	ld	(3512:16), 1	; F7BD30  ld (0x0db8),0x01
 	ld	(DisplayListB_Stage+6:16), 1	; F7BD35  ld (0x12fc),0x01
 	or	(UI_RequestBits:16), 0x09	; F7BD3A  or (0x2075),0x09
 	ret	; F7BD3F  ret
 
 ; --------------------------------------------------------------------------
-; Vel0cityChange_StageZero_LcdKeyRow2
-; Called from: T_Vel0cityChange_StageZero_LcdKeyRow2 (x1)
+; VelocityChange_StageZero_LcdKeyRow2
+; Called from: T_VelocityChange_StageZero_LcdKeyRow2 (x1)
 ; Touches: (0x0DB8) (0x12FC) (0x2075)
-; Evidence: thunk slot T_Vel0cityChange_StageZero_LcdKeyRow2 holds `jp 0x00F7BD40`, and 0xF7BD40 is an
+; Evidence: thunk slot T_VelocityChange_StageZero_LcdKeyRow2 holds `jp 0x00F7BD40`, and 0xF7BD40 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; Vel0cityChange_StageZero_LcdKeyRow2: the LcdKeyRow2 action of Vel0cityChange_StageZero -- called only by LcdKeyRow2_Vel0cityChange_StageZero.
-Vel0cityChange_StageZero_LcdKeyRow2:		; <- T_Vel0cityChange_StageZero_LcdKeyRow2
+; VelocityChange_StageZero_LcdKeyRow2: the LcdKeyRow2 action of VelocityChange_StageZero -- called only by LcdKeyRow2_VelocityChange_StageZero.
+VelocityChange_StageZero_LcdKeyRow2:		; <- T_VelocityChange_StageZero_LcdKeyRow2
 	ld	(3512:16), 2	; F7BD40  ld (0x0db8),0x02
 	ld	(DisplayListB_Stage+6:16), 2	; F7BD45  ld (0x12fc),0x02
 	or	(UI_RequestBits:16), 0x08	; F7BD4A  or (0x2075),0x08
@@ -3088,18 +3088,18 @@ Vel0cityChange_StageZero_LcdKeyRow2:		; <- T_Vel0cityChange_StageZero_LcdKeyRow2
 	ret	; F7BD54  ret
 
 ; --------------------------------------------------------------------------
-; Vel0cityChange_StageZero_LcdKeyRow3
-; Called from: T_Vel0cityChange_StageZero_LcdKeyRow3 (x1)
+; VelocityChange_StageZero_LcdKeyRow3
+; Called from: T_VelocityChange_StageZero_LcdKeyRow3 (x1)
 ; Touches: (0x0DB8) (0x12FC) (0x2075)
-; Evidence: thunk slot T_Vel0cityChange_StageZero_LcdKeyRow3 holds `jp 0x00F7BD55`, and 0xF7BD55 is an
+; Evidence: thunk slot T_VelocityChange_StageZero_LcdKeyRow3 holds `jp 0x00F7BD55`, and 0xF7BD55 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; Vel0cityChange_StageZero_LcdKeyRow3: the LcdKeyRow3 action of Vel0cityChange_StageZero -- called only by LcdKeyRow3_Vel0cityChange_StageZero.
-Vel0cityChange_StageZero_LcdKeyRow3:		; <- T_Vel0cityChange_StageZero_LcdKeyRow3
+; VelocityChange_StageZero_LcdKeyRow3: the LcdKeyRow3 action of VelocityChange_StageZero -- called only by LcdKeyRow3_VelocityChange_StageZero.
+VelocityChange_StageZero_LcdKeyRow3:		; <- T_VelocityChange_StageZero_LcdKeyRow3
 	ld	(3512:16), 3	; F7BD55  ld (0x0db8),0x03
 	ld	(DisplayListB_Stage+6:16), 3	; F7BD5A  ld (0x12fc),0x03
 	or	(UI_RequestBits:16), 0x08	; F7BD5F  or (0x2075),0x08
@@ -3107,18 +3107,18 @@ Vel0cityChange_StageZero_LcdKeyRow3:		; <- T_Vel0cityChange_StageZero_LcdKeyRow3
 	ret	; F7BD69  ret
 
 ; --------------------------------------------------------------------------
-; Vel0cityChange_StageZero_LcdKeyRow4
-; Called from: T_Vel0cityChange_StageZero_LcdKeyRow4 (x1)
+; VelocityChange_StageZero_LcdKeyRow4
+; Called from: T_VelocityChange_StageZero_LcdKeyRow4 (x1)
 ; Touches: (0x0DB8) (0x12FC) (0x2075)
-; Evidence: thunk slot T_Vel0cityChange_StageZero_LcdKeyRow4 holds `jp 0x00F7BD6A`, and 0xF7BD6A is an
+; Evidence: thunk slot T_VelocityChange_StageZero_LcdKeyRow4 holds `jp 0x00F7BD6A`, and 0xF7BD6A is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; Vel0cityChange_StageZero_LcdKeyRow4: the LcdKeyRow4 action of Vel0cityChange_StageZero -- called only by LcdKeyRow4_Vel0cityChange_StageZero.
-Vel0cityChange_StageZero_LcdKeyRow4:		; <- T_Vel0cityChange_StageZero_LcdKeyRow4
+; VelocityChange_StageZero_LcdKeyRow4: the LcdKeyRow4 action of VelocityChange_StageZero -- called only by LcdKeyRow4_VelocityChange_StageZero.
+VelocityChange_StageZero_LcdKeyRow4:		; <- T_VelocityChange_StageZero_LcdKeyRow4
 	ld	(3512:16), 4	; F7BD6A  ld (0x0db8),0x04
 	ld	(DisplayListB_Stage+6:16), 4	; F7BD6F  ld (0x12fc),0x04
 	or	(UI_RequestBits:16), 0x08	; F7BD74  or (0x2075),0x08
@@ -3126,106 +3126,106 @@ Vel0cityChange_StageZero_LcdKeyRow4:		; <- T_Vel0cityChange_StageZero_LcdKeyRow4
 	ret	; F7BD7E  ret
 
 ; --------------------------------------------------------------------------
-; Vel0cityChange_StepFieldUp
-; Called from: T_Vel0cityChange_StepFieldUp (x4)
+; VelocityChange_StepFieldUp
+; Called from: T_VelocityChange_StepFieldUp (x4)
 ; Touches: (0x0C4E) (0x0C4F) (0x0DB8) (0x207E)
-; Calls:   Vel0cityChange_StepTrack Vel0cityChange_StepFirstMeasure Vel0cityChange_StepLastMeasure Vel0cityChange_StepVelocity
-; Evidence: thunk slot T_Vel0cityChange_StepFieldUp holds `jp 0x00F7BD7F`, and 0xF7BD7F is an
+; Calls:   VelocityChange_StepTrack VelocityChange_StepFirstMeasure VelocityChange_StepLastMeasure VelocityChange_StepVelocity
+; Evidence: thunk slot T_VelocityChange_StepFieldUp holds `jp 0x00F7BD7F`, and 0xF7BD7F is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; Vel0cityChange_StepFieldUp: at stage 1 leaves through Vel0cityChange_ReturnToStageZero; else (0x0C4E) = W, (0x0C4F) = 0 (up) and
+; VelocityChange_StepFieldUp: at stage 1 leaves through VelocityChange_ReturnToStageZero; else (0x0C4E) = W, (0x0C4F) = 0 (up) and
 ;   steps field (0x0db8) (notes/prom_b_seqjob_field_names.py)
-Vel0cityChange_StepFieldUp:		; <- T_Vel0cityChange_StepFieldUp
+VelocityChange_StepFieldUp:		; <- T_VelocityChange_StepFieldUp
 	cp	(UI_ScreenStage:16), 0x01	; F7BD7F  cp (0x207e),0x01
-	jr	nz, Vel0cityChange_StepFieldUp_Skip2	; F7BD84  jr NZ,0xf7bd88
-	jr	Vel0cityChange_ReturnToStageZero	; F7BD86  jr T,0xf7bdc0
-Vel0cityChange_StepFieldUp_Skip2:
+	jr	nz, VelocityChange_StepFieldUp_Skip2	; F7BD84  jr NZ,0xf7bd88
+	jr	VelocityChange_ReturnToStageZero	; F7BD86  jr T,0xf7bdc0
+VelocityChange_StepFieldUp_Skip2:
 	ld	(3150:16), w	; F7BD88  ld (0x0c4e),W
 	ld	(3151:16), 0	; F7BD8C  ld (0x0c4f),0x00
 	cp	(0x0db8:16), 0x01	; F7BD91  cp (0x0db8),0x01
-	jr	nz, Vel0cityChange_StepFieldUp_Skip3	; F7BD96  jr NZ,0xf7bd9d
-	calr	Vel0cityChange_StepTrack	; F7BD98  calr 0xf7be0c
-	jr	Vel0cityChange_StepFieldUp_Return3	; F7BD9B  jr T,0xf7bdbf
-Vel0cityChange_StepFieldUp_Skip3:
+	jr	nz, VelocityChange_StepFieldUp_Skip3	; F7BD96  jr NZ,0xf7bd9d
+	calr	VelocityChange_StepTrack	; F7BD98  calr 0xf7be0c
+	jr	VelocityChange_StepFieldUp_Return3	; F7BD9B  jr T,0xf7bdbf
+VelocityChange_StepFieldUp_Skip3:
 	cp	(0x0db8:16), 0x02	; F7BD9D  cp (0x0db8),0x02
-	jr	nz, Vel0cityChange_StepFieldUp_Skip4	; F7BDA2  jr NZ,0xf7bda9
-	calr	Vel0cityChange_StepFirstMeasure	; F7BDA4  calr 0xf7be43
-	jr	Vel0cityChange_StepFieldUp_Return3	; F7BDA7  jr T,0xf7bdbf
-Vel0cityChange_StepFieldUp_Skip4:
+	jr	nz, VelocityChange_StepFieldUp_Skip4	; F7BDA2  jr NZ,0xf7bda9
+	calr	VelocityChange_StepFirstMeasure	; F7BDA4  calr 0xf7be43
+	jr	VelocityChange_StepFieldUp_Return3	; F7BDA7  jr T,0xf7bdbf
+VelocityChange_StepFieldUp_Skip4:
 	cp	(0x0db8:16), 0x03	; F7BDA9  cp (0x0db8),0x03
-	jr	nz, Vel0cityChange_StepFieldUp_Skip5	; F7BDAE  jr NZ,0xf7bdb5
-	calr	Vel0cityChange_StepLastMeasure	; F7BDB0  calr 0xf7be79
-	jr	Vel0cityChange_StepFieldUp_Return3	; F7BDB3  jr T,0xf7bdbf
-Vel0cityChange_StepFieldUp_Skip5:
+	jr	nz, VelocityChange_StepFieldUp_Skip5	; F7BDAE  jr NZ,0xf7bdb5
+	calr	VelocityChange_StepLastMeasure	; F7BDB0  calr 0xf7be79
+	jr	VelocityChange_StepFieldUp_Return3	; F7BDB3  jr T,0xf7bdbf
+VelocityChange_StepFieldUp_Skip5:
 	cp	(0x0db8:16), 0x04	; F7BDB5  cp (0x0db8),0x04
-	jr	nz, Vel0cityChange_StepFieldUp_Return3	; F7BDBA  jr NZ,0xf7bdbf
-	calr	Vel0cityChange_StepVelocity	; F7BDBC  calr 0xf7beb3
-Vel0cityChange_StepFieldUp_Return3:
+	jr	nz, VelocityChange_StepFieldUp_Return3	; F7BDBA  jr NZ,0xf7bdbf
+	calr	VelocityChange_StepVelocity	; F7BDBC  calr 0xf7beb3
+VelocityChange_StepFieldUp_Return3:
 	ret	; F7BDBF  ret
 
 ; --------------------------------------------------------------------------
-; Vel0cityChange_ReturnToStageZero
-; Called from: T_Vel0cityChange_ReturnToStageZero (x0)
+; VelocityChange_ReturnToStageZero
+; Called from: T_VelocityChange_ReturnToStageZero (x0)
 ; Touches: (0x2071) (0x2075) (0x207E)
-; Calls:   Vel0cityChange_LoadSavedFields
-; Evidence: thunk slot T_Vel0cityChange_ReturnToStageZero holds `jp 0x00F7BDC0`, and 0xF7BDC0 is an
+; Calls:   VelocityChange_LoadSavedFields
+; Evidence: thunk slot T_VelocityChange_ReturnToStageZero holds `jp 0x00F7BDC0`, and 0xF7BDC0 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; Vel0cityChange_ReturnToStageZero: UI_ScreenStage = 0, UI_Request_Hi |= 0x10 (notes/prom_b_seqjob_field_names.py)
-Vel0cityChange_ReturnToStageZero:		; <- T_Vel0cityChange_ReturnToStageZero
+; VelocityChange_ReturnToStageZero: UI_ScreenStage = 0, UI_Request_Hi |= 0x10 (notes/prom_b_seqjob_field_names.py)
+VelocityChange_ReturnToStageZero:		; <- T_VelocityChange_ReturnToStageZero
 	and	(UI_RequestBits:16), 0xf6	; F7BDC0  and (0x2075),0xf6
-	calr	Vel0cityChange_LoadSavedFields	; F7BDC5  calr 0xf7bf74
+	calr	VelocityChange_LoadSavedFields	; F7BDC5  calr 0xf7bf74
 	ld	(UI_ScreenStage:16), 0	; F7BDC8  ld (0x207e),0x00
 	or	(UI_Request_Hi:16), 0x10	; F7BDCD  or (0x2071),0x10
-	jr	Vel0cityChange_StepFieldUp_Return3	; F7BDD2  jr T,0xf7bdbf
+	jr	VelocityChange_StepFieldUp_Return3	; F7BDD2  jr T,0xf7bdbf
 
 ; --------------------------------------------------------------------------
-; Vel0cityChange_StepFieldDown
-; Called from: T_Vel0cityChange_StepFieldDown (x2)
+; VelocityChange_StepFieldDown
+; Called from: T_VelocityChange_StepFieldDown (x2)
 ; Touches: (0x0C4E) (0x0C4F) (0x0DB8)
-; Calls:   Vel0cityChange_StepTrack Vel0cityChange_StepFirstMeasure Vel0cityChange_StepLastMeasure Vel0cityChange_StepVelocity
-; Evidence: thunk slot T_Vel0cityChange_StepFieldDown holds `jp 0x00F7BDD4`, and 0xF7BDD4 is an
+; Calls:   VelocityChange_StepTrack VelocityChange_StepFirstMeasure VelocityChange_StepLastMeasure VelocityChange_StepVelocity
+; Evidence: thunk slot T_VelocityChange_StepFieldDown holds `jp 0x00F7BDD4`, and 0xF7BDD4 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; Vel0cityChange_StepFieldDown: (0x0C4E) = W, (0x0C4F) = 0x80 (down), steps field (0x0db8) (notes/prom_b_seqjob_field_names.py)
-Vel0cityChange_StepFieldDown:		; <- T_Vel0cityChange_StepFieldDown
+; VelocityChange_StepFieldDown: (0x0C4E) = W, (0x0C4F) = 0x80 (down), steps field (0x0db8) (notes/prom_b_seqjob_field_names.py)
+VelocityChange_StepFieldDown:		; <- T_VelocityChange_StepFieldDown
 	ld	(3150:16), w	; F7BDD4  ld (0x0c4e),W
 	ld	(3151:16), 128	; F7BDD8  ld (0x0c4f),0x80
 	cp	(0x0db8:16), 0x01	; F7BDDD  cp (0x0db8),0x01
-	jr	nz, Vel0cityChange_StepFieldDown_Skip6	; F7BDE2  jr NZ,0xf7bde9
-	calr	Vel0cityChange_StepTrack	; F7BDE4  calr 0xf7be0c
-	jr	Vel0cityChange_StepFieldDown_Return4	; F7BDE7  jr T,0xf7be0b
-Vel0cityChange_StepFieldDown_Skip6:
+	jr	nz, VelocityChange_StepFieldDown_Skip6	; F7BDE2  jr NZ,0xf7bde9
+	calr	VelocityChange_StepTrack	; F7BDE4  calr 0xf7be0c
+	jr	VelocityChange_StepFieldDown_Return4	; F7BDE7  jr T,0xf7be0b
+VelocityChange_StepFieldDown_Skip6:
 	cp	(0x0db8:16), 0x02	; F7BDE9  cp (0x0db8),0x02
-	jr	nz, Vel0cityChange_StepFieldDown_Skip7	; F7BDEE  jr NZ,0xf7bdf5
-	calr	Vel0cityChange_StepFirstMeasure	; F7BDF0  calr 0xf7be43
-	jr	Vel0cityChange_StepFieldDown_Return4	; F7BDF3  jr T,0xf7be0b
-Vel0cityChange_StepFieldDown_Skip7:
+	jr	nz, VelocityChange_StepFieldDown_Skip7	; F7BDEE  jr NZ,0xf7bdf5
+	calr	VelocityChange_StepFirstMeasure	; F7BDF0  calr 0xf7be43
+	jr	VelocityChange_StepFieldDown_Return4	; F7BDF3  jr T,0xf7be0b
+VelocityChange_StepFieldDown_Skip7:
 	cp	(0x0db8:16), 0x03	; F7BDF5  cp (0x0db8),0x03
-	jr	nz, Vel0cityChange_StepFieldDown_Skip8	; F7BDFA  jr NZ,0xf7be01
-	calr	Vel0cityChange_StepLastMeasure	; F7BDFC  calr 0xf7be79
-	jr	Vel0cityChange_StepFieldDown_Return4	; F7BDFF  jr T,0xf7be0b
-Vel0cityChange_StepFieldDown_Skip8:
+	jr	nz, VelocityChange_StepFieldDown_Skip8	; F7BDFA  jr NZ,0xf7be01
+	calr	VelocityChange_StepLastMeasure	; F7BDFC  calr 0xf7be79
+	jr	VelocityChange_StepFieldDown_Return4	; F7BDFF  jr T,0xf7be0b
+VelocityChange_StepFieldDown_Skip8:
 	cp	(0x0db8:16), 0x04	; F7BE01  cp (0x0db8),0x04
-	jr	nz, Vel0cityChange_StepFieldDown_Return4	; F7BE06  jr NZ,0xf7be0b
-	calr	Vel0cityChange_StepVelocity	; F7BE08  calr 0xf7beb3
-Vel0cityChange_StepFieldDown_Return4:
+	jr	nz, VelocityChange_StepFieldDown_Return4	; F7BE06  jr NZ,0xf7be0b
+	calr	VelocityChange_StepVelocity	; F7BE08  calr 0xf7beb3
+VelocityChange_StepFieldDown_Return4:
 	ret	; F7BE0B  ret
 
 ; --------------------------------------------------------------------------
-; Vel0cityChange_StepTrack
+; VelocityChange_StepTrack
 ; Called from: in-module: 0xF7BD98 0xF7BDE4
 ; Touches: (0x0C13) (0x0C35) (0x12F6)
 ; Calls:   SeqJob_StepTrack17
@@ -3235,29 +3235,29 @@ Vel0cityChange_StepFieldDown_Return4:
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; Vel0cityChange_StepTrack: field 1 of the page (Track, FirstMeasure, LastMeasure, Velocity), stepped in the direction (0x0C4F) holds (notes/prom_b_seqjob_field_names.py)
-Vel0cityChange_StepTrack:
+; VelocityChange_StepTrack: field 1 of the page (Track, FirstMeasure, LastMeasure, Velocity), stepped in the direction (0x0C4F) holds (notes/prom_b_seqjob_field_names.py)
+VelocityChange_StepTrack:
 	ld	a, (3091:16)	; F7BE0C  ld A,(0x0c13)
 	ld	l, 1:opc	; F7BE10  ld L,0x01
 	ld	h, 17:opc	; F7BE12  ld H,0x11
 	calr	SeqJob_StepTrack17	; F7BE14  calr 0xf7cd01
 	cp	a, 17	; F7BE17  cp A,0x11
-	jr	z, Vel0cityChange_StepTrack_Skip	; F7BE1A  jr Z,0xf7be30
+	jr	z, VelocityChange_StepTrack_Skip	; F7BE1A  jr Z,0xf7be30
 	ld	(3091:16), a	; F7BE1C  ld (0x0c13),A
 	ld	(6304945:24), a	; F7BE20  ld (0x6034b1),A
 	ld	(DisplayListB_Stage:16), a	; F7BE25  ld (0x12f6),A
 	and	(0x0c35:16), 0xdf	; F7BE29  and (0x0c35),0xdf
-	jr	Vel0cityChange_StepTrack_Return	; F7BE2E  jr T,0xf7be42
-Vel0cityChange_StepTrack_Skip:
+	jr	VelocityChange_StepTrack_Return	; F7BE2E  jr T,0xf7be42
+VelocityChange_StepTrack_Skip:
 	ld	(3091:16), a	; F7BE30  ld (0x0c13),A
 	ld	(6304945:24), a	; F7BE34  ld (0x6034b1),A
 	ld	(DisplayListB_Stage:16), a	; F7BE39  ld (0x12f6),A
 	or	(0x0c35:16), 0x20	; F7BE3D  or (0x0c35),0x20
-Vel0cityChange_StepTrack_Return:
+VelocityChange_StepTrack_Return:
 	ret	; F7BE42  ret
 
 ; --------------------------------------------------------------------------
-; Vel0cityChange_StepFirstMeasure
+; VelocityChange_StepFirstMeasure
 ; Called from: in-module: 0xF7BDA4 0xF7BDF0
 ; Touches: (0x0C18) (0x0C20) (0x0C22) (0x12F7) (0x12F9)
 ; Calls:   SeqJob_StepMeasure
@@ -3267,18 +3267,18 @@ Vel0cityChange_StepTrack_Return:
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; Vel0cityChange_StepFirstMeasure: field 2 of the page (Track, FirstMeasure, LastMeasure, Velocity), stepped in the direction (0x0C4F) holds (notes/prom_b_seqjob_field_names.py)
-Vel0cityChange_StepFirstMeasure:
+; VelocityChange_StepFirstMeasure: field 2 of the page (Track, FirstMeasure, LastMeasure, Velocity), stepped in the direction (0x0C4F) holds (notes/prom_b_seqjob_field_names.py)
+VelocityChange_StepFirstMeasure:
 	ld	wa, (3096:16)	; F7BE43  ld WA,(0x0c18)
 	calr	SeqJob_StepMeasure	; F7BE47  calr 0xf7cd5f
 	ld	(3096:16), wa	; F7BE4A  ld (0x0c18),WA
 	ld	(6304946:24), wa	; F7BE4E  ld (0x6034b2),WA
 	ld	(DisplayListB_Stage+1:16), wa	; F7BE53  ld (0x12f7),WA
 	cp	wa, (0x0c22:16)	; F7BE57  cp WA,(0x0c22)
-	jr	ule, Vel0cityChange_StepFirstMeasure_Skip	; F7BE5B  jr ULE,0xf7be65
+	jr	ule, VelocityChange_StepFirstMeasure_Skip	; F7BE5B  jr ULE,0xf7be65
 	ld	(3106:16), wa	; F7BE5D  ld (0x0c22),WA
 	ld	(DisplayListB_Stage+3:16), wa	; F7BE61  ld (0x12f9),WA
-Vel0cityChange_StepFirstMeasure_Skip:
+VelocityChange_StepFirstMeasure_Skip:
 	ld	(3104:16), wa	; F7BE65  ld (0x0c20),WA
 	ld	wa, (3106:16)	; F7BE69  ld WA,(0x0c22)
 	sub	wa, (0x0c20:16)	; F7BE6D  sub WA,(0x0c20)
@@ -3287,7 +3287,7 @@ Vel0cityChange_StepFirstMeasure_Skip:
 	ret	; F7BE78  ret
 
 ; --------------------------------------------------------------------------
-; Vel0cityChange_StepLastMeasure
+; VelocityChange_StepLastMeasure
 ; Called from: in-module: 0xF7BDB0 0xF7BDFC
 ; Touches: (0x0C18) (0x0C20) (0x0C22) (0x12F7) (0x12F9)
 ; Calls:   SeqJob_StepMeasure
@@ -3297,19 +3297,19 @@ Vel0cityChange_StepFirstMeasure_Skip:
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; Vel0cityChange_StepLastMeasure: field 3 of the page (Track, FirstMeasure, LastMeasure, Velocity), stepped in the direction (0x0C4F) holds (notes/prom_b_seqjob_field_names.py)
-Vel0cityChange_StepLastMeasure:
+; VelocityChange_StepLastMeasure: field 3 of the page (Track, FirstMeasure, LastMeasure, Velocity), stepped in the direction (0x0C4F) holds (notes/prom_b_seqjob_field_names.py)
+VelocityChange_StepLastMeasure:
 	ld	wa, (3106:16)	; F7BE79  ld WA,(0x0c22)
 	calr	SeqJob_StepMeasure	; F7BE7D  calr 0xf7cd5f
 	ld	(3106:16), wa	; F7BE80  ld (0x0c22),WA
 	ld	(DisplayListB_Stage+3:16), wa	; F7BE84  ld (0x12f9),WA
 	cp	wa, (0x0c20:16)	; F7BE88  cp WA,(0x0c20)
-	jr	nc, Vel0cityChange_StepLastMeasure_Skip	; F7BE8C  jr NC,0xf7be9f
+	jr	nc, VelocityChange_StepLastMeasure_Skip	; F7BE8C  jr NC,0xf7be9f
 	ld	(3104:16), wa	; F7BE8E  ld (0x0c20),WA
 	ld	(3096:16), wa	; F7BE92  ld (0x0c18),WA
 	ld	(6304946:24), wa	; F7BE96  ld (0x6034b2),WA
 	ld	(DisplayListB_Stage+1:16), wa	; F7BE9B  ld (0x12f7),WA
-Vel0cityChange_StepLastMeasure_Skip:
+VelocityChange_StepLastMeasure_Skip:
 	ld	(3106:16), wa	; F7BE9F  ld (0x0c22),WA
 	ld	wa, (3106:16)	; F7BEA3  ld WA,(0x0c22)
 	sub	wa, (0x0c20:16)	; F7BEA7  sub WA,(0x0c20)
@@ -3318,7 +3318,7 @@ Vel0cityChange_StepLastMeasure_Skip:
 	ret	; F7BEB2  ret
 
 ; --------------------------------------------------------------------------
-; Vel0cityChange_StepVelocity
+; VelocityChange_StepVelocity
 ; Called from: in-module: 0xF7BDBC 0xF7BE08
 ; Touches: (0x0C1E) (0x0C24) (0x0C4F) (0x12FB) (0x2075)
 ; Evidence: reached by a `call`/`calr` decoded in this transcription (the
@@ -3327,24 +3327,24 @@ Vel0cityChange_StepLastMeasure_Skip:
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; Vel0cityChange_StepVelocity: field 4 of the page (Track, FirstMeasure, LastMeasure, Velocity), stepped in the direction (0x0C4F) holds (notes/prom_b_seqjob_field_names.py)
-Vel0cityChange_StepVelocity:
+; VelocityChange_StepVelocity: field 4 of the page (Track, FirstMeasure, LastMeasure, Velocity), stepped in the direction (0x0C4F) holds (notes/prom_b_seqjob_field_names.py)
+VelocityChange_StepVelocity:
 	or	(UI_RequestBits:16), 0x09	; F7BEB3  or (0x2075),0x09
 	ld	a, (3102:16)	; F7BEB8  ld A,(0x0c1e)
 	cp	(0x0c4f:16), 0x80	; F7BEBC  cp (0x0c4f),0x80
-	jr	z, Vel0cityChange_StepVelocity_Skip2	; F7BEC1  jr Z,0xf7bece
+	jr	z, VelocityChange_StepVelocity_Skip2	; F7BEC1  jr Z,0xf7bece
 	inc	1, a	; F7BEC3  inc 1,A
 	cp	a, 128	; F7BEC5  cp A,0x80
-	jr	nz, Vel0cityChange_StepVelocity_Skip	; F7BEC8  jr NZ,0xf7becc
+	jr	nz, VelocityChange_StepVelocity_Skip	; F7BEC8  jr NZ,0xf7becc
 	ld	a, 127:opc	; F7BECA  ld A,0x7f
-Vel0cityChange_StepVelocity_Skip:
-	jr	Vel0cityChange_StepVelocity_Join	; F7BECC  jr T,0xf7bed7
-Vel0cityChange_StepVelocity_Skip2:
+VelocityChange_StepVelocity_Skip:
+	jr	VelocityChange_StepVelocity_Join	; F7BECC  jr T,0xf7bed7
+VelocityChange_StepVelocity_Skip2:
 	dec	1, a	; F7BECE  dec 1,A
 	cp	a, 128	; F7BED0  cp A,0x80
-	jr	nz, Vel0cityChange_StepVelocity_Join	; F7BED3  jr NZ,0xf7bed7
+	jr	nz, VelocityChange_StepVelocity_Join	; F7BED3  jr NZ,0xf7bed7
 	ld	a, 129:opc	; F7BED5  ld A,0x81
-Vel0cityChange_StepVelocity_Join:
+VelocityChange_StepVelocity_Join:
 	ld	(3102:16), a	; F7BED7  ld (0x0c1e),A
 	ld	(6304956:24), a	; F7BEDB  ld (0x6034bc),A
 	xor	w, w	; F7BEE0  xor W,W
@@ -3352,37 +3352,37 @@ Vel0cityChange_StepVelocity_Join:
 	ld	(3108:16), a	; F7BEE6  ld (0x0c24),A
 	ldw	de, 127	; F7BEEA  ld DE,0x007f
 	ld	(DisplayListB_Stage+5:16), a	; F7BEED  ld (0x12fb),A
-	jr	Vel0cityChange_StepVelocity_Return	; F7BEF1  jr T,0xf7bef3
-Vel0cityChange_StepVelocity_Return:
+	jr	VelocityChange_StepVelocity_Return	; F7BEF1  jr T,0xf7bef3
+VelocityChange_StepVelocity_Return:
 	ret	; F7BEF3  ret
 
 ; --------------------------------------------------------------------------
-; Vel0cityChange_LcdKeyRow2
-; Called from: T_Vel0cityChange_LcdKeyRow2 (x2)
+; VelocityChange_LcdKeyRow2
+; Called from: T_VelocityChange_LcdKeyRow2 (x2)
 ; Touches: (0x0C13) (0x0C1E) (0x0C20) (0x0C22) (0x0C35) (0x0C70) (0x0C73)
 ;          (0x0C77) (0x0C7A) (0x0C7B) +6 more
-; Calls:   T_Vel0cityChange_Execute
-; Evidence: thunk slot T_Vel0cityChange_LcdKeyRow2 holds `jp 0x00F7BEF4`, and 0xF7BEF4 is an
+; Calls:   T_VelocityChange_Execute
+; Evidence: thunk slot T_VelocityChange_LcdKeyRow2 holds `jp 0x00F7BEF4`, and 0xF7BEF4 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; Vel0cityChange_LcdKeyRow2: the LcdKeyRow2 action of Vel0cityChange_StageNonZero, Vel0cityChange_StageZero -- called only by LcdKeyRow2_Vel0cityChange_StageNonZero, LcdKeyRow2_Vel0cityChange_StageZero.
-Vel0cityChange_LcdKeyRow2:		; <- T_Vel0cityChange_LcdKeyRow2
+; VelocityChange_LcdKeyRow2: the LcdKeyRow2 action of VelocityChange_StageNonZero, VelocityChange_StageZero -- called only by LcdKeyRow2_VelocityChange_StageNonZero, LcdKeyRow2_VelocityChange_StageZero.
+VelocityChange_LcdKeyRow2:		; <- T_VelocityChange_LcdKeyRow2
 	and	(UI_RequestBits:16), 0xf6	; F7BEF4  and (0x2075),0xf6
 	cp	(UI_ScreenStage:16), 0x01	; F7BEF9  cp (0x207e),0x01
-	jr	z, Vel0cityChange_LcdKeyRow2_Skip3	; F7BEFE  jr Z,0xf7bf0c
+	jr	z, VelocityChange_LcdKeyRow2_Skip3	; F7BEFE  jr Z,0xf7bf0c
 	ld	(UI_ScreenStage:16), 1	; F7BF00  ld (0x207e),0x01
 	or	(UI_Request_Hi:16), 0x10	; F7BF05  or (0x2071),0x10
-	jr	Vel0cityChange_LcdKeyRow2_Return2	; F7BF0A  jr T,0xf7bf73
-Vel0cityChange_LcdKeyRow2_Skip3:
+	jr	VelocityChange_LcdKeyRow2_Return2	; F7BF0A  jr T,0xf7bf73
+VelocityChange_LcdKeyRow2_Skip3:
 	ld	a, (3091:16)	; F7BF0C  ld A,(0x0c13)
 	bit	5, (0x0c35:16)	; F7BF10  bit 5,(0x0c35)
-	jr	z, Vel0cityChange_LcdKeyRow2_Skip4	; F7BF14  jr Z,0xf7bf18
+	jr	z, VelocityChange_LcdKeyRow2_Skip4	; F7BF14  jr Z,0xf7bf18
 	ld	a, 127:opc	; F7BF16  ld A,0x7f
-Vel0cityChange_LcdKeyRow2_Skip4:
+VelocityChange_LcdKeyRow2_Skip4:
 	ld	(3184:16), a	; F7BF18  ld (0x0c70),A
 	ld	wa, (6304946:24)	; F7BF1C  ld WA,(0x6034b2)
 	ld	(3187:16), wa	; F7BF21  ld (0x0c73),WA
@@ -3394,24 +3394,24 @@ Vel0cityChange_LcdKeyRow2_Skip4:
 	ld	(3194:16), 0	; F7BF38  ld (0x0c7a),0x00
 	ld	a, (3102:16)	; F7BF3D  ld A,(0x0c1e)
 	ld	(3195:16), a	; F7BF41  ld (0x0c7b),A
-	jr	Vel0cityChange_LcdKeyRow2_Join2	; F7BF45  jr T,0xf7bf47
-Vel0cityChange_LcdKeyRow2_Join2:
+	jr	VelocityChange_LcdKeyRow2_Join2	; F7BF45  jr T,0xf7bf47
+VelocityChange_LcdKeyRow2_Join2:
 	ld	(UI_StatusCode:16), 255	; F7BF47  ld (0x2880),0xff
 	ld	(BStore_ErrorCode:16), 0	; F7BF4C  ld (0x0d4a),0x00
-	call	T_Vel0cityChange_Execute	; F7BF51  call 0xf426fc
+	call	T_VelocityChange_Execute	; F7BF51  call 0xf426fc
 	cp	(UI_StatusCode:16), 0xff	; F7BF55  cp (0x2880),0xff
-	jr	z, Vel0cityChange_LcdKeyRow2_Skip5	; F7BF5A  jr Z,0xf7bf69
+	jr	z, VelocityChange_LcdKeyRow2_Skip5	; F7BF5A  jr Z,0xf7bf69
 	ldw	(UI_Request:16), 16555	; F7BF5C  ld (0x2070),0x40ab
 	ld	(UI_ScreenStage:16), 0	; F7BF62  ld (0x207e),0x00
-	jr	Vel0cityChange_LcdKeyRow2_Return2	; F7BF67  jr T,0xf7bf73
-Vel0cityChange_LcdKeyRow2_Skip5:
+	jr	VelocityChange_LcdKeyRow2_Return2	; F7BF67  jr T,0xf7bf73
+VelocityChange_LcdKeyRow2_Skip5:
 	ld	(UI_ScreenStage:16), 0	; F7BF69  ld (0x207e),0x00
 	or	(UI_Request_Hi:16), 0x10	; F7BF6E  or (0x2071),0x10
-Vel0cityChange_LcdKeyRow2_Return2:
+VelocityChange_LcdKeyRow2_Return2:
 	ret	; F7BF73  ret
 
 ; --------------------------------------------------------------------------
-; Vel0cityChange_LoadSavedFields
+; VelocityChange_LoadSavedFields
 ; Called from: in-module: 0xF7BCFD 0xF7BDC5
 ; Touches: (0x0C13) (0x0C16) (0x0C18) (0x0C1C) (0x0C1E) (0x0C1F) (0x0C20)
 ;          (0x0C22) (0x0C24) (0x0C35) +3 more
@@ -3421,8 +3421,8 @@ Vel0cityChange_LcdKeyRow2_Return2:
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; Vel0cityChange_LoadSavedFields: copies the job's saved fields from battery RAM 0x6034xx into the working cells (notes/prom_b_seqjob_field_names.py)
-Vel0cityChange_LoadSavedFields:
+; VelocityChange_LoadSavedFields: copies the job's saved fields from battery RAM 0x6034xx into the working cells (notes/prom_b_seqjob_field_names.py)
+VelocityChange_LoadSavedFields:
 	ld	a, (6304945:24)	; F7BF74  ld A,(0x6034b1)
 	ld	(3091:16), a	; F7BF79  ld (0x0c13),A
 	ld	(DisplayListB_Stage:16), a	; F7BF7D  ld (0x12f6),A
@@ -3449,9 +3449,9 @@ Vel0cityChange_LoadSavedFields:
 	ld	(3103:16), a	; F7BFD4  ld (0x0c1f),A
 	and	(0x0c35:16), 0xdf	; F7BFD8  and (0x0c35),0xdf
 	cp	(0x0c13:16), 0x11	; F7BFDD  cp (0x0c13),0x11
-	jr	nz, Vel0cityChange_LoadSavedFields_Return	; F7BFE2  jr NZ,0xf7bfe9
+	jr	nz, VelocityChange_LoadSavedFields_Return	; F7BFE2  jr NZ,0xf7bfe9
 	or	(0x0c35:16), 0x20	; F7BFE4  or (0x0c35),0x20
-Vel0cityChange_LoadSavedFields_Return:
+VelocityChange_LoadSavedFields_Return:
 	ret	; F7BFE9  ret
 
 ; --------------------------------------------------------------------------
@@ -4090,39 +4090,39 @@ Quantize_LcdKeyRow3_Return:
 	ret	; F7C3B1  ret
 
 ; --------------------------------------------------------------------------
-; S0ngC0py_InitFields
-; Called from: T_S0ngC0py_InitFields (x1)
+; SongCopy_InitFields
+; Called from: T_SongCopy_InitFields (x1)
 ; Touches: (0x0E0C) (0x0E0D) (0x0E0E) (0x0E0F) (0x12F6) (0x12F7) (0x1304)
 ;          (0x1305) (0x207B)  |  0x0012F8 0x0012FE
 ; Calls:   SongStore_CopyBankSongName
-; Evidence: thunk slot T_S0ngC0py_InitFields holds `jp 0x00F7C3B2`, and 0xF7C3B2 is an
+; Evidence: thunk slot T_SongCopy_InitFields holds `jp 0x00F7C3B2`, and 0xF7C3B2 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; S0ngC0py_InitFields: Paint_S0ngC0py's init (slot T_S0ngC0py_InitFields): unless the previous screen was S0NG C0PY (0x2A),
-;   S0ngC0py_FromSong = S0ngC0py_ToSong = 1 with both 6-character names staged (SongStore_CopyBankSongName to 0x12F8 /
-;   0x12FE), and S0ngC0py_FromTrack = S0ngC0py_ToTrack = 1, each with its DisplayListB_Stage cell. Basis: caller +
+; SongCopy_InitFields: Paint_SongCopy's init (slot T_SongCopy_InitFields): unless the previous screen was S0NG C0PY (0x2A),
+;   SongCopy_FromSong = SongCopy_ToSong = 1 with both 6-character names staged (SongStore_CopyBankSongName to 0x12F8 /
+;   0x12FE), and SongCopy_FromTrack = SongCopy_ToTrack = 1, each with its DisplayListB_Stage cell. Basis: caller +
 ;   body + siblings (AdvanceDelay_InitFields). (notes/naming-pilot-2026-10-06/proposals_wave7_z.json)
-S0ngC0py_InitFields:		; <- T_S0ngC0py_InitFields
+SongCopy_InitFields:		; <- T_SongCopy_InitFields
 	cp	(UI_ScreenLatch_Previous:16), 0x2a	; F7C3B2  cp (0x207b),0x2a
-	jr	z, S0ngC0py_InitFields_Return	; F7C3B7  jr Z,0xf7c3ed
+	jr	z, SongCopy_InitFields_Return	; F7C3B7  jr Z,0xf7c3ed
 	ld	a, 1:opc	; F7C3B9  ld A,0x01
-	ld	(S0ngC0py_FromSong:16), a	; F7C3BB  ld (0x0e0c),A
+	ld	(SongCopy_FromSong:16), a	; F7C3BB  ld (0x0e0c),A
 	ld	(DisplayListB_Stage:16), a	; F7C3BF  ld (0x12f6),A
 	ld	xix, DisplayListB_Stage+2	; F7C3C3  ld XIX,0x000012f8
 	call	SongStore_CopyBankSongName	; F7C3C8  call 0xf7c440
-	ld	(S0ngC0py_ToSong:16), a	; F7C3CC  ld (0x0e0d),A
+	ld	(SongCopy_ToSong:16), a	; F7C3CC  ld (0x0e0d),A
 	ld	(DisplayListB_Stage+1:16), a	; F7C3D0  ld (0x12f7),A
 	ld	xix, DisplayListB_Stage+8	; F7C3D4  ld XIX,0x000012fe
 	call	SongStore_CopyBankSongName	; F7C3D9  call 0xf7c440
-	ld	(S0ngC0py_FromTrack:16), a	; F7C3DD  ld (0x0e0e),A
+	ld	(SongCopy_FromTrack:16), a	; F7C3DD  ld (0x0e0e),A
 	ld	(DisplayListB_Stage+14:16), a	; F7C3E1  ld (0x1304),A
-	ld	(S0ngC0py_ToTrack:16), a	; F7C3E5  ld (0x0e0f),A
+	ld	(SongCopy_ToTrack:16), a	; F7C3E5  ld (0x0e0f),A
 	ld	(DisplayListB_Stage+15:16), a	; F7C3E9  ld (0x1305),A
-S0ngC0py_InitFields_Return:
+SongCopy_InitFields_Return:
 	ret	; F7C3ED  ret
 
 ; --------------------------------------------------------------------------
@@ -4145,57 +4145,57 @@ sub_F7C3EE_Return:
 	ret	; F7C3F9  ret
 
 ; --------------------------------------------------------------------------
-; S0ngC0py_StageZero_SoftKeyCol1
-; Called from: T_S0ngC0py_StageZero_SoftKeyCol1 (x1)
+; SongCopy_StageZero_SoftKeyCol1
+; Called from: T_SongCopy_StageZero_SoftKeyCol1 (x1)
 ; Touches: (0x0E0C) (0x12F6) (0x2075)  |  0x0012F8
 ; Calls:   SongStore_CopyBankSongName
-; Evidence: thunk slot T_S0ngC0py_StageZero_SoftKeyCol1 holds `jp 0x00F7C3FA`, and 0xF7C3FA is an
+; Evidence: thunk slot T_SongCopy_StageZero_SoftKeyCol1 holds `jp 0x00F7C3FA`, and 0xF7C3FA is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; S0ngC0py_StageZero_SoftKeyCol1: the SoftKeyCol1 action of S0ngC0py_StageZero -- called only by SoftKeyCol1_S0ngC0py_StageZero.
-S0ngC0py_StageZero_SoftKeyCol1:		; <- T_S0ngC0py_StageZero_SoftKeyCol1
+; SongCopy_StageZero_SoftKeyCol1: the SoftKeyCol1 action of SongCopy_StageZero -- called only by SoftKeyCol1_SongCopy_StageZero.
+SongCopy_StageZero_SoftKeyCol1:		; <- T_SongCopy_StageZero_SoftKeyCol1
 	or	(UI_RequestBits:16), 0x08	; F7C3FA  or (0x2075),0x08
-	ld	a, (S0ngC0py_FromSong:16)	; F7C3FF  ld A,(0x0e0c)
+	ld	a, (SongCopy_FromSong:16)	; F7C3FF  ld A,(0x0e0c)
 	ld	l, 1:opc	; F7C403  ld L,0x01
 	cp	a, l	; F7C405  cp A,L
-	jr	ule, S0ngC0py_StageZero_SoftKeyCol1_Return	; F7C407  jr ULE,0xf7c41c
+	jr	ule, SongCopy_StageZero_SoftKeyCol1_Return	; F7C407  jr ULE,0xf7c41c
 	dec	1, a	; F7C409  dec 1,A
-	ld	(S0ngC0py_FromSong:16), a	; F7C40B  ld (0x0e0c),A
+	ld	(SongCopy_FromSong:16), a	; F7C40B  ld (0x0e0c),A
 	ld	(DisplayListB_Stage:16), a	; F7C40F  ld (0x12f6),A
 	ld	xix, DisplayListB_Stage+2	; F7C413  ld XIX,0x000012f8
 	call	SongStore_CopyBankSongName	; F7C418  call 0xf7c440
-S0ngC0py_StageZero_SoftKeyCol1_Return:
+SongCopy_StageZero_SoftKeyCol1_Return:
 	ret	; F7C41C  ret
 
 ; --------------------------------------------------------------------------
-; S0ngC0py_StageZero_SoftKeyCol2
-; Called from: T_S0ngC0py_StageZero_SoftKeyCol2 (x1)
+; SongCopy_StageZero_SoftKeyCol2
+; Called from: T_SongCopy_StageZero_SoftKeyCol2 (x1)
 ; Touches: (0x0E0C) (0x12F6) (0x2075)  |  0x0012F8
 ; Calls:   SongStore_CopyBankSongName
-; Evidence: thunk slot T_S0ngC0py_StageZero_SoftKeyCol2 holds `jp 0x00F7C41D`, and 0xF7C41D is an
+; Evidence: thunk slot T_SongCopy_StageZero_SoftKeyCol2 holds `jp 0x00F7C41D`, and 0xF7C41D is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; S0ngC0py_StageZero_SoftKeyCol2: the SoftKeyCol2 action of S0ngC0py_StageZero -- called only by SoftKeyCol2_S0ngC0py_StageZero.
-S0ngC0py_StageZero_SoftKeyCol2:		; <- T_S0ngC0py_StageZero_SoftKeyCol2
+; SongCopy_StageZero_SoftKeyCol2: the SoftKeyCol2 action of SongCopy_StageZero -- called only by SoftKeyCol2_SongCopy_StageZero.
+SongCopy_StageZero_SoftKeyCol2:		; <- T_SongCopy_StageZero_SoftKeyCol2
 	or	(UI_RequestBits:16), 0x08	; F7C41D  or (0x2075),0x08
-	ld	a, (S0ngC0py_FromSong:16)	; F7C422  ld A,(0x0e0c)
+	ld	a, (SongCopy_FromSong:16)	; F7C422  ld A,(0x0e0c)
 	ld	l, 10:opc	; F7C426  ld L,0x0a
 	cp	a, l	; F7C428  cp A,L
-	jr	nc, S0ngC0py_StageZero_SoftKeyCol2_Return	; F7C42A  jr NC,0xf7c43f
+	jr	nc, SongCopy_StageZero_SoftKeyCol2_Return	; F7C42A  jr NC,0xf7c43f
 	inc	1, a	; F7C42C  inc 1,A
-	ld	(S0ngC0py_FromSong:16), a	; F7C42E  ld (0x0e0c),A
+	ld	(SongCopy_FromSong:16), a	; F7C42E  ld (0x0e0c),A
 	ld	(DisplayListB_Stage:16), a	; F7C432  ld (0x12f6),A
 	ld	xix, DisplayListB_Stage+2	; F7C436  ld XIX,0x000012f8
 	call	SongStore_CopyBankSongName	; F7C43B  call 0xf7c440
-S0ngC0py_StageZero_SoftKeyCol2_Return:
+SongCopy_StageZero_SoftKeyCol2_Return:
 	ret	; F7C43F  ret
 
 ; --------------------------------------------------------------------------
@@ -4229,202 +4229,202 @@ SongStore_CopyBankSongName:
 	ret	; F7C462  ret
 
 ; --------------------------------------------------------------------------
-; S0ngC0py_StageZero_SoftKeyCol3
-; Called from: T_S0ngC0py_StageZero_SoftKeyCol3 (x1)
+; SongCopy_StageZero_SoftKeyCol3
+; Called from: T_SongCopy_StageZero_SoftKeyCol3 (x1)
 ; Touches: (0x0E0E) (0x0E0F) (0x1304) (0x1305) (0x2075)
-; Evidence: thunk slot T_S0ngC0py_StageZero_SoftKeyCol3 holds `jp 0x00F7C463`, and 0xF7C463 is an
+; Evidence: thunk slot T_SongCopy_StageZero_SoftKeyCol3 holds `jp 0x00F7C463`, and 0xF7C463 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; S0ngC0py_StageZero_SoftKeyCol3: the SoftKeyCol3 action of S0ngC0py_StageZero -- called only by SoftKeyCol3_S0ngC0py_StageZero.
-S0ngC0py_StageZero_SoftKeyCol3:		; <- T_S0ngC0py_StageZero_SoftKeyCol3
+; SongCopy_StageZero_SoftKeyCol3: the SoftKeyCol3 action of SongCopy_StageZero -- called only by SoftKeyCol3_SongCopy_StageZero.
+SongCopy_StageZero_SoftKeyCol3:		; <- T_SongCopy_StageZero_SoftKeyCol3
 	or	(UI_RequestBits:16), 0x08	; F7C463  or (0x2075),0x08
-	ld	a, (S0ngC0py_FromTrack:16)	; F7C468  ld A,(0x0e0e)
+	ld	a, (SongCopy_FromTrack:16)	; F7C468  ld A,(0x0e0e)
 	ld	l, 1:opc	; F7C46C  ld L,0x01
 	cp	a, l	; F7C46E  cp A,L
-	jr	z, S0ngC0py_StageZero_SoftKeyCol3_Return	; F7C470  jr Z,0xf7c48b
+	jr	z, SongCopy_StageZero_SoftKeyCol3_Return	; F7C470  jr Z,0xf7c48b
 	dec	1, a	; F7C472  dec 1,A
-	ld	(S0ngC0py_FromTrack:16), a	; F7C474  ld (0x0e0e),A
+	ld	(SongCopy_FromTrack:16), a	; F7C474  ld (0x0e0e),A
 	ld	(DisplayListB_Stage+14:16), a	; F7C478  ld (0x1304),A
-	cp	(S0ngC0py_ToTrack:16), 0x12	; F7C47C  cp (0x0e0f),0x12
-	jr	nz, S0ngC0py_StageZero_SoftKeyCol3_Return	; F7C481  jr NZ,0xf7c48b
-	ld	(S0ngC0py_ToTrack:16), a	; F7C483  ld (0x0e0f),A
+	cp	(SongCopy_ToTrack:16), 0x12	; F7C47C  cp (0x0e0f),0x12
+	jr	nz, SongCopy_StageZero_SoftKeyCol3_Return	; F7C481  jr NZ,0xf7c48b
+	ld	(SongCopy_ToTrack:16), a	; F7C483  ld (0x0e0f),A
 	ld	(DisplayListB_Stage+15:16), a	; F7C487  ld (0x1305),A
-S0ngC0py_StageZero_SoftKeyCol3_Return:
+SongCopy_StageZero_SoftKeyCol3_Return:
 	ret	; F7C48B  ret
 
 ; --------------------------------------------------------------------------
-; S0ngC0py_StageZero_SoftKeyCol4
-; Called from: T_S0ngC0py_StageZero_SoftKeyCol4 (x1)
+; SongCopy_StageZero_SoftKeyCol4
+; Called from: T_SongCopy_StageZero_SoftKeyCol4 (x1)
 ; Touches: (0x0E0E) (0x0E0F) (0x1304) (0x1305) (0x2075)
-; Evidence: thunk slot T_S0ngC0py_StageZero_SoftKeyCol4 holds `jp 0x00F7C48C`, and 0xF7C48C is an
+; Evidence: thunk slot T_SongCopy_StageZero_SoftKeyCol4 holds `jp 0x00F7C48C`, and 0xF7C48C is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; S0ngC0py_StageZero_SoftKeyCol4: the SoftKeyCol4 action of S0ngC0py_StageZero -- called only by SoftKeyCol4_S0ngC0py_StageZero.
-S0ngC0py_StageZero_SoftKeyCol4:		; <- T_S0ngC0py_StageZero_SoftKeyCol4
+; SongCopy_StageZero_SoftKeyCol4: the SoftKeyCol4 action of SongCopy_StageZero -- called only by SoftKeyCol4_SongCopy_StageZero.
+SongCopy_StageZero_SoftKeyCol4:		; <- T_SongCopy_StageZero_SoftKeyCol4
 	or	(UI_RequestBits:16), 0x08	; F7C48C  or (0x2075),0x08
-	ld	a, (S0ngC0py_FromTrack:16)	; F7C491  ld A,(0x0e0e)
+	ld	a, (SongCopy_FromTrack:16)	; F7C491  ld A,(0x0e0e)
 	ld	l, 18:opc	; F7C495  ld L,0x12
 	cp	a, l	; F7C497  cp A,L
-	jr	z, S0ngC0py_StageZero_SoftKeyCol4_Return2	; F7C499  jr Z,0xf7c4b8
+	jr	z, SongCopy_StageZero_SoftKeyCol4_Return2	; F7C499  jr Z,0xf7c4b8
 	inc	1, a	; F7C49B  inc 1,A
-	ld	(S0ngC0py_FromTrack:16), a	; F7C49D  ld (0x0e0e),A
+	ld	(SongCopy_FromTrack:16), a	; F7C49D  ld (0x0e0e),A
 	ld	(DisplayListB_Stage+14:16), a	; F7C4A1  ld (0x1304),A
 	cp	a, 18	; F7C4A5  cp A,0x12
-	jr	nz, S0ngC0py_StageZero_SoftKeyCol4_Return2	; F7C4A8  jr NZ,0xf7c4b8
-	cp	(S0ngC0py_ToTrack:16), a	; F7C4AA  cp (0x0e0f),A
-	jr	z, S0ngC0py_StageZero_SoftKeyCol4_Return2	; F7C4AE  jr Z,0xf7c4b8
-	ld	(S0ngC0py_ToTrack:16), a	; F7C4B0  ld (0x0e0f),A
+	jr	nz, SongCopy_StageZero_SoftKeyCol4_Return2	; F7C4A8  jr NZ,0xf7c4b8
+	cp	(SongCopy_ToTrack:16), a	; F7C4AA  cp (0x0e0f),A
+	jr	z, SongCopy_StageZero_SoftKeyCol4_Return2	; F7C4AE  jr Z,0xf7c4b8
+	ld	(SongCopy_ToTrack:16), a	; F7C4B0  ld (0x0e0f),A
 	ld	(DisplayListB_Stage+15:16), a	; F7C4B4  ld (0x1305),A
-S0ngC0py_StageZero_SoftKeyCol4_Return2:
+SongCopy_StageZero_SoftKeyCol4_Return2:
 	ret	; F7C4B8  ret
 
 ; --------------------------------------------------------------------------
-; S0ngC0py_StageZero_SoftKeyCol5
-; Called from: T_S0ngC0py_StageZero_SoftKeyCol5 (x1)
+; SongCopy_StageZero_SoftKeyCol5
+; Called from: T_SongCopy_StageZero_SoftKeyCol5 (x1)
 ; Touches: (0x0E0D) (0x12F7) (0x2075)  |  0x0012FE
 ; Calls:   SongStore_CopyBankSongName
-; Evidence: thunk slot T_S0ngC0py_StageZero_SoftKeyCol5 holds `jp 0x00F7C4B9`, and 0xF7C4B9 is an
+; Evidence: thunk slot T_SongCopy_StageZero_SoftKeyCol5 holds `jp 0x00F7C4B9`, and 0xF7C4B9 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; S0ngC0py_StageZero_SoftKeyCol5: the SoftKeyCol5 action of S0ngC0py_StageZero -- called only by SoftKeyCol5_S0ngC0py_StageZero.
-S0ngC0py_StageZero_SoftKeyCol5:		; <- T_S0ngC0py_StageZero_SoftKeyCol5
+; SongCopy_StageZero_SoftKeyCol5: the SoftKeyCol5 action of SongCopy_StageZero -- called only by SoftKeyCol5_SongCopy_StageZero.
+SongCopy_StageZero_SoftKeyCol5:		; <- T_SongCopy_StageZero_SoftKeyCol5
 	or	(UI_RequestBits:16), 0x08	; F7C4B9  or (0x2075),0x08
-	ld	a, (S0ngC0py_ToSong:16)	; F7C4BE  ld A,(0x0e0d)
+	ld	a, (SongCopy_ToSong:16)	; F7C4BE  ld A,(0x0e0d)
 	ld	l, 1:opc	; F7C4C2  ld L,0x01
 	cp	a, l	; F7C4C4  cp A,L
-	jr	z, S0ngC0py_StageZero_SoftKeyCol5_Return3	; F7C4C6  jr Z,0xf7c4db
+	jr	z, SongCopy_StageZero_SoftKeyCol5_Return3	; F7C4C6  jr Z,0xf7c4db
 	dec	1, a	; F7C4C8  dec 1,A
-	ld	(S0ngC0py_ToSong:16), a	; F7C4CA  ld (0x0e0d),A
+	ld	(SongCopy_ToSong:16), a	; F7C4CA  ld (0x0e0d),A
 	ld	(DisplayListB_Stage+1:16), a	; F7C4CE  ld (0x12f7),A
 	ld	xix, DisplayListB_Stage+8	; F7C4D2  ld XIX,0x000012fe
 	call	SongStore_CopyBankSongName	; F7C4D7  call 0xf7c440
-S0ngC0py_StageZero_SoftKeyCol5_Return3:
+SongCopy_StageZero_SoftKeyCol5_Return3:
 	ret	; F7C4DB  ret
 
 ; --------------------------------------------------------------------------
-; S0ngC0py_StageZero_SoftKeyCol6
-; Called from: T_S0ngC0py_StageZero_SoftKeyCol6 (x1)
+; SongCopy_StageZero_SoftKeyCol6
+; Called from: T_SongCopy_StageZero_SoftKeyCol6 (x1)
 ; Touches: (0x0E0D) (0x12F7) (0x2075)  |  0x0012FE
 ; Calls:   SongStore_CopyBankSongName
-; Evidence: thunk slot T_S0ngC0py_StageZero_SoftKeyCol6 holds `jp 0x00F7C4DC`, and 0xF7C4DC is an
+; Evidence: thunk slot T_SongCopy_StageZero_SoftKeyCol6 holds `jp 0x00F7C4DC`, and 0xF7C4DC is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; S0ngC0py_StageZero_SoftKeyCol6: the SoftKeyCol6 action of S0ngC0py_StageZero -- called only by SoftKeyCol6_S0ngC0py_StageZero.
-S0ngC0py_StageZero_SoftKeyCol6:		; <- T_S0ngC0py_StageZero_SoftKeyCol6
+; SongCopy_StageZero_SoftKeyCol6: the SoftKeyCol6 action of SongCopy_StageZero -- called only by SoftKeyCol6_SongCopy_StageZero.
+SongCopy_StageZero_SoftKeyCol6:		; <- T_SongCopy_StageZero_SoftKeyCol6
 	or	(UI_RequestBits:16), 0x08	; F7C4DC  or (0x2075),0x08
-	ld	a, (S0ngC0py_ToSong:16)	; F7C4E1  ld A,(0x0e0d)
+	ld	a, (SongCopy_ToSong:16)	; F7C4E1  ld A,(0x0e0d)
 	ld	l, 10:opc	; F7C4E5  ld L,0x0a
 	cp	a, l	; F7C4E7  cp A,L
-	jr	z, S0ngC0py_StageZero_SoftKeyCol6_Return4	; F7C4E9  jr Z,0xf7c4fe
+	jr	z, SongCopy_StageZero_SoftKeyCol6_Return4	; F7C4E9  jr Z,0xf7c4fe
 	inc	1, a	; F7C4EB  inc 1,A
-	ld	(S0ngC0py_ToSong:16), a	; F7C4ED  ld (0x0e0d),A
+	ld	(SongCopy_ToSong:16), a	; F7C4ED  ld (0x0e0d),A
 	ld	(DisplayListB_Stage+1:16), a	; F7C4F1  ld (0x12f7),A
 	ld	xix, DisplayListB_Stage+8	; F7C4F5  ld XIX,0x000012fe
 	call	SongStore_CopyBankSongName	; F7C4FA  call 0xf7c440
-S0ngC0py_StageZero_SoftKeyCol6_Return4:
+SongCopy_StageZero_SoftKeyCol6_Return4:
 	ret	; F7C4FE  ret
 
 ; --------------------------------------------------------------------------
-; S0ngC0py_StageZero_SoftKeyCol7
-; Called from: T_S0ngC0py_StageZero_SoftKeyCol7 (x1)
+; SongCopy_StageZero_SoftKeyCol7
+; Called from: T_SongCopy_StageZero_SoftKeyCol7 (x1)
 ; Touches: (0x0E0E) (0x0E0F) (0x1304) (0x1305) (0x2075)
-; Evidence: thunk slot T_S0ngC0py_StageZero_SoftKeyCol7 holds `jp 0x00F7C4FF`, and 0xF7C4FF is an
+; Evidence: thunk slot T_SongCopy_StageZero_SoftKeyCol7 holds `jp 0x00F7C4FF`, and 0xF7C4FF is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; S0ngC0py_StageZero_SoftKeyCol7: the SoftKeyCol7 action of S0ngC0py_StageZero -- called only by SoftKeyCol7_S0ngC0py_StageZero.
-S0ngC0py_StageZero_SoftKeyCol7:		; <- T_S0ngC0py_StageZero_SoftKeyCol7
+; SongCopy_StageZero_SoftKeyCol7: the SoftKeyCol7 action of SongCopy_StageZero -- called only by SoftKeyCol7_SongCopy_StageZero.
+SongCopy_StageZero_SoftKeyCol7:		; <- T_SongCopy_StageZero_SoftKeyCol7
 	or	(UI_RequestBits:16), 0x08	; F7C4FF  or (0x2075),0x08
-	ld	a, (S0ngC0py_ToTrack:16)	; F7C504  ld A,(0x0e0f)
+	ld	a, (SongCopy_ToTrack:16)	; F7C504  ld A,(0x0e0f)
 	ld	l, 1:opc	; F7C508  ld L,0x01
 	cp	a, l	; F7C50A  cp A,L
-	jr	z, S0ngC0py_StageZero_SoftKeyCol7_Return5	; F7C50C  jr Z,0xf7c527
+	jr	z, SongCopy_StageZero_SoftKeyCol7_Return5	; F7C50C  jr Z,0xf7c527
 	dec	1, a	; F7C50E  dec 1,A
-	ld	(S0ngC0py_ToTrack:16), a	; F7C510  ld (0x0e0f),A
+	ld	(SongCopy_ToTrack:16), a	; F7C510  ld (0x0e0f),A
 	ld	(DisplayListB_Stage+15:16), a	; F7C514  ld (0x1305),A
-	cp	(S0ngC0py_FromTrack:16), 0x12	; F7C518  cp (0x0e0e),0x12
-	jr	nz, S0ngC0py_StageZero_SoftKeyCol7_Return5	; F7C51D  jr NZ,0xf7c527
-	ld	(S0ngC0py_FromTrack:16), a	; F7C51F  ld (0x0e0e),A
+	cp	(SongCopy_FromTrack:16), 0x12	; F7C518  cp (0x0e0e),0x12
+	jr	nz, SongCopy_StageZero_SoftKeyCol7_Return5	; F7C51D  jr NZ,0xf7c527
+	ld	(SongCopy_FromTrack:16), a	; F7C51F  ld (0x0e0e),A
 	ld	(DisplayListB_Stage+14:16), a	; F7C523  ld (0x1304),A
-S0ngC0py_StageZero_SoftKeyCol7_Return5:
+SongCopy_StageZero_SoftKeyCol7_Return5:
 	ret	; F7C527  ret
 
 ; --------------------------------------------------------------------------
-; S0ngC0py_StageZero_SoftKeyCol8
-; Called from: T_S0ngC0py_StageZero_SoftKeyCol8 (x1)
+; SongCopy_StageZero_SoftKeyCol8
+; Called from: T_SongCopy_StageZero_SoftKeyCol8 (x1)
 ; Touches: (0x0E0E) (0x0E0F) (0x1304) (0x1305) (0x2075)
-; Evidence: thunk slot T_S0ngC0py_StageZero_SoftKeyCol8 holds `jp 0x00F7C528`, and 0xF7C528 is an
+; Evidence: thunk slot T_SongCopy_StageZero_SoftKeyCol8 holds `jp 0x00F7C528`, and 0xF7C528 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; S0ngC0py_StageZero_SoftKeyCol8: the SoftKeyCol8 action of S0ngC0py_StageZero -- called only by SoftKeyCol8_S0ngC0py_StageZero.
-S0ngC0py_StageZero_SoftKeyCol8:		; <- T_S0ngC0py_StageZero_SoftKeyCol8
+; SongCopy_StageZero_SoftKeyCol8: the SoftKeyCol8 action of SongCopy_StageZero -- called only by SoftKeyCol8_SongCopy_StageZero.
+SongCopy_StageZero_SoftKeyCol8:		; <- T_SongCopy_StageZero_SoftKeyCol8
 	or	(UI_RequestBits:16), 0x08	; F7C528  or (0x2075),0x08
-	ld	a, (S0ngC0py_ToTrack:16)	; F7C52D  ld A,(0x0e0f)
+	ld	a, (SongCopy_ToTrack:16)	; F7C52D  ld A,(0x0e0f)
 	ld	l, 18:opc	; F7C531  ld L,0x12
 	cp	a, l	; F7C533  cp A,L
-	jr	z, S0ngC0py_StageZero_SoftKeyCol8_Return6	; F7C535  jr Z,0xf7c554
+	jr	z, SongCopy_StageZero_SoftKeyCol8_Return6	; F7C535  jr Z,0xf7c554
 	inc	1, a	; F7C537  inc 1,A
-	ld	(S0ngC0py_ToTrack:16), a	; F7C539  ld (0x0e0f),A
+	ld	(SongCopy_ToTrack:16), a	; F7C539  ld (0x0e0f),A
 	ld	(DisplayListB_Stage+15:16), a	; F7C53D  ld (0x1305),A
 	cp	a, 18	; F7C541  cp A,0x12
-	jr	nz, S0ngC0py_StageZero_SoftKeyCol8_Return6	; F7C544  jr NZ,0xf7c554
-	cp	(S0ngC0py_FromTrack:16), a	; F7C546  cp (0x0e0e),A
-	jr	z, S0ngC0py_StageZero_SoftKeyCol8_Return6	; F7C54A  jr Z,0xf7c554
-	ld	(S0ngC0py_FromTrack:16), a	; F7C54C  ld (0x0e0e),A
+	jr	nz, SongCopy_StageZero_SoftKeyCol8_Return6	; F7C544  jr NZ,0xf7c554
+	cp	(SongCopy_FromTrack:16), a	; F7C546  cp (0x0e0e),A
+	jr	z, SongCopy_StageZero_SoftKeyCol8_Return6	; F7C54A  jr Z,0xf7c554
+	ld	(SongCopy_FromTrack:16), a	; F7C54C  ld (0x0e0e),A
 	ld	(DisplayListB_Stage+14:16), a	; F7C550  ld (0x1304),A
-S0ngC0py_StageZero_SoftKeyCol8_Return6:
+SongCopy_StageZero_SoftKeyCol8_Return6:
 	ret	; F7C554  ret
 
 ; --------------------------------------------------------------------------
-; S0ngC0py_LcdKeyRow2
-; Called from: T_S0ngC0py_LcdKeyRow2 (x2)
+; SongCopy_LcdKeyRow2
+; Called from: T_SongCopy_LcdKeyRow2 (x2)
 ; Touches: (0x0E0C) (0x0E0D) (0x0E0E) (0x0E34) (0x2070) (0x2071) (0x207E)  |
 ;          0x000022 0x610000
-; Calls:   T_S0ngC0py_Execute
-; Evidence: thunk slot T_S0ngC0py_LcdKeyRow2 holds `jp 0x00F7C555`, and 0xF7C555 is an
+; Calls:   T_SongCopy_Execute
+; Evidence: thunk slot T_SongCopy_LcdKeyRow2 holds `jp 0x00F7C555`, and 0xF7C555 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; S0ngC0py_LcdKeyRow2: the LcdKeyRow2 action of S0ngC0py_StageNonZero, S0ngC0py_StageZero -- called only by LcdKeyRow2_S0ngC0py_StageNonZero, LcdKeyRow2_S0ngC0py_StageZero.
-S0ngC0py_LcdKeyRow2:		; <- T_S0ngC0py_LcdKeyRow2
+; SongCopy_LcdKeyRow2: the LcdKeyRow2 action of SongCopy_StageNonZero, SongCopy_StageZero -- called only by LcdKeyRow2_SongCopy_StageNonZero, LcdKeyRow2_SongCopy_StageZero.
+SongCopy_LcdKeyRow2:		; <- T_SongCopy_LcdKeyRow2
 	cp	(UI_ScreenStage:16), 0x00	; F7C555  cp (0x207e),0x00
-	jrl	nz, S0ngC0py_LcdKeyRow2_Skip2	; F7C55A  jrl NZ,0xf7c5b0
+	jrl	nz, SongCopy_LcdKeyRow2_Skip2	; F7C55A  jrl NZ,0xf7c5b0
 	ld	(3636:16), 0	; F7C55D  ld (0x0e34),0x00
-	cp	(S0ngC0py_FromTrack:16), 0x12	; F7C562  cp (0x0e0e),0x12
-	jrl	z, S0ngC0py_LcdKeyRow2_Skip	; F7C567  jrl Z,0xf7c5a4
-	ld	a, (S0ngC0py_FromSong:16)	; F7C56A  ld A,(0x0e0c)
-	cp	a, (S0ngC0py_ToSong:16)	; F7C56E  cp A,(0x0e0d)
-	jrl	z, S0ngC0py_LcdKeyRow2_Skip	; F7C572  jrl Z,0xf7c5a4
+	cp	(SongCopy_FromTrack:16), 0x12	; F7C562  cp (0x0e0e),0x12
+	jrl	z, SongCopy_LcdKeyRow2_Skip	; F7C567  jrl Z,0xf7c5a4
+	ld	a, (SongCopy_FromSong:16)	; F7C56A  ld A,(0x0e0c)
+	cp	a, (SongCopy_ToSong:16)	; F7C56E  cp A,(0x0e0d)
+	jrl	z, SongCopy_LcdKeyRow2_Skip	; F7C572  jrl Z,0xf7c5a4
 	ld	xde, 6356992	; F7C575  ld XDE,0x00610000
 	push	xbc	; F7C57A  push XBC
 	xor	xhl, xhl	; F7C57B  xor XHL,XHL
-	ld	l, (S0ngC0py_FromSong:16)	; F7C57D  ld L,(0x0e0c)
+	ld	l, (SongCopy_FromSong:16)	; F7C57D  ld L,(0x0e0c)
 	dec	1, l	; F7C581  dec 1,L
 	ld	xbc, xhl	; F7C583  ld XBC,XHL
 	sla	xhl, 11	; F7C585  sla 0x0b,XHL
@@ -4435,34 +4435,34 @@ S0ngC0py_LcdKeyRow2:		; <- T_S0ngC0py_LcdKeyRow2
 	ld	xhl, 34	; F7C590  ld XHL,0x00000022
 	add	xhl, xde	; F7C595  add XHL,XDE
 	xor	bc, bc	; F7C597  xor BC,BC
-	ld	c, (S0ngC0py_FromTrack:16)	; F7C599  ld C,(0x0e0e)
+	ld	c, (SongCopy_FromTrack:16)	; F7C599  ld C,(0x0e0e)
 	dec	1, c	; F7C59D  dec 1,C
 	ld	a, (xhl+bc)	; F7C59F  ld A,(XHL+BC)
-S0ngC0py_LcdKeyRow2_Skip:
+SongCopy_LcdKeyRow2_Skip:
 	ld	(UI_ScreenStage:16), 1	; F7C5A4  ld (0x207e),0x01
 	or	(UI_Request_Hi:16), 0x10	; F7C5A9  or (0x2071),0x10
-	jr	S0ngC0py_LcdKeyRow2_Return7	; F7C5AE  jr T,0xf7c5bf
-S0ngC0py_LcdKeyRow2_Skip2:
-	call	T_S0ngC0py_Execute	; F7C5B0  call 0xf4271c
+	jr	SongCopy_LcdKeyRow2_Return7	; F7C5AE  jr T,0xf7c5bf
+SongCopy_LcdKeyRow2_Skip2:
+	call	T_SongCopy_Execute	; F7C5B0  call 0xf4271c
 	ldw	(UI_Request:16), 16555	; F7C5B4  ld (0x2070),0x40ab
 	ld	(UI_ScreenStage:16), 0	; F7C5BA  ld (0x207e),0x00
-S0ngC0py_LcdKeyRow2_Return7:
+SongCopy_LcdKeyRow2_Return7:
 	ret	; F7C5BF  ret
 
 ; --------------------------------------------------------------------------
-; S0ngC0py_ReturnToStageZero
-; Called from: T_S0ngC0py_ReturnToStageZero (x2)
+; SongCopy_ReturnToStageZero
+; Called from: T_SongCopy_ReturnToStageZero (x2)
 ; Touches: (0x2071) (0x207E)
-; Evidence: thunk slot T_S0ngC0py_ReturnToStageZero holds `jp 0x00F7C5C0`, and 0xF7C5C0 is an
+; Evidence: thunk slot T_SongCopy_ReturnToStageZero holds `jp 0x00F7C5C0`, and 0xF7C5C0 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; S0ngC0py_ReturnToStageZero: UI_ScreenStage = 0 and UI_Request_Hi |= 0x10 -- back to stage 0 of S0ngC0py_StageNonZero;
-;   called by ExitKey_S0ngC0py_StageNonZero, LcdKeyRow3_S0ngC0py_StageNonZero (notes/prom_ab_stage_zero_names.py).
-S0ngC0py_ReturnToStageZero:		; <- T_S0ngC0py_ReturnToStageZero
+; SongCopy_ReturnToStageZero: UI_ScreenStage = 0 and UI_Request_Hi |= 0x10 -- back to stage 0 of SongCopy_StageNonZero;
+;   called by ExitKey_SongCopy_StageNonZero, LcdKeyRow3_SongCopy_StageNonZero (notes/prom_ab_stage_zero_names.py).
+SongCopy_ReturnToStageZero:		; <- T_SongCopy_ReturnToStageZero
 	ld	(UI_ScreenStage:16), 0	; F7C5C0  ld (0x207e),0x00
 	or	(UI_Request_Hi:16), 0x10	; F7C5C5  or (0x2071),0x10
 	ret	; F7C5CA  ret
@@ -4536,38 +4536,38 @@ PanelWrite_Execute:		; <- T_PanelWrite_Execute
 	ret	; F7C605  ret
 
 ; --------------------------------------------------------------------------
-; Transp0se_InitFields
-; Called from: T_Transp0se_InitFields (x1)
+; Transpose_InitFields
+; Called from: T_Transpose_InitFields (x1)
 ; Touches: (0x0DF6) (0x12FC) (0x2070) (0x207B) (0x2880)
-; Calls:   Transp0se_StageDisplayFields
-; Evidence: thunk slot T_Transp0se_InitFields holds `jp 0x00F7C606`, and 0xF7C606 is an
+; Calls:   Transpose_StageDisplayFields
+; Evidence: thunk slot T_Transpose_InitFields holds `jp 0x00F7C606`, and 0xF7C606 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; Transp0se_InitFields: Paint_Transp0se's stage-0 init (slot T_Transp0se_InitFields): unless the previous screen was TRANSP0SE
-;   (0x2B), Transp0se_StageDisplayFields stages the saved cells (0x0DF7)..(0x0DFC) into DisplayListB_Stage, the field cursor (0x0DF6) :=
+; Transpose_InitFields: Paint_Transpose's stage-0 init (slot T_Transpose_InitFields): unless the previous screen was TRANSP0SE
+;   (0x2B), Transpose_StageDisplayFields stages the saved cells (0x0DF7)..(0x0DFC) into DisplayListB_Stage, the field cursor (0x0DF6) :=
 ;   1 and UI_StatusCode := 0xFF; then, when UI_StatusCode is 0x23 (job done), UI_Request := 0x801A, back to EDIT.
 ;   Basis: caller + body + siblings (AdvanceDelay_InitFields). (notes/naming-pilot-2026-10-06/proposals_wave7_z.json)
-Transp0se_InitFields:		; <- T_Transp0se_InitFields
+Transpose_InitFields:		; <- T_Transpose_InitFields
 	cp	(UI_ScreenLatch_Previous:16), 0x2b	; F7C606  cp (0x207b),0x2b
-	jr	z, Transp0se_InitFields_Skip4	; F7C60B  jr Z,0xf7c61f
-	calr	Transp0se_StageDisplayFields	; F7C60D  calr 0xf7c62d
+	jr	z, Transpose_InitFields_Skip4	; F7C60B  jr Z,0xf7c61f
+	calr	Transpose_StageDisplayFields	; F7C60D  calr 0xf7c62d
 	ld	a, 1:opc	; F7C610  ld A,0x01
 	ld	(3574:16), a	; F7C612  ld (0x0df6),A
 	ld	(DisplayListB_Stage+6:16), a	; F7C616  ld (0x12fc),A
 	ld	(UI_StatusCode:16), 255	; F7C61A  ld (0x2880),0xff
-Transp0se_InitFields_Skip4:
+Transpose_InitFields_Skip4:
 	cp	(UI_StatusCode:16), 0x23	; F7C61F  cp (0x2880),0x23
-	jr	nz, Transp0se_InitFields_Return10	; F7C624  jr NZ,0xf7c62c
+	jr	nz, Transpose_InitFields_Return10	; F7C624  jr NZ,0xf7c62c
 	ldw	(UI_Request:16), 32794	; F7C626  ld (0x2070),0x801a
-Transp0se_InitFields_Return10:
+Transpose_InitFields_Return10:
 	ret	; F7C62C  ret
 
 ; --------------------------------------------------------------------------
-; Transp0se_StageDisplayFields
+; Transpose_StageDisplayFields
 ; Called from: in-module: 0xF7C60D
 ; Touches: (0x0DF6) (0x0DF7) (0x0DF8) (0x0DFA) (0x0DFC) (0x0E00) (0x12F6)
 ;          (0x12F7) (0x12F9) (0x12FB) +1 more
@@ -4577,12 +4577,12 @@ Transp0se_InitFields_Return10:
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; Transp0se_StageDisplayFields: TRANSP0SE: its working cells into DisplayListB_Stage -- track (0x0DF7) -> +0, the
-;   1..999 pair (0x0DF8)/(0x0DFA) (first <= last, as Transp0se_KeypadCommit keeps them) -> +1/+3, the signed value
-;   (0x0DFC) -> +5 -- field cursor (0x0DF6) := 1 (+6), and (0x0E00) := (0x0DFA) - (0x0DF8) + 1. Transp0se_InitFields
-;   calls it unless the previous screen was TRANSP0SE; cf. N0teChange_StageDisplayFields. Basis: caller + body + twin.
+; Transpose_StageDisplayFields: TRANSP0SE: its working cells into DisplayListB_Stage -- track (0x0DF7) -> +0, the
+;   1..999 pair (0x0DF8)/(0x0DFA) (first <= last, as Transpose_KeypadCommit keeps them) -> +1/+3, the signed value
+;   (0x0DFC) -> +5 -- field cursor (0x0DF6) := 1 (+6), and (0x0E00) := (0x0DFA) - (0x0DF8) + 1. Transpose_InitFields
+;   calls it unless the previous screen was TRANSP0SE; cf. NoteChange_StageDisplayFields. Basis: caller + body + twin.
 ;   (notes/naming-pilot-2026-10-06/proposals_wave8_b8.json)
-Transp0se_StageDisplayFields:
+Transpose_StageDisplayFields:
 	ld	a, (3575:16)	; F7C62D  ld A,(0x0df7)
 	ld	(DisplayListB_Stage:16), a	; F7C631  ld (0x12f6),A
 	ld	wa, (3576:16)	; F7C635  ld WA,(0x0df8)
@@ -4601,42 +4601,42 @@ Transp0se_StageDisplayFields:
 	ret	; F7C665  ret
 
 ; --------------------------------------------------------------------------
-; Transp0se_OnLeave
-; Called from: T_Transp0se_OnLeave (x1)
+; Transpose_OnLeave
+; Called from: T_Transpose_OnLeave (x1)
 ; Touches: (0x207A)
 ; Calls:   T_Seq_RequestRewind
-; Evidence: thunk slot T_Transp0se_OnLeave holds `jp 0x00F7C666`, and 0xF7C666 is an
+; Evidence: thunk slot T_Transpose_OnLeave holds `jp 0x00F7C666`, and 0xF7C666 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; Transp0se_OnLeave: the LEAVE work of Transp0se -- the one unnamed routine ScreenLeaveBody_Transp0se calls, and nothing else calls it
+; Transpose_OnLeave: the LEAVE work of Transpose -- the one unnamed routine ScreenLeaveBody_Transpose calls, and nothing else calls it
 ;   (notes/prom_ab_screen_enter_leave_work.py).
-Transp0se_OnLeave:		; <- T_Transp0se_OnLeave
+Transpose_OnLeave:		; <- T_Transpose_OnLeave
 	cp	(UI_ScreenLatch:16), 0x2b	; F7C666  cp (0x207a),0x2b
-	jr	z, Transp0se_OnLeave_Return	; F7C66B  jr Z,0xf7c671
+	jr	z, Transpose_OnLeave_Return	; F7C66B  jr Z,0xf7c671
 	call	T_Seq_RequestRewind	; F7C66D  call 0xf409e0
-Transp0se_OnLeave_Return:
+Transpose_OnLeave_Return:
 	ret	; F7C671  ret
 
 ; --------------------------------------------------------------------------
-; Transp0se_SelectField1
-; Called from: T_Transp0se_SelectField1 (x1)
+; Transpose_SelectField1
+; Called from: T_Transpose_SelectField1 (x1)
 ; Touches: (0x0DF6) (0x12FC) (0x2075)
 ; Superseded 2026-10-03, when the routine was named; the earlier stanza, verbatim:
-; Evidence: thunk slot T_Transp0se_SelectField1 holds `jp 0x00F7C672`, and 0xF7C672 is an
+; Evidence: thunk slot T_Transpose_SelectField1 holds `jp 0x00F7C672`, and 0xF7C672 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; Evidence: it stores 1 into (0x0DF6) and requests a redraw (UI_RequestBits);
-;           (0x0DF6) is read by Paint_Transp0se, so it is the Transp0se screen's field cell.
+;           (0x0DF6) is read by Paint_Transpose, so it is the Transpose screen's field cell.
 ; Unknown: what field 1 is on that screen.
 ; --------------------------------------------------------------------------
-Transp0se_SelectField1:		; <- T_Transp0se_SelectField1
+Transpose_SelectField1:		; <- T_Transpose_SelectField1
 	or	(UI_RequestBits:16), 0x01	; F7C672  or (0x2075),0x01
 	ld	a, 1:opc	; F7C677  ld A,0x01
 	ld	(3574:16), a	; F7C679  ld (0x0df6),A
@@ -4644,21 +4644,21 @@ Transp0se_SelectField1:		; <- T_Transp0se_SelectField1
 	ret	; F7C681  ret
 
 ; --------------------------------------------------------------------------
-; Transp0se_SelectField2
-; Called from: T_Transp0se_SelectField2 (x1)
+; Transpose_SelectField2
+; Called from: T_Transpose_SelectField2 (x1)
 ; Touches: (0x0DF6) (0x12FC) (0x2075)
 ; Superseded 2026-10-03, when the routine was named; the earlier stanza, verbatim:
-; Evidence: thunk slot T_Transp0se_SelectField2 holds `jp 0x00F7C682`, and 0xF7C682 is an
+; Evidence: thunk slot T_Transpose_SelectField2 holds `jp 0x00F7C682`, and 0xF7C682 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; Evidence: it stores 2 into (0x0DF6) and requests a redraw (UI_RequestBits);
-;           (0x0DF6) is read by Paint_Transp0se, so it is the Transp0se screen's field cell.
+;           (0x0DF6) is read by Paint_Transpose, so it is the Transpose screen's field cell.
 ; Unknown: what field 2 is on that screen.
 ; --------------------------------------------------------------------------
-Transp0se_SelectField2:		; <- T_Transp0se_SelectField2
+Transpose_SelectField2:		; <- T_Transpose_SelectField2
 	or	(UI_RequestBits:16), 0x01	; F7C682  or (0x2075),0x01
 	ld	a, 2:opc	; F7C687  ld A,0x02
 	ld	(3574:16), a	; F7C689  ld (0x0df6),A
@@ -4666,21 +4666,21 @@ Transp0se_SelectField2:		; <- T_Transp0se_SelectField2
 	ret	; F7C691  ret
 
 ; --------------------------------------------------------------------------
-; Transp0se_SelectField3
-; Called from: T_Transp0se_SelectField3 (x1)
+; Transpose_SelectField3
+; Called from: T_Transpose_SelectField3 (x1)
 ; Touches: (0x0DF6) (0x12FC) (0x2075)
 ; Superseded 2026-10-03, when the routine was named; the earlier stanza, verbatim:
-; Evidence: thunk slot T_Transp0se_SelectField3 holds `jp 0x00F7C692`, and 0xF7C692 is an
+; Evidence: thunk slot T_Transpose_SelectField3 holds `jp 0x00F7C692`, and 0xF7C692 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; Evidence: it stores 3 into (0x0DF6) and requests a redraw (UI_RequestBits);
-;           (0x0DF6) is read by Paint_Transp0se, so it is the Transp0se screen's field cell.
+;           (0x0DF6) is read by Paint_Transpose, so it is the Transpose screen's field cell.
 ; Unknown: what field 3 is on that screen.
 ; --------------------------------------------------------------------------
-Transp0se_SelectField3:		; <- T_Transp0se_SelectField3
+Transpose_SelectField3:		; <- T_Transpose_SelectField3
 	or	(UI_RequestBits:16), 0x01	; F7C692  or (0x2075),0x01
 	ld	a, 3:opc	; F7C697  ld A,0x03
 	ld	(3574:16), a	; F7C699  ld (0x0df6),A
@@ -4688,21 +4688,21 @@ Transp0se_SelectField3:		; <- T_Transp0se_SelectField3
 	ret	; F7C6A1  ret
 
 ; --------------------------------------------------------------------------
-; Transp0se_SelectField4
-; Called from: T_Transp0se_SelectField4 (x1)
+; Transpose_SelectField4
+; Called from: T_Transpose_SelectField4 (x1)
 ; Touches: (0x0DF6) (0x12FC) (0x2075)
 ; Superseded 2026-10-03, when the routine was named; the earlier stanza, verbatim:
-; Evidence: thunk slot T_Transp0se_SelectField4 holds `jp 0x00F7C6A2`, and 0xF7C6A2 is an
+; Evidence: thunk slot T_Transpose_SelectField4 holds `jp 0x00F7C6A2`, and 0xF7C6A2 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; Evidence: it stores 4 into (0x0DF6) and requests a redraw (UI_RequestBits);
-;           (0x0DF6) is read by Paint_Transp0se, so it is the Transp0se screen's field cell.
+;           (0x0DF6) is read by Paint_Transpose, so it is the Transpose screen's field cell.
 ; Unknown: what field 4 is on that screen.
 ; --------------------------------------------------------------------------
-Transp0se_SelectField4:		; <- T_Transp0se_SelectField4
+Transpose_SelectField4:		; <- T_Transpose_SelectField4
 	or	(UI_RequestBits:16), 0x01	; F7C6A2  or (0x2075),0x01
 	ld	a, 4:opc	; F7C6A7  ld A,0x04
 	ld	(3574:16), a	; F7C6A9  ld (0x0df6),A
@@ -4710,22 +4710,22 @@ Transp0se_SelectField4:		; <- T_Transp0se_SelectField4
 	ret	; F7C6B1  ret
 
 ; --------------------------------------------------------------------------
-; Transp0se_StepFieldUp
-; Called from: T_Transp0se_StepFieldUp (x2)
+; Transpose_StepFieldUp
+; Called from: T_Transpose_StepFieldUp (x2)
 ; Touches: (0x0C4E) (0x0C4F) (0x0DF6) (0x2075)
-; Evidence: thunk slot T_Transp0se_StepFieldUp holds `jp 0x00F7C6B2`, and 0xF7C6B2 is an
+; Evidence: thunk slot T_Transpose_StepFieldUp holds `jp 0x00F7C6B2`, and 0xF7C6B2 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; Transp0se_StepFieldUp: TRANSPOSE: UI_RequestBits |= 8, (0x0C4E) := W, (0x0C4F) := W & 0x80 (0 = up at both call
+; Transpose_StepFieldUp: TRANSPOSE: UI_RequestBits |= 8, (0x0C4E) := W, (0x0C4F) := W & 0x80 (0 = up at both call
 ;   sites), then steps the selected field (0x0DF6) = 1..4 through SongStore_DispatchA_1 (track, measures, ...). Its
-;   callers take it for the UPPER switch (W bit 7 clear) and T_Transp0se_StepSelectedFieldDown (Transp0se_StepSelectedFieldDown) for the lower one -- the
+;   callers take it for the UPPER switch (W bit 7 clear) and T_Transpose_StepSelectedFieldDown (Transpose_StepSelectedFieldDown) for the lower one -- the
 ;   Quantize_StepFieldUp / _StepFieldDown pattern. Basis: callers + body + sibling screens. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave3_j.json)
-Transp0se_StepFieldUp:		; <- T_Transp0se_StepFieldUp
+Transpose_StepFieldUp:		; <- T_Transpose_StepFieldUp
 	or	(UI_RequestBits:16), 0x08	; F7C6B2  or (0x2075),0x08
 	ld	(3150:16), w	; F7C6B7  ld (0x0c4e),W
 	and	w, 128	; F7C6BB  and W,0x80
@@ -4796,21 +4796,21 @@ SongStore_DispatchA_1_Nop0:
 	ret	; F7C6FA  ret
 
 ; --------------------------------------------------------------------------
-; Transp0se_StepSelectedFieldDown
-; Called from: T_Transp0se_StepSelectedFieldDown (x2)
+; Transpose_StepSelectedFieldDown
+; Called from: T_Transpose_StepSelectedFieldDown (x2)
 ; Touches: (0x0C4E) (0x0C4F) (0x0DF6) (0x2075)
-; Evidence: thunk slot T_Transp0se_StepSelectedFieldDown holds `jp 0x00F7C6FB`, and 0xF7C6FB is an
+; Evidence: thunk slot T_Transpose_StepSelectedFieldDown holds `jp 0x00F7C6FB`, and 0xF7C6FB is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; Transp0se_StepSelectedFieldDown: (0x0C4E) := W, (0x0C4F) := W & 0x80 (0x80 = down), UI_RequestBits |= 9, then
+; Transpose_StepSelectedFieldDown: (0x0C4E) := W, (0x0C4F) := W & 0x80 (0x80 = down), UI_RequestBits |= 9, then
 ;   SongStore_DispatchA_2[(0x0DF6)] for TRANSP0SE field 1..4 (track via SeqJob_StepTrack17, start/end measure via
-;   SeqJob_StepMeasure, ...). Both TRANSP0SE step keys call it when W bit 7 is set; its twin Transp0se_StepFieldUp
+;   SeqJob_StepMeasure, ...). Both TRANSP0SE step keys call it when W bit 7 is set; its twin Transpose_StepFieldUp
 ;   (UI_RequestBits |= 8) when clear. Basis: callers + body. (notes/naming-pilot-2026-10-06/proposals_wave3_g.json)
-Transp0se_StepSelectedFieldDown:		; <- T_Transp0se_StepSelectedFieldDown
+Transpose_StepSelectedFieldDown:		; <- T_Transpose_StepSelectedFieldDown
 	or	(UI_RequestBits:16), 0x09	; F7C6FB  or (0x2075),0x09
 	ld	(3150:16), w	; F7C700  ld (0x0c4e),W
 	and	w, 128	; F7C704  and W,0x80
@@ -4981,91 +4981,91 @@ SongStore_DispatchA_Case4_Join:
 	ret	; F7C7EF  ret
 
 ; --------------------------------------------------------------------------
-; Transp0se_LcdKeyRow2
-; Called from: T_Transp0se_LcdKeyRow2 (x2)
+; Transpose_LcdKeyRow2
+; Called from: T_Transpose_LcdKeyRow2 (x2)
 ; Touches: (0x0C70) (0x0C73) (0x0C77) (0x0DF7) (0x0DF8) (0x0E00) (0x2070)
 ;          (0x2071) (0x2075) (0x207E) +1 more
-; Calls:   T_Transp0se_Execute
-; Evidence: thunk slot T_Transp0se_LcdKeyRow2 holds `jp 0x00F7C7F0`, and 0xF7C7F0 is an
+; Calls:   T_Transpose_Execute
+; Evidence: thunk slot T_Transpose_LcdKeyRow2 holds `jp 0x00F7C7F0`, and 0xF7C7F0 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; Transp0se_LcdKeyRow2: the LcdKeyRow2 action of Transp0se_StageNonZero, Transp0se_StageZero -- called only by LcdKeyRow2_Transp0se_StageNonZero, LcdKeyRow2_Transp0se_StageZero.
-Transp0se_LcdKeyRow2:		; <- T_Transp0se_LcdKeyRow2
+; Transpose_LcdKeyRow2: the LcdKeyRow2 action of Transpose_StageNonZero, Transpose_StageZero -- called only by LcdKeyRow2_Transpose_StageNonZero, LcdKeyRow2_Transpose_StageZero.
+Transpose_LcdKeyRow2:		; <- T_Transpose_LcdKeyRow2
 	and	(UI_RequestBits:16), 0xf6	; F7C7F0  and (0x2075),0xf6
 	cp	(UI_ScreenStage:16), 0x01	; F7C7F5  cp (0x207e),0x01
-	jr	z, Transp0se_LcdKeyRow2_Skip	; F7C7FA  jr Z,0xf7c808
+	jr	z, Transpose_LcdKeyRow2_Skip	; F7C7FA  jr Z,0xf7c808
 	ld	(UI_ScreenStage:16), 1	; F7C7FC  ld (0x207e),0x01
 	or	(UI_Request_Hi:16), 0x10	; F7C801  or (0x2071),0x10
-	jr	Transp0se_LcdKeyRow2_Return	; F7C806  jr T,0xf7c842
-Transp0se_LcdKeyRow2_Skip:
+	jr	Transpose_LcdKeyRow2_Return	; F7C806  jr T,0xf7c842
+Transpose_LcdKeyRow2_Skip:
 	ld	a, (3575:16)	; F7C808  ld A,(0x0df7)
 	ld	(3184:16), a	; F7C80C  ld (0x0c70),A
 	ld	wa, (3576:16)	; F7C810  ld WA,(0x0df8)
 	ld	(3187:16), wa	; F7C814  ld (0x0c73),WA
 	ld	wa, (3584:16)	; F7C818  ld WA,(0x0e00)
 	ld	(3191:16), wa	; F7C81C  ld (0x0c77),WA
-	call	T_Transp0se_Execute	; F7C820  call 0xf42714
+	call	T_Transpose_Execute	; F7C820  call 0xf42714
 	cp	(UI_StatusCode:16), 0xff	; F7C824  cp (0x2880),0xff
-	jr	z, Transp0se_LcdKeyRow2_Skip2	; F7C829  jr Z,0xf7c838
+	jr	z, Transpose_LcdKeyRow2_Skip2	; F7C829  jr Z,0xf7c838
 	ld	(UI_ScreenStage:16), 0	; F7C82B  ld (0x207e),0x00
 	ldw	(UI_Request:16), 16555	; F7C830  ld (0x2070),0x40ab
-	jr	Transp0se_LcdKeyRow2_Return	; F7C836  jr T,0xf7c842
-Transp0se_LcdKeyRow2_Skip2:
+	jr	Transpose_LcdKeyRow2_Return	; F7C836  jr T,0xf7c842
+Transpose_LcdKeyRow2_Skip2:
 	ld	(UI_ScreenStage:16), 0	; F7C838  ld (0x207e),0x00
 	or	(UI_Request_Hi:16), 0x10	; F7C83D  or (0x2071),0x10
-Transp0se_LcdKeyRow2_Return:
+Transpose_LcdKeyRow2_Return:
 	ret	; F7C842  ret
 
 ; --------------------------------------------------------------------------
-; Transp0se_ReturnToStageZero
-; Called from: T_Transp0se_ReturnToStageZero (x2)
+; Transpose_ReturnToStageZero
+; Called from: T_Transpose_ReturnToStageZero (x2)
 ; Touches: (0x2071) (0x2075) (0x207E)
-; Evidence: thunk slot T_Transp0se_ReturnToStageZero holds `jp 0x00F7C843`, and 0xF7C843 is an
+; Evidence: thunk slot T_Transpose_ReturnToStageZero holds `jp 0x00F7C843`, and 0xF7C843 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; Transp0se_ReturnToStageZero: UI_ScreenStage = 0 and UI_Request_Hi |= 0x10 -- back to stage 0 of Transp0se_StageNonZero;
-;   called by ExitKey_Transp0se_StageNonZero, LcdKeyRow3_Transp0se_StageNonZero (notes/prom_ab_stage_zero_names.py).
-Transp0se_ReturnToStageZero:		; <- T_Transp0se_ReturnToStageZero
+; Transpose_ReturnToStageZero: UI_ScreenStage = 0 and UI_Request_Hi |= 0x10 -- back to stage 0 of Transpose_StageNonZero;
+;   called by ExitKey_Transpose_StageNonZero, LcdKeyRow3_Transpose_StageNonZero (notes/prom_ab_stage_zero_names.py).
+Transpose_ReturnToStageZero:		; <- T_Transpose_ReturnToStageZero
 	and	(UI_RequestBits:16), 0xf6	; F7C843  and (0x2075),0xf6
 	ld	(UI_ScreenStage:16), 0	; F7C848  ld (0x207e),0x00
 	or	(UI_Request_Hi:16), 0x10	; F7C84D  or (0x2071),0x10
 	ret	; F7C852  ret
 
 ; --------------------------------------------------------------------------
-; N0teChange_InitFields
-; Called from: T_N0teChange_InitFields (x1)
+; NoteChange_InitFields
+; Called from: T_NoteChange_InitFields (x1)
 ; Touches: (0x0DED) (0x1301) (0x207B)
-; Calls:   N0teChange_StageDisplayFields
-; Evidence: thunk slot T_N0teChange_InitFields holds `jp 0x00F7C853`, and 0xF7C853 is an
+; Calls:   NoteChange_StageDisplayFields
+; Evidence: thunk slot T_NoteChange_InitFields holds `jp 0x00F7C853`, and 0xF7C853 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; N0teChange_InitFields: Paint_N0teChange's stage-0 init (slot T_N0teChange_InitFields): unless the previous screen was N0TE CHANGE
-;   (0x2D), N0teChange_StageDisplayFields and the field cursor N0teChange_Field := 1 (DisplayListB_Stage+11). Basis:
+; NoteChange_InitFields: Paint_NoteChange's stage-0 init (slot T_NoteChange_InitFields): unless the previous screen was N0TE CHANGE
+;   (0x2D), NoteChange_StageDisplayFields and the field cursor NoteChange_Field := 1 (DisplayListB_Stage+11). Basis:
 ;   caller + body + siblings (AdvanceDelay_InitFields). (notes/naming-pilot-2026-10-06/proposals_wave7_z.json)
-N0teChange_InitFields:		; <- T_N0teChange_InitFields
+NoteChange_InitFields:		; <- T_NoteChange_InitFields
 	cp	(UI_ScreenLatch_Previous:16), 0x2d	; F7C853  cp (0x207b),0x2d
-	jr	z, N0teChange_InitFields_Return	; F7C858  jr Z,0xf7c868
-	call	N0teChange_StageDisplayFields	; F7C85A  call 0xf7c869
+	jr	z, NoteChange_InitFields_Return	; F7C858  jr Z,0xf7c868
+	call	NoteChange_StageDisplayFields	; F7C85A  call 0xf7c869
 	ld	a, 1:opc	; F7C85E  ld A,0x01
-	ld	(N0teChange_Field:16), a	; F7C860  ld (0x0ded),A
+	ld	(NoteChange_Field:16), a	; F7C860  ld (0x0ded),A
 	ld	(DisplayListB_Stage+11:16), a	; F7C864  ld (0x1301),A
-N0teChange_InitFields_Return:
+NoteChange_InitFields_Return:
 	ret	; F7C868  ret
 
 ; --------------------------------------------------------------------------
-; N0teChange_StageDisplayFields
+; NoteChange_StageDisplayFields
 ; Called from: in-module: 0xF7C85A
 ; Touches: (0x0DEE) (0x0DF0) (0x0DF2) (0x0DF4) (0x0DF5) (0x129E) (0x12F6)
 ;          (0x12F7) (0x12F8) (0x12F9) +5 more
@@ -5075,178 +5075,178 @@ N0teChange_InitFields_Return:
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; N0teChange_StageDisplayFields: N0TE CHANGE's fields into DisplayListB_Stage for its page: the track (0x0DEE), N0teChange_FromMeasure /
+; NoteChange_StageDisplayFields: N0TE CHANGE's fields into DisplayListB_Stage for its page: the track (0x0DEE), NoteChange_FromMeasure /
 ;   _ToMeasure, the two notes split into octave and note name by `divs WA,12`; (0x129E) = the measure count,
 ;   To - From + 1.
-N0teChange_StageDisplayFields:
+NoteChange_StageDisplayFields:
 	ld	a, (3566:16)	; F7C869  ld A,(0x0dee)
 	ld	(DisplayListB_Stage:16), a	; F7C86D  ld (0x12f6),A
-	ld	wa, (N0teChange_FromMeasure:16)	; F7C871  ld WA,(0x0df0)
+	ld	wa, (NoteChange_FromMeasure:16)	; F7C871  ld WA,(0x0df0)
 	ld	(DisplayListB_Stage+6:16), wa	; F7C875  ld (0x12fc),WA
-	ld	wa, (N0teChange_ToMeasure:16)	; F7C879  ld WA,(0x0df2)
+	ld	wa, (NoteChange_ToMeasure:16)	; F7C879  ld WA,(0x0df2)
 	ld	(DisplayListB_Stage+9:16), wa	; F7C87D  ld (0x12ff),WA
-	ld	a, (N0teChange_FromNote:16)	; F7C881  ld A,(0x0df4)
+	ld	a, (NoteChange_FromNote:16)	; F7C881  ld A,(0x0df4)
 	ld	(DisplayListB_Stage+5:16), a	; F7C885  ld (0x12fb),A
 	xor	w, w	; F7C889  xor W,W
 	ld	l, 12:opc	; F7C88B  ld L,0x0c
 	divs	wa, l	; F7C88D  divs WA,L
 	ld	(DisplayListB_Stage+1:16), w	; F7C88F  ld (0x12f7),W
 	ld	(DisplayListB_Stage+2:16), a	; F7C893  ld (0x12f8),A
-	ld	a, (N0teChange_ToNote:16)	; F7C897  ld A,(0x0df5)
+	ld	a, (NoteChange_ToNote:16)	; F7C897  ld A,(0x0df5)
 	ld	(DisplayListB_Stage+8:16), a	; F7C89B  ld (0x12fe),A
 	xor	w, w	; F7C89F  xor W,W
 	ld	l, 12:opc	; F7C8A1  ld L,0x0c
 	divs	wa, l	; F7C8A3  divs WA,L
 	ld	(DisplayListB_Stage+3:16), w	; F7C8A5  ld (0x12f9),W
 	ld	(DisplayListB_Stage+4:16), a	; F7C8A9  ld (0x12fa),A
-	ld	wa, (N0teChange_ToMeasure:16)	; F7C8AD  ld WA,(0x0df2)
-	sub	wa, (N0teChange_FromMeasure:16)	; F7C8B1  sub WA,(0x0df0)
+	ld	wa, (NoteChange_ToMeasure:16)	; F7C8AD  ld WA,(0x0df2)
+	sub	wa, (NoteChange_FromMeasure:16)	; F7C8B1  sub WA,(0x0df0)
 	inc	1, wa	; F7C8B5  inc 1,WA
 	ld	(4766:16), wa	; F7C8B7  ld (0x129e),WA
 	ret	; F7C8BB  ret
 
 ; --------------------------------------------------------------------------
-; N0teChange_OnLeave
-; Called from: T_N0teChange_OnLeave (x1)
+; NoteChange_OnLeave
+; Called from: T_NoteChange_OnLeave (x1)
 ; Touches: (0x207A)
 ; Calls:   T_Seq_RequestRewind
-; Evidence: thunk slot T_N0teChange_OnLeave holds `jp 0x00F7C8BC`, and 0xF7C8BC is an
+; Evidence: thunk slot T_NoteChange_OnLeave holds `jp 0x00F7C8BC`, and 0xF7C8BC is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; N0teChange_OnLeave: the LEAVE work of N0teChange -- the one unnamed routine ScreenLeaveBody_N0teChange calls, and nothing else calls it
+; NoteChange_OnLeave: the LEAVE work of NoteChange -- the one unnamed routine ScreenLeaveBody_NoteChange calls, and nothing else calls it
 ;   (notes/prom_ab_screen_enter_leave_work.py).
-N0teChange_OnLeave:		; <- T_N0teChange_OnLeave
+NoteChange_OnLeave:		; <- T_NoteChange_OnLeave
 	cp	(UI_ScreenLatch:16), 0x2d	; F7C8BC  cp (0x207a),0x2d
-	jr	z, N0teChange_OnLeave_Return	; F7C8C1  jr Z,0xf7c8c7
+	jr	z, NoteChange_OnLeave_Return	; F7C8C1  jr Z,0xf7c8c7
 	call	T_Seq_RequestRewind	; F7C8C3  call 0xf409e0
-N0teChange_OnLeave_Return:
+NoteChange_OnLeave_Return:
 	ret	; F7C8C7  ret
 
 ; --------------------------------------------------------------------------
-; N0teChange_SelectField1
-; Called from: T_N0teChange_SelectField1 (x1)
+; NoteChange_SelectField1
+; Called from: T_NoteChange_SelectField1 (x1)
 ; Touches: (0x0DED) (0x1301) (0x2075)
-; Evidence: thunk slot T_N0teChange_SelectField1 holds `jp 0x00F7C8C8`, and 0xF7C8C8 is an
+; Evidence: thunk slot T_NoteChange_SelectField1 holds `jp 0x00F7C8C8`, and 0xF7C8C8 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; N0teChange_SelectField1: moves the N0teChange screen's cursor to field 1 -- stores 1 into N0teChange_Field
+; NoteChange_SelectField1: moves the NoteChange screen's cursor to field 1 -- stores 1 into NoteChange_Field
 ;   and requests the redraw, nothing else (notes/prom_b_select_field_names.py).
-N0teChange_SelectField1:		; <- T_N0teChange_SelectField1
+NoteChange_SelectField1:		; <- T_NoteChange_SelectField1
 	or	(UI_RequestBits:16), 0x09	; F7C8C8  or (0x2075),0x09
 	ld	a, 1:opc	; F7C8CD  ld A,0x01
-	ld	(N0teChange_Field:16), a	; F7C8CF  ld (0x0ded),A
+	ld	(NoteChange_Field:16), a	; F7C8CF  ld (0x0ded),A
 	ld	(DisplayListB_Stage+11:16), a	; F7C8D3  ld (0x1301),A
 	ret	; F7C8D7  ret
 
 ; --------------------------------------------------------------------------
-; N0teChange_SelectField2
-; Called from: T_N0teChange_SelectField2 (x1)
+; NoteChange_SelectField2
+; Called from: T_NoteChange_SelectField2 (x1)
 ; Touches: (0x0DED) (0x1301) (0x2075)
-; Evidence: thunk slot T_N0teChange_SelectField2 holds `jp 0x00F7C8D8`, and 0xF7C8D8 is an
+; Evidence: thunk slot T_NoteChange_SelectField2 holds `jp 0x00F7C8D8`, and 0xF7C8D8 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; N0teChange_SelectField2: moves the N0teChange screen's cursor to field 2 -- stores 2 into N0teChange_Field
+; NoteChange_SelectField2: moves the NoteChange screen's cursor to field 2 -- stores 2 into NoteChange_Field
 ;   and requests the redraw, nothing else (notes/prom_b_select_field_names.py).
-N0teChange_SelectField2:		; <- T_N0teChange_SelectField2
+NoteChange_SelectField2:		; <- T_NoteChange_SelectField2
 	or	(UI_RequestBits:16), 0x09	; F7C8D8  or (0x2075),0x09
 	ld	a, 2:opc	; F7C8DD  ld A,0x02
-	ld	(N0teChange_Field:16), a	; F7C8DF  ld (0x0ded),A
+	ld	(NoteChange_Field:16), a	; F7C8DF  ld (0x0ded),A
 	ld	(DisplayListB_Stage+11:16), a	; F7C8E3  ld (0x1301),A
 	ret	; F7C8E7  ret
 
 ; --------------------------------------------------------------------------
-; N0teChange_SelectField3
-; Called from: T_N0teChange_SelectField3 (x1)
+; NoteChange_SelectField3
+; Called from: T_NoteChange_SelectField3 (x1)
 ; Touches: (0x0DED) (0x1301) (0x2075)
-; Evidence: thunk slot T_N0teChange_SelectField3 holds `jp 0x00F7C8E8`, and 0xF7C8E8 is an
+; Evidence: thunk slot T_NoteChange_SelectField3 holds `jp 0x00F7C8E8`, and 0xF7C8E8 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; N0teChange_SelectField3: moves the N0teChange screen's cursor to field 3 -- stores 3 into N0teChange_Field
+; NoteChange_SelectField3: moves the NoteChange screen's cursor to field 3 -- stores 3 into NoteChange_Field
 ;   and requests the redraw, nothing else (notes/prom_b_select_field_names.py).
-N0teChange_SelectField3:		; <- T_N0teChange_SelectField3
+NoteChange_SelectField3:		; <- T_NoteChange_SelectField3
 	or	(UI_RequestBits:16), 0x09	; F7C8E8  or (0x2075),0x09
 	ld	a, 3:opc	; F7C8ED  ld A,0x03
-	ld	(N0teChange_Field:16), a	; F7C8EF  ld (0x0ded),A
+	ld	(NoteChange_Field:16), a	; F7C8EF  ld (0x0ded),A
 	ld	(DisplayListB_Stage+11:16), a	; F7C8F3  ld (0x1301),A
 	ret	; F7C8F7  ret
 
 ; --------------------------------------------------------------------------
-; N0teChange_SelectField4
-; Called from: T_N0teChange_SelectField4 (x1)
+; NoteChange_SelectField4
+; Called from: T_NoteChange_SelectField4 (x1)
 ; Touches: (0x0DED) (0x1301) (0x2075)
-; Evidence: thunk slot T_N0teChange_SelectField4 holds `jp 0x00F7C8F8`, and 0xF7C8F8 is an
+; Evidence: thunk slot T_NoteChange_SelectField4 holds `jp 0x00F7C8F8`, and 0xF7C8F8 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; N0teChange_SelectField4: moves the N0teChange screen's cursor to field 4 -- stores 4 into N0teChange_Field
+; NoteChange_SelectField4: moves the NoteChange screen's cursor to field 4 -- stores 4 into NoteChange_Field
 ;   and requests the redraw, nothing else (notes/prom_b_select_field_names.py).
-N0teChange_SelectField4:		; <- T_N0teChange_SelectField4
+NoteChange_SelectField4:		; <- T_NoteChange_SelectField4
 	or	(UI_RequestBits:16), 0x09	; F7C8F8  or (0x2075),0x09
 	ld	a, 4:opc	; F7C8FD  ld A,0x04
-	ld	(N0teChange_Field:16), a	; F7C8FF  ld (0x0ded),A
+	ld	(NoteChange_Field:16), a	; F7C8FF  ld (0x0ded),A
 	ld	(DisplayListB_Stage+11:16), a	; F7C903  ld (0x1301),A
 	ret	; F7C907  ret
 
 ; --------------------------------------------------------------------------
-; N0teChange_SelectField5
-; Called from: T_N0teChange_SelectField5 (x1)
+; NoteChange_SelectField5
+; Called from: T_NoteChange_SelectField5 (x1)
 ; Touches: (0x0DED) (0x1301) (0x2075)
-; Evidence: thunk slot T_N0teChange_SelectField5 holds `jp 0x00F7C908`, and 0xF7C908 is an
+; Evidence: thunk slot T_NoteChange_SelectField5 holds `jp 0x00F7C908`, and 0xF7C908 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; N0teChange_SelectField5: moves the N0teChange screen's cursor to field 5 -- stores 5 into N0teChange_Field
+; NoteChange_SelectField5: moves the NoteChange screen's cursor to field 5 -- stores 5 into NoteChange_Field
 ;   and requests the redraw, nothing else (notes/prom_b_select_field_names.py).
-N0teChange_SelectField5:		; <- T_N0teChange_SelectField5
+NoteChange_SelectField5:		; <- T_NoteChange_SelectField5
 	or	(UI_RequestBits:16), 0x09	; F7C908  or (0x2075),0x09
 	ld	a, 5:opc	; F7C90D  ld A,0x05
-	ld	(N0teChange_Field:16), a	; F7C90F  ld (0x0ded),A
+	ld	(NoteChange_Field:16), a	; F7C90F  ld (0x0ded),A
 	ld	(DisplayListB_Stage+11:16), a	; F7C913  ld (0x1301),A
 	ret	; F7C917  ret
 
 ; --------------------------------------------------------------------------
-; N0teChange_StepSelectedFieldUp
-; Called from: T_N0teChange_StepSelectedFieldUp (x2)
+; NoteChange_StepSelectedFieldUp
+; Called from: T_NoteChange_StepSelectedFieldUp (x2)
 ; Touches: (0x0C4E) (0x0C4F) (0x0DED) (0x2075)
-; Evidence: thunk slot T_N0teChange_StepSelectedFieldUp holds `jp 0x00F7C918`, and 0xF7C918 is an
+; Evidence: thunk slot T_NoteChange_StepSelectedFieldUp holds `jp 0x00F7C918`, and 0xF7C918 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; N0teChange_StepSelectedFieldUp: (0x0C4E) := key code W, (0x0C4F) := W & 0x80, then the stepper for N0teChange_Field
+; NoteChange_StepSelectedFieldUp: (0x0C4E) := key code W, (0x0C4F) := W & 0x80, then the stepper for NoteChange_Field
 ;   1..5 from SongStore_DispatchB_1 (case 1 = SeqJob_StepTrack17 on (0x0DEE), ...). NOTE CHANGE's soft key 5 calls it
-;   for the UPPER switch (W bit 7 clear, so the steppers add); the LOWER switch calls the identical twin N0teChange_StepFieldDown.
+;   for the UPPER switch (W bit 7 clear, so the steppers add); the LOWER switch calls the identical twin NoteChange_StepFieldDown.
 ;   Basis: callers + body. (notes/naming-pilot-2026-10-06/proposals_wave3_h.json)
-N0teChange_StepSelectedFieldUp:		; <- T_N0teChange_StepSelectedFieldUp
+NoteChange_StepSelectedFieldUp:		; <- T_NoteChange_StepSelectedFieldUp
 	or	(UI_RequestBits:16), 0x09	; F7C918  or (0x2075),0x09
 	ld	(3150:16), w	; F7C91D  ld (0x0c4e),W
 	and	w, 128	; F7C921  and W,0x80
 	ld	(3151:16), w	; F7C924  ld (0x0c4f),W
-	ld	l, (N0teChange_Field:16)	; F7C928  ld L,(0x0ded)
+	ld	l, (NoteChange_Field:16)	; F7C928  ld L,(0x0ded)
 	cp	l, 1:i3	; F7C92C  cp L,1
 	jp	c, (sub_F7C918_Code:24)	; F7C92E  jp C,0xf7c94b
 	cp	l, 5:i3	; F7C933  cp L,5
@@ -5296,26 +5296,26 @@ SongStore_DispatchB_1:
 
 
 ; --------------------------------------------------------------------------
-; N0teChange_StepFieldDown
-; Called from: T_N0teChange_StepFieldDown (x2)
+; NoteChange_StepFieldDown
+; Called from: T_NoteChange_StepFieldDown (x2)
 ; Touches: (0x0C4E) (0x0C4F) (0x0DED) (0x2075)
-; Evidence: thunk slot T_N0teChange_StepFieldDown holds `jp 0x00F7C964`, and 0xF7C964 is an
+; Evidence: thunk slot T_NoteChange_StepFieldDown holds `jp 0x00F7C964`, and 0xF7C964 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; N0teChange_StepFieldDown: NOTE CHANGE: (0x0C4E) := W, (0x0C4F) := W & 0x80 (0x80, down: callers pass bit 7 set),
-;   then steps field N0teChange_Field 1..5 through SongStore_DispatchB_2 (SeqJob_StepMeasure etc.). The down twin of
-;   N0teChange_StepSelectedFieldUp (SongStore_DispatchB_1); same shape as AdvanceDelay_StepFieldDown. Basis: callers + body + sibling.
+; NoteChange_StepFieldDown: NOTE CHANGE: (0x0C4E) := W, (0x0C4F) := W & 0x80 (0x80, down: callers pass bit 7 set),
+;   then steps field NoteChange_Field 1..5 through SongStore_DispatchB_2 (SeqJob_StepMeasure etc.). The down twin of
+;   NoteChange_StepSelectedFieldUp (SongStore_DispatchB_1); same shape as AdvanceDelay_StepFieldDown. Basis: callers + body + sibling.
 ;   (notes/naming-pilot-2026-10-06/proposals_wave3_i.json)
-N0teChange_StepFieldDown:		; <- T_N0teChange_StepFieldDown
+NoteChange_StepFieldDown:		; <- T_NoteChange_StepFieldDown
 	or	(UI_RequestBits:16), 0x09	; F7C964  or (0x2075),0x09
 	ld	(3150:16), w	; F7C969  ld (0x0c4e),W
 	and	w, 128	; F7C96D  and W,0x80
 	ld	(3151:16), w	; F7C970  ld (0x0c4f),W
-	ld	l, (N0teChange_Field:16)	; F7C974  ld L,(0x0ded)
+	ld	l, (NoteChange_Field:16)	; F7C974  ld L,(0x0ded)
 	cp	l, 1:i3	; F7C978  cp L,1
 	jp	c, (sub_F7C964_Code:24)	; F7C97A  jp C,0xf7c997
 	cp	l, 5:i3	; F7C97F  cp L,5
@@ -5401,17 +5401,17 @@ SongStore_DispatchB_Case1:
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
 SongStore_DispatchB_Case2:
-	ld	wa, (N0teChange_FromMeasure:16)	; F7C9C9  ld WA,(0x0df0)
+	ld	wa, (NoteChange_FromMeasure:16)	; F7C9C9  ld WA,(0x0df0)
 	calr	SeqJob_StepMeasure	; F7C9CD  calr 0xf7cd5f
-	ld	(N0teChange_FromMeasure:16), wa	; F7C9D0  ld (0x0df0),WA
+	ld	(NoteChange_FromMeasure:16), wa	; F7C9D0  ld (0x0df0),WA
 	ld	(DisplayListB_Stage+6:16), wa	; F7C9D4  ld (0x12fc),WA
-	cp	wa, (N0teChange_ToMeasure:16)	; F7C9D8  cp WA,(0x0df2)
+	cp	wa, (NoteChange_ToMeasure:16)	; F7C9D8  cp WA,(0x0df2)
 	jr	ule, SongStore_DispatchB_Case2_Skip	; F7C9DC  jr ULE,0xf7c9e6
-	ld	(N0teChange_ToMeasure:16), wa	; F7C9DE  ld (0x0df2),WA
+	ld	(NoteChange_ToMeasure:16), wa	; F7C9DE  ld (0x0df2),WA
 	ld	(DisplayListB_Stage+9:16), wa	; F7C9E2  ld (0x12ff),WA
 SongStore_DispatchB_Case2_Skip:
-	ld	wa, (N0teChange_ToMeasure:16)	; F7C9E6  ld WA,(0x0df2)
-	sub	wa, (N0teChange_FromMeasure:16)	; F7C9EA  sub WA,(0x0df0)
+	ld	wa, (NoteChange_ToMeasure:16)	; F7C9E6  ld WA,(0x0df2)
+	sub	wa, (NoteChange_FromMeasure:16)	; F7C9EA  sub WA,(0x0df0)
 	inc	1, wa	; F7C9EE  inc 1,WA
 	ld	(4766:16), wa	; F7C9F0  ld (0x129e),WA
 	ret	; F7C9F4  ret
@@ -5430,17 +5430,17 @@ SongStore_DispatchB_Case2_Skip:
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
 SongStore_DispatchB_Case3:
-	ld	wa, (N0teChange_ToMeasure:16)	; F7C9F5  ld WA,(0x0df2)
+	ld	wa, (NoteChange_ToMeasure:16)	; F7C9F5  ld WA,(0x0df2)
 	calr	SeqJob_StepMeasure	; F7C9F9  calr 0xf7cd5f
-	ld	(N0teChange_ToMeasure:16), wa	; F7C9FC  ld (0x0df2),WA
+	ld	(NoteChange_ToMeasure:16), wa	; F7C9FC  ld (0x0df2),WA
 	ld	(DisplayListB_Stage+9:16), wa	; F7CA00  ld (0x12ff),WA
-	cp	wa, (N0teChange_FromMeasure:16)	; F7CA04  cp WA,(0x0df0)
+	cp	wa, (NoteChange_FromMeasure:16)	; F7CA04  cp WA,(0x0df0)
 	jr	nc, SongStore_DispatchB_Case3_Skip	; F7CA08  jr NC,0xf7ca12
-	ld	(N0teChange_FromMeasure:16), wa	; F7CA0A  ld (0x0df0),WA
+	ld	(NoteChange_FromMeasure:16), wa	; F7CA0A  ld (0x0df0),WA
 	ld	(DisplayListB_Stage+6:16), wa	; F7CA0E  ld (0x12fc),WA
 SongStore_DispatchB_Case3_Skip:
-	ld	wa, (N0teChange_ToMeasure:16)	; F7CA12  ld WA,(0x0df2)
-	sub	wa, (N0teChange_FromMeasure:16)	; F7CA16  sub WA,(0x0df0)
+	ld	wa, (NoteChange_ToMeasure:16)	; F7CA12  ld WA,(0x0df2)
+	sub	wa, (NoteChange_FromMeasure:16)	; F7CA16  sub WA,(0x0df0)
 	inc	1, wa	; F7CA1A  inc 1,WA
 	ld	(4766:16), wa	; F7CA1C  ld (0x129e),WA
 	ret	; F7CA20  ret
@@ -5460,11 +5460,11 @@ SongStore_DispatchB_Case3_Skip:
 ; --------------------------------------------------------------------------
 SongStore_DispatchB_Case4:
 	or	(UI_RequestBits:16), 0x09	; F7CA21  or (0x2075),0x09
-	ld	a, (N0teChange_FromNote:16)	; F7CA26  ld A,(0x0df4)
+	ld	a, (NoteChange_FromNote:16)	; F7CA26  ld A,(0x0df4)
 	ld	l, 0:opc	; F7CA2A  ld L,0x00
 	ld	h, 127:opc	; F7CA2C  ld H,0x7f
 	calr	SeqJob_StepValueInRange	; F7CA2E  calr 0xf7ccdb
-	ld	(N0teChange_FromNote:16), a	; F7CA31  ld (0x0df4),A
+	ld	(NoteChange_FromNote:16), a	; F7CA31  ld (0x0df4),A
 	ld	(DisplayListB_Stage+5:16), a	; F7CA35  ld (0x12fb),A
 	xor	w, w	; F7CA39  xor W,W
 	ld	l, 12:opc	; F7CA3B  ld L,0x0c
@@ -5488,11 +5488,11 @@ SongStore_DispatchB_Case4:
 ; --------------------------------------------------------------------------
 SongStore_DispatchB_Case5:
 	or	(UI_RequestBits:16), 0x09	; F7CA48  or (0x2075),0x09
-	ld	a, (N0teChange_ToNote:16)	; F7CA4D  ld A,(0x0df5)
+	ld	a, (NoteChange_ToNote:16)	; F7CA4D  ld A,(0x0df5)
 	ld	l, 0:opc	; F7CA51  ld L,0x00
 	ld	h, 127:opc	; F7CA53  ld H,0x7f
 	calr	SeqJob_StepValueInRange	; F7CA55  calr 0xf7ccdb
-	ld	(N0teChange_ToNote:16), a	; F7CA58  ld (0x0df5),A
+	ld	(NoteChange_ToNote:16), a	; F7CA58  ld (0x0df5),A
 	ld	(DisplayListB_Stage+8:16), a	; F7CA5C  ld (0x12fe),A
 	xor	w, w	; F7CA60  xor W,W
 	ld	l, 12:opc	; F7CA62  ld L,0x0c
@@ -5502,59 +5502,59 @@ SongStore_DispatchB_Case5:
 	ret	; F7CA6E  ret
 
 ; --------------------------------------------------------------------------
-; N0teChange_LcdKeyRow4
-; Called from: T_N0teChange_LcdKeyRow4 (x2)
+; NoteChange_LcdKeyRow4
+; Called from: T_NoteChange_LcdKeyRow4 (x2)
 ; Touches: (0x0C70) (0x0C73) (0x0C77) (0x0DEE) (0x0DF0) (0x129E) (0x2070)
 ;          (0x2071) (0x2075) (0x207E) +1 more
-; Calls:   T_N0teChange_Execute
-; Evidence: thunk slot T_N0teChange_LcdKeyRow4 holds `jp 0x00F7CA6F`, and 0xF7CA6F is an
+; Calls:   T_NoteChange_Execute
+; Evidence: thunk slot T_NoteChange_LcdKeyRow4 holds `jp 0x00F7CA6F`, and 0xF7CA6F is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; N0teChange_LcdKeyRow4: the LcdKeyRow4 action of N0teChange_StageNonZero, N0teChange_StageZero -- called only by LcdKeyRow4_N0teChange_StageNonZero, LcdKeyRow4_N0teChange_StageZero.
-N0teChange_LcdKeyRow4:		; <- T_N0teChange_LcdKeyRow4
+; NoteChange_LcdKeyRow4: the LcdKeyRow4 action of NoteChange_StageNonZero, NoteChange_StageZero -- called only by LcdKeyRow4_NoteChange_StageNonZero, LcdKeyRow4_NoteChange_StageZero.
+NoteChange_LcdKeyRow4:		; <- T_NoteChange_LcdKeyRow4
 	and	(UI_RequestBits:16), 0xf6	; F7CA6F  and (0x2075),0xf6
 	cp	(UI_ScreenStage:16), 0x01	; F7CA74  cp (0x207e),0x01
-	jr	z, N0teChange_LcdKeyRow4_Skip	; F7CA79  jr Z,0xf7ca87
+	jr	z, NoteChange_LcdKeyRow4_Skip	; F7CA79  jr Z,0xf7ca87
 	ld	(UI_ScreenStage:16), 1	; F7CA7B  ld (0x207e),0x01
 	or	(UI_Request_Hi:16), 0x10	; F7CA80  or (0x2071),0x10
-	jr	N0teChange_LcdKeyRow4_Return	; F7CA85  jr T,0xf7cac1
-N0teChange_LcdKeyRow4_Skip:
+	jr	NoteChange_LcdKeyRow4_Return	; F7CA85  jr T,0xf7cac1
+NoteChange_LcdKeyRow4_Skip:
 	ld	a, (3566:16)	; F7CA87  ld A,(0x0dee)
 	ld	(3184:16), a	; F7CA8B  ld (0x0c70),A
-	ld	wa, (N0teChange_FromMeasure:16)	; F7CA8F  ld WA,(0x0df0)
+	ld	wa, (NoteChange_FromMeasure:16)	; F7CA8F  ld WA,(0x0df0)
 	ld	(3187:16), wa	; F7CA93  ld (0x0c73),WA
 	ld	wa, (4766:16)	; F7CA97  ld WA,(0x129e)
 	ld	(3191:16), wa	; F7CA9B  ld (0x0c77),WA
-	call	T_N0teChange_Execute	; F7CA9F  call 0xf42718
+	call	T_NoteChange_Execute	; F7CA9F  call 0xf42718
 	cp	(UI_StatusCode:16), 0xff	; F7CAA3  cp (0x2880),0xff
-	jr	z, N0teChange_LcdKeyRow4_Skip2	; F7CAA8  jr Z,0xf7cab7
+	jr	z, NoteChange_LcdKeyRow4_Skip2	; F7CAA8  jr Z,0xf7cab7
 	ld	(UI_ScreenStage:16), 0	; F7CAAA  ld (0x207e),0x00
 	ldw	(UI_Request:16), 16555	; F7CAAF  ld (0x2070),0x40ab
-	jr	N0teChange_LcdKeyRow4_Return	; F7CAB5  jr T,0xf7cac1
-N0teChange_LcdKeyRow4_Skip2:
+	jr	NoteChange_LcdKeyRow4_Return	; F7CAB5  jr T,0xf7cac1
+NoteChange_LcdKeyRow4_Skip2:
 	ld	(UI_ScreenStage:16), 0	; F7CAB7  ld (0x207e),0x00
 	or	(UI_Request_Hi:16), 0x10	; F7CABC  or (0x2071),0x10
-N0teChange_LcdKeyRow4_Return:
+NoteChange_LcdKeyRow4_Return:
 	ret	; F7CAC1  ret
 
 ; --------------------------------------------------------------------------
-; N0teChange_ReturnToStageZero
-; Called from: T_N0teChange_ReturnToStageZero (x2)
+; NoteChange_ReturnToStageZero
+; Called from: T_NoteChange_ReturnToStageZero (x2)
 ; Touches: (0x2071) (0x2075) (0x207E)
-; Evidence: thunk slot T_N0teChange_ReturnToStageZero holds `jp 0x00F7CAC2`, and 0xF7CAC2 is an
+; Evidence: thunk slot T_NoteChange_ReturnToStageZero holds `jp 0x00F7CAC2`, and 0xF7CAC2 is an
 ;           instruction boundary of this transcription (re-asserted on every
 ;           emit).  That is ALL the name rests on -- the name IS the
 ;           address.
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; N0teChange_ReturnToStageZero: UI_ScreenStage = 0 and UI_Request_Hi |= 0x10 -- back to stage 0 of N0teChange_StageNonZero;
-;   called by ExitKey_N0teChange_StageNonZero, LcdKeyRow5_N0teChange_StageNonZero (notes/prom_ab_stage_zero_names.py).
-N0teChange_ReturnToStageZero:		; <- T_N0teChange_ReturnToStageZero
+; NoteChange_ReturnToStageZero: UI_ScreenStage = 0 and UI_Request_Hi |= 0x10 -- back to stage 0 of NoteChange_StageNonZero;
+;   called by ExitKey_NoteChange_StageNonZero, LcdKeyRow5_NoteChange_StageNonZero (notes/prom_ab_stage_zero_names.py).
+NoteChange_ReturnToStageZero:		; <- T_NoteChange_ReturnToStageZero
 	and	(UI_RequestBits:16), 0xf6	; F7CAC2  and (0x2075),0xf6
 	ld	(UI_ScreenStage:16), 0	; F7CAC7  ld (0x207e),0x00
 	or	(UI_Request_Hi:16), 0x10	; F7CACC  or (0x2071),0x10
@@ -6227,7 +6227,7 @@ MeasureInsert_RepeatInsert_Return:
 	ret	; F7CE03  ret
 
 ; --------------------------------------------------------------------------
-; MeasureC0py_RepeatCopy
+; MeasureCopy_RepeatCopy
 ; Called from: in-module: 0xF7BC04
 ; Touches: (0x0C14) (0x0C35) (0x0C70) (0x0C73) (0x0C75) (0x0C77) (0x0C8A)
 ;          (0x0D4A) (0x0E16) (0x2880)
@@ -6238,22 +6238,22 @@ MeasureInsert_RepeatInsert_Return:
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; MeasureC0py_RepeatCopy: MEASURE COPY's repeat: when the repeat count (0x0E16) is non-zero and (0x0C8A) bit 3 clear,
+; MeasureCopy_RepeatCopy: MEASURE COPY's repeat: when the repeat count (0x0E16) is non-zero and (0x0C8A) bit 3 clear,
 ;   runs T_SongEdit_CopyMeasures (0x0E16) more times from the destination track (0x0C14) (0x7F = all with (0x0C35) bit
 ;   3), source measure = the saved destination measure 0x603475, destination (0x0C75) = it + count (0x0C77), advanced
-;   by the count after each status 0x23. MeasureC0py_LcdKeyRow1 calls it after a successful first copy. Basis: caller
+;   by the count after each status 0x23. MeasureCopy_LcdKeyRow1 calls it after a successful first copy. Basis: caller
 ;   + body + twin. (notes/naming-pilot-2026-10-06/proposals_wave7_z.json)
-MeasureC0py_RepeatCopy:
+MeasureCopy_RepeatCopy:
 	cp	(0x0e16:16), 0x00	; F7CE04  cp (0x0e16),0x00
-	jr	z, MeasureC0py_RepeatCopy_Return	; F7CE09  jr Z,0xf7ce67
+	jr	z, MeasureCopy_RepeatCopy_Return	; F7CE09  jr Z,0xf7ce67
 	bit	3, (0x0c8a:16)	; F7CE0B  bit 3,(0x0c8a)
-	jr	nz, MeasureC0py_RepeatCopy_Return	; F7CE0F  jr NZ,0xf7ce67
+	jr	nz, MeasureCopy_RepeatCopy_Return	; F7CE0F  jr NZ,0xf7ce67
 	ld	c, (3606:16)	; F7CE11  ld C,(0x0e16)
 	ld	a, (3092:16)	; F7CE15  ld A,(0x0c14)
 	bit	3, (0x0c35:16)	; F7CE19  bit 3,(0x0c35)
-	jr	z, MeasureC0py_RepeatCopy_Skip	; F7CE1D  jr Z,0xf7ce21
+	jr	z, MeasureCopy_RepeatCopy_Skip	; F7CE1D  jr Z,0xf7ce21
 	ld	a, 127:opc	; F7CE1F  ld A,0x7f
-MeasureC0py_RepeatCopy_Skip:
+MeasureCopy_RepeatCopy_Skip:
 	ld	(3184:16), a	; F7CE21  ld (0x0c70),A
 	ld	wa, (6304885:24)	; F7CE25  ld WA,(0x603475)
 	ld	(3187:16), wa	; F7CE2A  ld (0x0c73),WA
@@ -6266,13 +6266,13 @@ MeasureC0py_RepeatCopy_Skip:
 	call	T_SongEdit_CopyMeasures	; F7CE46  call 0xf426f8
 	popw	bc	; F7CE4A  pop BC
 	cp	(UI_StatusCode:16), 0x23	; F7CE4B  cp (0x2880),0x23
-	jr	nz, MeasureC0py_RepeatCopy_Return	; F7CE50  jr NZ,0xf7ce67
+	jr	nz, MeasureCopy_RepeatCopy_Return	; F7CE50  jr NZ,0xf7ce67
 	bit	3, (0x0c8a:16)	; F7CE52  bit 3,(0x0c8a)
-	jr	nz, MeasureC0py_RepeatCopy_Return	; F7CE56  jr NZ,0xf7ce67
+	jr	nz, MeasureCopy_RepeatCopy_Return	; F7CE56  jr NZ,0xf7ce67
 	ld	wa, (3189:16)	; F7CE58  ld WA,(0x0c75)
 	add	wa, (0x0c77:16)	; F7CE5C  add WA,(0x0c77)
 	ld	(3189:16), wa	; F7CE60  ld (0x0c75),WA
 	djnz8	c, -44	; F7CE64  djnz C,0xf7ce3b
-MeasureC0py_RepeatCopy_Return:
+MeasureCopy_RepeatCopy_Return:
 	ret	; F7CE67  ret
 	.fill	408, 1, 0x0E	; F7CE68-F7CFFF  `ret` padding (asserted pure 0x0E)

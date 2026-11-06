@@ -435,12 +435,12 @@ BlinkArgPtrs_F8024D:
 	.long 0x00f3b388                                 ; F80255  [  2]
 	.long 0x00f3b392                                 ; F80259  [  3]
 	.long 0x00f3b39c                                 ; F8025D  [  4]
-; Paint_S0ngC0py -- paints the screen whose own text reads "S0NG C0PY", "FROM", "TO"
+; Paint_SongCopy -- paints the screen whose own text reads "S0NG C0PY", "FROM", "TO"
 ;
 ; It reaches the display-list interpreters at 0xF417F0 (A) and 0xF417F4 (B)
 ; 6 time(s); XIY = list start, XIX = list end.  4 of those 6 list(s)
 ; carry text, and those are the ones that name this routine:
-;     site 0xF80277  interpreter A  list 0xF3BF80  DL_S0ngC0pyFromToSongSongOk
+;     site 0xF80277  interpreter A  list 0xF3BF80  DL_SongCopyFromToSongSongOk
 ;        text: "S0NG C0PY"; "FROM"; "TO"; "SONG "; "SONG "; "OK"
 ;     site 0xF8028C  interpreter A  list 0xF3BFF8  DL_FromToSongNoTrAllSongNoTrAll
 ;        text: "FROM"; "TO"; "SONG NO   TR/ALL    SONG NO   TR/ALL"; " <    >    <    >    <    >    <    >"
@@ -463,11 +463,11 @@ BlinkArgPtrs_F8024D:
 ; Unknown: whether this routine also handles input for the screen, and
 ;          whether any other routine paints it.  Neither was searched.
 ; ---------------------------------------------------------------------
-Paint_S0ngC0py:
+Paint_SongCopy:
 	call T_CallbackQueue_ResetAndRestartTask2            ; F80261  1d 80 2e f4
 	call PromB_LCD_ScreenRedraw_Begin                                        ; F80265  1d d9 e2 f7
-	call T_S0ngC0py_InitFields                                        ; F80269  1d 08 2a f4
-	ld XIY,DL_S0ngC0pyFromToSongSongOk                   ; F8026D  45 80 bf f3 00
+	call T_SongCopy_InitFields                                        ; F80269  1d 08 2a f4
+	ld XIY,DL_SongCopyFromToSongSongOk                   ; F8026D  45 80 bf f3 00
 	ld XIX,DL_FromToSongNoTrAllSongNoTrAll               ; F80272  44 f8 bf f3 00
 	call T_DisplayList_Run                               ; F80277  1d f0 17 f4
 	cp	(UI_ScreenStage:16), 0x00                            ; F8027B  c1 7e 20 3f 00
@@ -483,11 +483,11 @@ Paint_S0ngC0py:
 	cp	(0x0e34:16), 0x00                            ; F802A0  c1 34 0e 3f 00
 	jr z, .LF802CD                                       ; F802A5  66 26
 	ld XIY,DL_ACurrentTrackWillBeClearedAutomaticaly     ; F802A7  45 d5 c4 f3 00
-	ld XIX,Paint_S0ngC0py_DL                                     ; F802AC  44 30 c5 f3 00
+	ld XIX,Paint_SongCopy_DL                                     ; F802AC  44 30 c5 f3 00
 	call T_DisplayList_Run                               ; F802B1  1d f0 17 f4
 	ld a, (0x0e34:16)                                   ; F802B5  c1 34 0e 21
 	ld (DisplayListB_Stage+17:16), a                                   ; F802B9  f1 07 13 41
-	ld XIY,Paint_S0ngC0py_DL                                     ; F802BD  45 30 c5 f3 00
+	ld XIY,Paint_SongCopy_DL                                     ; F802BD  45 30 c5 f3 00
 	ld XIX,DLText_ChordApcControlRhythm                                   ; F802C2  44 3f c5 f3 00
 	call T_DisplayListB_Run                              ; F802C7  1d f4 17 f4
 	jr .LF802DB                                          ; F802CB  68 0e
@@ -496,19 +496,19 @@ Paint_S0ngC0py:
 	ld XIX,DL_TrackMergeOkTrackTrackTrack                ; F802D2  44 7f a4 f3 00
 	call T_DisplayList_Run                               ; F802D7  1d f0 17 f4
 .LF802DB:
-	call S0ngC0py_DrawFromSong                                      ; F802DB  1d ec 02 f8
-	call S0ngC0py_DrawToSong                                      ; F802DF  1d 38 03 f8
-	call S0ngC0py_DrawTracks                                      ; F802E3  1d 84 03 f8
+	call SongCopy_DrawFromSong                                      ; F802DB  1d ec 02 f8
+	call SongCopy_DrawToSong                                      ; F802DF  1d 38 03 f8
+	call SongCopy_DrawTracks                                      ; F802E3  1d 84 03 f8
 	call PromB_LCD_ScreenRedraw_End                                        ; F802E7  1d e7 e2 f7
 	ret                                                  ; F802EB  0e
-; S0ngC0py_DrawFromSong -- redraw the FROM song number and its six-character name on the SONG COPY screen
-; Evidence: (0x12F6)=(0x0E0C); site 0xF80301 runs B record 0xF3C199 ((0x12F6) at IX 0x0A84, x=12 beside 'SONG ' x=7 under 'FROM' x=8 in DL_S0ngC0pyFromToSongSongOk); ldir 6 bytes from 0x610000+((0x0E0C)-1)*0xC00+0xCA (song bank name, FINDINGS-prom_b-block-store.md) to 0x12F8; site 0xF80333 runs S0ngC0py_DrawFromSong_DL2 (string 0x12F8 at IX 0x0DA0).
-; Callers: Paint_S0ngC0py and the SoftKeyCol1/2 slot handlers (0xF803C9/0xF803D2) after T_S0ngC0py_StageZero_SoftKeyCol1/T_S0ngC0py_StageZero_SoftKeyCol2 step (0x0E0C) down/up in 1..10.
-S0ngC0py_DrawFromSong:
+; SongCopy_DrawFromSong -- redraw the FROM song number and its six-character name on the SONG COPY screen
+; Evidence: (0x12F6)=(0x0E0C); site 0xF80301 runs B record 0xF3C199 ((0x12F6) at IX 0x0A84, x=12 beside 'SONG ' x=7 under 'FROM' x=8 in DL_SongCopyFromToSongSongOk); ldir 6 bytes from 0x610000+((0x0E0C)-1)*0xC00+0xCA (song bank name, FINDINGS-prom_b-block-store.md) to 0x12F8; site 0xF80333 runs SongCopy_DrawFromSong_DL2 (string 0x12F8 at IX 0x0DA0).
+; Callers: Paint_SongCopy and the SoftKeyCol1/2 slot handlers (0xF803C9/0xF803D2) after T_SongCopy_StageZero_SoftKeyCol1/T_SongCopy_StageZero_SoftKeyCol2 step (0x0E0C) down/up in 1..10.
+SongCopy_DrawFromSong:
 	xor XWA,XWA                                          ; F802EC  e8 d0
-	ld a, (S0ngC0py_FromSong:16)                                   ; F802EE  c1 0c 0e 21
+	ld a, (SongCopy_FromSong:16)                                   ; F802EE  c1 0c 0e 21
 	ld (DisplayListB_Stage:16), a                                   ; F802F2  f1 f6 12 41
-	ld XIY,S0ngC0py_DrawFromSong_DL1                                     ; F802F6  45 99 c1 f3 00
+	ld XIY,SongCopy_DrawFromSong_DL1                                     ; F802F6  45 99 c1 f3 00
 	ld XIX,0x00f3c1a3                                    ; F802FB  44 a3 c1 f3 00
 .LF80300:
 	push XWA                                             ; F80300  38
@@ -525,19 +525,19 @@ S0ngC0py_DrawFromSong:
 	ld XIX,DisplayListB_Stage+2                                    ; F8031F  44 f8 12 00 00
 	ldw bc, 0x06                                         ; F80324  31 06 00
 	ldir85                                               ; F80327  85 11
-	ld XIY,S0ngC0py_DrawFromSong_DL2                                     ; F80329  45 5d c1 f3 00
-	ld XIX,S0ngC0py_DrawToSong_DL                                     ; F8032E  44 6c c1 f3 00
+	ld XIY,SongCopy_DrawFromSong_DL2                                     ; F80329  45 5d c1 f3 00
+	ld XIX,SongCopy_DrawToSong_DL                                     ; F8032E  44 6c c1 f3 00
 	call T_DisplayListB_Run                              ; F80333  1d f4 17 f4
 	ret                                                  ; F80337  0e
-; S0ngC0py_DrawToSong -- redraw the TO song number and name on the SONG COPY screen
-; Evidence: (0x12F7)=(0x0E0D); site 0xF8034D runs B record 0xF3C1A3 (IX 0x0A95, x=29 under 'TO' x=26); name of bank (0x0E0D)-1 copied to 0x12FE; site 0xF8037F runs S0ngC0py_DrawToSong_DL (IX 0x0DB1).
-; Callers: Paint_S0ngC0py and the SoftKeyCol5/6 slot handlers (0xF803ED/0xF803F6) after T_S0ngC0py_StageZero_SoftKeyCol5/T_S0ngC0py_StageZero_SoftKeyCol6.
-S0ngC0py_DrawToSong:
+; SongCopy_DrawToSong -- redraw the TO song number and name on the SONG COPY screen
+; Evidence: (0x12F7)=(0x0E0D); site 0xF8034D runs B record 0xF3C1A3 (IX 0x0A95, x=29 under 'TO' x=26); name of bank (0x0E0D)-1 copied to 0x12FE; site 0xF8037F runs SongCopy_DrawToSong_DL (IX 0x0DB1).
+; Callers: Paint_SongCopy and the SoftKeyCol5/6 slot handlers (0xF803ED/0xF803F6) after T_SongCopy_StageZero_SoftKeyCol5/T_SongCopy_StageZero_SoftKeyCol6.
+SongCopy_DrawToSong:
 	xor XWA,XWA                                          ; F80338  e8 d0
-	ld a, (S0ngC0py_ToSong:16)                                   ; F8033A  c1 0d 0e 21
+	ld a, (SongCopy_ToSong:16)                                   ; F8033A  c1 0d 0e 21
 	ld (DisplayListB_Stage+1:16), a                                   ; F8033E  f1 f7 12 41
 	ld XIY,0x00f3c1a3                                    ; F80342  45 a3 c1 f3 00
-	ld XIX,DL_S0ngSelectNameKbS0ngName                   ; F80347  44 ad c1 f3 00
+	ld XIX,DL_SongSelectNameKbSongName                   ; F80347  44 ad c1 f3 00
 	push XWA                                             ; F8034C  38
 	call T_DisplayListB_Run                              ; F8034D  1d f4 17 f4
 	pop XWA                                              ; F80351  58
@@ -552,152 +552,152 @@ S0ngC0py_DrawToSong:
 	ld XIX,DisplayListB_Stage+8                                    ; F8036B  44 fe 12 00 00
 	ldw bc, 0x06                                         ; F80370  31 06 00
 	ldir85                                               ; F80373  85 11
-	ld XIY,S0ngC0py_DrawToSong_DL                                     ; F80375  45 6c c1 f3 00
-	ld XIX,S0ngC0py_DrawTracks_DL                                     ; F8037A  44 7b c1 f3 00
+	ld XIY,SongCopy_DrawToSong_DL                                     ; F80375  45 6c c1 f3 00
+	ld XIX,SongCopy_DrawTracks_DL                                     ; F8037A  44 7b c1 f3 00
 	call T_DisplayListB_Run                              ; F8037F  1d f4 17 f4
 	ret                                                  ; F80383  0e
-; S0ngC0py_DrawTracks -- redraw the FROM and TO track fields of the SONG COPY screen
-; Evidence: (0x0E0E)=0x12 draws DL_AllAll ('  ALL   ' at both columns); otherwise (0x1304)=(0x0E0E), (0x1305)=(0x0E0F), DLB S0ngC0py_DrawTracks_DL (two DLText_0To17All readouts at IX 0x1344/0x1355) and DL_TrackTrack.
-; Callers: Paint_S0ngC0py and SoftKeyCol3/4/7/8 handlers after T_S0ngC0py_StageZero_SoftKeyCol3/18/2C/28 step (0x0E0E)/(0x0E0F) in 1..0x12.
-S0ngC0py_DrawTracks:
-	cp	(S0ngC0py_FromTrack:16), 0x12                            ; F80384  c1 0e 0e 3f 12
+; SongCopy_DrawTracks -- redraw the FROM and TO track fields of the SONG COPY screen
+; Evidence: (0x0E0E)=0x12 draws DL_AllAll ('  ALL   ' at both columns); otherwise (0x1304)=(0x0E0E), (0x1305)=(0x0E0F), DLB SongCopy_DrawTracks_DL (two DLText_0To17All readouts at IX 0x1344/0x1355) and DL_TrackTrack.
+; Callers: Paint_SongCopy and SoftKeyCol3/4/7/8 handlers after T_SongCopy_StageZero_SoftKeyCol3/18/2C/28 step (0x0E0E)/(0x0E0F) in 1..0x12.
+SongCopy_DrawTracks:
+	cp	(SongCopy_FromTrack:16), 0x12                            ; F80384  c1 0e 0e 3f 12
 	jr nz, .LF8039B                                      ; F80389  6e 10
 	ld XIY,DL_AllAll                                     ; F8038B  45 45 c1 f3 00
-	ld XIX,S0ngC0py_DrawFromSong_DL2                                     ; F80390  44 5d c1 f3 00
+	ld XIX,SongCopy_DrawFromSong_DL2                                     ; F80390  44 5d c1 f3 00
 	call T_DisplayList_Run                               ; F80395  1d f0 17 f4
 	jr .LF803C7                                          ; F80399  68 2c
 .LF8039B:
-	ld a, (S0ngC0py_FromTrack:16)                                   ; F8039B  c1 0e 0e 21
+	ld a, (SongCopy_FromTrack:16)                                   ; F8039B  c1 0e 0e 21
 	ld (DisplayListB_Stage+14:16), a                                   ; F8039F  f1 04 13 41
-	ld a, (S0ngC0py_ToTrack:16)                                   ; F803A3  c1 0f 0e 21
+	ld a, (SongCopy_ToTrack:16)                                   ; F803A3  c1 0f 0e 21
 	ld (DisplayListB_Stage+15:16), a                                   ; F803A7  f1 05 13 41
-	ld XIY,S0ngC0py_DrawTracks_DL                                     ; F803AB  45 7b c1 f3 00
-	ld XIX,S0ngC0py_DrawFromSong_DL1                                     ; F803B0  44 99 c1 f3 00
+	ld XIY,SongCopy_DrawTracks_DL                                     ; F803AB  45 7b c1 f3 00
+	ld XIX,SongCopy_DrawFromSong_DL1                                     ; F803B0  44 99 c1 f3 00
 	call T_DisplayListB_Run                              ; F803B5  1d f4 17 f4
 	ld XIY,DL_TrackTrack                                 ; F803B9  45 33 c1 f3 00
 	ld XIX,DL_AllAll                                     ; F803BE  44 45 c1 f3 00
 	call T_DisplayList_Run                               ; F803C3  1d f0 17 f4
 .LF803C7:
 	ret                                                  ; F803C7  0e
-ScreenLeave_S0ngC0py_Nop:
+ScreenLeave_SongCopy_Nop:
 	ret                                                  ; F803C8  0e
-; SoftKeyCol1_S0ngC0py_StageZero: the 1st of the eight soft keys under the LCD; bit 7 of the code picks the
-;   LOWER (set) or UPPER (clear) of the column's two switches; ButtonTable_S0ngC0py_StageZero slots 0x00, 0x11.
+; SoftKeyCol1_SongCopy_StageZero: the 1st of the eight soft keys under the LCD; bit 7 of the code picks the
+;   LOWER (set) or UPPER (clear) of the column's two switches; ButtonTable_SongCopy_StageZero slots 0x00, 0x11.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
-SoftKeyCol1_S0ngC0py_StageZero:
-	call T_S0ngC0py_StageZero_SoftKeyCol1                                        ; F803C9  1d 14 2a f4
-	call S0ngC0py_DrawFromSong                                      ; F803CD  1d ec 02 f8
+SoftKeyCol1_SongCopy_StageZero:
+	call T_SongCopy_StageZero_SoftKeyCol1                                        ; F803C9  1d 14 2a f4
+	call SongCopy_DrawFromSong                                      ; F803CD  1d ec 02 f8
 	ret                                                  ; F803D1  0e
-; SoftKeyCol2_S0ngC0py_StageZero: the 2nd of the eight soft keys under the LCD; bit 7 of the code picks the
-;   LOWER (set) or UPPER (clear) of the column's two switches; ButtonTable_S0ngC0py_StageZero slots 0x01, 0x12.
+; SoftKeyCol2_SongCopy_StageZero: the 2nd of the eight soft keys under the LCD; bit 7 of the code picks the
+;   LOWER (set) or UPPER (clear) of the column's two switches; ButtonTable_SongCopy_StageZero slots 0x01, 0x12.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
-SoftKeyCol2_S0ngC0py_StageZero:
-	call T_S0ngC0py_StageZero_SoftKeyCol2                                        ; F803D2  1d 10 2a f4
-	call S0ngC0py_DrawFromSong                                      ; F803D6  1d ec 02 f8
+SoftKeyCol2_SongCopy_StageZero:
+	call T_SongCopy_StageZero_SoftKeyCol2                                        ; F803D2  1d 10 2a f4
+	call SongCopy_DrawFromSong                                      ; F803D6  1d ec 02 f8
 	ret                                                  ; F803DA  0e
-; SoftKeyCol3_S0ngC0py_StageZero: the 3rd of the eight soft keys under the LCD; bit 7 of the code picks the
-;   LOWER (set) or UPPER (clear) of the column's two switches; ButtonTable_S0ngC0py_StageZero slots 0x02, 0x13.
+; SoftKeyCol3_SongCopy_StageZero: the 3rd of the eight soft keys under the LCD; bit 7 of the code picks the
+;   LOWER (set) or UPPER (clear) of the column's two switches; ButtonTable_SongCopy_StageZero slots 0x02, 0x13.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
-SoftKeyCol3_S0ngC0py_StageZero:
-	call T_S0ngC0py_StageZero_SoftKeyCol3                                        ; F803DB  1d 1c 2a f4
-	call S0ngC0py_DrawTracks                                      ; F803DF  1d 84 03 f8
+SoftKeyCol3_SongCopy_StageZero:
+	call T_SongCopy_StageZero_SoftKeyCol3                                        ; F803DB  1d 1c 2a f4
+	call SongCopy_DrawTracks                                      ; F803DF  1d 84 03 f8
 	ret                                                  ; F803E3  0e
-; SoftKeyCol4_S0ngC0py_StageZero: the 4th of the eight soft keys under the LCD; bit 7 of the code picks the
-;   LOWER (set) or UPPER (clear) of the column's two switches; ButtonTable_S0ngC0py_StageZero slots 0x03, 0x14.
+; SoftKeyCol4_SongCopy_StageZero: the 4th of the eight soft keys under the LCD; bit 7 of the code picks the
+;   LOWER (set) or UPPER (clear) of the column's two switches; ButtonTable_SongCopy_StageZero slots 0x03, 0x14.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
-SoftKeyCol4_S0ngC0py_StageZero:
-	call T_S0ngC0py_StageZero_SoftKeyCol4                                        ; F803E4  1d 18 2a f4
-	call S0ngC0py_DrawTracks                                      ; F803E8  1d 84 03 f8
+SoftKeyCol4_SongCopy_StageZero:
+	call T_SongCopy_StageZero_SoftKeyCol4                                        ; F803E4  1d 18 2a f4
+	call SongCopy_DrawTracks                                      ; F803E8  1d 84 03 f8
 	ret                                                  ; F803EC  0e
-; SoftKeyCol5_S0ngC0py_StageZero: the 5th of the eight soft keys under the LCD; bit 7 of the code picks the
-;   LOWER (set) or UPPER (clear) of the column's two switches; ButtonTable_S0ngC0py_StageZero slots 0x04, 0x15.
+; SoftKeyCol5_SongCopy_StageZero: the 5th of the eight soft keys under the LCD; bit 7 of the code picks the
+;   LOWER (set) or UPPER (clear) of the column's two switches; ButtonTable_SongCopy_StageZero slots 0x04, 0x15.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
-SoftKeyCol5_S0ngC0py_StageZero:
-	call T_S0ngC0py_StageZero_SoftKeyCol5                                        ; F803ED  1d 24 2a f4
-	call S0ngC0py_DrawToSong                                      ; F803F1  1d 38 03 f8
+SoftKeyCol5_SongCopy_StageZero:
+	call T_SongCopy_StageZero_SoftKeyCol5                                        ; F803ED  1d 24 2a f4
+	call SongCopy_DrawToSong                                      ; F803F1  1d 38 03 f8
 	ret                                                  ; F803F5  0e
-; SoftKeyCol6_S0ngC0py_StageZero: the 6th of the eight soft keys under the LCD; bit 7 of the code picks the
-;   LOWER (set) or UPPER (clear) of the column's two switches; ButtonTable_S0ngC0py_StageZero slots 0x05, 0x16.
+; SoftKeyCol6_SongCopy_StageZero: the 6th of the eight soft keys under the LCD; bit 7 of the code picks the
+;   LOWER (set) or UPPER (clear) of the column's two switches; ButtonTable_SongCopy_StageZero slots 0x05, 0x16.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
-SoftKeyCol6_S0ngC0py_StageZero:
-	call T_S0ngC0py_StageZero_SoftKeyCol6                                        ; F803F6  1d 20 2a f4
-	call S0ngC0py_DrawToSong                                      ; F803FA  1d 38 03 f8
+SoftKeyCol6_SongCopy_StageZero:
+	call T_SongCopy_StageZero_SoftKeyCol6                                        ; F803F6  1d 20 2a f4
+	call SongCopy_DrawToSong                                      ; F803FA  1d 38 03 f8
 	ret                                                  ; F803FE  0e
-; SoftKeyCol7_S0ngC0py_StageZero: the 7th of the eight soft keys under the LCD; bit 7 of the code picks the
-;   LOWER (set) or UPPER (clear) of the column's two switches; ButtonTable_S0ngC0py_StageZero slots 0x06, 0x17.
+; SoftKeyCol7_SongCopy_StageZero: the 7th of the eight soft keys under the LCD; bit 7 of the code picks the
+;   LOWER (set) or UPPER (clear) of the column's two switches; ButtonTable_SongCopy_StageZero slots 0x06, 0x17.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
-SoftKeyCol7_S0ngC0py_StageZero:
-	call T_S0ngC0py_StageZero_SoftKeyCol7                                        ; F803FF  1d 2c 2a f4
-	call S0ngC0py_DrawTracks                                      ; F80403  1d 84 03 f8
+SoftKeyCol7_SongCopy_StageZero:
+	call T_SongCopy_StageZero_SoftKeyCol7                                        ; F803FF  1d 2c 2a f4
+	call SongCopy_DrawTracks                                      ; F80403  1d 84 03 f8
 	ret                                                  ; F80407  0e
-; SoftKeyCol8_S0ngC0py_StageZero: the 8th of the eight soft keys under the LCD; bit 7 of the code picks the
-;   LOWER (set) or UPPER (clear) of the column's two switches; ButtonTable_S0ngC0py_StageZero slots 0x07, 0x18.
+; SoftKeyCol8_SongCopy_StageZero: the 8th of the eight soft keys under the LCD; bit 7 of the code picks the
+;   LOWER (set) or UPPER (clear) of the column's two switches; ButtonTable_SongCopy_StageZero slots 0x07, 0x18.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
-SoftKeyCol8_S0ngC0py_StageZero:
-	call T_S0ngC0py_StageZero_SoftKeyCol8                                        ; F80408  1d 28 2a f4
-	call S0ngC0py_DrawTracks                                      ; F8040C  1d 84 03 f8
+SoftKeyCol8_SongCopy_StageZero:
+	call T_SongCopy_StageZero_SoftKeyCol8                                        ; F80408  1d 28 2a f4
+	call SongCopy_DrawTracks                                      ; F8040C  1d 84 03 f8
 	ret                                                  ; F80410  0e
-; ButtonTable_S0ngC0py_StageZero_Nop8: a bare ret -- ButtonTable_S0ngC0py_StageZero slot 0x08.
-ButtonTable_S0ngC0py_StageZero_Nop8:
+; ButtonTable_SongCopy_StageZero_Nop8: a bare ret -- ButtonTable_SongCopy_StageZero slot 0x08.
+ButtonTable_SongCopy_StageZero_Nop8:
 	ret                                                  ; F80411  0e
-; LcdKeyRow2_S0ngC0py_StageZero: row 2 of the five key pairs flanking the LCD; bit 7 of the code picks the CP2
-;   side (set) or the CP1 side (clear); ButtonTable_S0ngC0py_StageZero slot 0x09.
+; LcdKeyRow2_SongCopy_StageZero: row 2 of the five key pairs flanking the LCD; bit 7 of the code picks the CP2
+;   side (set) or the CP1 side (clear); ButtonTable_SongCopy_StageZero slot 0x09.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
-LcdKeyRow2_S0ngC0py_StageZero:
-	call T_S0ngC0py_LcdKeyRow2                                        ; F80412  1d 30 2a f4
+LcdKeyRow2_SongCopy_StageZero:
+	call T_SongCopy_LcdKeyRow2                                        ; F80412  1d 30 2a f4
 	ret                                                  ; F80416  0e
-; ButtonTable_S0ngC0py_StageZero_Nop10: a bare ret -- ButtonTable_S0ngC0py_StageZero slots 0x0A, 0x0B, 0x0C,
+; ButtonTable_SongCopy_StageZero_Nop10: a bare ret -- ButtonTable_SongCopy_StageZero slots 0x0A, 0x0B, 0x0C,
 ;   0x0D, 0x0E.
-ButtonTable_S0ngC0py_StageZero_Nop10:
+ButtonTable_SongCopy_StageZero_Nop10:
 	ret                                                  ; F80417  0e
-; ExitKey_S0ngC0py_StageZero: the EXIT key; ButtonTable_S0ngC0py_StageZero slot 0x0F.
+; ExitKey_SongCopy_StageZero: the EXIT key; ButtonTable_SongCopy_StageZero slot 0x0F.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
-ExitKey_S0ngC0py_StageZero:
+ExitKey_SongCopy_StageZero:
 	bit 0x07,W                                           ; F80418  c8 33 07
 	jr nz, .LF80425                                      ; F8041B  6e 08
 	ldw (UI_Request:16), 0x801a                              ; F8041D  f1 70 20 02 1a 80
 	jr .LF80425                                          ; F80423  68 00
 .LF80425:
 	ret                                                  ; F80425  0e
-; ButtonTable_S0ngC0py_StageZero_Nop16: a bare ret -- ButtonTable_S0ngC0py_StageZero slots 0x10, 0x19, 0x1A,
+; ButtonTable_SongCopy_StageZero_Nop16: a bare ret -- ButtonTable_SongCopy_StageZero slots 0x10, 0x19, 0x1A,
 ;   0x1B, 0x1C, 0x1D, 0x1E, 0x1F.
-ButtonTable_S0ngC0py_StageZero_Nop16:
+ButtonTable_SongCopy_StageZero_Nop16:
 	ret                                                  ; F80426  0e
-; ButtonTable_S0ngC0py_StageNonZero_Nop0: a bare ret -- ButtonTable_S0ngC0py_StageNonZero slots 0x00, 0x01,
+; ButtonTable_SongCopy_StageNonZero_Nop0: a bare ret -- ButtonTable_SongCopy_StageNonZero slots 0x00, 0x01,
 ;   0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08.
-ButtonTable_S0ngC0py_StageNonZero_Nop0:
+ButtonTable_SongCopy_StageNonZero_Nop0:
 	ret                                                  ; F80427  0e
-; LcdKeyRow2_S0ngC0py_StageNonZero: row 2 of the five key pairs flanking the LCD; bit 7 of the code picks the
-;   CP2 side (set) or the CP1 side (clear); ButtonTable_S0ngC0py_StageNonZero slot 0x09.
+; LcdKeyRow2_SongCopy_StageNonZero: row 2 of the five key pairs flanking the LCD; bit 7 of the code picks the
+;   CP2 side (set) or the CP1 side (clear); ButtonTable_SongCopy_StageNonZero slot 0x09.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
-LcdKeyRow2_S0ngC0py_StageNonZero:
-	call T_S0ngC0py_LcdKeyRow2                                        ; F80428  1d 30 2a f4
+LcdKeyRow2_SongCopy_StageNonZero:
+	call T_SongCopy_LcdKeyRow2                                        ; F80428  1d 30 2a f4
 	ret                                                  ; F8042C  0e
-; LcdKeyRow3_S0ngC0py_StageNonZero: row 3 of the five key pairs flanking the LCD; bit 7 of the code picks the
-;   CP2 side (set) or the CP1 side (clear); ButtonTable_S0ngC0py_StageNonZero slot 0x0A.
+; LcdKeyRow3_SongCopy_StageNonZero: row 3 of the five key pairs flanking the LCD; bit 7 of the code picks the
+;   CP2 side (set) or the CP1 side (clear); ButtonTable_SongCopy_StageNonZero slot 0x0A.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
-LcdKeyRow3_S0ngC0py_StageNonZero:
-	call T_S0ngC0py_ReturnToStageZero                                        ; F8042D  1d 34 2a f4
+LcdKeyRow3_SongCopy_StageNonZero:
+	call T_SongCopy_ReturnToStageZero                                        ; F8042D  1d 34 2a f4
 	ret                                                  ; F80431  0e
-; ButtonTable_S0ngC0py_StageNonZero_Nop11: a bare ret -- ButtonTable_S0ngC0py_StageNonZero slots 0x0B, 0x0C,
+; ButtonTable_SongCopy_StageNonZero_Nop11: a bare ret -- ButtonTable_SongCopy_StageNonZero slots 0x0B, 0x0C,
 ;   0x0D, 0x0E.
-ButtonTable_S0ngC0py_StageNonZero_Nop11:
+ButtonTable_SongCopy_StageNonZero_Nop11:
 	ret                                                  ; F80432  0e
-; ExitKey_S0ngC0py_StageNonZero: the EXIT key; ButtonTable_S0ngC0py_StageNonZero slot 0x0F.
+; ExitKey_SongCopy_StageNonZero: the EXIT key; ButtonTable_SongCopy_StageNonZero slot 0x0F.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
-ExitKey_S0ngC0py_StageNonZero:
-	call T_S0ngC0py_ReturnToStageZero                                        ; F80433  1d 34 2a f4
+ExitKey_SongCopy_StageNonZero:
+	call T_SongCopy_ReturnToStageZero                                        ; F80433  1d 34 2a f4
 	ret                                                  ; F80437  0e
-; ButtonTable_S0ngC0py_StageNonZero_Nop16: a bare ret -- ButtonTable_S0ngC0py_StageNonZero slots 0x10, 0x11,
+; ButtonTable_SongCopy_StageNonZero_Nop16: a bare ret -- ButtonTable_SongCopy_StageNonZero slots 0x10, 0x11,
 ;   0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1A, 0x1B, 0x1C, 0x1D, 0x1E, 0x1F.
-ButtonTable_S0ngC0py_StageNonZero_Nop16:
+ButtonTable_SongCopy_StageNonZero_Nop16:
 	ret                                                  ; F80438  0e
-; Paint_N0teChange -- paints the screen whose own text reads "N0TE CHANGE", "TARGET NOTE", "TRACK         :"
+; Paint_NoteChange -- paints the screen whose own text reads "N0TE CHANGE", "TARGET NOTE", "TRACK         :"
 ;
 ; It reaches the display-list interpreters at 0xF417F0 (A) and 0xF417F4 (B)
 ; 6 time(s); XIY = list start, XIX = list end.  3 of those 6 list(s)
 ; carry text, and those are the ones that name this routine:
-;     site 0xF8048D  interpreter A  list 0xF3AEAF  DL_N0teChangeTargetNoteTrack
+;     site 0xF8048D  interpreter A  list 0xF3AEAF  DL_NoteChangeTargetNoteTrack
 ;        text: "N0TE CHANGE"; "TARGET NOTE"; "TRACK         :"; ":"; " ("; ")"
 ;     site 0xF804C0  interpreter A  list 0xF3A461  DL_AreYouSure
 ;        text: "Are You Sure ?"
@@ -718,16 +718,16 @@ ButtonTable_S0ngC0py_StageNonZero_Nop16:
 ; Unknown: whether this routine also handles input for the screen, and
 ;          whether any other routine paints it.  Neither was searched.
 ; ---------------------------------------------------------------------
-Paint_N0teChange:
+Paint_NoteChange:
 	call T_CallbackQueue_ResetAndRestartTask2            ; F80439  1d 80 2e f4
 	cp	(UI_ScreenStage:16), 0x00                            ; F8043D  c1 7e 20 3f 00
 	jr nz, .LF8047B                                      ; F80442  6e 37
-	call T_N0teChange_InitFields                                        ; F80444  1d 88 2a f4
+	call T_NoteChange_InitFields                                        ; F80444  1d 88 2a f4
 	or	(UI_RequestBits:16), 0x01                            ; F80448  c1 75 20 3e 01
 	ldw (PanelDial_DownButton:16), 0x0484                              ; F8044D  f1 9b 20 02 84 04
 	ldw (0x2666:16), 0xffff                              ; F80453  f1 66 26 02 ff ff
 	ldw (0x266a:16), 0xffff                              ; F80459  f1 6a 26 02 ff ff
-	ld a, (N0teChange_Field:16)                                   ; F8045F  c1 ed 0d 21
+	ld a, (NoteChange_Field:16)                                   ; F8045F  c1 ed 0d 21
 	cp a, 0x02:i3                                          ; F80463  c9 da
 	jr z, .LF80478                                       ; F80465  66 11
 	cp a, 0x03:i3                                          ; F80467  c9 db
@@ -743,18 +743,18 @@ Paint_N0teChange:
 .LF8047B:
 	calr PromB_LCD_ScreenRedraw_Begin                                          ; F8047B  1e 5b de
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F8047E  f1 40 25 00 00
-	ld XIY,DL_N0teChangeTargetNoteTrack                  ; F80483  45 af ae f3 00
-	ld XIX,Paint_N0teChange_DL1                                     ; F80488  44 af af f3 00
+	ld XIY,DL_NoteChangeTargetNoteTrack                  ; F80483  45 af ae f3 00
+	ld XIX,Paint_NoteChange_DL1                                     ; F80488  44 af af f3 00
 	call T_DisplayList_Run                               ; F8048D  1d f0 17 f4
 	cp	(UI_ScreenStage:16), 0x00                            ; F80491  c1 7e 20 3f 00
 	jr nz, .LF804A8                                      ; F80496  6e 10
-	ld XIY,Paint_N0teChange_DL1                                     ; F80498  45 af af f3 00
+	ld XIY,Paint_NoteChange_DL1                                     ; F80498  45 af af f3 00
 	ld XIX,DL_F3AFE7                                     ; F8049D  44 e7 af f3 00
 	call T_DisplayList_Run                               ; F804A2  1d f0 17 f4
 	jr .LF804D2                                          ; F804A6  68 2a
 .LF804A8:
-	ld XIY,Paint_N0teChange_DL2                                     ; F804A8  45 c3 b0 f3 00
-	ld XIX,DL_Transp0seTrackFirstMeasure                 ; F804AD  44 02 b1 f3 00
+	ld XIY,Paint_NoteChange_DL2                                     ; F804A8  45 c3 b0 f3 00
+	ld XIX,DL_TransposeTrackFirstMeasure                 ; F804AD  44 02 b1 f3 00
 	call T_DisplayList_Run                               ; F804B2  1d f0 17 f4
 	ld XIY,DL_AreYouSure                                 ; F804B6  45 61 a4 f3 00
 	ld XIX,DL_TrackMergeOkTrackTrackTrack                ; F804BB  44 7f a4 f3 00
@@ -770,27 +770,27 @@ Paint_N0teChange:
 	call T_DisplayListB_Run                              ; F804E4  1d f4 17 f4
 	calr PromB_LCD_ScreenRedraw_End                                          ; F804E8  1e fc dd
 	ret                                                  ; F804EB  0e
-; ScreenLeaveBody_N0teChange -- the whole body of the N0teChange screen's Leave method
-; Evidence: prom_b ScreenLeave_N0teChange (0xF7D21C) is `call 0xF804EC / ret` (+4 of screen object 0xF43120); body `call T_N0teChange_OnLeave / ret` -- prom_b 0xF7C8BC: unless (0x207A)=0x2D, call T_Seq_RequestRewind.  Same shape as prom_b ScreenLeaveBody_AdvanceDelay.
-ScreenLeaveBody_N0teChange:
-	call T_N0teChange_OnLeave                                        ; F804EC  1d 8c 2a f4
+; ScreenLeaveBody_NoteChange -- the whole body of the NoteChange screen's Leave method
+; Evidence: prom_b ScreenLeave_NoteChange (0xF7D21C) is `call 0xF804EC / ret` (+4 of screen object 0xF43120); body `call T_NoteChange_OnLeave / ret` -- prom_b 0xF7C8BC: unless (0x207A)=0x2D, call T_Seq_RequestRewind.  Same shape as prom_b ScreenLeaveBody_AdvanceDelay.
+ScreenLeaveBody_NoteChange:
+	call T_NoteChange_OnLeave                                        ; F804EC  1d 8c 2a f4
 	ret                                                  ; F804F0  0e
-; ButtonTable_N0teChange_StageZero_Nop0: a bare ret -- ButtonTable_N0teChange_StageZero slot 0x00.
-ButtonTable_N0teChange_StageZero_Nop0:
+; ButtonTable_NoteChange_StageZero_Nop0: a bare ret -- ButtonTable_NoteChange_StageZero slot 0x00.
+ButtonTable_NoteChange_StageZero_Nop0:
 	ret                                                  ; F804F1  0e
-; ButtonTable_N0teChange_StageZero_Nop1: a bare ret -- ButtonTable_N0teChange_StageZero slot 0x01.
-ButtonTable_N0teChange_StageZero_Nop1:
+; ButtonTable_NoteChange_StageZero_Nop1: a bare ret -- ButtonTable_NoteChange_StageZero slot 0x01.
+ButtonTable_NoteChange_StageZero_Nop1:
 	ret                                                  ; F804F2  0e
-; ButtonTable_N0teChange_StageZero_Nop2: a bare ret -- ButtonTable_N0teChange_StageZero slot 0x02.
-ButtonTable_N0teChange_StageZero_Nop2:
+; ButtonTable_NoteChange_StageZero_Nop2: a bare ret -- ButtonTable_NoteChange_StageZero slot 0x02.
+ButtonTable_NoteChange_StageZero_Nop2:
 	ret                                                  ; F804F3  0e
-; ButtonTable_N0teChange_StageZero_Nop3: a bare ret -- ButtonTable_N0teChange_StageZero slot 0x03.
-ButtonTable_N0teChange_StageZero_Nop3:
+; ButtonTable_NoteChange_StageZero_Nop3: a bare ret -- ButtonTable_NoteChange_StageZero slot 0x03.
+ButtonTable_NoteChange_StageZero_Nop3:
 	ret                                                  ; F804F4  0e
-; SoftKeyCol5_N0teChange_StageZero: the 5th of the eight soft keys under the LCD; bit 7 of the code picks the
-;   LOWER (set) or UPPER (clear) of the column's two switches; ButtonTable_N0teChange_StageZero slot 0x04.
+; SoftKeyCol5_NoteChange_StageZero: the 5th of the eight soft keys under the LCD; bit 7 of the code picks the
+;   LOWER (set) or UPPER (clear) of the column's two switches; ButtonTable_NoteChange_StageZero slot 0x04.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
-SoftKeyCol5_N0teChange_StageZero:
+SoftKeyCol5_NoteChange_StageZero:
 	bit	1, (UI_RequestBits:16)                               ; F804F5  f1 75 20 c9
 	jr z, .LF804FF                                       ; F804F9  66 04
 	call T_Blink_Stop                                    ; F804FB  1d 24 2e f4
@@ -799,46 +799,46 @@ SoftKeyCol5_N0teChange_StageZero:
 	ld (0x0e18:16), 0x01                                 ; F80504  f1 18 0e 00 01
 	bit 0x07,W                                           ; F80509  c8 33 07
 	jr z, .LF80514                                       ; F8050C  66 06
-	call T_N0teChange_StepFieldDown                                        ; F8050E  1d a8 2a f4
+	call T_NoteChange_StepFieldDown                                        ; F8050E  1d a8 2a f4
 	jr .LF80518                                          ; F80512  68 04
 .LF80514:
-	call T_N0teChange_StepSelectedFieldUp                                        ; F80514  1d a4 2a f4
+	call T_NoteChange_StepSelectedFieldUp                                        ; F80514  1d a4 2a f4
 .LF80518:
-	calr N0teChange_DrawValues                                      ; F80518  1e 9d 00
+	calr NoteChange_DrawValues                                      ; F80518  1e 9d 00
 	ret                                                  ; F8051B  0e
-; ButtonTable_N0teChange_StageZero_Nop5: a bare ret -- ButtonTable_N0teChange_StageZero slot 0x05.
-ButtonTable_N0teChange_StageZero_Nop5:
+; ButtonTable_NoteChange_StageZero_Nop5: a bare ret -- ButtonTable_NoteChange_StageZero slot 0x05.
+ButtonTable_NoteChange_StageZero_Nop5:
 	ret                                                  ; F8051C  0e
-; ButtonTable_N0teChange_StageZero_Nop6: a bare ret -- ButtonTable_N0teChange_StageZero slot 0x06.
-ButtonTable_N0teChange_StageZero_Nop6:
+; ButtonTable_NoteChange_StageZero_Nop6: a bare ret -- ButtonTable_NoteChange_StageZero slot 0x06.
+ButtonTable_NoteChange_StageZero_Nop6:
 	ret                                                  ; F8051D  0e
-ButtonTable_N0teChange_StageZero_Nop7:
+ButtonTable_NoteChange_StageZero_Nop7:
 	ret                                                  ; F8051E  0e
-; LcdKeyRow2_N0teChange_StageZero: row 2 of the five key pairs flanking the LCD; bit 7 of the code picks the CP2
-;   side (set) or the CP1 side (clear); ButtonTable_N0teChange_StageZero slot 0x09.
+; LcdKeyRow2_NoteChange_StageZero: row 2 of the five key pairs flanking the LCD; bit 7 of the code picks the CP2
+;   side (set) or the CP1 side (clear); ButtonTable_NoteChange_StageZero slot 0x09.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
-LcdKeyRow2_N0teChange_StageZero:
+LcdKeyRow2_NoteChange_StageZero:
 	bit 0x07,W                                           ; F8051F  c8 33 07
 	jr z, .LF80534                                       ; F80522  66 10
-	cp	(N0teChange_Field:16), 0x01                            ; F80524  c1 ed 0d 3f 01
+	cp	(NoteChange_Field:16), 0x01                            ; F80524  c1 ed 0d 3f 01
 	jr z, .LF80548                                       ; F80529  66 1d
 	calr Blink_DisableThenStop                                          ; F8052B  1e 17 ed
-	call T_N0teChange_SelectField1                                        ; F8052E  1d 90 2a f4
+	call T_NoteChange_SelectField1                                        ; F8052E  1d 90 2a f4
 	jr .LF80542                                          ; F80532  68 0e
 .LF80534:
-	cp	(N0teChange_Field:16), 0x04                            ; F80534  c1 ed 0d 3f 04
+	cp	(NoteChange_Field:16), 0x04                            ; F80534  c1 ed 0d 3f 04
 	jr z, .LF80548                                       ; F80539  66 0d
 	calr Blink_EnableThenStop_Copy                                          ; F8053B  1e f9 ec
-	call T_N0teChange_SelectField4                                        ; F8053E  1d 9c 2a f4
+	call T_NoteChange_SelectField4                                        ; F8053E  1d 9c 2a f4
 .LF80542:
-	calr N0teChange_DrawValues                                      ; F80542  1e 73 00
-	calr N0teChange_DrawFieldCursor                                      ; F80545  1e 01 00
+	calr NoteChange_DrawValues                                      ; F80542  1e 73 00
+	calr NoteChange_DrawFieldCursor                                      ; F80545  1e 01 00
 .LF80548:
 	ret                                                  ; F80548  0e
-; N0teChange_DrawFieldCursor -- clear LCD layer 1, then fill the box of the NOTE CHANGE field (0x1301) selects
-; Evidence: (0x2540)=1; site 0xF8055B runs DL_F39551-0xF39559 (op 0E ClearColumns, whole layer); then DLB_Handler_Array8 (T_F4181C) on op-03 record 0xF3B05A: (0x1301)&7 indexes the boxes at 0xF3B065, swi 5 FillRect.  (0x1301) is written with (0x0DED) (T_N0teChange_InitFields = prom_b 0xF7C853).
-; Callers: the row-key handlers of ButtonTable_N0teChange_StageZero at 0xF8051F-0xF805AB.
-N0teChange_DrawFieldCursor:
+; NoteChange_DrawFieldCursor -- clear LCD layer 1, then fill the box of the NOTE CHANGE field (0x1301) selects
+; Evidence: (0x2540)=1; site 0xF8055B runs DL_F39551-0xF39559 (op 0E ClearColumns, whole layer); then DLB_Handler_Array8 (T_F4181C) on op-03 record 0xF3B05A: (0x1301)&7 indexes the boxes at 0xF3B065, swi 5 FillRect.  (0x1301) is written with (0x0DED) (T_NoteChange_InitFields = prom_b 0xF7C853).
+; Callers: the row-key handlers of ButtonTable_NoteChange_StageZero at 0xF8051F-0xF805AB.
+NoteChange_DrawFieldCursor:
 	ld (LCD_CurrentLayer:16), 0x01                                 ; F80549  f1 40 25 00 01
 	calr ButtonTable_SequencerMedley_Nop                                          ; F8054E  1e 87 dd
 	ld XIY,DL_F39551                                     ; F80551  45 51 95 f3 00
@@ -847,67 +847,67 @@ N0teChange_DrawFieldCursor:
 	ld XIY,0x00f3b05a                                    ; F8055F  45 5a b0 f3 00
 	call T_DLB_Handler_Array8                                        ; F80564  1d 1c 18 f4
 	ret                                                  ; F80568  0e
-; LcdKeyRow3_N0teChange_StageZero: row 3 of the five key pairs flanking the LCD; bit 7 of the code picks the CP2
-;   side (set) or the CP1 side (clear); ButtonTable_N0teChange_StageZero slot 0x0A.
+; LcdKeyRow3_NoteChange_StageZero: row 3 of the five key pairs flanking the LCD; bit 7 of the code picks the CP2
+;   side (set) or the CP1 side (clear); ButtonTable_NoteChange_StageZero slot 0x0A.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
-LcdKeyRow3_N0teChange_StageZero:
+LcdKeyRow3_NoteChange_StageZero:
 	bit 0x07,W                                           ; F80569  c8 33 07
 	jr z, .LF8057E                                       ; F8056C  66 10
-	cp	(N0teChange_Field:16), 0x02                            ; F8056E  c1 ed 0d 3f 02
+	cp	(NoteChange_Field:16), 0x02                            ; F8056E  c1 ed 0d 3f 02
 	jr z, .LF80594                                       ; F80573  66 1f
 	calr Blink_EnableThenStop_Copy                                          ; F80575  1e bf ec
-	call T_N0teChange_SelectField2                                        ; F80578  1d 94 2a f4
+	call T_NoteChange_SelectField2                                        ; F80578  1d 94 2a f4
 	jr .LF8058C                                          ; F8057C  68 0e
 .LF8057E:
-	cp	(N0teChange_Field:16), 0x05                            ; F8057E  c1 ed 0d 3f 05
+	cp	(NoteChange_Field:16), 0x05                            ; F8057E  c1 ed 0d 3f 05
 	jr z, .LF80594                                       ; F80583  66 0f
 	calr Blink_EnableThenStop_Copy                                          ; F80585  1e af ec
-	call T_N0teChange_SelectField5                                        ; F80588  1d a0 2a f4
+	call T_NoteChange_SelectField5                                        ; F80588  1d a0 2a f4
 .LF8058C:
-	calr N0teChange_DrawValues                                      ; F8058C  1e 29 00
-	calr N0teChange_DrawFieldCursor                                      ; F8058F  1e b7 ff
+	calr NoteChange_DrawValues                                      ; F8058C  1e 29 00
+	calr NoteChange_DrawFieldCursor                                      ; F8058F  1e b7 ff
 	jr .LF80594                                          ; F80592  68 00
 .LF80594:
 	ret                                                  ; F80594  0e
-; LcdKeyRow4_N0teChange_StageZero: row 4 of the five key pairs flanking the LCD; bit 7 of the code picks the CP2
-;   side (set) or the CP1 side (clear); ButtonTable_N0teChange_StageZero slot 0x0B.
+; LcdKeyRow4_NoteChange_StageZero: row 4 of the five key pairs flanking the LCD; bit 7 of the code picks the CP2
+;   side (set) or the CP1 side (clear); ButtonTable_NoteChange_StageZero slot 0x0B.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
-LcdKeyRow4_N0teChange_StageZero:
+LcdKeyRow4_NoteChange_StageZero:
 	bit 0x07,W                                           ; F80595  c8 33 07
 	jr z, .LF805B0                                       ; F80598  66 16
-	cp	(N0teChange_Field:16), 0x03                            ; F8059A  c1 ed 0d 3f 03
+	cp	(NoteChange_Field:16), 0x03                            ; F8059A  c1 ed 0d 3f 03
 	jr z, .LF805B7                                       ; F8059F  66 16
 	calr Blink_EnableThenStop_Copy                                          ; F805A1  1e 93 ec
-	call T_N0teChange_SelectField3                                        ; F805A4  1d 98 2a f4
-	calr N0teChange_DrawValues                                      ; F805A8  1e 0d 00
-	calr N0teChange_DrawFieldCursor                                      ; F805AB  1e 9b ff
+	call T_NoteChange_SelectField3                                        ; F805A4  1d 98 2a f4
+	calr NoteChange_DrawValues                                      ; F805A8  1e 0d 00
+	calr NoteChange_DrawFieldCursor                                      ; F805AB  1e 9b ff
 	jr .LF805B7                                          ; F805AE  68 07
 .LF805B0:
 	calr Blink_DisableThenStop                                          ; F805B0  1e 92 ec
-	call T_N0teChange_LcdKeyRow4                                        ; F805B3  1d ac 2a f4
+	call T_NoteChange_LcdKeyRow4                                        ; F805B3  1d ac 2a f4
 .LF805B7:
 	ret                                                  ; F805B7  0e
-; N0teChange_DrawValues -- redraw the live values of the NOTE CHANGE screen on layer 0
-; Evidence: (0x2540)=0; site 0xF805CA runs interpreter B over DL_F3AFE7-0xF3B05A (readouts of 0x12F6-0x12FA, 0x12FB, 0x12FC, 0x12FE, 0x12FF), the list Paint_N0teChange runs at 0xF804DA; BlinkArgPtrs_F80754[2..5] are its records for fields 2-5.
-N0teChange_DrawValues:
+; NoteChange_DrawValues -- redraw the live values of the NOTE CHANGE screen on layer 0
+; Evidence: (0x2540)=0; site 0xF805CA runs interpreter B over DL_F3AFE7-0xF3B05A (readouts of 0x12F6-0x12FA, 0x12FB, 0x12FC, 0x12FE, 0x12FF), the list Paint_NoteChange runs at 0xF804DA; BlinkArgPtrs_F80754[2..5] are its records for fields 2-5.
+NoteChange_DrawValues:
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F805B8  f1 40 25 00 00
 	calr ButtonTable_SequencerMedley_Nop                                          ; F805BD  1e 18 dd
 	ld XIY,DL_F3AFE7                                     ; F805C0  45 e7 af f3 00
 	ld XIX,0x00f3b05a                                    ; F805C5  44 5a b0 f3 00
 	call T_DisplayListB_Run                              ; F805CA  1d f4 17 f4
 	ret                                                  ; F805CE  0e
-; ButtonTable_N0teChange_StageZero_Nop12: a bare ret -- ButtonTable_N0teChange_StageZero slot 0x0C.
-ButtonTable_N0teChange_StageZero_Nop12:
+; ButtonTable_NoteChange_StageZero_Nop12: a bare ret -- ButtonTable_NoteChange_StageZero slot 0x0C.
+ButtonTable_NoteChange_StageZero_Nop12:
 	ret                                                  ; F805CF  0e
-; ButtonTable_N0teChange_StageZero_Nop13: a bare ret -- ButtonTable_N0teChange_StageZero slot 0x0D.
-ButtonTable_N0teChange_StageZero_Nop13:
+; ButtonTable_NoteChange_StageZero_Nop13: a bare ret -- ButtonTable_NoteChange_StageZero slot 0x0D.
+ButtonTable_NoteChange_StageZero_Nop13:
 	ret                                                  ; F805D0  0e
-; ButtonTable_N0teChange_StageZero_Nop14: a bare ret -- ButtonTable_N0teChange_StageZero slot 0x0E.
-ButtonTable_N0teChange_StageZero_Nop14:
+; ButtonTable_NoteChange_StageZero_Nop14: a bare ret -- ButtonTable_NoteChange_StageZero slot 0x0E.
+ButtonTable_NoteChange_StageZero_Nop14:
 	ret                                                  ; F805D1  0e
-; ExitKey_N0teChange_StageZero: the EXIT key; ButtonTable_N0teChange_StageZero slot 0x0F.
+; ExitKey_NoteChange_StageZero: the EXIT key; ButtonTable_NoteChange_StageZero slot 0x0F.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
-ExitKey_N0teChange_StageZero:
+ExitKey_NoteChange_StageZero:
 	bit 0x07,W                                           ; F805D2  c8 33 07
 	jr z, .LF805D9                                       ; F805D5  66 02
 	jr .LF805DF                                          ; F805D7  68 06
@@ -915,14 +915,14 @@ ExitKey_N0teChange_StageZero:
 	ldw (UI_Request:16), 0x801a                              ; F805D9  f1 70 20 02 1a 80
 .LF805DF:
 	ret                                                  ; F805DF  0e
-; ButtonTable_N0teChange_StageZero_Nop16: a bare ret -- ButtonTable_N0teChange_StageZero slots 0x10, 0x11, 0x12,
+; ButtonTable_NoteChange_StageZero_Nop16: a bare ret -- ButtonTable_NoteChange_StageZero slots 0x10, 0x11, 0x12,
 ;   0x13, 0x14.
-ButtonTable_N0teChange_StageZero_Nop16:
+ButtonTable_NoteChange_StageZero_Nop16:
 	ret                                                  ; F805E0  0e
-; N0teChange_StageZero_Button21 -- ButtonTable_N0teChange_StageZero slot 0x15, NOT NAMED: slot 0x15 is only the
+; NoteChange_StageZero_Button21 -- ButtonTable_NoteChange_StageZero slot 0x15, NOT NAMED: slot 0x15 is only the
 ;   VARIANT-1 already-held rewrite of base code 0x04; the SX-WSA1R is variant 2, so the slot is never delivered
 ;   here.
-N0teChange_StageZero_Button21:
+NoteChange_StageZero_Button21:
 	bit	1, (UI_RequestBits:16)                               ; F805E1  f1 75 20 c9
 	jr z, .LF805EB                                       ; F805E5  66 04
 	call T_Blink_Stop                                    ; F805E7  1d 24 2e f4
@@ -931,64 +931,64 @@ N0teChange_StageZero_Button21:
 	ld (0x0e18:16), 0x04                                 ; F805F0  f1 18 0e 00 04
 	bit 0x07,W                                           ; F805F5  c8 33 07
 	jr z, .LF80600                                       ; F805F8  66 06
-	call T_N0teChange_StepFieldDown                                        ; F805FA  1d a8 2a f4
+	call T_NoteChange_StepFieldDown                                        ; F805FA  1d a8 2a f4
 	jr T,.LF80604                                        ; F805FE  68 04
 .LF80600:
-	call T_N0teChange_StepSelectedFieldUp                                        ; F80600  1d a4 2a f4
+	call T_NoteChange_StepSelectedFieldUp                                        ; F80600  1d a4 2a f4
 .LF80604:
-	calr N0teChange_DrawValues                                      ; F80604  1e b1 ff
+	calr NoteChange_DrawValues                                      ; F80604  1e b1 ff
 	ret                                                  ; F80607  0e
-; ButtonTable_N0teChange_StageZero_Nop22: a bare ret -- ButtonTable_N0teChange_StageZero slots 0x16, 0x17, 0x18,
+; ButtonTable_NoteChange_StageZero_Nop22: a bare ret -- ButtonTable_NoteChange_StageZero slots 0x16, 0x17, 0x18,
 ;   0x19, 0x1A.
-ButtonTable_N0teChange_StageZero_Nop22:
+ButtonTable_NoteChange_StageZero_Nop22:
 	ret                                                  ; F80608  0e
-; NumberPadKey_N0teChange_StageZero: the twelve-key number pad (0-9, +/-, ENTER);
-;   ButtonTable_N0teChange_StageZero slot 0x1B.
+; NumberPadKey_NoteChange_StageZero: the twelve-key number pad (0-9, +/-, ENTER);
+;   ButtonTable_NoteChange_StageZero slot 0x1B.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
-NumberPadKey_N0teChange_StageZero:
-	calr N0teChange_NumberPad                                      ; F80609  1e 1e 00
+NumberPadKey_NoteChange_StageZero:
+	calr NoteChange_NumberPad                                      ; F80609  1e 1e 00
 	ret                                                  ; F8060C  0e
-; ButtonTable_N0teChange_StageZero_Nop28: a bare ret -- ButtonTable_N0teChange_StageZero slots 0x1C, 0x1D, 0x1E,
+; ButtonTable_NoteChange_StageZero_Nop28: a bare ret -- ButtonTable_NoteChange_StageZero slots 0x1C, 0x1D, 0x1E,
 ;   0x1F.
-ButtonTable_N0teChange_StageZero_Nop28:
+ButtonTable_NoteChange_StageZero_Nop28:
 	ret                                                  ; F8060D  0e
-; ButtonTable_N0teChange_StageNonZero_Nop0: a bare ret -- ButtonTable_N0teChange_StageNonZero slots 0x00, 0x01,
+; ButtonTable_NoteChange_StageNonZero_Nop0: a bare ret -- ButtonTable_NoteChange_StageNonZero slots 0x00, 0x01,
 ;   0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A.
-ButtonTable_N0teChange_StageNonZero_Nop0:
+ButtonTable_NoteChange_StageNonZero_Nop0:
 	ret                                                  ; F8060E  0e
-; LcdKeyRow4_N0teChange_StageNonZero: row 4 of the five key pairs flanking the LCD; bit 7 of the code picks the
-;   CP2 side (set) or the CP1 side (clear); ButtonTable_N0teChange_StageNonZero slot 0x0B.
+; LcdKeyRow4_NoteChange_StageNonZero: row 4 of the five key pairs flanking the LCD; bit 7 of the code picks the
+;   CP2 side (set) or the CP1 side (clear); ButtonTable_NoteChange_StageNonZero slot 0x0B.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
-LcdKeyRow4_N0teChange_StageNonZero:
+LcdKeyRow4_NoteChange_StageNonZero:
 	bit 0x07,W                                           ; F8060F  c8 33 07
 	jr nz, .LF80618                                      ; F80612  6e 04
-	call T_N0teChange_LcdKeyRow4                                        ; F80614  1d ac 2a f4
+	call T_NoteChange_LcdKeyRow4                                        ; F80614  1d ac 2a f4
 .LF80618:
 	ret                                                  ; F80618  0e
-; LcdKeyRow5_N0teChange_StageNonZero: row 5 of the five key pairs flanking the LCD; bit 7 of the code picks the
-;   CP2 side (set) or the CP1 side (clear); ButtonTable_N0teChange_StageNonZero slot 0x0C.
+; LcdKeyRow5_NoteChange_StageNonZero: row 5 of the five key pairs flanking the LCD; bit 7 of the code picks the
+;   CP2 side (set) or the CP1 side (clear); ButtonTable_NoteChange_StageNonZero slot 0x0C.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
-LcdKeyRow5_N0teChange_StageNonZero:
+LcdKeyRow5_NoteChange_StageNonZero:
 	bit 0x07,W                                           ; F80619  c8 33 07
 	jr nz, .LF80622                                      ; F8061C  6e 04
-	call T_N0teChange_ReturnToStageZero                                        ; F8061E  1d b0 2a f4
+	call T_NoteChange_ReturnToStageZero                                        ; F8061E  1d b0 2a f4
 .LF80622:
 	ret                                                  ; F80622  0e
-; ButtonTable_N0teChange_StageNonZero_Nop13: a bare ret -- ButtonTable_N0teChange_StageNonZero slots 0x0D, 0x0E.
-ButtonTable_N0teChange_StageNonZero_Nop13:
+; ButtonTable_NoteChange_StageNonZero_Nop13: a bare ret -- ButtonTable_NoteChange_StageNonZero slots 0x0D, 0x0E.
+ButtonTable_NoteChange_StageNonZero_Nop13:
 	ret                                                  ; F80623  0e
-; ExitKey_N0teChange_StageNonZero: the EXIT key; ButtonTable_N0teChange_StageNonZero slot 0x0F.
+; ExitKey_NoteChange_StageNonZero: the EXIT key; ButtonTable_NoteChange_StageNonZero slot 0x0F.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
-ExitKey_N0teChange_StageNonZero:
-	call T_N0teChange_ReturnToStageZero                                        ; F80624  1d b0 2a f4
+ExitKey_NoteChange_StageNonZero:
+	call T_NoteChange_ReturnToStageZero                                        ; F80624  1d b0 2a f4
 	ret                                                  ; F80628  0e
-; ButtonTable_N0teChange_StageNonZero_Nop16: a bare ret -- ButtonTable_N0teChange_StageNonZero slots 0x10, 0x11,
+; ButtonTable_NoteChange_StageNonZero_Nop16: a bare ret -- ButtonTable_NoteChange_StageNonZero slots 0x10, 0x11,
 ;   0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1A, 0x1B, 0x1C, 0x1D, 0x1E, 0x1F.
-ButtonTable_N0teChange_StageNonZero_Nop16:
+ButtonTable_NoteChange_StageNonZero_Nop16:
 	ret                                                  ; F80629  0e
-; N0teChange_NumberPad -- NUMBER PAD key on the NOTE CHANGE screen: dispatch on (0x2267)
-; Evidence: reached only by `calr` at 0xF80609, slot 27 of ButtonTable_N0teChange_StageZero; <=9 -> N0teChange_KeypadDigit, 0x0F -> N0teChange_KeypadCommit, 0x80 -> N0teChange_KeypadSign, then N0teChange_BlinkSelectedField.
-N0teChange_NumberPad:
+; NoteChange_NumberPad -- NUMBER PAD key on the NOTE CHANGE screen: dispatch on (0x2267)
+; Evidence: reached only by `calr` at 0xF80609, slot 27 of ButtonTable_NoteChange_StageZero; <=9 -> NoteChange_KeypadDigit, 0x0F -> NoteChange_KeypadCommit, 0x80 -> NoteChange_KeypadSign, then NoteChange_BlinkSelectedField.
+NoteChange_NumberPad:
 	ld a, (0x2267:16)                                   ; F8062A  c1 67 22 21
 	cp A,0x09                                            ; F8062E  c9 cf 09
 	jr ule, .LF8063F                                     ; F80631  63 0c
@@ -1001,31 +1001,31 @@ N0teChange_NumberPad:
 	calr Blink_SetEnable_1_2                                      ; F8063F  1e 0e 00
 	jr .LF8064C                                          ; F80642  68 08
 .LF80644:
-	calr N0teChange_KeypadCommit                                      ; F80644  1e 13 00
+	calr NoteChange_KeypadCommit                                      ; F80644  1e 13 00
 	jr .LF8064C                                          ; F80647  68 03
 .LF80649:
-	calr N0teChange_KeypadSign                                      ; F80649  1e c8 00
+	calr NoteChange_KeypadSign                                      ; F80649  1e c8 00
 .LF8064C:
-	calr N0teChange_BlinkSelectedField                                      ; F8064C  1e d8 00
+	calr NoteChange_BlinkSelectedField                                      ; F8064C  1e d8 00
 	ret                                                  ; F8064F  0e
 Blink_SetEnable_1_2:
 	pushw 0x01                                           ; F80650  0b 01 00
 	call T_Blink_SetEnable                               ; F80653  1d 28 2e f4
 	inc 2,XSP                                            ; F80657  ef 62
 	ret                                                  ; F80659  0e
-; N0teChange_KeypadCommit -- keypad code 0x0F: store the typed number into the NOTE CHANGE field (0x0DED) selects
+; NoteChange_KeypadCommit -- keypad code 0x0F: store the typed number into the NOTE CHANGE field (0x0DED) selects
 ; Evidence: T_AsciiDigits3_ToValue; fields 2/3 accept 1..999 into (0x0DF0)/(0x12FC) and (0x0DF2)/(0x12FF) keeping first<=last, (0x129E)=last-first+1; fields 4/5 accept 0..127 into (0x0DF4)/(0x12FB) and (0x0DF5)/(0x12FE), and `divs WA,12` splits each into (0x12F7)/(0x12F8) and (0x12F9)/(0x12FA).
-; Then T_Blink_Stop and N0teChange_DrawValues.
-N0teChange_KeypadCommit:
+; Then T_Blink_Stop and NoteChange_DrawValues.
+NoteChange_KeypadCommit:
 	ld (0x2826:16), 0x03                                 ; F8065A  f1 26 28 00 03
 	call T_AsciiDigits3_ToValue                          ; F8065F  1d f0 32 f4
-	cp	(N0teChange_Field:16), 0x02                            ; F80663  c1 ed 0d 3f 02
+	cp	(NoteChange_Field:16), 0x02                            ; F80663  c1 ed 0d 3f 02
 	jr z, .LF80682                                       ; F80668  66 18
-	cp	(N0teChange_Field:16), 0x03                            ; F8066A  c1 ed 0d 3f 03
+	cp	(NoteChange_Field:16), 0x03                            ; F8066A  c1 ed 0d 3f 03
 	jr z, .LF806A6                                       ; F8066F  66 35
-	cp	(N0teChange_Field:16), 0x04                            ; F80671  c1 ed 0d 3f 04
+	cp	(NoteChange_Field:16), 0x04                            ; F80671  c1 ed 0d 3f 04
 	jr z, .LF806D6                                       ; F80676  66 5e
-	cp	(N0teChange_Field:16), 0x05                            ; F80678  c1 ed 0d 3f 05
+	cp	(NoteChange_Field:16), 0x05                            ; F80678  c1 ed 0d 3f 05
 	jr z, .LF806F2                                       ; F8067D  66 73
 	jrl .LF80713                                         ; F8067F  78 91 00
 .LF80682:
@@ -1033,11 +1033,11 @@ N0teChange_KeypadCommit:
 	jrl lt, .LF80713                                     ; F80684  71 8c 00
 	cp WA,0x03e7                                         ; F80687  d8 cf e7 03
 	jrl gt, .LF80713                                     ; F8068B  7a 85 00
-	ld (N0teChange_FromMeasure:16), wa                                  ; F8068E  f1 f0 0d 50
+	ld (NoteChange_FromMeasure:16), wa                                  ; F8068E  f1 f0 0d 50
 	ld (DisplayListB_Stage+6:16), wa                                  ; F80692  f1 fc 12 50
-	cp	wa, (N0teChange_ToMeasure:16)                              ; F80696  d1 f2 0d f0
+	cp	wa, (NoteChange_ToMeasure:16)                              ; F80696  d1 f2 0d f0
 	jr ule, .LF806A4                                     ; F8069A  63 08
-	ld (N0teChange_ToMeasure:16), wa                                  ; F8069C  f1 f2 0d 50
+	ld (NoteChange_ToMeasure:16), wa                                  ; F8069C  f1 f2 0d 50
 	ld (DisplayListB_Stage+9:16), wa                                  ; F806A0  f1 ff 12 50
 .LF806A4:
 	jr .LF806C6                                          ; F806A4  68 20
@@ -1046,22 +1046,22 @@ N0teChange_KeypadCommit:
 	jr lt, .LF80713                                      ; F806A8  61 69
 	cp WA,0x03e7                                         ; F806AA  d8 cf e7 03
 	jr gt, .LF80713                                      ; F806AE  6a 63
-	ld (N0teChange_ToMeasure:16), wa                                  ; F806B0  f1 f2 0d 50
+	ld (NoteChange_ToMeasure:16), wa                                  ; F806B0  f1 f2 0d 50
 	ld (DisplayListB_Stage+9:16), wa                                  ; F806B4  f1 ff 12 50
-	cp	wa, (N0teChange_FromMeasure:16)                              ; F806B8  d1 f0 0d f0
+	cp	wa, (NoteChange_FromMeasure:16)                              ; F806B8  d1 f0 0d f0
 	jr nc, .LF806C6                                      ; F806BC  6f 08
-	ld (N0teChange_FromMeasure:16), wa                                  ; F806BE  f1 f0 0d 50
+	ld (NoteChange_FromMeasure:16), wa                                  ; F806BE  f1 f0 0d 50
 	ld (DisplayListB_Stage+6:16), wa                                  ; F806C2  f1 fc 12 50
 .LF806C6:
-	ld wa, (N0teChange_ToMeasure:16)                                 ; F806C6  d1 f2 0d 20
-	sub	wa, (N0teChange_FromMeasure:16)                              ; F806CA  d1 f0 0d a0
+	ld wa, (NoteChange_ToMeasure:16)                                 ; F806C6  d1 f2 0d 20
+	sub	wa, (NoteChange_FromMeasure:16)                              ; F806CA  d1 f0 0d a0
 	inc 1,WA                                             ; F806CE  d8 61
 	ld (0x129e:16), wa                                  ; F806D0  f1 9e 12 50
 	jr .LF8070C                                          ; F806D4  68 36
 .LF806D6:
 	cp WA,0x007f                                         ; F806D6  d8 cf 7f 00
 	jr gt, .LF80713                                      ; F806DA  6a 37
-	ld (N0teChange_FromNote:16), a                                   ; F806DC  f1 f4 0d 41
+	ld (NoteChange_FromNote:16), a                                   ; F806DC  f1 f4 0d 41
 	ld (DisplayListB_Stage+5:16), a                                   ; F806E0  f1 fb 12 41
 	ld l, 0x0c:opc                                          ; F806E4  27 0c
 	divs wa, l                                         ; F806E6  cf 59
@@ -1071,7 +1071,7 @@ N0teChange_KeypadCommit:
 .LF806F2:
 	cp WA,0x007f                                         ; F806F2  d8 cf 7f 00
 	jr gt, .LF80713                                      ; F806F6  6a 1b
-	ld (N0teChange_ToNote:16), a                                   ; F806F8  f1 f5 0d 41
+	ld (NoteChange_ToNote:16), a                                   ; F806F8  f1 f5 0d 41
 	ld (DisplayListB_Stage+8:16), a                                   ; F806FC  f1 fe 12 41
 	ld l, 0x0c:opc                                          ; F80700  27 0c
 	divs wa, l                                         ; F80702  cf 59
@@ -1079,12 +1079,12 @@ N0teChange_KeypadCommit:
 	ld (DisplayListB_Stage+4:16), a                                   ; F80708  f1 fa 12 41
 .LF8070C:
 	call T_Blink_Stop                                    ; F8070C  1d 24 2e f4
-	calr N0teChange_DrawValues                                      ; F80710  1e a5 fe
+	calr NoteChange_DrawValues                                      ; F80710  1e a5 fe
 .LF80713:
 	ret                                                  ; F80713  0e
-; N0teChange_KeypadSign -- keypad code 0x80: put '+' back in (0x2820)
+; NoteChange_KeypadSign -- keypad code 0x80: put '+' back in (0x2820)
 ; Evidence: `bit 1,(0x2075)` and `cp (0x0DB8),4` gate `ld (0x2820),0x2B`.  This screen's field index is (0x0DED); why it tests (0x0DB8) is not established.
-N0teChange_KeypadSign:
+NoteChange_KeypadSign:
 	bit	1, (UI_RequestBits:16)                               ; F80714  f1 75 20 c9
 	jr z, .LF80726                                       ; F80718  66 0c
 	cp	(0x0db8:16), 0x04                            ; F8071A  c1 b8 0d 3f 04
@@ -1092,15 +1092,15 @@ N0teChange_KeypadSign:
 	ld (0x2820:16), 0x2b                                 ; F80721  f1 20 28 00 2b
 .LF80726:
 	ret                                                  ; F80726  0e
-; N0teChange_BlinkSelectedField -- start the field blink on the field (0x0DED) selects
+; NoteChange_BlinkSelectedField -- start the field blink on the field (0x0DED) selects
 ; Evidence: unless blink is off or (0x2267)=0x0F: push BlinkArgPtrs_F80754[(0x0DED)], call T_Blink_Command.
-N0teChange_BlinkSelectedField:
+NoteChange_BlinkSelectedField:
 	bit	1, (UI_RequestBits:16)                               ; F80727  f1 75 20 c9
 	jr z, .LF80753                                       ; F8072B  66 26
 	cp	(0x2267:16), 0x0f                            ; F8072D  c1 67 22 3f 0f
 	jr z, .LF80753                                       ; F80732  66 1f
 	xor XWA,XWA                                          ; F80734  e8 d0
-	ld a, (N0teChange_Field:16)                                   ; F80736  c1 ed 0d 21
+	ld a, (NoteChange_Field:16)                                   ; F80736  c1 ed 0d 21
 	sla xwa, 0x02                                        ; F8073A  e8 ec 02
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F8073D  f1 40 25 00 00
 	ld XIY,BlinkArgPtrs_F80754                           ; F80742  45 54 07 f8 00
@@ -1126,12 +1126,12 @@ BlinkArgPtrs_F80754:
 	.long 0x00f3b050                                 ; F80760  [  3]
 	.long 0x00f3b032                                 ; F80764  [  4]
 	.long 0x00f3b046                                 ; F80768  [  5]
-; Paint_MeasureC0py -- paints the screen whose own text reads "MEASURE C0PY", "FROM TRACK", "TO TRACK"
+; Paint_MeasureCopy -- paints the screen whose own text reads "MEASURE C0PY", "FROM TRACK", "TO TRACK"
 ;
 ; It reaches the display-list interpreters at 0xF417F0 (A) and 0xF417F4 (B)
 ; 6 time(s); XIY = list start, XIX = list end.  2 of those 6 list(s)
 ; carry text, and those are the ones that name this routine:
-;     site 0xF807B7  interpreter A  list 0xF3BBA5  DL_MeasureC0pyFromTrackToTrack
+;     site 0xF807B7  interpreter A  list 0xF3BBA5  DL_MeasureCopyFromTrackToTrack
 ;        text: "MEASURE C0PY"; "FROM TRACK"; "TO TRACK"; ":"; ":"; "FIRST MEASURE"
 ;     site 0xF807ED  interpreter A  list 0xF3A461  DL_AreYouSure
 ;        text: "Are You Sure ?"
@@ -1150,11 +1150,11 @@ BlinkArgPtrs_F80754:
 ; Unknown: whether this routine also handles input for the screen, and
 ;          whether any other routine paints it.  Neither was searched.
 ; ---------------------------------------------------------------------
-Paint_MeasureC0py:
+Paint_MeasureCopy:
 	call T_CallbackQueue_ResetAndRestartTask2                                        ; F8076C  1d 80 2e f4
 	cp	(UI_ScreenStage:16), 0x00                            ; F80770  c1 7e 20 3f 00
 	jr nz, .LF80792                                      ; F80775  6e 1b
-	call T_MeasureC0py_InitFields                                        ; F80777  1d d8 29 f4
+	call T_MeasureCopy_InitFields                                        ; F80777  1d d8 29 f4
 	or	(UI_RequestBits:16), 0x01                            ; F8077B  c1 75 20 3e 01
 	ldw (PanelDial_DownButton:16), 0x0484                              ; F80780  f1 9b 20 02 84 04
 	ldw (0x2666:16), 0xffff                              ; F80786  f1 66 26 02 ff ff
@@ -1166,15 +1166,15 @@ Paint_MeasureC0py:
 	ld XIX,DL_F3BD07                                     ; F8079F  44 07 bd f3 00
 	call T_DisplayList_Run                               ; F807A4  1d f0 17 f4
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F807A8  f1 40 25 00 00
-	ld XIY,DL_MeasureC0pyFromTrackToTrack                ; F807AD  45 a5 bb f3 00
-	ld XIX,Paint_MeasureC0py_DL                                     ; F807B2  44 93 bc f3 00
+	ld XIY,DL_MeasureCopyFromTrackToTrack                ; F807AD  45 a5 bb f3 00
+	ld XIX,Paint_MeasureCopy_DL                                     ; F807B2  44 93 bc f3 00
 	call T_DisplayList_Run                               ; F807B7  1d f0 17 f4
 	cp	(UI_ScreenStage:16), 0x00                            ; F807BB  c1 7e 20 3f 00
 	jr nz, .LF807D5                                      ; F807C0  6e 13
-	ld XIY,Paint_MeasureC0py_DL                                     ; F807C2  45 93 bc f3 00
+	ld XIY,Paint_MeasureCopy_DL                                     ; F807C2  45 93 bc f3 00
 	ld XIX,DL_F3BCCB                                     ; F807C7  44 cb bc f3 00
 	call T_DisplayList_Run                               ; F807CC  1d f0 17 f4
-	calr Paint_MeasureC0py_Nop                                      ; F807D0  1e 35 00
+	calr Paint_MeasureCopy_Nop                                      ; F807D0  1e 35 00
 	jr .LF807F1                                          ; F807D3  68 1c
 .LF807D5:
 	ld XIY,DL_F3BD90                                     ; F807D5  45 90 bd f3 00
@@ -1190,29 +1190,29 @@ Paint_MeasureC0py:
 	call T_DisplayListB_Run                              ; F80800  1d f4 17 f4
 	calr PromB_LCD_ScreenRedraw_End                                          ; F80804  1e e0 da
 	ret                                                  ; F80807  0e
-Paint_MeasureC0py_Nop:
+Paint_MeasureCopy_Nop:
 	ret                                                  ; F80808  0e
-; ScreenLeaveBody_MeasureC0py -- the whole body of the MeasureC0py screen's Leave method
-; Evidence: prom_b ScreenLeave_MeasureC0py (0xF7D23D) is `call 0xF80809 / ret` (+4 of screen object 0xF430C0); body `call T_MeasureC0py_OnLeave / ret`.  Bytes after it are ButtonTable_MeasureC0py slot handlers.
-ScreenLeaveBody_MeasureC0py:
-	call T_MeasureC0py_OnLeave                                        ; F80809  1d dc 29 f4
+; ScreenLeaveBody_MeasureCopy -- the whole body of the MeasureCopy screen's Leave method
+; Evidence: prom_b ScreenLeave_MeasureCopy (0xF7D23D) is `call 0xF80809 / ret` (+4 of screen object 0xF430C0); body `call T_MeasureCopy_OnLeave / ret`.  Bytes after it are ButtonTable_MeasureCopy slot handlers.
+ScreenLeaveBody_MeasureCopy:
+	call T_MeasureCopy_OnLeave                                        ; F80809  1d dc 29 f4
 	ret                                                  ; F8080D  0e
-; ButtonTable_MeasureC0py_StageZero_Nop0: a bare ret -- ButtonTable_MeasureC0py_StageZero slot 0x00.
-ButtonTable_MeasureC0py_StageZero_Nop0:
+; ButtonTable_MeasureCopy_StageZero_Nop0: a bare ret -- ButtonTable_MeasureCopy_StageZero slot 0x00.
+ButtonTable_MeasureCopy_StageZero_Nop0:
 	ret                                                  ; F8080E  0e
-; ButtonTable_MeasureC0py_StageZero_Nop1: a bare ret -- ButtonTable_MeasureC0py_StageZero slot 0x01.
-ButtonTable_MeasureC0py_StageZero_Nop1:
+; ButtonTable_MeasureCopy_StageZero_Nop1: a bare ret -- ButtonTable_MeasureCopy_StageZero slot 0x01.
+ButtonTable_MeasureCopy_StageZero_Nop1:
 	ret                                                  ; F8080F  0e
-; ButtonTable_MeasureC0py_StageZero_Nop2: a bare ret -- ButtonTable_MeasureC0py_StageZero slot 0x02.
-ButtonTable_MeasureC0py_StageZero_Nop2:
+; ButtonTable_MeasureCopy_StageZero_Nop2: a bare ret -- ButtonTable_MeasureCopy_StageZero slot 0x02.
+ButtonTable_MeasureCopy_StageZero_Nop2:
 	ret                                                  ; F80810  0e
-; ButtonTable_MeasureC0py_StageZero_Nop3: a bare ret -- ButtonTable_MeasureC0py_StageZero slot 0x03.
-ButtonTable_MeasureC0py_StageZero_Nop3:
+; ButtonTable_MeasureCopy_StageZero_Nop3: a bare ret -- ButtonTable_MeasureCopy_StageZero slot 0x03.
+ButtonTable_MeasureCopy_StageZero_Nop3:
 	ret                                                  ; F80811  0e
-; SoftKeyCol5_MeasureC0py_StageZero: the 5th of the eight soft keys under the LCD; bit 7 of the code picks the
-;   LOWER (set) or UPPER (clear) of the column's two switches; ButtonTable_MeasureC0py_StageZero slot 0x04.
+; SoftKeyCol5_MeasureCopy_StageZero: the 5th of the eight soft keys under the LCD; bit 7 of the code picks the
+;   LOWER (set) or UPPER (clear) of the column's two switches; ButtonTable_MeasureCopy_StageZero slot 0x04.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
-SoftKeyCol5_MeasureC0py_StageZero:
+SoftKeyCol5_MeasureCopy_StageZero:
 	bit	1, (UI_RequestBits:16)                               ; F80812  f1 75 20 c9
 	jr z, .LF8081C                                       ; F80816  66 04
 	call T_Blink_Stop                                    ; F80818  1d 24 2e f4
@@ -1221,10 +1221,10 @@ SoftKeyCol5_MeasureC0py_StageZero:
 	ld (0x0e18:16), 0x01                                 ; F80821  f1 18 0e 00 01
 	bit 0x07,W                                           ; F80826  c8 33 07
 	jr z, .LF80831                                       ; F80829  66 06
-	call T_MeasureC0py_StepFieldDown                                        ; F8082B  1d fc 29 f4
+	call T_MeasureCopy_StepFieldDown                                        ; F8082B  1d fc 29 f4
 	jr .LF80835                                          ; F8082F  68 04
 .LF80831:
-	call T_MeasureC0py_StepFieldUp                                        ; F80831  1d f8 29 f4
+	call T_MeasureCopy_StepFieldUp                                        ; F80831  1d f8 29 f4
 .LF80835:
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F80835  f1 40 25 00 00
 	calr ButtonTable_SequencerMedley_Nop                                          ; F8083A  1e 9b da
@@ -1232,52 +1232,52 @@ SoftKeyCol5_MeasureC0py_StageZero:
 	ld XIX,0x00f3bd4d                                    ; F80842  44 4d bd f3 00
 	call T_DisplayListB_Run                              ; F80847  1d f4 17 f4
 	ret                                                  ; F8084B  0e
-; ButtonTable_MeasureC0py_StageZero_Nop5: a bare ret -- ButtonTable_MeasureC0py_StageZero slot 0x05.
-ButtonTable_MeasureC0py_StageZero_Nop5:
+; ButtonTable_MeasureCopy_StageZero_Nop5: a bare ret -- ButtonTable_MeasureCopy_StageZero slot 0x05.
+ButtonTable_MeasureCopy_StageZero_Nop5:
 	ret                                                  ; F8084C  0e
-; ButtonTable_MeasureC0py_StageZero_Nop6: a bare ret -- ButtonTable_MeasureC0py_StageZero slot 0x06.
-ButtonTable_MeasureC0py_StageZero_Nop6:
+; ButtonTable_MeasureCopy_StageZero_Nop6: a bare ret -- ButtonTable_MeasureCopy_StageZero slot 0x06.
+ButtonTable_MeasureCopy_StageZero_Nop6:
 	ret                                                  ; F8084D  0e
-; ButtonTable_MeasureC0py_StageZero_Nop7: a bare ret -- ButtonTable_MeasureC0py_StageZero slot 0x07.
-ButtonTable_MeasureC0py_StageZero_Nop7:
+; ButtonTable_MeasureCopy_StageZero_Nop7: a bare ret -- ButtonTable_MeasureCopy_StageZero slot 0x07.
+ButtonTable_MeasureCopy_StageZero_Nop7:
 	ret                                                  ; F8084E  0e
-; LcdKeyRow1_MeasureC0py_StageZero: row 1 of the five key pairs flanking the LCD; bit 7 of the code picks the
-;   CP2 side (set) or the CP1 side (clear); ButtonTable_MeasureC0py_StageZero slot 0x08.
+; LcdKeyRow1_MeasureCopy_StageZero: row 1 of the five key pairs flanking the LCD; bit 7 of the code picks the
+;   CP2 side (set) or the CP1 side (clear); ButtonTable_MeasureCopy_StageZero slot 0x08.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
-LcdKeyRow1_MeasureC0py_StageZero:
+LcdKeyRow1_MeasureCopy_StageZero:
 	bit 0x07,W                                           ; F8084F  c8 33 07
 	jr nz, .LF8085B                                      ; F80852  6e 07
 	calr Blink_DisableThenStop                                          ; F80854  1e ee e9
-	call T_MeasureC0py_LcdKeyRow1                                        ; F80857  1d 04 2a f4
+	call T_MeasureCopy_LcdKeyRow1                                        ; F80857  1d 04 2a f4
 .LF8085B:
 	ret                                                  ; F8085B  0e
-; LcdKeyRow2_MeasureC0py_StageZero: row 2 of the five key pairs flanking the LCD; bit 7 of the code picks the
-;   CP2 side (set) or the CP1 side (clear); ButtonTable_MeasureC0py_StageZero slot 0x09.
+; LcdKeyRow2_MeasureCopy_StageZero: row 2 of the five key pairs flanking the LCD; bit 7 of the code picks the
+;   CP2 side (set) or the CP1 side (clear); ButtonTable_MeasureCopy_StageZero slot 0x09.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
-LcdKeyRow2_MeasureC0py_StageZero:
+LcdKeyRow2_MeasureCopy_StageZero:
 	bit 0x07,W                                           ; F8085C  c8 33 07
 	jr z, .LF80871                                       ; F8085F  66 10
-	cp	(MeasureC0py_Field:16), 0x01                            ; F80861  c1 bc 0d 3f 01
+	cp	(MeasureCopy_Field:16), 0x01                            ; F80861  c1 bc 0d 3f 01
 	jr z, .LF80890                                       ; F80866  66 28
 	calr Blink_DisableThenStop                                          ; F80868  1e da e9
-	call T_MeasureC0py_SelectField1                                        ; F8086B  1d e0 29 f4
+	call T_MeasureCopy_SelectField1                                        ; F8086B  1d e0 29 f4
 	jr .LF8087F                                          ; F8086F  68 0e
 .LF80871:
-	cp	(MeasureC0py_Field:16), 0x04                            ; F80871  c1 bc 0d 3f 04
+	cp	(MeasureCopy_Field:16), 0x04                            ; F80871  c1 bc 0d 3f 04
 	jr z, .LF80890                                       ; F80876  66 18
 	calr Blink_DisableThenStop                                          ; F80878  1e ca e9
-	call T_MeasureC0py_SelectField4                                        ; F8087B  1d ec 29 f4
+	call T_MeasureCopy_SelectField4                                        ; F8087B  1d ec 29 f4
 .LF8087F:
-	ld a, (MeasureC0py_Field:16)                                   ; F8087F  c1 bc 0d 21
+	ld a, (MeasureCopy_Field:16)                                   ; F8087F  c1 bc 0d 21
 	ld (DisplayListB_Stage+9:16), a                                   ; F80883  f1 ff 12 41
-	calr MeasureC0py_DrawValues                                      ; F80887  1e 13 01
-	calr MeasureC0py_DrawFieldCursor                                      ; F8088A  1e 04 00
-	calr Paint_MeasureC0py_Nop                                      ; F8088D  1e 78 ff
+	calr MeasureCopy_DrawValues                                      ; F80887  1e 13 01
+	calr MeasureCopy_DrawFieldCursor                                      ; F8088A  1e 04 00
+	calr Paint_MeasureCopy_Nop                                      ; F8088D  1e 78 ff
 .LF80890:
 	ret                                                  ; F80890  0e
-; MeasureC0py_DrawFieldCursor -- clear LCD layer 1, then fill the box of the MEASURE COPY field (0x12FF) selects
+; MeasureCopy_DrawFieldCursor -- clear LCD layer 1, then fill the box of the MEASURE COPY field (0x12FF) selects
 ; Evidence: (0x2540)=1; site 0xF808A3 runs DL_F39551-0xF39559 (op 0E ClearColumns, whole layer); DLB_Handler_Array8 on op-03 record 0xF3BD4D: (0x12FF)&7 indexes boxes 0xF3BD58, swi 5 FillRect.  Every caller first stores (0x0DBC) into (0x12FF) (0xF8087F, 0xF808D4, 0xF80909).
-MeasureC0py_DrawFieldCursor:
+MeasureCopy_DrawFieldCursor:
 	ld (LCD_CurrentLayer:16), 0x01                                 ; F80891  f1 40 25 00 01
 	calr ButtonTable_SequencerMedley_Nop                                          ; F80896  1e 3f da
 	ld XIY,DL_F39551                                     ; F80899  45 51 95 f3 00
@@ -1286,66 +1286,66 @@ MeasureC0py_DrawFieldCursor:
 	ld XIY,0x00f3bd4d                                    ; F808A7  45 4d bd f3 00
 	call T_DLB_Handler_Array8                                        ; F808AC  1d 1c 18 f4
 	ret                                                  ; F808B0  0e
-; LcdKeyRow3_MeasureC0py_StageZero: row 3 of the five key pairs flanking the LCD; bit 7 of the code picks the
-;   CP2 side (set) or the CP1 side (clear); ButtonTable_MeasureC0py_StageZero slot 0x0A.
+; LcdKeyRow3_MeasureCopy_StageZero: row 3 of the five key pairs flanking the LCD; bit 7 of the code picks the
+;   CP2 side (set) or the CP1 side (clear); ButtonTable_MeasureCopy_StageZero slot 0x0A.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
-LcdKeyRow3_MeasureC0py_StageZero:
+LcdKeyRow3_MeasureCopy_StageZero:
 	bit 0x07,W                                           ; F808B1  c8 33 07
 	jr nz, .LF808C6                                      ; F808B4  6e 10
-	cp	(MeasureC0py_Field:16), 0x05                            ; F808B6  c1 bc 0d 3f 05
+	cp	(MeasureCopy_Field:16), 0x05                            ; F808B6  c1 bc 0d 3f 05
 	jr z, .LF808E5                                       ; F808BB  66 28
 	calr Blink_EnableThenStop_Copy                                          ; F808BD  1e 77 e9
-	call T_MeasureC0py_SelectField5                                        ; F808C0  1d f0 29 f4
+	call T_MeasureCopy_SelectField5                                        ; F808C0  1d f0 29 f4
 	jr .LF808D4                                          ; F808C4  68 0e
 .LF808C6:
-	cp	(MeasureC0py_Field:16), 0x02                            ; F808C6  c1 bc 0d 3f 02
+	cp	(MeasureCopy_Field:16), 0x02                            ; F808C6  c1 bc 0d 3f 02
 	jr z, .LF808E5                                       ; F808CB  66 18
 	calr Blink_EnableThenStop_Copy                                          ; F808CD  1e 67 e9
-	call T_MeasureC0py_SelectField2                                        ; F808D0  1d e4 29 f4
+	call T_MeasureCopy_SelectField2                                        ; F808D0  1d e4 29 f4
 .LF808D4:
-	ld a, (MeasureC0py_Field:16)                                   ; F808D4  c1 bc 0d 21
+	ld a, (MeasureCopy_Field:16)                                   ; F808D4  c1 bc 0d 21
 	ld (DisplayListB_Stage+9:16), a                                   ; F808D8  f1 ff 12 41
-	calr MeasureC0py_DrawValues                                      ; F808DC  1e be 00
-	calr MeasureC0py_DrawFieldCursor                                      ; F808DF  1e af ff
-	calr Paint_MeasureC0py_Nop                                      ; F808E2  1e 23 ff
+	calr MeasureCopy_DrawValues                                      ; F808DC  1e be 00
+	calr MeasureCopy_DrawFieldCursor                                      ; F808DF  1e af ff
+	calr Paint_MeasureCopy_Nop                                      ; F808E2  1e 23 ff
 .LF808E5:
 	ret                                                  ; F808E5  0e
-; LcdKeyRow4_MeasureC0py_StageZero: row 4 of the five key pairs flanking the LCD; bit 7 of the code picks the
-;   CP2 side (set) or the CP1 side (clear); ButtonTable_MeasureC0py_StageZero slot 0x0B.
+; LcdKeyRow4_MeasureCopy_StageZero: row 4 of the five key pairs flanking the LCD; bit 7 of the code picks the
+;   CP2 side (set) or the CP1 side (clear); ButtonTable_MeasureCopy_StageZero slot 0x0B.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
-LcdKeyRow4_MeasureC0py_StageZero:
+LcdKeyRow4_MeasureCopy_StageZero:
 	bit 0x07,W                                           ; F808E6  c8 33 07
 	jr z, .LF808FB                                       ; F808E9  66 10
-	cp	(MeasureC0py_Field:16), 0x03                            ; F808EB  c1 bc 0d 3f 03
+	cp	(MeasureCopy_Field:16), 0x03                            ; F808EB  c1 bc 0d 3f 03
 	jr z, .LF8091A                                       ; F808F0  66 28
 	calr Blink_EnableThenStop_Copy                                          ; F808F2  1e 42 e9
-	call T_MeasureC0py_SelectField3                                        ; F808F5  1d e8 29 f4
+	call T_MeasureCopy_SelectField3                                        ; F808F5  1d e8 29 f4
 	jr .LF80909                                          ; F808F9  68 0e
 .LF808FB:
-	cp	(MeasureC0py_Field:16), 0x06                            ; F808FB  c1 bc 0d 3f 06
+	cp	(MeasureCopy_Field:16), 0x06                            ; F808FB  c1 bc 0d 3f 06
 	jr z, .LF8091A                                       ; F80900  66 18
 	calr Blink_DisableThenStop                                          ; F80902  1e 40 e9
-	call T_MeasureC0py_SelectField6                                        ; F80905  1d f4 29 f4
+	call T_MeasureCopy_SelectField6                                        ; F80905  1d f4 29 f4
 .LF80909:
-	ld a, (MeasureC0py_Field:16)                                   ; F80909  c1 bc 0d 21
+	ld a, (MeasureCopy_Field:16)                                   ; F80909  c1 bc 0d 21
 	ld (DisplayListB_Stage+9:16), a                                   ; F8090D  f1 ff 12 41
-	calr MeasureC0py_DrawValues                                      ; F80911  1e 89 00
-	calr MeasureC0py_DrawFieldCursor                                      ; F80914  1e 7a ff
-	calr Paint_MeasureC0py_Nop                                      ; F80917  1e ee fe
+	calr MeasureCopy_DrawValues                                      ; F80911  1e 89 00
+	calr MeasureCopy_DrawFieldCursor                                      ; F80914  1e 7a ff
+	calr Paint_MeasureCopy_Nop                                      ; F80917  1e ee fe
 .LF8091A:
 	ret                                                  ; F8091A  0e
-; ButtonTable_MeasureC0py_StageZero_Nop12: a bare ret -- ButtonTable_MeasureC0py_StageZero slot 0x0C.
-ButtonTable_MeasureC0py_StageZero_Nop12:
+; ButtonTable_MeasureCopy_StageZero_Nop12: a bare ret -- ButtonTable_MeasureCopy_StageZero slot 0x0C.
+ButtonTable_MeasureCopy_StageZero_Nop12:
 	ret                                                  ; F8091B  0e
-; ButtonTable_MeasureC0py_StageZero_Nop13: a bare ret -- ButtonTable_MeasureC0py_StageZero slot 0x0D.
-ButtonTable_MeasureC0py_StageZero_Nop13:
+; ButtonTable_MeasureCopy_StageZero_Nop13: a bare ret -- ButtonTable_MeasureCopy_StageZero slot 0x0D.
+ButtonTable_MeasureCopy_StageZero_Nop13:
 	ret                                                  ; F8091C  0e
-; ButtonTable_MeasureC0py_StageZero_Nop14: a bare ret -- ButtonTable_MeasureC0py_StageZero slot 0x0E.
-ButtonTable_MeasureC0py_StageZero_Nop14:
+; ButtonTable_MeasureCopy_StageZero_Nop14: a bare ret -- ButtonTable_MeasureCopy_StageZero slot 0x0E.
+ButtonTable_MeasureCopy_StageZero_Nop14:
 	ret                                                  ; F8091D  0e
-; ExitKey_MeasureC0py_StageZero: the EXIT key; ButtonTable_MeasureC0py_StageZero slot 0x0F.
+; ExitKey_MeasureCopy_StageZero: the EXIT key; ButtonTable_MeasureCopy_StageZero slot 0x0F.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
-ExitKey_MeasureC0py_StageZero:
+ExitKey_MeasureCopy_StageZero:
 	bit 0x07,W                                           ; F8091E  c8 33 07
 	jr z, .LF80925                                       ; F80921  66 02
 	jr .LF8092B                                          ; F80923  68 06
@@ -1353,14 +1353,14 @@ ExitKey_MeasureC0py_StageZero:
 	ldw (UI_Request:16), 0x801a                              ; F80925  f1 70 20 02 1a 80
 .LF8092B:
 	ret                                                  ; F8092B  0e
-; ButtonTable_MeasureC0py_StageZero_Nop16: a bare ret -- ButtonTable_MeasureC0py_StageZero slots 0x10, 0x11,
+; ButtonTable_MeasureCopy_StageZero_Nop16: a bare ret -- ButtonTable_MeasureCopy_StageZero slots 0x10, 0x11,
 ;   0x12, 0x13, 0x14.
-ButtonTable_MeasureC0py_StageZero_Nop16:
+ButtonTable_MeasureCopy_StageZero_Nop16:
 	ret                                                  ; F8092C  0e
-; MeasureC0py_StageZero_Button21 -- ButtonTable_MeasureC0py_StageZero slot 0x15, NOT NAMED: slot 0x15 is only
+; MeasureCopy_StageZero_Button21 -- ButtonTable_MeasureCopy_StageZero slot 0x15, NOT NAMED: slot 0x15 is only
 ;   the VARIANT-1 already-held rewrite of base code 0x04; the SX-WSA1R is variant 2, so the slot is never
 ;   delivered here.
-MeasureC0py_StageZero_Button21:
+MeasureCopy_StageZero_Button21:
 	bit	1, (UI_RequestBits:16)                               ; F8092D  f1 75 20 c9
 	jr z, .LF80937                                       ; F80931  66 04
 	call T_Blink_Stop                                    ; F80933  1d 24 2e f4
@@ -1369,10 +1369,10 @@ MeasureC0py_StageZero_Button21:
 	ld (0x0e18:16), 0x04                                 ; F8093C  f1 18 0e 00 04
 	bit 0x07,W                                           ; F80941  c8 33 07
 	jr z, .LF8094C                                       ; F80944  66 06
-	call T_MeasureC0py_StepFieldDown                                        ; F80946  1d fc 29 f4
+	call T_MeasureCopy_StepFieldDown                                        ; F80946  1d fc 29 f4
 	jr .LF80950                                          ; F8094A  68 04
 .LF8094C:
-	call T_MeasureC0py_StepFieldUp                                        ; F8094C  1d f8 29 f4
+	call T_MeasureCopy_StepFieldUp                                        ; F8094C  1d f8 29 f4
 .LF80950:
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F80950  f1 40 25 00 00
 	calr ButtonTable_SequencerMedley_Nop                                          ; F80955  1e 80 d9
@@ -1380,99 +1380,99 @@ MeasureC0py_StageZero_Button21:
 	ld XIX,0x00f3bd4d                                    ; F8095D  44 4d bd f3 00
 	call T_DisplayListB_Run                              ; F80962  1d f4 17 f4
 	ret                                                  ; F80966  0e
-; ButtonTable_MeasureC0py_StageZero_Nop22: a bare ret -- ButtonTable_MeasureC0py_StageZero slots 0x16, 0x17,
+; ButtonTable_MeasureCopy_StageZero_Nop22: a bare ret -- ButtonTable_MeasureCopy_StageZero slots 0x16, 0x17,
 ;   0x18, 0x19, 0x1A.
-ButtonTable_MeasureC0py_StageZero_Nop22:
+ButtonTable_MeasureCopy_StageZero_Nop22:
 	ret                                                  ; F80967  0e
-; NumberPadKey_MeasureC0py_StageZero: the twelve-key number pad (0-9, +/-, ENTER);
-;   ButtonTable_MeasureC0py_StageZero slot 0x1B.
+; NumberPadKey_MeasureCopy_StageZero: the twelve-key number pad (0-9, +/-, ENTER);
+;   ButtonTable_MeasureCopy_StageZero slot 0x1B.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
-NumberPadKey_MeasureC0py_StageZero:
-	calr MeasureC0py_NumberPad                                      ; F80968  1e 42 00
+NumberPadKey_MeasureCopy_StageZero:
+	calr MeasureCopy_NumberPad                                      ; F80968  1e 42 00
 	ret                                                  ; F8096B  0e
-; ButtonTable_MeasureC0py_StageZero_Nop28: a bare ret -- ButtonTable_MeasureC0py_StageZero slots 0x1C, 0x1D,
+; ButtonTable_MeasureCopy_StageZero_Nop28: a bare ret -- ButtonTable_MeasureCopy_StageZero slots 0x1C, 0x1D,
 ;   0x1E, 0x1F.
-ButtonTable_MeasureC0py_StageZero_Nop28:
+ButtonTable_MeasureCopy_StageZero_Nop28:
 	ret                                                  ; F8096C  0e
-; ButtonTable_MeasureC0py_StageNonZero_Nop0: a bare ret -- ButtonTable_MeasureC0py_StageNonZero slot 0x00.
-ButtonTable_MeasureC0py_StageNonZero_Nop0:
+; ButtonTable_MeasureCopy_StageNonZero_Nop0: a bare ret -- ButtonTable_MeasureCopy_StageNonZero slot 0x00.
+ButtonTable_MeasureCopy_StageNonZero_Nop0:
 	ret                                                  ; F8096D  0e
-; ButtonTable_MeasureC0py_StageNonZero_Nop1: a bare ret -- ButtonTable_MeasureC0py_StageNonZero slot 0x01.
-ButtonTable_MeasureC0py_StageNonZero_Nop1:
+; ButtonTable_MeasureCopy_StageNonZero_Nop1: a bare ret -- ButtonTable_MeasureCopy_StageNonZero slot 0x01.
+ButtonTable_MeasureCopy_StageNonZero_Nop1:
 	ret                                                  ; F8096E  0e
-; ButtonTable_MeasureC0py_StageNonZero_Nop2: a bare ret -- ButtonTable_MeasureC0py_StageNonZero slot 0x02.
-ButtonTable_MeasureC0py_StageNonZero_Nop2:
+; ButtonTable_MeasureCopy_StageNonZero_Nop2: a bare ret -- ButtonTable_MeasureCopy_StageNonZero slot 0x02.
+ButtonTable_MeasureCopy_StageNonZero_Nop2:
 	ret                                                  ; F8096F  0e
-; ButtonTable_MeasureC0py_StageNonZero_Nop3: a bare ret -- ButtonTable_MeasureC0py_StageNonZero slot 0x03.
-ButtonTable_MeasureC0py_StageNonZero_Nop3:
+; ButtonTable_MeasureCopy_StageNonZero_Nop3: a bare ret -- ButtonTable_MeasureCopy_StageNonZero slot 0x03.
+ButtonTable_MeasureCopy_StageNonZero_Nop3:
 	ret                                                  ; F80970  0e
-; ButtonTable_MeasureC0py_StageNonZero_Nop4: a bare ret -- ButtonTable_MeasureC0py_StageNonZero slot 0x04.
-ButtonTable_MeasureC0py_StageNonZero_Nop4:
+; ButtonTable_MeasureCopy_StageNonZero_Nop4: a bare ret -- ButtonTable_MeasureCopy_StageNonZero slot 0x04.
+ButtonTable_MeasureCopy_StageNonZero_Nop4:
 	ret                                                  ; F80971  0e
-; ButtonTable_MeasureC0py_StageNonZero_Nop5: a bare ret -- ButtonTable_MeasureC0py_StageNonZero slot 0x05.
-ButtonTable_MeasureC0py_StageNonZero_Nop5:
+; ButtonTable_MeasureCopy_StageNonZero_Nop5: a bare ret -- ButtonTable_MeasureCopy_StageNonZero slot 0x05.
+ButtonTable_MeasureCopy_StageNonZero_Nop5:
 	ret                                                  ; F80972  0e
-; ButtonTable_MeasureC0py_StageNonZero_Nop6: a bare ret -- ButtonTable_MeasureC0py_StageNonZero slot 0x06.
-ButtonTable_MeasureC0py_StageNonZero_Nop6:
+; ButtonTable_MeasureCopy_StageNonZero_Nop6: a bare ret -- ButtonTable_MeasureCopy_StageNonZero slot 0x06.
+ButtonTable_MeasureCopy_StageNonZero_Nop6:
 	ret                                                  ; F80973  0e
-; ButtonTable_MeasureC0py_StageNonZero_Nop7: a bare ret -- ButtonTable_MeasureC0py_StageNonZero slot 0x07.
-ButtonTable_MeasureC0py_StageNonZero_Nop7:
+; ButtonTable_MeasureCopy_StageNonZero_Nop7: a bare ret -- ButtonTable_MeasureCopy_StageNonZero slot 0x07.
+ButtonTable_MeasureCopy_StageNonZero_Nop7:
 	ret                                                  ; F80974  0e
-; LcdKeyRow1_MeasureC0py_StageNonZero: row 1 of the five key pairs flanking the LCD; bit 7 of the code picks the
-;   CP2 side (set) or the CP1 side (clear); ButtonTable_MeasureC0py_StageNonZero slot 0x08.
+; LcdKeyRow1_MeasureCopy_StageNonZero: row 1 of the five key pairs flanking the LCD; bit 7 of the code picks the
+;   CP2 side (set) or the CP1 side (clear); ButtonTable_MeasureCopy_StageNonZero slot 0x08.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
-LcdKeyRow1_MeasureC0py_StageNonZero:
+LcdKeyRow1_MeasureCopy_StageNonZero:
 	bit 0x07,W                                           ; F80975  c8 33 07
 	jr nz, .LF80983                                      ; F80978  6e 09
 	and	(UI_RequestBits:16), 0x6f                            ; F8097A  c1 75 20 3c 6f
-	call T_MeasureC0py_LcdKeyRow1                                        ; F8097F  1d 04 2a f4
+	call T_MeasureCopy_LcdKeyRow1                                        ; F8097F  1d 04 2a f4
 .LF80983:
 	ret                                                  ; F80983  0e
-; ButtonTable_MeasureC0py_StageNonZero_Nop9: a bare ret -- ButtonTable_MeasureC0py_StageNonZero slot 0x09.
-ButtonTable_MeasureC0py_StageNonZero_Nop9:
+; ButtonTable_MeasureCopy_StageNonZero_Nop9: a bare ret -- ButtonTable_MeasureCopy_StageNonZero slot 0x09.
+ButtonTable_MeasureCopy_StageNonZero_Nop9:
 	ret                                                  ; F80984  0e
-; ButtonTable_MeasureC0py_StageNonZero_Nop10: a bare ret -- ButtonTable_MeasureC0py_StageNonZero slots 0x0A,
+; ButtonTable_MeasureCopy_StageNonZero_Nop10: a bare ret -- ButtonTable_MeasureCopy_StageNonZero slots 0x0A,
 ;   0x0B.
-ButtonTable_MeasureC0py_StageNonZero_Nop10:
+ButtonTable_MeasureCopy_StageNonZero_Nop10:
 	ret                                                  ; F80985  0e
-; LcdKeyRow5_MeasureC0py_StageNonZero: row 5 of the five key pairs flanking the LCD; bit 7 of the code picks the
-;   CP2 side (set) or the CP1 side (clear); ButtonTable_MeasureC0py_StageNonZero slot 0x0C.
+; LcdKeyRow5_MeasureCopy_StageNonZero: row 5 of the five key pairs flanking the LCD; bit 7 of the code picks the
+;   CP2 side (set) or the CP1 side (clear); ButtonTable_MeasureCopy_StageNonZero slot 0x0C.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
-LcdKeyRow5_MeasureC0py_StageNonZero:
+LcdKeyRow5_MeasureCopy_StageNonZero:
 	bit 0x07,W                                           ; F80986  c8 33 07
 	jr nz, .LF8098F                                      ; F80989  6e 04
-	call T_MeasureC0py_ReturnToStageZero                                        ; F8098B  1d 00 2a f4
+	call T_MeasureCopy_ReturnToStageZero                                        ; F8098B  1d 00 2a f4
 .LF8098F:
 	ret                                                  ; F8098F  0e
-; ButtonTable_MeasureC0py_StageNonZero_Nop13: a bare ret -- ButtonTable_MeasureC0py_StageNonZero slot 0x0D.
-ButtonTable_MeasureC0py_StageNonZero_Nop13:
+; ButtonTable_MeasureCopy_StageNonZero_Nop13: a bare ret -- ButtonTable_MeasureCopy_StageNonZero slot 0x0D.
+ButtonTable_MeasureCopy_StageNonZero_Nop13:
 	ret                                                  ; F80990  0e
-; ButtonTable_MeasureC0py_StageNonZero_Nop14: a bare ret -- ButtonTable_MeasureC0py_StageNonZero slot 0x0E.
-ButtonTable_MeasureC0py_StageNonZero_Nop14:
+; ButtonTable_MeasureCopy_StageNonZero_Nop14: a bare ret -- ButtonTable_MeasureCopy_StageNonZero slot 0x0E.
+ButtonTable_MeasureCopy_StageNonZero_Nop14:
 	ret                                                  ; F80991  0e
-; ExitKey_MeasureC0py_StageNonZero: the EXIT key; ButtonTable_MeasureC0py_StageNonZero slot 0x0F.
+; ExitKey_MeasureCopy_StageNonZero: the EXIT key; ButtonTable_MeasureCopy_StageNonZero slot 0x0F.
 ; The slot -> control map is notes/wave7_panel_names_round11.py's CONTROL (variant 2).
-ExitKey_MeasureC0py_StageNonZero:
+ExitKey_MeasureCopy_StageNonZero:
 	bit 0x07,W                                           ; F80992  c8 33 07
 	jr nz, .LF8099B                                      ; F80995  6e 04
-	call T_MeasureC0py_ReturnToStageZero                                        ; F80997  1d 00 2a f4
+	call T_MeasureCopy_ReturnToStageZero                                        ; F80997  1d 00 2a f4
 .LF8099B:
 	ret                                                  ; F8099B  0e
-; ButtonTable_MeasureC0py_StageNonZero_Nop16: a bare ret -- ButtonTable_MeasureC0py_StageNonZero slots 0x10,
+; ButtonTable_MeasureCopy_StageNonZero_Nop16: a bare ret -- ButtonTable_MeasureCopy_StageNonZero slots 0x10,
 ;   0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1A, 0x1B, 0x1C, 0x1D, 0x1E, 0x1F.
-ButtonTable_MeasureC0py_StageNonZero_Nop16:
+ButtonTable_MeasureCopy_StageNonZero_Nop16:
 	ret                                                  ; F8099C  0e
-; MeasureC0py_DrawValues -- redraw the live values of the MEASURE COPY screen
-; Evidence: site 0xF809A7 runs interpreter B over DL_F3BD07-0xF3BD4D: string readouts (0x12F6) (0x12FB), 3-digit (0x12F7) (0x12F9) (0x12FC), (0x12FE) -- the list Paint_MeasureC0py runs at 0xF807F6.  It does not set (0x2540); callers have.
-MeasureC0py_DrawValues:
+; MeasureCopy_DrawValues -- redraw the live values of the MEASURE COPY screen
+; Evidence: site 0xF809A7 runs interpreter B over DL_F3BD07-0xF3BD4D: string readouts (0x12F6) (0x12FB), 3-digit (0x12F7) (0x12F9) (0x12FC), (0x12FE) -- the list Paint_MeasureCopy runs at 0xF807F6.  It does not set (0x2540); callers have.
+MeasureCopy_DrawValues:
 	ld XIY,DL_F3BD07                                     ; F8099D  45 07 bd f3 00
 	ld XIX,0x00f3bd4d                                    ; F809A2  44 4d bd f3 00
 	call T_DisplayListB_Run                              ; F809A7  1d f4 17 f4
 	ret                                                  ; F809AB  0e
 	ret                                                  ; F809AC  0e
-; MeasureC0py_NumberPad -- NUMBER PAD key on the MEASURE COPY screen: dispatch on (0x2267)
-; Evidence: reached only by `calr` at 0xF80968, slot 27 of ButtonTable_MeasureC0py_StageZero; digit / 0x0F / 0x80 arms then MeasureC0py_BlinkSelectedField.
-MeasureC0py_NumberPad:
+; MeasureCopy_NumberPad -- NUMBER PAD key on the MEASURE COPY screen: dispatch on (0x2267)
+; Evidence: reached only by `calr` at 0xF80968, slot 27 of ButtonTable_MeasureCopy_StageZero; digit / 0x0F / 0x80 arms then MeasureCopy_BlinkSelectedField.
+MeasureCopy_NumberPad:
 	ld a, (0x2267:16)                                   ; F809AD  c1 67 22 21
 	cp A,0x09                                            ; F809B1  c9 cf 09
 	jr le, .LF809C2                                      ; F809B4  62 0c
@@ -1485,22 +1485,22 @@ MeasureC0py_NumberPad:
 	calr Blink_SetEnable_1_3                                      ; F809C2  1e 0e 00
 	jr .LF809CF                                          ; F809C5  68 08
 .LF809C7:
-	calr MeasureC0py_KeypadCommit                                      ; F809C7  1e 13 00
+	calr MeasureCopy_KeypadCommit                                      ; F809C7  1e 13 00
 	jr .LF809CF                                          ; F809CA  68 03
 .LF809CC:
-	calr MeasureC0py_KeypadSign                                      ; F809CC  1e ab 00
+	calr MeasureCopy_KeypadSign                                      ; F809CC  1e ab 00
 .LF809CF:
-	calr MeasureC0py_BlinkSelectedField                                      ; F809CF  1e ae 00
+	calr MeasureCopy_BlinkSelectedField                                      ; F809CF  1e ae 00
 	ret                                                  ; F809D2  0e
 Blink_SetEnable_1_3:
 	pushw 0x01                                           ; F809D3  0b 01 00
 	call T_Blink_SetEnable                               ; F809D6  1d 28 2e f4
 	inc 2,XSP                                            ; F809DA  ef 62
 	ret                                                  ; F809DC  0e
-; MeasureC0py_KeypadCommit -- keypad code 0x0F: store the typed measure number into the field (0x0DBC) selects
-; Evidence: T_AsciiDigits3_ToValue, 1..999; field 2 -> (0x0C18), (0x603470), (0x12F7), (0x0C30) with last (0x0C32) raised to match; field 3 -> (0x0C32)/(0x12F9) with first lowered; (0x603472)=last-first+1; field 5 -> (0x0C1A), (0x603475), (0x12FC).  Then T_Blink_Stop and MeasureC0py_DrawValues.
+; MeasureCopy_KeypadCommit -- keypad code 0x0F: store the typed measure number into the field (0x0DBC) selects
+; Evidence: T_AsciiDigits3_ToValue, 1..999; field 2 -> (0x0C18), (0x603470), (0x12F7), (0x0C30) with last (0x0C32) raised to match; field 3 -> (0x0C32)/(0x12F9) with first lowered; (0x603472)=last-first+1; field 5 -> (0x0C1A), (0x603475), (0x12FC).  Then T_Blink_Stop and MeasureCopy_DrawValues.
 ; It first returns when `cp (0x02),0x20` is equal -- address 0x0002 is not a named SFR and the other screens' commits lack the test; not established.
-MeasureC0py_KeypadCommit:
+MeasureCopy_KeypadCommit:
 	cp	(0x02:8), 0x20                               ; F809DD  c0 02 3f 20
 	jrl z, .LF80A79                                      ; F809E1  76 95 00
 	ld (0x2826:16), 0x03                                 ; F809E4  f1 26 28 00 03
@@ -1509,11 +1509,11 @@ MeasureC0py_KeypadCommit:
 	jrl lt, .LF80A79                                     ; F809EF  71 87 00
 	cp WA,0x03e7                                         ; F809F2  d8 cf e7 03
 	jrl gt, .LF80A79                                     ; F809F6  7a 80 00
-	cp	(MeasureC0py_Field:16), 0x02                            ; F809F9  c1 bc 0d 3f 02
+	cp	(MeasureCopy_Field:16), 0x02                            ; F809F9  c1 bc 0d 3f 02
 	jr Z,.LF80A10                                        ; F809FE  66 10
-	cp	(MeasureC0py_Field:16), 0x03                            ; F80A00  c1 bc 0d 3f 03
+	cp	(MeasureCopy_Field:16), 0x03                            ; F80A00  c1 bc 0d 3f 03
 	jr z, .LF80A31                                       ; F80A05  66 2a
-	cp	(MeasureC0py_Field:16), 0x05                            ; F80A07  c1 bc 0d 3f 05
+	cp	(MeasureCopy_Field:16), 0x05                            ; F80A07  c1 bc 0d 3f 05
 	jr z, .LF80A65                                       ; F80A0C  66 57
 	jr .LF80A79                                          ; F80A0E  68 69
 .LF80A10:
@@ -1550,23 +1550,23 @@ MeasureC0py_KeypadCommit:
 	ld (DisplayListB_Stage+6:16), wa                                  ; F80A6E  f1 fc 12 50
 .LF80A72:
 	call T_Blink_Stop                                    ; F80A72  1d 24 2e f4
-	calr MeasureC0py_DrawValues                                      ; F80A76  1e 24 ff
+	calr MeasureCopy_DrawValues                                      ; F80A76  1e 24 ff
 .LF80A79:
 	ret                                                  ; F80A79  0e
-; MeasureC0py_KeypadSign -- keypad code 0x80: put '+' back in (0x2820)
-; Evidence: body is `ld (0x2820),0x2B / ret`; only caller is the 0x80 arm of MeasureC0py_NumberPad (no field here is signed).
-MeasureC0py_KeypadSign:
+; MeasureCopy_KeypadSign -- keypad code 0x80: put '+' back in (0x2820)
+; Evidence: body is `ld (0x2820),0x2B / ret`; only caller is the 0x80 arm of MeasureCopy_NumberPad (no field here is signed).
+MeasureCopy_KeypadSign:
 	ld (0x2820:16), 0x2b                                 ; F80A7A  f1 20 28 00 2b
 	ret                                                  ; F80A7F  0e
-; MeasureC0py_BlinkSelectedField -- start the field blink on the field (0x0DBC) selects
-; Evidence: unless blink is off or (0x2267)=0x0F: push BlinkArgPtrs_F80AAD[(0x0DBC)], call T_Blink_Command; the non-null entries 2/3/5 are the records of (0x12F7)/(0x12F9)/(0x12FC), the variables MeasureC0py_KeypadCommit writes.
-MeasureC0py_BlinkSelectedField:
+; MeasureCopy_BlinkSelectedField -- start the field blink on the field (0x0DBC) selects
+; Evidence: unless blink is off or (0x2267)=0x0F: push BlinkArgPtrs_F80AAD[(0x0DBC)], call T_Blink_Command; the non-null entries 2/3/5 are the records of (0x12F7)/(0x12F9)/(0x12FC), the variables MeasureCopy_KeypadCommit writes.
+MeasureCopy_BlinkSelectedField:
 	bit	1, (UI_RequestBits:16)                               ; F80A80  f1 75 20 c9
 	jr z, .LF80AAC                                       ; F80A84  66 26
 	cp	(0x2267:16), 0x0f                            ; F80A86  c1 67 22 3f 0f
 	jr z, .LF80AAC                                       ; F80A8B  66 1f
 	xor XWA,XWA                                          ; F80A8D  e8 d0
-	ld a, (MeasureC0py_Field:16)                                   ; F80A8F  c1 bc 0d 21
+	ld a, (MeasureCopy_Field:16)                                   ; F80A8F  c1 bc 0d 21
 	sla xwa, 0x02                                        ; F80A93  e8 ec 02
 	ld XIY,BlinkArgPtrs_F80AAD                           ; F80A96  45 ad 0a f8 00
 	ld	xiy, (xiy+wa)                                ; F80A9B  e3 07 f4 e0 25
@@ -1936,7 +1936,7 @@ ExitKey_MeasureInsert_StageNonZero:
 ButtonTable_MeasureInsert_StageNonZero_Nop16:
 	ret                                                  ; F80CFA  0e
 ; MeasureInsert_DrawValues -- redraw the live values of the MEASURE INSERT screen on layer 0
-; Evidence: (0x2540)=0; site 0xF80D0D runs interpreter B over DL_F3BEF7-0xF3BF3D (same six variables as MeasureC0py_DrawValues), the list Paint_MeasureInsert runs at 0xF80B53.
+; Evidence: (0x2540)=0; site 0xF80D0D runs interpreter B over DL_F3BEF7-0xF3BF3D (same six variables as MeasureCopy_DrawValues), the list Paint_MeasureInsert runs at 0xF80B53.
 MeasureInsert_DrawValues:
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F80CFB  f1 40 25 00 00
 	calr ButtonTable_SequencerMedley_Nop                                          ; F80D00  1e d5 d5
@@ -1973,7 +1973,7 @@ Blink_SetEnable_1_4:
 	ret                                                  ; F80D41  0e
 ; MeasureInsert_KeypadCommit -- keypad code 0x0F: store the typed measure number into the field (0x0DDA) selects
 ; Evidence: 1..999; field 2 -> (0x0C18), (0x603468), (0x12F7), (0x0DDC); field 3 -> (0x0DDE)/(0x12F9), keeping first<=last; (0x60346A)=last-first+1; field 5 -> (0x0C1A), (0x60346D), (0x12FC); then T_Blink_Stop and MeasureInsert_DrawValues.
-; Same `cp (0x02),0x20` early return as MeasureC0py_KeypadCommit -- not established.
+; Same `cp (0x02),0x20` early return as MeasureCopy_KeypadCommit -- not established.
 MeasureInsert_KeypadCommit:
 	cp	(0x02:8), 0x20                               ; F80D42  c0 02 3f 20
 	jrl z, .LF80DDE                                      ; F80D46  76 95 00
@@ -2070,12 +2070,12 @@ BlinkArgPtrs_F80E12:
 	.long 0x00000000                                 ; F80E22  [  4]
 	.long 0x00f3bf29                                 ; F80E26  [  5]
 	.long 0x00000000                                 ; F80E2A  [  6]
-; Paint_S0ngSelectName -- paints the screen whose own text reads "S0NG SELECT & NAME", " KB", "S0NG"
+; Paint_SongSelectName -- paints the screen whose own text reads "S0NG SELECT & NAME", " KB", "S0NG"
 ;
 ; It reaches the display-list interpreters at 0xF417F0 (A) and 0xF417F4 (B)
 ; 1 time(s); XIY = list start, XIX = list end.  1 of those 1 list(s)
 ; carry text, and those are the ones that name this routine:
-;     site 0xF80E65  interpreter A  list 0xF3C1AD  DL_S0ngSelectNameKbS0ngName
+;     site 0xF80E65  interpreter A  list 0xF3C1AD  DL_SongSelectNameKbSongName
 ;        text: "S0NG SELECT & NAME"; " KB"; "S0NG"; ":"; "%"; ":"
 ; Evidence: the list address is the `ld XIY,0x00F3C1AD` IMMEDIATE at the
 ;          instruction two before the cited `call`, and the text quoted
@@ -2092,9 +2092,9 @@ BlinkArgPtrs_F80E12:
 ; Unknown: whether this routine also handles input for the screen, and
 ;          whether any other routine paints it.  Neither was searched.
 ; ---------------------------------------------------------------------
-Paint_S0ngSelectName:
+Paint_SongSelectName:
 	call T_CallbackQueue_ResetAndRestartTask2            ; F80E2E  1d 80 2e f4
-	call S0ngSelectName_PrepareValues                                      ; F80E32  1d 8d 17 f8
+	call SongSelectName_PrepareValues                                      ; F80E32  1d 8d 17 f8
 	or	(UI_RequestBits:16), 0x01                            ; F80E36  c1 75 20 3e 01
 	ldw (PanelDial_DownButton:16), 0x0605                              ; F80E3B  f1 9b 20 02 05 06
 	ldw (0x2666:16), 0xffff                              ; F80E41  f1 66 26 02 ff ff
@@ -2103,12 +2103,12 @@ Paint_S0ngSelectName:
 	jr nz, .LF80E69                                      ; F80E51  6e 16
 	calr PromB_LCD_ScreenRedraw_Begin                                          ; F80E53  1e 83 d4
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F80E56  f1 40 25 00 00
-	ld XIY,DL_S0ngSelectNameKbS0ngName                   ; F80E5B  45 ad c1 f3 00
-	ld XIX,S0ngSelectName_DrawValues_DL                                     ; F80E60  44 1e c3 f3 00
+	ld XIY,DL_SongSelectNameKbSongName                   ; F80E5B  45 ad c1 f3 00
+	ld XIX,SongSelectName_DrawValues_DL                                     ; F80E60  44 1e c3 f3 00
 	call T_DisplayList_Run                               ; F80E65  1d f0 17 f4
 .LF80E69:
-	call S0ngSelectName_UpdateSizeValues                                      ; F80E69  1d 7d 14 f8
-	call S0ngSelectName_DrawValues                                      ; F80E6D  1d 9b 0e f8
+	call SongSelectName_UpdateSizeValues                                      ; F80E69  1d 7d 14 f8
+	call SongSelectName_DrawValues                                      ; F80E6D  1d 9b 0e f8
 	call SongName_Draw6Chars                                      ; F80E71  1d 5e 16 f8
 	ld (LCD_CurrentLayer:16), 0x01                                 ; F80E75  f1 40 25 00 01
 	ld XIY,DL_F3C351                                     ; F80E7A  45 51 c3 f3 00
@@ -2119,24 +2119,24 @@ Paint_S0ngSelectName:
 	call T_DLB_Handler_Array8                                        ; F80E92  1d 1c 18 f4
 	call PromB_LCD_ScreenRedraw_End                                        ; F80E96  1d e7 e2 f7
 	ret                                                  ; F80E9A  0e
-; S0ngSelectName_DrawValues -- redraw the song name, song number, size in KB and percent on the SONG SELECT & NAME screen
-; Evidence: (0x2540)=0; site 0xF80EAA runs interpreter B over S0ngSelectName_DrawValues_DL-DL_F3C351: string 0x12F6 (6 bytes, svc 8 at 0x0998), (0x12FC) 2 digits beside 'S0NG', (0x12FD) 3 digits at (0xF8,0x30) beside ' KB' (0x10A,0x30), (0x12FF) at (0xF0,0x3D) beside '%' (0x111,0x3D).
-; Caller: Paint_S0ngSelectName only.
-S0ngSelectName_DrawValues:
+; SongSelectName_DrawValues -- redraw the song name, song number, size in KB and percent on the SONG SELECT & NAME screen
+; Evidence: (0x2540)=0; site 0xF80EAA runs interpreter B over SongSelectName_DrawValues_DL-DL_F3C351: string 0x12F6 (6 bytes, svc 8 at 0x0998), (0x12FC) 2 digits beside 'S0NG', (0x12FD) 3 digits at (0xF8,0x30) beside ' KB' (0x10A,0x30), (0x12FF) at (0xF0,0x3D) beside '%' (0x111,0x3D).
+; Caller: Paint_SongSelectName only.
+SongSelectName_DrawValues:
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F80E9B  f1 40 25 00 00
-	ld XIY,S0ngSelectName_DrawValues_DL                                     ; F80EA0  45 1e c3 f3 00
+	ld XIY,SongSelectName_DrawValues_DL                                     ; F80EA0  45 1e c3 f3 00
 	ld XIX,DL_F3C351                                     ; F80EA5  44 51 c3 f3 00
 	call T_DisplayListB_Run                              ; F80EAA  1d f4 17 f4
 	ret                                                  ; F80EAE  0e
-; ScreenLeaveBody_S0ngSelectName -- the Leave method body of the S0ngSelectName screen
-; Evidence: prom_b ScreenLeave_S0ngSelectName (0xF7D27F) is `call 0xF80EAF / ret` (+4 of screen object 0xF431A0); body `call S0ngSelectName_Leave / ret`.
-ScreenLeaveBody_S0ngSelectName:
-	call S0ngSelectName_Leave                                      ; F80EAF  1d f7 17 f8
+; ScreenLeaveBody_SongSelectName -- the Leave method body of the SongSelectName screen
+; Evidence: prom_b ScreenLeave_SongSelectName (0xF7D27F) is `call 0xF80EAF / ret` (+4 of screen object 0xF431A0); body `call SongSelectName_Leave / ret`.
+ScreenLeaveBody_SongSelectName:
+	call SongSelectName_Leave                                      ; F80EAF  1d f7 17 f8
 	ret                                                  ; F80EB3  0e
-; ScreenButtonBody_S0ngSelectName -- the Button method body of the S0ngSelectName screen: dispatch on the button slot in HL
-; Evidence: prom_b ScreenButton_S0ngSelectName (0xF7D284) is `call 0xF80EB4 / ret`.  Slots 0/0x11 -> S0ngSelectName_PrevSong, 1/0x12 -> NextSong, 3/0x14 -> CursorLeft, 4/0x15 -> CursorRight, 5/0x16 -> CharPrev, 6/0x17 -> CharNext, 7/0x18 -> ClearName; 0x0F (ExitKey) posts (0x2070)=0x8004 when W bit 7 is clear.
-; The bottom row of DL_S0ngSelectNameKbS0ngName reads SONG < >, POSITION < >, ABC..789 < >, CLR, which is this pairing.
-ScreenButtonBody_S0ngSelectName:
+; ScreenButtonBody_SongSelectName -- the Button method body of the SongSelectName screen: dispatch on the button slot in HL
+; Evidence: prom_b ScreenButton_SongSelectName (0xF7D284) is `call 0xF80EB4 / ret`.  Slots 0/0x11 -> SongSelectName_PrevSong, 1/0x12 -> NextSong, 3/0x14 -> CursorLeft, 4/0x15 -> CursorRight, 5/0x16 -> CharPrev, 6/0x17 -> CharNext, 7/0x18 -> ClearName; 0x0F (ExitKey) posts (0x2070)=0x8004 when W bit 7 is clear.
+; The bottom row of DL_SongSelectNameKbSongName reads SONG < >, POSITION < >, ABC..789 < >, CLR, which is this pairing.
+ScreenButtonBody_SongSelectName:
 	cp hl, 0x00:i3                                         ; F80EB4  db d8
 	jr z, .LF80F11                                       ; F80EB6  66 59
 	cp HL,0x0011                                         ; F80EB8  db cf 11 00
@@ -2174,25 +2174,25 @@ ScreenButtonBody_S0ngSelectName:
 .LF80F0E:
 	jrl .LF80F39                                         ; F80F0E  78 28 00
 .LF80F11:
-	call S0ngSelectName_PrevSong                                      ; F80F11  1d 34 14 f8
+	call SongSelectName_PrevSong                                      ; F80F11  1d 34 14 f8
 	jr .LF80F39                                          ; F80F15  68 22
 .LF80F17:
-	call S0ngSelectName_NextSong                                      ; F80F17  1d c7 14 f8
+	call SongSelectName_NextSong                                      ; F80F17  1d c7 14 f8
 	jr .LF80F39                                          ; F80F1B  68 1c
 .LF80F1D:
-	call S0ngSelectName_CursorLeft                                      ; F80F1D  1d 12 15 f8
+	call SongSelectName_CursorLeft                                      ; F80F1D  1d 12 15 f8
 	jr .LF80F39                                          ; F80F21  68 16
 .LF80F23:
-	call S0ngSelectName_CursorRight                                      ; F80F23  1d 74 15 f8
+	call SongSelectName_CursorRight                                      ; F80F23  1d 74 15 f8
 	jr .LF80F39                                          ; F80F27  68 10
 .LF80F29:
-	call S0ngSelectName_CharPrev                                      ; F80F29  1d d6 15 f8
+	call SongSelectName_CharPrev                                      ; F80F29  1d d6 15 f8
 	jr .LF80F39                                          ; F80F2D  68 0a
 .LF80F2F:
-	call S0ngSelectName_CharNext                                      ; F80F2F  1d 1a 16 f8
+	call SongSelectName_CharNext                                      ; F80F2F  1d 1a 16 f8
 	jr .LF80F39                                          ; F80F33  68 04
 .LF80F35:
-	call S0ngSelectName_ClearName                                      ; F80F35  1d 70 16 f8
+	call SongSelectName_ClearName                                      ; F80F35  1d 70 16 f8
 .LF80F39:
 	ret                                                  ; F80F39  0e
 ; ModeEnterBody_StepRecord: The whole body of ModeEnter_StepRecord (+0 ENTER of panel mode 6): (0x0C02) := 2 and
@@ -2376,7 +2376,7 @@ ScreenLeaveBody_StepRecord:
 ; It reaches the display-list interpreters at 0xF417F0 (A) and 0xF417F4 (B)
 ; 3 time(s); XIY = list start, XIX = list end.  2 of those 3 list(s)
 ; carry text, and those are the ones that name this routine:
-;     site 0xF81098  interpreter A  list 0xF3C562  DL_SequencerMedleyStartFirstS0ng
+;     site 0xF81098  interpreter A  list 0xF3C562  DL_SequencerMedleyStartFirstSong
 ;        text: "SEQUENCER MEDLEY"; "START"; "FIRST S0NG    "; "STOP"; "SKIP"; "LAST S0NG     "
 ;     site 0xF810A6  interpreter A  list 0xF3C721  DL_SelectIntFd
 ;        text: "SELECT"; "INT"; "FD"
@@ -2419,11 +2419,11 @@ Paint_SequencerMedley:
 	jr ugt, .LF8108B                                     ; F81089  6b 00
 .LF8108B:
 	calr PromB_LCD_ScreenRedraw_Begin                                          ; F8108B  1e 4b d2
-	ld XIY,DL_SequencerMedleyStartFirstS0ng              ; F8108E  45 62 c5 f3 00
+	ld XIY,DL_SequencerMedleyStartFirstSong              ; F8108E  45 62 c5 f3 00
 	ld XIX,DL_F3C6B3                                     ; F81093  44 b3 c6 f3 00
 	call T_DisplayList_Run                               ; F81098  1d f0 17 f4
 	ld XIY,DL_SelectIntFd                                ; F8109C  45 21 c7 f3 00
-	ld XIX,DL_FirstS0ngLastS0ng                          ; F810A1  44 78 c7 f3 00
+	ld XIX,DL_FirstSongLastSong                          ; F810A1  44 78 c7 f3 00
 	call T_DisplayList_Run                               ; F810A6  1d f0 17 f4
 .LF810AA:
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F810AA  f1 40 25 00 00
@@ -2439,7 +2439,7 @@ Paint_SequencerMedley:
 	ld (DisplayListB_Stage+13:16), a                                   ; F810CF  f1 03 13 41
 	ld	a, (P1:8)                                      ; F810D3  c0 01 21
 	ld (DisplayListB_Stage+15:16), a                                   ; F810D6  f1 05 13 41
-	ld XIY,DL_FirstS0ngLastS0ng                          ; F810DA  45 78 c7 f3 00
+	ld XIY,DL_FirstSongLastSong                          ; F810DA  45 78 c7 f3 00
 	ld XIX,SequencerMedley_DrawPlayState_DL4                                     ; F810DF  44 ad c7 f3 00
 	call T_DisplayListB_Run                              ; F810E4  1d f4 17 f4
 	call SequencerMedley_DrawPlayState                                      ; F810E8  1d 50 13 f8
@@ -2465,7 +2465,7 @@ SoftKeyCol2_SequencerMedley:
 	jr z, .LF8111D                                       ; F81107  66 14
 	call T_Blink_Stop                                    ; F81109  1d 24 2e f4
 	call T_SequencerMedley_SetSourceInternal                                        ; F8110D  1d 18 2c f4
-	call Draw_FirstS0ngLastS0ng                                      ; F81111  1d bf 13 f8
+	call Draw_FirstSongLastSong                                      ; F81111  1d bf 13 f8
 	call SequencerMedley_DrawSourceBox                                      ; F81115  1d ff 13 f8
 	call SequencerMedley_DrawFileTypeBox                                      ; F81119  1d 1c 14 f8
 .LF8111D:
@@ -2478,7 +2478,7 @@ SoftKeyCol3_SequencerMedley:
 	jr z, .LF81135                                       ; F81123  66 10
 	call T_Blink_Stop                                    ; F81125  1d 24 2e f4
 	call T_SequencerMedley_SoftKeyCol3                                        ; F81129  1d 1c 2c f4
-	call Draw_FirstS0ngLastS0ng                                      ; F8112D  1d bf 13 f8
+	call Draw_FirstSongLastSong                                      ; F8112D  1d bf 13 f8
 	call SequencerMedley_DrawSourceBox                                      ; F81131  1d ff 13 f8
 .LF81135:
 	ret                                                  ; F81135  0e
@@ -2504,7 +2504,7 @@ SoftKeyCol5_SequencerMedley:
 	ld (DisplayListB_Stage+8:16), a                                   ; F81154  f1 fe 12 41
 	ld a, (Medley_LastSong:16)                                   ; F81158  c1 09 22 21
 	ld (DisplayListB_Stage+10:16), a                                   ; F8115C  f1 00 13 41
-	call Draw_FirstS0ngLastS0ng                                      ; F81160  1d bf 13 f8
+	call Draw_FirstSongLastSong                                      ; F81160  1d bf 13 f8
 	ret                                                  ; F81164  0e
 ; ButtonTable_SequencerMedley_Nop5: a bare ret -- ButtonTable_SequencerMedley slot 0x05.
 ButtonTable_SequencerMedley_Nop5:
@@ -2519,7 +2519,7 @@ SoftKeyCol7_SequencerMedley:
 	jr z, .LF81184                                       ; F81172  66 10
 	call T_Blink_Stop                                    ; F81174  1d 24 2e f4
 	call T_SequencerMedley_SoftKeyCol7                                        ; F81178  1d 24 2c f4
-	call Draw_FirstS0ngLastS0ng                                      ; F8117C  1d bf 13 f8
+	call Draw_FirstSongLastSong                                      ; F8117C  1d bf 13 f8
 	call SequencerMedley_DrawFileTypeBox                                      ; F81180  1d 1c 14 f8
 .LF81184:
 	ret                                                  ; F81184  0e
@@ -2531,7 +2531,7 @@ SoftKeyCol8_SequencerMedley:
 	jr z, .LF8119C                                       ; F8118A  66 10
 	call T_Blink_Stop                                    ; F8118C  1d 24 2e f4
 	call T_SequencerMedley_SoftKeyCol8                                        ; F81190  1d 28 2c f4
-	call Draw_FirstS0ngLastS0ng                                      ; F81194  1d bf 13 f8
+	call Draw_FirstSongLastSong                                      ; F81194  1d bf 13 f8
 	call SequencerMedley_DrawFileTypeBox                                      ; F81198  1d 1c 14 f8
 .LF8119C:
 	ret                                                  ; F8119C  0e
@@ -2552,7 +2552,7 @@ LcdKeyRow2_SequencerMedley:
 	jr nz, .LF811E1                                      ; F811B6  6e 29
 	cp	(Medley_Source:16), 0x00                            ; F811B8  c1 0b 22 3f 00
 	jr nz, .LF811E1                                      ; F811BD  6e 22
-	calr Draw_FirstS0ngLastS0ng                                          ; F811BF  1e fd 01
+	calr Draw_FirstSongLastSong                                          ; F811BF  1e fd 01
 	call SequencerMedley_DrawPlayState                                      ; F811C2  1d 50 13 f8
 	jr .LF811E1                                          ; F811C6  68 19
 .LF811C8:
@@ -2709,7 +2709,7 @@ SequencerMedley_KeypadCommit:
 	call T_F42580                                        ; F812FE  1d 80 25 f4
 .LF81302:
 	call T_Blink_Stop                                    ; F81302  1d 24 2e f4
-	calr Draw_FirstS0ngLastS0ng                                            ; F81306  1e b6 00
+	calr Draw_FirstSongLastSong                                            ; F81306  1e b6 00
 .LF81309:
 	ret                                                  ; F81309  0e
 ; SequencerMedley_KeypadSign -- keypad code 0x80: put '+' back in (0x2820)
@@ -2718,7 +2718,7 @@ SequencerMedley_KeypadSign:
 	ld (0x2820:16), 0x2b                                 ; F8130A  f1 20 28 00 2b
 	ret                                                  ; F8130F  0e
 ; SequencerMedley_BlinkSelectedField -- start the field blink on the FIRST or LAST song field
-; Evidence: unless (0x0DC1)=1, blink off or (0x2267)=0x0F: push BlinkArgPtrs_F81344[(0x0C0F)] (entry 1 = DL_FirstS0ngLastS0ng, the (0x12FE) record), call T_Blink_Command.
+; Evidence: unless (0x0DC1)=1, blink off or (0x2267)=0x0F: push BlinkArgPtrs_F81344[(0x0C0F)] (entry 1 = DL_FirstSongLastSong, the (0x12FE) record), call T_Blink_Command.
 SequencerMedley_BlinkSelectedField:
 	cp	(Medley_Playing:16), 0x01                            ; F81310  c1 c1 0d 3f 01
 	jr z, .LF81343                                       ; F81315  66 2c
@@ -2753,7 +2753,7 @@ SequencerMedley_BlinkSelectedField:
 ; ---------------------------------------------------------------------
 BlinkArgPtrs_F81344:
 	.long 0x00000000                                 ; F81344  [  0]
-	.long DL_FirstS0ngLastS0ng                       ; F81348  [  1]
+	.long DL_FirstSongLastSong                       ; F81348  [  1]
 	.long 0x00f3c782                                 ; F8134C  [  2]
 ; SequencerMedley_DrawPlayState -- draw or erase the NOW PLAYING line and move the START/STOP box
 ; Evidence: (0x0DC1)!=1: site 0xF81366 runs SequencerMedley_DrawPlayState_DL1 (op 0E ClearColumns at 0x05CC, 0x21 x 0x10); (0x0DC1)=1: T_DLHandler_IX_Text on 0xF3C873 ('N0W PLAYING S0NG ') and 0xF3C888 (' :'), (0x12F6)=(0x220A)+1 drawn by site 0xF81392 (SequencerMedley_DrawPlayState_DL3, 3 digits), string record 0xF3C88E.
@@ -2788,7 +2788,7 @@ SequencerMedley_DrawPlayState:
 	ld XIY,SequencerMedley_DrawPlayState_DL4                                     ; F813B5  45 ad c7 f3 00
 	call T_DLB_Handler_Array8                                        ; F813BA  1d 1c 18 f4
 	ret                                                  ; F813BE  0e
-Draw_FirstS0ngLastS0ng:
+Draw_FirstSongLastSong:
 	ld (LCD_CurrentLayer:16), 0x00                                 ; F813BF  f1 40 25 00 00
 	ld a, (Medley_FirstSong:16)                                   ; F813C4  c1 08 22 21
 	inc 1,A                                              ; F813C8  c9 61
@@ -2796,7 +2796,7 @@ Draw_FirstS0ngLastS0ng:
 	ld a, (Medley_LastSong:16)                                   ; F813CE  c1 09 22 21
 	inc 1,A                                              ; F813D2  c9 61
 	ld (DisplayListB_Stage+10:16), a                                   ; F813D4  f1 00 13 41
-	ld XIY,DL_FirstS0ngLastS0ng                          ; F813D8  45 78 c7 f3 00
+	ld XIY,DL_FirstSongLastSong                          ; F813D8  45 78 c7 f3 00
 	ld XIX,0x00f3c78c                                    ; F813DD  44 8c c7 f3 00
 	call T_DisplayListB_Run                              ; F813E2  1d f4 17 f4
 	ret                                                  ; F813E6  0e
@@ -2822,7 +2822,7 @@ SequencerMedley_DrawSourceBox:
 	call T_DLB_Handler_Array8                                        ; F81417  1d 1c 18 f4
 	ret                                                  ; F8141B  0e
 ; SequencerMedley_DrawFileTypeBox -- highlight NORM FILE or MIDI FILE
-; Evidence: (0x2540)=1; EraseRect record 0xF3C7CD (array 0xF3C84B) then FillRect record 0xF3C7A2 (array 0xF3C813), both on (0x1304); value 0 fills (0x11C,0xCE)-(0x13D,0xE7) around 'NORM'/'FILE', value 1 fills (0xF3,0xCE)-(0x113,0xE7) around 'MIDI'/'FILE' (DL_SequencerMedleyStartFirstS0ng).  (0x1304) is loaded from (0x0E35).
+; Evidence: (0x2540)=1; EraseRect record 0xF3C7CD (array 0xF3C84B) then FillRect record 0xF3C7A2 (array 0xF3C813), both on (0x1304); value 0 fills (0x11C,0xCE)-(0x13D,0xE7) around 'NORM'/'FILE', value 1 fills (0xF3,0xCE)-(0x113,0xE7) around 'MIDI'/'FILE' (DL_SequencerMedleyStartFirstSong).  (0x1304) is loaded from (0x0E35).
 SequencerMedley_DrawFileTypeBox:
 	ld (LCD_CurrentLayer:16), 0x01                                 ; F8141C  f1 40 25 00 01
 	ld XIY,SequencerMedley_DrawFileTypeBox_DL                                     ; F81421  45 cd c7 f3 00
@@ -2830,10 +2830,10 @@ SequencerMedley_DrawFileTypeBox:
 	ld XIY,0x00f3c7a2                                    ; F8142A  45 a2 c7 f3 00
 	call T_DLB_Handler_Array8                                        ; F8142F  1d 1c 18 f4
 	ret                                                  ; F81433  0e
-; S0ngSelectName_PrevSong -- SONG '<': save the current song, step (0x360A) down and load that song
-; Evidence: SoftKeyCol1 arm of ScreenButtonBody_S0ngSelectName.  Unless (0x0E45)!=0 or (0x360A)=0: site 0xF81453 erases both boxes (DL_F3C367-DLTable_F3C37D, svc 0x1B), S0ngSelectName_SaveWorkspaceToBank, dec (0x360A), (0x12FC)=song+1, S0ngSelectName_LoadSongFromBank, (0x0E45)=4, S0ngSelectName_UpdateSizeValues, (0x2095),0x10.
+; SongSelectName_PrevSong -- SONG '<': save the current song, step (0x360A) down and load that song
+; Evidence: SoftKeyCol1 arm of ScreenButtonBody_SongSelectName.  Unless (0x0E45)!=0 or (0x360A)=0: site 0xF81453 erases both boxes (DL_F3C367-DLTable_F3C37D, svc 0x1B), SongSelectName_SaveWorkspaceToBank, dec (0x360A), (0x12FC)=song+1, SongSelectName_LoadSongFromBank, (0x0E45)=4, SongSelectName_UpdateSizeValues, (0x2095),0x10.
 ; The 0 bound at 0xF8143F is the one FINDINGS-memory-map.md cites for the ten song banks.
-S0ngSelectName_PrevSong:
+SongSelectName_PrevSong:
 	cp	(0x0e45:16), 0x00                            ; F81434  c1 45 0e 3f 00
 	jr nz, .LF8147C                                      ; F81439  6e 41
 	ld a, (BStore_CurrentBank:16)                                   ; F8143B  c1 0a 36 21
@@ -2846,21 +2846,21 @@ S0ngSelectName_PrevSong:
 	call T_DisplayListB_Run                              ; F81453  1d f4 17 f4
 	popw wa                                              ; F81457  48
 	push XWA                                             ; F81458  38
-	call S0ngSelectName_SaveWorkspaceToBank                                      ; F81459  1d 9a 14 f8
+	call SongSelectName_SaveWorkspaceToBank                                      ; F81459  1d 9a 14 f8
 	pop XWA                                              ; F8145D  58
 	dec 1,A                                              ; F8145E  c9 69
 	ld (BStore_CurrentBank:16), a                                   ; F81460  f1 0a 36 41
 	inc 1,A                                              ; F81464  c9 61
 	ld (DisplayListB_Stage+6:16), a                                   ; F81466  f1 fc 12 41
-	call S0ngSelectName_LoadSongFromBank                                      ; F8146A  1d 0d 18 f8
+	call SongSelectName_LoadSongFromBank                                      ; F8146A  1d 0d 18 f8
 	ld (0x0e45:16), 0x04                                 ; F8146E  f1 45 0e 00 04
-	call S0ngSelectName_UpdateSizeValues                                      ; F81473  1d 7d 14 f8
+	call SongSelectName_UpdateSizeValues                                      ; F81473  1d 7d 14 f8
 	or	(UI_ScreenFlags:16), 0x10                            ; F81477  c1 95 20 3e 10
 .LF8147C:
 	ret                                                  ; F8147C  0e
-; S0ngSelectName_UpdateSizeValues -- compute the selected song's size and copy it to the display variables
-; Evidence: (0x0E32)=(0x360A); SongStore_MeasureSongSize; (0x12FD)=(0x0E2F) and (0x12FF)=(0x0E31), the variables S0ngSelectName_DrawValues shows beside ' KB' and '%'.
-S0ngSelectName_UpdateSizeValues:
+; SongSelectName_UpdateSizeValues -- compute the selected song's size and copy it to the display variables
+; Evidence: (0x0E32)=(0x360A); SongStore_MeasureSongSize; (0x12FD)=(0x0E2F) and (0x12FF)=(0x0E31), the variables SongSelectName_DrawValues shows beside ' KB' and '%'.
+SongSelectName_UpdateSizeValues:
 	ld a, (BStore_CurrentBank:16)                                   ; F8147D  c1 0a 36 21
 	ld (0x0e32:16), a                                   ; F81481  f1 32 0e 41
 	call SongStore_MeasureSongSize                                      ; F81485  1d e9 19 f8
@@ -2869,9 +2869,9 @@ S0ngSelectName_UpdateSizeValues:
 	ld a, (0x0e31:16)                                   ; F81491  c1 31 0e 21
 	ld (DisplayListB_Stage+9:16), a                                   ; F81495  f1 ff 12 41
 	ret                                                  ; F81499  0e
-; S0ngSelectName_SaveWorkspaceToBank -- copy the 3 KiB song workspace back into its bank (0x360A)
+; SongSelectName_SaveWorkspaceToBank -- copy the 3 KiB song workspace back into its bank (0x360A)
 ; Evidence: (0x60341E)=(0x360C); `ld XIX,0x610000+n*0xC00 / ld XIY,0x603400 / ld BC,0x0C00 / ldir` (ldir writes (XIX+) from (XIY+)).  Same effect as prom_b BStore_Workspace_SaveToBank (0xF64BE3), written independently (instruction order differs).
-S0ngSelectName_SaveWorkspaceToBank:
+SongSelectName_SaveWorkspaceToBank:
 	ld xwa, (0x360c:16)                                 ; F8149A  e1 0c 36 20
 	ld (0x60341e:24), xwa                               ; F8149E  f2 1e 34 60 60
 	xor XWA,XWA                                          ; F814A3  e8 d0
@@ -2887,9 +2887,9 @@ S0ngSelectName_SaveWorkspaceToBank:
 	ldw bc, 0x0c00                                       ; F814C1  31 00 0c
 	ldir85                                               ; F814C4  85 11
 	ret                                                  ; F814C6  0e
-; S0ngSelectName_NextSong -- SONG '>': save the current song, step (0x360A) up and load that song
-; Evidence: SoftKeyCol2 arm of ScreenButtonBody_S0ngSelectName; identical to S0ngSelectName_PrevSong except `cp A,0x09` (0xF814D2) and `inc` -- site 0xF814E7 erases both boxes on layer 1 first.
-S0ngSelectName_NextSong:
+; SongSelectName_NextSong -- SONG '>': save the current song, step (0x360A) up and load that song
+; Evidence: SoftKeyCol2 arm of ScreenButtonBody_SongSelectName; identical to SongSelectName_PrevSong except `cp A,0x09` (0xF814D2) and `inc` -- site 0xF814E7 erases both boxes on layer 1 first.
+SongSelectName_NextSong:
 	cp	(0x0e45:16), 0x00                            ; F814C7  c1 45 0e 3f 00
 	jr nz, .LF81510                                      ; F814CC  6e 42
 	ld a, (BStore_CurrentBank:16)                                   ; F814CE  c1 0a 36 21
@@ -2902,22 +2902,22 @@ S0ngSelectName_NextSong:
 	call T_DisplayListB_Run                              ; F814E7  1d f4 17 f4
 	popw wa                                              ; F814EB  48
 	pushw wa                                             ; F814EC  28
-	call S0ngSelectName_SaveWorkspaceToBank                                      ; F814ED  1d 9a 14 f8
+	call SongSelectName_SaveWorkspaceToBank                                      ; F814ED  1d 9a 14 f8
 	popw wa                                              ; F814F1  48
 	inc 1,A                                              ; F814F2  c9 61
 	ld (BStore_CurrentBank:16), a                                   ; F814F4  f1 0a 36 41
 	inc 1,A                                              ; F814F8  c9 61
 	ld (DisplayListB_Stage+6:16), a                                   ; F814FA  f1 fc 12 41
-	call S0ngSelectName_LoadSongFromBank                                      ; F814FE  1d 0d 18 f8
+	call SongSelectName_LoadSongFromBank                                      ; F814FE  1d 0d 18 f8
 	ld (0x0e45:16), 0x04                                 ; F81502  f1 45 0e 00 04
-	call S0ngSelectName_UpdateSizeValues                                      ; F81507  1d 7d 14 f8
+	call SongSelectName_UpdateSizeValues                                      ; F81507  1d 7d 14 f8
 	or	(UI_ScreenFlags:16), 0x10                            ; F8150B  c1 95 20 3e 10
 .LF81510:
 	ret                                                  ; F81510  0e
 	ret                                                  ; F81511  0e
-; S0ngSelectName_CursorLeft -- POSITION '<': move the name-edit cursor one character left
+; SongSelectName_CursorLeft -- POSITION '<': move the name-edit cursor one character left
 ; Evidence: SoftKeyCol4 arm.  (0x2075),9; site 0xF8152C erases the position and character boxes (DL_F3C367-DLTable_F3C37D, svc 0x1B); (0x222D)-1 if >=0 into (0x222D)/(0x2721)/(0x1301); SongName_CharIndexAtCursor; (0x1302)=(0x21F9); fills both boxes again (records DL_F3C351/0xF3C35C, svc 5).
-S0ngSelectName_CursorLeft:
+SongSelectName_CursorLeft:
 	or	(UI_RequestBits:16), 0x09                            ; F81512  c1 75 20 3e 09
 	ldw (PanelDial_DownButton:16), 0x0605                              ; F81517  f1 9b 20 02 05 06
 	ld (LCD_CurrentLayer:16), 0x01                                 ; F8151D  f1 40 25 00 01
@@ -2943,9 +2943,9 @@ S0ngSelectName_CursorLeft:
 	ld XIX,DL_F3C367                                     ; F8156A  44 67 c3 f3 00
 	call T_DLB_Handler_Array8                                        ; F8156F  1d 1c 18 f4
 	ret                                                  ; F81573  0e
-; S0ngSelectName_CursorRight -- POSITION '>': move the name-edit cursor one character right
-; Evidence: SoftKeyCol5 arm; as S0ngSelectName_CursorLeft with `inc` and `cp A,5 / jr gt` (six positions); site 0xF8158E is the erase.
-S0ngSelectName_CursorRight:
+; SongSelectName_CursorRight -- POSITION '>': move the name-edit cursor one character right
+; Evidence: SoftKeyCol5 arm; as SongSelectName_CursorLeft with `inc` and `cp A,5 / jr gt` (six positions); site 0xF8158E is the erase.
+SongSelectName_CursorRight:
 	or	(UI_RequestBits:16), 0x09                            ; F81574  c1 75 20 3e 09
 	ldw (PanelDial_DownButton:16), 0x0605                              ; F81579  f1 9b 20 02 05 06
 	ld (LCD_CurrentLayer:16), 0x01                                 ; F8157F  f1 40 25 00 01
@@ -2971,9 +2971,9 @@ S0ngSelectName_CursorRight:
 	ld XIX,DL_F3C367                                     ; F815CC  44 67 c3 f3 00
 	call T_DLB_Handler_Array8                                        ; F815D1  1d 1c 18 f4
 	ret                                                  ; F815D5  0e
-; S0ngSelectName_CharPrev -- character '<': replace the character under the cursor with the previous one of CharSet_F81768
+; SongSelectName_CharPrev -- character '<': replace the character under the cursor with the previous one of CharSet_F81768
 ; Evidence: SoftKeyCol6 arm; erases the character box (record 0xF3C372), SongName_StepCharAtCursor with W=0x81, (0x1302)=(0x21F9), SongName_Draw6Chars on layer 0, fills the box (0xF3C35C).
-S0ngSelectName_CharPrev:
+SongSelectName_CharPrev:
 	or	(UI_RequestBits:16), 0x09                            ; F815D6  c1 75 20 3e 09
 	ldw (PanelDial_DownButton:16), 0x0605                              ; F815DB  f1 9b 20 02 05 06
 	ld (LCD_CurrentLayer:16), 0x01                                 ; F815E1  f1 40 25 00 01
@@ -2990,9 +2990,9 @@ S0ngSelectName_CharPrev:
 	ld XIX,DL_F3C367                                     ; F81610  44 67 c3 f3 00
 	call T_DLB_Handler_Array8                                        ; F81615  1d 1c 18 f4
 	ret                                                  ; F81619  0e
-; S0ngSelectName_CharNext -- character '>': replace the character under the cursor with the next one of CharSet_F81768
-; Evidence: SoftKeyCol7 arm; as S0ngSelectName_CharPrev with W=0x01.
-S0ngSelectName_CharNext:
+; SongSelectName_CharNext -- character '>': replace the character under the cursor with the next one of CharSet_F81768
+; Evidence: SoftKeyCol7 arm; as SongSelectName_CharPrev with W=0x01.
+SongSelectName_CharNext:
 	or	(UI_RequestBits:16), 0x09                            ; F8161A  c1 75 20 3e 09
 	ldw (PanelDial_DownButton:16), 0x0605                              ; F8161F  f1 9b 20 02 05 06
 	ld (LCD_CurrentLayer:16), 0x01                                 ; F81625  f1 40 25 00 01
@@ -3012,9 +3012,9 @@ S0ngSelectName_CharNext:
 ; ---------------------------------------------------------------------
 ; SongName_Draw6Chars -- draw the six-character name buffer at 0x6034CA
 ;
-; Called from: prom_a Paint_S0ngSelectName (`call`) at 0xF80E71
-;          prom_a S0ngSelectName_CharPrev (`call`) at 0xF81602
-;          prom_a S0ngSelectName_CharNext (`call`) at 0xF81646
+; Called from: prom_a Paint_SongSelectName (`call`) at 0xF80E71
+;          prom_a SongSelectName_CharPrev (`call`) at 0xF81602
+;          prom_a SongSelectName_CharNext (`call`) at 0xF81646
 ; Issues:  SWI7 service 0x08 at 0xF8166E -- LCD_Svc_08_DrawText16x16, draw 16x16 text
 ; Evidence: `ld HL,0x0000` + `ld BC,0x0006` + `ld XIY,0x006034CA` + `ld IX,0x0998` +
 ;           service 0x08, the 16x16 text service, so it draws six characters from that
@@ -3022,7 +3022,7 @@ S0ngSelectName_CharNext:
 ;           SongName_ResetToUnderscores fills it with the six ROM bytes at 0xF81948,
 ;           which are `5F 5F 5F 5F 5F 5F` = `______`, and the 37 characters that can
 ;           stand in it are CharSet_F81768 = `_` + `A`-`Z` + `0`-`9`.  `Song` is the
-;           ROM's own word: this routine's caller at 0xF80E71 is Paint_S0ngSelectName.
+;           ROM's own word: this routine's caller at 0xF80E71 is Paint_SongSelectName.
 ; Named by notes/prom_a_understanding_round6.py --apply; the byte gate
 ;          is blind to this name, --verify reads it back.
 ; ---------------------------------------------------------------------
@@ -3034,9 +3034,9 @@ SongName_Draw6Chars:
 	ld a, 0x08:opc                                          ; F8166C  21 08
 	swi 7                                                ; F8166E  ff
 	ret                                                  ; F8166F  0e
-; S0ngSelectName_ClearName -- CLR: blank the song name to '______'
-; Evidence: SoftKeyCol8 arm ('CLR' in DL_S0ngSelectNameKbS0ngName); (0x2540)=1, site 0xF8167F erases the position box (DL_F3C367-0xF3C372, svc 0x1B), then SongName_ResetToUnderscores (which zeroes cursor and character index and sets (0x2071) bit 4).
-S0ngSelectName_ClearName:
+; SongSelectName_ClearName -- CLR: blank the song name to '______'
+; Evidence: SoftKeyCol8 arm ('CLR' in DL_SongSelectNameKbSongName); (0x2540)=1, site 0xF8167F erases the position box (DL_F3C367-0xF3C372, svc 0x1B), then SongName_ResetToUnderscores (which zeroes cursor and character index and sets (0x2071) bit 4).
+SongSelectName_ClearName:
 	ld (LCD_CurrentLayer:16), 0x01                                 ; F81670  f1 40 25 00 01
 	ld XIY,DL_F3C367                                     ; F81675  45 67 c3 f3 00
 	ld XIX,0x00f3c372                                    ; F8167A  44 72 c3 f3 00
@@ -3045,7 +3045,7 @@ S0ngSelectName_ClearName:
 	ret                                                  ; F81687  0e
 ; SongName_CharIndexAtCursor -- (0x21F9) = index in CharSet_F81768 of the name character under the cursor (0 if absent)
 ; Evidence: reads the byte at 0x610000+(0x360A)*0xC00+0xCA+(0x222D) (the bank copy of the name), then compares it with each of the 37 bytes of CharSet_F81768 (`ld BC,0x25` / djnz; 0xF816C0 loads 0xF81768, '_ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'); returns at once when (0x222D) is negative.
-; Called from: S0ngSelectName_CursorLeft/Right, S0ngSelectName_PrepareValues, S0ngSelectName_LoadSongFromBank.
+; Called from: SongSelectName_CursorLeft/Right, SongSelectName_PrepareValues, SongSelectName_LoadSongFromBank.
 SongName_CharIndexAtCursor:
 	ld l, (NameEdit_CursorPos:16)                                   ; F81688  c1 2d 22 27
 	cp l, 0x00:i3                                          ; F8168C  cf d8
@@ -3080,7 +3080,7 @@ SongName_CharIndexAtCursor:
 .LF816D9:
 	ret                                                  ; F816D9  0e
 ; SongName_StepCharAtCursor -- step the character under the name cursor: W bit 7 clear = next, set = previous
-; Evidence: `bit 7,W` chooses SongName_NextCharAtCursor or SongName_PrevCharAtCursor; callers pass W=0x01 (S0ngSelectName_CharNext) and 0x81 (S0ngSelectName_CharPrev).
+; Evidence: `bit 7,W` chooses SongName_NextCharAtCursor or SongName_PrevCharAtCursor; callers pass W=0x01 (SongSelectName_CharNext) and 0x81 (SongSelectName_CharPrev).
 SongName_StepCharAtCursor:
 	bit 0x07,W                                           ; F816DA  c8 33 07
 	jr nz, .LF816E5                                      ; F816DD  6e 06
@@ -3160,9 +3160,9 @@ CharSet_F81768:
 	.byte 0x5f, 0x41, 0x42, 0x43, 0x44, 0x45, 0x46, 0x47, 0x48, 0x49, 0x4a, 0x4b, 0x4c, 0x4d, 0x4e, 0x4f  ; F81768
 	.byte 0x50, 0x51, 0x52, 0x53, 0x54, 0x55, 0x56, 0x57, 0x58, 0x59, 0x5a, 0x30, 0x31, 0x32, 0x33, 0x34  ; F81778
 	.byte 0x35, 0x36, 0x37, 0x38, 0x39                                        ; F81788
-; S0ngSelectName_PrepareValues -- set up the SONG SELECT & NAME display variables on entry
-; Evidence: first call of Paint_S0ngSelectName (0xF80E32).  Unless (0x207B)=0x0D: (0x0E45)=0, T_Transport_StopAllRunning, (0x34BB),4, cursor (0x222D)=(0x1301)=0, (0x60341E)=(0x360C).  Always: 6 bytes 0x6034CA -> 0x12F6, (0x12FC)=(0x360A)+1, SongName_CharIndexAtCursor -> (0x1302), and the KB/percent pair as S0ngSelectName_UpdateSizeValues does.
-S0ngSelectName_PrepareValues:
+; SongSelectName_PrepareValues -- set up the SONG SELECT & NAME display variables on entry
+; Evidence: first call of Paint_SongSelectName (0xF80E32).  Unless (0x207B)=0x0D: (0x0E45)=0, T_Transport_StopAllRunning, (0x34BB),4, cursor (0x222D)=(0x1301)=0, (0x60341E)=(0x360C).  Always: 6 bytes 0x6034CA -> 0x12F6, (0x12FC)=(0x360A)+1, SongName_CharIndexAtCursor -> (0x1302), and the KB/percent pair as SongSelectName_UpdateSizeValues does.
+SongSelectName_PrepareValues:
 	cp	(UI_ScreenLatch_Previous:16), 0x0d                            ; F8178D  c1 7b 20 3f 0d
 	jr z, .LF817B5                                       ; F81792  66 21
 	ld (0x0e45:16), 0x00                                 ; F81794  f1 45 0e 00 00
@@ -3192,9 +3192,9 @@ S0ngSelectName_PrepareValues:
 	ld a, (0x0e31:16)                                   ; F817EE  c1 31 0e 21
 	ld (DisplayListB_Stage+9:16), a                                   ; F817F2  f1 ff 12 41
 	ret                                                  ; F817F6  0e
-; S0ngSelectName_Leave -- the work of the S0ngSelectName Leave method
-; Evidence: only caller is ScreenLeaveBody_S0ngSelectName.  Unless (0x207A)=0x0D: and (0x34BB),0xFB (undoing S0ngSelectName_PrepareValues' or), call T_NoteRouting_RebuildForSong, (0x0E45)=0.
-S0ngSelectName_Leave:
+; SongSelectName_Leave -- the work of the SongSelectName Leave method
+; Evidence: only caller is ScreenLeaveBody_SongSelectName.  Unless (0x207A)=0x0D: and (0x34BB),0xFB (undoing SongSelectName_PrepareValues' or), call T_NoteRouting_RebuildForSong, (0x0E45)=0.
+SongSelectName_Leave:
 	cp	(UI_ScreenLatch:16), 0x0d                            ; F817F7  c1 7a 20 3f 0d
 	jr z, .LF8180C                                       ; F817FC  66 0e
 	and	(0x34bb:16), 0xfb                            ; F817FE  c1 bb 34 3c fb
@@ -3202,12 +3202,12 @@ S0ngSelectName_Leave:
 	ld (0x0e45:16), 0x00                                 ; F81807  f1 45 0e 00 00
 .LF8180C:
 	ret                                                  ; F8180C  0e
-; S0ngSelectName_LoadSongFromBank -- load song (0x360A) from its bank into the workspace and refresh the name-edit state
+; SongSelectName_LoadSongFromBank -- load song (0x360A) from its bank into the workspace and refresh the name-edit state
 ; Evidence: saves workspace words +0xB8/+0xBA in (0x0E2B)/(0x0E2D), ldir 0xC00 bytes 0x610000+(0x360A)*0xC00 -> 0x603400 and restores the two words (as prom_b BStore_Workspace_LoadFromBank does), (0x360C)=(0x60341E), (0x3752)=bit 0 of (0x603420), cursor 0, name -> 0x12F6, SongName_CharIndexAtCursor; then the (0x6034C6)/(0x7F4D) queue post, T_F42578, T_Seq_RequestRewind, T_Seq_ApplySongBeatsPerBar, (0x360B) bit 0 cleared.
 ; The label sub_F81812 one instruction in is unreferenced and part of this routine.
-S0ngSelectName_LoadSongFromBank:
+SongSelectName_LoadSongFromBank:
 	ld wa, (BStore_FreeHead:24)                                ; F8180D  d2 b8 34 60 20
-; (sub_F81812 removed 2026-10-04: no code names it and the line above falls through into it -- part of S0ngSelectName_LoadSongFromBank;
+; (sub_F81812 removed 2026-10-04: no code names it and the line above falls through into it -- part of SongSelectName_LoadSongFromBank;
 ;  notes/prom_a_stray_label_removal.py)
 	ld (0x0e2b:16), wa                                  ; F81812  f1 2b 0e 50
 	ld wa, (BStore_FreeCount:24)                                ; F81816  d2 ba 34 60 20
@@ -3277,7 +3277,7 @@ S0ngSelectName_LoadSongFromBank:
 ; ---------------------------------------------------------------------
 ; SongName_ResetToUnderscores -- blank all three copies of the six-character name buffer
 ;
-; Called from: prom_a S0ngSelectName_ClearName (`call`) at 0xF81683
+; Called from: prom_a SongSelectName_ClearName (`call`) at 0xF81683
 ; Evidence: three `ldir` runs of BC = 6 from the same source 0xF81948 (`______`) to
 ;           0x006034CA, to 0x00610000 + ((0x360A) << 11) + ((0x360A) << 10) + 0xCA, and
 ;           to 0x0012F6.  The destinations are read straight off the three `ld XIX`
@@ -3390,7 +3390,7 @@ sub_F819A2:
 	ret                                                  ; F819E8  0e
 ; SongStore_MeasureSongSize -- size of song (0x0E32): (0x0E2F) = KB, (0x0E31) = percent of the block heap
 ; Evidence: directory = 0x603500 when (0x0E32)=(0x360A) (the song in the workspace), else 0x610000+n*0xC00+0x100 (the bank's copy); for each 3-byte entry 0..0x30 with bit 7 set, SongStore_CountChainBlocks; (0x0E31) = blocks*100/(0x3608)+1, max 99 ((0x3608) = heap block count, BStore_FreeList_Init); (0x0E2F) = blocks/4, at least 1 (256-byte blocks).
-; Callers display them beside ' KB' and '%': S0ngSelectName and prom_b Paint_SongClear (0xF7EB23) / SongClear soft keys.  (0x126E) is preserved.
+; Callers display them beside ' KB' and '%': SongSelectName and prom_b Paint_SongClear (0xF7EB23) / SongClear soft keys.  (0x126E) is preserved.
 SongStore_MeasureSongSize:
 	ld xwa, (BStore_CursorBlockAddr:16)                                 ; F819E9  e1 6e 12 20
 	push XWA                                             ; F819ED  38

@@ -440,13 +440,19 @@ Zero9:
 ;   0xF59904  COMPOSER LOAD
 ;
 ; ⚠ `L0AD`, `FL0PPY` and `F0RMAT` are not typos in this comment: those labels
-;   spell capital O with character code 0x30, the digit zero.  The module uses
+;   (the on-screen captions) spell capital O with character code 0x30, the
+;   digit zero.  The module uses
 ;   BOTH codes -- 67 occurrences of 0x30 and 71 of 0x4F inside its printable runs
 ;   -- and the SAME PHRASE appears both ways: `MIDI FILE SAVE : FILE SELECTION`
 ;   at 0xF58A66 and `MIDI FILE SAVE : FILE SELECTI0N` at 0xF59226.  It makes no
 ;   difference on screen, because Font_Svc06_8x14 cell 0x30 and cell 0x4F are the
 ;   SAME fourteen bytes.  Recorded because a reader who greps this file for
 ;   `LOAD`, `SOUND` or `SELECTION` will miss half of them.
+;   That is still true of the CAPTIONS -- the `.ascii` text and the comments that
+;   quote it.  It was true of the LABEL NAMES too until 2026-11-06, when the owner
+;   decided to normalise them: they spell the word with O (`DL_MidiFileLoadLoad`,
+;   `Paint_DiskLoadFile`; notes/zero-for-o/README.md), so a grep of the names
+;   finds them all.  The ROM's bytes keep their zeros.
 ;
 ; HOW THE NON-LIST BYTES ARE GRADED.  18 tables are emitted as N rows of W bytes.
 ; W always comes from the handler of the record that points at the table (8 for

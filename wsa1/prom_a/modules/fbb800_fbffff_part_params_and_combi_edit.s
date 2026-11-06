@@ -1635,7 +1635,7 @@ T_F41A94_Nop:
 ; ScreenEnter_WriteProtectError: the +0 ENTER method of the screen object for screen id 0xB3 -- PanelScreen_VtableTable entry 0xD3
 ;   (ViewB entry 0xB3) points at the thunk triple starting at T_ScreenEnter_WriteProtectError, and slot T_ScreenEnter_WriteProtectError jumps here.
 ; ScreenEnter_WriteProtectError: screen 0xB3's +0 ENTER.  Its painter (posted by ScreenEnterBody_WriteProtectError) runs
-;   DL_Err0rTheS0undOrC0mbinati0n: "ERR0R! The S0UND or C0MBINATI0N memories are write protected." with YES / NO.
+;   DL_ErrorTheSoundOrCombination: "ERR0R! The S0UND or C0MBINATI0N memories are write protected." with YES / NO.
 ScreenEnter_WriteProtectError:
 	calr ScreenEnterBody_WriteProtectError                                          ; FBC5BD  1e f9 38
 	ret                                                  ; FBC5C0  0e
@@ -8365,7 +8365,7 @@ ExitKey_Effect2OutputConflict:
 	call T_DisplayList_RunOne_Stack                      ; FBFE98  1d 08 2e f4
 	ld (XIX),0x00                                        ; FBFE9C  b4 00 00
 	inc 8,XSP                                            ; FBFE9F  ef 60
-	lda xbc, (DL_Err0rTheS0undOrC0mbinati0n:24)          ; FBFEA1  f2 99 a9 f1 31
+	lda xbc, (DL_ErrorTheSoundOrCombination:24)          ; FBFEA1  f2 99 a9 f1 31
 	push XBC                                             ; FBFEA6  39
 	lda xwa, (ExitKey_Effect2OutputConflict_DL:24)                              ; FBFEA7  f2 ef a8 f1 30
 	push XWA                                             ; FBFEAC  38
@@ -8452,7 +8452,7 @@ WriteProtectError_Dismiss:
 	ld (LCD_CurrentLayer:16), 0x00                                 ; FBFF44  f1 40 25 00 00
 	lda xbc, (PartParamField_KeyLayerLow:24)                          ; FBFF49  f2 7c aa f1 31
 	push XBC                                             ; FBFF4E  39
-	lda xwa, (DL_Err0rTheS0undOrC0mbinati0n:24)          ; FBFF4F  f2 99 a9 f1 30
+	lda xwa, (DL_ErrorTheSoundOrCombination:24)          ; FBFF4F  f2 99 a9 f1 30
 	push XWA                                             ; FBFF54  38
 	call T_DisplayList_Run_Stack                         ; FBFF55  1d 00 2e f4
 	call T_LCD_ShowAllLayers_StackFrame_Copy                                        ; FBFF59  1d 14 2e f4

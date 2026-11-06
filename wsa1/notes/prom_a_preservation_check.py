@@ -10525,6 +10525,22 @@ RENAMES = {
 }
 
 
+# 2026-11-06: the 0-for-O renames (notes/prom_ab_names_zero_for_o.py), and chains.  The declarations above
+# name the label as it was spelled THEN (`sub_FF4986` -> `ScreenLeave_DiskL0adFile`); the 0-for-O pass renamed
+# that to `ScreenLeave_DiskLoadFile`.  final() follows such a chain to the name the tree has now.
+from prom_ab_names_zero_for_o import RENAMES as _ZFO, WORDS as _ZFO_WORDS  # noqa: E402
+RENAMES.update(dict(_ZFO))
+RENAMES.update(dict(_ZFO_WORDS))
+
+
+def final(name):
+    seen = set()
+    while name in RENAMES and name not in seen:
+        seen.add(name)
+        name = RENAMES[name]
+    return name
+
+
 def _renames():
     return RENAMES
 
@@ -10587,8 +10603,8 @@ def main():
                 del lost[line]
                 break
     gone = sorted(lo - ln_)
-    undeclared = [g for g in gone if RENAMES.get(g) not in ln_]
-    declared = [g for g in gone if RENAMES.get(g) in ln_]
+    undeclared = [g for g in gone if final(g) not in ln_]
+    declared = [g for g in gone if final(g) in ln_]
 
     print("prom_a preservation, working tree vs %s" % ref)
     print("  comment lines   %6d -> %6d   (+%d added)"
@@ -10606,7 +10622,7 @@ def main():
         for g in undeclared:
             print("    UNDECLARED LABEL LOSS  %s" % g)
         for g in declared:
-            print("    renamed  %s -> %s" % (g, RENAMES[g]))
+            print("    renamed  %s -> %s" % (g, final(g)))
         for line, n in updated.items():
             print("    rewritten x%d  %s" % (n, line[:110]))
     bad = sum(lost.values()) + len(undeclared)

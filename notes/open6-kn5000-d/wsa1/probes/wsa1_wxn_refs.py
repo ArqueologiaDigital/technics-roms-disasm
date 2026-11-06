@@ -15,7 +15,8 @@ QUESTIONS IT ANSWERS (each prints PASS / FAIL; exit 1 on any FAIL)
       routines are byte-identical between A and E?
   R4  Do the two dedicated floppy-format button readers (prom_a 0xFF6550 / 0xFF66AA) add base 0xFF3D39 + 4*128 and
       + 5*128, i.e. rows 4 and 5 of the 0xFF3D39 matrix (`e9 c8 <addr32>` = add XBC,imm32)?
-  R5  Does the ROM text spell "MIDI FILE L0AD" with a digit zero (the screen name MidiFileL0ad is CamelCase of it)?
+  R5  Does the ROM text spell "MIDI FILE L0AD" with a digit zero (the screen name MidiFileL0ad, now MidiFileLoad, was CamelCase of it;
+      renamed 2026-11-06, wsa1/notes/zero-for-o/README.md)?
 
 RUN (from the repo root or anywhere)
   python3 notes/open6-kn5000-d/wsa1/probes/wsa1_wxn_refs.py

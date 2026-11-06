@@ -9,7 +9,7 @@
 ;   0xF7127B where the live copy calls SeqJob_StepValueInRange (0xBA60 higher -- that
 ;   routine moved 0x60 further between the builds).  It starts on the 4 KB
 ;   boundary after 0x0E fill (the live copy is preceded by fill too) and ends
-;   on the 1 KB boundary 0xF6F400, where this build's MidiFileL0ad_LcdKeyRow1 cuts the old
+;   on the 1 KB boundary 0xF6F400, where this build's MidiFileLoad_LcdKeyRow1 cuts the old
 ;   copy's last instruction after 4 of its 5 bytes.  Nothing outside these
 ;   1,024 bytes names an address in them: DEAD in this build.  The same
 ;   phenomenon as OldBuild_DLHandlerTables_Tail (0xF0ED50) and
@@ -467,16 +467,16 @@ OldCopy_TrackMerge_StepDestTrack:
 OldCopy_TrackMerge_ReturnToStageZero:
 	cp	(UI_ScreenStage:16), 0x01	; F6F3F5  cp (0x207e),0x01
 	jr	nz, TrackMerge_ReturnToStageZero_Return - 0xBA00	; F6F3FA  jr NZ,0xf6f40b
-	.byte	0xC1, 0x75, 0x20, 0x3C	; F6F3FC  the first 4 of the 5 bytes of `and (0x2075),0xf6` (live 0xF7ADFC); this build's MidiFileL0ad_LcdKeyRow1 begins at 0xF6F400
+	.byte	0xC1, 0x75, 0x20, 0x3C	; F6F3FC  the first 4 of the 5 bytes of `and (0x2075),0xf6` (live 0xF7ADFC); this build's MidiFileLoad_LcdKeyRow1 begins at 0xF6F400
 
 
 ; --------------------------------------------------------------------------
-; MidiFileL0ad_LcdKeyRow1
-; Called from: T_MidiFileL0ad_LcdKeyRow1 (x1)
+; MidiFileLoad_LcdKeyRow1
+; Called from: T_MidiFileLoad_LcdKeyRow1 (x1)
 ; Touches: nothing with an absolute address
 ; Evidence (THUNK): a `jp` slot of the 0xF40000 routine directory holds `jp`
 ;                   to this address, so the firmware's own routine table
-;                   names it.  Only TWO slots reach this module -- T_MidiFileL0ad_LcdKeyRow1
+;                   names it.  Only TWO slots reach this module -- T_MidiFileLoad_LcdKeyRow1
 ;                   and T_MidiFileSave_WriteSeqBankSmf -- which is why the thunk-run frontier
 ;                   ranks it thirteenth and why it was chosen with a
 ;                   different tool.  0xF6F400 is an instruction boundary of
@@ -485,9 +485,9 @@ OldCopy_TrackMerge_ReturnToStageZero:
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; MidiFileL0ad_LcdKeyRow1: the LcdKeyRow1 action of MidiFileL0ad -- called only by LcdKeyRow1_MidiFileL0ad.
-MidiFileL0ad_LcdKeyRow1:		; <- T_MidiFileL0ad_LcdKeyRow1
-	jp	MidiFileL0ad_SelectSeqBankAndReadSmf	; F6F400  jp 0xf6f408
+; MidiFileLoad_LcdKeyRow1: the LcdKeyRow1 action of MidiFileLoad -- called only by LcdKeyRow1_MidiFileLoad.
+MidiFileLoad_LcdKeyRow1:		; <- T_MidiFileLoad_LcdKeyRow1
+	jp	MidiFileLoad_SelectSeqBankAndReadSmf	; F6F400  jp 0xf6f408
 
 ; --------------------------------------------------------------------------
 ; MidiFileSave_WriteSeqBankSmf
@@ -495,7 +495,7 @@ MidiFileL0ad_LcdKeyRow1:		; <- T_MidiFileL0ad_LcdKeyRow1
 ; Touches: nothing with an absolute address
 ; Evidence (THUNK): a `jp` slot of the 0xF40000 routine directory holds `jp`
 ;                   to this address, so the firmware's own routine table
-;                   names it.  Only TWO slots reach this module -- T_MidiFileL0ad_LcdKeyRow1
+;                   names it.  Only TWO slots reach this module -- T_MidiFileLoad_LcdKeyRow1
 ;                   and T_MidiFileSave_WriteSeqBankSmf -- which is why the thunk-run frontier
 ;                   ranks it thirteenth and why it was chosen with a
 ;                   different tool.  0xF6F404 is an instruction boundary of
@@ -507,13 +507,13 @@ MidiFileL0ad_LcdKeyRow1:		; <- T_MidiFileL0ad_LcdKeyRow1
 ; MidiFileSave_WriteSeqBankSmf: `jp MidiFileSave_SelectSeqBankAndWriteSmf`: unless Disk_SeqBank is already BStore_CurrentBank, saves the
 ;   workspace to the current bank, makes Disk_SeqBank current and loads it (MidiFile_LoadWorkspaceFromBank), applies its beats per bar;
 ;   then Smf_WriteFile (writes the song as a Standard MIDI File) and re-inits the playback rings. Run by the MIDI FILE
-;   SAVE row keys. Twin of MidiFileL0ad_LcdKeyRow1's load path. Basis: callers + body. (notes/naming-
+;   SAVE row keys. Twin of MidiFileLoad_LcdKeyRow1's load path. Basis: callers + body. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave3_i.json)
 MidiFileSave_WriteSeqBankSmf:		; <- T_MidiFileSave_WriteSeqBankSmf
 	jp	MidiFileSave_SelectSeqBankAndWriteSmf	; F6F404  jp 0xf6f440
 
 ; --------------------------------------------------------------------------
-; MidiFileL0ad_SelectSeqBankAndReadSmf
+; MidiFileLoad_SelectSeqBankAndReadSmf
 ; Called from: in-module: 0xF6F400
 ; Touches: (0x272B) (0x360A) (0x360B)
 ; Calls:   MidiFile_SaveWorkspaceToBank MidiFile_LoadWorkspaceFromBank T_Seq_ApplySongBeatsPerBar Smf_ReadFile_Entry T_Ring601850_Init T_SeqBufRing_Init
@@ -526,12 +526,12 @@ MidiFileSave_WriteSeqBankSmf:		; <- T_MidiFileSave_WriteSeqBankSmf
 ; Unknown: what the routine is FOR.  Left as sub_XXXXXX with the gap stated,
 ;          per this tree's rule that a stated gap beats a plausible guess.
 ; --------------------------------------------------------------------------
-; MidiFileL0ad_SelectSeqBankAndReadSmf: Saves the workspace to the current bank (MidiFile_SaveWorkspaceToBank);
+; MidiFileLoad_SelectSeqBankAndReadSmf: Saves the workspace to the current bank (MidiFile_SaveWorkspaceToBank);
 ;   unless Disk_SeqBank is already BStore_CurrentBank, makes it current, loads it (MidiFile_LoadWorkspaceFromBank) and applies its beats
 ;   per bar; then Smf_ReadFile (via Smf_ReadFile_Entry), re-inits the playback rings and clears (0x360B) bit 0. The
-;   target of MidiFileL0ad_LcdKeyRow1 (`jp`); load-side twin of MidiFileSave_WriteSeqBankSmf's body. Basis: caller +
+;   target of MidiFileLoad_LcdKeyRow1 (`jp`); load-side twin of MidiFileSave_WriteSeqBankSmf's body. Basis: caller +
 ;   body + twin. (notes/naming-pilot-2026-10-06/proposals_wave6_v.json)
-MidiFileL0ad_SelectSeqBankAndReadSmf:
+MidiFileLoad_SelectSeqBankAndReadSmf:
 	push	xiz	; F6F408  push XIZ
 	push	xix	; F6F409  push XIX
 	push	xhl	; F6F40A  push XHL
@@ -539,12 +539,12 @@ MidiFileL0ad_SelectSeqBankAndReadSmf:
 	call	MidiFile_SaveWorkspaceToBank	; F6F40C  call 0xf6f476
 	ld	a, (Disk_SeqBank:16)	; F6F410  ld A,(0x272b)
 	cp	a, (BStore_CurrentBank:16)	; F6F414  cp A,(0x360a)
-	jr	z, MidiFileL0ad_SelectSeqBankAndReadSmf_Skip	; F6F418  jr Z,0xf6f42a
+	jr	z, MidiFileLoad_SelectSeqBankAndReadSmf_Skip	; F6F418  jr Z,0xf6f42a
 	ld	a, (Disk_SeqBank:16)	; F6F41A  ld A,(0x272b)
 	ld	(BStore_CurrentBank:16), a	; F6F41E  ld (0x360a),A
 	call	MidiFile_LoadWorkspaceFromBank	; F6F422  call 0xf6f4a3
 	call	T_Seq_ApplySongBeatsPerBar	; F6F426  call 0xf40ac8
-MidiFileL0ad_SelectSeqBankAndReadSmf_Skip:
+MidiFileLoad_SelectSeqBankAndReadSmf_Skip:
 	call	Smf_ReadFile_Entry	; F6F42A  call 0xf6f526
 	call	T_Ring601850_Init	; F6F42E  call 0xf41e6c
 	call	T_SeqBufRing_Init	; F6F432  call 0xf41d94
@@ -574,7 +574,7 @@ MidiFileL0ad_SelectSeqBankAndReadSmf_Skip:
 ;   current bank, makes Disk_SeqBank current, loads it (MidiFile_LoadWorkspaceFromBank), rewinds/re-posts its GM mode (Seq_RewindAndApplySongGmAndParams) and
 ;   applies its beats per bar; then Smf_WriteFile (via Smf_WriteFile_Veneer) and re-inits the playback rings. The body
 ;   behind MidiFileSave_WriteSeqBankSmf (`jp`), whose header describes it; save-side twin of
-;   MidiFileL0ad_SelectSeqBankAndReadSmf. Basis: caller + body. (notes/naming-pilot-2026-10-06/proposals_wave6_v.json)
+;   MidiFileLoad_SelectSeqBankAndReadSmf. Basis: caller + body. (notes/naming-pilot-2026-10-06/proposals_wave6_v.json)
 MidiFileSave_SelectSeqBankAndWriteSmf:
 	push	xiz	; F6F440  push XIZ
 	push	xix	; F6F441  push XIX
@@ -615,7 +615,7 @@ MidiFileSave_SelectSeqBankAndWriteSmf_Skip:
 ; MidiFile_SaveWorkspaceToBank: Saves the 3 KiB sequencer workspace 0x603400 to its bank copy 0x610000 +
 ;   BStore_CurrentBank * 3072 (storing (0x360C) at 0x60341E first): the SMF file module's own copy of
 ;   BStore_Workspace_SaveToBank (prom_b 0xF64BE3; all 15 instructions equal), the save-side twin of
-;   MidiFile_LoadWorkspaceFromBank. Live: MidiFileL0ad_SelectSeqBankAndReadSmf and its save twin call it, and
+;   MidiFile_LoadWorkspaceFromBank. Live: MidiFileLoad_SelectSeqBankAndReadSmf and its save twin call it, and
 ;   0xF6F476 lies past the older build's block 0xF6F000-0xF6F3FF (banner above), so it is not an OldCopy_.
 ;   Basis: callers + body + twin.
 MidiFile_SaveWorkspaceToBank:

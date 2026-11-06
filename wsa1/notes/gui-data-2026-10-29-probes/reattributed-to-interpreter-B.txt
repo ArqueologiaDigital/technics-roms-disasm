@@ -13,7 +13,7 @@ prom_b/modules/f32800_f33fff_sound_edit_display_lists.s        DL_F3391E        
 prom_b/modules/f34000_f367ff_sequencer_display_lists.s         DL_F34000                                                  adjacent 25, length 1
 prom_b/modules/f39000_f3f3ff_sequencer_job_display_lists.s     DL_F3B65B                                                  audit 8
 prom_b/modules/f39000_f3f3ff_sequencer_job_display_lists.s     DL_F3C351                                                  length 2
-prom_b/modules/f39000_f3f3ff_sequencer_job_display_lists.s     S0ngC0py_DrawFromSong_DL1                                  geometry 2
+prom_b/modules/f39000_f3f3ff_sequencer_job_display_lists.s     SongCopy_DrawFromSong_DL1                                  geometry 2
 prom_b/modules/f39000_f3f3ff_sequencer_job_display_lists.s     SequencerMedley_DrawPlayState_DL2                          length 1
 prom_b/modules/f39000_f3f3ff_sequencer_job_display_lists.s     SequencerMedley_DrawPlayState_DL4                          adjacent 1, length 1
 prom_b/modules/f39000_f3f3ff_sequencer_job_display_lists.s     TrackAssign_DrawLocalControlColumn_DL                      length 8

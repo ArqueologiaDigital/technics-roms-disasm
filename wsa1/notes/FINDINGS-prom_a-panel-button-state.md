@@ -34,7 +34,7 @@ for a button was not pinned down here.
 | 0x20A7 | `PanelHold_Timer` | ticks before a held event requests a screen: 0x40 (`PanelEvent_Code01_ArmHold`) or 0x30 (`PanelEvent_Code20_ArmHold`), 0 to cancel. `PanelHold_Tick` counts it down | 6 |
 | 0x2096 | `PanelHold_Index` | the 16-bit index into `PanelHold_ScreenRequest`. `PanelHold_Tick` loads the word there into `UI_Request` when the timer reaches 0; the ArmHold handlers write 2, 7 or 0 | 6 instructions; the census also lists 8 `.short 0x2096`, which are display-list data in prom_b's `DL_*` and not this variable |
 
-`Paint_DiskL0adFile` also writes 0 to (0x2096) and compares it with 7.
+`Paint_DiskLoadFile` also writes 0 to (0x2096) and compares it with 7.
 
 ⚠ Still open, as the headers say: why index 7, whose `PanelHold_ScreenRequest` entry is 0xFFFF,
 is armed at all.

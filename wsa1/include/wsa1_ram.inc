@@ -296,21 +296,21 @@
 	.equ Medley_LastSong,				0x2209	; the last song -- SequencerMedley_KeypadCommit
 	.equ Medley_PlayingSong,			0x220a	; the song now playing -- SequencerMedley_DrawPlayState
 	.equ Medley_Source,				0x220b	; 0 INT, 1 FD, 2 HD -- SequencerMedley_DrawSourceBox
-	.equ NameEdit_CursorPos,			0x222d	; the character position of the name cursor -- S0ngSelectName_CursorLeft / _CursorRight
+	.equ NameEdit_CursorPos,			0x222d	; the character position of the name cursor -- SongSelectName_CursorLeft / _CursorRight
 
 ; ---- wsa1/notes/FINDINGS-prom_a-medley-and-name-edit-state.md -- "3. The song-edit screens"
-	.equ MeasureC0py_Field,				0x0dbc	; the selected field -- MeasureC0py_KeypadCommit
+	.equ MeasureCopy_Field,				0x0dbc	; the selected field -- MeasureCopy_KeypadCommit
 	.equ MeasureInsert_Field,			0x0dda	; the selected field -- MeasureInsert_KeypadCommit
 	.equ AdvanceDelay_Field,			0x0de5	; the selected field -- AdvanceDelay_KeypadCommit
-	.equ N0teChange_Field,				0x0ded	; the selected field (2/3 measures, 4/5 notes) -- N0teChange_KeypadCommit
-	.equ N0teChange_FromMeasure,			0x0df0	; field 2, 1..999 -- N0teChange_KeypadCommit
-	.equ N0teChange_ToMeasure,			0x0df2	; field 3, 1..999 -- N0teChange_KeypadCommit
-	.equ N0teChange_FromNote,			0x0df4	; field 4, note 0..127 -- N0teChange_KeypadCommit
-	.equ N0teChange_ToNote,				0x0df5	; field 5, note 0..127 -- N0teChange_KeypadCommit
-	.equ S0ngC0py_FromSong,				0x0e0c	; the source song (1-based) -- S0ngC0py_DrawFromSong
-	.equ S0ngC0py_ToSong,				0x0e0d	; the destination song -- S0ngC0py_DrawToSong
-	.equ S0ngC0py_FromTrack,			0x0e0e	; the source track; 0x12 = ALL -- S0ngC0py_DrawTracks
-	.equ S0ngC0py_ToTrack,				0x0e0f	; the destination track -- S0ngC0py_DrawTracks
+	.equ NoteChange_Field,				0x0ded	; the selected field (2/3 measures, 4/5 notes) -- NoteChange_KeypadCommit
+	.equ NoteChange_FromMeasure,			0x0df0	; field 2, 1..999 -- NoteChange_KeypadCommit
+	.equ NoteChange_ToMeasure,			0x0df2	; field 3, 1..999 -- NoteChange_KeypadCommit
+	.equ NoteChange_FromNote,			0x0df4	; field 4, note 0..127 -- NoteChange_KeypadCommit
+	.equ NoteChange_ToNote,				0x0df5	; field 5, note 0..127 -- NoteChange_KeypadCommit
+	.equ SongCopy_FromSong,				0x0e0c	; the source song (1-based) -- SongCopy_DrawFromSong
+	.equ SongCopy_ToSong,				0x0e0d	; the destination song -- SongCopy_DrawToSong
+	.equ SongCopy_FromTrack,			0x0e0e	; the source track; 0x12 = ALL -- SongCopy_DrawTracks
+	.equ SongCopy_ToTrack,				0x0e0f	; the destination track -- SongCopy_DrawTracks
 
 ; ---- wsa1/notes/FINDINGS-prom_a-mode-screen-state.md -- "1. The sound selection; 2. COMBINATION MODE"
 	.equ SoundSel_Group,				0x2169	; the selected group -- SoundGroup_StepSelected
@@ -320,15 +320,15 @@
 	.equ SoundGroupMenu_Highlight,			0x2675	; the group the menu box is drawn on -- SoundGroupMenu_MoveGroupHighlight
 	.equ ModeScreen_DirtyFields,			0x2676	; page-1 value fields to redraw, a bit each -- Paint_SoundModeFields
 	.equ ModeScreen_DirtyFields2,			0x2677	; more field bits (0x18-0x1A events: bits 0-2) -- UiEvent_MarkRedrawFromClass20Block
-	.equ CombinationMode_EditRow,			0x2678	; page 2 row: bit 0 SOUND, 3 INT, 2 PAN, 1 VOL -- C0mbinati0nM0de_EditSelectedRow
+	.equ CombinationMode_EditRow,			0x2678	; page 2 row: bit 0 SOUND, 3 INT, 2 PAN, 1 VOL -- CombinationMode_EditSelectedRow
 	.equ CombinationMode_DirtySound,		0x2679	; page 2: parts whose SOUND cell to redraw -- UiEvent_MarkPartRedrawBits
 	.equ CombinationMode_DirtyInt,			0x267a	; parts whose INT cell to redraw -- UiEvent_MarkPartRedrawBits
 	.equ CombinationMode_DirtyPan,			0x267b	; parts whose PAN cell to redraw -- UiEvent_MarkPartRedrawBits
 	.equ CombinationMode_DirtyVol,			0x267c	; parts whose VOL cell to redraw -- UiEvent_MarkPartRedrawBits
-	.equ CombinationMode_Solo,			0x267d	; bit 0: SOLO -- LcdKeyRow1_C0mbinati0nM0de_Page2
-	.equ CombinationMode_ShownPart,			0x267e	; the part the PART box was last drawn for -- C0mbinati0nM0de_ShowSelectedPart
+	.equ CombinationMode_Solo,			0x267d	; bit 0: SOLO -- LcdKeyRow1_CombinationMode_Page2
+	.equ CombinationMode_ShownPart,			0x267e	; the part the PART box was last drawn for -- CombinationMode_ShowSelectedPart
 	.equ DisplayHold_Flag,				0x267f	; bit 0: DISPLAY HOLD on -- SoftKeyCol7/8_GroupSoundDisplayHold
-	.equ CombinationMode_Page,			0x2687	; 0 page 1, 1 page 2 -- PageKey_C0mbinati0nM0de
+	.equ CombinationMode_Page,			0x2687	; 0 page 1, 1 page 2 -- PageKey_CombinationMode
 
 ; ---- wsa1/notes/FINDINGS-prom_a-panel-io-state.md -- "panel LED, analog-control and held-key state"
 	.equ PanelLed_Shadow,				0x20d0	; 8 LED bytes as they should be -- PanelLed_Show*, PanelLed_SendChangedBytes
@@ -518,7 +518,7 @@
 	.equ IconOrigin_Y,				0x2352	; Y of the small icon being drawn -- KeyboardIcon_Draw and TouchCurve_DrawThumbnail draw relative to it
 
 ; ---- wsa1/notes/FINDINGS-prom_a-dispatch-matrix-and-drum-names.md -- "1. 0xFF3800-0xFF7C65 -- a UI screen module with fourteen dispatch tables"
-	.equ UI_ScreenPage,				0x2229	; the page of a multi-page screen (DiskSaveFile 0..5, MidiFileSave 0..3, L0adSingle* 0..1) -- the PageDispatch_* ENTER readers index ScreenEnterPages_* by it; the 32-slot control tables add 32 * it
+	.equ UI_ScreenPage,				0x2229	; the page of a multi-page screen (DiskSaveFile 0..5, MidiFileSave 0..3, LoadSingle* 0..1) -- the PageDispatch_* ENTER readers index ScreenEnterPages_* by it; the 32-slot control tables add 32 * it
 
 ; ---- wsa1/notes/FINDINGS-prom_a-initial.md -- "1. The screen: seven items, one table"
 	.equ Initial_SelectedItem,			0x26f2	; the INITIAL screen's item, 0..6: TOTAL, PART SETTING, SYSTEM, MIDI SETTING, RE-MAP, DRUMS MAP, SEQUENCER -- Initial_ExecuteSelected bounds it (cp BC,6) and jumps through Initial_ItemTable
@@ -577,7 +577,7 @@
 	.equ BStore_TrackToPart,			0x603422	; workspace +0x22: 16 bytes, the part each sequencer channel plays, 0xFF = none -- TimedEvents_ProcessRing maps a frame's channel through it; EditPartSelect_DrawPartLabels draws it
 
 ; ---- wsa1/notes/FINDINGS-prom_b-disk-and-file-menus.md -- "2026-10-04: the SEQUENCER content type -- two files, SQF and SEQ"
-	.equ Disk_SeqBank,				0x272b	; the sequencer bank 0..9 a disk load goes into / a save comes from -- LcdKeyRow4 / LcdKeyRow5_DiskL0adFile step it 0..9; SeqFile_Load makes it BStore_CurrentBank
+	.equ Disk_SeqBank,				0x272b	; the sequencer bank 0..9 a disk load goes into / a save comes from -- LcdKeyRow4 / LcdKeyRow5_DiskLoadFile step it 0..9; SeqFile_Load makes it BStore_CurrentBank
 
 ; ---- wsa1/notes/FINDINGS-prom_b-disk-and-file-menus.md -- "2026-10-04: the DISK SAVE PASSWORD -- a hidden page, and banks that clear themselves at boot"
 	.equ DiskSave_PasswordUnlockCount,		0x220c	; DISK SAVE FILE page 1's SoftKeyCol4 presses; past 6 the password page opens -- SoftKeyCol4_DiskSaveFile_Page1 counts it; DiskSave_StorePasswordInWorkspace tests >= 6
@@ -607,7 +607,7 @@
 ; ---- wsa1/notes/gui-data-2026-10-29/README.md -- "8.1 Screen working cells"
 	.equ SoundGroup_PreviousBank,			0x2674	; the bank before the selection was reloaded; its highlight box is erased -- SoundGroup_LoadSelectionFromPart: (0x2674) = old (0x216A)
 	.equ EditScreen_DrawNumber,			0x26b0	; the 16-bit number an edit-screen field draws next: measure, beat, tick, velocity, length, note -- EditScreen_DrawMeasure / _DrawBeat / _DrawTick / _DrawEventVelocity, DrumEdit_DrawRowNote0..11 store it; 53 records draw it
-	.equ UI_CursorBox,				0x2721	; the index of the box a screen draws its cursor highlight in -- Paint_MidiTotalMode, MidiFileSave_MoveNameCursor, S0ngSelectName_CursorLeft/Right
+	.equ UI_CursorBox,				0x2721	; the index of the box a screen draws its cursor highlight in -- Paint_MidiTotalMode, MidiFileSave_MoveNameCursor, SongSelectName_CursorLeft/Right
 	.equ MidiScreen_SubPage,			0x2740	; which page / key row a MIDI settings screen shows -- LcdKeyRow1_GeneralMidiMode_Page0 sets 1 (YES/NO); ScreenButton_GeneralMidiMode_Entry reads it
 	.equ MidiOutPgm_SendShown,			0x2741	; 1 while the SEND box is drawn -- MidiOutProgramChange_Send sets it; Paint_MidiOutProgramChange erases the box
 	.equ MidiOutPgm_FilledBox,			0x2742	; which of DLTable_F0D58E's two bottom-row boxes the SEND list fills; nothing on CPU 1 writes it and RESET zeroes 0x0080-0x51FF, so it is always box 0 -- display-only -- the record after MidiOutPgm_SendShown's erase in DLTable_F0D530; notes/open4-c-probes/ram_cell_writer_census.py
@@ -619,16 +619,16 @@
 	.equ MessageScreen_Arg,				0x2881	; a byte the message screen draws with its message -- MessageScreen_Paint copies (0x0C12) here for message 0x1A
 
 ; ---- wsa1/notes/gui-data-2026-10-29/README.md -- "8.2 The disk and MIDI-file screens"
-	.equ LoadSingle_SourceBank,			0x2728	; the USER bank of the LOAD SINGLE screens drawn at the left: the SOURCE, the bank inside the loaded file the sound is copied from -- DiskFile_BuildLinkCopyRecords puts UserSoundBank_RemoteGroupAddr((0x2728), (0x2727)) in each copy record's +0 source field; L0adSingle_DrawBankAndNumber: Text_UserBankAbbrevs[(0x2728)]
+	.equ LoadSingle_SourceBank,			0x2728	; the USER bank of the LOAD SINGLE screens drawn at the left: the SOURCE, the bank inside the loaded file the sound is copied from -- DiskFile_BuildLinkCopyRecords puts UserSoundBank_RemoteGroupAddr((0x2728), (0x2727)) in each copy record's +0 source field; LoadSingle_DrawBankAndNumber: Text_UserBankAbbrevs[(0x2728)]
 	.equ NameEdit_CharBox,				0x2729	; the character cell the name-entry grid highlights -- MidiFileSave_MoveNameCursor: (0x2729) := NameEdit_CharIndex
 	.equ DiskSave_PasswordCursor,			0x272a	; bit 0: which of the DISK SAVE password's two 16x16 characters is highlighted (the two rects of DLTab_F589BD/F589D8 are the cells of the width-2 string at x 136); nothing on CPU 1 writes it and RESET zeroes 0x0080-0x51FF, so it is always the first -- display-only -- DL_F589B2 fills and DL_F589CD clears by it; notes/open4-c-probes/ram_cell_writer_census.py
-	.equ MidiFile_ListCursorRow,			0x272d	; the MIDI FILE screens' list cursor row -- 0 on Paint_MidiFileDirectPlay / _L0ad; MidiFile_LcdKeyRow4 decrements it
+	.equ MidiFile_ListCursorRow,			0x272d	; the MIDI FILE screens' list cursor row -- 0 on Paint_MidiFileDirectPlay / _Load; MidiFile_LcdKeyRow4 decrements it
 	.equ DiskScreen_RowOption,			0x2730	; the option the last LCD-row key chose; each row key writes its own number -- LcdKeyRow1..5_MidiFileSave_Page1 write 0, 0, 1, 2, 3
 	.equ MidiFileSave_Options,			0x2731	; two one-bit options of MIDI FILE SAVE page 1, each drawn OFF / ON -- ScreenEnter_MidiFileSave_Page1
-	.equ DiskLoad_SongNumber,			0x2733	; the song number the row-4 / row-5 keys step -- LcdKeyRow4/5_DiskL0adFile, LcdKeyRow4/5_MidiFileL0ad
-	.equ LoadSingle_DestBank,			0x2736	; the other USER bank, drawn at the right: the DESTINATION in the machine's memory; page 1 lists its groups -- DiskFile_BuildLinkCopyRecords puts it in each copy record's +6 destination field; SoftKeyCol2_L0adSingleS0und_Page0 writes 1 / 2; L0adSingleS0und_DrawGroupList
-	.equ LoadSingle_SelectedItem,			0x2738	; the item selected on LOAD SINGLE page 0 -- ScreenEnter_L0adSingleS0und_Page0, SoftKeyCol5_L0adSingleS0und_Page0
-	.equ LoadSingle_ListCursorRow,			0x2739	; page 1's cursor row 0..7 -- SoftKeyCols7_8_L0adSingle_Page1
+	.equ DiskLoad_SongNumber,			0x2733	; the song number the row-4 / row-5 keys step -- LcdKeyRow4/5_DiskLoadFile, LcdKeyRow4/5_MidiFileLoad
+	.equ LoadSingle_DestBank,			0x2736	; the other USER bank, drawn at the right: the DESTINATION in the machine's memory; page 1 lists its groups -- DiskFile_BuildLinkCopyRecords puts it in each copy record's +6 destination field; SoftKeyCol2_LoadSingleSound_Page0 writes 1 / 2; LoadSingleSound_DrawGroupList
+	.equ LoadSingle_SelectedItem,			0x2738	; the item selected on LOAD SINGLE page 0 -- ScreenEnter_LoadSingleSound_Page0, SoftKeyCol5_LoadSingleSound_Page0
+	.equ LoadSingle_ListCursorRow,			0x2739	; page 1's cursor row 0..7 -- SoftKeyCols7_8_LoadSingle_Page1
 
 ; ---- wsa1/notes/FINDINGS-prom_b-graphics-veneers.md -- "Open: (0x27A2), (0x27A4), (0x27F5) -- named 2026-10-31"
 	.equ ToneEdit_SoloOn,				0x27a2	; 1 while the MODELING top's SOLO is on (the selected layer heard alone); UiPaint_Solo draws its indicator from it -- Var27A2_ToggleWithP23 (LCD row 1, right key of ToneEditPage_A0) toggles it and sends p23 for one layer (on) or all four (off); sub_FDACBD clears it
@@ -671,12 +671,12 @@
 	.equ Combination_Effect1On,			0x7659	; bit 0: EFF1 (Combination_Current+0x39); inferred from the caption -- cleared by CombinationNaming_WriteToUserMemory; EffectEditor_PaintJob2_DL1 draws EFF1 / ----
 	.equ Combination_Effect2On,			0x7679	; bit 0: EFF2 (Combination_Current+0x59); inferred from the caption -- cleared by CombinationNaming_WriteToUserMemory; EffectEditor_PaintJob2_DL1 draws EFF2 / ----
 	.equ Combination_ReverbOn,			0x7699	; bit 0: REV (Combination_Current+0x79); inferred from the caption -- cleared by CombinationNaming_WriteToUserMemory; EffectEditor_PaintJob2_DL1 draws REV / ---
-	.equ CombiPart_Volume,				0x76a5	; part 1's VOL (record +0x03; part n+1 at +n*0x40) -- C0mbinati0nM0de_DrawPart1Vol; C0mbinati0nM0de_StepPartVol steps it
+	.equ CombiPart_Volume,				0x76a5	; part 1's VOL (record +0x03; part n+1 at +n*0x40) -- CombinationMode_DrawPart1Vol; CombinationMode_StepPartVol steps it
 	.equ CombiPart_Effect1Send,			0x76a7	; part 1's EFFECT1 SEND (record +0x05) -- Cpu2Query_ApplyPartRecordEffects
 	.equ CombiPart_Effect2OnOff,			0x76a8	; part 1's EFFECT2 ON/OFF (record +0x06) -- Cpu2Query_ApplyPartRecordEffects
 	.equ CombiPart_ReverbSend,			0x76a9	; part 1's REVERB SEND (record +0x07) -- Cpu2Query_ApplyPartRecordEffects
-	.equ CombiPart_Pan,				0x76aa	; part 1's PAN (record +0x08) -- C0mbinati0nM0de_DrawPart1Pan, Msg0716_RepostPart0Pan
-	.equ CombiPart_Flags,				0x76af	; part 1's flags (record +0x0D): bit 5 INT; bit 6 set = MIDI OUT parameter messages for the part are not sent (parts 1-3 only) -- C0mbinati0nM0de_SetPartInt (bit 5); MidiOut_ParamGate_Part0..2 skip MidiOut_DispatchByClass when bit 6 is set and (0x60F007) bit 7 is clear
+	.equ CombiPart_Pan,				0x76aa	; part 1's PAN (record +0x08) -- CombinationMode_DrawPart1Pan, Msg0716_RepostPart0Pan
+	.equ CombiPart_Flags,				0x76af	; part 1's flags (record +0x0D): bit 5 INT; bit 6 set = MIDI OUT parameter messages for the part are not sent (parts 1-3 only) -- CombinationMode_SetPartInt (bit 5); MidiOut_ParamGate_Part0..2 skip MidiOut_DispatchByClass when bit 6 is set and (0x60F007) bit 7 is clear
 	.equ CombiPart_SoundBank,			0x76df	; part 1's sound bank (record +0x3D) -- SoundGroup_LoadSelectionFromPart: (0x216A) = record +0x3D
 
 ; ---- wsa1/notes/gui-data-2026-10-29/README.md -- "8.5 MIDI, and the records with no variable"

@@ -6,7 +6,7 @@ ROM's OWN handler table, not an assumption.
 QUESTION IT ANSWERS
   `scripts/analysis/sizing_defect_hunt.py --scan prom_b/wsa1_prom_b.s` flags
   `Data_F34968` (declared 1 B) with a ZERO-DRIFT LANDING at 0xF34970 (the
-  start of the already-converted, already-named `DL_CycleMasterS0ngMeasureTimeSig`
+  start of the already-converted, already-named `DL_CycleMasterSongMeasureTimeSig`
   display list) recovering exactly 1 record, 8 bytes -- i.e. the tiny
   "Data" object plus the 7 B `.incbin` right after it (0xF34969-0xF34970)
   is really the record immediately before that named list.
@@ -58,7 +58,7 @@ NEW_BLOCK = (
     "; 1 B object plus the 7 B .incbin that followed it is ONE interpreter-A\n"
     "; op-0x0E record (handler 0xF31A9F, fixed 8 B, verified against the ROM's\n"
     "; own handler table), the record immediately before the already-named\n"
-    "; DL_CycleMasterS0ngMeasureTimeSig list right after it.\n"
+    "; DL_CycleMasterSongMeasureTimeSig list right after it.\n"
     "\t.byte 0x0E, 0x08\t; op 0E, 8 bytes -> handler 0xF31A9F\n"
     "\t.short 0x0000\n"
     "\t.short 0x0028\n"
@@ -90,7 +90,7 @@ def cmd_check():
                     (kind, n) == ("fixed", 8) == ("fixed", rec[1])))
 
     checks.append(("0xF34970 (right after these 8 B) is the already-converted, "
-                    "already-named DL_CycleMasterS0ngMeasureTimeSig start",
+                    "already-named DL_CycleMasterSongMeasureTimeSig start",
                     True))  # confirmed by inspection; not re-derivable from the ROM alone
 
     src = open(SRC, encoding="latin-1").read()

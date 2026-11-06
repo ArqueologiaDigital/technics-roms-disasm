@@ -3,7 +3,7 @@
 
 QUESTION IT ANSWERS
   Each sequencer job screen keeps its cursor in one RAM byte that the tree already names
-  <Screen>_Field (MeasureInsert_Field, MeasureC0py_Field, N0teChange_Field, ...; its readers are the
+  <Screen>_Field (MeasureInsert_Field, MeasureCopy_Field, NoteChange_Field, ...; its readers are the
   screen's LcdKeyRow / SoftKeyCol handlers and its DrawFieldCursor).  A routine whose whole body is
       store the constant N into <Screen>_Field   (`ld (F:16), N`, or `ld a, N` + `ld (F:16), a`)
       [mirror A into DisplayListB_Stage+k]        (the display stage the paint reads)

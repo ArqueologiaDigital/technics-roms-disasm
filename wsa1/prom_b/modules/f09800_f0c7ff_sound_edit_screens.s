@@ -92,14 +92,14 @@ SoundEditController_PaintHeader:
 	cp	(SoundEdit_SoundKind:16), 0x01	; F098B8  cp (0x27f5),0x01
 	jr	z, SoundEditController_PaintHeader_Skip	; F098BD  jr Z,0xf098d4
 	ld	(LCD_CurrentLayer:16), 0	; F098BF  ld (0x2540),0x00
-	ld	xiy, DL_C0ntr0llerSoundEditDepth	; F098C4  ld XIY,0x00f32c2a
+	ld	xiy, DL_ControllerSoundEditDepth	; F098C4  ld XIY,0x00f32c2a
 	ld	xix, DL_1st2nd	; F098C9  ld XIX,0x00f32d03
 	call	T_DisplayList_Run	; F098CE  call 0xf417f0
 	jr	SoundEditController_PaintHeader_Return	; F098D2  jr T,0xf098fa
 SoundEditController_PaintHeader_Skip:
 	ld	(LCD_CurrentLayer:16), 0	; F098D4  ld (0x2540),0x00
-	ld	xiy, DL_C0ntr0llerSoundEditDepth	; F098D9  ld XIY,0x00f32c2a
-	ld	xix, DL_C0ntr0llerSoundEditDepth + 0x9E	; F098DE  ld XIX,0x00f32cc8
+	ld	xiy, DL_ControllerSoundEditDepth	; F098D9  ld XIY,0x00f32c2a
+	ld	xix, DL_ControllerSoundEditDepth + 0x9E	; F098DE  ld XIX,0x00f32cc8
 	call	T_DisplayList_Run	; F098E3  call 0xf417f0
 	ld	(LCD_CurrentLayer:16), 0	; F098E7  ld (0x2540),0x00
 	ld	xiy, DL_1st2nd	; F098EC  ld XIY,0x00f32d03

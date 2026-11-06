@@ -269,7 +269,7 @@ live in the workspace (`0x6034B8` / `0x6034BA`), so they are per bank. `SeqFile_
 them across the workspace swap (`BStore_StashFreeChain` / `BStore_UnstashFreeChain`). A song that needs
 more blocks than are free is refused with result 0x1E.
 
-The bank is `Disk_SeqBank` (RAM 0x272B), 0..9, which `LcdKeyRow4` / `LcdKeyRow5_DiskL0adFile` step.
+The bank is `Disk_SeqBank` (RAM 0x272B), 0..9, which `LcdKeyRow4` / `LcdKeyRow5_DiskLoadFile` step.
 Results go to `(0x23CB)`: 0x10 bad SQF, 0x1E no room in the store, 7 no room on the disk, otherwise
 `Disk_LastError`. Reads succeed with 1 and writes with 3.
 
@@ -376,8 +376,12 @@ phrase* appears both ways: `MIDI FILE SAVE : FILE SELECTION` at `0xF58A66` and
 `MIDI FILE SAVE : FILE SELECTI0N` at `0xF59226`. It makes no difference on
 screen, and the reason is a byte fact: **`Font_Svc06_8x14` cell
 0x30 and cell 0x4F are the same fourteen bytes** (both checked in
-`gen_prom_b_f58000_module.py --selftest`). Recorded because anyone grepping this
-source for `LOAD`, `SOUND` or `SELECTION` will miss half of them.
+`gen_prom_b_f58000_module.py --selftest`). Recorded because anyone grepping the
+captions in this source (the `.ascii` text and the comments that quote it) for
+`LOAD`, `SOUND` or `SELECTION` will miss half of them. Label names are different
+since 2026-11-06: the owner decided to normalise them, so they spell the word with
+O (`DL_MidiFileLoadLoad`, `Paint_DiskLoadFile`; `notes/zero-for-o/README.md`), and a
+grep of the names finds them all.
 
 ---
 

@@ -114,7 +114,7 @@ def plan():
             if len(slots) > 1:
                 ks = sorted(kk for tt, kk in slots)
                 # one handler on several SOFT KEYS of the same table: SoftKeyCols<a>_<b> for two, <a>to<b> for a run
-                # (the spelling of SoftKeyCols3_4_L0adSingleS0und_Page0 / SoftKeyCols2to7_CreatorSelectController)
+                # (the spelling of SoftKeyCols3_4_LoadSingleSound_Page0 / SoftKeyCols2to7_CreatorSelectController)
                 if {tt for tt, kk in slots} == {t} and all(kk < 8 for kk in ks):
                     if k != ks[0]:
                         continue

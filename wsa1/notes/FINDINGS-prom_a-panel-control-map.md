@@ -131,14 +131,14 @@ carries a `Paint_*` name an earlier round derived from the screen's own text.
 |---|---|---|---|
 | `Dispatch_FF3800` | 0x60 | **DiskMenu** | Enter draws "DISK" / "MIDI FILE LOAD" / "LOAD", choosing on the model strap at 0xFF42EE — the site this module's banner already calls the disk menu |
 | `Dispatch_FF3880` | 0x65 | **MidiFileDirectPlay** | Enter **is** `Paint_MidiFileDirectPlay` |
-| `Dispatch_FF3900` | 0x67 | **DiskL0adFile** | Enter **is** `Paint_DiskL0adFile` |
-| `Dispatch_FF3980` | 0x69 | **MidiFileL0ad** | Enter **is** `Paint_MidiFileL0ad` |
+| `Dispatch_FF3900` | 0x67 | **DiskLoadFile** | Enter **is** `Paint_DiskLoadFile` |
+| `Dispatch_FF3980` | 0x69 | **MidiFileLoad** | Enter **is** `Paint_MidiFileLoad` |
 | `Dispatch_FF3A29` | 0x6C | **DiskSaveFile** | Enter is `PageDispatch_DiskSaveFile`, four of whose six pages are `Paint_DiskSaveFile` |
 | `Dispatch_FF3D39` | 0x6E | **MidiFileSave** | its pages draw the lists at 0xF58A21 "MIDI FILE SAVE : FILE NAMING" and 0xF59222 "MIDI FILE SAVE : FILE SELECTI0N" |
 | `Dispatch_FF3F39` | 0x70 | **FloppyDiskFormatSelectType** | Enter **is** `Paint_FloppyDiskFormatSelectType` |
 | `Dispatch_FF3FB9` | 0x71 | **FloppyDiskFormatAreYouSure** | Enter **is** `Paint_FloppyDiskFormatAreYouSure` |
-| `Dispatch_FF4049` | 0x74 | **L0adSingleS0und** | its page 0 draws the list at 0xF58C53, "LOAD SINGLE SOUND" |
-| `Dispatch_FF4151` | 0x73 | **L0adSingleC0mbination** | its page 1 draws the list at 0xF58F55, "LOAD SINGLE COMBINATION" |
+| `Dispatch_FF4049` | 0x74 | **LoadSingleSound** | its page 0 draws the list at 0xF58C53, "LOAD SINGLE SOUND" |
+| `Dispatch_FF4151` | 0x73 | **LoadSingleCombination** | its page 1 draws the list at 0xF58F55, "LOAD SINGLE COMBINATION" |
 
 ### The batch
 
@@ -150,7 +150,7 @@ anything ambiguous:
   page byte `(0x2229)` alone and take no argument. Giving one of *those* a
   PanelButton name is the mistake the distinction exists to prevent.
 * **6 renames + 59 new labels** — the handlers, in round 12's exact form
-  `<Control>_<Screen>`: `LcdKeyRow1_DiskMenu`, `ExitKey_MidiFileL0ad`,
+  `<Control>_<Screen>`: `LcdKeyRow1_DiskMenu`, `ExitKey_MidiFileLoad`,
   `LcdKeyRow4_MidiFileSave_Page3`, `ExitKey_DiskSaveFile_Pages3_4`, …
   ⚠ **No `SoftKeyCol*` name comes out of this module**, and that is the refusal
   working: its tables do have live entries at 0x00-0x07, and every one of those
@@ -206,10 +206,10 @@ picking on bit 7 of the forwarded argument and, on one arm, on the model strap:
 
 | key | bit 7 SET | bit 7 CLEAR, variant 2 (the rack) | bit 7 CLEAR, variant 1 |
 |---|---|---|---|
-| LCD row 1 | `0x47` → **DiskL0adFile** | `0x54` → **L0adSingleS0und** | `0x49` → **MidiFileL0ad** |
-| LCD row 2 | `0x4C` → **DiskSaveFile** | `0x53` → **L0adSingleC0mbination** | `0x4E` → **MidiFileSave** |
-| LCD row 3 | `0x45` → **MidiFileDirectPlay** | *nothing* | `0x54` → **L0adSingleS0und** |
-| LCD row 4 | `0x50` → **FloppyDiskFormatSelectType** | *nothing* | `0x53` → **L0adSingleC0mbination** |
+| LCD row 1 | `0x47` → **DiskLoadFile** | `0x54` → **LoadSingleSound** | `0x49` → **MidiFileLoad** |
+| LCD row 2 | `0x4C` → **DiskSaveFile** | `0x53` → **LoadSingleCombination** | `0x4E` → **MidiFileSave** |
+| LCD row 3 | `0x45` → **MidiFileDirectPlay** | *nothing* | `0x54` → **LoadSingleSound** |
+| LCD row 4 | `0x50` → **FloppyDiskFormatSelectType** | *nothing* | `0x53` → **LoadSingleCombination** |
 | EXIT | — | `0x01` (entry 0x21) | `0x01` |
 
 Every id is a literal byte in the ROM (`0xFF4359`, `0xFF435E`, `0xFF4367`,
@@ -235,7 +235,7 @@ Round 7 refused to name `sub_FF4ACB` and `sub_FF4D5D`:
 
 Nothing in their lists does. The **dispatch slot** does: they are
 `Dispatch_FF3900` entries **[11]** and **[12]** — LCD row 4 and LCD row 5 of one
-screen. They are now `LcdKeyRow4_DiskL0adFile` and `LcdKeyRow5_DiskL0adFile`, and round 7's
+screen. They are now `LcdKeyRow4_DiskLoadFile` and `LcdKeyRow5_DiskLoadFile`, and round 7's
 block is left below the new one verbatim, refusal included, as the record of how
 the gap closed.
 

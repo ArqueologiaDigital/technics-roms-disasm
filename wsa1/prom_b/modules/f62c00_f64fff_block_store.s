@@ -1298,7 +1298,7 @@ BStore_CursorAdvance_Skip3:
 BStore_CursorAdvance_Return:
 	ret	; F6360D  ret
 ; Seq_FindMasterTrack: W := 1 + the first track 0..(0x0CA3) whose BStore_TrackToPart byte is 0x20, and (0x0C8A) bit 2
-;   set -- only when (0x360E) bit 0 (the bit S0ngC0py_CopyAllTracks shows as '(MASTER: ON') is set; else W = 0.
+;   set -- only when (0x360E) bit 0 (the bit SongCopy_CopyAllTracks shows as '(MASTER: ON') is set; else W = 0.
 ;   Seq_LoadTimeSigAtCurrentMeasure reads the time signature from that track. Basis: callers + body. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave2_f.json)
 Seq_FindMasterTrack:		; <- T_Seq_FindMasterTrack
@@ -1845,14 +1845,14 @@ SongEdit_ResetJobFields:		; <- T_SongEdit_ResetJobFields
 	ld	(3589:16), 100	; F63B41  ld (0x0e05),0x64
 	ldw	wa, 1	; F63B46  ld WA,0x0001
 	ld	(3566:16), a	; F63B49  ld (0x0dee),A
-	ld	(N0teChange_FromMeasure:16), wa	; F63B4D  ld (0x0df0),WA
-	ld	(N0teChange_ToMeasure:16), wa	; F63B51  ld (0x0df2),WA
+	ld	(NoteChange_FromMeasure:16), wa	; F63B4D  ld (0x0df0),WA
+	ld	(NoteChange_ToMeasure:16), wa	; F63B51  ld (0x0df2),WA
 	ld	(3584:16), wa	; F63B55  ld (0x0e00),WA
 	xor	a, a	; F63B59  xor A,A
-	ld	(N0teChange_FromNote:16), a	; F63B5B  ld (0x0df4),A
-	ld	(N0teChange_ToNote:16), a	; F63B5F  ld (0x0df5),A
-	ld	wa, (N0teChange_ToMeasure:16)	; F63B63  ld WA,(0x0df2)
-	sub	wa, (N0teChange_FromMeasure:16)	; F63B67  sub WA,(0x0df0)
+	ld	(NoteChange_FromNote:16), a	; F63B5B  ld (0x0df4),A
+	ld	(NoteChange_ToNote:16), a	; F63B5F  ld (0x0df5),A
+	ld	wa, (NoteChange_ToMeasure:16)	; F63B63  ld WA,(0x0df2)
+	sub	wa, (NoteChange_FromMeasure:16)	; F63B67  sub WA,(0x0df0)
 	inc	1, wa	; F63B6B  inc 1,WA
 	ld	(4766:16), wa	; F63B6D  ld (0x129e),WA
 	ldw	wa, 1	; F63B71  ld WA,0x0001
@@ -3515,7 +3515,7 @@ sub_F64A34_Return2:
 ;   its 0xC00-byte copy, then SongGmFlag_ApplyAndRebuildRouting matches GM mode (0x7F4D) bit 2 to the song's +0xC6 flag (posting the change
 ;   to CPU 2) and rebuilds note routing, then T_Seq_ApplySongBeatsPerBar and (0x360B) bit 0 cleared.
 ;   Medley_LoadInternalSong calls it (T_BStore_LoadSongFromCurrentBank) right after BStore_CurrentBank := the song; prom_a's
-;   S0ngSelectName_LoadSongFromBank does the same steps inline. Basis: caller + body. (notes/naming-
+;   SongSelectName_LoadSongFromBank does the same steps inline. Basis: caller + body. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave5_r.json)
 BStore_LoadSongFromCurrentBank:		; <- T_BStore_LoadSongFromCurrentBank
 	ld	wa, (BStore_FreeHead:24)	; F64B1B  ld WA,(0x6034b8)

@@ -2478,7 +2478,7 @@ PanelScreen_VtableTable:
 PanelScreen_VtableTable_ViewB:
 	.long PanelScreen_NullVtable                ; F86F41  [0]   -> PanelScreen_NullVtable
 	.long T_InstallPainter_SoundMode_Entry                              ; F86F45  [1]   -> 0xF41520
-	.long T_InstallPainter_C0mbinati0nM0de_Entry                              ; F86F49  [2]   -> 0xF41530
+	.long T_InstallPainter_CombinationMode_Entry                              ; F86F49  [2]   -> 0xF41530
 	.long PanelScreen_NullVtable                ; F86F4D  [3]   -> PanelScreen_NullVtable
 	.long T_Paint_Sequencer                     ; F86F51  [4]   -> 0xF402AC
 	.long PanelScreen_NullVtable                ; F86F55  [5]   -> PanelScreen_NullVtable
@@ -2487,9 +2487,9 @@ PanelScreen_VtableTable_ViewB:
 	.long T_ScreenEnter_CycleRecordScreen_Fwd                              ; F86F61  [8]   -> 0xF40DD0
 	.long PanelScreen_NullVtable                ; F86F65  [9]   -> PanelScreen_NullVtable
 	.long PanelScreen_NullVtable                ; F86F69  [10]   -> PanelScreen_NullVtable
-	.long T_ScreenEnter_AfterT0uchSetting       ; F86F6D  [11]   -> 0xF43180
+	.long T_ScreenEnter_AfterTouchSetting       ; F86F6D  [11]   -> 0xF43180
 	.long T_ScreenEnter_MetronomeBalanceScreen_Fwd                              ; F86F71  [12]   -> 0xF40E00
-	.long T_ScreenEnter_S0ngSelectName          ; F86F75  [13]   -> 0xF431A0
+	.long T_ScreenEnter_SongSelectName          ; F86F75  [13]   -> 0xF431A0
 	.long T_ScreenEnter_StepRecord                              ; F86F79  [14]   -> 0xF43160
 	.long T_ScreenEnter_StepRecordPartSelect    ; F86F7D  [15]   -> 0xF43170
 	.long T_ScreenEnter_TrackAssign             ; F86F81  [16]   -> 0xF43140
@@ -2505,11 +2505,11 @@ PanelScreen_VtableTable_ViewB:
 	.long T_ScreenEnter_Edit                    ; F86FA9  [26]   -> 0xF43050
 	.long T_ScreenEnter_SongClear               ; F86FAD  [27]   -> 0xF43060
 	.long T_ScreenEnter_TrackClear              ; F86FB1  [28]   -> 0xF43070
-	.long T_ScreenEnter_Vel0cityChange          ; F86FB5  [29]   -> 0xF43080
+	.long T_ScreenEnter_VelocityChange          ; F86FB5  [29]   -> 0xF43080
 	.long T_ScreenEnter_Quantize                ; F86FB9  [30]   -> 0xF43090
 	.long T_ScreenEnter_TrackMerge              ; F86FBD  [31]   -> 0xF430A0
 	.long T_ScreenEnter_MeasureErase            ; F86FC1  [32]   -> 0xF430B0
-	.long T_ScreenEnter_MeasureC0py             ; F86FC5  [33]   -> 0xF430C0
+	.long T_ScreenEnter_MeasureCopy             ; F86FC5  [33]   -> 0xF430C0
 	.long T_ScreenEnter_MeasureInsert           ; F86FC9  [34]   -> 0xF430D0
 	.long T_ScreenEnter_MeasureDelete           ; F86FCD  [35]   -> 0xF430E0
 	.long T_ShowScreen_NoteEditPartSelect       ; F86FD1  [36]   -> 0xF402BC
@@ -2518,10 +2518,10 @@ PanelScreen_VtableTable_ViewB:
 	.long T_ShowScreen_DrumEditPartSelect       ; F86FDD  [39]   -> 0xF402DC
 	.long T_EditScreen_EnterDrumEdit                              ; F86FE1  [40]   -> 0xF402EC
 	.long T_ScreenEnter_CyclePlayEditScreen29_Fwd                              ; F86FE5  [41]   -> 0xF40DF0
-	.long T_ScreenEnter_S0ngC0py                ; F86FE9  [42]   -> 0xF430F0
-	.long T_ScreenEnter_Transp0se               ; F86FED  [43]   -> 0xF43100
+	.long T_ScreenEnter_SongCopy                ; F86FE9  [42]   -> 0xF430F0
+	.long T_ScreenEnter_Transpose               ; F86FED  [43]   -> 0xF43100
 	.long T_ScreenEnter_AdvanceDelay            ; F86FF1  [44]   -> 0xF43110
-	.long T_ScreenEnter_N0teChange              ; F86FF5  [45]   -> 0xF43120
+	.long T_ScreenEnter_NoteChange              ; F86FF5  [45]   -> 0xF43120
 	.long T_ScreenEnter_PanelWrite              ; F86FF9  [46]   -> 0xF43130
 	.long PanelScreen_NullVtable                ; F86FFD  [47]   -> PanelScreen_NullVtable
 	.long PanelScreen_NullVtable                ; F87001  [48]   -> PanelScreen_NullVtable
@@ -2547,9 +2547,9 @@ PanelScreen_VtableTable_ViewB:
 	.long PanelScreen_NullVtable                ; F87051  [68]   -> PanelScreen_NullVtable
 	.long T_Paint_MidiFileDirectPlay            ; F87055  [69]   -> 0xF42274
 	.long PanelScreen_NullVtable                ; F87059  [70]   -> PanelScreen_NullVtable
-	.long T_Paint_DiskL0adFile                  ; F8705D  [71]   -> 0xF423A0
+	.long T_Paint_DiskLoadFile                  ; F8705D  [71]   -> 0xF423A0
 	.long PanelScreen_NullVtable                ; F87061  [72]   -> PanelScreen_NullVtable
-	.long T_Paint_MidiFileL0ad                  ; F87065  [73]   -> 0xF42400
+	.long T_Paint_MidiFileLoad                  ; F87065  [73]   -> 0xF42400
 	.long PanelScreen_NullVtable                ; F87069  [74]   -> PanelScreen_NullVtable
 	.long PanelScreen_NullVtable                ; F8706D  [75]   -> PanelScreen_NullVtable
 	.long T_PageDispatch_DiskSaveFile                              ; F87071  [76]   -> 0xF423B0
@@ -2559,8 +2559,8 @@ PanelScreen_VtableTable_ViewB:
 	.long T_Paint_FloppyDiskFormatSelectType    ; F87081  [80]   -> 0xF423D0
 	.long T_Paint_FloppyDiskFormatAreYouSure    ; F87085  [81]   -> 0xF423F0
 	.long PanelScreen_NullVtable                ; F87089  [82]   -> PanelScreen_NullVtable
-	.long T_PageDispatch_L0adSingleC0mbination                              ; F8708D  [83]   -> 0xF4241C
-	.long T_PageDispatch_L0adSingleS0und                              ; F87091  [84]   -> 0xF423E0
+	.long T_PageDispatch_LoadSingleCombination                              ; F8708D  [83]   -> 0xF4241C
+	.long T_PageDispatch_LoadSingleSound                              ; F87091  [84]   -> 0xF423E0
 	.long PanelScreen_FillerVtable_F406CC       ; F87095  [85]   -> 0xF406CC
 	.long PanelScreen_FillerVtable_F406DC       ; F87099  [86]   -> 0xF406DC
 	.long PanelScreen_NullVtable                ; F8709D  [87]   -> PanelScreen_NullVtable

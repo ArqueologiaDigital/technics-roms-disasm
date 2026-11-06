@@ -192,8 +192,8 @@ away — it is a menu, and the menu is now named
 * each row handler writes a screen id to `(0x2070)` with `(0x2071) = 0x80`;
   the ids are literal bytes at `0xFF4359`, `0xFF435E`, `0xFF4367`, `0xFF4385`,
   `0xFF438A`, `0xFF4393`, `0xFF43AC`, `0xFF43B9`, `0xFF43D3`, `0xFF43E0`, and
-  they lead to **DiskL0adFile, DiskSaveFile, MidiFileL0ad, MidiFileSave,
-  MidiFileDirectPlay, L0adSingleS0und, L0adSingleC0mbination** and
+  they lead to **DiskLoadFile, DiskSaveFile, MidiFileLoad, MidiFileSave,
+  MidiFileDirectPlay, LoadSingleSound, LoadSingleCombination** and
   **FloppyDiskFormatSelectType**;
 * ⚠ two of the eight slots are **inert on the rack**: rows 3 and 4's second key
   is gated on `cp (0xC4),0x01`, i.e. variant 1.

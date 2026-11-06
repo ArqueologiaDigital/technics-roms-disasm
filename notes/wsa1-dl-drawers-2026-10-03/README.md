@@ -27,7 +27,7 @@ that added this note restored the parent's names and applied the start-operand r
 
 ## Not named, on purpose
 
-- `sub_F99F24`: starts `DL_Input0utputFilterMidiT0talM0de`, but its header (round 7) records why
+- `sub_F99F24`: starts `DL_InputOutputFilterMidiTotalMode`, but its header (round 7) records why
   it was not named -- that list is the MIDI menu's index of thirteen captions.  The renamer skips
   any routine whose header says `NOT NAMED because` / `REFUSED to name`.
 - Routines with a start that is not a list label (a register copy, `xiz`-relative, `DLB_*` name
