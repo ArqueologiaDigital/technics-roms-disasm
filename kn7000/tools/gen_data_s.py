@@ -126,6 +126,8 @@ PROFILES["kn2400"] = dict(root="../kn2400", rom="baserom/kn2400_program.rom", sr
                           # crt0_start copies .data 0x485DD334 -> 0x50000010, 0x6E78 bytes (kn2400_manual.sym);
                           # stated, since the typed code spells the copy's source as a data label
                           raminit=(0x485DD334, 0x50000010, 0x6E78),
+                          # lane mn10300-data2: TitleNameTable (0x140 name pointers, title i's "_TT_<NAME>")
+                          title_names=(0x48414BD8, 0x140),
                           # func_486183E3 inflates demo song n's three streams (ptrs_50000C18 / C48 / C78)
                           # through func_486D4A2A, as the KN7000's func_48457350 through func_48533758
                           inflate="func_486D4A2A",
@@ -767,6 +769,28 @@ class Gen:
             for i, (nm, _a, _c) in d.items():
                 n = sanitize(nm or f"ID_{i:X}", 60)
                 self.id_name[i] = self.uniq(n if n not in self.names else n + "_ID")
+        # (lane mn10300-data2, L-mn10300-names-kn2400-titles) the titles no screen registers but the firmware's own
+        # title-name table names (profile `title_names`: its CPU address and entry count; the KN2400's
+        # TitleNameTable, title i's name string "_TT_<NAME>" at entry i): TT_<NAME> = (title slot << 16) | i.
+        # The firmware's placeholders ("_TT_13e") stay unnamed.
+        self.table_titles = {}
+        tn = P.get("title_names")
+        if tn:
+            ta, cnt = tn
+            slot = MM.SCHEMES[MM.SCHEME]["title_slot"]
+            have = set(self.id_name.values())
+            for i in range(cnt):
+                tid = (slot << 16) | i
+                if tid in m.titles:
+                    continue
+                s = m.cstr(m.u32(ta + 4 * i)) or ""
+                if not s.startswith("_TT_") or re.fullmatch(r"_TT_[0-9a-f]+", s):
+                    continue
+                n = sanitize(s[1:], 60)
+                if n in have or n in self.names:
+                    continue
+                self.id_name[tid] = self.uniq(n)
+                self.table_titles[tid] = s
 
     def str_item(self, a, base, kind="string", block=None):
         """A NUL-terminated string at `a` as an .asciz item; returns its label."""
@@ -6180,6 +6204,10 @@ class Gen:
                     extra = f"\t# screen {self.obj_by_id.get(scr, hex(scr) if isinstance(scr, int) else '?')}"
                 out.append(f".equ {self.id_name[i]}, 0x{i:08X}{extra}")
             out.append("")
+        if getattr(self, "table_titles", None):
+            out.append(f"# {len(self.table_titles)} titles no screen registers, named by the firmware's own title-name"
+                       f" table ({P['title_names'][0]:#010x}, entry i = title i's name string)")
+            out += [f".equ {self.id_name[i]}, 0x{i:08X}\t# \"{s}\"" for i, s in sorted(self.table_titles.items())] + [""]
         if self.host_used:
             out += [f"# the {P['host'].upper()}'s titles and functions this image's records name (the host's ids)"]
             out += [f".equ {self.host_ids[i]}, 0x{i:08X}" for i in sorted(self.host_used)] + [""]
