@@ -1553,10 +1553,9 @@ NakaWidget_Perf3StyleSel:	.incbin "includes/generated/naka_direct_play.bin", 0x2
 ; [nakarest] (Viewable slot 0xe3 (table 0xe24544, 12 entries, InitializeYoko)): "SOUND"
 ; [nakarest] (PsWideToggle.stroff of element 8); "SOUND" (PsWideToggle.stron of element 8).
 NakaWidget_Perf3SoundSel:	.incbin "includes/generated/naka_direct_play.bin", 0x2F82, 0x36
-; [nakarest] NakaWidget_Perf3RhythmSel  +0x2fb8..+0x2fda (0xe24034, 34 B)
+; [nakarest] NakaWidget_Perf3RhythmSel  +0x2fb8..+0x2fe2 (0xe24034, 42 B)
 ; [nakarest] widget record, element 9 of Viewable slot 0xe3 (table 0xe24544, 12 entries,
-; [nakarest] InitializeYoko) ("DemoRhy"): PsWideToggle (42 B).  Only 34 bytes are here: the
-; last 8, and the two "RHYTHM" captions, are NakaWidget_Perf3RhythmSel_Tail and the labels after
-; it, at the start of ui_widgets/naka_widget_tables_1.s.
-NakaWidget_Perf3RhythmSel:	.incbin "includes/generated/naka_direct_play.bin", 0x2FB8, 0x22
+; [nakarest] InitializeYoko) ("DemoRhy"): PsWideToggle (42 B).  Its two
+; "RHYTHM" captions are the first labels of ui_widgets/naka_widget_tables_1.s.
+NakaWidget_Perf3RhythmSel:	.incbin "includes/generated/naka_direct_play.bin", 0x2FB8, 0x2A
 ; External label offsets within the binary blob above.
