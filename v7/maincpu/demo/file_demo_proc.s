@@ -696,7 +696,7 @@ Demo_SelectEntry_ByteTable:
 	ret	z
 	cpw	(SEQ_ACTIVE_PARTS:16), 0
 	jr	nz, Demo_SelectEntry_ByteTable_Skip
-	bit	0, (0x31e7:16)
+	bit	0, (ACC_RUN_FLAGS:16)
 	jr	z, Demo_SelectEntry_ByteTable_Skip2
 Demo_SelectEntry_ByteTable_Skip:
 	res	3, (DEMO_CONTROL_FLAGS:16)

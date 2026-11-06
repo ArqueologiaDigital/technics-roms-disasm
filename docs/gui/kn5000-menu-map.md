@@ -13,7 +13,7 @@ title's procedure, or the function of a menu box, passing the title's `TT_*` ind
 `UI_ChangeTitleByIndex` / `UI_InterruptTitleByIndex` (`scripts/converters/name_title_index_operands.py`)
 or posting `EVT_CHANGE_TITLE` itself.
 
-211 titles (130 with a path), 21 modes, 3242 widget records in 18 C files, 99 menu entries, 93 code transitions and 267 EXIT links.
+211 titles (158 with a path), 21 modes, 3259 widget records in 18 C files, 99 menu entries, 275 code transitions and 267 EXIT links.
 
 ## Modes
 
@@ -289,9 +289,17 @@ Not an event. This is title id 0, entry 0 of object table 0x1A0. InitializeObjec
 
 - Path: mode MD_PS
 - Registered: `"TT_PS"`, title id 0x0, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/display/graphics_text_vga.s
-- View: element 0 of Viewable slot 0x0 (record outside the C sources)
+- View: `OBJ_NakaWidget_PanelSimulator` (Screen) in `naka_widget_names_charmap.c`
 - Menu entries: "CHECK TITLE" -> `TITLE_CHECK`
 - EXIT -> `TITLE_PS`
+- Widgets:
+
+  - `OBJ_NakaWidget_PanelSimulator` Screen [0,0 320x240]
+    - `OBJ_NakaDbg_PanelSimBitmap` Bitmap [6,34 307x45]
+    - `OBJ_PanelSimulatorForHk_Label` Label "Panel Simulator for HK" [38,114 246x19]
+    - `OBJ_CheckTitle_AcTitleMenu` AcTitleMenu "CHECK TITLE" [163,198 149x26] -> `TITLE_CHECK`
+    - `OBJ_NakaWidget_PanelSimulator_4_IvExitMode` IvExitMode [0,0 32x32]
+    - `OBJ_DebugWindow_AcWindowMenu` AcWindowMenu "DEBUG WINDOW" [8,198 149x26]
 
 ### `TITLE_SQMENU` -- "SEQUENCER MENU"
 
@@ -826,13 +834,17 @@ the CONTROL > wallpaper-setting page.
     - `OBJ_ControlWallSet_AcFuncEditSw_2` AcFuncEditSw [281,160 31x18]
     - `OBJ_ControlWallSet_IvShowHide` IvShowHide [0,0 32x32]
 
-### `TITLE_DEMOFEATURE`
+### `TITLE_DEMOFEATURE` -- "FEATURE PRESENTATION"
 
 - Path: DEMO button (mode MD_DEMO) > "FEATURE PRESENTATION"
 - Registered: `"TT_DEMOFEATURE"`, title id 0xE4, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/ui/drawbar_panel_ui.s
-- View: element 0 of Viewable slot 0xE4 (record outside the C sources)
+- View: `OBJ_NakaWidget_Demofeature` (AcFdemoScreen) in `naka_technichord_part.c`
 - EXIT -> `TITLE_DEMOMENU`
 - Opened from: `TITLE_DEMOMENU` ("FEATURE PRESENTATION")
+- Widgets:
+
+  - `OBJ_NakaWidget_Demofeature` AcFdemoScreen "FEATURE PRESENTATION" [0,0 320x240]
+    - `OBJ_StartTheInternalDemo_AcPresentationBox` AcPresentationBox "Start the internal DEMO" [8,72 197x26]
 
 ### `TITLE_DEMOSTYLE` -- "PERFORMANCES"
 
@@ -1062,8 +1074,8 @@ Title id 0xEE, "TT_MESAGE" (the firmware's own spelling): the message / confirma
     - `OBJ_DiskLoad_IvPageControl` IvPageControl [0,0 32x32]
     - `OBJ_DiskLoad_IvPageControl_2` IvPageControl [32,0 32x32]
     - `OBJ_DiskLoad_IvPageControl_3` IvPageControl [64,0 32x32]
-    - `NakaWidget_DiskLoad_5_IvExit` IvExit, record outside the C sources
-    - `NakaWidget_DiskLoad_6_IvMainEditSw` IvMainEditSw, record outside the C sources
+    - `OBJ_NakaWidget_DiskLoad_5_IvExit` IvExit [204,0 32x32]
+    - `OBJ_NakaWidget_DiskLoad_6_IvMainEditSw` IvMainEditSw [96,0 32x32]
 
 ### `TITLE_DKLDSMF` -- "SMF LOAD"
 
@@ -1093,8 +1105,8 @@ Title id 0xEE, "TT_MESAGE" (the firmware's own spelling): the message / confirma
     - `OBJ_DiskLoadSMF_AcIndexEditSw_4` AcIndexEditSw [208,160 104x18]
       - `OBJ_DiskLoadSMF_PsFileNameBox_4` PsFileNameBox [208,160 104x18]
     - `OBJ_DiskLoadSMF_IvMainEditSw` IvMainEditSw [0,0 32x32]
-    - `NakaWidget_DiskLoad_92_IvExit` IvExit, record outside the C sources
-    - `NakaWidget_DiskLoad_93_IvIndexSwDelay` IvIndexSwDelay, record outside the C sources
+    - `OBJ_NakaWidget_DiskLoad_92_IvExit` IvExit [32,0 32x32]
+    - `OBJ_NakaWidget_DiskLoad_93_IvIndexSwDelay` IvIndexSwDelay [64,0 32x32]
     - `OBJ_NakaWidget_DiskLoad_94_AcIndexEditSw` AcIndexEditSw [281,34 31x18]
 
 ### `TITLE_DKMDLY` -- "SONG MEDLEY"
@@ -1967,7 +1979,7 @@ the song-name page reached from easy record. It reuses TT_SQSNGNAME's view 0x008
   - `OBJ_Sdmixer` TtlScreen "MIXER" [0,0 320x240]
     - `OBJ_Sdmixer_AcResetPage` AcResetPage [245,6 71x18]
     - `OBJ_Sdmixer_AcPartMixer` AcPartMixer [108,31 204x13]
-    - `NakaWidget_Sdmixer_3_IvExit` IvExit, record outside the C sources
+    - `OBJ_NakaWidget_Sdmixer_3_IvExit` IvExit [0,0 32x32]
 
 ### `TITLE_SDPART` -- "SOUND PART SETTING"
 
@@ -2045,13 +2057,109 @@ the song-name page reached from easy record. It reuses TT_SQSNGNAME's view 0x008
     - `OBJ_Reverb_IvIntEasySet` IvIntEasySet [0,0 32x32]
     - `OBJ_Reverb_IvSdrev` IvSdrev [0,32 32x32]
 
-### `TITLE_SDTECD`
+### `TITLE_SDTECD` -- "TECHNI-CHORD"
 
 - Path: MENU SOUND button (mode MD_SOUND) > "TECHNI-CHORD"
 - Registered: `"TT_SDTECD"`, title id 0xD, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/ui/drawbar_panel_ui.s
-- View: element 0 of Viewable slot 0xD (record outside the C sources)
+- View: `OBJ_NakaWidget_Sdtecd` (TtlScreen) in `naka_technichord_part.c`
 - EXIT -> `TITLE_SDMENU`
 - Opened from: `TITLE_SDMENU` ("TECHNI-CHORD")
+- Widgets:
+
+  - `OBJ_NakaWidget_Sdtecd` TtlScreen "TECHNI-CHORD" [0,0 320x240]
+    - `OBJ_SdtecdPage` AcWindowPage [245,6 71x18]
+    - `OBJ_NakaWidget_Sdtecd_2_IvPageControl` IvPageControl [0,0 32x32]
+    - `OBJ_NakaWidget_Sdtecd_3_IvPageControl` IvPageControl [32,0 32x32]
+    - `OBJ_NakaWidget_Sdtecd_4_IvSdtecd` IvSdtecd [64,0 32x32]
+    - `OBJ_NakaWidget_Sdtecd_5_IvIntEasySet` IvIntEasySet [0,32 32x32]
+
+### `TITLE_SEEASY`
+
+- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch)
+- Registered: `"TT_SEEASY"`, title id 0x21, function `NAKA_MAINFUNC_SeEasyTitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x21 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SETONTON1`
+
+- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch)
+- Registered: `"TT_SETONTON1"`, title id 0x22, function `NAKA_MAINFUNC_SeTonTon1TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x22 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SETONRAN1`
+
+- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch)
+- Registered: `"TT_SETONRAN1"`, title id 0x24, function `NAKA_MAINFUNC_SeTonRan1TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x24 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEPITPIT1`
+
+- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch)
+- Registered: `"TT_SEPITPIT1"`, title id 0x27, function `NAKA_MAINFUNC_SePitPit1TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x27 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEAMPAMP1`
+
+- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch)
+- Registered: `"TT_SEAMPAMP1"`, title id 0x2B, function `NAKA_MAINFUNC_SeAmpAmp1TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x2B (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEFILLPQ1`
+
+- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch)
+- Registered: `"TT_SEFILLPQ1"`, title id 0x30, function `NAKA_MAINFUNC_SeFilLpq1TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x30 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEDIGEFF`
+
+- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch)
+- Registered: `"TT_SEDIGEFF"`, title id 0x3A, function `NAKA_MAINFUNC_SeDigEffTitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x3A (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SECTR2`
+
+- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch)
+- Registered: `"TT_SECTR2"`, title id 0x3B, function `NAKA_MAINFUNC_SeCtr2TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x3B (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEWRTMEM`
+
+- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch)
+- Registered: `"TT_SEWRTMEM"`, title id 0x3E, function `NAKA_MAINFUNC_SeWrtMemTitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x3E (record outside the C sources)
+- EXIT -> `TITLE_PS`
+- Opened from: `an untitled view` ("WRITE")
+
+### `TITLE_DRAWBAR`
+
+the drawbar-organ screen. It is opened when the sound category byte (0xC07E) is 12.
+
+- Path: mode MD_SOUNDEDIT > (by UpdSeSel_ProcessStep)
+- Registered: `"TT_DRAWBAR"`, title id 0xEA, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/ui/drawbar_panel_ui.s
+- View: `OBJ_Drawbar` (TtlScreen) in `naka_technichord_part.c`
+- EXIT -> `TITLE_PS`
+- Widgets:
+
+  - `OBJ_Drawbar` TtlScreen [0,0 320x240]
+    - `OBJ_Drawbar_IvIntVari` IvIntVari [92,32 32x32]
+    - `OBJ_DrawPerc4` AcIndexToggle " 4'" [268,76 44x18]
+    - `OBJ_DrawPerc223` AcIndexToggle "2  '" [268,34 44x18]
+      - `OBJ_White23` Label "2/3" [280,40 22x11]
+      - `OBJ_Black23` Label "2/3" [280,40 22x11]
+    - `OBJ_Percussive_Label` Label "PERCUSSIVE" [174,50 84x19]
+      - `OBJ_NakaWidget_Drawbar_7_IvExit` IvExit [220,32 32x32]
+    - `OBJ_NakaWidget_Drawbar_8_Label` Label "TONE" [230,62 36x19]
+    - `OBJ_NakaWidget_Drawbar_9_IvPageOverWrite` IvPageOverWrite [124,32 32x32]
+    - `OBJ_Drawbar_IvPageOverWrite` IvPageOverWrite [156,32 32x32]
+    - `OBJ_Drawbar_IvDrawbar` IvDrawbar [188,32 32x32]
+    - `OBJ_DrawSetting` AcDrawSetting "DRAWBAR SETTING" [8,76 131x18]
 
 ### `TITLE_CMBKSL_S` -- "RECORDING"
 
@@ -2362,8 +2470,8 @@ the disk SAVE page. The file-naming window returns to it.
     - `OBJ_DiskSave_IvPageControl` IvPageControl [0,0 32x32]
     - `OBJ_DiskSave_IvPageControl_2` IvPageControl [32,0 32x32]
     - `OBJ_DiskSave_IvPageControl_3` IvPageControl [64,0 32x32]
-    - `NakaWidget_DiskSave_5_IvExit` IvExit, record outside the C sources
-    - `NakaWidget_DiskSave_6_IvMainEditSw` IvMainEditSw, record outside the C sources
+    - `OBJ_NakaWidget_DiskSave_5_IvExit` IvExit [204,0 32x32]
+    - `OBJ_NakaWidget_DiskSave_6_IvMainEditSw` IvMainEditSw [96,0 32x32]
 
 ### `TITLE_STYLCNVMODL` -- "STYLE TYPE SELECT"
 
@@ -2601,6 +2709,97 @@ the song-copy page reached from TT_SQCMENU. It reuses TT_SQSNGCP's view 0x009100
     - `OBJ_LeftToRight_AcStrRadioBox` AcStrRadioBox "Left To Right" [163,156 149x26]
     - `OBJ_Cavernous_AcStrRadioBox` AcStrRadioBox "Cavernous" [163,198 149x26]
 
+### `TITLE_SETONRAN2`
+
+- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch) > (by SeTonRan1_OnSideRow3)
+- Registered: `"TT_SETONRAN2"`, title id 0x25, function `NAKA_MAINFUNC_SeTonRan2TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x25 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEPITENV1`
+
+- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch) > (by SePitPit1_OnSideRow1)
+- Registered: `"TT_SEPITENV1"`, title id 0x28, function `NAKA_MAINFUNC_SePitEnv1TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x28 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEPITLFO1`
+
+- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch) > (by SePitPit1_OnSideRow3)
+- Registered: `"TT_SEPITLFO1"`, title id 0x2A, function `NAKA_MAINFUNC_SePitLfo1TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x2A (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEAMPENV1`
+
+- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch) > (by SeAmpAmp1_OnSideRow1)
+- Registered: `"TT_SEAMPENV1"`, title id 0x2D, function `NAKA_MAINFUNC_SeAmpEnv1TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x2D (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEAMPLFO1`
+
+- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch) > (by SeAmpAmp1_OnSideRow3)
+- Registered: `"TT_SEAMPLFO1"`, title id 0x2F, function `NAKA_MAINFUNC_SeAmpLfo1TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x2F (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SECOPY`
+
+- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch) > (by SeAmpAmp1_OnSwitch15)
+- Registered: `"TT_SECOPY"`, title id 0x3D, function `NAKA_MAINFUNC_SeCopyTitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x3D (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEAMPAMP2`
+
+- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch) > (by SeAmpAmp1_OnSwitch25)
+- Registered: `"TT_SEAMPAMP2"`, title id 0x2C, function `NAKA_MAINFUNC_SeAmpAmp2TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x2C (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEFILENV1`
+
+- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch) > (by SeFilLpq1_OnColumn4_Join26)
+- Registered: `"TT_SEFILENV1"`, title id 0x37, function `NAKA_MAINFUNC_SeFilEnv1TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x37 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEFILLFO1`
+
+- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch) > (by SeFilLpq1_OnColumn4_Join28)
+- Registered: `"TT_SEFILLFO1"`, title id 0x39, function `NAKA_MAINFUNC_SeFilLfo1TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x39 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEFILFIL2`
+
+- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch) > (by SeFilLpq1_OnSwitch25)
+- Registered: `"TT_SEFILFIL2"`, title id 0x36, function `NAKA_MAINFUNC_SeFilFil2TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x36 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEFILBCF1`
+
+- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch) > (by UpdSeSel_DetailedUpdate_SetDisplayState_Join12)
+- Registered: `"TT_SEFILBCF1"`, title id 0x35, function `NAKA_MAINFUNC_SeFilBcf1TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x35 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SECTR3`
+
+- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch) > (by SeCtr2_OnSwitch25)
+- Registered: `"TT_SECTR3"`, title id 0x3C, function `NAKA_MAINFUNC_SeCtr3TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x3C (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEWRTSND`
+
+- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch) > (by SeWrtMem_OnSideRow5)
+- Registered: `"TT_SEWRTSND"`, title id 0x3F, function `NAKA_MAINFUNC_SeWrtSndTitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x3F (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
 ### `TITLE_CMNAME` -- "VARIATION NAMING"
 
 - Path: COMPOSER MENU button (mode MD_CMP) > (by CmpMenuTtl_MainHandler) > (by CmpOffset_Dispatch) > (by CmpBksl_STtlFunc)
@@ -2712,7 +2911,7 @@ the sequencer track-mixer page.
   - `OBJ_Sqmixer` TtlScreen "TRACK MIXER" [0,0 320x240]
     - `OBJ_Sqmixer_AcResetPage` AcResetPage [245,6 71x18]
     - `OBJ_Sqmixer_AcTrackMixer` AcTrackMixer [108,31 204x13]
-    - `NakaWidget_Sqmixer_3_IvExit` IvExit, record outside the C sources
+    - `OBJ_NakaWidget_Sqmixer_3_IvExit` IvExit [0,0 32x32]
 
 ### `TITLE_DKSVNAMESMF` -- "SAVE FILE NAMING"
 
@@ -2777,6 +2976,41 @@ the sequencer song-name page.
     - `OBJ_SqTrAsPs_IvMainEditSw` IvMainEditSw [0,0 32x32]
     - `OBJ_SqTrAsPs_VwEditSwBox` VwEditSwBox [281,160 31x18]
     - `OBJ_SqTrAsPs_AcLanguageText` AcLanguageText [7,150 264x48]
+
+### `TITLE_SEPITENV2`
+
+- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch) > (by SePitPit1_OnSideRow1) > (by SePitEnv1_OnSwitch25)
+- Registered: `"TT_SEPITENV2"`, title id 0x29, function `NAKA_MAINFUNC_SePitEnv2TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x29 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEAMPENV2`
+
+- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch) > (by SeAmpAmp1_OnSideRow1) > (by SeAmpEnv1_OnSwitch25)
+- Registered: `"TT_SEAMPENV2"`, title id 0x2E, function `NAKA_MAINFUNC_SeAmpEnv2TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x2E (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SETONHYB1`
+
+- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch) > (by SeAmpAmp1_OnSwitch15) > (by SeCopy_OnSideRow2)
+- Registered: `"TT_SETONHYB1"`, title id 0x26, function `NAKA_MAINFUNC_SeTonHyb1TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x26 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SEFILENV2`
+
+- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch) > (by SeFilLpq1_OnColumn4_Join26) > (by SeFilEnv1_OnSwitch25)
+- Registered: `"TT_SEFILENV2"`, title id 0x38, function `NAKA_MAINFUNC_SeFilEnv2TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x38 (record outside the C sources)
+- EXIT -> `TITLE_PS`
+
+### `TITLE_SETONTON2`
+
+- Path: mode MD_SOUNDEDIT > (by SeMenuTitleFunc_DispatchSwitch) > (by SeAmpAmp1_OnSwitch15) > (by SeCopy_OnSideRow2) > (by SeTonHyb1_OnSwitch25)
+- Registered: `"TT_SETONTON2"`, title id 0x23, function `NAKA_MAINFUNC_SeTonTon2TitleFunc`, v10/maincpu/display/scoop_display.s
+- View: element 0 of Viewable slot 0x23 (record outside the C sources)
+- EXIT -> `TITLE_PS`
 
 ### `TITLE_SDOCT` -- "RIGHT1/RIGHT2 OCTAVE"
 
@@ -2866,118 +3100,6 @@ the sequencer song-name page.
     - `OBJ_StylCnvContScreen_VwEditSwBox` VwEditSwBox [281,118 31x18]
     - `OBJ_StylCnvContScreen_VwEditSwBox_2` VwEditSwBox [281,160 31x18]
 
-### `TITLE_SEEASY`
-
-- Path: none found (no data entry, and no traced code, opens it)
-- Registered: `"TT_SEEASY"`, title id 0x21, function `NAKA_MAINFUNC_SeEasyTitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x21 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SETONTON1`
-
-- Path: none found (no data entry, and no traced code, opens it)
-- Registered: `"TT_SETONTON1"`, title id 0x22, function `NAKA_MAINFUNC_SeTonTon1TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x22 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SETONTON2`
-
-- Path: none found (no data entry, and no traced code, opens it)
-- Registered: `"TT_SETONTON2"`, title id 0x23, function `NAKA_MAINFUNC_SeTonTon2TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x23 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SETONRAN1`
-
-- Path: none found (no data entry, and no traced code, opens it)
-- Registered: `"TT_SETONRAN1"`, title id 0x24, function `NAKA_MAINFUNC_SeTonRan1TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x24 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SETONRAN2`
-
-- Path: none found (no data entry, and no traced code, opens it)
-- Registered: `"TT_SETONRAN2"`, title id 0x25, function `NAKA_MAINFUNC_SeTonRan2TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x25 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SETONHYB1`
-
-- Path: none found (no data entry, and no traced code, opens it)
-- Registered: `"TT_SETONHYB1"`, title id 0x26, function `NAKA_MAINFUNC_SeTonHyb1TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x26 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEPITPIT1`
-
-- Path: none found (no data entry, and no traced code, opens it)
-- Registered: `"TT_SEPITPIT1"`, title id 0x27, function `NAKA_MAINFUNC_SePitPit1TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x27 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEPITENV1`
-
-- Path: none found (no data entry, and no traced code, opens it)
-- Registered: `"TT_SEPITENV1"`, title id 0x28, function `NAKA_MAINFUNC_SePitEnv1TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x28 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEPITENV2`
-
-- Path: none found (no data entry, and no traced code, opens it)
-- Registered: `"TT_SEPITENV2"`, title id 0x29, function `NAKA_MAINFUNC_SePitEnv2TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x29 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEPITLFO1`
-
-- Path: none found (no data entry, and no traced code, opens it)
-- Registered: `"TT_SEPITLFO1"`, title id 0x2A, function `NAKA_MAINFUNC_SePitLfo1TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x2A (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEAMPAMP1`
-
-- Path: none found (no data entry, and no traced code, opens it)
-- Registered: `"TT_SEAMPAMP1"`, title id 0x2B, function `NAKA_MAINFUNC_SeAmpAmp1TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x2B (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEAMPAMP2`
-
-- Path: none found (no data entry, and no traced code, opens it)
-- Registered: `"TT_SEAMPAMP2"`, title id 0x2C, function `NAKA_MAINFUNC_SeAmpAmp2TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x2C (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEAMPENV1`
-
-- Path: none found (no data entry, and no traced code, opens it)
-- Registered: `"TT_SEAMPENV1"`, title id 0x2D, function `NAKA_MAINFUNC_SeAmpEnv1TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x2D (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEAMPENV2`
-
-- Path: none found (no data entry, and no traced code, opens it)
-- Registered: `"TT_SEAMPENV2"`, title id 0x2E, function `NAKA_MAINFUNC_SeAmpEnv2TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x2E (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEAMPLFO1`
-
-- Path: none found (no data entry, and no traced code, opens it)
-- Registered: `"TT_SEAMPLFO1"`, title id 0x2F, function `NAKA_MAINFUNC_SeAmpLfo1TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x2F (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEFILLPQ1`
-
-- Path: none found (no data entry, and no traced code, opens it)
-- Registered: `"TT_SEFILLPQ1"`, title id 0x30, function `NAKA_MAINFUNC_SeFilLpq1TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x30 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
 ### `TITLE_SEFILHPQ1`
 
 - Path: none found (no data entry, and no traced code, opens it)
@@ -3004,84 +3126,6 @@ the sequencer song-name page.
 - Path: none found (no data entry, and no traced code, opens it)
 - Registered: `"TT_SEFILBPF1"`, title id 0x34, function `NAKA_MAINFUNC_SeFilBpf1TitleFunc`, v10/maincpu/display/scoop_display.s
 - View: element 0 of Viewable slot 0x34 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEFILBCF1`
-
-- Path: none found (no data entry, and no traced code, opens it)
-- Registered: `"TT_SEFILBCF1"`, title id 0x35, function `NAKA_MAINFUNC_SeFilBcf1TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x35 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEFILFIL2`
-
-- Path: none found (no data entry, and no traced code, opens it)
-- Registered: `"TT_SEFILFIL2"`, title id 0x36, function `NAKA_MAINFUNC_SeFilFil2TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x36 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEFILENV1`
-
-- Path: none found (no data entry, and no traced code, opens it)
-- Registered: `"TT_SEFILENV1"`, title id 0x37, function `NAKA_MAINFUNC_SeFilEnv1TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x37 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEFILENV2`
-
-- Path: none found (no data entry, and no traced code, opens it)
-- Registered: `"TT_SEFILENV2"`, title id 0x38, function `NAKA_MAINFUNC_SeFilEnv2TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x38 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEFILLFO1`
-
-- Path: none found (no data entry, and no traced code, opens it)
-- Registered: `"TT_SEFILLFO1"`, title id 0x39, function `NAKA_MAINFUNC_SeFilLfo1TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x39 (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEDIGEFF`
-
-- Path: none found (no data entry, and no traced code, opens it)
-- Registered: `"TT_SEDIGEFF"`, title id 0x3A, function `NAKA_MAINFUNC_SeDigEffTitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x3A (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SECTR2`
-
-- Path: none found (no data entry, and no traced code, opens it)
-- Registered: `"TT_SECTR2"`, title id 0x3B, function `NAKA_MAINFUNC_SeCtr2TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x3B (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SECTR3`
-
-- Path: none found (no data entry, and no traced code, opens it)
-- Registered: `"TT_SECTR3"`, title id 0x3C, function `NAKA_MAINFUNC_SeCtr3TitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x3C (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SECOPY`
-
-- Path: none found (no data entry, and no traced code, opens it)
-- Registered: `"TT_SECOPY"`, title id 0x3D, function `NAKA_MAINFUNC_SeCopyTitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x3D (record outside the C sources)
-- EXIT -> `TITLE_PS`
-
-### `TITLE_SEWRTMEM`
-
-- Path: none found (no data entry, and no traced code, opens it)
-- Registered: `"TT_SEWRTMEM"`, title id 0x3E, function `NAKA_MAINFUNC_SeWrtMemTitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x3E (record outside the C sources)
-- EXIT -> `TITLE_PS`
-- Opened from: `an untitled view` ("WRITE")
-
-### `TITLE_SEWRTSND`
-
-- Path: none found (no data entry, and no traced code, opens it)
-- Registered: `"TT_SEWRTSND"`, title id 0x3F, function `NAKA_MAINFUNC_SeWrtSndTitleFunc`, v10/maincpu/display/scoop_display.s
-- View: element 0 of Viewable slot 0x3F (record outside the C sources)
 - EXIT -> `TITLE_PS`
 
 ### `TITLE_CTPMPARA` -- "INITIAL"
@@ -3628,30 +3672,6 @@ Title id 0xE9, "TT_RVARI". It is the companion of TT_SVARI. What the screen show
   - `OBJ_RVARI` RVariScreen [0,0 320x240]
     - `OBJ_RVARI_AcTempoBox` AcTempoBox [136,15 62x12]
     - `OBJ_RVARI_IvIntVari` IvIntVari [0,0 32x32]
-
-### `TITLE_DRAWBAR`
-
-the drawbar-organ screen. It is opened when the sound category byte (0xC07E) is 12.
-
-- Path: none found (no data entry, and no traced code, opens it)
-- Registered: `"TT_DRAWBAR"`, title id 0xEA, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/ui/drawbar_panel_ui.s
-- View: `OBJ_Drawbar` (TtlScreen) in `naka_technichord_part.c`
-- EXIT -> `TITLE_PS`
-- Widgets:
-
-  - `OBJ_Drawbar` TtlScreen [0,0 320x240]
-    - `OBJ_Drawbar_IvIntVari` IvIntVari [92,32 32x32]
-    - `OBJ_DrawPerc4` AcIndexToggle " 4'" [268,76 44x18]
-    - `OBJ_DrawPerc223` AcIndexToggle "2  '" [268,34 44x18]
-      - `OBJ_White23` Label "2/3" [280,40 22x11]
-      - `OBJ_Black23` Label "2/3" [280,40 22x11]
-    - `OBJ_Percussive_Label` Label "PERCUSSIVE" [174,50 84x19]
-      - `NakaWidget_Drawbar_7_IvExit` IvExit, record outside the C sources
-    - `NakaWidget_Drawbar_8_Label` Label "TONE", record outside the C sources
-    - `OBJ_NakaWidget_Drawbar_9_IvPageOverWrite` IvPageOverWrite [124,32 32x32]
-    - `OBJ_Drawbar_IvPageOverWrite` IvPageOverWrite [156,32 32x32]
-    - `OBJ_Drawbar_IvDrawbar` IvDrawbar [188,32 32x32]
-    - `OBJ_DrawSetting` AcDrawSetting "DRAWBAR SETTING" [8,76 131x18]
 
 ### `TITLE_ACCORDION`
 

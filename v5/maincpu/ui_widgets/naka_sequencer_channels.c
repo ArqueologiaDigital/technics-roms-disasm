@@ -2658,8 +2658,8 @@ enum Cheap_ViewableTable_061_objects {
       OBJ_DiskLoad_IvPageControl,                  /*  2 IvPageControl, record in naka_disk_menu_file_io.c */
       OBJ_DiskLoad_IvPageControl_2,                /*  3 IvPageControl, record in naka_disk_menu_file_io.c */
       OBJ_DiskLoad_IvPageControl_3,                /*  4 IvPageControl, record in naka_disk_menu_file_io.c */
-      OBJ_NakaWidget_DiskLoad_5_IvExit,            /*  5 IvExit, record outside the C sources (NakaWidget_DiskLoad_5_IvExit) */
-      OBJ_NakaWidget_DiskLoad_6_IvMainEditSw,      /*  6 IvMainEditSw, record outside the C sources (NakaWidget_DiskLoad_6_IvMainEditSw) */
+      OBJ_NakaWidget_DiskLoad_5_IvExit,            /*  5 IvExit, record in naka_disk_menu_file_io.c */
+      OBJ_NakaWidget_DiskLoad_6_IvMainEditSw,      /*  6 IvMainEditSw, record in naka_disk_menu_file_io.c */
     OBJ_DiskLoadP1,                                /*  7 Window, record in naka_disk_menu_file_io.c */
       OBJ_DiskLoadP1_PsFileNameBox,                /*  8 PsFileNameBox, record in naka_disk_menu_file_io.c */
       OBJ_DiskLoadP1_AcIndexEditSw,                /*  9 AcIndexEditSw, record in naka_disk_menu_file_io.c */
@@ -2745,8 +2745,8 @@ enum Cheap_ViewableTable_061_objects {
       OBJ_DiskLoadSMF_AcIndexEditSw_4,             /* 89 AcIndexEditSw, record in naka_disk_menu_file_io.c */
         OBJ_DiskLoadSMF_PsFileNameBox_4,           /* 90 PsFileNameBox, record in naka_disk_menu_file_io.c */
       OBJ_DiskLoadSMF_IvMainEditSw,                /* 91 IvMainEditSw, record in naka_disk_menu_file_io.c */
-      OBJ_NakaWidget_DiskLoad_92_IvExit,           /* 92 IvExit, record outside the C sources (NakaWidget_DiskLoad_92_IvExit) */
-      OBJ_NakaWidget_DiskLoad_93_IvIndexSwDelay,   /* 93 IvIndexSwDelay, record outside the C sources (NakaWidget_DiskLoad_93_IvIndexSwDelay) */
+      OBJ_NakaWidget_DiskLoad_92_IvExit,           /* 92 IvExit, record in naka_disk_menu_file_io.c */
+      OBJ_NakaWidget_DiskLoad_93_IvIndexSwDelay,   /* 93 IvIndexSwDelay, record in naka_disk_menu_file_io.c */
       OBJ_NakaWidget_DiskLoad_94_AcIndexEditSw,    /* 94 AcIndexEditSw, record in naka_disk_menu_file_io.c */
     OBJ_SongNameSmfLdWin,                          /* 95 Window, record in naka_disk_menu_file_io.c */
       OBJ_SongNameSmfLdWin_AcParaStrBox,           /* 96 AcParaStrBox, record in naka_disk_menu_file_io.c */

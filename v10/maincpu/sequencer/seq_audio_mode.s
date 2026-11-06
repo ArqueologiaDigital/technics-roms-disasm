@@ -183,7 +183,7 @@ AccVoice_ReadBankAssign:
 	ld xhl, AccStyle_ApplyExt_SkipClamp_Table
 	ld a, (ACC_BEATS_PER_BAR:16)
 	ld	a, (xhl+wa)
-	bit 0, (0x3283:16)
+	bit 0, (ACC_RUN_FLAGS:16)
 	jr nz, AccVoice_StoreBankAssign
 	ld a, 0x0:opc
 
@@ -193,7 +193,7 @@ AccVoice_StoreBankAssign:
 
 ; Unless part bits 0..5 are set in 0x3314 or 0x3315: when 0x32f5 differs from 0x32f6 or the low 3
 ; bits of 0x32f7 and 0x32f8 differ, AccSection_DeferToBarUnlessFirstBeat, _CheckActivitySetDirty,
-; _CheckPartIndexDirty and bit 0 of 0x330c set.  Always 0x32e7 = (0x32f5), 0x32e8 = (0x32f7) & 0x7f.
+; _CheckPartIndexDirty and bit 0 of 0x330c set.  Always 0x32e7 = (ACC_PENDING_STYLE), 0x32e8 = (ACC_PENDING_GROUP) & 0x7f.
 AccChannel_CompareAndMarkDirty:
 	ld a, (ACC_LANES_ENDING1:16)
 	or a, (ACC_LANES_ENDING2:16)
@@ -979,7 +979,7 @@ Rhythm_ProcessAllPartsAndLoad:
 	calr RhythmPart3_ProcessAccentData
 	calr RhythmPart4_ProcessAccentData
 	calr RhythmPart5_ProcessAccentData
-	bit 0, (0x3283:16)
+	bit 0, (ACC_RUN_FLAGS:16)
 	jr nz, Rhythm_ProcessAllDone
 	call AccVoice_LoadAllChannelParams
 
@@ -995,17 +995,17 @@ RhythmPart_CopyData:
 	ret
 
 RhythmPart1_ProcessAccentData:
-	bit 0, (0x3283:16)
+	bit 0, (ACC_RUN_FLAGS:16)
 	jr z, RhythmPart1_CheckAccentData
 	call AccentData_ComparePart1
 
 RhythmPart1_CheckAccentData:
-	ld a, (0x332c:16)
+	ld a, (ACC_LANES_RESYNC:16)
 	and a, 0x3
 	jr z, RhythmPart1_WriteDone
 	ld e, (0x3246:16)
 	ld d, (0x3247:16)
-	bit 0, (0x3283:16)
+	bit 0, (ACC_RUN_FLAGS:16)
 	jr nz, RhythmPart1_ProcessRingBuf
 	ld xhl, 0x3214
 	ld (xhl), e
@@ -1036,7 +1036,7 @@ RhythmPart1_ProcessRingBuf:
 	ld (xhl + 1), d
 
 RhythmPart1_WriteDone:
-	and (0x332c:16), 252
+	and (ACC_LANES_RESYNC:16), 252
 	call AccVoiceReg_WritePart1
 	ret
 
@@ -1105,12 +1105,12 @@ RingBuf_IndexOK:
 	ret
 
 RhythmPart2_ProcessAccentData:
-	bit 0, (0x3283:16)
+	bit 0, (ACC_RUN_FLAGS:16)
 	jr z, RhythmPart2_LoadAndStore
 	call AccentData_ComparePart2
 
 RhythmPart2_LoadAndStore:
-	bit 2, (0x332c:16)
+	bit 2, (ACC_LANES_RESYNC:16)
 	ld e, (0x324d:16)
 	ld d, (0x324e:16)
 	ld a, (0x324f:16)
@@ -1124,7 +1124,7 @@ RhythmPart2_LoadAndStore:
 	ld a, (0x3253:16)
 	ld (ACC_CH_CEILING:16), a
 	calr Rhythm_PackVelocityHighBit
-	bit 0, (0x3283:16)
+	bit 0, (ACC_RUN_FLAGS:16)
 	jr nz, RhythmPart2_ProcessRingBuf
 	ld xhl, 0x3219
 	calr AccVoiceReg_StoreParamRecord
@@ -1155,7 +1155,7 @@ RhythmPart2_ProcessRingBuf:
 	calr AccVoiceReg_StoreParamRecord
 
 RhythmPart2_WriteDone:
-	and (0x332c:16), 251
+	and (ACC_LANES_RESYNC:16), 251
 	call AccVoiceReg_WritePart2
 	ret
 
@@ -1186,12 +1186,12 @@ Rhythm_VelocityPackDone:
 ;   buffer 0x2D94 (the D4 channel buffer), clears bit 3 of 0x332C and calls AccVoiceReg_WritePart3. Basis: callers +
 ;   body.
 RhythmPart3_ProcessAccentData:
-	bit 0, (0x3283:16)
+	bit 0, (ACC_RUN_FLAGS:16)
 	jr z, RhythmPart3_LoadAndStore
 	call AccentData_ComparePart3
 
 RhythmPart3_LoadAndStore:
-	bit 3, (0x332c:16)
+	bit 3, (ACC_LANES_RESYNC:16)
 	ld e, (0x3254:16)
 	ld d, (0x3255:16)
 	ld a, (0x3256:16)
@@ -1205,7 +1205,7 @@ RhythmPart3_LoadAndStore:
 	ld a, (0x325a:16)
 	ld (ACC_CH_CEILING+1:16), a
 	calr Rhythm_PackVelocityHighBit
-	bit 0, (0x3283:16)
+	bit 0, (ACC_RUN_FLAGS:16)
 	jr nz, RhythmPart3_ProcessRingBuf
 	ld xhl, 0x321e
 	calr AccVoiceReg_StoreParamRecord
@@ -1236,7 +1236,7 @@ RhythmPart3_ProcessRingBuf:
 	calr AccVoiceReg_StoreParamRecord
 
 RhythmPart3_WriteDone:
-	and (0x332c:16), 247
+	and (ACC_LANES_RESYNC:16), 247
 	call AccVoiceReg_WritePart3
 	ret
 
@@ -1244,12 +1244,12 @@ RhythmPart3_WriteDone:
 ;   at RAM 0x325B..0x3261, stores 5 of it at 0x3223 or (bit 0 of 0x3283 set) appends it as a 0xC0 record to ring
 ;   buffer 0x2E94 (D5), clears bit 4 of 0x332C and calls AccVoiceReg_WritePart4. Basis: callers + body.
 RhythmPart4_ProcessAccentData:
-	bit 0, (0x3283:16)
+	bit 0, (ACC_RUN_FLAGS:16)
 	jr z, RhythmPart4_LoadAndStore
 	call AccentData_ComparePart4
 
 RhythmPart4_LoadAndStore:
-	bit 4, (0x332c:16)
+	bit 4, (ACC_LANES_RESYNC:16)
 	ld e, (0x325b:16)
 	ld d, (0x325c:16)
 	ld a, (0x325d:16)
@@ -1263,7 +1263,7 @@ RhythmPart4_LoadAndStore:
 	ld a, (0x3261:16)
 	ld (ACC_CH_CEILING+2:16), a
 	calr Rhythm_PackVelocityHighBit
-	bit 0, (0x3283:16)
+	bit 0, (ACC_RUN_FLAGS:16)
 	jr nz, RhythmPart4_ProcessRingBuf
 	ld xhl, 0x3223
 	calr AccVoiceReg_StoreParamRecord
@@ -1294,7 +1294,7 @@ RhythmPart4_ProcessRingBuf:
 	calr AccVoiceReg_StoreParamRecord
 
 RhythmPart4_WriteDone:
-	and (0x332c:16), 239
+	and (ACC_LANES_RESYNC:16), 239
 	call AccVoiceReg_WritePart4
 	ret
 
@@ -1302,12 +1302,12 @@ RhythmPart4_WriteDone:
 ;   at RAM 0x3262..0x3268, stores 5 of it at 0x3228 or (bit 0 of 0x3283 set) appends it as a 0xC0 record to ring
 ;   buffer 0x2F94 (D6), clears bit 5 of 0x332C and calls AccVoiceReg_WritePart5. Basis: callers + body.
 RhythmPart5_ProcessAccentData:
-	bit 0, (0x3283:16)
+	bit 0, (ACC_RUN_FLAGS:16)
 	jr z, RhythmPart5_LoadAndStore
 	call AccentData_ComparePart5
 
 RhythmPart5_LoadAndStore:
-	bit 5, (0x332c:16)
+	bit 5, (ACC_LANES_RESYNC:16)
 	ld e, (0x3262:16)
 	ld d, (0x3263:16)
 	ld a, (0x3264:16)
@@ -1321,7 +1321,7 @@ RhythmPart5_LoadAndStore:
 	ld a, (0x3268:16)
 	ld (ACC_CH_CEILING+3:16), a
 	calr Rhythm_PackVelocityHighBit
-	bit 0, (0x3283:16)
+	bit 0, (ACC_RUN_FLAGS:16)
 	jr nz, RhythmPart5_ProcessRingBuf
 	ld xhl, 0x3228
 	calr AccVoiceReg_StoreParamRecord
@@ -1352,60 +1352,63 @@ RhythmPart5_ProcessRingBuf:
 	calr AccVoiceReg_StoreParamRecord
 
 RhythmPart5_WriteDone:
-	and (0x332c:16), 223
+	and (ACC_LANES_RESYNC:16), 223
 	call AccVoiceReg_WritePart5
 	ret
 
-AccompVoice_BulkReadRegisters:
+; Marks every sounding-note slot of the six accompaniment parts free (byte +0 = 0) without sending a
+; note-off: ACC_DRUM1_NOTES / ACC_DRUM2_NOTES (8 x 6 bytes) and ACC_BASS_NOTES .. ACC_ACCOMP3_NOTES
+; (8 x 9 bytes).
+AccNotes_ForgetAllSounding:
 	ld a, 0x0:opc
-	ld xhl, 0x3094
+	ld xhl, ACC_DRUM1_NOTES
 	xor iy, iy
 
-BulkRead_Loop1_6Byte:
+AccNotes_ForgetDrum1_Loop:
 	ld	(xhl+iy), a
 	add iy, 0x6
 	cp iy, 0x30
-	jr c, BulkRead_Loop1_6Byte
-	ld xhl, 0x30c4
+	jr c, AccNotes_ForgetDrum1_Loop
+	ld xhl, ACC_DRUM2_NOTES
 	xor iy, iy
 
-BulkRead_Loop2_6Byte:
+AccNotes_ForgetDrum2_Loop:
 	ld	(xhl+iy), a
 	add iy, 0x6
 	cp iy, 0x30
-	jr c, BulkRead_Loop2_6Byte
-	ld xhl, 0x30f4
+	jr c, AccNotes_ForgetDrum2_Loop
+	ld xhl, ACC_BASS_NOTES
 	xor iy, iy
 
-BulkRead_Loop3_9Byte:
+AccNotes_ForgetBass_Loop:
 	ld	(xhl+iy), a
 	add iy, 0x9
 	cp iy, 0x48
-	jr c, BulkRead_Loop3_9Byte
-	ld xhl, 0x313c
+	jr c, AccNotes_ForgetBass_Loop
+	ld xhl, ACC_ACCOMP1_NOTES
 	xor iy, iy
 
-BulkRead_Loop4_9Byte:
+AccNotes_ForgetAccomp1_Loop:
 	ld	(xhl+iy), a
 	add iy, 0x9
 	cp iy, 0x48
-	jr c, BulkRead_Loop4_9Byte
-	ld xhl, 0x3184
+	jr c, AccNotes_ForgetAccomp1_Loop
+	ld xhl, ACC_ACCOMP2_NOTES
 	xor iy, iy
 
-BulkRead_Loop5_9Byte:
+AccNotes_ForgetAccomp2_Loop:
 	ld	(xhl+iy), a
 	add iy, 0x9
 	cp iy, 0x48
-	jr c, BulkRead_Loop5_9Byte
-	ld xhl, 0x31cc
+	jr c, AccNotes_ForgetAccomp2_Loop
+	ld xhl, ACC_ACCOMP3_NOTES
 	xor iy, iy
 
-BulkRead_Loop6_9Byte:
+AccNotes_ForgetAccomp3_Loop:
 	ld	(xhl+iy), a
 	add iy, 0x9
 	cp iy, 0x48
-	jr c, BulkRead_Loop6_9Byte
+	jr c, AccNotes_ForgetAccomp3_Loop
 	ret
 
 ; Sends the three-byte rhythm message 0x90 0x7f 0x7f (Rhythm_Send3ByteMsg).
@@ -1447,11 +1450,11 @@ Rhythm_SendChanPressure:
 	ld (ACC_CH_CC3+3:16), a
 	ret
 
-; Resets the six accompaniment ring buffers, reads the voice registers back
-; (AccompVoice_BulkReadRegisters) and runs AccStyle_InitVRAM_Wrap.
+; Resets the six accompaniment ring buffers, marks every sounding-note slot
+; free (AccNotes_ForgetAllSounding) and runs AccStyle_InitVRAM_Wrap.
 AccBuf_ResetAndReload:
 	call AccBuf_ResetAllPositions
-	call AccompVoice_BulkReadRegisters
+	call AccNotes_ForgetAllSounding
 	call AccStyle_InitVRAM_Wrap
 	ret
 
@@ -1645,7 +1648,7 @@ AccentData_ComparePart1:
 	jr nz, AccentData_Part1_Done
 	cp l, h
 	jr nz, AccentData_Part1_Done
-	and (0x332c:16), 252
+	and (ACC_LANES_RESYNC:16), 252
 
 AccentData_Part1_Done:
 	ret
@@ -1663,7 +1666,7 @@ AccentData_ComparePart2:
 	jr nz, AccentData_Part2_Done
 	cp l, h
 	jr nz, AccentData_Part2_Done
-	and (0x332c:16), 251
+	and (ACC_LANES_RESYNC:16), 251
 
 AccentData_Part2_Done:
 	ret
@@ -1681,7 +1684,7 @@ AccentData_ComparePart3:
 	jr nz, AccentData_Part3_Done
 	cp l, h
 	jr nz, AccentData_Part3_Done
-	and (0x332c:16), 247
+	and (ACC_LANES_RESYNC:16), 247
 
 AccentData_Part3_Done:
 	ret
@@ -1699,7 +1702,7 @@ AccentData_ComparePart4:
 	jr nz, AccentData_Part4_Done
 	cp l, h
 	jr nz, AccentData_Part4_Done
-	and (0x332c:16), 239
+	and (ACC_LANES_RESYNC:16), 239
 
 AccentData_Part4_Done:
 	ret
@@ -1715,7 +1718,7 @@ AccentData_ComparePart5:
 	jr nz, AccentData_Part5_Done
 	cp l, h
 	jr nz, AccentData_Part5_Done
-	and (0x332c:16), 223
+	and (ACC_LANES_RESYNC:16), 223
 
 AccentData_Part5_Done:
 	ret

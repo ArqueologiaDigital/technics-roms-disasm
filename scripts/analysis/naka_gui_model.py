@@ -603,6 +603,68 @@ def mode_buttons(tree='v10'):
     return out
 
 
+def dirmd_page_handlers(tree):
+    """title function -> set of routine labels that run as part of its page, for the pages driven by
+    DirmdEmulator (lane kn5000-notes, 2026-11-06).  Read from the code's own structure, e.g.
+    audio/sound_editor_routines.s and display/scoop_editor_data.s:
+
+        SeAmpAmp1TitleFunc:   ld xiy, SeAmpAmp1TitleFunc_Methods ... call DirmdEmulator
+        SeAmpAmp1TitleFunc_Methods:  .long _OnDraw, _OnHide, _OnSwitchIn, _Nop
+        SeAmpAmp1TitleFunc_OnSwitchIn:  ... jp SeAmpAmp1TitleFunc_DispatchSwitch
+        SeAmpAmp1TitleFunc_DispatchSwitch:  lda xde, (SeAmpAmp1TitleFunc_SwitchHandlers:24) ... call (xhl)
+        SeAmpAmp1TitleFunc_SwitchHandlers:  .long <one handler per switch>
+
+    The set is the methods, the routines they jump to, and the switch handlers."""
+    import glob
+    lines, at, longs = [], {}, {}
+    for p in sorted(glob.glob(os.path.join(ROOT, tree, 'maincpu', '**', '*.s'), recursive=True)):
+        L = [x.split(';')[0].strip() for x in open(p, 'rb').read().decode('latin-1').split('\n')]
+        base = len(lines)
+        lines += L
+        cur = None
+        for i, x in enumerate(L):
+            m = re.match(r'^([A-Za-z_]\w*):\s*(.*)$', x)
+            if m:
+                at[m.group(1)] = base + i
+                cur = m.group(1)
+                longs.setdefault(cur, [])
+                x = m.group(2)
+            r = re.match(r'^\.long\s+([A-Za-z_]\w*)$', x)
+            if r and cur:
+                longs[cur].append(r.group(1))
+    def body(lab, n=60):
+        i = at.get(lab)
+        out = []
+        if i is None:
+            return out
+        for x in lines[i + 1:i + 1 + n]:
+            out.append(x)
+            if re.match(r'^(ret|retd|reti)\b', x):
+                break
+        return out
+    res = {}
+    for lab in at:
+        if not lab.endswith('TitleFunc'):
+            continue
+        mt = [re.match(r'^ld\s+xiy,\s*(\w+_Methods)$', x) for x in body(lab, 12)]
+        mt = [x.group(1) for x in mt if x]
+        if not mt or 'call DirmdEmulator' not in [re.sub(r'\s+', ' ', x) for x in body(lab, 12)]:
+            continue
+        hs = set()
+        for meth in longs.get(mt[0], []):
+            hs.add(meth)
+            for x in body(meth, 6):
+                j = re.match(r'^jp\s+(\w+)$', x)
+                if j:
+                    hs.add(j.group(1))
+                    for y in body(j.group(1)):
+                        k = re.match(r'^lda\s+xde,\s*\((\w+_SwitchHandlers)(?::24)?\)$', y)
+                        if k:
+                            hs.update(longs.get(k.group(1), []))
+        res[lab] = hs
+    return res
+
+
 def add_code_edges(g):
     """g.code_edges: (from title, to title, routine) for every title procedure and menu box
     function that passes a TT_* index; g.mode_button: MD_X -> buttons."""
@@ -615,6 +677,9 @@ def add_code_edges(g):
                 lab = g.m.name_of(a)
                 if lab[0] == a:
                     extra.add(lab[1])
+    dirmd = dirmd_page_handlers(g.tree)
+    for hs in dirmd.values():
+        extra |= hs
     opens = N.opens_by_routine(g.tree, 'title', extra)
     tt = {n: v for n, v in g.ids.items() if n.startswith('TT_')}
     g.routine_opens = opens
@@ -624,6 +689,14 @@ def add_code_edges(g):
         for n in sorted(opens.get(lab, ())):
             if n in tt:
                 g.code_edges.append((tid, 0x01A00000 + tt[n], lab, ''))
+    # a DirmdEmulator page (the sound editor's TITLE_SE* screens): its title function's methods and
+    # the switch handlers its OnSwitchIn dispatches to open the titles (SeMenu_SendEvent, ...)
+    for tid, t in g.titles.items():
+        lab = func_label(g.m, t['func'])
+        for h in sorted(dirmd.get(lab, ())):
+            for n in sorted(opens.get(h, ())):
+                if n in tt:
+                    g.code_edges.append((tid, 0x01A00000 + tt[n], h, ''))
     # a menu box's function often only calls the routine that opens the title
     # (DirectPlayTtlJgFunc -> FileIO_DetectFileTypeAndPost): count its direct callees' titles too
     calls = N.callees(g.tree, extra)

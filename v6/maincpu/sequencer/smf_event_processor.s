@@ -10770,8 +10770,8 @@ Rhythm_DispatchNote_Finalize:
 	pop xiz
 	ret
 
-Rhythm_TransposeWithMod_Tramp:
-	jp Rhythm_TransposeWithMod
+Rhythm_PhraseConvertNote_Tramp:
+	jp Rhythm_PhraseConvertNote
 Rhythm_TransposeTrampBlock:
 	jp	Rhythm_DispatchNote_Helper
 

@@ -1411,50 +1411,53 @@ RhythmPart5_WriteDone:
 
 
 
-AccompVoice_BulkReadRegisters:
+; Marks every sounding-note slot of the six accompaniment parts free (byte +0 = 0) without sending a
+; note-off: ACC_DRUM1_NOTES / ACC_DRUM2_NOTES (8 x 6 bytes) and ACC_BASS_NOTES .. ACC_ACCOMP3_NOTES
+; (8 x 9 bytes).
+AccNotes_ForgetAllSounding:
 	ld	a, 0:opc
 	ld	xhl, 12252
 	xor	iy, iy
-BulkRead_Loop1_6Byte:
+AccNotes_ForgetDrum1_Loop:
 	ld	(xhl+iy), a
 	add	iy, 6
 	cp	iy, 48
-	jr	c, BulkRead_Loop1_6Byte	; -> 0xF53F55
+	jr	c, AccNotes_ForgetDrum1_Loop	; -> 0xF53F55
 	ld	xhl, 12300
 	xor	iy, iy
-BulkRead_Loop2_6Byte:
+AccNotes_ForgetDrum2_Loop:
 	ld	(xhl+iy), a
 	add	iy, 6
 	cp	iy, 48
-	jr	c, BulkRead_Loop2_6Byte	; -> 0xF53F6B
+	jr	c, AccNotes_ForgetDrum2_Loop	; -> 0xF53F6B
 	ld	xhl, 12348
 	xor	iy, iy
-BulkRead_Loop3_9Byte:
+AccNotes_ForgetBass_Loop:
 	ld	(xhl+iy), a
 	add	iy, 9
 	cp	iy, 72
-	jr	c, BulkRead_Loop3_9Byte	; -> 0xF53F81
+	jr	c, AccNotes_ForgetBass_Loop	; -> 0xF53F81
 	ld	xhl, 12420
 	xor	iy, iy
-BulkRead_Loop4_9Byte:
+AccNotes_ForgetAccomp1_Loop:
 	ld	(xhl+iy), a
 	add	iy, 9
 	cp	iy, 72
-	jr	c, BulkRead_Loop4_9Byte	; -> 0xF53F97
+	jr	c, AccNotes_ForgetAccomp1_Loop	; -> 0xF53F97
 	ld	xhl, 12492
 	xor	iy, iy
-BulkRead_Loop5_9Byte:
+AccNotes_ForgetAccomp2_Loop:
 	ld	(xhl+iy), a
 	add	iy, 9
 	cp	iy, 72
-	jr	c, BulkRead_Loop5_9Byte	; -> 0xF53FAD
+	jr	c, AccNotes_ForgetAccomp2_Loop	; -> 0xF53FAD
 	ld	xhl, 12564
 	xor	iy, iy
-BulkRead_Loop6_9Byte:
+AccNotes_ForgetAccomp3_Loop:
 	ld	(xhl+iy), a
 	add iy, 0x9
 	cp iy, 0x48
-	jr c, BulkRead_Loop6_9Byte
+	jr c, AccNotes_ForgetAccomp3_Loop
 	ret
 
 Rhythm_SendNoteOnMax:
@@ -1488,7 +1491,7 @@ Rhythm_SendChanPressure:
 	ret
 AccBuf_ResetAndReload:
 	call AccBuf_ResetAllPositions
-	call AccompVoice_BulkReadRegisters
+	call AccNotes_ForgetAllSounding
 	call AccStyle_InitVRAM_Wrap
 	ret
 
