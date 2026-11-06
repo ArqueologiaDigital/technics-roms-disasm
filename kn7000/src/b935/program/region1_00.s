@@ -7419,11 +7419,11 @@ loc_48404CF8:
     call    PutM3Em_entry, [d2,d3,a2], 0x24
 loc_48404D0D:
     ret     0, 0x10
-
-func_48404D10:
+# JpegEncSetup  (CPU 0x48404d10)
+JpegEncSetup:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x34, sp
-func_48404D10_entry:
+JpegEncSetup_entry:
     mov     a0, (0x4c, sp)
     movhu   (0x1c, a0), d0
     mov     0xff, d1
@@ -7600,11 +7600,11 @@ loc_48404D2A:
     movhu   d0, (0x1e, a0)
     clr     d0
     retf    [d2,d3,a2,a3], 0x44
-
-func_48404E71:
+# JpegEncImage  (CPU 0x48404e71)
+JpegEncImage:
     movm    [d2,d3,a2], (sp)
     add     -0x10, sp
-func_48404E71_entry:
+JpegEncImage_entry:
     movhu   (a0), d0
     movhu   (2, a0), d1
     mov     a1, a2
@@ -7693,7 +7693,7 @@ loc_48404F50:
     nop
     nop
     mul     d3, d1
-    call    func_48405091_entry, [d2,d3,a2,a3], 0x44
+    call    JpegEncMcu_entry, [d2,d3,a2,a3], 0x44
     cmp     0, d0
     bge     loc_48404F77
     ret     [d2,d3,a2], 0x1c
@@ -7716,7 +7716,7 @@ loc_48404F81:
     nop
     nop
     mul     d3, d1
-    call    func_48405091_entry, [d2,d3,a2,a3], 0x44
+    call    JpegEncMcu_entry, [d2,d3,a2,a3], 0x44
     cmp     0, d0
     bge     loc_48404FB7
     ret     [d2,d3,a2], 0x1c
@@ -7748,7 +7748,7 @@ loc_48404FD8:
     nop
     nop
     mul     d3, d1
-    call    func_48405091_entry, [d2,d3,a2,a3], 0x44
+    call    JpegEncMcu_entry, [d2,d3,a2,a3], 0x44
     cmp     0, d0
     bge     loc_4840500B
     ret     [d2,d3,a2], 0x1c
@@ -7776,7 +7776,7 @@ loc_48405024:
     nop
     nop
     mul     d3, d1
-    call    func_48405091_entry, [d2,d3,a2,a3], 0x44
+    call    JpegEncMcu_entry, [d2,d3,a2,a3], 0x44
     cmp     0, d0
     bge     loc_48405059
     bra     loc_4840508E
@@ -7799,11 +7799,11 @@ loc_48405089:
     call    func_4840520C_entry, 0, 8
 loc_4840508E:
     ret     [d2,d3,a2], 0x1c
-
-func_48405091:
+# JpegEncMcu  (CPU 0x48405091)
+JpegEncMcu:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x34, sp
-func_48405091_entry:
+JpegEncMcu_entry:
     mov     d1, (0x50, sp)
     mov     d0, (0x4c, sp)
     movhu   (0x501739e0), d0

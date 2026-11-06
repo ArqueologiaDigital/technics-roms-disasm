@@ -1,0 +1,17 @@
+       15-20  ch0 rms      0.0 peak      0  ch1 rms      0.0 peak      0  ch2 rms      0.0 peak      0
+     21-22.2  ch0 rms    321.2 peak   1580  ch1 rms    277.1 peak   1206  ch2 rms      0.0 peak      0
+       23-24  ch0 rms      1.2 peak      8  ch1 rms      1.3 peak      8  ch2 rms      0.0 peak      0
+   36.5-37.7  ch0 rms    322.5 peak   1581  ch1 rms    277.4 peak   1214  ch2 rms      0.0 peak      0
+     39-41.5  ch0 rms      0.1 peak      1  ch1 rms      0.1 peak      1  ch2 rms      0.0 peak      0
+   47.5-48.7  ch0 rms    320.0 peak   1575  ch1 rms    276.8 peak   1196  ch2 rms      0.0 peak      0
+
+       15-20  ch0 rms      0.0 peak      0  ch1 rms      0.0 peak      0  ch2 rms      0.0 peak      0
+     21-22.2  ch0 rms    321.2 peak   1580  ch1 rms    277.1 peak   1206  ch2 rms      0.0 peak      0
+       23-24  ch0 rms      1.2 peak      8  ch1 rms      1.3 peak      8  ch2 rms      0.0 peak      0
+   36.5-37.7  ch0 rms    322.5 peak   1581  ch1 rms    277.4 peak   1214  ch2 rms      0.0 peak      0
+   47.5-48.7  ch0 rms    320.0 peak   1575  ch1 rms    276.8 peak   1196  ch2 rms      0.0 peak      0
+
+picload_fd_final.wav (md5 a0923285c97f4269bfa9368559569846; current picload_keys.lua, fresh cfg / nvram, fresh SD copy):
+     21-22.2  ch0 rms    321.2 peak   1579  ch1 rms    277.1 peak   1206  ch2 rms      0.0 peak      0
+   36.5-37.7  ch0 rms    322.5 peak   1581  ch1 rms    277.4 peak   1214  ch2 rms      0.0 peak      0
+   47.5-48.7  ch0 rms    322.5 peak   1582  ch1 rms    277.5 peak   1214  ch2 rms      0.0 peak      0

@@ -73,5 +73,13 @@
 0x48572590  SdSndEditCurListIndexGet ; -> *(0x50006310) -- retf leaf (SdSndEditCurListIndexSet stores it)
 0x48572599  SdSndEditCurEntryIndexGet ; -> *(0x50006314) -- retf leaf (SdSndEditCurEntryIndexSet stores it)
 ;
+; ---- JPEG encoder (lane kn7000-research, 2026-11-06; N-99771106) ----
+; 941 moved its JPEG encoder to 0x4840D29C.. (JpegEncSetup / JpegEncImage / JpegEncMcu in
+; kn7000_manual.sym); this build keeps it here with edited bodies, so no name ports.  Same callers:
+; JpegEncode calls JpegEncSetup then JpegEncImage, and JpegEncImage calls JpegEncMcu at four sites.
+0x48404D10  JpegEncSetup            ; (a0 = JpegEncode's parameter block, +0x1C = mode 1..5, else -0x70) fills the mode's table bytes into the block (941 JpegEncSetup)
+0x48404E71  JpegEncImage            ; (a0 = parameter block, a1 = callback block) headers, then the MCU grid through JpegEncMcu (941 JpegEncImage)
+0x48405091  JpegEncMcu              ; (d0 = x, d1 = y) encodes one MCU (941 JpegEncMcu)
+;
 ; ---- end of the image ----
 0x487F55CE  LibLoadDescriptorTail   ; one byte, 0xF0, after the library loader descriptor's last record (flags 0x8003); the loader (func_484D782E) stops at the record whose flags have bit 15 set and nothing else reads past it -- 941, 935 and 929 end at that record; [INFERENCE] left by the tool that built this image

@@ -6015,7 +6015,7 @@ loc_48485F08:
     movhu   d0, (0x1a, sp)
     mov     sp, a0
     add     0x18, a0
-    call    func_4840D29C_entry, [d2,d3,a2,a3], 0x44
+    call    JpegEncSetup_entry, [d2,d3,a2,a3], 0x44
     mov     (0x58, sp), d0
     mov     d0, (0x501739b4)
     mov     0x0007ffff, d0
@@ -6029,7 +6029,7 @@ loc_48485F08:
     add     0x18, a0
     mov     sp, a1
     add     0x38, a1
-    call    func_4840D3FD_entry, [d2,d3,a2], 0x1c
+    call    JpegEncImage_entry, [d2,d3,a2], 0x1c
     mov     d0, (0x14, sp)
     cmp     0, d0
     blt     loc_48485F82
