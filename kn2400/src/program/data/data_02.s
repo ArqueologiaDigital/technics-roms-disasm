@@ -12199,8 +12199,8 @@ func_48701EF2_Table_3:
 	.long	loc_487024E4
 	.long	loc_4870250D
 	.long	loc_4870251F
-	.long	func_48701EF2_entry_L69a
-	.long	func_48701EF2_entry_L69a
+	.long	PcComCommand_entry_L69a
+	.long	PcComCommand_entry_L69a
 	.long	loc_4870253E
 data_4850EA04:
 # census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it

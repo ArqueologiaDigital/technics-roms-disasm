@@ -3778,12 +3778,12 @@ PictureImport_entry_L280_Table:
 func_487010B8_Table:	# 2 x u16, 1..65535; read by func_487010B8 0x487010B8: `movhu (func_487010B8_Table), d0`; func_487010B8 0x487010B8: `movhu (func_487010B8_Table), d1` ...
 	tab_u16	1, 65535
 
-func_48701EF2_entry_L3c_Var:	# u8, initial value of a RAM variable; read / written by func_48701EF2_entry_L3c 0x48701F30: `movbu d0, (func_48701EF2_entry_L3c_Var)`; func_48701EF2_entry_L77 0x48701F6B: `movbu d2, (func_48701EF2_entry_L3c_Var)` ...
+func_48701EF2_entry_L3c_Var:	# u8, initial value of a RAM variable; read / written by PcComCommand_entry_L3c 0x48701F30: `movbu d0, (func_48701EF2_entry_L3c_Var)`; PcComCommand_entry_L77 0x48701F6B: `movbu d2, (func_48701EF2_entry_L3c_Var)` ...
 	.byte	0
-func_48701EF2_entry_L3c_Var_2:	# u8, initial value of a RAM variable; read / written by func_48701EF2_entry_L3c 0x48701F30: `movbu d2, (func_48701EF2_entry_L3c_Var_2)`; func_48701EF2_entry_La0 0x48701F94: `movbu (func_48701EF2_entry_L3c_Var_2), d0` ...
+func_48701EF2_entry_L3c_Var_2:	# u8, initial value of a RAM variable; read / written by PcComCommand_entry_L3c 0x48701F30: `movbu d2, (func_48701EF2_entry_L3c_Var_2)`; PcComCommand_entry_La0 0x48701F94: `movbu (func_48701EF2_entry_L3c_Var_2), d0` ...
 	.byte	0
 
-func_48701EF2_entry_L3c_Table:	# 2 x u8, 0..255; read by func_48701EF2_entry_L3c 0x48701F30: `movbu d0, (func_48701EF2_entry_L3c_Table)`; func_48701EF2_entry_L8e 0x48701F82: `movbu (func_48701EF2_entry_L3c_Table), d0` ...
+func_48701EF2_entry_L3c_Table:	# 2 x u8, 0..255; read by PcComCommand_entry_L3c 0x48701F30: `movbu d0, (func_48701EF2_entry_L3c_Table)`; PcComCommand_entry_L8e 0x48701F82: `movbu (func_48701EF2_entry_L3c_Table), d0` ...
 	tab_u8	0, 255
 
 PCCom_window:	# u32, initial value of a RAM variable: the TtlScreen PCCom's `window` (+0x24), loaded and dereferenced by ScreenProc 0x485EF333: `mov (0x24, a3), a0` -> `mov d0, (a0)`
@@ -4920,7 +4920,7 @@ func_48726AA8_L52_Table:	# 2 x u16, 0..65535; read by func_48726AA8_L52 0x48726A
 	tab_u16	0, 65535
 func_48726C45_entry_L2_Table:	# 4 x u8, 0..255; read by func_48726C45_entry_L2 0x48726C4C: `movbu d0, (func_48726C45_entry_L2_Table)`; func_48726C45_entry_L21 0x48726C6B: `movbu (func_48726C45_entry_L2_Table), d0` ...
 	tab_u8	0, 255, 255, 255
-func_48701EF2_entry_L23_Table:	# 4 x u8, 1..255; read by func_48701EF2_entry_L23 0x48701F17: `movbu (func_48701EF2_entry_L23_Table), d0`
+func_48701EF2_entry_L23_Table:	# 4 x u8, 1..255; read by PcComCommand_entry_L23 0x48701F17: `movbu (func_48701EF2_entry_L23_Table), d0`
 	tab_u8	1, 255, 255, 255
 
 StyleNameModuleBoot_Var:	# u32, initial value of a RAM variable; read / written by StyleNameModuleBoot 0x5017184B: `mov a0, (StyleNameModuleBoot_Var)`
@@ -4956,7 +4956,7 @@ func_487243A9_entry_L89_Table:	# 2 x u16, 0..65535; read by func_487243A9_entry_
 	tab_u16	0, 65535
 func_486095EA_Table:	# 2 x u16, 1000..65535; read by func_486095EA 0x486095EA: `movhu (func_486095EA_Table), d0`; func_486095EA 0x486095EA: `movhu d0, (func_486095EA_Table)`
 	tab_u16	1000, 65535
-func_4860964C_Table:	# 4 x u8, 0..255; read by func_4860964C 0x4860964C: `movbu (func_4860964C_Table), d0`; func_4860964C 0x4860964C: `movbu d0, (func_4860964C_Table)` ...
+func_4860964C_Table:	# 4 x u8, 0..255; read by KeybedFifoRead 0x4860964C: `movbu (func_4860964C_Table), d0`; KeybedFifoRead 0x4860964C: `movbu d0, (func_4860964C_Table)` ...
 	tab_u8	0, 255, 255, 255
 
 func_4860AA20_entry_L35_Records:	# 7 x REC_func_4860AA20_entry_L35_Records (8 bytes each); read by func_4860AA20_entry_L35 0x4860AA5A `mov (d0, a0), d0`; func_4860AA20_entry_L4d 0x4860AA72 `mov (4, a0), d1`
