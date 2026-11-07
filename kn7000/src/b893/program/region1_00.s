@@ -44,21 +44,21 @@ loc_484000D9:
     mov     0x1c, d0
     movbu   d0, (FDC_DOR)
     mov     1, d0
-    movbu   d0, (func_48400084_Records)
+    movbu   d0, (FdcPrgMotorCtl_Records)
     bra     loc_4840013F
 loc_484000EB:
-    movbu   (func_48400084_Records), d0
+    movbu   (FdcPrgMotorCtl_Records), d0
     cmp     1, d0
     beq     loc_484000F7
     bra     loc_4840013F
 loc_484000F7:
     mov     2, d0
-    movbu   d0, (func_48400084_Records)
+    movbu   d0, (FdcPrgMotorCtl_Records)
     mov     0xfa, d0
     movhu   d0, (0x50007f40)
     bra     loc_4840013F
 loc_4840010A:
-    movbu   (func_48400084_Records), d0
+    movbu   (FdcPrgMotorCtl_Records), d0
     cmp     2, d0
     beq     loc_48400116
     bra     loc_4840013F
@@ -72,7 +72,7 @@ loc_48400116:
     bra     loc_4840013F
 loc_48400130:
     clr     d0
-    movbu   d0, (func_48400084_Records)
+    movbu   d0, (FdcPrgMotorCtl_Records)
     mov     0xc, d0
     movbu   d0, (FDC_DOR)
 loc_4840013F:
@@ -3517,9 +3517,9 @@ loc_484023BC:
     call    FdcPrgRequest_entry, 0, 0xc
     mov     0xbb8, d0
     call    dly_tsk_entry, [d2,a2], 0x18
-    mov     (func_48400084_Records+4), d0
+    mov     (FdcPrgMotorCtl_Records+4), d0
     inc     d0
-    mov     d0, (func_48400084_Records+4)
+    mov     d0, (FdcPrgMotorCtl_Records+4)
     jmp     loc_484023BC
 loc_484024DC:
     ret     0, 0x10
@@ -3568,7 +3568,7 @@ FdcPrgDiskSpinning:
 FdcPrgDiskSpinning_entry:
     call    loc_cpu_entry, 0, 0x10
     mov     (0x50151bd8), d0
-    mov     (func_48402563_Var), d1
+    mov     (FdcPrgDiskSpinning_Var), d1
     sub     d1, d0
     mov     d0, (8, sp)
     cmp     0x6e, d0
@@ -3576,10 +3576,10 @@ FdcPrgDiskSpinning_entry:
     bra     loc_4840258A
 loc_48402583:
     clr     d0
-    movbu   d0, (func_48402563_Table)
+    movbu   d0, (FdcPrgDiskSpinning_Table)
 loc_4840258A:
     call    unl_cpu, 0, 0
-    movbu   (func_48402563_Table), d0
+    movbu   (FdcPrgDiskSpinning_Table), d0
     extb    d0
     ret     0, 0xc
 loc_4840259B:
@@ -3593,9 +3593,9 @@ loc_4840259B:
     movhu   (G30ICR), d0
     movhu   d0, (0x5009e912)
     mov     (0x50151bd8), d0
-    mov     d0, (func_48402563_Var)
+    mov     d0, (FdcPrgDiskSpinning_Var)
     mov     1, d0
-    movbu   d0, (func_48402563_Table)
+    movbu   d0, (FdcPrgDiskSpinning_Table)
     movhu   (G30ICR), d0
     ret     0, 0
 # FdcPrgDiskPresent  (CPU 0x484025dd)
@@ -3614,14 +3614,14 @@ loc_484025F2:
     extbu   d0
     bra     loc_48402670
 loc_484025FA:
-    movbu   (func_48400084_Records+9), d0
+    movbu   (FdcPrgMotorCtl_Records+9), d0
     cmp     0, d0
     beq     loc_48402606
     bra     loc_48402613
 loc_48402606:
     call    FdcPrgIndexDetectInit_entry, 0, 0x28
     mov     1, d0
-    movbu   d0, (func_48400084_Records+9)
+    movbu   d0, (FdcPrgMotorCtl_Records+9)
 loc_48402613:
     mov     0x82, d0
     call    FdcPrgMotorCtl, 0, 0
@@ -3656,7 +3656,7 @@ loc_4840265F:
     movbu   d0, (0xc, sp)
 loc_48402664:
     movbu   (0xd, sp), d0
-    movbu   d0, (func_48400084_Records+8)
+    movbu   d0, (FdcPrgMotorCtl_Records+8)
     movbu   (0xc, sp), d0
 loc_48402670:
     ret     0, 0x10
@@ -3736,7 +3736,7 @@ loc_48402714:
     call    FdcStrap3MediaChangePoll_entry, 0, 0x10
     bra     loc_4840278A
 loc_4840271B:
-    movbu   (func_48402703_Table), d0
+    movbu   (FdcPrgMediaChangePoll_Table), d0
     cmp     0xff, d0
     bne     loc_48402729
     bra     loc_48402737
@@ -3752,7 +3752,7 @@ loc_48402735:
     bra     loc_4840278A
 loc_48402737:
     call    FdcPrgDiskPresent_entry, 0, 0x10
-    movbu   d0, (func_48402703_Table)
+    movbu   d0, (FdcPrgMediaChangePoll_Table)
     bra     loc_4840278A
 loc_48402744:
     call    FdcPrgDiskPresent_entry, 0, 0x10
@@ -3762,7 +3762,7 @@ loc_48402744:
     bra     loc_4840278A
 loc_48402750:
     mov     1, d0
-    movbu   d0, (func_48402703_Table)
+    movbu   d0, (FdcPrgMediaChangePoll_Table)
     mov     0x10708000, d0
     mov     1, d1
     call    PutM3Em_entry, [d2,d3,a2], 0x24
@@ -3775,7 +3775,7 @@ loc_48402769:
     bra     loc_4840278A
 loc_48402775:
     clr     d0
-    movbu   d0, (func_48402703_Table)
+    movbu   d0, (FdcPrgMediaChangePoll_Table)
     mov     0x10708000, d0
     clr     d1
     call    PutM3Em_entry, [d2,d3,a2], 0x24
@@ -3820,21 +3820,21 @@ loc_484027E2:
     mov     0x1c, d0
     movbu   d0, (FDC_DOR)
     mov     1, d0
-    movbu   d0, (func_4840278D_Table)
+    movbu   d0, (FdcStrap3MotorCtl_Table)
     bra     loc_48402848
 loc_484027F4:
-    movbu   (func_4840278D_Table), d0
+    movbu   (FdcStrap3MotorCtl_Table), d0
     cmp     1, d0
     beq     loc_48402800
     bra     loc_48402848
 loc_48402800:
     mov     2, d0
-    movbu   d0, (func_4840278D_Table)
+    movbu   d0, (FdcStrap3MotorCtl_Table)
     mov     0xfa, d0
     movhu   d0, (0x50007f44)
     bra     loc_48402848
 loc_48402813:
-    movbu   (func_4840278D_Table), d0
+    movbu   (FdcStrap3MotorCtl_Table), d0
     cmp     2, d0
     beq     loc_4840281F
     bra     loc_48402848
@@ -3848,7 +3848,7 @@ loc_4840281F:
     bra     loc_48402848
 loc_48402839:
     clr     d0
-    movbu   d0, (func_4840278D_Table)
+    movbu   d0, (FdcStrap3MotorCtl_Table)
     mov     0xc, d0
     movbu   d0, (FDC_DOR)
 loc_48402848:
@@ -7187,9 +7187,9 @@ loc_48404969:
     call    FdcStrap3Request_entry, 0, 0xc
     mov     0xbb8, d0
     call    dly_tsk_entry, [d2,a2], 0x18
-    mov     (func_48404920_Var), d0
+    mov     (FdcStrap3SeekTestLoop_Var), d0
     inc     d0
-    mov     d0, (func_48404920_Var)
+    mov     d0, (FdcStrap3SeekTestLoop_Var)
 loc_48404AA5:
     ret     0, 0x10
 # FdcStrap3IndexDetectInit  (CPU 0x48404aa8)
@@ -7237,7 +7237,7 @@ FdcStrap3DiskSpinning:
 FdcStrap3DiskSpinning_entry:
     call    loc_cpu_entry, 0, 0x10
     mov     (0x50151bd8), d0
-    mov     (func_48404B2C_Var), d1
+    mov     (FdcStrap3DiskSpinning_Var), d1
     sub     d1, d0
     mov     d0, (8, sp)
     cmp     0x6e, d0
@@ -7245,19 +7245,19 @@ FdcStrap3DiskSpinning_entry:
     bra     loc_48404B53
 loc_48404B4C:
     clr     d0
-    movbu   d0, (func_48404B2C_Table)
+    movbu   d0, (FdcStrap3DiskSpinning_Table)
 loc_48404B53:
     call    unl_cpu, 0, 0
-    movbu   (func_48404B2C_Table), d0
+    movbu   (FdcStrap3DiskSpinning_Table), d0
     extb    d0
     ret     0, 0xc
 # FdcStrap3IndexIsr  (CPU 0x48404b64)
 FdcStrap3IndexIsr:
     add     -0xc, sp
     mov     (0x50151bd8), d0
-    mov     d0, (func_48404B2C_Var)
+    mov     d0, (FdcStrap3DiskSpinning_Var)
     mov     1, d0
-    movbu   d0, (func_48404B2C_Table)
+    movbu   d0, (FdcStrap3DiskSpinning_Table)
     clr     d0
     call    dis_int_entry, [d2], 4
     movhu   (G30ICR), d0
@@ -7273,14 +7273,14 @@ FdcStrap3DiskPresent:
 FdcStrap3DiskPresent_entry:
     clr     d0
     movbu   d0, (0xc, sp)
-    movbu   (func_48404BA1_Table), d0
+    movbu   (FdcStrap3DiskPresent_Table), d0
     cmp     0, d0
     beq     loc_48404BB4
     bra     loc_48404BC1
 loc_48404BB4:
     call    FdcStrap3IndexDetectInit_entry, 0, 0x28
     mov     1, d0
-    movbu   d0, (func_48404BA1_Table)
+    movbu   d0, (FdcStrap3DiskPresent_Table)
 loc_48404BC1:
     mov     0x82, d0
     call    FdcStrap3MotorCtl, 0, 0
@@ -7315,7 +7315,7 @@ loc_48404C0D:
     movbu   d0, (0xc, sp)
 loc_48404C12:
     movbu   (0xd, sp), d0
-    movbu   d0, (func_48404BA1_Var)
+    movbu   d0, (FdcStrap3DiskPresent_Var)
     movbu   (0xc, sp), d0
     ret     0, 0x10
 # FdcStrap3DiskChangedClear  (CPU 0x48404c21)
@@ -7374,7 +7374,7 @@ loc_48404C95:
 FdcStrap3MediaChangePoll:
     add     -0x10, sp
 FdcStrap3MediaChangePoll_entry:
-    movbu   (func_48404C9B_Table), d0
+    movbu   (FdcStrap3MediaChangePoll_Table), d0
     cmp     0xff, d0
     bne     loc_48404CAC
     bra     loc_48404CBA
@@ -7390,7 +7390,7 @@ loc_48404CB8:
     bra     loc_48404D0D
 loc_48404CBA:
     call    FdcStrap3DiskPresent_entry, 0, 0x10
-    movbu   d0, (func_48404C9B_Table)
+    movbu   d0, (FdcStrap3MediaChangePoll_Table)
     bra     loc_48404D0D
 loc_48404CC7:
     call    FdcStrap3DiskPresent_entry, 0, 0x10
@@ -7400,7 +7400,7 @@ loc_48404CC7:
     bra     loc_48404D0D
 loc_48404CD3:
     mov     1, d0
-    movbu   d0, (func_48404C9B_Table)
+    movbu   d0, (FdcStrap3MediaChangePoll_Table)
     mov     0x10708000, d0
     mov     1, d1
     call    PutM3Em_entry, [d2,d3,a2], 0x24
@@ -7413,7 +7413,7 @@ loc_48404CEC:
     bra     loc_48404D0D
 loc_48404CF8:
     clr     d0
-    movbu   d0, (func_48404C9B_Table)
+    movbu   d0, (FdcStrap3MediaChangePoll_Table)
     mov     0x10708000, d0
     clr     d1
     call    PutM3Em_entry, [d2,d3,a2], 0x24
@@ -7436,26 +7436,26 @@ loc_48404D25:
     retf    [d2,d3,a2,a3], 0x44
 loc_48404D2A:
     add     -1, d1
-    mov     func_48404D10_Table, a0
+    mov     JpegEncSetup_Table, a0
     movbu   (d1, a0), d0
     mov     (0x4c, sp), a0
     asl2    d1
     movbu   d0, (4, a0)
-    mov     func_48406633_Table, d0
+    mov     JpegDecModeMatch_Table, d0
     add     d1, d0
     mov     d0, (0x18, sp)
     mov     (0x4c, sp), d0
     mov     d1, a3
     add     0xd, d0
     mov     d0, (0x14, sp)
-    mov     func_48406633_Table_2, d0
+    mov     JpegDecModeMatch_Table_2, d0
     add     d1, d0
     mov     d0, (0x10, sp)
     mov     (0x4c, sp), d0
-    add     func_48404D10_Records, a3
+    add     JpegEncSetup_Records, a3
     add     0x11, d0
     mov     d0, (0xc, sp)
-    mov     func_48404D10_Records_2, d0
+    mov     JpegEncSetup_Records_2, d0
     add     d1, d0
     mov     d0, (8, sp)
     mov     (0x4c, sp), d3
@@ -7468,7 +7468,7 @@ loc_48404D2A:
     add     0x15, a2
     movbu   (a0), d0
     mov     (0x14, sp), a0
-    mov     func_48404D10_Table_2, a1
+    mov     JpegEncSetup_Table_2, a1
     movbu   d0, (a0)
     mov     (0x10, sp), a0
     mov     a2, d2
@@ -8071,7 +8071,7 @@ loc_484052EC:
     bra     loc_48405335
 loc_484052F7:
     mov     d0, d2
-    mov     func_48405229_Records, a2
+    mov     JpegEncTablesInit_Records, a2
     mov     0x50173ae4, a3
 loc_48405304:
     mov     a2, a1
@@ -8107,9 +8107,9 @@ loc_48405335:
     mov     d3, d2
 loc_48405343:
     mov     d2, a0
-    add     func_484058DA_Table, a0
+    add     JpegEncWriteDht_Table, a0
     mov     d2, a1
-    add     func_484058DA_Table_2, a1
+    add     JpegEncWriteDht_Table_2, a1
     mov     a3, d0
     mov     0x50173d64, d1
     add     d2, d1
@@ -8119,9 +8119,9 @@ loc_48405343:
     ret     [d2,d3,a2,a3], 0x38
 loc_48405368:
     mov     d2, a0
-    add     func_484058DA_Records, a0
+    add     JpegEncWriteDht_Records, a0
     mov     d3, a1
-    add     func_484060C1_Table, a1
+    add     JpegHuffMakeCodes_Table, a1
     mov     a2, d0
     mov     0x50174244, d1
     add     d3, d1
@@ -8180,7 +8180,7 @@ loc_484053DF:
     call    LibDiv32, 0, 0
     movhu   d0, (0x501739b2)
     movhu   (0x50173958), d0
-    mov     func_48405825_Table, a1
+    mov     JpegEncWriteDqt_Table, a1
     ext     d0
     div     d3, d0
     mov     mdr, d0
@@ -8196,7 +8196,7 @@ loc_484053DF:
     asl2    d0
     movbu   d0, (a2)
     inc     a2
-    cmp     func_484058DA_Table, a1
+    cmp     JpegEncWriteDht_Table, a1
     lcs
     clr     d0
     ret     [d2,d3,a2,a3], 0x38
@@ -8648,7 +8648,7 @@ loc_484058A3:
     mov     d2, d0
     extbu   d0
     call    JpegWriteByte, 0, 0
-    mov     func_48405825_Table, a2
+    mov     JpegEncWriteDqt_Table, a2
 loc_484058B7:
     movbu   (a2), d0
     inc     a2
@@ -8656,7 +8656,7 @@ loc_484058B7:
     movhu   (d0, a3), d0
     extbu   d0
     call    JpegWriteByte, 0, 0
-    cmp     func_484058DA_Table, a2
+    cmp     JpegEncWriteDht_Table, a2
     bcs     loc_484058B7
 loc_484058CB:
     inc     d2
@@ -8696,8 +8696,8 @@ loc_48405907:
     mov     0x5017396d, d0
     movbu   (0x5017395c), d1
     mov     d0, (0x10, sp)
-    mov     func_484058DA_Table, d3
-    mov     func_484058DA_Records, a3
+    mov     JpegEncWriteDht_Table, d3
+    mov     JpegEncWriteDht_Records, a3
     add     d1, d0
     mov     d0, (0x1c, sp)
 loc_48405924:
@@ -8782,12 +8782,12 @@ loc_48405985:
     add     d1, d0
     exthu   d0
     call    JpegWriteU16Be_entry, [d2], 0xc
-    mov     func_484058DA_Table, d0
+    mov     JpegEncWriteDht_Table, d0
     mov     d0, (0x1c, sp)
-    mov     func_484058DA_Records, a0
+    mov     JpegEncWriteDht_Records, a0
     mov     a0, (0x20, sp)
     mov     a0, (0x10, sp)
-    mov     func_484060C1_Table, d0
+    mov     JpegHuffMakeCodes_Table, d0
     mov     d0, (0x2c, sp)
     mov     0x10, d0
     mov     d0, (0x28, sp)
@@ -8816,9 +8816,9 @@ loc_484059E9:
     bcs     loc_484059E9
     mov     (0x18, sp), d0
     mov     (0x18, sp), d3
-    add     func_484058DA_Table, d0
+    add     JpegEncWriteDht_Table, d0
     mov     d0, a3
-    add     func_484058DA_Table_2, d3
+    add     JpegEncWriteDht_Table_2, d3
     add     0x10, d0
     mov     d0, (0xc, sp)
 loc_48405A0A:
@@ -10010,7 +10010,7 @@ JpegDecInit:
 JpegDecInit_entry:
     clr     d0
     movhu   d0, (0x50173972)
-    mov     func_48405825_Table, a1
+    mov     JpegEncWriteDqt_Table, a1
     mov     0x50173ce4, a2
     setlb
     movbu   (a1), d0
@@ -10018,7 +10018,7 @@ JpegDecInit_entry:
     asl2    d0
     movbu   d0, (a2)
     inc     a2
-    cmp     func_484058DA_Table, a1
+    cmp     JpegEncWriteDht_Table, a1
     lcs
     clr     d0
     retf    [a2], 4
@@ -10134,7 +10134,7 @@ JpegDecModeMatch_entry:
     mov     d1, (0x14, sp)
     clr     d0
     movhu   d0, (0x50173974)
-    mov     func_48404D10_Table, d3
+    mov     JpegEncSetup_Table, d3
     mov     1, d0
     mov     d0, (8, sp)
     clr     d2
@@ -10149,10 +10149,10 @@ loc_48406668:
     ble     loc_484066AB
     mov     0x50173965, a1
     mov     d2, a3
-    add     func_48406633_Table, a3
+    add     JpegDecModeMatch_Table, a3
     mov     0x50173969, a2
     mov     d2, a0
-    add     func_48406633_Table_2, a0
+    add     JpegDecModeMatch_Table_2, a0
     setlb
     movbu   (a1), d1
     movbu   (a3), d0
@@ -10178,7 +10178,7 @@ loc_484066B3:
     inc     d0
     mov     d0, (8, sp)
     inc     d3
-    cmp     func_48406633_Table, d3
+    cmp     JpegDecModeMatch_Table, d3
     bcs     loc_48406668
     movhu   (0x50173974), d0
     cmp     0, d0
@@ -10513,7 +10513,7 @@ loc_484069EA:
     asl     7, d0
     mov     d0, a3
     add     0x50173ae4, a3
-    mov     func_48405825_Table, a2
+    mov     JpegEncWriteDqt_Table, a2
 loc_484069FB:
     call    JpegReadByte, 0, 0
     mov     d0, d1
@@ -10529,7 +10529,7 @@ loc_484069FB:
     bra     loc_48406A22
 loc_48406A14:
     inc     a2
-    cmp     func_484058DA_Table, a2
+    cmp     JpegEncWriteDht_Table, a2
     bcs     loc_484069FB
     cmp     0, d2
     bgt     loc_484069CF
@@ -12314,7 +12314,7 @@ loc_48407AC5:
     cmp     0, d1
     ble     loc_48407AE0
     mov     0x487af25c, a0
-    mov     func_48400084_Records, a1
+    mov     FdcPrgMotorCtl_Records, a1
 loc_48407AD8:
     mov     (a0), d0
     inc4    a0
@@ -13202,7 +13202,7 @@ func_4840827F:
 DspManagerPassDoneTake:
     add     -4, sp
 DspManagerPassDoneTake_entry:
-    movhu   (func_48408282_Table), d0
+    movhu   (DspManagerPassDoneTake_Table), d0
     cmp     0, d0
     bne     loc_48408291
     bra     loc_4840829F
@@ -13210,7 +13210,7 @@ loc_48408291:
     mov     1, d0
     movhu   d0, (0, sp)
     clr     d0
-    movhu   d0, (func_48408282_Table)
+    movhu   d0, (DspManagerPassDoneTake_Table)
     bra     loc_484082A3
 loc_4840829F:
     clr     d0
@@ -13253,7 +13253,7 @@ loc_484082C7:
     call    func_48408FF3_entry, 0, 0x24
     movhu   d0, (0x16, sp)
     mov     1, d0
-    movhu   d0, (func_48408282_Table)
+    movhu   d0, (DspManagerPassDoneTake_Table)
     call    func_4840964F_entry, [d2,d3], 0x2c
     movhu   d0, (0x16, sp)
     call    func_48409436_entry, 0, 0x18
@@ -18025,7 +18025,7 @@ loc_4840AF03:
 DspDebugPrintHex16:
     add     -0x14, sp
     movhu   d0, (0x1c, sp)
-    mov     func_4840AF06_Table, a1
+    mov     DspDebugPrintHex16_Table, a1
     mov     sp, a0
     add     0xc, a0
     mov     -5, d1
@@ -29121,7 +29121,7 @@ loc_48412159:
     jmp     loc_48412227
 loc_48412160:
     asl2    d1
-    mov     func_48412145_Table, a0
+    mov     DspPresetEffectTypeGet_Table, a0
     mov     (d1, a0), a0
     jmp     (a0)
 loc_4841216B:
@@ -30496,7 +30496,7 @@ loc_48412BA2:
     bgt     loc_48412BDE
     add     -0x70, d0
     asl2    d0
-    mov     func_48412B96_Table, a0
+    mov     DspPresetKeyKind_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_48412BBA:
@@ -33319,10 +33319,10 @@ GuiTasksStart_entry:
     exth    d0
     call    sta_tsk, 0, 0
     mov     2, d0
-    mov     func_4C03C8BD_Table_3, a0
+    mov     KernelCyclicHandlerDefine_Table_3, a0
     call    KernelCyclicHandlerDefine_entry, [d2,d3,a2,a3], 0x1c
     mov     1, d0
-    mov     func_4C03C8BD_Table, a0
+    mov     KernelCyclicHandlerDefine_Table, a0
     call    KernelCyclicHandlerDefine_entry, [d2,d3,a2,a3], 0x1c
     ret     0, 0x10
 # GuiSystemInit  (CPU 0x4841428e)
@@ -33371,9 +33371,9 @@ loc_484142FF:
     call    InitializeGraphics_entry, 0, 0x1c
     call    InitializeTimer_entry, [d2], 0x10
     call    InitializeObjectTable_entry, [d2,d3], 0x1c
-    mov     (func_4841428E_Var), d0
+    mov     (GuiSystemInit_Var), d0
     clr     d3
-    movhu   d0, (func_4841428E_Table)
+    movhu   d0, (GuiSystemInit_Table)
     mov     (0x4800001c), d2
     add     TableRomDirectory, d2
     mov     d2, a0
@@ -33403,7 +33403,7 @@ loc_484142FF:
     cmp     0, d0
     lne
 loc_48414369:
-    movhu   d3, (func_4841428E_Table_2)
+    movhu   d3, (GuiSystemInit_Table_2)
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x000f0000, d0
@@ -33449,7 +33449,7 @@ loc_484143FF:
     nop
     mul     d1, d0
     mov     d0, a0
-    add     func_4842886A_Table, a0
+    add     DeleteEventForTask_Table, a0
     movhu   (6, a0), d0
     mov     a3, a0
     exth    d0
@@ -33520,7 +33520,7 @@ GuiTimerTick_entry:
     nop
     mul     d1, d0
     mov     d0, a0
-    add     func_4842886A_Table, a0
+    add     DeleteEventForTask_Table, a0
     movhu   (6, a0), d0
     mov     1, d1
     exth    d0
@@ -33932,7 +33932,7 @@ DialEventRepost_entry:
     call    ApDeleteEvent_entry, [d2], 0x18
     mov     d2, d0
     asl2    d0
-    add     func_484148FA_Table, d0
+    add     DialEventRepost_Table, d0
     mov     d0, a0
     mov     (0x40, a0), d1
     mov     -1, d0
@@ -34758,14 +34758,14 @@ loc_484150FD:
     exthu   d1
     mov     d1, d0
     asl     3, d0
-    mov     func_4841508C_Table, a0
+    mov     LcdOutRect_Table, a0
     mov     (d0, a0), d2
     mov     (0x38, sp), a0
     mov     d2, (0x20, sp)
     asl     3, d1
     movhu   (a0), d0
     mov     d1, a0
-    add     func_4841508C_Table, a0
+    add     LcdOutRect_Table, a0
     mov     (4, a0), d1
     exth    d0
     add     d1, d0
@@ -34908,7 +34908,7 @@ loc_4841521B:
     exthu   d0
     mov     d0, d1
     asl     3, d1
-    mov     func_4841508C_Table, a0
+    mov     LcdOutRect_Table, a0
     mov     (d1, a0), d2
     asl     3, d0
     mov     d2, (0x28, sp)
@@ -35095,12 +35095,12 @@ loc_4841539B:
     exthu   d0
     mov     d0, d1
     asl     3, d1
-    mov     func_4841508C_Table, a0
+    mov     LcdOutRect_Table, a0
     mov     (d1, a0), d2
     asl     3, d0
     mov     d2, (0x1c, sp)
     mov     d0, a0
-    add     func_4841508C_Table, a0
+    add     LcdOutRect_Table, a0
     mov     (4, a0), d1
     mov     (0x38, sp), a0
     movhu   (a0), d0
@@ -35727,7 +35727,7 @@ loc_484158B7:
     ret     [d2,d3,a2,a3], 0xd4
 loc_484158FE:
     clr     d3
-    mov     func_48415804_Table, a3
+    mov     CaptureLcdBmpPaletted_Table, a3
     mov     sp, a2
     add     0x84, a2
 loc_4841590A:
@@ -36745,8 +36745,8 @@ PartHasDspUnit_entry:
 loc_4841618B:
     clr     d2
     clr     d1
-    mov     func_4841617C_Table, a2
-    mov     (func_4841617C_Table), a0
+    mov     PartHasDspUnit_Table, a2
+    mov     (PartHasDspUnit_Table), a0
     mov     -1, d3
     cmp     d3, a0
     beq     loc_484161BE
@@ -37002,7 +37002,7 @@ loc_484163E4:
     bra     loc_48416446
 loc_484163FF:
     inc4    a1
-    cmp     func_484165A4_Var, a1
+    cmp     MallocSbrk_Var, a1
     lcs
     bra     loc_48416446
 loc_48416409:
@@ -37020,7 +37020,7 @@ loc_4841641F:
     cmp     a0, d0
     beq     loc_48416446
     inc4    a1
-    cmp     func_484165A4_Var, a1
+    cmp     MallocSbrk_Var, a1
     lcs
     bra     loc_48416446
 loc_48416430:
@@ -37029,7 +37029,7 @@ loc_48416430:
     mov     0xff000000, d0
     mov     d0, (a0)
     inc4    a0
-    cmp     func_484165A4_Var, a0
+    cmp     MallocSbrk_Var, a0
     lcs
 loc_48416446:
     mov     d3, d0
@@ -37187,22 +37187,22 @@ MallocSbrk:
     mov     d0, d1
     cmp     0, d1
     bne     loc_484165B1
-    mov     (func_484165A4_Var_2), a0
+    mov     (MallocSbrk_Var_2), a0
     bra     loc_484165E0
 loc_484165B1:
-    mov     (func_484165A4_Var_2), a0
+    mov     (MallocSbrk_Var_2), a0
     cmp     d0, a0
     bcc     loc_484165C3
     mov     0xffffffff, a0
     bra     loc_484165E0
 loc_484165C3:
-    mov     (func_484165A4_Var), a0
-    mov     (func_484165A4_Var_2), d0
+    mov     (MallocSbrk_Var), a0
+    mov     (MallocSbrk_Var_2), d0
     sub     d1, d0
-    mov     d0, (func_484165A4_Var_2)
+    mov     d0, (MallocSbrk_Var_2)
     mov     a0, d0
     add     d1, d0
-    mov     d0, (func_484165A4_Var)
+    mov     d0, (MallocSbrk_Var)
 loc_484165E0:
     retf    0, 0
 # Malloc  (CPU 0x484165e3)
@@ -39170,7 +39170,7 @@ loc_484177EB:
     jmp     loc_48417A6B
 loc_4841780F:
     add     8, a0
-    cmp     func_48417A7B_Table, a0
+    cmp     ScreenWallSelect_Table, a0
     bcs     loc_4841781A
     mov     a1, a0
 loc_4841781A:
@@ -39405,7 +39405,7 @@ ScreenWallSelect_entry:
     bgt     loc_48417AD0
     mov     d0, d1
     asl2    d1
-    mov     func_48417A7B_Table, a0
+    mov     ScreenWallSelect_Table, a0
     mov     (d1, a0), a0
     jmp     (a0)
 loc_48417A93:
@@ -48539,7 +48539,7 @@ loc_4841D296:
     jmp     loc_4841D450
 loc_4841D2B9:
     add     8, a0
-    cmp     func_4841D460_Table, a0
+    cmp     PsEditSwLabelDraw_Table, a0
     bcs     loc_4841D2C4
     mov     a1, a0
 loc_4841D2C4:
@@ -48962,7 +48962,7 @@ loc_4841D68A:
     jmp     loc_4841D7B0
 loc_4841D691:
     asl2    d0
-    mov     func_4841D460_Table, a0
+    mov     PsEditSwLabelDraw_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_4841D69C:

@@ -329,20 +329,20 @@ SswDoraJpgImport:
     call    fmmopen_entry, [a2,a3], 0x24
     mov     a2, a0
     movhu   (0x5009e2ec), d0
-    movhu   (func_48580316_Table), d1
+    movhu   (SswDoraJpgImport_Table), d1
     call    PictureImport_entry, [d2,d3,a2,a3], 0x10
     call    fmmclose_entry, 0, 0x14
     movhu   (0x5009e2ec), d0
     inc     d0
     movhu   d0, (0x5009e2ec)
-    movhu   (func_48580316_Table), d0
+    movhu   (SswDoraJpgImport_Table), d0
     inc     d0
-    movhu   d0, (func_48580316_Table)
-    movhu   (func_48580316_Table), d0
+    movhu   d0, (SswDoraJpgImport_Table)
+    movhu   (SswDoraJpgImport_Table), d0
     cmp     3, d0
     ble     loc_48580385
     mov     1, d0
-    movhu   d0, (func_48580316_Table)
+    movhu   d0, (SswDoraJpgImport_Table)
 loc_48580385:
     ret     [a2], 0x28
 # SswImageSizeCheck  (CPU 0x48580388)
@@ -4143,7 +4143,7 @@ loc_48582689:
     mov     -1, d0
     jmp     loc_48582CCC
 loc_4858268E:
-    movbu   (func_48582669_Table_5), d0
+    movbu   (PcComCommand_Table_5), d0
     cmp     d2, d0
     bne     loc_4858269A
     jmp     loc_48582785
@@ -4158,7 +4158,7 @@ loc_485826A7:
     clr     d0
     call    func_484C2E0F_entry, [d2,d3], 8
     clr     d0
-    movbu   d0, (func_48582669_Table_4)
+    movbu   d0, (PcComCommand_Table_4)
     call    GetModeNow_entry, 0, 0x10
     and     0xffff, d0
     cmp     1, d0
@@ -4167,18 +4167,18 @@ loc_485826A7:
     clr     d1
     call    ChangeTitle_entry, [d2,d3,a2], 0x20
     mov     1, d0
-    movbu   d0, (func_48582669_Var)
+    movbu   d0, (PcComCommand_Var)
     clr     d0
     jmp     loc_48582CCC
 loc_485826DC:
-    movbu   d2, (func_48582669_Var)
+    movbu   d2, (PcComCommand_Var)
     mov     -2, d0
     jmp     loc_48582CCC
 loc_485826E7:
-    movbu   (func_48582669_Var), d0
+    movbu   (PcComCommand_Var), d0
     cmp     d2, d0
     beq     loc_48582769
-    movbu   (func_48582669_Table_4), d0
+    movbu   (PcComCommand_Table_4), d0
     cmp     d2, d0
     beq     loc_48582710
     call    GetSeqPlyPart_entry, 0, 0x10
@@ -4220,8 +4220,8 @@ loc_4858274E:
     call    InterruptTitle_entry, [d2,d3,a2], 0x20
 loc_48582759:
     clr     d0
-    movbu   d2, (func_48582669_Var)
-    movbu   d0, (func_48582669_Table_4)
+    movbu   d2, (PcComCommand_Var)
+    movbu   d0, (PcComCommand_Table_4)
     jmp     loc_48582CCC
 loc_48582769:
     mov     -2, d0
@@ -4275,7 +4275,7 @@ loc_485827CA:
 loc_485827D1:
     add     -1, d0
     asl2    d0
-    mov     func_48582669_Table_3, a0
+    mov     PcComCommand_Table_3, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_485827DE:
@@ -4417,7 +4417,7 @@ loc_4858294A:
     jmp     loc_48582CBD
 loc_48582951:
     asl2    d0
-    mov     func_48582669_Table_2, a0
+    mov     PcComCommand_Table_2, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_4858295C:
@@ -4573,7 +4573,7 @@ loc_48582B2A:
     jmp     loc_48582CBD
 loc_48582B31:
     asl2    d0
-    mov     func_48582669_Table, a0
+    mov     PcComCommand_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_48582B3C:
@@ -4601,7 +4601,7 @@ loc_48582B60:
     jmp     loc_48582CBD
 loc_48582B71:
     mov     1, d0
-    movbu   d0, (func_48582669_Table_4)
+    movbu   d0, (PcComCommand_Table_4)
     jmp     loc_48582CBD
 loc_48582B7C:
     mov     a2, a0
@@ -4613,7 +4613,7 @@ loc_48582B7C:
     jmp     loc_48582CBD
 loc_48582B8D:
     mov     1, d0
-    movbu   d0, (func_48582669_Table_4)
+    movbu   d0, (PcComCommand_Table_4)
     jmp     loc_48582CBD
 loc_48582B98:
     mov     a2, a0

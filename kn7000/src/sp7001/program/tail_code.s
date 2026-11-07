@@ -483,7 +483,7 @@ KernelWaitAbortHook:
 #   (0x50381408 in PROGRAM 941), then jmp KernelInit. The reset code's start-up
 #   0x48410151 and 0x4C03E2BE jump here. The KN6000's func_4C3F7793.
 KernelStart:
-    mov     (func_4C03CF63_Var_3), a3
+    mov     (KernelMemoryInit_Var_3), a3
     mov     a3, sp
     jmp     KernelInit
 # KernelInitHook  (CPU 0x487ba763)

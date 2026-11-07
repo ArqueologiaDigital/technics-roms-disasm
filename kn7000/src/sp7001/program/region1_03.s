@@ -2848,7 +2848,7 @@ SeqTitleEnterDispatch_entry:
     sub     d1, d2
     mov     d2, d1
     asl2    d1
-    mov     func_48462EAF_Table, a0
+    mov     SeqTitleEnterDispatch_Table, a0
     mov     (d1, a0), a0
     jmp     (a0)
 loc_48462ED0:
@@ -2902,7 +2902,7 @@ loc_48462F32:
     sub     d1, d2
     mov     d2, d1
     asl2    d1
-    mov     func_48462F1A_Table, a0
+    mov     SeqTitleLeaveDispatch_Table, a0
     mov     (d1, a0), a0
     jmp     (a0)
 loc_48462F41:
@@ -3338,7 +3338,7 @@ SeqTitleIsEditOpScreen:
     bgt     loc_484634C1
     sub     d1, d0
     asl2    d0
-    mov     func_484634A3_Table, a0
+    mov     SeqTitleIsEditOpScreen_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484634BD:
@@ -9041,7 +9041,7 @@ StepRecCtlValStep_entry:
     mov     d0, d2
     movbu   (0x5004b8fc), d0
     mov     sp, a1
-    mov     func_48466D08_Table, a0
+    mov     StepRecCtlValStep_Table, a0
     asl2    d0
     mov     (d0, a0), d0
     mov     sp, a0
@@ -9197,7 +9197,7 @@ loc_48466E31:
     bls     loc_48466E3C
     jmp     loc_48466F18
 loc_48466E3C:
-    mov     func_48466E1F_Records, a3
+    mov     M3ParamRangeGet_Records, a3
     add     -3, d2
     mov     d2, d1
     and     0x1f, d1
@@ -9679,7 +9679,7 @@ func_484671D8:
 # StepRecCtlParamIdGet  (CPU 0x484671e1)
 StepRecCtlParamIdGet:
     movbu   (0x5004b8fc), d0
-    mov     func_48466D08_Table, a0
+    mov     StepRecCtlValStep_Table, a0
     asl2    d0
     mov     (d0, a0), d0
     retf    0, 0
@@ -13871,7 +13871,7 @@ StepRecCtlValLoad:
     add     -0x10, sp
 StepRecCtlValLoad_entry:
     movbu   (0x5004b8fc), d0
-    mov     func_48466D08_Table, a0
+    mov     StepRecCtlValStep_Table, a0
     asl2    d0
     mov     (d0, a0), d2
     clr     d0
@@ -13890,7 +13890,7 @@ StepRecCtlEventBuild:
     add     -0x14, sp
 StepRecCtlEventBuild_entry:
     movbu   (0x5004b946), d0
-    mov     func_48466D08_Table, a0
+    mov     StepRecCtlValStep_Table, a0
     movbu   d0, (0x5004b886)
     movbu   (0x5004b8fc), d0
     movbu   (0x5004b932), d1
@@ -14481,7 +14481,7 @@ StepRecChordPoll:
 loc_4846A159:
     extbu   d0
     asl2    d0
-    mov     func_4846A13F_Table, a0
+    mov     StepRecChordPoll_Table, a0
     mov     (d0, a0), a0
     calls   (a0)
 loc_4846A165:
@@ -20282,12 +20282,12 @@ loc_4846D8C0:
     mov     d1, (0x14, sp)
     clr     d0
     movbu   d0, (0x18, sp)
-    mov     (func_4846D7EA_Records+80), d0
-    mov     func_4846D7EA_Records, a3
+    mov     (VfsFileOpen_Records+80), d0
+    mov     VfsFileOpen_Records, a3
     clr     d3
     cmp     d3, d0
     ble     loc_4846D915
-    mov     func_4846D7EA_Records+28, a2
+    mov     VfsFileOpen_Records+28, a2
 loc_4846D8F2:
     mov     (a2), a1
     mov     (0x10, sp), a0
@@ -20297,7 +20297,7 @@ loc_4846D8F2:
     inc     d3
     movbu   d3, (0x18, sp)
     movbu   (0x18, sp), d3
-    mov     (func_4846D7EA_Records+80), d0
+    mov     (VfsFileOpen_Records+80), d0
     add     0x28, a3
     add     0x28, a2
     cmp     d0, d3
@@ -20305,7 +20305,7 @@ loc_4846D8F2:
 loc_4846D915:
     mov     (0x10, sp), a0
     call    VfsFree_entry, 0, 0xc
-    mov     (func_4846D7EA_Records+80), d0
+    mov     (VfsFileOpen_Records+80), d0
     cmp     d0, d3
     bne     loc_4846D932
 loc_4846D925:
@@ -20893,7 +20893,7 @@ loc_4846DD73:
     mov     a1, a0
     ret     [d2,d3,a2,a3], 0x38
 loc_4846DD9D:
-    movbu   (func_4846D7EA_Records+84), d0
+    movbu   (VfsFileOpen_Records+84), d0
     mov     0x50149860, a2
     mov     d0, (0x1c, sp)
     clr     d2
@@ -20970,7 +20970,7 @@ loc_4846DE27:
     cmp     0xa, d0
     llt
     clr     d0
-    movbu   d0, (func_4846D7EA_Records+84)
+    movbu   d0, (VfsFileOpen_Records+84)
     mov     (0x14, sp), d0
     cmp     0, d0
     beq     loc_4846DE8E
@@ -20983,7 +20983,7 @@ loc_4846DE27:
     btst    0x8000, d0
     beq     loc_4846DE73
     mov     1, d0
-    movbu   d0, (func_4846D7EA_Records+84)
+    movbu   d0, (VfsFileOpen_Records+84)
 loc_4846DE73:
     mov     (0x14, sp), a0
     mov     (0x4c, sp), d1
@@ -25270,7 +25270,7 @@ FloppySectorRead_entry:
     cmp     0, d0
     beq     loc_4846FEE3
     mov     1, d0
-    movbu   d0, (func_4846FEBF_Table)
+    movbu   d0, (FloppySectorRead_Table)
     call    MediaChangeAck, 0, 0
     mov     6, d0
     ret     [d2,d3,a2,a3], 0x34
@@ -25797,12 +25797,12 @@ loc_484702D5:
     clr     d0
     movhu   d0, (a0)
     retf    0, 0
-    movbu   (func_4846FEBF_Table), d0
+    movbu   (FloppySectorRead_Table), d0
     extb    d0
     cmp     0, d0
     beq     loc_484702F6
     clr     d0
-    movbu   d0, (func_4846FEBF_Table)
+    movbu   d0, (FloppySectorRead_Table)
     mov     1, d0
     bra     loc_484702F7
 loc_484702F6:
@@ -25846,14 +25846,14 @@ SdSectorRead:
     add     -0x18, sp
 SdSectorRead_entry:
     mov     d0, d2
-    movbu   (func_48470337_Var), d0
+    movbu   (SdSectorRead_Var), d0
     extb    d0
     cmp     0, d0
     beq     loc_4847035B
     mov     1, d0
-    movbu   d0, (func_48470337_Table)
+    movbu   d0, (SdSectorRead_Table)
     clr     d0
-    movbu   d0, (func_48470337_Var)
+    movbu   d0, (SdSectorRead_Var)
     mov     6, d0
     bra     loc_48470367
 loc_4847035B:
@@ -26281,12 +26281,12 @@ loc_4847066D:
     clr     d0
     movhu   d0, (a0)
     retf    0, 0
-    movbu   (func_48470337_Table), d0
+    movbu   (SdSectorRead_Table), d0
     extb    d0
     cmp     0, d0
     beq     loc_4847068E
     clr     d0
-    movbu   d0, (func_48470337_Table)
+    movbu   d0, (SdSectorRead_Table)
     mov     1, d0
     bra     loc_4847068F
 loc_4847068E:
@@ -26315,33 +26315,33 @@ SdCapacityGet_entry:
     cmp     1, d1
     bne     loc_484706C8
     mov     1, d0
-    movbu   d0, (func_48470337_Var)
+    movbu   d0, (SdSectorRead_Var)
 loc_484706C8:
     clr     d0
     retf    0, 0
 # SdForceMediaChanged  (CPU 0x484706cc)
 SdForceMediaChanged:
     mov     1, d0
-    movbu   d0, (func_48470337_Var)
+    movbu   d0, (SdSectorRead_Var)
     retf    0, 0
 # MediaTypeCacheSet  (CPU 0x484706d7)
 MediaTypeCacheSet:
-    movbu   d0, (func_484706D7_Table)
+    movbu   d0, (MediaTypeCacheSet_Table)
     mov     1, d0
-    mov     d0, (func_484706D7_Var)
+    mov     d0, (MediaTypeCacheSet_Var)
     clr     d0
-    movbu   d0, (func_4846D7EA_Records+2)
+    movbu   d0, (VfsFileOpen_Records+2)
     retf    0, 0
 # MediaChangeAck  (CPU 0x484706ef)
 MediaChangeAck:
-    movbu   (func_484706D7_Table), d0
-    movbu   d0, (func_484706EF_Var)
+    movbu   (MediaTypeCacheSet_Table), d0
+    movbu   d0, (MediaChangeAck_Var)
     clr     d0
-    mov     d0, (func_484706D7_Var)
+    mov     d0, (MediaTypeCacheSet_Var)
     retf    0, 0
 # MediaChangedGet  (CPU 0x48470705)
 MediaChangedGet:
-    mov     (func_484706D7_Var), d0
+    mov     (MediaTypeCacheSet_Var), d0
     retf    0, 0
 # MediaTypeCachedGet  (CPU 0x4847070e)
 MediaTypeCachedGet:
@@ -26354,7 +26354,7 @@ MediaTypeCachedGet_entry:
     mov     1, d0
     call    MediaTypeCacheSet, 0, 0
 loc_48470724:
-    movbu   (func_484706D7_Table), d0
+    movbu   (MediaTypeCacheSet_Table), d0
     ret     0, 0xc
 # FdFormatByType  (CPU 0x4847072d)
 FdFormatByType:
@@ -26420,7 +26420,7 @@ FdFormat720K:
 FdFormat720K_entry:
     clr     d0
     call    FdStatusToErrno, 0, 0
-    mov     func_48401F32_Var_2, a0
+    mov     FdcPrgRequest_Var_2, a0
     call    FdcPrgRequest_entry, 0, 0xc
     extbu   d0
     cmp     0, d0
@@ -26429,7 +26429,7 @@ FdFormat720K_entry:
     clr     d0
     ret     [d2,d3,a2,a3], 0x40
 loc_484707C1:
-    mov     func_48401F32_Var, a0
+    mov     FdcPrgRequest_Var, a0
     call    FdcPrgRequest_entry, 0, 0xc
     extbu   d0
     cmp     0, d0
@@ -26480,7 +26480,7 @@ loc_4847083E:
     clr     d0
     mov     0x200, d1
     call    memset_entry, [a2], 4
-    mov     func_4847079B_Block, d2
+    mov     FdFormat720K_Block, d2
     mov     a2, a0
     mov     d2, a1
     mov     3, d0
@@ -26707,7 +26707,7 @@ FdFormat1440K:
 FdFormat1440K_entry:
     clr     d0
     call    FdStatusToErrno, 0, 0
-    mov     func_48401F32_Var_3, a0
+    mov     FdcPrgRequest_Var_3, a0
     call    FdcPrgRequest_entry, 0, 0xc
     extbu   d0
     cmp     0, d0
@@ -26716,7 +26716,7 @@ FdFormat1440K_entry:
     clr     d0
     ret     [d2,d3,a2,a3], 0x40
 loc_48470A8B:
-    mov     func_48401F32_Var, a0
+    mov     FdcPrgRequest_Var, a0
     call    FdcPrgRequest_entry, 0, 0xc
     extbu   d0
     cmp     0, d0
@@ -26767,7 +26767,7 @@ loc_48470B08:
     clr     d0
     mov     0x200, d1
     call    memset_entry, [a2], 4
-    mov     func_48470A65_Block, d2
+    mov     FdFormat1440K_Block, d2
     mov     a2, a0
     mov     d2, a1
     mov     3, d0
@@ -26991,13 +26991,13 @@ loc_48470CF2:
     mov     1, d2
     jmp     loc_48470DD5
 loc_48470D23:
-    mov     func_48401F32_Var_4, a0
+    mov     FdcPrgRequest_Var_4, a0
     call    FdcPrgRequest_entry, 0, 0xc
     cmp     d2, d0
     beq     loc_48470D36
     jmp     loc_48470DD5
 loc_48470D36:
-    mov     func_48401F32_Var_3, a0
+    mov     FdcPrgRequest_Var_3, a0
     call    FdcPrgRequest_entry, 0, 0xc
     cmp     d2, d0
     beq     loc_48470D49
@@ -27034,7 +27034,7 @@ loc_48470D86:
     clr     d2
     bra     loc_48470DD5
 loc_48470D89:
-    mov     func_48401F32_Var_2, a0
+    mov     FdcPrgRequest_Var_2, a0
     call    FdcPrgRequest_entry, 0, 0xc
     cmp     d2, d0
     beq     loc_48470D9B
@@ -27361,7 +27361,7 @@ _findfirst:
     movm    [d2,a2,a3], (sp)
     add     -0x1c, sp
 _findfirst_entry:
-    movbu   (func_484706D7_Table), d0
+    movbu   (MediaTypeCacheSet_Table), d0
     mov     a1, (0x34, sp)
     mov     a0, d2
     cmp     5, d0
@@ -27427,13 +27427,13 @@ loc_484710CB:
     mov     a2, a0
     call    MplHeapFree_entry, 0, 0x10
     clr     d0
-    mov     d0, (func_4846D7EA_Records+92)
+    mov     d0, (VfsFileOpen_Records+92)
     mov     0x5014ad80, a0
     mov     0x20, d0
     mov     0xe0, d1
     mov     d2, a1
     call    VfsFileRead_entry, [d2,a2,a3], 0x20
-    mov     d0, (func_4846D7EA_Records+88)
+    mov     d0, (VfsFileOpen_Records+88)
     cmp     0, d0
     bne     loc_48471101
     mov     a3, d0
@@ -27476,7 +27476,7 @@ _findclose:
     movm    [a2], (sp)
     add     -0xc, sp
 _findclose_entry:
-    movbu   (func_484706D7_Table), d1
+    movbu   (MediaTypeCacheSet_Table), d1
     cmp     5, d1
     bne     loc_48471162
     call    PianoDiscFindClose, 0, 0
@@ -27502,7 +27502,7 @@ _findnext:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x38, sp
 _findnext_entry:
-    movbu   (func_484706D7_Table), d1
+    movbu   (MediaTypeCacheSet_Table), d1
     mov     a0, (0x54, sp)
     clr     d2
     cmp     5, d1
@@ -27523,8 +27523,8 @@ loc_484711AC:
     add     0x20, a3
     mov     0x5014ad80, a2
 loc_484711BA:
-    mov     (func_4846D7EA_Records+92), d0
-    mov     (func_4846D7EA_Records+88), d1
+    mov     (VfsFileOpen_Records+92), d0
+    mov     (VfsFileOpen_Records+88), d1
     cmp     d1, d0
     bcs     loc_484711CC
     jmp     loc_4847126A
@@ -27536,10 +27536,10 @@ loc_484711CC:
     clr     d2
     mov     d2, mdr
     divu    d1, d0
-    mov     (func_4846D7EA_Records+92), d0
+    mov     (VfsFileOpen_Records+92), d0
     mov     (0x1c, sp), d2
     inc     d0
-    mov     d0, (func_4846D7EA_Records+92)
+    mov     d0, (VfsFileOpen_Records+92)
     mov     mdr, d0
     asl     5, d0
     add     d0, a1
@@ -27587,15 +27587,15 @@ loc_48471207:
     clr     d0
     ret     [d2,d3,a2,a3], 0x48
 loc_48471258:
-    mov     (func_4846D7EA_Records+92), d0
-    mov     (func_4846D7EA_Records+88), d1
+    mov     (VfsFileOpen_Records+92), d0
+    mov     (VfsFileOpen_Records+88), d1
     cmp     d1, d0
     bcc     loc_4847126A
     jmp     loc_484711CC
 loc_4847126A:
     cmp     0, d2
     bne     loc_484712B4
-    mov     (func_4846D7EA_Records+88), d0
+    mov     (VfsFileOpen_Records+88), d0
     cmp     0xe0, d0
     bcs     loc_484712B4
     mov     0xe0, d1
@@ -27617,9 +27617,9 @@ loc_4847126A:
     mov     d0, d1
     cmp     0, d1
     beq     loc_484712B4
-    mov     (func_4846D7EA_Records+88), d0
+    mov     (VfsFileOpen_Records+88), d0
     add     d1, d0
-    mov     d0, (func_4846D7EA_Records+88)
+    mov     d0, (VfsFileOpen_Records+88)
     jmp     loc_484711BA
 loc_484712B4:
     mov     -1, d0
@@ -28249,7 +28249,7 @@ SdFmtSectorsPerCluster_entry:
     cmp     0xa, d0
     bgt     loc_484717CA
     asl2    d0
-    mov     func_484717A2_Table, a0
+    mov     SdFmtSectorsPerCluster_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484717C0:
@@ -28277,7 +28277,7 @@ SdFmtAlignUnit_entry:
     cmp     0xa, d0
     bgt     loc_484717FC
     asl2    d0
-    mov     func_484717CF_Table, a0
+    mov     SdFmtAlignUnit_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484717ED:
@@ -28331,12 +28331,12 @@ SdBootSectorBuild_entry:
     ret     [d2,d3,a2,a3], 0x24
 loc_48471870:
     mov     d2, a0
-    mov     func_48471841_Block, a1
+    mov     SdBootSectorBuild_Block, a1
     mov     3, d0
     call    memcpy_entry, [a2,a3], 8
     mov     3, a0
     add     d2, a0
-    mov     func_48471841_Block_2, a1
+    mov     SdBootSectorBuild_Block_2, a1
     mov     8, d0
     call    memcpy_entry, [a2,a3], 8
     movhu   (0x5004bbe2), d0
@@ -28428,12 +28428,12 @@ loc_48471927:
     call    StoreLe8, 0, 0
     mov     0x27, a0
     add     d2, a0
-    mov     func_48471841_Block_3, a1
+    mov     SdBootSectorBuild_Block_3, a1
     mov     4, d0
     call    memcpy_entry, [a2,a3], 8
     mov     0x2b, a0
     add     d2, a0
-    mov     func_48471841_Block_4, a1
+    mov     SdBootSectorBuild_Block_4, a1
     mov     0xb, d0
     call    memcpy_entry, [a2,a3], 8
     movbu   (0x5004bbee), d0
@@ -28441,7 +28441,7 @@ loc_48471927:
     bne     loc_484719D7
     mov     0x36, a0
     add     d2, a0
-    mov     func_48471841_Block_6, a1
+    mov     SdBootSectorBuild_Block_6, a1
     mov     8, d0
     call    memcpy_entry, [a2,a3], 8
     bra     loc_484719FF
@@ -28451,7 +28451,7 @@ loc_484719D7:
     bne     loc_484719F6
     mov     0x36, a0
     add     d2, a0
-    mov     func_48471841_Block_5, a1
+    mov     SdBootSectorBuild_Block_5, a1
     mov     8, d0
     call    memcpy_entry, [a2,a3], 8
     bra     loc_484719FF
@@ -28462,7 +28462,7 @@ loc_484719F6:
 loc_484719FF:
     mov     0x1fe, a0
     add     d2, a0
-    mov     func_48471841_Block_7, a1
+    mov     SdBootSectorBuild_Block_7, a1
     mov     2, d0
     call    memcpy_entry, [a2,a3], 8
     mov     a3, d0
@@ -29036,7 +29036,7 @@ loc_48471FA2:
     mov     d2, d0
     asl2    d0
     mov     d0, a3
-    add     func_48471EE4_Records, a3
+    add     SdFatFormatWrite_Records, a3
     clr     d0
     mov     0x200, d1
     call    memset_entry, [a2], 4
@@ -29335,7 +29335,7 @@ loc_4847222B:
 FileStreamBlockFill:
     add     -0x18, sp
 FileStreamBlockFill_entry:
-    movbu   (func_4847222E_Table), d0
+    movbu   (FileStreamBlockFill_Table), d0
     cmp     0, d0
     bne     loc_48472269
     mov     1, d0
@@ -29372,18 +29372,18 @@ FileStreamReaderTask:
     add     -0x14, sp
     mov     1, d0
     movbu   d0, (0x5014cfc0)
-    mov     (func_4847227A_Var), d0
+    mov     (FileStreamReaderTask_Var), d0
     mov     0, a2
     mov     d0, (0x5004bbf0)
-    mov     (func_4846D7EA_Records+112), a0
+    mov     (VfsFileOpen_Records+112), a0
     clr     d0
     movhu   d0, (6, a0)
-    mov     (func_4846D7EA_Records+112), a0
+    mov     (VfsFileOpen_Records+112), a0
     movhu   d0, (0x42e, a0)
     mov     3, d0
-    mov     (func_4846D7EA_Records+112), a0
+    mov     (VfsFileOpen_Records+112), a0
     call    snd_msg, 0, 0
-    mov     (func_4846D7EA_Records+112), a0
+    mov     (VfsFileOpen_Records+112), a0
     mov     3, d0
     add     0x428, a0
     call    snd_msg, 0, 0
@@ -29611,7 +29611,7 @@ loc_484724F6:
     cmp     0, d0
     beq     loc_484724F6
 loc_48472504:
-    movbu   (func_4847222E_Table), d0
+    movbu   (FileStreamBlockFill_Table), d0
     cmp     0, d0
     bne     loc_48472519
     mov     (0x5004c654), a0
@@ -29627,12 +29627,12 @@ FileStreamOpen_entry:
     mov     1, d0
     movbu   d0, (0x5014cfc2)
     clr     d0
-    movbu   d0, (func_4847222E_Table)
+    movbu   d0, (FileStreamBlockFill_Table)
     movhu   d0, (0x5004c658)
     mov     1, d0
     movbu   d0, (0x5004c664)
     mov     0x5004bdf4, d0
-    mov     d0, (func_4846D7EA_Records+112)
+    mov     d0, (VfsFileOpen_Records+112)
     mov     Str_rb_57, a1
     call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
     mov     a0, (0x5004c654)
@@ -29646,10 +29646,10 @@ FileStreamOpen_entry:
     bra     loc_4847259F
 loc_48472577:
     mov     (0x50, a0), d0
-    mov     d0, (func_4847227A_Var)
+    mov     d0, (FileStreamReaderTask_Var)
     call    FileStreamMbxInit_entry, 0, 0x10
     mov     6, d0
-    mov     func_4846D7EA_Records+116, a0
+    mov     VfsFileOpen_Records+116, a0
     call    cre_tsk, 0, 0
     mov     6, d0
     clr     d1
@@ -29660,7 +29660,7 @@ loc_4847259F:
 # StreamTestDataSmfStep  (CPU 0x484725a2)
 StreamTestDataSmfStep:
     add     -0xc, sp
-    movhu   (func_484725A2_Table), d0
+    movhu   (StreamTestDataSmfStep_Table), d0
     exth    d0
     cmp     0, d0
     beq     loc_484725C9
@@ -29679,11 +29679,11 @@ loc_484725C6:
     ret     0, 0xc
 loc_484725C9:
     clr     d0
-    mov     d0, (func_484725A2_Var)
+    mov     d0, (StreamTestDataSmfStep_Var)
     mov     Str_A_TESTDATA_SMF, a0
     call    FileStreamOpen_entry, 0, 0x10
     mov     1, d0
-    movhu   d0, (func_484725A2_Table)
+    movhu   d0, (StreamTestDataSmfStep_Table)
     ret     0, 0xc
 loc_484725E6:
     mov     1, d0
@@ -29694,42 +29694,42 @@ loc_484725E6:
     cmp     0, d1
     bge     loc_48472605
     mov     2, d0
-    movhu   d0, (func_484725A2_Table)
+    movhu   d0, (StreamTestDataSmfStep_Table)
     ret     0, 0xc
 loc_48472605:
-    mov     (func_484725A2_Var), d1
+    mov     (StreamTestDataSmfStep_Var), d1
     mov     0x5004bbf4, a0
     movbu   d0, (d1, a0)
-    mov     (func_484725A2_Var), d0
+    mov     (StreamTestDataSmfStep_Var), d0
     inc     d0
-    mov     d0, (func_484725A2_Var)
+    mov     d0, (StreamTestDataSmfStep_Var)
     cmp     0x200, d0
     blt     loc_48472673
     clr     d0
-    mov     d0, (func_484725A2_Var)
+    mov     d0, (StreamTestDataSmfStep_Var)
     bra     loc_48472673
 loc_4847262F:
     call    FileStreamClose_entry, [a2], 0x14
     mov     3, d0
-    movhu   d0, (func_484725A2_Table)
+    movhu   d0, (StreamTestDataSmfStep_Table)
     bra     loc_48472673
 loc_4847263E:
     clr     d0
-    mov     d0, (func_484725A2_Var)
+    mov     d0, (StreamTestDataSmfStep_Var)
     mov     4, d0
-    movhu   d0, (func_484725A2_Table)
+    movhu   d0, (StreamTestDataSmfStep_Table)
     bra     loc_48472673
 loc_4847264F:
     mov     4, d0
     call    dly_tsk_entry, [d2,a2], 0x18
-    mov     (func_484725A2_Var), d1
+    mov     (StreamTestDataSmfStep_Var), d1
     mov     d1, d0
     inc     d0
-    mov     d0, (func_484725A2_Var)
+    mov     d0, (StreamTestDataSmfStep_Var)
     cmp     0x3e8, d1
     ble     loc_48472673
     clr     d0
-    movhu   d0, (func_484725A2_Table)
+    movhu   d0, (StreamTestDataSmfStep_Table)
 loc_48472673:
     ret     0, 0xc
 # FdLbaToChs720K  (CPU 0x48472676)
@@ -29834,7 +29834,7 @@ PianoDiscStreamClose:
 PianoDiscStreamClose_entry:
     call    FileStreamClose_entry, [a2], 0x14
     clr     d0
-    movbu   d0, (func_4847222E_Table)
+    movbu   d0, (FileStreamBlockFill_Table)
     call    func_484728B4_entry, 0, 0x28
     ret     0, 8
 # PianoDiscEntrySelect  (CPU 0x48472759)
@@ -29870,7 +29870,7 @@ loc_48472774:
     movhu   d0, (0x5004ca68)
     movhu   (0x5004ca68), d0
     asl     9, d0
-    mov     d0, (func_4847227A_Var)
+    mov     d0, (FileStreamReaderTask_Var)
     clr     d0
     rets
 # PianoDiscStreamOpen  (CPU 0x484727aa)
@@ -29879,13 +29879,13 @@ PianoDiscStreamOpen:
 PianoDiscStreamOpen_entry:
     mov     1, d1
     movbu   d1, (0x5014cfc2)
-    movbu   d1, (func_4847222E_Table)
+    movbu   d1, (FileStreamBlockFill_Table)
     clr     d1
     movhu   d1, (0x5004c658)
     mov     1, d1
     movbu   d1, (0x5004c664)
     mov     0x5004bdf4, d1
-    mov     d1, (func_4846D7EA_Records+112)
+    mov     d1, (VfsFileOpen_Records+112)
     exth    d0
     call    PianoDiscEntrySelect, 0, 0
     extbu   d0
@@ -29894,14 +29894,14 @@ PianoDiscStreamOpen_entry:
     mov     2, d0
     movbu   d0, (0x5004c664)
     clr     d0
-    movbu   d0, (func_4847222E_Table)
+    movbu   d0, (FileStreamBlockFill_Table)
     movbu   d0, (0x5014cfc2)
     mov     -1, d0
     bra     loc_48472819
 loc_484727FA:
     call    FileStreamMbxInit_entry, 0, 0x10
     mov     6, d0
-    mov     func_4846D7EA_Records+116, a0
+    mov     VfsFileOpen_Records+116, a0
     call    cre_tsk, 0, 0
     mov     6, d0
     clr     d1
@@ -30069,17 +30069,17 @@ loc_4847295D:
 FileStreamMbxInit:
     add     -0x10, sp
 FileStreamMbxInit_entry:
-    movbu   (func_48472960_Table), d0
+    movbu   (FileStreamMbxInit_Table), d0
     extb    d0
     cmp     0, d0
     bne     loc_48472994
     mov     1, d0
-    movbu   d0, (func_48472960_Table)
+    movbu   d0, (FileStreamMbxInit_Table)
     mov     3, d0
-    mov     func_4846D7EA_Records+104, a0
+    mov     VfsFileOpen_Records+104, a0
     call    cre_mbx, 0, 0
     mov     4, d0
-    mov     func_4846D7EA_Records+96, a0
+    mov     VfsFileOpen_Records+96, a0
     call    cre_mbx, 0, 0
 loc_48472994:
     ret     0, 0x10
@@ -30093,12 +30093,12 @@ SdJobPost_entry:
     extbu   d0
     cmp     0, d0
     bne     loc_484729FA
-    movbu   (func_48472997_Table), d0
+    movbu   (SdJobPost_Table), d0
     extb    d0
     cmp     0, d0
     bne     loc_484729C9
     mov     1, d0
-    movbu   d0, (func_48472997_Table)
+    movbu   d0, (SdJobPost_Table)
     mov     0xb, d0
     mov     cre_mbx_Impl_Table_4, a0
     call    cre_mbx, 0, 0
@@ -30128,10 +30128,10 @@ SdJobTask:
     beq     loc_48472A15
     calls   (a0)
 loc_48472A15:
-    mov     (func_4846D7EA_Records+112), a0
+    mov     (VfsFileOpen_Records+112), a0
     movhu   d0, (6, a0)
     mov     0xb, d0
-    mov     (func_4846D7EA_Records+112), a0
+    mov     (VfsFileOpen_Records+112), a0
     call    snd_msg, 0, 0
     clr     d0
     movbu   d0, (0x5014cfc1)
@@ -30235,22 +30235,22 @@ TechniChordUpdate:
     movm    [a2], (sp)
     add     -0x10, sp
 TechniChordUpdate_entry:
-    movhu   (func_48472B20_Table_2+4), d1
-    mov     func_48472B20_Table_2, a2
+    movhu   (TechniChordUpdate_Table_2+4), d1
+    mov     TechniChordUpdate_Table_2, a2
     cmp     0, d1
     beq     loc_48472B37
     bra     loc_48472BAC
 loc_48472B37:
-    mov     func_48472B20_Table_4, a0
+    mov     TechniChordUpdate_Table_4, a0
     call    TechniChordHeldKeyFind_entry, [d2,d3,a2,a3], 0x10
     extbu   d0
     cmp     0, d0
     bne     loc_48472B4A
     ret     [a2], 0x14
 loc_48472B4A:
-    movhu   (func_48472B20_Table_4), d0
-    mov     func_48472B20_Var_3, a1
-    movhu   d0, (func_48472B20_Table_2)
+    movhu   (TechniChordUpdate_Table_4), d0
+    mov     TechniChordUpdate_Var_3, a1
+    movhu   d0, (TechniChordUpdate_Table_2)
     movbu   (a1), d0
     mov     func_48472B20_Var, a0
     movbu   d0, (a0)
@@ -30259,18 +30259,18 @@ loc_48472B4A:
     mov     a2, a0
     call    TechniChordCompute_entry, [d2,d3,a2,a3], 0x28
     call    TechniChordOrchestratorPart_entry, [d2,d3], 0x18
-    movhu   d0, (func_48472B20_Table_2+2)
+    movhu   d0, (TechniChordUpdate_Table_2+2)
     exth    d0
     cmp     0, d0
     bge     loc_48472B89
     clr     d0
-    movhu   d0, (func_48472B20_Table_2+4)
+    movhu   d0, (TechniChordUpdate_Table_2+4)
 loc_48472B89:
-    mov     func_48472B20_Table_3, a1
+    mov     TechniChordUpdate_Table_3, a1
     mov     a2, a0
     call    TechniChordNotesDiffSend_entry, [d2,d3,a2,a3], 0x10
     mov     a2, a1
-    mov     func_48472B20_Table_3, a0
+    mov     TechniChordUpdate_Table_3, a0
     mov     -0x14, d1
     setlb
     movhu   (a1), d0
@@ -30293,7 +30293,7 @@ loc_48472BB7:
 loc_48472BBE:
     ret     [a2], 0x14
 loc_48472BC1:
-    mov     func_48472B20_Table_4, a0
+    mov     TechniChordUpdate_Table_4, a0
     call    TechniChordHeldKeyFind_entry, [d2,d3,a2,a3], 0x10
     extbu   d0
     cmp     0, d0
@@ -30302,9 +30302,9 @@ loc_48472BC1:
     call    TechniChordDelaySet, 0, 0
     ret     [a2], 0x14
 loc_48472BDB:
-    movhu   (func_48472B20_Table_4), d0
-    mov     func_48472B20_Var_3, a0
-    movhu   d0, (func_48472B20_Table_2)
+    movhu   (TechniChordUpdate_Table_4), d0
+    mov     TechniChordUpdate_Var_3, a0
+    movhu   d0, (TechniChordUpdate_Table_2)
     movbu   (a0), d0
     mov     func_48472B20_Var, a1
     movbu   d0, (a1)
@@ -30313,18 +30313,18 @@ loc_48472BDB:
     movbu   d0, (1, a1)
     call    TechniChordCompute_entry, [d2,d3,a2,a3], 0x28
     call    TechniChordOrchestratorPart_entry, [d2,d3], 0x18
-    movhu   d0, (func_48472B20_Table_2+2)
+    movhu   d0, (TechniChordUpdate_Table_2+2)
     exth    d0
     cmp     0, d0
     bge     loc_48472C1A
     clr     d0
-    movhu   d0, (func_48472B20_Table_2+4)
+    movhu   d0, (TechniChordUpdate_Table_2+4)
 loc_48472C1A:
-    mov     func_48472B20_Table_3, a1
+    mov     TechniChordUpdate_Table_3, a1
     mov     a2, a0
     call    TechniChordNotesDiffSend_entry, [d2,d3,a2,a3], 0x10
     mov     a2, a1
-    mov     func_48472B20_Table_3, a0
+    mov     TechniChordUpdate_Table_3, a0
     mov     -0x14, d1
     setlb
     movhu   (a1), d0
@@ -30335,14 +30335,14 @@ loc_48472C1A:
     lne
     ret     [a2], 0x14
 loc_48472C3D:
-    mov     func_48472B20_Table_4, a0
+    mov     TechniChordUpdate_Table_4, a0
     call    TechniChordHeldKeyFind_entry, [d2,d3,a2,a3], 0x10
     extbu   d0
     cmp     0, d0
     bne     loc_48472C50
     ret     [a2], 0x14
 loc_48472C50:
-    movbu   (func_48472B20_Var_3), d1
+    movbu   (TechniChordUpdate_Var_3), d1
     movbu   (func_48472B20_Var), d0
     extb    d1
     extb    d0
@@ -30350,9 +30350,9 @@ loc_48472C50:
     bne     loc_48472C64
     ret     [a2], 0x14
 loc_48472C64:
-    movhu   (func_48472B20_Table_4), d0
-    mov     func_48472B20_Var_3, a1
-    movhu   d0, (func_48472B20_Table_2)
+    movhu   (TechniChordUpdate_Table_4), d0
+    mov     TechniChordUpdate_Var_3, a1
+    movhu   d0, (TechniChordUpdate_Table_2)
     movbu   (a1), d0
     mov     func_48472B20_Var, a0
     movbu   d0, (a0)
@@ -30361,18 +30361,18 @@ loc_48472C64:
     mov     a2, a0
     call    TechniChordCompute_entry, [d2,d3,a2,a3], 0x28
     call    TechniChordOrchestratorPart_entry, [d2,d3], 0x18
-    movhu   d0, (func_48472B20_Table_2+2)
+    movhu   d0, (TechniChordUpdate_Table_2+2)
     exth    d0
     cmp     0, d0
     bge     loc_48472CA3
     clr     d0
-    movhu   d0, (func_48472B20_Table_2+4)
+    movhu   d0, (TechniChordUpdate_Table_2+4)
 loc_48472CA3:
-    mov     func_48472B20_Table_3, a1
+    mov     TechniChordUpdate_Table_3, a1
     mov     a2, a0
     call    TechniChordNotesDiffSend_entry, [d2,d3,a2,a3], 0x10
     mov     a2, a1
-    mov     func_48472B20_Table_3, a0
+    mov     TechniChordUpdate_Table_3, a0
     mov     -0x14, d1
     setlb
     movhu   (a1), d0
@@ -30383,11 +30383,11 @@ loc_48472CA3:
     lne
     bra     loc_48472D2F
 loc_48472CC5:
-    mov     func_48472B20_Table_4, a0
+    mov     TechniChordUpdate_Table_4, a0
     call    TechniChordHeldKeyFind_entry, [d2,d3,a2,a3], 0x10
-    movhu   (func_48472B20_Table_4), d0
-    mov     func_48472B20_Var_3, a0
-    movhu   d0, (func_48472B20_Table_2)
+    movhu   (TechniChordUpdate_Table_4), d0
+    mov     TechniChordUpdate_Var_3, a0
+    movhu   d0, (TechniChordUpdate_Table_2)
     movbu   (a0), d0
     mov     func_48472B20_Var, a1
     movbu   d0, (a1)
@@ -30396,18 +30396,18 @@ loc_48472CC5:
     movbu   d0, (1, a1)
     call    TechniChordCompute_entry, [d2,d3,a2,a3], 0x28
     call    TechniChordOrchestratorPart_entry, [d2,d3], 0x18
-    movhu   d0, (func_48472B20_Table_2+2)
+    movhu   d0, (TechniChordUpdate_Table_2+2)
     exth    d0
     cmp     0, d0
     bge     loc_48472D0F
     clr     d0
-    movhu   d0, (func_48472B20_Table_2+4)
+    movhu   d0, (TechniChordUpdate_Table_2+4)
 loc_48472D0F:
-    mov     func_48472B20_Table_3, a1
+    mov     TechniChordUpdate_Table_3, a1
     mov     a2, a0
     call    TechniChordNotesDiffSend_entry, [d2,d3,a2,a3], 0x10
     mov     a2, a1
-    mov     func_48472B20_Table_3, a0
+    mov     TechniChordUpdate_Table_3, a0
     mov     -0x14, d1
     setlb
     movhu   (a1), d0
@@ -30424,7 +30424,7 @@ TechniChordHeldKeyFind:
 TechniChordHeldKeyFind_entry:
     add     -0x1a8, sp
     mov     a0, (0x1c0, sp)
-    mov     func_48472D32_Table, a1
+    mov     TechniChordHeldKeyFind_Table, a1
     mov     sp, a0
     add     0x14, a0
     mov     -8, d1
@@ -32348,12 +32348,12 @@ loc_48473A6E:
 TechniChordDelayTick:
     add     -0xc, sp
 TechniChordDelayTick_entry:
-    mov     (func_48473A75_Var), d0
+    mov     (TechniChordDelayTick_Var), d0
     cmp     0, d0
     bls     loc_48473A94
     mov     1, d1
     sub     d1, d0
-    mov     d0, (func_48473A75_Var)
+    mov     d0, (TechniChordDelayTick_Var)
     bne     loc_48473A94
     mov     d1, d0
     call    TechniChordUpdate_entry, [a2], 0x14
@@ -32361,7 +32361,7 @@ loc_48473A94:
     ret     0, 0xc
 # TechniChordDelaySet  (CPU 0x48473a97)
 TechniChordDelaySet:
-    mov     d0, (func_48473A75_Var)
+    mov     d0, (TechniChordDelayTick_Var)
     retf    0, 0
 # adler32  (CPU 0x48473aa0)
 adler32:
@@ -47045,7 +47045,7 @@ loc_4847A8C4:
     mov     a1, a2
     clr     d2
     setlb
-    mov     func_4847A841_Table, a3
+    mov     StylCnvTechnicsInstall_Table, a3
     mov     a2, a0
     exthu   d0
     movbu   (d0, a3), d1
@@ -48346,7 +48346,7 @@ loc_4847B66C:
     mov     (4, a0), a0
     movhu   (a0), d0
     movhu   d0, (CUR_STYLE_IDX)
-    movhu   d0, (func_4847B65A_Table)
+    movhu   d0, (StyleGenreSelect_Table)
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -48932,7 +48932,7 @@ loc_4847BC7C:
     mov     0x01550000, d1
     movhu   (a0), d0
     movhu   d0, (CUR_STYLE_IDX)
-    movhu   d0, (func_4847B65A_Table)
+    movhu   d0, (StyleGenreSelect_Table)
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -49104,7 +49104,7 @@ loc_4847BE1E:
     bne     loc_4847BE7E
     movhu   (CUR_STYLE_IDX), d0
     mov     0x18, d1
-    movhu   d0, (func_4847B65A_Table)
+    movhu   d0, (StyleGenreSelect_Table)
     movhu   (CUR_STYLE_IDX), d0
     nop
     nop
@@ -49902,7 +49902,7 @@ loc_4847C5A4:
 loc_4847C5B1:
     movhu   (CUR_STYLE_IDX), d0
     mov     0x01550000, d1
-    movhu   d0, (func_4847B65A_Table)
+    movhu   d0, (StyleGenreSelect_Table)
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -50293,7 +50293,7 @@ StyleAlphaHeaderBuild_entry:
     mov     sp, a3
     add     0x1c, a3
     asl     3, d2
-    mov     func_4847C996_Records, a2
+    mov     StyleAlphaHeaderBuild_Records, a2
     add     a2, d0
     mov     d0, a0
     mov     (4, a0), a0
@@ -50351,7 +50351,7 @@ StyleAlphaLastIndex:
     clr     d1
     clr     d0
     setlb
-    mov     func_4847C996_Records, a0
+    mov     StyleAlphaHeaderBuild_Records, a0
     exthu   d1
     asl     3, d1
     mov     (d1, a0), d1
@@ -50416,13 +50416,13 @@ StyleAlphaLetterStep_entry:
     call    StyleAlphaStepWrap_entry, [d2], 0xc
     exthu   d0
     asl     3, d0
-    add     func_4847C996_Records, d0
+    add     StyleAlphaHeaderBuild_Records, d0
     mov     d0, a0
     mov     (4, a0), a0
     mov     0x01550000, d1
     movhu   (a0), d0
     movhu   d0, (CUR_STYLE_IDX)
-    movhu   d0, (func_4847B65A_Table)
+    movhu   d0, (StyleGenreSelect_Table)
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -50524,7 +50524,7 @@ loc_4847CBDF:
     bne     loc_4847CC44
     movhu   (CUR_STYLE_IDX), d0
     mov     0x18, d1
-    movhu   d0, (func_4847B65A_Table)
+    movhu   d0, (StyleGenreSelect_Table)
     movhu   (CUR_STYLE_IDX), d0
     mov     StyleRecordTable, a0
     nop
@@ -50941,7 +50941,7 @@ StyleAlphaPageTextBuild_entry:
     movhu   (0x14, a1), d0
     exthu   d1
     asl     3, d1
-    add     func_4847C996_Records, d1
+    add     StyleAlphaHeaderBuild_Records, d1
     mov     d1, a0
     mov     (4, a0), a2
     exthu   d0
@@ -51076,7 +51076,7 @@ StyleAlphaCursorMove_entry:
     movhu   (0x14, sp), d0
     movhu   (0x14, a2), d3
     asl     3, d0
-    mov     func_4847C996_Records, a2
+    mov     StyleAlphaHeaderBuild_Records, a2
     mov     a2, a0
     add     d0, a0
     mov     (4, a0), a3
@@ -51182,7 +51182,7 @@ loc_4847D272:
     movhu   (d0, a3), d1
     clr     d0
     movhu   d1, (CUR_STYLE_IDX)
-    movhu   d1, (func_4847B65A_Table)
+    movhu   d1, (StyleGenreSelect_Table)
     mov     d0, (0x10, sp)
     mov     -1, d0
     mov     0x01550000, d1
@@ -51768,7 +51768,7 @@ loc_4847D823:
     mov     0x01550000, d1
     movhu   (a0), d0
     movhu   d0, (CUR_STYLE_IDX)
-    movhu   d0, (func_4847B65A_Table)
+    movhu   d0, (StyleGenreSelect_Table)
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -51888,7 +51888,7 @@ loc_4847D915:
     movhu   (d1, a3), d0
     mov     0x01550000, d1
     movhu   d0, (CUR_STYLE_IDX)
-    movhu   d0, (func_4847B65A_Table)
+    movhu   d0, (StyleGenreSelect_Table)
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -52049,7 +52049,7 @@ loc_4847DA9F:
     bne     loc_4847DB04
     movhu   (CUR_STYLE_IDX), d0
     mov     0x18, d1
-    movhu   d0, (func_4847B65A_Table)
+    movhu   d0, (StyleGenreSelect_Table)
     movhu   (CUR_STYLE_IDX), d0
     mov     StyleRecordTable, a0
     nop
@@ -52831,7 +52831,7 @@ loc_4847E235:
     movhu   (d0, a3), d1
     clr     d0
     movhu   d1, (CUR_STYLE_IDX)
-    movhu   d1, (func_4847B65A_Table)
+    movhu   d1, (StyleGenreSelect_Table)
     mov     d0, (0x10, sp)
     mov     -1, d0
     mov     0x01550000, d1
@@ -53335,7 +53335,7 @@ loc_4847E77E:
     movhu   (AcStyleNameProc_Var), d0
     mov     0x01550000, d1
     add     0x438, d0
-    movhu   d0, (func_4847B65A_Table)
+    movhu   d0, (StyleGenreSelect_Table)
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -53438,7 +53438,7 @@ loc_4847E87E:
     movhu   (AcStyleNameProc_Var), d3
     mov     0x438, d0
     add     d3, d0
-    movhu   d0, (func_4847B65A_Table)
+    movhu   d0, (StyleGenreSelect_Table)
     mov     4, d2
     mov     d3, d0
     mov     d2, d1
@@ -54184,7 +54184,7 @@ loc_4847EF9C:
     movhu   (AcStyleNameProc_Var), d0
     mov     0x01550000, d1
     add     0x438, d0
-    movhu   d0, (func_4847B65A_Table)
+    movhu   d0, (StyleGenreSelect_Table)
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -54424,7 +54424,7 @@ loc_4847F20D:
     ret     [d2,d3,a2,a3], 0x30
 # StyleListSelIdGet  (CPU 0x4847f210)
 StyleListSelIdGet:
-    movhu   (func_4847B65A_Table), d0
+    movhu   (StyleGenreSelect_Table), d0
     retf    0, 0
 # StyleNameByIdGet  (CPU 0x4847f219)
 StyleNameByIdGet:
@@ -54486,7 +54486,7 @@ StyleGenreKindGet_entry:
     cmp     d1, d0
     blt     loc_4847F2AC
     movhu   (StyleFlatOrdinalBuilder_Var), d2
-    movhu   (func_4847F28C_Var), d1
+    movhu   (StyleGenreKindGet_Var), d1
     add     d1, d2
     cmp     d2, d0
     bge     loc_4847F2AC
@@ -55510,17 +55510,17 @@ DpEventPump:
 DpEventPump_entry:
     clr     d0
     movhu   d0, (0x5005fb88)
-    movbu   (func_4847FBF8_Table), d0
+    movbu   (DpEventPump_Table), d0
     extb    d0
     cmp     0, d0
     bne     loc_4847FC11
     clr     d0
     ret     0, 0x10
 loc_4847FC11:
-    movhu   (func_4847FBF8_Var_2), d0
+    movhu   (DpEventPump_Var_2), d0
     btst    0x02, d0
     beq     loc_4847FC2B
-    movhu   (func_4847FBF8_Var_2), d0
+    movhu   (DpEventPump_Var_2), d0
     btst    0x04, d0
     bne     loc_4847FC2B
     clr     d0
@@ -55528,17 +55528,17 @@ loc_4847FC11:
 loc_4847FC2B:
     mov     1, d0
     call    DpTransportCtrl_entry, 0, 0x10
-    movhu   (func_4847FBF8_Var_2), d0
-    movhu   (func_4847FBF8_Var_4), d1
+    movhu   (DpEventPump_Var_2), d0
+    movhu   (DpEventPump_Var_4), d1
     call    func_484810BA_entry, [d2,d3,a2,a3], 0x20
-    mov     d0, (func_4847FBF8_Var)
-    movbu   (func_4847FBF8_Table_2), d1
+    mov     d0, (DpEventPump_Var)
+    movbu   (DpEventPump_Table_2), d1
     cmp     5, d1
     bne     loc_4847FC58
     call    func_484818AC_entry, [d2,d3,a2,a3], 0x20
 loc_4847FC58:
-    mov     (func_4847FBF8_Var_3), d1
-    mov     (func_4847FBF8_Var), d0
+    mov     (DpEventPump_Var_3), d1
+    mov     (DpEventPump_Var), d0
     cmp     d0, d1
     bls     loc_4847FC6A
     jmp     loc_4847FD09
@@ -55551,7 +55551,7 @@ loc_4847FC6A:
     mov     -1, d0
     ret     0, 0x10
 loc_4847FC7A:
-    movbu   (func_4847FBF8_Table_2), d1
+    movbu   (DpEventPump_Table_2), d1
     cmp     1, d1
     beq     loc_4847FC96
     cmp     2, d1
@@ -55588,21 +55588,21 @@ loc_4847FCB3:
     bge     loc_4847FCC1
     bra     loc_4847FD0A
 loc_4847FCC1:
-    mov     (func_4847FBF8_Var_3), d0
+    mov     (DpEventPump_Var_3), d0
     cmp     0x60, d0
     bne     loc_4847FCF4
     movbu   (0x501507fc), d0
     cmp     0, d0
     bne     loc_4847FCF4
-    movbu   (func_4847FBF8_Table_2), d0
+    movbu   (DpEventPump_Table_2), d0
     cmp     1, d0
     beq     loc_4847FCE7
     mov     2, d0
-    movbu   d0, (func_4847FBF8_Table_2)
+    movbu   d0, (DpEventPump_Table_2)
 loc_4847FCE7:
-    mov     (func_4847FBF8_Var), d0
+    mov     (DpEventPump_Var), d0
     inc     d0
-    mov     d0, (func_4847FBF8_Var_3)
+    mov     d0, (DpEventPump_Var_3)
 loc_4847FCF4:
     movhu   (0x5005fb88), d0
     exth    d0
@@ -55624,7 +55624,7 @@ DpFileStart_entry:
     mov     a0, a2
     mov     d0, d3
     call    DpStateReset_entry, 0, 0xc
-    movbu   d3, (func_4847FBF8_Table_2)
+    movbu   d3, (DpEventPump_Table_2)
     mov     6, d0
     call    func_4C023C11_entry, [d2], 0x14
     mov     a2, a0
@@ -55662,16 +55662,16 @@ loc_4847FD53:
     bra     loc_4847FD9D
 loc_4847FD68:
     mov     a2, a1
-    mov     func_4847FBF8_Table, a0
+    mov     DpEventPump_Table, a0
     call    strcpy_entry, [a2], 4
     call    func_4C02BA2F, 0, 0
     mov     1, d0
     call    func_4C02B9D0_entry, 0, 0xc
     mov     6, d0
     call    DpTransportCtrl_entry, 0, 0x10
-    movhu   (func_4847FBF8_Var_2), d0
+    movhu   (DpEventPump_Var_2), d0
     or      0x01, d0
-    movhu   d0, (func_4847FBF8_Var_2)
+    movhu   d0, (DpEventPump_Var_2)
     clr     d0
 loc_4847FD9D:
     ret     [d2,d3,a2,a3], 0x20
@@ -55943,7 +55943,7 @@ loc_4847FF7A:
 loc_4847FF8A:
     extbu   d0
     asl     8, d0
-    movhu   d0, (func_4847FE50_Var)
+    movhu   d0, (DpSmfHeaderParse_Var)
     call    DpFileGetByte_entry, 0, 8
     mov     d0, d1
     exth    d1
@@ -55952,10 +55952,10 @@ loc_4847FF8A:
     mov     -1, d0
     ret     [d2], 0xa8
 loc_4847FFA4:
-    movhu   (func_4847FE50_Var), d1
+    movhu   (DpSmfHeaderParse_Var), d1
     extbu   d0
     add     d1, d0
-    movhu   d0, (func_4847FE50_Var)
+    movhu   d0, (DpSmfHeaderParse_Var)
     call    DpFileGetByte_entry, 0, 8
     mov     d0, d1
     exth    d1
@@ -55966,7 +55966,7 @@ loc_4847FFA4:
 loc_4847FFC2:
     extbu   d0
     asl     8, d0
-    movhu   d0, (func_4847FBF8_Var_4)
+    movhu   d0, (DpEventPump_Var_4)
     call    DpFileGetByte_entry, 0, 8
     mov     d0, d1
     exth    d1
@@ -55975,14 +55975,14 @@ loc_4847FFC2:
     mov     -1, d0
     ret     [d2], 0xa8
 loc_4847FFDC:
-    movhu   (func_4847FBF8_Var_4), d1
+    movhu   (DpEventPump_Var_4), d1
     extbu   d0
     add     d1, d0
-    movhu   d0, (func_4847FBF8_Var_4)
-    movbu   (func_4847FBF8_Table_2), d0
+    movhu   d0, (DpEventPump_Var_4)
+    movbu   (DpEventPump_Table_2), d0
     cmp     1, d0
     beq     loc_48480001
-    movbu   (func_4847FBF8_Table_2), d0
+    movbu   (DpEventPump_Table_2), d0
     cmp     2, d0
     beq     loc_48480001
     jmp     loc_4848007C
@@ -56044,9 +56044,9 @@ loc_4848004C:
     mov     -1, d0
     bra     loc_48480081
 loc_4848006D:
-    mov     (func_4847FBF8_Var_3), d1
+    mov     (DpEventPump_Var_3), d1
     add     d1, d0
-    mov     d0, (func_4847FBF8_Var_3)
+    mov     d0, (DpEventPump_Var_3)
     bra     loc_48480080
 loc_4848007C:
     mov     -2, d0

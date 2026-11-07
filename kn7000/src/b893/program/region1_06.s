@@ -2775,7 +2775,7 @@ PcComFrame30HeaderPut_entry:
     mov     a0, (0x20, sp)
     clr     d0
     mov     d0, (0x14, sp)
-    mov     func_484C346C_Block, a1
+    mov     PcComFrame30HeaderPut_Block, a1
     mov     6, d0
     call    memcpy_entry, [a2,a3], 8
     mov     (0x14, sp), d0
@@ -32710,7 +32710,7 @@ loc_484D5643:
     mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     asl2    d0
-    mov     func_484D5481_Table, a0
+    mov     AcPmemBankSelProc_Table, a0
     mov     (d0, a0), a0
     mov     Str_s_s_2, d0
     mov     a0, (0x10, sp)
@@ -32765,7 +32765,7 @@ loc_484D56EA:
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
     movhu   (a3), d0
-    mov     func_484D5481_Table, a0
+    mov     AcPmemBankSelProc_Table, a0
     exth    d0
     asl2    d0
     mov     (d0, a0), a0
@@ -34583,7 +34583,7 @@ loc_484D6AA8:
 PsHarmOnOffBoxProc:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x2c, sp
-    mov     func_484D6AAB_Table, a1
+    mov     PsHarmOnOffBoxProc_Table, a1
     mov     sp, a0
     add     0x20, a0
     mov     d0, d3
@@ -34591,7 +34591,7 @@ PsHarmOnOffBoxProc:
     mov     d1, d2
     movhu   d0, (a0)
     movhu   (2, a1), d0
-    mov     func_484D6AAB_Table_2, a1
+    mov     PsHarmOnOffBoxProc_Table_2, a1
     movhu   d0, (2, a0)
     mov     sp, a0
     add     0x24, a0
@@ -34691,7 +34691,7 @@ loc_484D6BA7:
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     5, d0
     bne     loc_484D6BE3
-    mov     (func_484D6AAB_Var), a0
+    mov     (PsHarmOnOffBoxProc_Var), a0
     mov     d3, a1
     mov     a0, (0x10, sp)
     mov     d2, a0
@@ -34740,7 +34740,7 @@ loc_484D6C2F:
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     5, d0
     bne     loc_484D6C6A
-    mov     (func_484D6AAB_Var), a0
+    mov     (PsHarmOnOffBoxProc_Var), a0
     mov     d3, a1
     mov     a0, (0x10, sp)
     mov     d2, a0
@@ -34867,7 +34867,7 @@ loc_484D6D66:
     call    func_4C020EA1_entry, 0, 0x14
     call    func_484B372D_entry, 0, 0x28
     exthu   d2
-    mov     func_484D6D22_Table, a0
+    mov     MainVocalistOK_Table, a0
     movbu   (d2, a0), d0
     lsr     16, d3
     exthu   d0

@@ -2775,7 +2775,7 @@ PcComFrame30HeaderPut_entry:
     mov     a0, (0x20, sp)
     clr     d0
     mov     d0, (0x14, sp)
-    mov     func_484C3668_Block, a1
+    mov     PcComFrame30HeaderPut_Block, a1
     mov     6, d0
     call    memcpy_entry, [a2,a3], 8
     mov     (0x14, sp), d0

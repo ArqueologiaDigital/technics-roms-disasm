@@ -7,20 +7,20 @@
 # f<off> / p<off> / s<off> / x<off> are fields named by their offset only (a number, a pointer,
 # text, bytes no reader was seen to touch); tools/data_struct_names.py names the others.
 
-# REC_func_4C001EBB_Records: 8-byte records (func_4C001EBB_Records, 20 records); fields, and what reads them:
+# REC_PfParseSpec_Records: 8-byte records (PfParseSpec_Records, 20 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   f0           u32            PfParseSpec 0x4C001EBB `mov (a0), d0`
 #   +4   x4           u8[4]          no reader seen
-.macro REC_func_4C001EBB_Records f0=0, x4
+.macro REC_PfParseSpec_Records f0=0, x4
 	.long	\f0
 	.ascii	"\x4"
 .endm
 
-# REC_func_4C02E85D_Records: 8-byte records (func_4C02E85D_Records, 128 records); fields, and what reads them:
+# REC_TgPartControlChange_Records: 8-byte records (TgPartControlChange_Records, 128 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   key          u32            TgPartControlChange 0x4C02E85D `mov (a0), d0`
 #   +4   x4           u8[4]          no reader seen
-.macro REC_func_4C02E85D_Records key=0, x4
+.macro REC_TgPartControlChange_Records key=0, x4
 	.long	\key
 	.ascii	"\x4"
 .endm
@@ -381,11 +381,11 @@
 	.long	\y
 .endm
 
-# REC_func_4841508C_Table: 8-byte records (func_4841508C_Table, 4 records); fields, and what reads them:
+# REC_LcdOutRect_Table: 8-byte records (LcdOutRect_Table, 4 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   f0           u32            LcdOutRect 0x4841508C `mov (d0, a0), d2`; LcdOutRect 0x4841508C `mov (d1, a0), d2`
 #   +4   f4           u32            LcdOutRect 0x4841508C `mov (4, a0), d1`; LcdOutRect 0x4841508C `mov (4, a0), d2`
-.macro REC_func_4841508C_Table f0=0, f4=0
+.macro REC_LcdOutRect_Table f0=0, f4=0
 	.long	\f0
 	.long	\f4
 .endm
@@ -583,7 +583,7 @@
 	.word	\index
 .endm
 
-# REC_func_48427DCB_Records: 16-byte records (func_48427DCB_Records, 13 records); fields, and what reads them:
+# REC_SetPresetWall_Impl_Records: 16-byte records (SetPresetWall_Impl_Records, 13 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   p0           ptr            SetPresetWall_Impl 0x48427DCB `mov (a2), a1`; DrawWallPreview_Impl 0x48428026 `mov (d0, a1), d1`
 #   +4   x            s16            SetPresetWall_Impl 0x48427DCB `movhu (a0), d0`; SetPresetWall_Impl 0x48427DCB `movhu (a3), d1` (+2)
@@ -591,7 +591,7 @@
 #   +8   p8           ptr            SetPresetWall_Impl 0x48427DCB `mov (a0), d1`; DrawWallPreview_Impl 0x48428026 `mov (8, a2), d1`
 #   +12  GetPaletteRGB_d0 s16            SetPresetWall_Impl 0x48427DCB `movhu (0xc, a0), d0`
 #   +14  x14          u8[2]          no reader seen
-.macro REC_func_48427DCB_Records p0=0, x=0, y=0, p8=0, GetPaletteRGB_d0=0, x14
+.macro REC_SetPresetWall_Impl_Records p0=0, x=0, y=0, p8=0, GetPaletteRGB_d0=0, x14
 	.long	\p0
 	.word	\x
 	.word	\y
@@ -600,20 +600,20 @@
 	.ascii	"\x14"
 .endm
 
-# REC_func_484261D5_Records: 8-byte records (func_484261D5_Records, 32 records); fields, and what reads them:
+# REC_DrawDesignBox_Impl_Records: 8-byte records (DrawDesignBox_Impl_Records, 32 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   key          u32            DrawDesignBox_Impl 0x484261D5 `mov (a0), d0`
 #   +4   proc         ptr            no reader seen
-.macro REC_func_484261D5_Records key=0, proc=0
+.macro REC_DrawDesignBox_Impl_Records key=0, proc=0
 	.long	\key
 	.long	\proc
 .endm
 
-# REC_func_484261D5_Records_2: 8-byte records (func_484261D5_Records_2, 64 records); fields, and what reads them:
+# REC_DrawDesignBox_Impl_Records_2: 8-byte records (DrawDesignBox_Impl_Records_2, 64 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   key          u32            DrawDesignBox_Impl 0x484261D5 `mov (a0), d0`
 #   +4   proc         ptr            no reader seen
-.macro REC_func_484261D5_Records_2 key=0, proc=0
+.macro REC_DrawDesignBox_Impl_Records_2 key=0, proc=0
 	.long	\key
 	.long	\proc
 .endm
@@ -744,11 +744,11 @@
 	.long	\a0
 .endm
 
-# REC_func_4844081B_Table: 2-byte records (func_4844081B_Table, 24 records); fields, and what reads them:
+# REC_StylePartFieldEmit_Table: 2-byte records (StylePartFieldEmit_Table, 24 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   kind         u8             StylePartFieldEmit 0x4844081B `movbu (d0, a2), d1`
 #   +1   f1           u8             PartFieldCcSend 0x48440620 `movbu (1, a0), d3`
-.macro REC_func_4844081B_Table kind=0, f1=0
+.macro REC_StylePartFieldEmit_Table kind=0, f1=0
 	.byte	\kind
 	.byte	\f1
 .endm
@@ -879,20 +879,20 @@
 	.long	\proc
 .endm
 
-# REC_func_48454CDF_Records: 8-byte records (func_48454CDF_Records, 32 records); fields, and what reads them:
+# REC_ApcSeqSliderOnSeq_Records: 8-byte records (ApcSeqSliderOnSeq_Records, 32 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   key          u32            ApcSeqSliderOnSeq 0x48454CDF `mov (a0), d1`
 #   +4   proc         ptr            no reader seen
-.macro REC_func_48454CDF_Records key=0, proc=0
+.macro REC_ApcSeqSliderOnSeq_Records key=0, proc=0
 	.long	\key
 	.long	\proc
 .endm
 
-# REC_func_4845828E_Records: 8-byte records (func_4845828E_Records, 16 records); fields, and what reads them:
+# REC_SongEventFromM3_Records: 8-byte records (SongEventFromM3_Records, 16 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   key          u32            SongEventFromM3 0x4845828E `mov (a0), d0`
 #   +4   proc         ptr            no reader seen
-.macro REC_func_4845828E_Records key=0, proc=0
+.macro REC_SongEventFromM3_Records key=0, proc=0
 	.long	\key
 	.long	\proc
 .endm
@@ -928,11 +928,11 @@
 	.byte	\f3
 .endm
 
-# REC_func_48466DEE_Records: 8-byte records (func_48466DEE_Records, 32 records); fields, and what reads them:
+# REC_M3ParamRangeGet_Records: 8-byte records (M3ParamRangeGet_Records, 32 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   key          u32            M3ParamRangeGet 0x48466DEE `mov (a0), d1`
 #   +4   proc         ptr            no reader seen
-.macro REC_func_48466DEE_Records key=0, proc=0
+.macro REC_M3ParamRangeGet_Records key=0, proc=0
 	.long	\key
 	.long	\proc
 .endm
@@ -973,10 +973,10 @@
 	.long	\proc
 .endm
 
-# REC_func_48471EB3_Records: 4-byte records (func_48471EB3_Records, 2 records); fields, and what reads them:
+# REC_SdFatFormatWrite_Records: 4-byte records (SdFatFormatWrite_Records, 2 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   s0           char[4]        SdFatFormatWrite 0x48471EB3 `call memcpy_entry, [a2,a3], 8`
-.macro REC_func_48471EB3_Records s0
+.macro REC_SdFatFormatWrite_Records s0
 	.ascii	"\s0"
 .endm
 
@@ -1167,24 +1167,24 @@
 	.long	\proc
 .endm
 
-# REC_func_48489E33_Table: 16-byte records (func_48489E33_Table, 113 records); fields, and what reads them:
+# MessageBoxDef: 16-byte records (TtMessage_Table, 113 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   key          s16            TtMessage 0x48489E33 `movhu (d0, a0), d1`; IvMessageProc 0x48489E95 `movhu (d0, a0), d0` (+3)
+#   +0   kind         s16            TtMessage 0x48489E33 `movhu (d0, a0), d1`; IvMessageProc 0x48489E95 `movhu (d0, a0), d0` (+3)
 #   +2   x2           u8[2]          no reader seen
-#   +4   sprintf_d0   s16            MessageHeader 0x4848A39F `movhu (4, a0), d0`
+#   +4   error_no     s16            MessageHeader 0x4848A39F `movhu (4, a0), d0`
 #   +6   x6           u8[2]          no reader seen
-#   +8   index        ptr            MessageHeader 0x4848A39F `mov (8, a0), a0`; MessageHeader 0x4848A39F `mov (8, a0), a1` (+1)
-#   +12  p12          ptr            CheckMessage 0x4848A23B `mov (0x1c, a0), d1`; MessageText 0x4848A326 `mov (0xc, a0), d0`
-.macro REC_func_48489E33_Table key=0, x2, sprintf_d0=0, x6, index=0, p12=0
-	.word	\key
+#   +8   header       ptr            MessageHeader 0x4848A39F `mov (8, a0), a0`; MessageHeader 0x4848A39F `mov (8, a0), a1` (+1)
+#   +12  text         ptr            CheckMessage 0x4848A23B `mov (0x1c, a0), d1`; MessageText 0x4848A326 `mov (0xc, a0), d0`
+.macro MessageBoxDef kind=0, x2, error_no=0, x6, header=0, text=0
+	.word	\kind
 	.ascii	"\x2"
-	.word	\sprintf_d0
+	.word	\error_no
 	.ascii	"\x6"
-	.long	\index
-	.long	\p12
+	.long	\header
+	.long	\text
 .endm
 
-# REC_func_4848B05A_Records: 28-byte records (func_4848B05A_Records, 68 records); fields, and what reads them:
+# REC_PartParamTableSelect_Records: 28-byte records (PartParamTableSelect_Records, 68 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   proc         ptr            PartParamProcCall 0x4848B0EB `mov (d0, a0), a1`
 #   +4   key          ptr            PartParamTableSelect 0x4848B05A `mov (4, a0), a0`; PartParamDefaultProc 0x4848B111 `mov (4, a0), a0` (+5)
@@ -1193,7 +1193,7 @@
 #   +16  f16          u32            PartParamDefaultProc 0x4848B111 `mov (0x10, a0), a2`; func_4848B789 0x4848B789 `mov (0x10, a0), d2`
 #   +20  f20          u32            PartParamDefaultProc 0x4848B111 `mov (0x14, a0), a2`; PartParamDefaultProc 0x4848B111 `mov (0x14, a0), d0`
 #   +24  index        ptr            PartParamDefaultProc 0x4848B111 `mov (0x18, a0), d0`; PartParamDefaultProc 0x4848B111 `mov (0x18, a1), a1` (+5)
-.macro REC_func_4848B05A_Records proc=0, key=0, p8=0, p12=0, f16=0, f20=0, index=0
+.macro REC_PartParamTableSelect_Records proc=0, key=0, p8=0, p12=0, f16=0, f20=0, index=0
 	.long	\proc
 	.long	\key
 	.long	\p8
@@ -1228,11 +1228,11 @@
 	.long	\proc
 .endm
 
-# REC_func_4848B111_Records: 8-byte records (func_4848B111_Records, 16 records); fields, and what reads them:
+# REC_PartParamDefaultProc_Records: 8-byte records (PartParamDefaultProc_Records, 16 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   key          u32            PartParamDefaultProc 0x4848B111 `mov (a0), d0`
 #   +4   proc         ptr            no reader seen
-.macro REC_func_4848B111_Records key=0, proc=0
+.macro REC_PartParamDefaultProc_Records key=0, proc=0
 	.long	\key
 	.long	\proc
 .endm
@@ -1694,14 +1694,14 @@
 	.word	\f2
 .endm
 
-# REC_func_484A3D6C_Records: 12-byte records (func_484A3D6C_Records, 24 records); fields, and what reads them:
+# REC_BoardTestLineDraw_Records: 12-byte records (BoardTestLineDraw_Records, 24 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   f0           u16            BoardTestLineDraw 0x484A3D6C `movhu (a2), d0`
 #   +2   f2           u16            BoardTestLineDraw 0x484A3D6C `movhu (2, a2), d0`
 #   +4   f4           u16            BoardTestLineDraw 0x484A3D6C `movhu (4, a2), d1`
 #   +6   DrawString_d1 s16            BoardTestLineDraw 0x484A3D6C `movhu (6, a2), d1`
 #   +8   text         ptr            BoardTestLineDraw 0x484A3D6C `mov (8, a2), a0`
-.macro REC_func_484A3D6C_Records f0=0, f2=0, f4=0, DrawString_d1=0, text=0
+.macro REC_BoardTestLineDraw_Records f0=0, f2=0, f4=0, DrawString_d1=0, text=0
 	.word	\f0
 	.word	\f2
 	.word	\f4
@@ -1718,11 +1718,11 @@
 	.long	\proc
 .endm
 
-# REC_func_484A280C_Records: 8-byte records (func_484A280C_Records, 16 records); fields, and what reads them:
+# REC_TestCtrlM3Handler_Records: 8-byte records (TestCtrlM3Handler_Records, 16 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   key          u32            TestCtrlM3Handler 0x484A280C `mov (a0), d1`
 #   +4   proc         ptr            no reader seen
-.macro REC_func_484A280C_Records key=0, proc=0
+.macro REC_TestCtrlM3Handler_Records key=0, proc=0
 	.long	\key
 	.long	\proc
 .endm
@@ -2443,11 +2443,11 @@
 	.long	\proc
 .endm
 
-# REC_func_48500C2F_Records: 8-byte records (func_48500C2F_Records, 128 records); fields, and what reads them:
+# REC_PartParamDumpLine_Records: 8-byte records (PartParamDumpLine_Records, 128 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   key          u32            PartParamDumpLine 0x48500C2F `mov (a0), d0`
 #   +4   proc         ptr            no reader seen
-.macro REC_func_48500C2F_Records key=0, proc=0
+.macro REC_PartParamDumpLine_Records key=0, proc=0
 	.long	\key
 	.long	\proc
 .endm
@@ -3661,12 +3661,12 @@
 	.long	\proc
 .endm
 
-# REC_func_485510FC_Records: 4-byte records (func_485510FC_Records, 15 records); fields, and what reads them:
+# REC_SdcErrorMsgGet_Records: 4-byte records (SdcErrorMsgGet_Records, 15 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   key          s16            SdcErrorMsgGet 0x485510FC `movhu (d0, a0), d0`
 #   +2   f2           u8             SdcErrorMsgGet 0x485510FC `movbu (2, a0), d0`; SdcErrorMsgGet 0x485510FC `movbu (2, a1), d1`
 #   +3   x3           u8[1]          no reader seen
-.macro REC_func_485510FC_Records key=0, f2=0, x3
+.macro REC_SdcErrorMsgGet_Records key=0, f2=0, x3
 	.word	\key
 	.byte	\f2
 	.ascii	"\x3"
@@ -3808,11 +3808,11 @@
 	.ascii	"\x4"
 .endm
 
-# REC_func_4857F2BC_Records: 8-byte records (func_4857F2BC_Records, 5 records); fields, and what reads them:
+# REC_SswScriptStep_Records: 8-byte records (SswScriptStep_Records, 5 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   text         ptr            SswScriptStep 0x4857F2BC `mov (d0, a2), a0`; SswScriptStep 0x4857F2BC `mov (d0, a2), d0` (+1)
 #   +4   proc         ptr            SswScriptStep 0x4857F2BC `mov (4, a2), d0`
-.macro REC_func_4857F2BC_Records text=0, proc=0
+.macro REC_SswScriptStep_Records text=0, proc=0
 	.long	\text
 	.long	\proc
 .endm
@@ -3826,54 +3826,54 @@
 	.long	\proc
 .endm
 
-# REC_func_4C00206A_Records: 40-byte records (func_4C00206A_Records, 1 records); fields, and what reads them:
+# LconvMonetary: 40-byte records (localeconv_Records, 1 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   text         ptr            no reader seen
-#   +4   p4           ptr            localeconv 0x4C00206A `mov (4, a1), a0`
-#   +8   p8           ptr            localeconv 0x4C00206A `mov (8, a1), a0`
-#   +12  p12          ptr            localeconv 0x4C00206A `mov (0xc, a1), a0`
-#   +16  p16          ptr            localeconv 0x4C00206A `mov (0x10, a1), a0`
-#   +20  p20          ptr            localeconv 0x4C00206A `mov (0x14, a1), a0`
-#   +24  p24          ptr            localeconv 0x4C00206A `mov (0x18, a1), a0`
-#   +28  p28          ptr            localeconv 0x4C00206A `mov (0x1c, a1), a0`
-#   +32  f32          u8             localeconv 0x4C00206A `movbu (0x20, a1), d0`
-#   +33  f33          u8             localeconv 0x4C00206A `movbu (0x21, a1), d0`
-#   +34  f34          u8             localeconv 0x4C00206A `movbu (0x22, a1), d0`
-#   +35  f35          u8             localeconv 0x4C00206A `movbu (0x23, a1), d0`
-#   +36  f36          u8             localeconv 0x4C00206A `movbu (0x24, a1), d0`
-#   +37  f37          u8             localeconv 0x4C00206A `movbu (0x25, a1), d0`
-#   +38  f38          u8             localeconv 0x4C00206A `movbu (0x26, a1), d0`
-#   +39  f39          u8             localeconv 0x4C00206A `movbu (0x27, a1), d0`
-.macro REC_func_4C00206A_Records text=0, p4=0, p8=0, p12=0, p16=0, p20=0, p24=0, p28=0, f32=0, f33=0, f34=0, f35=0, f36=0, f37=0, f38=0, f39=0
-	.long	\text
-	.long	\p4
-	.long	\p8
-	.long	\p12
-	.long	\p16
-	.long	\p20
-	.long	\p24
-	.long	\p28
-	.byte	\f32
-	.byte	\f33
-	.byte	\f34
-	.byte	\f35
-	.byte	\f36
-	.byte	\f37
-	.byte	\f38
-	.byte	\f39
+#   +0   locale       ptr            no reader seen
+#   +4   int_curr_symbol ptr            localeconv 0x4C00206A `mov (4, a1), a0`
+#   +8   currency_symbol ptr            localeconv 0x4C00206A `mov (8, a1), a0`
+#   +12  mon_decimal_point ptr            localeconv 0x4C00206A `mov (0xc, a1), a0`
+#   +16  mon_thousands_sep ptr            localeconv 0x4C00206A `mov (0x10, a1), a0`
+#   +20  mon_grouping ptr            localeconv 0x4C00206A `mov (0x14, a1), a0`
+#   +24  positive_sign ptr            localeconv 0x4C00206A `mov (0x18, a1), a0`
+#   +28  negative_sign ptr            localeconv 0x4C00206A `mov (0x1c, a1), a0`
+#   +32  int_frac_digits u8             localeconv 0x4C00206A `movbu (0x20, a1), d0`
+#   +33  frac_digits  u8             localeconv 0x4C00206A `movbu (0x21, a1), d0`
+#   +34  p_cs_precedes u8             localeconv 0x4C00206A `movbu (0x22, a1), d0`
+#   +35  p_sep_by_space u8             localeconv 0x4C00206A `movbu (0x23, a1), d0`
+#   +36  n_cs_precedes u8             localeconv 0x4C00206A `movbu (0x24, a1), d0`
+#   +37  n_sep_by_space u8             localeconv 0x4C00206A `movbu (0x25, a1), d0`
+#   +38  p_sign_posn  u8             localeconv 0x4C00206A `movbu (0x26, a1), d0`
+#   +39  n_sign_posn  u8             localeconv 0x4C00206A `movbu (0x27, a1), d0`
+.macro LconvMonetary locale=0, int_curr_symbol=0, currency_symbol=0, mon_decimal_point=0, mon_thousands_sep=0, mon_grouping=0, positive_sign=0, negative_sign=0, int_frac_digits=0, frac_digits=0, p_cs_precedes=0, p_sep_by_space=0, n_cs_precedes=0, n_sep_by_space=0, p_sign_posn=0, n_sign_posn=0
+	.long	\locale
+	.long	\int_curr_symbol
+	.long	\currency_symbol
+	.long	\mon_decimal_point
+	.long	\mon_thousands_sep
+	.long	\mon_grouping
+	.long	\positive_sign
+	.long	\negative_sign
+	.byte	\int_frac_digits
+	.byte	\frac_digits
+	.byte	\p_cs_precedes
+	.byte	\p_sep_by_space
+	.byte	\n_cs_precedes
+	.byte	\n_sep_by_space
+	.byte	\p_sign_posn
+	.byte	\n_sign_posn
 .endm
 
-# REC_func_4C00206A_Records_2: 16-byte records (func_4C00206A_Records_2, 2 records); fields, and what reads them:
+# LconvNumeric: 16-byte records (localeconv_Records_2, 2 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   text         ptr            no reader seen
-#   +4   text_        ptr            localeconv 0x4C00206A `mov (4, a1), a0`
-#   +8   p8           ptr            localeconv 0x4C00206A `mov (8, a1), a0`
-#   +12  p12          ptr            localeconv 0x4C00206A `mov (0xc, a1), a0`
-.macro REC_func_4C00206A_Records_2 text=0, text_=0, p8=0, p12=0
-	.long	\text
-	.long	\text_
-	.long	\p8
-	.long	\p12
+#   +0   locale       ptr            no reader seen
+#   +4   decimal_point ptr            localeconv 0x4C00206A `mov (4, a1), a0`
+#   +8   thousands_sep ptr            localeconv 0x4C00206A `mov (8, a1), a0`
+#   +12  grouping     ptr            localeconv 0x4C00206A `mov (0xc, a1), a0`
+.macro LconvNumeric locale=0, decimal_point=0, thousands_sep=0, grouping=0
+	.long	\locale
+	.long	\decimal_point
+	.long	\thousands_sep
+	.long	\grouping
 .endm
 
 # REC_func_4C02FCBA_Records: 256-byte records (func_4C02FCBA_Records, 7 records); fields, and what reads them:
@@ -3985,29 +3985,29 @@
 	.ascii	"\x10"
 .endm
 
-# REC_func_484058DA_Table: 16-byte records (func_484058DA_Table, 2 records); fields, and what reads them:
+# REC_JpegEncWriteDht_Table: 16-byte records (JpegEncWriteDht_Table, 2 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   count        u8             JpegEncWriteDht 0x484058DA `movbu (a0), d0`; JpegEncWriteDht 0x484058DA `movbu (a2), d0` (+1)
 #   +1   x1           u8[15]         no reader seen
-.macro REC_func_484058DA_Table count=0, x1
+.macro REC_JpegEncWriteDht_Table count=0, x1
 	.byte	\count
 	.ascii	"\x1"
 .endm
 
-# REC_func_484058DA_Records: 16-byte records (func_484058DA_Records, 2 records); fields, and what reads them:
+# REC_JpegEncWriteDht_Records: 16-byte records (JpegEncWriteDht_Records, 2 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   count        u8             JpegEncWriteDht 0x484058DA `movbu (a0), d0`; JpegEncWriteDht 0x484058DA `movbu (a2), d0` (+1)
 #   +1   x1           u8[15]         no reader seen
-.macro REC_func_484058DA_Records count=0, x1
+.macro REC_JpegEncWriteDht_Records count=0, x1
 	.byte	\count
 	.ascii	"\x1"
 .endm
 
-# REC_func_48405229_Records: 64-byte records (func_48405229_Records, 2 records); fields, and what reads them:
+# REC_JpegEncTablesInit_Records: 64-byte records (JpegEncTablesInit_Records, 2 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   index        u8             JpegEncTablesInit 0x48405229 `movbu (a1), d0`
 #   +1   x1           u8[63]         no reader seen
-.macro REC_func_48405229_Records index=0, x1
+.macro REC_JpegEncTablesInit_Records index=0, x1
 	.byte	\index
 	.ascii	"\x1"
 .endm
@@ -4030,11 +4030,11 @@
 	.byte	\root_flags
 .endm
 
-# REC_func_48437375_Records: 44-byte records (func_48437375_Records, 27 records); fields, and what reads them:
+# REC_PadBankNameGet_Records: 44-byte records (PadBankNameGet_Records, 27 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   s0           char[20]       PadBankNameGet 0x48437375 `call strcpy_entry, [a2], 4`
 #   +20  a20          6 x 4 (u32)    PadIdFromBankSlot 0x484374EA `mov (d1, a0), d0`
-.macro REC_func_48437375_Records s0, a20:vararg
+.macro REC_PadBankNameGet_Records s0, a20:vararg
 	.ascii	"\s0"
 	.long	\a20
 .endm
@@ -4054,14 +4054,14 @@
 	.long	\styles
 .endm
 
-# REC_func_48436196_Records: 8-byte records (func_48436196_Records, 128 records); fields, and what reads them:
+# REC_NoteConvRuleByte1Get_Records: 8-byte records (NoteConvRuleByte1Get_Records, 128 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   f0           u8             NoteConvApply 0x484361E7 `movbu (d0, a0), d0`
 #   +1   f1           u8             NoteConvRuleByte1Get 0x48436196 `movbu (1, a0), d0`
 #   +2   f2           u8             NoteConvRuleByte2Get 0x484361B1 `movbu (2, a0), d0`; NoteConvApply 0x484361E7 `movbu (2, a0), d0`
 #   +3   key          u8             NoteConvRuleByte3Get 0x484361CC `movbu (3, a0), d0`; NoteConvApply 0x484361E7 `movbu (3, a0), d0`
 #   +4   p4           ptr            NoteConvApply 0x484361E7 `mov (4, a0), d2`
-.macro REC_func_48436196_Records f0=0, f1=0, f2=0, key=0, p4=0
+.macro REC_NoteConvRuleByte1Get_Records f0=0, f1=0, f2=0, key=0, p4=0
 	.byte	\f0
 	.byte	\f1
 	.byte	\f2
@@ -4069,52 +4069,52 @@
 	.long	\p4
 .endm
 
-# REC_func_48406633_Table: 4-byte records (func_48406633_Table, 5 records); fields, and what reads them:
+# REC_JpegDecModeMatch_Table: 4-byte records (JpegDecModeMatch_Table, 5 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   f0           u8             JpegEncSetup 0x48404D10 `movbu (a0), d0`
 #   +1   f1           u8             JpegEncSetup 0x48404D10 `movbu (1, a1), d0`
 #   +2   f2           u8             JpegEncSetup 0x48404D10 `movbu (2, a3), d0`
 #   +3   f3           u8             JpegEncSetup 0x48404D10 `movbu (3, a3), d0`
-.macro REC_func_48406633_Table f0=0, f1=0, f2=0, f3=0
+.macro REC_JpegDecModeMatch_Table f0=0, f1=0, f2=0, f3=0
 	.byte	\f0
 	.byte	\f1
 	.byte	\f2
 	.byte	\f3
 .endm
 
-# REC_func_48406633_Table_2: 4-byte records (func_48406633_Table_2, 5 records); fields, and what reads them:
+# REC_JpegDecModeMatch_Table_2: 4-byte records (JpegDecModeMatch_Table_2, 5 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   f0           u8             JpegEncSetup 0x48404D10 `movbu (a0), d0`
 #   +1   f1           u8             JpegEncSetup 0x48404D10 `movbu (a1), d0`
 #   +2   f2           u8             JpegEncSetup 0x48404D10 `movbu (a1), d0`
 #   +3   f3           u8             JpegEncSetup 0x48404D10 `movbu (a1), d0`
-.macro REC_func_48406633_Table_2 f0=0, f1=0, f2=0, f3=0
+.macro REC_JpegDecModeMatch_Table_2 f0=0, f1=0, f2=0, f3=0
 	.byte	\f0
 	.byte	\f1
 	.byte	\f2
 	.byte	\f3
 .endm
 
-# REC_func_48404D10_Records_2: 4-byte records (func_48404D10_Records_2, 5 records); fields, and what reads them:
+# REC_JpegEncSetup_Records_2: 4-byte records (JpegEncSetup_Records_2, 5 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   f0           u8             JpegEncSetup 0x48404D10 `movbu (a0), d0`
 #   +1   f1           u8             JpegEncSetup 0x48404D10 `movbu (a3), d0`
 #   +2   f2           u8             JpegEncSetup 0x48404D10 `movbu (a3), d0`
 #   +3   f3           u8             JpegEncSetup 0x48404D10 `movbu (a3), d0`
-.macro REC_func_48404D10_Records_2 f0=0, f1=0, f2=0, f3=0
+.macro REC_JpegEncSetup_Records_2 f0=0, f1=0, f2=0, f3=0
 	.byte	\f0
 	.byte	\f1
 	.byte	\f2
 	.byte	\f3
 .endm
 
-# REC_func_48404D10_Records: 4-byte records (func_48404D10_Records, 8 records); fields, and what reads them:
+# REC_JpegEncSetup_Records: 4-byte records (JpegEncSetup_Records, 8 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   f0           u8             JpegEncSetup 0x48404D10 `movbu (a3), d0`
 #   +1   f1           u8             JpegEncSetup 0x48404D10 `movbu (a1), d0`
 #   +2   f2           u8             JpegEncSetup 0x48404D10 `movbu (a0), d0`
 #   +3   f3           u8             JpegEncSetup 0x48404D10 `movbu (a0), d0`
-.macro REC_func_48404D10_Records f0=0, f1=0, f2=0, f3=0
+.macro REC_JpegEncSetup_Records f0=0, f1=0, f2=0, f3=0
 	.byte	\f0
 	.byte	\f1
 	.byte	\f2
@@ -4137,11 +4137,11 @@
 	.long	\styles
 .endm
 
-# REC_func_4847C965_Records: 8-byte records (func_4847C965_Records, 34 records); fields, and what reads them:
+# REC_StyleAlphaHeaderBuild_Records: 8-byte records (StyleAlphaHeaderBuild_Records, 34 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   text         ptr            StyleAlphaHeaderBuild 0x4847C965 `mov (d2, a2), a1`; StyleAlphaLastIndex 0x4847CA38 `mov (d1, a0), d1`
 #   +4   U16ListLastIndex_a0 ptr            StyleAlphaHeaderBuild 0x4847C965 `mov (4, a0), a0`; StyleAlphaLetterStep 0x4847CA90 `mov (4, a0), a0` (+3)
-.macro REC_func_4847C965_Records text=0, U16ListLastIndex_a0=0
+.macro REC_StyleAlphaHeaderBuild_Records text=0, U16ListLastIndex_a0=0
 	.long	\text
 	.long	\U16ListLastIndex_a0
 .endm
@@ -4223,11 +4223,11 @@
 	.long	\proc
 .endm
 
-# REC_func_48400084_Records: 4-byte records (func_48400084_Records, 3 records); fields, and what reads them:
+# REC_FdcPrgMotorCtl_Records: 4-byte records (FdcPrgMotorCtl_Records, 3 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   f0           u8             FdcPrgMotorCtl 0x48400084 `movbu (func_48400084_Records), d0`; FdcPrgMotorCtl 0x48400084 `movbu d0, (func_48400084_Records)`
+#   +0   f0           u8             FdcPrgMotorCtl 0x48400084 `movbu (FdcPrgMotorCtl_Records), d0`; FdcPrgMotorCtl 0x48400084 `movbu d0, (FdcPrgMotorCtl_Records)`
 #   +1   x1           u8[3]          no reader seen
-.macro REC_func_48400084_Records f0=0, x1
+.macro REC_FdcPrgMotorCtl_Records f0=0, x1
 	.byte	\f0
 	.ascii	"\x1"
 .endm
@@ -4257,11 +4257,11 @@
 	.word	\MainFuncCall_d1
 .endm
 
-# REC_func_48535675_Records: 8-byte records (func_48535675_Records, 43 records); fields, and what reads them:
+# REC_SeqCycPlyFieldApply_Records: 8-byte records (SeqCycPlyFieldApply_Records, 43 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   object       u32            SeqCycPlyFieldApply 0x48535675 `mov (a2), d0`
 #   +4   object_      u32            SeqCycPlyFieldApply 0x48535675 `mov (4, a2), d0`
-.macro REC_func_48535675_Records object=0, object_=0
+.macro REC_SeqCycPlyFieldApply_Records object=0, object_=0
 	.long	\object
 	.long	\object_
 .endm
@@ -4346,7 +4346,7 @@
 	.ascii	"\x1"
 .endm
 
-# REC_func_4842886A_Table: 56-byte records (func_4842886A_Table, 4 records); fields, and what reads them:
+# REC_DeleteEventForTask_Table: 56-byte records (DeleteEventForTask_Table, 4 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   key          s16            PostEventForTask 0x4842859D `movhu (d0, a3), d2`; GetEventForTask 0x4842874B `movhu (d0, a2), d0` (+9)
 #   +2   key_         s16            PostEventForTask 0x4842859D `movhu (2, a0), d2`; PostEventForTask 0x4842859D `movhu (2, a0), d3` (+14)
@@ -4366,7 +4366,7 @@
 #   +48  key___       s16            InitializeTaskTimer 0x4842990A `movhu d0, (0x30, a0)`; ApTimer 0x484299AF `movhu (0x30, a0), d0` (+10)
 #   +50  count        s16            InitializeTaskTimer 0x4842990A `movhu (0x32, a0), d1`; InitializeTaskTimer 0x4842990A `movhu (a1), d0` (+2)
 #   +52  index_       u32            InitializeTaskTimer 0x4842990A `mov (a0), a0`; InitializeTaskTimer 0x4842990A `mov (a3), a0` (+12)
-.macro REC_func_4842886A_Table key=0, key_=0, key__=0, flag_id=0, flag_id_=0, x10, index=0, f16=0, f20=0, f24=0, f28=0, f32=0, f36=0, f40=0, Free_d1=0, key___=0, count=0, index_=0
+.macro REC_DeleteEventForTask_Table key=0, key_=0, key__=0, flag_id=0, flag_id_=0, x10, index=0, f16=0, f20=0, f24=0, f28=0, f32=0, f36=0, f40=0, Free_d1=0, key___=0, count=0, index_=0
 	.word	\key
 	.word	\key_
 	.word	\key__
@@ -4387,11 +4387,11 @@
 	.long	\index_
 .endm
 
-# REC_func_48449420_Records: 8-byte records (func_48449420_Records, 7 records); fields, and what reads them:
+# REC_TableToneKeyMap_Records: 8-byte records (TableToneKeyMap_Records, 7 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   p0           ptr            TableToneKeyMap 0x48449420 `mov (d0, a0), d0`
 #   +4   p4           ptr            TableToneKeyMap 0x48449420 `mov (4, a0), d1`
-.macro REC_func_48449420_Records p0=0, p4=0
+.macro REC_TableToneKeyMap_Records p0=0, p4=0
 	.long	\p0
 	.long	\p4
 .endm
@@ -4416,16 +4416,16 @@
 	.byte	\f3
 .endm
 
-# REC_func_4846D7B9_Records: 40-byte records (func_4846D7B9_Records, 3 records); fields, and what reads them:
+# REC_VfsFileOpen_Records: 40-byte records (VfsFileOpen_Records, 3 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   x0           u8[2]          no reader seen
-#   +2   f2           u8             MediaTypeCacheSet 0x484706A6 `movbu d0, (func_4846D7B9_Records+2)`
+#   +2   f2           u8             MediaTypeCacheSet 0x484706A6 `movbu d0, (VfsFileOpen_Records+2)`
 #   +3   x3           u8[17]         no reader seen
 #   +20  p20          ptr            no reader seen
 #   +24  p24          ptr            no reader seen
 #   +28  text         ptr            VfsFileOpen 0x4846D7B9 `mov (a2), a1`
 #   +32  x32          u8[8]          no reader seen
-.macro REC_func_4846D7B9_Records x0, f2=0, x3, p20=0, p24=0, text=0, x32
+.macro REC_VfsFileOpen_Records x0, f2=0, x3, p20=0, p24=0, text=0, x32
 	.ascii	"\x0"
 	.byte	\f2
 	.ascii	"\x3"
@@ -4805,9 +4805,9 @@
 	.ascii	"\x0"
 .endm
 
-# REC_func_48436196_Records_p4: 4-byte records (func_48436196_Records_p4, 21 records); fields, and what reads them:
+# REC_NoteConvRuleByte1Get_Records_p4: 4-byte records (NoteConvRuleByte1Get_Records_p4, 21 records); fields, and what reads them:
 #   +0   text         ptr            no reader seen
-.macro REC_func_48436196_Records_p4 text=0
+.macro REC_NoteConvRuleByte1Get_Records_p4 text=0
 	.long	\text
 .endm
 
@@ -4845,9 +4845,9 @@
 	.ascii	"\x1"
 .endm
 
-# REC_func_4848B05A_Records_p4_p0: 34-byte records (func_4848B05A_Records_p4_p0, 27 records); fields, and what reads them:
+# REC_PartParamTableSelect_Records_p4_p0: 34-byte records (PartParamTableSelect_Records_p4_p0, 27 records); fields, and what reads them:
 #   +0   x0           u8[34]         no reader seen
-.macro REC_func_4848B05A_Records_p4_p0 x0
+.macro REC_PartParamTableSelect_Records_p4_p0 x0
 	.ascii	"\x0"
 .endm
 
@@ -5053,15 +5053,15 @@
 	.ascii	"\value"
 .endm
 
-# REC_func_4857F5AB_Table_p0: 1-byte records (func_4857F5AB_Table_p0, 1 records); fields, and what reads them:
+# REC_SswTagActProc_Table_p0: 1-byte records (SswTagActProc_Table_p0, 1 records); fields, and what reads them:
 #   +0   key          u8             SswTagActProc 0x4857F5AB `movbu (a0), d0`; SswTagActProc 0x4857F5AB `movbu (a0), d1`
-.macro REC_func_4857F5AB_Table_p0 key=0
+.macro REC_SswTagActProc_Table_p0 key=0
 	.byte	\key
 .endm
 
-# REC_func_4857F6FB_Table_p0: 1-byte records (func_4857F6FB_Table_p0, 1 records); fields, and what reads them:
+# REC_SswTagDaProc_Table_p0: 1-byte records (SswTagDaProc_Table_p0, 1 records); fields, and what reads them:
 #   +0   key          u8             SswTagDaProc 0x4857F6FB `movbu (a0), d0`; SswTagDaProc 0x4857F6FB `movbu (a0), d1`
-.macro REC_func_4857F6FB_Table_p0 key=0
+.macro REC_SswTagDaProc_Table_p0 key=0
 	.byte	\key
 .endm
 
@@ -5213,9 +5213,9 @@
 	.ascii	"\x4"
 .endm
 
-# REC_func_48449420_Records_p0: 128-byte records (func_48449420_Records_p0, 12 records); fields, and what reads them:
+# REC_TableToneKeyMap_Records_p0: 128-byte records (TableToneKeyMap_Records_p0, 12 records); fields, and what reads them:
 #   +0   x0           u8[128]        no reader seen
-.macro REC_func_48449420_Records_p0 x0
+.macro REC_TableToneKeyMap_Records_p0 x0
 	.ascii	"\x0"
 .endm
 
@@ -5343,9 +5343,9 @@
 	.ascii	"\x1"
 .endm
 
-# REC_func_4848B05A_Records_p4: 4-byte records (func_4848B05A_Records_p4, 27 records); fields, and what reads them:
+# REC_PartParamTableSelect_Records_p4: 4-byte records (PartParamTableSelect_Records_p4, 27 records); fields, and what reads them:
 #   +0   index        ptr            PartParamTableSelect 0x4848B05A `mov d2, (a0)`; PartParamDefaultProc 0x4848B111 `mov (a0), a0` (+3)
-.macro REC_func_4848B05A_Records_p4 index=0
+.macro REC_PartParamTableSelect_Records_p4 index=0
 	.long	\index
 .endm
 
@@ -5394,7 +5394,7 @@
 .endm
 
 # REC_FlashSectorProgram_ArgA0: 2-byte records (FlashSectorProgram_ArgA0, 2 records); fields, and what reads them:
-#   (the layout FlashSectorProgram reads through its argument a0 (passed by FlashSectorRewrite 0x4847F866 `call FlashSectorProgram_entry, [d2,d3,a2,a3], 0x24`))
+#   (the layout FlashSectorProgram 0x4847F7BA reads through its argument a0 (passed by FlashSectorRewrite 0x4847F866 `call FlashSectorProgram_entry, [d2,d3,a2,a3], 0x24`))
 #   (an array of 2-byte records: FlashSectorProgram steps it by 2 in a loop; as many as are free up to the next label [INFERENCE: the block's extent])
 #   +0   FlashWordProgram_d0 u16            FlashSectorProgram 0x4847F7BA `movhu (a3), d0`
 .macro REC_FlashSectorProgram_ArgA0 FlashWordProgram_d0=0
@@ -5402,7 +5402,7 @@
 .endm
 
 # REC_KernelCyclicHandlerDefine_ArgA0: 24-byte records (KernelCyclicHandlerDefine_ArgA0, 2 records); fields, and what reads them:
-#   (the layout KernelCyclicHandlerDefine reads through its argument a0 (passed by GuiTasksStart 0x4841424C `call KernelCyclicHandlerDefine_entry, [d2,d3,a2,a3], 0x1c`))
+#   (the layout KernelCyclicHandlerDefine 0x4C03C8D0 reads through its argument a0 (passed by GuiTasksStart 0x4841424C `call KernelCyclicHandlerDefine_entry, [d2,d3,a2,a3], 0x1c`))
 #   +0   f0           u32            KernelCyclicHandlerDefine 0x4C03C8D0 `mov (a3), d0`
 #   +4   x4           u8[4]          no reader seen
 #   +8   proc         ptr            KernelCyclicHandlerDefine 0x4C03C8D0 `mov (8, a3), a0`
@@ -5436,8 +5436,8 @@
 .endm
 
 # REC_FdcPrgRequest_ArgA0_s4: 4-byte records (FdcPrgRequest_ArgA0_s4, 35 records); fields, and what reads them:
-#   (the layout FdcPrgRequest reads through its argument a0 (passed by FdFormat720K 0x4847076A `call FdcPrgRequest_entry, 0, 0xc`, +2 more calls))
-#   (the layout FdcStrap3Request reads through its argument a0 (passed by FdcPrgRequest 0x48401F32 `call FdcStrap3Request_entry, 0, 0xc`))
+#   (the layout FdcPrgRequest 0x48401F32 reads through its argument a0 (passed by FdFormat720K 0x4847076A `call FdcPrgRequest_entry, 0, 0xc`, +2 more calls))
+#   (the layout FdcStrap3Request 0x48404547 reads through its argument a0 (passed by FdcPrgRequest 0x48401F32 `call FdcStrap3Request_entry, 0, 0xc`))
 #   (an array of 4-byte records: FdcPrgRequest steps it by 4 in a loop; as many as are free up to the next label [INFERENCE: the block's extent])
 #   +0   loc_cpu_d1   u32            FdcPrgRequest 0x48401F32 `mov (a0), d1`; FdcPrgRequest 0x48401F32 `mov (a1), d0` (+7)
 .macro REC_FdcPrgRequest_ArgA0_s4 loc_cpu_d1=0
@@ -5475,7 +5475,7 @@
 .endm
 
 # REC_LedProcTableDispatch_ArgA0: 8-byte records (LedProcTableDispatch_ArgA0, 1 records); fields, and what reads them:
-#   (the layout LedProcTableDispatch reads through its argument a0 (passed by LedRedrawRequestsRun 0x484AE69D `call LedProcTableDispatch_entry, [d2,a2], 0x10`, +1 more calls))
+#   (the layout LedProcTableDispatch 0x484AE78B reads through its argument a0 (passed by LedRedrawRequestsRun 0x484AE69D `call LedProcTableDispatch_entry, [d2,a2], 0x10`, +1 more calls))
 #   (an array of 8-byte records: LedProcTableDispatch steps it by 8 in a loop; as many as are free up to the next label [INFERENCE: the block's extent])
 #   +0   f0           u32            LedProcTableDispatch 0x484AE78B `mov (a2), d0`
 #   +4   proc         ptr            LedProcTableDispatch 0x484AE78B `mov (4, a2), d0`
@@ -5564,7 +5564,7 @@
 .endm
 
 # REC_TechniChordHeldKeyFind_ArgA0: 8-byte records (TechniChordHeldKeyFind_ArgA0, 1 records); fields, and what reads them:
-#   (the layout TechniChordHeldKeyFind reads through its argument a0 (passed by TechniChordUpdate 0x48472AEF `call TechniChordHeldKeyFind_entry, [d2,d3,a2,a3], 0x10`))
+#   (the layout TechniChordHeldKeyFind 0x48472D01 reads through its argument a0 (passed by TechniChordUpdate 0x48472AEF `call TechniChordHeldKeyFind_entry, [d2,d3,a2,a3], 0x10`))
 #   (an array of 38-byte records: TechniChordHeldKeyFind steps it by 38 in a loop; as many as are free up to the next label [INFERENCE: the block's extent])
 #   +0   f0           u8             TechniChordHeldKeyFind 0x48472D01 `movbu d2, (a0)`
 #   +1   f1           u8             TechniChordHeldKeyFind 0x48472D01 `movbu (0x27, a0), d0`; TechniChordHeldKeyFind 0x48472D01 `movbu d0, (0x27, a0)` (+1)

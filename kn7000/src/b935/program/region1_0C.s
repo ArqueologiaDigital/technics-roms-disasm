@@ -8,7 +8,7 @@ SswTagHdrProc:
     movhu   d1, (0x2b0, sp)
     mov     a0, (0x2ac, sp)
     mov     d0, d2
-    mov     func_48580021_Table, a1
+    mov     SswTagHdrProc_Table, a1
     mov     sp, a0
     add     0x28, a0
     mov     -0x81, d1
@@ -21,7 +21,7 @@ SswTagHdrProc:
     lne
     clr     d0
     movhu   d0, (0x20, sp)
-    mov     func_48580021_Table_2, a1
+    mov     SswTagHdrProc_Table_2, a1
     mov     sp, a0
     add     0xac, a0
     mov     -0x81, d1
@@ -32,7 +32,7 @@ SswTagHdrProc:
     inc     a0
     inc     d1
     lne
-    mov     func_48580021_Table_3, a1
+    mov     SswTagHdrProc_Table_3, a1
     mov     sp, a0
     add     0x130, a0
     mov     -0x81, d1
@@ -56,7 +56,7 @@ loc_48580081:
     mov     d0, (0x18, sp)
     mov     sp, a2
     add     0x1f8, a2
-    mov     func_48580021_Table_4, a3
+    mov     SswTagHdrProc_Table_4, a3
 loc_48580095:
     mov     d3, d0
     mov     (0x2ac, sp), a0
@@ -2460,20 +2460,20 @@ SswDoraJpgImport:
     call    fmmopen_entry, [a2,a3], 0x24
     mov     a2, a0
     movhu   (0x5009e310), d0
-    movhu   (func_48581589_Table), d1
+    movhu   (SswDoraJpgImport_Table), d1
     call    PictureImport_entry, [d2,d3,a2,a3], 0x10
     call    fmmclose_entry, 0, 0x14
     movhu   (0x5009e310), d0
     inc     d0
     movhu   d0, (0x5009e310)
-    movhu   (func_48581589_Table), d0
+    movhu   (SswDoraJpgImport_Table), d0
     inc     d0
-    movhu   d0, (func_48581589_Table)
-    movhu   (func_48581589_Table), d0
+    movhu   d0, (SswDoraJpgImport_Table)
+    movhu   (SswDoraJpgImport_Table), d0
     cmp     3, d0
     ble     loc_485815F8
     mov     1, d0
-    movhu   d0, (func_48581589_Table)
+    movhu   d0, (SswDoraJpgImport_Table)
 loc_485815F8:
     ret     [a2], 0x28
 # SswImageSizeCheck  (CPU 0x485815fb)
@@ -6274,7 +6274,7 @@ loc_485838FC:
     mov     -1, d0
     jmp     loc_48583F89
 loc_48583901:
-    movbu   (func_485838DC_Table_5), d0
+    movbu   (PcComCommand_Table_5), d0
     cmp     d2, d0
     bne     loc_4858390D
     jmp     loc_48583A19
@@ -6289,8 +6289,8 @@ loc_4858391A:
     clr     d0
     call    func_484C2FDA_entry, [d2,d3], 8
     clr     d0
-    movbu   d2, (func_485838DC_Var_2)
-    movbu   d0, (func_485838DC_Table_4)
+    movbu   d2, (PcComCommand_Var_2)
+    movbu   d0, (PcComCommand_Table_4)
     call    GetModeNow_entry, 0, 0x10
     and     0xffff, d0
     cmp     1, d0
@@ -6299,27 +6299,27 @@ loc_4858391A:
     clr     d1
     call    ChangeTitle_entry, [d2,d3,a2], 0x20
     mov     1, d0
-    movbu   d0, (func_485838DC_Var)
+    movbu   d0, (PcComCommand_Var)
     clr     d0
     jmp     loc_48583F89
 loc_48583955:
-    movbu   d2, (func_485838DC_Var)
+    movbu   d2, (PcComCommand_Var)
     mov     -2, d0
     jmp     loc_48583F89
 loc_48583960:
-    movbu   (func_485838DC_Var), d0
+    movbu   (PcComCommand_Var), d0
     cmp     d2, d0
     bne     loc_4858396C
     jmp     loc_485839FD
 loc_4858396C:
-    movbu   (func_485838DC_Table_4), d0
+    movbu   (PcComCommand_Table_4), d0
     cmp     d2, d0
     beq     loc_4858397E
     clr     d0
     mov     d2, d1
     call    SDModuleModeReq_entry, 0, 0xc
 loc_4858397E:
-    movbu   (func_485838DC_Var_2), d0
+    movbu   (PcComCommand_Var_2), d0
     cmp     d2, d0
     beq     loc_4858399E
     call    GetSeqPlyPart_entry, 0, 0x10
@@ -6361,9 +6361,9 @@ loc_485839DC:
     call    InterruptTitle_entry, [d2,d3,a2], 0x20
 loc_485839E7:
     clr     d0
-    movbu   d2, (func_485838DC_Var)
-    movbu   d2, (func_485838DC_Var_2)
-    movbu   d0, (func_485838DC_Table_4)
+    movbu   d2, (PcComCommand_Var)
+    movbu   d2, (PcComCommand_Var_2)
+    movbu   d0, (PcComCommand_Table_4)
     jmp     loc_48583F89
 loc_485839FD:
     mov     -2, d0
@@ -6417,7 +6417,7 @@ loc_48583A5E:
 loc_48583A65:
     add     -1, d0
     asl2    d0
-    mov     func_485838DC_Table_3, a0
+    mov     PcComCommand_Table_3, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_48583A72:
@@ -6559,7 +6559,7 @@ loc_48583BDE:
     jmp     loc_48583F7A
 loc_48583BE5:
     asl2    d0
-    mov     func_485838DC_Table_2, a0
+    mov     PcComCommand_Table_2, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_48583BF0:
@@ -6715,7 +6715,7 @@ loc_48583DBE:
     jmp     loc_48583F7A
 loc_48583DC5:
     asl2    d0
-    mov     func_485838DC_Table, a0
+    mov     PcComCommand_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_48583DD0:
@@ -6743,7 +6743,7 @@ loc_48583DF4:
     jmp     loc_48583F7A
 loc_48583E05:
     mov     1, d0
-    movbu   d0, (func_485838DC_Var_2)
+    movbu   d0, (PcComCommand_Var_2)
     jmp     loc_48583F7A
 loc_48583E10:
     mov     a2, a0
@@ -6755,7 +6755,7 @@ loc_48583E10:
     jmp     loc_48583F7A
 loc_48583E21:
     mov     1, d0
-    movbu   d0, (func_485838DC_Var_2)
+    movbu   d0, (PcComCommand_Var_2)
     jmp     loc_48583F7A
 loc_48583E2C:
     mov     a2, a0
@@ -6812,13 +6812,13 @@ loc_48583EA5:
     mov     (0x18, sp), d1
     call    func_484C300D_entry, 0, 0x3c
     mov     1, d0
-    movbu   d0, (func_485838DC_Table_4)
+    movbu   d0, (PcComCommand_Table_4)
     jmp     loc_48583F7A
 loc_48583EBB:
     call    func_4855228B_entry, 0, 0x10
     mov     d0, d2
     mov     1, d0
-    movbu   d0, (func_485838DC_Table_4)
+    movbu   d0, (PcComCommand_Table_4)
     jmp     loc_48583F7A
 loc_48583ECE:
     mov     sp, a0
@@ -6834,13 +6834,13 @@ loc_48583EE1:
     mov     (0x18, sp), d1
     call    func_484C300D_entry, 0, 0x3c
     mov     1, d0
-    movbu   d0, (func_485838DC_Table_4)
+    movbu   d0, (PcComCommand_Table_4)
     jmp     loc_48583F7A
 loc_48583EF7:
     call    func_485522C2_entry, 0, 0x10
     mov     d0, d2
     mov     1, d0
-    movbu   d0, (func_485838DC_Table_4)
+    movbu   d0, (PcComCommand_Table_4)
     bra     loc_48583F7A
 loc_48583F09:
     mov     0x50172f57, a0
@@ -6848,7 +6848,7 @@ loc_48583F09:
     mov     d0, d2
     call    SdRemountSync_entry, [d2], 0x10
     mov     1, d0
-    movbu   d0, (func_485838DC_Table_4)
+    movbu   d0, (PcComCommand_Table_4)
     bra     loc_48583F7A
 loc_48583F28:
     movbu   (0x50172f4d), d0

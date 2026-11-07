@@ -1207,7 +1207,7 @@ loc_48500C9F:
     bls     loc_48500CA5
     jmp     loc_4850273A
 loc_48500CA5:
-    mov     func_48500C71_Records, a2
+    mov     PartParamDumpLine_Records, a2
     inc     d1
     mov     d1, d0
     mov     d2, (0x2c, sp)
@@ -1260,7 +1260,7 @@ loc_48500CDA:
     asl2    d2
     mov     Str_s_SOUND_s, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     (d2, a0), d0
     mov     d0, (0x10, sp)
     mov     a2, (0x14, sp)
@@ -1272,7 +1272,7 @@ loc_48500D2B:
     mov     d0, (8, sp)
     mov     Str_s_VOLUME_3d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -1298,7 +1298,7 @@ loc_48500D6C:
     asl2    d2
     mov     Str_s_VOLUME_MUTE_s, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a1
+    mov     PartParamDumpLine_Table, a1
     mov     (d2, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
@@ -1311,7 +1311,7 @@ loc_48500D90:
     asl2    d2
     mov     Str_s_EXPRESSION_3d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     (d2, a0), d0
     mov     d0, (0x10, sp)
     mov     a3, d0
@@ -1326,7 +1326,7 @@ loc_48500DBA:
     mov     d0, (8, sp)
     mov     Str_s_MULTI_EFFECT_DPT_3d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -1352,7 +1352,7 @@ loc_48500DFB:
     asl2    d2
     mov     Str_s_MULTI_EFFECT_s, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a1
+    mov     PartParamDumpLine_Table, a1
     mov     (d2, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
@@ -1364,7 +1364,7 @@ loc_48500E1F:
     mov     d0, (8, sp)
     mov     Str_s_REVERB_3d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -1390,7 +1390,7 @@ loc_48500E60:
     asl2    d2
     mov     Str_s_SOLO_s, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a1
+    mov     PartParamDumpLine_Table, a1
     mov     (d2, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
@@ -1592,7 +1592,7 @@ loc_48501104:
     mov     d0, (8, sp)
     mov     Str_s_SOUND_DSP_DEPTH_3d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), a0
@@ -1617,7 +1617,7 @@ loc_48501145:
     mov     d0, (8, sp)
     mov     Str_s_SOUND_DSP_s, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a1
+    mov     PartParamDumpLine_Table, a1
     mov     d2, d0
     asl2    d0
     mov     (d0, a1), d0
@@ -1631,7 +1631,7 @@ loc_4850116A:
     mov     d0, (8, sp)
     mov     Str_s_CHORUS_DEPTH_3d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), a0
@@ -1656,7 +1656,7 @@ loc_485011AB:
     mov     d0, (8, sp)
     mov     Str_s_CHORUS_s, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a1
+    mov     PartParamDumpLine_Table, a1
     mov     d2, d0
     asl2    d0
     mov     (d0, a1), d0
@@ -1670,7 +1670,7 @@ loc_485011D0:
     mov     d0, (8, sp)
     mov     Str_s_PORTAMENTO_TIME_3d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), a0
@@ -1695,7 +1695,7 @@ loc_48501211:
     mov     d0, (8, sp)
     mov     Str_s_PORTAMENTO_s, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a1
+    mov     PartParamDumpLine_Table, a1
     mov     d2, d0
     asl2    d0
     mov     (d0, a1), d0
@@ -1707,7 +1707,7 @@ loc_48501236:
     extbu   d2
     mov     Str_s_EQ_HIGH_FC_s_Hz, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), a0
@@ -1725,7 +1725,7 @@ loc_48501263:
     asl2    d2
     mov     Str_s_EQ_HIGH_GAIN_5_1f_dB, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     (d2, a0), a0
     mov     a3, d0
     mov     a0, (0x10, sp)
@@ -1742,7 +1742,7 @@ loc_48501291:
     asl2    d2
     mov     Str_s_EQ_LOW_FC_s_Hz, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     (d2, a0), a0
     mov     a3, d0
     mov     a0, (0x10, sp)
@@ -1758,7 +1758,7 @@ loc_485012BD:
     asl2    d2
     mov     Str_s_EQ_LOW_GAIN_5_1f_dB, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     (d2, a0), d0
     mov     d0, (0x10, sp)
     mov     a3, d0
@@ -1785,7 +1785,7 @@ loc_48501301:
     asl2    d2
     mov     Str_s_DRAWBAR_TYPE_s, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a1
+    mov     PartParamDumpLine_Table, a1
     mov     (d2, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
@@ -1798,7 +1798,7 @@ loc_48501325:
     asl2    d2
     mov     Str_s_DRAWBAR_EFF_TYPE_4d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     (d2, a0), d0
     mov     d0, (0x10, sp)
     mov     a3, d0
@@ -1814,7 +1814,7 @@ loc_4850134F:
     asl2    d2
     mov     Str_s_DRAWBAR_PERC_DECAY_4d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     (d2, a0), d0
     mov     d0, (0x10, sp)
     mov     a3, d0
@@ -1830,7 +1830,7 @@ loc_48501379:
     asl2    d2
     mov     Str_s_DRAWBAR_PERC_LEVEL_4d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     (d2, a0), a0
     mov     a3, d0
     mov     a0, (0x10, sp)
@@ -1846,7 +1846,7 @@ loc_485013A3:
     asl2    d2
     mov     Str_s_DRAWBAR_RELEASE_4d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     (d2, a0), d0
     mov     d0, (0x10, sp)
     mov     a3, d0
@@ -1861,7 +1861,7 @@ loc_485013CD:
     mov     d0, (8, sp)
     mov     Str_s_DRAWBAR_ATTACK_4d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -1878,7 +1878,7 @@ loc_485013F8:
     mov     d0, (8, sp)
     mov     Str_s_DRAWBAR_FLUTE16_4d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -1896,7 +1896,7 @@ loc_48501423:
     asl2    d2
     mov     Str_s_DRAWBAR_FLUTE8_4d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     (d2, a0), d0
     mov     d0, (0x10, sp)
     mov     a3, d0
@@ -1912,7 +1912,7 @@ loc_4850144D:
     asl2    d2
     mov     Str_s_DRAWBAR_FLUTE5_1_3_4d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     (d2, a0), d0
     mov     d0, (0x10, sp)
     mov     a3, d0
@@ -1927,7 +1927,7 @@ loc_48501477:
     mov     d0, (8, sp)
     mov     Str_s_DRAWBAR_FLUTE4_4d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), a0
@@ -1945,7 +1945,7 @@ loc_485014A2:
     asl2    d2
     mov     Str_s_DRAWBAR_FLUTE2_2_3_4d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     (d2, a0), a0
     mov     a3, d0
     mov     a0, (0x10, sp)
@@ -1961,7 +1961,7 @@ loc_485014CC:
     asl2    d2
     mov     Str_s_DRAWBAR_FLUTE2_4d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     (d2, a0), a0
     mov     a3, d0
     mov     a0, (0x10, sp)
@@ -1977,7 +1977,7 @@ loc_485014F6:
     asl2    d2
     mov     Str_s_DRAWBAR_FLUTE1_3_5_4d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     (d2, a0), d0
     mov     d0, (0x10, sp)
     mov     a3, d0
@@ -1992,7 +1992,7 @@ loc_48501520:
     mov     d0, (8, sp)
     mov     Str_s_DRAWBAR_FLUTE1_1_3_4d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -2009,7 +2009,7 @@ loc_4850154B:
     mov     d0, (8, sp)
     mov     Str_s_DRAWBAR_FLUTE1_4d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), a0
@@ -2035,7 +2035,7 @@ loc_4850158C:
     asl2    d2
     mov     Str_s_DRAWBAR_PERC_4_s, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a1
+    mov     PartParamDumpLine_Table, a1
     mov     (d2, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
@@ -2056,7 +2056,7 @@ loc_485015C6:
     asl2    d2
     mov     Str_s_DRAWBAR_PERC_2_2_3_s, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a1
+    mov     PartParamDumpLine_Table, a1
     mov     (d2, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
@@ -2068,7 +2068,7 @@ loc_485015EA:
     mov     d0, (8, sp)
     mov     Str_s_RESET_ALL_CONT_3d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -2085,7 +2085,7 @@ loc_48501615:
     mov     d0, (8, sp)
     mov     Str_s_ALL_SOUND_OFF_3d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), a0
@@ -2111,7 +2111,7 @@ loc_48501656:
     asl2    d2
     mov     Str_s_DIGITAL_EFFECT_s, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a1
+    mov     PartParamDumpLine_Table, a1
     mov     (d2, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
@@ -2131,7 +2131,7 @@ loc_48501690:
     mov     d0, (8, sp)
     mov     Str_s_SUSTAIN_s_2, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a1
+    mov     PartParamDumpLine_Table, a1
     mov     d2, d0
     asl2    d0
     mov     (d0, a1), d0
@@ -2146,7 +2146,7 @@ loc_485016B5:
     asl2    d2
     mov     Str_s_SUSTAIN_LENGTH_3d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     (d2, a0), d0
     mov     d0, (0x10, sp)
     mov     a3, d0
@@ -2169,7 +2169,7 @@ loc_485016F5:
     mov     d0, (8, sp)
     mov     Str_s_SUSTAIN_s, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a1
+    mov     PartParamDumpLine_Table, a1
     mov     d2, d0
     asl2    d0
     mov     (d0, a1), d0
@@ -2188,7 +2188,7 @@ loc_4850171A:
     mov     d0, (8, sp)
     mov     Str_s_PAN_CENTER, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), a0
@@ -2204,7 +2204,7 @@ loc_48501749:
     mov     d0, (8, sp)
     mov     Str_s_PAN_L_2d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -2220,7 +2220,7 @@ loc_48501776:
     mov     d0, (8, sp)
     mov     Str_s_PAN_R_2d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), a0
@@ -2236,7 +2236,7 @@ loc_4850179F:
     mov     d0, (8, sp)
     mov     Str_s_BEND_SENS_3d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), a0
@@ -2253,7 +2253,7 @@ loc_485017CA:
     mov     d0, (8, sp)
     mov     Str_s_TUNING_4d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -2271,7 +2271,7 @@ loc_485017F7:
     mov     d0, (8, sp)
     mov     Str_s_KEY_SHIFT_4d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -2289,7 +2289,7 @@ loc_48501824:
     mov     d0, (8, sp)
     mov     Str_s_MODULATION_SENS_3d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -2306,7 +2306,7 @@ loc_4850184F:
     mov     d0, (8, sp)
     mov     Str_s_AFTER_TOUCH_3d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -2324,7 +2324,7 @@ loc_4850187A:
     asl2    d2
     mov     Str_s_PITCH_BEND_6d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     (d2, a0), d0
     mov     a3, d2
     mov     d0, (0x10, sp)
@@ -2349,7 +2349,7 @@ loc_485018BE:
     mov     d0, (8, sp)
     mov     Str_s_MODULATION_3d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -2970,7 +2970,7 @@ loc_48501F85:
     asl2    d2
     mov     Str_s_SOSTENUTO_3d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     (d2, a0), d0
     mov     d0, (0x10, sp)
     mov     a3, d0
@@ -2985,7 +2985,7 @@ loc_48501FAF:
     mov     d0, (8, sp)
     mov     Str_s_SOFT_PEDAL_3d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), a0
@@ -3002,7 +3002,7 @@ loc_48501FDA:
     mov     d0, (8, sp)
     mov     Str_s_FILTER_RESONANCE_3d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), a0
@@ -3020,7 +3020,7 @@ loc_48502007:
     mov     d0, (8, sp)
     mov     Str_s_RELEASE_TIME_3d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -3038,7 +3038,7 @@ loc_48502034:
     mov     d0, (8, sp)
     mov     Str_s_ATTACK_TIME_3d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -3057,7 +3057,7 @@ loc_48502061:
     asl2    d2
     mov     Str_s_BRIGHTNESS_3d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     (d2, a0), d0
     mov     d0, (0x10, sp)
     mov     a3, d0
@@ -3073,7 +3073,7 @@ loc_4850208D:
     mov     d0, (8, sp)
     mov     Str_s_DECAY_TIME_3d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -3090,7 +3090,7 @@ loc_485020B8:
     mov     d0, (8, sp)
     mov     Str_s_VIBRATO_RATE_3d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -3107,7 +3107,7 @@ loc_485020E3:
     mov     d0, (8, sp)
     mov     Str_s_VIBRATO_DEPTH_3d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -3125,7 +3125,7 @@ loc_4850210E:
     asl2    d2
     mov     Str_s_VIBRATO_DELAY_3d, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     (d2, a0), a0
     mov     a3, d0
     mov     a0, (0x10, sp)
@@ -3265,7 +3265,7 @@ loc_48502269:
     mov     d0, (8, sp)
     mov     Str_s_TREMULANT_TIBIA_ON, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -3279,7 +3279,7 @@ loc_4850228C:
     asl2    d2
     mov     Str_s_TREMULANT_VOX_ON, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     (d2, a0), d0
     mov     d0, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
@@ -3291,7 +3291,7 @@ loc_485022AE:
     asl2    d2
     mov     Str_s_TREMULANT_TIBIA_ON_VOX_ON, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     (d2, a0), a0
     mov     a0, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
@@ -3302,7 +3302,7 @@ loc_485022D0:
     mov     d0, (8, sp)
     mov     Str_s_TREMULANT_MAIN_ON, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), a0
@@ -3315,7 +3315,7 @@ loc_485022F3:
     mov     d0, (8, sp)
     mov     Str_s_TREMULANT_TIBIA_ON_MAIN_ON, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -3328,7 +3328,7 @@ loc_48502316:
     mov     d0, (8, sp)
     mov     Str_s_TREMULANT_VOX_ON_MAIN_ON, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), a0
@@ -3341,7 +3341,7 @@ loc_48502339:
     mov     d0, (8, sp)
     mov     Str_s_TREMULANT_TIBIA_ON_VOX_ON_MAIN_ON, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -3354,7 +3354,7 @@ loc_4850235C:
     mov     d0, (8, sp)
     mov     Str_s_TREMULANT_OFF, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
@@ -3375,7 +3375,7 @@ loc_48502395:
     mov     d0, (8, sp)
     mov     Str_s_TAB_FLUTE_16_s, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a1
+    mov     PartParamDumpLine_Table, a1
     mov     d2, d0
     asl2    d0
     mov     (d0, a1), d0
@@ -3398,7 +3398,7 @@ loc_485023D0:
     asl2    d2
     mov     Str_s_TAB_FLUTE_8_s, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a1
+    mov     PartParamDumpLine_Table, a1
     mov     (d2, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
@@ -3418,7 +3418,7 @@ loc_4850240A:
     mov     d0, (8, sp)
     mov     Str_s_TAB_FLUTE_4_s, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a1
+    mov     PartParamDumpLine_Table, a1
     mov     d2, d0
     asl2    d0
     mov     (d0, a1), d0
@@ -3440,7 +3440,7 @@ loc_48502445:
     mov     d0, (8, sp)
     mov     Str_s_TAB_FLUTE_2_2_3_s, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a1
+    mov     PartParamDumpLine_Table, a1
     mov     d2, d0
     asl2    d0
     mov     (d0, a1), d0
@@ -3462,7 +3462,7 @@ loc_48502480:
     mov     d0, (8, sp)
     mov     Str_s_TAB_FLUTE_2_s, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a1
+    mov     PartParamDumpLine_Table, a1
     mov     d2, d0
     asl2    d0
     mov     (d0, a1), d0
@@ -3485,7 +3485,7 @@ loc_485024BB:
     asl2    d2
     mov     Str_s_TAB_FLUTE_1_3_5_s, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a1
+    mov     PartParamDumpLine_Table, a1
     mov     (d2, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
@@ -3505,7 +3505,7 @@ loc_485024F5:
     mov     d0, (8, sp)
     mov     Str_s_TAB_FLUTE_1_s, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a1
+    mov     PartParamDumpLine_Table, a1
     mov     d2, d0
     asl2    d0
     mov     (d0, a1), d0
@@ -3527,7 +3527,7 @@ loc_48502530:
     mov     d0, (8, sp)
     mov     Str_s_TAB_TROMBONE_16_s, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a1
+    mov     PartParamDumpLine_Table, a1
     mov     d2, d0
     asl2    d0
     mov     (d0, a1), d0
@@ -3549,7 +3549,7 @@ loc_4850256B:
     mov     d0, (8, sp)
     mov     Str_s_TAB_TRUMPET_8_s, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a1
+    mov     PartParamDumpLine_Table, a1
     mov     d2, d0
     asl2    d0
     mov     (d0, a1), d0
@@ -3571,7 +3571,7 @@ loc_485025A6:
     mov     d0, (8, sp)
     mov     Str_s_TAB_KINURA_8_s, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a1
+    mov     PartParamDumpLine_Table, a1
     mov     d2, d0
     asl2    d0
     mov     (d0, a1), d0
@@ -3593,7 +3593,7 @@ loc_485025E1:
     mov     d0, (8, sp)
     mov     Str_s_TAB_CLARINET_8_s, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a1
+    mov     PartParamDumpLine_Table, a1
     mov     d2, d0
     asl2    d0
     mov     (d0, a1), d0
@@ -3615,7 +3615,7 @@ loc_4850261C:
     mov     d0, (8, sp)
     mov     Str_s_TAB_VOX_HUMANA_8_s, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a1
+    mov     PartParamDumpLine_Table, a1
     mov     d2, d0
     asl2    d0
     mov     (d0, a1), d0
@@ -3637,7 +3637,7 @@ loc_48502657:
     mov     d0, (8, sp)
     mov     Str_s_TAB_VIOLIN_8_s, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a1
+    mov     PartParamDumpLine_Table, a1
     mov     d2, d0
     asl2    d0
     mov     (d0, a1), d0
@@ -3659,7 +3659,7 @@ loc_48502692:
     mov     d0, (8, sp)
     mov     Str_s_TAB_PERC_4_s, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a1
+    mov     PartParamDumpLine_Table, a1
     mov     d2, d0
     asl2    d0
     mov     (d0, a1), d0
@@ -3682,7 +3682,7 @@ loc_485026CD:
     asl2    d2
     mov     Str_s_TAB_PERC_2_2_3_s, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a1
+    mov     PartParamDumpLine_Table, a1
     mov     (d2, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
@@ -3703,7 +3703,7 @@ loc_48502706:
     asl2    d2
     mov     Str_s_TAB_VIBRATO_s, d0
     mov     d0, (0xc, sp)
-    mov     func_48500C71_Table, a1
+    mov     PartParamDumpLine_Table, a1
     mov     (d2, a1), d0
     mov     d0, (0x10, sp)
     mov     a0, (0x14, sp)
@@ -3840,7 +3840,7 @@ PartParamTransposeText:
     mov     0x34, d1
     sub     d1, d0
     asl2    d0
-    mov     func_48502852_Table, a0
+    mov     PartParamTransposeText_Table, a0
     mov     (d0, a0), a0
     retf    0, 0
 # AcSeqInfo6_SRProc  (CPU 0x48502862)
@@ -4188,7 +4188,7 @@ loc_48502B94:
     add     a0, a0
     add     a0, a3
     movhu   (-2, a3), d0
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     asl2    d0
     mov     (d0, a0), d0
     mov     d0, (0x14, sp)
@@ -4206,7 +4206,7 @@ loc_48502BF2:
     movhu   (a0), d0
     call    SeqInfoNum3Text_entry, [a2], 0x18
     mov     a0, (0x10, sp)
-    mov     (func_48500C71_Table), a0
+    mov     (PartParamDumpLine_Table), a0
     add     0x20, a2
     mov     a0, (0x14, sp)
     mov     (0x1c, sp), a0
@@ -6710,13 +6710,13 @@ loc_485044E2:
     asl2    d0
     mov     func_485043C7_Table, a0
     mov     (d0, a0), d0
-    mov     func_48502E9F_Var, a0
+    mov     StrIsBlank_Var, a0
     call    func_48503931_entry, [d2,d3,a2,a3], 0x2c
     mov     a2, d0
     asl2    d0
     mov     func_485043C7_Table_2, a0
     mov     (d0, a0), d0
-    mov     func_48502E9F_Var_2, a0
+    mov     StrIsBlank_Var_2, a0
     call    func_48503931_entry, [d2,d3,a2,a3], 0x2c
 loc_4850450E:
     mov     (0x18, sp), d1
@@ -6833,11 +6833,11 @@ loc_485045D9:
     asl2    d0
     mov     func_485045A1_Table, a0
     mov     (d0, a0), d0
-    mov     func_48502E9F_Var_3, a0
+    mov     StrIsBlank_Var_3, a0
     call    func_48503931_entry, [d2,d3,a2,a3], 0x2c
     asl2    d2
     mov     (d2, a3), d0
-    mov     func_48502E9F_Var_4, a0
+    mov     StrIsBlank_Var_4, a0
     call    func_48503931_entry, [d2,d3,a2,a3], 0x2c
 loc_485045FC:
     inc     d3
@@ -7159,7 +7159,7 @@ loc_48504987:
     mov     Str_CTL_ERR_2, a0
     call    func_48503931_entry, [d2,d3,a2,a3], 0x2c
     mov     (func_48504AD0_Table), d0
-    mov     func_48502E9F_Var_5, a0
+    mov     StrIsBlank_Var_5, a0
     call    func_48503931_entry, [d2,d3,a2,a3], 0x2c
     ret     [d2,d3,a2,a3], 0x6c
 loc_485049A9:
@@ -7233,7 +7233,7 @@ loc_48504A85:
     mov     Str_CTL_ERR, a0
     call    func_48503931_entry, [d2,d3,a2,a3], 0x2c
     mov     (func_48504AD0_Table), d0
-    mov     func_48502E9F_Var_6, a0
+    mov     StrIsBlank_Var_6, a0
     call    func_48503931_entry, [d2,d3,a2,a3], 0x2c
     bra     loc_48504ACD
 loc_48504AA6:
@@ -7241,7 +7241,7 @@ loc_48504AA6:
     mov     Str_EVENT_ERR, a0
     call    func_48503931_entry, [d2,d3,a2,a3], 0x2c
     mov     (func_48504AD0_Table), d0
-    mov     func_48502E9F_Var_7, a0
+    mov     StrIsBlank_Var_7, a0
     call    func_48503931_entry, [d2,d3,a2,a3], 0x2c
     bra     loc_48504ACD
 loc_48504AC7:
@@ -7367,7 +7367,7 @@ loc_48504C01:
     bra     loc_48504C75
 loc_48504C0F:
     mov     (func_48504AD0_Table), d0
-    mov     func_48502E9F_Var_8, a0
+    mov     StrIsBlank_Var_8, a0
     call    func_48503931_entry, [d2,d3,a2,a3], 0x2c
     bra     loc_48504C75
 loc_48504C22:
@@ -7381,7 +7381,7 @@ loc_48504C22:
     bra     loc_48504C75
 loc_48504C3F:
     mov     (func_48504AD0_Table), d0
-    mov     func_48502E9F_Var_9, a0
+    mov     StrIsBlank_Var_9, a0
     call    func_48503931_entry, [d2,d3,a2,a3], 0x2c
     bra     loc_48504C75
 loc_48504C52:
@@ -8206,10 +8206,10 @@ loc_48505446:
     jmp     loc_4850553D
 loc_48505466:
     mov     0x484, d0
-    mov     func_48502E9F_Var_10, a0
+    mov     StrIsBlank_Var_10, a0
     call    func_48503931_entry, [d2,d3,a2,a3], 0x2c
     mov     0x489, d0
-    mov     func_48502E9F_Var_11, a0
+    mov     StrIsBlank_Var_11, a0
     call    func_48503931_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_4850553D
 loc_48505485:
@@ -8276,10 +8276,10 @@ loc_485054EB:
     bra     loc_4850553D
 loc_48505521:
     mov     0x484, d0
-    mov     func_48502E9F_Var_12, a0
+    mov     StrIsBlank_Var_12, a0
     call    func_48503931_entry, [d2,d3,a2,a3], 0x2c
     mov     0x489, d0
-    mov     func_48502E9F_Var_13, a0
+    mov     StrIsBlank_Var_13, a0
     call    func_48503931_entry, [d2,d3,a2,a3], 0x2c
 loc_4850553D:
     mov     1, d0
@@ -14816,7 +14816,7 @@ loc_48509AC0:
 loc_48509B5C:
     movbu   (0x501523cd), d0
     movhu   (StyleFlatOrdinalBuilder_Var), d2
-    movhu   (func_4847F29D_Var), d1
+    movhu   (StyleGenreKindGet_Var), d1
     movbu   d0, (0x18, sp)
     movbu   (0x501523ce), d0
     add     d1, d2
@@ -14860,7 +14860,7 @@ loc_48509BCA:
     movbu   (0x501523cd), d3
     bne     loc_48509BF7
     movhu   (StyleFlatOrdinalBuilder_Var), d2
-    movhu   (func_4847F29D_Var), d0
+    movhu   (StyleGenreKindGet_Var), d0
     clr     d3
     add     d0, d2
     add     -1, d2
@@ -14922,7 +14922,7 @@ func_48509C6C_entry:
     cmp     a0, d0
     bgt     loc_48509C93
     movhu   (StyleFlatOrdinalBuilder_Var), d2
-    movhu   (func_4847F29D_Var), d0
+    movhu   (StyleGenreKindGet_Var), d0
     add     d0, d2
     cmp     d2, a0
     bge     loc_48509C93
@@ -15190,7 +15190,7 @@ loc_48509EC3:
     cmp     0, d3
     ble     loc_48509F0F
     movhu   (StyleFlatOrdinalBuilder_Var), d1
-    movhu   (func_4847F29D_Var), d0
+    movhu   (StyleGenreKindGet_Var), d0
     add     d0, d1
     add     -1, d1
     cmp     d1, a0
@@ -15219,7 +15219,7 @@ loc_48509F0F:
     cmp     d0, a0
     bne     loc_48509F2C
     movhu   (StyleFlatOrdinalBuilder_Var), d1
-    movhu   (func_4847F29D_Var), d0
+    movhu   (StyleGenreKindGet_Var), d0
     add     d0, d1
     add     -1, d1
     movhu   d1, (a2)
@@ -16622,7 +16622,7 @@ SeqToCmpFieldApply:
 SeqToCmpFieldApply_entry:
     mov     d1, d3
     mov     d0, d2
-    mov     func_4850AD31_Table_3, a2
+    mov     SeqToCmpFieldApply_Table_3, a2
     mov     sp, a3
     add     0x14, a3
 loc_4850AD41:
@@ -16676,7 +16676,7 @@ loc_4850ADA0:
     movhu   d2, (0x14, sp)
     mov     d2, d1
     exth    d1
-    mov     (func_4850AD31_Table_3), d0
+    mov     (SeqToCmpFieldApply_Table_3), d0
     mov     d1, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -16685,7 +16685,7 @@ loc_4850ADA0:
     cmp     d0, d3
     ble     loc_4850ADDB
     movhu   d3, (0x16, sp)
-    mov     (func_4850AD31_Table_3+4), d0
+    mov     (SeqToCmpFieldApply_Table_3+4), d0
     exth    d2
     mov     d2, (0x10, sp)
     mov     MT_SetParam, d1
@@ -16706,7 +16706,7 @@ loc_4850ADED:
     add     0xf, d1
     movhu   d1, (0x16, sp)
     exth    d1
-    mov     (func_4850AD31_Table_3+4), d0
+    mov     (SeqToCmpFieldApply_Table_3+4), d0
     mov     d1, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -16724,7 +16724,7 @@ loc_4850AE1F:
     movhu   d2, (0x16, sp)
     mov     d2, d1
     exth    d1
-    mov     (func_4850AD31_Table_3+4), d0
+    mov     (SeqToCmpFieldApply_Table_3+4), d0
     mov     d1, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -16733,7 +16733,7 @@ loc_4850AE1F:
     cmp     d0, d3
     bge     loc_4850AE5A
     movhu   d3, (0x14, sp)
-    mov     (func_4850AD31_Table_3), d0
+    mov     (SeqToCmpFieldApply_Table_3), d0
     exth    d2
     mov     d2, (0x10, sp)
     mov     MT_SetParam, d1
@@ -16756,7 +16756,7 @@ loc_4850AE6C:
     movhu   d0, (0x14, sp)
     exth    d0
     mov     d0, (0x10, sp)
-    mov     (func_4850AD31_Table_3), d0
+    mov     (SeqToCmpFieldApply_Table_3), d0
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_4850B016
 loc_4850AE8E:
@@ -16769,7 +16769,7 @@ loc_4850AE95:
     jmp     loc_4850B016
 loc_4850AE9C:
     movhu   d3, (0x18, sp)
-    mov     (func_4850AD31_Table_3+8), d0
+    mov     (SeqToCmpFieldApply_Table_3+8), d0
     mov     d3, d1
     exth    d1
     mov     d1, (0x10, sp)
@@ -16786,7 +16786,7 @@ loc_4850AEC0:
     jmp     loc_4850B016
 loc_4850AEC7:
     movhu   d3, (0x1a, sp)
-    mov     (func_4850AD31_Table_3+12), d0
+    mov     (SeqToCmpFieldApply_Table_3+12), d0
     mov     d3, d1
     exth    d1
     mov     d1, (0x10, sp)
@@ -16803,7 +16803,7 @@ loc_4850AEEB:
     jmp     loc_4850B016
 loc_4850AEF2:
     movhu   d3, (0x1c, sp)
-    mov     (func_4850AD31_Table_3+16), d0
+    mov     (SeqToCmpFieldApply_Table_3+16), d0
     mov     d3, d1
     exth    d1
     mov     d1, (0x10, sp)
@@ -16812,7 +16812,7 @@ loc_4850AEF2:
     jmp     loc_4850B016
 loc_4850AF0F:
     movhu   (0x1c, sp), d0
-    mov     func_4850AD31_Table, a0
+    mov     SeqToCmpFieldApply_Table, a0
     exth    d0
     movbu   (d0, a0), d0
     cmp     0xc, d0
@@ -16851,7 +16851,7 @@ loc_4850AF4E:
     call    ApFuncCall_entry, [d2,d3,a2], 0x24
     mov     d0, a0
     add     8, d0
-    mov     func_4850AD31_Table_2, a1
+    mov     SeqToCmpFieldApply_Table_2, a1
     setlb
     movbu   (a0), d2
     movbu   (a1), d1
@@ -16873,7 +16873,7 @@ loc_4850AF4E:
     movhu   (0x1c, sp), d0
     movhu   (0x1a, sp), d2
     exth    d0
-    mov     func_4850AD31_Table, a0
+    mov     SeqToCmpFieldApply_Table, a0
     movbu   (d0, a0), d1
     exth    d2
     mov     a3, (0x10, sp)
@@ -21649,7 +21649,7 @@ CmpMCopyFieldApply:
 CmpMCopyFieldApply_entry:
     mov     d1, d3
     mov     d0, d2
-    mov     func_4850DF34_Table, a2
+    mov     CmpMCopyFieldApply_Table, a2
     mov     sp, a3
     add     0x18, a3
 loc_4850DF44:
@@ -21707,7 +21707,7 @@ loc_4850DFA7:
     movbu   (0x14, sp), d0
     movbu   d0, (0x18, sp)
     movbu   (0x14, sp), d1
-    mov     (func_4850DF34_Table), d0
+    mov     (CmpMCopyFieldApply_Table), d0
     extb    d1
     mov     d1, (0x10, sp)
     mov     MT_SetParam, d1
@@ -21732,7 +21732,7 @@ loc_4850DFEE:
     movbu   (0x14, sp), d0
     movbu   d0, (0x1b, sp)
     movbu   (0x14, sp), d1
-    mov     (func_4850DF34_Table+12), d0
+    mov     (CmpMCopyFieldApply_Table+12), d0
     extb    d1
     mov     d1, (0x10, sp)
     mov     MT_SetParam, d1
@@ -21750,7 +21750,7 @@ loc_4850E010:
     extb    d0
     mov     d0, (0x10, sp)
     mov     MT_SetParam, d1
-    mov     (func_4850DF34_Table+4), d0
+    mov     (CmpMCopyFieldApply_Table+4), d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4850E03F:
     call    CmpMeasureCountGet_entry, 0, 0xc
@@ -21764,7 +21764,7 @@ loc_4850E03F:
     extb    d0
     mov     d0, (0x10, sp)
     mov     MT_SetParam, d1
-    mov     (func_4850DF34_Table+8), d0
+    mov     (CmpMCopyFieldApply_Table+8), d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4850E06E:
     movbu   (0x19, sp), d1
@@ -21776,7 +21776,7 @@ loc_4850E06E:
     movbu   (0x1a, sp), d1
     movbu   d1, (0x19, sp)
     extb    d1
-    mov     (func_4850DF34_Table+4), d0
+    mov     (CmpMCopyFieldApply_Table+4), d0
     mov     d1, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -21806,7 +21806,7 @@ loc_4850E0B3:
     movbu   d0, (0x1c, sp)
     extb    d0
     mov     d0, (0x10, sp)
-    mov     (func_4850DF34_Table+16), d0
+    mov     (CmpMCopyFieldApply_Table+16), d0
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_4850E3DB
@@ -21825,7 +21825,7 @@ loc_4850E0F8:
     movbu   d2, (0x19, sp)
     mov     d2, d1
     extb    d1
-    mov     (func_4850DF34_Table+4), d0
+    mov     (CmpMCopyFieldApply_Table+4), d0
     mov     d1, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -21834,7 +21834,7 @@ loc_4850E0F8:
     cmp     d0, d3
     ble     loc_4850E133
     movbu   d3, (0x1a, sp)
-    mov     (func_4850DF34_Table+8), d0
+    mov     (CmpMCopyFieldApply_Table+8), d0
     extb    d2
     mov     d2, (0x10, sp)
     mov     MT_SetParam, d1
@@ -21865,7 +21865,7 @@ loc_4850E151:
     movbu   d0, (0x1c, sp)
     extb    d0
     mov     d0, (0x10, sp)
-    mov     (func_4850DF34_Table+16), d0
+    mov     (CmpMCopyFieldApply_Table+16), d0
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_4850E3DB
@@ -21886,7 +21886,7 @@ loc_4850E196:
     ble     loc_4850E1B7
     mov     d3, d1
     movbu   d1, (0x19, sp)
-    mov     (func_4850DF34_Table+4), d0
+    mov     (CmpMCopyFieldApply_Table+4), d0
     extb    d1
     mov     d1, (0x10, sp)
     mov     MT_SetParam, d1
@@ -21895,7 +21895,7 @@ loc_4850E1B7:
     mov     d3, d1
     movbu   d1, (0x1a, sp)
     extb    d1
-    mov     (func_4850DF34_Table+8), d0
+    mov     (CmpMCopyFieldApply_Table+8), d0
     mov     d1, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -21921,7 +21921,7 @@ loc_4850E1ED:
     movbu   d0, (0x1c, sp)
     extb    d0
     mov     d0, (0x10, sp)
-    mov     (func_4850DF34_Table+16), d0
+    mov     (CmpMCopyFieldApply_Table+16), d0
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_4850E3DB
@@ -21938,7 +21938,7 @@ loc_4850E227:
     movbu   (0x14, sp), d0
     movbu   d0, (0x1b, sp)
     movbu   (0x14, sp), d1
-    mov     (func_4850DF34_Table+12), d0
+    mov     (CmpMCopyFieldApply_Table+12), d0
     extb    d1
     mov     d1, (0x10, sp)
     mov     MT_SetParam, d1
@@ -21963,7 +21963,7 @@ loc_4850E26E:
     movbu   (0x14, sp), d0
     movbu   d0, (0x18, sp)
     movbu   (0x14, sp), d1
-    mov     (func_4850DF34_Table), d0
+    mov     (CmpMCopyFieldApply_Table), d0
     extb    d1
     mov     d1, (0x10, sp)
     mov     MT_SetParam, d1
@@ -21987,7 +21987,7 @@ loc_4850E297:
     jmp     loc_4850E3DB
 loc_4850E2B1:
     movbu   d3, (0x1c, sp)
-    mov     (func_4850DF34_Table+16), d0
+    mov     (CmpMCopyFieldApply_Table+16), d0
     mov     d3, d1
     extb    d1
     mov     d1, (0x10, sp)
@@ -22377,7 +22377,7 @@ CmpMDelFieldApply:
 CmpMDelFieldApply_entry:
     mov     d1, d3
     mov     d0, d2
-    mov     func_4850E617_Table, a2
+    mov     CmpMDelFieldApply_Table, a2
     mov     sp, a3
     add     0x14, a3
 loc_4850E627:
@@ -22421,7 +22421,7 @@ loc_4850E667:
     movbu   d0, (0x14, sp)
     extb    d0
     mov     d0, (0x10, sp)
-    mov     (func_4850E617_Table), d0
+    mov     (CmpMDelFieldApply_Table), d0
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4850E696:
@@ -22436,7 +22436,7 @@ loc_4850E696:
     extb    d0
     mov     d0, (0x10, sp)
     mov     MT_SetParam, d1
-    mov     (func_4850E617_Table+4), d0
+    mov     (CmpMDelFieldApply_Table+4), d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4850E6C5:
     movbu   (0x14, sp), d1
@@ -22448,7 +22448,7 @@ loc_4850E6C5:
     movbu   (0x15, sp), d1
     movbu   d1, (0x14, sp)
     extb    d1
-    mov     (func_4850E617_Table), d0
+    mov     (CmpMDelFieldApply_Table), d0
     mov     d1, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -22482,7 +22482,7 @@ loc_4850E717:
     extb    d0
     mov     d0, (0x10, sp)
     mov     MT_SetParam, d1
-    mov     (func_4850E617_Table+4), d0
+    mov     (CmpMDelFieldApply_Table+4), d0
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_4850E972
 loc_4850E742:
@@ -22500,7 +22500,7 @@ loc_4850E757:
     movbu   d2, (0x14, sp)
     mov     d2, d1
     extb    d1
-    mov     (func_4850E617_Table), d0
+    mov     (CmpMDelFieldApply_Table), d0
     mov     d1, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -22509,7 +22509,7 @@ loc_4850E757:
     cmp     d0, d3
     ble     loc_4850E792
     movbu   d3, (0x15, sp)
-    mov     (func_4850E617_Table+4), d0
+    mov     (CmpMDelFieldApply_Table+4), d0
     extb    d2
     mov     d2, (0x10, sp)
     mov     MT_SetParam, d1
@@ -22537,7 +22537,7 @@ loc_4850E7AE:
     movbu   d0, (0x15, sp)
     extb    d0
     mov     d0, (0x10, sp)
-    mov     (func_4850E617_Table+4), d0
+    mov     (CmpMDelFieldApply_Table+4), d0
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_4850E972
@@ -22558,7 +22558,7 @@ loc_4850E7EE:
     ble     loc_4850E80F
     mov     d3, d1
     movbu   d1, (0x14, sp)
-    mov     (func_4850E617_Table), d0
+    mov     (CmpMDelFieldApply_Table), d0
     extb    d1
     mov     d1, (0x10, sp)
     mov     MT_SetParam, d1
@@ -22567,7 +22567,7 @@ loc_4850E80F:
     mov     d3, d1
     movbu   d3, (0x15, sp)
     extb    d1
-    mov     (func_4850E617_Table+4), d0
+    mov     (CmpMDelFieldApply_Table+4), d0
     mov     d1, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -22593,7 +22593,7 @@ loc_4850E846:
     add     2, d1
     movbu   d1, (0x14, sp)
     extb    d1
-    mov     (func_4850E617_Table), d0
+    mov     (CmpMDelFieldApply_Table), d0
     mov     d1, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -22674,13 +22674,13 @@ loc_4850E8EC:
     add     -1, d1
     movbu   d1, (0x14, sp)
     extb    d1
-    mov     (func_4850E617_Table), d0
+    mov     (CmpMDelFieldApply_Table), d0
     mov     d1, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4850E959:
     movbu   (0x14, sp), d1
-    mov     (func_4850E617_Table+4), d0
+    mov     (CmpMDelFieldApply_Table+4), d0
     extb    d1
     mov     d1, (0x10, sp)
     mov     MT_SetParam, d1
@@ -23045,7 +23045,7 @@ CmpMErsFieldApply:
 CmpMErsFieldApply_entry:
     mov     d1, d3
     mov     d0, d2
-    mov     func_4850EC91_Table, a2
+    mov     CmpMErsFieldApply_Table, a2
     mov     sp, a3
     add     0x14, a3
 loc_4850ECA1:
@@ -23086,7 +23086,7 @@ loc_4850ECE5:
     jmp     loc_4850EE8D
 loc_4850ECEC:
     movbu   d3, (0x14, sp)
-    mov     (func_4850EC91_Table), d0
+    mov     (CmpMErsFieldApply_Table), d0
     mov     d3, d1
     extb    d1
     mov     d1, (0x10, sp)
@@ -23104,7 +23104,7 @@ loc_4850ED09:
     movbu   d0, (0x15, sp)
     extb    d0
     mov     d0, (0x10, sp)
-    mov     (func_4850EC91_Table+4), d0
+    mov     (CmpMErsFieldApply_Table+4), d0
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4850ED38:
@@ -23119,7 +23119,7 @@ loc_4850ED38:
     extb    d0
     mov     d0, (0x10, sp)
     mov     MT_SetParam, d1
-    mov     (func_4850EC91_Table+8), d0
+    mov     (CmpMErsFieldApply_Table+8), d0
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4850ED67:
     movbu   (0x15, sp), d1
@@ -23133,7 +23133,7 @@ loc_4850ED75:
     movbu   (0x16, sp), d1
     movbu   d1, (0x15, sp)
     extb    d1
-    mov     (func_4850EC91_Table+4), d0
+    mov     (CmpMErsFieldApply_Table+4), d0
     mov     d1, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -23153,7 +23153,7 @@ loc_4850EDA9:
     movbu   d2, (0x15, sp)
     mov     d2, d1
     extb    d1
-    mov     (func_4850EC91_Table+4), d0
+    mov     (CmpMErsFieldApply_Table+4), d0
     mov     d1, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -23164,7 +23164,7 @@ loc_4850EDA9:
     jmp     loc_4850EE8D
 loc_4850EDCE:
     movbu   d3, (0x16, sp)
-    mov     (func_4850EC91_Table+8), d0
+    mov     (CmpMErsFieldApply_Table+8), d0
     extb    d2
     mov     d2, (0x10, sp)
     mov     MT_SetParam, d1
@@ -23187,14 +23187,14 @@ loc_4850EDFF:
     ble     loc_4850EE20
     mov     d3, d1
     movbu   d1, (0x15, sp)
-    mov     (func_4850EC91_Table+4), d0
+    mov     (CmpMErsFieldApply_Table+4), d0
     extb    d1
     mov     d1, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4850EE20:
     movbu   d3, (0x16, sp)
-    mov     (func_4850EC91_Table+8), d0
+    mov     (CmpMErsFieldApply_Table+8), d0
     mov     d3, d1
     extb    d1
     mov     d1, (0x10, sp)
@@ -23474,7 +23474,7 @@ CmpMInsFieldApply:
 CmpMInsFieldApply_entry:
     mov     d1, d3
     mov     d0, d2
-    mov     func_4850F0A5_Table, a2
+    mov     CmpMInsFieldApply_Table, a2
     mov     sp, a3
     add     0x14, a3
 loc_4850F0B5:
@@ -23526,7 +23526,7 @@ loc_4850F0F5:
     movbu   d0, (0x14, sp)
 loc_4850F11B:
     movbu   (0x14, sp), d1
-    mov     (func_4850F0A5_Table), d0
+    mov     (CmpMInsFieldApply_Table), d0
     extb    d1
     mov     d1, (0x10, sp)
     mov     MT_SetParam, d1
@@ -23554,7 +23554,7 @@ loc_4850F148:
     movbu   d0, (0x15, sp)
 loc_4850F162:
     movbu   (0x15, sp), d1
-    mov     (func_4850F0A5_Table+4), d0
+    mov     (CmpMInsFieldApply_Table+4), d0
     extb    d1
     mov     d1, (0x10, sp)
     mov     MT_SetParam, d1
@@ -23577,7 +23577,7 @@ loc_4850F194:
     jmp     loc_4850F2B0
 loc_4850F19B:
     movbu   d3, (0x14, sp)
-    mov     (func_4850F0A5_Table), d0
+    mov     (CmpMInsFieldApply_Table), d0
     mov     d3, d1
     extb    d1
     mov     d1, (0x10, sp)
@@ -23598,7 +23598,7 @@ loc_4850F1BF:
     jmp     loc_4850F2B0
 loc_4850F1D1:
     movbu   d3, (0x15, sp)
-    mov     (func_4850F0A5_Table+4), d0
+    mov     (CmpMInsFieldApply_Table+4), d0
     mov     d3, d1
     extb    d1
     mov     d1, (0x10, sp)
@@ -23661,7 +23661,7 @@ loc_4850F25C:
     mov     FN_MainAutoFree, d0
     mov     MT_AutoFree, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
-    mov     (func_4850F0A5_Table+4), d0
+    mov     (CmpMInsFieldApply_Table+4), d0
     mov     1, d1
     mov     d1, (0x10, sp)
     mov     MT_SetParam, d1
@@ -33216,7 +33216,7 @@ SeqToPadFieldApply:
 SeqToPadFieldApply_entry:
     mov     d1, d3
     mov     d0, d2
-    mov     func_485155EA_Table, a2
+    mov     SeqToPadFieldApply_Table, a2
     mov     sp, a3
     add     0x14, a3
 loc_485155FA:
@@ -33270,7 +33270,7 @@ loc_48515659:
     movhu   d2, (0x14, sp)
     mov     d2, d1
     exth    d1
-    mov     (func_485155EA_Table), d0
+    mov     (SeqToPadFieldApply_Table), d0
     mov     d1, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -33279,7 +33279,7 @@ loc_48515659:
     cmp     d0, d3
     ble     loc_48515694
     movhu   d3, (0x16, sp)
-    mov     (func_485155EA_Table+4), d0
+    mov     (SeqToPadFieldApply_Table+4), d0
     exth    d2
     mov     d2, (0x10, sp)
     mov     MT_SetParam, d1
@@ -33302,7 +33302,7 @@ loc_485156A6:
     movhu   d0, (0x16, sp)
     exth    d0
     mov     d0, (0x10, sp)
-    mov     (func_485155EA_Table+4), d0
+    mov     (SeqToPadFieldApply_Table+4), d0
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_485158E8
 loc_485156C8:
@@ -33318,7 +33318,7 @@ loc_485156D8:
     movhu   d2, (0x16, sp)
     mov     d2, d1
     exth    d1
-    mov     (func_485155EA_Table+4), d0
+    mov     (SeqToPadFieldApply_Table+4), d0
     mov     d1, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -33327,7 +33327,7 @@ loc_485156D8:
     cmp     d0, d3
     bge     loc_48515713
     movhu   d3, (0x14, sp)
-    mov     (func_485155EA_Table), d0
+    mov     (SeqToPadFieldApply_Table), d0
     exth    d2
     mov     d2, (0x10, sp)
     mov     MT_SetParam, d1
@@ -33348,7 +33348,7 @@ loc_48515725:
     add     -0xf, d1
     movhu   d1, (0x14, sp)
     exth    d1
-    mov     (func_485155EA_Table), d0
+    mov     (SeqToPadFieldApply_Table), d0
     mov     d1, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -33363,7 +33363,7 @@ loc_4851574E:
     jmp     loc_485158E8
 loc_48515755:
     movhu   d3, (0x18, sp)
-    mov     (func_485155EA_Table+8), d0
+    mov     (SeqToPadFieldApply_Table+8), d0
     mov     d3, d1
     exth    d1
     mov     d1, (0x10, sp)
@@ -33380,7 +33380,7 @@ loc_48515779:
     jmp     loc_485158E8
 loc_48515780:
     movhu   d3, (0x1a, sp)
-    mov     (func_485155EA_Table+12), d0
+    mov     (SeqToPadFieldApply_Table+12), d0
     mov     d3, d1
     exth    d1
     mov     d1, (0x10, sp)
@@ -33397,7 +33397,7 @@ loc_485157A4:
     jmp     loc_485158E8
 loc_485157AB:
     movhu   d3, (0x1c, sp)
-    mov     (func_485155EA_Table+16), d0
+    mov     (SeqToPadFieldApply_Table+16), d0
     mov     d3, d1
     exth    d1
     mov     d1, (0x10, sp)
@@ -41577,7 +41577,7 @@ FmmDiskStateReset_entry:
     movhu   d0, (0x5006ece4)
     movhu   d0, (0x5006ece6)
     call    FmmListsReset_entry, [d2], 4
-    mov     func_4851AA87_Table, a0
+    mov     FmmDiskStateReset_Table, a0
     movbu   (a0), d0
     mov     0x5006f1d6, a1
     movbu   d0, (a1)
@@ -41787,7 +41787,7 @@ func_4851ACFB_entry:
 loc_4851AD2A:
     mov     0x5006e578, a2
     mov     a2, a0
-    mov     func_4852F762_Var, a1
+    mov     FmmStrCopy_Var, a1
     call    FmmStrCopy, 0, 0
 loc_4851AD3E:
     mov     a2, a0
@@ -45328,7 +45328,7 @@ loc_4851D34A:
     blt     loc_4851D334
     mov     3, d0
     call    SetSavePMBankNUM, 0, 0
-    mov     func_4851AA87_Table, a0
+    mov     FmmDiskStateReset_Table, a0
     movbu   (a0), d0
     mov     0x5006f1d6, a1
     movbu   d0, (a1)
@@ -48972,7 +48972,7 @@ loc_4851FB06:
     add     a0, d0
     mov     d0, a0
     inc     a0
-    mov     func_4852F762_Var_2, a1
+    mov     FmmStrCopy_Var_2, a1
     call    FmmStrCopy, 0, 0
     movbu   (0x5006e799), d1
     mov     0x15, d0

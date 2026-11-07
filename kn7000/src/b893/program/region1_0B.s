@@ -9472,7 +9472,7 @@ SdFileCopy_entry:
     mov     a1, (0xb8, sp)
     mov     a0, a3
     clr     d3
-    mov     func_4856502B_Table, a1
+    mov     SdFileCopy_Table, a1
     mov     sp, a0
     add     0x1c, a0
     mov     -0x40, d1
@@ -9483,7 +9483,7 @@ SdFileCopy_entry:
     inc     a0
     inc     d1
     lne
-    mov     func_4856502B_Table_2, a1
+    mov     SdFileCopy_Table_2, a1
     mov     sp, a0
     add     0x5c, a0
     mov     -0x40, d1
@@ -10183,7 +10183,7 @@ DspUnitNameGet:
 loc_48565812:
     exthu   d0
     asl2    d0
-    mov     func_48565805_Table, a0
+    mov     DspUnitNameGet_Table, a0
     mov     (d0, a0), a0
 loc_4856581C:
     retf    0, 0
@@ -22783,7 +22783,7 @@ loc_4856DC2F:
     jmp     loc_4856E117
 loc_4856DC54:
     add     8, a0
-    cmp     func_4856F546_Table, a0
+    cmp     SoundSwNoBankGet_Table, a0
     bcs     loc_4856DC5F
     mov     a1, a0
 loc_4856DC5F:
@@ -25371,7 +25371,7 @@ SoundSwNoBankGet_entry:
     cmp     0xb, d0
     bgt     loc_4856F5AE
     asl2    d0
-    mov     func_4856F546_Table, a0
+    mov     SoundSwNoBankGet_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_4856F561:
@@ -25850,7 +25850,7 @@ loc_4856F89A:
     jmp     loc_4856F990
 loc_4856F8A1:
     asl2    d0
-    mov     func_4856F88B_Table, a0
+    mov     SoundGroupNameGet_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_4856F8AC:
@@ -26054,7 +26054,7 @@ loc_4856FA2E:
     jmp     loc_4856FB24
 loc_4856FA35:
     asl2    d0
-    mov     func_4856FA1F_Table, a0
+    mov     SoundGroupSizeGet_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_4856FA40:
@@ -31877,7 +31877,7 @@ SdSndEditBufGet:
     retf    0, 0
 # SdSndEditDirtyGet  (CPU 0x485727f1)
 SdSndEditDirtyGet:
-    movbu   (func_485727F1_Var), d0
+    movbu   (SdSndEditDirtyGet_Var), d0
     retf    0, 0
 # SdSndEditDirtySet  (CPU 0x485727fa)
 SdSndEditDirtySet:
@@ -31888,7 +31888,7 @@ SdSndEditDirtySet:
     cmp     0, d1
     bne     loc_4857280A
 loc_48572804:
-    movbu   d0, (func_485727F1_Var)
+    movbu   d0, (SdSndEditDirtyGet_Var)
 loc_4857280A:
     retf    0, 0
 
@@ -32011,7 +32011,7 @@ loc_4857290A:
     ret     [d2,d3], 0x1c
 # SdSndEditNameFlagGet  (CPU 0x4857290e)
 SdSndEditNameFlagGet:
-    movbu   (func_4857290E_Var), d0
+    movbu   (SdSndEditNameFlagGet_Var), d0
     extb    d0
     retf    0, 0
 # SdSndEditNameFlagSet  (CPU 0x48572918)
@@ -32023,7 +32023,7 @@ SdSndEditNameFlagSet:
     cmp     0, d1
     bne     loc_48572928
 loc_48572922:
-    movbu   d0, (func_4857290E_Var)
+    movbu   d0, (SdSndEditNameFlagGet_Var)
 loc_48572928:
     retf    0, 0
 # AcIntTitleMenuSDProc  (CPU 0x4857292b)
@@ -34038,7 +34038,7 @@ func_48573C24_entry:
     movbu   d0, (func_48573C24_Var)
     movbu   d0, (func_48573C24_Var_2)
     mov     1, d0
-    movbu   d0, (func_48573949_Var)
+    movbu   d0, (SdSongInfoTagSet_Var)
     movbu   d0, (func_48573C24_Var_3)
     clr     d0
     movbu   d0, (0x5009268c)
@@ -34124,7 +34124,7 @@ loc_48573D09:
     movbu   d0, (func_48573C24_Var)
     jmp     loc_48573F41
 loc_48573D20:
-    movbu   (func_48573949_Var), d0
+    movbu   (SdSongInfoTagSet_Var), d0
     cmp     0, d0
     bne     loc_48573D2D
     jmp     loc_48573F41
@@ -34196,7 +34196,7 @@ loc_48573DE9:
     blt     loc_48573DF6
     jmp     loc_48573F41
 loc_48573DF6:
-    movbu   (func_48573949_Var), d0
+    movbu   (SdSongInfoTagSet_Var), d0
     cmp     0, d0
     bne     loc_48573E0E
     movbu   (func_48573C24_Var_3), d0
@@ -34259,7 +34259,7 @@ loc_48573E8D:
     blt     loc_48573E9A
     jmp     loc_48573F41
 loc_48573E9A:
-    movbu   (func_48573949_Var), d1
+    movbu   (SdSongInfoTagSet_Var), d1
     cmp     0, d1
     bne     loc_48573EAB
     cmp     0x5c, d2
@@ -34296,7 +34296,7 @@ loc_48573EE2:
     movbu   d1, (d0, a0)
     call    func_48573B9D_entry, [d2,a2,a3], 0x24
     mov     (0x14, sp), d0
-    mov     func_48573949_Var, a1
+    mov     SdSongInfoTagSet_Var, a1
     call    SdSongInfoTagSet_entry, [d2,a2,a3], 0x20
     movbu   (func_48573C24_Var_2), d0
     movbu   d0, (func_48573C24_Var)
@@ -40716,7 +40716,7 @@ SdAudPlayerHalt:
     add     -0xc, sp
 SdAudPlayerHalt_entry:
     call    SdAudCmdQueueReset, 0, 0
-    movbu   (func_48578059_Var), d0
+    movbu   (SdAudPlayerHalt_Var), d0
     cmp     0, d0
     beq     loc_48578075
     cmp     1, d0
@@ -40726,7 +40726,7 @@ SdAudPlayerHalt_entry:
     bra     loc_485780E2
 loc_48578075:
     clr     d0
-    movbu   d0, (func_48578059_Var_2)
+    movbu   d0, (SdAudPlayerHalt_Var_2)
     bra     loc_485780E2
 loc_4857807E:
     movbu   (func_48578029_Var_2), d0
@@ -40736,17 +40736,17 @@ loc_4857807E:
     bne     loc_48578093
 loc_4857808C:
     clr     d0
-    mov     d0, (func_48578059_Var_4)
+    mov     d0, (SdAudPlayerHalt_Var_4)
 loc_48578093:
-    movbu   (func_48578059_Var_2), d0
+    movbu   (SdAudPlayerHalt_Var_2), d0
     cmp     0, d0
     beq     loc_485780A2
     call    SdAudSeekEndCmdPost_entry, 0, 0x24
 loc_485780A2:
     call    SdAudStopCmdPost_entry, 0, 0x20
     clr     d0
-    mov     d0, (func_48578059_Var_3)
-    movbu   d0, (func_48578059_Var_2)
+    mov     d0, (SdAudPlayerHalt_Var_3)
+    movbu   d0, (SdAudPlayerHalt_Var_2)
     call    SdAudPlayStateSet_entry, [d2], 0x10
     bra     loc_485780E2
 loc_485780BB:
@@ -40757,11 +40757,11 @@ loc_485780BB:
     bne     loc_485780D0
 loc_485780C9:
     clr     d0
-    mov     d0, (func_48578059_Var_4)
+    mov     d0, (SdAudPlayerHalt_Var_4)
 loc_485780D0:
     clr     d0
-    mov     d0, (func_48578059_Var_3)
-    movbu   d0, (func_48578059_Var_2)
+    mov     d0, (SdAudPlayerHalt_Var_3)
+    movbu   d0, (SdAudPlayerHalt_Var_2)
     call    SdAudPlayStateSet_entry, [d2], 0x10
 loc_485780E2:
     call    SdAudCmdKick_entry, 0, 0x10
@@ -40833,10 +40833,10 @@ loc_48578174:
 func_48578178:
     add     -0xc, sp
 func_48578178_entry:
-    movbu   (func_48578059_Var), d0
+    movbu   (SdAudPlayerHalt_Var), d0
     cmp     1, d0
     beq     loc_4857818F
-    movbu   (func_48578059_Var_2), d0
+    movbu   (SdAudPlayerHalt_Var_2), d0
     cmp     0, d0
     beq     loc_4857819F
 loc_4857818F:
@@ -40879,21 +40879,21 @@ SdAudPlayerReset:
 SdAudPlayerReset_entry:
     call    SdPlaylistDbInitAll_entry, 0, 0xc
     clr     d0
-    movhu   d0, (func_485781E3_Var)
-    mov     d0, (func_48578059_Var_4)
+    movhu   d0, (SdAudPlayerReset_Var)
+    mov     d0, (SdAudPlayerHalt_Var_4)
     ret     0, 8
 # SdAudMountReset  (CPU 0x485781fd)
 SdAudMountReset:
     add     -0xc, sp
 SdAudMountReset_entry:
     clr     d0
-    movhu   d0, (func_485781FD_Var_3)
-    mov     d0, (func_485781FD_Var_2)
-    movhu   d0, (func_485781FD_Var)
+    movhu   d0, (SdAudMountReset_Var_3)
+    mov     d0, (SdAudMountReset_Var_2)
+    movhu   d0, (SdAudMountReset_Var)
     call    func_48482125_entry, [d2,d3,a2,a3], 0x38
     clr     d0
-    movhu   d0, (func_485781E3_Var)
-    mov     d0, (func_48578059_Var_4)
+    movhu   d0, (SdAudPlayerReset_Var)
+    mov     d0, (SdAudPlayerHalt_Var_4)
     call    SdPlaylistDbReload_entry, 0, 0xc
     ret     0, 0xc
 # SdAudStateStop  (CPU 0x48578231)
@@ -40907,11 +40907,11 @@ SdAudStateStop_entry:
     bne     loc_48578249
 loc_48578242:
     clr     d0
-    mov     d0, (func_48578059_Var_4)
+    mov     d0, (SdAudPlayerHalt_Var_4)
 loc_48578249:
     clr     d0
-    mov     d0, (func_48578059_Var_3)
-    movbu   d0, (func_48578059_Var_2)
+    mov     d0, (SdAudPlayerHalt_Var_3)
+    movbu   d0, (SdAudPlayerHalt_Var_2)
     call    SdAudPlayStateSet_entry, [d2], 0x10
     call    SdAudCmdKick_entry, 0, 0x10
     ret     0, 0xc
@@ -40925,12 +40925,12 @@ SdAudListCountGet:
     retf    0, 0
 # SdAudOpenListIndexGet  (CPU 0x48578275)
 SdAudOpenListIndexGet:
-    movhu   (func_485781E3_Var), d0
+    movhu   (SdAudPlayerReset_Var), d0
     exth    d0
     retf    0, 0
 # SdAudPlaySongGet  (CPU 0x4857827f)
 SdAudPlaySongGet:
-    mov     (func_48578059_Var_4), d0
+    mov     (SdAudPlayerHalt_Var_4), d0
     retf    0, 0
 # SdAudListNameCopy  (CPU 0x48578288)
 SdAudListNameCopy:
@@ -41009,11 +41009,11 @@ SdAudSongTimeGet:
     rets
 # SdAudPlayTimeGet  (CPU 0x48578321)
 SdAudPlayTimeGet:
-    mov     (func_48578059_Var_3), d0
+    mov     (SdAudPlayerHalt_Var_3), d0
     retf    0, 0
 # SdAudPlayStateGet  (CPU 0x4857832a)
 SdAudPlayStateGet:
-    movbu   (func_48578059_Var), d0
+    movbu   (SdAudPlayerHalt_Var), d0
     retf    0, 0
 # SdAudPlayModeGet  (CPU 0x48578333)
 SdAudPlayModeGet:
@@ -41092,10 +41092,10 @@ loc_485783E9:
     mov     -1, d2
     jmp     loc_485784B6
 loc_485783EE:
-    movbu   (func_48578059_Var), d0
+    movbu   (SdAudPlayerHalt_Var), d0
     cmp     d2, d0
     bne     loc_48578400
-    movbu   (func_48578059_Var_2), d0
+    movbu   (SdAudPlayerHalt_Var_2), d0
     cmp     d2, d0
     beq     loc_48578405
 loc_48578400:
@@ -41176,7 +41176,7 @@ loc_48578483:
     mov     1, d0
     movbu   d0, (func_4857833C_Table_2)
     add     -1, a2
-    mov     a2, (func_48578059_Var_4)
+    mov     a2, (SdAudPlayerHalt_Var_4)
 loc_485784B6:
     call    FmmSwRefresh_entry, 0, 8
     call    GetTitleNow_entry, 0, 0x10
@@ -41215,7 +41215,7 @@ func_4857850E_entry:
     mov     -1, d0
     bra     loc_4857855E
 loc_4857851F:
-    movbu   (func_48578059_Var), d0
+    movbu   (SdAudPlayerHalt_Var), d0
     cmp     0, d0
     bne     loc_4857855D
     movbu   (func_4857833C_Table_2), d0
@@ -41223,7 +41223,7 @@ loc_4857851F:
     cmp     1, d0
     bne     loc_4857855D
     clr     d0
-    movbu   d0, (func_48578059_Var_2)
+    movbu   d0, (SdAudPlayerHalt_Var_2)
     mov     1, d0
     call    SdAudPlayStateSet_entry, [d2], 0x10
     mov     5, d0
@@ -41249,7 +41249,7 @@ SdAudStopNotify_entry:
     bra     loc_485785AD
 loc_48578572:
     clr     d0
-    movbu   d0, (func_48578059_Var_2)
+    movbu   d0, (SdAudPlayerHalt_Var_2)
     movbu   (func_48578029_Var_2), d0
     cmp     0, d0
     beq     loc_48578587
@@ -41257,10 +41257,10 @@ loc_48578572:
     bne     loc_4857858E
 loc_48578587:
     clr     d0
-    mov     d0, (func_48578059_Var_4)
+    mov     d0, (SdAudPlayerHalt_Var_4)
 loc_4857858E:
     clr     d0
-    mov     d0, (func_48578059_Var_3)
+    mov     d0, (SdAudPlayerHalt_Var_3)
     call    SdAudPlayStateSet_entry, [d2], 0x10
     mov     5, d0
     call    SdAudPlayEventDeliver_entry, 0, 0x14
@@ -41294,7 +41294,7 @@ loc_485785C4:
     call    TempoBpmReloadWrite_entry, [d2], 4
     jmp     loc_4857867C
 loc_485785EA:
-    mov     (func_48578059_Var_4), d0
+    mov     (SdAudPlayerHalt_Var_4), d0
     cmp     d2, d0
     beq     loc_485785FD
     clr     d0
@@ -41327,7 +41327,7 @@ loc_48578617:
     bra     loc_4857867C
 loc_48578647:
     mov     (0x28, sp), d0
-    mov     (func_48578059_Var_4), d1
+    mov     (SdAudPlayerHalt_Var_4), d1
     call    func_48578737_entry, [d2,d3], 8
     cmp     d2, d0
     bge     loc_48578662
@@ -41604,14 +41604,14 @@ SdAudRewStart_entry:
     mov     -1, d0
     bra     loc_485788D5
 loc_485788B5:
-    movbu   (func_48578059_Var), d0
+    movbu   (SdAudPlayerHalt_Var), d0
     cmp     0, d0
     bne     loc_485788C7
     mov     1, d0
-    movbu   d0, (func_485788A4_Var)
+    movbu   d0, (SdAudRewStart_Var)
 loc_485788C7:
     mov     2, d0
-    movbu   d0, (func_48578059_Var_2)
+    movbu   d0, (SdAudPlayerHalt_Var_2)
     call    SdAudCmdKick_entry, 0, 0x10
     clr     d0
 loc_485788D5:
@@ -41627,14 +41627,14 @@ func_485788D8_entry:
     mov     -1, d0
     bra     loc_48578909
 loc_485788E9:
-    movbu   (func_48578059_Var), d0
+    movbu   (SdAudPlayerHalt_Var), d0
     cmp     0, d0
     bne     loc_485788FB
     mov     1, d0
-    movbu   d0, (func_485788A4_Var)
+    movbu   d0, (SdAudRewStart_Var)
 loc_485788FB:
     mov     1, d0
-    movbu   d0, (func_48578059_Var_2)
+    movbu   d0, (SdAudPlayerHalt_Var_2)
     call    SdAudCmdKick_entry, 0, 0x10
     clr     d0
 loc_48578909:
@@ -41650,10 +41650,10 @@ SdAudRewEnd_entry:
     mov     -1, d0
     bra     loc_48578958
 loc_4857891D:
-    movbu   (func_48578059_Var_2), d0
+    movbu   (SdAudPlayerHalt_Var_2), d0
     cmp     2, d0
     bne     loc_48578952
-    movbu   (func_48578059_Var), d0
+    movbu   (SdAudPlayerHalt_Var), d0
     cmp     0, d0
     beq     loc_4857893B
     cmp     1, d0
@@ -41663,13 +41663,13 @@ loc_4857891D:
     bra     loc_48578952
 loc_4857893B:
     clr     d0
-    movbu   d0, (func_48578059_Var_2)
+    movbu   d0, (SdAudPlayerHalt_Var_2)
     mov     2, d0
     call    SdAudPlayStateSet_entry, [d2], 0x10
     bra     loc_48578952
 loc_4857894B:
     clr     d0
-    movbu   d0, (func_48578059_Var_2)
+    movbu   d0, (SdAudPlayerHalt_Var_2)
 loc_48578952:
     call    SdAudCmdKick_entry, 0, 0x10
     clr     d0
@@ -41686,10 +41686,10 @@ SdAudFfEnd_entry:
     mov     -1, d0
     bra     loc_485789A7
 loc_4857896C:
-    movbu   (func_48578059_Var_2), d0
+    movbu   (SdAudPlayerHalt_Var_2), d0
     cmp     1, d0
     bne     loc_485789A1
-    movbu   (func_48578059_Var), d0
+    movbu   (SdAudPlayerHalt_Var), d0
     cmp     0, d0
     beq     loc_4857898A
     cmp     1, d0
@@ -41699,13 +41699,13 @@ loc_4857896C:
     bra     loc_485789A1
 loc_4857898A:
     clr     d0
-    movbu   d0, (func_48578059_Var_2)
+    movbu   d0, (SdAudPlayerHalt_Var_2)
     mov     2, d0
     call    SdAudPlayStateSet_entry, [d2], 0x10
     bra     loc_485789A1
 loc_4857899A:
     clr     d0
-    movbu   d0, (func_48578059_Var_2)
+    movbu   d0, (SdAudPlayerHalt_Var_2)
 loc_485789A1:
     call    SdAudCmdKick_entry, 0, 0x10
     clr     d0
@@ -41722,8 +41722,8 @@ SdAudPrevSong_entry:
     mov     -1, d0
     ret     0, 0x10
 loc_485789BC:
-    mov     (func_48578059_Var_4), d0
-    mov     (func_48578059_Var_3), d1
+    mov     (SdAudPlayerHalt_Var_4), d0
+    mov     (SdAudPlayerHalt_Var_3), d1
     mov     d0, (0xc, sp)
     cmp     0x3e8, d1
     bgt     loc_485789F6
@@ -41733,7 +41733,7 @@ loc_485789BC:
     mov     d0, (0xc, sp)
     cmp     0, d1
     bgt     loc_485789F6
-    movhu   (func_485781E3_Var), d0
+    movhu   (SdAudPlayerReset_Var), d0
     mov     0x18, d1
     exth    d0
     nop
@@ -41745,7 +41745,7 @@ loc_485789BC:
     add     -1, d0
     mov     d0, (0xc, sp)
 loc_485789F6:
-    movbu   (func_48578059_Var), d1
+    movbu   (SdAudPlayerHalt_Var), d1
     cmp     0, d1
     beq     loc_48578A0A
     cmp     1, d1
@@ -41754,24 +41754,24 @@ loc_485789F6:
     beq     loc_48578A3C
     bra     loc_48578A54
 loc_48578A0A:
-    mov     d0, (func_48578059_Var_4)
+    mov     d0, (SdAudPlayerHalt_Var_4)
     clr     d0
-    mov     d0, (func_48578059_Var_3)
-    movbu   d0, (func_48578059_Var_2)
+    mov     d0, (SdAudPlayerHalt_Var_3)
+    movbu   d0, (SdAudPlayerHalt_Var_2)
     bra     loc_48578A54
 loc_48578A1F:
-    mov     d0, (func_48578059_Var_4)
+    mov     d0, (SdAudPlayerHalt_Var_4)
     clr     d0
-    mov     d0, (func_48578059_Var_3)
-    movbu   d0, (func_48578059_Var_2)
+    mov     d0, (SdAudPlayerHalt_Var_3)
+    movbu   d0, (SdAudPlayerHalt_Var_2)
     mov     1, d0
-    movbu   d0, (func_485788A4_Var)
+    movbu   d0, (SdAudRewStart_Var)
     bra     loc_48578A54
 loc_48578A3C:
-    mov     d0, (func_48578059_Var_4)
+    mov     d0, (SdAudPlayerHalt_Var_4)
     clr     d0
-    mov     d0, (func_48578059_Var_3)
-    movbu   d0, (func_48578059_Var_2)
+    mov     d0, (SdAudPlayerHalt_Var_3)
+    movbu   d0, (SdAudPlayerHalt_Var_2)
     call    SdAudPlayStateSet_entry, [d2], 0x10
 loc_48578A54:
     call    SdAudCmdKick_entry, 0, 0x10
@@ -41789,7 +41789,7 @@ SdAudNextSong_entry:
     mov     -1, d0
     ret     [d2], 0x14
 loc_48578A71:
-    movhu   (func_485781E3_Var), d0
+    movhu   (SdAudPlayerReset_Var), d0
     mov     0x18, d1
     exth    d0
     nop
@@ -41798,7 +41798,7 @@ loc_48578A71:
     mov     d1, a0
     add     0x501720cc, a0
     movhu   (0x12, a0), d0
-    mov     (func_48578059_Var_4), d1
+    mov     (SdAudPlayerHalt_Var_4), d1
     add     -1, d0
     clr     d2
     mov     d2, (0xc, sp)
@@ -41807,7 +41807,7 @@ loc_48578A71:
     inc     d1
     mov     d1, (0xc, sp)
 loc_48578A9A:
-    movbu   (func_48578059_Var), d0
+    movbu   (SdAudPlayerHalt_Var), d0
     cmp     d2, d0
     beq     loc_48578AAD
     cmp     1, d0
@@ -41817,26 +41817,26 @@ loc_48578A9A:
     bra     loc_48578AFD
 loc_48578AAD:
     mov     (0xc, sp), d0
-    mov     d2, (func_48578059_Var_3)
-    mov     d0, (func_48578059_Var_4)
+    mov     d2, (SdAudPlayerHalt_Var_3)
+    mov     d0, (SdAudPlayerHalt_Var_4)
     clr     d0
-    movbu   d0, (func_48578059_Var_2)
+    movbu   d0, (SdAudPlayerHalt_Var_2)
     bra     loc_48578AFD
 loc_48578AC4:
     mov     (0xc, sp), d0
-    mov     d2, (func_48578059_Var_3)
-    mov     d0, (func_48578059_Var_4)
+    mov     d2, (SdAudPlayerHalt_Var_3)
+    mov     d0, (SdAudPlayerHalt_Var_4)
     clr     d0
-    movbu   d0, (func_48578059_Var_2)
+    movbu   d0, (SdAudPlayerHalt_Var_2)
     mov     1, d0
-    movbu   d0, (func_485788A4_Var)
+    movbu   d0, (SdAudRewStart_Var)
     bra     loc_48578AFD
 loc_48578AE3:
     mov     (0xc, sp), d0
-    mov     d0, (func_48578059_Var_4)
-    mov     d2, (func_48578059_Var_3)
+    mov     d0, (SdAudPlayerHalt_Var_4)
+    mov     d2, (SdAudPlayerHalt_Var_3)
     clr     d0
-    movbu   d0, (func_48578059_Var_2)
+    movbu   d0, (SdAudPlayerHalt_Var_2)
     call    SdAudPlayStateSet_entry, [d2], 0x10
 loc_48578AFD:
     call    SdAudCmdKick_entry, 0, 0x10
@@ -41860,11 +41860,11 @@ loc_48578B17:
     bne     loc_48578B2C
 loc_48578B25:
     clr     d0
-    mov     d0, (func_48578059_Var_4)
+    mov     d0, (SdAudPlayerHalt_Var_4)
 loc_48578B2C:
     clr     d0
-    mov     d0, (func_48578059_Var_3)
-    movbu   d0, (func_48578059_Var_2)
+    mov     d0, (SdAudPlayerHalt_Var_3)
+    movbu   d0, (SdAudPlayerHalt_Var_2)
     call    SdAudPlayStateSet_entry, [d2], 0x10
     call    SdAudCmdKick_entry, 0, 0x10
     clr     d0
@@ -41881,7 +41881,7 @@ SdAudPlayPauseToggle_entry:
     mov     -1, d0
     bra     loc_48578BA8
 loc_48578B58:
-    movbu   (func_48578059_Var), d0
+    movbu   (SdAudPlayerHalt_Var), d0
     cmp     0, d0
     beq     loc_48578B6C
     cmp     1, d0
@@ -41891,21 +41891,21 @@ loc_48578B58:
     bra     loc_48578BA2
 loc_48578B6C:
     clr     d0
-    movbu   d0, (func_48578059_Var_2)
+    movbu   d0, (SdAudPlayerHalt_Var_2)
     mov     1, d0
     call    SdAudPlayStateSet_entry, [d2], 0x10
     mov     1, d0
-    movbu   d0, (func_485788A4_Var)
+    movbu   d0, (SdAudRewStart_Var)
     bra     loc_48578BA2
 loc_48578B84:
     clr     d0
-    movbu   d0, (func_48578059_Var_2)
+    movbu   d0, (SdAudPlayerHalt_Var_2)
     mov     2, d0
     call    SdAudPlayStateSet_entry, [d2], 0x10
     bra     loc_48578BA2
 loc_48578B94:
     clr     d0
-    movbu   d0, (func_48578059_Var_2)
+    movbu   d0, (SdAudPlayerHalt_Var_2)
     mov     1, d0
     call    SdAudPlayStateSet_entry, [d2], 0x10
 loc_48578BA2:
@@ -41924,7 +41924,7 @@ SdAudPlayModeCycle_entry:
     mov     -1, d0
     ret     0, 0xc
 loc_48578BBD:
-    movbu   (func_48578059_Var_2), d0
+    movbu   (SdAudPlayerHalt_Var_2), d0
     cmp     0, d0
     bne     loc_48578C20
     movbu   (func_48578029_Var_2), d0
@@ -41973,19 +41973,19 @@ SdAudListSelect_entry:
     mov     -1, d0
     bra     loc_48578C68
 loc_48578C38:
-    movbu   (func_48578059_Var), d1
+    movbu   (SdAudPlayerHalt_Var), d1
     cmp     0, d1
     beq     loc_48578C54
     clr     d0
-    mov     d0, (func_48578059_Var_3)
-    movbu   d0, (func_48578059_Var_2)
+    mov     d0, (SdAudPlayerHalt_Var_3)
+    movbu   d0, (SdAudPlayerHalt_Var_2)
     call    SdAudPlayStateSet_entry, [d2], 0x10
 loc_48578C54:
     exth    d2
     mov     d2, d0
     call    SdAudListIndexApply_entry, [d2], 0x10
     clr     d0
-    mov     d0, (func_48578059_Var_4)
+    mov     d0, (SdAudPlayerHalt_Var_4)
     call    SdAudCmdKick_entry, 0, 0x10
     clr     d0
 loc_48578C68:
@@ -41995,10 +41995,10 @@ SdAudListIndexApply:
     movm    [d2], (sp)
     add     -0xc, sp
 SdAudListIndexApply_entry:
-    movbu   (func_48578059_Var), d1
+    movbu   (SdAudPlayerHalt_Var), d1
     cmp     1, d1
     beq     loc_48578CBB
-    movbu   (func_48578059_Var_2), d1
+    movbu   (SdAudPlayerHalt_Var_2), d1
     cmp     0, d1
     bne     loc_48578CBB
     mov     d0, d2
@@ -42008,14 +42008,14 @@ SdAudListIndexApply_entry:
     movbu   (SdPlaylistDbClear_Table), d1
     cmp     d1, d2
     bgt     loc_48578CBB
-    movhu   (func_485781E3_Var), d1
+    movhu   (SdAudPlayerReset_Var), d1
     exth    d1
     cmp     d2, d1
     beq     loc_48578CB8
-    movhu   d0, (func_485781E3_Var)
+    movhu   d0, (SdAudPlayerReset_Var)
     clr     d0
-    mov     d0, (func_48578059_Var_4)
-    movhu   (func_485781E3_Var), d0
+    mov     d0, (SdAudPlayerHalt_Var_4)
+    movhu   (SdAudPlayerReset_Var), d0
     exthu   d0
     call    SdPlaylistDbReload_entry, 0, 0xc
 loc_48578CB8:
@@ -42039,11 +42039,11 @@ SdAudPlayStateSet_entry:
     cmp     2, d2
     bne     loc_48578D14
 loc_48578CD3:
-    movbu   (func_48578059_Var), d1
+    movbu   (SdAudPlayerHalt_Var), d1
     cmp     d2, d1
     beq     loc_48578D14
-    movbu   d0, (func_48578059_Var)
-    movbu   (func_48578059_Var), d0
+    movbu   d0, (SdAudPlayerHalt_Var)
+    movbu   (SdAudPlayerHalt_Var), d0
     cmp     1, d0
     beq     loc_48578CF6
     movbu   (func_48578148_Var), d0
@@ -42111,10 +42111,10 @@ loc_48578D7F:
     bne     loc_48578D94
 loc_48578D8D:
     clr     d0
-    mov     d0, (func_48578059_Var_4)
+    mov     d0, (SdAudPlayerHalt_Var_4)
 loc_48578D94:
     clr     d0
-    mov     d0, (func_48578059_Var_3)
+    mov     d0, (SdAudPlayerHalt_Var_3)
     call    SdAudPlayStateSet_entry, [d2], 0x10
     clr     d0
     call    SdAudPlayTimerPost_entry, 0, 0x14
@@ -42201,15 +42201,15 @@ loc_48578E65:
 loc_48578E68:
     mov     1, d0
     movbu   d0, (func_48578029_Var_3)
-    mov     (func_48578059_Var_4), d1
-    movhu   (func_485781E3_Var), d0
+    mov     (SdAudPlayerHalt_Var_4), d1
+    movhu   (SdAudPlayerReset_Var), d0
     inc     d1
     extbu   d0
     exthu   d1
     call    func_48579612_entry, [d2,d3], 0x2c
     call    func_485797A0_entry, 0, 0x20
     clr     d0
-    movbu   d0, (func_485788A4_Var)
+    movbu   d0, (SdAudRewStart_Var)
     mov     -1, d0
     mov     d0, (func_48578DD9_Var)
     mov     1, d0
@@ -42221,15 +42221,15 @@ loc_48578EA2:
 loc_48578EAA:
     mov     1, d0
     movbu   d0, (func_48578029_Var_3)
-    mov     (func_48578059_Var_4), d1
-    movhu   (func_485781E3_Var), d0
+    mov     (SdAudPlayerHalt_Var_4), d1
+    movhu   (SdAudPlayerReset_Var), d0
     inc     d1
     extbu   d0
     exthu   d1
     call    func_48579612_entry, [d2,d3], 0x2c
     call    func_485797A0_entry, 0, 0x20
     clr     d0
-    movbu   d0, (func_485788A4_Var)
+    movbu   d0, (SdAudRewStart_Var)
     mov     -1, d0
     mov     d0, (func_48578DD9_Var)
     mov     1, d0
@@ -42258,14 +42258,14 @@ loc_48578F0D:
     bne     loc_48578F1A
     ret     0, 0x10
 loc_48578F1A:
-    mov     (func_48578059_Var_4), d1
+    mov     (SdAudPlayerHalt_Var_4), d1
     cmp     d1, d0
     bne     loc_48578F26
     ret     0, 0x10
 loc_48578F26:
     mov     1, d0
     movbu   d0, (func_48578029_Var_3)
-    movhu   (func_485781E3_Var), d0
+    movhu   (SdAudPlayerReset_Var), d0
     inc     d1
     extbu   d0
     exthu   d1
@@ -42311,8 +42311,8 @@ loc_48578F83:
 loc_48578F9C:
     mov     1, d0
     movbu   d0, (func_48578029_Var_3)
-    mov     (func_48578059_Var_4), d1
-    movhu   (func_485781E3_Var), d0
+    mov     (SdAudPlayerHalt_Var_4), d1
+    movhu   (SdAudPlayerReset_Var), d0
     inc     d1
     extbu   d0
     exthu   d1
@@ -42346,8 +42346,8 @@ loc_48578FE3:
 loc_48578FFB:
     mov     1, d0
     movbu   d0, (func_48578029_Var_3)
-    mov     (func_48578059_Var_4), d1
-    movhu   (func_485781E3_Var), d0
+    mov     (SdAudPlayerHalt_Var_4), d1
+    movhu   (SdAudPlayerReset_Var), d0
     inc     d1
     extbu   d0
     exthu   d1
@@ -42370,7 +42370,7 @@ loc_4857903C:
     ret     0, 0x10
 
 func_4857903F:
-    movbu   (func_485788A4_Var), d0
+    movbu   (SdAudRewStart_Var), d0
     clr     d1
     cmp     d1, d0
     beq     loc_4857904F
@@ -42378,7 +42378,7 @@ func_4857903F:
     beq     loc_48579085
     bra     loc_485790B9
 loc_4857904F:
-    movbu   (func_48578059_Var_2), d0
+    movbu   (SdAudPlayerHalt_Var_2), d0
     cmp     d1, d0
     beq     loc_48579062
     cmp     1, d0
@@ -42387,7 +42387,7 @@ loc_4857904F:
     beq     loc_48579081
     bra     loc_485790B9
 loc_48579062:
-    movbu   (func_48578059_Var), d0
+    movbu   (SdAudPlayerHalt_Var), d0
     cmp     1, d0
     beq     loc_48579075
     cmp     d1, d0
@@ -42408,7 +42408,7 @@ loc_48579081:
     mov     7, d1
     bra     loc_485790B9
 loc_48579085:
-    movbu   (func_48578059_Var_2), d0
+    movbu   (SdAudPlayerHalt_Var_2), d0
     cmp     d1, d0
     beq     loc_48579098
     cmp     1, d0
@@ -42417,7 +42417,7 @@ loc_48579085:
     beq     loc_485790B7
     bra     loc_485790B9
 loc_48579098:
-    movbu   (func_48578059_Var), d0
+    movbu   (SdAudPlayerHalt_Var), d0
     cmp     1, d0
     beq     loc_485790AB
     cmp     d1, d0
@@ -42961,7 +42961,7 @@ func_48579612:
 func_48579612_entry:
     mov     d1, d3
     mov     d0, d2
-    movbu   (func_48578059_Var), d0
+    movbu   (SdAudPlayerHalt_Var), d0
     cmp     1, d0
     bne     loc_48579636
     call    SdAudPlayGateGet_entry, 0, 0xc
@@ -43179,7 +43179,7 @@ loc_485797F5:
     movbu   (func_4857833C_Table), d0
     cmp     1, d0
     bne     loc_48579821
-    movbu   (func_48578059_Var), d0
+    movbu   (SdAudPlayerHalt_Var), d0
     cmp     1, d0
     bne     loc_48579821
     mov     0x43, d0
@@ -43198,7 +43198,7 @@ loc_4857982A:
     movbu   (func_4857833C_Table), d1
     cmp     1, d1
     bne     loc_48579861
-    movbu   (func_48578059_Var), d0
+    movbu   (SdAudPlayerHalt_Var), d0
     cmp     1, d0
     bne     loc_48579861
     mov     0x43, d0
@@ -43295,31 +43295,31 @@ loc_4857990F:
     mov     1, d0
     movbu   d0, (func_48578DD9_Table)
 loc_48579920:
-    mov     (func_48578059_Var_3), d0
+    mov     (SdAudPlayerHalt_Var_3), d0
     add     -1, d2
     mov     d3, (func_485797C3_Var)
     cmp     d0, d3
     beq     loc_4857993E
-    mov     d3, (func_48578059_Var_3)
+    mov     d3, (SdAudPlayerHalt_Var_3)
     mov     6, d0
     call    SdAudPlayEventDeliver_entry, 0, 0x14
 loc_4857993E:
     mov     (func_48578DD9_Var), d0
     cmp     -1, d0
     beq     loc_48579966
-    mov     (func_48578059_Var_4), d0
+    mov     (SdAudPlayerHalt_Var_4), d0
     mov     d2, (func_48578DD9_Var)
     cmp     d0, d2
     beq     loc_4857996C
-    mov     d2, (func_48578059_Var_4)
+    mov     d2, (SdAudPlayerHalt_Var_4)
     mov     2, d0
     call    SdAudPlayEventDeliver_entry, 0, 0x14
     bra     loc_4857996C
 loc_48579966:
     mov     d2, (func_48578DD9_Var)
 loc_4857996C:
-    mov     (func_48578059_Var_3), d0
-    mov     (func_48578059_Var_4), d1
+    mov     (SdAudPlayerHalt_Var_3), d0
+    mov     (SdAudPlayerHalt_Var_4), d1
     call    func_485785B0_entry, [d2,d3], 0x20
     clr     d0
     ret     [d2,d3,a2], 0x1c
@@ -43950,23 +43950,23 @@ loc_48579E54:
     cmp     d2, d0
     beq     loc_48579E62
     clr     d0
-    mov     d0, (func_485781FD_Var_2)
+    mov     d0, (SdAudMountReset_Var_2)
     bra     loc_48579ED1
 loc_48579E62:
-    movhu   (func_485781FD_Var_3), d0
+    movhu   (SdAudMountReset_Var_3), d0
     exth    d0
     call    SdSndListEntryCountGet_entry, 0, 0xc
-    mov     (func_485781FD_Var_2), d1
+    mov     (SdAudMountReset_Var_2), d1
     add     -1, d0
     cmp     d0, d1
     bne     loc_48579E82
     clr     d0
-    mov     d0, (func_485781FD_Var_2)
+    mov     d0, (SdAudMountReset_Var_2)
     bra     loc_48579ED1
 loc_48579E82:
     mov     d1, d0
     inc     d0
-    mov     d0, (func_485781FD_Var_2)
+    mov     d0, (SdAudMountReset_Var_2)
     mov     1, d2
     bra     loc_48579ED1
 loc_48579E8E:
@@ -43975,24 +43975,24 @@ loc_48579E8E:
     cmp     d2, d0
     beq     loc_48579E9C
     clr     d0
-    mov     d0, (func_485781FD_Var_2)
+    mov     d0, (SdAudMountReset_Var_2)
     bra     loc_48579ED1
 loc_48579E9C:
-    movhu   (func_485781FD_Var_3), d0
+    movhu   (SdAudMountReset_Var_3), d0
     exth    d0
     call    SdSndListEntryCountGet_entry, 0, 0xc
-    mov     (func_485781FD_Var_2), d1
+    mov     (SdAudMountReset_Var_2), d1
     add     -1, d0
     cmp     d0, d1
     bne     loc_48579EBE
     clr     d0
-    mov     d0, (func_485781FD_Var_2)
+    mov     d0, (SdAudMountReset_Var_2)
     mov     1, d2
     bra     loc_48579ED1
 loc_48579EBE:
     mov     d1, d0
     inc     d0
-    mov     d0, (func_485781FD_Var_2)
+    mov     d0, (SdAudMountReset_Var_2)
     mov     1, d2
     bra     loc_48579ED1
 loc_48579ECA:
@@ -44035,8 +44035,8 @@ loc_48579F04:
     inc     a0
     inc     d1
     lne
-    mov     (func_485781FD_Var_2), d1
-    movhu   (func_485781FD_Var_3), d0
+    mov     (SdAudMountReset_Var_2), d1
+    movhu   (SdAudMountReset_Var_3), d0
     inc     d1
     movbu   d0, (0x10, sp)
     movbu   (0x10, sp), d0
@@ -44069,7 +44069,7 @@ loc_48579F39:
     bne     loc_48579F76
 loc_48579F6F:
     clr     d0
-    mov     d0, (func_485781FD_Var_2)
+    mov     d0, (SdAudMountReset_Var_2)
 loc_48579F76:
     clr     d0
     call    SdSndPlayStateSet_entry, [d2], 0x10
@@ -44091,12 +44091,12 @@ SdSndListCountGet_entry:
     ret     0, 8
 # SdSndSelListIndexGet  (CPU 0x48579f9c)
 SdSndSelListIndexGet:
-    movhu   (func_485781FD_Var_3), d0
+    movhu   (SdAudMountReset_Var_3), d0
     exth    d0
     retf    0, 0
 # SdSndPlaySongGet  (CPU 0x48579fa6)
 SdSndPlaySongGet:
-    mov     (func_485781FD_Var_2), d0
+    mov     (SdAudMountReset_Var_2), d0
     retf    0, 0
 # SdSndListNameCopy  (CPU 0x48579faf)
 SdSndListNameCopy:
@@ -44237,7 +44237,7 @@ SdSndPlayModeGet:
     retf    0, 0
 # SdSndPlayAsGet  (CPU 0x4857a09d)
 SdSndPlayAsGet:
-    movhu   (func_4857A09D_Var), d0
+    movhu   (SdSndPlayAsGet_Var), d0
     exth    d0
     retf    0, 0
 
@@ -44246,7 +44246,7 @@ func_4857A0A7:
     retf    0, 0
 # SdSndMuteMaskGet  (CPU 0x4857a0ab)
 SdSndMuteMaskGet:
-    movhu   (func_485781FD_Var), d0
+    movhu   (SdAudMountReset_Var), d0
     retf    0, 0
 
 func_4857A0B4:
@@ -44396,8 +44396,8 @@ loc_4857A1C7:
     jmp     loc_4857A265
 loc_4857A1CA:
     call    func_48482439_entry, 0, 0xc
-    mov     (func_485781FD_Var_2), d1
-    movhu   (func_485781FD_Var_3), d0
+    mov     (SdAudMountReset_Var_2), d1
+    movhu   (SdAudMountReset_Var_3), d0
     inc     d1
     movbu   d0, (0x10, sp)
     movbu   (0x10, sp), d0
@@ -44430,7 +44430,7 @@ loc_4857A1F3:
     bne     loc_4857A22F
 loc_4857A228:
     clr     d0
-    mov     d0, (func_485781FD_Var_2)
+    mov     d0, (SdAudMountReset_Var_2)
 loc_4857A22F:
     clr     d0
     call    SdSndPlayStateSet_entry, [d2], 0x10
@@ -44529,23 +44529,23 @@ loc_4857A2F6:
     call    func_4857777E_entry, [d2], 0x18
 loc_4857A308:
     clr     d0
-    movhu   d0, (func_485781FD_Var)
+    movhu   d0, (SdAudMountReset_Var)
     call    func_48482125_entry, [d2,d3,a2,a3], 0x38
-    movhu   (func_485781FD_Var_3), d0
+    movhu   (SdAudMountReset_Var_3), d0
     exth    d0
     call    SdSndListEntryCountGet_entry, 0, 0xc
     cmp     0, d0
     ble     loc_4857A343
-    mov     (func_485781FD_Var_2), d1
+    mov     (SdAudMountReset_Var_2), d1
     cmp     0, d1
     ble     loc_4857A33B
     mov     d1, d0
     add     -1, d0
-    mov     d0, (func_485781FD_Var_2)
+    mov     d0, (SdAudMountReset_Var_2)
     bra     loc_4857A343
 loc_4857A33B:
     add     -1, d0
-    mov     d0, (func_485781FD_Var_2)
+    mov     d0, (SdAudMountReset_Var_2)
 loc_4857A343:
     movbu   (func_48578148_Var), d0
     cmp     0, d0
@@ -44574,8 +44574,8 @@ loc_4857A369:
     inc     a0
     inc     d1
     lne
-    mov     (func_485781FD_Var_2), d1
-    movhu   (func_485781FD_Var_3), d0
+    mov     (SdAudMountReset_Var_2), d1
+    movhu   (SdAudMountReset_Var_3), d0
     inc     d1
     movbu   d0, (0x10, sp)
     movbu   (0x10, sp), d0
@@ -44607,7 +44607,7 @@ loc_4857A39E:
     bne     loc_4857A3D9
 loc_4857A3D2:
     clr     d0
-    mov     d0, (func_485781FD_Var_2)
+    mov     d0, (SdAudMountReset_Var_2)
 loc_4857A3D9:
     clr     d0
     call    SdSndPlayStateSet_entry, [d2], 0x10
@@ -44648,24 +44648,24 @@ loc_4857A423:
     call    SdSndSongInfoClear_entry, 0, 0x10
 loc_4857A42F:
     clr     d0
-    movhu   d0, (func_485781FD_Var)
+    movhu   d0, (SdAudMountReset_Var)
     call    func_48482125_entry, [d2,d3,a2,a3], 0x38
-    movhu   (func_485781FD_Var_3), d0
+    movhu   (SdAudMountReset_Var_3), d0
     exth    d0
     call    SdSndListEntryCountGet_entry, 0, 0xc
     cmp     0, d0
     ble     loc_4857A469
-    mov     (func_485781FD_Var_2), d1
+    mov     (SdAudMountReset_Var_2), d1
     add     -1, d0
     cmp     d0, d1
     blt     loc_4857A461
     clr     d0
-    mov     d0, (func_485781FD_Var_2)
+    mov     d0, (SdAudMountReset_Var_2)
     bra     loc_4857A469
 loc_4857A461:
     mov     d1, d0
     inc     d0
-    mov     d0, (func_485781FD_Var_2)
+    mov     d0, (SdAudMountReset_Var_2)
 loc_4857A469:
     movbu   (func_48578148_Var), d0
     cmp     0, d0
@@ -44694,8 +44694,8 @@ loc_4857A48F:
     inc     a0
     inc     d1
     lne
-    mov     (func_485781FD_Var_2), d1
-    movhu   (func_485781FD_Var_3), d0
+    mov     (SdAudMountReset_Var_2), d1
+    movhu   (SdAudMountReset_Var_3), d0
     inc     d1
     movbu   d0, (0x10, sp)
     movbu   (0x10, sp), d0
@@ -44727,7 +44727,7 @@ loc_4857A4C4:
     bne     loc_4857A4FF
 loc_4857A4F8:
     clr     d0
-    mov     d0, (func_485781FD_Var_2)
+    mov     d0, (SdAudMountReset_Var_2)
 loc_4857A4FF:
     clr     d0
     call    SdSndPlayStateSet_entry, [d2], 0x10
@@ -44796,8 +44796,8 @@ loc_4857A578:
     inc     a0
     inc     d1
     lne
-    mov     (func_485781FD_Var_2), d1
-    movhu   (func_485781FD_Var_3), d0
+    mov     (SdAudMountReset_Var_2), d1
+    movhu   (SdAudMountReset_Var_3), d0
     inc     d1
     movbu   d0, (0x10, sp)
     movbu   (0x10, sp), d0
@@ -44829,7 +44829,7 @@ loc_4857A5AE:
     bne     loc_4857A5E9
 loc_4857A5E2:
     clr     d0
-    mov     d0, (func_485781FD_Var_2)
+    mov     d0, (SdAudMountReset_Var_2)
 loc_4857A5E9:
     clr     d0
     call    SdSndPlayStateSet_entry, [d2], 0x10
@@ -44891,8 +44891,8 @@ loc_4857A662:
     inc     a0
     inc     d1
     lne
-    mov     (func_485781FD_Var_2), d1
-    movhu   (func_485781FD_Var_3), d0
+    mov     (SdAudMountReset_Var_2), d1
+    movhu   (SdAudMountReset_Var_3), d0
     inc     d1
     extbu   d0
     exthu   d1
@@ -44923,7 +44923,7 @@ loc_4857A692:
     bne     loc_4857A6CD
 loc_4857A6C6:
     clr     d0
-    mov     d0, (func_485781FD_Var_2)
+    mov     d0, (SdAudMountReset_Var_2)
 loc_4857A6CD:
     clr     d0
     call    SdSndPlayStateSet_entry, [d2], 0x10
@@ -44949,12 +44949,12 @@ SdSndStop_entry:
     bra     loc_4857A719
 loc_4857A6FF:
     clr     d0
-    mov     d0, (func_485781FD_Var_2)
+    mov     d0, (SdAudMountReset_Var_2)
     call    SdSndSongInfoClear_entry, 0, 0x10
     bra     loc_4857A719
 loc_4857A70D:
     clr     d0
-    mov     d0, (func_485781FD_Var_2)
+    mov     d0, (SdAudMountReset_Var_2)
     call    SdSndSongInfoClear_entry, 0, 0x10
 loc_4857A719:
     clr     d0
@@ -44966,7 +44966,7 @@ SdSndMuteChannelSet:
 SdSndMuteChannelSet_entry:
     mov     d1, d3
     mov     d0, d1
-    mov     func_4857A71D_Table, a1
+    mov     SdSndMuteChannelSet_Table, a1
     mov     sp, a0
     add     0xc, a0
     mov     -0x20, d2
@@ -44987,10 +44987,10 @@ SdSndMuteChannelSet_entry:
     add     0xc, a1
     mov     a0, d0
     movhu   (d0, a1), d1
-    movhu   (func_485781FD_Var), d0
+    movhu   (SdAudMountReset_Var), d0
     or      d1, d0
-    movhu   d0, (func_485781FD_Var)
-    movhu   (func_485781FD_Var), d0
+    movhu   d0, (SdAudMountReset_Var)
+    movhu   (SdAudMountReset_Var), d0
     call    func_48482125_entry, [d2,d3,a2,a3], 0x38
     bra     loc_4857A78E
 loc_4857A766:
@@ -45001,11 +45001,11 @@ loc_4857A766:
     mov     sp, a0
     add     0xc, a0
     movhu   (d3, a0), d0
-    movhu   (func_485781FD_Var), d1
+    movhu   (SdAudMountReset_Var), d1
     not     d0
     and     d0, d1
-    movhu   d1, (func_485781FD_Var)
-    movhu   (func_485781FD_Var), d0
+    movhu   d1, (SdAudMountReset_Var)
+    movhu   (SdAudMountReset_Var), d0
     call    func_48482125_entry, [d2,d3,a2,a3], 0x38
 loc_4857A78E:
     clr     d0
@@ -45043,22 +45043,22 @@ loc_4857A7D0:
     retf    0, 0
 # SdSndPlayAsCycle  (CPU 0x4857a7d4)
 SdSndPlayAsCycle:
-    movhu   (func_4857A09D_Var), d0
+    movhu   (SdSndPlayAsGet_Var), d0
     mov     1, d1
     exth    d0
-    movhu   d1, (func_4857A09D_Var)
+    movhu   d1, (SdSndPlayAsGet_Var)
     cmp     0, d0
     beq     loc_4857A805
     mov     2, d1
-    movhu   d1, (func_4857A09D_Var)
+    movhu   d1, (SdSndPlayAsGet_Var)
     cmp     1, d0
     beq     loc_4857A805
     clr     d1
-    movhu   d1, (func_4857A09D_Var)
+    movhu   d1, (SdSndPlayAsGet_Var)
     cmp     2, d0
     beq     loc_4857A805
     clr     d0
-    movhu   d0, (func_4857A09D_Var)
+    movhu   d0, (SdSndPlayAsGet_Var)
 loc_4857A805:
     clr     d0
     retf    0, 0
@@ -45081,7 +45081,7 @@ SdSndListSelect_entry:
     bne     loc_4857A83B
 loc_4857A834:
     clr     d0
-    mov     d0, (func_485781FD_Var_2)
+    mov     d0, (SdAudMountReset_Var_2)
 loc_4857A83B:
     clr     d0
     call    SdSndPlayStateSet_entry, [d2], 0x10
@@ -45127,7 +45127,7 @@ func_4857A876_entry:
     mov     d0, d3
     cmp     0, d3
     blt     loc_4857A8A1
-    movhu   (func_485781FD_Var_3), d0
+    movhu   (SdAudMountReset_Var_3), d0
     exth    d0
     cmp     d0, d2
     bgt     loc_4857A8A1
@@ -45135,7 +45135,7 @@ func_4857A876_entry:
     exth    d0
     call    SdSndListIndexApply_entry, [d2,d3,a2], 0x18
     clr     d0
-    mov     d0, (func_485781FD_Var_2)
+    mov     d0, (SdAudMountReset_Var_2)
 loc_4857A8A1:
     mov     d3, d0
     ret     [d2,d3], 0x14
@@ -45157,16 +45157,16 @@ SdSndListIndexApply_entry:
     exth    d0
     cmp     d0, d2
     bgt     loc_4857A8ED
-    movhu   (func_485781FD_Var_3), d0
+    movhu   (SdAudMountReset_Var_3), d0
     clr     d3
     exth    d0
     cmp     d2, d0
     beq     loc_4857A8ED
     mov     a2, d0
-    movhu   d0, (func_485781FD_Var_3)
+    movhu   d0, (SdAudMountReset_Var_3)
     clr     d0
-    mov     d3, (func_485781FD_Var_2)
-    movhu   d0, (func_485781FD_Var)
+    mov     d3, (SdAudMountReset_Var_2)
+    movhu   d0, (SdAudMountReset_Var)
     call    func_48482125_entry, [d2,d3,a2,a3], 0x38
 loc_4857A8ED:
     mov     d3, d0
@@ -45189,7 +45189,7 @@ loc_4857A904:
     cmp     d2, d1
     beq     loc_4857A93B
     movbu   d0, (func_48578148_Var)
-    movbu   (func_48578059_Var), d0
+    movbu   (SdAudPlayerHalt_Var), d0
     cmp     1, d0
     beq     loc_4857A927
     movbu   (func_48578148_Var), d0
@@ -45345,7 +45345,7 @@ SdSndPlayerHalt_entry:
     clr     d0
     call    SdSndPlayStateSet_entry, [d2], 0x10
     clr     d0
-    mov     d0, (func_485781FD_Var_2)
+    mov     d0, (SdAudMountReset_Var_2)
 loc_4857AA7A:
     ret     0, 0xc
 
@@ -45381,11 +45381,11 @@ SdAudMediaLostReset_entry:
     bne     loc_4857AAC7
 loc_4857AAC0:
     clr     d0
-    mov     d0, (func_48578059_Var_4)
+    mov     d0, (SdAudPlayerHalt_Var_4)
 loc_4857AAC7:
     clr     d0
-    mov     d0, (func_48578059_Var_3)
-    movbu   d0, (func_48578059_Var_2)
+    mov     d0, (SdAudPlayerHalt_Var_3)
+    movbu   d0, (SdAudPlayerHalt_Var_2)
     call    SdAudPlayStateSet_entry, [d2], 0x10
     clr     d0
     movbu   d0, (func_4857833C_Table)
@@ -51681,11 +51681,11 @@ loc_4857E064:
     jmp     loc_4857E1E8
 loc_4857E06D:
     mov     a0, d0
-    mov     (func_4857E049_Records), a0
+    mov     (SswScriptStep_Records), a0
     mov     d0, (0x5009cf5c)
     clr     d2
     cmp     0, a0
-    mov     func_4857E049_Records, a2
+    mov     SswScriptStep_Records, a2
     bne     loc_4857E089
     jmp     loc_4857E1CB
 loc_4857E089:
@@ -52078,7 +52078,7 @@ loc_4857E354:
     mov     d0, (0x18, sp)
     inc     d0
     mov     d0, (0x1c, sp)
-    mov     func_4857E338_Table, a3
+    mov     SswTagActProc_Table, a3
 loc_4857E36A:
     mov     a2, d0
     mov     (0x10c, sp), a0
@@ -52240,7 +52240,7 @@ SswTagDaProc:
     mov     a0, d0
     add     0x68, d0
     mov     d0, (0x18, sp)
-    mov     func_4857E488_Table, a2
+    mov     SswTagDaProc_Table, a2
 loc_4857E4B6:
     mov     d3, d0
     mov     (0x108, sp), a0
@@ -52617,7 +52617,7 @@ SswTagImgProc:
     movhu   d1, (0x210, sp)
     mov     a0, (0x20c, sp)
     mov     d0, d2
-    mov     func_4857E7C9_Table, a1
+    mov     SswTagImgProc_Table, a1
     mov     sp, a0
     add     0x20, a0
     mov     -0x81, d1
@@ -52628,7 +52628,7 @@ SswTagImgProc:
     inc     a0
     inc     d1
     lne
-    mov     func_4857E7C9_Table_2, a1
+    mov     SswTagImgProc_Table_2, a1
     mov     sp, a0
     add     0xa4, a0
     mov     -0x81, d1
@@ -52646,7 +52646,7 @@ SswTagImgProc:
     bge     loc_4857E80E
     jmp     loc_4857E88A
 loc_4857E80E:
-    mov     func_4857E7C9_Table_4, a2
+    mov     SswTagImgProc_Table_4, a2
     mov     sp, a0
     mov     a0, d0
     add     0x128, d0
@@ -52678,7 +52678,7 @@ loc_4857E838:
     bgt     loc_4857E877
     mov     d2, d0
     asl2    d0
-    mov     func_4857E7C9_Table_3, a0
+    mov     SswTagImgProc_Table_3, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_4857E85D:
@@ -52750,7 +52750,7 @@ SswTagShowProc:
     add     -0x16c, sp
     movhu   d1, (0x18c, sp)
     mov     a0, (0x188, sp)
-    mov     func_4857E8D3_Table, a1
+    mov     SswTagShowProc_Table, a1
     mov     sp, a0
     add     0x20, a0
     mov     -0x81, d2
@@ -52772,7 +52772,7 @@ SswTagShowProc:
     mov     d0, (0x18, sp)
     mov     sp, a3
     add     0xe8, a3
-    mov     func_4857E8D3_Table_2, a2
+    mov     SswTagShowProc_Table_2, a2
 loc_4857E911:
     mov     d3, d0
     mov     (0x188, sp), a0
@@ -52853,7 +52853,7 @@ SswTagSswProc:
     mov     a0, (0x18c, sp)
     mov     -1, d1
     movhu   d1, (0x20, sp)
-    mov     func_4857E99A_Table, a1
+    mov     SswTagSswProc_Table, a1
     mov     sp, a0
     add     0x24, a0
     mov     -0x81, d2
@@ -52875,7 +52875,7 @@ SswTagSswProc:
     mov     d0, (0x18, sp)
     mov     sp, a3
     add     0xec, a3
-    mov     func_4857E99A_Table_2, a2
+    mov     SswTagSswProc_Table_2, a2
 loc_4857E9DD:
     mov     d3, d0
     mov     (0x18c, sp), a0
@@ -53137,7 +53137,7 @@ SswTagScoreProc:
     movhu   d1, (0x1a0, sp)
     mov     a0, (0x19c, sp)
     mov     d0, d2
-    mov     func_4857EBF2_Table, a1
+    mov     SswTagScoreProc_Table, a1
     mov     sp, a0
     add     0x34, a0
     mov     -0x81, d1
@@ -53178,7 +53178,7 @@ loc_4857EC4C:
     mov     (0x20, sp), a1
     mov     a2, d1
     call    SswTagAttrParse_entry, [d2,d3,a2,a3], 0x24
-    mov     (func_4857EBF2_Table_2), a0
+    mov     (SswTagScoreProc_Table_2), a0
     clr     d3
     movbu   (a0), d0
     cmp     d3, d0
@@ -53187,7 +53187,7 @@ loc_4857EC4C:
 loc_4857EC6A:
     mov     d3, d0
     asl2    d0
-    mov     func_4857EBF2_Table_2, a0
+    mov     SswTagScoreProc_Table_2, a0
     mov     (d0, a0), d0
     mov     (0x20, sp), a1
     mov     d0, a0
@@ -53245,7 +53245,7 @@ loc_4857ECE7:
     exth    d3
     mov     d3, d0
     asl2    d0
-    mov     func_4857EBF2_Table_2, a0
+    mov     SswTagScoreProc_Table_2, a0
     mov     (d0, a0), a0
     movbu   (a0), d0
     cmp     0, d0
@@ -53339,7 +53339,7 @@ SswTagHdrProc:
     movhu   d1, (0x2b0, sp)
     mov     a0, (0x2ac, sp)
     mov     d0, d2
-    mov     func_4857EDAE_Table, a1
+    mov     SswTagHdrProc_Table, a1
     mov     sp, a0
     add     0x28, a0
     mov     -0x81, d1
@@ -53352,7 +53352,7 @@ SswTagHdrProc:
     lne
     clr     d0
     movhu   d0, (0x20, sp)
-    mov     func_4857EDAE_Table_2, a1
+    mov     SswTagHdrProc_Table_2, a1
     mov     sp, a0
     add     0xac, a0
     mov     -0x81, d1
@@ -53363,7 +53363,7 @@ SswTagHdrProc:
     inc     a0
     inc     d1
     lne
-    mov     func_4857EDAE_Table_3, a1
+    mov     SswTagHdrProc_Table_3, a1
     mov     sp, a0
     add     0x130, a0
     mov     -0x81, d1
@@ -53387,7 +53387,7 @@ loc_4857EE0E:
     mov     d0, (0x18, sp)
     mov     sp, a2
     add     0x1f8, a2
-    mov     func_4857EDAE_Table_4, a3
+    mov     SswTagHdrProc_Table_4, a3
 loc_4857EE22:
     mov     d3, d0
     mov     (0x2ac, sp), a0

@@ -1182,7 +1182,7 @@ PanelSelfTestSwEvent:
     add     -0x24, sp
 PanelSelfTestSwEvent_entry:
     mov     a0, a3
-    mov     func_484A0C6E_Table, a1
+    mov     PanelSelfTestSwEvent_Table, a1
     mov     sp, a0
     add     0x20, a0
     mov     -4, d1
@@ -2641,7 +2641,7 @@ loc_484A1B1B:
     jmp     loc_484A2684
 loc_484A1B3E:
     add     8, a0
-    cmp     func_484A280C_Records, a0
+    cmp     TestCtrlM3Handler_Records, a0
     bcs     loc_484A1B49
     mov     a1, a0
 loc_484A1B49:
@@ -3860,7 +3860,7 @@ loc_484A2824:
     bls     loc_484A282F
     jmp     loc_484A29E8
 loc_484A282F:
-    mov     func_484A280C_Records, a1
+    mov     TestCtrlM3Handler_Records, a1
     add     0xff8ff001, d2
     mov     d2, d1
     and     0x0f, d1
@@ -4976,7 +4976,7 @@ loc_484A3347:
     add     a0, a2
     mov     a0, d3
     mov     (a2), a0
-    mov     func_484A3780_Table, d2
+    mov     SineWaveTestTextDraw_Table, d2
     movhu   (a0), d1
     mov     sp, a0
     exth    d1
@@ -5092,7 +5092,7 @@ SineSweepStop_entry:
     mov     SndCmdStreamWrite_Var_4, a0
     call    TgcBufWrite_entry, [d2,d3,a2], 0x34
     mov     0x61, d0
-    movbu   d0, (func_484A346F_Table)
+    movbu   d0, (SineSweepStop_Table)
     movbu   d0, (Str_a_3)
     call    func_4849FB1A_entry, 0, 0x14
     clr     d0
@@ -5158,10 +5158,10 @@ SineSweepTick_entry:
     blt     loc_484A3567
     mov     SndCmdStreamWrite_Var_4, a0
     call    TgcBufWrite_entry, [d2,d3,a2], 0x34
-    movbu   (func_484A346F_Table), d0
+    movbu   (SineSweepStop_Table), d0
     mov     SndCmdStreamWrite_Var_2, a0
     add     -1, d0
-    movbu   d0, (func_484A346F_Table)
+    movbu   d0, (SineSweepStop_Table)
     movbu   (Str_a_3), d0
     add     -1, d0
     movbu   d0, (Str_a_3)
@@ -5368,7 +5368,7 @@ SineWaveTestTextDraw:
 SineWaveTestTextDraw_entry:
     mov     d1, d3
     mov     d0, d2
-    mov     func_484A3780_Table_7, a1
+    mov     SineWaveTestTextDraw_Table_7, a1
     mov     sp, a0
     add     0x20, a0
     mov     -4, d1
@@ -5379,7 +5379,7 @@ SineWaveTestTextDraw_entry:
     add     2, a0
     inc     d1
     lne
-    mov     func_484A3780_Table_8, a1
+    mov     SineWaveTestTextDraw_Table_8, a1
     movhu   (a1), d0
     mov     sp, a0
     add     0x28, a0
@@ -5411,7 +5411,7 @@ loc_484A37D1:
 loc_484A37D8:
     ret     [d2,d3,a2,a3], 0x3c
 loc_484A37DB:
-    mov     func_484A3780_Table, a1
+    mov     SineWaveTestTextDraw_Table, a1
     mov     sp, a0
     add     0x20, a0
     mov     -4, d1
@@ -5465,7 +5465,7 @@ loc_484A37DB:
     call    DrawString_entry, [d2,d3,a2,a3], 0x30
     ret     [d2,d3,a2,a3], 0x3c
 loc_484A3852:
-    mov     func_484A3780_Table_2, a1
+    mov     SineWaveTestTextDraw_Table_2, a1
     mov     sp, a0
     add     0x20, a0
     mov     -4, d1
@@ -5519,7 +5519,7 @@ loc_484A3852:
     call    DrawString_entry, [d2,d3,a2,a3], 0x30
     ret     [d2,d3,a2,a3], 0x3c
 loc_484A38C9:
-    mov     func_484A3780_Table_3, a1
+    mov     SineWaveTestTextDraw_Table_3, a1
     mov     sp, a0
     add     0x20, a0
     mov     -4, d1
@@ -5552,7 +5552,7 @@ loc_484A38C9:
     call    DrawString_entry, [d2,d3,a2,a3], 0x30
     ret     [d2,d3,a2,a3], 0x3c
 loc_484A3911:
-    mov     func_484A3780_Table_4, a1
+    mov     SineWaveTestTextDraw_Table_4, a1
     mov     sp, a0
     add     0x20, a0
     mov     -4, d1
@@ -5585,7 +5585,7 @@ loc_484A3911:
     call    DrawString_entry, [d2,d3,a2,a3], 0x30
     ret     [d2,d3,a2,a3], 0x3c
 loc_484A3959:
-    mov     func_484A3780_Table_5, a1
+    mov     SineWaveTestTextDraw_Table_5, a1
     mov     sp, a0
     add     0x20, a0
     mov     -4, d1
@@ -5618,7 +5618,7 @@ loc_484A3959:
     call    DrawString_entry, [d2,d3,a2,a3], 0x30
     bra     loc_484A39E5
 loc_484A39A0:
-    mov     func_484A3780_Table_6, a1
+    mov     SineWaveTestTextDraw_Table_6, a1
     mov     sp, a0
     add     0x20, a0
     mov     -4, d1
@@ -5724,21 +5724,21 @@ loc_484A3A62:
 SdTestRunAndCount:
     add     -0x14, sp
 SdTestRunAndCount_entry:
-    mov     (func_484A3A65_Var), d0
+    mov     (SdTestRunAndCount_Var), d0
     inc     d0
-    mov     d0, (func_484A3A65_Var)
+    mov     d0, (SdTestRunAndCount_Var)
     call    ImmunityFileTest_entry, [d2,d3,a2,a3], 0x28
     exth    d0
     cmp     0, d0
     bne     loc_484A3A90
-    mov     (func_484A3A65_Var_2), d0
+    mov     (SdTestRunAndCount_Var_2), d0
     inc     d0
-    mov     d0, (func_484A3A65_Var_2)
+    mov     d0, (SdTestRunAndCount_Var_2)
     bra     loc_484A3A9D
 loc_484A3A90:
-    mov     (func_484A3A65_Var_3), d0
+    mov     (SdTestRunAndCount_Var_3), d0
     inc     d0
-    mov     d0, (func_484A3A65_Var_3)
+    mov     d0, (SdTestRunAndCount_Var_3)
 loc_484A3A9D:
     call    GetTitleNow_entry, 0, 0x10
     extbu   d0
@@ -5747,17 +5747,17 @@ loc_484A3A9D:
     extbu   d0
     cmp     0xd, d0
     bne     loc_484A3B05
-    mov     (func_484A3A65_Var), a0
+    mov     (SdTestRunAndCount_Var), a0
     mov     SDTotalBox_id, d0
     mov     a0, (0x10, sp)
     mov     MT_ParaDraw, d1
     call    ApPostEvent_entry, [d2], 0x1c
-    mov     (func_484A3A65_Var_2), d1
+    mov     (SdTestRunAndCount_Var_2), d1
     mov     SDOKBox_id, d0
     mov     d1, (0x10, sp)
     mov     MT_ParaDraw, d1
     call    ApPostEvent_entry, [d2], 0x1c
-    mov     (func_484A3A65_Var_3), a0
+    mov     (SdTestRunAndCount_Var_3), a0
     mov     SDNGBox_id, d0
     mov     a0, (0x10, sp)
     mov     MT_ParaDraw, d1
@@ -5991,7 +5991,7 @@ BoardTestLineDraw:
     add     -0x2c, sp
 BoardTestLineDraw_entry:
     mov     d0, d2
-    mov     func_484A3D6C_Table, a1
+    mov     BoardTestLineDraw_Table, a1
     mov     sp, a0
     add     0x20, a0
     mov     -4, d1
@@ -6002,7 +6002,7 @@ BoardTestLineDraw_entry:
     add     2, a0
     inc     d1
     lne
-    mov     func_484A3D6C_Table_2, a1
+    mov     BoardTestLineDraw_Table_2, a1
     movhu   (a1), d0
     mov     sp, a0
     add     0x28, a0
@@ -6015,7 +6015,7 @@ BoardTestLineDraw_entry:
     nop
     mulu    d0, d2
     mov     d2, a2
-    add     func_484A3D6C_Records, a2
+    add     BoardTestLineDraw_Records, a2
     movhu   (a2), d0
     mov     sp, a1
     add     0x28, a1
@@ -6309,8 +6309,8 @@ loc_484A4091:
     lcs
 loc_484A409D:
     mov     (a2), d0
-    mov     d3, (func_484A4005_Var_2)
-    mov     d0, (func_484A4005_Var)
+    mov     d3, (BoardFlashChecksumCheck_Var_2)
+    mov     d0, (BoardFlashChecksumCheck_Var)
     mov     (a2), d0
     cmp     d3, d0
     beq     loc_484A40B2
@@ -22224,7 +22224,7 @@ LedRedrawRequestsRun_entry:
     cmp     0, d1
     beq     loc_484AE6CB
     exthu   d0
-    mov     func_484AE78B_MsgTable, a0
+    mov     LedProcTableDispatch_MsgTable, a0
     call    LedProcTableDispatch_entry, [d2,a2], 0x10
     clr     d0
     movhu   d0, (0x5006bfbc)
@@ -22239,7 +22239,7 @@ loc_484AE6CB:
     beq     loc_484AE6F5
     mov     d2, d0
     exthu   d0
-    mov     func_484AE78B_MsgTable_2, a0
+    mov     LedProcTableDispatch_MsgTable_2, a0
     call    LedProcTableDispatch_entry, [d2,a2], 0x10
     clr     d0
     movhu   d0, (0x5006bfc0)
@@ -22253,7 +22253,7 @@ loc_484AE6F5:
     cmp     0, d1
     beq     loc_484AE71E
     exthu   d0
-    mov     func_484AE78B_MsgTable_3, a0
+    mov     LedProcTableDispatch_MsgTable_3, a0
     call    LedProcTableDispatch_entry, [d2,a2], 0x10
     clr     d0
     movhu   d0, (0x5006bfc4)
@@ -22267,7 +22267,7 @@ loc_484AE71E:
     cmp     0, d1
     beq     loc_484AE747
     exthu   d0
-    mov     func_484AE78B_MsgTable_4, a0
+    mov     LedProcTableDispatch_MsgTable_4, a0
     call    LedProcTableDispatch_entry, [d2,a2], 0x10
     clr     d0
     movhu   d0, (0x5006bfc8)
@@ -22288,7 +22288,7 @@ loc_484AE768:
     cmp     0, d0
     beq     loc_484AE783
     movhu   (0x5006bfc6), d0
-    mov     func_484AE78B_MsgTable_5, a0
+    mov     LedProcTableDispatch_MsgTable_5, a0
     call    LedProcTableDispatch_entry, [d2,a2], 0x10
 loc_484AE783:
     call    PanelLedFlush_entry, 0, 8
@@ -26647,7 +26647,7 @@ PanelLedGroupWriteB_entry:
     extbu   d0
     cmp     0x14, d0
     bcc     loc_484B1736
-    mov     func_484B16FF_Table, a0
+    mov     PanelLedGroupWriteB_Table, a0
     movbu   (d0, a0), d2
     mov     d2, d1
     extbu   d1
@@ -26823,7 +26823,7 @@ loc_484B1885:
     jmp     loc_484B1B82
 loc_484B18A7:
     add     8, a0
-    cmp     func_484B1B86_Table, a0
+    cmp     PanelLedOn_Table, a0
     bcs     loc_484B18B2
     mov     a1, a0
 loc_484B18B2:
@@ -27046,7 +27046,7 @@ loc_484B1B91:
 loc_484B1B98:
     add     -1, d0
     asl2    d0
-    mov     func_484B1B86_Table, a0
+    mov     PanelLedOn_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484B1BA5:
@@ -27139,7 +27139,7 @@ loc_484B1C67:
 loc_484B1C6E:
     add     -1, d0
     asl2    d0
-    mov     func_484B1C5C_Table, a0
+    mov     PanelLedOff_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484B1C7B:
@@ -29162,7 +29162,7 @@ MidiOutM3Format:
 MidiOutM3Format_entry:
     mov     d1, (0x3c, sp)
     mov     d0, (0x38, sp)
-    mov     func_484B306F_Table, a1
+    mov     MidiOutM3Format_Table, a1
     mov     sp, a0
     add     0x10, a0
     mov     -0x20, d1
@@ -30880,7 +30880,7 @@ loc_484B3FEE:
 # MidiContextInit  (CPU 0x484b3ff3)
 MidiContextInit:
     mov     a0, (8, sp)
-    mov     func_484B3FF3_Table, a1
+    mov     MidiContextInit_Table, a1
     mov     -8, d1
 loc_484B3FFD:
     mov     (a1), d0

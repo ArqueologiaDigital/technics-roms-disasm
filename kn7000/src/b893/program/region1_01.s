@@ -2054,20 +2054,20 @@ loc_484213BE:
     call    LibStrlen, 0, 0
     movhu   d0, (0x44, sp)
     movhu   (0x40, sp), d0
-    mov     func_48421357_Table, a0
+    mov     AcChordBoxStringDraw_Table, a0
     exth    d0
     mov     d0, (0x30, sp)
     asl2    d0
     mov     (d0, a0), d0
     call    GetCharHeight, 0, 0
-    mov     func_48421357_Table, a0
+    mov     AcChordBoxStringDraw_Table, a0
     mov     d0, d2
     mov     (0x30, sp), d0
     exth    d2
     asl2    d0
     mov     (d0, a0), d0
     call    GetCharDescent, 0, 0
-    mov     func_48421357_Table, a0
+    mov     AcChordBoxStringDraw_Table, a0
     exth    d0
     sub     d0, d2
     mov     (0x30, sp), d0
@@ -2126,7 +2126,7 @@ loc_4842146B:
     exth    d3
     clr     d0
     movbu   d0, (d3, a0)
-    mov     func_48421357_Table, a0
+    mov     AcChordBoxStringDraw_Table, a0
     mov     a2, d0
     exth    d0
     asl2    d0
@@ -2259,7 +2259,7 @@ loc_48421568:
     clr     d1
     movbu   d1, (d0, a0)
     mov     (0x24, sp), d0
-    mov     func_48421357_Table, a0
+    mov     AcChordBoxStringDraw_Table, a0
     mov     d0, (0x10, sp)
     movhu   (0x40, sp), d2
     mov     0xf7, d1
@@ -2273,7 +2273,7 @@ loc_48421568:
     mov     (0x38, sp), d1
     call    DrawString_entry, [d2,d3,a2,a3], 0x30
     asl2    d2
-    mov     func_48421357_Table, a0
+    mov     AcChordBoxStringDraw_Table, a0
     mov     (d2, a0), d0
     mov     (0x24, sp), a0
     call    CalcTotalWidth_entry, [d2,d3,a2,a3], 0x24
@@ -2309,14 +2309,14 @@ loc_484215D7:
     cmp     0x3c, d0
     bne     loc_48421611
     movhu   (0x40, sp), d2
-    mov     func_48421357_Table, a0
+    mov     AcChordBoxStringDraw_Table, a0
     exth    d2
     mov     d2, d0
     asl2    d0
     mov     (d0, a0), d0
     call    GetCharHeight, 0, 0
     asl2    d2
-    mov     func_48421357_Table, a0
+    mov     AcChordBoxStringDraw_Table, a0
     mov     d0, d3
     mov     (d2, a0), d0
     call    GetCharDescent, 0, 0
@@ -2577,7 +2577,7 @@ loc_4842185F:
     nop
     mul     d1, d0
     mov     d0, a0
-    add     func_4842886A_Table, a0
+    add     DeleteEventForTask_Table, a0
     movhu   (6, a0), d0
     mov     d2, a0
     exth    d0
@@ -2610,7 +2610,7 @@ DrawRing_ResetLocked:
     add     -0x1c, sp
 DrawRing_ResetLocked_entry:
     movhu   (0x500d3c40), d0
-    mov     func_4842886A_Table, a2
+    mov     DeleteEventForTask_Table, a2
     exth    d0
     mov     a2, a0
     mov     0x38, d1
@@ -2644,7 +2644,7 @@ DrawRing_GetLocked:
     add     -0x1c, sp
 DrawRing_GetLocked_entry:
     movhu   (0x500d3c40), d0
-    mov     func_4842886A_Table, a3
+    mov     DeleteEventForTask_Table, a3
     exth    d0
     mov     0x38, d1
     nop
@@ -2682,7 +2682,7 @@ DrawRing_Post_entry:
     mov     a0, (0x30, sp)
     mov     sp, a3
     add     0x18, a3
-    mov     func_4842886A_Table, d2
+    mov     DeleteEventForTask_Table, d2
 loc_4842196D:
     movhu   (0x500d3c40), d0
     mov     0x38, d1
@@ -2905,7 +2905,7 @@ DrawFunc_entry:
     ret     [d2,a2], 0x24
 loc_48421B8B:
     movhu   (0x500d3c40), d0
-    mov     func_4842886A_Table, a2
+    mov     DeleteEventForTask_Table, a2
     exth    d0
     mov     0x38, d1
     nop
@@ -4333,7 +4333,7 @@ loc_4842250A:
 UpdateScreen_Impl:
     add     -0xc, sp
 UpdateScreen_Impl_entry:
-    mov     (func_4842250D_Var), d0
+    mov     (UpdateScreen_Impl_Var), d0
     cmp     0, d0
     bne     loc_4842251D
     ret     0, 0xc
@@ -4408,7 +4408,7 @@ loc_484225E2:
     ret     0, 0xc
 # SetNeedUpdate_Impl  (CPU 0x484225e5)
 SetNeedUpdate_Impl:
-    mov     d0, (func_4842250D_Var)
+    mov     d0, (UpdateScreen_Impl_Var)
     retf    0, 0
 # SetChangeRect  (CPU 0x484225ee)
 SetChangeRect:
@@ -7092,7 +7092,7 @@ loc_484239F1:
     nop
     mul     d0, d1
     mov     d1, a0
-    add     func_4842886A_Table, a0
+    add     DeleteEventForTask_Table, a0
     movhu   (6, a0), d0
     mov     1, d1
     exth    d0
@@ -7115,7 +7115,7 @@ loc_48423A32:
     nop
     nop
     mul     d1, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     mov     d0, a0
     movhu   (6, a0), d0
     mov     1, d1
@@ -12931,7 +12931,7 @@ DrawDesignBox_Impl_entry:
     cmp     0xcc, d0
     bgt     loc_48426230
     mov     (0x1c, sp), d1
-    mov     func_484261D5_Records_2, a1
+    mov     DrawDesignBox_Impl_Records_2, a1
     inc     d1
     mov     a1, a0
     mov     0x3f, d0
@@ -13597,7 +13597,7 @@ loc_48426749:
     cmp     0xa8, d0
     bgt     loc_4842678C
     mov     (0x1c, sp), d1
-    mov     func_484261D5_Records, a1
+    mov     DrawDesignBox_Impl_Records, a1
     add     -6, d1
     mov     a1, a0
     mov     0x1f, d0
@@ -13611,7 +13611,7 @@ loc_48426749:
     cmp     0, d0
     beq     loc_4842678C
     add     8, a0
-    cmp     func_484261D5_Records_2, a0
+    cmp     DrawDesignBox_Impl_Records_2, a0
     bcs     loc_48426784
     mov     a1, a0
 loc_48426784:
@@ -16308,7 +16308,7 @@ loc_48427DDD:
     clr     d0
     movhu   d0, (0x32, sp)
     movhu   (0x4c, sp), d1
-    mov     func_48427DCB_Records, d3
+    mov     SetPresetWall_Impl_Records, d3
     mov     d1, d0
     asl     4, d0
     add     d3, d0
@@ -16377,7 +16377,7 @@ loc_48427E27:
     movhu   (0x4c, sp), d0
     asl     4, d0
     mov     d0, a0
-    add     func_48427DCB_Records, a0
+    add     SetPresetWall_Impl_Records, a0
     movhu   (0xc, a0), d0
     exth    d0
     call    GetPaletteRGB, 0, 0
@@ -16663,7 +16663,7 @@ loc_48428090:
     exth    d2
     mov     d2, d0
     asl     4, d0
-    mov     func_48427DCB_Records, a1
+    mov     SetPresetWall_Impl_Records, a1
     add     a1, d0
     mov     d0, a2
     mov     (8, a2), d1
@@ -17253,7 +17253,7 @@ InitializeEventQueue_entry:
     movhu   (0x500d3c3c), d3
     movhu   (0x500d3c4a), d2
     exth    d3
-    mov     func_4842886A_Table, d1
+    mov     DeleteEventForTask_Table, d1
     mov     0x38, d0
     nop
     nop
@@ -17324,7 +17324,7 @@ SendEventForTask_entry:
     nop
     nop
     mul     d1, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     mov     d0, a0
     mov     (0x10, a0), d0
 loc_4842852E:
@@ -17334,7 +17334,7 @@ loc_4842852E:
     bra     loc_4842859A
 loc_48428535:
     movhu   (0x3c, sp), d2
-    mov     func_4842886A_Table, d3
+    mov     DeleteEventForTask_Table, d3
     exth    d2
     mov     0x38, d1
     nop
@@ -17400,7 +17400,7 @@ PostEventForTask_entry:
     add     0x1c, d0
     mov     d0, (0x18, sp)
     movhu   (0x4c, sp), d0
-    mov     func_4842886A_Table, a3
+    mov     DeleteEventForTask_Table, a3
     exth    d0
     mov     0x38, d1
     nop
@@ -17621,7 +17621,7 @@ GetEventForTask_entry:
     mov     d1, (0x3c, sp)
     mov     a1, (0x38, sp)
     exth    d3
-    mov     func_4842886A_Table, a2
+    mov     DeleteEventForTask_Table, a2
     mov     0x38, d0
     nop
     nop
@@ -17786,7 +17786,7 @@ DeleteEventForTask_entry:
     nop
     nop
     mul     d1, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     mov     d0, a0
     movhu   (8, a0), d0
     mov     sp, a0
@@ -17801,14 +17801,14 @@ DeleteEventForTask_entry:
     nop
     mul     d0, d1
     mov     d1, a0
-    add     func_4842886A_Table, a0
+    add     DeleteEventForTask_Table, a0
     mov     d0, d2
     mov     0x38, d0
     nop
     nop
     mul     d2, d0
     movhu   (2, a0), d1
-    mov     func_4842886A_Table, a0
+    mov     DeleteEventForTask_Table, a0
     movhu   (d0, a0), d2
     exth    d1
     mov     d2, a2
@@ -17822,7 +17822,7 @@ DeleteEventForTask_entry:
     nop
     mul     d1, d0
     mov     d0, a0
-    add     func_4842886A_Table, a0
+    add     DeleteEventForTask_Table, a0
     movhu   (8, a0), d0
     mov     1, d1
     exth    d0
@@ -17869,28 +17869,28 @@ loc_484288EB:
     nop
     nop
     mul     d1, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     add     0x2c, d0
     mov     d0, (0x24, sp)
     mov     0x38, d0
     nop
     nop
     mul     d1, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     add     0x2c, d0
     mov     d0, (0x2c, sp)
     mov     0x38, d0
     nop
     nop
     mul     d1, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     add     4, d0
     mov     d0, (0x18, sp)
     mov     0x38, d0
     nop
     nop
     mul     d1, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     add     4, d0
     mov     d0, (0x20, sp)
 loc_48428964:
@@ -17992,7 +17992,7 @@ loc_484289F0:
     nop
     nop
     mul     d1, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     mov     d0, a0
     mov     a2, d1
     movhu   d1, (2, a0)
@@ -18002,7 +18002,7 @@ loc_484289F0:
     nop
     mul     d0, d1
     mov     d1, a0
-    add     func_4842886A_Table, a0
+    add     DeleteEventForTask_Table, a0
     movhu   (8, a0), d0
     mov     1, d1
     exth    d0
@@ -18022,7 +18022,7 @@ DeleteSpecificEventForTask_entry:
     nop
     mul     d0, d1
     mov     d1, a0
-    add     func_4842886A_Table, a0
+    add     DeleteEventForTask_Table, a0
     mov     d0, a3
     movhu   (8, a0), d0
     mov     sp, a0
@@ -18036,14 +18036,14 @@ DeleteSpecificEventForTask_entry:
     nop
     nop
     mul     d1, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     mov     d0, a0
     mov     0x38, d0
     nop
     nop
     mul     d1, d0
     movhu   (2, a0), d3
-    mov     func_4842886A_Table, a0
+    mov     DeleteEventForTask_Table, a0
     movhu   (d0, a0), d2
     exth    d3
     mov     d2, a2
@@ -18057,7 +18057,7 @@ DeleteSpecificEventForTask_entry:
     nop
     mul     d0, d1
     mov     d1, a0
-    add     func_4842886A_Table, a0
+    add     DeleteEventForTask_Table, a0
     movhu   (8, a0), d0
     mov     1, d1
     exth    d0
@@ -18110,28 +18110,28 @@ loc_48428AA3:
     nop
     nop
     mul     d1, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     add     0x2c, d0
     mov     d0, (0x30, sp)
     mov     0x38, d0
     nop
     nop
     mul     d1, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     add     0x2c, d0
     mov     d0, (0x18, sp)
     mov     0x38, d0
     nop
     nop
     mul     d1, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     add     4, d0
     mov     d0, (0x24, sp)
     mov     0x38, d0
     nop
     nop
     mul     d1, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     add     4, d0
     mov     d0, (0x1c, sp)
 loc_48428B26:
@@ -18246,7 +18246,7 @@ loc_48428BC7:
     nop
     mul     d0, d1
     mov     d1, a0
-    add     func_4842886A_Table, a0
+    add     DeleteEventForTask_Table, a0
     mov     a2, d0
     movhu   d0, (2, a0)
     mov     a3, d0
@@ -18255,7 +18255,7 @@ loc_48428BC7:
     nop
     mul     d0, d1
     mov     d1, a0
-    add     func_4842886A_Table, a0
+    add     DeleteEventForTask_Table, a0
     movhu   (8, a0), d0
     mov     1, d1
     exth    d0
@@ -18287,7 +18287,7 @@ DispatchEventForTask_entry:
     bne     loc_48428C28
     ret     [d2,d3,a2,a3], 0x44
 loc_48428C28:
-    mov     func_4842886A_Table, d2
+    mov     DeleteEventForTask_Table, d2
     mov     0x38, d0
     nop
     nop
@@ -18369,7 +18369,7 @@ loc_48428CC3:
     cmp     0x50000, a3
     beq     loc_48428D20
     mov     (0x1c, sp), d0
-    mov     func_4842886A_Table, d2
+    mov     DeleteEventForTask_Table, d2
     mov     0x38, d1
     nop
     nop
@@ -18434,7 +18434,7 @@ loc_48428D4C:
     ret     [d2,d3,a2,a3], 0x60
 loc_48428D57:
     mov     (0x70, sp), a0
-    mov     func_4842886A_Table, a3
+    mov     DeleteEventForTask_Table, a3
     mov     a0, (0x18, sp)
     movhu   (0x500d3c38), d0
     mov     0x38, d1
@@ -18866,7 +18866,7 @@ func_48429049_entry:
     nop
     nop
     mul     d1, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     mov     d0, a0
     movhu   (8, a0), d0
     mov     sp, a0
@@ -18881,13 +18881,13 @@ func_48429049_entry:
     nop
     mul     d0, d1
     mov     d1, a0
-    add     func_4842886A_Table, a0
+    add     DeleteEventForTask_Table, a0
     movhu   (2, a0), d1
     mov     0x38, d2
     nop
     nop
     mul     d2, d0
-    mov     func_4842886A_Table, a0
+    mov     DeleteEventForTask_Table, a0
     movhu   (d0, a0), d0
     exth    d1
     exth    d0
@@ -18899,7 +18899,7 @@ func_48429049_entry:
     nop
     mul     d0, d1
     mov     d1, a0
-    add     func_4842886A_Table, a0
+    add     DeleteEventForTask_Table, a0
     movhu   (8, a0), d0
     mov     1, d1
     exth    d0
@@ -18995,49 +18995,49 @@ loc_484290C0:
     nop
     nop
     mul     d2, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     add     0x2c, d0
     mov     d0, (0x30, sp)
     mov     a0, d0
     nop
     nop
     mul     d2, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     add     0x2c, d0
     mov     d0, (0x34, sp)
     mov     a0, d0
     nop
     nop
     mul     d2, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     add     4, d0
     mov     d0, (0x24, sp)
     mov     a0, d0
     nop
     nop
     mul     d2, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     add     4, d0
     mov     d0, (0x28, sp)
     mov     a0, d0
     nop
     nop
     mul     d2, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     add     0x2c, d0
     mov     d0, (0x58, sp)
     mov     a0, d0
     nop
     nop
     mul     d2, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     add     0x2c, d0
     mov     d0, (0x5c, sp)
     mov     a0, d0
     nop
     nop
     mul     d2, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     add     4, d0
     mov     d0, (0x44, sp)
 loc_484291C4:
@@ -19246,7 +19246,7 @@ loc_4842930D:
     nop
     mul     d1, d0
     mov     d0, a0
-    add     func_4842886A_Table, a0
+    add     DeleteEventForTask_Table, a0
     movhu   (8, a0), d0
     mov     1, d1
     exth    d0
@@ -19367,7 +19367,7 @@ GetCurrentTarget_entry:
     nop
     nop
     mul     d1, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     mov     d0, a0
     mov     (0x10, a0), d0
     ret     0, 0x10
@@ -19388,7 +19388,7 @@ SetCurrentTarget_entry:
     nop
     nop
     mul     d1, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     mov     d0, a0
     mov     d3, (0x10, a0)
 loc_48429447:
@@ -19416,7 +19416,7 @@ ProcCall_entry:
     ret     [d2,d3,a2,a3], 0x30
 loc_48429477:
     movhu   (0x18, sp), d1
-    mov     func_4842886A_Table, d2
+    mov     DeleteEventForTask_Table, d2
     exth    d1
     mov     0x38, d0
     nop
@@ -19513,7 +19513,7 @@ InheritedProc_entry:
     add     0x14, a0
     call    GuiCallerTaskIdGet_entry, [a2], 4
     movhu   (0x14, sp), d3
-    mov     func_4842886A_Table, a2
+    mov     DeleteEventForTask_Table, a2
     exth    d3
     mov     0x38, d0
     nop
@@ -19600,7 +19600,7 @@ GetRootObject_entry:
     nop
     nop
     mul     d1, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     mov     d0, a0
     mov     (0x14, a0), d0
     ret     0, 0x10
@@ -19617,7 +19617,7 @@ GetRootEvent_entry:
     nop
     nop
     mul     d1, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     mov     d0, a0
     mov     (0x18, a0), d0
     ret     0, 0x10
@@ -19634,7 +19634,7 @@ GetRootParam_entry:
     nop
     nop
     mul     d1, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     mov     d0, a0
     mov     (0x1c, a0), d0
     ret     0, 0x10
@@ -19653,7 +19653,7 @@ SetRootObject_entry:
     nop
     nop
     mul     d1, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     mov     d0, a0
     mov     d3, (0x14, a0)
     ret     [d3], 0x14
@@ -19671,7 +19671,7 @@ SetRootEvent:
     nop
     nop
     mul     d1, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     mov     d0, a0
     mov     d3, (0x18, a0)
     ret     [d3], 0x14
@@ -19689,7 +19689,7 @@ SetRootParam:
     nop
     nop
     mul     d1, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     mov     d0, a0
     mov     d3, (0x1c, a0)
     ret     [d3], 0x14
@@ -19706,7 +19706,7 @@ GetFocusObject_entry:
     nop
     nop
     mul     d1, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     mov     d0, a0
     mov     (0x20, a0), d0
     ret     0, 0x10
@@ -19722,7 +19722,7 @@ GetFocusEvent:
     nop
     nop
     mul     d1, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     mov     d0, a0
     mov     (0x24, a0), d0
     ret     0, 0x10
@@ -19738,7 +19738,7 @@ GetFocusParam:
     nop
     nop
     mul     d1, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     mov     d0, a0
     mov     (0x28, a0), d0
     ret     0, 0x10
@@ -19756,7 +19756,7 @@ SetFocusObject:
     nop
     nop
     mul     d1, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     mov     d0, a0
     mov     d3, (0x20, a0)
     ret     [d3], 0x14
@@ -19774,7 +19774,7 @@ SetFocusEvent:
     nop
     nop
     mul     d1, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     mov     d0, a0
     mov     d3, (0x24, a0)
     ret     [d3], 0x14
@@ -19792,7 +19792,7 @@ SetFocusParam:
     nop
     nop
     mul     d1, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     mov     d0, a0
     mov     d3, (0x28, a0)
     ret     [d3], 0x14
@@ -19983,7 +19983,7 @@ InitializeTaskTimer_entry:
     clr     d1
     mov     0x5011fa68, a0
     mov     d1, (d0, a0)
-    mov     func_4842886A_Table, a1
+    mov     DeleteEventForTask_Table, a1
     mov     0x38, d0
     nop
     nop
@@ -20077,7 +20077,7 @@ ApTimer_entry:
     add     0x1c, a0
     call    GuiCallerTaskIdGet_entry, [a2], 4
     movhu   (0x1c, sp), d2
-    mov     func_4842886A_Table, d3
+    mov     DeleteEventForTask_Table, d3
     exth    d2
     mov     0x38, d0
     nop
@@ -20463,7 +20463,7 @@ SetApTimer_entry:
     nop
     mul     d3, d0
     mov     d0, a0
-    add     func_4842886A_Table, a0
+    add     DeleteEventForTask_Table, a0
     movhu   (0x32, a0), d0
     exth    d0
     cmp     0, d0
@@ -20474,14 +20474,14 @@ loc_48429C89:
     nop
     nop
     mul     d3, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     mov     d0, a1
     movhu   (0x32, a1), d2
     mov     0x38, d0
     nop
     nop
     mul     d3, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     mov     d0, a0
     mov     (0x34, a0), a0
     exth    d2
@@ -20504,7 +20504,7 @@ loc_48429CC6:
     nop
     mul     d3, d0
     mov     d0, a0
-    add     func_4842886A_Table, a0
+    add     DeleteEventForTask_Table, a0
     mov     (0x34, a0), a0
     asl2    d3
     mov     (0x10, sp), d0
@@ -20523,7 +20523,7 @@ loc_48429CC6:
     nop
     nop
     mul     d1, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     mov     d0, a0
     mov     (0x34, a0), a0
     mov     (0x10, sp), d0
@@ -20540,7 +20540,7 @@ loc_48429CC6:
     nop
     mul     d0, d1
     mov     d1, a0
-    add     func_4842886A_Table, a0
+    add     DeleteEventForTask_Table, a0
     mov     (0x34, a0), a0
     mov     (0x10, sp), d0
     mov     0x38, d1
@@ -20556,7 +20556,7 @@ loc_48429CC6:
     nop
     mul     d0, d1
     mov     d1, a0
-    add     func_4842886A_Table, a0
+    add     DeleteEventForTask_Table, a0
     mov     (0x34, a0), a0
     mov     (0x10, sp), d0
     mov     0x38, d1
@@ -20572,7 +20572,7 @@ loc_48429CC6:
     nop
     mul     d0, d1
     mov     d1, a0
-    add     func_4842886A_Table, a0
+    add     DeleteEventForTask_Table, a0
     mov     (0x34, a0), a0
     mov     (0x10, sp), d0
     nop
@@ -20587,7 +20587,7 @@ loc_48429CC6:
     nop
     mul     d3, d0
     mov     d0, a0
-    add     func_4842886A_Table, a0
+    add     DeleteEventForTask_Table, a0
     movhu   (0x30, a0), d0
     exth    d0
     cmp     -1, d0
@@ -20600,7 +20600,7 @@ loc_48429D92:
     nop
     nop
     mul     d3, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     mov     d0, a0
     movhu   (0x30, a0), d1
     mov     0x38, d0
@@ -20608,7 +20608,7 @@ loc_48429D92:
     nop
     mul     d3, d0
     mov     d0, a0
-    add     func_4842886A_Table, a0
+    add     DeleteEventForTask_Table, a0
     mov     (0x34, a0), a0
     mov     d1, d2
     mov     0x18, d0
@@ -20621,7 +20621,7 @@ loc_48429D92:
     nop
     nop
     mul     d3, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     mov     d1, a3
     mov     (4, a0), d1
     mov     d0, a0
@@ -20642,7 +20642,7 @@ loc_48429D92:
     nop
     nop
     mul     d3, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     mov     d0, a0
     mov     (0x34, a0), d1
     mov     (0x10, sp), d0
@@ -20655,7 +20655,7 @@ loc_48429D92:
     nop
     nop
     mul     d3, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     mov     d0, a0
     mov     (0x34, a0), a1
     mov     0x38, d0
@@ -20663,7 +20663,7 @@ loc_48429D92:
     nop
     mul     d3, d0
     mov     d0, a0
-    add     func_4842886A_Table, a0
+    add     DeleteEventForTask_Table, a0
     mov     (0x34, a0), a2
     add     d1, a1
     mov     (4, a1), d1
@@ -20697,7 +20697,7 @@ loc_48429E5C:
     nop
     nop
     mul     d0, d3
-    add     func_4842886A_Table, d3
+    add     DeleteEventForTask_Table, d3
     mov     d3, a0
     mov     (0x34, a0), a0
     mov     (0x10, sp), d0
@@ -20713,7 +20713,7 @@ loc_48429E5C:
     nop
     nop
     mul     d1, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     mov     d0, a0
     mov     (0x34, a0), a0
     mov     (0x10, sp), d0
@@ -20734,7 +20734,7 @@ loc_48429E5C:
     nop
     nop
     mul     d3, d1
-    add     func_4842886A_Table, d1
+    add     DeleteEventForTask_Table, d1
     mov     d1, a0
     mov     (0x34, a0), a0
     mov     0x18, d1
@@ -20753,7 +20753,7 @@ loc_48429EC9:
     nop
     nop
     mul     d1, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     mov     d0, a0
     mov     (0x34, a0), a0
     movhu   (0x1a, sp), d1
@@ -20769,7 +20769,7 @@ loc_48429EED:
     nop
     nop
     mul     d3, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     mov     d0, a0
     movhu   (0x30, a0), d1
     exth    d1
@@ -20779,7 +20779,7 @@ loc_48429EED:
     nop
     nop
     mul     d3, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     movhu   (0x1a, sp), d1
     mov     d0, a0
     movhu   d1, (0x30, a0)
@@ -20789,7 +20789,7 @@ loc_48429F1C:
     nop
     nop
     mul     d3, d0
-    add     func_4842886A_Table, d0
+    add     DeleteEventForTask_Table, d0
     movhu   (0x1a, sp), d1
     mov     d0, a0
     movhu   d1, (0x30, a0)
@@ -20809,7 +20809,7 @@ loc_48429F3F:
     nop
     mul     d0, d3
     mov     d3, a0
-    add     func_4842886A_Table, a0
+    add     DeleteEventForTask_Table, a0
     movhu   (0x32, a0), d0
     exth    d0
     cmp     d0, d1
@@ -20856,7 +20856,7 @@ KillApTimer_entry:
     add     0x1c, a0
     call    GuiCallerTaskIdGet_entry, [a2], 4
     movhu   (0x1c, sp), d2
-    mov     func_4842886A_Table, a3
+    mov     DeleteEventForTask_Table, a3
     exth    d2
     mov     0x38, d0
     nop
@@ -28716,7 +28716,7 @@ KinsokuNoBreakBefore:
     add     -0x14, sp
 KinsokuNoBreakBefore_entry:
     mov     a0, a2
-    mov     func_4842E2C7_Table, a1
+    mov     KinsokuNoBreakBefore_Table, a1
     mov     sp, a0
     add     0x10, a0
     mov     -3, d1
@@ -28785,7 +28785,7 @@ KinsokuNoBreakAfter:
     add     -0x14, sp
 KinsokuNoBreakAfter_entry:
     mov     a0, a2
-    mov     func_4842E350_Table, a1
+    mov     KinsokuNoBreakAfter_Table, a1
     mov     sp, a0
     add     0x10, a0
     mov     -3, d1
@@ -35486,7 +35486,7 @@ UserPadRecPartErase:
     movm    [a2], (sp)
     add     -0x10, sp
 UserPadRecPartErase_entry:
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     exthu   d0
     call    MemPadRecData_entry, 0, 0xc
     mov     a0, a2
@@ -35503,7 +35503,7 @@ UserPadRecPartErase_entry:
     mov     -3, d0
     bra     loc_48431F11
 loc_48431EFD:
-    movbu   (func_48431ED1_Var_2), d0
+    movbu   (UserPadRecPartErase_Var_2), d0
     cmp     2, d0
     blt     loc_48431F0B
     mov     -1, d0
@@ -35539,7 +35539,7 @@ loc_48431F35:
     mov     -1, d0
     ret     [d2,d3,a2,a3], 0x3c
 loc_48431F3A:
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     exthu   d0
     call    MemPadRecData_entry, 0, 0xc
     mov     a0, a2
@@ -35655,13 +35655,13 @@ loc_48432006:
     mov     -1, d0
     bra     loc_48432037
 loc_4843200A:
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     mov     d3, d1
     exthu   d0
     mov     a2, a1
     mov     ptrs_48727F38, a0
     call    RhyStreamBytesDelete_entry, [d2,d3,a2,a3], 0x34
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     exthu   d0
     call    func_4843874F, 0, 0
     mov     (0x24, sp), d0
@@ -35696,7 +35696,7 @@ loc_48432059:
     mov     -1, d0
     ret     [d2,d3,a2,a3], 0x38
 loc_4843205E:
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     exthu   d0
     call    MemPadRecData_entry, 0, 0xc
     mov     a0, a2
@@ -35782,7 +35782,7 @@ loc_484320F4:
 loc_484320FC:
     mov     (0x18, sp), d1
     mov     (0x1c, sp), d2
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     nop
     nop
     mul     d2, d1
@@ -35792,7 +35792,7 @@ loc_484320FC:
     mov     ptrs_48727F38, a0
     call    RhyStreamBeatsInsert_entry, [d2,d3,a2,a3], 0x30
     mov     d0, d2
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     exthu   d0
     call    func_4843874F, 0, 0
     mov     (0x20, sp), d0
@@ -36050,7 +36050,7 @@ loc_48432346:
     ret     [d2,d3,a2,a3], 0x20
 # UserPadCurIndexGet  (CPU 0x48432349)
 UserPadCurIndexGet:
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     retf    0, 0
 # UserPadSelect  (CPU 0x48432352)
 UserPadSelect:
@@ -36090,8 +36090,8 @@ loc_48432371:
 loc_48432392:
     clr     d0
     call    func_484391B2_entry, [d2], 0xc
-    movbu   d2, (func_48431ED1_Var)
-    movbu   (func_48431ED1_Var), d0
+    movbu   d2, (UserPadRecPartErase_Var)
+    movbu   (UserPadRecPartErase_Var), d0
     exthu   d0
     call    func_48431E5B_entry, [d2,d3,a2,a3], 0x24
     mov     1, d0
@@ -36103,7 +36103,7 @@ loc_484323BB:
     ret     [d2,d3], 0x14
 # UserPadRecPartGet  (CPU 0x484323be)
 UserPadRecPartGet:
-    movbu   (func_48431ED1_Var_2), d0
+    movbu   (UserPadRecPartErase_Var_2), d0
     retf    0, 0
 # UserPadRecPartSet  (CPU 0x484323c7)
 UserPadRecPartSet:
@@ -36118,19 +36118,19 @@ UserPadRecPartSet_entry:
     mov     -1, d0
     bra     loc_484323E3
 loc_484323DB:
-    movbu   d2, (func_48431ED1_Var_2)
+    movbu   d2, (UserPadRecPartErase_Var_2)
     mov     1, d0
 loc_484323E3:
     ret     [d2], 0xc
 # UserPadAllEraseGet  (CPU 0x484323e6)
 UserPadAllEraseGet:
-    movbu   (func_484323E6_Var), d0
+    movbu   (UserPadAllEraseGet_Var), d0
     retf    0, 0
 # UserPadAllEraseSet  (CPU 0x484323ef)
 UserPadAllEraseSet:
     movm    [d2], (sp)
 UserPadAllEraseSet_entry:
-    movbu   (func_484323E6_Var), d1
+    movbu   (UserPadAllEraseGet_Var), d1
     mov     d0, d2
     extbu   d2
     cmp     d1, d2
@@ -36138,19 +36138,19 @@ UserPadAllEraseSet_entry:
     mov     -1, d0
     bra     loc_48432408
 loc_48432400:
-    movbu   d0, (func_484323E6_Var)
+    movbu   d0, (UserPadAllEraseGet_Var)
     mov     1, d0
 loc_48432408:
     retf    [d2], 4
 # UserPadNoteClearGet  (CPU 0x4843240b)
 UserPadNoteClearGet:
-    movbu   (func_4843240B_Var), d0
+    movbu   (UserPadNoteClearGet_Var), d0
     retf    0, 0
 # UserPadNoteClearSet  (CPU 0x48432414)
 UserPadNoteClearSet:
     movm    [d2], (sp)
 UserPadNoteClearSet_entry:
-    movbu   (func_4843240B_Var), d1
+    movbu   (UserPadNoteClearGet_Var), d1
     mov     d0, d2
     extbu   d2
     cmp     d1, d2
@@ -36158,7 +36158,7 @@ UserPadNoteClearSet_entry:
     mov     -1, d0
     bra     loc_4843242D
 loc_48432425:
-    movbu   d0, (func_4843240B_Var)
+    movbu   d0, (UserPadNoteClearGet_Var)
     mov     1, d0
 loc_4843242D:
     retf    [d2], 4
@@ -36166,7 +36166,7 @@ loc_4843242D:
 UserPadSynchroGet:
     add     -0xc, sp
 UserPadSynchroGet_entry:
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     exthu   d0
     call    func_4843874F, 0, 0
     movbu   (0x1a, a0), d0
@@ -36180,7 +36180,7 @@ UserPadSynchroSet_entry:
     extbu   d0
     cmp     0, d0
     beq     loc_48432468
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     exthu   d0
     call    func_4843874F, 0, 0
     add     0x1a, a0
@@ -36189,7 +36189,7 @@ UserPadSynchroSet_entry:
     movbu   d0, (a0)
     bra     loc_48432480
 loc_48432468:
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     exthu   d0
     call    func_4843874F, 0, 0
     add     0x1a, a0
@@ -36204,7 +36204,7 @@ loc_48432480:
 UserPadLoopGet:
     add     -0xc, sp
 UserPadLoopGet_entry:
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     exthu   d0
     call    func_4843874F, 0, 0
     movbu   (0x1a, a0), d0
@@ -36218,7 +36218,7 @@ UserPadLoopSet_entry:
     extbu   d0
     cmp     0, d0
     beq     loc_484324C4
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     exthu   d0
     call    func_4843874F, 0, 0
     add     0x1a, a0
@@ -36227,7 +36227,7 @@ UserPadLoopSet_entry:
     movbu   d0, (a0)
     bra     loc_484324DC
 loc_484324C4:
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     exthu   d0
     call    func_4843874F, 0, 0
     add     0x1a, a0
@@ -36241,7 +36241,7 @@ loc_484324DC:
 # UserPadFlag2Get  (CPU 0x484324e8)
 UserPadFlag2Get:
     add     -0xc, sp
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     exthu   d0
     call    func_4843874F, 0, 0
     movbu   (0x1a, a0), d0
@@ -36251,7 +36251,7 @@ UserPadFlag2Get:
 # UserPadFlag3Get  (CPU 0x48432501)
 UserPadFlag3Get:
     add     -0xc, sp
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     exthu   d0
     call    func_4843874F, 0, 0
     movbu   (0x1a, a0), d0
@@ -36264,7 +36264,7 @@ UserPadFlag3Set:
     extbu   d0
     cmp     0, d0
     beq     loc_48432539
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     exthu   d0
     call    func_4843874F, 0, 0
     add     0x1a, a0
@@ -36273,7 +36273,7 @@ UserPadFlag3Set:
     movbu   d0, (a0)
     bra     loc_48432551
 loc_48432539:
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     exthu   d0
     call    func_4843874F, 0, 0
     add     0x1a, a0
@@ -36288,7 +36288,7 @@ loc_48432551:
 UserPadRecChordGet:
     add     -0xc, sp
 UserPadRecChordGet_entry:
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     exthu   d0
     call    func_4843874F, 0, 0
     movbu   (0x13, a0), d0
@@ -36299,7 +36299,7 @@ UserPadRecChordSet:
     add     -0xc, sp
 UserPadRecChordSet_entry:
     mov     d0, d2
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     exthu   d0
     call    func_4843874F, 0, 0
     movbu   d2, (0x13, a0)
@@ -36309,7 +36309,7 @@ UserPadRecChordSet_entry:
 UserPadMeasureCountGet:
     add     -0xc, sp
 UserPadMeasureCountGet_entry:
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     exthu   d0
     call    func_4843874F, 0, 0
     movbu   (0x18, a0), d0
@@ -36366,7 +36366,7 @@ loc_484325F2:
 
 func_484325F5:
     add     -0xc, sp
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     exthu   d0
     call    func_4843874F, 0, 0
     movbu   (0x19, a0), d0
@@ -36401,12 +36401,12 @@ loc_48432626:
 loc_48432630:
     clr     d0
     call    func_484391B2_entry, [d2], 0xc
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     exthu   d0
     call    func_4843874F, 0, 0
     movbu   d2, (0x18, a0)
     movbu   d3, (0x19, a0)
-    movbu   (func_48431ED1_Var), d2
+    movbu   (UserPadRecPartErase_Var), d2
     call    UserPadBeatTotalGet_entry, 0, 0xc
     exthu   d2
     mov     d0, d1
@@ -36443,7 +36443,7 @@ func_48432675_entry:
 UserPadBeatTotalGet:
     add     -0xc, sp
 UserPadBeatTotalGet_entry:
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     exthu   d0
     call    func_4843874F, 0, 0
     movbu   (0x18, a0), d1
@@ -36462,7 +36462,7 @@ UserPadBeatTotalGet_entry:
 UserPadBeatsPerBarGet:
     add     -0xc, sp
 UserPadBeatsPerBarGet_entry:
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     exthu   d0
     call    func_4843874F, 0, 0
     movbu   (0x19, a0), d0
@@ -36474,7 +36474,7 @@ func_484326D0:
     movm    [d2], (sp)
     add     -0xc, sp
 func_484326D0_entry:
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     exthu   d0
     call    MemPadRecData_entry, 0, 0xc
     inc     a0
@@ -36500,10 +36500,10 @@ UserPadCurClear:
 UserPadCurClear_entry:
     clr     d0
     call    func_484391B2_entry, [d2], 0xc
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     exthu   d0
     call    func_4843859B_entry, [d2,d3,a2,a3], 0x20
-    movbu   (func_48431ED1_Var), d2
+    movbu   (UserPadRecPartErase_Var), d2
     call    UserPadBeatTotalGet_entry, 0, 0xc
     exthu   d2
     mov     d0, d1
@@ -36527,7 +36527,7 @@ UserPadRecArrangeGet_entry:
     blt     loc_48432753
     clr     d2
 loc_48432753:
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     extbu   d2
     exthu   d0
     call    func_4843874F, 0, 0
@@ -36547,7 +36547,7 @@ UserPadRecArrangeSet_entry:
     mov     -1, d0
     bra     loc_4843278A
 loc_48432777:
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     extbu   d2
     exthu   d0
     call    func_4843874F, 0, 0
@@ -36564,7 +36564,7 @@ UserPadRecArrangeApplyAll_entry:
     mov     d0, d3
     clr     d0
     call    func_484391B2_entry, [d2], 0xc
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     mov     -3, d2
     exthu   d0
     call    MemPadRecData_entry, 0, 0xc
@@ -36616,7 +36616,7 @@ loc_484327FA:
     clr     d0
     bra     loc_4843281A
 loc_484327FD:
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     extbu   d2
     exthu   d0
     call    func_4843874F, 0, 0
@@ -36653,7 +36653,7 @@ loc_48432830:
 loc_48432834:
     extbu   d2
     mov     d2, a0
-    add     func_4843281D_Table, a0
+    add     UserPadPartSetupByteSet_Table, a0
     movbu   (a0), d1
     movbu   (0x24, sp), d0
     cmp     d1, d0
@@ -36661,7 +36661,7 @@ loc_48432834:
     movbu   (a0), d0
     movbu   d0, (0x24, sp)
 loc_4843284A:
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     extbu   d3
     exthu   d0
     call    func_4843874F, 0, 0
@@ -36688,7 +36688,7 @@ UserPadPartVoiceGet:
     clr     d0
     bra     loc_484328C4
 loc_48432880:
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     extbu   d3
     exthu   d0
     call    func_4843874F, 0, 0
@@ -36698,13 +36698,13 @@ loc_48432880:
     mulu    d0, d3
     add     d3, a0
     movbu   (0x2c, a0), d2
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     asl     8, d2
     exthu   d0
     call    func_4843874F, 0, 0
     add     d3, a0
     movbu   (0x2b, a0), d1
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     or      d1, d2
     exthu   d0
     call    func_4843874F, 0, 0
@@ -36727,7 +36727,7 @@ UserPadPartVoiceSet_entry:
     mov     -1, d0
     bra     loc_4843292B
 loc_484328D7:
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     extbu   d2
     exthu   d0
     call    func_4843874F, 0, 0
@@ -36739,7 +36739,7 @@ loc_484328D7:
     mov     0x7f, d0
     and     d3, d0
     movbu   d0, (0x2a, a0)
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     lsr     8, d3
     exthu   d0
     call    func_4843874F, 0, 0
@@ -36747,7 +36747,7 @@ loc_484328D7:
     mov     0x7f, d0
     and     d3, d0
     movbu   d0, (0x2b, a0)
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     lsr     8, d3
     exthu   d0
     call    func_4843874F, 0, 0
@@ -36784,7 +36784,7 @@ UserPadRecPartNoteErase:
     add     -0x14, sp
 UserPadRecPartNoteErase_entry:
     mov     d0, d2
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     exthu   d0
     call    MemPadRecData_entry, 0, 0xc
     mov     a0, a2
@@ -36801,7 +36801,7 @@ UserPadRecPartNoteErase_entry:
     mov     -3, d0
     bra     loc_484329A4
 loc_48432986:
-    movbu   (func_48431ED1_Var_2), d0
+    movbu   (UserPadRecPartErase_Var_2), d0
     cmp     2, d0
     blt     loc_48432994
     mov     -1, d0
@@ -36827,10 +36827,10 @@ func_484329A7_entry:
     mov     a0, (0x34, sp)
     mov     d1, d3
     mov     d0, d2
-    movbu   (func_484323E6_Var), d0
+    movbu   (UserPadAllEraseGet_Var), d0
     cmp     0, d0
     beq     loc_484329C5
-    movbu   (func_48431ED1_Var_2), d1
+    movbu   (UserPadRecPartErase_Var_2), d1
     cmp     2, d1
     blt     loc_484329CA
 loc_484329C5:
@@ -36881,7 +36881,7 @@ loc_48432A15:
     cmp     0x7f, d0
     ble     loc_48432A44
     movbu   (a2), d0
-    movbu   (func_48431ED1_Var_2), d1
+    movbu   (UserPadRecPartErase_Var_2), d1
     and     0xffffff0f, d0
     cmp     d1, d0
     bne     loc_48432A37
@@ -36935,7 +36935,7 @@ UserPadStreamReset_entry:
 UserPadCurStreamCompact:
     add     -0x10, sp
 UserPadCurStreamCompact_entry:
-    movbu   (func_48431ED1_Var), d0
+    movbu   (UserPadRecPartErase_Var), d0
     mov     ptrs_48727F38, a0
     exthu   d0
     call    RhyStreamCompact_entry, [d2,d3,a2,a3], 0x28
@@ -42867,7 +42867,7 @@ StylePartToTgPart:
     cmp     0x20, d0
     bcc     loc_48435BF7
     asl2    d0
-    mov     func_48435BE7_Table, a0
+    mov     StylePartToTgPart_Table, a0
     mov     (d0, a0), d0
     bra     loc_48435BF9
 loc_48435BF7:
@@ -43514,7 +43514,7 @@ NoteConvRuleByte1Get:
 loc_4843619F:
     extbu   d0
     asl     3, d0
-    add     func_48436196_Records, d0
+    add     NoteConvRuleByte1Get_Records, d0
     mov     d0, a0
     movbu   (1, a0), d0
     retf    0, 0
@@ -43528,7 +43528,7 @@ NoteConvRuleByte2Get:
 loc_484361BA:
     extbu   d0
     asl     3, d0
-    add     func_48436196_Records, d0
+    add     NoteConvRuleByte1Get_Records, d0
     mov     d0, a0
     movbu   (2, a0), d0
     retf    0, 0
@@ -43542,7 +43542,7 @@ NoteConvRuleByte3Get:
 loc_484361D5:
     extbu   d0
     asl     3, d0
-    add     func_48436196_Records, d0
+    add     NoteConvRuleByte1Get_Records, d0
     mov     d0, a0
     movbu   (3, a0), d0
     retf    0, 0
@@ -43560,7 +43560,7 @@ NoteConvApply_entry:
     ret     [d2,d3,a2,a3], 0x24
 loc_484361FF:
     movbu   (a0), d0
-    mov     func_48436196_Records, d3
+    mov     NoteConvRuleByte1Get_Records, d3
     asl     3, d0
     mov     d0, a0
     add     d3, a0
@@ -45536,7 +45536,7 @@ loc_48437426:
     nop
     mulu    d0, d3
     mov     d3, a1
-    add     func_48437375_Records, a1
+    add     PadBankNameGet_Records, a1
     mov     a3, a0
     call    strcpy_entry, [a2], 4
     mov     1, d0
@@ -45705,7 +45705,7 @@ loc_4843758E:
     nop
     nop
     mulu    d3, d0
-    add     func_48437375_Records, d0
+    add     PadBankNameGet_Records, d0
     add     0x14, d0
     mov     d0, a0
     mov     (d1, a0), d0
@@ -47456,11 +47456,11 @@ MemPadAreaHeaderRestamp_entry:
     call    memcpy_entry, [a2,a3], 8
     mov     0x10, a0
     add     a2, a0
-    mov     func_48438461_Block, a1
+    mov     MemPadAreaHeaderRestamp_Block, a1
     mov     3, d0
     call    memcpy_entry, [a2,a3], 8
     add     0x16, a2
-    mov     func_48438461_Block_2, a1
+    mov     MemPadAreaHeaderRestamp_Block_2, a1
     mov     0x1a, d0
     mov     a2, a0
     call    memcpy_entry, [a2,a3], 8
@@ -54449,16 +54449,16 @@ CmpStyleSelect_entry:
 loc_4843BB9D:
     clr     d0
     call    func_48436C49_entry, [d2], 0xc
-    movbu   d2, (func_4843BB8E_Var)
-    movbu   (func_4843BB8E_Var), d0
+    movbu   d2, (CmpStyleSelect_Var)
+    movbu   (CmpStyleSelect_Var), d0
     extbu   d2
     exthu   d0
     call    MemStyleRecPtr, 0, 0
-    movbu   (func_4843BB8E_Var_2), d1
+    movbu   (CmpStyleSelect_Var_2), d1
     add     0x50, a0
     movbu   (d1, a0), d0
     or      0x00100000, d2
-    movbu   d0, (func_4843BB8E_Var_3)
+    movbu   d0, (CmpStyleSelect_Var_3)
     mov     d2, d0
     call    func_484436C3_entry, [d2], 0x14
     mov     1, d0
@@ -54468,7 +54468,7 @@ loc_4843BBDB:
     ret     [d2], 0x10
 # CmpCurVariationGet  (CPU 0x4843bbde)
 CmpCurVariationGet:
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     retf    0, 0
 # CmpVariationSelect  (CPU 0x4843bbe7)
 CmpVariationSelect:
@@ -54485,15 +54485,15 @@ CmpVariationSelect_entry:
 loc_4843BBF8:
     clr     d0
     call    func_48436C49_entry, [d2], 0xc
-    movbu   d2, (func_4843BB8E_Var_2)
-    movbu   (func_4843BB8E_Var), d0
+    movbu   d2, (CmpStyleSelect_Var_2)
+    movbu   (CmpStyleSelect_Var), d0
     exthu   d0
     call    MemStyleRecPtr, 0, 0
-    movbu   (func_4843BB8E_Var_2), d0
+    movbu   (CmpStyleSelect_Var_2), d0
     add     0x50, a0
     movbu   (d0, a0), d1
-    movbu   d1, (func_4843BB8E_Var_3)
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   d1, (CmpStyleSelect_Var_3)
+    movbu   (CmpStyleSelect_Var_3), d0
     exthu   d0
     call    func_4843A9DF_entry, [d2,d3,a2,a3], 0x24
     cmp     0xc, d3
@@ -54567,7 +54567,7 @@ func_4843BCC0:
     add     -0xc, sp
 func_4843BCC0_entry:
     mov     d0, d2
-    movbu   (func_4843BB8E_Var), d0
+    movbu   (CmpStyleSelect_Var), d0
     extbu   d2
     exthu   d0
     call    MemStyleRecPtr, 0, 0
@@ -54589,7 +54589,7 @@ func_4843BCC0_entry:
     clr     d0
     bra     loc_4843BD07
 loc_4843BCF4:
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     cmp     d0, d2
     bne     loc_4843BD05
     call    func_48436E33_entry, 0, 0xc
@@ -54601,22 +54601,22 @@ loc_4843BD07:
     ret     [d2,d3], 0x14
 # CmpRecPartGet  (CPU 0x4843bd0a)
 CmpRecPartGet:
-    movbu   (func_4843BD0A_Var), d0
+    movbu   (CmpRecPartGet_Var), d0
     retf    0, 0
 # CmpRecPartSet  (CPU 0x4843bd13)
 CmpRecPartSet:
-    movbu   d0, (func_4843BD0A_Var)
+    movbu   d0, (CmpRecPartGet_Var)
     mov     1, d0
     retf    0, 0
 # CmpAllEraseGet  (CPU 0x4843bd1e)
 CmpAllEraseGet:
-    movbu   (func_4843BD1E_Var), d0
+    movbu   (CmpAllEraseGet_Var), d0
     retf    0, 0
 # CmpAllEraseSet  (CPU 0x4843bd27)
 CmpAllEraseSet:
     movm    [d2], (sp)
 CmpAllEraseSet_entry:
-    movbu   (func_4843BD1E_Var), d1
+    movbu   (CmpAllEraseGet_Var), d1
     mov     d0, d2
     extbu   d2
     cmp     d1, d2
@@ -54624,19 +54624,19 @@ CmpAllEraseSet_entry:
     mov     -1, d0
     bra     loc_4843BD40
 loc_4843BD38:
-    movbu   d0, (func_4843BD1E_Var)
+    movbu   d0, (CmpAllEraseGet_Var)
     mov     1, d0
 loc_4843BD40:
     retf    [d2], 4
 # CmpNoteClearGet  (CPU 0x4843bd43)
 CmpNoteClearGet:
-    movbu   (func_4843BD43_Table), d0
+    movbu   (CmpNoteClearGet_Table), d0
     retf    0, 0
 # CmpNoteClearSet  (CPU 0x4843bd4c)
 CmpNoteClearSet:
     movm    [d2], (sp)
 CmpNoteClearSet_entry:
-    movbu   (func_4843BD43_Table), d1
+    movbu   (CmpNoteClearGet_Table), d1
     mov     d0, d2
     extbu   d2
     cmp     d1, d2
@@ -54644,7 +54644,7 @@ CmpNoteClearSet_entry:
     mov     -1, d0
     bra     loc_4843BD65
 loc_4843BD5D:
-    movbu   d0, (func_4843BD43_Table)
+    movbu   d0, (CmpNoteClearGet_Table)
     mov     1, d0
 loc_4843BD65:
     retf    [d2], 4
@@ -54653,7 +54653,7 @@ CmpStyleNameGet:
     movm    [a2,a3], (sp)
     add     -0x14, sp
 CmpStyleNameGet_entry:
-    movbu   (func_4843BB8E_Var), d0
+    movbu   (CmpStyleSelect_Var), d0
     mov     a0, a3
     exthu   d0
     call    MemStyleRecPtr, 0, 0
@@ -54688,7 +54688,7 @@ loc_4843BDB2:
     mov     a1, d0
     mov     a2, a1
     call    strncpy_entry, [a2,a3], 8
-    movbu   (func_4843BB8E_Var), d0
+    movbu   (CmpStyleSelect_Var), d0
     exthu   d0
     call    MemStyleRecPtr, 0, 0
     mov     0xd, d0
@@ -54713,25 +54713,25 @@ CmpVariNameGet_entry:
     cmp     3, d0
     beq     loc_4843BE24
 loc_4843BDF4:
-    movbu   (func_4843BB8E_Var), d0
+    movbu   (CmpStyleSelect_Var), d0
     exthu   d0
     call    MemStyleRecPtr, 0, 0
     add     0x10, a0
     bra     loc_4843BE32
 loc_4843BE04:
-    movbu   (func_4843BB8E_Var), d0
+    movbu   (CmpStyleSelect_Var), d0
     exthu   d0
     call    MemStyleRecPtr, 0, 0
     add     0x20, a0
     bra     loc_4843BE32
 loc_4843BE14:
-    movbu   (func_4843BB8E_Var), d0
+    movbu   (CmpStyleSelect_Var), d0
     exthu   d0
     call    MemStyleRecPtr, 0, 0
     add     0x30, a0
     bra     loc_4843BE32
 loc_4843BE24:
-    movbu   (func_4843BB8E_Var), d0
+    movbu   (CmpStyleSelect_Var), d0
     exthu   d0
     call    MemStyleRecPtr, 0, 0
     add     0x40, a0
@@ -54764,28 +54764,28 @@ loc_4843BE55:
     cmp     3, d0
     beq     loc_4843BE98
 loc_4843BE65:
-    movbu   (func_4843BB8E_Var), d0
+    movbu   (CmpStyleSelect_Var), d0
     exthu   d0
     call    MemStyleRecPtr, 0, 0
     mov     a0, a3
     add     0x10, a3
     bra     loc_4843BEA7
 loc_4843BE76:
-    movbu   (func_4843BB8E_Var), d0
+    movbu   (CmpStyleSelect_Var), d0
     exthu   d0
     call    MemStyleRecPtr, 0, 0
     mov     a0, a3
     add     0x20, a3
     bra     loc_4843BEA7
 loc_4843BE87:
-    movbu   (func_4843BB8E_Var), d0
+    movbu   (CmpStyleSelect_Var), d0
     exthu   d0
     call    MemStyleRecPtr, 0, 0
     mov     a0, a3
     add     0x30, a3
     bra     loc_4843BEA7
 loc_4843BE98:
-    movbu   (func_4843BB8E_Var), d0
+    movbu   (CmpStyleSelect_Var), d0
     exthu   d0
     call    MemStyleRecPtr, 0, 0
     mov     a0, a3
@@ -54880,7 +54880,7 @@ CmpPatternClear:
 CmpPatternClear_entry:
     clr     d0
     call    func_48436C49_entry, [d2], 0xc
-    movbu   (func_4843BB8E_Var), d0
+    movbu   (CmpStyleSelect_Var), d0
     call    MemStyleStyleClear_entry, [d2,d3,a2], 0x1c
     mov     1, d0
     call    func_48436C49_entry, [d2], 0xc
@@ -54899,7 +54899,7 @@ CmpEffect1TotalGet_entry:
     clr     d0
     bra     loc_4843BF97
 loc_4843BF80:
-    movbu   (func_4843BB8E_Var), d0
+    movbu   (CmpStyleSelect_Var), d0
     exthu   d0
     call    MemStyleRecPtr, 0, 0
     mov     d2, d0
@@ -54926,7 +54926,7 @@ loc_4843BFAA:
     extbu   d1
     cmp     0, d1
     beq     loc_4843BFCE
-    movbu   (func_4843BB8E_Var), d0
+    movbu   (CmpStyleSelect_Var), d0
     add     a2, a2
     exthu   d0
     call    MemStyleRecPtr, 0, 0
@@ -54940,7 +54940,7 @@ loc_4843BFAA:
     movbu   d0, (a0)
     bra     loc_4843BFEE
 loc_4843BFCE:
-    movbu   (func_4843BB8E_Var), d0
+    movbu   (CmpStyleSelect_Var), d0
     add     a2, a2
     exthu   d0
     call    MemStyleRecPtr, 0, 0
@@ -54953,7 +54953,7 @@ loc_4843BFCE:
     and     0xffffff7f, d0
     movbu   d0, (a0)
 loc_4843BFEE:
-    movbu   (func_4843BB8E_Var), d0
+    movbu   (CmpStyleSelect_Var), d0
     call    func_4843CB68_entry, [d2,d3,a2], 0x1c
     call    RhyStyleReloadRewind_entry, 0, 0x18
     mov     1, d0
@@ -54971,14 +54971,14 @@ CmpEffectTypeGet_entry:
     blt     loc_4843C010
     clr     d2
 loc_4843C010:
-    movbu   (func_4843BB8E_Var), d0
+    movbu   (CmpStyleSelect_Var), d0
     extbu   d2
     exthu   d0
     call    MemStyleRecPtr, 0, 0
     add     d2, d2
     add     0x70, a0
     movbu   (d2, a0), d3
-    movbu   (func_4843BB8E_Var), d0
+    movbu   (CmpStyleSelect_Var), d0
     inc     d2
     exthu   d0
     call    MemStyleRecPtr, 0, 0
@@ -55005,13 +55005,13 @@ CmpEffectTypeSet_entry:
     mov     -1, d0
     bra     loc_4843C0A8
 loc_4843C055:
-    movbu   (func_4843BB8E_Var), d0
+    movbu   (CmpStyleSelect_Var), d0
     add     d2, d2
     exthu   d0
     call    MemStyleRecPtr, 0, 0
     add     0x70, a0
     movbu   d3, (d2, a0)
-    movbu   (func_4843BB8E_Var), d0
+    movbu   (CmpStyleSelect_Var), d0
     inc     d2
     exthu   d0
     call    MemStyleRecPtr, 0, 0
@@ -55021,7 +55021,7 @@ loc_4843C055:
     add     0x70, a0
     and     0x80, d0
     movbu   d0, (d2, a0)
-    movbu   (func_4843BB8E_Var), d0
+    movbu   (CmpStyleSelect_Var), d0
     exthu   d3
     exthu   d0
     call    MemStyleRecPtr, 0, 0
@@ -55048,7 +55048,7 @@ MemVarEffectPartGet_entry:
     blt     loc_4843C0B7
     clr     d2
 loc_4843C0B7:
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     extbu   d2
     exthu   d0
     call    MemStyleVarRecPtr, 0, 0
@@ -55068,14 +55068,14 @@ MemVarEffectPartSet_entry:
     mov     -1, d0
     bra     loc_4843C104
 loc_4843C0DB:
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     extbu   d2
     exthu   d0
     call    MemStyleVarRecPtr, 0, 0
     add     0x18, a0
     movbu   d3, (d2, a0)
-    movbu   (func_4843BB8E_Var), d0
-    movbu   (func_4843BB8E_Var_2), d1
+    movbu   (CmpStyleSelect_Var), d0
+    movbu   (CmpStyleSelect_Var_2), d1
     call    func_4843CAFF_entry, [d2,d3,a2], 0x18
     call    RhyStylePartsReapply_entry, 0, 0x18
     mov     1, d0
@@ -55086,10 +55086,10 @@ MemVarRecChordGet:
     movm    [d2], (sp)
     add     -0xc, sp
 MemVarRecChordGet_entry:
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     exthu   d0
     call    MemStyleVarRecPtr, 0, 0
-    movbu   (func_4843BB8E_Var_2), d1
+    movbu   (CmpStyleSelect_Var_2), d1
     movbu   (3, a0), d0
     cmp     0xc, d1
     blt     loc_4843C140
@@ -55115,7 +55115,7 @@ MemVarRecChordSet:
     add     -0xc, sp
 MemVarRecChordSet_entry:
     mov     d0, d2
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     exthu   d0
     call    MemStyleVarRecPtr, 0, 0
     movbu   d2, (3, a0)
@@ -55125,7 +55125,7 @@ MemVarRecChordSet_entry:
 CmpMeasureCountGet:
     add     -0xc, sp
 CmpMeasureCountGet_entry:
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     exthu   d0
     call    MemStyleVarMeasureCountGet_entry, 0, 0xc
     extbu   d0
@@ -55142,7 +55142,7 @@ CmpMeasureCountSet_entry:
     mov     -1, d0
     ret     [d2,d3,a2,a3], 0x34
 loc_4843C182:
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     exthu   d0
     call    MemStyleVarMeasureCountGet_entry, 0, 0xc
     extbu   d0
@@ -55162,7 +55162,7 @@ loc_4843C19B:
     mov     a2, d0
     extbu   d0
     mov     d0, (0x10, sp)
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     mov     (0x1c, sp), d1
     exthu   d0
     call    MemStyleVarMeasuresDelete_entry, [d2,d3,a2,a3], 0x40
@@ -55179,7 +55179,7 @@ loc_4843C1C7:
     mov     a2, d1
     extbu   d0
     mov     d0, (0x10, sp)
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     exthu   d0
     call    MemStyleVarMeasuresInsert_entry, [d2,d3,a2,a3], 0x3c
     mov     d0, d3
@@ -55188,7 +55188,7 @@ loc_4843C1C7:
     bge     loc_4843C1E8
     jmp     loc_4843C26D
 loc_4843C1E8:
-    movbu   (func_4843BB8E_Var_2), d0
+    movbu   (CmpStyleSelect_Var_2), d0
     cmp     0xc, d0
     blt     loc_4843C1F4
     bra     loc_4843C26D
@@ -55212,7 +55212,7 @@ loc_4843C215:
     mov     a2, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     mov     a2, d1
     exthu   d0
     nop
@@ -55247,7 +55247,7 @@ loc_4843C23D:
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0x14, sp)
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     mov     a2, d1
     exthu   d0
     nop
@@ -55265,7 +55265,7 @@ loc_4843C26D:
     bge     loc_4843C276
     jmp     loc_4843C2F3
 loc_4843C276:
-    movbu   (func_4843BB8E_Var_2), d0
+    movbu   (CmpStyleSelect_Var_2), d0
     cmp     0xc, d0
     bge     loc_4843C282
     bra     loc_4843C2F3
@@ -55277,19 +55277,19 @@ loc_4843C282:
     mov     mdr, d0
     cmp     0, d0
     bne     loc_4843C2A9
-    movbu   (func_4843BB8E_Var), d0
+    movbu   (CmpStyleSelect_Var), d0
     exthu   d0
     call    MemStyleRecPtr, 0, 0
-    movbu   (func_4843BB8E_Var_2), d0
+    movbu   (CmpStyleSelect_Var_2), d0
     add     0x50, a0
     inc     d0
     movbu   (d0, a0), d0
     bra     loc_4843C2C1
 loc_4843C2A9:
-    movbu   (func_4843BB8E_Var), d0
+    movbu   (CmpStyleSelect_Var), d0
     exthu   d0
     call    MemStyleRecPtr, 0, 0
-    movbu   (func_4843BB8E_Var_2), d0
+    movbu   (CmpStyleSelect_Var_2), d0
     add     0x50, a0
     add     -1, d0
     movbu   (d0, a0), d0
@@ -55331,7 +55331,7 @@ loc_4843C2F3:
 CmpTimeSigByteGet:
     add     -0xc, sp
 CmpTimeSigByteGet_entry:
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     exthu   d0
     call    MemStyleVarRecPtr, 0, 0
     movbu   (0x11, a0), d0
@@ -55365,16 +55365,16 @@ loc_4843C339:
 loc_4843C344:
     clr     d0
     call    func_48436C49_entry, [d2], 0xc
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     mov     ptrs_48727F84, a2
     exthu   d0
     call    MemStyleVarRecPtr, 0, 0
     movbu   (0x28, sp), d0
     movbu   d0, (0x10, a0)
     movbu   d3, (0x11, a0)
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     mov     d0, d2
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     exthu   d2
     exthu   d0
     call    MemStyleVarBarCount_entry, 0, 0xc
@@ -55388,7 +55388,7 @@ loc_4843C344:
     exth    d1
     cmp     0, d1
     blt     loc_4843C3F3
-    movbu   (func_4843BB8E_Var_2), d0
+    movbu   (CmpStyleSelect_Var_2), d0
     cmp     0xc, d0
     blt     loc_4843C3F3
     add     -0xc, d0
@@ -55398,19 +55398,19 @@ loc_4843C344:
     mov     mdr, d0
     cmp     0, d0
     bne     loc_4843C3BA
-    movbu   (func_4843BB8E_Var), d0
+    movbu   (CmpStyleSelect_Var), d0
     exthu   d0
     call    MemStyleRecPtr, 0, 0
-    movbu   (func_4843BB8E_Var_2), d0
+    movbu   (CmpStyleSelect_Var_2), d0
     add     0x50, a0
     inc     d0
     movbu   (d0, a0), d2
     bra     loc_4843C3D2
 loc_4843C3BA:
-    movbu   (func_4843BB8E_Var), d0
+    movbu   (CmpStyleSelect_Var), d0
     exthu   d0
     call    MemStyleRecPtr, 0, 0
-    movbu   (func_4843BB8E_Var_2), d0
+    movbu   (CmpStyleSelect_Var_2), d0
     add     0x50, a0
     add     -1, d0
     movbu   (d0, a0), d2
@@ -55458,14 +55458,14 @@ MemStyleVarBarCount_entry:
 CmpBeatTotalGet:
     add     -0xc, sp
 CmpBeatTotalGet_entry:
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     exthu   d0
     call    MemStyleVarBarCount_entry, 0, 0xc
     ret     0, 0xc
 # CmpBeatsPerBarGet  (CPU 0x4843c433)
 CmpBeatsPerBarGet:
     add     -0xc, sp
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     exthu   d0
     call    MemStyleVarBeatsPerBarGet_entry, 0, 0xc
     ret     0, 0xc
@@ -55475,8 +55475,8 @@ CmpSectionClear:
 CmpSectionClear_entry:
     clr     d0
     call    func_48436C49_entry, [d2], 0xc
-    movbu   (func_4843BB8E_Var), d0
-    movbu   (func_4843BB8E_Var_2), d1
+    movbu   (CmpStyleSelect_Var), d0
+    movbu   (CmpStyleSelect_Var_2), d1
     call    MemStyleVarClear_entry, [d2,a2], 0x1c
     mov     1, d0
     call    func_48436C49_entry, [d2], 0xc
@@ -55490,7 +55490,7 @@ CmpMeasureErase:
 CmpMeasureErase_entry:
     mov     d1, d2
     mov     d0, d3
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     extbu   d3
     exthu   d0
     call    MemStyleVarMeasureCountGet_entry, 0, 0xc
@@ -55512,7 +55512,7 @@ loc_4843C493:
     movbu   (0x30, sp), d0
     mov     d3, d1
     mov     d0, (0x14, sp)
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     exthu   d0
     call    func_4843AD72_entry, [d2,d3,a2,a3], 0x28
     mov     d0, d2
@@ -55578,7 +55578,7 @@ loc_4843C50C:
     mov     -1, d0
     ret     [d2,d3,a2,a3], 0x38
 loc_4843C51D:
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     exthu   d0
     call    MemStyleVarMeasureCountGet_entry, 0, 0xc
     movbu   (0x4c, sp), d1
@@ -55606,7 +55606,7 @@ loc_4843C541:
     blt     loc_4843C568
     mov     d3, (0x10, sp)
     mov     a2, (0x14, sp)
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     mov     a3, d1
     exthu   d0
     call    func_4843AE5A_entry, [d2,d3,a2,a3], 0x50
@@ -55617,7 +55617,7 @@ loc_4843C568:
     mov     (0x20, sp), d0
     mov     a3, d1
     mov     d0, (0x14, sp)
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     exthu   d0
     call    func_4843AD72_entry, [d2,d3,a2,a3], 0x28
     mov     d0, d2
@@ -55631,7 +55631,7 @@ loc_4843C568:
     mov     a2, (0x18, sp)
     mov     (0x24, sp), d0
     mov     d0, (0x1c, sp)
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     exthu   d0
     call    func_4843AFA9_entry, [d2,d3,a2,a3], 0x60
     mov     d0, d2
@@ -55648,7 +55648,7 @@ CmpMeasureDelete:
 CmpMeasureDelete_entry:
     mov     d1, d3
     mov     d0, d2
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     extbu   d2
     exthu   d0
     call    MemStyleVarMeasureCountGet_entry, 0, 0xc
@@ -55670,7 +55670,7 @@ loc_4843C5D7:
     clr     d0
     call    func_48436C49_entry, [d2], 0xc
     mov     a2, (0x10, sp)
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     mov     d2, d1
     exthu   d0
     call    MemStyleVarMeasuresDelete_entry, [d2,d3,a2,a3], 0x40
@@ -55678,7 +55678,7 @@ loc_4843C5D7:
     exth    d0
     cmp     0, d0
     blt     loc_4843C659
-    movbu   (func_4843BB8E_Var_2), d0
+    movbu   (CmpStyleSelect_Var_2), d0
     cmp     0xc, d0
     blt     loc_4843C659
     add     -0xc, d0
@@ -55688,19 +55688,19 @@ loc_4843C5D7:
     mov     mdr, d0
     cmp     0, d0
     bne     loc_4843C623
-    movbu   (func_4843BB8E_Var), d0
+    movbu   (CmpStyleSelect_Var), d0
     exthu   d0
     call    MemStyleRecPtr, 0, 0
-    movbu   (func_4843BB8E_Var_2), d0
+    movbu   (CmpStyleSelect_Var_2), d0
     add     0x50, a0
     inc     d0
     movbu   (d0, a0), d0
     bra     loc_4843C63B
 loc_4843C623:
-    movbu   (func_4843BB8E_Var), d0
+    movbu   (CmpStyleSelect_Var), d0
     exthu   d0
     call    MemStyleRecPtr, 0, 0
-    movbu   (func_4843BB8E_Var_2), d0
+    movbu   (CmpStyleSelect_Var_2), d0
     add     0x50, a0
     add     -1, d0
     movbu   (d0, a0), d0
@@ -55734,7 +55734,7 @@ CmpMeasureInsert:
 CmpMeasureInsert_entry:
     mov     d1, d3
     mov     d0, d2
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     extbu   d2
     exthu   d0
     call    MemStyleVarMeasureCountGet_entry, 0, 0xc
@@ -55755,7 +55755,7 @@ loc_4843C692:
     clr     d0
     call    func_48436C49_entry, [d2], 0xc
     mov     d3, (0x10, sp)
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     mov     d2, d1
     exthu   d0
     call    MemStyleVarMeasuresInsert_entry, [d2,d3,a2,a3], 0x3c
@@ -55763,7 +55763,7 @@ loc_4843C692:
     exth    d0
     cmp     0, d0
     blt     loc_4843C71A
-    movbu   (func_4843BB8E_Var_2), d0
+    movbu   (CmpStyleSelect_Var_2), d0
     cmp     0xc, d0
     blt     loc_4843C71A
     add     -0xc, d0
@@ -55773,19 +55773,19 @@ loc_4843C692:
     mov     mdr, d0
     cmp     0, d0
     bne     loc_4843C6DF
-    movbu   (func_4843BB8E_Var), d0
+    movbu   (CmpStyleSelect_Var), d0
     exthu   d0
     call    MemStyleRecPtr, 0, 0
-    movbu   (func_4843BB8E_Var_2), d0
+    movbu   (CmpStyleSelect_Var_2), d0
     add     0x50, a0
     inc     d0
     movbu   (d0, a0), d0
     bra     loc_4843C6F7
 loc_4843C6DF:
-    movbu   (func_4843BB8E_Var), d0
+    movbu   (CmpStyleSelect_Var), d0
     exthu   d0
     call    MemStyleRecPtr, 0, 0
-    movbu   (func_4843BB8E_Var_2), d0
+    movbu   (CmpStyleSelect_Var_2), d0
     add     0x50, a0
     add     -1, d0
     movbu   (d0, a0), d0
@@ -55820,7 +55820,7 @@ CmpRecArrangeGet:
     add     -0xc, sp
 CmpRecArrangeGet_entry:
     mov     d0, d2
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     extbu   d2
     exthu   d0
     call    MemStyleVarRecPtr, 0, 0
@@ -55834,7 +55834,7 @@ CmpRecArrangeSet:
 CmpRecArrangeSet_entry:
     mov     d1, d3
     mov     d0, d2
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     extbu   d2
     exthu   d0
     call    MemStyleVarRecPtr, 0, 0
@@ -55850,7 +55850,7 @@ CmpRecArrangeApplyAll_entry:
     mov     d0, d3
     clr     d0
     call    func_48436C49_entry, [d2], 0xc
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     mov     -3, d2
     exthu   d0
     call    MemStyleVarRecData_entry, 0, 0xc
@@ -55899,7 +55899,7 @@ loc_4843C7C3:
     clr     d0
     bra     loc_4843C7E3
 loc_4843C7C6:
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     extbu   d2
     exthu   d0
     call    MemStyleVarRecPtr, 0, 0
@@ -55936,7 +55936,7 @@ loc_4843C7F9:
 loc_4843C7FD:
     extbu   d2
     mov     d2, a0
-    add     func_4843C7E6_Table, a0
+    add     CmpPartSetupByteSet_Table, a0
     movbu   (a0), d1
     movbu   (0x24, sp), d0
     cmp     d1, d0
@@ -55944,7 +55944,7 @@ loc_4843C7FD:
     movbu   (a0), d0
     movbu   d0, (0x24, sp)
 loc_4843C813:
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     extbu   d3
     exthu   d0
     call    MemStyleVarRecPtr, 0, 0
@@ -55971,7 +55971,7 @@ CmpPartVoiceGet:
     clr     d0
     bra     loc_4843C88B
 loc_4843C847:
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     extbu   d3
     exthu   d0
     call    MemStyleVarRecPtr, 0, 0
@@ -55981,13 +55981,13 @@ loc_4843C847:
     mulu    d0, d3
     add     d3, a0
     movbu   (0x24, a0), d2
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     asl     8, d2
     exthu   d0
     call    MemStyleVarRecPtr, 0, 0
     add     d3, a0
     movbu   (0x23, a0), d1
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     or      d1, d2
     exthu   d0
     call    MemStyleVarRecPtr, 0, 0
@@ -56010,7 +56010,7 @@ CmpPartVoiceSet_entry:
     mov     -1, d0
     bra     loc_4843C8F0
 loc_4843C89E:
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     extbu   d2
     exthu   d0
     call    MemStyleVarRecPtr, 0, 0
@@ -56022,7 +56022,7 @@ loc_4843C89E:
     mov     0x7f, d0
     and     d3, d0
     movbu   d0, (0x22, a0)
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     lsr     8, d3
     exthu   d0
     call    MemStyleVarRecPtr, 0, 0
@@ -56030,7 +56030,7 @@ loc_4843C89E:
     mov     0x7f, d0
     and     d3, d0
     movbu   d0, (0x23, a0)
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     lsr     8, d3
     exthu   d0
     call    MemStyleVarRecPtr, 0, 0
@@ -56046,8 +56046,8 @@ CmpPartClear:
     movm    [d2,d3,a2], (sp)
     add     -0x10, sp
 CmpPartClear_entry:
-    movbu   (func_4843BB8E_Var_3), d0
-    movbu   (func_4843BD0A_Var), d1
+    movbu   (CmpStyleSelect_Var_3), d0
+    movbu   (CmpRecPartGet_Var), d1
     exthu   d0
     call    MemStyleVarPartErase_entry, [d2,a2], 0x18
     mov     d0, d2
@@ -56070,7 +56070,7 @@ CmpRecPartNoteErase:
     add     -0x14, sp
 CmpRecPartNoteErase_entry:
     mov     d0, d2
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     exthu   d0
     call    MemStyleVarRecData_entry, 0, 0xc
     mov     a0, a2
@@ -56093,7 +56093,7 @@ loc_4843C954:
     mov     -1, d0
     bra     loc_4843C96A
 loc_4843C95D:
-    movbu   (func_4843BD0A_Var), d0
+    movbu   (CmpRecPartGet_Var), d0
     mov     d2, d1
     mov     a2, a0
     call    RhyStreamNoteErase_entry, [d2,d3,a2], 0x18
@@ -56107,14 +56107,14 @@ func_4843C96D_entry:
     mov     a1, a2
     mov     a0, (0x34, sp)
     mov     d1, d3
-    movbu   (func_4843BD1E_Var), d1
+    movbu   (CmpAllEraseGet_Var), d1
     mov     d0, d2
     cmp     0, d1
     bne     loc_4843C986
     mov     -1, d0
     ret     [d2,d3,a2,a3], 0x1c
 loc_4843C986:
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     exthu   d2
     exthu   d0
     call    MemStyleVarBarCount_entry, 0, 0xc
@@ -56161,7 +56161,7 @@ loc_4843C9D6:
     ble     loc_4843CA04
     movbu   (a2), d0
     mov     d0, d1
-    movbu   (func_4843BD0A_Var), d0
+    movbu   (CmpRecPartGet_Var), d0
     and     0xffffff0f, d1
     cmp     d0, d1
     bne     loc_4843C9F9
@@ -56215,7 +56215,7 @@ MemStyleVarStreamReset_entry:
 CmpCurStreamCompact:
     add     -0x10, sp
 CmpCurStreamCompact_entry:
-    movbu   (func_4843BB8E_Var_3), d0
+    movbu   (CmpStyleSelect_Var_3), d0
     mov     ptrs_48727F84, a0
     exthu   d0
     call    RhyStreamCompact_entry, [d2,d3,a2,a3], 0x28
@@ -62337,7 +62337,7 @@ loc_4843FB10:
     bra     loc_4843FB20
 loc_4843FB14:
     asl2    d0
-    add     func_4843FB07_Table, d0
+    add     SndArgPartEntry_Table, d0
     mov     d0, a0
     mov     (-0x4c, a0), d0
 loc_4843FB20:
@@ -62634,7 +62634,7 @@ loc_4843FD5F:
     call    func_48441915_entry, [d2,d3,a2], 0x24
     extbu   d2
     mov     d2, a0
-    add     func_4843FF8E_Table, a0
+    add     SndArgTemplateApply_Table, a0
     mov     (0x10, sp), a1
     mov     d0, d3
     movbu   (a0), d0
@@ -62920,7 +62920,7 @@ SndArgTemplateApply_entry:
     cmp     8, d0
     bge     loc_4843FFF5
     extbu   d1
-    mov     func_4843FF8E_Table, a1
+    mov     SndArgTemplateApply_Table, a1
     movbu   (d1, a1), d0
     exthu   d3
     movbu   d0, (0, sp)
@@ -63067,7 +63067,7 @@ loc_4844009F:
     mov     a2, d0
     exthu   d0
     movbu   (0x32, sp), d2
-    mov     func_4843FF8E_Table, a0
+    mov     SndArgTemplateApply_Table, a0
     movbu   (d0, a0), d0
     mov     (0x18, sp), a0
     mov     d0, d1

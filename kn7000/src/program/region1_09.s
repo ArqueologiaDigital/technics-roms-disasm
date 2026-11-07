@@ -4066,7 +4066,7 @@ func_485231D2_entry:
 loc_48523224:
     mov     0x5006e8c8, a2
     mov     a2, a0
-    mov     func_4852F762_Var_3, a1
+    mov     FmmStrCopy_Var_3, a1
     call    FmmStrCopy, 0, 0
     mov     a2, a0
     mov     0x10, d0
@@ -4129,7 +4129,7 @@ func_4852326B_entry:
 loc_485232BF:
     mov     0x5006e8e0, a3
     mov     a3, a0
-    mov     func_4852F762_Var_4, a1
+    mov     FmmStrCopy_Var_4, a1
     call    FmmStrCopy, 0, 0
     mov     a3, a0
     mov     0x10, d0
@@ -4184,7 +4184,7 @@ func_4852331D_entry:
     bge     loc_48523356
     mov     0x5006e8f8, a2
     mov     a2, a0
-    mov     func_4852F762_Var_5, a1
+    mov     FmmStrCopy_Var_5, a1
     call    FmmStrCopy, 0, 0
     mov     a2, a0
     mov     0x10, d0
@@ -4213,7 +4213,7 @@ loc_48523356:
 loc_48523393:
     mov     0x5006e8f8, a2
     mov     a2, a0
-    mov     func_4852F762_Var_5, a1
+    mov     FmmStrCopy_Var_5, a1
     call    FmmStrCopy, 0, 0
     mov     a2, a0
     mov     0x10, d0
@@ -4371,7 +4371,7 @@ func_48523481_entry:
 loc_485234E1:
     mov     0x5006e910, a3
     mov     a3, a0
-    mov     func_4852F762_Var_6, a1
+    mov     FmmStrCopy_Var_6, a1
     call    FmmStrCopy, 0, 0
     mov     a3, a0
     mov     0x10, d0
@@ -4427,7 +4427,7 @@ func_48523527_entry:
 loc_4852357B:
     mov     0x5006e928, a3
     mov     a3, a0
-    mov     func_4852F762_Var_7, a1
+    mov     FmmStrCopy_Var_7, a1
     call    FmmStrCopy, 0, 0
     mov     a3, a0
     mov     0x10, d0
@@ -4490,7 +4490,7 @@ func_485235CD_entry:
 loc_4852361E:
     mov     0x5006e940, a3
     mov     a3, a0
-    mov     func_4852F762_Var_8, a1
+    mov     FmmStrCopy_Var_8, a1
     call    FmmStrCopy, 0, 0
     mov     a3, a0
     mov     0x10, d0
@@ -4548,7 +4548,7 @@ func_48523669_entry:
 loc_485236BB:
     mov     0x5006e958, a3
     mov     a3, a0
-    mov     func_4852F762_Var_9, a1
+    mov     FmmStrCopy_Var_9, a1
     call    FmmStrCopy, 0, 0
     mov     a3, a0
     mov     0x10, d0
@@ -4615,7 +4615,7 @@ func_48523711_entry:
 loc_4852375B:
     mov     0x5006e970, a2
     mov     a2, a0
-    mov     func_4852F762_Var_10, a1
+    mov     FmmStrCopy_Var_10, a1
     call    FmmStrCopy, 0, 0
     mov     a2, a0
     mov     0x10, d0
@@ -7085,7 +7085,7 @@ func_48525732_entry:
     movbu   d0, (0x5006f11c)
     mov     0x5006f11d, a2
     mov     a2, a0
-    mov     func_4852F762_Var_11, a1
+    mov     FmmStrCopy_Var_11, a1
     call    FmmStrCopy, 0, 0
     mov     0x10, d0
     mov     a2, a0
@@ -7201,7 +7201,7 @@ func_485258C1_entry:
     movbu   d0, (0x5006f170)
     mov     0x5006f171, a2
     mov     a2, a0
-    mov     func_4852F762_Var_12, a1
+    mov     FmmStrCopy_Var_12, a1
     call    FmmStrCopy, 0, 0
     mov     0x10, d0
     mov     a2, a0
@@ -22008,7 +22008,7 @@ loc_4852ED7E:
     mov     d3, d1
     clr     d2
 loc_4852ED81:
-    mov     func_4852ED19_Table, a1
+    mov     FmmEntryPicturesDelete_Table, a1
     extbu   d1
     asl     3, d1
     mov     d1, a0
@@ -22297,7 +22297,7 @@ FmmEntryPicturesCopy_entry:
 loc_4852EFFB:
     clr     d2
 loc_4852EFFC:
-    mov     func_4852ED19_Table, a1
+    mov     FmmEntryPicturesDelete_Table, a1
     mov     d2, d1
     asl     3, d1
     mov     d1, a0
@@ -22633,7 +22633,7 @@ loc_4852F2E4:
     mov     d3, d1
     clr     d2
 loc_4852F2E7:
-    mov     func_4852ED19_Table, a1
+    mov     FmmEntryPicturesDelete_Table, a1
     extbu   d1
     asl     3, d1
     mov     d1, a0
@@ -23380,7 +23380,7 @@ FmmNameWithExtBuild_entry:
     call    FmmStrCat, 0, 0
     extbu   d2
     asl2    d2
-    mov     func_4852F882_Table, a0
+    mov     FmmNameWithExtBuild_Table, a0
     mov     (d2, a0), a1
     mov     a2, a0
     call    FmmStrCat, 0, 0
@@ -24015,7 +24015,7 @@ loc_4852FCFE:
 FmmListsReset:
     movm    [d2], (sp)
 FmmListsReset_entry:
-    mov     func_4852FD0A_Table, a1
+    mov     FmmListsReset_Table, a1
     mov     0x5006f54c, a0
     mov     -0x13, d1
     setlb
@@ -24027,7 +24027,7 @@ FmmListsReset_entry:
     lne
     clr     d2
 loc_4852FD22:
-    mov     func_4852FD0A_Table_2, a1
+    mov     FmmListsReset_Table_2, a1
     mov     0xa, d1
     nop
     nop
@@ -24048,7 +24048,7 @@ loc_4852FD22:
     blt     loc_4852FD22
     clr     d2
 loc_4852FD4A:
-    mov     func_4852FD0A_Table_3, a1
+    mov     FmmListsReset_Table_3, a1
     mov     0x4f, d1
     nop
     nop
@@ -24090,7 +24090,7 @@ FmmMediaTypeGet:
     add     -8, sp
 FmmMediaTypeGet_entry:
     movbu   (0x5006f595), d1
-    movbu   (func_4852FD0A_Table+73), d0
+    movbu   (FmmListsReset_Table+73), d0
     cmp     d0, d1
     bne     loc_4852FDE9
     call    GetMediaType_entry, [d2,a2,a3], 0x34
@@ -24104,7 +24104,7 @@ FmmDiskFreeSpaceGet:
     add     -0x10, sp
 FmmDiskFreeSpaceGet_entry:
     mov     (0x5006f54c), a2
-    mov     (func_4852FD0A_Table), a1
+    mov     (FmmListsReset_Table), a1
     mov     0x5006f54c, a0
     cmp     a1, a2
     bne     loc_4852FE19
@@ -24123,7 +24123,7 @@ FdDiskFreeSpaceRead:
     ret     0, 0x10
 # FmmDiskFreeSpaceInvalidate  (CPU 0x4852fe41)
 FmmDiskFreeSpaceInvalidate:
-    mov     (func_4852FD0A_Table), d0
+    mov     (FmmListsReset_Table), d0
     mov     d0, (0x5006f54c)
     retf    0, 0
 # FmmDiskSpaceSecondGet  (CPU 0x4852fe50)
@@ -24132,7 +24132,7 @@ FmmDiskSpaceSecondGet:
     add     -0x10, sp
 FmmDiskSpaceSecondGet_entry:
     mov     (0x5006f550), a2
-    mov     (func_4852FD0A_Table+4), a1
+    mov     (FmmListsReset_Table+4), a1
     mov     0x5006f54c, a0
     cmp     a1, a2
     bne     loc_4852FE77
@@ -24147,7 +24147,7 @@ FmmVolumeLabelGet:
     add     -0x10, sp
 FmmVolumeLabelGet_entry:
     mov     0x5006f554, d2
-    mov     func_4852FD0A_Table+8, a3
+    mov     FmmListsReset_Table+8, a3
     mov     d2, a0
     mov     a3, a1
     call    FmmStrCmp, 0, 0
@@ -24422,7 +24422,7 @@ loc_4853009D:
     add     d1, a2
 loc_485300A6:
     movbu   (0x10, sp), d0
-    mov     func_4852F882_Table, a0
+    mov     FmmNameWithExtBuild_Table, a0
     asl2    d0
     mov     (d0, a0), d0
     mov     a2, a1
@@ -24640,7 +24640,7 @@ FmmFileListScan_entry:
     add     -0x120, sp
     clr     d2
 loc_4853021B:
-    mov     func_4852FD0A_Table_2, a1
+    mov     FmmListsReset_Table_2, a1
     mov     0xa, d1
     nop
     nop
@@ -24726,7 +24726,7 @@ func_485302C0:
     movhu   d1, (0x28, sp)
     mov     d0, d3
     exthu   d3
-    mov     func_4852FD0A_Table_2, a1
+    mov     FmmListsReset_Table_2, a1
     mov     0xa, d2
     nop
     nop
@@ -24968,7 +24968,7 @@ MidFileNamesPageFill_entry:
     add     -0x11c, sp
     clr     d2
 loc_485304D2:
-    mov     func_4852FD0A_Table_3, a1
+    mov     FmmListsReset_Table_3, a1
     mov     0x4f, d1
     nop
     nop
@@ -25786,7 +25786,7 @@ loc_48530B57:
     bra     loc_48530BBE
 loc_48530B76:
     mov     a2, a0
-    mov     func_4852F7D7_Var_2, a1
+    mov     FmmStrCmp_Var_2, a1
     call    FmmStrCmp, 0, 0
     exth    d0
     cmp     0, d0
@@ -25961,7 +25961,7 @@ loc_48530D0E:
     bra     loc_48530D54
 loc_48530D22:
     mov     a3, a0
-    mov     func_4852F7D7_Var_2, a1
+    mov     FmmStrCmp_Var_2, a1
     call    FmmStrCmp, 0, 0
     exth    d0
     cmp     0, d0
@@ -26007,7 +26007,7 @@ loc_48530D76:
     add     d3, d0
     mov     0xd, a0
     add     d0, a0
-    mov     func_4852F7D7_Var_2, a1
+    mov     FmmStrCmp_Var_2, a1
     call    FmmStrCmp, 0, 0
     exth    d0
     cmp     0, d0
@@ -26478,7 +26478,7 @@ loc_48531150:
     add     a2, d0
     mov     0xd, a0
     add     d0, a0
-    mov     func_4852F7D7_Var_3, a1
+    mov     FmmStrCmp_Var_3, a1
     call    FmmStrCmp, 0, 0
     exth    d0
     cmp     0, d0
@@ -26572,7 +26572,7 @@ PdFileNamesPageFill_entry:
     add     -0x11c, sp
     clr     d2
 loc_4853121E:
-    mov     func_4852FD0A_Table_3, a1
+    mov     FmmListsReset_Table_3, a1
     mov     0x4f, d1
     nop
     nop
@@ -27019,7 +27019,7 @@ DocFileNamesPageFill:
 DocFileNamesPageFill_entry:
     clr     d2
 loc_485315C7:
-    mov     func_4852FD0A_Table_3, a1
+    mov     FmmListsReset_Table_3, a1
     mov     0x4f, d1
     nop
     nop
@@ -28149,7 +28149,7 @@ BmpFileNamesPageFill_entry:
     add     -0x11c, sp
     clr     d2
 loc_48531F35:
-    mov     func_48531F2E_Table, a1
+    mov     BmpFileNamesPageFill_Table, a1
     mov     0xd, d1
     nop
     nop
@@ -28292,7 +28292,7 @@ PicFileNamesPageFill_entry:
     add     -0x11c, sp
     clr     d2
 loc_48532052:
-    mov     func_48531F2E_Table, a1
+    mov     BmpFileNamesPageFill_Table, a1
     mov     0xd, d1
     nop
     nop
@@ -28498,7 +28498,7 @@ PicFileListReset_entry:
     movhu   d0, (0x500710e6)
     clr     d2
 loc_48532209:
-    mov     func_48531F2E_Table, a1
+    mov     BmpFileNamesPageFill_Table, a1
     mov     0xd, d1
     nop
     nop
@@ -28609,7 +28609,7 @@ func_485322F8:
     cmp     0xe, d0
     bcc     loc_48532308
     asl2    d0
-    mov     func_4852F882_Table, a0
+    mov     FmmNameWithExtBuild_Table, a0
     mov     (d0, a0), a0
     bra     loc_4853230A
 loc_48532308:
@@ -33350,7 +33350,7 @@ loc_4853510F:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     (0x30, a3), a0
     movhu   (a0), d0
-    mov     func_48500C71_Table, a0
+    mov     PartParamDumpLine_Table, a0
     exth    d0
     asl2    d0
     mov     (d0, a0), a1
@@ -33965,7 +33965,7 @@ loc_485356E7:
     extbu   d0
     asl     3, d0
     mov     d0, a2
-    add     func_485356B7_Records, a2
+    add     SeqCycPlyFieldApply_Records, a2
     mov     (a2), d0
     clr     d1
     mov     d1, (0x10, sp)
@@ -34342,7 +34342,7 @@ loc_48535A78:
     clr     d0
     ret     [d2,d3], 0x1c
 loc_48535A7C:
-    movhu   (func_485356B7_Records+24), d1
+    movhu   (SeqCycPlyFieldApply_Records+24), d1
     mov     1, d0
     exth    d1
     mov     d1, d2
@@ -34352,7 +34352,7 @@ loc_48535A7C:
     clr     d0
     ret     [d2,d3], 0x1c
 loc_48535A91:
-    movhu   (func_485356B7_Records+24), d1
+    movhu   (SeqCycPlyFieldApply_Records+24), d1
     mov     1, d0
     exth    d1
     mov     d1, a0
@@ -34366,23 +34366,23 @@ loc_48535AA8:
     mov     Str_3d_38, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    movhu   (func_485356B7_Records+24), d0
+    movhu   (SeqCycPlyFieldApply_Records+24), d0
     exth    d0
     mov     d0, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_48535B00
 loc_48535AC7:
-    movhu   (func_485356B7_Records+24), d0
+    movhu   (SeqCycPlyFieldApply_Records+24), d0
     exth    d0
     bra     loc_48535B00
 loc_48535AD0:
     mov     (0x2c, sp), d1
-    movhu   (func_485356B7_Records+24), d0
+    movhu   (SeqCycPlyFieldApply_Records+24), d0
     exth    d0
     cmp     d1, d0
     beq     loc_48535AF9
-    movhu   d1, (func_485356B7_Records+24)
+    movhu   d1, (SeqCycPlyFieldApply_Records+24)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -34442,7 +34442,7 @@ loc_48535B56:
     clr     d0
     ret     [d2,d3], 0x1c
 loc_48535B5A:
-    movhu   (func_485356B7_Records+28), d1
+    movhu   (SeqCycPlyFieldApply_Records+28), d1
     mov     2, d0
     exth    d1
     mov     d1, d2
@@ -34452,7 +34452,7 @@ loc_48535B5A:
     clr     d0
     ret     [d2,d3], 0x1c
 loc_48535B6F:
-    movhu   (func_485356B7_Records+28), d1
+    movhu   (SeqCycPlyFieldApply_Records+28), d1
     mov     2, d0
     exth    d1
     mov     d1, a0
@@ -34466,23 +34466,23 @@ loc_48535B86:
     mov     Str_3d_37, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    movhu   (func_485356B7_Records+28), d0
+    movhu   (SeqCycPlyFieldApply_Records+28), d0
     exth    d0
     mov     d0, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_48535BDE
 loc_48535BA5:
-    movhu   (func_485356B7_Records+28), d0
+    movhu   (SeqCycPlyFieldApply_Records+28), d0
     exth    d0
     bra     loc_48535BDE
 loc_48535BAE:
     mov     (0x2c, sp), d1
-    movhu   (func_485356B7_Records+28), d0
+    movhu   (SeqCycPlyFieldApply_Records+28), d0
     exth    d0
     cmp     d1, d0
     beq     loc_48535BD7
-    movhu   d1, (func_485356B7_Records+28)
+    movhu   d1, (SeqCycPlyFieldApply_Records+28)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -34505,13 +34505,13 @@ SeqCycRecFieldApply:
 SeqCycRecFieldApply_entry:
     mov     d1, a2
     mov     d0, d2
-    mov     (func_485356B7_Records+32), d0
+    mov     (SeqCycPlyFieldApply_Records+32), d0
     clr     d1
     mov     d1, (0x10, sp)
     mov     MT_GetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, d3
-    mov     (func_485356B7_Records+36), d0
+    mov     (SeqCycPlyFieldApply_Records+36), d0
     clr     d1
     mov     d1, (0x10, sp)
     mov     MT_GetParam, d1
@@ -34839,7 +34839,7 @@ loc_48535F09:
 loc_48535F0E:
     call    SleepMainTask_entry, 0, 0x14
     call    GetSeqSongNo, 0, 0
-    movbu   d0, (func_485356B7_Records+40)
+    movbu   d0, (SeqCycPlyFieldApply_Records+40)
     call    WakeUpMainTask_entry, 0, 0x14
     clr     d0
     ret     [d2,d3], 0x1c
@@ -34853,15 +34853,15 @@ loc_48535F35:
     clr     d0
     ret     [d2,d3], 0x1c
 loc_48535F39:
-    movbu   (func_485356B7_Records+40), d0
+    movbu   (SeqCycPlyFieldApply_Records+40), d0
     mov     d0, d1
     inc     d1
     cmp     0xb, d1
     bgt     loc_48535F69
     inc     d0
-    movbu   d0, (func_485356B7_Records+40)
+    movbu   d0, (SeqCycPlyFieldApply_Records+40)
     call    GetFocusObject_entry, 0, 0x10
-    movbu   (func_485356B7_Records+40), d2
+    movbu   (SeqCycPlyFieldApply_Records+40), d2
     mov     d0, d1
     mov     d2, (0x10, sp)
     mov     FN_MainSEQ_SongClrNameParaDraw, d0
@@ -34870,15 +34870,15 @@ loc_48535F69:
     clr     d0
     bra     loc_48535FCD
 loc_48535F6C:
-    movbu   (func_485356B7_Records+40), d0
+    movbu   (SeqCycPlyFieldApply_Records+40), d0
     mov     -1, d1
     add     d0, d1
     cmp     1, d1
     blt     loc_48535F9E
     add     -1, d0
-    movbu   d0, (func_485356B7_Records+40)
+    movbu   d0, (SeqCycPlyFieldApply_Records+40)
     call    GetFocusObject_entry, 0, 0x10
-    movbu   (func_485356B7_Records+40), d2
+    movbu   (SeqCycPlyFieldApply_Records+40), d2
     mov     d0, d1
     mov     d2, (0x10, sp)
     mov     FN_MainSEQ_SongClrNameParaDraw, d0
@@ -34888,7 +34888,7 @@ loc_48535F9E:
     bra     loc_48535FCD
 loc_48535FA1:
     call    GetFocusObject_entry, 0, 0x10
-    movbu   (func_485356B7_Records+40), d2
+    movbu   (SeqCycPlyFieldApply_Records+40), d2
     mov     d0, d1
     mov     d2, (0x10, sp)
     mov     FN_MainSEQ_SongClrNameParaDraw, d0
@@ -34896,7 +34896,7 @@ loc_48535FA1:
     clr     d0
     bra     loc_48535FCD
 loc_48535FC1:
-    movbu   (func_485356B7_Records+40), d0
+    movbu   (SeqCycPlyFieldApply_Records+40), d0
     bra     loc_48535FCD
 loc_48535FC9:
     mov     d3, d0
@@ -35080,7 +35080,7 @@ loc_4853618D:
     movbu   (0x500812d8), d0
     cmp     0, d0
     beq     loc_485361A8
-    mov     func_485356B7_Records+44, a1
+    mov     SeqCycPlyFieldApply_Records+44, a1
     mov     (0x88, sp), a0
     call    strcpy_entry, [a2], 4
     bra     loc_485361B7
@@ -35095,7 +35095,7 @@ loc_485361BB:
     mov     1, d0
     movbu   d0, (0x500812d8)
     mov     (0x88, sp), a1
-    mov     func_485356B7_Records+44, a0
+    mov     SeqCycPlyFieldApply_Records+44, a0
     call    strcpy_entry, [a2], 4
     clr     d0
     mov     d0, (0x10, sp)
@@ -35835,7 +35835,7 @@ loc_4853680D:
     clr     d0
     ret     [d2,d3], 0x1c
 loc_48536811:
-    movhu   (func_485356B7_Records+300), d1
+    movhu   (SeqCycPlyFieldApply_Records+300), d1
     mov     1, d0
     exth    d1
     mov     d1, d2
@@ -35845,7 +35845,7 @@ loc_48536811:
     clr     d0
     ret     [d2,d3], 0x1c
 loc_48536826:
-    movhu   (func_485356B7_Records+300), d1
+    movhu   (SeqCycPlyFieldApply_Records+300), d1
     mov     1, d0
     exth    d1
     mov     d1, a0
@@ -35859,23 +35859,23 @@ loc_4853683D:
     mov     Str_3d_36, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    movhu   (func_485356B7_Records+300), d0
+    movhu   (SeqCycPlyFieldApply_Records+300), d0
     exth    d0
     mov     d0, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_48536895
 loc_4853685C:
-    movhu   (func_485356B7_Records+300), d0
+    movhu   (SeqCycPlyFieldApply_Records+300), d0
     exth    d0
     bra     loc_48536895
 loc_48536865:
     mov     (0x2c, sp), d1
-    movhu   (func_485356B7_Records+300), d0
+    movhu   (SeqCycPlyFieldApply_Records+300), d0
     exth    d0
     cmp     d1, d0
     beq     loc_4853688E
-    movhu   d1, (func_485356B7_Records+300)
+    movhu   d1, (SeqCycPlyFieldApply_Records+300)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -35935,7 +35935,7 @@ loc_485368EB:
     clr     d0
     ret     [d2,d3], 0x1c
 loc_485368EF:
-    movhu   (func_485356B7_Records+304), d1
+    movhu   (SeqCycPlyFieldApply_Records+304), d1
     mov     2, d0
     exth    d1
     mov     d1, d2
@@ -35945,7 +35945,7 @@ loc_485368EF:
     clr     d0
     ret     [d2,d3], 0x1c
 loc_48536904:
-    movhu   (func_485356B7_Records+304), d1
+    movhu   (SeqCycPlyFieldApply_Records+304), d1
     mov     2, d0
     exth    d1
     mov     d1, a0
@@ -35959,23 +35959,23 @@ loc_4853691B:
     mov     Str_3d_35, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    movhu   (func_485356B7_Records+304), d0
+    movhu   (SeqCycPlyFieldApply_Records+304), d0
     exth    d0
     mov     d0, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_48536973
 loc_4853693A:
-    movhu   (func_485356B7_Records+304), d0
+    movhu   (SeqCycPlyFieldApply_Records+304), d0
     exth    d0
     bra     loc_48536973
 loc_48536943:
     mov     (0x2c, sp), d1
-    movhu   (func_485356B7_Records+304), d0
+    movhu   (SeqCycPlyFieldApply_Records+304), d0
     exth    d0
     cmp     d1, d0
     beq     loc_4853696C
-    movhu   d1, (func_485356B7_Records+304)
+    movhu   d1, (SeqCycPlyFieldApply_Records+304)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -36035,7 +36035,7 @@ loc_485369C9:
     clr     d0
     ret     [d2,d3], 0x1c
 loc_485369CD:
-    movhu   (func_485356B7_Records+308), d1
+    movhu   (SeqCycPlyFieldApply_Records+308), d1
     mov     3, d0
     exth    d1
     mov     d1, d2
@@ -36045,7 +36045,7 @@ loc_485369CD:
     clr     d0
     ret     [d2,d3], 0x1c
 loc_485369E2:
-    movhu   (func_485356B7_Records+308), d1
+    movhu   (SeqCycPlyFieldApply_Records+308), d1
     mov     3, d0
     exth    d1
     mov     d1, a0
@@ -36059,23 +36059,23 @@ loc_485369F9:
     mov     Str_3d_34, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    movhu   (func_485356B7_Records+308), d0
+    movhu   (SeqCycPlyFieldApply_Records+308), d0
     exth    d0
     mov     d0, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_48536A51
 loc_48536A18:
-    movhu   (func_485356B7_Records+308), d0
+    movhu   (SeqCycPlyFieldApply_Records+308), d0
     exth    d0
     bra     loc_48536A51
 loc_48536A21:
     mov     (0x2c, sp), d1
-    movhu   (func_485356B7_Records+308), d0
+    movhu   (SeqCycPlyFieldApply_Records+308), d0
     exth    d0
     cmp     d1, d0
     beq     loc_48536A4A
-    movhu   d1, (func_485356B7_Records+308)
+    movhu   d1, (SeqCycPlyFieldApply_Records+308)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -36115,19 +36115,19 @@ SeqAutoPunchFieldApply:
 SeqAutoPunchFieldApply_entry:
     mov     d1, (0x30, sp)
     mov     d0, d3
-    mov     (func_485356B7_Records+312), d0
+    mov     (SeqCycPlyFieldApply_Records+312), d0
     clr     d1
     mov     d1, (0x10, sp)
     mov     MT_GetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, a3
-    mov     (func_485356B7_Records+316), d0
+    mov     (SeqCycPlyFieldApply_Records+316), d0
     clr     d1
     mov     d1, (0x10, sp)
     mov     MT_GetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
     mov     d0, a2
-    mov     (func_485356B7_Records+320), d0
+    mov     (SeqCycPlyFieldApply_Records+320), d0
     clr     d1
     mov     d1, (0x10, sp)
     mov     MT_GetParam, d1
@@ -36292,21 +36292,21 @@ loc_48536C05:
     clr     d0
     ret     [d2,d3], 0x1c
 loc_48536C09:
-    movbu   (func_485356B7_Records+324), d1
+    movbu   (SeqCycPlyFieldApply_Records+324), d1
     mov     1, d0
     inc     d1
     call    SeqQtzFieldApply_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     ret     [d2,d3], 0x1c
 loc_48536C1B:
-    movbu   (func_485356B7_Records+324), d1
+    movbu   (SeqCycPlyFieldApply_Records+324), d1
     mov     1, d0
     add     -1, d1
     call    SeqQtzFieldApply_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     ret     [d2,d3], 0x1c
 loc_48536C2E:
-    movbu   (func_485356B7_Records+324), d0
+    movbu   (SeqCycPlyFieldApply_Records+324), d0
     cmp     0x11, d0
     bne     loc_48536C49
     mov     (0x2c, sp), a0
@@ -36324,14 +36324,14 @@ loc_48536C5E:
     clr     d0
     bra     loc_48536C98
 loc_48536C61:
-    movbu   (func_485356B7_Records+324), d0
+    movbu   (SeqCycPlyFieldApply_Records+324), d0
     bra     loc_48536C98
 loc_48536C69:
     mov     (0x2c, sp), d1
-    movbu   (func_485356B7_Records+324), d0
+    movbu   (SeqCycPlyFieldApply_Records+324), d0
     cmp     d1, d0
     beq     loc_48536C91
-    movbu   d1, (func_485356B7_Records+324)
+    movbu   d1, (SeqCycPlyFieldApply_Records+324)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -36391,14 +36391,14 @@ loc_48536CEE:
     clr     d0
     ret     [d2,d3], 0x1c
 loc_48536CF2:
-    movhu   (func_485356B7_Records+328), d1
+    movhu   (SeqCycPlyFieldApply_Records+328), d1
     mov     2, d0
     inc     d1
     call    SeqQtzFieldApply_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     ret     [d2,d3], 0x1c
 loc_48536D04:
-    movhu   (func_485356B7_Records+328), d1
+    movhu   (SeqCycPlyFieldApply_Records+328), d1
     mov     2, d0
     add     -1, d1
     call    SeqQtzFieldApply_entry, [d2,d3,a2,a3], 0x30
@@ -36409,20 +36409,20 @@ loc_48536D16:
     mov     Str_3d_33, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    movhu   (func_485356B7_Records+328), d0
+    movhu   (SeqCycPlyFieldApply_Records+328), d0
     mov     d0, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_48536D6B
 loc_48536D34:
-    movhu   (func_485356B7_Records+328), d0
+    movhu   (SeqCycPlyFieldApply_Records+328), d0
     bra     loc_48536D6B
 loc_48536D3C:
     mov     (0x2c, sp), d0
-    movhu   (func_485356B7_Records+328), d1
+    movhu   (SeqCycPlyFieldApply_Records+328), d1
     cmp     d0, d1
     beq     loc_48536D64
-    movhu   d0, (func_485356B7_Records+328)
+    movhu   d0, (SeqCycPlyFieldApply_Records+328)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -36482,14 +36482,14 @@ loc_48536DC1:
     clr     d0
     ret     [d2,d3], 0x1c
 loc_48536DC5:
-    movhu   (func_485356B7_Records+332), d1
+    movhu   (SeqCycPlyFieldApply_Records+332), d1
     mov     3, d0
     inc     d1
     call    SeqQtzFieldApply_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     ret     [d2,d3], 0x1c
 loc_48536DD7:
-    movhu   (func_485356B7_Records+332), d1
+    movhu   (SeqCycPlyFieldApply_Records+332), d1
     mov     3, d0
     add     -1, d1
     call    SeqQtzFieldApply_entry, [d2,d3,a2,a3], 0x30
@@ -36500,20 +36500,20 @@ loc_48536DE9:
     mov     Str_3d_32, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    movhu   (func_485356B7_Records+332), d0
+    movhu   (SeqCycPlyFieldApply_Records+332), d0
     mov     d0, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_48536E3E
 loc_48536E07:
-    movhu   (func_485356B7_Records+332), d0
+    movhu   (SeqCycPlyFieldApply_Records+332), d0
     bra     loc_48536E3E
 loc_48536E0F:
     mov     (0x2c, sp), d0
-    movhu   (func_485356B7_Records+332), d1
+    movhu   (SeqCycPlyFieldApply_Records+332), d1
     cmp     d0, d1
     beq     loc_48536E37
-    movhu   d0, (func_485356B7_Records+332)
+    movhu   d0, (SeqCycPlyFieldApply_Records+332)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -36573,7 +36573,7 @@ loc_48536E93:
     clr     d0
     ret     [d2,d3,a2], 0x20
 loc_48536E97:
-    movhu   (func_485356B7_Records+336), d1
+    movhu   (SeqCycPlyFieldApply_Records+336), d1
     mov     4, d0
     exth    d1
     inc     d1
@@ -36581,7 +36581,7 @@ loc_48536E97:
     clr     d0
     ret     [d2,d3,a2], 0x20
 loc_48536EAA:
-    movhu   (func_485356B7_Records+336), d1
+    movhu   (SeqCycPlyFieldApply_Records+336), d1
     mov     4, d0
     exth    d1
     add     -1, d1
@@ -36589,7 +36589,7 @@ loc_48536EAA:
     clr     d0
     ret     [d2,d3,a2], 0x20
 loc_48536EBE:
-    movhu   (func_485356B7_Records+336), d0
+    movhu   (SeqCycPlyFieldApply_Records+336), d0
     exth    d0
     cmp     0, d0
     beq     loc_48536EE3
@@ -36649,16 +36649,16 @@ loc_48536F69:
     clr     d0
     bra     loc_48536FA5
 loc_48536F6C:
-    movhu   (func_485356B7_Records+336), d0
+    movhu   (SeqCycPlyFieldApply_Records+336), d0
     exth    d0
     bra     loc_48536FA5
 loc_48536F75:
     mov     (0x30, sp), d0
-    movhu   (func_485356B7_Records+336), d1
+    movhu   (SeqCycPlyFieldApply_Records+336), d1
     exth    d1
     cmp     d0, d1
     beq     loc_48536F9E
-    movhu   d0, (func_485356B7_Records+336)
+    movhu   d0, (SeqCycPlyFieldApply_Records+336)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -36718,7 +36718,7 @@ loc_48536FFB:
     clr     d0
     ret     [d2,d3], 0x1c
 loc_48536FFF:
-    movhu   (func_485356B7_Records+340), d1
+    movhu   (SeqCycPlyFieldApply_Records+340), d1
     mov     5, d0
     exth    d1
     inc     d1
@@ -36726,7 +36726,7 @@ loc_48536FFF:
     clr     d0
     ret     [d2,d3], 0x1c
 loc_48537012:
-    movhu   (func_485356B7_Records+340), d1
+    movhu   (SeqCycPlyFieldApply_Records+340), d1
     mov     5, d0
     exth    d1
     add     -1, d1
@@ -36738,23 +36738,23 @@ loc_48537025:
     mov     Str_3d_31, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    movhu   (func_485356B7_Records+340), d0
+    movhu   (SeqCycPlyFieldApply_Records+340), d0
     exth    d0
     mov     d0, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
     clr     d0
     bra     loc_4853707D
 loc_48537044:
-    movhu   (func_485356B7_Records+340), d0
+    movhu   (SeqCycPlyFieldApply_Records+340), d0
     exth    d0
     bra     loc_4853707D
 loc_4853704D:
     mov     (0x2c, sp), d0
-    movhu   (func_485356B7_Records+340), d1
+    movhu   (SeqCycPlyFieldApply_Records+340), d1
     exth    d1
     cmp     d0, d1
     beq     loc_48537076
-    movhu   d0, (func_485356B7_Records+340)
+    movhu   d0, (SeqCycPlyFieldApply_Records+340)
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -36911,7 +36911,7 @@ SeqQtzFieldApply:
 SeqQtzFieldApply_entry:
     mov     d1, d3
     mov     d0, d2
-    mov     func_485371AC_Table, a2
+    mov     SeqQtzFieldApply_Table, a2
     mov     sp, a3
     add     0x14, a3
 loc_485371BC:
@@ -36959,7 +36959,7 @@ loc_4853720F:
     ble     loc_48537216
     jmp     loc_4853737D
 loc_48537216:
-    mov     (func_485371AC_Table), d0
+    mov     (SeqQtzFieldApply_Table), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -36973,7 +36973,7 @@ loc_48537235:
     ble     loc_4853723E
     jmp     loc_4853737D
 loc_4853723E:
-    mov     (func_485371AC_Table+4), d0
+    mov     (SeqQtzFieldApply_Table+4), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -36983,7 +36983,7 @@ loc_4853723E:
     bgt     loc_4853725D
     jmp     loc_4853737D
 loc_4853725D:
-    mov     (func_485371AC_Table+8), d0
+    mov     (SeqQtzFieldApply_Table+8), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -37001,12 +37001,12 @@ loc_48537285:
     exth    d0
     cmp     d3, d0
     ble     loc_485372A1
-    mov     (func_485371AC_Table+4), d0
+    mov     (SeqQtzFieldApply_Table+4), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_485372A1:
-    mov     (func_485371AC_Table+8), d0
+    mov     (SeqQtzFieldApply_Table+8), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -37020,7 +37020,7 @@ loc_485372C0:
     ble     loc_485372C7
     jmp     loc_4853737D
 loc_485372C7:
-    mov     (func_485371AC_Table+12), d0
+    mov     (SeqQtzFieldApply_Table+12), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -37034,7 +37034,7 @@ loc_485372E6:
     ble     loc_485372ED
     jmp     loc_4853737D
 loc_485372ED:
-    mov     (func_485371AC_Table+16), d0
+    mov     (SeqQtzFieldApply_Table+16), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -37044,7 +37044,7 @@ loc_48537304:
     blt     loc_4853737D
     cmp     0x64, d3
     bgt     loc_4853737D
-    mov     (func_485371AC_Table+20), d0
+    mov     (SeqQtzFieldApply_Table+20), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -38883,7 +38883,7 @@ SeqTrackCopyFieldApply:
 SeqTrackCopyFieldApply_entry:
     mov     d1, d3
     mov     d0, d2
-    mov     func_48538667_Table, a2
+    mov     SeqTrackCopyFieldApply_Table, a2
     mov     sp, a3
     add     0x14, a3
 loc_48538677:
@@ -38923,7 +38923,7 @@ loc_485386BC:
     ble     loc_485386C3
     jmp     loc_4853881C
 loc_485386C3:
-    mov     (func_48538667_Table), d0
+    mov     (SeqTrackCopyFieldApply_Table), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -38937,7 +38937,7 @@ loc_485386E2:
     ble     loc_485386E9
     jmp     loc_4853881C
 loc_485386E9:
-    mov     (func_48538667_Table+4), d0
+    mov     (SeqTrackCopyFieldApply_Table+4), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -38949,7 +38949,7 @@ loc_485386E9:
     bne     loc_4853870D
     jmp     loc_4853881C
 loc_4853870D:
-    mov     (func_48538667_Table+12), d0
+    mov     (SeqTrackCopyFieldApply_Table+12), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -38961,7 +38961,7 @@ loc_48538725:
     beq     loc_48538730
     jmp     loc_4853881C
 loc_48538730:
-    mov     (func_48538667_Table+12), d0
+    mov     (SeqTrackCopyFieldApply_Table+12), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -38975,7 +38975,7 @@ loc_4853874F:
     ble     loc_48538756
     jmp     loc_4853881C
 loc_48538756:
-    mov     (func_48538667_Table+8), d0
+    mov     (SeqTrackCopyFieldApply_Table+8), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -38989,7 +38989,7 @@ loc_48538775:
     ble     loc_4853877C
     jmp     loc_4853881C
 loc_4853877C:
-    mov     (func_48538667_Table+12), d0
+    mov     (SeqTrackCopyFieldApply_Table+12), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -39001,7 +39001,7 @@ loc_4853877C:
     bne     loc_485387A0
     jmp     loc_4853881C
 loc_485387A0:
-    mov     (func_48538667_Table+4), d0
+    mov     (SeqTrackCopyFieldApply_Table+4), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -39011,7 +39011,7 @@ loc_485387B7:
     exth    d0
     cmp     0x11, d0
     bne     loc_4853881C
-    mov     (func_48538667_Table+4), d0
+    mov     (SeqTrackCopyFieldApply_Table+4), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -39254,7 +39254,7 @@ SeqSongCopyFieldApply:
 SeqSongCopyFieldApply_entry:
     mov     d1, d2
     mov     d0, d3
-    mov     func_48538A04_Table, a2
+    mov     SeqSongCopyFieldApply_Table, a2
     mov     sp, a3
     add     0x14, a3
 loc_48538A14:
@@ -39284,7 +39284,7 @@ loc_48538A48:
     ble     loc_48538A4E
     bra     loc_48538AC8
 loc_48538A4E:
-    mov     (func_48538A04_Table), d0
+    mov     (SeqSongCopyFieldApply_Table), d0
     mov     d2, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -39294,7 +39294,7 @@ loc_48538A65:
     blt     loc_48538AC8
     cmp     0xa, d2
     bgt     loc_48538AC8
-    mov     (func_48538A04_Table+4), d0
+    mov     (SeqSongCopyFieldApply_Table+4), d0
     mov     d2, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -39495,7 +39495,7 @@ SeqTrkMrgFieldApply:
 SeqTrkMrgFieldApply_entry:
     mov     d1, d2
     mov     d0, d3
-    mov     func_48538C34_Table, a2
+    mov     SeqTrkMrgFieldApply_Table, a2
     mov     sp, a3
     add     0x14, a3
 loc_48538C44:
@@ -39539,7 +39539,7 @@ loc_48538C8E:
     ble     loc_48538C95
     jmp     loc_48538D3D
 loc_48538C95:
-    mov     (func_48538C34_Table), d0
+    mov     (SeqTrkMrgFieldApply_Table), d0
     mov     d2, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -39561,7 +39561,7 @@ loc_48538CBC:
 loc_48538CC3:
     cmp     0x10, d2
     bgt     loc_48538D3D
-    mov     (func_48538C34_Table+4), d0
+    mov     (SeqTrkMrgFieldApply_Table+4), d0
     mov     d2, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -39571,7 +39571,7 @@ loc_48538CDE:
     blt     loc_48538D3D
     cmp     0x10, d2
     bgt     loc_48538D3D
-    mov     (func_48538C34_Table+8), d0
+    mov     (SeqTrkMrgFieldApply_Table+8), d0
     mov     d2, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -40194,7 +40194,7 @@ SeqMsCpFieldApply:
 SeqMsCpFieldApply_entry:
     mov     d1, d3
     mov     d0, d2
-    mov     func_4853929B_Table, a2
+    mov     SeqMsCpFieldApply_Table, a2
     mov     sp, a3
     add     0x14, a3
 loc_485392AB:
@@ -40244,7 +40244,7 @@ loc_48539301:
     ble     loc_48539308
     jmp     loc_485394FF
 loc_48539308:
-    mov     (func_4853929B_Table), d0
+    mov     (SeqMsCpFieldApply_Table), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -40256,7 +40256,7 @@ loc_48539308:
     bne     loc_4853932C
     jmp     loc_485394FF
 loc_4853932C:
-    mov     (func_4853929B_Table+12), d0
+    mov     (SeqMsCpFieldApply_Table+12), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -40268,7 +40268,7 @@ loc_48539344:
     beq     loc_4853934F
     jmp     loc_485394FF
 loc_4853934F:
-    mov     (func_4853929B_Table+12), d0
+    mov     (SeqMsCpFieldApply_Table+12), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -40282,7 +40282,7 @@ loc_4853936E:
     ble     loc_48539377
     jmp     loc_485394FF
 loc_48539377:
-    mov     (func_4853929B_Table+4), d0
+    mov     (SeqMsCpFieldApply_Table+4), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -40292,7 +40292,7 @@ loc_48539377:
     bgt     loc_48539396
     jmp     loc_485394FF
 loc_48539396:
-    mov     (func_4853929B_Table+8), d0
+    mov     (SeqMsCpFieldApply_Table+8), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -40310,12 +40310,12 @@ loc_485393BE:
     exth    d0
     cmp     d3, d0
     ble     loc_485393DA
-    mov     (func_4853929B_Table+4), d0
+    mov     (SeqMsCpFieldApply_Table+4), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_485393DA:
-    mov     (func_4853929B_Table+8), d0
+    mov     (SeqMsCpFieldApply_Table+8), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -40329,7 +40329,7 @@ loc_485393F9:
     ble     loc_48539400
     jmp     loc_485394FF
 loc_48539400:
-    mov     (func_4853929B_Table+12), d0
+    mov     (SeqMsCpFieldApply_Table+12), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -40341,7 +40341,7 @@ loc_48539400:
     bne     loc_48539424
     jmp     loc_485394FF
 loc_48539424:
-    mov     (func_4853929B_Table), d0
+    mov     (SeqMsCpFieldApply_Table), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -40353,7 +40353,7 @@ loc_4853943C:
     beq     loc_48539447
     jmp     loc_485394FF
 loc_48539447:
-    mov     (func_4853929B_Table), d0
+    mov     (SeqMsCpFieldApply_Table), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -40367,7 +40367,7 @@ loc_48539466:
     ble     loc_4853946F
     jmp     loc_485394FF
 loc_4853946F:
-    mov     (func_4853929B_Table+16), d0
+    mov     (SeqMsCpFieldApply_Table+16), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -40377,7 +40377,7 @@ loc_48539486:
     blt     loc_485394FF
     cmp     0x7f, d3
     bgt     loc_485394FF
-    mov     (func_4853929B_Table+20), d0
+    mov     (SeqMsCpFieldApply_Table+20), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -40842,7 +40842,7 @@ SeqMsErsFieldApply:
 SeqMsErsFieldApply_entry:
     mov     d1, d3
     mov     d0, d2
-    mov     func_485398D0_Table, a2
+    mov     SeqMsErsFieldApply_Table, a2
     mov     sp, a3
     add     0x14, a3
 loc_485398E0:
@@ -40882,7 +40882,7 @@ loc_48539925:
     ble     loc_4853992C
     jmp     loc_48539A3C
 loc_4853992C:
-    mov     (func_485398D0_Table), d0
+    mov     (SeqMsErsFieldApply_Table), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -40896,7 +40896,7 @@ loc_4853994B:
     ble     loc_48539954
     jmp     loc_48539A3C
 loc_48539954:
-    mov     (func_485398D0_Table+4), d0
+    mov     (SeqMsErsFieldApply_Table+4), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -40906,7 +40906,7 @@ loc_48539954:
     bgt     loc_48539973
     jmp     loc_48539A3C
 loc_48539973:
-    mov     (func_485398D0_Table+8), d0
+    mov     (SeqMsErsFieldApply_Table+8), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -40924,12 +40924,12 @@ loc_4853999B:
     exth    d0
     cmp     d3, d0
     ble     loc_485399B7
-    mov     (func_485398D0_Table+4), d0
+    mov     (SeqMsErsFieldApply_Table+4), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_485399B7:
-    mov     (func_485398D0_Table+8), d0
+    mov     (SeqMsErsFieldApply_Table+8), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -40939,7 +40939,7 @@ loc_485399CE:
     blt     loc_48539A3C
     cmp     2, d3
     bgt     loc_48539A3C
-    mov     (func_485398D0_Table+12), d0
+    mov     (SeqMsErsFieldApply_Table+12), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -41289,7 +41289,7 @@ SeqMsDelFieldApply:
 SeqMsDelFieldApply_entry:
     mov     d1, d3
     mov     d0, d2
-    mov     func_48539D0B_Table, a2
+    mov     SeqMsDelFieldApply_Table, a2
     mov     sp, a3
     add     0x14, a3
 loc_48539D1B:
@@ -41323,7 +41323,7 @@ loc_48539D56:
     ble     loc_48539D5D
     jmp     loc_48539E47
 loc_48539D5D:
-    mov     (func_48539D0B_Table), d0
+    mov     (SeqMsDelFieldApply_Table), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -41337,7 +41337,7 @@ loc_48539D7C:
     ble     loc_48539D85
     jmp     loc_48539E47
 loc_48539D85:
-    mov     (func_48539D0B_Table+4), d0
+    mov     (SeqMsDelFieldApply_Table+4), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -41347,7 +41347,7 @@ loc_48539D85:
     bgt     loc_48539DA4
     jmp     loc_48539E47
 loc_48539DA4:
-    mov     (func_48539D0B_Table+8), d0
+    mov     (SeqMsDelFieldApply_Table+8), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -41365,12 +41365,12 @@ loc_48539DCB:
     exth    d0
     cmp     d3, d0
     ble     loc_48539DE7
-    mov     (func_48539D0B_Table+4), d0
+    mov     (SeqMsDelFieldApply_Table+4), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_48539DE7:
-    mov     (func_48539D0B_Table+8), d0
+    mov     (SeqMsDelFieldApply_Table+8), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -41999,7 +41999,7 @@ SeqMsInsFieldApply:
 SeqMsInsFieldApply_entry:
     mov     d1, d3
     mov     d0, d2
-    mov     func_4853A3A5_Table, a2
+    mov     SeqMsInsFieldApply_Table, a2
     mov     sp, a3
     add     0x14, a3
 loc_4853A3B5:
@@ -42049,7 +42049,7 @@ loc_4853A40B:
     ble     loc_4853A412
     jmp     loc_4853A609
 loc_4853A412:
-    mov     (func_4853A3A5_Table), d0
+    mov     (SeqMsInsFieldApply_Table), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -42061,7 +42061,7 @@ loc_4853A412:
     bne     loc_4853A436
     jmp     loc_4853A609
 loc_4853A436:
-    mov     (func_4853A3A5_Table+12), d0
+    mov     (SeqMsInsFieldApply_Table+12), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -42073,7 +42073,7 @@ loc_4853A44E:
     beq     loc_4853A459
     jmp     loc_4853A609
 loc_4853A459:
-    mov     (func_4853A3A5_Table+12), d0
+    mov     (SeqMsInsFieldApply_Table+12), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -42087,7 +42087,7 @@ loc_4853A478:
     ble     loc_4853A481
     jmp     loc_4853A609
 loc_4853A481:
-    mov     (func_4853A3A5_Table+4), d0
+    mov     (SeqMsInsFieldApply_Table+4), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -42097,7 +42097,7 @@ loc_4853A481:
     bgt     loc_4853A4A0
     jmp     loc_4853A609
 loc_4853A4A0:
-    mov     (func_4853A3A5_Table+8), d0
+    mov     (SeqMsInsFieldApply_Table+8), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -42115,12 +42115,12 @@ loc_4853A4C8:
     exth    d0
     cmp     d3, d0
     ble     loc_4853A4E4
-    mov     (func_4853A3A5_Table+4), d0
+    mov     (SeqMsInsFieldApply_Table+4), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4853A4E4:
-    mov     (func_4853A3A5_Table+8), d0
+    mov     (SeqMsInsFieldApply_Table+8), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -42134,7 +42134,7 @@ loc_4853A503:
     ble     loc_4853A50A
     jmp     loc_4853A609
 loc_4853A50A:
-    mov     (func_4853A3A5_Table+12), d0
+    mov     (SeqMsInsFieldApply_Table+12), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -42146,7 +42146,7 @@ loc_4853A50A:
     bne     loc_4853A52E
     jmp     loc_4853A609
 loc_4853A52E:
-    mov     (func_4853A3A5_Table), d0
+    mov     (SeqMsInsFieldApply_Table), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -42158,7 +42158,7 @@ loc_4853A546:
     beq     loc_4853A551
     jmp     loc_4853A609
 loc_4853A551:
-    mov     (func_4853A3A5_Table), d0
+    mov     (SeqMsInsFieldApply_Table), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -42172,7 +42172,7 @@ loc_4853A570:
     ble     loc_4853A579
     jmp     loc_4853A609
 loc_4853A579:
-    mov     (func_4853A3A5_Table+16), d0
+    mov     (SeqMsInsFieldApply_Table+16), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -42182,7 +42182,7 @@ loc_4853A590:
     blt     loc_4853A609
     cmp     0x7f, d3
     bgt     loc_4853A609
-    mov     (func_4853A3A5_Table+20), d0
+    mov     (SeqMsInsFieldApply_Table+20), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -43237,7 +43237,7 @@ SeqNoteChangeFieldApply:
 SeqNoteChangeFieldApply_entry:
     mov     d1, d3
     mov     d0, d2
-    mov     func_4853AFB6_Table, a2
+    mov     SeqNoteChangeFieldApply_Table, a2
     mov     sp, a3
     add     0x14, a3
 loc_4853AFC6:
@@ -43281,7 +43281,7 @@ loc_4853B012:
     ble     loc_4853B019
     jmp     loc_4853B154
 loc_4853B019:
-    mov     (func_4853AFB6_Table), d0
+    mov     (SeqNoteChangeFieldApply_Table), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -43295,7 +43295,7 @@ loc_4853B038:
     ble     loc_4853B041
     jmp     loc_4853B154
 loc_4853B041:
-    mov     (func_4853AFB6_Table+4), d0
+    mov     (SeqNoteChangeFieldApply_Table+4), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -43305,7 +43305,7 @@ loc_4853B041:
     bgt     loc_4853B060
     jmp     loc_4853B154
 loc_4853B060:
-    mov     (func_4853AFB6_Table+8), d0
+    mov     (SeqNoteChangeFieldApply_Table+8), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -43323,12 +43323,12 @@ loc_4853B088:
     exth    d0
     cmp     d3, d0
     ble     loc_4853B0A4
-    mov     (func_4853AFB6_Table+4), d0
+    mov     (SeqNoteChangeFieldApply_Table+4), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4853B0A4:
-    mov     (func_4853AFB6_Table+8), d0
+    mov     (SeqNoteChangeFieldApply_Table+8), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -43342,7 +43342,7 @@ loc_4853B0C3:
     ble     loc_4853B0CA
     jmp     loc_4853B154
 loc_4853B0CA:
-    mov     (func_4853AFB6_Table+12), d0
+    mov     (SeqNoteChangeFieldApply_Table+12), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -43352,7 +43352,7 @@ loc_4853B0E1:
     blt     loc_4853B154
     cmp     0x7f, d3
     bgt     loc_4853B154
-    mov     (func_4853AFB6_Table+16), d0
+    mov     (SeqNoteChangeFieldApply_Table+16), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -43809,7 +43809,7 @@ SeqVeloCngFieldApply:
 SeqVeloCngFieldApply_entry:
     mov     d1, d3
     mov     d0, d2
-    mov     func_4853B513_Table, a2
+    mov     SeqVeloCngFieldApply_Table, a2
     mov     sp, a3
     add     0x14, a3
 loc_4853B523:
@@ -43849,7 +43849,7 @@ loc_4853B568:
     ble     loc_4853B56F
     jmp     loc_4853B67F
 loc_4853B56F:
-    mov     (func_4853B513_Table), d0
+    mov     (SeqVeloCngFieldApply_Table), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -43863,7 +43863,7 @@ loc_4853B58E:
     ble     loc_4853B597
     jmp     loc_4853B67F
 loc_4853B597:
-    mov     (func_4853B513_Table+4), d0
+    mov     (SeqVeloCngFieldApply_Table+4), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -43873,7 +43873,7 @@ loc_4853B597:
     bgt     loc_4853B5B6
     jmp     loc_4853B67F
 loc_4853B5B6:
-    mov     (func_4853B513_Table+8), d0
+    mov     (SeqVeloCngFieldApply_Table+8), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -43891,12 +43891,12 @@ loc_4853B5DE:
     exth    d0
     cmp     d3, d0
     ble     loc_4853B5FA
-    mov     (func_4853B513_Table+4), d0
+    mov     (SeqVeloCngFieldApply_Table+4), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4853B5FA:
-    mov     (func_4853B513_Table+8), d0
+    mov     (SeqVeloCngFieldApply_Table+8), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -43906,7 +43906,7 @@ loc_4853B611:
     blt     loc_4853B67F
     cmp     0x7f, d3
     bgt     loc_4853B67F
-    mov     (func_4853B513_Table+12), d0
+    mov     (SeqVeloCngFieldApply_Table+12), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -44362,7 +44362,7 @@ SeqTransFieldApply:
 SeqTransFieldApply_entry:
     mov     d1, d3
     mov     d0, d2
-    mov     func_4853BA3E_Table, a2
+    mov     SeqTransFieldApply_Table, a2
     mov     sp, a3
     add     0x14, a3
 loc_4853BA4E:
@@ -44402,7 +44402,7 @@ loc_4853BA93:
     ble     loc_4853BA9A
     jmp     loc_4853BBAA
 loc_4853BA9A:
-    mov     (func_4853BA3E_Table), d0
+    mov     (SeqTransFieldApply_Table), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -44416,7 +44416,7 @@ loc_4853BAB9:
     ble     loc_4853BAC2
     jmp     loc_4853BBAA
 loc_4853BAC2:
-    mov     (func_4853BA3E_Table+4), d0
+    mov     (SeqTransFieldApply_Table+4), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -44426,7 +44426,7 @@ loc_4853BAC2:
     bgt     loc_4853BAE1
     jmp     loc_4853BBAA
 loc_4853BAE1:
-    mov     (func_4853BA3E_Table+8), d0
+    mov     (SeqTransFieldApply_Table+8), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -44444,12 +44444,12 @@ loc_4853BB09:
     exth    d0
     cmp     d3, d0
     ble     loc_4853BB25
-    mov     (func_4853BA3E_Table+4), d0
+    mov     (SeqTransFieldApply_Table+4), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4853BB25:
-    mov     (func_4853BA3E_Table+8), d0
+    mov     (SeqTransFieldApply_Table+8), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -44459,7 +44459,7 @@ loc_4853BB3C:
     blt     loc_4853BBAA
     cmp     0x7f, d3
     bgt     loc_4853BBAA
-    mov     (func_4853BA3E_Table+12), d0
+    mov     (SeqTransFieldApply_Table+12), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -44915,7 +44915,7 @@ SeqAdvDlyFieldApply:
 SeqAdvDlyFieldApply_entry:
     mov     d1, d3
     mov     d0, d2
-    mov     func_4853BF69_Table, a2
+    mov     SeqAdvDlyFieldApply_Table, a2
     mov     sp, a3
     add     0x14, a3
 loc_4853BF79:
@@ -44955,7 +44955,7 @@ loc_4853BFBE:
     ble     loc_4853BFC5
     jmp     loc_4853C0D5
 loc_4853BFC5:
-    mov     (func_4853BF69_Table), d0
+    mov     (SeqAdvDlyFieldApply_Table), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -44969,7 +44969,7 @@ loc_4853BFE4:
     ble     loc_4853BFED
     jmp     loc_4853C0D5
 loc_4853BFED:
-    mov     (func_4853BF69_Table+4), d0
+    mov     (SeqAdvDlyFieldApply_Table+4), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -44979,7 +44979,7 @@ loc_4853BFED:
     bgt     loc_4853C00C
     jmp     loc_4853C0D5
 loc_4853C00C:
-    mov     (func_4853BF69_Table+8), d0
+    mov     (SeqAdvDlyFieldApply_Table+8), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -44997,12 +44997,12 @@ loc_4853C034:
     exth    d0
     cmp     d3, d0
     ble     loc_4853C050
-    mov     (func_4853BF69_Table+4), d0
+    mov     (SeqAdvDlyFieldApply_Table+4), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
 loc_4853C050:
-    mov     (func_4853BF69_Table+8), d0
+    mov     (SeqAdvDlyFieldApply_Table+8), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -45012,7 +45012,7 @@ loc_4853C067:
     blt     loc_4853C0D5
     cmp     0x60, d3
     bgt     loc_4853C0D5
-    mov     (func_4853BF69_Table+12), d0
+    mov     (SeqAdvDlyFieldApply_Table+12), d0
     mov     d3, (0x10, sp)
     mov     MT_SetParam, d1
     call    SendEvent_entry, [d2,d3], 0x24

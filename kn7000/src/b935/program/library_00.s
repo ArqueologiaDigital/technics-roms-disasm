@@ -2429,7 +2429,7 @@ loc_4C00136E:
     mov     d0, (0x24, sp)
     mov     d1, (0x28, sp)
     mov     data_4858598C, a3
-    mov     func_4C0012BB_Table, a2
+    mov     LibF64Sin_Table, a2
     cmp     a3, a2
     nop
     bcs     loc_4C0013E1
@@ -3455,7 +3455,7 @@ loc_4C001B2B:
 loc_4C001B33:
     add     -0x45, d0
     asl2    d0
-    mov     func_4C001A65_Table, a0
+    mov     vsprintf_core_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
     mov     (a3), d0
@@ -3972,7 +3972,7 @@ PfParseSpec_entry:
     nop
     clr     d0
     mov     d0, (a1)
-    mov     func_4C001EBB_Records, a3
+    mov     PfParseSpec_Records, a3
 loc_4C001ED0:
     movbu   (a2), d1
     extb    d1
@@ -3998,7 +3998,7 @@ loc_4C001ED0:
     nop
     beq     loc_4C001F4F
     add     8, a0
-    cmp     func_4C001EBB_Records+128, a0
+    cmp     PfParseSpec_Records+128, a0
     nop
     bcs     loc_4C001F01
     mov     a3, a0
@@ -4244,13 +4244,13 @@ loc_4C002066:
     retf    [a2], 4
 # localeconv  (lib CPU 0x4c00206a)
 localeconv:
-    mov     (func_4C00206A_Table), d0
+    mov     (localeconv_Table), d0
     mov     0x28, d1
     asl     4, d0
     mov     d0, a1
-    add     func_4C00206A_Records_2, a1
+    add     localeconv_Records_2, a1
     mov     (4, a1), a0
-    mov     (func_4C00206A_Records_2+28), d0
+    mov     (localeconv_Records_2+28), d0
     mov     a0, (0x50008244)
     mov     (8, a1), a0
     nop
@@ -4261,7 +4261,7 @@ localeconv:
     mov     d0, a1
     mov     a0, (0x5000824c)
     nop
-    add     func_4C00206A_Records, a1
+    add     localeconv_Records, a1
     mov     (4, a1), a0
     mov     a0, (0x50008250)
     mov     (8, a1), a0
@@ -4808,7 +4808,7 @@ PfFormatF_entry:
     cmp     0x135, d0
     nop
     ble     loc_4C002486
-    mov     func_4C001EBB_Records+148, a1
+    mov     PfParseSpec_Records+148, a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
     mov     8, d0
@@ -5916,7 +5916,7 @@ PfDoubleToDecimal_entry:
     mov     sp, a2
     add     0x68, a2
     mov     a2, (4, sp)
-    mov     func_4C002B70_Table, a1
+    mov     PfDoubleToDecimal_Table, a1
     mov     sp, a0
     add     0x44, a0
     mov     -5, d1
@@ -6159,7 +6159,7 @@ loc_4C002D12:
     bcc     loc_4C002D12
     jmp     loc_4C002EB1
 loc_4C002D56:
-    mov     func_4C002B70_Table_3, a0
+    mov     PfDoubleToDecimal_Table_3, a0
     mov     (a0), d2
     mov     (4, a0), d3
     mov     d2, (0x2c, sp)
@@ -6183,7 +6183,7 @@ loc_4C002D56:
     mov     d1, (0xc, sp)
     call    LibF64CmpZero_entry, [d2,d3], 0x10
     bgt     loc_4C002DC0
-    mov     func_4C002B70_Table_3, a0
+    mov     PfDoubleToDecimal_Table_3, a0
     mov     (a0), d0
     mov     (4, a0), d1
     mov     d0, (8, sp)
@@ -6201,7 +6201,7 @@ loc_4C002D56:
     call    LibF64ToI32_entry, [d3,a3], 0x10
     bra     loc_4C002DED
 loc_4C002DC0:
-    mov     func_4C002B70_Table_3, a0
+    mov     PfDoubleToDecimal_Table_3, a0
     mov     (a0), d0
     mov     (4, a0), d1
     mov     d0, (8, sp)
@@ -6364,7 +6364,7 @@ loc_4C002EC0:
     nop
     bcs     loc_4C002EC0
 loc_4C002F18:
-    mov     func_4C002B70_Table_2, a0
+    mov     PfDoubleToDecimal_Table_2, a0
     mov     (a0), d0
     mov     (4, a0), d1
     mov     d0, (0x1c, sp)
@@ -6379,7 +6379,7 @@ loc_4C002F18:
     mov     d1, (0x14, sp)
     call    LibF64Cmp_entry, [d2,d3], 0x10
     bgt     loc_4C002F6E
-    mov     func_4C002B70_Table_2, a0
+    mov     PfDoubleToDecimal_Table_2, a0
     mov     (a0), d0
     mov     (4, a0), d1
     mov     d0, (0x1c, sp)
@@ -6453,7 +6453,7 @@ loc_4C002FA6:
 # LibF64Zero  (lib CPU 0x4c002fb8)
 LibF64Zero:
     add     -8, sp
-    mov     func_4C002FB8_Table, a0
+    mov     LibF64Zero_Table, a0
     mov     sp, a1
     mov     (a0), d1
     mov     (4, a0), d0
@@ -14492,7 +14492,7 @@ loc_4C007053:
 loc_4C00705A:
     add     -0x60, d0
     asl2    d0
-    mov     func_4C006FB7_Table, a0
+    mov     TgPartDataEntrySet_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
     movbu   (2, a1), d0
@@ -14680,7 +14680,7 @@ TgPartVolumeSet_entry:
     beq     loc_4C007217
     extbu   d1
     add     d1, d1
-    mov     func_4C0071EF_Table, a0
+    mov     TgPartVolumeSet_Table, a0
     movhu   (d1, a0), d2
     extbu   d3
     mov     0x54c, d0
@@ -14727,7 +14727,7 @@ TgPartExpressionSet_entry:
     beq     loc_4C007270
     extbu   d1
     add     d1, d1
-    mov     func_4C0071EF_Table, a0
+    mov     TgPartVolumeSet_Table, a0
     movhu   (d1, a0), d2
     extbu   d3
     mov     0x54c, d0
@@ -15965,7 +15965,7 @@ TgPartControllersReset_entry:
     asl2    d0
     sub     a1, d0
     mov     d0, a2
-    add     func_4C02E85D_Table, a2
+    add     TgPartControlChange_Table, a2
     movbu   (a2), d0
     add     a1, a1
     mov     a1, a0
@@ -17826,7 +17826,7 @@ loc_4C008AEB:
     asl2    d0
     sub     d1, d0
     mov     d0, a0
-    add     func_4C02E85D_Table, a0
+    add     TgPartControlChange_Table, a0
     movbu   (1, a0), d1
     cmp     d1, a1
     bne     loc_4C008B28
@@ -17909,7 +17909,7 @@ loc_4C008BA1:
     asl2    d0
     sub     a1, d0
     mov     d0, a2
-    add     func_4C02E85D_Table, a2
+    add     TgPartControlChange_Table, a2
     movbu   (a2), d0
     extb    d1
     cmp     d0, d1
@@ -43063,7 +43063,7 @@ loc_4C015617:
     ret     [d2,d3,a2], 0x24
 loc_4C01561E:
     asl2    d1
-    mov     func_4C015602_Table, a1
+    mov     M3GetByKind_Table, a1
     mov     (d1, a1), a1
     jmp     (a1)
     exthu   d3
@@ -43856,7 +43856,7 @@ M3GetType1ByKind_entry:
     cmp     0xb, d1
     bgt     loc_4C015CA6
     asl2    d1
-    mov     func_4C015C45_Table, a1
+    mov     M3GetType1ByKind_Table, a1
     mov     (d1, a1), a1
     jmp     (a1)
     exthu   d3
@@ -44130,7 +44130,7 @@ loc_4C015E64:
     ret     [d2,d3], 0x20
 loc_4C015E6B:
     asl2    d1
-    mov     func_4C015E50_Table, a1
+    mov     M3SetByKind_Table, a1
     mov     (d1, a1), a1
     jmp     (a1)
     movhu   (0x34, sp), d0
@@ -48254,7 +48254,7 @@ loc_4C0181FD:
     jmp     loc_4C018297
 loc_4C018204:
     asl2    d1
-    mov     func_4C0181E8_Table, a1
+    mov     M3SetType1ByKind_Table, a1
     mov     (d1, a1), a1
     jmp     (a1)
     movhu   (0x34, sp), d0
@@ -49015,7 +49015,7 @@ loc_4C018825:
 loc_4C01882C:
     add     d0, d1
     asl2    d1
-    mov     func_4C018810_Table, a0
+    mov     M3SetType3ByKind_Table, a0
     mov     (d1, a0), a0
     jmp     (a0)
     movhu   (0x34, sp), d0
@@ -52473,7 +52473,7 @@ loc_4C01A518:
 loc_4C01A51F:
     add     d0, d1
     asl2    d1
-    mov     func_4C01A504_Table, a1
+    mov     M3SetType4ByKind_Table, a1
     mov     (d1, a1), a1
     jmp     (a1)
     movhu   (0x34, sp), d0
@@ -55380,7 +55380,7 @@ M3SourceCheck:
     bgt     loc_4C01BC23
     add     -1, d0
     asl2    d0
-    mov     func_4C01BC01_Table, a0
+    mov     M3SourceCheck_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
     clr     d0

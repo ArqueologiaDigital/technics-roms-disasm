@@ -10,7 +10,7 @@ M3BlockPtrGet:
     bra     loc_4C02103D
 loc_4C021034:
     asl2    d0
-    mov     func_4C02102B_Table, a0
+    mov     M3BlockPtrGet_Table, a0
     mov     (d0, a0), a0
 loc_4C02103D:
     retf    0, 0
@@ -213,7 +213,7 @@ PartDspUnitFind_entry:
     clr     d0
     extbu   d3
     setlb
-    mov     func_4C021244_Table, a0
+    mov     PartDspUnitFind_Table, a0
     movbu   (d0, a0), d1
     mov     0x84000772, a0
     movbu   (d1, a0), d1
@@ -580,31 +580,31 @@ M3SetSpecialDispatch_entry:
     ret     [d2,d3,a2,a3], 0x24
 loc_4C0216B0:
     mov     (0x2c, sp), d0
-    mov     func_4C02168E_Selected_0, d2
+    mov     M3HookDispatch_Selected_0, d2
     and     0x00ff0000, d0
     lsr     16, d0
     extbu   d0
     cmp     0, d0
     beq     loc_4C021718
-    mov     func_4C02168E_Selected_1, d2
+    mov     M3HookDispatch_Selected_1, d2
     cmp     0x20, d0
     beq     loc_4C021718
-    mov     func_4C02168E_Selected_2, d2
+    mov     M3HookDispatch_Selected_2, d2
     cmp     0x60, d0
     beq     loc_4C021718
-    mov     func_4C02168E_Selected_3, d2
+    mov     M3HookDispatch_Selected_3, d2
     cmp     0x70, d0
     beq     loc_4C021718
-    mov     func_4C02168E_Selected_4, d2
+    mov     M3HookDispatch_Selected_4, d2
     cmp     0xb0, d0
     beq     loc_4C021718
-    mov     func_4C02168E_Selected_5, d2
+    mov     M3HookDispatch_Selected_5, d2
     cmp     0xc0, d0
     beq     loc_4C021718
-    mov     func_4C02168E_Selected_6, d2
+    mov     M3HookDispatch_Selected_6, d2
     cmp     0xd0, d0
     beq     loc_4C021718
-    mov     func_4C02168E_Selected_7, d2
+    mov     M3HookDispatch_Selected_7, d2
     cmp     0xe0, d0
     beq     loc_4C021718
     mov     -1, d0
@@ -4325,7 +4325,7 @@ func_4C023F6B:
     add     -0x14, sp
 func_4C023F6B_entry:
     mov     0x96804000, a0
-    mov     func_4847F639_Table, a1
+    mov     FlashSectorProgram_Table, a1
     mov     2, d0
     call    FlashProgram128Words, [d2,d3,a2,a3], 0x50
     ret     0, 0x14
@@ -22933,7 +22933,7 @@ loc_4C02E85D:
     jmp     loc_4C02F9E3
 loc_4C02E868:
     mov     (0x24, sp), d1
-    mov     func_4C02E84A_Records, a1
+    mov     TgPartControlChange_Records, a1
     mov     a1, a0
     mov     0x7f, d0
     and     d1, d0
@@ -24496,7 +24496,7 @@ loc_4C02F9E3:
     movbu   (1, a0), d1
     asl2    d0
     sub     a1, d0
-    mov     func_4C02E84A_Table, a0
+    mov     TgPartControlChange_Table, a0
     movbu   (d0, a0), d0
     extb    d1
     cmp     d0, d1
@@ -24538,7 +24538,7 @@ loc_4C02FA3C:
     mov     d3, d1
     asl2    d1
     sub     d3, d1
-    mov     func_4C02E84A_Table, a0
+    mov     TgPartControlChange_Table, a0
     movbu   (d1, a0), d1
     extb    d0
     sub     d1, d0
@@ -24561,7 +24561,7 @@ loc_4C02FA70:
     mov     d3, d1
     asl2    d1
     sub     d3, d1
-    mov     func_4C02E84A_Table, a0
+    mov     TgPartControlChange_Table, a0
     movbu   (d1, a0), d1
     extb    d0
     sub     d1, d0
@@ -24589,7 +24589,7 @@ loc_4C02FAB3:
     mov     d3, d0
     asl2    d0
     sub     d3, d0
-    mov     func_4C02E84A_Table, a0
+    mov     TgPartControlChange_Table, a0
     movbu   (d0, a0), d0
     extb    d1
     sub     d0, d1
@@ -24601,7 +24601,7 @@ loc_4C02FAE3:
     asl2    d0
     mov     d0, a0
     sub     d3, a0
-    add     func_4C02E84A_Table, a0
+    add     TgPartControlChange_Table, a0
     mov     2, d0
     mov     d0, (0x10, sp)
     mov     0x55, d0
@@ -47608,11 +47608,11 @@ loc_4C03B5B5:
     movhu   d0, (0x5038072c)
 loc_4C03B5DA:
     or      0x0800, psw
-    movhu   (func_4C03B501_Var), d0
+    movhu   (KernelTimerTask_Var), d0
     exth    d0
     cmp     0, d0
     bne     loc_4C03B5F4
-    movhu   (func_4C03B501_Table), d0
+    movhu   (KernelTimerTask_Table), d0
     exth    d0
     cmp     0, d0
     beq     loc_4C03B65A
@@ -47801,12 +47801,12 @@ KernelTaskReadyRemove_entry:
     cmp     d0, a0
     bne     loc_4C03B80A
     movhu   (a2), d2
-    movhu   (func_4C03B786_Table), d0
+    movhu   (KernelTaskReadyRemove_Table), d0
     exth    d2
     exth    d0
     cmp     d0, d2
     bgt     loc_4C03B7E5
-    movhu   (func_4C03B786_Table), d1
+    movhu   (KernelTaskReadyRemove_Table), d1
     asl     3, d2
     exth    d1
     mov     d2, a0
@@ -47848,7 +47848,7 @@ loc_4C03B818:
     cmp     d1, d0
     bne     loc_4C03B87E
     movhu   (a2), d1
-    movhu   (func_4C03B786_Table), d0
+    movhu   (KernelTaskReadyRemove_Table), d0
     exth    d1
     exth    d0
     cmp     d0, d1
@@ -47859,7 +47859,7 @@ loc_4C03B818:
     bge     loc_4C03B86B
 loc_4C03B837:
     movhu   (0x1c, a0), d3
-    movhu   (func_4C03B786_Table), d2
+    movhu   (KernelTaskReadyRemove_Table), d2
     exth    d3
     exth    d2
     asl     3, d1
@@ -50311,16 +50311,16 @@ loc_4C03CC35:
 KernelMemoryInit:
     add     -0xc, sp
 KernelMemoryInit_entry:
-    mov     (func_4C03CC38_Var_3), a0
+    mov     (KernelMemoryInit_Var_3), a0
     mov     0x53595350, d0
     mov     a0, (0x5038096c)
     mov     d0, (0xc, a0)
-    mov     (func_4C03CC38_Var), d0
-    mov     (func_4C03CC38_Var_3), a1
+    mov     (KernelMemoryInit_Var), d0
+    mov     (KernelMemoryInit_Var_3), a1
     sub     a1, d0
     mov     d0, (8, a0)
     call    KernelPoolInit, 0, 0
-    mov     (func_4C03CC38_Var_2), a0
+    mov     (KernelMemoryInit_Var_2), a0
     clr     d0
     mov     d0, (a0)
     mov     d0, (4, a0)
@@ -50342,7 +50342,7 @@ KernelAreaAlloc_entry:
     mov     -0xa, d0
     retf    [d2,d3,a2,a3], 0x10
 loc_4C03CC93:
-    mov     (func_4C03CC38_Var_2), a2
+    mov     (KernelMemoryInit_Var_2), a2
     mov     0, a1
     mov     (a2), d0
     cmp     0, d0
@@ -50375,7 +50375,7 @@ loc_4C03CCBB:
     cmp     0, d0
     lne
 loc_4C03CCC7:
-    mov     (func_4C03CC74_Table), d0
+    mov     (KernelAreaAlloc_Table), d0
     mov     8, d1
     sub     a2, d0
     sub     d1, d0
@@ -50434,7 +50434,7 @@ KernelAreaFree:
     movm    [d2,a2], (sp)
 KernelAreaFree_entry:
     mov     a0, d0
-    mov     (func_4C03CC38_Var_2), a1
+    mov     (KernelMemoryInit_Var_2), a1
     mov     8, d1
     sub     d1, d0
     mov     d0, a2
@@ -50470,7 +50470,7 @@ loc_4C03CD52:
     mov     d1, (a0)
     bra     loc_4C03CD68
 loc_4C03CD5E:
-    mov     (func_4C03CC38_Var_2), a0
+    mov     (KernelMemoryInit_Var_2), a0
     clr     d0
     mov     d0, (4, a0)
 loc_4C03CD68:
@@ -51530,7 +51530,7 @@ KernelAreaFreeContaining:
     movm    [a2], (sp)
     add     -0xc, sp
 KernelAreaFreeContaining_entry:
-    mov     (func_4C03CC38_Var_2), a1
+    mov     (KernelMemoryInit_Var_2), a1
     mov     a0, a2
     mov     (a1), d1
     mov     0, a0

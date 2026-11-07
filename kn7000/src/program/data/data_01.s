@@ -3770,9 +3770,9 @@ Str_TT_TESTMENU:	.asciz "TT_TESTMENU"
 
 func_4849FC38_Table:	# 8 x u8, 1..223; read by func_4849FC38_entry 0x4849F85B: `movbu  (d0, a0), d0`
 	tab_u8	1, 9, 48, 64, 85, 65, 223, 131
-func_4849FC4F_Table:	# 8 x u8, 0..0; read by RomTwoPassSumTest_entry 0x4849FC4F: `movbu  (a1), d0`
+RomTwoPassSumTest_Table:	# 8 x u8, 0..0; read by RomTwoPassSumTest_entry 0x4849FC4F: `movbu  (a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0
-func_4849FC4F_Table_2:	# 8 x u8, 0..0; read by RomTwoPassSumTest_entry 0x4849FC4F: `movbu  (a1), d0`
+RomTwoPassSumTest_Table_2:	# 8 x u8, 0..0; read by RomTwoPassSumTest_entry 0x4849FC4F: `movbu  (a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0
 data_4860C9B0:
 	# 12 bytes the code takes the address of: TestDiskFunc 0x484A0A32 `call KillApTimer_entry, [d2,d3,a2,a3], 0x30` (+0, arg sp24); TestDiskFunc 0x484A0A32 `call SetApTimer_entry, [d2,d3,a2,a3], 0x34` (+0, arg sp24); TestDiskFunc 0x484A0A32 `mov data_4860C9B0, d0` (+0, as a base); byte rows (u8); the callee walk: KillApTimer (sp24): KillApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later); SetApTimer (sp24): SetApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later)
@@ -3903,7 +3903,7 @@ PanelSwitchClassTable:	# 103 x PanelTestSwitch (2 bytes each); read by PanelSelf
 
 PanelSelfTestScanEntry_Table:	# 6 x u32, 0..99; read by PanelSelfTestScanEntry 0x484A0D07: `mov   (a0), d0`
 	tab_u32	0, 1, 99, 0, 0, 0
-func_484A0CB0_Table:	# 4 x u8, 0..240; read by PanelSelfTestSwEvent_entry 0x484A0CB0: `movbu  (a1), d0`
+PanelSelfTestSwEvent_Table:	# 4 x u8, 0..240; read by PanelSelfTestSwEvent_entry 0x484A0CB0: `movbu  (a1), d0`
 	tab_u8	3, 240, 38, 0
 
 Str_2d_2d_8:	.asciz "%2d/%2d"
@@ -4138,35 +4138,35 @@ Str_CcEv_9:	.asciz "CcEv"
 
 SineWaveFilter_Table:	# 3 x u32, 7340032..12582912; read by SineWaveFilter 0x484A2FEA: `mov   (d0, a0), d0`
 	tab_u32	7344145, 12582912, 7340032
-func_484A37C2_Table:	# 4 x u16, 54..543; read by SineWaveTestTextDraw 0x484A37C2: `movhu  (a1), d0`
+SineWaveTestTextDraw_Table:	# 4 x u16, 54..543; read by SineWaveTestTextDraw 0x484A37C2: `movhu  (a1), d0`
 	tab_u16	128, 54, 543, 85
-func_484A37C2_Table_2:	# 4 x u16, 90..543; read by SineWaveTestTextDraw 0x484A37C2: `movhu  (a1), d0`
+SineWaveTestTextDraw_Table_2:	# 4 x u16, 90..543; read by SineWaveTestTextDraw 0x484A37C2: `movhu  (a1), d0`
 	tab_u16	128, 90, 543, 119
-func_484A37C2_Table_3:	# 4 x u16, 122..558; read by SineWaveTestTextDraw 0x484A37C2: `movhu  (a1), d0`
+SineWaveTestTextDraw_Table_3:	# 4 x u16, 122..558; read by SineWaveTestTextDraw 0x484A37C2: `movhu  (a1), d0`
 	tab_u16	128, 122, 558, 141
-func_484A37C2_Table_4:	# 4 x u16, 128..543; read by SineWaveTestTextDraw 0x484A37C2: `movhu  (a1), d0`
+SineWaveTestTextDraw_Table_4:	# 4 x u16, 128..543; read by SineWaveTestTextDraw 0x484A37C2: `movhu  (a1), d0`
 	tab_u16	128, 145, 543, 164
-func_484A37C2_Table_5:	# 4 x u16, 128..398; read by SineWaveTestTextDraw 0x484A37C2: `movhu  (a1), d0`
+SineWaveTestTextDraw_Table_5:	# 4 x u16, 128..398; read by SineWaveTestTextDraw 0x484A37C2: `movhu  (a1), d0`
 	tab_u16	128, 169, 398, 188
-func_484A37C2_Table_6:	# 27 x u16, 32..32326; read by SineWaveTestTextDraw 0x484A37C2: `movhu  (a1), d0`
+SineWaveTestTextDraw_Table_6:	# 27 x u16, 32..32326; read by SineWaveTestTextDraw 0x484A37C2: `movhu  (a1), d0`
 	tab_u16	128, 191, 588, 210, 8259, 17408, 24958, 48, 8260, 17664, 24958, 48	# [0]
 	tab_u16	8261, 17920, 32, 32326, 25913, 18176, 32, 32321, 12385, 16640, 32, 32322	# [12]
 	tab_u16	12385, 16896, 32	# [24]
-	.align	4, 0xFF	# pad after func_484A37C2_Table_6
+	.align	4, 0xFF	# pad after SineWaveTestTextDraw_Table_6
 
 SineWaveWindowProc_Table:
-	.long	func_484A37C2_Table_6+8
-	.long	func_484A37C2_Table_6+11
-	.long	func_484A37C2_Table_6+16
-	.long	func_484A37C2_Table_6+19
-	.long	func_484A37C2_Table_6+24
-	.long	func_484A37C2_Table_6+27
-	.long	func_484A37C2_Table_6+30
-	.long	func_484A37C2_Table_6+35
-	.long	func_484A37C2_Table_6+38
-	.long	func_484A37C2_Table_6+43
-	.long	func_484A37C2_Table_6+46
-	.long	func_484A37C2_Table_6+51
+	.long	SineWaveTestTextDraw_Table_6+8
+	.long	SineWaveTestTextDraw_Table_6+11
+	.long	SineWaveTestTextDraw_Table_6+16
+	.long	SineWaveTestTextDraw_Table_6+19
+	.long	SineWaveTestTextDraw_Table_6+24
+	.long	SineWaveTestTextDraw_Table_6+27
+	.long	SineWaveTestTextDraw_Table_6+30
+	.long	SineWaveTestTextDraw_Table_6+35
+	.long	SineWaveTestTextDraw_Table_6+38
+	.long	SineWaveTestTextDraw_Table_6+43
+	.long	SineWaveTestTextDraw_Table_6+46
+	.long	SineWaveTestTextDraw_Table_6+51
 
 SineWaveWindowProc_Table_2:	# 4 x u16, 0..0; read by SineWaveWindowProc 0x484A302F: `movhu  (a1), d0`
 	tab_u16	0, 0, 0, 0
@@ -4200,9 +4200,9 @@ Str_CHECK_MODE:	.asciz "CHECK MODE:"
 Str_KEY_DOWN_INFORMATION:	.asciz "KEY DOWN INFORMATION = (                )"
 	.align	4, 0xFF	# pad after Str_KEY_DOWN_INFORMATION
 
-func_484A37C2_Table_7:	# 4 x u16, 0..0; read by SineWaveTestTextDraw 0x484A37C2: `movhu  (a1), d0`
+SineWaveTestTextDraw_Table_7:	# 4 x u16, 0..0; read by SineWaveTestTextDraw 0x484A37C2: `movhu  (a1), d0`
 	tab_u16	0, 0, 0, 0
-func_484A37C2_Table_8:	# 2 x u16, 0..0; read by SineWaveTestTextDraw_entry 0x484A37C2: `movhu  (a1), d0`
+SineWaveTestTextDraw_Table_8:	# 2 x u16, 0..0; read by SineWaveTestTextDraw_entry 0x484A37C2: `movhu  (a1), d0`
 	tab_u16	0, 0
 
 Str_1_SINE_WAVE_at_Full_level_w_o_Touch_and:	.asciz "(1)SINE WAVE at Full level (w/o Touch and Key note)"
@@ -4255,35 +4255,35 @@ Str_IC2:	.asciz ", IC2 ="
 Str_WAVE_ROM_IC3:	.asciz "WAVE ROM      IC3 ="
 Str_IC4:	.asciz ", IC4 ="
 
-func_484A3DAE_Records:	# 24 x REC_func_484A3DAE_Records (12 bytes each); read by BoardTestLineDraw 0x484A3DAE `mov (8, a2), a0`; BoardTestLineDraw 0x484A3DAE `movhu (2, a2), d0`; BoardTestLineDraw 0x484A3DAE `movhu (4, a2), d1` (+2)
-	REC_func_484A3DAE_Records	f0=4, f2=42, f4=40, DrawString_d1=251, text=Str_EXP1_4	# [0]
-	REC_func_484A3DAE_Records	f0=44, f2=42, f4=152, DrawString_d1=255, text=Str_PARAMETOR_ROM_IC5_4
-	REC_func_484A3DAE_Records	f0=44, f2=68, f4=152, DrawString_d1=255, text=Str_WAVE_ROM_IC1_4
-	REC_func_484A3DAE_Records	f0=220, f2=68, f4=56, DrawString_d1=255, text=Str_IC2_4
-	REC_func_484A3DAE_Records	f0=44, f2=94, f4=152, DrawString_d1=255, text=Str_WAVE_ROM_IC3_4
-	REC_func_484A3DAE_Records	f0=220, f2=94, f4=56, DrawString_d1=255, text=Str_IC4_4
-	REC_func_484A3DAE_Records	f0=4, f2=124, f4=40, DrawString_d1=251, text=Str_EXP2_4
-	REC_func_484A3DAE_Records	f0=44, f2=124, f4=152, DrawString_d1=255, text=Str_PARAMETOR_ROM_IC5_3
-	REC_func_484A3DAE_Records	f0=44, f2=150, f4=152, DrawString_d1=255, text=Str_WAVE_ROM_IC1_3	# [8]
-	REC_func_484A3DAE_Records	f0=220, f2=150, f4=56, DrawString_d1=255, text=Str_IC2_3
-	REC_func_484A3DAE_Records	f0=44, f2=176, f4=152, DrawString_d1=255, text=Str_WAVE_ROM_IC3_3
-	REC_func_484A3DAE_Records	f0=220, f2=176, f4=56, DrawString_d1=255, text=Str_IC4_3
-	REC_func_484A3DAE_Records	f0=324, f2=42, f4=40, DrawString_d1=251, text=Str_EXP3_4
-	REC_func_484A3DAE_Records	f0=364, f2=42, f4=152, DrawString_d1=255, text=Str_PARAMETOR_ROM_IC5_2
-	REC_func_484A3DAE_Records	f0=364, f2=68, f4=152, DrawString_d1=255, text=Str_WAVE_ROM_IC1_2
-	REC_func_484A3DAE_Records	f0=540, f2=68, f4=56, DrawString_d1=255, text=Str_IC2_2
-	REC_func_484A3DAE_Records	f0=364, f2=94, f4=152, DrawString_d1=255, text=Str_WAVE_ROM_IC3_2	# [16]
-	REC_func_484A3DAE_Records	f0=540, f2=94, f4=56, DrawString_d1=255, text=Str_IC4_2
-	REC_func_484A3DAE_Records	f0=324, f2=124, f4=40, DrawString_d1=251, text=Str_EXP4_4
-	REC_func_484A3DAE_Records	f0=364, f2=124, f4=152, DrawString_d1=255, text=Str_PARAMETOR_ROM_IC5
-	REC_func_484A3DAE_Records	f0=364, f2=150, f4=152, DrawString_d1=255, text=Str_WAVE_ROM_IC1
-	REC_func_484A3DAE_Records	f0=540, f2=150, f4=56, DrawString_d1=255, text=Str_IC2
-	REC_func_484A3DAE_Records	f0=364, f2=176, f4=152, DrawString_d1=255, text=Str_WAVE_ROM_IC3
-	REC_func_484A3DAE_Records	f0=540, f2=176, f4=56, DrawString_d1=255, text=Str_IC4
+BoardTestLineDraw_Records:	# 24 x REC_BoardTestLineDraw_Records (12 bytes each); read by BoardTestLineDraw 0x484A3DAE `mov (8, a2), a0`; BoardTestLineDraw 0x484A3DAE `movhu (2, a2), d0`; BoardTestLineDraw 0x484A3DAE `movhu (4, a2), d1` (+2)
+	REC_BoardTestLineDraw_Records	f0=4, f2=42, f4=40, DrawString_d1=251, text=Str_EXP1_4	# [0]
+	REC_BoardTestLineDraw_Records	f0=44, f2=42, f4=152, DrawString_d1=255, text=Str_PARAMETOR_ROM_IC5_4
+	REC_BoardTestLineDraw_Records	f0=44, f2=68, f4=152, DrawString_d1=255, text=Str_WAVE_ROM_IC1_4
+	REC_BoardTestLineDraw_Records	f0=220, f2=68, f4=56, DrawString_d1=255, text=Str_IC2_4
+	REC_BoardTestLineDraw_Records	f0=44, f2=94, f4=152, DrawString_d1=255, text=Str_WAVE_ROM_IC3_4
+	REC_BoardTestLineDraw_Records	f0=220, f2=94, f4=56, DrawString_d1=255, text=Str_IC4_4
+	REC_BoardTestLineDraw_Records	f0=4, f2=124, f4=40, DrawString_d1=251, text=Str_EXP2_4
+	REC_BoardTestLineDraw_Records	f0=44, f2=124, f4=152, DrawString_d1=255, text=Str_PARAMETOR_ROM_IC5_3
+	REC_BoardTestLineDraw_Records	f0=44, f2=150, f4=152, DrawString_d1=255, text=Str_WAVE_ROM_IC1_3	# [8]
+	REC_BoardTestLineDraw_Records	f0=220, f2=150, f4=56, DrawString_d1=255, text=Str_IC2_3
+	REC_BoardTestLineDraw_Records	f0=44, f2=176, f4=152, DrawString_d1=255, text=Str_WAVE_ROM_IC3_3
+	REC_BoardTestLineDraw_Records	f0=220, f2=176, f4=56, DrawString_d1=255, text=Str_IC4_3
+	REC_BoardTestLineDraw_Records	f0=324, f2=42, f4=40, DrawString_d1=251, text=Str_EXP3_4
+	REC_BoardTestLineDraw_Records	f0=364, f2=42, f4=152, DrawString_d1=255, text=Str_PARAMETOR_ROM_IC5_2
+	REC_BoardTestLineDraw_Records	f0=364, f2=68, f4=152, DrawString_d1=255, text=Str_WAVE_ROM_IC1_2
+	REC_BoardTestLineDraw_Records	f0=540, f2=68, f4=56, DrawString_d1=255, text=Str_IC2_2
+	REC_BoardTestLineDraw_Records	f0=364, f2=94, f4=152, DrawString_d1=255, text=Str_WAVE_ROM_IC3_2	# [16]
+	REC_BoardTestLineDraw_Records	f0=540, f2=94, f4=56, DrawString_d1=255, text=Str_IC4_2
+	REC_BoardTestLineDraw_Records	f0=324, f2=124, f4=40, DrawString_d1=251, text=Str_EXP4_4
+	REC_BoardTestLineDraw_Records	f0=364, f2=124, f4=152, DrawString_d1=255, text=Str_PARAMETOR_ROM_IC5
+	REC_BoardTestLineDraw_Records	f0=364, f2=150, f4=152, DrawString_d1=255, text=Str_WAVE_ROM_IC1
+	REC_BoardTestLineDraw_Records	f0=540, f2=150, f4=56, DrawString_d1=255, text=Str_IC2
+	REC_BoardTestLineDraw_Records	f0=364, f2=176, f4=152, DrawString_d1=255, text=Str_WAVE_ROM_IC3
+	REC_BoardTestLineDraw_Records	f0=540, f2=176, f4=56, DrawString_d1=255, text=Str_IC4
 
-func_484A3DAE_Table:	# 4 x u16, 0..0; read by BoardTestLineDraw 0x484A3DAE: `movhu  (a1), d0`
+BoardTestLineDraw_Table:	# 4 x u16, 0..0; read by BoardTestLineDraw 0x484A3DAE: `movhu  (a1), d0`
 	tab_u16	0, 0, 0, 0
-func_484A3DAE_Var:	# 2 x u16, 0..0; read by BoardTestLineDraw_entry 0x484A3DAE: `movhu  (a1), d0`
+BoardTestLineDraw_Var:	# 2 x u16, 0..0; read by BoardTestLineDraw_entry 0x484A3DAE: `movhu  (a1), d0`
 	tab_u16	0, 0
 StestWindowProc_Table:	# 48 x u8, 0..118; read by StestWindowProc 0x484A4A2B: `movbu  (a1), d0`
 	tab_u8	32, 1, 0, 1, 34, 1, 0, 1, 36, 1, 0, 1, 16, 0, 0, 1	# [0]
@@ -4373,23 +4373,23 @@ InOutTestWindowProc_Records_2:	# 32 x REC_InOutTestWindowProc_Records_2 (8 bytes
 	REC_InOutTestWindowProc_Records_2	proc=loc_484A26C6
 	REC_InOutTestWindowProc_Records_2	proc=loc_484A26C6
 	REC_InOutTestWindowProc_Records_2	proc=loc_484A26C6
-func_484A284E_Records:	# 16 x REC_func_484A284E_Records (8 bytes each); read by TestCtrlM3Handler 0x484A284E `mov (a0), d1`
-	REC_func_484A284E_Records	proc=loc_484A2A2A	# [0]
-	REC_func_484A284E_Records	key=17, proc=loc_484A29A4
-	REC_func_484A284E_Records	key=18, proc=loc_484A28A6
-	REC_func_484A284E_Records	key=19, proc=loc_484A29A1
-	REC_func_484A284E_Records	key=33, proc=loc_484A29DA
-	REC_func_484A284E_Records	key=5, proc=loc_484A2933
-	REC_func_484A284E_Records	key=6, proc=loc_484A296A
-	REC_func_484A284E_Records	key=1, proc=loc_484A2A0C
-	REC_func_484A284E_Records	key=2, proc=loc_484A2A2A	# [8]
-	REC_func_484A284E_Records	key=8193, proc=loc_484A2A2A
-	REC_func_484A284E_Records	key=10, proc=loc_484A28FD
-	REC_func_484A284E_Records	key=8194, proc=loc_484A2A2A
-	REC_func_484A284E_Records	key=8195, proc=loc_484A2A2A
-	REC_func_484A284E_Records	key=8196, proc=loc_484A2A2A
-	REC_func_484A284E_Records	key=8197, proc=loc_484A2A2A
-	REC_func_484A284E_Records	proc=loc_484A2A2A
+TestCtrlM3Handler_Records:	# 16 x REC_TestCtrlM3Handler_Records (8 bytes each); read by TestCtrlM3Handler 0x484A284E `mov (a0), d1`
+	REC_TestCtrlM3Handler_Records	proc=loc_484A2A2A	# [0]
+	REC_TestCtrlM3Handler_Records	key=17, proc=loc_484A29A4
+	REC_TestCtrlM3Handler_Records	key=18, proc=loc_484A28A6
+	REC_TestCtrlM3Handler_Records	key=19, proc=loc_484A29A1
+	REC_TestCtrlM3Handler_Records	key=33, proc=loc_484A29DA
+	REC_TestCtrlM3Handler_Records	key=5, proc=loc_484A2933
+	REC_TestCtrlM3Handler_Records	key=6, proc=loc_484A296A
+	REC_TestCtrlM3Handler_Records	key=1, proc=loc_484A2A0C
+	REC_TestCtrlM3Handler_Records	key=2, proc=loc_484A2A2A	# [8]
+	REC_TestCtrlM3Handler_Records	key=8193, proc=loc_484A2A2A
+	REC_TestCtrlM3Handler_Records	key=10, proc=loc_484A28FD
+	REC_TestCtrlM3Handler_Records	key=8194, proc=loc_484A2A2A
+	REC_TestCtrlM3Handler_Records	key=8195, proc=loc_484A2A2A
+	REC_TestCtrlM3Handler_Records	key=8196, proc=loc_484A2A2A
+	REC_TestCtrlM3Handler_Records	key=8197, proc=loc_484A2A2A
+	REC_TestCtrlM3Handler_Records	proc=loc_484A2A2A
 SineWaveWindowProc_Records:	# 16 x REC_SineWaveWindowProc_Records (8 bytes each); read by SineWaveWindowProc 0x484A302F `mov (a0), d0`
 	REC_SineWaveWindowProc_Records	key=0x1010010, proc=loc_484A322A	# [0]
 	REC_SineWaveWindowProc_Records	key=1, proc=loc_484A30C1
@@ -7164,7 +7164,7 @@ func_484AE299_Table_2:
 	.long	loc_484AE466
 	.long	loc_484AE429
 
-func_484AE7CD_MsgTable:	# 13 x {u32 key, code address}: a dispatch table; read by LedRedrawRequestsRun 0x484AE6DF `call LedProcTableDispatch_entry, [d2,a2], 0x10`; LedProcTableDispatch 0x484AE7CD `mov (a2), d0`
+LedProcTableDispatch_MsgTable:	# 13 x {u32 key, code address}: a dispatch table; read by LedRedrawRequestsRun 0x484AE6DF `call LedProcTableDispatch_entry, [d2,a2], 0x10`; LedProcTableDispatch 0x484AE7CD `mov (a2), d0`
 	.long	1, func_484AEE30
 	.long	2, func_484AF046
 	.long	4, func_484AEF46
@@ -7179,7 +7179,7 @@ func_484AE7CD_MsgTable:	# 13 x {u32 key, code address}: a dispatch table; read b
 	.long	2048, func_484AF6BD
 	.long	2048, loc_484AF104
 	.space	8, 0x00
-func_484AE7CD_MsgTable_2:	# 8 x {u32 key, code address}: a dispatch table; read by LedRedrawRequestsRun 0x484AE6DF `call LedProcTableDispatch_entry, [d2,a2], 0x10`; LedProcTableDispatch 0x484AE7CD `mov (a2), d0`
+LedProcTableDispatch_MsgTable_2:	# 8 x {u32 key, code address}: a dispatch table; read by LedRedrawRequestsRun 0x484AE6DF `call LedProcTableDispatch_entry, [d2,a2], 0x10`; LedProcTableDispatch 0x484AE7CD `mov (a2), d0`
 	.long	1, func_484AFCE4
 	.long	2, func_484AFE48
 	.long	8, func_484AFEDD
@@ -7189,7 +7189,7 @@ func_484AE7CD_MsgTable_2:	# 8 x {u32 key, code address}: a dispatch table; read 
 	.long	128, func_484B01C3
 	.long	256, func_484B025A
 	.space	8, 0x00
-func_484AE7CD_MsgTable_3:	# 9 x {u32 key, code address}: a dispatch table; read by LedRedrawRequestsRun 0x484AE6DF `call LedProcTableDispatch_entry, [d2,a2], 0x10`; LedProcTableDispatch 0x484AE7CD `mov (a2), d0`
+LedProcTableDispatch_MsgTable_3:	# 9 x {u32 key, code address}: a dispatch table; read by LedRedrawRequestsRun 0x484AE6DF `call LedProcTableDispatch_entry, [d2,a2], 0x10`; LedProcTableDispatch 0x484AE7CD `mov (a2), d0`
 	.long	1, func_484B044A
 	.long	8, func_484B04DE
 	.long	16, func_484B0574
@@ -7200,13 +7200,13 @@ func_484AE7CD_MsgTable_3:	# 9 x {u32 key, code address}: a dispatch table; read 
 	.long	16384, func_484B0828
 	.long	32768, func_484B090A
 	.space	8, 0x00
-func_484AE7CD_MsgTable_4:	# 3 x {u32 key, code address}: a dispatch table; read by LedRedrawRequestsRun 0x484AE6DF `call LedProcTableDispatch_entry, [d2,a2], 0x10`; LedProcTableDispatch 0x484AE7CD `mov (a2), d0`
+LedProcTableDispatch_MsgTable_4:	# 3 x {u32 key, code address}: a dispatch table; read by LedRedrawRequestsRun 0x484AE6DF `call LedProcTableDispatch_entry, [d2,a2], 0x10`; LedProcTableDispatch 0x484AE7CD `mov (a2), d0`
 	.long	4, func_484B0BDC
 	.long	8, func_484B0A5B
 	.long	16, func_484B0A77
 	.space	8, 0x00
 
-func_484AE7CD_Var:	# REC_LedProcTableDispatch_ArgA0 (8 bytes): the layout LedProcTableDispatch reads through its argument a0 (passed by LedRedrawRequestsRun 0x484AE6DF `call LedProcTableDispatch_entry, [d2,a2], 0x10`, +1 more calls)
+func_484AE7CD_Var:	# REC_LedProcTableDispatch_ArgA0 (8 bytes): the layout LedProcTableDispatch 0x484AE7CD reads through its argument a0 (passed by LedRedrawRequestsRun 0x484AE6DF `call LedProcTableDispatch_entry, [d2,a2], 0x10`, +1 more calls)
 	REC_LedProcTableDispatch_ArgA0	f0=4, proc=func_484B127E
 	# then 1 x u32 up to the next label, which no instruction is seen to read (the table the field reads ran on into them)
 	tab_u32	0	# +8
@@ -7214,7 +7214,7 @@ func_484AE7CD_Var:	# REC_LedProcTableDispatch_ArgA0 (8 bytes): the layout LedPro
 LedProcTableDispatch_Var:	# u32, a constant; read / written by LedProcTableDispatch 0x484AE7CD: `mov (4, a2), d0`
 	.long	0
 
-func_484AE7CD_MsgTable_5:	# 3 x {u32 key, code address}: a dispatch table; read by LedBlinkRun 0x484AE78C `call LedProcTableDispatch_entry, [d2,a2], 0x10`; LedProcTableDispatch 0x484AE7CD `mov (a2), d0`
+LedProcTableDispatch_MsgTable_5:	# 3 x {u32 key, code address}: a dispatch table; read by LedBlinkRun 0x484AE78C `call LedProcTableDispatch_entry, [d2,a2], 0x10`; LedProcTableDispatch 0x484AE7CD `mov (a2), d0`
 	.long	4, func_484B12EC
 	.long	8192, func_484B135A
 	.long	16384, func_484B13C8
@@ -7230,7 +7230,7 @@ func_484B13E4_Table:	# 32 x u32, 1..2147483648; read by func_484B13E4 0x484B13E4
 PanelLedRegMap:	# 24 x u8, 0..255; read by PanelLedGroupToReg_entry 0x484B1707: `movbu  (d0, a0), d2`
 	tab_u8	192, 193, 194, 195, 196, 197, 198, 199, 0, 1, 2, 3, 4, 5, 8, 9	# [0]
 	tab_u8	10, 11, 12, 13, 255, 255, 255, 255	# [16]
-func_484B1741_Table:	# 20 x u8, 1..255; read by PanelLedGroupWriteB_entry 0x484B1741: `movbu  (d0, a0), d2`
+PanelLedGroupWriteB_Table:	# 20 x u8, 1..255; read by PanelLedGroupWriteB_entry 0x484B1741: `movbu  (d0, a0), d2`
 	tab_u8	192, 193, 194, 195, 196, 200, 201, 1, 2, 3, 4, 5, 6, 9, 10, 11	# [0]
 	tab_u8	12, 13, 14, 255	# [16]
 
@@ -7289,7 +7289,7 @@ func_484B17CB_Records:	# 16 x REC_func_484B17CB_Records (8 bytes each); read by 
 	REC_func_484B17CB_Records	key=27, proc=loc_484B1933
 	REC_func_484B17CB_Records	key=123, proc=loc_484B1958
 
-func_484B1BC8_Table:
+PanelLedOn_Table:
 	.long	loc_484B1BE7
 	.long	loc_484B1BF1
 	.long	loc_484B1BFB
@@ -7309,7 +7309,7 @@ func_484B1BC8_Table:
 	.long	loc_484B1C9B
 	.long	loc_484B1C9B
 	.long	loc_484B1C94
-func_484B1C9E_Table:
+PanelLedOff_Table:
 	.long	loc_484B1CBD
 	.long	loc_484B1CC6
 	.long	loc_484B1CCF
@@ -7330,7 +7330,7 @@ func_484B1C9E_Table:
 	.long	loc_484B1D62
 	.long	loc_484B1D5C
 
-func_484B30B1_Table:	# 32 x u8, 0..255; read by MidiOutM3Format_entry 0x484B30B1: `movbu  (a1), d0`
+MidiOutM3Format_Table:	# 32 x u8, 0..255; read by MidiOutM3Format_entry 0x484B30B1: `movbu  (a1), d0`
 	tab_u8	255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
 func_484B3549_Table:	# 32 x u8, 0..255; read by func_484B3549_entry 0x484B33E9: `movbu  (a1), d0`
@@ -7356,7 +7356,7 @@ Str_x_5:	.asciz "\xB0x"
 Str_y_2:	.asciz "\xB0y"
 	.align	4, 0xFF	# pad after Str_y_2
 
-func_484B4035_Table:	# 8 x u32, 0..2139062016; read by MidiContextInit 0x484B4035: `mov   (a1), d0`
+MidiContextInit_Table:	# 8 x u32, 0..2139062016; read by MidiContextInit 0x484B4035: `mov   (a1), d0`
 	tab_u32	16777215, 0, 0, 0, 0, 2139062016, 127, 0
 func_484B404B_Table:	# 8 x u32, 0..16777215; read by func_484B404B 0x484B404B: `mov   (a1), d0`
 	tab_u32	16777215, 0, 0, 0, 0, 0, 0, 0
@@ -9301,9 +9301,9 @@ Str_P_1_4:	.asciz "\xF0P) 1\x1F"
 # census: opaque -- unknown-dump: 5 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program.rom", 0x2175EF, 0x2175F4
 
-func_484C3679_Block:	# 6 bytes, copied whole by PcComFrame30HeaderPut 0x484C3679: memcpy(.., 6)
+PcComFrame30HeaderPut_Block:	# 6 bytes, copied whole by PcComFrame30HeaderPut 0x484C3679: memcpy(.., 6)
 	tab_u8	240, 80, 48, 32, 49, 31	# [0]
-	.align	4, 0xFF	# pad after func_484C3679_Block
+	.align	4, 0xFF	# pad after PcComFrame30HeaderPut_Block
 func_484C369B_Block:	# 8 bytes, copied whole by func_484C369B 0x484C369B: memcpy(.., 8)
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0	# [0]
 func_484C3711_Block:	# 2 bytes, copied whole by func_484C3711 0x484C3711: memcpy(.., 2)
@@ -18112,7 +18112,7 @@ Str_A_20:	.asciz " A"
 Str_A_21:	.asciz "A#"
 Str_B_9:	.asciz " B"
 
-func_484F7B66_Table:
+SoundEditNoteNameText_Table:
 	.long	Str_C_17
 	.long	Str_C_18
 	.long	Str_D_4
@@ -18257,7 +18257,7 @@ Str_46K:	.asciz " 46K "
 Str_47K:	.asciz " 47K "
 Str_48K:	.asciz " 48K "
 
-func_484F856E_Table:
+SoundEditFreqText_Table:
 	.long	Str_65_4
 	.long	Str_69_3
 	.long	Str_73_4
@@ -20266,7 +20266,7 @@ func_484F86E1_Table_2:
 	.long	loc_484F87B6
 	.long	loc_484F87B6
 	.long	loc_484F873E
-func_484F88AF_Table:
+SoundEditCtrlDestText_Table:
 	.long	loc_484F88CC
 	.long	loc_484F88E0
 	.long	loc_484F88F4
@@ -20338,7 +20338,7 @@ func_484F8BAB_Table:
 	.long	loc_484F8BC1
 	.long	loc_484F8BC4
 	.long	loc_484F8BC1
-func_484F904F_Table:
+SoundEditDeffTypeIndexGet_Table:
 	.long	loc_484F9074
 	.long	loc_484F9077
 	.long	loc_484F907B
@@ -20353,7 +20353,7 @@ func_484F904F_Table:
 	.long	loc_484F909F
 	.long	loc_484F90A7
 	.long	loc_484F90A3
-func_484F90AB_Table:
+SoundEditDeffTypeIndexSet_Table:
 	.long	loc_484F90C2
 	.long	loc_484F90C5
 	.long	loc_484F90C9
@@ -23189,7 +23189,7 @@ Str_TRANSPOSE_B_80:	.asciz "TRANSPOSE:B ~80"
 Str_TRANSPOSE_C_80:	.asciz "TRANSPOSE:C ~80"
 Str_empty_594:	.asciz "             "
 
-func_48502852_Table:
+PartParamTransposeText_Table:
 	.long	Str_TRANSPOSE_7fC
 	.long	Str_TRANSPOSE_7fD_a0
 	.long	Str_TRANSPOSE_7fD
@@ -23368,135 +23368,135 @@ StepCommandCatch_Records:	# 16 x REC_StepCommandCatch_Records (8 bytes each); re
 	REC_StepCommandCatch_Records	key=16, proc=loc_484FFC3F
 	REC_StepCommandCatch_Records	proc=loc_484FFF4B
 	REC_StepCommandCatch_Records	key=15, proc=loc_484FFC3D
-func_48500C71_Records:	# 128 x REC_func_48500C71_Records (8 bytes each); read by PartParamDumpLine 0x48500C71 `mov (a0), d0`
-	REC_func_48500C71_Records	key=0x1000000, proc=loc_48502729	# [0]
-	REC_func_48500C71_Records	key=0xC00001, proc=loc_48500CDA
-	REC_func_48500C71_Records	key=0x200001, proc=loc_48500D56
-	REC_func_48500C71_Records	key=0x200081, proc=loc_485012EB
-	REC_func_48500C71_Records	key=0x200082, proc=loc_48501325
-	REC_func_48500C71_Records	key=0x204081, proc=loc_485016B5
-	REC_func_48500C71_Records	key=0xB00006, proc=loc_485011D0
-	REC_func_48500C71_Records	key=0x204082, proc=loc_485016DF
-	REC_func_48500C71_Records	key=0xB00008, proc=loc_48500D2B	# [8]
-	REC_func_48500C71_Records	key=0x200089, proc=loc_4850134F
-	REC_func_48500C71_Records	key=0x20008A, proc=loc_48501379
-	REC_func_48500C71_Records	key=0x20008B, proc=loc_485013A3
-	REC_func_48500C71_Records	key=0xB0000C, proc=loc_48500D90
-	REC_func_48500C71_Records	key=0x20008C, proc=loc_485013CD
-	REC_func_48500C71_Records	key=0xB0000B, proc=loc_4850171A
-	REC_func_48500C71_Records	key=0xB08001, proc=loc_4850179F
-	REC_func_48500C71_Records	key=0xB08002, proc=loc_485017CA	# [16]
-	REC_func_48500C71_Records	key=0x200091, proc=loc_485013F8
-	REC_func_48500C71_Records	key=0x200092, proc=loc_48501423
-	REC_func_48500C71_Records	key=0x200093, proc=loc_4850144D
-	REC_func_48500C71_Records	key=0x200094, proc=loc_48501477
-	REC_func_48500C71_Records	key=45077, proc=loc_48500E84
-	REC_func_48500C71_Records	key=0x200095, proc=loc_485014A2
-	REC_func_48500C71_Records	key=0x200096, proc=loc_485014CC
-	REC_func_48500C71_Records	key=0x200097, proc=loc_485014F6	# [24]
-	REC_func_48500C71_Records	key=0x200098, proc=loc_48501520
-	REC_func_48500C71_Records	key=0x200099, proc=loc_4850154B
-	REC_func_48500C71_Records	key=0x20009A, proc=loc_48501576
-	REC_func_48500C71_Records	key=0x20009B, proc=loc_485015B0
-	REC_func_48500C71_Records	key=0xB08003, proc=loc_485017F7
-	REC_func_48500C71_Records	key=0xB08006, proc=loc_48501824
-	REC_func_48500C71_Records	key=0xD00001, proc=loc_4850184F
-	REC_func_48500C71_Records	key=0xE00001, proc=loc_4850187A	# [32]
-	REC_func_48500C71_Records	key=0xB00002, proc=loc_485018BE
-	REC_func_48500C71_Records	key=49281, proc=loc_485018E9
-	REC_func_48500C71_Records	key=49282, proc=loc_485018E9
-	REC_func_48500C71_Records	key=49283, proc=loc_4850190C
-	REC_func_48500C71_Records	key=45093, proc=loc_48500F04
-	REC_func_48500C71_Records	key=49284, proc=loc_4850193A
-	REC_func_48500C71_Records	key=32777, proc=loc_48501996
-	REC_func_48500C71_Records	key=32775, proc=loc_485019B4	# [40]
-	REC_func_48500C71_Records	key=53251, proc=loc_485019D2
-	REC_func_48500C71_Records	key=53250, proc=loc_48501A1D
-	REC_func_48500C71_Records	key=53252, proc=loc_48501A7E
-	REC_func_48500C71_Records	key=53249, proc=loc_48501AC9
-	REC_func_48500C71_Records	key=2, proc=loc_48501AF7
-	REC_func_48500C71_Records	key=49153, proc=loc_48501B25
-	REC_func_48500C71_Records	key=49157, proc=loc_48501B4C
-	REC_func_48500C71_Records	key=57345, proc=loc_48501B6C	# [48]
-	REC_func_48500C71_Records	key=5, proc=loc_48501BAD
-	REC_func_48500C71_Records	key=32897, proc=loc_48501C16
-	REC_func_48500C71_Records	key=32819, proc=loc_48501968
-	REC_func_48500C71_Records	key=32801, proc=loc_48501CD1
-	REC_func_48500C71_Records	key=45109, proc=loc_48500F84
-	REC_func_48500C71_Records	key=4, proc=loc_48501D60
-	REC_func_48500C71_Records	key=32820, proc=loc_48501D7F
-	REC_func_48500C71_Records	key=129, proc=loc_48501DCA	# [56]
-	REC_func_48500C71_Records	key=32818, proc=loc_48501E5F
-	REC_func_48500C71_Records	key=161, proc=loc_48501E8D
-	REC_func_48500C71_Records	key=32771, proc=loc_48501EBB
-	REC_func_48500C71_Records	key=57346, proc=loc_48501ED9
-	REC_func_48500C71_Records	key=57347, proc=loc_48501EF7
-	REC_func_48500C71_Records	key=1, proc=loc_48501F25
-	REC_func_48500C71_Records	key=0x600001, proc=loc_48502138
-	REC_func_48500C71_Records	key=0x600015, proc=loc_48502188	# [64]
-	REC_func_48500C71_Records	key=0xB00041, proc=loc_4850167A
-	REC_func_48500C71_Records	key=0xB00042, proc=loc_485011FB
-	REC_func_48500C71_Records	key=32833, proc=loc_48501C44
-	REC_func_48500C71_Records	key=0xB00043, proc=loc_48501F85
-	REC_func_48500C71_Records	key=45125, proc=loc_48501004
-	REC_func_48500C71_Records	key=0xB00044, proc=loc_48501FAF
-	REC_func_48500C71_Records	key=0x2000A3, proc=loc_48502238
-	REC_func_48500C71_Records	key=0xB00048, proc=loc_48501FDA	# [72]
-	REC_func_48500C71_Records	key=0xB00049, proc=loc_48502007
-	REC_func_48500C71_Records	key=0xB0004A, proc=loc_48502034
-	REC_func_48500C71_Records	key=0xB0004B, proc=loc_48502061
-	REC_func_48500C71_Records	key=0xB0004C, proc=loc_4850208D
-	REC_func_48500C71_Records	key=0xB0004D, proc=loc_485020B8
-	REC_func_48500C71_Records	key=0xB0004E, proc=loc_485020E3
-	REC_func_48500C71_Records	key=0xB0004F, proc=loc_4850210E
-	REC_func_48500C71_Records	key=0x2000B1, proc=loc_4850237F	# [80]
-	REC_func_48500C71_Records	key=0xB00051, proc=loc_48501236
-	REC_func_48500C71_Records	key=0xB00052, proc=loc_48501263
-	REC_func_48500C71_Records	key=0xB00053, proc=loc_48501291
-	REC_func_48500C71_Records	key=0xB00054, proc=loc_485012BD
-	REC_func_48500C71_Records	key=45141, proc=loc_48501084
-	REC_func_48500C71_Records	key=0x2000B2, proc=loc_485023BA
-	REC_func_48500C71_Records	key=0x2000B3, proc=loc_485023F4
-	REC_func_48500C71_Records	key=0x2000B4, proc=loc_4850242F	# [88]
-	REC_func_48500C71_Records	key=0x2000B5, proc=loc_4850246A
-	REC_func_48500C71_Records	key=0x2000B6, proc=loc_485024A5
-	REC_func_48500C71_Records	key=0x2000B7, proc=loc_485024DF
-	REC_func_48500C71_Records	key=0xB0005C, proc=loc_48500E1F
-	REC_func_48500C71_Records	key=0xB0005D, proc=loc_48500DBA
-	REC_func_48500C71_Records	key=0x20005D, proc=loc_48500DE5
-	REC_func_48500C71_Records	key=0xB0005E, proc=loc_4850116A
-	REC_func_48500C71_Records	key=0xB00060, proc=loc_48501104	# [96]
-	REC_func_48500C71_Records	key=0x200060, proc=loc_4850112F
-	REC_func_48500C71_Records	key=0x20005E, proc=loc_48501195
-	REC_func_48500C71_Records	key=0xB0005F, proc=loc_48501640
-	REC_func_48500C71_Records	key=32865, proc=loc_48501CFF
-	REC_func_48500C71_Records	key=0x2000B8, proc=loc_4850251A
-	REC_func_48500C71_Records	key=0x2000B9, proc=loc_48502555
-	REC_func_48500C71_Records	key=0x2000BA, proc=loc_48502590
-	REC_func_48500C71_Records	key=0x2000BB, proc=loc_485025CB	# [104]
-	REC_func_48500C71_Records	key=0x2000BC, proc=loc_48502606
-	REC_func_48500C71_Records	key=0x2000BD, proc=loc_48502641
-	REC_func_48500C71_Records	key=0x2000BE, proc=loc_4850267C
-	REC_func_48500C71_Records	key=0x2000BF, proc=loc_485026B7
-	REC_func_48500C71_Records	key=0x2000C0, proc=loc_485026F0
-	REC_func_48500C71_Records	proc=loc_4850273A
-	REC_func_48500C71_Records	proc=loc_4850273A
-	REC_func_48500C71_Records	proc=loc_4850273A	# [112]
-	REC_func_48500C71_Records	proc=loc_4850273A
-	REC_func_48500C71_Records	proc=loc_4850273A
-	REC_func_48500C71_Records	proc=loc_4850273A
-	REC_func_48500C71_Records	proc=loc_4850273A
-	REC_func_48500C71_Records	proc=loc_4850273A
-	REC_func_48500C71_Records	proc=loc_4850273A
-	REC_func_48500C71_Records	proc=loc_4850273A
-	REC_func_48500C71_Records	proc=loc_4850273A	# [120]
-	REC_func_48500C71_Records	key=0xB00079, proc=loc_48501615
-	REC_func_48500C71_Records	key=0xB0007A, proc=loc_485015EA
-	REC_func_48500C71_Records	proc=loc_4850273A
-	REC_func_48500C71_Records	proc=loc_4850273A
-	REC_func_48500C71_Records	proc=loc_4850273A
-	REC_func_48500C71_Records	proc=loc_4850273A
-	REC_func_48500C71_Records	key=0xB0007F, proc=loc_48500E4A
+PartParamDumpLine_Records:	# 128 x REC_PartParamDumpLine_Records (8 bytes each); read by PartParamDumpLine 0x48500C71 `mov (a0), d0`
+	REC_PartParamDumpLine_Records	key=0x1000000, proc=loc_48502729	# [0]
+	REC_PartParamDumpLine_Records	key=0xC00001, proc=loc_48500CDA
+	REC_PartParamDumpLine_Records	key=0x200001, proc=loc_48500D56
+	REC_PartParamDumpLine_Records	key=0x200081, proc=loc_485012EB
+	REC_PartParamDumpLine_Records	key=0x200082, proc=loc_48501325
+	REC_PartParamDumpLine_Records	key=0x204081, proc=loc_485016B5
+	REC_PartParamDumpLine_Records	key=0xB00006, proc=loc_485011D0
+	REC_PartParamDumpLine_Records	key=0x204082, proc=loc_485016DF
+	REC_PartParamDumpLine_Records	key=0xB00008, proc=loc_48500D2B	# [8]
+	REC_PartParamDumpLine_Records	key=0x200089, proc=loc_4850134F
+	REC_PartParamDumpLine_Records	key=0x20008A, proc=loc_48501379
+	REC_PartParamDumpLine_Records	key=0x20008B, proc=loc_485013A3
+	REC_PartParamDumpLine_Records	key=0xB0000C, proc=loc_48500D90
+	REC_PartParamDumpLine_Records	key=0x20008C, proc=loc_485013CD
+	REC_PartParamDumpLine_Records	key=0xB0000B, proc=loc_4850171A
+	REC_PartParamDumpLine_Records	key=0xB08001, proc=loc_4850179F
+	REC_PartParamDumpLine_Records	key=0xB08002, proc=loc_485017CA	# [16]
+	REC_PartParamDumpLine_Records	key=0x200091, proc=loc_485013F8
+	REC_PartParamDumpLine_Records	key=0x200092, proc=loc_48501423
+	REC_PartParamDumpLine_Records	key=0x200093, proc=loc_4850144D
+	REC_PartParamDumpLine_Records	key=0x200094, proc=loc_48501477
+	REC_PartParamDumpLine_Records	key=45077, proc=loc_48500E84
+	REC_PartParamDumpLine_Records	key=0x200095, proc=loc_485014A2
+	REC_PartParamDumpLine_Records	key=0x200096, proc=loc_485014CC
+	REC_PartParamDumpLine_Records	key=0x200097, proc=loc_485014F6	# [24]
+	REC_PartParamDumpLine_Records	key=0x200098, proc=loc_48501520
+	REC_PartParamDumpLine_Records	key=0x200099, proc=loc_4850154B
+	REC_PartParamDumpLine_Records	key=0x20009A, proc=loc_48501576
+	REC_PartParamDumpLine_Records	key=0x20009B, proc=loc_485015B0
+	REC_PartParamDumpLine_Records	key=0xB08003, proc=loc_485017F7
+	REC_PartParamDumpLine_Records	key=0xB08006, proc=loc_48501824
+	REC_PartParamDumpLine_Records	key=0xD00001, proc=loc_4850184F
+	REC_PartParamDumpLine_Records	key=0xE00001, proc=loc_4850187A	# [32]
+	REC_PartParamDumpLine_Records	key=0xB00002, proc=loc_485018BE
+	REC_PartParamDumpLine_Records	key=49281, proc=loc_485018E9
+	REC_PartParamDumpLine_Records	key=49282, proc=loc_485018E9
+	REC_PartParamDumpLine_Records	key=49283, proc=loc_4850190C
+	REC_PartParamDumpLine_Records	key=45093, proc=loc_48500F04
+	REC_PartParamDumpLine_Records	key=49284, proc=loc_4850193A
+	REC_PartParamDumpLine_Records	key=32777, proc=loc_48501996
+	REC_PartParamDumpLine_Records	key=32775, proc=loc_485019B4	# [40]
+	REC_PartParamDumpLine_Records	key=53251, proc=loc_485019D2
+	REC_PartParamDumpLine_Records	key=53250, proc=loc_48501A1D
+	REC_PartParamDumpLine_Records	key=53252, proc=loc_48501A7E
+	REC_PartParamDumpLine_Records	key=53249, proc=loc_48501AC9
+	REC_PartParamDumpLine_Records	key=2, proc=loc_48501AF7
+	REC_PartParamDumpLine_Records	key=49153, proc=loc_48501B25
+	REC_PartParamDumpLine_Records	key=49157, proc=loc_48501B4C
+	REC_PartParamDumpLine_Records	key=57345, proc=loc_48501B6C	# [48]
+	REC_PartParamDumpLine_Records	key=5, proc=loc_48501BAD
+	REC_PartParamDumpLine_Records	key=32897, proc=loc_48501C16
+	REC_PartParamDumpLine_Records	key=32819, proc=loc_48501968
+	REC_PartParamDumpLine_Records	key=32801, proc=loc_48501CD1
+	REC_PartParamDumpLine_Records	key=45109, proc=loc_48500F84
+	REC_PartParamDumpLine_Records	key=4, proc=loc_48501D60
+	REC_PartParamDumpLine_Records	key=32820, proc=loc_48501D7F
+	REC_PartParamDumpLine_Records	key=129, proc=loc_48501DCA	# [56]
+	REC_PartParamDumpLine_Records	key=32818, proc=loc_48501E5F
+	REC_PartParamDumpLine_Records	key=161, proc=loc_48501E8D
+	REC_PartParamDumpLine_Records	key=32771, proc=loc_48501EBB
+	REC_PartParamDumpLine_Records	key=57346, proc=loc_48501ED9
+	REC_PartParamDumpLine_Records	key=57347, proc=loc_48501EF7
+	REC_PartParamDumpLine_Records	key=1, proc=loc_48501F25
+	REC_PartParamDumpLine_Records	key=0x600001, proc=loc_48502138
+	REC_PartParamDumpLine_Records	key=0x600015, proc=loc_48502188	# [64]
+	REC_PartParamDumpLine_Records	key=0xB00041, proc=loc_4850167A
+	REC_PartParamDumpLine_Records	key=0xB00042, proc=loc_485011FB
+	REC_PartParamDumpLine_Records	key=32833, proc=loc_48501C44
+	REC_PartParamDumpLine_Records	key=0xB00043, proc=loc_48501F85
+	REC_PartParamDumpLine_Records	key=45125, proc=loc_48501004
+	REC_PartParamDumpLine_Records	key=0xB00044, proc=loc_48501FAF
+	REC_PartParamDumpLine_Records	key=0x2000A3, proc=loc_48502238
+	REC_PartParamDumpLine_Records	key=0xB00048, proc=loc_48501FDA	# [72]
+	REC_PartParamDumpLine_Records	key=0xB00049, proc=loc_48502007
+	REC_PartParamDumpLine_Records	key=0xB0004A, proc=loc_48502034
+	REC_PartParamDumpLine_Records	key=0xB0004B, proc=loc_48502061
+	REC_PartParamDumpLine_Records	key=0xB0004C, proc=loc_4850208D
+	REC_PartParamDumpLine_Records	key=0xB0004D, proc=loc_485020B8
+	REC_PartParamDumpLine_Records	key=0xB0004E, proc=loc_485020E3
+	REC_PartParamDumpLine_Records	key=0xB0004F, proc=loc_4850210E
+	REC_PartParamDumpLine_Records	key=0x2000B1, proc=loc_4850237F	# [80]
+	REC_PartParamDumpLine_Records	key=0xB00051, proc=loc_48501236
+	REC_PartParamDumpLine_Records	key=0xB00052, proc=loc_48501263
+	REC_PartParamDumpLine_Records	key=0xB00053, proc=loc_48501291
+	REC_PartParamDumpLine_Records	key=0xB00054, proc=loc_485012BD
+	REC_PartParamDumpLine_Records	key=45141, proc=loc_48501084
+	REC_PartParamDumpLine_Records	key=0x2000B2, proc=loc_485023BA
+	REC_PartParamDumpLine_Records	key=0x2000B3, proc=loc_485023F4
+	REC_PartParamDumpLine_Records	key=0x2000B4, proc=loc_4850242F	# [88]
+	REC_PartParamDumpLine_Records	key=0x2000B5, proc=loc_4850246A
+	REC_PartParamDumpLine_Records	key=0x2000B6, proc=loc_485024A5
+	REC_PartParamDumpLine_Records	key=0x2000B7, proc=loc_485024DF
+	REC_PartParamDumpLine_Records	key=0xB0005C, proc=loc_48500E1F
+	REC_PartParamDumpLine_Records	key=0xB0005D, proc=loc_48500DBA
+	REC_PartParamDumpLine_Records	key=0x20005D, proc=loc_48500DE5
+	REC_PartParamDumpLine_Records	key=0xB0005E, proc=loc_4850116A
+	REC_PartParamDumpLine_Records	key=0xB00060, proc=loc_48501104	# [96]
+	REC_PartParamDumpLine_Records	key=0x200060, proc=loc_4850112F
+	REC_PartParamDumpLine_Records	key=0x20005E, proc=loc_48501195
+	REC_PartParamDumpLine_Records	key=0xB0005F, proc=loc_48501640
+	REC_PartParamDumpLine_Records	key=32865, proc=loc_48501CFF
+	REC_PartParamDumpLine_Records	key=0x2000B8, proc=loc_4850251A
+	REC_PartParamDumpLine_Records	key=0x2000B9, proc=loc_48502555
+	REC_PartParamDumpLine_Records	key=0x2000BA, proc=loc_48502590
+	REC_PartParamDumpLine_Records	key=0x2000BB, proc=loc_485025CB	# [104]
+	REC_PartParamDumpLine_Records	key=0x2000BC, proc=loc_48502606
+	REC_PartParamDumpLine_Records	key=0x2000BD, proc=loc_48502641
+	REC_PartParamDumpLine_Records	key=0x2000BE, proc=loc_4850267C
+	REC_PartParamDumpLine_Records	key=0x2000BF, proc=loc_485026B7
+	REC_PartParamDumpLine_Records	key=0x2000C0, proc=loc_485026F0
+	REC_PartParamDumpLine_Records	proc=loc_4850273A
+	REC_PartParamDumpLine_Records	proc=loc_4850273A
+	REC_PartParamDumpLine_Records	proc=loc_4850273A	# [112]
+	REC_PartParamDumpLine_Records	proc=loc_4850273A
+	REC_PartParamDumpLine_Records	proc=loc_4850273A
+	REC_PartParamDumpLine_Records	proc=loc_4850273A
+	REC_PartParamDumpLine_Records	proc=loc_4850273A
+	REC_PartParamDumpLine_Records	proc=loc_4850273A
+	REC_PartParamDumpLine_Records	proc=loc_4850273A
+	REC_PartParamDumpLine_Records	proc=loc_4850273A
+	REC_PartParamDumpLine_Records	proc=loc_4850273A	# [120]
+	REC_PartParamDumpLine_Records	key=0xB00079, proc=loc_48501615
+	REC_PartParamDumpLine_Records	key=0xB0007A, proc=loc_485015EA
+	REC_PartParamDumpLine_Records	proc=loc_4850273A
+	REC_PartParamDumpLine_Records	proc=loc_4850273A
+	REC_PartParamDumpLine_Records	proc=loc_4850273A
+	REC_PartParamDumpLine_Records	proc=loc_4850273A
+	REC_PartParamDumpLine_Records	key=0xB0007F, proc=loc_48500E4A
 
 Str_SONG_2d_16s:	.asciz "SONG%2d : %16s"
 	.align	4, 0xFF	# pad after Str_SONG_2d_16s
@@ -23730,11 +23730,11 @@ func_485043C7_Table_2:	# 4 x u32, 1108..1139; read by func_485043C7 0x485043C7: 
 	tab_u32	1108, 1109, 1138, 1139
 func_485043C7_Table_3:	# 1 x u32, 4294967040..4294967040; read by func_485043C7_entry 0x4850419B: `mov   (a0), a1`
 	tab_u32	4294967040
-func_48502E9F_Var:
+StrIsBlank_Var:
 	# a string, 4 bytes with its pad, read by func_48503931 0x48503931 `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_48503931 0x48503931 `call GetTitleNow_entry, 0, 0x10` (+0, arg sp56); func_485043C7 0x485043C7 `call func_48503931_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0) (+1 more); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
 	.asciz	""
 	.align	4, 0xFF
-func_48502E9F_Var_2:
+StrIsBlank_Var_2:
 	# a string, 4 bytes with its pad, read by func_48503931 0x48503931 `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_48503931 0x48503931 `call GetTitleNow_entry, 0, 0x10` (+0, arg sp56); func_485043C7 0x485043C7 `call func_48503931_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0) (+1 more); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
 	.asciz	""
 	.align	4, 0xFF
@@ -23744,11 +23744,11 @@ Str_empty_973:	.asciz "                                                         
 
 func_4850451E_Table:	# 4 x u32, 1107..1140; read by func_4850451E 0x4850451E: `mov   (d0, a3), d0`; func_4850451E 0x4850451E: `mov   (d2, a3), d0`
 	tab_u32	1107, 1110, 1137, 1140
-func_48502E9F_Var_3:
+StrIsBlank_Var_3:
 	# a string, 4 bytes with its pad, read by func_48503931 0x48503931 `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_48503931 0x48503931 `call GetTitleNow_entry, 0, 0x10` (+0, arg sp56); func_485045A1 0x485045A1 `call func_48503931_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0) (+1 more); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
 	.asciz	""
 	.align	4, 0xFF
-func_48502E9F_Var_4:
+StrIsBlank_Var_4:
 	# a string, 4 bytes with its pad, read by func_48503931 0x48503931 `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_48503931 0x48503931 `call GetTitleNow_entry, 0, 0x10` (+0, arg sp56); func_485045A1 0x485045A1 `call func_48503931_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0) (+1 more); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
 	.asciz	""
 	.align	4, 0xFF
@@ -23781,7 +23781,7 @@ Str_EFF_DYNAMIC_CTRL_2:	.asciz "EFF.DYNAMIC CTRL"
 Str_TRACKBALL_X_2:	.asciz "TRACKBALL X"
 Str_TRACKBALL_Y_2:	.asciz "TRACKBALL Y"
 Str_CTL_ERR_2:	.asciz "CTL ERR"
-func_48502E9F_Var_5:
+StrIsBlank_Var_5:
 	# a string, 4 bytes with its pad, read by func_48503931 0x48503931 `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_48503931 0x48503931 `call GetTitleNow_entry, 0, 0x10` (+0, arg sp56); func_48504606 0x48504606 `call func_48503931_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0) (+1 more); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
 	.asciz	""
 	.align	4, 0xFF
@@ -23791,13 +23791,13 @@ Str_AFTER_TOUCH_5:	.asciz "AFTER TOUCH"
 Str_PITCH_BEND_2:	.asciz "PITCH BEND"
 	.align	4, 0xFF	# pad after Str_PITCH_BEND_2
 Str_CTL_ERR:	.asciz "CTL ERR"
-func_48502E9F_Var_6:
+StrIsBlank_Var_6:
 	# a string, 4 bytes with its pad, read by func_48503931 0x48503931 `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_48503931 0x48503931 `call GetTitleNow_entry, 0, 0x10` (+0, arg sp56); func_48504606 0x48504606 `call func_48503931_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0) (+1 more); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
 	.asciz	""
 	.align	4, 0xFF
 Str_EVENT_ERR:	.asciz "EVENT ERR"
 	.align	4, 0xFF	# pad after Str_EVENT_ERR
-func_48502E9F_Var_7:
+StrIsBlank_Var_7:
 	# a string, 4 bytes with its pad, read by func_48503931 0x48503931 `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_48503931 0x48503931 `call GetTitleNow_entry, 0, 0x10` (+0, arg sp56); func_48504606 0x48504606 `call func_48503931_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0) (+1 more); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
 	.asciz	""
 	.align	4, 0xFF
@@ -23809,11 +23809,11 @@ Str_CENTER_8:	.asciz "CENTER"
 	.align	4, 0xFF	# pad after Str_CENTER_8
 Str_L_2d_2:	.asciz "  L %2d"
 Str_R_2d_2:	.asciz "  R %2d"
-func_48502E9F_Var_8:
+StrIsBlank_Var_8:
 	# a string, 4 bytes with its pad, read by func_48503931 0x48503931 `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_48503931 0x48503931 `call GetTitleNow_entry, 0, 0x10` (+0, arg sp56); func_48504AD0 0x48504AD0 `call func_48503931_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0) (+1 more); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
 	.asciz	""
 	.align	4, 0xFF
-func_48502E9F_Var_9:
+StrIsBlank_Var_9:
 	# a string, 4 bytes with its pad, read by func_48503931 0x48503931 `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_48503931 0x48503931 `call GetTitleNow_entry, 0, 0x10` (+0, arg sp56); func_48504AD0 0x48504AD0 `call func_48503931_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0) (+1 more); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
 	.asciz	""
 	.align	4, 0xFF
@@ -23853,11 +23853,11 @@ Str_EFF_DYNAMIC_CTRL:	.asciz "EFF.DYNAMIC CTRL"
 	.align	4, 0xFF	# pad after Str_EFF_DYNAMIC_CTRL
 Str_TRACKBALL_X:	.asciz "TRACKBALL X"
 Str_TRACKBALL_Y:	.asciz "TRACKBALL Y"
-func_48502E9F_Var_10:
+StrIsBlank_Var_10:
 	# a string, 4 bytes with its pad, read by func_48503931 0x48503931 `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_48503931 0x48503931 `call GetTitleNow_entry, 0, 0x10` (+0, arg sp56); func_48504F37 0x48504F37 `call func_48503931_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0) (+1 more); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
 	.asciz	""
 	.align	4, 0xFF
-func_48502E9F_Var_11:
+StrIsBlank_Var_11:
 	# a string, 4 bytes with its pad, read by func_48503931 0x48503931 `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_48503931 0x48503931 `call GetTitleNow_entry, 0, 0x10` (+0, arg sp56); func_48504F37 0x48504F37 `call func_48503931_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0) (+1 more); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
 	.asciz	""
 	.align	4, 0xFF
@@ -23866,11 +23866,11 @@ Str_SOUND_12:	.asciz "SOUND"
 Str_AFTER_TOUCH_4:	.asciz "AFTER TOUCH"
 Str_PITCH_BEND:	.asciz "PITCH BEND"
 	.align	4, 0xFF	# pad after Str_PITCH_BEND
-func_48502E9F_Var_12:
+StrIsBlank_Var_12:
 	# a string, 4 bytes with its pad, read by func_48503931 0x48503931 `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_48503931 0x48503931 `call GetTitleNow_entry, 0, 0x10` (+0, arg sp56); func_48504F37 0x48504F37 `call func_48503931_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0) (+1 more); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
 	.asciz	""
 	.align	4, 0xFF
-func_48502E9F_Var_13:
+StrIsBlank_Var_13:
 	# a string, 4 bytes with its pad, read by func_48503931 0x48503931 `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_48503931 0x48503931 `call GetTitleNow_entry, 0, 0x10` (+0, arg sp56); func_48504F37 0x48504F37 `call func_48503931_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0) (+1 more); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
 	.asciz	""
 	.align	4, 0xFF
@@ -26625,12 +26625,12 @@ Str_OFF_52:	.asciz "OFF"
 Str_3d_54:	.asciz "%3d"
 Str_3d_53:	.asciz "%3d"
 
-func_4850AD31_Table:	# 20 x u8, 0..19; read by SeqToCmpFieldApply_entry 0x4850AD31: `movbu  (d0, a0), d0`; SeqToCmpFieldApply_entry 0x4850AD31: `movbu  (d0, a0), d1`
+SeqToCmpFieldApply_Table:	# 20 x u8, 0..19; read by SeqToCmpFieldApply_entry 0x4850AD31: `movbu  (d0, a0), d0`; SeqToCmpFieldApply_entry 0x4850AD31: `movbu  (d0, a0), d1`
 	tab_u8	0, 3, 6, 9, 12, 13, 16, 17, 14, 15, 18, 19, 1, 2, 4, 5	# [0]
 	tab_u8	7, 8, 10, 11	# [16]
-func_4850AD31_Table_2:	# 8 x u8, 0..7; read by SeqToCmpFieldApply_entry 0x4850AD31: `movbu  (a1), d1`
+SeqToCmpFieldApply_Table_2:	# 8 x u8, 0..7; read by SeqToCmpFieldApply_entry 0x4850AD31: `movbu  (a1), d1`
 	tab_u8	0, 7, 1, 2, 3, 4, 5, 6
-func_4850AD31_Table_3:	# 5 x u32, 9437377..9437392; read by SeqToCmpFieldApply 0x4850AD31: `mov   (a2), d0`; SeqToCmpFieldApply 0x4850AD31: `mov   (func_4850AD31_Table_3), d0`
+SeqToCmpFieldApply_Table_3:	# 5 x u32, 9437377..9437392; read by SeqToCmpFieldApply 0x4850AD31: `mov   (SeqToCmpFieldApply_Table_3), d0`; SeqToCmpFieldApply 0x4850AD31: `mov   (a2), d0`
 	tab_u32	9437377, 9437378, 9437387, 9437391, 9437392
 
 Str_1c_2d_2:	.asciz "%1c%2d"
@@ -29284,7 +29284,7 @@ Str_1c:	.asciz "%1c"
 Str_d_SOLO:	.asciz "%d-SOLO"
 Str_d_11:	.asciz " %d    "
 
-func_485155EA_Table:	# 5 x u32, 10485863..10485878; read by SeqToPadFieldApply 0x485155EA: `mov   (a2), d0`; SeqToPadFieldApply 0x485155EA: `mov   (func_485155EA_Table), d0`
+SeqToPadFieldApply_Table:	# 5 x u32, 10485863..10485878; read by SeqToPadFieldApply 0x485155EA: `mov   (SeqToPadFieldApply_Table), d0`; SeqToPadFieldApply 0x485155EA: `mov   (a2), d0`
 	tab_u32	10485863, 10485864, 10485873, 10485877, 10485878
 
 FE_PadRecQtz_Records:	# 16 x REC_FE_PadRecQtz_Records (8 bytes each); read by FE_PadRecQtz 0x48511D43 `mov (a0), d0`
@@ -32816,10 +32816,10 @@ CusLoadSaveSrcDstFunc_Var:	# u32, a constant; read / written by CusLoadSaveSrcDs
 CusLoadSaveSrcDstFunc_Var_2:	# u32, a constant; read / written by CusLoadSaveSrcDstFunc 0x4851FD67: `mov (CusLoadSaveSrcDstFunc_Var_2), d0`
 	.long	0x4866377b
 
-func_4851AA87_Table:	# 4 x u8, 0..255; read by FmmDiskStateReset_entry 0x4851AA87: `movbu  (a0), d0`; FmmSaveTitleFunc 0x4851D280: `movbu  (a0), d0`
+FmmDiskStateReset_Table:	# 4 x u8, 0..255; read by FmmDiskStateReset_entry 0x4851AA87: `movbu  (a0), d0`; FmmSaveTitleFunc 0x4851D280: `movbu  (a0), d0`
 	tab_u8	0, 0, 255, 255
 
-func_4852F762_Var:	# s8, a constant; read / written by FmmStrCopy 0x4852F762: `movbu (a1), d0`
+FmmStrCopy_Var:	# s8, a constant; read / written by FmmStrCopy 0x4852F762: `movbu (a1), d0`
 	.byte	0
 
 FmmStrCopy_Table:	# 3 x s8, -1..-1; read by FmmStrCopy 0x4852F762: `movbu (a1), d0`
@@ -32939,7 +32939,7 @@ Str_FILE_5:	.asciz "FILE "
 Str_NEW_3:	.asciz " * NEW *"
 	.align	4, 0xFF	# pad after Str_NEW_3
 
-func_4852F762_Var_2:	# s8, a constant; read / written by FmmStrCopy 0x4852F762: `movbu (a1), d0`
+FmmStrCopy_Var_2:	# s8, a constant; read / written by FmmStrCopy 0x4852F762: `movbu (a1), d0`
 	.byte	0
 
 FmmStrCopy_Table_2:	# 3 x s8, -1..-1; read by FmmStrCopy 0x4852F762: `movbu (a1), d0`
@@ -33007,19 +33007,19 @@ func_485233B3_Table:	# 20 x u8, 0..19; read by func_485233B3 0x48522D26: `movbu 
 SingleLoadSrcDstFunc_Table:	# 6 x u8, 1..255; read by SingleLoadSrcDstFunc_entry 0x485262DD: `movbu  (d0, a0), d1`; CmpSingleLoadSrcDstFunc_entry 0x48526B18: `movbu  (d0, a0), d1` ...
 	tab_u8	1, 2, 3, 4, 6, 255
 
-func_4852F762_Var_3:	# s8, a constant; read / written by FmmStrCopy 0x4852F762: `movbu (a1), d0`
+FmmStrCopy_Var_3:	# s8, a constant; read / written by FmmStrCopy 0x4852F762: `movbu (a1), d0`
 	.byte	0
 
 FmmStrCopy_Table_3:	# 3 x s8, -1..-1; read by FmmStrCopy 0x4852F762: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
-func_4852F762_Var_4:	# s8, a constant; read / written by FmmStrCopy 0x4852F762: `movbu (a1), d0`
+FmmStrCopy_Var_4:	# s8, a constant; read / written by FmmStrCopy 0x4852F762: `movbu (a1), d0`
 	.byte	0
 
 FmmStrCopy_Table_4:	# 3 x s8, -1..-1; read by FmmStrCopy 0x4852F762: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
-func_4852F762_Var_5:	# s8, a constant; read / written by FmmStrCopy 0x4852F762: `movbu (a1), d0`
+FmmStrCopy_Var_5:	# s8, a constant; read / written by FmmStrCopy 0x4852F762: `movbu (a1), d0`
 	.byte	0
 
 FmmStrCopy_Table_5:	# 3 x s8, -1..-1; read by FmmStrCopy 0x4852F762: `movbu (a1), d0`
@@ -33083,7 +33083,7 @@ func_48523452_Table:
 	.long	Str_MULTI_EFFECT_2
 	.long	Str_CHORUS_9
 
-func_4852F762_Var_6:	# s8, a constant; read / written by FmmStrCopy 0x4852F762: `movbu (a1), d0`
+FmmStrCopy_Var_6:	# s8, a constant; read / written by FmmStrCopy 0x4852F762: `movbu (a1), d0`
 	.byte	0
 
 FmmStrCopy_Table_6:	# 3 x s8, -1..-1; read by FmmStrCopy 0x4852F762: `movbu (a1), d0`
@@ -33097,25 +33097,25 @@ func_48523501_Table:
 	.long	Str_MEMORY_19
 	.long	Str_USER_KIT
 
-func_4852F762_Var_7:	# s8, a constant; read / written by FmmStrCopy 0x4852F762: `movbu (a1), d0`
+FmmStrCopy_Var_7:	# s8, a constant; read / written by FmmStrCopy 0x4852F762: `movbu (a1), d0`
 	.byte	0
 
 FmmStrCopy_Table_7:	# 3 x s8, -1..-1; read by FmmStrCopy 0x4852F762: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
-func_4852F762_Var_8:	# s8, a constant; read / written by FmmStrCopy 0x4852F762: `movbu (a1), d0`
+FmmStrCopy_Var_8:	# s8, a constant; read / written by FmmStrCopy 0x4852F762: `movbu (a1), d0`
 	.byte	0
 
 FmmStrCopy_Table_8:	# 3 x s8, -1..-1; read by FmmStrCopy 0x4852F762: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
-func_4852F762_Var_9:	# s8, a constant; read / written by FmmStrCopy 0x4852F762: `movbu (a1), d0`
+FmmStrCopy_Var_9:	# s8, a constant; read / written by FmmStrCopy 0x4852F762: `movbu (a1), d0`
 	.byte	0
 
 FmmStrCopy_Table_9:	# 3 x s8, -1..-1; read by FmmStrCopy 0x4852F762: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
-func_4852F762_Var_10:	# s8, a constant; read / written by FmmStrCopy 0x4852F762: `movbu (a1), d0`
+FmmStrCopy_Var_10:	# s8, a constant; read / written by FmmStrCopy 0x4852F762: `movbu (a1), d0`
 	.byte	0
 
 FmmStrCopy_Table_10:	# 3 x s8, -1..-1; read by FmmStrCopy 0x4852F762: `movbu (a1), d0`
@@ -33210,7 +33210,7 @@ func_485250CF_Var:	# u8, a constant; read / written by func_485250CF 0x485250CF:
 func_485250CF_Table:	# 3 x u8, 168..255; read by func_485250CF 0x485250CF: `movbu (func_485250CF_Table), d1`; func_485250CF 0x485250CF: `movbu (func_485250CF_Table), d2`
 	tab_u8	168, 255, 255
 
-func_4852F762_Var_11:	# s8, a constant; read / written by FmmStrCopy 0x4852F762: `movbu (a1), d0`
+FmmStrCopy_Var_11:	# s8, a constant; read / written by FmmStrCopy 0x4852F762: `movbu (a1), d0`
 	.byte	0
 
 FmmStrCopy_Table_11:	# 3 x s8, -1..-1; read by FmmStrCopy 0x4852F762: `movbu (a1), d0`
@@ -33221,7 +33221,7 @@ Str_USER_MEMORY_2:	.asciz "USER MEMORY: "
 Str_ALL_24:	.asciz "      ALL       "
 	.align	4, 0xFF	# pad after Str_ALL_24
 
-func_4852F762_Var_12:	# s8, a constant; read / written by FmmStrCopy 0x4852F762: `movbu (a1), d0`
+FmmStrCopy_Var_12:	# s8, a constant; read / written by FmmStrCopy 0x4852F762: `movbu (a1), d0`
 	.byte	0
 
 FmmStrCopy_Table_12:	# 3 x s8, -1..-1; read by FmmStrCopy 0x4852F762: `movbu (a1), d0`
@@ -33505,7 +33505,7 @@ Str_wb_14:	.asciz "wb"
 Str_rb_33:	.asciz "rb"
 	.align	4, 0xFF	# pad after Str_rb_33
 
-func_4852ED19_Table:	# 8 x u8, 0..0; read by FmmEntryPicturesDelete_entry 0x4852ED19: `movbu  (a1), d0`; FmmEntryPicturesCopy_entry 0x4852EF7E: `movbu  (a1), d0` ...
+FmmEntryPicturesDelete_Table:	# 8 x u8, 0..0; read by FmmEntryPicturesDelete_entry 0x4852ED19: `movbu  (a1), d0`; FmmEntryPicturesCopy_entry 0x4852EF7E: `movbu  (a1), d0` ...
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0
 
 Str_BMP_15:	.asciz "BMP"
@@ -33580,7 +33580,7 @@ FmmStrCat_List_18:
 FmmStrCat_List_19:
 	.byte	65, 67, 84, 0
 
-func_4852F882_Table:
+FmmNameWithExtBuild_Table:
 	.long	FmmStrCat_List_7
 	.long	FmmStrCat_List_8
 	.long	FmmStrCat_List_9
@@ -33596,16 +33596,16 @@ func_4852F882_Table:
 	.long	FmmStrCat_List_18
 	.long	FmmStrCat_List_19
 
-func_4852FD0A_Table:	# 19 x u32, 0..4294967295; read by FmmListsReset 0x4852FD0A: `mov   (a1), d0`; FmmDiskFreeSpaceGet 0x4852FDF2: `mov   (func_4852FD0A_Table), a1` ...; 19 records: the index is bounded by FmmListsReset: `mov -0x13, d1` / setlb / `mov (a1), d0` / `inc4 a1` / `inc d1` / lne (19 passes)
+FmmListsReset_Table:	# 19 x u32, 0..4294967295; read by FmmListsReset 0x4852FD0A: `mov   (a1), d0`; FmmDiskFreeSpaceGet 0x4852FDF2: `mov   (FmmListsReset_Table), a1` ...; 19 records: the index is bounded by FmmListsReset 0x4852FD0A: `mov -0x13, d1` / setlb / `mov (a1), d0` / `inc4 a1` / `inc d1` / lne (19 passes)
 	tab_u32	4294967295, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [8]
 	tab_u32	0, 0, 65280	# [16]
-func_4852FD0A_Table_2:	# 5 x u16, 0..0; read by FmmListsReset 0x4852FD0A: `movhu  (a1), d0`; FmmFileListScan 0x48530214: `movhu  (a1), d0` ...
+FmmListsReset_Table_2:	# 5 x u16, 0..0; read by FmmListsReset 0x4852FD0A: `movhu  (a1), d0`; FmmFileListScan 0x48530214: `movhu  (a1), d0` ...
 	tab_u16	0, 0, 0, 0, 0
-func_4852FD0A_Table_3:	# 13 x u8, 0..0; read by FmmListsReset 0x4852FD0A: `movbu (a1), d0`; MidFileNamesPageFill 0x485304CB: `movbu (a1), d0` ...
+FmmListsReset_Table_3:	# 13 x u8, 0..0; read by FmmListsReset 0x4852FD0A: `movbu (a1), d0`; MidFileNamesPageFill 0x485304CB: `movbu (a1), d0` ...
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 
-func_4852F7D7_Var_2:	# s8, a constant; read / written by FmmStrCmp 0x4852F7D7: `movbu (a1), d0`
+FmmStrCmp_Var_2:	# s8, a constant; read / written by FmmStrCmp 0x4852F7D7: `movbu (a1), d0`
 	.byte	0
 
 FmmStrCmp_Table:	# 65 x s8, 0..0; read by FmmStrCmp 0x4852F7D7: `movbu (a1), d0`
@@ -33617,12 +33617,12 @@ FmmStrCmp_Table:	# 65 x s8, 0..0; read by FmmStrCmp 0x4852F7D7: `movbu (a1), d0`
 CstFileNamesPageFill_Table:	# 13 x u8, 0..0; read by CstFileNamesPageFill 0x48530E7C: `movbu (a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 
-func_4852F7D7_Var_3:	# s8, a constant; read / written by FmmStrCmp 0x4852F7D7: `movbu (a1), d0`
+FmmStrCmp_Var_3:	# s8, a constant; read / written by FmmStrCmp 0x4852F7D7: `movbu (a1), d0`
 	.byte	0
 
 FmmStrCmp_Table_2:	# 16 x s8, 0..0; read by FmmStrCmp 0x4852F7D7: `movbu (a1), d0`
 	tab_s8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-func_48531F2E_Table:	# 13 x u8, 0..0; read by BmpFileNamesPageFill 0x48531F2E: `movbu (a1), d0`; PicFileNamesPageFill 0x4853204B: `movbu (a1), d0` ...
+BmpFileNamesPageFill_Table:	# 13 x u8, 0..0; read by BmpFileNamesPageFill 0x48531F2E: `movbu (a1), d0`; PicFileNamesPageFill 0x4853204B: `movbu (a1), d0` ...
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 func_4852F9C6_Table:	# 3 x u8, 0..0; read by func_4852F9C6_entry 0x4852F9A0: `movbu  (a1), d0`
 	tab_u8	0, 0, 0

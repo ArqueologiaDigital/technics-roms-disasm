@@ -685,7 +685,7 @@ loc_484405FC:
 # StylePartCcFieldIndex  (CPU 0x484405ff)
 StylePartCcFieldIndex:
     extbu   d0
-    mov     func_48440617_Result_0+24, a0
+    mov     StylePartTemplateDefault_Result_0+24, a0
     movbu   (d0, a0), d0
     retf    0, 0
 
@@ -696,7 +696,7 @@ func_4844060B:
     retf    0, 0
 # StylePartTemplateDefault  (CPU 0x48440617)
 StylePartTemplateDefault:
-    mov     func_48440617_Result_0, a0
+    mov     StylePartTemplateDefault_Result_0, a0
     retf    0, 0
 # PartFieldCcSend  (CPU 0x48440620)
 PartFieldCcSend:
@@ -714,7 +714,7 @@ PartFieldCcSend_entry:
     add     a2, a1
     movbu   (a1), d0
     add     a0, a0
-    add     func_4844081B_Table, a0
+    add     StylePartFieldEmit_Table, a0
     movbu   (1, a0), d3
     clr     d1
     cmp     d2, d0
@@ -991,7 +991,7 @@ StylePartFieldEmit_entry:
     extbu   d3
     mov     d3, d0
     add     d0, d0
-    mov     func_4844081B_Table, a2
+    mov     StylePartFieldEmit_Table, a2
     movbu   (d0, a2), d1
     extbu   d1
     cmp     0xc0, d1
@@ -1110,7 +1110,7 @@ UserPadConvKindClassify:
     add     -0x14, sp
 UserPadConvKindClassify_entry:
     mov     a0, a2
-    mov     func_484408FD_Block, a1
+    mov     UserPadConvKindClassify_Block, a1
     mov     3, d0
     call    memcmp_entry, [d2,a2], 8
     cmp     0, d0
@@ -1136,7 +1136,7 @@ loc_48440931:
     mov     2, d0
     bra     loc_48440963
 loc_48440949:
-    mov     func_484408FD_Block_2, a1
+    mov     UserPadConvKindClassify_Block_2, a1
     mov     3, d0
     mov     a2, a0
     call    memcmp_entry, [d2,a2], 8
@@ -13275,7 +13275,7 @@ KeybedFifoRead:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x1c, sp
 KeybedFifoRead_entry:
-    movbu   (func_48448035_Table), d0
+    movbu   (KeybedFifoRead_Table), d0
     mov     a0, a3
     cmp     0, d0
     beq     loc_48448060
@@ -13283,7 +13283,7 @@ KeybedFifoRead_entry:
     movbu   (0x501496a3), d1
     call    func_484480E6_entry, [d2,d3,a2,a3], 0x20
     clr     d0
-    movbu   d0, (func_48448035_Table)
+    movbu   d0, (KeybedFifoRead_Table)
     ret     [d2,d3,a2,a3], 0x2c
 loc_48448060:
     movhu   (TGA_KEY_FIFO), d0
@@ -13325,7 +13325,7 @@ loc_4844807D:
     movbu   d3, (0x501496a2)
     movbu   d1, (0x501496a3)
     mov     1, d1
-    movbu   d1, (func_48448035_Table)
+    movbu   d1, (KeybedFifoRead_Table)
     bra     loc_484480E3
 loc_484480D8:
     extbu   d2
@@ -15779,7 +15779,7 @@ loc_4844945A:
     movbu   (a0), d0
     movbu   (0x30, sp), d1
     asl     3, d0
-    mov     func_48449420_Records, a0
+    mov     TableToneKeyMap_Records, a0
     mov     (d0, a0), d0
     mov     d1, a0
     add     d0, a0
@@ -15789,7 +15789,7 @@ loc_48449472:
     movbu   (a0), d0
     asl     3, d0
     mov     d0, a0
-    add     func_48449420_Records, a0
+    add     TableToneKeyMap_Records, a0
     mov     (4, a0), d1
     movbu   (0x30, sp), d0
     add     d1, d0
@@ -15798,7 +15798,7 @@ loc_48449472:
     bra     loc_4844949C
 loc_4844948C:
     movbu   (0x30, sp), d0
-    mov     func_48449420_Table, a0
+    mov     TableToneKeyMap_Table, a0
     movbu   (d0, a0), d0
     bra     loc_4844949C
 loc_48449499:
@@ -29604,7 +29604,7 @@ HeldKeyListReleaseAll_entry:
 loc_48450637:
     mov     0x41, d2
 loc_48450639:
-    mov     func_48450625_Table, a1
+    mov     HeldKeyListReleaseAll_Table, a1
     movbu   (a1), d0
     mov     sp, a0
     add     0x14, a0
@@ -29686,7 +29686,7 @@ loc_484506C9:
 loc_484506DA:
     mov     0x3c, d3
 loc_484506DC:
-    mov     func_48450625_Table, a1
+    mov     HeldKeyListReleaseAll_Table, a1
     movbu   (a1), d0
     mov     sp, a0
     add     0x18, a0
@@ -29731,7 +29731,7 @@ loc_48450724:
     cmp     0x41, d1
     bne     loc_48450709
 loc_48450732:
-    mov     func_48450625_Table, a1
+    mov     HeldKeyListReleaseAll_Table, a1
     movbu   (a1), d0
     mov     sp, a0
     add     0x18, a0
@@ -29774,7 +29774,7 @@ loc_48450776:
     cmp     0x42, d1
     bne     loc_48450758
 loc_48450784:
-    mov     func_48450625_Table, a1
+    mov     HeldKeyListReleaseAll_Table, a1
     movbu   (a1), d0
     mov     sp, a0
     mov     a0, d1
@@ -29802,7 +29802,7 @@ loc_48450784:
     mov     1, d0
     movbu   d0, (0x14, sp)
 loc_484507C4:
-    mov     func_48450625_Table, a1
+    mov     HeldKeyListReleaseAll_Table, a1
     movbu   (a1), d1
     mov     sp, a0
     mov     a0, d0
@@ -30599,7 +30599,7 @@ func_48450D9F:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x24, sp
 func_48450D9F_entry:
-    mov     func_48450625_Table, a1
+    mov     HeldKeyListReleaseAll_Table, a1
     mov     sp, a0
     mov     d1, d2
     clr     d1
@@ -31864,7 +31864,7 @@ func_484517A4:
 func_484517B4:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x24, sp
-    mov     func_48450625_Table, a1
+    mov     HeldKeyListReleaseAll_Table, a1
     mov     sp, a0
     mov     d1, d3
     mov     a0, d1
@@ -32275,7 +32275,7 @@ func_48451B21_entry:
     mov     a0, d1
     add     0x1c, d1
     mov     d1, (0x14, sp)
-    mov     func_48450625_Table, a1
+    mov     HeldKeyListReleaseAll_Table, a1
     movbu   (a1), d1
     mov     a0, d2
     add     0x1c, d2
@@ -32852,7 +32852,7 @@ func_48451FD4_entry:
     call    memcpy_entry, [a2,a3], 8
     mov     0x1ff, d0
     movhu   d0, (0x34, sp)
-    mov     func_48450625_Table, a1
+    mov     HeldKeyListReleaseAll_Table, a1
     mov     sp, a0
     mov     a0, d0
     add     0x30, d0
@@ -32894,7 +32894,7 @@ loc_4845205A:
 loc_4845206C:
     mov     0x1ff, d0
     movhu   d0, (0x34, sp)
-    mov     func_48450625_Table, a1
+    mov     HeldKeyListReleaseAll_Table, a1
     movbu   (a1), d0
     mov     sp, a0
     mov     a0, d1
@@ -32934,7 +32934,7 @@ loc_484520B9:
     call    func_4844FDF0_entry, [d2,d3,a2,a3], 0x4c
     mov     0x1ff, d0
     movhu   d0, (0x34, sp)
-    mov     func_48450625_Table, a1
+    mov     HeldKeyListReleaseAll_Table, a1
     movbu   (a1), d0
     mov     sp, a0
     mov     a0, d1
@@ -32974,7 +32974,7 @@ loc_48452109:
 loc_4845211B:
     mov     0x1ff, d0
     movhu   d0, (0x34, sp)
-    mov     func_48450625_Table, a1
+    mov     HeldKeyListReleaseAll_Table, a1
     movbu   (a1), d0
     mov     sp, a0
     mov     a0, d1
@@ -33378,7 +33378,7 @@ loc_48452431:
     call    memcpy_entry, [a2,a3], 8
     mov     0x1ff, d0
     movhu   d0, (0x24, sp)
-    mov     func_48450625_Table, a1
+    mov     HeldKeyListReleaseAll_Table, a1
     movbu   (a1), d0
     mov     sp, a0
     mov     a0, d1
@@ -33467,7 +33467,7 @@ func_484524A9_entry:
     lsr     8, d0
     movbu   d0, (a0)
     mov     (0x18, sp), d0
-    mov     func_48450625_Table, a0
+    mov     HeldKeyListReleaseAll_Table, a0
     add     0xc, d0
     mov     d0, (0x24, sp)
     mov     d0, a1
@@ -34246,7 +34246,7 @@ func_48452B0E:
     add     -0x24, sp
 func_48452B0E_entry:
     mov     sp, a0
-    mov     func_48450625_Table, a1
+    mov     HeldKeyListReleaseAll_Table, a1
     mov     d1, d2
     mov     a0, d1
     add     0x14, d1
@@ -35001,7 +35001,7 @@ func_48453129:
     add     -0x44, sp
 func_48453129_entry:
     mov     sp, a0
-    mov     func_48450625_Table, a1
+    mov     HeldKeyListReleaseAll_Table, a1
     mov     a0, d1
     add     0x24, d1
     mov     d0, d2
@@ -38242,7 +38242,7 @@ loc_48454D19:
     bgt     loc_48454D3D
     sub     d1, d0
     asl2    d0
-    mov     func_48454CDF_Table, a0
+    mov     ApcSeqSliderOnSeq_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_48454D3A:
@@ -38256,7 +38256,7 @@ loc_48454D3D:
     cmp     0x123, d0
     bgt     loc_48454D82
     add     -0x6d, d0
-    mov     func_48454CDF_Records, a1
+    mov     ApcSeqSliderOnSeq_Records, a1
     mov     0x1f, d1
     and     d0, d1
     asl     3, d1
@@ -38269,7 +38269,7 @@ loc_48454D3D:
     cmp     0, d1
     beq     loc_48454D82
     add     8, a0
-    cmp     func_48454CDF_Table, a0
+    cmp     ApcSeqSliderOnSeq_Table, a0
     bcs     loc_48454D76
     mov     a1, a0
 loc_48454D76:
@@ -40233,7 +40233,7 @@ SongRecTrackPartsSetLinear_entry:
 loc_48455D0C:
     mov     -1, d0
     add     d2, d0
-    mov     func_48455CFD_Table, a0
+    mov     SongRecTrackPartsSetLinear_Table, a0
     movbu   (d0, a0), d0
     mov     d2, d1
     mov     d0, (0x10, sp)
@@ -40253,7 +40253,7 @@ loc_48455D27:
     cmp     0x10, d0
     bgt     loc_48455D3E
     add     d1, d0
-    mov     func_48455CFD_Table, a0
+    mov     SongRecTrackPartsSetLinear_Table, a0
     movbu   (d0, a0), d1
 loc_48455D3E:
     mov     d1, d0
@@ -43052,12 +43052,12 @@ loc_48457357:
     asl2    d0
     mov     d0, a0
     mov     a0, a1
-    add     func_4845730E_Table, a1
+    add     DemoSongLoad_Table, a1
     mov     (-4, a1), a2
     mov     a0, a1
-    add     func_4845730E_Table_2, a1
+    add     DemoSongLoad_Table_2, a1
     mov     (-4, a1), a3
-    add     func_4845730E_Table_3, a0
+    add     DemoSongLoad_Table_3, a0
     mov     (-4, a0), d3
     clr     d0
     call    Rec8E0TablePtr, 0, 0
@@ -43330,13 +43330,13 @@ loc_4845763C:
     bne     loc_48457651
     ret     0, 0x10
 loc_48457651:
-    movbu   (func_48457557_Table), d0
+    movbu   (SeqStatusBitsService_Table), d0
     cmp     0, d0
     beq     loc_48457663
     add     -1, d0
-    movbu   d0, (func_48457557_Table)
+    movbu   d0, (SeqStatusBitsService_Table)
 loc_48457663:
-    movbu   (func_48457557_Table), d0
+    movbu   (SeqStatusBitsService_Table), d0
     cmp     0, d0
     beq     loc_48457670
     ret     0, 0x10
@@ -43378,7 +43378,7 @@ loc_484576E2:
     bra     loc_484576F3
 loc_484576EB:
     mov     0xa, d0
-    movbu   d0, (func_48457557_Table)
+    movbu   d0, (SeqStatusBitsService_Table)
 loc_484576F3:
     ret     0, 0x10
 loc_484576F6:
@@ -44724,7 +44724,7 @@ loc_484582AA:
     ble     loc_484582B3
     jmp     loc_48458378
 loc_484582B3:
-    mov     func_4845828E_Records, a1
+    mov     SongEventFromM3_Records, a1
     inc     d1
     mov     a1, a0
     mov     0xf, d0
@@ -45750,7 +45750,7 @@ func_48458A85_entry:
     cmp     0, d1
     beq     loc_48458ACB
     add     8, a0
-    cmp     func_4845BC19_Table, a0
+    cmp     SongEventLenGet_Table, a0
     bcs     loc_48458ABB
     mov     a1, a0
 loc_48458ABB:
@@ -50929,7 +50929,7 @@ func_4845BC10:
 # SongEventLenGet  (CPU 0x4845bc19)
 SongEventLenGet:
     extbu   d0
-    mov     func_4845BC19_Table, a0
+    mov     SongEventLenGet_Table, a0
     movbu   (d0, a0), d0
     extb    d0
     retf    0, 0
@@ -61244,7 +61244,7 @@ loc_4846142F:
     ret     0, 8
 loc_4846144D:
     add     8, a0
-    cmp     func_48462E7E_Table, a0
+    cmp     SeqTitleEnterDispatch_Table, a0
     bcs     loc_48461458
     mov     a1, a0
 loc_48461458:

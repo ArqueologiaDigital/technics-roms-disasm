@@ -41238,7 +41238,7 @@ SoundEditNoteNameText_entry:
     mov     mdr, d1
     extbu   d1
     asl2    d1
-    mov     func_484F7B24_Table, a0
+    mov     SoundEditNoteNameText_Table, a0
     mov     (d1, a0), d1
     extb    d0
     mov     d1, (0x10, sp)
@@ -42596,7 +42596,7 @@ SoundEditFreqText_entry:
     asl2    d0
     mov     Str_s_9, d1
     mov     d1, (0xc, sp)
-    mov     func_484F852C_Table, a0
+    mov     SoundEditFreqText_Table, a0
     mov     (d0, a0), a0
     mov     a0, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
@@ -43050,7 +43050,7 @@ loc_484F8878:
     jmp     loc_484F8B55
 loc_484F887F:
     asl2    d0
-    mov     func_484F886D_Table, a1
+    mov     SoundEditCtrlDestText_Table, a1
     mov     (d0, a1), a1
     jmp     (a1)
 loc_484F888A:
@@ -43842,7 +43842,7 @@ SoundEditDeffTypeIndexGet_entry:
     cmp     0xd, d0
     bgt     loc_484F9065
     asl2    d0
-    mov     func_484F900D_Table, a0
+    mov     SoundEditDeffTypeIndexGet_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484F9032:
@@ -43898,7 +43898,7 @@ SoundEditDeffTypeIndexSet_entry:
     cmp     0xc, d0
     bgt     loc_484F90B3
     asl2    d0
-    mov     func_484F9069_Table, a0
+    mov     SoundEditDeffTypeIndexSet_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484F9080:
@@ -54307,7 +54307,7 @@ loc_484FFA9D:
     jmp     loc_484FFF09
 loc_484FFAC1:
     add     8, a0
-    cmp     func_48500C2F_Records, a0
+    cmp     PartParamDumpLine_Records, a0
     bcs     loc_484FFACC
     mov     a1, a0
 loc_484FFACC:

@@ -14492,7 +14492,7 @@ loc_4C007053:
 loc_4C00705A:
     add     -0x60, d0
     asl2    d0
-    mov     func_4C006FB7_Table, a0
+    mov     TgPartDataEntrySet_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
     movbu   (2, a1), d0
@@ -14680,7 +14680,7 @@ TgPartVolumeSet_entry:
     beq     loc_4C007217
     extbu   d1
     add     d1, d1
-    mov     func_4C0071EF_Table, a0
+    mov     TgPartVolumeSet_Table, a0
     movhu   (d1, a0), d2
     extbu   d3
     mov     0x54c, d0
@@ -14727,7 +14727,7 @@ TgPartExpressionSet_entry:
     beq     loc_4C007270
     extbu   d1
     add     d1, d1
-    mov     func_4C0071EF_Table, a0
+    mov     TgPartVolumeSet_Table, a0
     movhu   (d1, a0), d2
     extbu   d3
     mov     0x54c, d0
@@ -15965,7 +15965,7 @@ TgPartControllersReset_entry:
     asl2    d0
     sub     a1, d0
     mov     d0, a2
-    add     func_4C007B5E_Var, a2
+    add     TgPartControllersReset_Var, a2
     movbu   (a2), d0
     add     a1, a1
     mov     a1, a0
@@ -17826,7 +17826,7 @@ loc_4C008AEB:
     asl2    d0
     sub     d1, d0
     mov     d0, a0
-    add     func_4C007B5E_Var, a0
+    add     TgPartControllersReset_Var, a0
     movbu   (1, a0), d1
     cmp     d1, a1
     bne     loc_4C008B28
@@ -17909,7 +17909,7 @@ loc_4C008BA1:
     asl2    d0
     sub     a1, d0
     mov     d0, a2
-    add     func_4C007B5E_Var, a2
+    add     TgPartControllersReset_Var, a2
     movbu   (a2), d0
     extb    d1
     cmp     d0, d1
@@ -43063,7 +43063,7 @@ loc_4C015617:
     ret     [d2,d3,a2], 0x24
 loc_4C01561E:
     asl2    d1
-    mov     func_4C015602_Table, a1
+    mov     M3GetByKind_Table, a1
     mov     (d1, a1), a1
     jmp     (a1)
     exthu   d3
@@ -43856,7 +43856,7 @@ M3GetType1ByKind_entry:
     cmp     0xb, d1
     bgt     loc_4C015CA6
     asl2    d1
-    mov     func_4C015C45_Table, a1
+    mov     M3GetType1ByKind_Table, a1
     mov     (d1, a1), a1
     jmp     (a1)
     exthu   d3
@@ -44130,7 +44130,7 @@ loc_4C015E64:
     ret     [d2,d3], 0x20
 loc_4C015E6B:
     asl2    d1
-    mov     func_4C015E50_Table, a1
+    mov     M3SetByKind_Table, a1
     mov     (d1, a1), a1
     jmp     (a1)
     movhu   (0x34, sp), d0
@@ -48254,7 +48254,7 @@ loc_4C0181FD:
     jmp     loc_4C018297
 loc_4C018204:
     asl2    d1
-    mov     func_4C0181E8_Table, a1
+    mov     M3SetType1ByKind_Table, a1
     mov     (d1, a1), a1
     jmp     (a1)
     movhu   (0x34, sp), d0
@@ -49015,7 +49015,7 @@ loc_4C018825:
 loc_4C01882C:
     add     d0, d1
     asl2    d1
-    mov     func_4C018810_Table, a0
+    mov     M3SetType3ByKind_Table, a0
     mov     (d1, a0), a0
     jmp     (a0)
     movhu   (0x34, sp), d0
@@ -52473,7 +52473,7 @@ loc_4C01A518:
 loc_4C01A51F:
     add     d0, d1
     asl2    d1
-    mov     func_4C01A504_Table, a1
+    mov     M3SetType4ByKind_Table, a1
     mov     (d1, a1), a1
     jmp     (a1)
     movhu   (0x34, sp), d0
@@ -55380,7 +55380,7 @@ M3SourceCheck:
     bgt     loc_4C01BC23
     add     -1, d0
     asl2    d0
-    mov     func_4C01BC01_Table, a0
+    mov     M3SourceCheck_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
     clr     d0

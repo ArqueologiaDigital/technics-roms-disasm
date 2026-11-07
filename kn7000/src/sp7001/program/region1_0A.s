@@ -27726,13 +27726,13 @@ SdcErrorMsgGet_entry:
     extbu   d0
     bra     loc_48551190
 loc_48551148:
-    movhu   (func_4855112D_Records), d0
+    movhu   (SdcErrorMsgGet_Records), d0
     clr     d2
     exth    d0
     cmp     d0, d1
-    mov     func_4855112D_Records, a0
+    mov     SdcErrorMsgGet_Records, a0
     beq     loc_48551176
-    movhu   (func_4855112D_Records), d0
+    movhu   (SdcErrorMsgGet_Records), d0
     exth    d0
     cmp     d2, d0
     bge     loc_48551176
@@ -39392,7 +39392,7 @@ loc_48558C11:
     add     a0, d0
     mov     d0, a0
     inc     a0
-    mov     func_4852F751_Var_13, a1
+    mov     FmmStrCopy_Var_13, a1
     call    FmmStrCopy, 0, 0
     movbu   (0x50082c89), d1
     mov     0x15, d0
@@ -42529,7 +42529,7 @@ loc_4855B084:
     bge     loc_4855B0C2
     mov     0x500831ec, a2
     mov     a2, a0
-    mov     func_4852F751_Var_14, a1
+    mov     FmmStrCopy_Var_14, a1
     call    FmmStrCopy, 0, 0
     bra     loc_4855B11E
 loc_4855B0C2:
@@ -42557,7 +42557,7 @@ loc_4855B0C2:
 loc_4855B10A:
     mov     0x500831ec, a2
     mov     a2, a0
-    mov     func_4852F751_Var_15, a1
+    mov     FmmStrCopy_Var_15, a1
     call    FmmStrCopy, 0, 0
 loc_4855B11E:
     mov     a2, a0
@@ -42729,7 +42729,7 @@ loc_4855B2B1:
     add     d3, d0
     mov     d0, a0
     inc     a0
-    mov     func_4852F751_Var_16, a1
+    mov     FmmStrCopy_Var_16, a1
     call    FmmStrCopy, 0, 0
 loc_4855B2C8:
     mov     0x18, d1
@@ -43116,7 +43116,7 @@ loc_4855B663:
 loc_4855B69E:
     mov     0x500831d4, a2
     mov     a2, a0
-    mov     func_4852F751_Var_17, a1
+    mov     FmmStrCopy_Var_17, a1
     call    FmmStrCopy, 0, 0
 loc_4855B6B2:
     mov     a2, a0
@@ -47884,7 +47884,7 @@ SdFmmTablesReset_entry:
     clr     d0
     mov     d0, (0x50083ce4)
     movbu   d0, (0x50083ce8)
-    mov     func_4855E89B_Table, a1
+    mov     SdFmmTablesReset_Table, a1
     mov     0x50083cec, a0
     mov     -0x13, d1
     setlb
@@ -47896,7 +47896,7 @@ SdFmmTablesReset_entry:
     lne
     clr     d1
 loc_4855E8C3:
-    mov     func_4855E89B_Table_3, a1
+    mov     SdFmmTablesReset_Table_3, a1
     mov     9, d2
     nop
     nop
@@ -47917,7 +47917,7 @@ loc_4855E8C3:
     blt     loc_4855E8C3
     clr     d2
 loc_4855E8E9:
-    mov     func_4855E89B_Table_2, a1
+    mov     SdFmmTablesReset_Table_2, a1
     mov     0x1e, d1
     nop
     nop
@@ -47938,7 +47938,7 @@ loc_4855E8E9:
     blt     loc_4855E8E9
     clr     d2
 loc_4855E90F:
-    mov     func_4855E89B_Table_4, a1
+    mov     SdFmmTablesReset_Table_4, a1
     mov     0xa, d1
     nop
     nop
@@ -47994,12 +47994,12 @@ loc_4855E90F:
     ret     [d2], 0xc
 # SdFreeBytesInvalidate  (CPU 0x4855e9ca)
 SdFreeBytesInvalidate:
-    mov     (func_4855E89B_Table), d0
+    mov     (SdFmmTablesReset_Table), d0
     mov     d0, (0x50083cec)
     retf    0, 0
 # SdTotalBytesInvalidate  (CPU 0x4855e9d9)
 SdTotalBytesInvalidate:
-    mov     (func_4855E89B_Table+4), d0
+    mov     (SdFmmTablesReset_Table+4), d0
     mov     d0, (0x50083cf0)
     retf    0, 0
 # SdVolumeLabelInvalidate  (CPU 0x4855e9e8)
@@ -48007,7 +48007,7 @@ SdVolumeLabelInvalidate:
     add     -0x10, sp
 SdVolumeLabelInvalidate_entry:
     mov     0x50083cf4, a0
-    mov     func_4855E89B_Table+8, a1
+    mov     SdFmmTablesReset_Table+8, a1
     call    FmmStrCopy, 0, 0
     ret     0, 0x10
 # SdFreeBytesQuery  (CPU 0x4855ea01)
@@ -48016,7 +48016,7 @@ SdFreeBytesQuery:
     add     -0x10, sp
 SdFreeBytesQuery_entry:
     mov     (0x50083cec), a0
-    mov     (func_4855E89B_Table), a1
+    mov     (SdFmmTablesReset_Table), a1
     cmp     a1, a0
     bne     loc_4855EA2F
     call    SdMediaEnsureInit_entry, 0, 0x1c
@@ -48031,7 +48031,7 @@ SdTotalBytesQuery:
     movm    [a2], (sp)
     add     -0x10, sp
     mov     (0x50083cf0), a0
-    mov     (func_4855E89B_Table+4), a1
+    mov     (SdFmmTablesReset_Table+4), a1
     cmp     a1, a0
     bne     loc_4855EA66
     call    SdMediaEnsureInit_entry, 0, 0x1c
@@ -48065,7 +48065,7 @@ SdVolumeLabelGet:
     add     -0x10, sp
 SdVolumeLabelGet_entry:
     mov     0x50083cf4, d2
-    mov     func_4855E89B_Table+8, a3
+    mov     SdFmmTablesReset_Table+8, a3
     mov     d2, a0
     mov     a3, a1
     call    FmmStrCmp, 0, 0
@@ -50151,7 +50151,7 @@ SdCstListScan_entry:
     add     -0x164, sp
     clr     d2
 loc_4855FAA7:
-    mov     func_4855E89B_Table_2, a1
+    mov     SdFmmTablesReset_Table_2, a1
     mov     0x1e, d1
     nop
     nop
@@ -50497,7 +50497,7 @@ SdPrivSmfListScan_entry:
 loc_4855FD9F:
     clr     d2
 loc_4855FDA0:
-    mov     func_4855E89B_Table_3, a1
+    mov     SdFmmTablesReset_Table_3, a1
     mov     9, d1
     nop
     nop
