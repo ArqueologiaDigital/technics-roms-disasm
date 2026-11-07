@@ -304,12 +304,21 @@ HAND = {"rsm_tsk": "its body undoes sus_tsk (TCB +0x12 count down, the suspend b
                    "ready); sus_tsk's callers call it in mirror order [INFERENCE]"}
 
 
-def names_942(t):
+EXPORTS_942 = "kn7000/kn7000_sp7001_exports.sym"
+
+
+def names_942(t, root="."):
     """Program 942's own names for kernel services: {routine: (service, how)}.  A wrapper the export
-    table names keeps its label; a routine an exported forwarder `<svc>_X` calls is <svc>."""
+    table (kn7000_sp7001_exports.sym, generated from it) names keeps its label; a routine an exported
+    forwarder `<svc>_X` calls is <svc>."""
+    exported = set()
+    for ln in open(os.path.join(root, EXPORTS_942), encoding="latin-1"):
+        m = re.match(r"^0x[0-9A-Fa-f]{8}\s+(\w+)", ln)
+        if m:
+            exported.add(m.group(1))
     out = {}
     for w in t["wrappers"]:
-        if not is_placeholder(w) and re.match(r"^[a-z]{3}_[a-z]{3,4}$", w):
+        if w in exported:
             out[w] = (w, "export table")
     for fwd in t["callees"]:
         m = re.match(r"^([a-z]{3,4}_[a-z]{3})_X$", fwd)
@@ -474,7 +483,7 @@ def main():
 
     if a.rows:
         t942 = results["942"][1] if "942" in results else scan_tree(TREES["942"][1], a.root)
-        n942 = names_942(t942)
+        n942 = names_942(t942, a.root)
         cite = "(uITRON 3.0 sect. 6.3; notes/uitron3-function-codes)"
         for k, (title, t, vs) in results.items():
             info = {v["routine"]: v for v in vs}
@@ -511,7 +520,7 @@ def main():
 
     if a.sed:
         t942 = results["942"][1] if "942" in results else scan_tree(TREES["942"][1], a.root)
-        n942 = names_942(t942)
+        n942 = names_942(t942, a.root)
         os.makedirs(a.sed, exist_ok=True)
         for k, (title, t, vs) in results.items():
             rules = []
@@ -552,7 +561,7 @@ def main():
         print(table(rows))
         print()
     t942 = results["942"][1] if "942" in results else scan_tree(TREES["942"][1], a.root)
-    n942 = names_942(t942)
+    n942 = names_942(t942, a.root)
     print("== The kernel's services: every service-call wrapper (the trap stub a task calls) with its body,")
     print("   and the bodies a task calls directly; the name the evidence asks for: the function code above,")
     print("   else program 942's names (export table / exported forwarder <svc>_X) carried by an identical body")

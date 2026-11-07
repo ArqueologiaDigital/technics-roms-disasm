@@ -126,13 +126,29 @@ routine names.
 `kernel_errorhook_codes.py`: each MILK kernel service calls KernelErrorHook / KernelErrorHook2
 before it returns an error, with d0 = a function code and d1 = a uITRON 3.0 error code (E_ID
 -0x23, E_OBJ -0x3F, E_CTX -0x45, E_QOVR -0x49, E_TMOUT -0x55, E_NOMEM -0x0A, E_PAR -0x21).  19
-KN6000 / KN6500 services and 17 KN2400 ones do so, and 17 / 17 / 16 of them are still func_.
-The reflection names give two codes: `ter_tsk` d0 -0x19 (E_OBJ: a task terminating itself), and
--0x08 is `clr_flg` in the KN6000 / KN6500 but `ena_int` in the KN2400, so the reflection rows are
-not a reliable key on their own.  The μITRON 3.0 specification's function-code table (TFN_*)
-would name all of them in four trees at once; it is not in this repository and was not found
-offline, and naming them from memory would be a guess.  Next step: read the table from the
-μITRON 3.0 specification (TRON Association, 1993) and check it against `ter_tsk` = -0x19.
+KN6000 / KN6500 routines and 17 KN2400 ones do so (with `loc_cpu` among them: see below), and,
+before lane open13/uitron-names, 17 / 17 / 16 of them were still func_.
+
+**Followed on 2026-11-07 (lane open13/uitron-names, `../uitron3-function-codes/README.md`).**  The
+table is section 6.3 of the TRON Association's "uITRON 3.0 Specification" Ver 3.02.00 (I-01-02E);
+its licence forbids partial reproduction, so `../uitron3-function-codes/fetch_spec.sh` downloads it
+(git-ignored) and `function_codes.py` reads it at run time.  It names every code the firmware
+passes, and agrees with the seven program-942 export names that report one (`ter_tsk` = -0x19,
+`cre_tsk` -17, `wai_sem` -53, `rot_rdq` -28, `exd_tsk` -22, `ext_tsk` -21, `unl_cpu` -7).  Almost
+every reporting routine is the body of a service-call wrapper (the context-saving trap stub a task
+calls): the wrapper is named after the service, the body `<svc>_Impl`; `loc_cpu`, `sus_tsk` and
+`ena_dsp` are called directly.  The two polling services report their waiting twin's code
+(`preq_sem` wai_sem's -53, `prcv_msg` rcv_msg's -61, with d1 = the poll's result).
+
+**Corrected:** this section said "-0x08 is `clr_flg` in the KN6000 / KN6500 but `ena_int` in the
+KN2400, so the reflection rows are not a reliable key on their own".  That was the probe's error,
+not the labels': it skipped every label starting `loc_` (meant for `loc_<ADDR>`), so the service
+`loc_cpu`, which reports -8 and is labelled correctly in all seven trees, lent its code to the
+routine before it (`clr_flg` in the KN6000 / KN6500 and 942, `ena_int` in the KN2400, 941, 935 and
+893, whose kernels have no `clr_flg`).  The bodies check out: `loc_cpu` sets the dispatch-disabled
+state and clears PSW.IE (`and 0xf7ff, psw`), `clr_flg` ANDs an event flag's pattern, `ena_int`
+sets an interrupt's enable bit (or PSW.IE for 0).  The probe is fixed and
+`kernel-errorhook-codes.txt` re-measured.
 
 ## Items
 

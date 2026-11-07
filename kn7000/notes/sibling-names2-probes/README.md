@@ -24,17 +24,17 @@ every paired table unchecked, which is how the check's need was measured.
 
 Outputs kept here, measured on the tree of commit e5127d07d (the lane's regeneration):
 
-| file                            | what                                                                                                                      |
-|---------------------------------|---------------------------------------------------------------------------------------------------------------------------|
-| `census-e53dc9b3a.txt`          | `sibling_name_census.py` at the lane's base, e53dc9b3a                                                                    |
-| `census-after.txt`              | the same after the regeneration                                                                                           |
-| `name-source-trials.txt`        | the reports of `name_source_trial.sh` for kn6000 / kn2400 from kn2400 / kn6000 / kn6500 / b893, and from kn7000 unchecked |
-| `ram-run-premise.txt`           | `ram_run_premise.py kn6000 kn6500 kn2400`, with the exceptions                                                            |
-| `ram-writer-potential.txt`      | `ram_writer_potential.py kn6000 kn6500 kn2400`                                                                            |
-| `kn7000-ram-names-reach.txt`    | `kn7000_ram_names_reach.sh` (its report, then the per-model counts)                                                       |
-| `kernel-errorhook-codes.txt`    | `kernel_errorhook_codes.py kn6000 kn6500 kn2400`                                                                          |
-| `missed-kn2400-tglib-after.txt` | `../sibling-names-probes/kn7000_names_missed.py kn2400 --a-range 0x4C000000:0x4C03DF30 --b-range 0x50120000:0x5018E000`   |
-| `func-pairing.txt`              | `func_pairing.py kn6000 kn6500 kn2400`                                                                                    |
+| file                            | what                                                                                                                                                                          |
+|---------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `census-e53dc9b3a.txt`          | `sibling_name_census.py` at the lane's base, e53dc9b3a                                                                                                                        |
+| `census-after.txt`              | the same after the regeneration                                                                                                                                               |
+| `name-source-trials.txt`        | the reports of `name_source_trial.sh` for kn6000 / kn2400 from kn2400 / kn6000 / kn6500 / b893, and from kn7000 unchecked                                                     |
+| `ram-run-premise.txt`           | `ram_run_premise.py kn6000 kn6500 kn2400`, with the exceptions                                                                                                                |
+| `ram-writer-potential.txt`      | `ram_writer_potential.py kn6000 kn6500 kn2400`                                                                                                                                |
+| `kn7000-ram-names-reach.txt`    | `kn7000_ram_names_reach.sh` (its report, then the per-model counts)                                                                                                           |
+| `kernel-errorhook-codes.txt`    | `kernel_errorhook_codes.py kn6000 kn6500 kn2400`, re-measured 2026-11-07 by lane open13/uitron-names after its `loc_` fix and the kernel names (`../uitron3-function-codes/`) |
+| `missed-kn2400-tglib-after.txt` | `../sibling-names-probes/kn7000_names_missed.py kn2400 --a-range 0x4C000000:0x4C03DF30 --b-range 0x50120000:0x5018E000`                                                       |
+| `func-pairing.txt`              | `func_pairing.py kn6000 kn6500 kn2400`                                                                                                                                        |
 
 The signals: the trial reports' lines are the tool's own (`port_names_by_alignment.py`, header
 POINTERS / RUNS); a "voted" RAM pair is a row of `<model>/notes/ram-map-kn7000.tsv` whose third

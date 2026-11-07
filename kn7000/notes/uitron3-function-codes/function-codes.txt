@@ -1,0 +1,371 @@
+== 941: KN7000 program 941 (v1.6): 18 routines report errors through KernelErrorHook*: ok 18
+verdict  d0    code    service                            d1                      routine        wants  wrapper   wants  other callers
+ok       -143  H'ff71  rel_blk                            -33 E_PAR; -63 E_OBJ    rel_blk_Impl   =      rel_blk   =      -
+ok       -141  H'ff73  get_blk                            -63 E_OBJ; -85 E_TMOUT  get_blk_Impl   =      get_blk   =      -
+ok       -137  H'ff77  cre_mpl                            -10 E_NOMEM             cre_mpl_Impl   =      cre_mpl   =      -
+ok       -61   H'ffc3  prcv_msg (reports rcv_msg's code)  d2 (register)           prcv_msg_Impl  =      prcv_msg  =      -
+ok       -61   H'ffc3  rcv_msg                            -69 E_CTX               rcv_msg_Impl   =      rcv_msg   =      -
+ok       -53   H'ffcb  preq_sem (reports wai_sem's code)  d2 (register)           preq_sem_Impl  =      preq_sem  =      -
+ok       -53   H'ffcb  wai_sem                            -69 E_CTX               wai_sem_Impl   =      wai_sem   =      -
+ok       -46   H'ffd2  wai_flg                            -69 E_CTX               wai_flg_Impl   =      wai_flg   =      -
+ok       -39   H'ffd9  wup_tsk                            -73 E_QOVR              wup_tsk_Impl   =      wup_tsk   =      -
+ok       -38   H'ffda  slp_tsk                            -69 E_CTX               slp_tsk_Impl   =      slp_tsk   =      -
+ok       -33   H'ffdf  sus_tsk                            -63 E_OBJ; -73 E_QOVR   sus_tsk        =      -         -      func_4840139A, func_48401872, func_48401CBA
+ok       -29   H'ffe3  ena_dsp                            -69 E_CTX               ena_dsp        =      -         -      unl_cpu_Impl
+ok       -28   H'ffe4  rot_rdq                            -69 E_CTX               rot_rdq_Impl   =      rot_rdq   =      -
+ok       -27   H'ffe5  chg_pri                            -35 E_ID; -69 E_CTX     chg_pri_Impl   =      chg_pri   =      -
+ok       -22   H'ffea  exd_tsk                            -63 E_OBJ               exd_tsk_Impl   =      exd_tsk   =      -
+ok       -17   H'ffef  cre_tsk                            d2 (register)           cre_tsk_Impl   =      cre_tsk   =      -
+ok       -8    H'fff8  loc_cpu                            -69 E_CTX               loc_cpu        =      -         -      DspPortRead, DspPortWrite, FlashReadAutoselect, FlashReset +49
+ok       -7    H'fff9  unl_cpu                            -69 E_CTX               unl_cpu_Impl   =      unl_cpu   =      -
+
+== 942: KN7000 program 942 (SP7001): 20 routines report errors through KernelErrorHook*: ok 20
+verdict  d0    code    service                            d1                      routine        wants  wrapper   wants  other callers
+ok       -143  H'ff71  rel_blk                            -33 E_PAR; -63 E_OBJ    rel_blk_Impl   =      rel_blk   =      -
+ok       -141  H'ff73  get_blk                            -63 E_OBJ; -85 E_TMOUT  get_blk_Impl   =      get_blk   =      -
+ok       -137  H'ff77  cre_mpl                            -10 E_NOMEM             cre_mpl_Impl   =      cre_mpl   =      -
+ok       -61   H'ffc3  prcv_msg (reports rcv_msg's code)  d2 (register)           prcv_msg_Impl  =      prcv_msg  =      -
+ok       -61   H'ffc3  rcv_msg                            -69 E_CTX               rcv_msg_Impl   =      rcv_msg   =      -
+ok       -53   H'ffcb  preq_sem (reports wai_sem's code)  d2 (register)           preq_sem_Impl  =      preq_sem  =      -
+ok       -53   H'ffcb  wai_sem                            -69 E_CTX               wai_sem_Impl   =      wai_sem   =      -
+ok       -46   H'ffd2  wai_flg                            -69 E_CTX               wai_flg_Impl   =      wai_flg   =      -
+ok       -39   H'ffd9  wup_tsk                            -73 E_QOVR              wup_tsk_Impl   =      wup_tsk   =      -
+ok       -38   H'ffda  slp_tsk                            -69 E_CTX               slp_tsk_Impl   =      slp_tsk   =      -
+ok       -33   H'ffdf  sus_tsk                            -63 E_OBJ; -73 E_QOVR   sus_tsk        =      -         -      func_4840139A, func_48401872, func_48401CBA
+ok       -29   H'ffe3  ena_dsp                            -69 E_CTX               ena_dsp        =      -         -      unl_cpu_Impl
+ok       -28   H'ffe4  rot_rdq                            -69 E_CTX               rot_rdq_Impl   =      rot_rdq   =      -
+ok       -27   H'ffe5  chg_pri                            -35 E_ID; -69 E_CTX     chg_pri_Impl   =      chg_pri   =      -
+ok       -25   H'ffe7  ter_tsk                            -63 E_OBJ               ter_tsk        =      -         -      -
+ok       -22   H'ffea  exd_tsk                            -63 E_OBJ               exd_tsk_Impl   =      exd_tsk   =      -
+ok       -21   H'ffeb  ext_tsk                            -63 E_OBJ               ext_tsk_Impl   =      ext_tsk   =      -
+ok       -17   H'ffef  cre_tsk                            d2 (register)           cre_tsk_Impl   =      cre_tsk   =      -
+ok       -8    H'fff8  loc_cpu                            -69 E_CTX               loc_cpu        =      -         -      DspPortRead, DspPortWrite, FlashReadAutoselect, FlashReset +49
+ok       -7    H'fff9  unl_cpu                            -69 E_CTX               unl_cpu_Impl   =      unl_cpu   =      -
+
+== 935: KN7000 program 935 (v1.5): 18 routines report errors through KernelErrorHook*: ok 18
+verdict  d0    code    service                            d1                      routine        wants  wrapper   wants  other callers
+ok       -143  H'ff71  rel_blk                            -33 E_PAR; -63 E_OBJ    rel_blk_Impl   =      rel_blk   =      -
+ok       -141  H'ff73  get_blk                            -63 E_OBJ; -85 E_TMOUT  get_blk_Impl   =      get_blk   =      -
+ok       -137  H'ff77  cre_mpl                            -10 E_NOMEM             cre_mpl_Impl   =      cre_mpl   =      -
+ok       -61   H'ffc3  prcv_msg (reports rcv_msg's code)  d2 (register)           prcv_msg_Impl  =      prcv_msg  =      -
+ok       -61   H'ffc3  rcv_msg                            -69 E_CTX               rcv_msg_Impl   =      rcv_msg   =      -
+ok       -53   H'ffcb  preq_sem (reports wai_sem's code)  d2 (register)           preq_sem_Impl  =      preq_sem  =      -
+ok       -53   H'ffcb  wai_sem                            -69 E_CTX               wai_sem_Impl   =      wai_sem   =      -
+ok       -46   H'ffd2  wai_flg                            -69 E_CTX               wai_flg_Impl   =      wai_flg   =      -
+ok       -39   H'ffd9  wup_tsk                            -73 E_QOVR              wup_tsk_Impl   =      wup_tsk   =      -
+ok       -38   H'ffda  slp_tsk                            -69 E_CTX               slp_tsk_Impl   =      slp_tsk   =      -
+ok       -33   H'ffdf  sus_tsk                            -63 E_OBJ; -73 E_QOVR   sus_tsk        =      -         -      func_4840139A, func_48401872, func_48401CBA
+ok       -29   H'ffe3  ena_dsp                            -69 E_CTX               ena_dsp        =      -         -      unl_cpu_Impl
+ok       -28   H'ffe4  rot_rdq                            -69 E_CTX               rot_rdq_Impl   =      rot_rdq   =      -
+ok       -27   H'ffe5  chg_pri                            -35 E_ID; -69 E_CTX     chg_pri_Impl   =      chg_pri   =      -
+ok       -22   H'ffea  exd_tsk                            -63 E_OBJ               exd_tsk_Impl   =      exd_tsk   =      -
+ok       -17   H'ffef  cre_tsk                            d2 (register)           cre_tsk_Impl   =      cre_tsk   =      -
+ok       -8    H'fff8  loc_cpu                            -69 E_CTX               loc_cpu        =      -         -      DspPortRead, DspPortWrite, FlashReadAutoselect, FlashReset +49
+ok       -7    H'fff9  unl_cpu                            -69 E_CTX               unl_cpu_Impl   =      unl_cpu   =      -
+
+== 893: KN7000 program 893 (v1.3): 18 routines report errors through KernelErrorHook*: ok 18
+verdict  d0    code    service                            d1                      routine        wants  wrapper   wants  other callers
+ok       -143  H'ff71  rel_blk                            -33 E_PAR; -63 E_OBJ    rel_blk_Impl   =      rel_blk   =      -
+ok       -141  H'ff73  get_blk                            -63 E_OBJ; -85 E_TMOUT  get_blk_Impl   =      get_blk   =      -
+ok       -137  H'ff77  cre_mpl                            -10 E_NOMEM             cre_mpl_Impl   =      cre_mpl   =      -
+ok       -61   H'ffc3  prcv_msg (reports rcv_msg's code)  d2 (register)           prcv_msg_Impl  =      prcv_msg  =      -
+ok       -61   H'ffc3  rcv_msg                            -69 E_CTX               rcv_msg_Impl   =      rcv_msg   =      -
+ok       -53   H'ffcb  preq_sem (reports wai_sem's code)  d2 (register)           preq_sem_Impl  =      preq_sem  =      -
+ok       -53   H'ffcb  wai_sem                            -69 E_CTX               wai_sem_Impl   =      wai_sem   =      -
+ok       -46   H'ffd2  wai_flg                            -69 E_CTX               wai_flg_Impl   =      wai_flg   =      -
+ok       -39   H'ffd9  wup_tsk                            -73 E_QOVR              wup_tsk_Impl   =      wup_tsk   =      -
+ok       -38   H'ffda  slp_tsk                            -69 E_CTX               slp_tsk_Impl   =      slp_tsk   =      -
+ok       -33   H'ffdf  sus_tsk                            -63 E_OBJ; -73 E_QOVR   sus_tsk        =      -         -      func_4840139A, func_48401872, func_48401CBA
+ok       -29   H'ffe3  ena_dsp                            -69 E_CTX               ena_dsp        =      -         -      unl_cpu_Impl
+ok       -28   H'ffe4  rot_rdq                            -69 E_CTX               rot_rdq_Impl   =      rot_rdq   =      -
+ok       -27   H'ffe5  chg_pri                            -35 E_ID; -69 E_CTX     chg_pri_Impl   =      chg_pri   =      -
+ok       -22   H'ffea  exd_tsk                            -63 E_OBJ               exd_tsk_Impl   =      exd_tsk   =      -
+ok       -17   H'ffef  cre_tsk                            d2 (register)           cre_tsk_Impl   =      cre_tsk   =      -
+ok       -8    H'fff8  loc_cpu                            -69 E_CTX               loc_cpu        =      -         -      DspPortRead, DspPortWrite, FlashReadAutoselect, FlashReset +49
+ok       -7    H'fff9  unl_cpu                            -69 E_CTX               unl_cpu_Impl   =      unl_cpu   =      -
+
+== kn6000: SX-KN6000 v7.1: 19 routines report errors through KernelErrorHook*: ok 19
+verdict  d0    code    service                            d1                      routine        wants  wrapper   wants  other callers
+ok       -143  H'ff71  rel_blk                            -33 E_PAR; -63 E_OBJ    rel_blk_Impl   =      rel_blk   =      -
+ok       -141  H'ff73  get_blk                            -63 E_OBJ; -85 E_TMOUT  get_blk_Impl   =      get_blk   =      -
+ok       -137  H'ff77  cre_mpl                            -10 E_NOMEM             cre_mpl_Impl   =      cre_mpl   =      -
+ok       -61   H'ffc3  prcv_msg (reports rcv_msg's code)  d2 (register)           prcv_msg_Impl  =      prcv_msg  =      -
+ok       -61   H'ffc3  rcv_msg                            -69 E_CTX               rcv_msg_Impl   =      rcv_msg   =      -
+ok       -53   H'ffcb  preq_sem (reports wai_sem's code)  d2 (register)           preq_sem_Impl  =      preq_sem  =      -
+ok       -53   H'ffcb  wai_sem                            -69 E_CTX               wai_sem_Impl   =      wai_sem   =      -
+ok       -46   H'ffd2  wai_flg                            -69 E_CTX               wai_flg_Impl   =      wai_flg   =      -
+ok       -39   H'ffd9  wup_tsk                            -73 E_QOVR              wup_tsk_Impl   =      wup_tsk   =      -
+ok       -38   H'ffda  slp_tsk                            -69 E_CTX               slp_tsk_Impl   =      slp_tsk   =      -
+ok       -29   H'ffe3  ena_dsp                            -69 E_CTX               ena_dsp        =      -         -      unl_cpu_Impl
+ok       -28   H'ffe4  rot_rdq                            -69 E_CTX               rot_rdq_Impl   =      rot_rdq   =      -
+ok       -27   H'ffe5  chg_pri                            -35 E_ID; -69 E_CTX     chg_pri_Impl   =      chg_pri   =      -
+ok       -25   H'ffe7  ter_tsk                            -63 E_OBJ               ter_tsk        =      -         -      -
+ok       -22   H'ffea  exd_tsk                            -63 E_OBJ               exd_tsk_Impl   =      exd_tsk   =      -
+ok       -21   H'ffeb  ext_tsk                            -63 E_OBJ               ext_tsk_Impl   =      ext_tsk   =      -
+ok       -17   H'ffef  cre_tsk                            d2 (register)           cre_tsk_Impl   =      cre_tsk   =      -
+ok       -8    H'fff8  loc_cpu                            -69 E_CTX               loc_cpu        =      -         -      FlashSectorErase, FlashWordProgram, GetBeatSeq, HddTestFlashIdCheck +47
+ok       -7    H'fff9  unl_cpu                            -69 E_CTX               unl_cpu_Impl   =      unl_cpu   =      -
+
+== kn6500: SX-KN6500 v1.3: 19 routines report errors through KernelErrorHook*: ok 19
+verdict  d0    code    service                            d1                      routine        wants  wrapper   wants  other callers
+ok       -143  H'ff71  rel_blk                            -33 E_PAR; -63 E_OBJ    rel_blk_Impl   =      rel_blk   =      -
+ok       -141  H'ff73  get_blk                            -63 E_OBJ; -85 E_TMOUT  get_blk_Impl   =      get_blk   =      -
+ok       -137  H'ff77  cre_mpl                            -10 E_NOMEM             cre_mpl_Impl   =      cre_mpl   =      -
+ok       -61   H'ffc3  prcv_msg (reports rcv_msg's code)  d2 (register)           prcv_msg_Impl  =      prcv_msg  =      -
+ok       -61   H'ffc3  rcv_msg                            -69 E_CTX               rcv_msg_Impl   =      rcv_msg   =      -
+ok       -53   H'ffcb  preq_sem (reports wai_sem's code)  d2 (register)           preq_sem_Impl  =      preq_sem  =      -
+ok       -53   H'ffcb  wai_sem                            -69 E_CTX               wai_sem_Impl   =      wai_sem   =      -
+ok       -46   H'ffd2  wai_flg                            -69 E_CTX               wai_flg_Impl   =      wai_flg   =      -
+ok       -39   H'ffd9  wup_tsk                            -73 E_QOVR              wup_tsk_Impl   =      wup_tsk   =      -
+ok       -38   H'ffda  slp_tsk                            -69 E_CTX               slp_tsk_Impl   =      slp_tsk   =      -
+ok       -29   H'ffe3  ena_dsp                            -69 E_CTX               ena_dsp        =      -         -      unl_cpu_Impl
+ok       -28   H'ffe4  rot_rdq                            -69 E_CTX               rot_rdq_Impl   =      rot_rdq   =      -
+ok       -27   H'ffe5  chg_pri                            -35 E_ID; -69 E_CTX     chg_pri_Impl   =      chg_pri   =      -
+ok       -25   H'ffe7  ter_tsk                            -63 E_OBJ               ter_tsk        =      -         -      -
+ok       -22   H'ffea  exd_tsk                            -63 E_OBJ               exd_tsk_Impl   =      exd_tsk   =      -
+ok       -21   H'ffeb  ext_tsk                            -63 E_OBJ               ext_tsk_Impl   =      ext_tsk   =      -
+ok       -17   H'ffef  cre_tsk                            d2 (register)           cre_tsk_Impl   =      cre_tsk   =      -
+ok       -8    H'fff8  loc_cpu                            -69 E_CTX               loc_cpu        =      -         -      FlashSectorErase, FlashWordProgram, GetBeatSeq, HddTestFlashIdCheck +47
+ok       -7    H'fff9  unl_cpu                            -69 E_CTX               unl_cpu_Impl   =      unl_cpu   =      -
+
+== kn2400: SX-KN2400 (KN2600 v1.1): 17 routines report errors through KernelErrorHook*: ok 17
+verdict  d0    code    service                            d1                      routine        wants  wrapper   wants  other callers
+ok       -143  H'ff71  rel_blk                            -33 E_PAR; -63 E_OBJ    rel_blk_Impl   =      rel_blk   =      -
+ok       -141  H'ff73  get_blk                            -63 E_OBJ; -85 E_TMOUT  get_blk_Impl   =      get_blk   =      -
+ok       -137  H'ff77  cre_mpl                            -10 E_NOMEM             cre_mpl_Impl   =      cre_mpl   =      -
+ok       -61   H'ffc3  prcv_msg (reports rcv_msg's code)  d2 (register)           prcv_msg_Impl  =      prcv_msg  =      -
+ok       -61   H'ffc3  rcv_msg                            -69 E_CTX               rcv_msg_Impl   =      rcv_msg   =      -
+ok       -53   H'ffcb  wai_sem                            -69 E_CTX               wai_sem_Impl   =      wai_sem   =      -
+ok       -46   H'ffd2  wai_flg                            -69 E_CTX               wai_flg_Impl   =      wai_flg   =      -
+ok       -39   H'ffd9  wup_tsk                            -73 E_QOVR              wup_tsk_Impl   =      wup_tsk   =      -
+ok       -38   H'ffda  slp_tsk                            -69 E_CTX               slp_tsk_Impl   =      slp_tsk   =      -
+ok       -33   H'ffdf  sus_tsk                            -63 E_OBJ; -73 E_QOVR   sus_tsk        =      -         -      func_485E5592, func_485E5A6A, func_485E5EB2
+ok       -29   H'ffe3  ena_dsp                            -69 E_CTX               ena_dsp        =      -         -      unl_cpu_Impl
+ok       -28   H'ffe4  rot_rdq                            -69 E_CTX               rot_rdq_Impl   =      rot_rdq   =      -
+ok       -27   H'ffe5  chg_pri                            -35 E_ID; -69 E_CTX     chg_pri_Impl   =      chg_pri   =      -
+ok       -22   H'ffea  exd_tsk                            -63 E_OBJ               exd_tsk_Impl   =      exd_tsk   =      -
+ok       -17   H'ffef  cre_tsk                            d2 (register)           cre_tsk_Impl   =      cre_tsk   =      -
+ok       -8    H'fff8  loc_cpu                            -69 E_CTX               loc_cpu        =      -         -      GetBeatSeq, func_485E6123, func_485E64E5, func_485E6771 +44
+ok       -7    H'fff9  unl_cpu                            -69 E_CTX               unl_cpu_Impl   =      unl_cpu   =      -
+
+== hdsx3: HD-SX3 (XAPR plug-in): 0 routines report errors through KernelErrorHook*
+
+== The kernel's services: every service-call wrapper (the trap stub a task calls) with its body,
+   and the bodies a task calls directly; the name the evidence asks for: the function code above,
+   else program 942's names (export table / exported forwarder <svc>_X) carried by an identical body
+-- 941: 26 services, 0 labels to change
+wrapper   wants  body           wants  evidence
+chg_pri   =      chg_pri_Impl   =      code -27
+cre_flg   =      cre_flg_Impl   =      942 forwarder cre_flg_X
+cre_mbx   =      cre_mbx_Impl   =      942 forwarder cre_mbx_X
+cre_mpl   =      cre_mpl_Impl   =      code -137
+cre_sem   =      cre_sem_Impl   =      942 forwarder cre_sem_X
+cre_tsk   =      cre_tsk_Impl   =      code -17
+exd_tsk   =      exd_tsk_Impl   =      code -22
+get_blk   =      get_blk_Impl   =      code -141
+prcv_msg  =      prcv_msg_Impl  =      code -61 (polling)
+preq_sem  =      preq_sem_Impl  =      code -53 (polling)
+rcv_msg   =      rcv_msg_Impl   =      code -61
+rel_blk   =      rel_blk_Impl   =      code -143
+rot_rdq   =      rot_rdq_Impl   =      code -28
+rsm_tsk   =      rsm_tsk_Impl   =      by hand: its body undoes sus_tsk (TCB +0x12 count down, the suspend bit 2 cleared or the task made ready); sus_tsk's callers call it in mirror order [INFERENCE]
+set_flg   =      set_flg_Impl   =      942 export table
+sig_sem   =      sig_sem_Impl   =      942 export table
+slp_tsk   =      slp_tsk_Impl   =      code -38
+snd_msg   =      snd_msg_Impl   =      942 forwarder snd_msg_X
+sta_tsk   =      sta_tsk_Impl   =      942 export table
+unl_cpu   =      unl_cpu_Impl   =      code -7
+wai_flg   =      wai_flg_Impl   =      code -46
+wai_sem   =      wai_sem_Impl   =      code -53
+wup_tsk   =      wup_tsk_Impl   =      code -39
+-         -      ena_dsp        =      code -29
+-         -      loc_cpu        =      code -8
+-         -      sus_tsk        =      code -33
+
+-- 942: 32 services, 0 labels to change
+wrapper   wants  body           wants  evidence
+chg_pri   =      chg_pri_Impl   =      code -27
+cre_flg   =      cre_flg_Impl   =      942 forwarder cre_flg_X
+cre_mbx   =      cre_mbx_Impl   =      942 forwarder cre_mbx_X
+cre_mpl   =      cre_mpl_Impl   =      code -137
+cre_sem   =      cre_sem_Impl   =      942 forwarder cre_sem_X
+cre_tsk   =      cre_tsk_Impl   =      code -17
+del_flg   =      del_flg_Impl   =      942 export table
+del_mbx   =      del_mbx_Impl   =      942 export table
+del_sem   =      del_sem_Impl   =      942 export table
+exd_tsk   =      exd_tsk_Impl   =      code -22
+ext_tsk   =      ext_tsk_Impl   =      code -21
+get_blk   =      get_blk_Impl   =      code -141
+prcv_msg  =      prcv_msg_Impl  =      code -61 (polling)
+preq_sem  =      preq_sem_Impl  =      code -53 (polling)
+rcv_msg   =      rcv_msg_Impl   =      code -61
+rel_blk   =      rel_blk_Impl   =      code -143
+rot_rdq   =      rot_rdq_Impl   =      code -28
+rsm_tsk   =      rsm_tsk_Impl   =      by hand: its body undoes sus_tsk (TCB +0x12 count down, the suspend bit 2 cleared or the task made ready); sus_tsk's callers call it in mirror order [INFERENCE]
+set_flg   =      set_flg_Impl   =      942 export table
+sig_sem   =      sig_sem_Impl   =      942 export table
+slp_tsk   =      slp_tsk_Impl   =      code -38
+snd_msg   =      snd_msg_Impl   =      942 forwarder snd_msg_X
+sta_tsk   =      sta_tsk_Impl   =      942 export table
+unl_cpu   =      unl_cpu_Impl   =      code -7
+wai_flg   =      wai_flg_Impl   =      code -46
+wai_sem   =      wai_sem_Impl   =      code -53
+wup_tsk   =      wup_tsk_Impl   =      code -39
+-         -      ena_dsp        =      code -29
+-         -      loc_cpu        =      code -8
+-         -      ref_sem        =      942 forwarder ref_sem_X
+-         -      sus_tsk        =      code -33
+-         -      ter_tsk        =      code -25
+
+-- 935: 26 services, 0 labels to change
+wrapper   wants  body           wants  evidence
+chg_pri   =      chg_pri_Impl   =      code -27
+cre_flg   =      cre_flg_Impl   =      942 forwarder cre_flg_X
+cre_mbx   =      cre_mbx_Impl   =      942 forwarder cre_mbx_X
+cre_mpl   =      cre_mpl_Impl   =      code -137
+cre_sem   =      cre_sem_Impl   =      942 forwarder cre_sem_X
+cre_tsk   =      cre_tsk_Impl   =      code -17
+exd_tsk   =      exd_tsk_Impl   =      code -22
+get_blk   =      get_blk_Impl   =      code -141
+prcv_msg  =      prcv_msg_Impl  =      code -61 (polling)
+preq_sem  =      preq_sem_Impl  =      code -53 (polling)
+rcv_msg   =      rcv_msg_Impl   =      code -61
+rel_blk   =      rel_blk_Impl   =      code -143
+rot_rdq   =      rot_rdq_Impl   =      code -28
+rsm_tsk   =      rsm_tsk_Impl   =      by hand: its body undoes sus_tsk (TCB +0x12 count down, the suspend bit 2 cleared or the task made ready); sus_tsk's callers call it in mirror order [INFERENCE]
+set_flg   =      set_flg_Impl   =      942 export table
+sig_sem   =      sig_sem_Impl   =      942 export table
+slp_tsk   =      slp_tsk_Impl   =      code -38
+snd_msg   =      snd_msg_Impl   =      942 forwarder snd_msg_X
+sta_tsk   =      sta_tsk_Impl   =      942 export table
+unl_cpu   =      unl_cpu_Impl   =      code -7
+wai_flg   =      wai_flg_Impl   =      code -46
+wai_sem   =      wai_sem_Impl   =      code -53
+wup_tsk   =      wup_tsk_Impl   =      code -39
+-         -      ena_dsp        =      code -29
+-         -      loc_cpu        =      code -8
+-         -      sus_tsk        =      code -33
+
+-- 893: 26 services, 0 labels to change
+wrapper   wants  body           wants  evidence
+chg_pri   =      chg_pri_Impl   =      code -27
+cre_flg   =      cre_flg_Impl   =      942 forwarder cre_flg_X
+cre_mbx   =      cre_mbx_Impl   =      942 forwarder cre_mbx_X
+cre_mpl   =      cre_mpl_Impl   =      code -137
+cre_sem   =      cre_sem_Impl   =      942 forwarder cre_sem_X
+cre_tsk   =      cre_tsk_Impl   =      code -17
+exd_tsk   =      exd_tsk_Impl   =      code -22
+get_blk   =      get_blk_Impl   =      code -141
+prcv_msg  =      prcv_msg_Impl  =      code -61 (polling)
+preq_sem  =      preq_sem_Impl  =      code -53 (polling)
+rcv_msg   =      rcv_msg_Impl   =      code -61
+rel_blk   =      rel_blk_Impl   =      code -143
+rot_rdq   =      rot_rdq_Impl   =      code -28
+rsm_tsk   =      rsm_tsk_Impl   =      by hand: its body undoes sus_tsk (TCB +0x12 count down, the suspend bit 2 cleared or the task made ready); sus_tsk's callers call it in mirror order [INFERENCE]
+set_flg   =      set_flg_Impl   =      942 export table
+sig_sem   =      sig_sem_Impl   =      942 export table
+slp_tsk   =      slp_tsk_Impl   =      code -38
+snd_msg   =      snd_msg_Impl   =      942 forwarder snd_msg_X
+sta_tsk   =      sta_tsk_Impl   =      942 export table
+unl_cpu   =      unl_cpu_Impl   =      code -7
+wai_flg   =      wai_flg_Impl   =      code -46
+wai_sem   =      wai_sem_Impl   =      code -53
+wup_tsk   =      wup_tsk_Impl   =      code -39
+-         -      ena_dsp        =      code -29
+-         -      loc_cpu        =      code -8
+-         -      sus_tsk        =      code -33
+
+-- kn6000: 30 services, 0 labels to change
+wrapper   wants  body           wants  evidence
+chg_pri   =      chg_pri_Impl   =      code -27
+cre_flg   =      cre_flg_Impl   =      942 forwarder cre_flg_X
+cre_mbx   =      cre_mbx_Impl   =      942 forwarder cre_mbx_X
+cre_mpl   =      cre_mpl_Impl   =      code -137
+cre_sem   =      cre_sem_Impl   =      942 forwarder cre_sem_X
+cre_tsk   =      cre_tsk_Impl   =      code -17
+del_flg   =      del_flg_Impl   =      942 export table
+del_mbx   =      del_mbx_Impl   =      942 export table
+del_sem   =      del_sem_Impl   =      942 export table
+exd_tsk   =      exd_tsk_Impl   =      code -22
+ext_tsk   =      ext_tsk_Impl   =      code -21
+get_blk   =      get_blk_Impl   =      code -141
+prcv_msg  =      prcv_msg_Impl  =      code -61 (polling)
+preq_sem  =      preq_sem_Impl  =      code -53 (polling)
+rcv_msg   =      rcv_msg_Impl   =      code -61
+rel_blk   =      rel_blk_Impl   =      code -143
+rot_rdq   =      rot_rdq_Impl   =      code -28
+set_flg   =      set_flg_Impl   =      942 export table
+sig_sem   =      sig_sem_Impl   =      942 export table
+slp_tsk   =      slp_tsk_Impl   =      code -38
+snd_msg   =      snd_msg_Impl   =      942 forwarder snd_msg_X
+sta_tsk   =      sta_tsk_Impl   =      942 export table
+unl_cpu   =      unl_cpu_Impl   =      code -7
+wai_flg   =      wai_flg_Impl   =      code -46
+wai_sem   =      wai_sem_Impl   =      code -53
+wup_tsk   =      wup_tsk_Impl   =      code -39
+-         -      ena_dsp        =      code -29
+-         -      loc_cpu        =      code -8
+-         -      ref_sem        =      942 forwarder ref_sem_X
+-         -      ter_tsk        =      code -25
+
+-- kn6500: 30 services, 0 labels to change
+wrapper   wants  body           wants  evidence
+chg_pri   =      chg_pri_Impl   =      code -27
+cre_flg   =      cre_flg_Impl   =      942 forwarder cre_flg_X
+cre_mbx   =      cre_mbx_Impl   =      942 forwarder cre_mbx_X
+cre_mpl   =      cre_mpl_Impl   =      code -137
+cre_sem   =      cre_sem_Impl   =      942 forwarder cre_sem_X
+cre_tsk   =      cre_tsk_Impl   =      code -17
+del_flg   =      del_flg_Impl   =      942 export table
+del_mbx   =      del_mbx_Impl   =      942 export table
+del_sem   =      del_sem_Impl   =      942 export table
+exd_tsk   =      exd_tsk_Impl   =      code -22
+ext_tsk   =      ext_tsk_Impl   =      code -21
+get_blk   =      get_blk_Impl   =      code -141
+prcv_msg  =      prcv_msg_Impl  =      code -61 (polling)
+preq_sem  =      preq_sem_Impl  =      code -53 (polling)
+rcv_msg   =      rcv_msg_Impl   =      code -61
+rel_blk   =      rel_blk_Impl   =      code -143
+rot_rdq   =      rot_rdq_Impl   =      code -28
+set_flg   =      set_flg_Impl   =      942 export table
+sig_sem   =      sig_sem_Impl   =      942 export table
+slp_tsk   =      slp_tsk_Impl   =      code -38
+snd_msg   =      snd_msg_Impl   =      942 forwarder snd_msg_X
+sta_tsk   =      sta_tsk_Impl   =      942 export table
+unl_cpu   =      unl_cpu_Impl   =      code -7
+wai_flg   =      wai_flg_Impl   =      code -46
+wai_sem   =      wai_sem_Impl   =      code -53
+wup_tsk   =      wup_tsk_Impl   =      code -39
+-         -      ena_dsp        =      code -29
+-         -      loc_cpu        =      code -8
+-         -      ref_sem        =      942 forwarder ref_sem_X
+-         -      ter_tsk        =      code -25
+
+-- kn2400: 25 services, 0 labels to change
+wrapper   wants  body           wants  evidence
+chg_pri   =      chg_pri_Impl   =      code -27
+cre_flg   =      cre_flg_Impl   =      942 forwarder cre_flg_X
+cre_mbx   =      cre_mbx_Impl   =      942 forwarder cre_mbx_X
+cre_mpl   =      cre_mpl_Impl   =      code -137
+cre_sem   =      cre_sem_Impl   =      942 forwarder cre_sem_X
+cre_tsk   =      cre_tsk_Impl   =      code -17
+exd_tsk   =      exd_tsk_Impl   =      code -22
+get_blk   =      get_blk_Impl   =      code -141
+prcv_msg  =      prcv_msg_Impl  =      code -61 (polling)
+rcv_msg   =      rcv_msg_Impl   =      code -61
+rel_blk   =      rel_blk_Impl   =      code -143
+rot_rdq   =      rot_rdq_Impl   =      code -28
+rsm_tsk   =      rsm_tsk_Impl   =      by hand: its body undoes sus_tsk (TCB +0x12 count down, the suspend bit 2 cleared or the task made ready); sus_tsk's callers call it in mirror order [INFERENCE]
+set_flg   =      set_flg_Impl   =      942 export table
+sig_sem   =      sig_sem_Impl   =      942 export table
+slp_tsk   =      slp_tsk_Impl   =      code -38
+snd_msg   =      snd_msg_Impl   =      942 forwarder snd_msg_X
+sta_tsk   =      sta_tsk_Impl   =      942 export table
+unl_cpu   =      unl_cpu_Impl   =      code -7
+wai_flg   =      wai_flg_Impl   =      code -46
+wai_sem   =      wai_sem_Impl   =      code -53
+wup_tsk   =      wup_tsk_Impl   =      code -39
+-         -      ena_dsp        =      code -29
+-         -      loc_cpu        =      code -8
+-         -      sus_tsk        =      code -33
+
