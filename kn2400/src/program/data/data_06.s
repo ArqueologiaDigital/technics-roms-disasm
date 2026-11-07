@@ -5413,8 +5413,8 @@ Str_d_2:	.asciz "d"
 AcNoteEditBoxProc_L8e_Table_2:	# 6 x u16, 0..65280; read by AcNoteEditBoxProc_L8e 0x486DD473: `movhu (AcNoteEditBoxProc_L8e_Table_2), d0`; AcDrumEditBoxProc_L53 0x486DE36D: `movhu (AcNoteEditBoxProc_L8e_Table_2), d0` ...
 	tab_u16	1, 2, 1, 65, 0, 65280
 
-SdCommandSend_Table:	# REC_SdCommandSend_ArgA0 (10 bytes): the layout SdCommandSend 0x486EDF52 reads through its argument a0 (passed by SdWorkerCmdHandler_entry_L84 0x486ECB16 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +4 more calls)
-	REC_SdCommandSend_ArgA0	kind=2, SdResponseScan_d0=1, x4="B\x00\x00\x00\x00", f9=149
+SdCommandSend_Table:	# SdCommandFrame (10 bytes): the layout SdCommandSend 0x486EDF52 reads through its argument a0 (passed by SdWorkerCmdHandler_entry_L84 0x486ECB16 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +4 more calls)
+	SdCommandFrame	clock_mode=2, resp_type=1, cmd="B\x00\x00\x00\x00", crc7=149
 
 SdReadBlockCmd_Var:	# u16, initial value of a RAM variable; read / written by SdReadBlockCmd 0x486EE067: `movhu (a3), d0`; SdReadBlockCmd_entry_L2d 0x486EE099: `movhu (a3), d0` ...
 	.word	2
@@ -5428,12 +5428,12 @@ SdReadBlockCmd_entry_L2d_Table:	# 41 x u8, 0..255; read by SdReadBlockCmd_entry_
 	tab_u8	0, 0, 1, 0, 255, 2, 0, 2, 0, 70, 0, 0, 0, 0, 255, 2	# [16]
 	tab_u8	0, 2, 0, 71, 0, 0, 0, 0, 255	# [32]
 
-SdCommandSend_Table_2:	# REC_SdCommandSend_ArgA0 (10 bytes): the layout SdCommandSend 0x486EDF52 reads through its argument a0 (passed by SdWorkerCmdHandler_entry_L84 0x486ECB16 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +4 more calls)
-	REC_SdCommandSend_ArgA0	kind=3, SdResponseScan_d0=1, x4="@\x00\x00\x00\x00", f9=149
-SdCommandSend_Table_3:	# REC_SdCommandSend_ArgA0 (10 bytes): the layout SdCommandSend 0x486EDF52 reads through its argument a0 (passed by SdWorkerCmdHandler_entry_L84 0x486ECB16 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +4 more calls)
-	REC_SdCommandSend_ArgA0	kind=3, SdResponseScan_d0=1, x4="{\x00\x00\x00\x01", f9=255
-SdCommandSend_Table_4:	# REC_SdCommandSend_ArgA0 (10 bytes): the layout SdCommandSend 0x486EDF52 reads through its argument a0 (passed by SdWorkerCmdHandler_entry_L84 0x486ECB16 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +4 more calls)
-	REC_SdCommandSend_ArgA0	kind=3, SdResponseScan_d0=1, x4="A\x00\x00\x00\x00", f9=255
+SdCommandSend_Table_2:	# SdCommandFrame (10 bytes): the layout SdCommandSend 0x486EDF52 reads through its argument a0 (passed by SdWorkerCmdHandler_entry_L84 0x486ECB16 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +4 more calls)
+	SdCommandFrame	clock_mode=3, resp_type=1, cmd="@\x00\x00\x00\x00", crc7=149
+SdCommandSend_Table_3:	# SdCommandFrame (10 bytes): the layout SdCommandSend 0x486EDF52 reads through its argument a0 (passed by SdWorkerCmdHandler_entry_L84 0x486ECB16 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +4 more calls)
+	SdCommandFrame	clock_mode=3, resp_type=1, cmd="{\x00\x00\x00\x01", crc7=255
+SdCommandSend_Table_4:	# SdCommandFrame (10 bytes): the layout SdCommandSend 0x486EDF52 reads through its argument a0 (passed by SdWorkerCmdHandler_entry_L84 0x486ECB16 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +4 more calls)
+	SdCommandFrame	clock_mode=3, resp_type=1, cmd="A\x00\x00\x00\x00", crc7=255
 
 SdReadBlockCmd_Table:	# u16, initial value of a RAM variable; read / written by SdReadBlockCmd 0x486EE067: `movhu (a3), d0`; SdReadBlockCmd_entry_L2d 0x486EE099: `movhu (a3), d0` ...
 	.word	3

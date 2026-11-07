@@ -4361,22 +4361,22 @@
 	.ascii	"\x0"
 .endm
 
-# REC_StylePartTemplateDefault_Result: 21-byte records (StylePartTemplateDefault_Result, 1 records); fields, and what reads them:
+# StylePartTemplate: 21-byte records (StylePartTemplateDefault_Result, 1 records); fields, and what reads them:
 #   +0   s0           char[2]        func_4C0634C9_entry_L2 0x4C0634D0 `call memcpy_entry, [a2,a3], 8`; func_4C06580B_entry_L2 0x4C065812 `call memcpy_entry, [a2,a3], 8`
-#   +2   key          u8             StylePartFieldEmit_entry_L2b 0x4C062495 `movbu (2, a1), d2`
-#   +3   f3           u8             StylePartFieldEmit_entry_L2b 0x4C062495 `movbu (3, a1), d0`
-#   +4   f4           u8             StylePartFieldEmit_entry_L2b 0x4C062495 `movbu (4, a1), d0`
+#   +2   pc_d1        u8             StylePartFieldEmit_entry_L2b 0x4C062495 `movbu (2, a1), d2`
+#   +3   pc_d2        u8             StylePartFieldEmit_entry_L2b 0x4C062495 `movbu (3, a1), d0`
+#   +4   pc_d3        u8             StylePartFieldEmit_entry_L2b 0x4C062495 `movbu (4, a1), d0`
 #   +5   x5           u8[14]         no reader seen
-#   +19  key_         u8             StylePartFieldEmit_entry_L71 0x4C0624DB `movbu (0x13, a1), d2`
-#   +20  f20          u8             StylePartFieldEmit_entry_L71 0x4C0624DB `movbu (0x14, a1), d0`
-.macro REC_StylePartTemplateDefault_Result s0, key=0, f3=0, f4=0, x5, key_=0, f20=0
+#   +19  bend_d1      u8             StylePartFieldEmit_entry_L71 0x4C0624DB `movbu (0x13, a1), d2`
+#   +20  bend_d2      u8             StylePartFieldEmit_entry_L71 0x4C0624DB `movbu (0x14, a1), d0`
+.macro StylePartTemplate s0, pc_d1=0, pc_d2=0, pc_d3=0, x5, bend_d1=0, bend_d2=0
 	.ascii	"\s0"
-	.byte	\key
-	.byte	\f3
-	.byte	\f4
+	.byte	\pc_d1
+	.byte	\pc_d2
+	.byte	\pc_d3
 	.ascii	"\x5"
-	.byte	\key_
-	.byte	\f20
+	.byte	\bend_d1
+	.byte	\bend_d2
 .endm
 
 # REC_func_4C06A6F6_Records_p4_p0: 34-byte records (func_4C06A6F6_Records_p4_p0, 27 records); fields, and what reads them:
@@ -4431,12 +4431,12 @@
 	.ascii	"\x6"
 .endm
 
-# REC_func_4C09CF34_Table_p0: 12-byte records (func_4C09CF34_Table_p0, 643 records); fields, and what reads them:
-#   +0   p0           ptr            VoiceDirRefFind_entry_L38 0x4C09CF71 `mov (a2), a2`
+# VoiceDirRefNode: 12-byte records (func_4C09CF34_Table_p0, 643 records); fields, and what reads them:
+#   +0   next         ptr            VoiceDirRefFind_entry_L38 0x4C09CF71 `mov (a2), a2`
 #   +4   key          u16            VoiceDirRefFind_entry_L25 0x4C09CF5E `movhu (4, a2), d1`
 #   +6   x6           u8[6]          no reader seen
-.macro REC_func_4C09CF34_Table_p0 p0=0, key=0, x6
-	.long	\p0
+.macro VoiceDirRefNode next=0, key=0, x6
+	.long	\next
 	.word	\key
 	.ascii	"\x6"
 .endm
@@ -4611,26 +4611,6 @@
 	.ascii	"\x0"
 .endm
 
-# REC_M3HookDispatch_entry_L8c_Selected: 12-byte records (M3HookDispatch_entry_L8c_Selected, 8 records); fields, and what reads them:
-#   +0   key          u32            M3HookDispatch_entry_L8c 0x4C03CCFF `mov (a1), d1`
-#   +4   key_         u32            M3HookDispatch_entry_L8c 0x4C03CCFF `mov (a2), d3`
-#   +8   proc         ptr            M3HookDispatch_entry_L8c 0x4C03CCFF `mov (a3), d0`
-.macro REC_M3HookDispatch_entry_L8c_Selected key=0, key_=0, proc=0
-	.long	\key
-	.long	\key_
-	.long	\proc
-.endm
-
-# REC_func_4C03CD2C_entry_L9d_Selected: 12-byte records (func_4C03CD2C_entry_L9d_Selected, 9 records); fields, and what reads them:
-#   +0   key          u32            func_4C03CD2C_entry_L9d 0x4C03CDCE `mov (a1), d3`
-#   +4   key_         u32            func_4C03CD2C_entry_L9d 0x4C03CDCE `mov (a2), d1`
-#   +8   proc         ptr            func_4C03CD2C_entry_L9d 0x4C03CDCE `mov (a3), d0`
-.macro REC_func_4C03CD2C_entry_L9d_Selected key=0, key_=0, proc=0
-	.long	\key
-	.long	\key_
-	.long	\proc
-.endm
-
 # REC_GetFocusObject_Records_p4: 12-byte records (GetFocusObject_Records_p4, 1 records); fields, and what reads them:
 #   +0   f0           s8             func_4C0BB259_entry_L27 0x4C0BB285 `movbu (a0), d0`; func_4C0BDE7B_entry_L27 0x4C0BDEA7 `movbu (a0), d0` (+1)
 #   +1   x1           u8[3]          no reader seen
@@ -4693,18 +4673,18 @@
 	.long	\stksz
 .endm
 
-# REC_cre_flg_ArgA0: 12-byte records (cre_flg_ArgA0, 12 records); fields, and what reads them:
+# T_CFLG: 12-byte records (cre_flg_ArgA0, 12 records); fields, and what reads them:
 #   (the layout cre_flg 0x4C3F5CA2 reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call cre_flg, 0, 0`, +5 more calls))
 #   (the layout cre_flg_Impl 0x4C3F5D2E reads through its argument a0 (passed by cre_flg_L3d 0x4C3F5CDF `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`))
-#   +0   f0           u32            cre_flg_Impl 0x4C3F5D2E `mov (a3), d2`
-#   +4   f4           u16            cre_flg_Impl 0x4C3F5D2E `movhu (4, a3), d2`
+#   +0   exinf        u32            cre_flg_Impl 0x4C3F5D2E `mov (a3), d2`
+#   +4   flgatr       u16            cre_flg_Impl 0x4C3F5D2E `movhu (4, a3), d2`
 #   +6   x6           u8[2]          no reader seen
-#   +8   f8           u32            cre_flg_Impl 0x4C3F5D2E `mov (8, a3), d2`
-.macro REC_cre_flg_ArgA0 f0=0, f4=0, x6, f8=0
-	.long	\f0
-	.word	\f4
+#   +8   iflgptn      u32            cre_flg_Impl 0x4C3F5D2E `mov (8, a3), d2`
+.macro T_CFLG exinf=0, flgatr=0, x6, iflgptn=0
+	.long	\exinf
+	.word	\flgatr
 	.ascii	"\x6"
-	.long	\f8
+	.long	\iflgptn
 .endm
 
 # REC_func_4C3F5D83_ArgA0: 24-byte records (func_4C3F5D83_ArgA0, 2 records); fields, and what reads them:

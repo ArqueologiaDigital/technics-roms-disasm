@@ -38940,57 +38940,116 @@ data_4C2F78D1:
 data_4C2F78DC:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6500_program.rom", 0x2F78DC, 0x2F78E8
-func_4C03CDDE_entry_L8c_Selected_0:	# REC_M3HookDispatch_entry_L8c_Selected (12 bytes)
-	REC_M3HookDispatch_entry_L8c_Selected	key=65280, key_=53248, proc=TempoSyncSetDispatch
-	.space	12, 0x00
-func_4C03CDDE_entry_L8c_Selected_1:	# REC_M3HookDispatch_entry_L8c_Selected (12 bytes)
-	REC_M3HookDispatch_entry_L8c_Selected	
-func_4C03CDDE_entry_L8c_Selected_2:	# REC_M3HookDispatch_entry_L8c_Selected (12 bytes)
-	REC_M3HookDispatch_entry_L8c_Selected	
-func_4C03CDDE_entry_L8c_Selected_3:	# REC_M3HookDispatch_entry_L8c_Selected (12 bytes)
-	REC_M3HookDispatch_entry_L8c_Selected	key=0xFF0000, key_=0x700000, proc=XaprCallM3Hook
-# census: opaque -- unknown-dump: 72 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x2F7924, 0x2F796C
-func_4C03CDDE_entry_L8c_Selected_4:	# REC_M3HookDispatch_entry_L8c_Selected (12 bytes)
-	REC_M3HookDispatch_entry_L8c_Selected	key=255, key_=121, proc=func_4C02DEA8
-	.space	12, 0x00
-func_4C03CDDE_entry_L8c_Selected_5:	# REC_M3HookDispatch_entry_L8c_Selected (12 bytes)
-	REC_M3HookDispatch_entry_L8c_Selected	
-func_4C03CDDE_entry_L8c_Selected_6:	# REC_M3HookDispatch_entry_L8c_Selected (12 bytes)
-	REC_M3HookDispatch_entry_L8c_Selected	
-func_4C03CDDE_entry_L8c_Selected_7:	# REC_M3HookDispatch_entry_L8c_Selected (12 bytes)
-	REC_M3HookDispatch_entry_L8c_Selected	
-func_4C03CE9C_entry_L9d_Selected_0:	# REC_func_4C03CE9C_entry_L9d_Selected (12 bytes)
-	REC_func_4C03CE9C_entry_L9d_Selected	key=0xFFFF00, key_=8192, proc=loc_4C0670FD
-# census: opaque -- unknown-dump: 132 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x2F79B4, 0x2F7A38
-func_4C03CE9C_entry_L9d_Selected_1:	# REC_func_4C03CE9C_entry_L9d_Selected (12 bytes)
-	REC_func_4C03CE9C_entry_L9d_Selected	key=0xFFFF00, key_=0x204000, proc=func_4C02F659
-# census: opaque -- unknown-dump: 36 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x2F7A44, 0x2F7A68
-func_4C03CE9C_entry_L9d_Selected_2:	# REC_func_4C03CE9C_entry_L9d_Selected (12 bytes)
-	REC_func_4C03CE9C_entry_L9d_Selected	key=0xFF0000, key_=0x600000, proc=func_4C02F659
-# census: opaque -- unknown-dump: 84 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x2F7A74, 0x2F7AC8
-func_4C03CE9C_entry_L9d_Selected_3:	# REC_func_4C03CE9C_entry_L9d_Selected (12 bytes)
-	REC_func_4C03CE9C_entry_L9d_Selected	key=0xFFFFFF, key_=0x701011, proc=loc_4C05186C
-# census: opaque -- unknown-dump: 276 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x2F7AD4, 0x2F7BE8
-func_4C03CE9C_entry_L9d_Selected_4:	# REC_func_4C03CE9C_entry_L9d_Selected (12 bytes)
-	REC_func_4C03CE9C_entry_L9d_Selected	key=0xFFFFFF, key_=0x900000, proc=func_4C0524FF
-# census: opaque -- unknown-dump: 36 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x2F7BF4, 0x2F7C18
-func_4C03CE9C_entry_L9d_Selected_5:	# REC_func_4C03CE9C_entry_L9d_Selected (12 bytes)
-	REC_func_4C03CE9C_entry_L9d_Selected	key=0xFFFFFF, key_=0xB0007E, proc=func_4C0D961C
-	.space	12, 0x00
-func_4C03CE9C_entry_L9d_Selected_6:	# REC_func_4C03CE9C_entry_L9d_Selected (12 bytes)
-	REC_func_4C03CE9C_entry_L9d_Selected	key=0xFFFFFF, key_=0xC00000, proc=loc_4C09D0AC
-# census: opaque -- unknown-dump: 24 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6500_program.rom", 0x2F7C3C, 0x2F7C54
-func_4C03CE9C_entry_L9d_Selected_7:	# REC_func_4C03CE9C_entry_L9d_Selected (12 bytes)
-	REC_func_4C03CE9C_entry_L9d_Selected	
-func_4C03CE9C_entry_L9d_Selected_8:	# REC_func_4C03CE9C_entry_L9d_Selected (12 bytes)
-	REC_func_4C03CE9C_entry_L9d_Selected	
+
+# 1 records of 12 bytes up to the end marker (+8, 32 bits) that M3HookDispatch 0x4C03CDDE: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C03CDDE_entry_L8c_Selected_0:
+	.long	0xff00, 0xd000, TempoSyncSetDispatch
+	.long	0x0, 0x0, 0x0	# end
+# 0 records of 12 bytes up to the end marker (+8, 32 bits) that M3HookDispatch 0x4C03CDDE: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C03CDDE_entry_L8c_Selected_1:
+	.long	0x0, 0x0, 0x0	# end
+# 0 records of 12 bytes up to the end marker (+8, 32 bits) that M3HookDispatch 0x4C03CDDE: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C03CDDE_entry_L8c_Selected_2:
+	.long	0x0, 0x0, 0x0	# end
+# 6 records of 12 bytes up to the end marker (+8, 32 bits) that M3HookDispatch 0x4C03CDDE: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C03CDDE_entry_L8c_Selected_3:
+	.long	0xff0000, 0x700000, XaprCallM3Hook
+	.long	0xff0000, 0x700000, func_4C05262B
+	.long	0xff0000, 0x700000, func_4C051471
+	.long	0xff00, 0x2000, func_4C12DAFB
+	.long	0xff00, 0x2000, TempoSyncSetDispatch
+	.long	0xffffff, 0x702040, func_4C1142AB
+	.long	0x0, 0x0, 0x0	# end
+# 1 records of 12 bytes up to the end marker (+8, 32 bits) that M3HookDispatch 0x4C03CDDE: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C03CDDE_entry_L8c_Selected_4:
+	.long	0xff, 0x79, func_4C02DEA8
+	.long	0x0, 0x0, 0x0	# end
+# 0 records of 12 bytes up to the end marker (+8, 32 bits) that M3HookDispatch 0x4C03CDDE: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C03CDDE_entry_L8c_Selected_5:
+	.long	0x0, 0x0, 0x0	# end
+# 0 records of 12 bytes up to the end marker (+8, 32 bits) that M3HookDispatch 0x4C03CDDE: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C03CDDE_entry_L8c_Selected_6:
+	.long	0x0, 0x0, 0x0	# end
+# 0 records of 12 bytes up to the end marker (+8, 32 bits) that M3HookDispatch 0x4C03CDDE: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C03CDDE_entry_L8c_Selected_7:
+	.long	0x0, 0x0, 0x0	# end
+# 11 records of 12 bytes up to the end marker (+8, 32 bits) that func_4C03CE9C 0x4C03CE9C: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C03CE9C_entry_L9d_Selected_0:
+	.long	0xffff00, 0x2000, loc_4C0670FD
+	.long	0xff0000, 0x0, func_4C02F659
+	.long	0xffff00, 0xc000, func_4C0320B8
+	.long	0xff0000, 0x0, func_4C0470EC
+	.long	0xff0000, 0x0, func_4C09DB14
+	.long	0xff0000, 0x0, loc_4C1343FA
+	.long	0xff0000, 0x0, func_4C0D961C
+	.long	0xff0000, 0x0, loc_4C03294A
+	.long	0xff0000, 0x0, SndSetupPowerOnInit
+	.long	0xffff00, 0x0, loc_4C03EDB5
+	.long	0xff0000, 0x0, func_4C02DD81
+	.long	0x0, 0x0, 0x0	# end
+# 3 records of 12 bytes up to the end marker (+8, 32 bits) that func_4C03CE9C 0x4C03CE9C: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C03CE9C_entry_L9d_Selected_1:
+	.long	0xffff00, 0x204000, func_4C02F659
+	.long	0xff0000, 0x200000, func_4C0D961C
+	.long	0xff0000, 0x200000, func_4C0320B8
+	.long	0x0, 0x0, 0x0	# end
+# 7 records of 12 bytes up to the end marker (+8, 32 bits) that func_4C03CE9C 0x4C03CE9C: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C03CE9C_entry_L9d_Selected_2:
+	.long	0xff0000, 0x600000, func_4C02F659
+	.long	0xffffff, 0x600000, loc_4C1343FA
+	.long	0xffffff, 0x600010, loc_4C11418C
+	.long	0xffffff, 0x600012, func_4C11C7A3
+	.long	0xffffff, 0x600011, loc_4C11C859
+	.long	0xff0000, 0x600000, func_4C09DB14
+	.long	0xff0000, 0x600000, SndSetupPowerOnInit
+	.long	0x0, 0x0, 0x0	# end
+# 23 records of 12 bytes up to the end marker (+8, 32 bits) that func_4C03CE9C 0x4C03CE9C: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C03CE9C_entry_L9d_Selected_3:
+	.long	0xffffff, 0x701011, loc_4C05186C
+	.long	0xffffff, 0x701009, loc_4C0520A3
+	.long	0xffffff, 0x701004, loc_4C0520DB
+	.long	0xffffff, 0x701005, loc_4C052113
+	.long	0xffffff, 0x701012, loc_4C05214B
+	.long	0xffffff, 0x701010, loc_4C0521A6
+	.long	0xffffff, 0x701020, loc_4C0521DE
+	.long	0xffffff, 0x701000, loc_4C052215
+	.long	0xffffff, 0x7020a6, func_4C02F659
+	.long	0xffffff, 0x7020a1, func_4C046C3F
+	.long	0xffffff, 0x702032, loc_4C0AD00A
+	.long	0xffffff, 0x708000, loc_4C13AAE8
+	.long	0xffffff, 0x702004, func_4C06FE10
+	.long	0xffffff, 0x708000, func_4C1618E9
+	.long	0xffffff, 0x7020a8, loc_4C0FDCE5
+	.long	0xffffff, 0x702083, loc_4C0FDD4A
+	.long	0xffffff, 0x700000, func_4C0FDD70
+	.long	0xffffff, 0x7020a4, func_4C16B510
+	.long	0xffffff, 0x702020, func_4C124E76
+	.long	0xffffff, 0x702040, func_4C124DDF
+	.long	0xffffff, 0x700000, func_4C12DB9F
+	.long	0xffffff, 0x7020b0, func_4C11B79B
+	.long	0xffffff, 0x700000, func_4C0470EC
+	.long	0x0, 0x0, 0x0	# end
+# 3 records of 12 bytes up to the end marker (+8, 32 bits) that func_4C03CE9C 0x4C03CE9C: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C03CE9C_entry_L9d_Selected_4:
+	.long	0xffffff, 0x900000, func_4C0524FF
+	.long	0xff0000, 0x900000, func_4C0470EC
+	.long	0xffffff, 0x900000, loc_4C09D0AC
+	.long	0x0, 0x0, 0x0	# end
+# 1 records of 12 bytes up to the end marker (+8, 32 bits) that func_4C03CE9C 0x4C03CE9C: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C03CE9C_entry_L9d_Selected_5:
+	.long	0xffffff, 0xb0007e, func_4C0D961C
+	.long	0x0, 0x0, 0x0	# end
+# 2 records of 12 bytes up to the end marker (+8, 32 bits) that func_4C03CE9C 0x4C03CE9C: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C03CE9C_entry_L9d_Selected_6:
+	.long	0xffffff, 0xc00000, loc_4C09D0AC
+	.long	0xffffff, 0xc00000, func_4C0D961C
+	.long	0x0, 0x0, 0x0	# end
+# 0 records of 12 bytes up to the end marker (+8, 32 bits) that func_4C03CE9C 0x4C03CE9C: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C03CE9C_entry_L9d_Selected_7:
+	.long	0x0, 0x0, 0x0	# end
+# 0 records of 12 bytes up to the end marker (+8, 32 bits) that func_4C03CE9C 0x4C03CE9C: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C03CE9C_entry_L9d_Selected_8:
+	.long	0x0, 0x0, 0x0	# end
 
 func_4C09C9C6_Var:	# u16, a constant; read / written by VoiceDirRemapFind 0x4C09C9C6: `movhu (func_4C09C9C6_Var), d1`
 	.word	1

@@ -93221,6 +93221,7 @@ func_4C032928_entry:
 	call	func_4C03296C_entry, 0, 8
 func_4C032928_entry_L1a:
 	ret	[d2], 0xc
+loc_4C03294A:
 	and	0x00ffffff, d0
 	cmp	0x6020, d0
 	bne	func_4C032928_entry_L32
@@ -116645,6 +116646,7 @@ func_4C03EC77_entry_L110:
 	call	func_4C0330FF_entry, [d2,d3], 0x38
 func_4C03EC77_entry_L136:
 	ret	[d2,d3], 0x18
+loc_4C03EDB5:
 	add	-0xc, sp
 	and	0x00ffffff, d0
 	cmp	0x80, d0
@@ -149240,6 +149242,7 @@ func_4C05208C_Lf:
 func_4C05209F:
 	clr	d0
 	retf	0, 0
+loc_4C0520A3:
 	add	-0x14, sp
 	movbu	(0x5002dcc0), d0
 	cmp	7, d0
@@ -149259,6 +149262,7 @@ func_4C05209F_L37:
 	mov	-1, d0
 func_4C05209F_L39:
 	ret	0, 0x14
+loc_4C0520DB:
 	add	-0x14, sp
 	movbu	(0x5002dcc0), d0
 	cmp	7, d0
@@ -149278,6 +149282,7 @@ func_4C05209F_L6f:
 	mov	-1, d0
 func_4C05209F_L71:
 	ret	0, 0x14
+loc_4C052113:
 	add	-0x14, sp
 	movbu	(0x5002dcc0), d0
 	cmp	7, d0
@@ -149297,6 +149302,7 @@ func_4C05209F_La7:
 	mov	-1, d0
 func_4C05209F_La9:
 	ret	0, 0x14
+loc_4C05214B:
 	add	-0x14, sp
 	movbu	(0x5002dcc0), d0
 	cmp	7, d0
@@ -149325,6 +149331,7 @@ func_4C05209F_L102:
 	mov	-1, d0
 func_4C05209F_L104:
 	ret	0, 0x14
+loc_4C0521A6:
 	add	-0x14, sp
 	movbu	(0x5002dcc0), d0
 	cmp	7, d0
@@ -149344,6 +149351,7 @@ func_4C05209F_L13a:
 	mov	-1, d0
 func_4C05209F_L13c:
 	ret	0, 0x14
+loc_4C0521DE:
 	add	-0x14, sp
 	movbu	(0x5002dcc0), d0
 	cmp	7, d0
@@ -149363,6 +149371,7 @@ func_4C05209F_L171:
 	mov	-1, d0
 func_4C05209F_L173:
 	ret	0, 0x14
+loc_4C052215:
 	add	-0x14, sp
 	movbu	(0x5002dcc0), d0
 	cmp	7, d0
@@ -311455,6 +311464,7 @@ func_4C0ACF83_entry_L6d:
 	movhu	(0x14, sp), d0
 func_4C0ACF83_entry_L7f:
 	ret	[d2,d3,a2,a3], 0x38
+loc_4C0AD00A:
 	add	-0x10, sp
 	and	0x00ffffff, d0
 	cmp	0x702032, d0
@@ -445565,6 +445575,7 @@ func_4C0FDCCB_Ld:
 	mov	(d0, a0), a0
 func_4C0FDCCB_L17:
 	retf	0, 0
+loc_4C0FDCE5:
 	add	-0x14, sp
 	and	0xff, d1
 	extbu	d1
@@ -445593,6 +445604,7 @@ func_4C0FDCCB_L4d:
 func_4C0FDCCB_L7b:
 	clr	d0
 	ret	0, 0x14
+loc_4C0FDD4A:
 	add	-0x14, sp
 	and	0xff, d1
 	extbu	d1
@@ -480086,6 +480098,7 @@ func_4C114169_entry_L15:
 	call	func_4C04D20E_entry, 0, 0xc
 func_4C114169_entry_L1d:
 	ret	0, 0xc
+loc_4C11418C:
 	add	-8, sp
 	call	func_4C116E38_entry, [d2], 0x14
 	clr	d0
@@ -495628,6 +495641,7 @@ func_4C11C7F8_entry:
 	call	PutM3Em_entry, [d2,d3,a2], 0x24
 func_4C11C7F8_entry_L59:
 	ret	[d2,d3], 0x1c
+loc_4C11C859:
 	add	-0x10, sp
 	call	func_4C11C8BC_entry, [d2,d3,a2], 0x2c
 	exth	d0
@@ -537886,6 +537900,7 @@ func_4C1343C0_entry_L31:
 	ret	0, 0x10
 # func_4C1343C0_entry + 0x34: no traced path reaches what follows (--decode-gaps)
 	retf	0, 0
+loc_4C1343FA:
 	add	-0xc, sp
 	and	0x00ffffff, d0
 	cmp	0x8080, d0
@@ -552275,6 +552290,7 @@ func_4C13AACC_entry_L11:
 	call	func_4C13A9A8_entry, 0, 0x10
 func_4C13AACC_entry_L16:
 	ret	0, 0xc
+loc_4C13AAE8:
 	add	-8, sp
 	cmp	0x10708000, d0
 	bne	func_4C13AACC_entry_L46
