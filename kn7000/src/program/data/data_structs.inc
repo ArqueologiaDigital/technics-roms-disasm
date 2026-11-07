@@ -3867,7 +3867,7 @@
 
 # REC_func_4C01232D_Records: 128-byte records (func_4C01232D_Records, 3 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   index        128 x 1 (s8)   func_4C01232D 0x4C01232D `movbu (d1, a0), d1`; func_4C02FE77 0x4C02FE77 `movbu (d0, a0), d2` (+1)
+#   +0   index        128 x 1 (s8)   func_4C01232D 0x4C01232D `movbu (d1, a0), d1`; TgVeloSenseApply 0x4C02FE77 `movbu (d0, a0), d2` (+1)
 .macro REC_func_4C01232D_Records index:vararg
 	.byte	\index
 .endm
