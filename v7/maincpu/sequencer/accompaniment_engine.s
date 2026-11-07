@@ -6180,7 +6180,7 @@ AccStyleCtl_StartStop_MultiMatch:
 	jr AccStyleCtl_StartStop_Return
 
 AccStyleCtl_StartStop_Normal:
-	bit 2, (0x28b2:16)
+	bit 2, (SEQ_METRO_FLAGS:16)
 	jr nz, AccStyleCtl_StartStop_Return
 	pushw wa
 	calr AccStyleCtl_IsStartStopBlocked
@@ -7383,15 +7383,15 @@ AccAutoPlay_NoteDispatch_Process:
 	jr nz, AccAutoPlay_NoteDispatch_Return
 	bit 1, (PANEL_STYLE+5:16)
 	jr z, AccAutoPlay_NoteDispatch_Return
-	bit 3, (0x28b3:16)
+	bit 3, (SEQ_CONTROL_FLAGS:16)
 	jr z, AccAutoPlay_NoteDispatch_Return
-	bit 0, (0x28b2:16)
+	bit 0, (SEQ_METRO_FLAGS:16)
 	jr nz, AccAutoPlay_NoteDispatch_Return
 	bit 2, (SEQ_CYCLE_FLAGS:16)
 	jr nz, AccAutoPlay_NoteDispatch_Return
 	bit 0, (ACC_SYNCHRO_KEY_EVENT:16)
 	jr z, AccAutoPlay_NoteDispatch_Return
-	and (0x28b3:16), 0xf7
+	and (SEQ_CONTROL_FLAGS:16), 0xf7
 	call Audio_CheckSubsystemReady
 AccAutoPlay_NoteDispatch_Return:
 	ret
@@ -7400,9 +7400,9 @@ AccAutoPlay_SplitDetect:
 	ld c, 0x0:opc
 	cpw (SEQ_REC_TRACKS:16), 0
 	jr z, AccAutoPlay_SplitDetect_Check
-	bit 3, (0x28b3:16)
+	bit 3, (SEQ_CONTROL_FLAGS:16)
 	jr z, AccAutoPlay_SplitDetect_Check
-	bit 0, (0x28b2:16)
+	bit 0, (SEQ_METRO_FLAGS:16)
 	jr nz, AccAutoPlay_SplitDetect_Return
 	bit 2, (SEQ_CYCLE_FLAGS:16)
 	jr nz, AccAutoPlay_SplitDetect_Return
@@ -8246,13 +8246,13 @@ AccPlayMode_StopExprB:
 	jr nz, AccPlayMode_StopExprB_Return
 	bit 2, (PLAY_TRANSPORT_STATE:16)
 	jr nz, AccPlayMode_StopExprB_Return
-	bit 2, (0x28b2:16)
+	bit 2, (SEQ_METRO_FLAGS:16)
 	jr nz, AccPlayMode_StopExprB_Process
-	bit 1, (0x28b2:16)
+	bit 1, (SEQ_METRO_FLAGS:16)
 	jr z, AccPlayMode_StopExprB_Process
 	call SeqPlay_SetBarAndResetScroll
 	ld (ACC_TRANSPORT_STATE:16), 128
-	or (0x28b2:16), 4
+	or (SEQ_METRO_FLAGS:16), 4
 	jr AccPlayMode_StartAccPlay_Return
 
 AccPlayMode_StopExprB_Process:
@@ -8300,13 +8300,13 @@ AccPlayMode_StopAcc_Padding:
 	nop
 
 AccPlayMode_StartPlayFull:
-	bit 2, (0x28b2:16)
+	bit 2, (SEQ_METRO_FLAGS:16)
 	jr nz, AccPlayMode_StartPlayFull_Process
-	bit 1, (0x28b2:16)
+	bit 1, (SEQ_METRO_FLAGS:16)
 	jr z, AccPlayMode_StartPlayFull_Process
 	call SeqPlay_SetBarAndResetScroll
 	ld (ACC_TRANSPORT_STATE:16), 128
-	or (0x28b2:16), 4
+	or (SEQ_METRO_FLAGS:16), 4
 	jr AccPlayMode_StartPlayFull_Return
 
 AccPlayMode_StartPlayFull_Process:
@@ -8329,7 +8329,7 @@ AccPlayMode_StartPlayFull_Padding:
 
 AccPlayMode_StopExprFull:
 	ld (ACC_TRANSPORT_STATE:16), 0x0c
-	bit 0, (0x28b2:16)
+	bit 0, (SEQ_METRO_FLAGS:16)
 	jr nz, AccPlayMode_StopExprFull_Process
 	or (0x33de:16), 0x04
 AccPlayMode_StopExprFull_Process:

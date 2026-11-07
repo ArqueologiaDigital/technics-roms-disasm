@@ -123,7 +123,11 @@ record's `+0x0D`: bit 0 stages layer 0 and bit 2 layer 1.  The user kit's 128 re
 is the **key map**: `func_48449462` reads tone record `+0x11` (through `func_484495E8`), and when it is
 below 7 it maps a played key through one of the seven tables `func_48449462_Records`.  This happens
 only when M3 0x2025 is 1, for `KeyZoneNoteResolve` 0x484516EC.  The factory kits use 0..6, and the User
-Kit uses 1, like Standard Kit1.  The other 21 head bytes have no traced reader.
+Kit uses 1, like Standard Kit1.  The other 21 head bytes (lane kn7000-ic21, 2026-11-07, read in MAME while
+the kit played, [`kn7000-ic21/README.md`](kn7000-ic21/README.md)): six modulation routings `{src, dest, depth}`
+at `+0x12 + k*3`, whose dest and depth `TgPartToneModRoutesLoad` 0x4C009C88 hands to `TgPartModConfigStore`
+(the src bytes are not read on the TABLE path), and `+0x24..+0x26`, which `func_48448EA3` copies into its
+tone summary.
 
 **Voice records** (`kn7000/src/include/voice_record.inc`). The 0x8E-byte record of the tone
 generator's voice-resource banks, the same unit `VoiceRecFetchBanked` 0x484496C9 returns and
@@ -133,9 +137,14 @@ layer's sub-record index or 0xFF = none -- bit 0 enables layer 0, bit 2 layer 1,
 this sentence said until 2026-11-06 that the byte itself picks the sub-record), two 0x1C-byte sub-records at `+0x10`
 (`VoiceSubRecFetch`: `+0x10 + n*0x1C`) and two 0x23-byte element records at `+0x48`
 (`TgPartLocalEditElemRecPtr` 0x4C00C2F9). `VOICE_HEAD`, `VOICE_SUB` and `VOICE_ELEM` type each
-part; the sub-record and element fields keep neutral names (offset in the sub-record), since no
-reader of single fields was traced. No floppy lane has typed a KN6000/KN7000 sound file yet; the
-include is meant for those too.
+part.  Since lane kn7000-ic21 (2026-11-07) their fields are named from the routines that read them while
+the user kit plays in MAME (`kn7000-ic21/README.md` section 2, probes in `kn7000-ic21-probes/`): the
+sub-record is one layer of a kit voice -- pan, coarse / fine tune, level and its key curve, the amp EG
+(attack rate and key scaling, two rate / level segments, release rate), the filter (mode, velocity curve
+and sense, cutoff and key follow, level, Q, shape) and two sends; each element layer adds a level and a
+filter offset; the head's three bytes are the voice flags (layers, key-off release), the exclusive group
+and a control sense.  Three sub-record bytes and the element's `+0x03` / `+0x04` are not read.
+The include is also used by the KN6000 `.TM` files (`floppy/tools/kd/kn_soundram.py`).
 
 **One touch settings** (`kn7000/src/include/panel_memory.inc`, shared with the floppy
 describers). Four records of 0xA0 bytes (KN6000: 0x90), one per ONE TOUCH SETTING. The save builds
@@ -406,7 +415,7 @@ above (it was 183 / 2,592,308 before the third round, 679 / 4,179 before lane ic
 
 ## Open questions
 
-State after lane ic21-rest (2026-10-31):
+State after lane kn7000-ic21 (2026-11-07; evidence in [`kn7000-ic21/README.md`](kn7000-ic21/README.md)):
 
 - **BLOCKED** (no image holds one): the 0x42-byte dependency records (five kinds) and the 0x2C8 SOUND
   EDIT records. None of the ten factory banks, nor Felipe's bank and its three KN6000-layout records,
@@ -418,24 +427,24 @@ State after lane ic21-rest (2026-10-31):
   part 3 all 0xFF.
 - **BLOCKED** (no copy of the tool): where the factory sets were made; the residue shows one tool built
   them in sequence, reusing its buffer.
-- Not closed by this lane (firmware tracing still to do; no blocker): the panel-memory fields named only
-  by their parameter id (`m<id>`), see `notes/data-semantics-2026-10-29/kn67-field-names.md`; the voice
-  record's single fields beyond those `voice_record.inc` names, and the custom-sound block's 0x27-byte
-  header; nine of the pad record's thirteen setting bytes.  (Status 2026-11-06, lane kn7000-research2:
-  the header is a TABLE tone head, class `+0x10` and key map `+0x11` traced, 21 bytes unread; the
-  references are per note; the voice record's `+0x0D` bits 0 / 2 enable the two layers; section "The
-  slot record".  The voice record's sub-record and element bytes that `voice_record.inc` leaves by
-  offset are still to trace.  Next step: the TABLE voice's staged record keeps the sub-record at
-  `+0x3C`, the element at `+0x40` and the parameter record at `+0x44` (`TgTableToneStage`).  Follow
-  `TgPitchZoneFold`, `TgVoiceRoutePtrCalc` and `TgTableKeyOffProgram` for the class-0x40 path.  Check in
-  MAME by loading `03custm3` (CUSTOM slot 7), playing its kit, and breaking on `TgTableToneStage`.)  (Status 2026-11-06, lane kn7000-research: the
-pad record's `+0x13`, `+0x18`, `+0x19` and `+0x1A` are traced, section "TPAD"; the TCMP variation
-  bytes `+0x00..+0x02` and `+0x18` / `+0x19`, the style record's `+0x70` and the reader of the part
-  set-up are traced, section "The TCMP style container"; the macros in `src/customdata/customdata.inc`
-  carry the names.  The part set-up's bytes 15..23 have no reader: 0 everywhere.)  The `m<id>` fields
-  whose ids are song-record parameters are named in `presentation-control-probes/song-records.md`
-  section 3 (the firmware's parameter dump, 2026-11-06).
-- The 157 opaque residue bytes above.
+- **Closed** (lane kn7000-ic21): the custom-sound block's fields.  The user kit was played in MAME and every
+  byte the firmware reads has its reader: the voice records' sub-record, element and head fields (section
+  "The slot record"), the TABLE head's modulation routings and `+0x24..+0x26`.  Not read: six `mod<k>_src`
+  bytes of the head, three sub-record bytes, the element's `+0x03` / `+0x04`.
+- **Closed** (lanes kn7000-research and kn7000-ic21): the part set-up's bytes 15..23 have no reader -- not in
+  the code, and not in MAME, where the style and pad players read only the first 15 (0 in all 28,800
+  factory set-ups).  Nine of the pad record's thirteen setting bytes (`s0..s2`, `s4..s7`, `s11`, `s12`)
+  have no reader in the user-pad module and were not read in MAME while a pad played (`PadBindCustom`
+  reads `bars`, `meter`, `flags`; `rec_chord` is read by the user-pad editor).  The macros keep their
+  offset names; next step if wanted: the PAD edit screens' procs.
+- **Open:** the panel-memory fields named only by their parameter id (`m<id>`: `PM_FX` `m008010`,
+  `PM_PART` `p06`, the `organ_nib24` / `25` nibbles; `notes/data-semantics-2026-10-29/kn67-field-names.md`).
+  Next step: in MAME, recall a CUSTOM one-touch setting with a write tap on the live panel record and
+  follow parameter 0x008010 and part byte `+0x06` to their users (`kn7000-ic21/README.md` section 5).  The
+  `m<id>` fields whose ids are song-record parameters are named in
+  `presentation-control-probes/song-records.md` section 3.
+- **Open:** the 157 opaque residue bytes above: splinters of settings and style records cut at both ends,
+  with no donor record that holds the same bytes.
 
 ## Website page draft
 

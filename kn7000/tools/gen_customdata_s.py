@@ -404,7 +404,7 @@ def gen_record(o, d, base, lab, model, place, slot_of, title):
             o.w(f"# of 0x8E bytes (customdata.inc, CSOUND_HEAD)")
             o.w(f"{lab}_{DEP_NAME[k]}:")
             o.emit(None, f"CSOUND_HEAD {qstr(vb[0:16])}, " + ", ".join(f"{x:#04x}" for x in vb[16:0x27]),
-                   vb[0:0x27], "the kit's tone head: name, class 0x40 (TABLE), 22 bytes as every factory kit")
+                   vb[0:0x27], "the kit's tone head: name, class 0x40 (TABLE), key map, six modulation routings, three bytes, as every factory kit")
             for i in range(128):
                 t = vb[0x27 + 3 * i:0x2A + 3 * i]
                 o.emit(None, f"VOICE_REF {t[0]:#04x}, {t[1]:#04x}, {t[2]:#04x}", t, f"note {i}" if i % 16 == 0 else None)

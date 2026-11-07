@@ -872,6 +872,8 @@
 0x4C030ADE  TgTotalLevelCalc_entry
 0x4C030AF2  TgElemNoteOnStd         ; (d0 slot, a0 shadow rec) per-element note-on programmer, standard class (librec+2 bit1): fills the shadow cache -- +0x40 zone word (desc+2 &0xFFF), pitch16 via 0x4C02FB7E then +0x48 pitch18 := ((pitch16+0x1800)<<2)&0x3FFFF (THE pipeline formula), +0x24 level (0x4C02FBE3 &0x7F), effect sends +0x5C/+0x2C from desc2+0x18/+0x19 via curve tables 0x486D1F54/0x486D2154 (skipped when TgTotalLevelCalc >= 0x100), + class-0x04/0x0C global writes
 0x4C030AF7  TgElemNoteOnStd_entry
+0x4C030660  TgVoiceFilterProgram    ; (d0 part, d1 bank, a0 librec, a1 desc2, stack shadow) program a voice's filter from desc2+0x10 bits 0-1 (0 = none): TgPartCutoffResolve(depth desc2+0x14, base desc2+0x12) -> shadow +0x26 bits 8-14; TgPartModSumFilter + librec+0x60 through TgVoiceZoneVeloResolve -> TgVoiceSendWordALevelSet; librec+0x62 -> TgVoiceSendWordBLevelSet; desc2+0x16 bits 6-7 pick the variant; callers TgElemNoteOnStd, 0x4C0043B1, 0x4C00446B, 0x4C00BD96 (VOICE_SUB cutoff / cutoff_key_follow, lane kn7000-ic21)
+0x4C030665  TgVoiceFilterProgram_entry
 0x4C030EC8  TgVoiceKillHandler      ; slot-service class-0x08 handler (d0 slot): clears the lib record's active bit (+8 bit7); when desc+0x0D bit5 is set continues into the 0x50009944 block via 0x4C02FE59 (else plain return)
 0x4C030ECD  TgVoiceKillHandler_entry
 0x4C03100E  TgPitchInitCalc         ; the tg-pitch-pipeline notes' INIT pitch computation (note16 -> pitch16 with zone center/exp, coarse/fine, multisample corr); populates librec +0x0C notePitch16 race-free before the first TG write
@@ -968,12 +970,21 @@
 0x4C02E153  TgPartHoldQuery_entry
 0x4C02E31B  TgPartHoldMark          ; (d0 part, d1 note) the Part-52 mark-only pedal path: note 7 rejected; records the held key in the part's 0x500AD5A8+part*0x10C block for later collection by the pedal-release sweep -- no TG write happens here
 0x4C02E321  TgPartHoldMark_entry
-0x4C02FB7F  TgPitchZoneFold         ; (a0 librec) librec+0x0C := desc+0x0C zone center16; librec+0x0A := (zone4<<8 + zone5 folded by +-0xC00 OCTAVE steps into the sample's mapped key window [desc+9 << 8, (desc+0xA << 8)+0xFF]) -- the multisample octave fold that seeds the pitch pipeline
+0x4C02FB7F  TgPitchZoneFold         ; (a0 librec) the TABLE layer's pitch (only caller TgTableToneStage): librec+0x0C := zone center16 (param rec +0x0C); librec+0x0A := center + desc2 (the 0x1C sub-record) +0x04 signed COARSE TUNE << 8 + 2 * +0x05 signed FINE TUNE, folded by +-0xC00 OCTAVE steps into the sample's mapped key window [param+9 << 8, (param+0xA << 8)+0xFF] (lane kn7000-ic21: sub +0x04 / +0x05 read here in MAME, VOICE_SUB coarse_tune / fine_tune)
 0x4C02FB81  TgPitchZoneFold_entry
 0x4C02FBD3  TgPitchNoteResolve      ; (a0 librec) -> pitch16 (clamped 0..0x7FFF) = librec+0x0A folded zone pitch + (desc+8 bit7: sample corr (librec+0x34)+6) + part word 0x500B5340+part*0x54C+0x64 + master tune 0x500C075C + part offset resolve 0x4C0067D2 -- the tg-pitch-pipeline notes' pitch16 producer for TgElemNoteOnStd
 0x4C02FBD8  TgPitchNoteResolve_entry
-0x4C02FC38  TgLevelResolve          ; (a0 librec, a1 vel ptr) -> 0..0x7F note level: part state 0x500B5340+part*0x54C+0x1D in 1..3 with flags bit0 -> 0 (muted) / bit1 -> 0x7F (solo); part-link flag (+0xD0 of the 0x54-scaled sub-rec, bit1) -> borrow the linked part's level byte +0xCD; else 0x4C006A17(part) + velocity + (partrec+0x0A - 0x40) expression sum, clamped
+0x4C02FC38  TgLevelResolve          ; (a0 librec, a1 vel ptr) -> 0..0x7F note level: part state 0x500B5340+part*0x54C+0x1D in 1..3 with flags bit0 -> 0 (muted) / bit1 -> 0x7F (solo); part-link flag (+0xD0 of the 0x54-scaled sub-rec, bit1) -> borrow the linked part's level byte +0xCD; else 0x4C006A17(part) + velocity + (partrec+0x0A - 0x40) expression sum, clamped -- lane kn7000-ic21 (2026-11-07): what it resolves is the voice's PAN: on the TABLE path *a1 is the sub-record's +0x00 (VOICE_SUB pan, observed in MAME), whose archive values are drum-kit pan positions (bass drum 64, snare 76, hi-hat 88, ride 40); partrec+0x0A is reset to 0x40 by the part init (0x4C009629) and enters as +0x0A - 0x40; the two forced values 0 / 0x7F are hard left / right.  Name kept (it reaches kn2400 and the probes of other lanes)
 0x4C02FC3D  TgLevelResolve_entry
+0x4C02FDEE  TgVoiceLevelTermCalc    ; (a0 librec) the level term of a voice from desc2 (librec+0x3C) +0x06: librec+0x12 level base + value - 100, -0x200 (silent) when 0; then + the part's per-note offset (0x4C0071BC / 0x4C007192) -> TgLevelTermFinalize; callers TgElemNoteOnStd's class-8 tail and 0x4C004251 / 0x4C00BF08 (VOICE_SUB level, lane kn7000-ic21)
+0x4C02FDF3  TgVoiceLevelTermCalc_entry
+0x4C02FE54  TgTableAmpAttackRateCalc ; (d0, a0 desc2) -> 0..0xFF amp-EG attack rate of a TABLE layer: curve ROM 0x486D25E4[desc2+0x09] (the attack curve of TgAmpEgAttackRateCalc) + signed key scaling desc2+0x0F * 0x486D13D4[note] >> 4 (0x486D1354 when negative); callers TgElemNoteOnStd and 0x4C00BDE8 (VOICE_SUB aeg_attack_rate / aeg_attack_key)
+0x4C02FE56  TgTableAmpAttackRateCalc_entry
+0x4C02FEB3  TgTableKeyOffRelease    ; (a0 desc2, a1 out [rate|lvl]x2) the key-off release of a TABLE voice whose head +0x0D has bit 5: rate desc2+0x0E through curve ROM 0x486D2649, levels 0x80 / 0; called only by TgVoiceKillHandler (VOICE_SUB aeg_release_rate)
+0x4C02FED1  TgVeloSenseApply        ; (d0 base, a0 librec, a1 desc2) -> clamp(base + curve[(desc2+0x10) >> 5][librec+0x10 velocity] * (s8)desc2+0x11 >> 5, 0..0x7F): curves ROM 0x486D2264 + n*0x80; unchanged base when +0x11 is 0 (VOICE_SUB filter_flags bits 5-7 / filter_velo_sense)
+0x4C02FED3  TgVeloSenseApply_entry
+0x4C02FF21  TgTableFilterLevelCalc  ; (d0 part, a0 librec, a1 desc2) -> the filter level of a TABLE layer: 0x4C0146D3(part, 0) + the layer's signed +4 (element (librec+0x40)+5+zone*5 +4) + desc2+0x13 & 0x7F, through TgVeloSenseApply; func_4C02FFD4 stores it in librec+0x60 (VOICE_SUB filter_level, VOICE_ELEM l<k>_filter_ofs)
+0x4C02FF26  TgTableFilterLevelCalc_entry
 0x4C03A7D3  TgNodeRingSeed          ; (a0 node, a1 head ptr) start a class ring with a single node (self-linked +0/+4)
 0x4C03A7D5  TgNodeRingSeed_entry
 0x4C03A7E7  TgNodeRingInsert        ; (a0 node, a1 before) link the node into a class ring before `before` (+0/+4 links)
@@ -1484,6 +1495,8 @@
 0x4C005FC7  TgPartModDepthDefaultSet_entry
 0x4C006095  TgPartModConfigStore    ; STORE-ONLY twin of TgPartModConfigSet (own 46-entry jump table 0x48586658, same partrec targets, no voice re-collect/re-apply) -- the bulk/preset-load path
 0x4C00609A  TgPartModConfigStore_entry
+0x4C009CE2  TgPartToneModRoutesLoad ; (d0 part) load the part's tone head (tone block 0x500CE404+part*0x130) modulation routings into the part: a TABLE head (class 0x40) has six {src, dest, depth} groups at +0x12 + k*3, any other head eight at +0x13 + k*3 (the last two with flag 1); each dest / depth goes to TgPartModConfigStore; then 0x4C007AF7; called after TgPartLocalEditClear (CSOUND_HEAD mod<k>_dest / mod<k>_depth, observed in MAME, lane kn7000-ic21)
+0x4C009CE7  TgPartToneModRoutesLoad_entry
 0x4C00638D  TgPartModConfigSet      ; THE MOD-MATRIX SETTER (read side = TgPartModSumPitch..Dest40): param byte &0x7F in 1..0x2E indexes the 46-entry jump table 0x48586710; each case scales the value (TgModValueScale*/0x4C0057xx) into partrec 0x500B5340+part*0x54C +0x66+dest*0xC+src*2 (value) / +0x6C+... (depth), then re-collects the part's voices and re-applies; the mask cases call TgPartModDestEnableUpdate to rebuild partrec+0x52C
 0x4C006393  TgPartModConfigSet_entry
 
@@ -3073,6 +3086,8 @@
 0x4843408A  PadBindBuiltin_entry
 0x48434110  PadBindUser            ; the TPAD twin: set-ups +0x28 stride 0x18, 0x50122E04..06 := +0x18..+0x1A
 0x48434115  PadBindUser_entry
+0x48434198  PadBindCustom           ; the CUSTOM-style twin of PadBindUser (PadSelectById leaves 0x200000 in 0x50122DD8 for an id with 0x200000 set: the selected CUSTOM slot's "TPAD", CustomStyleBlockFetchCur): name, set-ups +0x28 stride 0x18, 0x50122E04..06 := +0x18..+0x1A, the stream through func_4844145C; observed in MAME reading 03custm3 slot 7's pads (lane kn7000-ic21)
+0x4843419D  PadBindCustom_entry
 0x484343F9  PadCurLoopGet          ; 0x50122E06 & 1 -- retf leaf
 0x48434406  PadCurSynchroGet       ; 0x50122E06 & 2 -- retf leaf
 0x48434413  PadCurFlag2Get         ; 0x50122E06 & 4 [INFERENCE: fixed-chord pad]; RhyNoteOnVoice, PadRecPtChdGrid, PadPartSetGrid1/2 -- retf leaf

@@ -5,8 +5,8 @@
 # scripts/analysis/l2_symbol_reference.py --regen
 # Do not hand-edit: rename in the sources and regenerate.
 #
-#   symbols .................. 54,081
-#   semantic names ........... 53,791 (99.5%)
+#   symbols .................. 54,094
+#   semantic names ........... 53,804 (99.5%)
 #   positional names ......... 290
 #
 LED_patterns_indicating_firmware_version 00E00000
@@ -15989,6 +15989,19 @@ Sprintf_TypeSwitch 00EED878
 Sprintf_HexDigitsLower 00EED8A4
 Sprintf_HexDigitsUpper 00EED8B6
 WorkRamInit_Image 00EED8C8
+CmpRealScreen_AcCmpRecBox 00EEDB58
+CmpRealScreen_AcCmpRecBox_2 00EEDB7E
+CmpRealScreen_AcCmpRecBox_3 00EEDBA4
+CmpRealScreen_AcCmpRecBox_4 00EEDBCA
+CmpRealScreen_AcCmpRecBox_5 00EEDBF0
+CmpNcpScreen_PsCmpCpFPtnBox 00EEDC16
+CmpNcpScreen_PsNameMemBox 00EEDC3A
+CmpNcpScreen_AcMemNoBox 00EEDC5E
+CmpNcpScreen_PsCmpCpFGrpBox 00EEDC82
+CmpNcpScreen_PsCmpCpFVariBox 00EEDCA6
+S2CScreen_PsS2cTransBox 00EEDCCA
+S2CScreen_PsS2cFmeasBox 00EEDCEE
+S2CScreen_PsS2cLmeasBox 00EEDD12
 RamInit_NumStrPtrs 00EEDD36
 RamInit_NoteNamePtrs 00EEDD6A
 RamInit_DisableEnablePtrs 00EEDD9A
@@ -29341,16 +29354,16 @@ SeqAccomp_OtherActivate 00F462B8
 SeqAccomp_SendVoiceAndReturn 00F462C0
 SeqAccomp_OtherSetBit 00F462C6
 SeqAccomp_PostModeAndInit 00F462CD
-NoteEditSy_ModeScroll 00F462D3
-NoteEdit_ScrollToggle 00F462E2
-NoteEdit_ScrollSetZero 00F462F0
-NoteEdit_ScrollDispatchMode 00F462F5
+ApPlaySyori_OnSetMetro 00F462D3
+ApPlaySyori_OnSetMetro_Refuse 00F462E2
+ApPlaySyori_OnSetMetro_RefuseOff 00F462F0
+ApPlaySyori_OnSetMetro_Redraw 00F462F5
 NoteEdit_ScrollCallReset 00F46301
-NoteEdit_ScrollCheck86 00F46306
-NoteEdit_ScrollCheck87 00F46313
-NoteEdit_ScrollCheck88 00F46320
-NoteEdit_ScrollInactive 00F4632D
-NoteEdit_ScrollActivate 00F4633D
+ApPlaySyori_OnSetMetro_Redraw86 00F46306
+ApPlaySyori_OnSetMetro_Redraw87 00F46313
+ApPlaySyori_OnSetMetro_Redraw88 00F46320
+ApPlaySyori_OnSetMetro_Store 00F4632D
+ApPlaySyori_OnSetMetro_StoreOn 00F4633D
 SeqAccomp_InitAndReturn 00F46352
 NoteEditSy_ModeScrollReturn 00F46358
 NoteEdit_ReturnSetZero 00F4636E

@@ -93,7 +93,7 @@ SeqAcc_InitAndDispatch:
 	ldw	(SEQ_START_MEASURE:16), 1
 	set	1, (8964:16)
 	res	3, (SEQ_RTMCFG:16)
-	set	4, (0x2897:16)
+	set	4, (SEQ_CONTROL_FLAGS:16)
 	call AccWrap_PlayModeDispatch
 	jp SeqBuffer_ClearAndInitIteration
 
@@ -340,11 +340,11 @@ SeqPlay_DeactivateParts_LoopNext:
 SeqPlay_ResetPlaybackState:
 	ld	(SEQ_PLAY_FLAGS:16), 0
 	ldw	(SEQ_RECORDED_TRACKS:16), 0
-	ld	a, (0x2896:16)
+	ld	a, (SEQ_METRO_FLAGS:16)
 	res 2, a
 	res 1, a
 	res 7, a
-	ld	(0x2896:16), a
+	ld	(SEQ_METRO_FLAGS:16), a
 	bit 0, (0xf23c:16)
 	jr z, SeqPlay_InitTempoAndActivateParts
 	ld wa, (SEQ_PUNCH_IN_MEASURE:16)
@@ -358,19 +358,19 @@ SeqPlay_InitTempoAndActivateParts:
 	cp	wa, 0:i3
 	jr	z, SeqPlay_InitAccAndSetMode
 	or	(SEQ_TRACK_MASK:16), wa
-	set	3, (10391:16)
+	set	3, (SEQ_CONTROL_FLAGS:16)
 	call	Audio_CheckSubsystemReady
 	set	0, (SEQ_PLAY_FLAGS:16)
-	ldb_d8	a, (10390)
+	ldb_d8	a, (SEQ_METRO_FLAGS)
 	bit	0, a
 	jr	z, SeqPlay_InitAccAndSetMode
 	set	1, a
-	ld	(0x2896:16), a
+	ld	(SEQ_METRO_FLAGS:16), a
 	ldmm16	9008, SEQ_START_MEASURE
 SeqPlay_InitAccAndSetMode:
 	call SeqAcc_InitPlaybackState
 	ld a, 0xc:opc
-	bit	0, (0x2896:16)
+	bit	0, (SEQ_METRO_FLAGS:16)
 	jr nz, SeqPlay_InitAccAndSetMode_StoreState
 	ld a, 0xb:opc
 
@@ -406,13 +406,13 @@ SeqPlay_DecPunchInMeasure_Skip3:
 	jrl	SeqAcc_SetupRepeatCount
 ; SeqPlay_UpdateStartFromPunchIn: After the punch-in measure (0xF238, the "P" in-measure of MT_GetPInMeasString) has
 ;   changed, recomputes the playback start measure (words 0x2668 and 0x26EC) as punch-in minus the count in 0xF23F,
-;   first clamping 0xF23F to punch-in - 1 (0x28C3, SeqAcc_UpdateEndPosition); with bit 0 of 0x28B2 set, punch-in 2
+;   first clamping 0xF23F to punch-in - 1 (0x28C3, SeqAcc_UpdateEndPosition); with bit 0 of SEQ_METRO_FLAGS set, punch-in 2
 ;   instead gives start 0x8002 and 0xF23F = 3, punch-in 3 gives start 1 and 0xF23F = 2, and punch-in 1 leaves both
 ;   alone. Basis: callers + body -- SeqPlay_DataBlock_BBE (play-screen case 8) calls it after incrementing 0xF238,
 ;   SeqPlay_IncPunchOutMeasure (case 9, punch-out up) after pulling 0xF238 below 0xF23A;
 ;   SeqAcc_StartPlaybackFromPosition does the same subtraction when playback starts.
 SeqPlay_UpdateStartFromPunchIn:
-	bit	0, (10390:16)
+	bit	0, (SEQ_METRO_FLAGS:16)
 	jr	z, SeqPlay_UpdateStartFromPunchIn_Skip2
 	ldw_d16	wa, (SEQ_PUNCH_IN_MEASURE)
 	cp	wa, 2:i3
@@ -442,13 +442,13 @@ SeqPlay_UpdateStartFromPunchIn_Skip2:
 	ld	(9938:16), wa
 	ret
 ; SeqPlay_UpdateStartFromPunchInDown: Step-down counterpart of SeqPlay_UpdateStartFromPunchIn: recomputes the playback
-;   start words 0x2668 / 0x26EC after the punch-in measure 0xF238 went down -- with bit 0 of 0x28B2 set, punch-in 1
+;   start words 0x2668 / 0x26EC after the punch-in measure 0xF238 went down -- with bit 0 of SEQ_METRO_FLAGS set, punch-in 1
 ;   gives start 0x8002 and count-in 0xF23F = 2, punch-in 2 gives 0x2668 = 2, 0x26EC = 0x8002 and 0xF23F = 3; otherwise
 ;   it clamps the count-in to punch-in - 1 (0x28C3, SeqAcc_UpdateEndPosition) and sets start = punch-in - count-in.
 ;   Basis: callers + body -- SeqPlay_DecPunchInMeasure and SeqPlay_DecPunchOutMeasure call it after lowering 0xF238;
 ;   their headers already call it the step-down counterpart.
 SeqPlay_UpdateStartFromPunchInDown:
-	bit	0, (10390:16)
+	bit	0, (SEQ_METRO_FLAGS:16)
 	jr	z, SeqPlay_UpdateStartFromPunchInDown_Skip2
 	ldw_d16	wa, (SEQ_PUNCH_IN_MEASURE)
 	cp	wa, 1:i3
@@ -523,10 +523,10 @@ SeqPlay_DecPunchOutMeasure_Join2:
 ; SeqPlay_IncPunchCountIn: Parameter 10 up on the sequencer play screen: increments the punch count-in 0xF23F
 ;   (MT_GetPCntInString), capped at 997, clamps it to punch-in - 1 (0x28C3, SeqAcc_UpdateEndPosition), sets the
 ;   playback start words 0x2668 / 0x26EC = punch-in - count-in and tail-jumps to SeqAcc_SetupRepeatCount; with bit 0
-;   of 0x28B2 set and punch-in <= 2 it does nothing. Basis: callers + body -- SeqAccomp_ParamDelivery_IncPInPOutPCntIn
+;   of SEQ_METRO_FLAGS set and punch-in <= 2 it does nothing. Basis: callers + body -- SeqAccomp_ParamDelivery_IncPInPOutPCntIn
 ;   calls it for parameter 10 ("P count-in 0xF23F").
 SeqPlay_IncPunchCountIn:
-	bit	0, (10390:16)
+	bit	0, (SEQ_METRO_FLAGS:16)
 	jr	z, SeqPlay_IncPunchCountIn_Skip3
 	cpw	(SEQ_PUNCH_IN_MEASURE:16), 2
 	ret	ule
@@ -550,7 +550,7 @@ SeqPlay_IncPunchCountIn_Join3:
 	ld	(9938:16), wa
 	jrl	SeqAcc_SetupRepeatCount
 SeqPlay_DecPunchCountIn:
-	bit	0, (10390:16)
+	bit	0, (SEQ_METRO_FLAGS:16)
 	jr	z, SeqPlay_DecPunchCountIn_Skip4
 	cpw	(SEQ_PUNCH_IN_MEASURE:16), 2
 	ret	ule
@@ -760,7 +760,7 @@ SeqAcc_ProcessTempo_NextPart:
 	ldw_d16	wa, (10548)
 	or	(SEQ_TRACK_MASK:16), wa
 	call	Audio_CheckSubsystemReady
-	set	4, (10391:16)
+	set	4, (SEQ_CONTROL_FLAGS:16)
 	res	3, (SEQ_RTMCFG:16)
 	ldw	wa, 35
 	call	SoundCtrl_SaveAndSendCmd_EE
@@ -774,7 +774,7 @@ SeqAcc_ProcessTempo_NoActiveParts:
 
 	call	Audio_CheckSubsystemReady
 
-	set	4, (0x2897:16)
+	set	4, (SEQ_CONTROL_FLAGS:16)
 
 	res	3, (SEQ_RTMCFG:16)
 
@@ -823,7 +823,7 @@ SeqPlay_SendStopAndClearParts:
 
 	call Audio_CheckSubsystemReady
 
-	set	4, (0x2897:16)
+	set	4, (SEQ_CONTROL_FLAGS:16)
 
 	res	3, (SEQ_RTMCFG:16)
 
@@ -840,13 +840,13 @@ SeqPlay_FinalCleanupAndReset:
 	ld wa, 0:i3
 	call BitMapOut_PrepareAndRender
 SeqPlay_FinalCleanup_ClearFlags:
-	res	3, (0x2897:16)
+	res	3, (SEQ_CONTROL_FLAGS:16)
 
 	call	Audio_CheckSubsystemReady
 
 	ld	(SEQ_PLAY_FLAGS:16), 0
 
-	ld	a, (0x2896:16)
+	ld	a, (SEQ_METRO_FLAGS:16)
 
 	res 7, a
 
@@ -854,7 +854,7 @@ SeqPlay_FinalCleanup_ClearFlags:
 
 	res 2, a
 
-	ld	(0x2896:16), a
+	ld	(SEQ_METRO_FLAGS:16), a
 
 	ret
 
@@ -1213,7 +1213,7 @@ SeqPlay_ReactivatePartsAndResume:
 
 	pushw_erp 0xfa
 
-	res	3, (0x2897:16)
+	res	3, (SEQ_CONTROL_FLAGS:16)
 
 	call	Audio_CheckSubsystemReady
 
@@ -1256,7 +1256,7 @@ SeqPlay_Reactivate_LoopNext:
 	ret
 
 SeqAcc_InitPlaybackState:
-	res	5, (0x2897:16)
+	res	5, (SEQ_CONTROL_FLAGS:16)
 	ldw wa, 0x32
 	call SeqNotePool_Init
 	res 0, (1115:16)
@@ -1275,7 +1275,7 @@ SeqAcc_InitPlaybackState:
 SeqAcc_InitPlayback_HasActiveVoices:
 	bit	1, (ACC_RUN_FLAGS:16)
 	jr	z, SeqAcc_InitPlayback_FindVoices
-	set	4, (10391:16)
+	set	4, (SEQ_CONTROL_FLAGS:16)
 	jrl	SeqAcc_InitPlayback_ReturnZero
 SeqAcc_InitPlayback_FindVoices:
 	ld wa, 0:i3
@@ -1493,7 +1493,7 @@ SeqPlay_RestartWithVoiceConfig_Skip4:
 	jrl	z, SeqPlay_PopIzSkip6Ret
 	cpw	(SEQ_REC_TRACKS:16), 0
 	jr	z, SeqPlay_RestartWithVoiceConfig_Skip5
-	bit	0, (10390:16)
+	bit	0, (SEQ_METRO_FLAGS:16)
 	jrl	nz, SeqPlay_PopIzSkip6Ret
 SeqPlay_RestartWithVoiceConfig_Skip5:
 	ld	wa, 0:i3
@@ -2008,7 +2008,7 @@ SeqPlay_IncrLoopCounter:
 	ret
 
 SeqPlay_InitFromDemoRecord:
-	res	5, (0x2897:16)
+	res	5, (SEQ_CONTROL_FLAGS:16)
 	ldw	(8998:16), 0
 	res	0, (0x288a:16)
 	call AccWrap_PositionClear
@@ -2118,7 +2118,7 @@ SeqPlay_InitDemo_PartLoopNext:
 
 SeqPlay_InitializePlayback:
 	push QIZ
-	res	5, (0x2897:16)
+	res	5, (SEQ_CONTROL_FLAGS:16)
 	ld	(0x1d8e:16), 0x00
 	ld a, (CURRENT_TITLE:16)
 	cp A,0x87
@@ -2150,7 +2150,7 @@ SeqPlay_FindVoicesAndReturn:
 SeqPlay_InitFreshPlayback:
 	calr SeqAcc_InitPlaybackState
 
-	ld	a, (0x2896:16)
+	ld	a, (SEQ_METRO_FLAGS:16)
 
 	res 2, a
 
@@ -2158,9 +2158,9 @@ SeqPlay_InitFreshPlayback:
 
 	res 7, a
 
-	ld	(0x2896:16), a
+	ld	(SEQ_METRO_FLAGS:16), a
 
-	res	3, (0x2897:16)
+	res	3, (SEQ_CONTROL_FLAGS:16)
 
 	call	Audio_CheckSubsystemReady
 
@@ -2206,14 +2206,14 @@ SeqPlay_InitFresh_PartLoopNext:
 	inc	1, c
 	cp	l, 16
 	jr	ule, SeqPlay_InitFresh_PartClearLoop
-	ld	a, (10390:16)
+	ld	a, (SEQ_METRO_FLAGS:16)
 	bit	0, a
 	jr	z, SeqPlay_InitFresh_SetPosition
 	set	1, a
-	ld	(10390:16), a
+	ld	(SEQ_METRO_FLAGS:16), a
 	ld	wa, (SEQ_START_MEASURE:16)
 	ld	(9008:16), wa
-	set	3, (10391:16)
+	set	3, (SEQ_CONTROL_FLAGS:16)
 	call	Audio_CheckSubsystemReady
 SeqPlay_InitFresh_SetPosition:
 	ldw	(9002:16), 0
@@ -2227,7 +2227,7 @@ SeqPlay_InitFresh_SetPosition:
 	call	SeqMode_SendStatusUpdate
 	cpw	(SEQ_TRACK_MASK:16), 0
 	jr	z, SeqPlay_InitFresh_NoVoices
-	set	3, (10391:16)
+	set	3, (SEQ_CONTROL_FLAGS:16)
 	call	Audio_CheckSubsystemReady
 	jr	SeqPlay_InitFresh_TempoInit
 SeqPlay_InitFresh_NoVoices:
@@ -2242,7 +2242,7 @@ SeqPlay_InitFresh_TempoInit:
 	call	Audio_CheckSubsystemReady
 	call	TempoRingBuf_Init
 	call	BitMapOut_ComputeRegionDelta
-	bit	0, (10390:16)
+	bit	0, (SEQ_METRO_FLAGS:16)
 	jr	nz, SeqPlay_InitFresh_State8orC
 	cpw	(SEQ_TRACK_MASK:16), 0
 	jr	z, SeqPlay_InitFresh_StateB
@@ -2268,11 +2268,11 @@ SeqPlay_InitFresh_Return:
 SeqPlay_InitResumePlayback:
 	push xiz
 	calr SeqAcc_InitPlaybackState
-	ld	a, (0x2896:16)
+	ld	a, (SEQ_METRO_FLAGS:16)
 	res 2, a
 	res 1, a
 	res 7, a
-	ld	(0x2896:16), a
+	ld	(SEQ_METRO_FLAGS:16), a
 	cpw	(SEQ_REC_TRACKS:16), 0
 	jrl z, SeqPlay_InitResume_Return
 	ldmm16	8992, SEQ_BEAT_COUNT
@@ -2302,19 +2302,19 @@ SeqPlay_InitResume_LoopNext:
 	inc1b_erp 0xfb
 	cp_erpb 0xfb, 0x10
 	jr ule, SeqPlay_InitResume_PartLoop
-	ld	a, (0x2896:16)
+	ld	a, (SEQ_METRO_FLAGS:16)
 	ld c, a
 	res 1, c
 	ld a, c
-	ld	(0x2896:16), c
+	ld	(SEQ_METRO_FLAGS:16), c
 	bit 0, c
 	jr z, SeqPlay_InitResume_SetFlags
 	set 1, a
-	ld	(0x2896:16), a
+	ld	(SEQ_METRO_FLAGS:16), a
 	ld	wa, (SEQ_START_MEASURE:16)
 	ld	(9008:16), wa
 SeqPlay_InitResume_SetFlags:
-	set	3, (10391:16)
+	set	3, (SEQ_CONTROL_FLAGS:16)
 	call	Audio_CheckSubsystemReady
 	ldmm16	9002, SEQ_BEAT_COUNT
 	call	NoteEditSy_SendModeScrollReset
@@ -2335,7 +2335,7 @@ SeqPlay_InitResume_SetFlags:
 	extz	wa
 	ld	bc, 1:i3
 	call	Chan_SetActiveBit
-	bit	0, (10390:16)
+	bit	0, (SEQ_METRO_FLAGS:16)
 	jr	nz, SeqPlay_InitResume_State10or14
 	cp	iz, 0:i3
 	jr	z, SeqPlay_InitResume_State0F
@@ -2381,7 +2381,7 @@ SeqPlay_FindSpecialVoices:
 SeqPlay_ClearPositionAndFlags:
 	ld	(7518:16), 0
 	ldw	(9000:16), 0
-	res	1, (0x2897:16)
+	res	1, (SEQ_CONTROL_FLAGS:16)
 	ret
 
 SeqPlay_SaveAndPrepareState:
@@ -2390,33 +2390,33 @@ SeqPlay_SaveAndPrepareState:
 	ldfr_berp L, 0xfb
 	cpib_erp 0xfb, 0
 	jr z, SeqPlay_SaveState_CheckActive
-	res	1, (0x2897:16)
+	res	1, (SEQ_CONTROL_FLAGS:16)
 	jr SeqPlay_ReassignVoicesAlt
 
 SeqPlay_SaveState_CheckActive:
 	bit	0, (SEQ_PLAY_FLAGS:16)
 	jr	z, SeqPlay_SaveState_NoActiveParts
-	res	1, (10391:16)
+	res	1, (SEQ_CONTROL_FLAGS:16)
 	ldb_d8	a, (8950)
 	extz	wa
 	lda	xbc, (SeqPlay_SaveAndPrepareState_Table:24)
 	ld	(8950), (xbc+wa)
 	bit	0, (62012:16)
 	jr	nz, SeqPlay_ReassignVoicesAlt
-	res	3, (10391:16)
+	res	3, (SEQ_CONTROL_FLAGS:16)
 	call	Audio_CheckSubsystemReady
 	jr	SeqPlay_ReassignVoicesAlt
 SeqPlay_SaveState_NoActiveParts:
-	res	3, (10391:16)
+	res	3, (SEQ_CONTROL_FLAGS:16)
 	call	Audio_CheckSubsystemReady
-	bit	1, (10391:16)
+	bit	1, (SEQ_CONTROL_FLAGS:16)
 	jr	nz, SeqPlay_SaveState_CheckBit1
-	bit	0, (10390:16)
+	bit	0, (SEQ_METRO_FLAGS:16)
 	jr	z, SeqPlay_SaveState_CheckBit1
 	ldmm16	SEQ_START_MEASURE, 9008
 	call	NoteEditSy_SendModeScrollReset
 SeqPlay_SaveState_CheckBit1:
-	bit	1, (0x2897:16)
+	bit	1, (SEQ_CONTROL_FLAGS:16)
 	jr nz, SeqPlay_SaveState_SetPlayFlags
 	calr SeqPlay_ReassignVoiceChannels
 	ldfr_berp L, 0xfb
@@ -2441,11 +2441,11 @@ SeqPlay_SaveState_SetPlayFlags:
 	ldb_d8	c, (8964)
 	set	0, c
 	ld	(0x2304:16), c
-	ldb_d8	a, (10391)
+	ldb_d8	a, (SEQ_CONTROL_FLAGS)
 	bit	1, a
 	jr	z, SeqPlay_SaveState_CheckVoices
 	res	1, a
-	ld	(0x2897:16), a
+	ld	(SEQ_CONTROL_FLAGS:16), a
 	jrl	SeqPlay_ReturnFalse
 SeqPlay_SaveState_CheckVoices:
 	res 1, c
@@ -2456,7 +2456,7 @@ SeqPlay_SaveState_CheckVoices:
 	jrl z, SeqPlay_ReturnFalse
 
 SeqPlay_SaveState_CheckChordVoice:
-	bit	0, (0x2896:16)
+	bit	0, (SEQ_METRO_FLAGS:16)
 	jrl nz, SeqPlay_ReturnFalse
 	ld	e, (8990:16)
 	cp e, 0xff
@@ -2540,7 +2540,7 @@ SeqPlay_PreparePlaybackState:
 	ld (SEQ_ACTIVE_PARTS:16), wa
 	bit	0, (SEQ_PLAY_FLAGS:16)
 	jr z, .Lc_f3a09a
-	bit	0, (0x2896:16)
+	bit	0, (SEQ_METRO_FLAGS:16)
 	jr z, .Lc_f3a09a
 	ldmm16	SEQ_START_MEASURE, 0x2330
 	call NoteEditSy_SendModeScrollReset
@@ -2696,14 +2696,14 @@ SeqPlay_StopAndCleanup:
 	call	BitMapOut_PrepareAndDisplay
 	call	AccompSeq_StopSequence
 	call	AccWrap_PlayModeDispatch
-	ld	a, (10390:16)
+	ld	a, (SEQ_METRO_FLAGS:16)
 	res	2, a
 	res	1, a
-	ld	(10390:16), a
+	ld	(SEQ_METRO_FLAGS:16), a
 	ldw	(SEQ_REC_TRACKS:16), 0
 	call	Audio_CheckSubsystemReady
 	ldw	(SEQ_ACTIVE_PARTS:16), 0
-	res	3, (10391:16)
+	res	3, (SEQ_CONTROL_FLAGS:16)
 	call	Audio_CheckSubsystemReady
 	call	SeqBuffer_ClearAndInitIteration
 	call	Audio_CheckSubsystemReady
@@ -2747,10 +2747,10 @@ SeqPlay_ProcessVoice_RepeatPath:
 SeqPlay_ProcessVoice_Cleanup:
 	ld	(7518:16), 0
 	ldw	(SEQ_ACTIVE_PARTS:16), 0
-	ld	a, (10390:16)
+	ld	a, (SEQ_METRO_FLAGS:16)
 	res	2, a
 	res	1, a
-	ld	(10390:16), a
+	ld	(SEQ_METRO_FLAGS:16), a
 	call	AccompSeq_StopSequence
 	call	AccWrap_PlayModeDispatch
 	call	AccWrap_DispatchAndWaitSync
@@ -3395,7 +3395,7 @@ SeqNote_ProcessNoteOn:
 	jrl SeqNote_ProcessNoteOn_Return
 
 SeqNote_NoteOn_HasParts:
-	bit	5, (0x2897:16)
+	bit	5, (SEQ_CONTROL_FLAGS:16)
 	jr z, SeqNote_NoteOn_CheckRepeat
 	ei 6
 	ld a, (SEQ_BEAT_TICK:16)
@@ -4838,7 +4838,7 @@ AccPedalCfg_CheckBit6Replay:
 	jr	z, AccPedalCfg_CheckBit7Alt
 	cp	(ACTIVE_TITLE:16), 129
 	jr	nz, AccPedalConfig_ApplyChannelSettings
-	bit	5, (10391:16)
+	bit	5, (SEQ_CONTROL_FLAGS:16)
 	jr	z, AccPedalConfig_ApplyChannelSettings
 	res_erpb	251, 6	; res 0x06,qizh
 AccPedalConfig_ApplyChannelSettings:
@@ -5065,7 +5065,7 @@ SeqNote_UpdatePlayPosition_B:
 	ld (xsp + 2), xwa
 	bit 2, (ACC_TRANSPORT_STATE:16)
 	jr z, SeqNote_StackCleanupRet
-	bit	1, (0x2896:16)
+	bit	1, (SEQ_METRO_FLAGS:16)
 	jr nz, SeqNote_StackCleanupRet
 	ei 6
 	ld a, (xsp)
@@ -6818,13 +6818,13 @@ NotePool_DataBlock_890:
 	cp	a, 0:i3
 	ret	nz
 	ldb_d8	a, (SWBTWR_PAYLOAD_1)
-	bit	5, (10391:16)
+	bit	5, (SEQ_CONTROL_FLAGS:16)
 	ret	z
 	cp	a, 4:i3
 	ret	nz
 	calr	SeqPlay_HandlePlaybackEvent
 	call	VoiceAlloc_TestBitRead
-	res	5, (10391:16)
+	res	5, (SEQ_CONTROL_FLAGS:16)
 	ret
 NotePool_DataBlock_8BA:
 	bit	7, (8952:16)
@@ -6899,7 +6899,7 @@ SeqPlay_CheckStart_TestSysFlag:
 	ret
 
 SeqPlay_CheckStart_TestBit5:
-	bit	5, (0x2897:16)
+	bit	5, (SEQ_CONTROL_FLAGS:16)
 	jr z, SeqStart_CheckActiveParts
 	res 7, a
 	ld	(8952:16), a
@@ -7025,7 +7025,7 @@ Seq_ResetAndRestartAccompaniment:
 	res	0, (0x288a:16)
 	res	1, (0x33c2:16)
 	res	3, (SEQ_RTMCFG:16)
-	res	2, (0x2897:16)
+	res	2, (SEQ_CONTROL_FLAGS:16)
 	cp (CURRENT_MODE:16), 0x13
 	jr nz, Seq_ResetRestart_NormalPath
 	ld	(0x1d8e:16), 0x01
@@ -7060,7 +7060,7 @@ SeqPlay_StopReset_NotPlaying:
 SeqPlay_StopReset_DispatchAccomp:
 	call AccWrap_PlayModeDispatch
 SeqPlay_StopReset_CleanupAll:
-	res	5, (10391:16)
+	res	5, (SEQ_CONTROL_FLAGS:16)
 	ldw	wa, 50
 	call	SeqBuf_WriteNoteOffEntry
 	call	NoteMap_SendAllNotesOff
@@ -7072,10 +7072,10 @@ SeqPlay_StopReset_CleanupAll:
 	res	3, (SEQ_RTMCFG:16)
 	ldw	(SEQ_START_MEASURE:16), 1
 	ldw	(SEQ_ACTIVE_PARTS:16), 0
-	ld	a, (10391:16)
+	ld	a, (SEQ_CONTROL_FLAGS:16)
 	set	4, a
 	set	2, a
-	ld	(10391:16), a
+	ld	(SEQ_CONTROL_FLAGS:16), a
 	ld	(8950:16), 0
 	cp	(CURRENT_MODE:16), 19
 	ret	nz
@@ -10377,7 +10377,7 @@ SeqAllocBuf_ResetStartState:
 	jr SeqPlay_ResetStartState
 
 SeqPlay_InitStartState:
-	set	4, (0x2897:16)
+	set	4, (SEQ_CONTROL_FLAGS:16)
 	set	2, (SEQ_RTMCFG:16)
 	ld	(9482:16), 1
 	cpw	(SEQ_START_MEASURE:16), 1
@@ -10421,7 +10421,7 @@ SeqInitStart_SetPreroll:
 	jr SeqInitStart_ClearBit3
 
 SeqPlay_ResetStartState:
-	res	4, (0x2897:16)
+	res	4, (SEQ_CONTROL_FLAGS:16)
 	ld	(0x1d5a:16), 0x00
 	ld	(0x250a:16), 0x00
 	cp (CURRENT_TITLE:16), 0x8e
@@ -10870,11 +10870,11 @@ SeqVoiceSingle_LookupAndApply:
 	call	AddswbWr
 	ret
 SeqNotify_DataBlock:
-	set	0, (10391:16)
+	set	0, (SEQ_CONTROL_FLAGS:16)
 	ret
 
 SeqNotify_CheckAndClearStart:
-	bit	0, (0x2897:16)
+	bit	0, (SEQ_CONTROL_FLAGS:16)
 	ret Z
 	ld a, (CURRENT_TITLE:16)
 	cp A,0x87
@@ -10882,7 +10882,7 @@ SeqNotify_CheckAndClearStart:
 	cp A,0x88
 	call nz, (BitMapOut_ComputeRegionDelta:24)
 SeqNotify_ClearStartFlag:
-	res	0, (0x2897:16)
+	res	0, (SEQ_CONTROL_FLAGS:16)
 	ret
 
 Seq_HandleModeTransition:
@@ -18632,7 +18632,7 @@ SeqInit_ClearPartDataLoop:
 	ldw	bc, 50
 	calr	Part_ReleaseVoicesForRange
 	calr	Part_UnlinkVoiceFromChain
-	ld	(10390:16), 0
+	ld	(SEQ_METRO_FLAGS:16), 0
 	ldw	(SEQ_START_MEASURE:16), 1
 	ld	(SEQ_CURRENT_SONG:24), 0
 	ldw	(9474:16), 1
@@ -19177,14 +19177,14 @@ SeqPlay_CheckAndStartPlayback:
 	ret z
 	cpw	(SEQ_RECORDING_TRACKS:16), 0
 	ret nz
-	bit	1, (0x2896:16)
+	bit	1, (SEQ_METRO_FLAGS:16)
 	ret nz
 	call SeqPlay_ReassignVoiceChannels
 	cp l, 0:i3
 	jrl nz, SeqPlay_StopAndClearChannels
 	cpw	(SEQ_RECORDING_TRACKS:16), 0
 	ret z
-	set	1, (0x2897:16)
+	set	1, (SEQ_CONTROL_FLAGS:16)
 	ei 6
 	ldw (SEQ_BEAT_COUNT:16), 0
 	ld (SEQ_BEAT_TICK:16), 0
@@ -19232,16 +19232,16 @@ SeqPlay_SetBarAndResetScroll:
 	jp NoteEditSy_SendModeScrollReset
 
 SeqPlay_HandleVoiceReassign:
-	bit	2, (0x2897:16)
+	bit	2, (SEQ_CONTROL_FLAGS:16)
 	jr z, SeqPlay_CheckNoteDisplayPending
 	ld a, (PANEL_STYLE+5:16)
 	and a, 0x30
 	jr nz, SeqPlay_CheckNoteDisplayPending
 	call SeqRestart_CheckAndDispatch
-	ld	a, (0x2897:16)
+	ld	a, (SEQ_CONTROL_FLAGS:16)
 	res 2, a
 	set 4, a
-	ld	(0x2897:16), a
+	ld	(SEQ_CONTROL_FLAGS:16), a
 
 SeqPlay_CheckNoteDisplayPending:
 	cp	(7562:16), 0
@@ -19256,7 +19256,7 @@ SeqPlay_CheckNoteDisplayPending:
 	call	BitMapOut_PrepareAndRender
 	ld	(7562:16), 0
 SeqPlay_InitBuffers:
-	bit	4, (10391:16)
+	bit	4, (SEQ_CONTROL_FLAGS:16)
 	jr	z, SeqPlay_CheckMidiPending
 	bit	2, (ACC_TRANSPORT_STATE:16)
 	jr	nz, SeqPlay_CheckMidiPending
@@ -19268,7 +19268,7 @@ SeqPlay_InitBuffers:
 	bit	1, (ACC_RUN_FLAGS:16)
 	jr	nz, SeqPlay_CheckMidiPending
 	calr	SeqPlay_AllocBuffersAndInit
-	res	4, (10391:16)
+	res	4, (SEQ_CONTROL_FLAGS:16)
 SeqPlay_CheckMidiPending:
 	cp	(7578:16), 0
 	ret z
@@ -19309,7 +19309,7 @@ SeqPlay_DispatchAndResetAll:
 	call BitMapOut_PrepareAndRender
 	res	3, (SEQ_RTMCFG:16)
 	call TempoRingBuf_Init
-	set	4, (0x2897:16)
+	set	4, (SEQ_CONTROL_FLAGS:16)
 	ldw WA, 0x000f
 	call SoundCtrl_SaveAndSendCmd_EE
 	ldw WA, 0x0008
@@ -19330,7 +19330,7 @@ SeqPlay_StopAndClearSequence:
 	calr SeqBuf_WriteNoteOffEntry
 	calr VoiceAlloc_ProcessAll
 	ld (0x0431:16), 0x00
-	res	5, (0x2897:16)
+	res	5, (SEQ_CONTROL_FLAGS:16)
 	ldw WA, 0x000e
 	call SoundCtrl_SaveAndSendCmd_EE
 	ldw WA, 0x0008
@@ -19371,7 +19371,7 @@ SeqPlay_BufferUpdateBlock_Join2:
 	jp	SeqMode_SendStatusUpdate
 ; SeqStep_TimerDispatch_ProcTables target: count-in measure -2 -> -1 (RAM 0x2668, sign-magnitude)
 SeqPlay_CountInToLastBar:
-	bit	2, (10390:16)
+	bit	2, (SEQ_METRO_FLAGS:16)
 	ret	z
 	ld	wa, (SEQ_START_MEASURE:16)
 	cp	wa, 32770
@@ -19404,7 +19404,7 @@ SeqPlay_AdvanceMeasure:
 	jp	SeqMode_SendStatusUpdate
 ; SeqStep_TimerDispatch_ProcTables target: the count-in ends -- sequencer state 8/12/16/20 -> + 1
 SeqPlay_CountInEnd:
-	bit	1, (10390:16)
+	bit	1, (SEQ_METRO_FLAGS:16)
 	ret	z
 	ld	wa, (SEQ_START_MEASURE:16)
 	cp	wa, 32769
@@ -19417,7 +19417,7 @@ SeqPlay_CountInEnd:
 	ld	a, (ACC_CLOCK:16)
 	cp	a, 72
 	ret	c
-	res	3, (10391:16)
+	res	3, (SEQ_CONTROL_FLAGS:16)
 	call	Audio_CheckSubsystemReady
 	call	Audio_CheckSubsystemReady
 	ld	a, (8950:16)
@@ -19776,7 +19776,7 @@ SeqTimer_HandleBarChange:
 
 SeqTimer_BarChangeProcess:
 	res	3, (SEQ_RTMCFG:16)
-	set	4, (0x2897:16)
+	set	4, (SEQ_CONTROL_FLAGS:16)
 	ld wa, 0:i3
 	ldw bc, 0xbd
 	calr Part_ReadByteDirect
@@ -22605,7 +22605,7 @@ ApPlaySyori:
 	cp	xbc, EVT_SET_PUNCH
 	jrl	z, NoteEditSy_ModeScrollReturn	; -> 0xF4634A
 	cp	xbc, EVT_SET_METRO
-	jrl	z, NoteEditSy_ModeScroll	; -> 0xF462C5
+	jrl	z, ApPlaySyori_OnSetMetro	; -> 0xF462C5
 	cp	xbc, EVT_SET_CYCLE
 	jrl	z, SeqAccomp_StartHelper	; -> 0xF46202
 	ld	de, (SEQ_START_MEASURE:16)
@@ -22708,7 +22708,7 @@ SeqPlay_AllocPostEvent:
 	ld wa, iz
 	exts xwa
 	calr AppEvent_SendPlayStatus
-	ld	a, (0x2896:16)
+	ld	a, (SEQ_METRO_FLAGS:16)
 	and a, 0x1
 	cp a, 0:i3
 	scc16 nz, iz
@@ -22730,7 +22730,7 @@ ApPlaySyori_OnPaintSqPunch:
 	ld xbc, EVT_PARA_DRAW
 	ld xde, 2:i3
 	call ApDeliveryEvent
-	ld	a, (0x2896:16)
+	ld	a, (SEQ_METRO_FLAGS:16)
 	and a, 0x1
 	cp a, 0:i3
 	scc16 nz, iz
@@ -22785,7 +22785,7 @@ SeqAcc_SendParamsAndStart:
 	ld xbc, EVT_PARA_DRAW
 	ld xde, 0xa
 	call ApDeliveryEvent
-	ld	a, (0x2896:16)
+	ld	a, (SEQ_METRO_FLAGS:16)
 	and a, 0x1
 	cp a, 0:i3
 	scc16 nz, iz
@@ -22795,7 +22795,7 @@ SeqAcc_SendParamsAndStart:
 	ld xbc, EVT_SET_PARAM
 	jrl SeqAccomp_StartHandler
 ApPlaySyori_OnPaintSqCycRec:
-	ld	a, (0x2896:16)
+	ld	a, (SEQ_METRO_FLAGS:16)
 	and a, 0x1
 	cp a, 0:i3
 	scc16 nz, iz
@@ -22880,7 +22880,7 @@ SeqAccomp_ParamDelivery_IncCycleEnable:
 SeqAccomp_ParamDelivery_IncCycleEnable_Skip13:
 	cp	a, 134
 	jr	nz, SeqAccomp_ParamDelivery_IncCycleEnable_Join9
-	bit	2, (10390:16)
+	bit	2, (SEQ_METRO_FLAGS:16)
 	jrl	nz, AppEvent_ReturnZero
 	bit	1, (SEQ_CYCLE_FLAGS:16)
 	jrl	nz, AppEvent_ReturnZero
@@ -23055,7 +23055,7 @@ ApPlaySyori_Skip8:
 	jr	nz, ApPlaySyori_Join6
 	bit	2, (SEQ_TRANSPORT_STATE:16)
 	jrl	nz, AppEvent_ReturnZero
-	bit	2, (10390:16)
+	bit	2, (SEQ_METRO_FLAGS:16)
 	jrl	nz, AppEvent_ReturnZero
 	ld	c, a
 	bit	1, a
@@ -23202,7 +23202,7 @@ SeqAccomp_StartHelper:
 	jrl	nz, SeqAccomp_HandleOtherState
 	bit	2, (SEQ_TRANSPORT_STATE:16)
 	jr	nz, SeqAccomp_TogglePlayback
-	bit	2, (10390:16)
+	bit	2, (SEQ_METRO_FLAGS:16)
 	jr	z, SeqAccomp_HandleStartStop
 SeqAccomp_TogglePlayback:
 	ld xwa, (xsp + 2)
@@ -23281,67 +23281,70 @@ SeqAccomp_PostModeAndInit:
 	call UI_ChangeTitleByIndex
 	jr SeqAccomp_InitAndReturn
 
-; NoteEditSy mode scroll dispatch
-NoteEditSy_ModeScroll:
+; ApPlaySyori's EVT_SET_METRO (MT_SetMetro) handler: MetroOnOffFunc posts it with the switch's new
+; state at (xsp+2).  While the sequencer runs or the count-in does (SEQ_METRO_FLAGS bit 2) it only
+; redraws the switch with the state flipped back; otherwise it stores the state in SEQ_METRO_FLAGS
+; bit 0 and, switching it on in TT_SQREALREC, opens TT_SQMETBAL.
+ApPlaySyori_OnSetMetro:
 	bit 2, (SEQ_TRANSPORT_STATE:16)
-	jr nz, NoteEdit_ScrollToggle
-	ld	c, (0x2896:16)
+	jr nz, ApPlaySyori_OnSetMetro_Refuse
+	ld	c, (SEQ_METRO_FLAGS:16)
 	bit 2, c
-	jr z, NoteEdit_ScrollInactive
+	jr z, ApPlaySyori_OnSetMetro_Store
 
-NoteEdit_ScrollToggle:
+ApPlaySyori_OnSetMetro_Refuse:
 	ld xwa, (xsp + 2)
 	or xwa, xwa
-	jr nz, NoteEdit_ScrollSetZero
+	jr nz, ApPlaySyori_OnSetMetro_RefuseOff
 	ld xwa, 1:i3
 	ld (xsp + 2), xwa
-	jr NoteEdit_ScrollDispatchMode
+	jr ApPlaySyori_OnSetMetro_Redraw
 
-NoteEdit_ScrollSetZero:
+ApPlaySyori_OnSetMetro_RefuseOff:
 	ld xwa, 0:i3
 	ld (xsp + 2), xwa
 
-NoteEdit_ScrollDispatchMode:
+ApPlaySyori_OnSetMetro_Redraw:
 	ld	a, (ACTIVE_TITLE:16)
 	cp	a, 133
-	jr	nz, NoteEdit_ScrollCheck86
+	jr	nz, ApPlaySyori_OnSetMetro_Redraw86
 	ld	xwa, (xsp+2)
 NoteEdit_ScrollCallReset:
 	calr NoteEditSy_ScrollReset
 	jr AppEvent_ReturnZero
 
-NoteEdit_ScrollCheck86:
+ApPlaySyori_OnSetMetro_Redraw86:
 	cp a, 0x86
-	jr nz, NoteEdit_ScrollCheck87
+	jr nz, ApPlaySyori_OnSetMetro_Redraw87
 	ld xwa, (xsp + 2)
 	calr AppEvent_SendAccompStatus
 	jr AppEvent_ReturnZero
 
-NoteEdit_ScrollCheck87:
+ApPlaySyori_OnSetMetro_Redraw87:
 	cp a, 0x87
-	jr nz, NoteEdit_ScrollCheck88
+	jr nz, ApPlaySyori_OnSetMetro_Redraw88
 	ld xwa, (xsp + 2)
 	calr NoteEditSy_ScrollCase1
 	jr AppEvent_ReturnZero
 
-NoteEdit_ScrollCheck88:
+ApPlaySyori_OnSetMetro_Redraw88:
 	cp a, 0x88
 	jr nz, AppEvent_ReturnZero
 	ld xwa, (xsp + 2)
 	calr NoteEditSy_ScrollCase2
 	jr AppEvent_ReturnZero
 
-NoteEdit_ScrollInactive:
+ApPlaySyori_OnSetMetro_Store:
 	ld xwa, (xsp + 2)
 	or xwa, xwa
-	jr nz, NoteEdit_ScrollActivate
+	jr nz, ApPlaySyori_OnSetMetro_StoreOn
 	res 0, c
-	ld	(0x2896:16), c
+	ld	(SEQ_METRO_FLAGS:16), c
 	jr SeqAccomp_InitAndReturn
 
-NoteEdit_ScrollActivate:
+ApPlaySyori_OnSetMetro_StoreOn:
 	set	0, c
-	ld	(0x2896:16), c
+	ld	(SEQ_METRO_FLAGS:16), c
 	cp	(ACTIVE_TITLE:16), 133
 	jr	nz, SeqAccomp_InitAndReturn
 	ldw	wa, TT_SQMETBAL
@@ -24093,7 +24096,7 @@ SeqModeFunc:
 	jr nz, SeqErecMode_ReturnZero
 	ldw wa, 0x4c
 	call CtrlPanel_SetIndicatorBit
-	res	5, (0x2897:16)
+	res	5, (SEQ_CONTROL_FLAGS:16)
 	calr SeqIndicator_HideBoth
 	jr SeqErecMode_ReturnZero
 
@@ -24780,7 +24783,7 @@ MainExe_Handle85_SubE9:
 	jrl nz, MainExe_ReturnZero
 	bit	1, (SEQ_CYCLE_FLAGS:16)
 	jrl z, MainExe_ReturnZero
-	bit	2, (0x2896:16)
+	bit	2, (SEQ_METRO_FLAGS:16)
 	jr z, MainExe_StartSongPlay
 	bit 2, (SEQ_TRANSPORT_STATE:16)
 	jr nz, MainExe_StartSongPlay
@@ -24789,7 +24792,7 @@ MainExe_Handle85_SubE9:
 MainExe_Handle86:
 	bit	1, (SEQ_CYCLE_FLAGS:16)
 	jrl z, MainExe_ReturnZero
-	bit	2, (0x2896:16)
+	bit	2, (SEQ_METRO_FLAGS:16)
 	jr z, MainExe_StartSongPlay
 	bit 2, (SEQ_TRANSPORT_STATE:16)
 	jrl z, MainExe_ReturnZero

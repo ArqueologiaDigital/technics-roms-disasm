@@ -8784,7 +8784,7 @@ loc_4C004233:
     bra     loc_4C00426C
 loc_4C004250:
     mov     a3, a0
-    call    func_4C02FD94_entry, [d2,d3,a2,a3], 0x20
+    call    TgVoiceLevelTermCalc_entry, [d2,d3,a2,a3], 0x20
     mov     d0, d1
     mov     0x54, a1
     add     d3, a1
@@ -8936,7 +8936,7 @@ loc_4C0043A5:
     movbu   (6, a2), d1
     mov     a0, (0x18, sp)
     mov     a2, a0
-    call    func_4C030606_entry, [d2,d3,a2,a3], 0x38
+    call    TgVoiceFilterProgram_entry, [d2,d3,a2,a3], 0x38
     mov     d2, a0
     mov     (0x4c, a0), d1
     movbu   (a3), d0
@@ -9010,7 +9010,7 @@ loc_4C00445F:
     movbu   (6, a2), d1
     mov     a0, (0x18, sp)
     mov     a2, a0
-    call    func_4C030606_entry, [d2,d3,a2,a3], 0x38
+    call    TgVoiceFilterProgram_entry, [d2,d3,a2,a3], 0x38
     mov     d2, a0
     movhu   (0x26, a0), d1
     movbu   (a3), d0
@@ -19759,11 +19759,14 @@ func_4C009C62_entry:
     call    TgGlobalChanCRefresh_entry, 0, 0x10
 loc_4C009C85:
     ret     [d2], 0xc
-
-func_4C009C88:
+# TgPartToneModRoutesLoad  (lib CPU 0x4c009c88)
+#   load the part's tone-head modulation routings {src, dest, depth}
+#   into TgPartModConfigStore: six at +0x12 for a TABLE head, else
+#   eight at +0x13
+TgPartToneModRoutesLoad:
     movm    [d2,d3,a2], (sp)
     add     -0x1c, sp
-func_4C009C88_entry:
+TgPartToneModRoutesLoad_entry:
     movbu   d0, (0x30, sp)
     movbu   (0x30, sp), d0
     mov     0x130, d1
@@ -23979,7 +23982,7 @@ loc_4C00BD1B:
     mov     (0x1c, sp), a0
     mov     (0x24, sp), a1
     mov     d3, d0
-    call    func_4C030606_entry, [d2,d3,a2,a3], 0x38
+    call    TgVoiceFilterProgram_entry, [d2,d3,a2,a3], 0x38
     movbu   (0x2c, sp), d0
     mov     0x54c, d1
     nop
@@ -24012,7 +24015,7 @@ loc_4C00BDBC:
     mov     (0x1c, sp), a0
     movbu   (0x10, a0), d0
     mov     (0x24, sp), a0
-    call    func_4C02FDFA_entry, [d2,d3], 8
+    call    TgTableAmpAttackRateCalc_entry, [d2,d3], 8
     mov     (0x54, sp), a0
     mov     0xff, d1
     movhu   (a0), d2
@@ -24141,7 +24144,7 @@ loc_4C00BE0B:
     mov     (0x1c, sp), a0
     call    func_4C00AF7A, 0, 0
     mov     (0x1c, sp), a0
-    call    func_4C02FD94_entry, [d2,d3,a2,a3], 0x20
+    call    TgVoiceLevelTermCalc_entry, [d2,d3,a2,a3], 0x20
     mov     (0x54, sp), a0
     exthu   d0
     add     0x54, a0

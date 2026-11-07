@@ -1293,8 +1293,8 @@ typedef struct __attribute__((packed)) {
     uint8_t PanelTlv_CompanionPartTags[24];
     /* PanelTlv_ApplyFieldRule_CaseOffsets: 9 u16 case offsets of a compiled switch; the asm spells them `.short <Case> - <Base>` (scripts/converters/naka_case_tables_retype.py) */
     uint16_t PanelTlv_ApplyFieldRule_CaseOffsets[9];
-    uint8_t pad_144[2];  /* zero padding */
-    uint16_t field_2b52;
+    /* SndParamBank_OptionDefault_00: SndParamBank_OptionDefault_NN -- the defaults of the five fields of the 0x50-byte block at Custom Data Flash 0x3D3400 (+0x00 2 B -- this slice is 4 B, of which the first 2 are copied --, +0x10 12 B, +0x20 4 B, +0x30 4 B, +0x40 6 B).  SndParamBank_WriteFlashDefaults builds the block from them; SndParamBank_RestoreOptionBlock (factory reset) rebuilds it keeping the flash's own +0x00; SndParamBank_LoadOptionBlock copies the five fields to RAM 0x340E4, 0x340E6, 0x340F2, 0x340F6, 0x340FA, read by the ParaLoadOpt_* dialog (midi/param_load_routines.s) and demo/file_demo_proc.s -- hence "option". (v9/maincpu/ui_widgets/extension_device_screens.s) */
+    uint8_t SndParamBank_OptionDefault_00[4];
     uint8_t SndParamBank_OptionDefault_30[4];  /* zero padding */
     uint16_t field_2b58;
     uint16_t field_2b5a;
@@ -1451,36 +1451,26 @@ typedef struct __attribute__((packed)) {
     uint8_t PanelButton_ModeKeyCodes_RightSeg4[2];
     uint8_t PanelButton_ModeKeyCodes_RightSeg5[2];
     uint8_t PanelButton_ModeKeyCodes_RightSeg10[4];
-    uint16_t field_3570;
-    uint16_t field_3572;
-    uint16_t field_3574;
-    uint16_t field_3576;
-    uint16_t field_3578;
-    uint16_t field_357a;
-    uint16_t field_357c;
-    uint16_t field_357e;
+    /* PanelButton_SoundGroupCodes_RightSeg1: Sound-group map of right-panel segment 1 (panel event index 12), indexed by the lowest set button bit: ORGAN & ACCORDION, ORCHESTRAL PAD, SYNTH, BASS, DIGITAL DRAWBAR, ACCORDION REGISTER, GM SPECIAL, DRUM KITS -> sound groups 8..15. (v9/maincpu/ui_widgets/extension_device_screens.s) */
+    uint8_t PanelButton_SoundGroupCodes_RightSeg1[8];
+    /* PanelButton_SoundGroupCodes_RightSeg2: Sound-group map of right-panel segment 2 (panel event index 13): PIANO, GUITAR, STRINGS & VOCAL, BRASS, FLUTE, SAX & REED, MALLET & ORCH PERC, WORLD PERC -> sound groups 0..7. (v9/maincpu/ui_widgets/extension_device_screens.s) */
+    uint8_t PanelButton_SoundGroupCodes_RightSeg2[8];
     uint16_t PanelButton_SoundGroupCodes_RightSeg9;
-    uint16_t field_3582;
-    uint16_t field_3584;
-    uint16_t field_3586;
-    uint16_t field_3588;
+    /* PanelButton_RhythmGroupCodes_LeftSeg0: Rhythm-group map of left-panel segment 0 (panel event index 0), indexed by the lowest set button bit: STANDARD ROCK, R & ROLL & BLUES, POP & BALLAD, FUNK & FUSION, SOUL & MODERN DANCE, BIG BAND & SWING, JAZZ COMBO -> rhythm groups 0..6 (bit 7: 0xFF). (v9/maincpu/ui_widgets/extension_device_screens.s) */
+    uint8_t PanelButton_RhythmGroupCodes_LeftSeg0[8];
     uint16_t PanelButton_RhythmGroupCodes_LeftSeg1;
-    uint16_t field_358c;
-    uint16_t field_358e;
-    uint16_t field_3590;
-    uint16_t field_3592;
+    /* PanelButton_RhythmGroupCodes_LeftSeg6: Rhythm-group map of left-panel segment 6 (panel event index 6): U.S. TRAD, COUNTRY, LATIN, MARCH & WALTZ, PARTY TIME, SHOWTIME & TRAD DANCE, WORLD, CUSTOM -> rhythm groups 7..14. (v9/maincpu/ui_widgets/extension_device_screens.s) */
+    uint8_t PanelButton_RhythmGroupCodes_LeftSeg6[8];
     uint16_t field_3594;
     char str_558[2];
     uint32_t PanelButton_MspBank17FuncHandlers[6];  /* 6 pointers */
-    uint16_t field_35b0;
-    uint16_t field_35b2;
-    uint16_t field_35b4;
+    /* PanelButton_MspBank17FuncCodes: 6 x u8 foot-pedal function codes the MSP 1-6 buttons act as while the MSP bank (sound parameter 0x28800) is 17: 0xAD, 0xB3, 0x96, 0x91, 0xB4, 0x90. PanelButton_MspNumber puts code [button] in C and calls handler [button] of PanelButton_MspBank17FuncHandlers, each the same handler PanelAction_PedalAssignHandlerIndex / PanelAction_PedalFunctionHandlers give for that code. (v9/maincpu/ui_widgets/extension_device_screens.s) */
+    uint8_t PanelButton_MspBank17FuncCodes[6];
     uint32_t PanelButton_MspBank18FuncHandlers[6];  /* 6 pointers */
-    uint16_t field_35ce;
-    uint16_t field_35d0;
-    uint16_t field_35d2;
-    uint16_t field_35d4;
-    uint16_t field_35d6;
+    /* PanelButton_MspBank18FuncCodes: 6 x u8 foot-pedal function codes the MSP 1-6 buttons act as while the MSP bank (sound parameter 0x28800) is 18: 0x92, 0x94, 0xB5, 0x93, 0x95, 0x88, with handlers from PanelButton_MspBank18FuncHandlers. Five match the pedal tables; 0xB5 has no pedal handler and is served by handler 12 (ExtDev_SndParam_Block48_Var02), which the pedal map never selects. (v9/maincpu/ui_widgets/extension_device_screens.s) */
+    uint8_t PanelButton_MspBank18FuncCodes[6];
+    /* PanelButton_VariationCodes: 4 x u8 {0x00, 0x10, 0x20, 0x30}: the VARIATION 1-4 buttons' values for record 0x48 +7 bits 4-5 (the style variation, RAM 0xFC61). PanelButton_Variation puts entry [lowest set bit] in the event's state byte with change mask 0x30 when the style's category byte is below 14. (v9/maincpu/ui_widgets/extension_device_screens.s) */
+    uint8_t PanelButton_VariationCodes[4];
     /* handler number (index into FileIO_BytecodeData_Code_Entry8_PtrTable_3) per foot-pedal assignment code; 0xff = no action */
     uint8_t PanelAction_PedalAssignHandlerIndex[256];
     /* FileIO_BytecodeData_Code_Entry8_PtrTable_3: 22 pointers (cut from ptrs_29 by split_naka_pointer_arrays.py) */
@@ -1718,7 +1708,8 @@ const naka_extension_device_t naka_extension_device_data
     .w0_text = ALIGNED_STRING(""),
 
     /* ==== SCREEN TITLE_TEST2 -- "TT_TEST2", title id 0xF5, function NAKA_MAINFUNC_TEST2FUNC ====
-     * Path: none found (no data entry, and no traced code, opens it)
+     * Path: power-on boot sequence User_didnt_request_flash_mem_update > (by
+     *       SelfTest_FirmwareVersionCheck)
      * EXIT -> TITLE_PS */
     .TEST2 = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -2071,7 +2062,8 @@ const naka_extension_device_t naka_extension_device_data
     /* ==== SCREEN TITLE_TEST3 -- "TT_TEST3", title id 0xF6, function NAKA_MAINFUNC_TEST3FUNC ====
      * What: a self-test screen. While it is up, some panel handlers stand down and one is active
      *       only there.
-     * Path: none found (no data entry, and no traced code, opens it)
+     * Path: power-on boot sequence User_didnt_request_flash_mem_update > (by
+     *       SelfTest_FirmwareVersionCheck)
      * EXIT -> TITLE_PS */
     .TEST3 = {
         .class_ = NAKA_CLASS(SineWaveScreen),
@@ -2093,7 +2085,8 @@ const naka_extension_device_t naka_extension_device_data
     },
 
     /* ==== SCREEN TITLE_TEST4 -- "TT_TEST4", title id 0xF7, function NAKA_MAINFUNC_TEST4FUNC ====
-     * Path: none found (no data entry, and no traced code, opens it)
+     * Path: power-on boot sequence User_didnt_request_flash_mem_update > (by
+     *       SelfTest_FirmwareVersionCheck)
      * EXIT -> TITLE_PS */
     .TEST4 = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -2148,7 +2141,8 @@ const naka_extension_device_t naka_extension_device_data
     .PanelSwLedCheck_text = ALIGNED_STRING("PANEL SW&LED CHECK"),
 
     /* ==== SCREEN TITLE_TEST5 -- "TT_TEST5", title id 0xF8, function NAKA_APFUNC_DefaultFunction ====
-     * Path: none found (no data entry, and no traced code, opens it)
+     * Path: power-on boot sequence User_didnt_request_flash_mem_update > (by
+     *       SelfTest_FirmwareVersionCheck)
      * EXIT -> TITLE_PS */
     .TEST5 = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -3146,7 +3140,8 @@ const naka_extension_device_t naka_extension_device_data
     .H_text_40 = "H",
 
     /* ==== SCREEN TITLE_TEST6 -- "TT_TEST6", title id 0xF9, function NAKA_MAINFUNC_TEST6FUNC ====
-     * Path: none found (no data entry, and no traced code, opens it)
+     * Path: power-on boot sequence User_didnt_request_flash_mem_update > (by
+     *       SelfTest_FirmwareVersionCheck)
      * EXIT -> TITLE_PS */
     .TEST6 = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -3285,7 +3280,8 @@ const naka_extension_device_t naka_extension_device_data
     .No_text_5 = ALIGNED_STRING("= NO"),
 
     /* ==== SCREEN TITLE_EXT -- "TT_EXT", title id 0xFB, function NAKA_APFUNC_DefaultFunction ====
-     * Path: none found (no data entry, and no traced code, opens it)
+     * Path: power-on boot sequence User_didnt_request_flash_mem_update > (by
+     *       SelfTest_FirmwareVersionCheck)
      * EXIT -> TITLE_PS */
     .EXT = {
         .class_ = NAKA_CLASS(IvScreen),
@@ -5761,9 +5757,9 @@ const naka_extension_device_t naka_extension_device_data
         0x0028,
     },
 
-    .pad_144 = { 0 },
-
-    .field_2b52 = 0x0001,
+    .SndParamBank_OptionDefault_00 = {
+        0x00, 0x00, 0x01, 0x00,
+    },
 
     .SndParamBank_OptionDefault_30 = { 0 },
 
@@ -6392,41 +6388,25 @@ const naka_extension_device_t naka_extension_device_data
         MD_DISK,            /* CPR_SEG10 0x20: MENU DISK */
     },
 
-    .field_3570 = 0x0908,
+    .PanelButton_SoundGroupCodes_RightSeg1 = {
+        0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F,
+    },
 
-    .field_3572 = 0x0B0A,
-
-    .field_3574 = 0x0D0C,
-
-    .field_3576 = 0x0F0E,
-
-    .field_3578 = 0x0100,
-
-    .field_357a = 0x0302,
-
-    .field_357c = 0x0504,
-
-    .field_357e = 0x0706,
+    .PanelButton_SoundGroupCodes_RightSeg2 = {
+        0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+    },
 
     .PanelButton_SoundGroupCodes_RightSeg9 = 0x1110,
 
-    .field_3582 = 0x0100,
-
-    .field_3584 = 0x0302,
-
-    .field_3586 = 0x0504,
-
-    .field_3588 = 0xFF06,
+    .PanelButton_RhythmGroupCodes_LeftSeg0 = {
+        0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0xFF,
+    },
 
     .PanelButton_RhythmGroupCodes_LeftSeg1 = 0xFF0F,
 
-    .field_358c = 0x0807,
-
-    .field_358e = 0x0A09,
-
-    .field_3590 = 0x0C0B,
-
-    .field_3592 = 0x0E0D,
+    .PanelButton_RhythmGroupCodes_LeftSeg6 = {
+        0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E,
+    },
 
     .field_3594 = 0x0102,
 
@@ -6441,11 +6421,9 @@ const naka_extension_device_t naka_extension_device_data
         NAKA_ADDR(FileIO_BytecodeData_Code_Loop3),
     },
 
-    .field_35b0 = 0xB3AD,
-
-    .field_35b2 = 0x9196,
-
-    .field_35b4 = 0x90B4,
+    .PanelButton_MspBank17FuncCodes = {
+        0xAD, 0xB3, 0x96, 0x91, 0xB4, 0x90,
+    },
 
     .PanelButton_MspBank18FuncHandlers = {
         NAKA_ADDR(ExtDev_SndParam_Block48_Var40),
@@ -6456,15 +6434,13 @@ const naka_extension_device_t naka_extension_device_data
         NAKA_ADDR(NakaData_WidgetInit1),
     },
 
-    .field_35ce = 0x9492,
+    .PanelButton_MspBank18FuncCodes = {
+        0x92, 0x94, 0xB5, 0x93, 0x95, 0x88,
+    },
 
-    .field_35d0 = 0x93B5,
-
-    .field_35d2 = 0x8895,
-
-    .field_35d4 = 0x1000,
-
-    .field_35d6 = 0x3020,
+    .PanelButton_VariationCodes = {
+        0x00, 0x10, 0x20, 0x30,
+    },
 
     .PanelAction_PedalAssignHandlerIndex = {
         0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,

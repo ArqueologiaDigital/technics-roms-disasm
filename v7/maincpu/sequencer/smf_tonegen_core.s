@@ -1566,7 +1566,7 @@ MidiSysEx_Cmd_SystemMessage:
 
 SoundGen_ResetVoiceBitmapAndFlag:
 	call ToneGen_SyncVoiceBitmapFromSlots
-	or (0x28b3:16), 16
+	or (SEQ_CONTROL_FLAGS:16), 16
 
 SoundGen_ResetBitmapDone:
 	ret

@@ -75,31 +75,31 @@ ScreenGroup_WidgetLoop:
 	ret
 
 ScreenGroup_InitState:
-	lda xbc, (0xc1fe:16)
+	lda xbc, (AUDIO_STATE:16)
 	ld (xbc), 0x1
 	ld (xbc + 1), 0xff
 	ld (xbc + 2), 0xff
 	ld (xbc + 3), 0xff
-	or (0xc2c2:16), 127
-	and (0xc2c3:16), 1
-	or (0xc2c4:16), 254
-	and (0xc2c5:16), 1
-	or (0xc2c6:16), 127
-	and (0xc2c7:16), 1
-	or (0xc2c8:16), 254
-	and (0xc2c9:16), 1
-	or (0xc2ca:16), 127
-	and (0xc2cb:16), 1
-	or (0xc2cc:16), 254
-	and (0xc2cd:16), 1
-	or (0xc2ce:16), 127
-	and (0xc2cf:16), 1
-	or (0xc2d0:16), 254
-	and (0xc2d1:16), 1
-	or (0xc2d2:16), 127
-	and (0xc2d3:16), 1
-	or (0xc2d4:16), 254
-	and (0xc2d5:16), 1
+	or (AUDIO_STATE+196:16), 127
+	and (AUDIO_STATE+197:16), 1
+	or (AUDIO_STATE+198:16), 254
+	and (AUDIO_STATE+199:16), 1
+	or (AUDIO_STATE+200:16), 127
+	and (AUDIO_STATE+201:16), 1
+	or (AUDIO_STATE+202:16), 254
+	and (AUDIO_STATE+203:16), 1
+	or (AUDIO_STATE+204:16), 127
+	and (AUDIO_STATE+205:16), 1
+	or (AUDIO_STATE+206:16), 254
+	and (AUDIO_STATE+207:16), 1
+	or (AUDIO_STATE+208:16), 127
+	and (AUDIO_STATE+209:16), 1
+	or (AUDIO_STATE+210:16), 254
+	and (AUDIO_STATE+211:16), 1
+	or (AUDIO_STATE+212:16), 127
+	and (AUDIO_STATE+213:16), 1
+	or (AUDIO_STATE+214:16), 254
+	and (AUDIO_STATE+215:16), 1
 	ld de, 0:i3
 	cp de, 0x20
 	jrl ge, ScreenGroup_InitParams16
@@ -232,8 +232,8 @@ ScreenGroup_InitParam8ComplexLoop:
 ScreenGroup_FinalInit:
 	ld (xbc), 0x1
 	ld (xbc + 4), 0x0
-	ld xiy, 0xc1fe
-	ld xix, 0xc364
+	ld xiy, AUDIO_STATE
+	ld xix, AUDIO_STATE_SENT
 	ldw bc, 0xb3
 	ldirw
 	ld de, 0:i3

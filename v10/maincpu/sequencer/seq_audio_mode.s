@@ -39,9 +39,9 @@ AudioMode_MergeOutputBits:
 	ld (0x3310:16), a
 	ret
 
-; 0x3335 = (0x28b2) & 3.
+; 0x3335 = (SEQ_METRO_FLAGS) & 3.
 AudioMode_CopyChannelMode:
-	ld a, (0x28b2:16)
+	ld a, (SEQ_METRO_FLAGS:16)
 	and a, 0x3
 	ld (0x3335:16), a
 	ret
