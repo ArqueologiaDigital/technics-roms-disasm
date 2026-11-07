@@ -20334,8 +20334,8 @@ AccWrap_PlayModeStateMachine_Skip:
 	ret le
 	subw (0xd09a:16), 1
 	ret nz
-	res 1, (0x28b2:16)
-	res 2, (0x28b2:16)
+	res 1, (SEQ_METRO_FLAGS:16)
+	res 2, (SEQ_METRO_FLAGS:16)
 	res 3, (SEQ_RTMCFG:16)
 	ei 6
 	ldw (SEQ_BEAT_COUNT:16), 0

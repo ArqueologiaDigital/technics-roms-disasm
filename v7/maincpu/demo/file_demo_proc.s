@@ -1023,7 +1023,7 @@ Banner_Loop_CheckEntry:
 	jr z, Banner_Loop_Exit
 	cp a, 0xd
 	jr z, Banner_Loop_Exit
-	set 6, (0x28b3:16)
+	set 6, (SEQ_CONTROL_FLAGS:16)
 	lda xwa, (xsp + 2)
 	ld (xwa), 0xd3
 	ld (xwa + 1), 0x7e

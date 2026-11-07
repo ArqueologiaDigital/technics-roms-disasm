@@ -201,7 +201,7 @@ NoteOn_CheckSpecialChannel:
 	ld	xwa, (xsp + 2)
 	cp	(xwa + 1), 0x15
 	jr	nz, NoteOn_CheckLayer3Only
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	and	wa, 0xa
 	jr	z, NoteOn_SpecialChannelUpdate
 	lda	xwa, (xsp+172:16)
@@ -376,7 +376,7 @@ NoteOn_CC_CheckSpecialChannel:
 	ld	xwa, (xsp + 2)
 	cp	(xwa + 1), 0x15
 	jr	nz, NoteOn_CC_CheckLayer3Only
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit	1, wa
 	jr	z, NoteOn_CC_SpecialUpdate
 	lda	xwa, (xsp+172:16)
@@ -640,7 +640,7 @@ AccNoteOn_CheckSpecialChannel:
 	ld	xwa, (xsp + 2)
 	cp	(xwa + 1), 0x15
 	jr	nz, AccNoteOn_CheckLayer3Only
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	and	wa, 0xa
 	jr	z, AccNoteOn_SpecialDirectAdd
 	ld	xhl, 0xcaba
@@ -1292,7 +1292,7 @@ VoiceInit_MergeLayer3:
 VoiceInit_CheckSpecialChannel:
 	cp	(xiz + 1), 0x15
 	jr	nz, VoiceInit_CheckLayer3Only
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit	1, wa
 	jr	z, VoiceInit_SpecialChannelUpdate
 	lda	xwa, (xsp+172:16)
@@ -3871,7 +3871,7 @@ NoteMap_AddEntry:
 	ld	bc, 2:i3
 	calr	NoteMap_AllocateVoice
 NoteMap_AltCheckEmit:
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit	9, wa
 	jr	z, AltCheckEmit_LoadParam
 	ldib_erp	0xfb, 0
@@ -3977,7 +3977,7 @@ AllocCheckChannel_LoadParam:
 	ld	xwa, (xsp + 8)
 	call	Voice_ScanAndEmitMidiEvents
 AllocCheckChannel_LoadDRAM:
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit	9, wa
 	jr	z, AllocCheckChannel_LoadParam2
 	ldib_erp	0xfb, 0
@@ -4073,7 +4073,7 @@ AllocCheckNoteOn_Data:
 	ld	bc, 2:i3
 	calr	NoteMap_AllocateVoice
 NoteMap_AddEntry_Skip:
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit	9, wa
 	jrl	z, NoteMap_AddEntry_Epilogue
 	ldib_erp	251, 0
@@ -4161,7 +4161,7 @@ NoteMap_AddEntry_Skip4:
 	ld	xwa, (xsp+8)
 	call	Voice_ScanAndEmitMidiEvents
 NoteMap_AddEntry_Skip8:
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit	9, wa
 	jr	z, NoteMap_AddEntry_Skip9
 	ldib_erp	251, 0
@@ -4262,7 +4262,7 @@ NoteMap_CollectAndFindBestVoice:
 	ld	bc, 2:i3
 	calr	NoteMap_AllocateVoice
 NoteMap_AltAllocEmit:
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit	9, wa
 	jrl	z, NoteMap_PopRetFA_StoreAE
 	ldib_erp	0xfb, 0
@@ -4387,7 +4387,7 @@ CollectAllocVoice_CheckDuplicate:
 	extz	bc
 	call	Voice_ScanAndEmitMidiEvents
 CollectAllocVoice_EmitCheck:
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit	9, wa
 	jr	z, CollectAllocVoice_Em_LoadFromStack
 	ldib_erp	0xfb, 0
@@ -4477,7 +4477,7 @@ NoteMap_CollectAndAllocVoice_NoTimerCheck:
 	ld	bc, 2:i3
 	calr	NoteMap_AllocateVoice
 NoteMap_FallbackVoiceCheck:
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit	9, wa
 	jr	z, FallbackVoiceCheck_LoadParam
 	ldib_erp	0xfb, 0
@@ -4541,7 +4541,7 @@ NoteMap_LookupAllocEmit:
 	extz	bc
 	ld	xwa, (xsp + 8)
 	call	NoteMap_SetChannelParam
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit	9, wa
 	jr	z, LookupAllocEmit_LoadParam
 	ldib_erp	0xfb, 0
@@ -4643,7 +4643,7 @@ NoteMap_CollectAndAllocVoice_Indirect:
 	ld	bc, 2:i3
 	calr	NoteMap_AllocateVoice
 NoteMap_IndirectCollectEmit:
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit	9, wa
 	jrl	z, NoteMap_PopRetFA_StoreAE2
 	ldib_erp	0xfb, 0
@@ -4724,7 +4724,7 @@ NoteMap_LookupAllocAndSetChannel:
 	extz	bc
 	ld	xwa, xde
 	call	NoteMap_SetChannelParam
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit	9, wa
 	jr	z, LookupAllocAndSetCha_LoadFromStack
 	ldib_erp	0xfb, 0
@@ -4814,7 +4814,7 @@ NoteMap_UpdateEntry:
 	ld	bc, 2:i3
 	calr	NoteMap_AllocateVoice
 NoteMap_FallbackAllocEmit:
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit	9, wa
 	jr	z, UpdateEntry_CheckLayerCount
 	ldib_erp	0xfb, 0
@@ -4878,7 +4878,7 @@ NoteMap_DirectLookupEmit:
 	extz	bc
 	ld	xwa, (xsp + 8)
 	call	NoteMap_SetChannelParam
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit	9, wa
 	jr	z, UpdateEntry_CheckSeqPartEmit
 	ldib_erp	0xfb, 0
@@ -4980,7 +4980,7 @@ NoteMap_FindAndAllocBestVoice:
 	ld	bc, 2:i3
 	calr	NoteMap_AllocateVoice
 NoteMap_FindAllocEmit:
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit	9, wa
 	jrl	z, NoteMap_PopRetFA_StoreAE3
 	ldib_erp	0xfb, 0
@@ -5061,7 +5061,7 @@ NoteMap_CollectAndAllocVoice_NoTimerReset:
 	extz	bc
 	ld	xwa, xde
 	call	NoteMap_SetChannelParam
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit	9, wa
 	jr	z, CollectAndAllocVoice_LoadFromStack
 	ldib_erp	0xfb, 0
@@ -11276,7 +11276,7 @@ ReallocVoices_Exit_TestBit3:
 ReallocVoices_Exit_CheckDRAM:
 	cp	(0xc2a5:16), 21
 	jr	nz, ReallocVoices_Exit_TestBit32
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit	1, wa
 	jr	z, ReallocVoices_Exit_WriteReg2
 	lda	xwa, (xsp+164:16)
@@ -14215,7 +14215,7 @@ ProcessControllers_R_Prologue:
 	jr	z, ProcessControllers_R_LoadDRAM
 	jr	PlayMode_ClearBit6
 ProcessControllers_R_LoadDRAM:
-	ld	de, (0xc4d8:16)
+	ld	de, (AUDIO_SEQ_TRACK_FLAGS:16)
 	and	de, 0x20
 	jr	z, PlayMode_UpdateAndReturn
 	or	(CHORD_FLAGS:24), 64
@@ -14251,7 +14251,7 @@ Voice_UpdatePlayModeState:
 	jr	z, PlayMode_CheckModes23
 	jr	PlayMode_ClearBit6_Alt
 PlayMode_CheckModes23:
-	ld	de, (0xc4d8:16)
+	ld	de, (AUDIO_SEQ_TRACK_FLAGS:16)
 	and	de, 0x20
 	jr	z, PlayMode_CheckSlotAndReturn
 	or	(CHORD_FLAGS:24), 64
@@ -14391,13 +14391,13 @@ Voice_CheckAndResetSlotState_Skip:
 	ld	e, (PANEL_STYLE+6:16)
 	and	e, 0x30
 	jr	nz, Voice_NullRet2
-	ld	de, (0xc4d8:16)
+	ld	de, (AUDIO_SEQ_TRACK_FLAGS:16)
 	and	de, 0x2
 	jr	nz, CheckAndResetSlotSta_LoadDRAM
 	bit	6, (CHORD_FLAGS:24)
 	jr	nz, CheckAndResetSlotSta_Block2
 CheckAndResetSlotSta_LoadDRAM:
-	ld	de, (0xc4d8:16)
+	ld	de, (AUDIO_SEQ_TRACK_FLAGS:16)
 	and	de, 0x2
 	jr	nz, CheckAndResetSlotSta_LoadDRAM2
 	bit	6, (CHORD_FLAGS:24)
@@ -14439,7 +14439,7 @@ NullRet2_TestBit24:
 	ld	de, (AUDIO_CONFIG_FLAGS:16)
 	and	de, 0x2
 	jr	nz, EffectState_Dispatch
-	ld	de, (0xc4d8:16)
+	ld	de, (AUDIO_SEQ_TRACK_FLAGS:16)
 	and	de, 0x2
 	jr	nz, EffectState_Dispatch
 	ld	de, (AUDIO_CONFIG_FLAGS:16)
@@ -15359,7 +15359,7 @@ Voice_InitPartAllocState_Skip:
 	calr	InitPartAllocState_TestBit242
 	calr	InitPartAllocState_OrBits
 	ldfr_werp	DE, 0x3e
-	ld	de, (0xc4d8:16)
+	ld	de, (AUDIO_SEQ_TRACK_FLAGS:16)
 	and	de, 0x2
 	ldto_werp	DE, 0x3e
 	jr	z, InitPartAllocState_TestBit24
@@ -18998,8 +18998,8 @@ AccWrap_PlayModeStateMachine_Skip:
 	ret	le
 	subw	(0xcfda:16), 1
 	ret	nz
-	res	1, (0x2896:16)
-	res	2, (0x2896:16)
+	res	1, (SEQ_METRO_FLAGS:16)
+	res	2, (SEQ_METRO_FLAGS:16)
 	res	3, (SEQ_RTMCFG:16)
 	ei	6
 	ldw	(SEQ_BEAT_COUNT:16), 0

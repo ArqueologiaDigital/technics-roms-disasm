@@ -4839,7 +4839,7 @@ AudioModeChange_Handler:
 	ld	(0xc1fc:16), 255
 	ld	(0xc140:16), 255
 	ld	(0xc141:16), 255
-	orw	(0xc4dc:16), 257
+	orw	(AUDIO_STATE_CHANGES:16), 257
 	ld	a, (CURRENT_MODE:16)
 	extz	wa
 	sla	wa, 2
@@ -4859,7 +4859,7 @@ AudioModeChange_Handler:
 	ret
 Audio_CheckSubsystemReady:
 	call	Audio_CheckInitStatus
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	and	wa, 0x60
 	call	z, (AudioInit_RefreshToneBank:24)
 	bit	1, (PANEL_CONDUCTOR+1:16)
@@ -4878,7 +4878,7 @@ AudioSubsystem_Callback:
 	ld	(0xc1fc:16), 255
 	ld	(0xc140:16), 255
 	ld	(0xc141:16), 255
-	orw	(0xc4dc:16), 257
+	orw	(AUDIO_STATE_CHANGES:16), 257
 	ld	a, (CURRENT_MODE:16)
 	extz	wa
 	sla	wa, 2
@@ -4905,10 +4905,10 @@ AudioInit_CheckMIDIAndDispatch:
 Audio_InitDispatchReturn:
 	cp	a, 0:i3
 	jr	z, AudioDispatch_ClearAccFlags
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit	2, wa
 	jr	z, AudioDispatch_SetAccMode
-	bit	0, (0x2896:16)
+	bit	0, (SEQ_METRO_FLAGS:16)
 	jr	z, AudioDispatch_SetAccMode
 AudioDispatch_ClearAccFlags:
 	andw	(AUDIO_CONFIG_FLAGS:16), 0xfdff
@@ -4950,7 +4950,7 @@ UIStateEvt_DrumAssign_Set:
 	and	a, 0xf
 	ld	(xde), a
 UIStateEvt_DrumAssign_Notify:
-	orw	(0xc4dc:16), 8
+	orw	(AUDIO_STATE_CHANGES:16), 8
 	orw	(AUDIO_CONFIG_UPDATE:16), 4
 	ret
 UIStateEvt_TransposeUpdate:
@@ -5002,7 +5002,7 @@ UIStateEvt_TransposeUpdate_Apply_Code:
 	ldb_d8	a, (SWBTWR_PAYLOAD_3)
 	and	a, 7
 	jrl	z, UIStateEvt_TransposeUpdate_Apply_Join
-	ldw_d16	wa, (0xc4d8)
+	ldw_d16	wa, (AUDIO_SEQ_TRACK_FLAGS)
 	bit	6, wa
 	jr	z, UIStateEvt_ParamEdit_Data_Skip
 	ldb_d8	a, (PANEL_STYLE+4)
@@ -5019,7 +5019,7 @@ UIStateEvt_TransposeUpdate_Apply_Code:
 	or	iz, (xbc+wa)
 	jr	UIStateEvt_ParamEdit_Data_Join
 UIStateEvt_ParamEdit_Data_Skip:
-	ldw_d16	wa, (0xc4d8)
+	ldw_d16	wa, (AUDIO_SEQ_TRACK_FLAGS)
 	and	wa, 34
 	cp	wa, 32
 	jr	nz, UIStateEvt_ParamEdit_Data_Skip2
@@ -5071,7 +5071,7 @@ UIStateEvt_TransposeUpdate_Apply_Join:
 UIStateEvt_ParamEdit_Data_Skip6:
 	andw	(AUDIO_CONFIG_FLAGS:16), 0xffef
 UIStateEvt_ParamEdit_Data_Join2:
-	orw	(0xc4da:16), 0x2000
+	orw	(AUDIO_VOICE_CHANGES:16), 0x2000
 	orw	(AUDIO_CONFIG_UPDATE:16), 4
 	jrl	UIStateEvt_ParamEdit_Data_Epilogue
 UIStateEvt_ParamEdit_Data_Case4:
@@ -5084,7 +5084,7 @@ UIStateEvt_ParamEdit_Data_Case4:
 UIStateEvt_ParamEdit_Data_Skip7:
 	andw	(AUDIO_CONFIG_FLAGS:16), 0xfbff
 UIStateEvt_ParamEdit_Data_Join3:
-	orw	(0xc4da:16), 0x4000
+	orw	(AUDIO_VOICE_CHANGES:16), 0x4000
 	orw	(AUDIO_CONFIG_UPDATE:16), 4
 UIStateEvt_ParamEdit_Data_Skip8:
 	bit	4, (SWBTWR_PAYLOAD_3:16)
@@ -5102,7 +5102,7 @@ UIStateEvt_ParamEdit_Data_Skip10:
 	ldb_d8	a, (SWBTWR_PAYLOAD_3)
 	and	a, 7
 	jrl	z, UIStateEvt_ParamEdit_Data_Epilogue
-	ldw_d16	wa, (0xc4d8)
+	ldw_d16	wa, (AUDIO_SEQ_TRACK_FLAGS)
 	bit	6, wa
 	jr	z, UIStateEvt_ParamEdit_Data_Skip11
 	ldb_d8	a, (PANEL_STYLE+4)
@@ -5119,7 +5119,7 @@ UIStateEvt_ParamEdit_Data_Skip10:
 	or	iz, (xbc+wa)
 	jr	UIStateEvt_ParamEdit_Data_Join5
 UIStateEvt_ParamEdit_Data_Skip11:
-	ldw_d16	wa, (0xc4d8)
+	ldw_d16	wa, (AUDIO_SEQ_TRACK_FLAGS)
 	bit	5, wa
 	jr	z, UIStateEvt_ParamEdit_Data_Skip12
 	ld	iz, 2:i3
@@ -5217,7 +5217,7 @@ UIStateEvt_VolumeMixer_Data_Skip:
 	bit	4, wa
 	ret	z
 	ld	(0xc13e:16), 0
-	orw	(0xc4da:16), 4
+	orw	(AUDIO_VOICE_CHANGES:16), 4
 	ret
 UIStateEvt_VolumeMixer_Data_Case1:
 	ldb_d8	a, (SWBTWR_PAYLOAD_3)
@@ -5245,7 +5245,7 @@ UIStateEvt_VolumeMixer_Data_Skip3:
 	bit	4, wa
 	ret	z
 	ld	(0xc13e:16), 0
-	orw	(0xc4da:16), 4
+	orw	(AUDIO_VOICE_CHANGES:16), 4
 	ret
 UIStateEvt_VolumeMixer_Data_Case3:
 	bit	0, (SWBTWR_PAYLOAD_3:16)
@@ -5347,19 +5347,19 @@ UIStateEvt_EffectSelect_Data:
 	ldb_d8	a, (PANEL_PLAY_SETTINGS+1)
 	res	7, a
 	stb_d8	(0xc4e2), a
-	orw	(0xc4da:16), 0x400
+	orw	(AUDIO_VOICE_CHANGES:16), 0x400
 	jr	UIStateEvt_EffectSelect_Data_Join
 UIStateEvt_EffectSelect_Data_Skip5:
 	ld	(0xc4e2:16), 55
-	orw	(0xc4da:16), 0x400
+	orw	(AUDIO_VOICE_CHANGES:16), 0x400
 	jr	UIStateEvt_EffectSelect_Data_Join
 UIStateEvt_EffectSelect_Data_Skip6:
 	ld	(0xc4e2:16), 60
-	orw	(0xc4da:16), 0x400
+	orw	(AUDIO_VOICE_CHANGES:16), 0x400
 	jr	UIStateEvt_EffectSelect_Data_Join
 UIStateEvt_EffectSelect_Data_Skip7:
 	ld	(0xc4e2:16), 67
-	orw	(0xc4da:16), 0x400
+	orw	(AUDIO_VOICE_CHANGES:16), 0x400
 UIStateEvt_EffectSelect_Data_Join:
 	orw	(AUDIO_CONFIG_UPDATE:16), 4
 	ret
@@ -5375,7 +5375,7 @@ UIStateEvt_EffectSelect_Data_Skip:
 	res	7, a
 	stb_d8	(0xc4e2), a
 UIStateEvt_EffectSelect_Data_Skip8:
-	orw	(0xc4da:16), 0x400
+	orw	(AUDIO_VOICE_CHANGES:16), 0x400
 	orw	(AUDIO_CONFIG_UPDATE:16), 4
 	ret
 UIStateEvt_EffectSelect_Data_Skip2:
@@ -5426,7 +5426,7 @@ UIStateEvt_EffectSelect_Data_Skip4:
 	ldb_d8	a, (SWBTWR_PAYLOAD_2)
 	and	a, 15
 	stb_d8	(0xe8d4), a
-	orw	(0xc4da:16), 0x4000
+	orw	(AUDIO_VOICE_CHANGES:16), 0x4000
 	orw	(AUDIO_CONFIG_UPDATE:16), 4
 	ret
 ; --- Guard/dispatch: check flags, set/clear bits, conditional calls (54 bytes) ---
@@ -5465,7 +5465,7 @@ UIStateEvt_ChannelConfig_Data:
 	ret	nz
 	bit	6, (SWBTWR_PAYLOAD_3:16)
 	jr	z, UIStateEvt_PlayModeGuard_ClearBit_Join
-	orw	(0xc4dc:16), 8
+	orw	(AUDIO_STATE_CHANGES:16), 8
 	orw	(AUDIO_CONFIG_UPDATE:16), 4
 UIStateEvt_PlayModeGuard_ClearBit_Join:
 	bit	5, (SWBTWR_PAYLOAD_3:16)
@@ -5523,11 +5523,11 @@ UIStateEvt_PlayModeGuard_ClearBit_Skip2:
 	bit	0, (SWBTWR_PAYLOAD_2:16)
 	jr	z, UIStateEvt_ChannelConfig_Data_Skip4
 	res	4, (0xc262:16)
-	orw	(0xc4dc:16), 8
+	orw	(AUDIO_STATE_CHANGES:16), 8
 	jr	UIStateEvt_ChannelConfig_Data_Join2
 UIStateEvt_ChannelConfig_Data_Skip4:
 	set	4, (0xc262:16)
-	orw	(0xc4dc:16), 8
+	orw	(AUDIO_STATE_CHANGES:16), 8
 UIStateEvt_ChannelConfig_Data_Join2:
 	orw	(AUDIO_CONFIG_UPDATE:16), 4
 UIStateEvt_PlayModeGuard_ClearBit_Join2:
@@ -5549,18 +5549,18 @@ UIStateEvt_PlayModeGuard_ClearBit_Skip3:
 	res	6, (0xc288:16)
 	res	6, (0xc28a:16)
 	res	6, (0xc28c:16)
-	orw	(0xc4dc:16), 8
+	orw	(AUDIO_STATE_CHANGES:16), 8
 UIStateEvt_ChannelConfig_Data_Join3:
 	orw	(AUDIO_CONFIG_UPDATE:16), 4
 UIStateEvt_PlayModeGuard_ClearBit_Join3:
 	bit	6, (SWBTWR_PAYLOAD_3:16)
 	jr	z, UIStateEvt_PlayModeGuard_ClearBit_Join4
-	orw	(0xc4dc:16), 8
+	orw	(AUDIO_STATE_CHANGES:16), 8
 	orw	(AUDIO_CONFIG_UPDATE:16), 4
 UIStateEvt_PlayModeGuard_ClearBit_Join4:
 	bit	7, (SWBTWR_PAYLOAD_3:16)
 	ret	z
-	orw	(0xc4dc:16), 8
+	orw	(AUDIO_STATE_CHANGES:16), 8
 	orw	(AUDIO_CONFIG_UPDATE:16), 4
 	ret
 UIStateEvt_ChannelConfig_Data_Skip5:

@@ -45,7 +45,7 @@ UIStateEvt_VoiceParamHandler_Skip6:
 	call	AccWrap_PlayModeDispatch
 	call	SeqBuf_Init
 	ld	(1073:16), 0
-	or	(10391:16), 16
+	or	(SEQ_CONTROL_FLAGS:16), 16
 	ldw	(SEQ_TRACK_MASK:16), 0
 	and	(10377:16), 254
 	ld	a, 76:opc
@@ -61,7 +61,7 @@ UIStateEvt_VoiceParamHandler_Skip7:
 	call	AccWrap_PlayModeDispatch
 	call	SeqBuf_Init
 	ld	(1073:16), 0
-	or	(10391:16), 16
+	or	(SEQ_CONTROL_FLAGS:16), 16
 	ldw	(SEQ_TRACK_MASK:16), 0
 	ld	(4596:16), 0
 	call	SeqPlay_CheckStartConditions
@@ -159,7 +159,7 @@ PlayMode_TeardownAndRestore:
 	ld	wa, (0x2859:16)
 	ld	(SEQ_TRACK_MASK:16), wa
 	and	(SEQ_RTMCFG:16), 251
-	or	(0x2897:16), 16
+	or	(SEQ_CONTROL_FLAGS:16), 16
 	and	(SEQ_RTMCFG:16), 247
 	ret
 PartLookup_NullRet:
@@ -856,7 +856,7 @@ CDlikeSwitch_PlaybackTimer:
 	jr t, CDlikeSwTtl_StorePlaybackMode
 CDlikeTimer_ResetAccompaniment:
 	pushw wa
-	and	(0x2896:16), 249
+	and	(SEQ_METRO_FLAGS:16), 249
 	and	(SEQ_RTMCFG:16), 247
 	call Seq_ResetAndRestartAccompaniment
 	popw wa

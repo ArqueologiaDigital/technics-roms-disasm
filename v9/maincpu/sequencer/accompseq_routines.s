@@ -1801,7 +1801,7 @@ AccompSeq_ChordChange_Return:
 AccompSeq_CompareChord:
 	bit 0, (ACC_RUN_FLAGS:16)
 	jr z, AccompSeq_CompareChord_Return
-	bit 2, (0x28b2:16)
+	bit 2, (SEQ_METRO_FLAGS:16)
 	jr nz, AccompSeq_CompareChord_Return
 	ld (0x7e60:16), l
 	ld (0x7e61:16), h

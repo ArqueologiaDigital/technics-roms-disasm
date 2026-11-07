@@ -997,7 +997,7 @@ AudioInit_ChannelLoop_Done:
 	jr	nz, AudioInit_SetChangedFlag
 	orw	(AUDIO_SEQ_TRACK_FLAGS:16), 1
 AudioInit_SetChangedFlag:
-	bit	3, (0x28b3:16)
+	bit	3, (SEQ_CONTROL_FLAGS:16)
 	jr	z, AudioInit_CheckExternalBit3
 	andw	(AUDIO_SEQ_TRACK_FLAGS:16), 0xfdff
 AudioInit_CheckExternalBit3:

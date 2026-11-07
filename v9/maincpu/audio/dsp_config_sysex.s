@@ -5509,7 +5509,7 @@ Audio_InitDispatchReturn:
 	ld wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit 2, wa
 	jr z, AudioDispatch_SetAccMode
-	bit 0, (0x28b2:16)
+	bit 0, (SEQ_METRO_FLAGS:16)
 	jr z, AudioDispatch_SetAccMode
 
 AudioDispatch_ClearAccFlags:
