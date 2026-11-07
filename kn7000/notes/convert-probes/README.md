@@ -46,7 +46,7 @@ function of code region 1 and of the library image to MN10300 source
   `<export>_entry`: `sprintf_entry`, `dly_tsk_entry`, ...;
   `scripts/renaming/rename_kn7000_lib_entries.sed`.)
   No block header sits between a prologue and its entry. Frames: 6,257 entries
-  match every direct `call`, 18 have none, 1 does not (`func_4840FF64`: a bare
+  match every direct `call`, 18 have none, 1 does not (`JpegReadU16Be`: a bare
   `add -8, sp` before it, its callers save `[d2]` in an 8-byte frame), so it is
   left out.
 - `seed_layout_probe.py`, with the labels of the build before the relabelling

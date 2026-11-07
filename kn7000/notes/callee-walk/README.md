@@ -100,7 +100,7 @@ switch selections included):
 | hdsx3      | 0 / 0       | 0 / 0      | 30 / 228       | 25 / 177      | 10 / 38       | 9 / 34       | 40 / 266     | 34 / 211     | 131 / 1,048    | 7 / 56           | 17 / 19,340    | 155 / 20,444  |
 
 The KN7000's address-only pieces fall 50 -> 39 (1,037 -> 682 bytes); its string rows rise 32 -> 45 because
-13 empty strings handed to func_48502E9F (one of a switch's set, now a T value) are written `.asciz ""` in place
+13 empty strings handed to StrIsBlank (one of a switch's set, now a T value) are written `.asciz ""` in place
 of an s8 variable plus a 3 x s8 table.  The siblings' fall most (KN6000 339 -> 151 address pieces, 17,838 ->
 11,022 bytes; KN2400 380 -> 123): the address joins, return sets and jump-table states let their switches'
 descriptors be records (`func_4C026B6B_Selected`, `func_5016B726_Result` ...), and the KN2400's 51 "read"

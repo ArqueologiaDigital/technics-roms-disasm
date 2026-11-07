@@ -236,7 +236,7 @@ What each parameter is comes from the program's own parameter dump `func_48500C7
 EFFECT" and so on. The GUI's formatters agree: `func_4848BC9A` prints an FC through the table
 0x485EC344, 20 Hz to 20 kHz in third octaves, at `value >> 2`. `func_4848BD21` prints a gain as
 `(value - 64) / 2` dB, clamped to +-12. The tone generator's own controller table (lib
-`func_4C02E85D`, records 0x48586860) has handlers for CC80-83, 91-94 and none for CC96 or CC97.
+`TgPartControlChange`, records 0x48586860) has handlers for CC80-83, 91-94 and none for CC96 or CC97.
 
 | byte | controller | name in the source             | meaning (program 941)                                                                                                     | values over 169 x 8 parts                              |
 |------|------------|--------------------------------|---------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------|
@@ -264,7 +264,7 @@ per-voice filter-coefficient registers (2026-11-06,
 - `func_4C00807E` writes five 20-bit words to the part record (0x500B5340 + part x 0x54C) at
   +0x28, +0x2C, +0x30, +0x34 and +0x38, and a normalising shift (`asl 3` / `LibDiv32` by 6 of the
   halvings it needed) to the byte at +0x3C;
-- when a part's EQ changes (a case of the TG controller handler `func_4C02E85D`), the library collects the part's voices (`TgVoiceListCollectPartAll`) and `func_4C0045E7` merges the five words
+- when a part's EQ changes (a case of the TG controller handler `TgPartControlChange`), the library collects the part's voices (`TgVoiceListCollectPartAll`) and `func_4C0045E7` merges the five words
   into each voice record (`TgVoiceRecordPtr`) at +0x64 .. +0x74, keeping the top 12 bits, then calls
   `TgVoiceReg4000GroupWrite` (lib 0x4C037BA8);
 - that writes the five words through `TgVoiceRegWrite` as register classes 0x40000000, 0x44000000,
@@ -309,7 +309,7 @@ in a style's set-up. They start from the default template 0x485B7804.
 | 18-19 | `Ending2Major`, `Ending2Minor`                   | 2-10                      | ENDING 2: `k` = 1                                                                                                                  |
 
 **The intro and ending handlers** of program 941 (both called from the rhythm event dispatcher
-`func_48435ED4`, cases 0x48435FC8 / 0x48435FFD, and from `func_4843BC29`) compute the slot:
+`func_48435ED4`, cases 0x48435FC8 / 0x48435FFD, and from `CmpVariationSelect`) compute the slot:
 
     func_484437DA (INTRO, d0 = 1, 2, 3):  1 -> 2, 2 -> 0, 3 -> 1 (`add -2` / `mov 2`), >= 3 -> 0
                                           asl2 d2 / add 0xc, d2         slot 12 + 4k: 20, 12, 16
@@ -325,7 +325,7 @@ The chip stores a style's slots as the intros, the twelve variation slots, then 
 
 **The two halves are major and minor.** `StyleRecordSelectBind` (0x4843398F) is called with the
 slot (`0x5003A466`) and an extra byte (`0x5003A46A`). `StyleRecordSlotSelect` adds that byte to an
-intro or ending slot, `(0x2c, sp) + d1`. The byte is only ever written as 0 (reset, `func_484433C2`)
+intro or ending slot, `(0x2c, sp) + d1`. The byte is only ever written as 0 (reset, `RhyControllerReset`)
 or as `func_484361BC(chord type)`, in `func_48442FC7` when the chord changes. `func_484361BC` is a
 lookup in the 42-byte table 0x485B6EC8:
 
@@ -348,15 +348,15 @@ VARIATION 1-4 and FILL IN 1/2 buttons, the bar counts and the count block.
 
 `StyleRecordBindBuiltin` (0x484336DB) binds the current one into the pattern player's view:
 
-| offset     | size  | field                                                       | evidence                                                                     |
-|------------|-------|-------------------------------------------------------------|------------------------------------------------------------------------------|
-| `+0`       | 1     | bars - 1                                                    | `0x50122DCE`; `StyleBoundRecByteCeInc` + 1 -> `0x5003A452` (`func_48442293`) |
-| `+1`       | 1     | beats a bar - 1                                             | `0x50122DCF`; `StyleBoundRecByteCfLow3` + 1 -> `0x5003A454`                  |
-| `+2`, `+3` | 1, 1  | the style parts DSP units EFF4 / EFF5 serve, 0xFF = default | `0x50122DD4`; `func_48442164` (below)                                        |
-| `+4`       | u16BE | set-up length L                                             | `0x50122DCC`                                                                 |
-| `+6`       | L     | set-up events                                               | `0x50122DC8`; replayed into the part table by `func_48441DEB`                |
-| `+6+L`     | u24BE | stream length S                                             |                                                                              |
-| `+9+L`     | S     | the event stream                                            | start `0x50122DC0`, end `0x50122DC4` = start + S - 1, the 0xF5               |
+| offset     | size  | field                                                       | evidence                                                                    |
+|------------|-------|-------------------------------------------------------------|-----------------------------------------------------------------------------|
+| `+0`       | 1     | bars - 1                                                    | `0x50122DCE`; `StyleBoundRecByteCeInc` + 1 -> `0x5003A452` (`RhyMeterBind`) |
+| `+1`       | 1     | beats a bar - 1                                             | `0x50122DCF`; `StyleBoundRecByteCfLow3` + 1 -> `0x5003A454`                 |
+| `+2`, `+3` | 1, 1  | the style parts DSP units EFF4 / EFF5 serve, 0xFF = default | `0x50122DD4`; `func_48442164` (below)                                       |
+| `+4`       | u16BE | set-up length L                                             | `0x50122DCC`                                                                |
+| `+6`       | L     | set-up events                                               | `0x50122DC8`; replayed into the part table by `func_48441DEB`               |
+| `+6+L`     | u24BE | stream length S                                             |                                                                             |
+| `+9+L`     | S     | the event stream                                            | start `0x50122DC0`, end `0x50122DC4` = start + S - 1, the 0xF5              |
 
 Bytes 2/3 are `FF FF` in 2710 of the 3380 variations and `FF 02`-`FF 07` in the rest. They are
 the style parts that the DSP effect units the style sets (EFF4 / EFF5, `style_units` above) apply
@@ -466,7 +466,7 @@ offsets. `StyleNoteKeyConvert` (0x4843CEF3) hands `NoteConvApply` (0x48436229) t
 `{rule, fold_root, bass, root, type, on_bass, ..., state ptr, composer_part}`: root 1-12 (C = 1)
 and type 1-41 from `GetCurrentChord`, or from the second chord record `func_4844DDC6` copies when
 the rule's `alt_chord` byte is set (only rule 2); `bass` is 1 on style part 1; `composer_part` is
-1 when the rhythm genre is not 0 and the part is the one `func_4843BD55` selected (set from the
+1 when the rhythm genre is not 0 and the part is the one `CmpRecPartSet` selected (set from the
 COMPOSER's step screen `TT_CMSTEP`, 0xFF = none; [INFERENCE] the part being recorded).
 `NoteConvApply` then:
 

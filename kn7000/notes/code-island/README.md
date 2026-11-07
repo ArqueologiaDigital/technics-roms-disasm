@@ -4,7 +4,7 @@ Lane `code-island` of the open-items effort, 2026-10-30.  It answers two of the 
 (`notes/data-semantics-2026-10-29/README.md` at the repository root, "Generic 0", "Left open"), which
 turned out to be one problem:
 
-1. KN7000 `func_487B8E34`: the library's func_4C03B514 does `call func_487B8E34, [d2,a2,a3], 0x1c`,
+1. KN7000 `func_487B8E34`: the library's KernelTimerTask does `call func_487B8E34, [d2,a2,a3], 0x1c`,
    yet its 301 bytes were a `census: opaque -- unknown-dump` piece of the typed data region, followed by
    more opaque pieces that were call targets (`func_487B8F9B`, `func_487B8F9E`, `func_487B8FA1`) and a
    jump target (`loc_487B8FA4`);
@@ -28,13 +28,13 @@ that range to `gen_image_s.py` as code.  Program 941 (the other builds: "Per bui
 |------------|-------|-----------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | 0x487B8AAC | 24    | `Str_MILK_MN10300_Ver1_0R1` | the kernel's version string and two 0xFF pad bytes                                                                                                                                                                       |
 | 0x487B8AC4 | 128   | `KernelServiceHash`         | 16 x {u32 key, case address}: KernelWaitRelease does `mov KernelServiceHash, a1`, probes `(key & 0xF) * 8`, steps `add 8, a0` up to `cmp KernelRamLayout, a0` and jumps through `(4, a0)`; typed `REC_KernelServiceHash` |
-| 0x487B8B44 | 24    | `KernelRamLayout`           | 6 RAM addresses; read at +4, +8 (func_4C03CC4B), +0xC (func_4C03CC87) and +0x14 (func_4C03CC4B, KernelStart's stack pointer); +0 and +0x10 have no reader the walk sees                                                  |
-| 0x487B8B5C | 28    | `KernelParams`              | 14 u16 = 10, 20, 20, 20, 10, 10, 10, 10, 10, 10, 20, 10, 30, 0; read at +0 (get_tid), +0x10, +0x12 (func_4C03B514), +0x16 (func_4C03B799)                                                                                |
-| 0x487B8B78 | 695   | `KernelInit`                | KernelStart's `jmp` target: fills the kernel's RAM tables, creates the task func_4C03B514, calls func_48447F33 (region 1), KernelInitHook and func_4C03DCBF                                                              |
+| 0x487B8B44 | 24    | `KernelRamLayout`           | 6 RAM addresses; read at +4, +8 (KernelMemoryInit), +0xC (KernelAreaAlloc) and +0x14 (KernelMemoryInit, KernelStart's stack pointer); +0 and +0x10 have no reader the walk sees                                          |
+| 0x487B8B5C | 28    | `KernelParams`              | 14 u16 = 10, 20, 20, 20, 10, 10, 10, 10, 10, 10, 20, 10, 30, 0; read at +0 (get_tid), +0x10, +0x12 (KernelTimerTask), +0x16 (KernelTaskReadyRemove)                                                                      |
+| 0x487B8B78 | 695   | `KernelInit`                | KernelStart's `jmp` target: fills the kernel's RAM tables, creates the task KernelTimerTask, calls KernelTickTaskInit (region 1), KernelInitHook and KernelDispatchStart                                                 |
 | 0x487B8E2F | 364   | `KernelWaitRelease`         | movm + `add -0x10, sp` prologue, then `KernelWaitRelease_entry` (the old `func_487B8E34`); the 11 cases KernelServiceHash points at are its `loc_` labels                                                                |
 | 0x487B8F9B | 3     | `KernelErrorHook`           | `retf 0, 0`; 26 calls, each before a service returns an error (d0 = function code, d1 = a uITRON error code: -0x45 E_CTX, -0x3F E_OBJ, -0x23 E_ID ...)                                                                   |
 | 0x487B8F9E | 3     | `KernelErrorHook2`          | `retf 0, 0`; 3 calls, the same arguments                                                                                                                                                                                 |
-| 0x487B8FA1 | 3     | `KernelWaitAbortHook`       | `retf 0, 0`; func_4C03B514 calls it with a0 = the TCB, d0 = -0x55 (E_TMOUT); the KN6000's also gets -0x51 (E_DLT)                                                                                                        |
+| 0x487B8FA1 | 3     | `KernelWaitAbortHook`       | `retf 0, 0`; KernelTimerTask calls it with a0 = the TCB, d0 = -0x55 (E_TMOUT); the KN6000's also gets -0x51 (E_DLT)                                                                                                      |
 | 0x487B8FA4 | 11    | `KernelStart`               | `mov (KernelRamLayout+20), a3 / mov a3, sp / jmp KernelInit`; jumped to from the reset code (0x48410151) and from func_4C03DD98                                                                                          |
 | 0x487B8FAF | 3     | `KernelInitHook`            | `ret 0, 0`, called by KernelInit                                                                                                                                                                                         |
 | 0x487B8FB2 | 31    | `func_487B8FB2`             | no traced path enters it: after `ret 0, 0`, it decodes to the library image's first byte and ends in `rets` (clears bits 4..7 of 0x34000118, calls func_4C03DC87_entry); the KN6000's copy is unreached too              |
@@ -69,7 +69,7 @@ addresses differ): the tail code starts at `LIB_FILE_BASE - 0x459`.
 
 ### `func_4C03B799_Table`'s true extent
 
-func_4C03B799 (library_01.s) reads it four times, always as `movhu (func_4C03B799_Table), dN`: no index
+KernelTaskReadyRemove (library_01.s) reads it four times, always as `movhu (func_4C03B799_Table), dN`: no index
 register, no offset.  It can reach exactly one halfword, `KernelParams + 0x16` (value 10).  Its next two
 halfwords (30, 0) are `KernelParams + 0x18` / `+ 0x1A`, which no instruction the walk sees reads (the
 KN6000's KernelParams has the same 14 words, read at the same four offsets).  Everything from [3] on was
@@ -92,7 +92,7 @@ of the copy, so it fell in the data region, right before the library image.  The
   declared `opaque -- unknown-dump` ("a typed pointer or a code immediate holds their address, but
   nothing is read through it");
 - `reader_tables()` types a fixed-address `movhu` read as a table that runs to the next label or typed
-  item.  func_4C03B799's read was the last item before the code, and the next label was the call target
+  item.  KernelTaskReadyRemove's read was the last item before the code, and the next label was the call target
   `func_487B8E34`, 706 bytes on: hence 353 x s16.
 
 The siblings had the opposite gap: their code ranges were right (Makefile `--code`), but
@@ -165,7 +165,7 @@ rises and why:
 | program    | (a) call targets w/o header   | 7,454 -> 7,460            | the same; and `_entry` labels the tail's calls made visible in the library (func_4C03BB8A_entry, func_4C03CC4B_entry ...)              |
 | program    | (b) number operands           | 20,523 -> 20,558          | the tail code's RAM addresses (`mov 0x50380088, a0` ...: the kernel's tables in RAM, unnamed)                                          |
 | program    | (c) loc_ locals               | 61,449 -> 61,468          | the tail code's branch targets and switch cases                                                                                        |
-| program    | (e) placeholder names         | 6,496 -> 6,498            | func_487B8FB2 (unreached) and func_4C03DCBF (a call target of KernelInit)                                                              |
+| program    | (e) placeholder names         | 6,496 -> 6,498            | func_487B8FB2 (unreached) and KernelDispatchStart (a call target of KernelInit)                                                        |
 | program942 | the same five                 | +18 / +6 / +35 / +19 / +2 | the same code in build 942                                                                                                             |
 | kn2400     | (a) call targets w/o header   | 7,423 -> 7,424            | a call that was a `.byte` escape now names its target                                                                                  |
 | kn6000     | (a) routines without a header | 19,013 -> 19,014          | the same                                                                                                                               |
@@ -184,7 +184,7 @@ and WSA1 images only (no MN10300 tree), so this lane cannot move it.
   (`tools/mn10300_insn_len.py`); `"><SH"`, `"RIGH"`, `"PUSH"` and the KN2400's `ptrs_48501B38` word are text
   again, and every tree's `P` is 0.
 - ~~**func_487B8FB2**~~: resolved by lane mn10300-typer (item 4): `KernelTickIsrDefault`, the kernel's
-  default tick ISR, which nothing installs (func_48447F33 def_ints KernelTickHandler for the same interrupt).
+  default tick ISR, which nothing installs (KernelTickTaskInit def_ints KernelTickHandler for the same interrupt).
 - ~~**Pointer-walk bounds in the data typer**~~: resolved by lane mn10300-typer (item 2, `array_end`), with
   the line churn measured and explained there.
 

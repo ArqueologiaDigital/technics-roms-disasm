@@ -129,7 +129,7 @@ firmware has none for those objects.
 
 ### The built-in demo songs
 
-The 30 zlib streams of each build are its 10 demo songs, three streams each.  func_48457350
+The 30 zlib streams of each build are its 10 demo songs, three streams each.  DemoSongLoad
 (941 0x48457350; d0 = the song) takes song n's streams from three 12-entry tables in the
 initialised RAM (`func_48457350_Table` / `_Table_2` / `_Table_3`; written `ptrs_50000C20` / `_50000C50` / `_50000C80` when this lane ran) and inflates them with
 func_48533758: the song record into Rec8E0TablePtr(0) (0x8E0 bytes), the event memory into

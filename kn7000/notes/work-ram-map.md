@@ -149,7 +149,7 @@ custom-flash directory edit buffer 0x5037A000..0x5037FFFF.
 | 0x5004A76C | 0x5004FB68  | 0x53FC  | Sequencer engine, disk-job, Techni-Chord and style-converter vars                              | 0x4845A..0x4846D code, MainStylCnvFunc                                         |
 | 0x5004FB68 | 0x5005FB68  | 0x10000 | Custom-flash 64 KB sector read-modify-write buffer                                             | func_4847F8A8_entry: 0x4847F91D, 0x4847F939, 0x4847F95A                        |
 | 0x5005FB68 | 0x500615F4  | 0x1A8C  | Custom-data / flash module state and buffers                                                   | 0x48481F4E, 0x48482076, 0x484821A1                                             |
-| 0x500615F4 | 0x50061604  | 0x10    | 16-byte block zeroed before the record scan                                                    | func_48482617: 0x48482623..0x48482634                                          |
+| 0x500615F4 | 0x50061604  | 0x10    | 16-byte block zeroed before the record scan                                                    | DpSmf1ReaderTask: 0x48482623..0x48482634                                       |
 | 0x50061604 | 0x5006A984  | 0x9380  | Record table, stride 0x49C (note 5)                                                            | func_4848275F_entry: base 0x4848278C, add 0x49C at 0x484828D3                  |
 | 0x5006A984 | 0x5006B4E4  | 0xB60   | Loader flag/handle, custom-data vars, MEMO LOG text                                            | func_48482725, DbMemoProc                                                      |
 | 0x5006B4E4 | 0x5006CEF0  | 0x1A0C  | UI screen vars, panel serial, MIDI settings (note 10)                                          | DbBitmapFileProc, 0x484970B2                                                   |
@@ -309,7 +309,7 @@ Each gap between referenced bases equals count x stride. The strides come from t
   M3SendProcess only when func_484A3A2A is true: the service test state byte 0x5006BA20+0x1F9 is 0xF6, or it is 0xFC
   with +0x1F8 = 0xB (the factory test modes, not PICTURE LOAD). Otherwise func_484524EB routes it: func_4844FD70 gives
   kind 1 for 0x700000, the key's zone record (func_4845124C / func_4845127C) gives the part, a negative part or a
-  failed slot (func_48450542, 64 held-key slots of 6 bytes at 0x5003AC4C) drops it, and func_4844FAF1 posts the
+  failed slot (HeldKeyListUpdate, 64 held-key slots of 6 bytes at 0x5003AC4C) drops it, and func_4844FAF1 posts the
   part's note to func_4C024DD8, the M3 -> TG translator, whose note case calls func_4C029793 (status 0x90..0x94 by
   source) -> TgcBufWrite; the library's SndCmdStreamInterpret (0x4C003B2C) hands status 0x9n to TgPartKeyEvent.
   TgcBufWrite itself has no gate (it only waits for ring space). `work-ram-map-probes/picload_key_gate.py` intersects
