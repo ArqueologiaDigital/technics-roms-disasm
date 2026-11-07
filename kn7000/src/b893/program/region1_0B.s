@@ -37383,7 +37383,7 @@ MainSDAudPlay_FwdSW:
 loc_4857603D:
     jmp     loc_485760D8
 loc_48576040:
-    call    func_485788D8_entry, 0, 8
+    call    SdAudFfStart_entry, 0, 8
     cmp     0, d0
     bge     loc_4857604C
     jmp     loc_485760D8
@@ -41616,10 +41616,10 @@ loc_485788C7:
     clr     d0
 loc_485788D5:
     ret     0, 8
-
-func_485788D8:
+# SdAudFfStart  (CPU 0x485788d8)
+SdAudFfStart:
     add     -8, sp
-func_485788D8_entry:
+SdAudFfStart_entry:
     call    SdAudPlayGateGet_entry, 0, 0xc
     exth    d0
     cmp     2, d0
