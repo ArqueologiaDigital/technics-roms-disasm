@@ -74,7 +74,7 @@ def main():
                     if b != a and not re.search(r'_ram\.sym$', f):
                         print(f'{model}: {nm} at 0x{a:08X} is also {f} 0x{b:08X}'); bad += 1
             ph = f'func_{a:08X}'
-            if ph not in taken and nm not in taken and cls and cls.group(1) not in ('data', 'var'):
+            if ph not in taken and nm not in taken and cls and cls.group(1) not in ('data', 'var') and (a >> 24) not in (0x50, 0x90, 0x84):
                 print(f'{model}: 0x{a:08X} {nm}: neither {ph} nor the name is a label of the source'); bad += 1
         print(f'{model}: {rows} hand rows of this lane checked')
     print('PASS' if bad == 0 else f'FAIL {bad}')

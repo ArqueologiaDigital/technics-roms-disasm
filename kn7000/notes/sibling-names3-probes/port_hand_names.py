@@ -11,7 +11,9 @@ two lists of masked bodies, in address order, are aligned with difflib.SequenceM
 heuristic); a pair is kept inside an `equal` block of at least --min-run routines (default 3), so a
 short routine is carried only with its neighbours, or, in a shorter block, when its body has at least
 --min-long instructions (default 12).  A body that occurs again among the --window (default 8)
-routines on either side of it in A is refused: in a run of identical procedures the alignment can be
+routines on either side of it in A is refused.  Then, outside the runs, a body of at least --min-long
+instructions that occurs once in A and once in B pairs wherever it is (relinked modules move).
+In a run of identical procedures the alignment can be
 off by one (the audit found FtLangText01 / FtLangText03 that way before this rule).  A hand row of A carries to B when its routine
 pairs and B's routine is still func_<ADDR>.  A var row (a RAM address) carries when, over every
 paired routine, the instruction operands at the same place give A's address one B address and that
@@ -92,6 +94,14 @@ def main():
                 continue
             if blk.size >= o.min_run or len(ma[i]) >= o.min_long:
                 pair[na[i]] = nb[blk.b + k]
+    # second pass: a body of at least --min-long instructions that is unique in A and in B pairs anywhere
+    ca, cb = collections.Counter(ma), collections.Counter(mb)
+    whereb = {m: nb[k] for k, m in enumerate(mb) if cb[m] == 1}
+    paired_b = set(pair.values())
+    unique_pass = 0
+    for k, m in enumerate(ma):
+        if na[k] not in pair and len(m) >= o.min_long and ca[m] == 1 and m in whereb and whereb[m] not in paired_b:
+            pair[na[k]] = whereb[m]; paired_b.add(whereb[m]); unique_pass += 1
     adda, addb = addr_of(o.a), addr_of(o.b)
     # RAM address pairs over the paired routines
     seen = collections.defaultdict(set); back = collections.defaultdict(set)
@@ -130,7 +140,7 @@ def main():
         same = sum(1 for x, y in both if x == y)
         print(f'audit: {len(both)} paired routines named on both sides, {same} alike, {len(both) - same} unlike'
               + (': ' + ', '.join(f'{x}/{y}' for x, y in both if x != y) if len(both) != same else ''))
-        print(f'{o.a} -> {o.b}: {len(pair)} routines paired in equal runs of >= {o.min_run}; {len(rows)} hand rows, {len(out)} carried; ' + ', '.join(f'{k} {v}' for k, v in missed.items()))
+        print(f'{o.a} -> {o.b}: {len(pair)} routines paired ({unique_pass} of them by a unique long body); {len(rows)} hand rows, {len(out)} carried; ' + ', '.join(f'{k} {v}' for k, v in missed.items()))
     else:
         print('\n'.join(out))
 
