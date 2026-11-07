@@ -31,7 +31,7 @@ loc_48580056:
     jmp     loc_4858030F
 loc_48580086:
     mov     a2, a0
-    call    func_4857FCAC_entry, [d2,a2,a3], 0x1c
+    call    PictureExtIndexGet_entry, [d2,a2,a3], 0x1c
     movhu   d0, (0x2c, sp)
     movhu   (0x2c, sp), d0
     mov     d0, (0x24, sp)
@@ -307,8 +307,8 @@ loc_485802FD:
 loc_4858030F:
     add     0x494, sp
     ret     [d2,d3,a2,a3], 0x10
-
-func_48580316:
+# SswDoraJpgImport  (CPU 0x48580316)
+SswDoraJpgImport:
     movm    [a2], (sp)
     add     -0x24, sp
     mov     Str_DORA_JPG, a1
@@ -1511,16 +1511,16 @@ InitializeBlock15_entry:
     mov     Str_TT_HELPTEXT, a0
     call    RegisterTitle_entry, [d2,a2], 8
     ret     [d2,d3,a2,a3], 0x3c
-
-func_48580E74:
+# HelpNoSet  (CPU 0x48580e74)
+HelpNoSet:
     movhu   d0, (0x5009e702)
     retf    0, 0
-
-func_48580E7D:
+# HelpNoGet  (CPU 0x48580e7d)
+HelpNoGet:
     movhu   (0x5009e702), d0
     retf    0, 0
-
-func_48580E86:
+# HelpPageSet  (CPU 0x48580e86)
+HelpPageSet:
     mov     d0, d1
     exth    d1
     cmp     0, d1
@@ -1535,15 +1535,15 @@ loc_48580E8D:
 loc_48580E95:
     movhu   d0, (0x5009e704)
     retf    0, 0
-
-func_48580E9E:
+# HelpPageGet  (CPU 0x48580e9e)
+HelpPageGet:
     movhu   (0x5009e704), d0
     retf    0, 0
-
-func_48580EA7:
+# HelpPageCountGet  (CPU 0x48580ea7)
+HelpPageCountGet:
     movm    [d2,a2], (sp)
     add     -8, sp
-func_48580EA7_entry:
+HelpPageCountGet_entry:
     movhu   (0x500c4d24), d1
     cmp     1, d1
     beq     loc_48580EC2
@@ -1563,7 +1563,7 @@ loc_48580EC2:
     mov     (d0, a0), d0
     mov     a0, a2
     add     d0, a2
-    call    func_48580E7D, 0, 0
+    call    HelpNoGet, 0, 0
     exth    d0
     mov     0xc, d1
     nop
@@ -1573,11 +1573,11 @@ loc_48580EC2:
     movhu   (2, a2), d0
 loc_48580EED:
     ret     [d2,a2], 0x10
-
-func_48580EF0:
+# HelpPageTextGet  (CPU 0x48580ef0)
+HelpPageTextGet:
     movm    [d2,d3,a2], (sp)
     add     -0x10, sp
-func_48580EF0_entry:
+HelpPageTextGet_entry:
     mov     d0, d3
     exth    d3
     cmp     0, d3
@@ -1590,7 +1590,7 @@ loc_48580F04:
     mov     Str_Page_NG_0, a0
     ret     [d2,d3,a2], 0x1c
 loc_48580F11:
-    call    func_48580E7D, 0, 0
+    call    HelpNoGet, 0, 0
     exth    d0
     cmp     0x48, d0
     ble     loc_48580F24
@@ -1614,7 +1614,7 @@ loc_48580F40:
     mov     d2, a2
     asl2    d0
     mov     (d0, a2), d2
-    call    func_48580E7D, 0, 0
+    call    HelpNoGet, 0, 0
     add     a2, d2
     exth    d0
     mov     0xc, d1
@@ -1642,11 +1642,11 @@ loc_48580F81:
     movhu   d0, (0x5009e2fc)
     mov     a2, a0
     ret     [d2,d3,a2], 0x1c
-
-func_48580FA1:
+# HelpTitleTextGet  (CPU 0x48580fa1)
+HelpTitleTextGet:
     movm    [d2,d3,a2], (sp)
     add     -8, sp
-func_48580FA1_entry:
+HelpTitleTextGet_entry:
     movhu   (0x500c4d24), d0
     cmp     1, d0
     beq     loc_48580FBE
@@ -1665,7 +1665,7 @@ loc_48580FBE:
     mov     d3, a0
     asl2    d1
     mov     (d1, a0), d2
-    call    func_48580E7D, 0, 0
+    call    HelpNoGet, 0, 0
     add     d3, d2
     exth    d0
     mov     0xc, d1
@@ -1761,7 +1761,7 @@ HelpTitleCheck:
     cmp     MT_GetTableString, d1
     bne     loc_485810E4
     mov     (0x24, sp), a2
-    call    func_48580FA1_entry, [d2,d3,a2], 0x14
+    call    HelpTitleTextGet_entry, [d2,d3,a2], 0x14
     mov     a0, a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
@@ -1790,7 +1790,7 @@ loc_48581113:
     mov     (0x30, sp), a0
     mov     a0, (0x10, sp)
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
-    call    func_48580E9E, 0, 0
+    call    HelpPageGet, 0, 0
     exth    d0
     mov     d0, (0x10, sp)
     mov     (0x28, sp), d0
@@ -1806,7 +1806,7 @@ loc_48581139:
 loc_48581147:
     call    GetViewInstance, 0, 0
     mov     a0, a2
-    call    func_48580EA7_entry, [d2,a2], 0x10
+    call    HelpPageCountGet_entry, [d2,a2], 0x10
     movhu   d0, (0x26, a2)
     exth    d0
     ret     [d2,d3,a2], 0x20
@@ -1862,7 +1862,7 @@ loc_485811C1:
 loc_485811D4:
     exth    d3
     mov     d3, d0
-    call    func_48580E86, 0, 0
+    call    HelpPageSet, 0, 0
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -1900,7 +1900,7 @@ loc_48581223:
     mov     0xf1, d0
     movhu   d0, (0x5009e700)
     mov     1, d0
-    call    func_48580E86, 0, 0
+    call    HelpPageSet, 0, 0
     bra     loc_4858124D
 loc_48581245:
     clr     d0
@@ -2032,51 +2032,51 @@ loc_48581373:
     jmp     loc_48581466
 loc_48581376:
     mov     0x27, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     mov     1, d0
-    call    func_48580E86, 0, 0
+    call    HelpPageSet, 0, 0
     jmp     loc_48581466
 loc_48581387:
     mov     0x28, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     mov     1, d0
-    call    func_48580E86, 0, 0
+    call    HelpPageSet, 0, 0
     jmp     loc_48581466
 loc_48581398:
     mov     0x29, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     mov     1, d0
-    call    func_48580E86, 0, 0
+    call    HelpPageSet, 0, 0
     jmp     loc_48581466
 loc_485813A9:
     mov     0x2a, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     mov     1, d0
-    call    func_48580E86, 0, 0
+    call    HelpPageSet, 0, 0
     jmp     loc_48581466
 loc_485813BA:
     mov     0x2c, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     mov     1, d0
-    call    func_48580E86, 0, 0
+    call    HelpPageSet, 0, 0
     jmp     loc_48581466
 loc_485813CB:
     mov     0x2d, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     mov     1, d0
-    call    func_48580E86, 0, 0
+    call    HelpPageSet, 0, 0
     jmp     loc_48581466
 loc_485813DC:
     mov     0x2e, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     mov     1, d0
-    call    func_48580E86, 0, 0
+    call    HelpPageSet, 0, 0
     jmp     loc_48581466
 loc_485813ED:
     mov     0x2f, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     mov     1, d0
-    call    func_48580E86, 0, 0
+    call    HelpPageSet, 0, 0
     bra     loc_48581466
 loc_485813FD:
     call    GetTitleNow_entry, 0, 0x10
@@ -2097,27 +2097,27 @@ loc_485813FD:
     bra     loc_48581466
 loc_48581428:
     mov     0x36, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     mov     1, d0
-    call    func_48580E86, 0, 0
+    call    HelpPageSet, 0, 0
     bra     loc_48581466
 loc_48581438:
     mov     0x37, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     mov     1, d0
-    call    func_48580E86, 0, 0
+    call    HelpPageSet, 0, 0
     bra     loc_48581466
 loc_48581448:
     mov     0x38, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     mov     1, d0
-    call    func_48580E86, 0, 0
+    call    HelpPageSet, 0, 0
     bra     loc_48581466
 loc_48581458:
     mov     0x39, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     mov     1, d0
-    call    func_48580E86, 0, 0
+    call    HelpPageSet, 0, 0
 loc_48581466:
     clr     d0
     ret     [d2,d3], 0x14
@@ -2209,9 +2209,9 @@ HelpTextCheck:
     beq     loc_4858155B
     bra     loc_48581561
 loc_4858154C:
-    call    func_48580E9E, 0, 0
+    call    HelpPageGet, 0, 0
     exth    d0
-    call    func_48580EF0_entry, [d2,d3,a2], 0x1c
+    call    HelpPageTextGet_entry, [d2,d3,a2], 0x1c
     mov     a0, d0
     bra     loc_48581562
 loc_4858155B:
@@ -2316,7 +2316,7 @@ loc_4858163A:
     bra     loc_48581653
 loc_4858163D:
     mov     1, d0
-    call    func_48580E86, 0, 0
+    call    HelpPageSet, 0, 0
     mov     0x12e, d0
     clr     d1
     call    ChangeTitle_entry, [d2,d3,a2], 0x20
@@ -2842,11 +2842,11 @@ loc_48581B2A:
     jmp     loc_48581EEB
 loc_48581B3F:
     mov     0x3b, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581B49:
     mov     0x47, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581B53:
     mov     a3, d1
@@ -2859,7 +2859,7 @@ loc_48581B53:
     jmp     loc_48581EEB
 loc_48581B64:
     mov     0x47, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581B6E:
     mov     a3, d1
@@ -2881,7 +2881,7 @@ loc_48581B86:
     jmp     (a0)
 loc_48581B91:
     mov     1, d0
-    call    func_48580E86, 0, 0
+    call    HelpPageSet, 0, 0
     mov     0x12d, d0
     clr     d1
     call    ChangeTitle_entry, [d2,d3,a2], 0x20
@@ -2889,50 +2889,50 @@ loc_48581B91:
     ret     [d3,a2,a3], 0x1c
 loc_48581BA7:
     mov     1, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581BB1:
     mov     0x30, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581BBB:
     mov     0x25, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581BC5:
     mov     0x33, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581BCF:
     mov     0x13, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581BD9:
     mov     0x24, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581BE3:
     clr     d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581BEC:
     clr     d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581BF5:
     mov     0x44, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581BFF:
     mov     0x2b, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
 loc_48581C06:
     jmp     loc_48581EEB
 loc_48581C09:
     mov     0x36, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     mov     1, d0
-    call    func_48580E86, 0, 0
+    call    HelpPageSet, 0, 0
     mov     0x12c, d0
     clr     d1
     call    ChangeTitle_entry, [d2,d3,a2], 0x20
@@ -2959,31 +2959,31 @@ loc_48581C26:
     bra     loc_48581C86
 loc_48581C4A:
     mov     0x3f, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581C54:
     mov     0x3e, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581C5E:
     mov     0x46, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581C68:
     mov     0x3d, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581C72:
     mov     0x3d, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581C7C:
     mov     0x45, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581C86:
     mov     0x3d, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581C90:
     mov     a3, d1
@@ -2998,39 +2998,39 @@ loc_48581C90:
     bra     loc_48581CB8
 loc_48581CA4:
     mov     0x31, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581CAE:
     mov     0x32, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581CB8:
     mov     0x31, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581CC2:
     mov     0x18, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581CCC:
     mov     0x17, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581CD6:
     mov     0x20, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581CE0:
     mov     0x1f, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581CEA:
     mov     0x21, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581CF4:
     mov     0x22, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581CFE:
     mov     -1, d0
@@ -3040,66 +3040,66 @@ loc_48581D03:
     ret     [d3,a2,a3], 0x1c
 loc_48581D08:
     mov     0x23, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581D12:
     mov     0x11, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581D1C:
     mov     0xe, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581D26:
     mov     0x10, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581D30:
     mov     0xf, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581D3A:
     mov     7, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581D44:
     mov     4, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581D4E:
     mov     5, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581D58:
     mov     6, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581D62:
     mov     0x1d, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581D6C:
     mov     0x1c, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581D76:
     mov     0x1b, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581D80:
     mov     0x1e, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581D8A:
     mov     -1, d0
     ret     [d3,a2,a3], 0x1c
 loc_48581D8F:
     mov     0x40, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581D99:
     mov     0x41, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581DA3:
     mov     -1, d0
@@ -3121,79 +3121,79 @@ loc_48581DBC:
     ret     [d3,a2,a3], 0x1c
 loc_48581DC1:
     mov     0x15, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581DCB:
     mov     0x12, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581DD5:
     mov     0x16, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581DDF:
     mov     0xc, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581DE9:
     mov     9, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581DF3:
     mov     0x19, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581DFD:
     mov     0x3c, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581E07:
     mov     0xd, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581E11:
     mov     0x1a, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581E1B:
     mov     8, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581E25:
     mov     0xa, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581E2F:
     mov     0xb, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581E39:
     mov     0x34, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581E43:
     mov     0x3a, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581E4D:
     mov     0x42, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581E57:
     mov     0x43, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581E61:
     mov     2, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581E6B:
     mov     3, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     jmp     loc_48581EEB
 loc_48581E75:
     mov     0x14, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     bra     loc_48581EEB
 loc_48581E7E:
     mov     -1, d0
@@ -3215,27 +3215,27 @@ loc_48581E97:
     ret     [d3,a2,a3], 0x1c
 loc_48581E9C:
     mov     0x48, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     bra     loc_48581EEB
 loc_48581EA5:
     mov     0x48, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     bra     loc_48581EEB
 loc_48581EAE:
     mov     0x48, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     bra     loc_48581EEB
 loc_48581EB7:
     mov     0x48, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     bra     loc_48581EEB
 loc_48581EC0:
     mov     0x48, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     bra     loc_48581EEB
 loc_48581EC9:
     mov     0x48, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     bra     loc_48581EEB
 loc_48581ED2:
     mov     -1, d0
@@ -3248,14 +3248,14 @@ loc_48581EDA:
     bra     loc_48581F02
 loc_48581EDE:
     mov     0x12, d0
-    call    func_48580E74, 0, 0
+    call    HelpNoSet, 0, 0
     bra     loc_48581EEB
 loc_48581EE7:
     mov     -1, d0
     bra     loc_48581F02
 loc_48581EEB:
     mov     1, d0
-    call    func_48580E86, 0, 0
+    call    HelpPageSet, 0, 0
     mov     0x12e, d0
     clr     d1
     call    ChangeTitle_entry, [d2,d3,a2], 0x20
@@ -3986,7 +3986,7 @@ loc_48582537:
     call    func_48451E53_entry, [d2,d3], 0x1c
     mov     5, d0
     mov     3, d1
-    call    func_484B30BF_entry, [d2,d3], 8
+    call    MidiFilterFieldSet_entry, [d2,d3], 8
     bra     loc_4858259B
 loc_48582570:
     call    func_484481BF_entry, [a2], 0x14
@@ -3997,7 +3997,7 @@ loc_48582570:
     call    MidiRealtimeModeSet, 0, 0
     mov     5, d0
     clr     d1
-    call    func_484B30BF_entry, [d2,d3], 8
+    call    MidiFilterFieldSet_entry, [d2,d3], 8
     call    func_484AB998_entry, 0, 8
 loc_4858259B:
     clr     d0
@@ -4064,7 +4064,7 @@ func_485825FB_entry:
     beq     loc_48582638
     mov     0xc, a0
     add     a2, a0
-    call    func_484C301C_entry, 0, 0x1c
+    call    PcComFrame2ESend_entry, 0, 0x1c
     mov     d0, d2
     cmp     0, d2
     bge     loc_4858261C
@@ -4227,7 +4227,7 @@ loc_48582769:
     mov     -2, d0
     jmp     loc_48582CCC
 loc_4858276E:
-    call    func_4842B9A1, 0, 0
+    call    TitleIdLastSetGet, 0, 0
     exthu   d0
     and     0xffff, d0
     cmp     0x12f, d0
@@ -4339,7 +4339,7 @@ loc_4858286C:
     mov     d3, a2
     mov     0x10, d0
     mov     a2, a0
-    call    func_4852F0BF, 0, 0
+    call    FmmStrNCopyPad, 0, 0
     mov     a2, a0
     mov     0x10, d0
     call    func_48526C8F_entry, 0, 0x10
@@ -4353,12 +4353,12 @@ loc_4858286C:
 loc_485828A3:
     mov     d3, a0
     mov     0x10, d0
-    call    func_48520782_entry, [d2,d3], 8
+    call    FmmTextPadFix_entry, [d2,d3], 8
     movbu   (0x50172f29), d0
     mov     d3, a0
     inc     d0
     extbu   d0
-    call    func_48455E99_entry, [d2,a2], 0x1c
+    call    SongRecNameSet_entry, [d2,a2], 0x1c
     call    GetSeqSongNo, 0, 0
     movbu   (0x50172f29), d1
     extbu   d0
@@ -4367,12 +4367,12 @@ loc_485828A3:
     bne     loc_485828DC
     clr     d0
     mov     d3, a0
-    call    func_48455E99_entry, [d2,a2], 0x1c
+    call    SongRecNameSet_entry, [d2,a2], 0x1c
 loc_485828DC:
     mov     0xc, d0
-    call    func_48462DA7_entry, 0, 8
+    call    SeqModeEnterDispatch_entry, 0, 8
     mov     0xc, d0
-    call    func_48462DCF_entry, 0, 8
+    call    SeqModeLeaveDispatch_entry, 0, 8
     jmp     loc_48582CBD
 loc_485828F1:
     mov     0x50172f33, a3
@@ -4764,7 +4764,7 @@ loc_48582CE9:
     movhu   d0, (0x50173148)
     ret     [d2,a2,a3], 0x1c
 loc_48582D02:
-    call    func_484C2F3E_entry, 0, 0x1c
+    call    PcComFrame30Send_entry, 0, 0x1c
     mov     d0, d2
     cmp     0, d2
     bge     loc_48582D18
@@ -4821,7 +4821,7 @@ loc_48582D93:
     movbu   d0, (0x5017303c)
     mov     d0, (0x50173140)
     mov     d0, (0x50173144)
-    call    func_484C2FC4_entry, 0, 0x1c
+    call    PcComFrame31Send_entry, 0, 0x1c
     cmp     0, d0
     bge     loc_48582DCC
     mov     -9, d0
@@ -4917,7 +4917,7 @@ loc_48582EC6:
     mov     sp, a0
     add     0x14, a0
     mov     1, d1
-    call    func_484C309A_entry, 0, 0x1c
+    call    PcComFrame2DSend_entry, 0, 0x1c
     cmp     0, d0
     bge     loc_48582EE6
     mov     -3, d0
@@ -5084,7 +5084,7 @@ loc_485830A1:
     mov     (0x50173144), d0
     mov     d3, a0
     mov     d2, d1
-    call    func_484C309A_entry, 0, 0x1c
+    call    PcComFrame2DSend_entry, 0, 0x1c
     cmp     0, d0
     bge     loc_485830BF
     mov     -3, d0

@@ -13710,13 +13710,13 @@ data_4872978D:
 .incbin_range "baserom/kn7000_program_b935.rom", 0x32978D, 0x329790
 
 ptrs_48729790:
-	.long	func_48438694
-	.long	func_484386AE
-	.long	func_484386CB
-	.long	func_4843877C
-	.long	func_48438794
+	.long	MemPadAllocPtrGet
+	.long	MemPadAllocPtrSet
+	.long	MemPadAllocFits
+	.long	MemPadRecData
+	.long	MemPadRecDataSet
 
-func_48439AF3_Table:	# 2 x u16, 0..18; read by func_48439AF3 0x48439AF3: `movhu (a0), d0`; func_48439C99 0x48439C99: `movhu (a0), d0` ...
+RhyStreamBeatsInsert_Table:	# 2 x u16, 0..18; read by RhyStreamBeatsInsert 0x48439AF3: `movhu (a0), d0`; RhyStreamBytesDelete 0x48439C99: `movhu (a0), d0` ...
 	tab_u16	18, 0
 
 Str_Technics_Rhythms:	.asciz "Technics Rhythms"
@@ -13739,17 +13739,17 @@ ptrs_487297DC:
 	.long	MemStyleVarRecData
 	.long	MemStyleVarRecDataSet
 
-func_48439AF3_Table_2:	# 2 x u16, 0..60; read by func_48439AF3 0x48439AF3: `movhu (a0), d0`; func_48439BA3 0x48439BA3: `movhu (a2), d0` ...
+RhyStreamBeatsInsert_Table_2:	# 2 x u16, 0..60; read by RhyStreamBeatsInsert 0x48439AF3: `movhu (a0), d0`; func_48439BA3 0x48439BA3: `movhu (a2), d0` ...
 	tab_u16	60, 0
 
 Str_TPAD:	.asciz "TPAD"
 	.space	11, 0x00
 
-func_48438461_Block:	# 3 bytes, copied whole by func_48438461 0x48438461: memcpy(.., 3)
+func_48438461_Block:	# 3 bytes, copied whole by MemPadAreaHeaderRestamp 0x48438461: memcpy(.., 3)
 	tab_u8	0, 160, 0	# [0]
 # census: opaque -- unknown-dump: 3 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b935.rom", 0x329807, 0x32980A
-func_48438461_Block_2:	# 26 bytes, copied whole by func_48438461 0x48438461: memcpy(.., 26)
+func_48438461_Block_2:	# 26 bytes, copied whole by MemPadAreaHeaderRestamp 0x48438461: memcpy(.., 26)
 	tab_u8	0, 3, 0, 96, 16, 6, 16, 2, 0, 2, 0, 15, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
 
@@ -22031,7 +22031,7 @@ func_48449420_Records_p0_10:	# REC_func_48449420_Records_p0 (128 bytes)
 func_48449420_Records_p0_11:	# REC_func_48449420_Records_p0 (128 bytes)
 	REC_func_48449420_Records_p0	x0="\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\n\x0B\x0C\x0D\x0E\x0F\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1A\x1B\x1C\x1D\x1E\x1F !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\x7F"
 
-func_48449420_Table:	# 128 x u8, 0..112; read by func_48449420_entry 0x48449354: `movbu  (d0, a0), d0`
+func_48449420_Table:	# 128 x u8, 0..112; read by TableToneKeyMap_entry 0x48449420: `movbu  (d0, a0), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0	# [16]
 	tab_u8	18, 0, 52, 36, 24, 53, 38, 49, 38, 36, 37, 24, 11, 38, 44, 38	# [32]
@@ -22074,11 +22074,11 @@ func_4C021761_Selected_2:	# REC_func_4C021761_Selected (12 bytes)
 # census: opaque -- unknown-dump: 108 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b935.rom", 0x331F90, 0x331FFC
 func_4C021761_Selected_3:	# REC_func_4C021761_Selected (12 bytes)
-	REC_func_4C021761_Selected	key=0xFF0000, key_=0x700000, proc=func_484A280C
+	REC_func_4C021761_Selected	key=0xFF0000, key_=0x700000, proc=TestCtrlM3Handler
 # census: opaque -- unknown-dump: 312 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b935.rom", 0x332008, 0x332140
 func_4C021761_Selected_4:	# REC_func_4C021761_Selected (12 bytes)
-	REC_func_4C021761_Selected	key=0xFFFFFF, key_=0x900000, proc=func_484A2B9B
+	REC_func_4C021761_Selected	key=0xFFFFFF, key_=0x900000, proc=MidiIoTestM3Handler
 # census: opaque -- unknown-dump: 36 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b935.rom", 0x33214C, 0x332170
 func_4C021761_Selected_5:	# REC_func_4C021761_Selected (12 bytes)
@@ -26282,7 +26282,7 @@ func_484375A8_Table:	# 1035 x u16, 0..33511; read by func_484375A8 0x484375A8: `
 	tab_u16	2, 25, 1	# [1032]
 	.align	4, 0xFF	# pad after func_484375A8_Table
 
-func_48437375_Records:	# 27 x REC_func_48437375_Records (44 bytes each); read by func_48437375 0x48437375 `call strcpy_entry, [a2], 4`; func_484374EA 0x484374EA `mov (d1, a0), d0`
+func_48437375_Records:	# 27 x REC_func_48437375_Records (44 bytes each); read by PadBankNameGet 0x48437375 `call strcpy_entry, [a2], 4`; PadIdFromBankSlot 0x484374EA `mov (d1, a0), d0`
 	REC_func_48437375_Records	"     EFFECT     \x00\x00\x00\x00", 881, 629, 375, 376, 296, 552	# [0]
 	REC_func_48437375_Records	"      POP       \x00\x00\x00\x00", 261, 517, 773, 1029, 366, 622
 	REC_func_48437375_Records	"   SWING ROCK   \x00\x00\x00\x00", 262, 518, 1030, 774, 365, 621
@@ -26484,7 +26484,7 @@ StyleNumToBankSlotLUT:	# 2048 x u16, 0..34687; read by ResolveStyleId 0x48435AF1
 	tab_u16	33132, 33132, 33518, 33263, 33392, 33777, 33394, 33392, 33396, 33396, 33396, 33396	# [2028]
 	tab_u16	33400, 33145, 33146, 33146, 33916, 33533, 33918, 2573	# [2040]
 
-GenreStyleTable:	# 16 x GenreStyleEntry (24 bytes each); read by GetGenreName 0x48435A5D `call memcpy_entry, [a2,a3], 8`; GetGenreStyleCount 0x48435A97 `movbu (0x11, a0), d0`; func_48435ABD 0x48435ABD `mov (0x14, a0), a0` (+3)
+GenreStyleTable:	# 16 x GenreStyleEntry (24 bytes each); read by GetGenreName 0x48435A5D `call memcpy_entry, [a2,a3], 8`; GetGenreStyleCount 0x48435A97 `movbu (0x11, a0), d0`; GetGenreStyleId 0x48435ABD `mov (0x14, a0), a0` (+3)
 	GenreStyleEntry	name="   8&16 BEAT    ", x16="\x00", style_count=10, x18="\x00\x00", styles=func_4844D762_Records+256	# [0]
 	GenreStyleEntry	name="   ROCK & POP   ", x16="\x00", style_count=16, x18="\x00\x00", styles=func_4844D762_Records+296
 	GenreStyleEntry	name="     BALLAD     ", x16="\x00", style_count=16, x18="\x00\x00", styles=func_4844D762_Records+360
@@ -26504,15 +26504,15 @@ GenreStyleTable:	# 16 x GenreStyleEntry (24 bytes each); read by GetGenreName 0x
 
 GenreCount:	# u16, a constant; read / written by GetGenreName 0x48435A5D: `movhu (GenreCount), d3`; GetGenreStyleCount 0x48435A97: `movhu (GenreCount), d2` ...
 	.word	16
-StyleFlatOrdinalBuilder_Var:	# s16, a constant; read / written by StyleFlatOrdinalBuilder 0x4843FACB: `movhu (StyleFlatOrdinalBuilder_Var), d2`; func_4847F25B 0x4847F25B: `movhu (StyleFlatOrdinalBuilder_Var), d1` ...
+StyleFlatOrdinalBuilder_Var:	# s16, a constant; read / written by StyleFlatOrdinalBuilder 0x4843FACB: `movhu (StyleFlatOrdinalBuilder_Var), d2`; StyleGenreKindGet 0x4847F25B: `movhu (StyleFlatOrdinalBuilder_Var), d1` ...
 	.word	0
-func_4847F25B_Var:	# u16, a constant; read / written by func_4847F25B 0x4847F25B: `movhu (func_4847F25B_Var), d1`; FuncEdit_rhyGroup 0x4850996D: `movhu (func_4847F25B_Var), d0` ...
+func_4847F25B_Var:	# u16, a constant; read / written by StyleGenreKindGet 0x4847F25B: `movhu (func_4847F25B_Var), d1`; FuncEdit_rhyGroup 0x4850996D: `movhu (func_4847F25B_Var), d0` ...
 	.word	14
 ResolveStyleId_Var:	# u16, a constant; read / written by ResolveStyleId 0x48435AF1: `movhu (ResolveStyleId_Var), d0`; AcRvariScreenProc 0x4849774F: `movhu (ResolveStyleId_Var), d0` ...
 	.word	15
 AcRvariScreenProc_Var:	# u16, a constant; read / written by AcRvariScreenProc 0x4849774F: `movhu (AcRvariScreenProc_Var), d0`; AcRhyVariProc 0x484978BE: `movhu (AcRvariScreenProc_Var), d0` ...
 	.word	1
-ResolveStyleId_Var_2:	# u16, a constant; read / written by ResolveStyleId 0x48435AF1: `movhu (ResolveStyleId_Var_2), d0`; func_4847F25B 0x4847F25B: `movhu (ResolveStyleId_Var_2), d1` ...
+ResolveStyleId_Var_2:	# u16, a constant; read / written by ResolveStyleId 0x48435AF1: `movhu (ResolveStyleId_Var_2), d0`; StyleGenreKindGet 0x4847F25B: `movhu (ResolveStyleId_Var_2), d1` ...
 	.word	14
 ResolveStyleId_Var_3:	# u16, a constant; read / written by ResolveStyleId 0x48435AF1: `movhu (ResolveStyleId_Var_3), d0`; AcRvariScreenProc 0x4849774F: `movhu (ResolveStyleId_Var_3), d0` ...
 	.word	1
@@ -26530,7 +26530,7 @@ CountIntroRecordTable:
 	.long	0
 	.long	0
 
-func_48450625_Table:	# 4 x u8, 255..255; read by func_48450625_entry 0x4845027B: `movbu  (a1), d0`; func_48450697_entry 0x4845027B: `movbu  (a1), d0` ...
+func_48450625_Table:	# 4 x u8, 255..255; read by HeldKeyListReleaseAll_entry 0x48450625: `movbu  (a1), d0`; func_48450697_entry 0x48450625: `movbu  (a1), d0` ...
 	tab_u8	255, 255, 255, 255
 
 ptrs_48736038:
@@ -26540,22 +26540,22 @@ ptrs_48736038:
 	.long	loc_484517A1
 ptrs_48736048:
 	.long	loc_484576F6
-	.long	func_484576F9
+	.long	SongBackupRestore
 	.long	func_4845772C
-	.long	func_48457737
+	.long	SeqPlayStateInit
 
-FatBootHead_720K:	# a FAT boot sector's first 32 bytes, a 720 KB disk's (1440 sectors of 512 bytes): func_4847076A 0x4847076A: memcpy(.., 0x20)
+FatBootHead_720K:	# a FAT boot sector's first 32 bytes, a 720 KB disk's (1440 sectors of 512 bytes): FdFormat720K 0x00000000: memcpy(.., 0x20)
 	FAT_BOOT_HEAD	0xeb, 0x1c, 0x90, "Technics", 512, 2, 1, 2, 112, 1440, 0xf9, 3, 9, 2, 0
 	.byte	0xeb, 0xfe	# +0x1E: the boot code the jump at +0 lands on (EB 1C: +2 + 0x1C), x86 `jmp $`: a loop
 
-func_4847076A_Block:	# 3 bytes, copied whole by func_4847076A 0x4847076A: memcpy(.., 3)
+func_4847076A_Block:	# 3 bytes, copied whole by FdFormat720K 0x4847076A: memcpy(.., 3)
 	tab_u8	249, 255, 255	# [0]
 
-FatBootHead_1440K:	# a FAT boot sector's first 32 bytes, a 1440 KB disk's (2880 sectors of 512 bytes): func_48470A34 0x48470A34: memcpy(.., 0x20)
+FatBootHead_1440K:	# a FAT boot sector's first 32 bytes, a 1440 KB disk's (2880 sectors of 512 bytes): FdFormat1440K 0x00000000: memcpy(.., 0x20)
 	FAT_BOOT_HEAD	0xeb, 0x1c, 0x90, "Technics", 512, 1, 1, 2, 224, 2880, 0xf0, 9, 18, 2, 0
 	.byte	0xeb, 0xfe	# +0x1E: the boot code the jump at +0 lands on (EB 1C: +2 + 0x1C), x86 `jmp $`: a loop
 
-func_48470A34_Block:	# 3 bytes, copied whole by func_48470A34 0x48470A34: memcpy(.., 3)
+func_48470A34_Block:	# 3 bytes, copied whole by FdFormat1440K 0x48470A34: memcpy(.., 3)
 	tab_u8	240, 255, 255	# [0]
 	.align	4, 0xFF	# pad after func_48470A34_Block
 
@@ -26689,7 +26689,7 @@ func_48436196_Records:	# 128 x REC_func_48436196_Records (8 bytes each); read by
 	REC_func_48436196_Records	p4=func_48436196_Records_p4_11
 	REC_func_48436196_Records	p4=func_48436196_Records_p4_11
 
-func_4843A52F_Table:	# 256 x u8, 0..2; read by func_4843A52F_entry 0x484397EB: `movbu  (d0, a0), d0`
+func_4843A52F_Table:	# 256 x u8, 0..2; read by func_4843A52F_entry 0x4843A3AF: `movbu  (d0, a0), d0`
 	tab_u8	2, 2, 0, 2, 2, 2, 1, 0, 0, 2, 0, 0, 2, 2, 2, 2	# [0]
 	tab_u8	2, 2, 1, 1, 1, 1, 1, 0, 0, 0, 2, 2, 2, 2, 2, 2	# [16]
 	tab_u8	2, 2, 2, 0, 0, 0, 0, 2, 0, 2, 1, 2, 1, 2, 1, 2	# [32]
@@ -26711,7 +26711,7 @@ EasyCompGrid_Table:	# 2 x u16, 0..10; read by EasyCompGrid 0x4850B3C5: `movhu (E
 
 func_4843B895_Var:	# u32, a constant; read / written by func_4843B895 0x4843B895: `mov (func_4843B895_Var), a0`; func_4843B895 0x4843B895: `mov (func_4843B895_Var), d1` ...
 	.long	0x485cceec
-func_4841428E_Var:	# u32, a constant; read / written by func_4841428E 0x4841428E: `mov (func_4841428E_Var), d0`
+func_4841428E_Var:	# u32, a constant; read / written by GuiSystemInit 0x4841428E: `mov (func_4841428E_Var), d0`
 	.long	935
 
 # 14 classes; a class id is (0x154 << 16) | its index here (ClassProc 0x4842A7C0 reads entry id & 0xFFFF, 0x18 bytes each)
@@ -27970,7 +27970,7 @@ StyleGenre_Organ_Stylist_Styles:	# StyleGenre "Organ Stylist"'s 27 styles, Genre
 	.long	Text_Ballermann+850, StyleSetups_Organ_Stylist_Jive_Organist
 	.long	0, 0
 
-StyleGenreTable:	# 12 x StyleGenre (8 bytes each); read by func_4847B5DB 0x4847B5DB `mov (d0, a0), a1`; func_4847B629 0x4847B629 `mov (4, a0), a0`; func_4847BA00 0x4847BA00 `mov (4, a0), a3` (+7)
+StyleGenreTable:	# 12 x StyleGenre (8 bytes each); read by StyleGenreListTextBuild 0x4847B5DB `mov (d0, a0), a1`; StyleGenreSelect 0x4847B629 `mov (4, a0), a0`; StyleSubCatHeaderBuild 0x4847BA00 `mov (4, a0), a3` (+7)
 	StyleGenre	name=Text_Rock_Pop, styles=StyleGenre_Rock_Pop_Styles	# [0]
 	StyleGenre	name=Text_Rock_Pop+17, styles=StyleGenre_Easy_Listening_Styles
 	StyleGenre	name=Text_Rock_Pop+34, styles=StyleGenre_Soul_Gospel_Styles
@@ -27984,141 +27984,141 @@ StyleGenreTable:	# 12 x StyleGenre (8 bytes each); read by func_4847B5DB 0x4847B
 	StyleGenre	name=Text_Rock_Pop+170, styles=StyleGenre_Organ_Stylist_Styles
 	StyleGenre	
 
-# 4 entries of 16 bits up to the end marker that func_4847D041 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D041_List:
+# 4 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List:
 	.word	0x24d, 0x4e, 0x3ce, 0x3c5, 0xffff
-# 2 entries of 16 bits up to the end marker that func_4847D041 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D041_List_2:
+# 2 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_2:
 	.word	0xea, 0x2b4, 0xffff
-# 2 entries of 16 bits up to the end marker that func_4847D041 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D041_List_3:
+# 2 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_3:
 	.word	0x152, 0x410, 0xffff
-# 4 entries of 16 bits up to the end marker that func_4847D041 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D041_List_4:
+# 4 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_4:
 	.word	0xd2, 0x1c9, 0x5e, 0xd1, 0xffff
-# 5 entries of 16 bits up to the end marker that func_4847D041 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D041_List_5:
+# 5 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_5:
 	.word	0x10c, 0x394, 0x142, 0x6a, 0x5, 0xffff
-# 5 entries of 16 bits up to the end marker that func_4847D041 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D041_List_6:
+# 5 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_6:
 	.word	0x240, 0x32, 0x3, 0x7e, 0x376, 0xffff
-# 9 entries of 16 bits up to the end marker that func_4847D041 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D041_List_7:
+# 9 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_7:
 	.word	0x39, 0x1bd, 0x37, 0x4a, 0xcb, 0xa4, 0xc8, 0xcc, 0x91, 0xffff
-# 3 entries of 16 bits up to the end marker that func_4847D041 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D041_List_8:
+# 3 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_8:
 	.word	0x87, 0x24e, 0x5a, 0xffff
-# 27 entries of 16 bits up to the end marker that func_4847D041 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D041_List_9:
+# 27 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_9:
 	.word	0x2f9, 0x2d7, 0x116, 0x1ce, 0x23b, 0x186, 0xda, 0xaa, 0x33f, 0x15b, 0x335, 0x2fc, 0x2e6, 0x1de, 0x382, 0x350, 0x29c, 0x67, 0x256, 0x3be, 0x174, 0x308, 0x2fb, 0x412, 0x431, 0x36f, 0x3f6, 0xffff
-# 112 entries of 16 bits up to the end marker that func_4847D041 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D041_List_10:
+# 112 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_10:
 	.word	0x5c, 0x1be, 0x30f, 0x40a, 0x219, 0x3d4, 0x437, 0x40b, 0x409, 0x408, 0x3eb, 0x50, 0x128, 0xa0, 0xa7, 0x3cb, 0xb0, 0x1a1, 0xec, 0x166, 0x135, 0x216, 0x13f, 0x41f, 0x3a9, 0x257, 0x1e3, 0x103, 0xf6, 0x2b7, 0x2c2, 0x2eb, 0x3a1, 0x255, 0x12, 0x316, 0x22a, 0x228, 0x1db, 0x206, 0x14a, 0x420, 0x23d, 0x254, 0xf0, 0x4d, 0xe4, 0x183, 0x12e, 0x138, 0x35e, 0x1e6, 0x8e, 0xb6, 0x5d, 0x23e, 0x347, 0x1fa, 0x20e, 0x6b, 0x3a6, 0x3b0, 0x194, 0x76, 0x2bd, 0x1f7, 0x1f6, 0xa9, 0x75, 0x12b, 0x12a, 0x115, 0xbd, 0x2e0, 0x31a, 0x318, 0x31b, 0x10e, 0x10f, 0x10d, 0x69, 0x1e, 0x88, 0x35f, 0x426, 0x30a, 0x30c, 0x18, 0x5b, 0x47, 0xa1, 0x56, 0x2c6, 0x39d, 0x2de, 0x1ed, 0x5f, 0x17d, 0x167, 0x7, 0x2ca, 0x27f, 0x324, 0x1f0, 0x416, 0x14c, 0x30d, 0x14e, 0x309, 0x397, 0x222, 0x3e0, 0xffff
-# 83 entries of 16 bits up to the end marker that func_4847D041 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D041_List_11:
+# 83 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_11:
 	.word	0x122, 0x356, 0x1b4, 0x2b3, 0x389, 0x1b5, 0x252, 0x34f, 0x322, 0x31c, 0x395, 0x39e, 0x19e, 0x1b7, 0x3fd, 0x1a9, 0x31f, 0x31d, 0x165, 0x300, 0x3db, 0x178, 0x317, 0x2bc, 0x77, 0x38c, 0x19b, 0x407, 0x3b3, 0x1b8, 0x386, 0x108, 0x100, 0xb5, 0x1f9, 0xc2, 0x162, 0xd9, 0xd8, 0x1d1, 0x15, 0x3da, 0x95, 0x311, 0x427, 0x190, 0x2d8, 0x417, 0x2ee, 0x179, 0x191, 0x3d7, 0x28c, 0x269, 0x3bb, 0xb8, 0x35c, 0x3bc, 0x38d, 0x117, 0x261, 0x327, 0x30b, 0x3f7, 0x2cf, 0x378, 0x2a4, 0x2b9, 0x2ad, 0x2ae, 0x2ac, 0x2af, 0x3e4, 0x2d4, 0x217, 0x197, 0x213, 0x29d, 0x315, 0x314, 0x359, 0x35a, 0x1a8, 0xffff
-# 47 entries of 16 bits up to the end marker that func_4847D041 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D041_List_12:
+# 47 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_12:
 	.word	0x102, 0x253, 0x225, 0x351, 0x146, 0x340, 0x34b, 0xfb, 0x369, 0x368, 0x36a, 0xf9, 0x282, 0xb4, 0x23, 0xbc, 0x62, 0x422, 0x325, 0x248, 0x0, 0x1b2, 0x127, 0x126, 0x175, 0xe1, 0x141, 0x2e7, 0x425, 0x233, 0xbf, 0xe9, 0xfe, 0x2aa, 0xb1, 0x171, 0x3f8, 0x3fb, 0x3fa, 0x3f9, 0x232, 0x319, 0x3ba, 0x21, 0x344, 0x34, 0xa5, 0xffff
-# 20 entries of 16 bits up to the end marker that func_4847D041 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D041_List_13:
+# 20 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_13:
 	.word	0x1c8, 0x48, 0x204, 0x2e8, 0xb2, 0x346, 0x3a4, 0x345, 0x210, 0x40c, 0x3e2, 0x19f, 0x3e5, 0x2f2, 0x16b, 0x208, 0x20b, 0x15e, 0x40d, 0x97, 0xffff
-# 66 entries of 16 bits up to the end marker that func_4847D041 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D041_List_14:
+# 66 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_14:
 	.word	0xc, 0x3fc, 0x215, 0x221, 0x185, 0x17c, 0x1cc, 0x182, 0x2d1, 0x158, 0x7a, 0x3ca, 0x223, 0x27, 0x33e, 0x1a7, 0x2d3, 0x2b6, 0x380, 0x24b, 0x323, 0x25d, 0x1ae, 0x120, 0x372, 0x13, 0x2be, 0x112, 0x3c4, 0x292, 0x414, 0x379, 0x2b2, 0x2b1, 0xcd, 0x3dd, 0x3dc, 0x3de, 0x3df, 0x406, 0x41d, 0x133, 0x13a, 0x118, 0x18a, 0x2f8, 0x15f, 0xbb, 0x307, 0x367, 0x40f, 0x3ff, 0x286, 0x114, 0x384, 0x281, 0x28e, 0x387, 0x22e, 0x296, 0x25b, 0x28a, 0x28b, 0x29e, 0x98, 0x288, 0xffff
-# 41 entries of 16 bits up to the end marker that func_4847D041 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D041_List_15:
+# 41 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_15:
 	.word	0x361, 0x37e, 0x23c, 0x399, 0x3c3, 0x12c, 0x3c6, 0x3a0, 0x1e5, 0x1d8, 0x150, 0x244, 0x81, 0x83, 0x2e9, 0x3a3, 0x355, 0x13e, 0x8d, 0x26e, 0x71, 0x273, 0x26c, 0x2a2, 0x270, 0x272, 0x3c8, 0x155, 0x271, 0x31, 0x3e3, 0x306, 0x27e, 0x3b9, 0x2f7, 0x287, 0x38f, 0xa, 0x9f, 0x119, 0x33d, 0xffff
-# 60 entries of 16 bits up to the end marker that func_4847D041 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D041_List_16:
+# 60 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_16:
 	.word	0x391, 0x1d3, 0x436, 0x1d9, 0x1ee, 0x64, 0x18f, 0x2d2, 0x33b, 0xff, 0x329, 0x331, 0x429, 0x2b8, 0x7b, 0x2c5, 0x1e9, 0x36b, 0x349, 0xc7, 0xc6, 0x78, 0xc5, 0x25c, 0x2cc, 0x2cd, 0x3bf, 0x58, 0x22f, 0x3d3, 0x84, 0x3b8, 0x2b0, 0x41b, 0x8, 0x3a5, 0x1fc, 0x1f4, 0x34a, 0x2ef, 0x10a, 0x277, 0x2a3, 0x2c1, 0x211, 0x3f2, 0x3ed, 0x4, 0x305, 0x262, 0x432, 0x129, 0x328, 0x11e, 0x237, 0x235, 0x234, 0x236, 0xeb, 0x334, 0xffff
-# 9 entries of 16 bits up to the end marker that func_4847D041 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D041_List_17:
+# 9 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_17:
 	.word	0x74, 0x279, 0x1d6, 0x36d, 0x21f, 0x202, 0x337, 0x336, 0x342, 0xffff
-# 19 entries of 16 bits up to the end marker that func_4847D041 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D041_List_18:
+# 19 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_18:
 	.word	0x35b, 0x34c, 0x33c, 0x3e9, 0x106, 0x433, 0xde, 0xdf, 0xdd, 0x113, 0x164, 0x3d1, 0x1c5, 0x90, 0x212, 0x1b3, 0x15a, 0x283, 0x38a, 0xffff
-# 12 entries of 16 bits up to the end marker that func_4847D041 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D041_List_19:
+# 12 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_19:
 	.word	0x1c, 0x226, 0x2ba, 0x36c, 0x2bb, 0x231, 0x21e, 0x2ff, 0x405, 0x39c, 0x21a, 0x24, 0xffff
-# 44 entries of 16 bits up to the end marker that func_4847D041 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D041_List_20:
+# 44 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_20:
 	.word	0xa2, 0x3c1, 0x29f, 0x263, 0xee, 0x26b, 0x2d6, 0x348, 0xd3, 0x143, 0x411, 0xd6, 0x37f, 0xe5, 0x310, 0x312, 0x207, 0x144, 0x24f, 0x149, 0x169, 0x8c, 0x14b, 0x1b6, 0x3cd, 0x2e2, 0x275, 0x16f, 0x250, 0xe2, 0x125, 0x1e4, 0x377, 0x25, 0x239, 0x2d5, 0x1c0, 0x14, 0xb3, 0x189, 0x1, 0x3b5, 0x1ca, 0xf4, 0xffff
-# 49 entries of 16 bits up to the end marker that func_4847D041 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D041_List_21:
+# 49 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_21:
 	.word	0x251, 0x1c1, 0x10, 0x1f2, 0x1bf, 0x2db, 0x2d9, 0x2dd, 0x338, 0x333, 0x11d, 0x374, 0x2f1, 0x66, 0x339, 0x358, 0x8f, 0x32b, 0x107, 0x180, 0x2da, 0x101, 0x362, 0x6c, 0x230, 0x242, 0x31e, 0x1cd, 0x381, 0x393, 0xc3, 0x1a, 0x22, 0x16e, 0x18b, 0x19d, 0x193, 0x294, 0x22d, 0x148, 0x2e4, 0x396, 0x290, 0x37d, 0x3aa, 0x52, 0x371, 0x3a7, 0x1b, 0xffff
-# 21 entries of 16 bits up to the end marker that func_4847D041 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D041_List_22:
+# 21 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_22:
 	.word	0x36, 0x2a5, 0x2c4, 0x2b5, 0xe0, 0x16c, 0x357, 0xac, 0x2ce, 0x161, 0x2cb, 0x121, 0x1ad, 0x423, 0x1c3, 0x2c3, 0x238, 0x42d, 0x22c, 0x245, 0xed, 0xffff
-# 26 entries of 16 bits up to the end marker that func_4847D041 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D041_List_23:
+# 26 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_23:
 	.word	0x32c, 0x170, 0x1eb, 0x3c0, 0x1a0, 0xe6, 0x1bb, 0x1a4, 0xc1, 0x172, 0x3fe, 0x428, 0x2, 0x1aa, 0x18d, 0xa3, 0x1a5, 0x176, 0x35d, 0x123, 0x1df, 0x65, 0x1fd, 0x205, 0x421, 0x38b, 0xffff
-# 51 entries of 16 bits up to the end marker that func_4847D041 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D041_List_24:
+# 51 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_24:
 	.word	0x297, 0x36e, 0x363, 0x398, 0x28, 0x1d7, 0x147, 0x19c, 0x330, 0x1ec, 0x1da, 0x365, 0x1fe, 0x390, 0x1f3, 0x1cf, 0x168, 0x136, 0x375, 0x2c7, 0x3f5, 0x17e, 0x19a, 0x401, 0x354, 0x9e, 0x274, 0x7d, 0x68, 0x33, 0x353, 0x383, 0x38e, 0x220, 0x25a, 0x85, 0x3c7, 0x43, 0x19, 0x3d6, 0x3ae, 0x55, 0x57, 0x2c, 0x2e, 0x4f, 0x40, 0x59, 0x53, 0x2fd, 0x37a, 0xffff
-# 4 entries of 16 bits up to the end marker that func_4847D041 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D041_List_25:
+# 4 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_25:
 	.word	0x1b9, 0x13c, 0x424, 0x402, 0xffff
-# 46 entries of 16 bits up to the end marker that func_4847D041 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D041_List_26:
+# 46 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_26:
 	.word	0x284, 0x28f, 0x293, 0x1c7, 0xa8, 0x7c, 0xfd, 0x17, 0x419, 0xc9, 0x27a, 0x246, 0x34d, 0xd0, 0x1e2, 0x3c, 0x42a, 0x370, 0x39a, 0x385, 0x41, 0x26f, 0x278, 0x3d5, 0x403, 0x14f, 0x41e, 0x2dc, 0x99, 0x60, 0x3ac, 0xb7, 0x26, 0x2a9, 0x17f, 0x72, 0x70, 0x1cb, 0x3ec, 0x96, 0x51, 0x11a, 0x3b4, 0x303, 0x2fa, 0x21d, 0xffff
-# 201 entries of 16 bits up to the end marker that func_4847D041 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D041_List_27:
+# 201 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_27:
 	.word	0x130, 0x321, 0x14d, 0x20a, 0x39f, 0x1f1, 0x320, 0x366, 0x243, 0x418, 0x1ac, 0x18e, 0xce, 0x1ea, 0x73, 0xe3, 0x291, 0x3ab, 0x3f1, 0xab, 0x11f, 0x1e7, 0xf8, 0x229, 0x13d, 0x41c, 0x3e, 0x105, 0x24a, 0x29, 0x1af, 0x61, 0x109, 0x111, 0x18c, 0x6d, 0x25e, 0x1a6, 0x20f, 0x20d, 0x20c, 0x79, 0x63, 0x1d2, 0x151, 0x1bc, 0x3ad, 0x154, 0x35, 0x3b1, 0x26d, 0x187, 0x140, 0x38, 0x352, 0x276, 0x30e, 0x3ee, 0x1d4, 0x37b, 0x39b, 0xca, 0x3c9, 0x3b7, 0x1dd, 0x3b6, 0x157, 0x413, 0x37c, 0x3f, 0x104, 0x415, 0x134, 0x26a, 0x93, 0xd4, 0x373, 0x3d2, 0x3b2, 0x4c, 0x3a, 0x3bd, 0x388, 0x3cc, 0x12f, 0x203, 0xa6, 0x280, 0xae, 0x41a, 0x224, 0x32a, 0x29a, 0x267, 0x2f, 0xd5, 0xba, 0x29b, 0x265, 0x298, 0x259, 0xd7, 0x28d, 0x20, 0x258, 0xb9, 0x266, 0x260, 0x2ea, 0x2a6, 0x2a8, 0x23f, 0x227, 0x24c, 0x15c, 0x1c2, 0x3e1, 0x2c9, 0x341, 0xaf, 0x2a, 0x435, 0x27b, 0x8a, 0x21b, 0x27c, 0x430, 0x1e0, 0xcf, 0xc4, 0x2f5, 0x94, 0x17a, 0x285, 0x45, 0x1a2, 0x3c2, 0xdc, 0x1d0, 0x1fb, 0x11c, 0x326, 0x214, 0x404, 0x16a, 0x173, 0x132, 0x1a3, 0x249, 0x302, 0x80, 0xd, 0x1d, 0x241, 0x4b, 0x3d0, 0x1c4, 0x16, 0x264, 0x9d, 0x184, 0x34e, 0x27d, 0x1e1, 0x198, 0x1d5, 0x2d, 0x3a2, 0x6, 0x11, 0x9c, 0x2fe, 0x2bf, 0x3d, 0x3f4, 0x49, 0x7f, 0x2ec, 0x25f, 0xfc, 0xf3, 0x196, 0x1f8, 0x42, 0xf5, 0xf1, 0x3a8, 0xf7, 0x2f0, 0x2f3, 0x2f4, 0x9, 0x3b, 0x313, 0xdb, 0x289, 0x54, 0x3af, 0x44, 0x82, 0x92, 0xffff
-# 50 entries of 16 bits up to the end marker that func_4847D041 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D041_List_28:
+# 50 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_28:
 	.word	0x392, 0x23a, 0x2a1, 0x6e, 0x2d0, 0x360, 0x32d, 0x32e, 0x15d, 0x32f, 0x343, 0x139, 0xbe, 0x8b, 0x6f, 0x2ab, 0x33a, 0x1ab, 0x13b, 0x137, 0x1ef, 0x2a0, 0x3ea, 0x42b, 0xe8, 0x209, 0x295, 0x10b, 0x16d, 0x3ef, 0x1ff, 0x434, 0x1ba, 0x1dc, 0x2f6, 0x11b, 0x2df, 0x181, 0xc0, 0x3e6, 0x1b0, 0x124, 0x2e1, 0x3f3, 0x30, 0x177, 0x247, 0x40e, 0x301, 0xe7, 0xffff
-# 10 entries of 16 bits up to the end marker that func_4847D041 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D041_List_29:
+# 10 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_29:
 	.word	0x22b, 0x195, 0xef, 0xb, 0x42e, 0x159, 0x1c6, 0xf2, 0x9a, 0x3cf, 0xffff
-# 11 entries of 16 bits up to the end marker that func_4847D041 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D041_List_30:
+# 11 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_30:
 	.word	0x2c8, 0xfa, 0x364, 0x2b, 0x145, 0x304, 0x160, 0x110, 0x268, 0x3d9, 0x21c, 0xffff
-# 31 entries of 16 bits up to the end marker that func_4847D041 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D041_List_31:
+# 31 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_31:
 	.word	0x332, 0x1b1, 0x218, 0x156, 0x192, 0x400, 0x153, 0x200, 0x3f0, 0x3e8, 0x201, 0x17b, 0x42f, 0xf, 0xad, 0x199, 0x3d8, 0x299, 0x2c0, 0x1f, 0x9b, 0x163, 0x2e3, 0x12d, 0x46, 0x131, 0x188, 0x3e7, 0x2ed, 0x42c, 0x89, 0xffff
-# 5 entries of 16 bits up to the end marker that func_4847D041 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D041_List_32:
+# 5 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_32:
 	.word	0x2a7, 0x1f5, 0x1e8, 0xe, 0x86, 0xffff
-# 1 entries of 16 bits up to the end marker that func_4847D041 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D041_List_33:
+# 1 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D041: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_33:
 	.word	0x2e5, 0xffff
 	.byte	0xff, 0xff	# the marker's fill to a 4-byte boundary
 
-func_4847C965_Records:	# 34 x REC_func_4847C965_Records (8 bytes each); read by func_4847C965 0x4847C965 `call func_4847C935, 0, 0`; func_4847C965 0x4847C965 `mov (4, a0), a0`; func_4847C965 0x4847C965 `mov (d2, a2), a1` (+6)
-	REC_func_4847C965_Records	text=Str_1_38, index=func_4847D041_List	# [0]
-	REC_func_4847C965_Records	text=Str_2_42, index=func_4847D041_List_2
-	REC_func_4847C965_Records	text=Str_3_32, index=func_4847D041_List_3
-	REC_func_4847C965_Records	text=Str_5_29, index=func_4847D041_List_4
-	REC_func_4847C965_Records	text=Str_6_26, index=func_4847D041_List_5
-	REC_func_4847C965_Records	text=Str_7_16, index=func_4847D041_List_6
-	REC_func_4847C965_Records	text=Str_8_16, index=func_4847D041_List_7
-	REC_func_4847C965_Records	text=Str_9_16, index=func_4847D041_List_8
-	REC_func_4847C965_Records	text=Str_A_30, index=func_4847D041_List_9	# [8]
-	REC_func_4847C965_Records	text=Str_B_18, index=func_4847D041_List_10
-	REC_func_4847C965_Records	text=Str_C_28, index=func_4847D041_List_11
-	REC_func_4847C965_Records	text=Str_D_14, index=func_4847D041_List_12
-	REC_func_4847C965_Records	text=Str_E_14, index=func_4847D041_List_13
-	REC_func_4847C965_Records	text=Str_F_18, index=func_4847D041_List_14
-	REC_func_4847C965_Records	text=Str_G_14, index=func_4847D041_List_15
-	REC_func_4847C965_Records	text=Str_H_5, index=func_4847D041_List_16
-	REC_func_4847C965_Records	text=Str_I_6, index=func_4847D041_List_17	# [16]
-	REC_func_4847C965_Records	text=Str_J_5, index=func_4847D041_List_18
-	REC_func_4847C965_Records	text=Str_K_5, index=func_4847D041_List_19
-	REC_func_4847C965_Records	text=Str_L_5, index=func_4847D041_List_20
-	REC_func_4847C965_Records	text=Str_M_5, index=func_4847D041_List_21
-	REC_func_4847C965_Records	text=Str_N_6, index=func_4847D041_List_22
-	REC_func_4847C965_Records	text=Str_O_5, index=func_4847D041_List_23
-	REC_func_4847C965_Records	text=Str_P_13, index=func_4847D041_List_24
-	REC_func_4847C965_Records	text=Str_Q_8, index=func_4847D041_List_25	# [24]
-	REC_func_4847C965_Records	text=Str_R_5, index=func_4847D041_List_26
-	REC_func_4847C965_Records	text=Str_S_6, index=func_4847D041_List_27
-	REC_func_4847C965_Records	text=Str_T_5, index=func_4847D041_List_28
-	REC_func_4847C965_Records	text=Str_U_5, index=func_4847D041_List_29
-	REC_func_4847C965_Records	text=Str_V_5, index=func_4847D041_List_30
-	REC_func_4847C965_Records	text=Str_W_5, index=func_4847D041_List_31
-	REC_func_4847C965_Records	text=Str_Y_6, index=func_4847D041_List_32
-	REC_func_4847C965_Records	text=Str_Z_5, index=func_4847D041_List_33	# [32]
+func_4847C965_Records:	# 34 x REC_func_4847C965_Records (8 bytes each); read by StyleAlphaHeaderBuild 0x4847C965 `call U16ListLastIndex, 0, 0`; StyleAlphaHeaderBuild 0x4847C965 `mov (4, a0), a0`; StyleAlphaHeaderBuild 0x4847C965 `mov (d2, a2), a1` (+6)
+	REC_func_4847C965_Records	text=Str_1_38, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List	# [0]
+	REC_func_4847C965_Records	text=Str_2_42, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_2
+	REC_func_4847C965_Records	text=Str_3_32, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_3
+	REC_func_4847C965_Records	text=Str_5_29, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_4
+	REC_func_4847C965_Records	text=Str_6_26, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_5
+	REC_func_4847C965_Records	text=Str_7_16, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_6
+	REC_func_4847C965_Records	text=Str_8_16, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_7
+	REC_func_4847C965_Records	text=Str_9_16, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_8
+	REC_func_4847C965_Records	text=Str_A_30, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_9	# [8]
+	REC_func_4847C965_Records	text=Str_B_18, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_10
+	REC_func_4847C965_Records	text=Str_C_28, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_11
+	REC_func_4847C965_Records	text=Str_D_14, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_12
+	REC_func_4847C965_Records	text=Str_E_14, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_13
+	REC_func_4847C965_Records	text=Str_F_18, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_14
+	REC_func_4847C965_Records	text=Str_G_14, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_15
+	REC_func_4847C965_Records	text=Str_H_5, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_16
+	REC_func_4847C965_Records	text=Str_I_6, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_17	# [16]
+	REC_func_4847C965_Records	text=Str_J_5, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_18
+	REC_func_4847C965_Records	text=Str_K_5, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_19
+	REC_func_4847C965_Records	text=Str_L_5, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_20
+	REC_func_4847C965_Records	text=Str_M_5, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_21
+	REC_func_4847C965_Records	text=Str_N_6, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_22
+	REC_func_4847C965_Records	text=Str_O_5, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_23
+	REC_func_4847C965_Records	text=Str_P_13, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_24
+	REC_func_4847C965_Records	text=Str_Q_8, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_25	# [24]
+	REC_func_4847C965_Records	text=Str_R_5, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_26
+	REC_func_4847C965_Records	text=Str_S_6, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_27
+	REC_func_4847C965_Records	text=Str_T_5, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_28
+	REC_func_4847C965_Records	text=Str_U_5, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_29
+	REC_func_4847C965_Records	text=Str_V_5, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_30
+	REC_func_4847C965_Records	text=Str_W_5, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_31
+	REC_func_4847C965_Records	text=Str_Y_6, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_32
+	REC_func_4847C965_Records	text=Str_Z_5, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_33	# [32]
 	REC_func_4847C965_Records	
 
 PostEvent_Records_p4_0:	# REC_PostEvent_Records_p4 (410 bytes)
@@ -28143,7 +28143,7 @@ PostEvent_Records_p4_s58_0:	# REC_PostEvent_Records_p4_s58 (58 bytes)
 PostEvent_Records_p4_s68_0:	# REC_PostEvent_Records_p4_s68 (68 bytes)
 	REC_PostEvent_Records_p4_s68	f0=358, x2="\x16\x02\x83\x01g\x01\xFD\x03e\x01\x17\x02\xFC\x03\x15\x02\x82\x01\xFF\x03)\x03\xED\x03(\x03\x1F\x02d\x01\x1E\x02+\x03\x80\x01\xFE\x03\x01\x04\x02\x04\x03\x04\xEC\x03\x1D\x02\xEE\x03*\x03\x14\x02\xEF\x03\x81\x01\x1C\x02\x00\x04\xFF\xFF\xFF\xFF"
 
-StyleRecordTable:	# 1080 x MusicStylistSetup (24 bytes each); read by InheritedProc 0x48429522 `call func_48414A0B_entry, [a2], 4`; ApDeleteEvent 0x484298BF `call func_4842886A_entry, [d2,d3,a2,a3], 0x54`; ChangeTitle 0x4842B3AD `call ApDeleteEvent_entry, [d2], 0x18` (+77)
+StyleRecordTable:	# 1080 x MusicStylistSetup (24 bytes each); read by InheritedProc 0x48429522 `call GuiCallerTaskIdGet_entry, [a2], 4`; ApDeleteEvent 0x484298BF `call DeleteEventForTask_entry, [d2,d3,a2,a3], 0x54`; ChangeTitle 0x4842B3AD `call ApDeleteEvent_entry, [d2], 0x18` (+77)
 	MusicStylistSetup	panel=StyleRecordTable_p0_0, name=Text_Disco_Hustling, era_pos=36, letter=11, letter_pos=20, x22="\x00\x00"	# [0]
 	MusicStylistSetup	panel=StyleRecordTable_p0_1, name=Text_Disco_Hustling+17, setup=1, era_pos=89, letter=19, letter_pos=40, x22="\x00\x00"
 	MusicStylistSetup	panel=StyleRecordTable_p0_2, name=Text_Disco_Hustling+34, setup=2, era_pos=109, letter=22, letter_pos=12, x22="\x00\x00"
@@ -29224,16 +29224,16 @@ StyleRecordTable:	# 1080 x MusicStylistSetup (24 bytes each); read by InheritedP
 	MusicStylistSetup	panel=StyleRecordTable_p0_325, name=Text_Disco_Hustling+18309, genre=10, style=26, setup=1, era=4, era_pos=110, letter=26, letter_pos=121, x22="\x00\x00"
 	MusicStylistSetup	panel=StyleRecordTable_p0_326, name=Text_Disco_Hustling+18326, genre=10, style=26, setup=2, era=4, era_pos=55, letter=15, letter_pos=2, x22="\x00\x00"
 	MusicStylistSetup	panel=StyleRecordTable_p0_327, name=Text_Disco_Hustling+18343, genre=10, style=26, setup=3, era=4, era_pos=12, letter=9, letter_pos=6, x22="\x00\x00"
-PostEvent_Records:	# 10 x REC_PostEvent_Records (12 bytes each); read by PostEvent 0x4842936B `call func_48414A0B_entry, [a2], 4`; func_4847D602 0x4847D602 `mov (4, a0), a0`; func_4847D602 0x4847D602 `mov (d1, a2), d1` (+16)
-	REC_PostEvent_Records	text=Text_Disco_Hustling+18360, index=PostEvent_Records_p4_s58_0, key=7, x10="\x00\x00"	# [0]
-	REC_PostEvent_Records	text=Text_Disco_Hustling+18377, index=PostEvent_Records_p4_s74_0, key=6, x10="\x00\x00"
-	REC_PostEvent_Records	text=Text_Disco_Hustling+18394, index=PostEvent_Records_p4_s68_0, key=8, x10="\x00\x00"
-	REC_PostEvent_Records	text=Text_Disco_Hustling+18411, index=PostEvent_Records_p4_s138_0, key=5, x10="\x00\x00"
-	REC_PostEvent_Records	text=Text_Disco_Hustling+18428, index=PostEvent_Records_p4_s258_0, key=4, x10="\x00\x00"
-	REC_PostEvent_Records	text=Text_Disco_Hustling+18445, index=PostEvent_Records_p4_s322_0, key=1, x10="\x00\x00"
-	REC_PostEvent_Records	text=Text_Disco_Hustling+18462, index=PostEvent_Records_p4_0, x10="\x00\x00"
-	REC_PostEvent_Records	text=Text_Disco_Hustling+18479, index=Str_N, key=3, x10="\x00\x00"
-	REC_PostEvent_Records	text=Text_Disco_Hustling+18496, index=PostEvent_Records_p4_s386_0, key=2, x10="\x00\x00"	# [8]
+PostEvent_Records:	# 10 x REC_PostEvent_Records (12 bytes each); read by PostEvent 0x4842936B `call GuiCallerTaskIdGet_entry, [a2], 4`; StyleEraHeaderBuild 0x4847D602 `mov (4, a0), a0`; StyleEraHeaderBuild 0x4847D602 `mov (d1, a2), d1` (+16)
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18360, U16ListLastIndex_a0=PostEvent_Records_p4_s58_0, key=7, x10="\x00\x00"	# [0]
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18377, U16ListLastIndex_a0=PostEvent_Records_p4_s74_0, key=6, x10="\x00\x00"
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18394, U16ListLastIndex_a0=PostEvent_Records_p4_s68_0, key=8, x10="\x00\x00"
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18411, U16ListLastIndex_a0=PostEvent_Records_p4_s138_0, key=5, x10="\x00\x00"
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18428, U16ListLastIndex_a0=PostEvent_Records_p4_s258_0, key=4, x10="\x00\x00"
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18445, U16ListLastIndex_a0=PostEvent_Records_p4_s322_0, key=1, x10="\x00\x00"
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18462, U16ListLastIndex_a0=PostEvent_Records_p4_0, x10="\x00\x00"
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18479, U16ListLastIndex_a0=Str_N, key=3, x10="\x00\x00"
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18496, U16ListLastIndex_a0=PostEvent_Records_p4_s386_0, key=2, x10="\x00\x00"	# [8]
 	REC_PostEvent_Records	x10="\x00\x00"
 
 # 13 classes; a class id is (0x14 << 16) | its index here (ClassProc 0x4842A7C0 reads entry id & 0xFFFF, 0x18 bytes each)
@@ -29705,7 +29705,7 @@ MESSAGE_ResNames:
 .equ WELCOME_Classes_SLOT, 0x44
 WELCOME_Classes:
 	CLASS	Class_AcWelcomeScreen, CLASS_AcWelcomeScreen, WELCOME_Classes, proc=AcWelcomeScreenProc, parent=CLASS_Screen, allsize=40, selfsize=0, cname=ClassName_AcWelcomeScreen, sig=ClassSig_AcWelcomeScreen, fields=ClassFields_AcWelcomeScreen
-	CLASS	Class_AcMPVer, CLASS_AcMPVer, WELCOME_Classes, proc=func_4848A868, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcMPVer, sig=ClassSig_AcMPVer, fields=ClassFields_AcMPVer
+	CLASS	Class_AcMPVer, CLASS_AcMPVer, WELCOME_Classes, proc=VersionTextProc, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcMPVer, sig=ClassSig_AcMPVer, fields=ClassFields_AcMPVer
 	.space	24, 0x00
 WELCOME_Events:
 	.space	4, 0x00
@@ -29715,7 +29715,7 @@ WELCOME_Methods:
 # 2 Function procedures; a function id is (0x41 << 16) | its index (the names are the parallel table at slot 0x49)
 WELCOME_Functions:
 	IDNAME	FN_AcWelcomeScreenProc, AcWelcomeScreenProc, WELCOME_Functions, 0x41
-	IDNAME	FN_AcMPVerProc, func_4848A868, WELCOME_Functions, 0x41
+	IDNAME	FN_AcMPVerProc, VersionTextProc, WELCOME_Functions, 0x41
 	.space	4, 0x00
 
 WELCOME_FunctionNames:
@@ -34578,7 +34578,7 @@ PmemModeBoxProc_Table_4:	# 2 x u8, 144..146; read by PmemModeBoxProc 0x484AAC68:
 	tab_u8	144, 146
 MSAModeBoxProc_Table_4:	# 6 x u8, 0..255; read by MSAModeBoxProc 0x484AA59D: `movbu  (d0, a2), d0`
 	tab_u8	0, 145, 146, 147, 255, 255
-FSWAssGridCheck_Table_2:	# 44 x u8, 0..255; read by FSWAssGridCheck 0x484A9ABC: `movbu  (d0, a0), d1`; func_484AA548_entry 0x484AA503: `movbu  (d0, a0), d0`
+FSWAssGridCheck_Table_2:	# 44 x u8, 0..255; read by FSWAssGridCheck 0x484A9ABC: `movbu  (d0, a0), d1`; FSWAssGridIndexFind_entry 0x484AA548: `movbu  (d0, a0), d0`
 	tab_u8	0, 65, 66, 144, 145, 179, 180, 192, 193, 194, 195, 196, 197, 198, 199, 178	# [0]
 	tab_u8	136, 146, 147, 148, 149, 64, 150, 153, 151, 191, 190, 173, 188, 176, 177, 184	# [16]
 	tab_u8	185, 160, 161, 162, 163, 164, 165, 189, 182, 183, 255, 255	# [32]
@@ -38988,7 +38988,7 @@ func_484FFF32_Table:
 	# 4 bytes read by func_484FF790 0x484FF790 `movbu (8, a0), d0` (+0, u8); the read fields at their widths (u8), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u8	10, 0, 0, 0	# +0
 
-func_484FFF32_Table_2:	# 9 x u32, 0..1215631232; read by func_484FFF32 0x484FFF32: `mov (a1), d0`; func_48508C65 0x48508C65: `mov (a1), d0` ...
+func_484FFF32_Table_2:	# 9 x u32, 0..1215631232; read by func_484FFF32 0x484FFF32: `mov (a1), d0`; CmpRecArrangePosGet 0x48508C65: `mov (a1), d0` ...
 	tab_u32	1214521028, 1215631152, 9, 1214521036, 1215631232, 4, 0, 0	# [0]
 	tab_u32	0	# [8]
 

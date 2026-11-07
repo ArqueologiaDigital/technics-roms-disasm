@@ -1843,13 +1843,13 @@ FE_CmpMCopyDPart_Table:	# 4 x u8, 2..255; read by FE_CmpMCopyDPart 0x4850DD26: `
 	tab_u8	2, 255, 255, 255
 FE_CmpMCopySrtMeas_Table:	# 2 x u16, 1..65535; read by FE_CmpMCopySrtMeas 0x4850DDFA: `movhu (FE_CmpMCopySrtMeas_Table), d0`; FE_CmpMCopySrtMeas 0x4850DDFA: `movhu (FE_CmpMCopySrtMeas_Table), d1` ...
 	tab_u16	1, 65535
-func_4850DF34_Table:	# 5 x u32, 9437455..9437474; read by func_4850DF34 0x4850DF34: `mov   (a2), d0`; func_4850DF34 0x4850DF34: `mov   (func_4850DF34_Table), d0`; ends at +20, where func_4850DF34 0x4850DF34's loop stops (`cmp FE_CmpMDelFstMeas_Table, a2`)
+func_4850DF34_Table:	# 5 x u32, 9437455..9437474; read by CmpMCopyFieldApply 0x4850DF34: `mov   (a2), d0`; CmpMCopyFieldApply 0x4850DF34: `mov   (func_4850DF34_Table), d0`; ends at +20, where CmpMCopyFieldApply 0x4850DF34's loop stops (`cmp FE_CmpMDelFstMeas_Table, a2`)
 	tab_u32	9437455, 9437456, 9437457, 9437470, 9437474
 FE_CmpMDelFstMeas_Table:	# 2 x u16, 1..65535; read by FE_CmpMDelFstMeas 0x4850E43F: `movhu (FE_CmpMDelFstMeas_Table), d0`; FE_CmpMDelFstMeas 0x4850E43F: `movhu (FE_CmpMDelFstMeas_Table), d1` ...
 	tab_u16	1, 65535
 FE_CmpMDelLstMeas_Table:	# 2 x u16, 1..65535; read by FE_CmpMDelLstMeas 0x4850E519: `movhu (FE_CmpMDelLstMeas_Table), d0`; FE_CmpMDelLstMeas 0x4850E519: `movhu (FE_CmpMDelLstMeas_Table), d1` ...
 	tab_u16	1, 65535
-func_4850E617_Table:	# 2 x u32, 9437485..9437486; read by func_4850E617 0x4850E617: `mov   (a2), d0`; func_4850E617 0x4850E617: `mov   (func_4850E617_Table), d0`; ends at +8, where func_4850E617 0x4850E617's loop stops (`cmp FE_CmpMErsSPart_Table, a2`)
+func_4850E617_Table:	# 2 x u32, 9437485..9437486; read by CmpMDelFieldApply 0x4850E617: `mov   (a2), d0`; CmpMDelFieldApply 0x4850E617: `mov   (func_4850E617_Table), d0`; ends at +8, where CmpMDelFieldApply 0x4850E617's loop stops (`cmp FE_CmpMErsSPart_Table, a2`)
 	tab_u32	9437485, 9437486
 FE_CmpMErsSPart_Table:	# 4 x u8, 1..255; read by FE_CmpMErsSPart 0x4850E9D4: `movbu (FE_CmpMErsSPart_Table), d0`; FE_CmpMErsSPart 0x4850E9D4: `movbu (FE_CmpMErsSPart_Table), d1` ...
 	tab_u8	1, 255, 255, 255
@@ -1857,13 +1857,13 @@ FE_CmpMErsFstMeas_Table:	# 2 x u16, 1..65535; read by FE_CmpMErsFstMeas 0x4850EA
 	tab_u16	1, 65535
 FE_CmpMErsLstMeas_Table:	# 2 x u16, 1..65535; read by FE_CmpMErsLstMeas 0x4850EB82: `movhu (FE_CmpMErsLstMeas_Table), d0`; FE_CmpMErsLstMeas 0x4850EB82: `movhu (FE_CmpMErsLstMeas_Table), d1` ...
 	tab_u16	1, 65535
-func_4850EC91_Table:	# 3 x u32, 9437500..9437502; read by func_4850EC91 0x4850EC91: `mov   (a2), d0`; func_4850EC91 0x4850EC91: `mov   (func_4850EC91_Table), d0`; ends at +12, where func_4850EC91 0x4850EC91's loop stops (`cmp FE_CmpMInsFstMeas_Table, a2`)
+func_4850EC91_Table:	# 3 x u32, 9437500..9437502; read by CmpMErsFieldApply 0x4850EC91: `mov   (a2), d0`; CmpMErsFieldApply 0x4850EC91: `mov   (func_4850EC91_Table), d0`; ends at +12, where CmpMErsFieldApply 0x4850EC91's loop stops (`cmp FE_CmpMInsFstMeas_Table, a2`)
 	tab_u32	9437500, 9437501, 9437502
 FE_CmpMInsFstMeas_Table:	# 2 x u16, 1..65535; read by FE_CmpMInsFstMeas 0x4850EE91: `movhu (FE_CmpMInsFstMeas_Table), d0`; FE_CmpMInsFstMeas 0x4850EE91: `movhu (FE_CmpMInsFstMeas_Table), d1` ...
 	tab_u16	1, 65535
 FE_CmpMInsMeasNum_Table:	# 2 x u16, 1..65535; read by FE_CmpMInsMeasNum 0x4850EF6B: `movhu (FE_CmpMInsMeasNum_Table), d0`; FE_CmpMInsMeasNum 0x4850EF6B: `movhu (FE_CmpMInsMeasNum_Table), d1` ...
 	tab_u16	1, 65535
-func_4850F0A5_Table:	# 2 x u32, 9437520..9437521; read by func_4850F0A5 0x4850F0A5: `mov   (a2), d0`; func_4850F0A5 0x4850F0A5: `mov   (func_4850F0A5_Table), d0`
+func_4850F0A5_Table:	# 2 x u32, 9437520..9437521; read by CmpMInsFieldApply 0x4850F0A5: `mov   (a2), d0`; CmpMInsFieldApply 0x4850F0A5: `mov   (func_4850F0A5_Table), d0`
 	tab_u32	9437520, 9437521
 
 MspMenuScreen_window:	# u32, initial value of a RAM variable: the TtlScreen MspMenuScreen's `window` (+0x24), loaded and dereferenced by ScreenProc 0x48417810: `mov (0x24, a3), a0` -> `mov d0, (a0)`
@@ -3804,7 +3804,7 @@ FE_SeqCycPlySrt_Table:	# 2 x s16, -1..1; read by FE_SeqCycPlySrt 0x485354FB: `mo
 FE_SeqCycPlyEnd_Table:	# 2 x s16, -1..1; read by FE_SeqCycPlyEnd 0x485355D9: `movhu (FE_SeqCycPlyEnd_Table), d0`; FE_SeqCycPlyEnd 0x485355D9: `movhu (FE_SeqCycPlyEnd_Table), d1` ...
 	tab_s16	1, -1
 
-func_485356B7_Records:	# 43 x REC_func_485356B7_Records (8 bytes each); read by func_485356B7 0x485356B7 `mov (4, a2), d0`; func_485356B7 0x485356B7 `mov (a2), d0`
+func_485356B7_Records:	# 43 x REC_func_485356B7_Records (8 bytes each); read by SeqCycPlyFieldApply 0x485356B7 `mov (4, a2), d0`; SeqCycPlyFieldApply 0x485356B7 `mov (a2), d0`
 	REC_func_485356B7_Records	object=0xE00056, object_=0xE00057	# [0]
 	REC_func_485356B7_Records	object=0xE00164, object_=0xE00165
 	REC_func_485356B7_Records	object=0xE00192, object_=0xE00193
@@ -3852,7 +3852,7 @@ func_485356B7_Records:	# 43 x REC_func_485356B7_Records (8 bytes each); read by 
 Str_d_3:	.asciz "d"
 	.align	4, 0xFF	# pad after Str_d_3
 
-func_485371AC_Table:	# 6 x u32, 14680524..14680529; read by func_485371AC 0x485371AC: `mov   (a2), d0`; func_485371AC 0x485371AC: `mov   (func_485371AC_Table), d0`; ends at +24, where func_485371AC 0x485371AC's loop stops (`cmp SeqTrAsGridCheck_Var_2, a2`)
+func_485371AC_Table:	# 6 x u32, 14680524..14680529; read by SeqQtzFieldApply 0x485371AC: `mov   (a2), d0`; SeqQtzFieldApply 0x485371AC: `mov   (func_485371AC_Table), d0`; ends at +24, where SeqQtzFieldApply 0x485371AC's loop stops (`cmp SeqTrAsGridCheck_Var_2, a2`)
 	tab_u32	14680524, 14680525, 14680526, 14680527, 14680528, 14680529
 
 SeqTrAsGridCheck_Var_2:	# u8, initial value of a RAM variable; read / written by SeqTrAsGridCheck 0x48537381: `movbu (SeqTrAsGridCheck_Var_2), d0`; SeqTrAsGridCheck 0x48537381: `movbu d0, (SeqTrAsGridCheck_Var_2)` ...
@@ -3870,17 +3870,17 @@ FE_SeqTrackCopyFSong_Table:	# 2 x u16, 1..65535; read by FE_SeqTrackCopyFSong 0x
 	tab_u16	1, 65535
 FE_SeqTrackCopyTSong_Table:	# 2 x u16, 1..65535; read by FE_SeqTrackCopyTSong 0x48538557: `movhu (FE_SeqTrackCopyTSong_Table), d0`; FE_SeqTrackCopyTSong 0x48538557: `movhu (FE_SeqTrackCopyTSong_Table), d1` ...
 	tab_u16	1, 65535
-func_48538667_Table:	# 4 x u32, 14680178..14680184; read by func_48538667 0x48538667: `mov   (a2), d0`; func_48538667 0x48538667: `mov   (func_48538667_Table), d0`; ends at +16, where func_48538667 0x48538667's loop stops (`cmp FE_SeqSongCopyFSong_Table, a2`)
+func_48538667_Table:	# 4 x u32, 14680178..14680184; read by SeqTrackCopyFieldApply 0x48538667: `mov   (a2), d0`; SeqTrackCopyFieldApply 0x48538667: `mov   (func_48538667_Table), d0`; ends at +16, where SeqTrackCopyFieldApply 0x48538667's loop stops (`cmp FE_SeqSongCopyFSong_Table, a2`)
 	tab_u32	14680179, 14680178, 14680184, 14680183
 FE_SeqSongCopyFSong_Table:	# 2 x u16, 1..65535; read by FE_SeqSongCopyFSong 0x48538820: `movhu (FE_SeqSongCopyFSong_Table), d0`; FE_SeqSongCopyFSong 0x48538820: `movhu (FE_SeqSongCopyFSong_Table), d1` ...
 	tab_u16	1, 65535
 FE_SeqSongCopyTSong_Table:	# 2 x u16, 1..65535; read by FE_SeqSongCopyTSong 0x485388F4: `movhu (FE_SeqSongCopyTSong_Table), d0`; FE_SeqSongCopyTSong 0x485388F4: `movhu (FE_SeqSongCopyTSong_Table), d1` ...
 	tab_u16	1, 65535
-func_48538A04_Table:	# 2 x u32, 14680356..14680359; read by func_48538A04 0x48538A04: `mov   (a2), d0`; func_48538A04 0x48538A04: `mov   (func_48538A04_Table), d0`
+func_48538A04_Table:	# 2 x u32, 14680356..14680359; read by SeqSongCopyFieldApply 0x48538A04: `mov   (a2), d0`; SeqSongCopyFieldApply 0x48538A04: `mov   (func_48538A04_Table), d0`
 	tab_u32	14680356, 14680359
 FE_SeqTrkMrgTrack_Table_2:	# 4 x u8, 1..255; read by FE_SeqTrkMrgTrack 0x48538ACC: `movbu  (d1, a0), d0`; FE_SeqTrkMrgTrack 0x48538ACC: `movbu  (d1, a0), d1`
 	tab_u8	1, 2, 3, 255
-func_48538C34_Table:	# 3 x u32, 14680480..14680492; read by func_48538C34 0x48538C34: `mov   (a2), d0`; func_48538C34 0x48538C34: `mov   (func_48538C34_Table), d0`; ends at +12, where func_48538C34 0x48538C34's loop stops (`cmp FE_SeqMsCpFTrack_Table, a2`)
+func_48538C34_Table:	# 3 x u32, 14680480..14680492; read by SeqTrkMrgFieldApply 0x48538C34: `mov   (a2), d0`; SeqTrkMrgFieldApply 0x48538C34: `mov   (func_48538C34_Table), d0`; ends at +12, where SeqTrkMrgFieldApply 0x48538C34's loop stops (`cmp FE_SeqMsCpFTrack_Table, a2`)
 	tab_u32	14680492, 14680480, 14680486
 FE_SeqMsCpFTrack_Table:	# 4 x u8, 1..255; read by FE_SeqMsCpFTrack 0x48538D41: `movbu (FE_SeqMsCpFTrack_Table), d0`; FE_SeqMsCpFTrack 0x48538D41: `movbu (FE_SeqMsCpFTrack_Table), d1` ...
 	tab_u8	1, 255, 255, 255
@@ -3894,7 +3894,7 @@ FE_SeqMsCpTSrtMeas_Table:	# 2 x u16, 1..65535; read by FE_SeqMsCpTSrtMeas 0x4853
 	tab_u16	1, 65535
 FE_SeqMsCpTRep_Table:	# 2 x u16, 0..65535; read by FE_SeqMsCpTRep 0x4853918C: `movhu (FE_SeqMsCpTRep_Table), d0`; FE_SeqMsCpTRep 0x4853918C: `movhu (FE_SeqMsCpTRep_Table), d1` ...
 	tab_u16	0, 65535
-func_4853929B_Table:	# 6 x u32, 14680663..14680688; read by func_4853929B 0x4853929B: `mov   (a2), d0`; func_4853929B 0x4853929B: `mov   (func_4853929B_Table), d0`; ends at +24, where func_4853929B 0x4853929B's loop stops (`cmp FE_SeqMsErsTrack_Table, a2`)
+func_4853929B_Table:	# 6 x u32, 14680663..14680688; read by SeqMsCpFieldApply 0x4853929B: `mov   (a2), d0`; SeqMsCpFieldApply 0x4853929B: `mov   (func_4853929B_Table), d0`; ends at +24, where SeqMsCpFieldApply 0x4853929B's loop stops (`cmp FE_SeqMsErsTrack_Table, a2`)
 	tab_u32	14680665, 14680663, 14680664, 14680686, 14680687, 14680688
 FE_SeqMsErsTrack_Table:	# 4 x u8, 1..255; read by FE_SeqMsErsTrack 0x48539503: `movbu (FE_SeqMsErsTrack_Table), d0`; FE_SeqMsErsTrack 0x48539503: `movbu (FE_SeqMsErsTrack_Table), d1` ...
 	tab_u8	1, 255, 255, 255
@@ -3904,7 +3904,7 @@ FE_SeqMsErsLstMeas_Table:	# 2 x u16, 1..65535; read by FE_SeqMsErsLstMeas 0x4853
 	tab_u16	1, 65535
 FE_SeqMsErsData_Table:	# 2 x s16, -1..0; read by FE_SeqMsErsData 0x48539792: `movhu (FE_SeqMsErsData_Table), d0`; FE_SeqMsErsData 0x48539792: `movhu (FE_SeqMsErsData_Table), d1` ...
 	tab_s16	0, -1
-func_485398D0_Table:	# 4 x u32, 14680641..14680644; read by func_485398D0 0x485398D0: `mov   (a2), d0`; func_485398D0 0x485398D0: `mov   (func_485398D0_Table), d0`; ends at +16, where func_485398D0 0x485398D0's loop stops (`cmp FE_SeqMsDelTrack_Table, a2`)
+func_485398D0_Table:	# 4 x u32, 14680641..14680644; read by SeqMsErsFieldApply 0x485398D0: `mov   (a2), d0`; SeqMsErsFieldApply 0x485398D0: `mov   (func_485398D0_Table), d0`; ends at +16, where SeqMsErsFieldApply 0x485398D0's loop stops (`cmp FE_SeqMsDelTrack_Table, a2`)
 	tab_u32	14680641, 14680642, 14680643, 14680644
 FE_SeqMsDelTrack_Table:	# 4 x u8, 1..255; read by FE_SeqMsDelTrack 0x48539A40: `movbu (FE_SeqMsDelTrack_Table), d0`; FE_SeqMsDelTrack 0x48539A40: `movbu (FE_SeqMsDelTrack_Table), d1` ...
 	tab_u8	1, 255, 255, 255
@@ -3912,7 +3912,7 @@ FE_SeqMsDelFstMeas_Table:	# 2 x u16, 1..65535; read by FE_SeqMsDelFstMeas 0x4853
 	tab_u16	1, 65535
 FE_SeqMsDelLstMeas_Table:	# 2 x u16, 1..65535; read by FE_SeqMsDelLstMeas 0x48539BFC: `movhu (FE_SeqMsDelLstMeas_Table), d0`; FE_SeqMsDelLstMeas 0x48539BFC: `movhu (FE_SeqMsDelLstMeas_Table), d1` ...
 	tab_u16	1, 65535
-func_48539D0B_Table:	# 3 x u32, 14680698..14680700; read by func_48539D0B 0x48539D0B: `mov   (a2), d0`; func_48539D0B 0x48539D0B: `mov   (func_48539D0B_Table), d0`; ends at +12, where func_48539D0B 0x48539D0B's loop stops (`cmp FE_SeqMsInsFTrack_Table, a2`)
+func_48539D0B_Table:	# 3 x u32, 14680698..14680700; read by SeqMsDelFieldApply 0x48539D0B: `mov   (a2), d0`; SeqMsDelFieldApply 0x48539D0B: `mov   (func_48539D0B_Table), d0`; ends at +12, where SeqMsDelFieldApply 0x48539D0B's loop stops (`cmp FE_SeqMsInsFTrack_Table, a2`)
 	tab_u32	14680698, 14680699, 14680700
 FE_SeqMsInsFTrack_Table:	# 4 x u8, 1..255; read by FE_SeqMsInsFTrack 0x48539E4B: `movbu (FE_SeqMsInsFTrack_Table), d0`; FE_SeqMsInsFTrack 0x48539E4B: `movbu (FE_SeqMsInsFTrack_Table), d1` ...
 	tab_u8	1, 255, 255, 255
@@ -3926,7 +3926,7 @@ FE_SeqMsInsTSrtMeas_Table:	# 2 x u16, 1..65535; read by FE_SeqMsInsTSrtMeas 0x48
 	tab_u16	1, 65535
 FE_SeqMsInsTRep_Table:	# 2 x u16, 0..65535; read by FE_SeqMsInsTRep 0x4853A296: `movhu (FE_SeqMsInsTRep_Table), d0`; FE_SeqMsInsTRep 0x4853A296: `movhu (FE_SeqMsInsTRep_Table), d1` ...
 	tab_u16	0, 65535
-func_4853A3A5_Table:	# 6 x u32, 14680720..14680738; read by func_4853A3A5 0x4853A3A5: `mov   (a2), d0`; func_4853A3A5 0x4853A3A5: `mov   (func_4853A3A5_Table), d0`
+func_4853A3A5_Table:	# 6 x u32, 14680720..14680738; read by SeqMsInsFieldApply 0x4853A3A5: `mov   (a2), d0`; SeqMsInsFieldApply 0x4853A3A5: `mov   (func_4853A3A5_Table), d0`
 	tab_u32	14680720, 14680721, 14680722, 14680736, 14680737, 14680738
 ApcToSMFConvGrid_Table_2:	# 16 x u8, 0..0; read by ApcToSMFConvGrid 0x4853A60D: `movbu  (a1), d1`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
@@ -3940,7 +3940,7 @@ FE_SeqNoteChangeSrcNt_Table:	# 4 x u8, 60..255; read by FE_SeqNoteChangeSrcNt 0x
 	tab_u8	60, 255, 255, 255
 FE_SeqNoteChangeDstNt_Table:	# 4 x u8, 61..255; read by FE_SeqNoteChangeDstNt 0x4853AE98: `movbu (FE_SeqNoteChangeDstNt_Table), d0`; FE_SeqNoteChangeDstNt 0x4853AE98: `movbu (FE_SeqNoteChangeDstNt_Table), d1` ...
 	tab_u8	61, 255, 255, 255
-func_4853AFB6_Table:	# 5 x u32, 14680584..14680605; read by func_4853AFB6 0x4853AFB6: `mov   (a2), d0`; func_4853AFB6 0x4853AFB6: `mov   (func_4853AFB6_Table), d0`; ends at +20, where func_4853AFB6 0x4853AFB6's loop stops (`cmp FE_SeqVeloCngTrack_Table, a2`)
+func_4853AFB6_Table:	# 5 x u32, 14680584..14680605; read by SeqNoteChangeFieldApply 0x4853AFB6: `mov   (a2), d0`; SeqNoteChangeFieldApply 0x4853AFB6: `mov   (func_4853AFB6_Table), d0`; ends at +20, where SeqNoteChangeFieldApply 0x4853AFB6's loop stops (`cmp FE_SeqVeloCngTrack_Table, a2`)
 	tab_u32	14680584, 14680591, 14680592, 14680599, 14680605
 FE_SeqVeloCngTrack_Table:	# 4 x u8, 1..255; read by FE_SeqVeloCngTrack 0x4853B158: `movbu (FE_SeqVeloCngTrack_Table), d0`; FE_SeqVeloCngTrack 0x4853B158: `movbu (FE_SeqVeloCngTrack_Table), d1` ...
 	tab_u8	1, 255, 255, 255
@@ -3950,7 +3950,7 @@ FE_SeqVeloCngLstMeas_Table:	# 2 x u16, 1..65535; read by FE_SeqVeloCngLstMeas 0x
 	tab_u16	1, 65535
 FE_SeqVeloCngVelo_Table:	# 2 x s16, -1..0; read by FE_SeqVeloCngVelo 0x4853B3E7: `movhu (FE_SeqVeloCngVelo_Table), d0`; FE_SeqVeloCngVelo 0x4853B3E7: `movhu (FE_SeqVeloCngVelo_Table), d1` ...
 	tab_s16	0, -1
-func_4853B513_Table:	# 4 x u32, 14680562..14680567; read by func_4853B513 0x4853B513: `mov   (a2), d0`; func_4853B513 0x4853B513: `mov   (func_4853B513_Table), d0`; ends at +16, where func_4853B513 0x4853B513's loop stops (`cmp FE_SeqTransTrack_Table, a2`)
+func_4853B513_Table:	# 4 x u32, 14680562..14680567; read by SeqVeloCngFieldApply 0x4853B513: `mov   (a2), d0`; SeqVeloCngFieldApply 0x4853B513: `mov   (func_4853B513_Table), d0`; ends at +16, where SeqVeloCngFieldApply 0x4853B513's loop stops (`cmp FE_SeqTransTrack_Table, a2`)
 	tab_u32	14680562, 14680566, 14680567, 14680565
 FE_SeqTransTrack_Table:	# 4 x u8, 1..255; read by FE_SeqTransTrack 0x4853B683: `movbu (FE_SeqTransTrack_Table), d0`; FE_SeqTransTrack 0x4853B683: `movbu (FE_SeqTransTrack_Table), d1` ...
 	tab_u8	1, 255, 255, 255
@@ -3960,7 +3960,7 @@ FE_SeqTransLstMeas_Table:	# 2 x u16, 1..65535; read by FE_SeqTransLstMeas 0x4853
 	tab_u16	1, 65535
 FE_SeqTransTrans_Table:	# 2 x s16, -1..0; read by FE_SeqTransTrans 0x4853B912: `movhu (FE_SeqTransTrans_Table), d0`; FE_SeqTransTrans 0x4853B912: `movhu (FE_SeqTransTrans_Table), d1` ...
 	tab_s16	0, -1
-func_4853BA3E_Table:	# 4 x u32, 14680538..14680544; read by func_4853BA3E 0x4853BA3E: `mov   (a2), d0`; func_4853BA3E 0x4853BA3E: `mov   (func_4853BA3E_Table), d0`; ends at +16, where func_4853BA3E 0x4853BA3E's loop stops (`cmp FE_SeqAdvDlyTrack_Table, a2`)
+func_4853BA3E_Table:	# 4 x u32, 14680538..14680544; read by SeqTransFieldApply 0x4853BA3E: `mov   (a2), d0`; SeqTransFieldApply 0x4853BA3E: `mov   (func_4853BA3E_Table), d0`; ends at +16, where SeqTransFieldApply 0x4853BA3E's loop stops (`cmp FE_SeqAdvDlyTrack_Table, a2`)
 	tab_u32	14680538, 14680543, 14680544, 14680541
 FE_SeqAdvDlyTrack_Table:	# 4 x u8, 1..255; read by FE_SeqAdvDlyTrack 0x4853BBAE: `movbu (FE_SeqAdvDlyTrack_Table), d0`; FE_SeqAdvDlyTrack 0x4853BBAE: `movbu (FE_SeqAdvDlyTrack_Table), d1` ...
 	tab_u8	1, 255, 255, 255
@@ -3970,7 +3970,7 @@ FE_SeqAdvDlyLstMeas_Table:	# 2 x u16, 1..65535; read by FE_SeqAdvDlyLstMeas 0x48
 	tab_u16	1, 65535
 FE_SeqAdvDlyAdvDly_Table:	# 2 x s16, -1..0; read by FE_SeqAdvDlyAdvDly 0x4853BE3D: `movhu (FE_SeqAdvDlyAdvDly_Table), d0`; FE_SeqAdvDlyAdvDly 0x4853BE3D: `movhu (FE_SeqAdvDlyAdvDly_Table), d1` ...
 	tab_s16	0, -1
-func_4853BF69_Table:	# 4 x u32, 14680615..14680621; read by func_4853BF69 0x4853BF69: `mov   (a2), d0`; func_4853BF69 0x4853BF69: `mov   (func_4853BF69_Table), d0`; ends at +16, where func_4853BF69 0x4853BF69's loop stops (`cmp AcNoteEditBoxProc_Table_5, a2`)
+func_4853BF69_Table:	# 4 x u32, 14680615..14680621; read by SeqAdvDlyFieldApply 0x4853BF69: `mov   (a2), d0`; SeqAdvDlyFieldApply 0x4853BF69: `mov   (func_4853BF69_Table), d0`; ends at +16, where SeqAdvDlyFieldApply 0x4853BF69's loop stops (`cmp AcNoteEditBoxProc_Table_5, a2`)
 	tab_u32	14680615, 14680620, 14680621, 14680619
 AcNoteEditBoxProc_Table_5:	# 4 x u8, 0..255; read by AcNoteEditBoxProc 0x4853C0FB: `movbu (AcNoteEditBoxProc_Table_5), d0`; AcNoteEditBoxProc 0x4853C0FB: `movbu d0, (AcNoteEditBoxProc_Table_5)`
 	tab_u8	0, 255, 255, 255
@@ -3985,7 +3985,7 @@ AcStepRecBoxProc_Table_3:	# 3 x u8, 32..183; read by AcStepRecBoxProc 0x4853DD39
 AcStepRecBoxProc_Table:	# 3 x u32, 0..0; read by AcStepRecBoxProc 0x4853DD39: `mov   (a0), a0`; AcStepRecBoxProc 0x4853DD39: `mov   (a0), d0` ...; ends at +12, where AcStepRecBoxProc 0x4853DD39's loop stops (`cmp MdSeq_Var, a2`)
 	tab_u32	0, 0, 0
 
-MdSeq_Var:	# u8, initial value of a RAM variable; read / written by MdSeq 0x4853F16B: `movbu d0, (MdSeq_Var)`; func_4853F284 0x4853F284: `movbu d1, (MdSeq_Var)` ...
+MdSeq_Var:	# u8, initial value of a RAM variable; read / written by MdSeq 0x4853F16B: `movbu d0, (MdSeq_Var)`; MdSeqCurSongSetNoPlay 0x4853F284: `movbu d1, (MdSeq_Var)` ...
 	.byte	0
 MainSEQ_SetLyricsFlag_Var:	# u8, initial value of a RAM variable; read / written by MainSEQ_SetLyricsFlag 0x4853F77B: `movbu d0, (MainSEQ_SetLyricsFlag_Var)`; TtSeqPlay 0x4853F935: `movbu (MainSEQ_SetLyricsFlag_Var), d0` ...
 	.byte	0
@@ -5790,9 +5790,9 @@ SdSndEditCurListIndexGet_Var:	# u32, initial value of a RAM variable; read / wri
 	.long	1
 SdSndEditCurEntryIndexGet_Var:	# u32, initial value of a RAM variable; read / written by SdSndEditCurEntryIndexGet 0x48573325: `mov (SdSndEditCurEntryIndexGet_Var), d0`; SdSndEditCurEntryIndexSet 0x48573369: `mov d2, (SdSndEditCurEntryIndexGet_Var)` ...
 	.long	1
-func_4857369A_Var:	# s8, initial value of a RAM variable; read / written by func_4857369A 0x4857369A: `movbu (func_4857369A_Var), d0`; func_485736A4 0x485736A4: `movbu d0, (func_4857369A_Var)`
+func_4857369A_Var:	# s8, initial value of a RAM variable; read / written by SdSndEditNameFlagGet 0x4857369A: `movbu (func_4857369A_Var), d0`; SdSndEditNameFlagSet 0x485736A4: `movbu d0, (func_4857369A_Var)`
 	.byte	0
-func_4857357D_Var:	# u8, initial value of a RAM variable; read / written by func_4857357D 0x4857357D: `movbu (func_4857357D_Var), d0`; func_48573586 0x48573586: `movbu d0, (func_4857357D_Var)`
+func_4857357D_Var:	# u8, initial value of a RAM variable; read / written by SdSndEditDirtyGet 0x4857357D: `movbu (func_4857357D_Var), d0`; SdSndEditDirtySet 0x48573586: `movbu d0, (func_4857357D_Var)`
 	.byte	0
 SdSndEditMoveDirGet_Var:	# s8, initial value of a RAM variable; read / written by SdSndEditMoveDirGet 0x4857339F: `movbu (SdSndEditMoveDirGet_Var), d0`; SdSndEditMoveDirSet 0x485733A9: `movbu d0, (SdSndEditMoveDirGet_Var)`
 	.byte	1
@@ -5822,7 +5822,7 @@ func_48574A70_Var:	# u8, initial value of a RAM variable; read / written by func
 	.byte	0
 func_48574A70_Var_2:	# u8, initial value of a RAM variable; read / written by func_48574A70 0x48574A70: `movbu (func_48574A70_Var_2), d0`; func_48574A70 0x48574A70: `movbu d0, (func_48574A70_Var_2)`
 	.byte	0
-func_48574795_Var:	# u8, initial value of a RAM variable; read / written by func_48574795 0x48574795: `movbu (a3), d1`; func_48574795 0x48574795: `movbu d0, (a3)` ...
+func_48574795_Var:	# u8, initial value of a RAM variable; read / written by SdSongInfoTagSet 0x48574795: `movbu (a3), d1`; SdSongInfoTagSet 0x48574795: `movbu d0, (a3)` ...
 	.byte	1
 func_48574A70_Var_3:	# u8, initial value of a RAM variable; read / written by func_48574A70 0x48574A70: `movbu (func_48574A70_Var_3), d0`; func_48574A70 0x48574A70: `movbu d0, (func_48574A70_Var_3)`
 	.byte	1
@@ -5830,35 +5830,35 @@ func_48574A70_Var_3:	# u8, initial value of a RAM variable; read / written by fu
 Str_INIT:	.asciz "INIT "
 	.align	4, 0xFF	# pad after Str_INIT
 
-func_48579079_Var:	# u8, initial value of a RAM variable; read / written by func_48579079 0x48579079: `movbu (func_48579079_Var), d0`; func_485792F1 0x485792F1: `movbu (func_48579079_Var), d0` ...
+func_48579079_Var:	# u8, initial value of a RAM variable; read / written by func_48579079 0x48579079: `movbu (func_48579079_Var), d0`; SdAudVolumeGet 0x485792F1: `movbu (func_48579079_Var), d0` ...
 	.byte	25
-func_485791B7_Var:	# u8, initial value of a RAM variable; read / written by func_485791B7 0x485791B7: `movbu (func_485791B7_Var), d0`; func_48579EE3 0x48579EE3: `movbu (func_485791B7_Var), d0` ...
+func_485791B7_Var:	# u8, initial value of a RAM variable; read / written by func_485791B7 0x485791B7: `movbu (func_485791B7_Var), d0`; SdAudPlayStateSet 0x48579EE3: `movbu (func_485791B7_Var), d0` ...
 	.byte	0
-func_4857926C_Var:	# u16, initial value of a RAM variable; read / written by func_4857926C 0x4857926C: `movhu d0, (func_4857926C_Var)`; func_4857B360 0x4857B360: `movhu (func_4857926C_Var), d0` ...
+func_4857926C_Var:	# u16, initial value of a RAM variable; read / written by SdAudMountReset 0x4857926C: `movhu d0, (func_4857926C_Var)`; SdSndMuteMaskGet 0x4857B360: `movhu (func_4857926C_Var), d0` ...
 	.word	0
-func_4857926C_Var_2:	# u32, initial value of a RAM variable; read / written by func_4857926C 0x4857926C: `mov d0, (func_4857926C_Var_2)`; func_4857B0E2 0x4857B0E2: `mov (func_4857926C_Var_2), d1` ...
+func_4857926C_Var_2:	# u32, initial value of a RAM variable; read / written by SdAudMountReset 0x4857926C: `mov d0, (func_4857926C_Var_2)`; func_4857B0E2 0x4857B0E2: `mov (func_4857926C_Var_2), d1` ...
 	.long	0
-func_4857926C_Var_3:	# s16, initial value of a RAM variable; read / written by func_4857926C 0x4857926C: `movhu d0, (func_4857926C_Var_3)`; func_4857B0E2 0x4857B0E2: `movhu (func_4857926C_Var_3), d0` ...
+func_4857926C_Var_3:	# s16, initial value of a RAM variable; read / written by SdAudMountReset 0x4857926C: `movhu d0, (func_4857926C_Var_3)`; func_4857B0E2 0x4857B0E2: `movhu (func_4857926C_Var_3), d0` ...
 	.word	0
-func_4857B0E2_Var:	# s16, initial value of a RAM variable; read / written by func_4857B0E2 0x4857B0E2: `movhu (func_4857B0E2_Var), d0`; func_4857B348 0x4857B348: `movhu (func_4857B0E2_Var), d0` ...
+func_4857B0E2_Var:	# s16, initial value of a RAM variable; read / written by func_4857B0E2 0x4857B0E2: `movhu (func_4857B0E2_Var), d0`; SdSndPlayModeGet 0x4857B348: `movhu (func_4857B0E2_Var), d0` ...
 	.word	0
-func_4857B352_Var:	# s16, initial value of a RAM variable; read / written by func_4857B352 0x4857B352: `movhu (func_4857B352_Var), d0`; func_4857BA89 0x4857BA89: `movhu (func_4857B352_Var), d0` ...
+func_4857B352_Var:	# s16, initial value of a RAM variable; read / written by SdSndPlayAsGet 0x4857B352: `movhu (func_4857B352_Var), d0`; SdSndPlayAsCycle 0x4857BA89: `movhu (func_4857B352_Var), d0` ...
 	.word	0
-func_485790A9_Var:	# u8, initial value of a RAM variable; read / written by func_485790A9 0x485790A9: `movbu (func_485790A9_Var), d0`; func_485791E7 0x485791E7: `movbu (func_485790A9_Var), d0` ...
+func_485790A9_Var:	# u8, initial value of a RAM variable; read / written by SdAudPlayerHalt 0x485790A9: `movbu (func_485790A9_Var), d0`; func_485791E7 0x485791E7: `movbu (func_485790A9_Var), d0` ...
 	.byte	0
-func_485790A9_Var_2:	# u8, initial value of a RAM variable; read / written by func_485790A9 0x485790A9: `movbu (func_485790A9_Var_2), d0`; func_485790A9 0x485790A9: `movbu d0, (func_485790A9_Var_2)` ...
+func_485790A9_Var_2:	# u8, initial value of a RAM variable; read / written by SdAudPlayerHalt 0x485790A9: `movbu (func_485790A9_Var_2), d0`; SdAudPlayerHalt 0x485790A9: `movbu d0, (func_485790A9_Var_2)` ...
 	.byte	0
-func_485790A9_Var_3:	# u32, initial value of a RAM variable; read / written by func_485790A9 0x485790A9: `mov d0, (func_485790A9_Var_3)`; func_485792A0 0x485792A0: `mov d0, (func_485790A9_Var_3)` ...
+func_485790A9_Var_3:	# u32, initial value of a RAM variable; read / written by SdAudPlayerHalt 0x485790A9: `mov d0, (func_485790A9_Var_3)`; SdAudStateStop 0x485792A0: `mov d0, (func_485790A9_Var_3)` ...
 	.long	0
-func_485790A9_Var_4:	# u32, initial value of a RAM variable; read / written by func_485790A9 0x485790A9: `mov d0, (func_485790A9_Var_4)`; func_48579252 0x48579252: `mov d0, (func_485790A9_Var_4)` ...
+func_485790A9_Var_4:	# u32, initial value of a RAM variable; read / written by SdAudPlayerHalt 0x485790A9: `mov d0, (func_485790A9_Var_4)`; SdAudPlayerReset 0x48579252: `mov d0, (func_485790A9_Var_4)` ...
 	.long	0
-func_48579252_Var:	# s16, initial value of a RAM variable; read / written by func_48579252 0x48579252: `movhu d0, (func_48579252_Var)`; func_4857926C 0x4857926C: `movhu d0, (func_48579252_Var)` ...
+func_48579252_Var:	# s16, initial value of a RAM variable; read / written by SdAudPlayerReset 0x48579252: `movhu d0, (func_48579252_Var)`; SdAudMountReset 0x4857926C: `movhu d0, (func_48579252_Var)` ...
 	.word	0
-func_48579079_Var_2:	# u8, initial value of a RAM variable; read / written by func_48579079 0x48579079: `movbu (func_48579079_Var_2), d1`; func_485790A9 0x485790A9: `movbu (func_48579079_Var_2), d0` ...
+func_48579079_Var_2:	# u8, initial value of a RAM variable; read / written by func_48579079 0x48579079: `movbu (func_48579079_Var_2), d1`; SdAudPlayerHalt 0x485790A9: `movbu (func_48579079_Var_2), d0` ...
 	.byte	0
-func_485795B7_Var:	# u8, initial value of a RAM variable; read / written by func_485795B7 0x485795B7: `movbu d0, (func_485795B7_Var)`; func_48579A19 0x48579A19: `movbu d0, (func_485795B7_Var)` ...
+func_485795B7_Var:	# u8, initial value of a RAM variable; read / written by func_485795B7 0x485795B7: `movbu d0, (func_485795B7_Var)`; SdAudRewStart 0x48579A19: `movbu d0, (func_485795B7_Var)` ...
 	.byte	0
-func_48579079_Var_3:	# u8, initial value of a RAM variable; read / written by func_48579079 0x48579079: `movbu d0, (func_48579079_Var_3)`; func_48579966 0x48579966: `movbu d0, (func_48579079_Var_3)` ...
+func_48579079_Var_3:	# u8, initial value of a RAM variable; read / written by func_48579079 0x48579079: `movbu d0, (func_48579079_Var_3)`; SdAudVolumeStep 0x48579966: `movbu d0, (func_48579079_Var_3)` ...
 	.byte	0
 
 func_485793CA_Table:	# 3 x u8, 0..255; read by func_485793CA 0x485793CA: `movbu (func_485793CA_Table), d0`; func_48579F5C 0x48579F5C: `movbu (func_485793CA_Table), d0` ...
@@ -5876,10 +5876,10 @@ func_48579FDD_Var_2:	# u8, initial value of a RAM variable; read / written by fu
 func_48579FDD_Table:	# 2 x u8, 0..255; read by func_48579FDD 0x48579FDD: `movbu (func_48579FDD_Table), d0`; func_48579FDD 0x48579FDD: `movbu d0, (func_48579FDD_Table)` ...
 	tab_u8	0, 255
 
-func_485790A9_Var_5:	# s8, initial value of a RAM variable; read / written by func_485790A9 0x485790A9: `movbu d0, (func_485790A9_Var_5)`; func_485792A0 0x485792A0: `movbu d0, (func_485790A9_Var_5)` ...
+func_485790A9_Var_5:	# s8, initial value of a RAM variable; read / written by SdAudPlayerHalt 0x485790A9: `movbu d0, (func_485790A9_Var_5)`; SdAudStateStop 0x485792A0: `movbu d0, (func_485790A9_Var_5)` ...
 	.byte	0
 
-func_485790A9_Table:	# 3 x u8, 0..255; read by func_485790A9 0x485790A9: `movbu d0, (func_485790A9_Table)`; func_485792A0 0x485792A0: `movbu d0, (func_485790A9_Table)` ...
+func_485790A9_Table:	# 3 x u8, 0..255; read by SdAudPlayerHalt 0x485790A9: `movbu d0, (func_485790A9_Table)`; SdAudStateStop 0x485792A0: `movbu d0, (func_485790A9_Table)` ...
 	tab_u8	0, 255, 255
 
 Str_x:	.asciz "x"
@@ -5922,7 +5922,7 @@ PictureImport_Table:
 	.long	Str_BMP_16
 	.long	Str_JPG_15
 
-func_485815CB_Table:	# 2 x u16, 1..65535; read by func_485815CB 0x485815CB: `movhu (func_485815CB_Table), d0`; func_485815CB 0x485815CB: `movhu (func_485815CB_Table), d1` ...
+func_485815CB_Table:	# 2 x u16, 1..65535; read by SswDoraJpgImport 0x485815CB: `movhu (func_485815CB_Table), d0`; SswDoraJpgImport 0x485815CB: `movhu (func_485815CB_Table), d1` ...
 	tab_u16	1, 65535
 
 HelpFunction_window:	# u32, initial value of a RAM variable: the TtlScreen HelpFunction's `window` (+0x24), loaded and dereferenced by ScreenProc 0x48417810: `mov (0x24, a3), a0` -> `mov d0, (a0)`
@@ -6227,23 +6227,23 @@ fdemo_d15_window:	# u32, initial value of a RAM variable: the Screen fdemo_d15's
 fdemo_d16_window:	# u32, initial value of a RAM variable: the Screen fdemo_d16's `window` (+0x24), loaded and dereferenced by ScreenProc 0x48417810: `mov (0x24, a3), a0` -> `mov d0, (a0)`
 	.long	0xffffffff
 
-func_48402563_Table:	# 4 x s8, -1..0; read by func_48402563 0x48402563: `movbu (func_48402563_Table), d0`; func_48402563 0x48402563: `movbu d0, (func_48402563_Table)`
+func_48402563_Table:	# 4 x s8, -1..0; read by FdcPrgDiskSpinning 0x48402563: `movbu (func_48402563_Table), d0`; FdcPrgDiskSpinning 0x48402563: `movbu d0, (func_48402563_Table)`
 	tab_s8	0, -1, -1, -1
 
-func_48402563_Var:	# u32, initial value of a RAM variable; read / written by func_48402563 0x48402563: `mov (func_48402563_Var), d1`; func_48402563 0x48402563: `mov d0, (func_48402563_Var)`
+func_48402563_Var:	# u32, initial value of a RAM variable; read / written by FdcPrgDiskSpinning 0x48402563: `mov (func_48402563_Var), d1`; FdcPrgDiskSpinning 0x48402563: `mov d0, (func_48402563_Var)`
 	.long	0
 DspHostPortError:	# s8, initial value of a RAM variable; read / written by DspWaitReady 0x48404D25: `movbu d0, (DspHostPortError)`; DspPortWriteChecked 0x48404EF5: `movbu (DspHostPortError), d0` ...
 	.byte	-1
 
 DspReadyWaitEnabled:	# 3 x u8, 0..255; read by DspReadyWaitOn 0x48404D10: `movbu d0, (DspReadyWaitEnabled)`; DspReadyWaitOff 0x48404D1B: `movbu d0, (DspReadyWaitEnabled)` ...
 	tab_u8	0, 255, 255
-func_48405B55_Table:	# 2 x u16, 0..65535; read by func_48405B55 0x48405B55: `movhu (func_48405B55_Table), d0`; func_48405B55 0x48405B55: `movhu d0, (func_48405B55_Table)` ...
+func_48405B55_Table:	# 2 x u16, 0..65535; read by DspManagerPassDoneTake 0x48405B55: `movhu (func_48405B55_Table), d0`; DspManagerPassDoneTake 0x48405B55: `movhu d0, (func_48405B55_Table)` ...
 	tab_u16	0, 65535
 
 func_4840783A_Var:	# u32, initial value of a RAM variable; read / written by func_4840783A 0x4840783A: `mov (func_4840783A_Var), d0`; func_4840783A 0x4840783A: `mov d0, (func_4840783A_Var)`
 	.long	0
 
-func_4840791C_Table:	# 4 x u16, 49193..65535; read by func_4840791C_entry 0x484068D7: `movhu  (d0, a0), d1`
+func_4840791C_Table:	# 4 x u16, 49193..65535; read by func_4840791C_entry 0x48407387: `movhu  (d0, a0), d1`
 	tab_u16	49197, 49195, 49193, 65535
 
 DspDownloadAll_Table:
@@ -6820,7 +6820,7 @@ GetColorMode_Var:	# u16, initial value of a RAM variable; read / written by GetC
 GetLcdMode_Var:	# u16, initial value of a RAM variable; read / written by GetLcdMode 0x48421D5E: `movhu (GetLcdMode_Var), d0`; SetLcdMode 0x48421D67: `movhu d0, (GetLcdMode_Var)`
 	.word	0
 
-func_484288AC_Table:	# 4 x REC_func_484288AC_Table (56 bytes each); read by func_484143EB 0x484143EB `movhu (6, a0), d0`; func_484144F8 0x484144F8 `call set_flg, 0, 0`; func_484144F8 0x484144F8 `movhu (6, a0), d0` (+175)
+func_484288AC_Table:	# 4 x REC_func_484288AC_Table (56 bytes each); read by ApTaskMain 0x484143EB `movhu (6, a0), d0`; GuiTimerTick 0x484144F8 `call set_flg, 0, 0`; GuiTimerTick 0x484144F8 `movhu (6, a0), d0` (+175)
 	REC_func_484288AC_Table	key__=1, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x50000, f32=0xFFFFFFFF, f36=0x50000, Free_d1=0x5002C044, key___=-1, count=1, index_=0x5002FC5C
 	REC_func_484288AC_Table	key__=256, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x50000, f32=0xFFFFFFFF, f36=0x50000, Free_d1=0x5002C050, key___=-1, count=128, index_=0x5002FC74
 	REC_func_484288AC_Table	key__=1024, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x50000, f32=0xFFFFFFFF, f36=0x50000, Free_d1=0x5002CC50, key___=-1, count=128, index_=0x50030874
@@ -6886,7 +6886,7 @@ func_48448015_Table:	# 2 x u16, 1000..65535; read by func_48448015 0x48448015: `
 func_48448077_Table:	# 4 x u8, 0..255; read by KeybedFifoRead 0x48448077: `movbu (func_48448077_Table), d0`; KeybedFifoRead 0x48448077: `movbu d0, (func_48448077_Table)` ...
 	tab_u8	0, 255, 255, 255
 
-func_48449462_Records:	# 7 x REC_func_48449462_Records (8 bytes each); read by func_48449462 0x48449462 `mov (4, a0), d1`; func_48449462 0x48449462 `mov (d0, a0), d0`
+func_48449462_Records:	# 7 x REC_func_48449462_Records (8 bytes each); read by TableToneKeyMap 0x48449462 `mov (4, a0), d1`; TableToneKeyMap 0x48449462 `mov (d0, a0), d0`
 	REC_func_48449462_Records	p0=func_48449462_Records_p0_1, p4=func_48449462_Records_p0_1
 	REC_func_48449462_Records	p0=func_48449462_Records_p0_6, p4=func_48449462_Records_p0_2
 	REC_func_48449462_Records	p0=func_48449462_Records_p0_7, p4=func_48449462_Records_p0_3
@@ -7023,7 +7023,7 @@ func_4846138D_Records:	# 73 x REC_func_4846138D_Records (4 bytes each); read by 
 	REC_func_4846138D_Records	f0=1439, f2=71, f3=72
 	REC_func_4846138D_Records	f0=1667, f2=71, f3=72
 	REC_func_4846138D_Records	f0=1673, f2=71, f3=72	# [72]
-func_4846D7FB_Records:	# 3 x REC_func_4846D7FB_Records (40 bytes each); read by func_4846D7FB 0x4846D7FB `mov (a2), a1`; func_484706E8 0x484706E8 `movbu d0, (func_4846D7FB_Records+2)`
+func_4846D7FB_Records:	# 3 x REC_func_4846D7FB_Records (40 bytes each); read by VfsFileOpen 0x4846D7FB `mov (a2), a1`; MediaTypeCacheSet 0x484706E8 `movbu d0, (func_4846D7FB_Records+2)`
 	REC_func_4846D7FB_Records	x0="\x01\x0F", x3="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00", p20=func_4846138D_Records+228, p24=func_4846138D_Records+188, text=Str_A_31, x32="\x00y\x00P\x00\x00\x00\x00"
 	REC_func_4846D7FB_Records	x0="\x01\x0F", x3="\x00\x84\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00", p20=func_4846138D_Records+260, p24=func_4846138D_Records+188, text=Str_C_28, x32="0\x97\x14P\x00\x00\x00\x00"
 	REC_func_4846D7FB_Records	x0="\x02\x00", x3="\x00\x00\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00", x32="\xE4\xBD\x04P\x00\x00\x00\x00"
@@ -7039,8 +7039,8 @@ cre_tsk_Impl_Table_2:	# 2 x u16, 0..3; read by cre_tsk_Impl 0x4C03D154: `movhu (
 cre_tsk_Impl_Var_2:	# u32, initial value of a RAM variable; read / written by cre_tsk_Impl 0x4C03D154: `mov (0x10, a2), d0`
 	.long	20480
 
-cre_tsk_Impl_Table_14:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C03D0C8 reads through its argument a0 (passed by func_484141DB 0x484141DB `call cre_tsk, 0, 0`, +7 more calls); the layout cre_tsk_Impl 0x4C03D154 reads through its argument a0 (passed by cre_tsk 0x4C03D0C8 `call cre_tsk_Impl_entry, [d2,d3,a2], 0x2c`)
-	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_48472A0E, itskpri=3, x14="\x00\x00", stksz=20480
+cre_tsk_Impl_Table_14:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C03D0C8 reads through its argument a0 (passed by GuiTaskObjectsCreate 0x484141DB `call cre_tsk, 0, 0`, +7 more calls); the layout cre_tsk_Impl 0x4C03D154 reads through its argument a0 (passed by cre_tsk 0x4C03D0C8 `call cre_tsk_Impl_entry, [d2,d3,a2], 0x2c`)
+	T_CTSK	tskatr="\x01\x00\x00\x00", task=SdJobTask, itskpri=3, x14="\x00\x00", stksz=20480
 
 cre_mbx_Impl_Table_4:	# 2 x u32, 0..0; read by cre_mbx_Impl 0x4C03BFC8: `mov (a3), d2`
 	tab_u32	0, 0
@@ -7071,29 +7071,29 @@ ptrs_50007B64:
 	.long	Str_incompatible_version
 	.long	data_485CD529
 
-func_4847FC09_Table:	# 32 x s8, 0..0; read by func_4847FC09 0x4847FC09: `movbu (func_4847FC09_Table), d0`; func_48481400 0x48481400: `movbu (func_4847FC09_Table), d0` ...
+func_4847FC09_Table:	# 32 x s8, 0..0; read by DpEventPump 0x4847FC09: `movbu (func_4847FC09_Table), d0`; func_48481400 0x48481400: `movbu (func_4847FC09_Table), d0` ...
 	tab_s8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_s8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
-func_4847FC09_Table_2:	# 2 x u8, 0..0; read by func_4847FC09 0x4847FC09: `movbu (func_4847FC09_Table_2), d0`; func_4847FC09 0x4847FC09: `movbu (func_4847FC09_Table_2), d1` ...
+func_4847FC09_Table_2:	# 2 x u8, 0..0; read by DpEventPump 0x4847FC09: `movbu (func_4847FC09_Table_2), d0`; DpEventPump 0x4847FC09: `movbu (func_4847FC09_Table_2), d1` ...
 	tab_u8	0, 0
 
-func_4847FC09_Var_2:	# u16, initial value of a RAM variable; read / written by func_4847FC09 0x4847FC09: `movhu (func_4847FC09_Var_2), d0`; func_4847FD1E 0x4847FD1E: `movhu (func_4847FC09_Var_2), d0` ...
+func_4847FC09_Var_2:	# u16, initial value of a RAM variable; read / written by DpEventPump 0x4847FC09: `movhu (func_4847FC09_Var_2), d0`; DpFileStart 0x4847FD1E: `movhu (func_4847FC09_Var_2), d0` ...
 	.word	0
-func_4847FC09_Var_3:	# u32, initial value of a RAM variable; read / written by func_4847FC09 0x4847FC09: `mov (func_4847FC09_Var_3), d0`; func_4847FC09 0x4847FC09: `mov (func_4847FC09_Var_3), d1` ...
+func_4847FC09_Var_3:	# u32, initial value of a RAM variable; read / written by DpEventPump 0x4847FC09: `mov (func_4847FC09_Var_3), d0`; DpEventPump 0x4847FC09: `mov (func_4847FC09_Var_3), d1` ...
 	.long	0
 func_48482572_Var:	# u32, initial value of a RAM variable; read / written by func_48482572 0x48482572: `mov (func_48482572_Var), d0`; func_48482572 0x48482572: `mov d0, (func_48482572_Var)`
 	.long	0
-func_48480095_Var:	# u32, initial value of a RAM variable; read / written by func_48480095 0x48480095: `mov (func_48480095_Var), d0`; func_48480095 0x48480095: `mov d0, (func_48480095_Var)` ...
+func_48480095_Var:	# u32, initial value of a RAM variable; read / written by DpEseqHeaderParse 0x48480095: `mov (func_48480095_Var), d0`; DpEseqHeaderParse 0x48480095: `mov d0, (func_48480095_Var)` ...
 	.long	0
-func_4847FC09_Var_4:	# u16, initial value of a RAM variable; read / written by func_4847FC09 0x4847FC09: `movhu (func_4847FC09_Var_4), d1`; func_4847FE61 0x4847FE61: `movhu (func_4847FC09_Var_4), d1` ...
+func_4847FC09_Var_4:	# u16, initial value of a RAM variable; read / written by DpEventPump 0x4847FC09: `movhu (func_4847FC09_Var_4), d1`; DpSmfHeaderParse 0x4847FE61: `movhu (func_4847FC09_Var_4), d1` ...
 	.word	0
-func_4847FE61_Var:	# u16, initial value of a RAM variable; read / written by func_4847FE61 0x4847FE61: `movhu (func_4847FE61_Var), d1`; func_4847FE61 0x4847FE61: `movhu d0, (func_4847FE61_Var)` ...
+func_4847FE61_Var:	# u16, initial value of a RAM variable; read / written by DpSmfHeaderParse 0x4847FE61: `movhu (func_4847FE61_Var), d1`; DpSmfHeaderParse 0x4847FE61: `movhu d0, (func_4847FE61_Var)` ...
 	.word	0
-func_48481C43_Var:	# u16, initial value of a RAM variable; read / written by func_48481C43 0x48481C43: `movhu d0, (func_48481C43_Var)`; func_48482569 0x48482569: `movhu (func_48481C43_Var), d0` ...
+func_48481C43_Var:	# u16, initial value of a RAM variable; read / written by DpFileOpen 0x48481C43: `movhu d0, (func_48481C43_Var)`; func_48482569 0x48482569: `movhu (func_48481C43_Var), d0` ...
 	.word	0
-func_484812E2_Var:	# u16, initial value of a RAM variable; read / written by func_484812E2 0x484812E2: `movhu (func_484812E2_Var), d0`; func_484813AB 0x484813AB: `movhu (func_484812E2_Var), d0` ...
+func_484812E2_Var:	# u16, initial value of a RAM variable; read / written by DpMidiMsgOutUnmuted 0x484812E2: `movhu (func_484812E2_Var), d0`; func_484813AB 0x484813AB: `movhu (func_484812E2_Var), d0` ...
 	.word	0
-func_48481507_Var:	# u32, initial value of a RAM variable; read / written by func_48481507 0x48481507: `mov (func_48481507_Var), d1`; func_48481507 0x48481507: `mov d0, (func_48481507_Var)` ...
+func_48481507_Var:	# u32, initial value of a RAM variable; read / written by DpSmfRingFill 0x48481507: `mov (func_48481507_Var), d1`; DpSmfRingFill 0x48481507: `mov d0, (func_48481507_Var)` ...
 	.long	0
 
 func_4848216A_Table:	# 2 x u8, 0..0; read by func_4848216A 0x4848216A: `movbu (a2), d0`
@@ -7116,7 +7116,7 @@ func_4848216A_Table_2:	# 254 x u8, 0..0; read by func_4848216A 0x4848216A: `movb
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [224]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [240]
 
-func_48480365_Var:	# s16, initial value of a RAM variable; read / written by func_48480365 0x48480365: `movhu d0, (func_48480365_Var)`; func_48481507 0x48481507: `movhu (func_48480365_Var), d0` ...
+func_48480365_Var:	# s16, initial value of a RAM variable; read / written by DpSmfSetup 0x48480365: `movhu d0, (func_48480365_Var)`; DpSmfRingFill 0x48481507: `movhu (func_48480365_Var), d0` ...
 	.word	0
 
 func_48482042_Table:	# 256 x u8, 0..0; read by func_48482042 0x48482042: `movbu (a2), d0`
@@ -7137,13 +7137,13 @@ func_48482042_Table:	# 256 x u8, 0..0; read by func_48482042 0x48482042: `movbu 
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [224]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [240]
 
-func_48480365_Var_2:	# s16, initial value of a RAM variable; read / written by func_48480365 0x48480365: `movhu d0, (func_48480365_Var_2)`; func_48481507 0x48481507: `movhu (func_48480365_Var_2), d0` ...
+func_48480365_Var_2:	# s16, initial value of a RAM variable; read / written by DpSmfSetup 0x48480365: `movhu d0, (func_48480365_Var_2)`; DpSmfRingFill 0x48481507: `movhu (func_48480365_Var_2), d0` ...
 	.word	0
 func_4848041D_Var:	# u32, initial value of a RAM variable; read / written by func_4848041D 0x4848041D: `mov d0, (func_4848041D_Var)`; func_484818BD 0x484818BD: `mov (func_4848041D_Var), d0` ...
 	.long	0
 func_4848041D_Var_2:	# u16, initial value of a RAM variable; read / written by func_4848041D 0x4848041D: `movhu d0, (func_4848041D_Var_2)`; func_484818BD 0x484818BD: `movhu (func_4848041D_Var_2), d0` ...
 	.word	0
-func_484812E2_Var_2:	# u8, initial value of a RAM variable; read / written by func_484812E2 0x484812E2: `movbu (a2), d0`; func_48481337 0x48481337: `movbu (a2), d0` ...
+func_484812E2_Var_2:	# u8, initial value of a RAM variable; read / written by DpMidiMsgOutUnmuted 0x484812E2: `movbu (a2), d0`; DpMidiMsgOut 0x48481337: `movbu (a2), d0` ...
 	.byte	0
 func_484818BD_Var:	# u8, initial value of a RAM variable; read / written by func_484818BD 0x484818BD: `movbu (func_484818BD_Var), d0`
 	.byte	0
@@ -7151,12 +7151,12 @@ func_484818BD_Var:	# u8, initial value of a RAM variable; read / written by func
 func_484818BD_Table:	# 8 x u8, 0..0; read by func_484818BD 0x484818BD: `movbu (func_484818BD_Table), d0`; func_484818BD 0x484818BD: `movbu d0, (func_484818BD_Table)`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0
 
-func_48482617_Var_2:	# u32, initial value of a RAM variable; read / written by func_48482617 0x48482617: `mov (func_48482617_Var_2), a0`; func_48483359 0x48483359: `mov d0, (func_48482617_Var_2)`
+func_48482617_Var_2:	# u32, initial value of a RAM variable; read / written by DpSmf1ReaderTask 0x48482617: `mov (func_48482617_Var_2), a0`; DpSmf1StreamOpen 0x48483359: `mov d0, (func_48482617_Var_2)`
 	.long	0x50060da4
 
-func_484142D0_Table:	# 2 x s16, -1..9999; read by func_484142D0 0x484142D0: `movhu d0, (func_484142D0_Table)`; AcProgVerBoxProc 0x48488897: `movhu (func_484142D0_Table), d0`
+func_484142D0_Table:	# 2 x s16, -1..9999; read by GuiSystemInit 0x484142D0: `movhu d0, (func_484142D0_Table)`; AcProgVerBoxProc 0x48488897: `movhu (func_484142D0_Table), d0`
 	tab_s16	9999, -1
-func_484142D0_Table_2:	# 2 x s16, -1..9999; read by func_484142D0 0x484142D0: `movhu d3, (func_484142D0_Table_2)`; AcTableVerBoxProc 0x484888FB: `movhu (func_484142D0_Table_2), d0`
+func_484142D0_Table_2:	# 2 x s16, -1..9999; read by GuiSystemInit 0x484142D0: `movhu d3, (func_484142D0_Table_2)`; AcTableVerBoxProc 0x484888FB: `movhu (func_484142D0_Table_2), d0`
 	tab_s16	9999, -1
 AcRhythmVerBoxProc_Table:	# 2 x s16, -1..0; read by AcRhythmVerBoxProc 0x4848895F: `movhu (AcRhythmVerBoxProc_Table), d0`; AcRhythmVerBoxProc 0x4848895F: `movhu d2, (AcRhythmVerBoxProc_Table)`
 	tab_s16	0, -1
@@ -7318,24 +7318,24 @@ KernelRamLayout:
 # census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program.rom", 0x3B8B44, 0x3B8B48
 
-func_4C03CC4B_Var:	# u32, a constant; read / written by func_4C03CC4B 0x4C03CC4B: `mov (func_4C03CC4B_Var), d0`
+func_4C03CC4B_Var:	# u32, a constant; read / written by KernelMemoryInit 0x4C03CC4B: `mov (func_4C03CC4B_Var), d0`
 	.long	0x50387fff
-func_4C03CC4B_Var_2:	# u32, a constant; read / written by func_4C03CC4B 0x4C03CC4B: `mov (func_4C03CC4B_Var_2), a0`; func_4C03CC87 0x4C03CC87: `mov (func_4C03CC4B_Var_2), a2` ...
+func_4C03CC4B_Var_2:	# u32, a constant; read / written by KernelMemoryInit 0x4C03CC4B: `mov (func_4C03CC4B_Var_2), a0`; KernelAreaAlloc 0x4C03CC87: `mov (func_4C03CC4B_Var_2), a2` ...
 	.long	0x50388000
 
-func_4C03CC87_Table:	# 2 x u32, 1345850656..1346093055; read by func_4C03CC87 0x4C03CC87: `mov (func_4C03CC87_Table), d0`
+func_4C03CC87_Table:	# 2 x u32, 1345850656..1346093055; read by KernelAreaAlloc 0x4C03CC87: `mov (func_4C03CC87_Table), d0`
 	tab_u32	1346093055, 1345850656
 
-func_4C03CC4B_Var_3:	# u32, a constant; read / written by KernelStart 0x487B8FA4: `mov (func_4C03CC4B_Var_3), a3`; func_4C03CC4B 0x4C03CC4B: `mov (func_4C03CC4B_Var_3), a0` ...
+func_4C03CC4B_Var_3:	# u32, a constant; read / written by KernelStart 0x487B8FA4: `mov (func_4C03CC4B_Var_3), a3`; KernelMemoryInit 0x4C03CC4B: `mov (func_4C03CC4B_Var_3), a0` ...
 	.long	0x50381408
 
 KernelParams:	# 8 x s16, 10..20; read by get_tid 0x4C03DC33: `movhu (KernelParams), d0`
 	tab_s16	10, 20, 20, 20, 10, 10, 10, 10
 
-func_4C03B514_Var:	# s16, a constant; read / written by func_4C03B514 0x4C03B514: `movhu (func_4C03B514_Var), d0`
+func_4C03B514_Var:	# s16, a constant; read / written by KernelTimerTask 0x4C03B514: `movhu (func_4C03B514_Var), d0`
 	.word	10
 
-func_4C03B514_Table:	# 2 x s16, 10..20; read by func_4C03B514 0x4C03B514: `movhu (func_4C03B514_Table), d0`
+func_4C03B514_Table:	# 2 x s16, 10..20; read by KernelTimerTask 0x4C03B514: `movhu (func_4C03B514_Table), d0`
 	tab_s16	10, 20
-func_4C03B799_Table:	# 3 x s16, 0..30; read by func_4C03B799 0x4C03B799: `movhu (func_4C03B799_Table), d0`; func_4C03B799 0x4C03B799: `movhu (func_4C03B799_Table), d1` ...
+func_4C03B799_Table:	# 3 x s16, 0..30; read by KernelTaskReadyRemove 0x4C03B799: `movhu (func_4C03B799_Table), d0`; KernelTaskReadyRemove 0x4C03B799: `movhu (func_4C03B799_Table), d1` ...
 	tab_s16	10, 30, 0

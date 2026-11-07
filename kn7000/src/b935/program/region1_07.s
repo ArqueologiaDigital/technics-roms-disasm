@@ -70,7 +70,7 @@ loc_484E0341:
 loc_484E034E:
     mov     1, d0
     extbu   d1
-    call    func_484F775B_entry, [d2,d3], 0x20
+    call    SoundEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484E0497
 loc_484E035B:
     mov     2, d0
@@ -90,7 +90,7 @@ loc_484E035B:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E0497
 loc_484E0383:
     mov     0x7f, d0
@@ -110,7 +110,7 @@ loc_484E0383:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E0497
 loc_484E03A9:
     mov     0x7f, d0
@@ -129,13 +129,13 @@ loc_484E03A9:
     add     5, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E0497
 loc_484E03CD:
     extbu   d1
     mov     d1, d0
     mov     1, d1
-    call    func_484F8BEA_entry, [d2,d3,a2,a3], 0x28
+    call    SoundEditElemKeyModeStep_entry, [d2,d3,a2,a3], 0x28
     jmp     loc_484E0497
 loc_484E03DB:
     mov     d1, d2
@@ -151,7 +151,7 @@ loc_484E03DB:
     exthu   d0
     mov     a2, a0
     mov     0x7ff, d1
-    call    func_484F7A1D_entry, [d2,d3,a2], 0x24
+    call    SoundEditField16Get_entry, [d2,d3,a2], 0x24
     mov     1, d0
     mov     a2, a0
     call    func_484F8D03_entry, [d2], 4
@@ -160,7 +160,7 @@ loc_484E03DB:
     exthu   d2
     movhu   (0x20, sp), d1
     mov     d2, d0
-    call    func_484F7AE1_entry, [d2,d3,a2], 0x24
+    call    SoundEditField16Set_entry, [d2,d3,a2], 0x24
     jmp     loc_484E0497
 loc_484E0413:
     extbu   d1
@@ -175,7 +175,7 @@ loc_484E0413:
     exthu   d0
     mov     a2, a0
     mov     0x0000c000, d1
-    call    func_484F7A1D_entry, [d2,d3,a2], 0x24
+    call    SoundEditField16Get_entry, [d2,d3,a2], 0x24
     mov     1, d0
     mov     a2, a0
     call    func_484F8D2C_entry, [d2], 4
@@ -184,7 +184,7 @@ loc_484E0413:
     mov     d2, d0
     exthu   d0
     movhu   (0x20, sp), d1
-    call    func_484F7AE1_entry, [d2,d3,a2], 0x24
+    call    SoundEditField16Set_entry, [d2,d3,a2], 0x24
     bra     loc_484E0497
 loc_484E044F:
     mov     0x7f, d0
@@ -204,7 +204,7 @@ loc_484E044F:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E0497
 loc_484E0475:
     mov     0x32, d0
@@ -222,7 +222,7 @@ loc_484E0475:
     add     3, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E0497:
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
@@ -259,7 +259,7 @@ loc_484E04E3:
 loc_484E04F0:
     clr     d0
     extbu   d1
-    call    func_484F775B_entry, [d2,d3], 0x20
+    call    SoundEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484E0631
 loc_484E04FC:
     clr     d0
@@ -278,7 +278,7 @@ loc_484E04FC:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E0631
 loc_484E0522:
     clr     d0
@@ -296,7 +296,7 @@ loc_484E0522:
     add     4, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E0631
 loc_484E0544:
     clr     d0
@@ -313,13 +313,13 @@ loc_484E0544:
     add     5, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E0631
 loc_484E0565:
     extbu   d1
     mov     d1, d0
     mov     -1, d1
-    call    func_484F8BEA_entry, [d2,d3,a2,a3], 0x28
+    call    SoundEditElemKeyModeStep_entry, [d2,d3,a2,a3], 0x28
     jmp     loc_484E0631
 loc_484E0573:
     extbu   d1
@@ -334,7 +334,7 @@ loc_484E0573:
     exthu   d0
     mov     a2, a0
     mov     0x7ff, d1
-    call    func_484F7A1D_entry, [d2,d3,a2], 0x24
+    call    SoundEditField16Get_entry, [d2,d3,a2], 0x24
     mov     -1, d0
     mov     a2, a0
     call    func_484F8D03_entry, [d2], 4
@@ -343,7 +343,7 @@ loc_484E0573:
     exthu   d2
     movhu   (0x20, sp), d1
     mov     d2, d0
-    call    func_484F7AE1_entry, [d2,d3,a2], 0x24
+    call    SoundEditField16Set_entry, [d2,d3,a2], 0x24
     jmp     loc_484E0631
 loc_484E05AA:
     mov     d1, d2
@@ -359,7 +359,7 @@ loc_484E05AA:
     exthu   d0
     mov     a2, a0
     mov     0x0000c000, d1
-    call    func_484F7A1D_entry, [d2,d3,a2], 0x24
+    call    SoundEditField16Get_entry, [d2,d3,a2], 0x24
     mov     -1, d0
     mov     a2, a0
     call    func_484F8D2C_entry, [d2], 4
@@ -368,7 +368,7 @@ loc_484E05AA:
     exthu   d2
     movhu   (0x20, sp), d1
     mov     d2, d0
-    call    func_484F7AE1_entry, [d2,d3,a2], 0x24
+    call    SoundEditField16Set_entry, [d2,d3,a2], 0x24
     bra     loc_484E0631
 loc_484E05E7:
     clr     d0
@@ -387,7 +387,7 @@ loc_484E05E7:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E0631
 loc_484E060B:
     mov     -0x32, d0
@@ -407,7 +407,7 @@ loc_484E060B:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E0631:
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
@@ -465,7 +465,7 @@ loc_484E06B5:
     extbu   d1
     mov     d1, d0
     mov     a2, a0
-    call    func_484F7800_entry, [d2,a2], 0x24
+    call    SoundEditElemOnText_entry, [d2,a2], 0x24
     jmp     loc_484E0820
 loc_484E06C2:
     extbu   d1
@@ -481,7 +481,7 @@ loc_484E06C2:
     mov     sp, a0
     add     0x1c, a0
     mov     0xc0, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     cmp     0, d0
     beq     loc_484E06F1
@@ -522,7 +522,7 @@ loc_484E072D:
     mov     Str_2x_2, a1
     clr     d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484E0820
 loc_484E074F:
     mov     0x7f, d0
@@ -540,13 +540,13 @@ loc_484E074F:
     mov     Str_2x, a1
     clr     d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484E0820
 loc_484E0775:
     extbu   d1
     mov     d1, d0
     mov     a2, a0
-    call    func_484F8D7A_entry, [d2,d3,a2], 0x24
+    call    SoundEditElemKeyModeText_entry, [d2,d3,a2], 0x24
     jmp     loc_484E0820
 loc_484E0782:
     extbu   d1
@@ -561,10 +561,10 @@ loc_484E0782:
     mov     sp, a0
     add     0x20, a0
     mov     0x7ff, d1
-    call    func_484F7A1D_entry, [d2,d3,a2], 0x24
+    call    SoundEditField16Get_entry, [d2,d3,a2], 0x24
     movhu   (0x20, sp), d0
     mov     a2, a0
-    call    func_484F8E5E_entry, [d2,d3,a2], 0x24
+    call    SoundEditMilliText_entry, [d2,d3,a2], 0x24
     bra     loc_484E0820
 loc_484E07AA:
     extbu   d1
@@ -578,10 +578,10 @@ loc_484E07AA:
     mov     sp, a0
     add     0x20, a0
     mov     0x0000c000, d1
-    call    func_484F7A1D_entry, [d2,d3,a2], 0x24
+    call    SoundEditField16Get_entry, [d2,d3,a2], 0x24
     movhu   (0x20, sp), d0
     mov     a2, a0
-    call    func_484F8E92_entry, 0, 0x10
+    call    SoundEditPanModeText_entry, 0, 0x10
     bra     loc_484E0820
 loc_484E07D2:
     extbu   d1
@@ -597,10 +597,10 @@ loc_484E07D2:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a2, a0
-    call    func_484F8EF5_entry, 0, 0x14
+    call    SoundEditPanText_entry, 0, 0x14
     bra     loc_484E0820
 loc_484E07FB:
     mov     0xff, d0
@@ -618,7 +618,7 @@ loc_484E07FB:
     mov     Str_3d_134, a1
     mov     1, d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
 loc_484E0820:
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
@@ -706,7 +706,7 @@ loc_484E08D5:
     mov     1, d0
     mov     d2, d1
     extbu   d1
-    call    func_484F775B_entry, [d2,d3], 0x20
+    call    SoundEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484E09B6
 loc_484E08E3:
     extbu   d2
@@ -722,7 +722,7 @@ loc_484E08E3:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     0x21, a0
     exth    d0
@@ -735,7 +735,7 @@ loc_484E08E3:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E09B6
 loc_484E091F:
     extbu   d2
@@ -751,7 +751,7 @@ loc_484E091F:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     0x20, a0
     exth    d0
@@ -764,7 +764,7 @@ loc_484E091F:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E09B6
 loc_484E095A:
     extbu   d2
@@ -780,7 +780,7 @@ loc_484E095A:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     0x22, a0
     exth    d0
@@ -793,7 +793,7 @@ loc_484E095A:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E09B6
 loc_484E0995:
     mov     0x7f, d0
@@ -812,7 +812,7 @@ loc_484E0995:
     add     0x23, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E09B6:
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
@@ -850,7 +850,7 @@ loc_484E0A0C:
 loc_484E0A0F:
     clr     d0
     extbu   d1
-    call    func_484F775B_entry, [d2,d3], 0x20
+    call    SoundEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484E0AE8
 loc_484E0A1B:
     clr     d0
@@ -869,7 +869,7 @@ loc_484E0A1B:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E0AE8
 loc_484E0A40:
     mov     d1, d2
@@ -885,7 +885,7 @@ loc_484E0A40:
     add     d2, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     add     0x20, d2
     exth    d0
@@ -897,7 +897,7 @@ loc_484E0A40:
     mov     d2, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E0AE8
 loc_484E0A76:
     extbu   d1
@@ -913,7 +913,7 @@ loc_484E0A76:
     mov     a1, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     0x22, a0
     exth    d0
@@ -926,7 +926,7 @@ loc_484E0A76:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E0AE8
 loc_484E0AB1:
     mov     d1, d2
@@ -943,7 +943,7 @@ loc_484E0AB1:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     add     0x23, d2
     exth    d0
@@ -955,7 +955,7 @@ loc_484E0AB1:
     mov     d2, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E0AE8:
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
@@ -1017,7 +1017,7 @@ loc_484E0B70:
     extbu   d2
     mov     d2, d0
     mov     a2, a0
-    call    func_484F7800_entry, [d2,a2], 0x24
+    call    SoundEditElemOnText_entry, [d2,a2], 0x24
     jmp     loc_484E0DEE
 loc_484E0B7D:
     mov     d2, d0
@@ -1034,10 +1034,10 @@ loc_484E0B7D:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a2, a0
-    call    func_484F7B24_entry, [d2,d3,a2], 0x24
+    call    SoundEditNoteNameText_entry, [d2,d3,a2], 0x24
     extbu   d2
     cmp     0, d2
     beq     loc_484E0BB9
@@ -1089,10 +1089,10 @@ loc_484E0C1D:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a2, a0
-    call    func_484F7B24_entry, [d2,d3,a2], 0x24
+    call    SoundEditNoteNameText_entry, [d2,d3,a2], 0x24
     extbu   d2
     cmp     0, d2
     beq     loc_484E0C55
@@ -1144,10 +1144,10 @@ loc_484E0CB9:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a2, a0
-    call    func_484F7B24_entry, [d2,d3,a2], 0x24
+    call    SoundEditNoteNameText_entry, [d2,d3,a2], 0x24
     extbu   d2
     cmp     0, d2
     beq     loc_484E0CF1
@@ -1201,10 +1201,10 @@ loc_484E0D55:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a2, a0
-    call    func_484F7B24_entry, [d2,d3,a2], 0x24
+    call    SoundEditNoteNameText_entry, [d2,d3,a2], 0x24
     extbu   d2
     cmp     0, d2
     beq     loc_484E0D90
@@ -1329,7 +1329,7 @@ loc_484E0EA2:
     mov     1, d0
     mov     d2, d1
     extbu   d1
-    call    func_484F775B_entry, [d2,d3], 0x20
+    call    SoundEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484E0F7E
 loc_484E0EB0:
     extbu   d2
@@ -1344,7 +1344,7 @@ loc_484E0EB0:
     add     d2, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     0x25, a0
     exth    d0
@@ -1357,7 +1357,7 @@ loc_484E0EB0:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E0F7E
 loc_484E0EE9:
     extbu   d2
@@ -1373,7 +1373,7 @@ loc_484E0EE9:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     0x24, a0
     exth    d0
@@ -1386,7 +1386,7 @@ loc_484E0EE9:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E0F7E
 loc_484E0F24:
     extbu   d2
@@ -1402,7 +1402,7 @@ loc_484E0F24:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     add     0x26, d2
     exth    d0
@@ -1414,7 +1414,7 @@ loc_484E0F24:
     mov     d2, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E0F7E
 loc_484E0F5C:
     mov     0x7f, d0
@@ -1434,7 +1434,7 @@ loc_484E0F5C:
     add     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E0F7E:
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
@@ -1471,7 +1471,7 @@ loc_484E0FD3:
 loc_484E0FD6:
     clr     d0
     extbu   d1
-    call    func_484F775B_entry, [d2,d3], 0x20
+    call    SoundEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484E10B3
 loc_484E0FE2:
     clr     d0
@@ -1490,7 +1490,7 @@ loc_484E0FE2:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E10B3
 loc_484E1007:
     extbu   d1
@@ -1506,7 +1506,7 @@ loc_484E1007:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     0x24, a0
     exth    d0
@@ -1519,7 +1519,7 @@ loc_484E1007:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E10B3
 loc_484E1042:
     extbu   d1
@@ -1535,7 +1535,7 @@ loc_484E1042:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     0x26, a0
     exth    d0
@@ -1548,7 +1548,7 @@ loc_484E1042:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E10B3
 loc_484E107D:
     extbu   d1
@@ -1564,7 +1564,7 @@ loc_484E107D:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     add     0x27, d2
     exth    d0
@@ -1576,7 +1576,7 @@ loc_484E107D:
     mov     d2, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E10B3:
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
@@ -1637,7 +1637,7 @@ loc_484E113A:
     extbu   d2
     mov     d2, d0
     mov     a1, a0
-    call    func_484F7800_entry, [d2,a2], 0x24
+    call    SoundEditElemOnText_entry, [d2,a2], 0x24
     jmp     loc_484E13A8
 loc_484E1147:
     mov     0x7f, d0
@@ -1654,7 +1654,7 @@ loc_484E1147:
     mov     a1, a0
     mov     Str_3d_133, a1
     clr     d1
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     extbu   d2
     cmp     0, d2
     beq     loc_484E117B
@@ -1710,7 +1710,7 @@ loc_484E11DF:
     mov     a1, a0
     mov     Str_3d_132, a1
     clr     d1
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     extbu   d2
     cmp     0, d2
     beq     loc_484E1217
@@ -1766,7 +1766,7 @@ loc_484E127B:
     mov     a1, a0
     mov     Str_3d_131, a1
     clr     d1
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     extbu   d2
     cmp     0, d2
     beq     loc_484E12B3
@@ -1820,7 +1820,7 @@ loc_484E1317:
     mov     a1, a0
     mov     Str_3d_130, a1
     clr     d1
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     extbu   d2
     cmp     0, d2
     beq     loc_484E134A
@@ -1938,7 +1938,7 @@ loc_484E141B:
 loc_484E1453:
     mov     1, d0
     extbu   d1
-    call    func_484F775B_entry, [d2,d3], 0x20
+    call    SoundEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484E14E2
 loc_484E1460:
     mov     0x32, d0
@@ -1958,7 +1958,7 @@ loc_484E1460:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E14E2
 loc_484E1488:
     mov     0x7f, d0
@@ -1977,7 +1977,7 @@ loc_484E1488:
     add     8, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E14E2
 loc_484E14AD:
     extbu   d1
@@ -1993,7 +1993,7 @@ loc_484E14AD:
     exthu   d0
     mov     a2, a0
     mov     0x3800, d1
-    call    func_484F7A1D_entry, [d2,d3,a2], 0x24
+    call    SoundEditField16Get_entry, [d2,d3,a2], 0x24
     mov     1, d0
     mov     a2, a0
     call    func_484F8D53_entry, [d2], 4
@@ -2002,7 +2002,7 @@ loc_484E14AD:
     exthu   d2
     movhu   (0x1c, sp), d1
     mov     d2, d0
-    call    func_484F7AE1_entry, [d2,d3,a2], 0x24
+    call    SoundEditField16Set_entry, [d2,d3,a2], 0x24
 loc_484E14E2:
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
@@ -2035,7 +2035,7 @@ loc_484E14FC:
 loc_484E1533:
     clr     d0
     extbu   d1
-    call    func_484F775B_entry, [d2,d3], 0x20
+    call    SoundEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484E15C0
 loc_484E153F:
     mov     -0x32, d0
@@ -2053,7 +2053,7 @@ loc_484E153F:
     add     7, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E15C0
 loc_484E1563:
     mov     -0x80, d0
@@ -2073,7 +2073,7 @@ loc_484E1563:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E15C0
 loc_484E158B:
     extbu   d1
@@ -2089,7 +2089,7 @@ loc_484E158B:
     exthu   d0
     mov     a2, a0
     mov     0x3800, d1
-    call    func_484F7A1D_entry, [d2,d3,a2], 0x24
+    call    SoundEditField16Get_entry, [d2,d3,a2], 0x24
     mov     -1, d0
     mov     a2, a0
     call    func_484F8D53_entry, [d2], 4
@@ -2098,7 +2098,7 @@ loc_484E158B:
     mov     d2, d0
     exthu   d0
     movhu   (0x1c, sp), d1
-    call    func_484F7AE1_entry, [d2,d3,a2], 0x24
+    call    SoundEditField16Set_entry, [d2,d3,a2], 0x24
 loc_484E15C0:
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
@@ -2150,7 +2150,7 @@ loc_484E1604:
 loc_484E163A:
     extbu   d0
     mov     a2, a0
-    call    func_484F7800_entry, [d2,a2], 0x24
+    call    SoundEditElemOnText_entry, [d2,a2], 0x24
     bra     loc_484E16B9
 loc_484E1645:
     mov     0xff, d1
@@ -2168,7 +2168,7 @@ loc_484E1645:
     mov     Str_3d_194, a1
     mov     1, d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     bra     loc_484E16B9
 loc_484E166C:
     mov     0xff, d1
@@ -2186,7 +2186,7 @@ loc_484E166C:
     mov     Str_4d_17, a1
     mov     1, d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     bra     loc_484E16B9
 loc_484E1693:
     extbu   d0
@@ -2201,10 +2201,10 @@ loc_484E1693:
     mov     sp, a0
     add     0x1c, a0
     mov     0x3800, d1
-    call    func_484F7A1D_entry, [d2,d3,a2], 0x24
+    call    SoundEditField16Get_entry, [d2,d3,a2], 0x24
     movhu   (0x1c, sp), d0
     mov     a2, a0
-    call    func_484F8F45_entry, 0, 0x10
+    call    SoundEditPitchRatioText_entry, 0, 0x10
 loc_484E16B9:
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
@@ -2289,7 +2289,7 @@ loc_484E176A:
     mov     1, d0
     extbu   d2
     mov     d2, d1
-    call    func_484F775B_entry, [d2,d3], 0x20
+    call    SoundEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484E18F5
 loc_484E1778:
     mov     0x32, d0
@@ -2308,7 +2308,7 @@ loc_484E1778:
     mov     d2, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E18F5
 loc_484E179E:
     mov     0x64, d0
@@ -2327,7 +2327,7 @@ loc_484E179E:
     add     0xb, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E18F5
 loc_484E17C2:
     mov     0x32, d0
@@ -2348,7 +2348,7 @@ loc_484E17C2:
     exthu   d2
     mov     1, d1
     mov     d2, d0
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E18F5
 loc_484E17EC:
     mov     0x64, d0
@@ -2367,7 +2367,7 @@ loc_484E17EC:
     add     0xd, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E18F5
 loc_484E1810:
     mov     0x32, d0
@@ -2388,7 +2388,7 @@ loc_484E1810:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E18F5
 loc_484E183A:
     mov     0x64, d0
@@ -2406,7 +2406,7 @@ loc_484E183A:
     add     0xf, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E18F5
 loc_484E185D:
     mov     0x32, d0
@@ -2426,7 +2426,7 @@ loc_484E185D:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E18F5
 loc_484E1885:
     mov     0x64, d0
@@ -2444,7 +2444,7 @@ loc_484E1885:
     add     0x11, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E18F5
 loc_484E18A7:
     mov     0x32, d0
@@ -2464,7 +2464,7 @@ loc_484E18A7:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E18F5
 loc_484E18CF:
     mov     0x32, d0
@@ -2484,7 +2484,7 @@ loc_484E18CF:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E18F5:
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
@@ -2522,7 +2522,7 @@ loc_484E1942:
 loc_484E194F:
     clr     d0
     extbu   d1
-    call    func_484F775B_entry, [d2,d3], 0x20
+    call    SoundEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484E1AD1
 loc_484E195B:
     mov     -0x32, d0
@@ -2542,7 +2542,7 @@ loc_484E195B:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E1AD1
 loc_484E1984:
     clr     d0
@@ -2560,7 +2560,7 @@ loc_484E1984:
     add     d1, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E1AD1
 loc_484E19A6:
     mov     -0x32, d0
@@ -2580,7 +2580,7 @@ loc_484E19A6:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E1AD1
 loc_484E19CF:
     clr     d0
@@ -2598,7 +2598,7 @@ loc_484E19CF:
     add     0xd, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E1AD1
 loc_484E19F1:
     mov     -0x32, d0
@@ -2617,7 +2617,7 @@ loc_484E19F1:
     add     0xe, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E1AD1
 loc_484E1A17:
     clr     d0
@@ -2635,7 +2635,7 @@ loc_484E1A17:
     add     0xf, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E1AD1
 loc_484E1A39:
     mov     -0x32, d0
@@ -2655,7 +2655,7 @@ loc_484E1A39:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E1AD1
 loc_484E1A61:
     clr     d0
@@ -2673,7 +2673,7 @@ loc_484E1A61:
     add     0x11, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E1AD1
 loc_484E1A82:
     mov     -0x32, d0
@@ -2694,7 +2694,7 @@ loc_484E1A82:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E1AD1
 loc_484E1AAB:
     mov     -0x32, d0
@@ -2714,7 +2714,7 @@ loc_484E1AAB:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E1AD1:
     call    GetFocusObject_entry, 0, 0x10
     mov     d2, (0x10, sp)
@@ -2771,7 +2771,7 @@ loc_484E1B53:
     extbu   d1
     mov     d1, d0
     mov     a1, a0
-    call    func_484F7800_entry, [d2,a2], 0x24
+    call    SoundEditElemOnText_entry, [d2,a2], 0x24
     jmp     loc_484E1D8D
 loc_484E1B60:
     mov     0xff, d0
@@ -2789,7 +2789,7 @@ loc_484E1B60:
     mov     a1, a0
     mov     Str_3d_129, a1
     mov     1, d1
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -2811,7 +2811,7 @@ loc_484E1B9A:
     mov     a1, a0
     mov     Str_3d_128, a1
     clr     d1
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -2834,7 +2834,7 @@ loc_484E1BCF:
     mov     a1, a0
     mov     Str_3d_126, a1
     mov     1, d1
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -2858,7 +2858,7 @@ loc_484E1C09:
     mov     a1, a0
     mov     Str_3d_125, a1
     clr     d1
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -2881,7 +2881,7 @@ loc_484E1C42:
     mov     a1, a0
     mov     Str_3d_124, a1
     mov     1, d1
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -2904,7 +2904,7 @@ loc_484E1C7C:
     mov     Str_3d_123, a1
     clr     d1
     mov     d2, d0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -2927,7 +2927,7 @@ loc_484E1CB2:
     mov     a1, a0
     mov     Str_3d_122, a1
     mov     1, d1
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -2949,7 +2949,7 @@ loc_484E1CEC:
     mov     a1, a0
     mov     Str_3d_121, a1
     clr     d1
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -2971,7 +2971,7 @@ loc_484E1D20:
     mov     a1, a0
     mov     Str_3d_120, a1
     mov     1, d1
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -2994,7 +2994,7 @@ loc_484E1D56:
     mov     a1, a0
     mov     Str_3d_119, a1
     mov     1, d1
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -3091,7 +3091,7 @@ loc_484E1E49:
 loc_484E1E4C:
     mov     1, d0
     extbu   d1
-    call    func_484F775B_entry, [d2,d3], 0x20
+    call    SoundEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484E1F59
 loc_484E1E59:
     mov     0x32, d0
@@ -3111,7 +3111,7 @@ loc_484E1E59:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E1F59
 loc_484E1E82:
     mov     0x32, d0
@@ -3131,7 +3131,7 @@ loc_484E1E82:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E1F59
 loc_484E1EAB:
     mov     0x32, d0
@@ -3151,7 +3151,7 @@ loc_484E1EAB:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     clr     d0
     movbu   d0, (EnvKfGraphTitleSe_Var)
     jmp     loc_484E1F59
@@ -3172,7 +3172,7 @@ loc_484E1EDB:
     add     0x17, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     mov     1, d0
     movbu   d0, (EnvKfGraphTitleSe_Var)
     bra     loc_484E1F59
@@ -3194,7 +3194,7 @@ loc_484E1F08:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     mov     2, d0
     movbu   d0, (EnvKfGraphTitleSe_Var)
     bra     loc_484E1F59
@@ -3215,7 +3215,7 @@ loc_484E1F38:
     mov     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E1F59:
     call    GetFocusObject_entry, 0, 0x10
     mov     d2, (0x10, sp)
@@ -3260,7 +3260,7 @@ loc_484E1FBC:
 loc_484E1FBF:
     clr     d0
     extbu   d1
-    call    func_484F775B_entry, [d2,d3], 0x20
+    call    SoundEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484E20C8
 loc_484E1FCB:
     mov     -0x32, d0
@@ -3278,7 +3278,7 @@ loc_484E1FCB:
     add     0x13, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E20C8
 loc_484E1FF0:
     mov     -0x32, d0
@@ -3298,7 +3298,7 @@ loc_484E1FF0:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E20C8
 loc_484E2019:
     mov     -0x32, d0
@@ -3318,7 +3318,7 @@ loc_484E2019:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     clr     d0
     movbu   d0, (EnvKfGraphTitleSe_Var)
     jmp     loc_484E20C8
@@ -3339,7 +3339,7 @@ loc_484E2049:
     add     0x17, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     mov     1, d0
     movbu   d0, (EnvKfGraphTitleSe_Var)
     bra     loc_484E20C8
@@ -3361,7 +3361,7 @@ loc_484E2076:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     mov     2, d0
     movbu   d0, (EnvKfGraphTitleSe_Var)
     bra     loc_484E20C8
@@ -3382,7 +3382,7 @@ loc_484E20A6:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E20C8:
     call    GetFocusObject_entry, 0, 0x10
     mov     d2, (0x10, sp)
@@ -3446,7 +3446,7 @@ loc_484E2154:
 loc_484E2157:
     extbu   d0
     mov     a2, a0
-    call    func_484F7800_entry, [d2,a2], 0x24
+    call    SoundEditElemOnText_entry, [d2,a2], 0x24
     jmp     loc_484E2294
 loc_484E2163:
     mov     0xff, d1
@@ -3462,7 +3462,7 @@ loc_484E2163:
     mov     Str_3d_193, a1
     mov     1, d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484E2294
 loc_484E2187:
     mov     0xff, d1
@@ -3480,7 +3480,7 @@ loc_484E2187:
     mov     Str_3d_192, a1
     mov     1, d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484E2294
 loc_484E21AF:
     mov     0xff, d1
@@ -3498,7 +3498,7 @@ loc_484E21AF:
     mov     Str_3d_118, a1
     mov     1, d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -3521,7 +3521,7 @@ loc_484E21E9:
     mov     Str_3d_117, a1
     mov     1, d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -3544,7 +3544,7 @@ loc_484E2222:
     mov     Str_3d_116, a1
     mov     1, d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -3565,10 +3565,10 @@ loc_484E225B:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a2, a0
-    call    func_484F7B24_entry, [d2,d3,a2], 0x24
+    call    SoundEditNoteNameText_entry, [d2,d3,a2], 0x24
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -3673,7 +3673,7 @@ loc_484E235D:
 loc_484E2360:
     mov     1, d0
     extbu   d1
-    call    func_484F775B_entry, [d2,d3], 0x20
+    call    SoundEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484E24C2
 loc_484E236D:
     mov     0x7f, d0
@@ -3693,7 +3693,7 @@ loc_484E236D:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E24C2
 loc_484E2394:
     mov     0x32, d0
@@ -3713,7 +3713,7 @@ loc_484E2394:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E24C2
 loc_484E23BD:
     mov     7, d0
@@ -3732,7 +3732,7 @@ loc_484E23BD:
     add     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     add     -1, d2
     exthu   d2
@@ -3760,7 +3760,7 @@ loc_484E2400:
     add     0x1f, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E24C2
 loc_484E2426:
     mov     d1, d2
@@ -3776,7 +3776,7 @@ loc_484E2426:
     add     d2, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     0x1d, a0
     add     -1, d0
@@ -3790,7 +3790,7 @@ loc_484E2426:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E24C2
 loc_484E2461:
     extbu   d1
@@ -3806,7 +3806,7 @@ loc_484E2461:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     0x1c, a0
     add     -1, d0
@@ -3820,7 +3820,7 @@ loc_484E2461:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E24C2
 loc_484E249E:
     mov     0x7f, d0
@@ -3840,7 +3840,7 @@ loc_484E249E:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E24C2:
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, (0x10, sp)
@@ -3891,7 +3891,7 @@ loc_484E252F:
 loc_484E2532:
     clr     d0
     extbu   d1
-    call    func_484F775B_entry, [d2,d3], 0x20
+    call    SoundEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484E2688
 loc_484E253E:
     clr     d0
@@ -3908,7 +3908,7 @@ loc_484E253E:
     add     0x19, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E2688
 loc_484E255F:
     mov     -0x32, d0
@@ -3928,7 +3928,7 @@ loc_484E255F:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E2688
 loc_484E2588:
     clr     d0
@@ -3947,7 +3947,7 @@ loc_484E2588:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     add     -1, d2
     exthu   d2
@@ -3976,7 +3976,7 @@ loc_484E25CD:
     mov     d1, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E2688
 loc_484E25F3:
     clr     d0
@@ -3994,7 +3994,7 @@ loc_484E25F3:
     add     0x1d, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E2688
 loc_484E2614:
     mov     d1, d2
@@ -4010,7 +4010,7 @@ loc_484E2614:
     add     d2, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     0x1c, a0
     inc     d0
@@ -4024,7 +4024,7 @@ loc_484E2614:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E2688
 loc_484E264E:
     extbu   d1
@@ -4040,7 +4040,7 @@ loc_484E264E:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     0x1e, a0
     inc     d0
@@ -4054,7 +4054,7 @@ loc_484E264E:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E2688:
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, (0x10, sp)
@@ -4124,7 +4124,7 @@ loc_484E271E:
 loc_484E2721:
     extbu   d0
     mov     a2, a0
-    call    func_484F7800_entry, [d2,a2], 0x24
+    call    SoundEditElemOnText_entry, [d2,a2], 0x24
     jmp     loc_484E28EB
 loc_484E272D:
     mov     0x7f, d1
@@ -4142,7 +4142,7 @@ loc_484E272D:
     mov     Str_3d_191, a1
     clr     d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484E28EB
 loc_484E2753:
     mov     d0, d2
@@ -4159,7 +4159,7 @@ loc_484E2753:
     mov     sp, a0
     add     0x1c, a0
     mov     0xf0, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     extb    d0
     add     -3, d0
@@ -4182,7 +4182,7 @@ loc_484E2796:
     mov     1, d1
     mov     a2, a0
     mov     d2, d0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484E28EB
 loc_484E27B2:
     extbu   d0
@@ -4198,7 +4198,7 @@ loc_484E27B2:
     mov     sp, a0
     add     0x1c, a0
     mov     0xf0, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     extb    d0
     add     -3, d0
@@ -4235,7 +4235,7 @@ loc_484E280A:
     mov     Str_3d_114, a1
     mov     1, d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -4254,10 +4254,10 @@ loc_484E2844:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a2, a0
-    call    func_484F7B24_entry, [d2,d3,a2], 0x24
+    call    SoundEditNoteNameText_entry, [d2,d3,a2], 0x24
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -4276,10 +4276,10 @@ loc_484E287B:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a2, a0
-    call    func_484F7B24_entry, [d2,d3,a2], 0x24
+    call    SoundEditNoteNameText_entry, [d2,d3,a2], 0x24
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -4300,10 +4300,10 @@ loc_484E28B2:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a2, a0
-    call    func_484F7B24_entry, [d2,d3,a2], 0x24
+    call    SoundEditNoteNameText_entry, [d2,d3,a2], 0x24
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -4393,7 +4393,7 @@ loc_484E299C:
     mov     1, d0
     extbu   d2
     mov     d2, d1
-    call    func_484F775B_entry, [d2,d3], 0x20
+    call    SoundEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484E2AD4
 loc_484E29AA:
     mov     0x64, d0
@@ -4412,7 +4412,7 @@ loc_484E29AA:
     add     d2, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E2AD4
 loc_484E29CE:
     mov     0x64, d0
@@ -4432,7 +4432,7 @@ loc_484E29CE:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E2AD4
 loc_484E29F5:
     mov     0x64, d0
@@ -4453,7 +4453,7 @@ loc_484E29F5:
     exthu   d2
     mov     1, d1
     mov     d2, d0
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E2AD4
 loc_484E2A1D:
     mov     0x64, d0
@@ -4472,7 +4472,7 @@ loc_484E2A1D:
     exthu   d2
     mov     1, d1
     mov     d2, d0
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E2AD4
 loc_484E2A41:
     mov     0x64, d0
@@ -4492,7 +4492,7 @@ loc_484E2A41:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E2AD4
 loc_484E2A67:
     mov     0x64, d0
@@ -4512,7 +4512,7 @@ loc_484E2A67:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E2AD4
 loc_484E2A8D:
     mov     0x64, d0
@@ -4530,7 +4530,7 @@ loc_484E2A8D:
     add     0x2e, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E2AD4
 loc_484E2AAF:
     mov     1, d0
@@ -4550,7 +4550,7 @@ loc_484E2AAF:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E2AD4:
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
@@ -4588,7 +4588,7 @@ loc_484E2B21:
 loc_484E2B2E:
     clr     d0
     extbu   d1
-    call    func_484F775B_entry, [d2,d3], 0x20
+    call    SoundEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484E2C4E
 loc_484E2B3A:
     clr     d0
@@ -4607,7 +4607,7 @@ loc_484E2B3A:
     exthu   d2
     mov     -1, d1
     mov     d2, d0
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E2C4E
 loc_484E2B5D:
     clr     d0
@@ -4624,7 +4624,7 @@ loc_484E2B5D:
     add     0x29, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E2C4E
 loc_484E2B7E:
     clr     d0
@@ -4642,7 +4642,7 @@ loc_484E2B7E:
     add     0x2a, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E2C4E
 loc_484E2BA0:
     clr     d0
@@ -4659,7 +4659,7 @@ loc_484E2BA0:
     add     0x2b, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E2C4E
 loc_484E2BC1:
     clr     d0
@@ -4678,7 +4678,7 @@ loc_484E2BC1:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E2C4E
 loc_484E2BE5:
     clr     d0
@@ -4696,7 +4696,7 @@ loc_484E2BE5:
     add     0x2d, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E2C4E
 loc_484E2C06:
     clr     d0
@@ -4715,7 +4715,7 @@ loc_484E2C06:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E2C4E
 loc_484E2C2A:
     clr     d0
@@ -4735,7 +4735,7 @@ loc_484E2C2A:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E2C4E:
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
@@ -4793,7 +4793,7 @@ loc_484E2CD2:
     extbu   d2
     mov     d2, d0
     mov     a2, a0
-    call    func_484F7800_entry, [d2,a2], 0x24
+    call    SoundEditElemOnText_entry, [d2,a2], 0x24
     jmp     loc_484E2EB4
 loc_484E2CDF:
     mov     0x7f, d0
@@ -4811,7 +4811,7 @@ loc_484E2CDF:
     mov     Str_3d_113, a1
     clr     d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -4834,7 +4834,7 @@ loc_484E2D17:
     mov     Str_3d_112, a1
     clr     d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -4857,7 +4857,7 @@ loc_484E2D4F:
     mov     Str_3d_111, a1
     clr     d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -4880,7 +4880,7 @@ loc_484E2D87:
     mov     Str_3d_110, a1
     clr     d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -4903,7 +4903,7 @@ loc_484E2DBF:
     mov     Str_3d_109, a1
     clr     d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -4926,7 +4926,7 @@ loc_484E2DF7:
     mov     Str_3d_108, a1
     clr     d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -4949,7 +4949,7 @@ loc_484E2E2F:
     mov     Str_3d_107, a1
     clr     d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -4970,7 +4970,7 @@ loc_484E2E66:
     mov     a1, d0
     exthu   d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     cmp     0, d0
     beq     loc_484E2E90
@@ -5072,7 +5072,7 @@ loc_484E2F65:
     mov     1, d0
     extbu   d2
     mov     d2, d1
-    call    func_484F775B_entry, [d2,d3], 0x20
+    call    SoundEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484E30E5
 loc_484E2F73:
     mov     0x32, d0
@@ -5092,7 +5092,7 @@ loc_484E2F73:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E30E5
 loc_484E2F9C:
     mov     0x32, d0
@@ -5112,7 +5112,7 @@ loc_484E2F9C:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E30E5
 loc_484E2FC5:
     mov     0x32, d0
@@ -5131,7 +5131,7 @@ loc_484E2FC5:
     add     d2, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     clr     d0
     movbu   d0, (EnvKfGraphTitleSe_Var)
     jmp     loc_484E30E5
@@ -5153,7 +5153,7 @@ loc_484E2FF2:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     mov     1, d0
     movbu   d0, (EnvKfGraphTitleSe_Var)
     jmp     loc_484E30E5
@@ -5173,7 +5173,7 @@ loc_484E3023:
     add     0x36, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     mov     2, d0
     movbu   d0, (EnvKfGraphTitleSe_Var)
     jmp     loc_484E30E5
@@ -5191,7 +5191,7 @@ loc_484E3050:
     mov     a1, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     add     0x32, d2
     add     -1, d0
@@ -5204,7 +5204,7 @@ loc_484E3050:
     mov     d2, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E30E5
 loc_484E308A:
     extbu   d2
@@ -5219,7 +5219,7 @@ loc_484E308A:
     add     d2, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     0x31, a0
     add     -1, d0
@@ -5233,7 +5233,7 @@ loc_484E308A:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E30E5
 loc_484E30C4:
     mov     0x7f, d0
@@ -5252,7 +5252,7 @@ loc_484E30C4:
     exthu   d2
     mov     1, d1
     mov     d2, d0
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E30E5:
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
@@ -5290,7 +5290,7 @@ loc_484E3132:
 loc_484E313F:
     clr     d0
     extbu   d1
-    call    func_484F775B_entry, [d2,d3], 0x20
+    call    SoundEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484E32B9
 loc_484E314B:
     mov     -0x32, d0
@@ -5309,7 +5309,7 @@ loc_484E314B:
     add     d1, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E32B9
 loc_484E3171:
     mov     -0x32, d0
@@ -5328,7 +5328,7 @@ loc_484E3171:
     mov     d1, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E32B9
 loc_484E3197:
     mov     -0x32, d0
@@ -5347,7 +5347,7 @@ loc_484E3197:
     add     0x34, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     clr     d0
     movbu   d0, (EnvKfGraphTitleSe_Var)
     jmp     loc_484E32B9
@@ -5370,7 +5370,7 @@ loc_484E31C4:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     mov     1, d0
     movbu   d0, (EnvKfGraphTitleSe_Var)
     jmp     loc_484E32B9
@@ -5390,7 +5390,7 @@ loc_484E31F6:
     add     0x36, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     mov     2, d0
     movbu   d0, (EnvKfGraphTitleSe_Var)
     jmp     loc_484E32B9
@@ -5411,7 +5411,7 @@ loc_484E3223:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E32B9
 loc_484E3247:
     mov     d1, d2
@@ -5427,7 +5427,7 @@ loc_484E3247:
     add     d2, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     0x31, a0
     inc     d0
@@ -5441,7 +5441,7 @@ loc_484E3247:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E32B9
 loc_484E3281:
     mov     d1, d2
@@ -5458,7 +5458,7 @@ loc_484E3281:
     mov     a1, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     add     0x33, d2
     inc     d0
@@ -5471,7 +5471,7 @@ loc_484E3281:
     mov     d0, (0x18, sp)
     mov     d2, d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E32B9:
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
@@ -5529,7 +5529,7 @@ loc_484E333D:
     extbu   d1
     mov     d1, d0
     mov     a2, a0
-    call    func_484F7800_entry, [d2,a2], 0x24
+    call    SoundEditElemOnText_entry, [d2,a2], 0x24
     jmp     loc_484E34E8
 loc_484E334A:
     mov     0xff, d0
@@ -5547,7 +5547,7 @@ loc_484E334A:
     mov     Str_3d_106, a1
     mov     1, d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484E34E8
 loc_484E3372:
     mov     0xff, d0
@@ -5563,7 +5563,7 @@ loc_484E3372:
     mov     Str_3d_100, a1
     mov     1, d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484E34E8
 loc_484E3396:
     mov     0xff, d0
@@ -5581,7 +5581,7 @@ loc_484E3396:
     mov     Str_3d_81, a1
     mov     1, d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -5604,7 +5604,7 @@ loc_484E33D0:
     mov     Str_3d_80, a1
     mov     1, d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -5627,7 +5627,7 @@ loc_484E340A:
     mov     Str_3d_79, a1
     mov     1, d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -5647,10 +5647,10 @@ loc_484E3444:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a2, a0
-    call    func_484F7B24_entry, [d2,d3,a2], 0x24
+    call    SoundEditNoteNameText_entry, [d2,d3,a2], 0x24
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -5669,10 +5669,10 @@ loc_484E347C:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a2, a0
-    call    func_484F7B24_entry, [d2,d3,a2], 0x24
+    call    SoundEditNoteNameText_entry, [d2,d3,a2], 0x24
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -5691,10 +5691,10 @@ loc_484E34B3:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a2, a0
-    call    func_484F7B24_entry, [d2,d3,a2], 0x24
+    call    SoundEditNoteNameText_entry, [d2,d3,a2], 0x24
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -5802,7 +5802,7 @@ loc_484E35BA:
     extbu   d2
     mov     d2, d1
     mov     1, d0
-    call    func_484F775B_entry, [d2,d3], 0x20
+    call    SoundEditElemOnSet_entry, [d2,d3], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x1c, sp), d1
     mov     d1, (0x10, sp)
@@ -5863,7 +5863,7 @@ loc_484E3629:
     mov     a1, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     mov     1, d1
     add     -1, d0
@@ -5875,7 +5875,7 @@ loc_484E3629:
     mov     d0, (0x18, sp)
     mov     d2, d0
     exthu   d0
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E3696
 loc_484E3675:
     mov     0x7f, d0
@@ -5894,7 +5894,7 @@ loc_484E3675:
     add     d2, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E3696:
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x1c, sp), d1
@@ -5926,7 +5926,7 @@ loc_484E36B1:
     add     0x4f, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E3705
 loc_484E36E5:
     mov     0x7f, d0
@@ -5944,7 +5944,7 @@ loc_484E36E5:
     add     0x4f, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E3705:
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x1c, sp), d1
@@ -5982,7 +5982,7 @@ loc_484E373A:
     add     d2, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E375B:
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x1c, sp), d1
@@ -6023,7 +6023,7 @@ loc_484E3796:
     add     0x50, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E37DA
 loc_484E37B9:
     mov     0x7f, d0
@@ -6042,7 +6042,7 @@ loc_484E37B9:
     add     0x50, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E37DA:
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x1c, sp), d1
@@ -6084,7 +6084,7 @@ loc_484E3815:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E385B
 loc_484E383B:
     mov     0x7f, d0
@@ -6102,7 +6102,7 @@ loc_484E383B:
     add     0x51, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E385B:
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x1c, sp), d1
@@ -6159,7 +6159,7 @@ loc_484E38D5:
     extbu   d2
     mov     d2, d1
     clr     d0
-    call    func_484F775B_entry, [d2,d3], 0x20
+    call    SoundEditElemOnSet_entry, [d2,d3], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x1c, sp), d1
     mov     d1, (0x10, sp)
@@ -6220,7 +6220,7 @@ loc_484E3943:
     add     0x4e, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E3993
 loc_484E3975:
     clr     d0
@@ -6237,7 +6237,7 @@ loc_484E3975:
     add     0x4e, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E3993:
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x1c, sp), d1
@@ -6268,7 +6268,7 @@ loc_484E39AE:
     add     0x4f, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E39FF
 loc_484E39E0:
     clr     d0
@@ -6286,7 +6286,7 @@ loc_484E39E0:
     add     d2, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E39FF:
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x1c, sp), d1
@@ -6322,7 +6322,7 @@ loc_484E3A34:
     add     0x51, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E3A52:
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x1c, sp), d1
@@ -6361,7 +6361,7 @@ loc_484E3A8D:
     add     0x50, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E3AE2
 loc_484E3AAD:
     extbu   d2
@@ -6377,7 +6377,7 @@ loc_484E3AAD:
     mov     d2, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     add     2, d2
     inc     d0
@@ -6390,7 +6390,7 @@ loc_484E3AAD:
     mov     d2, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E3AE2:
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x1c, sp), d1
@@ -6429,7 +6429,7 @@ loc_484E3B1C:
     add     0x51, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E3B5A
 loc_484E3B3C:
     clr     d0
@@ -6446,7 +6446,7 @@ loc_484E3B3C:
     add     0x51, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E3B5A:
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x1c, sp), d1
@@ -6518,7 +6518,7 @@ loc_484E3BF2:
     extbu   d2
     mov     d2, d0
     mov     a2, a0
-    call    func_484F7800_entry, [d2,a2], 0x24
+    call    SoundEditElemOnText_entry, [d2,a2], 0x24
     jmp     loc_484E3FD5
 loc_484E3BFF:
     extbu   d2
@@ -6629,10 +6629,10 @@ loc_484E3D05:
     mov     sp, a0
     add     0x20, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     mov     a2, a0
-    call    func_484F852C_entry, 0, 0x14
+    call    SoundEditFreqText_entry, 0, 0x14
     bra     loc_484E3D52
 loc_484E3D2B:
     extbu   d2
@@ -6648,10 +6648,10 @@ loc_484E3D2B:
     mov     sp, a0
     add     0x20, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     mov     a2, a0
-    call    func_484F852C_entry, 0, 0x14
+    call    SoundEditFreqText_entry, 0, 0x14
 loc_484E3D52:
     clr     d0
     mov     d0, (0x10, sp)
@@ -6693,11 +6693,11 @@ loc_484E3D96:
     mov     sp, a0
     add     0x20, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     clr     d1
     mov     a2, a0
-    call    func_484F854F_entry, [a2], 0x24
+    call    SoundEditDbFloatText_entry, [a2], 0x24
     bra     loc_484E3E0C
 loc_484E3DC0:
     extbu   d2
@@ -6711,11 +6711,11 @@ loc_484E3DC0:
     mov     sp, a0
     add     0x20, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     mov     1, d1
     mov     a2, a0
-    call    func_484F854F_entry, [a2], 0x24
+    call    SoundEditDbFloatText_entry, [a2], 0x24
     bra     loc_484E3E0C
 loc_484E3DE7:
     extbu   d2
@@ -6730,11 +6730,11 @@ loc_484E3DE7:
     mov     sp, a0
     add     0x20, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     clr     d1
     mov     a2, a0
-    call    func_484F854F_entry, [a2], 0x24
+    call    SoundEditDbFloatText_entry, [a2], 0x24
 loc_484E3E0C:
     clr     d0
     mov     d0, (0x10, sp)
@@ -6768,7 +6768,7 @@ loc_484E3E3B:
     add     0x51, d0
     exthu   d0
     mov     0x20, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     cmp     0, d0
     beq     loc_484E3E61
@@ -6829,10 +6829,10 @@ loc_484E3ECD:
     mov     sp, a0
     add     0x20, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     mov     a2, a0
-    call    func_484F852C_entry, 0, 0x14
+    call    SoundEditFreqText_entry, 0, 0x14
     bra     loc_484E3F2D
 loc_484E3EF6:
     extbu   d2
@@ -6847,10 +6847,10 @@ loc_484E3EF6:
     mov     sp, a0
     add     0x20, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     mov     a2, a0
-    call    func_484F852C_entry, 0, 0x14
+    call    SoundEditFreqText_entry, 0, 0x14
     bra     loc_484E3F2D
 loc_484E3F1C:
     mov     a2, (8, sp)
@@ -6894,10 +6894,10 @@ loc_484E3F62:
     mov     sp, a0
     add     0x20, a0
     mov     0x1f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     mov     a2, a0
-    call    func_484F8643_entry, 0, 0x14
+    call    SoundEditDbCutText_entry, 0, 0x14
     bra     loc_484E3FC3
 loc_484E3F8B:
     extbu   d2
@@ -6912,11 +6912,11 @@ loc_484E3F8B:
     mov     sp, a0
     add     0x20, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     clr     d1
     mov     a2, a0
-    call    func_484F854F_entry, [a2], 0x24
+    call    SoundEditDbFloatText_entry, [a2], 0x24
     bra     loc_484E3FC3
 loc_484E3FB2:
     mov     a2, (8, sp)
@@ -7025,7 +7025,7 @@ loc_484E409A:
     mov     1, d0
     extbu   d2
     mov     d2, d1
-    call    func_484F775B_entry, [d2,d3], 0x20
+    call    SoundEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484E41DD
 loc_484E40A8:
     mov     0x32, d0
@@ -7044,7 +7044,7 @@ loc_484E40A8:
     exthu   d2
     mov     1, d1
     mov     d2, d0
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E41DD
 loc_484E40CC:
     mov     6, d0
@@ -7064,7 +7064,7 @@ loc_484E40CC:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E41DD
 loc_484E40F4:
     mov     0x32, d0
@@ -7084,7 +7084,7 @@ loc_484E40F4:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E41DD
 loc_484E411B:
     mov     0x32, d0
@@ -7105,7 +7105,7 @@ loc_484E411B:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E41DD
 loc_484E4145:
     extbu   d2
@@ -7121,7 +7121,7 @@ loc_484E4145:
     mov     a1, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     0x3b, a0
     add     -1, d0
@@ -7135,7 +7135,7 @@ loc_484E4145:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E41DD
 loc_484E4182:
     extbu   d2
@@ -7150,7 +7150,7 @@ loc_484E4182:
     add     d2, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     add     0x3a, d2
     add     -1, d0
@@ -7163,7 +7163,7 @@ loc_484E4182:
     mov     d2, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E41DD
 loc_484E41B9:
     mov     0x7f, d0
@@ -7183,7 +7183,7 @@ loc_484E41B9:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E41DD:
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
@@ -7233,7 +7233,7 @@ loc_484E4248:
 loc_484E424B:
     clr     d0
     extbu   d1
-    call    func_484F775B_entry, [d2,d3], 0x20
+    call    SoundEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484E4381
 loc_484E4257:
     clr     d0
@@ -7252,7 +7252,7 @@ loc_484E4257:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E4381
 loc_484E427C:
     clr     d0
@@ -7270,7 +7270,7 @@ loc_484E427C:
     add     0x37, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E4381
 loc_484E429F:
     clr     d0
@@ -7287,7 +7287,7 @@ loc_484E429F:
     add     0x39, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E4381
 loc_484E42C0:
     mov     -0x32, d0
@@ -7306,7 +7306,7 @@ loc_484E42C0:
     add     0x3d, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E4381
 loc_484E42E6:
     clr     d0
@@ -7325,7 +7325,7 @@ loc_484E42E6:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E4381
 loc_484E430A:
     mov     d1, d2
@@ -7342,7 +7342,7 @@ loc_484E430A:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     0x3a, a0
     inc     d0
@@ -7356,7 +7356,7 @@ loc_484E430A:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E4381
 loc_484E4347:
     extbu   d1
@@ -7372,7 +7372,7 @@ loc_484E4347:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     0x3c, a0
     inc     d0
@@ -7386,7 +7386,7 @@ loc_484E4347:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E4381:
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
@@ -7456,7 +7456,7 @@ loc_484E4417:
 loc_484E441A:
     extbu   d0
     mov     a2, a0
-    call    func_484F7800_entry, [d2,a2], 0x24
+    call    SoundEditElemOnText_entry, [d2,a2], 0x24
     jmp     loc_484E4587
 loc_484E4426:
     mov     0x3f, d1
@@ -7472,7 +7472,7 @@ loc_484E4426:
     mov     Str_3d_190, a1
     clr     d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484E4587
 loc_484E4448:
     extbu   d0
@@ -7486,7 +7486,7 @@ loc_484E4448:
     add     0x37, d0
     exthu   d0
     mov     0xe0, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     extb    d0
     add     -3, d0
@@ -7515,7 +7515,7 @@ loc_484E4484:
     mov     Str_3d_56, a1
     clr     d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484E4587
 loc_484E44AA:
     mov     0xff, d1
@@ -7531,7 +7531,7 @@ loc_484E44AA:
     mov     Str_3d_55, a1
     mov     1, d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -7550,10 +7550,10 @@ loc_484E44E0:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a2, a0
-    call    func_484F7B24_entry, [d2,d3,a2], 0x24
+    call    SoundEditNoteNameText_entry, [d2,d3,a2], 0x24
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -7572,10 +7572,10 @@ loc_484E4517:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a2, a0
-    call    func_484F7B24_entry, [d2,d3,a2], 0x24
+    call    SoundEditNoteNameText_entry, [d2,d3,a2], 0x24
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -7596,10 +7596,10 @@ loc_484E454E:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a2, a0
-    call    func_484F7B24_entry, [d2,d3,a2], 0x24
+    call    SoundEditNoteNameText_entry, [d2,d3,a2], 0x24
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -7689,7 +7689,7 @@ loc_484E4638:
     mov     1, d0
     extbu   d2
     mov     d2, d1
-    call    func_484F775B_entry, [d2,d3], 0x20
+    call    SoundEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484E47C3
 loc_484E4646:
     mov     0x32, d0
@@ -7708,7 +7708,7 @@ loc_484E4646:
     mov     d2, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E47C3
 loc_484E466C:
     mov     0x64, d0
@@ -7727,7 +7727,7 @@ loc_484E466C:
     add     0x40, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E47C3
 loc_484E4690:
     mov     0x32, d0
@@ -7748,7 +7748,7 @@ loc_484E4690:
     exthu   d2
     mov     1, d1
     mov     d2, d0
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E47C3
 loc_484E46BA:
     mov     0x64, d0
@@ -7767,7 +7767,7 @@ loc_484E46BA:
     add     0x42, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E47C3
 loc_484E46DE:
     mov     0x32, d0
@@ -7788,7 +7788,7 @@ loc_484E46DE:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E47C3
 loc_484E4708:
     mov     0x64, d0
@@ -7806,7 +7806,7 @@ loc_484E4708:
     add     0x44, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E47C3
 loc_484E472B:
     mov     0x32, d0
@@ -7826,7 +7826,7 @@ loc_484E472B:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E47C3
 loc_484E4753:
     mov     0x64, d0
@@ -7844,7 +7844,7 @@ loc_484E4753:
     add     0x46, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E47C3
 loc_484E4775:
     mov     0x32, d0
@@ -7864,7 +7864,7 @@ loc_484E4775:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E47C3
 loc_484E479D:
     mov     0x32, d0
@@ -7884,7 +7884,7 @@ loc_484E479D:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E47C3:
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
@@ -7922,7 +7922,7 @@ loc_484E4810:
 loc_484E481D:
     clr     d0
     extbu   d1
-    call    func_484F775B_entry, [d2,d3], 0x20
+    call    SoundEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484E499F
 loc_484E4829:
     mov     -0x32, d0
@@ -7942,7 +7942,7 @@ loc_484E4829:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E499F
 loc_484E4852:
     clr     d0
@@ -7960,7 +7960,7 @@ loc_484E4852:
     add     d1, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E499F
 loc_484E4874:
     mov     -0x32, d0
@@ -7980,7 +7980,7 @@ loc_484E4874:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E499F
 loc_484E489D:
     clr     d0
@@ -7998,7 +7998,7 @@ loc_484E489D:
     add     0x42, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E499F
 loc_484E48BF:
     mov     -0x32, d0
@@ -8017,7 +8017,7 @@ loc_484E48BF:
     add     0x43, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E499F
 loc_484E48E5:
     clr     d0
@@ -8035,7 +8035,7 @@ loc_484E48E5:
     add     0x44, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E499F
 loc_484E4907:
     mov     -0x32, d0
@@ -8055,7 +8055,7 @@ loc_484E4907:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E499F
 loc_484E492F:
     clr     d0
@@ -8073,7 +8073,7 @@ loc_484E492F:
     add     0x46, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E499F
 loc_484E4950:
     mov     -0x32, d0
@@ -8094,7 +8094,7 @@ loc_484E4950:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E499F
 loc_484E4979:
     mov     -0x32, d0
@@ -8114,7 +8114,7 @@ loc_484E4979:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E499F:
     call    GetFocusObject_entry, 0, 0x10
     mov     d2, (0x10, sp)
@@ -8171,7 +8171,7 @@ loc_484E4A21:
     extbu   d1
     mov     d1, d0
     mov     a1, a0
-    call    func_484F7800_entry, [d2,a2], 0x24
+    call    SoundEditElemOnText_entry, [d2,a2], 0x24
     jmp     loc_484E4C5B
 loc_484E4A2E:
     mov     0xff, d0
@@ -8189,7 +8189,7 @@ loc_484E4A2E:
     mov     a1, a0
     mov     Str_3d_54, a1
     mov     1, d1
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -8211,7 +8211,7 @@ loc_484E4A68:
     mov     a1, a0
     mov     Str_3d_47, a1
     clr     d1
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -8234,7 +8234,7 @@ loc_484E4A9D:
     mov     a1, a0
     mov     Str_3d_46, a1
     mov     1, d1
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -8258,7 +8258,7 @@ loc_484E4AD7:
     mov     a1, a0
     mov     Str_3d_45, a1
     clr     d1
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -8281,7 +8281,7 @@ loc_484E4B10:
     mov     a1, a0
     mov     Str_3d_105, a1
     mov     1, d1
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -8304,7 +8304,7 @@ loc_484E4B4A:
     mov     Str_3d_104, a1
     clr     d1
     mov     d2, d0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -8327,7 +8327,7 @@ loc_484E4B80:
     mov     a1, a0
     mov     Str_3d_103, a1
     mov     1, d1
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -8349,7 +8349,7 @@ loc_484E4BBA:
     mov     a1, a0
     mov     Str_3d_102, a1
     clr     d1
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -8371,7 +8371,7 @@ loc_484E4BEE:
     mov     a1, a0
     mov     Str_3d_101, a1
     mov     1, d1
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -8394,7 +8394,7 @@ loc_484E4C24:
     mov     a1, a0
     mov     Str_3d_44, a1
     mov     1, d1
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -8491,7 +8491,7 @@ loc_484E4D17:
 loc_484E4D1A:
     mov     1, d0
     extbu   d1
-    call    func_484F775B_entry, [d2,d3], 0x20
+    call    SoundEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484E4E27
 loc_484E4D27:
     mov     0x32, d0
@@ -8511,7 +8511,7 @@ loc_484E4D27:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E4E27
 loc_484E4D50:
     mov     0x32, d0
@@ -8531,7 +8531,7 @@ loc_484E4D50:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E4E27
 loc_484E4D79:
     mov     0x32, d0
@@ -8551,7 +8551,7 @@ loc_484E4D79:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     clr     d0
     movbu   d0, (EnvKfGraphTitleSe_Var)
     jmp     loc_484E4E27
@@ -8572,7 +8572,7 @@ loc_484E4DA9:
     add     0x4c, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     mov     1, d0
     movbu   d0, (EnvKfGraphTitleSe_Var)
     bra     loc_484E4E27
@@ -8594,7 +8594,7 @@ loc_484E4DD6:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     mov     2, d0
     movbu   d0, (EnvKfGraphTitleSe_Var)
     bra     loc_484E4E27
@@ -8615,7 +8615,7 @@ loc_484E4E06:
     mov     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E4E27:
     call    GetFocusObject_entry, 0, 0x10
     mov     d2, (0x10, sp)
@@ -8660,7 +8660,7 @@ loc_484E4E8A:
 loc_484E4E8D:
     clr     d0
     extbu   d1
-    call    func_484F775B_entry, [d2,d3], 0x20
+    call    SoundEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484E4F96
 loc_484E4E99:
     mov     -0x32, d0
@@ -8678,7 +8678,7 @@ loc_484E4E99:
     add     0x48, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E4F96
 loc_484E4EBE:
     mov     -0x32, d0
@@ -8698,7 +8698,7 @@ loc_484E4EBE:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E4F96
 loc_484E4EE7:
     mov     -0x32, d0
@@ -8718,7 +8718,7 @@ loc_484E4EE7:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     clr     d0
     movbu   d0, (EnvKfGraphTitleSe_Var)
     jmp     loc_484E4F96
@@ -8739,7 +8739,7 @@ loc_484E4F17:
     add     0x4c, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     mov     1, d0
     movbu   d0, (EnvKfGraphTitleSe_Var)
     bra     loc_484E4F96
@@ -8761,7 +8761,7 @@ loc_484E4F44:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     mov     2, d0
     movbu   d0, (EnvKfGraphTitleSe_Var)
     bra     loc_484E4F96
@@ -8782,7 +8782,7 @@ loc_484E4F74:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E4F96:
     call    GetFocusObject_entry, 0, 0x10
     mov     d2, (0x10, sp)
@@ -8846,7 +8846,7 @@ loc_484E5022:
 loc_484E5025:
     extbu   d0
     mov     a2, a0
-    call    func_484F7800_entry, [d2,a2], 0x24
+    call    SoundEditElemOnText_entry, [d2,a2], 0x24
     jmp     loc_484E5162
 loc_484E5031:
     mov     0xff, d1
@@ -8862,7 +8862,7 @@ loc_484E5031:
     mov     Str_3d_99, a1
     mov     1, d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484E5162
 loc_484E5055:
     mov     0xff, d1
@@ -8880,7 +8880,7 @@ loc_484E5055:
     mov     Str_3d_98, a1
     mov     1, d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484E5162
 loc_484E507D:
     mov     0xff, d1
@@ -8898,7 +8898,7 @@ loc_484E507D:
     mov     Str_3d_97, a1
     mov     1, d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -8921,7 +8921,7 @@ loc_484E50B7:
     mov     Str_3d_96, a1
     mov     1, d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -8944,7 +8944,7 @@ loc_484E50F0:
     mov     Str_3d_95, a1
     mov     1, d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -8965,10 +8965,10 @@ loc_484E5129:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a2, a0
-    call    func_484F7B24_entry, [d2,d3,a2], 0x24
+    call    SoundEditNoteNameText_entry, [d2,d3,a2], 0x24
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -9059,7 +9059,7 @@ loc_484E5218:
     mov     1, d0
     extbu   d2
     mov     d2, d1
-    call    func_484F775B_entry, [d2,d3], 0x20
+    call    SoundEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484E551C
 loc_484E5226:
     mov     0xb, d0
@@ -9078,13 +9078,13 @@ loc_484E5226:
     add     d2, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E551C
 loc_484E524A:
     extbu   d2
     clr     d1
     mov     d2, d0
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     mov     0x7f, d1
     mov     d1, (0x10, sp)
@@ -9096,7 +9096,7 @@ loc_484E524A:
     add     0x2b, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, d2
     mov     d2, d1
@@ -9134,7 +9134,7 @@ loc_484E52E5:
     extbu   d2
     clr     d1
     mov     d2, d0
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     mov     1, d1
     mov     d1, (0x10, sp)
@@ -9147,7 +9147,7 @@ loc_484E52E5:
     inc     d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, d2
     mov     d2, d1
@@ -9185,7 +9185,7 @@ loc_484E5382:
     extbu   d2
     mov     d2, d0
     clr     d1
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     add     d0, d0
     mov     0x2b, d3
@@ -9197,13 +9197,13 @@ loc_484E5382:
     mov     sp, a0
     add     0x20, a0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     cmp     1, d0
     bne     loc_484E53D1
     clr     d1
     mov     d2, d0
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     mov     0x47, d1
     mov     d1, (0x10, sp)
@@ -9218,7 +9218,7 @@ loc_484E5382:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E53D1:
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, d2
@@ -9270,7 +9270,7 @@ loc_484E5449:
     add     0x52, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E551C
 loc_484E546E:
     clr     d0
@@ -9288,7 +9288,7 @@ loc_484E546E:
     add     0x52, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E551C
 loc_484E5490:
     mov     4, d0
@@ -9306,7 +9306,7 @@ loc_484E5490:
     add     0x55, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E551C
 loc_484E54B3:
     mov     0x1e, d0
@@ -9326,7 +9326,7 @@ loc_484E54B3:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E551C
 loc_484E54D9:
     mov     0x7f, d0
@@ -9345,7 +9345,7 @@ loc_484E54D9:
     mov     d2, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E551C
 loc_484E54FC:
     mov     0x32, d0
@@ -9363,7 +9363,7 @@ loc_484E54FC:
     add     0x54, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E551C:
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
@@ -9404,7 +9404,7 @@ loc_484E557C:
     clr     d0
     extbu   d2
     mov     d2, d1
-    call    func_484F775B_entry, [d2,d3], 0x20
+    call    SoundEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484E587C
 loc_484E5589:
     clr     d0
@@ -9422,13 +9422,13 @@ loc_484E5589:
     exthu   d2
     mov     -1, d1
     mov     d2, d0
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E587C
 loc_484E55AB:
     extbu   d2
     clr     d1
     mov     d2, d0
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     clr     d1
     mov     d1, (0x10, sp)
@@ -9439,7 +9439,7 @@ loc_484E55AB:
     add     0x2b, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, d2
     mov     d2, d1
@@ -9477,7 +9477,7 @@ loc_484E5644:
     extbu   d2
     clr     d1
     mov     d2, d0
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     clr     d1
     mov     d1, (0x10, sp)
@@ -9491,7 +9491,7 @@ loc_484E5644:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, d2
     mov     d2, d1
@@ -9530,7 +9530,7 @@ loc_484E56E4:
     extbu   d2
     mov     d2, d0
     clr     d1
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     add     d0, d0
     mov     0x2b, d3
@@ -9542,13 +9542,13 @@ loc_484E56E4:
     mov     sp, a0
     add     0x20, a0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     cmp     1, d0
     bne     loc_484E5731
     clr     d1
     mov     d2, d0
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     clr     d1
     mov     d1, (0x10, sp)
@@ -9562,7 +9562,7 @@ loc_484E56E4:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E5731:
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, d2
@@ -9613,7 +9613,7 @@ loc_484E57AA:
     add     0x52, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E587C
 loc_484E57CC:
     mov     1, d0
@@ -9631,7 +9631,7 @@ loc_484E57CC:
     add     0x52, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E587C
 loc_484E57EF:
     clr     d0
@@ -9649,7 +9649,7 @@ loc_484E57EF:
     add     d2, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E587C
 loc_484E5811:
     clr     d0
@@ -9668,7 +9668,7 @@ loc_484E5811:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E587C
 loc_484E5835:
     clr     d0
@@ -9688,7 +9688,7 @@ loc_484E5835:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E587C
 loc_484E585A:
     clr     d0
@@ -9707,7 +9707,7 @@ loc_484E585A:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E587C:
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
@@ -9770,7 +9770,7 @@ loc_484E590C:
     extbu   d2
     mov     d2, d0
     mov     a2, a0
-    call    func_484F7800_entry, [d2,a2], 0x24
+    call    SoundEditElemOnText_entry, [d2,a2], 0x24
     jmp     loc_484E5C4B
 loc_484E5919:
     extbu   d2
@@ -9786,7 +9786,7 @@ loc_484E5919:
     mov     sp, a0
     add     0x20, a0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     a2, (8, sp)
     mov     Str_LFO_2d_4, d0
     mov     d0, (0xc, sp)
@@ -9822,7 +9822,7 @@ loc_484E5991:
     extbu   d2
     clr     d1
     mov     d2, d0
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     mov     0x7f, d1
     mov     d1, (0x18, sp)
@@ -9832,13 +9832,13 @@ loc_484E5991:
     mov     Str_3d_94, a1
     clr     d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484E5C4B
 loc_484E59B6:
     extbu   d2
     mov     d2, d0
     clr     d1
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     mov     d0, a1
     add     a1, a1
@@ -9849,7 +9849,7 @@ loc_484E59B6:
     mov     sp, a0
     add     0x20, a0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     cmp     0, d0
     beq     loc_484E59E5
@@ -9887,7 +9887,7 @@ loc_484E5A2D:
     mov     sp, a3
     add     0x20, a3
     clr     d1
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     add     d0, d0
     mov     a3, a0
@@ -9896,7 +9896,7 @@ loc_484E5A2D:
     inc     d0
     exthu   d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     cmp     0, d0
     beq     loc_484E5A5A
@@ -9912,7 +9912,7 @@ loc_484E5A5A:
 loc_484E5A6E:
     mov     d2, d0
     clr     d1
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     add     d0, d0
     add     d0, d3
@@ -9922,7 +9922,7 @@ loc_484E5A6E:
     exthu   d0
     mov     a3, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     a2, (8, sp)
     mov     Str_3d_93, d0
     mov     d0, (0xc, sp)
@@ -9945,7 +9945,7 @@ loc_484E5AA6:
     add     0x52, d0
     exthu   d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     cmp     0, d0
     beq     loc_484E5ACD
@@ -9978,7 +9978,7 @@ loc_484E5AF5:
     mov     a1, d0
     exthu   d0
     mov     0x40, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     cmp     0, d0
     beq     loc_484E5B1F
@@ -10011,7 +10011,7 @@ loc_484E5B47:
     mov     a1, d0
     exthu   d0
     mov     0xe0, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     cmp     0, d0
     beq     loc_484E5B7E
@@ -10070,7 +10070,7 @@ loc_484E5BE1:
     mov     Str_2d_59, a1
     clr     d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     bra     loc_484E5C4B
 loc_484E5C06:
     mov     0x7f, d0
@@ -10088,7 +10088,7 @@ loc_484E5C06:
     mov     Str_3d_92, a1
     clr     d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     bra     loc_484E5C4B
 loc_484E5C2B:
     mov     0x3f, d0
@@ -10105,7 +10105,7 @@ loc_484E5C2B:
     mov     Str_2d_58, a1
     clr     d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
 loc_484E5C4B:
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x1c, sp), a0
@@ -10192,7 +10192,7 @@ loc_484E5D03:
     mov     1, d0
     extbu   d2
     mov     d2, d1
-    call    func_484F775B_entry, [d2,d3], 0x20
+    call    SoundEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484E600B
 loc_484E5D11:
     mov     0xb, d0
@@ -10211,13 +10211,13 @@ loc_484E5D11:
     add     d2, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E600B
 loc_484E5D35:
     extbu   d2
     mov     1, d1
     mov     d2, d0
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     mov     0x7f, d1
     mov     d1, (0x10, sp)
@@ -10229,7 +10229,7 @@ loc_484E5D35:
     add     0x2b, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, d2
     mov     d2, d1
@@ -10267,7 +10267,7 @@ loc_484E5DD1:
     extbu   d2
     mov     1, d1
     mov     d2, d0
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     mov     1, d1
     mov     d1, (0x10, sp)
@@ -10280,7 +10280,7 @@ loc_484E5DD1:
     inc     d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, d2
     mov     d2, d1
@@ -10318,7 +10318,7 @@ loc_484E5E6F:
     extbu   d2
     mov     d2, d0
     mov     1, d1
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     add     d0, d0
     mov     0x2b, d3
@@ -10330,13 +10330,13 @@ loc_484E5E6F:
     mov     sp, a0
     add     0x20, a0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     cmp     1, d0
     bne     loc_484E5EC0
     mov     1, d1
     mov     d2, d0
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     mov     0x47, d1
     mov     d1, (0x10, sp)
@@ -10351,7 +10351,7 @@ loc_484E5E6F:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E5EC0:
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, d2
@@ -10403,7 +10403,7 @@ loc_484E5F38:
     add     0x56, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E600B
 loc_484E5F5D:
     clr     d0
@@ -10421,7 +10421,7 @@ loc_484E5F5D:
     add     0x56, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E600B
 loc_484E5F7F:
     mov     4, d0
@@ -10439,7 +10439,7 @@ loc_484E5F7F:
     add     0x59, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E600B
 loc_484E5FA2:
     mov     0x1e, d0
@@ -10459,7 +10459,7 @@ loc_484E5FA2:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E600B
 loc_484E5FC8:
     mov     0x7f, d0
@@ -10478,7 +10478,7 @@ loc_484E5FC8:
     mov     d2, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E600B
 loc_484E5FEB:
     mov     0x32, d0
@@ -10496,7 +10496,7 @@ loc_484E5FEB:
     add     0x58, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E600B:
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
@@ -10537,7 +10537,7 @@ loc_484E606B:
     clr     d0
     extbu   d2
     mov     d2, d1
-    call    func_484F775B_entry, [d2,d3], 0x20
+    call    SoundEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484E636F
 loc_484E6078:
     clr     d0
@@ -10555,13 +10555,13 @@ loc_484E6078:
     exthu   d2
     mov     -1, d1
     mov     d2, d0
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E636F
 loc_484E609A:
     extbu   d2
     mov     1, d1
     mov     d2, d0
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     clr     d1
     mov     d1, (0x10, sp)
@@ -10572,7 +10572,7 @@ loc_484E609A:
     add     0x2b, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, d2
     mov     d2, d1
@@ -10610,7 +10610,7 @@ loc_484E6134:
     extbu   d2
     mov     1, d1
     mov     d2, d0
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     clr     d1
     mov     d1, (0x10, sp)
@@ -10624,7 +10624,7 @@ loc_484E6134:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, d2
     mov     d2, d1
@@ -10663,7 +10663,7 @@ loc_484E61D5:
     extbu   d2
     mov     d2, d0
     mov     1, d1
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     add     d0, d0
     mov     0x2b, d3
@@ -10675,13 +10675,13 @@ loc_484E61D5:
     mov     sp, a0
     add     0x20, a0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     cmp     1, d0
     bne     loc_484E6224
     mov     1, d1
     mov     d2, d0
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     clr     d1
     mov     d1, (0x10, sp)
@@ -10695,7 +10695,7 @@ loc_484E61D5:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E6224:
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, d2
@@ -10746,7 +10746,7 @@ loc_484E629D:
     add     0x56, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E636F
 loc_484E62BF:
     mov     1, d0
@@ -10764,7 +10764,7 @@ loc_484E62BF:
     add     0x56, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E636F
 loc_484E62E2:
     clr     d0
@@ -10782,7 +10782,7 @@ loc_484E62E2:
     add     d2, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E636F
 loc_484E6304:
     clr     d0
@@ -10801,7 +10801,7 @@ loc_484E6304:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E636F
 loc_484E6328:
     clr     d0
@@ -10821,7 +10821,7 @@ loc_484E6328:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E636F
 loc_484E634D:
     clr     d0
@@ -10840,7 +10840,7 @@ loc_484E634D:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E636F:
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
@@ -10903,7 +10903,7 @@ loc_484E63FF:
     extbu   d2
     mov     d2, d0
     mov     a2, a0
-    call    func_484F7800_entry, [d2,a2], 0x24
+    call    SoundEditElemOnText_entry, [d2,a2], 0x24
     jmp     loc_484E6742
 loc_484E640C:
     extbu   d2
@@ -10919,7 +10919,7 @@ loc_484E640C:
     mov     sp, a0
     add     0x20, a0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     a2, (8, sp)
     mov     Str_LFO_2d_3, d0
     mov     d0, (0xc, sp)
@@ -10955,7 +10955,7 @@ loc_484E6484:
     extbu   d2
     mov     1, d1
     mov     d2, d0
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     mov     0x7f, d1
     mov     d1, (0x18, sp)
@@ -10965,13 +10965,13 @@ loc_484E6484:
     mov     Str_3d_91, a1
     clr     d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484E6742
 loc_484E64AA:
     extbu   d2
     mov     d2, d0
     mov     1, d1
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     mov     d0, a1
     add     a1, a1
@@ -10982,7 +10982,7 @@ loc_484E64AA:
     mov     sp, a0
     add     0x20, a0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     cmp     0, d0
     beq     loc_484E64DA
@@ -11020,7 +11020,7 @@ loc_484E6522:
     mov     sp, a3
     add     0x20, a3
     mov     1, d1
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     add     d0, d0
     mov     a3, a0
@@ -11029,7 +11029,7 @@ loc_484E6522:
     inc     d0
     exthu   d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     cmp     0, d0
     beq     loc_484E6550
@@ -11045,7 +11045,7 @@ loc_484E6550:
 loc_484E6564:
     mov     d2, d0
     mov     1, d1
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     add     d0, d0
     add     d0, d3
@@ -11055,7 +11055,7 @@ loc_484E6564:
     exthu   d0
     mov     a3, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     a2, (8, sp)
     mov     Str_3d_90, d0
     mov     d0, (0xc, sp)
@@ -11078,7 +11078,7 @@ loc_484E659D:
     add     0x56, d0
     exthu   d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     cmp     0, d0
     beq     loc_484E65C4
@@ -11111,7 +11111,7 @@ loc_484E65EC:
     mov     a1, d0
     exthu   d0
     mov     0x40, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     cmp     0, d0
     beq     loc_484E6616
@@ -11144,7 +11144,7 @@ loc_484E663E:
     mov     a1, d0
     exthu   d0
     mov     0xe0, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     cmp     0, d0
     beq     loc_484E6675
@@ -11203,7 +11203,7 @@ loc_484E66D8:
     mov     Str_2d_57, a1
     clr     d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     bra     loc_484E6742
 loc_484E66FD:
     mov     0x7f, d0
@@ -11221,7 +11221,7 @@ loc_484E66FD:
     mov     Str_3d_89, a1
     clr     d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     bra     loc_484E6742
 loc_484E6722:
     mov     0x3f, d0
@@ -11238,7 +11238,7 @@ loc_484E6722:
     mov     Str_2d_56, a1
     clr     d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
 loc_484E6742:
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x1c, sp), a0
@@ -11325,7 +11325,7 @@ loc_484E67FA:
     mov     1, d0
     extbu   d2
     mov     d2, d1
-    call    func_484F775B_entry, [d2,d3], 0x20
+    call    SoundEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484E6B02
 loc_484E6808:
     mov     0xb, d0
@@ -11344,13 +11344,13 @@ loc_484E6808:
     add     d2, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E6B02
 loc_484E682C:
     extbu   d2
     mov     2, d1
     mov     d2, d0
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     mov     0x7f, d1
     mov     d1, (0x10, sp)
@@ -11362,7 +11362,7 @@ loc_484E682C:
     add     0x2b, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, d2
     mov     d2, d1
@@ -11400,7 +11400,7 @@ loc_484E68C8:
     extbu   d2
     mov     2, d1
     mov     d2, d0
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     mov     1, d1
     mov     d1, (0x10, sp)
@@ -11413,7 +11413,7 @@ loc_484E68C8:
     inc     d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, d2
     mov     d2, d1
@@ -11451,7 +11451,7 @@ loc_484E6966:
     extbu   d2
     mov     d2, d0
     mov     2, d1
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     add     d0, d0
     mov     0x2b, d3
@@ -11463,13 +11463,13 @@ loc_484E6966:
     mov     sp, a0
     add     0x20, a0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     cmp     1, d0
     bne     loc_484E69B7
     mov     2, d1
     mov     d2, d0
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     mov     0x47, d1
     mov     d1, (0x10, sp)
@@ -11484,7 +11484,7 @@ loc_484E6966:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E69B7:
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, d2
@@ -11536,7 +11536,7 @@ loc_484E6A2F:
     add     0x5a, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E6B02
 loc_484E6A54:
     clr     d0
@@ -11554,7 +11554,7 @@ loc_484E6A54:
     add     0x5a, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E6B02
 loc_484E6A76:
     mov     4, d0
@@ -11572,7 +11572,7 @@ loc_484E6A76:
     add     0x5d, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E6B02
 loc_484E6A99:
     mov     0x1e, d0
@@ -11592,7 +11592,7 @@ loc_484E6A99:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E6B02
 loc_484E6ABF:
     mov     0x7f, d0
@@ -11611,7 +11611,7 @@ loc_484E6ABF:
     mov     d2, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E6B02
 loc_484E6AE2:
     mov     0x32, d0
@@ -11629,7 +11629,7 @@ loc_484E6AE2:
     add     0x5c, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E6B02:
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
@@ -11670,7 +11670,7 @@ loc_484E6B62:
     clr     d0
     extbu   d2
     mov     d2, d1
-    call    func_484F775B_entry, [d2,d3], 0x20
+    call    SoundEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484E6E66
 loc_484E6B6F:
     clr     d0
@@ -11688,13 +11688,13 @@ loc_484E6B6F:
     exthu   d2
     mov     -1, d1
     mov     d2, d0
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E6E66
 loc_484E6B91:
     extbu   d2
     mov     2, d1
     mov     d2, d0
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     clr     d1
     mov     d1, (0x10, sp)
@@ -11705,7 +11705,7 @@ loc_484E6B91:
     add     0x2b, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, d2
     mov     d2, d1
@@ -11743,7 +11743,7 @@ loc_484E6C2B:
     extbu   d2
     mov     2, d1
     mov     d2, d0
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     clr     d1
     mov     d1, (0x10, sp)
@@ -11757,7 +11757,7 @@ loc_484E6C2B:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, d2
     mov     d2, d1
@@ -11796,7 +11796,7 @@ loc_484E6CCC:
     extbu   d2
     mov     d2, d0
     mov     2, d1
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     add     d0, d0
     mov     0x2b, d3
@@ -11808,13 +11808,13 @@ loc_484E6CCC:
     mov     sp, a0
     add     0x20, a0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     cmp     1, d0
     bne     loc_484E6D1B
     mov     2, d1
     mov     d2, d0
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     clr     d1
     mov     d1, (0x10, sp)
@@ -11828,7 +11828,7 @@ loc_484E6CCC:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E6D1B:
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, d2
@@ -11879,7 +11879,7 @@ loc_484E6D94:
     add     0x5a, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E6E66
 loc_484E6DB6:
     mov     1, d0
@@ -11897,7 +11897,7 @@ loc_484E6DB6:
     add     0x5a, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E6E66
 loc_484E6DD9:
     clr     d0
@@ -11915,7 +11915,7 @@ loc_484E6DD9:
     add     d2, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E6E66
 loc_484E6DFB:
     clr     d0
@@ -11934,7 +11934,7 @@ loc_484E6DFB:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E6E66
 loc_484E6E1F:
     clr     d0
@@ -11954,7 +11954,7 @@ loc_484E6E1F:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E6E66
 loc_484E6E44:
     clr     d0
@@ -11973,7 +11973,7 @@ loc_484E6E44:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E6E66:
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
@@ -12036,7 +12036,7 @@ loc_484E6EF6:
     extbu   d2
     mov     d2, d0
     mov     a2, a0
-    call    func_484F7800_entry, [d2,a2], 0x24
+    call    SoundEditElemOnText_entry, [d2,a2], 0x24
     jmp     loc_484E7239
 loc_484E6F03:
     extbu   d2
@@ -12052,7 +12052,7 @@ loc_484E6F03:
     mov     sp, a0
     add     0x20, a0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     a2, (8, sp)
     mov     Str_LFO_2d_2, d0
     mov     d0, (0xc, sp)
@@ -12088,7 +12088,7 @@ loc_484E6F7B:
     extbu   d2
     mov     2, d1
     mov     d2, d0
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     mov     0x7f, d1
     mov     d1, (0x18, sp)
@@ -12098,13 +12098,13 @@ loc_484E6F7B:
     mov     Str_3d_88, a1
     clr     d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484E7239
 loc_484E6FA1:
     extbu   d2
     mov     d2, d0
     mov     2, d1
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     mov     d0, a1
     add     a1, a1
@@ -12115,7 +12115,7 @@ loc_484E6FA1:
     mov     sp, a0
     add     0x20, a0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     cmp     0, d0
     beq     loc_484E6FD1
@@ -12153,7 +12153,7 @@ loc_484E7019:
     mov     sp, a3
     add     0x20, a3
     mov     2, d1
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     add     d0, d0
     mov     a3, a0
@@ -12162,7 +12162,7 @@ loc_484E7019:
     inc     d0
     exthu   d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     cmp     0, d0
     beq     loc_484E7047
@@ -12178,7 +12178,7 @@ loc_484E7047:
 loc_484E705B:
     mov     d2, d0
     mov     2, d1
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     add     d0, d0
     add     d0, d3
@@ -12188,7 +12188,7 @@ loc_484E705B:
     exthu   d0
     mov     a3, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     a2, (8, sp)
     mov     Str_3d_87, d0
     mov     d0, (0xc, sp)
@@ -12211,7 +12211,7 @@ loc_484E7094:
     add     0x5a, d0
     exthu   d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     cmp     0, d0
     beq     loc_484E70BB
@@ -12244,7 +12244,7 @@ loc_484E70E3:
     mov     a1, d0
     exthu   d0
     mov     0x40, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     cmp     0, d0
     beq     loc_484E710D
@@ -12277,7 +12277,7 @@ loc_484E7135:
     mov     a1, d0
     exthu   d0
     mov     0xe0, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     cmp     0, d0
     beq     loc_484E716C
@@ -12336,7 +12336,7 @@ loc_484E71CF:
     mov     Str_2d_55, a1
     clr     d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     bra     loc_484E7239
 loc_484E71F4:
     mov     0x7f, d0
@@ -12354,7 +12354,7 @@ loc_484E71F4:
     mov     Str_3d_86, a1
     clr     d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     bra     loc_484E7239
 loc_484E7219:
     mov     0x3f, d0
@@ -12371,7 +12371,7 @@ loc_484E7219:
     mov     Str_2d_54, a1
     clr     d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
 loc_484E7239:
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x1c, sp), a0
@@ -12458,7 +12458,7 @@ loc_484E72F1:
     mov     1, d0
     extbu   d2
     mov     d2, d1
-    call    func_484F775B_entry, [d2,d3], 0x20
+    call    SoundEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484E75F9
 loc_484E72FF:
     mov     0xb, d0
@@ -12477,13 +12477,13 @@ loc_484E72FF:
     add     d2, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E75F9
 loc_484E7323:
     extbu   d2
     mov     3, d1
     mov     d2, d0
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     mov     0x7f, d1
     mov     d1, (0x10, sp)
@@ -12495,7 +12495,7 @@ loc_484E7323:
     add     0x2b, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, d2
     mov     d2, d1
@@ -12533,7 +12533,7 @@ loc_484E73BF:
     extbu   d2
     mov     3, d1
     mov     d2, d0
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     mov     1, d1
     mov     d1, (0x10, sp)
@@ -12546,7 +12546,7 @@ loc_484E73BF:
     inc     d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, d2
     mov     d2, d1
@@ -12584,7 +12584,7 @@ loc_484E745D:
     extbu   d2
     mov     d2, d0
     mov     3, d1
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     add     d0, d0
     mov     0x2b, d3
@@ -12596,13 +12596,13 @@ loc_484E745D:
     mov     sp, a0
     add     0x20, a0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     cmp     1, d0
     bne     loc_484E74AE
     mov     3, d1
     mov     d2, d0
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     mov     0x47, d1
     mov     d1, (0x10, sp)
@@ -12617,7 +12617,7 @@ loc_484E745D:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E74AE:
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, d2
@@ -12669,7 +12669,7 @@ loc_484E7526:
     add     0x5e, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E75F9
 loc_484E754B:
     clr     d0
@@ -12687,7 +12687,7 @@ loc_484E754B:
     add     0x5e, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E75F9
 loc_484E756D:
     mov     4, d0
@@ -12705,7 +12705,7 @@ loc_484E756D:
     add     0x61, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E75F9
 loc_484E7590:
     mov     0x1e, d0
@@ -12725,7 +12725,7 @@ loc_484E7590:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E75F9
 loc_484E75B6:
     mov     0x7f, d0
@@ -12744,7 +12744,7 @@ loc_484E75B6:
     mov     d2, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E75F9
 loc_484E75D9:
     mov     0x32, d0
@@ -12762,7 +12762,7 @@ loc_484E75D9:
     add     0x60, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E75F9:
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
@@ -12803,7 +12803,7 @@ loc_484E7659:
     clr     d0
     extbu   d2
     mov     d2, d1
-    call    func_484F775B_entry, [d2,d3], 0x20
+    call    SoundEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484E795D
 loc_484E7666:
     clr     d0
@@ -12821,13 +12821,13 @@ loc_484E7666:
     exthu   d2
     mov     -1, d1
     mov     d2, d0
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E795D
 loc_484E7688:
     extbu   d2
     mov     3, d1
     mov     d2, d0
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     clr     d1
     mov     d1, (0x10, sp)
@@ -12838,7 +12838,7 @@ loc_484E7688:
     add     0x2b, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, d2
     mov     d2, d1
@@ -12876,7 +12876,7 @@ loc_484E7722:
     extbu   d2
     mov     3, d1
     mov     d2, d0
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     clr     d1
     mov     d1, (0x10, sp)
@@ -12890,7 +12890,7 @@ loc_484E7722:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, d2
     mov     d2, d1
@@ -12929,7 +12929,7 @@ loc_484E77C3:
     extbu   d2
     mov     d2, d0
     mov     3, d1
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     add     d0, d0
     mov     0x2b, d3
@@ -12941,13 +12941,13 @@ loc_484E77C3:
     mov     sp, a0
     add     0x20, a0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     cmp     1, d0
     bne     loc_484E7812
     mov     3, d1
     mov     d2, d0
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     clr     d1
     mov     d1, (0x10, sp)
@@ -12961,7 +12961,7 @@ loc_484E77C3:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E7812:
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, d2
@@ -13012,7 +13012,7 @@ loc_484E788B:
     add     0x5e, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E795D
 loc_484E78AD:
     mov     1, d0
@@ -13030,7 +13030,7 @@ loc_484E78AD:
     add     0x5e, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E795D
 loc_484E78D0:
     clr     d0
@@ -13048,7 +13048,7 @@ loc_484E78D0:
     add     d2, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E795D
 loc_484E78F2:
     clr     d0
@@ -13067,7 +13067,7 @@ loc_484E78F2:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E795D
 loc_484E7916:
     clr     d0
@@ -13087,7 +13087,7 @@ loc_484E7916:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484E795D
 loc_484E793B:
     clr     d0
@@ -13106,7 +13106,7 @@ loc_484E793B:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484E795D:
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
@@ -13169,7 +13169,7 @@ loc_484E79ED:
     extbu   d2
     mov     d2, d0
     mov     a2, a0
-    call    func_484F7800_entry, [d2,a2], 0x24
+    call    SoundEditElemOnText_entry, [d2,a2], 0x24
     jmp     loc_484E7D30
 loc_484E79FA:
     extbu   d2
@@ -13185,7 +13185,7 @@ loc_484E79FA:
     mov     sp, a0
     add     0x20, a0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     a2, (8, sp)
     mov     Str_LFO_2d, d0
     mov     d0, (0xc, sp)
@@ -13221,7 +13221,7 @@ loc_484E7A72:
     extbu   d2
     mov     3, d1
     mov     d2, d0
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     mov     0x7f, d1
     mov     d1, (0x18, sp)
@@ -13231,13 +13231,13 @@ loc_484E7A72:
     mov     Str_3d_85, a1
     clr     d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484E7D30
 loc_484E7A98:
     extbu   d2
     mov     d2, d0
     mov     3, d1
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     mov     d0, a1
     add     a1, a1
@@ -13248,7 +13248,7 @@ loc_484E7A98:
     mov     sp, a0
     add     0x20, a0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     cmp     0, d0
     beq     loc_484E7AC8
@@ -13286,7 +13286,7 @@ loc_484E7B10:
     mov     sp, a3
     add     0x20, a3
     mov     3, d1
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     add     d0, d0
     mov     a3, a0
@@ -13295,7 +13295,7 @@ loc_484E7B10:
     inc     d0
     exthu   d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     cmp     0, d0
     beq     loc_484E7B3E
@@ -13311,7 +13311,7 @@ loc_484E7B3E:
 loc_484E7B52:
     mov     d2, d0
     mov     3, d1
-    call    func_484F8676_entry, [d2], 0x1c
+    call    SoundEditLfoNibbleGet_entry, [d2], 0x1c
     extbu   d0
     add     d0, d0
     add     d0, d3
@@ -13321,7 +13321,7 @@ loc_484E7B52:
     exthu   d0
     mov     a3, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     a2, (8, sp)
     mov     Str_3d_84, d0
     mov     d0, (0xc, sp)
@@ -13344,7 +13344,7 @@ loc_484E7B8B:
     add     0x5e, d0
     exthu   d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     cmp     0, d0
     beq     loc_484E7BB2
@@ -13377,7 +13377,7 @@ loc_484E7BDA:
     mov     a1, d0
     exthu   d0
     mov     0x40, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     cmp     0, d0
     beq     loc_484E7C04
@@ -13410,7 +13410,7 @@ loc_484E7C2C:
     mov     a1, d0
     exthu   d0
     mov     0xe0, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     cmp     0, d0
     beq     loc_484E7C63
@@ -13469,7 +13469,7 @@ loc_484E7CC6:
     mov     Str_2d_53, a1
     clr     d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     bra     loc_484E7D30
 loc_484E7CEB:
     mov     0x7f, d0
@@ -13487,7 +13487,7 @@ loc_484E7CEB:
     mov     Str_3d_83, a1
     clr     d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     bra     loc_484E7D30
 loc_484E7D10:
     mov     0x3f, d0
@@ -13504,7 +13504,7 @@ loc_484E7D10:
     mov     Str_2d_52, a1
     clr     d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
 loc_484E7D30:
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x1c, sp), a0
@@ -14004,7 +14004,7 @@ loc_484E825E:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
     mov     MT_RequestGridDraw, d1
@@ -14032,7 +14032,7 @@ loc_484E82A8:
     mov     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
     mov     MT_RequestGridDraw, d1
@@ -14060,7 +14060,7 @@ loc_484E82EE:
     mov     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
     mov     MT_RequestGridDraw, d1
@@ -14089,7 +14089,7 @@ loc_484E8334:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
     mov     MT_RequestGridDraw, d1
@@ -14118,7 +14118,7 @@ loc_484E837F:
     exthu   d2
     mov     1, d1
     mov     d2, d0
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
     mov     MT_RequestGridDraw, d1
@@ -14145,7 +14145,7 @@ loc_484E83D9:
     add     d3, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x21, sp), d0
     cmp     0x7f, d0
     bge     loc_484E8422
@@ -14165,7 +14165,7 @@ loc_484E83D9:
     add     d3, d0
     exthu   d0
     movbu   (0x21, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
 loc_484E8422:
     movbu   (0x21, sp), d0
     inc     d3
@@ -14254,7 +14254,7 @@ loc_484E84B0:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
     mov     MT_RequestGridDraw, d1
@@ -14281,7 +14281,7 @@ loc_484E84F8:
     mov     d1, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
     mov     MT_RequestGridDraw, d1
@@ -14309,7 +14309,7 @@ loc_484E853C:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
     mov     MT_RequestGridDraw, d1
@@ -14338,7 +14338,7 @@ loc_484E8583:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
     mov     MT_RequestGridDraw, d1
@@ -14367,7 +14367,7 @@ loc_484E85CE:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
     mov     MT_RequestGridDraw, d1
@@ -14394,7 +14394,7 @@ loc_484E8619:
     mov     sp, a0
     add     0x20, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
 loc_484E8647:
     cmp     5, a2
     blt     loc_484E864E
@@ -14423,7 +14423,7 @@ loc_484E8666:
     add     d2, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x21, sp), d1
     cmp     d2, d1
     ble     loc_484E86AD
@@ -14443,7 +14443,7 @@ loc_484E8666:
     add     d2, d0
     exthu   d0
     movbu   (0x21, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
 loc_484E86AD:
     movbu   (0x21, sp), d0
     add     -1, d2
@@ -14539,7 +14539,7 @@ loc_484E8740:
     mov     a1, d0
     exthu   d0
     mov     0xc0, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x21, sp), d0
     cmp     0, d0
     beq     loc_484E877B
@@ -14587,7 +14587,7 @@ loc_484E87B7:
     mov     Str_2x_6, a1
     clr     d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484E899A
 loc_484E87E7:
     extb    d2
@@ -14610,7 +14610,7 @@ loc_484E87E7:
     mov     Str_2x_5, a1
     clr     d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484E899A
 loc_484E8819:
     extb    d2
@@ -14632,7 +14632,7 @@ loc_484E8819:
     mov     Str_4d_16, a1
     mov     1, d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484E899A
 loc_484E884A:
     extb    d2
@@ -14655,7 +14655,7 @@ loc_484E884A:
     mov     Str_4d_15, a1
     mov     1, d1
     mov     a2, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484E899A
 loc_484E887E:
     extb    d2
@@ -14686,7 +14686,7 @@ loc_484E889D:
     add     d2, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     a2, (8, sp)
     mov     Str_0_3d_3, d0
     mov     d0, (0xc, sp)
@@ -14710,7 +14710,7 @@ loc_484E88D4:
     exthu   d1
     mov     d1, d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     cmp     0x7f, d0
     bne     loc_484E8911
@@ -14732,7 +14732,7 @@ loc_484E8911:
     mov     d3, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     a2, (8, sp)
     mov     Str_3d_3d_3, d0
     mov     d0, (0xc, sp)
@@ -14757,7 +14757,7 @@ loc_484E894B:
     exthu   d1
     mov     d1, d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     cmp     0x7f, d0
     bne     loc_484E8986
@@ -15296,7 +15296,7 @@ loc_484E8F00:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     1, d1
     call    func_484F869F_entry, [d2], 4
@@ -15305,7 +15305,7 @@ loc_484E8F00:
     mov     d0, (0x10, sp)
     mov     0x14, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     call    GetFocusObject_entry, 0, 0x10
     mov     d2, d1
     exthu   d1
@@ -15339,7 +15339,7 @@ loc_484E8FA7:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     1, d1
     call    func_484F869F_entry, [d2], 4
@@ -15348,7 +15348,7 @@ loc_484E8FA7:
     mov     d0, (0x10, sp)
     mov     0x17, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     call    GetFocusObject_entry, 0, 0x10
     mov     d2, d1
     exthu   d1
@@ -15382,7 +15382,7 @@ loc_484E904E:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     1, d1
     call    func_484F869F_entry, [d2], 4
@@ -15391,7 +15391,7 @@ loc_484E904E:
     mov     d0, (0x10, sp)
     mov     0x26, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     call    GetFocusObject_entry, 0, 0x10
     mov     d2, d1
     exthu   d1
@@ -15425,7 +15425,7 @@ loc_484E90F5:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     1, d1
     call    func_484F869F_entry, [d2], 4
@@ -15434,7 +15434,7 @@ loc_484E90F5:
     mov     d0, (0x10, sp)
     mov     0x29, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     call    GetFocusObject_entry, 0, 0x10
     mov     d2, d1
     exthu   d1
@@ -15483,7 +15483,7 @@ loc_484E91B0:
     mov     d0, (0x18, sp)
     mov     0x15, d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E9573
 loc_484E91C9:
     mov     0x7f, d0
@@ -15494,7 +15494,7 @@ loc_484E91C9:
     mov     d0, (0x18, sp)
     mov     0x18, d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E9573
 loc_484E91E2:
     mov     0x7f, d0
@@ -15505,7 +15505,7 @@ loc_484E91E2:
     mov     d0, (0x18, sp)
     mov     0x27, d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E9573
 loc_484E91FB:
     mov     0x7f, d0
@@ -15516,7 +15516,7 @@ loc_484E91FB:
     mov     d0, (0x18, sp)
     mov     0x2a, d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E9573
 loc_484E9214:
     extbu   d1
@@ -15536,7 +15536,7 @@ loc_484E922B:
     mov     sp, a0
     add     0x1c, a0
     mov     3, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     1, d1
     call    func_484F883C_entry, [d2], 4
@@ -15545,14 +15545,14 @@ loc_484E922B:
     mov     d0, (0x10, sp)
     mov     0x13, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     jmp     loc_484E9573
 loc_484E925B:
     mov     0x16, d0
     mov     sp, a0
     add     0x1c, a0
     mov     3, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     1, d1
     call    func_484F883C_entry, [d2], 4
@@ -15561,14 +15561,14 @@ loc_484E925B:
     mov     d0, (0x10, sp)
     mov     0x16, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     jmp     loc_484E9573
 loc_484E928B:
     mov     0x25, d0
     mov     sp, a0
     add     0x1c, a0
     mov     3, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     1, d1
     call    func_484F883C_entry, [d2], 4
@@ -15577,14 +15577,14 @@ loc_484E928B:
     mov     d0, (0x10, sp)
     mov     0x25, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     jmp     loc_484E9573
 loc_484E92BB:
     mov     0x28, d0
     mov     sp, a0
     add     0x1c, a0
     mov     3, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     1, d1
     call    func_484F883C_entry, [d2], 4
@@ -15593,7 +15593,7 @@ loc_484E92BB:
     mov     d0, (0x10, sp)
     mov     0x28, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     jmp     loc_484E9573
 loc_484E92EB:
     extbu   d1
@@ -15613,7 +15613,7 @@ loc_484E9302:
     mov     sp, a0
     add     0x1c, a0
     mov     0xc, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     1, d1
     call    func_484F883C_entry, [d2], 4
@@ -15622,14 +15622,14 @@ loc_484E9302:
     mov     d0, (0x10, sp)
     mov     0x13, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     jmp     loc_484E9573
 loc_484E9332:
     mov     0x16, d0
     mov     sp, a0
     add     0x1c, a0
     mov     0xc, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     1, d1
     call    func_484F883C_entry, [d2], 4
@@ -15638,14 +15638,14 @@ loc_484E9332:
     mov     d0, (0x10, sp)
     mov     0x16, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     jmp     loc_484E9573
 loc_484E9362:
     mov     0x25, d0
     mov     sp, a0
     add     0x1c, a0
     mov     0xc, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     1, d1
     call    func_484F883C_entry, [d2], 4
@@ -15654,14 +15654,14 @@ loc_484E9362:
     mov     d0, (0x10, sp)
     mov     0x25, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     jmp     loc_484E9573
 loc_484E9392:
     mov     0x28, d0
     mov     sp, a0
     add     0x1c, a0
     mov     0xc, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     1, d1
     call    func_484F883C_entry, [d2], 4
@@ -15670,7 +15670,7 @@ loc_484E9392:
     mov     d0, (0x10, sp)
     mov     0x28, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     jmp     loc_484E9573
 loc_484E93C2:
     extbu   d1
@@ -15690,7 +15690,7 @@ loc_484E93D9:
     mov     sp, a0
     add     0x1c, a0
     mov     0x30, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     1, d1
     call    func_484F883C_entry, [d2], 4
@@ -15699,14 +15699,14 @@ loc_484E93D9:
     mov     d0, (0x10, sp)
     mov     0x13, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     jmp     loc_484E9573
 loc_484E9409:
     mov     0x16, d0
     mov     sp, a0
     add     0x1c, a0
     mov     0x30, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     1, d1
     call    func_484F883C_entry, [d2], 4
@@ -15715,14 +15715,14 @@ loc_484E9409:
     mov     d0, (0x10, sp)
     mov     0x16, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     jmp     loc_484E9573
 loc_484E9439:
     mov     0x25, d0
     mov     sp, a0
     add     0x1c, a0
     mov     0x30, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     1, d1
     call    func_484F883C_entry, [d2], 4
@@ -15731,14 +15731,14 @@ loc_484E9439:
     mov     d0, (0x10, sp)
     mov     0x25, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     jmp     loc_484E9573
 loc_484E9469:
     mov     0x28, d0
     mov     sp, a0
     add     0x1c, a0
     mov     0x30, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     1, d1
     call    func_484F883C_entry, [d2], 4
@@ -15747,7 +15747,7 @@ loc_484E9469:
     mov     d0, (0x10, sp)
     mov     0x28, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     jmp     loc_484E9573
 loc_484E9499:
     extbu   d1
@@ -15767,7 +15767,7 @@ loc_484E94B0:
     mov     sp, a0
     add     0x1c, a0
     mov     0xc0, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     1, d1
     call    func_484F883C_entry, [d2], 4
@@ -15776,14 +15776,14 @@ loc_484E94B0:
     mov     d0, (0x10, sp)
     mov     0x13, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     jmp     loc_484E9573
 loc_484E94E2:
     mov     0x16, d0
     mov     sp, a0
     add     0x1c, a0
     mov     0xc0, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     1, d1
     call    func_484F883C_entry, [d2], 4
@@ -15792,14 +15792,14 @@ loc_484E94E2:
     mov     d0, (0x10, sp)
     mov     0x16, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     bra     loc_484E9573
 loc_484E9513:
     mov     0x25, d0
     mov     sp, a0
     add     0x1c, a0
     mov     0xc0, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     1, d1
     call    func_484F883C_entry, [d2], 4
@@ -15808,14 +15808,14 @@ loc_484E9513:
     mov     d0, (0x10, sp)
     mov     0x25, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     bra     loc_484E9573
 loc_484E9544:
     mov     0x28, d0
     mov     sp, a0
     add     0x1c, a0
     mov     0xc0, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     1, d1
     call    func_484F883C_entry, [d2], 4
@@ -15824,7 +15824,7 @@ loc_484E9544:
     mov     d0, (0x10, sp)
     mov     0x28, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
 loc_484E9573:
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
@@ -15891,7 +15891,7 @@ loc_484E95F9:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     -1, d1
     call    func_484F869F_entry, [d2], 4
@@ -15900,7 +15900,7 @@ loc_484E95F9:
     mov     d0, (0x10, sp)
     mov     0x14, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     call    GetFocusObject_entry, 0, 0x10
     mov     d2, d1
     exthu   d1
@@ -15934,7 +15934,7 @@ loc_484E96A0:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     -1, d1
     call    func_484F869F_entry, [d2], 4
@@ -15943,7 +15943,7 @@ loc_484E96A0:
     mov     d0, (0x10, sp)
     mov     0x17, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     call    GetFocusObject_entry, 0, 0x10
     mov     d2, d1
     exthu   d1
@@ -15977,7 +15977,7 @@ loc_484E9747:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     -1, d1
     call    func_484F869F_entry, [d2], 4
@@ -15986,7 +15986,7 @@ loc_484E9747:
     mov     d0, (0x10, sp)
     mov     0x26, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     call    GetFocusObject_entry, 0, 0x10
     mov     d2, d1
     exthu   d1
@@ -16020,7 +16020,7 @@ loc_484E97EE:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     -1, d1
     call    func_484F869F_entry, [d2], 4
@@ -16029,7 +16029,7 @@ loc_484E97EE:
     mov     d0, (0x10, sp)
     mov     0x29, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     call    GetFocusObject_entry, 0, 0x10
     mov     d2, d1
     exthu   d1
@@ -16077,7 +16077,7 @@ loc_484E98A9:
     mov     d0, (0x18, sp)
     mov     0x15, d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E9C64
 loc_484E98C0:
     clr     d0
@@ -16087,7 +16087,7 @@ loc_484E98C0:
     mov     d0, (0x18, sp)
     mov     0x18, d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E9C64
 loc_484E98D7:
     clr     d0
@@ -16097,7 +16097,7 @@ loc_484E98D7:
     mov     d0, (0x18, sp)
     mov     0x27, d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E9C64
 loc_484E98EE:
     clr     d0
@@ -16107,7 +16107,7 @@ loc_484E98EE:
     mov     d0, (0x18, sp)
     mov     0x2a, d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484E9C64
 loc_484E9905:
     extbu   d1
@@ -16127,7 +16127,7 @@ loc_484E991C:
     mov     sp, a0
     add     0x1c, a0
     mov     3, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     -1, d1
     call    func_484F883C_entry, [d2], 4
@@ -16136,14 +16136,14 @@ loc_484E991C:
     mov     d0, (0x10, sp)
     mov     0x13, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     jmp     loc_484E9C64
 loc_484E994C:
     mov     0x16, d0
     mov     sp, a0
     add     0x1c, a0
     mov     3, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     -1, d1
     call    func_484F883C_entry, [d2], 4
@@ -16152,14 +16152,14 @@ loc_484E994C:
     mov     d0, (0x10, sp)
     mov     0x16, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     jmp     loc_484E9C64
 loc_484E997C:
     mov     0x25, d0
     mov     sp, a0
     add     0x1c, a0
     mov     3, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     -1, d1
     call    func_484F883C_entry, [d2], 4
@@ -16168,14 +16168,14 @@ loc_484E997C:
     mov     d0, (0x10, sp)
     mov     0x25, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     jmp     loc_484E9C64
 loc_484E99AC:
     mov     0x28, d0
     mov     sp, a0
     add     0x1c, a0
     mov     3, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     -1, d1
     call    func_484F883C_entry, [d2], 4
@@ -16184,7 +16184,7 @@ loc_484E99AC:
     mov     d0, (0x10, sp)
     mov     0x28, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     jmp     loc_484E9C64
 loc_484E99DC:
     extbu   d1
@@ -16204,7 +16204,7 @@ loc_484E99F3:
     mov     sp, a0
     add     0x1c, a0
     mov     0xc, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     -1, d1
     call    func_484F883C_entry, [d2], 4
@@ -16213,14 +16213,14 @@ loc_484E99F3:
     mov     d0, (0x10, sp)
     mov     0x13, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     jmp     loc_484E9C64
 loc_484E9A23:
     mov     0x16, d0
     mov     sp, a0
     add     0x1c, a0
     mov     0xc, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     -1, d1
     call    func_484F883C_entry, [d2], 4
@@ -16229,14 +16229,14 @@ loc_484E9A23:
     mov     d0, (0x10, sp)
     mov     0x16, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     jmp     loc_484E9C64
 loc_484E9A53:
     mov     0x25, d0
     mov     sp, a0
     add     0x1c, a0
     mov     0xc, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     -1, d1
     call    func_484F883C_entry, [d2], 4
@@ -16245,14 +16245,14 @@ loc_484E9A53:
     mov     d0, (0x10, sp)
     mov     0x25, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     jmp     loc_484E9C64
 loc_484E9A83:
     mov     0x28, d0
     mov     sp, a0
     add     0x1c, a0
     mov     0xc, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     -1, d1
     call    func_484F883C_entry, [d2], 4
@@ -16261,7 +16261,7 @@ loc_484E9A83:
     mov     d0, (0x10, sp)
     mov     0x28, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     jmp     loc_484E9C64
 loc_484E9AB3:
     extbu   d1
@@ -16281,7 +16281,7 @@ loc_484E9ACA:
     mov     sp, a0
     add     0x1c, a0
     mov     0x30, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     -1, d1
     call    func_484F883C_entry, [d2], 4
@@ -16290,14 +16290,14 @@ loc_484E9ACA:
     mov     d0, (0x10, sp)
     mov     0x13, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     jmp     loc_484E9C64
 loc_484E9AFA:
     mov     0x16, d0
     mov     sp, a0
     add     0x1c, a0
     mov     0x30, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     -1, d1
     call    func_484F883C_entry, [d2], 4
@@ -16306,14 +16306,14 @@ loc_484E9AFA:
     mov     d0, (0x10, sp)
     mov     0x16, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     jmp     loc_484E9C64
 loc_484E9B2A:
     mov     0x25, d0
     mov     sp, a0
     add     0x1c, a0
     mov     0x30, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     -1, d1
     call    func_484F883C_entry, [d2], 4
@@ -16322,14 +16322,14 @@ loc_484E9B2A:
     mov     d0, (0x10, sp)
     mov     0x25, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     jmp     loc_484E9C64
 loc_484E9B5A:
     mov     0x28, d0
     mov     sp, a0
     add     0x1c, a0
     mov     0x30, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     -1, d1
     call    func_484F883C_entry, [d2], 4
@@ -16338,7 +16338,7 @@ loc_484E9B5A:
     mov     d0, (0x10, sp)
     mov     0x28, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     jmp     loc_484E9C64
 loc_484E9B8A:
     extbu   d1
@@ -16358,7 +16358,7 @@ loc_484E9BA1:
     mov     sp, a0
     add     0x1c, a0
     mov     0xc0, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     -1, d1
     call    func_484F883C_entry, [d2], 4
@@ -16367,14 +16367,14 @@ loc_484E9BA1:
     mov     d0, (0x10, sp)
     mov     0x13, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     jmp     loc_484E9C64
 loc_484E9BD3:
     mov     0x16, d0
     mov     sp, a0
     add     0x1c, a0
     mov     0xc0, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     -1, d1
     call    func_484F883C_entry, [d2], 4
@@ -16383,14 +16383,14 @@ loc_484E9BD3:
     mov     d0, (0x10, sp)
     mov     0x16, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     bra     loc_484E9C64
 loc_484E9C04:
     mov     0x25, d0
     mov     sp, a0
     add     0x1c, a0
     mov     0xc0, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     -1, d1
     call    func_484F883C_entry, [d2], 4
@@ -16399,14 +16399,14 @@ loc_484E9C04:
     mov     d0, (0x10, sp)
     mov     0x25, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     bra     loc_484E9C64
 loc_484E9C35:
     mov     0x28, d0
     mov     sp, a0
     add     0x1c, a0
     mov     0xc0, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     -1, d1
     call    func_484F883C_entry, [d2], 4
@@ -16415,7 +16415,7 @@ loc_484E9C35:
     mov     d0, (0x10, sp)
     mov     0x28, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
 loc_484E9C64:
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
@@ -16495,40 +16495,40 @@ loc_484E9D0B:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a3, a0
-    call    func_484F886D_entry, 0, 0x10
+    call    SoundEditCtrlDestText_entry, 0, 0x10
     jmp     loc_484EA315
 loc_484E9D27:
     mov     0x17, d0
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a3, a0
-    call    func_484F886D_entry, 0, 0x10
+    call    SoundEditCtrlDestText_entry, 0, 0x10
     jmp     loc_484EA315
 loc_484E9D43:
     mov     0x26, d0
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a3, a0
-    call    func_484F886D_entry, 0, 0x10
+    call    SoundEditCtrlDestText_entry, 0, 0x10
     jmp     loc_484EA315
 loc_484E9D5F:
     mov     0x29, d0
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a3, a0
-    call    func_484F886D_entry, 0, 0x10
+    call    SoundEditCtrlDestText_entry, 0, 0x10
     jmp     loc_484EA315
 loc_484E9D7B:
     extbu   d0
@@ -16548,7 +16548,7 @@ loc_484E9D8F:
     mov     Str_3d_82, a1
     clr     d1
     mov     a3, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484EA315
 loc_484E9DA7:
     mov     0x7f, d0
@@ -16557,7 +16557,7 @@ loc_484E9DA7:
     mov     Str_3d_43, a1
     clr     d1
     mov     a3, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484EA315
 loc_484E9DBF:
     mov     0x7f, d0
@@ -16566,7 +16566,7 @@ loc_484E9DBF:
     mov     Str_3d_42, a1
     clr     d1
     mov     a3, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484EA315
 loc_484E9DD7:
     mov     0x7f, d0
@@ -16575,7 +16575,7 @@ loc_484E9DD7:
     mov     Str_3d_41, a1
     clr     d1
     mov     a3, a0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484EA315
 loc_484E9DEF:
     extbu   d0
@@ -16598,7 +16598,7 @@ loc_484E9E09:
     mov     0x14, d0
     mov     a2, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     call    func_484F8B69, 0, 0
     extbu   d0
@@ -16607,10 +16607,10 @@ loc_484E9E09:
     mov     0x13, d0
     mov     3, d1
     mov     a2, a0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a3, a0
-    call    func_484F8B87_entry, 0, 0x10
+    call    SoundEditCtrlSwitchText_entry, 0, 0x10
     jmp     loc_484EA315
 loc_484E9E41:
     mov     a3, (8, sp)
@@ -16624,7 +16624,7 @@ loc_484E9E55:
     mov     0x17, d0
     mov     a2, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     call    func_484F8B69, 0, 0
     extbu   d0
@@ -16633,10 +16633,10 @@ loc_484E9E55:
     mov     0x16, d0
     mov     3, d1
     mov     a2, a0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a3, a0
-    call    func_484F8B87_entry, 0, 0x10
+    call    SoundEditCtrlSwitchText_entry, 0, 0x10
     jmp     loc_484EA315
 loc_484E9E8D:
     mov     a3, (8, sp)
@@ -16650,7 +16650,7 @@ loc_484E9EA1:
     mov     0x26, d0
     mov     a2, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     call    func_484F8B69, 0, 0
     extbu   d0
@@ -16659,10 +16659,10 @@ loc_484E9EA1:
     mov     0x25, d0
     mov     3, d1
     mov     a2, a0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a3, a0
-    call    func_484F8B87_entry, 0, 0x10
+    call    SoundEditCtrlSwitchText_entry, 0, 0x10
     jmp     loc_484EA315
 loc_484E9ED9:
     mov     a3, (8, sp)
@@ -16676,7 +16676,7 @@ loc_484E9EED:
     mov     0x29, d0
     mov     a2, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     call    func_484F8B69, 0, 0
     extbu   d0
@@ -16685,10 +16685,10 @@ loc_484E9EED:
     mov     0x28, d0
     mov     3, d1
     mov     a2, a0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a3, a0
-    call    func_484F8B87_entry, 0, 0x10
+    call    SoundEditCtrlSwitchText_entry, 0, 0x10
     jmp     loc_484EA315
 loc_484E9F25:
     mov     a3, (8, sp)
@@ -16717,7 +16717,7 @@ loc_484E9F53:
     mov     0x14, d0
     mov     a2, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     call    func_484F8B69, 0, 0
     extbu   d0
@@ -16726,10 +16726,10 @@ loc_484E9F53:
     mov     0x13, d0
     mov     0xc, d1
     mov     a2, a0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a3, a0
-    call    func_484F8B87_entry, 0, 0x10
+    call    SoundEditCtrlSwitchText_entry, 0, 0x10
     jmp     loc_484EA315
 loc_484E9F8B:
     mov     a3, (8, sp)
@@ -16743,7 +16743,7 @@ loc_484E9F9F:
     mov     0x17, d0
     mov     a2, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     call    func_484F8B69, 0, 0
     extbu   d0
@@ -16752,10 +16752,10 @@ loc_484E9F9F:
     mov     0x16, d0
     mov     0xc, d1
     mov     a2, a0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a3, a0
-    call    func_484F8B87_entry, 0, 0x10
+    call    SoundEditCtrlSwitchText_entry, 0, 0x10
     jmp     loc_484EA315
 loc_484E9FD7:
     mov     a3, (8, sp)
@@ -16769,7 +16769,7 @@ loc_484E9FEB:
     mov     0x26, d0
     mov     a2, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     call    func_484F8B69, 0, 0
     extbu   d0
@@ -16778,10 +16778,10 @@ loc_484E9FEB:
     mov     0x25, d0
     mov     0xc, d1
     mov     a2, a0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a3, a0
-    call    func_484F8B87_entry, 0, 0x10
+    call    SoundEditCtrlSwitchText_entry, 0, 0x10
     jmp     loc_484EA315
 loc_484EA023:
     mov     a3, (8, sp)
@@ -16795,7 +16795,7 @@ loc_484EA037:
     mov     0x29, d0
     mov     a2, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     call    func_484F8B69, 0, 0
     extbu   d0
@@ -16804,10 +16804,10 @@ loc_484EA037:
     mov     0x28, d0
     mov     0xc, d1
     mov     a2, a0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a3, a0
-    call    func_484F8B87_entry, 0, 0x10
+    call    SoundEditCtrlSwitchText_entry, 0, 0x10
     jmp     loc_484EA315
 loc_484EA06F:
     mov     a3, (8, sp)
@@ -16836,7 +16836,7 @@ loc_484EA09D:
     mov     0x14, d0
     mov     a2, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     call    func_484F8B69, 0, 0
     extbu   d0
@@ -16845,10 +16845,10 @@ loc_484EA09D:
     mov     0x13, d0
     mov     0x30, d1
     mov     a2, a0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a3, a0
-    call    func_484F8B87_entry, 0, 0x10
+    call    SoundEditCtrlSwitchText_entry, 0, 0x10
     jmp     loc_484EA315
 loc_484EA0D5:
     mov     a3, (8, sp)
@@ -16862,7 +16862,7 @@ loc_484EA0E9:
     mov     0x17, d0
     mov     a2, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     call    func_484F8B69, 0, 0
     extbu   d0
@@ -16871,10 +16871,10 @@ loc_484EA0E9:
     mov     0x16, d0
     mov     0x30, d1
     mov     a2, a0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a3, a0
-    call    func_484F8B87_entry, 0, 0x10
+    call    SoundEditCtrlSwitchText_entry, 0, 0x10
     jmp     loc_484EA315
 loc_484EA121:
     mov     a3, (8, sp)
@@ -16888,7 +16888,7 @@ loc_484EA135:
     mov     0x26, d0
     mov     a2, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     call    func_484F8B69, 0, 0
     extbu   d0
@@ -16897,10 +16897,10 @@ loc_484EA135:
     mov     0x25, d0
     mov     0x30, d1
     mov     a2, a0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a3, a0
-    call    func_484F8B87_entry, 0, 0x10
+    call    SoundEditCtrlSwitchText_entry, 0, 0x10
     jmp     loc_484EA315
 loc_484EA16D:
     mov     a3, (8, sp)
@@ -16914,7 +16914,7 @@ loc_484EA181:
     mov     0x29, d0
     mov     a2, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     call    func_484F8B69, 0, 0
     extbu   d0
@@ -16923,10 +16923,10 @@ loc_484EA181:
     mov     0x28, d0
     mov     0x30, d1
     mov     a2, a0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a3, a0
-    call    func_484F8B87_entry, 0, 0x10
+    call    SoundEditCtrlSwitchText_entry, 0, 0x10
     jmp     loc_484EA315
 loc_484EA1B9:
     mov     a3, (8, sp)
@@ -16955,7 +16955,7 @@ loc_484EA1E7:
     mov     0x14, d0
     mov     a2, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     call    func_484F8B69, 0, 0
     extbu   d0
@@ -16964,10 +16964,10 @@ loc_484EA1E7:
     mov     0x13, d0
     mov     0xc0, d1
     mov     a2, a0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a3, a0
-    call    func_484F8B87_entry, 0, 0x10
+    call    SoundEditCtrlSwitchText_entry, 0, 0x10
     jmp     loc_484EA315
 loc_484EA220:
     mov     a3, (8, sp)
@@ -16981,7 +16981,7 @@ loc_484EA234:
     mov     0x17, d0
     mov     a2, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     call    func_484F8B69, 0, 0
     extbu   d0
@@ -16990,10 +16990,10 @@ loc_484EA234:
     mov     0x16, d0
     mov     0xc0, d1
     mov     a2, a0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a3, a0
-    call    func_484F8B87_entry, 0, 0x10
+    call    SoundEditCtrlSwitchText_entry, 0, 0x10
     jmp     loc_484EA315
 loc_484EA26D:
     mov     a3, (8, sp)
@@ -17007,7 +17007,7 @@ loc_484EA281:
     mov     0x26, d0
     mov     a2, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     call    func_484F8B69, 0, 0
     extbu   d0
@@ -17016,10 +17016,10 @@ loc_484EA281:
     mov     0x25, d0
     mov     0xc0, d1
     mov     a2, a0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a3, a0
-    call    func_484F8B87_entry, 0, 0x10
+    call    SoundEditCtrlSwitchText_entry, 0, 0x10
     bra     loc_484EA315
 loc_484EA2B9:
     mov     a3, (8, sp)
@@ -17033,7 +17033,7 @@ loc_484EA2CC:
     mov     0x29, d0
     mov     a2, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     call    func_484F8B69, 0, 0
     extbu   d0
@@ -17042,10 +17042,10 @@ loc_484EA2CC:
     mov     0x28, d0
     mov     0xc0, d1
     mov     a2, a0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a3, a0
-    call    func_484F8B87_entry, 0, 0x10
+    call    SoundEditCtrlSwitchText_entry, 0, 0x10
     bra     loc_484EA315
 loc_484EA304:
     mov     a3, (8, sp)
@@ -17468,7 +17468,7 @@ loc_484EA74E:
     add     0x1c, a0
     mov     0x13, d0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     1, d1
     call    func_484F869F_entry, [d2], 4
@@ -17481,14 +17481,14 @@ loc_484EA775:
     mov     0x7f, d0
     mov     d0, (0x10, sp)
     mov     0x13, d0
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     jmp     loc_484EA8CC
 loc_484EA785:
     mov     sp, a0
     add     0x1c, a0
     mov     0x16, d0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     1, d1
     call    func_484F869F_entry, [d2], 4
@@ -17501,7 +17501,7 @@ loc_484EA7AC:
     mov     0x7f, d0
     mov     d0, (0x10, sp)
     mov     0x16, d0
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     jmp     loc_484EA8CC
 loc_484EA7BC:
     extbu   d1
@@ -17519,7 +17519,7 @@ loc_484EA7C8:
     mov     d0, (0x18, sp)
     mov     0x14, d0
     mov     1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484EA8CC
 loc_484EA7E1:
     mov     0x7f, d0
@@ -17530,7 +17530,7 @@ loc_484EA7E1:
     mov     d0, (0x18, sp)
     mov     0x17, d0
     mov     1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484EA8CC
 loc_484EA7FA:
     extbu   d1
@@ -17544,7 +17544,7 @@ loc_484EA806:
     mov     sp, a0
     add     0x1c, a0
     mov     3, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     1, d1
     call    func_484F883C_entry, [d2], 4
@@ -17553,14 +17553,14 @@ loc_484EA806:
     mov     d0, (0x10, sp)
     mov     0x12, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     jmp     loc_484EA8CC
 loc_484EA836:
     mov     0x15, d0
     mov     sp, a0
     add     0x1c, a0
     mov     3, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     1, d1
     call    func_484F883C_entry, [d2], 4
@@ -17569,7 +17569,7 @@ loc_484EA836:
     mov     d0, (0x10, sp)
     mov     0x15, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     bra     loc_484EA8CC
 loc_484EA865:
     extbu   d1
@@ -17583,7 +17583,7 @@ loc_484EA870:
     mov     sp, a0
     add     0x1c, a0
     mov     0xc, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     1, d1
     call    func_484F883C_entry, [d2], 4
@@ -17592,14 +17592,14 @@ loc_484EA870:
     mov     d0, (0x10, sp)
     mov     0x12, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     bra     loc_484EA8CC
 loc_484EA89F:
     mov     0x15, d0
     mov     sp, a0
     add     0x1c, a0
     mov     0xc, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     1, d1
     call    func_484F883C_entry, [d2], 4
@@ -17608,7 +17608,7 @@ loc_484EA89F:
     mov     d0, (0x10, sp)
     mov     0x15, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
 loc_484EA8CC:
     call    GetFocusObject_entry, 0, 0x10
     mov     d2, (0x10, sp)
@@ -17656,7 +17656,7 @@ loc_484EA932:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     -1, d1
     call    func_484F869F_entry, [d2], 4
@@ -17665,14 +17665,14 @@ loc_484EA932:
     mov     d0, (0x10, sp)
     mov     0x13, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     jmp     loc_484EAA9E
 loc_484EA962:
     mov     0x16, d0
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     -1, d1
     call    func_484F869F_entry, [d2], 4
@@ -17681,7 +17681,7 @@ loc_484EA962:
     mov     d0, (0x10, sp)
     mov     0x16, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     jmp     loc_484EAA9E
 loc_484EA992:
     extbu   d1
@@ -17698,7 +17698,7 @@ loc_484EA99E:
     mov     d0, (0x18, sp)
     mov     0x14, d0
     mov     -1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484EAA9E
 loc_484EA9B5:
     clr     d0
@@ -17708,7 +17708,7 @@ loc_484EA9B5:
     mov     d0, (0x18, sp)
     mov     0x17, d0
     mov     -1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484EAA9E
 loc_484EA9CC:
     extbu   d1
@@ -17722,7 +17722,7 @@ loc_484EA9D8:
     mov     sp, a0
     add     0x1c, a0
     mov     3, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     -1, d1
     call    func_484F883C_entry, [d2], 4
@@ -17731,14 +17731,14 @@ loc_484EA9D8:
     mov     d0, (0x10, sp)
     mov     0x12, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     jmp     loc_484EAA9E
 loc_484EAA08:
     mov     0x15, d0
     mov     sp, a0
     add     0x1c, a0
     mov     3, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     -1, d1
     call    func_484F883C_entry, [d2], 4
@@ -17747,7 +17747,7 @@ loc_484EAA08:
     mov     d0, (0x10, sp)
     mov     0x15, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     bra     loc_484EAA9E
 loc_484EAA37:
     extbu   d1
@@ -17761,7 +17761,7 @@ loc_484EAA42:
     mov     sp, a0
     add     0x1c, a0
     mov     0xc, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     -1, d1
     call    func_484F883C_entry, [d2], 4
@@ -17770,14 +17770,14 @@ loc_484EAA42:
     mov     d0, (0x10, sp)
     mov     0x12, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     bra     loc_484EAA9E
 loc_484EAA71:
     mov     0x15, d0
     mov     sp, a0
     add     0x1c, a0
     mov     0xc, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     -1, d1
     call    func_484F883C_entry, [d2], 4
@@ -17786,7 +17786,7 @@ loc_484EAA71:
     mov     d0, (0x10, sp)
     mov     0x15, d0
     movbu   (0x1c, sp), d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
 loc_484EAA9E:
     call    GetFocusObject_entry, 0, 0x10
     mov     d2, (0x10, sp)
@@ -17851,20 +17851,20 @@ loc_484EAB2A:
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a2, a0
-    call    func_484F886D_entry, 0, 0x10
+    call    SoundEditCtrlDestText_entry, 0, 0x10
     jmp     loc_484EAC1E
 loc_484EAB46:
     mov     0x16, d0
     mov     sp, a0
     add     0x1c, a0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a2, a0
-    call    func_484F886D_entry, 0, 0x10
+    call    SoundEditCtrlDestText_entry, 0, 0x10
     jmp     loc_484EAC1E
 loc_484EAB62:
     extbu   d0
@@ -17880,7 +17880,7 @@ loc_484EAB6E:
     mov     Str_3d_78, a1
     clr     d1
     mov     a2, a0
-    call    func_484F792D_entry, [d2,d3,a2,a3], 0x2c
+    call    DrumEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484EAC1E
 loc_484EAB86:
     mov     0x7f, d0
@@ -17889,7 +17889,7 @@ loc_484EAB86:
     mov     Str_3d_77, a1
     clr     d1
     mov     a2, a0
-    call    func_484F792D_entry, [d2,d3,a2,a3], 0x2c
+    call    DrumEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484EAC1E
 loc_484EAB9E:
     extbu   d0
@@ -17903,20 +17903,20 @@ loc_484EABA9:
     mov     sp, a0
     add     0x1c, a0
     mov     3, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a2, a0
-    call    func_484F8B87_entry, 0, 0x10
+    call    SoundEditCtrlSwitchText_entry, 0, 0x10
     bra     loc_484EAC1E
 loc_484EABC4:
     mov     0x15, d0
     mov     sp, a0
     add     0x1c, a0
     mov     3, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a2, a0
-    call    func_484F8B87_entry, 0, 0x10
+    call    SoundEditCtrlSwitchText_entry, 0, 0x10
     bra     loc_484EAC1E
 loc_484EABDF:
     extbu   d0
@@ -17930,20 +17930,20 @@ loc_484EABEA:
     mov     sp, a0
     add     0x1c, a0
     mov     0xc, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a2, a0
-    call    func_484F8B87_entry, 0, 0x10
+    call    SoundEditCtrlSwitchText_entry, 0, 0x10
     bra     loc_484EAC1E
 loc_484EAC05:
     mov     0x15, d0
     mov     sp, a0
     add     0x1c, a0
     mov     0xc, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     mov     a2, a0
-    call    func_484F8B87_entry, 0, 0x10
+    call    SoundEditCtrlSwitchText_entry, 0, 0x10
 loc_484EAC1E:
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
@@ -18372,7 +18372,7 @@ loc_484EB089:
     add     d2, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     sp, a0
     mov     a0, d0
     add     0x35, d0
@@ -18388,7 +18388,7 @@ loc_484EB089:
     add     6, d0
     exthu   d0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (func_484D807B_Var_3), d0
     mov     sp, a3
     add     0x36, a3
@@ -18404,7 +18404,7 @@ loc_484EB089:
     mov     a1, d0
     exthu   d0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x36, sp), d0
     mov     sp, a2
     mov     d0, (0x10, sp)
@@ -18450,7 +18450,7 @@ loc_484EB144:
     add     d2, d0
     exthu   d0
     movbu   (0x34, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xff, d0
     mov     d0, (0x10, sp)
     movbu   (func_484D807B_Var_3), d0
@@ -18463,7 +18463,7 @@ loc_484EB144:
     add     6, d0
     exthu   d0
     movbu   (0x35, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xff, d0
     mov     d0, (0x10, sp)
     movbu   (func_484D807B_Var_3), d0
@@ -18478,7 +18478,7 @@ loc_484EB144:
     mov     a0, d0
     exthu   d0
     movbu   (0x36, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     call    GetFocusObject_entry, 0, 0x10
     movhu   (0x2e, sp), d3
     movhu   (0x2c, sp), d2
@@ -18526,7 +18526,7 @@ loc_484EB1EC:
     mov     a1, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (func_484D807B_Var_3), d0
     mov     0x23, d1
     nop
@@ -18544,7 +18544,7 @@ loc_484EB1EC:
     add     d0, a1
     mov     a1, d0
     exthu   d0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (func_484D807B_Var_3), d0
     mov     0x23, d1
     nop
@@ -18559,7 +18559,7 @@ loc_484EB1EC:
     mov     0xff, d1
     add     0x36, a3
     mov     a3, a0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x36, sp), d0
     mov     sp, a2
     mov     d0, (0x10, sp)
@@ -18602,7 +18602,7 @@ loc_484EB2AD:
     add     d1, d0
     exthu   d0
     movbu   (0x34, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xff, d0
     mov     d0, (0x10, sp)
     movbu   (func_484D807B_Var_3), d0
@@ -18616,7 +18616,7 @@ loc_484EB2AD:
     add     6, d0
     exthu   d0
     movbu   (0x35, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xff, d0
     mov     d0, (0x10, sp)
     movbu   (func_484D807B_Var_3), d0
@@ -18632,7 +18632,7 @@ loc_484EB2AD:
     add     d3, a0
     mov     a0, d0
     exthu   d0
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     call    GetFocusObject_entry, 0, 0x10
     movhu   (0x2e, sp), d3
     movhu   (0x2c, sp), d1
@@ -18678,7 +18678,7 @@ loc_484EB35C:
     exthu   d2
     mov     1, d1
     mov     d2, d0
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
     mov     MT_RequestGridDraw, d1
@@ -18707,7 +18707,7 @@ loc_484EB3A5:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
     mov     MT_RequestGridDraw, d1
@@ -18734,7 +18734,7 @@ loc_484EB401:
     add     d3, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x39, sp), d0
     cmp     0x7f, d0
     bge     loc_484EB44A
@@ -18754,7 +18754,7 @@ loc_484EB401:
     add     d3, d0
     exthu   d0
     movbu   (0x39, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
 loc_484EB44A:
     movbu   (0x39, sp), d0
     inc     d3
@@ -18843,7 +18843,7 @@ loc_484EB4DC:
     add     d2, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     sp, a0
     mov     a0, d0
     add     0x35, d0
@@ -18859,7 +18859,7 @@ loc_484EB4DC:
     add     6, d0
     exthu   d0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (func_484D807B_Var_3), d0
     mov     sp, a3
     add     0x36, a3
@@ -18873,7 +18873,7 @@ loc_484EB4DC:
     add     7, d0
     exthu   d0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x36, sp), d0
     mov     sp, a2
     mov     d0, (0x10, sp)
@@ -18919,7 +18919,7 @@ loc_484EB594:
     add     d2, d0
     exthu   d0
     movbu   (0x34, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xff, d0
     mov     d0, (0x10, sp)
     movbu   (func_484D807B_Var_3), d0
@@ -18934,7 +18934,7 @@ loc_484EB594:
     add     d0, a0
     mov     a0, d0
     exthu   d0
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xff, d0
     mov     d0, (0x10, sp)
     movbu   (func_484D807B_Var_3), d0
@@ -18948,7 +18948,7 @@ loc_484EB594:
     add     7, d0
     exthu   d0
     movbu   (0x36, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     call    GetFocusObject_entry, 0, 0x10
     movhu   (0x2e, sp), d3
     movhu   (0x2c, sp), d2
@@ -18992,7 +18992,7 @@ loc_484EB63D:
     add     d2, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     sp, a0
     mov     a0, d0
     add     0x35, d0
@@ -19008,7 +19008,7 @@ loc_484EB63D:
     add     6, d0
     exthu   d0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (func_484D807B_Var_3), d0
     mov     sp, a3
     add     0x36, a3
@@ -19024,7 +19024,7 @@ loc_484EB63D:
     exthu   d0
     mov     a3, a0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x36, sp), d0
     mov     sp, a2
     mov     d0, (0x10, sp)
@@ -19066,7 +19066,7 @@ loc_484EB6F5:
     add     d2, d0
     exthu   d0
     movbu   (0x34, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xff, d0
     mov     d0, (0x10, sp)
     movbu   (func_484D807B_Var_3), d0
@@ -19079,7 +19079,7 @@ loc_484EB6F5:
     add     6, d0
     exthu   d0
     movbu   (0x35, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xff, d0
     mov     d0, (0x10, sp)
     movbu   (func_484D807B_Var_3), d0
@@ -19094,7 +19094,7 @@ loc_484EB6F5:
     mov     a0, d0
     exthu   d0
     movbu   (0x36, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     call    GetFocusObject_entry, 0, 0x10
     movhu   (0x2e, sp), d3
     movhu   (0x2c, sp), d1
@@ -19141,7 +19141,7 @@ loc_484EB79E:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
     mov     MT_RequestGridDraw, d1
@@ -19170,7 +19170,7 @@ loc_484EB7EA:
     exthu   d2
     mov     -1, d1
     mov     d2, d0
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
     mov     MT_RequestGridDraw, d1
@@ -19198,7 +19198,7 @@ loc_484EB833:
     mov     sp, a0
     add     0x38, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
 loc_484EB863:
     cmp     5, a3
     blt     loc_484EB86A
@@ -19227,7 +19227,7 @@ loc_484EB882:
     add     d2, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x39, sp), d0
     cmp     d2, d0
     ble     loc_484EB8C9
@@ -19247,7 +19247,7 @@ loc_484EB882:
     add     d2, d0
     exthu   d0
     movbu   (0x39, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
 loc_484EB8C9:
     movbu   (0x39, sp), d0
     add     -1, d2
@@ -19338,7 +19338,7 @@ loc_484EB955:
     add     d2, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (func_484D807B_Var_3), d0
     mov     sp, a0
     add     0x35, a0
@@ -19351,7 +19351,7 @@ loc_484EB955:
     add     6, d0
     exthu   d0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (func_484D807B_Var_3), d0
     mov     0x23, d1
     mov     7, a0
@@ -19366,7 +19366,7 @@ loc_484EB955:
     mov     sp, a0
     add     0x36, a0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x36, sp), d0
     mov     sp, a0
     mov     d0, (0x10, sp)
@@ -19405,7 +19405,7 @@ loc_484EB9E6:
     mov     a1, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (func_484D807B_Var_3), d0
     mov     0x23, d1
     nop
@@ -19420,7 +19420,7 @@ loc_484EB9E6:
     mov     sp, a0
     add     0x35, a0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (func_484D807B_Var_3), d0
     mov     sp, a0
     add     0x36, a0
@@ -19434,7 +19434,7 @@ loc_484EB9E6:
     add     7, d0
     exthu   d0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x36, sp), d0
     mov     sp, a0
     mov     d0, (0x10, sp)
@@ -19471,7 +19471,7 @@ loc_484EBA7B:
     mov     1, d1
     mov     a2, a0
     mov     d2, d0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484EBC04
 loc_484EBAAC:
     extb    d0
@@ -19493,7 +19493,7 @@ loc_484EBAAC:
     mov     1, d1
     mov     a2, a0
     mov     d2, d0
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484EBC04
 loc_484EBADD:
     mov     d0, d2
@@ -19525,7 +19525,7 @@ loc_484EBAFD:
     add     d2, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     a2, (8, sp)
     mov     Str_0_3d_2, d0
     mov     d0, (0xc, sp)
@@ -19549,7 +19549,7 @@ loc_484EBB34:
     mov     a1, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x38, sp), d0
     cmp     0x7f, d0
     bne     loc_484EBB78
@@ -19571,7 +19571,7 @@ loc_484EBB78:
     mov     d3, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     a2, (8, sp)
     mov     Str_3d_3d_2, d0
     mov     d0, (0xc, sp)
@@ -19597,7 +19597,7 @@ loc_484EBBB2:
     mov     sp, a0
     add     0x38, a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x38, sp), d0
     cmp     0x7f, d0
     bne     loc_484EBBF0
@@ -19731,7 +19731,7 @@ loc_484EBCD4:
     mov     sp, a3
     add     0x42, a3
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     a2, a0
     inc     a0
     mov     a0, d1
@@ -19755,7 +19755,7 @@ loc_484EBCD4:
     mov     (0x20, sp), a0
     mov     d1, d0
     mov     0xff, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     a3, a0
     mov     2, d1
     add     a2, d1
@@ -19766,7 +19766,7 @@ loc_484EBCD4:
     exthu   d2
     mov     d2, d0
     mov     0xff, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x42, sp), d0
     mov     sp, a2
     mov     d0, (0x10, sp)
@@ -19804,17 +19804,17 @@ loc_484EBDA7:
     mov     d0, (0x10, sp)
     mov     (0x2c, sp), d0
     movbu   (0x40, sp), d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xff, d0
     mov     d0, (0x10, sp)
     mov     (0x24, sp), d0
     movbu   (0x41, sp), d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xff, d0
     mov     d0, (0x10, sp)
     movbu   (0x42, sp), d1
     mov     d2, d0
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     call    GetFocusObject_entry, 0, 0x10
     movhu   (0x38, sp), d3
     movhu   (0x3a, sp), d1
@@ -19871,7 +19871,7 @@ loc_484EBE1D:
     mov     (0x2c, sp), d0
     mov     (0x28, sp), a0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     a2, a0
     inc     a0
     mov     a0, d1
@@ -19894,7 +19894,7 @@ loc_484EBE1D:
     add     2, a2
     mov     sp, a3
     mov     0xff, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     0x8e, d0
     nop
     nop
@@ -19908,7 +19908,7 @@ loc_484EBE1D:
     add     0x42, a3
     mov     a3, a0
     mov     0xff, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x42, sp), d0
     mov     sp, a2
     mov     d0, (0x10, sp)
@@ -19942,17 +19942,17 @@ loc_484EBEED:
     mov     d0, (0x10, sp)
     mov     (0x2c, sp), d0
     movbu   (0x40, sp), d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xff, d0
     mov     d0, (0x10, sp)
     mov     (0x24, sp), d0
     movbu   (0x41, sp), d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xff, d0
     mov     d0, (0x10, sp)
     movbu   (0x42, sp), d1
     mov     d2, d0
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     call    GetFocusObject_entry, 0, 0x10
     movhu   (0x38, sp), d3
     movhu   (0x3a, sp), d1
@@ -20008,7 +20008,7 @@ loc_484EBF64:
     mov     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
     mov     MT_RequestGridDraw, d1
@@ -20047,7 +20047,7 @@ loc_484EBFC5:
     mov     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
     mov     MT_RequestGridDraw, d1
@@ -20083,7 +20083,7 @@ loc_484EC035:
     exthu   d2
     mov     d2, d0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x45, sp), d0
     cmp     0x7f, d0
     bge     loc_484EC084
@@ -20096,7 +20096,7 @@ loc_484EC035:
     mov     d0, (0x10, sp)
     movbu   (0x45, sp), d1
     mov     d2, d0
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
 loc_484EC084:
     movbu   (0x45, sp), d0
     inc     d3
@@ -20198,7 +20198,7 @@ loc_484EC11A:
     mov     d0, (0x28, sp)
     mov     (0x2c, sp), d0
     mov     (0x28, sp), a0
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     d2, a0
     inc     a0
     mov     a0, d1
@@ -20225,7 +20225,7 @@ loc_484EC11A:
     add     2, d2
     mov     sp, a3
     mov     0xff, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     a2, d0
     mov     d2, d1
     exthu   d1
@@ -20237,7 +20237,7 @@ loc_484EC11A:
     add     0x42, a3
     mov     a3, a0
     mov     0xff, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x42, sp), d0
     mov     sp, a2
     mov     d0, (0x10, sp)
@@ -20275,17 +20275,17 @@ loc_484EC1F0:
     mov     d0, (0x10, sp)
     mov     (0x2c, sp), d0
     movbu   (0x40, sp), d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xff, d0
     mov     d0, (0x10, sp)
     mov     (0x24, sp), d0
     movbu   (0x41, sp), d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xff, d0
     mov     d0, (0x10, sp)
     movbu   (0x42, sp), d1
     mov     d2, d0
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     call    GetFocusObject_entry, 0, 0x10
     movhu   (0x3a, sp), d3
     movhu   (0x38, sp), d1
@@ -20345,7 +20345,7 @@ loc_484EC266:
     mov     sp, a3
     add     0x42, a3
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     d2, d0
     inc     d0
     mov     d0, d1
@@ -20367,7 +20367,7 @@ loc_484EC266:
     mov     (0x24, sp), d0
     mov     (0x20, sp), a0
     mov     0xff, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     a3, a0
     mov     0x8e, d0
     nop
@@ -20381,7 +20381,7 @@ loc_484EC266:
     exthu   d2
     mov     d2, d0
     mov     0xff, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x42, sp), d0
     mov     sp, a2
     mov     d0, (0x10, sp)
@@ -20415,17 +20415,17 @@ loc_484EC337:
     mov     d0, (0x10, sp)
     mov     (0x2c, sp), d0
     movbu   (0x40, sp), d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xff, d0
     mov     d0, (0x10, sp)
     mov     (0x24, sp), d0
     movbu   (0x41, sp), d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xff, d0
     mov     d0, (0x10, sp)
     movbu   (0x42, sp), d1
     mov     d2, d0
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     call    GetFocusObject_entry, 0, 0x10
     movhu   (0x3a, sp), d3
     movhu   (0x38, sp), d1
@@ -20480,7 +20480,7 @@ loc_484EC3AE:
     mov     d1, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, (0x10, sp)
     mov     MT_RequestGridDraw, d1
@@ -20516,7 +20516,7 @@ loc_484EC40C:
     add     d1, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, (0x10, sp)
     mov     MT_RequestGridDraw, d1
@@ -20552,7 +20552,7 @@ loc_484EC464:
     mov     sp, a0
     add     0x44, a0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
 loc_484EC4A2:
     cmp     5, a3
     blt     loc_484EC4A9
@@ -20592,7 +20592,7 @@ loc_484EC4BF:
     exthu   d3
     mov     d3, d0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x45, sp), d1
     cmp     d2, d1
     ble     loc_484EC50F
@@ -20605,7 +20605,7 @@ loc_484EC4BF:
     mov     d0, (0x10, sp)
     movbu   (0x45, sp), d1
     mov     d3, d0
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
 loc_484EC50F:
     movbu   (0x45, sp), d0
     add     -1, d2
@@ -20709,7 +20709,7 @@ loc_484EC5A0:
     add     d1, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     d2, a0
     inc     a0
     mov     a0, d1
@@ -20725,7 +20725,7 @@ loc_484EC5A0:
     mov     d1, d0
     exthu   d0
     mov     0xff, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     sp, a0
     add     0x42, a0
     mov     2, a1
@@ -20741,7 +20741,7 @@ loc_484EC5A0:
     exthu   d2
     mov     d2, d0
     mov     0xff, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x42, sp), d0
     mov     sp, a0
     mov     d0, (0x10, sp)
@@ -20789,7 +20789,7 @@ loc_484EC644:
     mov     d1, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     a2, a0
     inc     a0
     mov     a0, d1
@@ -20809,7 +20809,7 @@ loc_484EC644:
     exthu   d0
     add     0x41, a0
     mov     0xff, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     d3, d0
     mov     sp, a0
     add     0x42, a0
@@ -20820,7 +20820,7 @@ loc_484EC644:
     add     d1, d0
     exthu   d0
     mov     0xff, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x42, sp), d0
     mov     sp, a0
     mov     d0, (0x10, sp)
@@ -20867,7 +20867,7 @@ loc_484EC6E2:
     mov     Str_4d_5, a1
     mov     1, d1
     mov     a3, a0
-    call    func_484F792D_entry, [d2,d3,a2,a3], 0x2c
+    call    DrumEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484EC8EC
 loc_484EC729:
     extb    d1
@@ -20899,7 +20899,7 @@ loc_484EC729:
     mov     Str_4d_4, a1
     mov     1, d1
     mov     a3, a0
-    call    func_484F792D_entry, [d2,d3,a2,a3], 0x2c
+    call    DrumEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484EC8EC
 loc_484EC770:
     extb    d2
@@ -20941,7 +20941,7 @@ loc_484EC78F:
     add     d1, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     a3, (8, sp)
     mov     Str_0_3d, d0
     mov     d0, (0xc, sp)
@@ -20976,7 +20976,7 @@ loc_484EC7D9:
     mov     d1, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x44, sp), d0
     cmp     0x7f, d0
     bne     loc_484EC834
@@ -21008,7 +21008,7 @@ loc_484EC834:
     add     d1, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     a3, (8, sp)
     mov     Str_3d_3d, d0
     mov     d0, (0xc, sp)
@@ -21042,7 +21042,7 @@ loc_484EC885:
     add     d1, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x44, sp), d0
     cmp     0x7f, d0
     bne     loc_484EC8D8
@@ -21508,7 +21508,7 @@ loc_484ECDC1:
     exthu   d2
     mov     1, d1
     mov     d2, d0
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484ECE46
 loc_484ECDE4:
     movbu   (AcGridBoxScrlSeProc_Var), d1
@@ -21527,7 +21527,7 @@ loc_484ECDE4:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484ECE46
 loc_484ECE0C:
     movbu   (AcGridBoxScrlSeProc_Var), d1
@@ -21543,7 +21543,7 @@ loc_484ECE0C:
     mov     d2, d0
     exthu   d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     1, d0
     bne     loc_484ECE46
@@ -21556,7 +21556,7 @@ loc_484ECE0C:
     exthu   d2
     mov     1, d1
     mov     d2, d0
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484ECE46:
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, (0x10, sp)
@@ -21603,7 +21603,7 @@ loc_484ECEA6:
     mov     a0, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484ECF29
 loc_484ECECA:
     movbu   (AcGridBoxScrlSeProc_Var), d2
@@ -21622,7 +21622,7 @@ loc_484ECECA:
     exthu   d2
     mov     -1, d1
     mov     d2, d0
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484ECF29
 loc_484ECEF1:
     movbu   (AcGridBoxScrlSeProc_Var), d1
@@ -21638,7 +21638,7 @@ loc_484ECEF1:
     mov     sp, a0
     add     0x34, a0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     1, d0
     bne     loc_484ECF29
@@ -21650,7 +21650,7 @@ loc_484ECEF1:
     mov     d2, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F757F_entry, [d2,d3,a2], 0x2c
+    call    SoundEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484ECF29:
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, (0x10, sp)
@@ -21743,7 +21743,7 @@ loc_484ECFF0:
     exthu   d0
     mov     a3, a0
     clr     d1
-    call    func_484F78B9_entry, [d2,d3,a2,a3], 0x2c
+    call    SoundEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484EDB79
 loc_484ED016:
     movbu   (0x31, sp), d1
@@ -21758,7 +21758,7 @@ loc_484ED016:
     mov     sp, a0
     add     0x34, a0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     0, d0
     beq     loc_484ED040
@@ -21803,7 +21803,7 @@ loc_484ED085:
     exthu   d0
     mov     a2, a0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d1
     cmp     0, d1
     beq     loc_484ED0B0
@@ -21821,7 +21821,7 @@ loc_484ED0C4:
     mov     a2, a0
     mov     d2, d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     a3, (8, sp)
     mov     Str_3d_75, d0
     mov     d0, (0xc, sp)
@@ -21840,7 +21840,7 @@ loc_484ED0EC:
     movbu   d0, (0x30, sp)
     mov     0xa6, d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     sp, a0
     mov     a0, d0
     add     0x35, d0
@@ -21848,7 +21848,7 @@ loc_484ED0EC:
     mov     (0x28, sp), a0
     mov     0xa6, d0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     1, d0
     bne     loc_484ED12C
@@ -21870,11 +21870,11 @@ loc_484ED136:
     mov     a2, a0
     mov     0x120, d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     (0x28, sp), a0
     mov     0x120, d0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     1, d0
     bne     loc_484ED168
@@ -21896,11 +21896,11 @@ loc_484ED172:
     mov     a2, a0
     mov     0x19a, d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     (0x28, sp), a0
     mov     0x19a, d0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     1, d0
     bne     loc_484ED1A4
@@ -21922,11 +21922,11 @@ loc_484ED1AE:
     mov     a2, a0
     mov     0x214, d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     (0x28, sp), a0
     mov     0x214, d0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     1, d0
     bne     loc_484ED1E0
@@ -21948,11 +21948,11 @@ loc_484ED1EA:
     mov     a2, a0
     mov     0xaa, d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     (0x28, sp), a0
     mov     0xaa, d0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     1, d0
     bne     loc_484ED21C
@@ -21974,11 +21974,11 @@ loc_484ED226:
     mov     a2, a0
     mov     0x124, d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     (0x28, sp), a0
     mov     0x124, d0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     1, d0
     bne     loc_484ED258
@@ -22000,11 +22000,11 @@ loc_484ED262:
     mov     a2, a0
     mov     0x19e, d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     (0x28, sp), a0
     mov     0x19e, d0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     1, d0
     bne     loc_484ED294
@@ -22026,11 +22026,11 @@ loc_484ED29E:
     mov     a2, a0
     mov     0x218, d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     (0x28, sp), a0
     mov     0x218, d0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     1, d0
     bne     loc_484ED2D0
@@ -22052,11 +22052,11 @@ loc_484ED2DA:
     mov     a2, a0
     mov     0xae, d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     (0x28, sp), a0
     mov     0xae, d0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     1, d0
     bne     loc_484ED30C
@@ -22078,11 +22078,11 @@ loc_484ED316:
     mov     a2, a0
     mov     0x128, d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     (0x28, sp), a0
     mov     0x128, d0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     1, d0
     bne     loc_484ED348
@@ -22104,11 +22104,11 @@ loc_484ED352:
     mov     a2, a0
     mov     0x1a2, d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     (0x28, sp), a0
     mov     0x1a2, d0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     1, d0
     bne     loc_484ED384
@@ -22130,11 +22130,11 @@ loc_484ED38E:
     mov     a2, a0
     mov     0x21c, d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     (0x28, sp), a0
     mov     0x21c, d0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     1, d0
     bne     loc_484ED3C0
@@ -22156,11 +22156,11 @@ loc_484ED3CA:
     mov     a2, a0
     mov     0xb2, d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     (0x28, sp), a0
     mov     0xb2, d0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     1, d0
     bne     loc_484ED3FC
@@ -22182,11 +22182,11 @@ loc_484ED406:
     mov     a2, a0
     mov     0x12c, d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     (0x28, sp), a0
     mov     0x12c, d0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     1, d0
     bne     loc_484ED438
@@ -22208,11 +22208,11 @@ loc_484ED442:
     mov     a2, a0
     mov     0x1a6, d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     (0x28, sp), a0
     mov     0x1a6, d0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     1, d0
     bne     loc_484ED474
@@ -22234,11 +22234,11 @@ loc_484ED47E:
     mov     a2, a0
     mov     0x220, d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     (0x28, sp), a0
     mov     0x220, d0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     1, d0
     bne     loc_484ED4B0
@@ -22280,12 +22280,12 @@ loc_484ED4F0:
     add     0x34, a0
     mov     0xa6, d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     sp, a0
     add     0x35, a0
     mov     0xa6, d0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     1, d0
     bne     loc_484ED525
@@ -22321,12 +22321,12 @@ loc_484ED559:
     add     0x34, a0
     mov     0x120, d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     sp, a0
     add     0x35, a0
     mov     0x120, d0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     1, d0
     bne     loc_484ED58E
@@ -22362,12 +22362,12 @@ loc_484ED5C2:
     add     0x34, a0
     mov     0x19a, d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     sp, a0
     add     0x35, a0
     mov     0x19a, d0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     1, d0
     bne     loc_484ED5F7
@@ -22403,12 +22403,12 @@ loc_484ED62B:
     add     0x34, a0
     mov     0x214, d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     sp, a0
     add     0x35, a0
     mov     0x214, d0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     1, d0
     bne     loc_484ED660
@@ -22444,12 +22444,12 @@ loc_484ED694:
     add     0x34, a0
     mov     0xaa, d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     sp, a0
     add     0x35, a0
     mov     0xaa, d0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     1, d0
     bne     loc_484ED6C9
@@ -22485,12 +22485,12 @@ loc_484ED6FD:
     add     0x34, a0
     mov     0x124, d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     sp, a0
     add     0x35, a0
     mov     0x124, d0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     1, d0
     bne     loc_484ED732
@@ -22526,12 +22526,12 @@ loc_484ED766:
     add     0x34, a0
     mov     0x19e, d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     sp, a0
     add     0x35, a0
     mov     0x19e, d0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     1, d0
     bne     loc_484ED79B
@@ -22567,12 +22567,12 @@ loc_484ED7CF:
     add     0x34, a0
     mov     0x218, d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     sp, a0
     add     0x35, a0
     mov     0x218, d0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     1, d0
     bne     loc_484ED804
@@ -22608,12 +22608,12 @@ loc_484ED838:
     add     0x34, a0
     mov     0xae, d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     sp, a0
     add     0x35, a0
     mov     0xae, d0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     1, d0
     bne     loc_484ED86D
@@ -22649,12 +22649,12 @@ loc_484ED8A1:
     add     0x34, a0
     mov     0x128, d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     sp, a0
     add     0x35, a0
     mov     0x128, d0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     1, d0
     bne     loc_484ED8D6
@@ -22690,12 +22690,12 @@ loc_484ED90A:
     add     0x34, a0
     mov     0x1a2, d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     sp, a0
     add     0x35, a0
     mov     0x1a2, d0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     1, d0
     bne     loc_484ED93F
@@ -22731,12 +22731,12 @@ loc_484ED973:
     add     0x34, a0
     mov     0x21c, d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     sp, a0
     add     0x35, a0
     mov     0x21c, d0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     1, d0
     bne     loc_484ED9A8
@@ -22772,12 +22772,12 @@ loc_484ED9DC:
     add     0x34, a0
     mov     0xb2, d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     sp, a0
     add     0x35, a0
     mov     0xb2, d0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     1, d0
     bne     loc_484EDA11
@@ -22813,12 +22813,12 @@ loc_484EDA45:
     add     0x34, a0
     mov     0x12c, d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     sp, a0
     add     0x35, a0
     mov     0x12c, d0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     1, d0
     bne     loc_484EDA7A
@@ -22854,12 +22854,12 @@ loc_484EDAAE:
     add     0x34, a0
     mov     0x1a6, d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     sp, a0
     add     0x35, a0
     mov     0x1a6, d0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     1, d0
     bne     loc_484EDAE3
@@ -22895,12 +22895,12 @@ loc_484EDB15:
     add     0x34, a0
     mov     0x220, d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     sp, a0
     add     0x35, a0
     mov     0x220, d0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     1, d0
     bne     loc_484EDB4A
@@ -23074,7 +23074,7 @@ loc_484EDC1F:
     mov     a1, d0
     exthu   d0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     d2, d0
     inc     d0
     mov     d0, (0x1c, sp)
@@ -23090,7 +23090,7 @@ loc_484EDC1F:
     exthu   d0
     mov     (0x1c, sp), a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     2, d0
     add     d2, d0
     mov     d0, (0x14, sp)
@@ -23107,7 +23107,7 @@ loc_484EDC1F:
     exthu   d0
     mov     (0x14, sp), a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     d2, (0x18, sp)
     movbu   (func_484D807B_Var_3), d0
     mov     0x7a, d1
@@ -23121,7 +23121,7 @@ loc_484EDC1F:
     mov     a0, d0
     exthu   d0
     mov     d2, a0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     (0x1c, sp), a0
     movbu   (a0), d0
     cmp     0x15, d0
@@ -23789,7 +23789,7 @@ loc_484EE2D0:
     mov     sp, a0
     add     0x4c, a0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     bra     loc_484EE336
 loc_484EE2F0:
     movbu   (func_484D807B_Var_3), d0
@@ -23805,7 +23805,7 @@ loc_484EE2F0:
     mov     sp, a0
     add     0x4c, a0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     bra     loc_484EE336
 loc_484EE314:
     movbu   (func_484D807B_Var_3), d0
@@ -23821,7 +23821,7 @@ loc_484EE314:
     mov     sp, a0
     add     0x4c, a0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
 loc_484EE336:
     mov     sp, a0
     mov     a0, d2
@@ -23840,7 +23840,7 @@ loc_484EE336:
     add     0x32, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     2, d0
     add     d2, d0
     mov     d0, (0x1c, sp)
@@ -23857,7 +23857,7 @@ loc_484EE336:
     exthu   d0
     mov     (0x1c, sp), a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     d2, (0x14, sp)
     movbu   (func_484D807B_Var_3), d0
     mov     d2, a0
@@ -23870,7 +23870,7 @@ loc_484EE336:
     add     d3, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     (0x18, sp), a0
     movbu   (a0), d0
     cmp     0x15, d0
@@ -24534,7 +24534,7 @@ loc_484EE880:
     mov     a1, d0
     exthu   d0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     d2, d0
     inc     d0
     mov     d0, (0x1c, sp)
@@ -24550,7 +24550,7 @@ loc_484EE880:
     exthu   d0
     mov     (0x1c, sp), a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     2, d0
     add     d2, d0
     mov     d0, (0x14, sp)
@@ -24567,7 +24567,7 @@ loc_484EE880:
     exthu   d0
     mov     (0x14, sp), a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     d2, (0x18, sp)
     movbu   (func_484D807B_Var_3), d0
     mov     0x7a, d1
@@ -24581,7 +24581,7 @@ loc_484EE880:
     mov     a0, d0
     exthu   d0
     mov     d2, a0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     (0x1c, sp), a0
     movbu   (a0), d0
     cmp     0x15, d0
@@ -25249,7 +25249,7 @@ loc_484EEF31:
     mov     sp, a0
     add     0x44, a0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     bra     loc_484EEF97
 loc_484EEF51:
     movbu   (func_484D807B_Var_3), d0
@@ -25265,7 +25265,7 @@ loc_484EEF51:
     mov     sp, a0
     add     0x44, a0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     bra     loc_484EEF97
 loc_484EEF75:
     movbu   (func_484D807B_Var_3), d0
@@ -25281,7 +25281,7 @@ loc_484EEF75:
     mov     sp, a0
     add     0x44, a0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
 loc_484EEF97:
     mov     sp, a0
     clr     d0
@@ -25300,7 +25300,7 @@ loc_484EEF97:
     add     0x15, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     0x7f, d0
     movbu   d0, (0x47, sp)
     movbu   (0x45, sp), d0
@@ -25950,7 +25950,7 @@ loc_484EF541:
     mov     sp, a0
     add     0x44, a0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     bra     loc_484EF5A7
 loc_484EF561:
     movbu   (func_484D807B_Var_3), d0
@@ -25966,7 +25966,7 @@ loc_484EF561:
     mov     sp, a0
     add     0x44, a0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     bra     loc_484EF5A7
 loc_484EF585:
     movbu   (func_484D807B_Var_3), d0
@@ -25982,7 +25982,7 @@ loc_484EF585:
     mov     sp, a0
     add     0x44, a0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
 loc_484EF5A7:
     mov     sp, a0
     clr     d0
@@ -26001,7 +26001,7 @@ loc_484EF5A7:
     add     0x4a, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     0x7f, d0
     movbu   d0, (0x47, sp)
     movbu   (0x45, sp), d0
@@ -26630,7 +26630,7 @@ loc_484EFAA8:
     add     0x28, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (func_484D807B_Var_3), d0
     mov     d2, a2
     inc     a2
@@ -26643,7 +26643,7 @@ loc_484EFAA8:
     add     0x29, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     2, d0
     add     d2, d0
     mov     d0, (0x28, sp)
@@ -26657,7 +26657,7 @@ loc_484EFAA8:
     add     0x2a, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     3, d0
     add     d2, d0
     mov     d0, (0x20, sp)
@@ -26673,7 +26673,7 @@ loc_484EFAA8:
     mov     a1, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     4, d0
     add     d2, d0
     mov     d0, (0x24, sp)
@@ -26689,7 +26689,7 @@ loc_484EFAA8:
     exthu   d0
     mov     (0x24, sp), a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     5, d0
     add     d2, d0
     mov     d0, (0x2c, sp)
@@ -26704,7 +26704,7 @@ loc_484EFAA8:
     add     0x2d, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     d2, (0x3c, sp)
     movbu   (func_484D807B_Var_3), d0
     mov     d2, a0
@@ -26717,7 +26717,7 @@ loc_484EFAA8:
     mov     d3, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (a2), d0
     mov     a3, d1
     exthu   d1
@@ -27163,7 +27163,7 @@ loc_484EFEC6:
     exthu   d0
     mov     d2, a0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     0x64, d0
     movbu   d0, (0x59, sp)
     mov     2, d0
@@ -27192,7 +27192,7 @@ loc_484EFEC6:
     mov     d1, d0
     mov     (0x28, sp), a0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (func_484D807B_Var_3), d0
     mov     3, a3
     add     d2, a3
@@ -27218,7 +27218,7 @@ loc_484EFEC6:
     mov     d1, d0
     mov     a3, a0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     4, d0
     add     d2, d0
     mov     d0, (0x24, sp)
@@ -27245,7 +27245,7 @@ loc_484EFEC6:
     mov     d1, d0
     mov     (0x24, sp), a0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     5, d0
     add     d2, d0
     mov     d0, (0x20, sp)
@@ -27273,7 +27273,7 @@ loc_484EFEC6:
     mov     (0x20, sp), a0
     add     6, d2
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     d2, (0x38, sp)
     movbu   (func_484D807B_Var_3), d0
     mov     0x1c, d1
@@ -27296,7 +27296,7 @@ loc_484EFEC6:
     exthu   d2
     mov     d2, d0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (Str_empty_266), d0
     mov     sp, a0
     add     0x48, a0
@@ -27308,7 +27308,7 @@ loc_484EFEC6:
     add     0xd, d0
     exthu   d0
     mov     0x20, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x48, sp), d0
     cmp     0, d0
     bne     loc_484F0097
@@ -27994,7 +27994,7 @@ loc_484F050B:
     mov     a1, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     d2, d0
     inc     d0
     mov     d0, (0x24, sp)
@@ -28008,7 +28008,7 @@ loc_484F050B:
     add     0xd, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     2, d0
     add     d2, d0
     mov     d0, (0x28, sp)
@@ -28023,7 +28023,7 @@ loc_484F050B:
     add     0xf, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     d2, (0x38, sp)
     movbu   (func_484D807B_Var_3), d0
     mov     d2, a0
@@ -28035,7 +28035,7 @@ loc_484F050B:
     add     0x11, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (func_484D807B_Var_3), d0
     mov     sp, a0
     mov     a0, d3
@@ -28049,7 +28049,7 @@ loc_484F050B:
     add     0xa, d0
     exthu   d0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     d3, a0
     call    func_484F0BAB_entry, [d2,a2], 0x20
     movbu   (0x6c, sp), d0
@@ -28078,7 +28078,7 @@ loc_484F050B:
     mov     a1, d0
     exthu   d0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     a3, a0
     call    func_484F0BAB_entry, [d2,a2], 0x20
     movbu   (a3), d0
@@ -28103,7 +28103,7 @@ loc_484F050B:
     add     0xa, d0
     exthu   d0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (func_484D807B_Var_3), d0
     mov     0x7a, d1
     nop
@@ -28116,7 +28116,7 @@ loc_484F050B:
     exthu   d0
     mov     a3, a0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (a3), d0
     movbu   (0x6c, sp), d1
     extb    d0
@@ -28128,7 +28128,7 @@ loc_484F050B:
     sub     d1, d0
     extb    d0
     mov     d2, a0
-    call    func_484F120E, 0, 0
+    call    SignedByteAbsStore, 0, 0
     movbu   (0x64, sp), d1
     movbu   (0x50, sp), d0
     movbu   (0x64, sp), d2
@@ -28166,7 +28166,7 @@ loc_484F0737:
     add     0xe, d0
     exthu   d0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     a2, a0
     call    func_484F0BAB_entry, [d2,a2], 0x20
     movbu   (a2), d0
@@ -28193,7 +28193,7 @@ loc_484F0737:
     exthu   d0
     mov     a3, a0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (func_484D807B_Var_3), d0
     mov     a2, a0
     mov     0x7a, d1
@@ -28206,7 +28206,7 @@ loc_484F0737:
     mov     a1, d0
     exthu   d0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (a2), d0
     movbu   (a3), d1
     extb    d0
@@ -28214,7 +28214,7 @@ loc_484F0737:
     sub     d1, d0
     extb    d0
     mov     (0x30, sp), a0
-    call    func_484F120E, 0, 0
+    call    SignedByteAbsStore, 0, 0
     mov     (0x24, sp), a0
     movbu   (0x50, sp), d0
     movbu   (a0), d1
@@ -28256,7 +28256,7 @@ loc_484F07F2:
     exthu   d0
     mov     (0x2c, sp), a0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     (0x2c, sp), a0
     call    func_484F0BAB_entry, [d2,a2], 0x20
     mov     (0x2c, sp), a0
@@ -28282,7 +28282,7 @@ loc_484F07F2:
     add     0xe, d0
     exthu   d0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (func_484D807B_Var_3), d0
     mov     (0x2c, sp), a0
     mov     0x7a, d1
@@ -28293,7 +28293,7 @@ loc_484F07F2:
     add     0x10, d0
     exthu   d0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     (0x2c, sp), a0
     movbu   (a2), d1
     movbu   (a0), d0
@@ -28302,7 +28302,7 @@ loc_484F07F2:
     sub     d1, d0
     extb    d0
     mov     (0x30, sp), a0
-    call    func_484F120E, 0, 0
+    call    SignedByteAbsStore, 0, 0
     mov     (0x28, sp), a0
     movbu   (0x50, sp), d0
     movbu   (a0), d1
@@ -28343,7 +28343,7 @@ loc_484F08B3:
     mov     a1, d0
     exthu   d0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     (0x24, sp), a0
     call    func_484F0BAB_entry, [d2,a2], 0x20
     mov     (0x24, sp), a0
@@ -28371,7 +28371,7 @@ loc_484F08B3:
     exthu   d0
     mov     (0x2c, sp), a0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (func_484D807B_Var_3), d0
     mov     0x7a, d1
     nop
@@ -28384,7 +28384,7 @@ loc_484F08B3:
     exthu   d0
     mov     (0x24, sp), a0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     (0x24, sp), a0
     movbu   (a0), d0
     mov     (0x2c, sp), a0
@@ -28394,7 +28394,7 @@ loc_484F08B3:
     extb    d1
     sub     d1, d0
     extb    d0
-    call    func_484F120E, 0, 0
+    call    SignedByteAbsStore, 0, 0
     mov     (0x38, sp), a0
     movbu   (0x50, sp), d0
     movbu   (a0), d1
@@ -28630,7 +28630,7 @@ loc_484F0AD3:
     mov     a1, d0
     exthu   d0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     (0x24, sp), a0
     call    func_484F0BAB_entry, [d2,a2], 0x20
     mov     (0x24, sp), a0
@@ -28642,7 +28642,7 @@ loc_484F0AD3:
     extb    d1
     sub     d1, d0
     extb    d0
-    call    func_484F120E, 0, 0
+    call    SignedByteAbsStore, 0, 0
     mov     (0x38, sp), a0
     movbu   (0x50, sp), d1
     movbu   (a0), d0
@@ -28751,7 +28751,7 @@ loc_484F0BC7:
     add     9, d0
     exthu   d0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (a2), d2
     movbu   (0x14, sp), d1
     extb    d2
@@ -28878,7 +28878,7 @@ loc_484F0C39:
     add     0x40, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     d2, d0
     inc     d0
     mov     d0, (0x24, sp)
@@ -28894,7 +28894,7 @@ loc_484F0C39:
     exthu   d0
     mov     (0x24, sp), a0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     2, d0
     add     d2, d0
     mov     d0, (0x34, sp)
@@ -28909,7 +28909,7 @@ loc_484F0C39:
     add     0x44, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     d2, (0x3c, sp)
     movbu   (func_484D807B_Var_3), d0
     mov     d2, a0
@@ -28921,7 +28921,7 @@ loc_484F0C39:
     add     0x46, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     sp, a0
     mov     a0, d0
     add     0x74, d0
@@ -28938,7 +28938,7 @@ loc_484F0C39:
     mov     a1, d0
     exthu   d0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x74, sp), d0
     mov     (0x2c, sp), d1
     extb    d0
@@ -28965,7 +28965,7 @@ loc_484F0C39:
     mov     a1, d0
     exthu   d0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (a3), d0
     mov     (0x2c, sp), d1
     extb    d0
@@ -28989,7 +28989,7 @@ loc_484F0C39:
     sub     d1, d0
     extb    d0
     mov     d2, a0
-    call    func_484F120E, 0, 0
+    call    SignedByteAbsStore, 0, 0
     movbu   (0x6c, sp), d0
     movbu   (0x58, sp), d1
     movbu   (0x6c, sp), d2
@@ -29028,7 +29028,7 @@ loc_484F0E27:
     add     0x43, d0
     exthu   d0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (a2), d0
     mov     (0x2c, sp), d1
     extb    d0
@@ -29048,7 +29048,7 @@ loc_484F0E27:
     sub     d1, d0
     extb    d0
     mov     (0x30, sp), a0
-    call    func_484F120E, 0, 0
+    call    SignedByteAbsStore, 0, 0
     mov     (0x24, sp), a0
     movbu   (0x58, sp), d1
     movbu   (a0), d3
@@ -29090,7 +29090,7 @@ loc_484F0EA1:
     add     0x45, d0
     exthu   d0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     (0x38, sp), a0
     mov     (0x2c, sp), d1
     movbu   (a0), d0
@@ -29112,7 +29112,7 @@ loc_484F0EA1:
     sub     d1, d0
     extb    d0
     mov     (0x30, sp), a0
-    call    func_484F120E, 0, 0
+    call    SignedByteAbsStore, 0, 0
     mov     (0x34, sp), a0
     movbu   (0x58, sp), d0
     movbu   (a0), d1
@@ -29152,7 +29152,7 @@ loc_484F0F23:
     add     0x47, d0
     exthu   d0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     (0x34, sp), a0
     mov     (0x2c, sp), d1
     movbu   (a0), d0
@@ -29175,7 +29175,7 @@ loc_484F0F23:
     extb    d1
     sub     d1, d0
     extb    d0
-    call    func_484F120E, 0, 0
+    call    SignedByteAbsStore, 0, 0
     mov     (0x3c, sp), a0
     movbu   (0x58, sp), d1
     movbu   (a0), d3
@@ -29452,7 +29452,7 @@ loc_484F1146:
     sub     d0, d1
     mov     d1, d0
     extb    d0
-    call    func_484F120E, 0, 0
+    call    SignedByteAbsStore, 0, 0
     mov     (0x3c, sp), a0
     movbu   (0x58, sp), d1
     movbu   (a0), d3
@@ -29546,8 +29546,8 @@ loc_484F120A:
     clr     d0
 loc_484F120B:
     ret     [d2,d3,a2,a3], 0x8c
-
-func_484F120E:
+# SignedByteAbsStore  (CPU 0x484f120e)
+SignedByteAbsStore:
     mov     d0, d1
     extb    d1
     cmp     0, d1
@@ -29580,7 +29580,7 @@ func_484F121F_entry:
     mov     sp, a0
     add     0x14, a0
     mov     0xff, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     sp, a0
     add     0x48, a0
     movhu   (6, a0), d2
@@ -29773,7 +29773,7 @@ loc_484F1390:
     exthu   d0
     sub     d2, d1
     exthu   d1
-    call    func_484F1495_entry, 0, 0x10
+    call    MulDivU16_entry, 0, 0x10
     exthu   d0
     add     a2, d0
     movhu   d0, (0x40, sp)
@@ -29803,7 +29803,7 @@ loc_484F13D5:
     sub     a2, d0
     exthu   d0
     exthu   d1
-    call    func_484F1495_entry, 0, 0x10
+    call    MulDivU16_entry, 0, 0x10
     exthu   d0
     add     a2, d0
     mov     d0, a3
@@ -29834,7 +29834,7 @@ loc_484F13FF:
     sub     d1, a0
     mov     a0, d1
     exthu   d1
-    call    func_484F1495_entry, 0, 0x10
+    call    MulDivU16_entry, 0, 0x10
     exthu   d0
     add     a2, d0
     movhu   d0, (0x40, sp)
@@ -29865,7 +29865,7 @@ loc_484F1439:
     sub     d1, d2
     mov     d2, d1
     exthu   d1
-    call    func_484F1495_entry, 0, 0x10
+    call    MulDivU16_entry, 0, 0x10
     exthu   d0
     add     a2, d0
     mov     d0, a3
@@ -29887,10 +29887,10 @@ loc_484F146E:
     mov     0xff, d0
     call    DrawLine_entry, [d2,a2,a3], 0x20
     ret     [d2,d3,a2,a3], 0x30
-
-func_484F1495:
+# MulDivU16  (CPU 0x484f1495)
+MulDivU16:
     add     -0x10, sp
-func_484F1495_entry:
+MulDivU16_entry:
     exthu   d0
     exthu   d1
     nop
@@ -29994,7 +29994,7 @@ loc_484F1581:
     add     0x4e, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (func_484D807B_Var_3), d0
     mov     sp, a0
     add     0x41, a0
@@ -30006,7 +30006,7 @@ loc_484F1581:
     add     0x4f, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (func_484D807B_Var_3), d0
     mov     sp, a0
     add     0x42, a0
@@ -30018,7 +30018,7 @@ loc_484F1581:
     add     0x50, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (func_484D807B_Var_3), d0
     mov     sp, a0
     add     0x43, a0
@@ -30031,7 +30031,7 @@ loc_484F1581:
     add     d2, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x40, sp), d1
     movbu   (0x42, sp), d0
     cmp     d0, d1
@@ -30312,7 +30312,7 @@ loc_484F187B:
     add     0x4e, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (func_484D807B_Var_3), d0
     mov     sp, a0
     add     0x41, a0
@@ -30325,7 +30325,7 @@ loc_484F187B:
     add     d2, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movhu   (0x4a, sp), d0
     mov     0x80, d1
     movhu   d0, (0x34, sp)
@@ -30713,7 +30713,7 @@ loc_484F1C0D:
     add     0x50, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (func_484D807B_Var_3), d0
     mov     sp, a0
     add     0x25, a0
@@ -30727,7 +30727,7 @@ loc_484F1C0D:
     mov     a1, d0
     exthu   d0
     mov     0x1f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (func_484D807B_Var_3), d0
     mov     sp, a0
     add     0x26, a0
@@ -30741,7 +30741,7 @@ loc_484F1C0D:
     mov     a1, d0
     exthu   d0
     mov     0x20, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movhu   (0x2e, sp), d0
     mov     0x80, d1
     movhu   d0, (0x22, sp)
@@ -31009,7 +31009,7 @@ loc_484F1ECE:
     add     d1, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (func_484D807B_Var_3), d0
     mov     sp, a0
     add     0x41, a0
@@ -31031,7 +31031,7 @@ loc_484F1ECE:
     mov     d1, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (func_484D807B_Var_3), d1
     mov     sp, a0
     mov     0x1c, d0
@@ -31051,7 +31051,7 @@ loc_484F1ECE:
     mov     d1, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (func_484D807B_Var_3), d0
     mov     sp, a0
     add     0x43, a0
@@ -31073,7 +31073,7 @@ loc_484F1ECE:
     add     d1, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x40, sp), d1
     movbu   (0x42, sp), d0
     cmp     d0, d1
@@ -31363,7 +31363,7 @@ loc_484F2213:
     add     d1, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (func_484D807B_Var_3), d0
     mov     sp, a0
     add     0x41, a0
@@ -31385,7 +31385,7 @@ loc_484F2213:
     exthu   d2
     mov     d2, d0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movhu   (0x4a, sp), d0
     mov     0x80, d1
     movhu   d0, (0x34, sp)
@@ -31782,7 +31782,7 @@ loc_484F25C3:
     exthu   d1
     mov     d1, d0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (func_484D807B_Var_3), d0
     mov     0x1c, d1
     mov     0x10, a0
@@ -31805,7 +31805,7 @@ loc_484F25C3:
     exthu   d2
     mov     d2, d0
     mov     0x1f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (func_484D807B_Var_3), d1
     mov     sp, a0
     mov     0x1c, d0
@@ -31826,7 +31826,7 @@ loc_484F25C3:
     add     d1, d0
     exthu   d0
     mov     0x20, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movhu   (0x32, sp), d0
     mov     0x80, d1
     movhu   d0, (0x20, sp)
@@ -32193,22 +32193,22 @@ loc_484F2858:
     mov     d3, a3
     inc     a3
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     a3, a0
     mov     0x74, d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     2, a2
     add     d3, a2
     mov     a2, a0
     add     3, d3
     mov     0x76, d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     d3, a0
     mov     0x77, d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     0x14, d0
     bge     loc_484F2A3F
@@ -32553,22 +32553,22 @@ loc_484F2BDA:
     mov     d3, a3
     inc     a3
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     a3, a0
     mov     0xee, d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     2, a2
     add     d3, a2
     mov     a2, a0
     add     3, d3
     mov     0xf0, d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     d3, a0
     mov     0xf1, d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     0x14, d0
     bge     loc_484F2DC5
@@ -32913,22 +32913,22 @@ loc_484F2F60:
     mov     d3, a3
     inc     a3
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     a3, a0
     mov     0x168, d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     2, a2
     add     d3, a2
     mov     a2, a0
     add     3, d3
     mov     0x16a, d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     d3, a0
     mov     0x16b, d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     0x14, d0
     bge     loc_484F314B
@@ -33273,22 +33273,22 @@ loc_484F32E6:
     mov     d3, a3
     inc     a3
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     a3, a0
     mov     0x1e2, d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     2, a2
     add     d3, a2
     mov     a2, a0
     add     3, d3
     mov     0x1e4, d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     d3, a0
     mov     0x1e5, d0
     mov     0x7f, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x34, sp), d0
     cmp     0x14, d0
     bge     loc_484F34D1
@@ -33634,11 +33634,11 @@ loc_484F366C:
     mov     d2, a0
     mov     d3, d1
     mov     0x79, d0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     a3, a0
     mov     d3, d1
     mov     0x78, d0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     d3, d1
     mov     2, d0
     add     d2, d0
@@ -33646,12 +33646,12 @@ loc_484F366C:
     mov     (0x14, sp), a0
     add     3, d2
     mov     0x7a, d0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     d2, (0x18, sp)
     mov     d2, a0
     mov     d3, d1
     mov     0x7b, d0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x38, sp), d0
     movhu   (0x28, sp), d2
     mov     a2, d1
@@ -33935,11 +33935,11 @@ loc_484F3972:
     mov     d2, a0
     mov     d3, d1
     mov     0xf3, d0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     a3, a0
     mov     d3, d1
     mov     0xf2, d0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     d3, d1
     mov     2, d0
     add     d2, d0
@@ -33947,12 +33947,12 @@ loc_484F3972:
     mov     (0x14, sp), a0
     add     3, d2
     mov     0xf4, d0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     d2, (0x18, sp)
     mov     d2, a0
     mov     d3, d1
     mov     0xf5, d0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x38, sp), d0
     movhu   (0x28, sp), d2
     mov     a2, d1
@@ -34236,11 +34236,11 @@ loc_484F3C7C:
     mov     d2, a0
     mov     d3, d1
     mov     0x16d, d0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     a3, a0
     mov     d3, d1
     mov     0x16c, d0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     d3, d1
     mov     2, d0
     add     d2, d0
@@ -34248,12 +34248,12 @@ loc_484F3C7C:
     mov     (0x14, sp), a0
     add     3, d2
     mov     0x16e, d0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     d2, (0x18, sp)
     mov     d2, a0
     mov     d3, d1
     mov     0x16f, d0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x38, sp), d0
     movhu   (0x28, sp), d2
     mov     a2, d1
@@ -34537,11 +34537,11 @@ loc_484F3F86:
     mov     d2, a0
     mov     d3, d1
     mov     0x1e7, d0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     a3, a0
     mov     d3, d1
     mov     0x1e6, d0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     d3, d1
     mov     2, d0
     add     d2, d0
@@ -34549,12 +34549,12 @@ loc_484F3F86:
     mov     (0x14, sp), a0
     add     3, d2
     mov     0x1e8, d0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     d2, (0x18, sp)
     mov     d2, a0
     mov     d3, d1
     mov     0x1e9, d0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x38, sp), d0
     movhu   (0x28, sp), d2
     mov     a2, d1
@@ -35115,7 +35115,7 @@ loc_484F4724:
 loc_484F4733:
     mov     1, d0
     extbu   d1
-    call    func_484F77A3_entry, [d2,d3], 0x20
+    call    DrumEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484F4B20
 loc_484F473E:
     movbu   (Str_empty_266), d3
@@ -35149,7 +35149,7 @@ loc_484F473E:
     mov     (0x24, sp), a0
     add     0x3d, a3
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     a3, a0
     mov     0x8e, d0
     nop
@@ -35168,7 +35168,7 @@ loc_484F473E:
     exthu   d0
     mov     d0, (0x20, sp)
     mov     0xff, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     3, a0
     add     d2, a0
     mov     a0, d1
@@ -35182,7 +35182,7 @@ loc_484F473E:
     mov     d3, d0
     mov     d2, a0
     mov     0xff, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x3e, sp), d0
     mov     sp, a2
     mov     d0, (0x10, sp)
@@ -35217,17 +35217,17 @@ loc_484F47E9:
     mov     d0, (0x10, sp)
     mov     (0x28, sp), d0
     movbu   (0x3c, sp), d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xff, d0
     mov     d0, (0x10, sp)
     mov     (0x20, sp), d0
     movbu   (0x3d, sp), d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xff, d0
     mov     d0, (0x10, sp)
     movbu   (0x3e, sp), d1
     mov     d3, d0
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     call    GetFocusObject_entry, 0, 0x10
     movhu   (0x34, sp), d3
     mov     (0x2c, sp), d1
@@ -35285,7 +35285,7 @@ loc_484F4872:
     mov     (0x28, sp), d0
     mov     (0x20, sp), a0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     d2, (0x4c, sp)
     mov     sp, a3
     mov     2, d0
@@ -35306,7 +35306,7 @@ loc_484F4872:
     add     0x3d, a3
     mov     a3, a0
     mov     0xff, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     3, a0
     add     d2, a0
     mov     a0, d1
@@ -35325,7 +35325,7 @@ loc_484F4872:
     mov     d3, d0
     mov     d2, a0
     mov     0xff, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x3e, sp), d0
     mov     sp, a0
     mov     d0, (0x10, sp)
@@ -35357,17 +35357,17 @@ loc_484F4939:
     mov     d0, (0x10, sp)
     mov     (0x28, sp), d0
     movbu   (0x3c, sp), d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xff, d0
     mov     d0, (0x10, sp)
     mov     (0x24, sp), d0
     movbu   (0x3d, sp), d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xff, d0
     mov     d0, (0x10, sp)
     movbu   (0x3e, sp), d1
     mov     d3, d0
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     call    GetFocusObject_entry, 0, 0x10
     movhu   (0x34, sp), d3
     mov     (0x2c, sp), d1
@@ -35418,7 +35418,7 @@ loc_484F49AA:
     add     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484F4B20
 loc_484F49E2:
     mov     0x32, d0
@@ -35447,7 +35447,7 @@ loc_484F49E2:
     exthu   d2
     mov     1, d1
     mov     d2, d0
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484F4B20
 loc_484F4A1D:
     mov     7, d0
@@ -35475,7 +35475,7 @@ loc_484F4A1D:
     add     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x2c, sp), d1
     add     -1, d1
@@ -35517,7 +35517,7 @@ loc_484F4A77:
     exthu   d2
     mov     1, d1
     mov     d2, d0
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484F4B20
 loc_484F4AB1:
     mov     0x7f, d0
@@ -35548,7 +35548,7 @@ loc_484F4AB1:
     exthu   d2
     mov     d2, d0
     mov     1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484F4B20
 loc_484F4AED:
     mov     0x7f, d0
@@ -35577,7 +35577,7 @@ loc_484F4AED:
     exthu   d2
     mov     d2, d0
     mov     1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484F4B20:
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x30, sp), d1
@@ -35621,7 +35621,7 @@ loc_484F4B7D:
 loc_484F4B8C:
     clr     d0
     extbu   d1
-    call    func_484F77A3_entry, [d2,d3], 0x20
+    call    DrumEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484F4F6C
 loc_484F4B96:
     movbu   (Str_empty_266), d0
@@ -35656,7 +35656,7 @@ loc_484F4B96:
     mov     d1, d0
     mov     (0x28, sp), a0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     d2, (0x50, sp)
     mov     sp, a3
     mov     2, d0
@@ -35677,7 +35677,7 @@ loc_484F4B96:
     add     0x3d, a3
     mov     a3, a0
     mov     0xff, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     3, a0
     add     d2, a0
     mov     a0, d1
@@ -35697,7 +35697,7 @@ loc_484F4B96:
     mov     d3, d0
     mov     d2, a0
     mov     0xff, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x3e, sp), d0
     mov     sp, a2
     mov     d0, (0x10, sp)
@@ -35732,17 +35732,17 @@ loc_484F4C4D:
     mov     d0, (0x10, sp)
     mov     (0x24, sp), d0
     movbu   (0x3c, sp), d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xff, d0
     mov     d0, (0x10, sp)
     mov     (0x20, sp), d0
     movbu   (0x3d, sp), d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xff, d0
     mov     d0, (0x10, sp)
     movbu   (0x3e, sp), d1
     mov     d3, d0
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     call    GetFocusObject_entry, 0, 0x10
     movhu   (0x34, sp), d3
     mov     (0x2c, sp), d1
@@ -35797,7 +35797,7 @@ loc_484F4CD6:
     mov     d1, d0
     add     0x3d, a3
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     2, a0
     add     d2, a0
     mov     a0, d1
@@ -35814,7 +35814,7 @@ loc_484F4CD6:
     exthu   d0
     mov     d0, (0x24, sp)
     mov     0xff, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     sp, a0
     mov     0x8e, d0
     nop
@@ -35831,7 +35831,7 @@ loc_484F4CD6:
     mov     d3, d0
     mov     d2, a0
     mov     0xff, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x3e, sp), d0
     mov     sp, a0
     mov     d0, (0x10, sp)
@@ -35863,17 +35863,17 @@ loc_484F4D8F:
     mov     d0, (0x10, sp)
     mov     (0x28, sp), d0
     movbu   (0x3c, sp), d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xff, d0
     mov     d0, (0x10, sp)
     mov     (0x24, sp), d0
     movbu   (0x3d, sp), d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xff, d0
     mov     d0, (0x10, sp)
     movbu   (0x3e, sp), d1
     mov     d3, d0
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     call    GetFocusObject_entry, 0, 0x10
     movhu   (0x34, sp), d3
     mov     (0x2c, sp), d1
@@ -35924,7 +35924,7 @@ loc_484F4E00:
     exthu   d2
     mov     d2, d0
     mov     -1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484F4F6C
 loc_484F4E38:
     mov     -0x32, d0
@@ -35954,7 +35954,7 @@ loc_484F4E38:
     exthu   d2
     mov     d2, d0
     mov     -1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484F4F6C
 loc_484F4E74:
     clr     d0
@@ -35982,7 +35982,7 @@ loc_484F4E74:
     add     d1, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x2c, sp), d2
     movhu   (0x34, sp), d1
@@ -36022,7 +36022,7 @@ loc_484F4ECE:
     add     d1, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484F4F6C
 loc_484F4F05:
     mov     -0x80, d0
@@ -36051,7 +36051,7 @@ loc_484F4F05:
     add     d1, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484F4F6C
 loc_484F4F3E:
     clr     d0
@@ -36077,7 +36077,7 @@ loc_484F4F3E:
     add     d1, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484F4F6C:
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x30, sp), d1
@@ -36140,7 +36140,7 @@ loc_484F4FFA:
     mov     (0x20, sp), a0
     extbu   d2
     mov     d2, d0
-    call    func_484F7854_entry, [d2,d3,a2], 0x28
+    call    DrumEditElemOnText_entry, [d2,d3,a2], 0x28
     jmp     loc_484F54A5
 loc_484F5006:
     movbu   (Str_empty_266), d0
@@ -36169,7 +36169,7 @@ loc_484F5006:
     exthu   d0
     mov     a3, d2
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     2, a0
     add     d3, a0
     mov     a0, d1
@@ -36186,7 +36186,7 @@ loc_484F5006:
     add     d1, d0
     exthu   d0
     mov     0xff, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     sp, a0
     mov     0x8e, d0
     nop
@@ -36200,7 +36200,7 @@ loc_484F5006:
     exthu   d0
     add     0x3e, a0
     mov     0xff, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x3e, sp), d0
     mov     sp, a0
     mov     d0, (0x10, sp)
@@ -36242,7 +36242,7 @@ loc_484F509F:
     add     d1, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     2, a0
     add     d2, a0
     mov     a0, d1
@@ -36258,7 +36258,7 @@ loc_484F509F:
     add     d1, d0
     exthu   d0
     mov     0xff, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     3, a0
     add     d2, a0
     mov     a0, d1
@@ -36274,7 +36274,7 @@ loc_484F509F:
     add     d1, d0
     exthu   d0
     mov     0xff, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x3e, sp), d0
     mov     sp, a0
     mov     d0, (0x10, sp)
@@ -36317,7 +36317,7 @@ loc_484F5135:
     add     a3, d2
     exthu   d2
     mov     d2, d0
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (Str_empty_266), d0
     mov     2, a0
     add     d3, a0
@@ -36334,7 +36334,7 @@ loc_484F5135:
     add     d1, d0
     exthu   d0
     mov     0xff, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (Str_empty_266), d0
     add     3, d3
     mov     d3, d1
@@ -36349,7 +36349,7 @@ loc_484F5135:
     mov     sp, a0
     add     0x3e, a0
     mov     0xff, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     a2, d0
     mov     5, a2
     mov     sp, a0
@@ -36371,7 +36371,7 @@ loc_484F5135:
     add     d1, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (Str_empty_266), d0
     mov     a2, a1
     inc     a1
@@ -36389,7 +36389,7 @@ loc_484F5135:
     add     d1, d0
     exthu   d0
     mov     0xff, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     sp, a0
     mov     2, d0
     add     a2, d0
@@ -36406,7 +36406,7 @@ loc_484F5135:
     exthu   d2
     mov     d2, d0
     mov     0xff, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (Str_empty_266), d0
     mov     3, a0
     add     a2, a0
@@ -36424,7 +36424,7 @@ loc_484F5135:
     add     d1, d0
     exthu   d0
     mov     0xff, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (Str_empty_266), d0
     mov     a2, d2
     exthu   d2
@@ -36440,7 +36440,7 @@ loc_484F5135:
     exthu   d2
     mov     d2, d0
     mov     0xff, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (Str_empty_266), d0
     mov     d3, d1
     exthu   d1
@@ -36455,7 +36455,7 @@ loc_484F5135:
     add     d1, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x3c, sp), d1
     movbu   (0x40, sp), d0
     cmp     d0, d1
@@ -36518,7 +36518,7 @@ loc_484F52DA:
     mov     Str_3d_74, a1
     clr     d1
     mov     d2, d0
-    call    func_484F792D_entry, [d2,d3,a2,a3], 0x2c
+    call    DrumEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484F54A5
 loc_484F5314:
     extbu   d2
@@ -36546,7 +36546,7 @@ loc_484F5314:
     add     d1, d0
     exthu   d0
     mov     0xf0, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x46, sp), d0
     extb    d0
     add     -3, d0
@@ -36579,7 +36579,7 @@ loc_484F536E:
     mov     (0x20, sp), a0
     mov     Str_3d_73, a1
     mov     1, d1
-    call    func_484F792D_entry, [d2,d3,a2,a3], 0x2c
+    call    DrumEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484F54A5
 loc_484F539A:
     extbu   d2
@@ -36602,7 +36602,7 @@ loc_484F539A:
     add     0x1a7, d0
     exthu   d0
     mov     0xf0, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x46, sp), d0
     extb    d0
     add     -3, d0
@@ -36648,7 +36648,7 @@ loc_484F5404:
     mov     (0x20, sp), a0
     mov     Str_3d_72, a1
     mov     1, d1
-    call    func_484F792D_entry, [d2,d3,a2,a3], 0x2c
+    call    DrumEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     bra     loc_484F54A5
 loc_484F5439:
     mov     0xff, d0
@@ -36676,7 +36676,7 @@ loc_484F5439:
     mov     Str_4d_3, a1
     mov     1, d1
     mov     d2, d0
-    call    func_484F792D_entry, [d2,d3,a2,a3], 0x2c
+    call    DrumEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     bra     loc_484F54A5
 loc_484F5474:
     extbu   d2
@@ -36698,10 +36698,10 @@ loc_484F5474:
     mov     sp, a0
     add     0x46, a0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     (0x20, sp), a0
     movbu   (0x46, sp), d0
-    call    func_484F8EF5_entry, 0, 0x14
+    call    SoundEditPanText_entry, 0, 0x14
 loc_484F54A5:
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x24, sp), a0
@@ -36793,7 +36793,7 @@ loc_484F5565:
     extbu   d2
     mov     d2, d1
     mov     1, d0
-    call    func_484F77A3_entry, [d2,d3], 0x20
+    call    DrumEditElemOnSet_entry, [d2,d3], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x1c, sp), d1
     mov     d1, (0x10, sp)
@@ -36867,7 +36867,7 @@ loc_484F55DD:
     exthu   d2
     mov     d2, d0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     mov     d3, d1
     add     -1, d0
@@ -36888,7 +36888,7 @@ loc_484F55DD:
     mov     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484F5675
 loc_484F563F:
     mov     0x7f, d0
@@ -36918,7 +36918,7 @@ loc_484F563F:
     add     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484F5675:
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x1c, sp), d1
@@ -36961,7 +36961,7 @@ loc_484F5690:
     add     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484F5709
 loc_484F56D7:
     mov     0x7f, d0
@@ -36989,7 +36989,7 @@ loc_484F56D7:
     add     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484F5709:
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x1c, sp), d1
@@ -37038,7 +37038,7 @@ loc_484F573C:
     exthu   d2
     mov     d2, d0
     mov     1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484F5773:
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x1c, sp), d1
@@ -37089,7 +37089,7 @@ loc_484F57AC:
     add     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484F5818
 loc_484F57E3:
     mov     0x7f, d0
@@ -37118,7 +37118,7 @@ loc_484F57E3:
     add     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484F5818:
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x1c, sp), d1
@@ -37169,7 +37169,7 @@ loc_484F5851:
     mov     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484F58BD
 loc_484F5887:
     mov     0x7f, d0
@@ -37198,7 +37198,7 @@ loc_484F5887:
     exthu   d2
     mov     1, d1
     mov     d2, d0
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484F58BD:
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x1c, sp), d1
@@ -37233,7 +37233,7 @@ loc_484F58D8:
     mov     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x1c, sp), d1
     mov     d1, (0x10, sp)
@@ -37268,7 +37268,7 @@ loc_484F5929:
     add     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x1c, sp), d1
     mov     d1, (0x10, sp)
@@ -37302,7 +37302,7 @@ loc_484F5978:
     add     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x1c, sp), d1
     mov     d1, (0x10, sp)
@@ -37347,7 +37347,7 @@ loc_484F5A15:
     extbu   d2
     mov     d2, d1
     clr     d0
-    call    func_484F77A3_entry, [d2,d3], 0x20
+    call    DrumEditElemOnSet_entry, [d2,d3], 0x20
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x1c, sp), d1
     mov     d1, (0x10, sp)
@@ -37419,7 +37419,7 @@ loc_484F5A7D:
     add     d1, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484F5AF7
 loc_484F5AC2:
     clr     d0
@@ -37448,7 +37448,7 @@ loc_484F5AC2:
     exthu   d2
     mov     d2, d0
     mov     -1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484F5AF7:
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x1c, sp), d1
@@ -37490,7 +37490,7 @@ loc_484F5B12:
     add     d1, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484F5B8A
 loc_484F5B57:
     clr     d0
@@ -37518,7 +37518,7 @@ loc_484F5B57:
     add     d1, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484F5B8A:
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x1c, sp), d1
@@ -37564,7 +37564,7 @@ loc_484F5BBD:
     add     d1, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484F5BED:
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x1c, sp), d1
@@ -37614,7 +37614,7 @@ loc_484F5C27:
     mov     d1, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484F5CBB
 loc_484F5C5D:
     extbu   d2
@@ -37642,7 +37642,7 @@ loc_484F5C5D:
     mov     a0, d2
     mov     sp, a0
     add     0x20, a0
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     mov     2, a0
     inc     d0
@@ -37665,7 +37665,7 @@ loc_484F5C5D:
     exthu   d2
     mov     d2, d0
     mov     -1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484F5CBB:
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x1c, sp), d1
@@ -37715,7 +37715,7 @@ loc_484F5CF4:
     mov     d1, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484F5D60
 loc_484F5D2A:
     clr     d0
@@ -37745,7 +37745,7 @@ loc_484F5D2A:
     mov     d1, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484F5D60:
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x1c, sp), d1
@@ -37779,7 +37779,7 @@ loc_484F5D7B:
     mov     d1, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x1c, sp), d1
     mov     d1, (0x10, sp)
@@ -37812,7 +37812,7 @@ loc_484F5DCA:
     exthu   d1
     mov     d1, d0
     mov     -1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x1c, sp), d1
     mov     d1, (0x10, sp)
@@ -37845,7 +37845,7 @@ loc_484F5E19:
     add     d1, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     call    GetFocusObject_entry, 0, 0x10
     mov     (0x1c, sp), d1
     mov     d1, (0x10, sp)
@@ -37905,7 +37905,7 @@ loc_484F5ED3:
     extbu   d2
     mov     d2, d0
     mov     a2, a0
-    call    func_484F7854_entry, [d2,d3,a2], 0x28
+    call    DrumEditElemOnText_entry, [d2,d3,a2], 0x28
     jmp     loc_484F6416
 loc_484F5EDE:
     extbu   d2
@@ -38026,10 +38026,10 @@ loc_484F5FE0:
     add     d1, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     mov     a2, a0
-    call    func_484F852C_entry, 0, 0x14
+    call    SoundEditFreqText_entry, 0, 0x14
     bra     loc_484F604E
 loc_484F6016:
     extbu   d2
@@ -38055,10 +38055,10 @@ loc_484F6016:
     add     0x20, a0
     mov     0x7f, d1
     mov     d2, d0
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     mov     a2, a0
-    call    func_484F852C_entry, 0, 0x14
+    call    SoundEditFreqText_entry, 0, 0x14
 loc_484F604E:
     clr     d0
     mov     d0, (0x10, sp)
@@ -38110,11 +38110,11 @@ loc_484F6092:
     exthu   d2
     mov     d2, d0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     mov     a2, a0
     clr     d1
-    call    func_484F854F_entry, [a2], 0x24
+    call    SoundEditDbFloatText_entry, [a2], 0x24
     bra     loc_484F613E
 loc_484F60CD:
     extbu   d2
@@ -38141,11 +38141,11 @@ loc_484F60CD:
     exthu   d2
     mov     d2, d0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     mov     a2, a0
     mov     1, d1
-    call    func_484F854F_entry, [a2], 0x24
+    call    SoundEditDbFloatText_entry, [a2], 0x24
     bra     loc_484F613E
 loc_484F610A:
     extbu   d2
@@ -38169,11 +38169,11 @@ loc_484F610A:
     mov     sp, a0
     add     0x20, a0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     clr     d1
     mov     a2, a0
-    call    func_484F854F_entry, [a2], 0x24
+    call    SoundEditDbFloatText_entry, [a2], 0x24
 loc_484F613E:
     clr     d0
     mov     d0, (0x10, sp)
@@ -38216,7 +38216,7 @@ loc_484F616B:
     add     d1, d0
     exthu   d0
     mov     0x20, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     cmp     0, d0
     beq     loc_484F61A2
@@ -38286,10 +38286,10 @@ loc_484F620C:
     mov     sp, a0
     add     0x20, a0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     mov     a2, a0
-    call    func_484F852C_entry, 0, 0x14
+    call    SoundEditFreqText_entry, 0, 0x14
     bra     loc_484F628F
 loc_484F6244:
     extbu   d2
@@ -38315,10 +38315,10 @@ loc_484F6244:
     mov     sp, a0
     add     0x20, a0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     mov     a2, a0
-    call    func_484F852C_entry, 0, 0x14
+    call    SoundEditFreqText_entry, 0, 0x14
     bra     loc_484F628F
 loc_484F627E:
     mov     a2, (8, sp)
@@ -38371,10 +38371,10 @@ loc_484F62C2:
     add     d1, d0
     exthu   d0
     mov     0x1f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     mov     a2, a0
-    call    func_484F8643_entry, 0, 0x14
+    call    SoundEditDbCutText_entry, 0, 0x14
     bra     loc_484F6343
 loc_484F62F8:
     extbu   d2
@@ -38400,11 +38400,11 @@ loc_484F62F8:
     add     d1, d0
     exthu   d0
     mov     0x7f, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     mov     a2, a0
     clr     d1
-    call    func_484F854F_entry, [a2], 0x24
+    call    SoundEditDbFloatText_entry, [a2], 0x24
     bra     loc_484F6343
 loc_484F6332:
     mov     a2, (8, sp)
@@ -38444,7 +38444,7 @@ loc_484F6358:
     mov     d1, d0
     mov     Str_3d_71, a1
     clr     d1
-    call    func_484F792D_entry, [d2,d3,a2,a3], 0x2c
+    call    DrumEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484F6416
 loc_484F6391:
     extbu   d2
@@ -38470,7 +38470,7 @@ loc_484F6391:
     add     d1, d0
     exthu   d0
     mov     0xe0, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x20, sp), d0
     extb    d0
     add     -3, d0
@@ -38509,7 +38509,7 @@ loc_484F63E2:
     exthu   d0
     mov     Str_3d_70, a1
     clr     d1
-    call    func_484F792D_entry, [d2,d3,a2,a3], 0x2c
+    call    DrumEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
 loc_484F6416:
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
@@ -38980,7 +38980,7 @@ loc_484F68FD:
     mov     1, d0
     extbu   d2
     mov     d2, d1
-    call    func_484F77A3_entry, [d2,d3], 0x20
+    call    DrumEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484F6AD2
 loc_484F6909:
     mov     0x64, d0
@@ -39009,7 +39009,7 @@ loc_484F6909:
     exthu   d1
     mov     d1, d0
     mov     1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484F6AD2
 loc_484F6942:
     mov     0x64, d0
@@ -39038,7 +39038,7 @@ loc_484F6942:
     mov     d2, d0
     exthu   d0
     mov     1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484F6AD2
 loc_484F697B:
     mov     0x64, d0
@@ -39067,7 +39067,7 @@ loc_484F697B:
     mov     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484F6AD2
 loc_484F69B2:
     mov     0x64, d0
@@ -39095,7 +39095,7 @@ loc_484F69B2:
     mov     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484F6AD2
 loc_484F69E8:
     movbu   (Str_empty_266), d0
@@ -39110,7 +39110,7 @@ loc_484F69E8:
     add     0xd, d0
     exthu   d0
     mov     0x20, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     cmp     1, d0
     beq     loc_484F6A10
@@ -39142,7 +39142,7 @@ loc_484F6A10:
     add     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484F6AD2
 loc_484F6A46:
     movbu   (Str_empty_266), d0
@@ -39157,7 +39157,7 @@ loc_484F6A46:
     add     0xd, d0
     exthu   d0
     mov     0x20, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     cmp     1, d0
     bne     loc_484F6AD2
@@ -39186,7 +39186,7 @@ loc_484F6A46:
     mov     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484F6AD2
 loc_484F6A9D:
     mov     0x32, d0
@@ -39215,7 +39215,7 @@ loc_484F6A9D:
     add     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484F6AD2:
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, (0x10, sp)
@@ -39268,7 +39268,7 @@ loc_484F6B45:
     clr     d0
     extbu   d2
     mov     d2, d1
-    call    func_484F77A3_entry, [d2,d3], 0x20
+    call    DrumEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484F6D0C
 loc_484F6B50:
     clr     d0
@@ -39296,7 +39296,7 @@ loc_484F6B50:
     mov     d1, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484F6D0C
 loc_484F6B87:
     clr     d0
@@ -39323,7 +39323,7 @@ loc_484F6B87:
     mov     d1, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484F6D0C
 loc_484F6BBB:
     clr     d0
@@ -39350,7 +39350,7 @@ loc_484F6BBB:
     exthu   d1
     mov     d1, d0
     mov     -1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484F6D0C
 loc_484F6BEF:
     clr     d0
@@ -39377,7 +39377,7 @@ loc_484F6BEF:
     mov     d1, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484F6D0C
 loc_484F6C23:
     movbu   (Str_empty_266), d0
@@ -39393,7 +39393,7 @@ loc_484F6C23:
     add     0xd, d0
     exthu   d0
     mov     0x20, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     cmp     1, d0
     beq     loc_484F6C4C
@@ -39424,7 +39424,7 @@ loc_484F6C4C:
     mov     d1, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484F6D0C
 loc_484F6C7E:
     movbu   (Str_empty_266), d0
@@ -39439,7 +39439,7 @@ loc_484F6C7E:
     add     0xd, d0
     exthu   d0
     mov     0x20, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     cmp     1, d0
     bne     loc_484F6D0C
@@ -39468,7 +39468,7 @@ loc_484F6C7E:
     mov     d1, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484F6D0C
 loc_484F6CD6:
     mov     -0x32, d0
@@ -39498,7 +39498,7 @@ loc_484F6CD6:
     exthu   d1
     mov     d1, d0
     mov     -1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484F6D0C:
     call    GetFocusObject_entry, 0, 0x10
     mov     a2, (0x10, sp)
@@ -39569,7 +39569,7 @@ loc_484F6DA5:
     extbu   d2
     mov     d2, d0
     mov     a2, a0
-    call    func_484F7854_entry, [d2,d3,a2], 0x28
+    call    DrumEditElemOnText_entry, [d2,d3,a2], 0x28
     jmp     loc_484F700E
 loc_484F6DB0:
     mov     0x7f, d0
@@ -39595,7 +39595,7 @@ loc_484F6DB0:
     mov     Str_3d_69, a1
     clr     d1
     mov     a2, a0
-    call    func_484F792D_entry, [d2,d3,a2,a3], 0x2c
+    call    DrumEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -39628,7 +39628,7 @@ loc_484F6DF7:
     clr     d1
     mov     a2, a0
     mov     d2, d0
-    call    func_484F792D_entry, [d2,d3,a2,a3], 0x2c
+    call    DrumEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -39659,7 +39659,7 @@ loc_484F6E3F:
     mov     Str_3d_67, a1
     clr     d1
     mov     a2, a0
-    call    func_484F792D_entry, [d2,d3,a2,a3], 0x2c
+    call    DrumEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -39691,7 +39691,7 @@ loc_484F6E86:
     mov     Str_3d_66, a1
     clr     d1
     mov     a2, a0
-    call    func_484F792D_entry, [d2,d3,a2,a3], 0x2c
+    call    DrumEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -39711,7 +39711,7 @@ loc_484F6ED0:
     add     0xd, d0
     exthu   d0
     mov     0x20, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     cmp     0, d0
     beq     loc_484F6EFC
@@ -39749,7 +39749,7 @@ loc_484F6F10:
     mov     Str_3d_65, a1
     clr     d1
     mov     a2, a0
-    call    func_484F792D_entry, [d2,d3,a2,a3], 0x2c
+    call    DrumEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -39769,7 +39769,7 @@ loc_484F6F57:
     add     0xd, d0
     exthu   d0
     mov     0x20, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     cmp     0, d0
     beq     loc_484F6F83
@@ -39807,7 +39807,7 @@ loc_484F6F96:
     mov     Str_3d_64, a1
     clr     d1
     mov     a2, a0
-    call    func_484F792D_entry, [d2,d3,a2,a3], 0x2c
+    call    DrumEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -39836,7 +39836,7 @@ loc_484F6FDC:
     mov     Str_3d_63, a1
     mov     1, d1
     mov     a2, a0
-    call    func_484F792D_entry, [d2,d3,a2,a3], 0x2c
+    call    DrumEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
 loc_484F700E:
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
@@ -39926,7 +39926,7 @@ loc_484F70C6:
 loc_484F70C9:
     mov     1, d0
     extbu   d1
-    call    func_484F77A3_entry, [d2,d3], 0x20
+    call    DrumEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484F71E8
 loc_484F70D4:
     mov     0x7f, d0
@@ -39955,7 +39955,7 @@ loc_484F70D4:
     mov     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484F71E8
 loc_484F710D:
     clr     d0
@@ -39983,7 +39983,7 @@ loc_484F710D:
     mov     d1, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484F71E8
 loc_484F7145:
     mov     0x7f, d0
@@ -40013,7 +40013,7 @@ loc_484F7145:
     mov     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484F71E8
 loc_484F717E:
     clr     d0
@@ -40041,7 +40041,7 @@ loc_484F717E:
     add     d1, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484F71E8
 loc_484F71B4:
     mov     0x7f, d0
@@ -40070,7 +40070,7 @@ loc_484F71B4:
     mov     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484F71E8:
     call    GetFocusObject_entry, 0, 0x10
     mov     d2, (0x10, sp)
@@ -40114,7 +40114,7 @@ loc_484F7248:
 loc_484F724B:
     clr     d0
     extbu   d1
-    call    func_484F77A3_entry, [d2,d3], 0x20
+    call    DrumEditElemOnSet_entry, [d2,d3], 0x20
     jmp     loc_484F7365
 loc_484F7255:
     clr     d0
@@ -40142,7 +40142,7 @@ loc_484F7255:
     add     d1, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484F7365
 loc_484F728B:
     mov     1, d0
@@ -40171,7 +40171,7 @@ loc_484F728B:
     add     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     jmp     loc_484F7365
 loc_484F72C4:
     clr     d0
@@ -40198,7 +40198,7 @@ loc_484F72C4:
     exthu   d2
     mov     -1, d1
     mov     d2, d0
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484F7365
 loc_484F72F7:
     mov     1, d0
@@ -40228,7 +40228,7 @@ loc_484F72F7:
     add     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
     bra     loc_484F7365
 loc_484F7330:
     clr     d0
@@ -40257,7 +40257,7 @@ loc_484F7330:
     mov     d1, d0
     exthu   d0
     mov     -1, d1
-    call    func_484F766D_entry, [d2,d3,a2], 0x2c
+    call    DrumEditFieldStep_entry, [d2,d3,a2], 0x2c
 loc_484F7365:
     call    GetFocusObject_entry, 0, 0x10
     mov     d3, (0x10, sp)
@@ -40319,7 +40319,7 @@ loc_484F73ED:
 loc_484F73F0:
     extbu   d0
     mov     a2, a0
-    call    func_484F7854_entry, [d2,d3,a2], 0x28
+    call    DrumEditElemOnText_entry, [d2,d3,a2], 0x28
     jmp     loc_484F755F
 loc_484F73FA:
     mov     0x7f, d1
@@ -40346,7 +40346,7 @@ loc_484F73FA:
     mov     Str_3d_62, a1
     clr     d1
     mov     a2, a0
-    call    func_484F792D_entry, [d2,d3,a2,a3], 0x2c
+    call    DrumEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484F755F
 loc_484F7431:
     extbu   d0
@@ -40371,7 +40371,7 @@ loc_484F7431:
     mov     d1, d0
     exthu   d0
     mov     0x80, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     cmp     0, d0
     beq     loc_484F746C
@@ -40414,7 +40414,7 @@ loc_484F7494:
     mov     Str_3d_61, a1
     clr     d1
     mov     a2, a0
-    call    func_484F792D_entry, [d2,d3,a2,a3], 0x2c
+    call    DrumEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_484F755F
 loc_484F74C9:
     extbu   d0
@@ -40440,7 +40440,7 @@ loc_484F74C9:
     exthu   d2
     mov     d2, d0
     mov     0x80, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x1c, sp), d0
     cmp     0, d0
     beq     loc_484F7506
@@ -40484,7 +40484,7 @@ loc_484F752C:
     mov     d1, d0
     mov     Str_3d_60, a1
     clr     d1
-    call    func_484F792D_entry, [d2,d3,a2,a3], 0x2c
+    call    DrumEditFieldPrint_entry, [d2,d3,a2,a3], 0x2c
 loc_484F755F:
     call    GetFocusObject_entry, 0, 0x10
     mov     a3, (0x10, sp)
@@ -40499,11 +40499,11 @@ loc_484F757B:
     clr     d0
 loc_484F757C:
     ret     [d2,d3,a2,a3], 0x44
-
-func_484F757F:
+# SoundEditFieldStep  (CPU 0x484f757f)
+SoundEditFieldStep:
     movm    [d2,d3,a2], (sp)
     add     -0x20, sp
-func_484F757F_entry:
+SoundEditFieldStep_entry:
     mov     d0, d2
     movbu   d1, (0x38, sp)
     exthu   d2
@@ -40614,11 +40614,11 @@ loc_484F7648:
     movbu   (0x19, sp), d0
     call    func_4C00E8C8_entry, [d2,d3,a2,a3], 0x30
     ret     [d2,d3,a2], 0x2c
-
-func_484F766D:
+# DrumEditFieldStep  (CPU 0x484f766d)
+DrumEditFieldStep:
     movm    [d2,d3,a2], (sp)
     add     -0x20, sp
-func_484F766D_entry:
+DrumEditFieldStep_entry:
     mov     d0, d2
     movbu   d1, (0x38, sp)
     exthu   d2
@@ -40729,11 +40729,11 @@ loc_484F7736:
     movbu   (0x19, sp), d0
     call    func_4C00E98A_entry, [d2,d3,a2,a3], 0x34
     ret     [d2,d3,a2], 0x2c
-
-func_484F775B:
+# SoundEditElemOnSet  (CPU 0x484f775b)
+SoundEditElemOnSet:
     movm    [d2,d3], (sp)
     add     -0x18, sp
-func_484F775B_entry:
+SoundEditElemOnSet_entry:
     mov     d0, d3
     mov     d1, d2
     call    GetPartSelect_entry, 0, 0x14
@@ -40770,11 +40770,11 @@ loc_484F778E:
     call    func_4C00E8C8_entry, [d2,d3,a2,a3], 0x30
 loc_484F77A0:
     ret     [d2,d3], 0x20
-
-func_484F77A3:
+# DrumEditElemOnSet  (CPU 0x484f77a3)
+DrumEditElemOnSet:
     movm    [d2,d3], (sp)
     add     -0x18, sp
-func_484F77A3_entry:
+DrumEditElemOnSet_entry:
     mov     d0, d3
     mov     d1, d2
     call    GetPartSelect_entry, 0, 0x14
@@ -40820,11 +40820,11 @@ loc_484F77E9:
     call    func_4C00E98A_entry, [d2,d3,a2,a3], 0x34
 loc_484F77FD:
     ret     [d2,d3], 0x20
-
-func_484F7800:
+# SoundEditElemOnText  (CPU 0x484f7800)
+SoundEditElemOnText:
     movm    [d2,a2], (sp)
     add     -0x1c, sp
-func_484F7800_entry:
+SoundEditElemOnText_entry:
     mov     a0, a2
     mov     d0, d2
     call    GetPartSelect_entry, 0, 0x14
@@ -40855,11 +40855,11 @@ loc_484F7840:
     call    sprintf_entry, [a2], 0x20
 loc_484F7851:
     ret     [d2,a2], 0x24
-
-func_484F7854:
+# DrumEditElemOnText  (CPU 0x484f7854)
+DrumEditElemOnText:
     movm    [d2,d3,a2], (sp)
     add     -0x1c, sp
-func_484F7854_entry:
+DrumEditElemOnText_entry:
     mov     a0, a2
     mov     d0, d3
     movbu   (Str_empty_266), d2
@@ -40897,11 +40897,11 @@ loc_484F78A5:
     call    sprintf_entry, [a2], 0x20
 loc_484F78B6:
     ret     [d2,d3,a2], 0x28
-
-func_484F78B9:
+# SoundEditFieldPrint  (CPU 0x484f78b9)
+SoundEditFieldPrint:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x1c, sp
-func_484F78B9_entry:
+SoundEditFieldPrint_entry:
     mov     d0, d2
     exthu   d2
     mov     a1, a3
@@ -40952,11 +40952,11 @@ loc_484F791A:
     call    sprintf_entry, [a2], 0x20
 loc_484F792A:
     ret     [d2,d3,a2,a3], 0x2c
-
-func_484F792D:
+# DrumEditFieldPrint  (CPU 0x484f792d)
+DrumEditFieldPrint:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x1c, sp
-func_484F792D_entry:
+DrumEditFieldPrint_entry:
     mov     d0, d2
     exthu   d2
     mov     a1, a3
@@ -41007,11 +41007,11 @@ loc_484F798E:
     call    sprintf_entry, [a2], 0x20
 loc_484F799E:
     ret     [d2,d3,a2,a3], 0x2c
-
-func_484F79A1:
+# SoundEditFieldGet  (CPU 0x484f79a1)
+SoundEditFieldGet:
     movm    [d2,d3,a2], (sp)
     add     -0x18, sp
-func_484F79A1_entry:
+SoundEditFieldGet_entry:
     mov     d1, d3
     mov     a0, a2
     mov     d0, d2
@@ -41040,11 +41040,11 @@ func_484F79A1_entry:
     leq
 loc_484F79DC:
     ret     [d2,d3,a2], 0x24
-
-func_484F79DF:
+# DrumEditFieldGet  (CPU 0x484f79df)
+DrumEditFieldGet:
     movm    [d2,d3,a2], (sp)
     add     -0x18, sp
-func_484F79DF_entry:
+DrumEditFieldGet_entry:
     mov     d1, d3
     mov     a0, a2
     mov     d0, d2
@@ -41073,11 +41073,11 @@ func_484F79DF_entry:
     leq
 loc_484F7A1A:
     ret     [d2,d3,a2], 0x24
-
-func_484F7A1D:
+# SoundEditField16Get  (CPU 0x484f7a1d)
+SoundEditField16Get:
     movm    [d2,d3,a2], (sp)
     add     -0x18, sp
-func_484F7A1D_entry:
+SoundEditField16Get_entry:
     mov     d1, d3
     mov     a0, a2
     mov     d0, d2
@@ -41106,11 +41106,11 @@ func_484F7A1D_entry:
     leq
 loc_484F7A58:
     ret     [d2,d3,a2], 0x24
-
-func_484F7A5B:
+# SoundEditFieldSet  (CPU 0x484f7a5b)
+SoundEditFieldSet:
     movm    [d2,d3,a2], (sp)
     add     -0x18, sp
-func_484F7A5B_entry:
+SoundEditFieldSet_entry:
     mov     d1, d3
     mov     d0, a2
     call    GetPartSelect_entry, 0, 0x14
@@ -41143,11 +41143,11 @@ loc_484F7A80:
     exthu   d1
     call    func_4C00E8C8_entry, [d2,d3,a2,a3], 0x30
     ret     [d2,d3,a2], 0x24
-
-func_484F7A9E:
+# DrumEditFieldSet  (CPU 0x484f7a9e)
+DrumEditFieldSet:
     movm    [d2,d3,a2], (sp)
     add     -0x18, sp
-func_484F7A9E_entry:
+DrumEditFieldSet_entry:
     mov     d1, d3
     mov     d0, a2
     call    GetPartSelect_entry, 0, 0x14
@@ -41180,11 +41180,11 @@ loc_484F7AC3:
     exthu   d1
     call    func_4C00E98A_entry, [d2,d3,a2,a3], 0x34
     ret     [d2,d3,a2], 0x24
-
-func_484F7AE1:
+# SoundEditField16Set  (CPU 0x484f7ae1)
+SoundEditField16Set:
     movm    [d2,d3,a2], (sp)
     add     -0x18, sp
-func_484F7AE1_entry:
+SoundEditField16Set_entry:
     mov     d1, d3
     mov     d0, a2
     call    GetPartSelect_entry, 0, 0x14
@@ -41217,11 +41217,11 @@ loc_484F7B06:
     exthu   d1
     call    func_4C00E8C8_entry, [d2,d3,a2,a3], 0x30
     ret     [d2,d3,a2], 0x24
-
-func_484F7B24:
+# SoundEditNoteNameText  (CPU 0x484f7b24)
+SoundEditNoteNameText:
     movm    [d2,d3,a2], (sp)
     add     -0x18, sp
-func_484F7B24_entry:
+SoundEditNoteNameText_entry:
     mov     a0, a2
     mov     d0, d3
     extbu   d3
@@ -41264,7 +41264,7 @@ func_484F7B62_entry:
     add     d2, d0
     exthu   d0
     mov     3, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x14, sp), d0
     cmp     0, d0
     beq     loc_484F7B95
@@ -41285,7 +41285,7 @@ loc_484F7B99:
     exthu   d0
     mov     a2, a0
     mov     0xc0, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x14, sp), d0
     cmp     0, d0
     beq     loc_484F7BBE
@@ -41314,7 +41314,7 @@ loc_484F7BCE:
     mov     d2, d0
     exthu   d0
     mov     0xc0, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x14, sp), d0
     cmp     0, d0
     beq     loc_484F7BF0
@@ -41373,7 +41373,7 @@ func_484F7C08_entry:
     exthu   d2
     mov     d2, d0
     mov     3, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x14, sp), d0
     cmp     0, d0
     beq     loc_484F7C56
@@ -41406,7 +41406,7 @@ loc_484F7C5A:
     exthu   d2
     mov     d2, d0
     mov     0xc0, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x14, sp), d0
     cmp     0, d0
     beq     loc_484F7C92
@@ -41445,7 +41445,7 @@ loc_484F7CA4:
     add     d1, d0
     exthu   d0
     mov     0xc0, d1
-    call    func_484F79DF_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x14, sp), d0
     cmp     0, d0
     beq     loc_484F7CDB
@@ -41531,7 +41531,7 @@ loc_484F7D3A:
     mov     a1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xc0, d0
     mov     d0, (0x10, sp)
     mov     0x51, a0
@@ -41539,7 +41539,7 @@ loc_484F7D3A:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     ret     [d2], 0x18
 loc_484F7D6B:
     movbu   (0x28, sp), d0
@@ -41563,7 +41563,7 @@ loc_484F7D7A:
     mov     a0, d0
     exthu   d0
     clr     d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     ret     [d2], 0x18
 loc_484F7D97:
     extbu   d2
@@ -41578,7 +41578,7 @@ loc_484F7D97:
     add     d2, d0
     exthu   d0
     mov     1, d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xc0, d0
     mov     d0, (0x10, sp)
     mov     0x51, a0
@@ -41586,7 +41586,7 @@ loc_484F7D97:
     mov     a0, d0
     exthu   d0
     clr     d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     ret     [d2], 0x18
 loc_484F7DC4:
     movbu   (0x28, sp), d0
@@ -41609,7 +41609,7 @@ loc_484F7DD3:
     add     d2, d0
     exthu   d0
     mov     1, d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xc0, d0
     mov     d0, (0x10, sp)
     mov     0x51, a0
@@ -41617,7 +41617,7 @@ loc_484F7DD3:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     ret     [d2], 0x18
 loc_484F7E01:
     extbu   d2
@@ -41632,14 +41632,14 @@ loc_484F7E01:
     add     d2, d0
     exthu   d0
     mov     1, d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xc0, d0
     mov     d0, (0x10, sp)
     add     0x51, d2
     mov     d2, d0
     exthu   d0
     mov     3, d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     ret     [d2], 0x18
 loc_484F7E2C:
     movbu   (0x28, sp), d0
@@ -41663,14 +41663,14 @@ loc_484F7E3B:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xc0, d0
     mov     d0, (0x10, sp)
     add     0x51, d2
     mov     d2, d0
     exthu   d0
     clr     d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     ret     [d2], 0x18
 loc_484F7E68:
     extbu   d2
@@ -41686,14 +41686,14 @@ loc_484F7E68:
     mov     a0, d0
     exthu   d0
     mov     2, d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xc0, d0
     mov     d0, (0x10, sp)
     add     0x51, d2
     mov     d2, d0
     exthu   d0
     mov     1, d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     ret     [d2], 0x18
 loc_484F7E96:
     movbu   (0x28, sp), d0
@@ -41717,14 +41717,14 @@ loc_484F7EA5:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xc0, d0
     mov     d0, (0x10, sp)
     add     0x51, d2
     mov     d2, d0
     exthu   d0
     mov     3, d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     ret     [d2], 0x18
 loc_484F7ED3:
     extbu   d2
@@ -41740,14 +41740,14 @@ loc_484F7ED3:
     mov     a0, d0
     exthu   d0
     mov     2, d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xc0, d0
     mov     d0, (0x10, sp)
     add     0x51, d2
     mov     d2, d0
     exthu   d0
     clr     d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     ret     [d2], 0x18
 loc_484F7F00:
     movbu   (0x28, sp), d0
@@ -41771,14 +41771,14 @@ loc_484F7F0F:
     mov     a0, d0
     exthu   d0
     mov     2, d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xc0, d0
     mov     d0, (0x10, sp)
     add     0x51, d2
     mov     d2, d0
     exthu   d0
     mov     1, d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     ret     [d2], 0x18
 loc_484F7F3D:
     extbu   d2
@@ -41794,14 +41794,14 @@ loc_484F7F3D:
     mov     a0, d0
     exthu   d0
     mov     2, d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xc0, d0
     mov     d0, (0x10, sp)
     add     0x51, d2
     mov     d2, d0
     exthu   d0
     mov     3, d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     ret     [d2], 0x18
 loc_484F7F6B:
     movbu   (0x28, sp), d0
@@ -41825,14 +41825,14 @@ loc_484F7F7A:
     mov     a0, d0
     exthu   d0
     mov     2, d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xc0, d0
     mov     d0, (0x10, sp)
     add     0x51, d2
     mov     d2, d0
     exthu   d0
     clr     d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     ret     [d2], 0x18
 loc_484F7FA7:
     extbu   d2
@@ -41848,14 +41848,14 @@ loc_484F7FA7:
     mov     a1, d0
     exthu   d0
     mov     3, d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     add     0x4e, d2
     mov     0x80, d0
     mov     d0, (0x10, sp)
     mov     d2, d0
     exthu   d0
     mov     1, d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0x80, d0
     mov     d0, (0x10, sp)
     mov     2, a0
@@ -41863,7 +41863,7 @@ loc_484F7FA7:
     mov     a0, d0
     exthu   d0
     mov     1, d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     bra     loc_484F801A
 loc_484F7FE7:
     movbu   (0x28, sp), d0
@@ -41882,7 +41882,7 @@ loc_484F7FE7:
     add     d2, d0
     exthu   d0
     mov     2, d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xc0, d0
     mov     d0, (0x10, sp)
     mov     0x51, a0
@@ -41890,7 +41890,7 @@ loc_484F7FE7:
     mov     a0, d0
     exthu   d0
     mov     3, d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
 loc_484F801A:
     ret     [d2], 0x18
 
@@ -41960,7 +41960,7 @@ loc_484F8067:
     add     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xc0, d0
     mov     d0, (0x10, sp)
     add     0x16, d2
@@ -41975,7 +41975,7 @@ loc_484F8067:
     exthu   d1
     mov     d1, d0
     mov     1, d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     ret     [d2,d3,a2], 0x34
 loc_484F80B4:
     movbu   (0x44, sp), d0
@@ -42008,7 +42008,7 @@ loc_484F80C3:
     add     d1, d0
     exthu   d0
     clr     d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     ret     [d2,d3,a2], 0x34
 loc_484F80F1:
     extbu   d2
@@ -42033,7 +42033,7 @@ loc_484F80F1:
     exthu   d1
     mov     d1, d0
     mov     1, d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xc0, d0
     mov     d0, (0x10, sp)
     mov     0x16, a0
@@ -42049,7 +42049,7 @@ loc_484F80F1:
     add     d1, d0
     exthu   d0
     clr     d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     ret     [d2,d3,a2], 0x34
 loc_484F8142:
     movbu   (0x44, sp), d0
@@ -42088,7 +42088,7 @@ loc_484F8151:
     mov     d1, d0
     add     0x16, d2
     mov     1, d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xc0, d0
     mov     d0, (0x10, sp)
     mov     d2, d1
@@ -42103,7 +42103,7 @@ loc_484F8151:
     exthu   d1
     mov     d1, d0
     mov     1, d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     ret     [d2,d3,a2], 0x34
 loc_484F81A6:
     movbu   (Str_empty_266), d0
@@ -42133,7 +42133,7 @@ loc_484F81A6:
     mov     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xc0, d0
     mov     d0, (0x10, sp)
     mov     0x16, a0
@@ -42150,7 +42150,7 @@ loc_484F81A6:
     add     d1, d0
     exthu   d0
     mov     3, d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     ret     [d2,d3,a2], 0x34
 loc_484F8200:
     movbu   (0x44, sp), d0
@@ -42189,7 +42189,7 @@ loc_484F820F:
     exthu   d0
     add     0x16, d2
     mov     1, d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xc0, d0
     mov     d0, (0x10, sp)
     mov     d2, d1
@@ -42204,7 +42204,7 @@ loc_484F820F:
     mov     d1, d0
     exthu   d0
     clr     d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     ret     [d2,d3,a2], 0x34
 loc_484F8263:
     movbu   (Str_empty_266), d0
@@ -42235,7 +42235,7 @@ loc_484F8263:
     exthu   d0
     add     0x16, d2
     mov     2, d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xc0, d0
     mov     d0, (0x10, sp)
     mov     d2, d1
@@ -42250,7 +42250,7 @@ loc_484F8263:
     add     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     ret     [d2,d3,a2], 0x34
 loc_484F82B8:
     movbu   (0x44, sp), d0
@@ -42283,7 +42283,7 @@ loc_484F82C7:
     mov     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xc0, d0
     mov     d0, (0x10, sp)
     add     0x16, d2
@@ -42298,7 +42298,7 @@ loc_484F82C7:
     add     d1, d0
     exthu   d0
     mov     3, d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     ret     [d2,d3,a2], 0x34
 loc_484F8314:
     extbu   d2
@@ -42323,7 +42323,7 @@ loc_484F8314:
     add     d1, d0
     exthu   d0
     mov     2, d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xc0, d0
     mov     d0, (0x10, sp)
     add     0x16, d2
@@ -42338,7 +42338,7 @@ loc_484F8314:
     mov     d1, d0
     exthu   d0
     clr     d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     ret     [d2,d3,a2], 0x34
 loc_484F8360:
     movbu   (0x44, sp), d0
@@ -42372,7 +42372,7 @@ loc_484F836F:
     mov     d1, d0
     exthu   d0
     mov     2, d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xc0, d0
     mov     d0, (0x10, sp)
     add     0x16, d2
@@ -42387,7 +42387,7 @@ loc_484F836F:
     mov     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     ret     [d2,d3,a2], 0x34
 loc_484F83BC:
     extbu   d2
@@ -42413,7 +42413,7 @@ loc_484F83BC:
     mov     d1, d0
     exthu   d0
     mov     2, d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xc0, d0
     mov     d0, (0x10, sp)
     add     0x16, d2
@@ -42428,7 +42428,7 @@ loc_484F83BC:
     mov     d1, d0
     exthu   d0
     mov     3, d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     ret     [d2,d3,a2], 0x34
 loc_484F8409:
     movbu   (0x44, sp), d0
@@ -42462,7 +42462,7 @@ loc_484F8418:
     mov     d1, d0
     exthu   d0
     mov     2, d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xc0, d0
     mov     d0, (0x10, sp)
     add     0x16, d2
@@ -42477,7 +42477,7 @@ loc_484F8418:
     mov     d1, d0
     exthu   d0
     clr     d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     ret     [d2,d3,a2], 0x34
 loc_484F8464:
     extbu   d2
@@ -42504,7 +42504,7 @@ loc_484F8464:
     add     d1, d0
     exthu   d0
     mov     3, d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0x80, d0
     mov     d0, (0x10, sp)
     mov     d3, d1
@@ -42518,7 +42518,7 @@ loc_484F8464:
     add     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0x80, d0
     mov     d0, (0x10, sp)
     add     2, d3
@@ -42533,7 +42533,7 @@ loc_484F8464:
     mov     d1, d0
     exthu   d0
     mov     1, d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     bra     loc_484F8529
 loc_484F84CC:
     movbu   (0x44, sp), d0
@@ -42567,7 +42567,7 @@ loc_484F84CC:
     add     d1, d0
     exthu   d0
     mov     2, d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0xc0, d0
     mov     d0, (0x10, sp)
     mov     0x16, a0
@@ -42584,13 +42584,13 @@ loc_484F84CC:
     mov     d1, d0
     exthu   d0
     mov     3, d1
-    call    func_484F7A9E_entry, [d2,d3,a2], 0x24
+    call    DrumEditFieldSet_entry, [d2,d3,a2], 0x24
 loc_484F8529:
     ret     [d2,d3,a2], 0x34
-
-func_484F852C:
+# SoundEditFreqText  (CPU 0x484f852c)
+SoundEditFreqText:
     add     -0x14, sp
-func_484F852C_entry:
+SoundEditFreqText_entry:
     extbu   d0
     mov     a0, (8, sp)
     asl2    d0
@@ -42601,11 +42601,11 @@ func_484F852C_entry:
     mov     a0, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
     ret     0, 0x14
-
-func_484F854F:
+# SoundEditDbFloatText  (CPU 0x484f854f)
+SoundEditDbFloatText:
     movm    [a2], (sp)
     add     -0x20, sp
-func_484F854F_entry:
+SoundEditDbFloatText_entry:
     mov     a0, a2
     extbu   d1
     cmp     0, d1
@@ -42694,10 +42694,10 @@ loc_484F85C3:
     mov     d1, (0x14, sp)
     call    sprintf_entry, [a2], 0x20
     ret     [a2], 0x24
-
-func_484F8643:
+# SoundEditDbCutText  (CPU 0x484f8643)
+SoundEditDbCutText:
     add     -0x14, sp
-func_484F8643_entry:
+SoundEditDbCutText_entry:
     extbu   d0
     cmp     0, d0
     bne     loc_484F865E
@@ -42715,11 +42715,11 @@ loc_484F865E:
     call    sprintf_entry, [a2], 0x20
 loc_484F8673:
     ret     0, 0x14
-
-func_484F8676:
+# SoundEditLfoNibbleGet  (CPU 0x484f8676)
+SoundEditLfoNibbleGet:
     movm    [d2], (sp)
     add     -0x18, sp
-func_484F8676_entry:
+SoundEditLfoNibbleGet_entry:
     extbu   d0
     mov     0x7a, d2
     nop
@@ -42736,7 +42736,7 @@ func_484F8676_entry:
     mov     sp, a0
     add     0x14, a0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x14, sp), d0
     ret     [d2], 0x1c
 
@@ -43036,10 +43036,10 @@ loc_484F8868:
     mov     d2, d0
     extbu   d0
     retf    [d2], 4
-
-func_484F886D:
+# SoundEditCtrlDestText  (CPU 0x484f886d)
+SoundEditCtrlDestText:
     add     -0x10, sp
-func_484F886D_entry:
+SoundEditCtrlDestText_entry:
     extbu   d0
     cmp     0, d0
     bge     loc_484F8878
@@ -43295,10 +43295,10 @@ loc_484F8B82:
     mov     1, d0
 loc_484F8B84:
     retf    0, 0
-
-func_484F8B87:
+# SoundEditCtrlSwitchText  (CPU 0x484f8b87)
+SoundEditCtrlSwitchText:
     add     -0x10, sp
-func_484F8B87_entry:
+SoundEditCtrlSwitchText_entry:
     extbu   d0
     cmp     0, d0
     beq     loc_484F8B9D
@@ -43334,11 +43334,11 @@ loc_484F8BD6:
     call    sprintf_entry, [a2], 0x20
 loc_484F8BE7:
     ret     0, 0x10
-
-func_484F8BEA:
+# SoundEditElemKeyModeStep  (CPU 0x484f8bea)
+SoundEditElemKeyModeStep:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x18, sp
-func_484F8BEA_entry:
+SoundEditElemKeyModeStep_entry:
     mov     d0, d3
     movbu   d1, (0x34, sp)
     extbu   d3
@@ -43353,7 +43353,7 @@ func_484F8BEA_entry:
     mov     a3, d1
     exthu   d1
     mov     0x11, d0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     sp, a0
     add     0x15, a0
     mov     3, d0
@@ -43362,7 +43362,7 @@ func_484F8BEA_entry:
     mov     a2, d1
     exthu   d1
     mov     0x12, d0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     sp, a0
     add     0x16, a0
     mov     0x7a, d0
@@ -43374,7 +43374,7 @@ func_484F8BEA_entry:
     mov     d3, d0
     exthu   d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x14, sp), d0
     mov     4, d1
     cmp     1, d0
@@ -43467,19 +43467,19 @@ loc_484F8CD3:
     mov     d0, (0x10, sp)
     mov     0x11, d0
     movbu   (0x14, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     a2, d0
     exthu   d0
     mov     d0, (0x10, sp)
     mov     0x12, d0
     movbu   (0x15, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     mov     0x80, d0
     mov     d0, (0x10, sp)
     mov     d3, d0
     exthu   d0
     movbu   (0x16, sp), d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     ret     [d2,d3,a2,a3], 0x28
 
 func_484F8D03:
@@ -43559,11 +43559,11 @@ loc_484F8D68:
     movhu   d0, (a0)
 loc_484F8D77:
     retf    [d2], 4
-
-func_484F8D7A:
+# SoundEditElemKeyModeText  (CPU 0x484f8d7a)
+SoundEditElemKeyModeText:
     movm    [d2,d3,a2], (sp)
     add     -0x18, sp
-func_484F8D7A_entry:
+SoundEditElemKeyModeText_entry:
     mov     d0, d3
     extbu   d3
     mov     d3, d2
@@ -43576,14 +43576,14 @@ func_484F8D7A_entry:
     mov     a0, a2
     mov     sp, a0
     add     0x14, a0
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     sp, a0
     add     0x15, a0
     mov     0x12, d0
     mov     3, d1
     asl     d2, d1
     exthu   d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     mov     sp, a0
     add     0x16, a0
     mov     0x7a, d0
@@ -43595,7 +43595,7 @@ func_484F8D7A_entry:
     exthu   d3
     mov     d3, d0
     mov     0x80, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x14, sp), d0
     mov     4, d1
     cmp     1, d0
@@ -43657,11 +43657,11 @@ loc_484F8E4A:
     call    sprintf_entry, [a2], 0x20
 loc_484F8E5B:
     ret     [d2,d3,a2], 0x24
-
-func_484F8E5E:
+# SoundEditMilliText  (CPU 0x484f8e5e)
+SoundEditMilliText:
     movm    [d2,d3,a2], (sp)
     add     -0x18, sp
-func_484F8E5E_entry:
+SoundEditMilliText_entry:
     mov     a0, a2
     mov     d0, d3
     exthu   d3
@@ -43681,10 +43681,10 @@ func_484F8E5E_entry:
     mov     d0, (0x14, sp)
     call    sprintf_entry, [a2], 0x20
     ret     [d2,d3,a2], 0x24
-
-func_484F8E92:
+# SoundEditPanModeText  (CPU 0x484f8e92)
+SoundEditPanModeText:
     add     -0x10, sp
-func_484F8E92_entry:
+SoundEditPanModeText_entry:
     exthu   d0
     cmp     0, d0
     beq     loc_484F8EA8
@@ -43720,10 +43720,10 @@ loc_484F8EE1:
     call    sprintf_entry, [a2], 0x20
 loc_484F8EF2:
     ret     0, 0x10
-
-func_484F8EF5:
+# SoundEditPanText  (CPU 0x484f8ef5)
+SoundEditPanText:
     add     -0x14, sp
-func_484F8EF5_entry:
+SoundEditPanText_entry:
     extbu   d0
     cmp     0x40, d0
     bne     loc_484F8F10
@@ -43752,10 +43752,10 @@ loc_484F8F2B:
     call    sprintf_entry, [a2], 0x20
 loc_484F8F42:
     ret     0, 0x14
-
-func_484F8F45:
+# SoundEditPitchRatioText  (CPU 0x484f8f45)
+SoundEditPitchRatioText:
     add     -0x10, sp
-func_484F8F45_entry:
+SoundEditPitchRatioText_entry:
     exthu   d0
     cmp     0, d0
     beq     loc_484F8F72
@@ -43827,15 +43827,15 @@ loc_484F8FF9:
     call    sprintf_entry, [a2], 0x20
 loc_484F900A:
     ret     0, 0x10
-
-func_484F900D:
+# SoundEditDeffTypeIndexGet  (CPU 0x484f900d)
+SoundEditDeffTypeIndexGet:
     add     -0x18, sp
-func_484F900D_entry:
+SoundEditDeffTypeIndexGet_entry:
     mov     sp, a0
     add     0x14, a0
     mov     0x44, d0
     mov     0xf, d1
-    call    func_484F79A1_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldGet_entry, [d2,d3,a2], 0x24
     movbu   (0x14, sp), d0
     cmp     0, d0
     blt     loc_484F9065
@@ -43888,10 +43888,10 @@ loc_484F9065:
     clr     d0
 loc_484F9066:
     ret     0, 0x18
-
-func_484F9069:
+# SoundEditDeffTypeIndexSet  (CPU 0x484f9069)
+SoundEditDeffTypeIndexSet:
     add     -0x14, sp
-func_484F9069_entry:
+SoundEditDeffTypeIndexSet_entry:
     extbu   d0
     cmp     0, d0
     blt     loc_484F90B3
@@ -43947,13 +43947,13 @@ loc_484F90B4:
     mov     d0, (0x10, sp)
     mov     0x44, d0
     extbu   d1
-    call    func_484F7A5B_entry, [d2,d3,a2], 0x24
+    call    SoundEditFieldSet_entry, [d2,d3,a2], 0x24
     ret     0, 0x14
-
-func_484F90C3:
+# SoundEditElemMaskUpdate  (CPU 0x484f90c3)
+SoundEditElemMaskUpdate:
     movm    [d2], (sp)
     add     -0x14, sp
-func_484F90C3_entry:
+SoundEditElemMaskUpdate_entry:
     mov     d0, d2
     call    GetPartSelect_entry, 0, 0x14
     extbu   d2
@@ -44079,11 +44079,11 @@ loc_484F91CF:
     mov     1, d0
 loc_484F91D1:
     ret     [d2,d3,a2,a3], 0x44
-
-func_484F91D4:
+# DrawArrowLineSeg  (CPU 0x484f91d4)
+DrawArrowLineSeg:
     movm    [d2,a2], (sp)
     add     -0x1c, sp
-func_484F91D4_entry:
+DrawArrowLineSeg_entry:
     mov     d0, d2
     cmp     0, d1
     beq     loc_484F9205
@@ -44281,7 +44281,7 @@ loc_484F9362:
     mov     (0x24, sp), a1
     mov     a2, d0
     mov     a3, d1
-    call    func_484F91D4_entry, [d2,a2], 0x24
+    call    DrawArrowLineSeg_entry, [d2,a2], 0x24
     movhu   (0x34, sp), d0
     inc     d2
     exth    d0
@@ -44346,7 +44346,7 @@ loc_484F93E7:
     mov     (0x24, sp), a1
     mov     a2, d0
     mov     a3, d1
-    call    func_484F91D4_entry, [d2,a2], 0x24
+    call    DrawArrowLineSeg_entry, [d2,a2], 0x24
     movhu   (0x38, sp), d0
     inc     d2
     exth    d0
@@ -44386,7 +44386,7 @@ loc_484F943B:
     mov     (0x24, sp), a1
     mov     a2, d0
     mov     a3, d1
-    call    func_484F91D4_entry, [d2,a2], 0x24
+    call    DrawArrowLineSeg_entry, [d2,a2], 0x24
     movhu   (0x38, sp), d0
     inc     d2
     exth    d0
@@ -44560,7 +44560,7 @@ loc_484F954A:
     exth    d0
     mov     d0, (0x24, sp)
     mov     (0x18, sp), a0
-    call    func_484F91D4_entry, [d2,a2], 0x24
+    call    DrawArrowLineSeg_entry, [d2,a2], 0x24
     movhu   (0x3c, sp), d0
     mov     a3, a1
     movhu   d0, (0x38, sp)
@@ -44569,7 +44569,7 @@ loc_484F954A:
     movhu   d0, (0x3a, sp)
     mov     (0x18, sp), a0
     mov     (0x24, sp), d0
-    call    func_484F91D4_entry, [d2,a2], 0x24
+    call    DrawArrowLineSeg_entry, [d2,a2], 0x24
     movhu   (0x40, sp), d0
     movhu   d0, (0x38, sp)
     movhu   (0x36, sp), d0
@@ -44601,7 +44601,7 @@ loc_484F954A:
     mov     (0x18, sp), a0
     mov     a3, a1
     mov     (0x24, sp), d0
-    call    func_484F91D4_entry, [d2,a2], 0x24
+    call    DrawArrowLineSeg_entry, [d2,a2], 0x24
     movhu   (0x3c, sp), d0
     mov     a3, a1
     movhu   d0, (0x38, sp)
@@ -44610,7 +44610,7 @@ loc_484F954A:
     movhu   d0, (0x3a, sp)
     mov     (0x18, sp), a0
     mov     (0x24, sp), d0
-    call    func_484F91D4_entry, [d2,a2], 0x24
+    call    DrawArrowLineSeg_entry, [d2,a2], 0x24
     mov     sp, a1
     add     0x40, a1
     movhu   (a1), d0
@@ -44631,7 +44631,7 @@ loc_484F954A:
     mov     (0x18, sp), a0
     mov     a3, a1
     mov     (0x24, sp), d0
-    call    func_484F91D4_entry, [d2,a2], 0x24
+    call    DrawArrowLineSeg_entry, [d2,a2], 0x24
     mov     (0x1c, sp), d0
     cmp     0, d0
     beq     loc_484F9664
@@ -44677,7 +44677,7 @@ loc_484F967B:
     mov     a3, a1
     mov     (0x24, sp), d0
     mov     a2, d1
-    call    func_484F91D4_entry, [d2,a2], 0x24
+    call    DrawArrowLineSeg_entry, [d2,a2], 0x24
     movhu   (0x36, sp), d0
     movhu   d0, (0x3a, sp)
     movhu   (0x36, sp), d2
@@ -44695,7 +44695,7 @@ loc_484F967B:
     mov     (0x24, sp), d0
     mov     a2, d1
     mov     a3, a1
-    call    func_484F91D4_entry, [d2,a2], 0x24
+    call    DrawArrowLineSeg_entry, [d2,a2], 0x24
     ret     [d2,d3,a2,a3], 0x58
 # DrawArrowProc  (CPU 0x484f96d9)
 DrawArrowProc:
@@ -47751,18 +47751,18 @@ func_484FB7C8_entry:
 func_484FB7EF:
     add     -0x14, sp
 func_484FB7EF_entry:
-    call    func_4842B9A1, 0, 0
+    call    TitleIdLastSetGet, 0, 0
     exthu   d0
     and     0xff, d0
     cmp     0xca, d0
     beq     loc_484FB833
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x01, d0
     beq     loc_484FB833
     clr     d0
     call    func_484FB7C8_entry, 0, 0x14
-    call    func_48480E89_entry, 0, 0xc
+    call    DpStop_entry, 0, 0xc
     clr     d0
     mov     d0, (0x10, sp)
     mov     Lyrics_id, d0
@@ -47781,7 +47781,7 @@ func_484FB836_entry:
 func_484FB849:
     add     -0x14, sp
 func_484FB849_entry:
-    call    func_4842B9A1, 0, 0
+    call    TitleIdLastSetGet, 0, 0
     exthu   d0
     and     0xff, d0
     cmp     0xc7, d0
@@ -48034,7 +48034,7 @@ loc_484FBC36:
 func_484FBC39:
     add     -8, sp
 func_484FBC39_entry:
-    call    func_4842B9A1, 0, 0
+    call    TitleIdLastSetGet, 0, 0
     exthu   d0
     and     0xff, d0
     cmp     0x6e, d0
@@ -48068,7 +48068,7 @@ loc_484FBC7A:
 loc_484FBC7F:
     bra     loc_484FBC88
 loc_484FBC81:
-    call    func_48461E55_entry, 0, 0xc
+    call    MdlySessionEnd_entry, 0, 0xc
 loc_484FBC88:
     ret     0, 8
 
@@ -48096,7 +48096,7 @@ func_484FBCD1:
     movm    [a2,a3], (sp)
     add     -0x14, sp
 func_484FBCD1_entry:
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x01, d0
     beq     loc_484FBCE6
@@ -48107,9 +48107,9 @@ loc_484FBCE6:
     mov     LyricsFunc_id, d0
     mov     0x01350013, d1
     call    ApPostEvent_entry, [d2], 0x1c
-    call    func_48530468_entry, 0, 0xc
+    call    MidCurFileIndexGet_entry, 0, 0xc
     exthu   d0
-    call    func_485305B9_entry, [d2], 0x10
+    call    MidFileNameGet_entry, [d2], 0x10
     mov     a0, a1
     mov     0x50151c0a, a3
     mov     a3, a0
@@ -48130,17 +48130,17 @@ loc_484FBD43:
     mov     1, d0
     movbu   d0, (0x50151d30)
     mov     a3, a0
-    call    func_4847FCDC_entry, [d2,d3,a2,a3], 0x20
+    call    DpFileStart_entry, [d2,d3,a2,a3], 0x20
     exth    d0
     cmp     0, d0
     beq     loc_484FBD66
-    call    func_484618D8_entry, 0, 0x14
+    call    DpPlayEndReturn_entry, 0, 0x14
     bra     loc_484FBD75
 loc_484FBD66:
     mov     1, d0
     call    func_484FB7C8_entry, 0, 0x14
     clr     d0
-    call    func_484617EC, 0, 0
+    call    MdlyContinueFlagSet, 0, 0
 loc_484FBD75:
     ret     [a2,a3], 0x1c
 
@@ -48156,23 +48156,23 @@ loc_484FBD88:
     movbu   d0, (0x5015232b)
     clr     d0
     movbu   d0, (0x5015232a)
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x02, d0
     beq     loc_484FBDBC
     mov     3, d0
     movbu   d0, (0x5015232a)
-    call    func_484824B4_entry, 0, 0xc
-    call    func_484824DA, 0, 0
+    call    DpResume_entry, 0, 0xc
+    call    DpPauseRequestSet, 0, 0
     bra     loc_484FBDF5
 loc_484FBDBC:
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x01, d0
     beq     loc_484FBDDA
     mov     2, d0
     movbu   d0, (0x5015232a)
-    call    func_484824DA, 0, 0
+    call    DpPauseRequestSet, 0, 0
     bra     loc_484FBDF5
 loc_484FBDDA:
     mov     1, d0
@@ -48180,7 +48180,7 @@ loc_484FBDDA:
     call    func_484FBCD1_entry, [a2,a3], 0x1c
     mov     2, d0
     call    func_484FB7C8_entry, 0, 0x14
-    call    func_484824DA, 0, 0
+    call    DpPauseRequestSet, 0, 0
 loc_484FBDF5:
     ret     0, 0xc
 
@@ -48200,14 +48200,14 @@ func_484FBDF8_entry:
 loc_484FBE13:
     mov     2, d0
     call    func_484FB7C8_entry, 0, 0x14
-    call    func_48482476_entry, 0, 0xc
+    call    DpPause_entry, 0, 0xc
     clr     d0
     movbu   d0, (0x5015232a)
     bra     loc_484FBE3F
 loc_484FBE2A:
     mov     1, d0
     call    func_484FB7C8_entry, 0, 0x14
-    call    func_484824B4_entry, 0, 0xc
+    call    DpResume_entry, 0, 0xc
     clr     d0
     movbu   d0, (0x5015232a)
 loc_484FBE3F:
@@ -48252,7 +48252,7 @@ loc_484FBEA9:
     mov     0x5006ccd0, a2
     clr     d0
     mov     a2, a0
-    call    func_48455F69_entry, [d2], 0x18
+    call    SongRecNameGet_entry, [d2], 0x18
     clr     d0
     movbu   d0, (0x5006cce0)
     mov     0x50151c39, d0
@@ -48274,13 +48274,13 @@ loc_484FBEA9:
 loc_484FBEF8:
     mov     Str_FILE_02d_s, d0
     mov     d0, (0xc, sp)
-    call    func_4852FEC1_entry, 0, 0xc
+    call    FmmCurFileIndexGet_entry, 0, 0xc
     exth    d0
     inc     d0
     mov     d0, (0x10, sp)
-    call    func_4852FEC1_entry, 0, 0xc
+    call    FmmCurFileIndexGet_entry, 0, 0xc
     exthu   d0
-    call    func_4852FF29_entry, [d2], 0x10
+    call    FmmFileNameGet_entry, [d2], 0x10
     mov     a0, (0x14, sp)
     mov     0x50151c4f, d0
     mov     d0, (8, sp)
@@ -48297,20 +48297,20 @@ loc_484FBF47:
     mov     0x50151c5d, a2
     mov     Str_03d_s, d0
     mov     d0, (0xc, sp)
-    call    func_48530468_entry, 0, 0xc
+    call    MidCurFileIndexGet_entry, 0, 0xc
     exth    d0
     inc     d0
     mov     d0, (0x10, sp)
-    call    func_48530468_entry, 0, 0xc
+    call    MidCurFileIndexGet_entry, 0, 0xc
     exthu   d0
-    call    func_485305B9_entry, [d2], 0x10
+    call    MidFileNameGet_entry, [d2], 0x10
     mov     a0, (0x14, sp)
     mov     a2, (8, sp)
     call    sprintf_entry, [a2], 0x20
     clr     d0
     movbu   d0, (0x50151c6d)
     mov     a2, a0
-    call    func_4852F95E, 0, 0
+    call    FmmTextSanitize, 0, 0
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -48320,7 +48320,7 @@ loc_484FBF47:
     ret     [d2,a2,a3], 0x24
 loc_484FBF9F:
     mov     0x50151c71, a3
-    call    func_48530468_entry, 0, 0xc
+    call    MidCurFileIndexGet_entry, 0, 0xc
     exthu   d0
     call    func_48530D1B_entry, [d2,d3], 0x18
     mov     a0, a1
@@ -48343,7 +48343,7 @@ loc_484FBF9F:
     lhi
 loc_484FBFDF:
     mov     a3, a0
-    call    func_4852F95E, 0, 0
+    call    FmmTextSanitize, 0, 0
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -48356,7 +48356,7 @@ loc_484FBFFD:
     mov     d0, (8, sp)
     mov     Str_02d_2, d0
     mov     d0, (0xc, sp)
-    call    func_48531538_entry, 0, 0xc
+    call    DocCurFileIndexGet_entry, 0, 0xc
     exth    d0
     inc     d0
     mov     d0, (0x10, sp)
@@ -48371,9 +48371,9 @@ loc_484FBFFD:
     ret     [d2,a2,a3], 0x24
 loc_484FC03B:
     mov     0x50151c8a, a3
-    call    func_48531538_entry, 0, 0xc
+    call    DocCurFileIndexGet_entry, 0, 0xc
     exthu   d0
-    call    func_48531A10_entry, [d2,a2], 0x14
+    call    DocSongTitleGet_entry, [d2,a2], 0x14
     mov     a0, a1
     mov     0xc, d0
     mov     a3, a0
@@ -48394,7 +48394,7 @@ loc_484FC03B:
     lhi
 loc_484FC07B:
     mov     a3, a0
-    call    func_4852F95E, 0, 0
+    call    FmmTextSanitize, 0, 0
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -48407,7 +48407,7 @@ loc_484FC099:
     mov     d0, (8, sp)
     mov     Str_02d, d0
     mov     d0, (0xc, sp)
-    call    func_485311B4_entry, 0, 0xc
+    call    PdCurFileIndexGet_entry, 0, 0xc
     exth    d0
     inc     d0
     mov     d0, (0x10, sp)
@@ -48422,9 +48422,9 @@ loc_484FC099:
     ret     [d2,a2,a3], 0x24
 loc_484FC0D7:
     mov     0x50151c9b, a2
-    call    func_485311B4_entry, 0, 0xc
+    call    PdCurFileIndexGet_entry, 0, 0xc
     exthu   d0
-    call    func_48531309_entry, [d2], 0x10
+    call    PdFileNameGet_entry, [d2], 0x10
     mov     a0, a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
@@ -48444,7 +48444,7 @@ loc_484FC0D7:
     lhi
 loc_484FC115:
     mov     a2, a0
-    call    func_4852F95E, 0, 0
+    call    FmmTextSanitize, 0, 0
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -48457,7 +48457,7 @@ loc_484FC133:
     cmp     0, d0
     beq     loc_484FC18E
     mov     0x50151cb0, a3
-    call    func_48530468_entry, 0, 0xc
+    call    MidCurFileIndexGet_entry, 0, 0xc
     exthu   d0
     call    func_48530D1B_entry, [d2,d3], 0x18
     mov     a0, a1
@@ -48487,12 +48487,12 @@ loc_484FC18E:
     mov     0x50152250, a2
     clr     d0
     mov     a2, a0
-    call    func_48455F69_entry, [d2], 0x18
+    call    SongRecNameGet_entry, [d2], 0x18
     clr     d0
     movbu   d0, (0x50152260)
 loc_484FC1A4:
     mov     a2, a0
-    call    func_4852F95E, 0, 0
+    call    FmmTextSanitize, 0, 0
     movbu   (0x5015226f), d0
     mov     0x5015226f, a1
     cmp     0, d0
@@ -48512,7 +48512,7 @@ loc_484FC1DA:
     cmp     0, d0
     beq     loc_484FC23A
     mov     0x50151cb0, a2
-    call    func_48530468_entry, 0, 0xc
+    call    MidCurFileIndexGet_entry, 0, 0xc
     exthu   d0
     call    func_48530D1B_entry, [d2,d3], 0x18
     mov     a0, a1
@@ -48543,7 +48543,7 @@ loc_484FC23A:
     movbu   d0, (0x5015228e)
 loc_484FC247:
     mov     a2, a0
-    call    func_4852F95E, 0, 0
+    call    FmmTextSanitize, 0, 0
     movbu   (0x50152303), d0
     mov     0x50152303, a1
     cmp     0, d0
@@ -48584,13 +48584,13 @@ func_484FC2AA:
     add     -0x14, sp
 func_484FC2AA_entry:
     mov     d0, d2
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x02, d0
     bne     loc_484FC2C0
     jmp     loc_484FC36A
 loc_484FC2C0:
-    call    func_48480E89_entry, 0, 0xc
+    call    DpStop_entry, 0, 0xc
     clr     d0
     mov     d0, (0x10, sp)
     mov     Lyrics_id, d0
@@ -48638,13 +48638,13 @@ loc_484FC2C0:
     call    func_484FBCD1_entry, [a2,a3], 0x1c
     ret     [d2], 0x18
 loc_484FC36A:
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x01, d0
     bne     loc_484FC37A
     jmp     loc_484FC424
 loc_484FC37A:
-    call    func_48480E89_entry, 0, 0xc
+    call    DpStop_entry, 0, 0xc
     clr     d0
     mov     d0, (0x10, sp)
     mov     Lyrics_id, d0
@@ -48736,13 +48736,13 @@ loc_484FC424:
 func_484FC4AC:
     add     -0x14, sp
 func_484FC4AC_entry:
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x02, d0
     beq     loc_484FC4E1
     clr     d0
     call    func_484FB7C8_entry, 0, 0x14
-    call    func_48480E89_entry, 0, 0xc
+    call    DpStop_entry, 0, 0xc
     clr     d0
     mov     d0, (0x10, sp)
     mov     Lyrics_id, d0
@@ -48750,13 +48750,13 @@ func_484FC4AC_entry:
     call    ApPostEvent_entry, [d2], 0x1c
     bra     loc_484FC518
 loc_484FC4E1:
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x01, d0
     beq     loc_484FC513
     clr     d0
     call    func_484FB7C8_entry, 0, 0x14
-    call    func_48480E89_entry, 0, 0xc
+    call    DpStop_entry, 0, 0xc
     clr     d0
     mov     d0, (0x10, sp)
     mov     Lyrics_id, d0
@@ -48783,7 +48783,7 @@ func_484FC537:
 func_484FC537_entry:
     clr     d0
     call    func_484FB7C8_entry, 0, 0x14
-    call    func_48480E89_entry, 0, 0xc
+    call    DpStop_entry, 0, 0xc
     clr     d0
     movbu   d0, (0x5015232a)
     ret     0, 0xc
@@ -48793,7 +48793,7 @@ func_484FC551:
 func_484FC551_entry:
     clr     d0
     call    func_484FB7C8_entry, 0, 0x14
-    call    func_48480E89_entry, 0, 0xc
+    call    DpStop_entry, 0, 0xc
     clr     d0
     movbu   d0, (0x5015232a)
     ret     0, 0xc
@@ -48803,7 +48803,7 @@ func_484FC56B:
 func_484FC56B_entry:
     clr     d0
     call    func_484FB7C8_entry, 0, 0x14
-    call    func_48480E89_entry, 0, 0xc
+    call    DpStop_entry, 0, 0xc
     clr     d0
     mov     d0, (0x10, sp)
     mov     Lyrics_id, d0
@@ -48865,20 +48865,20 @@ loc_484FC5F8:
     call    func_484FBCD1_entry, [a2,a3], 0x1c
     jmp     loc_484FC78E
 loc_484FC62D:
-    call    func_4842B9A1, 0, 0
+    call    TitleIdLastSetGet, 0, 0
     exthu   d0
     and     0xff, d0
     cmp     0xca, d0
     bne     loc_484FC641
     jmp     loc_484FC78E
 loc_484FC641:
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x01, d0
     beq     loc_484FC671
     clr     d0
     call    func_484FB7C8_entry, 0, 0x14
-    call    func_48480E89_entry, 0, 0xc
+    call    DpStop_entry, 0, 0xc
     clr     d0
     mov     d0, (0x10, sp)
     mov     Lyrics_id, d0
@@ -48922,13 +48922,13 @@ loc_484FC6B2:
     call    func_484FC2AA_entry, [d2], 0x18
     jmp     loc_484FC78E
 loc_484FC6BC:
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x02, d0
     beq     loc_484FC6EF
     clr     d0
     call    func_484FB7C8_entry, 0, 0x14
-    call    func_48480E89_entry, 0, 0xc
+    call    DpStop_entry, 0, 0xc
     clr     d0
     mov     d0, (0x10, sp)
     mov     Lyrics_id, d0
@@ -48936,7 +48936,7 @@ loc_484FC6BC:
     call    ApPostEvent_entry, [d2], 0x1c
     jmp     loc_484FC78E
 loc_484FC6EF:
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x01, d0
     bne     loc_484FC6FF
@@ -48944,7 +48944,7 @@ loc_484FC6EF:
 loc_484FC6FF:
     clr     d0
     call    func_484FB7C8_entry, 0, 0x14
-    call    func_48480E89_entry, 0, 0xc
+    call    DpStop_entry, 0, 0xc
     clr     d0
     mov     d0, (0x10, sp)
     mov     Lyrics_id, d0
@@ -48952,22 +48952,22 @@ loc_484FC6FF:
     call    ApPostEvent_entry, [d2], 0x1c
     bra     loc_484FC78E
 loc_484FC724:
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x02, d0
     beq     loc_484FC741
     mov     1, d0
     call    func_484FB7C8_entry, 0, 0x14
-    call    func_484824B4_entry, 0, 0xc
+    call    DpResume_entry, 0, 0xc
     bra     loc_484FC78E
 loc_484FC741:
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x01, d0
     beq     loc_484FC75E
     mov     2, d0
     call    func_484FB7C8_entry, 0, 0x14
-    call    func_48482476_entry, 0, 0xc
+    call    DpPause_entry, 0, 0xc
     bra     loc_484FC78E
 loc_484FC75E:
     call    func_484FBCD1_entry, [a2,a3], 0x1c
@@ -49075,13 +49075,13 @@ loc_484FC846:
     call    func_484FC2AA_entry, [d2], 0x18
     jmp     loc_484FC922
 loc_484FC850:
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x02, d0
     beq     loc_484FC883
     clr     d0
     call    func_484FB7C8_entry, 0, 0x14
-    call    func_48480E89_entry, 0, 0xc
+    call    DpStop_entry, 0, 0xc
     clr     d0
     mov     d0, (0x10, sp)
     mov     Lyrics_id, d0
@@ -49089,7 +49089,7 @@ loc_484FC850:
     call    ApPostEvent_entry, [d2], 0x1c
     jmp     loc_484FC922
 loc_484FC883:
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x01, d0
     bne     loc_484FC893
@@ -49097,7 +49097,7 @@ loc_484FC883:
 loc_484FC893:
     clr     d0
     call    func_484FB7C8_entry, 0, 0x14
-    call    func_48480E89_entry, 0, 0xc
+    call    DpStop_entry, 0, 0xc
     clr     d0
     mov     d0, (0x10, sp)
     mov     Lyrics_id, d0
@@ -49105,22 +49105,22 @@ loc_484FC893:
     call    ApPostEvent_entry, [d2], 0x1c
     bra     loc_484FC922
 loc_484FC8B8:
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x02, d0
     beq     loc_484FC8D5
     mov     1, d0
     call    func_484FB7C8_entry, 0, 0x14
-    call    func_484824B4_entry, 0, 0xc
+    call    DpResume_entry, 0, 0xc
     bra     loc_484FC922
 loc_484FC8D5:
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x01, d0
     beq     loc_484FC8F2
     mov     2, d0
     call    func_484FB7C8_entry, 0, 0x14
-    call    func_48482476_entry, 0, 0xc
+    call    DpPause_entry, 0, 0xc
     bra     loc_484FC922
 loc_484FC8F2:
     call    func_484FBCD1_entry, [a2,a3], 0x1c
@@ -49154,14 +49154,14 @@ func_484FC926:
     movm    [a2,a3], (sp)
     add     -0x14, sp
 func_484FC926_entry:
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x01, d0
     bne     loc_484FC986
     mov     0x50151c17, a3
-    call    func_48531538_entry, 0, 0xc
+    call    DocCurFileIndexGet_entry, 0, 0xc
     exthu   d0
-    call    func_48531750_entry, [d2], 0x10
+    call    DocFileNameGet_entry, [d2], 0x10
     mov     a0, a1
     mov     0xc, d0
     mov     a3, a0
@@ -49170,17 +49170,17 @@ func_484FC926_entry:
     movbu   d0, (0x50151c23)
     mov     3, d0
     mov     a3, a0
-    call    func_4847FCDC_entry, [d2,d3,a2,a3], 0x20
+    call    DpFileStart_entry, [d2,d3,a2,a3], 0x20
     exth    d0
     cmp     0, d0
     beq     loc_484FC977
-    call    func_484618D8_entry, 0, 0x14
+    call    DpPlayEndReturn_entry, 0, 0x14
     bra     loc_484FC986
 loc_484FC977:
     mov     1, d0
     call    func_484FB7C8_entry, 0, 0x14
     clr     d0
-    call    func_484617EC, 0, 0
+    call    MdlyContinueFlagSet, 0, 0
 loc_484FC986:
     ret     [a2,a3], 0x1c
 
@@ -49189,11 +49189,11 @@ func_484FC989:
     add     -0x14, sp
 func_484FC989_entry:
     mov     d0, d2
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x02, d0
     beq     loc_484FC9E5
-    call    func_48480E89_entry, 0, 0xc
+    call    DpStop_entry, 0, 0xc
     exth    d2
     mov     d2, d0
     call    func_4852920D_entry, [d2,d3], 0x14
@@ -49214,11 +49214,11 @@ func_484FC989_entry:
     call    func_484FC926_entry, [a2,a3], 0x1c
     ret     [d2], 0x18
 loc_484FC9E5:
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x01, d0
     beq     loc_484FCA3A
-    call    func_48480E89_entry, 0, 0xc
+    call    DpStop_entry, 0, 0xc
     exth    d2
     mov     d2, d0
     call    func_4852920D_entry, [d2,d3], 0x14
@@ -49262,22 +49262,22 @@ loc_484FCA74:
 func_484FCA77:
     add     -0xc, sp
 func_484FCA77_entry:
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x02, d0
     beq     loc_484FCA96
     clr     d0
     call    func_484FB7C8_entry, 0, 0x14
-    call    func_48480E89_entry, 0, 0xc
+    call    DpStop_entry, 0, 0xc
     bra     loc_484FCAB7
 loc_484FCA96:
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x01, d0
     beq     loc_484FCAB2
     clr     d0
     call    func_484FB7C8_entry, 0, 0x14
-    call    func_48480E89_entry, 0, 0xc
+    call    DpStop_entry, 0, 0xc
     bra     loc_484FCAB7
 loc_484FCAB2:
     call    func_484FC926_entry, [a2,a3], 0x1c
@@ -49296,23 +49296,23 @@ loc_484FCACA:
     movbu   d0, (0x5015232b)
     clr     d0
     movbu   d0, (0x5015232a)
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x02, d0
     beq     loc_484FCAFE
     mov     3, d0
     movbu   d0, (0x5015232a)
-    call    func_484824B4_entry, 0, 0xc
-    call    func_484824DA, 0, 0
+    call    DpResume_entry, 0, 0xc
+    call    DpPauseRequestSet, 0, 0
     bra     loc_484FCB37
 loc_484FCAFE:
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x01, d0
     beq     loc_484FCB1C
     mov     2, d0
     movbu   d0, (0x5015232a)
-    call    func_484824DA, 0, 0
+    call    DpPauseRequestSet, 0, 0
     bra     loc_484FCB37
 loc_484FCB1C:
     mov     1, d0
@@ -49320,7 +49320,7 @@ loc_484FCB1C:
     call    func_484FC926_entry, [a2,a3], 0x1c
     mov     2, d0
     call    func_484FB7C8_entry, 0, 0x14
-    call    func_484824DA, 0, 0
+    call    DpPauseRequestSet, 0, 0
 loc_484FCB37:
     ret     0, 0xc
 # DpDocTtlFunc  (CPU 0x484fcb3a)
@@ -49362,13 +49362,13 @@ loc_484FCB81:
     call    func_484FC926_entry, [a2,a3], 0x1c
     jmp     loc_484FCC9F
 loc_484FCB9A:
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x01, d0
     beq     loc_484FCBB4
     clr     d0
     call    func_484FB7C8_entry, 0, 0x14
-    call    func_48480E89_entry, 0, 0xc
+    call    DpStop_entry, 0, 0xc
 loc_484FCBB4:
     call    func_484FBC39_entry, 0, 8
     jmp     loc_484FCC9F
@@ -49403,16 +49403,16 @@ loc_484FCBEF:
     call    func_484FC989_entry, [d2], 0x18
     jmp     loc_484FCC9F
 loc_484FCBF9:
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x02, d0
     beq     loc_484FCC16
     clr     d0
     call    func_484FB7C8_entry, 0, 0x14
-    call    func_48480E89_entry, 0, 0xc
+    call    DpStop_entry, 0, 0xc
     jmp     loc_484FCC9F
 loc_484FCC16:
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x01, d0
     bne     loc_484FCC26
@@ -49420,25 +49420,25 @@ loc_484FCC16:
 loc_484FCC26:
     clr     d0
     call    func_484FB7C8_entry, 0, 0x14
-    call    func_48480E89_entry, 0, 0xc
+    call    DpStop_entry, 0, 0xc
     bra     loc_484FCC9F
 loc_484FCC35:
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x02, d0
     beq     loc_484FCC52
     mov     1, d0
     call    func_484FB7C8_entry, 0, 0x14
-    call    func_484824B4_entry, 0, 0xc
+    call    DpResume_entry, 0, 0xc
     bra     loc_484FCC9F
 loc_484FCC52:
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x01, d0
     beq     loc_484FCC6F
     mov     2, d0
     call    func_484FB7C8_entry, 0, 0x14
-    call    func_48482476_entry, 0, 0xc
+    call    DpPause_entry, 0, 0xc
     bra     loc_484FCC9F
 loc_484FCC6F:
     call    func_484FC926_entry, [a2,a3], 0x1c
@@ -49472,14 +49472,14 @@ func_484FCCA3:
     movm    [a2,a3], (sp)
     add     -0x14, sp
 func_484FCCA3_entry:
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x01, d0
     bne     loc_484FCD03
     mov     0x50151c24, a3
-    call    func_485311B4_entry, 0, 0xc
+    call    PdCurFileIndexGet_entry, 0, 0xc
     exthu   d0
-    call    func_48531309_entry, [d2], 0x10
+    call    PdFileNameGet_entry, [d2], 0x10
     mov     a0, a1
     mov     0x14, d0
     mov     a3, a0
@@ -49488,17 +49488,17 @@ func_484FCCA3_entry:
     movbu   d0, (0x50151c38)
     mov     5, d0
     mov     a3, a0
-    call    func_4847FCDC_entry, [d2,d3,a2,a3], 0x20
+    call    DpFileStart_entry, [d2,d3,a2,a3], 0x20
     exth    d0
     cmp     0, d0
     beq     loc_484FCCF4
-    call    func_484618D8_entry, 0, 0x14
+    call    DpPlayEndReturn_entry, 0, 0x14
     bra     loc_484FCD03
 loc_484FCCF4:
     mov     1, d0
     call    func_484FB7C8_entry, 0, 0x14
     clr     d0
-    call    func_484617EC, 0, 0
+    call    MdlyContinueFlagSet, 0, 0
 loc_484FCD03:
     ret     [a2,a3], 0x1c
 
@@ -49507,11 +49507,11 @@ func_484FCD06:
     add     -0x14, sp
 func_484FCD06_entry:
     mov     d0, d2
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x02, d0
     beq     loc_484FCD62
-    call    func_48480E89_entry, 0, 0xc
+    call    DpStop_entry, 0, 0xc
     exth    d2
     mov     d2, d0
     call    func_48529263_entry, [d2,d3], 0x14
@@ -49532,11 +49532,11 @@ func_484FCD06_entry:
     call    func_484FCCA3_entry, [a2,a3], 0x1c
     ret     [d2], 0x18
 loc_484FCD62:
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x01, d0
     beq     loc_484FCDB7
-    call    func_48480E89_entry, 0, 0xc
+    call    DpStop_entry, 0, 0xc
     exth    d2
     mov     d2, d0
     call    func_48529263_entry, [d2,d3], 0x14
@@ -49580,22 +49580,22 @@ loc_484FCDF1:
 func_484FCDF4:
     add     -0xc, sp
 func_484FCDF4_entry:
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x02, d0
     beq     loc_484FCE13
     clr     d0
     call    func_484FB7C8_entry, 0, 0x14
-    call    func_48480E89_entry, 0, 0xc
+    call    DpStop_entry, 0, 0xc
     bra     loc_484FCE34
 loc_484FCE13:
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x01, d0
     beq     loc_484FCE2F
     clr     d0
     call    func_484FB7C8_entry, 0, 0x14
-    call    func_48480E89_entry, 0, 0xc
+    call    DpStop_entry, 0, 0xc
     bra     loc_484FCE34
 loc_484FCE2F:
     call    func_484FCCA3_entry, [a2,a3], 0x1c
@@ -49614,23 +49614,23 @@ loc_484FCE47:
     movbu   d0, (0x5015232b)
     clr     d0
     movbu   d0, (0x5015232a)
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x02, d0
     beq     loc_484FCE7B
     mov     3, d0
     movbu   d0, (0x5015232a)
-    call    func_484824B4_entry, 0, 0xc
-    call    func_484824DA, 0, 0
+    call    DpResume_entry, 0, 0xc
+    call    DpPauseRequestSet, 0, 0
     bra     loc_484FCEB4
 loc_484FCE7B:
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x01, d0
     beq     loc_484FCE99
     mov     2, d0
     movbu   d0, (0x5015232a)
-    call    func_484824DA, 0, 0
+    call    DpPauseRequestSet, 0, 0
     bra     loc_484FCEB4
 loc_484FCE99:
     mov     1, d0
@@ -49638,7 +49638,7 @@ loc_484FCE99:
     call    func_484FCCA3_entry, [a2,a3], 0x1c
     mov     2, d0
     call    func_484FB7C8_entry, 0, 0x14
-    call    func_484824DA, 0, 0
+    call    DpPauseRequestSet, 0, 0
 loc_484FCEB4:
     ret     0, 0xc
 # DpPdTtlFunc  (CPU 0x484fceb7)
@@ -49680,13 +49680,13 @@ loc_484FCEFE:
     call    func_484FCCA3_entry, [a2,a3], 0x1c
     jmp     loc_484FD01C
 loc_484FCF17:
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x01, d0
     beq     loc_484FCF31
     clr     d0
     call    func_484FB7C8_entry, 0, 0x14
-    call    func_48480E89_entry, 0, 0xc
+    call    DpStop_entry, 0, 0xc
 loc_484FCF31:
     call    func_484FBC39_entry, 0, 8
     jmp     loc_484FD01C
@@ -49721,16 +49721,16 @@ loc_484FCF6C:
     call    func_484FCD06_entry, [d2], 0x18
     jmp     loc_484FD01C
 loc_484FCF76:
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x02, d0
     beq     loc_484FCF93
     clr     d0
     call    func_484FB7C8_entry, 0, 0x14
-    call    func_48480E89_entry, 0, 0xc
+    call    DpStop_entry, 0, 0xc
     jmp     loc_484FD01C
 loc_484FCF93:
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x01, d0
     bne     loc_484FCFA3
@@ -49738,25 +49738,25 @@ loc_484FCF93:
 loc_484FCFA3:
     clr     d0
     call    func_484FB7C8_entry, 0, 0x14
-    call    func_48480E89_entry, 0, 0xc
+    call    DpStop_entry, 0, 0xc
     bra     loc_484FD01C
 loc_484FCFB2:
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x02, d0
     beq     loc_484FCFCF
     mov     1, d0
     call    func_484FB7C8_entry, 0, 0x14
-    call    func_484824B4_entry, 0, 0xc
+    call    DpResume_entry, 0, 0xc
     bra     loc_484FD01C
 loc_484FCFCF:
-    call    func_4848250C, 0, 0
+    call    DpStatusGet, 0, 0
     exthu   d0
     btst    0x01, d0
     beq     loc_484FCFEC
     mov     2, d0
     call    func_484FB7C8_entry, 0, 0x14
-    call    func_48482476_entry, 0, 0xc
+    call    DpPause_entry, 0, 0xc
     bra     loc_484FD01C
 loc_484FCFEC:
     call    func_484FCCA3_entry, [a2,a3], 0x1c
@@ -49816,10 +49816,10 @@ loc_484FD042:
     mov     0x01350001, d1
     call    ApPostEvent_entry, [d2], 0x1c
 loc_484FD07F:
-    call    func_48461B47_entry, 0, 8
+    call    DpMdlySmfActivate_entry, 0, 8
     bra     loc_484FD0B2
 loc_484FD088:
-    call    func_48461B8F_entry, 0, 8
+    call    DpMdlySmfLeave_entry, 0, 8
     call    func_484FBC39_entry, 0, 8
     bra     loc_484FD0B2
 loc_484FD096:
@@ -49830,10 +49830,10 @@ loc_484FD096:
     beq     loc_484FD0AB
     bra     loc_484FD0B2
 loc_484FD0A2:
-    call    func_48461C0C_entry, 0, 8
+    call    DpMdlySmfSwNext_entry, 0, 8
     bra     loc_484FD0B2
 loc_484FD0AB:
-    call    func_48461BA8_entry, 0, 8
+    call    DpMdlySmfSwQuit_entry, 0, 8
 loc_484FD0B2:
     clr     d0
     ret     0, 0x14
@@ -49879,7 +49879,7 @@ loc_484FD0E5:
     mov     0x01350001, d1
     call    ApPostEvent_entry, [d2], 0x1c
 loc_484FD130:
-    call    func_48461B47_entry, 0, 8
+    call    DpMdlySmfActivate_entry, 0, 8
 loc_484FD137:
     clr     d0
     mov     d0, (0x10, sp)
@@ -49888,9 +49888,9 @@ loc_484FD137:
     call    ApPostEvent_entry, [d2], 0x1c
     bra     loc_484FD1A7
 loc_484FD14F:
-    call    func_48461C5A_entry, 0, 8
+    call    DpMdlySmfLyrLeave_entry, 0, 8
     call    func_484FBC39_entry, 0, 8
-    call    func_4842B9A1, 0, 0
+    call    TitleIdLastSetGet, 0, 0
     exthu   d0
     and     0xff, d0
     cmp     0xcb, d0
@@ -49912,10 +49912,10 @@ loc_484FD18B:
     beq     loc_484FD1A0
     bra     loc_484FD1A7
 loc_484FD197:
-    call    func_48461C17_entry, 0, 0x14
+    call    DpMdlySmfNext_entry, 0, 0x14
     bra     loc_484FD1A7
 loc_484FD1A0:
-    call    func_48461C73_entry, 0, 0x10
+    call    DpMdlySmfLyrExit_entry, 0, 0x10
 loc_484FD1A7:
     clr     d0
     ret     [d2], 0x18
@@ -49939,10 +49939,10 @@ loc_484FD1CC:
     movhu   d0, (0x50151c06)
     call    func_484FB836_entry, 0, 0xc
     call    func_484FB849_entry, 0, 0x14
-    call    func_484617FE_entry, 0, 8
+    call    DpMdlyDocActivate_entry, 0, 8
     bra     loc_484FD210
 loc_484FD1E6:
-    call    func_48461839, 0, 0
+    call    DpMdlyDocLeave, 0, 0
     call    func_484FBC39_entry, 0, 8
     bra     loc_484FD210
 loc_484FD1F4:
@@ -49953,10 +49953,10 @@ loc_484FD1F4:
     beq     loc_484FD209
     bra     loc_484FD210
 loc_484FD200:
-    call    func_48461895_entry, 0, 0x14
+    call    DpMdlyDocNext_entry, 0, 0x14
     bra     loc_484FD210
 loc_484FD209:
-    call    func_48461843_entry, 0, 0x10
+    call    DpMdlyDocQuit_entry, 0, 0x10
 loc_484FD210:
     clr     d0
     ret     0, 8
@@ -49980,10 +49980,10 @@ loc_484FD235:
     movhu   d0, (0x50151c06)
     call    func_484FB836_entry, 0, 0xc
     call    func_484FB849_entry, 0, 0x14
-    call    func_48461A6D_entry, 0, 8
+    call    DpMdlyPdActivate_entry, 0, 8
     bra     loc_484FD279
 loc_484FD24F:
-    call    func_48461AA8, 0, 0
+    call    DpMdlyPdLeave, 0, 0
     call    func_484FBC39_entry, 0, 8
     bra     loc_484FD279
 loc_484FD25D:
@@ -49994,10 +49994,10 @@ loc_484FD25D:
     beq     loc_484FD272
     bra     loc_484FD279
 loc_484FD269:
-    call    func_48461B04_entry, 0, 0x14
+    call    DpMdlyPdNext_entry, 0, 0x14
     bra     loc_484FD279
 loc_484FD272:
-    call    func_48461AB2_entry, 0, 8
+    call    DpMdlyPdSwQuit_entry, 0, 8
 loc_484FD279:
     clr     d0
     ret     0, 8
@@ -50005,7 +50005,7 @@ loc_484FD279:
 func_484FD27D:
     add     -8, sp
 func_484FD27D_entry:
-    call    func_4842B9A1, 0, 0
+    call    TitleIdLastSetGet, 0, 0
     exthu   d0
     and     0xff, d0
     cmp     0xc7, d0
@@ -50035,16 +50035,16 @@ loc_484FD2CB:
     call    func_484FCDF4_entry, 0, 0xc
     bra     loc_484FD2F4
 loc_484FD2D2:
-    call    func_48461C0C_entry, 0, 8
+    call    DpMdlySmfSwNext_entry, 0, 8
     bra     loc_484FD2F4
 loc_484FD2DB:
-    call    func_48461C17_entry, 0, 0x14
+    call    DpMdlySmfNext_entry, 0, 0x14
     bra     loc_484FD2F4
 loc_484FD2E4:
-    call    func_48461895_entry, 0, 0x14
+    call    DpMdlyDocNext_entry, 0, 0x14
     bra     loc_484FD2F4
 loc_484FD2ED:
-    call    func_48461B04_entry, 0, 0x14
+    call    DpMdlyPdNext_entry, 0, 0x14
 loc_484FD2F4:
     ret     0, 8
 
@@ -50073,7 +50073,7 @@ func_484FD324_entry:
     beq     loc_484FD343
 loc_484FD331:
     movbu   (a2), d0
-    call    func_4C00163D_entry, [d2], 4
+    call    LibCharToUpper_entry, [d2], 4
     movbu   d0, (a2)
     inc     a2
     movbu   (a2), d0
@@ -50125,7 +50125,7 @@ loc_484FD38F:
     inc     a2
     mov     a2, a0
     mov     Str_empty_979, a1
-    call    func_4C00369D_entry, [d2,a2,a3], 0xc
+    call    LibStrStr_entry, [d2,a2,a3], 0xc
     mov     a0, a3
     cmp     0, a3
     bne     loc_484FD3A6
@@ -50147,7 +50147,7 @@ loc_484FD3A6:
     mov     a3, a1
     call    strncpy_entry, [a2,a3], 8
     mov     a2, a0
-    call    func_4852F95E, 0, 0
+    call    FmmTextSanitize, 0, 0
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -50173,7 +50173,7 @@ loc_484FD3ED:
     mov     a3, a1
     call    strncat_entry, [a2,a3], 8
     mov     a2, a0
-    call    func_4852F95E, 0, 0
+    call    FmmTextSanitize, 0, 0
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -50199,7 +50199,7 @@ loc_484FD443:
     mov     a3, a1
     call    strncat_entry, [a2,a3], 8
     mov     a2, a0
-    call    func_4852F95E, 0, 0
+    call    FmmTextSanitize, 0, 0
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -50225,7 +50225,7 @@ loc_484FD498:
     mov     a3, a1
     call    strncat_entry, [a2,a3], 8
     mov     a2, a0
-    call    func_4852F95E, 0, 0
+    call    FmmTextSanitize, 0, 0
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -51614,7 +51614,7 @@ loc_484FE1CA:
     mov     (0x50152340), d0
     movbu   (0x50152344), d1
     extbu   d0
-    call    func_484374EA_entry, [d2,d3], 0x14
+    call    PadIdFromBankSlot_entry, [d2,d3], 0x14
     call    PadFlag2ById_entry, 0, 0xc
     extbu   d0
     cmp     0, d0
@@ -52161,7 +52161,7 @@ loc_484FE698:
     exth    d0
     mov     d0, (0x24, sp)
     mov     (0x18, sp), a0
-    call    func_484FEA70_entry, [d2,a2], 0x24
+    call    PaintArrowLineSeg_entry, [d2,a2], 0x24
     movhu   (0x3c, sp), d0
     mov     a3, a1
     movhu   d0, (0x38, sp)
@@ -52170,7 +52170,7 @@ loc_484FE698:
     movhu   d0, (0x3a, sp)
     mov     (0x18, sp), a0
     mov     (0x24, sp), d0
-    call    func_484FEA70_entry, [d2,a2], 0x24
+    call    PaintArrowLineSeg_entry, [d2,a2], 0x24
     movhu   (0x40, sp), d0
     movhu   d0, (0x38, sp)
     movhu   (0x36, sp), d0
@@ -52202,7 +52202,7 @@ loc_484FE698:
     mov     (0x18, sp), a0
     mov     a3, a1
     mov     (0x24, sp), d0
-    call    func_484FEA70_entry, [d2,a2], 0x24
+    call    PaintArrowLineSeg_entry, [d2,a2], 0x24
     movhu   (0x3c, sp), d0
     mov     a3, a1
     movhu   d0, (0x38, sp)
@@ -52211,7 +52211,7 @@ loc_484FE698:
     movhu   d0, (0x3a, sp)
     mov     (0x18, sp), a0
     mov     (0x24, sp), d0
-    call    func_484FEA70_entry, [d2,a2], 0x24
+    call    PaintArrowLineSeg_entry, [d2,a2], 0x24
     mov     sp, a1
     add     0x40, a1
     movhu   (a1), d0
@@ -52232,7 +52232,7 @@ loc_484FE698:
     mov     (0x18, sp), a0
     mov     a3, a1
     mov     (0x24, sp), d0
-    call    func_484FEA70_entry, [d2,a2], 0x24
+    call    PaintArrowLineSeg_entry, [d2,a2], 0x24
     mov     (0x1c, sp), d0
     cmp     0, d0
     beq     loc_484FE7B2
@@ -52278,7 +52278,7 @@ loc_484FE7C9:
     mov     a3, a1
     mov     (0x24, sp), d0
     mov     a2, d1
-    call    func_484FEA70_entry, [d2,a2], 0x24
+    call    PaintArrowLineSeg_entry, [d2,a2], 0x24
     movhu   (0x36, sp), d0
     movhu   d0, (0x3a, sp)
     movhu   (0x36, sp), d2
@@ -52296,7 +52296,7 @@ loc_484FE7C9:
     mov     (0x24, sp), d0
     mov     a2, d1
     mov     a3, a1
-    call    func_484FEA70_entry, [d2,a2], 0x24
+    call    PaintArrowLineSeg_entry, [d2,a2], 0x24
     ret     [d2,d3,a2,a3], 0x58
 
 func_484FE827:
@@ -52470,7 +52470,7 @@ loc_484FE978:
     mov     (0x24, sp), a1
     mov     a2, d0
     mov     a3, d1
-    call    func_484FEA70_entry, [d2,a2], 0x24
+    call    PaintArrowLineSeg_entry, [d2,a2], 0x24
     movhu   (0x34, sp), d0
     inc     d2
     exth    d0
@@ -52535,7 +52535,7 @@ loc_484FE9FD:
     mov     (0x24, sp), a1
     mov     a2, d0
     mov     a3, d1
-    call    func_484FEA70_entry, [d2,a2], 0x24
+    call    PaintArrowLineSeg_entry, [d2,a2], 0x24
     movhu   (0x38, sp), d0
     inc     d2
     exth    d0
@@ -52575,7 +52575,7 @@ loc_484FEA51:
     mov     (0x24, sp), a1
     mov     a2, d0
     mov     a3, d1
-    call    func_484FEA70_entry, [d2,a2], 0x24
+    call    PaintArrowLineSeg_entry, [d2,a2], 0x24
     movhu   (0x38, sp), d0
     inc     d2
     exth    d0
@@ -52587,11 +52587,11 @@ loc_484FEA51:
     blt     loc_484FEA51
 loc_484FEA6D:
     ret     [d2,d3,a2,a3], 0x4c
-
-func_484FEA70:
+# PaintArrowLineSeg  (CPU 0x484fea70)
+PaintArrowLineSeg:
     movm    [d2,a2], (sp)
     add     -0x1c, sp
-func_484FEA70_entry:
+PaintArrowLineSeg_entry:
     mov     d0, d2
     cmp     0, d1
     beq     loc_484FEAA1
@@ -53071,7 +53071,7 @@ loc_484FEEC1:
     cmp     MD_CMP, d0
     bne     loc_484FEEDB
     mov     (0x28, sp), a0
-    call    func_4843BD68_entry, [a2,a3], 0x1c
+    call    CmpStyleNameGet_entry, [a2,a3], 0x1c
     bra     loc_484FEEFA
 loc_484FEEDB:
     call    GetModeNow_entry, 0, 0x10
@@ -53080,7 +53080,7 @@ loc_484FEEDB:
     mov     (0x50152340), d0
     mov     (0x28, sp), a0
     extbu   d0
-    call    func_48437375_entry, [d2,d3,a2,a3], 0x24
+    call    PadBankNameGet_entry, [d2,d3,a2,a3], 0x24
 loc_484FEEFA:
     clr     d0
     bra     loc_484FEF08
@@ -53569,7 +53569,7 @@ AcNoteDrawBoxProc:
     cmp     0x7f, d0
     bgt     loc_484FF41F
     extbu   d0
-    call    func_4850083C_entry, [d2], 4
+    call    SeqNoteNameGet_entry, [d2], 4
     mov     a0, (0x10, sp)
     mov     d2, d0
     mov     MT_SetString, d1
@@ -53611,12 +53611,12 @@ loc_484FF465:
     jmp     loc_484FF54E
 loc_484FF46E:
     mov     a2, a0
-    call    func_48502E5D, 0, 0
+    call    StrIsBlank, 0, 0
     mov     -2, d2
     cmp     0, d0
     bne     loc_484FF483
     mov     a2, a0
-    call    func_4C001775_entry, [a2], 0x20
+    call    LibAtoi_entry, [a2], 0x20
     mov     d0, d2
 loc_484FF483:
     call    GetModeNow_entry, 0, 0x10
@@ -53720,12 +53720,12 @@ loc_484FF595:
     jmp     loc_484FF679
 loc_484FF59E:
     mov     a2, a0
-    call    func_48502E5D, 0, 0
+    call    StrIsBlank, 0, 0
     mov     -2, d2
     cmp     0, d0
     bne     loc_484FF5B3
     mov     a2, a0
-    call    func_4C001775_entry, [a2], 0x20
+    call    LibAtoi_entry, [a2], 0x20
     mov     d0, d2
 loc_484FF5B3:
     call    GetModeNow_entry, 0, 0x10
@@ -53835,7 +53835,7 @@ AcStepPhraseBoxProc:
     mov     (0x3c, sp), a0
     cmp     0, a0
     beq     loc_484FF710
-    call    func_4C001775_entry, [a2], 0x20
+    call    LibAtoi_entry, [a2], 0x20
     cmp     0, d0
     blt     loc_484FF6FA
     cmp     4, d0
@@ -54875,7 +54875,7 @@ loc_485000B1:
     mov     a0, (8, sp)
     mov     d1, (0xc, sp)
     mov     d0, (0x10, sp)
-    call    func_4843C15E_entry, 0, 0xc
+    call    CmpMeasureCountGet_entry, 0, 0xc
     extbu   d0
     mov     d0, (0x14, sp)
     call    sprintf_entry, [a2], 0x20
@@ -54888,7 +54888,7 @@ loc_485000EE:
     mov     Str_1d_2d_3, d1
     mov     d1, (0xc, sp)
     mov     d0, (0x10, sp)
-    call    func_4843C15E_entry, 0, 0xc
+    call    CmpMeasureCountGet_entry, 0, 0xc
     extbu   d0
     mov     d0, (0x14, sp)
     call    sprintf_entry, [a2], 0x20
@@ -54898,7 +54898,7 @@ loc_48500113:
     mov     Str_2d_35, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    func_4843C15E_entry, 0, 0xc
+    call    CmpMeasureCountGet_entry, 0, 0xc
     extbu   d0
     mov     d0, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
@@ -54922,7 +54922,7 @@ loc_48500145:
     mov     a0, (8, sp)
     mov     d1, (0xc, sp)
     mov     d0, (0x10, sp)
-    call    func_4843258C_entry, 0, 0xc
+    call    UserPadMeasureCountGet_entry, 0, 0xc
     extbu   d0
     mov     d0, (0x14, sp)
     call    sprintf_entry, [a2], 0x20
@@ -54935,7 +54935,7 @@ loc_48500181:
     mov     Str_1d_2d_2, d1
     mov     d1, (0xc, sp)
     mov     d0, (0x10, sp)
-    call    func_4843258C_entry, 0, 0xc
+    call    UserPadMeasureCountGet_entry, 0, 0xc
     extbu   d0
     mov     d0, (0x14, sp)
     call    sprintf_entry, [a2], 0x20
@@ -54945,7 +54945,7 @@ loc_485001A5:
     mov     Str_2d_51, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
-    call    func_4843258C_entry, 0, 0xc
+    call    UserPadMeasureCountGet_entry, 0, 0xc
     extbu   d0
     mov     d0, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
