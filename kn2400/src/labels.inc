@@ -13953,6 +13953,7 @@
 .equ func_4861605B_entry, 0x4861605e
 .equ func_4861605B_entry_L15, 0x48616073
 .equ func_4861605B_entry_L1d, 0x4861607b
+.equ loc_4861607E, 0x4861607e
 .equ func_4861608A, 0x4861608a
 .equ func_48616094, 0x48616094
 .equ func_4861609D, 0x4861609d
@@ -15710,6 +15711,7 @@
 .equ func_4861E23E, 0x4861e23e
 .equ func_4861E23E_entry, 0x4861e243
 .equ func_4861E23E_entry_L59, 0x4861e29c
+.equ loc_4861E29F, 0x4861e29f
 .equ func_4861E23E_entry_L92, 0x4861e2d5
 .equ func_4861E23E_entry_Lb3, 0x4861e2f6
 .equ func_4861E23E_entry_Lba, 0x4861e2fd
@@ -19731,6 +19733,7 @@
 .equ func_4863161E_L101, 0x4863171f
 .equ func_48631722, 0x48631722
 .equ func_48631722_entry, 0x48631725
+.equ loc_48631744, 0x48631744
 .equ func_48631722_entry_L33, 0x48631758
 .equ func_4863175C, 0x4863175c
 .equ func_48631767, 0x48631767
@@ -20164,6 +20167,7 @@
 .equ func_48633B56_entry, 0x48633b59
 .equ func_48633B56_entry_La, 0x48633b63
 .equ func_48633B56_entry_L1d, 0x48633b76
+.equ loc_48633B7C, 0x48633b7c
 .equ func_48633B56_entry_L4c, 0x48633ba5
 .equ func_48633B56_entry_L53, 0x48633bac
 .equ func_48633BB0, 0x48633bb0
@@ -21224,6 +21228,7 @@
 .equ func_4863ABB9_entry_L57, 0x4863ac15
 .equ func_4863ABB9_entry_L59, 0x4863ac17
 .equ func_4863AC1A, 0x4863ac1a
+.equ loc_4863AC1D, 0x4863ac1d
 .equ func_4863AC1A_L29, 0x4863ac43
 .equ func_4863AC46, 0x4863ac46
 .equ func_4863AC46_entry, 0x4863ac4b
@@ -40241,6 +40246,7 @@
 .equ TtMspChdStep_L14b, 0x486bb07c
 .equ TtMspChdStep_L153, 0x486bb084
 .equ TtMspChdStep_L154, 0x486bb085
+.equ loc_486BB088, 0x486bb088
 .equ TtMspChdStep_L18a, 0x486bb0bb
 .equ InitializeBlock20_entry, 0x486bb0c4
 .equ PasswordText_L10, 0x486bb618
@@ -40940,6 +40946,7 @@
 .equ func_486BFC6D_entry, 0x486bfc70
 .equ func_486BFC6D_entry_L11, 0x486bfc81
 .equ func_486BFC6D_entry_L16, 0x486bfc86
+.equ loc_486BFC89, 0x486bfc89
 .equ func_486BFC6D_entry_L36, 0x486bfca6
 .equ func_486BFC6D_entry_L3d, 0x486bfcad
 .equ func_486BFC6D_entry_L46, 0x486bfcb6
@@ -49220,6 +49227,7 @@
 .equ TtContrast_Lec, 0x486ef668
 .equ TtContrast_Lf0, 0x486ef66c
 .equ TtContrast_L101, 0x486ef67d
+.equ loc_486EF681, 0x486ef681
 .equ TtContrast_L138, 0x486ef6b4
 .equ ContrastMessage, 0x486ef6b8
 .equ ContrastMessage_L1a, 0x486ef6d2
@@ -50442,8 +50450,10 @@
 .equ BitmapKenban_L6d, 0x486f6ab4
 .equ BitmapKenban_L71, 0x486f6ab8
 .equ BitmapKenban_L72, 0x486f6ab9
+.equ loc_486F6ABC, 0x486f6abc
 .equ BitmapKenban_La8, 0x486f6aef
 .equ BitmapKenban_Ld6, 0x486f6b1d
+.equ loc_486F6B21, 0x486f6b21
 .equ BitmapKenban_Lfc, 0x486f6b43
 .equ func_486F6B47, 0x486f6b47
 .equ func_486F6B47_L3f, 0x486f6b86
@@ -51950,6 +51960,7 @@
 .equ loc_486FE86C, 0x486fe86c
 .equ AcSswImgListProc_L405, 0x486fe89d
 .equ AcSswImgListProc_L412, 0x486fe8aa
+.equ loc_486FE8D3, 0x486fe8d3
 .equ AcSswImgListProc_L466, 0x486fe8fe
 .equ AcSswImgListProc_L46b, 0x486fe903
 .equ func_486FE907, 0x486fe907
@@ -58177,6 +58188,7 @@
 .equ MainSD_PlayStatusJudge_L2d, 0x4872403f
 .equ MainSD_PlayStatusJudge_L58, 0x4872406a
 .equ MainSD_PlayStatusJudge_L6b, 0x4872407d
+.equ loc_48724081, 0x48724081
 .equ MainSD_PlayStatusJudge_Lba, 0x487240cc
 .equ MainSD_PlayStatusJudge_Lc6, 0x487240d8
 .equ MainSD_PlayStatusJudge_Ld2, 0x487240e4
@@ -67911,6 +67923,7 @@
 .equ func_50151D19_entry_Ld7, 0x50151df5
 .equ func_50151D19_entry_L110, 0x50151e2e
 .equ func_50151D19_entry_L136, 0x50151e54
+.equ loc_50151E57, 0x50151e57
 .equ func_50151D19_entry_L14d, 0x50151e6b
 .equ func_50151E6F, 0x50151e6f
 .equ func_50151E6F_L19, 0x50151e88
@@ -70263,6 +70276,7 @@
 .equ func_5015D103_entry_L84, 0x5015d18a
 .equ func_5015D103_entry_Laa, 0x5015d1b0
 .equ func_5015D103_entry_Lce, 0x5015d1d4
+.equ loc_5015D1D7, 0x5015d1d7
 .equ func_5015D1DA, 0x5015d1da
 .equ func_5015D1DA_L14, 0x5015d1ee
 .equ func_5015D1DA_L17, 0x5015d1f1
@@ -70448,6 +70462,7 @@
 .equ func_5015DB38, 0x5015db38
 .equ func_5015DB49, 0x5015db49
 .equ func_5015DB5A, 0x5015db5a
+.equ loc_5015DB64, 0x5015db64
 .equ func_5015DB5A_L1f, 0x5015db79
 .equ func_5015DB5A_L31, 0x5015db8b
 .equ func_5015DB5A_L3c, 0x5015db96

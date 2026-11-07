@@ -3283,22 +3283,22 @@ InOutTestWindowProc_Table_16:
 	.long	Text_PITCHBEND_WHEEL_VALUE+360
 	.long	Str_KEYBOAD_NOTE_VELOCITY_AFTER_TOUCH
 
-InOutTestWindowProc_Var_2:	# 15 x REC_InOutTestWindowProc_Var_2 (4 bytes each); read by InOutTestWindowProc 0x484A18F1 `movhu (2, a1), d0`; InOutTestWindowProc 0x484A18F1 `movhu (2, a2), d0`; InOutTestWindowProc 0x484A18F1 `movhu (a1), d0` (+1)
-	REC_InOutTestWindowProc_Var_2	f0=15, f2=40	# [0]
-	REC_InOutTestWindowProc_Var_2	f0=15, f2=64
-	REC_InOutTestWindowProc_Var_2	f0=15, f2=88
-	REC_InOutTestWindowProc_Var_2	f0=15, f2=112
-	REC_InOutTestWindowProc_Var_2	f0=15, f2=136
-	REC_InOutTestWindowProc_Var_2	f0=15, f2=160
-	REC_InOutTestWindowProc_Var_2	f0=15, f2=184
-	REC_InOutTestWindowProc_Var_2	f0=340, f2=40
-	REC_InOutTestWindowProc_Var_2	f0=340, f2=64	# [8]
-	REC_InOutTestWindowProc_Var_2	f0=340, f2=88
-	REC_InOutTestWindowProc_Var_2	f0=340, f2=112
-	REC_InOutTestWindowProc_Var_2	f0=340, f2=136
-	REC_InOutTestWindowProc_Var_2	f0=340, f2=160
-	REC_InOutTestWindowProc_Var_2	f0=340, f2=184
-	REC_InOutTestWindowProc_Var_2	f0=142, f2=220
+InOutTestWindowProc_Var_2:	# 15 x InOutTestTextPos (4 bytes each); read by InOutTestWindowProc 0x484A18F1 `movhu (2, a1), d0`; InOutTestWindowProc 0x484A18F1 `movhu (2, a2), d0`; InOutTestWindowProc 0x484A18F1 `movhu (a1), d0` (+1)
+	InOutTestTextPos	x=15, y=40	# [0]
+	InOutTestTextPos	x=15, y=64
+	InOutTestTextPos	x=15, y=88
+	InOutTestTextPos	x=15, y=112
+	InOutTestTextPos	x=15, y=136
+	InOutTestTextPos	x=15, y=160
+	InOutTestTextPos	x=15, y=184
+	InOutTestTextPos	x=340, y=40
+	InOutTestTextPos	x=340, y=64	# [8]
+	InOutTestTextPos	x=340, y=88
+	InOutTestTextPos	x=340, y=112
+	InOutTestTextPos	x=340, y=136
+	InOutTestTextPos	x=340, y=160
+	InOutTestTextPos	x=340, y=184
+	InOutTestTextPos	x=142, y=220
 
 InOutTestWindowProc_Table_4:	# 2 x u16, 40..250; read by InOutTestWindowProc 0x484A18F1: `movhu  (a1), d0`
 	tab_u16	250, 40
@@ -3313,14 +3313,14 @@ InOutTestWindowProc_Table_8:	# 6 x u16, 136..250; read by InOutTestWindowProc 0x
 InOutTestWindowProc_Table_9:	# 2 x u16, 220..563; read by InOutTestWindowProc 0x484A18F1: `movhu  (a1), d0`
 	tab_u16	563, 220
 
-InOutTestWindowProc_Records:	# 7 x REC_InOutTestWindowProc_Records (4 bytes each); read by InOutTestWindowProc 0x484A18F1 `movhu (2, a0), d1`; InOutTestWindowProc 0x484A18F1 `movhu (2, a1), d0`; InOutTestWindowProc 0x484A18F1 `movhu (a0), d1` (+1)
-	REC_InOutTestWindowProc_Records	f0=575, f2=40
-	REC_InOutTestWindowProc_Records	f0=575, f2=64
-	REC_InOutTestWindowProc_Records	f0=575, f2=88
-	REC_InOutTestWindowProc_Records	f0=575, f2=112
-	REC_InOutTestWindowProc_Records	f0=575, f2=136
-	REC_InOutTestWindowProc_Records	f0=575, f2=160
-	REC_InOutTestWindowProc_Records	f0=250, f2=160
+InOutTestWindowProc_Records:	# 7 x InOutTestStatePos (4 bytes each); read by InOutTestWindowProc 0x484A18F1 `movhu (2, a0), d1`; InOutTestWindowProc 0x484A18F1 `movhu (2, a1), d0`; InOutTestWindowProc 0x484A18F1 `movhu (a0), d1` (+1)
+	InOutTestStatePos	x=575, y=40
+	InOutTestStatePos	x=575, y=64
+	InOutTestStatePos	x=575, y=88
+	InOutTestStatePos	x=575, y=112
+	InOutTestStatePos	x=575, y=136
+	InOutTestStatePos	x=575, y=160
+	InOutTestStatePos	x=250, y=160
 
 InOutTestWindowProc_Table_10:	# 2 x u16, 40..300; read by InOutTestWindowProc 0x484A18F1: `movhu  (a1), d0`
 	tab_u16	300, 40
@@ -6466,11 +6466,10 @@ func_484AE5C0_MsgTable_4:	# 3 x {u32 key, code address}: a dispatch table; read 
 
 func_484AE5C0_Var:	# REC_func_484AE5C0_ArgA0 (8 bytes): the layout func_484AE5C0 0x484AE5C0 reads through its argument a0 (passed by func_484AE4D2 0x484AE4D2 `call func_484AE5C0_entry, [d2,a2], 0x10`, +1 more calls)
 	REC_func_484AE5C0_ArgA0	f0=4, proc=func_484B1071
-	# then 1 x u32 up to the next label, which no instruction is seen to read (the table the field reads ran on into them)
-	tab_u32	0	# +8
 
-func_484AE5C0_Var_2:	# u32, a constant; read / written by func_484AE5C0 0x484AE5C0: `mov (4, a2), d0`
-	.long	0
+# 0 records of 8 bytes up to the end marker (+4, 32 bits) that func_484AE5C0 0x484AE5C0: `mov (4, a2), d0` / `cmp 0, d0`, `add 8, a2` stops at, then the marker
+func_484AE5C0_List:
+	.long	0x0, 0x0	# end
 
 func_484AE5C0_MsgTable_5:	# 3 x {u32 key, code address}: a dispatch table; read by func_484AE57F 0x484AE57F `call func_484AE5C0_entry, [d2,a2], 0x10`; func_484AE5C0 0x484AE5C0 `mov (a2), d0`
 	.long	4, func_484B10DF
@@ -22397,8 +22396,68 @@ Str_OFF_63:	.asciz "OFF"
 	.align	4, 0xFF	# pad after Str_OFF_63
 Str_empty_970:	.asciz "                                       "
 Str_08x_08x_2:	.asciz "   %08x, %08x                  "
-# census: opaque -- unknown-dump: 186 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x24333C, 0x2433F6
+# a byte-identical copy of Str_20 (0x485EAEEC, string); nothing is seen to read the copy (dup_spans)
+Str_20_Copy:	.asciz "   20"
+# a byte-identical copy of Str_25 (0x485EAEF2, string); nothing is seen to read the copy (dup_spans)
+Str_25_Copy:	.asciz "   25"
+# a byte-identical copy of Str_31_5 (0x485EAEF8, string); nothing is seen to read the copy (dup_spans)
+Str_31_5_Copy:	.asciz " 31.5"
+# a byte-identical copy of Str_40 (0x485EAEFE, string); nothing is seen to read the copy (dup_spans)
+Str_40_Copy:	.asciz "   40"
+# a byte-identical copy of Str_50 (0x485EAF04, string); nothing is seen to read the copy (dup_spans)
+Str_50_Copy:	.asciz "   50"
+# a byte-identical copy of Str_63 (0x485EAF0A, string); nothing is seen to read the copy (dup_spans)
+Str_63_Copy:	.asciz "   63"
+# a byte-identical copy of Str_80 (0x485EAF10, string); nothing is seen to read the copy (dup_spans)
+Str_80_Copy:	.asciz "   80"
+# a byte-identical copy of Str_100 (0x485EAF16, string); nothing is seen to read the copy (dup_spans)
+Str_100_Copy:	.asciz "  100"
+# a byte-identical copy of Str_125 (0x485EAF1C, string); nothing is seen to read the copy (dup_spans)
+Str_125_Copy:	.asciz "  125"
+# a byte-identical copy of Str_160 (0x485EAF22, string); nothing is seen to read the copy (dup_spans)
+Str_160_Copy:	.asciz "  160"
+# a byte-identical copy of Str_200 (0x485EAF28, string); nothing is seen to read the copy (dup_spans)
+Str_200_Copy:	.asciz "  200"
+# a byte-identical copy of Str_250 (0x485EAF2E, string); nothing is seen to read the copy (dup_spans)
+Str_250_Copy:	.asciz "  250"
+# a byte-identical copy of Str_315 (0x485EAF34, string); nothing is seen to read the copy (dup_spans)
+Str_315_Copy:	.asciz "  315"
+# a byte-identical copy of Str_400 (0x485EAF3A, string); nothing is seen to read the copy (dup_spans)
+Str_400_Copy:	.asciz "  400"
+# a byte-identical copy of Str_500 (0x485EAF40, string); nothing is seen to read the copy (dup_spans)
+Str_500_Copy:	.asciz "  500"
+# a byte-identical copy of Str_630 (0x485EAF46, string); nothing is seen to read the copy (dup_spans)
+Str_630_Copy:	.asciz "  630"
+# a byte-identical copy of Str_800 (0x485EAF4C, string); nothing is seen to read the copy (dup_spans)
+Str_800_Copy:	.asciz "  800"
+# a byte-identical copy of Str_1k (0x485EAF52, string); nothing is seen to read the copy (dup_spans)
+Str_1k_Copy:	.asciz "   1k"
+# a byte-identical copy of Str_1_25k (0x485EAF58, string); nothing is seen to read the copy (dup_spans)
+Str_1_25k_Copy:	.asciz "1.25k"
+# a byte-identical copy of Str_1_6k (0x485EAF5E, string); nothing is seen to read the copy (dup_spans)
+Str_1_6k_Copy:	.asciz " 1.6k"
+# a byte-identical copy of Str_2k (0x485EAF64, string); nothing is seen to read the copy (dup_spans)
+Str_2k_Copy:	.asciz "   2k"
+# a byte-identical copy of Str_2_5k (0x485EAF6A, string); nothing is seen to read the copy (dup_spans)
+Str_2_5k_Copy:	.asciz " 2.5k"
+# a byte-identical copy of Str_3_15k (0x485EAF70, string); nothing is seen to read the copy (dup_spans)
+Str_3_15k_Copy:	.asciz "3.15k"
+# a byte-identical copy of Str_4k (0x485EAF76, string); nothing is seen to read the copy (dup_spans)
+Str_4k_Copy:	.asciz "   4k"
+# a byte-identical copy of Str_5k (0x485EAF7C, string); nothing is seen to read the copy (dup_spans)
+Str_5k_Copy:	.asciz "   5k"
+# a byte-identical copy of Str_6_3k (0x485EAF82, string); nothing is seen to read the copy (dup_spans)
+Str_6_3k_Copy:	.asciz " 6.3k"
+# a byte-identical copy of Str_8k (0x485EAF88, string); nothing is seen to read the copy (dup_spans)
+Str_8k_Copy:	.asciz "   8k"
+# a byte-identical copy of Str_10k (0x485EAF8E, string); nothing is seen to read the copy (dup_spans)
+Str_10k_Copy:	.asciz "  10k"
+# a byte-identical copy of Str_12_5k (0x485EAF94, string); nothing is seen to read the copy (dup_spans)
+Str_12_5k_Copy:	.asciz "12.5k"
+# a byte-identical copy of Str_16k (0x485EAF9A, string); nothing is seen to read the copy (dup_spans)
+Str_16k_Copy:	.asciz "  16k"
+# a byte-identical copy of Str_20k (0x485EAFA0, string); nothing is seen to read the copy (dup_spans)
+Str_20k_Copy:	.asciz "  20k"
 
 func_485024EF_Table:	# 126 x u8, 51..255; read by func_485024EF_entry 0x48500A08: `movbu  (a1), d0`
 	tab_u8	60, 51, 100, 72, 66, 51, 100, 72, 72, 51, 100, 72, 78, 51, 100, 72	# [0]
@@ -26156,8 +26215,68 @@ Str_3d_50:	.asciz "%3d"
 Str_ON_38:	.asciz "ON "
 Str_empty_930:	.asciz "-- "
 Str_3d_49:	.asciz "%3d"
-# census: opaque -- unknown-dump: 186 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x24ECBC, 0x24ED76
+# a byte-identical copy of Str_20 (0x485EAEEC, string); nothing is seen to read the copy (dup_spans)
+Str_20_Copy_2:	.asciz "   20"
+# a byte-identical copy of Str_25 (0x485EAEF2, string); nothing is seen to read the copy (dup_spans)
+Str_25_Copy_2:	.asciz "   25"
+# a byte-identical copy of Str_31_5 (0x485EAEF8, string); nothing is seen to read the copy (dup_spans)
+Str_31_5_Copy_2:	.asciz " 31.5"
+# a byte-identical copy of Str_40 (0x485EAEFE, string); nothing is seen to read the copy (dup_spans)
+Str_40_Copy_2:	.asciz "   40"
+# a byte-identical copy of Str_50 (0x485EAF04, string); nothing is seen to read the copy (dup_spans)
+Str_50_Copy_2:	.asciz "   50"
+# a byte-identical copy of Str_63 (0x485EAF0A, string); nothing is seen to read the copy (dup_spans)
+Str_63_Copy_2:	.asciz "   63"
+# a byte-identical copy of Str_80 (0x485EAF10, string); nothing is seen to read the copy (dup_spans)
+Str_80_Copy_2:	.asciz "   80"
+# a byte-identical copy of Str_100 (0x485EAF16, string); nothing is seen to read the copy (dup_spans)
+Str_100_Copy_2:	.asciz "  100"
+# a byte-identical copy of Str_125 (0x485EAF1C, string); nothing is seen to read the copy (dup_spans)
+Str_125_Copy_2:	.asciz "  125"
+# a byte-identical copy of Str_160 (0x485EAF22, string); nothing is seen to read the copy (dup_spans)
+Str_160_Copy_2:	.asciz "  160"
+# a byte-identical copy of Str_200 (0x485EAF28, string); nothing is seen to read the copy (dup_spans)
+Str_200_Copy_2:	.asciz "  200"
+# a byte-identical copy of Str_250 (0x485EAF2E, string); nothing is seen to read the copy (dup_spans)
+Str_250_Copy_2:	.asciz "  250"
+# a byte-identical copy of Str_315 (0x485EAF34, string); nothing is seen to read the copy (dup_spans)
+Str_315_Copy_2:	.asciz "  315"
+# a byte-identical copy of Str_400 (0x485EAF3A, string); nothing is seen to read the copy (dup_spans)
+Str_400_Copy_2:	.asciz "  400"
+# a byte-identical copy of Str_500 (0x485EAF40, string); nothing is seen to read the copy (dup_spans)
+Str_500_Copy_2:	.asciz "  500"
+# a byte-identical copy of Str_630 (0x485EAF46, string); nothing is seen to read the copy (dup_spans)
+Str_630_Copy_2:	.asciz "  630"
+# a byte-identical copy of Str_800 (0x485EAF4C, string); nothing is seen to read the copy (dup_spans)
+Str_800_Copy_2:	.asciz "  800"
+# a byte-identical copy of Str_1k (0x485EAF52, string); nothing is seen to read the copy (dup_spans)
+Str_1k_Copy_2:	.asciz "   1k"
+# a byte-identical copy of Str_1_25k (0x485EAF58, string); nothing is seen to read the copy (dup_spans)
+Str_1_25k_Copy_2:	.asciz "1.25k"
+# a byte-identical copy of Str_1_6k (0x485EAF5E, string); nothing is seen to read the copy (dup_spans)
+Str_1_6k_Copy_2:	.asciz " 1.6k"
+# a byte-identical copy of Str_2k (0x485EAF64, string); nothing is seen to read the copy (dup_spans)
+Str_2k_Copy_2:	.asciz "   2k"
+# a byte-identical copy of Str_2_5k (0x485EAF6A, string); nothing is seen to read the copy (dup_spans)
+Str_2_5k_Copy_2:	.asciz " 2.5k"
+# a byte-identical copy of Str_3_15k (0x485EAF70, string); nothing is seen to read the copy (dup_spans)
+Str_3_15k_Copy_2:	.asciz "3.15k"
+# a byte-identical copy of Str_4k (0x485EAF76, string); nothing is seen to read the copy (dup_spans)
+Str_4k_Copy_2:	.asciz "   4k"
+# a byte-identical copy of Str_5k (0x485EAF7C, string); nothing is seen to read the copy (dup_spans)
+Str_5k_Copy_2:	.asciz "   5k"
+# a byte-identical copy of Str_6_3k (0x485EAF82, string); nothing is seen to read the copy (dup_spans)
+Str_6_3k_Copy_2:	.asciz " 6.3k"
+# a byte-identical copy of Str_8k (0x485EAF88, string); nothing is seen to read the copy (dup_spans)
+Str_8k_Copy_2:	.asciz "   8k"
+# a byte-identical copy of Str_10k (0x485EAF8E, string); nothing is seen to read the copy (dup_spans)
+Str_10k_Copy_2:	.asciz "  10k"
+# a byte-identical copy of Str_12_5k (0x485EAF94, string); nothing is seen to read the copy (dup_spans)
+Str_12_5k_Copy_2:	.asciz "12.5k"
+# a byte-identical copy of Str_16k (0x485EAF9A, string); nothing is seen to read the copy (dup_spans)
+Str_16k_Copy_2:	.asciz "  16k"
+# a byte-identical copy of Str_20k (0x485EAFA0, string); nothing is seen to read the copy (dup_spans)
+Str_20k_Copy_2:	.asciz "  20k"
 
 func_4850D773_Table:	# 126 x u8, 4..255; read by func_4850D773_entry 0x4850CDE1: `movbu  (a1), d0`
 	tab_u8	188, 236, 100, 72, 194, 236, 100, 72, 200, 236, 100, 72, 206, 236, 100, 72	# [0]
@@ -28516,8 +28635,68 @@ Str_5_1f:	.asciz "%+5.1f"
 	.align	4, 0xFF	# pad after Str_5_1f
 Str_empty_912:	.asciz "---"
 Str_3d_48:	.asciz "%3d"
-# census: opaque -- unknown-dump: 186 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x255928, 0x2559E2
+# a byte-identical copy of Str_20 (0x485EAEEC, string); nothing is seen to read the copy (dup_spans)
+Str_20_Copy_3:	.asciz "   20"
+# a byte-identical copy of Str_25 (0x485EAEF2, string); nothing is seen to read the copy (dup_spans)
+Str_25_Copy_3:	.asciz "   25"
+# a byte-identical copy of Str_31_5 (0x485EAEF8, string); nothing is seen to read the copy (dup_spans)
+Str_31_5_Copy_3:	.asciz " 31.5"
+# a byte-identical copy of Str_40 (0x485EAEFE, string); nothing is seen to read the copy (dup_spans)
+Str_40_Copy_3:	.asciz "   40"
+# a byte-identical copy of Str_50 (0x485EAF04, string); nothing is seen to read the copy (dup_spans)
+Str_50_Copy_3:	.asciz "   50"
+# a byte-identical copy of Str_63 (0x485EAF0A, string); nothing is seen to read the copy (dup_spans)
+Str_63_Copy_3:	.asciz "   63"
+# a byte-identical copy of Str_80 (0x485EAF10, string); nothing is seen to read the copy (dup_spans)
+Str_80_Copy_3:	.asciz "   80"
+# a byte-identical copy of Str_100 (0x485EAF16, string); nothing is seen to read the copy (dup_spans)
+Str_100_Copy_3:	.asciz "  100"
+# a byte-identical copy of Str_125 (0x485EAF1C, string); nothing is seen to read the copy (dup_spans)
+Str_125_Copy_3:	.asciz "  125"
+# a byte-identical copy of Str_160 (0x485EAF22, string); nothing is seen to read the copy (dup_spans)
+Str_160_Copy_3:	.asciz "  160"
+# a byte-identical copy of Str_200 (0x485EAF28, string); nothing is seen to read the copy (dup_spans)
+Str_200_Copy_3:	.asciz "  200"
+# a byte-identical copy of Str_250 (0x485EAF2E, string); nothing is seen to read the copy (dup_spans)
+Str_250_Copy_3:	.asciz "  250"
+# a byte-identical copy of Str_315 (0x485EAF34, string); nothing is seen to read the copy (dup_spans)
+Str_315_Copy_3:	.asciz "  315"
+# a byte-identical copy of Str_400 (0x485EAF3A, string); nothing is seen to read the copy (dup_spans)
+Str_400_Copy_3:	.asciz "  400"
+# a byte-identical copy of Str_500 (0x485EAF40, string); nothing is seen to read the copy (dup_spans)
+Str_500_Copy_3:	.asciz "  500"
+# a byte-identical copy of Str_630 (0x485EAF46, string); nothing is seen to read the copy (dup_spans)
+Str_630_Copy_3:	.asciz "  630"
+# a byte-identical copy of Str_800 (0x485EAF4C, string); nothing is seen to read the copy (dup_spans)
+Str_800_Copy_3:	.asciz "  800"
+# a byte-identical copy of Str_1k (0x485EAF52, string); nothing is seen to read the copy (dup_spans)
+Str_1k_Copy_3:	.asciz "   1k"
+# a byte-identical copy of Str_1_25k (0x485EAF58, string); nothing is seen to read the copy (dup_spans)
+Str_1_25k_Copy_3:	.asciz "1.25k"
+# a byte-identical copy of Str_1_6k (0x485EAF5E, string); nothing is seen to read the copy (dup_spans)
+Str_1_6k_Copy_3:	.asciz " 1.6k"
+# a byte-identical copy of Str_2k (0x485EAF64, string); nothing is seen to read the copy (dup_spans)
+Str_2k_Copy_3:	.asciz "   2k"
+# a byte-identical copy of Str_2_5k (0x485EAF6A, string); nothing is seen to read the copy (dup_spans)
+Str_2_5k_Copy_3:	.asciz " 2.5k"
+# a byte-identical copy of Str_3_15k (0x485EAF70, string); nothing is seen to read the copy (dup_spans)
+Str_3_15k_Copy_3:	.asciz "3.15k"
+# a byte-identical copy of Str_4k (0x485EAF76, string); nothing is seen to read the copy (dup_spans)
+Str_4k_Copy_3:	.asciz "   4k"
+# a byte-identical copy of Str_5k (0x485EAF7C, string); nothing is seen to read the copy (dup_spans)
+Str_5k_Copy_3:	.asciz "   5k"
+# a byte-identical copy of Str_6_3k (0x485EAF82, string); nothing is seen to read the copy (dup_spans)
+Str_6_3k_Copy_3:	.asciz " 6.3k"
+# a byte-identical copy of Str_8k (0x485EAF88, string); nothing is seen to read the copy (dup_spans)
+Str_8k_Copy_3:	.asciz "   8k"
+# a byte-identical copy of Str_10k (0x485EAF8E, string); nothing is seen to read the copy (dup_spans)
+Str_10k_Copy_3:	.asciz "  10k"
+# a byte-identical copy of Str_12_5k (0x485EAF94, string); nothing is seen to read the copy (dup_spans)
+Str_12_5k_Copy_3:	.asciz "12.5k"
+# a byte-identical copy of Str_16k (0x485EAF9A, string); nothing is seen to read the copy (dup_spans)
+Str_16k_Copy_3:	.asciz "  16k"
+# a byte-identical copy of Str_20k (0x485EAFA0, string); nothing is seen to read the copy (dup_spans)
+Str_20k_Copy_3:	.asciz "  20k"
 
 func_485141C5_Table:	# 126 x u8, 40..255; read by func_485141C5_entry 0x48513D3B: `movbu  (a1), d0`
 	tab_u8	40, 89, 101, 72, 46, 89, 101, 72, 52, 89, 101, 72, 58, 89, 101, 72	# [0]

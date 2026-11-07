@@ -35918,11 +35918,11 @@ GetColorMode_Var:	# u16, initial value of a RAM variable; read / written by GetC
 GetLcdMode_Var:	# u16, initial value of a RAM variable; read / written by GetLcdMode 0x48421D1C: `movhu (GetLcdMode_Var), d0`; SetLcdMode 0x48421D25: `movhu d0, (GetLcdMode_Var)`
 	.word	0
 
-func_4842886A_Table:	# 4 x REC_func_4842886A_Table (56 bytes each); read by func_484143A9 0x484143A9 `movhu (6, a0), d0`; func_484144B6 0x484144B6 `call set_flg, 0, 0`; func_484144B6 0x484144B6 `movhu (6, a0), d0` (+175)
-	REC_func_4842886A_Table	key__=1, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x50000, f32=0xFFFFFFFF, f36=0x50000, Free_d1=0x5002C040, key___=-1, count=1, index_=0x5002FC58
-	REC_func_4842886A_Table	key__=256, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x50000, f32=0xFFFFFFFF, f36=0x50000, Free_d1=0x5002C04C, key___=-1, count=128, index_=0x5002FC70
-	REC_func_4842886A_Table	key__=1024, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x50000, f32=0xFFFFFFFF, f36=0x50000, Free_d1=0x5002CC4C, key___=-1, count=128, index_=0x50030870
-	REC_func_4842886A_Table	key__=1, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x50000, f32=0xFFFFFFFF, f36=0x50000, Free_d1=0x5002FC4C, key___=-1, count=1, index_=0x50031470
+func_4842886A_Table:	# 4 x AppTaskState (56 bytes each); read by func_484143A9 0x484143A9 `movhu (6, a0), d0`; func_484144B6 0x484144B6 `call set_flg, 0, 0`; func_484144B6 0x484144B6 `movhu (6, a0), d0` (+175)
+	AppTaskState	q_size=1, x10="\x00\x00", cur_class=0xFFFFFFFF, main_obj=0xFFFFFFFF, msg_obj=0xFFFFFFFF, msg_event=0x50000, call_obj=0xFFFFFFFF, call_msg=0x50000, q_buf=0x5002C040, key=-1, count=1, index=0x5002FC58
+	AppTaskState	q_size=256, x10="\x00\x00", cur_class=0xFFFFFFFF, main_obj=0xFFFFFFFF, msg_obj=0xFFFFFFFF, msg_event=0x50000, call_obj=0xFFFFFFFF, call_msg=0x50000, q_buf=0x5002C04C, key=-1, count=128, index=0x5002FC70
+	AppTaskState	q_size=1024, x10="\x00\x00", cur_class=0xFFFFFFFF, main_obj=0xFFFFFFFF, msg_obj=0xFFFFFFFF, msg_event=0x50000, call_obj=0xFFFFFFFF, call_msg=0x50000, q_buf=0x5002CC4C, key=-1, count=128, index=0x50030870
+	AppTaskState	q_size=1, x10="\x00\x00", cur_class=0xFFFFFFFF, main_obj=0xFFFFFFFF, msg_obj=0xFFFFFFFF, msg_event=0x50000, call_obj=0xFFFFFFFF, call_msg=0x50000, q_buf=0x5002FC4C, key=-1, count=1, index=0x50031470
 
 names_50007658:
 	.long	Str_CHARA1
@@ -36337,24 +36337,24 @@ Str_d_2:	.asciz "d"
 AcNoteEditBoxProc_Table_5:	# 7 x u16, 0..65535; read by AcNoteEditBoxProc 0x4853BA26: `movhu (AcNoteEditBoxProc_Table_5), d0`; AcDrumEditBoxProc 0x4853C965: `movhu (AcNoteEditBoxProc_Table_5), d0` ...
 	tab_u16	1, 65535, 2, 1, 65, 0, 65280
 
-SdCommandSend_Var:	# REC_SdCommandSend_ArgA0 (10 bytes): the layout SdCommandSend 0x4854BBBE reads through its argument a0 (passed by SdWorkerCmdHandler 0x4854A914 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +2 more calls)
-	REC_SdCommandSend_ArgA0	SdSpiClockSet_d0=2, SdResponseScan_d0=1, f4=66, x5="\x00\x00\x00\x00", f9=149
-SdFrameR2Cmd0:	# REC_SdCommandSend_ArgA0 (10 bytes) [INFERENCE: between two records of the kind, a whole number of records apart; no call the walk sees passes it]
-	REC_SdCommandSend_ArgA0	SdSpiClockSet_d0=2, SdResponseScan_d0=2, f4=64, x5="\x00\x00\x0F\x00", f9=255
-SdFrameR2Cmd5:	# REC_SdCommandSend_ArgA0 (10 bytes) [INFERENCE: between two records of the kind, a whole number of records apart; no call the walk sees passes it]
-	REC_SdCommandSend_ArgA0	SdSpiClockSet_d0=2, SdResponseScan_d0=2, f4=69, x5="\x00\x00\x00\x00", f9=255
-SdFrameR2Cmd3:	# REC_SdCommandSend_ArgA0 (10 bytes) [INFERENCE: between two records of the kind, a whole number of records apart; no call the walk sees passes it]
-	REC_SdCommandSend_ArgA0	SdSpiClockSet_d0=2, SdResponseScan_d0=2, f4=67, x5="\x00\x00\x01\x00", f9=255
-SdFrameR2Cmd6:	# REC_SdCommandSend_ArgA0 (10 bytes) [INFERENCE: between two records of the kind, a whole number of records apart; no call the walk sees passes it]
-	REC_SdCommandSend_ArgA0	SdSpiClockSet_d0=2, SdResponseScan_d0=2, f4=70, x5="\x00\x00\x00\x00", f9=255
-SdFrameR2Cmd7:	# REC_SdCommandSend_ArgA0 (10 bytes) [INFERENCE: between two records of the kind, a whole number of records apart; no call the walk sees passes it]
-	REC_SdCommandSend_ArgA0	SdSpiClockSet_d0=2, SdResponseScan_d0=2, f4=71, x5="\x00\x00\x00\x00", f9=255
-SdCommandSend_Var_4:	# REC_SdCommandSend_ArgA0 (10 bytes): the layout SdCommandSend 0x4854BBBE reads through its argument a0 (passed by SdWorkerCmdHandler 0x4854A914 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +2 more calls)
-	REC_SdCommandSend_ArgA0	SdSpiClockSet_d0=3, SdResponseScan_d0=1, f4=64, x5="\x00\x00\x00\x00", f9=149
-SdCommandSend_Var_7:	# REC_SdCommandSend_ArgA0 (10 bytes): the layout SdCommandSend 0x4854BBBE reads through its argument a0 (passed by SdWorkerCmdHandler 0x4854A914 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +2 more calls)
-	REC_SdCommandSend_ArgA0	SdSpiClockSet_d0=3, SdResponseScan_d0=1, f4=123, x5="\x00\x00\x00\x01", f9=255
-SdCommandSend_Var_10:	# REC_SdCommandSend_ArgA0 (10 bytes): the layout SdCommandSend 0x4854BBBE reads through its argument a0 (passed by SdWorkerCmdHandler 0x4854A914 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +2 more calls)
-	REC_SdCommandSend_ArgA0	SdSpiClockSet_d0=3, SdResponseScan_d0=1, f4=65, x5="\x00\x00\x00\x00", f9=255
+SdCommandSend_Var:	# SdCommandFrame (10 bytes): the layout SdCommandSend 0x4854BBBE reads through its argument a0 (passed by SdWorkerCmdHandler 0x4854A914 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +2 more calls)
+	SdCommandFrame	clock_mode=2, resp_type=1, cmd=66, x5="\x00\x00\x00\x00", crc7=149
+SdFrameR2Cmd0:	# SdCommandFrame (10 bytes) [INFERENCE: between two records of the kind, a whole number of records apart; no call the walk sees passes it]
+	SdCommandFrame	clock_mode=2, resp_type=2, cmd=64, x5="\x00\x00\x0F\x00", crc7=255
+SdFrameR2Cmd5:	# SdCommandFrame (10 bytes) [INFERENCE: between two records of the kind, a whole number of records apart; no call the walk sees passes it]
+	SdCommandFrame	clock_mode=2, resp_type=2, cmd=69, x5="\x00\x00\x00\x00", crc7=255
+SdFrameR2Cmd3:	# SdCommandFrame (10 bytes) [INFERENCE: between two records of the kind, a whole number of records apart; no call the walk sees passes it]
+	SdCommandFrame	clock_mode=2, resp_type=2, cmd=67, x5="\x00\x00\x01\x00", crc7=255
+SdFrameR2Cmd6:	# SdCommandFrame (10 bytes) [INFERENCE: between two records of the kind, a whole number of records apart; no call the walk sees passes it]
+	SdCommandFrame	clock_mode=2, resp_type=2, cmd=70, x5="\x00\x00\x00\x00", crc7=255
+SdFrameR2Cmd7:	# SdCommandFrame (10 bytes) [INFERENCE: between two records of the kind, a whole number of records apart; no call the walk sees passes it]
+	SdCommandFrame	clock_mode=2, resp_type=2, cmd=71, x5="\x00\x00\x00\x00", crc7=255
+SdCommandSend_Var_4:	# SdCommandFrame (10 bytes): the layout SdCommandSend 0x4854BBBE reads through its argument a0 (passed by SdWorkerCmdHandler 0x4854A914 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +2 more calls)
+	SdCommandFrame	clock_mode=3, resp_type=1, cmd=64, x5="\x00\x00\x00\x00", crc7=149
+SdCommandSend_Var_7:	# SdCommandFrame (10 bytes): the layout SdCommandSend 0x4854BBBE reads through its argument a0 (passed by SdWorkerCmdHandler 0x4854A914 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +2 more calls)
+	SdCommandFrame	clock_mode=3, resp_type=1, cmd=123, x5="\x00\x00\x00\x01", crc7=255
+SdCommandSend_Var_10:	# SdCommandFrame (10 bytes): the layout SdCommandSend 0x4854BBBE reads through its argument a0 (passed by SdWorkerCmdHandler 0x4854A914 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +2 more calls)
+	SdCommandFrame	clock_mode=3, resp_type=1, cmd=65, x5="\x00\x00\x00\x00", crc7=255
 
 SdReadBlockCmd_Var:	# u16, initial value of a RAM variable; read / written by SdReadBlockCmd 0x4854BCD3: `movhu (a3), d0`
 	.word	3

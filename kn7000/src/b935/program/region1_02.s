@@ -87597,6 +87597,7 @@ func_48470661_entry:
     call    DiskCmdTransact_entry, [d2,a2], 0x18
     mov     (0xc, sp), d0
     ret     0, 0x20
+loc_48470683:
     cmp     0x107020bb, d0
     bne     loc_48470697
     cmp     1, d1

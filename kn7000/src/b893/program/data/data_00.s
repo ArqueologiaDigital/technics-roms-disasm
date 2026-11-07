@@ -88,12 +88,12 @@ func_4C002FA3_Table:	# 2 x u32, 0..0; read by LibF64Zero 0x4C002FA3: `mov   (a0)
 
 cre_tsk_Impl_Table:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C03D0B5 reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_tsk, 0, 0`, +8 more calls); the layout cre_tsk_Impl 0x4C03D141 reads through its argument a0 (passed by cre_tsk 0x4C03D0B5 `call cre_tsk_Impl_entry, [d2,d3,a2], 0x2c`)
 	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_4C003F80, itskpri=3, x14="\x00\x00", stksz=3072
-cre_flg_Impl_Var:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	x6="\x00\x00", f8=1
-cre_flg_Impl_Var_3:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	x6="\x00\x00"
-cre_flg_Impl_Var_5:	# REC_cre_flg_ArgA0_s8 (8 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0_s8	x6="\x00\x00"
+cre_flg_Impl_Var:	# T_CFLG (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	x6="\x00\x00", iflgptn=1
+cre_flg_Impl_Var_3:	# T_CFLG (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	x6="\x00\x00"
+cre_flg_Impl_Var_5:	# T_CFLG_s8 (8 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG_s8	x6="\x00\x00"
 
 cre_flg_Impl_Table:	# 10 x u32, 1..4294901760; read by cre_flg_Impl 0x4C03C868: `mov (8, a3), d2`
 	tab_u32	1, 16843009, 16843009, 16843009, 16843009, 16843009, 16843009, 65793	# [0]
@@ -3655,8 +3655,8 @@ func_4C01C067_Table:	# 11 x u16, 0..40; read by func_4C01C067 0x4C01C067: `movhu
 	tab_u16	0, 6, 8, 10, 13, 16, 19, 22, 25, 30, 40
 	.align	4, 0xFF	# pad after func_4C01C067_Table
 
-cre_flg_Impl_Var_6:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00", f8=1
+cre_flg_Impl_Var_6:	# T_CFLG (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	flgatr=8, x6="\x00\x00", iflgptn=1
 
 M3SendProcessTgc_Table:	# 12 x u32, 1275154489..1275154491; read by M3SendProcessTgc 0x4C01500B: `mov   (d0, a0), a0`
 	tab_u32	1275154489, 1275154489, 1275154489, 1275154489, 1275154489, 1275154489, 1275154489, 1275154489	# [0]
@@ -5026,8 +5026,8 @@ func_4840AE06_Records:	# 98 x REC_func_4840AE06_Records (8 bytes each); read by 
 
 cre_tsk_Impl_Table_3:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C03D0B5 reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_tsk, 0, 0`, +8 more calls); the layout cre_tsk_Impl 0x4C03D141 reads through its argument a0 (passed by cre_tsk 0x4C03D0B5 `call cre_tsk_Impl_entry, [d2,d3,a2], 0x2c`)
 	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_484082C2, itskpri=3, x14="\x00\x00", stksz=10240
-cre_flg_Impl_Var_8:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00"
+cre_flg_Impl_Var_8:	# T_CFLG (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	flgatr=8, x6="\x00\x00"
 
 cre_sem_Impl_Table:	# 2 x u32, 0..0; read by cre_sem_Impl 0x4C03C090: `mov (a3), d2`
 	tab_u32	0, 0
@@ -11507,16 +11507,16 @@ cre_tsk_Impl_Table_5:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C03D0B5 reads t
 	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_484143A9, itskpri=3, x14="\x00\x00", stksz=0x10000
 cre_tsk_Impl_Table_7:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C03D0B5 reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_tsk, 0, 0`, +8 more calls); the layout cre_tsk_Impl 0x4C03D141 reads through its argument a0 (passed by cre_tsk 0x4C03D0B5 `call cre_tsk_Impl_entry, [d2,d3,a2], 0x2c`)
 	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_48421839, itskpri=3, x14="\x00\x00", stksz=6144
-cre_flg_Impl_Var_10:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00"
-cre_flg_Impl_Var_12:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00"
-cre_flg_Impl_Var_14:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00", f8=1
-cre_flg_Impl_Var_16:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00", f8=1
-cre_flg_Impl_Var_18:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00", f8=1
+cre_flg_Impl_Var_10:	# T_CFLG (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	flgatr=8, x6="\x00\x00"
+cre_flg_Impl_Var_12:	# T_CFLG (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	flgatr=8, x6="\x00\x00"
+cre_flg_Impl_Var_14:	# T_CFLG (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	flgatr=8, x6="\x00\x00", iflgptn=1
+cre_flg_Impl_Var_16:	# T_CFLG (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	flgatr=8, x6="\x00\x00", iflgptn=1
+cre_flg_Impl_Var_18:	# T_CFLG (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	flgatr=8, x6="\x00\x00", iflgptn=1
 func_4C03C8BD_Table:	# REC_func_4C03C8BD_ArgA0 (24 bytes): the layout func_4C03C8BD 0x4C03C8BD reads through its argument a0 (passed by func_4841424C 0x4841424C `call func_4C03C8BD_entry, [d2,d3,a2,a3], 0x1c`)
 	REC_func_4C03C8BD_ArgA0	x4="\x01\x00\x00\x00", proc=func_4841418A, f12=1, x18="\x00\x00", f20=1
 func_4C03C8BD_Table_3:	# REC_func_4C03C8BD_ArgA0 (24 bytes): the layout func_4C03C8BD 0x4C03C8BD reads through its argument a0 (passed by func_4841424C 0x4841424C `call func_4C03C8BD_entry, [d2,d3,a2,a3], 0x1c`)
@@ -11578,8 +11578,8 @@ func_4841617C_Table_End:	.long	0xffffffff	# the end marker of func_4841617C_Tabl
 SetModeLed_Table:	# 16 x u8, 2..255; read by SetModeLed_entry 0x4841654E: `movbu  (d3, a0), d0`
 	tab_u8	255, 7, 6, 8, 255, 3, 2, 255, 17, 18, 14, 19, 255, 255, 255, 255
 
-cre_flg_Impl_Var_20:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00", f8=1
+cre_flg_Impl_Var_20:	# T_CFLG (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	flgatr=8, x6="\x00\x00", iflgptn=1
 
 Str_604:	.asciz "604"
 
@@ -18648,8 +18648,8 @@ func_4844081B_Table:	# 24 x REC_func_4844081B_Table (2 bytes each); read by Part
 	REC_func_4844081B_Table	kind=176, f1=17
 	REC_func_4844081B_Table	kind=176, f1=13
 
-func_48440617_Result_0:	# REC_StylePartTemplateDefault_Result (21 bytes), then 131 x u8 the code indexes from +0 (read by StylePartFieldEmit 0x4844081B `movbu (d3, a1), d2`; StylePartFieldEmit 0x4844081B `movbu (d3, a1), d3`)
-	REC_StylePartTemplateDefault_Result	s0="\xFF\xFF", key=255, f3=255, f4=255, x5="\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x7F\x00", f20=64
+func_48440617_Result_0:	# StylePartTemplate (21 bytes), then 131 x u8 the code indexes from +0 (read by StylePartFieldEmit 0x4844081B `movbu (d3, a1), d2`; StylePartFieldEmit 0x4844081B `movbu (d3, a1), d3`)
+	StylePartTemplate	s0="\xFF\xFF", pc_d1=255, pc_d2=255, pc_d3=255, x5="\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x7F\x00", bend_d2=64
 	tab_u8	64, 64, 64, 255, 16, 255, 255, 255, 255, 255, 1, 255, 255, 8, 17, 255	# [0]
 	tab_u8	23, 255, 255, 21, 22, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [16]
 	tab_u8	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [32]
@@ -18749,8 +18749,8 @@ TempoSyncSetDispatch_Records:	# 16 x REC_TempoSyncSetDispatch_Records (8 bytes e
 
 cre_tsk_Impl_Table_9:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C03D0B5 reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_tsk, 0, 0`, +8 more calls); the layout cre_tsk_Impl 0x4C03D141 reads through its argument a0 (passed by cre_tsk 0x4C03D0B5 `call cre_tsk_Impl_entry, [d2,d3,a2], 0x2c`)
 	T_CTSK	tskatr="\x01\x00\x00\x00", task=TickJobsTask, itskpri=3, x14="\x00\x00", stksz=24576
-cre_flg_Impl_Var_22:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00"
+cre_flg_Impl_Var_22:	# T_CFLG (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	flgatr=8, x6="\x00\x00"
 
 func_4844822C_Table:
 	.long	loc_4844826E
@@ -31523,120 +31523,120 @@ ptrs_485E4A84:
 	.long	Str_SD_access_is_canceled_Please_try_again_a
 	.long	StrJa_485E4A49
 
-func_48489C68_Table:	# 113 x REC_func_48489C68_Table (16 bytes each); read by TtMessage 0x48489C68 `movhu (d0, a0), d1`; IvMessageProc 0x48489CCA `movhu (d0, a0), d0`; IvMessageProc 0x48489CCA `movhu (d0, a2), d0` (+9)
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485D8048	# [0]
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=1, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485D8240
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=2, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485D834C
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=3, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485D84B4
-	REC_func_48489C68_Table	x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6DB0, p12=ptrs_485D6E30
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=5, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485D86AC
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=6, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485D8968
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=7, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485D8B18
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=8, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485D8E34	# [8]
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=9, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485D9028
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=10, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485D9140
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=11, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485D9268
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=12, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485D94C8
-	REC_func_48489C68_Table	x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6DB0, p12=ptrs_485D6E30
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=20, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485DA068
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=21, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485DA13C
-	REC_func_48489C68_Table	x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6DB0, p12=ptrs_485D6E30	# [16]
-	REC_func_48489C68_Table	x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6DB0, p12=ptrs_485D6E30
-	REC_func_48489C68_Table	x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6DB0, p12=ptrs_485D6E30
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=30, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485DBEC4
-	REC_func_48489C68_Table	key=1, x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6DB0, p12=ptrs_485D6FC0
-	REC_func_48489C68_Table	key=1, x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6DB0, p12=ptrs_485D6FC0
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=31, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485DC3E4
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=32, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485DC49C
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=22, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485DA2C4	# [24]
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=23, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485DA530
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=24, x6="\x00\x00", index=ptrs_485D6E78, p12=Str_L_H_H_H_H_H_H_HA_Chord_Track_already_exi
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=25, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485DAF8C
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=26, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485DB260
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=27, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485DB540
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=28, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485DB718
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=29, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485DBAC0
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=42, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485DCFB8	# [32]
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=41, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485DCC8C
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=40, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485DC8FC
-	REC_func_48489C68_Table	key=1, x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6DB0, p12=ptrs_485D6FC0
-	REC_func_48489C68_Table	key=2, x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6F44, p12=ptrs_485D7414
-	REC_func_48489C68_Table	key=5, x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6DB0, p12=ptrs_485D7058
-	REC_func_48489C68_Table	key=5, x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6DB0, p12=ptrs_485D7058
-	REC_func_48489C68_Table	key=5, x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6DB0, p12=ptrs_485D7058
-	REC_func_48489C68_Table	key=5, x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6DB0, p12=ptrs_485D7058	# [40]
-	REC_func_48489C68_Table	key=1, x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6DB0, p12=ptrs_485D6FC0
-	REC_func_48489C68_Table	x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6DB0, p12=ptrs_485D6E30
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=43, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485DD354
-	REC_func_48489C68_Table	key=1, x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6DB0, p12=ptrs_485D6FC0
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=44, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485DD658
-	REC_func_48489C68_Table	x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6DB0, p12=ptrs_485D6E30
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=15, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485D9614
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=16, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485D9818	# [48]
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=17, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485D9940
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=18, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485D9B8C
-	REC_func_48489C68_Table	x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6DB0, p12=ptrs_485D6E30
-	REC_func_48489C68_Table	x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6DB0, p12=ptrs_485D6E30
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=46, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485DD948
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=47, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485DDBEC
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=48, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485DDE44
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=49, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485DE1DC	# [56]
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=54, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485DE54C
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=55, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485DE994
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=56, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485DECB0
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=57, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485DF064
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=58, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485DF45C
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=61, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485DFE54
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=19, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485D9DBC
-	REC_func_48489C68_Table	x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6DB0, p12=ptrs_485D6E30	# [64]
-	REC_func_48489C68_Table	x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6DB0, p12=ptrs_485D6E30
-	REC_func_48489C68_Table	x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6DB0, p12=ptrs_485D6E30
-	REC_func_48489C68_Table	x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6DB0, p12=ptrs_485D6E30
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=59, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485DF778
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=60, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485DFB6C
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=62, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485E0310
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=63, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485E0600
-	REC_func_48489C68_Table	key=2, x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6F44, p12=ptrs_485D77FC	# [72]
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=64, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485E07A4
-	REC_func_48489C68_Table	key=4, x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6DB0, p12=ptrs_485D7E74
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=33, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485DC680
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=65, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485E0AAC
-	REC_func_48489C68_Table	key=2, x2="\xFF\xFF", sprintf_d0=66, x6="\x00\x00", index=ptrs_485D6F44, p12=ptrs_485E0DB0
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=67, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485E100C
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=68, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485E134C
-	REC_func_48489C68_Table	key=2, x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6F44, p12=ptrs_485D7AB8	# [80]
-	REC_func_48489C68_Table	key=2, x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6F44, p12=ptrs_485D7BEC
-	REC_func_48489C68_Table	key=2, x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6F44, p12=ptrs_485D7CD8
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=69, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485E1430
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=70, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485E156C
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=71, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485E1750
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=72, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485E1A30
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=73, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485E1F7C
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=45, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485E2138	# [88]
-	REC_func_48489C68_Table	key=2, x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6F44, p12=ptrs_485D7D94
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6EE0, p12=ptrs_485E238C
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6EE0, p12=ptrs_485E26F0
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=80, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485E28AC
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=81, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485E2A90
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=82, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485E2B6C
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=83, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485E2CCC
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=85, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485E2EB4	# [96]
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=86, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485E314C
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=87, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485E32D0
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=88, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485E35BC
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=89, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485E3854
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=90, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485E3EB0
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=91, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485E4414
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=92, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485E4674
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=93, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485E486C	# [104]
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=94, x6="\x00\x00", index=ptrs_485D6E78, p12=ptrs_485E4A84
-	REC_func_48489C68_Table	x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6DB0, p12=ptrs_485D6E30
-	REC_func_48489C68_Table	key=1, x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6DB0, p12=ptrs_485D6E30
-	REC_func_48489C68_Table	key=2, x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6DB0, p12=ptrs_485D6E30
-	REC_func_48489C68_Table	key=3, x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6DB0, p12=ptrs_485D6E30
-	REC_func_48489C68_Table	key=4, x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6DB0, p12=ptrs_485D6E30
-	REC_func_48489C68_Table	key=6, x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00", index=ptrs_485D6DB0, p12=ptrs_485D6E30
-	REC_func_48489C68_Table	x2="\xFF\xFF", sprintf_d0=-1, x6="\x00\x00"	# [112]
+func_48489C68_Table:	# 113 x MessageBoxDef (16 bytes each); read by TtMessage 0x48489C68 `movhu (d0, a0), d1`; IvMessageProc 0x48489CCA `movhu (d0, a0), d0`; IvMessageProc 0x48489CCA `movhu (d0, a2), d0` (+9)
+	MessageBoxDef	kind=3, x2="\xFF\xFF", x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485D8048	# [0]
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=1, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485D8240
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=2, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485D834C
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=3, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485D84B4
+	MessageBoxDef	x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6DB0, text=ptrs_485D6E30
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=5, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485D86AC
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=6, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485D8968
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=7, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485D8B18
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=8, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485D8E34	# [8]
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=9, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485D9028
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=10, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485D9140
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=11, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485D9268
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=12, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485D94C8
+	MessageBoxDef	x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6DB0, text=ptrs_485D6E30
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=20, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485DA068
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=21, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485DA13C
+	MessageBoxDef	x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6DB0, text=ptrs_485D6E30	# [16]
+	MessageBoxDef	x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6DB0, text=ptrs_485D6E30
+	MessageBoxDef	x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6DB0, text=ptrs_485D6E30
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=30, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485DBEC4
+	MessageBoxDef	kind=1, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6DB0, text=ptrs_485D6FC0
+	MessageBoxDef	kind=1, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6DB0, text=ptrs_485D6FC0
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=31, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485DC3E4
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=32, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485DC49C
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=22, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485DA2C4	# [24]
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=23, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485DA530
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=24, x6="\x00\x00", header=ptrs_485D6E78, text=Str_L_H_H_H_H_H_H_HA_Chord_Track_already_exi
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=25, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485DAF8C
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=26, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485DB260
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=27, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485DB540
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=28, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485DB718
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=29, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485DBAC0
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=42, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485DCFB8	# [32]
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=41, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485DCC8C
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=40, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485DC8FC
+	MessageBoxDef	kind=1, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6DB0, text=ptrs_485D6FC0
+	MessageBoxDef	kind=2, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6F44, text=ptrs_485D7414
+	MessageBoxDef	kind=5, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6DB0, text=ptrs_485D7058
+	MessageBoxDef	kind=5, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6DB0, text=ptrs_485D7058
+	MessageBoxDef	kind=5, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6DB0, text=ptrs_485D7058
+	MessageBoxDef	kind=5, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6DB0, text=ptrs_485D7058	# [40]
+	MessageBoxDef	kind=1, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6DB0, text=ptrs_485D6FC0
+	MessageBoxDef	x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6DB0, text=ptrs_485D6E30
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=43, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485DD354
+	MessageBoxDef	kind=1, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6DB0, text=ptrs_485D6FC0
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=44, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485DD658
+	MessageBoxDef	x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6DB0, text=ptrs_485D6E30
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=15, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485D9614
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=16, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485D9818	# [48]
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=17, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485D9940
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=18, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485D9B8C
+	MessageBoxDef	x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6DB0, text=ptrs_485D6E30
+	MessageBoxDef	x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6DB0, text=ptrs_485D6E30
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=46, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485DD948
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=47, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485DDBEC
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=48, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485DDE44
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=49, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485DE1DC	# [56]
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=54, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485DE54C
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=55, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485DE994
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=56, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485DECB0
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=57, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485DF064
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=58, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485DF45C
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=61, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485DFE54
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=19, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485D9DBC
+	MessageBoxDef	x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6DB0, text=ptrs_485D6E30	# [64]
+	MessageBoxDef	x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6DB0, text=ptrs_485D6E30
+	MessageBoxDef	x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6DB0, text=ptrs_485D6E30
+	MessageBoxDef	x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6DB0, text=ptrs_485D6E30
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=59, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485DF778
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=60, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485DFB6C
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=62, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485E0310
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=63, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485E0600
+	MessageBoxDef	kind=2, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6F44, text=ptrs_485D77FC	# [72]
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=64, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485E07A4
+	MessageBoxDef	kind=4, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6DB0, text=ptrs_485D7E74
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=33, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485DC680
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=65, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485E0AAC
+	MessageBoxDef	kind=2, x2="\xFF\xFF", error_no=66, x6="\x00\x00", header=ptrs_485D6F44, text=ptrs_485E0DB0
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=67, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485E100C
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=68, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485E134C
+	MessageBoxDef	kind=2, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6F44, text=ptrs_485D7AB8	# [80]
+	MessageBoxDef	kind=2, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6F44, text=ptrs_485D7BEC
+	MessageBoxDef	kind=2, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6F44, text=ptrs_485D7CD8
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=69, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485E1430
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=70, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485E156C
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=71, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485E1750
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=72, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485E1A30
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=73, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485E1F7C
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=45, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485E2138	# [88]
+	MessageBoxDef	kind=2, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6F44, text=ptrs_485D7D94
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6EE0, text=ptrs_485E238C
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6EE0, text=ptrs_485E26F0
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=80, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485E28AC
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=81, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485E2A90
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=82, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485E2B6C
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=83, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485E2CCC
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=85, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485E2EB4	# [96]
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=86, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485E314C
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=87, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485E32D0
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=88, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485E35BC
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=89, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485E3854
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=90, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485E3EB0
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=91, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485E4414
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=92, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485E4674
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=93, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485E486C	# [104]
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=94, x6="\x00\x00", header=ptrs_485D6E78, text=ptrs_485E4A84
+	MessageBoxDef	x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6DB0, text=ptrs_485D6E30
+	MessageBoxDef	kind=1, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6DB0, text=ptrs_485D6E30
+	MessageBoxDef	kind=2, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6DB0, text=ptrs_485D6E30
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6DB0, text=ptrs_485D6E30
+	MessageBoxDef	kind=4, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6DB0, text=ptrs_485D6E30
+	MessageBoxDef	kind=6, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_485D6DB0, text=ptrs_485D6E30
+	MessageBoxDef	x2="\xFF\xFF", error_no=-1, x6="\x00\x00"	# [112]
 
 func_48489CCA_Table:	# 7 x u32, 5242882..5242905; read by IvMessageProc 0x48489CCA: `mov   (d0, a0), d0`; CheckMessage 0x4848A070: `mov   (d0, a3), d0`
 	tab_u32	5242882, 5242884, 5242887, 5242891, 5242894, 5242896, 5242905
@@ -39409,174 +39409,202 @@ AcPartSelectProc_Table:
 	.long	Str_APC_3
 	.long	Str_CONTROL_3
 
-Str_empty_781:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCB6E, 0x1FCB7A
-Str_empty_780:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCB80, 0x1FCB8C
-Str_empty_779:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCB92, 0x1FCB9E
-Str_empty_778:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCBA4, 0x1FCBB0
-Str_empty_777:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCBB6, 0x1FCBC2
-Str_empty_776:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCBC8, 0x1FCBD4
-Str_empty_775:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCBDA, 0x1FCBE6
-Str_empty_774:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCBEC, 0x1FCBF8
-
-AcAcdnTabProc_Block:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+AcAcdnTabProc_Block:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"  \x95  "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_2:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	"  \x95  "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_3:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	"     "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_4:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	" \x95\x95\x95 "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_5:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	" \x95 \x95 "
+	.asciz	"     "
+AcAcdnTabProc_Block_6:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	" \x95\x95\x95 "
+	.asciz	"     "
+AcAcdnTabProc_Block_7:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	"  \x95  "
+	.asciz	"     "
+AcAcdnTabProc_Block_8:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"  \x95  "
+	.asciz	"     "
+AcAcdnTabProc_Block_9:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
 	tab_u8	0, 32, 32, 32, 32, 0, 66, 65, 83, 83, 49, 0, 0, 32, 32, 32	# [0]
 	tab_u8	32, 0	# [16]
-AcAcdnTabProc_Block_2:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+AcAcdnTabProc_Block_10:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
 	tab_u8	0, 32, 32, 32, 32, 0, 66, 65, 83, 83, 50, 0, 0, 32, 32, 32	# [0]
 	tab_u8	32, 0	# [16]
-
-Str_empty_651:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCC22, 0x1FCC2E
-Str_empty_650:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCC34, 0x1FCC40
-Str_empty_631:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCC46, 0x1FCC52
-Str_empty_630:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCC58, 0x1FCC64
-Str_empty_629:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCC6A, 0x1FCC76
-Str_empty_628:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCC7C, 0x1FCC88
-Str_empty_627:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCC8E, 0x1FCC9A
-Str_empty_626:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCCA0, 0x1FCCAC
-
-AcAcdnTabProc_Block_3:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+AcAcdnTabProc_Block_11:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_12:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"  \x95  "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_13:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	"     "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_14:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	" \x95 \x95 "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_15:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	" \x95 \x95 "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_16:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	" \x95 \x95 "
+	.asciz	"     "
+AcAcdnTabProc_Block_17:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	"  \x95  "
+	.asciz	"     "
+AcAcdnTabProc_Block_18:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"  \x95  "
+	.asciz	"     "
+AcAcdnTabProc_Block_19:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
 	tab_u8	0, 32, 32, 32, 32, 0, 66, 65, 83, 83, 49, 0, 0, 32, 32, 32	# [0]
 	tab_u8	32, 0	# [16]
-AcAcdnTabProc_Block_4:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+AcAcdnTabProc_Block_20:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
 	tab_u8	0, 32, 32, 32, 32, 0, 66, 65, 83, 83, 50, 0, 0, 32, 32, 32	# [0]
 	tab_u8	32, 0	# [16]
-
-Str_empty_625:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCCD6, 0x1FCCE2
-Str_empty_624:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCCE8, 0x1FCCF4
-Str_empty_623:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCCFA, 0x1FCD06
-Str_empty_622:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCD0C, 0x1FCD18
-Str_empty_621:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCD1E, 0x1FCD2A
-Str_empty_620:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCD30, 0x1FCD3C
-Str_empty_619:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCD42, 0x1FCD4E
-Str_empty_618:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCD54, 0x1FCD60
-
-AcAcdnTabProc_Block_5:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+AcAcdnTabProc_Block_21:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_22:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"  \x95  "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_23:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	"     "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_24:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	" \x95 \x95 "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_25:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	" \x95 \x95 "
+	.asciz	"     "
+AcAcdnTabProc_Block_26:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	" \x95 \x95 "
+	.asciz	"     "
+AcAcdnTabProc_Block_27:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	"  \x95  "
+	.asciz	"     "
+AcAcdnTabProc_Block_28:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"  \x95  "
+	.asciz	"     "
+AcAcdnTabProc_Block_29:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
 	tab_u8	0, 32, 32, 32, 32, 0, 66, 65, 83, 83, 49, 0, 0, 32, 32, 32	# [0]
 	tab_u8	32, 0	# [16]
-AcAcdnTabProc_Block_6:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+AcAcdnTabProc_Block_30:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
 	tab_u8	0, 32, 32, 32, 32, 0, 66, 65, 83, 83, 50, 0, 0, 32, 32, 32	# [0]
 	tab_u8	32, 0	# [16]
-
-Str_empty_617:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCD8A, 0x1FCD96
-Str_empty_616:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCD9C, 0x1FCDA8
-Str_empty_615:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCDAE, 0x1FCDBA
-Str_empty_614:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCDC0, 0x1FCDCC
-Str_empty_613:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCDD2, 0x1FCDDE
-Str_empty_612:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCDE4, 0x1FCDF0
-Str_empty_611:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCDF6, 0x1FCE02
-Str_empty_610:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCE08, 0x1FCE14
-Str_empty_609:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCE1A, 0x1FCE26
-Str_empty_608:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCE2C, 0x1FCE38
+AcAcdnTabProc_Block_31:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"     "
+AcAcdnTabProc_Block_32:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"     "
+AcAcdnTabProc_Block_33:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"     "
+AcAcdnTabProc_Block_34:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"     "
+AcAcdnTabProc_Block_35:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"     "
+AcAcdnTabProc_Block_36:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"     "
+AcAcdnTabProc_Block_37:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"     "
+AcAcdnTabProc_Block_38:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"     "
+AcAcdnTabProc_Block_39:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"     "
+AcAcdnTabProc_Block_40:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"     "
 
 AcAcdnTabProc_Table:
-	.long	Str_empty_781
-	.long	Str_empty_780
-	.long	Str_empty_779
-	.long	Str_empty_778
-	.long	Str_empty_777
-	.long	Str_empty_776
-	.long	Str_empty_775
-	.long	Str_empty_774
 	.long	AcAcdnTabProc_Block
 	.long	AcAcdnTabProc_Block_2
-	.long	Str_empty_651
-	.long	Str_empty_650
-	.long	Str_empty_631
-	.long	Str_empty_630
-	.long	Str_empty_629
-	.long	Str_empty_628
-	.long	Str_empty_627
-	.long	Str_empty_626
 	.long	AcAcdnTabProc_Block_3
 	.long	AcAcdnTabProc_Block_4
-	.long	Str_empty_625
-	.long	Str_empty_624
-	.long	Str_empty_623
-	.long	Str_empty_622
-	.long	Str_empty_621
-	.long	Str_empty_620
-	.long	Str_empty_619
-	.long	Str_empty_618
 	.long	AcAcdnTabProc_Block_5
 	.long	AcAcdnTabProc_Block_6
-	.long	Str_empty_617
-	.long	Str_empty_616
-	.long	Str_empty_615
-	.long	Str_empty_614
-	.long	Str_empty_613
-	.long	Str_empty_612
-	.long	Str_empty_611
-	.long	Str_empty_610
-	.long	Str_empty_609
-	.long	Str_empty_608
+	.long	AcAcdnTabProc_Block_7
+	.long	AcAcdnTabProc_Block_8
+	.long	AcAcdnTabProc_Block_9
+	.long	AcAcdnTabProc_Block_10
+	.long	AcAcdnTabProc_Block_11
+	.long	AcAcdnTabProc_Block_12
+	.long	AcAcdnTabProc_Block_13
+	.long	AcAcdnTabProc_Block_14
+	.long	AcAcdnTabProc_Block_15
+	.long	AcAcdnTabProc_Block_16
+	.long	AcAcdnTabProc_Block_17
+	.long	AcAcdnTabProc_Block_18
+	.long	AcAcdnTabProc_Block_19
+	.long	AcAcdnTabProc_Block_20
+	.long	AcAcdnTabProc_Block_21
+	.long	AcAcdnTabProc_Block_22
+	.long	AcAcdnTabProc_Block_23
+	.long	AcAcdnTabProc_Block_24
+	.long	AcAcdnTabProc_Block_25
+	.long	AcAcdnTabProc_Block_26
+	.long	AcAcdnTabProc_Block_27
+	.long	AcAcdnTabProc_Block_28
+	.long	AcAcdnTabProc_Block_29
+	.long	AcAcdnTabProc_Block_30
+	.long	AcAcdnTabProc_Block_31
+	.long	AcAcdnTabProc_Block_32
+	.long	AcAcdnTabProc_Block_33
+	.long	AcAcdnTabProc_Block_34
+	.long	AcAcdnTabProc_Block_35
+	.long	AcAcdnTabProc_Block_36
+	.long	AcAcdnTabProc_Block_37
+	.long	AcAcdnTabProc_Block_38
+	.long	AcAcdnTabProc_Block_39
+	.long	AcAcdnTabProc_Block_40
 
 Str_GERMAN_7:	.asciz "GERMAN "
 Str_FRENCH_7:	.asciz "FRENCH "

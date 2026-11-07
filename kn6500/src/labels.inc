@@ -7872,6 +7872,7 @@
 .equ func_4C032928, 0x4c032928
 .equ func_4C032928_entry, 0x4c03292d
 .equ func_4C032928_entry_L1a, 0x4c032947
+.equ loc_4C03294A, 0x4c03294a
 .equ func_4C032928_entry_L32, 0x4c03295f
 .equ func_4C032963, 0x4c032963
 .equ func_4C03296C, 0x4c03296c
@@ -10507,6 +10508,7 @@
 .equ func_4C03EC77_entry_Ld7, 0x4c03ed53
 .equ func_4C03EC77_entry_L110, 0x4c03ed8c
 .equ func_4C03EC77_entry_L136, 0x4c03edb2
+.equ loc_4C03EDB5, 0x4c03edb5
 .equ func_4C03EC77_entry_L15b, 0x4c03edd7
 .equ func_4C03EC77_entry_L160, 0x4c03eddc
 .equ func_4C03EDE0, 0x4c03ede0
@@ -13236,18 +13238,25 @@
 .equ func_4C05208C, 0x4c05208c
 .equ func_4C05208C_Lf, 0x4c05209b
 .equ func_4C05209F, 0x4c05209f
+.equ loc_4C0520A3, 0x4c0520a3
 .equ func_4C05209F_L37, 0x4c0520d6
 .equ func_4C05209F_L39, 0x4c0520d8
+.equ loc_4C0520DB, 0x4c0520db
 .equ func_4C05209F_L6f, 0x4c05210e
 .equ func_4C05209F_L71, 0x4c052110
+.equ loc_4C052113, 0x4c052113
 .equ func_4C05209F_La7, 0x4c052146
 .equ func_4C05209F_La9, 0x4c052148
+.equ loc_4C05214B, 0x4c05214b
 .equ func_4C05209F_L102, 0x4c0521a1
 .equ func_4C05209F_L104, 0x4c0521a3
+.equ loc_4C0521A6, 0x4c0521a6
 .equ func_4C05209F_L13a, 0x4c0521d9
 .equ func_4C05209F_L13c, 0x4c0521db
+.equ loc_4C0521DE, 0x4c0521de
 .equ func_4C05209F_L171, 0x4c052210
 .equ func_4C05209F_L173, 0x4c052212
+.equ loc_4C052215, 0x4c052215
 .equ func_4C05209F_L197, 0x4c052236
 .equ func_4C05209F_L199, 0x4c052238
 .equ TEST2FUNC_L16, 0x4c052251
@@ -27411,6 +27420,7 @@
 .equ func_4C0ACF83_entry_L3d, 0x4c0acfc5
 .equ func_4C0ACF83_entry_L6d, 0x4c0acff5
 .equ func_4C0ACF83_entry_L7f, 0x4c0ad007
+.equ loc_4C0AD00A, 0x4c0ad00a
 .equ func_4C0ACF83_entry_Lb5, 0x4c0ad03d
 .equ func_4C0AD041, 0x4c0ad041
 .equ func_4C0AD068, 0x4c0ad068
@@ -40223,8 +40233,10 @@
 .equ func_4C0FDCCB, 0x4c0fdccb
 .equ func_4C0FDCCB_Ld, 0x4c0fdcd8
 .equ func_4C0FDCCB_L17, 0x4c0fdce2
+.equ loc_4C0FDCE5, 0x4c0fdce5
 .equ func_4C0FDCCB_L4d, 0x4c0fdd18
 .equ func_4C0FDCCB_L7b, 0x4c0fdd46
+.equ loc_4C0FDD4A, 0x4c0fdd4a
 .equ func_4C0FDCCB_La1, 0x4c0fdd6c
 .equ func_4C0FDD70, 0x4c0fdd70
 .equ func_4C0FDD70_L3f, 0x4c0fddaf
@@ -43889,6 +43901,7 @@
 .equ func_4C114169_entry, 0x4c11416c
 .equ func_4C114169_entry_L15, 0x4c114181
 .equ func_4C114169_entry_L1d, 0x4c114189
+.equ loc_4C11418C, 0x4c11418c
 .equ func_4C114198, 0x4c114198
 .equ func_4C1141A2, 0x4c1141a2
 .equ func_4C1141AB, 0x4c1141ab
@@ -45688,6 +45701,7 @@
 .equ func_4C11C7F8, 0x4c11c7f8
 .equ func_4C11C7F8_entry, 0x4c11c7fd
 .equ func_4C11C7F8_entry_L59, 0x4c11c856
+.equ loc_4C11C859, 0x4c11c859
 .equ func_4C11C7F8_entry_L92, 0x4c11c88f
 .equ func_4C11C7F8_entry_Lb3, 0x4c11c8b0
 .equ func_4C11C7F8_entry_Lba, 0x4c11c8b7
@@ -50511,6 +50525,7 @@
 .equ func_4C1343C0, 0x4c1343c0
 .equ func_4C1343C0_entry, 0x4c1343c3
 .equ func_4C1343C0_entry_L31, 0x4c1343f4
+.equ loc_4C1343FA, 0x4c1343fa
 .equ func_4C1343C0_entry_L60, 0x4c134423
 .equ func_4C1343C0_entry_L67, 0x4c13442a
 .equ func_4C13442E, 0x4c13442e
@@ -51514,6 +51529,7 @@
 .equ func_4C13AACC_entry, 0x4c13aacf
 .equ func_4C13AACC_entry_L11, 0x4c13aae0
 .equ func_4C13AACC_entry_L16, 0x4c13aae5
+.equ loc_4C13AAE8, 0x4c13aae8
 .equ func_4C13AACC_entry_L36, 0x4c13ab05
 .equ func_4C13AACC_entry_L3d, 0x4c13ab0c
 .equ func_4C13AACC_entry_L46, 0x4c13ab15

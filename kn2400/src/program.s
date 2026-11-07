@@ -91580,6 +91580,7 @@ func_4861605B_entry_L15:
 	call	func_5015825D_entry, 0, 0xc
 func_4861605B_entry_L1d:
 	ret	0, 0xc
+loc_4861607E:
 	add	-8, sp
 	call	func_48618E65_entry, [d2], 0x14
 	clr	d0
@@ -106584,6 +106585,7 @@ func_4861E23E_entry:
 	call	PutM3Em_entry, [d2,d3,a2], 0x24
 func_4861E23E_entry_L59:
 	ret	[d2,d3], 0x1c
+loc_4861E29F:
 	add	-0x10, sp
 	call	func_4861E302_entry, [d2,d3,a2], 0x2c
 	exth	d0
@@ -141526,6 +141528,7 @@ func_48631722_entry:
 	call	DiskCmdTransact_entry, [d2,a2], 0x18
 	mov	(0xc, sp), d0
 	ret	0, 0x20
+loc_48631744:
 	cmp	0x107020bb, d0
 	bne	func_48631722_entry_L33
 	cmp	1, d1
@@ -145479,6 +145482,7 @@ func_48633B56_entry_L1d:
 	ret	0, 0xc
 # func_48633B56_entry + 0x20: no traced path reaches what follows (--decode-gaps)
 	retf	0, 0
+loc_48633B7C:
 	add	-0xc, sp
 	and	0x00ffffff, d0
 	cmp	0x8080, d0
@@ -161073,6 +161077,7 @@ func_4863ABB9_entry_L59:
 
 func_4863AC1A:
 	retf	0, 0
+loc_4863AC1D:
 	add	-0x10, sp
 	and	0x00ffffff, d0
 	cmp	1, d0
@@ -372006,6 +372011,7 @@ TtMspChdStep_L153:
 	clr	d0
 TtMspChdStep_L154:
 	ret	[d2], 0x20
+loc_486BB088:
 	add	-0x10, sp
 	and	0x00ffffff, d0
 	cmp	0x702032, d0
@@ -379629,6 +379635,7 @@ func_486BFC6D_entry_L11:
 	call	func_486BFB70_entry, 0, 0x10
 func_486BFC6D_entry_L16:
 	ret	0, 0xc
+loc_486BFC89:
 	add	-8, sp
 	cmp	0x10708000, d0
 	bne	func_486BFC6D_entry_L46
@@ -457376,6 +457383,7 @@ TtContrast_Lf0:
 TtContrast_L101:
 	mov	d3, d0
 	ret	[d2,d3], 0x20
+loc_486EF681:
 	add	-0x10, sp
 	mov	0xff, d0
 	and	d1, d0
@@ -468479,6 +468487,7 @@ BitmapKenban_L71:
 	clr	d0
 BitmapKenban_L72:
 	retf	0, 0
+loc_486F6ABC:
 	add	-0x14, sp
 	and	0xff, d1
 	extbu	d1
@@ -468507,6 +468516,7 @@ BitmapKenban_La8:
 BitmapKenban_Ld6:
 	clr	d0
 	ret	0, 0x14
+loc_486F6B21:
 	add	-0x14, sp
 	and	0xff, d1
 	extbu	d1
@@ -482131,6 +482141,7 @@ AcSswImgListProc_L412:
 	mov	0, a0
 	call	SswPoolSelect, 0, 0
 	ret	0, 0xc
+loc_486FE8D3:
 	add	-0xc, sp
 	and	0x00ffffff, d0
 	cmp	SvariDrawbar_Label_3_5_id, d0
@@ -544172,6 +544183,7 @@ MainSD_PlayStatusJudge_L58:
 MainSD_PlayStatusJudge_L6b:
 	mov	d2, d0
 	ret	[d2], 0x18
+loc_48724081:
 	add	-0xc, sp
 	and	0x00ffffff, d0
 	cmp	0x7020bb, d0
@@ -648561,6 +648573,7 @@ func_50151D19_entry_L110:
 	call	func_5015EA64_entry, 0, 0x34
 func_50151D19_entry_L136:
 	ret	[d2,d3], 0x18
+loc_50151E57:
 	add	-8, sp
 	and	0x00ffffff, d0
 	cmp	0x80, d0
@@ -667038,6 +667051,7 @@ func_5015D103_entry_Laa:
 	movhu	d1, (0x50021514)
 func_5015D103_entry_Lce:
 	ret	0, 8
+loc_5015D1D7:
 	add	-4, sp
 
 func_5015D1DA:
@@ -668001,6 +668015,7 @@ func_5015DB49:
 func_5015DB5A:
 	bclr	0x02, (0x50021522)
 	ret	0, 0
+loc_5015DB64:
 	add	-0xc, sp
 	mov	d1, (0x18, sp)
 	mov	d0, (0x14, sp)

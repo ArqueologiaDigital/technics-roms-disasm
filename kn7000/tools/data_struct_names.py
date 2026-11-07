@@ -9,6 +9,20 @@ by auto_name() from what the code does with it (lane mn10300-formats, 2026-10-31
 offset name (f<off>, p<off>, s<off>, x<off>).
 """
 
+# (lane mn10300-data5, N-2468beef) the GUI tasks' message queues and dispatch state, 56 bytes per task, indexed by the
+# task id (`mov 0x38, d1` / `mul`; the draw task's id is the u16 at 0x500D3C64, IsDrawTask): func_484285DF (post)
+# compares +0 (the read index) with +2 (the write index) + 1 and with +2 - +4 (the size) + 1 (full), takes the lock
+# flag +8 (wai_flg / set_flg) and stores into the buffer at +0x2C; the draw task waits on +6 (InitDrawTask's loop
+# `movhu (6, a0), d0` / `call wai_flg`).  func_48428C3E (the task's loop) takes a message {object, event, param} into
+# +0x14 / +0x18 / +0x1C (`mov d0, (a0)` / `mov d1, (a3)` / `mov a0, (a2)`, after `cmp EV_NONE`); ProcCall 0x4842948C
+# keeps the object, message and parameter of the call it makes at +0x20 / +0x24 / +0x28 and the class it calls into at
+# +0xC (saved and put back around `calls (a2)`, InheritedProc reads it); func_48428550 calls +0x10, the task's own
+# object, when it is handed -1.  941 / 942 func_484288AC_Table, 935 / 893 func_4842886A_Table.  The timer fields
+# from +0x30 (InitializeTaskTimer, ApTimer) keep the names the code's use gives them
+_APP_TASK = ("AppTaskState", {0: "q_rd", 2: "q_wr", 4: "q_size", 6: "msg_flag", 8: "lock_flag", 12: "cur_class",
+                              16: "main_obj", 20: "msg_obj", 24: "msg_event", 28: "msg_param", 32: "call_obj",
+                              36: "call_msg", 40: "call_param", 44: "q_buf"})
+
 NAMES = {
     # StyleRecordTable: the built-in Music Stylist setups, 270 styles x 4 (func_4847F638 0x4847F638
     # ends the built-ins at 1080 = 0x438).  Fields cross-checked over all records against the lists
@@ -135,6 +149,62 @@ NAMES = {
     # +0x16 + sel * 5 (seg<k>_param), TgPartEgRampBuild reads +0x14 / +0x15 (seg0_b, seg0_c).  +5 (note_flags) is
     # read by TgKitElemNoteOn / TgElemNoteOnFresh at note-on [INFERENCE: what each LFO value is (speed, depth,
     # delay) is not traced]
+    # (lane mn10300-data5, N-2468beef) what callers hand cre_flg in a0, the uITRON 3.0 T_CFLG packet: cre_flg_Impl
+    # 0x4C03C87B copies +0 to the flag's control block +0x10 (`mov (a3), d2` / `mov d2, (0x10, a0)`), the 16-bit +4
+    # to +8 (`movhu (4, a3), d2` / `movhu d2, (8, a0)`) and +8 to +0xC, the word set_flg_Impl ORs the bits it is
+    # given into (`mov (0xc, a0), d2` / `or d1, d2` / `mov d2, (0xc, a0)`): the flag's initial pattern.  +0 and +4
+    # are named in the specification's order [INFERENCE: exinf / flgatr, nothing reads them back here]
+    "cre_flg_ArgA0": ("T_CFLG", {0: "exinf", 4: "flgatr", 8: "iflgptn"}),
+    "cre_flg_ArgA0_s8": ("T_CFLG_s8", {0: "exinf", 4: "flgatr"}),
+    # func_4C03C8D0 0x4C03C8D0 (d0 = number, a0 = the packet; a0 = -1 deletes, `cmp 0xffffffff, a3`): the kernel's
+    # cyclic / alarm handler definition -- it fills the handler block 0x50380824 + number * 32 from the packet: +0 ->
+    # +0x14, +8 -> +8 (the handler, called by the timer: `mov (8, a3), a0` / `mov a0, (8, a2)`), +0xC -> +0x18
+    # (16 bits), the 48-bit time +0x10 (16 bits, `movhu (a3)` after `add 0x10, a3`) / +0x14 (32 bits) -> +0x1A /
+    # +0x1C, then func_4C03BA20 starts it.  The uITRON 3.0 def_cyc / def_alm packets have this shape (exinf, attribute,
+    # handler, cycact / tmmode, 48-bit time) [INFERENCE: which of the two is not settled: the routine reports no
+    # error code, kn7000/notes/uitron3-function-codes/]
+    "func_4C03C8D0_ArgA0": ("T_DefTimeHandler", {0: "exinf", 8: "handler", 12: "mode", 16: "time_hi", 20: "time_lo"}),
+    # InOutTestWindowProc 0x484A1AFE (the I/O test screen): `add InOutTestWindowProc_Var_2, a2` / `movhu (a2)` /
+    # `movhu (2, a2)` into a rectangle's corner, + 0x104 / + 0x13 for the other corner, then DrawString: where each
+    # line's text goes; InOutTestWindowProc_Records the same for the ON / OFF state texts (+ 0x78 / + 0x50 wide)
+    "InOutTestWindowProc_Var_2": ("InOutTestTextPos", {0: "x", 2: "y"}),
+    "InOutTestWindowProc_Records": ("InOutTestStatePos", {0: "x", 2: "y"}),
+    # SdCommandSend 0x4854C291's a0, a frame {clock mode, response type, the 6-byte SPI command} (kn7000_manual.sym):
+    # +0 to SdSpiClockSet (and 2 / 3 select the slow-mode and flush extras), +2 to SdResponseScan (R1 / R2 / R1b),
+    # +4 .. +9 sent by SdSpiSendBuf (6 bytes), +9 the CRC7 byte SdCmdCrc7 computes over +4 .. +8 and stores
+    # (`add d0, d0` / `inc d0` / `movbu d0, (5, a2)`); +4 is the command byte (0x40 | the command's index)
+    "SdCommandSend_ArgA0": ("SdCommandFrame", {0: "clock_mode", 2: "resp_type", 4: "cmd", 9: "crc7"}),
+    # StylePartTemplateDefault 0x48440659's answer, the part template StylePartFieldEmit 0x4844085D sends field by
+    # field (kn7000_manual.sym): kind C0 (a program change) sends +2, +3, +4 as the message's three data values
+    # (`movbu (2, a1), d2` / `movbu (3, a1)` / `movbu (4, a1)` to func_4844077C, which keeps them at +2 .. +4 of the
+    # part's last-sent copy); kind E0 (a pitch bend) sends +0x13, +0x14 (func_48440820) [INFERENCE: which of +2 .. +4
+    # is the program and which the bank is not traced: they are named by their place in the message]
+    "StylePartTemplateDefault_Result": ("StylePartTemplate", {2: "pc_d1", 3: "pc_d2", 4: "pc_d3", 19: "bend_d1",
+                                                              20: "bend_d2"}),
+    # (lane mn10300-data5, N-2468beef) JpegEncSetup 0x4840D29C (kn7000_manual.sym): for the encoder's mode (1 .. 5,
+    # `movhu (0x1c, a0)`) it copies one 4-byte record of each of these tables into the parameter block (+4 .. +0x18),
+    # one byte per colour component.  The values are the five JPEG layouts: component 0's factors 1/1/2/2/4 across
+    # by 1/1/1/2/1 down (grey, 4:4:4, 4:2:2, 4:2:0, 4:1:1), components 1 and 2 at 1 x 1; the quantisation table 0 for
+    # component 0 and 1 for the others; the Huffman tables 0x00 / 0x11 (DC << 4 | AC) [INFERENCE: which table is
+    # which comes from the values, the block's later readers (the frame and scan headers) are not traced].  935 / 893
+    # hold them as func_48406633_Table / _Table_2, func_48404D10_Records_2 / _Records
+    "func_4840EBC3_Table": ("JpegModeHSampling", {0: "comp0", 1: "comp1", 2: "comp2", 3: "comp3"}),
+    "func_4840EBC3_Table_2": ("JpegModeVSampling", {0: "comp0", 1: "comp1", 2: "comp2", 3: "comp3"}),
+    "func_4840D29C_Records_2": ("JpegModeQuantSel", {0: "comp0", 1: "comp1", 2: "comp2", 3: "comp3"}),
+    "func_4840D29C_Records": ("JpegModeHuffSel", {0: "comp0", 1: "comp1", 2: "comp2", 3: "comp3"}),
+    "func_48406633_Table": ("JpegModeHSampling", {0: "comp0", 1: "comp1", 2: "comp2", 3: "comp3"}),
+    "func_48406633_Table_2": ("JpegModeVSampling", {0: "comp0", 1: "comp1", 2: "comp2", 3: "comp3"}),
+    "func_48404D10_Records_2": ("JpegModeQuantSel", {0: "comp0", 1: "comp1", 2: "comp2", 3: "comp3"}),
+    "func_48404D10_Records": ("JpegModeHuffSel", {0: "comp0", 1: "comp1", 2: "comp2", 3: "comp3"}),
+    # (lane mn10300-data5, N-2468beef) a sound block's patches: func_4C02B542 0x4C02B542 runs func_4C02B569 on its 8
+    # records (`mulu` by 0xC, `cmp 8, d2`), func_4C02B569 on the 44 of func_4C02B569_Records; each record's op list
+    # (+4, `mov (4, a1), a2`) is run byte-coded on block + +0 + 2 (func_4C02B591: op 0 .. 6, AND / AND NOT ... with
+    # the next bytes, 0xFF ends); func_4C02B6F8 writes +8 / +9 to block[+0] / block[+0 + 1] (`add d1, a0` / `movbu
+    # d0, (a0)` / `movbu d0, (1, a0)`) [INFERENCE: what the two bytes are]
+    "func_4C02B569_Records": ("BlockPatch", {0: "off", 4: "ops", 8: "val0", 9: "val1"}),
+    "func_4C02B542_Records": ("BlockPatch", {0: "off", 4: "ops", 8: "val0", 9: "val1"}),
+    "func_484288AC_Table": _APP_TASK,
+    "func_4842886A_Table": _APP_TASK,
     "TgPartEditLfoLoadA_Records": ("ToneTypeFeature", {
         0: "t0_a", 1: "t0_b", 2: "t0_flags", 3: "t1_a", 4: "t1_b", 5: "note_flags", 6: "t2_a", 7: "t2_b", 8: "t2_c",
         9: "t3_a", 10: "t3_b", 11: "t3_c", 12: "t3_d", 14: "lfo_p6", 18: "lfo_p7", 19: "seg0_flags", 20: "seg0_b",
@@ -265,8 +335,8 @@ READ_FIELDS_ONLY = {"ToneTypeFeature"}
 MODEL = None    # gen_data_s.configure() sets the profile
 
 
-def lookup(label, stride):
-    return lookup3(label, stride)[:2]
+def lookup(label, stride, gen=None):
+    return lookup3(label, stride, gen)[:2]
 
 
 def options(label):
@@ -279,12 +349,47 @@ def pointed():
     return MODEL_POINTED.get(MODEL, {})
 
 
-def lookup3(label, stride):
-    """(kind name, {offset: field name}, new label or None) for the array `label`."""
+def _lookup_entry(label, stride):
     mn = MODEL_NAMES.get(MODEL, {})
     e = mn.get((label, stride)) or mn.get(label) or NAMES.get((label, stride)) or NAMES.get(label)
     if e is None:
         e = next((k for rx, (st, k) in NAMES_RE if rx.fullmatch(label or "") and st in (None, stride)), None)
+    return e
+
+
+# (lane mn10300-data5, N-2468beef) a routine label that is still a placeholder: an array labelled after it is not
+# looked up under it (exact patterns, WAVE13.md's probe hygiene)
+_PLACEHOLDER = _re.compile(r"^(?:func|loc)_[0-9A-F]{8}$")
+_BY_ADDR = _re.compile(r"^func_([0-9A-F]{8})(_\w+)$")
+
+
+def reader_alias(label, gen):
+    """(lane mn10300-data5, N-2468beef) The label an array would have after its reader's current name.
+
+    The generator keeps an array label it made before (labels.sym), so an array first labelled after an
+    address-named reader -- func_<ADDR>_Records -- keeps that label after the routine at ADDR is named (935's
+    func_4C00206A_Records is read by localeconv 0x4C00206A, whose 941 twin is localeconv_Records).  Its curated
+    names are then looked up under <the routine's name><suffix> too, so one entry names the kind in every
+    build that has named the reader.  None when the label is not of that form or the routine has no name yet."""
+    m = _BY_ADDR.match(label or "")
+    if not m or gen is None:
+        return None
+    n = getattr(gen, "extern", {}).get(int(m.group(1), 16))
+    if not n or _PLACEHOLDER.match(n) or n.startswith("func_"):
+        return None
+    return n + m.group(2)
+
+
+def lookup3(label, stride, gen=None):
+    """(kind name, {offset: field name}, new label or None) for the array `label`.  With `gen` (the generator), an
+    array labelled after an address-named reader that has a name now is also looked up under that name
+    (reader_alias); the label itself is kept then (no new label)."""
+    e = _lookup_entry(label, stride)
+    if e is None:
+        alt = reader_alias(label, gen)
+        e = _lookup_entry(alt, stride) if alt else None
+        if e is not None:
+            return e[0], e[1], None
     if e is None:
         return None, {}, None
     return (e + (None,))[:3]
