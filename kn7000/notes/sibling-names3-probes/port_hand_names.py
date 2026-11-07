@@ -113,8 +113,12 @@ def main():
                 if va is not None and vb is not None and (va >> 24) in (0x50, 0x90, 0x84) and (vb >> 24) in (0x50, 0x90, 0x84):
                     seen[va].add(vb); back[vb].add(va)
     rows = hand_rows(o.a)
+    have_b = {r[1] for r in hand_rows(o.b)}
     out, missed = [], collections.Counter()
     for a, name, cls, ev in rows:
+        if name in have_b:
+            missed['B has the row already'] += 1
+            continue
         if cls in ('var',):
             bs = seen.get(a, set())
             if len(bs) == 1 and len(back[next(iter(bs))]) == 1:

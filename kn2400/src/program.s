@@ -68055,7 +68055,7 @@ func_48609970_L81a:
 loc_4860A19C:
 	add	-8, sp
 	call	VoiceArchiveScanBoot_entry, [d2,d3,a2,a3], 0x10
-	call	func_4860C6F3_entry, [d2], 0xc
+	call	SoundRamSignatureCheck_entry, [d2], 0xc
 	call	func_4860BABA_entry, [d2], 4
 	ret	0, 8
 loc_4860A1B1:
@@ -72428,11 +72428,11 @@ func_4860C387_entry_L50:
 func_4860C387_entry_L52:
 	ret	[a2], 0x14
 
-func_4860C3E1:
+SoundRamSumUpdate:
 	movm	[d2], (sp)
 	add	-8, sp
 
-func_4860C3E1_entry:
+SoundRamSumUpdate_entry:
 	clr	d1
 	clr	d2
 	setlb
@@ -72447,7 +72447,7 @@ func_4860C3E1_entry:
 	cmp	0x10, d2
 	llt
 	call	func_4860BBEB_entry, [d2], 4
-	movhu	d0, (0x502b080c)
+	movhu	d0, (SoundRamSumUpdate_Ram)
 	clr	d0
 	ret	[d2], 0xc
 
@@ -72473,7 +72473,7 @@ func_4860C412_entry_Ld:
 	exth	d2
 	cmp	0, d2
 	bge	func_4860C412_entry_Ld
-	call	func_4860C3E1_entry, [d2], 0xc
+	call	SoundRamSumUpdate_entry, [d2], 0xc
 	call	func_4860C2C4_entry, 0, 0xc
 	bra	func_4860C412_entry_L31
 func_4860C412_entry_L27:
@@ -72547,7 +72547,7 @@ func_4860C499_entry_Ld:
 	exth	d2
 	cmp	0, d2
 	bge	func_4860C499_entry_Ld
-	call	func_4860C3E1_entry, [d2], 0xc
+	call	SoundRamSumUpdate_entry, [d2], 0xc
 	call	func_4860C2C4_entry, 0, 0xc
 	bra	func_4860C499_entry_L31
 func_4860C499_entry_L27:
@@ -72582,7 +72582,7 @@ func_4860C4DA_entry_L17:
 	bne	func_4860C4DA_entry_L20
 	call	func_4860C387_entry, [a2], 0x14
 func_4860C4DA_entry_L20:
-	call	func_4860C3E1_entry, [d2], 0xc
+	call	SoundRamSumUpdate_entry, [d2], 0xc
 	call	func_4860C2C4_entry, 0, 0xc
 	bra	func_4860C4DA_entry_L36
 func_4860C4DA_entry_L2c:
@@ -72622,7 +72622,7 @@ func_4860C520_entry_L1d:
 	bne	func_4860C520_entry_L26
 	call	func_4860C387_entry, [a2], 0x14
 func_4860C520_entry_L26:
-	call	func_4860C3E1_entry, [d2], 0xc
+	call	SoundRamSumUpdate_entry, [d2], 0xc
 	call	func_4860C2C4_entry, 0, 0xc
 	bra	func_4860C520_entry_L3c
 func_4860C520_entry_L32:
@@ -72850,11 +72850,11 @@ func_4860C6E6:
 	call	func_4860C2C4_entry, 0, 0xc
 	ret	0, 8
 
-func_4860C6F3:
+SoundRamSignatureCheck:
 	movm	[d2], (sp)
 	add	-8, sp
 
-func_4860C6F3_entry:
+SoundRamSignatureCheck_entry:
 	mov	0x502a5014, a0
 	mov	a0, (0x500d7398)
 	clr	d0
@@ -72865,24 +72865,24 @@ func_4860C6F3_entry:
 	movbu	(d0, a0), d1
 	movbu	(d0, a1), d0
 	cmp	d0, d1
-	bne	func_4860C6F3_entry_L23
+	bne	SoundRamSignatureCheck_entry_L23
 	inc	d2
 	mov	d2, d0
 	extbu	d2
 	cmp	0x10, d2
 	llt
-func_4860C6F3_entry_L23:
+SoundRamSignatureCheck_entry_L23:
 	cmp	0x10, d2
-	bne	func_4860C6F3_entry_L3c
+	bne	SoundRamSignatureCheck_entry_L3c
 	call	func_4860BBEB_entry, [d2], 4
 	mov	(0x500d7398), a0
 	exthu	d0
 	movhu	(0x0000b7f8, a0), d1
 	cmp	d0, d1
-	beq	func_4860C6F3_entry_L41
-func_4860C6F3_entry_L3c:
+	beq	SoundRamSignatureCheck_entry_L41
+SoundRamSignatureCheck_entry_L3c:
 	call	func_4860C24C_entry, [d2,d3], 0x1c
-func_4860C6F3_entry_L41:
+SoundRamSignatureCheck_entry_L41:
 	ret	[d2], 0xc
 
 func_4860C73C:
@@ -707051,7 +707051,7 @@ TechnicsPadsResourceInit_entry_L28:
 	mov	d0, (0x50021968)
 	ret	0, 0xc
 
-func_5017205E:
+TechnicsPadsResourceCheck:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x14, sp
 	call	func_5017B299, 0, 0
@@ -707060,10 +707060,10 @@ func_5017205E:
 	mov	0x10, d0
 	call	strncmp_entry, [a2], 4
 	cmp	0, d0
-	beq	func_5017205E_L25
+	beq	TechnicsPadsResourceCheck_L25
 	mov	-1, d0
-	bra	func_5017205E_L61
-func_5017205E_L25:
+	bra	TechnicsPadsResourceCheck_L61
+TechnicsPadsResourceCheck_L25:
 	mov	0x12, a0
 	add	d2, a0
 	call	LoadU24BE, 0, 0
@@ -707085,11 +707085,11 @@ func_5017205E_L25:
 	exthu	d1
 	exthu	d0
 	cmp	d0, d1
-	beq	func_5017205E_L60
+	beq	TechnicsPadsResourceCheck_L60
 	mov	-1, d2
-func_5017205E_L60:
+TechnicsPadsResourceCheck_L60:
 	mov	d2, d0
-func_5017205E_L61:
+TechnicsPadsResourceCheck_L61:
 	ret	[d2,d3,a2,a3], 0x24
 
 func_501720C2:

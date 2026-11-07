@@ -306,3 +306,6 @@
 0x485ED02F  CaptureLcdWriteBmp      ; string: CaptureLcd's work: sprintf "LCDCAP%02d.BMP" with the counter at 0x500275C4, fmmopen "wb", writes the "BM" header and the screen rows (0x38436-byte file, 0x140 x 0xF0 pixels from 0x9C800000)
 0x4862FE51  FsMountVolume           ; string: reads a boot sector, checks its 0x55 0xAA signature and the "FAT16" type string (strncmp), and derives the volume's geometry with LibDiv32 [INFERENCE: name from the checks]
 0x486331C6  TestSdImmunityFile      ; string: the SD test's file check: removes "C:IMMUNITY.TST" (FsRemove), writes 0x400-byte blocks to it "wb" (FsWrite), closes it and reads it back "rb" (caller func_48662BF0, the SDOKBox_id / SDNGBox_id result screen)
+0x5017205E  TechnicsPadsResourceCheck; same-body: = KN6000 0x4C0562FA (kn6000_manual.sym, string): the same masked body in the same place of the routine order
+0x4860C6F3  SoundRamSignatureCheck  ; same-body: = KN6000 0x4C07E1D4 (kn6000_manual.sym, string): the same masked body in the same place of the routine order
+0x4860C3E1  SoundRamSumUpdate       ; same-body: = KN6000 0x4C07DEC8 (kn6000_manual.sym, string): the same masked body in the same place of the routine order
