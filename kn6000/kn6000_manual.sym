@@ -184,3 +184,173 @@
 0x4C3F64AA  wai_sem_Impl            ; wai_sem's body, behind the wrapper wai_sem; KernelErrorHook d0 = -53 (H'ffcb, wai_sem), d1 = E_CTX (uITRON 3.0 sect. 6.3; ../kn7000/notes/uitron3-function-codes)
 0x4C3F6D44  ena_dsp                 ; uITRON ena_dsp, called directly (no wrapper); KernelErrorHook d0 = -29 (H'ffe3, ena_dsp), d1 = E_CTX (uITRON 3.0 sect. 6.3; ../kn7000/notes/uitron3-function-codes)
 0x4C3F703D  ref_sem                 ; uITRON ref_sem, called directly (no wrapper); program 942's exported ref_sem_X calls it, carried here by an identical body
+;
+; ---- lane open14/sibling-names3 (2026-11-07): sibling-only code named by hand from the image's own evidence.
+;      Each row starts with its evidence class (../kn7000/notes/sibling-names3/README.md, "Evidence classes");
+;      checked by ../kn7000/notes/sibling-names3-probes/hand_names_check.py.
+; -- the host side of the XAPR plug-in's file-layer slots (the plug-in's header words +0x20..+0x54,
+;    named in ../hdsx3/hdsx3_manual.sym / ../hdsx3/README.md "the header"; XaprCallDiskFreeSpace is +0x1C)
+0x4C173A4E  XaprCallCstFileName     ; table: calls the XAPR header slot +0x20 (`mov (0x97800020), a0 / calls (a0)`) when XaprBoardPresent: the plug-in's XaprExtCstFileName
+0x4C173A6A  XaprCallCstEntryName    ; table: header slot +0x24, the plug-in's XaprExtCstEntryName
+0x4C173A86  XaprCallSmfFileName     ; table: header slot +0x28, the plug-in's XaprExtSmfFileName
+0x4C173AA2  XaprCallFileError       ; table: header slot +0x2C, the plug-in's XaprExtFileError; FileError's ExtMode branch
+0x4C173ABD  XaprCallFileOpen        ; table: header slot +0x30, XaprExtFileOpen; FileOpen's ExtMode branch
+0x4C173ADA  XaprCallFileClose       ; table: header slot +0x34, XaprExtFileClose; FileClose's ExtMode branch
+0x4C173AF5  XaprCallFileRemove      ; table: header slot +0x38, XaprExtFileRemove; FileRemove's ExtMode branch
+0x4C173B10  XaprCallFileGetc        ; table: header slot +0x3C, XaprExtFileGetc; FileGetc's ExtMode branch
+0x4C173B2B  XaprCallFilePutc        ; table: header slot +0x40, XaprExtFilePutc; FilePutc's ExtMode branch
+0x4C173B47  XaprCallFileRead        ; table: header slot +0x44, XaprExtFileRead; FileRead's ExtMode branch
+0x4C173B5F  XaprCallFileWrite       ; table: header slot +0x48, XaprExtFileWrite; FileWrite's ExtMode branch
+0x4C173B77  XaprCallFileSeek        ; table: header slot +0x4C, XaprExtFileSeek; FileSeek's ExtMode branch
+0x4C173B94  XaprCallFileRewind      ; table: header slot +0x50, XaprExtFileRewind; FileRewind's ExtMode branch
+0x4C173BAF  XaprCallFileTell        ; table: header slot +0x54, XaprExtFileTell; FileTell's ExtMode branch
+; -- the file layer FileOpen belongs to: each routine takes the XAPR slot of the same name when FileExtMode is set,
+;    else works on the one open FILE at 0x500622AC (FileOpen stores it) and keeps FileLastError
+0x4C14EF02  FileError               ; table: FileExtMode -> XaprCallFileError (slot +0x2C, XaprExtFileError), else returns FileLastError; ferror_ext is `call` + ret of it; called after every failed FileOpen
+0x4C14EFC0  FileClose               ; table: FileExtMode -> XaprCallFileClose (slot +0x34), else FsClose of the FILE at 0x500622AC and clears it; fclose_ext is `call` + ret of it
+0x4C14EFF2  FileRemove              ; table: FileExtMode -> XaprCallFileRemove (slot +0x38), else "A:\" + a0 (StrAppend) and FsRemove; -0xB when the error word is 0x1F, else -3
+0x4C14F0A9  FileGetc                ; table: FileExtMode -> XaprCallFileGetc (slot +0x3C), else FsGetc of the FILE at 0x500622AC
+0x4C14F0F9  FilePutc                ; table: FileExtMode -> XaprCallFilePutc (slot +0x40), else FsPutc(d0) to the FILE at 0x500622AC
+0x4C14F158  FileRead                ; table: FileExtMode -> XaprCallFileRead (slot +0x44), else FsRead(a0, 1, n) from the FILE at 0x500622AC in pieces of at most 0x7FFF bytes; fread_ext is `call` + ret of it
+0x4C14F1F2  FileWrite               ; table: FileExtMode -> XaprCallFileWrite (slot +0x48), else FsWrite in pieces of at most 0x7FFF bytes (-0xB disk full when the error word is 0x1F, else -3); fwrite_ext is `call` + ret of it
+0x4C14F291  FileSeek                ; table: FileExtMode -> XaprCallFileSeek (slot +0x4C), else FsSeek(FILE, d0, d1); -5 into FileLastError on failure
+0x4C14F2E1  FileRewind              ; table: FileExtMode -> XaprCallFileRewind (slot +0x50), else FsRewind(FILE)
+0x4C14F326  FileTell                ; table: FileExtMode -> XaprCallFileTell (slot +0x54), else FsTell(FILE)
+0x4C14F041  FilePathRename          ; body: "A:\" + a0 and "A:\" + a1 (StrAppend), then FsRename; the callers are FileRenameFunc's, FileRenameSmfFunc's and FileRenameCstFunc's helpers
+; -- the file system library under that layer, a stdio-like API of its own (not the C runtime's fwrite at 0x4C004289,
+;    PfOutString's); FsErrno at 0x50200000; a FILE's +4 flags bit 0 readable, bit 1 writable, +0x14 the device
+;    method table, +0x1C the position, +0x50 the size
+0x4C130087  FsOpen                  ; body: (a0 path, a1 mode): parses the mode letters r w a + b ~ d (`cmp 0x72 / 0x77 / 0x61 / 0x2b / 0x62 / 0x7e / 0x64`) into flags and returns a FILE in a0 (0 + FsErrno on failure); FileOpen's core
+0x4C1302B8  FsRead                  ; body: (a0 buf, d0 size, d1 count, a1 FILE): FsErrno 0x11 when the FILE is not open, 0xD when not readable (+4 bit 0), else the device read method (+4 of the table at +0x14) for size * count bytes, returns bytes / size (LibDiv32)
+0x4C130301  FsWrite                 ; body: as FsRead with the writable bit (+4 bit 1) and the write method (+0xC); FileWrite's core
+0x4C12FE0B  FsSeek                  ; body: (a0 FILE, d0 offset, d1 whence): 0 from the start, 1 from the position (+0x1C), 2 from the size (+0x50), through the seek method (+0x18); FsErrno 0x14 beyond the end
+0x4C13004A  FsRewind                ; body: FsSeek(FILE, 0, 0) and clears the FILE's error word (+8)
+0x4C12FE8E  FsTell                  ; body: returns the FILE's position (+0x1C, the one FsSeek's whence 1 adds to); -1 + FsErrno 0x11 / 0x12 otherwise
+0x4C13034A  FsGetc                  ; body: one byte through the read method, -1 at the end or on error
+0x4C1303E1  FsPutc                  ; body: (d0 byte, a0 FILE): one byte through the write method, -1 on error
+0x4C13048B  FsClose                 ; body: closes the FILE (func_4C13049F calls its close method +0x14 and clears its slot in the open-file table 0x502883B8)
+0x4C12FED8  FsRename                ; body: (a0 old, a1 new): opens old "r" (else "d", a directory), refuses (FsErrno 0x15) when new opens "r", then moves the entry [INFERENCE: name from the two-path signature and FileRename]
+0x4C12FD13  FsRemove                ; body: opens the path "w~" and calls the FILE's method +0x20 [INFERENCE: the delete method; FileRemove's core]
+0x4C12FD34  FsMkdir                 ; body: FsErrno 0x15 when the path opens as "d" (a directory), else creates it "wb" and calls method +0x1C [INFERENCE]
+0x4C12FFB6  FsRmdir                 ; body: opens the path "d", reads its 32-byte FAT entries and refuses (FsErrno 0x1B) unless every one is 0 or 0xE5 (deleted), then method +0x24 [INFERENCE]
+; -- string helpers of the file layer (no return value, unlike the C library's)
+0x4C14C71E  StrCopy                 ; body: copies the string a1 to a0 with its terminator; 72 callers build file names with it
+0x4C14C76A  StrAppend               ; body: appends the string a1 to the end of the string a0 (FileOpen, FileRename, FileRemove put "A:\" before a name with it)
+0x4C14C738  StrCopyPad              ; body: copies at most d0 bytes of the string a1 to a0 and zero-fills the rest of the d0 (strncpy's contract, a0 / a1 / d0)
+0x4C14C83E  FileNameWithExt         ; body: StrCopy(a0, a1), StrAppend("."), StrAppend(FileTypeExtTable[d0]): the name of the disk file of type d0 (LoadPmt_HD's file routine passes 1, "PMT")
+0x4C2592E4  FileTypeExtTable        ; data: 13 pointers to "LSW", "PMT", "SQT", "CMP", "TM ", "MSP", "EFC", "MD ", "FAV", "HMP", "AST", "SQF", "SEQ" (the strings FileNameWithExt appends)
+; -- the zlib layer of the file routines: one z_stream at 0x500622EC (whole-file codec: 0x500622B4), a 64 KB
+;    buffer at 0x50062328 written / read through FileWrite / FileRead in blocks of 0xFFFD, a status at 0x50072328
+0x4C137D8D  inflateInit_            ; libc: zlib 1.0.4 inflateInit_(strm, version, size) -> inflateInit2_(strm, 15, ...): the same body as KN7000 941 inflateInit_ (kn7000_manual.sym), too short to port
+0x4C14F5E1  ZFileStatus             ; ram: returns the zlib file layer's status (0x50072328, halfword): every routine below stores its first error there
+0x4C14F5EA  ZFileStatusClear        ; ram: clears 0x50072328; the load / save routines call it before a ZFile call and ZFileStatus after
+0x4C14F5F4  ZFileInflatedTotal      ; ram: returns 0x50062324, which ZFileInflateBegin clears and the inflating readers count up [INFERENCE: the bytes inflated]
+0x4C14F5FD  ZFileSpaceSet           ; ram: d0 -> 0x5007232C, the bytes the output file may still take: ZFileDeflateBegin sets -1 (no limit), the deflating writers fail with -0x65 when a 0xFFFD block would pass it; SaveLsw_HD_Impl passes FileDiskFreeSpace - 0x18
+0x4C14F606  ZFileDeflateBegin       ; callee: ZArenaReset, deflateInit_(0x500622EC, -1, "1.0.4", 0x38) for the input a0 / d0, the 64 KB buffer as output; -3 on failure (callers SaveCst, SaveRcm_HD_Impl)
+0x4C14F699  ZFileInflateBegin       ; callee: ZArenaReset, inflateInit_(0x500622EC, "1.0.4", 0x38) with the output a0 / d0; -2 on failure (callers LoadCst and seven Load*_HD bodies)
+0x4C14FCB6  ZFileDeflatePart        ; callee: deflate on the stream ZFileDeflateBegin set up, a0 / d0 more input, d1 = 1 the last piece (Z_FINISH 4); writes each full 0xFFFD block with FileWrite
+0x4C14FF84  ZFileInflatePart        ; callee: inflate on the stream ZFileInflateBegin set up, refilling the 64 KB buffer with FileRead
+0x4C14F718  ZFileWriteDeflated      ; callee: one call for a whole buffer (a0, d0 bytes): deflateInit_ on 0x500622B4, deflate, FileWrite of each 0xFFFD block, deflateEnd (the eight Save*_HD bodies)
+0x4C14F9D8  ZFileReadInflated       ; callee: one call for a whole buffer: inflateInit_ on 0x500622B4, FileRead, inflate, inflateEnd (the Load*_HD bodies)
+0x4C0145A3  InitDrawTask_Impl           ; caller: InitDrawTask is `call` + ret of it, its only caller
+0x4C1499D0  LoadLsw_HD_Impl             ; caller: LoadLsw_HD is `call` + ret of it, its only caller
+0x4C149B00  LoadPmt_HD_Impl             ; caller: LoadPmt_HD is `call` + ret of it, its only caller
+0x4C149C7C  LoadMd_HD_Impl              ; caller: LoadMd_HD is `call` + ret of it, its only caller
+0x4C149CE0  LoadSqt_HD_Impl             ; caller: LoadSqt_HD is `call` + ret of it, its only caller
+0x4C14A1F2  LoadCmp_HD_Impl             ; caller: LoadCmp_HD is `call` + ret of it, its only caller
+0x4C14A2BE  LoadMsp_HD_Impl             ; caller: LoadMsp_HD is `call` + ret of it, its only caller
+0x4C14A38A  LoadTm_HD_Impl              ; caller: LoadTm_HD is `call` + ret of it, its only caller
+0x4C14A4CA  LoadEfc_HD_Impl             ; caller: LoadEfc_HD is `call` + ret of it, its only caller
+0x4C14A58E  LoadFav_HD_Impl             ; caller: LoadFav_HD is `call` + ret of it, its only caller
+0x4C14A5F2  LoadHmp_HD_Impl             ; caller: LoadHmp_HD is `call` + ret of it, its only caller
+0x4C14A656  LoadRcm_HD_Impl             ; caller: LoadRcm_HD is `call` + ret of it, its only caller
+0x4C14AB84  SaveLsw_HD_Impl             ; caller: SaveLsw_HD is `call` + ret of it, its only caller
+0x4C14ACE7  SavePmt_HD_Impl             ; caller: SavePmt_HD is `call` + ret of it, its only caller
+0x4C14AE15  SaveMd_HD_Impl              ; caller: SaveMd_HD is `call` + ret of it, its only caller
+0x4C14AE8F  SaveFav_HD_Impl             ; caller: SaveFav_HD is `call` + ret of it, its only caller
+0x4C14AF09  SaveHmp_HD_Impl             ; caller: SaveHmp_HD is `call` + ret of it, its only caller
+0x4C14AF83  SaveEfc_HD_Impl             ; caller: SaveEfc_HD is `call` + ret of it, its only caller
+0x4C14B044  SaveSqt_HD_Impl             ; caller: SaveSqt_HD is `call` + ret of it, its only caller
+0x4C14B189  SaveCmp_HD_Impl             ; caller: SaveCmp_HD is `call` + ret of it, its only caller
+0x4C14B24A  SaveMsp_HD_Impl             ; caller: SaveMsp_HD is `call` + ret of it, its only caller
+0x4C14B30B  SaveTm_HD_Impl              ; caller: SaveTm_HD is `call` + ret of it, its only caller
+0x4C14B591  SaveRcm_HD_Impl             ; caller: SaveRcm_HD is `call` + ret of it, its only caller
+; -- the expansion board's test screens (HDDTestProc, HDD_COMM_TEST; the board's PPORT chip 0x98064000,
+;    USB chip 0x98068000 and ATA registers 0x98060000 are the ones ../hdsx3/README.md names)
+0x4C1721B7  HddTestMemoPrint        ; gui: copies the string a0 into a Malloc'd block and posts it to HDD_DBMEMO_id (EV_MEMODRAW, MT_AutoFree): the test log line; HDDTestProc's checks print every result with it
+0x4C1739B3  TestConsolePrint        ; gui: as HddTestMemoPrint, to TestConsole_id: HDD_COMM_TEST's log line
+0x4C171FC8  HddTestExpansionSlots   ; string: "EXPANSION SLOT 1 Check" / "SLOT1 WAVE OK" / "SLOT1 WAVE NG NG NG" / "SLOT1 TABLE" (wave ROMs at 0x04000000 / 0x05000000, HddTestFlashIdCheck 0x97000000) and the same for slot 2 (0x06000000 / 0x07000000, 0x96000000)
+0x4C172331  HddTestRamAddressLines  ; string: "OK" / "NG NG NG Err %d": writes and reads back the board RAM at 0x97900000 + 0x40, 0x80, 0x100 ... 0x40000 (one address line each, func_4C1722F9)
+0x4C172477  HddTestPportChip        ; string: "PPORT CHIP OK" / "PPORT CHIP NG NG NG": toggles and reads back the PPORT chip's registers 0x98064004 / 0x98064014 with dly_tsk between
+0x4C172577  HddTestUsbChip          ; string: "USB Chip OK" / "USB Chip NG NG NG": writes 0x5A / 0xA5 to the USB chip's 0x98068036 and reads them back
+0x4C1726C4  HddTestDriveAccess      ; string: "Cannot Reset NG NG NG" / "Cannot Read ID NG NG NG" / "HDD ACCESS OK": HddReset, HddIdentify, HddTestDriveInfo
+0x4C1725F9  HddTestDriveInfo        ; string: "Hard Disk Drive ID information", "Model number %40.40s", "CYLINDER %d", "HEADS %d", "SECTORS %d", "CAPACITY %ldKB" from the IDENTIFY block
+0x4C172D1C  HddCommTestDriveInfo    ; string: as HddTestDriveInfo for HDD_COMM_TEST ("CAPACITY %ldMB"), printed with TestConsolePrint
+0x4C172BCC  HddCommTestPport        ; string: "This is Test Data for PPORT": drives the PPORT chip 0x98064000 / 0x98064004 through six steps (func_4C172B18) and compares
+0x4C173DA0  HddRegWrite8            ; io: (d0 block, d1 register 0..7, (0x10, sp) byte): writes one ATA register at 0x98060000 + 2 * (reg | 8 or 0x10); sprintf's a "HDCS ..." trace line first
+0x4C173E3E  HddRegRead8             ; io: reads one ATA register (as HddRegWrite8's address), with its "HDCS ..." trace line
+0x4C173E89  HddRegRead16            ; io: reads the 16-bit ATA data register (as HddRegWrite8's address, halfword)
+0x4C173ED5  HddStatus               ; io: HddRegRead8(0, 7): the ATA status register
+0x4C173EF7  HddWaitReady            ; io: polls HddStatus until BSY (0x80) clears, -1 after 0x640000 tries
+0x4C1741D9  HddIdentify             ; io: ATA command 0xEC (IDENTIFY DEVICE) on drive 0xA0, then 256 data words into a0 (byte-swapped); -3 busy, -2 no DRQ, -4 error
+0x4C174289  HddReset                ; io: device control 0x0C then 0x08 (SRST), then command 0xEF (SET FEATURES) with feature 1; -1 / -2 when the drive stays busy
+0x4C173F24  HddWriteSector          ; io: ATA command 0x30 (WRITE SECTORS), one sector, LBA from d0 / (0x34, sp), drive 0xA0 | head, 256 words from a0
+; -- the factory test mode (TestModeFunc, RamTestFunc, RomTestFunc, TEST2FUNC ... TEST7FUNC)
+0x4C0506C7  RamTestWords            ; body: for each RamTestRegion record (func_4C0506C7_entry_L4_Records: base, length, the fail bits) writes 0x5A5A5A5A and 0xA5A5A5A5 to every word, reads both halfwords back and restores the word; ORs the record's bit per failing half into the result (callers RamTestFunc, func_4C0505AA)
+0x4C050787  RamTestBytes            ; body: the same with bytes 0x5A / 0xA5 over the records at func_4C050787_entry_L4_Records (callers RamTestFunc, func_4C0505AA, func_4C050B10)
+0x4C0507ED  RomTestChecksums        ; body: sums the program flash's even and odd halfwords (0x4C000000, 2 x 0x40000 words) and the wave / table ROM at 0x48000000 (0x100000 words: 0x504EEB12, 0x2C7CD2D4 expected); bits 0..3 of the result flag each mismatch (caller RomTestFunc)
+0x4C0514CA  Test2ShowResult         ; gui: TEST2FUNC's body: shows TEST2OKOK_id / TEST2OKNG_id / TEST2NGOK_id / TEST2NGNG_id (EV_SHOW) from bits 0 and 3 of func_4C024218's result
+0x4C0517D1  Test6ShowResult         ; gui: TEST6FUNC's body: TEST6_OK_id / TEST6_NO_id from a sub-CPU query (func_4C112249 with 3; 0xFC = no answer), TEST6DSP_OK_id / TEST6DSP_NO_id from DspHostPortStatus
+0x4C051853  TestFdLoadSaveRun       ; gui: TEST7FUNC's and TestDiskFunc's body: GetMediaType, FDLoadSaveTest, counts total / OK / NG and draws them into T7_TOTAL_id / T7_OK_id / T7_NG_id (or TM_FD_*_id) with MT_ParaDraw
+0x4C051072  Test5ColorStep          ; gui: shows TEST5_Red_id, ... TEST5_White_id, TEST5_TP_id in turn as the step counter 0x5002DD0D passes 0, 0x1E, 0x3C ... 0xB4 (the LCD colour test), unless CheckHoldLED
+0x4C052257  TestMidiIoResult        ; gui: d0's top nibble 1 stores the test byte sent (0x5002DCF0), 2 compares the byte received: MIDI_IO_OK_id / MIDI_IO_NG_id, MIDI_IO_NONE_id when none came back
+; -- the sequencer's image of a song file in INSTALL_SCRATCH (0xC8000 bytes), with one cursor at 0x5004EECC
+0x4C116230  ScratchPosReset         ; ram: clears the INSTALL_SCRATCH cursor 0x5004EECC (SaveSmf and the song loaders before they walk the image)
+0x4C11623A  ScratchReadByte         ; ram: the byte of INSTALL_SCRATCH at the cursor 0x5004EECC (`movbu (d0, a0), d0`, a0 = INSTALL_SCRATCH)
+0x4C11624B  ScratchWriteByte        ; ram: stores d0 into INSTALL_SCRATCH at the cursor
+0x4C11627C  ScratchPosNext          ; ram: advances the cursor by one; -1 when it is at 0xC8000 (the end of INSTALL_SCRATCH)
+0x4C11629A  ScratchPos              ; ram: returns the cursor 0x5004EECC
+0x4C1162A3  ScratchPosSet           ; ram: d0 -> the cursor, -1 (and no change) when d0 >= 0xC8000
+0x4C1162BA  ScratchPosSkip          ; ram: adds d0 to the cursor, -1 when that passes 0xC8000 (SmfReadHeaderChunk skips the rest of a long MThd with it)
+0x4C11633F  ScratchTrackTableSet    ; ram: 0x5004EED0 := INSTALL_SCRATCH + d0 (SmfReadTracks puts a per-track table of u32 there, read by func_4C11636C / func_4C1163A2) [INFERENCE: name from use]
+0x4C116421  StoreU16LE              ; body: stores the halfword d0 at a0 low byte first (`movbu d0, (a0)` / `movbu d1, (1, a0)` after `asr 8`)
+; -- Standard MIDI File reading / writing on that image (LoadSmf / SaveSmf)
+0x4C121023  SmfReadByte             ; callee: ScratchReadByte then ScratchPosNext: the next byte of the file image (12 callers in the SMF reader)
+0x4C120F14  SmfReadU32BE            ; body: four SmfReadByte, big-endian (the chunk lengths)
+0x4C1209F3  SmfReadHeaderChunk      ; string: compares "MThd" (SmfReadByte), reads the length (SmfReadU32BE), then format -> 0x5005BF3E, track count -> 0x5005BF40, division -> 0x5005BF42 (two bytes each), skipping a longer header
+0x4C120F41  SmfReadTrackChunkHeader ; string: compares "MTrk" and reads the track length (SmfReadU32BE); -1 when the tag does not match
+0x4C120E28  SmfReadTracks           ; body: for each of the 0x5005BF40 tracks SmfReadTrackChunkHeader, then the track's events into the per-track tables at 0x5004EED0 / 0x5004EED4 / 0x5004EED8 (format 1; format 0 is the one-track branch)
+0x4C12083B  SmfFileReadAll          ; callee: FileRead(InstallScratchPtr(), 0xC8000): the whole file into the image (LoadSmf's func_4C1207F6 keeps the size in 0x5005BF44)
+0x4C120763  LoadSmf_Begin           ; caller: LoadSmf's first step (LoadSmf calls func_4C120763, func_4C1207F6, func_4C1207B3 in turn): stores the target song (0x5005BEDD), selects it (func_4C114C33, SetSeqSongNo)
+0x4C1207F6  LoadSmf_Read            ; caller: LoadSmf's second step: SmfFileReadAll, func_4C120855 (clears the song), SmfReadHeaderChunk, then by the format (0x5005BF3E) the track reader
+0x4C1207B3  LoadSmf_End             ; caller: LoadSmf's last step
+0x4C1230B3  SmfWriteByte            ; callee: ScratchWriteByte then ScratchPosNext
+0x4C1230C8  SmfWriteBytes           ; body: SmfWriteByte for each of the d0 bytes at a0
+0x4C1224A7  SmfWriteMThdTag         ; string: SmfWriteBytes("MThd", 4)
+0x4C14C68F  SmfFileCreate           ; callee: FileOpen(the SMF file's name, func_4C14CA3F, "wb"): SaveSmf's
+0x4C14C6A5  SmfFileClose            ; callee: FileClose: SaveSmf's
+0x4C14C6B0  SmfFileRemove           ; callee: FileRemove(the SMF file's name): SaveSmf's clean-up after a failed write
+0x4C121F87  SmfFileWriteImage       ; callee: FileSeek then FileWrite of the image (ScratchPos bytes): SaveSmf's
+; -- RAM read off the routines named above (class var: what the code that uses it says it holds)
+0x50200000  FsErrno                 ; var: the file system library's error number: FsOpen / FsRead / FsSeek ... store 0x11 (FILE not open), 0xD (wrong mode), 0x14, 0x15, 0x1B there, FsRename / FsMkdir clear and test it
+0x502883B8  FileOpenTable           ; var: the open FILEs, one u32 per descriptor: FsClose (func_4C13049F) checks the FILE against its slot (`mov 0x502883b8, d2 / asl2 d0 / mov (d0, a0), d0`) and clears it
+0x500622AC  FileCurrent             ; var: the FILE FileOpen opened (`mov a0, (0x500622ac)`); FileRead / FileWrite / FileSeek / FileClose ... use it, FileClose clears it
+0x50072328  ZFileStatusCode         ; var: the zlib file layer's status halfword: ZFileStatus returns it, ZFileStatusClear clears it, the ZFile* routines store their first error (-2, -3, -0x65, -0xC8)
+0x5007232C  ZFileSpaceLeft          ; var: the bytes the output file may still take (ZFileSpaceSet; -1 = no limit); the deflating writers subtract each 0xFFFD block
+0x50062324  ZFileInflatedBytes      ; var: cleared by ZFileInflateBegin, returned by ZFileInflatedTotal [INFERENCE: what the inflating readers count]
+0x50062328  ZFileBuffer             ; var: the 64 KB block buffer the ZFile routines deflate into / inflate from (next_out / next_in of the two streams; FileWrite / FileRead move it from 0x5006232A, 0xFFFD bytes)
+0x500622B4  ZWholeStream            ; var: the z_stream of ZFileWriteDeflated / ZFileReadInflated (0x38 bytes, deflateInit_ / inflateInit_ size 0x38); +0 next_in
+0x500622B8  ZWholeStreamAvailIn     ; var: ZWholeStream +4, avail_in (the routines store the input length there)
+0x500622C0  ZWholeStreamNextOut     ; var: ZWholeStream +0xC, next_out (ZFileBuffer or the caller's buffer)
+0x500622C4  ZWholeStreamAvailOut    ; var: ZWholeStream +0x10, avail_out
+0x500622EC  ZPartStream             ; var: the z_stream of ZFileDeflateBegin / ZFileInflateBegin and the *Part routines (0x38 bytes); +0 next_in
+0x500622F0  ZPartStreamAvailIn      ; var: ZPartStream +4, avail_in
+0x500622F8  ZPartStreamNextOut      ; var: ZPartStream +0xC, next_out (ZFileDeflateBegin stores ZFileBuffer)
+0x500622FC  ZPartStreamAvailOut     ; var: ZPartStream +0x10, avail_out (ZFileDeflateBegin stores 0xFFFF)
+0x5004EECC  InstallScratchPos       ; var: the cursor into INSTALL_SCRATCH that ScratchReadByte / ScratchWriteByte / ScratchPosNext use (0 .. 0xC8000)
+0x5004EED0  ScratchTrackTable       ; var: ScratchTrackTableSet stores INSTALL_SCRATCH + d0 there; func_4C11636C / func_4C1163A2 index it by track * 4 [INFERENCE]
+0x5005BF3E  SmfFormat               ; var: the MThd format field SmfReadHeaderChunk reads (LoadSmf_Read branches on 0 / 1)
+0x5005BF40  SmfTrackCount           ; var: the MThd track count (SmfReadTracks loops over it)
+0x5005BF42  SmfDivision             ; var: the MThd division (ticks per quarter note)
+0x5005BF44  SmfFileSize             ; var: LoadSmf_Read stores SmfFileReadAll's result (the bytes read) there
+0x5002DCF0  TestMidiIoSent          ; var: the byte TestMidiIoResult stores on a type-1 message and compares the received byte with
