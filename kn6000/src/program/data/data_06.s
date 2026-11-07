@@ -20420,13 +20420,13 @@ func_4C130087_entry_Ld1_Records:	# 2 x REC_func_4C130087_entry_Ld1_Records (40 b
 # census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3F3508, 0x3F350C
 
-func_4C3F674B_Var:	# u32, initial value of a RAM variable; read / written by func_4C3F674B 0x4C3F674B: `mov (8, a2), a1`
+cre_tsk_Impl_Var:	# u32, initial value of a RAM variable; read / written by cre_tsk_Impl 0x4C3F674B: `mov (8, a2), a1`
 	.long	0x4c133987
 
-func_4C3F674B_Table_2:	# 2 x u16, 0..3; read by func_4C3F674B 0x4C3F674B: `movhu (0xc, a2), d0`
+cre_tsk_Impl_Table_2:	# 2 x u16, 0..3; read by cre_tsk_Impl 0x4C3F674B: `movhu (0xc, a2), d0`
 	tab_u16	3, 0
 
-func_4C3F674B_Var_2:	# u32, initial value of a RAM variable; read / written by func_4C3F674B 0x4C3F674B: `mov (0x10, a2), d0`
+cre_tsk_Impl_Var_2:	# u32, initial value of a RAM variable; read / written by cre_tsk_Impl 0x4C3F674B: `mov (0x10, a2), d0`
 	.long	20480
 
 deflate_copyright:	.asciz " deflate 1.0.4 Copyright 1995-1996 Jean-loup Gailly "

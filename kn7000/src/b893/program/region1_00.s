@@ -2021,14 +2021,14 @@ func_4840139A:
     add     -0xc, sp
 func_4840139A_entry:
     mov     7, d0
-    call    func_4C03DA89_entry, [d2,a2,a3], 0x1c
+    call    sus_tsk_entry, [d2,a2,a3], 0x1c
     mov     3, d0
-    call    func_4C03DA89_entry, [d2,a2,a3], 0x1c
+    call    sus_tsk_entry, [d2,a2,a3], 0x1c
     call    func_484013D2_entry, 0, 0xc
     mov     3, d0
-    call    func_4C03D7CF, 0, 0
+    call    rsm_tsk, 0, 0
     mov     7, d0
-    call    func_4C03D7CF, 0, 0
+    call    rsm_tsk, 0, 0
     mov     2, d0
     call    dly_tsk_entry, [d2,a2], 0x18
     ret     0, 0xc
@@ -2418,14 +2418,14 @@ func_48401872:
     add     -0xc, sp
 func_48401872_entry:
     mov     7, d0
-    call    func_4C03DA89_entry, [d2,a2,a3], 0x1c
+    call    sus_tsk_entry, [d2,a2,a3], 0x1c
     mov     3, d0
-    call    func_4C03DA89_entry, [d2,a2,a3], 0x1c
+    call    sus_tsk_entry, [d2,a2,a3], 0x1c
     call    func_484018AA_entry, 0, 0xc
     mov     3, d0
-    call    func_4C03D7CF, 0, 0
+    call    rsm_tsk, 0, 0
     mov     7, d0
-    call    func_4C03D7CF, 0, 0
+    call    rsm_tsk, 0, 0
     mov     2, d0
     call    dly_tsk_entry, [d2,a2], 0x18
     ret     0, 0xc
@@ -2779,22 +2779,22 @@ func_48401CBA:
     add     -0xc, sp
 func_48401CBA_entry:
     mov     7, d0
-    call    func_4C03DA89_entry, [d2,a2,a3], 0x1c
+    call    sus_tsk_entry, [d2,a2,a3], 0x1c
     mov     3, d0
-    call    func_4C03DA89_entry, [d2,a2,a3], 0x1c
+    call    sus_tsk_entry, [d2,a2,a3], 0x1c
     mov     4, d0
-    call    func_4C03DA89_entry, [d2,a2,a3], 0x1c
+    call    sus_tsk_entry, [d2,a2,a3], 0x1c
     mov     2, d0
-    call    func_4C03DA89_entry, [d2,a2,a3], 0x1c
+    call    sus_tsk_entry, [d2,a2,a3], 0x1c
     call    func_48401D16_entry, 0, 0xc
     mov     2, d0
-    call    func_4C03D7CF, 0, 0
+    call    rsm_tsk, 0, 0
     mov     4, d0
-    call    func_4C03D7CF, 0, 0
+    call    rsm_tsk, 0, 0
     mov     3, d0
-    call    func_4C03D7CF, 0, 0
+    call    rsm_tsk, 0, 0
     mov     7, d0
-    call    func_4C03D7CF, 0, 0
+    call    rsm_tsk, 0, 0
     mov     2, d0
     call    dly_tsk_entry, [d2,a2], 0x18
     ret     0, 0xc
@@ -12757,14 +12757,14 @@ loc_48407ED0:
 DspAllocParamBlock:
     mov     0x500c6a88, a0
     mov     6, d0
-    call    func_4C03CA45, 0, 0
+    call    prcv_msg, 0, 0
     cmp     -0x55, d0
     beq     loc_48407EEB
     bra     loc_48407EFA
 loc_48407EEB:
     mov     0x500c6a88, a0
     mov     5, d0
-    call    LibMsgReceive, 0, 0
+    call    rcv_msg, 0, 0
 loc_48407EFA:
     mov     (0x500c6a88), a0
     ret     0, 0x10
@@ -13182,7 +13182,7 @@ func_48408251_entry:
     mov     d0, (0x10, sp)
     mov     6, d0
     mov     (0x500c6a88), a0
-    call    LibMsgSend, 0, 0
+    call    snd_msg, 0, 0
     mov     -1, d0
     mov     d0, (0x500c6a88)
     ret     0, 0x14
@@ -13238,7 +13238,7 @@ func_484082C2:
 loc_484082C7:
     mov     0x500c6a8c, a0
     mov     6, d0
-    call    LibMsgReceive, 0, 0
+    call    rcv_msg, 0, 0
     mov     (0x500c6a8c), d0
     mov     d0, (0x10, sp)
     call    func_484D745C, 0, 0
@@ -13373,7 +13373,7 @@ loc_48408410:
 loc_4840841A:
     mov     5, d0
     mov     (0x500c6a8c), a0
-    call    LibMsgSend, 0, 0
+    call    snd_msg, 0, 0
     clr     d0
     movhu   d0, (0x18, sp)
     bra     loc_4840845A
@@ -13411,29 +13411,29 @@ loc_48408463:
     add     -0x2c, sp
 DspManagerInit:
     mov     7, d0
-    mov     func_4C03D141_Table_3, a0
+    mov     cre_tsk_Impl_Table_3, a0
     call    cre_tsk, 0, 0
     mov     0xa, d0
-    mov     func_4C03C868_Var_8, a0
-    call    func_4C03C7DC, 0, 0
+    mov     cre_flg_Impl_Var_8, a0
+    call    cre_flg, 0, 0
     mov     1, d0
-    mov     func_4C03C090_Table, a0
-    call    func_4C03C004, 0, 0
+    mov     cre_sem_Impl_Table, a0
+    call    cre_sem, 0, 0
     mov     2, d0
-    mov     func_4C03C090_Table, a0
-    call    func_4C03C004, 0, 0
+    mov     cre_sem_Impl_Table, a0
+    call    cre_sem, 0, 0
     mov     5, d0
-    mov     func_4C03BFB5_Table, a0
-    call    func_4C03BF29, 0, 0
+    mov     cre_mbx_Impl_Table, a0
+    call    cre_mbx, 0, 0
     mov     6, d0
-    mov     func_4C03BFB5_Table, a0
-    call    func_4C03BF29, 0, 0
+    mov     cre_mbx_Impl_Table, a0
+    call    cre_mbx, 0, 0
     mov     7, d0
-    mov     func_4C03BFB5_Table, a0
-    call    func_4C03BF29, 0, 0
+    mov     cre_mbx_Impl_Table, a0
+    call    cre_mbx, 0, 0
     mov     8, d0
-    mov     func_4C03BFB5_Table, a0
-    call    func_4C03BF29, 0, 0
+    mov     cre_mbx_Impl_Table, a0
+    call    cre_mbx, 0, 0
     mov     7, d0
     clr     d1
     call    sta_tsk, 0, 0
@@ -13443,10 +13443,10 @@ DspManagerInit:
     mov     d0, (0x18, sp)
     mov     5, d0
     mov     0x500c5400, a0
-    call    LibMsgSend, 0, 0
+    call    snd_msg, 0, 0
     mov     5, d0
     mov     0x500c5f44, a0
-    call    LibMsgSend, 0, 0
+    call    snd_msg, 0, 0
     mov     -1, d0
     mov     d0, (0x500c6a88)
     mov     d0, (0x500c6a8c)
@@ -33276,34 +33276,34 @@ func_48414199_entry:
     mov     3, d2
     movhu   d2, (0x500d3c3e)
     movhu   d0, (0x500d3c44)
-    mov     func_4C03C868_Var_10, a0
-    call    func_4C03C7DC, 0, 0
+    mov     cre_flg_Impl_Var_10, a0
+    call    cre_flg, 0, 0
     mov     2, d3
     movhu   d3, (0x500d3c46)
     mov     d3, d0
-    mov     func_4C03C868_Var_12, a0
-    call    func_4C03C7DC, 0, 0
+    mov     cre_flg_Impl_Var_12, a0
+    call    cre_flg, 0, 0
     movhu   d2, (0x500d3c48)
     mov     d2, d0
-    mov     func_4C03C868_Var_14, a0
-    call    func_4C03C7DC, 0, 0
+    mov     cre_flg_Impl_Var_14, a0
+    call    cre_flg, 0, 0
     mov     4, d0
     movhu   d0, (0x500d3c4a)
-    mov     func_4C03C868_Var_16, a0
-    call    func_4C03C7DC, 0, 0
+    mov     cre_flg_Impl_Var_16, a0
+    call    cre_flg, 0, 0
     mov     5, d0
     movhu   d0, (0x500d3c4c)
-    mov     func_4C03C868_Var_18, a0
-    call    func_4C03C7DC, 0, 0
+    mov     cre_flg_Impl_Var_18, a0
+    call    cre_flg, 0, 0
     movhu   d2, (0x500d3c40)
     movhu   d2, (0x500d3c42)
     mov     d2, d0
-    mov     func_4C03D141_Table_7, a0
+    mov     cre_tsk_Impl_Table_7, a0
     call    cre_tsk, 0, 0
     movhu   d3, (0x500d3c38)
     movhu   d2, (0x500d3c3a)
     mov     d3, d0
-    mov     func_4C03D141_Table_5, a0
+    mov     cre_tsk_Impl_Table_5, a0
     call    cre_tsk, 0, 0
     ret     [d2,d3], 0x18
 
@@ -33455,7 +33455,7 @@ loc_484143FF:
     exth    d0
     mov     1, d1
     mov     d1, (0x14, sp)
-    call    func_4C03C59C, 0, 0
+    call    wai_flg, 0, 0
     clr     d0
     call    SetNeedUpdate_entry, [d2], 0x10
     mov     (0x50021fe0), d0
@@ -34057,8 +34057,8 @@ ApTaskControl_entry:
 loc_48414A67:
     movhu   (0x500d3c3c), d0
     exth    d0
-    call    func_4C03D46B, 0, 0
-    call    func_4C03B669, 0, 0
+    call    wup_tsk, 0, 0
+    call    slp_tsk, 0, 0
     clr     d0
     bra     loc_48414AB5
 loc_48414A7F:
@@ -34069,13 +34069,13 @@ loc_48414A82:
     mov     FN_MainTaskControl, d0
     mov     a0, (0x10, sp)
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
-    call    func_4C03B669, 0, 0
+    call    slp_tsk, 0, 0
     clr     d0
     bra     loc_48414AB5
 loc_48414A9D:
     movhu   (0x500d3c3c), d0
     exth    d0
-    call    func_4C03D46B, 0, 0
+    call    wup_tsk, 0, 0
     clr     d0
     bra     loc_48414AB5
 loc_48414AAE:
@@ -34110,20 +34110,20 @@ loc_48414AED:
     mov     FN_ApTaskControl, d0
     mov     a0, (0x10, sp)
     call    ApFuncCall_entry, [d2,d3,a2], 0x24
-    call    func_4C03B669, 0, 0
+    call    slp_tsk, 0, 0
     clr     d0
     bra     loc_48414B48
 loc_48414B08:
     movhu   (0x500d3c38), d0
     exth    d0
-    call    func_4C03D46B, 0, 0
+    call    wup_tsk, 0, 0
     clr     d0
     bra     loc_48414B48
 loc_48414B19:
     movhu   (0x500d3c38), d0
     exth    d0
-    call    func_4C03D46B, 0, 0
-    call    func_4C03B669, 0, 0
+    call    wup_tsk, 0, 0
+    call    slp_tsk, 0, 0
     clr     d0
     bra     loc_48414B48
 loc_48414B31:
@@ -37179,8 +37179,8 @@ func_48416589:
 func_48416589_entry:
     mov     6, d0
     movhu   d0, (0x5002a000)
-    mov     func_4C03C868_Var_20, a0
-    call    func_4C03C7DC, 0, 0
+    mov     cre_flg_Impl_Var_20, a0
+    call    cre_flg, 0, 0
     ret     0, 0x10
 
 func_484165A4:
@@ -37220,7 +37220,7 @@ Malloc_entry:
     movhu   (0x5002a000), d0
     lsr     2, d2
     exth    d0
-    call    func_4C03C59C, 0, 0
+    call    wai_flg, 0, 0
     mov     (Malloc_Var), a2
     asl2    d2
     cmp     0, a2
@@ -37309,7 +37309,7 @@ loc_484166A5:
     add     0x18, a0
     exth    d0
     mov     1, d1
-    call    func_4C03C59C, 0, 0
+    call    wai_flg, 0, 0
     mov     (Malloc_Var), a2
     mov     8, d0
     sub     d0, d2

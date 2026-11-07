@@ -17429,15 +17429,15 @@ loc_4C02BB10:
 loc_4C02BB62:
     mov     1, d0
     mov     d0, d1
-    call    func_4C03C0D1, 0, 0
+    call    chg_pri, 0, 0
     mov     4, d0
     mov     2, d1
-    call    func_4C03C0D1, 0, 0
+    call    chg_pri, 0, 0
     bra     loc_4C02BB84
 loc_4C02BB79:
     mov     1, d0
     mov     3, d1
-    call    func_4C03C0D1, 0, 0
+    call    chg_pri, 0, 0
 loc_4C02BB84:
     btst    0x03, (0x500c53f8)
     bne     loc_4C02BB98
@@ -17472,7 +17472,7 @@ loc_4C02BBD5:
     add     0x18, a0
     mov     0xc, d0
     mov     1, d1
-    call    func_4C03C59C, 0, 0
+    call    wai_flg, 0, 0
     call    TickHookPass_entry, 0, 0x10
     call    func_484B1434_entry, 0, 8
     call    func_484B3035_entry, 0, 8
@@ -47462,11 +47462,11 @@ loc_4C03B654:
     bra     loc_4C03B5F4
 loc_4C03B65A:
     or      0x0800, psw
-    call    func_4C03B669, 0, 0
+    call    slp_tsk, 0, 0
     jmp     loc_4C03B508
     ret     [d2,d3,a2,a3], 0x20
-
-func_4C03B669:
+# slp_tsk  (lib CPU 0x4c03b669)
+slp_tsk:
     add     -4, sp
     mov     d1, (0, sp)
     movhu   (0x50380d0c), d1
@@ -47506,7 +47506,7 @@ loc_4C03B6A5:
     add     -8, sp
 loc_4C03B6C1:
     add     -4, sp
-    call    func_4C03B712_entry, 0, 0x10
+    call    slp_tsk_Impl_entry, 0, 0x10
     add     4, sp
     movhu   (0x50380d0c), d1
     add     0, d1
@@ -47535,10 +47535,10 @@ loc_4C03B6F4:
     mov     a1, sp
     mov     d3, a1
     jmp     (a2)
-
-func_4C03B712:
+# slp_tsk_Impl  (lib CPU 0x4c03b712)
+slp_tsk_Impl:
     add     -0x10, sp
-func_4C03B712_entry:
+slp_tsk_Impl_entry:
     movhu   (0x50380d0c), d0
     cmp     0, d0
     beq     loc_4C03B72E
@@ -48572,8 +48572,8 @@ loc_4C03BF23:
     mov     d3, d0
 loc_4C03BF26:
     retf    [d2,d3,a2], 0xc
-
-func_4C03BF29:
+# cre_mbx  (lib CPU 0x4c03bf29)
+cre_mbx:
     add     -4, sp
     mov     d1, (0, sp)
     movhu   (0x50380d0c), d1
@@ -48613,7 +48613,7 @@ loc_4C03BF66:
     add     -8, sp
 loc_4C03BF82:
     add     -4, sp
-    call    func_4C03BFB5_entry, [d2,a2,a3], 0xc
+    call    cre_mbx_Impl_entry, [d2,a2,a3], 0xc
     add     4, sp
     movhu   (0x50380d0c), d1
     add     0, d1
@@ -48631,10 +48631,10 @@ loc_4C03BF9D:
     mov     d0, psw
     mov     a0, d0
     ret     0, 0
-
-func_4C03BFB5:
+# cre_mbx_Impl  (lib CPU 0x4c03bfb5)
+cre_mbx_Impl:
     movm    [d2,a2,a3], (sp)
-func_4C03BFB5_entry:
+cre_mbx_Impl_entry:
     mov     a0, a3
     exth    d0
     add     -1, d0
@@ -48677,8 +48677,8 @@ func_4C03BFB5_entry:
     mov     d2, (0x10, a0)
     clr     d0
     retf    [d2,a2,a3], 0xc
-
-func_4C03C004:
+# cre_sem  (lib CPU 0x4c03c004)
+cre_sem:
     add     -4, sp
     mov     d1, (0, sp)
     movhu   (0x50380d0c), d1
@@ -48718,7 +48718,7 @@ loc_4C03C041:
     add     -8, sp
 loc_4C03C05D:
     add     -4, sp
-    call    func_4C03C090_entry, [d2,a2,a3], 0xc
+    call    cre_sem_Impl_entry, [d2,a2,a3], 0xc
     add     4, sp
     movhu   (0x50380d0c), d1
     add     0, d1
@@ -48736,10 +48736,10 @@ loc_4C03C078:
     mov     d0, psw
     mov     a0, d0
     ret     0, 0
-
-func_4C03C090:
+# cre_sem_Impl  (lib CPU 0x4c03c090)
+cre_sem_Impl:
     movm    [d2,a2,a3], (sp)
-func_4C03C090_entry:
+cre_sem_Impl_entry:
     mov     a0, a3
     exth    d0
     add     -1, d0
@@ -48775,8 +48775,8 @@ func_4C03C090_entry:
     mov     d0, (8, a2)
     clr     d0
     retf    [d2,a2,a3], 0xc
-
-func_4C03C0D1:
+# chg_pri  (lib CPU 0x4c03c0d1)
+chg_pri:
     add     -4, sp
     mov     d1, (0, sp)
     movhu   (0x50380d0c), d1
@@ -48816,7 +48816,7 @@ loc_4C03C10E:
     add     -8, sp
 loc_4C03C12A:
     add     -4, sp
-    call    func_4C03C15D_entry, [d2,a2], 0x18
+    call    chg_pri_Impl_entry, [d2,a2], 0x18
     add     4, sp
     movhu   (0x50380d0c), d1
     add     0, d1
@@ -48834,11 +48834,11 @@ loc_4C03C145:
     mov     d0, psw
     mov     a0, d0
     ret     0, 0
-
-func_4C03C15D:
+# chg_pri_Impl  (lib CPU 0x4c03c15d)
+chg_pri_Impl:
     movm    [d2,a2], (sp)
     add     -0x10, sp
-func_4C03C15D_entry:
+chg_pri_Impl_entry:
     mov     d1, d2
     mov     d0, d1
     exth    d1
@@ -48904,8 +48904,8 @@ loc_4C03C1F8:
     clr     d0
 loc_4C03C1F9:
     ret     [d2,a2], 0x18
-
-func_4C03C1FC:
+# rel_blk  (lib CPU 0x4c03c1fc)
+rel_blk:
     add     -4, sp
     mov     d1, (0, sp)
     movhu   (0x50380d0c), d1
@@ -48945,7 +48945,7 @@ loc_4C03C239:
     add     -8, sp
 loc_4C03C255:
     add     -4, sp
-    call    func_4C03C288_entry, [d2,d3,a2,a3], 0x34
+    call    rel_blk_Impl_entry, [d2,d3,a2,a3], 0x34
     add     4, sp
     movhu   (0x50380d0c), d1
     add     0, d1
@@ -48963,11 +48963,11 @@ loc_4C03C270:
     mov     d0, psw
     mov     a0, d0
     ret     0, 0
-
-func_4C03C288:
+# rel_blk_Impl  (lib CPU 0x4c03c288)
+rel_blk_Impl:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x24, sp
-func_4C03C288_entry:
+rel_blk_Impl_entry:
     exth    d0
     mov     a0, (0x40, sp)
     mov     d0, a2
@@ -49175,8 +49175,8 @@ loc_4C03C449:
     mov     d0, (a2)
 loc_4C03C45A:
     retf    [a2,a3], 8
-
-func_4C03C45D:
+# get_blk  (lib CPU 0x4c03c45d)
+get_blk:
     add     -4, sp
     mov     d1, (0, sp)
     movhu   (0x50380d0c), d1
@@ -49216,7 +49216,7 @@ loc_4C03C49A:
     add     -8, sp
 loc_4C03C4B6:
     add     -4, sp
-    call    func_4C03C4E9_entry, [d2,a2,a3], 0x24
+    call    get_blk_Impl_entry, [d2,a2,a3], 0x24
     add     4, sp
     movhu   (0x50380d0c), d1
     add     0, d1
@@ -49234,11 +49234,11 @@ loc_4C03C4D1:
     mov     d0, psw
     mov     a0, d0
     ret     0, 0
-
-func_4C03C4E9:
+# get_blk_Impl  (lib CPU 0x4c03c4e9)
+get_blk_Impl:
     movm    [d2,a2,a3], (sp)
     add     -0x18, sp
-func_4C03C4E9_entry:
+get_blk_Impl_entry:
     exth    d0
     mov     a0, a3
     mov     d1, d2
@@ -49305,8 +49305,8 @@ loc_4C03C598:
     clr     d0
 loc_4C03C599:
     ret     [d2,a2,a3], 0x24
-
-func_4C03C59C:
+# wai_flg  (lib CPU 0x4c03c59c)
+wai_flg:
     add     -4, sp
     mov     d1, (0, sp)
     movhu   (0x50380d0c), d1
@@ -49348,7 +49348,7 @@ loc_4C03C5D9:
     add     -4, sp
 loc_4C03C5F9:
     add     -4, sp
-    call    func_4C03C62C_entry, [d2,d3,a2,a3], 0x24
+    call    wai_flg_Impl_entry, [d2,d3,a2,a3], 0x24
     add     4, sp
     movhu   (0x50380d0c), d1
     add     0, d1
@@ -49366,11 +49366,11 @@ loc_4C03C614:
     mov     d0, psw
     mov     a0, d0
     ret     0, 0
-
-func_4C03C62C:
+# wai_flg_Impl  (lib CPU 0x4c03c62c)
+wai_flg_Impl:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x14, sp
-func_4C03C62C_entry:
+wai_flg_Impl_entry:
     mov     a0, (0x2c, sp)
     mov     d1, (0x34, sp)
     movhu   (0x50380d0c), d1
@@ -49581,8 +49581,8 @@ loc_4C03C7AF:
     mov     mdr, d3
     mov     d3, a1
     jmp     (a2)
-
-func_4C03C7DC:
+# cre_flg  (lib CPU 0x4c03c7dc)
+cre_flg:
     add     -4, sp
     mov     d1, (0, sp)
     movhu   (0x50380d0c), d1
@@ -49622,7 +49622,7 @@ loc_4C03C819:
     add     -8, sp
 loc_4C03C835:
     add     -4, sp
-    call    func_4C03C868_entry, [d2,a2,a3], 0xc
+    call    cre_flg_Impl_entry, [d2,a2,a3], 0xc
     add     4, sp
     movhu   (0x50380d0c), d1
     add     0, d1
@@ -49640,10 +49640,10 @@ loc_4C03C850:
     mov     d0, psw
     mov     a0, d0
     ret     0, 0
-
-func_4C03C868:
+# cre_flg_Impl  (lib CPU 0x4c03c868)
+cre_flg_Impl:
     movm    [d2,a2,a3], (sp)
-func_4C03C868_entry:
+cre_flg_Impl_entry:
     mov     a0, a3
     exth    d0
     add     -1, d0
@@ -49786,7 +49786,7 @@ loc_4C03C983:
     add     -8, sp
 loc_4C03C99F:
     add     -4, sp
-    call    func_4C03C9D2_entry, [d2], 0x14
+    call    preq_sem_Impl_entry, [d2], 0x14
     add     4, sp
     movhu   (0x50380d0c), d1
     add     0, d1
@@ -49804,11 +49804,11 @@ loc_4C03C9BA:
     mov     d0, psw
     mov     a0, d0
     ret     0, 0
-
-func_4C03C9D2:
+# preq_sem_Impl  (lib CPU 0x4c03c9d2)
+preq_sem_Impl:
     movm    [d2], (sp)
     add     -0x10, sp
-func_4C03C9D2_entry:
+preq_sem_Impl_entry:
     exth    d0
     call    func_4C03CA06_entry, [d2,a2], 8
     mov     d0, d2
@@ -49864,8 +49864,8 @@ loc_4C03CA27:
     clr     d0
 loc_4C03CA42:
     retf    [d2,a2], 8
-
-func_4C03CA45:
+# prcv_msg  (lib CPU 0x4c03ca45)
+prcv_msg:
     add     -4, sp
     mov     d1, (0, sp)
     movhu   (0x50380d0c), d1
@@ -49905,7 +49905,7 @@ loc_4C03CA82:
     add     -8, sp
 loc_4C03CA9E:
     add     -4, sp
-    call    func_4C03CAD1_entry, [d2], 0x14
+    call    prcv_msg_Impl_entry, [d2], 0x14
     add     4, sp
     movhu   (0x50380d0c), d1
     add     0, d1
@@ -49923,11 +49923,11 @@ loc_4C03CAB9:
     mov     d0, psw
     mov     a0, d0
     ret     0, 0
-
-func_4C03CAD1:
+# prcv_msg_Impl  (lib CPU 0x4c03cad1)
+prcv_msg_Impl:
     movm    [d2], (sp)
     add     -0x10, sp
-func_4C03CAD1_entry:
+prcv_msg_Impl_entry:
     exth    d0
     call    func_4C03CB05_entry, [d2,a2], 8
     mov     d0, d2
@@ -49989,8 +49989,8 @@ loc_4C03CB39:
     mov     -0x55, d0
 loc_4C03CB3B:
     retf    [d2,a2], 8
-
-func_4C03CB3E:
+# cre_mpl  (lib CPU 0x4c03cb3e)
+cre_mpl:
     add     -4, sp
     mov     d1, (0, sp)
     movhu   (0x50380d0c), d1
@@ -50030,7 +50030,7 @@ loc_4C03CB7B:
     add     -8, sp
 loc_4C03CB97:
     add     -4, sp
-    call    func_4C03CBCA_entry, [d2,d3,a2,a3], 0x24
+    call    cre_mpl_Impl_entry, [d2,d3,a2,a3], 0x24
     add     4, sp
     movhu   (0x50380d0c), d1
     add     0, d1
@@ -50048,11 +50048,11 @@ loc_4C03CBB2:
     mov     d0, psw
     mov     a0, d0
     ret     0, 0
-
-func_4C03CBCA:
+# cre_mpl_Impl  (lib CPU 0x4c03cbca)
+cre_mpl_Impl:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x14, sp
-func_4C03CBCA_entry:
+cre_mpl_Impl_entry:
     mov     a0, (0x30, sp)
     mov     d0, d2
     mov     (8, a0), d0
@@ -50315,7 +50315,7 @@ loc_4C03CDA9:
     add     -8, sp
 loc_4C03CDC5:
     add     -4, sp
-    call    func_4C03CDF8_entry, [d2,d3,a2,a3], 0x2c
+    call    set_flg_Impl_entry, [d2,d3,a2,a3], 0x2c
     add     4, sp
     movhu   (0x50380d0c), d1
     add     0, d1
@@ -50333,11 +50333,11 @@ loc_4C03CDE0:
     mov     d0, psw
     mov     a0, d0
     ret     0, 0
-
-func_4C03CDF8:
+# set_flg_Impl  (lib CPU 0x4c03cdf8)
+set_flg_Impl:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x1c, sp
-func_4C03CDF8_entry:
+set_flg_Impl_entry:
     mov     d0, d3
     exth    d3
     mov     -1, d0
@@ -50467,7 +50467,7 @@ loc_4C03CED8:
     add     -8, sp
 loc_4C03CEF4:
     add     -4, sp
-    call    func_4C03CF27_entry, [d2,a2], 0x18
+    call    wai_sem_Impl_entry, [d2,a2], 0x18
     add     4, sp
     movhu   (0x50380d0c), d1
     add     0, d1
@@ -50485,11 +50485,11 @@ loc_4C03CF0F:
     mov     d0, psw
     mov     a0, d0
     ret     0, 0
-
-func_4C03CF27:
+# wai_sem_Impl  (lib CPU 0x4c03cf27)
+wai_sem_Impl:
     movm    [d2,a2], (sp)
     add     -0x10, sp
-func_4C03CF27_entry:
+wai_sem_Impl_entry:
     movhu   (0x50380d0c), d1
     mov     d0, d2
     cmp     0, d1
@@ -50579,7 +50579,7 @@ loc_4C03CFE4:
     add     -8, sp
 loc_4C03D000:
     add     -4, sp
-    call    func_4C03D033_entry, [a2,a3], 0x18
+    call    sig_sem_Impl_entry, [a2,a3], 0x18
     add     4, sp
     movhu   (0x50380d0c), d1
     add     0, d1
@@ -50597,11 +50597,11 @@ loc_4C03D01B:
     mov     d0, psw
     mov     a0, d0
     ret     0, 0
-
-func_4C03D033:
+# sig_sem_Impl  (lib CPU 0x4c03d033)
+sig_sem_Impl:
     movm    [a2,a3], (sp)
     add     -0x10, sp
-func_4C03D033_entry:
+sig_sem_Impl_entry:
     exth    d0
     add     -1, d0
     exth    d0
@@ -50711,7 +50711,7 @@ loc_4C03D0F2:
     add     -8, sp
 loc_4C03D10E:
     add     -4, sp
-    call    func_4C03D141_entry, [d2,d3,a2], 0x2c
+    call    cre_tsk_Impl_entry, [d2,d3,a2], 0x2c
     add     4, sp
     movhu   (0x50380d0c), d1
     add     0, d1
@@ -50729,11 +50729,11 @@ loc_4C03D129:
     mov     d0, psw
     mov     a0, d0
     ret     0, 0
-
-func_4C03D141:
+# cre_tsk_Impl  (lib CPU 0x4c03d141)
+cre_tsk_Impl:
     movm    [d2,d3,a2], (sp)
     add     -0x20, sp
-func_4C03D141_entry:
+cre_tsk_Impl_entry:
     mov     a0, a2
     mov     d0, d3
     movhu   d3, (0x10, sp)
@@ -50819,8 +50819,8 @@ loc_4C03D202:
     mov     d2, d0
 loc_4C03D203:
     ret     [d2,a2,a3], 0x28
-# LibMsgSend  (lib CPU 0x4c03d206)
-LibMsgSend:
+# snd_msg  (lib CPU 0x4c03d206)
+snd_msg:
     add     -4, sp
     mov     d1, (0, sp)
     movhu   (0x50380d0c), d1
@@ -50860,7 +50860,7 @@ loc_4C03D243:
     add     -8, sp
 loc_4C03D25F:
     add     -4, sp
-    call    func_4C03D292_entry, [d2,a2,a3], 0x1c
+    call    snd_msg_Impl_entry, [d2,a2,a3], 0x1c
     add     4, sp
     movhu   (0x50380d0c), d1
     add     0, d1
@@ -50878,11 +50878,11 @@ loc_4C03D27A:
     mov     d0, psw
     mov     a0, d0
     ret     0, 0
-
-func_4C03D292:
+# snd_msg_Impl  (lib CPU 0x4c03d292)
+snd_msg_Impl:
     movm    [d2,a2,a3], (sp)
     add     -0x10, sp
-func_4C03D292_entry:
+snd_msg_Impl_entry:
     exth    d0
     add     -1, d0
     exth    d0
@@ -50990,8 +50990,8 @@ loc_4C03D32D:
     clr     d0
 loc_4C03D357:
     ret     [d2,a2,a3], 0x1c
-# LibMsgReceive  (lib CPU 0x4c03d35a)
-LibMsgReceive:
+# rcv_msg  (lib CPU 0x4c03d35a)
+rcv_msg:
     add     -4, sp
     mov     d1, (0, sp)
     movhu   (0x50380d0c), d1
@@ -51031,7 +51031,7 @@ loc_4C03D397:
     add     -8, sp
 loc_4C03D3B3:
     add     -4, sp
-    call    func_4C03D3E6_entry, [d2,a2,a3], 0x1c
+    call    rcv_msg_Impl_entry, [d2,a2,a3], 0x1c
     add     4, sp
     movhu   (0x50380d0c), d1
     add     0, d1
@@ -51049,11 +51049,11 @@ loc_4C03D3CE:
     mov     d0, psw
     mov     a0, d0
     ret     0, 0
-
-func_4C03D3E6:
+# rcv_msg_Impl  (lib CPU 0x4c03d3e6)
+rcv_msg_Impl:
     movm    [d2,a2,a3], (sp)
     add     -0x10, sp
-func_4C03D3E6_entry:
+rcv_msg_Impl_entry:
     movhu   (0x50380d0c), d1
     mov     d0, d2
     mov     a0, a3
@@ -51104,8 +51104,8 @@ loc_4C03D467:
     clr     d0
 loc_4C03D468:
     ret     [d2,a2,a3], 0x1c
-
-func_4C03D46B:
+# wup_tsk  (lib CPU 0x4c03d46b)
+wup_tsk:
     add     -4, sp
     mov     d1, (0, sp)
     movhu   (0x50380d0c), d1
@@ -51145,7 +51145,7 @@ loc_4C03D4A8:
     add     -8, sp
 loc_4C03D4C4:
     add     -4, sp
-    call    func_4C03D4F7_entry, [d2,a2,a3], 0x1c
+    call    wup_tsk_Impl_entry, [d2,a2,a3], 0x1c
     add     4, sp
     movhu   (0x50380d0c), d1
     add     0, d1
@@ -51163,11 +51163,11 @@ loc_4C03D4DF:
     mov     d0, psw
     mov     a0, d0
     ret     0, 0
-
-func_4C03D4F7:
+# wup_tsk_Impl  (lib CPU 0x4c03d4f7)
+wup_tsk_Impl:
     movm    [d2,a2,a3], (sp)
     add     -0x10, sp
-func_4C03D4F7_entry:
+wup_tsk_Impl_entry:
     exth    d0
     asl2    d0
     mov     0x50380000, a0
@@ -51272,7 +51272,7 @@ loc_4C03D5CB:
     add     -8, sp
 loc_4C03D5E7:
     add     -4, sp
-    call    func_4C03D61A_entry, [d2,a2], 0x18
+    call    exd_tsk_Impl_entry, [d2,a2], 0x18
     add     4, sp
     movhu   (0x50380d0c), d1
     add     0, d1
@@ -51290,11 +51290,11 @@ loc_4C03D602:
     mov     d0, psw
     mov     a0, d0
     ret     0, 0
-
-func_4C03D61A:
+# exd_tsk_Impl  (lib CPU 0x4c03d61a)
+exd_tsk_Impl:
     movm    [d2,a2], (sp)
     add     -0x10, sp
-func_4C03D61A_entry:
+exd_tsk_Impl_entry:
     movhu   (0x50380d04), d0
     btst    0x01, d0
     beq     loc_4C03D637
@@ -51399,7 +51399,7 @@ loc_4C03D6E6:
     add     -8, sp
 loc_4C03D702:
     add     -4, sp
-    call    func_4C03D735_entry, 0, 0x10
+    call    unl_cpu_Impl_entry, 0, 0x10
     add     4, sp
     movhu   (0x50380d0c), d1
     add     0, d1
@@ -51417,10 +51417,10 @@ loc_4C03D71D:
     mov     d0, psw
     mov     a0, d0
     ret     0, 0
-
-func_4C03D735:
+# unl_cpu_Impl  (lib CPU 0x4c03d735)
+unl_cpu_Impl:
     add     -0x10, sp
-func_4C03D735_entry:
+unl_cpu_Impl_entry:
     movhu   (0x50380d0c), d0
     cmp     0, d0
     bne     loc_4C03D744
@@ -51441,14 +51441,14 @@ loc_4C03D753:
     mov     (0x3c, a1), d2
     or      0x0800, d2
     mov     d2, (0x3c, a1)
-    call    func_4C03D781_entry, 0, 0x10
+    call    ena_dsp_entry, 0, 0x10
     clr     d0
 loc_4C03D77E:
     ret     0, 0x10
-
-func_4C03D781:
+# ena_dsp  (lib CPU 0x4c03d781)
+ena_dsp:
     add     -0x10, sp
-func_4C03D781_entry:
+ena_dsp_entry:
     movhu   (0x50380d0c), d0
     cmp     0, d0
     beq     loc_4C03D79D
@@ -51472,8 +51472,8 @@ loc_4C03D79D:
     mov     d0, (0x50380d08)
 loc_4C03D7CC:
     ret     0, 0x10
-
-func_4C03D7CF:
+# rsm_tsk  (lib CPU 0x4c03d7cf)
+rsm_tsk:
     add     -4, sp
     mov     d1, (0, sp)
     movhu   (0x50380d0c), d1
@@ -51513,7 +51513,7 @@ loc_4C03D80C:
     add     -8, sp
 loc_4C03D828:
     add     -4, sp
-    call    func_4C03D85B_entry, 0, 0xc
+    call    rsm_tsk_Impl_entry, 0, 0xc
     add     4, sp
     movhu   (0x50380d0c), d1
     add     0, d1
@@ -51531,10 +51531,10 @@ loc_4C03D843:
     mov     d0, psw
     mov     a0, d0
     ret     0, 0
-
-func_4C03D85B:
+# rsm_tsk_Impl  (lib CPU 0x4c03d85b)
+rsm_tsk_Impl:
     add     -0xc, sp
-func_4C03D85B_entry:
+rsm_tsk_Impl_entry:
     exth    d0
     asl2    d0
     mov     0x50380000, a0
@@ -51605,7 +51605,7 @@ loc_4C03D8D5:
     add     -8, sp
 loc_4C03D8F1:
     add     -4, sp
-    call    func_4C03D924_entry, [d2,a2], 0x18
+    call    sta_tsk_Impl_entry, [d2,a2], 0x18
     add     4, sp
     movhu   (0x50380d0c), d1
     add     0, d1
@@ -51623,11 +51623,11 @@ loc_4C03D90C:
     mov     d0, psw
     mov     a0, d0
     ret     0, 0
-
-func_4C03D924:
+# sta_tsk_Impl  (lib CPU 0x4c03d924)
+sta_tsk_Impl:
     movm    [d2,a2], (sp)
     add     -0x10, sp
-func_4C03D924_entry:
+sta_tsk_Impl_entry:
     exth    d0
     asl2    d0
     mov     0x50380000, a0
@@ -51687,7 +51687,7 @@ loc_4C03D992:
     add     -8, sp
 loc_4C03D9AE:
     add     -4, sp
-    call    func_4C03D9E1_entry, [d2,a2], 0x18
+    call    rot_rdq_Impl_entry, [d2,a2], 0x18
     add     4, sp
     movhu   (0x50380d0c), d1
     add     0, d1
@@ -51705,11 +51705,11 @@ loc_4C03D9C9:
     mov     d0, psw
     mov     a0, d0
     ret     0, 0
-
-func_4C03D9E1:
+# rot_rdq_Impl  (lib CPU 0x4c03d9e1)
+rot_rdq_Impl:
     movm    [d2,a2], (sp)
     add     -0x10, sp
-func_4C03D9E1_entry:
+rot_rdq_Impl_entry:
     mov     d0, d2
     exth    d0
     cmp     0, d0
@@ -51780,11 +51780,11 @@ loc_4C03DA85:
     clr     d0
 loc_4C03DA86:
     ret     [d2,a2], 0x18
-
-func_4C03DA89:
+# sus_tsk  (lib CPU 0x4c03da89)
+sus_tsk:
     movm    [d2,a2,a3], (sp)
     add     -0x10, sp
-func_4C03DA89_entry:
+sus_tsk_entry:
     exth    d0
     asl2    d0
     mov     0x50380000, a0
@@ -52142,7 +52142,7 @@ dly_tsk_entry:
 loc_4C03DD71:
     clr     d0
     mov     d0, d1
-    call    func_4C03C0D1, 0, 0
+    call    chg_pri, 0, 0
     mov     (0x500c53f8), d0
     cmp     d0, d2
     bhi     loc_4C03DD71

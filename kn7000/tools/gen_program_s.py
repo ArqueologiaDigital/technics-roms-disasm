@@ -1392,7 +1392,7 @@ FUNC_DOC = {
     "DiskWorkerStatusClear": ["clear the ctrl-block status halfword (4,a0)"],
     "DiskWorkerTask": [
         "MILK task 8 main loop: blocking-receive a 0x14-byte message from",
-        "mailbox 9 (LibMsgReceive), dispatch on type halfword +8: 2 ->",
+        "mailbox 9 (rcv_msg), dispatch on type halfword +8: 2 ->",
         "DiskDriveCtrlHandler (drive-letter control commands), 3 ->",
         "SdWorkerCmdHandler (SD media commands); optional per-message",
         "completion callback (calls), then clear status + post done-event 0xA",

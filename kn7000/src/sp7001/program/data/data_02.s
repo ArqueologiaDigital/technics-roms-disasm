@@ -1483,10 +1483,10 @@ func_4854AC8D_Table:
 	.long	ptrs_487632AC
 	.long	0
 
-func_4C03D4F7_Table_11:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C03D46B reads through its argument a0 (passed by func_484141DB 0x484141DB `call cre_tsk, 0, 0`, +7 more calls); the layout func_4C03D4F7 0x4C03D4F7 reads through its argument a0 (passed by cre_tsk 0x4C03D46B `call func_4C03D4F7_entry, [d2,d3,a2], 0x2c`)
+cre_tsk_Impl_Table_11:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C03D46B reads through its argument a0 (passed by func_484141DB 0x484141DB `call cre_tsk, 0, 0`, +7 more calls); the layout cre_tsk_Impl 0x4C03D4F7 reads through its argument a0 (passed by cre_tsk 0x4C03D46B `call cre_tsk_Impl_entry, [d2,d3,a2], 0x2c`)
 	T_CTSK	tskatr="\x01\x00\x00\x00", task=DiskWorkerTask, itskpri=3, x14="\x00\x00", stksz=3072
 
-func_4C03C022_Table_3:	# 2 x u32, 0..0; read by func_4C03C022 0x4C03C022: `mov (a3), d2`
+cre_mbx_Impl_Table_3:	# 2 x u32, 0..0; read by cre_mbx_Impl 0x4C03C022: `mov (a3), d2`
 	tab_u32	0, 0
 
 Str_empty_662:	.asciz "        "

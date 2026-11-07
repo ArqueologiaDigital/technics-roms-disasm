@@ -1,0 +1,21 @@
+spec: 118 defined function codes, 18 error codes
+  note: H'ffca (-54): the prefix line says used, the V2 line says reserved; taken as reserved
+  note: H'ffcb (-53): the prefix line says reserved, the V2 line says used; taken as wai_sem
+   -143  H'ff71  rel_blk
+   -141  H'ff73  get_blk
+   -137  H'ff77  cre_mpl
+    -61  H'ffc3  rcv_msg
+    -53  H'ffcb  wai_sem
+    -46  H'ffd2  wai_flg
+    -39  H'ffd9  wup_tsk
+    -38  H'ffda  slp_tsk
+    -33  H'ffdf  sus_tsk
+    -29  H'ffe3  ena_dsp
+    -28  H'ffe4  rot_rdq
+    -27  H'ffe5  chg_pri
+    -25  H'ffe7  ter_tsk
+    -22  H'ffea  exd_tsk
+    -21  H'ffeb  ext_tsk
+    -17  H'ffef  cre_tsk
+     -8  H'fff8  loc_cpu
+     -7  H'fff9  unl_cpu

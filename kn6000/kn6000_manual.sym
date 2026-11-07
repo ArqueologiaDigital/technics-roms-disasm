@@ -33,7 +33,7 @@
 ;      ../kn7000/notes/code-island/README.md: the same block, linked at the flash address) ----
 0x4C3F7383  KernelInit                   ; the routine KernelStart jumps to: fills the kernel's RAM tables, creates the kernel task, calls the application's start-up, KernelInitHook and the dispatcher start [INFERENCE: name, from what it does]
 0x4C3F7632  KernelWaitRelease            ; d0 = task id: dequeues the task from the wait queue its wait state names (through KernelServiceHash), then from the timer list [INFERENCE: name]
-0x4C3F778A  KernelErrorHook              ; `retf 0, 0`: kernel services call it before they return an error, d0 = the function code, d1 = the uITRON error code [INFERENCE]
+0x4C3F778A  KernelErrorHook              ; `retf 0, 0`: kernel services call it before they return an error, d0 = the function code, d1 = the uITRON error code; the function codes are uITRON 3.0's and name the services (../kn7000/notes/uitron3-function-codes) [INFERENCE]
 0x4C3F778D  KernelErrorHook2             ; `retf 0, 0`: as KernelErrorHook, from a few other call sites [INFERENCE]
 0x4C3F7790  KernelWaitAbortHook          ; `retf 0, 0`: called with a0 = the TCB and d0 = -0x55 (E_TMOUT) or -0x51 (E_DLT) for a wait that ends in an error [INFERENCE]
 0x4C3F7793  KernelStart                  ; sp := (KernelRamLayout + 0x14), jmp KernelInit: the kernel's start
@@ -141,3 +141,46 @@
 0x4C07C3D4  VoiceRecFetchBanked        ; (d0, d1, (0x10, sp)) -> a0 = a 0x8E-byte voice record: SoundBankIndexGet(d0 & 0x7F, d1, the stack argument) gives the index; source 0 reads ToneRecordDirectory+0x1130 (record 1100 on), 1 / 2 the archives' +0x14 directory (the KN7000's VoiceRecFetchBanked 0x484496C9)
 0x4C07C472  VoiceSubRecFetch           ; (d0 = part, the voice key in d1 / stack) -> voice record +0x10 + n * 0x1C, n = func_4C07C227(part, record +0x0D); 0xFF -> the default func_4C07C4F7 (the KN7000's VoiceSubRecFetch 0x4844978B)
 0x4C07C511  VoiceModRecFetch           ; (a0 = tone record, d0 = part, d1 = unit) -> record +0x54 + unit * 0x7A: parts 0x22 / 0x2A directly, the others through func_4C07C227(part, record +0x11); 0xFF -> func_4C07C4B2 (the KN7000's VoiceModRecFetch 0x4844982A, whose direct parts are 0x22 / 0x23 / 0x2A / 0x2B)
+;
+; ---- the uITRON 3.0 kernel services (the KN7000's MILK kernel; ../kn7000/notes/uitron3-function-codes/README.md) ----
+; A task calls a service through its wrapper (the context save with `udf15`, the switch to the kernel stack), which
+; calls the body <svc>_Impl; each body reports an error to KernelErrorHook* with d0 = its uITRON 3.0 function code.
+0x4C3F69EE  rcv_msg_Impl            ; rcv_msg's body, behind the wrapper rcv_msg; KernelErrorHook d0 = -61 (H'ffc3, rcv_msg), d1 = E_CTX (uITRON 3.0 sect. 6.3; ../kn7000/notes/uitron3-function-codes)
+0x4C3F689A  snd_msg_Impl            ; snd_msg's body, behind the wrapper snd_msg; program 942's exported snd_msg_X calls the wrapper, carried here by an identical body
+0x4C3F674B  cre_tsk_Impl            ; cre_tsk's body, behind the wrapper cre_tsk; KernelErrorHook d0 = -17 (H'ffef, cre_tsk), d1 = the error its core returns (uITRON 3.0 sect. 6.3; ../kn7000/notes/uitron3-function-codes)
+0x4C3F5E98  del_flg_Impl            ; del_flg's body, behind the wrapper del_flg; program 942's export table names the wrapper, carried here by an identical body
+0x4C3F57C0  del_mbx_Impl            ; del_mbx's body, behind the wrapper del_mbx; program 942's export table names the wrapper, carried here by an identical body
+0x4C3F5A2F  del_sem_Impl            ; del_sem's body, behind the wrapper del_sem; program 942's export table names the wrapper, carried here by an identical body
+0x4C3F6C1C  exd_tsk_Impl            ; exd_tsk's body, behind the wrapper exd_tsk; KernelErrorHook d0 = -22 (H'ffea, exd_tsk), d1 = E_OBJ (uITRON 3.0 sect. 6.3; ../kn7000/notes/uitron3-function-codes)
+0x4C3F6E1C  ext_tsk_Impl            ; ext_tsk's body, behind the wrapper ext_tsk; KernelErrorHook d0 = -21 (H'ffeb, ext_tsk), d1 = E_OBJ (uITRON 3.0 sect. 6.3; ../kn7000/notes/uitron3-function-codes)
+0x4C3F4950  slp_tsk                 ; uITRON slp_tsk: the service-call wrapper (context save, kernel stack, call slp_tsk_Impl); KernelErrorHook d0 = -38 (H'ffda, slp_tsk), d1 = E_CTX (uITRON 3.0 sect. 6.3; ../kn7000/notes/uitron3-function-codes)
+0x4C3F49F9  slp_tsk_Impl            ; slp_tsk's body, behind the wrapper slp_tsk; KernelErrorHook d0 = -38 (H'ffda, slp_tsk), d1 = E_CTX (uITRON 3.0 sect. 6.3; ../kn7000/notes/uitron3-function-codes)
+0x4C3F520C  cre_mbx                 ; uITRON cre_mbx: the service-call wrapper (context save, kernel stack, call cre_mbx_Impl); program 942's exported cre_mbx_X calls the wrapper, carried here by an identical body
+0x4C3F5298  cre_mbx_Impl            ; cre_mbx's body, behind the wrapper cre_mbx; program 942's exported cre_mbx_X calls the wrapper, carried here by an identical body
+0x4C3F52E7  cre_sem                 ; uITRON cre_sem: the service-call wrapper (context save, kernel stack, call cre_sem_Impl); program 942's exported cre_sem_X calls the wrapper, carried here by an identical body
+0x4C3F5373  cre_sem_Impl            ; cre_sem's body, behind the wrapper cre_sem; program 942's exported cre_sem_X calls the wrapper, carried here by an identical body
+0x4C3F53B4  chg_pri                 ; uITRON chg_pri: the service-call wrapper (context save, kernel stack, call chg_pri_Impl); KernelErrorHook d0 = -27 (H'ffe5, chg_pri), d1 = E_ID / E_CTX (uITRON 3.0 sect. 6.3; ../kn7000/notes/uitron3-function-codes)
+0x4C3F5440  chg_pri_Impl            ; chg_pri's body, behind the wrapper chg_pri; KernelErrorHook d0 = -27 (H'ffe5, chg_pri), d1 = E_ID / E_CTX (uITRON 3.0 sect. 6.3; ../kn7000/notes/uitron3-function-codes)
+0x4C3F54DB  rel_blk                 ; uITRON rel_blk: the service-call wrapper (context save, kernel stack, call rel_blk_Impl); KernelErrorHook d0 = -143 (H'ff71, rel_blk), d1 = E_PAR / E_OBJ (uITRON 3.0 sect. 6.3; ../kn7000/notes/uitron3-function-codes)
+0x4C3F5567  rel_blk_Impl            ; rel_blk's body, behind the wrapper rel_blk; KernelErrorHook d0 = -143 (H'ff71, rel_blk), d1 = E_PAR / E_OBJ (uITRON 3.0 sect. 6.3; ../kn7000/notes/uitron3-function-codes)
+0x4C3F586A  get_blk                 ; uITRON get_blk: the service-call wrapper (context save, kernel stack, call get_blk_Impl); KernelErrorHook d0 = -141 (H'ff73, get_blk), d1 = E_OBJ / E_TMOUT (uITRON 3.0 sect. 6.3; ../kn7000/notes/uitron3-function-codes)
+0x4C3F58F6  get_blk_Impl            ; get_blk's body, behind the wrapper get_blk; KernelErrorHook d0 = -141 (H'ff73, get_blk), d1 = E_OBJ / E_TMOUT (uITRON 3.0 sect. 6.3; ../kn7000/notes/uitron3-function-codes)
+0x4C3F5A66  wai_flg                 ; uITRON wai_flg: the service-call wrapper (context save, kernel stack, call wai_flg_Impl); KernelErrorHook d0 = -46 (H'ffd2, wai_flg), d1 = E_CTX (uITRON 3.0 sect. 6.3; ../kn7000/notes/uitron3-function-codes)
+0x4C3F5AF6  wai_flg_Impl            ; wai_flg's body, behind the wrapper wai_flg; KernelErrorHook d0 = -46 (H'ffd2, wai_flg), d1 = E_CTX (uITRON 3.0 sect. 6.3; ../kn7000/notes/uitron3-function-codes)
+0x4C3F5CA2  cre_flg                 ; uITRON cre_flg: the service-call wrapper (context save, kernel stack, call cre_flg_Impl); program 942's exported cre_flg_X calls the wrapper, carried here by an identical body
+0x4C3F5D2E  cre_flg_Impl            ; cre_flg's body, behind the wrapper cre_flg; program 942's exported cre_flg_X calls the wrapper, carried here by an identical body
+0x4C3F5FCC  prcv_msg                ; uITRON prcv_msg: the service-call wrapper (context save, kernel stack, call prcv_msg_Impl); KernelErrorHook d0 = -61 (H'ffc3, rcv_msg's code: the polling variant), d1 = the poll's result (uITRON 3.0 sect. 6.3; ../kn7000/notes/uitron3-function-codes)
+0x4C3F6058  prcv_msg_Impl           ; prcv_msg's body, behind the wrapper prcv_msg; KernelErrorHook d0 = -61 (H'ffc3, rcv_msg's code: the polling variant), d1 = the poll's result (uITRON 3.0 sect. 6.3; ../kn7000/notes/uitron3-function-codes)
+0x4C3F60C3  cre_mpl                 ; uITRON cre_mpl: the service-call wrapper (context save, kernel stack, call cre_mpl_Impl); KernelErrorHook d0 = -137 (H'ff77, cre_mpl), d1 = E_NOMEM (uITRON 3.0 sect. 6.3; ../kn7000/notes/uitron3-function-codes)
+0x4C3F614F  cre_mpl_Impl            ; cre_mpl's body, behind the wrapper cre_mpl; KernelErrorHook d0 = -137 (H'ff77, cre_mpl), d1 = E_NOMEM (uITRON 3.0 sect. 6.3; ../kn7000/notes/uitron3-function-codes)
+0x4C3F6A6F  wup_tsk                 ; uITRON wup_tsk: the service-call wrapper (context save, kernel stack, call wup_tsk_Impl); KernelErrorHook d0 = -39 (H'ffd9, wup_tsk), d1 = E_QOVR (uITRON 3.0 sect. 6.3; ../kn7000/notes/uitron3-function-codes)
+0x4C3F6AFB  wup_tsk_Impl            ; wup_tsk's body, behind the wrapper wup_tsk; KernelErrorHook d0 = -39 (H'ffd9, wup_tsk), d1 = E_QOVR (uITRON 3.0 sect. 6.3; ../kn7000/notes/uitron3-function-codes)
+0x4C3F5F5B  preq_sem_Impl           ; preq_sem's body, behind the wrapper preq_sem; KernelErrorHook d0 = -53 (H'ffcb, wai_sem's code: the polling variant), d1 = the poll's result (uITRON 3.0 sect. 6.3; ../kn7000/notes/uitron3-function-codes)
+0x4C3F6F97  rot_rdq_Impl            ; rot_rdq's body, behind the wrapper rot_rdq; KernelErrorHook d0 = -28 (H'ffe4, rot_rdq), d1 = E_CTX (uITRON 3.0 sect. 6.3; ../kn7000/notes/uitron3-function-codes)
+0x4C3F637B  set_flg_Impl            ; set_flg's body, behind the wrapper set_flg; program 942's export table names the wrapper, carried here by an identical body
+0x4C3F663D  sig_sem_Impl            ; sig_sem's body, behind the wrapper sig_sem; program 942's export table names the wrapper, carried here by an identical body
+0x4C3F6EDA  sta_tsk_Impl            ; sta_tsk's body, behind the wrapper sta_tsk; program 942's export table names the wrapper, carried here by an identical body
+0x4C3F6CFA  unl_cpu_Impl            ; unl_cpu's body, behind the wrapper unl_cpu; KernelErrorHook d0 = -7 (H'fff9, unl_cpu), d1 = E_CTX (uITRON 3.0 sect. 6.3; ../kn7000/notes/uitron3-function-codes)
+0x4C3F64AA  wai_sem_Impl            ; wai_sem's body, behind the wrapper wai_sem; KernelErrorHook d0 = -53 (H'ffcb, wai_sem), d1 = E_CTX (uITRON 3.0 sect. 6.3; ../kn7000/notes/uitron3-function-codes)
+0x4C3F6D44  ena_dsp                 ; uITRON ena_dsp, called directly (no wrapper); KernelErrorHook d0 = -29 (H'ffe3, ena_dsp), d1 = E_CTX (uITRON 3.0 sect. 6.3; ../kn7000/notes/uitron3-function-codes)
+0x4C3F703D  ref_sem                 ; uITRON ref_sem, called directly (no wrapper); program 942's exported ref_sem_X calls it, carried here by an identical body

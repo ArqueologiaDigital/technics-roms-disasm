@@ -257,8 +257,8 @@
 0x50182240  IsStopTimingSeq	; = KN7000 941 0x48445472, same body (4 insns, 3 unmasked; 4 in A, 4 in B), 1 RAM operands agree; round 1
 0x50184696  Tm5TimerRestart	; = KN7000 941 0x484478C8, callee at 2 aligned call sites (2 exact/skeleton) of MidiContinueRxHandler, MidiStartRxHandler; body 1.00/1.00; round 1
 0x5018B3B1  StrapReadDelay	; = KN7000 941 0x48405531, callee at 1 aligned call sites (1 exact/skeleton) of @0x48405537; body 1.00/1.00; round 2
-0x5018D2FE  LibMsgSend	; = KN7000 941 0x4C03D219, callee at 3 aligned call sites (3 exact/skeleton) of DiskCmdPostAsync, DiskCmdTransact, DiskWorkerTask; body 1.00/1.00; round 1
-0x5018D452  LibMsgReceive	; = KN7000 941 0x4C03D36D, callee at 1 aligned call sites (1 exact/skeleton) of DiskWorkerTask; body 1.00/1.00; round 1
+0x5018D2FE  snd_msg	; = KN7000 941 0x4C03D219, callee at 3 aligned call sites (3 exact/skeleton) of DiskCmdPostAsync, DiskCmdTransact, DiskWorkerTask; body 1.00/1.00; round 1
+0x5018D452  rcv_msg	; = KN7000 941 0x4C03D36D, callee at 1 aligned call sites (1 exact/skeleton) of DiskWorkerTask; body 1.00/1.00; round 1
 0x5018D990  sta_tsk	; = KN7000 941 0x4C03D8AB, callee at 1 aligned call sites (1 exact/skeleton) of @0x484729A8; body 1.00/1.00; round 2
 0x5018DA4D  rot_rdq	; = KN7000 941 0x4C03D968, callee at 1 aligned call sites (1 exact/skeleton) of DiskCmdTransact; body 1.00/1.00; round 1
 0x502B8000  INSTALL_SCRATCH	; RAM = KN7000 941 0x502B8000, 21 aligned operands

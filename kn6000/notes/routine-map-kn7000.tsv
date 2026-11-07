@@ -4411,8 +4411,8 @@
 0x4C3F641E	0x4C03CEAE	wai_sem	wai_sem	same name
 0x4C3F65B1	0x4C03CFBA	sig_sem	sig_sem	same name
 0x4C3F66BF	0x4C03D0C8	cre_tsk	cre_tsk	same name
-0x4C3F680E	0x4C03D219	LibMsgSend	LibMsgSend	carried
-0x4C3F6962	0x4C03D36D	LibMsgReceive	LibMsgReceive	carried
+0x4C3F680E	0x4C03D219	snd_msg	snd_msg	carried
+0x4C3F6962	0x4C03D36D	rcv_msg	rcv_msg	carried
 0x4C3F6B90	0x4C03D5A1	exd_tsk	exd_tsk	same name
 0x4C3F6C6E	0x4C03D6BC	unl_cpu	unl_cpu	same name
 0x4C3F6E4E	0x4C03D8AB	sta_tsk	sta_tsk	same name

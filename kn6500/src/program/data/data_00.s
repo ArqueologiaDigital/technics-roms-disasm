@@ -212,20 +212,20 @@ Str_Infinity:	.asciz "Infinity"
 PfDoubleToDecimal_Table:	# 5 x u32, 0..1; read by PfDoubleToDecimal 0x4C003D6D: `mov	(a1), d0`
 	tab_u32	1, 0, 0, 0, 0
 
-func_4C3803AB_Table:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C38031F reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call cre_tsk, 0, 0`, +6 more calls); the layout func_4C3803AB 0x4C3803AB reads through its argument a0 (passed by cre_tsk_L3d 0x4C38035C `call func_4C3803AB_entry, [d2,d3,a2], 0x2c`)
+cre_tsk_Impl_Table:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C38031F reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call cre_tsk, 0, 0`, +6 more calls); the layout cre_tsk_Impl 0x4C3803AB reads through its argument a0 (passed by cre_tsk_L3d 0x4C38035C `call cre_tsk_Impl_entry, [d2,d3,a2], 0x2c`)
 	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_4C0065B1, itskpri=3, x14="\x00\x00", stksz=0x10000
-func_4C3803AB_Table_3:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C38031F reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call cre_tsk, 0, 0`, +6 more calls); the layout func_4C3803AB 0x4C3803AB reads through its argument a0 (passed by cre_tsk_L3d 0x4C38035C `call func_4C3803AB_entry, [d2,d3,a2], 0x2c`)
+cre_tsk_Impl_Table_3:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C38031F reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call cre_tsk, 0, 0`, +6 more calls); the layout cre_tsk_Impl 0x4C3803AB reads through its argument a0 (passed by cre_tsk_L3d 0x4C38035C `call cre_tsk_Impl_entry, [d2,d3,a2], 0x2c`)
 	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_4C01465E, itskpri=3, x14="\x00\x00", stksz=6144
-func_4C37F98E_Var:	# REC_func_4C37F902_ArgA0 (12 bytes): the layout func_4C37F902 0x4C37F902 reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call func_4C37F902, 0, 0`, +5 more calls); the layout func_4C37F98E 0x4C37F98E reads through its argument a0 (passed by func_4C37F902_L3d 0x4C37F93F `call func_4C37F98E_entry, [d2,a2,a3], 0xc`)
-	REC_func_4C37F902_ArgA0	f4=8, x6="\x00\x00"
-func_4C37F98E_Var_3:	# REC_func_4C37F902_ArgA0 (12 bytes): the layout func_4C37F902 0x4C37F902 reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call func_4C37F902, 0, 0`, +5 more calls); the layout func_4C37F98E 0x4C37F98E reads through its argument a0 (passed by func_4C37F902_L3d 0x4C37F93F `call func_4C37F98E_entry, [d2,a2,a3], 0xc`)
-	REC_func_4C37F902_ArgA0	f4=8, x6="\x00\x00"
-func_4C37F98E_Var_5:	# REC_func_4C37F902_ArgA0 (12 bytes): the layout func_4C37F902 0x4C37F902 reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call func_4C37F902, 0, 0`, +5 more calls); the layout func_4C37F98E 0x4C37F98E reads through its argument a0 (passed by func_4C37F902_L3d 0x4C37F93F `call func_4C37F98E_entry, [d2,a2,a3], 0xc`)
-	REC_func_4C37F902_ArgA0	f4=8, x6="\x00\x00", f8=1
-func_4C37F98E_Var_7:	# REC_func_4C37F902_ArgA0 (12 bytes): the layout func_4C37F902 0x4C37F902 reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call func_4C37F902, 0, 0`, +5 more calls); the layout func_4C37F98E 0x4C37F98E reads through its argument a0 (passed by func_4C37F902_L3d 0x4C37F93F `call func_4C37F98E_entry, [d2,a2,a3], 0xc`)
-	REC_func_4C37F902_ArgA0	f4=8, x6="\x00\x00", f8=1
-func_4C37F98E_Var_9:	# REC_func_4C37F902_ArgA0 (12 bytes): the layout func_4C37F902 0x4C37F902 reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call func_4C37F902, 0, 0`, +5 more calls); the layout func_4C37F98E 0x4C37F98E reads through its argument a0 (passed by func_4C37F902_L3d 0x4C37F93F `call func_4C37F98E_entry, [d2,a2,a3], 0xc`)
-	REC_func_4C37F902_ArgA0	f4=8, x6="\x00\x00", f8=1
+cre_flg_Impl_Var:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C37F902 reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C37F98E reads through its argument a0 (passed by cre_flg_L3d 0x4C37F93F `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00"
+cre_flg_Impl_Var_3:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C37F902 reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C37F98E reads through its argument a0 (passed by cre_flg_L3d 0x4C37F93F `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00"
+cre_flg_Impl_Var_5:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C37F902 reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C37F98E reads through its argument a0 (passed by cre_flg_L3d 0x4C37F93F `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00", f8=1
+cre_flg_Impl_Var_7:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C37F902 reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C37F98E reads through its argument a0 (passed by cre_flg_L3d 0x4C37F93F `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00", f8=1
+cre_flg_Impl_Var_9:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C37F902 reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C37F98E reads through its argument a0 (passed by cre_flg_L3d 0x4C37F93F `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00", f8=1
 func_4C37F9E3_entry_L52_Table:	# REC_func_4C37F9E3_ArgA0 (24 bytes): the layout func_4C37F9E3 0x4C37F9E3 reads through its argument a0 (passed by func_4C006484 0x4C006484 `call func_4C37F9E3_entry, [d2,d3,a2,a3], 0x1c`)
 	REC_func_4C37F9E3_ArgA0	x4="\x01\x00\x00\x00", proc=loc_4C0063C2, f12=1, x18="\x00\x00", f20=1
 func_4C37F9E3_entry_L52_Table_3:	# REC_func_4C37F9E3_ArgA0 (24 bytes): the layout func_4C37F9E3 0x4C37F9E3 reads through its argument a0 (passed by func_4C006484 0x4C006484 `call func_4C37F9E3_entry, [d2,d3,a2,a3], 0x1c`)
@@ -289,8 +289,8 @@ SetModeLed_entry_L14_Table:	# 16 x u8, a sparse map by index: 5 entries set, the
 	map8	6, 2
 	map_none8	9	# [7..15]
 
-func_4C37F98E_Var_11:	# REC_func_4C37F902_ArgA0 (12 bytes): the layout func_4C37F902 0x4C37F902 reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call func_4C37F902, 0, 0`, +5 more calls); the layout func_4C37F98E 0x4C37F98E reads through its argument a0 (passed by func_4C37F902_L3d 0x4C37F93F `call func_4C37F98E_entry, [d2,a2,a3], 0xc`)
-	REC_func_4C37F902_ArgA0	f4=8, x6="\x00\x00", f8=1
+cre_flg_Impl_Var_11:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C37F902 reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C37F98E reads through its argument a0 (passed by cre_flg_L3d 0x4C37F93F `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00", f8=1
 
 GetEditSwPointInit_L2f_Table:	# 32 x REC_GetEditSwPointInit_L2f_Table (4 bytes each); read by GetEditSwPointInit_L2f 0x4C0092EF `movhu (2, a0), d0`; GetEditSwPointInit_L2f 0x4C0092EF `movhu (d0, a0), d0`
 	REC_GetEditSwPointInit_L2f_Table	f0=20, f2=239	# [0]
@@ -10979,8 +10979,8 @@ func_4C02CFE5_entry_L31_Table:	# 11 x u16, 0..40; read by func_4C02CFE5_entry_L3
 	tab_u16	0, 6, 8, 10, 13, 16, 19, 22, 25, 30, 40
 	.align	4, 0xFF	# pad after func_4C02CFE5_entry_L31_Table
 
-func_4C37F98E_Var_13:	# REC_func_4C37F902_ArgA0 (12 bytes): the layout func_4C37F902 0x4C37F902 reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call func_4C37F902, 0, 0`, +5 more calls); the layout func_4C37F98E 0x4C37F98E reads through its argument a0 (passed by func_4C37F902_L3d 0x4C37F93F `call func_4C37F98E_entry, [d2,a2,a3], 0xc`)
-	REC_func_4C37F902_ArgA0	f4=8, x6="\x00\x00", f8=1
+cre_flg_Impl_Var_13:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C37F902 reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C37F98E reads through its argument a0 (passed by cre_flg_L3d 0x4C37F93F `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00", f8=1
 
 M3SendProcessTgc_entry_L1f_Table:
 	.long	loc_4C026238
@@ -17817,10 +17817,10 @@ func_4C062A53_entry_Lf2_Table:	# 16 x REC_func_4C062A53_entry_Lf2_Table (8 bytes
 
 func_4C066052_ArgA0_0:	# REC_func_4C066052_ArgA0 (8 bytes): the layout func_4C066052 0x4C066052 reads through its argument a0 (passed by func_4C0663EF_entry_L3f 0x4C066433 `call func_4C066052, 0, 0`)
 	REC_func_4C066052_ArgA0	x0="\xF0\x04\x02", x6="\xFF\xFF"
-func_4C3803AB_Table_5:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C38031F reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call cre_tsk, 0, 0`, +6 more calls); the layout func_4C3803AB 0x4C3803AB reads through its argument a0 (passed by cre_tsk_L3d 0x4C38035C `call func_4C3803AB_entry, [d2,d3,a2], 0x2c`)
+cre_tsk_Impl_Table_5:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C38031F reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call cre_tsk, 0, 0`, +6 more calls); the layout cre_tsk_Impl 0x4C3803AB reads through its argument a0 (passed by cre_tsk_L3d 0x4C38035C `call cre_tsk_Impl_entry, [d2,d3,a2], 0x2c`)
 	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_4C053D2C, itskpri=3, x14="\x00\x00", stksz=24576
-func_4C37F98E_Var_15:	# REC_func_4C37F902_ArgA0 (12 bytes): the layout func_4C37F902 0x4C37F902 reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call func_4C37F902, 0, 0`, +5 more calls); the layout func_4C37F98E 0x4C37F98E reads through its argument a0 (passed by func_4C37F902_L3d 0x4C37F93F `call func_4C37F98E_entry, [d2,a2,a3], 0xc`)
-	REC_func_4C37F902_ArgA0	f4=8, x6="\x00\x00"
+cre_flg_Impl_Var_15:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C37F902 reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C37F98E reads through its argument a0 (passed by cre_flg_L3d 0x4C37F93F `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00"
 
 FnName_MmmMtune:	.asciz "MmmMtune"
 FnName_MmmOrchestrator:	.asciz "MmmOrchestrator"
@@ -26962,14 +26962,14 @@ func_4C07F2D5_Records:	# 16 x REC_func_4C07F2D5_Records (8 bytes each); read by 
 	REC_func_4C07F2D5_Records	key=46, proc=loc_4C07F315
 	REC_func_4C07F2D5_Records	key=47, proc=loc_4C07F315
 
-func_4C3803AB_Table_7:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C38031F reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call cre_tsk, 0, 0`, +6 more calls); the layout func_4C3803AB 0x4C3803AB reads through its argument a0 (passed by cre_tsk_L3d 0x4C38035C `call func_4C3803AB_entry, [d2,d3,a2], 0x2c`)
+cre_tsk_Impl_Table_7:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C38031F reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call cre_tsk, 0, 0`, +6 more calls); the layout cre_tsk_Impl 0x4C3803AB reads through its argument a0 (passed by cre_tsk_L3d 0x4C38035C `call cre_tsk_Impl_entry, [d2,d3,a2], 0x2c`)
 	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_4C07FD94, itskpri=3, x14="\x00\x00", stksz=3072
-func_4C37F98E_Var_17:	# REC_func_4C37F902_ArgA0 (12 bytes): the layout func_4C37F902 0x4C37F902 reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call func_4C37F902, 0, 0`, +5 more calls); the layout func_4C37F98E 0x4C37F98E reads through its argument a0 (passed by func_4C37F902_L3d 0x4C37F93F `call func_4C37F98E_entry, [d2,a2,a3], 0xc`)
-	REC_func_4C37F902_ArgA0	x6="\x00\x00", f8=1
-func_4C37F98E_Var_19:	# REC_func_4C37F902_ArgA0 (12 bytes): the layout func_4C37F902 0x4C37F902 reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call func_4C37F902, 0, 0`, +5 more calls); the layout func_4C37F98E 0x4C37F98E reads through its argument a0 (passed by func_4C37F902_L3d 0x4C37F93F `call func_4C37F98E_entry, [d2,a2,a3], 0xc`)
-	REC_func_4C37F902_ArgA0	x6="\x00\x00"
-func_4C37F98E_Var_21:	# REC_func_4C37F902_ArgA0 (12 bytes): the layout func_4C37F902 0x4C37F902 reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call func_4C37F902, 0, 0`, +5 more calls); the layout func_4C37F98E 0x4C37F98E reads through its argument a0 (passed by func_4C37F902_L3d 0x4C37F93F `call func_4C37F98E_entry, [d2,a2,a3], 0xc`)
-	REC_func_4C37F902_ArgA0	x6="\x00\x00", f8=1
+cre_flg_Impl_Var_17:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C37F902 reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C37F98E reads through its argument a0 (passed by cre_flg_L3d 0x4C37F93F `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	REC_cre_flg_ArgA0	x6="\x00\x00", f8=1
+cre_flg_Impl_Var_19:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C37F902 reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C37F98E reads through its argument a0 (passed by cre_flg_L3d 0x4C37F93F `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	REC_cre_flg_ArgA0	x6="\x00\x00"
+cre_flg_Impl_Var_21:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C37F902 reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C37F98E reads through its argument a0 (passed by cre_flg_L3d 0x4C37F93F `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	REC_cre_flg_ArgA0	x6="\x00\x00", f8=1
 
 TgModCurveSquareScale_Table:	# 8 x s16, -20..255; read by TgModCurveSquareScale 0x4C080739: `movhu	(d1, a0), d0`
 	tab_s16	-16, -8, 0, 8, 16, -20, 0, 255

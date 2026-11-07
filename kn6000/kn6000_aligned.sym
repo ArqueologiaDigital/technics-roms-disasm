@@ -118,8 +118,8 @@
 0x4C15CC4D  SndDbTriDefaultsC	; = KN7000 941 0x48410589, callee at 10 aligned call sites (10 exact/skeleton) of @0x4C0202EC; body 1.00/1.00; round 5
 0x4C15CF5F  SndUnitSettingApply1	; = KN7000 941 0x4841089D, callee at 1 aligned call sites (1 exact/skeleton) of @0x48413077; body 1.00/1.00; round 2
 0x4C16DBEE  JpegSetup	; = KN7000 941 0x48486341, callee at 1 aligned call sites (1 exact/skeleton) of JpegDecodeBlit; body 0.65/0.65; round 1
-0x4C3F680E  LibMsgSend	; = KN7000 941 0x4C03D219, callee at 1 aligned call sites (1 exact/skeleton) of @0x48405B27; body 1.00/1.00; round 2
-0x4C3F6962  LibMsgReceive	; = KN7000 941 0x4C03D36D, callee at 1 aligned call sites (1 exact/skeleton) of DspAllocParamBlock; body 1.00/1.00; round 1
+0x4C3F680E  snd_msg	; = KN7000 941 0x4C03D219, callee at 1 aligned call sites (1 exact/skeleton) of @0x48405B27; body 1.00/1.00; round 2
+0x4C3F6962  rcv_msg	; = KN7000 941 0x4C03D36D, callee at 1 aligned call sites (1 exact/skeleton) of DspAllocParamBlock; body 1.00/1.00; round 1
 0x50005538  CUR_STYLE_IDX	; RAM = KN7000 941 0x50001270, 1 aligned operands
 0x50005D98  DspHostPortError	; RAM = KN7000 941 0x500066CC, 6 aligned operands
 0x50005D99  DspReadyWaitEnabled	; RAM = KN7000 941 0x500066CD, 3 aligned operands

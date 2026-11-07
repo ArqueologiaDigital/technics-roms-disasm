@@ -2432,11 +2432,11 @@ func_4847228B:
     movhu   d0, (0x42e, a0)
     mov     3, d0
     mov     (func_4846D7FB_Records+112), a0
-    call    LibMsgSend, 0, 0
+    call    snd_msg, 0, 0
     mov     (func_4846D7FB_Records+112), a0
     mov     3, d0
     add     0x428, a0
-    call    LibMsgSend, 0, 0
+    call    snd_msg, 0, 0
     mov     (0x5004bbe0), d0
     cmp     0, d0
     bcc     loc_484722E9
@@ -2447,7 +2447,7 @@ loc_484722E9:
 loc_484722EC:
     mov     a3, a0
     mov     3, d0
-    call    LibMsgReceive, 0, 0
+    call    rcv_msg, 0, 0
     mov     (0x10, sp), a0
     movhu   (6, a0), d0
     exth    d0
@@ -2457,7 +2457,7 @@ loc_484722EC:
     movhu   d0, (6, a0)
     mov     4, d0
     mov     (0x10, sp), a0
-    call    LibMsgSend, 0, 0
+    call    snd_msg, 0, 0
     bra     loc_48472380
 loc_48472312:
     add     0x18, a0
@@ -2473,7 +2473,7 @@ loc_48472312:
     movhu   d0, (6, a0)
     mov     4, d0
     mov     (0x10, sp), a0
-    call    LibMsgSend, 0, 0
+    call    snd_msg, 0, 0
     bra     loc_48472380
 loc_48472338:
     mov     (0x10, sp), a0
@@ -2493,7 +2493,7 @@ loc_4847235B:
     movhu   d0, (6, a0)
     mov     (0x10, sp), a0
     mov     4, d0
-    call    LibMsgSend, 0, 0
+    call    snd_msg, 0, 0
     mov     (0x5004bbe0), a1
     mov     0x400, d0
     add     a2, d0
@@ -2533,7 +2533,7 @@ loc_484723B4:
     bne     loc_484723E6
     mov     4, d0
     mov     0x5004c64c, a0
-    call    LibMsgReceive, 0, 0
+    call    rcv_msg, 0, 0
     mov     (0x5004c64c), d0
     mov     d0, a0
     movhu   (4, a0), d1
@@ -2582,7 +2582,7 @@ loc_4847241A:
     bra     loc_48472461
 loc_48472452:
     mov     3, d0
-    call    LibMsgSend, 0, 0
+    call    snd_msg, 0, 0
 loc_4847245B:
     mov     d2, d0
     exth    d0
@@ -2599,25 +2599,25 @@ func_48472464_entry:
     mov     0x5004c64c, a2
     mov     a2, a0
     mov     3, d0
-    call    func_4C03CA58, 0, 0
+    call    prcv_msg, 0, 0
     cmp     0, d0
     bne     loc_4847248B
 loc_4847247D:
     mov     a2, a0
     mov     3, d0
-    call    func_4C03CA58, 0, 0
+    call    prcv_msg, 0, 0
     cmp     0, d0
     beq     loc_4847247D
 loc_4847248B:
     mov     a2, a0
     mov     4, d0
-    call    func_4C03CA58, 0, 0
+    call    prcv_msg, 0, 0
     cmp     0, d0
     bne     loc_484724A7
 loc_48472499:
     mov     a2, a0
     mov     4, d0
-    call    func_4C03CA58, 0, 0
+    call    prcv_msg, 0, 0
     cmp     0, d0
     beq     loc_48472499
 loc_484724A7:
@@ -2626,7 +2626,7 @@ loc_484724A7:
     movhu   d0, (6, a0)
     mov     3, d0
     mov     (0x5004c64c), a0
-    call    LibMsgSend, 0, 0
+    call    snd_msg, 0, 0
     movbu   (0x5014cfb0), d0
     cmp     0, d0
     beq     loc_484724D5
@@ -2639,25 +2639,25 @@ loc_484724D5:
     movbu   d0, (0x5004c654)
     mov     a2, a0
     mov     3, d0
-    call    func_4C03CA58, 0, 0
+    call    prcv_msg, 0, 0
     cmp     0, d0
     bne     loc_484724F9
 loc_484724EB:
     mov     a2, a0
     mov     3, d0
-    call    func_4C03CA58, 0, 0
+    call    prcv_msg, 0, 0
     cmp     0, d0
     beq     loc_484724EB
 loc_484724F9:
     mov     a2, a0
     mov     4, d0
-    call    func_4C03CA58, 0, 0
+    call    prcv_msg, 0, 0
     cmp     0, d0
     bne     loc_48472515
 loc_48472507:
     mov     a2, a0
     mov     4, d0
-    call    func_4C03CA58, 0, 0
+    call    prcv_msg, 0, 0
     cmp     0, d0
     beq     loc_48472507
 loc_48472515:
@@ -3127,10 +3127,10 @@ func_48472971_entry:
     movbu   d0, (func_48472971_Table)
     mov     3, d0
     mov     func_4846D7FB_Records+104, a0
-    call    func_4C03BF3C, 0, 0
+    call    cre_mbx, 0, 0
     mov     4, d0
     mov     func_4846D7FB_Records+96, a0
-    call    func_4C03BF3C, 0, 0
+    call    cre_mbx, 0, 0
 loc_484729A5:
     ret     0, 0x10
 
@@ -3150,8 +3150,8 @@ func_484729A8_entry:
     mov     1, d0
     movbu   d0, (func_484729A8_Table)
     mov     0xb, d0
-    mov     func_4C03BFC8_Table_4, a0
-    call    func_4C03BF3C, 0, 0
+    mov     cre_mbx_Impl_Table_4, a0
+    call    cre_mbx, 0, 0
 loc_484729DA:
     mov     (a2), d0
     mov     d0, (0x5004ca5c)
@@ -3160,7 +3160,7 @@ loc_484729DA:
     mov     a0, (0x5004ca60)
     movbu   d0, (0x5014cfb3)
     mov     6, d0
-    mov     func_4C03D154_Table_14, a0
+    mov     cre_tsk_Impl_Table_14, a0
     call    cre_tsk, 0, 0
     mov     6, d0
     clr     d1
@@ -3182,7 +3182,7 @@ loc_48472A26:
     movhu   d0, (6, a0)
     mov     0xb, d0
     mov     (func_4846D7FB_Records+112), a0
-    call    LibMsgSend, 0, 0
+    call    snd_msg, 0, 0
     clr     d0
     movbu   d0, (0x5014cfb1)
     call    exd_tsk, 0, 0
@@ -3197,7 +3197,7 @@ func_48472A52_entry:
     beq     loc_48472AB6
     mov     0x5004c64c, a0
     mov     0xb, d0
-    call    func_4C03CA58, 0, 0
+    call    prcv_msg, 0, 0
     mov     d0, d1
     exth    d1
     cmp     -0x55, d1
@@ -33551,11 +33551,11 @@ func_48482617:
     movhu   d0, (0x42e, a0)
     mov     1, d0
     mov     (func_48482617_Var_2), a0
-    call    LibMsgSend, 0, 0
+    call    snd_msg, 0, 0
     mov     (func_48482617_Var_2), a0
     mov     1, d0
     add     0x428, a0
-    call    LibMsgSend, 0, 0
+    call    snd_msg, 0, 0
     mov     (0x50060da0), d1
     mov     (0x5006a98c), d0
     add     d0, d1
@@ -33568,7 +33568,7 @@ loc_4848269B:
 loc_4848269E:
     mov     a2, a0
     mov     1, d0
-    call    LibMsgReceive, 0, 0
+    call    rcv_msg, 0, 0
     mov     (0x10, sp), a0
     movhu   (6, a0), d0
     exth    d0
@@ -33578,7 +33578,7 @@ loc_4848269E:
     movhu   d0, (6, a0)
     mov     2, d0
     mov     (0x10, sp), a0
-    call    LibMsgSend, 0, 0
+    call    snd_msg, 0, 0
     bra     loc_48482715
 loc_484826C4:
     add     0x18, a0
@@ -33595,7 +33595,7 @@ loc_484826C4:
     movhu   d0, (6, a0)
     mov     2, d0
     mov     (0x10, sp), a0
-    call    LibMsgSend, 0, 0
+    call    snd_msg, 0, 0
     bra     loc_48482715
 loc_484826EB:
     mov     (0x10, sp), a0
@@ -33606,7 +33606,7 @@ loc_484826EB:
     movhu   d0, (6, a0)
     mov     (0x10, sp), a0
     mov     2, d0
-    call    LibMsgSend, 0, 0
+    call    snd_msg, 0, 0
     mov     (0x50060da0), d1
     mov     (0x5006a98c), d0
     add     d0, d1

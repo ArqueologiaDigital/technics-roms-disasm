@@ -435,7 +435,7 @@ symbols-sp7001: $(REFS) $(SP7001_REFS)
 	$(SP7001_PORT) kn7000.sym $(SYMOUT)/kn7000_sp7001.sym --inc $(SYMOUT)/src/sp7001/symbols.inc \
 	    --title "KN7000 SP7001 (program 942 / table 83) symbols" \
 	    --check-recovered 0x80:0x1864F4 0x3B97B4:0x3F8BDB
-	$(SP7001_PORT) kn7000_manual.sym $(SYMOUT)/kn7000_sp7001_manual.sym \
+	$(SP7001_PORT) kn7000_manual.sym $(SYMOUT)/kn7000_sp7001_manual.sym --authority kn7000_sp7001_new.sym \
 	    --title "KN7000 SP7001 manual symbol supplement"
 	LIB_FILE_BASE=$(SP7001_LIB_FILE) UNIDASM=$(UNIDASM) $(PYTHON) tools/sp7001_exports.py \
 	    baserom/kn7000_program_sp7001.rom $(SYMOUT)/kn7000_sp7001_exports.sym \

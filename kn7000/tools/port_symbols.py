@@ -33,6 +33,14 @@
 # An entry that cannot be ported (its bytes were deleted, or its RAM delta is
 # ambiguous) is written commented-out with the reason, never guessed.
 #
+# --authority names symbol files of the NEW build whose rows place their names
+# themselves: an input row with such a name is not ported but written commented-
+# out, saying where the new build defines it.  The micro-ITRON kernel's service
+# wrappers are near-identical runs of bytes, so where the new build inserted a
+# service (942's del_mbx before get_blk, del_sem before wai_flg, ref_sem before
+# sus_tsk) the offset map aligns the old name with the inserted one; each build's
+# kernel names are then taken from its own code (notes/uitron3-function-codes/).
+#
 # --check-recovered re-derives the reflection-table names directly from the new
 # program image (tools/gen_symbols.py), an end-to-end test of the offset map:
 # every name must sit exactly at its ported address, unless the disagreement is
@@ -197,6 +205,9 @@ def main():
                          "offset map that holds it is at least this many bytes (default 1: "
                          "any run; 16 for the older builds 935/893, see Porter._pmap)")
     ap.add_argument("--cache-dir", help="save / reuse the offset maps here (offset_map.cached)")
+    ap.add_argument("--authority", nargs="+", metavar="SYM", default=[],
+                    help="new-build symbol files that place their names themselves: an input "
+                         "row with one of their names is left commented-out, not ported")
     ap.add_argument("--check-recovered", nargs="+", metavar="LO:HI",
                     help="new-build code file ranges for gen_symbols' reflection scan")
     args = ap.parse_args()
@@ -249,6 +260,13 @@ def main():
         for kind, nm, oa, cpu in notes:
             print(f"    {nm:22s} {('0x%08X' % oa) if oa else '(new)':>10} -> 0x{cpu:08X}  {kind}")
 
+    authority = {}
+    for path in args.authority:
+        for line in open(path, encoding="latin-1"):
+            m = LINE.match(line.rstrip("\n"))
+            if m and not line.lstrip().startswith(";"):
+                authority.setdefault(m.group(4), (int(m.group(2), 16), os.path.basename(path)))
+
     out, equ, stats, unported = [], [], collections.Counter(), []
     ported_at = {}
     for line in open(args.in_sym):
@@ -258,6 +276,11 @@ def main():
             continue
         ind, hexa, sep, name, rest = m.groups()
         a = int(hexa, 16)
+        if name in authority:
+            stats[space(a) + " placed by --authority"] += 1
+            out.append(f"; NOT PORTED ({authority[name][1]} places it at 0x{authority[name][0]:08X}): "
+                       f"0x{a:08X}{sep}{name}{rest}")
+            continue
         n, why = (override[name], None) if name in override else P.port(a)
         if name in RESET_LOADED:
             old_v = RESET_LOADED[name](P.A)

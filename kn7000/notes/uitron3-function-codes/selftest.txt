@@ -1,0 +1,21 @@
+ok   942: export wai_sem = -53 (H'ffcb): reported by wai_sem_Impl
+ok   942: export rot_rdq = -28 (H'ffe4): reported by rot_rdq_Impl
+ok   942: export ter_tsk = -25 (H'ffe7): reported by ter_tsk
+ok   942: export exd_tsk = -22 (H'ffea): reported by exd_tsk_Impl
+ok   942: export ext_tsk = -21 (H'ffeb): reported by ext_tsk_Impl
+ok   942: export cre_tsk = -17 (H'ffef): reported by cre_tsk_Impl
+ok   942: export unl_cpu = -7 (H'fff9): reported by unl_cpu_Impl
+ok   942: forwarder chg_pri_X calls the wrapper of chg_pri_Impl (-27)
+ok   942: forwarder cre_tsk_X calls the wrapper of cre_tsk_Impl (-17)
+ok   942: forwarder prcv_msg_X calls the wrapper of prcv_msg_Impl (-61, polling)
+ok   942: forwarder rcv_msg_X calls the wrapper of rcv_msg_Impl (-61)
+ok   942: forwarder wai_flg_X calls the wrapper of wai_flg_Impl (-46)
+ok   941: 18 reporting routines, each one defined uITRON 3.0 function code, no label disagrees
+ok   942: 20 reporting routines, each one defined uITRON 3.0 function code, no label disagrees
+ok   935: 18 reporting routines, each one defined uITRON 3.0 function code, no label disagrees
+ok   893: 18 reporting routines, each one defined uITRON 3.0 function code, no label disagrees
+ok   kn6000: 19 reporting routines, each one defined uITRON 3.0 function code, no label disagrees
+ok   kn6500: 19 reporting routines, each one defined uITRON 3.0 function code, no label disagrees
+ok   kn2400: 17 reporting routines, each one defined uITRON 3.0 function code, no label disagrees
+ok   hdsx3: 0 reporting routines, each one defined uITRON 3.0 function code, no label disagrees
+selftest: PASS

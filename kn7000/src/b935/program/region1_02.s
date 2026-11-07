@@ -13006,7 +13006,7 @@ loc_48447DA1:
     jmp     loc_48447EED
 loc_48447DC4:
     add     8, a0
-    cmp     func_4C03D154_Table_9, a0
+    cmp     cre_tsk_Impl_Table_9, a0
     bcs     loc_48447DCF
     mov     a1, a0
 loc_48447DCF:
@@ -13135,8 +13135,8 @@ func_48447EF1:
     add     -0x24, sp
 func_48447EF1_entry:
     mov     0xc, d0
-    mov     func_4C03C87B_Var_22, a0
-    call    func_4C03C7EF, 0, 0
+    mov     cre_flg_Impl_Var_22, a0
+    call    cre_flg, 0, 0
     mov     1, d0
     movhu   d0, (0x10, sp)
     mov     KernelTickHandler, d0
@@ -13156,7 +13156,7 @@ func_48447EF1_entry:
     call    ena_int_entry, [d2], 4
     call    func_484D722D_entry, 0, 8
     mov     1, d0
-    mov     func_4C03D154_Table_9, a0
+    mov     cre_tsk_Impl_Table_9, a0
     call    cre_tsk, 0, 0
     mov     1, d0
     clr     d1
@@ -13514,7 +13514,7 @@ func_4844822C_entry:
     add     0x18, a0
     mov     0xb, d0
     mov     1, d1
-    call    func_4C03C5AF, 0, 0
+    call    wai_flg, 0, 0
     extbu   d3
     cmp     0, d3
     bge     loc_4844824D
@@ -14861,7 +14861,7 @@ func_48448DAD_entry:
     add     0x1c, a0
     mov     0xb, d0
     mov     1, d1
-    call    func_4C03C5AF, 0, 0
+    call    wai_flg, 0, 0
     extbu   d3
     exthu   d3
     mov     d3, d0
@@ -35494,7 +35494,7 @@ func_48453559_entry:
     mov     1, d0
     mov     sp, a0
     add     0x10, a0
-    call    func_4C03CB51, 0, 0
+    call    cre_mpl, 0, 0
     clr     d0
     movbu   d0, (0x5003bdf4)
     ret     0, 0x1c
@@ -35514,7 +35514,7 @@ loc_4845358A:
     mov     sp, a0
     add     0x14, a0
     mov     1, d0
-    call    func_4C03C470, 0, 0
+    call    get_blk, 0, 0
     cmp     0, d0
     bge     loc_4845359E
     mov     0, a0
@@ -35528,7 +35528,7 @@ func_484535A3:
     add     -0x10, sp
 func_484535A3_entry:
     mov     1, d0
-    call    func_4C03C20F, 0, 0
+    call    rel_blk, 0, 0
     ret     0, 0x10
 
 func_484535B2:

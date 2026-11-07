@@ -1038,12 +1038,12 @@ func_4C168985_entry_L32_Table:
 	.long	loc_4C168ABA
 	.long	func_4C168985_entry_L147
 
-func_4C3803AB_Table_11:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C38031F reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call cre_tsk, 0, 0`, +6 more calls); the layout func_4C3803AB 0x4C3803AB reads through its argument a0 (passed by cre_tsk_L3d 0x4C38035C `call func_4C3803AB_entry, [d2,d3,a2], 0x2c`)
+cre_tsk_Impl_Table_11:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C38031F reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call cre_tsk, 0, 0`, +6 more calls); the layout cre_tsk_Impl 0x4C3803AB reads through its argument a0 (passed by cre_tsk_L3d 0x4C38035C `call cre_tsk_Impl_entry, [d2,d3,a2], 0x2c`)
 	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_4C16A73D, itskpri=3, x14="\x00\x00", stksz=3072
 
-func_4C37EEF8_Table_2:	# 2 x u32, 0..0; read by func_4C37EEF8 0x4C37EEF8: `mov (a3), d2`
+cre_mbx_Impl_Table_2:	# 2 x u32, 0..0; read by cre_mbx_Impl 0x4C37EEF8: `mov (a3), d2`
 	tab_u32	0, 0
-func_4C37EEF8_Table_3:	# 2 x u32, 0..0; read by func_4C37EEF8 0x4C37EEF8: `mov (a3), d2`
+cre_mbx_Impl_Table_3:	# 2 x u32, 0..0; read by cre_mbx_Impl 0x4C37EEF8: `mov (a3), d2`
 	tab_u32	0, 0
 
 Str_empty_536:	.asciz "\xFF/"

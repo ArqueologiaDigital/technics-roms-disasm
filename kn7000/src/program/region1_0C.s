@@ -9372,15 +9372,15 @@ rodata_48585D7C:
     .long   func_48405B95
     .long   0x00000003, 0x00002800
 
-# packet {0, 8, 0} passed with id 10 to the kernel call func_4C03C7EF
+# packet {0, 8, 0} passed with id 10 to the kernel call cre_flg
 rodata_48585D90:
     .long   0x00000000, 0x00000008, 0x00000000
 
-# zero packet passed with ids 1 and 2 to the kernel call func_4C03C017
+# zero packet passed with ids 1 and 2 to the kernel call cre_sem
 rodata_48585D9C:
     .long   0x00000000, 0x00000000
 
-# zero packet passed with ids 5..8 to the kernel call func_4C03BF3C
+# zero packet passed with ids 5..8 to the kernel call cre_mbx
 rodata_48585DA4:
     .long   0x00000000, 0x00000000
 

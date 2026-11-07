@@ -2583,7 +2583,7 @@ loc_484218A1:
     exth    d0
     mov     1, d1
     mov     d1, (0x14, sp)
-    call    func_4C03C5AF, 0, 0
+    call    wai_flg, 0, 0
 loc_484218D3:
     movhu   (0x500d3c64), d0
     exth    d0
@@ -2624,7 +2624,7 @@ func_484218FA_entry:
     add     0x18, a0
     mov     1, d1
     mov     d1, (0x14, sp)
-    call    func_4C03C5AF, 0, 0
+    call    wai_flg, 0, 0
     call    func_48421A27, 0, 0
     movhu   (0x500d3c64), d0
     mov     0x38, d1
@@ -2658,7 +2658,7 @@ func_4842194B_entry:
     add     0x18, a0
     mov     1, d1
     mov     d1, (0x14, sp)
-    call    func_4C03C5AF, 0, 0
+    call    wai_flg, 0, 0
     call    func_48421A5E, 0, 0
     movhu   (0x500d3c64), d0
     mov     0x38, d1
@@ -2697,7 +2697,7 @@ loc_484219AF:
     exth    d0
     mov     1, d1
     mov     d1, (0x14, sp)
-    call    func_4C03C5AF, 0, 0
+    call    wai_flg, 0, 0
     mov     (0x30, sp), a0
     call    func_48421AAF_entry, [a2], 4
     movhu   (0x500d3c64), d0
@@ -2729,7 +2729,7 @@ loc_484219AF:
     bne     loc_48421A1F
     clr     d0
     mov     d0, d1
-    call    func_4C03C0E4, 0, 0
+    call    chg_pri, 0, 0
 loc_48421A1F:
     cmp     0, a2
     beq     loc_484219AF
@@ -2919,7 +2919,7 @@ loc_48421BCD:
     add     0x18, a0
     mov     1, d1
     mov     d1, (0x14, sp)
-    call    func_4C03C5AF, 0, 0
+    call    wai_flg, 0, 0
     call    func_48421B09, 0, 0
     call    func_48421B18, 0, 0
     cmp     0, a0
@@ -7099,7 +7099,7 @@ loc_48423A33:
     call    set_flg, 0, 0
     clr     d0
     mov     d0, d1
-    call    func_4C03C0E4, 0, 0
+    call    chg_pri, 0, 0
     mov     (DrawEnable), d0
     cmp     0, d0
     bne     loc_48423A33
@@ -7123,7 +7123,7 @@ loc_48423A74:
     call    set_flg, 0, 0
     clr     d0
     mov     d0, d1
-    call    func_4C03C0E4, 0, 0
+    call    chg_pri, 0, 0
     mov     (DrawEnable), d0
     cmp     0, d0
     beq     loc_48423A74
@@ -17414,7 +17414,7 @@ func_484285DF_entry:
     exth    d0
     mov     d1, (0x14, sp)
     mov     (0x18, sp), a0
-    call    func_4C03C5AF, 0, 0
+    call    wai_flg, 0, 0
     mov     a2, d1
     mov     0x38, d0
     nop
@@ -17473,7 +17473,7 @@ loc_4842864F:
 loc_4842867D:
     clr     d0
     mov     d0, d1
-    call    func_4C03C0E4, 0, 0
+    call    chg_pri, 0, 0
     mov     a2, d0
     mov     0x38, d1
     nop
@@ -17486,7 +17486,7 @@ loc_4842867D:
     exth    d0
     mov     d1, (0x14, sp)
     mov     (0x18, sp), a0
-    call    func_4C03C5AF, 0, 0
+    call    wai_flg, 0, 0
     mov     a2, d0
     mov     0x38, d1
     nop
@@ -17635,7 +17635,7 @@ func_4842878D_entry:
     exth    d0
     mov     sp, a0
     add     0x18, a0
-    call    func_4C03C5AF, 0, 0
+    call    wai_flg, 0, 0
     mov     0x38, d0
     nop
     nop
@@ -17794,7 +17794,7 @@ func_484288AC_entry:
     add     0x40, a0
     mov     1, d1
     mov     d1, (0x14, sp)
-    call    func_4C03C5AF, 0, 0
+    call    wai_flg, 0, 0
     mov     a3, d0
     mov     0x38, d1
     nop
@@ -18030,7 +18030,7 @@ func_48428A67_entry:
     add     0x44, a0
     mov     1, d1
     mov     d1, (0x14, sp)
-    call    func_4C03C5AF, 0, 0
+    call    wai_flg, 0, 0
     mov     a3, d1
     mov     0x38, d0
     nop
@@ -18451,7 +18451,7 @@ loc_48428D99:
     add     0x48, a0
     mov     1, d1
     mov     d1, (0x14, sp)
-    call    func_4C03C5AF, 0, 0
+    call    wai_flg, 0, 0
     mov     a2, d1
     mov     0x38, d0
     nop
@@ -18874,7 +18874,7 @@ func_4842908B_entry:
     add     0x74, a0
     mov     1, d1
     mov     d1, (0x14, sp)
-    call    func_4C03C5AF, 0, 0
+    call    wai_flg, 0, 0
     mov     (0x18, sp), d0
     mov     0x38, d1
     nop
