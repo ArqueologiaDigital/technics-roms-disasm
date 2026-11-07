@@ -17433,7 +17433,7 @@ data_4C2AC79C:
 # census: opaque -- unknown-dump: 320 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x2AC79C, 0x2AC8DC
 
-func_4C172252_Table:	# 2 x REC_func_4C172252_Table (32 bytes each); read by HddTestFlashIdCheck 0x4C172252 `movhu (2, a2), d0`; HddTestFlashIdCheck 0x4C172252 `movhu (d0, a0), d0`; HddTestFlashIdCheck 0x4C172252 `call func_4C1721B7_entry, [a2,a3], 0x1c` (+1)
+func_4C172252_Table:	# 2 x REC_func_4C172252_Table (32 bytes each); read by HddTestFlashIdCheck 0x4C172252 `movhu (2, a2), d0`; HddTestFlashIdCheck 0x4C172252 `movhu (d0, a0), d0`; HddTestFlashIdCheck 0x4C172252 `call HddTestMemoPrint_entry, [a2,a3], 0x1c` (+1)
 	REC_func_4C172252_Table	key=4, key_=8777, x4="#\x00\x00\x00", p8=data_4C2AC684, x12=" MBM29LV160B    \x00\x00\x00\x00"
 	REC_func_4C172252_Table	key=31, key_=192, x4="(\x00\x00\x00", p8=data_4C2AC79C, x12=" AT49BV16X4     \x00\x00\x00\x00"
 
