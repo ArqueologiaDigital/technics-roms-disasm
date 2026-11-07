@@ -5,6 +5,7 @@
 0x97807DE3	0x4C000263	LibF64UnpackedToI32	LibF64UnpackedToI32	same name
 0x97807E33	0x4C0002B3	LibF64ToI32	LibF64ToI32	same name
 0x97807E4B	0x4C0002CB	LibF64Unpack	LibF64Unpack	same name
+0x97807E91	0x4C001412	LibF64ToU32	LibF64ToU32	carried
 0x97807EF3	0x4C001A43	sprintf	sprintf	same name
 0x97807F15	0x4C001A65	vsprintf_core	vsprintf_core	same name
 0x978081E5	0x4C001D35	PfOutField	PfOutField	same name
@@ -20,13 +21,13 @@
 0x9780895D	0x4C0024AD	PfFormatE	PfFormatE	same name
 0x97808ABD	0x4C00260D	PfFormatG	PfFormatG	same name
 0x97808C88	0x4C0027D8	PfAssembleFloat	PfAssembleFloat	same name
-0x97808E3B	0x4C00298B	-	-	call sites, A unnamed
+0x97808E3B	0x4C00298B	PfUlongToDigits	PfUlongToDigits	carried
 0x97808E89	0x4C0029D9	PfShortToDigits	PfShortToDigits	same name
-0x97808EDE	0x4C002A2E	-	-	call sites, A unnamed
+0x97808EDE	0x4C002A2E	PfUlongToDigitsB	PfUlongToDigitsB	carried
 0x97808F2C	0x4C002A7C	StrReverse	StrReverse	same name
 0x97808F4E	0x4C002A9E	PfRoundDigits	PfRoundDigits	same name
 0x97808FFE	0x4C002B4E	abs	abs	same name
-0x9780900C	0x4C002B5C	-	-	call sites, A unnamed
+0x9780900C	0x4C002B5C	LibF64Neg	LibF64Neg	carried
 0x97809020	0x4C0019D5	LibDiv32	LibDiv32	same name
 0x9780903D	0x4C002B70	PfDoubleToDecimal	PfDoubleToDecimal	same name
 0x97809485	0x4C000523	LibI32ToF64	LibI32ToF64	same name
