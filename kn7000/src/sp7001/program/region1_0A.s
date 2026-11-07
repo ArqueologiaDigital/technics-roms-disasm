@@ -19323,6 +19323,7 @@ loc_4854BB1F:
     mov     d1, d0
     extbu   d0
     retf    0, 0
+loc_4854BB24:
     mov     -1, d0
     retf    0, 0
 # SdHwInit  (CPU 0x4854bb29)

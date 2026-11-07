@@ -20466,11 +20466,11 @@ ptrs_486BB610:
 FileRenameFunc_Var:	# u32, a constant; read / written by FileRenameFunc 0x4851BDF1: `mov (FileRenameFunc_Var), a0`; FileRenameSmfFunc 0x4851BF53: `mov (FileRenameFunc_Var), a0` ...
 	.long	0x48584710
 
-func_4C002055_Records:	# 1 x REC_func_4C002055_Records (40 bytes each); read by localeconv 0x4C002055 `mov (0x10, a1), a0`; localeconv 0x4C002055 `mov (0x14, a1), a0`; localeconv 0x4C002055 `mov (0x18, a1), a0` (+12)
-	REC_func_4C002055_Records	text=func_4C001EA6_Records+128, p4=func_4C001EA6_Records+130, p8=func_4C001EA6_Records+131, p12=func_4C001EA6_Records+132, p16=func_4C001EA6_Records+133, p20=func_4C001EA6_Records+134, p24=func_4C001EA6_Records+135, p28=func_4C001EA6_Records+136, f32=127, f33=127, f34=127, f35=127, f36=127, f37=127, f38=127, f39=127
-func_4C002055_Records_2:	# 2 x REC_func_4C002055_Records_2 (16 bytes each); read by localeconv 0x4C002055 `mov (0xc, a1), a0`; localeconv 0x4C002055 `mov (4, a1), a0`; localeconv 0x4C002055 `mov (8, a1), a0`
-	REC_func_4C002055_Records_2	text=func_4C001EA6_Records+140, text_=func_4C001EA6_Records+142, p8=func_4C001EA6_Records+144, p12=func_4C001EA6_Records+145
-	REC_func_4C002055_Records_2	
+func_4C002055_Records:	# 1 x LconvMonetary (40 bytes each); read by localeconv 0x4C002055 `mov (0x10, a1), a0`; localeconv 0x4C002055 `mov (0x14, a1), a0`; localeconv 0x4C002055 `mov (0x18, a1), a0` (+12)
+	LconvMonetary	locale=func_4C001EA6_Records+128, int_curr_symbol=func_4C001EA6_Records+130, currency_symbol=func_4C001EA6_Records+131, mon_decimal_point=func_4C001EA6_Records+132, mon_thousands_sep=func_4C001EA6_Records+133, mon_grouping=func_4C001EA6_Records+134, positive_sign=func_4C001EA6_Records+135, negative_sign=func_4C001EA6_Records+136, int_frac_digits=127, frac_digits=127, p_cs_precedes=127, p_sep_by_space=127, n_cs_precedes=127, n_sep_by_space=127, p_sign_posn=127, n_sign_posn=127
+func_4C002055_Records_2:	# 2 x LconvNumeric (16 bytes each); read by localeconv 0x4C002055 `mov (0xc, a1), a0`; localeconv 0x4C002055 `mov (4, a1), a0`; localeconv 0x4C002055 `mov (8, a1), a0`
+	LconvNumeric	locale=func_4C001EA6_Records+140, decimal_point=func_4C001EA6_Records+142, thousands_sep=func_4C001EA6_Records+144, grouping=func_4C001EA6_Records+145
+	LconvNumeric	
 
 func_4C002055_Table:	# 4 x u32, 0..2576980378; read by localeconv 0x4C002055: `mov (func_4C002055_Table), d0`
 	tab_u32	0, 0, 2576980378, 1069128089

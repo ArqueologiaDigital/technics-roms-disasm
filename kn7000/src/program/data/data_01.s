@@ -105,174 +105,202 @@ AcPartSelectProc_Table:
 	.long	Str_APC_3
 	.long	Str_CONTROL_5
 
-Str_empty_790:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x1FDF06, 0x1FDF12
-Str_empty_789:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x1FDF18, 0x1FDF24
-Str_empty_788:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x1FDF2A, 0x1FDF36
-Str_empty_787:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x1FDF3C, 0x1FDF48
-Str_empty_786:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x1FDF4E, 0x1FDF5A
-Str_empty_785:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x1FDF60, 0x1FDF6C
-Str_empty_774:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x1FDF72, 0x1FDF7E
-Str_empty_772:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x1FDF84, 0x1FDF90
-
-AcAcdnTabProc_Block:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+AcAcdnTabProc_Block:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"  \x95  "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_2:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	"  \x95  "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_3:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	"     "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_4:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	" \x95\x95\x95 "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_5:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	" \x95 \x95 "
+	.asciz	"     "
+AcAcdnTabProc_Block_6:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	" \x95\x95\x95 "
+	.asciz	"     "
+AcAcdnTabProc_Block_7:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	"  \x95  "
+	.asciz	"     "
+AcAcdnTabProc_Block_8:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"  \x95  "
+	.asciz	"     "
+AcAcdnTabProc_Block_9:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
 	tab_u8	0, 32, 32, 32, 32, 0, 66, 65, 83, 83, 49, 0, 0, 32, 32, 32	# [0]
 	tab_u8	32, 0	# [16]
-AcAcdnTabProc_Block_2:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+AcAcdnTabProc_Block_10:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
 	tab_u8	0, 32, 32, 32, 32, 0, 66, 65, 83, 83, 50, 0, 0, 32, 32, 32	# [0]
 	tab_u8	32, 0	# [16]
-
-Str_empty_650:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x1FDFBA, 0x1FDFC6
-Str_empty_631:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x1FDFCC, 0x1FDFD8
-Str_empty_630:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x1FDFDE, 0x1FDFEA
-Str_empty_629:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x1FDFF0, 0x1FDFFC
-Str_empty_628:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x1FE002, 0x1FE00E
-Str_empty_627:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x1FE014, 0x1FE020
-Str_empty_626:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x1FE026, 0x1FE032
-Str_empty_625:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x1FE038, 0x1FE044
-
-AcAcdnTabProc_Block_3:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+AcAcdnTabProc_Block_11:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_12:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"  \x95  "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_13:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	"     "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_14:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	" \x95 \x95 "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_15:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	" \x95 \x95 "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_16:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	" \x95 \x95 "
+	.asciz	"     "
+AcAcdnTabProc_Block_17:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	"  \x95  "
+	.asciz	"     "
+AcAcdnTabProc_Block_18:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"  \x95  "
+	.asciz	"     "
+AcAcdnTabProc_Block_19:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
 	tab_u8	0, 32, 32, 32, 32, 0, 66, 65, 83, 83, 49, 0, 0, 32, 32, 32	# [0]
 	tab_u8	32, 0	# [16]
-AcAcdnTabProc_Block_4:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+AcAcdnTabProc_Block_20:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
 	tab_u8	0, 32, 32, 32, 32, 0, 66, 65, 83, 83, 50, 0, 0, 32, 32, 32	# [0]
 	tab_u8	32, 0	# [16]
-
-Str_empty_624:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x1FE06E, 0x1FE07A
-Str_empty_623:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x1FE080, 0x1FE08C
-Str_empty_622:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x1FE092, 0x1FE09E
-Str_empty_621:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x1FE0A4, 0x1FE0B0
-Str_empty_620:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x1FE0B6, 0x1FE0C2
-Str_empty_619:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x1FE0C8, 0x1FE0D4
-Str_empty_618:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x1FE0DA, 0x1FE0E6
-Str_empty_617:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x1FE0EC, 0x1FE0F8
-
-AcAcdnTabProc_Block_5:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+AcAcdnTabProc_Block_21:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_22:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"  \x95  "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_23:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	"     "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_24:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	" \x95 \x95 "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_25:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	" \x95 \x95 "
+	.asciz	"     "
+AcAcdnTabProc_Block_26:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	" \x95 \x95 "
+	.asciz	"     "
+AcAcdnTabProc_Block_27:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	"  \x95  "
+	.asciz	"     "
+AcAcdnTabProc_Block_28:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"  \x95  "
+	.asciz	"     "
+AcAcdnTabProc_Block_29:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
 	tab_u8	0, 32, 32, 32, 32, 0, 66, 65, 83, 83, 49, 0, 0, 32, 32, 32	# [0]
 	tab_u8	32, 0	# [16]
-AcAcdnTabProc_Block_6:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+AcAcdnTabProc_Block_30:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
 	tab_u8	0, 32, 32, 32, 32, 0, 66, 65, 83, 83, 50, 0, 0, 32, 32, 32	# [0]
 	tab_u8	32, 0	# [16]
-
-Str_empty_616:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x1FE122, 0x1FE12E
-Str_empty_615:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x1FE134, 0x1FE140
-Str_empty_614:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x1FE146, 0x1FE152
-Str_empty_613:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x1FE158, 0x1FE164
-Str_empty_612:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x1FE16A, 0x1FE176
-Str_empty_611:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x1FE17C, 0x1FE188
-Str_empty_610:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x1FE18E, 0x1FE19A
-Str_empty_609:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x1FE1A0, 0x1FE1AC
-Str_empty_608:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x1FE1B2, 0x1FE1BE
-Str_empty_607:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x1FE1C4, 0x1FE1D0
+AcAcdnTabProc_Block_31:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"     "
+AcAcdnTabProc_Block_32:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"     "
+AcAcdnTabProc_Block_33:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"     "
+AcAcdnTabProc_Block_34:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"     "
+AcAcdnTabProc_Block_35:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"     "
+AcAcdnTabProc_Block_36:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"     "
+AcAcdnTabProc_Block_37:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"     "
+AcAcdnTabProc_Block_38:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"     "
+AcAcdnTabProc_Block_39:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"     "
+AcAcdnTabProc_Block_40:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849989C: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"     "
 
 AcAcdnTabProc_Table:
-	.long	Str_empty_790
-	.long	Str_empty_789
-	.long	Str_empty_788
-	.long	Str_empty_787
-	.long	Str_empty_786
-	.long	Str_empty_785
-	.long	Str_empty_774
-	.long	Str_empty_772
 	.long	AcAcdnTabProc_Block
 	.long	AcAcdnTabProc_Block_2
-	.long	Str_empty_650
-	.long	Str_empty_631
-	.long	Str_empty_630
-	.long	Str_empty_629
-	.long	Str_empty_628
-	.long	Str_empty_627
-	.long	Str_empty_626
-	.long	Str_empty_625
 	.long	AcAcdnTabProc_Block_3
 	.long	AcAcdnTabProc_Block_4
-	.long	Str_empty_624
-	.long	Str_empty_623
-	.long	Str_empty_622
-	.long	Str_empty_621
-	.long	Str_empty_620
-	.long	Str_empty_619
-	.long	Str_empty_618
-	.long	Str_empty_617
 	.long	AcAcdnTabProc_Block_5
 	.long	AcAcdnTabProc_Block_6
-	.long	Str_empty_616
-	.long	Str_empty_615
-	.long	Str_empty_614
-	.long	Str_empty_613
-	.long	Str_empty_612
-	.long	Str_empty_611
-	.long	Str_empty_610
-	.long	Str_empty_609
-	.long	Str_empty_608
-	.long	Str_empty_607
+	.long	AcAcdnTabProc_Block_7
+	.long	AcAcdnTabProc_Block_8
+	.long	AcAcdnTabProc_Block_9
+	.long	AcAcdnTabProc_Block_10
+	.long	AcAcdnTabProc_Block_11
+	.long	AcAcdnTabProc_Block_12
+	.long	AcAcdnTabProc_Block_13
+	.long	AcAcdnTabProc_Block_14
+	.long	AcAcdnTabProc_Block_15
+	.long	AcAcdnTabProc_Block_16
+	.long	AcAcdnTabProc_Block_17
+	.long	AcAcdnTabProc_Block_18
+	.long	AcAcdnTabProc_Block_19
+	.long	AcAcdnTabProc_Block_20
+	.long	AcAcdnTabProc_Block_21
+	.long	AcAcdnTabProc_Block_22
+	.long	AcAcdnTabProc_Block_23
+	.long	AcAcdnTabProc_Block_24
+	.long	AcAcdnTabProc_Block_25
+	.long	AcAcdnTabProc_Block_26
+	.long	AcAcdnTabProc_Block_27
+	.long	AcAcdnTabProc_Block_28
+	.long	AcAcdnTabProc_Block_29
+	.long	AcAcdnTabProc_Block_30
+	.long	AcAcdnTabProc_Block_31
+	.long	AcAcdnTabProc_Block_32
+	.long	AcAcdnTabProc_Block_33
+	.long	AcAcdnTabProc_Block_34
+	.long	AcAcdnTabProc_Block_35
+	.long	AcAcdnTabProc_Block_36
+	.long	AcAcdnTabProc_Block_37
+	.long	AcAcdnTabProc_Block_38
+	.long	AcAcdnTabProc_Block_39
+	.long	AcAcdnTabProc_Block_40
 
 Str_GERMAN_7:	.asciz "GERMAN "
 Str_FRENCH_7:	.asciz "FRENCH "
@@ -4025,22 +4053,22 @@ InOutTestWindowProc_Table_11:
 	.long	Text_PITCHBEND_WHEEL_VALUE+360
 	.long	Str_KEYBOAD_NOTE_VELOCITY_AFTER_TOUCH
 
-InOutTestWindowProc_Var_2:	# 15 x REC_InOutTestWindowProc_Var_2 (4 bytes each); read by InOutTestWindowProc 0x484A1AFE `movhu (2, a1), d0`; InOutTestWindowProc 0x484A1AFE `movhu (2, a2), d0`; InOutTestWindowProc 0x484A1AFE `movhu (a1), d0` (+1)
-	REC_InOutTestWindowProc_Var_2	f0=15, f2=40	# [0]
-	REC_InOutTestWindowProc_Var_2	f0=15, f2=64
-	REC_InOutTestWindowProc_Var_2	f0=15, f2=88
-	REC_InOutTestWindowProc_Var_2	f0=15, f2=112
-	REC_InOutTestWindowProc_Var_2	f0=15, f2=136
-	REC_InOutTestWindowProc_Var_2	f0=15, f2=160
-	REC_InOutTestWindowProc_Var_2	f0=15, f2=184
-	REC_InOutTestWindowProc_Var_2	f0=340, f2=40
-	REC_InOutTestWindowProc_Var_2	f0=340, f2=64	# [8]
-	REC_InOutTestWindowProc_Var_2	f0=340, f2=88
-	REC_InOutTestWindowProc_Var_2	f0=340, f2=112
-	REC_InOutTestWindowProc_Var_2	f0=340, f2=136
-	REC_InOutTestWindowProc_Var_2	f0=340, f2=160
-	REC_InOutTestWindowProc_Var_2	f0=340, f2=184
-	REC_InOutTestWindowProc_Var_2	f0=142, f2=220
+InOutTestWindowProc_Var_2:	# 15 x InOutTestTextPos (4 bytes each); read by InOutTestWindowProc 0x484A1AFE `movhu (2, a1), d0`; InOutTestWindowProc 0x484A1AFE `movhu (2, a2), d0`; InOutTestWindowProc 0x484A1AFE `movhu (a1), d0` (+1)
+	InOutTestTextPos	x=15, y=40	# [0]
+	InOutTestTextPos	x=15, y=64
+	InOutTestTextPos	x=15, y=88
+	InOutTestTextPos	x=15, y=112
+	InOutTestTextPos	x=15, y=136
+	InOutTestTextPos	x=15, y=160
+	InOutTestTextPos	x=15, y=184
+	InOutTestTextPos	x=340, y=40
+	InOutTestTextPos	x=340, y=64	# [8]
+	InOutTestTextPos	x=340, y=88
+	InOutTestTextPos	x=340, y=112
+	InOutTestTextPos	x=340, y=136
+	InOutTestTextPos	x=340, y=160
+	InOutTestTextPos	x=340, y=184
+	InOutTestTextPos	x=142, y=220
 
 InOutTestWindowProc_Table_4:	# 2 x u16, 40..250; read by InOutTestWindowProc 0x484A1AFE: `movhu  (a1), d0`
 	tab_u16	250, 40
@@ -4055,14 +4083,14 @@ InOutTestWindowProc_Table_8:	# 6 x u16, 136..250; read by InOutTestWindowProc 0x
 InOutTestWindowProc_Table_9:	# 2 x u16, 220..563; read by InOutTestWindowProc 0x484A1AFE: `movhu  (a1), d0`
 	tab_u16	563, 220
 
-InOutTestWindowProc_Records:	# 7 x REC_InOutTestWindowProc_Records (4 bytes each); read by InOutTestWindowProc 0x484A1AFE `movhu (2, a0), d1`; InOutTestWindowProc 0x484A1AFE `movhu (2, a1), d0`; InOutTestWindowProc 0x484A1AFE `movhu (a0), d1` (+1)
-	REC_InOutTestWindowProc_Records	f0=575, f2=40
-	REC_InOutTestWindowProc_Records	f0=575, f2=64
-	REC_InOutTestWindowProc_Records	f0=575, f2=88
-	REC_InOutTestWindowProc_Records	f0=575, f2=112
-	REC_InOutTestWindowProc_Records	f0=575, f2=136
-	REC_InOutTestWindowProc_Records	f0=575, f2=160
-	REC_InOutTestWindowProc_Records	f0=250, f2=160
+InOutTestWindowProc_Records:	# 7 x InOutTestStatePos (4 bytes each); read by InOutTestWindowProc 0x484A1AFE `movhu (2, a0), d1`; InOutTestWindowProc 0x484A1AFE `movhu (2, a1), d0`; InOutTestWindowProc 0x484A1AFE `movhu (a0), d1` (+1)
+	InOutTestStatePos	x=575, y=40
+	InOutTestStatePos	x=575, y=64
+	InOutTestStatePos	x=575, y=88
+	InOutTestStatePos	x=575, y=112
+	InOutTestStatePos	x=575, y=136
+	InOutTestStatePos	x=575, y=160
+	InOutTestStatePos	x=250, y=160
 
 InOutTestWindowProc_Var_5:	# 2 x u16, 40..300; read by InOutTestWindowProc 0x484A1AFE: `movhu  (a1), d0`
 	tab_u16	300, 40
@@ -7208,11 +7236,10 @@ func_484AE7CD_MsgTable_4:	# 3 x {u32 key, code address}: a dispatch table; read 
 
 func_484AE7CD_Var:	# REC_func_484AE7CD_ArgA0 (8 bytes): the layout func_484AE7CD 0x484AE7CD reads through its argument a0 (passed by func_484AE6DF 0x484AE6DF `call func_484AE7CD_entry, [d2,a2], 0x10`, +1 more calls)
 	REC_func_484AE7CD_ArgA0	f0=4, proc=func_484B127E
-	# then 1 x u32 up to the next label, which no instruction is seen to read (the table the field reads ran on into them)
-	tab_u32	0	# +8
 
-func_484AE7CD_Var_2:	# u32, a constant; read / written by func_484AE7CD 0x484AE7CD: `mov (4, a2), d0`
-	.long	0
+# 0 records of 8 bytes up to the end marker (+4, 32 bits) that func_484AE7CD 0x484AE7CD: `mov (4, a2), d0` / `cmp 0, d0`, `add 8, a2` stops at, then the marker
+func_484AE7CD_List:
+	.long	0x0, 0x0	# end
 
 func_484AE7CD_MsgTable_5:	# 3 x {u32 key, code address}: a dispatch table; read by func_484AE78C 0x484AE78C `call func_484AE7CD_entry, [d2,a2], 0x10`; func_484AE7CD 0x484AE7CD `mov (a2), d0`
 	.long	4, func_484B12EC
@@ -23139,8 +23166,68 @@ Str_OFF_63:	.asciz "OFF"
 	.align	4, 0xFF	# pad after Str_OFF_63
 Str_empty_988:	.asciz "                                       "
 Str_08x_08x_2:	.asciz "   %08x, %08x                  "
-# census: opaque -- unknown-dump: 186 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x2446D4, 0x24478E
+# a byte-identical copy of Str_20 (0x485EC284, string); nothing is seen to read the copy (dup_spans)
+Str_20_Copy:	.asciz "   20"
+# a byte-identical copy of Str_25 (0x485EC28A, string); nothing is seen to read the copy (dup_spans)
+Str_25_Copy:	.asciz "   25"
+# a byte-identical copy of Str_31_5 (0x485EC290, string); nothing is seen to read the copy (dup_spans)
+Str_31_5_Copy:	.asciz " 31.5"
+# a byte-identical copy of Str_40 (0x485EC296, string); nothing is seen to read the copy (dup_spans)
+Str_40_Copy:	.asciz "   40"
+# a byte-identical copy of Str_50 (0x485EC29C, string); nothing is seen to read the copy (dup_spans)
+Str_50_Copy:	.asciz "   50"
+# a byte-identical copy of Str_63 (0x485EC2A2, string); nothing is seen to read the copy (dup_spans)
+Str_63_Copy:	.asciz "   63"
+# a byte-identical copy of Str_80 (0x485EC2A8, string); nothing is seen to read the copy (dup_spans)
+Str_80_Copy:	.asciz "   80"
+# a byte-identical copy of Str_100 (0x485EC2AE, string); nothing is seen to read the copy (dup_spans)
+Str_100_Copy:	.asciz "  100"
+# a byte-identical copy of Str_125 (0x485EC2B4, string); nothing is seen to read the copy (dup_spans)
+Str_125_Copy:	.asciz "  125"
+# a byte-identical copy of Str_160 (0x485EC2BA, string); nothing is seen to read the copy (dup_spans)
+Str_160_Copy:	.asciz "  160"
+# a byte-identical copy of Str_200 (0x485EC2C0, string); nothing is seen to read the copy (dup_spans)
+Str_200_Copy:	.asciz "  200"
+# a byte-identical copy of Str_250 (0x485EC2C6, string); nothing is seen to read the copy (dup_spans)
+Str_250_Copy:	.asciz "  250"
+# a byte-identical copy of Str_315 (0x485EC2CC, string); nothing is seen to read the copy (dup_spans)
+Str_315_Copy:	.asciz "  315"
+# a byte-identical copy of Str_400 (0x485EC2D2, string); nothing is seen to read the copy (dup_spans)
+Str_400_Copy:	.asciz "  400"
+# a byte-identical copy of Str_500 (0x485EC2D8, string); nothing is seen to read the copy (dup_spans)
+Str_500_Copy:	.asciz "  500"
+# a byte-identical copy of Str_630 (0x485EC2DE, string); nothing is seen to read the copy (dup_spans)
+Str_630_Copy:	.asciz "  630"
+# a byte-identical copy of Str_800 (0x485EC2E4, string); nothing is seen to read the copy (dup_spans)
+Str_800_Copy:	.asciz "  800"
+# a byte-identical copy of Str_1k (0x485EC2EA, string); nothing is seen to read the copy (dup_spans)
+Str_1k_Copy:	.asciz "   1k"
+# a byte-identical copy of Str_1_25k (0x485EC2F0, string); nothing is seen to read the copy (dup_spans)
+Str_1_25k_Copy:	.asciz "1.25k"
+# a byte-identical copy of Str_1_6k (0x485EC2F6, string); nothing is seen to read the copy (dup_spans)
+Str_1_6k_Copy:	.asciz " 1.6k"
+# a byte-identical copy of Str_2k (0x485EC2FC, string); nothing is seen to read the copy (dup_spans)
+Str_2k_Copy:	.asciz "   2k"
+# a byte-identical copy of Str_2_5k (0x485EC302, string); nothing is seen to read the copy (dup_spans)
+Str_2_5k_Copy:	.asciz " 2.5k"
+# a byte-identical copy of Str_3_15k (0x485EC308, string); nothing is seen to read the copy (dup_spans)
+Str_3_15k_Copy:	.asciz "3.15k"
+# a byte-identical copy of Str_4k (0x485EC30E, string); nothing is seen to read the copy (dup_spans)
+Str_4k_Copy:	.asciz "   4k"
+# a byte-identical copy of Str_5k (0x485EC314, string); nothing is seen to read the copy (dup_spans)
+Str_5k_Copy:	.asciz "   5k"
+# a byte-identical copy of Str_6_3k (0x485EC31A, string); nothing is seen to read the copy (dup_spans)
+Str_6_3k_Copy:	.asciz " 6.3k"
+# a byte-identical copy of Str_8k (0x485EC320, string); nothing is seen to read the copy (dup_spans)
+Str_8k_Copy:	.asciz "   8k"
+# a byte-identical copy of Str_10k (0x485EC326, string); nothing is seen to read the copy (dup_spans)
+Str_10k_Copy:	.asciz "  10k"
+# a byte-identical copy of Str_12_5k (0x485EC32C, string); nothing is seen to read the copy (dup_spans)
+Str_12_5k_Copy:	.asciz "12.5k"
+# a byte-identical copy of Str_16k (0x485EC332, string); nothing is seen to read the copy (dup_spans)
+Str_16k_Copy:	.asciz "  16k"
+# a byte-identical copy of Str_20k (0x485EC338, string); nothing is seen to read the copy (dup_spans)
+Str_20k_Copy:	.asciz "  20k"
 
 func_48502758_Table:	# 126 x u8, 4..255; read by func_48502758_entry 0x48500C71: `movbu  (a1), d0`
 	tab_u8	212, 70, 100, 72, 218, 70, 100, 72, 224, 70, 100, 72, 230, 70, 100, 72	# [0]
@@ -26898,8 +26985,68 @@ Str_3d_50:	.asciz "%3d"
 Str_ON_38:	.asciz "ON "
 Str_empty_811:	.asciz "-- "
 Str_3d_49:	.asciz "%3d"
-# census: opaque -- unknown-dump: 186 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x250054, 0x25010E
+# a byte-identical copy of Str_20 (0x485EC284, string); nothing is seen to read the copy (dup_spans)
+Str_20_Copy_2:	.asciz "   20"
+# a byte-identical copy of Str_25 (0x485EC28A, string); nothing is seen to read the copy (dup_spans)
+Str_25_Copy_2:	.asciz "   25"
+# a byte-identical copy of Str_31_5 (0x485EC290, string); nothing is seen to read the copy (dup_spans)
+Str_31_5_Copy_2:	.asciz " 31.5"
+# a byte-identical copy of Str_40 (0x485EC296, string); nothing is seen to read the copy (dup_spans)
+Str_40_Copy_2:	.asciz "   40"
+# a byte-identical copy of Str_50 (0x485EC29C, string); nothing is seen to read the copy (dup_spans)
+Str_50_Copy_2:	.asciz "   50"
+# a byte-identical copy of Str_63 (0x485EC2A2, string); nothing is seen to read the copy (dup_spans)
+Str_63_Copy_2:	.asciz "   63"
+# a byte-identical copy of Str_80 (0x485EC2A8, string); nothing is seen to read the copy (dup_spans)
+Str_80_Copy_2:	.asciz "   80"
+# a byte-identical copy of Str_100 (0x485EC2AE, string); nothing is seen to read the copy (dup_spans)
+Str_100_Copy_2:	.asciz "  100"
+# a byte-identical copy of Str_125 (0x485EC2B4, string); nothing is seen to read the copy (dup_spans)
+Str_125_Copy_2:	.asciz "  125"
+# a byte-identical copy of Str_160 (0x485EC2BA, string); nothing is seen to read the copy (dup_spans)
+Str_160_Copy_2:	.asciz "  160"
+# a byte-identical copy of Str_200 (0x485EC2C0, string); nothing is seen to read the copy (dup_spans)
+Str_200_Copy_2:	.asciz "  200"
+# a byte-identical copy of Str_250 (0x485EC2C6, string); nothing is seen to read the copy (dup_spans)
+Str_250_Copy_2:	.asciz "  250"
+# a byte-identical copy of Str_315 (0x485EC2CC, string); nothing is seen to read the copy (dup_spans)
+Str_315_Copy_2:	.asciz "  315"
+# a byte-identical copy of Str_400 (0x485EC2D2, string); nothing is seen to read the copy (dup_spans)
+Str_400_Copy_2:	.asciz "  400"
+# a byte-identical copy of Str_500 (0x485EC2D8, string); nothing is seen to read the copy (dup_spans)
+Str_500_Copy_2:	.asciz "  500"
+# a byte-identical copy of Str_630 (0x485EC2DE, string); nothing is seen to read the copy (dup_spans)
+Str_630_Copy_2:	.asciz "  630"
+# a byte-identical copy of Str_800 (0x485EC2E4, string); nothing is seen to read the copy (dup_spans)
+Str_800_Copy_2:	.asciz "  800"
+# a byte-identical copy of Str_1k (0x485EC2EA, string); nothing is seen to read the copy (dup_spans)
+Str_1k_Copy_2:	.asciz "   1k"
+# a byte-identical copy of Str_1_25k (0x485EC2F0, string); nothing is seen to read the copy (dup_spans)
+Str_1_25k_Copy_2:	.asciz "1.25k"
+# a byte-identical copy of Str_1_6k (0x485EC2F6, string); nothing is seen to read the copy (dup_spans)
+Str_1_6k_Copy_2:	.asciz " 1.6k"
+# a byte-identical copy of Str_2k (0x485EC2FC, string); nothing is seen to read the copy (dup_spans)
+Str_2k_Copy_2:	.asciz "   2k"
+# a byte-identical copy of Str_2_5k (0x485EC302, string); nothing is seen to read the copy (dup_spans)
+Str_2_5k_Copy_2:	.asciz " 2.5k"
+# a byte-identical copy of Str_3_15k (0x485EC308, string); nothing is seen to read the copy (dup_spans)
+Str_3_15k_Copy_2:	.asciz "3.15k"
+# a byte-identical copy of Str_4k (0x485EC30E, string); nothing is seen to read the copy (dup_spans)
+Str_4k_Copy_2:	.asciz "   4k"
+# a byte-identical copy of Str_5k (0x485EC314, string); nothing is seen to read the copy (dup_spans)
+Str_5k_Copy_2:	.asciz "   5k"
+# a byte-identical copy of Str_6_3k (0x485EC31A, string); nothing is seen to read the copy (dup_spans)
+Str_6_3k_Copy_2:	.asciz " 6.3k"
+# a byte-identical copy of Str_8k (0x485EC320, string); nothing is seen to read the copy (dup_spans)
+Str_8k_Copy_2:	.asciz "   8k"
+# a byte-identical copy of Str_10k (0x485EC326, string); nothing is seen to read the copy (dup_spans)
+Str_10k_Copy_2:	.asciz "  10k"
+# a byte-identical copy of Str_12_5k (0x485EC32C, string); nothing is seen to read the copy (dup_spans)
+Str_12_5k_Copy_2:	.asciz "12.5k"
+# a byte-identical copy of Str_16k (0x485EC332, string); nothing is seen to read the copy (dup_spans)
+Str_16k_Copy_2:	.asciz "  16k"
+# a byte-identical copy of Str_20k (0x485EC338, string); nothing is seen to read the copy (dup_spans)
+Str_20k_Copy_2:	.asciz "  20k"
 Str_T_2:	.asciz "T"
 # census: opaque -- unknown-dump: 124 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program.rom", 0x250110, 0x25018C
@@ -29250,8 +29397,68 @@ Str_5_1f:	.asciz "%+5.1f"
 	.align	4, 0xFF	# pad after Str_5_1f
 Str_empty_796:	.asciz "---"
 Str_3d_48:	.asciz "%3d"
-# census: opaque -- unknown-dump: 186 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program.rom", 0x256CC0, 0x256D7A
+# a byte-identical copy of Str_20 (0x485EC284, string); nothing is seen to read the copy (dup_spans)
+Str_20_Copy_3:	.asciz "   20"
+# a byte-identical copy of Str_25 (0x485EC28A, string); nothing is seen to read the copy (dup_spans)
+Str_25_Copy_3:	.asciz "   25"
+# a byte-identical copy of Str_31_5 (0x485EC290, string); nothing is seen to read the copy (dup_spans)
+Str_31_5_Copy_3:	.asciz " 31.5"
+# a byte-identical copy of Str_40 (0x485EC296, string); nothing is seen to read the copy (dup_spans)
+Str_40_Copy_3:	.asciz "   40"
+# a byte-identical copy of Str_50 (0x485EC29C, string); nothing is seen to read the copy (dup_spans)
+Str_50_Copy_3:	.asciz "   50"
+# a byte-identical copy of Str_63 (0x485EC2A2, string); nothing is seen to read the copy (dup_spans)
+Str_63_Copy_3:	.asciz "   63"
+# a byte-identical copy of Str_80 (0x485EC2A8, string); nothing is seen to read the copy (dup_spans)
+Str_80_Copy_3:	.asciz "   80"
+# a byte-identical copy of Str_100 (0x485EC2AE, string); nothing is seen to read the copy (dup_spans)
+Str_100_Copy_3:	.asciz "  100"
+# a byte-identical copy of Str_125 (0x485EC2B4, string); nothing is seen to read the copy (dup_spans)
+Str_125_Copy_3:	.asciz "  125"
+# a byte-identical copy of Str_160 (0x485EC2BA, string); nothing is seen to read the copy (dup_spans)
+Str_160_Copy_3:	.asciz "  160"
+# a byte-identical copy of Str_200 (0x485EC2C0, string); nothing is seen to read the copy (dup_spans)
+Str_200_Copy_3:	.asciz "  200"
+# a byte-identical copy of Str_250 (0x485EC2C6, string); nothing is seen to read the copy (dup_spans)
+Str_250_Copy_3:	.asciz "  250"
+# a byte-identical copy of Str_315 (0x485EC2CC, string); nothing is seen to read the copy (dup_spans)
+Str_315_Copy_3:	.asciz "  315"
+# a byte-identical copy of Str_400 (0x485EC2D2, string); nothing is seen to read the copy (dup_spans)
+Str_400_Copy_3:	.asciz "  400"
+# a byte-identical copy of Str_500 (0x485EC2D8, string); nothing is seen to read the copy (dup_spans)
+Str_500_Copy_3:	.asciz "  500"
+# a byte-identical copy of Str_630 (0x485EC2DE, string); nothing is seen to read the copy (dup_spans)
+Str_630_Copy_3:	.asciz "  630"
+# a byte-identical copy of Str_800 (0x485EC2E4, string); nothing is seen to read the copy (dup_spans)
+Str_800_Copy_3:	.asciz "  800"
+# a byte-identical copy of Str_1k (0x485EC2EA, string); nothing is seen to read the copy (dup_spans)
+Str_1k_Copy_3:	.asciz "   1k"
+# a byte-identical copy of Str_1_25k (0x485EC2F0, string); nothing is seen to read the copy (dup_spans)
+Str_1_25k_Copy_3:	.asciz "1.25k"
+# a byte-identical copy of Str_1_6k (0x485EC2F6, string); nothing is seen to read the copy (dup_spans)
+Str_1_6k_Copy_3:	.asciz " 1.6k"
+# a byte-identical copy of Str_2k (0x485EC2FC, string); nothing is seen to read the copy (dup_spans)
+Str_2k_Copy_3:	.asciz "   2k"
+# a byte-identical copy of Str_2_5k (0x485EC302, string); nothing is seen to read the copy (dup_spans)
+Str_2_5k_Copy_3:	.asciz " 2.5k"
+# a byte-identical copy of Str_3_15k (0x485EC308, string); nothing is seen to read the copy (dup_spans)
+Str_3_15k_Copy_3:	.asciz "3.15k"
+# a byte-identical copy of Str_4k (0x485EC30E, string); nothing is seen to read the copy (dup_spans)
+Str_4k_Copy_3:	.asciz "   4k"
+# a byte-identical copy of Str_5k (0x485EC314, string); nothing is seen to read the copy (dup_spans)
+Str_5k_Copy_3:	.asciz "   5k"
+# a byte-identical copy of Str_6_3k (0x485EC31A, string); nothing is seen to read the copy (dup_spans)
+Str_6_3k_Copy_3:	.asciz " 6.3k"
+# a byte-identical copy of Str_8k (0x485EC320, string); nothing is seen to read the copy (dup_spans)
+Str_8k_Copy_3:	.asciz "   8k"
+# a byte-identical copy of Str_10k (0x485EC326, string); nothing is seen to read the copy (dup_spans)
+Str_10k_Copy_3:	.asciz "  10k"
+# a byte-identical copy of Str_12_5k (0x485EC32C, string); nothing is seen to read the copy (dup_spans)
+Str_12_5k_Copy_3:	.asciz "12.5k"
+# a byte-identical copy of Str_16k (0x485EC332, string); nothing is seen to read the copy (dup_spans)
+Str_16k_Copy_3:	.asciz "  16k"
+# a byte-identical copy of Str_20k (0x485EC338, string); nothing is seen to read the copy (dup_spans)
+Str_20k_Copy_3:	.asciz "  20k"
 
 func_48514731_Table:	# 126 x u8, 2..255; read by func_48514731_entry 0x485142A7: `movbu  (a1), d0`
 	tab_u8	192, 108, 101, 72, 198, 108, 101, 72, 204, 108, 101, 72, 210, 108, 101, 72	# [0]
@@ -39803,204 +40010,3 @@ Str_Changing_the_assignment_of_Track_2d_from:	.asciz "Changing the assignment of
 Str_Ubahlah_assignment_dari_Tracks_2d_dari_s:	.asciz "Ubahlah assignment dari Tracks %2d dari %s ke %s akan menghapus semua data yang sekarang."
 StrJa_4867824A:	.asciz "\xA5\xC8\xA5\xE9\xA5\xC3\xA5\xAF%2d \xA4\xCE\xA5\xC8\xA5\xE9\xA5\xC3\xA5\xAF\xA5\xA2\xA5\xB5\xA5\xA4\xA5\xF3\xA4\xF2 %s \xA4\xAB\xA4\xE9 %s \xA4\xCB\xCA\xD1\xB9\xB9\xA4\xB9\xA4\xEB\xA4\xC8\xA1\xA2\xB8\xBD\xBA\xDF\xA4\xCE\xA5\xC8\xA5\xE9\xA5\xC3\xA5\xAF\xA5\xC7\xA1\xBC\xA5\xBF\xA4\xCF\xA4\xB9\xA4\xD9\xA4\xC6\xBE\xC3\xB5\xEE\xA4\xB5\xA4\xEC\xA4\xDE\xA4\xB9\xA1\xA3"	# EUC-JP
 	.align	4, 0xFF	# pad after StrJa_4867824A
-
-TrAsSureLangCheck_Table_2:
-	.long	Str_Changing_the_assignment_of_Track_2d_from_2
-	.long	Str_Das_ndern_der_Spurzuordnung_2d_von_s_nac
-	.long	Str_Tout_changement_d_assignation_des_pistes
-	.long	Str_Al_cambiar_la_asignaci_n_de_pistas_2d_de
-	.long	Str_Changing_the_assignment_of_Track_2d_from
-	.long	Str_Ubahlah_assignment_dari_Tracks_2d_dari_s
-	.long	StrJa_4867824A
-
-Str_Any_existing_song_will_be_cleared_Press:	.asciz "Any existing song will be cleared. Press OK to proceed."
-Str_Jeder_Song_im_Arbeitsspeicher_wird_gel_s:	.asciz "Jeder Song im Arbeitsspeicher wird gel\xF6scht. Dr\xFCcken Sie OK zur Best\xE4tigung."
-Str_Toute_s_quence_existante_sera_effac_e_Pr:	.asciz "Toute s\xE9quence existante sera effac\xE9e. Pressez OK pour continuer."
-Str_La_canci_n_existente_ser_eliminada_Para:	.asciz "La canci\xF3n existente ser\xE1 eliminada. Para continuar, presione OK."
-Str_Select_whether_or_not_After_Touch_is_rec:	.asciz "Select whether or not After Touch is recorded by Sequencer."
-Str_W_hlen_Sie_ob_After_Touch_Effekte_vom_Se:	.asciz "W\xE4hlen Sie, ob After Touch Effekte vom Sequenzer aufgezeichnet werden sollen."
-Str_S_lectionnez_l_enregistrement_ou_non_des:	.asciz "S\xE9lectionnez l'enregistrement ou non des donn\xE9es d'\"After Touch\" par le s\xE9quenceur."
-Str_Seleccione_si_desea_grabar_o_no_el_AFTER:	.asciz "Seleccione si desea grabar o no el AFTER TOUCH con el SEQUENCER."
-Str_Press_the_up_down_button_under_the_scree_2:	.asciz "Press the up/down button under the screen corresponding to the track that you want to edit."
-Str_Dr_cken_Sie_eine_der_Doppeltasten_unter_2:	.asciz "Dr\xFCcken Sie eine der Doppeltasten unter dem Display, entsprechend der Spur, die Sie editieren m\xF6chten "
-Str_Pressez_le_bouton_sous_l_cran_correspond_2:	.asciz "Pressez le bouton \xD9\xDA sous l'\xE9cran correspondant \xE0 la piste que vous d\xE9sirez \xE9diter. "
-Str_Presione_el_bot_n_arriba_abajo_situado_d_2:	.asciz "Presione el bot\xF3n arriba/abajo situado debajo de la pantalla, correspondiente a las pistas que desea editar. "
-Str_Press_the_up_down_button_under_the_scree:	.asciz "Press the up/down button under the screen corresponding to the track that you want to STEP RECORD."
-Str_Dr_cken_Sie_eine_der_Doppeltasten_unter:	.asciz "Dr\xFCcken Sie eine der Doppeltasten unter dem Display, entsprechend der Spur, die Sie per STEP RECORD aufnehmen m\xF6chten."
-Str_Pressez_le_bouton_sous_l_cran_correspond:	.asciz "Pressez le bouton \xD9\xDA sous l'\xE9cran correspondant \xE0 la piste que vous d\xE9sirez enregistrer en STEP RECORD."
-Str_Presione_el_bot_n_arriba_abajo_situado_d:	.asciz "Presione el bot\xF3n arriba/abajo situado debajo de la pantalla, correspondiente a las pistas que desea grabar paso a paso."
-	.align	4, 0xFF	# pad after Str_Presione_el_bot_n_arriba_abajo_situado_d
-Str_text_24:	.asciz "    "
-Str_PLAY_7:	.asciz "PLAY"
-Str_REC_8:	.asciz "REC"
-Str_PUNCH_2:	.asciz "PUNCH"
-Str_CLR_7:	.asciz "CLR"
-
-AcSeqPlayRecBoxProc_Table_2:
-	.long	Str_text_24
-	.long	Str_PLAY_7
-	.long	Str_REC_8
-	.long	Str_PUNCH_2
-	.long	Str_CLR_7
-
-Str_d_10:	.asciz "%d"
-	.align	4, 0xFF	# pad after Str_d_10
-Str_2d_19:	.asciz "-%2d"
-	.align	4, 0xFF	# pad after Str_2d_19
-Str_3d_42:	.asciz "%3d"
-Str_999:	.asciz "999"
-Str_empty_784:	.asciz "   "
-Str_3d_41:	.asciz "%3d"
-Str_3d_40:	.asciz "%3d"
-Str_empty_783:	.asciz "                      "
-	.align	4, 0xFF	# pad after Str_empty_783
-
-ptrs_4867889C:
-	.long	Str_EASY_RECORD_sets_the_Sequencer_to_record
-	.long	Str_EASY_RECORD_aktiviert_die_wichtigsten_Sp
-	.long	Str_EASY_RECORD_programme_le_Sequencer_pour
-	.long	Str_La_grabaci_n_sencilla_prepara_al_secuenc
-	.long	Str_EASY_RECORD_sets_the_Sequencer_to_record
-	.long	Str_EASY_RECORD_sets_the_Sequencer_to_record
-	.long	Str_EASY_RECORD_sets_the_Sequencer_to_record
-ptrs_486788B8:
-	.long	Str_Press_OK_to_proceed
-	.long	Str_Best_tigen_Sie_mit_OK
-	.long	Str_Pressez_OK_pour_continuer
-	.long	Str_Para_continuar_presione_OK
-	.long	Str_Press_OK_to_proceed
-	.long	Str_Press_OK_to_proceed
-	.long	Str_Press_OK_to_proceed
-
-Str_3d_39:	.asciz "%3d"
-Str_3d_38:	.asciz "%3d"
-Str_3d_37:	.asciz "%3d"
-
-ptrs_486788E0:
-	.long	Str_PANEL_WRITE_replaces_the_sounds_and_sett
-	.long	Str_PANEL_WRITE_ersetzt_alle_Kl_nge_und_Eins
-	.long	Str_PANEL_WRITE_remplace_les_sonorit_s_et_le
-	.long	Str_La_escritura_de_panel_reemplaza_a_los_so
-	.long	Str_PANEL_WRITE_replaces_the_sounds_and_sett
-	.long	Str_PANEL_WRITE_replaces_the_sounds_and_sett
-	.long	Str_PANEL_WRITE_replaces_the_sounds_and_sett
-ptrs_486788FC:
-	.long	Str_Using_SONG_CLEAR_will_erase_any_existing
-	.long	Str_SONG_CLEAR_l_scht_alle_aufgenommenen_Dat
-	.long	Str_L_utilisation_de_SONG_CLEAR_effacera_tou
-	.long	Str_Al_anular_la_canci_n_se_borra_la_grabaci
-	.long	Str_Using_SONG_CLEAR_will_erase_any_existing
-	.long	Str_Using_SONG_CLEAR_will_erase_any_existing
-	.long	Str_Using_SONG_CLEAR_will_erase_any_existing
-data_48678918:
-	# a string, 4 bytes with its pad, read by AcSongSelBoxProc 0x48536084 `call strcpy_entry, [a2], 4` (+0, arg a1); AcSongSelBoxProc 0x48536084 `mov data_48678918, a1` (+0, as a base); handed to strcpy
-	.asciz	""
-	.align	4, 0xFF
-ptrs_4867891C:
-	.long	Str_Using_TRACK_CLEAR_will_erase_any_existin
-	.long	Str_TRACK_CLEAR_l_scht_alle_Daten_in_den_aus
-	.long	Str_L_utilisation_de_TRACK_CLEAR_effacera_to
-	.long	Str_Al_anular_la_pista_se_borra_la_grabaci_n
-	.long	Str_Using_TRACK_CLEAR_will_erase_any_existin
-	.long	Str_Using_TRACK_CLEAR_will_erase_any_existin
-	.long	Str_Using_TRACK_CLEAR_will_erase_any_existin
-ptrs_48678938:
-	.long	Str_Press_the_up_down_buttons_under_the_scre
-	.long	Str_Dr_cken_Sie_einer_der_Doppeltasten_unter
-	.long	Str_Pressez_le_bouton_sous_l_cran_correspond_3
-	.long	Str_Presione_el_bot_n_arriba_abajo_situado_d_3
-	.long	Str_Press_the_up_down_buttons_under_the_scre
-	.long	Str_Press_the_up_down_buttons_under_the_scre
-	.long	Str_Press_the_up_down_buttons_under_the_scre
-ptrs_48678954:
-	.long	Str_Press_OK_to_complete_TRACK_CLEAR
-	.long	Str_Dr_cken_Sie_OK_um_TRACK_CLEAR_auszuf_hre
-	.long	Str_Pressez_OK_pour_terminer_la_proc_dure_TR
-	.long	Str_Para_completar_la_eliminaci_n_de_pistas
-	.long	Str_Press_OK_to_complete_TRACK_CLEAR
-	.long	Str_Press_OK_to_complete_TRACK_CLEAR
-	.long	Str_Press_OK_to_complete_TRACK_CLEAR
-
-Str_3d_36:	.asciz "%3d"
-Str_3d_35:	.asciz "%3d"
-Str_3d_34:	.asciz "%3d"
-
-ptrs_4867897C:
-	.long	Str_Press_the_START_STOP_button_to_begin
-	.long	Str_Bet_tigen_Sie_die_START_STOP_Taste_um_de
-	.long	Str_Pressez_le_bouton_START_STOP
-	.long	Str_Oprima_el_bot_n_START_STOP_para_empezar
-	.long	Str_Press_the_START_STOP_button_to_begin
-	.long	Str_Press_the_START_STOP_button_to_begin
-	.long	Str_Press_the_START_STOP_button_to_begin
-
-Str_ALL_22:	.asciz "ALL"
-Str_2d_18:	.asciz " %2d"
-	.align	4, 0xFF	# pad after Str_2d_18
-Str_3d_33:	.asciz "%3d"
-Str_3d_32:	.asciz "%3d"
-Str_ad_b8:	.asciz "~ad~b8"
-	.align	4, 0xFF	# pad after Str_ad_b8
-Str_ad:	.asciz "~ad "
-	.align	4, 0xFF	# pad after Str_ad
-Str_ac_b8:	.asciz "~ac~b8"
-	.align	4, 0xFF	# pad after Str_ac_b8
-Str_ac:	.asciz "~ac "
-	.align	4, 0xFF	# pad after Str_ac
-Str_ab_b8:	.asciz "~ab~b8"
-	.align	4, 0xFF	# pad after Str_ab_b8
-Str_ab:	.asciz "~ab "
-	.align	4, 0xFF	# pad after Str_ab
-Str_aa:	.asciz "~aa "
-	.align	4, 0xFF	# pad after Str_aa
-Str_empty_782:	.asciz "  "
-	.align	4, 0xFF	# pad after Str_empty_782
-Str_3d_31:	.asciz "%3d%%"
-	.align	4, 0xFF	# pad after Str_3d_31
-Str_1c_3d_5:	.asciz "%1c%3d%%"
-	.align	4, 0xFF	# pad after Str_1c_3d_5
-
-SeqTrAsGridCheck_Table:	# 24 x u8, 0..66; read by SeqTrAsGridCheck_entry 0x48537381: `movbu  (a0), d0`; SeqTrAsGridCheck_entry 0x48537381: `movbu  (d1, a0), d0`
-	tab_u8	16, 17, 18, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12	# [0]
-	tab_u8	13, 14, 15, 31, 64, 65, 27, 66	# [16]
-
-SeqTrAsGridCheck_Var:	# u32, a constant; read / written by SeqTrAsGridCheck 0x48537381: `mov (SeqTrAsGridCheck_Var), d3`
-	.long	24
-
-Str_empty_781:	.asciz "-- "
-Str_empty_780:	.asciz "-- "
-data_48678A20:
-	# 28 bytes the code takes the address of: TrAsSureLangCheck 0x48537BD2 `mov data_48678A20, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
-	tab_u32	0x50081300, 0x50081300, 0x50081300, 0x50081300, 0x50081300, 0x50081300, 0x50081300	# +0
-
-ptrs_48678A3C:
-	.long	Str_Any_existing_song_will_be_cleared_Press
-	.long	Str_Jeder_Song_im_Arbeitsspeicher_wird_gel_s
-	.long	Str_Toute_s_quence_existante_sera_effac_e_Pr
-	.long	Str_La_canci_n_existente_ser_eliminada_Para
-	.long	Str_Any_existing_song_will_be_cleared_Press
-	.long	Str_Any_existing_song_will_be_cleared_Press
-	.long	Str_Any_existing_song_will_be_cleared_Press
-
-Str_ON_35:	.asciz "ON "
-Str_OFF_39:	.asciz "OFF"
-
-ptrs_48678A60:
-	.long	Str_Select_whether_or_not_After_Touch_is_rec
-	.long	Str_W_hlen_Sie_ob_After_Touch_Effekte_vom_Se
-	.long	Str_S_lectionnez_l_enregistrement_ou_non_des
-	.long	Str_Seleccione_si_desea_grabar_o_no_el_AFTER
-	.long	Str_Select_whether_or_not_After_Touch_is_rec
-	.long	Str_Select_whether_or_not_After_Touch_is_rec
-	.long	Str_Select_whether_or_not_After_Touch_is_rec
-
-Str_empty_779:	.asciz "                         "
-	.align	4, 0xFF	# pad after Str_empty_779
-Str_empty_778:	.asciz "                         "
-	.align	4, 0xFF	# pad after Str_empty_778
-Str_ALL_21:	.asciz "ALL"
-Str_2d_17:	.asciz " %2d"
-	.align	4, 0xFF	# pad after Str_2d_17
-Str_ALL_20:	.asciz "ALL"
-Str_2d_16:	.asciz " %2d"
-	.align	4, 0xFF	# pad after Str_2d_16

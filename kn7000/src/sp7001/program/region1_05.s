@@ -22956,6 +22956,7 @@ loc_484AF0EB:
     call    func_484AF095_entry, [d2], 0x14
 loc_484AF0F0:
     ret     0, 8
+loc_484AF0F3:
     retf    0, 0
 
 func_484AF0F6:
