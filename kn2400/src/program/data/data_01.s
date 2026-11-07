@@ -32754,10 +32754,10 @@ func_486C5864_entry_L63_Table:
 func_486BF613_Table:	# 4 x u8, 0..255; read by FmmSaveTitleFunc : `movbu	(a1), d0`; func_486BF613_entry : `movbu	(a0), d0`
 	tab_u8	0, 0, 255, 255
 
-func_486D0DF2_Var:	# s8, a constant; read / written by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+func_486D0DF2_Var:	# s8, a constant; read / written by StrCopy 0x486D0DF2: `movbu (a1), d0`
 	.byte	0
 
-func_486D0DF2_Table:	# 3 x s8, -1..-1; read by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+StrCopy_Table:	# 3 x s8, -1..-1; read by StrCopy 0x486D0DF2: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
 func_486BFBDA_entry_L19_Table:	# 15 x REC_func_486BFBDA_entry_L19_Table (4 bytes each); read by func_486BFBDA_entry_L19 0x486BFBF5 `movhu (d0, a0), d0`; func_486BFBDA_entry_L47 0x486BFC23 `movbu (2, a0), d0`; func_486BFBDA_entry_L47 0x486BFC23 `movbu (2, a1), d1`
@@ -32877,22 +32877,22 @@ func_486C540C_Table:	# 20 x u8, 0..19; read by func_486C540C : `movbu	(d0, a0), 
 SingleLoadSrcDstFunc_Table:	# 6 x u8, 1..255; read by CmpSingleLoadFileFunc : `movbu	(d0, a0), d1`; CmpSingleLoadSrcDstFunc_entry : `movbu	(d0, a0), d1` ...
 	tab_u8	1, 2, 3, 4, 6, 255
 
-func_486D0DF2_Var_2:	# s8, a constant; read / written by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+func_486D0DF2_Var_2:	# s8, a constant; read / written by StrCopy 0x486D0DF2: `movbu (a1), d0`
 	.byte	0
 
-func_486D0DF2_Table_2:	# 3 x s8, -1..-1; read by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+StrCopy_Table_2:	# 3 x s8, -1..-1; read by StrCopy 0x486D0DF2: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
-func_486D0DF2_Var_3:	# s8, a constant; read / written by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+func_486D0DF2_Var_3:	# s8, a constant; read / written by StrCopy 0x486D0DF2: `movbu (a1), d0`
 	.byte	0
 
-func_486D0DF2_Table_3:	# 3 x s8, -1..-1; read by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+StrCopy_Table_3:	# 3 x s8, -1..-1; read by StrCopy 0x486D0DF2: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
-func_486D0DF2_Var_4:	# s8, a constant; read / written by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+func_486D0DF2_Var_4:	# s8, a constant; read / written by StrCopy 0x486D0DF2: `movbu (a1), d0`
 	.byte	0
 
-func_486D0DF2_Table_4:	# 3 x s8, -1..-1; read by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+StrCopy_Table_4:	# 3 x s8, -1..-1; read by StrCopy 0x486D0DF2: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
 Text_Vari_1:	# 20 strings of 16 characters, NUL-terminated
@@ -32953,10 +32953,10 @@ func_486C54AB_Table:
 	.long	Str_MULTI_EFFECT_2
 	.long	Str_CHORUS_9
 
-func_486D0DF2_Var_5:	# s8, a constant; read / written by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+func_486D0DF2_Var_5:	# s8, a constant; read / written by StrCopy 0x486D0DF2: `movbu (a1), d0`
 	.byte	0
 
-func_486D0DF2_Table_5:	# 3 x s8, -1..-1; read by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+StrCopy_Table_5:	# 3 x s8, -1..-1; read by StrCopy 0x486D0DF2: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
 Str_MEMORY_26:	.asciz "     MEMORY     "
@@ -32967,28 +32967,28 @@ func_486C5556_Table:
 	.long	Str_MEMORY_26
 	.long	Str_USER_KIT
 
-func_486D0DF2_Var_6:	# s8, a constant; read / written by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+func_486D0DF2_Var_6:	# s8, a constant; read / written by StrCopy 0x486D0DF2: `movbu (a1), d0`
 	.byte	0
 
-func_486D0DF2_Table_6:	# 3 x s8, -1..-1; read by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+StrCopy_Table_6:	# 3 x s8, -1..-1; read by StrCopy 0x486D0DF2: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
-func_486D0DF2_Var_7:	# s8, a constant; read / written by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+func_486D0DF2_Var_7:	# s8, a constant; read / written by StrCopy 0x486D0DF2: `movbu (a1), d0`
 	.byte	0
 
-func_486D0DF2_Table_7:	# 3 x s8, -1..-1; read by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+StrCopy_Table_7:	# 3 x s8, -1..-1; read by StrCopy 0x486D0DF2: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
-func_486D0DF2_Var_8:	# s8, a constant; read / written by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+func_486D0DF2_Var_8:	# s8, a constant; read / written by StrCopy 0x486D0DF2: `movbu (a1), d0`
 	.byte	0
 
-func_486D0DF2_Table_8:	# 3 x s8, -1..-1; read by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+StrCopy_Table_8:	# 3 x s8, -1..-1; read by StrCopy 0x486D0DF2: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
-func_486D0DF2_Var_9:	# s8, a constant; read / written by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+func_486D0DF2_Var_9:	# s8, a constant; read / written by StrCopy 0x486D0DF2: `movbu (a1), d0`
 	.byte	0
 
-func_486D0DF2_Table_9:	# 3 x s8, -1..-1; read by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+StrCopy_Table_9:	# 3 x s8, -1..-1; read by StrCopy 0x486D0DF2: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
 Str_empty_733:	.asciz ": "
@@ -33012,21 +33012,21 @@ func_486C62EF_L171_Table:	# 4 x u8, 10..255; read by func_486C62EF_L171 0x486C64
 Str_SONG_27:	.asciz "SONG: "
 	.align	4, 0xFF	# pad after Str_SONG_27
 
-# 8 entries of 8 bits up to the end marker that func_486D0E3E_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_486D0E3E_Lf_List:
+# 8 entries of 8 bits up to the end marker that StrAppend_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+StrAppend_Lf_List:
 	.byte	77, 69, 77, 79, 82, 89, 45, 65, 0
-# 8 entries of 8 bits up to the end marker that func_486D0E3E_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_486D0E3E_Lf_List_2:
+# 8 entries of 8 bits up to the end marker that StrAppend_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+StrAppend_Lf_List_2:
 	.byte	77, 69, 77, 79, 82, 89, 45, 66, 0
-# 8 entries of 8 bits up to the end marker that func_486D0E3E_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_486D0E3E_Lf_List_3:
+# 8 entries of 8 bits up to the end marker that StrAppend_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+StrAppend_Lf_List_3:
 	.byte	77, 69, 77, 79, 82, 89, 45, 67, 0
 	.byte	0xff	# the marker's fill to a 4-byte boundary
 
 func_486C650A_Table:
-	.long	func_486D0E3E_Lf_List
-	.long	func_486D0E3E_Lf_List_2
-	.long	func_486D0E3E_Lf_List_3
+	.long	StrAppend_Lf_List
+	.long	StrAppend_Lf_List_2
+	.long	StrAppend_Lf_List_3
 
 Str_empty_731:	.asciz ": "
 	.align	4, 0xFF	# pad after Str_empty_731
@@ -33037,21 +33037,21 @@ Str_empty_729:	.asciz ": "
 Str_ALL_29:	.asciz "      ALL       "
 	.align	4, 0xFF	# pad after Str_ALL_29
 
-# 8 entries of 8 bits up to the end marker that func_486D0E3E_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_486D0E3E_Lf_List_4:
+# 8 entries of 8 bits up to the end marker that StrAppend_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+StrAppend_Lf_List_4:
 	.byte	77, 69, 77, 79, 82, 89, 45, 65, 0
-# 8 entries of 8 bits up to the end marker that func_486D0E3E_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_486D0E3E_Lf_List_5:
+# 8 entries of 8 bits up to the end marker that StrAppend_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+StrAppend_Lf_List_5:
 	.byte	77, 69, 77, 79, 82, 89, 45, 66, 0
-# 8 entries of 8 bits up to the end marker that func_486D0E3E_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_486D0E3E_Lf_List_6:
+# 8 entries of 8 bits up to the end marker that StrAppend_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+StrAppend_Lf_List_6:
 	.byte	77, 69, 77, 79, 82, 89, 45, 67, 0
 	.byte	0xff	# the marker's fill to a 4-byte boundary
 
 func_486C6699_Table:
-	.long	func_486D0E3E_Lf_List_4
-	.long	func_486D0E3E_Lf_List_5
-	.long	func_486D0E3E_Lf_List_6
+	.long	StrAppend_Lf_List_4
+	.long	StrAppend_Lf_List_5
+	.long	StrAppend_Lf_List_6
 
 Str_empty_728:	.asciz ": "
 	.align	4, 0xFF	# pad after Str_empty_728
@@ -33082,10 +33082,10 @@ func_486C711E_L22_Var:	# u8, a constant; read / written by func_486C711E_L22 0x4
 func_486C711E_L1ce_Table:	# 3 x u8, 168..255; read by func_486C711E_L1ce 0x486C72EC: `movbu (func_486C711E_L1ce_Table), d1`; func_486C711E_L498 0x486C75B6: `movbu (func_486C711E_L1ce_Table), d2`
 	tab_u8	168, 255, 255
 
-func_486D0DF2_Var_10:	# s8, a constant; read / written by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+func_486D0DF2_Var_10:	# s8, a constant; read / written by StrCopy 0x486D0DF2: `movbu (a1), d0`
 	.byte	0
 
-func_486D0DF2_Table_10:	# 3 x s8, -1..-1; read by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+StrCopy_Table_10:	# 3 x s8, -1..-1; read by StrCopy 0x486D0DF2: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
 Str_USER_MEMORY_2:	.asciz "USER MEMORY: "
@@ -33093,10 +33093,10 @@ Str_USER_MEMORY_2:	.asciz "USER MEMORY: "
 Str_ALL_25:	.asciz "      ALL       "
 	.align	4, 0xFF	# pad after Str_ALL_25
 
-func_486D0DF2_Var_11:	# s8, a constant; read / written by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+func_486D0DF2_Var_11:	# s8, a constant; read / written by StrCopy 0x486D0DF2: `movbu (a1), d0`
 	.byte	0
 
-func_486D0DF2_Table_11:	# 3 x s8, -1..-1; read by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+StrCopy_Table_11:	# 3 x s8, -1..-1; read by StrCopy 0x486D0DF2: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
 Str_USER_MEMORY:	.asciz "USER MEMORY: "
@@ -33305,14 +33305,14 @@ Str_rb_31:	.asciz "rb"
 	.align	4, 0xFF	# pad after Str_rb_31
 
 func_486CEAA1_Table:	# 8 x REC_func_486CEAA1_Table (8 bytes each); read by DiskLoadDispatch_entry_L3b 0x486CEAE1 `mov (4, a0), a1`; DiskLoadDispatch_entry_L3b 0x486CEAE1 `movbu (d0, a2), d0`; DiskLoadDispatch_entry_L3b 0x486CEAE1 `movbu (d1, a2), d1` (+1)
-	REC_func_486CEAA1_Table	f0=6, x1="\x00\x00\x00", proc=func_486CE955
-	REC_func_486CEAA1_Table	f0=4, x1="\x00\x00\x00", proc=func_486CE7F3
+	REC_func_486CEAA1_Table	f0=6, x1="\x00\x00\x00", proc=LoadEfcFile
+	REC_func_486CEAA1_Table	f0=4, x1="\x00\x00\x00", proc=LoadTmFile
 	REC_func_486CEAA1_Table	x1="\x00\x00\x00", proc=func_486CD954
 	REC_func_486CEAA1_Table	f0=1, x1="\x00\x00\x00", proc=func_486CDC29
-	REC_func_486CEAA1_Table	f0=5, x1="\x00\x00\x00", proc=func_486CE712
-	REC_func_486CEAA1_Table	f0=3, x1="\x00\x00\x00", proc=func_486CE631
+	REC_func_486CEAA1_Table	f0=5, x1="\x00\x00\x00", proc=LoadMspFile
+	REC_func_486CEAA1_Table	f0=3, x1="\x00\x00\x00", proc=LoadCmpFile
 	REC_func_486CEAA1_Table	f0=2, x1="\x00\x00\x00", proc=func_486CDF6D
-	REC_func_486CEAA1_Table	f0=7, x1="\x00\x00\x00", proc=func_486CDF09
+	REC_func_486CEAA1_Table	f0=7, x1="\x00\x00\x00", proc=LoadMdFile
 
 Str_wb_23:	.asciz "wb"
 	.align	4, 0xFF	# pad after Str_wb_23
@@ -33335,13 +33335,13 @@ Str_wb_15:	.asciz "wb"
 
 func_486CF41A_Table_2:	# 8 x REC_func_486CF41A_Table_2 (8 bytes each); read by func_486CF41A_entry_L89 0x486CF4A8 `mov (4, a0), a1`; func_486CF41A_entry_L89 0x486CF4A8 `movbu (d0, a2), d0`; func_486CF41A_entry_Ld9 0x486CF4F8 `movbu (d0, a3), d0` (+1)
 	REC_func_486CF41A_Table_2	x1="\x00\x00\x00", proc=func_486CECD2
-	REC_func_486CF41A_Table_2	index=1, x1="\x00\x00\x00", proc=func_486CEE05
-	REC_func_486CF41A_Table_2	index=5, x1="\x00\x00\x00", proc=func_486CF2A7
-	REC_func_486CF41A_Table_2	index=3, x1="\x00\x00\x00", proc=func_486CF1F5
-	REC_func_486CF41A_Table_2	index=4, x1="\x00\x00\x00", proc=func_486CF359
-	REC_func_486CF41A_Table_2	index=2, x1="\x00\x00\x00", proc=func_486CF0DD
-	REC_func_486CF41A_Table_2	index=6, x1="\x00\x00\x00", proc=func_486CF02B
-	REC_func_486CF41A_Table_2	index=7, x1="\x00\x00\x00", proc=func_486CEF33
+	REC_func_486CF41A_Table_2	FileNameWithExt_d0=1, x1="\x00\x00\x00", proc=SavePmtFile
+	REC_func_486CF41A_Table_2	FileNameWithExt_d0=5, x1="\x00\x00\x00", proc=SaveMspFile
+	REC_func_486CF41A_Table_2	FileNameWithExt_d0=3, x1="\x00\x00\x00", proc=SaveCmpFile
+	REC_func_486CF41A_Table_2	FileNameWithExt_d0=4, x1="\x00\x00\x00", proc=SaveTmFile
+	REC_func_486CF41A_Table_2	FileNameWithExt_d0=2, x1="\x00\x00\x00", proc=func_486CF0DD
+	REC_func_486CF41A_Table_2	FileNameWithExt_d0=6, x1="\x00\x00\x00", proc=SaveEfcFile
+	REC_func_486CF41A_Table_2	FileNameWithExt_d0=7, x1="\x00\x00\x00", proc=SaveMdFile
 
 Str_rb_30:	.asciz "rb"
 	.align	4, 0xFF	# pad after Str_rb_30
@@ -33400,7 +33400,7 @@ Text_LSW:	# 14 strings of 3 characters, NUL-terminated
 	.asciz	"SEQ"
 	.asciz	"ACT"
 
-func_486D0F12_Table:
+FileTypeExtTable:
 	.long	Text_LSW
 	.long	Text_LSW+4
 	.long	Text_LSW+8

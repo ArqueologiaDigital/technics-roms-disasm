@@ -1,0 +1,36 @@
+kn6000: 5632 func_ routines; region (64 KB), func_, of them with a string or GUI id
+  0x4C12xxxx    720    18
+  0x4C11xxxx    717     6
+  0x4C05xxxx    440    22
+  0x4C04xxxx    387     7
+  0x4C08xxxx    378     4
+  0x4C03xxxx    361    20
+  0x4C09xxxx    329     0
+  0x4C06xxxx    305    21
+  0x4C16xxxx    292    18
+  0x4C14xxxx    291    76
+  0x4C02xxxx    270    13
+kn6500: 5659 func_ routines; region (64 KB), func_, of them with a string or GUI id
+  0x4C11xxxx    722     7
+  0x4C12xxxx    705    14
+  0x4C05xxxx    442    25
+  0x4C04xxxx    384     6
+  0x4C08xxxx    372     4
+  0x4C03xxxx    364    20
+  0x4C09xxxx    342     0
+  0x4C06xxxx    312    22
+  0x4C16xxxx    295    18
+  0x4C14xxxx    289    76
+  0x4C02xxxx    266    14
+kn2400: 6480 func_ routines; region (64 KB), func_, of them with a string or GUI id
+  0x4861xxxx    662     5
+  0x4862xxxx    655    12
+  0x5017xxxx    467    18
+  0x5015xxxx    451     6
+  0x4870xxxx    329    72
+  0x5014xxxx    318    11
+  0x486Exxxx    317    32
+  0x5018xxxx    280     3
+  0x5016xxxx    265    12
+  0x4864xxxx    254    22
+  0x485Exxxx    249     3

@@ -3434,33 +3434,33 @@
 # REC_func_4C149AE9_Records: 8-byte records (func_4C149AE9_Records, 11 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   index        ptr            func_4C149AE9_entry_L34 0x4C149B22 `mov (a3), a0`
-#   +4   f4           u16            func_4C149AE9 0x4C149AE9 `movhu (4, a3), d0`
+#   +4   FileSeek_d0  u16            func_4C149AE9 0x4C149AE9 `movhu (4, a3), d0`
 #   +6   count        u16            func_4C149AE9 0x4C149AE9 `movhu (a2), d1`; func_4C149AE9_entry_L40 0x4C149B2E `movhu (a2), d0`
-.macro REC_func_4C149AE9_Records index=0, f4=0, count=0
+.macro REC_func_4C149AE9_Records index=0, FileSeek_d0=0, count=0
 	.long	\index
-	.word	\f4
+	.word	\FileSeek_d0
 	.word	\count
 .endm
 
 # REC_func_4C149B92_Records: 8-byte records (func_4C149B92_Records, 11 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   text         ptr            func_4C149B92_entry_L34 0x4C149BCB `mov (a3), a0`; func_4C14AFF6_entry_L14 0x4C14B00F `mov (d0, a2), a1`
-#   +4   f4           u16            func_4C149B92 0x4C149B92 `movhu (4, a3), d0`; func_4C14AFF6_entry_L14 0x4C14B00F `movhu (4, a0), d2`
+#   +4   FileSeek_d0  u16            func_4C149B92 0x4C149B92 `movhu (4, a3), d0`; func_4C14AFF6_entry_L14 0x4C14B00F `movhu (4, a0), d2`
 #   +6   count        u16            func_4C149B92 0x4C149B92 `movhu (a2), d1`; func_4C149B92_entry_L40 0x4C149BD7 `movhu (a2), d0` (+1)
-.macro REC_func_4C149B92_Records text=0, f4=0, count=0
+.macro REC_func_4C149B92_Records text=0, FileSeek_d0=0, count=0
 	.long	\text
-	.word	\f4
+	.word	\FileSeek_d0
 	.word	\count
 .endm
 
 # REC_func_4C149927_entry_L54_Table: 8-byte records (func_4C149927_entry_L54_Table, 7 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   f0           u16            func_4C149927_entry_L54 0x4C149980 `movhu (d3, a0), d0`; func_4C149E91_entry_Lb 0x4C149EA1 `movhu (a3), d0` (+1)
+#   +0   FileSeek_d0  u16            func_4C149927_entry_L54 0x4C149980 `movhu (d3, a0), d0`; func_4C149E91_entry_Lb 0x4C149EA1 `movhu (a3), d0` (+1)
 #   +2   index        u16            func_4C14AFF6_entry_L14 0x4C14B00F `movhu (2, a0), d1`
 #   +4   index_       u16            func_4C149E91_entry_Lb 0x4C149EA1 `movhu (4, a3), d0`; func_4C14AFF6_entry_L74 0x4C14B06F `movhu (4, a0), d0`
 #   +6   index__      u16            func_4C14AFF6_entry_L89 0x4C14B084 `movhu (6, a2), d1`
-.macro REC_func_4C149927_entry_L54_Table f0=0, index=0, index_=0, index__=0
-	.word	\f0
+.macro REC_func_4C149927_entry_L54_Table FileSeek_d0=0, index=0, index_=0, index__=0
+	.word	\FileSeek_d0
 	.word	\index
 	.word	\index_
 	.word	\index__
@@ -3479,11 +3479,11 @@
 
 # REC_func_4C14BB7D_entry_L11_Table: 8-byte records (func_4C14BB7D_entry_L11_Table, 11 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   index        u8             func_4C14BB7D_entry_L36 0x4C14BBB8 `movbu (d0, a2), d0`; func_4C14BB7D_entry_L9e 0x4C14BC20 `movbu (d0, a2), d0` (+1)
+#   +0   FileNameWithExt_d0 u8             func_4C14BB7D_entry_L36 0x4C14BBB8 `movbu (d0, a2), d0`; func_4C14BB7D_entry_L9e 0x4C14BC20 `movbu (d0, a2), d0` (+1)
 #   +1   x1           u8[3]          no reader seen
 #   +4   proc         ptr            func_4C14BB7D_entry_L9e 0x4C14BC20 `mov (4, a0), a1`
-.macro REC_func_4C14BB7D_entry_L11_Table index=0, x1, proc=0
-	.byte	\index
+.macro REC_func_4C14BB7D_entry_L11_Table FileNameWithExt_d0=0, x1, proc=0
+	.byte	\FileNameWithExt_d0
 	.ascii	"\x1"
 	.long	\proc
 .endm
@@ -3806,8 +3806,8 @@
 
 # RamTestRegion: 12-byte records (func_4C050837_entry_L4_Records, 3 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   base         u32            func_4C050837_entry_L4 0x4C050840 `mov (a0), a2`
-#   +4   length       u32            func_4C050837_entry_L4 0x4C050840 `mov (4, a0), d3`
+#   +0   base         u32            RamTestWords_entry_L4 0x4C050840 `mov (a0), a2`
+#   +4   length       u32            RamTestWords_entry_L4 0x4C050840 `mov (4, a0), d3`
 #   +8   x8           u8[4]          no reader seen
 .macro RamTestRegion base=0, length=0, x8
 	.long	\base
@@ -3817,9 +3817,9 @@
 
 # RamTestByteRegion: 12-byte records (func_4C0508F7_entry_L4_Records, 1 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   base         u32            func_4C0508F7_entry_L4 0x4C0508FD `mov (a1), a0`
-#   +4   length       u32            func_4C0508F7_entry_L4 0x4C0508FD `mov (4, a1), d0`
-#   +8   fail_bit     u8             func_4C0508F7_entry_L4 0x4C0508FD `movbu (a1), d1`; func_4C0508F7_entry_L34 0x4C05092D `movbu (a1), d1`
+#   +0   base         u32            RamTestBytes_entry_L4 0x4C0508FD `mov (a1), a0`
+#   +4   length       u32            RamTestBytes_entry_L4 0x4C0508FD `mov (4, a1), d0`
+#   +8   fail_bit     u8             RamTestBytes_entry_L4 0x4C0508FD `movbu (a1), d1`; RamTestBytes_entry_L34 0x4C05092D `movbu (a1), d1`
 #   +9   x9           u8[3]          no reader seen
 .macro RamTestByteRegion base=0, length=0, fail_bit=0, x9
 	.long	\base
@@ -4157,7 +4157,7 @@
 #   +2   key_         s16            func_4C01B1AE 0x4C01B1AE `movhu (2, a0), d3`; func_4C01B1AE_entry_L99 0x4C01B24C `movhu (2, a0), d3` (+12)
 #   +4   key__        s16            func_4C01B1AE 0x4C01B1AE `movhu (4, a0), d0`; func_4C01B1AE_entry_Lce 0x4C01B281 `movhu (4, a0), d0` (+2)
 #   +6   flag_id      s16            func_4C0065B1_L56 0x4C006607 `movhu (6, a0), d0`; func_4C0066C1 0x4C0066C1 `movhu (6, a0), d0` (+8)
-#   +8   flag_id_     s16            func_4C0146DD 0x4C0146DD `movhu (8, a0), d0`; func_4C0146DD 0x4C0146DD `movhu (8, a2), d0` (+24)
+#   +8   flag_id_     s16            InitDrawTask_Impl 0x4C0146DD `movhu (8, a0), d0`; InitDrawTask_Impl 0x4C0146DD `movhu (8, a2), d0` (+24)
 #   +10  x10          u8[2]          no reader seen
 #   +12  index        u32            ProcCall 0x4C01C05B `mov (0xc, a0), d1`; ProcCall 0x4C01C05B `mov (0xc, a0), d2` (+7)
 #   +16  f16          u32            func_4C01B11F 0x4C01B11F `mov (0x10, a0), d0`; func_4C01B35C_entry_L5c 0x4C01B3BD `mov (0x10, a0), d0` (+3)
@@ -4223,7 +4223,7 @@
 
 # REC_func_4C130418_entry_Ld1_Records: 40-byte records (func_4C130418_entry_Ld1_Records, 2 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   count        u32            func_4C130418_entry_Ld1 0x4C1304EE `mov (func_4C130418_entry_Ld1_Records+40), d0`; func_4C130418_entry_L103 0x4C130520 `mov (func_4C130418_entry_Ld1_Records+40), d0` (+1)
+#   +0   count        u32            FsOpen_entry_Ld1 0x4C1304EE `mov (func_4C130418_entry_Ld1_Records+40), d0`; FsOpen_entry_L103 0x4C130520 `mov (func_4C130418_entry_Ld1_Records+40), d0` (+1)
 #   +4   f4           u8             func_4C13095A_entry_L3e 0x4C13099D `movbu (func_4C130418_entry_Ld1_Records+44), d0`; func_4C13095A_entry_Lc8 0x4C130A27 `movbu d0, (func_4C130418_entry_Ld1_Records+44)`
 #   +5   x5           u8[3]          no reader seen
 #   +8   f8           u32            _findfirst_entry_L91 0x4C133883 `mov d0, (func_4C130418_entry_Ld1_Records+48)`; _findnext_entry_L1f 0x4C133965 `mov (func_4C130418_entry_Ld1_Records+48), d0` (+1)
@@ -4231,7 +4231,7 @@
 #   +16  f16          u32            cre_mbx_Impl 0x4C37EEF8 `mov (a3), d2`
 #   +20  p20          ptr            no reader seen
 #   +24  p24          ptr            cre_mbx_Impl 0x4C37EEF8 `mov (a3), d2`
-#   +28  text         ptr            func_4C130418_entry_L103 0x4C130520 `mov (a2), a1`
+#   +28  text         ptr            FsOpen_entry_L103 0x4C130520 `mov (a2), a1`
 #   +32  x32          u8[8]          no reader seen
 .macro REC_func_4C130418_entry_Ld1_Records count=0, f4=0, x5, f8=0, index=0, f16=0, p20=0, p24=0, text=0, x32
 	.long	\count

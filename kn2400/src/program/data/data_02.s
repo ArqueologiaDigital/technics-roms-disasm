@@ -1799,11 +1799,11 @@ Str_MTrk:	.asciz "MTrk"
 # census: opaque -- unknown-dump: 3 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0DEA39, 0x0DEA3C
 
-func_486EACB1_entry_L8_Table:	# 12 x u8, 0..247; read by func_486EACB1_entry_L8 0x486EACBE: `movbu (d0, a2), d0`
+func_486EACB1_entry_L8_Table:	# 12 x u8, 0..247; read by SmfWriteBytes_entry_L8 0x486EACBE: `movbu (d0, a2), d0`
 	tab_u8	240, 10, 80, 44, 32, 126, 31, 0, 0, 127, 0, 247
-func_486EACB1_entry_L8_Table_2:	# 7 x u8, 3..247; read by func_486EACB1_entry_L8 0x486EACBE: `movbu (d0, a2), d0`
+func_486EACB1_entry_L8_Table_2:	# 7 x u8, 3..247; read by SmfWriteBytes_entry_L8 0x486EACBE: `movbu (d0, a2), d0`
 	tab_u8	240, 5, 126, 127, 9, 3, 247
-func_486EACB1_entry_L8_Table_3:	# 9 x u8, 1..255; read by func_486EACB1_entry_L8 0x486EACBE: `movbu (d0, a2), d0`
+func_486EACB1_entry_L8_Table_3:	# 9 x u8, 1..255; read by SmfWriteBytes_entry_L8 0x486EACBE: `movbu (d0, a2), d0`
 	tab_u8	240, 5, 126, 127, 9, 1, 247, 255, 255
 func_486EA2F3_Table:	# 12 x u8, 0..247; read by func_486EA2F3_entry : `movbu	(a1), d0`
 	tab_u8	240, 10, 80, 44, 32, 48, 31, 0, 0, 0, 0, 247
@@ -19867,29 +19867,29 @@ SdcSmfSaveAsFunc_Table:
 	.long	Str_GM2_3
 	.long	Str_GM
 
-func_486D0DF2_Var_13:	# s8, a constant; read / written by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+func_486D0DF2_Var_13:	# s8, a constant; read / written by StrCopy 0x486D0DF2: `movbu (a1), d0`
 	.byte	0
 
-func_486D0DF2_Table_12:	# 3 x s8, -1..-1; read by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+StrCopy_Table_12:	# 3 x s8, -1..-1; read by StrCopy 0x486D0DF2: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
 Str_TR:	.asciz "TR "
 Str_empty_400:	.asciz ": "
 	.align	4, 0xFF	# pad after Str_empty_400
 
-func_486D0DF2_Var_14:	# s8, a constant; read / written by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+func_486D0DF2_Var_14:	# s8, a constant; read / written by StrCopy 0x486D0DF2: `movbu (a1), d0`
 	.byte	0
 
-func_486D0DF2_Table_13:	# 3 x s8, -1..-1; read by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+StrCopy_Table_13:	# 3 x s8, -1..-1; read by StrCopy 0x486D0DF2: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
 Str_empty_399:	.asciz ": "
 	.align	4, 0xFF	# pad after Str_empty_399
 
-func_486D0DF2_Var_15:	# s8, a constant; read / written by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+func_486D0DF2_Var_15:	# s8, a constant; read / written by StrCopy 0x486D0DF2: `movbu (a1), d0`
 	.byte	0
 
-func_486D0DF2_Table_14:	# 3 x s8, -1..-1; read by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+StrCopy_Table_14:	# 3 x s8, -1..-1; read by StrCopy 0x486D0DF2: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
 Str_NO_PLAYLIST:	.asciz "  * NO PLAYLIST *  "
@@ -19898,10 +19898,10 @@ Str_Default_Playlist_2:	.asciz "* Default Playlist *"
 Str_empty_398:	.asciz ": "
 	.align	4, 0xFF	# pad after Str_empty_398
 
-func_486D0DF2_Var_16:	# s8, a constant; read / written by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+func_486D0DF2_Var_16:	# s8, a constant; read / written by StrCopy 0x486D0DF2: `movbu (a1), d0`
 	.byte	0
 
-func_486D0DF2_Table_15:	# 3 x s8, -1..-1; read by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+StrCopy_Table_15:	# 3 x s8, -1..-1; read by StrCopy 0x486D0DF2: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
 Str_empty_397:	.asciz " * "
@@ -19968,10 +19968,10 @@ func_4871B812_L1c_Table:
 	.long	Str_EFFECT_9
 	.long	Str_text_51
 
-func_486D0DF2_Var_17:	# s8, a constant; read / written by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+func_486D0DF2_Var_17:	# s8, a constant; read / written by StrCopy 0x486D0DF2: `movbu (a1), d0`
 	.byte	0
 
-func_486D0DF2_Table_16:	# 3 x s8, -1..-1; read by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+StrCopy_Table_16:	# 3 x s8, -1..-1; read by StrCopy 0x486D0DF2: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
 Text_Vari_1_2:	# 20 strings of 16 characters, NUL-terminated
@@ -20018,21 +20018,21 @@ func_4871BED4_Table_2:
 	.long	Text_Vari_1_2+306
 	.long	Text_Vari_1_2+323
 
-# 8 entries of 8 bits up to the end marker that func_486D0E3E_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_486D0E3E_Lf_List_7:
+# 8 entries of 8 bits up to the end marker that StrAppend_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+StrAppend_Lf_List_7:
 	.byte	77, 69, 77, 79, 82, 89, 45, 65, 0
-# 8 entries of 8 bits up to the end marker that func_486D0E3E_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_486D0E3E_Lf_List_8:
+# 8 entries of 8 bits up to the end marker that StrAppend_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+StrAppend_Lf_List_8:
 	.byte	77, 69, 77, 79, 82, 89, 45, 66, 0
-# 8 entries of 8 bits up to the end marker that func_486D0E3E_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_486D0E3E_Lf_List_9:
+# 8 entries of 8 bits up to the end marker that StrAppend_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+StrAppend_Lf_List_9:
 	.byte	77, 69, 77, 79, 82, 89, 45, 67, 0
 	.byte	0xff	# the marker's fill to a 4-byte boundary
 
 SdcSingleLoadCmpSrcBankNameFunc_L32_Table:
-	.long	func_486D0E3E_Lf_List_7
-	.long	func_486D0E3E_Lf_List_8
-	.long	func_486D0E3E_Lf_List_9
+	.long	StrAppend_Lf_List_7
+	.long	StrAppend_Lf_List_8
+	.long	StrAppend_Lf_List_9
 
 Str_empty_388:	.asciz ": "
 	.align	4, 0xFF	# pad after Str_empty_388
@@ -20041,21 +20041,21 @@ Str_empty_387:	.asciz ": "
 Str_ALL_8:	.asciz "      ALL       "
 	.align	4, 0xFF	# pad after Str_ALL_8
 
-# 8 entries of 8 bits up to the end marker that func_486D0E3E_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_486D0E3E_Lf_List_10:
+# 8 entries of 8 bits up to the end marker that StrAppend_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+StrAppend_Lf_List_10:
 	.byte	77, 69, 77, 79, 82, 89, 45, 65, 0
-# 8 entries of 8 bits up to the end marker that func_486D0E3E_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_486D0E3E_Lf_List_11:
+# 8 entries of 8 bits up to the end marker that StrAppend_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+StrAppend_Lf_List_11:
 	.byte	77, 69, 77, 79, 82, 89, 45, 66, 0
-# 8 entries of 8 bits up to the end marker that func_486D0E3E_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_486D0E3E_Lf_List_12:
+# 8 entries of 8 bits up to the end marker that StrAppend_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+StrAppend_Lf_List_12:
 	.byte	77, 69, 77, 79, 82, 89, 45, 67, 0
 	.byte	0xff	# the marker's fill to a 4-byte boundary
 
 SdcSingleLoadCmpDstBankNameFunc_L32_Table:
-	.long	func_486D0E3E_Lf_List_10
-	.long	func_486D0E3E_Lf_List_11
-	.long	func_486D0E3E_Lf_List_12
+	.long	StrAppend_Lf_List_10
+	.long	StrAppend_Lf_List_11
+	.long	StrAppend_Lf_List_12
 
 Str_empty_386:	.asciz ": "
 	.align	4, 0xFF	# pad after Str_empty_386

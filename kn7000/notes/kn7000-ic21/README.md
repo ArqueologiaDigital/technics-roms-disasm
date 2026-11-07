@@ -21,7 +21,11 @@ reaches the CPU halfword-swapped (the directory's `"IK"` reads `"KI"` and the fi
 directory over it), so `make_rompath.py` swaps each byte pair first; the CPU then reads `03custm3`'s own
 bytes (checked by a peek of the directory).  This is a driver observation for the kn7000_mame owner: the
 comment above `ROM_LOAD_OPTIONAL("kn7000_custom_data.rom", ...)` says the plain load is unaffected, and in
-this build it is not.  Nothing was changed in kn7000_mame.
+this build it is not.  Nothing was changed in kn7000_mame.  **Fixed since:** kn7000_mame b5581e5 (2026-11-07, published
+kn7000-emulator md5 4e4c2390) loads the file `ROM_GROUPWORD | ROM_REVERSE` like the other Initial Data files
+(its probe: kn7000_mame `notes/ic21-byte-order-2026-11-07/`).  With that build a bank is given as it is, and
+`make_rompath.py` swaps only when passed `--swap` (for older builds); an nvram saved by an older build still
+holds the swapped or emptied bank, so use a fresh `-nvram_directory`.
 
 `03custm3` slot 7 ("Bossa Nova") holds the only factory custom-sound block, a user drum kit.  Its style
 does not use the kit; its pads 1 ("PERCUSSION", part 1) and 4 ("RIDE BELL", part 0) do, with the sound

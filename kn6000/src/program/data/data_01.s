@@ -27247,11 +27247,11 @@ Str_MTrk_3:	.asciz "MTrk"
 # census: opaque -- unknown-dump: 3 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x244B9D, 0x244BA0
 
-func_4C1230C8_entry_L8_Table:	# 12 x u8, 0..247; read by func_4C1230C8_entry_L8 0x4C1230D5: `movbu (d0, a2), d0`
+func_4C1230C8_entry_L8_Table:	# 12 x u8, 0..247; read by SmfWriteBytes_entry_L8 0x4C1230D5: `movbu (d0, a2), d0`
 	tab_u8	240, 10, 80, 44, 32, 126, 31, 0, 0, 127, 0, 247
-func_4C1230C8_entry_L8_Table_2:	# 7 x u8, 3..247; read by func_4C1230C8_entry_L8 0x4C1230D5: `movbu (d0, a2), d0`
+func_4C1230C8_entry_L8_Table_2:	# 7 x u8, 3..247; read by SmfWriteBytes_entry_L8 0x4C1230D5: `movbu (d0, a2), d0`
 	tab_u8	240, 5, 126, 127, 9, 3, 247
-func_4C1230C8_entry_L8_Table_3:	# 9 x u8, 1..255; read by func_4C1230C8_entry_L8 0x4C1230D5: `movbu (d0, a2), d0`
+func_4C1230C8_entry_L8_Table_3:	# 9 x u8, 1..255; read by SmfWriteBytes_entry_L8 0x4C1230D5: `movbu (d0, a2), d0`
 	tab_u8	240, 5, 126, 127, 9, 1, 247, 255, 255
 func_4C12270C_Table:	# 12 x u8, 0..247; read by func_4C12270C_entry : `movbu	(a1), d0`
 	tab_u8	240, 10, 80, 44, 32, 48, 31, 0, 0, 0, 0, 247
@@ -34021,10 +34021,10 @@ Str_FILE_2:	.asciz "FILE "
 Str_NEW:	.asciz " * NEW *"
 	.align	4, 0xFF	# pad after Str_NEW
 
-func_4C14C71E_Var:	# s8, a constant; read / written by func_4C14C71E 0x4C14C71E: `movbu (a1), d0`
+func_4C14C71E_Var:	# s8, a constant; read / written by StrCopy 0x4C14C71E: `movbu (a1), d0`
 	.byte	0
 
-func_4C14C71E_Table:	# 3 x s8, -1..-1; read by func_4C14C71E 0x4C14C71E: `movbu (a1), d0`
+StrCopy_Table:	# 3 x s8, -1..-1; read by StrCopy 0x4C14C71E: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
 Str_CUSTOM_21:	.asciz "CUSTOM :"
@@ -34089,22 +34089,22 @@ func_4C1416A4_Table:	# 20 x u8, 0..19; read by func_4C1416A4 : `movbu	(d0, a0), 
 SingleLoadSrcDstFunc_L11e_Table:	# 6 x u8, 1..255; read by CmpSingleLoadFileFunc : `movbu	(d0, a0), d1`; CmpSingleLoadSrcDstFunc_entry : `movbu	(d0, a0), d1` ...
 	tab_u8	1, 2, 3, 4, 6, 255
 
-func_4C14C71E_Var_2:	# s8, a constant; read / written by func_4C14C71E 0x4C14C71E: `movbu (a1), d0`
+func_4C14C71E_Var_2:	# s8, a constant; read / written by StrCopy 0x4C14C71E: `movbu (a1), d0`
 	.byte	0
 
-func_4C14C71E_Table_2:	# 3 x s8, -1..-1; read by func_4C14C71E 0x4C14C71E: `movbu (a1), d0`
+StrCopy_Table_2:	# 3 x s8, -1..-1; read by StrCopy 0x4C14C71E: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
-func_4C14C71E_Var_3:	# s8, a constant; read / written by func_4C14C71E 0x4C14C71E: `movbu (a1), d0`
+func_4C14C71E_Var_3:	# s8, a constant; read / written by StrCopy 0x4C14C71E: `movbu (a1), d0`
 	.byte	0
 
-func_4C14C71E_Table_3:	# 3 x s8, -1..-1; read by func_4C14C71E 0x4C14C71E: `movbu (a1), d0`
+StrCopy_Table_3:	# 3 x s8, -1..-1; read by StrCopy 0x4C14C71E: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
-func_4C14C71E_Var_4:	# s8, a constant; read / written by func_4C14C71E 0x4C14C71E: `movbu (a1), d0`
+func_4C14C71E_Var_4:	# s8, a constant; read / written by StrCopy 0x4C14C71E: `movbu (a1), d0`
 	.byte	0
 
-func_4C14C71E_Table_4:	# 3 x s8, -1..-1; read by func_4C14C71E 0x4C14C71E: `movbu (a1), d0`
+StrCopy_Table_4:	# 3 x s8, -1..-1; read by StrCopy 0x4C14C71E: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
 Text_Vari_1:	# 20 strings of 16 characters, NUL-terminated
@@ -34165,10 +34165,10 @@ func_4C141743_Table:
 	.long	Str_MULTI_EFFECT_2
 	.long	Str_CHORUS_8
 
-func_4C14C71E_Var_5:	# s8, a constant; read / written by func_4C14C71E 0x4C14C71E: `movbu (a1), d0`
+func_4C14C71E_Var_5:	# s8, a constant; read / written by StrCopy 0x4C14C71E: `movbu (a1), d0`
 	.byte	0
 
-func_4C14C71E_Table_5:	# 3 x s8, -1..-1; read by func_4C14C71E 0x4C14C71E: `movbu (a1), d0`
+StrCopy_Table_5:	# 3 x s8, -1..-1; read by StrCopy 0x4C14C71E: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
 Str_MEMORY_19:	.asciz "     MEMORY     "
@@ -34179,28 +34179,28 @@ func_4C1417EE_Table:
 	.long	Str_MEMORY_19
 	.long	Str_USER_KIT
 
-func_4C14C71E_Var_6:	# s8, a constant; read / written by func_4C14C71E 0x4C14C71E: `movbu (a1), d0`
+func_4C14C71E_Var_6:	# s8, a constant; read / written by StrCopy 0x4C14C71E: `movbu (a1), d0`
 	.byte	0
 
-func_4C14C71E_Table_6:	# 3 x s8, -1..-1; read by func_4C14C71E 0x4C14C71E: `movbu (a1), d0`
+StrCopy_Table_6:	# 3 x s8, -1..-1; read by StrCopy 0x4C14C71E: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
-func_4C14C71E_Var_7:	# s8, a constant; read / written by func_4C14C71E 0x4C14C71E: `movbu (a1), d0`
+func_4C14C71E_Var_7:	# s8, a constant; read / written by StrCopy 0x4C14C71E: `movbu (a1), d0`
 	.byte	0
 
-func_4C14C71E_Table_7:	# 3 x s8, -1..-1; read by func_4C14C71E 0x4C14C71E: `movbu (a1), d0`
+StrCopy_Table_7:	# 3 x s8, -1..-1; read by StrCopy 0x4C14C71E: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
-func_4C14C71E_Var_8:	# s8, a constant; read / written by func_4C14C71E 0x4C14C71E: `movbu (a1), d0`
+func_4C14C71E_Var_8:	# s8, a constant; read / written by StrCopy 0x4C14C71E: `movbu (a1), d0`
 	.byte	0
 
-func_4C14C71E_Table_8:	# 3 x s8, -1..-1; read by func_4C14C71E 0x4C14C71E: `movbu (a1), d0`
+StrCopy_Table_8:	# 3 x s8, -1..-1; read by StrCopy 0x4C14C71E: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
-func_4C14C71E_Var_9:	# s8, a constant; read / written by func_4C14C71E 0x4C14C71E: `movbu (a1), d0`
+func_4C14C71E_Var_9:	# s8, a constant; read / written by StrCopy 0x4C14C71E: `movbu (a1), d0`
 	.byte	0
 
-func_4C14C71E_Table_9:	# 3 x s8, -1..-1; read by func_4C14C71E 0x4C14C71E: `movbu (a1), d0`
+StrCopy_Table_9:	# 3 x s8, -1..-1; read by StrCopy 0x4C14C71E: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
 Str_empty_323:	.asciz ": "
@@ -34224,21 +34224,21 @@ func_4C142587_L171_Table:	# 4 x u8, 10..255; read by func_4C142587_L171 0x4C1426
 Str_SONG_17:	.asciz "SONG: "
 	.align	4, 0xFF	# pad after Str_SONG_17
 
-# 8 entries of 8 bits up to the end marker that func_4C14C76A_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_4C14C76A_Lf_List:
+# 8 entries of 8 bits up to the end marker that StrAppend_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+StrAppend_Lf_List:
 	.byte	77, 69, 77, 79, 82, 89, 45, 65, 0
-# 8 entries of 8 bits up to the end marker that func_4C14C76A_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_4C14C76A_Lf_List_2:
+# 8 entries of 8 bits up to the end marker that StrAppend_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+StrAppend_Lf_List_2:
 	.byte	77, 69, 77, 79, 82, 89, 45, 66, 0
-# 8 entries of 8 bits up to the end marker that func_4C14C76A_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_4C14C76A_Lf_List_3:
+# 8 entries of 8 bits up to the end marker that StrAppend_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+StrAppend_Lf_List_3:
 	.byte	77, 69, 77, 79, 82, 89, 45, 67, 0
 	.byte	0xff	# the marker's fill to a 4-byte boundary
 
 func_4C1427A2_Table:
-	.long	func_4C14C76A_Lf_List
-	.long	func_4C14C76A_Lf_List_2
-	.long	func_4C14C76A_Lf_List_3
+	.long	StrAppend_Lf_List
+	.long	StrAppend_Lf_List_2
+	.long	StrAppend_Lf_List_3
 
 Str_empty_321:	.asciz ": "
 	.align	4, 0xFF	# pad after Str_empty_321
@@ -34247,21 +34247,21 @@ Str_empty_320:	.asciz ": "
 Str_ALL_11:	.asciz "      ALL       "
 	.align	4, 0xFF	# pad after Str_ALL_11
 
-# 8 entries of 8 bits up to the end marker that func_4C14C76A_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_4C14C76A_Lf_List_4:
+# 8 entries of 8 bits up to the end marker that StrAppend_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+StrAppend_Lf_List_4:
 	.byte	77, 69, 77, 79, 82, 89, 45, 65, 0
-# 8 entries of 8 bits up to the end marker that func_4C14C76A_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_4C14C76A_Lf_List_5:
+# 8 entries of 8 bits up to the end marker that StrAppend_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+StrAppend_Lf_List_5:
 	.byte	77, 69, 77, 79, 82, 89, 45, 66, 0
-# 8 entries of 8 bits up to the end marker that func_4C14C76A_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_4C14C76A_Lf_List_6:
+# 8 entries of 8 bits up to the end marker that StrAppend_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+StrAppend_Lf_List_6:
 	.byte	77, 69, 77, 79, 82, 89, 45, 67, 0
 	.byte	0xff	# the marker's fill to a 4-byte boundary
 
 func_4C14291A_Table:
-	.long	func_4C14C76A_Lf_List_4
-	.long	func_4C14C76A_Lf_List_5
-	.long	func_4C14C76A_Lf_List_6
+	.long	StrAppend_Lf_List_4
+	.long	StrAppend_Lf_List_5
+	.long	StrAppend_Lf_List_6
 
 Str_empty_319:	.asciz ": "
 	.align	4, 0xFF	# pad after Str_empty_319
@@ -34292,10 +34292,10 @@ func_4C14339A_L22_Var:	# u8, a constant; read / written by func_4C14339A_L22 0x4
 func_4C14339A_L1ce_Table:	# 3 x u8, 168..255; read by func_4C14339A_L1ce 0x4C143568: `movbu (func_4C14339A_L1ce_Table), d1`; func_4C14339A_L498 0x4C143832: `movbu (func_4C14339A_L1ce_Table), d2`
 	tab_u8	168, 255, 255
 
-func_4C14C71E_Var_10:	# s8, a constant; read / written by func_4C14C71E 0x4C14C71E: `movbu (a1), d0`
+func_4C14C71E_Var_10:	# s8, a constant; read / written by StrCopy 0x4C14C71E: `movbu (a1), d0`
 	.byte	0
 
-func_4C14C71E_Table_10:	# 3 x s8, -1..-1; read by func_4C14C71E 0x4C14C71E: `movbu (a1), d0`
+StrCopy_Table_10:	# 3 x s8, -1..-1; read by StrCopy 0x4C14C71E: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
 Str_USER_MEMORY_2:	.asciz "USER MEMORY: "
@@ -34303,10 +34303,10 @@ Str_USER_MEMORY_2:	.asciz "USER MEMORY: "
 Str_ALL_7:	.asciz "      ALL       "
 	.align	4, 0xFF	# pad after Str_ALL_7
 
-func_4C14C71E_Var_11:	# s8, a constant; read / written by func_4C14C71E 0x4C14C71E: `movbu (a1), d0`
+func_4C14C71E_Var_11:	# s8, a constant; read / written by StrCopy 0x4C14C71E: `movbu (a1), d0`
 	.byte	0
 
-func_4C14C71E_Table_11:	# 3 x s8, -1..-1; read by func_4C14C71E 0x4C14C71E: `movbu (a1), d0`
+StrCopy_Table_11:	# 3 x s8, -1..-1; read by StrCopy 0x4C14C71E: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
 Str_USER_MEMORY:	.asciz "USER MEMORY: "
@@ -34399,9 +34399,9 @@ func_4C149380_entry_L1_Table:	# 18 x u32, 0..4294967040; read by func_4C149380_e
 	tab_u32	1260407040, 4294967040	# [16]
 
 func_4C149594_Records:	# 11 x REC_func_4C149594_Records (8 bytes each); read by func_4C149594 0x4C149594 `movhu (4, a3), d0`; func_4C149594 0x4C149594 `movhu (a2), d1`; func_4C149594_entry_L34 0x4C1495CD `mov (a3), a0` (+1)
-	REC_func_4C149594_Records	index=func_4C149380_entry_L1_Table+12, f4=4, count=3	# [0]
+	REC_func_4C149594_Records	index=func_4C149380_entry_L1_Table+12, FileSeek_d0=4, count=3	# [0]
 	REC_func_4C149594_Records	index=func_4C149380_entry_L1_Table+16, count=3
-	REC_func_4C149594_Records	index=func_4C149380_entry_L1_Table+20, f4=5, count=2
+	REC_func_4C149594_Records	index=func_4C149380_entry_L1_Table+20, FileSeek_d0=5, count=2
 	REC_func_4C149594_Records	index=func_4C149380_entry_L1_Table+23, count=4
 	REC_func_4C149594_Records	index=func_4C149380_entry_L1_Table+28, count=16
 	REC_func_4C149594_Records	index=func_4C149380_entry_L1_Table+45, count=4
@@ -34437,13 +34437,13 @@ func_4C14963D_Records:	# 11 x REC_func_4C14963D_Records (8 bytes each); read by 
 	REC_func_4C14963D_Records	text=Str_IK_2, count=3
 	REC_func_4C14963D_Records	text=Str_I_K_5, count=3
 func_4C1493D2_entry_L54_Table:	# 7 x REC_func_4C1493D2_entry_L54_Table (8 bytes each); read by func_4C1493D2_entry_L54 0x4C14942B `movhu (d3, a0), d0`; func_4C14993C_entry_Lb 0x4C14994C `movhu (4, a3), d0`; func_4C14993C_entry_Lb 0x4C14994C `movhu (a3), d0` (+4)
-	REC_func_4C1493D2_entry_L54_Table	f0=24, index=5, index_=8, index__=12
-	REC_func_4C1493D2_entry_L54_Table	f0=16, index=5, index_=12
-	REC_func_4C1493D2_entry_L54_Table	f0=24, index=5, index_=8, index__=12
-	REC_func_4C1493D2_entry_L54_Table	f0=16, index=5, index_=12
-	REC_func_4C1493D2_entry_L54_Table	f0=16, index=5, index_=12
-	REC_func_4C1493D2_entry_L54_Table	f0=16, index=5, index_=12
-	REC_func_4C1493D2_entry_L54_Table	f0=16, index=5, index_=12
+	REC_func_4C1493D2_entry_L54_Table	FileSeek_d0=24, index=5, index_=8, index__=12
+	REC_func_4C1493D2_entry_L54_Table	FileSeek_d0=16, index=5, index_=12
+	REC_func_4C1493D2_entry_L54_Table	FileSeek_d0=24, index=5, index_=8, index__=12
+	REC_func_4C1493D2_entry_L54_Table	FileSeek_d0=16, index=5, index_=12
+	REC_func_4C1493D2_entry_L54_Table	FileSeek_d0=16, index=5, index_=12
+	REC_func_4C1493D2_entry_L54_Table	FileSeek_d0=16, index=5, index_=12
+	REC_func_4C1493D2_entry_L54_Table	FileSeek_d0=16, index=5, index_=12
 
 Str_rb_39:	.asciz "rb"
 	.align	4, 0xFF	# pad after Str_rb_39
@@ -34493,17 +34493,17 @@ Str_rb_21:	.asciz "rb"
 	.align	4, 0xFF	# pad after Str_rb_21
 
 DiskLoadDispatch_entry_L11_Table:	# 11 x REC_DiskLoadDispatch_entry_L11_Table (8 bytes each); read by DiskLoadDispatch_entry_L38 0x4C14A959 `mov (4, a0), a1`; DiskLoadDispatch_entry_L38 0x4C14A959 `movbu (d0, a2), d0`; DiskLoadDispatch_entry_L38 0x4C14A959 `movbu (d1, a2), d1` (+1)
-	REC_DiskLoadDispatch_entry_L11_Table	f0=6, x1="\x00\x00\x00", proc=func_4C14A4CA	# [0]
-	REC_DiskLoadDispatch_entry_L11_Table	f0=4, x1="\x00\x00\x00", proc=func_4C14A38A
-	REC_DiskLoadDispatch_entry_L11_Table	x1="\x00\x00\x00", proc=func_4C1499D0
-	REC_DiskLoadDispatch_entry_L11_Table	f0=1, x1="\x00\x00\x00", proc=func_4C149B00
-	REC_DiskLoadDispatch_entry_L11_Table	f0=5, x1="\x00\x00\x00", proc=func_4C14A2BE
-	REC_DiskLoadDispatch_entry_L11_Table	f0=3, x1="\x00\x00\x00", proc=func_4C14A1F2
-	REC_DiskLoadDispatch_entry_L11_Table	f0=2, x1="\x00\x00\x00", proc=func_4C149CE0
-	REC_DiskLoadDispatch_entry_L11_Table	f0=7, x1="\x00\x00\x00", proc=func_4C149C7C
-	REC_DiskLoadDispatch_entry_L11_Table	f0=8, x1="\x00\x00\x00", proc=func_4C14A58E	# [8]
-	REC_DiskLoadDispatch_entry_L11_Table	f0=9, x1="\x00\x00\x00", proc=func_4C14A5F2
-	REC_DiskLoadDispatch_entry_L11_Table	f0=10, x1="\x00\x00\x00", proc=func_4C14A656
+	REC_DiskLoadDispatch_entry_L11_Table	f0=6, x1="\x00\x00\x00", proc=LoadEfc_HD_Impl	# [0]
+	REC_DiskLoadDispatch_entry_L11_Table	f0=4, x1="\x00\x00\x00", proc=LoadTm_HD_Impl
+	REC_DiskLoadDispatch_entry_L11_Table	x1="\x00\x00\x00", proc=LoadLsw_HD_Impl
+	REC_DiskLoadDispatch_entry_L11_Table	f0=1, x1="\x00\x00\x00", proc=LoadPmt_HD_Impl
+	REC_DiskLoadDispatch_entry_L11_Table	f0=5, x1="\x00\x00\x00", proc=LoadMsp_HD_Impl
+	REC_DiskLoadDispatch_entry_L11_Table	f0=3, x1="\x00\x00\x00", proc=LoadCmp_HD_Impl
+	REC_DiskLoadDispatch_entry_L11_Table	f0=2, x1="\x00\x00\x00", proc=LoadSqt_HD_Impl
+	REC_DiskLoadDispatch_entry_L11_Table	f0=7, x1="\x00\x00\x00", proc=LoadMd_HD_Impl
+	REC_DiskLoadDispatch_entry_L11_Table	f0=8, x1="\x00\x00\x00", proc=LoadFav_HD_Impl	# [8]
+	REC_DiskLoadDispatch_entry_L11_Table	f0=9, x1="\x00\x00\x00", proc=LoadHmp_HD_Impl
+	REC_DiskLoadDispatch_entry_L11_Table	f0=10, x1="\x00\x00\x00", proc=LoadRcm_HD_Impl
 
 Str_I_K_3:	.asciz "I K"
 Str_I_K_2:	.asciz "I K"
@@ -34533,17 +34533,17 @@ Str_wb_4:	.asciz "wb"
 	.align	4, 0xFF	# pad after Str_wb_4
 
 func_4C14B6F4_entry_L11_Table:	# 11 x REC_func_4C14B6F4_entry_L11_Table (8 bytes each); read by func_4C14B6F4_entry_L36 0x4C14B72F `movbu (d0, a2), d0`; func_4C14B6F4_entry_L9e 0x4C14B797 `mov (4, a0), a1`; func_4C14B6F4_entry_L9e 0x4C14B797 `movbu (d0, a2), d0` (+1)
-	REC_func_4C14B6F4_entry_L11_Table	x1="\x00\x00\x00", proc=func_4C14AB84	# [0]
-	REC_func_4C14B6F4_entry_L11_Table	index=1, x1="\x00\x00\x00", proc=func_4C14ACE7
-	REC_func_4C14B6F4_entry_L11_Table	index=5, x1="\x00\x00\x00", proc=func_4C14B24A
-	REC_func_4C14B6F4_entry_L11_Table	index=3, x1="\x00\x00\x00", proc=func_4C14B189
-	REC_func_4C14B6F4_entry_L11_Table	index=4, x1="\x00\x00\x00", proc=func_4C14B30B
-	REC_func_4C14B6F4_entry_L11_Table	index=2, x1="\x00\x00\x00", proc=func_4C14B044
-	REC_func_4C14B6F4_entry_L11_Table	index=6, x1="\x00\x00\x00", proc=func_4C14AF83
-	REC_func_4C14B6F4_entry_L11_Table	index=7, x1="\x00\x00\x00", proc=func_4C14AE15
-	REC_func_4C14B6F4_entry_L11_Table	index=8, x1="\x00\x00\x00", proc=func_4C14AE8F	# [8]
-	REC_func_4C14B6F4_entry_L11_Table	index=9, x1="\x00\x00\x00", proc=func_4C14AF09
-	REC_func_4C14B6F4_entry_L11_Table	index=10, x1="\x00\x00\x00", proc=func_4C14B591
+	REC_func_4C14B6F4_entry_L11_Table	x1="\x00\x00\x00", proc=SaveLsw_HD_Impl	# [0]
+	REC_func_4C14B6F4_entry_L11_Table	FileNameWithExt_d0=1, x1="\x00\x00\x00", proc=SavePmt_HD_Impl
+	REC_func_4C14B6F4_entry_L11_Table	FileNameWithExt_d0=5, x1="\x00\x00\x00", proc=SaveMsp_HD_Impl
+	REC_func_4C14B6F4_entry_L11_Table	FileNameWithExt_d0=3, x1="\x00\x00\x00", proc=SaveCmp_HD_Impl
+	REC_func_4C14B6F4_entry_L11_Table	FileNameWithExt_d0=4, x1="\x00\x00\x00", proc=SaveTm_HD_Impl
+	REC_func_4C14B6F4_entry_L11_Table	FileNameWithExt_d0=2, x1="\x00\x00\x00", proc=SaveSqt_HD_Impl
+	REC_func_4C14B6F4_entry_L11_Table	FileNameWithExt_d0=6, x1="\x00\x00\x00", proc=SaveEfc_HD_Impl
+	REC_func_4C14B6F4_entry_L11_Table	FileNameWithExt_d0=7, x1="\x00\x00\x00", proc=SaveMd_HD_Impl
+	REC_func_4C14B6F4_entry_L11_Table	FileNameWithExt_d0=8, x1="\x00\x00\x00", proc=SaveFav_HD_Impl	# [8]
+	REC_func_4C14B6F4_entry_L11_Table	FileNameWithExt_d0=9, x1="\x00\x00\x00", proc=SaveHmp_HD_Impl
+	REC_func_4C14B6F4_entry_L11_Table	FileNameWithExt_d0=10, x1="\x00\x00\x00", proc=SaveRcm_HD_Impl
 
 Str_rb_20:	.asciz "rb"
 	.align	4, 0xFF	# pad after Str_rb_20
@@ -34554,60 +34554,60 @@ Str_rb_19:	.asciz "rb"
 Str_wb_2:	.asciz "wb"
 	.align	4, 0xFF	# pad after Str_wb_2
 
-# 3 entries of 8 bits up to the end marker that func_4C14C76A_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_4C14C76A_Lf_List_7:
+# 3 entries of 8 bits up to the end marker that StrAppend_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+StrAppend_Lf_List_7:
 	.byte	76, 83, 87, 0
-# 3 entries of 8 bits up to the end marker that func_4C14C76A_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_4C14C76A_Lf_List_8:
+# 3 entries of 8 bits up to the end marker that StrAppend_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+StrAppend_Lf_List_8:
 	.byte	80, 77, 84, 0
-# 3 entries of 8 bits up to the end marker that func_4C14C76A_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_4C14C76A_Lf_List_9:
+# 3 entries of 8 bits up to the end marker that StrAppend_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+StrAppend_Lf_List_9:
 	.byte	83, 81, 84, 0
-# 3 entries of 8 bits up to the end marker that func_4C14C76A_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_4C14C76A_Lf_List_10:
+# 3 entries of 8 bits up to the end marker that StrAppend_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+StrAppend_Lf_List_10:
 	.byte	67, 77, 80, 0
-# 3 entries of 8 bits up to the end marker that func_4C14C76A_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_4C14C76A_Lf_List_11:
+# 3 entries of 8 bits up to the end marker that StrAppend_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+StrAppend_Lf_List_11:
 	.byte	84, 77, 32, 0
-# 3 entries of 8 bits up to the end marker that func_4C14C76A_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_4C14C76A_Lf_List_12:
+# 3 entries of 8 bits up to the end marker that StrAppend_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+StrAppend_Lf_List_12:
 	.byte	77, 83, 80, 0
-# 3 entries of 8 bits up to the end marker that func_4C14C76A_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_4C14C76A_Lf_List_13:
+# 3 entries of 8 bits up to the end marker that StrAppend_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+StrAppend_Lf_List_13:
 	.byte	69, 70, 67, 0
-# 3 entries of 8 bits up to the end marker that func_4C14C76A_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_4C14C76A_Lf_List_14:
+# 3 entries of 8 bits up to the end marker that StrAppend_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+StrAppend_Lf_List_14:
 	.byte	77, 68, 32, 0
-# 3 entries of 8 bits up to the end marker that func_4C14C76A_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_4C14C76A_Lf_List_15:
+# 3 entries of 8 bits up to the end marker that StrAppend_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+StrAppend_Lf_List_15:
 	.byte	70, 65, 86, 0
-# 3 entries of 8 bits up to the end marker that func_4C14C76A_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_4C14C76A_Lf_List_16:
+# 3 entries of 8 bits up to the end marker that StrAppend_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+StrAppend_Lf_List_16:
 	.byte	72, 77, 80, 0
-# 3 entries of 8 bits up to the end marker that func_4C14C76A_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_4C14C76A_Lf_List_17:
+# 3 entries of 8 bits up to the end marker that StrAppend_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+StrAppend_Lf_List_17:
 	.byte	65, 83, 84, 0
-# 3 entries of 8 bits up to the end marker that func_4C14C76A_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_4C14C76A_Lf_List_18:
+# 3 entries of 8 bits up to the end marker that StrAppend_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+StrAppend_Lf_List_18:
 	.byte	83, 81, 70, 0
-# 3 entries of 8 bits up to the end marker that func_4C14C76A_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_4C14C76A_Lf_List_19:
+# 3 entries of 8 bits up to the end marker that StrAppend_Lf 0x4C14C779: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+StrAppend_Lf_List_19:
 	.byte	83, 69, 81, 0
 
-func_4C14C83E_Table:
-	.long	func_4C14C76A_Lf_List_7
-	.long	func_4C14C76A_Lf_List_8
-	.long	func_4C14C76A_Lf_List_9
-	.long	func_4C14C76A_Lf_List_10
-	.long	func_4C14C76A_Lf_List_11
-	.long	func_4C14C76A_Lf_List_12
-	.long	func_4C14C76A_Lf_List_13
-	.long	func_4C14C76A_Lf_List_14
-	.long	func_4C14C76A_Lf_List_15
-	.long	func_4C14C76A_Lf_List_16
-	.long	func_4C14C76A_Lf_List_17
-	.long	func_4C14C76A_Lf_List_18
-	.long	func_4C14C76A_Lf_List_19
+FileTypeExtTable:
+	.long	StrAppend_Lf_List_7
+	.long	StrAppend_Lf_List_8
+	.long	StrAppend_Lf_List_9
+	.long	StrAppend_Lf_List_10
+	.long	StrAppend_Lf_List_11
+	.long	StrAppend_Lf_List_12
+	.long	StrAppend_Lf_List_13
+	.long	StrAppend_Lf_List_14
+	.long	StrAppend_Lf_List_15
+	.long	StrAppend_Lf_List_16
+	.long	StrAppend_Lf_List_17
+	.long	StrAppend_Lf_List_18
+	.long	StrAppend_Lf_List_19
 
 func_4C14CCED_Table:	# 19 x u32, 0..4294967295; read by func_4C14CCED 0x4C14CCED: `mov	(a1), d0`; func_4C14CDC9 0x4C14CDC9: `mov	(func_4C14CCED_Table), a1` ...; 19 records: the index is bounded by func_4C14CCED 0x4C14CCED: `mov -0x13, d1` / setlb / `mov (a1), d0` / `inc4 a1` / `inc d1` / lne (19 passes)
 	tab_u32	4294967295, 0, 0, 0, 0, 0, 0, 0	# [0]
