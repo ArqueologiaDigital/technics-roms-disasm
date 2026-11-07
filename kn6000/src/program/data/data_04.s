@@ -1867,7 +1867,7 @@ MSAModeBoxProc_L10d_Table:	# 6 x u8, 0..255; read by MSAModeBoxProc : `movbu	(d0
 	tab_u8	0, 145, 146, 147, 255, 255
 CusMemModeBoxProc_L11c_Table:	# 4 x u8, 145..255; read by CusMemModeBoxProc : `movbu	(d0, a3), d0`
 	tab_u8	145, 147, 255, 255
-FSWAssGridCheck_L77_Table:	# 44 x u8, 0..255; read by FSWAssGridCheck : `movbu	(d0, a0), d1`; func_4C109205_entry : `movbu	(d0, a0), d0`
+FSWAssGridCheck_L77_Table:	# 44 x u8, 0..255; read by FSWAssGridCheck : `movbu	(d0, a0), d1`; FSWAssGridIndexFind_entry : `movbu	(d0, a0), d0`
 	tab_u8	0, 65, 66, 144, 145, 179, 180, 192, 193, 194, 195, 196, 197, 198, 199, 178	# [0]
 	tab_u8	136, 146, 147, 148, 149, 64, 150, 153, 151, 191, 190, 173, 188, 176, 177, 184	# [16]
 	tab_u8	185, 160, 161, 162, 163, 164, 165, 189, 182, 183, 255, 255	# [32]
@@ -1895,24 +1895,24 @@ Str_empty_281:	.asciz " "
 
 ptrs_4C385064:
 	.long	loc_4C1168EA
-	.long	func_4C1168ED
+	.long	SongBackupRestore
 	.long	loc_4C116920
 	.long	loc_4C11692B
 
-FatBootHead_720K:	# a FAT boot sector's first 32 bytes, a 720 KB disk's (1440 sectors of 512 bytes): func_4C132BF7 0x4C132BF7: memcpy(.., 0x20)
+FatBootHead_720K:	# a FAT boot sector's first 32 bytes, a 720 KB disk's (1440 sectors of 512 bytes): FdFormat720K 0x4C132BF7: memcpy(.., 0x20)
 	FAT_BOOT_HEAD	0xeb, 0x1c, 0x90, "Technics", 512, 2, 1, 2, 112, 1440, 0xf9, 3, 9, 2, 0
 	.byte	0xeb, 0xfe	# +0x1E: the boot code the jump at +0 lands on (EB 1C: +2 + 0x1C), x86 `jmp $`: a loop
 
-func_4C132BF7_entry_L9e_Block:	# 3 bytes, copied whole by func_4C132BF7_entry_L9e 0x4C132C9A: memcpy(.., 3); func_4C132BF7_entry_L149 0x4C132D45: memcpy(.., 3)
+FdFormat720K_entry_L9e_Block:	# 3 bytes, copied whole by FdFormat720K_entry_L9e 0x4C132C9A: memcpy(.., 3); FdFormat720K_entry_L149 0x4C132D45: memcpy(.., 3)
 	tab_u8	249, 255, 255	# [0]
 
-FatBootHead_1440K:	# a FAT boot sector's first 32 bytes, a 1440 KB disk's (2880 sectors of 512 bytes): func_4C132EC1 0x4C132EC1: memcpy(.., 0x20)
+FatBootHead_1440K:	# a FAT boot sector's first 32 bytes, a 1440 KB disk's (2880 sectors of 512 bytes): FdFormat1440K 0x4C132EC1: memcpy(.., 0x20)
 	FAT_BOOT_HEAD	0xeb, 0x1c, 0x90, "Technics", 512, 1, 1, 2, 224, 2880, 0xf0, 9, 18, 2, 0
 	.byte	0xeb, 0xfe	# +0x1E: the boot code the jump at +0 lands on (EB 1C: +2 + 0x1C), x86 `jmp $`: a loop
 
-func_4C132EC1_entry_L9e_Block:	# 3 bytes, copied whole by func_4C132EC1_entry_L9e 0x4C132F64: memcpy(.., 3); func_4C132EC1_entry_L11b 0x4C132FE1: memcpy(.., 3)
+FdFormat1440K_entry_L9e_Block:	# 3 bytes, copied whole by FdFormat1440K_entry_L9e 0x4C132F64: memcpy(.., 3); FdFormat1440K_entry_L11b 0x4C132FE1: memcpy(.., 3)
 	tab_u8	240, 255, 255	# [0]
-	.align	4, 0xFF	# pad after func_4C132EC1_entry_L9e_Block
+	.align	4, 0xFF	# pad after FdFormat1440K_entry_L9e_Block
 
 NoteConvRules:	# 128 x NoteConvRule (8 bytes each); read by NoteConvRuleByte1Get_L9 0x4C058014 `movbu (1, a0), d0`; NoteConvRuleByte2Get_L9 0x4C05802F `movbu (2, a0), d0`; NoteConvRuleByte3Get_L9 0x4C05804A `movbu (3, a0), d0` (+12)
 	NoteConvRule	is_melody=1, no_third_adj=1, no_transpose=1	# [0]
@@ -28888,12 +28888,12 @@ func_4C16BA39_entry_L34_Table:
 	.long	func_4C16B743
 	.long	func_4C16B743
 
-func_4C004FBF_entry_L30_Table_3:	# 5 x u8, 1..3; read by func_4C004FBF_entry_L30 0x4C004FF4: `movbu (a0), d0`
+JpegDecModeMatch_entry_L30_Table_3:	# 5 x u8, 1..3; read by JpegDecModeMatch_entry_L30 0x4C004FF4: `movbu (a0), d0`
 	tab_u8	1, 3, 3, 3, 3
-func_4C004FBF_entry_L30_Table:	# 20 x u8, 0..4; read by func_4C004FBF_entry_L30 0x4C004FF4: `movbu (a3), d0`
+JpegDecModeMatch_entry_L30_Table:	# 20 x u8, 0..4; read by JpegDecModeMatch_entry_L30 0x4C004FF4: `movbu (a3), d0`
 	tab_u8	1, 0, 0, 0, 1, 1, 1, 0, 2, 1, 1, 0, 2, 1, 1, 0	# [0]
 	tab_u8	4, 1, 1, 0	# [16]
-func_4C004FBF_entry_L30_Table_2:	# 63 x u8, 0..255; read by func_4C004FBF_entry_L30 0x4C004FF4: `movbu (a0), d0`
+JpegDecModeMatch_entry_L30_Table_2:	# 63 x u8, 0..255; read by JpegDecModeMatch_entry_L30 0x4C004FF4: `movbu (a0), d0`
 	tab_u8	1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 2, 1, 1, 0	# [0]
 	tab_u8	1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0	# [16]
 	tab_u8	0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 17, 17, 0	# [32]

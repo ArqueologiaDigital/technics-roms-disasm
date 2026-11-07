@@ -3017,12 +3017,12 @@ func_4C16C095_entry_L34_Table:
 	.long	func_4C16BD9F
 	.long	func_4C16BD9F
 
-func_4C004FBF_entry_L30_Table_3:	# 5 x u8, 1..3; read by func_4C004FBF_entry_L30 0x4C004FF4: `movbu (a0), d0`
+JpegDecModeMatch_entry_L30_Table_3:	# 5 x u8, 1..3; read by JpegDecModeMatch_entry_L30 0x4C004FF4: `movbu (a0), d0`
 	tab_u8	1, 3, 3, 3, 3
-func_4C004FBF_entry_L30_Table:	# 20 x u8, 0..4; read by func_4C004FBF_entry_L30 0x4C004FF4: `movbu (a3), d0`
+JpegDecModeMatch_entry_L30_Table:	# 20 x u8, 0..4; read by JpegDecModeMatch_entry_L30 0x4C004FF4: `movbu (a3), d0`
 	tab_u8	1, 0, 0, 0, 1, 1, 1, 0, 2, 1, 1, 0, 2, 1, 1, 0	# [0]
 	tab_u8	4, 1, 1, 0	# [16]
-func_4C004FBF_entry_L30_Table_2:	# 63 x u8, 0..255; read by func_4C004FBF_entry_L30 0x4C004FF4: `movbu (a0), d0`
+JpegDecModeMatch_entry_L30_Table_2:	# 63 x u8, 0..255; read by JpegDecModeMatch_entry_L30 0x4C004FF4: `movbu (a0), d0`
 	tab_u8	1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 2, 1, 1, 0	# [0]
 	tab_u8	1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0	# [16]
 	tab_u8	0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 17, 17, 0	# [32]

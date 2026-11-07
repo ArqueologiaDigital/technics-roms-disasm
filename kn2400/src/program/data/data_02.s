@@ -1716,7 +1716,7 @@ func_486EBD41_entry_Ld3_Records:	# 16 x REC_func_486EBD41_entry_Ld3_Records (8 b
 	REC_func_486EBD41_entry_Ld3_Records	proc=func_486EBD41_entry_L17a
 	REC_func_486EBD41_entry_Ld3_Records	proc=func_486EBD41_entry_L17a
 
-cre_tsk_Impl_Table_13:	# T_CTSK (20 bytes): the layout cre_tsk 0x5018D1AD reads through its argument a0 (passed by func_485EBBCD 0x485EBBCD `call cre_tsk, 0, 0`, +8 more calls); the layout cre_tsk_Impl 0x5018D239 reads through its argument a0 (passed by cre_tsk_L3d 0x5018D1EA `call cre_tsk_Impl_entry, [d2,d3,a2], 0x2c`)
+cre_tsk_Impl_Table_13:	# T_CTSK (20 bytes): the layout cre_tsk 0x5018D1AD reads through its argument a0 (passed by GuiTaskObjectsCreate 0x485EBBCD `call cre_tsk, 0, 0`, +8 more calls); the layout cre_tsk_Impl 0x5018D239 reads through its argument a0 (passed by cre_tsk_L3d 0x5018D1EA `call cre_tsk_Impl_entry, [d2,d3,a2], 0x2c`)
 	T_CTSK	tskatr="\x01\x00\x00\x00", task=DiskWorkerTask, itskpri=3, x14="\x00\x00", stksz=3072
 
 cre_mbx_Impl_Table_4:	# 2 x u32, 0..0; read by cre_mbx_Impl 0x5018C16D: `mov (a3), d2`
@@ -3363,7 +3363,7 @@ Text_PART1_3:	# 31 strings of 9 characters, NUL-terminated
 	.asciz	"PAD2     "
 	.align	4, 0xFF	# pad after Text_PART1_3
 
-func_486EFD4B_Ld_Table:
+DspUnitNameGet_Ld_Table:
 	.long	Text_PART1_3
 	.long	Text_PART1_3+10
 	.long	Text_PART1_3+20
@@ -4570,8 +4570,8 @@ func_486F800E_Table:	# 2 x u16, 4..156; read by func_486F800E_entry : `movhu	(a1
 Str_s_2d:	.asciz "%s%2d"
 	.align	4, 0xFF	# pad after Str_s_2d
 
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
-func_486F84EC_Voicing:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
+ChordFinderNotesGet_Voicing:
 	.byte	3, 55, 60, 64, 0xff, 0xff, 0xff, 0xff	# key 0
 	.byte	3, 56, 61, 65, 0xff, 0xff, 0xff, 0xff	# key 1
 	.byte	3, 57, 62, 66, 0xff, 0xff, 0xff, 0xff	# key 2
@@ -4584,8 +4584,8 @@ func_486F84EC_Voicing:
 	.byte	3, 57, 61, 64, 0xff, 0xff, 0xff, 0xff	# key 9
 	.byte	3, 58, 62, 65, 0xff, 0xff, 0xff, 0xff	# key 10
 	.byte	3, 59, 63, 66, 0xff, 0xff, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
-func_486F84EC_Voicing_2:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
+ChordFinderNotesGet_Voicing_2:
 	.byte	3, 55, 60, 63, 0xff, 0xff, 0xff, 0xff	# key 0
 	.byte	3, 56, 61, 64, 0xff, 0xff, 0xff, 0xff	# key 1
 	.byte	3, 57, 62, 65, 0xff, 0xff, 0xff, 0xff	# key 2
@@ -4598,8 +4598,8 @@ func_486F84EC_Voicing_2:
 	.byte	3, 57, 60, 64, 0xff, 0xff, 0xff, 0xff	# key 9
 	.byte	3, 58, 61, 65, 0xff, 0xff, 0xff, 0xff	# key 10
 	.byte	3, 59, 62, 66, 0xff, 0xff, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
-func_486F84EC_Voicing_3:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
+ChordFinderNotesGet_Voicing_3:
 	.byte	3, 58, 60, 64, 0xff, 0xff, 0xff, 0xff	# key 0
 	.byte	3, 59, 61, 65, 0xff, 0xff, 0xff, 0xff	# key 1
 	.byte	3, 60, 62, 66, 0xff, 0xff, 0xff, 0xff	# key 2
@@ -4612,8 +4612,8 @@ func_486F84EC_Voicing_3:
 	.byte	3, 57, 61, 67, 0xff, 0xff, 0xff, 0xff	# key 9
 	.byte	3, 56, 58, 62, 0xff, 0xff, 0xff, 0xff	# key 10
 	.byte	3, 57, 59, 63, 0xff, 0xff, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
-func_486F84EC_Voicing_4:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
+ChordFinderNotesGet_Voicing_4:
 	.byte	3, 58, 60, 63, 0xff, 0xff, 0xff, 0xff	# key 0
 	.byte	3, 59, 61, 64, 0xff, 0xff, 0xff, 0xff	# key 1
 	.byte	3, 60, 62, 65, 0xff, 0xff, 0xff, 0xff	# key 2
@@ -4626,8 +4626,8 @@ func_486F84EC_Voicing_4:
 	.byte	3, 57, 60, 67, 0xff, 0xff, 0xff, 0xff	# key 9
 	.byte	3, 56, 58, 61, 0xff, 0xff, 0xff, 0xff	# key 10
 	.byte	3, 57, 59, 62, 0xff, 0xff, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
-func_486F84EC_Voicing_5:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
+ChordFinderNotesGet_Voicing_5:
 	.byte	4, 54, 58, 60, 63, 0xff, 0xff, 0xff	# key 0
 	.byte	4, 55, 59, 61, 64, 0xff, 0xff, 0xff	# key 1
 	.byte	4, 56, 60, 62, 65, 0xff, 0xff, 0xff	# key 2
@@ -4640,8 +4640,8 @@ func_486F84EC_Voicing_5:
 	.byte	4, 57, 60, 63, 67, 0xff, 0xff, 0xff	# key 9
 	.byte	4, 56, 58, 61, 64, 0xff, 0xff, 0xff	# key 10
 	.byte	4, 57, 59, 62, 65, 0xff, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
-func_486F84EC_Voicing_6:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
+ChordFinderNotesGet_Voicing_6:
 	.byte	4, 60, 64, 67, 69, 0xff, 0xff, 0xff	# key 0
 	.byte	4, 61, 65, 68, 70, 0xff, 0xff, 0xff	# key 1
 	.byte	4, 62, 66, 69, 71, 0xff, 0xff, 0xff	# key 2
@@ -4654,8 +4654,8 @@ func_486F84EC_Voicing_6:
 	.byte	4, 57, 61, 64, 66, 0xff, 0xff, 0xff	# key 9
 	.byte	4, 58, 62, 65, 67, 0xff, 0xff, 0xff	# key 10
 	.byte	4, 59, 63, 66, 68, 0xff, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
-func_486F84EC_Voicing_7:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
+ChordFinderNotesGet_Voicing_7:
 	.byte	4, 60, 63, 67, 69, 0xff, 0xff, 0xff	# key 0
 	.byte	4, 61, 64, 68, 70, 0xff, 0xff, 0xff	# key 1
 	.byte	4, 62, 65, 69, 71, 0xff, 0xff, 0xff	# key 2
@@ -4668,8 +4668,8 @@ func_486F84EC_Voicing_7:
 	.byte	4, 57, 60, 64, 66, 0xff, 0xff, 0xff	# key 9
 	.byte	4, 58, 61, 65, 67, 0xff, 0xff, 0xff	# key 10
 	.byte	4, 59, 62, 66, 68, 0xff, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
-func_486F84EC_Voicing_8:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
+ChordFinderNotesGet_Voicing_8:
 	.byte	4, 55, 59, 60, 64, 0xff, 0xff, 0xff	# key 0
 	.byte	4, 56, 60, 61, 65, 0xff, 0xff, 0xff	# key 1
 	.byte	4, 57, 61, 62, 66, 0xff, 0xff, 0xff	# key 2
@@ -4682,8 +4682,8 @@ func_486F84EC_Voicing_8:
 	.byte	4, 56, 57, 61, 64, 0xff, 0xff, 0xff	# key 9
 	.byte	4, 57, 58, 62, 65, 0xff, 0xff, 0xff	# key 10
 	.byte	4, 58, 59, 63, 66, 0xff, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
-func_486F84EC_Voicing_9:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
+ChordFinderNotesGet_Voicing_9:
 	.byte	3, 60, 65, 67, 0xff, 0xff, 0xff, 0xff	# key 0
 	.byte	3, 61, 66, 68, 0xff, 0xff, 0xff, 0xff	# key 1
 	.byte	3, 62, 67, 69, 0xff, 0xff, 0xff, 0xff	# key 2
@@ -4696,8 +4696,8 @@ func_486F84EC_Voicing_9:
 	.byte	3, 57, 62, 64, 0xff, 0xff, 0xff, 0xff	# key 9
 	.byte	3, 58, 63, 65, 0xff, 0xff, 0xff, 0xff	# key 10
 	.byte	3, 59, 64, 66, 0xff, 0xff, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
-func_486F84EC_Voicing_10:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
+ChordFinderNotesGet_Voicing_10:
 	.byte	3, 60, 64, 68, 0xff, 0xff, 0xff, 0xff	# key 0
 	.byte	3, 61, 65, 69, 0xff, 0xff, 0xff, 0xff	# key 1
 	.byte	3, 62, 66, 70, 0xff, 0xff, 0xff, 0xff	# key 2
@@ -4710,8 +4710,8 @@ func_486F84EC_Voicing_10:
 	.byte	3, 57, 61, 65, 0xff, 0xff, 0xff, 0xff	# key 9
 	.byte	3, 58, 62, 66, 0xff, 0xff, 0xff, 0xff	# key 10
 	.byte	3, 59, 63, 67, 0xff, 0xff, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
-func_486F84EC_Voicing_11:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
+ChordFinderNotesGet_Voicing_11:
 	.byte	3, 54, 60, 63, 0xff, 0xff, 0xff, 0xff	# key 0
 	.byte	3, 55, 61, 64, 0xff, 0xff, 0xff, 0xff	# key 1
 	.byte	3, 56, 62, 65, 0xff, 0xff, 0xff, 0xff	# key 2
@@ -4724,8 +4724,8 @@ func_486F84EC_Voicing_11:
 	.byte	3, 57, 60, 63, 0xff, 0xff, 0xff, 0xff	# key 9
 	.byte	3, 58, 61, 64, 0xff, 0xff, 0xff, 0xff	# key 10
 	.byte	3, 59, 62, 65, 0xff, 0xff, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
-func_486F84EC_Voicing_12:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
+ChordFinderNotesGet_Voicing_12:
 	.byte	4, 55, 58, 60, 65, 0xff, 0xff, 0xff	# key 0
 	.byte	4, 56, 59, 61, 66, 0xff, 0xff, 0xff	# key 1
 	.byte	4, 57, 60, 62, 67, 0xff, 0xff, 0xff	# key 2
@@ -4738,8 +4738,8 @@ func_486F84EC_Voicing_12:
 	.byte	4, 57, 62, 64, 67, 0xff, 0xff, 0xff	# key 9
 	.byte	4, 56, 58, 63, 65, 0xff, 0xff, 0xff	# key 10
 	.byte	4, 57, 59, 64, 66, 0xff, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
-func_486F84EC_Voicing_13:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
+ChordFinderNotesGet_Voicing_13:
 	.byte	4, 56, 58, 60, 64, 0xff, 0xff, 0xff	# key 0
 	.byte	4, 57, 59, 61, 65, 0xff, 0xff, 0xff	# key 1
 	.byte	4, 58, 60, 62, 66, 0xff, 0xff, 0xff	# key 2
@@ -4752,8 +4752,8 @@ func_486F84EC_Voicing_13:
 	.byte	4, 55, 57, 61, 65, 0xff, 0xff, 0xff	# key 9
 	.byte	4, 56, 58, 62, 66, 0xff, 0xff, 0xff	# key 10
 	.byte	4, 55, 57, 59, 63, 0xff, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
-func_486F84EC_Voicing_14:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
+ChordFinderNotesGet_Voicing_14:
 	.byte	4, 60, 63, 66, 69, 0xff, 0xff, 0xff	# key 0
 	.byte	4, 61, 64, 67, 70, 0xff, 0xff, 0xff	# key 1
 	.byte	4, 62, 65, 68, 71, 0xff, 0xff, 0xff	# key 2
@@ -4766,8 +4766,8 @@ func_486F84EC_Voicing_14:
 	.byte	4, 57, 60, 63, 66, 0xff, 0xff, 0xff	# key 9
 	.byte	4, 58, 61, 64, 67, 0xff, 0xff, 0xff	# key 10
 	.byte	4, 59, 62, 65, 68, 0xff, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
-func_486F84EC_Voicing_15:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
+ChordFinderNotesGet_Voicing_15:
 	.byte	3, 54, 60, 64, 0xff, 0xff, 0xff, 0xff	# key 0
 	.byte	3, 55, 61, 65, 0xff, 0xff, 0xff, 0xff	# key 1
 	.byte	3, 56, 62, 66, 0xff, 0xff, 0xff, 0xff	# key 2
@@ -4780,8 +4780,8 @@ func_486F84EC_Voicing_15:
 	.byte	3, 57, 61, 63, 0xff, 0xff, 0xff, 0xff	# key 9
 	.byte	3, 58, 62, 64, 0xff, 0xff, 0xff, 0xff	# key 10
 	.byte	3, 59, 63, 65, 0xff, 0xff, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
-func_486F84EC_Voicing_16:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
+ChordFinderNotesGet_Voicing_16:
 	.byte	4, 58, 60, 64, 66, 0xff, 0xff, 0xff	# key 0
 	.byte	4, 59, 61, 65, 67, 0xff, 0xff, 0xff	# key 1
 	.byte	4, 50, 54, 56, 60, 0xff, 0xff, 0xff	# key 2
@@ -4794,8 +4794,8 @@ func_486F84EC_Voicing_16:
 	.byte	4, 57, 61, 63, 67, 0xff, 0xff, 0xff	# key 9
 	.byte	4, 56, 58, 62, 64, 0xff, 0xff, 0xff	# key 10
 	.byte	4, 57, 59, 63, 65, 0xff, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
-func_486F84EC_Voicing_17:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
+ChordFinderNotesGet_Voicing_17:
 	.byte	4, 55, 59, 60, 63, 0xff, 0xff, 0xff	# key 0
 	.byte	4, 56, 60, 61, 64, 0xff, 0xff, 0xff	# key 1
 	.byte	4, 57, 61, 62, 65, 0xff, 0xff, 0xff	# key 2
@@ -4808,8 +4808,8 @@ func_486F84EC_Voicing_17:
 	.byte	4, 56, 57, 60, 64, 0xff, 0xff, 0xff	# key 9
 	.byte	4, 57, 58, 61, 65, 0xff, 0xff, 0xff	# key 10
 	.byte	4, 58, 59, 62, 66, 0xff, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
-func_486F84EC_Voicing_18:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
+ChordFinderNotesGet_Voicing_18:
 	.byte	4, 54, 59, 60, 64, 0xff, 0xff, 0xff	# key 0
 	.byte	4, 55, 60, 61, 65, 0xff, 0xff, 0xff	# key 1
 	.byte	4, 56, 61, 62, 66, 0xff, 0xff, 0xff	# key 2
@@ -4822,8 +4822,8 @@ func_486F84EC_Voicing_18:
 	.byte	4, 56, 57, 61, 63, 0xff, 0xff, 0xff	# key 9
 	.byte	4, 57, 58, 62, 64, 0xff, 0xff, 0xff	# key 10
 	.byte	4, 58, 59, 63, 65, 0xff, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
-func_486F84EC_Voicing_19:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
+ChordFinderNotesGet_Voicing_19:
 	.byte	4, 56, 59, 60, 64, 0xff, 0xff, 0xff	# key 0
 	.byte	4, 57, 60, 61, 65, 0xff, 0xff, 0xff	# key 1
 	.byte	4, 58, 61, 62, 66, 0xff, 0xff, 0xff	# key 2
@@ -4836,8 +4836,8 @@ func_486F84EC_Voicing_19:
 	.byte	4, 56, 57, 61, 65, 0xff, 0xff, 0xff	# key 9
 	.byte	4, 57, 58, 62, 66, 0xff, 0xff, 0xff	# key 10
 	.byte	4, 55, 58, 59, 63, 0xff, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
-func_486F84EC_Voicing_20:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
+ChordFinderNotesGet_Voicing_20:
 	.byte	4, 54, 59, 60, 63, 0xff, 0xff, 0xff	# key 0
 	.byte	4, 55, 60, 61, 64, 0xff, 0xff, 0xff	# key 1
 	.byte	4, 56, 61, 62, 65, 0xff, 0xff, 0xff	# key 2
@@ -4850,8 +4850,8 @@ func_486F84EC_Voicing_20:
 	.byte	4, 56, 57, 60, 63, 0xff, 0xff, 0xff	# key 9
 	.byte	4, 57, 58, 61, 64, 0xff, 0xff, 0xff	# key 10
 	.byte	4, 53, 58, 59, 62, 0xff, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
-func_486F84EC_Voicing_21:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
+ChordFinderNotesGet_Voicing_21:
 	.byte	4, 60, 62, 64, 67, 0xff, 0xff, 0xff	# key 0
 	.byte	4, 61, 63, 65, 68, 0xff, 0xff, 0xff	# key 1
 	.byte	4, 62, 64, 66, 69, 0xff, 0xff, 0xff	# key 2
@@ -4864,8 +4864,8 @@ func_486F84EC_Voicing_21:
 	.byte	4, 57, 59, 61, 64, 0xff, 0xff, 0xff	# key 9
 	.byte	4, 58, 60, 62, 65, 0xff, 0xff, 0xff	# key 10
 	.byte	4, 59, 61, 63, 66, 0xff, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
-func_486F84EC_Voicing_22:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L18_Table)
+ChordFinderNotesGet_Voicing_22:
 	.byte	4, 60, 62, 63, 67, 0xff, 0xff, 0xff	# key 0
 	.byte	4, 61, 63, 64, 68, 0xff, 0xff, 0xff	# key 1
 	.byte	4, 62, 64, 65, 69, 0xff, 0xff, 0xff	# key 2
@@ -4878,8 +4878,8 @@ func_486F84EC_Voicing_22:
 	.byte	4, 57, 59, 60, 64, 0xff, 0xff, 0xff	# key 9
 	.byte	4, 58, 60, 61, 65, 0xff, 0xff, 0xff	# key 10
 	.byte	4, 59, 61, 62, 66, 0xff, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
-func_486F84EC_Voicing_23:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
+ChordFinderNotesGet_Voicing_23:
 	.byte	3, 60, 63, 66, 0xff, 0xff, 0xff, 0xff	# key 0
 	.byte	3, 61, 64, 67, 0xff, 0xff, 0xff, 0xff	# key 1
 	.byte	3, 62, 65, 68, 0xff, 0xff, 0xff, 0xff	# key 2
@@ -4892,8 +4892,8 @@ func_486F84EC_Voicing_23:
 	.byte	3, 57, 60, 63, 0xff, 0xff, 0xff, 0xff	# key 9
 	.byte	3, 58, 61, 64, 0xff, 0xff, 0xff, 0xff	# key 10
 	.byte	3, 59, 62, 65, 0xff, 0xff, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
-func_486F84EC_Voicing_24:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
+ChordFinderNotesGet_Voicing_24:
 	.byte	4, 52, 56, 58, 60, 0xff, 0xff, 0xff	# key 0
 	.byte	4, 53, 57, 59, 61, 0xff, 0xff, 0xff	# key 1
 	.byte	4, 54, 58, 60, 62, 0xff, 0xff, 0xff	# key 2
@@ -4906,8 +4906,8 @@ func_486F84EC_Voicing_24:
 	.byte	4, 55, 57, 61, 65, 0xff, 0xff, 0xff	# key 9
 	.byte	4, 56, 58, 62, 66, 0xff, 0xff, 0xff	# key 10
 	.byte	4, 57, 59, 63, 67, 0xff, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
-func_486F84EC_Voicing_25:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
+ChordFinderNotesGet_Voicing_25:
 	.byte	3, 52, 54, 60, 0xff, 0xff, 0xff, 0xff	# key 0
 	.byte	3, 53, 55, 61, 0xff, 0xff, 0xff, 0xff	# key 1
 	.byte	3, 54, 56, 62, 0xff, 0xff, 0xff, 0xff	# key 2
@@ -4920,8 +4920,8 @@ func_486F84EC_Voicing_25:
 	.byte	3, 57, 61, 63, 0xff, 0xff, 0xff, 0xff	# key 9
 	.byte	3, 58, 62, 64, 0xff, 0xff, 0xff, 0xff	# key 10
 	.byte	3, 59, 63, 65, 0xff, 0xff, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
-func_486F84EC_Voicing_26:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
+ChordFinderNotesGet_Voicing_26:
 	.byte	4, 52, 54, 59, 60, 0xff, 0xff, 0xff	# key 0
 	.byte	4, 53, 55, 60, 61, 0xff, 0xff, 0xff	# key 1
 	.byte	4, 54, 56, 61, 62, 0xff, 0xff, 0xff	# key 2
@@ -4934,8 +4934,8 @@ func_486F84EC_Voicing_26:
 	.byte	4, 61, 63, 68, 69, 0xff, 0xff, 0xff	# key 9
 	.byte	4, 62, 64, 69, 70, 0xff, 0xff, 0xff	# key 10
 	.byte	4, 63, 65, 70, 71, 0xff, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
-func_486F84EC_Voicing_27:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
+ChordFinderNotesGet_Voicing_27:
 	.byte	4, 60, 63, 66, 71, 0xff, 0xff, 0xff	# key 0
 	.byte	4, 49, 52, 55, 60, 0xff, 0xff, 0xff	# key 1
 	.byte	4, 50, 53, 56, 61, 0xff, 0xff, 0xff	# key 2
@@ -4948,8 +4948,8 @@ func_486F84EC_Voicing_27:
 	.byte	4, 57, 60, 63, 68, 0xff, 0xff, 0xff	# key 9
 	.byte	4, 58, 61, 64, 69, 0xff, 0xff, 0xff	# key 10
 	.byte	4, 59, 62, 65, 70, 0xff, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
-func_486F84EC_Voicing_28:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
+ChordFinderNotesGet_Voicing_28:
 	.byte	3, 52, 57, 62, 0xff, 0xff, 0xff, 0xff	# key 0
 	.byte	3, 53, 58, 63, 0xff, 0xff, 0xff, 0xff	# key 1
 	.byte	3, 54, 59, 64, 0xff, 0xff, 0xff, 0xff	# key 2
@@ -4962,8 +4962,8 @@ func_486F84EC_Voicing_28:
 	.byte	3, 61, 66, 71, 0xff, 0xff, 0xff, 0xff	# key 9
 	.byte	3, 50, 55, 60, 0xff, 0xff, 0xff, 0xff	# key 10
 	.byte	3, 51, 56, 61, 0xff, 0xff, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
-func_486F84EC_Voicing_29:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
+ChordFinderNotesGet_Voicing_29:
 	.byte	4, 60, 62, 63, 69, 0xff, 0xff, 0xff	# key 0
 	.byte	4, 61, 63, 64, 70, 0xff, 0xff, 0xff	# key 1
 	.byte	4, 62, 64, 65, 71, 0xff, 0xff, 0xff	# key 2
@@ -4976,8 +4976,8 @@ func_486F84EC_Voicing_29:
 	.byte	4, 57, 59, 60, 66, 0xff, 0xff, 0xff	# key 9
 	.byte	4, 58, 60, 61, 67, 0xff, 0xff, 0xff	# key 10
 	.byte	4, 59, 61, 62, 68, 0xff, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
-func_486F84EC_Voicing_30:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
+ChordFinderNotesGet_Voicing_30:
 	.byte	3, 52, 58, 62, 0xff, 0xff, 0xff, 0xff	# key 0
 	.byte	3, 53, 59, 63, 0xff, 0xff, 0xff, 0xff	# key 1
 	.byte	3, 54, 60, 64, 0xff, 0xff, 0xff, 0xff	# key 2
@@ -4990,8 +4990,8 @@ func_486F84EC_Voicing_30:
 	.byte	3, 61, 67, 71, 0xff, 0xff, 0xff, 0xff	# key 9
 	.byte	3, 50, 56, 60, 0xff, 0xff, 0xff, 0xff	# key 10
 	.byte	3, 51, 57, 61, 0xff, 0xff, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
-func_486F84EC_Voicing_31:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
+ChordFinderNotesGet_Voicing_31:
 	.byte	4, 58, 60, 61, 64, 0xff, 0xff, 0xff	# key 0
 	.byte	4, 59, 61, 62, 65, 0xff, 0xff, 0xff	# key 1
 	.byte	4, 60, 62, 63, 66, 0xff, 0xff, 0xff	# key 2
@@ -5004,8 +5004,8 @@ func_486F84EC_Voicing_31:
 	.byte	4, 55, 57, 58, 61, 0xff, 0xff, 0xff	# key 9
 	.byte	4, 56, 58, 59, 62, 0xff, 0xff, 0xff	# key 10
 	.byte	4, 57, 59, 60, 63, 0xff, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
-func_486F84EC_Voicing_32:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
+ChordFinderNotesGet_Voicing_32:
 	.byte	4, 58, 60, 63, 64, 0xff, 0xff, 0xff	# key 0
 	.byte	4, 59, 61, 64, 65, 0xff, 0xff, 0xff	# key 1
 	.byte	4, 60, 62, 65, 66, 0xff, 0xff, 0xff	# key 2
@@ -5018,8 +5018,8 @@ func_486F84EC_Voicing_32:
 	.byte	4, 55, 57, 60, 61, 0xff, 0xff, 0xff	# key 9
 	.byte	4, 56, 58, 61, 62, 0xff, 0xff, 0xff	# key 10
 	.byte	4, 57, 59, 62, 63, 0xff, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
-func_486F84EC_Voicing_33:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
+ChordFinderNotesGet_Voicing_33:
 	.byte	4, 60, 62, 63, 70, 0xff, 0xff, 0xff	# key 0
 	.byte	4, 61, 63, 64, 71, 0xff, 0xff, 0xff	# key 1
 	.byte	4, 50, 52, 53, 60, 0xff, 0xff, 0xff	# key 2
@@ -5032,8 +5032,8 @@ func_486F84EC_Voicing_33:
 	.byte	4, 57, 59, 60, 67, 0xff, 0xff, 0xff	# key 9
 	.byte	4, 58, 60, 61, 68, 0xff, 0xff, 0xff	# key 10
 	.byte	4, 59, 61, 62, 69, 0xff, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
-func_486F84EC_Voicing_34:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
+ChordFinderNotesGet_Voicing_34:
 	.byte	4, 60, 62, 64, 71, 0xff, 0xff, 0xff	# key 0
 	.byte	4, 49, 51, 53, 60, 0xff, 0xff, 0xff	# key 1
 	.byte	4, 50, 52, 54, 61, 0xff, 0xff, 0xff	# key 2
@@ -5046,8 +5046,8 @@ func_486F84EC_Voicing_34:
 	.byte	4, 57, 59, 61, 68, 0xff, 0xff, 0xff	# key 9
 	.byte	4, 58, 60, 62, 69, 0xff, 0xff, 0xff	# key 10
 	.byte	4, 59, 61, 63, 70, 0xff, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
-func_486F84EC_Voicing_35:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
+ChordFinderNotesGet_Voicing_35:
 	.byte	5, 60, 62, 64, 68, 70, 0xff, 0xff	# key 0
 	.byte	5, 61, 63, 65, 69, 71, 0xff, 0xff	# key 1
 	.byte	5, 50, 52, 54, 58, 60, 0xff, 0xff	# key 2
@@ -5060,8 +5060,8 @@ func_486F84EC_Voicing_35:
 	.byte	5, 57, 59, 61, 65, 67, 0xff, 0xff	# key 9
 	.byte	5, 58, 60, 62, 66, 68, 0xff, 0xff	# key 10
 	.byte	5, 59, 61, 63, 67, 69, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
-func_486F84EC_Voicing_36:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
+ChordFinderNotesGet_Voicing_36:
 	.byte	5, 60, 64, 66, 67, 70, 0xff, 0xff	# key 0
 	.byte	5, 61, 65, 67, 68, 71, 0xff, 0xff	# key 1
 	.byte	5, 50, 54, 56, 57, 60, 0xff, 0xff	# key 2
@@ -5074,8 +5074,8 @@ func_486F84EC_Voicing_36:
 	.byte	5, 57, 61, 63, 64, 67, 0xff, 0xff	# key 9
 	.byte	5, 58, 62, 64, 65, 68, 0xff, 0xff	# key 10
 	.byte	5, 59, 63, 65, 66, 69, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
-func_486F84EC_Voicing_37:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
+ChordFinderNotesGet_Voicing_37:
 	.byte	5, 55, 58, 60, 63, 65, 0xff, 0xff	# key 0
 	.byte	5, 56, 59, 61, 64, 66, 0xff, 0xff	# key 1
 	.byte	5, 57, 60, 62, 65, 67, 0xff, 0xff	# key 2
@@ -5088,8 +5088,8 @@ func_486F84EC_Voicing_37:
 	.byte	5, 52, 55, 57, 60, 62, 0xff, 0xff	# key 9
 	.byte	5, 53, 56, 58, 61, 63, 0xff, 0xff	# key 10
 	.byte	5, 54, 57, 59, 62, 64, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
-func_486F84EC_Voicing_38:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
+ChordFinderNotesGet_Voicing_38:
 	.byte	5, 60, 64, 66, 68, 70, 0xff, 0xff	# key 0
 	.byte	5, 61, 65, 67, 69, 71, 0xff, 0xff	# key 1
 	.byte	5, 50, 54, 56, 58, 60, 0xff, 0xff	# key 2
@@ -5102,8 +5102,8 @@ func_486F84EC_Voicing_38:
 	.byte	5, 57, 61, 63, 65, 67, 0xff, 0xff	# key 9
 	.byte	5, 58, 62, 64, 66, 68, 0xff, 0xff	# key 10
 	.byte	5, 59, 63, 65, 67, 69, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
-func_486F84EC_Voicing_39:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
+ChordFinderNotesGet_Voicing_39:
 	.byte	3, 58, 64, 69, 0xff, 0xff, 0xff, 0xff	# key 0
 	.byte	3, 59, 65, 70, 0xff, 0xff, 0xff, 0xff	# key 1
 	.byte	3, 60, 66, 71, 0xff, 0xff, 0xff, 0xff	# key 2
@@ -5116,8 +5116,8 @@ func_486F84EC_Voicing_39:
 	.byte	3, 55, 61, 66, 0xff, 0xff, 0xff, 0xff	# key 9
 	.byte	3, 56, 62, 67, 0xff, 0xff, 0xff, 0xff	# key 10
 	.byte	3, 57, 63, 68, 0xff, 0xff, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
-func_486F84EC_Voicing_40:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
+ChordFinderNotesGet_Voicing_40:
 	.byte	5, 57, 58, 60, 61, 64, 0xff, 0xff	# key 0
 	.byte	5, 58, 59, 61, 62, 65, 0xff, 0xff	# key 1
 	.byte	5, 59, 60, 62, 63, 66, 0xff, 0xff	# key 2
@@ -5130,8 +5130,8 @@ func_486F84EC_Voicing_40:
 	.byte	5, 54, 55, 57, 58, 61, 0xff, 0xff	# key 9
 	.byte	5, 55, 56, 58, 59, 62, 0xff, 0xff	# key 10
 	.byte	5, 56, 57, 59, 60, 63, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
-func_486F84EC_Voicing_41:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
+ChordFinderNotesGet_Voicing_41:
 	.byte	5, 57, 58, 60, 63, 64, 0xff, 0xff	# key 0
 	.byte	5, 58, 59, 61, 64, 65, 0xff, 0xff	# key 1
 	.byte	5, 59, 60, 62, 65, 66, 0xff, 0xff	# key 2
@@ -5144,8 +5144,8 @@ func_486F84EC_Voicing_41:
 	.byte	5, 54, 55, 57, 60, 61, 0xff, 0xff	# key 9
 	.byte	5, 55, 56, 58, 61, 62, 0xff, 0xff	# key 10
 	.byte	5, 56, 57, 59, 62, 63, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
-func_486F84EC_Voicing_42:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
+ChordFinderNotesGet_Voicing_42:
 	.byte	5, 55, 56, 58, 62, 64, 0xff, 0xff	# key 0
 	.byte	5, 56, 57, 59, 63, 65, 0xff, 0xff	# key 1
 	.byte	5, 57, 58, 60, 64, 66, 0xff, 0xff	# key 2
@@ -5158,8 +5158,8 @@ func_486F84EC_Voicing_42:
 	.byte	5, 52, 53, 55, 59, 61, 0xff, 0xff	# key 9
 	.byte	5, 53, 54, 56, 60, 62, 0xff, 0xff	# key 10
 	.byte	5, 54, 55, 57, 61, 63, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
-func_486F84EC_Voicing_43:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
+ChordFinderNotesGet_Voicing_43:
 	.byte	5, 56, 58, 60, 61, 64, 0xff, 0xff	# key 0
 	.byte	5, 57, 59, 61, 62, 65, 0xff, 0xff	# key 1
 	.byte	5, 58, 60, 62, 63, 66, 0xff, 0xff	# key 2
@@ -5172,8 +5172,8 @@ func_486F84EC_Voicing_43:
 	.byte	5, 53, 55, 57, 58, 61, 0xff, 0xff	# key 9
 	.byte	5, 54, 56, 58, 59, 62, 0xff, 0xff	# key 10
 	.byte	5, 55, 57, 59, 60, 63, 0xff, 0xff	# key 11
-# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
-func_486F84EC_Voicing_44:
+# 12 rows {u8 count; u8 note[7]}, one per key (row = key * 8, copied by memcpy 8): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table, a1` / `mov (d0, a1), a1` (func_486F8461_entry_L36_Table)
+ChordFinderNotesGet_Voicing_44:
 	.byte	5, 56, 58, 60, 63, 64, 0xff, 0xff	# key 0
 	.byte	5, 57, 59, 61, 64, 65, 0xff, 0xff	# key 1
 	.byte	5, 58, 60, 62, 65, 66, 0xff, 0xff	# key 2
@@ -5186,262 +5186,262 @@ func_486F84EC_Voicing_44:
 	.byte	5, 53, 55, 57, 60, 61, 0xff, 0xff	# key 9
 	.byte	5, 54, 56, 58, 61, 62, 0xff, 0xff	# key 10
 	.byte	5, 55, 57, 59, 62, 63, 0xff, 0xff	# key 11
-# 3 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
-func_486F84EC_Inversions:
+# 3 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
+ChordFinderNotesGet_Inversions:
 	.byte	3	# count
 	.byte	0x0b, 48, 52, 55, 0xff, 0xff, 0xff, 0xff	# inversion 1
 	.byte	0x13, 52, 55, 60, 0xff, 0xff, 0xff, 0xff	# inversion 2
 	.byte	0x1b, 55, 60, 64, 0xff, 0xff, 0xff, 0xff	# inversion 3
-# 3 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
-func_486F84EC_Inversions_2:
+# 3 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
+ChordFinderNotesGet_Inversions_2:
 	.byte	3	# count
 	.byte	0x0b, 48, 51, 55, 0xff, 0xff, 0xff, 0xff	# inversion 1
 	.byte	0x13, 51, 55, 60, 0xff, 0xff, 0xff, 0xff	# inversion 2
 	.byte	0x1b, 55, 60, 63, 0xff, 0xff, 0xff, 0xff	# inversion 3
-# 4 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
-func_486F84EC_Inversions_3:
+# 4 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
+ChordFinderNotesGet_Inversions_3:
 	.byte	4	# count
 	.byte	0x0c, 48, 52, 55, 58, 0xff, 0xff, 0xff	# inversion 1
 	.byte	0x14, 52, 55, 58, 60, 0xff, 0xff, 0xff	# inversion 2
 	.byte	0x1c, 55, 58, 60, 64, 0xff, 0xff, 0xff	# inversion 3
 	.byte	0x24, 58, 60, 64, 67, 0xff, 0xff, 0xff	# inversion 4
-# 3 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
-func_486F84EC_Inversions_4:
+# 3 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
+ChordFinderNotesGet_Inversions_4:
 	.byte	3	# count
 	.byte	0x0c, 48, 51, 55, 58, 0xff, 0xff, 0xff	# inversion 1
 	.byte	0x1c, 55, 58, 60, 63, 0xff, 0xff, 0xff	# inversion 3
 	.byte	0x24, 58, 60, 63, 67, 0xff, 0xff, 0xff	# inversion 4
-# 3 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
-func_486F84EC_Inversions_5:
+# 3 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
+ChordFinderNotesGet_Inversions_5:
 	.byte	3	# count
 	.byte	0x0c, 48, 51, 54, 58, 0xff, 0xff, 0xff	# inversion 1
 	.byte	0x1c, 54, 58, 60, 63, 0xff, 0xff, 0xff	# inversion 3
 	.byte	0x24, 58, 60, 63, 66, 0xff, 0xff, 0xff	# inversion 4
-# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
-func_486F84EC_Inversions_6:
+# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
+ChordFinderNotesGet_Inversions_6:
 	.byte	0	# count
 	.byte	0x04, 60, 64, 67, 69, 0xff, 0xff, 0xff	# inversion 0
-# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
-func_486F84EC_Inversions_7:
+# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
+ChordFinderNotesGet_Inversions_7:
 	.byte	0	# count
 	.byte	0x04, 60, 63, 67, 69, 0xff, 0xff, 0xff	# inversion 0
-# 4 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
-func_486F84EC_Inversions_8:
+# 4 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
+ChordFinderNotesGet_Inversions_8:
 	.byte	4	# count
 	.byte	0x0c, 48, 52, 55, 59, 0xff, 0xff, 0xff	# inversion 1
 	.byte	0x14, 52, 55, 59, 60, 0xff, 0xff, 0xff	# inversion 2
 	.byte	0x1c, 55, 59, 60, 64, 0xff, 0xff, 0xff	# inversion 3
 	.byte	0x24, 59, 60, 64, 67, 0xff, 0xff, 0xff	# inversion 4
-# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
-func_486F84EC_Inversions_9:
+# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
+ChordFinderNotesGet_Inversions_9:
 	.byte	0	# count
 	.byte	0x03, 60, 65, 67, 0xff, 0xff, 0xff, 0xff	# inversion 0
-# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
-func_486F84EC_Inversions_10:
+# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
+ChordFinderNotesGet_Inversions_10:
 	.byte	0	# count
 	.byte	0x03, 60, 64, 68, 0xff, 0xff, 0xff, 0xff	# inversion 0
-# 3 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
-func_486F84EC_Inversions_11:
+# 3 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
+ChordFinderNotesGet_Inversions_11:
 	.byte	3	# count
 	.byte	0x0b, 48, 51, 54, 0xff, 0xff, 0xff, 0xff	# inversion 1
 	.byte	0x13, 51, 54, 60, 0xff, 0xff, 0xff, 0xff	# inversion 2
 	.byte	0x1b, 54, 60, 63, 0xff, 0xff, 0xff, 0xff	# inversion 3
-# 4 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
-func_486F84EC_Inversions_12:
+# 4 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
+ChordFinderNotesGet_Inversions_12:
 	.byte	4	# count
 	.byte	0x0c, 48, 53, 55, 58, 0xff, 0xff, 0xff	# inversion 1
 	.byte	0x14, 53, 55, 58, 60, 0xff, 0xff, 0xff	# inversion 2
 	.byte	0x1c, 55, 58, 60, 65, 0xff, 0xff, 0xff	# inversion 3
 	.byte	0x24, 58, 60, 65, 67, 0xff, 0xff, 0xff	# inversion 4
-# 4 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
-func_486F84EC_Inversions_13:
+# 4 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
+ChordFinderNotesGet_Inversions_13:
 	.byte	4	# count
 	.byte	0x0c, 48, 52, 56, 58, 0xff, 0xff, 0xff	# inversion 1
 	.byte	0x14, 52, 56, 58, 60, 0xff, 0xff, 0xff	# inversion 2
 	.byte	0x1c, 56, 58, 60, 64, 0xff, 0xff, 0xff	# inversion 3
 	.byte	0x24, 58, 60, 64, 68, 0xff, 0xff, 0xff	# inversion 4
-# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
-func_486F84EC_Inversions_14:
+# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
+ChordFinderNotesGet_Inversions_14:
 	.byte	0	# count
 	.byte	0x04, 60, 63, 66, 69, 0xff, 0xff, 0xff	# inversion 0
-# 3 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
-func_486F84EC_Inversions_15:
+# 3 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
+ChordFinderNotesGet_Inversions_15:
 	.byte	3	# count
 	.byte	0x0b, 48, 52, 54, 0xff, 0xff, 0xff, 0xff	# inversion 1
 	.byte	0x13, 52, 54, 60, 0xff, 0xff, 0xff, 0xff	# inversion 2
 	.byte	0x1b, 54, 60, 64, 0xff, 0xff, 0xff, 0xff	# inversion 3
-# 2 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
-func_486F84EC_Inversions_16:
+# 2 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
+ChordFinderNotesGet_Inversions_16:
 	.byte	2	# count
 	.byte	0x0c, 48, 52, 54, 58, 0xff, 0xff, 0xff	# inversion 1
 	.byte	0x24, 58, 60, 64, 66, 0xff, 0xff, 0xff	# inversion 4
-# 4 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
-func_486F84EC_Inversions_17:
+# 4 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
+ChordFinderNotesGet_Inversions_17:
 	.byte	4	# count
 	.byte	0x0c, 48, 51, 55, 59, 0xff, 0xff, 0xff	# inversion 1
 	.byte	0x14, 51, 55, 59, 60, 0xff, 0xff, 0xff	# inversion 2
 	.byte	0x1c, 55, 59, 60, 63, 0xff, 0xff, 0xff	# inversion 3
 	.byte	0x24, 59, 60, 63, 67, 0xff, 0xff, 0xff	# inversion 4
-# 4 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
-func_486F84EC_Inversions_18:
+# 4 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
+ChordFinderNotesGet_Inversions_18:
 	.byte	4	# count
 	.byte	0x0c, 48, 52, 54, 59, 0xff, 0xff, 0xff	# inversion 1
 	.byte	0x14, 52, 54, 59, 60, 0xff, 0xff, 0xff	# inversion 2
 	.byte	0x1c, 54, 59, 60, 64, 0xff, 0xff, 0xff	# inversion 3
 	.byte	0x24, 59, 60, 64, 66, 0xff, 0xff, 0xff	# inversion 4
-# 4 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
-func_486F84EC_Inversions_19:
+# 4 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
+ChordFinderNotesGet_Inversions_19:
 	.byte	4	# count
 	.byte	0x0c, 48, 52, 56, 59, 0xff, 0xff, 0xff	# inversion 1
 	.byte	0x14, 52, 56, 59, 60, 0xff, 0xff, 0xff	# inversion 2
 	.byte	0x1c, 56, 59, 60, 64, 0xff, 0xff, 0xff	# inversion 3
 	.byte	0x24, 59, 60, 64, 68, 0xff, 0xff, 0xff	# inversion 4
-# 4 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
-func_486F84EC_Inversions_20:
+# 4 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
+ChordFinderNotesGet_Inversions_20:
 	.byte	4	# count
 	.byte	0x0c, 48, 51, 54, 59, 0xff, 0xff, 0xff	# inversion 1
 	.byte	0x14, 51, 54, 59, 60, 0xff, 0xff, 0xff	# inversion 2
 	.byte	0x1c, 54, 59, 60, 63, 0xff, 0xff, 0xff	# inversion 3
 	.byte	0x24, 59, 60, 63, 66, 0xff, 0xff, 0xff	# inversion 4
-# 1 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
-func_486F84EC_Inversions_21:
+# 1 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
+ChordFinderNotesGet_Inversions_21:
 	.byte	1	# count
 	.byte	0x0c, 48, 52, 55, 62, 0xff, 0xff, 0xff	# inversion 1
-# 1 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
-func_486F84EC_Inversions_22:
+# 1 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L18_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L18_Table_2)
+ChordFinderNotesGet_Inversions_22:
 	.byte	1	# count
 	.byte	0x0c, 48, 51, 55, 62, 0xff, 0xff, 0xff	# inversion 1
-	.align	4, 0xFF	# pad after func_486F84EC_Inversions_22
-# 2 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
-func_486F84EC_Inversions_23:
+	.align	4, 0xFF	# pad after ChordFinderNotesGet_Inversions_22
+# 2 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
+ChordFinderNotesGet_Inversions_23:
 	.byte	2	# count
 	.byte	0x0b, 48, 53, 55, 0xff, 0xff, 0xff, 0xff	# inversion 1
 	.byte	0x13, 53, 55, 60, 0xff, 0xff, 0xff, 0xff	# inversion 2
-# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
-func_486F84EC_Inversions_24:
+# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
+ChordFinderNotesGet_Inversions_24:
 	.byte	0	# count
 	.byte	0x03, 60, 63, 66, 0xff, 0xff, 0xff, 0xff	# inversion 0
-# 3 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
-func_486F84EC_Inversions_25:
+# 3 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
+ChordFinderNotesGet_Inversions_25:
 	.byte	3	# count
 	.byte	0x0c, 48, 52, 56, 58, 0xff, 0xff, 0xff	# inversion 1
 	.byte	0x14, 52, 56, 58, 60, 0xff, 0xff, 0xff	# inversion 2
 	.byte	0x24, 58, 60, 64, 68, 0xff, 0xff, 0xff	# inversion 4
-# 2 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
-func_486F84EC_Inversions_26:
+# 2 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
+ChordFinderNotesGet_Inversions_26:
 	.byte	2	# count
 	.byte	0x0b, 48, 52, 54, 0xff, 0xff, 0xff, 0xff	# inversion 1
 	.byte	0x13, 52, 54, 60, 0xff, 0xff, 0xff, 0xff	# inversion 2
-# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
-func_486F84EC_Inversions_27:
+# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
+ChordFinderNotesGet_Inversions_27:
 	.byte	0	# count
 	.byte	0x04, 52, 54, 59, 60, 0xff, 0xff, 0xff	# inversion 0
-# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
-func_486F84EC_Inversions_28:
+# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
+ChordFinderNotesGet_Inversions_28:
 	.byte	0	# count
 	.byte	0x04, 60, 63, 66, 71, 0xff, 0xff, 0xff	# inversion 0
-# 2 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
-func_486F84EC_Inversions_29:
+# 2 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
+ChordFinderNotesGet_Inversions_29:
 	.byte	2	# count
 	.byte	0x0c, 48, 52, 55, 62, 0xff, 0xff, 0xff	# inversion 1
 	.byte	0x1c, 55, 60, 62, 64, 0xff, 0xff, 0xff	# inversion 3
-# 3 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
-func_486F84EC_Inversions_30:
+# 3 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
+ChordFinderNotesGet_Inversions_30:
 	.byte	3	# count
 	.byte	0x0c, 48, 51, 55, 62, 0xff, 0xff, 0xff	# inversion 1
 	.byte	0x14, 51, 55, 60, 62, 0xff, 0xff, 0xff	# inversion 2
 	.byte	0x1c, 55, 60, 62, 63, 0xff, 0xff, 0xff	# inversion 3
-# 3 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
-func_486F84EC_Inversions_31:
+# 3 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
+ChordFinderNotesGet_Inversions_31:
 	.byte	3	# count
 	.byte	0x0d, 48, 52, 55, 57, 62, 0xff, 0xff	# inversion 1
 	.byte	0x25, 57, 60, 62, 64, 67, 0xff, 0xff	# inversion 4
 	.byte	0x2d, 62, 64, 67, 69, 72, 0xff, 0xff	# inversion 5
-# 5 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
-func_486F84EC_Inversions_32:
+# 5 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
+ChordFinderNotesGet_Inversions_32:
 	.byte	5	# count
 	.byte	0x0d, 48, 51, 55, 57, 62, 0xff, 0xff	# inversion 1
 	.byte	0x15, 51, 55, 57, 60, 62, 0xff, 0xff	# inversion 2
 	.byte	0x1d, 55, 57, 60, 62, 63, 0xff, 0xff	# inversion 3
 	.byte	0x25, 57, 60, 62, 63, 67, 0xff, 0xff	# inversion 4
 	.byte	0x2d, 62, 63, 67, 69, 72, 0xff, 0xff	# inversion 5
-# 5 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
-func_486F84EC_Inversions_33:
+# 5 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
+ChordFinderNotesGet_Inversions_33:
 	.byte	5	# count
 	.byte	0x0d, 48, 52, 55, 58, 62, 0xff, 0xff	# inversion 1
 	.byte	0x15, 52, 55, 58, 60, 62, 0xff, 0xff	# inversion 2
 	.byte	0x1d, 55, 58, 60, 62, 64, 0xff, 0xff	# inversion 3
 	.byte	0x25, 58, 60, 62, 64, 67, 0xff, 0xff	# inversion 4
 	.byte	0x2d, 62, 64, 67, 70, 72, 0xff, 0xff	# inversion 5
-# 5 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
-func_486F84EC_Inversions_34:
+# 5 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
+ChordFinderNotesGet_Inversions_34:
 	.byte	5	# count
 	.byte	0x0d, 48, 52, 55, 58, 61, 0xff, 0xff	# inversion 1
 	.byte	0x15, 52, 55, 58, 60, 61, 0xff, 0xff	# inversion 2
 	.byte	0x1d, 55, 58, 60, 61, 64, 0xff, 0xff	# inversion 3
 	.byte	0x25, 58, 60, 61, 64, 67, 0xff, 0xff	# inversion 4
 	.byte	0x2d, 61, 64, 67, 70, 72, 0xff, 0xff	# inversion 5
-# 5 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
-func_486F84EC_Inversions_35:
+# 5 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
+ChordFinderNotesGet_Inversions_35:
 	.byte	5	# count
 	.byte	0x0d, 48, 52, 55, 58, 63, 0xff, 0xff	# inversion 1
 	.byte	0x15, 52, 55, 58, 60, 63, 0xff, 0xff	# inversion 2
 	.byte	0x1d, 55, 58, 60, 63, 64, 0xff, 0xff	# inversion 3
 	.byte	0x25, 58, 60, 63, 64, 67, 0xff, 0xff	# inversion 4
 	.byte	0x2d, 63, 64, 67, 70, 72, 0xff, 0xff	# inversion 5
-# 3 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
-func_486F84EC_Inversions_36:
+# 3 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
+ChordFinderNotesGet_Inversions_36:
 	.byte	3	# count
 	.byte	0x0d, 48, 51, 55, 58, 62, 0xff, 0xff	# inversion 1
 	.byte	0x1d, 55, 58, 60, 62, 63, 0xff, 0xff	# inversion 3
 	.byte	0x25, 58, 60, 62, 63, 67, 0xff, 0xff	# inversion 4
-# 3 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
-func_486F84EC_Inversions_37:
+# 3 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
+ChordFinderNotesGet_Inversions_37:
 	.byte	3	# count
 	.byte	0x0d, 48, 52, 55, 59, 62, 0xff, 0xff	# inversion 1
 	.byte	0x1d, 55, 59, 60, 62, 64, 0xff, 0xff	# inversion 3
 	.byte	0x25, 59, 60, 62, 64, 67, 0xff, 0xff	# inversion 4
-# 1 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
-func_486F84EC_Inversions_38:
+# 1 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
+ChordFinderNotesGet_Inversions_38:
 	.byte	1	# count
 	.byte	0x0d, 48, 52, 56, 58, 62, 0xff, 0xff	# inversion 1
-# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
-func_486F84EC_Inversions_39:
+# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
+ChordFinderNotesGet_Inversions_39:
 	.byte	0	# count
 	.byte	0x05, 60, 64, 66, 67, 70, 0xff, 0xff	# inversion 0
-# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
-func_486F84EC_Inversions_40:
+# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
+ChordFinderNotesGet_Inversions_40:
 	.byte	0	# count
 	.byte	0x05, 55, 58, 60, 63, 65, 0xff, 0xff	# inversion 0
-# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
-func_486F84EC_Inversions_41:
+# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
+ChordFinderNotesGet_Inversions_41:
 	.byte	0	# count
 	.byte	0x05, 60, 64, 66, 68, 70, 0xff, 0xff	# inversion 0
-# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
-func_486F84EC_Inversions_42:
+# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
+ChordFinderNotesGet_Inversions_42:
 	.byte	0	# count
 	.byte	0x03, 58, 64, 69, 0xff, 0xff, 0xff, 0xff	# inversion 0
-# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
-func_486F84EC_Inversions_43:
+# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
+ChordFinderNotesGet_Inversions_43:
 	.byte	0	# count
 	.byte	0x05, 57, 58, 60, 61, 64, 0xff, 0xff	# inversion 0
-# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
-func_486F84EC_Inversions_44:
+# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
+ChordFinderNotesGet_Inversions_44:
 	.byte	0	# count
 	.byte	0x05, 57, 58, 60, 63, 64, 0xff, 0xff	# inversion 0
-# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
-func_486F84EC_Inversions_45:
+# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
+ChordFinderNotesGet_Inversions_45:
 	.byte	0	# count
 	.byte	0x05, 55, 56, 58, 62, 64, 0xff, 0xff	# inversion 0
-# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
-func_486F84EC_Inversions_46:
+# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
+ChordFinderNotesGet_Inversions_46:
 	.byte	0	# count
 	.byte	0x05, 56, 58, 60, 61, 64, 0xff, 0xff	# inversion 0
-# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): func_486F84EC 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
-func_486F84EC_Inversions_47:
+# 0 inversions: u8 count, then max(count, 1) rows {u8 head (bits 3..5: the inversion, 1..5); u8 note[7]} (row base + 8n - 7): ChordFinderNotesGet 0x486F84EC `mov func_486F8461_entry_L36_Table_2, a2` / `mov (d0, a2), d0` (func_486F8461_entry_L36_Table_2)
+ChordFinderNotesGet_Inversions_47:
 	.byte	0	# count
 	.byte	0x05, 56, 58, 60, 63, 64, 0xff, 0xff	# inversion 0
-	.align	4, 0xFF	# pad after func_486F84EC_Inversions_47
+	.align	4, 0xFF	# pad after ChordFinderNotesGet_Inversions_47
 
 func_486F8E3D_entry_L49_Records:	# 53 x REC_func_486F8E3D_entry_L49_Records (16 bytes each); read by func_486F8E3D_entry_L49 0x486F8E8B `mov (4, a0), d0`; func_486F8E3D_entry_L49 0x486F8E8B `mov (8, a0), d0`; func_486F8E3D_entry_L49 0x486F8E8B `movhu (0xc, a0), d0` (+7)
 	REC_func_486F8E3D_entry_L49_Records	x0="0\x00\x00\x00", f4=141, DrawBox_d0=96, f12=255, x14="\x00\x00"	# [0]
@@ -13270,24 +13270,24 @@ Str_ACTION_8:	.asciz "/ACTION"
 Str_SLIDESHOW_7:	.asciz "SLIDESHOW"
 Str_SLIDESHOW_8:	.asciz "/SLIDESHOW"
 
-func_486FEE03_entry_L22_Table:	# 5 x REC_func_486FEE03_entry_L22_Table (8 bytes each); read by func_486FEE03_entry_L41 0x486FEE46 `mov (d0, a2), a0`; func_486FEE03_entry_L41 0x486FEE46 `mov (d1, a2), a0`; func_486FEE03_entry_L64 0x486FEE69 `mov (4, a2), d0` (+1)
-	REC_func_486FEE03_entry_L22_Table	text=Str_BR, proc=loc_486FF2FB
-	REC_func_486FEE03_entry_L22_Table	text=Str_CENTER_7, proc=loc_486FF318
-	REC_func_486FEE03_entry_L22_Table	text=Str_CENTER_6, proc=loc_486FF35D
-	REC_func_486FEE03_entry_L22_Table	text=Str_FONT_2, proc=func_486FF3BA
-	REC_func_486FEE03_entry_L22_Table	text=Str_FONT, proc=func_486FF4F7
+SswScriptStep_entry_L22_Table:	# 5 x REC_SswScriptStep_entry_L22_Table (8 bytes each); read by SswScriptStep_entry_L41 0x486FEE46 `mov (d0, a2), a0`; SswScriptStep_entry_L41 0x486FEE46 `mov (d1, a2), a0`; SswScriptStep_entry_L64 0x486FEE69 `mov (4, a2), d0` (+1)
+	REC_SswScriptStep_entry_L22_Table	text=Str_BR, proc=loc_486FF2FB
+	REC_SswScriptStep_entry_L22_Table	text=Str_CENTER_7, proc=loc_486FF318
+	REC_SswScriptStep_entry_L22_Table	text=Str_CENTER_6, proc=loc_486FF35D
+	REC_SswScriptStep_entry_L22_Table	text=Str_FONT_2, proc=func_486FF3BA
+	REC_SswScriptStep_entry_L22_Table	text=Str_FONT, proc=func_486FF4F7
 
 names_4850E0B0:
-	.long	Str_IMG, func_486FF583
-	.long	Str_SHOW, func_486FF68D
-	.long	Str_HDR, func_486FFB68
-	.long	Str_ACT_2, func_486FF0F2
+	.long	Str_IMG, SswTagImgProc
+	.long	Str_SHOW, SswTagShowProc
+	.long	Str_HDR, SswTagHdrProc
+	.long	Str_ACT_2, SswTagActProc
 # census: opaque -- unknown-dump: 24 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x10E0D0, 0x10E0E8
 names_4850E0E8:
-	.long	Str_SCORE, func_486FF9AC
-	.long	Str_DA, func_486FF242
-	.long	Str_SSW, func_486FF754
+	.long	Str_SCORE, SswTagScoreProc
+	.long	Str_DA, SswTagDaProc
+	.long	Str_SSW, SswTagSswProc
 	.long	Str_PRESENTATION, 0
 names_4850E108:	# 9 string pointers, typed by value (every word 0 or a printable string of this region); reader not traced
 	.long	Str_PRESENTATION_2
@@ -13304,25 +13304,25 @@ names_4850E108:	# 9 string pointers, typed by value (every word 0 or a printable
 Str_NO_43:	.asciz "NO"
 Str_PAN_6:	.asciz "PAN"
 
-func_486FF0F2_L49_Table_p0_0:	# REC_func_486FF0F2_L49_Table_p0 (1 bytes)
-	REC_func_486FF0F2_L49_Table_p0	
+SswTagActProc_L49_Table_p0_0:	# REC_SswTagActProc_L49_Table_p0 (1 bytes)
+	REC_SswTagActProc_L49_Table_p0	
 
-func_486FF0F2_L49_Table:
+SswTagActProc_L49_Table:
 	.long	Str_NO_43
 	.long	Str_PAN_6
-	.long	func_486FF0F2_L49_Table_p0_0
+	.long	SswTagActProc_L49_Table_p0_0
 
 func_486FF09C_entry_L8_Table:	# 4 x u8, 0..255; read by func_486FF09C_entry_L8 0x486FF0A9: `movbu (a2), d0`
 	tab_u8	13, 10, 0, 255
 
 Str_NO_42:	.asciz "NO"
 
-func_486FF242_L44_Table_p0_0:	# REC_func_486FF242_L44_Table_p0 (1 bytes)
-	REC_func_486FF242_L44_Table_p0	
+SswTagDaProc_L44_Table_p0_0:	# REC_SswTagDaProc_L44_Table_p0 (1 bytes)
+	REC_SswTagDaProc_L44_Table_p0	
 
-func_486FF242_L44_Table:
+SswTagDaProc_L44_Table:
 	.long	Str_NO_42
-	.long	func_486FF242_L44_Table_p0_0
+	.long	SswTagDaProc_L44_Table_p0_0
 
 Str_SIZE:	.asciz "SIZE"
 Str_COLOR:	.asciz "COLOR"
@@ -13349,11 +13349,11 @@ Str_HEIGHT:	.asciz "HEIGHT"
 Str_LOWSRC:	.asciz "LOWSRC"
 Str_BORDER:	.asciz "BORDER"
 
-# 0 records of 164 bytes up to the end marker (+0, 8 bits) that func_486FF583_Lae 0x486FF631: `movbu (a0), d0` / `cmp 0, d0`, `add 0xa4, a0` stops at, then the marker
-func_486FF583_Lae_List:
+# 0 records of 164 bytes up to the end marker (+0, 8 bits) that SswTagImgProc_Lae 0x486FF631: `movbu (a0), d0` / `cmp 0, d0`, `add 0xa4, a0` stops at, then the marker
+SswTagImgProc_Lae_List:
 	.byte	0	# end
 
-func_486FF583_L6f_Table:
+SswTagImgProc_L6f_Table:
 	.long	Str_SRC
 	.long	Str_ALT
 	.long	Str_ALIGN
@@ -13363,9 +13363,9 @@ func_486FF583_L6f_Table:
 	.long	Str_HEIGHT
 	.long	Str_LOWSRC
 	.long	Str_BORDER
-	.long	func_486FF583_Lae_List
+	.long	SswTagImgProc_Lae_List
 
-func_486FF583_Table:	# 132 x u8, 0..255; read by func_486FF583 : `movbu	(a1), d0`
+SswTagImgProc_Table:	# 132 x u8, 0..255; read by SswTagImgProc : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [32]
@@ -13375,7 +13375,7 @@ func_486FF583_Table:	# 132 x u8, 0..255; read by func_486FF583 : `movbu	(a1), d0
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [96]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [112]
 	tab_u8	0, 255, 255, 255	# [128]
-func_486FF583_Table_2:	# 132 x u8, 0..255; read by func_486FF583 : `movbu	(a1), d0`
+SswTagImgProc_Table_2:	# 132 x u8, 0..255; read by SswTagImgProc : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [32]
@@ -13388,16 +13388,16 @@ func_486FF583_Table_2:	# 132 x u8, 0..255; read by func_486FF583 : `movbu	(a1), 
 
 Str_OBJ:	.asciz "OBJ"
 
-# 0 records of 32 bytes up to the end marker (+0, 8 bits) that func_486FF68D_L74 0x486FF701: `movbu (a0), d0` / `cmp 0, d0`, `add 0x20, a0` stops at, then the marker
-func_486FF68D_L74_List:
+# 0 records of 32 bytes up to the end marker (+0, 8 bits) that SswTagShowProc_L74 0x486FF701: `movbu (a0), d0` / `cmp 0, d0`, `add 0x20, a0` stops at, then the marker
+SswTagShowProc_L74_List:
 	.byte	0	# end
 	.byte	0xff, 0xff, 0xff	# the marker's fill to a 4-byte boundary
 
-func_486FF68D_L54_Table:
+SswTagShowProc_L54_Table:
 	.long	Str_OBJ
-	.long	func_486FF68D_L74_List
+	.long	SswTagShowProc_L74_List
 
-func_486FF68D_Table:	# 132 x u8, 0..255; read by func_486FF68D : `movbu	(a1), d1`
+SswTagShowProc_Table:	# 132 x u8, 0..255; read by SswTagShowProc : `movbu	(a1), d1`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [32]
@@ -13411,16 +13411,16 @@ func_486FF68D_Table:	# 132 x u8, 0..255; read by func_486FF68D : `movbu	(a1), d1
 Str_NO_41:	.asciz "NO"
 Str_IMG_2:	.asciz "IMG"
 
-# 0 records of 36 bytes up to the end marker (+0, 8 bits) that func_486FF754_L8c 0x486FF7E0: `movbu (a0), d0` / `cmp 0, d0`, `add 0x24, a0` stops at, then the marker
-func_486FF754_L8c_List:
+# 0 records of 36 bytes up to the end marker (+0, 8 bits) that SswTagSswProc_L8c 0x486FF7E0: `movbu (a0), d0` / `cmp 0, d0`, `add 0x24, a0` stops at, then the marker
+SswTagSswProc_L8c_List:
 	.byte	0	# end
 
-func_486FF754_L59_Table:
+SswTagSswProc_L59_Table:
 	.long	Str_NO_41
 	.long	Str_IMG_2
-	.long	func_486FF754_L8c_List
+	.long	SswTagSswProc_L8c_List
 
-func_486FF754_Table:	# 132 x u8, 0..255; read by func_486FF754 : `movbu	(a1), d1`
+SswTagSswProc_Table:	# 132 x u8, 0..255; read by SswTagSswProc : `movbu	(a1), d1`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [32]
@@ -13451,7 +13451,7 @@ Str_DISP:	.asciz "DISP"
 Str_text_47:	.asciz ""
 	.align	4, 0xFF	# pad after Str_text_47
 
-func_486FF9AC_L78_Table:
+SswTagScoreProc_L78_Table:
 	.long	Str_SRC_2
 	.long	Str_BEAT
 	.long	Str_X_2
@@ -13459,7 +13459,7 @@ func_486FF9AC_L78_Table:
 	.long	Str_DISP
 	.long	Str_text_47
 
-func_486FF9AC_Table:	# 132 x u8, 0..255; read by func_486FF9AC : `movbu	(a1), d0`
+SswTagScoreProc_Table:	# 132 x u8, 0..255; read by SswTagScoreProc : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [32]
@@ -13479,7 +13479,7 @@ Str_TEMPO1:	.asciz "TEMPO1"
 Str_TEMPO2:	.asciz "TEMPO2"
 Str_text_48:	.asciz ""
 
-func_486FFB68_L8d_Table:
+SswTagHdrProc_L8d_Table:
 	.long	Str_SQT
 	.long	Str_CLASS
 	.long	Str_TITLE_2
@@ -13489,7 +13489,7 @@ func_486FFB68_L8d_Table:
 	.long	Str_TEMPO2
 	.long	Str_text_48
 
-func_486FFB68_Table:	# 132 x u8, 0..255; read by func_486FFB68 : `movbu	(a1), d0`
+SswTagHdrProc_Table:	# 132 x u8, 0..255; read by SswTagHdrProc : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [32]
@@ -13499,7 +13499,7 @@ func_486FFB68_Table:	# 132 x u8, 0..255; read by func_486FFB68 : `movbu	(a1), d0
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [96]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [112]
 	tab_u8	0, 255, 255, 255	# [128]
-func_486FFB68_Table_2:	# 132 x u8, 0..255; read by func_486FFB68 : `movbu	(a1), d0`
+SswTagHdrProc_Table_2:	# 132 x u8, 0..255; read by SswTagHdrProc : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [32]
@@ -13509,7 +13509,7 @@ func_486FFB68_Table_2:	# 132 x u8, 0..255; read by func_486FFB68 : `movbu	(a1), 
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [96]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [112]
 	tab_u8	0, 255, 255, 255	# [128]
-func_486FFB68_Table_3:	# 132 x u8, 0..255; read by func_486FFB68 : `movbu	(a1), d0`
+SswTagHdrProc_Table_3:	# 132 x u8, 0..255; read by SswTagHdrProc : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [32]
@@ -13520,16 +13520,16 @@ func_486FFB68_Table_3:	# 132 x u8, 0..255; read by func_486FFB68 : `movbu	(a1), 
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [112]
 	tab_u8	0, 255, 255, 255	# [128]
 
-func_486FF583_Table_3:
+SswTagImgProc_Table_3:
 	.long	loc_486FF617
 	.long	loc_486FF624
-	.long	func_486FF583_Lae
-	.long	func_486FF583_Lae
-	.long	func_486FF583_Lae
-	.long	func_486FF583_Lae
-	.long	func_486FF583_Lae
-	.long	func_486FF583_Lae
-	.long	func_486FF583_Lae
+	.long	SswTagImgProc_Lae
+	.long	SswTagImgProc_Lae
+	.long	SswTagImgProc_Lae
+	.long	SswTagImgProc_Lae
+	.long	SswTagImgProc_Lae
+	.long	SswTagImgProc_Lae
+	.long	SswTagImgProc_Lae
 
 func_486FFDD3_Table:	# 4 x u16, 0..639; read by func_486FFDD3 0x486FFDD3: `movhu	(a1), d0`
 	tab_u16	0, 0, 639, 239
@@ -13592,17 +13592,17 @@ LibStrlen_Table_4:	# 3 x s8, -1..-1; read by LibStrlen 0x501232B7: `movbu (a1), 
 Str_wb_9:	.asciz "wb"
 	.align	4, 0xFF	# pad after Str_wb_9
 data_4850E7E0:
-	# a string, 4 bytes with its pad, read by func_487006F9_entry_L72 0x48700770 `call func_48700B5A_entry, 0, 0x10` (+0, arg a0); func_487006F9_entry_L72 0x48700770 `mov data_4850E7E0, a0` (+0, as a base); func_48700B5A 0x48700B5A `call strcpy_entry, [a2], 4` (+0, arg a1); handed to strcpy
+	# a string, 4 bytes with its pad, read by SswSlotImagesSave_entry_L72 0x48700770 `call func_48700B5A_entry, 0, 0x10` (+0, arg a0); SswSlotImagesSave_entry_L72 0x48700770 `mov data_4850E7E0, a0` (+0, as a base); func_48700B5A 0x48700B5A `call strcpy_entry, [a2], 4` (+0, arg a1); handed to strcpy
 	.asciz	""
 	.align	4, 0xFF
 data_4850E7E4:
-	# a string, 4 bytes with its pad, read by func_486D3761 0x486D3761 `calls (a1)` (+0, arg a0); func_4870077F_entry_L16 0x4870079A `call func_486D3761_entry, [d2,a2], 0x24` (+0, arg a0); func_4870077F_entry_L16 0x4870079A `mov data_4850E7E4, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	# a string, 4 bytes with its pad, read by FmmWrite 0x486D3761 `calls (a1)` (+0, arg a0); func_4870077F_entry_L16 0x4870079A `call FmmWrite_entry, [d2,a2], 0x24` (+0, arg a0); func_4870077F_entry_L16 0x4870079A `mov data_4850E7E4, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
 	.asciz	"\x0D\n"
 	.align	4, 0xFF
 
-func_487007B3_entry_L23_Block:	# 11 bytes, copied whole by func_487007B3_entry_L23 0x487007D8: strncmp(.., 11)
+SswSlideshowSectionWrite_entry_L23_Block:	# 11 bytes, copied whole by SswSlideshowSectionWrite_entry_L23 0x487007D8: strncmp(.., 11)
 	tab_u8	60, 83, 76, 73, 68, 69, 83, 72, 79, 87, 62	# [0]
-	.align	4, 0x00	# pad after func_487007B3_entry_L23_Block
+	.align	4, 0x00	# pad after SswSlideshowSectionWrite_entry_L23_Block
 
 Str_SLIDESHOW_3:	.asciz "</SLIDESHOW>"
 	.align	4, 0xFF	# pad after Str_SLIDESHOW_3
@@ -13611,7 +13611,7 @@ Str_SSW_ACT_V01_SLIDESHOW_2:	.asciz "SSW-ACT-V01\x0D\n\x0D\n<SLIDESHOW>"
 Str_SSW_ACT_V01_SLIDESHOW:	.asciz "SSW-ACT-V01\x0D\n\x0D\n<SLIDESHOW>"
 	.align	4, 0xFF	# pad after Str_SSW_ACT_V01_SLIDESHOW
 data_4850E83C:
-	# a string, 4 bytes with its pad, read by func_486D3761 0x486D3761 `calls (a1)` (+0, arg a0); func_487007B3_entry_L9f 0x48700854 `call func_486D3761_entry, [d2,a2], 0x24` (+0, arg a0); func_487007B3_entry_L9f 0x48700854 `mov data_4850E83C, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	# a string, 4 bytes with its pad, read by FmmWrite 0x486D3761 `calls (a1)` (+0, arg a0); SswSlideshowSectionWrite_entry_L9f 0x48700854 `call FmmWrite_entry, [d2,a2], 0x24` (+0, arg a0); SswSlideshowSectionWrite_entry_L9f 0x48700854 `mov data_4850E83C, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
 	.asciz	"\x0D\n"
 	.align	4, 0xFF
 Str_SSW_NO_d_IMG_s:	.asciz "<SSW NO=%d IMG=\"%s\">\x0D\n"
@@ -19323,15 +19323,15 @@ PsFileListBoxProc_L21_Records:	# 32 x REC_PsFileListBoxProc_L21_Records (8 bytes
 	REC_PsFileListBoxProc_L21_Records	proc=PsFileListBoxProc_L4b5
 	REC_PsFileListBoxProc_L21_Records	proc=PsFileListBoxProc_L4b5
 
-func_487090D3_Table:	# 19 x u32, 0..4294967295; read by func_487090D3 0x487090D3: `mov	(a1), d0`; func_487091C0 0x487091C0: `mov	(func_487090D3_Table), d0` ...; 19 records: the index is bounded by func_487090D3 0x487090D3: `mov -0x13, d1` / setlb / `mov (a1), d0` / `inc4 a1` / `inc d1` / lne (19 passes)
+func_487090D3_Table:	# 19 x u32, 0..4294967295; read by func_487090D3 0x487090D3: `mov	(a1), d0`; SdFreeBytesInvalidate 0x487091C0: `mov	(func_487090D3_Table), d0` ...; 19 records: the index is bounded by func_487090D3 0x487090D3: `mov -0x13, d1` / setlb / `mov (a1), d0` / `inc4 a1` / `inc d1` / lne (19 passes)
 	tab_u32	4294967295, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [8]
 	tab_u32	0, 0, 0	# [16]
 data_485237B8:
 	.space	1, 0x00
-func_487090D3_entry_L23_Table:	# 9 x u8, 0..0; read by func_487090D3_entry_L23 0x487090FB: `movbu (a1), d0`; func_4870A1B9_entry_L14 0x4870A1CF: `movbu (a1), d0`
+func_487090D3_entry_L23_Table:	# 9 x u8, 0..0; read by func_487090D3_entry_L23 0x487090FB: `movbu (a1), d0`; SdPrivSmfListScan_entry_L14 0x4870A1CF: `movbu (a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0
-func_487090D3_entry_L49_Table:	# 10 x u8, 0..0; read by func_487090D3_entry_L49 0x48709121: `movbu (a1), d0`; func_4870A4D5_entry_L15 0x4870A4EC: `movbu (a1), d0` ...
+func_487090D3_entry_L49_Table:	# 10 x u8, 0..0; read by func_487090D3_entry_L49 0x48709121: `movbu (a1), d0`; SdPictListScan_entry_L15 0x4870A4EC: `movbu (a1), d0` ...
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 
 Str_KN7000_SDDIR_INF:	.asciz "KN7000 SDDIR INF"
@@ -19443,27 +19443,27 @@ Str_wb_7:	.asciz "wb"
 	.align	4, 0xFF	# pad after Str_wb_7
 
 func_4870C801_Table:	# 8 x REC_func_4870C801_Table (8 bytes each); read by func_4870C801_entry_L79 0x4870C880 `mov (4, a0), a1`; func_4870C801_entry_L79 0x4870C880 `movbu (d0, a2), d0`; func_4870C801_entry_L79 0x4870C880 `movbu (d1, a2), d1`
-	REC_func_4870C801_Table	f0=6, x1="\x00\x00\x00", proc=loc_486D0CD6
-	REC_func_4870C801_Table	f0=4, x1="\x00\x00\x00", proc=loc_486D0CCB
+	REC_func_4870C801_Table	SdLoadFilterHasType_d0=6, x1="\x00\x00\x00", proc=loc_486D0CD6
+	REC_func_4870C801_Table	SdLoadFilterHasType_d0=4, x1="\x00\x00\x00", proc=loc_486D0CCB
 	REC_func_4870C801_Table	x1="\x00\x00\x00", proc=loc_486D0C7E
-	REC_func_4870C801_Table	f0=1, x1="\x00\x00\x00", proc=loc_486D0C89
-	REC_func_4870C801_Table	f0=5, x1="\x00\x00\x00", proc=loc_486D0CC0
-	REC_func_4870C801_Table	f0=3, x1="\x00\x00\x00", proc=loc_486D0CB5
-	REC_func_4870C801_Table	f0=2, x1="\x00\x00\x00", proc=loc_486D0C9F
-	REC_func_4870C801_Table	f0=7, x1="\x00\x00\x00", proc=loc_486D0C94
+	REC_func_4870C801_Table	SdLoadFilterHasType_d0=1, x1="\x00\x00\x00", proc=loc_486D0C89
+	REC_func_4870C801_Table	SdLoadFilterHasType_d0=5, x1="\x00\x00\x00", proc=loc_486D0CC0
+	REC_func_4870C801_Table	SdLoadFilterHasType_d0=3, x1="\x00\x00\x00", proc=loc_486D0CB5
+	REC_func_4870C801_Table	SdLoadFilterHasType_d0=2, x1="\x00\x00\x00", proc=loc_486D0C9F
+	REC_func_4870C801_Table	SdLoadFilterHasType_d0=7, x1="\x00\x00\x00", proc=loc_486D0C94
 
 Str_rb_10:	.asciz "rb"
 	.align	4, 0xFF	# pad after Str_rb_10
 
 func_4870CAE5_Table_2:	# 8 x REC_func_4870CAE5_Table_2 (8 bytes each); read by func_4870CAE5_entry_L170 0x4870CC5B `movbu (d0, a2), d0`; func_4870CAE5_entry_L1a8 0x4870CC93 `mov (4, a0), a1`; func_4870CAE5_entry_L216 0x4870CD01 `movbu (d0, a3), d0` (+1)
-	REC_func_4870CAE5_Table_2	CheckSdSavePM3Bank_d0=6, x1="\x00\x00\x00", proc=loc_486D0D39
-	REC_func_4870CAE5_Table_2	CheckSdSavePM3Bank_d0=4, x1="\x00\x00\x00", proc=loc_486D0D65
+	REC_func_4870CAE5_Table_2	SdSaveFilterHasType_d0=6, x1="\x00\x00\x00", proc=loc_486D0D39
+	REC_func_4870CAE5_Table_2	SdSaveFilterHasType_d0=4, x1="\x00\x00\x00", proc=loc_486D0D65
 	REC_func_4870CAE5_Table_2	x1="\x00\x00\x00", proc=loc_486D0D02
-	REC_func_4870CAE5_Table_2	CheckSdSavePM3Bank_d0=1, x1="\x00\x00\x00", proc=loc_486D0D0D
-	REC_func_4870CAE5_Table_2	CheckSdSavePM3Bank_d0=5, x1="\x00\x00\x00", proc=loc_486D0D5A
-	REC_func_4870CAE5_Table_2	CheckSdSavePM3Bank_d0=3, x1="\x00\x00\x00", proc=loc_486D0D4F
-	REC_func_4870CAE5_Table_2	CheckSdSavePM3Bank_d0=2, x1="\x00\x00\x00", proc=loc_486D0D44
-	REC_func_4870CAE5_Table_2	CheckSdSavePM3Bank_d0=7, x1="\x00\x00\x00", proc=loc_486D0D18
+	REC_func_4870CAE5_Table_2	SdSaveFilterHasType_d0=1, x1="\x00\x00\x00", proc=loc_486D0D0D
+	REC_func_4870CAE5_Table_2	SdSaveFilterHasType_d0=5, x1="\x00\x00\x00", proc=loc_486D0D5A
+	REC_func_4870CAE5_Table_2	SdSaveFilterHasType_d0=3, x1="\x00\x00\x00", proc=loc_486D0D4F
+	REC_func_4870CAE5_Table_2	SdSaveFilterHasType_d0=2, x1="\x00\x00\x00", proc=loc_486D0D44
+	REC_func_4870CAE5_Table_2	SdSaveFilterHasType_d0=7, x1="\x00\x00\x00", proc=loc_486D0D18
 
 Str_empty_450:	.asciz "\\"
 	.align	4, 0xFF	# pad after Str_empty_450
@@ -19585,12 +19585,12 @@ Str_C_8:	.asciz "C:\\"
 Str_d_7:	.asciz "d"
 	.align	4, 0xFF	# pad after Str_d_7
 
-func_4870F97A_Table:	# 64 x u8, 0..0; read by func_4870F97A_entry : `movbu	(a1), d0`
+SdFileCopy_Table:	# 64 x u8, 0..0; read by SdFileCopy_entry : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [32]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [48]
-func_4870F97A_Table_2:	# 64 x u8, 0..0; read by func_4870F97A_entry : `movbu	(a1), d0`
+SdFileCopy_Table_2:	# 64 x u8, 0..0; read by SdFileCopy_entry : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [32]
@@ -19639,22 +19639,22 @@ Str_C_SD_SOUND_2:	.asciz "C:\\SD_SOUND"
 func_487104E5_Table:	# 4 x u8, 0..255; read by SdcFmmSaveTitleFunc : `movbu	(a1), d0`; func_487104E5_entry : `movbu	(a0), d0` ...
 	tab_u8	0, 0, 255, 255
 
-func_4870FD81_entry_L19_Table:	# 15 x REC_func_4870FD81_entry_L19_Table (4 bytes each); read by func_4870FD81_entry_L19 0x4870FD9C `movhu (d0, a0), d0`; func_4870FD81_entry_L47 0x4870FDCA `movbu (2, a0), d0`; func_4870FD81_entry_L47 0x4870FDCA `movbu (2, a1), d1`
-	REC_func_4870FD81_entry_L19_Table	key=-2, f2=93, x3="\x00"	# [0]
-	REC_func_4870FD81_entry_L19_Table	key=-3, f2=96, x3="\x00"
-	REC_func_4870FD81_entry_L19_Table	key=-4, f2=98, x3="\x00"
-	REC_func_4870FD81_entry_L19_Table	key=-6, f2=99, x3="\x00"
-	REC_func_4870FD81_entry_L19_Table	key=-7, f2=92, x3="\x00"
-	REC_func_4870FD81_entry_L19_Table	key=-8, f2=94, x3="\x00"
-	REC_func_4870FD81_entry_L19_Table	key=-11, f2=97, x3="\x00"
-	REC_func_4870FD81_entry_L19_Table	key=-101, f2=98, x3="\x00"
-	REC_func_4870FD81_entry_L19_Table	key=-102, f2=92, x3="\x00"	# [8]
-	REC_func_4870FD81_entry_L19_Table	key=-104, f2=95, x3="\x00"
-	REC_func_4870FD81_entry_L19_Table	key=-105, f2=61, x3="\x00"
-	REC_func_4870FD81_entry_L19_Table	key=-107, f2=15, x3="\x00"
-	REC_func_4870FD81_entry_L19_Table	key=-109, f2=71, x3="\x00"
-	REC_func_4870FD81_entry_L19_Table	key=-108, f2=82, x3="\x00"
-	REC_func_4870FD81_entry_L19_Table	f2=255, x3="\x00"
+SdcErrorMsgGet_entry_L19_Table:	# 15 x REC_SdcErrorMsgGet_entry_L19_Table (4 bytes each); read by SdcErrorMsgGet_entry_L19 0x4870FD9C `movhu (d0, a0), d0`; SdcErrorMsgGet_entry_L47 0x4870FDCA `movbu (2, a0), d0`; SdcErrorMsgGet_entry_L47 0x4870FDCA `movbu (2, a1), d1`
+	REC_SdcErrorMsgGet_entry_L19_Table	key=-2, f2=93, x3="\x00"	# [0]
+	REC_SdcErrorMsgGet_entry_L19_Table	key=-3, f2=96, x3="\x00"
+	REC_SdcErrorMsgGet_entry_L19_Table	key=-4, f2=98, x3="\x00"
+	REC_SdcErrorMsgGet_entry_L19_Table	key=-6, f2=99, x3="\x00"
+	REC_SdcErrorMsgGet_entry_L19_Table	key=-7, f2=92, x3="\x00"
+	REC_SdcErrorMsgGet_entry_L19_Table	key=-8, f2=94, x3="\x00"
+	REC_SdcErrorMsgGet_entry_L19_Table	key=-11, f2=97, x3="\x00"
+	REC_SdcErrorMsgGet_entry_L19_Table	key=-101, f2=98, x3="\x00"
+	REC_SdcErrorMsgGet_entry_L19_Table	key=-102, f2=92, x3="\x00"	# [8]
+	REC_SdcErrorMsgGet_entry_L19_Table	key=-104, f2=95, x3="\x00"
+	REC_SdcErrorMsgGet_entry_L19_Table	key=-105, f2=61, x3="\x00"
+	REC_SdcErrorMsgGet_entry_L19_Table	key=-107, f2=15, x3="\x00"
+	REC_SdcErrorMsgGet_entry_L19_Table	key=-109, f2=71, x3="\x00"
+	REC_SdcErrorMsgGet_entry_L19_Table	key=-108, f2=82, x3="\x00"
+	REC_SdcErrorMsgGet_entry_L19_Table	f2=255, x3="\x00"
 
 Str_empty_414:	.asciz "__"
 	.align	4, 0xFF	# pad after Str_empty_414
@@ -19752,29 +19752,29 @@ SdcSmfSaveAsFunc_Table:
 	.long	Str_GM2_3
 	.long	Str_GM
 
-func_486D0DF2_Var_13:	# s8, a constant; read / written by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+FmmStrCopy_Var_13:	# s8, a constant; read / written by FmmStrCopy 0x486D0DF2: `movbu (a1), d0`
 	.byte	0
 
-func_486D0DF2_Table_12:	# 3 x s8, -1..-1; read by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+FmmStrCopy_Table_12:	# 3 x s8, -1..-1; read by FmmStrCopy 0x486D0DF2: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
 Str_TR:	.asciz "TR "
 Str_empty_400:	.asciz ": "
 	.align	4, 0xFF	# pad after Str_empty_400
 
-func_486D0DF2_Var_14:	# s8, a constant; read / written by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+FmmStrCopy_Var_14:	# s8, a constant; read / written by FmmStrCopy 0x486D0DF2: `movbu (a1), d0`
 	.byte	0
 
-func_486D0DF2_Table_13:	# 3 x s8, -1..-1; read by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+FmmStrCopy_Table_13:	# 3 x s8, -1..-1; read by FmmStrCopy 0x486D0DF2: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
 Str_empty_399:	.asciz ": "
 	.align	4, 0xFF	# pad after Str_empty_399
 
-func_486D0DF2_Var_15:	# s8, a constant; read / written by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+FmmStrCopy_Var_15:	# s8, a constant; read / written by FmmStrCopy 0x486D0DF2: `movbu (a1), d0`
 	.byte	0
 
-func_486D0DF2_Table_14:	# 3 x s8, -1..-1; read by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+FmmStrCopy_Table_14:	# 3 x s8, -1..-1; read by FmmStrCopy 0x486D0DF2: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
 Str_NO_PLAYLIST:	.asciz "  * NO PLAYLIST *  "
@@ -19783,10 +19783,10 @@ Str_Default_Playlist_2:	.asciz "* Default Playlist *"
 Str_empty_398:	.asciz ": "
 	.align	4, 0xFF	# pad after Str_empty_398
 
-func_486D0DF2_Var_16:	# s8, a constant; read / written by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+FmmStrCopy_Var_16:	# s8, a constant; read / written by FmmStrCopy 0x486D0DF2: `movbu (a1), d0`
 	.byte	0
 
-func_486D0DF2_Table_15:	# 3 x s8, -1..-1; read by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+FmmStrCopy_Table_15:	# 3 x s8, -1..-1; read by FmmStrCopy 0x486D0DF2: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
 Str_empty_397:	.asciz " * "
@@ -19812,7 +19812,7 @@ Str_KB_free:	.asciz "KB free ("
 	.align	4, 0xFF	# pad after Str_KB_free
 Str_used:	.asciz "% used)"
 
-func_486D0F3D_entry_L80_Var:	# 4 x s8, -1..0; read by func_486D0F3D_entry_L80 0x486D0FC2: `movbu (a3), d0`; func_486D0F3D_entry_L80 0x486D0FC2: `movbu (d2, a3), d0` ...
+FmmFileNoNameFormat_entry_L80_Var:	# 4 x s8, -1..0; read by FmmFileNoNameFormat_entry_L80 0x486D0FC2: `movbu (a3), d0`; FmmFileNoNameFormat_entry_L80 0x486D0FC2: `movbu (d2, a3), d0` ...
 	tab_s8	0, -1, -1, -1
 func_4871BED4_Table:	# 20 x u8, 0..19; read by MainSingleLoadSW : `movbu	(d0, a0), d1`; func_4871BED4 : `movbu	(d0, a0), d0`
 	tab_u8	0, 3, 6, 9, 12, 13, 16, 17, 14, 15, 18, 19, 1, 2, 4, 5	# [0]
@@ -19853,10 +19853,10 @@ func_4871B812_L1c_Table:
 	.long	Str_EFFECT_9
 	.long	Str_text_51
 
-func_486D0DF2_Var_17:	# s8, a constant; read / written by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+FmmStrCopy_Var_17:	# s8, a constant; read / written by FmmStrCopy 0x486D0DF2: `movbu (a1), d0`
 	.byte	0
 
-func_486D0DF2_Table_16:	# 3 x s8, -1..-1; read by func_486D0DF2 0x486D0DF2: `movbu (a1), d0`
+FmmStrCopy_Table_16:	# 3 x s8, -1..-1; read by FmmStrCopy 0x486D0DF2: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
 Text_Vari_1_2:	# 20 strings of 16 characters, NUL-terminated
@@ -19903,21 +19903,21 @@ func_4871BED4_Table_2:
 	.long	Text_Vari_1_2+306
 	.long	Text_Vari_1_2+323
 
-# 8 entries of 8 bits up to the end marker that func_486D0E3E_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_486D0E3E_Lf_List_7:
+# 8 entries of 8 bits up to the end marker that FmmStrCat_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+FmmStrCat_Lf_List_7:
 	.byte	77, 69, 77, 79, 82, 89, 45, 65, 0
-# 8 entries of 8 bits up to the end marker that func_486D0E3E_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_486D0E3E_Lf_List_8:
+# 8 entries of 8 bits up to the end marker that FmmStrCat_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+FmmStrCat_Lf_List_8:
 	.byte	77, 69, 77, 79, 82, 89, 45, 66, 0
-# 8 entries of 8 bits up to the end marker that func_486D0E3E_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_486D0E3E_Lf_List_9:
+# 8 entries of 8 bits up to the end marker that FmmStrCat_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+FmmStrCat_Lf_List_9:
 	.byte	77, 69, 77, 79, 82, 89, 45, 67, 0
 	.byte	0xff	# the marker's fill to a 4-byte boundary
 
 SdcSingleLoadCmpSrcBankNameFunc_L32_Table:
-	.long	func_486D0E3E_Lf_List_7
-	.long	func_486D0E3E_Lf_List_8
-	.long	func_486D0E3E_Lf_List_9
+	.long	FmmStrCat_Lf_List_7
+	.long	FmmStrCat_Lf_List_8
+	.long	FmmStrCat_Lf_List_9
 
 Str_empty_388:	.asciz ": "
 	.align	4, 0xFF	# pad after Str_empty_388
@@ -19926,21 +19926,21 @@ Str_empty_387:	.asciz ": "
 Str_ALL_8:	.asciz "      ALL       "
 	.align	4, 0xFF	# pad after Str_ALL_8
 
-# 8 entries of 8 bits up to the end marker that func_486D0E3E_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_486D0E3E_Lf_List_10:
+# 8 entries of 8 bits up to the end marker that FmmStrCat_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+FmmStrCat_Lf_List_10:
 	.byte	77, 69, 77, 79, 82, 89, 45, 65, 0
-# 8 entries of 8 bits up to the end marker that func_486D0E3E_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_486D0E3E_Lf_List_11:
+# 8 entries of 8 bits up to the end marker that FmmStrCat_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+FmmStrCat_Lf_List_11:
 	.byte	77, 69, 77, 79, 82, 89, 45, 66, 0
-# 8 entries of 8 bits up to the end marker that func_486D0E3E_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
-func_486D0E3E_Lf_List_12:
+# 8 entries of 8 bits up to the end marker that FmmStrCat_Lf 0x486D0E4D: `movbu (a1), d0` / `cmp 0, d0`, `inc a1` stops at, then the marker
+FmmStrCat_Lf_List_12:
 	.byte	77, 69, 77, 79, 82, 89, 45, 67, 0
 	.byte	0xff	# the marker's fill to a 4-byte boundary
 
 SdcSingleLoadCmpDstBankNameFunc_L32_Table:
-	.long	func_486D0E3E_Lf_List_10
-	.long	func_486D0E3E_Lf_List_11
-	.long	func_486D0E3E_Lf_List_12
+	.long	FmmStrCat_Lf_List_10
+	.long	FmmStrCat_Lf_List_11
+	.long	FmmStrCat_Lf_List_12
 
 Str_empty_386:	.asciz ": "
 	.align	4, 0xFF	# pad after Str_empty_386
@@ -21149,7 +21149,7 @@ func_48727B08_Table:	# 16 x u8, 0..255; read by func_48727B08_entry : `movbu	(a1
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255
 func_48727C0C_Table:	# 16 x u8, 0..255; read by func_48727C0C_entry : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255
-func_48727D0A_Table:	# 44 x u8, 0..241; read by func_48727D0A_entry : `movbu	(a1), d0`
+SdSndMuteChannelSet_Table:	# 44 x u8, 0..241; read by SdSndMuteChannelSet_entry : `movbu	(a1), d0`
 	tab_u8	1, 0, 2, 0, 4, 0, 8, 0, 16, 0, 32, 0, 64, 0, 128, 0	# [0]
 	tab_u8	0, 1, 0, 2, 0, 4, 0, 8, 0, 16, 0, 32, 0, 64, 0, 128	# [16]
 	tab_u8	241, 1, 64, 72, 1, 0, 0, 0, 240, 0, 64, 72	# [32]
@@ -21778,7 +21778,7 @@ func_5012FE46_Table_2:	# 129 x u8, 0..255; read by TgElemLevelBaseCalc_entry : `
 	tab_u8	242, 243, 243, 243, 244, 244, 245, 245, 246, 246, 247, 247, 247, 248, 248, 249	# [96]
 	tab_u8	249, 250, 250, 250, 251, 251, 252, 252, 252, 253, 253, 254, 254, 254, 255, 255	# [112]
 	tab_u8	255	# [128]
-func_501298DB_Table:	# 123 x u16, 65281..65534; read by func_501298DB 0x501298DB: `movhu	(d1, a0), d2`; func_50129934 0x50129934: `movhu	(d1, a0), d2`
+TgPartVolumeSet_Table:	# 123 x u16, 65281..65534; read by TgPartVolumeSet 0x501298DB: `movhu	(d1, a0), d2`; TgPartExpressionSet 0x50129934: `movhu	(d1, a0), d2`
 	tab_u16	65281, 65312, 65344, 65362, 65376, 65386, 65395, 65402, 65408, 65413, 65418, 65423	# [0]
 	tab_u16	65427, 65430, 65434, 65437, 65440, 65443, 65445, 65448, 65450, 65453, 65455, 65457	# [12]
 	tab_u16	65459, 65461, 65463, 65464, 65466, 65468, 65469, 65471, 65472, 65474, 65475, 65476	# [24]
@@ -22060,12 +22060,12 @@ Str_empty_362:	.asciz "?\xFF"
 
 ptrs_4852BC08:
 	.long	loc_501761BE
-	.long	func_501761D8
-	.long	func_501761F5
+	.long	MemPadAllocPtrSet
+	.long	MemPadAllocFits
 	.long	loc_501762A6
-	.long	func_501762BE
+	.long	MemPadRecDataSet
 
-func_5017761D_Table:	# 2 x u16, 0..18; read by func_5017761D 0x5017761D: `movhu (a0), d0`; func_5017761D_entry_L2f 0x50177651: `movhu (a0), d0` ...
+RhyStreamBeatsInsert_Table:	# 2 x u16, 0..18; read by RhyStreamBeatsInsert 0x5017761D: `movhu (a0), d0`; RhyStreamBeatsInsert_entry_L2f 0x50177651: `movhu (a0), d0` ...
 	tab_u16	18, 0
 
 Str_Technics_Rhythms_2:	.asciz "Technics Rhythms"
@@ -22088,17 +22088,17 @@ ptrs_4852BC54:
 	.long	loc_50173348
 	.long	MemStyleVarRecDataSet
 
-func_5017761D_Table_2:	# 2 x u16, 0..60; read by func_5017761D 0x5017761D: `movhu (a0), d0`; func_5017761D_entry_L2f 0x50177651: `movhu (a0), d0` ...
+RhyStreamBeatsInsert_Table_2:	# 2 x u16, 0..60; read by RhyStreamBeatsInsert 0x5017761D: `movhu (a0), d0`; RhyStreamBeatsInsert_entry_L2f 0x50177651: `movhu (a0), d0` ...
 	tab_u16	60, 0
 
 Str_TPAD:	.asciz "TPAD"
 	.space	11, 0x00
 
-func_50175F8B_Block:	# 3 bytes, copied whole by func_50175F8B 0x50175F8B: memcpy(.., 3)
+MemPadAreaHeaderRestamp_Block:	# 3 bytes, copied whole by MemPadAreaHeaderRestamp 0x50175F8B: memcpy(.., 3)
 	tab_u8	0, 160, 0	# [0]
 # census: opaque -- unknown-dump: 3 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x12BC7F, 0x12BC82
-func_50175F8B_Block_2:	# 26 bytes, copied whole by func_50175F8B 0x50175F8B: memcpy(.., 26)
+MemPadAreaHeaderRestamp_Block_2:	# 26 bytes, copied whole by MemPadAreaHeaderRestamp 0x50175F8B: memcpy(.., 26)
 	tab_u8	0, 3, 0, 96, 16, 6, 16, 2, 0, 2, 0, 15, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
 
@@ -39765,23 +39765,23 @@ FxUnitIdleProgramTable:
 	.long	FxUnitIdleProgram4
 	.long	FxUnitIdleProgram5
 
-func_485E99F2_Table:	# 64 x u8, 0..63; read by func_485E99F2_entry : `movbu	(a2), d0`; func_485EA6E5_entry : `movbu	(a1), d0` ...
+JpegEncWriteDqt_Table:	# 64 x u8, 0..63; read by JpegDecInit_entry : `movbu	(a1), d0`; JpegDecReadDqt_entry : `movbu	(a2), d0` ...
 	tab_u8	0, 1, 8, 16, 9, 2, 3, 10, 17, 24, 32, 25, 18, 11, 4, 5	# [0]
 	tab_u8	12, 19, 26, 33, 40, 48, 41, 34, 27, 20, 13, 6, 7, 14, 21, 28	# [16]
 	tab_u8	35, 42, 49, 56, 57, 50, 43, 36, 29, 22, 15, 23, 30, 37, 44, 51	# [32]
 	tab_u8	58, 59, 52, 45, 38, 31, 39, 46, 53, 60, 61, 54, 47, 55, 62, 63	# [48]
 
-func_485E9AA7_entry_L45_Table:	# 2 x REC_func_485E9AA7_entry_L45_Table (16 bytes each); read by func_485E9AA7_entry_L45 0x485E9AF1 `movbu (a0), d0`; func_485E9AA7_entry_L10a 0x485E9BB6 `movbu (a2), d0`
-	REC_func_485E9AA7_entry_L45_Table	x1="\x01\x05\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00"
-	REC_func_485E9AA7_entry_L45_Table	x1="\x03\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00"
-func_485E9AA7_entry_L6e_Records:	# 2 x REC_func_485E9AA7_entry_L6e_Records (16 bytes each); read by func_485E9AA7_entry_L6e 0x485E9B1A `movbu (a0), d0`; func_485E9AA7_entry_L163 0x485E9C0F `movbu (a2), d0`; func_485E9AA7_entry_L178 0x485E9C24 `movbu (a3), d0` (+1)
-	REC_func_485E9AA7_entry_L6e_Records	x1="\x02\x01\x03\x03\x02\x04\x03\x05\x05\x04\x04\x00\x00\x01}"
-	REC_func_485E9AA7_entry_L6e_Records	x1="\x02\x01\x02\x04\x04\x03\x04\x07\x05\x04\x04\x00\x01\x02w"
+JpegEncWriteDht_entry_L45_Table:	# 2 x REC_JpegEncWriteDht_entry_L45_Table (16 bytes each); read by JpegEncWriteDht_entry_L45 0x485E9AF1 `movbu (a0), d0`; JpegEncWriteDht_entry_L10a 0x485E9BB6 `movbu (a2), d0`
+	REC_JpegEncWriteDht_entry_L45_Table	x1="\x01\x05\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00"
+	REC_JpegEncWriteDht_entry_L45_Table	x1="\x03\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00"
+JpegEncWriteDht_entry_L6e_Records:	# 2 x REC_JpegEncWriteDht_entry_L6e_Records (16 bytes each); read by JpegEncWriteDht_entry_L6e 0x485E9B1A `movbu (a0), d0`; JpegEncWriteDht_entry_L163 0x485E9C0F `movbu (a2), d0`; JpegEncWriteDht_entry_L178 0x485E9C24 `movbu (a3), d0` (+1)
+	REC_JpegEncWriteDht_entry_L6e_Records	x1="\x02\x01\x03\x03\x02\x04\x03\x05\x05\x04\x04\x00\x00\x01}"
+	REC_JpegEncWriteDht_entry_L6e_Records	x1="\x02\x01\x02\x04\x04\x03\x04\x07\x05\x04\x04\x00\x01\x02w"
 
-func_485E9AA7_entry_L134_Table:	# 32 x u8, 0..11; read by func_485E9AA7_entry_L134 0x485E9BE0: `movbu (a2), d0`; func_485EA291_entry_Le 0x485EA2A4: `movbu (a0), d0`
+JpegEncWriteDht_entry_L134_Table:	# 32 x u8, 0..11; read by JpegEncWriteDht_entry_L134 0x485E9BE0: `movbu (a2), d0`; JpegHuffMakeCodes_entry_Le 0x485EA2A4: `movbu (a0), d0`
 	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 0, 0, 0	# [0]
 	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 0, 0, 0	# [16]
-func_485EA291_entry_Le_Table:	# 512 x u8, 0..250; read by func_485E9AA7_entry_L181 0x485E9C2D: `movbu (a2), d0`; func_485EA291_entry_Le 0x485EA2A4: `movbu (a0), d0`
+JpegHuffMakeCodes_entry_Le_Table:	# 512 x u8, 0..250; read by JpegEncWriteDht_entry_L181 0x485E9C2D: `movbu (a2), d0`; JpegHuffMakeCodes_entry_Le 0x485EA2A4: `movbu (a0), d0`
 	tab_u8	1, 2, 3, 0, 4, 17, 5, 18, 33, 49, 65, 6, 19, 81, 97, 7	# [0]
 	tab_u8	34, 113, 20, 50, 129, 145, 161, 8, 35, 66, 177, 193, 21, 82, 209, 240	# [16]
 	tab_u8	36, 51, 98, 114, 130, 9, 10, 22, 23, 24, 25, 26, 37, 38, 39, 40	# [32]
@@ -39815,9 +39815,9 @@ func_485EA291_entry_Le_Table:	# 512 x u8, 0..250; read by func_485E9AA7_entry_L1
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [480]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [496]
 
-func_485E93F6_entry_Ld6_Records:	# 2 x REC_func_485E93F6_entry_Ld6_Records (64 bytes each); read by func_485E93F6_entry_Ld6 0x485E94D1 `movbu (a1), d0`
-	REC_func_485E93F6_entry_Ld6_Records	index=16, x1="\x0B\n\x10\x18(3=\x0C\x0C\x0E\x13\x1A:<7\x0E\x0D\x10\x18(9E8\x0E\x11\x16\x1D3WP>\x12\x16%8DmgM\x18#7@Qhq\\1@NWgyxeH\\_bpdgc"
-	REC_func_485E93F6_entry_Ld6_Records	index=17, x1="\x12\x18/cccc\x12\x15\x1ABcccc\x18\x1A8ccccc/Bcccccccccccccccccccccccccccccccccccccc"
+JpegEncTablesInit_entry_Ld6_Records:	# 2 x REC_JpegEncTablesInit_entry_Ld6_Records (64 bytes each); read by JpegEncTablesInit_entry_Ld6 0x485E94D1 `movbu (a1), d0`
+	REC_JpegEncTablesInit_entry_Ld6_Records	index=16, x1="\x0B\n\x10\x18(3=\x0C\x0C\x0E\x13\x1A:<7\x0E\x0D\x10\x18(9E8\x0E\x11\x16\x1D3WP>\x12\x16%8DmgM\x18#7@Qhq\\1@NWgyxeH\\_bpdgc"
+	REC_JpegEncTablesInit_entry_Ld6_Records	index=17, x1="\x12\x18/cccc\x12\x15\x1ABcccc\x18\x1A8ccccc/Bcccccccccccccccccccccccccccccccccccccc"
 
 InitPaletteRGB_Table:	# 256 x u32, 0..16777104; read by InitPaletteRGB_entry_L2c 0x48605149: `mov	(a2), d1`
 	tab_u32	0, 128, 32768, 32896, 8388608, 8388736, 8421376, 8421504	# [0]

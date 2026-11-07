@@ -13106,7 +13106,7 @@ User15_MainFunctionNames:
 # census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6500_program.rom", 0x306FDC, 0x306FE0
 
-GetFocusObject_Records_p4_0:	# REC_GetFocusObject_Records_p4 (12 bytes), then 49 x u32 the code indexes from +0 (read by func_4C0BAFFF_entry_L27 0x4C0BB02B `movbu (d1, a0), d0`; func_4C0BAFFF_entry_L4d 0x4C0BB051 `movbu (d1, a1), d0` (+22))
+GetFocusObject_Records_p4_0:	# REC_GetFocusObject_Records_p4 (12 bytes), then 49 x u32 the code indexes from +0 (read by CmpRecArrangePosGet_entry_L27 0x4C0BB02B `movbu (d1, a0), d0`; CmpRecArrangePosGet_entry_L4d 0x4C0BB051 `movbu (d1, a1), d0` (+22))
 	REC_GetFocusObject_Records_p4	f0=16, x1="\x00\x00\x00", text=Str_Basic, x8="\x11\x00\x00\x00"
 	tab_u32	1277179225, 18, 1277179242, 19, 1277179259, 20, 1277179272, 21, 1277179285, 22, 1277179300, 23, 1277179313, 24, 1277179326, 25	# [0]
 	tab_u32	1277179339, 255, 0, 80, 1277179352, 83, 1277179365, 96, 1277179378, 97, 1277179391, 98, 1277179404, 100, 1277179417, 101	# [16]
@@ -13119,7 +13119,7 @@ GetFocusObject_Records:
 	# 4 bytes read by func_4C0CE1A3_La 0x4C0CE1AD `movbu (8, a0), d0` (+0, u8); the read fields at their widths (u8), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u8	10, 0, 0, 0	# +0
 
-func_4C0BAFFF_entry_L56_Table:	# 9 x u32, 0..1278242952; read by func_4C0BAFFF_entry_L56 0x4C0BB05A: `mov (a1), d0`; func_4C0BDC21_entry_L56 0x4C0BDC7C: `mov (a1), d0` ...
+CmpRecArrangePosGet_entry_L56_Table:	# 9 x u32, 0..1278242952; read by CmpRecArrangePosGet_entry_L56 0x4C0BB05A: `mov (a1), d0`; PadRecArrangePosGet_entry_L56 0x4C0BDC7C: `mov (a1), d0` ...
 	tab_u32	1277179532, 1278242872, 9, 1277179540, 1278242952, 4, 0, 0	# [0]
 	tab_u32	0	# [8]
 
@@ -13128,14 +13128,14 @@ MainCMP_CmpEasyCopy_Table:	# 12 x REC_MainCMP_CmpEasyCopy_Table (2 bytes each); 
 	REC_MainCMP_CmpEasyCopy_Table	key=3
 	REC_MainCMP_CmpEasyCopy_Table	key=6
 	REC_MainCMP_CmpEasyCopy_Table	key=9
-	REC_MainCMP_CmpEasyCopy_Table	sprintf_d0=1
-	REC_MainCMP_CmpEasyCopy_Table	sprintf_d0=1, key=3
-	REC_MainCMP_CmpEasyCopy_Table	sprintf_d0=1, key=6
-	REC_MainCMP_CmpEasyCopy_Table	sprintf_d0=1, key=9
-	REC_MainCMP_CmpEasyCopy_Table	sprintf_d0=2	# [8]
-	REC_MainCMP_CmpEasyCopy_Table	sprintf_d0=2, key=3
-	REC_MainCMP_CmpEasyCopy_Table	sprintf_d0=2, key=6
-	REC_MainCMP_CmpEasyCopy_Table	sprintf_d0=2, key=9
+	REC_MainCMP_CmpEasyCopy_Table	GetGenreStyleId_d1=1
+	REC_MainCMP_CmpEasyCopy_Table	GetGenreStyleId_d1=1, key=3
+	REC_MainCMP_CmpEasyCopy_Table	GetGenreStyleId_d1=1, key=6
+	REC_MainCMP_CmpEasyCopy_Table	GetGenreStyleId_d1=1, key=9
+	REC_MainCMP_CmpEasyCopy_Table	GetGenreStyleId_d1=2	# [8]
+	REC_MainCMP_CmpEasyCopy_Table	GetGenreStyleId_d1=2, key=3
+	REC_MainCMP_CmpEasyCopy_Table	GetGenreStyleId_d1=2, key=6
+	REC_MainCMP_CmpEasyCopy_Table	GetGenreStyleId_d1=2, key=9
 
 # 287 ApFunction procedures; a function id is (0x12f << 16) | its index (the names are the parallel table at slot 0x32f)
 User15_ApFunctions:
@@ -14423,34 +14423,34 @@ func_4C0596C4_Table:	# 1035 x u16, 0..33250; read by func_4C0596C4 0x4C0596C4: `
 	tab_u16	2, 25, 1	# [1032]
 	.align	4, 0xFF	# pad after func_4C0596C4_Table
 
-func_4C05949B_entry_La2_Records:	# 27 x REC_func_4C05949B_entry_La2_Records (44 bytes each); read by func_4C059606_entry_L9f 0x4C0596AA `mov (d1, a0), d0`; func_4C05949B_entry_La2 0x4C059542 `call strcpy_entry, [a2], 4`
-	REC_func_4C05949B_entry_La2_Records	"     EFFECT     \x00\x00\x00\x00", 625, 629, 375, 376, 296, 552	# [0]
-	REC_func_4C05949B_entry_La2_Records	"      POP       \x00\x00\x00\x00", 261, 517, 773, 1029, 366, 622
-	REC_func_4C05949B_entry_La2_Records	"   SWING ROCK   \x00\x00\x00\x00", 262, 518, 1030, 774, 365, 621
-	REC_func_4C05949B_entry_La2_Records	"  ROCK & ROLL   \x00\x00\x00\x00", 260, 533, 525, 522, 313, 569
-	REC_func_4C05949B_entry_La2_Records	"     DANCE      \x00\x00\x00\x00", 784, 1040, 1296, 1552, 314, 570
-	REC_func_4C05949B_entry_La2_Records	"      FUNK      \x00\x00\x00\x00", 272, 273, 274, 276, 315, 571
-	REC_func_4C05949B_entry_La2_Records	"    LATIN 1     \x00\x00\x00\x00", 310, 566, 306, 305, 317, 573
-	REC_func_4C05949B_entry_La2_Records	"    LATIN 2     \x00\x00\x00\x00", 311, 567, 561, 304, 318, 574
-	REC_func_4C05949B_entry_La2_Records	"  BALLAD 12/8   \x00\x00\x00\x00", 324, 580, 1091, 835, 299, 555	# [8]
-	REC_func_4C05949B_entry_La2_Records	"   BALLAD 4/4   \x00\x00\x00\x00", 1097, 841, 585, 582, 300, 556
-	REC_func_4C05949B_entry_La2_Records	"    SHOWBIZ     \x00\x00\x00\x00", 860, 358, 589, 866, 298, 554
-	REC_func_4C05949B_entry_La2_Records	"    BIGBAND     \x00\x00\x00\x00", 1316, 548, 804, 1060, 316, 572
-	REC_func_4C05949B_entry_La2_Records	"   JAZZ COMBO   \x00\x00\x00\x00", 289, 547, 549, 288, 361, 617
-	REC_func_4C05949B_entry_La2_Records	"TRADITIONAL 4/4 \x00\x00\x00\x00", 799, 542, 287, 543, 302, 558
-	REC_func_4C05949B_entry_La2_Records	"TRADITIONAL 12/8\x00\x00\x00\x00", 286, 798, 1054, 1310, 364, 620
-	REC_func_4C05949B_entry_La2_Records	"    COUNTRY     \x00\x00\x00\x00", 871, 1127, 359, 615, 360, 616
-	REC_func_4C05949B_entry_La2_Records	"   BLUEGRASS    \x00\x00\x00\x00", 1126, 1382, 1638, 1894, 363, 619	# [16]
-	REC_func_4C05949B_entry_La2_Records	"     GOSPEL     \x00\x00\x00\x00", 270, 526, 271, 527, 319, 575
-	REC_func_4C05949B_entry_La2_Records	"   TRAD WALTZ   \x00\x00\x00\x00", 284, 540, 285, 796, 303, 559
-	REC_func_4C05949B_entry_La2_Records	"  SWING WALTZ   \x00\x00\x00\x00", 1052, 1308, 1053, 1309, 362, 618
-	REC_func_4C05949B_entry_La2_Records	"  USER BANK 1   \x00\x00\x00\x00", 1048576, 1048832, 1049088, 1049344, 1049600, 1049856
-	REC_func_4C05949B_entry_La2_Records	"  USER BANK 2   \x00\x00\x00\x00", 1048577, 1048833, 1049089, 1049345, 1049601, 1049857
-	REC_func_4C05949B_entry_La2_Records	"  USER BANK 3   \x00\x00\x00\x00", 1048578, 1048834, 1049090, 1049346, 1049602, 1049858
-	REC_func_4C05949B_entry_La2_Records	" COMPILE BANK 1 \x00\x00\x00\x00", 1048575, 1048575, 1048575, 1048575, 1048575, 1048575
-	REC_func_4C05949B_entry_La2_Records	" COMPILE BANK 2 \x00\x00\x00\x00", 1048575, 1048575, 1048575, 1048575, 1048575, 1048575	# [24]
-	REC_func_4C05949B_entry_La2_Records	" CONTROL PRESET \x00\x00\x00\x00", 1048575, 1048575, 1048575, 1048575, 1048575, 1048575
-	REC_func_4C05949B_entry_La2_Records	"     CUSTOM     \x00\x00\x00\x00", 2097152, 2097408, 2097664, 2097920, 2098176, 2098432
+PadBankNameGet_entry_La2_Records:	# 27 x REC_PadBankNameGet_entry_La2_Records (44 bytes each); read by PadIdFromBankSlot_entry_L9f 0x4C0596AA `mov (d1, a0), d0`; PadBankNameGet_entry_La2 0x4C059542 `call strcpy_entry, [a2], 4`
+	REC_PadBankNameGet_entry_La2_Records	"     EFFECT     \x00\x00\x00\x00", 625, 629, 375, 376, 296, 552	# [0]
+	REC_PadBankNameGet_entry_La2_Records	"      POP       \x00\x00\x00\x00", 261, 517, 773, 1029, 366, 622
+	REC_PadBankNameGet_entry_La2_Records	"   SWING ROCK   \x00\x00\x00\x00", 262, 518, 1030, 774, 365, 621
+	REC_PadBankNameGet_entry_La2_Records	"  ROCK & ROLL   \x00\x00\x00\x00", 260, 533, 525, 522, 313, 569
+	REC_PadBankNameGet_entry_La2_Records	"     DANCE      \x00\x00\x00\x00", 784, 1040, 1296, 1552, 314, 570
+	REC_PadBankNameGet_entry_La2_Records	"      FUNK      \x00\x00\x00\x00", 272, 273, 274, 276, 315, 571
+	REC_PadBankNameGet_entry_La2_Records	"    LATIN 1     \x00\x00\x00\x00", 310, 566, 306, 305, 317, 573
+	REC_PadBankNameGet_entry_La2_Records	"    LATIN 2     \x00\x00\x00\x00", 311, 567, 561, 304, 318, 574
+	REC_PadBankNameGet_entry_La2_Records	"  BALLAD 12/8   \x00\x00\x00\x00", 324, 580, 1091, 835, 299, 555	# [8]
+	REC_PadBankNameGet_entry_La2_Records	"   BALLAD 4/4   \x00\x00\x00\x00", 1097, 841, 585, 582, 300, 556
+	REC_PadBankNameGet_entry_La2_Records	"    SHOWBIZ     \x00\x00\x00\x00", 860, 358, 589, 866, 298, 554
+	REC_PadBankNameGet_entry_La2_Records	"    BIGBAND     \x00\x00\x00\x00", 1316, 548, 804, 1060, 316, 572
+	REC_PadBankNameGet_entry_La2_Records	"   JAZZ COMBO   \x00\x00\x00\x00", 289, 547, 549, 288, 361, 617
+	REC_PadBankNameGet_entry_La2_Records	"TRADITIONAL 4/4 \x00\x00\x00\x00", 799, 542, 287, 543, 302, 558
+	REC_PadBankNameGet_entry_La2_Records	"TRADITIONAL 12/8\x00\x00\x00\x00", 286, 798, 1054, 1310, 364, 620
+	REC_PadBankNameGet_entry_La2_Records	"    COUNTRY     \x00\x00\x00\x00", 871, 1127, 359, 615, 360, 616
+	REC_PadBankNameGet_entry_La2_Records	"   BLUEGRASS    \x00\x00\x00\x00", 1126, 1382, 1638, 1894, 363, 619	# [16]
+	REC_PadBankNameGet_entry_La2_Records	"     GOSPEL     \x00\x00\x00\x00", 270, 526, 271, 527, 319, 575
+	REC_PadBankNameGet_entry_La2_Records	"   TRAD WALTZ   \x00\x00\x00\x00", 284, 540, 285, 796, 303, 559
+	REC_PadBankNameGet_entry_La2_Records	"  SWING WALTZ   \x00\x00\x00\x00", 1052, 1308, 1053, 1309, 362, 618
+	REC_PadBankNameGet_entry_La2_Records	"  USER BANK 1   \x00\x00\x00\x00", 1048576, 1048832, 1049088, 1049344, 1049600, 1049856
+	REC_PadBankNameGet_entry_La2_Records	"  USER BANK 2   \x00\x00\x00\x00", 1048577, 1048833, 1049089, 1049345, 1049601, 1049857
+	REC_PadBankNameGet_entry_La2_Records	"  USER BANK 3   \x00\x00\x00\x00", 1048578, 1048834, 1049090, 1049346, 1049602, 1049858
+	REC_PadBankNameGet_entry_La2_Records	" COMPILE BANK 1 \x00\x00\x00\x00", 1048575, 1048575, 1048575, 1048575, 1048575, 1048575
+	REC_PadBankNameGet_entry_La2_Records	" COMPILE BANK 2 \x00\x00\x00\x00", 1048575, 1048575, 1048575, 1048575, 1048575, 1048575	# [24]
+	REC_PadBankNameGet_entry_La2_Records	" CONTROL PRESET \x00\x00\x00\x00", 1048575, 1048575, 1048575, 1048575, 1048575, 1048575
+	REC_PadBankNameGet_entry_La2_Records	"     CUSTOM     \x00\x00\x00\x00", 2097152, 2097408, 2097664, 2097920, 2098176, 2098432
 
 func_4C057D61_Table:	# 2048 x u16, 0..34687; read by func_4C057D61 0x4C057D61: `movhu	(d0, a1), d2`
 	tab_u16	33536, 33281, 33282, 33282, 1795, 33157, 33882, 32776, 1800, 33289, 32776, 33163	# [0]
@@ -14625,7 +14625,7 @@ func_4C057D61_Table:	# 2048 x u16, 0..34687; read by func_4C057D61 0x4C057D61: `
 	tab_u16	33132, 33132, 33518, 33263, 33392, 33777, 33394, 33392, 33396, 33396, 33526, 33396	# [2028]
 	tab_u16	33400, 33145, 33018, 33531, 33916, 33533, 33918, 1289	# [2040]
 
-GetGenreName_entry_L14_Records:	# 16 x REC_GetGenreName_entry_L14_Records (24 bytes each); read by GetGenreStyleCount_entry_Lf 0x4C057D1A `movbu (0x11, a0), d0`; func_4C057D2F_entry_Ld 0x4C057D3E `movbu (0x11, a0), d2`; func_4C057D2F_entry_L25 0x4C057D56 `mov (0x14, a0), a0` (+4)
+GetGenreName_entry_L14_Records:	# 16 x REC_GetGenreName_entry_L14_Records (24 bytes each); read by GetGenreStyleCount_entry_Lf 0x4C057D1A `movbu (0x11, a0), d0`; GetGenreStyleId_entry_Ld 0x4C057D3E `movbu (0x11, a0), d2`; GetGenreStyleId_entry_L25 0x4C057D56 `mov (0x14, a0), a0` (+4)
 	REC_GetGenreName_entry_L14_Records	s0="   8&16 BEAT    ", x16="\x00", f17=10, x18="\x00\x00", index=data_4C211214	# [0]
 	REC_GetGenreName_entry_L14_Records	s0="   ROCK & POP   ", x16="\x00", f17=20, x18="\x00\x00", index=GetGenreName_entry_L14_Records_p20_0
 	REC_GetGenreName_entry_L14_Records	s0="     BALLAD     ", x16="\x00", f17=16, x18="\x00\x00", index=data_4C21128C
@@ -14669,7 +14669,7 @@ StyleVariationNameGet_entry_L25_Table:
 	.long	0
 	.long	0
 
-func_4C0D84DE_entry_Lf_Table:	# 4 x u8, 255..255; read by func_4C0D84DE_entry : `movbu	(a1), d0`; func_4C0D8550_entry : `movbu	(a1), d0` ...
+HeldKeyListReleaseAll_entry_Lf_Table:	# 4 x u8, 255..255; read by HeldKeyListReleaseAll_entry : `movbu	(a1), d0`; func_4C0D8550_entry : `movbu	(a1), d0` ...
 	tab_u8	255, 255, 255, 255
 
 ptrs_4C30A6A8:
@@ -18722,130 +18722,130 @@ V_SdOct_ResNames:
 
 func_4C0FE5BC_entry_L18_Table:
 	.long	func_4C0FE647_Voicing
-	.long	func_4C0FE647_Voicing_2
-	.long	func_4C0FE647_Voicing_3
-	.long	func_4C0FE647_Voicing_4
-	.long	func_4C0FE647_Voicing_5
-	.long	func_4C0FE647_Voicing_6
-	.long	func_4C0FE647_Voicing_7
-	.long	func_4C0FE647_Voicing_8
-	.long	func_4C0FE647_Voicing_9
-	.long	func_4C0FE647_Voicing_10
-	.long	func_4C0FE647_Voicing_11
-	.long	func_4C0FE647_Voicing_12
-	.long	func_4C0FE647_Voicing_13
-	.long	func_4C0FE647_Voicing_14
-	.long	func_4C0FE647_Voicing_15
-	.long	func_4C0FE647_Voicing_16
-	.long	func_4C0FE647_Voicing_17
-	.long	func_4C0FE647_Voicing_18
-	.long	func_4C0FE647_Voicing_19
-	.long	func_4C0FE647_Voicing_20
-	.long	func_4C0FE647_Voicing_21
-	.long	func_4C0FE647_Voicing_22
+	.long	ChordFinderNotesGet_Voicing
+	.long	ChordFinderNotesGet_Voicing_2
+	.long	ChordFinderNotesGet_Voicing_3
+	.long	ChordFinderNotesGet_Voicing_4
+	.long	ChordFinderNotesGet_Voicing_5
+	.long	ChordFinderNotesGet_Voicing_6
+	.long	ChordFinderNotesGet_Voicing_7
+	.long	ChordFinderNotesGet_Voicing_8
+	.long	ChordFinderNotesGet_Voicing_9
+	.long	ChordFinderNotesGet_Voicing_10
+	.long	ChordFinderNotesGet_Voicing_11
+	.long	ChordFinderNotesGet_Voicing_12
+	.long	ChordFinderNotesGet_Voicing_13
+	.long	ChordFinderNotesGet_Voicing_14
+	.long	ChordFinderNotesGet_Voicing_15
+	.long	ChordFinderNotesGet_Voicing_16
+	.long	ChordFinderNotesGet_Voicing_17
+	.long	ChordFinderNotesGet_Voicing_18
+	.long	ChordFinderNotesGet_Voicing_19
+	.long	ChordFinderNotesGet_Voicing_20
+	.long	ChordFinderNotesGet_Voicing_21
 func_4C0FE5BC_entry_L36_Table:
 	.long	func_4C0FE647_Voicing
-	.long	func_4C0FE647_Voicing_2
-	.long	func_4C0FE647_Voicing_3
-	.long	func_4C0FE647_Voicing_4
-	.long	func_4C0FE647_Voicing_5
-	.long	func_4C0FE647_Voicing_6
-	.long	func_4C0FE647_Voicing_7
-	.long	func_4C0FE647_Voicing_8
-	.long	func_4C0FE647_Voicing_9
-	.long	func_4C0FE647_Voicing_10
-	.long	func_4C0FE647_Voicing_23
-	.long	func_4C0FE647_Voicing_12
-	.long	func_4C0FE647_Voicing_24
-	.long	func_4C0FE647_Voicing_14
-	.long	func_4C0FE647_Voicing_25
-	.long	func_4C0FE647_Voicing_16
-	.long	func_4C0FE647_Voicing_17
-	.long	func_4C0FE647_Voicing_26
-	.long	func_4C0FE647_Voicing_19
-	.long	func_4C0FE647_Voicing_27
-	.long	func_4C0FE647_Voicing_21
-	.long	func_4C0FE647_Voicing_22
-	.long	func_4C0FE647_Voicing_28
-	.long	func_4C0FE647_Voicing_29
-	.long	func_4C0FE647_Voicing_30
-	.long	func_4C0FE647_Voicing_31
-	.long	func_4C0FE647_Voicing_32
-	.long	func_4C0FE647_Voicing_33
-	.long	func_4C0FE647_Voicing_34
-	.long	func_4C0FE647_Voicing_35
-	.long	func_4C0FE647_Voicing_36
-	.long	func_4C0FE647_Voicing_37
-	.long	func_4C0FE647_Voicing_38
-	.long	func_4C0FE647_Voicing_39
-	.long	func_4C0FE647_Voicing_40
-	.long	func_4C0FE647_Voicing_41
-	.long	func_4C0FE647_Voicing_42
-	.long	func_4C0FE647_Voicing_43
-	.long	func_4C0FE647_Voicing_44
+	.long	ChordFinderNotesGet_Voicing
+	.long	ChordFinderNotesGet_Voicing_2
+	.long	ChordFinderNotesGet_Voicing_3
+	.long	ChordFinderNotesGet_Voicing_4
+	.long	ChordFinderNotesGet_Voicing_5
+	.long	ChordFinderNotesGet_Voicing_6
+	.long	ChordFinderNotesGet_Voicing_7
+	.long	ChordFinderNotesGet_Voicing_8
+	.long	ChordFinderNotesGet_Voicing_9
+	.long	ChordFinderNotesGet_Voicing_22
+	.long	ChordFinderNotesGet_Voicing_11
+	.long	ChordFinderNotesGet_Voicing_23
+	.long	ChordFinderNotesGet_Voicing_13
+	.long	ChordFinderNotesGet_Voicing_24
+	.long	ChordFinderNotesGet_Voicing_15
+	.long	ChordFinderNotesGet_Voicing_16
+	.long	ChordFinderNotesGet_Voicing_25
+	.long	ChordFinderNotesGet_Voicing_18
+	.long	ChordFinderNotesGet_Voicing_26
+	.long	ChordFinderNotesGet_Voicing_20
+	.long	ChordFinderNotesGet_Voicing_21
+	.long	ChordFinderNotesGet_Voicing_27
+	.long	ChordFinderNotesGet_Voicing_28
+	.long	ChordFinderNotesGet_Voicing_29
+	.long	ChordFinderNotesGet_Voicing_30
+	.long	ChordFinderNotesGet_Voicing_31
+	.long	ChordFinderNotesGet_Voicing_32
+	.long	ChordFinderNotesGet_Voicing_33
+	.long	ChordFinderNotesGet_Voicing_34
+	.long	ChordFinderNotesGet_Voicing_35
+	.long	ChordFinderNotesGet_Voicing_36
+	.long	ChordFinderNotesGet_Voicing_37
+	.long	ChordFinderNotesGet_Voicing_38
+	.long	ChordFinderNotesGet_Voicing_39
+	.long	ChordFinderNotesGet_Voicing_40
+	.long	ChordFinderNotesGet_Voicing_41
+	.long	ChordFinderNotesGet_Voicing_42
+	.long	ChordFinderNotesGet_Voicing_43
 func_4C0FE5BC_entry_L18_Table_2:
-	.long	func_4C0FE647_Inversions
-	.long	func_4C0FE647_Inversions_2
-	.long	func_4C0FE647_Inversions_3
-	.long	func_4C0FE647_Inversions_4
-	.long	func_4C0FE647_Inversions_5
-	.long	func_4C0FE647_Inversions_6
-	.long	func_4C0FE647_Inversions_7
-	.long	func_4C0FE647_Inversions_8
-	.long	func_4C0FE647_Inversions_9
-	.long	func_4C0FE647_Inversions_10
-	.long	func_4C0FE647_Inversions_11
-	.long	func_4C0FE647_Inversions_12
-	.long	func_4C0FE647_Inversions_13
-	.long	func_4C0FE647_Inversions_14
-	.long	func_4C0FE647_Inversions_15
-	.long	func_4C0FE647_Inversions_16
-	.long	func_4C0FE647_Inversions_17
-	.long	func_4C0FE647_Inversions_18
-	.long	func_4C0FE647_Inversions_19
-	.long	func_4C0FE647_Inversions_20
-	.long	func_4C0FE647_Inversions_21
-	.long	func_4C0FE647_Inversions_22
+	.long	ChordFinderNotesGet_Inversions
+	.long	ChordFinderNotesGet_Inversions_2
+	.long	ChordFinderNotesGet_Inversions_3
+	.long	ChordFinderNotesGet_Inversions_4
+	.long	ChordFinderNotesGet_Inversions_5
+	.long	ChordFinderNotesGet_Inversions_6
+	.long	ChordFinderNotesGet_Inversions_7
+	.long	ChordFinderNotesGet_Inversions_8
+	.long	ChordFinderNotesGet_Inversions_9
+	.long	ChordFinderNotesGet_Inversions_10
+	.long	ChordFinderNotesGet_Inversions_11
+	.long	ChordFinderNotesGet_Inversions_12
+	.long	ChordFinderNotesGet_Inversions_13
+	.long	ChordFinderNotesGet_Inversions_14
+	.long	ChordFinderNotesGet_Inversions_15
+	.long	ChordFinderNotesGet_Inversions_16
+	.long	ChordFinderNotesGet_Inversions_17
+	.long	ChordFinderNotesGet_Inversions_18
+	.long	ChordFinderNotesGet_Inversions_19
+	.long	ChordFinderNotesGet_Inversions_20
+	.long	ChordFinderNotesGet_Inversions_21
+	.long	ChordFinderNotesGet_Inversions_22
 func_4C0FE5BC_entry_L36_Table_2:
-	.long	func_4C0FE647_Inversions
-	.long	func_4C0FE647_Inversions_2
-	.long	func_4C0FE647_Inversions_3
-	.long	func_4C0FE647_Inversions_4
-	.long	func_4C0FE647_Inversions_5
-	.long	func_4C0FE647_Inversions_6
-	.long	func_4C0FE647_Inversions_7
-	.long	func_4C0FE647_Inversions_8
-	.long	func_4C0FE647_Inversions_23
-	.long	func_4C0FE647_Inversions_10
-	.long	func_4C0FE647_Inversions_24
-	.long	func_4C0FE647_Inversions_12
-	.long	func_4C0FE647_Inversions_25
-	.long	func_4C0FE647_Inversions_14
-	.long	func_4C0FE647_Inversions_26
-	.long	func_4C0FE647_Inversions_16
-	.long	func_4C0FE647_Inversions_17
-	.long	func_4C0FE647_Inversions_27
-	.long	func_4C0FE647_Inversions_19
-	.long	func_4C0FE647_Inversions_28
-	.long	func_4C0FE647_Inversions_29
-	.long	func_4C0FE647_Inversions_30
-	.long	func_4C0FE647_Inversions_31
-	.long	func_4C0FE647_Inversions_32
-	.long	func_4C0FE647_Inversions_33
-	.long	func_4C0FE647_Inversions_34
-	.long	func_4C0FE647_Inversions_35
-	.long	func_4C0FE647_Inversions_36
-	.long	func_4C0FE647_Inversions_37
-	.long	func_4C0FE647_Inversions_38
-	.long	func_4C0FE647_Inversions_39
-	.long	func_4C0FE647_Inversions_40
-	.long	func_4C0FE647_Inversions_41
-	.long	func_4C0FE647_Inversions_42
-	.long	func_4C0FE647_Inversions_43
-	.long	func_4C0FE647_Inversions_44
-	.long	func_4C0FE647_Inversions_45
-	.long	func_4C0FE647_Inversions_46
-	.long	func_4C0FE647_Inversions_47
+	.long	ChordFinderNotesGet_Inversions
+	.long	ChordFinderNotesGet_Inversions_2
+	.long	ChordFinderNotesGet_Inversions_3
+	.long	ChordFinderNotesGet_Inversions_4
+	.long	ChordFinderNotesGet_Inversions_5
+	.long	ChordFinderNotesGet_Inversions_6
+	.long	ChordFinderNotesGet_Inversions_7
+	.long	ChordFinderNotesGet_Inversions_8
+	.long	ChordFinderNotesGet_Inversions_23
+	.long	ChordFinderNotesGet_Inversions_10
+	.long	ChordFinderNotesGet_Inversions_24
+	.long	ChordFinderNotesGet_Inversions_12
+	.long	ChordFinderNotesGet_Inversions_25
+	.long	ChordFinderNotesGet_Inversions_14
+	.long	ChordFinderNotesGet_Inversions_26
+	.long	ChordFinderNotesGet_Inversions_16
+	.long	ChordFinderNotesGet_Inversions_17
+	.long	ChordFinderNotesGet_Inversions_27
+	.long	ChordFinderNotesGet_Inversions_19
+	.long	ChordFinderNotesGet_Inversions_28
+	.long	ChordFinderNotesGet_Inversions_29
+	.long	ChordFinderNotesGet_Inversions_30
+	.long	ChordFinderNotesGet_Inversions_31
+	.long	ChordFinderNotesGet_Inversions_32
+	.long	ChordFinderNotesGet_Inversions_33
+	.long	ChordFinderNotesGet_Inversions_34
+	.long	ChordFinderNotesGet_Inversions_35
+	.long	ChordFinderNotesGet_Inversions_36
+	.long	ChordFinderNotesGet_Inversions_37
+	.long	ChordFinderNotesGet_Inversions_38
+	.long	ChordFinderNotesGet_Inversions_39
+	.long	ChordFinderNotesGet_Inversions_40
+	.long	ChordFinderNotesGet_Inversions_41
+	.long	ChordFinderNotesGet_Inversions_42
+	.long	ChordFinderNotesGet_Inversions_43
+	.long	ChordFinderNotesGet_Inversions_44
+	.long	ChordFinderNotesGet_Inversions_45
+	.long	ChordFinderNotesGet_Inversions_46
+	.long	ChordFinderNotesGet_Inversions_47
 	.long	loc_4C1003A9
 	.long	loc_4C1003AC
 	.long	loc_4C1003AF
@@ -20924,7 +20924,7 @@ MSAModeBoxProc_L10d_Table:	# 6 x u8, 0..255; read by MSAModeBoxProc : `movbu	(d0
 	tab_u8	0, 145, 146, 147, 255, 255
 CusMemModeBoxProc_L11c_Table:	# 4 x u8, 145..255; read by CusMemModeBoxProc : `movbu	(d0, a3), d0`
 	tab_u8	145, 147, 255, 255
-FSWAssGridCheck_L77_Table:	# 44 x u8, 0..255; read by FSWAssGridCheck : `movbu	(d0, a0), d1`; func_4C108ED3_entry : `movbu	(d0, a0), d0`
+FSWAssGridCheck_L77_Table:	# 44 x u8, 0..255; read by FSWAssGridCheck : `movbu	(d0, a0), d1`; FSWAssGridIndexFind_entry : `movbu	(d0, a0), d0`
 	tab_u8	0, 65, 66, 144, 145, 179, 180, 192, 193, 194, 195, 196, 197, 198, 199, 178	# [0]
 	tab_u8	136, 146, 147, 148, 149, 64, 150, 153, 151, 191, 190, 173, 188, 176, 177, 184	# [16]
 	tab_u8	185, 160, 161, 162, 163, 164, 165, 189, 182, 183, 255, 255	# [32]
@@ -20951,24 +20951,24 @@ data_4C310894:
 
 ptrs_4C3108A0:
 	.long	loc_4C116795
-	.long	func_4C116798
+	.long	SongBackupRestore
 	.long	loc_4C1167CB
 	.long	loc_4C1167D6
 
-FatBootHead_720K:	# a FAT boot sector's first 32 bytes, a 720 KB disk's (1440 sectors of 512 bytes): func_4C132F88 0x4C132F88: memcpy(.., 0x20)
+FatBootHead_720K:	# a FAT boot sector's first 32 bytes, a 720 KB disk's (1440 sectors of 512 bytes): FdFormat720K 0x4C132F88: memcpy(.., 0x20)
 	FAT_BOOT_HEAD	0xeb, 0x1c, 0x90, "Technics", 512, 2, 1, 2, 112, 1440, 0xf9, 3, 9, 2, 0
 	.byte	0xeb, 0xfe	# +0x1E: the boot code the jump at +0 lands on (EB 1C: +2 + 0x1C), x86 `jmp $`: a loop
 
-func_4C132F88_entry_L9e_Block:	# 3 bytes, copied whole by func_4C132F88_entry_L9e 0x4C13302B: memcpy(.., 3); func_4C132F88_entry_L149 0x4C1330D6: memcpy(.., 3)
+FdFormat720K_entry_L9e_Block:	# 3 bytes, copied whole by FdFormat720K_entry_L9e 0x4C13302B: memcpy(.., 3); FdFormat720K_entry_L149 0x4C1330D6: memcpy(.., 3)
 	tab_u8	249, 255, 255	# [0]
 
-FatBootHead_1440K:	# a FAT boot sector's first 32 bytes, a 1440 KB disk's (2880 sectors of 512 bytes): func_4C133252 0x4C133252: memcpy(.., 0x20)
+FatBootHead_1440K:	# a FAT boot sector's first 32 bytes, a 1440 KB disk's (2880 sectors of 512 bytes): FdFormat1440K 0x4C133252: memcpy(.., 0x20)
 	FAT_BOOT_HEAD	0xeb, 0x1c, 0x90, "Technics", 512, 1, 1, 2, 224, 2880, 0xf0, 9, 18, 2, 0
 	.byte	0xeb, 0xfe	# +0x1E: the boot code the jump at +0 lands on (EB 1C: +2 + 0x1C), x86 `jmp $`: a loop
 
-func_4C133252_entry_L9e_Block:	# 3 bytes, copied whole by func_4C133252_entry_L9e 0x4C1332F5: memcpy(.., 3); func_4C133252_entry_L11b 0x4C133372: memcpy(.., 3)
+FdFormat1440K_entry_L9e_Block:	# 3 bytes, copied whole by FdFormat1440K_entry_L9e 0x4C1332F5: memcpy(.., 3); FdFormat1440K_entry_L11b 0x4C133372: memcpy(.., 3)
 	tab_u8	240, 255, 255	# [0]
-	.align	4, 0xFF	# pad after func_4C133252_entry_L9e_Block
+	.align	4, 0xFF	# pad after FdFormat1440K_entry_L9e_Block
 
 NoteConvRules:	# 128 x NoteConvRule (8 bytes each); read by NoteConvRuleByte1Get_L9 0x4C05830B `movbu (1, a0), d0`; NoteConvRuleByte2Get_L9 0x4C058326 `movbu (2, a0), d0`; NoteConvRuleByte3Get_L9 0x4C058341 `movbu (3, a0), d0` (+12)
 	NoteConvRule	is_melody=1, no_third_adj=1, no_transpose=1	# [0]

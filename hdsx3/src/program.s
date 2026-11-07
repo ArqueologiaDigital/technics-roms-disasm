@@ -14043,45 +14043,45 @@ LibF64Unpack_L3d:
 LibF64Unpack_L43:
 	retf	0, 0
 
-func_97807E91:
+LibF64ToU32:
 	movm	[d3,a3], (sp)
 	add	-8, sp
 
-func_97807E91_entry:
+LibF64ToU32_entry:
 	mov	(0x1c, sp), d1
 	mov	(0x18, sp), d0
 	nop
 	or	d1, d1
 	nop
-	bnc	func_97807E91_entry_L19
+	bnc	LibF64ToU32_entry_L19
 	mov	d1, a1
 	call	LibF64Unpack, 0, 0
 	call	LibF64UnpackedToI32, 0, 0
-	bra	func_97807E91_entry_L5a
-func_97807E91_entry_L19:
+	bra	LibF64ToU32_entry_L5a
+LibF64ToU32_entry_L19:
 	clr	d3
 	call	LibF64Unpack, 0, 0
 	nop
 	btst	0x06, d3
 	nop
-	beq	func_97807E91_entry_L29
-func_97807E91_entry_L26:
+	beq	LibF64ToU32_entry_L29
+LibF64ToU32_entry_L26:
 	clr	d0
-	bra	func_97807E91_entry_L5a
-func_97807E91_entry_L29:
+	bra	LibF64ToU32_entry_L5a
+LibF64ToU32_entry_L29:
 	btst	0x01, d3
 	nop
-	beq	func_97807E91_entry_L33
-func_97807E91_entry_L2f:
+	beq	LibF64ToU32_entry_L33
+LibF64ToU32_entry_L2f:
 	mov	-1, d0
-	bra	func_97807E91_entry_L5a
-func_97807E91_entry_L33:
+	bra	LibF64ToU32_entry_L5a
+LibF64ToU32_entry_L33:
 	cmp	0x3ff00000, a3
 	nop
-	bcs	func_97807E91_entry_L26
+	bcs	LibF64ToU32_entry_L26
 	cmp	0x41e00000, a3
 	nop
-	bhi	func_97807E91_entry_L2f
+	bhi	LibF64ToU32_entry_L2f
 	asl	11, d1
 	lsr	21, d0
 	or	d1, d0
@@ -14089,7 +14089,7 @@ func_97807E91_entry_L33:
 	sub	a3, d1
 	lsr	20, d1
 	lsr	d1, d0
-func_97807E91_entry_L5a:
+LibF64ToU32_entry_L5a:
 	ret	[d3,a3], 0x10
 
 sprintf:
@@ -15328,7 +15328,7 @@ PfFormatInteger_entry_L165:
 	extb	d0
 	mov	d0, (0x14, sp)
 	mov	d2, d0
-	call	func_97808EDE_entry, [d2,d3,a2], 0x10
+	call	PfUlongToDigitsB_entry, [d2,d3,a2], 0x10
 	mov	d0, d2
 	bra	PfFormatInteger_entry_L18c
 PfFormatInteger_entry_L17d:
@@ -15337,7 +15337,7 @@ PfFormatInteger_entry_L17d:
 	extb	d0
 	mov	d0, (0x14, sp)
 	mov	a1, d0
-	call	func_97808E3B_entry, [d2,d3,a2], 0x10
+	call	PfUlongToDigits_entry, [d2,d3,a2], 0x10
 	mov	d0, d2
 PfFormatInteger_entry_L18c:
 	mov	(0x44, sp), a0
@@ -15421,7 +15421,7 @@ PfFloatToDigits_entry_L23:
 	mov	(0x1c, sp), d1
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
-	call	func_9780900C, 0, 0
+	call	LibF64Neg, 0, 0
 	mov	d0, (0x18, sp)
 	mov	d1, (0x1c, sp)
 	mov	(0x70, sp), a0
@@ -15501,7 +15501,7 @@ PfFloatToDigits_entry_La7:
 	mov	(0x1c, sp), d1
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
-	call	func_9780900C, 0, 0
+	call	LibF64Neg, 0, 0
 	mov	d0, (0x18, sp)
 	mov	d1, (0x1c, sp)
 	mov	(0x70, sp), a0
@@ -16385,11 +16385,11 @@ PfAssembleFloat_entry_L1aa:
 	mov	d2, d0
 	ret	[d2,d3,a2,a3], 0x2c
 
-func_97808E3B:
+PfUlongToDigits:
 	movm	[d2,d3,a2], (sp)
 	add	-4, sp
 
-func_97808E3B_entry:
+PfUlongToDigits_entry:
 	mov	d0, d2
 	mov	d1, a1
 	movbu	(0x24, sp), d1
@@ -16411,20 +16411,20 @@ func_97808E3B_entry:
 	nop
 	cmp	0xa, d1
 	nop
-	blt	func_97808E3B_entry_L30
+	blt	PfUlongToDigits_entry_L30
 	cmp	0xf, d1
 	nop
-	bgt	func_97808E3B_entry_L30
+	bgt	PfUlongToDigits_entry_L30
 	add	a2, d1
 	add	-0x21, d1
 	movbu	d1, (a0)
 	inc	a0
-	bra	func_97808E3B_entry_L35
-func_97808E3B_entry_L30:
+	bra	PfUlongToDigits_entry_L35
+PfUlongToDigits_entry_L30:
 	add	0x30, d1
 	movbu	d1, (a0)
 	inc	a0
-func_97808E3B_entry_L35:
+PfUlongToDigits_entry_L35:
 	clr	d1
 	mov	d1, mdr
 	mov	a1, d1
@@ -16496,11 +16496,11 @@ PfShortToDigits_entry_L36:
 	mov	d3, d0
 	ret	[d2,d3,a2,a3], 0x28
 
-func_97808EDE:
+PfUlongToDigitsB:
 	movm	[d2,d3,a2], (sp)
 	add	-4, sp
 
-func_97808EDE_entry:
+PfUlongToDigitsB_entry:
 	mov	d0, d2
 	mov	d1, a1
 	movbu	(0x24, sp), d1
@@ -16522,20 +16522,20 @@ func_97808EDE_entry:
 	nop
 	cmp	0xa, d1
 	nop
-	blt	func_97808EDE_entry_L30
+	blt	PfUlongToDigitsB_entry_L30
 	cmp	0xf, d1
 	nop
-	bgt	func_97808EDE_entry_L30
+	bgt	PfUlongToDigitsB_entry_L30
 	add	a2, d1
 	add	-0x21, d1
 	movbu	d1, (a0)
 	inc	a0
-	bra	func_97808EDE_entry_L35
-func_97808EDE_entry_L30:
+	bra	PfUlongToDigitsB_entry_L35
+PfUlongToDigitsB_entry_L30:
 	add	0x30, d1
 	movbu	d1, (a0)
 	inc	a0
-func_97808EDE_entry_L35:
+PfUlongToDigitsB_entry_L35:
 	clr	d1
 	mov	d1, mdr
 	mov	a1, d1
@@ -16706,7 +16706,7 @@ abs_La:
 	nop
 	retf	0, 0
 
-func_9780900C:
+LibF64Neg:
 	mov	(0xc, sp), d1
 	mov	(8, sp), d0
 	xor	0x80000000, d1
@@ -38151,7 +38151,7 @@ func_97815D8F_entry_L422:
 	mov	(0x20, sp), d1
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
-	call	func_97807E91_entry, [d3,a3], 0x10
+	call	LibF64ToU32_entry, [d3,a3], 0x10
 	mov	d0, (0x10, sp)
 	mov	(0x38, sp), d0
 	mov	d0, (8, sp)
@@ -68950,7 +68950,7 @@ KSSCLSFileListProc_L7e9:
 	call	LibF64Div_entry, [d2,d3,a2,a3], 0x18
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
-	call	func_97807E91_entry, [d3,a3], 0x10
+	call	LibF64ToU32_entry, [d3,a3], 0x10
 	mov	d0, (0x54, sp)
 	bra	KSSCLSFileListProc_L855
 KSSCLSFileListProc_L820:
@@ -68969,7 +68969,7 @@ KSSCLSFileListProc_L820:
 	call	LibF64Div_entry, [d2,d3,a2,a3], 0x18
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
-	call	func_97807E91_entry, [d3,a3], 0x10
+	call	LibF64ToU32_entry, [d3,a3], 0x10
 	mov	d0, (0x54, sp)
 KSSCLSFileListProc_L855:
 	mov	sp, a1
@@ -78396,7 +78396,7 @@ KssTextProc_L365:
 	call	LibF64Div_entry, [d2,d3,a2,a3], 0x18
 	mov	d0, (8, sp)
 	mov	d1, (0xc, sp)
-	call	func_97807E91_entry, [d3,a3], 0x10
+	call	LibF64ToU32_entry, [d3,a3], 0x10
 	mov	d0, (0x4c, sp)
 	mov	(0x30, sp), d0
 	mov	(0x4c, sp), d1

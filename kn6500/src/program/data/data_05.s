@@ -25754,7 +25754,7 @@ StyleGenre_Country_Styles:	# StyleGenre "Country"'s 12 styles, GenreStyle {char 
 	.long	Text_Bluegrass_Dance+187, StyleSetups_Country_SlowCountryDance
 	.long	0, 0
 
-StyleGenreTable:	# 11 x StyleGenre (8 bytes each); read by func_4C1642A9_entry_L7 0x4C1642B6 `mov (d0, a0), a1`; func_4C1642F7_entry_Lf 0x4C164309 `mov (4, a0), a0`; func_4C1646AA_entry_L3c 0x4C1646EB `mov (4, a0), a3` (+8)
+StyleGenreTable:	# 11 x StyleGenre (8 bytes each); read by StyleGenreListTextBuild_entry_L7 0x4C1642B6 `mov (d0, a0), a1`; func_4C1642F7_entry_Lf 0x4C164309 `mov (4, a0), a0`; StyleSubCatHeaderBuild_entry_L3c 0x4C1646EB `mov (4, a0), a3` (+8)
 	StyleGenre	name=Text_Bluegrass_Dance+204, styles=StyleGenre_Show_Ballroom_Styles	# [0]
 	StyleGenre	name=Text_Bluegrass_Dance+221, styles=StyleGenre_Rock_Pop_Styles
 	StyleGenre	name=Text_Bluegrass_Dance+238, styles=StyleGenre_Party_Music_Styles
@@ -25891,7 +25891,7 @@ StyleSetups_Letter_Y:	# the setups (u16 MusicStylistSetup numbers) under letter 
 StyleSetups_Letter_Z:	# the setups (u16 MusicStylistSetup numbers) under letter "Z" of StyleAlphabetTable, then 0xFFFF (func_4847D083: `movhu (a2), d0` / `cmp 0xffff, d0` / `add 2, a2`)
 	.word	653, 0xffff
 
-StyleAlphabetTable:	# 35 x StyleLetter (8 bytes each); read by func_4C165521 0x4C165521 `mov (4, a0), a0`; func_4C165521 0x4C165521 `mov (d2, a2), a1`; func_4C1655F4 0x4C1655F4 `mov (d1, a0), d1` (+7)
+StyleAlphabetTable:	# 35 x StyleLetter (8 bytes each); read by StyleAlphaHeaderBuild 0x4C165521 `mov (4, a0), a0`; StyleAlphaHeaderBuild 0x4C165521 `mov (d2, a2), a1`; StyleAlphaLastIndex 0x4C1655F4 `mov (d1, a0), d1` (+7)
 	StyleLetter	letter=Str_1_29, setups=StyleSetups_Letter_1	# [0]
 	StyleLetter	letter=Str_2_30, setups=StyleSetups_Letter_2
 	StyleLetter	letter=Str_3_25, setups=StyleSetups_Letter_3
@@ -26002,7 +26002,7 @@ StyleSetups_Era_1920_s:	# the setups (u16 MusicStylistSetup numbers) under era "
 	.word	742, 1041, 714, 712, 713, 826, 666, 777, 778, 779, 1042, 665, 0xffff
 	.align	4, 0xFF	# pad after StyleSetups_Era_1920_s
 
-StyleRecordTable:	# 1080 x MusicStylistSetup (24 bytes each); read by MssNameFunc_L121 0x4C163DDA `mov (4, a0), a1`; func_4C163E7B 0x4C163E7B `mov (4, a0), a1`; AcCategoryListBoxProc_L54 0x4C163FCA `movhu (8, a1), d0` (+65)
+StyleRecordTable:	# 1080 x MusicStylistSetup (24 bytes each); read by MssNameFunc_L121 0x4C163DDA `mov (4, a0), a1`; StyleRecNameGet 0x4C163E7B `mov (4, a0), a1`; AcCategoryListBoxProc_L54 0x4C163FCA `movhu (8, a1), d0` (+65)
 	MusicStylistSetup	panel=StylePanel_Nebula_Reeds_1, name=Text_Nebula_Reeds_126, era_pos=116, letter=22, letter_pos=7, x22="\x00\x00"	# [0]
 	MusicStylistSetup	panel=StylePanel_To_Boldly_Play_2, name=Text_Nebula_Reeds_126+27, setup=1, era_pos=188, letter=28, letter_pos=32, x22="\x00\x00"
 	MusicStylistSetup	panel=StylePanel_Movie_Adventure_3, name=Text_Nebula_Reeds_126+54, setup=2, era_pos=113, letter=21, letter_pos=45, x22="\x00\x00"
@@ -27747,7 +27747,7 @@ MainMmmControl_entry_Le5_Table:	# 256 x u32, 0..4278190080; read by MainMmmContr
 Str_z:	.asciz "\xB0z"
 	.align	4, 0x50	# pad after Str_z
 
-func_4C007EBA_Var:	# u32, initial value of a RAM variable; read / written by func_4C007EBA 0x4C007EBA: `mov (func_4C007EBA_Var), a0`; func_4C007EBA_Ld 0x4C007EC7: `mov (func_4C007EBA_Var), a0` ...
+MallocSbrk_Var:	# u32, initial value of a RAM variable; read / written by MallocSbrk 0x4C007EBA: `mov (MallocSbrk_Var), a0`; MallocSbrk_Ld 0x4C007EC7: `mov (MallocSbrk_Var), a0` ...
 	.long	32768
 Malloc_Var:	# u32, initial value of a RAM variable; read / written by Malloc 0x4C007EF9: `mov (Malloc_Var), a2`; Malloc_entry_L58 0x4C007F56: `mov (Malloc_Var), a0` ...
 	.long	0
@@ -27932,7 +27932,7 @@ AcChordBoxProc_L1b3_Table:
 
 AcTransposeBoxProc_La4_Var:	# u32, initial value of a RAM variable; read / written by AcTransposeBoxProc_La4 0x4C01448D: `mov (AcTransposeBoxProc_La4_Var), d1`; AcTransposeBoxProc_Lca 0x4C0144B3: `mov d0, (AcTransposeBoxProc_La4_Var)`
 	.long	1
-func_4C0152A4_Var:	# u32, initial value of a RAM variable; read / written by func_4C0152A4 0x4C0152A4: `mov (func_4C0152A4_Var), d0`; func_4C01537C 0x4C01537C: `mov d0, (func_4C0152A4_Var)`
+func_4C0152A4_Var:	# u32, initial value of a RAM variable; read / written by func_4C0152A4 0x4C0152A4: `mov (func_4C0152A4_Var), d0`; SetNeedUpdate_Impl 0x4C01537C: `mov d0, (func_4C0152A4_Var)`
 	.long	1
 
 ModeProc_L73_Table:	# 4 x u32, 31457280..31457280; read by ModeProc_L73 0x4C01D9D8: `mov	(d0, a0), d0`; ModeProc_L19c 0x4C01DB01: `mov	(d0, a0), d0` ...
@@ -28147,26 +28147,26 @@ func_4C051B0D_Var_2:	# u32, initial value of a RAM variable; read / written by f
 	.long	0
 func_4C051B0D_entry_L2f_Var:	# u32, initial value of a RAM variable; read / written by func_4C051B0D_entry_L2f 0x4C051B3F: `mov (func_4C051B0D_entry_L2f_Var), d0`; func_4C051B0D_entry_L2f 0x4C051B3F: `mov d0, (func_4C051B0D_entry_L2f_Var)` ...
 	.long	0
-func_4C05415F_Var:	# u8, initial value of a RAM variable; read / written by func_4C05415F 0x4C05415F: `movbu (func_4C05415F_Var), d0`; func_4C0541A2_entry_L21 0x4C0541C8: `movbu (func_4C05415F_Var), d0` ...
+UserPadRecPartErase_Var:	# u8, initial value of a RAM variable; read / written by UserPadRecPartErase 0x4C05415F: `movbu (UserPadRecPartErase_Var), d0`; UserPadMeasuresDelete_entry_L21 0x4C0541C8: `movbu (UserPadRecPartErase_Var), d0` ...
 	.byte	0
-func_4C05415F_entry_L27_Var:	# u8, initial value of a RAM variable; read / written by func_4C05415F_entry_L27 0x4C05418B: `movbu (func_4C05415F_entry_L27_Var), d0`; func_4C054660 0x4C054660: `movbu (func_4C05415F_entry_L27_Var), d0` ...
+UserPadRecPartErase_entry_L27_Var:	# u8, initial value of a RAM variable; read / written by UserPadRecPartErase_entry_L27 0x4C05418B: `movbu (UserPadRecPartErase_entry_L27_Var), d0`; UserPadRecPartGet 0x4C054660: `movbu (UserPadRecPartErase_entry_L27_Var), d0` ...
 	.byte	0
-func_4C054688_Var:	# u8, initial value of a RAM variable; read / written by func_4C054688 0x4C054688: `movbu (func_4C054688_Var), d0`; func_4C054691 0x4C054691: `movbu (func_4C054688_Var), d1` ...
+UserPadAllEraseGet_Var:	# u8, initial value of a RAM variable; read / written by UserPadAllEraseGet 0x4C054688: `movbu (UserPadAllEraseGet_Var), d0`; UserPadAllEraseSet 0x4C054691: `movbu (UserPadAllEraseGet_Var), d1` ...
 	.byte	0
-func_4C0546AD_Var:	# u8, initial value of a RAM variable; read / written by func_4C0546AD 0x4C0546AD: `movbu (func_4C0546AD_Var), d0`; func_4C0546B6 0x4C0546B6: `movbu (func_4C0546AD_Var), d1` ...
+UserPadNoteClearGet_Var:	# u8, initial value of a RAM variable; read / written by UserPadNoteClearGet 0x4C0546AD: `movbu (UserPadNoteClearGet_Var), d0`; UserPadNoteClearSet 0x4C0546B6: `movbu (UserPadNoteClearGet_Var), d1` ...
 	.byte	0
-func_4C05DC1D_entry_La_Var:	# u8, initial value of a RAM variable; read / written by func_4C05DC1D_entry_La 0x4C05DC2C: `movbu (func_4C05DC1D_entry_La_Var), d0`; func_4C05DC1D_entry_La 0x4C05DC2C: `movbu d2, (func_4C05DC1D_entry_La_Var)` ...
+CmpStyleSelect_entry_La_Var:	# u8, initial value of a RAM variable; read / written by CmpStyleSelect_entry_La 0x4C05DC2C: `movbu (CmpStyleSelect_entry_La_Var), d0`; CmpStyleSelect_entry_La 0x4C05DC2C: `movbu d2, (CmpStyleSelect_entry_La_Var)` ...
 	.byte	0
-func_4C05DC1D_entry_La_Var_2:	# u8, initial value of a RAM variable; read / written by func_4C05DC1D_entry_La 0x4C05DC2C: `movbu (func_4C05DC1D_entry_La_Var_2), d1`; func_4C05DC76_entry_Lc 0x4C05DC87: `movbu (func_4C05DC1D_entry_La_Var_2), d0` ...
+CmpStyleSelect_entry_La_Var_2:	# u8, initial value of a RAM variable; read / written by CmpStyleSelect_entry_La 0x4C05DC2C: `movbu (CmpStyleSelect_entry_La_Var_2), d1`; CmpVariationSelect_entry_Lc 0x4C05DC87: `movbu (CmpStyleSelect_entry_La_Var_2), d0` ...
 	.byte	0
-func_4C05DC1D_entry_La_Var_3:	# u8, initial value of a RAM variable; read / written by func_4C05DC1D_entry_La 0x4C05DC2C: `movbu d0, (func_4C05DC1D_entry_La_Var_3)`; func_4C05DC6D 0x4C05DC6D: `movbu (func_4C05DC1D_entry_La_Var_3), d0` ...
+CmpStyleSelect_entry_La_Var_3:	# u8, initial value of a RAM variable; read / written by CmpStyleSelect_entry_La 0x4C05DC2C: `movbu d0, (CmpStyleSelect_entry_La_Var_3)`; CmpCurVariationGet 0x4C05DC6D: `movbu (CmpStyleSelect_entry_La_Var_3), d0` ...
 	.byte	0
-func_4C05DD99_Var:	# u8, initial value of a RAM variable; read / written by func_4C05DD99 0x4C05DD99: `movbu (func_4C05DD99_Var), d0`; func_4C05DDA2 0x4C05DDA2: `movbu d0, (func_4C05DD99_Var)` ...
+CmpRecPartGet_Var:	# u8, initial value of a RAM variable; read / written by CmpRecPartGet 0x4C05DD99: `movbu (CmpRecPartGet_Var), d0`; CmpRecPartSet 0x4C05DDA2: `movbu d0, (CmpRecPartGet_Var)` ...
 	.byte	0
-func_4C05DDAD_Var:	# u8, initial value of a RAM variable; read / written by func_4C05DDAD 0x4C05DDAD: `movbu (func_4C05DDAD_Var), d0`; func_4C05DDB6 0x4C05DDB6: `movbu (func_4C05DDAD_Var), d1` ...
+CmpAllEraseGet_Var:	# u8, initial value of a RAM variable; read / written by CmpAllEraseGet 0x4C05DDAD: `movbu (CmpAllEraseGet_Var), d0`; CmpAllEraseSet 0x4C05DDB6: `movbu (CmpAllEraseGet_Var), d1` ...
 	.byte	0
 
-func_4C05DDD2_Table:	# 3 x u8, 0..255; read by func_4C05DDD2 0x4C05DDD2: `movbu (func_4C05DDD2_Table), d0`; func_4C05DDDB 0x4C05DDDB: `movbu (func_4C05DDD2_Table), d1` ...
+CmpNoteClearGet_Table:	# 3 x u8, 0..255; read by CmpNoteClearGet 0x4C05DDD2: `movbu (CmpNoteClearGet_Table), d0`; CmpNoteClearSet 0x4C05DDDB: `movbu (CmpNoteClearGet_Table), d1` ...
 	tab_u8	0, 255, 255
 
 TtHomepage_window:	# u32, initial value of a RAM variable: the AcHpScreen TtHomepage's `window` (+0x24), loaded and dereferenced by ScreenProc 0x4C00900F: `mov (0x24, a3), a0` -> `mov d0, (a0)`
@@ -31329,9 +31329,9 @@ TtSqmixer_L64_Table:	# 49 x u16, 0..255; read by TtSqmixer_L64 0x4C074917: `movh
 	tab_u16	1	# [48]
 	.align	4, 0xFF	# pad after TtSqmixer_L64_Table
 
-func_4C0749B9_Var:	# u32, initial value of a RAM variable; read / written by func_4C0749B9 0x4C0749B9: `mov (func_4C0749B9_Var), a0`; func_4C0749C8 0x4C0749C8: `mov a0, (func_4C0749B9_Var)`
+MixerColumnRecGet_Var:	# u32, initial value of a RAM variable; read / written by MixerColumnRecGet 0x4C0749B9: `mov (MixerColumnRecGet_Var), a0`; MixerColumnTableSet 0x4C0749C8: `mov a0, (MixerColumnRecGet_Var)`
 	.long	0x4c1b900c
-func_4C0749D1_Var:	# u32, initial value of a RAM variable; read / written by func_4C0749D1 0x4C0749D1: `mov (func_4C0749D1_Var), a0`; func_4C0749DE 0x4C0749DE: `mov a0, (func_4C0749D1_Var)`
+MixerColumnPartGet_Var:	# u32, initial value of a RAM variable; read / written by MixerColumnPartGet 0x4C0749D1: `mov (MixerColumnPartGet_Var), a0`; MixerColumnPartListSet 0x4C0749DE: `mov a0, (MixerColumnPartGet_Var)`
 	.long	0x4c1b9640
 
 AcMixPartSoundProc_L118_Table:
@@ -34020,17 +34020,17 @@ AcMspCompileBnkNmBoxProc_L39_Table:	# 2 x u8, 0..255; read by AcMspCompileBnkNmB
 AcPresentationBoxProc_L108_Var:	# u16, initial value of a RAM variable; read / written by AcPresentationBoxProc_L108 0x4C0CD71C: `movhu d0, (AcPresentationBoxProc_L108_Var)`; AcPresentationControlProc_L4f 0x4C0CD926: `movhu (AcPresentationBoxProc_L108_Var), d1` ...
 	.word	23
 
-func_4C0B5E3F_entry_L2b_Records:	# 10 x REC_func_4C0B5E3F_entry_L2b_Records (8 bytes each); read by func_4C0B5E3F_entry_L2b 0x4C0B5E6F `mov (4, a2), d0`; func_4C0B5E3F_entry_L2b 0x4C0B5E6F `mov (a2), d0`
-	REC_func_4C0B5E3F_entry_L2b_Records	object=0x820009, object_=0x82000A	# [0]
-	REC_func_4C0B5E3F_entry_L2b_Records	object=0x960009, object_=0x96000A
-	REC_func_4C0B5E3F_entry_L2b_Records	object=0x80003D, object_=0x80003E
-	REC_func_4C0B5E3F_entry_L2b_Records	object=0xFFFF0001, object_=0xFFFF0001
-	REC_func_4C0B5E3F_entry_L2b_Records	object=0xFFFFFF01, object_=0xFFFFFF01
-	REC_func_4C0B5E3F_entry_L2b_Records	object=0xFFFFFF00, object_=0xFFFF0000
-	REC_func_4C0B5E3F_entry_L2b_Records	object=0xFFFFFF00, object_=0xFFFF0000
-	REC_func_4C0B5E3F_entry_L2b_Records	object=0xFFFFFF00, object_=0x86000A
-	REC_func_4C0B5E3F_entry_L2b_Records	object=0x86000B, object_=0xFFFF0001	# [8]
-	REC_func_4C0B5E3F_entry_L2b_Records	object=0xFFFF0001, object_=0xFF808080
+SeqCycPlyFieldApply_entry_L2b_Records:	# 10 x REC_SeqCycPlyFieldApply_entry_L2b_Records (8 bytes each); read by SeqCycPlyFieldApply_entry_L2b 0x4C0B5E6F `mov (4, a2), d0`; SeqCycPlyFieldApply_entry_L2b 0x4C0B5E6F `mov (a2), d0`
+	REC_SeqCycPlyFieldApply_entry_L2b_Records	object=0x820009, object_=0x82000A	# [0]
+	REC_SeqCycPlyFieldApply_entry_L2b_Records	object=0x960009, object_=0x96000A
+	REC_SeqCycPlyFieldApply_entry_L2b_Records	object=0x80003D, object_=0x80003E
+	REC_SeqCycPlyFieldApply_entry_L2b_Records	object=0xFFFF0001, object_=0xFFFF0001
+	REC_SeqCycPlyFieldApply_entry_L2b_Records	object=0xFFFFFF01, object_=0xFFFFFF01
+	REC_SeqCycPlyFieldApply_entry_L2b_Records	object=0xFFFFFF00, object_=0xFFFF0000
+	REC_SeqCycPlyFieldApply_entry_L2b_Records	object=0xFFFFFF00, object_=0xFFFF0000
+	REC_SeqCycPlyFieldApply_entry_L2b_Records	object=0xFFFFFF00, object_=0x86000A
+	REC_SeqCycPlyFieldApply_entry_L2b_Records	object=0x86000B, object_=0xFFFF0001	# [8]
+	REC_SeqCycPlyFieldApply_entry_L2b_Records	object=0xFFFF0001, object_=0xFF808080
 
 CmpPartCopyGrid_L3d2_Var:	# u32, initial value of a RAM variable; read / written by CmpPartCopyGrid_L3d2 0x4C0C119B: `mov d0, (CmpPartCopyGrid_L3d2_Var)`; CmpPartCopyGrid_L4e4 0x4C0C12AD: `mov (CmpPartCopyGrid_L3d2_Var), d0` ...
 	.long	0
@@ -34062,13 +34062,13 @@ FE_CmpCstmCpy_L20a_Table:	# 4 x u8, 0..255; read by FE_CmpCstmCpy : `movbu	(d1, 
 	tab_u8	0, 3, 255, 255
 CmpCstmCpyDirec_L24_Table:	# 4 x u8, 1..255; read by CmpCstmCpyDirec_L24 0x4C0C2E96: `movbu (CmpCstmCpyDirec_L24_Table), d0`; CmpCstmCpyDirec_L31 0x4C0C2EA3: `movbu (CmpCstmCpyDirec_L24_Table), d0` ...
 	tab_u8	1, 255, 255, 255
-func_4C0C30E7_Table:	# 2 x u32, 9502723..9502726; read by func_4C0C30E7_entry_Lb 0x4C0C30F7: `mov	(a2), d0`; func_4C0C30E7_entry_L45 0x4C0C3131: `mov	(func_4C0C30E7_Table), d0`; ends at +8, where func_4C0C30E7_entry_Lb 0x4C0C30F7's loop stops (`cmp FE_SeqSongCopyFSong_L4d_Table, a2`)
+SeqSongCopyFieldApply_Table:	# 2 x u32, 9502723..9502726; read by SeqSongCopyFieldApply_entry_Lb 0x4C0C30F7: `mov	(a2), d0`; SeqSongCopyFieldApply_entry_L45 0x4C0C3131: `mov	(SeqSongCopyFieldApply_Table), d0`; ends at +8, where SeqSongCopyFieldApply_entry_Lb 0x4C0C30F7's loop stops (`cmp FE_SeqSongCopyFSong_L4d_Table, a2`)
 	tab_u32	9502723, 9502726
 FE_SeqSongCopyFSong_L4d_Table:	# 2 x u16, 1..65535; read by FE_SeqSongCopyFSong_L4d 0x4C0C31FC: `movhu (FE_SeqSongCopyFSong_L4d_Table), d0`; FE_SeqSongCopyFSong_L4d 0x4C0C31FC: `movhu (FE_SeqSongCopyFSong_L4d_Table), d1` ...
 	tab_u16	1, 65535
 FE_SeqSongCopyTSong_L4d_Table:	# 2 x u16, 1..65535; read by FE_SeqSongCopyTSong_L4d 0x4C0C32D0: `movhu (FE_SeqSongCopyTSong_L4d_Table), d0`; FE_SeqSongCopyTSong_L4d 0x4C0C32D0: `movhu (FE_SeqSongCopyTSong_L4d_Table), d1` ...
 	tab_u16	1, 65535
-func_4C0C3393_Table:	# 4 x u32, 8388629..8388635; read by func_4C0C3393_entry_Lb 0x4C0C33A3: `mov	(a2), d0`; func_4C0C3393_entry_L57 0x4C0C33EF: `mov	(func_4C0C3393_Table), d0`; ends at +16, where func_4C0C3393_entry_Lb 0x4C0C33A3's loop stops (`cmp FE_SeqTrackCopyFTrack_L4e_Table, a2`)
+SeqTrackCopyFieldApply_Table:	# 4 x u32, 8388629..8388635; read by SeqTrackCopyFieldApply_entry_Lb 0x4C0C33A3: `mov	(a2), d0`; SeqTrackCopyFieldApply_entry_L57 0x4C0C33EF: `mov	(SeqTrackCopyFieldApply_Table), d0`; ends at +16, where SeqTrackCopyFieldApply_entry_Lb 0x4C0C33A3's loop stops (`cmp FE_SeqTrackCopyFTrack_L4e_Table, a2`)
 	tab_u32	8388630, 8388629, 8388635, 8388634
 FE_SeqTrackCopyFTrack_L4e_Table:	# 4 x u8, 1..255; read by FE_SeqTrackCopyFTrack_L4e 0x4C0C359A: `movbu (FE_SeqTrackCopyFTrack_L4e_Table), d0`; FE_SeqTrackCopyFTrack_L4e 0x4C0C359A: `movbu (FE_SeqTrackCopyFTrack_L4e_Table), d1` ...
 	tab_u8	1, 255, 255, 255
@@ -34078,7 +34078,7 @@ FE_SeqTrackCopyFSong_L4d_Table:	# 2 x u16, 1..65535; read by FE_SeqTrackCopyFSon
 	tab_u16	1, 65535
 FE_SeqTrackCopyTSong_L4d_Table:	# 2 x u16, 1..65535; read by FE_SeqTrackCopyTSong_L4d 0x4C0C383F: `movhu (FE_SeqTrackCopyTSong_L4d_Table), d0`; FE_SeqTrackCopyTSong_L4d 0x4C0C383F: `movhu (FE_SeqTrackCopyTSong_L4d_Table), d1` ...
 	tab_u16	1, 65535
-func_4C0C3902_Table:	# 4 x u32, 10354691..10354694; read by func_4C0C3902_entry_Lb 0x4C0C3912: `mov	(a2), d0`; func_4C0C3902_entry_L57 0x4C0C395E: `mov	(func_4C0C3902_Table), d0`; ends at +16, where func_4C0C3902_entry_Lb 0x4C0C3912's loop stops (`cmp FE_SeqVeloCngTrack_L4e_Table, a2`)
+SeqVeloCngFieldApply_Table:	# 4 x u32, 10354691..10354694; read by SeqVeloCngFieldApply_entry_Lb 0x4C0C3912: `mov	(a2), d0`; SeqVeloCngFieldApply_entry_L57 0x4C0C395E: `mov	(SeqVeloCngFieldApply_Table), d0`; ends at +16, where SeqVeloCngFieldApply_entry_Lb 0x4C0C3912's loop stops (`cmp FE_SeqVeloCngTrack_L4e_Table, a2`)
 	tab_u32	10354691, 10354692, 10354693, 10354694
 FE_SeqVeloCngTrack_L4e_Table:	# 4 x u8, 1..255; read by FE_SeqVeloCngTrack_L4e 0x4C0C3AC0: `movbu (FE_SeqVeloCngTrack_L4e_Table), d0`; FE_SeqVeloCngTrack_L4e 0x4C0C3AC0: `movbu (FE_SeqVeloCngTrack_L4e_Table), d1` ...
 	tab_u8	1, 255, 255, 255
@@ -34088,7 +34088,7 @@ FE_SeqVeloCngLstMeas_L4e_Table:	# 2 x u16, 1..65535; read by FE_SeqVeloCngLstMea
 	tab_u16	1, 65535
 FE_SeqVeloCngVelo_L4e_Table:	# 2 x s16, -1..0; read by FE_SeqVeloCngVelo_L4e 0x4C0C3D4F: `movhu (FE_SeqVeloCngVelo_L4e_Table), d0`; FE_SeqVeloCngVelo_L4e 0x4C0C3D4F: `movhu (FE_SeqVeloCngVelo_L4e_Table), d1` ...
 	tab_s16	0, -1
-func_4C0C3E2D_Table:	# 4 x u32, 10485763..10485766; read by func_4C0C3E2D_entry_Lb 0x4C0C3E3D: `mov	(a2), d0`; func_4C0C3E2D_entry_L57 0x4C0C3E89: `mov	(func_4C0C3E2D_Table), d0`; ends at +16, where func_4C0C3E2D_entry_Lb 0x4C0C3E3D's loop stops (`cmp FE_SeqAdvDlyTrack_L4e_Table, a2`)
+SeqAdvDlyFieldApply_Table:	# 4 x u32, 10485763..10485766; read by SeqAdvDlyFieldApply_entry_Lb 0x4C0C3E3D: `mov	(a2), d0`; SeqAdvDlyFieldApply_entry_L57 0x4C0C3E89: `mov	(SeqAdvDlyFieldApply_Table), d0`; ends at +16, where SeqAdvDlyFieldApply_entry_Lb 0x4C0C3E3D's loop stops (`cmp FE_SeqAdvDlyTrack_L4e_Table, a2`)
 	tab_u32	10485763, 10485764, 10485765, 10485766
 FE_SeqAdvDlyTrack_L4e_Table:	# 4 x u8, 1..255; read by FE_SeqAdvDlyTrack_L4e 0x4C0C3FEB: `movbu (FE_SeqAdvDlyTrack_L4e_Table), d0`; FE_SeqAdvDlyTrack_L4e 0x4C0C3FEB: `movbu (FE_SeqAdvDlyTrack_L4e_Table), d1` ...
 	tab_u8	1, 255, 255, 255
@@ -34098,7 +34098,7 @@ FE_SeqAdvDlyLstMeas_L4e_Table:	# 2 x u16, 1..65535; read by FE_SeqAdvDlyLstMeas_
 	tab_u16	1, 65535
 FE_SeqAdvDlyAdvDly_L4e_Table:	# 2 x s16, -1..0; read by FE_SeqAdvDlyAdvDly_L4e 0x4C0C427A: `movhu (FE_SeqAdvDlyAdvDly_L4e_Table), d0`; FE_SeqAdvDlyAdvDly_L4e 0x4C0C427A: `movhu (FE_SeqAdvDlyAdvDly_L4e_Table), d1` ...
 	tab_s16	0, -1
-func_4C0C4358_Table:	# 4 x u32, 10289155..10289158; read by func_4C0C4358_entry_Lb 0x4C0C4368: `mov	(a2), d0`; func_4C0C4358_entry_L57 0x4C0C43B4: `mov	(func_4C0C4358_Table), d0`; ends at +16, where func_4C0C4358_entry_Lb 0x4C0C4368's loop stops (`cmp FE_SeqTransTrack_L4e_Table, a2`)
+SeqTransFieldApply_Table:	# 4 x u32, 10289155..10289158; read by SeqTransFieldApply_entry_Lb 0x4C0C4368: `mov	(a2), d0`; SeqTransFieldApply_entry_L57 0x4C0C43B4: `mov	(SeqTransFieldApply_Table), d0`; ends at +16, where SeqTransFieldApply_entry_Lb 0x4C0C4368's loop stops (`cmp FE_SeqTransTrack_L4e_Table, a2`)
 	tab_u32	10289155, 10289156, 10289157, 10289158
 FE_SeqTransTrack_L4e_Table:	# 4 x u8, 1..255; read by FE_SeqTransTrack_L4e 0x4C0C4516: `movbu (FE_SeqTransTrack_L4e_Table), d0`; FE_SeqTransTrack_L4e 0x4C0C4516: `movbu (FE_SeqTransTrack_L4e_Table), d1` ...
 	tab_u8	1, 255, 255, 255
@@ -34108,7 +34108,7 @@ FE_SeqTransLstMeas_L4e_Table:	# 2 x u16, 1..65535; read by FE_SeqTransLstMeas_L4
 	tab_u16	1, 65535
 FE_SeqTransTrans_L4e_Table:	# 2 x s16, -1..0; read by FE_SeqTransTrans_L4e 0x4C0C47A5: `movhu (FE_SeqTransTrans_L4e_Table), d0`; FE_SeqTransTrans_L4e 0x4C0C47A5: `movhu (FE_SeqTransTrans_L4e_Table), d1` ...
 	tab_s16	0, -1
-func_4C0C4883_Table:	# 6 x u32, 10223638..10223643; read by func_4C0C4883_entry_Lb 0x4C0C4893: `mov	(a2), d0`; func_4C0C4883_entry_L65 0x4C0C48ED: `mov	(func_4C0C4883_Table), d0`; ends at +24, where func_4C0C4883_entry_Lb 0x4C0C4893's loop stops (`cmp FE_SeqQtzTrack_L4e_Table, a2`)
+SeqQtzFieldApply_Table:	# 6 x u32, 10223638..10223643; read by SeqQtzFieldApply_entry_Lb 0x4C0C4893: `mov	(a2), d0`; SeqQtzFieldApply_entry_L65 0x4C0C48ED: `mov	(SeqQtzFieldApply_Table), d0`; ends at +24, where SeqQtzFieldApply_entry_Lb 0x4C0C4893's loop stops (`cmp FE_SeqQtzTrack_L4e_Table, a2`)
 	tab_u32	10223638, 10223639, 10223640, 10223641, 10223642, 10223643
 FE_SeqQtzTrack_L4e_Table:	# 4 x u8, 1..255; read by FE_SeqQtzTrack_L4e 0x4C0C4AA6: `movbu (FE_SeqQtzTrack_L4e_Table), d0`; FE_SeqQtzTrack_L4e 0x4C0C4AA6: `movbu (FE_SeqQtzTrack_L4e_Table), d1` ...
 	tab_u8	1, 255, 255, 255
@@ -34124,7 +34124,7 @@ Str_d_3:	.asciz "d"
 Str_d_2:	.asciz "d"
 	.align	4, 0xFF	# pad after Str_d_2
 
-func_4C0C5052_Table:	# 5 x u32, 10420227..10420248; read by func_4C0C5052_entry_Lb 0x4C0C5062: `mov	(a2), d0`; func_4C0C5052_entry_L5e 0x4C0C50B5: `mov	(func_4C0C5052_Table), d0`; ends at +20, where func_4C0C5052_entry_Lb 0x4C0C5062's loop stops (`cmp FE_SeqNoteChangeTrack_L4e_Table, a2`)
+SeqNoteChangeFieldApply_Table:	# 5 x u32, 10420227..10420248; read by SeqNoteChangeFieldApply_entry_Lb 0x4C0C5062: `mov	(a2), d0`; SeqNoteChangeFieldApply_entry_L5e 0x4C0C50B5: `mov	(SeqNoteChangeFieldApply_Table), d0`; ends at +20, where SeqNoteChangeFieldApply_entry_Lb 0x4C0C5062's loop stops (`cmp FE_SeqNoteChangeTrack_L4e_Table, a2`)
 	tab_u32	10420227, 10420228, 10420229, 10420244, 10420248
 FE_SeqNoteChangeTrack_L4e_Table:	# 4 x u8, 1..255; read by FE_SeqNoteChangeTrack_L4e 0x4C0C5242: `movbu (FE_SeqNoteChangeTrack_L4e_Table), d0`; FE_SeqNoteChangeTrack_L4e 0x4C0C5242: `movbu (FE_SeqNoteChangeTrack_L4e_Table), d1` ...
 	tab_u8	1, 255, 255, 255
@@ -34136,7 +34136,7 @@ FE_SeqNoteChangeSrcNt_L4e_Table:	# 4 x u8, 60..255; read by FE_SeqNoteChangeSrcN
 	tab_u8	60, 255, 255, 255
 FE_SeqNoteChangeDstNt_L4e_Table:	# 4 x u8, 61..255; read by FE_SeqNoteChangeDstNt_L4e 0x4C0C55B1: `movbu (FE_SeqNoteChangeDstNt_L4e_Table), d0`; FE_SeqNoteChangeDstNt_L4e 0x4C0C55B1: `movbu (FE_SeqNoteChangeDstNt_L4e_Table), d1` ...
 	tab_u8	61, 255, 255, 255
-func_4C0C567F_Table:	# 3 x u32, 10682371..10682373; read by func_4C0C567F_entry_Lb 0x4C0C568F: `mov	(a2), d0`; func_4C0C567F_entry_L4d 0x4C0C56D1: `mov	(func_4C0C567F_Table), d0`; ends at +12, where func_4C0C567F_entry_Lb 0x4C0C568F's loop stops (`cmp FE_SeqMsDelTrack_L4e_Table, a2`)
+SeqMsDelFieldApply_Table:	# 3 x u32, 10682371..10682373; read by SeqMsDelFieldApply_entry_Lb 0x4C0C568F: `mov	(a2), d0`; SeqMsDelFieldApply_entry_L4d 0x4C0C56D1: `mov	(SeqMsDelFieldApply_Table), d0`; ends at +12, where SeqMsDelFieldApply_entry_Lb 0x4C0C568F's loop stops (`cmp FE_SeqMsDelTrack_L4e_Table, a2`)
 	tab_u32	10682371, 10682372, 10682373
 FE_SeqMsDelTrack_L4e_Table:	# 4 x u8, 1..255; read by FE_SeqMsDelTrack_L4e 0x4C0C580D: `movbu (FE_SeqMsDelTrack_L4e_Table), d0`; FE_SeqMsDelTrack_L4e 0x4C0C580D: `movbu (FE_SeqMsDelTrack_L4e_Table), d1` ...
 	tab_u8	1, 255, 255, 255
@@ -34144,7 +34144,7 @@ FE_SeqMsDelFstMeas_L4e_Table:	# 2 x u16, 1..65535; read by FE_SeqMsDelFstMeas_L4
 	tab_u16	1, 65535
 FE_SeqMsDelLstMeas_L4e_Table:	# 2 x u16, 1..65535; read by FE_SeqMsDelLstMeas_L4e 0x4C0C59C9: `movhu (FE_SeqMsDelLstMeas_L4e_Table), d0`; FE_SeqMsDelLstMeas_L4e 0x4C0C59C9: `movhu (FE_SeqMsDelLstMeas_L4e_Table), d1` ...
 	tab_u16	1, 65535
-func_4C0C5A8A_Table:	# 4 x u32, 10551299..10551302; read by func_4C0C5A8A_entry_Lb 0x4C0C5A9A: `mov	(a2), d0`; func_4C0C5A8A_entry_L57 0x4C0C5AE6: `mov	(func_4C0C5A8A_Table), d0`; ends at +16, where func_4C0C5A8A_entry_Lb 0x4C0C5A9A's loop stops (`cmp FE_SeqMsErsTrack_L4e_Table, a2`)
+SeqMsErsFieldApply_Table:	# 4 x u32, 10551299..10551302; read by SeqMsErsFieldApply_entry_Lb 0x4C0C5A9A: `mov	(a2), d0`; SeqMsErsFieldApply_entry_L57 0x4C0C5AE6: `mov	(SeqMsErsFieldApply_Table), d0`; ends at +16, where SeqMsErsFieldApply_entry_Lb 0x4C0C5A9A's loop stops (`cmp FE_SeqMsErsTrack_L4e_Table, a2`)
 	tab_u32	10551299, 10551300, 10551301, 10551302
 FE_SeqMsErsTrack_L4e_Table:	# 4 x u8, 1..255; read by FE_SeqMsErsTrack_L4e 0x4C0C5C48: `movbu (FE_SeqMsErsTrack_L4e_Table), d0`; FE_SeqMsErsTrack_L4e 0x4C0C5C48: `movbu (FE_SeqMsErsTrack_L4e_Table), d1` ...
 	tab_u8	1, 255, 255, 255
@@ -34154,7 +34154,7 @@ FE_SeqMsErsLstMeas_L4e_Table:	# 2 x u16, 1..65535; read by FE_SeqMsErsLstMeas_L4
 	tab_u16	1, 65535
 FE_SeqMsErsData_L4d_Table:	# 2 x s16, -1..0; read by FE_SeqMsErsData_L4d 0x4C0C5ED6: `movhu (FE_SeqMsErsData_L4d_Table), d0`; FE_SeqMsErsData_L4d 0x4C0C5ED6: `movhu (FE_SeqMsErsData_L4d_Table), d1` ...
 	tab_s16	0, -1
-func_4C0C5FC7_Table:	# 6 x u32, 10616835..10616857; read by func_4C0C5FC7_entry_Lb 0x4C0C5FD7: `mov	(a2), d0`; func_4C0C5FC7_entry_L68 0x4C0C6034: `mov	(func_4C0C5FC7_Table), d0` ...; ends at +24, where func_4C0C5FC7_entry_Lb 0x4C0C5FD7's loop stops (`cmp FE_SeqMsCpFTrack_L4e_Table, a2`)
+SeqMsCpFieldApply_Table:	# 6 x u32, 10616835..10616857; read by SeqMsCpFieldApply_entry_Lb 0x4C0C5FD7: `mov	(a2), d0`; SeqMsCpFieldApply_entry_L68 0x4C0C6034: `mov	(SeqMsCpFieldApply_Table), d0` ...; ends at +24, where SeqMsCpFieldApply_entry_Lb 0x4C0C5FD7's loop stops (`cmp FE_SeqMsCpFTrack_L4e_Table, a2`)
 	tab_u32	10616835, 10616836, 10616837, 10616855, 10616856, 10616857
 FE_SeqMsCpFTrack_L4e_Table:	# 4 x u8, 1..255; read by FE_SeqMsCpFTrack_L4e 0x4C0C627D: `movbu (FE_SeqMsCpFTrack_L4e_Table), d0`; FE_SeqMsCpFTrack_L4e 0x4C0C627D: `movbu (FE_SeqMsCpFTrack_L4e_Table), d1` ...
 	tab_u8	1, 255, 255, 255
@@ -34168,7 +34168,7 @@ FE_SeqMsCpTSrtMeas_L4e_Table:	# 2 x u16, 1..65535; read by FE_SeqMsCpTSrtMeas_L4
 	tab_u16	1, 65535
 FE_SeqMsCpTRep_L4e_Table:	# 2 x u16, 0..65535; read by FE_SeqMsCpTRep_L4e 0x4C0C66C8: `movhu (FE_SeqMsCpTRep_L4e_Table), d0`; FE_SeqMsCpTRep_L4e 0x4C0C66C8: `movhu (FE_SeqMsCpTRep_L4e_Table), d1` ...
 	tab_u16	0, 65535
-func_4C0C6789_Table:	# 6 x u32, 10747907..10747928; read by func_4C0C6789_entry_Lb 0x4C0C6799: `mov	(a2), d0`; func_4C0C6789_entry_L68 0x4C0C67F6: `mov	(func_4C0C6789_Table), d0` ...; ends at +24, where func_4C0C6789_entry_Lb 0x4C0C6799's loop stops (`cmp FE_SeqMsInsFTrack_L4e_Table, a2`)
+SeqMsInsFieldApply_Table:	# 6 x u32, 10747907..10747928; read by SeqMsInsFieldApply_entry_Lb 0x4C0C6799: `mov	(a2), d0`; SeqMsInsFieldApply_entry_L68 0x4C0C67F6: `mov	(SeqMsInsFieldApply_Table), d0` ...; ends at +24, where SeqMsInsFieldApply_entry_Lb 0x4C0C6799's loop stops (`cmp FE_SeqMsInsFTrack_L4e_Table, a2`)
 	tab_u32	10747907, 10747908, 10747909, 10747926, 10747927, 10747928
 FE_SeqMsInsFTrack_L4e_Table:	# 4 x u8, 1..255; read by FE_SeqMsInsFTrack_L4e 0x4C0C6A3F: `movbu (FE_SeqMsInsFTrack_L4e_Table), d0`; FE_SeqMsInsFTrack_L4e 0x4C0C6A3F: `movbu (FE_SeqMsInsFTrack_L4e_Table), d1` ...
 	tab_u8	1, 255, 255, 255
@@ -34182,7 +34182,7 @@ FE_SeqMsInsTSrtMeas_L4e_Table:	# 2 x u16, 1..65535; read by FE_SeqMsInsTSrtMeas_
 	tab_u16	1, 65535
 FE_SeqMsInsTRep_L4e_Table:	# 2 x u16, 0..65535; read by FE_SeqMsInsTRep_L4e 0x4C0C6E8A: `movhu (FE_SeqMsInsTRep_L4e_Table), d0`; FE_SeqMsInsTRep_L4e 0x4C0C6E8A: `movhu (FE_SeqMsInsTRep_L4e_Table), d1` ...
 	tab_u16	0, 65535
-func_4C0C6F4B_Table:	# 3 x u32, 10158085..10158098; read by func_4C0C6F4B_entry_Lb 0x4C0C6F5B: `mov	(a2), d0`; func_4C0C6F4B_entry_L5c 0x4C0C6FAC: `mov	(func_4C0C6F4B_Table), d0`
+SeqTrkMrgFieldApply_Table:	# 3 x u32, 10158085..10158098; read by SeqTrkMrgFieldApply_entry_Lb 0x4C0C6F5B: `mov	(a2), d0`; SeqTrkMrgFieldApply_entry_L5c 0x4C0C6FAC: `mov	(SeqTrkMrgFieldApply_Table), d0`
 	tab_u32	10158098, 10158085, 10158091
 FE_SeqTrkMrgTrack_L91_Table:	# 4 x u8, 1..255; read by FE_SeqTrkMrgTrack : `movbu	(d1, a0), d0`; FE_SeqTrkMrgTrack : `movbu	(d1, a0), d1`
 	tab_u8	1, 2, 3, 255
@@ -34197,7 +34197,7 @@ SeqTrAsGridCheck_entry_L4b_Table:	# 3 x u8, 0..255; read by SeqTrAsGridCheck_ent
 	tab_u8	0, 255, 255
 FE_SeqTrAsPSongSel_L4e_Table:	# 4 x u8, 1..255; read by FE_SeqTrAsPSongSel_L4e 0x4C0C8105: `movbu (FE_SeqTrAsPSongSel_L4e_Table), d1`; FE_SeqTrAsPSongSel_L4e 0x4C0C8105: `movbu (FE_SeqTrAsPSongSel_L4e_Table), d2` ...
 	tab_u8	1, 255, 255, 255
-func_4C0C8344_Table:	# 5 x u32, 11665416..11665433; read by func_4C0C8344_entry_Lb 0x4C0C8354: `mov	(a2), d0`; func_4C0C8344_entry_L67 0x4C0C83B0: `mov	(func_4C0C8344_Table), d0` ...; ends at +20, where func_4C0C8344_entry_Lb 0x4C0C8354's loop stops (`cmp FE_CmpMCopySPart_L4e_Table, a2`)
+CmpMCopyFieldApply_Table:	# 5 x u32, 11665416..11665433; read by CmpMCopyFieldApply_entry_Lb 0x4C0C8354: `mov	(a2), d0`; CmpMCopyFieldApply_entry_L67 0x4C0C83B0: `mov	(CmpMCopyFieldApply_Table), d0` ...; ends at +20, where CmpMCopyFieldApply_entry_Lb 0x4C0C8354's loop stops (`cmp FE_CmpMCopySPart_L4e_Table, a2`)
 	tab_u32	11665416, 11665417, 11665418, 11665432, 11665433
 FE_CmpMCopySPart_L4e_Table:	# 4 x u8, 1..255; read by FE_CmpMCopySPart_L4e 0x4C0C8763: `movbu (FE_CmpMCopySPart_L4e_Table), d0`; FE_CmpMCopySPart_L4e 0x4C0C8763: `movbu (FE_CmpMCopySPart_L4e_Table), d1` ...
 	tab_u8	1, 255, 255, 255
@@ -34209,7 +34209,7 @@ FE_CmpMCopyLstMeas_L4e_Table:	# 2 x u16, 1..65535; read by FE_CmpMCopyLstMeas_L4
 	tab_u16	1, 65535
 FE_CmpMCopySrtMeas_L4e_Table:	# 2 x u16, 1..65535; read by FE_CmpMCopySrtMeas_L4e 0x4C0C8AB1: `movhu (FE_CmpMCopySrtMeas_L4e_Table), d0`; FE_CmpMCopySrtMeas_L4e 0x4C0C8AB1: `movhu (FE_CmpMCopySrtMeas_L4e_Table), d1` ...
 	tab_u16	1, 65535
-func_4C0C8B9D_entry_Lb_Table:	# 3 x u32, 11665448..11665450; read by func_4C0C8B9D_entry_Lb 0x4C0C8BAD: `mov	(a2), d0`; func_4C0C8B9D_entry_L4f 0x4C0C8BF1: `mov	(func_4C0C8B9D_entry_Lb_Table), d0`; ends at +12, where func_4C0C8B9D_entry_Lb 0x4C0C8BAD's loop stops (`cmp FE_CmpMErsSPart_L4e_Table, a2`)
+CmpMErsFieldApply_entry_Lb_Table:	# 3 x u32, 11665448..11665450; read by CmpMErsFieldApply_entry_Lb 0x4C0C8BAD: `mov	(a2), d0`; CmpMErsFieldApply_entry_L4f 0x4C0C8BF1: `mov	(CmpMErsFieldApply_entry_Lb_Table), d0`; ends at +12, where CmpMErsFieldApply_entry_Lb 0x4C0C8BAD's loop stops (`cmp FE_CmpMErsSPart_L4e_Table, a2`)
 	tab_u32	11665448, 11665449, 11665450
 FE_CmpMErsSPart_L4e_Table:	# 4 x u8, 1..255; read by FE_CmpMErsSPart_L4e 0x4C0C8D59: `movbu (FE_CmpMErsSPart_L4e_Table), d0`; FE_CmpMErsSPart_L4e 0x4C0C8D59: `movbu (FE_CmpMErsSPart_L4e_Table), d1` ...
 	tab_u8	1, 255, 255, 255
@@ -34217,13 +34217,13 @@ FE_CmpMErsFstMeas_L4e_Table:	# 2 x u16, 1..65535; read by FE_CmpMErsFstMeas_L4e 
 	tab_u16	1, 65535
 FE_CmpMErsLstMeas_L4e_Table:	# 2 x u16, 1..65535; read by FE_CmpMErsLstMeas_L4e 0x4C0C8F00: `movhu (FE_CmpMErsLstMeas_L4e_Table), d0`; FE_CmpMErsLstMeas_L4e 0x4C0C8F00: `movhu (FE_CmpMErsLstMeas_L4e_Table), d1` ...
 	tab_u16	1, 65535
-func_4C0C8FC1_entry_Lb_Table:	# 2 x u32, 11665467..11665468; read by func_4C0C8FC1_entry_Lb 0x4C0C8FD1: `mov	(a2), d0`; func_4C0C8FC1_entry_L59 0x4C0C901F: `mov	(func_4C0C8FC1_entry_Lb_Table), d0` ...; ends at +8, where func_4C0C8FC1_entry_Lb 0x4C0C8FD1's loop stops (`cmp FE_CmpMDelFstMeas_L4e_Table, a2`)
+CmpMDelFieldApply_entry_Lb_Table:	# 2 x u32, 11665467..11665468; read by CmpMDelFieldApply_entry_Lb 0x4C0C8FD1: `mov	(a2), d0`; CmpMDelFieldApply_entry_L59 0x4C0C901F: `mov	(CmpMDelFieldApply_entry_Lb_Table), d0` ...; ends at +8, where CmpMDelFieldApply_entry_Lb 0x4C0C8FD1's loop stops (`cmp FE_CmpMDelFstMeas_L4e_Table, a2`)
 	tab_u32	11665467, 11665468
 FE_CmpMDelFstMeas_L4e_Table:	# 2 x u16, 1..65535; read by FE_CmpMDelFstMeas_L4e 0x4C0C9289: `movhu (FE_CmpMDelFstMeas_L4e_Table), d0`; FE_CmpMDelFstMeas_L4e 0x4C0C9289: `movhu (FE_CmpMDelFstMeas_L4e_Table), d1` ...
 	tab_u16	1, 65535
 FE_CmpMDelLstMeas_L4e_Table:	# 2 x u16, 1..65535; read by FE_CmpMDelLstMeas_L4e 0x4C0C935C: `movhu (FE_CmpMDelLstMeas_L4e_Table), d0`; FE_CmpMDelLstMeas_L4e 0x4C0C935C: `movhu (FE_CmpMDelLstMeas_L4e_Table), d1` ...
 	tab_u16	1, 65535
-func_4C0C9448_entry_Lb_Table:	# 2 x u32, 11665483..11665484; read by func_4C0C9448_entry_Lb 0x4C0C9458: `mov	(a2), d0`; func_4C0C9448_entry_L5b 0x4C0C94A8: `mov	(func_4C0C9448_entry_Lb_Table), d0`; ends at +8, where func_4C0C9448_entry_Lb 0x4C0C9458's loop stops (`cmp FE_CmpMInsFstMeas_L4e_Table, a2`)
+CmpMInsFieldApply_entry_Lb_Table:	# 2 x u32, 11665483..11665484; read by CmpMInsFieldApply_entry_Lb 0x4C0C9458: `mov	(a2), d0`; CmpMInsFieldApply_entry_L5b 0x4C0C94A8: `mov	(CmpMInsFieldApply_entry_Lb_Table), d0`; ends at +8, where CmpMInsFieldApply_entry_Lb 0x4C0C9458's loop stops (`cmp FE_CmpMInsFstMeas_L4e_Table, a2`)
 	tab_u32	11665483, 11665484
 FE_CmpMInsFstMeas_L4e_Table:	# 2 x u16, 1..65535; read by FE_CmpMInsFstMeas_L4e 0x4C0C960F: `movhu (FE_CmpMInsFstMeas_L4e_Table), d0`; FE_CmpMInsFstMeas_L4e 0x4C0C960F: `movhu (FE_CmpMInsFstMeas_L4e_Table), d1` ...
 	tab_u16	1, 65535
@@ -36524,7 +36524,7 @@ CusMemModeBoxProc_L11c_Table_2:	# 2 x u16, 0..65535; read by CusMemModeBoxProc_L
 func_4C1102E3_L55_Table:	# 4 x u8, 0..255; read by func_4C1102E3_L55 0x4C110338: `movbu d0, (func_4C1102E3_L55_Table)`; func_4C1102E3_L67 0x4C11034A: `movbu (func_4C1102E3_L55_Table), d0` ...
 	tab_u8	0, 255, 255, 255
 
-func_4C112476_L49_Var:	# u32, initial value of a RAM variable; read / written by func_4C112476_L49 0x4C1124BF: `mov (func_4C112476_L49_Var), d0`; func_4C112476_L49 0x4C1124BF: `mov d0, (func_4C112476_L49_Var)`
+FdcStrap3SeekTestLoop_L49_Var:	# u32, initial value of a RAM variable; read / written by FdcStrap3SeekTestLoop_L49 0x4C1124BF: `mov (FdcStrap3SeekTestLoop_L49_Var), d0`; FdcStrap3SeekTestLoop_L49 0x4C1124BF: `mov d0, (FdcStrap3SeekTestLoop_L49_Var)`
 	.long	0
 func_4C1126F7_entry_L6e_Var:	# u8, initial value of a RAM variable; read / written by func_4C1126F7_entry_L6e 0x4C112768: `movbu d0, (func_4C1126F7_entry_L6e_Var)`
 	.byte	0
@@ -36582,49 +36582,49 @@ func_4C11C7F8_Table:	# 4 x u8, 0..255; read by func_4C11C7F8 0x4C11C7F8: `movbu 
 	tab_u8	0, 255, 255, 255
 func_4C123C73_Table:	# 2 x u16, 0..65535; read by func_4C123C73 0x4C123C73: `movhu (func_4C123C73_Table), d2`; func_4C123C73 0x4C123C73: `movhu (func_4C123C73_Table), d3` ...
 	tab_u16	0, 65535
-func_4C132A89_Table:	# 4 x s8, -1..1; read by func_4C132A89 0x4C132A89: `movbu d0, (func_4C132A89_Table)`; func_4C132D75_L12a 0x4C132E9F: `movbu (func_4C132A89_Table), d0` ...
+FloppySectorRead_Table:	# 4 x s8, -1..1; read by FloppySectorRead 0x4C132A89: `movbu d0, (FloppySectorRead_Table)`; FdSectorsWriteLoop_L12a 0x4C132E9F: `movbu (FloppySectorRead_Table), d0` ...
 	tab_s8	1, -1, -1, -1
 
-func_4C132EDC_Var:	# u8, initial value of a RAM variable; read / written by func_4C132EDC 0x4C132EDC: `movbu d0, (func_4C132EDC_Var)`
+MediaChangeAck_Var:	# u8, initial value of a RAM variable; read / written by MediaChangeAck 0x4C132EDC: `movbu d0, (MediaChangeAck_Var)`
 	.byte	1
 
-func_4C132EC4_Table:	# 3 x u8, 1..255; read by func_4C132EC4 0x4C132EC4: `movbu d0, (func_4C132EC4_Table)`; func_4C132EDC 0x4C132EDC: `movbu (func_4C132EC4_Table), d0` ...
+MediaTypeCacheSet_Table:	# 3 x u8, 1..255; read by MediaTypeCacheSet 0x4C132EC4: `movbu d0, (MediaTypeCacheSet_Table)`; MediaChangeAck 0x4C132EDC: `movbu (MediaTypeCacheSet_Table), d0` ...
 	tab_u8	1, 255, 255
 
-func_4C132EC4_Var:	# u32, initial value of a RAM variable; read / written by func_4C132EC4 0x4C132EC4: `mov d0, (func_4C132EC4_Var)`; func_4C132EDC 0x4C132EDC: `mov d0, (func_4C132EC4_Var)` ...
+MediaTypeCacheSet_Var:	# u32, initial value of a RAM variable; read / written by MediaTypeCacheSet 0x4C132EC4: `mov d0, (MediaTypeCacheSet_Var)`; MediaChangeAck 0x4C132EDC: `mov d0, (MediaTypeCacheSet_Var)` ...
 	.long	1
-func_4C133D18_Var:	# u32, initial value of a RAM variable; read / written by func_4C133D18 0x4C133D18: `mov (func_4C133D18_Var), d0`; func_4C133F9E_entry_L42 0x4C133FE3: `mov d0, (func_4C133D18_Var)` ...
+FileStreamReaderTask_Var:	# u32, initial value of a RAM variable; read / written by FileStreamReaderTask 0x4C133D18: `mov (FileStreamReaderTask_Var), d0`; func_4C133F9E_entry_L42 0x4C133FE3: `mov d0, (FileStreamReaderTask_Var)` ...
 	.long	0
 
-func_4C133CCC_Table:	# 4 x u8, 0..255; read by func_4C133CCC 0x4C133CCC: `movbu (func_4C133CCC_Table), d0`; func_4C133EF1_entry_L90 0x4C133F86: `movbu (func_4C133CCC_Table), d0` ...
+func_4C133CCC_Table:	# 4 x u8, 0..255; read by func_4C133CCC 0x4C133CCC: `movbu (func_4C133CCC_Table), d0`; FileStreamClose_entry_L90 0x4C133F86: `movbu (func_4C133CCC_Table), d0` ...
 	tab_u8	0, 255, 255, 255
 
-func_4C13400E_L27_Var:	# u32, initial value of a RAM variable; read / written by func_4C13400E_L27 0x4C134035: `mov d0, (func_4C13400E_L27_Var)`; func_4C13400E_L63 0x4C134071: `mov (func_4C13400E_L27_Var), d0` ...
+StreamTestDataSmfStep_L27_Var:	# u32, initial value of a RAM variable; read / written by StreamTestDataSmfStep_L27 0x4C134035: `mov d0, (StreamTestDataSmfStep_L27_Var)`; StreamTestDataSmfStep_L63 0x4C134071: `mov (StreamTestDataSmfStep_L27_Var), d0` ...
 	.long	0
 
-func_4C13400E_Table:	# 2 x s16, -1..0; read by func_4C13400E 0x4C13400E: `movhu (func_4C13400E_Table), d0`; func_4C13400E_L27 0x4C134035: `movhu d0, (func_4C13400E_Table)` ...
+StreamTestDataSmfStep_Table:	# 2 x s16, -1..0; read by StreamTestDataSmfStep 0x4C13400E: `movhu (StreamTestDataSmfStep_Table), d0`; StreamTestDataSmfStep_L27 0x4C134035: `movhu d0, (StreamTestDataSmfStep_Table)` ...
 	tab_s16	0, -1
 func_4C1343C0_Table:	# 4 x s8, -1..0; read by func_4C1343C0 0x4C1343C0: `movbu (func_4C1343C0_Table), d0`; func_4C1343C0 0x4C1343C0: `movbu d0, (func_4C1343C0_Table)`
 	tab_s8	0, -1, -1, -1
-func_4C13442E_entry_L25_Var:	# 19 x u16, 0..0; read by func_4C13442E_entry_L25 0x4C134458: `movhu	d0, (func_4C13442E_entry_L25_Var)`; func_4C13442E_entry_L64 0x4C134497: `movhu	(a1), d0` ...
+func_4C13442E_entry_L25_Var:	# 19 x u16, 0..0; read by TechniChordUpdate_entry_L25 0x4C134458: `movhu	d0, (func_4C13442E_entry_L25_Var)`; TechniChordUpdate_entry_L64 0x4C134497: `movhu	(a1), d0` ...
 	tab_u16	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u16	0, 0, 0, 0, 0, 0, 0	# [12]
 
-func_4C13442E_entry_L25_Var_3:	# s8, initial value of a RAM variable; read / written by func_4C13442E_entry_L25 0x4C134458: `movbu d0, (a0)`; func_4C13442E_entry_Lb6 0x4C1344E9: `movbu d0, (a1)` ...
+TechniChordUpdate_entry_L25_Var_3:	# s8, initial value of a RAM variable; read / written by TechniChordUpdate_entry_L25 0x4C134458: `movbu d0, (a0)`; TechniChordUpdate_entry_Lb6 0x4C1344E9: `movbu d0, (a1)` ...
 	.byte	0
-func_4C13442E_entry_L25_Var_2:	# s8, initial value of a RAM variable; read / written by func_4C13442E_entry_L25 0x4C134458: `movbu d0, (1, a0)`; func_4C13442E_entry_Lb6 0x4C1344E9: `movbu d0, (1, a1)` ...
+TechniChordUpdate_entry_L25_Var:	# s8, initial value of a RAM variable; read / written by TechniChordUpdate_entry_L25 0x4C134458: `movbu d0, (1, a0)`; TechniChordUpdate_entry_Lb6 0x4C1344E9: `movbu d0, (1, a1)` ...
 	.byte	0
 
-func_4C13442E_entry_L64_Table:	# 20 x u16, 0..0; read by func_4C13442E_entry_L64 0x4C134497: `movhu	d0, (a0)`; func_4C13442E_entry_Lf5 0x4C134528: `movhu	d0, (a0)` ...
+TechniChordUpdate_entry_L64_Table:	# 20 x u16, 0..0; read by TechniChordUpdate_entry_L64 0x4C134497: `movhu	d0, (a0)`; TechniChordUpdate_entry_Lf5 0x4C134528: `movhu	d0, (a0)` ...
 	tab_u16	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u16	0, 0, 0, 0, 0, 0, 0, 0	# [12]
 
-func_4C13442E_entry_L25_Table_2:	# REC_func_4C134640_ArgA0 (8 bytes): the layout func_4C134640 0x4C134640 reads through its argument a0 (passed by func_4C13442E_entry_L12 0x4C134445 `call func_4C134640_entry, [d2,d3,a2,a3], 0x10`, +3 more calls)
-	REC_func_4C134640_ArgA0	x2="\x00\x00", x6="\x00\x00"
+TechniChordUpdate_entry_L25_Table_2:	# REC_TechniChordHeldKeyFind_ArgA0 (8 bytes): the layout TechniChordHeldKeyFind 0x4C134640 reads through its argument a0 (passed by TechniChordUpdate_entry_L12 0x4C134445 `call TechniChordHeldKeyFind_entry, [d2,d3,a2,a3], 0x10`, +3 more calls)
+	REC_TechniChordHeldKeyFind_ArgA0	x2="\x00\x00", x6="\x00\x00"
 	# then 15 x u16 up to the next label, which no instruction is seen to read (the table the field reads ran on into them)
 	tab_u16	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +8
 
-func_4C13442E_entry_L25_Var_4:	# 2 x u8, 0..0; read by func_4C13442E_entry : `movbu	(a0), d0`; func_4C13442E_entry : `movbu	(a1), d0`
+TechniChordUpdate_entry_L25_Var_4:	# 2 x u8, 0..0; read by TechniChordUpdate_entry : `movbu	(a0), d0`; TechniChordUpdate_entry : `movbu	(a1), d0`
 	tab_u8	0, 0
 
 func_4C13530B_Var:	# u32, initial value of a RAM variable; read / written by func_4C13530B 0x4C13530B: `mov (func_4C13530B_Var), d0`; func_4C13530B 0x4C13530B: `mov d0, (func_4C13530B_Var)` ...
@@ -37300,10 +37300,10 @@ CUR_STYLE_IDX:	# u16, initial value of a RAM variable; read / written by AcStyle
 AcStyleNameProc_L66_Var:	# u16, initial value of a RAM variable; read / written by AcStyleNameProc_L66 0x4C163F4F: `movhu (AcStyleNameProc_L66_Var), d0`; AcCustomListBoxProc_L32f 0x4C166D23: `movhu (AcStyleNameProc_L66_Var), d0` ...
 	.word	0
 
-func_4C1642F7_entry_Lf_Table:	# 2 x u16, 0..65535; read by func_4C1642F7_entry_Lf 0x4C164309: `movhu d0, (func_4C1642F7_entry_Lf_Table)`; func_4C1648A1_entry_L4f 0x4C1648F5: `movhu d0, (func_4C1642F7_entry_Lf_Table)` ...
+func_4C1642F7_entry_Lf_Table:	# 2 x u16, 0..65535; read by func_4C1642F7_entry_Lf 0x4C164309: `movhu d0, (func_4C1642F7_entry_Lf_Table)`; StyleSubCatStep_entry_L4f 0x4C1648F5: `movhu d0, (func_4C1642F7_entry_Lf_Table)` ...
 	tab_u16	0, 65535
 
-func_4C169C8B_entry_L68_Var:	# u32, initial value of a RAM variable; read / written by func_4C169C8B_entry_L68 0x4C169CF8: `mov (func_4C169C8B_entry_L68_Var), d0`; func_4C169C8B_entry_L68 0x4C169CF8: `mov d0, (func_4C169C8B_entry_L68_Var)`
+DpGetByte_entry_L68_Var:	# u32, initial value of a RAM variable; read / written by DpGetByte_entry_L68 0x4C169CF8: `mov (DpGetByte_entry_L68_Var), d0`; DpGetByte_entry_L68 0x4C169CF8: `mov d0, (DpGetByte_entry_L68_Var)`
 	.long	22
 func_4C168425_entry_L36_Var:	# u32, initial value of a RAM variable; read / written by func_4C168425_entry_L36 0x4C16845E: `mov d0, (func_4C168425_entry_L36_Var)`; func_4C169144 0x4C169144: `mov (func_4C168425_entry_L36_Var), d0` ...
 	.long	0
@@ -37314,12 +37314,12 @@ GetBeatSeq_Var:	# u16, initial value of a RAM variable; read / written by GetBea
 GetBeatSeq_Var_2:	# u16, initial value of a RAM variable; read / written by GetBeatSeq 0x4C067212: `movhu d0, (a3)`; func_4C169055_entry_La7 0x4C1690FF: `movhu (GetBeatSeq_Var_2), d1` ...
 	.word	0
 
-func_4C1695BB_entry_L210_Table:	# 4 x u8, 0..255; read by func_4C1695BB_entry_L210 0x4C1697CD: `movbu d0, (func_4C1695BB_entry_L210_Table)`; func_4C1695BB_entry_L223 0x4C1697E0: `movbu (func_4C1695BB_entry_L210_Table), d3` ...
+DpSmfRingFill_entry_L210_Table:	# 4 x u8, 0..255; read by DpSmfRingFill_entry_L210 0x4C1697CD: `movbu d0, (DpSmfRingFill_entry_L210_Table)`; DpSmfRingFill_entry_L223 0x4C1697E0: `movbu (DpSmfRingFill_entry_L210_Table), d3` ...
 	tab_u8	0, 255, 255, 255
 func_4C16B3B4_entry_L96_Table:	# 4 x u8, 0..255; read by func_4C16B3B4_entry_L96 0x4C16B44F: `movbu (func_4C16B3B4_entry_L96_Table), d0`; func_4C16B469 0x4C16B469: `movbu d0, (func_4C16B3B4_entry_L96_Table)`
 	tab_u8	0, 255, 255, 255
 
-func_4C16A73D_Var:	# u32, initial value of a RAM variable; read / written by func_4C16A73D 0x4C16A73D: `mov (func_4C16A73D_Var), d0`; func_4C16B469_entry_L44 0x4C16B4B0: `mov d0, (func_4C16A73D_Var)`
+DpSmf1ReaderTask_Var:	# u32, initial value of a RAM variable; read / written by DpSmf1ReaderTask 0x4C16A73D: `mov (DpSmf1ReaderTask_Var), d0`; func_4C16B469_entry_L44 0x4C16B4B0: `mov d0, (DpSmf1ReaderTask_Var)`
 	.long	0
 
 func_4C16B4DB_Table:	# 4 x s8, -1..0; read by func_4C16B4DB 0x4C16B4DB: `movbu (func_4C16B4DB_Table), d0`; func_4C16B4DB 0x4C16B4DB: `movbu d0, (func_4C16B4DB_Table)`
@@ -37567,11 +37567,11 @@ func_4C0064C6_entry_L7d_Table:	# 2 x s16, -1..9999; read by func_4C0064C6_entry_
 func_4C0064C6_entry_L7d_Table_2:	# 2 x s16, -1..255; read by func_4C0064C6_entry_L7d 0x4C006548: `movhu d0, (func_4C0064C6_entry_L7d_Table_2)`; AcMpVerBoxProc_L33 0x4C0145AA: `movhu (func_4C0064C6_entry_L7d_Table_2), d0`
 	tab_s16	255, -1
 
-func_4C01B47B_Table:	# 4 x REC_func_4C01B47B_Table (56 bytes each); read by func_4C0065B1_L56 0x4C006607 `movhu (6, a0), d0`; func_4C0066C1 0x4C0066C1 `movhu (6, a0), d0`; func_4C01465E_L26 0x4C014684 `movhu (6, a0), d0` (+893)
-	REC_func_4C01B47B_Table	key__=1, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x1800000, f32=0xFFFFFFFF, f36=0x1800000, index_=0x50012358, key___=-1, count=1, index__=0x50015F70
-	REC_func_4C01B47B_Table	key__=256, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x1800000, f32=0xFFFFFFFF, f36=0x1800000, index_=0x50012364, key___=-1, count=128, index__=0x50015F88
-	REC_func_4C01B47B_Table	key__=1024, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x1800000, f32=0xFFFFFFFF, f36=0x1800000, index_=0x50012F64, key___=-1, count=128, index__=0x50016B88
-	REC_func_4C01B47B_Table	key__=1, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x1800000, f32=0xFFFFFFFF, f36=0x1800000, index_=0x50015F64, key___=-1, count=1, index__=0x50017788
+DeleteEventForTask_Table:	# 4 x REC_DeleteEventForTask_Table (56 bytes each); read by ApTaskMain_L56 0x4C006607 `movhu (6, a0), d0`; func_4C0066C1 0x4C0066C1 `movhu (6, a0), d0`; DrawTaskMain_L26 0x4C014684 `movhu (6, a0), d0` (+893)
+	REC_DeleteEventForTask_Table	key__=1, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x1800000, f32=0xFFFFFFFF, f36=0x1800000, index_=0x50012358, key___=-1, count=1, index__=0x50015F70
+	REC_DeleteEventForTask_Table	key__=256, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x1800000, f32=0xFFFFFFFF, f36=0x1800000, index_=0x50012364, key___=-1, count=128, index__=0x50015F88
+	REC_DeleteEventForTask_Table	key__=1024, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x1800000, f32=0xFFFFFFFF, f36=0x1800000, index_=0x50012F64, key___=-1, count=128, index__=0x50016B88
+	REC_DeleteEventForTask_Table	key__=1, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x1800000, f32=0xFFFFFFFF, f36=0x1800000, index_=0x50015F64, key___=-1, count=1, index__=0x50017788
 
 names_50005794:
 	.long	Str_CHARA1
@@ -37625,14 +37625,14 @@ func_4C07B737_Table:	# 2 x u16, 1000..65535; read by func_4C07B737 0x4C07B737: `
 func_4C07B799_Table:	# 4 x u8, 0..255; read by KeybedFifoRead 0x4C07B799: `movbu (func_4C07B799_Table), d0`; KeybedFifoRead 0x4C07B799: `movbu d0, (func_4C07B799_Table)` ...
 	tab_u8	0, 255, 255, 255
 
-func_4C07C326_entry_L35_Records:	# 7 x REC_func_4C07C326_entry_L35_Records (8 bytes each); read by func_4C07C326_entry_L35 0x4C07C360 `mov (d0, a0), d0`; func_4C07C326_entry_L4d 0x4C07C378 `mov (4, a0), d1`
-	REC_func_4C07C326_entry_L35_Records	p0=func_4C07C326_entry_L35_Records_p0_1, p4=func_4C07C326_entry_L35_Records_p0_1
-	REC_func_4C07C326_entry_L35_Records	p0=func_4C07C326_entry_L35_Records_p0_6, p4=func_4C07C326_entry_L35_Records_p0_2
-	REC_func_4C07C326_entry_L35_Records	p0=func_4C07C326_entry_L35_Records_p0_7, p4=func_4C07C326_entry_L35_Records_p0_3
-	REC_func_4C07C326_entry_L35_Records	p0=func_4C07C326_entry_L35_Records_p0_8, p4=func_4C07C326_entry_L35_Records_p0_4
-	REC_func_4C07C326_entry_L35_Records	p0=func_4C07C326_entry_L35_Records_p0_9, p4=func_4C07C326_entry_L35_Records_p0_5
-	REC_func_4C07C326_entry_L35_Records	p0=func_4C07C326_entry_L35_Records_p0_10, p4=func_4C07C326_entry_L35_Records_p0_0
-	REC_func_4C07C326_entry_L35_Records	p0=func_4C07C326_entry_L35_Records_p0_11, p4=func_4C07C326_entry_L35_Records_p0_1
+TableToneKeyMap_entry_L35_Records:	# 7 x REC_TableToneKeyMap_entry_L35_Records (8 bytes each); read by TableToneKeyMap_entry_L35 0x4C07C360 `mov (d0, a0), d0`; TableToneKeyMap_entry_L4d 0x4C07C378 `mov (4, a0), d1`
+	REC_TableToneKeyMap_entry_L35_Records	p0=TableToneKeyMap_entry_L35_Records_p0_1, p4=TableToneKeyMap_entry_L35_Records_p0_1
+	REC_TableToneKeyMap_entry_L35_Records	p0=TableToneKeyMap_entry_L35_Records_p0_6, p4=TableToneKeyMap_entry_L35_Records_p0_2
+	REC_TableToneKeyMap_entry_L35_Records	p0=TableToneKeyMap_entry_L35_Records_p0_7, p4=TableToneKeyMap_entry_L35_Records_p0_3
+	REC_TableToneKeyMap_entry_L35_Records	p0=TableToneKeyMap_entry_L35_Records_p0_8, p4=TableToneKeyMap_entry_L35_Records_p0_4
+	REC_TableToneKeyMap_entry_L35_Records	p0=TableToneKeyMap_entry_L35_Records_p0_9, p4=TableToneKeyMap_entry_L35_Records_p0_5
+	REC_TableToneKeyMap_entry_L35_Records	p0=TableToneKeyMap_entry_L35_Records_p0_10, p4=TableToneKeyMap_entry_L35_Records_p0_0
+	REC_TableToneKeyMap_entry_L35_Records	p0=TableToneKeyMap_entry_L35_Records_p0_11, p4=TableToneKeyMap_entry_L35_Records_p0_1
 data_500058E8:
 	# 208 bytes the code takes the address of: func_4C09E60A_entry_L75 0x4C09E684 `mov data_500058E8, d2` (+0, as a base); func_4C09E60A_entry_L156 0x4C09E765 `mov data_500058E8, d2` (+0, as a base); func_4C09E60A_entry_L33c 0x4C09E94B `mov data_500058E8, d2` (+0, as a base) (+7 more); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	3, 0, 4, 7, 0, 4, 0, 4, 7, 10, 4, 0, 4, 7, 11, 3	# +0
@@ -37755,7 +37755,7 @@ BoardTestFunc_L63_Var:	# u32, initial value of a RAM variable; read / written by
 func_4C112682_entry_L1d_Table:	# 4 x s8, -1..0; read by func_4C112682_entry_L1d 0x4C1126A2: `movbu d0, (func_4C112682_entry_L1d_Table)`; func_4C112682_entry_L24 0x4C1126A9: `movbu (func_4C112682_entry_L1d_Table), d0` ...
 	tab_s8	0, -1, -1, -1
 
-func_4C112682_Var:	# u32, initial value of a RAM variable; read / written by func_4C112682 0x4C112682: `mov (func_4C112682_Var), d1`; func_4C1126BA 0x4C1126BA: `mov d0, (func_4C112682_Var)`
+func_4C112682_Var:	# u32, initial value of a RAM variable; read / written by func_4C112682 0x4C112682: `mov (func_4C112682_Var), d1`; FdcStrap3IndexIsr 0x4C1126BA: `mov d0, (func_4C112682_Var)`
 	.long	0
 
 func_4C123C73_Records:	# 65 x REC_func_4C123C73_Records (4 bytes each); read by func_4C123C73 0x4C123C73 `movbu d0, (2, a0)`; func_4C123C73 0x4C123C73 `movbu d0, (3, a2)`; func_4C123C73 0x4C123C73 `movhu d0, (d1, a2)`
@@ -37824,9 +37824,9 @@ func_4C123C73_Records:	# 65 x REC_func_4C123C73_Records (4 bytes each); read by 
 	REC_func_4C123C73_Records	f0=11637, f2=19, f3=76
 	REC_func_4C123C73_Records	f0=11940, f2=19, f3=76
 	REC_func_4C123C73_Records	f0=11946, f2=19, f3=76	# [64]
-func_4C130418_entry_Ld1_Records:	# 2 x REC_func_4C130418_entry_Ld1_Records (40 bytes each); read by func_4C130418_entry_Ld1 0x4C1304EE `mov (func_4C130418_entry_Ld1_Records+40), d0`; func_4C130418_entry_L103 0x4C130520 `mov (a2), a1`; func_4C130418_entry_L103 0x4C130520 `mov (func_4C130418_entry_Ld1_Records+40), d0` (+13)
-	REC_func_4C130418_entry_Ld1_Records	count=3841, x5="\x00\x00\x00", p20=func_4C123C73_Records+228, p24=func_4C123C73_Records+188, text=Str_A_27, x32=",[\x00P\x00\x00\x00\x00"
-	REC_func_4C130418_entry_Ld1_Records	count=1, x5="\xFF\xFF\xFF", x32="\xC8\xDD\x05P\x00\x00\x00\x00"
+VfsFileOpen_entry_Ld1_Records:	# 2 x REC_VfsFileOpen_entry_Ld1_Records (40 bytes each); read by VfsFileOpen_entry_Ld1 0x4C1304EE `mov (VfsFileOpen_entry_Ld1_Records+40), d0`; VfsFileOpen_entry_L103 0x4C130520 `mov (VfsFileOpen_entry_Ld1_Records+40), d0`; VfsFileOpen_entry_L103 0x4C130520 `mov (a2), a1` (+13)
+	REC_VfsFileOpen_entry_Ld1_Records	count=3841, x5="\x00\x00\x00", p20=func_4C123C73_Records+228, p24=func_4C123C73_Records+188, text=Str_A_27, x32=",[\x00P\x00\x00\x00\x00"
+	REC_VfsFileOpen_entry_Ld1_Records	count=1, x5="\xFF\xFF\xFF", x32="\xC8\xDD\x05P\x00\x00\x00\x00"
 # census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6500_program.rom", 0x37D168, 0x37D16C
 
@@ -38468,7 +38468,7 @@ func_4C16A1B7_entry_L20_Table:	# 254 x u8, 0..0; read by func_4C16A1B7_entry_L20
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [224]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [240]
 
-func_4C168469_entry_L6d_Var:	# s16, initial value of a RAM variable; read / written by func_4C168469_entry_L6d 0x4C1684D9: `movhu d0, (func_4C168469_entry_L6d_Var)`; func_4C1695BB_entry_L36 0x4C1695F3: `movhu (func_4C168469_entry_L6d_Var), d0` ...
+func_4C168469_entry_L6d_Var:	# s16, initial value of a RAM variable; read / written by func_4C168469_entry_L6d 0x4C1684D9: `movhu d0, (func_4C168469_entry_L6d_Var)`; DpSmfRingFill_entry_L36 0x4C1695F3: `movhu (func_4C168469_entry_L6d_Var), d0` ...
 	.word	0
 
 func_4C16A08F_entry_L1e_Table:	# 256 x u8, 0..0; read by func_4C16A08F_entry_L1e 0x4C16A0B2: `movbu (a2), d0`
@@ -38489,13 +38489,13 @@ func_4C16A08F_entry_L1e_Table:	# 256 x u8, 0..0; read by func_4C16A08F_entry_L1e
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [224]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [240]
 
-func_4C168469_entry_L6d_Var_2:	# s16, initial value of a RAM variable; read / written by func_4C168469_entry_L6d 0x4C1684D9: `movhu d0, (func_4C168469_entry_L6d_Var_2)`; func_4C1695BB 0x4C1695BB: `movhu (func_4C168469_entry_L6d_Var_2), d0` ...
+func_4C168469_entry_L6d_Var_2:	# s16, initial value of a RAM variable; read / written by func_4C168469_entry_L6d 0x4C1684D9: `movhu d0, (func_4C168469_entry_L6d_Var_2)`; DpSmfRingFill 0x4C1695BB: `movhu (func_4C168469_entry_L6d_Var_2), d0` ...
 	.word	0
 func_4C1684F7_entry_L61_Var:	# u32, initial value of a RAM variable; read / written by func_4C1684F7_entry_L61 0x4C16855D: `mov d0, (func_4C1684F7_entry_L61_Var)`; func_4C169947_entry_La 0x4C169956: `mov (func_4C1684F7_entry_L61_Var), d0` ...
 	.long	0
 func_4C1684F7_entry_L61_Var_2:	# u16, initial value of a RAM variable; read / written by func_4C1684F7_entry_L61 0x4C16855D: `movhu d0, (func_4C1684F7_entry_L61_Var_2)`; func_4C169947_entry_L18 0x4C169964: `movhu (func_4C1684F7_entry_L61_Var_2), d0` ...
 	.word	0
-func_4C169947_entry_L10d_Var:	# u8, initial value of a RAM variable; read / written by func_4C16934C 0x4C16934C: `movbu (a2), d0`; func_4C16934C_entry_L30 0x4C169381: `movbu (a2), d0` ...
+func_4C169947_entry_L10d_Var:	# u8, initial value of a RAM variable; read / written by DpMidiMsgOutUnmuted 0x4C16934C: `movbu (a2), d0`; DpMidiMsgOutUnmuted_entry_L30 0x4C169381: `movbu (a2), d0` ...
 	.byte	0
 func_4C169947_entry_L167_Var:	# u8, initial value of a RAM variable; read / written by func_4C169947_entry_L167 0x4C169AB3: `movbu (func_4C169947_entry_L167_Var), d0`
 	.byte	0
@@ -38503,7 +38503,7 @@ func_4C169947_entry_L167_Var:	# u8, initial value of a RAM variable; read / writ
 func_4C169947_entry_L10d_Table:	# 8 x u8, 0..0; read by func_4C169947_entry_L10d 0x4C169A59: `movbu (func_4C169947_entry_L10d_Table), d0`; func_4C169947_entry_L10d 0x4C169A59: `movbu d0, (func_4C169947_entry_L10d_Table)` ...
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0
 
-func_4C16A73D_Var_2:	# u32, initial value of a RAM variable; read / written by func_4C16A73D 0x4C16A73D: `mov (func_4C16A73D_Var_2), a0`; func_4C16B469 0x4C16B469: `mov d0, (func_4C16A73D_Var_2)` ...
+DpSmf1ReaderTask_Var_2:	# u32, initial value of a RAM variable; read / written by DpSmf1ReaderTask 0x4C16A73D: `mov (DpSmf1ReaderTask_Var_2), a0`; func_4C16B469 0x4C16B469: `mov d0, (DpSmf1ReaderTask_Var_2)` ...
 	.long	0x500ca314
 func_4C1727CA_entry_L61_Var:	# u32, initial value of a RAM variable; read / written by func_4C1727CA_entry_L61 0x4C172830: `mov d0, (func_4C1727CA_entry_L61_Var)`; func_4C1727CA_entry_Ld1 0x4C1728A0: `mov d0, (func_4C1727CA_entry_L61_Var)` ...
 	.long	0x97800000
