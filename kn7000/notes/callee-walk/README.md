@@ -77,7 +77,7 @@ KN2400, HD-SX3); the docstring of `data_readers.py` ("CALLEE") has the rules:
 
 Fields are offset-named (`f12`, `p8`, `x4`) except where `tools/data_struct_names.py` knows their use:
 `cre_tsk_ArgA0` is micro-ITRON's `T_CTSK` {exinf, tskatr, task, itskpri, stksz} (kn7000.sym's note on
-cre_tsk 0x4C03D0C8; the reads are func_4C03D154's, which cre_tsk hands the block to).
+cre_tsk 0x4C03D0C8; the reads are its body cre_tsk_Impl's, which cre_tsk hands the block to).
 
 ## Results
 
@@ -177,7 +177,7 @@ an address the code loads.
 
 Evidence of the conventions above: DrawString_entry 0x48425398 (homes at +8 / +12, string at (0x40, sp) with a
 0x30 frame), SetApTimer 0x48429C95 (fifth argument at (0x4c, sp), frame 0x34, stored by TestDiskFunc 0x484A0A32 at
-(0x18, sp)).  Examples of callee records: `T_CTSK` (cre_tsk 0x4C03D0C8 / func_4C03D154), `REC_func_4C03C7EF_ArgA0`
+(0x18, sp)).  Examples of callee records: `T_CTSK` (cre_tsk 0x4C03D0C8 / cre_tsk_Impl), `REC_cre_flg_ArgA0`
 (12 bytes, 10 blocks and one 8-byte variant), `REC_func_48401F32_ArgA0` (28 bytes, with one record between two passed ones inferred),
 `REC_func_4844416A_ArgA0` (its reads at +3..+5 after an `add 2, a0`, the block's first three bytes unread).
 

@@ -6242,8 +6242,8 @@
 0x5018CE25	0x4C03CD7F	set_flg	set_flg	same name
 0x5018D09F	0x4C03CFBA	sig_sem	sig_sem	same name
 0x5018D1AD	0x4C03D0C8	cre_tsk	cre_tsk	same name
-0x5018D2FE	0x4C03D219	LibMsgSend	LibMsgSend	carried
-0x5018D452	0x4C03D36D	LibMsgReceive	LibMsgReceive	carried
+0x5018D2FE	0x4C03D219	snd_msg	snd_msg	carried
+0x5018D452	0x4C03D36D	rcv_msg	rcv_msg	carried
 0x5018D563	0x4C03D47E	-	-	call sites, A unnamed
 0x5018D686	0x4C03D5A1	exd_tsk	exd_tsk	same name
 0x5018D7A1	0x4C03D6BC	unl_cpu	unl_cpu	same name

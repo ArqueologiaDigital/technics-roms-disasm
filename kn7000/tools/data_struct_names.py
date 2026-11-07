@@ -37,7 +37,7 @@ NAMES = {
     "StyleGenreTable_p4": ("GenreStyle", {0: "name", 4: "setups"}),
     # (lane callee-walk) what callers hand cre_tsk in a0 (the kernel's micro-ITRON cre_tsk 0x4C03D0C8;
     # kn7000.sym: a0 = &T_CTSK {exinf, tskatr, task, itskpri (16-bit) at +0x0C, stksz at +0x10});
-    # the reads are func_4C03D154's, which cre_tsk hands it to: +0 u32, +8 the entry, +0xC u16, +0x10 u32
+    # the reads are cre_tsk_Impl's (its body), which cre_tsk hands it to: +0 u32, +8 the entry, +0xC u16, +0x10 u32
     "cre_tsk_ArgA0": ("T_CTSK", {0: "exinf", 4: "tskatr", 8: "task", 12: "itskpri", 16: "stksz"}),
 
     "TtMessage_Table": ("MessageBoxDef", {

@@ -23,3 +23,48 @@
 0x48585C05  PlugInProbeCallSlot08_entry
 0x48585C27  PlugInCallSlot10        ; if PlugInPresent: call header slot *(0x483E8010) with d0/d1 passed through, else return -1; reached via the pointer at 0x48732EA0
 0x48585C2A  PlugInCallSlot10_entry
+; ---- the uITRON 3.0 kernel services, placed from 942's own code (kn7000/notes/uitron3-function-codes/README.md):
+;      the Makefile ports kn7000_manual.sym with --authority on this file, because the offset map aligns
+;      941's get_blk / wai_flg / sus_tsk with the services 942 inserted before them (del_mbx, del_sem, ref_sem) ----
+0x4C03D79C  rcv_msg_Impl            ; rcv_msg's body, behind the wrapper rcv_msg; KernelErrorHook d0 = -61 (H'ffc3, rcv_msg), d1 = E_CTX (uITRON 3.0 sect. 6.3; notes/uitron3-function-codes)
+0x4C03D648  snd_msg_Impl            ; snd_msg's body, behind the wrapper snd_msg; program 942's exported snd_msg_X calls the wrapper
+0x4C03D4F7  cre_tsk_Impl            ; cre_tsk's body, behind the wrapper cre_tsk; KernelErrorHook d0 = -17 (H'ffef, cre_tsk), d1 = the error its core returns (uITRON 3.0 sect. 6.3; notes/uitron3-function-codes)
+0x4C03CC3A  del_flg_Impl            ; del_flg's body, behind the wrapper del_flg; program 942's export table names the wrapper
+0x4C03C556  del_mbx_Impl            ; del_mbx's body, behind the wrapper del_mbx; program 942's export table names the wrapper
+0x4C03C7CD  del_sem_Impl            ; del_sem's body, behind the wrapper del_sem; program 942's export table names the wrapper
+0x4C03D9D0  exd_tsk_Impl            ; exd_tsk's body, behind the wrapper exd_tsk; KernelErrorHook d0 = -22 (H'ffea, exd_tsk), d1 = E_OBJ (uITRON 3.0 sect. 6.3; notes/uitron3-function-codes)
+0x4C03DC9F  ext_tsk_Impl            ; ext_tsk's body, behind the wrapper ext_tsk; KernelErrorHook d0 = -21 (H'ffeb, ext_tsk), d1 = E_OBJ (uITRON 3.0 sect. 6.3; notes/uitron3-function-codes)
+0x4C03B6D6  slp_tsk                 ; uITRON slp_tsk: the service-call wrapper (context save, kernel stack, call slp_tsk_Impl); KernelErrorHook d0 = -38 (H'ffda, slp_tsk), d1 = E_CTX (uITRON 3.0 sect. 6.3; notes/uitron3-function-codes)
+0x4C03B77F  slp_tsk_Impl            ; slp_tsk's body, behind the wrapper slp_tsk; KernelErrorHook d0 = -38 (H'ffda, slp_tsk), d1 = E_CTX (uITRON 3.0 sect. 6.3; notes/uitron3-function-codes)
+0x4C03BF96  cre_mbx                 ; uITRON cre_mbx: the service-call wrapper (context save, kernel stack, call cre_mbx_Impl); program 942's exported cre_mbx_X calls the wrapper
+0x4C03C022  cre_mbx_Impl            ; cre_mbx's body, behind the wrapper cre_mbx; program 942's exported cre_mbx_X calls the wrapper
+0x4C03C071  cre_sem                 ; uITRON cre_sem: the service-call wrapper (context save, kernel stack, call cre_sem_Impl); program 942's exported cre_sem_X calls the wrapper
+0x4C03C0FD  cre_sem_Impl            ; cre_sem's body, behind the wrapper cre_sem; program 942's exported cre_sem_X calls the wrapper
+0x4C03C13E  chg_pri                 ; uITRON chg_pri: the service-call wrapper (context save, kernel stack, call chg_pri_Impl); KernelErrorHook d0 = -27 (H'ffe5, chg_pri), d1 = E_ID / E_CTX (uITRON 3.0 sect. 6.3; notes/uitron3-function-codes)
+0x4C03C1CA  chg_pri_Impl            ; chg_pri's body, behind the wrapper chg_pri; KernelErrorHook d0 = -27 (H'ffe5, chg_pri), d1 = E_ID / E_CTX (uITRON 3.0 sect. 6.3; notes/uitron3-function-codes)
+0x4C03C269  rel_blk                 ; uITRON rel_blk: the service-call wrapper (context save, kernel stack, call rel_blk_Impl); KernelErrorHook d0 = -143 (H'ff71, rel_blk), d1 = E_PAR / E_OBJ (uITRON 3.0 sect. 6.3; notes/uitron3-function-codes)
+0x4C03C2F5  rel_blk_Impl            ; rel_blk's body, behind the wrapper rel_blk; KernelErrorHook d0 = -143 (H'ff71, rel_blk), d1 = E_PAR / E_OBJ (uITRON 3.0 sect. 6.3; notes/uitron3-function-codes)
+0x4C03C602  get_blk                 ; uITRON get_blk: the service-call wrapper (context save, kernel stack, call get_blk_Impl); KernelErrorHook d0 = -141 (H'ff73, get_blk), d1 = E_OBJ / E_TMOUT (uITRON 3.0 sect. 6.3; notes/uitron3-function-codes)
+0x4C03C68E  get_blk_Impl            ; get_blk's body, behind the wrapper get_blk; KernelErrorHook d0 = -141 (H'ff73, get_blk), d1 = E_OBJ / E_TMOUT (uITRON 3.0 sect. 6.3; notes/uitron3-function-codes)
+0x4C03C804  wai_flg                 ; uITRON wai_flg: the service-call wrapper (context save, kernel stack, call wai_flg_Impl); KernelErrorHook d0 = -46 (H'ffd2, wai_flg), d1 = E_CTX (uITRON 3.0 sect. 6.3; notes/uitron3-function-codes)
+0x4C03C894  wai_flg_Impl            ; wai_flg's body, behind the wrapper wai_flg; KernelErrorHook d0 = -46 (H'ffd2, wai_flg), d1 = E_CTX (uITRON 3.0 sect. 6.3; notes/uitron3-function-codes)
+0x4C03CA44  cre_flg                 ; uITRON cre_flg: the service-call wrapper (context save, kernel stack, call cre_flg_Impl); program 942's exported cre_flg_X calls the wrapper
+0x4C03CAD0  cre_flg_Impl            ; cre_flg's body, behind the wrapper cre_flg; program 942's exported cre_flg_X calls the wrapper
+0x4C03CD70  prcv_msg                ; uITRON prcv_msg: the service-call wrapper (context save, kernel stack, call prcv_msg_Impl); KernelErrorHook d0 = -61 (H'ffc3, rcv_msg's code: the polling variant), d1 = the poll's result (uITRON 3.0 sect. 6.3; notes/uitron3-function-codes)
+0x4C03CDFC  prcv_msg_Impl           ; prcv_msg's body, behind the wrapper prcv_msg; KernelErrorHook d0 = -61 (H'ffc3, rcv_msg's code: the polling variant), d1 = the poll's result (uITRON 3.0 sect. 6.3; notes/uitron3-function-codes)
+0x4C03CE69  cre_mpl                 ; uITRON cre_mpl: the service-call wrapper (context save, kernel stack, call cre_mpl_Impl); KernelErrorHook d0 = -137 (H'ff77, cre_mpl), d1 = E_NOMEM (uITRON 3.0 sect. 6.3; notes/uitron3-function-codes)
+0x4C03CEF5  cre_mpl_Impl            ; cre_mpl's body, behind the wrapper cre_mpl; KernelErrorHook d0 = -137 (H'ff77, cre_mpl), d1 = E_NOMEM (uITRON 3.0 sect. 6.3; notes/uitron3-function-codes)
+0x4C03D821  wup_tsk                 ; uITRON wup_tsk: the service-call wrapper (context save, kernel stack, call wup_tsk_Impl); KernelErrorHook d0 = -39 (H'ffd9, wup_tsk), d1 = E_QOVR (uITRON 3.0 sect. 6.3; notes/uitron3-function-codes)
+0x4C03D8AD  wup_tsk_Impl            ; wup_tsk's body, behind the wrapper wup_tsk; KernelErrorHook d0 = -39 (H'ffd9, wup_tsk), d1 = E_QOVR (uITRON 3.0 sect. 6.3; notes/uitron3-function-codes)
+0x4C03CCFD  preq_sem_Impl           ; preq_sem's body, behind the wrapper preq_sem; KernelErrorHook d0 = -53 (H'ffcb, wai_sem's code: the polling variant), d1 = the poll's result (uITRON 3.0 sect. 6.3; notes/uitron3-function-codes)
+0x4C03DE1C  rot_rdq_Impl            ; rot_rdq's body, behind the wrapper rot_rdq; KernelErrorHook d0 = -28 (H'ffe4, rot_rdq), d1 = E_CTX (uITRON 3.0 sect. 6.3; notes/uitron3-function-codes)
+0x4C03D123  set_flg_Impl            ; set_flg's body, behind the wrapper set_flg; program 942's export table names the wrapper
+0x4C03D3E9  sig_sem_Impl            ; sig_sem's body, behind the wrapper sig_sem; program 942's export table names the wrapper
+0x4C03DD5F  sta_tsk_Impl            ; sta_tsk's body, behind the wrapper sta_tsk; program 942's export table names the wrapper
+0x4C03DAB0  unl_cpu_Impl            ; unl_cpu's body, behind the wrapper unl_cpu; KernelErrorHook d0 = -7 (H'fff9, unl_cpu), d1 = E_CTX (uITRON 3.0 sect. 6.3; notes/uitron3-function-codes)
+0x4C03D252  wai_sem_Impl            ; wai_sem's body, behind the wrapper wai_sem; KernelErrorHook d0 = -53 (H'ffcb, wai_sem), d1 = E_CTX (uITRON 3.0 sect. 6.3; notes/uitron3-function-codes)
+0x4C03DAFC  ena_dsp                 ; uITRON ena_dsp, called directly (no wrapper); KernelErrorHook d0 = -29 (H'ffe3, ena_dsp), d1 = E_CTX (uITRON 3.0 sect. 6.3; notes/uitron3-function-codes)
+0x4C03DEC4  ref_sem                 ; uITRON ref_sem, called directly (no wrapper); program 942's exported ref_sem_X calls it
+0x4C03DF28  sus_tsk                 ; uITRON sus_tsk, called directly (no wrapper); KernelErrorHook2 d0 = -33 (H'ffdf, sus_tsk), d1 = E_OBJ / E_QOVR (uITRON 3.0 sect. 6.3; notes/uitron3-function-codes)
+0x4C03DB4A  rsm_tsk                 ; uITRON rsm_tsk [INFERENCE: no function code, no name of the firmware's own]: the service-call wrapper of rsm_tsk_Impl, the same code as 941's rsm_tsk (0x4C03D7E2; see kn7000_manual.sym)
+0x4C03DBD6  rsm_tsk_Impl            ; rsm_tsk's body, behind the wrapper rsm_tsk [INFERENCE]
