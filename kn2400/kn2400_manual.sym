@@ -239,3 +239,70 @@
 0x5018DB81  sus_tsk                 ; uITRON sus_tsk, called directly (no wrapper); KernelErrorHook2 d0 = -33 (H'ffdf, sus_tsk), d1 = E_OBJ / E_QOVR (uITRON 3.0 sect. 6.3; ../kn7000/notes/uitron3-function-codes)
 0x5018D8C7  rsm_tsk                 ; uITRON rsm_tsk [INFERENCE: no function code, no name of the firmware's own]: the service-call wrapper of rsm_tsk_Impl, the same code as the KN7000 941's rsm_tsk (0x4C03D7E2): its body undoes sus_tsk (the TCB +0x12 suspend count down by one; at zero the task made ready or its suspend bit 2 cleared)
 0x5018D953  rsm_tsk_Impl            ; rsm_tsk's body, behind the wrapper rsm_tsk [INFERENCE]
+;
+; ---- lane open14/sibling-names3 (2026-11-07): sibling-only code named by hand (the KN6000's rows carried by
+;      ../kn7000/notes/sibling-names3-probes/port_hand_names.py, file bodies by file_type_bodies.py, trampoline
+;      bodies by wrapper_bodies.py); evidence classes: ../kn7000/notes/sibling-names3/README.md.
+0x486D0DF2  StrCopy                 ; same-body: = KN6000 0x4C14C71E (kn6000_manual.sym, body): the same masked body, and the four helpers lie in the KN6000's order (StrCopy, StrCopyPad, StrAppend ... FileNameWithExt); too short for a unique run
+0x486D0E0C  StrCopyPad              ; same-body: = KN6000 0x4C14C738 (kn6000_manual.sym, body), as StrCopy
+0x486D0E3E  StrAppend               ; same-body: = KN6000 0x4C14C76A (kn6000_manual.sym, body), as StrCopy
+0x486D0F12  FileNameWithExt         ; same-body: = KN6000 0x4C14C83E (kn6000_manual.sym, body): StrCopy, StrAppend("."), StrAppend(FileTypeExtTable[d0]); 38 callers
+0x484C6C90  FileTypeExtTable        ; data: the 14 pointers FileNameWithExt indexes (`mov func_486D0F12_Table, a0`): "LSW", "PMT", "SQT", "CMP", "TM ", "MSP", "EFC", "MD ", "FAV", "HMP", "AST", "SQF", "SEQ", "ACT" (Text_LSW); the KN6000's has the first 13
+0x4862EAAB  FsRead                  ; same-body: = KN6000 0x4C1302B8 (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x4862EAF4  FsWrite                 ; same-body: = KN6000 0x4C130301 (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x4862E5FE  FsSeek                  ; same-body: = KN6000 0x4C12FE0B (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x4862E681  FsTell                  ; same-body: = KN6000 0x4C12FE8E (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x4862EB3D  FsGetc                  ; same-body: = KN6000 0x4C13034A (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x4862EBD4  FsPutc                  ; same-body: = KN6000 0x4C1303E1 (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x4862E506  FsRemove                ; same-body: = KN6000 0x4C12FD13 (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x48637918  inflateInit_            ; same-body: = KN6000 0x4C137D8D (kn6000_manual.sym, libc): the same masked body in the same place of the routine order
+0x486D3F49  ZFileDeflateBegin       ; same-body: = KN6000 0x4C14F606 (kn6000_manual.sym, callee): the same masked body in the same place of the routine order
+0x486D3FDC  ZFileInflateBegin       ; same-body: = KN6000 0x4C14F699 (kn6000_manual.sym, callee): the same masked body in the same place of the routine order
+0x485F942F  InitDrawTask_Impl       ; same-body: = KN6000 0x4C0145A3 (kn6000_manual.sym, caller): the same masked body in the same place of the routine order
+0x48618104  ScratchPosReset         ; same-body: = KN6000 0x4C116230 (kn6000_manual.sym, ram): the same masked body in the same place of the routine order
+0x4861810E  ScratchReadByte         ; same-body: = KN6000 0x4C11623A (kn6000_manual.sym, ram): the same masked body in the same place of the routine order
+0x4861811F  ScratchWriteByte        ; same-body: = KN6000 0x4C11624B (kn6000_manual.sym, ram): the same masked body in the same place of the routine order
+0x4861815B  ScratchPosNext          ; same-body: = KN6000 0x4C11627C (kn6000_manual.sym, ram): the same masked body in the same place of the routine order
+0x48618179  ScratchPos              ; same-body: = KN6000 0x4C11629A (kn6000_manual.sym, ram): the same masked body in the same place of the routine order
+0x48618182  ScratchPosSet           ; same-body: = KN6000 0x4C1162A3 (kn6000_manual.sym, ram): the same masked body in the same place of the routine order
+0x48618199  ScratchPosSkip          ; same-body: = KN6000 0x4C1162BA (kn6000_manual.sym, ram): the same masked body in the same place of the routine order
+0x48618300  StoreU16LE              ; same-body: = KN6000 0x4C116421 (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x486E88EF  SmfReadU32BE            ; same-body: = KN6000 0x4C120F14 (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x486E83EB  SmfReadHeaderChunk      ; same-body: = KN6000 0x4C1209F3 (kn6000_manual.sym, string): the same masked body in the same place of the routine order
+0x486E891C  SmfReadTrackChunkHeader ; same-body: = KN6000 0x4C120F41 (kn6000_manual.sym, string): the same masked body in the same place of the routine order
+0x486E87FF  SmfReadTracks           ; same-body: = KN6000 0x4C120E28 (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x486E81EE  LoadSmf_Read            ; same-body: = KN6000 0x4C1207F6 (kn6000_manual.sym, caller): the same masked body in the same place of the routine order
+0x486E81AB  LoadSmf_End             ; same-body: = KN6000 0x4C1207B3 (kn6000_manual.sym, caller): the same masked body in the same place of the routine order
+0x486EACB1  SmfWriteBytes           ; same-body: = KN6000 0x4C1230C8 (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x500830CC  FsErrno                 ; same-body: = KN6000 0x50200000 (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x500EB3C8  FileOpenTable           ; same-body: = KN6000 0x502883B8 (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x50066482  ZFileStatusCode         ; same-body: = KN6000 0x50072328 (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x50066484  ZFileSpaceLeft          ; same-body: = KN6000 0x5007232C (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x5005647C  ZFileInflatedBytes      ; same-body: = KN6000 0x50062324 (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x50056480  ZFileBuffer             ; same-body: = KN6000 0x50062328 (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x50056444  ZPartStream             ; same-body: = KN6000 0x500622EC (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x50056448  ZPartStreamAvailIn      ; same-body: = KN6000 0x500622F0 (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x50056450  ZPartStreamNextOut      ; same-body: = KN6000 0x500622F8 (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x50056454  ZPartStreamAvailOut     ; same-body: = KN6000 0x500622FC (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x5003CF2C  InstallScratchPos       ; same-body: = KN6000 0x5004EECC (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x50066BAA  SmfFormat               ; same-body: = KN6000 0x5005BF3E (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x50066BAC  SmfTrackCount           ; same-body: = KN6000 0x5005BF40 (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x50066BAE  SmfDivision             ; same-body: = KN6000 0x5005BF42 (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x50066BB0  SmfFileSize             ; same-body: = KN6000 0x5005BF44 (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x486CEE05  SavePmtFile             ; string: builds the name of a .PMT file (FileNameWithExt with type 1, FileTypeExtTable) and opens it "wb"
+0x486CE631  LoadCmpFile             ; string: builds the name of a .CMP file (FileNameWithExt with type 3, FileTypeExtTable) and opens it "rb"
+0x486CF1F5  SaveCmpFile             ; string: builds the name of a .CMP file (FileNameWithExt with type 3, FileTypeExtTable) and opens it "wb"
+0x486CE7F3  LoadTmFile              ; string: builds the name of a .TM file (FileNameWithExt with type 4, FileTypeExtTable) and opens it "rb"
+0x486CF359  SaveTmFile              ; string: builds the name of a .TM file (FileNameWithExt with type 4, FileTypeExtTable) and opens it "wb"
+0x486CE712  LoadMspFile             ; string: builds the name of a .MSP file (FileNameWithExt with type 5, FileTypeExtTable) and opens it "rb"
+0x486CF2A7  SaveMspFile             ; string: builds the name of a .MSP file (FileNameWithExt with type 5, FileTypeExtTable) and opens it "wb"
+0x486CE955  LoadEfcFile             ; string: builds the name of a .EFC file (FileNameWithExt with type 6, FileTypeExtTable) and opens it "rb"
+0x486CF02B  SaveEfcFile             ; string: builds the name of a .EFC file (FileNameWithExt with type 6, FileTypeExtTable) and opens it "wb"
+0x486CDF09  LoadMdFile              ; string: builds the name of a .MD file (FileNameWithExt with type 7, FileTypeExtTable) and opens it "rb"
+0x486CEF33  SaveMdFile              ; string: builds the name of a .MD file (FileNameWithExt with type 7, FileTypeExtTable) and opens it "wb"
+0x486CEA2E  LoadFavFile             ; string: builds the name of a .FAV file (FileNameWithExt with type 8, FileTypeExtTable) and opens it "rb"
+0x486CEFAD  SaveFavFile             ; string: builds the name of a .FAV file (FileNameWithExt with type 8, FileTypeExtTable) and opens it "wb"
+0x5018B43A  FxDspSelect_Impl            ; caller: FxDspSelect is `call` + ret of it, its only caller
+0x485ED02F  CaptureLcdWriteBmp      ; string: CaptureLcd's work: sprintf "LCDCAP%02d.BMP" with the counter at 0x500275C4, fmmopen "wb", writes the "BM" header and the screen rows (0x38436-byte file, 0x140 x 0xF0 pixels from 0x9C800000)
+0x4862FE51  FsMountVolume           ; string: reads a boot sector, checks its 0x55 0xAA signature and the "FAT16" type string (strncmp), and derives the volume's geometry with LibDiv32 [INFERENCE: name from the checks]
+0x486331C6  TestSdImmunityFile      ; string: the SD test's file check: removes "C:IMMUNITY.TST" (FsRemove), writes 0x400-byte blocks to it "wb" (FsWrite), closes it and reads it back "rb" (caller func_48662BF0, the SDOKBox_id / SDNGBox_id result screen)
