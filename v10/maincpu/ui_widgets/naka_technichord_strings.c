@@ -2194,7 +2194,8 @@ typedef struct __attribute__((packed)) {
     uint16_t ApPreControl_CaseTable[7];
     char Feature_str[10];
     char rb_str_2[4];
-    uint8_t field_1a15e;
+    /* DemoSong_EntryCol: Base of the entry column of the 23 x {u8 entry, u8 title} auto-demo song order (byte 0 = 0, entry of demo song 0); Demo_SelectEntry_LoadPattern loads DEMO_ACTIVE_ENTRY from [2*DEMO_CURRENT_SONG]. (v10/maincpu/ui_widgets/technichord_string_data.s) */
+    uint8_t DemoSong_EntryCol;
     /* title (low byte of 0x01A000xx) of demo song 0; base of the title column of the 23 x {entry, title} song order */
     uint8_t DemoSong_TitleCol;
     /* demo songs 1-22: {demo entry to load, title to show: 0xE1 STYLE, 0xE2 SOUND, 0xE3 RHY, 0xE4 FEATURE} */
@@ -2514,8 +2515,8 @@ typedef struct __attribute__((packed)) {
     char SLSrcBankList_FuncBody_Str_Colon_2[4];
     char All_str[18];
     uint16_t SingleLoadSrc_PanelMemBankSize;
-    uint16_t field_1aa06;
-    uint16_t field_1aa08;
+    /* SingleLoadSrc_PanelMemEntryCount: Number of entries (80) of the PANEL MEMORY single-load source list: SingleLoadSrc_PanelMemListProc refuses a bank step (+8) or an item step (+1) whose new position would reach it. (v10/maincpu/ui_widgets/technichord_string_data.s) */
+    uint32_t SingleLoadSrc_PanelMemEntryCount;
     char SLSrcBankList_FuncBody_Entry_Str_Colon[2];
     char SLSrcBankList_FuncBody_Entry_Str_Colon_2[4];
     char SLSrcBankList_FuncBody_Entry_Str_Colon_3[4];
@@ -6663,7 +6664,7 @@ const naka_technichord_strings_t naka_technichord_strings_data
 
     .rb_str_2 = ALIGNED_STRING("rb"),
 
-    .field_1a15e = 0x00,
+    .DemoSong_EntryCol = 0,
 
     .DemoSong_TitleCol = 0xE1,
 
@@ -7362,9 +7363,7 @@ const naka_technichord_strings_t naka_technichord_strings_data
 
     .SingleLoadSrc_PanelMemBankSize = 0xFF08,
 
-    .field_1aa06 = 0xFF50,
-
-    .field_1aa08 = 0xFF0A,
+    .SingleLoadSrc_PanelMemEntryCount = 4278910800,
 
     .SLSrcBankList_FuncBody_Entry_Str_Colon = ":",
 

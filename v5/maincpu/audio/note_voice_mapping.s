@@ -13,7 +13,7 @@
 NoteOn_EntryPoint:
 	lda	xsp, (xsp-504)
 	pushw	iz
-	lda	xwa, (0xc13e:16)
+	lda	xwa, (AUDIO_STATE:16)
 	ld	(xsp + 2), xwa
 	call	SeqMain_SaveWritePos
 	ld	(xsp+500), 0x00
@@ -201,7 +201,7 @@ NoteOn_CheckSpecialChannel:
 	ld	xwa, (xsp + 2)
 	cp	(xwa + 1), 0x15
 	jr	nz, NoteOn_CheckLayer3Only
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	and	wa, 0xa
 	jr	z, NoteOn_SpecialChannelUpdate
 	lda	xwa, (xsp+172:16)
@@ -376,7 +376,7 @@ NoteOn_CC_CheckSpecialChannel:
 	ld	xwa, (xsp + 2)
 	cp	(xwa + 1), 0x15
 	jr	nz, NoteOn_CC_CheckLayer3Only
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit	1, wa
 	jr	z, NoteOn_CC_SpecialUpdate
 	lda	xwa, (xsp+172:16)
@@ -442,7 +442,7 @@ NoteOn_Epilogue:
 AccNoteOn_ProcessVoiceSetup:
 	lda	xsp, (xsp - 18)
 	pushw	iz
-	lda	xwa, (0xc13e:16)
+	lda	xwa, (AUDIO_STATE:16)
 	ld	(xsp + 2), xwa
 	ld	iz, 0:i3
 	ld	xiy, AccNoteOn_FrameTemplateA
@@ -640,7 +640,7 @@ AccNoteOn_CheckSpecialChannel:
 	ld	xwa, (xsp + 2)
 	cp	(xwa + 1), 0x15
 	jr	nz, AccNoteOn_CheckLayer3Only
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	and	wa, 0xa
 	jr	z, AccNoteOn_SpecialDirectAdd
 	ld	xhl, 0xcaba
@@ -713,7 +713,7 @@ AccNoteOn_Return:
 AccNoteOn_ChannelDispatch:
 	lda	xsp, (xsp-174)
 	pushw_erp	0xfa
-	lda	xwa, (0xc13e:16)
+	lda	xwa, (AUDIO_STATE:16)
 	ld	(xsp + 2), xwa
 	call	SeqBuf_SaveReadPos
 	ld	(xsp + 6), 0x0
@@ -841,7 +841,7 @@ AccMidi_Return:
 RhythmMidi_Dispatcher:
 	lda	xsp, (xsp-180)
 	pushw_erp	0xfa
-	lda	xwa, (0xc13e:16)
+	lda	xwa, (AUDIO_STATE:16)
 	ld	(xsp + 2), xwa
 	ld	xiy, RhythmMidi_FrameTemplate
 	lda	xix, (xsp + 6)
@@ -1051,7 +1051,7 @@ RhythmMidi_CC_Return:
 RhythmMidi_SeqEvt:
 	lda	xsp, (xsp-174)
 	pushw_erp	0xfa
-	lda	xwa, (0xc13e:16)
+	lda	xwa, (AUDIO_STATE:16)
 	ld	(xsp + 2), xwa
 	call	SeqEvtBuf_SaveReadPos
 	ld	(xsp + 6), 0x0
@@ -1166,7 +1166,7 @@ RhythmMidi_SeqEvt_Return:
 Voice_InitializeAll:
 	lda	xsp, (xsp-496)
 	push	xiz
-	lda	xiz, (0xc13e:16)
+	lda	xiz, (AUDIO_STATE:16)
 	ld	(xsp+336), 0x90
 	ld	(xsp+338), 0x01
 	ld	(xsp + 4), 0x0
@@ -1292,7 +1292,7 @@ VoiceInit_MergeLayer3:
 VoiceInit_CheckSpecialChannel:
 	cp	(xiz + 1), 0x15
 	jr	nz, VoiceInit_CheckLayer3Only
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit	1, wa
 	jr	z, VoiceInit_SpecialChannelUpdate
 	lda	xwa, (xsp+172:16)
@@ -1350,7 +1350,7 @@ VoiceInit_Epilogue:
 NoteMap_ProcessAndMerge:
 	lda	xsp, (xsp-328)
 	push	xiz
-	lda	xiz, (0xc13e:16)
+	lda	xiz, (AUDIO_STATE:16)
 	ld	(xsp+168), 0x90
 	ld	(xsp+170), 0x00
 	ld	(xsp+171), 0x00
@@ -1453,7 +1453,7 @@ NoteMap_AddEntry_Return:
 NoteMap_SendAllNotesOff:
 	lda	xsp, (xsp-168)
 	pushw_erp	0xfa
-	lda	xwa, (0xc13e:16)
+	lda	xwa, (AUDIO_STATE:16)
 	ld	(xsp + 2), xwa
 	ldib_erp	0xfb, 0
 	cp_erpb	0xfb, 0x10
@@ -1504,7 +1504,7 @@ NoteOff_Return:
 Voice_InitTableGroup:
 	lda	xsp, (xsp-168)
 	pushw_erp	0xfa
-	lda	xwa, (0xc13e:16)
+	lda	xwa, (AUDIO_STATE:16)
 	ld	(xsp + 2), xwa
 	ld	(xsp + 6), 0x90
 	ld	(xsp + 8), 0x4
@@ -1532,7 +1532,7 @@ VoiceTableGroup_Return:
 Voice_InitTablePair:
 	lda	xsp, (xsp-168)
 	pushw_erp	0xfa
-	lda	xwa, (0xc13e:16)
+	lda	xwa, (AUDIO_STATE:16)
 	ld	(xsp + 2), xwa
 	ld	(xsp + 6), 0x90
 	ld	(xsp + 8), 0x5
@@ -1560,10 +1560,10 @@ VoiceTablePair_Return:
 VoiceEvent_ResetAndInit:
 	ret
 VoiceEvent_AllocAllLayers:
-	lda	xwa, (0xc13e:16)
+	lda	xwa, (AUDIO_STATE:16)
 	ld	bc, 0:i3
 	call	NoteMap_AllocateVoice
-	lda	xwa, (0xc13e:16)
+	lda	xwa, (AUDIO_STATE:16)
 	ld	bc, 1:i3
 	call	NoteMap_AllocateVoice
 	cpw	(HARMONY_NOTE_LIST:16), 0
@@ -1571,22 +1571,22 @@ VoiceEvent_AllocAllLayers:
 	call	NoteMap_FindBestMatch
 	cp	l, 0xff
 	ret	z
-	lda	xwa, (0xc13e:16)
+	lda	xwa, (AUDIO_STATE:16)
 	ld	bc, 2:i3
 	call	NoteMap_AllocateVoice
 	ret
 VoiceEvent_AllocTwoLayers:
-	lda	xwa, (0xc13e:16)
+	lda	xwa, (AUDIO_STATE:16)
 	ld	bc, 0:i3
 	call	NoteMap_AssignVoiceParams
-	lda	xwa, (0xc13e:16)
+	lda	xwa, (AUDIO_STATE:16)
 	ld	bc, 1:i3
 	jp	NoteMap_AssignVoiceParams
 VoiceEvent_DispatchTable:
-	lda	xwa, (0xc13e:16)
+	lda	xwa, (AUDIO_STATE:16)
 	ld	bc, 2:i3
 	call	NoteMap_AssignVoiceParams
-	lda	xwa, (0xc13e:16)
+	lda	xwa, (AUDIO_STATE:16)
 	ld	bc, 2:i3
 	jp	NoteMap_InitVoiceSlots
 VoiceEvent_TableSeparator:
@@ -1778,7 +1778,7 @@ VoiceClaim_Slot0_MarkCheck:
 	jr	c, VoiceClaim_Slot0_MarkLoop
 	ld	a, (xsp+334)
 	extz	wa
-	lda	xbc, (0xc142:16)
+	lda	xbc, (AUDIO_STATE+4:16)
 	extz	xwa
 	add	xwa, xbc
 	cp	(xwa), 0xff
@@ -1836,7 +1836,7 @@ VoiceClaim_Slot0_Alt_MarkCheck:
 	jr	c, VoiceClaim_Slot0_Alt_MarkLoop
 	ld	a, (xsp+334)
 	extz	wa
-	lda	xbc, (0xc142:16)
+	lda	xbc, (AUDIO_STATE+4:16)
 	extz	xwa
 	add	xwa, xbc
 	cp	(xwa), 0xff
@@ -2486,7 +2486,7 @@ MidiEvent_ConfigChannel:
 	call	MIDI_PostSendStub
 	ld	a, (xsp+334)
 	extz	wa
-	lda	xbc, (0xc142:16)
+	lda	xbc, (AUDIO_STATE+4:16)
 	extz	xwa
 	add	xwa, xbc
 	cp	(xwa), 0xff
@@ -2526,7 +2526,7 @@ MidiConfig_Slot6Path:
 	call	MIDI_PostSendStub
 	ld	a, (xsp+334)
 	extz	wa
-	lda	xbc, (0xc142:16)
+	lda	xbc, (AUDIO_STATE+4:16)
 	extz	xwa
 	add	xwa, xbc
 	cp	(xwa), 0xff
@@ -2547,7 +2547,7 @@ Voice_FindAndAllocBestMatch:
 	call	NoteMap_FindBestMatch
 	cp	l, 0xff
 	ret	z
-	lda	xwa, (0xc13e:16)
+	lda	xwa, (AUDIO_STATE:16)
 	ld	bc, 2:i3
 	call	NoteMap_AllocateVoice
 	ret
@@ -2583,10 +2583,10 @@ VoiceSlotInit_Check:
 	cp	de, wa
 	jr	lt, VoiceSlotInit_Loop
 	call	Voice_InitPartAllocState
-	lda	xwa, (0xc13e:16)
+	lda	xwa, (AUDIO_STATE:16)
 	ld	bc, 0:i3
 	call	NoteMap_AllocateVoice
-	lda	xwa, (0xc13e:16)
+	lda	xwa, (AUDIO_STATE:16)
 	ld	bc, 1:i3
 	call	NoteMap_AllocateVoice
 	ldw	(CHORD_HELD_KEY_COUNT:16), 0
@@ -2851,15 +2851,15 @@ ProcessNoteEntry_ReadBuf3:
 ProcessNoteEntry_Compare:
 	cp	hl, 0:i3
 	jr	z, MidiEvent_ProcessCC_Continue
-	cp	(0xc2a3:16), 255
+	cp	(AUDIO_STATE+357:16), 255
 	jr	z, ProcessNoteEntry_CheckDRAM
-	ld	l, (0xc2a3:16)
+	ld	l, (AUDIO_STATE+357:16)
 	extz	hl
 	jr	MidiEvent_ProcessCC_Continue
 ProcessNoteEntry_CheckDRAM:
-	cp	(0xc2a2:16), 0
+	cp	(AUDIO_STATE+356:16), 0
 	jr	le, ProcessNoteEntry_LoadDRAM2
-	ld	a, (0xc2a2:16)
+	ld	a, (AUDIO_STATE+356:16)
 	exts	wa
 	add	wa, hl
 	cp	a, 0x7f
@@ -2867,12 +2867,12 @@ ProcessNoteEntry_CheckDRAM:
 	ldw	hl, 0x7f
 	jr	MidiEvent_ProcessCC_Continue
 ProcessNoteEntry_LoadDRAM:
-	ld	a, (0xc2a2:16)
+	ld	a, (AUDIO_STATE+356:16)
 	exts	wa
 	add	hl, wa
 	jr	MidiEvent_ProcessCC_Continue
 ProcessNoteEntry_LoadDRAM2:
-	ld	a, (0xc2a2:16)
+	ld	a, (AUDIO_STATE+356:16)
 	exts	wa
 	add	wa, hl
 	cp	a, 0:i3
@@ -2880,7 +2880,7 @@ ProcessNoteEntry_LoadDRAM2:
 	ld	hl, 1:i3
 	jr	MidiEvent_ProcessCC_Continue
 ProcessNoteEntry_LoadDRAM3:
-	ld	a, (0xc2a2:16)
+	ld	a, (AUDIO_STATE+356:16)
 	exts	wa
 	add	hl, wa
 MidiEvent_ProcessCC_Continue:
@@ -3871,7 +3871,7 @@ NoteMap_AddEntry:
 	ld	bc, 2:i3
 	calr	NoteMap_AllocateVoice
 NoteMap_AltCheckEmit:
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit	9, wa
 	jr	z, AltCheckEmit_LoadParam
 	ldib_erp	0xfb, 0
@@ -3977,7 +3977,7 @@ AllocCheckChannel_LoadParam:
 	ld	xwa, (xsp + 8)
 	call	Voice_ScanAndEmitMidiEvents
 AllocCheckChannel_LoadDRAM:
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit	9, wa
 	jr	z, AllocCheckChannel_LoadParam2
 	ldib_erp	0xfb, 0
@@ -4073,7 +4073,7 @@ AllocCheckNoteOn_Data:
 	ld	bc, 2:i3
 	calr	NoteMap_AllocateVoice
 NoteMap_AddEntry_Skip:
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit	9, wa
 	jrl	z, NoteMap_AddEntry_Epilogue
 	ldib_erp	251, 0
@@ -4161,7 +4161,7 @@ NoteMap_AddEntry_Skip4:
 	ld	xwa, (xsp+8)
 	call	Voice_ScanAndEmitMidiEvents
 NoteMap_AddEntry_Skip8:
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit	9, wa
 	jr	z, NoteMap_AddEntry_Skip9
 	ldib_erp	251, 0
@@ -4262,7 +4262,7 @@ NoteMap_CollectAndFindBestVoice:
 	ld	bc, 2:i3
 	calr	NoteMap_AllocateVoice
 NoteMap_AltAllocEmit:
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit	9, wa
 	jrl	z, NoteMap_PopRetFA_StoreAE
 	ldib_erp	0xfb, 0
@@ -4387,7 +4387,7 @@ CollectAllocVoice_CheckDuplicate:
 	extz	bc
 	call	Voice_ScanAndEmitMidiEvents
 CollectAllocVoice_EmitCheck:
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit	9, wa
 	jr	z, CollectAllocVoice_Em_LoadFromStack
 	ldib_erp	0xfb, 0
@@ -4477,7 +4477,7 @@ NoteMap_CollectAndAllocVoice_NoTimerCheck:
 	ld	bc, 2:i3
 	calr	NoteMap_AllocateVoice
 NoteMap_FallbackVoiceCheck:
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit	9, wa
 	jr	z, FallbackVoiceCheck_LoadParam
 	ldib_erp	0xfb, 0
@@ -4541,7 +4541,7 @@ NoteMap_LookupAllocEmit:
 	extz	bc
 	ld	xwa, (xsp + 8)
 	call	NoteMap_SetChannelParam
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit	9, wa
 	jr	z, LookupAllocEmit_LoadParam
 	ldib_erp	0xfb, 0
@@ -4643,7 +4643,7 @@ NoteMap_CollectAndAllocVoice_Indirect:
 	ld	bc, 2:i3
 	calr	NoteMap_AllocateVoice
 NoteMap_IndirectCollectEmit:
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit	9, wa
 	jrl	z, NoteMap_PopRetFA_StoreAE2
 	ldib_erp	0xfb, 0
@@ -4724,7 +4724,7 @@ NoteMap_LookupAllocAndSetChannel:
 	extz	bc
 	ld	xwa, xde
 	call	NoteMap_SetChannelParam
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit	9, wa
 	jr	z, LookupAllocAndSetCha_LoadFromStack
 	ldib_erp	0xfb, 0
@@ -4814,7 +4814,7 @@ NoteMap_UpdateEntry:
 	ld	bc, 2:i3
 	calr	NoteMap_AllocateVoice
 NoteMap_FallbackAllocEmit:
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit	9, wa
 	jr	z, UpdateEntry_CheckLayerCount
 	ldib_erp	0xfb, 0
@@ -4878,7 +4878,7 @@ NoteMap_DirectLookupEmit:
 	extz	bc
 	ld	xwa, (xsp + 8)
 	call	NoteMap_SetChannelParam
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit	9, wa
 	jr	z, UpdateEntry_CheckSeqPartEmit
 	ldib_erp	0xfb, 0
@@ -4980,7 +4980,7 @@ NoteMap_FindAndAllocBestVoice:
 	ld	bc, 2:i3
 	calr	NoteMap_AllocateVoice
 NoteMap_FindAllocEmit:
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit	9, wa
 	jrl	z, NoteMap_PopRetFA_StoreAE3
 	ldib_erp	0xfb, 0
@@ -5061,7 +5061,7 @@ NoteMap_CollectAndAllocVoice_NoTimerReset:
 	extz	bc
 	ld	xwa, xde
 	call	NoteMap_SetChannelParam
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit	9, wa
 	jr	z, CollectAndAllocVoice_LoadFromStack
 	ldib_erp	0xfb, 0
@@ -10077,14 +10077,14 @@ CheckControlCode_Tes_LoopCheck:
 	ld	xhl, xwa
 	lda	xwa, (xsp+166:16)
 	ld	xbc, xwa
-	lda	xwa, (0xc368:16)
+	lda	xwa, (AUDIO_STATE_SENT+196:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	cp	l, 0:i3
 	jr	z, CheckControlCode_Tes_TestBit0
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc2a4:16)
+	lda	xbc, (AUDIO_STATE_SENT:16)
 	ld	de, 0:i3
 	call	NoteMap_AddEntry
 CheckControlCode_Tes_TestBit0:
@@ -10094,14 +10094,14 @@ CheckControlCode_Tes_TestBit0:
 	ld	xhl, xwa
 	lda	xwa, (xsp+166:16)
 	ld	xbc, xwa
-	lda	xwa, (0xc36c:16)
+	lda	xwa, (AUDIO_STATE_SENT+200:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	cp	l, 0:i3
 	jr	z, CheckControlCode_Tes_TestBit02
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc2a4:16)
+	lda	xbc, (AUDIO_STATE_SENT:16)
 	ld	de, 1:i3
 	call	NoteMap_AddEntry
 CheckControlCode_Tes_TestBit02:
@@ -10111,14 +10111,14 @@ CheckControlCode_Tes_TestBit02:
 	ld	xhl, xwa
 	lda	xwa, (xsp+166:16)
 	ld	xbc, xwa
-	lda	xwa, (0xc370:16)
+	lda	xwa, (AUDIO_STATE_SENT+204:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	cp	l, 0:i3
 	jr	z, CheckControlCode_Tes_TestBit03
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc2a4:16)
+	lda	xbc, (AUDIO_STATE_SENT:16)
 	ld	de, 2:i3
 	call	NoteMap_AddEntry
 CheckControlCode_Tes_TestBit03:
@@ -10128,14 +10128,14 @@ CheckControlCode_Tes_TestBit03:
 	ld	xhl, xwa
 	lda	xwa, (xsp+166:16)
 	ld	xbc, xwa
-	lda	xwa, (0xc374:16)
+	lda	xwa, (AUDIO_STATE_SENT+208:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	cp	l, 0:i3
 	jr	z, NoteMap_AddChangedVoices
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc2a4:16)
+	lda	xbc, (AUDIO_STATE_SENT:16)
 	ldw	de, 0x15
 	call	NoteMap_AddEntry
 	call	AudioInit_RefreshToneBank
@@ -10152,14 +10152,14 @@ NoteMap_AddChangedVoices:
 	ld	xhl, xwa
 	lda	xwa, (xsp+330)
 	ld	xbc, xwa
-	lda	xwa, (0xc202:16)
+	lda	xwa, (AUDIO_STATE+196:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	cp	l, 0:i3
 	jr	z, AddChangedVoices_TestBit0
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	ld	de, 0:i3
 	call	NoteMap_AddEntry
 AddChangedVoices_TestBit0:
@@ -10169,14 +10169,14 @@ AddChangedVoices_TestBit0:
 	ld	xhl, xwa
 	lda	xwa, (xsp+330)
 	ld	xbc, xwa
-	lda	xwa, (0xc206:16)
+	lda	xwa, (AUDIO_STATE+200:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	cp	l, 0:i3
 	jr	z, AddChangedVoices_TestBit02
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	ld	de, 1:i3
 	call	NoteMap_AddEntry
 AddChangedVoices_TestBit02:
@@ -10186,14 +10186,14 @@ AddChangedVoices_TestBit02:
 	ld	xhl, xwa
 	lda	xwa, (xsp+330)
 	ld	xbc, xwa
-	lda	xwa, (0xc20a:16)
+	lda	xwa, (AUDIO_STATE+204:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	cp	l, 0:i3
 	jr	z, AddChangedVoices_TestBit03
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	ld	de, 2:i3
 	call	NoteMap_AddEntry
 AddChangedVoices_TestBit03:
@@ -10203,14 +10203,14 @@ AddChangedVoices_TestBit03:
 	ld	xhl, xwa
 	lda	xwa, (xsp+330)
 	ld	xbc, xwa
-	lda	xwa, (0xc20e:16)
+	lda	xwa, (AUDIO_STATE+208:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	cp	l, 0:i3
 	jr	z, NoteMap_CollectEnabledVoices
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	ldw	de, 0x15
 	call	NoteMap_AddEntry
 NoteMap_CollectEnabledVoices:
@@ -10225,12 +10225,12 @@ NoteMap_CollectEnabledVoices:
 	ld	xhl, xwa
 	lda	xwa, (xsp+330)
 	ld	xbc, xwa
-	lda	xwa, (0xc202:16)
+	lda	xwa, (AUDIO_STATE+196:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	ld	de, 0:i3
 	call	NoteMap_CollectAndFindBestVoice
 CollectEnabledVoices_TestBit0:
@@ -10240,12 +10240,12 @@ CollectEnabledVoices_TestBit0:
 	ld	xhl, xwa
 	lda	xwa, (xsp+330)
 	ld	xbc, xwa
-	lda	xwa, (0xc206:16)
+	lda	xwa, (AUDIO_STATE+200:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	ld	de, 1:i3
 	call	NoteMap_CollectAndFindBestVoice
 CollectEnabledVoices_TestBit02:
@@ -10255,12 +10255,12 @@ CollectEnabledVoices_TestBit02:
 	ld	xhl, xwa
 	lda	xwa, (xsp+330)
 	ld	xbc, xwa
-	lda	xwa, (0xc20a:16)
+	lda	xwa, (AUDIO_STATE+204:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	ld	de, 2:i3
 	call	NoteMap_CollectAndFindBestVoice
 CollectEnabledVoices_TestBit03:
@@ -10270,12 +10270,12 @@ CollectEnabledVoices_TestBit03:
 	ld	xhl, xwa
 	lda	xwa, (xsp+330)
 	ld	xbc, xwa
-	lda	xwa, (0xc20e:16)
+	lda	xwa, (AUDIO_STATE+208:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	ldw	de, 0x15
 	call	NoteMap_CollectAndFindBestVoice
 	jrl	NoteMap_VoiceAssign_Finalize
@@ -10286,7 +10286,7 @@ CollectEnabledVoices_CheckMem:
 	jr	z, CollectEnabledVoices_CheckMem2
 	lda	xwa, (xsp+166:16)
 	ld	xhl, xwa
-	lda	xbc, (0xc2a4:16)
+	lda	xbc, (AUDIO_STATE_SENT:16)
 	ld	a, (xsp+494)
 	ld	e, a
 	extz	de
@@ -10294,7 +10294,7 @@ CollectEnabledVoices_CheckMem:
 	call	NoteMap_AddEntry
 	lda	xwa, (xsp+330)
 	ld	xhl, xwa
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	ld	a, (xsp+496)
 	ld	e, a
 	extz	de
@@ -10308,60 +10308,60 @@ CollectEnabledVoices_CheckMem2:
 	jrl	z, CollectEnabledVoices_CheckMem3
 	lda	xwa, (xsp+166:16)
 	ld	xhl, xwa
-	lda	xbc, (0xc2a4:16)
+	lda	xbc, (AUDIO_STATE_SENT:16)
 	ld	a, (xsp+494)
 	ld	e, a
 	extz	de
 	ld	xwa, xhl
 	call	NoteMap_AddEntry
-	bit	0, (0xc13e:16)
+	bit	0, (AUDIO_STATE:16)
 	jr	z, CollectEnabledVoices_TestBit1
 	lda	xwa, (xsp + 2)
 	ld	xhl, xwa
 	lda	xwa, (xsp+330)
 	ld	xbc, xwa
-	lda	xwa, (0xc202:16)
+	lda	xwa, (AUDIO_STATE+196:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	cp	l, 0:i3
 	jr	z, CollectEnabledVoices_TestBit1
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	ld	de, 0:i3
 	call	NoteMap_AddEntry
 CollectEnabledVoices_TestBit1:
-	bit	1, (0xc13e:16)
+	bit	1, (AUDIO_STATE:16)
 	jr	z, CollectEnabledVoices_TestBit2
 	lda	xwa, (xsp + 2)
 	ld	xhl, xwa
 	lda	xwa, (xsp+330)
 	ld	xbc, xwa
-	lda	xwa, (0xc206:16)
+	lda	xwa, (AUDIO_STATE+200:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	cp	l, 0:i3
 	jr	z, CollectEnabledVoices_TestBit2
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	ld	de, 1:i3
 	call	NoteMap_AddEntry
 CollectEnabledVoices_TestBit2:
-	bit	2, (0xc13e:16)
+	bit	2, (AUDIO_STATE:16)
 	jrl	z, NoteMap_VoiceAssign_Finalize
 	lda	xwa, (xsp + 2)
 	ld	xhl, xwa
 	lda	xwa, (xsp+330)
 	ld	xbc, xwa
-	lda	xwa, (0xc20a:16)
+	lda	xwa, (AUDIO_STATE+204:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	cp	l, 0:i3
 	jrl	z, NoteMap_VoiceAssign_Finalize
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	ld	de, 2:i3
 	call	NoteMap_AddEntry
 	jrl	NoteMap_VoiceAssign_Finalize
@@ -10370,60 +10370,60 @@ CollectEnabledVoices_CheckMem3:
 	jrl	z, NoteMap_VoiceAssign_Finalize
 	cp	(xsp+494), 0xff
 	jrl	nz, NoteMap_VoiceAssign_Finalize
-	bit	0, (0xc2a4:16)
+	bit	0, (AUDIO_STATE_SENT:16)
 	jr	z, CollectEnabledVoices_TestBit12
 	lda	xwa, (xsp + 2)
 	ld	xhl, xwa
 	lda	xwa, (xsp+166:16)
 	ld	xbc, xwa
-	lda	xwa, (0xc368:16)
+	lda	xwa, (AUDIO_STATE_SENT+196:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	cp	l, 0:i3
 	jr	z, CollectEnabledVoices_TestBit12
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc2a4:16)
+	lda	xbc, (AUDIO_STATE_SENT:16)
 	ld	de, 0:i3
 	call	NoteMap_AddEntry
 CollectEnabledVoices_TestBit12:
-	bit	1, (0xc2a4:16)
+	bit	1, (AUDIO_STATE_SENT:16)
 	jr	z, CollectEnabledVoices_TestBit22
 	lda	xwa, (xsp + 2)
 	ld	xhl, xwa
 	lda	xwa, (xsp+166:16)
 	ld	xbc, xwa
-	lda	xwa, (0xc36c:16)
+	lda	xwa, (AUDIO_STATE_SENT+200:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	cp	l, 0:i3
 	jr	z, CollectEnabledVoices_TestBit22
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc2a4:16)
+	lda	xbc, (AUDIO_STATE_SENT:16)
 	ld	de, 1:i3
 	call	NoteMap_AddEntry
 CollectEnabledVoices_TestBit22:
-	bit	2, (0xc2a4:16)
+	bit	2, (AUDIO_STATE_SENT:16)
 	jr	z, CollectEnabledVoices_WriteReg
 	lda	xwa, (xsp + 2)
 	ld	xhl, xwa
 	lda	xwa, (xsp+166:16)
 	ld	xbc, xwa
-	lda	xwa, (0xc370:16)
+	lda	xwa, (AUDIO_STATE_SENT+204:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	cp	l, 0:i3
 	jr	z, CollectEnabledVoices_WriteReg
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc2a4:16)
+	lda	xbc, (AUDIO_STATE_SENT:16)
 	ld	de, 2:i3
 	call	NoteMap_AddEntry
 CollectEnabledVoices_WriteReg:
 	lda	xwa, (xsp+330)
 	ld	xhl, xwa
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	ld	a, (xsp+496)
 	ld	e, a
 	extz	de
@@ -10437,7 +10437,7 @@ VoiceAssign_CheckBothParts:
 	jrl	z, VoiceAssign_CheckSinglePart
 	cpw	(0xcda8:16), 0
 	jr	nz, VoiceAssign_LookupAndLoop_Part1
-	lda	xwa, (0xc2a4:16)
+	lda	xwa, (AUDIO_STATE_SENT:16)
 	ld	bc, 2:i3
 	call	NoteMap_AssignVoiceParams
 VoiceAssign_LookupAndLoop_Part1:
@@ -10477,7 +10477,7 @@ VoiceAssign_MergeAndCollect_Part1:
 	extz	wa
 	sla	wa, 2
 	add	wa, 0xc4
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	lda	xde, (xbc+wa)
 	ld	xwa, xix
 	ld	xbc, xhl
@@ -10496,7 +10496,7 @@ VoiceAssign_MergeAndCollect_Part1:
 	jrl	z, NoteMap_VoiceAssign_Finalize
 	lda	xwa, (xsp + 2)
 	ld	xhl, xwa
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	ld	a, (xsp+496)
 	ld	e, a
 	extz	de
@@ -10512,7 +10512,7 @@ VoiceAssign_MergeAndCollect_Part1:
 	call	NoteMap_FindBestMatch
 	cp	l, 0xff
 	jrl	z, NoteMap_VoiceAssign_Finalize
-	lda	xwa, (0xc13e:16)
+	lda	xwa, (AUDIO_STATE:16)
 	ld	bc, 2:i3
 	call	NoteMap_InitVoiceSlots
 	jrl	NoteMap_VoiceAssign_Finalize
@@ -10523,7 +10523,7 @@ VoiceAssign_CheckSinglePart:
 	jr	z, VoiceAssign_CheckOtherPart
 	cpw	(0xcda8:16), 0
 	jr	nz, VoiceAssign_LookupAndLoop_Part2
-	lda	xwa, (0xc2a4:16)
+	lda	xwa, (AUDIO_STATE_SENT:16)
 	ld	bc, 2:i3
 	call	NoteMap_AssignVoiceParams
 VoiceAssign_LookupAndLoop_Part2:
@@ -10568,7 +10568,7 @@ VoiceAssign_CheckOtherPart:
 	extz	wa
 	sla	wa, 2
 	add	wa, 0xc4
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	lda	xde, (xbc+wa)
 	ld	xwa, xix
 	ld	xbc, xhl
@@ -10587,7 +10587,7 @@ VoiceAssign_CheckOtherPart:
 	jr	z, NoteMap_VoiceAssign_Finalize
 	lda	xwa, (xsp + 2)
 	ld	xhl, xwa
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	ld	a, (xsp+496)
 	ld	e, a
 	extz	de
@@ -10603,7 +10603,7 @@ VoiceAssign_CheckOtherPart:
 	call	NoteMap_FindBestMatch
 	cp	l, 0xff
 	jr	z, NoteMap_VoiceAssign_Finalize
-	lda	xwa, (0xc13e:16)
+	lda	xwa, (AUDIO_STATE:16)
 	ld	bc, 2:i3
 	call	NoteMap_InitVoiceSlots
 NoteMap_VoiceAssign_Finalize:
@@ -10614,7 +10614,7 @@ NoteMap_VoiceAssign_Finalize:
 	cp	l, 0:i3
 	jrl	z, NoteMap_ReallocVoices_Exit
 	lda	xwa, (xsp+330)
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	ld	de, 0:i3
 	call	Voice_ApplyTransposeWithEncode
 	lda	xiy, (xsp+330)
@@ -10658,14 +10658,14 @@ VoiceAssign_Finalize_LoopCheck:
 	ld	xhl, xwa
 	lda	xwa, (xsp+166:16)
 	ld	xbc, xwa
-	lda	xwa, (0xc368:16)
+	lda	xwa, (AUDIO_STATE_SENT+196:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	cp	l, 0:i3
 	jr	z, VoiceAssign_Finalize_TestBit0
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc2a4:16)
+	lda	xbc, (AUDIO_STATE_SENT:16)
 	ld	de, 0:i3
 	call	NoteMap_UpdateEntry
 VoiceAssign_Finalize_TestBit0:
@@ -10675,14 +10675,14 @@ VoiceAssign_Finalize_TestBit0:
 	ld	xhl, xwa
 	lda	xwa, (xsp+166:16)
 	ld	xbc, xwa
-	lda	xwa, (0xc36c:16)
+	lda	xwa, (AUDIO_STATE_SENT+200:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	cp	l, 0:i3
 	jr	z, VoiceAssign_Finalize_TestBit02
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc2a4:16)
+	lda	xbc, (AUDIO_STATE_SENT:16)
 	ld	de, 1:i3
 	call	NoteMap_UpdateEntry
 VoiceAssign_Finalize_TestBit02:
@@ -10692,14 +10692,14 @@ VoiceAssign_Finalize_TestBit02:
 	ld	xhl, xwa
 	lda	xwa, (xsp+166:16)
 	ld	xbc, xwa
-	lda	xwa, (0xc370:16)
+	lda	xwa, (AUDIO_STATE_SENT+204:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	cp	l, 0:i3
 	jr	z, VoiceAssign_Finalize_TestBit03
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc2a4:16)
+	lda	xbc, (AUDIO_STATE_SENT:16)
 	ld	de, 2:i3
 	call	NoteMap_UpdateEntry
 VoiceAssign_Finalize_TestBit03:
@@ -10709,14 +10709,14 @@ VoiceAssign_Finalize_TestBit03:
 	ld	xhl, xwa
 	lda	xwa, (xsp+166:16)
 	ld	xbc, xwa
-	lda	xwa, (0xc374:16)
+	lda	xwa, (AUDIO_STATE_SENT+208:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	cp	l, 0:i3
 	jr	z, NoteMap_UpdateChangedVoices
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc2a4:16)
+	lda	xbc, (AUDIO_STATE_SENT:16)
 	ldw	de, 0x15
 	call	NoteMap_UpdateEntry
 	call	AudioInit_RefreshToneBank
@@ -10733,14 +10733,14 @@ NoteMap_UpdateChangedVoices:
 	ld	xhl, xwa
 	lda	xwa, (xsp+330)
 	ld	xbc, xwa
-	lda	xwa, (0xc202:16)
+	lda	xwa, (AUDIO_STATE+196:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	cp	l, 0:i3
 	jr	z, UpdateChangedVoices_TestBit0
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	ld	de, 0:i3
 	call	NoteMap_UpdateEntry
 UpdateChangedVoices_TestBit0:
@@ -10750,14 +10750,14 @@ UpdateChangedVoices_TestBit0:
 	ld	xhl, xwa
 	lda	xwa, (xsp+330)
 	ld	xbc, xwa
-	lda	xwa, (0xc206:16)
+	lda	xwa, (AUDIO_STATE+200:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	cp	l, 0:i3
 	jr	z, UpdateChangedVoices_TestBit02
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	ld	de, 1:i3
 	call	NoteMap_UpdateEntry
 UpdateChangedVoices_TestBit02:
@@ -10767,14 +10767,14 @@ UpdateChangedVoices_TestBit02:
 	ld	xhl, xwa
 	lda	xwa, (xsp+330)
 	ld	xbc, xwa
-	lda	xwa, (0xc20a:16)
+	lda	xwa, (AUDIO_STATE+204:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	cp	l, 0:i3
 	jr	z, UpdateChangedVoices_TestBit03
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	ld	de, 2:i3
 	call	NoteMap_UpdateEntry
 UpdateChangedVoices_TestBit03:
@@ -10784,14 +10784,14 @@ UpdateChangedVoices_TestBit03:
 	ld	xhl, xwa
 	lda	xwa, (xsp+330)
 	ld	xbc, xwa
-	lda	xwa, (0xc20e:16)
+	lda	xwa, (AUDIO_STATE+208:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	cp	l, 0:i3
 	jr	z, NoteMap_ReallocEnabledVoices
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	ldw	de, 0x15
 	call	NoteMap_UpdateEntry
 NoteMap_ReallocEnabledVoices:
@@ -10806,12 +10806,12 @@ NoteMap_ReallocEnabledVoices:
 	ld	xhl, xwa
 	lda	xwa, (xsp+330)
 	ld	xbc, xwa
-	lda	xwa, (0xc202:16)
+	lda	xwa, (AUDIO_STATE+196:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	ld	de, 0:i3
 	call	NoteMap_FindAndAllocBestVoice
 ReallocEnabledVoices_TestBit0:
@@ -10821,12 +10821,12 @@ ReallocEnabledVoices_TestBit0:
 	ld	xhl, xwa
 	lda	xwa, (xsp+330)
 	ld	xbc, xwa
-	lda	xwa, (0xc206:16)
+	lda	xwa, (AUDIO_STATE+200:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	ld	de, 1:i3
 	call	NoteMap_FindAndAllocBestVoice
 ReallocEnabledVoices_TestBit02:
@@ -10836,12 +10836,12 @@ ReallocEnabledVoices_TestBit02:
 	ld	xhl, xwa
 	lda	xwa, (xsp+330)
 	ld	xbc, xwa
-	lda	xwa, (0xc20a:16)
+	lda	xwa, (AUDIO_STATE+204:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	ld	de, 2:i3
 	call	NoteMap_FindAndAllocBestVoice
 ReallocEnabledVoices_TestBit03:
@@ -10851,12 +10851,12 @@ ReallocEnabledVoices_TestBit03:
 	ld	xhl, xwa
 	lda	xwa, (xsp+330)
 	ld	xbc, xwa
-	lda	xwa, (0xc20e:16)
+	lda	xwa, (AUDIO_STATE+208:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	ldw	de, 0x15
 	call	NoteMap_FindAndAllocBestVoice
 	jrl	NoteMap_ReallocVoices_Exit
@@ -10867,7 +10867,7 @@ ReallocEnabledVoices_CheckMem:
 	jr	z, ReallocEnabledVoices_CheckMem2
 	lda	xwa, (xsp+166:16)
 	ld	xhl, xwa
-	lda	xbc, (0xc2a4:16)
+	lda	xbc, (AUDIO_STATE_SENT:16)
 	ld	a, (xsp+494)
 	ld	e, a
 	extz	de
@@ -10875,7 +10875,7 @@ ReallocEnabledVoices_CheckMem:
 	call	NoteMap_UpdateEntry
 	lda	xwa, (xsp+330)
 	ld	xhl, xwa
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	ld	a, (xsp+496)
 	ld	e, a
 	extz	de
@@ -10889,60 +10889,60 @@ ReallocEnabledVoices_CheckMem2:
 	jrl	z, ReallocEnabledVoices_CheckMem3
 	lda	xwa, (xsp+166:16)
 	ld	xhl, xwa
-	lda	xbc, (0xc2a4:16)
+	lda	xbc, (AUDIO_STATE_SENT:16)
 	ld	a, (xsp+494)
 	ld	e, a
 	extz	de
 	ld	xwa, xhl
 	call	NoteMap_UpdateEntry
-	bit	0, (0xc13e:16)
+	bit	0, (AUDIO_STATE:16)
 	jr	z, ReallocEnabledVoices_TestBit1
 	lda	xwa, (xsp + 2)
 	ld	xhl, xwa
 	lda	xwa, (xsp+330)
 	ld	xbc, xwa
-	lda	xwa, (0xc202:16)
+	lda	xwa, (AUDIO_STATE+196:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	cp	l, 0:i3
 	jr	z, ReallocEnabledVoices_TestBit1
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	ld	de, 0:i3
 	call	NoteMap_UpdateEntry
 ReallocEnabledVoices_TestBit1:
-	bit	1, (0xc13e:16)
+	bit	1, (AUDIO_STATE:16)
 	jr	z, ReallocEnabledVoices_TestBit2
 	lda	xwa, (xsp + 2)
 	ld	xhl, xwa
 	lda	xwa, (xsp+330)
 	ld	xbc, xwa
-	lda	xwa, (0xc206:16)
+	lda	xwa, (AUDIO_STATE+200:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	cp	l, 0:i3
 	jr	z, ReallocEnabledVoices_TestBit2
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	ld	de, 1:i3
 	call	NoteMap_UpdateEntry
 ReallocEnabledVoices_TestBit2:
-	bit	2, (0xc13e:16)
+	bit	2, (AUDIO_STATE:16)
 	jrl	z, ReallocEnabledVoices_Block
 	lda	xwa, (xsp + 2)
 	ld	xhl, xwa
 	lda	xwa, (xsp+330)
 	ld	xbc, xwa
-	lda	xwa, (0xc20a:16)
+	lda	xwa, (AUDIO_STATE+204:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	cp	l, 0:i3
 	jrl	z, ReallocEnabledVoices_Block
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	ld	de, 2:i3
 	call	NoteMap_UpdateEntry
 	jrl	NoteMap_ReallocVoices_Exit
@@ -10951,60 +10951,60 @@ ReallocEnabledVoices_CheckMem3:
 	jrl	z, NoteMap_ReallocVoices_Exit
 	cp	(xsp+494), 0xff
 	jrl	nz, NoteMap_ReallocVoices_Exit
-	bit	0, (0xc2a4:16)
+	bit	0, (AUDIO_STATE_SENT:16)
 	jr	z, ReallocEnabledVoices_TestBit12
 	lda	xwa, (xsp + 2)
 	ld	xhl, xwa
 	lda	xwa, (xsp+166:16)
 	ld	xbc, xwa
-	lda	xwa, (0xc368:16)
+	lda	xwa, (AUDIO_STATE_SENT+196:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	cp	l, 0:i3
 	jr	z, ReallocEnabledVoices_TestBit12
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc2a4:16)
+	lda	xbc, (AUDIO_STATE_SENT:16)
 	ld	de, 0:i3
 	call	NoteMap_UpdateEntry
 ReallocEnabledVoices_TestBit12:
-	bit	1, (0xc2a4:16)
+	bit	1, (AUDIO_STATE_SENT:16)
 	jr	z, ReallocEnabledVoices_TestBit22
 	lda	xwa, (xsp + 2)
 	ld	xhl, xwa
 	lda	xwa, (xsp+166:16)
 	ld	xbc, xwa
-	lda	xwa, (0xc36c:16)
+	lda	xwa, (AUDIO_STATE_SENT+200:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	cp	l, 0:i3
 	jr	z, ReallocEnabledVoices_TestBit22
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc2a4:16)
+	lda	xbc, (AUDIO_STATE_SENT:16)
 	ld	de, 1:i3
 	call	NoteMap_UpdateEntry
 ReallocEnabledVoices_TestBit22:
-	bit	2, (0xc2a4:16)
+	bit	2, (AUDIO_STATE_SENT:16)
 	jr	z, ReallocEnabledVoices_WriteReg
 	lda	xwa, (xsp + 2)
 	ld	xhl, xwa
 	lda	xwa, (xsp+166:16)
 	ld	xbc, xwa
-	lda	xwa, (0xc370:16)
+	lda	xwa, (AUDIO_STATE_SENT+204:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	cp	l, 0:i3
 	jr	z, ReallocEnabledVoices_WriteReg
 	lda	xwa, (xsp + 2)
-	lda	xbc, (0xc2a4:16)
+	lda	xbc, (AUDIO_STATE_SENT:16)
 	ld	de, 2:i3
 	call	NoteMap_UpdateEntry
 ReallocEnabledVoices_WriteReg:
 	lda	xwa, (xsp+330)
 	ld	xhl, xwa
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	ld	a, (xsp+496)
 	ld	e, a
 	extz	de
@@ -11019,7 +11019,7 @@ ReallocEnabledVoices_CheckMem4:
 	jrl	z, ReallocEnabledVoices_CheckMem5
 	cpw	(0xcda8:16), 0
 	jr	nz, ReallocEnabledVoices_LoadAddr
-	lda	xwa, (0xc2a4:16)
+	lda	xwa, (AUDIO_STATE_SENT:16)
 	ld	bc, 2:i3
 	call	NoteMap_AssignVoiceParams
 ReallocEnabledVoices_LoadAddr:
@@ -11059,7 +11059,7 @@ ReallocEnabledVoices_LoadAddr2:
 	extz	wa
 	sla	wa, 2
 	add	wa, 0xc4
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 ReallocEnabledVoices_WriteReg2:
 ; NOTE: nothing seems to call here, but I saw this value on VGA undocumented registers at routine EF5163. It may be just a coincidence, though.  (was ReallocEnabledVoices_LoadAddr2_0x1D - off by 1 byte)
 	lda	xde, (xbc+wa)
@@ -11088,7 +11088,7 @@ ReallocEnabledVoices_WriteReg2:
 	call	NoteMap_FindBestMatch
 	cp	l, 0xff
 	jrl	z, NoteMap_ReallocVoices_Exit
-	lda	xwa, (0xc13e:16)
+	lda	xwa, (AUDIO_STATE:16)
 	ld	bc, 2:i3
 	call	NoteMap_InitVoiceSlots
 	jrl	NoteMap_ReallocVoices_Exit
@@ -11099,7 +11099,7 @@ ReallocEnabledVoices_CheckMem5:
 	jr	z, ReallocEnabledVoices_CheckMem6
 	cpw	(0xcda8:16), 0
 	jr	nz, ReallocEnabledVoices_LoadAddr3
-	lda	xwa, (0xc2a4:16)
+	lda	xwa, (AUDIO_STATE_SENT:16)
 	ld	bc, 2:i3
 	call	NoteMap_AssignVoiceParams
 ReallocEnabledVoices_LoadAddr3:
@@ -11144,7 +11144,7 @@ ReallocEnabledVoices_CheckMem6:
 	extz	wa
 	sla	wa, 2
 	add	wa, 0xc4
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	lda	xde, (xbc+wa)
 	ld	xwa, xix
 	ld	xbc, xhl
@@ -11171,7 +11171,7 @@ ReallocEnabledVoices_CheckMem6:
 	call	NoteMap_FindBestMatch
 	cp	l, 0xff
 	jr	z, NoteMap_ReallocVoices_Exit
-	lda	xwa, (0xc13e:16)
+	lda	xwa, (AUDIO_STATE:16)
 	ld	bc, 2:i3
 	call	NoteMap_InitVoiceSlots
 NoteMap_ReallocVoices_Exit:
@@ -11192,7 +11192,7 @@ ReallocVoices_Exit_CheckEnd:
 ReallocVoices_Exit_Compare:
 	cp	a, 0:i3
 	jrl	nz, ReallocVoices_Exit_WriteReg4
-	bit	4, (0xc3c8:16)
+	bit	4, (AUDIO_STATE_SENT+292:16)
 	jrl	z, ReallocVoices_Exit_WriteReg4
 	ld	(xsp+166), 0x00
 	ld	(xsp+167), 0x01
@@ -11202,114 +11202,114 @@ ReallocVoices_Exit_Compare:
 	jrl	z, NoteMap_StoreAndRet
 	lda	xwa, (xsp+164:16)
 	call	NoteMap_AssignAllVoiceLinks
-	cp	(0xc2a5:16), 255
+	cp	(AUDIO_STATE_SENT+1:16), 255
 	jrl	nz, ReallocVoices_Exit_CheckDRAM
-	bit	0, (0xc2a4:16)
+	bit	0, (AUDIO_STATE_SENT:16)
 	jr	z, ReallocVoices_Exit_TestBit1
 	lda	xwa, (xsp)
 	ld	xhl, xwa
 	lda	xwa, (xsp+164:16)
 	ld	xbc, xwa
-	lda	xwa, (0xc368:16)
+	lda	xwa, (AUDIO_STATE_SENT+196:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	cp	l, 0:i3
 	jr	z, ReallocVoices_Exit_TestBit1
 	lda	xwa, (xsp)
-	lda	xbc, (0xc2a4:16)
+	lda	xbc, (AUDIO_STATE_SENT:16)
 	ld	de, 0:i3
 	call	NoteMap_UpdateEntry
 ReallocVoices_Exit_TestBit1:
-	bit	1, (0xc2a4:16)
+	bit	1, (AUDIO_STATE_SENT:16)
 	jr	z, ReallocVoices_Exit_TestBit2
 	lda	xwa, (xsp)
 	ld	xhl, xwa
 	lda	xwa, (xsp+164:16)
 	ld	xbc, xwa
-	lda	xwa, (0xc36c:16)
+	lda	xwa, (AUDIO_STATE_SENT+200:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	cp	l, 0:i3
 	jr	z, ReallocVoices_Exit_TestBit2
 	lda	xwa, (xsp)
-	lda	xbc, (0xc2a4:16)
+	lda	xbc, (AUDIO_STATE_SENT:16)
 	ld	de, 1:i3
 	call	NoteMap_UpdateEntry
 ReallocVoices_Exit_TestBit2:
-	bit	2, (0xc2a4:16)
+	bit	2, (AUDIO_STATE_SENT:16)
 	jr	z, ReallocVoices_Exit_TestBit3
 	lda	xwa, (xsp)
 	ld	xhl, xwa
 	lda	xwa, (xsp+164:16)
 	ld	xbc, xwa
-	lda	xwa, (0xc370:16)
+	lda	xwa, (AUDIO_STATE_SENT+204:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	cp	l, 0:i3
 	jr	z, ReallocVoices_Exit_TestBit3
 	lda	xwa, (xsp)
-	lda	xbc, (0xc2a4:16)
+	lda	xbc, (AUDIO_STATE_SENT:16)
 	ld	de, 2:i3
 	call	NoteMap_UpdateEntry
 ReallocVoices_Exit_TestBit3:
-	bit	3, (0xc2a4:16)
+	bit	3, (AUDIO_STATE_SENT:16)
 	jrl	z, ReallocVoices_Exit_Block
 	lda	xwa, (xsp)
 	ld	xhl, xwa
 	lda	xwa, (xsp+164:16)
 	ld	xbc, xwa
-	lda	xwa, (0xc374:16)
+	lda	xwa, (AUDIO_STATE_SENT+208:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	cp	l, 0:i3
 	jrl	z, ReallocVoices_Exit_Block
 	lda	xwa, (xsp)
-	lda	xbc, (0xc2a4:16)
+	lda	xbc, (AUDIO_STATE_SENT:16)
 	ldw	de, 0x15
 	call	NoteMap_UpdateEntry
 	call	AudioInit_RefreshToneBank
 	jrl	NoteMap_StoreAndRet
 ReallocVoices_Exit_CheckDRAM:
-	cp	(0xc2a5:16), 21
+	cp	(AUDIO_STATE_SENT+1:16), 21
 	jr	nz, ReallocVoices_Exit_TestBit32
-	ld	wa, (0xc4d8:16)
+	ld	wa, (AUDIO_SEQ_TRACK_FLAGS:16)
 	bit	1, wa
 	jr	z, ReallocVoices_Exit_WriteReg2
 	lda	xwa, (xsp+164:16)
 	call	NoteMap_MarkEntriesAboveThreshold
 ReallocVoices_Exit_WriteReg2:
 	lda	xwa, (xsp+164:16)
-	lda	xbc, (0xc2a4:16)
+	lda	xbc, (AUDIO_STATE_SENT:16)
 	ldw	de, 0x15
 	call	NoteMap_UpdateEntry
 	jr	NoteMap_StoreAndRet
 ReallocVoices_Exit_TestBit32:
-	bit	3, (0xc2a4:16)
+	bit	3, (AUDIO_STATE_SENT:16)
 	jr	z, ReallocVoices_Exit_WriteReg3
 	lda	xwa, (xsp)
 	ld	xhl, xwa
 	lda	xwa, (xsp+164:16)
 	ld	xbc, xwa
-	lda	xwa, (0xc374:16)
+	lda	xwa, (AUDIO_STATE_SENT+208:16)
 	ld	xde, xwa
 	ld	xwa, xhl
 	call	NoteMap_MergeEntries
 	cp	l, 0:i3
 	jr	z, ReallocVoices_Exit_WriteReg3
 	lda	xwa, (xsp)
-	lda	xbc, (0xc2a4:16)
+	lda	xbc, (AUDIO_STATE_SENT:16)
 	ldw	de, 0x15
 	call	NoteMap_UpdateEntry
 	call	AudioInit_RefreshToneBank
 ReallocVoices_Exit_WriteReg3:
 	lda	xwa, (xsp+164:16)
 	ld	xhl, xwa
-	lda	xbc, (0xc2a4:16)
-	ld	a, (0xc2a5:16)
+	lda	xbc, (AUDIO_STATE_SENT:16)
+	ld	a, (AUDIO_STATE_SENT+1:16)
 	ld	e, a
 	extz	de
 	ld	xwa, xhl
@@ -11321,7 +11321,7 @@ ReallocVoices_Exit_WriteReg4:
 	ld	(xsp+167), e
 	lda	xbc, (xsp+164:16)
 	ld	xhl, xbc
-	lda	xbc, (0xc2a4:16)
+	lda	xbc, (AUDIO_STATE_SENT:16)
 	ld	e, a
 	extz	de
 	ld	xwa, xhl
@@ -11339,14 +11339,14 @@ StoreAndRet_WriteReg:
 	jrl	z, VoiceRealloc_CheckSingleLayer
 	cpw	(0xcda8:16), 1
 	jr	nz, StoreAndRet_WriteReg2
-	lda	xwa, (0xc2a4:16)
+	lda	xwa, (AUDIO_STATE_SENT:16)
 	ld	bc, 2:i3
 	call	NoteMap_AssignVoiceParams
 StoreAndRet_WriteReg2:
 	ld	(xsp+166), 0x01
 	ld	a, (xsp+328)
 	extz	wa
-	lda	xbc, (0xc2c8:16)
+	lda	xbc, (AUDIO_STATE_SENT+36:16)
 	extz	xwa
 	add	xwa, xbc
 	ld	a, (xwa)
@@ -11373,7 +11373,7 @@ StoreAndRet_WriteReg3:
 	ld	(xsp+166), 0x01
 	ld	a, (xsp+330)
 	extz	wa
-	lda	xbc, (0xc162:16)
+	lda	xbc, (AUDIO_STATE+36:16)
 	extz	xwa
 	add	xwa, xbc
 	ld	a, (xwa)
@@ -11392,7 +11392,7 @@ StoreAndRet_WriteReg3:
 	jrl	z, NoteMap_StoreVoiceResultAndReturn
 	lda	xwa, (xsp)
 	ld	xhl, xwa
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	ld	a, (xsp+330)
 	ld	e, a
 	extz	de
@@ -11408,7 +11408,7 @@ StoreAndRet_WriteReg3:
 	call	NoteMap_FindBestMatch
 	cp	l, 0xff
 	jrl	z, NoteMap_StoreVoiceResultAndReturn
-	lda	xwa, (0xc13e:16)
+	lda	xwa, (AUDIO_STATE:16)
 	ld	bc, 2:i3
 	call	NoteMap_InitVoiceSlots
 	jrl	NoteMap_StoreVoiceResultAndReturn
@@ -11419,14 +11419,14 @@ VoiceRealloc_CheckSingleLayer:
 	jr	z, VoiceRealloc_CheckAltLayer
 	cpw	(0xcda8:16), 1
 	jr	nz, VoiceRealloc_LookupVoice
-	lda	xwa, (0xc2a4:16)
+	lda	xwa, (AUDIO_STATE_SENT:16)
 	ld	bc, 2:i3
 	call	NoteMap_AssignVoiceParams
 VoiceRealloc_LookupVoice:
 	ld	(xsp+166), 0x01
 	ld	a, (xsp+328)
 	extz	wa
-	lda	xbc, (0xc2c8:16)
+	lda	xbc, (AUDIO_STATE_SENT+36:16)
 	extz	xwa
 	add	xwa, xbc
 	ld	a, (xwa)
@@ -11458,7 +11458,7 @@ VoiceRealloc_CheckAltLayer:
 	ld	(xsp+166), 0x01
 	ld	a, (xsp+330)
 	extz	wa
-	lda	xbc, (0xc162:16)
+	lda	xbc, (AUDIO_STATE+36:16)
 	extz	xwa
 	add	xwa, xbc
 	ld	a, (xwa)
@@ -11477,7 +11477,7 @@ VoiceRealloc_CheckAltLayer:
 	jr	z, NoteMap_StoreVoiceResultAndReturn
 	lda	xwa, (xsp)
 	ld	xhl, xwa
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	ld	a, (xsp+330)
 	ld	e, a
 	extz	de
@@ -11493,7 +11493,7 @@ VoiceRealloc_CheckAltLayer:
 	call	NoteMap_FindBestMatch
 	cp	l, 0xff
 	jr	z, NoteMap_StoreVoiceResultAndReturn
-	lda	xwa, (0xc13e:16)
+	lda	xwa, (AUDIO_STATE:16)
 	ld	bc, 2:i3
 	call	NoteMap_InitVoiceSlots
 NoteMap_StoreVoiceResultAndReturn:
@@ -11512,7 +11512,7 @@ NoteMap_ProcessDualLayerNoteOff:
 	ld	(xsp + 3), a
 	lda	xwa, (xsp)
 	ld	xhl, xwa
-	lda	xbc, (0xc2a4:16)
+	lda	xbc, (AUDIO_STATE_SENT:16)
 	ld	a, (xsp+164)
 	ld	e, a
 	extz	de
@@ -11523,7 +11523,7 @@ NoteMap_ProcessDualLayerNoteOff:
 	ld	(xsp + 3), a
 	lda	xwa, (xsp)
 	ld	xhl, xwa
-	lda	xbc, (0xc2a4:16)
+	lda	xbc, (AUDIO_STATE_SENT:16)
 	ld	a, (xsp+164)
 	ld	e, a
 	extz	de
@@ -11540,7 +11540,7 @@ NoteMap_DualLayerNoteOff_SinglePath:
 	ld	(xsp + 3), a
 	lda	xwa, (xsp)
 	ld	xhl, xwa
-	lda	xbc, (0xc2a4:16)
+	lda	xbc, (AUDIO_STATE_SENT:16)
 	ld	a, (xsp+164)
 	ld	e, a
 	extz	de
@@ -11551,7 +11551,7 @@ NoteMap_DualLayerNoteOff_SinglePath:
 	ld	(xsp + 3), a
 	lda	xwa, (xsp)
 	ld	xhl, xwa
-	lda	xbc, (0xc2a4:16)
+	lda	xbc, (AUDIO_STATE_SENT:16)
 	ld	a, (xsp+164)
 	ld	e, a
 	extz	de
@@ -11577,7 +11577,7 @@ NoteMap_ProcessLayeredNoteOn:
 	ld	xde, xwa
 	ld	a, (xsp+330)
 	extz	wa
-	lda	xbc, (0xc328:16)
+	lda	xbc, (AUDIO_STATE_SENT+132:16)
 	extz	xwa
 	add	xwa, xbc
 	ld	a, (xwa)
@@ -11606,7 +11606,7 @@ ProcessLayeredNoteOn_WriteReg:
 	ld	xde, xwa
 	ld	a, (xsp+330)
 	extz	wa
-	lda	xbc, (0xc328:16)
+	lda	xbc, (AUDIO_STATE_SENT+132:16)
 	extz	xwa
 	add	xwa, xbc
 	ld	a, (xwa)
@@ -11640,7 +11640,7 @@ ProcessLayeredNoteOn_CheckEnd:
 	ld	xde, xwa
 	ld	a, (xsp+330)
 	extz	wa
-	lda	xbc, (0xc328:16)
+	lda	xbc, (AUDIO_STATE_SENT+132:16)
 	extz	xwa
 	add	xwa, xbc
 	ld	a, (xwa)
@@ -11669,7 +11669,7 @@ ProcessLayeredNoteOn_WriteReg2:
 	ld	xde, xwa
 	ld	a, (xsp+330)
 	extz	wa
-	lda	xbc, (0xc328:16)
+	lda	xbc, (AUDIO_STATE_SENT+132:16)
 	extz	xwa
 	add	xwa, xbc
 	ld	a, (xwa)
@@ -11704,7 +11704,7 @@ ProcessLayeredNoteOn_WriteReg4:
 	jr	nz, ProcessLayeredNoteOn_InitVal
 	cpw	(0xcda8:16), 3
 	jr	nz, ProcessLayeredNoteOn_InitVal
-	lda	xwa, (0xc2a4:16)
+	lda	xwa, (AUDIO_STATE_SENT:16)
 	ld	bc, 2:i3
 	call	NoteMap_AssignVoiceParams
 ProcessLayeredNoteOn_InitVal:
@@ -11713,7 +11713,7 @@ ProcessLayeredNoteOn_InitVal:
 	jrl	nc, ProcessLayeredNoteOn_InitVal2
 ProcessLayeredNoteOn_LoadIter:
 	ld	wa, iz
-	lda	xbc, (0xc328:16)
+	lda	xbc, (AUDIO_STATE_SENT+132:16)
 	extz	xwa
 	add	xwa, xbc
 	ld	a, (xwa)
@@ -11768,7 +11768,7 @@ ProcessLayeredNoteOn_InitVal2:
 	jrl	nc, NoteMap_PopIzStoreRet
 ProcessLayeredNoteOn_LoadIter2:
 	ld	wa, iz
-	lda	xbc, (0xc328:16)
+	lda	xbc, (AUDIO_STATE_SENT+132:16)
 	extz	xwa
 	add	xwa, xbc
 	ld	a, (xwa)
@@ -11791,7 +11791,7 @@ ProcessLayeredNoteOn_LoadIter2:
 	jr	z, NoteMap_ClaimAndInitVoiceSlot_A
 	lda	xwa, (xsp + 2)
 	ld	xhl, xwa
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	ld	a, (xsp+332)
 	ld	e, a
 	extz	de
@@ -11807,7 +11807,7 @@ ProcessLayeredNoteOn_LoadIter2:
 	call	NoteMap_FindBestMatch
 	cp	l, 0xff
 	jr	z, NoteMap_ClaimAndInitVoiceSlot_A
-	lda	xwa, (0xc13e:16)
+	lda	xwa, (AUDIO_STATE:16)
 	ld	bc, 2:i3
 	call	NoteMap_InitVoiceSlots
 NoteMap_ClaimAndInitVoiceSlot_A:
@@ -11828,7 +11828,7 @@ NoteMap_ClaimAndInitVoiceSlot_A:
 	jr	z, NoteMap_LoopAdvance_Next
 	lda	xwa, (xsp + 2)
 	ld	xhl, xwa
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	ld	a, (xsp+332)
 	ld	e, a
 	extz	de
@@ -11844,7 +11844,7 @@ NoteMap_ClaimAndInitVoiceSlot_A:
 	call	NoteMap_FindBestMatch
 	cp	l, 0xff
 	jr	z, NoteMap_LoopAdvance_Next
-	lda	xwa, (0xc13e:16)
+	lda	xwa, (AUDIO_STATE:16)
 	ld	bc, 2:i3
 	call	NoteMap_InitVoiceSlots
 NoteMap_LoopAdvance_Next:
@@ -11861,7 +11861,7 @@ LoopAdvance_Next_CheckMem:
 	jr	nz, LoopAdvance_Next_InitVal
 	cpw	(0xcda8:16), 3
 	jr	nz, LoopAdvance_Next_InitVal
-	lda	xwa, (0xc2a4:16)
+	lda	xwa, (AUDIO_STATE_SENT:16)
 	ld	bc, 2:i3
 	call	NoteMap_AssignVoiceParams
 LoopAdvance_Next_InitVal:
@@ -11870,7 +11870,7 @@ LoopAdvance_Next_InitVal:
 	jrl	nc, NoteMap_PopIzStoreRet
 LoopAdvance_Next_LoadIter:
 	ld	wa, iz
-	lda	xbc, (0xc328:16)
+	lda	xbc, (AUDIO_STATE_SENT+132:16)
 	extz	xwa
 	add	xwa, xbc
 	ld	a, (xwa)
@@ -11930,7 +11930,7 @@ LoopAdvance_Next_CheckMem2:
 	jrl	nc, NoteMap_PopIzStoreRet
 LoopAdvance_Next_LoadIter2:
 	ld	wa, iz
-	lda	xbc, (0xc328:16)
+	lda	xbc, (AUDIO_STATE_SENT+132:16)
 	extz	xwa
 	add	xwa, xbc
 	ld	a, (xwa)
@@ -11953,7 +11953,7 @@ LoopAdvance_Next_LoadIter2:
 	jr	z, NoteMap_ClaimAndInitVoiceSlot_B
 	lda	xwa, (xsp + 2)
 	ld	xhl, xwa
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	ld	a, (xsp+332)
 	ld	e, a
 	extz	de
@@ -11969,7 +11969,7 @@ LoopAdvance_Next_LoadIter2:
 	call	NoteMap_FindBestMatch
 	cp	l, 0xff
 	jr	z, NoteMap_ClaimAndInitVoiceSlot_B
-	lda	xwa, (0xc13e:16)
+	lda	xwa, (AUDIO_STATE:16)
 	ld	bc, 2:i3
 	call	NoteMap_InitVoiceSlots
 NoteMap_ClaimAndInitVoiceSlot_B:
@@ -11990,7 +11990,7 @@ NoteMap_ClaimAndInitVoiceSlot_B:
 	jr	z, NoteMap_LoopAdvance_Next2
 	lda	xwa, (xsp + 2)
 	ld	xhl, xwa
-	lda	xbc, (0xc13e:16)
+	lda	xbc, (AUDIO_STATE:16)
 	ld	a, (xsp+332)
 	ld	e, a
 	extz	de
@@ -12006,7 +12006,7 @@ NoteMap_ClaimAndInitVoiceSlot_B:
 	call	NoteMap_FindBestMatch
 	cp	l, 0xff
 	jr	z, NoteMap_LoopAdvance_Next2
-	lda	xwa, (0xc13e:16)
+	lda	xwa, (AUDIO_STATE:16)
 	ld	bc, 2:i3
 	call	NoteMap_InitVoiceSlots
 NoteMap_LoopAdvance_Next2:
@@ -12024,7 +12024,7 @@ PopIzStoreRet_Prologue:
 	jr	nz, PopIzStoreRet_CheckEnd
 	cp	e, 0xff
 	jr	z, PopIzStoreRet_CheckEnd
-	lda	xde, (0xc2a4:16)
+	lda	xde, (AUDIO_STATE_SENT:16)
 	ld	a, (xsp)
 	ld	c, a
 	extz	bc
@@ -12036,13 +12036,13 @@ PopIzStoreRet_CheckEnd:
 	jr	z, PopIzStoreRet_CheckEnd_Skip
 	cp	e, 0xff
 	jr	z, PopIzStoreRet_CheckEnd_Skip
-	lda	xde, (0xc2a4:16)
+	lda	xde, (AUDIO_STATE_SENT:16)
 	ld	a, (xsp)
 	ld	c, a
 	extz	bc
 	ld	xwa, xde
 	call	NoteMap_AssignVoiceParams
-	lda	xde, (0xc13e:16)
+	lda	xde, (AUDIO_STATE:16)
 	ld	a, (xsp)
 	ld	c, a
 	extz	bc
@@ -12050,7 +12050,7 @@ PopIzStoreRet_CheckEnd:
 	call	NoteMap_AllocateVoice
 	jr	PopIzStoreRet_Increment
 PopIzStoreRet_CheckEnd_Skip:
-	lda	xde, (0xc13e:16)
+	lda	xde, (AUDIO_STATE:16)
 	ld	a, (xsp)
 	ld	c, a
 	extz	bc
@@ -12224,7 +12224,7 @@ SetParam_Return_WriteReg3:
 	ld	(xsp+167), 0xff
 	cp	(xsp+330), 0x19
 	jr	nz, SetParam_Return_LoadAddr
-	ld	a, (0xc362:16)
+	ld	a, (AUDIO_STATE_SENT+190:16)
 	ld	(xsp+330), a
 SetParam_Return_LoadAddr:
 	lda	xwa, (xsp)
@@ -12300,7 +12300,7 @@ SetParam_Return_WriteReg5:
 	ld	(xsp+167), 0xff
 	cp	(xsp+330), 0x19
 	jr	nz, SetParam_Return_LoadAddr2
-	ld	a, (0xc362:16)
+	ld	a, (AUDIO_STATE_SENT+190:16)
 	ld	(xsp+330), a
 SetParam_Return_LoadAddr2:
 	lda	xwa, (xsp)
@@ -14215,7 +14215,7 @@ ProcessControllers_R_Prologue:
 	jr	z, ProcessControllers_R_LoadDRAM
 	jr	PlayMode_ClearBit6
 ProcessControllers_R_LoadDRAM:
-	ld	de, (0xc4d8:16)
+	ld	de, (AUDIO_SEQ_TRACK_FLAGS:16)
 	and	de, 0x20
 	jr	z, PlayMode_UpdateAndReturn
 	or	(CHORD_FLAGS:24), 64
@@ -14251,7 +14251,7 @@ Voice_UpdatePlayModeState:
 	jr	z, PlayMode_CheckModes23
 	jr	PlayMode_ClearBit6_Alt
 PlayMode_CheckModes23:
-	ld	de, (0xc4d8:16)
+	ld	de, (AUDIO_SEQ_TRACK_FLAGS:16)
 	and	de, 0x20
 	jr	z, PlayMode_CheckSlotAndReturn
 	or	(CHORD_FLAGS:24), 64
@@ -14391,13 +14391,13 @@ Voice_CheckAndResetSlotState_Skip:
 	ld	e, (PANEL_STYLE+6:16)
 	and	e, 0x30
 	jr	nz, Voice_NullRet2
-	ld	de, (0xc4d8:16)
+	ld	de, (AUDIO_SEQ_TRACK_FLAGS:16)
 	and	de, 0x2
 	jr	nz, CheckAndResetSlotSta_LoadDRAM
 	bit	6, (CHORD_FLAGS:24)
 	jr	nz, CheckAndResetSlotSta_Block2
 CheckAndResetSlotSta_LoadDRAM:
-	ld	de, (0xc4d8:16)
+	ld	de, (AUDIO_SEQ_TRACK_FLAGS:16)
 	and	de, 0x2
 	jr	nz, CheckAndResetSlotSta_LoadDRAM2
 	bit	6, (CHORD_FLAGS:24)
@@ -14439,7 +14439,7 @@ NullRet2_TestBit24:
 	ld	de, (AUDIO_CONFIG_FLAGS:16)
 	and	de, 0x2
 	jr	nz, EffectState_Dispatch
-	ld	de, (0xc4d8:16)
+	ld	de, (AUDIO_SEQ_TRACK_FLAGS:16)
 	and	de, 0x2
 	jr	nz, EffectState_Dispatch
 	ld	de, (AUDIO_CONFIG_FLAGS:16)
@@ -15359,7 +15359,7 @@ Voice_InitPartAllocState_Skip:
 	calr	InitPartAllocState_TestBit242
 	calr	InitPartAllocState_OrBits
 	ldfr_werp	DE, 0x3e
-	ld	de, (0xc4d8:16)
+	ld	de, (AUDIO_SEQ_TRACK_FLAGS:16)
 	and	de, 0x2
 	ldto_werp	DE, 0x3e
 	jr	z, InitPartAllocState_TestBit24
@@ -18998,8 +18998,8 @@ AccWrap_PlayModeStateMachine_Skip:
 	ret	le
 	subw	(0xcfda:16), 1
 	ret	nz
-	res	1, (0x2896:16)
-	res	2, (0x2896:16)
+	res	1, (SEQ_METRO_FLAGS:16)
+	res	2, (SEQ_METRO_FLAGS:16)
 	res	3, (SEQ_RTMCFG:16)
 	ei	6
 	ldw	(SEQ_BEAT_COUNT:16), 0

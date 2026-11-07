@@ -1023,7 +1023,7 @@ Banner_Loop_CheckEntry:
 	jr z, Banner_Loop_Exit
 	cp a, 0xd
 	jr z, Banner_Loop_Exit
-	set	6, (0x2897:16)
+	set	6, (SEQ_CONTROL_FLAGS:16)
 	lda xwa, (xsp + 2)
 	ld (xwa), 0xd3
 	ld (xwa + 1), 0x7e
@@ -8838,7 +8838,7 @@ FileIO_ErrorCodeByteBlock_Skip5:
 	extz	wa
 	lda	xbc, (FileIO_ErrorCodeByteBlock_Entry_Data:24)
 	ld	a, (xbc+wa)
-	cp	a, 119
+	cp	a, TT_DKMDLY
 	jr	z, FileIO_ErrorCodeByteBlock_Skip6
 	cp	a, 108
 	jr	z, FileIO_ErrorCodeByteBlock_Loop2
@@ -8867,7 +8867,7 @@ FileIO_ErrorCodeByteBlock_Skip8:
 	extz	wa
 	lda	xbc, (FileIO_ErrorCodeByteBlock_Entry_Data:24)
 	ld	a, (xbc+wa)
-	cp	a, 119
+	cp	a, TT_DKMDLY
 	jr	z, FileIO_ErrorCodeByteBlock_Skip9
 	cp	a, 108
 	jr	z, FileIO_ErrorCodeByteBlock_Loop2

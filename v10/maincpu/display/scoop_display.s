@@ -3033,7 +3033,7 @@ SqStep_AuditionCursorNotes:
 	call	SeqTrack_ReadCursorByte
 	cp	a, 144
 	jrl	nz, Timer_ModeHandler_0_Skip4
-	or	(0x28b3:16), 64
+	or	(SEQ_CONTROL_FLAGS:16), 64
 	ld	a, 1:opc
 	call	SeqCursor_Save
 Timer_ModeHandler_0_Loop:
@@ -3147,7 +3147,7 @@ SoundEvt_Mode1_StepAndRefresh_Helper:
 	inc	2, xsp
 	xor	a, a
 	call	SeqCursor_Restore
-	or	(0x28b3:16), 64
+	or	(SEQ_CONTROL_FLAGS:16), 64
 	or	(0x0f54:16), 1
 	ld	(3431:16), 0
 	call	VoiceAlloc_ScoopDisplayProcess
@@ -6103,13 +6103,13 @@ VoiceCtrl_CheckAndReset:
 VoiceCtrl_CheckAndReset_Return:
 	ret
 
-; Sets bit 6 of 0x28b3, writes the 5-byte sequencer-buffer event {0x90, 0x7f, 0x33, 0, part-1}
+; Sets bit 6 of SEQ_CONTROL_FLAGS, writes the 5-byte sequencer-buffer event {0x90, 0x7f, 0x33, 0, part-1}
 ; (SeqBuf_WriteByte; part = the byte at 0xeee) and runs VoiceAlloc_ScoopDisplayProcess.
 ; Preserves WA and XHL.
 VoiceCtrl_SendNoteOffSequence:
 	push xhl
 	pushw wa
-	or (0x28b3:16), 64
+	or (SEQ_CONTROL_FLAGS:16), 64
 	ld a, 0x90:opc
 	ld hl, wa
 	pushw hl
@@ -8034,7 +8034,7 @@ SqStep_RestoreOnLeave_Skip4:
 	xor	a, a
 	call	Part_InitVoiceDefaults
 	popw	wa
-	or	(0x28b3:16), 16
+	or	(SEQ_CONTROL_FLAGS:16), 16
 	and	(SEQ_RTMCFG:16), 247
 	and	(SEQ_RTMCFG:16), 251
 	and	(0x0d53:16), 247
