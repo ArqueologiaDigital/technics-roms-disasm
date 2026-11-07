@@ -164,12 +164,31 @@ if __name__ == '__main__':
 # ====================================================================== the GUI graph
 # Boot_InitWorkRAM (boot/system_handlers.s) copies two ROM images into DRAM at reset; a view
 # record registered at a DRAM address is initialised from the ROM bytes at the image address.
-WORK_RAM_IMAGES = ((0x3D524, 0xEED8C8, 0x219E), (0xE35E, 0xEEFA66, 0x95B))
+WORK_RAM_IMAGES = ((0x3D524, 0xEED8C8, 0x219E), (0xE35E, 0xEEFA66, 0x95B))   # v10 (v9, v7 the same)
+_IMAGES_OF_TREE = {}
 
 
-def rom_image_of(a):
-    """the ROM address a DRAM address is initialised from (None if it is not in an image)."""
-    for ram, rom, n in WORK_RAM_IMAGES:
+def work_ram_images(tree):
+    """(DRAM, ROM, length) of each image, read from the tree's own Boot_InitWorkRAM
+    (`ld xde, <DRAM>; ld xhl, <image label>; ld xbc, <length>`) and its ELF symbols: v6 / v5 place
+    the images elsewhere (0xEED7CC / 0xEED7B4) and copy 0x219A bytes (lane kn5000-naka3, 2026-11-07)."""
+    if tree in _IMAGES_OF_TREE:
+        return _IMAGES_OF_TREE[tree]
+    import nakarest_objtab_map as O
+    txt = read(os.path.join(ROOT, tree, 'maincpu', 'boot', 'system_handlers.s'))
+    sym = O.nm(tree)[0]
+    out = []
+    for ram, lab, n in re.findall(r'ld\s+xde,\s*(0x[0-9a-fA-F]+)\s*\n\s*ld\s+xhl,\s*(WorkRamInit_Image2?)\s*\n'
+                                  r'\s*ld\s+xbc,\s*(0x[0-9a-fA-F]+)', txt):
+        out.append((int(ram, 16), sym[lab], int(n, 16)))
+    _IMAGES_OF_TREE[tree] = tuple(out) or WORK_RAM_IMAGES
+    return _IMAGES_OF_TREE[tree]
+
+
+def rom_image_of(a, tree='v10'):
+    """the ROM address a DRAM address is initialised from (None if it is not in an image), in the
+    given tree's image."""
+    for ram, rom, n in (WORK_RAM_IMAGES if tree == 'v10' else work_ram_images(tree)):
         if ram <= a < ram + n:
             return a - ram + rom
     return None
@@ -297,7 +316,7 @@ class Graph:
                 continue
             for k, a in enumerate(m.entries(reg)):
                 if not m.inrom(a):
-                    a = rom_image_of(a)
+                    a = rom_image_of(a, m.v)
                 if a is not None:
                     self.rom[(reg['slot'], k)] = (a, tuple(m.u16(a + o) for o in (4, 6, 8, 10)))
         self.edges = []                     # (from title or None, from record key, to title, kind, label)

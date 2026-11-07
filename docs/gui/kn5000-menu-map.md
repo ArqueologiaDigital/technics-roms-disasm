@@ -658,7 +658,7 @@ a Composer copy page. Three box procs fill different notify data while on it.
     - `OBJ_CmpNcpScreen_Line_7` Line [252,192 60x1]
     - `OBJ_CmpNcpScreen_Line_8` Line [312,192 1x10]
     - `OBJ_CmpNcpScreen_Box` Box [4,55 147x127]
-      - `0xEEDC16` PsCmpCpFPtnBox, record outside the C sources
+      - `CmpNcpScreen_PsCmpCpFPtnBox` PsCmpCpFPtnBox, record outside the C sources
     - `OBJ_Group_Label` Label "GROUP:" [10,60 52x19]
     - `OBJ_Rhythm_Label` Label "RHYTHM:" [10,100 60x19]
     - `OBJ_Pattern_Label_2` Label "PATTERN:" [10,140 68x19]
@@ -666,12 +666,12 @@ a Composer copy page. Three box procs fill different notify data while on it.
     - `OBJ_To_Label_2` Label "TO" [200,33 36x19]
     - `OBJ_CmpNcpScreen_VwEditSwBox` VwEditSwBox [281,160 31x18]
     - `OBJ_CmpNcpScreen_Box_2` Box [194,55 95x95]
-      - `0xEEDC3A` PsNameMemBox, record outside the C sources
-      - `0xEEDC5E` AcMemNoBox, record outside the C sources
+      - `CmpNcpScreen_PsNameMemBox` PsNameMemBox, record outside the C sources
+      - `CmpNcpScreen_AcMemNoBox` AcMemNoBox, record outside the C sources
     - `OBJ_Memory_Label_4` Label "MEMORY:" [200,60 60x19]
     - `OBJ_Pattern_Label_3` Label "PATTERN:" [200,100 68x19]
-    - `0xEEDC82` PsCmpCpFGrpBox, record outside the C sources
-    - `0xEEDCA6` PsCmpCpFVariBox, record outside the C sources
+    - `CmpNcpScreen_PsCmpCpFGrpBox` PsCmpCpFGrpBox, record outside the C sources
+    - `CmpNcpScreen_PsCmpCpFVariBox` PsCmpCpFVariBox, record outside the C sources
     - `OBJ_CmpNcpScreen_Yajirushi` Yajirushi [160,88 30x30]
 
 ### `TITLE_CMSEQCP` -- "SEQ TO COMPOSER COPY"
@@ -707,14 +707,14 @@ a Composer copy page. Three box procs fill different notify data while on it.
     - `OBJ_Last_Label` Label "LAST" [10,137 36x19]
     - `OBJ_Meas_Label_2` Label "MEAS:" [10,150 44x19]
     - `OBJ_S2CScreen_Box_2` Box [98,139 36x30]
-      - `0xEEDCCA` PsS2cTransBox, record outside the C sources
+      - `S2CScreen_PsS2cTransBox` PsS2cTransBox, record outside the C sources
     - `OBJ_Trn_Label` Label "TRN" [100,123 28x19]
     - `OBJ_Mem_Label` Label "MEM" [282,56 28x19]
     - `OBJ_ComposerMemory_Label` Label "COMPOSER MEMORY" [140,48 124x19]
-    - `0xEEDCEE` PsS2cFmeasBox, record outside the C sources
+    - `S2CScreen_PsS2cFmeasBox` PsS2cFmeasBox, record outside the C sources
     - `OBJ_S2cSeqSongNo` PsSeqSongNoBox [10,89 80x14]
     - `OBJ_S2cMemNo` AcS2cMemNoBox [137,64 140x22]
-    - `0xEEDD12` PsS2cLmeasBox, record outside the C sources
+    - `S2CScreen_PsS2cLmeasBox` PsS2cLmeasBox, record outside the C sources
     - `OBJ_S2CScreen_Yajirushi` Yajirushi [102,84 30x30]
     - `OBJ_S2cGrid` S2cGridBox [138,92 140x150]
     - `OBJ_S2CScreen_AcIndexEditSw` AcIndexEditSw [164,216 32x23]
@@ -2248,11 +2248,11 @@ the Composer (mode 0xE, MD_CMP) real-time page.
     - `OBJ_InstErs_VwMenuBox` VwMenuBox "INST ERS" [235,117 77x20]
     - `OBJ_QUANTIZE_VwMenuBox` VwMenuBox "QUANTIZE" [235,159 77x20]
     - `OBJ_Solo_VwMenuBox` VwMenuBox "  SOLO" [235,201 77x20]
-    - `0xEEDB58` AcCmpRecBox, record outside the C sources
-    - `0xEEDB7E` AcCmpRecBox, record outside the C sources
-    - `0xEEDBA4` AcCmpRecBox, record outside the C sources
-    - `0xEEDBCA` AcCmpRecBox, record outside the C sources
-    - `0xEEDBF0` AcCmpRecBox, record outside the C sources
+    - `CmpRealScreen_AcCmpRecBox` AcCmpRecBox, record outside the C sources
+    - `CmpRealScreen_AcCmpRecBox_2` AcCmpRecBox, record outside the C sources
+    - `CmpRealScreen_AcCmpRecBox_3` AcCmpRecBox, record outside the C sources
+    - `CmpRealScreen_AcCmpRecBox_4` AcCmpRecBox, record outside the C sources
+    - `CmpRealScreen_AcCmpRecBox_5` AcCmpRecBox, record outside the C sources
     - `OBJ_CmpQtz` PsCmpQtzBox [143,108 35x16]
     - `OBJ_CmpMeas` PsCmpMeasBox [140,134 24x18]
 

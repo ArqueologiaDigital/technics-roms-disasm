@@ -5,8 +5,8 @@
 # scripts/analysis/l2_symbol_reference.py --regen
 # Do not hand-edit: rename in the sources and regenerate.
 #
-#   symbols .................. 54,158
-#   semantic names ........... 53,836 (99.4%)
+#   symbols .................. 54,171
+#   semantic names ........... 53,849 (99.4%)
 #   positional names ......... 322
 #
 LED_patterns_indicating_firmware_version 00E00000
@@ -16218,6 +16218,19 @@ Sprintf_TypeSwitch 00EED764
 Sprintf_HexDigitsLower 00EED790
 Sprintf_HexDigitsUpper 00EED7A2
 WorkRamInit_Image 00EED7B4
+CmpRealScreen_AcCmpRecBox 00EEDA44
+CmpRealScreen_AcCmpRecBox_2 00EEDA6A
+CmpRealScreen_AcCmpRecBox_3 00EEDA90
+CmpRealScreen_AcCmpRecBox_4 00EEDAB6
+CmpRealScreen_AcCmpRecBox_5 00EEDADC
+CmpNcpScreen_PsCmpCpFPtnBox 00EEDB02
+CmpNcpScreen_PsNameMemBox 00EEDB26
+CmpNcpScreen_AcMemNoBox 00EEDB4A
+CmpNcpScreen_PsCmpCpFGrpBox 00EEDB6E
+CmpNcpScreen_PsCmpCpFVariBox 00EEDB92
+S2CScreen_PsS2cTransBox 00EEDBB6
+S2CScreen_PsS2cFmeasBox 00EEDBDA
+S2CScreen_PsS2cLmeasBox 00EEDBFE
 RamInit_NumStrPtrs 00EEDC22
 RamInit_NoteNamePtrs 00EEDC56
 RamInit_DisableEnablePtrs 00EEDC86

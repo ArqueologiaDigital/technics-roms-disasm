@@ -1007,11 +1007,11 @@ enum Suna_ViewableTable_0B5_objects {
       OBJ_InstErs_VwMenuBox,             /* 21 VwMenuBox */
       OBJ_QUANTIZE_VwMenuBox,            /* 22 VwMenuBox */
       OBJ_Solo_VwMenuBox,                /* 23 VwMenuBox */
-      OBJ_s0B5_e24,                      /* 24 AcCmpRecBox, RAM record initialised from the work-RAM image (0xEEDB58) */
-      OBJ_s0B5_e25,                      /* 25 AcCmpRecBox, RAM record initialised from the work-RAM image (0xEEDB7E) */
-      OBJ_s0B5_e26,                      /* 26 AcCmpRecBox, RAM record initialised from the work-RAM image (0xEEDBA4) */
-      OBJ_s0B5_e27,                      /* 27 AcCmpRecBox, RAM record initialised from the work-RAM image (0xEEDBCA) */
-      OBJ_s0B5_e28,                      /* 28 AcCmpRecBox, RAM record initialised from the work-RAM image (0xEEDBF0) */
+      OBJ_CmpRealScreen_AcCmpRecBox,     /* 24 AcCmpRecBox, RAM record initialised from the work-RAM image (CmpRealScreen_AcCmpRecBox) */
+      OBJ_CmpRealScreen_AcCmpRecBox_2,   /* 25 AcCmpRecBox, RAM record initialised from the work-RAM image (CmpRealScreen_AcCmpRecBox_2) */
+      OBJ_CmpRealScreen_AcCmpRecBox_3,   /* 26 AcCmpRecBox, RAM record initialised from the work-RAM image (CmpRealScreen_AcCmpRecBox_3) */
+      OBJ_CmpRealScreen_AcCmpRecBox_4,   /* 27 AcCmpRecBox, RAM record initialised from the work-RAM image (CmpRealScreen_AcCmpRecBox_4) */
+      OBJ_CmpRealScreen_AcCmpRecBox_5,   /* 28 AcCmpRecBox, RAM record initialised from the work-RAM image (CmpRealScreen_AcCmpRecBox_5) */
       OBJ_CmpQtz,                        /* 29 PsCmpQtzBox "CmpQtz" */
       OBJ_CmpMeas,                       /* 30 PsCmpMeasBox "CmpMeas" */
 };
@@ -1048,39 +1048,39 @@ enum Suna_ViewableTable_0B7_objects {
  * prev = siblings) by these names.  View id of element OBJ_x: NAKA_VIEW_ID(Suna_ViewableTable_0B8, OBJ_x). */
 #define Suna_ViewableTable_0B8_SLOT 0x0B8u
 enum Suna_ViewableTable_0B8_objects {
-    OBJ_CmpNcpScreen,                   /*  0 TtlScreen "CmpNcpScreen" */
-      OBJ_CmpNcpScreen_IvMainEditSw,    /*  1 IvMainEditSw */
-      OBJ_CmpNcpFitmSw,                 /*  2 VwWideESBox "CmpNcpFitmSw" */
-      OBJ_CmpNcpScreen_VwWideESBox,     /*  3 VwWideESBox */
-      OBJ_CmpNcpTitmSw,                 /*  4 VwWideESBox "CmpNcpTitmSw" */
-      OBJ_CmpNcpScreen_VwWideESBox_2,   /*  5 VwWideESBox */
-      OBJ_ItemValueItemValue_Label,     /*  6 Label */
-      OBJ_From_Label,                   /*  7 Label */
-      OBJ_CmpNcpScreen_Line,            /*  8 Line */
-      OBJ_CmpNcpScreen_Line_2,          /*  9 Line */
-      OBJ_CmpNcpScreen_Line_3,          /* 10 Line */
-      OBJ_CmpNcpScreen_Line_4,          /* 11 Line */
-      OBJ_To_Label,                     /* 12 Label */
-      OBJ_CmpNcpScreen_Line_5,          /* 13 Line */
-      OBJ_CmpNcpScreen_Line_6,          /* 14 Line */
-      OBJ_CmpNcpScreen_Line_7,          /* 15 Line */
-      OBJ_CmpNcpScreen_Line_8,          /* 16 Line */
-      OBJ_CmpNcpScreen_Box,             /* 17 Box */
-        OBJ_s0B8_e18,                   /* 18 PsCmpCpFPtnBox, RAM record initialised from the work-RAM image (0xEEDC16) */
-      OBJ_Group_Label,                  /* 19 Label */
-      OBJ_Rhythm_Label,                 /* 20 Label */
-      OBJ_Pattern_Label_2,              /* 21 Label */
-      OBJ_From_Label_2,                 /* 22 Label */
-      OBJ_To_Label_2,                   /* 23 Label */
-      OBJ_CmpNcpScreen_VwEditSwBox,     /* 24 VwEditSwBox */
-      OBJ_CmpNcpScreen_Box_2,           /* 25 Box */
-        OBJ_s0B8_e26,                   /* 26 PsNameMemBox, RAM record initialised from the work-RAM image (0xEEDC3A) */
-        OBJ_s0B8_e27,                   /* 27 AcMemNoBox, RAM record initialised from the work-RAM image (0xEEDC5E) */
-      OBJ_Memory_Label_4,               /* 28 Label */
-      OBJ_Pattern_Label_3,              /* 29 Label */
-      OBJ_s0B8_e30,                     /* 30 PsCmpCpFGrpBox, RAM record initialised from the work-RAM image (0xEEDC82) */
-      OBJ_s0B8_e31,                     /* 31 PsCmpCpFVariBox, RAM record initialised from the work-RAM image (0xEEDCA6) */
-      OBJ_CmpNcpScreen_Yajirushi,       /* 32 Yajirushi */
+    OBJ_CmpNcpScreen,                     /*  0 TtlScreen "CmpNcpScreen" */
+      OBJ_CmpNcpScreen_IvMainEditSw,      /*  1 IvMainEditSw */
+      OBJ_CmpNcpFitmSw,                   /*  2 VwWideESBox "CmpNcpFitmSw" */
+      OBJ_CmpNcpScreen_VwWideESBox,       /*  3 VwWideESBox */
+      OBJ_CmpNcpTitmSw,                   /*  4 VwWideESBox "CmpNcpTitmSw" */
+      OBJ_CmpNcpScreen_VwWideESBox_2,     /*  5 VwWideESBox */
+      OBJ_ItemValueItemValue_Label,       /*  6 Label */
+      OBJ_From_Label,                     /*  7 Label */
+      OBJ_CmpNcpScreen_Line,              /*  8 Line */
+      OBJ_CmpNcpScreen_Line_2,            /*  9 Line */
+      OBJ_CmpNcpScreen_Line_3,            /* 10 Line */
+      OBJ_CmpNcpScreen_Line_4,            /* 11 Line */
+      OBJ_To_Label,                       /* 12 Label */
+      OBJ_CmpNcpScreen_Line_5,            /* 13 Line */
+      OBJ_CmpNcpScreen_Line_6,            /* 14 Line */
+      OBJ_CmpNcpScreen_Line_7,            /* 15 Line */
+      OBJ_CmpNcpScreen_Line_8,            /* 16 Line */
+      OBJ_CmpNcpScreen_Box,               /* 17 Box */
+        OBJ_CmpNcpScreen_PsCmpCpFPtnBox,  /* 18 PsCmpCpFPtnBox, RAM record initialised from the work-RAM image (CmpNcpScreen_PsCmpCpFPtnBox) */
+      OBJ_Group_Label,                    /* 19 Label */
+      OBJ_Rhythm_Label,                   /* 20 Label */
+      OBJ_Pattern_Label_2,                /* 21 Label */
+      OBJ_From_Label_2,                   /* 22 Label */
+      OBJ_To_Label_2,                     /* 23 Label */
+      OBJ_CmpNcpScreen_VwEditSwBox,       /* 24 VwEditSwBox */
+      OBJ_CmpNcpScreen_Box_2,             /* 25 Box */
+        OBJ_CmpNcpScreen_PsNameMemBox,    /* 26 PsNameMemBox, RAM record initialised from the work-RAM image (CmpNcpScreen_PsNameMemBox) */
+        OBJ_CmpNcpScreen_AcMemNoBox,      /* 27 AcMemNoBox, RAM record initialised from the work-RAM image (CmpNcpScreen_AcMemNoBox) */
+      OBJ_Memory_Label_4,                 /* 28 Label */
+      OBJ_Pattern_Label_3,                /* 29 Label */
+      OBJ_CmpNcpScreen_PsCmpCpFGrpBox,    /* 30 PsCmpCpFGrpBox, RAM record initialised from the work-RAM image (CmpNcpScreen_PsCmpCpFGrpBox) */
+      OBJ_CmpNcpScreen_PsCmpCpFVariBox,   /* 31 PsCmpCpFVariBox, RAM record initialised from the work-RAM image (CmpNcpScreen_PsCmpCpFVariBox) */
+      OBJ_CmpNcpScreen_Yajirushi,         /* 32 Yajirushi */
 };
 
 /* Viewable table Naka_SeqToComposer_Screens, registry slot 0xB9, 37 elements.
@@ -1114,14 +1114,14 @@ enum Naka_SeqToComposer_Screens_objects {
       OBJ_Last_Label,                  /* 21 Label */
       OBJ_Meas_Label_2,                /* 22 Label */
       OBJ_S2CScreen_Box_2,             /* 23 Box */
-        OBJ_s0B9_e24,                  /* 24 PsS2cTransBox, RAM record initialised from the work-RAM image (0xEEDCCA) */
+        OBJ_S2CScreen_PsS2cTransBox,   /* 24 PsS2cTransBox, RAM record initialised from the work-RAM image (S2CScreen_PsS2cTransBox) */
       OBJ_Trn_Label,                   /* 25 Label */
       OBJ_Mem_Label,                   /* 26 Label */
       OBJ_ComposerMemory_Label,        /* 27 Label */
-      OBJ_s0B9_e28,                    /* 28 PsS2cFmeasBox, RAM record initialised from the work-RAM image (0xEEDCEE) */
+      OBJ_S2CScreen_PsS2cFmeasBox,     /* 28 PsS2cFmeasBox, RAM record initialised from the work-RAM image (S2CScreen_PsS2cFmeasBox) */
       OBJ_S2cSeqSongNo,                /* 29 PsSeqSongNoBox "S2cSeqSongNo" */
       OBJ_S2cMemNo,                    /* 30 AcS2cMemNoBox "S2cMemNo" */
-      OBJ_s0B9_e31,                    /* 31 PsS2cLmeasBox, RAM record initialised from the work-RAM image (0xEEDD12) */
+      OBJ_S2CScreen_PsS2cLmeasBox,     /* 31 PsS2cLmeasBox, RAM record initialised from the work-RAM image (S2CScreen_PsS2cLmeasBox) */
       OBJ_S2CScreen_Yajirushi,         /* 32 Yajirushi */
       OBJ_S2cGrid,                     /* 33 S2cGridBox "S2cGrid" */
       OBJ_S2CScreen_AcIndexEditSw,     /* 34 AcIndexEditSw */
@@ -3831,7 +3831,7 @@ const naka_composer_style_t naka_composer_style_data
         .class_ = NAKA_CLASS(VwMenuBox),
         .super = OBJ_CmpRealScreen,
         .sub = NAKA_NONE,
-        .next = OBJ_s0B5_e24,
+        .next = OBJ_CmpRealScreen_AcCmpRecBox,
         .prev = OBJ_QUANTIZE_VwMenuBox,
         .flag = VF_Const,
         .rect = NAKA_XYWH(235, 201, 77, 20),
@@ -3854,7 +3854,7 @@ const naka_composer_style_t naka_composer_style_data
         .super = OBJ_CmpRealScreen,
         .sub = NAKA_NONE,
         .next = OBJ_CmpMeas,
-        .prev = OBJ_s0B5_e28,
+        .prev = OBJ_CmpRealScreen_AcCmpRecBox_5,
         .flag = VF_Const,
         .rect = NAKA_XYWH(143, 108, 35, 16),
         .color = CL_WallPattern,
@@ -4264,7 +4264,7 @@ const naka_composer_style_t naka_composer_style_data
     .CmpNcpScreen_Box = {
         .class_ = NAKA_CLASS(Box),
         .super = OBJ_CmpNcpScreen,
-        .sub = OBJ_s0B8_e18,
+        .sub = OBJ_CmpNcpScreen_PsCmpCpFPtnBox,
         .next = OBJ_Group_Label,
         .prev = OBJ_CmpNcpScreen_Line_8,
         .flag = VF_Const,
@@ -4372,7 +4372,7 @@ const naka_composer_style_t naka_composer_style_data
     .CmpNcpScreen_Box_2 = {
         .class_ = NAKA_CLASS(Box),
         .super = OBJ_CmpNcpScreen,
-        .sub = OBJ_s0B8_e26,
+        .sub = OBJ_CmpNcpScreen_PsNameMemBox,
         .next = OBJ_Memory_Label_4,
         .prev = OBJ_CmpNcpScreen_VwEditSwBox,
         .flag = VF_Const,
@@ -4400,7 +4400,7 @@ const naka_composer_style_t naka_composer_style_data
         .class_ = NAKA_CLASS(Label),
         .super = OBJ_CmpNcpScreen,
         .sub = NAKA_NONE,
-        .next = OBJ_s0B8_e30,
+        .next = OBJ_CmpNcpScreen_PsCmpCpFGrpBox,
         .prev = OBJ_Memory_Label_4,
         .flag = VF_Const,
         .rect = NAKA_XYWH(200, 100, 68, 19),
@@ -4416,7 +4416,7 @@ const naka_composer_style_t naka_composer_style_data
         .super = OBJ_CmpNcpScreen,
         .sub = NAKA_NONE,
         .next = NAKA_NONE,
-        .prev = OBJ_s0B8_e31,
+        .prev = OBJ_CmpNcpScreen_PsCmpCpFVariBox,
         .flag = VF_Const,
         .rect = NAKA_XYWH(160, 88, 30, 30),
         .color = CL_White,
@@ -4795,7 +4795,7 @@ const naka_composer_style_t naka_composer_style_data
     .S2CScreen_Box_2 = {
         .class_ = NAKA_CLASS(Box),
         .super = OBJ_S2CScreen,
-        .sub = OBJ_s0B9_e24,
+        .sub = OBJ_S2CScreen_PsS2cTransBox,
         .next = OBJ_Trn_Label,
         .prev = OBJ_Meas_Label_2,
         .flag = VF_Const,
@@ -4838,7 +4838,7 @@ const naka_composer_style_t naka_composer_style_data
         .class_ = NAKA_CLASS(Label),
         .super = OBJ_S2CScreen,
         .sub = NAKA_NONE,
-        .next = OBJ_s0B9_e28,
+        .next = OBJ_S2CScreen_PsS2cFmeasBox,
         .prev = OBJ_Mem_Label,
         .flag = VF_Const,
         .rect = NAKA_XYWH(140, 48, 124, 19),
@@ -4854,7 +4854,7 @@ const naka_composer_style_t naka_composer_style_data
         .super = OBJ_S2CScreen,
         .sub = NAKA_NONE,
         .next = OBJ_S2cMemNo,
-        .prev = OBJ_s0B9_e28,
+        .prev = OBJ_S2CScreen_PsS2cFmeasBox,
         .flag = VF_Const,
         .rect = NAKA_XYWH(10, 89, 80, 14),
         .color = CL_WallPattern,
@@ -4869,7 +4869,7 @@ const naka_composer_style_t naka_composer_style_data
         .class_ = NAKA_CLASS(AcS2cMemNoBox),
         .super = OBJ_S2CScreen,
         .sub = NAKA_NONE,
-        .next = OBJ_s0B9_e31,
+        .next = OBJ_S2CScreen_PsS2cLmeasBox,
         .prev = OBJ_S2cSeqSongNo,
         .flag = VF_Const,
         .rect = NAKA_XYWH(137, 64, 140, 22),
@@ -4886,7 +4886,7 @@ const naka_composer_style_t naka_composer_style_data
         .super = OBJ_S2CScreen,
         .sub = NAKA_NONE,
         .next = OBJ_S2cGrid,
-        .prev = OBJ_s0B9_e31,
+        .prev = OBJ_S2CScreen_PsS2cLmeasBox,
         .flag = VF_Const,
         .rect = NAKA_XYWH(102, 84, 30, 30),
         .color = CL_White,
