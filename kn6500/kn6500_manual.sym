@@ -142,3 +142,156 @@
 0x4C38010A  wai_sem_Impl            ; wai_sem's body, behind the wrapper wai_sem; KernelErrorHook d0 = -53 (H'ffcb, wai_sem), d1 = E_CTX (uITRON 3.0 sect. 6.3; ../kn7000/notes/uitron3-function-codes)
 0x4C3809A4  ena_dsp                 ; uITRON ena_dsp, called directly (no wrapper); KernelErrorHook d0 = -29 (H'ffe3, ena_dsp), d1 = E_CTX (uITRON 3.0 sect. 6.3; ../kn7000/notes/uitron3-function-codes)
 0x4C380C9D  ref_sem                 ; uITRON ref_sem, called directly (no wrapper); program 942's exported ref_sem_X calls it, carried here by an identical body
+;
+; ---- lane open14/sibling-names3 (2026-11-07): sibling-only code named by hand (the KN6000's rows carried by
+;      ../kn7000/notes/sibling-names3-probes/port_hand_names.py, the XAPR slot callers by xapr_slot_callers.py,
+;      trampoline bodies by wrapper_bodies.py); evidence classes: ../kn7000/notes/sibling-names3/README.md.
+0x4C174250  XaprCallCstFileName     ; table: calls the XAPR header slot +0x20 (`mov (0x97800020), aN / calls (aN)`) when XaprBoardPresent: the plug-in's XaprExtCstFileName
+0x4C17426C  XaprCallCstEntryName    ; table: calls the XAPR header slot +0x24 (`mov (0x97800024), aN / calls (aN)`) when XaprBoardPresent: the plug-in's XaprExtCstEntryName
+0x4C174288  XaprCallSmfFileName     ; table: calls the XAPR header slot +0x28 (`mov (0x97800028), aN / calls (aN)`) when XaprBoardPresent: the plug-in's XaprExtSmfFileName
+0x4C1742A4  XaprCallFileError       ; table: calls the XAPR header slot +0x2C (`mov (0x9780002c), aN / calls (aN)`) when XaprBoardPresent: the plug-in's XaprExtFileError
+0x4C1742BF  XaprCallFileOpen        ; table: calls the XAPR header slot +0x30 (`mov (0x97800030), aN / calls (aN)`) when XaprBoardPresent: the plug-in's XaprExtFileOpen
+0x4C1742DC  XaprCallFileClose       ; table: calls the XAPR header slot +0x34 (`mov (0x97800034), aN / calls (aN)`) when XaprBoardPresent: the plug-in's XaprExtFileClose
+0x4C1742F7  XaprCallFileRemove      ; table: calls the XAPR header slot +0x38 (`mov (0x97800038), aN / calls (aN)`) when XaprBoardPresent: the plug-in's XaprExtFileRemove
+0x4C174312  XaprCallFileGetc        ; table: calls the XAPR header slot +0x3C (`mov (0x9780003c), aN / calls (aN)`) when XaprBoardPresent: the plug-in's XaprExtFileGetc
+0x4C17432D  XaprCallFilePutc        ; table: calls the XAPR header slot +0x40 (`mov (0x97800040), aN / calls (aN)`) when XaprBoardPresent: the plug-in's XaprExtFilePutc
+0x4C174349  XaprCallFileRead        ; table: calls the XAPR header slot +0x44 (`mov (0x97800044), aN / calls (aN)`) when XaprBoardPresent: the plug-in's XaprExtFileRead
+0x4C174361  XaprCallFileWrite       ; table: calls the XAPR header slot +0x48 (`mov (0x97800048), aN / calls (aN)`) when XaprBoardPresent: the plug-in's XaprExtFileWrite
+0x4C174379  XaprCallFileSeek        ; table: calls the XAPR header slot +0x4C (`mov (0x9780004c), aN / calls (aN)`) when XaprBoardPresent: the plug-in's XaprExtFileSeek
+0x4C174396  XaprCallFileRewind      ; table: calls the XAPR header slot +0x50 (`mov (0x97800050), aN / calls (aN)`) when XaprBoardPresent: the plug-in's XaprExtFileRewind
+0x4C1743B1  XaprCallFileTell        ; table: calls the XAPR header slot +0x54 (`mov (0x97800054), aN / calls (aN)`) when XaprBoardPresent: the plug-in's XaprExtFileTell
+0x4C14F38B  FileError               ; same-body: = KN6000 0x4C14EF02 (kn6000_manual.sym, table): the same masked body in the same place of the routine order
+0x4C14F449  FileClose               ; same-body: = KN6000 0x4C14EFC0 (kn6000_manual.sym, table): the same masked body in the same place of the routine order
+0x4C14F47B  FileRemove              ; same-body: = KN6000 0x4C14EFF2 (kn6000_manual.sym, table): the same masked body in the same place of the routine order
+0x4C14F532  FileGetc                ; same-body: = KN6000 0x4C14F0A9 (kn6000_manual.sym, table): the same masked body in the same place of the routine order
+0x4C14F582  FilePutc                ; same-body: = KN6000 0x4C14F0F9 (kn6000_manual.sym, table): the same masked body in the same place of the routine order
+0x4C14F5E1  FileRead                ; same-body: = KN6000 0x4C14F158 (kn6000_manual.sym, table): the same masked body in the same place of the routine order
+0x4C14F67B  FileWrite               ; same-body: = KN6000 0x4C14F1F2 (kn6000_manual.sym, table): the same masked body in the same place of the routine order
+0x4C14F71A  FileSeek                ; same-body: = KN6000 0x4C14F291 (kn6000_manual.sym, table): the same masked body in the same place of the routine order
+0x4C14F76A  FileRewind              ; same-body: = KN6000 0x4C14F2E1 (kn6000_manual.sym, table): the same masked body in the same place of the routine order
+0x4C14F7AF  FileTell                ; same-body: = KN6000 0x4C14F326 (kn6000_manual.sym, table): the same masked body in the same place of the routine order
+0x4C14F4CA  FilePathRename          ; same-body: = KN6000 0x4C14F041 (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x4C130418  FsOpen                  ; same-body: = KN6000 0x4C130087 (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x4C130649  FsRead                  ; same-body: = KN6000 0x4C1302B8 (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x4C130692  FsWrite                 ; same-body: = KN6000 0x4C130301 (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x4C13019C  FsSeek                  ; same-body: = KN6000 0x4C12FE0B (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x4C1303DB  FsRewind                ; same-body: = KN6000 0x4C13004A (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x4C13021F  FsTell                  ; same-body: = KN6000 0x4C12FE8E (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x4C1306DB  FsGetc                  ; same-body: = KN6000 0x4C13034A (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x4C130772  FsPutc                  ; same-body: = KN6000 0x4C1303E1 (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x4C13081C  FsClose                 ; same-body: = KN6000 0x4C13048B (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x4C130269  FsRename                ; same-body: = KN6000 0x4C12FED8 (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x4C1300A4  FsRemove                ; same-body: = KN6000 0x4C12FD13 (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x4C1300C5  FsMkdir                 ; same-body: = KN6000 0x4C12FD34 (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x4C130347  FsRmdir                 ; same-body: = KN6000 0x4C12FFB6 (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x4C14CBA7  StrCopy                 ; same-body: = KN6000 0x4C14C71E (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x4C14CBF3  StrAppend               ; same-body: = KN6000 0x4C14C76A (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x4C14CBC1  StrCopyPad              ; same-body: = KN6000 0x4C14C738 (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x4C14CCC7  FileNameWithExt         ; same-body: = KN6000 0x4C14C83E (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x4C13811E  inflateInit_            ; same-body: = KN6000 0x4C137D8D (kn6000_manual.sym, libc): the same masked body in the same place of the routine order
+0x4C14FA6A  ZFileStatus             ; same-body: = KN6000 0x4C14F5E1 (kn6000_manual.sym, ram): the same masked body in the same place of the routine order
+0x4C14FA73  ZFileStatusClear        ; same-body: = KN6000 0x4C14F5EA (kn6000_manual.sym, ram): the same masked body in the same place of the routine order
+0x4C14FA7D  ZFileInflatedTotal      ; same-body: = KN6000 0x4C14F5F4 (kn6000_manual.sym, ram): the same masked body in the same place of the routine order
+0x4C14FA86  ZFileSpaceSet           ; same-body: = KN6000 0x4C14F5FD (kn6000_manual.sym, ram): the same masked body in the same place of the routine order
+0x4C14FA8F  ZFileDeflateBegin       ; same-body: = KN6000 0x4C14F606 (kn6000_manual.sym, callee): the same masked body in the same place of the routine order
+0x4C14FB22  ZFileInflateBegin       ; same-body: = KN6000 0x4C14F699 (kn6000_manual.sym, callee): the same masked body in the same place of the routine order
+0x4C15013F  ZFileDeflatePart        ; same-body: = KN6000 0x4C14FCB6 (kn6000_manual.sym, callee): the same masked body in the same place of the routine order
+0x4C15040D  ZFileInflatePart        ; same-body: = KN6000 0x4C14FF84 (kn6000_manual.sym, callee): the same masked body in the same place of the routine order
+0x4C14FBA1  ZFileWriteDeflated      ; same-body: = KN6000 0x4C14F718 (kn6000_manual.sym, callee): the same masked body in the same place of the routine order
+0x4C14FE61  ZFileReadInflated       ; same-body: = KN6000 0x4C14F9D8 (kn6000_manual.sym, callee): the same masked body in the same place of the routine order
+0x4C0146DD  InitDrawTask_Impl       ; same-body: = KN6000 0x4C0145A3 (kn6000_manual.sym, caller): the same masked body in the same place of the routine order
+0x4C149F25  LoadLsw_HD_Impl         ; same-body: = KN6000 0x4C1499D0 (kn6000_manual.sym, caller): the same masked body in the same place of the routine order
+0x4C14A055  LoadPmt_HD_Impl         ; same-body: = KN6000 0x4C149B00 (kn6000_manual.sym, caller): the same masked body in the same place of the routine order
+0x4C14A1D1  LoadMd_HD_Impl          ; same-body: = KN6000 0x4C149C7C (kn6000_manual.sym, caller): the same masked body in the same place of the routine order
+0x4C14A235  LoadSqt_HD_Impl         ; same-body: = KN6000 0x4C149CE0 (kn6000_manual.sym, caller): the same masked body in the same place of the routine order
+0x4C14A747  LoadCmp_HD_Impl         ; same-body: = KN6000 0x4C14A1F2 (kn6000_manual.sym, caller): the same masked body in the same place of the routine order
+0x4C14A813  LoadMsp_HD_Impl         ; same-body: = KN6000 0x4C14A2BE (kn6000_manual.sym, caller): the same masked body in the same place of the routine order
+0x4C14A8DF  LoadTm_HD_Impl          ; same-body: = KN6000 0x4C14A38A (kn6000_manual.sym, caller): the same masked body in the same place of the routine order
+0x4C14AA1F  LoadEfc_HD_Impl         ; same-body: = KN6000 0x4C14A4CA (kn6000_manual.sym, caller): the same masked body in the same place of the routine order
+0x4C14AAE3  LoadFav_HD_Impl         ; same-body: = KN6000 0x4C14A58E (kn6000_manual.sym, caller): the same masked body in the same place of the routine order
+0x4C14AB47  LoadHmp_HD_Impl         ; same-body: = KN6000 0x4C14A5F2 (kn6000_manual.sym, caller): the same masked body in the same place of the routine order
+0x4C14ABAB  LoadRcm_HD_Impl         ; same-body: = KN6000 0x4C14A656 (kn6000_manual.sym, caller): the same masked body in the same place of the routine order
+0x4C14B170  SavePmt_HD_Impl         ; same-body: = KN6000 0x4C14ACE7 (kn6000_manual.sym, caller): the same masked body in the same place of the routine order
+0x4C14B29E  SaveMd_HD_Impl          ; same-body: = KN6000 0x4C14AE15 (kn6000_manual.sym, caller): the same masked body in the same place of the routine order
+0x4C14B318  SaveFav_HD_Impl         ; same-body: = KN6000 0x4C14AE8F (kn6000_manual.sym, caller): the same masked body in the same place of the routine order
+0x4C14B392  SaveHmp_HD_Impl         ; same-body: = KN6000 0x4C14AF09 (kn6000_manual.sym, caller): the same masked body in the same place of the routine order
+0x4C14B40C  SaveEfc_HD_Impl         ; same-body: = KN6000 0x4C14AF83 (kn6000_manual.sym, caller): the same masked body in the same place of the routine order
+0x4C14B4CD  SaveSqt_HD_Impl         ; same-body: = KN6000 0x4C14B044 (kn6000_manual.sym, caller): the same masked body in the same place of the routine order
+0x4C14B612  SaveCmp_HD_Impl         ; same-body: = KN6000 0x4C14B189 (kn6000_manual.sym, caller): the same masked body in the same place of the routine order
+0x4C14B6D3  SaveMsp_HD_Impl         ; same-body: = KN6000 0x4C14B24A (kn6000_manual.sym, caller): the same masked body in the same place of the routine order
+0x4C14B794  SaveTm_HD_Impl          ; same-body: = KN6000 0x4C14B30B (kn6000_manual.sym, caller): the same masked body in the same place of the routine order
+0x4C14BA1A  SaveRcm_HD_Impl         ; same-body: = KN6000 0x4C14B591 (kn6000_manual.sym, caller): the same masked body in the same place of the routine order
+0x4C1729B9  HddTestMemoPrint        ; same-body: = KN6000 0x4C1721B7 (kn6000_manual.sym, gui): the same masked body in the same place of the routine order
+0x4C1741B5  TestConsolePrint        ; same-body: = KN6000 0x4C1739B3 (kn6000_manual.sym, gui): the same masked body in the same place of the routine order
+0x4C1727CA  HddTestExpansionSlots   ; same-body: = KN6000 0x4C171FC8 (kn6000_manual.sym, string): the same masked body in the same place of the routine order
+0x4C172B33  HddTestRamAddressLines  ; same-body: = KN6000 0x4C172331 (kn6000_manual.sym, string): the same masked body in the same place of the routine order
+0x4C172C79  HddTestPportChip        ; same-body: = KN6000 0x4C172477 (kn6000_manual.sym, string): the same masked body in the same place of the routine order
+0x4C172D79  HddTestUsbChip          ; same-body: = KN6000 0x4C172577 (kn6000_manual.sym, string): the same masked body in the same place of the routine order
+0x4C172EC6  HddTestDriveAccess      ; same-body: = KN6000 0x4C1726C4 (kn6000_manual.sym, string): the same masked body in the same place of the routine order
+0x4C172DFB  HddTestDriveInfo        ; same-body: = KN6000 0x4C1725F9 (kn6000_manual.sym, string): the same masked body in the same place of the routine order
+0x4C17351E  HddCommTestDriveInfo    ; same-body: = KN6000 0x4C172D1C (kn6000_manual.sym, string): the same masked body in the same place of the routine order
+0x4C1733CE  HddCommTestPport        ; same-body: = KN6000 0x4C172BCC (kn6000_manual.sym, string): the same masked body in the same place of the routine order
+0x4C1745A2  HddRegWrite8            ; same-body: = KN6000 0x4C173DA0 (kn6000_manual.sym, io): the same masked body in the same place of the routine order
+0x4C174640  HddRegRead8             ; same-body: = KN6000 0x4C173E3E (kn6000_manual.sym, io): the same masked body in the same place of the routine order
+0x4C17468B  HddRegRead16            ; same-body: = KN6000 0x4C173E89 (kn6000_manual.sym, io): the same masked body in the same place of the routine order
+0x4C1746D7  HddStatus               ; same-body: = KN6000 0x4C173ED5 (kn6000_manual.sym, io): the same masked body in the same place of the routine order
+0x4C1746F9  HddWaitReady            ; same-body: = KN6000 0x4C173EF7 (kn6000_manual.sym, io): the same masked body in the same place of the routine order
+0x4C1749DB  HddIdentify             ; same-body: = KN6000 0x4C1741D9 (kn6000_manual.sym, io): the same masked body in the same place of the routine order
+0x4C174A8B  HddReset                ; same-body: = KN6000 0x4C174289 (kn6000_manual.sym, io): the same masked body in the same place of the routine order
+0x4C174726  HddWriteSector          ; same-body: = KN6000 0x4C173F24 (kn6000_manual.sym, io): the same masked body in the same place of the routine order
+0x4C050837  RamTestWords            ; same-body: = KN6000 0x4C0506C7 (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x4C0508F7  RamTestBytes            ; same-body: = KN6000 0x4C050787 (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x4C05095D  RomTestChecksums        ; same-body: = KN6000 0x4C0507ED (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x4C0516D8  Test2ShowResult         ; same-body: = KN6000 0x4C0514CA (kn6000_manual.sym, gui): the same masked body in the same place of the routine order
+0x4C051A8B  Test6ShowResult         ; same-body: = KN6000 0x4C0517D1 (kn6000_manual.sym, gui): the same masked body in the same place of the routine order
+0x4C051B0D  TestFdLoadSaveRun       ; same-body: = KN6000 0x4C051853 (kn6000_manual.sym, gui): the same masked body in the same place of the routine order
+0x4C0511DC  Test5ColorStep          ; same-body: = KN6000 0x4C051072 (kn6000_manual.sym, gui): the same masked body in the same place of the routine order
+0x4C05252A  TestMidiIoResult        ; same-body: = KN6000 0x4C052257 (kn6000_manual.sym, gui): the same masked body in the same place of the routine order
+0x4C1160DB  ScratchPosReset         ; same-body: = KN6000 0x4C116230 (kn6000_manual.sym, ram): the same masked body in the same place of the routine order
+0x4C1160E5  ScratchReadByte         ; same-body: = KN6000 0x4C11623A (kn6000_manual.sym, ram): the same masked body in the same place of the routine order
+0x4C1160F6  ScratchWriteByte        ; same-body: = KN6000 0x4C11624B (kn6000_manual.sym, ram): the same masked body in the same place of the routine order
+0x4C116127  ScratchPosNext          ; same-body: = KN6000 0x4C11627C (kn6000_manual.sym, ram): the same masked body in the same place of the routine order
+0x4C116145  ScratchPos              ; same-body: = KN6000 0x4C11629A (kn6000_manual.sym, ram): the same masked body in the same place of the routine order
+0x4C11614E  ScratchPosSet           ; same-body: = KN6000 0x4C1162A3 (kn6000_manual.sym, ram): the same masked body in the same place of the routine order
+0x4C116165  ScratchPosSkip          ; same-body: = KN6000 0x4C1162BA (kn6000_manual.sym, ram): the same masked body in the same place of the routine order
+0x4C1162CC  StoreU16LE              ; same-body: = KN6000 0x4C116421 (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x4C121160  SmfReadByte             ; same-body: = KN6000 0x4C121023 (kn6000_manual.sym, callee): the same masked body in the same place of the routine order
+0x4C121051  SmfReadU32BE            ; same-body: = KN6000 0x4C120F14 (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x4C120B30  SmfReadHeaderChunk      ; same-body: = KN6000 0x4C1209F3 (kn6000_manual.sym, string): the same masked body in the same place of the routine order
+0x4C12107E  SmfReadTrackChunkHeader ; same-body: = KN6000 0x4C120F41 (kn6000_manual.sym, string): the same masked body in the same place of the routine order
+0x4C120F65  SmfReadTracks           ; same-body: = KN6000 0x4C120E28 (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x4C120978  SmfFileReadAll          ; same-body: = KN6000 0x4C12083B (kn6000_manual.sym, callee): the same masked body in the same place of the routine order
+0x4C1208A0  LoadSmf_Begin           ; same-body: = KN6000 0x4C120763 (kn6000_manual.sym, caller): the same masked body in the same place of the routine order
+0x4C120933  LoadSmf_Read            ; same-body: = KN6000 0x4C1207F6 (kn6000_manual.sym, caller): the same masked body in the same place of the routine order
+0x4C1208F0  LoadSmf_End             ; same-body: = KN6000 0x4C1207B3 (kn6000_manual.sym, caller): the same masked body in the same place of the routine order
+0x4C12339C  SmfWriteByte            ; same-body: = KN6000 0x4C1230B3 (kn6000_manual.sym, callee): the same masked body in the same place of the routine order
+0x4C1233B1  SmfWriteBytes           ; same-body: = KN6000 0x4C1230C8 (kn6000_manual.sym, body): the same masked body in the same place of the routine order
+0x4C122729  SmfWriteMThdTag         ; same-body: = KN6000 0x4C1224A7 (kn6000_manual.sym, string): the same masked body in the same place of the routine order
+0x4C14CB18  SmfFileCreate           ; same-body: = KN6000 0x4C14C68F (kn6000_manual.sym, callee): the same masked body in the same place of the routine order
+0x4C14CB2E  SmfFileClose            ; same-body: = KN6000 0x4C14C6A5 (kn6000_manual.sym, callee): the same masked body in the same place of the routine order
+0x4C14CB39  SmfFileRemove           ; same-body: = KN6000 0x4C14C6B0 (kn6000_manual.sym, callee): the same masked body in the same place of the routine order
+0x4C122209  SmfFileWriteImage       ; same-body: = KN6000 0x4C121F87 (kn6000_manual.sym, callee): the same masked body in the same place of the routine order
+0x50200000  FsErrno                 ; same-body: = KN6000 0x50200000 (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x502883AC  FileOpenTable           ; same-body: = KN6000 0x502883B8 (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x50062EF8  FileCurrent             ; same-body: = KN6000 0x500622AC (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x50072F74  ZFileStatusCode         ; same-body: = KN6000 0x50072328 (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x50072F78  ZFileSpaceLeft          ; same-body: = KN6000 0x5007232C (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x50062F70  ZFileInflatedBytes      ; same-body: = KN6000 0x50062324 (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x50062F74  ZFileBuffer             ; same-body: = KN6000 0x50062328 (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x50062F00  ZWholeStream            ; same-body: = KN6000 0x500622B4 (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x50062F04  ZWholeStreamAvailIn     ; same-body: = KN6000 0x500622B8 (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x50062F0C  ZWholeStreamNextOut     ; same-body: = KN6000 0x500622C0 (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x50062F10  ZWholeStreamAvailOut    ; same-body: = KN6000 0x500622C4 (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x50062F38  ZPartStream             ; same-body: = KN6000 0x500622EC (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x50062F3C  ZPartStreamAvailIn      ; same-body: = KN6000 0x500622F0 (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x50062F44  ZPartStreamNextOut      ; same-body: = KN6000 0x500622F8 (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x50062F48  ZPartStreamAvailOut     ; same-body: = KN6000 0x500622FC (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x5004EE78  InstallScratchPos       ; same-body: = KN6000 0x5004EECC (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x5005CAEA  SmfFormat               ; same-body: = KN6000 0x5005BF3E (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x5005CAEC  SmfTrackCount           ; same-body: = KN6000 0x5005BF40 (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x5005CAEE  SmfDivision             ; same-body: = KN6000 0x5005BF42 (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x5005CAF0  SmfFileSize             ; same-body: = KN6000 0x5005BF44 (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x5002DC9C  TestMidiIoSent          ; same-body: = KN6000 0x5002DCF0 (kn6000_manual.sym, var): the paired routines spell the two addresses at the same operands
+0x4C07B331  _vector_08_Impl             ; caller: _vector_08 is `call` + ret of it, its only caller
+0x4C14B0D9  SaveLsw_HD_Impl             ; caller: SaveLsw_HD is `call` + ret of it, its only caller
+0x4C25A1B8  FileTypeExtTable        ; data: = KN6000 0x4C2592E4 (kn6000_manual.sym): the 13-pointer table FileNameWithExt indexes (`mov func_4C14CCC7_Table, a0 / mov (d2, a0), a1`), "LSW" ... "SEQ"
