@@ -22,3 +22,5 @@ __pycache__/
 /tools/dsptone/build/
 # The custom-style bank images, inflated from the softlist floppies' .AST files (make verify-customdata)
 /baserom/customdata/
+# The uITRON 3.0 specification text fetch_spec.sh downloads (reproduction only in its entirety: never committed)
+/notes/uitron3-function-codes/spec/

@@ -4,8 +4,8 @@
 #
 # Question: "which function code does each MILK kernel service pass to KernelErrorHook /
 # KernelErrorHook2 (d0, with the uITRON 3.0 error code in d1), and which of those services
-# are still func_<ADDR>?"  A lead for naming the kernel's services by the uITRON 3.0
-# function-code table (not in this repo: the codes are listed, not translated).
+# are still func_<ADDR>?"  The codes are listed, not translated: ../uitron3-function-codes/
+# function_codes.py translates them with the uITRON 3.0 specification's table.
 # Reads <model>/src/program.s: for each `call KernelErrorHook*`, the nearest `mov N, d0` and
 # `mov N, d1` among the 8 lines before it.  Run from the repo root:
 #     python3 -I kn7000/notes/sibling-names2-probes/kernel_errorhook_codes.py kn6000 kn6500 kn2400
@@ -18,7 +18,10 @@ for m in sys.argv[1:]:
     cur, out = None, collections.defaultdict(set)
     for i, ln in enumerate(lines):
         mm = re.match(r"^([A-Za-z_]\w*):", ln)
-        if mm and not re.search(r"_L[0-9a-f]+$", mm.group(1)) and not mm.group(1).startswith("loc_") \
+        # (a local label is loc_<ADDR>, not every loc_ name: until 2026-11-07 the test was
+        # startswith("loc_"), which skipped the service loc_cpu and credited its code -8 to the
+        # routine before it, "clr_flg" / "ena_int"; ../uitron3-function-codes/README.md)
+        if mm and not re.search(r"_L[0-9a-f]+$", mm.group(1)) and not re.match(r"loc_[0-9A-F]{8}$", mm.group(1)) \
                 and not mm.group(1).endswith("_entry"):
             cur = mm.group(1)
         if re.search(r"\tcall\tKernelErrorHook2?,", ln):
