@@ -1,0 +1,219 @@
+archive  VOICE_ELEM   l0_bank          TgPartProgramApply (11), TgVoiceZoneVeloResolve (10), TgElemStageRestrike (10)
+archive  VOICE_ELEM   l0_class         TgPartProgramApply (11), TgVoiceZoneVeloResolve (10), TgElemStageRestrike (10)
+archive  VOICE_ELEM   l0_filter_ofs    func_4C01243A (10)
+archive  VOICE_ELEM   l0_level         TgElemLevelBaseCalc (10)
+archive  VOICE_ELEM   l0_param         TgPartProgramApply (11), TgVoiceZoneVeloResolve (10), TgElemStageRestrike (10)
+archive  VOICE_ELEM   l1_bank          TgPartProgramApply (11)
+archive  VOICE_ELEM   l1_class         TgPartProgramApply (11)
+archive  VOICE_ELEM   l1_param         TgPartProgramApply (11)
+archive  VOICE_ELEM   l2_bank          TgPartProgramApply (11)
+archive  VOICE_ELEM   l2_class         TgPartProgramApply (11)
+archive  VOICE_ELEM   l2_param         TgPartProgramApply (11)
+archive  VOICE_ELEM   l3_bank          TgPartProgramApply (11)
+archive  VOICE_ELEM   l3_class         TgPartProgramApply (11)
+archive  VOICE_ELEM   l3_param         TgPartProgramApply (11)
+archive  VOICE_ELEM   l4_bank          TgPartProgramApply (11)
+archive  VOICE_ELEM   l4_class         TgPartProgramApply (11)
+archive  VOICE_ELEM   l4_param         TgPartProgramApply (11)
+archive  VOICE_ELEM   l5_bank          TgPartProgramApply (11)
+archive  VOICE_ELEM   l5_class         TgPartProgramApply (11)
+archive  VOICE_ELEM   l5_param         TgPartProgramApply (11)
+archive  VOICE_ELEM   vel_split0       TgElemStageRestrike (10)
+archive  VOICE_HEAD   ctrl_sense       func_4844B07D (512), TgPartCtrlSenseElem (174)
+archive  VOICE_HEAD   excl_group       func_4844B07D (512), TgExclGroupChoke (291)
+archive  VOICE_HEAD   name             func_4844B07D (6656)
+archive  VOICE_HEAD   voice_flags      VoiceSubRecFetch (686), func_4844B07D (512), TgNoteOnTableTone (348), TgVoiceKillHandler (174)
+archive  VOICE_SUB    aeg_attack_key   func_4844B07D (512), func_4C02FDFA (344)
+archive  VOICE_SUB    aeg_attack_rate  func_4844B07D (768), func_4C02FDFA (174)
+archive  VOICE_SUB    aeg_level1       func_4844B07D (768), TgElemNoteOnStd (174)
+archive  VOICE_SUB    aeg_level2       func_4844B07D (512), TgElemNoteOnStd (174)
+archive  VOICE_SUB    aeg_rate1        func_4844B07D (768), TgElemNoteOnStd (174)
+archive  VOICE_SUB    aeg_rate2        func_4844B07D (512), TgElemNoteOnStd (174)
+archive  VOICE_SUB    aeg_release_rate func_4844B07D (512), func_4C02FE59 (7)
+archive  VOICE_SUB    coarse_tune      func_4844B07D (768), TgPitchZoneFold (174)
+archive  VOICE_SUB    cutoff           func_4844B07D (512), func_4C030606 (174)
+archive  VOICE_SUB    cutoff_key_follow func_4844B07D (512), func_4C030606 (174)
+archive  VOICE_SUB    elem_bank_lsb    func_4844B07D (1024), TgTableToneStage (174)
+archive  VOICE_SUB    elem_bank_msb    func_4844B07D (1024), TgTableToneStage (174)
+archive  VOICE_SUB    elem_prog        func_4844B07D (1280), TgTableToneStage (174)
+archive  VOICE_SUB    filter_flags     func_4844B07D (512), func_4C02FE77 (174), func_4C02FFD4 (174), func_4C030606 (174)
+archive  VOICE_SUB    filter_level     func_4844B07D (512), func_4C02FEC7 (174)
+archive  VOICE_SUB    filter_q         func_4844B07D (512), func_4C02FFD4 (174)
+archive  VOICE_SUB    filter_shape     func_4C02FFD4 (1218), func_4844B07D (512), func_4C030606 (174)
+archive  VOICE_SUB    filter_velo_sense func_4844B07D (512), func_4C02FE77 (348)
+archive  VOICE_SUB    fine_tune        func_4844B07D (768), TgPitchZoneFold (174)
+archive  VOICE_SUB    level            func_4844B07D (768), func_4C02FD94 (348)
+archive  VOICE_SUB    level_key_curve  func_4844B07D (768), func_4C02FCBA (348)
+archive  VOICE_SUB    level_key_slope  func_4844B07D (768), func_4C02FCBA (348)
+archive  VOICE_SUB    pan              func_4844B07D (768), TgLevelResolve (174)
+archive  VOICE_SUB    s17              func_4844B07D (512)
+archive  VOICE_SUB    s1a              func_4844B07D (512)
+archive  VOICE_SUB    s1b              func_4844B07D (512)
+archive  VOICE_SUB    send_a           func_4844B07D (512), TgElemNoteOnStd (174)
+archive  VOICE_SUB    send_b           func_4844B07D (512), TgElemNoteOnStd (174)
+archive  jk_param     b11              TgPitchInitCalc (10)
+archive  jk_param     b14              TgVoiceZoneVeloResolve (226)
+archive  jk_param     center           TgPitchZoneFold (432)
+archive  jk_param     flags            TgPitchNoteResolve (256), TgVoiceRoutePtrCalc (226), TgPitchInitCalc (10), TgPitchRuntimeCalc (10), TgAmpEgAttackRateCalc (10)
+archive  jk_param     key_hi           TgPitchZoneFold (216), TgPitchInitCalc (10)
+archive  jk_param     key_lo           TgPitchZoneFold (216), TgPitchInitCalc (10)
+archive  jk_param     ms               func_48449DAA (904)
+archive  jk_param     zones            func_48449E46 (904)
+kit      CSOUND_HEAD  h24              func_48448EA3 (5)
+kit      CSOUND_HEAD  h25              func_48448EA3 (5)
+kit      CSOUND_HEAD  h26              func_48448EA3 (5)
+kit      CSOUND_HEAD  key_map          func_4C03C77F (1)
+kit      CSOUND_HEAD  mod0_depth       func_4C009C88 (5), func_4C03C77F (1)
+kit      CSOUND_HEAD  mod0_dest        func_4C009C88 (5), func_4C03C77F (1)
+kit      CSOUND_HEAD  mod0_src         func_4C03C77F (1)
+kit      CSOUND_HEAD  mod1_depth       func_4C009C88 (5), func_4C03C77F (1)
+kit      CSOUND_HEAD  mod1_dest        func_4C009C88 (5), func_4C03C77F (1)
+kit      CSOUND_HEAD  mod1_src         func_4C03C77F (1)
+kit      CSOUND_HEAD  mod2_depth       func_4C009C88 (5), func_4C03C77F (1)
+kit      CSOUND_HEAD  mod2_dest        func_4C009C88 (5), func_4C03C77F (1)
+kit      CSOUND_HEAD  mod2_src         func_4C03C77F (1)
+kit      CSOUND_HEAD  mod3_depth       func_4C009C88 (5), func_4C03C77F (1)
+kit      CSOUND_HEAD  mod3_dest        func_4C009C88 (5), func_4C03C77F (1)
+kit      CSOUND_HEAD  mod3_src         func_4C03C77F (1)
+kit      CSOUND_HEAD  mod4_depth       func_4C009C88 (5)
+kit      CSOUND_HEAD  mod4_dest        func_4C009C88 (5), func_4C03C77F (1)
+kit      CSOUND_HEAD  mod4_src         func_4C03C77F (1)
+kit      CSOUND_HEAD  mod5_depth       func_4C009C88 (5)
+kit      CSOUND_HEAD  mod5_dest        func_4C009C88 (5)
+kit      CSOUND_HEAD  name             func_4C03C77F (16)
+kit      CSOUND_HEAD  tone_class       func_48449207 (99), TgKeyOffSample (42), TgNoteOn (42), TgPartDspSwitchSet (5), func_4C009C88 (5), TgPartToneIsTableClass (5), func_4C03C77F (1)
+kit      VOICE_ELEM   l0_bank          TgTableToneStage (84), TgVoiceZoneVeloResolve (42)
+kit      VOICE_ELEM   l0_class         TgTableToneStage (84), TgVoiceZoneVeloResolve (42)
+kit      VOICE_ELEM   l0_filter_ofs    func_4C02FEC7 (42)
+kit      VOICE_ELEM   l0_level         func_4C02FCBA (42)
+kit      VOICE_ELEM   l0_param         TgTableToneStage (84), TgVoiceZoneVeloResolve (42)
+kit      VOICE_ELEM   vel_split0       TgTableToneStage (42)
+kit      VOICE_HEAD   ctrl_sense       TgPartCtrlSenseElem (42)
+kit      VOICE_HEAD   excl_group       TgExclGroupChoke (42)
+kit      VOICE_HEAD   voice_flags      TgNoteOnTableTone (84), TgVoiceKillHandler (42)
+kit      VOICE_REF    bank_lsb         TgTableToneStage (84), TgNoteOnTableTone (42)
+kit      VOICE_REF    bank_msb         TgTableToneStage (84), TgNoteOnTableTone (42)
+kit      VOICE_REF    prog             TgTableToneStage (84), TgNoteOnTableTone (42)
+kit      VOICE_SUB    aeg_attack_key   func_4C02FDFA (84)
+kit      VOICE_SUB    aeg_attack_rate  func_4C02FDFA (42)
+kit      VOICE_SUB    aeg_level1       TgElemNoteOnStd (42)
+kit      VOICE_SUB    aeg_level2       TgElemNoteOnStd (42)
+kit      VOICE_SUB    aeg_rate1        TgElemNoteOnStd (42)
+kit      VOICE_SUB    aeg_rate2        TgElemNoteOnStd (42)
+kit      VOICE_SUB    coarse_tune      TgPitchZoneFold (42)
+kit      VOICE_SUB    cutoff           func_4C030606 (42)
+kit      VOICE_SUB    cutoff_key_follow func_4C030606 (42)
+kit      VOICE_SUB    elem_bank_lsb    TgTableToneStage (42)
+kit      VOICE_SUB    elem_bank_msb    TgTableToneStage (42)
+kit      VOICE_SUB    elem_prog        TgTableToneStage (42)
+kit      VOICE_SUB    filter_flags     func_4C02FE77 (42), func_4C02FFD4 (42), func_4C030606 (42)
+kit      VOICE_SUB    filter_level     func_4C02FEC7 (42)
+kit      VOICE_SUB    filter_q         func_4C02FFD4 (42)
+kit      VOICE_SUB    filter_shape     func_4C02FFD4 (294), func_4C030606 (42)
+kit      VOICE_SUB    filter_velo_sense func_4C02FE77 (84)
+kit      VOICE_SUB    fine_tune        TgPitchZoneFold (42)
+kit      VOICE_SUB    level            func_4C02FD94 (84)
+kit      VOICE_SUB    level_key_curve  func_4C02FCBA (84)
+kit      VOICE_SUB    level_key_slope  func_4C02FCBA (84)
+kit      VOICE_SUB    pan              TgLevelResolve (42)
+kit      VOICE_SUB    send_a           TgElemNoteOnStd (42)
+kit      VOICE_SUB    send_b           TgElemNoteOnStd (42)
+UNMAPPED archive ShortKeyLookup 1274
+UNMAPPED archive SoundGroupSizeGet 9
+UNMAPPED archive SoundIconGet 13
+UNMAPPED archive SoundNameGet 48
+UNMAPPED archive SoundSwNoBankGet 96
+UNMAPPED archive SoundSwNoGet 186
+UNMAPPED archive SoundToneIndexGet 3722
+UNMAPPED archive TgAmpEgAttackRateCalc 40
+UNMAPPED archive TgAmpEgDecayRatePairCalc 90
+UNMAPPED archive TgElemKeyOffRelease 10
+UNMAPPED archive TgElemLevelBaseCalc 140
+UNMAPPED archive TgElemNoteOnStd 1296
+UNMAPPED archive TgElemRequestFlags 15
+UNMAPPED archive TgFilterEgAttackCalc 50
+UNMAPPED archive TgFilterEgDecayCalc 50
+UNMAPPED archive TgGlobalParamCommand 1088
+UNMAPPED archive TgKeyOffAmpRelease 60
+UNMAPPED archive TgKeyOffFilterRelease 80
+UNMAPPED archive TgKeyOffPitchRelease 50
+UNMAPPED archive TgKeyOffSample 179
+UNMAPPED archive TgKitElemNoteOn 170
+UNMAPPED archive TgKitZoneFilterEgLevel1Calc 20
+UNMAPPED archive TgKitZoneFilterEgLevel2Calc 20
+UNMAPPED archive TgKitZoneFilterEgLevelCalc 20
+UNMAPPED archive TgKitZoneLevelScaleCalc 20
+UNMAPPED archive TgKitZoneSendLevelsCalc 30
+UNMAPPED archive TgKitZoneVeloSenseCalc 20
+UNMAPPED archive TgMelodicVoiceAlloc 10
+UNMAPPED archive TgNoteLevelVariationCalc 30
+UNMAPPED archive TgNoteOn 179
+UNMAPPED archive TgNoteOnTableTone 522
+UNMAPPED archive TgPartCtrlSenseKit 11
+UNMAPPED archive TgPartCtrlSenseMelodic 178
+UNMAPPED archive TgPartDspSwitchSet 268
+UNMAPPED archive TgPartEgRampBuild 17
+UNMAPPED archive TgPartEgRampInit 93
+UNMAPPED archive TgPartModConfigSet 680
+UNMAPPED archive TgPartModRetrigger 217
+UNMAPPED archive TgPartModValueForElem 40
+UNMAPPED archive TgPartProgramApply 2232
+UNMAPPED archive TgPartToneIsTableClass 816
+UNMAPPED archive TgPartToneModParamBuild 14000
+UNMAPPED archive TgPartToneModSetupDispatch 372
+UNMAPPED archive TgPartToneModSetupMelodic 279
+UNMAPPED archive TgPartToneModUnitBuild 1781
+UNMAPPED archive TgPartToneTypeParamGet 5
+UNMAPPED archive TgPitchEgAttackCalc 40
+UNMAPPED archive TgPitchEgDecayCalc 40
+UNMAPPED archive TgPitchInitCalc 40
+UNMAPPED archive TgPitchNoteResolve 512
+UNMAPPED archive TgPitchRuntimeCalc 30
+UNMAPPED archive TgTableToneStage 1044
+UNMAPPED archive TgVoiceLevelWordCalc 20
+UNMAPPED archive TgVoiceNoteLevelCalc 20
+UNMAPPED archive TgVoiceRoutePtrCalc 452
+UNMAPPED archive TgVoiceSideSelect 452
+UNMAPPED archive ToneKeyLookup 93452
+UNMAPPED archive ToneNameGet 24
+UNMAPPED archive ToneRecordFind 14864
+UNMAPPED archive VoiceArchiveScanBoot 8
+UNMAPPED archive VoiceAttrClassify 2
+UNMAPPED archive VoiceAttrLookupInternal 12400
+UNMAPPED archive VoiceBankClassify 2580
+UNMAPPED archive VoiceBankLookupInternal 55800
+UNMAPPED archive VoiceElemRecFetch 44
+UNMAPPED archive VoiceModRecDefaultPtr 808
+UNMAPPED archive VoiceModRecFetch 372
+UNMAPPED archive VoiceParamBankClassify 11600
+UNMAPPED archive VoiceParamBankLookupInternal 161160
+UNMAPPED archive VoiceParamRecFetchBanked 9792
+UNMAPPED archive VoiceRecDefaultPtr 2048
+UNMAPPED archive VoiceRecFetchBanked 10320
+UNMAPPED archive func_48448D93 307
+UNMAPPED archive func_48448EA3 2754
+UNMAPPED archive func_48449082 321
+UNMAPPED archive func_48449207 988
+UNMAPPED archive func_48449AD9 40
+UNMAPPED archive func_48449B0A 904
+UNMAPPED archive func_48449B3B 40
+UNMAPPED archive func_48449C01 40
+UNMAPPED archive func_48449C90 320
+UNMAPPED archive func_48449DF8 904
+UNMAPPED archive func_4844B07D 10496
+UNMAPPED archive func_4844B1E3 846
+UNMAPPED archive func_4844B2BC 56960
+UNMAPPED archive func_4857093C 9
+UNMAPPED archive func_48570ACD 2116
+UNMAPPED archive func_4C006ED1 612
+UNMAPPED archive func_4C0072B9 306
+UNMAPPED archive func_4C007387 306
+UNMAPPED archive func_4C008A8E 204
+UNMAPPED archive func_4C009C88 1209
+UNMAPPED archive func_4C01227F 70
+UNMAPPED archive func_4C01231A 10
+UNMAPPED archive func_4C01232D 60
+UNMAPPED archive func_4C01243A 10
+UNMAPPED archive func_4C012906 60
+UNMAPPED archive func_4C02FCBA 216
+UNMAPPED archive func_4C0328CC 70
