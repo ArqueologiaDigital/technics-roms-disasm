@@ -14572,12 +14572,12 @@ CaptureLcdWriteBmp_entry:
 	mov	a2, (8, sp)
 	mov	Str_LCDCAP_02d_BMP_2, d0
 	mov	d0, (0xc, sp)
-	mov	(0x500275c4), a1
+	mov	(CaptureLcdWriteBmp_Ram), a1
 	mov	a1, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	mov	(0x500275c4), d0
+	mov	(CaptureLcdWriteBmp_Ram), d0
 	inc	d0
-	mov	d0, (0x500275c4)
+	mov	d0, (CaptureLcdWriteBmp_Ram)
 	call	func_486D1422_entry, 0, 8
 	call	func_486D186C_entry, [d2,d3,a2,a3], 0x10
 	mov	a2, a0

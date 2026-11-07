@@ -3,7 +3,7 @@
 ; evidence classes (accessor: a named Get/Set/Is routine's only variable; owner: every
 ; direct reference lies in one named routine).  Columns: RAM address, name, ; class, evidence.
 ;
-; 28 accessor names over 148 operands, 613 owner names over 2805 operands; 3621 RAM addresses referenced
+; 28 accessor names over 148 operands, 614 owner names over 2808 operands; 3621 RAM addresses referenced
 0x50006E8C  localeconv_Ram	; owner: 1 references, all in localeconv
 0x50006E90  localeconv_Ram_2	; owner: 1 references, all in localeconv
 0x50006E94  localeconv_Ram_3	; owner: 1 references, all in localeconv
@@ -75,6 +75,7 @@
 0x50027292  MetronomeBeatTask_Ram	; owner: 3 references, all in MetronomeBeatTask
 0x50027294  MetronomeBeatTask_Ram_2	; owner: 2 references, all in MetronomeBeatTask
 0x50027296  MetronomeBeatTask_Ram_3	; owner: 2 references, all in MetronomeBeatTask
+0x500275C4  CaptureLcdWriteBmp_Ram	; owner: 3 references, all in CaptureLcdWriteBmp
 0x500275D0  SetModeLed_Ram	; owner: 3 references, all in SetModeLed
 0x500275E8  RefreshSwEvent_Ram	; owner: 2 references, all in RefreshSwEvent
 0x500275F4  HoldLED	; accessor: CheckHoldLED (getter)

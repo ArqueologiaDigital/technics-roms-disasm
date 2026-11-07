@@ -59775,6 +59775,7 @@
 .equ MetronomeBeatTask_Ram, 0x50027292
 .equ MetronomeBeatTask_Ram_2, 0x50027294
 .equ MetronomeBeatTask_Ram_3, 0x50027296
+.equ CaptureLcdWriteBmp_Ram, 0x500275c4
 .equ SetModeLed_Ram, 0x500275d0
 .equ RefreshSwEvent_Ram, 0x500275e8
 .equ HoldLED, 0x500275f4
