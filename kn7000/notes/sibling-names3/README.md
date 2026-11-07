@@ -118,6 +118,11 @@ named routine); plus the hand `var` rows, 22 in the KN6000, 21 in the KN6500 and
 work-RAM operand fall (KN6000 -416, KN6500 -412, KN2400 -344) is mostly those `var` rows: errno,
 the zlib streams and the status word are spelled in dozens of places each.
 
+`make doc-quality` (`docs/coverage/doc-quality-2026-11-07-02`, against -01: nothing rose) reads the same
+change: (e) placeholder routine names KN6000 5,632 -> 5,501, KN6500 5,659 -> 5,529, KN2400 6,480 ->
+6,430; (b) operands spelled as a number outside the image KN6000 14,498 -> 14,110, KN6500 14,519 ->
+14,134, KN2400 15,787 -> 15,464.
+
 Regeneration order, each to its fixpoint (as `../sibling-names/README.md`, without `aligned-names`,
 which lane kn7000-subsystems owns): `data-and-code-src`, `ram-names`, `data-and-code-src`, again
 until `ram-names` writes the same file.  All three images rebuild byte-identical
