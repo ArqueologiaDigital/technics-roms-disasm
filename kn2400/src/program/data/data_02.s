@@ -1716,10 +1716,10 @@ func_486EBD41_entry_Ld3_Records:	# 16 x REC_func_486EBD41_entry_Ld3_Records (8 b
 	REC_func_486EBD41_entry_Ld3_Records	proc=func_486EBD41_entry_L17a
 	REC_func_486EBD41_entry_Ld3_Records	proc=func_486EBD41_entry_L17a
 
-func_5018D239_Table_13:	# T_CTSK (20 bytes): the layout cre_tsk 0x5018D1AD reads through its argument a0 (passed by func_485EBBCD 0x485EBBCD `call cre_tsk, 0, 0`, +8 more calls); the layout func_5018D239 0x5018D239 reads through its argument a0 (passed by cre_tsk_L3d 0x5018D1EA `call func_5018D239_entry, [d2,d3,a2], 0x2c`)
+cre_tsk_Impl_Table_13:	# T_CTSK (20 bytes): the layout cre_tsk 0x5018D1AD reads through its argument a0 (passed by func_485EBBCD 0x485EBBCD `call cre_tsk, 0, 0`, +8 more calls); the layout cre_tsk_Impl 0x5018D239 reads through its argument a0 (passed by cre_tsk_L3d 0x5018D1EA `call cre_tsk_Impl_entry, [d2,d3,a2], 0x2c`)
 	T_CTSK	tskatr="\x01\x00\x00\x00", task=DiskWorkerTask, itskpri=3, x14="\x00\x00", stksz=3072
 
-func_5018C16D_Table_4:	# 2 x u32, 0..0; read by func_5018C16D 0x5018C16D: `mov (a3), d2`
+cre_mbx_Impl_Table_4:	# 2 x u32, 0..0; read by cre_mbx_Impl 0x5018C16D: `mov (a3), d2`
 	tab_u32	0, 0
 
 Str_empty_605:	.asciz "        "

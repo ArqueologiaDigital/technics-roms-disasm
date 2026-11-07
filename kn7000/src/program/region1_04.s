@@ -821,7 +821,7 @@ loc_484831E1:
     bne     loc_48483213
     mov     2, d0
     mov     0x5006aa44, a0
-    call    LibMsgReceive, 0, 0
+    call    rcv_msg, 0, 0
     mov     (0x5006aa44), d0
     mov     d0, a0
     movhu   (4, a0), d1
@@ -868,7 +868,7 @@ loc_48483246:
     bra     loc_4848328B
 loc_4848327D:
     mov     1, d0
-    call    LibMsgSend, 0, 0
+    call    snd_msg, 0, 0
 loc_48483286:
     mov     d2, d0
     bra     loc_4848328B
@@ -884,25 +884,25 @@ func_4848328E_entry:
     mov     0x5006aa44, a2
     mov     a2, a0
     mov     1, d0
-    call    func_4C03CA58, 0, 0
+    call    prcv_msg, 0, 0
     cmp     0, d0
     bne     loc_484832B5
 loc_484832A7:
     mov     a2, a0
     mov     1, d0
-    call    func_4C03CA58, 0, 0
+    call    prcv_msg, 0, 0
     cmp     0, d0
     beq     loc_484832A7
 loc_484832B5:
     mov     a2, a0
     mov     2, d0
-    call    func_4C03CA58, 0, 0
+    call    prcv_msg, 0, 0
     cmp     0, d0
     bne     loc_484832D1
 loc_484832C3:
     mov     a2, a0
     mov     2, d0
-    call    func_4C03CA58, 0, 0
+    call    prcv_msg, 0, 0
     cmp     0, d0
     beq     loc_484832C3
 loc_484832D1:
@@ -911,7 +911,7 @@ loc_484832D1:
     movhu   d0, (6, a0)
     mov     1, d0
     mov     (0x5006aa44), a0
-    call    LibMsgSend, 0, 0
+    call    snd_msg, 0, 0
     call    func_4848272E, 0, 0
     extbu   d0
     cmp     0, d0
@@ -926,25 +926,25 @@ loc_484832FF:
     movbu   d0, (0x5006aa4c)
     mov     a2, a0
     mov     1, d0
-    call    func_4C03CA58, 0, 0
+    call    prcv_msg, 0, 0
     cmp     0, d0
     bne     loc_48483323
 loc_48483315:
     mov     a2, a0
     mov     1, d0
-    call    func_4C03CA58, 0, 0
+    call    prcv_msg, 0, 0
     cmp     0, d0
     beq     loc_48483315
 loc_48483323:
     mov     a2, a0
     mov     2, d0
-    call    func_4C03CA58, 0, 0
+    call    prcv_msg, 0, 0
     cmp     0, d0
     bne     loc_4848333F
 loc_48483331:
     mov     a2, a0
     mov     2, d0
-    call    func_4C03CA58, 0, 0
+    call    prcv_msg, 0, 0
     cmp     0, d0
     beq     loc_48483331
 loc_4848333F:
@@ -980,7 +980,7 @@ loc_484833A0:
     mov     d0, (func_48482617_Var)
     call    func_484833CB_entry, 0, 0x10
     mov     5, d0
-    mov     func_4C03D154_Table_9, a0
+    mov     cre_tsk_Impl_Table_9, a0
     call    cre_tsk, 0, 0
     mov     5, d0
     clr     d1
@@ -998,11 +998,11 @@ func_484833CB_entry:
     bne     loc_484833FD
     mov     1, d0
     movbu   d0, (func_484833CB_Table)
-    mov     func_4C03BFC8_Table, a0
-    call    func_4C03BF3C, 0, 0
+    mov     cre_mbx_Impl_Table, a0
+    call    cre_mbx, 0, 0
     mov     2, d0
-    mov     func_4C03BFC8_Table_2, a0
-    call    func_4C03BF3C, 0, 0
+    mov     cre_mbx_Impl_Table_2, a0
+    call    cre_mbx, 0, 0
 loc_484833FD:
     ret     0, 0x10
     movbu   d0, (8, sp)

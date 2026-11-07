@@ -7032,19 +7032,19 @@ func_4846D7B9_Records:	# 3 x REC_func_4846D7B9_Records (40 bytes each); read by 
 # census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b935.rom", 0x3B8574, 0x3B8578
 
-func_4C03D154_Var:	# u32, initial value of a RAM variable; read / written by func_4C03D154 0x4C03D154: `mov (8, a2), a1`
+cre_tsk_Impl_Var:	# u32, initial value of a RAM variable; read / written by cre_tsk_Impl 0x4C03D154: `mov (8, a2), a1`
 	.long	0x48472249
 
-func_4C03D154_Table_2:	# 2 x u16, 0..3; read by func_4C03D154 0x4C03D154: `movhu (0xc, a2), d0`
+cre_tsk_Impl_Table_2:	# 2 x u16, 0..3; read by cre_tsk_Impl 0x4C03D154: `movhu (0xc, a2), d0`
 	tab_u16	3, 0
 
-func_4C03D154_Var_2:	# u32, initial value of a RAM variable; read / written by func_4C03D154 0x4C03D154: `mov (0x10, a2), d0`
+cre_tsk_Impl_Var_2:	# u32, initial value of a RAM variable; read / written by cre_tsk_Impl 0x4C03D154: `mov (0x10, a2), d0`
 	.long	20480
 
-func_4C03D154_Table_16:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C03D0C8 reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_tsk, 0, 0`, +8 more calls); the layout func_4C03D154 0x4C03D154 reads through its argument a0 (passed by cre_tsk 0x4C03D0C8 `call func_4C03D154_entry, [d2,d3,a2], 0x2c`)
+cre_tsk_Impl_Table_16:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C03D0C8 reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_tsk, 0, 0`, +8 more calls); the layout cre_tsk_Impl 0x4C03D154 reads through its argument a0 (passed by cre_tsk 0x4C03D0C8 `call cre_tsk_Impl_entry, [d2,d3,a2], 0x2c`)
 	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_484729CC, itskpri=3, x14="\x00\x00", stksz=20480
 
-func_4C03BFC8_Table_5:	# 2 x u32, 0..0; read by func_4C03BFC8 0x4C03BFC8: `mov (a3), d2`
+cre_mbx_Impl_Table_5:	# 2 x u32, 0..0; read by cre_mbx_Impl 0x4C03BFC8: `mov (a3), d2`
 	tab_u32	0, 0
 
 deflate_copyright:	.asciz " deflate 1.0.4 Copyright 1995-1996 Jean-loup Gailly "

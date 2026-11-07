@@ -4333,8 +4333,8 @@
 #   +0   key          s16            func_484285DF 0x484285DF `movhu (d0, a3), d2`; func_4842878D 0x4842878D `movhu (d0, a2), d0` (+9)
 #   +2   key_         s16            func_484285DF 0x484285DF `movhu (2, a0), d2`; func_484285DF 0x484285DF `movhu (2, a0), d3` (+14)
 #   +4   key__        s16            func_484285DF 0x484285DF `movhu (4, a0), d0`; func_4842878D 0x4842878D `movhu (4, a0), d0` (+6)
-#   +6   flag         s16            func_484143EB 0x484143EB `movhu (6, a0), d0`; func_484144F8 0x484144F8 `movhu (6, a0), d0` (+7)
-#   +8   flag_        s16            func_484218FA 0x484218FA `movhu (8, a0), d0`; func_484218FA 0x484218FA `movhu (8, a2), d0` (+15)
+#   +6   flag_id      s16            func_484143EB 0x484143EB `movhu (6, a0), d0`; func_484144F8 0x484144F8 `movhu (6, a0), d0` (+7)
+#   +8   flag_id_     s16            func_484218FA 0x484218FA `movhu (8, a0), d0`; func_484218FA 0x484218FA `movhu (8, a2), d0` (+15)
 #   +10  x10          u8[2]          no reader seen
 #   +12  index        u32            ProcCall 0x4842948C `mov (0xc, a0), d0`; ProcCall 0x4842948C `mov (0xc, a0), d1` (+7)
 #   +16  f16          u32            func_48428550 0x48428550 `mov (0x10, a0), d0`; func_4842878D 0x4842878D `mov (0x10, a0), d0` (+3)
@@ -4348,12 +4348,12 @@
 #   +48  key___       s16            InitializeTaskTimer 0x4842994C `movhu d0, (0x30, a0)`; ApTimer 0x484299F1 `movhu (0x30, a0), d0` (+10)
 #   +50  count        s16            InitializeTaskTimer 0x4842994C `movhu (0x32, a0), d1`; InitializeTaskTimer 0x4842994C `movhu (a1), d0` (+2)
 #   +52  index_       u32            InitializeTaskTimer 0x4842994C `mov (a0), a0`; InitializeTaskTimer 0x4842994C `mov (a3), a0` (+12)
-.macro REC_func_484288AC_Table key=0, key_=0, key__=0, flag=0, flag_=0, x10, index=0, f16=0, f20=0, f24=0, f28=0, f32=0, f36=0, f40=0, Free_d1=0, key___=0, count=0, index_=0
+.macro REC_func_484288AC_Table key=0, key_=0, key__=0, flag_id=0, flag_id_=0, x10, index=0, f16=0, f20=0, f24=0, f28=0, f32=0, f36=0, f40=0, Free_d1=0, key___=0, count=0, index_=0
 	.word	\key
 	.word	\key_
 	.word	\key__
-	.word	\flag
-	.word	\flag_
+	.word	\flag_id
+	.word	\flag_id_
 	.ascii	"\x10"
 	.long	\index
 	.long	\f16
@@ -5297,13 +5297,13 @@
 
 # T_CTSK: 20-byte records (cre_tsk_ArgA0, 7 records); fields, and what reads them:
 #   (the layout cre_tsk 0x4C03D0C8 reads through its argument a0 (passed by func_484141DB 0x484141DB `call cre_tsk, 0, 0`, +7 more calls))
-#   (the layout func_4C03D154 0x4C03D154 reads through its argument a0 (passed by cre_tsk 0x4C03D0C8 `call func_4C03D154_entry, [d2,d3,a2], 0x2c`))
-#   +0   exinf        u32            func_4C03D154 0x4C03D154 `mov (a2), d1`
+#   (the layout cre_tsk_Impl 0x4C03D154 reads through its argument a0 (passed by cre_tsk 0x4C03D0C8 `call cre_tsk_Impl_entry, [d2,d3,a2], 0x2c`))
+#   +0   exinf        u32            cre_tsk_Impl 0x4C03D154 `mov (a2), d1`
 #   +4   tskatr       u8[4]          no reader seen
-#   +8   task         ptr            func_4C03D154 0x4C03D154 `mov (8, a2), a1`
-#   +12  itskpri      u16            func_4C03D154 0x4C03D154 `movhu (0xc, a2), d0`
+#   +8   task         ptr            cre_tsk_Impl 0x4C03D154 `mov (8, a2), a1`
+#   +12  itskpri      u16            cre_tsk_Impl 0x4C03D154 `movhu (0xc, a2), d0`
 #   +14  x14          u8[2]          no reader seen
-#   +16  stksz        u32            func_4C03D154 0x4C03D154 `mov (0x10, a2), d0`
+#   +16  stksz        u32            cre_tsk_Impl 0x4C03D154 `mov (0x10, a2), d0`
 .macro T_CTSK exinf=0, tskatr, task=0, itskpri=0, x14, stksz=0
 	.long	\exinf
 	.ascii	"\tskatr"
@@ -5313,27 +5313,27 @@
 	.long	\stksz
 .endm
 
-# REC_func_4C03C7EF_ArgA0: 12-byte records (func_4C03C7EF_ArgA0, 10 records); fields, and what reads them:
-#   (the layout func_4C03C7EF 0x4C03C7EF reads through its argument a0 (passed by func_484141DB 0x484141DB `call func_4C03C7EF, 0, 0`, +4 more calls))
-#   (the layout func_4C03C87B 0x4C03C87B reads through its argument a0 (passed by func_4C03C7EF 0x4C03C7EF `call func_4C03C87B_entry, [d2,a2,a3], 0xc`))
-#   +0   f0           u32            func_4C03C87B 0x4C03C87B `mov (a3), d2`
-#   +4   f4           u16            func_4C03C87B 0x4C03C87B `movhu (4, a3), d2`
+# REC_cre_flg_ArgA0: 12-byte records (cre_flg_ArgA0, 10 records); fields, and what reads them:
+#   (the layout cre_flg 0x4C03C7EF reads through its argument a0 (passed by func_484141DB 0x484141DB `call cre_flg, 0, 0`, +4 more calls))
+#   (the layout cre_flg_Impl 0x4C03C87B reads through its argument a0 (passed by cre_flg 0x4C03C7EF `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`))
+#   +0   f0           u32            cre_flg_Impl 0x4C03C87B `mov (a3), d2`
+#   +4   f4           u16            cre_flg_Impl 0x4C03C87B `movhu (4, a3), d2`
 #   +6   x6           u8[2]          no reader seen
-#   +8   f8           u32            func_4C03C87B 0x4C03C87B `mov (8, a3), d2`
-.macro REC_func_4C03C7EF_ArgA0 f0=0, f4=0, x6, f8=0
+#   +8   f8           u32            cre_flg_Impl 0x4C03C87B `mov (8, a3), d2`
+.macro REC_cre_flg_ArgA0 f0=0, f4=0, x6, f8=0
 	.long	\f0
 	.word	\f4
 	.ascii	"\x6"
 	.long	\f8
 .endm
 
-# REC_func_4C03C7EF_ArgA0_s8: 8-byte records (func_4C03C7EF_ArgA0_s8, 1 records); fields, and what reads them:
-#   (the layout func_4C03C7EF 0x4C03C7EF reads through its argument a0 (passed by func_484141DB 0x484141DB `call func_4C03C7EF, 0, 0`, +4 more calls))
-#   (the layout func_4C03C87B 0x4C03C87B reads through its argument a0 (passed by func_4C03C7EF 0x4C03C7EF `call func_4C03C87B_entry, [d2,a2,a3], 0xc`))
-#   +0   f0           u32            func_4C03C87B 0x4C03C87B `mov (a3), d2`
-#   +4   f4           u16            func_4C03C87B 0x4C03C87B `movhu (4, a3), d2`
+# REC_cre_flg_ArgA0_s8: 8-byte records (cre_flg_ArgA0_s8, 1 records); fields, and what reads them:
+#   (the layout cre_flg 0x4C03C7EF reads through its argument a0 (passed by func_484141DB 0x484141DB `call cre_flg, 0, 0`, +4 more calls))
+#   (the layout cre_flg_Impl 0x4C03C87B reads through its argument a0 (passed by cre_flg 0x4C03C7EF `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`))
+#   +0   f0           u32            cre_flg_Impl 0x4C03C87B `mov (a3), d2`
+#   +4   f4           u16            cre_flg_Impl 0x4C03C87B `movhu (4, a3), d2`
 #   +6   x6           u8[2]          no reader seen
-.macro REC_func_4C03C7EF_ArgA0_s8 f0=0, f4=0, x6
+.macro REC_cre_flg_ArgA0_s8 f0=0, f4=0, x6
 	.long	\f0
 	.word	\f4
 	.ascii	"\x6"

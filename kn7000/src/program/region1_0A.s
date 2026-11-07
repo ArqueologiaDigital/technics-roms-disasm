@@ -17661,25 +17661,25 @@ DiskInit_entry:
     mov     1, d0
     call    SdMediaStateSet_entry, [d2], 4
     mov     8, d0
-    mov     func_4C03D154_Table_11, a0
+    mov     cre_tsk_Impl_Table_11, a0
     call    cre_tsk, 0, 0
     mov     8, d0
     clr     d1
     call    sta_tsk, 0, 0
-    mov     func_4C03BFC8_Table_3, a2
+    mov     cre_mbx_Impl_Table_3, a2
     mov     9, d0
     mov     a2, a0
-    call    func_4C03BF3C, 0, 0
+    call    cre_mbx, 0, 0
     mov     0xa, d0
     mov     a2, a0
-    call    func_4C03BF3C, 0, 0
+    call    cre_mbx, 0, 0
     mov     0x50082738, a2
 loc_4854AD63:
     mov     a2, a0
     call    DiskWorkerStatusClear, 0, 0
     mov     0xa, d0
     mov     a2, a0
-    call    LibMsgSend, 0, 0
+    call    snd_msg, 0, 0
     add     0x30, a2
     cmp     0x50082918, a2
     bcs     loc_4854AD63
@@ -17699,7 +17699,7 @@ DiskWorkerStatusClear:
     retf    0, 0
 # DiskWorkerTask  (CPU 0x4854ad90)
 #   MILK task 8 main loop: blocking-receive a 0x14-byte message from
-#   mailbox 9 (LibMsgReceive), dispatch on type halfword +8: 2 ->
+#   mailbox 9 (rcv_msg), dispatch on type halfword +8: 2 ->
 #   DiskDriveCtrlHandler (drive-letter control commands), 3 ->
 #   SdWorkerCmdHandler (SD media commands); optional per-message
 #   completion callback (calls), then clear status + post done-event 0xA
@@ -17719,7 +17719,7 @@ DiskWorkerTask:
 loc_4854ADA8:
     mov     d3, a0
     mov     9, d0
-    call    LibMsgReceive, 0, 0
+    call    rcv_msg, 0, 0
     mov     (0x10, sp), a0
     mov     sp, a1
     add     0x14, a1
@@ -17763,7 +17763,7 @@ loc_4854ADF4:
     call    DiskWorkerStatusClear, 0, 0
     mov     0xa, d0
     mov     (0x10, sp), a0
-    call    LibMsgSend, 0, 0
+    call    snd_msg, 0, 0
     bra     loc_4854ADA8
     ret     [d2,d3,a2,a3], 0x54
 # DiskCmdReplyCopy  (CPU 0x4854ae0b)
@@ -17859,7 +17859,7 @@ loc_4854AEAA:
     movbu   d0, (MainSEQ_SeqCycPly_Reload_Records+52)
     mov     0x50082918, a0
     mov     0xa, d0
-    call    func_4C03CA58, 0, 0
+    call    prcv_msg, 0, 0
     cmp     -0x55, d0
     bne     loc_4854AECA
     mov     1, d0
@@ -17897,7 +17897,7 @@ loc_4854AECA:
     mov     d0, (0x2c, a0)
     mov     9, d0
     mov     (0x50082918), a0
-    call    LibMsgSend, 0, 0
+    call    snd_msg, 0, 0
     mov     3, d0
     call    rot_rdq, 0, 0
     movhu   (MainSEQ_SeqCycPly_Reload_Records+48), d0
@@ -17953,7 +17953,7 @@ DiskCmdPostAsync_entry:
 loc_4854AF9D:
     mov     0x50082918, a0
     mov     0xa, d0
-    call    func_4C03CA58, 0, 0
+    call    prcv_msg, 0, 0
     cmp     -0x55, d0
     bne     loc_4854AFB8
     mov     0x00008001, d0
@@ -17975,7 +17975,7 @@ loc_4854AFB8:
     lne
     mov     9, d0
     mov     (0x50082918), a0
-    call    LibMsgSend, 0, 0
+    call    snd_msg, 0, 0
     clr     d0
 loc_4854AFE6:
     ret     [a2], 0x14

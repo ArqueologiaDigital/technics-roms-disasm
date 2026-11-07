@@ -9570,7 +9570,7 @@ chg_pri_X:
     exth    d0
     movhu   (0x1c, sp), d1
     exth    d1
-    call    func_4C03C13E, 0, 0
+    call    chg_pri, 0, 0
     ret     0, 0x10
 # cre_sem_X  (CPU 0x48585d72)
 cre_sem_X:
@@ -9579,7 +9579,7 @@ cre_sem_X:
     movhu   d0, (0x18, sp)
     movhu   (0x18, sp), d0
     exth    d0
-    call    func_4C03C071, 0, 0
+    call    cre_sem, 0, 0
     ret     0, 0x10
 # ref_sem_X  (CPU 0x48585d88)
 ref_sem_X:
@@ -9588,7 +9588,7 @@ ref_sem_X:
     mov     d0, (0x1c, sp)
     movhu   (0x1c, sp), d0
     exth    d0
-    call    func_4C03DEC4_entry, [d2,d3,a2,a3], 0x1c
+    call    ref_sem_entry, [d2,d3,a2,a3], 0x1c
     ret     0, 0x10
 # cre_flg_X  (CPU 0x48585d9d)
 cre_flg_X:
@@ -9597,7 +9597,7 @@ cre_flg_X:
     movhu   d0, (0x18, sp)
     movhu   (0x18, sp), d0
     exth    d0
-    call    func_4C03CA44, 0, 0
+    call    cre_flg, 0, 0
     ret     0, 0x10
 # wai_flg_X  (CPU 0x48585db3)
 wai_flg_X:
@@ -9611,7 +9611,7 @@ wai_flg_X:
     movhu   (0x24, sp), d0
     exth    d0
     mov     (0x28, sp), d1
-    call    func_4C03C804, 0, 0
+    call    wai_flg, 0, 0
     ret     0, 0x18
 # cre_mbx_X  (CPU 0x48585dd2)
 cre_mbx_X:
@@ -9620,7 +9620,7 @@ cre_mbx_X:
     movhu   d0, (0x18, sp)
     movhu   (0x18, sp), d0
     exth    d0
-    call    func_4C03BF96, 0, 0
+    call    cre_mbx, 0, 0
     ret     0, 0x10
 # snd_msg_X  (CPU 0x48585de8)
 snd_msg_X:
@@ -9629,7 +9629,7 @@ snd_msg_X:
     movhu   d0, (0x18, sp)
     movhu   (0x18, sp), d0
     exth    d0
-    call    LibMsgSend, 0, 0
+    call    snd_msg, 0, 0
     ret     0, 0x10
 # rcv_msg_X  (CPU 0x48585dfe)
 rcv_msg_X:
@@ -9638,7 +9638,7 @@ rcv_msg_X:
     movhu   d0, (0x1c, sp)
     movhu   (0x1c, sp), d0
     exth    d0
-    call    LibMsgReceive, 0, 0
+    call    rcv_msg, 0, 0
     ret     0, 0x10
 # prcv_msg_X  (CPU 0x48585e14)
 prcv_msg_X:
@@ -9647,7 +9647,7 @@ prcv_msg_X:
     movhu   d0, (0x1c, sp)
     movhu   (0x1c, sp), d0
     exth    d0
-    call    func_4C03CD70, 0, 0
+    call    prcv_msg, 0, 0
     ret     0, 0x10
 # fopen_api  (CPU 0x48585e2a)
 fopen_api:
@@ -9838,15 +9838,15 @@ rodata_48586270:
     .long   func_48405B95
     .long   0x00000003, 0x00002800
 
-# packet {0, 8, 0} passed with id 10 to the kernel call func_4C03CA44
+# packet {0, 8, 0} passed with id 10 to the kernel call cre_flg
 rodata_48586284:
     .long   0x00000000, 0x00000008, 0x00000000
 
-# zero packet passed with ids 1 and 2 to the kernel call func_4C03C071
+# zero packet passed with ids 1 and 2 to the kernel call cre_sem
 rodata_48586290:
     .long   0x00000000, 0x00000000
 
-# zero packet passed with ids 5..8 to the kernel call func_4C03BF96
+# zero packet passed with ids 5..8 to the kernel call cre_mbx
 rodata_48586298:
     .long   0x00000000, 0x00000000
 

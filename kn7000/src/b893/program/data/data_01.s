@@ -10099,7 +10099,7 @@ AcMidiPartGridBoxProc_Table_5:
 TMidiPart_Table:	# 4 x u32, 61697..2113540; read by TMidiPart 0x484CF106: `mov   (a2), d0`
 	tab_u32	2113537, 2113540, 2113536, 61697
 
-Malloc_Records:	# 4 x REC_Malloc_Records (10 bytes each); read by Malloc 0x484165E3 `call func_4C03C59C, 0, 0`; MainPutM3Em 0x4841C335 `call Malloc_entry, [d2,a2,a3], 0x28`; MainAddM3Em 0x4841C37D `call Malloc_entry, [d2,a2,a3], 0x28` (+18)
+Malloc_Records:	# 4 x REC_Malloc_Records (10 bytes each); read by Malloc 0x484165E3 `call wai_flg, 0, 0`; MainPutM3Em 0x4841C335 `call Malloc_entry, [d2,a2,a3], 0x28`; MainAddM3Em 0x4841C37D `call Malloc_entry, [d2,a2,a3], 0x28` (+18)
 	REC_Malloc_Records	key="\xFF\xFF", key_=16, x3="\x11\x12\xFF\x00\xFF\x1B\xFF"
 	REC_Malloc_Records	key="\xFF\xFF", x3="\x01\x02\x03\x04\x05\x06\x07"
 	REC_Malloc_Records	key="\xFF\xFF", key_=8, x3="\x09\n\x0B\x0C\x0D\x0E\x0F"
@@ -11311,7 +11311,7 @@ VocalistGrid_Table_6:
 	.long	Str_7_10
 	.long	Str_8_10
 
-VocalistGrid_Table:	# 1 x REC_VocalistGrid_Table (8 bytes each); read by Malloc 0x484165E3 `call func_4C03C59C, 0, 0`; MainAddM3Em 0x4841C37D `call Malloc_entry, [d2,a2,a3], 0x28`; VocalistGrid 0x484D6212 `call GetM3EmVal_entry, 0, 0x10` (+7)
+VocalistGrid_Table:	# 1 x REC_VocalistGrid_Table (8 bytes each); read by Malloc 0x484165E3 `call wai_flg, 0, 0`; MainAddM3Em 0x4841C37D `call Malloc_entry, [d2,a2,a3], 0x28`; VocalistGrid 0x484D6212 `call GetM3EmVal_entry, 0, 0x10` (+7)
 	REC_VocalistGrid_Table	4294967295, 4294967295
 # census: opaque -- unknown-dump: 88 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_b893.rom", 0x228854, 0x2288AC
