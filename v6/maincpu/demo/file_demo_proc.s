@@ -8838,7 +8838,7 @@ FileIO_ErrorCodeByteBlock_Skip5:
 	extz	wa
 	lda	xbc, (FileIO_ErrorCodeByteBlock_Entry_Data:24)
 	ld	a, (xbc+wa)
-	cp	a, 119
+	cp	a, TT_DKMDLY
 	jr	z, FileIO_ErrorCodeByteBlock_Skip6
 	cp	a, 108
 	jr	z, FileIO_ErrorCodeByteBlock_Loop2
@@ -8867,7 +8867,7 @@ FileIO_ErrorCodeByteBlock_Skip8:
 	extz	wa
 	lda	xbc, (FileIO_ErrorCodeByteBlock_Entry_Data:24)
 	ld	a, (xbc+wa)
-	cp	a, 119
+	cp	a, TT_DKMDLY
 	jr	z, FileIO_ErrorCodeByteBlock_Skip9
 	cp	a, 108
 	jr	z, FileIO_ErrorCodeByteBlock_Loop2

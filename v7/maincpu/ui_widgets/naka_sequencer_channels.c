@@ -2645,7 +2645,8 @@ const naka_sequencer_channels_t naka_sequencer_channels_data
      * EXIT -> TITLE_DKMENU
      * Opened from: TITLE_DKMENU
     /* ==== SCREEN 0x01A000FC -- "TT_EXTAPR", title id 0xFC, function NAKA_MAINFUNC_TestTitleFunc ====
-     * Path: none found (no data entry, and no traced code, opens it)
+     * Path: power-on boot sequence User_didnt_request_flash_mem_update > (by
+     *       SelfTest_FirmwareVersionCheck)
      * EXIT -> TITLE_DKMENU */
     .FDTest_ScreenView = {
         .class_ = NAKA_CLASS(TtlScreen),

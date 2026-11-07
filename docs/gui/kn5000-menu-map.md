@@ -13,7 +13,7 @@ title's procedure, or the function of a menu box, passing the title's `TT_*` ind
 `UI_ChangeTitleByIndex` / `UI_InterruptTitleByIndex` (`scripts/converters/name_title_index_operands.py`)
 or posting `EVT_CHANGE_TITLE` itself.
 
-211 titles (170 with a path; 23 of the others are opened by code that no traced path reaches), 21 modes, 3260 widget records in 18 C files, 99 menu entries, 357 code transitions and 267 EXIT links.
+211 titles (179 with a path; 15 of the others are opened by code that no traced path reaches), 21 modes, 3260 widget records in 18 C files, 99 menu entries, 361 code transitions and 267 EXIT links.
 
 ## Modes
 
@@ -488,6 +488,137 @@ the SOUND menu. It is the home title of mode 2, MD_SOUND (0x01800002).
 - Registered: `"TT_SEMENU"`, title id 0x20, function `NAKA_MAINFUNC_SeMenuTitleFunc`, v10/maincpu/display/scoop_display.s
 - View: element 0 of Viewable slot 0x20 (record outside the C sources)
 - EXIT -> `TITLE_PS`
+
+### `TITLE_SOFTVER` -- "SOFT VERSION"
+
+the software-version screen, requested by a control-panel switch chord.
+
+- Path: power-on boot sequence User_didnt_request_flash_mem_update > (by Boot_HandleComboDisplay)
+- Registered: `"TT_SOFTVER"`, title id 0xF0, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/ui/drawbar_panel_ui.s
+- View: `OBJ_Softver` (TtlScreen) in `naka_technichord_part.c`
+- EXIT -> `TITLE_PS`
+- Widgets:
+
+  - `OBJ_Softver` TtlScreen "SOFT VERSION" [0,0 320x240]
+    - `OBJ_MainProgram` PsEditBox "MAIN PROGRAM :" [44,88 232x26]
+    - `OBJ_MainTable` PsEditBox "MAIN TABLE   :" [44,114 232x26]
+    - `OBJ_SubProgram` PsEditBox "SUB  PROGRAM :" [44,140 232x26]
+    - `OBJ_SoundTable` PsEditBox "SOUND TABLE  :" [44,166 232x26]
+    - `OBJ_Softver_IvSoftver` IvSoftver [0,0 32x32]
+
+### `TITLE_TEST1`
+
+the first self-test screen. It is shown when the SRAM test or the panel-detection check reports a problem, and an entry of ...
+
+- Path: power-on boot sequence User_didnt_request_flash_mem_update > (by SelfTest_FirmwareVersionCheck)
+- Registered: `"TT_TEST1"`, title id 0xF4, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
+- View: `OBJ_vF4_e0` (TtlScreen) in `naka_ctrl_menu_body.c`
+- EXIT -> `TITLE_PS`
+- Widgets:
+
+  - `OBJ_vF4_e0` TtlScreen [0,0 320x240]
+
+### `TITLE_TEST2`
+
+- Path: power-on boot sequence User_didnt_request_flash_mem_update > (by SelfTest_FirmwareVersionCheck)
+- Registered: `"TT_TEST2"`, title id 0xF5, function `NAKA_MAINFUNC_TEST2FUNC`, v10/maincpu/extensions/extension_init.s
+- View: `OBJ_TEST2` (TtlScreen) in `naka_extension_device.c`
+- EXIT -> `TITLE_PS`
+- Widgets:
+
+  - `OBJ_TEST2` TtlScreen [0,0 320x240]
+    - `OBJ_TEST2_TextBox` TextBox "Please check by the LED of test port. (PANEL CPU:                            OK=Lit SHORT, NO=Lit LONG) " [0,64 320x56]
+    - `OBJ_PanelCpuChecking_Label` Label "PANEL CPU CHECKING" [58,26 202x19]
+    - `OBJ_ResultCpuOfCpr_Label` Label "RESULT: CPU of CPR =" [42,138 164x19]
+    - `OBJ_CpuOfCpl_Label` Label "CPU of CPL =" [106,158 100x19]
+    - `OBJ_IfBothCpuAre_Label` Label "If both CPU are NO," [14,190 156x19]
+    - `OBJ_ItIsBetterTo_Label` Label "it is better to check the MAIN PCB." [14,206 294x19]
+    - `OBJ_TEST2_IvPageControl` IvPageControl [0,0 32x32]
+    - `OBJ_TEST2_IvPageControl_2` IvPageControl [0,0 32x32]
+    - `OBJ_TEST2_IvPageControl_3` IvPageControl [0,0 32x32]
+    - `OBJ_TEST2_IvPageControl_4` IvPageControl [0,0 32x32]
+
+### `TITLE_TEST3`
+
+a self-test screen. While it is up, some panel handlers stand down and one is active only there.
+
+- Path: power-on boot sequence User_didnt_request_flash_mem_update > (by SelfTest_FirmwareVersionCheck)
+- Registered: `"TT_TEST3"`, title id 0xF6, function `NAKA_MAINFUNC_TEST3FUNC`, v10/maincpu/extensions/extension_init.s
+- View: `OBJ_TEST3` (SineWaveScreen) in `naka_extension_device.c`
+- EXIT -> `TITLE_PS`
+- Widgets:
+
+  - `OBJ_TEST3` SineWaveScreen [0,0 320x240]
+
+### `TITLE_TEST4`
+
+- Path: power-on boot sequence User_didnt_request_flash_mem_update > (by SelfTest_FirmwareVersionCheck)
+- Registered: `"TT_TEST4"`, title id 0xF7, function `NAKA_MAINFUNC_TEST4FUNC`, v10/maincpu/extensions/extension_init.s
+- View: `OBJ_TEST4` (TtlScreen) in `naka_extension_device.c`
+- EXIT -> `TITLE_PS`
+- Widgets:
+
+  - `OBJ_TEST4` TtlScreen [0,0 320x240]
+    - `OBJ_TEST4_TextBox` TextBox "After all LEDs ON and OFF,  Please push any button.         If LED near the button turn ON/OFF,it is working OK." [44,84 268x116]
+    - `OBJ_PanelSwLedCheck_Label` Label "PANEL SW&LED CHECK" [54,42 202x19]
+
+### `TITLE_TEST5`
+
+- Path: power-on boot sequence User_didnt_request_flash_mem_update > (by SelfTest_FirmwareVersionCheck)
+- Registered: `"TT_TEST5"`, title id 0xF8, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
+- View: `OBJ_TEST5` (TtlScreen) in `naka_extension_device.c`
+- EXIT -> `TITLE_PS`
+- Widgets:
+
+  - `OBJ_TEST5` TtlScreen [0,0 320x240]
+    - `OBJ_TEST5_IvPageControl` IvPageControl [0,0 32x32]
+    - `OBJ_TEST5_IvPageControl_2` IvPageControl [0,0 32x32]
+    - `OBJ_TEST5_IvPageControl_3` IvPageControl [0,0 32x32]
+    - `OBJ_TEST5_IvPageControl_4` IvPageControl [0,0 32x32]
+    - `OBJ_TEST5_IvPageControl_5` IvPageControl [0,0 32x32]
+
+### `TITLE_TEST6`
+
+- Path: power-on boot sequence User_didnt_request_flash_mem_update > (by SelfTest_FirmwareVersionCheck)
+- Registered: `"TT_TEST6"`, title id 0xF9, function `NAKA_MAINFUNC_TEST6FUNC`, v10/maincpu/extensions/extension_init.s
+- View: `OBJ_TEST6` (TtlScreen) in `naka_extension_device.c`
+- EXIT -> `TITLE_PS`
+- Widgets:
+
+  - `OBJ_TEST6` TtlScreen [0,0 320x240]
+    - `OBJ_PeripheralDeviceCheck_Label` Label "PERIPHERAL DEVICE CHECK" [22,66 257x19]
+    - `OBJ_FloppyDiskControllerFdc_Label` Label "FLOPPY DISK CONTROLLER(FDC) " [14,110 228x19]
+    - `OBJ_TEST6_IvPageControl` IvPageControl [0,0 32x32]
+    - `OBJ_TEST6_IvPageControl_2` IvPageControl [0,0 32x32]
+
+### `TITLE_EXT`
+
+- Path: power-on boot sequence User_didnt_request_flash_mem_update > (by SelfTest_FirmwareVersionCheck)
+- Registered: `"TT_EXT"`, title id 0xFB, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
+- View: `OBJ_EXT` (IvScreen) in `naka_extension_device.c`
+- EXIT -> `TITLE_PS`
+- Widgets:
+
+  - `OBJ_EXT` IvScreen [0,0 320x240]
+
+### `0x01A000FC`
+
+- Path: power-on boot sequence User_didnt_request_flash_mem_update > (by SelfTest_FirmwareVersionCheck)
+- Registered: `"TT_EXTAPR"`, title id 0xFC, function `NAKA_MAINFUNC_TestTitleFunc`, v10/maincpu/factory_test/test_init.s
+- View: `OBJ_FDTest_ScreenView` (TtlScreen) in `naka_sequencer_channels.c`
+- EXIT -> `TITLE_DKMENU`
+- Widgets:
+
+  - `OBJ_FDTest_ScreenView` TtlScreen [0,0 320x240]
+    - `FDTest_DiagList_Total` PsNumEditBox " TOTAL :", record outside the C sources
+    - `FDTest_DiagList_NG` PsNumEditBox "    NG :", record outside the C sources
+    - `FDTest_DiagList_OK` PsNumEditBox "    OK :", record outside the C sources
+    - `FDTest_Separator1` IvMainEditSw, record outside the C sources
+    - `FDTest_Panel_Param` PsEditSwBox, record outside the C sources
+      - `FDTest_Label_Tilde80` Label "~80", record outside the C sources
+    - `FDTest_Panel_SubElements` PsEditSwBox, record outside the C sources
+      - `FDTest_Group_OnOff` Box, record outside the C sources
+    - `FDTest_Label_RunningTest` Label "RUNNING TEST", record outside the C sources
 
 ### `TITLE_PMBKSEL`
 
@@ -3752,145 +3883,6 @@ the welcome (boot) screen. It is requested once at boot.
     - `OBJ_Welcom_IvIntWelcome` IvIntWelcome [0,0 32x32]
     - `OBJ_Welcom_VwUserBitmapSp` VwUserBitmapSp [4,36 308x45]
     - `OBJ_Welcom_VwUserBitmapSp_2` VwUserBitmapSp [60,100 199x36]
-
-### `TITLE_SOFTVER` -- "SOFT VERSION"
-
-the software-version screen, requested by a control-panel switch chord.
-
-- Path: none found (no data entry opens it; the code that does is reached by no traced path)
-- Opened by code in: `Boot_HandleComboDisplay`, `MainTitle_PrepareAndDispatch`
-- Registered: `"TT_SOFTVER"`, title id 0xF0, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/ui/drawbar_panel_ui.s
-- View: `OBJ_Softver` (TtlScreen) in `naka_technichord_part.c`
-- EXIT -> `TITLE_PS`
-- Widgets:
-
-  - `OBJ_Softver` TtlScreen "SOFT VERSION" [0,0 320x240]
-    - `OBJ_MainProgram` PsEditBox "MAIN PROGRAM :" [44,88 232x26]
-    - `OBJ_MainTable` PsEditBox "MAIN TABLE   :" [44,114 232x26]
-    - `OBJ_SubProgram` PsEditBox "SUB  PROGRAM :" [44,140 232x26]
-    - `OBJ_SoundTable` PsEditBox "SOUND TABLE  :" [44,166 232x26]
-    - `OBJ_Softver_IvSoftver` IvSoftver [0,0 32x32]
-
-### `TITLE_TEST1`
-
-the first self-test screen. It is shown when the SRAM test or the panel-detection check reports a problem, and an entry of ...
-
-- Path: none found (no data entry opens it; the code that does is reached by no traced path)
-- Opened by code in: `SelfTest_FirmwareVersionCheck`
-- Registered: `"TT_TEST1"`, title id 0xF4, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
-- View: `OBJ_vF4_e0` (TtlScreen) in `naka_ctrl_menu_body.c`
-- EXIT -> `TITLE_PS`
-- Widgets:
-
-  - `OBJ_vF4_e0` TtlScreen [0,0 320x240]
-
-### `TITLE_TEST2`
-
-- Path: none found (no data entry opens it; the code that does is reached by no traced path)
-- Opened by code in: `SelfTest_FirmwareVersionCheck`
-- Registered: `"TT_TEST2"`, title id 0xF5, function `NAKA_MAINFUNC_TEST2FUNC`, v10/maincpu/extensions/extension_init.s
-- View: `OBJ_TEST2` (TtlScreen) in `naka_extension_device.c`
-- EXIT -> `TITLE_PS`
-- Widgets:
-
-  - `OBJ_TEST2` TtlScreen [0,0 320x240]
-    - `OBJ_TEST2_TextBox` TextBox "Please check by the LED of test port. (PANEL CPU:                            OK=Lit SHORT, NO=Lit LONG) " [0,64 320x56]
-    - `OBJ_PanelCpuChecking_Label` Label "PANEL CPU CHECKING" [58,26 202x19]
-    - `OBJ_ResultCpuOfCpr_Label` Label "RESULT: CPU of CPR =" [42,138 164x19]
-    - `OBJ_CpuOfCpl_Label` Label "CPU of CPL =" [106,158 100x19]
-    - `OBJ_IfBothCpuAre_Label` Label "If both CPU are NO," [14,190 156x19]
-    - `OBJ_ItIsBetterTo_Label` Label "it is better to check the MAIN PCB." [14,206 294x19]
-    - `OBJ_TEST2_IvPageControl` IvPageControl [0,0 32x32]
-    - `OBJ_TEST2_IvPageControl_2` IvPageControl [0,0 32x32]
-    - `OBJ_TEST2_IvPageControl_3` IvPageControl [0,0 32x32]
-    - `OBJ_TEST2_IvPageControl_4` IvPageControl [0,0 32x32]
-
-### `TITLE_TEST3`
-
-a self-test screen. While it is up, some panel handlers stand down and one is active only there.
-
-- Path: none found (no data entry opens it; the code that does is reached by no traced path)
-- Opened by code in: `SelfTest_FirmwareVersionCheck`
-- Registered: `"TT_TEST3"`, title id 0xF6, function `NAKA_MAINFUNC_TEST3FUNC`, v10/maincpu/extensions/extension_init.s
-- View: `OBJ_TEST3` (SineWaveScreen) in `naka_extension_device.c`
-- EXIT -> `TITLE_PS`
-- Widgets:
-
-  - `OBJ_TEST3` SineWaveScreen [0,0 320x240]
-
-### `TITLE_TEST4`
-
-- Path: none found (no data entry opens it; the code that does is reached by no traced path)
-- Opened by code in: `SelfTest_FirmwareVersionCheck`
-- Registered: `"TT_TEST4"`, title id 0xF7, function `NAKA_MAINFUNC_TEST4FUNC`, v10/maincpu/extensions/extension_init.s
-- View: `OBJ_TEST4` (TtlScreen) in `naka_extension_device.c`
-- EXIT -> `TITLE_PS`
-- Widgets:
-
-  - `OBJ_TEST4` TtlScreen [0,0 320x240]
-    - `OBJ_TEST4_TextBox` TextBox "After all LEDs ON and OFF,  Please push any button.         If LED near the button turn ON/OFF,it is working OK." [44,84 268x116]
-    - `OBJ_PanelSwLedCheck_Label` Label "PANEL SW&LED CHECK" [54,42 202x19]
-
-### `TITLE_TEST5`
-
-- Path: none found (no data entry opens it; the code that does is reached by no traced path)
-- Opened by code in: `SelfTest_FirmwareVersionCheck`
-- Registered: `"TT_TEST5"`, title id 0xF8, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
-- View: `OBJ_TEST5` (TtlScreen) in `naka_extension_device.c`
-- EXIT -> `TITLE_PS`
-- Widgets:
-
-  - `OBJ_TEST5` TtlScreen [0,0 320x240]
-    - `OBJ_TEST5_IvPageControl` IvPageControl [0,0 32x32]
-    - `OBJ_TEST5_IvPageControl_2` IvPageControl [0,0 32x32]
-    - `OBJ_TEST5_IvPageControl_3` IvPageControl [0,0 32x32]
-    - `OBJ_TEST5_IvPageControl_4` IvPageControl [0,0 32x32]
-    - `OBJ_TEST5_IvPageControl_5` IvPageControl [0,0 32x32]
-
-### `TITLE_TEST6`
-
-- Path: none found (no data entry opens it; the code that does is reached by no traced path)
-- Opened by code in: `SelfTest_FirmwareVersionCheck`
-- Registered: `"TT_TEST6"`, title id 0xF9, function `NAKA_MAINFUNC_TEST6FUNC`, v10/maincpu/extensions/extension_init.s
-- View: `OBJ_TEST6` (TtlScreen) in `naka_extension_device.c`
-- EXIT -> `TITLE_PS`
-- Widgets:
-
-  - `OBJ_TEST6` TtlScreen [0,0 320x240]
-    - `OBJ_PeripheralDeviceCheck_Label` Label "PERIPHERAL DEVICE CHECK" [22,66 257x19]
-    - `OBJ_FloppyDiskControllerFdc_Label` Label "FLOPPY DISK CONTROLLER(FDC) " [14,110 228x19]
-    - `OBJ_TEST6_IvPageControl` IvPageControl [0,0 32x32]
-    - `OBJ_TEST6_IvPageControl_2` IvPageControl [0,0 32x32]
-
-### `TITLE_EXT`
-
-- Path: none found (no data entry opens it; the code that does is reached by no traced path)
-- Opened by code in: `SelfTest_FirmwareVersionCheck`
-- Registered: `"TT_EXT"`, title id 0xFB, function `NAKA_APFUNC_DefaultFunction`, v10/maincpu/extensions/extension_init.s
-- View: `OBJ_EXT` (IvScreen) in `naka_extension_device.c`
-- EXIT -> `TITLE_PS`
-- Widgets:
-
-  - `OBJ_EXT` IvScreen [0,0 320x240]
-
-### `0x01A000FC`
-
-- Path: none found (no data entry, and no traced code, opens it)
-- Registered: `"TT_EXTAPR"`, title id 0xFC, function `NAKA_MAINFUNC_TestTitleFunc`, v10/maincpu/factory_test/test_init.s
-- View: `OBJ_FDTest_ScreenView` (TtlScreen) in `naka_sequencer_channels.c`
-- EXIT -> `TITLE_DKMENU`
-- Widgets:
-
-  - `OBJ_FDTest_ScreenView` TtlScreen [0,0 320x240]
-    - `FDTest_DiagList_Total` PsNumEditBox " TOTAL :", record outside the C sources
-    - `FDTest_DiagList_NG` PsNumEditBox "    NG :", record outside the C sources
-    - `FDTest_DiagList_OK` PsNumEditBox "    OK :", record outside the C sources
-    - `FDTest_Separator1` IvMainEditSw, record outside the C sources
-    - `FDTest_Panel_Param` PsEditSwBox, record outside the C sources
-      - `FDTest_Label_Tilde80` Label "~80", record outside the C sources
-    - `FDTest_Panel_SubElements` PsEditSwBox, record outside the C sources
-      - `FDTest_Group_OnOff` Box, record outside the C sources
-    - `FDTest_Label_RunningTest` Label "RUNNING TEST", record outside the C sources
 
 ### `TITLE_FDMSP`
 

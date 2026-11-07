@@ -7193,7 +7193,8 @@ const naka_technichord_part_t naka_technichord_part_data
 
     /* ==== SCREEN TITLE_SOFTVER "SOFT VERSION" -- "TT_SOFTVER", title id 0xF0, function NAKA_APFUNC_DefaultFunction ====
      * What: the software-version screen, requested by a control-panel switch chord.
-     * Path: none found (no data entry, and no traced code, opens it)
+     * Path: power-on boot sequence User_didnt_request_flash_mem_update > (by
+     *       Boot_HandleComboDisplay)
      * EXIT -> TITLE_PS */
     .Softver = {
         .class_ = NAKA_CLASS(TtlScreen),

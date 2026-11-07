@@ -1718,7 +1718,8 @@ const naka_extension_device_t naka_extension_device_data
     .w0_text = ALIGNED_STRING(""),
 
     /* ==== SCREEN TITLE_TEST2 -- "TT_TEST2", title id 0xF5, function NAKA_MAINFUNC_TEST2FUNC ====
-     * Path: none found (no data entry, and no traced code, opens it)
+     * Path: power-on boot sequence User_didnt_request_flash_mem_update > (by
+     *       SelfTest_FirmwareVersionCheck)
      * EXIT -> TITLE_PS */
     .TEST2 = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -2071,7 +2072,8 @@ const naka_extension_device_t naka_extension_device_data
     /* ==== SCREEN TITLE_TEST3 -- "TT_TEST3", title id 0xF6, function NAKA_MAINFUNC_TEST3FUNC ====
      * What: a self-test screen. While it is up, some panel handlers stand down and one is active
      *       only there.
-     * Path: none found (no data entry, and no traced code, opens it)
+     * Path: power-on boot sequence User_didnt_request_flash_mem_update > (by
+     *       SelfTest_FirmwareVersionCheck)
      * EXIT -> TITLE_PS */
     .TEST3 = {
         .class_ = NAKA_CLASS(SineWaveScreen),
@@ -2093,7 +2095,8 @@ const naka_extension_device_t naka_extension_device_data
     },
 
     /* ==== SCREEN TITLE_TEST4 -- "TT_TEST4", title id 0xF7, function NAKA_MAINFUNC_TEST4FUNC ====
-     * Path: none found (no data entry, and no traced code, opens it)
+     * Path: power-on boot sequence User_didnt_request_flash_mem_update > (by
+     *       SelfTest_FirmwareVersionCheck)
      * EXIT -> TITLE_PS */
     .TEST4 = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -2148,7 +2151,8 @@ const naka_extension_device_t naka_extension_device_data
     .PanelSwLedCheck_text = ALIGNED_STRING("PANEL SW&LED CHECK"),
 
     /* ==== SCREEN TITLE_TEST5 -- "TT_TEST5", title id 0xF8, function NAKA_APFUNC_DefaultFunction ====
-     * Path: none found (no data entry, and no traced code, opens it)
+     * Path: power-on boot sequence User_didnt_request_flash_mem_update > (by
+     *       SelfTest_FirmwareVersionCheck)
      * EXIT -> TITLE_PS */
     .TEST5 = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -3146,7 +3150,8 @@ const naka_extension_device_t naka_extension_device_data
     .H_text_40 = "H",
 
     /* ==== SCREEN TITLE_TEST6 -- "TT_TEST6", title id 0xF9, function NAKA_MAINFUNC_TEST6FUNC ====
-     * Path: none found (no data entry, and no traced code, opens it)
+     * Path: power-on boot sequence User_didnt_request_flash_mem_update > (by
+     *       SelfTest_FirmwareVersionCheck)
      * EXIT -> TITLE_PS */
     .TEST6 = {
         .class_ = NAKA_CLASS(TtlScreen),
@@ -3285,7 +3290,8 @@ const naka_extension_device_t naka_extension_device_data
     .No_text_5 = ALIGNED_STRING("= NO"),
 
     /* ==== SCREEN TITLE_EXT -- "TT_EXT", title id 0xFB, function NAKA_APFUNC_DefaultFunction ====
-     * Path: none found (no data entry, and no traced code, opens it)
+     * Path: power-on boot sequence User_didnt_request_flash_mem_update > (by
+     *       SelfTest_FirmwareVersionCheck)
      * EXIT -> TITLE_PS */
     .EXT = {
         .class_ = NAKA_CLASS(IvScreen),

@@ -543,6 +543,12 @@ class Graph:
                 path[to] = [('main', fname), ('main', '(by %s)' % routine)]
                 q.append(to)
                 bfs()
+        # third, the boot sequence (lane kn5000-naka3, 2026-11-07; add_code_edges' boot_edges)
+        for entry, to, routine in sorted(getattr(self, 'boot_edges', [])):
+            if to not in path and to in self.titles:
+                path[to] = [('boot', entry), ('boot', '(by %s)' % routine)]
+                q.append(to)
+                bfs()
         return path
 
 
@@ -583,6 +589,8 @@ def title_path(g, tid, paths=None):
             parts.append('%s button (mode %s)' % (' / '.join(b), lab) if b else 'mode %s' % lab)
         elif x == 'main' and i == 0:
             parts.append('panel switch handler %s' % lab)
+        elif x == 'boot' and i == 0:
+            parts.append('power-on boot sequence %s' % lab)
         elif lab and (lab.startswith('"') or lab.startswith('(')):
             parts.append(lab)
         else:
@@ -703,6 +711,7 @@ def dirmd_page_handlers(tree):
 # when it regenerates their headers (`python3 scripts/converters/naka_gui_symbolize.py --tree v6 --headers`, then
 # add the tree here).
 CALLEE_RULE_TREES = ('v10', 'v9', 'v7')
+BOOT_ENTRY = 'User_didnt_request_flash_mem_update'
 
 
 def add_code_edges(g):
@@ -749,6 +758,19 @@ def add_code_edges(g):
                 for n in sorted(opens.get(r, ())):
                     if n in tt:
                         g.main_edges.append((h, 0x01A00000 + tt[n], r))
+    # the boot sequence is a root too (lane kn5000-naka3, 2026-11-07): User_didnt_request_flash_mem_update, the
+    # reset path's main boot routine (kn5000_v10_program.s, reached from the reset handler after the flash-update
+    # check), calls SelfTest_FirmwareVersionCheck (TEST1..6, EXT, title 0xFC) and Boot_HandleComboDisplay (SOFTVER)
+    # directly; the titles they open get the path 'power-on boot sequence > (by R)' (g.boot_edges, menu_paths)
+    g.boot_edges = []
+    if wide:
+        bcalls = N.callees(g.tree, extra | {BOOT_ENTRY})
+        for r in sorted(bcalls.get(BOOT_ENTRY, ())):
+            for n in sorted(opens.get(r, ())):
+                tid = (0x01A00000 + tt[n]) if n in tt else \
+                    (0x01A00000 + int(n, 16)) if re.match(r'^0x[0-9a-fA-F]+$', n) else None
+                if tid is not None:
+                    g.boot_edges.append((BOOT_ENTRY, tid, r))
     # a DirmdEmulator page (the sound editor's TITLE_SE* screens): its title function's methods and
     # the switch handlers its OnSwitchIn dispatches to open the titles (SeMenu_SendEvent, ...)
     for tid, t in g.titles.items():

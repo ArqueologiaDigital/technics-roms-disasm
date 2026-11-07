@@ -162,14 +162,73 @@ def defines(code, reg):
     return True, None
 
 
-def walk(f, pos, reg, limit=400):
-    """reaching definitions of reg at instruction pos: (defs [(pos, value)], unknown?, entry?)"""
+GUARD_CP = re.compile(r'^cp\s+(a|wa)\s*,\s*(0x[0-9a-fA-F]+|\d+|TT_\w+)\s*$')
+
+
+def guard_value(f, p, s, reg):
+    """the value reg must hold on the edge p -> s when p is a branch on equality after `cp a, K`:
+    `cp a, K; jr z, L` taken (s = L) or `cp a, K; jr nz, L` not taken (s = p + 1) mean A == K there
+    (lane kn5000-naka3, 2026-11-07: FileIO_ErrorCodeByteBlock reaches UI_ChangeTitleByIndex only
+    through `cp a, 119; jr z`, on both of its paths).  None when no such guard decides it."""
+    if reg != 'a' or p < 1:
+        return None
+    m = BRANCH.match(f.ins[p][1])
+    g = GUARD_CP.match(f.ins[p - 1][1])
+    if not m or not g or m.group(1) == 'djnz':
+        return None
+    tgt = f.label_at.get(m.group(3).strip('()').split(':')[0])
+    cond = m.group(2)
+    if (cond in ('z', 'eq') and s == tgt and s != p + 1) or (cond in ('nz', 'ne') and s == p + 1 and tgt != s):
+        return g.group(2)
+    return None
+
+
+CELL_LOAD = re.compile(r'^ld\s+(a|wa|xwa)\s*,\s*\(([A-Za-z_]\w*|0x[0-9a-fA-F]+)(?::16|:24)?\)$')
+
+
+def _cell(tok):
+    return '0x%x' % int(tok, 16) if tok.lower().startswith('0x') else tok
+
+
+def return_cells(files):
+    """RAM cells that hold only the title a dialog was opened from: every write to the cell is
+    `ldmm8 CELL, PREVIOUS_TITLE` or `ld a, (PREVIOUS_TITLE); ld (CELL), a`, done when the dialog's
+    title procedure is activated (lane kn5000-naka3, 2026-11-07: FmmFormatFunc 0x7F6A, the disk load
+    0x7F6E, SmfLoad 0x808A, SmfMed 0x843A, the utility pages 0x7F5C / 0x7F5E).  Opening the title in
+    such a cell goes back to the opener, which has its own path, so a site that loads one is resolved."""
+    saved, other = set(), set()
+    dest = re.compile(r'^(?:ld|ldw|ldl|ldmm8|ldmm16|inc|dec|incw|decw|set|res|or|and|xor|add|sub)\s+'
+                      r'(?:\d\s*,\s*)?\(?([A-Za-z_]\w*|0x[0-9a-fA-F]+)(?::16|:24)?\)?\s*,')
+    for f in files:
+        for k, (i, code) in enumerate(f.ins):
+            m = re.match(r'^ldmm8\s+([A-Za-z_]\w*|0x[0-9a-fA-F]+)\s*,\s*PREVIOUS_TITLE$', code)
+            if m:
+                saved.add(_cell(m.group(1)))
+                continue
+            if (re.match(r'^ld\s+a\s*,\s*\(PREVIOUS_TITLE(?::16)?\)$', f.ins[k - 1][1]) if k else False):
+                m = re.match(r'^ld\s+\(([A-Za-z_]\w*|0x[0-9a-fA-F]+)(?::16|:24)?\)\s*,\s*a$', code)
+                if m:
+                    saved.add(_cell(m.group(1)))
+                    continue
+            m = dest.match(code)
+            if m and not code.startswith(('ld a', 'ld wa', 'ld xwa')):
+                other.add(_cell(m.group(1)))
+    return saved - other
+
+
+def walk(f, pos, reg, limit=400, cells=frozenset()):
+    """reaching definitions of reg at instruction pos: (defs [(pos, value)], unknown?, entry?);
+    a load of a return cell (return_cells) is a definition with the value 'PREVIOUS_TITLE'."""
     defs, unknown, entry = [], False, False
-    seen, stack, n = set(), list(f.preds.get(pos, [])), 0
+    seen, stack, n = set(), [(q, pos) for q in f.preds.get(pos, [])], 0
     if not f.preds.get(pos):
         entry = True
     while stack and n < limit:
-        p = stack.pop()
+        p, s = stack.pop()
+        gv = guard_value(f, p, s, reg)
+        if gv is not None:
+            defs.append((p - 1, gv))
+            continue
         if p in seen:
             continue
         seen.add(p)
@@ -181,6 +240,10 @@ def walk(f, pos, reg, limit=400):
         if comp and reg == 'a':
             defs.extend((p, v) for v in comp)
             continue
+        mc = CELL_LOAD.match(f.ins[p][1])
+        if reg == 'a' and mc and _cell(mc.group(2)) in cells:
+            defs.append((p, 'PREVIOUS_TITLE'))
+            continue
         d, v = defines(f.ins[p][1], reg)
         if d:
             if v is None:
@@ -191,7 +254,7 @@ def walk(f, pos, reg, limit=400):
         ps = f.preds.get(p, [])
         if not ps:
             entry = True
-        stack.extend(ps)
+        stack.extend((q, p) for q in ps)
     if n >= limit:
         unknown = True
     return defs, unknown, entry
@@ -218,6 +281,7 @@ def analyse(tree, kind='title', files=None):
     else:
         targets = dict(PRIMITIVES)
         targets.update(STACK_FORWARDERS)
+    cells = return_cells(files)
     changed = True
     sites = []
     while changed:
@@ -229,7 +293,7 @@ def analyse(tree, kind='title', files=None):
                 if not m or m.group(3) not in targets:
                     continue
                 for reg in targets[m.group(3)]:
-                    defs, unk, entry = walk(f, pos, reg)
+                    defs, unk, entry = walk(f, pos, reg, cells=cells)
                     rout = f.routine_of(pos)
                     sites.append(dict(file=f, pos=pos, target=m.group(3), reg=reg, defs=defs,
                                       unknown=unk, entry=entry, routine=rout))
@@ -253,6 +317,8 @@ def opened_by(tree, kind='title'):
     for s in sites:
         for p, v in s['defs']:
             v = v.split(':')[0]
+            if v == 'PREVIOUS_TITLE':
+                continue
             out[s['routine']].add(names.get(int(v, 0), v) if re.match(r'^(0x|\d)', v) else v)
     return files, targets, out
 
@@ -275,6 +341,9 @@ def main():
         if s['unknown']:
             st['sites with an unknown path'] += 1
         for p, v in s['defs']:
+            if v == 'PREVIOUS_TITLE':
+                st['returns to the opener'] += 1
+                continue
             if not re.match(r'^(0x|\d)', v):
                 st['already named'] += 1
                 continue
@@ -341,6 +410,8 @@ def opens_by_routine(tree, kind='title', extra=()):
             pos -= 1
         for p, v in s['defs']:
             v = v.split(':')[0]
+            if v == 'PREVIOUS_TITLE':
+                continue
             out[r].add(names.get(int(v, 0), v) if re.match(r'^(0x|\d)', v) else v)
     if kind == 'title':
         # titles posted directly: `ld xbc, EVT_CHANGE_TITLE` (or EVT_INTERRUPT_TITLE) and
