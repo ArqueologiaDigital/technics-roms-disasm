@@ -156646,7 +156646,7 @@ TechnicsPadsResourceInit_entry_L28:
 	mov	d0, (0x5002ddf8)
 	ret	0, 0xc
 
-func_4C0565F1:
+TechnicsPadsResourceCheck:
 	movm	[d2,d3,a2,a3], (sp)
 	add	-0x14, sp
 	call	func_4C061A57, 0, 0
@@ -156655,10 +156655,10 @@ func_4C0565F1:
 	mov	0x10, d0
 	call	strncmp_entry, [a2], 4
 	cmp	0, d0
-	beq	func_4C0565F1_L25
+	beq	TechnicsPadsResourceCheck_L25
 	mov	-1, d0
-	bra	func_4C0565F1_L61
-func_4C0565F1_L25:
+	bra	TechnicsPadsResourceCheck_L61
+TechnicsPadsResourceCheck_L25:
 	mov	0x12, a0
 	add	d2, a0
 	call	LoadU24BE, 0, 0
@@ -156680,11 +156680,11 @@ func_4C0565F1_L25:
 	exthu	d1
 	exthu	d0
 	cmp	d0, d1
-	beq	func_4C0565F1_L60
+	beq	TechnicsPadsResourceCheck_L60
 	mov	-1, d2
-func_4C0565F1_L60:
+TechnicsPadsResourceCheck_L60:
 	mov	d2, d0
-func_4C0565F1_L61:
+TechnicsPadsResourceCheck_L61:
 	ret	[d2,d3,a2,a3], 0x24
 
 func_4C056655:
@@ -221570,7 +221570,7 @@ func_4C07BA6B_entry_L60:
 loc_4C07BAD3:
 	add	-8, sp
 	call	func_4C07CB64_entry, [d2,d3,a2,a3], 0x10
-	call	func_4C07E0B0_entry, [d2], 0xc
+	call	SoundRamSignatureCheck_entry, [d2], 0xc
 	call	func_4C07D56C_entry, [d2], 4
 	ret	0, 8
 loc_4C07BAE8:
@@ -226127,11 +226127,11 @@ func_4C07DD5E_entry_L3c:
 func_4C07DD5E_entry_L3e:
 	ret	[a2], 0x14
 
-func_4C07DDA4:
+SoundRamSumUpdate:
 	movm	[d2], (sp)
 	add	-8, sp
 
-func_4C07DDA4_entry:
+SoundRamSumUpdate_entry:
 	clr	d1
 	clr	d2
 	setlb
@@ -226146,7 +226146,7 @@ func_4C07DDA4_entry:
 	cmp	0x10, d2
 	llt
 	call	func_4C07D69D_entry, [d2], 4
-	movhu	d0, (0x8403b0dc)
+	movhu	d0, (SoundRamSumUpdate_Ram)
 	clr	d0
 	ret	[d2], 0xc
 
@@ -226172,7 +226172,7 @@ func_4C07DDD5_entry_Ld:
 	exth	d2
 	cmp	0, d2
 	bge	func_4C07DDD5_entry_Ld
-	call	func_4C07DDA4_entry, [d2], 0xc
+	call	SoundRamSumUpdate_entry, [d2], 0xc
 	call	func_4C07DCA9_entry, 0, 0xc
 	bra	func_4C07DDD5_entry_L31
 func_4C07DDD5_entry_L27:
@@ -226244,7 +226244,7 @@ PostTmTransLoad_entry_Ld:
 	exth	d2
 	cmp	0, d2
 	bge	PostTmTransLoad_entry_Ld
-	call	func_4C07DDA4_entry, [d2], 0xc
+	call	SoundRamSumUpdate_entry, [d2], 0xc
 	call	func_4C07DCA9_entry, 0, 0xc
 	bra	PostTmTransLoad_entry_L31
 PostTmTransLoad_entry_L27:
@@ -226279,7 +226279,7 @@ func_4C07DE9A_entry_L17:
 	bne	func_4C07DE9A_entry_L20
 	call	func_4C07DD5E_entry, [a2], 0x14
 func_4C07DE9A_entry_L20:
-	call	func_4C07DDA4_entry, [d2], 0xc
+	call	SoundRamSumUpdate_entry, [d2], 0xc
 	call	func_4C07DCA9_entry, 0, 0xc
 	bra	func_4C07DE9A_entry_L36
 func_4C07DE9A_entry_L2c:
@@ -226319,7 +226319,7 @@ func_4C07DEE2_entry_L1d:
 	bne	func_4C07DEE2_entry_L26
 	call	func_4C07DD5E_entry, [a2], 0x14
 func_4C07DEE2_entry_L26:
-	call	func_4C07DDA4_entry, [d2], 0xc
+	call	SoundRamSumUpdate_entry, [d2], 0xc
 	call	func_4C07DCA9_entry, 0, 0xc
 	bra	func_4C07DEE2_entry_L3c
 func_4C07DEE2_entry_L32:
@@ -226542,11 +226542,11 @@ func_4C07E0A3:
 	call	func_4C07DCA9_entry, 0, 0xc
 	ret	0, 8
 
-func_4C07E0B0:
+SoundRamSignatureCheck:
 	movm	[d2], (sp)
 	add	-8, sp
 
-func_4C07E0B0_entry:
+SoundRamSignatureCheck_entry:
 	mov	0x8402f8e4, a0
 	mov	a0, (0x50276e88)
 	clr	d0
@@ -226557,24 +226557,24 @@ func_4C07E0B0_entry:
 	movbu	(d0, a0), d1
 	movbu	(d0, a1), d0
 	cmp	d0, d1
-	bne	func_4C07E0B0_entry_L23
+	bne	SoundRamSignatureCheck_entry_L23
 	inc	d2
 	mov	d2, d0
 	extbu	d2
 	cmp	0x10, d2
 	llt
-func_4C07E0B0_entry_L23:
+SoundRamSignatureCheck_entry_L23:
 	cmp	0x10, d2
-	bne	func_4C07E0B0_entry_L3c
+	bne	SoundRamSignatureCheck_entry_L3c
 	call	func_4C07D69D_entry, [d2], 4
 	mov	(0x50276e88), a0
 	exthu	d0
 	movhu	(0x0000b7f8, a0), d1
 	cmp	d0, d1
-	beq	func_4C07E0B0_entry_L41
-func_4C07E0B0_entry_L3c:
+	beq	SoundRamSignatureCheck_entry_L41
+SoundRamSignatureCheck_entry_L3c:
 	call	func_4C07DC31_entry, [d2,d3], 0x1c
-func_4C07E0B0_entry_L41:
+SoundRamSignatureCheck_entry_L41:
 	ret	[d2], 0xc
 
 func_4C07E0F9:
@@ -529902,7 +529902,7 @@ FsOpen_entry:
 	jmp	FsOpen_entry_L136
 FsOpen_entry_L8:
 	mov	0x4c13081c, d0
-	mov	d0, (0x502883f0)
+	mov	d0, (FsOpen_Ram)
 	movbu	(a1), d0
 	mov	4, d2
 	extb	d0
@@ -575905,14 +575905,14 @@ LoadRcm_HD_Impl:
 LoadRcm_HD_Impl_entry:
 	mov	a0, a1
 	clr	d3
-	mov	0x50061018, a3
+	mov	LoadRcm_HD_Impl_Ram, a3
 	mov	0x17, d0
-	movbu	d0, (0x50061018)
+	movbu	d0, (LoadRcm_HD_Impl_Ram)
 	clr	d0
-	movbu	d3, (0x50061019)
-	mov	d0, (0x5006101c)
-	movbu	d0, (0x50061024)
-	mov	d0, (0x50061028)
+	movbu	d3, (LoadRcm_HD_Impl_Ram_2)
+	mov	d0, (LoadRcm_HD_Impl_Ram_3)
+	movbu	d0, (LoadRcm_HD_Impl_Ram_5)
+	mov	d0, (LoadRcm_HD_Impl_Ram_6)
 	mov	sp, a2
 	add	0x14, a2
 	mov	a2, a0
@@ -575937,14 +575937,14 @@ LoadRcm_HD_Impl_entry_L5a:
 	call	func_4C149F0C_entry, 0, 0x40
 	mov	a3, a0
 	call	func_4C16E0CF_entry, [a2,a3], 0x18
-	mov	(0x5006101c), d0
+	mov	(LoadRcm_HD_Impl_Ram_3), d0
 	cmp	d3, d0
 	bne	LoadRcm_HD_Impl_entry_L7a
 	call	FileClose_entry, 0, 0xc
 	mov	-2, d0
 	ret	[d2,d3,a2,a3], 0x34
 LoadRcm_HD_Impl_entry_L7a:
-	movbu	(0x50061024), d0
+	movbu	(LoadRcm_HD_Impl_Ram_5), d0
 	extb	d0
 	cmp	d3, d0
 	beq	LoadRcm_HD_Impl_entry_L8e
@@ -575952,8 +575952,8 @@ LoadRcm_HD_Impl_entry_L7a:
 	mov	-2, d0
 	ret	[d2,d3,a2,a3], 0x34
 LoadRcm_HD_Impl_entry_L8e:
-	mov	(0x5006101c), a0
-	mov	(0x50061020), d0
+	mov	(LoadRcm_HD_Impl_Ram_3), a0
+	mov	(LoadRcm_HD_Impl_Ram_4), d0
 	call	ZFileInflateBegin_entry, 0, 0x14
 	cmp	d3, d0
 	beq	LoadRcm_HD_Impl_entry_Lac
@@ -575962,15 +575962,15 @@ LoadRcm_HD_Impl_entry_L8e:
 	ret	[d2,d3,a2,a3], 0x34
 LoadRcm_HD_Impl_entry_Lac:
 	clr	d2
-	mov	(0x5006101c), a0
-	mov	(0x50061020), d0
+	mov	(LoadRcm_HD_Impl_Ram_3), a0
+	mov	(LoadRcm_HD_Impl_Ram_4), d0
 	call	ZFileInflatePart_entry, [d2,d3,a2,a3], 0x20
 	cmp	d2, d0
 	ble	LoadRcm_HD_Impl_entry_L113
 LoadRcm_HD_Impl_entry_Lc1:
 	mov	a3, a0
 	call	func_4C16E15F_entry, [d2,d3,a2,a3], 0x24
-	movbu	(0x50061024), d0
+	movbu	(LoadRcm_HD_Impl_Ram_5), d0
 	extb	d0
 	cmp	d3, d0
 	beq	LoadRcm_HD_Impl_entry_Ldd
@@ -575979,9 +575979,9 @@ LoadRcm_HD_Impl_entry_Lc1:
 	ret	[d2,d3,a2,a3], 0x34
 LoadRcm_HD_Impl_entry_Ldd:
 	mov	0x17, d0
-	movbu	d0, (0x50061018)
+	movbu	d0, (LoadRcm_HD_Impl_Ram)
 	mov	1, d0
-	movbu	d0, (0x50061019)
+	movbu	d0, (LoadRcm_HD_Impl_Ram_2)
 	extbu	d2
 	inc	d2
 	mov	d2, d0
@@ -575992,8 +575992,8 @@ LoadRcm_HD_Impl_entry_Ldd:
 	mov	-2, d0
 	ret	[d2,d3,a2,a3], 0x34
 LoadRcm_HD_Impl_entry_Lff:
-	mov	(0x5006101c), a0
-	mov	(0x50061020), d0
+	mov	(LoadRcm_HD_Impl_Ram_3), a0
+	mov	(LoadRcm_HD_Impl_Ram_4), d0
 	call	ZFileInflatePart_entry, [d2,d3,a2,a3], 0x20
 	cmp	d3, d0
 	bgt	LoadRcm_HD_Impl_entry_Lc1
@@ -576005,14 +576005,14 @@ LoadRcm_HD_Impl_entry_L113:
 	bra	LoadRcm_HD_Impl_entry_L171
 LoadRcm_HD_Impl_entry_L11f:
 	mov	0x17, d0
-	movbu	d0, (0x50061018)
+	movbu	d0, (LoadRcm_HD_Impl_Ram)
 	mov	1, d0
-	movbu	d0, (0x50061019)
+	movbu	d0, (LoadRcm_HD_Impl_Ram_2)
 	call	ZFileInflatedTotal, 0, 0
-	mov	d0, (0x50061020)
+	mov	d0, (LoadRcm_HD_Impl_Ram_4)
 	mov	a3, a0
 	call	func_4C16E15F_entry, [d2,d3,a2,a3], 0x24
-	movbu	(0x50061024), d0
+	movbu	(LoadRcm_HD_Impl_Ram_5), d0
 	extb	d0
 	cmp	d3, d0
 	beq	LoadRcm_HD_Impl_entry_L157
@@ -577459,16 +577459,16 @@ SaveRcm_HD_Impl:
 
 SaveRcm_HD_Impl_entry:
 	mov	a0, a1
-	mov	0x50061058, a3
+	mov	SaveRcm_HD_Impl_Ram, a3
 	mov	0x17, d0
-	movbu	d0, (0x50061058)
+	movbu	d0, (SaveRcm_HD_Impl_Ram)
 	clr	d0
-	movbu	d0, (0x50061059)
-	mov	d0, (0x50061068)
-	mov	d0, (0x5006105c)
-	mov	d0, (0x50061060)
-	movbu	d0, (0x50061064)
-	mov	d0, (0x5006106c)
+	movbu	d0, (SaveRcm_HD_Impl_Ram_2)
+	mov	d0, (SaveRcm_HD_Impl_Ram_6)
+	mov	d0, (SaveRcm_HD_Impl_Ram_3)
+	mov	d0, (SaveRcm_HD_Impl_Ram_4)
+	movbu	d0, (SaveRcm_HD_Impl_Ram_5)
+	mov	d0, (SaveRcm_HD_Impl_Ram_7)
 	mov	sp, a2
 	add	0x14, a2
 	mov	a2, a0
@@ -577503,7 +577503,7 @@ SaveRcm_HD_Impl_entry_L67:
 SaveRcm_HD_Impl_entry_L81:
 	mov	a3, a0
 	call	func_4C16DF8F_entry, [d2,d3,a2,a3], 0x24
-	mov	(0x5006105c), d0
+	mov	(SaveRcm_HD_Impl_Ram_3), d0
 	cmp	0, d0
 	bne	SaveRcm_HD_Impl_entry_La3
 	call	FileClose_entry, 0, 0xc
@@ -577513,7 +577513,7 @@ SaveRcm_HD_Impl_entry_L81:
 	ret	[d2,d3,a2,a3], 0x34
 SaveRcm_HD_Impl_entry_La3:
 	mov	d0, a0
-	mov	(0x50061060), d0
+	mov	(SaveRcm_HD_Impl_Ram_4), d0
 	call	ZFileDeflateBegin_entry, [d2,a2], 0x20
 	mov	d0, d2
 	cmp	0, d2
@@ -577527,12 +577527,12 @@ SaveRcm_HD_Impl_entry_Lc4:
 	add	-0x10, d3
 	mov	d3, d0
 	call	ZFileSpaceSet, 0, 0
-	movbu	(0x50061064), d0
+	movbu	(SaveRcm_HD_Impl_Ram_5), d0
 	cmp	1, d0
 	bne	SaveRcm_HD_Impl_entry_L116
 SaveRcm_HD_Impl_entry_Ld6:
-	mov	(0x5006105c), a0
-	mov	(0x50061060), d0
+	mov	(SaveRcm_HD_Impl_Ram_3), a0
+	mov	(SaveRcm_HD_Impl_Ram_4), d0
 	clr	d1
 	call	ZFileDeflatePart_entry, [d2,d3,a2,a3], 0x20
 	mov	d0, d2
@@ -577546,17 +577546,17 @@ SaveRcm_HD_Impl_entry_Ld6:
 SaveRcm_HD_Impl_entry_Lfc:
 	mov	a3, a0
 	mov	1, d0
-	movbu	d0, (0x50061059)
+	movbu	d0, (SaveRcm_HD_Impl_Ram_2)
 	call	func_4C16DF8F_entry, [d2,d3,a2,a3], 0x24
-	movbu	(0x50061064), d0
+	movbu	(SaveRcm_HD_Impl_Ram_5), d0
 	cmp	1, d0
 	beq	SaveRcm_HD_Impl_entry_Ld6
 SaveRcm_HD_Impl_entry_L116:
-	movbu	(0x50061064), d0
+	movbu	(SaveRcm_HD_Impl_Ram_5), d0
 	cmp	0, d0
 	bne	SaveRcm_HD_Impl_entry_L146
-	mov	(0x5006105c), a0
-	mov	(0x50061060), d0
+	mov	(SaveRcm_HD_Impl_Ram_3), a0
+	mov	(SaveRcm_HD_Impl_Ram_4), d0
 	mov	1, d1
 	call	ZFileDeflatePart_entry, [d2,d3,a2,a3], 0x20
 	mov	d0, d2
@@ -586414,7 +586414,7 @@ ZFileDeflatePart_entry_L292:
 ZFileDeflatePart_entry_L2b1:
 	movhu	d0, (ZFileStatusCode)
 ZFileDeflatePart_entry_L2b7:
-	mov	(0x50062f4c), d0
+	mov	(ZFileDeflatePart_Ram), d0
 	bra	ZFileDeflatePart_entry_L2c6
 ZFileDeflatePart_entry_L2bf:
 	movhu	(ZFileStatusCode), d0

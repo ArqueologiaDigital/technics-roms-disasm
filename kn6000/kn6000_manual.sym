@@ -354,3 +354,8 @@
 0x5005BF42  SmfDivision             ; var: the MThd division (ticks per quarter note)
 0x5005BF44  SmfFileSize             ; var: LoadSmf_Read stores SmfFileReadAll's result (the bytes read) there
 0x5002DCF0  TestMidiIoSent          ; var: the byte TestMidiIoResult stores on a type-1 message and compares the received byte with
+; -- the built-in resources' checks
+0x4C0552B3  TechnicsRhythmsHeaderParse ; string: compares the resource's name with "Technics Rhythms" (strncmp, LibStrlen) and reads its header fields (LoadU24BE / LoadU16BE) into 0x5002DD8C .. 0x5002DDA8; caller func_4C0557E9, the style module's start-up that falls back to TechnicsRhythmsResource (kn6000_manual.sym)
+0x4C0562FA  TechnicsPadsResourceCheck  ; string: compares the bank's name with "Technics Pads", reads its lengths (LoadU24BE, LoadU16BE) and compares the stored sum with SumU16BE over it
+0x4C07E1D4  SoundRamSignatureCheck     ; string: compares the backup SRAM at 0x8402F4E4 with "KN6000 SOUND RAM" (16 bytes) and the sum at +0xB7F8 with func_4C07D7C1's; on a mismatch SoundRamSignatureWrite (func_4C07DD55)
+0x4C07DEC8  SoundRamSumUpdate          ; string: recomputes the sum of the "KN6000 SOUND RAM" area at 0x8402F4E4 (func_4C07D7C1) and stores it at 0x8403ACDC; PostTmTransLoad calls it after a load [INFERENCE: name from the store]

@@ -295,3 +295,6 @@
 0x4C07B331  _vector_08_Impl             ; caller: _vector_08 is `call` + ret of it, its only caller
 0x4C14B0D9  SaveLsw_HD_Impl             ; caller: SaveLsw_HD is `call` + ret of it, its only caller
 0x4C25A1B8  FileTypeExtTable        ; data: = KN6000 0x4C2592E4 (kn6000_manual.sym): the 13-pointer table FileNameWithExt indexes (`mov func_4C14CCC7_Table, a0 / mov (d2, a0), a1`), "LSW" ... "SEQ"
+0x4C0565F1  TechnicsPadsResourceCheck; same-body: = KN6000 0x4C0562FA (kn6000_manual.sym, string): the same masked body in the same place of the routine order
+0x4C07E0B0  SoundRamSignatureCheck  ; same-body: = KN6000 0x4C07E1D4 (kn6000_manual.sym, string): the same masked body in the same place of the routine order
+0x4C07DDA4  SoundRamSumUpdate       ; same-body: = KN6000 0x4C07DEC8 (kn6000_manual.sym, string): the same masked body in the same place of the routine order
