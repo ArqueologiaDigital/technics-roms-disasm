@@ -18790,7 +18790,7 @@ data_4C2B1BE4:
 # census: opaque -- unknown-dump: 320 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6500_program.rom", 0x2B1BE4, 0x2B1D24
 
-func_4C172A54_Table:	# 2 x REC_func_4C172A54_Table (32 bytes each); read by HddTestFlashIdCheck 0x4C172A54 `movhu (2, a2), d0`; HddTestFlashIdCheck 0x4C172A54 `movhu (d0, a0), d0`; HddTestFlashIdCheck 0x4C172A54 `call func_4C1729B9_entry, [a2,a3], 0x1c` (+1)
+func_4C172A54_Table:	# 2 x REC_func_4C172A54_Table (32 bytes each); read by HddTestFlashIdCheck 0x4C172A54 `movhu (2, a2), d0`; HddTestFlashIdCheck 0x4C172A54 `movhu (d0, a0), d0`; HddTestFlashIdCheck 0x4C172A54 `call HddTestMemoPrint_entry, [a2,a3], 0x1c` (+1)
 	REC_func_4C172A54_Table	key=4, key_=8777, x4="#\x00\x00\x00", p8=data_4C2B1ACC, x12=" MBM29LV160B    \x00\x00\x00\x00"
 	REC_func_4C172A54_Table	key=31, key_=192, x4="(\x00\x00\x00", p8=data_4C2B1BE4, x12=" AT49BV16X4     \x00\x00\x00\x00"
 
@@ -27037,11 +27037,11 @@ func_4C051A0B_Table:	# 15 x u16, 496..4638; read by func_4C051A0B 0x4C051A0B: `m
 	tab_u16	4126, 4382, 4638	# [12]
 	.space	4, 0xFF
 
-func_4C050837_entry_L4_Records:	# 3 x RamTestRegion (12 bytes each); read by func_4C050837_entry_L4 0x4C050840 `mov (4, a0), d3`; func_4C050837_entry_L4 0x4C050840 `mov (a0), a2`
+func_4C050837_entry_L4_Records:	# 3 x RamTestRegion (12 bytes each); read by RamTestWords_entry_L4 0x4C050840 `mov (4, a0), d3`; RamTestWords_entry_L4 0x4C050840 `mov (a0), a2`
 	RamTestRegion	base=0x50000000, length=0x80000, x8="\x01\x02\x00\x00"
 	RamTestRegion	base=0x58000000, length=0x5040100, x8="\x01\x00\x00\x00"
 	RamTestRegion	base=0x54000000, length=0x5040100, x8="\x01\x00\x00\x00"
-func_4C0508F7_entry_L4_Records:	# 1 x RamTestByteRegion (12 bytes each); read by func_4C0508F7_entry_L4 0x4C0508FD `mov (4, a1), d0`; func_4C0508F7_entry_L4 0x4C0508FD `mov (a1), a0`; func_4C0508F7_entry_L4 0x4C0508FD `movbu (a1), d1` (+1)
+func_4C0508F7_entry_L4_Records:	# 1 x RamTestByteRegion (12 bytes each); read by RamTestBytes_entry_L4 0x4C0508FD `mov (4, a1), d0`; RamTestBytes_entry_L4 0x4C0508FD `mov (a1), a0`; RamTestBytes_entry_L4 0x4C0508FD `movbu (a1), d1` (+1)
 	RamTestByteRegion	base=0x44000000, length=32768, fail_bit=4, x9="\x00\x00\x00"
 
 ptrs_4C2E5170:

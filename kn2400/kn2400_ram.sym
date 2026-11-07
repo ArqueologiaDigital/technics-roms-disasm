@@ -3,7 +3,7 @@
 ; evidence classes (accessor: a named Get/Set/Is routine's only variable; owner: every
 ; direct reference lies in one named routine).  Columns: RAM address, name, ; class, evidence.
 ;
-; 28 accessor names over 148 operands, 613 owner names over 2805 operands; 3621 RAM addresses referenced
+; 28 accessor names over 148 operands, 615 owner names over 2809 operands; 3621 RAM addresses referenced
 0x50006E8C  localeconv_Ram	; owner: 1 references, all in localeconv
 0x50006E90  localeconv_Ram_2	; owner: 1 references, all in localeconv
 0x50006E94  localeconv_Ram_3	; owner: 1 references, all in localeconv
@@ -75,6 +75,7 @@
 0x50027292  MetronomeBeatTask_Ram	; owner: 3 references, all in MetronomeBeatTask
 0x50027294  MetronomeBeatTask_Ram_2	; owner: 2 references, all in MetronomeBeatTask
 0x50027296  MetronomeBeatTask_Ram_3	; owner: 2 references, all in MetronomeBeatTask
+0x500275C4  CaptureLcdWriteBmp_Ram	; owner: 3 references, all in CaptureLcdWriteBmp
 0x500275D0  SetModeLed_Ram	; owner: 3 references, all in SetModeLed
 0x500275E8  RefreshSwEvent_Ram	; owner: 2 references, all in RefreshSwEvent
 0x500275F4  HoldLED	; accessor: CheckHoldLED (getter)
@@ -613,6 +614,7 @@
 0x501B5920  Rec8E0Field120Ptr_Ram	; owner: 1 references, all in Rec8E0Field120Ptr
 0x501BB9A0  SongPageStore	; accessor: SongPageStorePtr (address)
 0x50298772  PmemRecallOnSet_Ram_2	; owner: 1 references, all in PmemRecallOnSet
+0x502B080C  SoundRamSumUpdate_Ram	; owner: 1 references, all in SoundRamSumUpdate
 0x50380734  KernelInit_Ram	; owner: 1 references, all in KernelInit
 0x50380CA0  KernelInit_Ram_2	; owner: 3 references, all in KernelInit
 0x50380CA8  KernelInit_Ram_3	; owner: 1 references, all in KernelInit

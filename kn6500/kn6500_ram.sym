@@ -3,7 +3,7 @@
 ; evidence classes (accessor: a named Get/Set/Is routine's only variable; owner: every
 ; direct reference lies in one named routine).  Columns: RAM address, name, ; class, evidence.
 ;
-; 25 accessor names over 289 operands, 461 owner names over 2045 operands; 3203 RAM addresses referenced
+; 25 accessor names over 289 operands, 477 owner names over 2087 operands; 3203 RAM addresses referenced
 0x50007A44  localeconv_Ram	; owner: 2 references, all in localeconv
 0x50007A48  localeconv_Ram_2	; owner: 1 references, all in localeconv
 0x50007A4C  localeconv_Ram_3	; owner: 1 references, all in localeconv
@@ -373,6 +373,12 @@
 0x50060F4E  FmmDiskMedleySelectFunc_Ram_6	; owner: 19 references, all in FmmDiskMedleySelectFunc
 0x50060F4F  FmmDiskMedleySelectFunc_Ram_7	; owner: 21 references, all in FmmDiskMedleySelectFunc
 0x50060F50  FmmDiskMedleySelectFunc_Ram_8	; owner: 5 references, all in FmmDiskMedleySelectFunc
+0x50061018  LoadRcm_HD_Impl_Ram	; owner: 4 references, all in LoadRcm_HD_Impl
+0x50061019  LoadRcm_HD_Impl_Ram_2	; owner: 3 references, all in LoadRcm_HD_Impl
+0x5006101C  LoadRcm_HD_Impl_Ram_3	; owner: 5 references, all in LoadRcm_HD_Impl
+0x50061020  LoadRcm_HD_Impl_Ram_4	; owner: 4 references, all in LoadRcm_HD_Impl
+0x50061024  LoadRcm_HD_Impl_Ram_5	; owner: 4 references, all in LoadRcm_HD_Impl
+0x50061028  LoadRcm_HD_Impl_Ram_6	; owner: 1 references, all in LoadRcm_HD_Impl
 0x5006102C  LoadCst_Ram	; owner: 2 references, all in LoadCst
 0x5006102D  LoadCst_Ram_2	; owner: 1 references, all in LoadCst
 0x50061030  LoadCst_Ram_3	; owner: 4 references, all in LoadCst
@@ -386,6 +392,14 @@
 0x5006104C  SaveCst_Ram_5	; owner: 4 references, all in SaveCst
 0x50061050  SaveCst_Ram_6	; owner: 1 references, all in SaveCst
 0x50061054  SaveCst_Ram_7	; owner: 1 references, all in SaveCst
+0x50061058  SaveRcm_HD_Impl_Ram	; owner: 2 references, all in SaveRcm_HD_Impl
+0x50061059  SaveRcm_HD_Impl_Ram_2	; owner: 2 references, all in SaveRcm_HD_Impl
+0x5006105C  SaveRcm_HD_Impl_Ram_3	; owner: 4 references, all in SaveRcm_HD_Impl
+0x50061060  SaveRcm_HD_Impl_Ram_4	; owner: 4 references, all in SaveRcm_HD_Impl
+0x50061064  SaveRcm_HD_Impl_Ram_5	; owner: 4 references, all in SaveRcm_HD_Impl
+0x50061068  SaveRcm_HD_Impl_Ram_6	; owner: 1 references, all in SaveRcm_HD_Impl
+0x5006106C  SaveRcm_HD_Impl_Ram_7	; owner: 1 references, all in SaveRcm_HD_Impl
+0x50062F4C  ZFileDeflatePart_Ram	; owner: 1 references, all in ZFileDeflatePart
 0x50072F80  ZArenaReset_Ram	; owner: 1 references, all in ZArenaReset
 0x50072F81  ZArenaReset_Ram_2	; owner: 1 references, all in ZArenaReset
 0x50072F84  ZArenaReset_Ram_3	; owner: 1 references, all in ZArenaReset
@@ -460,6 +474,7 @@
 0x50288030  NameGetFuncCall_Ram_11	; owner: 1 references, all in NameGetFuncCall
 0x50288034  NameGetFuncCall_Ram_12	; owner: 1 references, all in NameGetFuncCall
 0x5028807A  NameGetFuncCall_Ram_13	; owner: 1 references, all in NameGetFuncCall
+0x502883F0  FsOpen_Ram	; owner: 1 references, all in FsOpen
 0x5028CCA4  ZArenaReset_Ram_5	; owner: 1 references, all in ZArenaReset
 0x5028CCA5  ZArenaReset_Ram_6	; owner: 1 references, all in ZArenaReset
 0x5028CCAC  ZArenaReset_Ram_7	; owner: 1 references, all in ZArenaReset
@@ -474,6 +489,7 @@
 0x503801F0  MemStyleVarRecPtr_Ram	; owner: 1 references, all in MemStyleVarRecPtr
 0x503A5920  Rec8E0Field120Ptr_Ram	; owner: 1 references, all in Rec8E0Field120Ptr
 0x503AB4D0  SongPageStore	; accessor: SongPageStorePtr (address)
+0x8403B0DC  SoundRamSumUpdate_Ram	; owner: 1 references, all in SoundRamSumUpdate
 0x900000B0  TtSndArg_Ram_4	; owner: 2 references, all in TtSndArg
 0x90008028  MicPresetStore_Ram	; owner: 4 references, all in MicPresetStore
 0x90008029  MicPresetStore_Ram_2	; owner: 4 references, all in MicPresetStore

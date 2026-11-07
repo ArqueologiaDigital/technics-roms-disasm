@@ -1,0 +1,49 @@
+# port_hand_names.py --report on the lane's final tree
+audit: 2233 paired routines named on both sides, 2233 alike, 0 unlike
+kn6000 -> kn6500: 6879 routines paired (0 of them by a unique long body); 154 hand rows, 0 carried; B has the row already 151, routine not in an equal run 2, var: no single pair 1
+audit: 1076 paired routines named on both sides, 1074 alike, 2 unlike: M3HookDispatch/M3SetSpecialDispatch, CmpPrtCpyEditFunc/CmpEasyCompEditFunc
+kn6000 -> kn2400: 3150 routines paired (1886 of them by a unique long body); 154 hand rows, 0 carried; routine not in an equal run 98, B has the row already 49, var: no single pair 7
+
+# file_type_bodies.py audit on the KN6000 (bodies named by their trampolines) and the KN2400
+type  1 PMT rb: func_4C1497F8 LoadPmt_HD_Impl
+type  1 PMT wb: SavePmt_HD_Impl
+type  2 SQT rb: func_4C149734 LoadSqt_HD_Impl
+type  2 SQT wb: SaveSqt_HD_Impl func_4C14B8DF
+type  3 CMP rb: LoadCmp_HD_Impl
+type  3 CMP wb: SaveCmp_HD_Impl
+type  4 TM  rb: LoadTm_HD_Impl
+type  4 TM  wb: SaveTm_HD_Impl
+type  5 MSP rb: LoadMsp_HD_Impl
+type  5 MSP wb: SaveMsp_HD_Impl
+type  6 EFC rb: LoadEfc_HD_Impl
+type  6 EFC wb: SaveEfc_HD_Impl
+type  7 MD  rb: LoadMd_HD_Impl
+type  7 MD  wb: SaveMd_HD_Impl
+type  8 FAV rb: LoadFav_HD_Impl
+type  8 FAV wb: SaveFav_HD_Impl
+type  9 HMP rb: LoadHmp_HD_Impl
+type  9 HMP wb: SaveHmp_HD_Impl
+type 10 AST rb: LoadRcm_HD_Impl
+type 10 AST wb: SaveRcm_HD_Impl
+type  1 PMT rb: func_486CD82D func_486CDC29
+type  1 PMT wb: SavePmtFile
+type  2 SQT rb: func_486CD6C6 func_486CDF6D
+type  2 SQT wb: func_486CF0DD func_486CF62D func_486CF7C7
+type  3 CMP rb: LoadCmpFile
+type  3 CMP wb: SaveCmpFile
+type  4 TM  rb: LoadTmFile
+type  4 TM  wb: SaveTmFile
+type  5 MSP rb: LoadMspFile
+type  5 MSP wb: SaveMspFile
+type  6 EFC rb: LoadEfcFile
+type  6 EFC wb: SaveEfcFile
+type  7 MD  rb: LoadMdFile
+type  7 MD  wb: SaveMdFile
+type  8 FAV rb: LoadFavFile
+type  8 FAV wb: SaveFavFile
+
+# hand_names_check.py
+kn6000: 154 hand rows of this lane checked
+kn6500: 152 hand rows of this lane checked
+kn2400: 66 hand rows of this lane checked
+PASS
