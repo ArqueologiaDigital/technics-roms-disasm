@@ -121,6 +121,9 @@ Not named: the 0x7A unit's +0x04..+0x06 (SOUND EDIT reads and writes them, `TgPa
 but their meaning is not traced) and the bytes no traced routine reads (+0x00..+0x03, +0x07, +0x08, +0x13, +0x1C..+0x1F, +0x29,
 +0x2B, +0x2D, +0x37..+0x3D, +0x48, +0x49, +0x4B, +0x4D..+0x79), the tone head's +0x11, +0x13..+0x43,
 +0x46..+0x53, the sub-record outside +1..+3, the element's +3, +4 and each layer's last two bytes.
+(2026-11-07, lane kn7000-ic21: the sub-record's fields, the layers' last two bytes (level and filter
+offsets) and a TABLE head's modulation routings are now named from their readers, observed in MAME;
+`kn7000/notes/kn7000-ic21/README.md`.  Still unread: the element's +3 / +4 and three sub-record bytes.)
 Which TG (MAIN or SUB) each zone side bit 0x400 / 0x800 selects was not traced either:
 `TgVoiceSideSelect` maps class 1/2 kits to 0x400 and 3/4 to 0x800, but the register writer that
 consumes the bit was not followed.

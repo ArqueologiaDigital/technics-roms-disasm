@@ -1,0 +1,493 @@
+REGION kit 968E0100 968E49A6
+REGION archive 4806EA98 48138FFF
+[  1.02] tap
+[  2.02] breakpoints
+PEEK 96820000 49 4b 01 01 08 01 09 01 12 02 14 01 04 01 06 01 18 02 02 01 07 01 05 01 0a 01 0b 01 15 01 03 01
+PEEK 968E0100 20 20 20 20 55 73 65 72 20 4b 69 74 20 20 20 20 40 01 0f 03 40 05 00 40 05 00 40 05 00 40 05 00
+[ 18.02] peek
+[ 19.02] SNAP
+[ 20.02] DOWN CUSTOM (SW2)
+[ 20.02] phase select
+[ 20.32] UP CUSTOM (SW2)
+[ 23.02] DOWN LCDR 3
+[ 23.32] UP LCDR 3
+[ 24.22] DOWN PERFORMANCE PADS/AUTO (SW5)
+[ 24.52] UP PERFORMANCE PADS/AUTO (SW5)
+[ 26.02] SNAP
+[ 26.52] redirect armed
+[ 27.02] DOWN START/STOP (SW4)
+[ 27.02] phase pad1
+[ 27.32] UP START/STOP (SW4)
+[ 29.02] DOWN PAD 1 (SW4)
+[ 29.32] UP PAD 1 (SW4)
+[ 33.02] SNAP
+[ 37.02] phase pad4
+[ 37.02] DOWN PERFORMANCE PADS/STOP (SW1)
+[ 37.32] UP PERFORMANCE PADS/STOP (SW1)
+[ 39.02] DOWN PAD 4 (SW2)
+[ 39.32] UP PAD 4 (SW2)
+[ 43.02] SNAP
+[ 47.02] DOWN PERFORMANCE PADS/STOP (SW1)
+[ 47.02] phase keys
+[ 47.32] UP PERFORMANCE PADS/STOP (SW1)
+[ 47.52] DOWN START/STOP (SW4)
+[ 47.82] UP START/STOP (SW4)
+[ 49.02] DOWN C2
+[ 49.82] UP C2
+[ 50.02] DOWN C3
+[ 50.82] UP C3
+[ 51.02] DOWN C4
+[ 51.82] UP C4
+[ 52.02] DOWN C5
+[ 52.82] UP C5
+[ 53.02] DOWN C6
+[ 53.82] UP C6
+[ 55.02] phase end
+H boot H PadSelectById d0=00000000 x1
+H keys H TgNoteOnTableTone part=19 note=* x1
+H keys H TgNoteOnTableTone part=1a note=* x1
+H keys H TgTableToneStage part=19 layer=0 x1
+H keys H TgTableToneStage part=1a layer=0 x1
+H pad1 H CustomKitBlock x110
+H pad1 H CustomVoiceRecFetch idx=* x80
+H pad1 H PadSelectById REDIRECT 00000371 -> 00200000 x1
+H pad1 H PadSelectById d0=00000371 x1
+H pad1 H TgNoteOnTableTone part=19 note=* x30
+H pad1 H TgNoteOnTableTone part=1a note=* x40
+H pad1 H TgNoteOnTableTone part=1d note=* x24
+H pad1 H TgNoteOnTableTone part=1e note=* x40
+H pad1 H TgTableToneStage part=19 layer=0 x30
+H pad1 H TgTableToneStage part=1a layer=0 x40
+H pad1 H TgTableToneStage part=1d layer=0 x24
+H pad1 H TgTableToneStage part=1e layer=0 x40
+H pad4 H CustomKitBlock x4
+H pad4 H CustomVoiceRecFetch idx=* x4
+H pad4 H PadSelectById d0=00000178 x1
+H pad4 H TgNoteOnTableTone part=19 note=* x30
+H pad4 H TgNoteOnTableTone part=1a note=* x40
+H pad4 H TgNoteOnTableTone part=1d note=* x8
+H pad4 H TgNoteOnTableTone part=1e note=* x2
+H pad4 H TgTableToneStage part=19 layer=0 x30
+H pad4 H TgTableToneStage part=1a layer=0 x40
+H pad4 H TgTableToneStage part=1d layer=0 x8
+H pad4 H TgTableToneStage part=1e layer=0 x2
+HL boot H PadSelectById d0=00000000
+HL pad1 H TgNoteOnTableTone part=19 note=24
+HL pad1 H TgTableToneStage part=19 layer=0
+HL pad1 H TgNoteOnTableTone part=1a note=52
+HL pad1 H TgTableToneStage part=1a layer=0
+HL pad1 H TgNoteOnTableTone part=19 note=2c
+HL pad1 H TgTableToneStage part=19 layer=0
+HL pad1 H TgNoteOnTableTone part=1a note=27
+HL pad1 H TgTableToneStage part=1a layer=0
+HL pad1 H TgNoteOnTableTone part=1a note=52
+HL pad1 H TgTableToneStage part=1a layer=0
+HL pad1 H TgNoteOnTableTone part=19 note=24
+HL pad1 H TgTableToneStage part=19 layer=0
+HL pad1 H TgNoteOnTableTone part=19 note=24
+HL pad1 H TgTableToneStage part=19 layer=0
+HL pad1 H TgNoteOnTableTone part=1a note=27
+HL pad1 H TgTableToneStage part=1a layer=0
+HL pad1 H TgNoteOnTableTone part=1a note=52
+HL pad1 H TgTableToneStage part=1a layer=0
+HL pad1 H TgNoteOnTableTone part=19 note=2c
+HL pad1 H TgTableToneStage part=19 layer=0
+HL pad1 H TgNoteOnTableTone part=1a note=1a
+HL pad1 H TgTableToneStage part=1a layer=0
+HL pad1 H TgNoteOnTableTone part=1a note=52
+HL pad1 H TgTableToneStage part=1a layer=0
+HL pad1 H TgNoteOnTableTone part=19 note=24
+HL pad1 H TgTableToneStage part=19 layer=0
+HL pad1 H TgNoteOnTableTone part=1a note=27
+HL pad1 H TgTableToneStage part=1a layer=0
+HL pad1 H PadSelectById d0=00000371
+HL pad1 H PadSelectById REDIRECT 00000371 -> 00200000
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H TgNoteOnTableTone part=19 note=24
+HL pad1 H TgTableToneStage part=19 layer=0
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H TgNoteOnTableTone part=1e note=3f
+HL pad1 H CustomVoiceRecFetch idx=3f
+HL pad1 H TgTableToneStage part=1e layer=0
+HL pad1 H CustomVoiceRecFetch idx=3f
+HL pad1 H CustomKitBlock
+HL pad1 H TgNoteOnTableTone part=1e note=38
+HL pad1 H CustomVoiceRecFetch idx=38
+HL pad1 H TgTableToneStage part=1e layer=0
+HL pad1 H CustomVoiceRecFetch idx=38
+HL pad1 H TgNoteOnTableTone part=1d note=30
+HL pad1 H TgTableToneStage part=1d layer=0
+HL pad1 H TgNoteOnTableTone part=1d note=31
+HL pad1 H TgTableToneStage part=1d layer=0
+HL pad1 H TgNoteOnTableTone part=1a note=52
+HL pad1 H TgTableToneStage part=1a layer=0
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H TgNoteOnTableTone part=1e note=3f
+HL pad1 H CustomVoiceRecFetch idx=3f
+HL pad1 H CustomKitBlock
+HL pad1 H TgTableToneStage part=1e layer=0
+HL pad1 H CustomVoiceRecFetch idx=3f
+HL pad1 H TgNoteOnTableTone part=1e note=46
+HL pad1 H CustomVoiceRecFetch idx=46
+HL pad1 H TgTableToneStage part=1e layer=0
+HL pad1 H CustomVoiceRecFetch idx=46
+HL pad1 H TgNoteOnTableTone part=1d note=32
+HL pad1 H TgTableToneStage part=1d layer=0
+HL pad1 H TgNoteOnTableTone part=19 note=2c
+HL pad1 H TgTableToneStage part=19 layer=0
+HL pad1 H TgNoteOnTableTone part=1a note=27
+HL pad1 H TgTableToneStage part=1a layer=0
+HL pad1 H TgNoteOnTableTone part=1a note=52
+HL pad1 H TgTableToneStage part=1a layer=0
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H TgNoteOnTableTone part=1e note=3f
+HL pad1 H CustomVoiceRecFetch idx=3f
+HL pad1 H TgTableToneStage part=1e layer=0
+HL pad1 H CustomVoiceRecFetch idx=3f
+HL pad1 H CustomKitBlock
+HL pad1 H TgNoteOnTableTone part=1e note=38
+HL pad1 H CustomVoiceRecFetch idx=38
+HL pad1 H TgTableToneStage part=1e layer=0
+HL pad1 H CustomVoiceRecFetch idx=38
+HL pad1 H TgNoteOnTableTone part=1d note=33
+HL pad1 H TgTableToneStage part=1d layer=0
+HL pad1 H TgNoteOnTableTone part=19 note=24
+HL pad1 H TgTableToneStage part=19 layer=0
+HL pad1 H TgNoteOnTableTone part=19 note=24
+HL pad1 H TgTableToneStage part=19 layer=0
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H TgNoteOnTableTone part=1e note=3f
+HL pad1 H CustomVoiceRecFetch idx=3f
+HL pad1 H TgTableToneStage part=1e layer=0
+HL pad1 H CustomVoiceRecFetch idx=3f
+HL pad1 H TgNoteOnTableTone part=1a note=27
+HL pad1 H TgTableToneStage part=1a layer=0
+HL pad1 H TgNoteOnTableTone part=1a note=52
+HL pad1 H TgTableToneStage part=1a layer=0
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H TgNoteOnTableTone part=1e note=38
+HL pad1 H CustomVoiceRecFetch idx=38
+HL pad1 H TgTableToneStage part=1e layer=0
+HL pad1 H CustomVoiceRecFetch idx=38
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H TgNoteOnTableTone part=1e note=38
+HL pad1 H CustomVoiceRecFetch idx=38
+HL pad1 H TgTableToneStage part=1e layer=0
+HL pad1 H CustomVoiceRecFetch idx=38
+HL pad1 H CustomKitBlock
+HL pad1 H TgNoteOnTableTone part=1e note=46
+HL pad1 H CustomVoiceRecFetch idx=46
+HL pad1 H TgTableToneStage part=1e layer=0
+HL pad1 H CustomVoiceRecFetch idx=46
+HL pad1 H TgNoteOnTableTone part=1d note=36
+HL pad1 H TgTableToneStage part=1d layer=0
+HL pad1 H TgNoteOnTableTone part=19 note=2c
+HL pad1 H TgTableToneStage part=19 layer=0
+HL pad1 H TgNoteOnTableTone part=1a note=1a
+HL pad1 H TgTableToneStage part=1a layer=0
+HL pad1 H TgNoteOnTableTone part=1a note=52
+HL pad1 H TgTableToneStage part=1a layer=0
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H TgNoteOnTableTone part=1d note=37
+HL pad1 H TgTableToneStage part=1d layer=0
+HL pad1 H CustomKitBlock
+HL pad1 H TgNoteOnTableTone part=19 note=24
+HL pad1 H TgTableToneStage part=19 layer=0
+HL pad1 H TgNoteOnTableTone part=1a note=27
+HL pad1 H TgTableToneStage part=1a layer=0
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H TgNoteOnTableTone part=1e note=3f
+HL pad1 H CustomVoiceRecFetch idx=3f
+HL pad1 H TgTableToneStage part=1e layer=0
+HL pad1 H CustomVoiceRecFetch idx=3f
+HL pad1 H TgNoteOnTableTone part=1e note=38
+HL pad1 H CustomVoiceRecFetch idx=38
+HL pad1 H TgTableToneStage part=1e layer=0
+HL pad1 H CustomVoiceRecFetch idx=38
+HL pad1 H TgNoteOnTableTone part=1d note=30
+HL pad1 H TgTableToneStage part=1d layer=0
+HL pad1 H TgNoteOnTableTone part=19 note=24
+HL pad1 H TgTableToneStage part=19 layer=0
+HL pad1 H TgNoteOnTableTone part=1d note=31
+HL pad1 H TgTableToneStage part=1d layer=0
+HL pad1 H TgNoteOnTableTone part=1a note=52
+HL pad1 H TgTableToneStage part=1a layer=0
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H TgNoteOnTableTone part=1e note=3f
+HL pad1 H CustomVoiceRecFetch idx=3f
+HL pad1 H TgTableToneStage part=1e layer=0
+HL pad1 H CustomVoiceRecFetch idx=3f
+HL pad1 H CustomKitBlock
+HL pad1 H TgNoteOnTableTone part=1e note=46
+HL pad1 H CustomVoiceRecFetch idx=46
+HL pad1 H TgTableToneStage part=1e layer=0
+HL pad1 H CustomVoiceRecFetch idx=46
+HL pad1 H TgNoteOnTableTone part=1d note=32
+HL pad1 H TgTableToneStage part=1d layer=0
+HL pad1 H TgNoteOnTableTone part=19 note=2c
+HL pad1 H TgTableToneStage part=19 layer=0
+HL pad1 H TgNoteOnTableTone part=1a note=27
+HL pad1 H TgTableToneStage part=1a layer=0
+HL pad1 H TgNoteOnTableTone part=1a note=52
+HL pad1 H TgTableToneStage part=1a layer=0
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H TgNoteOnTableTone part=1e note=3f
+HL pad1 H CustomVoiceRecFetch idx=3f
+HL pad1 H TgTableToneStage part=1e layer=0
+HL pad1 H CustomVoiceRecFetch idx=3f
+HL pad1 H TgNoteOnTableTone part=1e note=38
+HL pad1 H CustomVoiceRecFetch idx=38
+HL pad1 H TgTableToneStage part=1e layer=0
+HL pad1 H CustomVoiceRecFetch idx=38
+HL pad1 H TgNoteOnTableTone part=1d note=33
+HL pad1 H TgTableToneStage part=1d layer=0
+HL pad1 H TgNoteOnTableTone part=19 note=24
+HL pad1 H TgTableToneStage part=19 layer=0
+HL pad1 H TgNoteOnTableTone part=19 note=24
+HL pad1 H TgTableToneStage part=19 layer=0
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H TgNoteOnTableTone part=1e note=3f
+HL pad1 H CustomVoiceRecFetch idx=3f
+HL pad1 H TgTableToneStage part=1e layer=0
+HL pad1 H CustomVoiceRecFetch idx=3f
+HL pad1 H TgNoteOnTableTone part=1a note=27
+HL pad1 H TgTableToneStage part=1a layer=0
+HL pad1 H TgNoteOnTableTone part=1a note=52
+HL pad1 H TgTableToneStage part=1a layer=0
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H TgNoteOnTableTone part=1e note=38
+HL pad1 H CustomVoiceRecFetch idx=38
+HL pad1 H TgTableToneStage part=1e layer=0
+HL pad1 H CustomVoiceRecFetch idx=38
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H TgNoteOnTableTone part=1e note=38
+HL pad1 H CustomVoiceRecFetch idx=38
+HL pad1 H TgTableToneStage part=1e layer=0
+HL pad1 H CustomVoiceRecFetch idx=38
+HL pad1 H CustomKitBlock
+HL pad1 H TgNoteOnTableTone part=1e note=46
+HL pad1 H CustomVoiceRecFetch idx=46
+HL pad1 H TgTableToneStage part=1e layer=0
+HL pad1 H CustomVoiceRecFetch idx=46
+HL pad1 H TgNoteOnTableTone part=1d note=36
+HL pad1 H TgTableToneStage part=1d layer=0
+HL pad1 H TgNoteOnTableTone part=19 note=2c
+HL pad1 H TgTableToneStage part=19 layer=0
+HL pad1 H TgNoteOnTableTone part=1a note=1a
+HL pad1 H TgTableToneStage part=1a layer=0
+HL pad1 H TgNoteOnTableTone part=1a note=52
+HL pad1 H TgTableToneStage part=1a layer=0
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H TgNoteOnTableTone part=1d note=37
+HL pad1 H TgTableToneStage part=1d layer=0
+HL pad1 H CustomKitBlock
+HL pad1 H TgNoteOnTableTone part=19 note=24
+HL pad1 H TgTableToneStage part=19 layer=0
+HL pad1 H TgNoteOnTableTone part=1a note=27
+HL pad1 H TgTableToneStage part=1a layer=0
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H TgNoteOnTableTone part=1e note=3f
+HL pad1 H CustomVoiceRecFetch idx=3f
+HL pad1 H TgTableToneStage part=1e layer=0
+HL pad1 H CustomVoiceRecFetch idx=3f
+HL pad1 H CustomKitBlock
+HL pad1 H TgNoteOnTableTone part=1e note=38
+HL pad1 H CustomVoiceRecFetch idx=38
+HL pad1 H TgTableToneStage part=1e layer=0
+HL pad1 H CustomVoiceRecFetch idx=38
+HL pad1 H TgNoteOnTableTone part=1d note=30
+HL pad1 H TgTableToneStage part=1d layer=0
+HL pad1 H TgNoteOnTableTone part=19 note=24
+HL pad1 H TgTableToneStage part=19 layer=0
+HL pad1 H TgNoteOnTableTone part=1d note=31
+HL pad1 H TgTableToneStage part=1d layer=0
+HL pad1 H TgNoteOnTableTone part=1a note=52
+HL pad1 H TgTableToneStage part=1a layer=0
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H TgNoteOnTableTone part=1e note=3f
+HL pad1 H CustomVoiceRecFetch idx=3f
+HL pad1 H TgTableToneStage part=1e layer=0
+HL pad1 H CustomVoiceRecFetch idx=3f
+HL pad1 H CustomKitBlock
+HL pad1 H TgNoteOnTableTone part=1e note=46
+HL pad1 H CustomVoiceRecFetch idx=46
+HL pad1 H TgTableToneStage part=1e layer=0
+HL pad1 H CustomVoiceRecFetch idx=46
+HL pad1 H TgNoteOnTableTone part=1d note=32
+HL pad1 H TgTableToneStage part=1d layer=0
+HL pad1 H TgNoteOnTableTone part=19 note=2c
+HL pad1 H TgTableToneStage part=19 layer=0
+HL pad1 H TgNoteOnTableTone part=1a note=27
+HL pad1 H TgTableToneStage part=1a layer=0
+HL pad1 H TgNoteOnTableTone part=1a note=52
+HL pad1 H TgTableToneStage part=1a layer=0
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H TgNoteOnTableTone part=1e note=3f
+HL pad1 H CustomVoiceRecFetch idx=3f
+HL pad1 H CustomKitBlock
+HL pad1 H TgTableToneStage part=1e layer=0
+HL pad1 H CustomVoiceRecFetch idx=3f
+HL pad1 H TgNoteOnTableTone part=1e note=38
+HL pad1 H CustomVoiceRecFetch idx=38
+HL pad1 H TgTableToneStage part=1e layer=0
+HL pad1 H CustomVoiceRecFetch idx=38
+HL pad1 H TgNoteOnTableTone part=1d note=33
+HL pad1 H TgTableToneStage part=1d layer=0
+HL pad1 H TgNoteOnTableTone part=19 note=24
+HL pad1 H TgTableToneStage part=19 layer=0
+HL pad1 H TgNoteOnTableTone part=19 note=24
+HL pad1 H TgTableToneStage part=19 layer=0
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H TgNoteOnTableTone part=1e note=3f
+HL pad1 H CustomVoiceRecFetch idx=3f
+HL pad1 H TgTableToneStage part=1e layer=0
+HL pad1 H CustomVoiceRecFetch idx=3f
+HL pad1 H TgNoteOnTableTone part=1a note=27
+HL pad1 H TgTableToneStage part=1a layer=0
+HL pad1 H TgNoteOnTableTone part=1a note=52
+HL pad1 H TgTableToneStage part=1a layer=0
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H TgNoteOnTableTone part=1e note=38
+HL pad1 H CustomVoiceRecFetch idx=38
+HL pad1 H TgTableToneStage part=1e layer=0
+HL pad1 H CustomVoiceRecFetch idx=38
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H TgNoteOnTableTone part=1e note=38
+HL pad1 H CustomVoiceRecFetch idx=38
+HL pad1 H TgTableToneStage part=1e layer=0
+HL pad1 H CustomVoiceRecFetch idx=38
+HL pad1 H TgNoteOnTableTone part=1e note=46
+HL pad1 H CustomVoiceRecFetch idx=46
+HL pad1 H TgTableToneStage part=1e layer=0
+HL pad1 H CustomVoiceRecFetch idx=46
+HL pad1 H TgNoteOnTableTone part=1d note=36
+HL pad1 H TgTableToneStage part=1d layer=0
+HL pad1 H TgNoteOnTableTone part=19 note=2c
+HL pad1 H TgTableToneStage part=19 layer=0
+HL pad1 H TgNoteOnTableTone part=1a note=1a
+HL pad1 H TgTableToneStage part=1a layer=0
+HL pad1 H TgNoteOnTableTone part=1a note=52
+HL pad1 H TgTableToneStage part=1a layer=0
+HL pad1 H TgNoteOnTableTone part=1d note=37
+HL pad1 H TgTableToneStage part=1d layer=0
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H TgNoteOnTableTone part=19 note=24
+HL pad1 H TgTableToneStage part=19 layer=0
+HL pad1 H TgNoteOnTableTone part=1a note=27
+HL pad1 H TgTableToneStage part=1a layer=0
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H TgNoteOnTableTone part=1e note=3f
+HL pad1 H CustomVoiceRecFetch idx=3f
+HL pad1 H TgTableToneStage part=1e layer=0
+HL pad1 H CustomVoiceRecFetch idx=3f
+HL pad1 H TgNoteOnTableTone part=1e note=38
+HL pad1 H CustomVoiceRecFetch idx=38
+HL pad1 H TgTableToneStage part=1e layer=0
+HL pad1 H CustomVoiceRecFetch idx=38
+HL pad1 H TgNoteOnTableTone part=1d note=30
+HL pad1 H TgTableToneStage part=1d layer=0
+HL pad1 H TgNoteOnTableTone part=19 note=24
+HL pad1 H TgTableToneStage part=19 layer=0
+HL pad1 H TgNoteOnTableTone part=1d note=31
+HL pad1 H TgTableToneStage part=1d layer=0
+HL pad1 H TgNoteOnTableTone part=1a note=52
+HL pad1 H TgTableToneStage part=1a layer=0
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H TgNoteOnTableTone part=1e note=3f
+HL pad1 H CustomVoiceRecFetch idx=3f
+HL pad1 H TgTableToneStage part=1e layer=0
+HL pad1 H CustomVoiceRecFetch idx=3f
+HL pad1 H TgNoteOnTableTone part=1e note=46
+HL pad1 H CustomVoiceRecFetch idx=46
+HL pad1 H TgTableToneStage part=1e layer=0
+HL pad1 H CustomVoiceRecFetch idx=46
+HL pad1 H TgNoteOnTableTone part=1d note=32
+HL pad1 H TgTableToneStage part=1d layer=0
+HL pad1 H TgNoteOnTableTone part=19 note=2c
+HL pad1 H TgTableToneStage part=19 layer=0
+HL pad1 H TgNoteOnTableTone part=1a note=27
+HL pad1 H TgTableToneStage part=1a layer=0
+HL pad1 H TgNoteOnTableTone part=1a note=52
+HL pad1 H TgTableToneStage part=1a layer=0
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H CustomKitBlock
+HL pad1 H TgNoteOnTableTone part=1e note=3f
+HL pad1 H CustomVoiceRecFetch idx=3f
+DISTINCT 53003
+B boot 00000 32
+B keys 05C00 98
+B keys 06000 509
+B pad1 00000 1154
+B pad1 02000 880
+B pad1 02400 880
+B pad1 02800 440
+B pad1 05C00 6964
+B pad1 06000 5303
+B pad1 08800 9619
+B pad4 00000 63
+B pad4 02000 55
+B pad4 02400 55
+B pad4 05C00 6846
+B pad4 06000 5419
+B pad4 08800 50
+B select 00000 7
+B select 04C00 321
+B select 05C00 4
