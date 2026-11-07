@@ -237,6 +237,16 @@ PROFILE = "941"
 #                bytes no instruction reads) as .ascii
 #   table_ptrs   a reader table whose every entry is 0 or a data address is a pointer table (its strings typed)
 #   maps128      the 128 x 64 maps of two-byte entries (`cmp 0x7f` row, `and 0x3f` column, `asl 7`)
+# (lane mn10300-data5, 2026-11-07; kn7000/notes/mn10300-data5/README.md)
+#   sentinel_copy  sentinel_lists also reads a walk whose loaded word is copied to an address register before the
+#                compare (`mov (a3), d0` / `mov d0, a0` / `cmp 0, d0`), and whose pointer is the list's start plus
+#                the marker field's offset (`mov 8, a3` / `add d2, a3`): the {mask, value, handler} dispatch lists
+#   float_pairs  doubles() leaves a run whose 8-byte words read as two plausible singles each (a float table
+#                on the 8-byte grid) to the later passes
+#   dup_spans    free bytes that are a byte-identical copy of typed items elsewhere are typed as those items
+#                again, under <item>_Copy labels
+#   copied_reclaim  copied_blocks takes back a block's head that a string guess took, and writes a block of
+#                NUL-ended text cells as strings
 # (lane mn10300-data3, 2026-11-06; kn7000/notes/mn10300-data3/README.md)
 #   sentinel_indexed  sentinel_lists also reads the indexed form of the walk: `mov (dI, aT), dX` with dI a
 #                counter stepped by one and scaled to the entry width (`asl2 dI`), `lne` / `b<cc>` back
@@ -254,7 +264,9 @@ FEATURES = {k: True for k in ("ptr_starts", "array_end", "mem_ptrs", "loop_index
                               # lane mn10300-data3 (wave 11)
                               "sentinel_indexed", "frozen_obj_names", "host_widget_vars",
                               # lane mn10300-data4 (wave 12)
-                              "named_base_not_end", "fx_param_lists", "string_ptr_runs")}
+                              "named_base_not_end", "fx_param_lists", "string_ptr_runs",
+                              # lane mn10300-data5 (wave 13)
+                              "sentinel_copy", "float_pairs", "dup_spans", "copied_reclaim")}
 for _k in os.environ.get("GEN_DATA_S_OFF", "").split(","):
     if _k.strip():
         FEATURES[_k.strip()] = False
@@ -2101,7 +2113,7 @@ class Gen:
                              lambda gen, it, vals=vals, kind=kind, rd=rd, s=s, nt=end_note:
                              gen.render_table(it, vals, kind, rd, s, nt))
                 continue
-            kind, names, new_label = DN.lookup3(g.label, s)
+            kind, names, new_label = DN.lookup3(g.label, s, self)
             if new_label and g.label != new_label:
                 g.label = self.rename_at(a, new_label)
             g.macro = self.uniq(kind or ("REC_" + g.label))
@@ -3287,7 +3299,7 @@ class Gen:
             g.fields = DS.layout(g, self, None, 0, offs=[self.off(t) for t in ts])
             cont = self.kind_name(root) + vsuf
             g.label = cont
-            kind, names = DN.lookup(cont, stride)
+            kind, names = DN.lookup(cont, stride, self)
             g.macro = self.uniq(kind or ("REC_" + cont))
             DS.name_fields(g, names)
             self.struct_groups.append(g)
@@ -3903,7 +3915,10 @@ class Gen:
             lab, t = self._ins(L[j])
             if lab and not t:
                 break
-            if t and not re.fullmatch(r"ext[bh]u? %s" % dr, t):
+            if t and not re.fullmatch(r"ext[bh]u? %s" % dr, t) and not (
+                    # (sentinel_copy, lane mn10300-data5) a copy of the loaded word into an address register
+                    # before the compare (KN6000 func_4C03CD2C `mov (a3), d0` / `mov d0, a0` / `cmp 0, d0`)
+                    FEATURES.get("sentinel_copy", True) and re.fullmatch(r"mov %s, a\d" % dr, t)):
                 nxt.append(t)
             j += 1
         if len(nxt) < 2:
@@ -4045,6 +4060,17 @@ class Gen:
                     lb, t = self._ins(L[k])
                     if lb and not re.search(r"^loc_|_L[0-9a-f]+_*$|_entry$", lb):
                         break
+                    if FEATURES.get("sentinel_copy", True) and ar[0] == "a" and k > 0:
+                        # (sentinel_copy, lane mn10300-data5) the pointer is the list's start plus the marker
+                        # field's offset: `mov K, aR` / `add dZ, aR` (KN6000 func_4C03CD2C, 941 func_4C021761:
+                        # `mov 8, a3` / `add d2, a3`, the handler word of a {mask, value, handler} record): the
+                        # start is dZ's, the marker at +K
+                        ma = re.fullmatch(r"add (d\d), %s" % ar, t or "")
+                        mk = re.fullmatch(r"mov (%s), %s" % (self.NUM, ar), self._ins(L[k - 1])[1] or "") if ma else None
+                        if mk:
+                            r = r[:4] + (r[4] + int(mk.group(1), 0),) + r[5:]
+                            ar = ma.group(1)
+                            continue
                     if ar.startswith("sp"):
                         # (a stack slot) what was stored there: `mov rZ, (K, sp)`, rZ then the register
                         mz = re.fullmatch(r"mov ([ad]\d), \((0x[0-9a-f]+|\d+), sp\)", t)
@@ -5501,17 +5527,44 @@ class Gen:
         for a in sorted(found):
             uses = sorted(found[a], key=lambda u: (u[3], u[2], u[1], u[0]))   # (a full key: a set's order varies)
             size = min(u[0] for u in uses)
+            if 0 < size <= 4096 and self.in_data(a) and not self.free(a, size) and FEATURES.get("copied_reclaim", True) \
+                    and self.text_cells(self.rom[self.off(a):self.off(a) + size]):
+                # (copied_reclaim, lane mn10300-data5) a block of text cells whose first cell was taken for a lone
+                # string by its look (typed_refs: the pointer table's entry): the copy's length says what the
+                # block is (941 AcAcdnTabProc memcpys 0x12 bytes of each AcAcdnTabProc_Table entry, three 6-byte
+                # cells); a block that is not all text cells keeps its strings
+                self.reclaim_guessed_strings(a, size)
             if not 0 < size <= 4096 or not self.in_data(a) or not self.free(a, size):
                 continue
             o = self.off(a)
             vals = list(self.rom[o:o + size])
             cite = "; ".join(f"{u[2]} 0x{u[3]:08X}: {u[1]}(.., {u[0]})" for u in uses[:3])
+            cells = self.text_cells(bytes(vals)) if FEATURES.get("copied_reclaim", True) else None
+            if cells:
+                # NUL-ended text cells, every byte of the block: written as the strings they are
+                self.add(a, size, self.name_at(a, f"{uses[0][2]}_Block"), "copied block",
+                         lambda g, it, cells=cells, cite=cite: [f"{it.label}:\t# {sum(len(c) + 1 for c in cells)} bytes,"
+                                                                f" {len(cells)} NUL-ended text cells, copied whole by {cite}"]
+                         + [f'\t.asciz\t"{c_escape(c)}"' for c in cells])
+                n += 1
+                continue
             self.add(a, size, self.name_at(a, f"{uses[0][2]}_Block"), "copied block",
                      lambda g, it, vals=vals, cite=cite: [f"{it.label}:\t# {len(vals)} bytes, copied whole by {cite}"]
                      + [f"\ttab_u8\t" + ", ".join(str(v) for v in vals[i:i + 16]) + f"\t# [{i}]"
                         for i in range(0, len(vals), 16)])
             n += 1
         print(f"gen_data_s: {n} copied blocks")
+
+    @staticmethod
+    def text_cells(bs):
+        """(copied_reclaim) bs as NUL-ended cells of text (bytes 0x20 .. 0x7E and 0x80 .. 0xFE, the KN7000's font
+        has glyphs there: 0x95 the bullet), at least 2 cells, every byte of bs; else None."""
+        if len(bs) < 4 or bs[-1] != 0:
+            return None
+        cells = bs[:-1].split(b"\0")
+        if len(cells) < 2 or any(not c or any(not (0x20 <= x < 0x7F or 0x80 <= x < 0xFF) for x in c) for c in cells):
+            return None
+        return cells
 
     def string_ptr_runs(self):
         """(the siblings: `structs` profiles without readers_ext; FEATURES["string_ptr_runs"], lane mn10300-data4)
@@ -5798,6 +5851,12 @@ class Gen:
                 # (the KN6000's feature-demo script): printable_runs() types it
                 o += 8 * n
                 continue
+            if n >= 4 and FEATURES.get("float_pairs", True) and self.float_pairs(o, n):
+                # (float_pairs, lane mn10300-data5) both halves of most words are single-precision floats of
+                # plausible size: a table of floats the 8-byte grid misreads (KN2400 0x4840DE50); left to the
+                # later passes (dup_spans types the KN2400's as the copy it is)
+                o += 8 * n
+                continue
             if n >= 4 and nz >= n // 2 + 1:
                 vals = [struct.unpack_from("<IId", rom, o + 8 * k) for k in range(n)]
                 a = self.addr_of(o)
@@ -5807,6 +5866,114 @@ class Gen:
                 o += 8 * n
             else:
                 o += 8
+
+    def float_pairs(self, o, n):
+        """(FEATURES["float_pairs"], lane mn10300-data5) Are the n 8-byte words at offset o pairs of IEEE-754
+        singles rather than doubles?  A double's low word is mantissa bits, as good as random: read as a single it
+        has a plausible exponent (2^-31 .. 2^32) about one time in four.  So when at least 4 words have a low word
+        that is not 0 and three quarters of those read as two plausible singles, the run is singles."""
+        def plausible(w):
+            e = (w >> 23) & 0xFF
+            return w & 0x7FFFFFFF == 0 or 0x60 <= e <= 0x9F
+        lo_nz = both = 0
+        for k in range(n):
+            lo = int.from_bytes(self.rom[o + 8 * k:o + 8 * k + 4], "little")
+            hi = int.from_bytes(self.rom[o + 8 * k + 4:o + 8 * k + 8], "little")
+            if lo == 0:
+                continue
+            lo_nz += 1
+            both += plausible(lo) and plausible(hi)
+        return lo_nz >= 4 and 4 * both >= 3 * lo_nz
+
+    DUP_LABEL = re.compile(r"^([A-Za-z_.$][\w.$]*):")
+
+    def dup_spans(self):
+        """(FEATURES["dup_spans"], lane mn10300-data5) A run of 32 or more free bytes (8 distinct values or more)
+        that is a byte-identical copy of typed items elsewhere in the image, from the start of one item to the end
+        of the same or a later one: typed as those items again, each by its own rule under the label
+        <item>_Copy, with a note that nothing is seen to reference the copy.  The KN2400 holds its
+        interpolation tables 0x4840D45C .. 0x4840D9A4 (the 11-point tables func_50186924 reads, func_50186981's
+        16-point one, the float tables func_5018884C / func_5018888A / func_50189206 read) a second time at
+        0x4840DAF8, unreferenced.  Only items whose rendering carries the item's own label and no other are
+        copied (a list's inner labels would be defined twice).  Probe: notes/mn10300-data5-probes/opaque_copies.py."""
+        if not FEATURES.get("dup_spans", True):
+            return
+        rom = self.rom
+        self.build_index()
+        runs, o = [], R1_END
+        while o < DATA_END:
+            if self.claimed[o]:
+                o += 1
+                continue
+            e = o
+            while e < DATA_END and not self.claimed[e]:
+                e += 1
+            if e - o >= 32 and not RAMINIT_OFF <= o < RAMINIT_END:
+                runs.append((o, e))
+            o = e
+        starts = sorted(self.items)
+        import bisect
+        for p, q in runs:
+            bs = rom[p:q]
+            if len(set(bs)) < 8:
+                continue
+            best = None
+            j = rom.find(bs[:16], R1_END, DATA_END)
+            while j != -1:
+                if j != p and j in self.items and not p <= j < q:
+                    plan, k = [], bisect.bisect_left(starts, j)
+                    while k < len(starts):
+                        so = starts[k]
+                        it = self.items[so]
+                        rel = so - j
+                        if rel + it.size > q - p or rom[so:so + it.size] != rom[p + rel:p + rel + it.size]:
+                            break
+                        plan.append(it)
+                        k += 1
+                        if k < len(starts) and starts[k] - j >= q - p:
+                            break
+                        # the source's own free bytes between items are free in the copy as well: compare them too
+                        nxt = starts[k] if k < len(starts) else DATA_END
+                        g0 = so + it.size
+                        if nxt > g0 and (nxt - j > q - p or rom[g0:nxt] != rom[p + (g0 - j):p + (nxt - j)]):
+                            break
+                    if plan and (best is None or plan[-1].start + plan[-1].size > best[-1].start + best[-1].size):
+                        best = plan
+                j = rom.find(bs[:16], j + 1, DATA_END)
+            if not best:
+                continue
+            j0 = self.off(best[0].start)
+            done = []
+            for it in best:
+                if it.label is None or it.kind in ("double table",):
+                    break
+                try:
+                    lines = it.render(self, it)
+                except Exception:
+                    break
+                labs = [m.group(1) for m in (self.DUP_LABEL.match(x) for x in lines) if m]
+                if labs != [it.label]:
+                    break
+                done.append(it)
+            if not done or sum(x.size for x in done) < 32:
+                continue
+            for it in done:
+                a = self.addr_of(p + self.off(it.start) - j0)
+                lab = self.name_at(a, f"{it.label}_Copy")
+
+                def render(g, cit, src=it):
+                    out = [f"# a byte-identical copy of {src.label} (0x{src.start:08X}, {src.kind}); nothing is seen to"
+                           f" read the copy (dup_spans)"]
+                    done_ = False
+                    for x in src.render(g, src):
+                        m = g.DUP_LABEL.match(x)
+                        if m and not done_ and m.group(1) == src.label:
+                            x = cit.label + x[m.end() - 1:]
+                            done_ = True
+                        out.append(x)
+                    return out
+                self.add(a, it.size, lab, it.kind, render)
+        self.build_index()
 
     def printable_runs(self):
         """(FEATURES["doubles_text"], lane mn10300-data) What is left of 32 or more printable bytes in a row
@@ -6613,6 +6780,7 @@ class Gen:
             if P.get("structs"):
                 self.variables()
         if P.get("structs"):
+            self.dup_spans()
             self.widget_vars()
             self.table_terminators()
             self.printable_runs()
