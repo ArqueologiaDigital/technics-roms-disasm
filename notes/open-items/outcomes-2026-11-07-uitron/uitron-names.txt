@@ -1,0 +1,4 @@
+N-a810f3f6  OPEN  KN6000 func_ starts 5,671 -> 5,632 (census func_ 9,910 -> 9,843): the kernel's uITRON services (kn7000/notes/uitron3-function-codes, 72ab17130); next: the rest of the func_ backlog as wave 12 described (KN7000 names by call sites, or hand naming)
+N-f22bdce4  OPEN  KN6500 func_ starts 5,698 -> 5,659 (9,966 -> 9,899); next as N-a810f3f6
+N-b3ba9d8b  OPEN  KN2400 func_ starts 6,517 -> 6,480 (11,315 -> 11,254), rsm_tsk included; next as N-a810f3f6
+N-99771106  OPEN  893 func_ routines 6,316 -> 6,279 (941 6,327 -> 6,290, 935 6,324 -> 6,287, 942 6,331 -> 6,289): kernel services named; the rest of the backlog remains

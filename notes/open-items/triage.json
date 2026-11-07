@@ -1738,7 +1738,7 @@
   "was": [
    "N-90175c82"
   ],
-  "plan": "a44a8baa5 + 4de104f09: 0x48451649 = KeyZoneNoteResolve (+ SoundTableKeyMapOn), 893 own 3 -> 2; next: name 941's SD AUDIO player family (0x485790A9..), then 893's 0x485785B0 / 0x485788D8 (lane kn7000-research2, 2026-11-06)"
+  "plan": "893 func_ routines 6,316 -> 6,279 (941 6,327 -> 6,290, 935 6,324 -> 6,287, 942 6,331 -> 6,289): kernel services named; the rest of the backlog remains (lane uitron-names, 2026-11-07)"
  },
  "N-99d09c1a": {
   "status": "RESOLVED",
@@ -4406,7 +4406,7 @@
   "size": "L",
   "was_status": "RESOLVED",
   "was": "N-02383279",
-  "plan": "KN6000 func_ 9,917 -> 9,910; aligned names 108 -> 115 (e5127d07d; kn7000/notes/sibling-names2/README.md). Next: KN7000 names for the 1,358 call-site pairs 941 also leaves unnamed (routine-map-kn7000.tsv), then hand naming (0x4C11/0x4C12 sequencer/SMF code; kernel services by uITRON 3.0 function codes once the TFN table is available) (lane sibling-names2, 2026-11-06)"
+  "plan": "KN6000 func_ starts 5,671 -> 5,632 (census func_ 9,910 -> 9,843): the kernel's uITRON services (kn7000/notes/uitron3-function-codes, 72ab17130); next: the rest of the func_ backlog as wave 12 described (KN7000 names by call sites, or hand naming) (lane uitron-names, 2026-11-07)"
  },
  "N-f22bdce4": {
   "status": "ACTIONABLE",
@@ -4414,14 +4414,14 @@
   "size": "L",
   "was_status": "RESOLVED",
   "was": "N-a6b3dca1",
-  "plan": "KN6500 func_ 9,972 -> 9,966; aligned names 108 -> 114 (e5127d07d). Next: as N-a810f3f6 (1,421 pairs) (lane sibling-names2, 2026-11-06)"
+  "plan": "KN6500 func_ starts 5,698 -> 5,659 (9,966 -> 9,899); next as N-a810f3f6 (lane uitron-names, 2026-11-07)"
  },
  "N-b3ba9d8b": {
   "status": "ACTIONABLE",
   "title": "KN2400: 11,678 entries still func_<ADDR>",
   "size": "L",
   "was": "N-391deec6",
-  "plan": "KN2400 func_ 11,340 -> 11,315; aligned names 228 -> 249; TG library 418 -> 424 of 544, short twins 36 -> 30 (703afabca). The 30 have no possible RAM pair (the KN2400 rearranged the variables they read). Next: as N-a810f3f6 (2,320 pairs) (lane sibling-names2, 2026-11-06)"
+  "plan": "KN2400 func_ starts 6,517 -> 6,480 (11,315 -> 11,254), rsm_tsk included; next as N-a810f3f6 (lane uitron-names, 2026-11-07)"
  },
  "N-2dea56c9": {
   "status": "RESOLVED",
