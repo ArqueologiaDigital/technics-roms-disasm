@@ -2858,11 +2858,11 @@
 
 # REC_func_486CF41A_Table_2: 8-byte records (func_486CF41A_Table_2, 8 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   index        u8             func_486CF41A_entry_L89 0x486CF4A8 `movbu (d0, a2), d0`; func_486CF41A_entry_Ld9 0x486CF4F8 `movbu (d0, a3), d0`
+#   +0   FileNameWithExt_d0 u8             func_486CF41A_entry_L89 0x486CF4A8 `movbu (d0, a2), d0`; func_486CF41A_entry_Ld9 0x486CF4F8 `movbu (d0, a3), d0`
 #   +1   x1           u8[3]          no reader seen
 #   +4   proc         ptr            func_486CF41A_entry_L89 0x486CF4A8 `mov (4, a0), a1`
-.macro REC_func_486CF41A_Table_2 index=0, x1, proc=0
-	.byte	\index
+.macro REC_func_486CF41A_Table_2 FileNameWithExt_d0=0, x1, proc=0
+	.byte	\FileNameWithExt_d0
 	.ascii	"\x1"
 	.long	\proc
 .endm
@@ -4230,7 +4230,7 @@
 #   +2   key_         s16            func_485FFD4C 0x485FFD4C `movhu (2, a0), d3`; func_485FFD4C_entry_L99 0x485FFDEA `movhu (2, a0), d3` (+12)
 #   +4   key__        s16            func_485FFD4C 0x485FFD4C `movhu (4, a0), d0`; func_485FFD4C_entry_Lce 0x485FFE1F `movhu (4, a0), d0` (+2)
 #   +6   flag_id      s16            func_485EBDAE_L56 0x485EBE04 `movhu (6, a0), d0`; func_485EBE7F_L3f 0x485EBEBE `movhu (6, a0), d0` (+8)
-#   +8   flag_id_     s16            func_485F942F 0x485F942F `movhu (8, a0), d0`; func_485F942F 0x485F942F `movhu (8, a2), d0` (+24)
+#   +8   flag_id_     s16            InitDrawTask_Impl 0x485F942F `movhu (8, a0), d0`; InitDrawTask_Impl 0x485F942F `movhu (8, a2), d0` (+24)
 #   +10  x10          u8[2]          no reader seen
 #   +12  index        u32            ProcCall_entry_L28 0x48600C26 `mov (0xc, a0), d0`; ProcCall_entry_L28 0x48600C26 `mov (0xc, a0), d1` (+7)
 #   +16  f16          u32            func_485FFCBD 0x485FFCBD `mov (0x10, a0), d0`; func_485FFEFA_entry_L5c 0x485FFF5B `mov (0x10, a0), d0` (+3)
