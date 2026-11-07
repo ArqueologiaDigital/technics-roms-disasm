@@ -1905,14 +1905,14 @@ AccompSeq_ChordChange_ApplyOverride:
 AccompSeq_ChordChange_Return:
 	ret
 
-; Only when bit 0 of 0x3283 is set and bit 2 of 0x28b2 clear: 0x7e60 / 0x7e61 = L / H; looks up the
+; Only when bit 0 of 0x3283 is set and bit 2 of SEQ_METRO_FLAGS clear: 0x7e60 / 0x7e61 = L / H; looks up the
 ; voice's style data (AccompSeq_ResetMidiState, AccompSeq_LookupStyleData) and, when bit 4 of its
 ; first byte is set, sets bit 0 of 0x7e5f if byte 0x433 equals (ACC_BEAT) + 1, else bit 1.  0x7e28 /
 ; 0x7e2a are saved and restored.
 AccompSeq_CompareChord:
 	bit 0, (ACC_RUN_FLAGS:16)
 	jr z, AccompSeq_CompareChord_Return
-	bit 2, (0x28b2:16)
+	bit 2, (SEQ_METRO_FLAGS:16)
 	jr nz, AccompSeq_CompareChord_Return
 	ld (0x7e60:16), l
 	ld (0x7e61:16), h

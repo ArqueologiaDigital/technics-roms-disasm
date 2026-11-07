@@ -4528,7 +4528,8 @@ const naka_ctrl_menu_body_t naka_ctrl_menu_body_data
     /* ==== SCREEN TITLE_TEST1 -- "TT_TEST1", title id 0xF4, function NAKA_APFUNC_DefaultFunction ====
      * What: the first self-test screen. It is shown when the SRAM test or the panel-detection check
      *       reports a problem, and an entry of ...
-     * Path: none found (no data entry, and no traced code, opens it)
+     * Path: power-on boot sequence User_didnt_request_flash_mem_update > (by
+     *       SelfTest_FirmwareVersionCheck)
      * EXIT -> TITLE_PS */
     .vF4_e0 = {
         .class_ = NAKA_CLASS(TtlScreen),

@@ -60,7 +60,7 @@ def labelled_elements(m):
         if r['cls'] != 0x1600010 or not m.inrom(r['table']):
             continue
         for k, a in enumerate(m.entries(r)):
-            ra = a if m.inrom(a) else G.rom_image_of(a)
+            ra = a if m.inrom(a) else G.rom_image_of(a, m.v)
             if ra is None:
                 continue
             lab = m.name_of(ra)

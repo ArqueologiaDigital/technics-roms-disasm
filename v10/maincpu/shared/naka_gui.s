@@ -2834,6 +2834,11 @@
 .equ IDX_NakaWidget_CmpRealScreen_21_VwMenuBox, 21	; Viewable slot 0xB5 element 21
 .equ IDX_NakaWidget_CmpRealScreen_22_VwMenuBox, 22	; Viewable slot 0xB5 element 22
 .equ IDX_NakaWidget_CmpRealScreen_23_VwMenuBox, 23	; Viewable slot 0xB5 element 23
+.equ IDX_CmpRealScreen_AcCmpRecBox, 24	; Viewable slot 0xB5 element 24
+.equ IDX_CmpRealScreen_AcCmpRecBox_2, 25	; Viewable slot 0xB5 element 25
+.equ IDX_CmpRealScreen_AcCmpRecBox_3, 26	; Viewable slot 0xB5 element 26
+.equ IDX_CmpRealScreen_AcCmpRecBox_4, 27	; Viewable slot 0xB5 element 27
+.equ IDX_CmpRealScreen_AcCmpRecBox_5, 28	; Viewable slot 0xB5 element 28
 .equ IDX_NakaWidget_CmpQtz, 29	; Viewable slot 0xB5 element 29
 .equ IDX_NakaWidget_CmpMeas, 30	; Viewable slot 0xB5 element 30
 .equ IDX_NakaWidget_SunaView0B6_0_IvDirmdScreen, 0	; Viewable slot 0xB6 element 0
@@ -2861,6 +2866,7 @@
 .equ IDX_NakaWidget_CmpNcpScreen_15_Line, 15	; Viewable slot 0xB8 element 15
 .equ IDX_NakaWidget_CmpNcpScreen_16_Line, 16	; Viewable slot 0xB8 element 16
 .equ IDX_NakaWidget_CmpNcpScreen_17_Box, 17	; Viewable slot 0xB8 element 17
+.equ IDX_CmpNcpScreen_PsCmpCpFPtnBox, 18	; Viewable slot 0xB8 element 18
 .equ IDX_NakaWidget_CmpNcpScreen_19_Label, 19	; Viewable slot 0xB8 element 19
 .equ IDX_NakaWidget_CmpNcpScreen_20_Label, 20	; Viewable slot 0xB8 element 20
 .equ IDX_NakaWidget_CmpNcpScreen_21_Label, 21	; Viewable slot 0xB8 element 21
@@ -2868,8 +2874,12 @@
 .equ IDX_NakaWidget_CmpNcpScreen_23_Label, 23	; Viewable slot 0xB8 element 23
 .equ IDX_NakaWidget_CmpNcpScreen_24_VwEditSwBox, 24	; Viewable slot 0xB8 element 24
 .equ IDX_NakaWidget_CmpNcpScreen_25_Box, 25	; Viewable slot 0xB8 element 25
+.equ IDX_CmpNcpScreen_PsNameMemBox, 26	; Viewable slot 0xB8 element 26
+.equ IDX_CmpNcpScreen_AcMemNoBox, 27	; Viewable slot 0xB8 element 27
 .equ IDX_NakaLabel_PatternCopy_MemoryLabel, 28	; Viewable slot 0xB8 element 28
 .equ IDX_NakaLabel_PatternCopy_PatMemLabel, 29	; Viewable slot 0xB8 element 29
+.equ IDX_CmpNcpScreen_PsCmpCpFGrpBox, 30	; Viewable slot 0xB8 element 30
+.equ IDX_CmpNcpScreen_PsCmpCpFVariBox, 31	; Viewable slot 0xB8 element 31
 .equ IDX_NakaNode_PatternCopy_ProgressBar, 32	; Viewable slot 0xB8 element 32
 .equ IDX_NakaContainer_SeqToComposer_Root, 0	; Viewable slot 0xB9 element 0
 .equ IDX_Naka0x3E_SeqToComposer_DrmBtn, 1	; Viewable slot 0xB9 element 1
@@ -2895,11 +2905,14 @@
 .equ IDX_NakaLabel_SeqToComposer_LastLabel, 21	; Viewable slot 0xB9 element 21
 .equ IDX_NakaLabel_SeqToComposer_MeasLastLabel, 22	; Viewable slot 0xB9 element 22
 .equ IDX_NakaGroup_SeqToComposer_TransGroup, 23	; Viewable slot 0xB9 element 23
+.equ IDX_S2CScreen_PsS2cTransBox, 24	; Viewable slot 0xB9 element 24
 .equ IDX_NakaLabel_SeqToComposer_TrnLabel, 25	; Viewable slot 0xB9 element 25
 .equ IDX_NakaLabel_SeqToComposer_MemLabel, 26	; Viewable slot 0xB9 element 26
 .equ IDX_NakaLabel_SeqToComposer_ComposerMemory, 27	; Viewable slot 0xB9 element 27
+.equ IDX_S2CScreen_PsS2cFmeasBox, 28	; Viewable slot 0xB9 element 28
 .equ IDX_NakaNode_SeqToComposer_ControlField, 29	; Viewable slot 0xB9 element 29
 .equ IDX_NakaNode_SeqToComposer_StyleField, 30	; Viewable slot 0xB9 element 30
+.equ IDX_S2CScreen_PsS2cLmeasBox, 31	; Viewable slot 0xB9 element 31
 .equ IDX_NakaNode_SeqToComposer_ProgressBar, 32	; Viewable slot 0xB9 element 32
 .equ IDX_NakaNode_SeqToComposer_PartDisplay, 33	; Viewable slot 0xB9 element 33
 .equ IDX_Naka0x1F_SeqToComposer_PartSel1, 34	; Viewable slot 0xB9 element 34
