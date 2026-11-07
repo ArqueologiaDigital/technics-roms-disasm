@@ -27,12 +27,12 @@
 	ld	wa, (AUDIO_CONFIG_UPDATE:16)
 	bit	4, wa
 	jr	nz, AudioDispatch_ClearVoiceFlags
-	set	2, (0xc162:16)
+	set	2, (AUDIO_STATE:16)
 	jr	AudioDispatch_SetBusyFlag
 ; (v7 label ScreenGroup_Dispatch stood here; dropped, see the file header)
 ; (v7 label ScreenGroup_DispatchAlt stood here; dropped, see the file header)
 AudioDispatch_ClearVoiceFlags:
-	ld	(0xc162:16), 0
+	ld	(AUDIO_STATE:16), 0
 AudioDispatch_SetBusyFlag:
 	orw	(AUDIO_STATE_CHANGES:16), 0x1
 ; Audio voice callback dispatch
@@ -68,18 +68,18 @@ AudioMode_ResetVoiceState:
 	bit	4, wa
 ; (v7 label ScreenGroup_InitState stood here; dropped, see the file header)
 	jr	nz, AudioVoiceReset_ClearFlags
-	set	2, (0xc162:16)
+	set	2, (AUDIO_STATE:16)
 	jr	AudioVoiceReset_Handler
 AudioVoiceReset_ClearFlags:
-	ld	(0xc162:16), 0
+	ld	(AUDIO_STATE:16), 0
 ; (v7 label .Lc_fdd7f0 stood here; dropped, see the file header)
 ; [v10] Audio subsystem callback
 AudioVoiceReset_Handler:
-	res	3, (0xc162:16)
-	ld	(0xc218:16), 255
-	ld	(0xc220:16), 255
-	ld	(0xc164:16), 255
-	ld	(0xc165:16), 255
+	res	3, (AUDIO_STATE:16)
+	ld	(AUDIO_STATE+182:16), 255
+	ld	(AUDIO_STATE+190:16), 255
+	ld	(AUDIO_STATE+2:16), 255
+	ld	(AUDIO_STATE+3:16), 255
 	orw	(AUDIO_STATE_CHANGES:16), 257
 	andw	(AUDIO_CONFIG_UPDATE:16), 0xfffd
 	ld	a, (CURRENT_MODE:16)
@@ -100,7 +100,7 @@ AudioVoiceReset_Handler:
 	call	AudioInit_DispatchChanges
 	ret
 AudioMode_ConfigureExternal:
-	ld	(0xc162:16), 0
+	ld	(AUDIO_STATE:16), 0
 	cp	a, 0:i3
 	jr	z, AudioMode_ConfigExternal_Off
 	orw	(AUDIO_CONFIG_UPDATE:16), 16
@@ -109,11 +109,11 @@ AudioMode_ConfigExternal_Off:
 	andw	(AUDIO_CONFIG_UPDATE:16), 0xffef
 	bit	0, (PANEL_CONDUCTOR:16)
 	jr	z, AudioMode_ConfigExternal_CheckBit1
-	set	0, (0xc162:16)
+	set	0, (AUDIO_STATE:16)
 AudioMode_ConfigExternal_CheckBit1:
 	bit	1, (PANEL_CONDUCTOR:16)
 	jr	z, AudioMode_ConfigExternal_CheckStereo
-	set	1, (0xc162:16)
+	set	1, (AUDIO_STATE:16)
 AudioMode_ConfigExternal_CheckStereo:
 	bit	1, (PANEL_CONDUCTOR+1:16)
 	jr	z, AudioMode_ConfigExternal_NoStereo
@@ -125,12 +125,12 @@ AudioMode_ConfigExternal_NoStereo:
 	and	wa, 0x7
 	call	z, (AudioInit_RefreshToneBank:24)
 AudioMode_ConfigExternal_MergeFlags:
-	res	2, (0xc162:16)
+	res	2, (AUDIO_STATE:16)
 	ld	a, (PANEL_CONDUCTOR+1:16)
 	and	a, 0x2
 	ld	c, a
 	add	a, c
-	or	(0xc162:16), a
+	or	(AUDIO_STATE:16), a
 AudioMode_ConfigExternal_Apply:
 	orw	(AUDIO_CONFIG_UPDATE:16), 4
 	jrl	AudioInit_ProcessModeChange
@@ -182,7 +182,7 @@ UIStateEvt_PartRouting:
 	ld	hl, wa
 ; (v7 label ScreenGroup_InitParam16Loop stood here; dropped, see the file header)
 	add	hl, 0x124
-	lda	xix, (0xc162:16)
+	lda	xix, (AUDIO_STATE:16)
 	ld	a, d
 	and	a, 0x7
 	extz	wa
@@ -207,7 +207,7 @@ UIStateEvt_VoiceAssign:
 	lda	xbc, (PartIndex_ByteMap:24)
 	ld	a, (xbc+wa)
 	extz	wa
-	lda	xbc, (0xc186:16)
+	lda	xbc, (AUDIO_STATE+36:16)
 	ld	ix, wa
 	extz	xix
 ; (v7 label ScreenGroup_InitParams8Complex stood here; dropped, see the file header)
@@ -223,7 +223,7 @@ UIStateEvt_VoiceAssign_Reset:
 	lda	xbc, (PartIndex_ByteMap:24)
 	ld	a, (xbc+wa)
 	extz	wa
-	lda	xbc, (0xc186:16)
+	lda	xbc, (AUDIO_STATE+36:16)
 	extz	xwa
 	add	xwa, xbc
 	ld	(xwa), 0xff
@@ -240,13 +240,13 @@ UIStateEvt_ToneChange:
 	lda	xbc, (PartIndex_ByteMap:24)
 	ld	a, (xbc+wa)
 	extz	wa
-	lda	xbc, (0xc166:16)
+	lda	xbc, (AUDIO_STATE+4:16)
 	extz	xwa
 	add	xwa, xbc
 	ld	(xwa), 0xff
 	cp	l, 0x13
 	jr	nz, Tone_WriteEndMarker
-	ld	(0xc17c:16), 255
+	ld	(AUDIO_STATE+26:16), 255
 ; (v7 label ScreenGroup_FinalInit stood here; dropped, see the file header)
 	jr	Tone_WriteEndMarker
 UIStateEvt_ToneChange_Set:
@@ -255,7 +255,7 @@ UIStateEvt_ToneChange_Set:
 	lda	xbc, (PartIndex_ByteMap:24)
 	ld	a, (xbc+wa)
 	extz	wa
-	lda	xbc, (0xc166:16)
+	lda	xbc, (AUDIO_STATE+4:16)
 	ld	ix, wa
 	extz	xix
 	add	xix, xbc
@@ -267,7 +267,7 @@ UIStateEvt_ToneChange_Set:
 	ld	(xix), a
 	cp	l, 0x13
 	jr	nz, Tone_WriteEndMarker
-	ld	(0xc17c:16), 22
+	ld	(AUDIO_STATE+26:16), 22
 Tone_WriteEndMarker:
 	orw	(AUDIO_STATE_CHANGES:16), 4
 	orw	(AUDIO_CONFIG_UPDATE:16), 4
@@ -283,7 +283,7 @@ UIStateEvt_DrumAssign:
 	lda	xbc, (PartIndex_ByteMap:24)
 	ld	a, (xbc+wa)
 	extz	wa
-	lda	xbc, (0xc186:16)
+	lda	xbc, (AUDIO_STATE+36:16)
 	extz	xwa
 	add	xwa, xbc
 	.byte	0xb0, 0x00

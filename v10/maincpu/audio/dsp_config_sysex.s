@@ -5502,19 +5502,19 @@ AudioInit_ProcessModeChange:
 	ld wa, (AUDIO_CONFIG_UPDATE:16)
 	bit 4, wa
 	jr nz, AudioModeChange_ClearVoiceFlags
-	set 2, (0xc1fe:16)
+	set 2, (AUDIO_STATE:16)
 	jr AudioModeChange_Handler
 
 AudioModeChange_ClearVoiceFlags:
-	ld (0xc1fe:16), 0
+	ld (AUDIO_STATE:16), 0
 
 ; Audio mode change handler
 AudioModeChange_Handler:
-	res 3, (0xc1fe:16)
-	ld (0xc2b4:16), 255
-	ld (0xc2bc:16), 255
-	ld (0xc200:16), 255
-	ld (0xc201:16), 255
+	res 3, (AUDIO_STATE:16)
+	ld (AUDIO_STATE+182:16), 255
+	ld (AUDIO_STATE+190:16), 255
+	ld (AUDIO_STATE+2:16), 255
+	ld (AUDIO_STATE+3:16), 255
 	orw (AUDIO_STATE_CHANGES:16), 257
 	ld a, (CURRENT_MODE:16)
 	extz wa
@@ -5536,8 +5536,8 @@ AudioModeChange_Handler:
 
 ; Recomputes the audio routing state after a part or mode change and re-applies it.
 ;   Refreshes the status word AUDIO_SEQ_TRACK_FLAGS (Audio_CheckInitStatus) and, when its bits 5-6 are clear,
-;   the tone bank (AudioInit_RefreshToneBank).  With bit 1 of 0xfc67 set, 0xc1fe gets bit 2 or
-;   is cleared (bit 4 of 0xc594); bit 3 of 0xc1fe is then cleared, 0xc2b4, 0xc2bc, 0xc200 and
+;   the tone bank (AudioInit_RefreshToneBank).  With bit 1 of 0xfc67 set, AUDIO_STATE gets bit 2 or
+;   is cleared (bit 4 of 0xc594); bit 3 of AUDIO_STATE is then cleared, 0xc2b4, 0xc2bc, 0xc200 and
 ;   0xc201 are set to 0xff and bits 0 and 8 of AUDIO_STATE_CHANGES set.  The per-mode voice handler
 ;   AudioVoiceHandler_Table[CURRENT_MODE] is called with WA = 0 (unless it is the
 ;   AudioVoiceHandler_NoneSentinel, which ends the routine), then the drum routing, drum save,
@@ -5552,19 +5552,19 @@ Audio_CheckSubsystemReady:
 	ld wa, (AUDIO_CONFIG_UPDATE:16)
 	bit 4, wa
 	jr nz, AudioSubsystem_ClearVoiceFlags
-	set 2, (0xc1fe:16)
+	set 2, (AUDIO_STATE:16)
 	jr AudioSubsystem_Callback
 
 AudioSubsystem_ClearVoiceFlags:
-	ld (0xc1fe:16), 0
+	ld (AUDIO_STATE:16), 0
 
 ; Audio subsystem callback
 AudioSubsystem_Callback:
-	res 3, (0xc1fe:16)
-	ld (0xc2b4:16), 255
-	ld (0xc2bc:16), 255
-	ld (0xc200:16), 255
-	ld (0xc201:16), 255
+	res 3, (AUDIO_STATE:16)
+	ld (AUDIO_STATE+182:16), 255
+	ld (AUDIO_STATE+190:16), 255
+	ld (AUDIO_STATE+2:16), 255
+	ld (AUDIO_STATE+3:16), 255
 	orw (AUDIO_STATE_CHANGES:16), 257
 	ld a, (CURRENT_MODE:16)
 	extz wa
@@ -5632,11 +5632,11 @@ AudioDispatch_CheckStereoMode:
 	ld wa, (AUDIO_CONFIG_UPDATE:16)
 	bit 4, wa
 	jr nz, AudioDispatch_ClearVoiceFlags
-	set 2, (0xc1fe:16)
+	set 2, (AUDIO_STATE:16)
 	jr AudioDispatch_SetBusyFlag
 
 AudioDispatch_ClearVoiceFlags:
-	ld (0xc1fe:16), 0
+	ld (AUDIO_STATE:16), 0
 
 AudioDispatch_SetBusyFlag:
 	orw (AUDIO_STATE_CHANGES:16), 1
@@ -5675,19 +5675,19 @@ AudioMode_ResetVoiceState:
 	ld wa, (AUDIO_CONFIG_UPDATE:16)
 	bit 4, wa
 	jr nz, AudioVoiceReset_ClearFlags
-	set 2, (0xc1fe:16)
+	set 2, (AUDIO_STATE:16)
 	jr AudioVoiceReset_Handler
 
 AudioVoiceReset_ClearFlags:
-	ld (0xc1fe:16), 0
+	ld (AUDIO_STATE:16), 0
 
 ; Audio voice reset handler
 AudioVoiceReset_Handler:
-	res 3, (0xc1fe:16)
-	ld (0xc2b4:16), 255
-	ld (0xc2bc:16), 255
-	ld (0xc200:16), 255
-	ld (0xc201:16), 255
+	res 3, (AUDIO_STATE:16)
+	ld (AUDIO_STATE+182:16), 255
+	ld (AUDIO_STATE+190:16), 255
+	ld (AUDIO_STATE+2:16), 255
+	ld (AUDIO_STATE+3:16), 255
 	orw (AUDIO_STATE_CHANGES:16), 257
 	andw (AUDIO_CONFIG_UPDATE:16), 0xfffd
 	ld a, (CURRENT_MODE:16)
@@ -5709,7 +5709,7 @@ AudioVoiceReset_Handler:
 	ret
 
 AudioMode_ConfigureExternal:
-	ld (0xc1fe:16), 0
+	ld (AUDIO_STATE:16), 0
 	cp a, 0:i3
 	jr z, AudioMode_ConfigExternal_Off
 	orw (AUDIO_CONFIG_UPDATE:16), 16
@@ -5719,12 +5719,12 @@ AudioMode_ConfigExternal_Off:
 	andw (AUDIO_CONFIG_UPDATE:16), 0xffef
 	bit 0, (PANEL_CONDUCTOR:16)
 	jr z, AudioMode_ConfigExternal_CheckBit1
-	set 0, (0xc1fe:16)
+	set 0, (AUDIO_STATE:16)
 
 AudioMode_ConfigExternal_CheckBit1:
 	bit 1, (PANEL_CONDUCTOR:16)
 	jr z, AudioMode_ConfigExternal_CheckStereo
-	set 1, (0xc1fe:16)
+	set 1, (AUDIO_STATE:16)
 
 AudioMode_ConfigExternal_CheckStereo:
 	bit 1, (PANEL_CONDUCTOR+1:16)
@@ -5739,12 +5739,12 @@ AudioMode_ConfigExternal_NoStereo:
 	call z, (AudioInit_RefreshToneBank:24)
 
 AudioMode_ConfigExternal_MergeFlags:
-	res 2, (0xc1fe:16)
+	res 2, (AUDIO_STATE:16)
 	ld a, (PANEL_CONDUCTOR+1:16)
 	and a, 0x2
 	ld c, a
 	add a, c
-	or (0xc1fe:16), a
+	or (AUDIO_STATE:16), a
 
 AudioMode_ConfigExternal_Apply:
 	orw (AUDIO_CONFIG_UPDATE:16), 4
@@ -5796,7 +5796,7 @@ UIStateEvt_PartRouting:
 	add wa, wa
 	ld hl, wa
 	add hl, 0x124
-	lda xix, (0xc1fe:16)
+	lda xix, (AUDIO_STATE:16)
 	ld a, d
 	and a, 0x7
 	extz wa
@@ -5820,7 +5820,7 @@ UIStateEvt_VoiceAssign:
 	lda xbc, (PartIndex_ByteMap:24)
 	ld	a, (xbc+wa)
 	extz wa
-	lda xbc, (0xc222:16)
+	lda xbc, (AUDIO_STATE+36:16)
 	ld ix, wa
 	extz xix
 	add xix, xbc
@@ -5835,7 +5835,7 @@ UIStateEvt_VoiceAssign_Reset:
 	lda xbc, (PartIndex_ByteMap:24)
 	ld	a, (xbc+wa)
 	extz wa
-	lda xbc, (0xc222:16)
+	lda xbc, (AUDIO_STATE+36:16)
 	extz xwa
 	add xwa, xbc
 	ld (xwa), 0xff
@@ -5854,13 +5854,13 @@ UIStateEvt_ToneChange:
 	lda xbc, (PartIndex_ByteMap:24)
 	ld	a, (xbc+wa)
 	extz wa
-	lda xbc, (0xc202:16)
+	lda xbc, (AUDIO_STATE+4:16)
 	extz xwa
 	add xwa, xbc
 	ld (xwa), 0xff
 	cp l, 0x13
 	jr nz, Tone_WriteEndMarker
-	ld (0xc218:16), 255
+	ld (AUDIO_STATE+26:16), 255
 	jr Tone_WriteEndMarker
 
 UIStateEvt_ToneChange_Set:
@@ -5869,7 +5869,7 @@ UIStateEvt_ToneChange_Set:
 	lda xbc, (PartIndex_ByteMap:24)
 	ld	a, (xbc+wa)
 	extz wa
-	lda xbc, (0xc202:16)
+	lda xbc, (AUDIO_STATE+4:16)
 	ld ix, wa
 	extz xix
 	add xix, xbc
@@ -5880,7 +5880,7 @@ UIStateEvt_ToneChange_Set:
 	ld (xix), a
 	cp l, 0x13
 	jr nz, Tone_WriteEndMarker
-	ld (0xc218:16), 22
+	ld (AUDIO_STATE+26:16), 22
 
 Tone_WriteEndMarker:
 	orw (AUDIO_STATE_CHANGES:16), 4
@@ -5896,7 +5896,7 @@ UIStateEvt_DrumAssign:
 	lda xbc, (PartIndex_ByteMap:24)
 	ld	a, (xbc+wa)
 	extz wa
-	lda xbc, (0xc222:16)
+	lda xbc, (AUDIO_STATE+36:16)
 	extz xwa
 	add xwa, xbc
 	ld (xwa), 0xff
@@ -5908,7 +5908,7 @@ UIStateEvt_DrumAssign_Set:
 	lda xbc, (PartIndex_ByteMap:24)
 	ld	a, (xbc+wa)
 	extz wa
-	lda xbc, (0xc222:16)
+	lda xbc, (AUDIO_STATE+36:16)
 	ld de, wa
 	extz xde
 	add xde, xbc
@@ -5938,7 +5938,7 @@ UIStateEvt_TransposeUpdate:
 	add	wa, wa
 	ld	bc, wa
 	add	bc, 228
-	lda_d16	xde, (0xc1ff)
+	lda_d16	xde, (AUDIO_STATE+1)
 	ldb_d8	a, (PANEL_CONDUCTOR+4)
 	and	a, 255
 	sub	a, 64
@@ -5952,7 +5952,7 @@ UIStateEvt_TransposeUpdate_Clear:
 	extz	wa
 	add	wa, wa
 	add	wa, 228
-	lda_d16	xbc, (0xc1ff)
+	lda_d16	xbc, (AUDIO_STATE+1)
 	ld	(xbc+wa), 0x00
 UIStateEvt_TransposeUpdate_Apply:
 	orw	(AUDIO_CONFIG_UPDATE:16), 4
@@ -6188,16 +6188,16 @@ UIStateEvt_TransposeUpdate_Apply_Code_2:
 	ldb_d8	a, (SWBTWR_PAYLOAD_3)
 	and	a, 31
 	jr	z, UIStateEvt_TransposeUpdate_Apply_Code_2_Skip
-	and	(0xc1fe:16), 252
+	and	(AUDIO_STATE:16), 252
 	ldb_d8	a, (SWBTWR_PAYLOAD_2)
 	and	a, 3
-	or	(0xc1fe:16), a
+	or	(AUDIO_STATE:16), a
 	orw	(AUDIO_CONFIG_UPDATE:16), 4
 UIStateEvt_TransposeUpdate_Apply_Code_2_Skip:
 	ldw_d16	wa, (AUDIO_CONFIG_UPDATE)
 	bit	4, wa
 	ret	z
-	ld	(0xc1fe:16), 0
+	ld	(AUDIO_STATE:16), 0
 	orw	(AUDIO_VOICE_CHANGES:16), 4
 	ret
 UIStateEvt_VolumeMixer_Data_Case1:
@@ -6214,18 +6214,18 @@ UIStateEvt_VolumeMixer_Data_Case1_Skip2:
 	and	wa, 7
 	call	z, (AudioInit_RefreshToneBank:24)
 UIStateEvt_VolumeMixer_Data_Case1_Join2:
-	res	2, (0xc1fe:16)
+	res	2, (AUDIO_STATE:16)
 	ldb_d8	a, (SWBTWR_PAYLOAD_2)
 	and	a, 2
 	ld	c, a
 	add	a, c
-	or	(0xc1fe:16), a
+	or	(AUDIO_STATE:16), a
 	orw	(AUDIO_CONFIG_UPDATE:16), 4
 UIStateEvt_VolumeMixer_Data_Case1_Skip3:
 	ldw_d16	wa, (AUDIO_CONFIG_UPDATE)
 	bit	4, wa
 	ret	z
-	ld	(0xc1fe:16), 0
+	ld	(AUDIO_STATE:16), 0
 	orw	(AUDIO_VOICE_CHANGES:16), 4
 	ret
 UIStateEvt_VolumeMixer_Data_Case3:
@@ -6268,7 +6268,7 @@ UIStateEvt_VolumeMixer_Data_Case4_Loop:
 	ld	wa, de
 	add	wa, wa
 	add	wa, 228
-	lda_d16	xbc, (0xc1ff)
+	lda_d16	xbc, (AUDIO_STATE+1)
 	ld	hl, wa
 	extz	xhl
 	add	xhl, xbc
@@ -6281,7 +6281,7 @@ UIStateEvt_VolumeMixer_Data_Case4_Skip5:
 	ld	wa, de
 	add	wa, wa
 	add	wa, 228
-	lda_d16	xbc, (0xc1ff)
+	lda_d16	xbc, (AUDIO_STATE+1)
 	extz	xwa
 	add	xwa, xbc
 	ld	(xwa), 0
@@ -6380,7 +6380,7 @@ PanelTag70_UpdateAudioConfig_Loop:
 	ld	wa, hl
 	add	wa, wa
 	add	wa, 0x124
-	lda_d16	xbc, (0xc1ff)
+	lda_d16	xbc, (AUDIO_STATE+1)
 	extz	xwa
 	add	xwa, xbc
 	ld	c, e
@@ -6466,7 +6466,7 @@ PanelTag80_UpdateAudioConfig_Loop2:
 	ld	wa, de
 	add	wa, wa
 	add	wa, 0x124
-	lda_d16	xbc, (0xc1ff)
+	lda_d16	xbc, (AUDIO_STATE+1)
 	ld	hl, wa
 	extz	xhl
 	add	xhl, xbc
@@ -6491,7 +6491,7 @@ PanelTag80_UpdateAudioConfig_Loop:
 	ld	wa, de
 	add	wa, wa
 	add	wa, 0x124
-	lda_d16	xbc, (0xc1ff)
+	lda_d16	xbc, (AUDIO_STATE+1)
 	extz	xwa
 	add	xwa, xbc
 	andmi8	(xwa), 15
@@ -6509,11 +6509,11 @@ PanelTag80_UpdateAudioConfig_Skip2:
 	jr	z, PanelTag80_UpdateAudioConfig_Join2
 	bit	0, (SWBTWR_PAYLOAD_2:16)
 	jr	z, PanelTag80_UpdateAudioConfig_Skip5
-	res	4, (0xc322:16)
+	res	4, (AUDIO_STATE+292:16)
 	orw	(AUDIO_STATE_CHANGES:16), 8
 	jr	PanelTag80_UpdateAudioConfig_Join6
 PanelTag80_UpdateAudioConfig_Skip5:
-	set	4, (0xc322:16)
+	set	4, (AUDIO_STATE+292:16)
 	orw	(AUDIO_STATE_CHANGES:16), 8
 PanelTag80_UpdateAudioConfig_Join6:
 	orw	(AUDIO_CONFIG_UPDATE:16), 4
@@ -6522,20 +6522,20 @@ PanelTag80_UpdateAudioConfig_Join2:
 	jr	z, PanelTag80_UpdateAudioConfig_Join3
 	bit	2, (SWBTWR_PAYLOAD_2:16)
 	jr	z, PanelTag80_UpdateAudioConfig_Skip3
-	set	6, (0xc342:16)
-	set	6, (0xc344:16)
-	set	6, (0xc346:16)
-	set	6, (0xc348:16)
-	set	6, (0xc34a:16)
-	set	6, (0xc34c:16)
+	set	6, (AUDIO_STATE+324:16)
+	set	6, (AUDIO_STATE+326:16)
+	set	6, (AUDIO_STATE+328:16)
+	set	6, (AUDIO_STATE+330:16)
+	set	6, (AUDIO_STATE+332:16)
+	set	6, (AUDIO_STATE+334:16)
 	jr	PanelTag80_UpdateAudioConfig_Join7
 PanelTag80_UpdateAudioConfig_Skip3:
-	res	6, (0xc342:16)
-	res	6, (0xc344:16)
-	res	6, (0xc346:16)
-	res	6, (0xc348:16)
-	res	6, (0xc34a:16)
-	res	6, (0xc34c:16)
+	res	6, (AUDIO_STATE+324:16)
+	res	6, (AUDIO_STATE+326:16)
+	res	6, (AUDIO_STATE+328:16)
+	res	6, (AUDIO_STATE+330:16)
+	res	6, (AUDIO_STATE+332:16)
+	res	6, (AUDIO_STATE+334:16)
 	orw	(AUDIO_STATE_CHANGES:16), 8
 PanelTag80_UpdateAudioConfig_Join7:
 	orw	(AUDIO_CONFIG_UPDATE:16), 4
@@ -6559,20 +6559,20 @@ PanelTag80_UpdateAudioConfig_Skip6:
 	jr	z, PanelTag80_UpdateAudioConfig_Skip7
 	cp	hl, 0:i3
 	ret	nz
-	ld	(0xc362:16), 0
-	ld	(0xc363:16), 255
+	ld	(AUDIO_STATE+356:16), 0
+	ld	(AUDIO_STATE+357:16), 255
 	ret
 PanelTag80_UpdateAudioConfig_Skip7:
 	ld	xwa, 0x5001
 	call	SndParam_LookupReadOnly
-	stb_d8	(0xc362), l
-	ld	(0xc363:16), 255
+	stb_d8	(AUDIO_STATE+356), l
+	ld	(AUDIO_STATE+357:16), 255
 	ret
 PanelTag80_UpdateAudioConfig_Skip8:
-	ld	(0xc362:16), 0
+	ld	(AUDIO_STATE+356:16), 0
 	ld	xwa, 0x5002
 	call	SndParam_LookupReadOnly
-	stb_d8	(0xc363), l
+	stb_d8	(AUDIO_STATE+357), l
 	ret
 UIStateEvt_StubReturn:
 	ret
