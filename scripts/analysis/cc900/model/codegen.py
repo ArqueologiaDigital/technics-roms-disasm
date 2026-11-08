@@ -221,6 +221,27 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         if fam != 'WA' and reads_reg(r, fam):        # ra_leafsum5: target read later -> compute in WA
             gen_bin(F, e, 'WA', size, then_ret, store)
             F.emit('ld', '%s,%s' % (FAM[fam][size], FAM['WA'][size])); return fam
+        lr = regvar_of(strip(l).e) if strip(l).k == 'load' else None
+        if lr is not None and lr.reg in ('WA', 'BC', 'DE', 'HL') and F.opt and dies_here(F, l) and lr.reg != fam:
+            # -O: a dying register operand is computed in place, then moved (add_i_pp under O3XSXr)
+            F.dead.add(lr)
+            rs = operand(F, r, size)
+            if rs is None:
+                other = free_reg(F, avoid={lr.reg, fam}); gen(F, r, other, size); rs = FAM[other][size]
+            rc = fold(r)
+            if op in '+-' and rc.k == 'const' and 1 <= rc.value <= 8:
+                F.emit('inc' if op == '+' else 'dec', '%s,%s' % (hx(rc.value), FAM[lr.reg][size]))
+            else:
+                F.emit(SIMPLE_OPS[op], '%s,%s' % (FAM[lr.reg][size], rs))
+            F.emit('ld', '%s,%s' % (FAM[fam][size], FAM[lr.reg][size])); return fam
+        if lr is not None and lr.reg == fam and not dies_here(F, l):
+            # the target holds a live variable: work in a free register (mul_i_loc under Xr: ld DE,WA)
+            other = free_reg(F, avoid={fam})
+            gen(F, l, other, size); fam_work = other
+            rs = operand(F, r, size)
+            if rs is None: raise Unsupported('complex right operand')
+            F.emit(SIMPLE_OPS[op], '%s,%s' % (FAM[other][size], rs))
+            return other
         if fam != 'WA' and natural_wa(l):              # ra_noloop3: inner levels over a multiply stay in WA
             gen(F, l, 'WA', size)
             F.emit('ld', '%s,%s' % (FAM[fam][size], FAM['WA'][size]))
@@ -241,17 +262,22 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
     if op in ('*', '/', '%'):
         if size == 4: return gen_long_helper(F, e, l, r, fam, signed)
         rs = mem_operand(F, r)
-        gen(F, l, 'WA', size)
+        work = 'WA'
+        lr = regvar_of(strip(l).e) if strip(l).k == 'load' else None
+        if lr is not None and lr.reg == 'WA' and not dies_here(F, l):
+            work = free_reg(F, avoid={'WA'})            # mul_i_loc under Xr: ld DE,WA / muls XDE,BC
+        if lr is not None and lr.reg == 'WA' and dies_here(F, l): F.dead.add(lr)
+        gen(F, l, work, size)
         if rs is None:                                  # ra_noloop: muls XWA,BC
             gen(F, r, 'BC', size); rs = FAM['BC'][size]
-        wide = 'XWA' if size == 2 else 'WA'
+        wide = FAM[work][4] if size == 2 else FAM[work][2]
         if op == '*':
             F.emit('muls' if signed else 'mul', '%s,%s' % (wide, rs))
-            res = FAM['WA'][size]
+            res = FAM[work][size]
         else:
             F.emit('exts' if signed else 'extz', wide)
             F.emit('divs' if signed else 'div', '%s,%s' % (wide, rs))
-            res = FAM['WA'][size] if op == '/' else ('QWA' if size == 2 else 'W')
+            res = FAM[work][size] if op == '/' else (Q[work] if size == 2 else HI[work])
         if store and res == 'W': F.store_from = 'W'; return fam
         return move_to(F, res, fam, size)
     if op in ('<<', '>>'):
@@ -277,6 +303,12 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         F.lines.append(lab + ':')
         return vfam
     raise Unsupported('operator ' + op)
+
+def free_reg(F, avoid=()):
+    live = live_regs(F)
+    for r in ('DE', 'BC', 'HL', 'WA'):
+        if r not in live and r not in avoid: return r
+    raise Unsupported('no free register')
 
 def natural_wa(e):
     e = strip(e)
@@ -947,8 +979,33 @@ def plan_leaf(F):
         F.emit('ld', '%s,(XSP+%s)' % (R, hx(d.off + F.push)))
     return True
 
+def compute_last_uses(F):
+    """id of the last load of each variable in evaluation order; loads inside loops are never last"""
+    F.last_use = {}
+    def v(n, depth):
+        if n.k == 'load' and strip(n.e).k == 'var':
+            d = strip(n.e).decl
+            F.last_use[d] = None if depth else id(n)
+            if depth: F.in_loop.add(d)
+    F.in_loop = set()
+    walk(F.f.body, v)
+    for d in F.in_loop: F.last_use[d] = None
+
+def dies_here(F, e):
+    e = strip(e)
+    return e.k == 'load' and strip(e.e).k == 'var' and F.last_use.get(strip(e.e).decl, 'x') == id(e)
+
+def live_regs(F, except_decl=None):
+    out = set()
+    for d in list(F.f.params) + list(F.f.decls):
+        r = getattr(d, 'reg', None)
+        if r and d is not except_decl and d not in F.dead: out.add(r)
+    return out
+
 def compile_function(f, opt, adecl):
     F = Fn(f, adecl)
+    F.opt = opt != 'none'; F.dead = set()
+    compute_last_uses(F)
     F.lines.append(('.' if adecl else '_') + f.name + ':')
     F.loops = []; F.param_copies = []; F.pushes = []
     if not plan_leaf(F): plan_registers(F)

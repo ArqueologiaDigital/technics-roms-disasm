@@ -22,11 +22,14 @@ def oracle_path(odir, src):
 
 def main():
     a = sys.argv[1:]
-    opt = a[a.index('--opt') + 1] if '--opt' in a else 'none'
+    opt = a[a.index('--opt') + 1] if '--opt' in a else None
     show = int(a[a.index('--show') + 1]) if '--show' in a else 0
     strict = '--strict' in a; adecl = '--adecl' in a
     pos = [x for i, x in enumerate(a) if not x.startswith('--') and (i == 0 or a[i - 1] not in ('--opt', '--show'))]
     odir, files = pos[0], pos[1:]
+    base = os.path.basename(os.path.normpath(odir))          # infer from the oracle directory name
+    if opt is None: opt = 'O3XS' if base.startswith('O3XS') else 'none'
+    if base.endswith('Xr'): adecl = True
     tot = ok = 0; shown = 0
     for f in files:
         op = oracle_path(odir, f)
