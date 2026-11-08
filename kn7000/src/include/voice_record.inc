@@ -65,7 +65,8 @@
 #                        curve 0x486D26AE (the curve TgElemNoteOnFresh puts a unit's amp EG levels
 #                        through), packed into shadow +0x04 / +0x08
 #   aeg_release_rate +0x0E  TgTableKeyOffRelease 0x4C02FE59, through the rate curve 0x486D2649 (only for
-#                        a voice with voice_flags bit 5; read statically, not seen in the MAME run)
+#                        a voice with voice_flags bit 5; seen in MAME on the table flash's 'JK' archive kits, not
+#                        in the user-kit run: kn7000/notes/kn7000-ic21/README.md section 1)
 #   filter_flags  +0x10  bits 0-1 the filter mode (func_4C02FFD4 / TgVoiceFilterProgram 0x4C030606: 0 =
 #                        off -- shadow +0x4C bit 17 set, +0x24 bits 8-14 = 0x7F; 1..3 the three set-ups);
 #                        bits 5-7 the velocity curve of filter_level (TgVeloSenseApply 0x4C02FE77:
