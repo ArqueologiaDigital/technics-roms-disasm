@@ -39,6 +39,10 @@ archive: `~/compartilhado/upstream_repos/repo_archive/colinoflynn/Toshiba-TLCS-9
 it is Toshiba's software.  Its README: the IDE's CD key is 7921, and Toshiba issued a security advisory about these
 installers, so run them only in a VM.
 
+The C compiler `SW96CN0-ZCC` v1.10 from archive.org is kept too, at Felipe's request (2026-11-08):
+`~/compartilhado/upstream_repos/file_archive/archive.org/ToshibaTLCS900CompilerV1.10/`, the zip with the sha256 in
+the table above, archive.org's metadata and `SHA256SUMS` (that archive's README, commit 0f0ea74).
+
 ## What would settle the hypothesis
 
 The object version, `SW96RN2-ZCC`, was licensed for free copying of its object code, so its kernel library may
