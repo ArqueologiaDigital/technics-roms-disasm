@@ -22041,57 +22041,123 @@ TableToneKeyMap_Table:	# 128 x u8, 0..112; read by TableToneKeyMap_entry 0x48449
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [96]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [112]
 
-M3HookDispatch_Selected_0:	# REC_M3HookDispatch_Selected (12 bytes)
-	REC_M3HookDispatch_Selected	key=65280, key_=53248, proc=TempoSyncSetDispatch
-	.space	12, 0x00
-M3HookDispatch_Selected_1:	# REC_M3HookDispatch_Selected (12 bytes)
-	REC_M3HookDispatch_Selected	
-M3HookDispatch_Selected_2:	# REC_M3HookDispatch_Selected (12 bytes)
-	REC_M3HookDispatch_Selected	
-M3HookDispatch_Selected_3:	# REC_M3HookDispatch_Selected (12 bytes)
-	REC_M3HookDispatch_Selected	key=0xFF0000, key_=0x700000, proc=loc_48431CD7
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b935.rom", 0x331E1C, 0x331E7C
-M3HookDispatch_Selected_4:	# REC_M3HookDispatch_Selected (12 bytes)
-	REC_M3HookDispatch_Selected	key=255, key_=121, proc=func_4C01CFFC
-	.space	12, 0x00
-M3HookDispatch_Selected_5:	# REC_M3HookDispatch_Selected (12 bytes)
-	REC_M3HookDispatch_Selected	
-M3HookDispatch_Selected_6:	# REC_M3HookDispatch_Selected (12 bytes)
-	REC_M3HookDispatch_Selected	
-M3HookDispatch_Selected_7:	# REC_M3HookDispatch_Selected (12 bytes)
-	REC_M3HookDispatch_Selected	
-func_4C021761_Selected_0:	# REC_func_4C021761_Selected (12 bytes)
-	REC_func_4C021761_Selected	key=0xFFFF00, key_=8192, proc=TempoSyncParamDispatch
-# census: opaque -- unknown-dump: 144 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b935.rom", 0x331EC4, 0x331F54
-func_4C021761_Selected_1:	# REC_func_4C021761_Selected (12 bytes)
-	REC_func_4C021761_Selected	key=0xFFFF00, key_=0x204000, proc=func_4C01E82A
-# census: opaque -- unknown-dump: 36 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b935.rom", 0x331F60, 0x331F84
-func_4C021761_Selected_2:	# REC_func_4C021761_Selected (12 bytes)
-	REC_func_4C021761_Selected	key=0xFF0000, key_=0x600000, proc=func_4C01E82A
-# census: opaque -- unknown-dump: 108 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b935.rom", 0x331F90, 0x331FFC
-func_4C021761_Selected_3:	# REC_func_4C021761_Selected (12 bytes)
-	REC_func_4C021761_Selected	key=0xFF0000, key_=0x700000, proc=TestCtrlM3Handler
-# census: opaque -- unknown-dump: 312 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b935.rom", 0x332008, 0x332140
-func_4C021761_Selected_4:	# REC_func_4C021761_Selected (12 bytes)
-	REC_func_4C021761_Selected	key=0xFFFFFF, key_=0x900000, proc=MidiIoTestM3Handler
-# census: opaque -- unknown-dump: 36 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b935.rom", 0x33214C, 0x332170
-func_4C021761_Selected_5:	# REC_func_4C021761_Selected (12 bytes)
-	REC_func_4C021761_Selected	key=0xFFFFFF, key_=0xB0007E, proc=func_484517B4
-	.space	12, 0x00
-func_4C021761_Selected_6:	# REC_func_4C021761_Selected (12 bytes)
-	REC_func_4C021761_Selected	key=0xFFFFFF, key_=0xC00000, proc=SoundEditSelEventHandler
-# census: opaque -- unknown-dump: 24 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b935.rom", 0x332194, 0x3321AC
-func_4C021761_Selected_7:	# REC_func_4C021761_Selected (12 bytes)
-	REC_func_4C021761_Selected	
-func_4C021761_Selected_8:	# REC_func_4C021761_Selected (12 bytes)
-	REC_func_4C021761_Selected	
+# 1 records of 12 bytes up to the end marker (+8, 32 bits) that M3HookDispatch 0x4C0216A3: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+M3HookDispatch_Selected_0:
+	.long	0xff00, 0xd000, TempoSyncSetDispatch
+	.long	0x0, 0x0, 0x0	# end
+# 0 records of 12 bytes up to the end marker (+8, 32 bits) that M3HookDispatch 0x4C0216A3: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+M3HookDispatch_Selected_1:
+	.long	0x0, 0x0, 0x0	# end
+# 0 records of 12 bytes up to the end marker (+8, 32 bits) that M3HookDispatch 0x4C0216A3: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+M3HookDispatch_Selected_2:
+	.long	0x0, 0x0, 0x0	# end
+# 8 records of 12 bytes up to the end marker (+8, 32 bits) that M3HookDispatch 0x4C0216A3: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+M3HookDispatch_Selected_3:
+	.long	0xff0000, 0x700000, loc_48431CD7
+	.long	0xff0000, 0x700000, func_48582CAE
+	.long	0xff0000, 0x700000, TestPageM3Dispatch
+	.long	0xff00, 0x2000, func_4846AB24
+	.long	0xff00, 0x2000, TempoSyncSetDispatch
+	.long	0xffffff, 0x702040, func_48454F90
+	.long	0xffffff, 0x702004, func_48498480
+	.long	0xff0000, 0x700000, loc_4854BAF3
+	.long	0x0, 0x0, 0x0	# end
+# 1 records of 12 bytes up to the end marker (+8, 32 bits) that M3HookDispatch 0x4C0216A3: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+M3HookDispatch_Selected_4:
+	.long	0xff, 0x79, 0x4c01cffc
+	.long	0x0, 0x0, 0x0	# end
+# 0 records of 12 bytes up to the end marker (+8, 32 bits) that M3HookDispatch 0x4C0216A3: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+M3HookDispatch_Selected_5:
+	.long	0x0, 0x0, 0x0	# end
+# 0 records of 12 bytes up to the end marker (+8, 32 bits) that M3HookDispatch 0x4C0216A3: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+M3HookDispatch_Selected_6:
+	.long	0x0, 0x0, 0x0	# end
+# 0 records of 12 bytes up to the end marker (+8, 32 bits) that M3HookDispatch 0x4C0216A3: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+M3HookDispatch_Selected_7:
+	.long	0x0, 0x0, 0x0	# end
+# 12 records of 12 bytes up to the end marker (+8, 32 bits) that func_4C021761 0x4C021761: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C021761_Selected_0:
+	.long	0xffff00, 0x2000, TempoSyncParamDispatch
+	.long	0xff0000, 0x0, 0x4c01e82a
+	.long	0xffff00, 0xc000, 0x4c0212e4
+	.long	0xff0000, 0x0, 0x4c023c05
+	.long	0xff0000, 0x0, func_4844D762
+	.long	0xff0000, 0x0, TechniChordParamHook
+	.long	0xff0000, 0x0, func_484517B4
+	.long	0xff0000, 0x0, func_484B2607
+	.long	0xff0000, 0x0, SndSetupPowerOnInit
+	.long	0xffff00, 0x0, 0x4c023727
+	.long	0xff0000, 0x0, 0x4c01cde4
+	.long	0xffffff, 0x800e, func_48577E8D
+	.long	0x0, 0x0, 0x0	# end
+# 3 records of 12 bytes up to the end marker (+8, 32 bits) that func_4C021761 0x4C021761: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C021761_Selected_1:
+	.long	0xffff00, 0x204000, 0x4c01e82a
+	.long	0xff0000, 0x200000, func_484517B4
+	.long	0xff0000, 0x200000, 0x4c0212e4
+	.long	0x0, 0x0, 0x0	# end
+# 9 records of 12 bytes up to the end marker (+8, 32 bits) that func_4C021761 0x4C021761: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C021761_Selected_2:
+	.long	0xff0000, 0x600000, 0x4c01e82a
+	.long	0xffffff, 0x600000, TechniChordParamHook
+	.long	0xffffff, 0x600010, func_48454E71
+	.long	0xffffff, 0x600012, func_4845D14C
+	.long	0xffffff, 0x600011, func_4845D202
+	.long	0xff0000, 0x600000, func_4844D762
+	.long	0xff0000, 0x600000, SndSetupPowerOnInit
+	.long	0xffffff, 0x600014, func_4857ED80
+	.long	0xffffff, 0x600009, AudioOutSwitchM3Handler
+	.long	0x0, 0x0, 0x0	# end
+# 26 records of 12 bytes up to the end marker (+8, 32 bits) that func_4C021761 0x4C021761: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C021761_Selected_3:
+	.long	0xff0000, 0x700000, TestCtrlM3Handler
+	.long	0xffffff, 0x7020a6, 0x4c01e82a
+	.long	0xffffff, 0x7020a1, 0x4c023752
+	.long	0xffffff, 0x702032, func_48516485
+	.long	0xffffff, 0x708000, func_4851B1C6
+	.long	0xffffff, 0x702004, func_48498152
+	.long	0xffffff, 0x708000, StylCnvDiskPresentHook
+	.long	0xffffff, 0x7020a8, func_4856D2C2
+	.long	0xffffff, 0x702083, func_4856D327
+	.long	0xffffff, 0x700000, func_4856D34D
+	.long	0xffffff, 0x7020a4, func_4847F34F
+	.long	0xffffff, 0x702020, func_485462DF
+	.long	0xffffff, 0x702040, func_48546248
+	.long	0xffffff, 0x700000, func_4846ABC8
+	.long	0xffffff, 0x7020b0, func_4845C195
+	.long	0xffffff, 0x702000, func_4854E651
+	.long	0xffffff, 0x702001, func_4854E651
+	.long	0xffffff, 0x700000, 0x4c023c05
+	.long	0xffffff, 0x7020b5, func_48577E8D
+	.long	0xffffff, 0x7020b6, func_48577E8D
+	.long	0xffffff, 0x7020b7, func_48577E8D
+	.long	0xffffff, 0x7020b8, func_48577E8D
+	.long	0xffffff, 0x7020b9, func_48577E8D
+	.long	0xffffff, 0x7020ba, func_48577E8D
+	.long	0xffffff, 0x7020bb, loc_48470683
+	.long	0xffffff, 0x7020bb, SdCardInsertMsgHandler
+	.long	0x0, 0x0, 0x0	# end
+# 3 records of 12 bytes up to the end marker (+8, 32 bits) that func_4C021761 0x4C021761: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C021761_Selected_4:
+	.long	0xffffff, 0x900000, MidiIoTestM3Handler
+	.long	0xff0000, 0x900000, 0x4c023c05
+	.long	0xffffff, 0x900000, SoundEditSelEventHandler
+	.long	0x0, 0x0, 0x0	# end
+# 1 records of 12 bytes up to the end marker (+8, 32 bits) that func_4C021761 0x4C021761: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C021761_Selected_5:
+	.long	0xffffff, 0xb0007e, func_484517B4
+	.long	0x0, 0x0, 0x0	# end
+# 2 records of 12 bytes up to the end marker (+8, 32 bits) that func_4C021761 0x4C021761: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C021761_Selected_6:
+	.long	0xffffff, 0xc00000, SoundEditSelEventHandler
+	.long	0xffffff, 0xc00000, func_484517B4
+	.long	0x0, 0x0, 0x0	# end
+# 0 records of 12 bytes up to the end marker (+8, 32 bits) that func_4C021761 0x4C021761: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C021761_Selected_7:
+	.long	0x0, 0x0, 0x0	# end
+# 0 records of 12 bytes up to the end marker (+8, 32 bits) that func_4C021761 0x4C021761: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C021761_Selected_8:
+	.long	0x0, 0x0, 0x0	# end
 
 func_4844D0B6_Table:	# 2048 x ChordRecogEntry (2 bytes each); read by func_4844D0B6 0x4844D0B6 `movbu (1, a0), d0`; func_4844D0B6 0x4844D0B6 `movbu (d0, a0), d0`
 	ChordRecogEntry		# [0]

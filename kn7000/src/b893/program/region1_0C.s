@@ -4339,7 +4339,7 @@ loc_4858286C:
     mov     d3, a2
     mov     0x10, d0
     mov     a2, a0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     mov     a2, a0
     mov     0x10, d0
     call    func_48526C8F_entry, 0, 0x10

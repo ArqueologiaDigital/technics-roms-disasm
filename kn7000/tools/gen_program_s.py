@@ -2188,9 +2188,11 @@ FUNC_DOC = {
         "no TG write happens here",
     ],
     "TgPitchZoneFold": [
-        "multisample octave fold (a0 librec): librec+0x0C := zone center16,",
-        "librec+0x0A := zone pitch folded by +-0xC00 octave steps into the",
-        "sample's mapped key window [desc+9 << 8, (desc+0xA << 8)+0xFF]",
+        "a TABLE layer's pitch (a0 librec; TgTableToneStage): librec+0x0C :=",
+        "zone center16; librec+0x0A := center + desc2 (the voice sub-record)",
+        "+0x04 coarse tune << 8 + 2 * +0x05 fine tune (both signed), folded by",
+        "+-0xC00 octave steps into the sample's mapped key window",
+        "[desc+9 << 8, (desc+0xA << 8)+0xFF]",
     ],
     "TgPitchNoteResolve": [
         "pitch16 producer for TgElemNoteOnStd (a0 librec) = folded zone pitch",
@@ -2198,9 +2200,46 @@ FUNC_DOC = {
         "0x500C075C + part offset resolve 0x4C0067D2, clamped 0..0x7FFF",
     ],
     "TgLevelResolve": [
-        "note level 0..0x7F (a0 librec): part state +0x1D 1..3 w/ flags bit0",
-        "-> 0 (mute) / bit1 -> 0x7F (solo); part-link flag borrows the linked",
-        "part's level byte; else 0x4C006A17 + velocity + expression sum",
+        "the voice's pan 0..0x7F (a0 librec, a1 desc2): part state +0x1D 1..3",
+        "w/ flags bit0 -> 0 / bit1 -> 0x7F (hard left / right); part-link flag",
+        "borrows the linked part's byte; else 0x4C006A17 + desc2 +0x00 (a kit",
+        "voice's pan) + the part's pan (partrec+0x0A - 0x40).  The name is",
+        "older than that reading (lane kn7000-ic21)",
+    ],
+    "TgVoiceLevelTermCalc": [
+        "a voice's level term (a0 librec): librec+0x12 + desc2+0x06 - 100",
+        "(-0x200 when 0) + the part's per-note offset -> TgLevelTermFinalize",
+    ],
+    "TgTableAmpAttackRateCalc": [
+        "a TABLE layer's amp-EG attack rate (a0 desc2): curve 0x486D25E4",
+        "[desc2+0x09] + signed key scaling desc2+0x0F, clamped 0..0xFF",
+    ],
+    "TgTableKeyOffRelease": [
+        "key-off release of a TABLE voice (head +0x0D bit 5): rate desc2+0x0E",
+        "through curve 0x486D2649 into the out pairs (TgVoiceKillHandler)",
+    ],
+    "TgVeloSenseApply": [
+        "(d0 base, a0 librec, a1 desc2) base + velocity curve",
+        "0x486D2264[(desc2+0x10) >> 5] * signed desc2+0x11 >> 5, 0..0x7F",
+    ],
+    "TgTableFilterLevelCalc": [
+        "a TABLE layer's filter level: part term 0x4C0146D3 + the layer's",
+        "signed +4 + desc2+0x13, through TgVeloSenseApply",
+    ],
+    "TgVoiceFilterProgram": [
+        "a voice's filter from desc2+0x10 bits 0-1 (0 = none): cutoff",
+        "TgPartCutoffResolve(depth desc2+0x14, base desc2+0x12) -> shadow",
+        "+0x26; librec+0x60 / +0x62 -> the two send-word levels",
+    ],
+    "PadBindCustom": [
+        "bind a pad of the selected CUSTOM style's \"TPAD\" (PadSelectById",
+        "left 0x200000): name, set-ups +0x28 stride 0x18, 0x50122E04..06 :=",
+        "pad +0x18..+0x1A (bars, beats, flags), the stream",
+    ],
+    "TgPartToneModRoutesLoad": [
+        "load the part's tone-head modulation routings {src, dest, depth}",
+        "into TgPartModConfigStore: six at +0x12 for a TABLE head, else",
+        "eight at +0x13",
     ],
     "TgDrumNoteOnStd": [
         "drum-kit note-on builder (TgNoteOn class-0x80 sub-path): up to 2",

@@ -24614,9 +24614,11 @@ loc_4C02FB50:
     call    TgPartModConfigSet_entry, [d2,d3,a2,a3], 0xdc
     ret     [d2,d3,a2,a3], 0xc8
 # TgPitchZoneFold  (lib CPU 0x4c02fb7f)
-#   multisample octave fold (a0 librec): librec+0x0C := zone center16,
-#   librec+0x0A := zone pitch folded by +-0xC00 octave steps into the
-#   sample's mapped key window [desc+9 << 8, (desc+0xA << 8)+0xFF]
+#   a TABLE layer's pitch (a0 librec; TgTableToneStage): librec+0x0C :=
+#   zone center16; librec+0x0A := center + desc2 (the voice sub-record)
+#   +0x04 coarse tune << 8 + 2 * +0x05 fine tune (both signed), folded by
+#   +-0xC00 octave steps into the sample's mapped key window
+#   [desc+9 << 8, (desc+0xA << 8)+0xFF]
 TgPitchZoneFold:
     movm    [d2,a2,a3], (sp)
 TgPitchZoneFold_entry:
@@ -24725,9 +24727,11 @@ loc_4C02FC2E:
 loc_4C02FC35:
     ret     [d2,d3], 0x18
 # TgLevelResolve  (lib CPU 0x4c02fc38)
-#   note level 0..0x7F (a0 librec): part state +0x1D 1..3 w/ flags bit0
-#   -> 0 (mute) / bit1 -> 0x7F (solo); part-link flag borrows the linked
-#   part's level byte; else 0x4C006A71 + velocity + expression sum
+#   the voice's pan 0..0x7F (a0 librec, a1 desc2): part state +0x1D 1..3
+#   w/ flags bit0 -> 0 / bit1 -> 0x7F (hard left / right); part-link flag
+#   borrows the linked part's byte; else 0x4C006A71 + desc2 +0x00 (a kit
+#   voice's pan) + the part's pan (partrec+0x0A - 0x40).  The name is
+#   older than that reading (lane kn7000-ic21)
 TgLevelResolve:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x10, sp
@@ -24951,11 +24955,13 @@ loc_4C02FDB3:
     clr     d0
     movhu   d0, (0x56, a3)
     ret     [d2,d3,a2,a3], 0x18
-
-func_4C02FDEE:
+# TgVoiceLevelTermCalc  (lib CPU 0x4c02fdee)
+#   a voice's level term (a0 librec): librec+0x12 + desc2+0x06 - 100
+#   (-0x200 when 0) + the part's per-note offset -> TgLevelTermFinalize
+TgVoiceLevelTermCalc:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x10, sp
-func_4C02FDEE_entry:
+TgVoiceLevelTermCalc_entry:
     mov     a0, (0x28, sp)
     mov     (0x3c, a0), d0
     movbu   (7, a0), d3
@@ -25006,10 +25012,12 @@ loc_4C02FE48:
     mov     d2, d0
     call    TgLevelTermFinalize_entry, [d2,d3,a2,a3], 0x28
     ret     [d2,d3,a2,a3], 0x20
-
-func_4C02FE54:
+# TgTableAmpAttackRateCalc  (lib CPU 0x4c02fe54)
+#   a TABLE layer's amp-EG attack rate (a0 desc2): curve 0x486D3608
+#   [desc2+0x09] + signed key scaling desc2+0x0F, clamped 0..0xFF
+TgTableAmpAttackRateCalc:
     movm    [d2,d3], (sp)
-func_4C02FE54_entry:
+TgTableAmpAttackRateCalc_entry:
     mov     d0, d1
     movbu   (9, a0), d0
     add     0xf, a0
@@ -25062,8 +25070,10 @@ loc_4C02FEA6:
 loc_4C02FEAF:
     mov     d3, d0
     ret     [d2,d3], 8
-
-func_4C02FEB3:
+# TgTableKeyOffRelease  (lib CPU 0x4c02feb3)
+#   key-off release of a TABLE voice (head +0x0D bit 5): rate desc2+0x0E
+#   through curve 0x486D366D into the out pairs (TgVoiceKillHandler)
+TgTableKeyOffRelease:
     movbu   (0xe, a0), d0
     mov     func_4C0045A6_Table, a0
     exth    d0
@@ -25075,10 +25085,12 @@ func_4C02FEB3:
     clr     d0
     movhu   d0, (6, a1)
     retf    0, 0
-
-func_4C02FED1:
+# TgVeloSenseApply  (lib CPU 0x4c02fed1)
+#   (d0 base, a0 librec, a1 desc2) base + velocity curve
+#   0x486D3288[(desc2+0x10) >> 5] * signed desc2+0x11 >> 5, 0..0x7F
+TgVeloSenseApply:
     movm    [d2,d3,a2], (sp)
-func_4C02FED1_entry:
+TgVeloSenseApply_entry:
     mov     0x11, a2
     add     a1, a2
     mov     d0, d3
@@ -25124,11 +25136,13 @@ loc_4C02FF17:
 loc_4C02FF1D:
     mov     d3, d0
     ret     [d2,d3,a2], 0xc
-
-func_4C02FF21:
+# TgTableFilterLevelCalc  (lib CPU 0x4c02ff21)
+#   a TABLE layer's filter level: part term 0x4C01472D + the layer's
+#   signed +4 + desc2+0x13, through TgVeloSenseApply
+TgTableFilterLevelCalc:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x14, sp
-func_4C02FF21_entry:
+TgTableFilterLevelCalc_entry:
     extbu   d0
     clr     d1
     mov     a0, a2
@@ -25154,7 +25168,7 @@ func_4C02FF21_entry:
     exth    d0
     mov     a3, a1
     mov     a2, a0
-    call    func_4C02FED1_entry, [d2,d3,a2], 0xc
+    call    TgVeloSenseApply_entry, [d2,d3,a2], 0xc
     ret     [d2,d3,a2,a3], 0x24
 
 func_4C02FF58:
@@ -25186,7 +25200,7 @@ func_4C02FF58_entry:
     exth    d0
     mov     a3, a1
     mov     a2, a0
-    call    func_4C02FED1_entry, [d2,d3,a2], 0xc
+    call    TgVeloSenseApply_entry, [d2,d3,a2], 0xc
     ret     [d2,d3,a2,a3], 0x24
 
 func_4C02FF8F:
@@ -25218,7 +25232,7 @@ func_4C02FF8F_entry:
     exth    d0
     mov     a3, a1
     mov     a2, a0
-    call    func_4C02FED1_entry, [d2,d3,a2], 0xc
+    call    TgVeloSenseApply_entry, [d2,d3,a2], 0xc
     ret     [d2,d3,a2,a3], 0x24
 
 func_4C02FFC6:
@@ -25250,7 +25264,7 @@ func_4C02FFC6_entry:
     exth    d0
     mov     a3, a1
     mov     a2, a0
-    call    func_4C02FED1_entry, [d2,d3,a2], 0xc
+    call    TgVeloSenseApply_entry, [d2,d3,a2], 0xc
     ret     [d2,d3,a2,a3], 0x24
 
 func_4C02FFFD:
@@ -25280,7 +25294,7 @@ func_4C02FFFD_entry:
     exth    d0
     mov     a3, a1
     mov     a2, a0
-    call    func_4C02FED1_entry, [d2,d3,a2], 0xc
+    call    TgVeloSenseApply_entry, [d2,d3,a2], 0xc
     ret     [d2,d3,a2,a3], 0x24
 
 func_4C03002E:
@@ -25353,7 +25367,7 @@ loc_4C0300A7:
     mov     d0, (a0)
     mov     (0x34, sp), a0
     mov     d3, d0
-    call    func_4C02FF21_entry, [d2,d3,a2,a3], 0x24
+    call    TgTableFilterLevelCalc_entry, [d2,d3,a2,a3], 0x24
     mov     (0x34, sp), a0
     movhu   d0, (0x60, a0)
     movbu   (a2), d0
@@ -25474,7 +25488,7 @@ loc_4C0301AA:
     mov     d0, (a0)
     mov     (0x34, sp), a0
     mov     d3, d0
-    call    func_4C02FF21_entry, [d2,d3,a2,a3], 0x24
+    call    TgTableFilterLevelCalc_entry, [d2,d3,a2,a3], 0x24
     mov     (0x34, sp), a0
     movhu   d0, (0x60, a0)
     movbu   (a2), d0
@@ -26025,11 +26039,14 @@ loc_4C03063A:
     movhu   d0, (a0)
     clr     d0
     ret     [d2,d3,a2,a3], 0x2c
-
-func_4C030660:
+# TgVoiceFilterProgram  (lib CPU 0x4c030660)
+#   a voice's filter from desc2+0x10 bits 0-1 (0 = none): cutoff
+#   TgPartCutoffResolve(depth desc2+0x14, base desc2+0x12) -> shadow
+#   +0x26; librec+0x60 / +0x62 -> the two send-word levels
+TgVoiceFilterProgram:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x28, sp
-func_4C030660_entry:
+TgVoiceFilterProgram_entry:
     mov     a1, a3
     mov     a0, (0x40, sp)
     mov     d1, d3
@@ -26712,7 +26729,7 @@ loc_4C030B7F:
     mov     (0x1c, sp), a0
     mov     (0x28, sp), a1
     mov     (0x24, sp), d0
-    call    func_4C030660_entry, [d2,d3,a2,a3], 0x38
+    call    TgVoiceFilterProgram_entry, [d2,d3,a2,a3], 0x38
     mov     (0x28, sp), a2
     add     0x18, a2
     movbu   (a2), d0
@@ -26905,7 +26922,7 @@ loc_4C030D69:
     mov     (0x1c, sp), a0
     movbu   (0x10, a0), d0
     mov     (0x28, sp), a0
-    call    func_4C02FE54_entry, [d2,d3], 8
+    call    TgTableAmpAttackRateCalc_entry, [d2,d3], 8
     mov     (0x5c, sp), a0
     mov     a3, d1
     movhu   (a0), d2
@@ -27035,7 +27052,7 @@ loc_4C030DB7:
     exth    d0
     call    func_4C02FD14_entry, [d2,d3,a2,a3], 0x18
     mov     (0x1c, sp), a0
-    call    func_4C02FDEE_entry, [d2,d3,a2,a3], 0x20
+    call    TgVoiceLevelTermCalc_entry, [d2,d3,a2,a3], 0x20
     mov     (0x5c, sp), a0
     mov     d0, d1
     add     0x54, a0
@@ -27081,7 +27098,7 @@ TgVoiceKillHandler_entry:
     ret     [d2,d3,a2,a3], 0x28
 loc_4C030F07:
     mov     0x50009954, a1
-    call    func_4C02FEB3, 0, 0
+    call    TgTableKeyOffRelease, 0, 0
     mov     (0x14, sp), a0
     movhu   (0x50009954), d0
     add     2, a0
@@ -45673,7 +45690,7 @@ TgPartProgramSet_entry:
     mov     d2, d0
     call    TgPartLocalEditClear, 0, 0
     mov     d2, d0
-    call    func_4C009CE2_entry, [d2,d3,a2], 0x28
+    call    TgPartToneModRoutesLoad_entry, [d2,d3,a2], 0x28
     mov     d2, d0
     call    func_4C007C9F, 0, 0
     movbu   (0x30, sp), d0

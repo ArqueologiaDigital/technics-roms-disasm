@@ -376,9 +376,8 @@ typedef struct __attribute__((packed)) {
     /* zero padding */
     /* 1 << i: the bit of panel switch row i in the two 32-bit held-switch masks */
     uint32_t CtrlPanel_SwitchRowBit[32];
-    uint8_t field_0d3a;
-    char str_84[16];
-    uint8_t field_0d4b;
+    /* GetSoundName_Str_DashedName: " ------ ": 16-character placeholder sound name (NUL, 0xFF pad) that GetSoundName copies into the caller's buffer instead of a real name when the program lookup is out of range, before posting EVT_SOUND_NAME. (v10/maincpu/ui_widgets/disk_warning_strings.s) */
+    char GetSoundName_Str_DashedName[18];
     /* MainPmanControl_CaseTable: 6 u16 case offsets of a compiled switch; the asm spells them `.short <Case> - <Base>` (scripts/converters/naka_case_tables_retype.py) */
     uint16_t MainPmanControl_CaseTable[6];
     /* CtrlPanel_DispatchByIndex_CaseTable: 43 u16 case offsets of a compiled switch; the asm spells them `.short <Case> - <Base>` (scripts/converters/naka_case_tables_retype.py) */
@@ -534,9 +533,8 @@ typedef struct __attribute__((packed)) {
     char TitleEdit_HandlePaint_Str_N0x_Fmt2X_Fmts[12];
     /* UserBitmapCheck_Bitmap24x24: 24 x 24, one byte per pixel (asm header) */
     uint8_t UserBitmapCheck_Bitmap24x24[24][24];
-    uint8_t field_14b4;
-    char BMP_str[4];
-    uint8_t field_14b9;
+    /* VwUserBitmapByName_Str_BmpExt: ".BMP" (NUL, 0xFF pad): extension VwUserBitmapByName_HandlePaint appends (Strcat) to the view's name to form the bitmap file name it looks up (FDemo_LinkedListLookupField) and draws with DrawBitmapFile. (v10/maincpu/ui_widgets/disk_warning_strings.s) */
+    char VwUserBitmapByName_Str_BmpExt[6];
     /* EditSw_ByteData_Str_N7f: text (the asm slice of the same name) */
     char EditSw_ByteData_Str_N7f[4];
     char EditSw_ByteData_Str_N80[4];
@@ -1847,11 +1845,7 @@ const naka_disk_warning_t naka_disk_warning_data
         0x10000000, 0x20000000, 0x40000000, 0x80000000,
     },
 
-    .field_0d3a = 0x20,
-
-    .str_84 = "    ------     ",
-
-    .field_0d4b = 0xFF,
+    .GetSoundName_Str_DashedName = ALIGNED_STRING("     ------     "),
 
     .MainPmanControl_CaseTable = {
         0x0000, 0x0011, 0x0022, 0x0064, 0x007D, 0x0096,
@@ -2084,11 +2078,7 @@ const naka_disk_warning_t naka_disk_warning_data
 #include "../includes/generated/pictures/UserBitmapCheck_Bitmap24x24.inc"  /* pixels: images/UserBitmapCheck_Bitmap24x24.png, written at build time by scripts/build/c_bitmaps.py */
     },
 
-    .field_14b4 = 0x2E,
-
-    .BMP_str = "BMP",
-
-    .field_14b9 = 0xFF,
+    .VwUserBitmapByName_Str_BmpExt = ALIGNED_STRING(".BMP"),
 
     .EditSw_ByteData_Str_N7f = "~7f",
 

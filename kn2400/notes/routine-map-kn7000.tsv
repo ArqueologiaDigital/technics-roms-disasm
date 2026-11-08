@@ -308,7 +308,6 @@
 0x485F9339	0x48421804	InitializeGraphics	InitializeGraphics	same name
 0x485F93B0	0x4842187B	DrawTaskMain	DrawTaskMain	carried
 0x485F9424	0x484218EF	InitDrawTask	InitDrawTask	same name
-0x485F942F	0x484218FA	DrawRing_ResetLocked	DrawRing_ResetLocked	carried
 0x485F9480	0x4842194B	DrawRing_GetLocked	DrawRing_GetLocked	carried
 0x485F94D4	0x4842199F	DrawRing_Post	DrawRing_Post	same name
 0x485F955C	0x48421A27	DrawRing_Reset	DrawRing_Reset	carried
@@ -755,7 +754,6 @@
 0x4860B992	0x4844A3D4	VoiceBankSourceFlagGet	VoiceBankSourceFlagGet	same name
 0x4860BA02	0x4844AAB2	-	-	call sites, A unnamed
 0x4860BADC	0x4844AB8C	SoundRamBaseGet	SoundRamBaseGet	carried
-0x4860BB0B	0x4844ABBB	SoundRamImageSize	SoundRamImageSize	carried
 0x4860BB26	0x4844ABD6	SoundRamSoundRecPtr	SoundRamSoundRecPtr	carried
 0x4860BB3A	0x4844ABEA	SoundRamKitBlockPtr	SoundRamKitBlockPtr	carried
 0x4860BB47	0x4844ABF7	UserVoiceRecPtr	UserVoiceRecPtr	same name
@@ -768,12 +766,7 @@
 0x4860C173	0x4844B1E3	-	-	call sites, A unnamed
 0x4860C22C	0x4844B29C	SoundRamSignatureWrite	SoundRamSignatureWrite	same name
 0x4860C24C	0x4844B2BC	SoundRamFactoryInit	SoundRamFactoryInit	carried
-0x4860C2C7	0x4844B337	-	-	call sites, A unnamed
-0x4860C3E1	0x4844B431	SoundRamHeaderStamp	SoundRamHeaderStamp	carried
-0x4860C450	0x4844B4A2	-	-	call sites, A unnamed
-0x4860C456	0x4844B4A8	-	-	call sites, A unnamed
 0x4860C5A0	0x4844B5FF	SoundRamRecPtrByMsb	SoundRamRecPtrByMsb	carried
-0x4860C6F3	0x4844B73D	SoundRamBootCheck	SoundRamBootCheck	carried
 0x4860DEB2	0x4844CEC5	-	-	call sites, A unnamed
 0x4860E7A9	0x4844D7A4	-	-	call sites, A unnamed
 0x4860EBB3	0x4844DA7C	-	-	call sites, A unnamed
@@ -1028,7 +1021,6 @@
 0x486168CC	0x484556D7	-	-	call sites, A unnamed
 0x486168EA	0x484556F5	-	-	call sites, A unnamed
 0x48616909	0x48455714	-	-	call sites, A unnamed
-0x48616966	0x484558D3	StoreU16LE	StoreU16LE	carried
 0x48616978	0x484558E5	LoadU16LE	LoadU16LE	carried
 0x486169A5	0x48455912	LoadU32LE	LoadU32LE	carried
 0x486169BF	0x4845592C	SongRecByteSet	SongRecByteSet	carried
@@ -1139,14 +1131,14 @@
 0x48618003	0x48456F70	SongPageMove	SongPageMove	carried
 0x48618039	0x48456FA6	SongPageRelinkPrev	SongPageRelinkPrev	carried
 0x486180AB	0x48457018	SongPageRelinkNext	SongPageRelinkNext	carried
-0x48618104	0x48457071	ScratchCursorReset	ScratchCursorReset	carried
-0x4861810E	0x4845707B	ScratchCursorByteGet	ScratchCursorByteGet	carried
-0x4861811F	0x4845708C	ScratchCursorByteSet	ScratchCursorByteSet	carried
+0x48618104	0x48457071	ScratchPosReset	ScratchPosReset	same name
+0x4861810E	0x4845707B	ScratchReadByte	ScratchReadByte	same name
+0x4861811F	0x4845708C	ScratchWriteByte	ScratchWriteByte	same name
 0x48618145	0x484570B2	ScratchByteSet	ScratchByteSet	carried
-0x4861815B	0x484570C8	ScratchCursorInc	ScratchCursorInc	carried
-0x48618179	0x484570E6	ScratchCursorGet	ScratchCursorGet	carried
-0x48618182	0x484570EF	ScratchCursorSet	ScratchCursorSet	carried
-0x48618199	0x48457106	ScratchCursorAdvance	ScratchCursorAdvance	carried
+0x4861815B	0x484570C8	ScratchPosNext	ScratchPosNext	same name
+0x48618179	0x484570E6	ScratchPos	ScratchPos	same name
+0x48618182	0x484570EF	ScratchPosSet	ScratchPosSet	same name
+0x48618199	0x48457106	ScratchPosSkip	ScratchPosSkip	same name
 0x486181C1	0x4845712E	ScratchEventFetch	ScratchEventFetch	carried
 0x4861820A	0x48457177	InstallScratchPtr	InstallScratchPtr	carried
 0x48618213	0x48457180	ScratchPtrAt	ScratchPtrAt	carried
@@ -1161,6 +1153,7 @@
 0x486182B3	0x48457220	ScratchByteTableSet	ScratchByteTableSet	carried
 0x486182BF	0x4845722C	LoadU32LEB	LoadU32LEB	carried
 0x486182D9	0x48457246	StoreU32LEB	StoreU32LEB	carried
+0x48618300	0x484558D3	StoreU16LE	StoreU16LE	same name
 0x48618316	0x48457283	ScratchU32TableBSub	ScratchU32TableBSub	carried
 0x48618336	0x484572A3	ScratchTwinCursorSet	ScratchTwinCursorSet	carried
 0x4861834C	0x484572B9	ScratchTwinCursorInc	ScratchTwinCursorInc	carried
@@ -1854,28 +1847,29 @@
 0x4862E4F3	0x4846D474	-	-	call sites, A unnamed
 0x4862E4FE	0x4846D47F	FatLock	FatLock	carried
 0x4862E502	0x4846D483	FatUnlock	FatUnlock	carried
+0x4862E506	0x4846D487	FsRemove	FsRemove	same name
 0x4862E509	0x4846D48A	-	-	call sites, A unnamed
-0x4862E527	0x4846D4A8	VfsMkdir	VfsMkdir	carried
-0x4862E597	0x4846D518	VfsFileGetPos	VfsFileGetPos	carried
-0x4862E5CA	0x4846D54B	VfsFileSetPos	VfsFileSetPos	carried
-0x4862E5FE	0x4846D57F	VfsFileSeek	VfsFileSeek	carried
-0x4862E681	0x4846D602	VfsFileTell	VfsFileTell	carried
-0x4862E6B3	0x4846D634	VfsRenameIoctl	VfsRenameIoctl	carried
-0x4862E6CB	0x4846D64C	VfsRename	VfsRename	carried
-0x4862E7A9	0x4846D72A	VfsRmdir	VfsRmdir	carried
-0x4862E83D	0x4846D7BE	VfsFileRewind	VfsFileRewind	carried
-0x4862E851	0x4846D7D2	VfsCalloc	VfsCalloc	carried
-0x4862E87A	0x4846D7FB	VfsFileOpen	VfsFileOpen	carried
-0x4862EAAB	0x4846DA2C	VfsFileRead	VfsFileRead	carried
-0x4862EAF4	0x4846DA75	VfsFileWrite	VfsFileWrite	carried
-0x4862EB3D	0x4846DABE	VfsFileGetc	VfsFileGetc	carried
-0x4862EB88	0x4846DB09	VfsFileGets	VfsFileGets	carried
-0x4862EBD4	0x4846DB55	VfsFilePutc	VfsFilePutc	carried
-0x4862EC23	0x4846DBA4	VfsFilePuts	VfsFilePuts	carried
-0x4862EC7E	0x4846DBFF	VfsFileClose	VfsFileClose	carried
-0x4862ECC0	0x4846DC41	VfsFileCloseCore	VfsFileCloseCore	carried
-0x4862ED5D	0x4846DCDE	VfsFileFlush	VfsFileFlush	carried
-0x4862EDB7	0x4846DD38	VfsFileIoctl	VfsFileIoctl	carried
+0x4862E527	0x4846D4A8	FsMkdir	FsMkdir	carried
+0x4862E597	0x4846D518	FsGetPos	FsGetPos	carried
+0x4862E5CA	0x4846D54B	FsSetPos	FsSetPos	carried
+0x4862E5FE	0x4846D57F	FsSeek	FsSeek	carried
+0x4862E681	0x4846D602	FsTell	FsTell	carried
+0x4862E6B3	0x4846D634	FsRenameIoctl	FsRenameIoctl	carried
+0x4862E6CB	0x4846D64C	FsRename	FsRename	carried
+0x4862E7A9	0x4846D72A	FsRmdir	FsRmdir	carried
+0x4862E83D	0x4846D7BE	FsRewind	FsRewind	carried
+0x4862E851	0x4846D7D2	FsCalloc	FsCalloc	carried
+0x4862E87A	0x4846D7FB	FsOpen	FsOpen	carried
+0x4862EAAB	0x4846DA2C	FsRead	FsRead	carried
+0x4862EAF4	0x4846DA75	FsWrite	FsWrite	carried
+0x4862EB3D	0x4846DABE	FsGetc	FsGetc	carried
+0x4862EB88	0x4846DB09	FsGets	FsGets	carried
+0x4862EBD4	0x4846DB55	FsPutc	FsPutc	carried
+0x4862EC23	0x4846DBA4	FsPuts	FsPuts	carried
+0x4862EC7E	0x4846DBFF	FsClose	FsClose	carried
+0x4862ECC0	0x4846DC41	FsCloseCore	FsCloseCore	carried
+0x4862ED5D	0x4846DCDE	FsFlush	FsFlush	carried
+0x4862EDB7	0x4846DD38	FsIoctl	FsIoctl	carried
 0x4862EDEA	0x4846DD6B	FatCacheSectorGet	FatCacheSectorGet	carried
 0x4862F076	0x4846DFF7	FatCacheBufferWrite	FatCacheBufferWrite	carried
 0x4862F154	0x4846E0D5	FatCacheFlushDev	FatCacheFlushDev	carried
@@ -1892,7 +1886,7 @@
 0x4862FB51	0x4846EAD2	FatDirEntryCreate	FatDirEntryCreate	carried
 0x4862FD91	0x4846ED12	FatDirEntryWriteBack	FatDirEntryWriteBack	carried
 0x4862FDE8	0x4846ED69	FatClusterChainFree	FatClusterChainFree	carried
-0x4862FE51	0x4846EDD2	FatVolumeMount	FatVolumeMount	carried
+0x4862FE51	0x4846EDD2	FsMountVolume	FsMountVolume	same name
 0x48630214	0x4846F195	FatOpOpen	FatOpOpen	carried
 0x4863030A	0x4846F28B	FatFilePosToSector	FatFilePosToSector	carried
 0x48630471	0x4846F3F2	FatFileCurSectorBuf	FatFileCurSectorBuf	carried
@@ -1907,7 +1901,7 @@
 0x48630DFA	0x4846FD7B	FatFreeClusterCount	FatFreeClusterCount	carried
 0x48630E5D	0x4846FDDE	FatFreeBytesGet	FatFreeBytesGet	carried
 0x48630E76	0x4846FDF7	FatFileAttrGetSet	FatFileAttrGetSet	carried
-0x48630EAB	0x4846FE2C	VfsAttribSet	VfsAttribSet	carried
+0x48630EAB	0x4846FE2C	FsAttribSet	FsAttribSet	carried
 0x48630ED8	0x4846FE59	FatFileClusterNext	FatFileClusterNext	carried
 0x48630F06	0x4846FE87	FloppyRequestIssue	FloppyRequestIssue	carried
 0x48630F31	0x4846FEB2	-	-	call sites, A unnamed
@@ -1970,7 +1964,6 @@
 0x48633199	0x4847211A	-	-	call sites, A unnamed
 0x486331AF	0x48472130	-	-	call sites, A unnamed
 0x486331C2	0x48472143	-	-	call sites, A unnamed
-0x486331C6	0x48472147	ImmunityFileTest	ImmunityFileTest	carried
 0x486332C1	0x48472242	-	-	call sites, A unnamed
 0x4863330A	0x4847228B	FileStreamReaderTask	FileStreamReaderTask	carried
 0x48633421	0x484723A2	FileStreamGetByte	FileStreamGetByte	carried
@@ -2048,6 +2041,7 @@
 0x486377B0	0x48476731	inflateReset	inflateReset	same name
 0x486377F3	0x48476774	inflateEnd	inflateEnd	same name
 0x48637845	0x484767C6	inflateInit2_	inflateInit2_	same name
+0x48637918	0x48476899	inflateInit_	inflateInit_	same name
 0x4863791B	0x4847689C	-	-	call sites, A unnamed
 0x48637926	0x484768A7	inflate	inflate	same name
 0x48637C6F	0x48476BF0	inflateSetDictionary	inflateSetDictionary	same name
@@ -2394,10 +2388,6 @@
 0x4865EC98	0x4849E6A7	FavBankNamingFunc	FavBankNamingFunc	same name
 0x4865ED4B	0x4849E75A	AcFavCategoryProc	AcFavCategoryProc	same name
 0x4865F04A	0x4849EA59	AcFavItemProc	AcFavItemProc	same name
-0x4865F4E2	0x4849EE71	-	-	call sites, A unnamed
-0x4865F4F2	0x4849EE82	-	-	call sites, A unnamed
-0x4865F4FF	0x4849EE8F	-	-	call sites, A unnamed
-0x4865F50C	0x4849EE9D	-	-	call sites, A unnamed
 0x4865F50F	0x4849F85B	InitializeBlock16	InitializeBlock16	same name
 0x4865F813	0x4849FB5F	-	-	call sites, A unnamed
 0x4865F877	0x4849FBC3	-	-	call sites, A unnamed
@@ -2457,7 +2447,6 @@
 0x48662B73	0x484A3A2A	TestModeKeyDivert	TestModeKeyDivert	same name
 0x48662B76	0x484A3A2D	-	-	call sites, A unnamed
 0x48662BAB	0x484A3A62	SdTestFilter	SdTestFilter	same name
-0x48662BF3	0x484A3AAA	-	-	call sites, A unnamed
 0x48662C93	0x484A3B4A	SDTestStartFunc	SDTestStartFunc	same name
 0x48662CD3	0x484A3B8A	SDTestStopFunc	SDTestStopFunc	same name
 0x48662CFC	0x484A3BB3	TestSDAudioCatch	TestSDAudioCatch	same name
@@ -3376,18 +3365,11 @@
 0x486CD63B	0x4852B7F8	FmmCurFileSigCheck	FmmCurFileSigCheck	carried
 0x486CD692	0x4852B84F	-	-	call sites, A unnamed
 0x486CD919	0x4852BB83	-	-	call sites, A unnamed
-0x486CDF09	0x4852C0A8	MdFileLoad	MdFileLoad	carried
 0x486CE476	0x4852C5FD	SqfSeqFileLoad	SqfSeqFileLoad	carried
-0x486CEA2E	0x4852CBD6	FavFileLoad	FavFileLoad	carried
 0x486CEAA1	0x4852CFE4	DiskLoadDispatch	DiskLoadDispatch	carried
 0x486CEBEF	0x4852D169	-	-	call sites, A unnamed
 0x486CEC9E	0x4852D218	-	-	call sites, A unnamed
 0x486CECD2	0x4852D24C	LswFileSave	LswFileSave	carried
-0x486CEF33	0x4852D4A5	MdFileSave	MdFileSave	carried
-0x486CEFAD	0x4852D51F	FavFileSave	FavFileSave	carried
-0x486CF1F5	0x4852D84A	CmpFileSave	CmpFileSave	carried
-0x486CF2A7	0x4852D8FC	MspFileSave	MspFileSave	carried
-0x486CF359	0x4852D9AE	TmFileSave	TmFileSave	carried
 0x486CF545	0x4852DE6E	-	-	call sites, A unnamed
 0x486CF594	0x4852DEBD	-	-	call sites, A unnamed
 0x486CFE2F	0x4852E78E	PicCurFileImport	PicCurFileImport	carried
@@ -3407,13 +3389,13 @@
 0x486D0D7E	0x4852F6DD	-	-	call sites, A unnamed
 0x486D0D94	0x4852F6F3	-	-	call sites, A unnamed
 0x486D0D9F	0x4852F6FE	-	-	call sites, A unnamed
-0x486D0DF2	0x4852F762	FmmStrCopy	FmmStrCopy	carried
-0x486D0E0C	0x4852F77C	FmmStrNCopyPad	FmmStrNCopyPad	carried
-0x486D0E3E	0x4852F7AE	FmmStrCat	FmmStrCat	carried
+0x486D0DF2	0x4852F762	StrCopy	StrCopy	carried
+0x486D0E0C	0x4852F77C	StrCopyPad	StrCopyPad	carried
+0x486D0E3E	0x4852F7AE	StrAppend	StrAppend	carried
 0x486D0E67	0x4852F7D7	FmmStrCmp	FmmStrCmp	carried
 0x486D0E90	0x4852F800	FmmStrNCmp	FmmStrNCmp	carried
 0x486D0ED0	0x4852F840	FmmNumberedNameBuild	FmmNumberedNameBuild	carried
-0x486D0F12	0x4852F882	FmmNameWithExtBuild	FmmNameWithExtBuild	carried
+0x486D0F12	0x4852F882	FileNameWithExt	FileNameWithExt	same name
 0x486D0F3D	0x4852F8AD	FmmFileNoNameFormat	FmmFileNoNameFormat	carried
 0x486D1030	0x4852F9A0	FmmTextSanitize	FmmTextSanitize	carried
 0x486D1056	0x4852F9C6	-	-	call sites, A unnamed
@@ -3875,23 +3857,23 @@
 0x486E80E2	0x48546696	GetDemoCtlTimer	GetDemoCtlTimer	carried
 0x486E812A	0x485466DE	LoadSmf	LoadSmf	same name
 0x486E8147	0x485466FB	-	-	call sites, A unnamed
-0x486E81AB	0x4854675F	-	-	call sites, A unnamed
+0x486E81AB	0x4854675F	LoadSmf_End	-	call sites, A unnamed
 0x486E81CC	0x48546780	-	-	call sites, A unnamed
-0x486E81EE	0x485467A2	-	-	call sites, A unnamed
+0x486E81EE	0x485467A2	LoadSmf_Read	-	call sites, A unnamed
 0x486E8236	0x485467EA	-	-	call sites, A unnamed
 0x486E824D	0x48546801	-	-	call sites, A unnamed
 0x486E8285	0x48546839	-	-	call sites, A unnamed
 0x486E82EA	0x4854689E	-	-	call sites, A unnamed
 0x486E837B	0x4854692F	-	-	call sites, A unnamed
 0x486E83D6	0x4854698A	-	-	call sites, A unnamed
-0x486E83EB	0x4854699F	-	-	call sites, A unnamed
+0x486E83EB	0x4854699F	SmfReadHeaderChunk	-	call sites, A unnamed
 0x486E8501	0x48546AB5	-	-	call sites, A unnamed
 0x486E85B5	0x48546B69	-	-	call sites, A unnamed
 0x486E86C7	0x48546C7B	-	-	call sites, A unnamed
 0x486E87B1	0x48546D65	-	-	call sites, A unnamed
-0x486E87FF	0x48546DB3	-	-	call sites, A unnamed
-0x486E88EF	0x48546EA3	-	-	call sites, A unnamed
-0x486E891C	0x48546ED0	-	-	call sites, A unnamed
+0x486E87FF	0x48546DB3	SmfReadTracks	-	call sites, A unnamed
+0x486E88EF	0x48546EA3	SmfReadU32BE	-	call sites, A unnamed
+0x486E891C	0x48546ED0	SmfReadTrackChunkHeader	-	call sites, A unnamed
 0x486E895F	0x48546F13	-	-	call sites, A unnamed
 0x486E8967	0x48546F1B	-	-	call sites, A unnamed
 0x486E8991	0x48546F45	-	-	call sites, A unnamed
@@ -3992,7 +3974,7 @@
 0x486EABCE	0x4854918E	-	-	call sites, A unnamed
 0x486EAC3A	0x485491FA	-	-	call sites, A unnamed
 0x486EAC9F	0x4854925F	-	-	call sites, A unnamed
-0x486EACB1	0x48549271	-	-	call sites, A unnamed
+0x486EACB1	0x48549271	SmfWriteBytes	-	call sites, A unnamed
 0x486EACCF	0x4854928F	-	-	call sites, A unnamed
 0x486EAD0F	0x485492CF	-	-	call sites, A unnamed
 0x486EAD64	0x48549324	-	-	call sites, A unnamed
@@ -5221,6 +5203,8 @@
 0x501292C9	0x4C006BDD	TgPartModDestValueCalc	TgPartModDestValueCalc	same name
 0x5012968B	0x4C006F9F	TgPartPortamentoTimeSet	TgPartPortamentoTimeSet	carried
 0x501296A3	0x4C006FB7	TgPartDataEntrySet	TgPartDataEntrySet	carried
+0x5012987C	0x4C007190	-	-	call sites, A unnamed
+0x501298A6	0x4C0071BA	-	-	call sites, A unnamed
 0x501298DB	0x4C0071EF	TgPartVolumeSet	TgPartVolumeSet	carried
 0x5012991C	0x4C007230	TgPartPanSet	TgPartPanSet	carried
 0x50129934	0x4C007248	TgPartExpressionSet	TgPartExpressionSet	carried
@@ -5311,7 +5295,7 @@
 0x5012D293	0x4C00994C	-	-	call sites, A unnamed
 0x5012D45E	0x4C009AA9	-	-	call sites, A unnamed
 0x5012D461	0x4C009AAC	-	-	call sites, A unnamed
-0x5012D579	0x4C009C88	-	-	call sites, A unnamed
+0x5012D579	0x4C009C88	TgPartToneModRoutesLoad	TgPartToneModRoutesLoad	carried
 0x5012D9C5	0x4C009F01	TgDrumZoneParamClamp	TgDrumZoneParamClamp	carried
 0x5012DCBB	0x4C00A1F7	TgDrawbarToneRecInit	TgDrawbarToneRecInit	same name
 0x5012DD17	0x4C00A253	TgPartDrawbarCapture	TgPartDrawbarCapture	same name
@@ -5344,7 +5328,9 @@
 0x5012FCB5	0x4C02FB25	TgPitchZoneFold	TgPitchZoneFold	same name
 0x5012FD09	0x4C02FB79	TgPitchNoteResolve	TgPitchNoteResolve	same name
 0x5012FD6C	0x4C02FBDE	TgLevelResolve	TgLevelResolve	same name
-0x5012FFE3	0x4C02FE59	-	-	call sites, A unnamed
+0x5012FF20	0x4C02FD94	TgVoiceLevelTermCalc	TgVoiceLevelTermCalc	carried
+0x5012FFE3	0x4C02FE59	TgTableKeyOffRelease	TgTableKeyOffRelease	carried
+0x50130790	0x4C030606	TgVoiceFilterProgram	TgVoiceFilterProgram	carried
 0x50130A3C	0x4C030896	TgPartCtrlSenseElem	TgPartCtrlSenseElem	same name
 0x50130C22	0x4C030A7F	TgTotalLevelCalc	TgTotalLevelCalc	same name
 0x50131017	0x4C030E6E	TgVoiceKillHandler	TgVoiceKillHandler	same name
@@ -6102,10 +6088,6 @@
 0x5016EE23	0x484C3BB2	-	-	call sites, A unnamed
 0x5016F2AD	0x484C407A	-	-	call sites, A unnamed
 0x5016F4EA	0x484C433F	-	-	call sites, A unnamed
-0x5016F693	0x484C44E8	-	-	call sites, A unnamed
-0x5016F6AA	0x484C44FF	-	-	call sites, A unnamed
-0x5016F6C3	0x484C4518	-	-	call sites, A unnamed
-0x5016F6D7	0x484C452C	-	-	call sites, A unnamed
 0x5016F6EF	0x484C4544	-	-	call sites, A unnamed
 0x5016F722	0x484C4577	-	-	call sites, A unnamed
 0x5016F733	0x484C4588	-	-	call sites, A unnamed
@@ -6206,7 +6188,6 @@
 0x50171F56	0x48434121	PadBindUser	PadBindUser	same name
 0x50171FDE	0x48434239	PadFlagsById	PadFlagsById	carried
 0x50172023	0x484342B4	TechnicsPadsResourceInit	TechnicsPadsResourceInit	same name
-0x5017205E	0x484342EF	TechnicsPadsResourceVerify	TechnicsPadsResourceVerify	carried
 0x50172126	0x484343D7	-	-	call sites, A unnamed
 0x50172138	0x484343E9	PadCurTimeSigByteGet	PadCurTimeSigByteGet	carried
 0x50172141	0x484343F2	PadCurMeasureCountGet	PadCurMeasureCountGet	carried
@@ -6318,12 +6299,10 @@
 0x5017564D	0x484379F4	-	-	call sites, A unnamed
 0x501756C9	0x48437A70	CmpLoadAreaGet	CmpLoadAreaGet	carried
 0x501756F8	0x48437A9F	CmpSaveAreaGet	CmpSaveAreaGet	carried
-0x5017570E	0x48437AB5	-	-	call sites, A unnamed
 0x50175711	0x48437AB8	CmpConvLoad	CmpConvLoad	same name
 0x50175865	0x48437C0C	-	-	call sites, A unnamed
 0x501758B5	0x48437C5C	MspLoadAreaGet	MspLoadAreaGet	carried
 0x501758E4	0x48437C8B	MspSaveAreaGet	MspSaveAreaGet	carried
-0x501758FA	0x48437CA1	-	-	call sites, A unnamed
 0x501758FD	0x48437CA4	UserPadConvLoad	UserPadConvLoad	same name
 0x50175999	0x48437D46	LswSaveAreaGet	LswSaveAreaGet	carried
 0x501759A7	0x48437D54	-	-	call sites, A unnamed
@@ -6487,7 +6466,6 @@
 0x5017B1B7	0x4843D6D7	StyleResourceWindowProbe	StyleResourceWindowProbe	same name
 0x5017B277	0x4843D797	TableRomStyleSubTablePtr	TableRomStyleSubTablePtr	carried
 0x5017B288	0x4843D7A8	TableRomStyleResourcePtr	TableRomStyleResourcePtr	carried
-0x5017B299	0x4843D7B9	TableRomSeg04Ptr	TableRomSeg04Ptr	carried
 0x5017B2AA	0x4843D7CA	TableRomNullPtr	TableRomNullPtr	carried
 0x5017B2CF	0x4843D7EF	TableRomSeg02PtrSize	TableRomSeg02PtrSize	carried
 0x5017B2EF	0x4843D80F	TableRomSeg03PtrSize	TableRomSeg03PtrSize	carried

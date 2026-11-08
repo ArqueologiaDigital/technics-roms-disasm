@@ -3,7 +3,7 @@
 ; evidence classes (accessor: a named Get/Set/Is routine's only variable; owner: every
 ; direct reference lies in one named routine).  Columns: RAM address, name, ; class, evidence.
 ;
-; 66 accessor names over 645 operands, 522 owner names over 2171 operands; 3192 RAM addresses referenced
+; 65 accessor names over 635 operands, 537 owner names over 2212 operands; 3192 RAM addresses referenced
 0x50007A98  localeconv_Ram	; owner: 2 references, all in localeconv
 0x50007A9C  localeconv_Ram_2	; owner: 1 references, all in localeconv
 0x50007AA0  localeconv_Ram_3	; owner: 1 references, all in localeconv
@@ -317,7 +317,6 @@
 0x5004EEA4  SeqAutoPunchOutMeas	; accessor: SeqAutoPunchOutMeasGet (getter), SeqAutoPunchOutMeasSet (setter)
 0x5004EEA6  SeqAutoPunchPreRoll	; accessor: SeqAutoPunchPreRollGet (getter), SeqAutoPunchPreRollSet (setter)
 0x5004EEB8  SeqPunchState	; accessor: SeqPunchStateGet (getter), SeqPunchStateSet (setter)
-0x5004EECC  ScratchCursor	; accessor: ScratchCursorGet (getter)
 0x5005CBA5  MdlyContinueFlag	; accessor: MdlyContinueFlagGet (getter), MdlyContinueFlagSet (setter)
 0x5005CBAC  DemoCtlTimer	; accessor: GetDemoCtlTimer (getter)
 0x5005CBD0  NoteEditMeas	; accessor: NoteEditMeasGet (getter)
@@ -424,6 +423,12 @@
 0x50060302  FmmDiskMedleySelectFunc_Ram_6	; owner: 19 references, all in FmmDiskMedleySelectFunc
 0x50060303  FmmDiskMedleySelectFunc_Ram_7	; owner: 21 references, all in FmmDiskMedleySelectFunc
 0x50060304  FmmDiskMedleySelectFunc_Ram_8	; owner: 5 references, all in FmmDiskMedleySelectFunc
+0x500603CC  LoadRcm_HD_Impl_Ram	; owner: 4 references, all in LoadRcm_HD_Impl
+0x500603CD  LoadRcm_HD_Impl_Ram_2	; owner: 3 references, all in LoadRcm_HD_Impl
+0x500603D0  LoadRcm_HD_Impl_Ram_3	; owner: 5 references, all in LoadRcm_HD_Impl
+0x500603D4  LoadRcm_HD_Impl_Ram_4	; owner: 4 references, all in LoadRcm_HD_Impl
+0x500603D8  LoadRcm_HD_Impl_Ram_5	; owner: 4 references, all in LoadRcm_HD_Impl
+0x500603DC  LoadRcm_HD_Impl_Ram_6	; owner: 1 references, all in LoadRcm_HD_Impl
 0x500603E0  LoadCst_Ram	; owner: 2 references, all in LoadCst
 0x500603E1  LoadCst_Ram_2	; owner: 1 references, all in LoadCst
 0x500603E4  LoadCst_Ram_3	; owner: 4 references, all in LoadCst
@@ -437,11 +442,19 @@
 0x50060400  SaveCst_Ram_5	; owner: 4 references, all in SaveCst
 0x50060404  SaveCst_Ram_6	; owner: 1 references, all in SaveCst
 0x50060408  SaveCst_Ram_7	; owner: 1 references, all in SaveCst
+0x5006040C  SaveRcm_HD_Impl_Ram	; owner: 2 references, all in SaveRcm_HD_Impl
+0x5006040D  SaveRcm_HD_Impl_Ram_2	; owner: 2 references, all in SaveRcm_HD_Impl
+0x50060410  SaveRcm_HD_Impl_Ram_3	; owner: 4 references, all in SaveRcm_HD_Impl
+0x50060414  SaveRcm_HD_Impl_Ram_4	; owner: 4 references, all in SaveRcm_HD_Impl
+0x50060418  SaveRcm_HD_Impl_Ram_5	; owner: 4 references, all in SaveRcm_HD_Impl
+0x5006041C  SaveRcm_HD_Impl_Ram_6	; owner: 1 references, all in SaveRcm_HD_Impl
+0x50060420  SaveRcm_HD_Impl_Ram_7	; owner: 1 references, all in SaveRcm_HD_Impl
 0x500606D0  FmmSaveNameSet_Ram	; owner: 1 references, all in FmmSaveNameSet
 0x5006196A  FmmSmfNameSet_Ram	; owner: 1 references, all in FmmSmfNameSet
 0x500620C4  FmmCstNameSet_Ram	; owner: 1 references, all in FmmCstNameSet
 0x5006214C  FmmLoadFilterMask	; accessor: FmmLoadFilterMaskGet (getter)
 0x5006214E  FmmSaveFilterMask	; accessor: FmmSaveFilterMaskGet (getter)
+0x50062300  ZFileDeflatePart_Ram	; owner: 1 references, all in ZFileDeflatePart
 0x50072334  ZArenaReset_Ram	; owner: 1 references, all in ZArenaReset
 0x50072335  ZArenaReset_Ram_2	; owner: 1 references, all in ZArenaReset
 0x50072338  ZArenaReset_Ram_3	; owner: 1 references, all in ZArenaReset
@@ -552,7 +565,7 @@
 0x50288086  NameGetFuncCall_Ram_13	; owner: 1 references, all in NameGetFuncCall
 0x50288158  EffEditUnitLoad_Ram	; owner: 7 references, all in EffEditUnitLoad
 0x5028818C  FdcStrap3SeekTestLoop_Ram	; owner: 4 references, all in FdcStrap3SeekTestLoop
-0x502883FC  VfsFileOpen_Ram	; owner: 1 references, all in VfsFileOpen
+0x502883FC  FsOpen_Ram	; owner: 1 references, all in FsOpen
 0x50288524  FatCacheSectorGet_Ram	; owner: 1 references, all in FatCacheSectorGet
 0x50288532  FatCacheSectorGet_Ram_2	; owner: 1 references, all in FatCacheSectorGet
 0x5028B63C  PianoDiscDirRead_Ram_2	; owner: 2 references, all in PianoDiscDirRead
@@ -572,10 +585,11 @@
 0x503A5920  Rec8E0Field120Ptr_Ram	; owner: 1 references, all in Rec8E0Field120Ptr
 0x503A613A  SongBackupSongNo	; accessor: SongBackupSongNoGet (getter), SongBackupSongNoSet (setter)
 0x503AB4D0  SongPageStore	; accessor: SongPageStorePtr (address)
+0x504EEB12  RomTestChecksums_Ram	; owner: 1 references, all in RomTestChecksums
 0x8402F534  SoundRamSoundUpconvert_Ram	; owner: 1 references, all in SoundRamSoundUpconvert
 0x84036434  SoundRamRecPtrByMsb_Ram	; owner: 1 references, all in SoundRamRecPtrByMsb
 0x840365DB  SoundRamRecPtrByMsb_Ram_2	; owner: 1 references, all in SoundRamRecPtrByMsb
-0x8403ACDC  SoundRamHeaderStamp_Ram	; owner: 1 references, all in SoundRamHeaderStamp
+0x8403ACDC  SoundRamSumUpdate_Ram	; owner: 1 references, all in SoundRamSumUpdate
 0x900000B0  TtSndArg_Ram_4	; owner: 2 references, all in TtSndArg
 0x90008028  MicPresetStore_Ram	; owner: 4 references, all in MicPresetStore
 0x90008029  MicPresetStore_Ram_2	; owner: 4 references, all in MicPresetStore

@@ -140,12 +140,12 @@ LibF64Zero_Var:	# 2 x u32, 0..0; read by LibF64Zero 0x4C002FB8: `mov   (a0), d1`
 
 cre_tsk_Impl_Table:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C03D0C8 reads through its argument a0 (passed by GuiTaskObjectsCreate 0x484141DB `call cre_tsk, 0, 0`, +7 more calls); the layout cre_tsk_Impl 0x4C03D154 reads through its argument a0 (passed by cre_tsk 0x4C03D0C8 `call cre_tsk_Impl_entry, [d2,d3,a2], 0x2c`)
 	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_4C003F95, itskpri=3, x14="\x00\x00", stksz=3072
-cre_flg_Impl_Var:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C03C7EF reads through its argument a0 (passed by GuiTaskObjectsCreate 0x484141DB `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x4C03C87B reads through its argument a0 (passed by cre_flg 0x4C03C7EF `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	x6="\x00\x00", f8=1
-cre_flg_Impl_Var_3:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C03C7EF reads through its argument a0 (passed by GuiTaskObjectsCreate 0x484141DB `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x4C03C87B reads through its argument a0 (passed by cre_flg 0x4C03C7EF `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	x6="\x00\x00"
-cre_flg_Impl_Var_5:	# REC_cre_flg_ArgA0_s8 (8 bytes): the layout cre_flg 0x4C03C7EF reads through its argument a0 (passed by GuiTaskObjectsCreate 0x484141DB `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x4C03C87B reads through its argument a0 (passed by cre_flg 0x4C03C7EF `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0_s8	x6="\x00\x00"
+cre_flg_Impl_Var:	# T_CFLG (12 bytes): the layout cre_flg 0x4C03C7EF reads through its argument a0 (passed by GuiTaskObjectsCreate 0x484141DB `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x4C03C87B reads through its argument a0 (passed by cre_flg 0x4C03C7EF `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	x6="\x00\x00", iflgptn=1
+cre_flg_Impl_Var_3:	# T_CFLG (12 bytes): the layout cre_flg 0x4C03C7EF reads through its argument a0 (passed by GuiTaskObjectsCreate 0x484141DB `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x4C03C87B reads through its argument a0 (passed by cre_flg 0x4C03C7EF `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	x6="\x00\x00"
+cre_flg_Impl_Var_5:	# T_CFLG_s8 (8 bytes): the layout cre_flg 0x4C03C7EF reads through its argument a0 (passed by GuiTaskObjectsCreate 0x484141DB `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x4C03C87B reads through its argument a0 (passed by cre_flg 0x4C03C7EF `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG_s8	x6="\x00\x00"
 
 cre_flg_Impl_Table:	# 10 x u32, 1..4294901760; read by cre_flg_Impl 0x4C03C87B: `mov (8, a3), d2`
 	tab_u32	1, 16843009, 16843009, 16843009, 16843009, 16843009, 16843009, 65793	# [0]
@@ -3707,8 +3707,8 @@ func_4C01C07C_Table:	# 11 x u16, 0..40; read by func_4C01C07C 0x4C01C07C: `movhu
 	tab_u16	0, 6, 8, 10, 13, 16, 19, 22, 25, 30, 40
 	.align	4, 0xFF	# pad after func_4C01C07C_Table
 
-cre_flg_Impl_Var_6:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C03C7EF reads through its argument a0 (passed by GuiTaskObjectsCreate 0x484141DB `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x4C03C87B reads through its argument a0 (passed by cre_flg 0x4C03C7EF `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00", f8=1
+cre_flg_Impl_Var_6:	# T_CFLG (12 bytes): the layout cre_flg 0x4C03C7EF reads through its argument a0 (passed by GuiTaskObjectsCreate 0x484141DB `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x4C03C87B reads through its argument a0 (passed by cre_flg 0x4C03C7EF `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	flgatr=8, x6="\x00\x00", iflgptn=1
 
 M3SendProcessTgc_Table:	# 12 x u32, 1275154510..1275154512; read by M3SendProcessTgc 0x4C015020: `mov   (d0, a0), a0`
 	tab_u32	1275154510, 1275154510, 1275154510, 1275154510, 1275154510, 1275154510, 1275154510, 1275154510	# [0]
@@ -4880,60 +4880,60 @@ func_4C02A0C4_Records_8:	# 440 x PanelMemFieldMap_8 (3 bytes each); read by func
 	PanelMemFieldMap_8	rec_off=14, mask=255
 	PanelMemFieldMap_8	rec_off=15, mask=255
 	.align	4, 0xFF	# pad after func_4C02A0C4_Records_8
-func_4C02B569_Records:	# 44 x REC_func_4C02B569_Records (12 bytes each); read by func_4C02B569 0x4C02B569 `mov (4, a1), a2`; func_4C02B569 0x4C02B569 `mov (a1), d0`; func_4C02B6F8 0x4C02B6F8 `mov (a1), d1` (+2)
-	REC_func_4C02B569_Records	p4=func_4C02A0C4_Records_8+11, f8=64, f9=18, x10="\x00\x00"	# [0]
-	REC_func_4C02B569_Records	f0=20, p4=func_4C02A0C4_Records_8+112, f8=16, f9=72, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=94, p4=func_4C02A0C4_Records_8+112, f8=17, f9=72, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=168, p4=func_4C02A0C4_Records_8+112, f8=18, f9=72, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=242, p4=func_4C02A0C4_Records_8+458, f8=19, f9=4, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=248, p4=func_4C02A0C4_Records_8+458, f8=20, f9=4, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=254, p4=func_4C02A0C4_Records_8+458, f8=21, f9=4, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=260, p4=func_4C02A0C4_Records_8+458, f8=22, f9=4, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=266, p4=func_4C02A0C4_Records_8+458, f8=23, f9=4, x10="\x00\x00"	# [8]
-	REC_func_4C02B569_Records	f0=272, p4=func_4C02A0C4_Records_8+458, f8=24, f9=4, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=278, p4=func_4C02A0C4_Records_8+458, f8=25, f9=4, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=284, p4=func_4C02A0C4_Records_8+458, f8=26, f9=4, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=290, p4=func_4C02A0C4_Records_8+112, f8=27, f9=72, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=364, p4=func_4C02A0C4_Records_8+112, f8=28, f9=72, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=438, p4=func_4C02A0C4_Records_8+112, f8=31, f9=72, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=512, p4=func_4C02A0C4_Records_8+112, f9=72, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=586, p4=func_4C02A0C4_Records_8+112, f8=1, f9=72, x10="\x00\x00"	# [16]
-	REC_func_4C02B569_Records	f0=660, p4=func_4C02A0C4_Records_8+112, f8=2, f9=72, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=734, p4=func_4C02A0C4_Records_8+112, f8=3, f9=72, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=808, p4=func_4C02A0C4_Records_8+112, f8=4, f9=72, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=882, p4=func_4C02A0C4_Records_8+112, f8=5, f9=72, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=956, p4=func_4C02A0C4_Records_8+112, f8=6, f9=72, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=1030, p4=func_4C02A0C4_Records_8+112, f8=7, f9=72, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=1104, p4=func_4C02A0C4_Records_8+112, f8=8, f9=72, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=1178, p4=func_4C02A0C4_Records_8+112, f8=9, f9=72, x10="\x00\x00"	# [24]
-	REC_func_4C02B569_Records	f0=1252, p4=func_4C02A0C4_Records_8+112, f8=10, f9=72, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=1326, p4=func_4C02A0C4_Records_8+112, f8=11, f9=72, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=1400, p4=func_4C02A0C4_Records_8+112, f8=12, f9=72, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=1474, p4=func_4C02A0C4_Records_8+112, f8=13, f9=72, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=1548, p4=func_4C02A0C4_Records_8+112, f8=14, f9=72, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=1622, p4=func_4C02A0C4_Records_8+112, f8=15, f9=72, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=1696, p4=func_4C02A0C4_Records_8+483, f8=67, f9=2, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=1700, p4=func_4C02A0C4_Records_8+495, f8=75, f9=8, x10="\x00\x00"	# [32]
-	REC_func_4C02B569_Records	f0=1710, p4=func_4C02A0C4_Records_8+538, f8=74, f9=4, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=1716, p4=func_4C02A0C4_Records_8+557, f8=66, f9=14, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=1732, p4=func_4C02A0C4_Records_8+614, f8=65, f9=8, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=1742, p4=func_4C02A0C4_Records_8+637, f8=76, f9=30, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=1774, p4=func_4C02A0C4_Records_8+722, f8=77, f9=14, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=1790, p4=func_4C02A0C4_Records_8+764, f8=68, f9=20, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=1812, p4=func_4C02A0C4_Records_8+853, f8=70, f9=4, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=1818, p4=func_4C02A0C4_Records_8+865, f8=69, f9=2, x10="\x00\x00"	# [40]
-	REC_func_4C02B569_Records	f0=1822, p4=func_4C02A0C4_Records_8+871, f8=72, f9=30, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=1854, p4=func_4C02A0C4_Records_8+954, f8=71, f9=14, x10="\x00\x00"
-	REC_func_4C02B569_Records	f0=1870, p4=func_4C02A0C4_Records_8+10, f8=255, f9=255, x10="\x00\x00"
-func_4C02B542_Records:	# 8 x REC_func_4C02B542_Records (12 bytes each); read by func_4C02B542 0x4C02B542 `call func_4C02B569_entry, [d2,a2,a3], 0x1c`; func_4C02B569 0x4C02B569 `mov (4, a1), a2`; func_4C02B569 0x4C02B569 `mov (a1), d0` (+4)
-	REC_func_4C02B542_Records	f0=1872, p4=func_4C02A0C4_Records_8+1006, f8=82, f9=40, x10="\x00\x00"
-	REC_func_4C02B542_Records	f0=1914, p4=func_4C02A0C4_Records_8+1129, f8=80, f9=8, x10="\x00\x00"
-	REC_func_4C02B542_Records	f0=1924, p4=func_4C02A0C4_Records_8+1154, f8=81, f9=14, x10="\x00\x00"
-	REC_func_4C02B542_Records	f0=1940, p4=func_4C02A0C4_Records_8+1205, f8=96, f9=22, x10="\x00\x00"
-	REC_func_4C02B542_Records	f0=1964, p4=func_4C02A0C4_Records_8+1205, f8=97, f9=22, x10="\x00\x00"
-	REC_func_4C02B542_Records	f0=1988, p4=func_4C02A0C4_Records_8+1205, f8=98, f9=22, x10="\x00\x00"
-	REC_func_4C02B542_Records	f0=2012, p4=func_4C02A0C4_Records_8+1272, f8=104, f9=16, x10="\x00\x00"
-	REC_func_4C02B542_Records	f0=2030, p4=func_4C02A0C4_Records_8+10, f8=255, f9=255, x10="\x00\x00"
+func_4C02B569_Records:	# 44 x BlockPatch (12 bytes each); read by func_4C02B569 0x4C02B569 `mov (4, a1), a2`; func_4C02B569 0x4C02B569 `mov (a1), d0`; func_4C02B6F8 0x4C02B6F8 `mov (a1), d1` (+2)
+	BlockPatch	ops=func_4C02A0C4_Records_8+11, val0=64, val1=18, x10="\x00\x00"	# [0]
+	BlockPatch	off=20, ops=func_4C02A0C4_Records_8+112, val0=16, val1=72, x10="\x00\x00"
+	BlockPatch	off=94, ops=func_4C02A0C4_Records_8+112, val0=17, val1=72, x10="\x00\x00"
+	BlockPatch	off=168, ops=func_4C02A0C4_Records_8+112, val0=18, val1=72, x10="\x00\x00"
+	BlockPatch	off=242, ops=func_4C02A0C4_Records_8+458, val0=19, val1=4, x10="\x00\x00"
+	BlockPatch	off=248, ops=func_4C02A0C4_Records_8+458, val0=20, val1=4, x10="\x00\x00"
+	BlockPatch	off=254, ops=func_4C02A0C4_Records_8+458, val0=21, val1=4, x10="\x00\x00"
+	BlockPatch	off=260, ops=func_4C02A0C4_Records_8+458, val0=22, val1=4, x10="\x00\x00"
+	BlockPatch	off=266, ops=func_4C02A0C4_Records_8+458, val0=23, val1=4, x10="\x00\x00"	# [8]
+	BlockPatch	off=272, ops=func_4C02A0C4_Records_8+458, val0=24, val1=4, x10="\x00\x00"
+	BlockPatch	off=278, ops=func_4C02A0C4_Records_8+458, val0=25, val1=4, x10="\x00\x00"
+	BlockPatch	off=284, ops=func_4C02A0C4_Records_8+458, val0=26, val1=4, x10="\x00\x00"
+	BlockPatch	off=290, ops=func_4C02A0C4_Records_8+112, val0=27, val1=72, x10="\x00\x00"
+	BlockPatch	off=364, ops=func_4C02A0C4_Records_8+112, val0=28, val1=72, x10="\x00\x00"
+	BlockPatch	off=438, ops=func_4C02A0C4_Records_8+112, val0=31, val1=72, x10="\x00\x00"
+	BlockPatch	off=512, ops=func_4C02A0C4_Records_8+112, val1=72, x10="\x00\x00"
+	BlockPatch	off=586, ops=func_4C02A0C4_Records_8+112, val0=1, val1=72, x10="\x00\x00"	# [16]
+	BlockPatch	off=660, ops=func_4C02A0C4_Records_8+112, val0=2, val1=72, x10="\x00\x00"
+	BlockPatch	off=734, ops=func_4C02A0C4_Records_8+112, val0=3, val1=72, x10="\x00\x00"
+	BlockPatch	off=808, ops=func_4C02A0C4_Records_8+112, val0=4, val1=72, x10="\x00\x00"
+	BlockPatch	off=882, ops=func_4C02A0C4_Records_8+112, val0=5, val1=72, x10="\x00\x00"
+	BlockPatch	off=956, ops=func_4C02A0C4_Records_8+112, val0=6, val1=72, x10="\x00\x00"
+	BlockPatch	off=1030, ops=func_4C02A0C4_Records_8+112, val0=7, val1=72, x10="\x00\x00"
+	BlockPatch	off=1104, ops=func_4C02A0C4_Records_8+112, val0=8, val1=72, x10="\x00\x00"
+	BlockPatch	off=1178, ops=func_4C02A0C4_Records_8+112, val0=9, val1=72, x10="\x00\x00"	# [24]
+	BlockPatch	off=1252, ops=func_4C02A0C4_Records_8+112, val0=10, val1=72, x10="\x00\x00"
+	BlockPatch	off=1326, ops=func_4C02A0C4_Records_8+112, val0=11, val1=72, x10="\x00\x00"
+	BlockPatch	off=1400, ops=func_4C02A0C4_Records_8+112, val0=12, val1=72, x10="\x00\x00"
+	BlockPatch	off=1474, ops=func_4C02A0C4_Records_8+112, val0=13, val1=72, x10="\x00\x00"
+	BlockPatch	off=1548, ops=func_4C02A0C4_Records_8+112, val0=14, val1=72, x10="\x00\x00"
+	BlockPatch	off=1622, ops=func_4C02A0C4_Records_8+112, val0=15, val1=72, x10="\x00\x00"
+	BlockPatch	off=1696, ops=func_4C02A0C4_Records_8+483, val0=67, val1=2, x10="\x00\x00"
+	BlockPatch	off=1700, ops=func_4C02A0C4_Records_8+495, val0=75, val1=8, x10="\x00\x00"	# [32]
+	BlockPatch	off=1710, ops=func_4C02A0C4_Records_8+538, val0=74, val1=4, x10="\x00\x00"
+	BlockPatch	off=1716, ops=func_4C02A0C4_Records_8+557, val0=66, val1=14, x10="\x00\x00"
+	BlockPatch	off=1732, ops=func_4C02A0C4_Records_8+614, val0=65, val1=8, x10="\x00\x00"
+	BlockPatch	off=1742, ops=func_4C02A0C4_Records_8+637, val0=76, val1=30, x10="\x00\x00"
+	BlockPatch	off=1774, ops=func_4C02A0C4_Records_8+722, val0=77, val1=14, x10="\x00\x00"
+	BlockPatch	off=1790, ops=func_4C02A0C4_Records_8+764, val0=68, val1=20, x10="\x00\x00"
+	BlockPatch	off=1812, ops=func_4C02A0C4_Records_8+853, val0=70, val1=4, x10="\x00\x00"
+	BlockPatch	off=1818, ops=func_4C02A0C4_Records_8+865, val0=69, val1=2, x10="\x00\x00"	# [40]
+	BlockPatch	off=1822, ops=func_4C02A0C4_Records_8+871, val0=72, val1=30, x10="\x00\x00"
+	BlockPatch	off=1854, ops=func_4C02A0C4_Records_8+954, val0=71, val1=14, x10="\x00\x00"
+	BlockPatch	off=1870, ops=func_4C02A0C4_Records_8+10, val0=255, val1=255, x10="\x00\x00"
+func_4C02B542_Records:	# 8 x BlockPatch_2 (12 bytes each); read by func_4C02B542 0x4C02B542 `call func_4C02B569_entry, [d2,a2,a3], 0x1c`; func_4C02B569 0x4C02B569 `mov (4, a1), a2`; func_4C02B569 0x4C02B569 `mov (a1), d0` (+4)
+	BlockPatch_2	off=1872, ops=func_4C02A0C4_Records_8+1006, val0=82, val1=40, x10="\x00\x00"
+	BlockPatch_2	off=1914, ops=func_4C02A0C4_Records_8+1129, val0=80, val1=8, x10="\x00\x00"
+	BlockPatch_2	off=1924, ops=func_4C02A0C4_Records_8+1154, val0=81, val1=14, x10="\x00\x00"
+	BlockPatch_2	off=1940, ops=func_4C02A0C4_Records_8+1205, val0=96, val1=22, x10="\x00\x00"
+	BlockPatch_2	off=1964, ops=func_4C02A0C4_Records_8+1205, val0=97, val1=22, x10="\x00\x00"
+	BlockPatch_2	off=1988, ops=func_4C02A0C4_Records_8+1205, val0=98, val1=22, x10="\x00\x00"
+	BlockPatch_2	off=2012, ops=func_4C02A0C4_Records_8+1272, val0=104, val1=16, x10="\x00\x00"
+	BlockPatch_2	off=2030, ops=func_4C02A0C4_Records_8+10, val0=255, val1=255, x10="\x00\x00"
 func_4C02B422_Records:	# 5 x REC_func_4C02B422_Records (8 bytes each); read by func_4C02B422 0x4C02B422 `mov (a1), a0`; func_4C02B422 0x4C02B422 `mov (a1), a3`; func_4C02B422 0x4C02B422 `movbu (4, a1), d0`
 	REC_func_4C02B422_Records	addr=0x84000760, f4=251, x5="\x00\x00\x00"
 	REC_func_4C02B422_Records	addr=0x84000773, f4=128, x5="\x00\x00\x00"
@@ -11955,16 +11955,16 @@ cre_tsk_Impl_Table_3:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C03D0C8 reads t
 	T_CTSK	tskatr="\x01\x00\x00\x00", task=ApTaskMain, itskpri=3, x14="\x00\x00", stksz=0x10000
 cre_tsk_Impl_Table_5:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C03D0C8 reads through its argument a0 (passed by GuiTaskObjectsCreate 0x484141DB `call cre_tsk, 0, 0`, +7 more calls); the layout cre_tsk_Impl 0x4C03D154 reads through its argument a0 (passed by cre_tsk 0x4C03D0C8 `call cre_tsk_Impl_entry, [d2,d3,a2], 0x2c`)
 	T_CTSK	tskatr="\x01\x00\x00\x00", task=DrawTaskMain, itskpri=3, x14="\x00\x00", stksz=6144
-cre_flg_Impl_Var_8:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C03C7EF reads through its argument a0 (passed by GuiTaskObjectsCreate 0x484141DB `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x4C03C87B reads through its argument a0 (passed by cre_flg 0x4C03C7EF `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00"
-cre_flg_Impl_Var_10:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C03C7EF reads through its argument a0 (passed by GuiTaskObjectsCreate 0x484141DB `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x4C03C87B reads through its argument a0 (passed by cre_flg 0x4C03C7EF `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00"
-cre_flg_Impl_Var_12:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C03C7EF reads through its argument a0 (passed by GuiTaskObjectsCreate 0x484141DB `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x4C03C87B reads through its argument a0 (passed by cre_flg 0x4C03C7EF `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00", f8=1
-cre_flg_Impl_Var_14:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C03C7EF reads through its argument a0 (passed by GuiTaskObjectsCreate 0x484141DB `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x4C03C87B reads through its argument a0 (passed by cre_flg 0x4C03C7EF `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00", f8=1
-cre_flg_Impl_Var_16:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C03C7EF reads through its argument a0 (passed by GuiTaskObjectsCreate 0x484141DB `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x4C03C87B reads through its argument a0 (passed by cre_flg 0x4C03C7EF `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00", f8=1
+cre_flg_Impl_Var_8:	# T_CFLG (12 bytes): the layout cre_flg 0x4C03C7EF reads through its argument a0 (passed by GuiTaskObjectsCreate 0x484141DB `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x4C03C87B reads through its argument a0 (passed by cre_flg 0x4C03C7EF `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	flgatr=8, x6="\x00\x00"
+cre_flg_Impl_Var_10:	# T_CFLG (12 bytes): the layout cre_flg 0x4C03C7EF reads through its argument a0 (passed by GuiTaskObjectsCreate 0x484141DB `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x4C03C87B reads through its argument a0 (passed by cre_flg 0x4C03C7EF `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	flgatr=8, x6="\x00\x00"
+cre_flg_Impl_Var_12:	# T_CFLG (12 bytes): the layout cre_flg 0x4C03C7EF reads through its argument a0 (passed by GuiTaskObjectsCreate 0x484141DB `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x4C03C87B reads through its argument a0 (passed by cre_flg 0x4C03C7EF `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	flgatr=8, x6="\x00\x00", iflgptn=1
+cre_flg_Impl_Var_14:	# T_CFLG (12 bytes): the layout cre_flg 0x4C03C7EF reads through its argument a0 (passed by GuiTaskObjectsCreate 0x484141DB `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x4C03C87B reads through its argument a0 (passed by cre_flg 0x4C03C7EF `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	flgatr=8, x6="\x00\x00", iflgptn=1
+cre_flg_Impl_Var_16:	# T_CFLG (12 bytes): the layout cre_flg 0x4C03C7EF reads through its argument a0 (passed by GuiTaskObjectsCreate 0x484141DB `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x4C03C87B reads through its argument a0 (passed by cre_flg 0x4C03C7EF `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	flgatr=8, x6="\x00\x00", iflgptn=1
 KernelCyclicHandlerDefine_Table:	# REC_KernelCyclicHandlerDefine_ArgA0 (24 bytes): the layout KernelCyclicHandlerDefine 0x4C03C8D0 reads through its argument a0 (passed by GuiTasksStart 0x4841428E `call KernelCyclicHandlerDefine_entry, [d2,d3,a2,a3], 0x1c`)
 	REC_KernelCyclicHandlerDefine_ArgA0	x4="\x01\x00\x00\x00", proc=func_484141CC, f12=1, x18="\x00\x00", KernelCyclicSchedule_d0=1
 KernelCyclicHandlerDefine_Table_3:	# REC_KernelCyclicHandlerDefine_ArgA0 (24 bytes): the layout KernelCyclicHandlerDefine 0x4C03C8D0 reads through its argument a0 (passed by GuiTasksStart 0x4841428E `call KernelCyclicHandlerDefine_entry, [d2,d3,a2,a3], 0x1c`)
@@ -12026,8 +12026,8 @@ PartHasDspUnit_Table_End:	.long	0xffffffff	# the end marker of PartHasDspUnit_Ta
 SetModeLed_Table:	# 16 x u8, 2..255; read by SetModeLed_entry 0x48416590: `movbu  (d3, a0), d0`
 	tab_u8	255, 7, 6, 8, 255, 3, 2, 255, 17, 18, 14, 19, 255, 255, 255, 255
 
-cre_flg_Impl_Var_18:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C03C7EF reads through its argument a0 (passed by GuiTaskObjectsCreate 0x484141DB `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x4C03C87B reads through its argument a0 (passed by cre_flg 0x4C03C7EF `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00", f8=1
+cre_flg_Impl_Var_18:	# T_CFLG (12 bytes): the layout cre_flg 0x4C03C7EF reads through its argument a0 (passed by GuiTaskObjectsCreate 0x484141DB `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x4C03C87B reads through its argument a0 (passed by cre_flg 0x4C03C7EF `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	flgatr=8, x6="\x00\x00", iflgptn=1
 
 Str_604:	.asciz "604"
 
@@ -19094,8 +19094,8 @@ StylePartFieldEmit_Table:	# 24 x REC_StylePartFieldEmit_Table (2 bytes each); re
 	REC_StylePartFieldEmit_Table	kind=176, f1=17
 	REC_StylePartFieldEmit_Table	kind=176, f1=13
 
-StylePartTemplateDefault_Result_0:	# REC_StylePartTemplateDefault_Result (21 bytes), then 131 x u8 the code indexes from +0 (read by StylePartFieldEmit 0x4844085D `movbu (d3, a1), d2`; StylePartFieldEmit 0x4844085D `movbu (d3, a1), d3`)
-	REC_StylePartTemplateDefault_Result	s0="\xFF\xFF", key=255, f3=255, f4=255, x5="\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x7F\x00", f20=64
+StylePartTemplateDefault_Result_0:	# StylePartTemplate (21 bytes), then 131 x u8 the code indexes from +0 (read by StylePartFieldEmit 0x4844085D `movbu (d3, a1), d2`; StylePartFieldEmit 0x4844085D `movbu (d3, a1), d3`)
+	StylePartTemplate	s0="\xFF\xFF", pc_d1=255, pc_d2=255, pc_d3=255, x5="\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x7F\x00", bend_d2=64
 	tab_u8	64, 64, 64, 255, 16, 255, 255, 255, 255, 255, 1, 255, 255, 8, 17, 255	# [0]
 	tab_u8	23, 255, 255, 21, 22, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [16]
 	tab_u8	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [32]
@@ -19195,8 +19195,8 @@ TempoSyncSetDispatch_Records:	# 16 x REC_TempoSyncSetDispatch_Records (8 bytes e
 
 cre_tsk_Impl_Table_7:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C03D0C8 reads through its argument a0 (passed by GuiTaskObjectsCreate 0x484141DB `call cre_tsk, 0, 0`, +7 more calls); the layout cre_tsk_Impl 0x4C03D154 reads through its argument a0 (passed by cre_tsk 0x4C03D0C8 `call cre_tsk_Impl_entry, [d2,d3,a2], 0x2c`)
 	T_CTSK	tskatr="\x01\x00\x00\x00", task=TickJobsTask, itskpri=3, x14="\x00\x00", stksz=24576
-cre_flg_Impl_Var_20:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C03C7EF reads through its argument a0 (passed by GuiTaskObjectsCreate 0x484141DB `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x4C03C87B reads through its argument a0 (passed by cre_flg 0x4C03C7EF `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00"
+cre_flg_Impl_Var_20:	# T_CFLG (12 bytes): the layout cre_flg 0x4C03C7EF reads through its argument a0 (passed by GuiTaskObjectsCreate 0x484141DB `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x4C03C87B reads through its argument a0 (passed by cre_flg 0x4C03C7EF `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	flgatr=8, x6="\x00\x00"
 
 func_4844826E_Table:
 	.long	loc_484482B0

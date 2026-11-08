@@ -4539,7 +4539,7 @@ DpSmf1TrackScan_entry:
     mov     (0x5006a988), a0
     mov     0xe, d0
     clr     d1
-    call    VfsFileSeek_entry, [d2,a2,a3], 0x1c
+    call    FsSeek_entry, [d2,a2,a3], 0x1c
     clr     d3
     call    DpTimebaseGet, 0, 0
     exthu   d0
@@ -4580,7 +4580,7 @@ loc_484827A2:
     mov     1, d0
     mov     8, d1
     mov     (0x5006a988), a1
-    call    VfsFileRead_entry, [d2,a2,a3], 0x20
+    call    FsRead_entry, [d2,a2,a3], 0x20
     mov     d0, d1
     exth    d1
     cmp     0, d1
@@ -4618,7 +4618,7 @@ loc_48482806:
     mov     1, d0
     mov     0x400, d1
     mov     (0x5006a988), a1
-    call    VfsFileRead_entry, [d2,a2,a3], 0x20
+    call    FsRead_entry, [d2,a2,a3], 0x20
     mov     d0, d1
     exth    d1
     cmp     0, d1
@@ -4648,7 +4648,7 @@ loc_4848285B:
     add     a2, a0
     mov     1, d0
     mov     (0x5006a988), a1
-    call    VfsFileRead_entry, [d2,a2,a3], 0x20
+    call    FsRead_entry, [d2,a2,a3], 0x20
     mov     d0, d1
     exth    d1
     cmp     0, d1
@@ -4674,12 +4674,12 @@ loc_48482898:
     movhu   d0, (a0)
 loc_4848289E:
     mov     (0x5006a988), a0
-    call    VfsFileTell, 0, 0
+    call    FsTell, 0, 0
     mov     d0, (0x490, a2)
     mov     (a3), d0
     mov     (0x5006a988), a0
     mov     1, d1
-    call    VfsFileSeek_entry, [d2,a2,a3], 0x1c
+    call    FsSeek_entry, [d2,a2,a3], 0x1c
     mov     (0x18, sp), a0
     clr     d0
     movhu   d0, (a0)
@@ -5570,7 +5570,7 @@ loc_48482F7C:
     clr     d1
     mov     (a0), d0
     mov     (0x5006a988), a0
-    call    VfsFileSeek_entry, [d2,a2,a3], 0x1c
+    call    FsSeek_entry, [d2,a2,a3], 0x1c
     mov     (a2), d0
     cmp     0x400, d0
     bcs     loc_48482FD2
@@ -5578,7 +5578,7 @@ loc_48482F7C:
     mov     1, d0
     mov     0x400, d1
     mov     (0x5006a988), a1
-    call    VfsFileRead_entry, [d2,a2,a3], 0x20
+    call    FsRead_entry, [d2,a2,a3], 0x20
     cmp     0, d0
     bge     loc_48482FB1
     mov     -2, d0
@@ -5603,7 +5603,7 @@ loc_48482FD2:
     mov     (0x18, sp), a0
     mov     1, d0
     mov     (0x5006a988), a1
-    call    VfsFileRead_entry, [d2,a2,a3], 0x20
+    call    FsRead_entry, [d2,a2,a3], 0x20
     mov     d0, d1
     exth    d1
     cmp     0, d1
@@ -5626,7 +5626,7 @@ loc_48483007:
     clr     d0
     movhu   d0, (a3)
     mov     (0x5006a988), a0
-    call    VfsFileTell, 0, 0
+    call    FsTell, 0, 0
     mov     (0x20, sp), a0
     mov     d0, (a0)
 loc_4848301A:
@@ -6062,7 +6062,7 @@ loc_4848333F:
     cmp     0, d0
     bne     loc_48483356
     mov     (0x5006a988), a0
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
 loc_48483356:
     ret     [a2], 0x14
 # DpSmf1StreamOpen  (CPU 0x48483359)
@@ -6077,7 +6077,7 @@ DpSmf1StreamOpen_entry:
     mov     0x50060da4, d0
     mov     d0, (DpSmf1ReaderTask_Var_2)
     mov     Str_rb_55, a1
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     mov     a0, (0x5006a988)
     cmp     0, a0
     bne     loc_484833A0

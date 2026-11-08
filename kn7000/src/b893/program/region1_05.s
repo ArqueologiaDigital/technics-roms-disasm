@@ -21971,7 +21971,7 @@ LedBlinkRun_entry:
     cmp     0, d0
     beq     loc_484AE59D
     movhu   (0x5006bfbe), d0
-    mov     func_484AE5C0_Var, a0
+    mov     LedProcTableDispatch_Var, a0
     call    LedProcTableDispatch_entry, [d2,a2], 0x10
 loc_484AE59D:
     movhu   (0x5006bfc2), d0

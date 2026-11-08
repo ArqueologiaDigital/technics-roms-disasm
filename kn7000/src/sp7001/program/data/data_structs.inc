@@ -1658,22 +1658,22 @@
 	.byte	\test_arg
 .endm
 
-# REC_InOutTestWindowProc_Var_2: 4-byte records (InOutTestWindowProc_Var_2, 15 records); fields, and what reads them:
+# InOutTestTextPos: 4-byte records (InOutTestWindowProc_Var_2, 15 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   f0           u16            InOutTestWindowProc 0x484A1AED `movhu (a1), d0`; InOutTestWindowProc 0x484A1AED `movhu (a2), d0`
-#   +2   f2           u16            InOutTestWindowProc 0x484A1AED `movhu (2, a1), d0`; InOutTestWindowProc 0x484A1AED `movhu (2, a2), d0`
-.macro REC_InOutTestWindowProc_Var_2 f0=0, f2=0
-	.word	\f0
-	.word	\f2
+#   +0   x            u16            InOutTestWindowProc 0x484A1AED `movhu (a1), d0`; InOutTestWindowProc 0x484A1AED `movhu (a2), d0`
+#   +2   y            u16            InOutTestWindowProc 0x484A1AED `movhu (2, a1), d0`; InOutTestWindowProc 0x484A1AED `movhu (2, a2), d0`
+.macro InOutTestTextPos x=0, y=0
+	.word	\x
+	.word	\y
 .endm
 
-# REC_InOutTestWindowProc_Records: 4-byte records (InOutTestWindowProc_Records, 7 records); fields, and what reads them:
+# InOutTestStatePos: 4-byte records (InOutTestWindowProc_Records, 7 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   f0           u16            InOutTestWindowProc 0x484A1AED `movhu (a0), d1`; InOutTestWindowProc 0x484A1AED `movhu (a1), d0`
-#   +2   f2           u16            InOutTestWindowProc 0x484A1AED `movhu (2, a0), d1`; InOutTestWindowProc 0x484A1AED `movhu (2, a1), d0`
-.macro REC_InOutTestWindowProc_Records f0=0, f2=0
-	.word	\f0
-	.word	\f2
+#   +0   x            u16            InOutTestWindowProc 0x484A1AED `movhu (a0), d1`; InOutTestWindowProc 0x484A1AED `movhu (a1), d0`
+#   +2   y            u16            InOutTestWindowProc 0x484A1AED `movhu (2, a0), d1`; InOutTestWindowProc 0x484A1AED `movhu (2, a1), d0`
+.macro InOutTestStatePos x=0, y=0
+	.word	\x
+	.word	\y
 .endm
 
 # REC_BoardTestLineDraw_Records: 12-byte records (BoardTestLineDraw_Records, 24 records); fields, and what reads them:
@@ -3867,7 +3867,7 @@
 
 # REC_func_4C012387_Records: 128-byte records (func_4C012387_Records, 3 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   index        128 x 1 (s8)   func_4C012387 0x4C012387 `movbu (d1, a0), d1`; func_4C02FED1 0x4C02FED1 `movbu (d0, a0), d2` (+1)
+#   +0   index        128 x 1 (s8)   func_4C012387 0x4C012387 `movbu (d1, a0), d1`; TgVeloSenseApply 0x4C02FED1 `movbu (d0, a0), d2` (+1)
 .macro REC_func_4C012387_Records index:vararg
 	.byte	\index
 .endm
@@ -4398,16 +4398,16 @@
 	.byte	\f3
 .endm
 
-# REC_VfsFileOpen_Records: 40-byte records (VfsFileOpen_Records, 3 records); fields, and what reads them:
+# REC_FsOpen_Records: 40-byte records (FsOpen_Records, 3 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   x0           u8[2]          no reader seen
-#   +2   f2           u8             MediaTypeCacheSet 0x484706D7 `movbu d0, (VfsFileOpen_Records+2)`
+#   +2   f2           u8             MediaTypeCacheSet 0x484706D7 `movbu d0, (FsOpen_Records+2)`
 #   +3   x3           u8[17]         no reader seen
 #   +20  p20          ptr            no reader seen
 #   +24  p24          ptr            no reader seen
-#   +28  text         ptr            VfsFileOpen 0x4846D7EA `mov (a2), a1`
+#   +28  text         ptr            FsOpen 0x4846D7EA `mov (a2), a1`
 #   +32  x32          u8[8]          no reader seen
-.macro REC_VfsFileOpen_Records x0, f2=0, x3, p20=0, p24=0, text=0, x32
+.macro REC_FsOpen_Records x0, f2=0, x3, p20=0, p24=0, text=0, x32
 	.ascii	"\x0"
 	.byte	\f2
 	.ascii	"\x3"
@@ -4763,22 +4763,22 @@
 	.ascii	"\x0"
 .endm
 
-# REC_StylePartTemplateDefault_Result: 21-byte records (StylePartTemplateDefault_Result, 1 records); fields, and what reads them:
+# StylePartTemplate: 21-byte records (StylePartTemplateDefault_Result, 1 records); fields, and what reads them:
 #   +0   s0           char[2]        StyleTemplatesDefaultInit 0x484418DB `call memcpy_entry, [a2,a3], 8`; PadTemplatesDefaultInit 0x48443CB7 `call memcpy_entry, [a2,a3], 8`
-#   +2   key          u8             StylePartFieldEmit 0x4844084C `movbu (2, a1), d2`
-#   +3   f3           u8             StylePartFieldEmit 0x4844084C `movbu (3, a1), d0`
-#   +4   f4           u8             StylePartFieldEmit 0x4844084C `movbu (4, a1), d0`
+#   +2   pc_d1        u8             StylePartFieldEmit 0x4844084C `movbu (2, a1), d2`
+#   +3   pc_d2        u8             StylePartFieldEmit 0x4844084C `movbu (3, a1), d0`
+#   +4   pc_d3        u8             StylePartFieldEmit 0x4844084C `movbu (4, a1), d0`
 #   +5   x5           u8[14]         no reader seen
-#   +19  key_         u8             StylePartFieldEmit 0x4844084C `movbu (0x13, a1), d2`
-#   +20  f20          u8             StylePartFieldEmit 0x4844084C `movbu (0x14, a1), d0`
-.macro REC_StylePartTemplateDefault_Result s0, key=0, f3=0, f4=0, x5, key_=0, f20=0
+#   +19  bend_d1      u8             StylePartFieldEmit 0x4844084C `movbu (0x13, a1), d2`
+#   +20  bend_d2      u8             StylePartFieldEmit 0x4844084C `movbu (0x14, a1), d0`
+.macro StylePartTemplate s0, pc_d1=0, pc_d2=0, pc_d3=0, x5, bend_d1=0, bend_d2=0
 	.ascii	"\s0"
-	.byte	\key
-	.byte	\f3
-	.byte	\f4
+	.byte	\pc_d1
+	.byte	\pc_d2
+	.byte	\pc_d3
 	.ascii	"\x5"
-	.byte	\key_
-	.byte	\f20
+	.byte	\bend_d1
+	.byte	\bend_d2
 .endm
 
 # REC_func_4845FE4A_Table_p0: 96-byte records (func_4845FE4A_Table_p0, 6 records); fields, and what reads them:
@@ -5165,26 +5165,6 @@
 	.ascii	"\x0"
 .endm
 
-# REC_M3HookDispatch_Selected: 12-byte records (M3HookDispatch_Selected, 8 records); fields, and what reads them:
-#   +0   key          u32            M3HookDispatch 0x4C0216FD `mov (a1), d1`
-#   +4   key_         u32            M3HookDispatch 0x4C0216FD `mov (a2), d3`
-#   +8   proc         ptr            M3HookDispatch 0x4C0216FD `mov (a3), d0`
-.macro REC_M3HookDispatch_Selected key=0, key_=0, proc=0
-	.long	\key
-	.long	\key_
-	.long	\proc
-.endm
-
-# REC_func_4C0217BB_Selected: 12-byte records (func_4C0217BB_Selected, 9 records); fields, and what reads them:
-#   +0   key          u32            func_4C0217BB 0x4C0217BB `mov (a1), d3`
-#   +4   key_         u32            func_4C0217BB 0x4C0217BB `mov (a2), d1`
-#   +8   proc         ptr            func_4C0217BB 0x4C0217BB `mov (a3), d0`
-.macro REC_func_4C0217BB_Selected key=0, key_=0, proc=0
-	.long	\key
-	.long	\key_
-	.long	\proc
-.endm
-
 # REC_PostEvent_Records_p4: 410-byte records (PostEvent_Records_p4, 1 records); fields, and what reads them:
 #   +0   f0           u16            StyleEraFirstStyleGet 0x4847D628 `movhu (a0), d0`; StyleEraStep 0x4847D784 `movhu (a0), d0`
 #   +2   x2           u8[408]        no reader seen
@@ -5313,29 +5293,29 @@
 	.long	\stksz
 .endm
 
-# REC_cre_flg_ArgA0: 12-byte records (cre_flg_ArgA0, 10 records); fields, and what reads them:
+# T_CFLG: 12-byte records (cre_flg_ArgA0, 10 records); fields, and what reads them:
 #   (the layout cre_flg 0x4C03CA44 reads through its argument a0 (passed by GuiTaskObjectsCreate 0x484141DB `call cre_flg, 0, 0`, +4 more calls))
 #   (the layout cre_flg_Impl 0x4C03CAD0 reads through its argument a0 (passed by cre_flg 0x4C03CA44 `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`))
-#   +0   f0           u32            cre_flg_Impl 0x4C03CAD0 `mov (a3), d2`
-#   +4   f4           u16            cre_flg_Impl 0x4C03CAD0 `movhu (4, a3), d2`
+#   +0   exinf        u32            cre_flg_Impl 0x4C03CAD0 `mov (a3), d2`
+#   +4   flgatr       u16            cre_flg_Impl 0x4C03CAD0 `movhu (4, a3), d2`
 #   +6   x6           u8[2]          no reader seen
-#   +8   f8           u32            cre_flg_Impl 0x4C03CAD0 `mov (8, a3), d2`
-.macro REC_cre_flg_ArgA0 f0=0, f4=0, x6, f8=0
-	.long	\f0
-	.word	\f4
+#   +8   iflgptn      u32            cre_flg_Impl 0x4C03CAD0 `mov (8, a3), d2`
+.macro T_CFLG exinf=0, flgatr=0, x6, iflgptn=0
+	.long	\exinf
+	.word	\flgatr
 	.ascii	"\x6"
-	.long	\f8
+	.long	\iflgptn
 .endm
 
-# REC_cre_flg_ArgA0_s8: 8-byte records (cre_flg_ArgA0_s8, 1 records); fields, and what reads them:
+# T_CFLG_s8: 8-byte records (cre_flg_ArgA0_s8, 1 records); fields, and what reads them:
 #   (the layout cre_flg 0x4C03CA44 reads through its argument a0 (passed by GuiTaskObjectsCreate 0x484141DB `call cre_flg, 0, 0`, +4 more calls))
 #   (the layout cre_flg_Impl 0x4C03CAD0 reads through its argument a0 (passed by cre_flg 0x4C03CA44 `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`))
-#   +0   f0           u32            cre_flg_Impl 0x4C03CAD0 `mov (a3), d2`
-#   +4   f4           u16            cre_flg_Impl 0x4C03CAD0 `movhu (4, a3), d2`
+#   +0   exinf        u32            cre_flg_Impl 0x4C03CAD0 `mov (a3), d2`
+#   +4   flgatr       u16            cre_flg_Impl 0x4C03CAD0 `movhu (4, a3), d2`
 #   +6   x6           u8[2]          no reader seen
-.macro REC_cre_flg_ArgA0_s8 f0=0, f4=0, x6
-	.long	\f0
-	.word	\f4
+.macro T_CFLG_s8 exinf=0, flgatr=0, x6
+	.long	\exinf
+	.word	\flgatr
 	.ascii	"\x6"
 .endm
 
@@ -5533,17 +5513,17 @@
 	.long	\SdMediaStateGet_d0
 .endm
 
-# REC_SdCommandSend_ArgA0: 10-byte records (SdCommandSend_ArgA0, 9 records); fields, and what reads them:
+# SdCommandFrame: 10-byte records (SdCommandSend_ArgA0, 9 records); fields, and what reads them:
 #   (the layout SdCommandSend 0x4854C280 reads through its argument a0 (passed by SdWorkerCmdHandler 0x4854AFD8 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +2 more calls))
-#   +0   SdSpiClockSet_d0 u16            SdCommandSend 0x4854C280 `movhu (a3), d0`
-#   +2   SdResponseScan_d0 u16            SdCommandSend 0x4854C280 `movhu (2, a3), d0`
-#   +4   f4           u8             SdSpiSendBuf 0x4854BF8C `movbu (d0, a0), d1`
+#   +0   clock_mode   u16            SdCommandSend 0x4854C280 `movhu (a3), d0`
+#   +2   resp_type    u16            SdCommandSend 0x4854C280 `movhu (2, a3), d0`
+#   +4   cmd          u8             SdSpiSendBuf 0x4854BF8C `movbu (d0, a0), d1`
 #   +5   x5           u8[4]          no reader seen
-#   +9   f9           u8             SdCommandSend 0x4854C280 `movbu d0, (5, a2)`
-.macro REC_SdCommandSend_ArgA0 SdSpiClockSet_d0=0, SdResponseScan_d0=0, f4=0, x5, f9=0
-	.word	\SdSpiClockSet_d0
-	.word	\SdResponseScan_d0
-	.byte	\f4
+#   +9   crc7         u8             SdCommandSend 0x4854C280 `movbu d0, (5, a2)`
+.macro SdCommandFrame clock_mode=0, resp_type=0, cmd=0, x5, crc7=0
+	.word	\clock_mode
+	.word	\resp_type
+	.byte	\cmd
 	.ascii	"\x5"
-	.byte	\f9
+	.byte	\crc7
 .endm

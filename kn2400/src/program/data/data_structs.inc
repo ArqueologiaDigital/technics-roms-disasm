@@ -4230,7 +4230,7 @@
 #   +2   key_         s16            PostEventForTask 0x485FFD4C `movhu (2, a0), d3`; PostEventForTask_entry_L99 0x485FFDEA `movhu (2, a0), d3` (+12)
 #   +4   key__        s16            PostEventForTask 0x485FFD4C `movhu (4, a0), d0`; PostEventForTask_entry_Lce 0x485FFE1F `movhu (4, a0), d0` (+2)
 #   +6   flag_id      s16            ApTaskMain_L56 0x485EBE04 `movhu (6, a0), d0`; func_485EBE7F_L3f 0x485EBEBE `movhu (6, a0), d0` (+8)
-#   +8   flag_id_     s16            DrawRing_ResetLocked 0x485F942F `movhu (8, a0), d0`; DrawRing_ResetLocked 0x485F942F `movhu (8, a2), d0` (+24)
+#   +8   flag_id_     s16            InitDrawTask_Impl 0x485F942F `movhu (8, a0), d0`; InitDrawTask_Impl 0x485F942F `movhu (8, a2), d0` (+24)
 #   +10  x10          u8[2]          no reader seen
 #   +12  index        u32            ProcCall_entry_L28 0x48600C26 `mov (0xc, a0), d0`; ProcCall_entry_L28 0x48600C26 `mov (0xc, a0), d1` (+7)
 #   +16  f16          u32            SendEventForTask 0x485FFCBD `mov (0x10, a0), d0`; GetEventForTask_entry_L5c 0x485FFF5B `mov (0x10, a0), d0` (+3)
@@ -4294,16 +4294,16 @@
 	.byte	\f3
 .endm
 
-# REC_VfsFileOpen_entry_L103_Records: 40-byte records (VfsFileOpen_entry_L103_Records, 3 records); fields, and what reads them:
+# REC_FsOpen_entry_L103_Records: 40-byte records (FsOpen_entry_L103_Records, 3 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
 #   +0   x0           u8[2]          no reader seen
-#   +2   f2           u8             MediaTypeCacheSet 0x48631767 `movbu d0, (VfsFileOpen_entry_L103_Records+2)`
+#   +2   f2           u8             MediaTypeCacheSet 0x48631767 `movbu d0, (FsOpen_entry_L103_Records+2)`
 #   +3   x3           u8[17]         no reader seen
 #   +20  p20          ptr            no reader seen
 #   +24  p24          ptr            no reader seen
-#   +28  text         ptr            VfsFileOpen_entry_L103 0x4862E982 `mov (a2), a1`
+#   +28  text         ptr            FsOpen_entry_L103 0x4862E982 `mov (a2), a1`
 #   +32  x32          u8[8]          no reader seen
-.macro REC_VfsFileOpen_entry_L103_Records x0, f2=0, x3, p20=0, p24=0, text=0, x32
+.macro REC_FsOpen_entry_L103_Records x0, f2=0, x3, p20=0, p24=0, text=0, x32
 	.ascii	"\x0"
 	.byte	\f2
 	.ascii	"\x3"
@@ -4435,22 +4435,22 @@
 	.ascii	"\x0"
 .endm
 
-# REC_StylePartTemplateDefault_Result: 21-byte records (StylePartTemplateDefault_Result, 1 records); fields, and what reads them:
+# StylePartTemplate: 21-byte records (StylePartTemplateDefault_Result, 1 records); fields, and what reads them:
 #   +0   s0           char[2]        func_5017E6B4_entry_L2 0x5017E6BB `call memcpy_entry, [a2,a3], 8`; func_50180A94_entry_L2 0x50180A9B `call memcpy_entry, [a2,a3], 8`
-#   +2   key          u8             StylePartFieldEmit_entry_L2b 0x5017DCEF `movbu (2, a1), d2`
-#   +3   f3           u8             StylePartFieldEmit_entry_L2b 0x5017DCEF `movbu (3, a1), d0`
-#   +4   f4           u8             StylePartFieldEmit_entry_L2b 0x5017DCEF `movbu (4, a1), d0`
+#   +2   pc_d1        u8             StylePartFieldEmit_entry_L2b 0x5017DCEF `movbu (2, a1), d2`
+#   +3   pc_d2        u8             StylePartFieldEmit_entry_L2b 0x5017DCEF `movbu (3, a1), d0`
+#   +4   pc_d3        u8             StylePartFieldEmit_entry_L2b 0x5017DCEF `movbu (4, a1), d0`
 #   +5   x5           u8[14]         no reader seen
-#   +19  key_         u8             StylePartFieldEmit_entry_L71 0x5017DD35 `movbu (0x13, a1), d2`
-#   +20  f20          u8             StylePartFieldEmit_entry_L71 0x5017DD35 `movbu (0x14, a1), d0`
-.macro REC_StylePartTemplateDefault_Result s0, key=0, f3=0, f4=0, x5, key_=0, f20=0
+#   +19  bend_d1      u8             StylePartFieldEmit_entry_L71 0x5017DD35 `movbu (0x13, a1), d2`
+#   +20  bend_d2      u8             StylePartFieldEmit_entry_L71 0x5017DD35 `movbu (0x14, a1), d0`
+.macro StylePartTemplate s0, pc_d1=0, pc_d2=0, pc_d3=0, x5, bend_d1=0, bend_d2=0
 	.ascii	"\s0"
-	.byte	\key
-	.byte	\f3
-	.byte	\f4
+	.byte	\pc_d1
+	.byte	\pc_d2
+	.byte	\pc_d3
 	.ascii	"\x5"
-	.byte	\key_
-	.byte	\f20
+	.byte	\bend_d1
+	.byte	\bend_d2
 .endm
 
 # REC_func_50186924_Selected: 44-byte records (func_50186924_Selected, 7 records); fields, and what reads them:
@@ -4601,42 +4601,42 @@
 	.ascii	"\x1184"
 .endm
 
-# REC_func_486FBF8B_Table_p0: 8-byte records (func_486FBF8B_Table_p0, 985 records); fields, and what reads them:
-#   +0   p0           ptr            VoiceDirRemapFind_entry_L38 0x486FBFC8 `mov (a2), a2`
+# VoiceDirRemapNode: 8-byte records (func_486FBF8B_Table_p0, 985 records); fields, and what reads them:
+#   +0   next         ptr            VoiceDirRemapFind_entry_L38 0x486FBFC8 `mov (a2), a2`
 #   +4   key          u16            VoiceDirRemapFind_entry_L25 0x486FBFB5 `movhu (4, a2), d1`
 #   +6   x6           u8[2]          no reader seen
-.macro REC_func_486FBF8B_Table_p0 p0=0, key=0, x6
-	.long	\p0
+.macro VoiceDirRemapNode next=0, key=0, x6
+	.long	\next
 	.word	\key
 	.ascii	"\x6"
 .endm
 
-# REC_func_486FC03A_Table_p0: 8-byte records (func_486FC03A_Table_p0, 570 records); fields, and what reads them:
-#   +0   p0           ptr            VoiceDirClassFind_entry_L38 0x486FC077 `mov (a2), a2`
+# VoiceDirClassNode: 8-byte records (func_486FC03A_Table_p0, 570 records); fields, and what reads them:
+#   +0   next         ptr            VoiceDirClassFind_entry_L38 0x486FC077 `mov (a2), a2`
 #   +4   key          u16            VoiceDirClassFind_entry_L25 0x486FC064 `movhu (4, a2), d1`
 #   +6   x6           u8[2]          no reader seen
-.macro REC_func_486FC03A_Table_p0 p0=0, key=0, x6
-	.long	\p0
+.macro VoiceDirClassNode next=0, key=0, x6
+	.long	\next
 	.word	\key
 	.ascii	"\x6"
 .endm
 
-# REC_func_486FC122_Table_p0: 8-byte records (func_486FC122_Table_p0, 570 records); fields, and what reads them:
-#   +0   p0           ptr            VoiceDirIndexFind_entry_L38 0x486FC15F `mov (a2), a2`
+# VoiceDirIndexNode: 8-byte records (func_486FC122_Table_p0, 570 records); fields, and what reads them:
+#   +0   next         ptr            VoiceDirIndexFind_entry_L38 0x486FC15F `mov (a2), a2`
 #   +4   key          u16            VoiceDirIndexFind_entry_L25 0x486FC14C `movhu (4, a2), d1`
 #   +6   x6           u8[2]          no reader seen
-.macro REC_func_486FC122_Table_p0 p0=0, key=0, x6
-	.long	\p0
+.macro VoiceDirIndexNode next=0, key=0, x6
+	.long	\next
 	.word	\key
 	.ascii	"\x6"
 .endm
 
-# REC_func_486FC27A_Table_p0: 12-byte records (func_486FC27A_Table_p0, 645 records); fields, and what reads them:
-#   +0   p0           ptr            VoiceDirRefFind_entry_L38 0x486FC2B7 `mov (a2), a2`
+# VoiceDirRefNode: 12-byte records (func_486FC27A_Table_p0, 645 records); fields, and what reads them:
+#   +0   next         ptr            VoiceDirRefFind_entry_L38 0x486FC2B7 `mov (a2), a2`
 #   +4   key          u16            VoiceDirRefFind_entry_L25 0x486FC2A4 `movhu (4, a2), d1`
 #   +6   x6           u8[6]          no reader seen
-.macro REC_func_486FC27A_Table_p0 p0=0, key=0, x6
-	.long	\p0
+.macro VoiceDirRefNode next=0, key=0, x6
+	.long	\next
 	.word	\key
 	.ascii	"\x6"
 .endm
@@ -4705,26 +4705,6 @@
 	.ascii	"\x0"
 .endm
 
-# REC_M3SetSpecialDispatch_entry_L8c_Selected: 12-byte records (M3SetSpecialDispatch_entry_L8c_Selected, 8 records); fields, and what reads them:
-#   +0   key          u32            M3SetSpecialDispatch_entry_L8c 0x501502D5 `mov (a1), d1`
-#   +4   key_         u32            M3SetSpecialDispatch_entry_L8c 0x501502D5 `mov (a2), d3`
-#   +8   proc         ptr            M3SetSpecialDispatch_entry_L8c 0x501502D5 `mov (a3), d0`
-.macro REC_M3SetSpecialDispatch_entry_L8c_Selected key=0, key_=0, proc=0
-	.long	\key
-	.long	\key_
-	.long	\proc
-.endm
-
-# REC_func_50150302_entry_L9d_Selected: 12-byte records (func_50150302_entry_L9d_Selected, 9 records); fields, and what reads them:
-#   +0   key          u32            func_50150302_entry_L9d 0x501503A4 `mov (a1), d3`
-#   +4   key_         u32            func_50150302_entry_L9d 0x501503A4 `mov (a2), d1`
-#   +8   proc         ptr            func_50150302_entry_L9d 0x501503A4 `mov (a3), d0`
-.macro REC_func_50150302_entry_L9d_Selected key=0, key_=0, proc=0
-	.long	\key
-	.long	\key_
-	.long	\proc
-.endm
-
 # REC_func_4863DE13_Result_p20: 1-byte records (func_4863DE13_Result_p20, 6 records); fields, and what reads them:
 #   +0   x0           u8[1]          no reader seen
 .macro REC_func_4863DE13_Result_p20 x0
@@ -4781,18 +4761,18 @@
 	.long	\stksz
 .endm
 
-# REC_cre_flg_ArgA0: 12-byte records (cre_flg_ArgA0, 10 records); fields, and what reads them:
+# T_CFLG: 12-byte records (cre_flg_ArgA0, 10 records); fields, and what reads them:
 #   (the layout cre_flg 0x5018C994 reads through its argument a0 (passed by GuiTaskObjectsCreate 0x485EBBCD `call cre_flg, 0, 0`, +4 more calls))
 #   (the layout cre_flg_Impl 0x5018CA20 reads through its argument a0 (passed by cre_flg_L3d 0x5018C9D1 `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`))
-#   +0   f0           u32            cre_flg_Impl 0x5018CA20 `mov (a3), d2`
-#   +4   f4           u16            cre_flg_Impl 0x5018CA20 `movhu (4, a3), d2`
+#   +0   exinf        u32            cre_flg_Impl 0x5018CA20 `mov (a3), d2`
+#   +4   flgatr       u16            cre_flg_Impl 0x5018CA20 `movhu (4, a3), d2`
 #   +6   x6           u8[2]          no reader seen
-#   +8   f8           u32            cre_flg_Impl 0x5018CA20 `mov (8, a3), d2`
-.macro REC_cre_flg_ArgA0 f0=0, f4=0, x6, f8=0
-	.long	\f0
-	.word	\f4
+#   +8   iflgptn      u32            cre_flg_Impl 0x5018CA20 `mov (8, a3), d2`
+.macro T_CFLG exinf=0, flgatr=0, x6, iflgptn=0
+	.long	\exinf
+	.word	\flgatr
 	.ascii	"\x6"
-	.long	\f8
+	.long	\iflgptn
 .endm
 
 # REC_func_5015B863_ArgA0: 8-byte records (func_5015B863_ArgA0, 2 records); fields, and what reads them:
@@ -4945,15 +4925,15 @@
 	.long	\SdMediaStateGet_d0
 .endm
 
-# REC_SdCommandSend_ArgA0: 10-byte records (SdCommandSend_ArgA0, 4 records); fields, and what reads them:
+# SdCommandFrame: 10-byte records (SdCommandSend_ArgA0, 4 records); fields, and what reads them:
 #   (the layout SdCommandSend 0x486EDF52 reads through its argument a0 (passed by SdWorkerCmdHandler_entry_L84 0x486ECB16 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +4 more calls))
-#   +0   kind         u16            SdCommandSend 0x486EDF52 `movhu (a3), d0`; SdCommandSend_entry_L23 0x486EDF7A `movhu (a3), d0` (+2)
-#   +2   SdResponseScan_d0 u16            SdCommandSend_entry_L4e 0x486EDFA5 `movhu (2, a3), d0`
-#   +4   x4           u8[5]          no reader seen
-#   +9   f9           u8             SdCommandSend_entry_L23 0x486EDF7A `movbu d0, (5, a2)`
-.macro REC_SdCommandSend_ArgA0 kind=0, SdResponseScan_d0=0, x4, f9=0
-	.word	\kind
-	.word	\SdResponseScan_d0
-	.ascii	"\x4"
-	.byte	\f9
+#   +0   clock_mode   u16            SdCommandSend 0x486EDF52 `movhu (a3), d0`; SdCommandSend_entry_L23 0x486EDF7A `movhu (a3), d0` (+2)
+#   +2   resp_type    u16            SdCommandSend_entry_L4e 0x486EDFA5 `movhu (2, a3), d0`
+#   +4   cmd          u8[5]          no reader seen
+#   +9   crc7         u8             SdCommandSend_entry_L23 0x486EDF7A `movbu d0, (5, a2)`
+.macro SdCommandFrame clock_mode=0, resp_type=0, cmd, crc7=0
+	.word	\clock_mode
+	.word	\resp_type
+	.ascii	"\cmd"
+	.byte	\crc7
 .endm

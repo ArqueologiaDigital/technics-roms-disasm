@@ -88,12 +88,12 @@ LibF64Zero_Table:	# 2 x u32, 0..0; read by LibF64Zero 0x4C002FA3: `mov   (a0), d
 
 cre_tsk_Impl_Table:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C03D0B5 reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_tsk, 0, 0`, +8 more calls); the layout cre_tsk_Impl 0x4C03D141 reads through its argument a0 (passed by cre_tsk 0x4C03D0B5 `call cre_tsk_Impl_entry, [d2,d3,a2], 0x2c`)
 	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_4C003F80, itskpri=3, x14="\x00\x00", stksz=3072
-cre_flg_Impl_Var:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	x6="\x00\x00", f8=1
-cre_flg_Impl_Var_3:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	x6="\x00\x00"
-cre_flg_Impl_Var_5:	# REC_cre_flg_ArgA0_s8 (8 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0_s8	x6="\x00\x00"
+cre_flg_Impl_Var:	# T_CFLG (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	x6="\x00\x00", iflgptn=1
+cre_flg_Impl_Var_3:	# T_CFLG (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	x6="\x00\x00"
+cre_flg_Impl_Var_5:	# T_CFLG_s8 (8 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG_s8	x6="\x00\x00"
 
 cre_flg_Impl_Table:	# 10 x u32, 1..4294901760; read by cre_flg_Impl 0x4C03C868: `mov (8, a3), d2`
 	tab_u32	1, 16843009, 16843009, 16843009, 16843009, 16843009, 16843009, 65793	# [0]
@@ -3655,8 +3655,8 @@ func_4C01C067_Table:	# 11 x u16, 0..40; read by func_4C01C067 0x4C01C067: `movhu
 	tab_u16	0, 6, 8, 10, 13, 16, 19, 22, 25, 30, 40
 	.align	4, 0xFF	# pad after func_4C01C067_Table
 
-cre_flg_Impl_Var_6:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00", f8=1
+cre_flg_Impl_Var_6:	# T_CFLG (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	flgatr=8, x6="\x00\x00", iflgptn=1
 
 M3SendProcessTgc_Table:	# 12 x u32, 1275154489..1275154491; read by M3SendProcessTgc 0x4C01500B: `mov   (d0, a0), a0`
 	tab_u32	1275154489, 1275154489, 1275154489, 1275154489, 1275154489, 1275154489, 1275154489, 1275154489	# [0]
@@ -5026,8 +5026,8 @@ func_4840AE06_Records:	# 98 x REC_func_4840AE06_Records (8 bytes each); read by 
 
 cre_tsk_Impl_Table_3:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C03D0B5 reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_tsk, 0, 0`, +8 more calls); the layout cre_tsk_Impl 0x4C03D141 reads through its argument a0 (passed by cre_tsk 0x4C03D0B5 `call cre_tsk_Impl_entry, [d2,d3,a2], 0x2c`)
 	T_CTSK	tskatr="\x01\x00\x00\x00", task=DspManagerTask, itskpri=3, x14="\x00\x00", stksz=10240
-cre_flg_Impl_Var_8:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00"
+cre_flg_Impl_Var_8:	# T_CFLG (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	flgatr=8, x6="\x00\x00"
 
 cre_sem_Impl_Table:	# 2 x u32, 0..0; read by cre_sem_Impl 0x4C03C090: `mov (a3), d2`
 	tab_u32	0, 0
@@ -11507,16 +11507,16 @@ cre_tsk_Impl_Table_5:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C03D0B5 reads t
 	T_CTSK	tskatr="\x01\x00\x00\x00", task=ApTaskMain, itskpri=3, x14="\x00\x00", stksz=0x10000
 cre_tsk_Impl_Table_7:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C03D0B5 reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_tsk, 0, 0`, +8 more calls); the layout cre_tsk_Impl 0x4C03D141 reads through its argument a0 (passed by cre_tsk 0x4C03D0B5 `call cre_tsk_Impl_entry, [d2,d3,a2], 0x2c`)
 	T_CTSK	tskatr="\x01\x00\x00\x00", task=DrawTaskMain, itskpri=3, x14="\x00\x00", stksz=6144
-cre_flg_Impl_Var_10:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00"
-cre_flg_Impl_Var_12:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00"
-cre_flg_Impl_Var_14:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00", f8=1
-cre_flg_Impl_Var_16:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00", f8=1
-cre_flg_Impl_Var_18:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00", f8=1
+cre_flg_Impl_Var_10:	# T_CFLG (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	flgatr=8, x6="\x00\x00"
+cre_flg_Impl_Var_12:	# T_CFLG (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	flgatr=8, x6="\x00\x00"
+cre_flg_Impl_Var_14:	# T_CFLG (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	flgatr=8, x6="\x00\x00", iflgptn=1
+cre_flg_Impl_Var_16:	# T_CFLG (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	flgatr=8, x6="\x00\x00", iflgptn=1
+cre_flg_Impl_Var_18:	# T_CFLG (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	flgatr=8, x6="\x00\x00", iflgptn=1
 KernelCyclicHandlerDefine_Table:	# REC_KernelCyclicHandlerDefine_ArgA0 (24 bytes): the layout KernelCyclicHandlerDefine 0x4C03C8BD reads through its argument a0 (passed by GuiTasksStart 0x4841424C `call KernelCyclicHandlerDefine_entry, [d2,d3,a2,a3], 0x1c`)
 	REC_KernelCyclicHandlerDefine_ArgA0	x4="\x01\x00\x00\x00", proc=func_4841418A, f12=1, x18="\x00\x00", KernelCyclicSchedule_d0=1
 KernelCyclicHandlerDefine_Table_3:	# REC_KernelCyclicHandlerDefine_ArgA0 (24 bytes): the layout KernelCyclicHandlerDefine 0x4C03C8BD reads through its argument a0 (passed by GuiTasksStart 0x4841424C `call KernelCyclicHandlerDefine_entry, [d2,d3,a2,a3], 0x1c`)
@@ -11578,8 +11578,8 @@ PartHasDspUnit_Table_End:	.long	0xffffffff	# the end marker of PartHasDspUnit_Ta
 SetModeLed_Table:	# 16 x u8, 2..255; read by SetModeLed_entry 0x4841654E: `movbu  (d3, a0), d0`
 	tab_u8	255, 7, 6, 8, 255, 3, 2, 255, 17, 18, 14, 19, 255, 255, 255, 255
 
-cre_flg_Impl_Var_20:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00", f8=1
+cre_flg_Impl_Var_20:	# T_CFLG (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	flgatr=8, x6="\x00\x00", iflgptn=1
 
 Str_604:	.asciz "604"
 
@@ -18648,8 +18648,8 @@ StylePartFieldEmit_Table:	# 24 x REC_StylePartFieldEmit_Table (2 bytes each); re
 	REC_StylePartFieldEmit_Table	kind=176, f1=17
 	REC_StylePartFieldEmit_Table	kind=176, f1=13
 
-StylePartTemplateDefault_Result_0:	# REC_StylePartTemplateDefault_Result (21 bytes), then 131 x u8 the code indexes from +0 (read by StylePartFieldEmit 0x4844081B `movbu (d3, a1), d2`; StylePartFieldEmit 0x4844081B `movbu (d3, a1), d3`)
-	REC_StylePartTemplateDefault_Result	s0="\xFF\xFF", key=255, f3=255, f4=255, x5="\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x7F\x00", f20=64
+StylePartTemplateDefault_Result_0:	# StylePartTemplate (21 bytes), then 131 x u8 the code indexes from +0 (read by StylePartFieldEmit 0x4844081B `movbu (d3, a1), d2`; StylePartFieldEmit 0x4844081B `movbu (d3, a1), d3`)
+	StylePartTemplate	s0="\xFF\xFF", pc_d1=255, pc_d2=255, pc_d3=255, x5="\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x7F\x00", bend_d2=64
 	tab_u8	64, 64, 64, 255, 16, 255, 255, 255, 255, 255, 1, 255, 255, 8, 17, 255	# [0]
 	tab_u8	23, 255, 255, 21, 22, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [16]
 	tab_u8	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [32]
@@ -18749,8 +18749,8 @@ TempoSyncSetDispatch_Records:	# 16 x REC_TempoSyncSetDispatch_Records (8 bytes e
 
 cre_tsk_Impl_Table_9:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C03D0B5 reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_tsk, 0, 0`, +8 more calls); the layout cre_tsk_Impl 0x4C03D141 reads through its argument a0 (passed by cre_tsk 0x4C03D0B5 `call cre_tsk_Impl_entry, [d2,d3,a2], 0x2c`)
 	T_CTSK	tskatr="\x01\x00\x00\x00", task=TickJobsTask, itskpri=3, x14="\x00\x00", stksz=24576
-cre_flg_Impl_Var_22:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00"
+cre_flg_Impl_Var_22:	# T_CFLG (12 bytes): the layout cre_flg 0x4C03C7DC reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C868 reads through its argument a0 (passed by cre_flg 0x4C03C7DC `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	flgatr=8, x6="\x00\x00"
 
 func_4844822C_Table:
 	.long	loc_4844826E
@@ -39409,174 +39409,202 @@ AcPartSelectProc_Table:
 	.long	Str_APC_3
 	.long	Str_CONTROL_3
 
-Str_empty_781:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCB6E, 0x1FCB7A
-Str_empty_780:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCB80, 0x1FCB8C
-Str_empty_779:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCB92, 0x1FCB9E
-Str_empty_778:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCBA4, 0x1FCBB0
-Str_empty_777:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCBB6, 0x1FCBC2
-Str_empty_776:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCBC8, 0x1FCBD4
-Str_empty_775:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCBDA, 0x1FCBE6
-Str_empty_774:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCBEC, 0x1FCBF8
-
-AcAcdnTabProc_Block:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+AcAcdnTabProc_Block:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"  \x95  "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_2:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	"  \x95  "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_3:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	"     "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_4:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	" \x95\x95\x95 "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_5:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	" \x95 \x95 "
+	.asciz	"     "
+AcAcdnTabProc_Block_6:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	" \x95\x95\x95 "
+	.asciz	"     "
+AcAcdnTabProc_Block_7:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	"  \x95  "
+	.asciz	"     "
+AcAcdnTabProc_Block_8:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"  \x95  "
+	.asciz	"     "
+AcAcdnTabProc_Block_9:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
 	tab_u8	0, 32, 32, 32, 32, 0, 66, 65, 83, 83, 49, 0, 0, 32, 32, 32	# [0]
 	tab_u8	32, 0	# [16]
-AcAcdnTabProc_Block_2:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+AcAcdnTabProc_Block_10:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
 	tab_u8	0, 32, 32, 32, 32, 0, 66, 65, 83, 83, 50, 0, 0, 32, 32, 32	# [0]
 	tab_u8	32, 0	# [16]
-
-Str_empty_651:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCC22, 0x1FCC2E
-Str_empty_650:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCC34, 0x1FCC40
-Str_empty_631:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCC46, 0x1FCC52
-Str_empty_630:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCC58, 0x1FCC64
-Str_empty_629:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCC6A, 0x1FCC76
-Str_empty_628:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCC7C, 0x1FCC88
-Str_empty_627:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCC8E, 0x1FCC9A
-Str_empty_626:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCCA0, 0x1FCCAC
-
-AcAcdnTabProc_Block_3:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+AcAcdnTabProc_Block_11:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_12:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"  \x95  "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_13:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	"     "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_14:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	" \x95 \x95 "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_15:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	" \x95 \x95 "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_16:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	" \x95 \x95 "
+	.asciz	"     "
+AcAcdnTabProc_Block_17:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	"  \x95  "
+	.asciz	"     "
+AcAcdnTabProc_Block_18:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"  \x95  "
+	.asciz	"     "
+AcAcdnTabProc_Block_19:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
 	tab_u8	0, 32, 32, 32, 32, 0, 66, 65, 83, 83, 49, 0, 0, 32, 32, 32	# [0]
 	tab_u8	32, 0	# [16]
-AcAcdnTabProc_Block_4:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+AcAcdnTabProc_Block_20:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
 	tab_u8	0, 32, 32, 32, 32, 0, 66, 65, 83, 83, 50, 0, 0, 32, 32, 32	# [0]
 	tab_u8	32, 0	# [16]
-
-Str_empty_625:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCCD6, 0x1FCCE2
-Str_empty_624:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCCE8, 0x1FCCF4
-Str_empty_623:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCCFA, 0x1FCD06
-Str_empty_622:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCD0C, 0x1FCD18
-Str_empty_621:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCD1E, 0x1FCD2A
-Str_empty_620:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCD30, 0x1FCD3C
-Str_empty_619:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCD42, 0x1FCD4E
-Str_empty_618:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCD54, 0x1FCD60
-
-AcAcdnTabProc_Block_5:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+AcAcdnTabProc_Block_21:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_22:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"  \x95  "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_23:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	"     "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_24:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	" \x95 \x95 "
+	.asciz	"  \x95  "
+AcAcdnTabProc_Block_25:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	" \x95 \x95 "
+	.asciz	"     "
+AcAcdnTabProc_Block_26:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	" \x95 \x95 "
+	.asciz	"     "
+AcAcdnTabProc_Block_27:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"  \x95  "
+	.asciz	"  \x95  "
+	.asciz	"     "
+AcAcdnTabProc_Block_28:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"  \x95  "
+	.asciz	"     "
+AcAcdnTabProc_Block_29:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
 	tab_u8	0, 32, 32, 32, 32, 0, 66, 65, 83, 83, 49, 0, 0, 32, 32, 32	# [0]
 	tab_u8	32, 0	# [16]
-AcAcdnTabProc_Block_6:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+AcAcdnTabProc_Block_30:	# 18 bytes, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
 	tab_u8	0, 32, 32, 32, 32, 0, 66, 65, 83, 83, 50, 0, 0, 32, 32, 32	# [0]
 	tab_u8	32, 0	# [16]
-
-Str_empty_617:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCD8A, 0x1FCD96
-Str_empty_616:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCD9C, 0x1FCDA8
-Str_empty_615:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCDAE, 0x1FCDBA
-Str_empty_614:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCDC0, 0x1FCDCC
-Str_empty_613:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCDD2, 0x1FCDDE
-Str_empty_612:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCDE4, 0x1FCDF0
-Str_empty_611:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCDF6, 0x1FCE02
-Str_empty_610:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCE08, 0x1FCE14
-Str_empty_609:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCE1A, 0x1FCE26
-Str_empty_608:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b893.rom", 0x1FCE2C, 0x1FCE38
+AcAcdnTabProc_Block_31:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"     "
+AcAcdnTabProc_Block_32:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"     "
+AcAcdnTabProc_Block_33:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"     "
+AcAcdnTabProc_Block_34:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"     "
+AcAcdnTabProc_Block_35:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"     "
+AcAcdnTabProc_Block_36:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"     "
+AcAcdnTabProc_Block_37:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"     "
+AcAcdnTabProc_Block_38:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"     "
+AcAcdnTabProc_Block_39:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"     "
+AcAcdnTabProc_Block_40:	# 18 bytes, 3 NUL-ended text cells, copied whole by AcAcdnTabProc 0x4849968F: memcpy(.., 18)
+	.asciz	"     "
+	.asciz	"     "
+	.asciz	"     "
 
 AcAcdnTabProc_Table:
-	.long	Str_empty_781
-	.long	Str_empty_780
-	.long	Str_empty_779
-	.long	Str_empty_778
-	.long	Str_empty_777
-	.long	Str_empty_776
-	.long	Str_empty_775
-	.long	Str_empty_774
 	.long	AcAcdnTabProc_Block
 	.long	AcAcdnTabProc_Block_2
-	.long	Str_empty_651
-	.long	Str_empty_650
-	.long	Str_empty_631
-	.long	Str_empty_630
-	.long	Str_empty_629
-	.long	Str_empty_628
-	.long	Str_empty_627
-	.long	Str_empty_626
 	.long	AcAcdnTabProc_Block_3
 	.long	AcAcdnTabProc_Block_4
-	.long	Str_empty_625
-	.long	Str_empty_624
-	.long	Str_empty_623
-	.long	Str_empty_622
-	.long	Str_empty_621
-	.long	Str_empty_620
-	.long	Str_empty_619
-	.long	Str_empty_618
 	.long	AcAcdnTabProc_Block_5
 	.long	AcAcdnTabProc_Block_6
-	.long	Str_empty_617
-	.long	Str_empty_616
-	.long	Str_empty_615
-	.long	Str_empty_614
-	.long	Str_empty_613
-	.long	Str_empty_612
-	.long	Str_empty_611
-	.long	Str_empty_610
-	.long	Str_empty_609
-	.long	Str_empty_608
+	.long	AcAcdnTabProc_Block_7
+	.long	AcAcdnTabProc_Block_8
+	.long	AcAcdnTabProc_Block_9
+	.long	AcAcdnTabProc_Block_10
+	.long	AcAcdnTabProc_Block_11
+	.long	AcAcdnTabProc_Block_12
+	.long	AcAcdnTabProc_Block_13
+	.long	AcAcdnTabProc_Block_14
+	.long	AcAcdnTabProc_Block_15
+	.long	AcAcdnTabProc_Block_16
+	.long	AcAcdnTabProc_Block_17
+	.long	AcAcdnTabProc_Block_18
+	.long	AcAcdnTabProc_Block_19
+	.long	AcAcdnTabProc_Block_20
+	.long	AcAcdnTabProc_Block_21
+	.long	AcAcdnTabProc_Block_22
+	.long	AcAcdnTabProc_Block_23
+	.long	AcAcdnTabProc_Block_24
+	.long	AcAcdnTabProc_Block_25
+	.long	AcAcdnTabProc_Block_26
+	.long	AcAcdnTabProc_Block_27
+	.long	AcAcdnTabProc_Block_28
+	.long	AcAcdnTabProc_Block_29
+	.long	AcAcdnTabProc_Block_30
+	.long	AcAcdnTabProc_Block_31
+	.long	AcAcdnTabProc_Block_32
+	.long	AcAcdnTabProc_Block_33
+	.long	AcAcdnTabProc_Block_34
+	.long	AcAcdnTabProc_Block_35
+	.long	AcAcdnTabProc_Block_36
+	.long	AcAcdnTabProc_Block_37
+	.long	AcAcdnTabProc_Block_38
+	.long	AcAcdnTabProc_Block_39
+	.long	AcAcdnTabProc_Block_40
 
 Str_GERMAN_7:	.asciz "GERMAN "
 Str_FRENCH_7:	.asciz "FRENCH "

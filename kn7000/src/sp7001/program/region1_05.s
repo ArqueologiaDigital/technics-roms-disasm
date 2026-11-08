@@ -22224,7 +22224,7 @@ LedRedrawRequestsRun_entry:
     cmp     0, d1
     beq     loc_484AE6FC
     exthu   d0
-    mov     func_484AE7BC_Var, a0
+    mov     LedProcTableDispatch_Var, a0
     call    LedProcTableDispatch_entry, [d2,a2], 0x10
     clr     d0
     movhu   d0, (0x5006bfcc)
@@ -22956,6 +22956,7 @@ loc_484AF0EB:
     call    func_484AF095_entry, [d2], 0x14
 loc_484AF0F0:
     ret     0, 8
+loc_484AF0F3:
     retf    0, 0
 
 func_484AF0F6:

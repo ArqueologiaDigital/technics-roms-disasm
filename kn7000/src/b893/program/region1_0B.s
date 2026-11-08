@@ -32,7 +32,7 @@ loc_48560020:
     beq     loc_48560052
     mov     a3, a0
     mov     Str_empty_721, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     bra     loc_4856005C
 loc_48560052:
     mov     (0x188, sp), a0
@@ -44,13 +44,13 @@ loc_4856005C:
     add     0x24, a2
     mov     a2, a0
     mov     Str_C_DCIM, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     Str_empty_720, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     mov     a3, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     movhu   (0x50091a76), d0
     exth    d0
     call    func_4855FFC5_entry, [d2,d3,a2], 0xc
@@ -84,7 +84,7 @@ loc_485600B4:
     mov     (0x188, sp), a0
     mov     a3, a1
     mov     8, d0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     mov     (0x188, sp), a0
     clr     d0
     movbu   d0, (8, a0)
@@ -111,7 +111,7 @@ loc_485600F3:
     mov     (0x188, sp), a0
     mov     a3, a1
     mov     8, d0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     mov     (0x188, sp), a0
     clr     d0
     movbu   d0, (8, a0)
@@ -177,7 +177,7 @@ SdSmfSaveNameSet_entry:
     mov     a0, a1
     mov     0x10, d0
     mov     0x50083d37, a0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     clr     d0
     movbu   d0, (0x50083d47)
     ret     [a2], 0x18
@@ -193,7 +193,7 @@ SdPlaylistNameBufSet_entry:
     mov     a0, a1
     mov     0x10, d0
     mov     0x50083d48, a0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     clr     d0
     movbu   d0, (0x50083d58)
     ret     [a2], 0x18
@@ -207,7 +207,7 @@ SdPlaylistNameBufReset:
 SdPlaylistNameBufReset_entry:
     mov     0x50083d48, a0
     mov     Str_NEW_PLAYLIST_4, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     ret     0, 0x10
 # SdSndPlaylistCountQuery  (CPU 0x485601f9)
 SdSndPlaylistCountQuery:
@@ -414,7 +414,7 @@ loc_48560369:
     call    SdPrivSmfFileNameGet_entry, [d2,a2], 0x18
     mov     a0, a1
     mov     (0x14, sp), a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     (0x18, sp), d0
     clr     d1
     clr     d2
@@ -708,7 +708,7 @@ func_4856053F_entry:
     mov     0x50083ca0, a3
     mov     8, d0
     mov     a3, a0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     mov     8, d0
     mov     d0, d1
     setlb
@@ -798,10 +798,10 @@ SdTechFolderNameFormat_entry:
     movbu   d0, (0x13, sp)
     mov     a2, a0
     mov     Str_TFLD, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a3, a1
     mov     a2, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     ret     [d2,d3,a2,a3], 0x24
 # SdTechFolderPathBuild  (CPU 0x48560609)
 SdTechFolderPathBuild:
@@ -813,10 +813,10 @@ SdTechFolderPathBuild_entry:
     call    SdKn7000DirPathGet, 0, 0
     mov     a0, a1
     mov     a3, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a3, a0
     mov     Str_empty_719, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     sp, a2
     add     0x10, a2
     mov     a2, a0
@@ -825,7 +825,7 @@ SdTechFolderPathBuild_entry:
     call    SdTechFolderNameFormat_entry, [d2,d3,a2,a3], 0x24
     mov     a2, a1
     mov     a3, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     ret     [d2,a2,a3], 0x28
 # SdKn7000DirPathGet  (CPU 0x48560643)
 SdKn7000DirPathGet:
@@ -864,14 +864,14 @@ SdCustomDirPathBuild_entry:
     call    SdKn7000DirPathGet, 0, 0
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     Str_empty_718, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     call    SdCustomDirNameGet, 0, 0
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     ret     [a2], 0x14
 # SdCustomDirNameGet  (CPU 0x485606b5)
 SdCustomDirNameGet:
@@ -888,10 +888,10 @@ SdImexportPathBuild:
 SdImexportPathBuild_entry:
     mov     a0, a2
     mov     Str_C_15, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     Str_IMEXPORT_3, a1
     mov     a2, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     ret     [a2], 0x14
 # SdImexportDirNameGet  (CPU 0x485606eb)
 SdImexportDirNameGet:
@@ -960,7 +960,7 @@ func_48560734_entry:
     mov     a3, a0
     mov     6, d0
     mov     a2, a1
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     mov     0xa, d2
     mov     d3, d0
     inc     d0
@@ -978,7 +978,7 @@ func_48560734_entry:
     movbu   d0, (8, a3)
     mov     Str_MID_7, a1
     mov     a3, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
 loc_4856078F:
     ret     [d2,d3,a2,a3], 0x38
 
@@ -2446,7 +2446,7 @@ FavNameSetter_entry:
     mov     0x10, d0
     mov     a2, a1
     mov     d2, a0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
 loc_48561250:
     ret     [d2,a2], 0x1c
 
@@ -2849,14 +2849,14 @@ func_48561513_entry:
     call    SdKn7000DirPathGet, 0, 0
     mov     a0, a1
     mov     a3, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a3, a0
     mov     Str_empty_717, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     call    SdDirInfFileNameGet, 0, 0
     mov     a0, a1
     mov     a3, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a3, a0
     call    SdFileSizeGet_entry, [a2], 4
     cmp     d2, d0
@@ -2878,10 +2878,10 @@ loc_48561566:
     call    SdTechFolderPathBuild_entry, [d2,a2,a3], 0x28
     mov     a3, a0
     mov     Str_empty_716, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a3, a0
     mov     Str_empty_715, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     call    SdMediaEnsureInit_entry, 0, 0x1c
     mov     a3, a0
     mov     (0x14, sp), a1
@@ -2967,10 +2967,10 @@ loc_4856162D:
     beq     loc_4856169C
     mov     a3, a0
     mov     Str_empty_714, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a3, a0
     mov     Str_CST, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     call    SdMediaEnsureInit_entry, 0, 0x1c
     mov     sp, a2
     add     0x98, a2
@@ -3003,11 +3003,11 @@ loc_4856169C:
     call    SdSndDirPathCopy_entry, 0, 0x10
     mov     a3, a0
     mov     Str_empty_713, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     call    SdSndPlmFileNameGet, 0, 0
     mov     a0, a1
     mov     a3, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a3, a0
     call    SdFileSizeGet_entry, [a2], 4
     cmp     0, d0
@@ -3018,11 +3018,11 @@ loc_485616CD:
     call    SdSndDirPathCopy_entry, 0, 0x10
     mov     a3, a0
     mov     Str_empty_712, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     call    SdSndTkmFileNameGet, 0, 0
     mov     a0, a1
     mov     a3, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a3, a0
     call    SdFileSizeGet_entry, [a2], 4
     cmp     0, d0
@@ -3038,10 +3038,10 @@ loc_485616FE:
     beq     loc_4856176F
     mov     a3, a0
     mov     Str_empty_711, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a3, a0
     mov     Str_MID_6, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     call    SdMediaEnsureInit_entry, 0, 0x1c
     mov     sp, a2
     add     0x98, a2
@@ -3506,7 +3506,7 @@ loc_48561B32:
     mov     a0, a1
     mov     0x10, d0
     mov     a3, a0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     mov     a3, a0
     mov     0x10, d0
     call    func_48526C8F_entry, 0, 0x10
@@ -3639,7 +3639,7 @@ loc_48561C90:
     movbu   (d2, a2), d0
     mov     a3, a0
     mov     (0x18, sp), a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     a3, a0
     call    SdFileRemove_entry, [a2,a3], 0x98
     mov     d0, d3
@@ -3786,7 +3786,7 @@ loc_48561DD1:
     movbu   (d0, a3), d0
     mov     a2, a0
     mov     (0x18, sp), a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     a2, a0
     call    SdFileRemove_entry, [a2,a3], 0x98
 loc_48561DF7:
@@ -3900,7 +3900,7 @@ loc_48561EDE:
     movbu   (d2, a3), d0
     mov     a2, a0
     mov     (0x18, sp), a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     a2, a0
     call    SdFileRemove_entry, [a2,a3], 0x98
     mov     d0, d3
@@ -4319,11 +4319,11 @@ func_485622AD_entry:
     call    SdRootPathGet, 0, 0
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     call    SdPrivateDirNameGet, 0, 0
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     call    func_48562293_entry, [a2], 0x10
     mov     d0, d1
@@ -4334,11 +4334,11 @@ func_485622AD_entry:
 loc_485622DF:
     mov     a2, a0
     mov     Str_empty_710, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     call    SdTechnicsDirNameGet, 0, 0
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     call    func_48562293_entry, [a2], 0x10
     mov     d0, d1
@@ -4349,11 +4349,11 @@ loc_485622DF:
 loc_48562309:
     mov     a2, a0
     mov     Str_empty_709, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     call    SdKn7000DirNameGet, 0, 0
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     call    func_48562293_entry, [a2], 0x10
 loc_4856232B:
@@ -4411,11 +4411,11 @@ func_48562379_entry:
     call    SdRootPathGet, 0, 0
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     call    SdImexportDirNameGet, 0, 0
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     call    func_48562293_entry, [a2], 0x10
     ret     [a2], 0x54
@@ -4561,7 +4561,7 @@ loc_485624C4:
     movbu   (a2), d0
     mov     a3, a0
     mov     (0x20, sp), a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     a3, a0
     call    SdFileRemove_entry, [a2,a3], 0x98
     movhu   d0, (0x38, sp)
@@ -4676,23 +4676,23 @@ loc_485625D9:
     movbu   (a2), d0
     mov     (0x1c, sp), a0
     mov     (0x30, sp), a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     movbu   (a2), d0
     mov     (0x20, sp), a0
     mov     (0x28, sp), a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     a3, a0
     mov     Str_empty_708, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x18, sp), a0
     mov     Str_empty_707, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a3, a0
     mov     (0x1c, sp), a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x18, sp), a0
     mov     (0x20, sp), a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x18, sp), a0
     mov     a3, a1
     call    SdFileCopy_entry, [d2,d3,a2,a3], 0xac
@@ -4826,13 +4826,13 @@ loc_4856273A:
     call    SdDcimPathGet, 0, 0
     mov     a0, a1
     mov     a3, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a3, a0
     mov     Str_empty_706, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a3, a0
     mov     a2, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a3, a0
     call    func_4856227E_entry, 0, 0xc
     extbu   d0
@@ -4956,7 +4956,7 @@ loc_48562850:
     movbu   (a2), d0
     mov     a3, a0
     mov     (0x14, sp), a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     a3, a0
     call    fmmremove_entry, [a2], 0x1c
     movhu   d0, (0x1c, sp)
@@ -5133,7 +5133,7 @@ loc_485629DA:
     movbu   (a2), d0
     mov     (0x20, sp), a0
     mov     (0x28, sp), a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     (0x20, sp), a0
     call    SdFileRemove_entry, [a2,a3], 0x98
     mov     d0, d3
@@ -5201,27 +5201,27 @@ loc_48562A78:
     call    SdDriveARootPathGet, 0, 0
     mov     a0, a1
     mov     (0x24, sp), a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     (0x1c, sp), a0
     mov     (0x30, sp), d0
     call    SdTechFolderPathBuild_entry, [d2,a2,a3], 0x28
     movbu   (a2), d0
     mov     (0x2c, sp), a0
     mov     (0x18, sp), a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     movbu   (a2), d0
     mov     (0x20, sp), a0
     mov     (0x18, sp), a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     (0x1c, sp), a0
     mov     Str_empty_705, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x24, sp), a0
     mov     (0x2c, sp), a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x1c, sp), a0
     mov     (0x20, sp), a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x1c, sp), a0
     mov     (0x24, sp), a1
     call    SdFileCopy_entry, [d2,d3,a2,a3], 0xac
@@ -5334,13 +5334,13 @@ loc_48562B97:
     clr     d2
     movbu   d0, (0x8d, sp)
     mov     (0x34, sp), a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     (0x18, sp), a0
     mov     Str_empty_703, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x18, sp), a0
     mov     (0x1c, sp), a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     clr     d1
 loc_48562BD9:
     mov     func_48562B62_Table, a1
@@ -5382,7 +5382,7 @@ loc_48562C14:
     mov     a2, a0
     mov     (0x24, sp), a1
     mov     6, d0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     clr     d0
     movbu   d0, (6, a2)
     movbu   d2, (7, a2)
@@ -5417,7 +5417,7 @@ loc_48562C59:
     mov     a2, a0
     mov     (0x24, sp), a1
     mov     6, d0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     clr     d0
     movbu   d0, (6, a2)
     movbu   d3, (7, a2)
@@ -5459,10 +5459,10 @@ loc_48562CC0:
     call    SdTechFolderPathBuild_entry, [d2,a2,a3], 0x28
     mov     (0x18, sp), a0
     mov     Str_empty_702, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x18, sp), a0
     mov     (0x1c, sp), a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     7, a0
     add     d2, a0
     movbu   (a0), d0
@@ -5470,7 +5470,7 @@ loc_48562CC0:
     bne     loc_48562D28
     mov     (0x18, sp), a0
     mov     Str_BMP_5, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x18, sp), a0
     call    SdFileRemove_entry, [a2,a3], 0x98
     movhu   d0, (0x48, sp)
@@ -5484,7 +5484,7 @@ loc_48562D28:
     bne     loc_48562D4C
     mov     (0x18, sp), a0
     mov     Str_JPG_5, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x18, sp), a0
     call    SdFileRemove_entry, [a2,a3], 0x98
     movhu   d0, (0x48, sp)
@@ -5607,7 +5607,7 @@ loc_48562E20:
     mov     Str_A_9, a1
     mov     d0, (0x14, sp)
     mov     d0, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     bra     loc_48562E48
 loc_48562E3B:
     mov     (0x60, sp), d0
@@ -5623,13 +5623,13 @@ loc_48562E48:
     clr     d2
     movbu   d0, (0xb1, sp)
     mov     (0x44, sp), a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     (0x14, sp), a0
     mov     Str_empty_700, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x14, sp), a0
     mov     (0x24, sp), a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
 loc_48562E7C:
     mov     func_48562B62_Table, a1
     mov     9, d1
@@ -5685,7 +5685,7 @@ loc_48562EB5:
     mov     d1, a0
     add     0x50092394, a0
     mov     6, d0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     mov     d3, d0
     sub     d2, d0
     mov     9, d1
@@ -5756,7 +5756,7 @@ loc_48562F55:
     add     0x50092394, a0
     mov     (0x38, sp), a1
     mov     6, d0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     mov     d2, d0
     sub     a2, d0
     mov     9, d1
@@ -5816,7 +5816,7 @@ loc_48562FFB:
     bge     loc_48563012
     mov     (0x14, sp), a0
     mov     Str_A_8, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     bra     loc_4856301B
 loc_48563012:
     mov     (0x14, sp), a0
@@ -5829,7 +5829,7 @@ loc_4856301B:
     mov     (0x28, sp), a3
     mov     Str_A_7, a1
     mov     a3, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     bra     loc_4856303D
 loc_48563033:
     mov     (0x28, sp), a3
@@ -5857,16 +5857,16 @@ loc_4856303D:
     call    FmmNumberedNameBuild_entry, [d2], 0x14
     mov     (0x14, sp), a0
     mov     Str_empty_699, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a3, a0
     mov     Str_empty_698, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x14, sp), a0
     mov     (0x24, sp), a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a3, a0
     mov     (0x34, sp), a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     9, d0
     nop
     nop
@@ -5878,10 +5878,10 @@ loc_4856303D:
     bne     loc_485630D5
     mov     (0x14, sp), a0
     mov     Str_BMP_4, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a3, a0
     mov     Str_BMP_3, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     bra     loc_48563107
 loc_485630D5:
     mov     9, d0
@@ -5895,10 +5895,10 @@ loc_485630D5:
     bne     loc_48563107
     mov     (0x14, sp), a0
     mov     Str_JPG_4, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a3, a0
     mov     Str_JPG_3, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
 loc_48563107:
     mov     (0x14, sp), a1
     mov     a3, a0
@@ -6295,16 +6295,16 @@ loc_48563434:
     call    SdSndDirPathCopy_entry, 0, 0x10
     mov     d3, a0
     mov     Str_empty_697, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     mov     Str_empty_696, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     d3, a0
     mov     (0x18, sp), a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     mov     a3, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     mov     d3, a1
     call    SdFileCopy_entry, [d2,d3,a2,a3], 0xac
@@ -6514,16 +6514,16 @@ loc_485635D3:
 loc_48563615:
     mov     (0x18, sp), a0
     mov     Str_empty_695, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a3, a0
     mov     Str_empty_694, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x18, sp), a0
     mov     a2, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a3, a0
     mov     (0x14, sp), a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a3, a0
     mov     (0x18, sp), a1
     call    SdFileCopy_entry, [d2,d3,a2,a3], 0xac
@@ -6738,16 +6738,16 @@ loc_4856382B:
     call    SdDriveARootPathGet, 0, 0
     mov     a0, a1
     mov     (0x1c, sp), a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a3, a0
     mov     Str_empty_693, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x1c, sp), a0
     mov     a2, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a3, a0
     mov     (0x14, sp), a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     0, a0
     call    sdfmpath_entry, 0, 0x14
     mov     a3, a0
@@ -6928,19 +6928,19 @@ loc_485639CA:
     add     0x50, d3
     mov     d3, a0
     mov     (0x194, sp), a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     sp, a0
     mov     a0, d2
     add     0x60, d2
     mov     d2, a0
     mov     a3, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     Str_empty_692, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     mov     d3, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     sp, a1
     add     0x70, a1
     mov     a2, a0
@@ -7048,7 +7048,7 @@ loc_48563AE6:
     call    SdTechFolderPathBuild_entry, [d2,a2,a3], 0x28
     mov     (0x14, sp), a0
     mov     Str_empty_691, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     clr     d2
 loc_48563AFF:
     mov     func_48562B62_Table, a1
@@ -7113,7 +7113,7 @@ loc_48563B4A:
     mov     d1, a0
     add     0x50092394, a0
     mov     6, d0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     mov     d3, d0
     sub     d2, d0
     mov     9, d1
@@ -7203,7 +7203,7 @@ loc_48563C12:
     mov     d1, a0
     add     0x50092394, a0
     mov     6, d0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     mov     d2, d0
     sub     a2, d0
     mov     9, d1
@@ -7286,10 +7286,10 @@ loc_48563CC8:
     call    FmmNumberedNameBuild_entry, [d2], 0x14
     mov     (0x14, sp), a0
     mov     Str_empty_690, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x14, sp), a0
     mov     (0x30, sp), a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     9, d0
     nop
     nop
@@ -7301,7 +7301,7 @@ loc_48563CC8:
     bne     loc_48563D3A
     mov     (0x14, sp), a0
     mov     Str_BMP_2, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     bra     loc_48563D5E
 loc_48563D3A:
     mov     9, d0
@@ -7315,11 +7315,11 @@ loc_48563D3A:
     bne     loc_48563D5E
     mov     (0x14, sp), a0
     mov     Str_JPG_2, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
 loc_48563D5E:
     mov     (0x2c, sp), a0
     mov     (0x3c, sp), a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     (0x2c, sp), a0
     mov     (0x14, sp), a1
     call    func_485651E4_entry, [d2,d3,a2,a3], 0xa8
@@ -7403,7 +7403,7 @@ loc_48563DFF:
     call    SdTechFolderPathBuild_entry, [d2,a2,a3], 0x28
     mov     (0x14, sp), a0
     mov     Str_empty_689, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     clr     d2
 loc_48563E18:
     mov     func_48562B62_Table, a1
@@ -7468,7 +7468,7 @@ loc_48563E63:
     mov     d1, a0
     add     0x50092394, a0
     mov     6, d0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     mov     d3, d0
     sub     d2, d0
     mov     9, d1
@@ -7558,7 +7558,7 @@ loc_48563F2B:
     mov     d1, a0
     add     0x50092394, a0
     mov     6, d0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     mov     d2, d0
     sub     a2, d0
     mov     9, d1
@@ -7640,10 +7640,10 @@ loc_48563FE1:
     call    FmmNumberedNameBuild_entry, [d2], 0x14
     mov     (0x14, sp), a0
     mov     Str_empty_688, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x14, sp), a0
     mov     (0x2c, sp), a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     9, d0
     nop
     nop
@@ -7655,7 +7655,7 @@ loc_48563FE1:
     bne     loc_48564052
     mov     (0x14, sp), a0
     mov     Str_BMP, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     bra     loc_48564076
 loc_48564052:
     mov     9, d0
@@ -7669,7 +7669,7 @@ loc_48564052:
     bne     loc_48564076
     mov     (0x14, sp), a0
     mov     Str_JPG, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
 loc_48564076:
     mov     (0x14, sp), a0
     call    SdFileRemove_entry, [a2,a3], 0x98
@@ -7737,7 +7737,7 @@ loc_485640E8:
     call    SdKn7000DirPathGet, 0, 0
     mov     a0, a1
     mov     (0x14, sp), a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     call    SdDirInfFileNameGet, 0, 0
     mov     (0x14, sp), a1
     call    SdFileExistsCheck_entry, [a2,a3], 8
@@ -7746,17 +7746,17 @@ loc_485640E8:
     beq     loc_48564152
     mov     (0x14, sp), a0
     mov     Str_empty_687, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     call    SdDirInfFileNameGet, 0, 0
     mov     a0, a1
     mov     (0x14, sp), a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x14, sp), a1
     mov     sp, a2
     add     0x80, a2
     mov     a2, a0
     add     2, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     (0x14, sp), a1
     mov     a2, a0
     call    func_485651E4_entry, [d2,d3,a2,a3], 0xa8
@@ -7836,16 +7836,16 @@ loc_485641C5:
     movbu   (d2, a0), d0
     mov     (0x24, sp), a0
     mov     (0x2c, sp), a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     (0x14, sp), a0
     mov     Str_empty_686, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x14, sp), a0
     mov     (0x24, sp), a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x18, sp), a0
     mov     (0x38, sp), a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     (0x18, sp), a0
     mov     (0x14, sp), a1
     call    func_485651E4_entry, [d2,d3,a2,a3], 0xa8
@@ -7921,7 +7921,7 @@ loc_48564298:
     call    SdKn7000DirPathGet, 0, 0
     mov     a0, a1
     mov     (0x14, sp), a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     call    SdDirInfFileNameGet, 0, 0
     mov     (0x14, sp), a1
     call    SdFileExistsCheck_entry, [a2,a3], 8
@@ -7930,11 +7930,11 @@ loc_48564298:
     beq     loc_485642F0
     mov     (0x14, sp), a0
     mov     Str_empty_685, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     call    SdDirInfFileNameGet, 0, 0
     mov     a0, a1
     mov     (0x14, sp), a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x14, sp), a0
     call    SdFileRemove_entry, [a2,a3], 0x98
     mov     d0, a2
@@ -8007,13 +8007,13 @@ loc_48564353:
     movbu   (d2, a0), d0
     mov     (0x18, sp), a0
     mov     (0x28, sp), a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     (0x14, sp), a0
     mov     Str_empty_684, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x14, sp), a0
     mov     (0x18, sp), a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x14, sp), a0
     call    SdFileRemove_entry, [a2,a3], 0x98
     mov     d0, a2
@@ -8109,16 +8109,16 @@ loc_48564435:
     call    SdCustomDirPathBuild_entry, [a2], 0x14
     mov     a2, a0
     mov     Str_empty_683, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     exthu   d2
     mov     d2, d0
     call    SdCstEntryGet_entry, [d2], 0x10
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x10, sp), a0
     mov     (0x18, sp), a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     (0x10, sp), a0
     mov     a2, a1
     call    func_485651E4_entry, [d2,d3,a2,a3], 0xa8
@@ -8176,13 +8176,13 @@ loc_485644BC:
     call    SdCustomDirPathBuild_entry, [a2], 0x14
     mov     a2, a0
     mov     Str_empty_682, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     exthu   d2
     mov     d2, d0
     call    SdCstEntryGet_entry, [d2], 0x10
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     call    SdFileRemove_entry, [a2,a3], 0x98
     mov     d0, a3
@@ -8243,17 +8243,17 @@ loc_4856454F:
     beq     loc_485645A7
     mov     a3, a0
     mov     Str_empty_681, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     call    SdSndPlmFileNameGet, 0, 0
     mov     a0, a1
     mov     a3, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     sp, a2
     add     0x5c, a2
     mov     a2, a0
     mov     2, a1
     add     a3, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a3, a1
     mov     a2, a0
     call    func_485651E4_entry, [d2,d3,a2,a3], 0xa8
@@ -8274,17 +8274,17 @@ loc_485645A7:
     beq     loc_485645FF
     mov     a3, a0
     mov     Str_empty_680, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     call    SdSndTkmFileNameGet, 0, 0
     mov     a0, a1
     mov     a3, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     sp, a2
     add     0x5c, a2
     mov     a2, a0
     mov     2, a1
     add     a3, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a3, a1
     mov     a2, a0
     call    func_485651E4_entry, [d2,d3,a2,a3], 0xa8
@@ -8337,13 +8337,13 @@ loc_4856463A:
     call    SdSndDirPathCopy_entry, 0, 0x10
     mov     a3, a0
     mov     Str_empty_679, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a3, a0
     mov     a2, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x10, sp), a0
     mov     (0x18, sp), a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     (0x10, sp), a0
     mov     a3, a1
     call    func_485651E4_entry, [d2,d3,a2,a3], 0xa8
@@ -8418,10 +8418,10 @@ loc_485646E0:
     call    SdSndDirPathCopy_entry, 0, 0x10
     mov     a2, a0
     mov     Str_empty_678, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     mov     a3, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     clr     d0
     call    SdFileAttrSet_entry, [d2,a2], 0x18
@@ -8457,11 +8457,11 @@ loc_4856472D:
     beq     loc_4856477E
     mov     a2, a0
     mov     Str_empty_677, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     call    SdSndPlmFileNameGet, 0, 0
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     clr     d0
     call    SdFileAttrSet_entry, [d2,a2], 0x18
@@ -8484,11 +8484,11 @@ loc_4856477E:
     beq     loc_485647CC
     mov     a2, a0
     mov     Str_empty_676, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     call    SdSndTkmFileNameGet, 0, 0
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     clr     d0
     call    SdFileAttrSet_entry, [d2,a2], 0x18
@@ -8565,15 +8565,15 @@ loc_4856482F:
     mov     a3, a0
     mov     0x3e, d0
     mov     a2, a1
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     mov     sp, a2
     add     0x54, a2
     mov     a2, a0
     mov     Str_C_14, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     a3, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     call    func_4856495B_entry, [d2,d3,a2,a3], 0xb0
     exth    d0
@@ -8717,7 +8717,7 @@ loc_4856497A:
     mov     a3, a0
     mov     a2, a1
     mov     0x3e, d0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     mov     a3, a1
     mov     sp, a0
     mov     a0, d0
@@ -8743,7 +8743,7 @@ loc_4856499C:
     movbu   d0, (0x18, sp)
     exthu   d1
     mov     d1, d0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     mov     (0x14, sp), a0
     mov     a2, a1
     add     d2, a0
@@ -8806,13 +8806,13 @@ SdFileProtect_entry:
     mov     sp, a2
     add     0x10, a2
     mov     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     Str_empty_675, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     mov     a3, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     3, d0
     mov     a2, a0
     call    SdFileAttrSet_entry, [d2,a2], 0x18
@@ -8827,13 +8827,13 @@ SdFileUnprotect_entry:
     mov     sp, a2
     add     0x10, a2
     mov     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     Str_empty_674, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     mov     a3, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     clr     d0
     mov     a2, a0
     call    SdFileAttrSet_entry, [d2,a2], 0x18
@@ -8872,24 +8872,24 @@ SdFileOpen_entry:
     mov     sp, a2
     add     0x10, a2
     mov     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     Str_empty_673, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     mov     a3, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     bra     loc_48564AED
 loc_48564AE1:
     mov     sp, a2
     add     0x10, a2
     mov     a2, a0
     mov     a3, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
 loc_48564AED:
     mov     (0xa4, sp), a1
     mov     a2, a0
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     mov     a0, (0x500924fc)
     cmp     0, a0
     bne     loc_48564B3F
@@ -8930,7 +8930,7 @@ SdFileClose_entry:
     mov     (0x500924fc), a0
     cmp     0, a0
     beq     loc_48564B71
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     clr     d0
     mov     d0, (0x500924fc)
 loc_48564B71:
@@ -8962,23 +8962,23 @@ SdFileRemove_entry:
     mov     sp, a2
     add     0x10, a2
     mov     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     Str_empty_672, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     mov     a3, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     bra     loc_48564BD8
 loc_48564BCC:
     mov     sp, a2
     add     0x10, a2
     mov     a2, a0
     mov     a3, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
 loc_48564BD8:
     mov     a2, a0
-    call    VfsRemove_entry, 0, 0x10
+    call    FsRemove_entry, 0, 0x10
     mov     d0, d1
     exth    d1
     clr     d0
@@ -9034,24 +9034,24 @@ SdFileRename_entry:
     add     0x10, d2
     mov     d2, a0
     mov     a2, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     sp, a3
     add     0x50, a3
     mov     a3, a0
     mov     a2, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     d2, a0
     mov     Str_empty_671, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a3, a0
     mov     Str_empty_670, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     d2, a0
     mov     (0xa4, sp), a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a3, a0
     mov     (0xa8, sp), a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     bra     loc_48564CB3
 loc_48564C96:
     mov     sp, a0
@@ -9059,16 +9059,16 @@ loc_48564C96:
     add     0x10, d2
     mov     d2, a0
     mov     (0xa4, sp), a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     sp, a3
     add     0x50, a3
     mov     a3, a0
     mov     (0xa8, sp), a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
 loc_48564CB3:
     mov     d2, a0
     mov     a3, a1
-    call    VfsRename_entry, [d2,a2,a3], 0x1c
+    call    FsRename_entry, [d2,a2,a3], 0x1c
     cmp     0, d0
     bne     loc_48564CC4
     clr     d0
@@ -9093,7 +9093,7 @@ SdFileGetc_entry:
     mov     -0x64, d2
     cmp     0, a0
     beq     loc_48564CFE
-    call    VfsFileGetc_entry, [a2], 0x1c
+    call    FsGetc_entry, [a2], 0x1c
     mov     d0, d2
     exth    d0
     cmp     0, d0
@@ -9127,7 +9127,7 @@ func_48564D1B:
     beq     loc_48564D56
     extbu   d3
     mov     d3, d0
-    call    VfsFilePutc_entry, [a2], 0x1c
+    call    FsPutc_entry, [a2], 0x1c
     cmp     d2, d0
     bge     loc_48564D58
     mov     (0x500924fc), a0
@@ -9180,7 +9180,7 @@ loc_48564D9C:
     mov     d2, d1
     exth    d1
     mov     (0x500924fc), a1
-    call    VfsFileRead_entry, [d2,a2,a3], 0x20
+    call    FsRead_entry, [d2,a2,a3], 0x20
     cmp     d2, d0
     bne     loc_48564DB8
     add     d0, d3
@@ -9249,7 +9249,7 @@ loc_48564E28:
     mov     d2, d1
     exth    d1
     mov     (0x500924fc), a1
-    call    VfsFileWrite_entry, [d2,a2,a3], 0x20
+    call    FsWrite_entry, [d2,a2,a3], 0x20
     cmp     d2, d0
     bge     loc_48564E5F
     mov     (0x500924fc), a0
@@ -9300,7 +9300,7 @@ SdFileSeek_entry:
     mov     a2, d1
     exth    d1
     mov     d3, d0
-    call    VfsFileSeek_entry, [d2,a2,a3], 0x1c
+    call    FsSeek_entry, [d2,a2,a3], 0x1c
     mov     d0, d2
     exth    d0
     cmp     0, d0
@@ -9327,7 +9327,7 @@ func_48564ED4:
     clr     d2
     cmp     0, a0
     beq     loc_48564EF4
-    call    VfsFileRewind_entry, [a2], 0x18
+    call    FsRewind_entry, [a2], 0x18
     bra     loc_48564EF6
 loc_48564EF4:
     mov     -0x64, d2
@@ -9353,7 +9353,7 @@ func_48564F0E_entry:
     mov     -0x64, d3
     cmp     0, a0
     beq     loc_48564F34
-    call    VfsFileTell, 0, 0
+    call    FsTell, 0, 0
     mov     d0, d3
     cmp     0, d0
     bge     loc_48564F34
@@ -9383,7 +9383,7 @@ sdfmdopen_entry:
     call    SdMediaEnsureInit_entry, 0, 0x1c
     mov     Str_d_8, a1
     mov     a2, a0
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     cmp     0, a0
     bne     loc_48564F81
     mov     (0x5009eb30), d0
@@ -9393,7 +9393,7 @@ sdfmdopen_entry:
     mov     -0xc8, d2
     bra     loc_48564F88
 loc_48564F81:
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
 loc_48564F88:
     mov     d2, d0
     ret     [d2,a2], 0x18
@@ -9406,13 +9406,13 @@ SdRootDirOpenTest_entry:
     call    SdMediaEnsureInit_entry, 0, 0x1c
     mov     Str_C_9, a0
     mov     Str_d_7, a1
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     cmp     0, a0
     bne     loc_48564FB4
     mov     -2, d2
     bra     loc_48564FBB
 loc_48564FB4:
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
 loc_48564FBB:
     mov     d2, d0
     ret     [d2], 0x14
@@ -9425,7 +9425,7 @@ sdfmmkdir_entry:
     clr     d2
     call    SdMediaEnsureInit_entry, 0, 0x1c
     mov     a2, a0
-    call    VfsMkdir_entry, [d2,a2], 0x18
+    call    FsMkdir_entry, [d2,a2], 0x18
     cmp     d2, d0
     bge     loc_48564FE6
     mov     (0x5009eb30), d0
@@ -9460,7 +9460,7 @@ sdfmpath_entry:
     bra     loc_48565028
 loc_4856501A:
     mov     0x50092500, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     clr     d0
 loc_48565028:
     ret     0, 0x14
@@ -9499,10 +9499,10 @@ SdFileCopy_entry:
     add     0x5c, a2
     mov     a2, a0
     mov     a3, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     Str_wb_8, a1
     mov     a2, a0
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     mov     a0, (0x18, sp)
     cmp     0, a0
     bne     loc_48565098
@@ -9519,15 +9519,15 @@ loc_48565098:
     add     0x1c, a2
     mov     a2, a0
     mov     (0xb8, sp), a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     Str_rb_12, a1
     mov     a2, a0
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     mov     a0, a3
     cmp     0, a3
     bne     loc_485650C6
     mov     (0x18, sp), a0
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     mov     -2, d0
     ret     [d2,d3,a2,a3], 0xac
 loc_485650C6:
@@ -9536,7 +9536,7 @@ loc_485650C6:
     mov     1, d0
     mov     0x4000, d1
     mov     a3, a1
-    call    VfsFileRead_entry, [d2,a2,a3], 0x20
+    call    FsRead_entry, [d2,a2,a3], 0x20
     mov     d0, d1
     exth    d1
     cmp     d3, d1
@@ -9548,7 +9548,7 @@ loc_485650DF:
     mov     1, d0
     mov     d2, d1
     mov     (0x18, sp), a1
-    call    VfsFileWrite_entry, [d2,a2,a3], 0x20
+    call    FsWrite_entry, [d2,a2,a3], 0x20
     cmp     d0, d2
     beq     loc_48565104
     mov     (0x18, sp), a0
@@ -9564,7 +9564,7 @@ loc_48565104:
     mov     1, d0
     mov     0x4000, d1
     mov     a3, a1
-    call    VfsFileRead_entry, [d2,a2,a3], 0x20
+    call    FsRead_entry, [d2,a2,a3], 0x20
     mov     d0, d1
     exth    d1
     cmp     d3, d1
@@ -9580,9 +9580,9 @@ loc_48565117:
     mov     -2, d3
 loc_48565128:
     mov     a3, a0
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     mov     (0x18, sp), a0
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     mov     d3, d0
     ret     [d2,d3,a2,a3], 0xac
 # SdCardFormatRun  (CPU 0x4856513d)
@@ -9616,7 +9616,7 @@ SdFileAttrSet_entry:
     exth    d2
     mov     d2, d0
     mov     a2, a0
-    call    VfsAttribSet_entry, [d2,a2], 0x1c
+    call    FsAttribSet_entry, [d2,a2], 0x1c
     mov     d0, d1
     exth    d1
     cmp     -1, d1
@@ -9634,7 +9634,7 @@ SdDirAttrSet_entry:
     call    SdMediaEnsureInit_entry, 0, 0x1c
     mov     Str_d_6, a1
     mov     a2, a0
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     mov     a0, a2
     cmp     0, a2
     bne     loc_485651BE
@@ -9656,7 +9656,7 @@ loc_485651BE:
     mov     -0xc8, d2
 loc_485651D2:
     mov     a2, a0
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
 loc_485651DA:
     mov     d2, d0
     ret     [d2,a2], 0x1c
@@ -9708,7 +9708,7 @@ loc_48565225:
     add     0x58, a2
     mov     a2, a0
     mov     a3, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     Str_wb_7, a1
     mov     a2, a0
     call    func_48582CD3_entry, [d2,a2,a3], 0x1c
@@ -9722,10 +9722,10 @@ loc_4856524F:
     add     0x18, a2
     mov     a2, a0
     mov     (0xb4, sp), a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     Str_rb_11, a1
     mov     a2, a0
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     mov     a0, a3
     cmp     0, a3
     bne     loc_4856527A
@@ -9738,7 +9738,7 @@ loc_4856527A:
     mov     1, d0
     mov     0x4000, d1
     mov     a3, a1
-    call    VfsFileRead_entry, [d2,a2,a3], 0x20
+    call    FsRead_entry, [d2,a2,a3], 0x20
     mov     d0, d1
     exth    d1
     cmp     d3, d1
@@ -9758,7 +9758,7 @@ loc_485652A5:
     mov     1, d0
     mov     0x4000, d1
     mov     a3, a1
-    call    VfsFileRead_entry, [d2,a2,a3], 0x20
+    call    FsRead_entry, [d2,a2,a3], 0x20
     mov     d0, d1
     exth    d1
     cmp     d3, d1
@@ -9774,7 +9774,7 @@ loc_485652B8:
     mov     -2, d3
 loc_485652C9:
     mov     a3, a0
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     call    func_48582D7C_entry, 0, 0xc
     mov     d3, d0
 loc_485652D9:
@@ -9824,10 +9824,10 @@ loc_48565320:
     mov     d0, (0x18, sp)
     mov     d0, a0
     mov     a2, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x18, sp), a0
     mov     Str_wb_6, a1
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     mov     a0, a3
     cmp     0, a3
     bne     loc_48565360
@@ -9844,7 +9844,7 @@ loc_48565360:
     add     0x20, a2
     mov     a2, a0
     mov     (0xbc, sp), a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     Str_rb_10, a1
     mov     a2, a0
     call    func_48582CD3_entry, [d2,a2,a3], 0x1c
@@ -9852,7 +9852,7 @@ loc_48565360:
     cmp     0, d0
     bge     loc_4856538D
     mov     a3, a0
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     mov     -2, d0
     ret     [d2,d3,a2,a3], 0xb0
 loc_4856538D:
@@ -9871,7 +9871,7 @@ loc_485653A4:
     mov     1, d0
     mov     d3, d1
     mov     a3, a1
-    call    VfsFileWrite_entry, [d2,a2,a3], 0x20
+    call    FsWrite_entry, [d2,a2,a3], 0x20
     cmp     d0, d3
     beq     loc_485653CC
     mov     (8, a3), d0
@@ -9900,7 +9900,7 @@ loc_485653DD:
 loc_485653E6:
     call    func_48582D7C_entry, 0, 0xc
     mov     a3, a0
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     mov     (0x18, sp), a0
     mov     Str_C_SD_SOUND_2, a1
     mov     0xb, d0
@@ -46349,7 +46349,7 @@ loc_4857B1FC:
     cmp     0x3e7, d3
     bgt     loc_4857B27A
     mov     Str_SOB, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     sp, a3
     add     0x10, a3
     mov     0x3e8, d2
@@ -46390,10 +46390,10 @@ loc_4857B1FC:
     movbu   d0, (0x14, sp)
     mov     a2, a0
     mov     a3, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     Str_MID_5, a1
     mov     a2, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
 loc_4857B27A:
     ret     [d2,d3,a2,a3], 0x28
 # SdSndSongStateGet  (CPU 0x4857b27d)
@@ -47170,7 +47170,7 @@ SdSndDirPathCopy:
     add     -0x10, sp
 SdSndDirPathCopy_entry:
     mov     Str_C_SD_SOUND, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     ret     0, 0x10
 # SdSndDirEnsure  (CPU 0x4857b7ea)
 SdSndDirEnsure:

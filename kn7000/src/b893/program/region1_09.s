@@ -150,7 +150,7 @@ loc_485203F8:
     call    FmmSmfNamePathGet_entry, 0, 0x14
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     call    FmmTextSanitize, 0, 0
     mov     a2, (0x10, sp)
@@ -164,7 +164,7 @@ loc_4852042F:
     call    FmmSmfNamePathGet_entry, 0, 0x14
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     8, d0
     call    func_4852038B, 0, 0
@@ -179,13 +179,13 @@ loc_48520465:
     call    FmmSmfNamePathGet_entry, 0, 0x14
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     8, d0
     call    func_4852038B, 0, 0
     mov     (0x28, sp), a0
     mov     a2, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     clr     d0
     bra     loc_485204C4
 loc_48520490:
@@ -193,13 +193,13 @@ loc_48520490:
     mov     (0x28, sp), a1
     mov     a2, a0
     mov     8, d0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     mov     a2, a0
     mov     8, d0
     call    func_4852038B, 0, 0
     mov     a2, a0
     mov     Str_MID_13, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     call    FmmSmfNameSet_entry, [a2], 0x18
     clr     d0
@@ -231,7 +231,7 @@ loc_485204F5:
     call    FmmCstNamePathGet_entry, 0, 0x14
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     call    FmmTextSanitize, 0, 0
     mov     a2, (0x10, sp)
@@ -245,7 +245,7 @@ loc_4852052C:
     call    FmmCstNamePathGet_entry, 0, 0x14
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     8, d0
     call    func_4852038B, 0, 0
@@ -260,13 +260,13 @@ loc_48520562:
     call    FmmCstNamePathGet_entry, 0, 0x14
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     8, d0
     call    func_4852038B, 0, 0
     mov     (0x28, sp), a0
     mov     a2, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     clr     d0
     bra     loc_485205C1
 loc_4852058D:
@@ -274,13 +274,13 @@ loc_4852058D:
     mov     (0x28, sp), a1
     mov     a2, a0
     mov     8, d0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     mov     a2, a0
     mov     8, d0
     call    func_4852038B, 0, 0
     mov     a2, a0
     mov     Str_CST_8, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     call    FmmCstNameSet_entry, [a2], 0x18
     clr     d0
@@ -299,7 +299,7 @@ SmfSeqToSongNumFunc_entry:
     mov     0x5006e7a8, a2
     mov     a2, a0
     mov     Str_TO_SONG_2, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     movbu   (0x5006f112), d0
     mov     2, d1
     inc     d0
@@ -307,7 +307,7 @@ SmfSeqToSongNumFunc_entry:
     call    func_4851AFB8_entry, [d2], 0x18
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, (0x10, sp)
     mov     SMFSeqToSongNumBox_id, d0
     mov     0x0145000f, d1
@@ -328,7 +328,7 @@ SmfSeqFromSongNumFunc_entry:
     mov     0x5006e828, a2
     mov     a2, a0
     mov     Str_FROM_SONG_2, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     movbu   (0x5006f112), d0
     mov     2, d1
     inc     d0
@@ -336,7 +336,7 @@ SmfSeqFromSongNumFunc_entry:
     call    func_4851AFB8_entry, [d2], 0x18
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, (0x10, sp)
     mov     SMFSeqFromSongNumBox_id, d0
     mov     0x0145000f, d1
@@ -1053,7 +1053,7 @@ loc_48520CD5:
     mov     a0, a1
     mov     a3, a0
     mov     0x10, d0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     mov     a3, a0
     mov     0x10, d0
     call    func_485208B8_entry, [d2], 4
@@ -1066,7 +1066,7 @@ loc_48520CD5:
     mov     a0, a1
     mov     a3, a0
     mov     8, d0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
 loc_48520D17:
     mov     a3, a0
     mov     0x10, d0
@@ -1639,7 +1639,7 @@ loc_48521403:
     mov     0x5006f026, a2
     mov     a2, a0
     mov     Str_MID_12, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     bra     loc_4852145D
 loc_48521438:
     movhu   (0x5006e8b0), d0
@@ -1648,7 +1648,7 @@ loc_48521438:
     call    MidFileNameGet_entry, [d2], 0x10
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     call    FmmTextSanitize, 0, 0
 loc_4852145D:
@@ -2898,7 +2898,7 @@ loc_48522202:
     call    func_4851AFCA_entry, [d2], 0x18
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, (0x10, sp)
     mov     UserPictureNumBox_id, d0
     mov     MT_ParaDraw, d1
@@ -3173,7 +3173,7 @@ loc_485224FC:
     call    func_4851AFCA_entry, [d2], 0x18
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, (0x10, sp)
     mov     UserPictureNumBox_id, d0
     mov     MT_ParaDraw, d1
@@ -3789,7 +3789,7 @@ func_48522B52_entry:
     call    func_4C021AE3_entry, [d2,a2], 0x1c
     mov     a3, a0
     mov     a2, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     clr     d0
     movbu   d0, (0x10, a3)
     ret     [a2,a3], 0x2c
@@ -3819,15 +3819,15 @@ func_48522B77_entry:
     mov     d2, a1
     mov     0x10, d0
     mov     a2, a0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     clr     d0
     movbu   d0, (0x5006e8d4)
     bra     loc_48522BE5
 loc_48522BC9:
     mov     0x5006e8c4, a2
     mov     a2, a0
-    mov     FmmStrCopy_Var_3, a1
-    call    FmmStrCopy, 0, 0
+    mov     StrCopy_Var_3, a1
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     0x10, d0
     call    FmmTextPadFix_entry, [d2,d3], 8
@@ -3851,7 +3851,7 @@ func_48522BE9_entry:
     call    func_4C021B3E_entry, [d2,a2], 0x1c
     mov     a3, a0
     mov     a2, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     clr     d0
     movbu   d0, (0x10, a3)
     ret     [a2,a3], 0x2c
@@ -3882,15 +3882,15 @@ func_48522C10_entry:
     mov     0x5006e8dc, a3
     mov     a3, a0
     mov     0x10, d0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     clr     d0
     movbu   d0, (0x5006e8ec)
     bra     loc_48522C80
 loc_48522C64:
     mov     0x5006e8dc, a3
     mov     a3, a0
-    mov     FmmStrCopy_Var_4, a1
-    call    FmmStrCopy, 0, 0
+    mov     StrCopy_Var_4, a1
+    call    StrCopy, 0, 0
     mov     a3, a0
     mov     0x10, d0
     call    FmmTextPadFix_entry, [d2,d3], 8
@@ -3921,7 +3921,7 @@ func_48522C84_entry:
     add     d0, a1
     movhu   (0x1c, sp), d0
     mov     a3, a0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     movhu   (0x1c, sp), d0
     clr     d1
     movbu   d1, (d0, a3)
@@ -3944,8 +3944,8 @@ func_48522CC2_entry:
     bge     loc_48522CFB
     mov     0x5006e8f4, a2
     mov     a2, a0
-    mov     FmmStrCopy_Var_5, a1
-    call    FmmStrCopy, 0, 0
+    mov     StrCopy_Var_5, a1
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     0x10, d0
     call    FmmTextPadFix_entry, [d2,d3], 8
@@ -3965,7 +3965,7 @@ loc_48522CFB:
     add     d0, a1
     movhu   (0x1c, sp), d0
     mov     a2, a0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     movhu   (0x1c, sp), d0
     clr     d1
     movbu   d1, (d0, a2)
@@ -3973,8 +3973,8 @@ loc_48522CFB:
 loc_48522D38:
     mov     0x5006e8f4, a2
     mov     a2, a0
-    mov     FmmStrCopy_Var_5, a1
-    call    FmmStrCopy, 0, 0
+    mov     StrCopy_Var_5, a1
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     0x10, d0
     call    FmmTextPadFix_entry, [d2,d3], 8
@@ -4092,7 +4092,7 @@ func_48522E04_entry:
     call    SndRecTriFieldGet2_entry, [d2], 0x14
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     ret     [a2], 0x14
 
 func_48522E26:
@@ -4124,15 +4124,15 @@ func_48522E26_entry:
     add     d2, a2
     exthu   d0
     mov     a2, a1
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     clr     d0
     movbu   d0, (0x5006e91d)
     bra     loc_48522EA2
 loc_48522E86:
     mov     0x5006e90c, a3
     mov     a3, a0
-    mov     FmmStrCopy_Var_6, a1
-    call    FmmStrCopy, 0, 0
+    mov     StrCopy_Var_6, a1
+    call    StrCopy, 0, 0
     mov     a3, a0
     mov     0x10, d0
     call    FmmTextPadFix_entry, [d2,d3], 8
@@ -4152,7 +4152,7 @@ func_48522EA6_entry:
     mov     func_48522EA6_Table, a0
     mov     (d0, a0), a1
     mov     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     0x10, d0
     mov     a2, a0
     call    FmmTextPadFix_entry, [d2,d3], 8
@@ -4180,15 +4180,15 @@ func_48522ECC_entry:
     add     d2, a1
     mov     0x10, d0
     mov     a3, a0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     clr     d0
     movbu   d0, (0x5006e934)
     bra     loc_48522F3A
 loc_48522F1E:
     mov     0x5006e924, a3
     mov     a3, a0
-    mov     FmmStrCopy_Var_7, a1
-    call    FmmStrCopy, 0, 0
+    mov     StrCopy_Var_7, a1
+    call    StrCopy, 0, 0
     mov     a3, a0
     mov     0x10, d0
     call    FmmTextPadFix_entry, [d2,d3], 8
@@ -4214,7 +4214,7 @@ func_48522F3E_entry:
     inc     a2
     mov     a2, a0
     mov     d2, d0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     clr     d0
     movbu   d0, (0x10, a2)
     mov     d2, d0
@@ -4243,15 +4243,15 @@ func_48522F70_entry:
     add     d2, a1
     mov     0x10, d0
     mov     a3, a0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     clr     d0
     movbu   d0, (0x5006e94c)
     bra     loc_48522FDD
 loc_48522FC1:
     mov     0x5006e93c, a3
     mov     a3, a0
-    mov     FmmStrCopy_Var_8, a1
-    call    FmmStrCopy, 0, 0
+    mov     StrCopy_Var_8, a1
+    call    StrCopy, 0, 0
     mov     a3, a0
     mov     0x10, d0
     call    FmmTextPadFix_entry, [d2,d3], 8
@@ -4271,7 +4271,7 @@ func_48522FE1_entry:
     inc     a2
     mov     a2, a0
     mov     0x10, d0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     clr     d0
     movbu   d0, (0x10, a2)
     mov     0x10, d0
@@ -4301,15 +4301,15 @@ func_4852300C_entry:
     add     d2, a1
     mov     0xd, d0
     mov     a3, a0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     clr     d0
     movbu   d0, (0x5006e962)
     bra     loc_4852307A
 loc_4852305E:
     mov     0x5006e954, a3
     mov     a3, a0
-    mov     FmmStrCopy_Var_9, a1
-    call    FmmStrCopy, 0, 0
+    mov     StrCopy_Var_9, a1
+    call    StrCopy, 0, 0
     mov     a3, a0
     mov     0x10, d0
     call    FmmTextPadFix_entry, [d2,d3], 8
@@ -4336,7 +4336,7 @@ func_4852307E_entry:
     inc     a2
     mov     a2, a0
     mov     0xd, d0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     clr     d0
     movbu   d0, (0xd, a2)
     mov     0xf, d0
@@ -4368,15 +4368,15 @@ func_485230B4_entry:
     add     d1, a1
     mov     0x10, d0
     mov     a2, a0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     clr     d0
     movbu   d0, (0x5006e97c)
     bra     loc_4852311A
 loc_485230FE:
     mov     0x5006e96c, a2
     mov     a2, a0
-    mov     FmmStrCopy_Var_10, a1
-    call    FmmStrCopy, 0, 0
+    mov     StrCopy_Var_10, a1
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     0x10, d0
     call    FmmTextPadFix_entry, [d2,d3], 8
@@ -4612,10 +4612,10 @@ func_485233AE_entry:
     mov     func_48523154_Table, a0
     mov     (d0, a0), a1
     mov     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     Str_empty_882, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     movbu   (0x5006f1c4), d0
     mov     d2, d1
     call    LibDiv32, 0, 0
@@ -4626,7 +4626,7 @@ func_485233AE_entry:
     call    FmmAbcLetterText, 0, 0
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     bra     loc_48523427
 loc_48523413:
     add     -2, d0
@@ -4635,7 +4635,7 @@ loc_48523413:
     call    func_4851AFB8_entry, [d2], 0x18
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
 loc_48523427:
     mov     0x10, d0
     mov     a2, a0
@@ -4661,7 +4661,7 @@ func_48523443_entry:
     call    func_48522B77_entry, [d2,d3,a2,a3], 0x24
     mov     a0, a1
     mov     0x5006f12e, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a3, (0x10, sp)
     mov     -1, d0
     mov     0x0145000e, d1
@@ -4678,7 +4678,7 @@ func_4852348D_entry:
     mov     d0, d2
     mov     2, d0
     movbu   d0, (0x5006f142)
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     movbu   (0x5006f1c3), d0
     cmp     0, d0
     bne     loc_485234D9
@@ -4693,7 +4693,7 @@ func_4852348D_entry:
     call    func_4851AFB8_entry, [d2], 0x18
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
 loc_485234D9:
     mov     a2, a0
     mov     0x10, d0
@@ -4710,7 +4710,7 @@ loc_485234D9:
     movbu   d0, (0x5006f157)
     mov     0x5006f158, a0
     mov     Str_ALL_33, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     0x5006f157, d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -4735,7 +4735,7 @@ func_48523537_entry:
     mov     a0, a1
     mov     0x5006f158, a2
     mov     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     0x10, d0
     call    FmmTextPadFix_entry, [d2,d3], 8
@@ -4760,10 +4760,10 @@ func_4852358B_entry:
     mov     func_48523154_Table, a0
     mov     (d0, a0), a1
     mov     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     Str_empty_881, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     movbu   (0x5006f1c8), d0
     mov     d2, d1
     call    LibDiv32, 0, 0
@@ -4774,7 +4774,7 @@ func_4852358B_entry:
     call    FmmAbcLetterText, 0, 0
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     bra     loc_485235FF
 loc_485235EB:
     add     -2, d0
@@ -4783,7 +4783,7 @@ loc_485235EB:
     call    func_4851AFB8_entry, [d2], 0x18
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
 loc_485235FF:
     mov     0x10, d0
     mov     a2, a0
@@ -4820,7 +4820,7 @@ func_4852365C_entry:
     mov     d0, d2
     mov     6, d0
     movbu   d0, (0x5006f196)
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     movbu   (0x5006f1c3), d0
     cmp     0, d0
     bne     loc_485236BF
@@ -4835,7 +4835,7 @@ func_4852365C_entry:
     call    func_4851AFB8_entry, [d2], 0x18
     mov     a0, a1
     mov     a3, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     movbu   (0x5006f1c8), d0
     mov     0x5006f1ab, a2
     mov     a2, a0
@@ -4849,7 +4849,7 @@ loc_485236BF:
     movbu   d0, (0x5006f1ab)
     mov     0x5006f1ac, a0
     mov     Str_ALL_34, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
 loc_485236E0:
     mov     0x10, d0
     mov     a3, a0
@@ -5239,7 +5239,7 @@ func_48523BC6_entry:
     mov     0x5006f182, a2
     mov     a2, a0
     mov     Str_SONG_30, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     movbu   (0x5006f1c9), d0
     clr     d1
     inc     d0
@@ -5247,7 +5247,7 @@ func_48523BC6_entry:
     call    func_4851AFB8_entry, [d2], 0x18
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     mov     0x10, d0
     call    FmmTextPadFix_entry, [d2,d3], 8
@@ -5261,7 +5261,7 @@ func_48523BC6_entry:
     call    func_48526C9C_entry, [d2,d3,a2,a3], 0x44
     mov     a0, a1
     mov     0x5006f197, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     0x5006f181, d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -5301,7 +5301,7 @@ loc_48523C86:
     mov     0x5006f12e, a2
     mov     a2, a0
     mov     Str_SONG_29, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     0x10, d0
     mov     a2, a0
     call    FmmTextPadFix_entry, [d2,d3], 8
@@ -5312,7 +5312,7 @@ loc_48523C86:
     call    func_485230B4_entry, [d2,a2,a3], 0x20
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     0x10, d0
     mov     a2, a0
     call    FmmTextPadFix_entry, [d2,d3], 8
@@ -5449,17 +5449,17 @@ func_48523E7A_entry:
     mov     func_48523154_Table, a0
     mov     (d0, a0), a1
     mov     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     Str_empty_880, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     func_48523E7A_Table, a0
     mov     d2, d0
     extbu   d0
     asl2    d0
     mov     (d0, a0), a1
     mov     a2, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     mov     0x10, d0
     call    FmmTextPadFix_entry, [d2,d3], 8
@@ -5472,7 +5472,7 @@ func_48523E7A_entry:
     call    func_48522CC2_entry, [a2,a3], 0x28
     mov     a0, a1
     mov     0x5006f12e, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     0x5006f118, d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -5502,10 +5502,10 @@ func_48523F38_entry:
     asl2    d0
     mov     (d0, a0), a1
     mov     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     Str_empty_879, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     mov     0x10, d0
     call    FmmTextPadFix_entry, [d2,d3], 8
@@ -5521,7 +5521,7 @@ func_48523F38_entry:
     beq     loc_48523FC3
     mov     0x5006f158, a0
     mov     Str_ALL_35, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     bra     loc_48523FD8
 loc_48523FC3:
     extbu   d2
@@ -5529,7 +5529,7 @@ loc_48523FC3:
     call    func_48522D58, 0, 0
     mov     a0, a1
     mov     0x5006f158, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
 loc_48523FD8:
     mov     0x5006f157, d0
     mov     d0, (0x10, sp)
@@ -5556,17 +5556,17 @@ func_48523FF2_entry:
     mov     func_48523154_Table, a0
     mov     (d0, a0), a1
     mov     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     Str_empty_878, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     func_48523FF2_Table, a0
     mov     d2, d0
     extbu   d0
     asl2    d0
     mov     (d0, a0), a1
     mov     a2, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     mov     0x10, d0
     call    FmmTextPadFix_entry, [d2,d3], 8
@@ -5606,10 +5606,10 @@ func_4852409E_entry:
     asl2    d0
     mov     (d0, a0), a1
     mov     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     Str_empty_877, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     mov     0x10, d0
     call    FmmTextPadFix_entry, [d2,d3], 8
@@ -5625,7 +5625,7 @@ func_4852409E_entry:
     beq     loc_48524129
     mov     0x5006f1ac, a0
     mov     Str_ALL_36, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     bra     loc_4852413E
 loc_48524129:
     extbu   d2
@@ -5633,7 +5633,7 @@ loc_48524129:
     call    func_48522D58, 0, 0
     mov     a0, a1
     mov     0x5006f1ac, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
 loc_4852413E:
     mov     0x5006f1ab, d0
     mov     d0, (0x10, sp)
@@ -6018,10 +6018,10 @@ func_4852462A_entry:
     asl2    d0
     mov     (d0, a0), a1
     mov     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     Str_empty_876, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     mov     0x10, d0
     call    FmmTextPadFix_entry, [d2,d3], 8
@@ -6058,7 +6058,7 @@ func_485246B6_entry:
     mov     d0, d2
     mov     2, d0
     movbu   d0, (0x5006f142)
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     movbu   (0x5006f1c3), d0
     cmp     0, d0
     bne     loc_4852471C
@@ -6073,7 +6073,7 @@ func_485246B6_entry:
     call    func_4851AFB8_entry, [d2], 0x18
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     bra     loc_4852471C
 loc_48524703:
     ext     d0
@@ -6085,7 +6085,7 @@ loc_48524703:
     call    func_4851AFB8_entry, [d2], 0x18
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
 loc_4852471C:
     mov     a2, a0
     mov     0x10, d0
@@ -6102,7 +6102,7 @@ loc_4852471C:
     movbu   d0, (0x5006f157)
     mov     0x5006f158, a0
     mov     Str_ALL_37, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     0x5006f157, d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -6126,7 +6126,7 @@ func_4852477A_entry:
     call    func_48522F70_entry, [d2,a2,a3], 0x20
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     0x10, d0
     mov     a2, a0
     call    FmmTextPadFix_entry, [d2,d3], 8
@@ -6158,7 +6158,7 @@ func_485247C7_entry:
     call    func_4852300C_entry, [d2,a2,a3], 0x20
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     bra     loc_4852481D
 loc_48524808:
     mov     0x5006f158, a2
@@ -6166,7 +6166,7 @@ loc_48524808:
     call    func_48522ECC_entry, [d2,a2,a3], 0x20
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
 loc_4852481D:
     mov     0x10, d0
     mov     a2, a0
@@ -6191,10 +6191,10 @@ func_48524839_entry:
     asl2    d0
     mov     (d0, a0), a1
     mov     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     Str_empty_875, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     mov     0x10, d0
     call    FmmTextPadFix_entry, [d2,d3], 8
@@ -6241,7 +6241,7 @@ func_485248D6_entry:
     mov     0x5006f197, a2
     mov     a2, a0
     mov     Str_MEMORY_13, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     0x10, d0
     mov     a2, a0
     call    FmmTextPadFix_entry, [d2,d3], 8
@@ -6250,7 +6250,7 @@ func_485248D6_entry:
     movbu   d0, (0x5006f1ab)
     mov     0x5006f1ac, a0
     mov     Str_ALL_25, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     jmp     loc_485249FA
 loc_48524934:
     movbu   (0x5006f1cb), d0
@@ -6262,7 +6262,7 @@ loc_48524934:
     mov     0x5006f197, a2
     mov     a2, a0
     mov     Str_MEMORY_12, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     movbu   (0x5006f1cb), d0
     clr     d1
     sub     d2, d0
@@ -6271,7 +6271,7 @@ loc_48524934:
     call    func_4851AFB8_entry, [d2], 0x18
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     mov     0x10, d0
     call    FmmTextPadFix_entry, [d2,d3], 8
@@ -6290,7 +6290,7 @@ loc_4852499C:
     mov     0x5006f197, a2
     mov     a2, a0
     mov     Str_MEMORY_19, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     movbu   (0x5006f1cb), d0
     clr     d1
     ext     d0
@@ -6301,7 +6301,7 @@ loc_4852499C:
     call    func_4851AFB8_entry, [d2], 0x18
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     mov     0x10, d0
     call    FmmTextPadFix_entry, [d2,d3], 8
@@ -6845,8 +6845,8 @@ func_485250D5_entry:
     movbu   d0, (0x5006f118)
     mov     0x5006f119, a2
     mov     a2, a0
-    mov     FmmStrCopy_Var_11, a1
-    call    FmmStrCopy, 0, 0
+    mov     StrCopy_Var_11, a1
+    call    StrCopy, 0, 0
     mov     0x10, d0
     mov     a2, a0
     call    FmmTextPadFix_entry, [d2,d3], 8
@@ -6857,7 +6857,7 @@ func_485250D5_entry:
     call    func_48522DF7, 0, 0
     mov     a0, a1
     mov     0x5006f12e, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     0x5006f118, d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -6879,7 +6879,7 @@ func_48525157_entry:
     mov     0x5006f143, a2
     mov     a2, a0
     mov     Str_USER_MEMORY_2, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     movbu   (0x5006f1c3), d0
     cmp     0, d0
     bne     loc_485251B2
@@ -6897,7 +6897,7 @@ func_48525157_entry:
     call    func_4851AFB8_entry, [d2], 0x18
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
 loc_485251B2:
     mov     a2, a0
     mov     0x10, d0
@@ -6914,7 +6914,7 @@ loc_485251B2:
     movbu   d0, (0x5006f157)
     mov     0x5006f158, a0
     mov     Str_ALL_24, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     0x5006f157, d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -6939,7 +6939,7 @@ func_48525210_entry:
     mov     a0, a1
     mov     0x5006f158, a2
     mov     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     0x10, d0
     call    FmmTextPadFix_entry, [d2,d3], 8
@@ -6961,8 +6961,8 @@ func_48525264_entry:
     movbu   d0, (0x5006f16c)
     mov     0x5006f16d, a2
     mov     a2, a0
-    mov     FmmStrCopy_Var_12, a1
-    call    FmmStrCopy, 0, 0
+    mov     StrCopy_Var_12, a1
+    call    StrCopy, 0, 0
     mov     0x10, d0
     mov     a2, a0
     call    FmmTextPadFix_entry, [d2,d3], 8
@@ -6973,7 +6973,7 @@ func_48525264_entry:
     call    func_48522DF7, 0, 0
     mov     a0, a1
     mov     0x5006f182, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     0x5006f16c, d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -6995,7 +6995,7 @@ func_485252E7_entry:
     mov     0x5006f197, a3
     mov     a3, a0
     mov     Str_USER_MEMORY, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     movbu   (0x5006f1c3), d0
     cmp     0, d0
     bne     loc_48525359
@@ -7014,7 +7014,7 @@ func_485252E7_entry:
     call    func_4851AFB8_entry, [d2], 0x18
     mov     a0, a1
     mov     a3, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     movbu   (0x5006f1cc), d0
     mov     a2, a0
     exthu   d0
@@ -7027,7 +7027,7 @@ loc_48525359:
     movbu   d0, (0x5006f1ab)
     mov     0x5006f1ac, a0
     mov     Str_ALL_23, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
 loc_4852537A:
     mov     0x10, d0
     mov     a3, a0
@@ -9186,7 +9186,7 @@ loc_48526D10:
     mov     d2, a0
     mov     (0x18, sp), a1
     mov     0x10, d0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     clr     d0
     mov     d2, a0
     movbu   d0, (0x10, a0)
@@ -15497,7 +15497,7 @@ loc_4852AE3F:
     mov     a2, a0
     mov     d2, d0
     mov     a3, a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     Str_rb_50, a1
     mov     a2, a0
     call    fmmopen_entry, [a2,a3], 0x24
@@ -15865,7 +15865,7 @@ loc_4852B152:
     mov     a2, a0
     mov     d2, d0
     mov     a3, a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     Str_rb_49, a1
     mov     a2, a0
     call    fmmopen_entry, [a2,a3], 0x24
@@ -15937,7 +15937,7 @@ loc_4852B1DC:
     mov     a2, a0
     mov     2, d0
     mov     a3, a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     Str_rb_48, a1
     mov     a2, a0
     call    fmmopen_entry, [a2,a3], 0x24
@@ -16117,7 +16117,7 @@ loc_4852B341:
     mov     a2, a0
     mov     1, d0
     mov     a3, a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     Str_rb_47, a1
     mov     a2, a0
     call    fmmopen_entry, [a2,a3], 0x24
@@ -16347,7 +16347,7 @@ LswFileLoad_entry:
     add     0x1c, a3
     clr     d0
     mov     a3, a0
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     Str_rb_46, a1
     mov     a3, a0
     call    fmmopen_entry, [a2,a3], 0x24
@@ -16608,7 +16608,7 @@ PmtFileLoad_entry:
     add     0x18, a2
     mov     a2, a0
     mov     1, d0
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     Str_rb_45, a1
     mov     a2, a0
     call    fmmopen_entry, [a2,a3], 0x24
@@ -16822,7 +16822,7 @@ MdFileLoad_entry:
     add     0x1c, a3
     mov     7, d0
     mov     a3, a0
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     Str_rb_44, a1
     mov     a3, a0
     call    fmmopen_entry, [a2,a3], 0x24
@@ -16866,7 +16866,7 @@ SeqActFileLoad_entry:
     add     0x14, a3
     mov     0xd, d0
     mov     a3, a0
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     a3, a0
     call    FmmPathExists_entry, [a2], 0x1c
     extbu   d0
@@ -16901,7 +16901,7 @@ SqtFileLoad_entry:
     mov     a2, a0
     mov     a3, a1
     mov     2, d0
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     Str_rb_43, a1
     mov     a2, a0
     call    fmmopen_entry, [a2,a3], 0x24
@@ -17343,7 +17343,7 @@ SqfSeqFileLoad_entry:
     mov     a3, a0
     mov     (0x44, sp), a1
     mov     0xb, d0
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     a3, a0
     mov     Str_rb_42, a1
     call    fmmopen_entry, [a2,a3], 0x24
@@ -17415,7 +17415,7 @@ loc_4852BFC1:
     mov     a3, a0
     mov     (0x44, sp), a1
     mov     0xc, d0
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     Str_rb_41, a1
     mov     a3, a0
     call    fmmopen_entry, [a2,a3], 0x24
@@ -17470,7 +17470,7 @@ loc_4852C063:
     mov     a3, a0
     mov     (0x44, sp), a1
     mov     0xc, d0
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     Str_rb_40, a1
     mov     a3, a0
     call    fmmopen_entry, [a2,a3], 0x24
@@ -17513,7 +17513,7 @@ CmpFileLoad_entry:
     add     0x1c, a3
     mov     3, d0
     mov     a3, a0
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     Str_rb_39, a1
     mov     a3, a0
     call    fmmopen_entry, [a2,a3], 0x24
@@ -17604,7 +17604,7 @@ MspFileLoad_entry:
     add     0x1c, a3
     mov     5, d0
     mov     a3, a0
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     Str_rb_38, a1
     mov     a3, a0
     call    fmmopen_entry, [a2,a3], 0x24
@@ -17695,7 +17695,7 @@ TmFileLoad_entry:
     add     0x14, a2
     mov     a2, a0
     mov     4, d0
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     Str_rb_37, a1
     mov     a2, a0
     call    fmmopen_entry, [a2,a3], 0x24
@@ -17844,7 +17844,7 @@ EfcFileLoad_entry:
     add     0x1c, a3
     mov     6, d0
     mov     a3, a0
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     Str_rb_36, a1
     mov     a3, a0
     call    fmmopen_entry, [a2,a3], 0x24
@@ -17937,7 +17937,7 @@ FavFileLoad_entry:
     add     0x1c, a3
     mov     8, d0
     mov     a3, a0
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     Str_rb_35, a1
     mov     a3, a0
     call    fmmopen_entry, [a2,a3], 0x24
@@ -17980,7 +17980,7 @@ HmpFileLoad_entry:
     add     0x1c, a3
     mov     9, d0
     mov     a3, a0
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     Str_rb_34, a1
     mov     a3, a0
     call    fmmopen_entry, [a2,a3], 0x24
@@ -18032,7 +18032,7 @@ AstLoadHandler_entry:
     add     0x14, a2
     mov     a2, a0
     mov     0xa, d0
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     Str_rb_33, a1
     mov     a2, a0
     call    fmmopen_entry, [a2,a3], 0x24
@@ -18463,7 +18463,7 @@ func_4852CA28_entry:
     mov     a2, a0
     mov     Str_J_K_4, a1
     mov     3, d0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     mov     1, d0
     movbu   d0, (0x17, sp)
     mov     0x001e0000, d0
@@ -18492,7 +18492,7 @@ func_4852CA5F_entry:
     mov     a3, a0
     mov     Str_J_K_3, a1
     mov     3, d0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     mov     1, d0
     movbu   d0, (0x17, sp)
     mov     d2, (0x18, sp)
@@ -18508,7 +18508,7 @@ func_4852CA5F_entry:
     add     a3, a0
     mov     0x10, d0
     mov     a2, a1
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     mov     0x30, d0
     mov     a3, a0
     call    FmmWrite_entry, [d2,a2], 0x24
@@ -18565,7 +18565,7 @@ loc_4852CAC5:
     movhu   (6, a2), d0
     mov     a3, a0
     add     d2, a0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     mov     d3, d0
     asl     3, d0
     mov     func_4852AE25_Table, a1
@@ -18664,7 +18664,7 @@ loc_4852CBC2:
     mov     d0, a0
     clr     d0
     mov     a2, a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     (0x14, sp), a0
     mov     Str_wb_25, a1
     call    fmmopen_entry, [a2,a3], 0x24
@@ -18797,7 +18797,7 @@ loc_4852CCFF:
     mov     d0, a0
     mov     1, d0
     mov     a3, a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     (0x18, sp), a0
     mov     Str_wb_24, a1
     call    fmmopen_entry, [a2,a3], 0x24
@@ -18913,7 +18913,7 @@ loc_4852CE12:
     mov     a3, a0
     mov     7, d0
     mov     a2, a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     a3, a0
     mov     Str_wb_23, a1
     call    fmmopen_entry, [a2,a3], 0x24
@@ -18969,7 +18969,7 @@ loc_4852CE8C:
     mov     a3, a0
     mov     8, d0
     mov     a2, a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     a3, a0
     mov     Str_wb_22, a1
     call    fmmopen_entry, [a2,a3], 0x24
@@ -19025,7 +19025,7 @@ loc_4852CF06:
     mov     a3, a0
     mov     9, d0
     mov     a2, a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     a3, a0
     mov     Str_wb_21, a1
     call    fmmopen_entry, [a2,a3], 0x24
@@ -19076,7 +19076,7 @@ loc_4852CF78:
     mov     a3, a0
     mov     6, d0
     mov     a2, a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     a3, a0
     mov     Str_wb_20, a1
     call    fmmopen_entry, [a2,a3], 0x24
@@ -19151,7 +19151,7 @@ loc_4852D01C:
     mov     a3, a0
     mov     a2, a1
     mov     0xd, d0
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     sp, a0
     add     0x14, a0
     mov     sp, a1
@@ -19200,7 +19200,7 @@ loc_4852D087:
     mov     a3, a0
     mov     (0x40, sp), a1
     mov     2, d0
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     a3, a0
     mov     Str_wb_19, a1
     call    fmmopen_entry, [a2,a3], 0x24
@@ -19322,7 +19322,7 @@ loc_4852D1AF:
     mov     a3, a0
     mov     3, d0
     mov     a2, a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     a3, a0
     mov     Str_wb_18, a1
     call    fmmopen_entry, [a2,a3], 0x24
@@ -19402,7 +19402,7 @@ loc_4852D261:
     mov     a3, a0
     mov     5, d0
     mov     a2, a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     a3, a0
     mov     Str_wb_17, a1
     call    fmmopen_entry, [a2,a3], 0x24
@@ -19480,7 +19480,7 @@ loc_4852D310:
     mov     a3, a0
     mov     4, d0
     mov     a2, a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     a3, a0
     mov     Str_wb_16, a1
     call    fmmopen_entry, [a2,a3], 0x24
@@ -19715,7 +19715,7 @@ func_4852D55C_entry:
     add     0x14, a2
     mov     a2, a0
     mov     0xa, d0
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     call    FmmDiskFreeSpaceRead_entry, 0, 0x14
     mov     d0, d3
     cmp     0, d0
@@ -19858,7 +19858,7 @@ loc_4852D6FA:
     movbu   (d2, a3), d0
     mov     a2, a0
     mov     (0x14, sp), a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     a2, a0
     call    fmmremove_entry, [a2], 0x1c
     mov     d0, d1
@@ -19934,7 +19934,7 @@ loc_4852D783:
     movbu   (d0, a3), d0
     mov     a2, a0
     mov     (0x14, sp), a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     a2, a0
     call    fmmremove_entry, [a2], 0x1c
 loc_4852D7A7:
@@ -20035,7 +20035,7 @@ loc_4852D830:
     movhu   (func_4852B089_Records+22), d1
     mov     d0, a0
     mov     d1, d0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     movhu   (func_4852AE25_Table+18), d0
     mov     1, d1
     movbu   d1, (d0, a2)
@@ -20095,7 +20095,7 @@ loc_4852D8D3:
     movbu   (d2, a3), d0
     mov     a2, a0
     mov     (0x18, sp), a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     a2, a0
     call    fmmremove_entry, [a2], 0x1c
     mov     d0, d1
@@ -20121,7 +20121,7 @@ loc_4852D8F8:
     mov     d0, a0
     mov     (0x18, sp), a1
     mov     2, d0
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     call    FmmDiskFreeSpaceRead_entry, 0, 0x14
     mov     d0, d3
     cmp     0, d0
@@ -20263,7 +20263,7 @@ loc_4852DA5E:
     mov     d0, a0
     mov     (0x48, sp), a1
     mov     2, d0
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     (0x14, sp), a0
     mov     Str_wb_12, a1
     call    fmmopen_entry, [a2,a3], 0x24
@@ -21056,7 +21056,7 @@ loc_4852E13B:
     movbu   (d2, a2), d0
     mov     a3, a0
     mov     (0x14, sp), a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     a3, a0
     call    fmmremove_entry, [a2], 0x1c
     mov     d0, d3
@@ -21133,11 +21133,11 @@ loc_4852E1C9:
     movbu   (d2, a2), d0
     mov     d3, a0
     mov     (0x18, sp), a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     movbu   (d2, a2), d0
     mov     a3, a0
     mov     (0x14, sp), a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     d3, a0
     mov     a3, a1
     call    fmmrename_entry, [a2,a3], 0x38
@@ -21210,11 +21210,11 @@ loc_4852E271:
     movbu   (d2, a2), d0
     mov     a3, a0
     mov     (0x18, sp), a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     movbu   (d2, a2), d0
     mov     d3, a0
     mov     (0x14, sp), a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     a3, a0
     mov     d3, a1
     call    fmmrename_entry, [a2,a3], 0x38
@@ -21253,11 +21253,11 @@ loc_4852E2D2:
     movbu   (d2, a2), d0
     mov     d3, a0
     mov     (0x18, sp), a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     movbu   (d2, a2), d0
     mov     a3, a0
     mov     (0x14, sp), a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     d3, a0
     mov     a3, a1
     call    fmmrename_entry, [a2,a3], 0x38
@@ -21295,11 +21295,11 @@ loc_4852E32A:
     movbu   (d2, a2), d0
     mov     a3, a0
     mov     (0x18, sp), a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     movbu   (d2, a2), d0
     mov     d3, a0
     mov     (0x14, sp), a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     a3, a0
     mov     d3, a1
     call    fmmrename_entry, [a2,a3], 0x38
@@ -21395,7 +21395,7 @@ loc_4852E3FB:
     movbu   (d2, a3), d0
     mov     a2, a0
     mov     (0x18, sp), a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     a2, a0
     call    fmmremove_entry, [a2], 0x1c
     mov     d0, d1
@@ -21452,11 +21452,11 @@ loc_4852E471:
     movbu   (d2, a2), d0
     mov     d3, a0
     mov     (0x18, sp), a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     movbu   (d2, a2), d0
     mov     a3, a0
     mov     (0x14, sp), a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     a3, a0
     mov     d3, a1
     call    fmmcopy_entry, [d2,d3,a2,a3], 0x4c
@@ -21721,7 +21721,7 @@ FmmEntryPicturesDelete_entry:
     mov     d1, a0
     add     2, a0
     mov     Str_empty_874, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     1, d0
     movbu   d0, (0x30, sp)
     mov     sp, a0
@@ -21780,7 +21780,7 @@ loc_4852E702:
     mov     a2, a0
     mov     (0x20, sp), a1
     mov     6, d0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     clr     d0
     movbu   d0, (6, a2)
     movbu   d2, (7, a2)
@@ -21811,7 +21811,7 @@ loc_4852E73D:
     mov     a2, a0
     mov     (0x20, sp), a1
     mov     6, d0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     clr     d0
     movbu   d0, (6, a2)
     movbu   d2, (7, a2)
@@ -21850,7 +21850,7 @@ loc_4852E793:
     bne     loc_4852E7D1
     mov     (0x18, sp), a0
     mov     Str_BMP_14, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x18, sp), a0
     call    fmmremove_entry, [a2], 0x1c
     movhu   d0, (0x34, sp)
@@ -21864,7 +21864,7 @@ loc_4852E7D1:
     bne     loc_4852E7F3
     mov     (0x18, sp), a0
     mov     Str_JPG_13, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x18, sp), a0
     call    fmmremove_entry, [a2], 0x1c
     movhu   d0, (0x34, sp)
@@ -21924,7 +21924,7 @@ func_4852E81E_entry:
     mov     2, a0
     add     a3, a0
     mov     Str_empty_873, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     call    SdJobRunWait_entry, 0, 0xc
     mov     sp, a0
     mov     a0, d3
@@ -22003,7 +22003,7 @@ FmmEntryPicturesCopy_entry:
     mov     d1, a0
     add     2, a0
     mov     Str_empty_872, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     sp, a0
     mov     1, d0
     movbu   d0, (0x41, sp)
@@ -22082,7 +22082,7 @@ loc_4852E97D:
     add     0x5006f284, a0
     mov     (0x30, sp), a1
     mov     6, d0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     mov     d3, d0
     sub     d2, d0
     asl     3, d0
@@ -22146,7 +22146,7 @@ loc_4852EA0F:
     add     0x5006f284, a0
     mov     (0x30, sp), a1
     mov     6, d0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     mov     d2, d0
     sub     a2, d0
     asl     3, d0
@@ -22217,10 +22217,10 @@ loc_4852EAA3:
     bne     loc_4852EAFC
     mov     (0x24, sp), a0
     mov     Str_BMP_15, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x20, sp), a0
     mov     Str_BMP_12, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     bra     loc_4852EB29
 loc_4852EAFC:
     mov     d2, d0
@@ -22232,10 +22232,10 @@ loc_4852EAFC:
     bne     loc_4852EB29
     mov     (0x24, sp), a0
     mov     Str_JPG_14, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x20, sp), a0
     mov     Str_JPG_11, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
 loc_4852EB29:
     mov     (0x20, sp), a0
     mov     (0x24, sp), a1
@@ -22355,7 +22355,7 @@ loc_4852EBEB:
     movbu   d0, (0x49, sp)
     mov     (0x3c, sp), a0
     mov     Str_empty_871, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     1, d0
     movbu   d0, (0x40, sp)
     extbu   d2
@@ -22405,7 +22405,7 @@ loc_4852EC68:
     mov     a2, a0
     mov     (0x34, sp), a1
     mov     6, d0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     clr     d0
     movbu   d0, (6, a2)
     movbu   d2, (7, a2)
@@ -22437,7 +22437,7 @@ loc_4852ECA3:
     mov     a2, a0
     mov     (0x34, sp), a1
     mov     6, d0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     clr     d0
     movbu   d0, (6, a2)
     movbu   d2, (7, a2)
@@ -22480,10 +22480,10 @@ loc_4852ECFD:
     bne     loc_4852ED52
     mov     (0x1c, sp), a0
     mov     Str_BMP_11, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x18, sp), a0
     mov     Str_BMP_10, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x1c, sp), a0
     mov     (0x18, sp), a1
     call    fmmrename_entry, [a2,a3], 0x38
@@ -22498,10 +22498,10 @@ loc_4852ED52:
     bne     loc_4852ED83
     mov     (0x1c, sp), a0
     mov     Str_JPG_10, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x18, sp), a0
     mov     Str_JPG_9, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x1c, sp), a0
     mov     (0x18, sp), a1
     call    fmmrename_entry, [a2,a3], 0x38
@@ -22884,18 +22884,18 @@ FmmNameBuffersInit_entry:
     movbu   d0, (0x500710e8)
     mov     0x5006f65e, a0
     mov     Str_text_4, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     0x500708f2, a0
     mov     Str_MID_11, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     0x5007104c, a0
     mov     Str_CST_7, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     1, d0
     movbu   d0, (0x500710fa)
     ret     0, 0x10
-# FmmStrCopy  (CPU 0x4852f0a5)
-FmmStrCopy:
+# StrCopy  (CPU 0x4852f0a5)
+StrCopy:
     movbu   (a1), d0
     extb    d0
     cmp     0, d0
@@ -22913,8 +22913,8 @@ loc_4852F0B9:
     clr     d0
     movbu   d0, (a0)
     retf    0, 0
-# FmmStrNCopyPad  (CPU 0x4852f0bf)
-FmmStrNCopyPad:
+# StrCopyPad  (CPU 0x4852f0bf)
+StrCopyPad:
     mov     d0, d1
     exthu   d1
     cmp     0, d1
@@ -22949,8 +22949,8 @@ loc_4852F0E0:
     lgt
 loc_4852F0EE:
     retf    0, 0
-# FmmStrCat  (CPU 0x4852f0f1)
-FmmStrCat:
+# StrAppend  (CPU 0x4852f0f1)
+StrAppend:
     movbu   (a0), d0
     extb    d0
     cmp     0, d0
@@ -23100,25 +23100,25 @@ loc_4852F1B3:
     movbu   d0, (a0)
     inc     d1
     mov     d1, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     ret     [d2], 0x14
-# FmmNameWithExtBuild  (CPU 0x4852f1c5)
-FmmNameWithExtBuild:
+# FileNameWithExt  (CPU 0x4852f1c5)
+FileNameWithExt:
     movm    [d2,a2], (sp)
     add     -0x10, sp
-FmmNameWithExtBuild_entry:
+FileNameWithExt_entry:
     mov     d0, d2
     mov     a0, a2
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     Str_empty_870, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     extbu   d2
     asl2    d2
-    mov     FmmNameWithExtBuild_Table, a0
+    mov     FileNameWithExt_Table, a0
     mov     (d2, a0), a1
     mov     a2, a0
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     ret     [d2,a2], 0x18
 # FmmFileNoNameFormat  (CPU 0x4852f1f0)
 FmmFileNoNameFormat:
@@ -23390,7 +23390,7 @@ FmmSaveNameSet_entry:
     mov     a0, a1
     mov     6, d0
     mov     0x5006f65e, a0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     clr     d0
     movbu   d0, (0x5006f664)
     ret     [a2], 0x18
@@ -23405,7 +23405,7 @@ FmmSmfNameSet_entry:
     mov     a0, a1
     mov     0xc, d0
     mov     0x500708f2, a0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     clr     d0
     movbu   d0, (0x500708fe)
     ret     [a2], 0x18
@@ -23421,7 +23421,7 @@ FmmCstNameSet_entry:
     mov     a0, a1
     mov     0xc, d0
     mov     0x5007104c, a0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     clr     d0
     movbu   d0, (0x50071058)
     ret     [a2], 0x18
@@ -23892,7 +23892,7 @@ loc_4852F7DD:
 loc_4852F7EE:
     mov     d2, a0
     mov     a2, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
 loc_4852F7F6:
     mov     d2, a0
     ret     [d2,a2,a3], 0x1c
@@ -24078,7 +24078,7 @@ loc_4852F947:
     extbu   d3
     mov     d3, d0
     mov     a3, a1
-    call    FmmNameWithExtBuild_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     call    SdJobRunWait_entry, 0, 0xc
     mov     sp, a1
     add     0x34, a1
@@ -24144,7 +24144,7 @@ loc_4852F9C8:
     add     d1, a2
 loc_4852F9D1:
     movbu   (0x10, sp), d0
-    mov     FmmNameWithExtBuild_Table, a0
+    mov     FileNameWithExt_Table, a0
     asl2    d0
     mov     (d0, a0), d0
     mov     a2, a1
@@ -24276,7 +24276,7 @@ loc_4852FAA0:
     add     2, a3
     mov     6, d0
     mov     a3, a1
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     mov     0xa, d0
     nop
     nop
@@ -24485,10 +24485,10 @@ func_4852FBEB:
     mov     a3, a1
     mov     2, a0
     add     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     Str_empty_868, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     call    SdJobRunWait_entry, 0, 0xc
     mov     sp, a0
     mov     a0, d0
@@ -24520,7 +24520,7 @@ loc_4852FC75:
     mov     2, a1
     add     a3, a1
     mov     6, d0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     mov     0xa, d0
     nop
     nop
@@ -24583,7 +24583,7 @@ loc_4852FD0B:
     mov     a2, a1
     mov     (0x14, sp), a0
     mov     6, d0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     mov     (0x20, sp), a0
     clr     d0
     movbu   d0, (a0)
@@ -24740,7 +24740,7 @@ loc_4852FE42:
     mov     d0, a0
     add     0x5006f665, a0
     mov     a3, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
 loc_4852FE71:
     mov     1, d2
     mov     d3, d0
@@ -24767,7 +24767,7 @@ loc_4852FE80:
     mov     d0, a0
     add     0x5006f665, a0
     mov     a3, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
 loc_4852FEAC:
     inc     d2
     mov     d3, d0
@@ -24886,7 +24886,7 @@ loc_4852FF86:
     call    MidFileNameGet_entry, [d2], 0x10
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     call    SdJobRunWait_entry, 0, 0xc
     mov     sp, a1
     add     0x20, a1
@@ -25249,7 +25249,7 @@ loc_485301F3:
     mov     0xd, a0
     add     d0, a0
     mov     Str_empty_867, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     bra     loc_48530253
 loc_4853024C:
     inc     d3
@@ -25310,7 +25310,7 @@ loc_48530279:
     mov     0xd, a0
     add     d0, a0
     mov     Str_empty_867, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     call    fmmclose_entry, 0, 0x14
     mov     -1, d0
     ret     [d2,d3,a2,a3], 0x20
@@ -25429,7 +25429,7 @@ loc_485303A6:
     mov     0xd, a0
     add     d0, a0
     mov     Str_empty_867, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     call    fmmclose_entry, 0, 0x14
     mov     -1, d0
     ret     [d2,d3,a2,a3], 0x20
@@ -25473,7 +25473,7 @@ loc_485303FD:
     mov     0xd, a0
     add     d0, a0
     mov     Str_empty_867, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     call    fmmclose_entry, 0, 0x14
     mov     -1, d0
     ret     [d2,d3,a2,a3], 0x20
@@ -25504,7 +25504,7 @@ loc_48530482:
     mov     0xd, a0
     add     d0, a0
     mov     Str_empty_867, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     bra     loc_485304E9
 loc_485304A1:
     mov     a2, a0
@@ -25522,7 +25522,7 @@ loc_485304A1:
     mov     0xd, a0
     add     d0, a0
     mov     Str_empty_867, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     bra     loc_485304E9
 loc_485304D1:
     mov     a3, d1
@@ -25534,7 +25534,7 @@ loc_485304D1:
     add     0xd, d0
     mov     a2, a1
     mov     d0, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
 loc_485304E9:
     call    fmmclose_entry, 0, 0x14
     clr     d0
@@ -25554,7 +25554,7 @@ func_485304F2_entry:
     mov     0x5006f408, a2
     mov     a2, a0
     mov     Str_empty_866, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     ret     [d2,d3,a2,a3], 0x24
 loc_48530521:
@@ -25573,7 +25573,7 @@ loc_48530523:
     movbu   d0, (0x10, sp)
     mov     0x5006f408, a0
     mov     Str_empty_866, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     bra     loc_48530555
 loc_4853054E:
     inc     d3
@@ -25602,7 +25602,7 @@ loc_48530567:
     mov     0x5006f408, a2
     mov     a2, a0
     mov     Str_empty_866, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     call    fmmclose_entry, 0, 0x14
     mov     a2, a0
     ret     [d2,d3,a2,a3], 0x24
@@ -25632,7 +25632,7 @@ loc_4853059C:
     mov     0x5006f408, a2
     mov     a2, a0
     mov     Str_empty_866, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     call    fmmclose_entry, 0, 0x14
     mov     a2, a0
     ret     [d2,d3,a2,a3], 0x24
@@ -25654,7 +25654,7 @@ loc_485305E7:
     mov     0x5006f408, a2
     mov     a2, a0
     mov     Str_empty_866, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     call    fmmclose_entry, 0, 0x14
     mov     a2, a0
     ret     [d2,d3,a2,a3], 0x24
@@ -25679,7 +25679,7 @@ loc_48530639:
     mov     0x5006f408, a2
     mov     a2, a0
     mov     Str_empty_866, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     bra     loc_4853067F
 loc_4853064D:
     mov     a3, a0
@@ -25691,13 +25691,13 @@ loc_4853064D:
     mov     0x5006f408, a2
     mov     a2, a0
     mov     Str_empty_866, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     bra     loc_4853067F
 loc_48530672:
     mov     0x5006f408, a2
     mov     a2, a0
     mov     a3, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
 loc_4853067F:
     call    fmmclose_entry, 0, 0x14
     mov     a2, a0
@@ -25902,7 +25902,7 @@ loc_485307F3:
     mov     d0, a0
     add     0x5007093b, a0
     mov     a3, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
 loc_48530822:
     mov     1, d2
     mov     d3, d0
@@ -25929,7 +25929,7 @@ loc_48530831:
     mov     d0, a0
     add     0x5007093b, a0
     mov     a3, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
 loc_4853085D:
     inc     d2
     mov     d3, d0
@@ -26047,7 +26047,7 @@ loc_48530937:
     call    FmmCstFileNameGet_entry, [d2], 0x1c
     mov     a0, a1
     mov     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     call    SdJobRunWait_entry, 0, 0xc
     mov     sp, a1
     add     0x20, a1
@@ -26139,7 +26139,7 @@ loc_485309F3:
     mov     0xd, a0
     add     d0, a0
     mov     Str_empty_865, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     bra     loc_48530A28
 loc_48530A21:
     inc     d3
@@ -26345,7 +26345,7 @@ loc_48530B8E:
     mov     0xd, a0
     add     d0, a0
     mov     a3, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
 loc_48530BBF:
     mov     1, d2
     mov     d3, d0
@@ -26373,7 +26373,7 @@ loc_48530BCE:
     mov     0xd, a0
     add     d0, a0
     mov     a3, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
 loc_48530BFC:
     inc     d2
     mov     d3, d0
@@ -26547,7 +26547,7 @@ loc_48530D39:
     add     0x10, a2
     mov     a2, a0
     mov     a3, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     movbu   (a2), d1
     clr     d0
     extb    d1
@@ -26564,7 +26564,7 @@ loc_48530D5A:
     add     d0, a2
     mov     a2, a1
     mov     a3, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
 loc_48530D63:
     clr     d0
     ret     [d2,d3,a2,a3], 0xa0
@@ -26729,10 +26729,10 @@ func_48530EC6_entry:
     mov     a3, a0
     inc     a0
     mov     a2, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a3, a1
     mov     a2, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     ret     [a2,a3], 0x20
 # DocFileNamesPageFill  (CPU 0x48530eec)
 DocFileNamesPageFill:
@@ -26880,7 +26880,7 @@ loc_48530FEF:
     mul     d0, d1
     add     d1, a0
     mov     0xb, d0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     movhu   (0x500708ee), d0
     mov     d3, d1
     exth    d0
@@ -27053,7 +27053,7 @@ loc_4853117D:
     mul     d0, d1
     add     d3, d1
     mov     d1, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     movhu   (0x500708f0), d0
     inc     d2
     exth    d2
@@ -27134,7 +27134,7 @@ loc_485311D1:
     nop
     mul     d3, d1
     add     d1, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
 loc_48531254:
     movhu   (0x500708f0), d0
     inc     d2
@@ -27184,7 +27184,7 @@ loc_4853129B:
     mul     d1, d0
     add     d3, d0
     mov     d0, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     movhu   (0x500708f0), d0
     inc     d2
     exth    d2
@@ -27259,7 +27259,7 @@ loc_485312F0:
     nop
     mul     d3, d0
     add     d0, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
 loc_48531361:
     movhu   (0x500708f0), d0
     inc     d2
@@ -27346,13 +27346,13 @@ StylCnvFileOpen_entry:
     add     0x10, a2
     mov     a2, a0
     mov     0x50071107, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     0x50071127, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     mov     a3, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     (0xb0, sp), a1
     mov     a2, a0
     call    fmmopen_entry, [a2,a3], 0x24
@@ -27549,19 +27549,19 @@ loc_485315B2:
 loc_485315BF:
     mov     a2, a0
     mov     Str_A_17, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     0x50071107, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     mov     0x50071127, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     mov     d2, d0
     asl     5, d0
     mov     d0, a1
     add     0x50071147, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     call    SdJobRunWait_entry, 0, 0xc
     mov     a2, a0
     mov     (0x10, sp), a1
@@ -27572,7 +27572,7 @@ loc_485315BF:
     mov     (0x10, sp), a1
     mov     (0x138, sp), a0
     add     8, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     movbu   (0x14, sp), d0
     extb    d0
     btst    0x10, d0
@@ -27633,7 +27633,7 @@ loc_4853169D:
     mov     a2, a0
     mov     8, a1
     add     d2, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     movbu   (0x10, sp), d0
     extb    d0
     btst    0x10, d0
@@ -27765,7 +27765,7 @@ loc_48531793:
     mov     a2, a1
     mov     0x50071127, a3
     mov     a3, a0
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
     movbu   (a3), d0
     clr     d1
     extb    d0
@@ -27921,7 +27921,7 @@ loc_485318A5:
     mov     d0, a0
     add     0x50071059, a0
     mov     a3, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
 loc_485318D4:
     mov     1, d2
     mov     d3, d0
@@ -27948,7 +27948,7 @@ loc_485318E3:
     mov     d0, a0
     add     0x50071059, a0
     mov     a3, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
 loc_4853190F:
     inc     d2
     mov     d3, d0
@@ -28069,7 +28069,7 @@ loc_485319C2:
     mov     d0, a0
     add     0x50071059, a0
     mov     a2, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
 loc_485319FB:
     mov     1, d2
 loc_485319FD:
@@ -28103,7 +28103,7 @@ loc_48531A0A:
     mov     d0, a0
     add     0x50071059, a0
     mov     a2, a1
-    call    FmmStrCopy, 0, 0
+    call    StrCopy, 0, 0
 loc_48531A42:
     inc     d2
 loc_48531A43:
@@ -28331,7 +28331,7 @@ func_48531C23:
     cmp     0xe, d0
     bcc     loc_48531C33
     asl2    d0
-    mov     FmmNameWithExtBuild_Table, a0
+    mov     FileNameWithExt_Table, a0
     mov     (d0, a0), a0
     bra     loc_48531C35
 loc_48531C33:
@@ -28347,7 +28347,7 @@ func_48531C38_entry:
     movhu   d1, (0x500710fe)
     mov     0x50071100, a0
     mov     6, d0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     clr     d0
     movbu   d0, (0x50071106)
     mov     1, d0
@@ -28801,10 +28801,10 @@ FdFmmOpen:
     add     0x10, a2
     mov     a2, a0
     mov     a3, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     (0xa4, sp), a1
     mov     a2, a0
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     mov     a0, (0x50071250)
     cmp     0, a0
     bne     loc_48531FEE
@@ -28843,7 +28843,7 @@ FdFmmClose:
     mov     (0x50071250), a0
     cmp     0, a0
     beq     loc_48532019
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     clr     d0
     mov     d0, (0x50071250)
 loc_48532019:
@@ -28870,9 +28870,9 @@ FdFmmRemove:
     add     0x10, a2
     mov     a2, a0
     mov     a3, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
-    call    VfsRemove_entry, 0, 0x10
+    call    FsRemove_entry, 0, 0x10
     mov     d0, d1
     exth    d1
     clr     d0
@@ -28918,15 +28918,15 @@ fmmrename_entry:
     add     0x10, a3
     mov     a3, a0
     mov     a2, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     sp, a2
     add     0x20, a2
     mov     a2, a0
     mov     (0x44, sp), a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a1
     mov     a3, a0
-    call    VfsRename_entry, [d2,a2,a3], 0x1c
+    call    FsRename_entry, [d2,a2,a3], 0x1c
     cmp     0, d0
     bne     loc_485320BD
     clr     d0
@@ -28949,7 +28949,7 @@ FdFmmGetc:
     mov     -0x64, d2
     cmp     0, a0
     beq     loc_485320F0
-    call    VfsFileGetc_entry, [a2], 0x1c
+    call    FsGetc_entry, [a2], 0x1c
     mov     d0, d2
     exth    d0
     cmp     0, d0
@@ -28980,7 +28980,7 @@ FdFmmPutc:
     cmp     0, a0
     beq     loc_4853213F
     extbu   d0
-    call    VfsFilePutc_entry, [a2], 0x1c
+    call    FsPutc_entry, [a2], 0x1c
     cmp     d2, d0
     bge     loc_48532141
     mov     (0x50071250), a0
@@ -29031,7 +29031,7 @@ loc_4853217E:
     mov     d2, d1
     exth    d1
     mov     (0x50071250), a1
-    call    VfsFileRead_entry, [d2,a2,a3], 0x20
+    call    FsRead_entry, [d2,a2,a3], 0x20
     cmp     d2, d0
     bne     loc_4853219A
     add     d0, d3
@@ -29098,7 +29098,7 @@ loc_48532203:
     mov     d2, d1
     exth    d1
     mov     (0x50071250), a1
-    call    VfsFileWrite_entry, [d2,a2,a3], 0x20
+    call    FsWrite_entry, [d2,a2,a3], 0x20
     cmp     d2, d0
     bge     loc_4853223A
     mov     (0x50071250), a0
@@ -29143,7 +29143,7 @@ FdFmmSeek:
     cmp     0, a0
     beq     loc_4853228A
     exth    d1
-    call    VfsFileSeek_entry, [d2,a2,a3], 0x1c
+    call    FsSeek_entry, [d2,a2,a3], 0x1c
     mov     d0, d2
     exth    d0
     cmp     0, d0
@@ -29169,7 +29169,7 @@ FdFmmRewind:
     clr     d2
     cmp     0, a0
     beq     loc_485322BB
-    call    VfsFileRewind_entry, [a2], 0x18
+    call    FsRewind_entry, [a2], 0x18
     bra     loc_485322BD
 loc_485322BB:
     mov     -0x64, d2
@@ -29193,7 +29193,7 @@ FdFmmTell:
     mov     -0x64, d3
     cmp     0, a0
     beq     loc_485322F4
-    call    VfsFileTell, 0, 0
+    call    FsTell, 0, 0
     mov     d0, d3
     cmp     0, d0
     bge     loc_485322F4
@@ -29247,10 +29247,10 @@ fmmcopy_entry:
     add     0x2c, a2
     mov     a2, a0
     mov     a3, a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     Str_wb_10, a1
     mov     a2, a0
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     mov     a0, (0x18, sp)
     cmp     0, a0
     bne     loc_48532373
@@ -29267,15 +29267,15 @@ loc_48532373:
     add     0x1c, a2
     mov     a2, a0
     mov     (0x58, sp), a1
-    call    FmmStrCat, 0, 0
+    call    StrAppend, 0, 0
     mov     Str_rb_19, a1
     mov     a2, a0
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     mov     a0, a3
     cmp     0, a3
     bne     loc_4853239F
     mov     (0x18, sp), a0
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     mov     -2, d0
     ret     [d2,d3,a2,a3], 0x4c
 loc_4853239F:
@@ -29284,7 +29284,7 @@ loc_4853239F:
     mov     1, d0
     mov     0x4000, d1
     mov     a3, a1
-    call    VfsFileRead_entry, [d2,a2,a3], 0x20
+    call    FsRead_entry, [d2,a2,a3], 0x20
     mov     d0, d1
     exth    d1
     cmp     d3, d1
@@ -29296,7 +29296,7 @@ loc_485323B8:
     mov     1, d0
     mov     d2, d1
     mov     (0x18, sp), a1
-    call    VfsFileWrite_entry, [d2,a2,a3], 0x20
+    call    FsWrite_entry, [d2,a2,a3], 0x20
     cmp     d0, d2
     beq     loc_485323E1
     mov     (0x50071250), a0
@@ -29312,7 +29312,7 @@ loc_485323E1:
     mov     1, d0
     mov     0x4000, d1
     mov     a3, a1
-    call    VfsFileRead_entry, [d2,a2,a3], 0x20
+    call    FsRead_entry, [d2,a2,a3], 0x20
     mov     d0, d1
     exth    d1
     cmp     d3, d1
@@ -29328,9 +29328,9 @@ loc_485323F4:
     mov     -2, d3
 loc_48532405:
     mov     a3, a0
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     mov     (0x18, sp), a0
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     mov     d3, d0
     ret     [d2,d3,a2,a3], 0x4c
 # fmmformat  (CPU 0x4853241a)

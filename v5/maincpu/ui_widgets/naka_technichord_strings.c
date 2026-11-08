@@ -2514,8 +2514,8 @@ typedef struct __attribute__((packed)) {
     char SLSrcBankList_FuncBody_Str_Colon_2[4];
     char All_str[18];
     uint16_t SingleLoadSrc_PanelMemBankSize;
-    uint16_t field_1aa06;
-    uint16_t field_1aa08;
+    /* SingleLoadSrc_PanelMemEntryCount: Number of entries (80) of the PANEL MEMORY single-load source list: SingleLoadSrc_PanelMemListProc refuses a bank step (+8) or an item step (+1) whose new position would reach it. (v5/maincpu/ui_widgets/technichord_string_data.s) */
+    uint32_t SingleLoadSrc_PanelMemEntryCount;
     char SLSrcBankList_FuncBody_Entry_Str_Colon[2];
     char SLSrcBankList_FuncBody_Entry_Str_Colon_2[4];
     char SLSrcBankList_FuncBody_Entry_Str_Colon_3[4];
@@ -7367,9 +7367,7 @@ const naka_technichord_strings_t naka_technichord_strings_data
 
     .SingleLoadSrc_PanelMemBankSize = 0xFF08,
 
-    .field_1aa06 = 0xFF50,
-
-    .field_1aa08 = 0xFF0A,
+    .SingleLoadSrc_PanelMemEntryCount = 4278910800,
 
     .SLSrcBankList_FuncBody_Entry_Str_Colon = ":",
 

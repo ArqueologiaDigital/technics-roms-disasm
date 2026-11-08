@@ -39537,11 +39537,14 @@ PadBindUser_entry:
     bne     loc_48434195
 loc_48434195:
     ret     [d2,d3,a2], 0x20
-
-func_48434198:
+# PadBindCustom  (CPU 0x48434198)
+#   bind a pad of the selected CUSTOM style's "TPAD" (PadSelectById
+#   left 0x200000): name, set-ups +0x28 stride 0x18, 0x50122E14..06 :=
+#   pad +0x18..+0x1A (bars, beats, flags), the stream
+PadBindCustom:
     movm    [d2,d3,a2], (sp)
     add     -0x14, sp
-func_48434198_entry:
+PadBindCustom_entry:
     mov     (0x50034c44), a2
     mov     0x50122df0, a0
     mov     a2, a1
@@ -39733,7 +39736,7 @@ loc_48434373:
     mov     1, d0
     bra     loc_48434386
 loc_4843437C:
-    call    func_48434198_entry, [d2,d3,a2], 0x20
+    call    PadBindCustom_entry, [d2,d3,a2], 0x20
     mov     1, d0
     bra     loc_48434386
 loc_48434385:
@@ -39760,7 +39763,7 @@ loc_484343B4:
     call    PadBindUser_entry, [d2,d3,a2], 0x20
     bra     loc_484343C0
 loc_484343BB:
-    call    func_48434198_entry, [d2,d3,a2], 0x20
+    call    PadBindCustom_entry, [d2,d3,a2], 0x20
 loc_484343C0:
     ret     0, 0xc
 # PadCurNameCopy  (CPU 0x484343c3)

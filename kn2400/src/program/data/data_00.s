@@ -145,10 +145,10 @@ LibF64Zero_Table:	# 2 x u32, 0..0; read by LibF64Zero : `mov	(a0), d1`
 
 cre_tsk_Impl_Table:	# T_CTSK (20 bytes): the layout cre_tsk 0x5018D1AD reads through its argument a0 (passed by GuiTaskObjectsCreate 0x485EBBCD `call cre_tsk, 0, 0`, +8 more calls); the layout cre_tsk_Impl 0x5018D239 reads through its argument a0 (passed by cre_tsk_L3d 0x5018D1EA `call cre_tsk_Impl_entry, [d2,d3,a2], 0x2c`)
 	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_50123F57, itskpri=3, x14="\x00\x00", stksz=3072
-cre_flg_Impl_Var:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x5018C994 reads through its argument a0 (passed by GuiTaskObjectsCreate 0x485EBBCD `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x5018CA20 reads through its argument a0 (passed by cre_flg_L3d 0x5018C9D1 `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	x6="\x00\x00", f8=1
-cre_flg_Impl_Var_3:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x5018C994 reads through its argument a0 (passed by GuiTaskObjectsCreate 0x485EBBCD `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x5018CA20 reads through its argument a0 (passed by cre_flg_L3d 0x5018C9D1 `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	x6="\x00\x00"
+cre_flg_Impl_Var:	# T_CFLG (12 bytes): the layout cre_flg 0x5018C994 reads through its argument a0 (passed by GuiTaskObjectsCreate 0x485EBBCD `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x5018CA20 reads through its argument a0 (passed by cre_flg_L3d 0x5018C9D1 `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	x6="\x00\x00", iflgptn=1
+cre_flg_Impl_Var_3:	# T_CFLG (12 bytes): the layout cre_flg 0x5018C994 reads through its argument a0 (passed by GuiTaskObjectsCreate 0x485EBBCD `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x5018CA20 reads through its argument a0 (passed by cre_flg_L3d 0x5018C9D1 `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	x6="\x00\x00"
 
 cre_flg_Impl_Var_5:	# u32, a constant; read / written by cre_flg_Impl 0x5018CA20: `mov (a3), d2`
 	.long	0
@@ -4496,8 +4496,8 @@ func_5014AD97_Table:	# 11 x u16, 0..40; read by func_5014AD97_L36 0x5014ADCD: `m
 	tab_u16	0, 6, 8, 10, 13, 16, 19, 22, 25, 30, 40
 	.align	4, 0xFF	# pad after func_5014AD97_Table
 
-cre_flg_Impl_Var_6:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x5018C994 reads through its argument a0 (passed by GuiTaskObjectsCreate 0x485EBBCD `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x5018CA20 reads through its argument a0 (passed by cre_flg_L3d 0x5018C9D1 `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00", f8=1
+cre_flg_Impl_Var_6:	# T_CFLG (12 bytes): the layout cre_flg 0x5018C994 reads through its argument a0 (passed by GuiTaskObjectsCreate 0x485EBBCD `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x5018CA20 reads through its argument a0 (passed by cre_flg_L3d 0x5018C9D1 `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	flgatr=8, x6="\x00\x00", iflgptn=1
 
 func_501440A5_Table:
 	.long	loc_501440D3
@@ -9083,8 +9083,8 @@ func_5017DCBF_Table:	# 26 x REC_func_5017DCBF_Table (2 bytes each); read by Part
 	REC_func_5017DCBF_Table	kind=176, f1=71	# [24]
 	REC_func_5017DCBF_Table	kind=176, f1=74
 
-func_5017DCBF_entry_L48_Table:	# REC_StylePartTemplateDefault_Result (21 bytes), then 133 x u8 the code indexes from +0 (read by StylePartFieldEmit_entry_L48 0x5017DD0C `movbu (d3, a1), d3`; StylePartFieldEmit_entry_L5d 0x5017DD21 `movbu (d3, a1), d2`)
-	REC_StylePartTemplateDefault_Result	s0="\xFF\xFF", key=255, f3=255, f4=255, x5="\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x7F\x00", f20=64
+func_5017DCBF_entry_L48_Table:	# StylePartTemplate (21 bytes), then 133 x u8 the code indexes from +0 (read by StylePartFieldEmit_entry_L48 0x5017DD0C `movbu (d3, a1), d3`; StylePartFieldEmit_entry_L5d 0x5017DD21 `movbu (d3, a1), d2`)
+	StylePartTemplate	s0="\xFF\xFF", pc_d1=255, pc_d2=255, pc_d3=255, x5="\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x7F\x00", bend_d2=64
 	tab_u8	64, 64, 64, 64, 64, 255, 16, 255, 255, 255, 255, 255, 1, 255, 255, 8	# [0]
 	tab_u8	17, 255, 23, 255, 255, 21, 22, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [16]
 	tab_u8	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255	# [32]
@@ -9347,72 +9347,189 @@ func_50186924_Selected_5:	# REC_func_50186924_Selected (44 bytes)
 	REC_func_50186924_Selected	x0="\x00\x00\xC0\xFF\x00\x00\xC0\xFF\x00\x00\xC0\xFF\x00\x00\xC0\xFF\x00\x00\xC0\xFF\x00\x00\xC0\xFF\x00\x00\xC0\xFFff\xA6\xFF\xCC\xCC\x8C\xFFF\x03\x80\xFF\x08\x00\x80\xFF"
 func_50186924_Selected_6:	# REC_func_50186924_Selected (44 bytes)
 	REC_func_50186924_Selected	x0="\x99\x99Y\x00\x99\x99Y\x00\x99\x99Y\x00\x99\x99Y\x00\x99\x99Y\x00\xCC\xCCl\x0033s\x00\x99\x99y\x00\xF5(|\x00\xA3p}\x00\xA3p}\x00"
-# census: opaque -- unknown-dump: 856 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x00DAF8, 0x00DE50
 
-doubles_4840DE50:	# IEEE-754 doubles (lo word, hi word)
-	.long	0x000028F3, 0x3E809BCC	# 2.42906991e-07
-	.long	0x3E883AA8, 0x3E904D1C	# 5.33718432e-07
-	.long	0x3E98DA02, 0x3EA1E89B	# 1.29130262e-06
-	.long	0x3EAB8097, 0x3EB5AA1A	# 3.31769887e-06
-	.long	0x3EC06DC3, 0x3ECBD4B4	# 9.87148266e-06
-	.long	0x3ED7E89B, 0x3EE4B3B6	# 3.10972754e-05
-	.long	0x3EF240E2, 0x3F004DCE	# 6.0957689e-05
-	.long	0x3F07E80B, 0x3F0FF59A	# 0.00013370582
-	.long	0x3F187D50, 0x3F21866C	# 0.000324006948
-	.long	0x3F2B1896, 0x3F353BEF	# 0.000834595527
-	.long	0x3F3FF911, 0x3F4B5918	# 0.00246096635
-	.long	0x3F5765AC, 0x3F642905	# 0.00781250185
-	.long	0x3F71ADF9, 0x3F800000	# 0.0154386554
-	.long	0x3F8795A0, 0x3F8F9E4D	# 0.0334813669
-	.long	0x3F9820D7, 0x3FA12478	# 0.0812688022
-	.long	0x3FAAB0D5, 0x3FB4CE08	# 0.209893256
-	.long	0x3FBF84A6, 0x3FCADDC8	# 0.613117814
-	.long	0x3FD6E30D, 0x3FE39EA9	# 1.96209836
-	.long	0x3FF11B6A, 0x3FFF64C1	# 3.90976954
-	.long	0x40074368, 0x400F4735	# 8.38036537
-	.long	0x4017C496, 0x4020C2BF	# 20.3765144
-	.long	0x402A4952, 0x40346063	# 52.7715531
-	.long	0x403F1082, 0x404A62C2	# 152.644562
-	.long	0x405660BD, 0x406314A0	# 492.617493
-	.long	0x40708933, 0x407EC9E1	# 0.0115158576
-	.long	0x3F800000, 0x3F8795A0	# 0.0235627778
-	.long	0x3F8F9E4D, 0x3F9820D7	# 0.0521303787
-	.long	0x3FA12478, 0x3FAAB0D5	# 0.123117819
-	.long	0x3FB4CE08, 0x3FBF84A6	# 0.357608139
-	.long	0x3FCADDC8, 0x3FD6E30D	# 1.06919312
-	.long	0x3FE39EA9, 0x3FF11B6A	# 2.90791368
-	.long	0x3FFF64C1, 0x40074368	# 5.94197941
-	.long	0x400F4735, 0x4017C496	# 13.1432056
-	.long	0x4020C2BF, 0x402A4952	# 31.0644875
-	.long	0x40346063, 0x403F1082	# 89.511551
-	.long	0x404A62C2, 0x405660BD	# 264.575013
-	.long	0x406314A0, 0x40708933	# 3.10972756e-05
-	.long	0x407EC9E1, 0x3F004DCE	# 4.55978806e-05
-	.long	0x3F040CEC, 0x3F07E80B	# 6.0957689e-05
-	.long	0x3F0BDFFD, 0x3F0FF59A	# 9.34200505e-05
-	.long	0x3F1429BF, 0x3F187D50	# 0.00013370582
-	.long	0x3F1CF139, 0x3F21866C	# 0.000206726399
-	.long	0x3F263DE0, 0x3F2B1896	# 0.000324006948
-	.long	0x3F301796, 0x3F353BEF	# 0.000487868033
-	.long	0x3F3A86B8, 0x3F3FF911	# 0.000834595527
-	.long	0x3F459421, 0x3F4B5918	# 0.00142804929
-	.long	0x3F514931, 0x3F5765AC	# 0.00246096635
-	.long	0x3F5DAFD7, 0x3F642905	# 0.0043163048
-	.long	0x3F6AD298, 0x3F71ADF9	# 0.00781250185
-	.long	0x3F78BC9C, 0x3F800000	# 0.0115158576
-	.long	0x3F83BCD8, 0x3F8795A0	# 0.0154386554
-	.long	0x3F8B8B2A, 0x3F8F9E4D	# 0.0235627778
-	.long	0x3F93CFE5, 0x3F9820D7	# 0.0334813669
-	.long	0x3F9C920D, 0x3FA12478	# 0.0521303787
-	.long	0x3FA5D910, 0x3FAAB0D5	# 0.0812688022
-	.long	0x3FAFACCD, 0x3FB4CE08	# 0.123117819
-	.long	0x3FBA159B, 0x3FBF84A6	# 0.209893256
-	.long	0x3FC51C50, 0x3FCADDC8	# 0.357608139
-	.long	0x3FD0CA46, 0x3FD6E30D	# 0.613117814
-	.long	0x3FDD2967, 0x3FE39EA9	# 1.06919312
-	.long	0x3FEA4432, 0x3FF11B6A	# 1.96209836
-	.long	0x3FF825C5, 0x3FFF64C1	# 3.32535749e-316
+# a byte-identical copy of Str_empty_1216 (0x4840D45C, string); nothing is seen to read the copy (dup_spans)
+Str_empty_1216_Copy:	.asciz "{\xDA"
+	.align	4, 0x00	# pad after Str_empty_1216_Copy
+
+# a byte-identical copy of func_50186924_Table (0x4840D460, reader table); nothing is seen to read the copy (dup_spans)
+func_50186924_Table_Copy:	# 10 x u32, 137593..16697825; read by func_50186924 0x50186924: `mov (4, a0), d2`
+	tab_u32	137593, 374086, 1017061, 2765173, 3959678, 5280316, 7041414, 9389877	# [0]
+	tab_u32	12521602, 16697825	# [8]
+
+# a byte-identical copy of func_50186924_Var (0x4840D488, pointed record); nothing is seen to read the copy (dup_spans)
+func_50186924_Var_Copy:	# REC_func_50186924_ArgA0 (4 bytes): the layout func_50186924 0x50186924 reads through its argument a0 (passed by func_501869DE_entry_L19 0x501869FA `call func_50186924_entry, [d2,d3], 0x24`, +15 more calls)
+	REC_func_50186924_ArgA0	index=0x15F99D
+
+# a byte-identical copy of func_50186924_Table_2 (0x4840D48C, reader table); nothing is seen to read the copy (dup_spans)
+func_50186924_Table_2_Copy:	# 10 x u32, 1799533..16697825; read by func_50186924 0x50186924: `mov (4, a0), d2`
+	tab_u32	1799533, 2304941, 2952296, 3781463, 4843506, 6203830, 7946207, 10177940	# [0]
+	tab_u32	13036467, 16697825	# [8]
+
+# a byte-identical copy of func_50186924_Var_2 (0x4840D4B4, pointed record); nothing is seen to read the copy (dup_spans)
+func_50186924_Var_2_Copy:	# REC_func_50186924_ArgA0 (4 bytes): the layout func_50186924 0x50186924 reads through its argument a0 (passed by func_501869DE_entry_L19 0x501869FA `call func_50186924_entry, [d2,d3], 0x24`, +15 more calls)
+	REC_func_50186924_ArgA0	
+
+# a byte-identical copy of func_50186924_Table_3 (0x4840D4B8, reader table); nothing is seen to read the copy (dup_spans)
+func_50186924_Table_3_Copy:	# 10 x u32, 420..13295048; read by func_50186924 0x50186924: `mov (4, a0), d2`
+	tab_u32	420, 1329, 4204, 13295, 42042, 132950, 420426, 1329504	# [0]
+	tab_u32	4204263, 13295048	# [8]
+
+# a byte-identical copy of func_50186924_Var_3 (0x4840D4E0, pointed record); nothing is seen to read the copy (dup_spans)
+func_50186924_Var_3_Copy:	# REC_func_50186924_ArgA0 (4 bytes): the layout func_50186924 0x50186924 reads through its argument a0 (passed by func_501869DE_entry_L19 0x501869FA `call func_50186924_entry, [d2,d3], 0x24`, +15 more calls)
+	REC_func_50186924_ArgA0	
+
+# a byte-identical copy of func_50186924_Table_4 (0x4840D4E4, reader table); nothing is seen to read the copy (dup_spans)
+func_50186924_Table_4_Copy:	# 10 x u32, 1..13295048; read by func_50186924 0x50186924: `mov (4, a0), d2`
+	tab_u32	1, 12, 96, 765, 6077, 48271, 383433, 1329504	# [0]
+	tab_u32	4204263, 13295048	# [8]
+
+# a byte-identical copy of func_50186924_Var_4 (0x4840D50C, pointed record); nothing is seen to read the copy (dup_spans)
+func_50186924_Var_4_Copy:	# REC_func_50186924_ArgA0 (4 bytes): the layout func_50186924 0x50186924 reads through its argument a0 (passed by func_501869DE_entry_L19 0x501869FA `call func_50186924_entry, [d2,d3], 0x24`, +15 more calls)
+	REC_func_50186924_ArgA0	
+
+# a byte-identical copy of func_50186924_Table_5 (0x4840D510, reader table); nothing is seen to read the copy (dup_spans)
+func_50186924_Table_5_Copy:	# 10 x u32, 66633..8388608; read by func_50186924 0x50186924: `mov (4, a0), d2`
+	tab_u32	66633, 132950, 265271, 529285, 1056063, 1877975, 2976390, 4717261	# [0]
+	tab_u32	6663308, 8388608	# [8]
+
+# a byte-identical copy of func_50186924_Var_5 (0x4840D538, pointed record); nothing is seen to read the copy (dup_spans)
+func_50186924_Var_5_Copy:	# REC_func_50186924_ArgA0 (4 bytes): the layout func_50186924 0x50186924 reads through its argument a0 (passed by func_501869DE_entry_L19 0x501869FA `call func_50186924_entry, [d2,d3], 0x24`, +15 more calls)
+	REC_func_50186924_ArgA0	
+
+# a byte-identical copy of func_50186924_Table_6 (0x4840D53C, reader table); nothing is seen to read the copy (dup_spans)
+func_50186924_Table_6_Copy:	# 10 x u32, 747635..8388608; read by func_50186924 0x50186924: `mov (4, a0), d2`
+	tab_u32	747635, 1056063, 1491728, 2107123, 2976390, 3969080, 4996776, 6290568	# [0]
+	tab_u32	7476354, 8388608	# [8]
+
+# a byte-identical copy of func_50186981_Var (0x4840D564, pointed record); nothing is seen to read the copy (dup_spans)
+func_50186981_Var_Copy:	# REC_func_50186981_ArgA0 (4 bytes): the layout func_50186981 0x50186981 reads through its argument a0 (passed by func_50186A80_entry_L4f 0x50186AD2 `call func_50186981_entry, [d2,d3], 0x24`, +1 more calls)
+	REC_func_50186981_ArgA0	
+
+# a byte-identical copy of func_50186981_Table (0x4840D568, reader table); nothing is seen to read the copy (dup_spans)
+func_50186981_Table_Copy:	# 16 x u32, 1966481..8388608; read by func_50186981 0x50186981: `mov (4, a0), d2`
+	tab_u32	1966481, 2166156, 2386107, 2628390, 2895275, 3189259, 3513095, 3869812	# [0]
+	tab_u32	4262750, 4695587, 5172374, 5697573, 6276100, 6913371, 7615350, 8388608	# [8]
+
+# a byte-identical copy of func_50186924_Var_6 (0x4840D5A8, pointed record); nothing is seen to read the copy (dup_spans)
+func_50186924_Var_6_Copy:	# REC_func_50186924_ArgA0 (4 bytes): the layout func_50186924 0x50186924 reads through its argument a0 (passed by func_501869DE_entry_L19 0x501869FA `call func_50186924_entry, [d2,d3], 0x24`, +15 more calls)
+	REC_func_50186924_ArgA0	
+
+# a byte-identical copy of func_50186924_Table_7 (0x4840D5AC, reader table); nothing is seen to read the copy (dup_spans)
+func_50186924_Table_7_Copy:	# 10 x u32, 0..8388607; read by func_50186924 0x50186924: `mov (4, a0), d2`
+	tab_u32	0, 0, 0, 0, 8388607, 8388607, 8388607, 8388607	# [0]
+	tab_u32	8388607, 8388607	# [8]
+
+# a byte-identical copy of func_50186924_Var_7 (0x4840D5D4, pointed record); nothing is seen to read the copy (dup_spans)
+func_50186924_Var_7_Copy:	# REC_func_50186924_ArgA0 (4 bytes): the layout func_50186924 0x50186924 reads through its argument a0 (passed by func_501869DE_entry_L19 0x501869FA `call func_50186924_entry, [d2,d3], 0x24`, +15 more calls)
+	REC_func_50186924_ArgA0	
+
+# a byte-identical copy of func_50186924_Table_8 (0x4840D5D8, reader table); nothing is seen to read the copy (dup_spans)
+func_50186924_Table_8_Copy:	# 10 x u32, 275368..10693451; read by func_50186924 0x50186924: `mov (4, a0), d2`
+	tab_u32	275368, 581332, 1162665, 1774594, 2386523, 3962240, 5645045, 7327848	# [0]
+	tab_u32	9010650, 10693451	# [8]
+
+# a byte-identical copy of func_50186924_Var_8 (0x4840D600, pointed record); nothing is seen to read the copy (dup_spans)
+func_50186924_Var_8_Copy:	# REC_func_50186924_ArgA0 (4 bytes): the layout func_50186924 0x50186924 reads through its argument a0 (passed by func_501869DE_entry_L19 0x501869FA `call func_50186924_entry, [d2,d3], 0x24`, +15 more calls)
+	REC_func_50186924_ArgA0	
+
+# a byte-identical copy of func_50186924_Table_9 (0x4840D604, reader table); nothing is seen to read the copy (dup_spans)
+func_50186924_Table_9_Copy:	# 10 x u32, 1075..48045; read by func_50186924 0x50186924: `mov (4, a0), d2`
+	tab_u32	1075, 2270, 3466, 4661, 5856, 8127, 10517, 15776	# [0]
+	tab_u32	26532, 48045	# [8]
+
+# a byte-identical copy of func_50186924_Var_9 (0x4840D62C, pointed record); nothing is seen to read the copy (dup_spans)
+func_50186924_Var_9_Copy:	# REC_func_50186924_ArgA0 (4 bytes): the layout func_50186924 0x50186924 reads through its argument a0 (passed by func_501869DE_entry_L19 0x501869FA `call func_50186924_entry, [d2,d3], 0x24`, +15 more calls)
+	REC_func_50186924_ArgA0	
+
+# a byte-identical copy of func_50186924_Table_10 (0x4840D630, reader table); nothing is seen to read the copy (dup_spans)
+func_50186924_Table_10_Copy:	# 10 x u32, 10756..16562162; read by func_50186924 0x50186924: `mov (4, a0), d2`
+	tab_u32	10756, 119516, 358524, 597460, 836275, 1074919, 3558290, 8023770	# [0]
+	tab_u32	12499840, 16562162	# [8]
+
+# a byte-identical copy of func_50186924_Var_10 (0x4840D658, pointed record); nothing is seen to read the copy (dup_spans)
+func_50186924_Var_10_Copy:	# REC_func_50186924_ArgA0 (4 bytes): the layout func_50186924 0x50186924 reads through its argument a0 (passed by func_501869DE_entry_L19 0x501869FA `call func_50186924_entry, [d2,d3], 0x24`, +15 more calls)
+	REC_func_50186924_ArgA0	
+
+# a byte-identical copy of func_50186924_Table_11 (0x4840D65C, reader table); nothing is seen to read the copy (dup_spans)
+func_50186924_Table_11_Copy:	# 10 x u32, 1075..41771; read by func_50186924 0x50186924: `mov (4, a0), d2`
+	tab_u32	1075, 2270, 4541, 6932, 9322, 15477, 22050, 28624	# [0]
+	tab_u32	35197, 41771	# [8]
+
+# a byte-identical copy of func_50186924_Var_11 (0x4840D684, pointed record); nothing is seen to read the copy (dup_spans)
+func_50186924_Var_11_Copy:	# REC_func_50186924_ArgA0 (4 bytes): the layout func_50186924 0x50186924 reads through its argument a0 (passed by func_501869DE_entry_L19 0x501869FA `call func_50186924_entry, [d2,d3], 0x24`, +15 more calls)
+	REC_func_50186924_ArgA0	index=0x7FF3A4
+
+# a byte-identical copy of func_50186924_Table_12 (0x4840D688, reader table); nothing is seen to read the copy (dup_spans)
+func_50186924_Table_12_Copy:	# 10 x u32, 8387920..8388557; read by func_50186924 0x50186924: `mov (4, a0), d2`
+	tab_u32	8387920, 8388240, 8388357, 8388417, 8388454, 8388479, 8388497, 8388523	# [0]
+	tab_u32	8388544, 8388557	# [8]
+
+# a byte-identical copy of Str_y_5 (0x4840D6B0, string); nothing is seen to read the copy (dup_spans)
+Str_y_5_Copy:	.asciz "\xFD|y"
+
+# a byte-identical copy of func_50186924_Table_13 (0x4840D6B4, reader table); nothing is seen to read the copy (dup_spans)
+func_50186924_Table_13_Copy:	# 10 x u32, 8344923..8384229; read by func_50186924 0x50186924: `mov (4, a0), d2`
+	tab_u32	8344923, 8366737, 8374021, 8377665, 8379852, 8381311, 8382353, 8383135	# [0]
+	tab_u32	8383743, 8384229	# [8]
+
+# a byte-identical copy of func_50186924_Var_12 (0x4840D6DC, pointed record); nothing is seen to read the copy (dup_spans)
+func_50186924_Var_12_Copy:	# REC_func_50186924_ArgA0 (4 bytes): the layout func_50186924 0x50186924 reads through its argument a0 (passed by func_501869DE_entry_L19 0x501869FA `call func_50186924_entry, [d2,d3], 0x24`, +15 more calls)
+	REC_func_50186924_ArgA0	index=0xA3A88
+
+# a byte-identical copy of func_50186924_Table_14 (0x4840D6E0, reader table); nothing is seen to read the copy (dup_spans)
+func_50186924_Table_14_Copy:	# 10 x u32, 6878..68620; read by func_50186924 0x50186924: `mov (4, a0), d2`
+	tab_u32	68620, 34355, 22913, 17188, 13752, 11461, 9824, 8597	# [0]
+	tab_u32	7642, 6878	# [8]
+# census: opaque -- unknown-dump: 44 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x00DDA4, 0x00DDD0
+
+# a byte-identical copy of Str_U_8 (0x4840D734, string); nothing is seen to read the copy (dup_spans)
+Str_U_8_Copy:	.asciz "[U\x7F"
+# census: opaque -- unknown-dump: 40 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x00DDD4, 0x00DDFC
+
+# a byte-identical copy of func_50186924_Var_13 (0x4840D760, pointed record); nothing is seen to read the copy (dup_spans)
+func_50186924_Var_13_Copy:	# REC_func_50186924_ArgA0 (4 bytes): the layout func_50186924 0x50186924 reads through its argument a0 (passed by func_501869DE_entry_L19 0x501869FA `call func_50186924_entry, [d2,d3], 0x24`, +15 more calls)
+	REC_func_50186924_ArgA0	
+
+# a byte-identical copy of func_50186924_Table_15 (0x4840D764, reader table); nothing is seen to read the copy (dup_spans)
+func_50186924_Table_15_Copy:	# 10 x u32, 4234237772..4294967187; read by func_50186924 0x50186924: `mov (4, a0), d2`
+	tab_u32	4294967187, 4294966012, 4294956811, 4294918466, 4294789464, 4294379910, 4293079657, 4288951610	# [0]
+	tab_u32	4275845878, 4234237772	# [8]
+
+# a byte-identical copy of func_50186924_Var_14 (0x4840D78C, pointed record); nothing is seen to read the copy (dup_spans)
+func_50186924_Var_14_Copy:	# REC_func_50186924_ArgA0 (4 bytes): the layout func_50186924 0x50186924 reads through its argument a0 (passed by func_501869DE_entry_L19 0x501869FA `call func_50186924_entry, [d2,d3], 0x24`, +15 more calls)
+	REC_func_50186924_ArgA0	
+
+# a byte-identical copy of func_50186924_Table_16 (0x4840D790, reader table); nothing is seen to read the copy (dup_spans)
+func_50186924_Table_16_Copy:	# 10 x u32, 108..10483; read by func_50186924 0x50186924: `mov (4, a0), d2`
+	tab_u32	108, 1144, 5242, 8632, 9901, 10301, 10427, 10467	# [0]
+	tab_u32	10480, 10483	# [8]
+# a byte-identical copy of func_50189206_entry_L4f_Table (0x4840D7B8, reader table); nothing is seen to read the copy (dup_spans)
+func_50189206_entry_L4f_Table_Copy:	# 49 x u32, 1048615884..1082051041; read by func_50189206_entry_L4f 0x5018925A: `mov	(d0, a0), d1`; func_50189206_entry_L353 0x5018955E: `mov	(d0, a0), d1` ...
+	tab_u32	1048615884, 1049115304, 1049644316, 1050204674, 1050798235, 1051426967, 1052092954, 1052798403	# [0]
+	tab_u32	1053545652, 1054337179, 1055175606, 1056063714, 1056984526, 1057482763, 1058010522, 1058569552	# [8]
+	tab_u32	1059161708, 1059788950, 1060453359, 1061157137, 1061902616, 1062692268, 1063528709, 1064414713	# [16]
+	tab_u32	1065353216, 1065850272, 1066376781, 1066934487, 1067525240, 1068150997, 1068813832, 1069515942	# [24]
+	tab_u32	1070259656, 1071047437, 1071881897, 1072765802, 1073702081, 1074217832, 1074743093, 1075299478	# [32]
+	tab_u32	1075888831, 1076513106, 1077174371, 1077874818, 1078616770, 1079402685, 1080235168, 1081116979	# [40]
+	tab_u32	1082051041	# [48]
+# a byte-identical copy of func_5018884C_Table (0x4840D87C, reader table); nothing is seen to read the copy (dup_spans)
+func_5018884C_Table_Copy:	# 25 x u32, 1065353216..1082051041; read by func_5018884C 0x5018884C: `mov	(d0, a0), d1`
+	tab_u32	1065353216, 1065850272, 1066376781, 1066934487, 1067525240, 1068150997, 1068813832, 1069515942	# [0]
+	tab_u32	1070259656, 1071047437, 1071881897, 1072765802, 1073702081, 1074217832, 1074743093, 1075299478	# [8]
+	tab_u32	1075888831, 1076513106, 1077174371, 1077874818, 1078616770, 1079402685, 1080235168, 1081116979	# [16]
+	tab_u32	1082051041	# [24]
+# a byte-identical copy of func_5018888A_Table (0x4840D8E0, reader table); nothing is seen to read the copy (dup_spans)
+func_5018888A_Table_Copy:	# 49 x u32, 1056984526..1073702081; read by func_5018888A 0x5018888A: `mov	(d0, a0), d1`
+	tab_u32	1056984526, 1057230060, 1057482763, 1057742845, 1058010522, 1058286015, 1058569552, 1058861369	# [0]
+	tab_u32	1059161708, 1059470816, 1059788950, 1060116374, 1060453359, 1060800184, 1061157137, 1061524513	# [8]
+	tab_u32	1061902616, 1062291761, 1062692268, 1063104471, 1063528709, 1063965336, 1064414713, 1064877212	# [16]
+	tab_u32	1065353216, 1065598168, 1065850272, 1066109738, 1066376781, 1066651621, 1066934487, 1067225613	# [24]
+	tab_u32	1067525240, 1067833616, 1068150997, 1068477645, 1068813832, 1069159835, 1069515942, 1069882448	# [32]
+	tab_u32	1070259656, 1070647878, 1071047437, 1071458663, 1071881897, 1072317490, 1072765802, 1073227205	# [40]
+	tab_u32	1073702081	# [48]
 
 func_485E8EDD_entry_L15_Table:	# u8, a constant; read / written by JpegEncSetup_entry_L15 0x485E8EF7: `movbu (a1), d0`
 	.byte	1
@@ -9427,16 +9544,16 @@ cre_tsk_Impl_Table_3:	# T_CTSK (20 bytes): the layout cre_tsk 0x5018D1AD reads t
 	T_CTSK	tskatr="\x01\x00\x00\x00", task=ApTaskMain, itskpri=3, x14="\x00\x00", stksz=0x10000
 cre_tsk_Impl_Table_5:	# T_CTSK (20 bytes): the layout cre_tsk 0x5018D1AD reads through its argument a0 (passed by GuiTaskObjectsCreate 0x485EBBCD `call cre_tsk, 0, 0`, +8 more calls); the layout cre_tsk_Impl 0x5018D239 reads through its argument a0 (passed by cre_tsk_L3d 0x5018D1EA `call cre_tsk_Impl_entry, [d2,d3,a2], 0x2c`)
 	T_CTSK	tskatr="\x01\x00\x00\x00", task=DrawTaskMain, itskpri=3, x14="\x00\x00", stksz=6144
-cre_flg_Impl_Var_8:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x5018C994 reads through its argument a0 (passed by GuiTaskObjectsCreate 0x485EBBCD `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x5018CA20 reads through its argument a0 (passed by cre_flg_L3d 0x5018C9D1 `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00"
-cre_flg_Impl_Var_10:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x5018C994 reads through its argument a0 (passed by GuiTaskObjectsCreate 0x485EBBCD `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x5018CA20 reads through its argument a0 (passed by cre_flg_L3d 0x5018C9D1 `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00"
-cre_flg_Impl_Var_12:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x5018C994 reads through its argument a0 (passed by GuiTaskObjectsCreate 0x485EBBCD `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x5018CA20 reads through its argument a0 (passed by cre_flg_L3d 0x5018C9D1 `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00", f8=1
-cre_flg_Impl_Var_14:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x5018C994 reads through its argument a0 (passed by GuiTaskObjectsCreate 0x485EBBCD `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x5018CA20 reads through its argument a0 (passed by cre_flg_L3d 0x5018C9D1 `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00", f8=1
-cre_flg_Impl_Var_16:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x5018C994 reads through its argument a0 (passed by GuiTaskObjectsCreate 0x485EBBCD `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x5018CA20 reads through its argument a0 (passed by cre_flg_L3d 0x5018C9D1 `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00", f8=1
+cre_flg_Impl_Var_8:	# T_CFLG (12 bytes): the layout cre_flg 0x5018C994 reads through its argument a0 (passed by GuiTaskObjectsCreate 0x485EBBCD `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x5018CA20 reads through its argument a0 (passed by cre_flg_L3d 0x5018C9D1 `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	flgatr=8, x6="\x00\x00"
+cre_flg_Impl_Var_10:	# T_CFLG (12 bytes): the layout cre_flg 0x5018C994 reads through its argument a0 (passed by GuiTaskObjectsCreate 0x485EBBCD `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x5018CA20 reads through its argument a0 (passed by cre_flg_L3d 0x5018C9D1 `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	flgatr=8, x6="\x00\x00"
+cre_flg_Impl_Var_12:	# T_CFLG (12 bytes): the layout cre_flg 0x5018C994 reads through its argument a0 (passed by GuiTaskObjectsCreate 0x485EBBCD `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x5018CA20 reads through its argument a0 (passed by cre_flg_L3d 0x5018C9D1 `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	flgatr=8, x6="\x00\x00", iflgptn=1
+cre_flg_Impl_Var_14:	# T_CFLG (12 bytes): the layout cre_flg 0x5018C994 reads through its argument a0 (passed by GuiTaskObjectsCreate 0x485EBBCD `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x5018CA20 reads through its argument a0 (passed by cre_flg_L3d 0x5018C9D1 `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	flgatr=8, x6="\x00\x00", iflgptn=1
+cre_flg_Impl_Var_16:	# T_CFLG (12 bytes): the layout cre_flg 0x5018C994 reads through its argument a0 (passed by GuiTaskObjectsCreate 0x485EBBCD `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x5018CA20 reads through its argument a0 (passed by cre_flg_L3d 0x5018C9D1 `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	flgatr=8, x6="\x00\x00", iflgptn=1
 KernelCyclicHandlerDefine_entry_L52_Table:	# REC_KernelCyclicHandlerDefine_ArgA0 (24 bytes): the layout KernelCyclicHandlerDefine 0x5018CA75 reads through its argument a0 (passed by func_485EBC80 0x485EBC80 `call KernelCyclicHandlerDefine_entry, [d2,d3,a2,a3], 0x1c`)
 	REC_KernelCyclicHandlerDefine_ArgA0	x4="\x01\x00\x00\x00", proc=loc_485EBBBE, f12=1, x18="\x00\x00", KernelCyclicSchedule_d0=1
 KernelCyclicHandlerDefine_entry_L52_Table_3:	# REC_KernelCyclicHandlerDefine_ArgA0 (24 bytes): the layout KernelCyclicHandlerDefine 0x5018CA75 reads through its argument a0 (passed by func_485EBC80 0x485EBC80 `call KernelCyclicHandlerDefine_entry, [d2,d3,a2,a3], 0x1c`)
@@ -9493,8 +9610,8 @@ Str_BM_2:	.asciz "BM"
 SetModeLed_Table:	# 16 x u8, 2..255; read by SetModeLed_entry : `movbu	(d3, a0), d0`
 	tab_u8	255, 7, 6, 8, 255, 3, 2, 255, 17, 18, 14, 19, 255, 255, 255, 255
 
-cre_flg_Impl_Var_18:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x5018C994 reads through its argument a0 (passed by GuiTaskObjectsCreate 0x485EBBCD `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x5018CA20 reads through its argument a0 (passed by cre_flg_L3d 0x5018C9D1 `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00", f8=1
+cre_flg_Impl_Var_18:	# T_CFLG (12 bytes): the layout cre_flg 0x5018C994 reads through its argument a0 (passed by GuiTaskObjectsCreate 0x485EBBCD `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x5018CA20 reads through its argument a0 (passed by cre_flg_L3d 0x5018C9D1 `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	flgatr=8, x6="\x00\x00", iflgptn=1
 
 Str_604:	.asciz "604"
 
@@ -16241,8 +16358,8 @@ Text_i108_bmp:	# 130 strings of 8 characters, NUL-terminated
 
 cre_tsk_Impl_Table_7:	# T_CTSK (20 bytes): the layout cre_tsk 0x5018D1AD reads through its argument a0 (passed by GuiTaskObjectsCreate 0x485EBBCD `call cre_tsk, 0, 0`, +8 more calls); the layout cre_tsk_Impl 0x5018D239 reads through its argument a0 (passed by cre_tsk_L3d 0x5018D1EA `call cre_tsk_Impl_entry, [d2,d3,a2], 0x2c`)
 	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_4871EF31, itskpri=3, x14="\x00\x00", stksz=24576
-cre_flg_Impl_Var_20:	# REC_cre_flg_ArgA0 (12 bytes): the layout cre_flg 0x5018C994 reads through its argument a0 (passed by GuiTaskObjectsCreate 0x485EBBCD `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x5018CA20 reads through its argument a0 (passed by cre_flg_L3d 0x5018C9D1 `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
-	REC_cre_flg_ArgA0	f4=8, x6="\x00\x00"
+cre_flg_Impl_Var_20:	# T_CFLG (12 bytes): the layout cre_flg 0x5018C994 reads through its argument a0 (passed by GuiTaskObjectsCreate 0x485EBBCD `call cre_flg, 0, 0`, +4 more calls); the layout cre_flg_Impl 0x5018CA20 reads through its argument a0 (passed by cre_flg_L3d 0x5018C9D1 `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
+	T_CFLG	flgatr=8, x6="\x00\x00"
 
 func_4860982E_Table:
 	.long	loc_48609870
@@ -39886,119 +40003,3 @@ Str_P_EXP_PEDAL:	.asciz "P.EXP PEDAL:  "
 			AcSpsMmmEdit	SpsPage3_SpsMmmEdit_P_EXP_PEDAL, super=SpsPage3_Box1, prev=SpsPage3_SpsMmmEdit_SUS_PEDAL, flag=VF_Const, X=164, Y=148, W=149, H=14, color=CL_WallPattern, index=7, caption=Str_P_EXP_PEDAL, fontcolor=CL_White, align=1, length=5, editsw=ES_None, dial=1, selected=SpsPage3_SpsMmmEdit_P_EXP_PEDAL_selected, data=SpsPage3_SpsMmmEdit_P_EXP_PEDAL_data	# caption "P.EXP PEDAL:  "
 		AcIndexWideES	SpsPage3_IndexWideES1, super=SpsPage3, next=SpsPage3_IndexWideES2, prev=SpsPage3_Box1, flag=VF_Const, X=164, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, font=3, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom5, style=11
 		AcIndexWideES	SpsPage3_IndexWideES2, super=SpsPage3, next=SpsPage3_Label_ORIG, prev=SpsPage3_IndexWideES1, flag=VF_Const, X=284, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=5, font=3, fontcolor=CL_Black, editsw=ES_Bottom8, editsw2=ES_Bottom8, style=11
-
-Str_ORIG:	.asciz "ORIG"
-	.align	4, 0xFF	# pad after Str_ORIG
-
-		VwLabel	SpsPage3_Label_ORIG, super=SpsPage3, next=SpsPage3_IndexEditSw1, prev=SpsPage3_IndexWideES2, flag=VF_Const, X=282, Y=201, W=36, H=19, str=Str_ORIG, fontcolor=CL_White	# str "ORIG"
-		AcIndexEditSw	SpsPage3_IndexEditSw1, super=SpsPage3, next=SpsPage3_IndexEditSw2, prev=SpsPage3_Label_ORIG, flag=VF_Const, X=8, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, style=3
-		AcIndexEditSw	SpsPage3_IndexEditSw2, super=SpsPage3, next=SpsPage3_IndexEditSw3, prev=SpsPage3_IndexEditSw1, flag=VF_Const, X=40, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom2, style=3
-		AcIndexEditSw	SpsPage3_IndexEditSw3, super=SpsPage3, next=SpsPage3_IndexEditSw4, prev=SpsPage3_IndexEditSw2, flag=VF_Const, X=88, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, style=3
-		AcIndexEditSw	SpsPage3_IndexEditSw4, super=SpsPage3, next=SpsPage3_Label_EQ_LOW, prev=SpsPage3_IndexEditSw3, flag=VF_Const, X=120, Y=217, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, style=3
-
-Str_EQ_LOW:	.asciz "EQ LOW"
-	.align	4, 0xFF	# pad after Str_EQ_LOW
-
-		VwLabel	SpsPage3_Label_EQ_LOW, super=SpsPage3, sub=SpsPage3_Label_FC_GAIN, next=SpsPage3_Label_EQ_HI, prev=SpsPage3_IndexEditSw4, flag=VF_Const, X=14, Y=193, W=52, H=19, str=Str_EQ_LOW, fontcolor=CL_White	# str "EQ LOW"
-
-Str_FC_GAIN:	.asciz "FC  GAIN"
-	.align	4, 0xFF	# pad after Str_FC_GAIN
-
-			VwLabel	SpsPage3_Label_FC_GAIN, super=SpsPage3_Label_EQ_LOW, flag=VF_Const, X=16, Y=207, W=52, H=11, str=Str_FC_GAIN, font=3, fontcolor=CL_White	# str "FC  GAIN"
-
-Str_EQ_HI:	.asciz "EQ HI"
-	.align	4, 0xFF	# pad after Str_EQ_HI
-
-		VwLabel	SpsPage3_Label_EQ_HI, super=SpsPage3, next=SpsPage3_Label_FC_GAIN2, prev=SpsPage3_Label_EQ_LOW, flag=VF_Const, X=98, Y=193, W=44, H=19, str=Str_EQ_HI, fontcolor=CL_White	# str "EQ HI"
-
-Str_FC_GAIN_2:	.asciz "FC  GAIN"
-	.align	4, 0xFF	# pad after Str_FC_GAIN_2
-
-		VwLabel	SpsPage3_Label_FC_GAIN2, super=SpsPage3, next=SpsPage3_Line1, prev=SpsPage3_Label_EQ_HI, flag=VF_Const, X=96, Y=207, W=52, H=11, str=Str_FC_GAIN_2, font=3, fontcolor=CL_White	# str "FC  GAIN"
-		VwLine	SpsPage3_Line1, super=SpsPage3, next=SpsPage3_Line2, prev=SpsPage3_Label_FC_GAIN2, flag=VF_Const, X=72, Y=58, W=212, H=1, color=CL_White, linemode=1
-		VwLine	SpsPage3_Line2, super=SpsPage3, next=SpsPage3_SpsMmmEdit1, prev=SpsPage3_Line1, flag=VF_Const, X=72, Y=60, W=212, H=1, color=CL_White, linemode=1
-
-Str_empty_27:	.asciz ""
-	.align	4, 0xFF	# pad after Str_empty_27
-
-		AcSpsMmmEdit	SpsPage3_SpsMmmEdit1, super=SpsPage3, next=SpsPage3_Line3, prev=SpsPage3_Line2, flag=VF_Const, X=76, Y=36, W=204, H=22, color=CL_WallPattern, index=15, caption=Str_empty_27, font=4, fontcolor=CL_White, length=16, editsw=ES_None, dial=1, selected=SpsPage3_SpsMmmEdit1_selected, data=SpsPage3_SpsMmmEdit1_data	# caption ""
-		VwLine	SpsPage3_Line3, super=SpsPage3, next=SpsPage3_IndexWideES3, prev=SpsPage3_SpsMmmEdit1, flag=VF_Const, X=160, Y=101, W=1, H=88, color=CL_White, linemode=1
-		AcIndexWideES	SpsPage3_IndexWideES3, super=SpsPage3, next=SpsPage3_Label_SUST, prev=SpsPage3_Line3, flag=VF_Const, X=204, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=6, font=3, fontcolor=CL_Black, editsw=ES_Bottom6, editsw2=ES_Bottom6, style=11
-
-Str_SUST:	.asciz "SUST"
-	.align	4, 0xFF	# pad after Str_SUST
-
-		VwLabel	SpsPage3_Label_SUST, super=SpsPage3, next=SpsPage3_IndexWideES4, prev=SpsPage3_IndexWideES3, flag=VF_Const, X=199, Y=201, W=36, H=19, str=Str_SUST, fontcolor=CL_White	# str "SUST"
-		AcIndexWideES	SpsPage3_IndexWideES4, super=SpsPage3, next=SpsPage3_Label_P_EXP, prev=SpsPage3_Label_SUST, flag=VF_Const, X=244, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=7, font=3, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom7, style=11
-
-Str_P_EXP:	.asciz "P.EXP"
-	.align	4, 0xFF	# pad after Str_P_EXP
-
-		VwLabel	SpsPage3_Label_P_EXP, super=SpsPage3, next=SpsPage3_Label_GLIDE, prev=SpsPage3_IndexWideES4, flag=VF_Const, X=237, Y=201, W=44, H=19, str=Str_P_EXP, fontcolor=CL_White	# str "P.EXP"
-
-Str_GLIDE:	.asciz "GLIDE"
-	.align	4, 0xFF	# pad after Str_GLIDE
-
-		VwLabel	SpsPage3_Label_GLIDE, super=SpsPage3, prev=SpsPage3_Label_P_EXP, flag=VF_Const, X=153, Y=201, W=44, H=19, str=Str_GLIDE, fontcolor=CL_White	# str "GLIDE"
-
-	Window	SpsPage4, sub=SpsPage4_Box1, flag=VF_Const, X=0, Y=96, W=320, H=144, color=CL_WallPattern, index=0xFFFF, parent=SpsPage4_parent, child=SpsPage4_child
-		VwBox	SpsPage4_Box1, super=SpsPage4, sub=SpsPage4_SpsMmmEdit1, next=SpsPage4_IndexWideES1, flag=VF_Const, X=4, Y=96, W=312, H=98, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
-
-Str_empty_28:	.asciz "            :"
-	.align	4, 0xFF	# pad after Str_empty_28
-
-			AcSpsMmmEdit	SpsPage4_SpsMmmEdit1, super=SpsPage4_Box1, sub=SpsPage4_Label_RESONANCE, next=SpsPage4_SpsMmmEdit_BRIGHTNESS, flag=VF_Const, X=8, Y=112, W=153, H=14, color=CL_WallPattern, caption=Str_empty_28, fontcolor=CL_White, align=2, length=5, editsw=ES_None, dial=1, selected=SpsPage4_SpsMmmEdit1_selected, data=SpsPage4_SpsMmmEdit1_data	# caption "            :"
-
-Str_RESONANCE:	.asciz "RESONANCE"
-	.align	4, 0xFF	# pad after Str_RESONANCE
-
-				VwLabel	SpsPage4_Label_RESONANCE, super=SpsPage4_SpsMmmEdit1, flag=VF_Const, X=7, Y=113, W=76, H=19, str=Str_RESONANCE, fontcolor=CL_White	# str "RESONANCE"
-
-Str_BRIGHTNESS:	.asciz "BRIGHTNESS:"
-
-			AcSpsMmmEdit	SpsPage4_SpsMmmEdit_BRIGHTNESS, super=SpsPage4_Box1, next=SpsPage4_SpsMmmEdit_ATTACK_TIME, prev=SpsPage4_SpsMmmEdit1, flag=VF_Const, X=164, Y=104, W=145, H=14, color=CL_WallPattern, index=1, caption=Str_BRIGHTNESS, fontcolor=CL_White, align=2, length=5, editsw=ES_None, dial=1, selected=SpsPage4_SpsMmmEdit_BRIGHTNESS_selected, data=SpsPage4_SpsMmmEdit_BRIGHTNESS_data	# caption "BRIGHTNESS:"
-
-Str_ATTACK_TIME_2:	.asciz "ATTACK TIME :"
-	.align	4, 0xFF	# pad after Str_ATTACK_TIME_2
-
-			AcSpsMmmEdit	SpsPage4_SpsMmmEdit_ATTACK_TIME, super=SpsPage4_Box1, next=SpsPage4_SpsMmmEdit_DECAY_TIME, prev=SpsPage4_SpsMmmEdit_BRIGHTNESS, flag=VF_Const, X=8, Y=136, W=153, H=14, color=CL_WallPattern, index=2, caption=Str_ATTACK_TIME_2, fontcolor=CL_White, align=2, length=5, editsw=ES_None, dial=1, selected=SpsPage4_SpsMmmEdit_ATTACK_TIME_selected, data=SpsPage4_SpsMmmEdit_ATTACK_TIME_data	# caption "ATTACK TIME :"
-
-Str_DECAY_TIME:	.asciz "DECAY TIME  :"
-	.align	4, 0xFF	# pad after Str_DECAY_TIME
-
-			AcSpsMmmEdit	SpsPage4_SpsMmmEdit_DECAY_TIME, super=SpsPage4_Box1, next=SpsPage4_SpsMmmEdit_RELEASE_TIME, prev=SpsPage4_SpsMmmEdit_ATTACK_TIME, flag=VF_Const, X=8, Y=152, W=153, H=14, color=CL_WallPattern, index=3, caption=Str_DECAY_TIME, fontcolor=CL_White, align=2, length=5, editsw=ES_None, dial=1, selected=SpsPage4_SpsMmmEdit_DECAY_TIME_selected, data=SpsPage4_SpsMmmEdit_DECAY_TIME_data	# caption "DECAY TIME  :"
-
-Str_RELEASE_TIME_2:	.asciz "RELEASE TIME:"
-	.align	4, 0xFF	# pad after Str_RELEASE_TIME_2
-
-			AcSpsMmmEdit	SpsPage4_SpsMmmEdit_RELEASE_TIME, super=SpsPage4_Box1, sub=SpsPage4_Line1, next=SpsPage4_SpsMmmEdit_RATE, prev=SpsPage4_SpsMmmEdit_DECAY_TIME, flag=VF_Const, X=8, Y=168, W=153, H=14, color=CL_WallPattern, index=4, caption=Str_RELEASE_TIME_2, fontcolor=CL_White, align=2, length=5, editsw=ES_None, dial=1, selected=SpsPage4_SpsMmmEdit_RELEASE_TIME_selected, data=SpsPage4_SpsMmmEdit_RELEASE_TIME_data	# caption "RELEASE TIME:"
-				VwLine	SpsPage4_Line1, super=SpsPage4_SpsMmmEdit_RELEASE_TIME, flag=VF_Const, X=160, Y=101, W=1, H=88, color=CL_White, linemode=1
-
-Str_RATE:	.asciz "     RATE :"
-
-			AcSpsMmmEdit	SpsPage4_SpsMmmEdit_RATE, super=SpsPage4_Box1, next=SpsPage4_SpsMmmEdit_DEPTH, prev=SpsPage4_SpsMmmEdit_RELEASE_TIME, flag=VF_Const, X=164, Y=136, W=145, H=14, color=CL_WallPattern, index=5, caption=Str_RATE, fontcolor=CL_White, align=2, length=5, editsw=ES_None, dial=1, selected=SpsPage4_SpsMmmEdit_RATE_selected, data=SpsPage4_SpsMmmEdit_RATE_data	# caption "     RATE :"
-
-Str_DEPTH_3:	.asciz "     DEPTH:"
-
-			AcSpsMmmEdit	SpsPage4_SpsMmmEdit_DEPTH, super=SpsPage4_Box1, next=SpsPage4_SpsMmmEdit_DELAY, prev=SpsPage4_SpsMmmEdit_RATE, flag=VF_Const, X=164, Y=152, W=145, H=14, color=CL_WallPattern, index=6, caption=Str_DEPTH_3, fontcolor=CL_White, align=2, length=5, editsw=ES_None, dial=1, selected=SpsPage4_SpsMmmEdit_DEPTH_selected, data=SpsPage4_SpsMmmEdit_DEPTH_data	# caption "     DEPTH:"
-
-Str_DELAY:	.asciz "     DELAY:"
-
-			AcSpsMmmEdit	SpsPage4_SpsMmmEdit_DELAY, super=SpsPage4_Box1, next=SpsPage4_Label_FILTER, prev=SpsPage4_SpsMmmEdit_DEPTH, flag=VF_Const, X=164, Y=168, W=145, H=14, color=CL_WallPattern, index=7, caption=Str_DELAY, fontcolor=CL_White, align=2, length=5, editsw=ES_None, dial=1, selected=SpsPage4_SpsMmmEdit_DELAY_selected, data=SpsPage4_SpsMmmEdit_DELAY_data	# caption "     DELAY:"
-
-Str_FILTER:	.asciz "FILTER"
-	.align	4, 0xFF	# pad after Str_FILTER
-
-			VwLabel	SpsPage4_Label_FILTER, super=SpsPage4_Box1, prev=SpsPage4_SpsMmmEdit_DELAY, flag=VF_Const, X=7, Y=101, W=52, H=19, str=Str_FILTER, fontcolor=CL_White	# str "FILTER"
-		AcIndexWideES	SpsPage4_IndexWideES1, super=SpsPage4, next=SpsPage4_IndexWideES2, prev=SpsPage4_Box1, flag=VF_Const, X=4, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom1, style=3
-		AcIndexWideES	SpsPage4_IndexWideES2, super=SpsPage4, next=SpsPage4_IndexWideES3, prev=SpsPage4_IndexWideES1, flag=VF_Const, X=164, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom5, style=3
-		AcIndexWideES	SpsPage4_IndexWideES3, super=SpsPage4, next=SpsPage4_IndexWideES4, prev=SpsPage4_IndexWideES2, flag=VF_Const, X=84, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, editsw2=ES_Bottom3, style=3
-		AcIndexWideES	SpsPage4_IndexWideES4, super=SpsPage4, next=SpsPage4_IndexWideES5, prev=SpsPage4_IndexWideES3, flag=VF_Const, X=124, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, editsw2=ES_Bottom4, style=3
-		AcIndexWideES	SpsPage4_IndexWideES5, super=SpsPage4, next=SpsPage4_IndexWideES6, prev=SpsPage4_IndexWideES4, flag=VF_Const, X=204, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=5, font=4, fontcolor=CL_Black, editsw=ES_Bottom6, editsw2=ES_Bottom6, style=3
-		AcIndexWideES	SpsPage4_IndexWideES6, super=SpsPage4, next=SpsPage4_IndexWideES7, prev=SpsPage4_IndexWideES5, flag=VF_Const, X=244, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=6, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom7, style=3
-		AcIndexWideES	SpsPage4_IndexWideES7, super=SpsPage4, next=SpsPage4_Label_RESO, prev=SpsPage4_IndexWideES6, flag=VF_Const, X=284, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=7, font=4, fontcolor=CL_Black, editsw=ES_Bottom8, editsw2=ES_Bottom8, style=3
-
-Str_RESO:	.asciz "RESO"
-	.align	4, 0xFF	# pad after Str_RESO
-
-		VwLabel	SpsPage4_Label_RESO, super=SpsPage4, next=SpsPage4_Label_BRI, prev=SpsPage4_IndexWideES7, flag=VF_Const, X=2, Y=201, W=36, H=19, str=Str_RESO, fontcolor=CL_White	# str "RESO"

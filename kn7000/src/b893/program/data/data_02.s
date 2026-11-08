@@ -4449,10 +4449,10 @@ Str_FILE_4:	.asciz "FILE "
 Str_NEW_2:	.asciz " * NEW *"
 	.align	4, 0xFF	# pad after Str_NEW_2
 
-FmmStrCopy_Var_13:	# s8, a constant; read / written by FmmStrCopy 0x4852F0A5: `movbu (a1), d0`
+StrCopy_Var_13:	# s8, a constant; read / written by StrCopy 0x4852F0A5: `movbu (a1), d0`
 	.byte	0
 
-FmmStrCopy_Table_13:	# 3 x s8, -1..-1; read by FmmStrCopy 0x4852F0A5: `movbu (a1), d0`
+StrCopy_Table_13:	# 3 x s8, -1..-1; read by StrCopy 0x4852F0A5: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
 Str_NO_FILE:	.asciz "*** NO  FILE ***"
@@ -4493,29 +4493,29 @@ SdcSmfSaveAsFunc_Table:
 	.long	Str_GM2_3
 	.long	Str_GM
 
-FmmStrCopy_Var_14:	# s8, a constant; read / written by FmmStrCopy 0x4852F0A5: `movbu (a1), d0`
+StrCopy_Var_14:	# s8, a constant; read / written by StrCopy 0x4852F0A5: `movbu (a1), d0`
 	.byte	0
 
-FmmStrCopy_Table_14:	# 3 x s8, -1..-1; read by FmmStrCopy 0x4852F0A5: `movbu (a1), d0`
+StrCopy_Table_14:	# 3 x s8, -1..-1; read by StrCopy 0x4852F0A5: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
 Str_TR:	.asciz "TR "
 Str_empty_745:	.asciz ": "
 	.align	4, 0xFF	# pad after Str_empty_745
 
-FmmStrCopy_Var_15:	# s8, a constant; read / written by FmmStrCopy 0x4852F0A5: `movbu (a1), d0`
+StrCopy_Var_15:	# s8, a constant; read / written by StrCopy 0x4852F0A5: `movbu (a1), d0`
 	.byte	0
 
-FmmStrCopy_Table_15:	# 3 x s8, -1..-1; read by FmmStrCopy 0x4852F0A5: `movbu (a1), d0`
+StrCopy_Table_15:	# 3 x s8, -1..-1; read by StrCopy 0x4852F0A5: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
 Str_empty_761:	.asciz ": "
 	.align	4, 0xFF	# pad after Str_empty_761
 
-FmmStrCopy_Var_16:	# s8, a constant; read / written by FmmStrCopy 0x4852F0A5: `movbu (a1), d0`
+StrCopy_Var_16:	# s8, a constant; read / written by StrCopy 0x4852F0A5: `movbu (a1), d0`
 	.byte	0
 
-FmmStrCopy_Table_16:	# 3 x s8, -1..-1; read by FmmStrCopy 0x4852F0A5: `movbu (a1), d0`
+StrCopy_Table_16:	# 3 x s8, -1..-1; read by StrCopy 0x4852F0A5: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
 Str_NO_PLAYLIST:	.asciz "  * NO PLAYLIST *  "
@@ -4524,10 +4524,10 @@ Str_Default_Playlist:	.asciz "* Default Playlist *"
 Str_empty_744:	.asciz ": "
 	.align	4, 0xFF	# pad after Str_empty_744
 
-FmmStrCopy_Var_17:	# s8, a constant; read / written by FmmStrCopy 0x4852F0A5: `movbu (a1), d0`
+StrCopy_Var_17:	# s8, a constant; read / written by StrCopy 0x4852F0A5: `movbu (a1), d0`
 	.byte	0
 
-FmmStrCopy_Table_17:	# 3 x s8, -1..-1; read by FmmStrCopy 0x4852F0A5: `movbu (a1), d0`
+StrCopy_Table_17:	# 3 x s8, -1..-1; read by StrCopy 0x4852F0A5: `movbu (a1), d0`
 	tab_s8	-1, -1, -1
 
 Str_empty_743:	.asciz " * "
@@ -20976,7 +20976,7 @@ TgElemNoteOnStd_Table_3:	# 128 x u16, 0..8128; read by TgElemNoteOnStd 0x4C030A8
 TgPartModVoiceApplyB_Table:	# 8 x u16, 0..3; read by TgPartModVoiceApplyB 0x4C005A13: `movhu  (d0, a0), d0`; TgPartModVoiceApplyB 0x4C005A13: `movhu  (d0, a0), d1` ...
 	tab_u16	0, 3, 1, 2, 1, 0, 0, 0
 
-func_4C012318_Records:	# 3 x REC_func_4C012318_Records (128 bytes each); read by func_4C012318 0x4C012318 `movbu (d1, a0), d1`; func_4C02FE64 0x4C02FE64 `movbu (d0, a0), d2`; func_4C032734 0x4C032734 `movbu (d1, a2), d2`
+func_4C012318_Records:	# 3 x REC_func_4C012318_Records (128 bytes each); read by func_4C012318 0x4C012318 `movbu (d1, a0), d1`; TgVeloSenseApply 0x4C02FE64 `movbu (d0, a0), d2`; func_4C032734 0x4C032734 `movbu (d1, a2), d2`
 	REC_func_4C012318_Records	-64, -64, -64, -64, -64, -63, -63, -63, -63, -63, -63, -63, -63, -62, -62, -62, -62, -62, -62, -62, -62, -61, -61, -61, -61, -61, -61, -61, -61, -60, -60, -60, -60, -60, -60, -60, -60, -59, -59, -59, -59, -59, -59, -59, -59, -58, -58, -58, -58, -58, -58, -58, -58, -57, -57, -57, -57, -57, -57, -57, -57, -56, -56, -56, -56, -55, -54, -53, -53, -52, -51, -50, -49, -48, -47, -46, -46, -45, -44, -43, -42, -41, -40, -39, -39, -38, -37, -36, -35, -34, -33, -32, -32, -31, -30, -29, -28, -27, -26, -25, -25, -24, -23, -22, -21, -20, -19, -18, -18, -17, -16, -15, -14, -13, -12, -11, -11, -10, -9, -8, -7, -6, -5, -4, -4, -3, -2, -1
 	REC_func_4C012318_Records	-64, -64, -64, -63, -63, -63, -63, -62, -62, -62, -62, -61, -61, -61, -61, -60, -60, -60, -60, -59, -59, -59, -59, -58, -58, -58, -58, -57, -57, -57, -57, -56, -56, -56, -56, -55, -55, -55, -55, -54, -54, -54, -54, -53, -53, -53, -53, -52, -52, -52, -52, -51, -51, -51, -51, -50, -50, -50, -50, -49, -49, -49, -49, -48, -48, -47, -47, -46, -45, -44, -44, -43, -42, -41, -41, -40, -39, -38, -38, -37, -36, -35, -35, -34, -33, -32, -32, -31, -30, -29, -29, -28, -27, -26, -26, -25, -24, -23, -23, -22, -21, -20, -20, -19, -18, -17, -17, -16, -15, -14, -14, -13, -12, -11, -11, -10, -9, -8, -8, -7, -6, -5, -5, -4, -3, -2, -2, -1
 	REC_func_4C012318_Records	-64, -64, -63, -63, -63, -62, -62, -61, -61, -61, -60, -60, -60, -59, -59, -58, -58, -58, -57, -57, -57, -56, -56, -55, -55, -55, -54, -54, -54, -53, -53, -52, -52, -52, -51, -51, -51, -50, -50, -49, -49, -49, -48, -48, -48, -47, -47, -46, -46, -46, -45, -45, -45, -44, -44, -43, -43, -43, -42, -42, -42, -41, -41, -40, -40, -39, -39, -38, -38, -37, -36, -36, -35, -34, -34, -33, -33, -32, -31, -31, -30, -29, -29, -28, -28, -27, -26, -26, -25, -24, -24, -23, -23, -22, -21, -21, -20, -19, -19, -18, -18, -17, -16, -16, -15, -14, -14, -13, -13, -12, -11, -11, -10, -9, -9, -8, -8, -7, -6, -6, -5, -4, -4, -3, -3, -2, -1, -1
@@ -21014,7 +21014,7 @@ TgPartCutoffResolve_Table:	# 512 x s8, -64..0; read by TgPartCutoffResolve_entry
 	tab_s8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [464]
 	tab_s8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [480]
 	tab_s8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [496]
-func_4C00A979_Table:	# 26 x u8, 164..255; read by func_4C00A979_entry 0x4C00A8F7: `movbu  (d0, a0), d1`; func_4C02FDE7_entry 0x4C02FCA7: `movbu  (d0, a1), d3` ...
+func_4C00A979_Table:	# 26 x u8, 164..255; read by func_4C00A979_entry 0x4C00A8F7: `movbu  (d0, a0), d1`; TgTableAmpAttackRateCalc_entry 0x4C02FDE7: `movbu  (d0, a1), d3` ...
 	tab_u8	255, 248, 242, 238, 234, 230, 226, 222, 218, 214, 210, 206, 202, 198, 194, 190	# [0]
 	tab_u8	186, 182, 178, 176, 174, 172, 170, 168, 166, 164	# [16]
 func_4C00A979_Table_2:	# 75 x u8, 9..162; read by func_4C00A979 0x4C00A979: `movbu (func_4C00A979_Table_2), d0`
@@ -21046,13 +21046,13 @@ TgDrumZoneLevelScaleCalc_Table_3:	# 51 x u8, 0..127; read by TgDrumZoneLevelScal
 	tab_u8	16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46	# [16]
 	tab_u8	48, 52, 56, 60, 64, 68, 72, 76, 80, 84, 88, 92, 96, 100, 104, 108	# [32]
 	tab_u8	112, 120, 127	# [48]
-func_4C02FFC1_Table:	# 78 x u8, 0..253; read by func_4C02FFC1_entry 0x4C02FCA7: `movbu  (d0, a0), d0`; func_4C02FFC1_entry 0x4C02FCA7: `movbu  (d0, a0), d1` ...
+func_4C02FFC1_Table:	# 78 x u8, 0..253; read by func_4C02FFC1_entry 0x4C02FEB4: `movbu  (d0, a0), d0`; func_4C02FFC1_entry 0x4C02FEB4: `movbu  (d0, a0), d1` ...
 	tab_u8	1, 0, 0, 1, 21, 247, 1, 25, 246, 1, 30, 245, 1, 35, 244, 1	# [0]
 	tab_u8	42, 242, 1, 52, 241, 1, 64, 240, 1, 78, 243, 1, 91, 245, 1, 102	# [16]
 	tab_u8	248, 1, 111, 251, 1, 120, 253, 0, 127, 0, 0, 120, 0, 0, 111, 0	# [32]
 	tab_u8	0, 102, 0, 0, 91, 0, 0, 78, 0, 0, 64, 0, 0, 52, 5, 0	# [48]
 	tab_u8	42, 10, 0, 35, 14, 0, 30, 18, 0, 25, 22, 0, 21, 26	# [64]
-func_4C02FFC1_Table_2:	# 57 x u8, 0..253; read by func_4C02FFC1_entry 0x4C02FCA7: `movbu  (d0, a0), d0`; func_4C02FFC1_entry 0x4C02FCA7: `movbu  (d0, a0), d1` ...
+func_4C02FFC1_Table_2:	# 57 x u8, 0..253; read by func_4C02FFC1_entry 0x4C02FEB4: `movbu  (d0, a0), d0`; func_4C02FFC1_entry 0x4C02FEB4: `movbu  (d0, a0), d1` ...
 	tab_u8	0, 0, 0, 0, 21, 247, 0, 25, 246, 0, 30, 245, 0, 35, 244, 0	# [0]
 	tab_u8	42, 242, 0, 52, 241, 0, 64, 240, 0, 78, 243, 0, 91, 245, 0, 102	# [16]
 	tab_u8	248, 0, 111, 251, 0, 120, 253, 1, 127, 0, 1, 120, 0, 1, 111, 0	# [32]

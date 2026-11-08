@@ -27700,7 +27700,7 @@ V_HDDTEST_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6500_program.rom", 0x377504, 0x377508
 
-func_4C1733CE_entry_L27_Table:	# 1 x u8, 84..84; read by func_4C1733CE_entry : `movbu	(a2), d0`
+func_4C1733CE_entry_L27_Table:	# 1 x u8, 84..84; read by HddCommTestPport_entry : `movbu	(a2), d0`
 	tab_u8	84
 
 Str_his_is_Test_Data_for_PPORT:	.asciz "his is Test Data for PPORT"
@@ -28141,11 +28141,11 @@ TgcBufWrite_Table_5:	# u8, initial value of a RAM variable; read / written by Tg
 TgcBufWrite_entry_L51_Table_3:	# 4 x u8, 0..240; read by TgcBufWrite_entry_L51 0x4C07F8D9: `movbu (a2), d0`
 	tab_u8	144, 240, 64, 0
 
-func_4C051B0D_Var:	# u32, initial value of a RAM variable; read / written by func_4C051B0D 0x4C051B0D: `mov (func_4C051B0D_Var), d0`; func_4C051B0D 0x4C051B0D: `mov d0, (func_4C051B0D_Var)` ...
+func_4C051B0D_Var:	# u32, initial value of a RAM variable; read / written by TestFdLoadSaveRun 0x4C051B0D: `mov (func_4C051B0D_Var), d0`; TestFdLoadSaveRun 0x4C051B0D: `mov d0, (func_4C051B0D_Var)` ...
 	.long	0
-func_4C051B0D_Var_2:	# u32, initial value of a RAM variable; read / written by func_4C051B0D 0x4C051B0D: `mov (func_4C051B0D_Var_2), d0`; func_4C051B0D 0x4C051B0D: `mov d0, (func_4C051B0D_Var_2)` ...
+func_4C051B0D_Var_2:	# u32, initial value of a RAM variable; read / written by TestFdLoadSaveRun 0x4C051B0D: `mov (func_4C051B0D_Var_2), d0`; TestFdLoadSaveRun 0x4C051B0D: `mov d0, (func_4C051B0D_Var_2)` ...
 	.long	0
-func_4C051B0D_entry_L2f_Var:	# u32, initial value of a RAM variable; read / written by func_4C051B0D_entry_L2f 0x4C051B3F: `mov (func_4C051B0D_entry_L2f_Var), d0`; func_4C051B0D_entry_L2f 0x4C051B3F: `mov d0, (func_4C051B0D_entry_L2f_Var)` ...
+func_4C051B0D_entry_L2f_Var:	# u32, initial value of a RAM variable; read / written by TestFdLoadSaveRun_entry_L2f 0x4C051B3F: `mov (func_4C051B0D_entry_L2f_Var), d0`; TestFdLoadSaveRun_entry_L2f 0x4C051B3F: `mov d0, (func_4C051B0D_entry_L2f_Var)` ...
 	.long	0
 UserPadRecPartErase_Var:	# u8, initial value of a RAM variable; read / written by UserPadRecPartErase 0x4C05415F: `movbu (UserPadRecPartErase_Var), d0`; UserPadMeasuresDelete_entry_L21 0x4C0541C8: `movbu (UserPadRecPartErase_Var), d0` ...
 	.byte	0
@@ -37824,9 +37824,9 @@ func_4C123C73_Records:	# 65 x REC_func_4C123C73_Records (4 bytes each); read by 
 	REC_func_4C123C73_Records	f0=11637, f2=19, f3=76
 	REC_func_4C123C73_Records	f0=11940, f2=19, f3=76
 	REC_func_4C123C73_Records	f0=11946, f2=19, f3=76	# [64]
-VfsFileOpen_entry_Ld1_Records:	# 2 x REC_VfsFileOpen_entry_Ld1_Records (40 bytes each); read by VfsFileOpen_entry_Ld1 0x4C1304EE `mov (VfsFileOpen_entry_Ld1_Records+40), d0`; VfsFileOpen_entry_L103 0x4C130520 `mov (VfsFileOpen_entry_Ld1_Records+40), d0`; VfsFileOpen_entry_L103 0x4C130520 `mov (a2), a1` (+13)
-	REC_VfsFileOpen_entry_Ld1_Records	count=3841, x5="\x00\x00\x00", p20=func_4C123C73_Records+228, p24=func_4C123C73_Records+188, text=Str_A_27, x32=",[\x00P\x00\x00\x00\x00"
-	REC_VfsFileOpen_entry_Ld1_Records	count=1, x5="\xFF\xFF\xFF", x32="\xC8\xDD\x05P\x00\x00\x00\x00"
+FsOpen_entry_Ld1_Records:	# 2 x REC_FsOpen_entry_Ld1_Records (40 bytes each); read by FsOpen_entry_Ld1 0x4C1304EE `mov (FsOpen_entry_Ld1_Records+40), d0`; FsOpen_entry_L103 0x4C130520 `mov (FsOpen_entry_Ld1_Records+40), d0`; FsOpen_entry_L103 0x4C130520 `mov (a2), a1` (+13)
+	REC_FsOpen_entry_Ld1_Records	count=3841, x5="\x00\x00\x00", p20=func_4C123C73_Records+228, p24=func_4C123C73_Records+188, text=Str_A_27, x32=",[\x00P\x00\x00\x00\x00"
+	REC_FsOpen_entry_Ld1_Records	count=1, x5="\xFF\xFF\xFF", x32="\xC8\xDD\x05P\x00\x00\x00\x00"
 # census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6500_program.rom", 0x37D168, 0x37D16C
 
@@ -38505,7 +38505,7 @@ func_4C169947_entry_L10d_Table:	# 8 x u8, 0..0; read by func_4C169947_entry_L10d
 
 DpSmf1ReaderTask_Var_2:	# u32, initial value of a RAM variable; read / written by DpSmf1ReaderTask 0x4C16A73D: `mov (DpSmf1ReaderTask_Var_2), a0`; func_4C16B469 0x4C16B469: `mov d0, (DpSmf1ReaderTask_Var_2)` ...
 	.long	0x500ca314
-func_4C1727CA_entry_L61_Var:	# u32, initial value of a RAM variable; read / written by func_4C1727CA_entry_L61 0x4C172830: `mov d0, (func_4C1727CA_entry_L61_Var)`; func_4C1727CA_entry_Ld1 0x4C1728A0: `mov d0, (func_4C1727CA_entry_L61_Var)` ...
+func_4C1727CA_entry_L61_Var:	# u32, initial value of a RAM variable; read / written by HddTestExpansionSlots_entry_L61 0x4C172830: `mov d0, (func_4C1727CA_entry_L61_Var)`; HddTestExpansionSlots_entry_Ld1 0x4C1728A0: `mov d0, (func_4C1727CA_entry_L61_Var)` ...
 	.long	0x97800000
 func_4C17277E_entry_Le_Var:	# u16, initial value of a RAM variable; read / written by func_4C17277E_entry_Le 0x4C172791: `movhu (a0), d1`
 	.word	956

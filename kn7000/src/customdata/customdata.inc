@@ -77,13 +77,21 @@
 # key-bed side's func_48449207 classes the sound 2 from it), the key map +0x11 (0..6: which of the
 # seven tables of func_48449462_Records maps a played key when M3 0x2025 is 1 -- func_48449462 reads
 # tone record +0x11 through func_484495E8, for KeyZoneNoteResolve 0x484516EC; the factory kits use
-# 0 .. 6, Standard Kit1 and this User Kit 1), then 21 bytes no traced routine reads.
+# 0 .. 6, Standard Kit1 and this User Kit 1), then (lane kn7000-ic21, 2026-11-07, readers observed in
+# emulation, notes/kn7000-ic21/README.md):
+#   +0x12 + k*3, k = 0..5: six modulation routings {src, dest, depth}.  TgPartToneModRoutesLoad
+#          0x4C009C88 (after TgPartLocalEditClear) hands each dest (1..0x2E: the entry of its jump table
+#          0x48586658) and depth to TgPartModConfigStore 0x4C00603B for the part; a melodic head has
+#          eight such groups from +0x13.  The src bytes are not read on the TABLE path ([INFERENCE] the
+#          source, by the melodic head's 2-bit mod_src fields at +0x12)
+#   +0x24..+0x26: func_48448EA3 copies them as bytes 6..8 of its nine-byte tone summary, where a melodic
+#          head gives its +0x51..+0x53 (the summary's bytes 0..5 are then 0, 0x40, 0, 0, 0, 0)
 # (`tone_head_table`, src/table/style_macros.inc, is the same layout without the name;
 # notes/custom-data-ic21-probes/kit_tone_census.py lists the factory kits' heads.)
-.macro CSOUND_HEAD name, tone_class, key_map, b12, b13, b14, b15, b16, b17, b18, b19, b1a, b1b, b1c, b1d, b1e, b1f, b20, b21, b22, b23, b24, b25, b26
+.macro CSOUND_HEAD name, tone_class, key_map, mod0_src, mod0_dest, mod0_depth, mod1_src, mod1_dest, mod1_depth, mod2_src, mod2_dest, mod2_depth, mod3_src, mod3_dest, mod3_depth, mod4_src, mod4_dest, mod4_depth, mod5_src, mod5_dest, mod5_depth, h24, h25, h26
 	.ascii	"\name"
-	.byte	\tone_class, \key_map, \b12, \b13, \b14, \b15, \b16, \b17, \b18, \b19, \b1a, \b1b, \b1c, \b1d, \b1e, \b1f
-	.byte	\b20, \b21, \b22, \b23, \b24, \b25, \b26
+	.byte	\tone_class, \key_map, \mod0_src, \mod0_dest, \mod0_depth, \mod1_src, \mod1_dest, \mod1_depth, \mod2_src, \mod2_dest, \mod2_depth, \mod3_src, \mod3_dest, \mod3_depth, \mod4_src, \mod4_dest
+	.byte	\mod4_depth, \mod5_src, \mod5_dest, \mod5_depth, \h24, \h25, \h26
 .endm
 # One note's entry of the custom-sound block (+0x27 + note * 3): the {program, bank LSB, bank MSB}
 # of the voice record that plays that note.  TgNoteOnTableTone reads it for the note played;

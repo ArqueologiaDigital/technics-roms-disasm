@@ -7996,11 +7996,11 @@ func_4C051751_Table:	# 15 x u16, 496..4638; read by func_4C051751 0x4C051751: `m
 	tab_u16	4126, 4382, 4638	# [12]
 	.space	4, 0xFF
 
-func_4C0506C7_entry_L4_Records:	# 3 x RamTestRegion (12 bytes each); read by func_4C0506C7_entry_L4 0x4C0506D0 `mov (4, a0), d3`; func_4C0506C7_entry_L4 0x4C0506D0 `mov (a0), a2`
+func_4C0506C7_entry_L4_Records:	# 3 x RamTestRegion (12 bytes each); read by RamTestWords_entry_L4 0x4C0506D0 `mov (4, a0), d3`; RamTestWords_entry_L4 0x4C0506D0 `mov (a0), a2`
 	RamTestRegion	base=0x50000000, length=0x80000, x8="\x01\x02\x00\x00"
 	RamTestRegion	base=0x58000000, length=0x5040100, x8="\x01\x00\x00\x00"
 	RamTestRegion	base=0x54000000, length=0x5040100, x8="\x01\x00\x00\x00"
-func_4C050787_entry_L4_Records:	# 1 x RamTestByteRegion (12 bytes each); read by func_4C050787_entry_L4 0x4C05078D `mov (4, a1), d0`; func_4C050787_entry_L4 0x4C05078D `mov (a1), a0`; func_4C050787_entry_L4 0x4C05078D `movbu (a1), d1` (+1)
+func_4C050787_entry_L4_Records:	# 1 x RamTestByteRegion (12 bytes each); read by RamTestBytes_entry_L4 0x4C05078D `mov (4, a1), d0`; RamTestBytes_entry_L4 0x4C05078D `mov (a1), a0`; RamTestBytes_entry_L4 0x4C05078D `movbu (a1), d1` (+1)
 	RamTestByteRegion	base=0x44000000, length=32768, fail_bit=4, x9="\x00\x00\x00"
 
 ptrs_4C35992C:
@@ -19619,7 +19619,7 @@ func_4C089D6E_Table:	# 75 x u8, 9..162; read by func_4C089D6E 0x4C089D6E: `movbu
 	tab_u8	98, 96, 94, 92, 90, 88, 86, 84, 82, 80, 78, 76, 74, 72, 70, 68	# [32]
 	tab_u8	66, 64, 62, 60, 58, 56, 54, 52, 50, 48, 46, 44, 42, 40, 38, 36	# [48]
 	tab_u8	34, 32, 30, 28, 26, 24, 22, 20, 18, 14, 9	# [64]
-func_4C0806D2_Table:	# 2 x u8, 248..255; read by func_4C0806D2_entry : `movbu	(d2, a0), d0`; func_4C0837F4_entry : `movbu	(d0, a2), d0` ...
+func_4C0806D2_Table:	# 2 x u8, 248..255; read by TgTableKeyOffRelease : `movbu	(d0, a0), d0`; func_4C0806D2_entry : `movbu	(d2, a0), d0` ...
 	tab_u8	255, 248
 func_4C0806D2_Table_2:	# 99 x u8, 4..241; read by func_4C0806D2 0x4C0806D2: `movbu (func_4C0806D2_Table_2), d0`
 	tab_u8	241, 237, 233, 231, 229, 227, 225, 222, 218, 214, 210, 208, 206, 204, 202, 200	# [0]
@@ -19898,57 +19898,116 @@ data_4C36C089:
 data_4C36C094:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x36C094, 0x36C0A0
-func_4C03CC6E_entry_L8c_Selected_0:	# REC_M3HookDispatch_entry_L8c_Selected (12 bytes)
-	REC_M3HookDispatch_entry_L8c_Selected	key=65280, key_=53248, proc=TempoSyncSetDispatch
-	.space	12, 0x00
-func_4C03CC6E_entry_L8c_Selected_1:	# REC_M3HookDispatch_entry_L8c_Selected (12 bytes)
-	REC_M3HookDispatch_entry_L8c_Selected	
-func_4C03CC6E_entry_L8c_Selected_2:	# REC_M3HookDispatch_entry_L8c_Selected (12 bytes)
-	REC_M3HookDispatch_entry_L8c_Selected	
-func_4C03CC6E_entry_L8c_Selected_3:	# REC_M3HookDispatch_entry_L8c_Selected (12 bytes)
-	REC_M3HookDispatch_entry_L8c_Selected	key=0xFF0000, key_=0x700000, proc=XaprCallM3Hook
-# census: opaque -- unknown-dump: 72 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x36C0DC, 0x36C124
-func_4C03CC6E_entry_L8c_Selected_4:	# REC_M3HookDispatch_entry_L8c_Selected (12 bytes)
-	REC_M3HookDispatch_entry_L8c_Selected	key=255, key_=121, proc=func_4C02DD38
-	.space	12, 0x00
-func_4C03CC6E_entry_L8c_Selected_5:	# REC_M3HookDispatch_entry_L8c_Selected (12 bytes)
-	REC_M3HookDispatch_entry_L8c_Selected	
-func_4C03CC6E_entry_L8c_Selected_6:	# REC_M3HookDispatch_entry_L8c_Selected (12 bytes)
-	REC_M3HookDispatch_entry_L8c_Selected	
-func_4C03CC6E_entry_L8c_Selected_7:	# REC_M3HookDispatch_entry_L8c_Selected (12 bytes)
-	REC_M3HookDispatch_entry_L8c_Selected	
-func_4C03CD2C_entry_L9d_Selected_0:	# REC_func_4C03CD2C_entry_L9d_Selected (12 bytes)
-	REC_func_4C03CD2C_entry_L9d_Selected	key=0xFFFF00, key_=8192, proc=loc_4C066D29
-# census: opaque -- unknown-dump: 132 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x36C16C, 0x36C1F0
-func_4C03CD2C_entry_L9d_Selected_1:	# REC_func_4C03CD2C_entry_L9d_Selected (12 bytes)
-	REC_func_4C03CD2C_entry_L9d_Selected	key=0xFFFF00, key_=0x204000, proc=func_4C02F4E9
-# census: opaque -- unknown-dump: 36 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x36C1FC, 0x36C220
-func_4C03CD2C_entry_L9d_Selected_2:	# REC_func_4C03CD2C_entry_L9d_Selected (12 bytes)
-	REC_func_4C03CD2C_entry_L9d_Selected	key=0xFF0000, key_=0x600000, proc=func_4C02F4E9
-# census: opaque -- unknown-dump: 84 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x36C22C, 0x36C280
-func_4C03CD2C_entry_L9d_Selected_3:	# REC_func_4C03CD2C_entry_L9d_Selected (12 bytes)
-	REC_func_4C03CD2C_entry_L9d_Selected	key=0xFFFFFF, key_=0x701011, proc=loc_4C0515B2
-# census: opaque -- unknown-dump: 276 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x36C28C, 0x36C3A0
-func_4C03CD2C_entry_L9d_Selected_4:	# REC_func_4C03CD2C_entry_L9d_Selected (12 bytes)
-	REC_func_4C03CD2C_entry_L9d_Selected	key=0xFFFFFF, key_=0x900000, proc=func_4C05222C
-# census: opaque -- unknown-dump: 36 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x36C3AC, 0x36C3D0
-func_4C03CD2C_entry_L9d_Selected_5:	# REC_func_4C03CD2C_entry_L9d_Selected (12 bytes)
-	REC_func_4C03CD2C_entry_L9d_Selected	key=0xFFFFFF, key_=0xB0007E, proc=func_4C0D9876
-	.space	12, 0x00
-func_4C03CD2C_entry_L9d_Selected_6:	# REC_func_4C03CD2C_entry_L9d_Selected (12 bytes)
-	REC_func_4C03CD2C_entry_L9d_Selected	key=0xFFFFFF, key_=0xC00000, proc=loc_4C09D32B
-# census: opaque -- unknown-dump: 24 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x36C3F4, 0x36C40C
-func_4C03CD2C_entry_L9d_Selected_7:	# REC_func_4C03CD2C_entry_L9d_Selected (12 bytes)
-	REC_func_4C03CD2C_entry_L9d_Selected	
-func_4C03CD2C_entry_L9d_Selected_8:	# REC_func_4C03CD2C_entry_L9d_Selected (12 bytes)
-	REC_func_4C03CD2C_entry_L9d_Selected	
+
+# 1 records of 12 bytes up to the end marker (+8, 32 bits) that M3HookDispatch 0x4C03CC6E: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C03CC6E_entry_L8c_Selected_0:
+	.long	0xff00, 0xd000, TempoSyncSetDispatch
+	.long	0x0, 0x0, 0x0	# end
+# 0 records of 12 bytes up to the end marker (+8, 32 bits) that M3HookDispatch 0x4C03CC6E: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C03CC6E_entry_L8c_Selected_1:
+	.long	0x0, 0x0, 0x0	# end
+# 0 records of 12 bytes up to the end marker (+8, 32 bits) that M3HookDispatch 0x4C03CC6E: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C03CC6E_entry_L8c_Selected_2:
+	.long	0x0, 0x0, 0x0	# end
+# 6 records of 12 bytes up to the end marker (+8, 32 bits) that M3HookDispatch 0x4C03CC6E: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C03CC6E_entry_L8c_Selected_3:
+	.long	0xff0000, 0x700000, XaprCallM3Hook
+	.long	0xff0000, 0x700000, func_4C05234B
+	.long	0xff0000, 0x700000, func_4C051307
+	.long	0xff00, 0x2000, func_4C12D76A
+	.long	0xff00, 0x2000, TempoSyncSetDispatch
+	.long	0xffffff, 0x702040, func_4C114400
+	.long	0x0, 0x0, 0x0	# end
+# 1 records of 12 bytes up to the end marker (+8, 32 bits) that M3HookDispatch 0x4C03CC6E: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C03CC6E_entry_L8c_Selected_4:
+	.long	0xff, 0x79, func_4C02DD38
+	.long	0x0, 0x0, 0x0	# end
+# 0 records of 12 bytes up to the end marker (+8, 32 bits) that M3HookDispatch 0x4C03CC6E: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C03CC6E_entry_L8c_Selected_5:
+	.long	0x0, 0x0, 0x0	# end
+# 0 records of 12 bytes up to the end marker (+8, 32 bits) that M3HookDispatch 0x4C03CC6E: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C03CC6E_entry_L8c_Selected_6:
+	.long	0x0, 0x0, 0x0	# end
+# 0 records of 12 bytes up to the end marker (+8, 32 bits) that M3HookDispatch 0x4C03CC6E: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C03CC6E_entry_L8c_Selected_7:
+	.long	0x0, 0x0, 0x0	# end
+# 11 records of 12 bytes up to the end marker (+8, 32 bits) that func_4C03CD2C 0x4C03CD2C: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C03CD2C_entry_L9d_Selected_0:
+	.long	0xffff00, 0x2000, loc_4C066D29
+	.long	0xff0000, 0x0, func_4C02F4E9
+	.long	0xffff00, 0xc000, func_4C031F48
+	.long	0xff0000, 0x0, func_4C046F7C
+	.long	0xff0000, 0x0, func_4C09DD93
+	.long	0xff0000, 0x0, loc_4C134069
+	.long	0xff0000, 0x0, func_4C0D9876
+	.long	0xff0000, 0x0, loc_4C0327DA
+	.long	0xff0000, 0x0, SndSetupPowerOnInit
+	.long	0xffff00, 0x0, loc_4C03EC45
+	.long	0xff0000, 0x0, func_4C02DC11
+	.long	0x0, 0x0, 0x0	# end
+# 3 records of 12 bytes up to the end marker (+8, 32 bits) that func_4C03CD2C 0x4C03CD2C: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C03CD2C_entry_L9d_Selected_1:
+	.long	0xffff00, 0x204000, func_4C02F4E9
+	.long	0xff0000, 0x200000, func_4C0D9876
+	.long	0xff0000, 0x200000, func_4C031F48
+	.long	0x0, 0x0, 0x0	# end
+# 7 records of 12 bytes up to the end marker (+8, 32 bits) that func_4C03CD2C 0x4C03CD2C: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C03CD2C_entry_L9d_Selected_2:
+	.long	0xff0000, 0x600000, func_4C02F4E9
+	.long	0xffffff, 0x600000, loc_4C134069
+	.long	0xffffff, 0x600010, loc_4C1142E1
+	.long	0xffffff, 0x600012, func_4C11C7E2
+	.long	0xffffff, 0x600011, loc_4C11C898
+	.long	0xff0000, 0x600000, func_4C09DD93
+	.long	0xff0000, 0x600000, SndSetupPowerOnInit
+	.long	0x0, 0x0, 0x0	# end
+# 23 records of 12 bytes up to the end marker (+8, 32 bits) that func_4C03CD2C 0x4C03CD2C: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C03CD2C_entry_L9d_Selected_3:
+	.long	0xffffff, 0x701011, loc_4C0515B2
+	.long	0xffffff, 0x701009, loc_4C051DE9
+	.long	0xffffff, 0x701004, loc_4C051E21
+	.long	0xffffff, 0x701005, loc_4C051E59
+	.long	0xffffff, 0x701012, loc_4C051E91
+	.long	0xffffff, 0x701010, loc_4C051EEC
+	.long	0xffffff, 0x701020, loc_4C051F24
+	.long	0xffffff, 0x701000, loc_4C051F5B
+	.long	0xffffff, 0x7020a6, func_4C02F4E9
+	.long	0xffffff, 0x7020a1, func_4C046ACF
+	.long	0xffffff, 0x702032, loc_4C0AD289
+	.long	0xffffff, 0x708000, loc_4C13A69F
+	.long	0xffffff, 0x702004, func_4C06FA02
+	.long	0xffffff, 0x708000, StylCnvDiskPresentHook
+	.long	0xffffff, 0x7020a8, loc_4C0FDF3F
+	.long	0xffffff, 0x702083, loc_4C0FDFA4
+	.long	0xffffff, 0x700000, func_4C0FDFCA
+	.long	0xffffff, 0x7020a4, func_4C16AEB9
+	.long	0xffffff, 0x702020, func_4C124B73
+	.long	0xffffff, 0x702040, func_4C124ADC
+	.long	0xffffff, 0x700000, func_4C12D80E
+	.long	0xffffff, 0x7020b0, func_4C11B8AB
+	.long	0xffffff, 0x700000, func_4C046F7C
+	.long	0x0, 0x0, 0x0	# end
+# 3 records of 12 bytes up to the end marker (+8, 32 bits) that func_4C03CD2C 0x4C03CD2C: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C03CD2C_entry_L9d_Selected_4:
+	.long	0xffffff, 0x900000, func_4C05222C
+	.long	0xff0000, 0x900000, func_4C046F7C
+	.long	0xffffff, 0x900000, loc_4C09D32B
+	.long	0x0, 0x0, 0x0	# end
+# 1 records of 12 bytes up to the end marker (+8, 32 bits) that func_4C03CD2C 0x4C03CD2C: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C03CD2C_entry_L9d_Selected_5:
+	.long	0xffffff, 0xb0007e, func_4C0D9876
+	.long	0x0, 0x0, 0x0	# end
+# 2 records of 12 bytes up to the end marker (+8, 32 bits) that func_4C03CD2C 0x4C03CD2C: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C03CD2C_entry_L9d_Selected_6:
+	.long	0xffffff, 0xc00000, loc_4C09D32B
+	.long	0xffffff, 0xc00000, func_4C0D9876
+	.long	0x0, 0x0, 0x0	# end
+# 0 records of 12 bytes up to the end marker (+8, 32 bits) that func_4C03CD2C 0x4C03CD2C: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C03CD2C_entry_L9d_Selected_7:
+	.long	0x0, 0x0, 0x0	# end
+# 0 records of 12 bytes up to the end marker (+8, 32 bits) that func_4C03CD2C 0x4C03CD2C: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
+func_4C03CD2C_entry_L9d_Selected_8:
+	.long	0x0, 0x0, 0x0	# end
 
 func_4C09CA51_entry_L2f_Var:	# u16, a constant; read / written by func_4C09CA51_entry_L2f 0x4C09CA85: `movhu (func_4C09CA51_entry_L2f_Var), d1`
 	.word	1
@@ -39970,75 +40029,3 @@ EQGainEditCheck_L4f_Records:	# 49 x EqEditLabel_3 (6 bytes each); read by EQGain
 	EqEditLabel_3	label="+11.0\x00"
 	EqEditLabel_3	label="+11.5\x00"
 	EqEditLabel_3	label="+12.0\x00"	# [48]
-
-# 68 ApFunction procedures; a function id is (0x12c << 16) | its index (the names are the parallel table at slot 0x32c)
-User12_ApFunctions:
-	IDNAME	FN_SystemInitOkFunc, SystemInitOkFunc, User12_ApFunctions, 0x12c
-	IDNAME	FN_SystemInitMDFunc, SystemInitMDFunc, User12_ApFunctions, 0x12c
-	IDNAME	FN_AttnLngCheck, AttnLngCheck, User12_ApFunctions, 0x12c
-	IDNAME	FN_SysSureLngCheck, SysSureLngCheck, User12_ApFunctions, 0x12c
-	IDNAME	FN_SureLngCheck, SureLngCheck, User12_ApFunctions, 0x12c
-	IDNAME	FN_SysIniNoFunc, SysIniNoFunc, User12_ApFunctions, 0x12c
-	IDNAME	FN_SysIniYesFunc, SysIniYesFunc, User12_ApFunctions, 0x12c
-	IDNAME	FN_CtlIniLngCheck, CtlIniLngCheck, User12_ApFunctions, 0x12c
-	IDNAME	FN_TouchSenseFunc, TouchSenseFunc, User12_ApFunctions, 0x12c
-	IDNAME	FN_TchSensGridCheck, TchSensGridCheck, User12_ApFunctions, 0x12c
-	IDNAME	FN_TouchFilter, TouchFilter, User12_ApFunctions, 0x12c
-	IDNAME	FN_MSAFilter, MSAFilter, User12_ApFunctions, 0x12c
-	IDNAME	FN_PmemNormLngCheck, PmemNormLngCheck, User12_ApFunctions, 0x12c
-	IDNAME	FN_PmemExpLngCheck, PmemExpLngCheck, User12_ApFunctions, 0x12c
-	IDNAME	FN_PmExpFilter1GridCheck, PmExpFilter1GridCheck, User12_ApFunctions, 0x12c
-	IDNAME	FN_PmExpFilter2GridCheck, PmExpFilter2GridCheck, User12_ApFunctions, 0x12c
-	IDNAME	FN_PmExpFilter, PmExpFilter, User12_ApFunctions, 0x12c
-	IDNAME	FN_PmemModeFilter, PmemModeFilter, User12_ApFunctions, 0x12c
-	IDNAME	FN_FadeSetGridCheck, FadeSetGridCheck, User12_ApFunctions, 0x12c
-	IDNAME	FN_FadeIOFilter, FadeIOFilter, User12_ApFunctions, 0x12c
-	IDNAME	FN_DispTimeSetGridCheck, DispTimeSetGridCheck, User12_ApFunctions, 0x12c
-	IDNAME	FN_DispTimeSetOKFunc, DispTimeSetOKFunc, User12_ApFunctions, 0x12c
-	IDNAME	FN_FSWAssGridCheck, FSWAssGridCheck, User12_ApFunctions, 0x12c
-	IDNAME	FN_FSWAssGridFilter, FSWAssGridFilter, User12_ApFunctions, 0x12c
-	IDNAME	FN_WallHomeEditCheck, WallHomeEditCheck, User12_ApFunctions, 0x12c
-	IDNAME	FN_WallMenuEditCheck, WallMenuEditCheck, User12_ApFunctions, 0x12c
-	IDNAME	FN_WallOthEditCheck, WallOthEditCheck, User12_ApFunctions, 0x12c
-	IDNAME	FN_WallSetOKFunc, WallSetOKFunc, User12_ApFunctions, 0x12c
-	IDNAME	FN_WallPresetCheck, WallPresetCheck, User12_ApFunctions, 0x12c
-	IDNAME	FN_WallSetBitmapCheck, WallSetBitmapCheck, User12_ApFunctions, 0x12c
-	IDNAME	FN_ParaLoadOptGridCheck, ParaLoadOptGridCheck, User12_ApFunctions, 0x12c
-	IDNAME	FN_ParaLoadOptOKFunc, ParaLoadOptOKFunc, User12_ApFunctions, 0x12c
-	IDNAME	FN_FDCstopBitmapCheck, FDCstopBitmapCheck, User12_ApFunctions, 0x12c
-	IDNAME	FN_SineWaveFilter, SineWaveFilter, User12_ApFunctions, 0x12c
-	IDNAME	FN_DataProtectGridCheck, DataProtectGridCheck, User12_ApFunctions, 0x12c
-	IDNAME	FN_DataProtectOKFunc, DataProtectOKFunc, User12_ApFunctions, 0x12c
-	IDNAME	FN_InOutTestFilter, InOutTestFilter, User12_ApFunctions, 0x12c
-	IDNAME	FN_RomTestRunFunc, RomTestRunFunc, User12_ApFunctions, 0x12c
-	IDNAME	FN_RamTestRunFunc, RamTestRunFunc, User12_ApFunctions, 0x12c
-	IDNAME	FN_DeviceTestRunFunc, DeviceTestRunFunc, User12_ApFunctions, 0x12c
-	IDNAME	FN_TestMode4RunFunc, TestMode4RunFunc, User12_ApFunctions, 0x12c
-	IDNAME	FN_TestMode4StopFunc, TestMode4StopFunc, User12_ApFunctions, 0x12c
-	IDNAME	FN_WaveRomTestRunFunc, WaveRomTestRunFunc, User12_ApFunctions, 0x12c
-	IDNAME	FN_TestRgbwbRunFunc, TestRgbwbRunFunc, User12_ApFunctions, 0x12c
-	IDNAME	FN_TestCrosstarlRunFunc, TestCrosstarlRunFunc, User12_ApFunctions, 0x12c
-	IDNAME	FN_TestSampleRunFunc, TestSampleRunFunc, User12_ApFunctions, 0x12c
-	IDNAME	FN_TestContrastRunFunc, TestContrastRunFunc, User12_ApFunctions, 0x12c
-	IDNAME	FN_LangSetOKFunc, LangSetOKFunc, User12_ApFunctions, 0x12c
-	IDNAME	FN_LangSetMenuCheck, LangSetMenuCheck, User12_ApFunctions, 0x12c
-	IDNAME	FN_LangSetChkFunc, LangSetChkFunc2, User12_ApFunctions, 0x12c
-	IDNAME	FN_AcIndexWideToggleFunc, AcIndexWideToggleFunc, User12_ApFunctions, 0x12c
-	IDNAME	FN_CusMemOKFunc, CusMemOKFunc, User12_ApFunctions, 0x12c
-	IDNAME	FN_HelpMenuCheck, HelpMenuCheck, User12_ApFunctions, 0x12c
-	IDNAME	FN_HelpLang1Check, HelpLang1Check, User12_ApFunctions, 0x12c
-	IDNAME	FN_HelpLang2Check, HelpLang2Check, User12_ApFunctions, 0x12c
-	IDNAME	FN_HelpLang3Check, HelpLang3Check, User12_ApFunctions, 0x12c
-	IDNAME	FN_HelpLang4Check, HelpLang4Check, User12_ApFunctions, 0x12c
-	IDNAME	FN_HelpLangMenuCheck, HelpLangMenuCheck, User12_ApFunctions, 0x12c
-	IDNAME	FN_PrgMenuSelect, PrgMenuSelect, User12_ApFunctions, 0x12c
-	IDNAME	FN_APCModeSelect, APCModeSelect, User12_ApFunctions, 0x12c
-	IDNAME	FN_WallSetHideFunc, WallSetHideFunc, User12_ApFunctions, 0x12c
-	IDNAME	FN_DataPrtHideFunc, DataPrtHideFunc, User12_ApFunctions, 0x12c
-	IDNAME	FN_LangSetHideFunc, LangSetHideFunc, User12_ApFunctions, 0x12c
-	IDNAME	FN_CusPanModeHideFunc, CusPanModeHideFunc, User12_ApFunctions, 0x12c
-	IDNAME	FN_HelpShowHideFunc, HelpShowHideFunc, User12_ApFunctions, 0x12c
-	IDNAME	FN_LEDHideOffFunc, LEDHideOffFunc, User12_ApFunctions, 0x12c
-	IDNAME	FN_InitShowHideFunc, InitShowHideFunc, User12_ApFunctions, 0x12c
-	IDNAME	FN_BoardRomTestRunFunc, BoardRomTestRunFunc, User12_ApFunctions, 0x12c
-	.space	4, 0x00

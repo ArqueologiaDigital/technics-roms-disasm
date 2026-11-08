@@ -5131,10 +5131,10 @@ func_486223AC_Records:	# 73 x REC_func_486223AC_Records (4 bytes each); read by 
 	REC_func_486223AC_Records	f0=5662, f2=99, f3=72
 	REC_func_486223AC_Records	f0=5890, f2=99, f3=72
 	REC_func_486223AC_Records	f0=5896, f2=99, f3=72	# [72]
-VfsFileOpen_entry_L103_Records:	# 3 x REC_VfsFileOpen_entry_L103_Records (40 bytes each); read by VfsFileOpen_entry_L103 0x4862E982 `mov (a2), a1`; MediaTypeCacheSet 0x48631767 `movbu d0, (VfsFileOpen_entry_L103_Records+2)`
-	REC_VfsFileOpen_entry_L103_Records	x0="\x01\x0F", x3="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00", p20=func_486223AC_Records+228, p24=func_486223AC_Records+188, text=Str_A_24, x32="\xCCd\x00P\x00\x00\x00\x00"
-	REC_VfsFileOpen_entry_L103_Records	x0="\x01\x0F", x3="\x00\x84\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00", p20=func_486223AC_Records+260, p24=func_486223AC_Records+188, text=Str_C_24, x32="\x10\xB4\x0EP\x00\x00\x00\x00"
-	REC_VfsFileOpen_entry_L103_Records	x0="\x02\x00", x3="\x00\x00\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00", x32="\xC0!\x04P\x00\x00\x00\x00"
+FsOpen_entry_L103_Records:	# 3 x REC_FsOpen_entry_L103_Records (40 bytes each); read by FsOpen_entry_L103 0x4862E982 `mov (a2), a1`; MediaTypeCacheSet 0x48631767 `movbu d0, (FsOpen_entry_L103_Records+2)`
+	REC_FsOpen_entry_L103_Records	x0="\x01\x0F", x3="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00", p20=func_486223AC_Records+228, p24=func_486223AC_Records+188, text=Str_A_24, x32="\xCCd\x00P\x00\x00\x00\x00"
+	REC_FsOpen_entry_L103_Records	x0="\x01\x0F", x3="\x00\x84\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00", p20=func_486223AC_Records+260, p24=func_486223AC_Records+188, text=Str_C_24, x32="\x10\xB4\x0EP\x00\x00\x00\x00"
+	REC_FsOpen_entry_L103_Records	x0="\x02\x00", x3="\x00\x00\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00", x32="\xC0!\x04P\x00\x00\x00\x00"
 # census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x1E3960, 0x1E3964
 
@@ -5413,8 +5413,8 @@ Str_d_2:	.asciz "d"
 AcNoteEditBoxProc_L8e_Table_2:	# 6 x u16, 0..65280; read by AcNoteEditBoxProc_L8e 0x486DD473: `movhu (AcNoteEditBoxProc_L8e_Table_2), d0`; AcDrumEditBoxProc_L53 0x486DE36D: `movhu (AcNoteEditBoxProc_L8e_Table_2), d0` ...
 	tab_u16	1, 2, 1, 65, 0, 65280
 
-SdCommandSend_Table:	# REC_SdCommandSend_ArgA0 (10 bytes): the layout SdCommandSend 0x486EDF52 reads through its argument a0 (passed by SdWorkerCmdHandler_entry_L84 0x486ECB16 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +4 more calls)
-	REC_SdCommandSend_ArgA0	kind=2, SdResponseScan_d0=1, x4="B\x00\x00\x00\x00", f9=149
+SdCommandSend_Table:	# SdCommandFrame (10 bytes): the layout SdCommandSend 0x486EDF52 reads through its argument a0 (passed by SdWorkerCmdHandler_entry_L84 0x486ECB16 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +4 more calls)
+	SdCommandFrame	clock_mode=2, resp_type=1, cmd="B\x00\x00\x00\x00", crc7=149
 
 SdReadBlockCmd_Var:	# u16, initial value of a RAM variable; read / written by SdReadBlockCmd 0x486EE067: `movhu (a3), d0`; SdReadBlockCmd_entry_L2d 0x486EE099: `movhu (a3), d0` ...
 	.word	2
@@ -5428,12 +5428,12 @@ SdReadBlockCmd_entry_L2d_Table:	# 41 x u8, 0..255; read by SdReadBlockCmd_entry_
 	tab_u8	0, 0, 1, 0, 255, 2, 0, 2, 0, 70, 0, 0, 0, 0, 255, 2	# [16]
 	tab_u8	0, 2, 0, 71, 0, 0, 0, 0, 255	# [32]
 
-SdCommandSend_Table_2:	# REC_SdCommandSend_ArgA0 (10 bytes): the layout SdCommandSend 0x486EDF52 reads through its argument a0 (passed by SdWorkerCmdHandler_entry_L84 0x486ECB16 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +4 more calls)
-	REC_SdCommandSend_ArgA0	kind=3, SdResponseScan_d0=1, x4="@\x00\x00\x00\x00", f9=149
-SdCommandSend_Table_3:	# REC_SdCommandSend_ArgA0 (10 bytes): the layout SdCommandSend 0x486EDF52 reads through its argument a0 (passed by SdWorkerCmdHandler_entry_L84 0x486ECB16 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +4 more calls)
-	REC_SdCommandSend_ArgA0	kind=3, SdResponseScan_d0=1, x4="{\x00\x00\x00\x01", f9=255
-SdCommandSend_Table_4:	# REC_SdCommandSend_ArgA0 (10 bytes): the layout SdCommandSend 0x486EDF52 reads through its argument a0 (passed by SdWorkerCmdHandler_entry_L84 0x486ECB16 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +4 more calls)
-	REC_SdCommandSend_ArgA0	kind=3, SdResponseScan_d0=1, x4="A\x00\x00\x00\x00", f9=255
+SdCommandSend_Table_2:	# SdCommandFrame (10 bytes): the layout SdCommandSend 0x486EDF52 reads through its argument a0 (passed by SdWorkerCmdHandler_entry_L84 0x486ECB16 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +4 more calls)
+	SdCommandFrame	clock_mode=3, resp_type=1, cmd="@\x00\x00\x00\x00", crc7=149
+SdCommandSend_Table_3:	# SdCommandFrame (10 bytes): the layout SdCommandSend 0x486EDF52 reads through its argument a0 (passed by SdWorkerCmdHandler_entry_L84 0x486ECB16 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +4 more calls)
+	SdCommandFrame	clock_mode=3, resp_type=1, cmd="{\x00\x00\x00\x01", crc7=255
+SdCommandSend_Table_4:	# SdCommandFrame (10 bytes): the layout SdCommandSend 0x486EDF52 reads through its argument a0 (passed by SdWorkerCmdHandler_entry_L84 0x486ECB16 `call SdCommandSend_entry, [d2,d3,a2,a3], 0x24`, +4 more calls)
+	SdCommandFrame	clock_mode=3, resp_type=1, cmd="A\x00\x00\x00\x00", crc7=255
 
 SdReadBlockCmd_Table:	# u16, initial value of a RAM variable; read / written by SdReadBlockCmd 0x486EE067: `movhu (a3), d0`; SdReadBlockCmd_entry_L2d 0x486EE099: `movhu (a3), d0` ...
 	.word	3

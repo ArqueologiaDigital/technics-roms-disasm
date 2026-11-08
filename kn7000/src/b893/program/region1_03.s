@@ -19721,17 +19721,17 @@ func_4846D394:
 
 func_4846D397:
     retf    0, 0
-# VfsFree  (CPU 0x4846d39a)
-VfsFree:
+# FsFree  (CPU 0x4846d39a)
+FsFree:
     add     -0xc, sp
-VfsFree_entry:
+FsFree_entry:
     call    MplHeapFree_entry, 0, 0x10
     clr     d0
     ret     0, 0xc
-# VfsMalloc  (CPU 0x4846d3a8)
-VfsMalloc:
+# FsMalloc  (CPU 0x4846d3a8)
+FsMalloc:
     add     -0xc, sp
-VfsMalloc_entry:
+FsMalloc_entry:
     mov     d1, d0
     call    MplHeapAlloc_entry, 0, 0x18
     ret     0, 0xc
@@ -19743,12 +19743,12 @@ FatLock:
 FatUnlock:
     clr     d0
     retf    0, 0
-# VfsRemove  (CPU 0x4846d3be)
-VfsRemove:
+# FsRemove  (CPU 0x4846d3be)
+FsRemove:
     add     -0x10, sp
-VfsRemove_entry:
+FsRemove_entry:
     mov     Str_w_4, a1
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     cmp     0, a0
     bne     loc_4846D3D4
     mov     -1, d0
@@ -19759,20 +19759,20 @@ loc_4846D3D4:
     calls   (a1)
 loc_4846D3DC:
     ret     0, 0x10
-# VfsMkdir  (CPU 0x4846d3df)
-VfsMkdir:
+# FsMkdir  (CPU 0x4846d3df)
+FsMkdir:
     movm    [d2,a2], (sp)
     add     -0x10, sp
-VfsMkdir_entry:
+FsMkdir_entry:
     mov     a0, a2
     mov     (0x5009eb30), d2
     clr     d0
     mov     d0, (0x5009eb30)
     mov     Str_d_27, a1
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     cmp     0, a0
     beq     loc_4846D412
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     mov     0x15, d0
     mov     d0, (0x5009eb30)
     mov     -1, d0
@@ -19788,7 +19788,7 @@ loc_4846D420:
     mov     d2, (0x5009eb30)
     mov     Str_wb_29, a1
     mov     a2, a0
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     mov     a0, a2
     cmp     0, a2
     bne     loc_4846D43C
@@ -19800,12 +19800,12 @@ loc_4846D43C:
     calls   (a1)
     mov     d0, d2
     mov     a2, a0
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     mov     d2, d0
 loc_4846D44C:
     ret     [d2,a2], 0x18
-# VfsFileGetPos  (CPU 0x4846d44f)
-VfsFileGetPos:
+# FsGetPos  (CPU 0x4846d44f)
+FsGetPos:
     movm    [a2], (sp)
     mov     a0, a2
     cmp     0, a2
@@ -19831,8 +19831,8 @@ loc_4846D477:
     mov     d0, (0x5009eb30)
 loc_4846D47F:
     retf    [a2], 4
-# VfsFileSetPos  (CPU 0x4846d482)
-VfsFileSetPos:
+# FsSetPos  (CPU 0x4846d482)
+FsSetPos:
     movm    [a2,a3], (sp)
     add     -0x10, sp
     mov     a0, a2
@@ -19858,11 +19858,11 @@ loc_4846D49D:
     mov     d1, (0x5009eb30)
 loc_4846D4B3:
     ret     [a2,a3], 0x18
-# VfsFileSeek  (CPU 0x4846d4b6)
-VfsFileSeek:
+# FsSeek  (CPU 0x4846d4b6)
+FsSeek:
     movm    [d2,a2,a3], (sp)
     add     -0x10, sp
-VfsFileSeek_entry:
+FsSeek_entry:
     mov     d0, a3
     mov     a0, a2
     cmp     0, a2
@@ -19930,8 +19930,8 @@ loc_4846D52A:
     mov     d1, (0x5009eb30)
 loc_4846D536:
     ret     [d2,a2,a3], 0x1c
-# VfsFileTell  (CPU 0x4846d539)
-VfsFileTell:
+# FsTell  (CPU 0x4846d539)
+FsTell:
     cmp     0, a0
     beq     loc_4846D544
     movbu   (4, a0), d0
@@ -19955,11 +19955,11 @@ loc_4846D55E:
     mov     -1, d0
 loc_4846D568:
     retf    0, 0
-# VfsRenameIoctl  (CPU 0x4846d56b)
-VfsRenameIoctl:
+# FsRenameIoctl  (CPU 0x4846d56b)
+FsRenameIoctl:
     movm    [a2], (sp)
     add     -0x14, sp
-VfsRenameIoctl_entry:
+FsRenameIoctl_entry:
     mov     (0x20, sp), a0
     mov     0x14, d0
     mov     (0x14, a0), a1
@@ -19969,15 +19969,15 @@ VfsRenameIoctl_entry:
     inc4    a1
     calls   (a2)
     ret     [a2], 0x18
-# VfsRename  (CPU 0x4846d583)
-VfsRename:
+# FsRename  (CPU 0x4846d583)
+FsRename:
     movm    [d2,a2,a3], (sp)
     add     -0x10, sp
-VfsRename_entry:
+FsRename_entry:
     mov     a1, (0x28, sp)
     mov     a0, a2
     mov     Str_r_7, a1
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     mov     a0, a3
     cmp     0, a3
     bne     loc_4846D5D1
@@ -19988,7 +19988,7 @@ VfsRename_entry:
     mov     d0, (0x5009eb30)
     mov     Str_d_26, a1
     mov     a2, a0
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     mov     a0, a3
     cmp     0, a3
     bne     loc_4846D5D1
@@ -20003,14 +20003,14 @@ loc_4846D5CC:
 loc_4846D5D1:
     mov     (0x28, sp), a0
     mov     Str_r_6, a1
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     mov     a0, a2
     cmp     0, a2
     beq     loc_4846D5FC
     mov     a3, a0
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     mov     a2, a0
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     mov     0x15, d0
     mov     d0, (0x5009eb30)
     mov     -1, d0
@@ -20020,12 +20020,12 @@ loc_4846D5FC:
     mov     d0, (0x5009eb30)
     mov     (0x28, sp), a0
     mov     Str_a_6, a1
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     mov     a0, a2
     cmp     0, a2
     bne     loc_4846D61F
     mov     a3, a0
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     mov     -1, d0
     bra     loc_4846D65E
 loc_4846D61F:
@@ -20034,11 +20034,11 @@ loc_4846D61F:
     cmp     a0, a1
     beq     loc_4846D647
     mov     a3, a0
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     mov     a2, a0
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     mov     (0x28, sp), a0
-    call    VfsRemove_entry, 0, 0x10
+    call    FsRemove_entry, 0, 0x10
     mov     0x1a, d0
     mov     d0, (0x5009eb30)
     mov     -1, d0
@@ -20046,21 +20046,21 @@ loc_4846D61F:
 loc_4846D647:
     mov     a3, (8, sp)
     mov     a2, (0xc, sp)
-    call    VfsRenameIoctl_entry, [a2], 0x18
+    call    FsRenameIoctl_entry, [a2], 0x18
     mov     d0, d2
     mov     a3, a0
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     mov     a2, a0
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     mov     d2, d0
 loc_4846D65E:
     ret     [d2,a2,a3], 0x1c
-# VfsRmdir  (CPU 0x4846d661)
-VfsRmdir:
+# FsRmdir  (CPU 0x4846d661)
+FsRmdir:
     movm    [a2,a3], (sp)
     add     -0x3c, sp
     mov     Str_d_25, a1
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     mov     a0, a3
     cmp     0, a3
     bne     loc_4846D67B
@@ -20076,7 +20076,7 @@ loc_4846D67B:
 loc_4846D68C:
     mov     0x40, d0
     clr     d1
-    call    VfsFileSeek_entry, [d2,a2,a3], 0x1c
+    call    FsSeek_entry, [d2,a2,a3], 0x1c
     cmp     0, d0
     bne     loc_4846D6C2
     mov     sp, a2
@@ -20085,7 +20085,7 @@ loc_4846D68C:
     mov     0x20, d0
     mov     1, d1
     mov     a3, a1
-    call    VfsFileRead_entry, [d2,a2,a3], 0x20
+    call    FsRead_entry, [d2,a2,a3], 0x20
     cmp     1, d0
     bne     loc_4846D6DB
 loc_4846D6AA:
@@ -20099,7 +20099,7 @@ loc_4846D6AA:
     mov     d0, (0x5009eb30)
 loc_4846D6C2:
     mov     a3, a0
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     mov     -1, d0
     bra     loc_4846D6F2
 loc_4846D6CC:
@@ -20107,7 +20107,7 @@ loc_4846D6CC:
     mov     0x20, d0
     mov     1, d1
     mov     a3, a1
-    call    VfsFileRead_entry, [d2,a2,a3], 0x20
+    call    FsRead_entry, [d2,a2,a3], 0x20
     cmp     1, d0
     beq     loc_4846D6AA
 loc_4846D6DB:
@@ -20120,30 +20120,30 @@ loc_4846D6DB:
     cmp     0, d0
     bne     loc_4846D6C2
     mov     a3, a0
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
 loc_4846D6F2:
     ret     [a2,a3], 0x44
-# VfsFileRewind  (CPU 0x4846d6f5)
-VfsFileRewind:
+# FsRewind  (CPU 0x4846d6f5)
+FsRewind:
     movm    [a2], (sp)
     add     -0x14, sp
-VfsFileRewind_entry:
+FsRewind_entry:
     mov     a0, a2
     clr     d0
     mov     d0, d1
-    call    VfsFileSeek_entry, [d2,a2,a3], 0x1c
+    call    FsSeek_entry, [d2,a2,a3], 0x1c
     clr     d0
     mov     d0, (8, a2)
     ret     [a2], 0x18
-# VfsCalloc  (CPU 0x4846d709)
-VfsCalloc:
+# FsCalloc  (CPU 0x4846d709)
+FsCalloc:
     movm    [d2,a2], (sp)
     add     -0x14, sp
-VfsCalloc_entry:
+FsCalloc_entry:
     mov     d0, d2
     clr     d0
     mov     d2, d1
-    call    VfsMalloc_entry, 0, 0xc
+    call    FsMalloc_entry, 0, 0xc
     mov     a0, a2
     cmp     0, a2
     beq     loc_4846D726
@@ -20157,17 +20157,17 @@ loc_4846D726:
 loc_4846D72E:
     mov     a2, a0
     ret     [d2,a2], 0x1c
-# VfsFileOpen  (CPU 0x4846d732)
-VfsFileOpen:
+# FsOpen  (CPU 0x4846d732)
+FsOpen:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x1c, sp
-VfsFileOpen_entry:
+FsOpen_entry:
     mov     a0, a3
     cmp     0, a3
     bne     loc_4846D73F
     jmp     loc_4846D86D
 loc_4846D73F:
-    mov     VfsFileClose, d0
+    mov     FsClose, d0
     mov     d0, (0x50149708)
     movbu   (a1), d0
     mov     4, d2
@@ -20232,7 +20232,7 @@ loc_4846D7AB:
 loc_4846D7B1:
     call    LibStrlen, 0, 0
     inc     d0
-    call    VfsCalloc_entry, [d2,a2], 0x1c
+    call    FsCalloc_entry, [d2,a2], 0x1c
     mov     a0, (0x10, sp)
     cmp     0, a0
     bne     loc_4846D7C9
@@ -20282,12 +20282,12 @@ loc_4846D808:
     mov     d1, (0x14, sp)
     clr     d0
     movbu   d0, (0x18, sp)
-    mov     (VfsFileOpen_Records+80), d0
-    mov     VfsFileOpen_Records, a3
+    mov     (FsOpen_Records+80), d0
+    mov     FsOpen_Records, a3
     clr     d3
     cmp     d3, d0
     ble     loc_4846D85D
-    mov     VfsFileOpen_Records+28, a2
+    mov     FsOpen_Records+28, a2
 loc_4846D83A:
     mov     (a2), a1
     mov     (0x10, sp), a0
@@ -20297,15 +20297,15 @@ loc_4846D83A:
     inc     d3
     movbu   d3, (0x18, sp)
     movbu   (0x18, sp), d3
-    mov     (VfsFileOpen_Records+80), d0
+    mov     (FsOpen_Records+80), d0
     add     0x28, a3
     add     0x28, a2
     cmp     d0, d3
     blt     loc_4846D83A
 loc_4846D85D:
     mov     (0x10, sp), a0
-    call    VfsFree_entry, 0, 0xc
-    mov     (VfsFileOpen_Records+80), d0
+    call    FsFree_entry, 0, 0xc
+    mov     (FsOpen_Records+80), d0
     cmp     d0, d3
     bne     loc_4846D87A
 loc_4846D86D:
@@ -20364,7 +20364,7 @@ loc_4846D8D1:
     mov     d0, (a0)
     call    func_4846D397, 0, 0
     mov     0x54, d0
-    call    VfsCalloc_entry, [d2,a2], 0x1c
+    call    FsCalloc_entry, [d2,a2], 0x1c
     mov     a0, a2
     mov     a0, (0x24, a3)
     cmp     0, a2
@@ -20411,17 +20411,17 @@ loc_4846D8F9:
     mov     d1, (a0)
     mov     d0, (0x5009eb30)
     mov     a2, a0
-    call    VfsFree_entry, 0, 0xc
+    call    FsFree_entry, 0, 0xc
     mov     0, a2
 loc_4846D95F:
     mov     a2, a0
 loc_4846D960:
     ret     [d2,d3,a2,a3], 0x2c
-# VfsFileRead  (CPU 0x4846d963)
-VfsFileRead:
+# FsRead  (CPU 0x4846d963)
+FsRead:
     movm    [d2,a2,a3], (sp)
     add     -0x14, sp
-VfsFileRead_entry:
+FsRead_entry:
     mov     a0, a3
     mov     d0, d2
     mov     a1, a0
@@ -20457,11 +20457,11 @@ loc_4846D993:
     call    LibDiv32, 0, 0
 loc_4846D9A9:
     ret     [d2,a2,a3], 0x20
-# VfsFileWrite  (CPU 0x4846d9ac)
-VfsFileWrite:
+# FsWrite  (CPU 0x4846d9ac)
+FsWrite:
     movm    [d2,a2,a3], (sp)
     add     -0x14, sp
-VfsFileWrite_entry:
+FsWrite_entry:
     mov     a0, a3
     mov     d0, d2
     mov     a1, a0
@@ -20497,11 +20497,11 @@ loc_4846D9DC:
     call    LibDiv32, 0, 0
 loc_4846D9F2:
     ret     [d2,a2,a3], 0x20
-# VfsFileGetc  (CPU 0x4846d9f5)
-VfsFileGetc:
+# FsGetc  (CPU 0x4846d9f5)
+FsGetc:
     movm    [a2], (sp)
     add     -0x18, sp
-VfsFileGetc_entry:
+FsGetc_entry:
     cmp     0, a0
     beq     loc_4846DA06
     mov     a0, a1
@@ -20537,8 +20537,8 @@ loc_4846DA3B:
     mov     -1, d0
 loc_4846DA3D:
     ret     [a2], 0x1c
-# VfsFileGets  (CPU 0x4846da40)
-VfsFileGets:
+# FsGets  (CPU 0x4846da40)
+FsGets:
     movm    [a2,a3], (sp)
     add     -0x14, sp
     mov     d0, d1
@@ -20580,11 +20580,11 @@ loc_4846DA87:
     mov     0, a0
 loc_4846DA89:
     ret     [a2,a3], 0x1c
-# VfsFilePutc  (CPU 0x4846da8c)
-VfsFilePutc:
+# FsPutc  (CPU 0x4846da8c)
+FsPutc:
     movm    [a2], (sp)
     add     -0x18, sp
-VfsFilePutc_entry:
+FsPutc_entry:
     mov     d0, d1
     cmp     0, a0
     beq     loc_4846DA9E
@@ -20622,8 +20622,8 @@ loc_4846DAD6:
     mov     -1, d0
 loc_4846DAD8:
     ret     [a2], 0x1c
-# VfsFilePuts  (CPU 0x4846dadb)
-VfsFilePuts:
+# FsPuts  (CPU 0x4846dadb)
+FsPuts:
     movm    [d2,a2,a3], (sp)
     add     -0x14, sp
     mov     a0, d2
@@ -20676,11 +20676,11 @@ loc_4846DB31:
     mov     -1, d0
 loc_4846DB33:
     ret     [d2,a2,a3], 0x20
-# VfsFileClose  (CPU 0x4846db36)
-VfsFileClose:
+# FsClose  (CPU 0x4846db36)
+FsClose:
     movm    [d2,d3], (sp)
     add     -0xc, sp
-VfsFileClose_entry:
+FsClose_entry:
     clr     d3
     cmp     0, a0
     beq     loc_4846DB65
@@ -20701,7 +20701,7 @@ VfsFileClose_entry:
     bne     loc_4846DB65
     mov     1, d3
 loc_4846DB65:
-    call    VfsFileCloseCore_entry, [d2,d3,a2,a3], 0x20
+    call    FsCloseCore_entry, [d2,d3,a2,a3], 0x20
     mov     d0, d2
     cmp     0, d3
     bne     loc_4846DB74
@@ -20709,11 +20709,11 @@ loc_4846DB65:
 loc_4846DB74:
     mov     d2, d0
     ret     [d2,d3], 0x14
-# VfsFileCloseCore  (CPU 0x4846db78)
-VfsFileCloseCore:
+# FsCloseCore  (CPU 0x4846db78)
+FsCloseCore:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x10, sp
-VfsFileCloseCore_entry:
+FsCloseCore_entry:
     mov     a0, a2
     cmp     0, a2
     beq     loc_4846DB9E
@@ -20756,7 +20756,7 @@ loc_4846DBC4:
     mov     d1, (d0, a0)
     movbu   (a3), d2
     mov     a2, a0
-    call    VfsFree_entry, 0, 0xc
+    call    FsFree_entry, 0, 0xc
     mov     d0, d3
     cmp     0, d3
     beq     loc_4846DBF4
@@ -20784,8 +20784,8 @@ loc_4846DC11:
     clr     d0
 loc_4846DC12:
     ret     [d2,d3,a2,a3], 0x20
-# VfsFileFlush  (CPU 0x4846dc15)
-VfsFileFlush:
+# FsFlush  (CPU 0x4846dc15)
+FsFlush:
     movm    [d2,a2,a3], (sp)
     add     -0x18, sp
     clr     d2
@@ -20830,8 +20830,8 @@ loc_4846DC62:
     mov     d2, d0
 loc_4846DC6C:
     ret     [d2,a2,a3], 0x24
-# VfsFileIoctl  (CPU 0x4846dc6f)
-VfsFileIoctl:
+# FsIoctl  (CPU 0x4846dc6f)
+FsIoctl:
     movm    [a2,a3], (sp)
     add     -0x14, sp
     mov     (0x24, sp), a0
@@ -20893,7 +20893,7 @@ loc_4846DCBB:
     mov     a1, a0
     ret     [d2,d3,a2,a3], 0x38
 loc_4846DCE5:
-    movbu   (VfsFileOpen_Records+84), d0
+    movbu   (FsOpen_Records+84), d0
     mov     0x5014982c, a2
     mov     d0, (0x1c, sp)
     clr     d2
@@ -20970,7 +20970,7 @@ loc_4846DD6F:
     cmp     0xa, d0
     llt
     clr     d0
-    movbu   d0, (VfsFileOpen_Records+84)
+    movbu   d0, (FsOpen_Records+84)
     mov     (0x14, sp), d0
     cmp     0, d0
     beq     loc_4846DDD6
@@ -20983,7 +20983,7 @@ loc_4846DD6F:
     btst    0x8000, d0
     beq     loc_4846DDBB
     mov     1, d0
-    movbu   d0, (VfsFileOpen_Records+84)
+    movbu   d0, (FsOpen_Records+84)
 loc_4846DDBB:
     mov     (0x14, sp), a0
     mov     (0x4c, sp), d1
@@ -23054,11 +23054,11 @@ loc_4846ECEF:
     mov     d0, (0x14, a0)
 loc_4846ED06:
     ret     [d2,d3,a2,a3], 0x30
-# FatVolumeMount  (CPU 0x4846ed09)
-FatVolumeMount:
+# FsMountVolume  (CPU 0x4846ed09)
+FsMountVolume:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x68, sp
-FatVolumeMount_entry:
+FsMountVolume_entry:
     mov     a0, (0x80, sp)
     clr     d0
     mov     d0, (0x20, sp)
@@ -23079,7 +23079,7 @@ FatVolumeMount_entry:
     and     0xfffffffe, d0
     movbu   d0, (a0)
     mov     0x21c, d0
-    call    VfsCalloc_entry, [d2,a2], 0x1c
+    call    FsCalloc_entry, [d2,a2], 0x1c
     mov     a0, (0x34, sp)
     cmp     0, a0
     bne     loc_4846ED4C
@@ -23156,7 +23156,7 @@ loc_4846EDCE:
     mov     0x16, d2
 loc_4846EDD0:
     mov     (0x34, sp), a0
-    call    VfsFree_entry, 0, 0xc
+    call    FsFree_entry, 0, 0xc
     mov     d2, d0
     ret     [d2,d3,a2,a3], 0x78
 loc_4846EDDB:
@@ -23247,10 +23247,10 @@ loc_4846EE82:
     cmp     9, d0
     bne     loc_4846EEC4
     mov     0x21c, d0
-    call    VfsCalloc_entry, [d2,a2], 0x1c
+    call    FsCalloc_entry, [d2,a2], 0x1c
     mov     a0, a2
     mov     (0x34, sp), a0
-    call    VfsFree_entry, 0, 0xc
+    call    FsFree_entry, 0, 0xc
     cmp     0, a2
     bne     loc_4846EE9F
     mov     3, d0
@@ -23526,7 +23526,7 @@ loc_4846F0B0:
     or      0x01, d0
     movbu   d0, (a0)
     mov     (0x34, sp), a0
-    call    VfsFree_entry, 0, 0xc
+    call    FsFree_entry, 0, 0xc
     clr     d0
     ret     [d2,d3,a2,a3], 0x78
 # FatOpOpen  (CPU 0x4846f0cc)
@@ -23568,7 +23568,7 @@ loc_4846F113:
     btst    0x01, d0
     bne     loc_4846F12F
     mov     (0x10, sp), a0
-    call    FatVolumeMount_entry, [d2,d3,a2,a3], 0x78
+    call    FsMountVolume_entry, [d2,d3,a2,a3], 0x78
     mov     d0, d2
     cmp     0, d2
     beq     loc_4846F12F
@@ -24980,7 +24980,7 @@ loc_4846FBCB:
     asl2    d0
     mov     d1, (d0, a0)
     mov     a2, a0
-    call    VfsFree_entry, 0, 0xc
+    call    FsFree_entry, 0, 0xc
     call    FatUnlock, 0, 0
     mov     d2, d0
 loc_4846FBF9:
@@ -25166,14 +25166,14 @@ loc_4846FD5D:
     movbu   (0x48, a0), d0
 loc_4846FD60:
     retf    [d2], 4
-# VfsAttribSet  (CPU 0x4846fd63)
-VfsAttribSet:
+# FsAttribSet  (CPU 0x4846fd63)
+FsAttribSet:
     movm    [d2,a2], (sp)
     add     -0x14, sp
-VfsAttribSet_entry:
+FsAttribSet_entry:
     mov     d0, d2
     mov     Str_r_5, a1
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     mov     a0, a2
     cmp     0, a2
     bne     loc_4846FD7D
@@ -25185,7 +25185,7 @@ loc_4846FD7D:
     call    FatFileAttrGetSet_entry, [d2], 4
     mov     d0, d2
     mov     a2, a0
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     mov     d2, d0
 loc_4846FD8D:
     ret     [d2,a2], 0x1c
@@ -25392,7 +25392,7 @@ loc_4846FF01:
     call    func_4846FDFF, 0, 0
     mov     (a2), d0
     mov     d0, a0
-    call    FatVolumeMount_entry, [d2,d3,a2,a3], 0x78
+    call    FsMountVolume_entry, [d2,d3,a2,a3], 0x78
     cmp     d2, d0
     beq     loc_4846FF2D
     mov     d0, (0x14, a2)
@@ -25410,7 +25410,7 @@ loc_4846FF32:
     mov     d0, (a3)
     mov     (a2), d0
     mov     d0, a0
-    call    FatVolumeMount_entry, [d2,d3,a2,a3], 0x78
+    call    FsMountVolume_entry, [d2,d3,a2,a3], 0x78
     cmp     d2, d0
     beq     loc_4846FF55
     mov     d0, (0x14, a2)
@@ -25431,7 +25431,7 @@ loc_4846FF59:
     call    func_4846FDFF, 0, 0
     mov     (a2), d0
     mov     d0, a0
-    call    FatVolumeMount_entry, [d2,d3,a2,a3], 0x78
+    call    FsMountVolume_entry, [d2,d3,a2,a3], 0x78
     cmp     d2, d0
     beq     loc_4846FF84
     mov     d0, (0x14, a2)
@@ -25451,7 +25451,7 @@ loc_4846FF87:
     call    func_4846FDFF, 0, 0
     mov     (a2), d0
     mov     d0, a0
-    call    FatVolumeMount_entry, [d2,d3,a2,a3], 0x78
+    call    FsMountVolume_entry, [d2,d3,a2,a3], 0x78
     cmp     d2, d0
     beq     loc_4846FFB1
     mov     d0, (0x14, a2)
@@ -25963,7 +25963,7 @@ loc_48470352:
     mov     d0, (a2)
     mov     (a3), d0
     mov     d0, a0
-    call    FatVolumeMount_entry, [d2,d3,a2,a3], 0x78
+    call    FsMountVolume_entry, [d2,d3,a2,a3], 0x78
     cmp     d2, d0
     beq     loc_4847036D
     mov     d0, (0x14, a3)
@@ -25978,7 +25978,7 @@ loc_48470371:
     mov     d0, (a2)
     mov     (a3), d0
     mov     d0, a0
-    call    FatVolumeMount_entry, [d2,d3,a2,a3], 0x78
+    call    FsMountVolume_entry, [d2,d3,a2,a3], 0x78
     cmp     d2, d0
     beq     loc_4847038B
     mov     d0, (0x14, a3)
@@ -26007,7 +26007,7 @@ loc_484703B1:
 loc_484703B6:
     mov     (a3), d0
     mov     d0, a0
-    call    FatVolumeMount_entry, [d2,d3,a2,a3], 0x78
+    call    FsMountVolume_entry, [d2,d3,a2,a3], 0x78
     cmp     d2, d0
     beq     loc_484703C6
     mov     d0, (0x14, a3)
@@ -26310,6 +26310,7 @@ SdCapacityGet_entry:
     call    DiskCmdTransact_entry, [d2,a2], 0x18
     mov     (0xc, sp), d0
     ret     0, 0x20
+loc_484705FC:
     cmp     0x107020bb, d0
     bne     loc_48470610
     cmp     1, d1
@@ -26330,7 +26331,7 @@ MediaTypeCacheSet:
     mov     1, d0
     mov     d0, (MediaTypeCacheSet_Var)
     clr     d0
-    movbu   d0, (VfsFileOpen_Records+2)
+    movbu   d0, (FsOpen_Records+2)
     retf    0, 0
 # MediaChangeAck  (CPU 0x48470637)
 MediaChangeAck:
@@ -27119,7 +27120,7 @@ loc_48470D77:
 loc_48470D7E:
     mov     Str_A_38, a0
     mov     Str_d_24, a1
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     mov     a0, a2
     cmp     0, a2
     bne     loc_48470D97
@@ -27129,7 +27130,7 @@ loc_48470D97:
     call    FatFreeBytesGet_entry, [a2], 0x10
     mov     d0, (a3)
     mov     a2, a0
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     mov     1, d0
 loc_48470DA5:
     ret     [a2,a3], 0x18
@@ -27154,7 +27155,7 @@ loc_48470DC3:
 loc_48470DC8:
     mov     Str_A_37, a0
     mov     Str_d_33, a1
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     mov     a0, a3
     cmp     0, a3
     bne     loc_48470DE3
@@ -27167,7 +27168,7 @@ loc_48470DE3:
     mov     0x20, d0
     mov     1, d1
     mov     a3, a1
-    call    VfsFileRead_entry, [d2,a2,a3], 0x20
+    call    FsRead_entry, [d2,a2,a3], 0x20
     cmp     1, d0
     bne     loc_48470E53
     mov     sp, a0
@@ -27197,7 +27198,7 @@ loc_48470DFA:
     clr     d0
     movbu   d0, (0x5004bb97)
     mov     a3, a0
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     mov     a2, a0
     bra     loc_48470E5B
 loc_48470E44:
@@ -27205,12 +27206,12 @@ loc_48470E44:
     mov     0x20, d0
     mov     1, d1
     mov     a3, a1
-    call    VfsFileRead_entry, [d2,a2,a3], 0x20
+    call    FsRead_entry, [d2,a2,a3], 0x20
     cmp     1, d0
     beq     loc_48470DFA
 loc_48470E53:
     mov     a3, a0
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     mov     0, a0
 loc_48470E5B:
     ret     [d2,a2,a3], 0x5c
@@ -27238,7 +27239,7 @@ loc_48470E70:
     call    strcat_entry, [a2], 4
     mov     Str_wb_28, a1
     mov     a2, a0
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     cmp     0, a0
     bne     loc_48470EA1
     clr     d0
@@ -27251,7 +27252,7 @@ loc_48470EA1:
     movbu   (a1), d0
     or      0x80, d0
     movbu   d0, (a1)
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     mov     1, d0
 loc_48470EB8:
     ret     [a2,a3], 0x28
@@ -27413,7 +27414,7 @@ loc_48470FC9:
 loc_48470FEC:
     mov     a2, a0
     mov     Str_d_23, a1
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     mov     a0, d2
     cmp     0, d2
     bne     loc_48471013
@@ -27427,13 +27428,13 @@ loc_48471013:
     mov     a2, a0
     call    MplHeapFree_entry, 0, 0x10
     clr     d0
-    mov     d0, (VfsFileOpen_Records+92)
+    mov     d0, (FsOpen_Records+92)
     mov     0x5014ad4c, a0
     mov     0x20, d0
     mov     0xe0, d1
     mov     d2, a1
-    call    VfsFileRead_entry, [d2,a2,a3], 0x20
-    mov     d0, (VfsFileOpen_Records+88)
+    call    FsRead_entry, [d2,a2,a3], 0x20
+    mov     d0, (FsOpen_Records+88)
     cmp     0, d0
     bne     loc_48471049
     mov     a3, d0
@@ -27489,7 +27490,7 @@ loc_484710AA:
     bra     loc_484710CE
 loc_484710B4:
     mov     (a2), a0
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     mov     (4, a2), a0
     call    MplHeapFree_entry, 0, 0x10
     mov     a2, a0
@@ -27515,8 +27516,8 @@ loc_484710EA:
     mov     -1, d0
     ret     [d2,a2,a3], 0x38
 loc_484710F5:
-    mov     (VfsFileOpen_Records+92), d1
-    mov     (VfsFileOpen_Records+88), d0
+    mov     (FsOpen_Records+92), d1
+    mov     (FsOpen_Records+88), d0
     cmp     d0, d1
     bcs     loc_48471107
     jmp     loc_48471196
@@ -27524,11 +27525,11 @@ loc_48471107:
     mov     sp, a3
     add     0x14, a3
 loc_4847110A:
-    mov     (VfsFileOpen_Records+92), d0
+    mov     (FsOpen_Records+92), d0
     asl     5, d1
     add     0x5014ad4c, d1
     inc     d0
-    mov     d0, (VfsFileOpen_Records+92)
+    mov     d0, (FsOpen_Records+92)
     mov     a3, a0
     mov     d1, a1
     call    FatDirEntryDecode_entry, [a2,a3], 0x20
@@ -27570,8 +27571,8 @@ loc_4847110A:
     clr     d0
     bra     loc_48471198
 loc_48471184:
-    mov     (VfsFileOpen_Records+92), d1
-    mov     (VfsFileOpen_Records+88), d0
+    mov     (FsOpen_Records+92), d1
+    mov     (FsOpen_Records+88), d0
     cmp     d0, d1
     bcc     loc_48471196
     jmp     loc_4847110A
@@ -27797,7 +27798,7 @@ FDLoadSaveTest_entry:
     call    GetMediaType_entry, [d2,a2,a3], 0x34
     mov     Str_A_IMMUNITY_TST, d2
     mov     d2, a0
-    call    VfsRemove_entry, 0, 0x10
+    call    FsRemove_entry, 0, 0x10
     mov     0x800, d0
     call    MplHeapAlloc_entry, 0, 0x18
     mov     a0, a3
@@ -27820,7 +27821,7 @@ loc_48471326:
     llt
     mov     d2, a0
     mov     Str_wb_27, a1
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     mov     a0, a2
     cmp     0, a2
     bne     loc_48471355
@@ -27834,7 +27835,7 @@ loc_48471355:
     mov     1, d0
     mov     d3, d1
     mov     a2, a1
-    call    VfsFileWrite_entry, [d2,a2,a3], 0x20
+    call    FsWrite_entry, [d2,a2,a3], 0x20
     cmp     d3, d0
     beq     loc_48471372
     mov     a3, a0
@@ -27843,14 +27844,14 @@ loc_48471355:
     ret     [d2,d3,a2,a3], 0x28
 loc_48471372:
     mov     a2, a0
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     mov     a3, a0
     clr     d0
     mov     d3, d1
     call    memset_entry, [a2], 4
     mov     d2, a0
     mov     Str_rb_63, a1
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     mov     a0, a2
     cmp     0, a2
     bne     loc_484713A0
@@ -27863,7 +27864,7 @@ loc_484713A0:
     mov     1, d0
     mov     d3, d1
     mov     a2, a1
-    call    VfsFileRead_entry, [d2,a2,a3], 0x20
+    call    FsRead_entry, [d2,a2,a3], 0x20
     cmp     d3, d0
     beq     loc_484713B9
     mov     a3, a0
@@ -27872,7 +27873,7 @@ loc_484713A0:
     bra     loc_484713EE
 loc_484713B9:
     mov     a2, a0
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     mov     a3, a1
     clr     d1
     clr     d2
@@ -27957,7 +27958,7 @@ GetVolumeLabelSD:
 GetVolumeLabelSD_entry:
     mov     Str_C_35, a0
     mov     Str_d_22, a1
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     mov     a0, a3
     cmp     0, a3
     bne     loc_4847147C
@@ -27970,7 +27971,7 @@ loc_4847147C:
     mov     0x20, d0
     mov     1, d1
     mov     a3, a1
-    call    VfsFileRead_entry, [d2,a2,a3], 0x20
+    call    FsRead_entry, [d2,a2,a3], 0x20
     cmp     1, d0
     bne     loc_484714EC
     mov     sp, a0
@@ -28000,7 +28001,7 @@ loc_48471493:
     clr     d0
     movbu   d0, (0x5004bba7)
     mov     a3, a0
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     mov     a2, a0
     bra     loc_484714F4
 loc_484714DD:
@@ -28008,12 +28009,12 @@ loc_484714DD:
     mov     0x20, d0
     mov     1, d1
     mov     a3, a1
-    call    VfsFileRead_entry, [d2,a2,a3], 0x20
+    call    FsRead_entry, [d2,a2,a3], 0x20
     cmp     1, d0
     beq     loc_48471493
 loc_484714EC:
     mov     a3, a0
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     mov     0, a0
 loc_484714F4:
     ret     [d2,a2,a3], 0x5c
@@ -28041,7 +28042,7 @@ loc_48471509:
     call    strcat_entry, [a2], 4
     mov     Str_wb_26, a1
     mov     a2, a0
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     cmp     0, a0
     bne     loc_4847153A
     clr     d0
@@ -28054,7 +28055,7 @@ loc_4847153A:
     movbu   (a1), d0
     or      0x80, d0
     movbu   d0, (a1)
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     mov     1, d0
 loc_48471551:
     ret     [a2,a3], 0x28
@@ -28067,23 +28068,23 @@ GetDiskFreeSpaceSD_entry:
     mov     a0, a3
     mov     Str_C_33, a0
     mov     Str_d_21, a1
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     cmp     0, a0
     bne     loc_48471574
     clr     d0
     bra     loc_484715C2
 loc_48471574:
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     mov     Str_C_dummy_txt, a0
     mov     Str_r_4, a1
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     cmp     0, a0
     beq     loc_48471593
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
 loc_48471593:
     mov     Str_C_32, a0
     mov     Str_d_20, a1
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     mov     a0, a2
     cmp     0, a2
     bne     loc_484715AC
@@ -28096,7 +28097,7 @@ loc_484715AC:
     mov     (0x24, sp), a0
     mov     d0, (a0)
     mov     a2, a0
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     mov     1, d0
 loc_484715C2:
     ret     [a2,a3], 0x18
@@ -29169,7 +29170,7 @@ ImmunityFileTest:
 ImmunityFileTest_entry:
     mov     Str_C_IMMUNITY_TST, d2
     mov     d2, a0
-    call    VfsRemove_entry, 0, 0x10
+    call    FsRemove_entry, 0, 0x10
     mov     0x800, d0
     call    MplHeapAlloc_entry, 0, 0x18
     mov     a0, a3
@@ -29192,7 +29193,7 @@ loc_48472029:
     llt
     mov     d2, a0
     mov     Str_wb_34, a1
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     mov     a0, a2
     cmp     0, a2
     bne     loc_48472058
@@ -29206,7 +29207,7 @@ loc_48472058:
     mov     1, d0
     mov     d3, d1
     mov     a2, a1
-    call    VfsFileWrite_entry, [d2,a2,a3], 0x20
+    call    FsWrite_entry, [d2,a2,a3], 0x20
     cmp     d3, d0
     beq     loc_48472075
     mov     a3, a0
@@ -29215,14 +29216,14 @@ loc_48472058:
     ret     [d2,d3,a2,a3], 0x28
 loc_48472075:
     mov     a2, a0
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     mov     a3, a0
     clr     d0
     mov     d3, d1
     call    memset_entry, [a2], 4
     mov     d2, a0
     mov     Str_rb_62, a1
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     mov     a0, a2
     cmp     0, a2
     bne     loc_484720A3
@@ -29235,7 +29236,7 @@ loc_484720A3:
     mov     1, d0
     mov     d3, d1
     mov     a2, a1
-    call    VfsFileRead_entry, [d2,a2,a3], 0x20
+    call    FsRead_entry, [d2,a2,a3], 0x20
     cmp     d3, d0
     beq     loc_484720BC
     mov     a3, a0
@@ -29244,7 +29245,7 @@ loc_484720A3:
     bra     loc_484720F1
 loc_484720BC:
     mov     a2, a0
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     mov     a3, a1
     clr     d1
     clr     d2
@@ -29284,7 +29285,7 @@ FileStreamBlockFill_entry:
     mov     1, d0
     mov     0x400, d1
     mov     (0x5004c640), a1
-    call    VfsFileRead_entry, [d2,a2,a3], 0x20
+    call    FsRead_entry, [d2,a2,a3], 0x20
     cmp     0, d0
     bge     loc_48472119
     mov     -1, d0
@@ -29318,15 +29319,15 @@ FileStreamReaderTask:
     mov     (FileStreamReaderTask_Var), d0
     mov     0, a2
     mov     d0, (0x5004bbdc)
-    mov     (VfsFileOpen_Records+112), a0
+    mov     (FsOpen_Records+112), a0
     clr     d0
     movhu   d0, (6, a0)
-    mov     (VfsFileOpen_Records+112), a0
+    mov     (FsOpen_Records+112), a0
     movhu   d0, (0x42e, a0)
     mov     3, d0
-    mov     (VfsFileOpen_Records+112), a0
+    mov     (FsOpen_Records+112), a0
     call    snd_msg, 0, 0
-    mov     (VfsFileOpen_Records+112), a0
+    mov     (FsOpen_Records+112), a0
     mov     3, d0
     add     0x428, a0
     call    snd_msg, 0, 0
@@ -29558,7 +29559,7 @@ loc_484723CA:
     cmp     0, d0
     bne     loc_484723DF
     mov     (0x5004c640), a0
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
 loc_484723DF:
     clr     d0
     movbu   d0, (0x5014cf8e)
@@ -29575,9 +29576,9 @@ FileStreamOpen_entry:
     mov     1, d0
     movbu   d0, (0x5004c650)
     mov     0x5004bde0, d0
-    mov     d0, (VfsFileOpen_Records+112)
+    mov     d0, (FsOpen_Records+112)
     mov     Str_rb_61, a1
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     mov     a0, (0x5004c640)
     cmp     0, a0
     bne     loc_4847243D
@@ -29592,7 +29593,7 @@ loc_4847243D:
     mov     d0, (FileStreamReaderTask_Var)
     call    FileStreamMbxInit_entry, 0, 0x10
     mov     6, d0
-    mov     VfsFileOpen_Records+116, a0
+    mov     FsOpen_Records+116, a0
     call    cre_tsk, 0, 0
     mov     6, d0
     clr     d1
@@ -29828,7 +29829,7 @@ PianoDiscStreamOpen_entry:
     mov     1, d1
     movbu   d1, (0x5004c650)
     mov     0x5004bde0, d1
-    mov     d1, (VfsFileOpen_Records+112)
+    mov     d1, (FsOpen_Records+112)
     exth    d0
     call    PianoDiscEntrySelect, 0, 0
     extbu   d0
@@ -29844,7 +29845,7 @@ PianoDiscStreamOpen_entry:
 loc_484726C0:
     call    FileStreamMbxInit_entry, 0, 0x10
     mov     6, d0
-    mov     VfsFileOpen_Records+116, a0
+    mov     FsOpen_Records+116, a0
     call    cre_tsk, 0, 0
     mov     6, d0
     clr     d1
@@ -30019,10 +30020,10 @@ FileStreamMbxInit_entry:
     mov     1, d0
     movbu   d0, (FileStreamMbxInit_Table)
     mov     3, d0
-    mov     VfsFileOpen_Records+104, a0
+    mov     FsOpen_Records+104, a0
     call    cre_mbx, 0, 0
     mov     4, d0
-    mov     VfsFileOpen_Records+96, a0
+    mov     FsOpen_Records+96, a0
     call    cre_mbx, 0, 0
 loc_4847285A:
     ret     0, 0x10
@@ -30071,10 +30072,10 @@ SdJobTask:
     beq     loc_484728DB
     calls   (a0)
 loc_484728DB:
-    mov     (VfsFileOpen_Records+112), a0
+    mov     (FsOpen_Records+112), a0
     movhu   d0, (6, a0)
     mov     0xb, d0
-    mov     (VfsFileOpen_Records+112), a0
+    mov     (FsOpen_Records+112), a0
     call    snd_msg, 0, 0
     clr     d0
     movbu   d0, (0x5014cf8d)

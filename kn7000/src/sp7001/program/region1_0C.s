@@ -6481,7 +6481,7 @@ loc_48583B31:
     mov     d3, a2
     mov     0x10, d0
     mov     a2, a0
-    call    FmmStrNCopyPad, 0, 0
+    call    StrCopyPad, 0, 0
     mov     a2, a0
     mov     0x10, d0
     call    func_4852733B_entry, 0, 0x10
@@ -10241,7 +10241,7 @@ fopen_api:
     add     -0x10, sp
     mov     a1, (0x1c, sp)
     mov     a0, (0x18, sp)
-    call    VfsFileOpen_entry, [d2,d3,a2,a3], 0x2c
+    call    FsOpen_entry, [d2,d3,a2,a3], 0x2c
     ret     0, 0x10
 # fwrite_api  (CPU 0x48585e3b)
 fwrite_api:
@@ -10250,7 +10250,7 @@ fwrite_api:
     mov     a0, (0x20, sp)
     mov     d1, (0x28, sp)
     mov     d0, (0x24, sp)
-    call    VfsFileWrite_entry, [d2,a2,a3], 0x20
+    call    FsWrite_entry, [d2,a2,a3], 0x20
     ret     0, 0x18
 # fread_api  (CPU 0x48585e50)
 fread_api:
@@ -10259,13 +10259,13 @@ fread_api:
     mov     a0, (0x20, sp)
     mov     d1, (0x28, sp)
     mov     d0, (0x24, sp)
-    call    VfsFileRead_entry, [d2,a2,a3], 0x20
+    call    FsRead_entry, [d2,a2,a3], 0x20
     ret     0, 0x18
 # fclose_api  (CPU 0x48585e65)
 fclose_api:
     add     -0xc, sp
     mov     a0, (0x14, sp)
-    call    VfsFileClose_entry, [d2,d3], 0x14
+    call    FsClose_entry, [d2,d3], 0x14
     ret     0, 0xc
 # ferror_api  (CPU 0x48585e74)
 ferror_api:

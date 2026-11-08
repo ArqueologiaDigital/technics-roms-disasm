@@ -42815,19 +42815,19 @@ loc_48457062:
     ble     loc_4845703E
 loc_4845706E:
     ret     [d2,d3,a2,a3], 0x28
-# ScratchCursorReset  (CPU 0x48457071)
-ScratchCursorReset:
+# ScratchPosReset  (CPU 0x48457071)
+ScratchPosReset:
     clr     d0
     mov     d0, (0x5003d350)
     retf    0, 0
-# ScratchCursorByteGet  (CPU 0x4845707b)
-ScratchCursorByteGet:
+# ScratchReadByte  (CPU 0x4845707b)
+ScratchReadByte:
     mov     (0x5003d350), d0
     mov     INSTALL_SCRATCH, a0
     movbu   (d0, a0), d0
     retf    0, 0
-# ScratchCursorByteSet  (CPU 0x4845708c)
-ScratchCursorByteSet:
+# ScratchWriteByte  (CPU 0x4845708c)
+ScratchWriteByte:
     mov     (0x5003d350), d1
     mov     INSTALL_SCRATCH, a0
     movbu   d0, (d1, a0)
@@ -42850,8 +42850,8 @@ ScratchByteSet:
     mov     INSTALL_SCRATCH, a0
     movbu   (d0, a0), d0
     retf    0, 0
-# ScratchCursorInc  (CPU 0x484570c8)
-ScratchCursorInc:
+# ScratchPosNext  (CPU 0x484570c8)
+ScratchPosNext:
     mov     (0x5003d350), d0
     clr     d1
     cmp     0xc8000, d0
@@ -42864,12 +42864,12 @@ loc_484570E0:
 loc_484570E2:
     mov     d1, d0
     retf    0, 0
-# ScratchCursorGet  (CPU 0x484570e6)
-ScratchCursorGet:
+# ScratchPos  (CPU 0x484570e6)
+ScratchPos:
     mov     (0x5003d350), d0
     retf    0, 0
-# ScratchCursorSet  (CPU 0x484570ef)
-ScratchCursorSet:
+# ScratchPosSet  (CPU 0x484570ef)
+ScratchPosSet:
     mov     d0, d1
     clr     d0
     cmp     0xc8000, d1
@@ -42880,10 +42880,10 @@ loc_48457101:
     mov     -1, d0
 loc_48457103:
     retf    0, 0
-# ScratchCursorAdvance  (CPU 0x48457106)
-ScratchCursorAdvance:
+# ScratchPosSkip  (CPU 0x48457106)
+ScratchPosSkip:
     movm    [d2,d3], (sp)
-ScratchCursorAdvance_entry:
+ScratchPosSkip_entry:
     mov     (0x5003d350), d1
     mov     d0, d3
     add     d3, d1
@@ -42905,21 +42905,21 @@ ScratchEventFetch:
     add     -8, sp
 ScratchEventFetch_entry:
     mov     a0, a2
-    call    ScratchCursorByteGet, 0, 0
+    call    ScratchReadByte, 0, 0
     movbu   d0, (a2)
-    call    ScratchCursorInc, 0, 0
+    call    ScratchPosNext, 0, 0
     movbu   (a2), d1
     mov     1, d2
     cmp     0x82, d1
     beq     loc_48457174
-    call    ScratchCursorByteGet, 0, 0
+    call    ScratchReadByte, 0, 0
     movbu   d0, (1, a2)
     extbu   d0
     and     0x80, d0
     bne     loc_48457174
     inc     a2
 loc_48457159:
-    call    ScratchCursorInc, 0, 0
+    call    ScratchPosNext, 0, 0
     exthu   d2
     inc     d2
     inc     a2
@@ -42927,7 +42927,7 @@ loc_48457159:
     exthu   d0
     cmp     0xa, d0
     bge     loc_48457174
-    call    ScratchCursorByteGet, 0, 0
+    call    ScratchReadByte, 0, 0
     movbu   d0, (a2)
     extbu   d0
     and     0x80, d0
@@ -52343,7 +52343,7 @@ func_4845C8A3_entry:
     movhu   d1, (0x2c, sp)
     mov     d0, d2
     clr     d3
-    call    ScratchCursorReset, 0, 0
+    call    ScratchPosReset, 0, 0
     extbu   d2
     mov     d2, a2
     add     a2, a2
@@ -52393,9 +52393,9 @@ loc_4845C904:
 loc_4845C923:
     extbu   d1
     mov     d1, d0
-    call    ScratchCursorByteSet, 0, 0
+    call    ScratchWriteByte, 0, 0
     call    SongScanCurNext_entry, 0, 0x10
-    call    ScratchCursorInc, 0, 0
+    call    ScratchPosNext, 0, 0
     call    SongScanCurPageGet_entry, 0, 0xc
     movhu   (a2), d1
     exth    d0
@@ -52429,9 +52429,9 @@ func_4845C94E_entry:
     beq     loc_4845C9A5
 loc_4845C97C:
     extbu   d0
-    call    ScratchCursorByteSet, 0, 0
+    call    ScratchWriteByte, 0, 0
     call    SongScanCurNext_entry, 0, 0x10
-    call    ScratchCursorInc, 0, 0
+    call    ScratchPosNext, 0, 0
     call    SongScanCurByteGet_entry, 0, 0x10
     mov     d0, d1
     extbu   d1
@@ -52440,13 +52440,13 @@ loc_4845C97C:
     bra     loc_4845C9A5
 loc_4845C998:
     mov     0x81, d0
-    call    ScratchCursorByteSet, 0, 0
+    call    ScratchWriteByte, 0, 0
     call    SongScanCurNext_entry, 0, 0x10
 loc_4845C9A5:
     mov     0x82, d0
-    call    ScratchCursorByteSet, 0, 0
-    call    ScratchCursorInc, 0, 0
-    call    ScratchCursorGet, 0, 0
+    call    ScratchWriteByte, 0, 0
+    call    ScratchPosNext, 0, 0
+    call    ScratchPos, 0, 0
     ret     [d2], 0x14
 
 func_4845C9BA:
@@ -52454,7 +52454,7 @@ func_4845C9BA:
     add     -0x10, sp
 func_4845C9BA_entry:
     mov     d0, d3
-    call    ScratchCursorReset, 0, 0
+    call    ScratchPosReset, 0, 0
     movbu   (0x5004aeee), d1
     movhu   (0x5004aeec), d0
     exthu   d1
@@ -52463,10 +52463,10 @@ func_4845C9BA_entry:
     cmp     d2, d3
     bls     loc_4845C9F4
 loc_4845C9DB:
-    call    ScratchCursorByteGet, 0, 0
+    call    ScratchReadByte, 0, 0
     extbu   d0
     call    SongWrCurByteSet_entry, 0, 0x14
-    call    ScratchCursorInc, 0, 0
+    call    ScratchPosNext, 0, 0
     call    SongWrCurNext_entry, [d2,d3], 0x14
     inc     d2
     cmp     d3, d2
@@ -55619,14 +55619,14 @@ loc_4845E5FA:
     cmp     0, d0
     bge     loc_4845E639
     clr     d0
-    call    ScratchCursorSet, 0, 0
+    call    ScratchPosSet, 0, 0
     mov     0x81, d0
-    call    ScratchCursorByteSet, 0, 0
-    call    ScratchCursorInc, 0, 0
+    call    ScratchWriteByte, 0, 0
+    call    ScratchPosNext, 0, 0
     mov     0x82, d0
-    call    ScratchCursorByteSet, 0, 0
-    call    ScratchCursorInc, 0, 0
-    call    ScratchCursorGet, 0, 0
+    call    ScratchWriteByte, 0, 0
+    call    ScratchPosNext, 0, 0
+    call    ScratchPos, 0, 0
     mov     d0, d2
 loc_4845E639:
     mov     sp, a0
@@ -55645,12 +55645,12 @@ loc_4845E639:
     cmp     0, d0
     bge     loc_4845E678
     mov     d2, d0
-    call    ScratchCursorSet, 0, 0
+    call    ScratchPosSet, 0, 0
     mov     0x81, d0
-    call    ScratchCursorByteSet, 0, 0
-    call    ScratchCursorInc, 0, 0
+    call    ScratchWriteByte, 0, 0
+    call    ScratchPosNext, 0, 0
     mov     0x82, d0
-    call    ScratchCursorByteSet, 0, 0
+    call    ScratchWriteByte, 0, 0
 loc_4845E678:
     mov     sp, a0
     add     0x28, a0
@@ -56588,7 +56588,7 @@ loc_4845ED69:
     mov     d0, (0x10, sp)
     mov     d2, d0
     call    func_4845EFD8_entry, [d2,d3,a2], 0x18
-    call    ScratchCursorGet, 0, 0
+    call    ScratchPos, 0, 0
     mov     d0, (0x1c, sp)
     mov     sp, a0
     add     0x70, a0
@@ -56706,9 +56706,9 @@ loc_4845EE5C:
     movhu   (0x4e, sp), d1
     call    func_4845EFD8_entry, [d2,d3,a2], 0x18
     mov     0x82, d0
-    call    ScratchCursorByteSet, 0, 0
-    call    ScratchCursorInc, 0, 0
-    call    ScratchCursorGet, 0, 0
+    call    ScratchWriteByte, 0, 0
+    call    ScratchPosNext, 0, 0
+    call    ScratchPos, 0, 0
     mov     d0, (0x18, sp)
     mov     (0x44, sp), d0
     call    func_484627AE_entry, 0, 0x1c
@@ -56887,7 +56887,7 @@ func_4845EFD8_entry:
     mov     d0, d2
     clr     d3
     mov     (0x28, sp), d0
-    call    ScratchCursorSet:32, 0, 0
+    call    ScratchPosSet:32, 0, 0
     call    SongScanCurPageGet_entry, 0, 0xc
     exthu   d2
     exth    d0
@@ -56906,13 +56906,13 @@ loc_4845F000:
 loc_4845F005:
     call    SongScanCurByteGet_entry, 0, 0x10
     extbu   d0
-    call    ScratchCursorByteSet:32, 0, 0
+    call    ScratchWriteByte:32, 0, 0
     call    SongScanCurNext_entry, 0, 0x10
     mov     d0, d3
     exth    d0
     cmp     0, d0
     bne     loc_4845F037
-    call    ScratchCursorInc:32, 0, 0
+    call    ScratchPosNext:32, 0, 0
     call    SongScanCurPageGet_entry, 0, 0xc
     exth    d0
     cmp     d2, d0
@@ -56930,20 +56930,20 @@ func_4845F03B:
     add     -0xc, sp
 func_4845F03B_entry:
     mov     d1, d2
-    call    ScratchCursorSet:32, 0, 0
-    call    ScratchCursorGet:32, 0, 0
+    call    ScratchPosSet:32, 0, 0
+    call    ScratchPos:32, 0, 0
     cmp     d2, d0
     beq     loc_4845F07A
 loc_4845F052:
-    call    ScratchCursorByteGet:32, 0, 0
+    call    ScratchReadByte:32, 0, 0
     extbu   d0
     call    SongWrCurByteSet_entry, 0, 0x14
-    call    ScratchCursorInc:32, 0, 0
+    call    ScratchPosNext:32, 0, 0
     call    SongWrCurNext_entry, [d2,d3], 0x14
     exth    d0
     cmp     0, d0
     bne     loc_4845F07A
-    call    ScratchCursorGet:32, 0, 0
+    call    ScratchPos:32, 0, 0
     cmp     d2, d0
     bne     loc_4845F052
 loc_4845F07A:
@@ -57293,7 +57293,7 @@ loc_4845F2CB:
     exthu   d1
     mov     d2, d0
     call    func_4845EFD8_entry, [d2,d3,a2], 0x18
-    call    ScratchCursorGet, 0, 0
+    call    ScratchPos, 0, 0
     mov     d0, a2
 loc_4845F2EB:
     mov     sp, a0
@@ -57375,9 +57375,9 @@ loc_4845F37F:
     call    func_4845EFD8_entry, [d2,d3,a2], 0x18
     exthu   d3
     mov     0x82, d0
-    call    ScratchCursorByteSet, 0, 0
-    call    ScratchCursorInc, 0, 0
-    call    ScratchCursorGet, 0, 0
+    call    ScratchWriteByte, 0, 0
+    call    ScratchPosNext, 0, 0
+    call    ScratchPos, 0, 0
     mov     d0, (0x14, sp)
     mov     d3, d1
     mov     d2, d0

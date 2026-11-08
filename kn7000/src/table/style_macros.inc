@@ -189,10 +189,11 @@
 # VOICE_ELEM: the archive includes that file.
 # A TABLE tone (class 0x40): the head is 0x27 bytes, then one 3-byte entry per note that
 # TgNoteOnTableTone (0x4C03600D) reads at +0x27 + note x 3: it enables up to two synth
-# layers (0x4C035EAA builds them).
-.macro tone_head_table class, b11, b12, b13, b14, b15, b16, b17, b18, b19, b1a, b1b, b1c, b1d, b1e, b1f, b20, b21, b22, b23, b24, b25, b26
-	.byte	\class, \b11, \b12, \b13, \b14, \b15, \b16, \b17, \b18, \b19, \b1a, \b1b, \b1c, \b1d, \b1e, \b1f
-	.byte	\b20, \b21, \b22, \b23, \b24, \b25, \b26
+# layers (0x4C035EAA builds them).  key_map +0x11, the six modulation routings {src, dest, depth} at
+# +0x12 + k*3 and h24..h26: as CSOUND_HEAD of src/customdata/customdata.inc, which gives the readers.
+.macro tone_head_table class, key_map, mod0_src, mod0_dest, mod0_depth, mod1_src, mod1_dest, mod1_depth, mod2_src, mod2_dest, mod2_depth, mod3_src, mod3_dest, mod3_depth, mod4_src, mod4_dest, mod4_depth, mod5_src, mod5_dest, mod5_depth, h24, h25, h26
+	.byte	\class, \key_map, \mod0_src, \mod0_dest, \mod0_depth, \mod1_src, \mod1_dest, \mod1_depth, \mod2_src, \mod2_dest, \mod2_depth, \mod3_src, \mod3_dest, \mod3_depth, \mod4_src, \mod4_dest
+	.byte	\mod4_depth, \mod5_src, \mod5_dest, \mod5_depth, \h24, \h25, \h26
 .endm
 .macro tone_note a, b, c
 	.byte	\a, \b, \c

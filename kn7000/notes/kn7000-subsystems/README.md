@@ -69,17 +69,17 @@ one subsection per range, each row `0xADDR  Name  ; [CLASS] evidence`.
 
 By subsystem, in the readers' words:
 
-| range                 | the subsystems named                                                                                                                                                                                                                                                              |
-|-----------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 0x48400000-0x48430000 | the two floppy-controller drivers of region 1 (each routine the same code as an IC18 `Fdc*` routine; the copy entered on strap 3 is `FdcStrap3*`, the program's own `FdcPrg*`), the JPEG encoder's helpers (`JpegFdct8x8`, marker writers), the DSP host port, draw-queue helpers |
-| 0x48430000-0x48450000 | PERFORMANCE PAD editor and TPAD heap, the composer (MEMORY style editor), the five tempo clocks (10-byte blocks at 0x50149666 + 10 k), style part templates, user SOUND RAM, rhythm event-stream editors, the SOUND ARRANGER SRAM table                                           |
-| 0x48450000-0x48460000 | sequencer switch flags and measures, the song records (`Rec8E0TablePtr`'s 11 records), song-memory pages and their free chain, song cursors, song event encode / decode, record / output queues, held-key lists                                                                   |
-| 0x48460000-0x48470000 | the sequencer's title and mode enter / leave handlers (named after their jump-table slots), medley play, note / drum edit, step record, a C file layer (`Vfs*`) and the FAT12/16 driver (`Fat*`) with its operation table                                                         |
-| 0x48470000-0x484A0000 | floppy media type and find, the SD sector layer and the SD FAT format writer, the file stream reader task, Techni-Chord, Style Convert, style list boxes, the disk playback player (SMF 0 / 1, E-SEQ, PianoDisc), part-parameter procs, drawbar shadows                           |
-| 0x484A0000-0x484F0000 | the service tests (sine sweep, RAM / VRAM), the panel LED shadows and serial helpers, MIDI 1 / 2 receive and transmit, the PC COMMUNICATION protocol                                                                                                                              |
-| 0x484F0000-0x48540000 | the sound / drum editor's field read, write and value texts, file manager string helpers and lists, the `*_HD` load / save helpers, the fmm drive dispatch (`FmmGetc`, `FmmPutc`, `FmmWrite`), the SLIDE codec buffers, composer / pad dialogs                                    |
-| 0x48540000-0x48590000 | the SD card screens and list scanners, the SD AUDIO / SD SOUND players (`SdAud*`), the slide show (`Ssw*`), help                                                                                                                                                                  |
-| 0x4C000000-0x4C040000 | the uITRON kernel's inner routines (queues, ready queue, TCB lookup), soft-float helpers, TG part controllers (`TgPartExpressionSet` ...), the M3 store's setters                                                                                                                 |
+| range                 | the subsystems named                                                                                                                                                                                                                                                                                    |
+|-----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 0x48400000-0x48430000 | the two floppy-controller drivers of region 1 (each routine the same code as an IC18 `Fdc*` routine; the copy entered on strap 3 is `FdcStrap3*`, the program's own `FdcPrg*`), the JPEG encoder's helpers (`JpegFdct8x8`, marker writers), the DSP host port, draw-queue helpers                       |
+| 0x48430000-0x48450000 | PERFORMANCE PAD editor and TPAD heap, the composer (MEMORY style editor), the five tempo clocks (10-byte blocks at 0x50149666 + 10 k), style part templates, user SOUND RAM, rhythm event-stream editors, the SOUND ARRANGER SRAM table                                                                 |
+| 0x48450000-0x48460000 | sequencer switch flags and measures, the song records (`Rec8E0TablePtr`'s 11 records), song-memory pages and their free chain, song cursors, song event encode / decode, record / output queues, held-key lists                                                                                         |
+| 0x48460000-0x48470000 | the sequencer's title and mode enter / leave handlers (named after their jump-table slots), medley play, note / drum edit, step record, a C file layer (`Fs*`, the names lane sibling-names3 gave the same routines in the KN6000 and KN2400) and the FAT12/16 driver (`Fat*`) with its operation table |
+| 0x48470000-0x484A0000 | floppy media type and find, the SD sector layer and the SD FAT format writer, the file stream reader task, Techni-Chord, Style Convert, style list boxes, the disk playback player (SMF 0 / 1, E-SEQ, PianoDisc), part-parameter procs, drawbar shadows                                                 |
+| 0x484A0000-0x484F0000 | the service tests (sine sweep, RAM / VRAM), the panel LED shadows and serial helpers, MIDI 1 / 2 receive and transmit, the PC COMMUNICATION protocol                                                                                                                                                    |
+| 0x484F0000-0x48540000 | the sound / drum editor's field read, write and value texts, file manager string helpers and lists, the `*_HD` load / save helpers, the fmm drive dispatch (`FmmGetc`, `FmmPutc`, `FmmWrite`), the SLIDE codec buffers, composer / pad dialogs                                                          |
+| 0x48540000-0x48590000 | the SD card screens and list scanners, the SD AUDIO / SD SOUND players (`SdAud*`), the slide show (`Ssw*`), help                                                                                                                                                                                        |
+| 0x4C000000-0x4C040000 | the uITRON kernel's inner routines (queues, ready queue, TCB lookup), soft-float helpers, TG part controllers (`TgPartExpressionSet` ...), the M3 store's setters                                                                                                                                       |
 
 Findings the readers reported that touch existing names or data (none was renamed here):
 
@@ -124,9 +124,9 @@ In the order of `../kn7000-research2/README.md` and `../sibling-names/README.md`
    rename them after the routine the code now names at that address
    (`scripts/renaming/rename_kn7000_subsystems_derived_<tree>.sed`): 408 / 433 / 454 / 452 labels
    in 941 / 942 / 935 / 893 (the 37 / 59 / 80 / 80 left from earlier names included, among them
-   `func_48449462_Records` -> `TableToneKeyMap_Records`).  Two per build stay, because their new
-   spelling is another label already (`LedProcTableDispatch_Var`, `TechniChordUpdate_Var`), and
-   893's four `SdSndEditDef*` ones.  `data-and-code-src` afterwards changes no label (fixpoint in 2
+   `func_48449462_Records` -> `TableToneKeyMap_Records`); after the merge with main the same
+   command renamed 409 / 434 / 455 / 453.  One per build stays, because its new spelling is
+   another label already (`TechniChordUpdate_Var`), and 893's four `SdSndEditDef*` ones.  `data-and-code-src` afterwards changes no label (fixpoint in 2
    rounds).
 4. The prose: `scripts/renaming/rename_kn7000_subsystems_routines.sed` (word-bounded `func_<ADDR>`
    -> name) on `kn7000_manual.sym`, `kn7000_b893_own.sym` and the 22 kn7000 notes that quote a
@@ -138,14 +138,34 @@ In the order of `../kn7000-research2/README.md` and `../sibling-names/README.md`
    `data-and-code-src`, `gui-map`; a second `aligned-names` wrote the same files in every model
    (fixpoint).
 
-| model  | aligned routine names | call-site audit (right / wrong) | RAM pairs      | RAM names (owner + accessor) |
-|--------|-----------------------|---------------------------------|----------------|------------------------------|
-| KN6000 | 115 -> 1,065          | 498 / 2 -> 726 / 2              | 2,123 -> 2,317 | 486 -> 588                   |
-| KN6500 | 114 -> 1,069          | 504 / 2 -> 735 / 2              | 2,124 -> 2,318 | 486 -> 588                   |
-| KN2400 | 249 -> 1,649          | 674 / 3 -> 1,086 / 3            | 3,147 -> 3,362 | 641 -> 774                   |
-| HD-SX3 | 2 -> 6                | 36 / 0                          | 0              | -                            |
+Measured on the final tree, after merging main 4e1d77a5b (which brought lane sibling-names3's hand
+names and lane kn7000-ic21's IC21 reader names); "main" is that merge base, the tools' own reports:
 
-The audit's wrong pairs are the same ones wave 11 listed; the new names added none.
+| model  | aligned routine names (main -> after) | call-site audit, right / wrong | RAM pairs      | RAM names (owner + accessor) |
+|--------|---------------------------------------|--------------------------------|----------------|------------------------------|
+| KN6000 | 115 -> 1,040                          | 498 / 2 -> 758 / 3             | 2,123 -> 2,316 | 503 -> 602                   |
+| KN6500 | 114 -> 1,056                          | 504 / 2 -> 761 / 3             | 2,124 -> 2,317 | 502 -> 601                   |
+| KN2400 | 249 -> 1,629                          | 674 / 3 -> 1,107 / 3           | 3,147 -> 3,355 | 643 -> 773                   |
+| HD-SX3 | 2 -> 6                                | 36 / 0 -> 36 / 0               | 0              | -                            |
+
+The audit's wrong pairs are the ones wave 11 listed, plus one in the KN6000 and KN6500 (below).
+
+**Merged with lane open14/sibling-names3**, which named the siblings' C file layer, string helpers
+and INSTALL_SCRATCH cursor by hand in the same wave (`FsOpen`, `FsRead` ..., `StrCopy`,
+`StrAppend`, `StrCopyPad`, `FileNameWithExt`, `FsMountVolume`, `ScratchPosReset` ...).  Their
+routines are the same code as 941's that this lane had called `Vfs*` (`VfsFileOpen` ...), `FmmStr*`,
+`FmmNameWithExtBuild`, `FatVolumeMount` and `ScratchCursor*`: after the merge the call-site audit
+counted twelve "wrong" pairs where the two names met (KN6000 9, KN2400 3).  941 took the siblings'
+names (`scripts/renaming/rename_kn7000_subsystems_fs.sed`: 25 file-layer routines, the twelve the
+siblings had not named given the same `Fs` prefix, three string helpers, `FileNameWithExt`,
+`FsMountVolume` and seven INSTALL_SCRATCH cursor routines), so each routine has one name across the
+models.  One difference stays: 941's `SoundRamHeaderStamp`
+(0x4844B431) and the KN6000's `SoundRamSumUpdate` (0x4C07DEC8, `kn6000_manual.sym`, marked
+"[INFERENCE: name from the store]") are the same routine: both copy the 16-character "KN7000 /
+KN6000 SOUND RAM" signature to the SOUND RAM header and then store `SoundRamChecksumCalc`'s value.
+The KN6000 row is lane sibling-names3's file, so it is left for them (proposed:
+`SoundRamHeaderStamp`, which says both steps); until then the pair is the audit's one new wrong
+entry in the KN6000 and KN6500.
 
 The pre-existing derived labels of the siblings (KN6000 714, KN6500 714, KN2400 2,881 labels made
 from `func_` names that were named before this lane, `derived_label_renames.py <model>` without
@@ -154,28 +174,30 @@ same command renames them in one step afterwards.
 
 ## Before and after
 
-func_<ADDR> routine starts, `placeholders.py` (`placeholders-92b5cc4a7.txt`, `placeholders-after.txt`):
+func_<ADDR> routine starts, `placeholders.py`: at this lane's base (`placeholders-92b5cc4a7.txt`), at
+main 4e1d77a5b, the merge base of the final tree (`placeholders-main-4e1d77a5b.txt`: the other wave-13
+lanes' names), and after (`placeholders-after.txt`).  The "this lane" column is main minus after.
 
-| tree   | before (92b5cc4a7) | after | named |
-|--------|--------------------|-------|-------|
-| 941    | 6,290              | 3,978 | 2,312 |
-| 942    | 6,289              | 3,978 | 2,311 |
-| 935    | 6,287              | 3,975 | 2,312 |
-| 893    | 6,279              | 3,976 | 2,303 |
-| KN6000 | 5,632              | 4,683 | 949   |
-| KN6500 | 5,659              | 4,705 | 954   |
-| KN2400 | 6,480              | 5,081 | 1,399 |
-| HD-SX3 | 459                | 455   | 4     |
+| tree   | base 92b5cc4a7 | main 4e1d77a5b | after | this lane |
+|--------|----------------|----------------|-------|-----------|
+| 941    | 6,290          | 6,282          | 3,970 | 2,312     |
+| 942    | 6,289          | 6,281          | 3,970 | 2,311     |
+| 935    | 6,287          | 6,279          | 3,967 | 2,312     |
+| 893    | 6,279          | 6,271          | 3,968 | 2,303     |
+| KN6000 | 5,632          | 5,501          | 4,577 | 924       |
+| KN6500 | 5,659          | 5,529          | 4,599 | 930       |
+| KN2400 | 6,480          | 6,430          | 5,060 | 1,370     |
+| HD-SX3 | 459            | 459            | 455   | 4         |
 
-(893 also takes its own `SdAudFfStart`, below.)  `../sibling-names-probes/sibling_name_census.py`
-(`sibling-census-92b5cc4a7.txt`, `sibling-census-after.txt`) reads the same in the siblings and the
-RAM operands that the new RAM names spell:
+`../sibling-names-probes/sibling_name_census.py` on main's files (`sibling-census-main-4e1d77a5b.txt`)
+and on the final tree (`sibling-census-after.txt`) reads the same in the siblings, and the RAM
+operands the new RAM names spell:
 
 | model  | func_ (stats)   | named          | work RAM 0x50 ops / addrs        |
 |--------|-----------------|----------------|----------------------------------|
-| KN6000 | 9,843 -> 8,263  | 2,831 -> 3,781 | 17,755 / 2,522 -> 17,276 / 2,423 |
-| KN6500 | 9,899 -> 8,305  | 2,837 -> 3,792 | 17,791 / 2,531 -> 17,311 / 2,432 |
-| KN2400 | 11,254 -> 8,944 | 3,478 -> 4,878 | 20,908 / 2,933 -> 20,160 / 2,800 |
+| KN6000 | 9,600 -> 8,057  | 2,962 -> 3,887 | 17,339 / 2,484 -> 16,871 / 2,387 |
+| KN6500 | 9,658 -> 8,100  | 2,967 -> 3,898 | 17,379 / 2,495 -> 16,910 / 2,398 |
+| KN2400 | 11,166 -> 8,901 | 3,528 -> 4,899 | 20,564 / 2,916 -> 19,952 / 2,786 |
 | HD-SX3 | 765 -> 758      | 179 -> 183     | 0 / 0                            |
 
 ## Items
@@ -194,12 +216,12 @@ four checks are unnamed in 941 too, so neither routine has a name yet.
 | item                           | outcome | in one line                                                                                                                                                                                                                 |
 |--------------------------------|---------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | L-wave12-kn7000-handback-names | CLOSED  | `SoundKindGet` / `TableToneKeyMap` in `kn7000_manual.sym`, ported to 942 / 935 / 893; their data labels renamed (`TableToneKeyMap_Records` / `_Table`), and every other derived label of a named routine in the four builds |
-| N-99771106                     | OPEN    | 893 func_ 6,279 -> 3,976; own 2 -> 1 (`SdAudFfStart`); next: 941's `func_48579683` and its four checks, then 893's 0x485785B0                                                                                               |
-| N-a810f3f6                     | OPEN    | KN6000 func_ starts 5,632 -> 4,683 (aligned names 115 -> 1,065); next: name more of 941's 3,978, then re-run `aligned-names`                                                                                                |
-| N-f22bdce4                     | OPEN    | KN6500 5,659 -> 4,705 (114 -> 1,069); next as N-a810f3f6                                                                                                                                                                    |
-| N-b3ba9d8b                     | OPEN    | KN2400 6,480 -> 5,081 (249 -> 1,649); next as N-a810f3f6                                                                                                                                                                    |
+| N-99771106                     | OPEN    | 893 func_ 6,271 -> 3,968 (main -> after); own 2 -> 1 (`SdAudFfStart`); next: 941's `func_48579683` and its four checks, then 893's 0x485785B0                                                                               |
+| N-a810f3f6                     | OPEN    | KN6000 func_ starts 5,501 -> 4,577 (main -> after; aligned names 115 -> 1,040); next: name more of 941's 3,970, then re-run `aligned-names`                                                                                 |
+| N-f22bdce4                     | OPEN    | KN6500 5,529 -> 4,599 (114 -> 1,056); next as N-a810f3f6                                                                                                                                                                    |
+| N-b3ba9d8b                     | OPEN    | KN2400 6,430 -> 5,060 (249 -> 1,629); next as N-a810f3f6                                                                                                                                                                    |
 
-What is left in 941, measured: 3,978 `func_` routines; of them, the ones the siblings pair by call
+What is left in 941, measured: 3,970 `func_` routines; of them, the ones the siblings pair by call
 sites (the siblings' `notes/routine-map-kn7000.tsv`, "A unnamed") are the next names with the
 widest reach.  The readers' open leads above are the densest places to start.
 
