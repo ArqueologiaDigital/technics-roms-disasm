@@ -380,16 +380,46 @@ def reader_alias(label, gen):
     return n + m.group(2)
 
 
+_REV_CACHE = {}
+
+
+def reader_unalias(label, gen):
+    """(wave 13 integration) The inverse of reader_alias: the func_<ADDR><suffix> key of an array labelled after
+    its reader's current name.  Lane kn7000-subsystems named readers whose arrays this file keys by address
+    (func_484288AC_Table, func_4840EBC3_Table ...), and derived_label_renames.py renamed those arrays after the
+    new names (DeleteEventForTask_Table ...), so the address keys stopped matching.  For <Name><suffix>, where
+    Name is the name of the routine at ADDR in this build, the address key is tried too.  None when no prefix of
+    the label is a routine name of this build."""
+    if gen is None or not label:
+        return None
+    ext = getattr(gen, "extern", {})
+    rev = _REV_CACHE.get(id(ext))
+    if rev is None:
+        rev = {}
+        for a, n in ext.items():
+            if n and not n.startswith("func_") and not _PLACEHOLDER.match(n):
+                rev.setdefault(n, a)
+        _REV_CACHE[id(ext)] = rev
+    i = label.rfind("_")
+    while i > 0:
+        a = rev.get(label[:i])
+        if a is not None:
+            return "func_%08X%s" % (a, label[i:])
+        i = label.rfind("_", 0, i)
+    return None
+
+
 def lookup3(label, stride, gen=None):
     """(kind name, {offset: field name}, new label or None) for the array `label`.  With `gen` (the generator), an
     array labelled after an address-named reader that has a name now is also looked up under that name
-    (reader_alias); the label itself is kept then (no new label)."""
+    (reader_alias), and an array labelled after a reader's new name under the reader's address key
+    (reader_unalias); the label itself is kept then (no new label)."""
     e = _lookup_entry(label, stride)
     if e is None:
-        alt = reader_alias(label, gen)
-        e = _lookup_entry(alt, stride) if alt else None
-        if e is not None:
-            return e[0], e[1], None
+        for alt in (reader_alias(label, gen), reader_unalias(label, gen)):
+            e = _lookup_entry(alt, stride) if alt else None
+            if e is not None:
+                return e[0], e[1], None
     if e is None:
         return None, {}, None
     return (e + (None,))[:3]

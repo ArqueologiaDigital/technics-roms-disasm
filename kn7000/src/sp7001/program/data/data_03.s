@@ -27250,33 +27250,33 @@ Str_JFIF:	.asciz "JFIF"
 JpegEncSetup_Table:	# 5 x u8, 1..3; read by JpegEncSetup_entry 0x4840D29C: `movbu  (d1, a0), d0`
 	tab_u8	1, 3, 3, 3, 3
 
-JpegDecModeMatch_Table:	# 5 x REC_JpegDecModeMatch_Table (4 bytes each); read by JpegEncSetup 0x4840D29C `movbu (1, a1), d0`; JpegEncSetup 0x4840D29C `movbu (2, a3), d0`; JpegEncSetup 0x4840D29C `movbu (3, a3), d0` (+1)
-	REC_JpegDecModeMatch_Table	f0=1
-	REC_JpegDecModeMatch_Table	f0=1, f1=1, f2=1
-	REC_JpegDecModeMatch_Table	f0=2, f1=1, f2=1
-	REC_JpegDecModeMatch_Table	f0=2, f1=1, f2=1
-	REC_JpegDecModeMatch_Table	f0=4, f1=1, f2=1
-JpegDecModeMatch_Table_2:	# 5 x REC_JpegDecModeMatch_Table_2 (4 bytes each); read by JpegEncSetup 0x4840D29C `movbu (a0), d0`; JpegEncSetup 0x4840D29C `movbu (a1), d0`
-	REC_JpegDecModeMatch_Table_2	f0=1
-	REC_JpegDecModeMatch_Table_2	f0=1, f1=1, f2=1
-	REC_JpegDecModeMatch_Table_2	f0=1, f1=1, f2=1
-	REC_JpegDecModeMatch_Table_2	f0=2, f1=1, f2=1
-	REC_JpegDecModeMatch_Table_2	f0=1, f1=1, f2=1
-JpegEncSetup_Records_2:	# 5 x REC_JpegEncSetup_Records_2 (4 bytes each); read by JpegEncSetup 0x4840D29C `movbu (a0), d0`; JpegEncSetup 0x4840D29C `movbu (a3), d0`
-	REC_JpegEncSetup_Records_2	
-	REC_JpegEncSetup_Records_2	f1=1, f2=1
-	REC_JpegEncSetup_Records_2	f1=1, f2=1
-	REC_JpegEncSetup_Records_2	f1=1, f2=1
-	REC_JpegEncSetup_Records_2	f1=1, f2=1
-JpegEncSetup_Records:	# 8 x REC_JpegEncSetup_Records (4 bytes each); read by JpegEncSetup 0x4840D29C `movbu (a0), d0`; JpegEncSetup 0x4840D29C `movbu (a1), d0`; JpegEncSetup 0x4840D29C `movbu (a3), d0`
-	REC_JpegEncSetup_Records	
-	REC_JpegEncSetup_Records	f1=17, f2=17
-	REC_JpegEncSetup_Records	f1=17, f2=17
-	REC_JpegEncSetup_Records	f1=17, f2=17
-	REC_JpegEncSetup_Records	f1=17, f2=17
-	REC_JpegEncSetup_Records	f0=255, f1=255, f2=255, f3=120
-	REC_JpegEncSetup_Records	f0=72, f1=23, f2=80, f3=120
-	REC_JpegEncSetup_Records	f0=73, f1=23, f2=80, f3=184
+JpegDecModeMatch_Table:	# 5 x JpegModeHSampling (4 bytes each); read by JpegEncSetup 0x4840D29C `movbu (1, a1), d0`; JpegEncSetup 0x4840D29C `movbu (2, a3), d0`; JpegEncSetup 0x4840D29C `movbu (3, a3), d0` (+1)
+	JpegModeHSampling	comp0=1
+	JpegModeHSampling	comp0=1, comp1=1, comp2=1
+	JpegModeHSampling	comp0=2, comp1=1, comp2=1
+	JpegModeHSampling	comp0=2, comp1=1, comp2=1
+	JpegModeHSampling	comp0=4, comp1=1, comp2=1
+JpegDecModeMatch_Table_2:	# 5 x JpegModeVSampling (4 bytes each); read by JpegEncSetup 0x4840D29C `movbu (a0), d0`; JpegEncSetup 0x4840D29C `movbu (a1), d0`
+	JpegModeVSampling	comp0=1
+	JpegModeVSampling	comp0=1, comp1=1, comp2=1
+	JpegModeVSampling	comp0=1, comp1=1, comp2=1
+	JpegModeVSampling	comp0=2, comp1=1, comp2=1
+	JpegModeVSampling	comp0=1, comp1=1, comp2=1
+JpegEncSetup_Records_2:	# 5 x JpegModeQuantSel (4 bytes each); read by JpegEncSetup 0x4840D29C `movbu (a0), d0`; JpegEncSetup 0x4840D29C `movbu (a3), d0`
+	JpegModeQuantSel	
+	JpegModeQuantSel	comp1=1, comp2=1
+	JpegModeQuantSel	comp1=1, comp2=1
+	JpegModeQuantSel	comp1=1, comp2=1
+	JpegModeQuantSel	comp1=1, comp2=1
+JpegEncSetup_Records:	# 8 x JpegModeHuffSel (4 bytes each); read by JpegEncSetup 0x4840D29C `movbu (a0), d0`; JpegEncSetup 0x4840D29C `movbu (a1), d0`; JpegEncSetup 0x4840D29C `movbu (a3), d0`
+	JpegModeHuffSel	
+	JpegModeHuffSel	comp1=17, comp2=17
+	JpegModeHuffSel	comp1=17, comp2=17
+	JpegModeHuffSel	comp1=17, comp2=17
+	JpegModeHuffSel	comp1=17, comp2=17
+	JpegModeHuffSel	comp0=255, comp1=255, comp2=255, comp3=120
+	JpegModeHuffSel	comp0=72, comp1=23, comp2=80, comp3=120
+	JpegModeHuffSel	comp0=73, comp1=23, comp2=80, comp3=184
 # census: opaque -- unknown-dump: 3 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x33A0ED, 0x33A0F0
 func_48485F7E_Records:	# 3 x REC_func_48485F7E_Records (16 bytes each); read by func_48485F7E 0x48485F7E `mov (d0, a0), d1`; func_48485FE7 0x48485FE7 `mov (d0, a0), d1`; func_484860B4 0x484860B4 `mov (d0, a0), d1`

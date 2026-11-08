@@ -12117,10 +12117,10 @@ cre_flg_Impl_Var_16:	# T_CFLG (12 bytes): the layout cre_flg 0x4C03C7EF reads th
 	T_CFLG	flgatr=8, x6="\x00\x00", iflgptn=1
 cre_flg_Impl_Var_18:	# T_CFLG (12 bytes): the layout cre_flg 0x4C03C7EF reads through its argument a0 (passed by DspManagerInit 0x4840847C `call cre_flg, 0, 0`, +5 more calls); the layout cre_flg_Impl 0x4C03C87B reads through its argument a0 (passed by cre_flg 0x4C03C7EF `call cre_flg_Impl_entry, [d2,a2,a3], 0xc`)
 	T_CFLG	flgatr=8, x6="\x00\x00", iflgptn=1
-KernelCyclicHandlerDefine_Table:	# REC_KernelCyclicHandlerDefine_ArgA0 (24 bytes): the layout KernelCyclicHandlerDefine 0x4C03C8D0 reads through its argument a0 (passed by GuiTasksStart 0x4841424C `call KernelCyclicHandlerDefine_entry, [d2,d3,a2,a3], 0x1c`)
-	REC_KernelCyclicHandlerDefine_ArgA0	x4="\x01\x00\x00\x00", proc=func_4841418A, f12=1, x18="\x00\x00", KernelCyclicSchedule_d0=1
-KernelCyclicHandlerDefine_Table_3:	# REC_KernelCyclicHandlerDefine_ArgA0 (24 bytes): the layout KernelCyclicHandlerDefine 0x4C03C8D0 reads through its argument a0 (passed by GuiTasksStart 0x4841424C `call KernelCyclicHandlerDefine_entry, [d2,d3,a2,a3], 0x1c`)
-	REC_KernelCyclicHandlerDefine_ArgA0	x4="\x01\x00\x00\x00", proc=GuiTimerTick, f12=1, x18="\x00\x00", KernelCyclicSchedule_d0=24
+KernelCyclicHandlerDefine_Table:	# T_DefTimeHandler (24 bytes): the layout KernelCyclicHandlerDefine 0x4C03C8D0 reads through its argument a0 (passed by GuiTasksStart 0x4841424C `call KernelCyclicHandlerDefine_entry, [d2,d3,a2,a3], 0x1c`)
+	T_DefTimeHandler	x4="\x01\x00\x00\x00", handler=func_4841418A, mode=1, x18="\x00\x00", time_lo=1
+KernelCyclicHandlerDefine_Table_3:	# T_DefTimeHandler (24 bytes): the layout KernelCyclicHandlerDefine 0x4C03C8D0 reads through its argument a0 (passed by GuiTasksStart 0x4841424C `call KernelCyclicHandlerDefine_entry, [d2,d3,a2,a3], 0x1c`)
+	T_DefTimeHandler	x4="\x01\x00\x00\x00", handler=GuiTimerTick, mode=1, x18="\x00\x00", time_lo=24
 
 IndexSwEventHandler_Table:	# 32 x u32, 1..2147483648; read by IndexSwEventHandler 0x484146F3: `mov   (d0, a3), d0`; IndexSwEventHandler 0x484146F3: `mov   (d0, a3), d1` ...
 	tab_u32	1, 2, 4, 8, 16, 32, 64, 128	# [0]

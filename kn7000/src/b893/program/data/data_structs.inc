@@ -4069,56 +4069,56 @@
 	.long	\p4
 .endm
 
-# REC_JpegDecModeMatch_Table: 4-byte records (JpegDecModeMatch_Table, 5 records); fields, and what reads them:
+# JpegModeHSampling: 4-byte records (JpegDecModeMatch_Table, 5 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   f0           u8             JpegEncSetup 0x48404D10 `movbu (a0), d0`
-#   +1   f1           u8             JpegEncSetup 0x48404D10 `movbu (1, a1), d0`
-#   +2   f2           u8             JpegEncSetup 0x48404D10 `movbu (2, a3), d0`
-#   +3   f3           u8             JpegEncSetup 0x48404D10 `movbu (3, a3), d0`
-.macro REC_JpegDecModeMatch_Table f0=0, f1=0, f2=0, f3=0
-	.byte	\f0
-	.byte	\f1
-	.byte	\f2
-	.byte	\f3
+#   +0   comp0        u8             JpegEncSetup 0x48404D10 `movbu (a0), d0`
+#   +1   comp1        u8             JpegEncSetup 0x48404D10 `movbu (1, a1), d0`
+#   +2   comp2        u8             JpegEncSetup 0x48404D10 `movbu (2, a3), d0`
+#   +3   comp3        u8             JpegEncSetup 0x48404D10 `movbu (3, a3), d0`
+.macro JpegModeHSampling comp0=0, comp1=0, comp2=0, comp3=0
+	.byte	\comp0
+	.byte	\comp1
+	.byte	\comp2
+	.byte	\comp3
 .endm
 
-# REC_JpegDecModeMatch_Table_2: 4-byte records (JpegDecModeMatch_Table_2, 5 records); fields, and what reads them:
+# JpegModeVSampling: 4-byte records (JpegDecModeMatch_Table_2, 5 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   f0           u8             JpegEncSetup 0x48404D10 `movbu (a0), d0`
-#   +1   f1           u8             JpegEncSetup 0x48404D10 `movbu (a1), d0`
-#   +2   f2           u8             JpegEncSetup 0x48404D10 `movbu (a1), d0`
-#   +3   f3           u8             JpegEncSetup 0x48404D10 `movbu (a1), d0`
-.macro REC_JpegDecModeMatch_Table_2 f0=0, f1=0, f2=0, f3=0
-	.byte	\f0
-	.byte	\f1
-	.byte	\f2
-	.byte	\f3
+#   +0   comp0        u8             JpegEncSetup 0x48404D10 `movbu (a0), d0`
+#   +1   comp1        u8             JpegEncSetup 0x48404D10 `movbu (a1), d0`
+#   +2   comp2        u8             JpegEncSetup 0x48404D10 `movbu (a1), d0`
+#   +3   comp3        u8             JpegEncSetup 0x48404D10 `movbu (a1), d0`
+.macro JpegModeVSampling comp0=0, comp1=0, comp2=0, comp3=0
+	.byte	\comp0
+	.byte	\comp1
+	.byte	\comp2
+	.byte	\comp3
 .endm
 
-# REC_JpegEncSetup_Records_2: 4-byte records (JpegEncSetup_Records_2, 5 records); fields, and what reads them:
+# JpegModeQuantSel: 4-byte records (JpegEncSetup_Records_2, 5 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   f0           u8             JpegEncSetup 0x48404D10 `movbu (a0), d0`
-#   +1   f1           u8             JpegEncSetup 0x48404D10 `movbu (a3), d0`
-#   +2   f2           u8             JpegEncSetup 0x48404D10 `movbu (a3), d0`
-#   +3   f3           u8             JpegEncSetup 0x48404D10 `movbu (a3), d0`
-.macro REC_JpegEncSetup_Records_2 f0=0, f1=0, f2=0, f3=0
-	.byte	\f0
-	.byte	\f1
-	.byte	\f2
-	.byte	\f3
+#   +0   comp0        u8             JpegEncSetup 0x48404D10 `movbu (a0), d0`
+#   +1   comp1        u8             JpegEncSetup 0x48404D10 `movbu (a3), d0`
+#   +2   comp2        u8             JpegEncSetup 0x48404D10 `movbu (a3), d0`
+#   +3   comp3        u8             JpegEncSetup 0x48404D10 `movbu (a3), d0`
+.macro JpegModeQuantSel comp0=0, comp1=0, comp2=0, comp3=0
+	.byte	\comp0
+	.byte	\comp1
+	.byte	\comp2
+	.byte	\comp3
 .endm
 
-# REC_JpegEncSetup_Records: 4-byte records (JpegEncSetup_Records, 8 records); fields, and what reads them:
+# JpegModeHuffSel: 4-byte records (JpegEncSetup_Records, 8 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   f0           u8             JpegEncSetup 0x48404D10 `movbu (a3), d0`
-#   +1   f1           u8             JpegEncSetup 0x48404D10 `movbu (a1), d0`
-#   +2   f2           u8             JpegEncSetup 0x48404D10 `movbu (a0), d0`
-#   +3   f3           u8             JpegEncSetup 0x48404D10 `movbu (a0), d0`
-.macro REC_JpegEncSetup_Records f0=0, f1=0, f2=0, f3=0
-	.byte	\f0
-	.byte	\f1
-	.byte	\f2
-	.byte	\f3
+#   +0   comp0        u8             JpegEncSetup 0x48404D10 `movbu (a3), d0`
+#   +1   comp1        u8             JpegEncSetup 0x48404D10 `movbu (a1), d0`
+#   +2   comp2        u8             JpegEncSetup 0x48404D10 `movbu (a0), d0`
+#   +3   comp3        u8             JpegEncSetup 0x48404D10 `movbu (a0), d0`
+.macro JpegModeHuffSel comp0=0, comp1=0, comp2=0, comp3=0
+	.byte	\comp0
+	.byte	\comp1
+	.byte	\comp2
+	.byte	\comp3
 .endm
 
 # REC_func_48485D82_Records: 16-byte records (func_48485D82_Records, 3 records); fields, and what reads them:
@@ -4346,45 +4346,45 @@
 	.ascii	"\x1"
 .endm
 
-# REC_DeleteEventForTask_Table: 56-byte records (DeleteEventForTask_Table, 4 records); fields, and what reads them:
+# AppTaskState: 56-byte records (DeleteEventForTask_Table, 4 records); fields, and what reads them:
 #   ([INFERENCE] the count: the records up to where they stop being free, a pointer field stops holding an address or another named address begins; no reader checks it)
-#   +0   key          s16            PostEventForTask 0x4842859D `movhu (d0, a3), d2`; GetEventForTask 0x4842874B `movhu (d0, a2), d0` (+9)
-#   +2   key_         s16            PostEventForTask 0x4842859D `movhu (2, a0), d2`; PostEventForTask 0x4842859D `movhu (2, a0), d3` (+14)
-#   +4   key__        s16            PostEventForTask 0x4842859D `movhu (4, a0), d0`; GetEventForTask 0x4842874B `movhu (4, a0), d0` (+6)
-#   +6   flag_id      s16            ApTaskMain 0x484143A9 `movhu (6, a0), d0`; GuiTimerTick 0x484144B6 `movhu (6, a0), d0` (+7)
-#   +8   flag_id_     s16            DrawRing_ResetLocked 0x484218B8 `movhu (8, a0), d0`; DrawRing_ResetLocked 0x484218B8 `movhu (8, a2), d0` (+15)
+#   +0   q_rd         s16            PostEventForTask 0x4842859D `movhu (d0, a3), d2`; GetEventForTask 0x4842874B `movhu (d0, a2), d0` (+9)
+#   +2   q_wr         s16            PostEventForTask 0x4842859D `movhu (2, a0), d2`; PostEventForTask 0x4842859D `movhu (2, a0), d3` (+14)
+#   +4   q_size       s16            PostEventForTask 0x4842859D `movhu (4, a0), d0`; GetEventForTask 0x4842874B `movhu (4, a0), d0` (+6)
+#   +6   msg_flag     s16            ApTaskMain 0x484143A9 `movhu (6, a0), d0`; GuiTimerTick 0x484144B6 `movhu (6, a0), d0` (+7)
+#   +8   lock_flag    s16            DrawRing_ResetLocked 0x484218B8 `movhu (8, a0), d0`; DrawRing_ResetLocked 0x484218B8 `movhu (8, a2), d0` (+15)
 #   +10  x10          u8[2]          no reader seen
-#   +12  index        u32            ProcCall 0x4842944A `mov (0xc, a0), d0`; ProcCall 0x4842944A `mov (0xc, a0), d1` (+7)
-#   +16  f16          u32            SendEventForTask 0x4842850E `mov (0x10, a0), d0`; GetEventForTask 0x4842874B `mov (0x10, a0), d0` (+3)
-#   +20  f20          u32            DispatchEventForTask 0x48428BFC `mov d0, (a0)`; DispatchOneEventForTask 0x48428C92 `mov d3, (0x14, a0)` (+3)
-#   +24  f24          u32            DispatchEventForTask 0x48428BFC `mov d1, (a3)`; DispatchOneEventForTask 0x48428C92 `mov a3, (0x18, a0)` (+3)
-#   +28  f28          u32            DispatchEventForTask 0x48428BFC `mov a0, (a2)`; DispatchOneEventForTask 0x48428C92 `mov a0, (0x1c, a1)` (+3)
-#   +32  f32          u32            SendEventForTask 0x4842850E `mov (0x20, a0), a3`; SendEventForTask 0x4842850E `mov a3, (0x20, a0)` (+3)
-#   +36  f36          u32            SendEventForTask 0x4842850E `mov (0x24, a0), a2`; SendEventForTask 0x4842850E `mov a2, (0x24, a0)` (+3)
-#   +40  f40          u32            SendEventForTask 0x4842850E `mov (0x28, a1), a0`; SendEventForTask 0x4842850E `mov d0, (0x28, a0)` (+3)
-#   +44  Free_d1      u32            PostEventForTask 0x4842859D `mov (0x2c, a0), a0`; PostEventForTask 0x4842859D `mov (0x2c, a0), d0` (+17)
-#   +48  key___       s16            InitializeTaskTimer 0x4842990A `movhu d0, (0x30, a0)`; ApTimer 0x484299AF `movhu (0x30, a0), d0` (+10)
+#   +12  cur_class    u32            ProcCall 0x4842944A `mov (0xc, a0), d0`; ProcCall 0x4842944A `mov (0xc, a0), d1` (+7)
+#   +16  main_obj     u32            SendEventForTask 0x4842850E `mov (0x10, a0), d0`; GetEventForTask 0x4842874B `mov (0x10, a0), d0` (+3)
+#   +20  msg_obj      u32            DispatchEventForTask 0x48428BFC `mov d0, (a0)`; DispatchOneEventForTask 0x48428C92 `mov d3, (0x14, a0)` (+3)
+#   +24  msg_event    u32            DispatchEventForTask 0x48428BFC `mov d1, (a3)`; DispatchOneEventForTask 0x48428C92 `mov a3, (0x18, a0)` (+3)
+#   +28  msg_param    u32            DispatchEventForTask 0x48428BFC `mov a0, (a2)`; DispatchOneEventForTask 0x48428C92 `mov a0, (0x1c, a1)` (+3)
+#   +32  call_obj     u32            SendEventForTask 0x4842850E `mov (0x20, a0), a3`; SendEventForTask 0x4842850E `mov a3, (0x20, a0)` (+3)
+#   +36  call_msg     u32            SendEventForTask 0x4842850E `mov (0x24, a0), a2`; SendEventForTask 0x4842850E `mov a2, (0x24, a0)` (+3)
+#   +40  call_param   u32            SendEventForTask 0x4842850E `mov (0x28, a1), a0`; SendEventForTask 0x4842850E `mov d0, (0x28, a0)` (+3)
+#   +44  q_buf        u32            PostEventForTask 0x4842859D `mov (0x2c, a0), a0`; PostEventForTask 0x4842859D `mov (0x2c, a0), d0` (+17)
+#   +48  key          s16            InitializeTaskTimer 0x4842990A `movhu d0, (0x30, a0)`; ApTimer 0x484299AF `movhu (0x30, a0), d0` (+10)
 #   +50  count        s16            InitializeTaskTimer 0x4842990A `movhu (0x32, a0), d1`; InitializeTaskTimer 0x4842990A `movhu (a1), d0` (+2)
-#   +52  index_       u32            InitializeTaskTimer 0x4842990A `mov (a0), a0`; InitializeTaskTimer 0x4842990A `mov (a3), a0` (+12)
-.macro REC_DeleteEventForTask_Table key=0, key_=0, key__=0, flag_id=0, flag_id_=0, x10, index=0, f16=0, f20=0, f24=0, f28=0, f32=0, f36=0, f40=0, Free_d1=0, key___=0, count=0, index_=0
-	.word	\key
-	.word	\key_
-	.word	\key__
-	.word	\flag_id
-	.word	\flag_id_
+#   +52  index        u32            InitializeTaskTimer 0x4842990A `mov (a0), a0`; InitializeTaskTimer 0x4842990A `mov (a3), a0` (+12)
+.macro AppTaskState q_rd=0, q_wr=0, q_size=0, msg_flag=0, lock_flag=0, x10, cur_class=0, main_obj=0, msg_obj=0, msg_event=0, msg_param=0, call_obj=0, call_msg=0, call_param=0, q_buf=0, key=0, count=0, index=0
+	.word	\q_rd
+	.word	\q_wr
+	.word	\q_size
+	.word	\msg_flag
+	.word	\lock_flag
 	.ascii	"\x10"
-	.long	\index
-	.long	\f16
-	.long	\f20
-	.long	\f24
-	.long	\f28
-	.long	\f32
-	.long	\f36
-	.long	\f40
-	.long	\Free_d1
-	.word	\key___
+	.long	\cur_class
+	.long	\main_obj
+	.long	\msg_obj
+	.long	\msg_event
+	.long	\msg_param
+	.long	\call_obj
+	.long	\call_msg
+	.long	\call_param
+	.long	\q_buf
+	.word	\key
 	.word	\count
-	.long	\index_
+	.long	\index
 .endm
 
 # REC_TableToneKeyMap_Records: 8-byte records (TableToneKeyMap_Records, 7 records); fields, and what reads them:

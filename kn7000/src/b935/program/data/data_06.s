@@ -6822,11 +6822,11 @@ GetColorMode_Var:	# u16, initial value of a RAM variable; read / written by GetC
 GetLcdMode_Var:	# u16, initial value of a RAM variable; read / written by GetLcdMode 0x48421D1C: `movhu (GetLcdMode_Var), d0`; SetLcdMode 0x48421D25: `movhu d0, (GetLcdMode_Var)`
 	.word	0
 
-DeleteEventForTask_Table:	# 4 x REC_DeleteEventForTask_Table (56 bytes each); read by ApTaskMain 0x484143A9 `movhu (6, a0), d0`; GuiTimerTick 0x484144B6 `call set_flg, 0, 0`; GuiTimerTick 0x484144B6 `movhu (6, a0), d0` (+175)
-	REC_DeleteEventForTask_Table	key__=1, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x50000, f32=0xFFFFFFFF, f36=0x50000, Free_d1=0x5002C044, key___=-1, count=1, index_=0x5002FC5C
-	REC_DeleteEventForTask_Table	key__=256, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x50000, f32=0xFFFFFFFF, f36=0x50000, Free_d1=0x5002C050, key___=-1, count=128, index_=0x5002FC74
-	REC_DeleteEventForTask_Table	key__=1024, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x50000, f32=0xFFFFFFFF, f36=0x50000, Free_d1=0x5002CC50, key___=-1, count=128, index_=0x50030874
-	REC_DeleteEventForTask_Table	key__=1, x10="\x00\x00", index=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x50000, f32=0xFFFFFFFF, f36=0x50000, Free_d1=0x5002FC50, key___=-1, count=1, index_=0x50031474
+DeleteEventForTask_Table:	# 4 x AppTaskState (56 bytes each); read by ApTaskMain 0x484143A9 `movhu (6, a0), d0`; GuiTimerTick 0x484144B6 `call set_flg, 0, 0`; GuiTimerTick 0x484144B6 `movhu (6, a0), d0` (+175)
+	AppTaskState	q_size=1, x10="\x00\x00", cur_class=0xFFFFFFFF, main_obj=0xFFFFFFFF, msg_obj=0xFFFFFFFF, msg_event=0x50000, call_obj=0xFFFFFFFF, call_msg=0x50000, q_buf=0x5002C044, key=-1, count=1, index=0x5002FC5C
+	AppTaskState	q_size=256, x10="\x00\x00", cur_class=0xFFFFFFFF, main_obj=0xFFFFFFFF, msg_obj=0xFFFFFFFF, msg_event=0x50000, call_obj=0xFFFFFFFF, call_msg=0x50000, q_buf=0x5002C050, key=-1, count=128, index=0x5002FC74
+	AppTaskState	q_size=1024, x10="\x00\x00", cur_class=0xFFFFFFFF, main_obj=0xFFFFFFFF, msg_obj=0xFFFFFFFF, msg_event=0x50000, call_obj=0xFFFFFFFF, call_msg=0x50000, q_buf=0x5002CC50, key=-1, count=128, index=0x50030874
+	AppTaskState	q_size=1, x10="\x00\x00", cur_class=0xFFFFFFFF, main_obj=0xFFFFFFFF, msg_obj=0xFFFFFFFF, msg_event=0x50000, call_obj=0xFFFFFFFF, call_msg=0x50000, q_buf=0x5002FC50, key=-1, count=1, index=0x50031474
 
 names_5000765C:
 	.long	Str_CHARA1
