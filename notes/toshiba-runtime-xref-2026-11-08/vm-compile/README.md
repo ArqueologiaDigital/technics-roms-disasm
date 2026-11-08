@@ -26,7 +26,9 @@ and Wine 10.0 (Debian 10.0~repack-6).  The objects are not committed (they are c
 SHA-256s are `../results/vm_objects.sha256`.  Every thc1 call prints `THC1-Warning-501: Illegal option` for each
 variable Wine adds to the environment (`WINEDATADIR=...`): cc900 hands thc1 its options through the environment, and
 thc1 ignores the ones it does not know.  Four compiles failed with a Wine client error (`../README.md` lists them).
-The results were scratch under `~/compartilhado/tmp/cc900-vm/` and are regenerable with the commands below.
+The outputs of all three runs are kept in the private repository `~/compartilhado/cc900-oracle/` (never pushed:
+they are Toshiba-generated), under `runs/2026-11-08-{1,2,3}-*`.  The VM itself is kept permanently in that
+repository's git-ignored `vm/` (Felipe, 2026-11-08).
 
 ## How it runs
 
@@ -56,10 +58,11 @@ bare file names into another.
 
 ## Setting it up (no root needed)
 
-QEMU is not installed system-wide; its Debian packages are unpacked into scratch:
+QEMU is not installed system-wide; its Debian packages are unpacked beside the VM.  This is how
+`~/compartilhado/cc900-oracle/vm/` was made, and how to remake it:
 
 ```sh
-mkdir -p ~/compartilhado/tmp/cc900-vm/debs && cd ~/compartilhado/tmp/cc900-vm/debs
+mkdir -p ~/compartilhado/cc900-oracle/vm/debs && cd ~/compartilhado/cc900-oracle/vm/debs
 apt-get download qemu-system-x86 qemu-system-common qemu-system-data qemu-utils seabios ipxe-qemu \
     libcapstone5 libpmem1 libfdt1 librdmacm1t64 libibverbs1 libslirp0 libvdeplug2t64 libaio1t64 libndctl6 libdaxctl1
 for d in *.deb; do dpkg -x "$d" ../qemu; done
@@ -73,7 +76,7 @@ The user needs read/write access to `/dev/kvm`.
 ## Running it
 
 ```sh
-W=~/compartilhado/tmp/cc900-vm/run1           # the VM's home: its disk overlay keeps Wine between runs
+W=~/compartilhado/cc900-oracle/vm/home        # the VM's home: its disk overlay keeps Wine between runs
 ./run_vm.sh $W sources-all-c.txt options-float.txt && mkdir -p $W/x2 && tar -xf $W/out/results.tar -C $W/x2
 ./run_vm.sh $W sources-all-c.txt options-xs.txt    && mkdir -p $W/x3 && tar -xf $W/out/results.tar -C $W/x3
 mkdir -p $W/xall && for d in $W/x2/* $W/x3/*; do ln -sfn "$d" $W/xall/; done
@@ -82,3 +85,6 @@ python3 -I -B summarize.py ../results/vm_compile.md
 ```
 
 `compare_vm.py` needs the linked ELFs of the byte-identical rebuilds (`make all`), like `../xref_runtime.py`.
+
+Then copy each run's `out/` contents, `job.log`, `sources.txt` and `options.txt` into a new
+`~/compartilhado/cc900-oracle/runs/<date>-<n>-<name>/` and commit them there (that repository's README).

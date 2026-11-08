@@ -2,14 +2,14 @@
 # Compile Toshiba library sources with the TLCS-900 C Compiler V4.23 inside a throwaway QEMU/KVM VM.
 #
 # usage: run_vm.sh WORK SOURCES OPTIONS
-#   WORK     scratch directory (under ~/compartilhado/tmp); holds the VM disk overlay, which is kept between runs so
+#   WORK     the VM's home (normally ~/compartilhado/cc900-oracle/vm/home); holds the disk overlay, kept between runs so
 #            Wine is installed only once, and out/ (results.tar, job.log, serial.log)
 #   SOURCES  file naming LIB/SRC files to compile, one per line
 #   OPTIONS  file of option sets, "label|cc900 flags" per line
 # Environment:
-#   QEMU_ROOT   a qemu-system-x86 / qemu-utils tree (default ~/compartilhado/tmp/cc900-vm/qemu, made with
+#   QEMU_ROOT   a qemu-system-x86 / qemu-utils tree (default ~/compartilhado/cc900-oracle/vm/qemu, made with
 #               `apt-get download` + `dpkg -x`, see README.md)
-#   BASE_IMAGE  Debian 13 generic cloud image (default ~/compartilhado/tmp/cc900-vm/debian-13-generic-amd64.qcow2)
+#   BASE_IMAGE  Debian 13 generic cloud image (default ~/compartilhado/cc900-oracle/vm/debian-13-generic-amd64.qcow2)
 #   T900        the V4.23 tree (default: upstream_repos devrs.com/ngpcbins, unpacked/zip/T900)
 #   PORT        host port for httpd.py (default 8931)
 #
@@ -18,8 +18,8 @@
 set -euo pipefail
 WORK=$(realpath "${1:?WORK}"); SOURCES=$(realpath "${2:?SOURCES}"); OPTIONS=$(realpath "${3:?OPTIONS}")
 HERE=$(dirname "$(realpath "$0")")
-QEMU_ROOT=${QEMU_ROOT:-$HOME/compartilhado/tmp/cc900-vm/qemu}
-BASE_IMAGE=${BASE_IMAGE:-$HOME/compartilhado/tmp/cc900-vm/debian-13-generic-amd64.qcow2}
+QEMU_ROOT=${QEMU_ROOT:-$HOME/compartilhado/cc900-oracle/vm/qemu}
+BASE_IMAGE=${BASE_IMAGE:-$HOME/compartilhado/cc900-oracle/vm/debian-13-generic-amd64.qcow2}
 T900=${T900:-$HOME/compartilhado/upstream_repos/file_archive/devrs.com/ngpcbins/unpacked/zip/T900}
 PORT=${PORT:-8931}
 export LD_LIBRARY_PATH=$QEMU_ROOT/usr/lib/x86_64-linux-gnu

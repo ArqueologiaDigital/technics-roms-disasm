@@ -203,15 +203,15 @@ start once phase 5 has decided the rules that its first functions exercise.
 - **Effort.**  Phase 3 is the large one: a second code generator, whose size is not known until the phase 0 spike.
   Phases 4 and 5 are bounded by how many rules the neighbours' differences turn out to need.
 
-## 7. Decisions for Felipe
+## 7. Decisions (Felipe, 2026-11-08: plan approved)
 
-| #  | decision                                                                                                                                                     | recommendation                                                                                                                       |
-|----|--------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------|
-| D1 | Where do the oracle's outputs (Toshiba-generated `.asm` / `.rel`) live?                                                                                      | a private git repository on the share, never pushed (for example `~/compartilhado/cc900-oracle/`), with their hashes in public notes |
-| D2 | Black-box only, or may thc1 / thc2 themselves be disassembled to learn their rules?                                                                          | black-box only.  It keeps the implementation clearly ours, and the oracle answers most questions                                     |
-| D3 | Flag names: `-mabi=cc900` and `-mcc900-compat=<personality>` / `-mcc900-opt=N` / `-mcc900-size`?                                                             | as proposed.  They name the toolchain being imitated, and they are clearly not clang's own `-O`                                      |
-| D4 | Is the backend meant for LLVM upstream one day?                                                                                                              | if so, keep the compat pipeline in its own files behind the attribute check (as planned), so it can stay out of tree                 |
-| D5 | May the oracle VM, its Debian image and Wine stay on the share permanently (about 3 GB in `~/compartilhado/tmp/cc900-vm/`, to move somewhere less volatile)? | yes; the README rebuilds it, but phase 1 runs it often                                                                               |
+| #  | question                                                                            | decision                                                                                                                                                                                                               |
+|----|-------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| D1 | Where do the oracle's outputs (Toshiba-generated `.asm` / `.rel`) live?             | in the private git repository `~/compartilhado/cc900-oracle/`, which has no remote and a `pre-push` hook that refuses; public notes cite those files by SHA-256.  Set up the same day, with V4.23 runs 1-3             |
+| D2 | Black-box only, or may thc1 / thc2 themselves be disassembled to learn their rules? | black-box only, for now; Felipe may reconsider it later                                                                                                                                                                |
+| D3 | Flag names                                                                          | as proposed: `-mabi=cc900`, `-mcc900-compat=<personality>`, `-mcc900-opt=N`, `-mcc900-size`                                                                                                                            |
+| D4 | Is the backend meant for LLVM upstream?                                             | yes.  So the compat pipeline stays in its own files behind the attribute check, and `-mabi=cc900` is written to upstream standards; whether the compat mode itself is proposed upstream is decided when the backend is |
+| D5 | May the oracle VM stay on the share permanently?                                    | yes.  It moved from `~/compartilhado/tmp/cc900-vm/` to `~/compartilhado/cc900-oracle/vm/` (git-ignored there), about 2.8 GB                                                                                            |
 
 ## 8. Working rules that apply
 
