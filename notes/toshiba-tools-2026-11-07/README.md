@@ -48,6 +48,16 @@ checked against the MSI's own MD5 table.  Among them are `bin/` (cc900, thc1/thc
 `lib/c900ml.lib` and `c900pic.lib`, the startup code in `custom/`, and the three manuals as PDF.  That makes the
 side lead below possible for v1.10's runtime as well as the kit CD's.
 
+An older one, TLCS-900 C Compiler V4.23 of 1998, was found the same day in community copies of SNK's Neo Geo Pocket
+Color SDK.  Each copy is a git repository of its own under `~/compartilhado/upstream_repos/file_archive/`, whose root
+commit is the download (upstream_repos README, commit d5f5829):
+- `devrs.com/ngpcbins/` (root `d5fbaa1`), the original;
+- `sebastianmihai.com/ngpc/` (root `1330e81`);
+- `franck.charlet.pagesperso-orange.fr/NGPC_SDK/` (root `d60d3c2`).
+
+None holds a kernel library either.  What its runtime shows about the firmware's compiler is in
+`../toshiba-runtime-xref-2026-11-08/README.md`, "The 1998 compiler (V4.23)".
+
 ## What would settle the hypothesis
 
 The object version, `SW96RN2-ZCC`, was licensed for free copying of its object code, so its kernel library may

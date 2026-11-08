@@ -2,7 +2,8 @@
 """Which Toshiba C-runtime library routines are in our ROM images, and under which of our labels?
 
 usage: python3 -I xref_runtime.py OUT.tsv
-Reads the two Toshiba libraries' versions (paths below; override with TOSHIBA_V110 / TOSHIBA_IDE), searches every
+Reads three builds of Toshiba's runtime (paths below; override with TOSHIBA_V423 / TOSHIBA_IDE / TOSHIBA_V110): the
+1998 V4.23 compiler's c900ml.lib (members assembled 1997-05-26), the 2003 kit-CD IDE's and the 2008 v1.10's.  It searches every
 image listed in IMAGES with lib_match.py's masked search, keeps a piece only when it has >= 6 distinct known byte
 values and at most 4 hits in an image (fill and tiny tables otherwise match everywhere), and names each hit from the
 image's linked ELF (llvm-nm): the label at that address, else nearest-label+offset.  The bytes searched are the
@@ -23,7 +24,9 @@ def _root():
 R = os.environ.get('TECHNICS_ROOT') or _root()   # the repository: two levels above notes/<topic>/, or the share's
 V110 = os.environ.get('TOSHIBA_V110', H + '/upstream_repos/file_archive/archive.org/ToshibaTLCS900CompilerV1.10/unpacked/msi/install-1033/TOSHIBA/T900/lib')
 IDE = os.environ.get('TOSHIBA_IDE', H + '/upstream_repos/file_archive/github.com/colinoflynn/Toshiba-TLCS-900-L-Resources/unpacked/toshiba-ide/install-1033/Toshiba/IDE/T900SK/lib')
-LIBS = [('v1.10 ml', V110 + '/c900ml.lib'), ('v1.10 pic', V110 + '/c900pic.lib'),
+V423 = os.environ.get('TOSHIBA_V423', H + '/upstream_repos/file_archive/devrs.com/ngpcbins/unpacked/zip/T900/LIB')
+LIBS = [('V4.23 ml', V423 + '/C900ML.LIB'),
+        ('v1.10 ml', V110 + '/c900ml.lib'), ('v1.10 pic', V110 + '/c900pic.lib'),
         ('IDE ml', IDE + '/c900ml.lib'), ('IDE pic', IDE + '/pic/c900pic.lib')]
 O = R + '/original_ROMs/'; RB = R + '/rebuilt_ROMs/'; W = R + '/wsa1/'
 IMAGES = [  # name, reference image, linked ELF of the byte-identical rebuild

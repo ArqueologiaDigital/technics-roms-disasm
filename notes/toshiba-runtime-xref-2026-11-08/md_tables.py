@@ -4,7 +4,8 @@
 usage: python3 -I md_tables.py XREF.resolved.tsv XREF.inferred.tsv [IMAGE ...]
 Prints, for each IMAGE (default: maincpu v10, subcpu v142, table data, hdae v2.06i, wsa1 prom_a), a table of exact
 hits (address, Toshiba name, length, our label, libraries, check) and one of names inferred from their calls.
-Then a count table: hits per image and which library builds they match.
+Then a count table: hits per image, by which of the three runtime builds (1997 = V4.23, 2003 = kit-CD IDE,
+2008 = v1.10) they match.
 """
 import sys, collections
 
@@ -32,10 +33,13 @@ def main():
             print(table(rows, ('address', 'Toshiba name', 'referenced from', 'our label')) + '\n')
     c = collections.OrderedDict()
     for r in res:
-        ide, v = 'IDE' in r[5], 'v1.10' in r[5]
         k = c.setdefault(r[0], collections.Counter())
-        k['both' if ide and v else 'IDE only' if ide else 'v1.10 only'] += 1
-    print(table([(k, sum(v.values()), v['both'], v['IDE only'], v['v1.10 only']) for k, v in c.items()],
-                ('image', 'exact hits', 'both builds', 'IDE (2003) only', 'v1.10 (2008) only')))
+        k[frozenset(b for b, tag in BUILDS if tag in r[5])] += 1
+    print(table([(im, sum(v.values())) + tuple(v[p] for p in PATTERNS) for im, v in c.items()],
+                ('image', 'exact hits') + tuple(' + '.join(b for b, _ in BUILDS if b in p) or 'none' for p in PATTERNS)))
+
+BUILDS = [('1997', 'V4.23'), ('2003', 'IDE'), ('2008', 'v1.10')]   # (year the members were built, library tag)
+PATTERNS = [frozenset(x) for x in (('1997', '2003', '2008'), ('1997', '2003'), ('2003', '2008'), ('1997', '2008'),
+                                   ('1997',), ('2003',), ('2008',))]
 
 main()
