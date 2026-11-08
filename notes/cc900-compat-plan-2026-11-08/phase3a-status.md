@@ -36,7 +36,11 @@ no options, as are the loop shapes and the leaf-function register allocator.
    - `while` loops rotated (`j L27` to the test at the bottom, `-XS`) and `*p++` folded into `(XDE+:2)`;
    - more variables in registers (IZ pushed in a leaf function), in a different order.
    `codegen.py` reads `opt` (`F.opt`) for the rules it has; these are next.  (`score.py` takes the level from the
-   oracle directory name.)
+   oracle directory name.)  The targeted run `2026-11-08-9-micro-optloops` (`opt_loops.c`) pins down the loop
+   shapes; `regalloc_notes.md`, "Loops at -O3 -XS", lists them.  What it does not pin down is the register choice
+   for counters, bounds, bases and offsets: that needs a model of the allocator (priority order and per-role
+   register preferences, fitted to the oracle) rather than more hand-written rules, so as not to overfit the
+   examples.
 4. **Then the library**: score the model on the 123 `LIB/SRC` files against run `2026-11-08-5` (V4.23 at
    `-O3 -XS -DFLOAT`), which also brings the pairs check (`pairs_check.py`) into reach for the model's output once
    it can be assembled.
