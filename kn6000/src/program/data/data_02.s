@@ -937,7 +937,7 @@ func_4C1674C2_Table_p8_1:	# REC_func_4C1674C2_Table_p8 (280 bytes)
 # census: opaque -- unknown-dump: 40 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x276B88, 0x276BB0
 
-func_4C1674C2_Table:	# 2 x REC_func_4C1674C2_Table (32 bytes each); read by func_4C16722B 0x4C16722B `mov (8, a0), a0`; FlashSectorErase 0x4C1672A1 `mov (8, a0), a0`; func_4C1672FF 0x4C1672FF `mov (8, a0), a0` (+13)
+func_4C1674C2_Table:	# 2 x REC_func_4C1674C2_Table (32 bytes each); read by FlashToggleWait 0x4C16722B `mov (8, a0), a0`; FlashSectorErase 0x4C1672A1 `mov (8, a0), a0`; FlashSectorCopyOut 0x4C1672FF `mov (8, a0), a0` (+13)
 	REC_func_4C1674C2_Table	key=4, key_=8777, f4=35, x6="\x00\x00", memcpy_d1=func_4C1674C2_Table_p8_0, x12=" MBM29LV160B    \x00\x00\x00\x00"
 	REC_func_4C1674C2_Table	key=31, key_=192, f4=40, x6="\x00\x00", memcpy_d1=func_4C1674C2_Table_p8_1, x12=" AT49BV16X4     \x00\x00\x00\x00"
 
@@ -956,17 +956,17 @@ Str_MTrk:	.asciz "MTrk"
 Str_COM_ESEQ:	.asciz "COM-ESEQ"
 	.align	4, 0xFF	# pad after Str_COM_ESEQ
 
-func_4C168301_Table:	# 12 x u8, 0..255; read by func_4C168301_entry : `movbu	(a1), d0`
+DpSmfChannelEvent_Table:	# 12 x u8, 0..255; read by DpSmfChannelEvent_entry : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255
-func_4C16838A_Table:	# 12 x u8, 0..255; read by func_4C16838A_entry : `movbu	(a1), d0`
+DpEseqEventDispatch_Table:	# 12 x u8, 0..255; read by DpEseqEventDispatch_entry : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255
-func_4C1685D4_Table:	# 8 x u8, 0..255; read by func_4C1685D4_entry : `movbu	(a1), d0`
+DpEseqChannelEvent_Table:	# 8 x u8, 0..255; read by DpEseqChannelEvent_entry : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 255, 255, 255
 func_4C168885_Table:	# 12 x u8, 0..255; read by func_4C168885_entry : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255
 func_4C168C0D_Table:	# 12 x u8, 0..255; read by func_4C168C0D_entry : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255
-func_4C168D51_Table:	# 32 x u8, 0..128; read by func_4C168D51_entry : `movbu	(a1), d0`
+DpMidiMsgOutUnmuted_Table:	# 32 x u8, 0..128; read by DpMidiMsgOutUnmuted_entry : `movbu	(a1), d0`
 	tab_u8	1, 0, 2, 0, 4, 0, 8, 0, 16, 0, 32, 0, 64, 0, 128, 0	# [0]
 	tab_u8	0, 1, 0, 2, 0, 4, 0, 8, 0, 16, 0, 32, 0, 64, 0, 128	# [16]
 func_4C168E95_Table:	# 32 x u8, 0..128; read by func_4C168E95 : `movbu	(a1), d0`
@@ -1003,8 +1003,8 @@ func_4C169ECC_Ldc_Table:	# 32 x u8, 0..128; read by func_4C169ECC : `movbu	(a1),
 	tab_u8	1, 0, 2, 0, 4, 0, 8, 0, 16, 0, 32, 0, 64, 0, 128, 0	# [0]
 	tab_u8	0, 1, 0, 2, 0, 4, 0, 8, 0, 16, 0, 32, 0, 64, 0, 128	# [16]
 
-func_4C16838A_entry_L32_Table:
-	.long	func_4C16838A_entry_L3f
+DpEseqEventDispatch_entry_L32_Table:
+	.long	DpEseqEventDispatch_entry_L3f
 	.long	loc_4C1683EA
 	.long	loc_4C168402
 	.long	loc_4C168407
@@ -1019,10 +1019,10 @@ func_4C16838A_entry_L32_Table:
 	.long	loc_4C1684EE
 	.long	loc_4C1684EE
 	.long	loc_4C1684BF
-	.long	func_4C16838A_entry_L147
+	.long	DpEseqEventDispatch_entry_L147
 
-cre_tsk_Impl_Table_11:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C3F66BF reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call cre_tsk, 0, 0`, +6 more calls); the layout cre_tsk_Impl 0x4C3F674B reads through its argument a0 (passed by cre_tsk_L3d 0x4C3F66FC `call cre_tsk_Impl_entry, [d2,d3,a2], 0x2c`)
-	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_4C16A13A, itskpri=3, x14="\x00\x00", stksz=3072
+cre_tsk_Impl_Table_11:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C3F66BF reads through its argument a0 (passed by GuiTaskObjectsCreate 0x4C0063D1 `call cre_tsk, 0, 0`, +6 more calls); the layout cre_tsk_Impl 0x4C3F674B reads through its argument a0 (passed by cre_tsk_L3d 0x4C3F66FC `call cre_tsk_Impl_entry, [d2,d3,a2], 0x2c`)
+	T_CTSK	tskatr="\x01\x00\x00\x00", task=DpSmf1ReaderTask, itskpri=3, x14="\x00\x00", stksz=3072
 
 cre_mbx_Impl_Table_2:	# 2 x u32, 0..0; read by cre_mbx_Impl 0x4C3F5298: `mov (a3), d2`
 	tab_u32	0, 0

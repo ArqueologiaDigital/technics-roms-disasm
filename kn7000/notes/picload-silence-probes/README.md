@@ -126,8 +126,8 @@ index drops the TYPE bits, so 0xC2 and the wire byte 0xD2 select the same latch)
 (`m3_watch.lua`, `runs/m3_watch_2.txt`): moving it on the home screen posts M3 id 0x701009 (panel
 event 0x1009) with the remapped value (0x19, 0x7F, 0x66 for adjuster 20, 100, 80) and sets neither
 0x8006 nor 0x8008; leaving DEMO (EXIT), the panel's re-send sets 0x8006 := 0x7F and 0x8008 := 0x66,
-the slider's current value.  That is `func_48454E3A`'s case for `func_48454D21() == 0`, which is the
-normal one: `func_48454D21` answers 0 in DEMO and, on a screen its title tables do not list, whenever
+the slider's current value.  That is `ApcSeqSliderRoute`'s case for `ApcSeqSliderOnSeq() == 0`, which is the
+normal one: `ApcSeqSliderOnSeq` answers 0 in DEMO and, on a screen its title tables do not list, whenever
 `GetSeqPlyPart()` is 0; it answers 1 when the sequencer has play parts (and on some SEQUENCER screens, by
 title), and then the roles swap
 (0x8008 := 0x7F, 0x8006 := the slider).  The firmware's parameter dump names the two (`PartParamDumpLine`,
@@ -135,7 +135,7 @@ title), and then the roles swap
 each 0..127.  This matches the manual (p. 56: the slider lowers the automatic accompaniment; p. 85: with a
 recorded performance playing, it lowers all the playback parts; MAX = their own settings, OFF = 0): the
 slider drives the APC level normally and the sequencer level while a song plays, and the other is held at
-127.  (Lane mn10300-data2's note read `func_48454D21` the other way round, "0 in DEMO mode or while the
+127.  (Lane mn10300-data2's note read `ApcSeqSliderOnSeq` the other way round, "0 in DEMO mode or while the
 sequencer plays"; the code returns 0 at its end when `GetSeqPlyPart()` is 0.)
 
 **The other continuous controls** (`m3_panelctl.lua`, `runs/m3_panelctl_1.txt`; frames injected into the

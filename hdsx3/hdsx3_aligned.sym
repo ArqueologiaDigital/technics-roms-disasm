@@ -4,6 +4,10 @@
 ; the aligned call sites (of which exact / skeleton anchors), up to three anchors, the
 ; two bodies' skeleton / strict similarity and the round; RAM rows: the aligned operands.
 ;
-; 2 routine names and 0 RAM names carried from KN7000 941; audit (names both give): 36 right, 0 wrong; RAM audit 0 right, 0 wrong
+; 6 routine names and 0 RAM names carried from KN7000 941; audit (names both give): 36 right, 0 wrong; RAM audit 0 right, 0 wrong
+0x97807E91  LibF64ToU32	; = KN7000 941 0x4C001412, same body (39 insns, 36 unmasked; 1 in A, 1 in B), 3 named callees or strings agree; round 1
 0x9780836B  PfParseSpec	; = KN7000 941 0x4C001EBB, callee at 1 aligned call sites (1 exact/skeleton) of vsprintf_core; body 0.98/0.98; round 1
+0x97808E3B  PfUlongToDigits	; = KN7000 941 0x4C00298B, callee at 1 aligned call sites (1 exact/skeleton) of PfFormatInteger; body 1.00/1.00; round 1
+0x97808EDE  PfUlongToDigitsB	; = KN7000 941 0x4C002A2E, callee at 1 aligned call sites (1 exact/skeleton) of PfFormatInteger; body 1.00/1.00; round 1
+0x9780900C  LibF64Neg	; = KN7000 941 0x4C002B5C, callee at 2 aligned call sites (2 exact/skeleton) of PfFloatToDigits; body 1.00/1.00; round 1
 0x9780A204  LibI16ToF64	; = KN7000 941 0x4C0019F2, same body (2 insns, 2 unmasked; 1 in A, 1 in B), 1 named callees or strings agree; round 1

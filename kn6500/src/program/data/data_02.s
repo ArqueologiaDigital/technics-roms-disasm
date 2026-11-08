@@ -954,7 +954,7 @@ func_4C167AB6_Table_p8_1:	# REC_func_4C167AB6_Table_p8 (280 bytes)
 # census: opaque -- unknown-dump: 40 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6500_program.rom", 0x277BEC, 0x277C14
 
-func_4C167AB6_Table:	# 2 x REC_func_4C167AB6_Table (32 bytes each); read by func_4C16781F 0x4C16781F `mov (8, a0), a0`; FlashSectorErase 0x4C167895 `mov (8, a0), a0`; func_4C1678F3 0x4C1678F3 `mov (8, a0), a0` (+13)
+func_4C167AB6_Table:	# 2 x REC_func_4C167AB6_Table (32 bytes each); read by FlashToggleWait 0x4C16781F `mov (8, a0), a0`; FlashSectorErase 0x4C167895 `mov (8, a0), a0`; FlashSectorCopyOut 0x4C1678F3 `mov (8, a0), a0` (+13)
 	REC_func_4C167AB6_Table	key=4, key_=8777, f4=35, x6="\x00\x00", memcpy_d1=func_4C167AB6_Table_p8_0, x12=" MBM29LV160B    \x00\x00\x00\x00"
 	REC_func_4C167AB6_Table	key=31, key_=192, f4=40, x6="\x00\x00", memcpy_d1=func_4C167AB6_Table_p8_1, x12=" AT49BV16X4     \x00\x00\x00\x00"
 
@@ -973,17 +973,17 @@ Str_MTrk:	.asciz "MTrk"
 Str_COM_ESEQ:	.asciz "COM-ESEQ"
 	.align	4, 0xFF	# pad after Str_COM_ESEQ
 
-func_4C1688FC_Table:	# 12 x u8, 0..255; read by func_4C1688FC_entry : `movbu	(a1), d0`
+DpSmfChannelEvent_Table:	# 12 x u8, 0..255; read by DpSmfChannelEvent_entry : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255
-func_4C168985_Table:	# 12 x u8, 0..255; read by func_4C168985_entry : `movbu	(a1), d0`
+DpEseqEventDispatch_Table:	# 12 x u8, 0..255; read by DpEseqEventDispatch_entry : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255
-func_4C168BCF_Table:	# 8 x u8, 0..255; read by func_4C168BCF_entry : `movbu	(a1), d0`
+DpEseqChannelEvent_Table:	# 8 x u8, 0..255; read by DpEseqChannelEvent_entry : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 255, 255, 255
 func_4C168E80_Table:	# 12 x u8, 0..255; read by func_4C168E80_entry : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255
 func_4C169208_Table:	# 12 x u8, 0..255; read by func_4C169208_entry : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255
-func_4C16934C_Table:	# 32 x u8, 0..128; read by func_4C16934C_entry : `movbu	(a1), d0`
+DpMidiMsgOutUnmuted_Table:	# 32 x u8, 0..128; read by DpMidiMsgOutUnmuted_entry : `movbu	(a1), d0`
 	tab_u8	1, 0, 2, 0, 4, 0, 8, 0, 16, 0, 32, 0, 64, 0, 128, 0	# [0]
 	tab_u8	0, 1, 0, 2, 0, 4, 0, 8, 0, 16, 0, 32, 0, 64, 0, 128	# [16]
 func_4C169490_Table:	# 32 x u8, 0..128; read by func_4C169490 : `movbu	(a1), d0`
@@ -1020,8 +1020,8 @@ func_4C16A4CF_Ldc_Table:	# 32 x u8, 0..128; read by func_4C16A4CF : `movbu	(a1),
 	tab_u8	1, 0, 2, 0, 4, 0, 8, 0, 16, 0, 32, 0, 64, 0, 128, 0	# [0]
 	tab_u8	0, 1, 0, 2, 0, 4, 0, 8, 0, 16, 0, 32, 0, 64, 0, 128	# [16]
 
-func_4C168985_entry_L32_Table:
-	.long	func_4C168985_entry_L3f
+DpEseqEventDispatch_entry_L32_Table:
+	.long	DpEseqEventDispatch_entry_L3f
 	.long	loc_4C1689E5
 	.long	loc_4C1689FD
 	.long	loc_4C168A02
@@ -1036,10 +1036,10 @@ func_4C168985_entry_L32_Table:
 	.long	loc_4C168AE9
 	.long	loc_4C168AE9
 	.long	loc_4C168ABA
-	.long	func_4C168985_entry_L147
+	.long	DpEseqEventDispatch_entry_L147
 
-cre_tsk_Impl_Table_11:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C38031F reads through its argument a0 (passed by func_4C0063D1 0x4C0063D1 `call cre_tsk, 0, 0`, +6 more calls); the layout cre_tsk_Impl 0x4C3803AB reads through its argument a0 (passed by cre_tsk_L3d 0x4C38035C `call cre_tsk_Impl_entry, [d2,d3,a2], 0x2c`)
-	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_4C16A73D, itskpri=3, x14="\x00\x00", stksz=3072
+cre_tsk_Impl_Table_11:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C38031F reads through its argument a0 (passed by GuiTaskObjectsCreate 0x4C0063D1 `call cre_tsk, 0, 0`, +6 more calls); the layout cre_tsk_Impl 0x4C3803AB reads through its argument a0 (passed by cre_tsk_L3d 0x4C38035C `call cre_tsk_Impl_entry, [d2,d3,a2], 0x2c`)
+	T_CTSK	tskatr="\x01\x00\x00\x00", task=DpSmf1ReaderTask, itskpri=3, x14="\x00\x00", stksz=3072
 
 cre_mbx_Impl_Table_2:	# 2 x u32, 0..0; read by cre_mbx_Impl 0x4C37EEF8: `mov (a3), d2`
 	tab_u32	0, 0
@@ -19033,7 +19033,7 @@ Str_Rx_SOF_Int:	.asciz "Rx SOF Int"
 # census: opaque -- unknown-dump: 13 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6500_program.rom", 0x2B26F3, 0x2B2700
 
-func_4C001885_Var:	# u32, a constant; read / written by func_4C001885 0x4C001885: `mov (func_4C001885_Var), a0`; func_4C00191A_entry_L3d 0x4C00195C: `mov (func_4C001885_Var), a1` ...
+LibCharToUpper_Var:	# u32, a constant; read / written by LibCharToUpper 0x4C001885: `mov (LibCharToUpper_Var), a0`; func_4C00191A_entry_L3d 0x4C00195C: `mov (LibCharToUpper_Var), a1` ...
 	.long	0x4c1768ac
 
 localeconv_Records:	# 1 x LconvMonetary (40 bytes each); read by localeconv 0x4C00246C `mov (0x10, a1), a0`; localeconv 0x4C00246C `mov (0x14, a1), a0`; localeconv 0x4C00246C `mov (0x18, a1), a0` (+12)
@@ -19360,7 +19360,7 @@ Pow10Table:	# the powers of ten 1e0 .. 1e308 (309 IEEE-754 doubles, lo word, hi 
 	.long	0x3CAC7436, 0x7FAC7B1F	# 1e307
 	.long	0x85EBC8A2, 0x7FE1CCF3	# 1e308
 
-func_4C004EA1_Table:	# 64 x u8, 0..63; read by func_4C004EA1_entry : `movbu	(a1), d0`; func_4C00534E_entry : `movbu	(a2), d0`
+JpegDecInit_Table:	# 64 x u8, 0..63; read by JpegDecInit_entry : `movbu	(a1), d0`; JpegDecReadDqt_entry : `movbu	(a2), d0`
 	tab_u8	0, 1, 8, 16, 9, 2, 3, 10, 17, 24, 32, 25, 18, 11, 4, 5	# [0]
 	tab_u8	12, 19, 26, 33, 40, 48, 41, 34, 27, 20, 13, 6, 7, 14, 21, 28	# [16]
 	tab_u8	35, 42, 49, 56, 57, 50, 43, 36, 29, 22, 15, 23, 30, 37, 44, 51	# [32]
@@ -27046,12 +27046,12 @@ func_4C0508F7_entry_L4_Records:	# 1 x RamTestByteRegion (12 bytes each); read by
 
 ptrs_4C2E5170:
 	.long	loc_4C05A723
-	.long	func_4C05A73D
-	.long	func_4C05A75A
+	.long	MemPadAllocPtrSet
+	.long	MemPadAllocFits
 	.long	loc_4C05A80B
-	.long	func_4C05A823
+	.long	MemPadRecDataSet
 
-func_4C05BB82_Table:	# 2 x u16, 0..18; read by func_4C05BB82 0x4C05BB82: `movhu (a0), d0`; func_4C05BB82_entry_L2f 0x4C05BBB6: `movhu (a0), d0` ...
+RhyStreamBeatsInsert_Table:	# 2 x u16, 0..18; read by RhyStreamBeatsInsert 0x4C05BB82: `movhu (a0), d0`; RhyStreamBeatsInsert_entry_L2f 0x4C05BBB6: `movhu (a0), d0` ...
 	tab_u16	18, 0
 
 Str_Technics_Rhythms:	.asciz "Technics Rhythms"
@@ -27074,17 +27074,17 @@ ptrs_4C2E51BC:
 	.long	loc_4C0578F9
 	.long	MemStyleVarRecDataSet
 
-func_4C05BB82_Table_2:	# 2 x u16, 0..60; read by func_4C05BB82 0x4C05BB82: `movhu (a0), d0`; func_4C05BB82_entry_L2f 0x4C05BBB6: `movhu (a0), d0` ...
+RhyStreamBeatsInsert_Table_2:	# 2 x u16, 0..60; read by RhyStreamBeatsInsert 0x4C05BB82: `movhu (a0), d0`; RhyStreamBeatsInsert_entry_L2f 0x4C05BBB6: `movhu (a0), d0` ...
 	tab_u16	60, 0
 
 Str_TPAD:	.asciz "TPAD"
 	.space	11, 0x00
 
-func_4C05A4F0_Block:	# 3 bytes, copied whole by func_4C05A4F0 0x4C05A4F0: memcpy(.., 3)
+MemPadAreaHeaderRestamp_Block:	# 3 bytes, copied whole by MemPadAreaHeaderRestamp 0x4C05A4F0: memcpy(.., 3)
 	tab_u8	0, 160, 0	# [0]
 # census: opaque -- unknown-dump: 3 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6500_program.rom", 0x2E51E7, 0x2E51EA
-func_4C05A4F0_Block_2:	# 26 bytes, copied whole by func_4C05A4F0 0x4C05A4F0: memcpy(.., 26)
+MemPadAreaHeaderRestamp_Block_2:	# 26 bytes, copied whole by MemPadAreaHeaderRestamp 0x4C05A4F0: memcpy(.., 26)
 	tab_u8	0, 3, 0, 96, 16, 6, 16, 2, 0, 2, 0, 15, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
 
@@ -38445,32 +38445,32 @@ ptrs_4C2F4A70:
 	.long	loc_4C07BAFE
 	.space	128, 0xFF
 
-func_4C07C326_entry_L35_Records_p0_0:	# REC_func_4C07C326_entry_L35_Records_p0 (128 bytes)
-	REC_func_4C07C326_entry_L35_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-func_4C07C326_entry_L35_Records_p0_1:	# REC_func_4C07C326_entry_L35_Records_p0 (128 bytes)
-	REC_func_4C07C326_entry_L35_Records_p0	x0="\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\n\x0B\x0C\x0D\x0E\x0F\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1A\x1B\x1C\x1D\x1E\x1F !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\x7F"
-func_4C07C326_entry_L35_Records_p0_2:	# REC_func_4C07C326_entry_L35_Records_p0 (128 bytes)
-	REC_func_4C07C326_entry_L35_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x19\x00\x1A\x1F\x1B\x0C\x0DSU\x06\x16\x1779;\x005Y4\x17(\x03\x04\x05$#&\x02\x18-\x03/\x040\x05%\x12\x13.13@]?\\`EopqrstgfK\x1C'\x00\x00Z[6lJION^_>\n\x0B\x07\x08\x09=<cba\x14,+hiEBACDdejkQPVW:GH\x15MLn\x1E\x1D\x0F)2\x00\x00 \x10\x11"
-func_4C07C326_entry_L35_Records_p0_3:	# REC_func_4C07C326_entry_L35_Records_p0 (128 bytes)
-	REC_func_4C07C326_entry_L35_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x19\x00\x1A\x1F\x1B\x0C\x0DSU\x06\x16\x1779;\x005Y4(&\x03\x04\x05$#'('-\x03/\x040\x05%\x12\x13.13@]?\\`EopqrstgfK\x1C\x02\x00\x00Z[6lJION^_>('\x07\x08\x09=<cba\x14,+hiEBACDdejkQPVW:GH\x15MLn\x1E\x1D\x0F)2\x00\x00 \x10\x11"
-func_4C07C326_entry_L35_Records_p0_4:	# REC_func_4C07C326_entry_L35_Records_p0 (128 bytes)
-	REC_func_4C07C326_entry_L35_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x19\x00\x1A\x1F\x1B\x0C\x0DSU\x06\x16\x1779;\x005Y4\n\x0B\x03\x04\x05$#&\x0B\x18-\x03/\x040\x05%\x12\x13.13@]?\\`EopqrstgfK\x1C'\x00\x00Z[6lJION^_>\n\x0B\x07\x08\x09=<cba\x14,+hiEBACDdejkQPVW:GH\x15MLn\x1E\x1D\x0F)2\x00\x00 \x10\x11"
-func_4C07C326_entry_L35_Records_p0_5:	# REC_func_4C07C326_entry_L35_Records_p0 (128 bytes)
-	REC_func_4C07C326_entry_L35_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00,-.+'\x00\x00\x003\x19(\x1D>bLf00de7/\x001\x00\x00\x00\x00)\x00`\x00&:a\x00*c[\\^]Z\x00YK\x00FWXUop\x00\x00\x00\x00\x00\x00\x00\x00mm\x00\x00\x00\x00\x00\x00\x00nn\x00\x00\x00\x00\x00\x00\x00\x00\x1Ag\x00\x00\x00H\x00D\x00\x00m\x00nn\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00_\x00\x00\x00\x00\x1B\x1B\x1C"
-func_4C07C326_entry_L35_Records_p0_6:	# REC_func_4C07C326_entry_L35_Records_p0 (128 bytes)
-	REC_func_4C07C326_entry_L35_Records_p0	x0="\x00\x00'!\"#\x15UVWST\x11\x12\x00x~\x7F01]r\x16\x17(\x0C\x0E\x10Dwv\x0F}~\x7F%$/&E y0_^)2+-3z4\x1E\x1CJ\x18<\x19o\x1AYXR75dcef:ipqMLCtsONlk`\x13\x1D\x14mn\x00\x1DHI86PQ9\\[ZghBA`aijKKu;<=>?@\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-func_4C07C326_entry_L35_Records_p0_7:	# REC_func_4C07C326_entry_L35_Records_p0 (128 bytes)
-	REC_func_4C07C326_entry_L35_Records_p0	x0="\x00\x00E!\"#\x15UVWVV\x11\x12\x00x~\x7F01]r\x16\x17(\x0C\x0E\x10Dwv\x0F}~\x7F%$/ &'y0_^)2+-3z4\x1E\x1CJ\x18<\x19o\x1AYXR75dcef:ipqMLCtsONlk`\x13\x1D\x14mn\x00\x1DHI86PQ9\\[ZghBA`aijKKu;<=>?@\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-func_4C07C326_entry_L35_Records_p0_8:	# REC_func_4C07C326_entry_L35_Records_p0 (128 bytes)
-	REC_func_4C07C326_entry_L35_Records_p0	x0="\x00\x00\x00!\"#\x15UVWST\x11\x12\x00x~\x7F01]r\x16\x17(\x0C\x0E\x10Dwv\x0F}~\x7F%$/&E y0_^)2+-3z4\x1E\x1CJ\x18<\x19o\x1AYXR75dcef:ipqMLCtsONlk`\x13\x1D\x14mn\x00\x1DHI86PQ9\\[ZghBA`aijKKu;<=>?@\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-func_4C07C326_entry_L35_Records_p0_9:	# REC_func_4C07C326_entry_L35_Records_p0 (128 bytes)
-	REC_func_4C07C326_entry_L35_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x18_~\x7F\x1A\x00\x00\x00\x00\x00\x00\x00\x00/\x13\x19+3\x12\x0F\x10\x11$ &\x00\x17\x00\x00\x00#\x00\x000\x00\x00\x00\x1B\x00\x00\x00\x00\x00f\x00>\x00d\x00\x00<\x1D\x00\x00\x00\x00\x00\x00\x00\x00AA?@;95687x-1\x1C4!\"\x1E`\x00\x00LLKLKBCBBCC\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-func_4C07C326_entry_L35_Records_p0_10:	# REC_func_4C07C326_entry_L35_Records_p0 (128 bytes)
-	REC_func_4C07C326_entry_L35_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x1E:\x180\x002\x1A\x0F}\x00\x00%$/&7 ABCDEFGHIJKLM5\x18;\x19o\x1A\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00pq\x00\x00\x00ts\x00\x0089\x00\x13\x007mn\x00\x1D\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x006\x00u\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-func_4C07C326_entry_L35_Records_p0_11:	# REC_func_4C07C326_entry_L35_Records_p0 (128 bytes)
-	REC_func_4C07C326_entry_L35_Records_p0	x0="\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\n\x0B\x0C\x0D\x0E\x0F\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1A\x1B\x1C\x1D\x1E\x1F !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\x7F"
+TableToneKeyMap_entry_L35_Records_p0_0:	# REC_TableToneKeyMap_entry_L35_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_entry_L35_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+TableToneKeyMap_entry_L35_Records_p0_1:	# REC_TableToneKeyMap_entry_L35_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_entry_L35_Records_p0	x0="\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\n\x0B\x0C\x0D\x0E\x0F\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1A\x1B\x1C\x1D\x1E\x1F !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\x7F"
+TableToneKeyMap_entry_L35_Records_p0_2:	# REC_TableToneKeyMap_entry_L35_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_entry_L35_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x19\x00\x1A\x1F\x1B\x0C\x0DSU\x06\x16\x1779;\x005Y4\x17(\x03\x04\x05$#&\x02\x18-\x03/\x040\x05%\x12\x13.13@]?\\`EopqrstgfK\x1C'\x00\x00Z[6lJION^_>\n\x0B\x07\x08\x09=<cba\x14,+hiEBACDdejkQPVW:GH\x15MLn\x1E\x1D\x0F)2\x00\x00 \x10\x11"
+TableToneKeyMap_entry_L35_Records_p0_3:	# REC_TableToneKeyMap_entry_L35_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_entry_L35_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x19\x00\x1A\x1F\x1B\x0C\x0DSU\x06\x16\x1779;\x005Y4(&\x03\x04\x05$#'('-\x03/\x040\x05%\x12\x13.13@]?\\`EopqrstgfK\x1C\x02\x00\x00Z[6lJION^_>('\x07\x08\x09=<cba\x14,+hiEBACDdejkQPVW:GH\x15MLn\x1E\x1D\x0F)2\x00\x00 \x10\x11"
+TableToneKeyMap_entry_L35_Records_p0_4:	# REC_TableToneKeyMap_entry_L35_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_entry_L35_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x19\x00\x1A\x1F\x1B\x0C\x0DSU\x06\x16\x1779;\x005Y4\n\x0B\x03\x04\x05$#&\x0B\x18-\x03/\x040\x05%\x12\x13.13@]?\\`EopqrstgfK\x1C'\x00\x00Z[6lJION^_>\n\x0B\x07\x08\x09=<cba\x14,+hiEBACDdejkQPVW:GH\x15MLn\x1E\x1D\x0F)2\x00\x00 \x10\x11"
+TableToneKeyMap_entry_L35_Records_p0_5:	# REC_TableToneKeyMap_entry_L35_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_entry_L35_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00,-.+'\x00\x00\x003\x19(\x1D>bLf00de7/\x001\x00\x00\x00\x00)\x00`\x00&:a\x00*c[\\^]Z\x00YK\x00FWXUop\x00\x00\x00\x00\x00\x00\x00\x00mm\x00\x00\x00\x00\x00\x00\x00nn\x00\x00\x00\x00\x00\x00\x00\x00\x1Ag\x00\x00\x00H\x00D\x00\x00m\x00nn\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00_\x00\x00\x00\x00\x1B\x1B\x1C"
+TableToneKeyMap_entry_L35_Records_p0_6:	# REC_TableToneKeyMap_entry_L35_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_entry_L35_Records_p0	x0="\x00\x00'!\"#\x15UVWST\x11\x12\x00x~\x7F01]r\x16\x17(\x0C\x0E\x10Dwv\x0F}~\x7F%$/&E y0_^)2+-3z4\x1E\x1CJ\x18<\x19o\x1AYXR75dcef:ipqMLCtsONlk`\x13\x1D\x14mn\x00\x1DHI86PQ9\\[ZghBA`aijKKu;<=>?@\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+TableToneKeyMap_entry_L35_Records_p0_7:	# REC_TableToneKeyMap_entry_L35_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_entry_L35_Records_p0	x0="\x00\x00E!\"#\x15UVWVV\x11\x12\x00x~\x7F01]r\x16\x17(\x0C\x0E\x10Dwv\x0F}~\x7F%$/ &'y0_^)2+-3z4\x1E\x1CJ\x18<\x19o\x1AYXR75dcef:ipqMLCtsONlk`\x13\x1D\x14mn\x00\x1DHI86PQ9\\[ZghBA`aijKKu;<=>?@\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+TableToneKeyMap_entry_L35_Records_p0_8:	# REC_TableToneKeyMap_entry_L35_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_entry_L35_Records_p0	x0="\x00\x00\x00!\"#\x15UVWST\x11\x12\x00x~\x7F01]r\x16\x17(\x0C\x0E\x10Dwv\x0F}~\x7F%$/&E y0_^)2+-3z4\x1E\x1CJ\x18<\x19o\x1AYXR75dcef:ipqMLCtsONlk`\x13\x1D\x14mn\x00\x1DHI86PQ9\\[ZghBA`aijKKu;<=>?@\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+TableToneKeyMap_entry_L35_Records_p0_9:	# REC_TableToneKeyMap_entry_L35_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_entry_L35_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x18_~\x7F\x1A\x00\x00\x00\x00\x00\x00\x00\x00/\x13\x19+3\x12\x0F\x10\x11$ &\x00\x17\x00\x00\x00#\x00\x000\x00\x00\x00\x1B\x00\x00\x00\x00\x00f\x00>\x00d\x00\x00<\x1D\x00\x00\x00\x00\x00\x00\x00\x00AA?@;95687x-1\x1C4!\"\x1E`\x00\x00LLKLKBCBBCC\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+TableToneKeyMap_entry_L35_Records_p0_10:	# REC_TableToneKeyMap_entry_L35_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_entry_L35_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x1E:\x180\x002\x1A\x0F}\x00\x00%$/&7 ABCDEFGHIJKLM5\x18;\x19o\x1A\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00pq\x00\x00\x00ts\x00\x0089\x00\x13\x007mn\x00\x1D\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x006\x00u\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+TableToneKeyMap_entry_L35_Records_p0_11:	# REC_TableToneKeyMap_entry_L35_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_entry_L35_Records_p0	x0="\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\n\x0B\x0C\x0D\x0E\x0F\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1A\x1B\x1C\x1D\x1E\x1F !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\x7F"
 
-func_4C07C326_entry_L67_Table:	# 128 x u8, 0..112; read by func_4C07C326_entry : `movbu	(d0, a0), d0`
+TableToneKeyMap_entry_L67_Table:	# 128 x u8, 0..112; read by TableToneKeyMap_entry : `movbu	(d0, a0), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0	# [16]
 	tab_u8	18, 0, 52, 36, 24, 53, 38, 49, 38, 36, 37, 24, 11, 38, 44, 38	# [32]
@@ -38661,7 +38661,7 @@ func_4C089C38_Table:	# 75 x u8, 9..162; read by func_4C089C38 0x4C089C38: `movbu
 	tab_u8	98, 96, 94, 92, 90, 88, 86, 84, 82, 80, 78, 76, 74, 72, 70, 68	# [32]
 	tab_u8	66, 64, 62, 60, 58, 56, 54, 52, 50, 48, 46, 44, 42, 40, 38, 36	# [48]
 	tab_u8	34, 32, 30, 28, 26, 24, 22, 20, 18, 14, 9	# [64]
-func_4C0805AE_Table:	# 2 x u8, 248..255; read by func_4C0805AE_entry : `movbu	(d2, a0), d0`; func_4C0836BE_entry : `movbu	(d0, a2), d0` ...
+func_4C0805AE_Table:	# 2 x u8, 248..255; read by TgTableKeyOffRelease : `movbu	(d0, a0), d0`; func_4C0805AE_entry : `movbu	(d2, a0), d0` ...
 	tab_u8	255, 248
 func_4C0805AE_Table_2:	# 99 x u8, 4..241; read by func_4C0805AE 0x4C0805AE: `movbu (func_4C0805AE_Table_2), d0`
 	tab_u8	241, 237, 233, 231, 229, 227, 225, 222, 218, 214, 210, 208, 206, 204, 202, 200	# [0]
@@ -39018,7 +39018,7 @@ func_4C03CE9C_entry_L9d_Selected_3:
 	.long	0xffffff, 0x702032, loc_4C0AD00A
 	.long	0xffffff, 0x708000, loc_4C13AAE8
 	.long	0xffffff, 0x702004, func_4C06FE10
-	.long	0xffffff, 0x708000, func_4C1618E9
+	.long	0xffffff, 0x708000, StylCnvDiskPresentHook
 	.long	0xffffff, 0x7020a8, loc_4C0FDCE5
 	.long	0xffffff, 0x702083, loc_4C0FDD4A
 	.long	0xffffff, 0x700000, func_4C0FDD70

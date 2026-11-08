@@ -44,11 +44,11 @@ and the IC25 latch is not modelled.  Nothing was changed in kn7000_mame.
 `0x48451649` is 941's `func_484516EC`, now **`KeyZoneNoteResolve`** in 941 (and 935, `0x484516AA`, by port)
 and in 893 (`kn7000_b893_own.sym`).  The key-bed router calls it for each zone a key sounds in.  It
 copies the key and velocity, checks the zone, and reads the zone's part and that part's SOUND.  A TABLE
-tone (a kit: `func_48449207` = 2) has its key mapped through `func_48449462` when M3 0x2025 is 1.  Any
-other sound gets TRANSPOSE (M3 0x000003 - 64, when M3 0x2013 is 1) plus `func_48451060(8, zone)`.  893's
+tone (a kit: `SoundKindGet` = 2) has its key mapped through `TableToneKeyMap` when M3 0x2025 is 1.  Any
+other sound gets TRANSPOSE (M3 0x000003 - 64, when M3 0x2013 is 1) plus `KeyZoneParamGet(8, zone)`.  893's
 edit: its TABLE-tone test is a call of **`SoundTableKeyMapOn`** (893 `0x4845027B` = 941 `0x484502BD`, the
 same code, also named now; 941 inlines it).  A kit with M3 0x2025 not 1 therefore gets TRANSPOSE in 893,
-while 941 and 935 leave its key alone.  `func_48449207` and `func_48449462` keep their `func_` names,
+while 941 and 935 leave its key alone.  `SoundKindGet` and `TableToneKeyMap` keep their `func_` names,
 because data labels are derived from them (`func_48449462_Records`, `_Table`).  Those labels belong to
 the data regeneration (lane mn10300-data4's `gen_data_s.py`).  The names proposed for them are
 `SoundKindGet` and `TableToneKeyMap`.
@@ -64,7 +64,7 @@ soft keys, and then name 893's two edited routines from their places in that fam
 
 The custom-sound block (`03custm3` slot 7) is a **TABLE tone**.  The tone library takes the block as the
 part's tone record.  Its 0x27-byte header is the tone head: the name, class 0x40, the **key map** byte
-`+0x11` (0..6, read by `func_48449462`), and 21 unread bytes, identical to 20 of the table flash's kits.
+`+0x11` (0..6, read by `TableToneKeyMap`), and 21 unread bytes, identical to 20 of the table flash's kits.
 The 128 references are **one per note** (`TgNoteOnTableTone`).  A voice record's **`+0x0D` bits 0 / 2**
 enable its two layers.  `src/customdata/` spells the header with the new `CSOUND_HEAD` macro
 (`tools/gen_customdata_s.py`), and `make verify-customdata` reproduces all nine banks.  Details and the

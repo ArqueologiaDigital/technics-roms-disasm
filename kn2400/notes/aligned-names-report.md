@@ -1,19 +1,20 @@
 # kn2400: KN7000 941 names carried along aligned call sites and RAM operands
 
-- routine names carried: 249, 61 of them by mapped operands (rounds: 195, 36, 17, 0, 0, 0, 1, 0, 0, 0, 0)
-- routine pairs both images leave unnamed, accepted by the same rule as anchors: 3186
+- routine names carried: 1629, 733 of them by mapped operands (rounds: 1213, 308, 78, 13, 9, 1, 2, 5, 0, 0, 0)
+- routine pairs both images leave unnamed, accepted by the same rule as anchors: 2366
 - accepted pairs that a later round gave a rival: 0
-- audit, callees both images name: 674 right, 3 wrong (of them paired by operand pointers alone: 19 right, 0 wrong; pairs by table words alone are audited below)
-- paired data tables: {'audit: named word, table passes without it, right': 1684, 'audit: named word, table passes without it, wrong': 5, 'tables refused (named words disagree, or too few agree)': 2807, 'tables used': 90}
-- routine names carried on pointer supports alone (an operand or a table word): 6
-- audit, same-body routines B names already, picked by mapped operands: 201 right, 0 wrong
-- RAM address pairs: 3147: 2284 by aligned operands (of 2292 B addresses seen in them), 863 between two of one delta (runs; the premise on the voted pairs: 1900 right, 2 wrong); named from A: 8; RAM audit 15 right, 0 wrong
+- audit, callees both images name: 1107 right, 3 wrong (of them paired by operand pointers alone: 20 right, 0 wrong; pairs by table words alone are audited below)
+- paired data tables: {'audit: named word, table passes without it, right': 2068, 'audit: named word, table passes without it, wrong': 5, 'tables refused (named words disagree, or too few agree)': 2908, 'tables used': 126}
+- routine names carried on pointer supports alone (an operand or a table word): 21
+- audit, same-body routines B names already, picked by mapped operands: 518 right, 0 wrong
+- RAM address pairs: 3355: 2528 by aligned operands (of 2540 B addresses seen in them), 827 between two of one delta (runs; the premise on the voted pairs: 2140 right, 2 wrong); named from A: 9; RAM audit 15 right, 0 wrong
 - not carried (last reason per call-site pair):
-  -   3186 A's callee is unnamed too (the pair anchors the next round)
-  -    202 A's callee is unnamed too
-  -     22 one aligned call site only
-  -     11 the bodies' callees or strings disagree
-  -     11 body skeleton similarity below 0.6
+  -   2366 A's callee is unnamed too (the pair anchors the next round)
+  -    167 A's callee is unnamed too
+  -     68 one aligned call site only
+  -     15 body skeleton similarity below 0.6
+  -     12 the bodies' callees or strings disagree
+  -      1 the name is taken in B
 
 Audit, wrong pairs (B name, B address, A name, A address, call sites):
 

@@ -120,7 +120,7 @@ byte for byte the head of 20 of the table flash's 52 TABLE tones (its kits), Sta
 entry at `+0x27 + note * 3`, so the 128 references are **one per MIDI note**.  It also tests the voice
 record's `+0x0D`: bit 0 stages layer 0 and bit 2 layer 1.  The user kit's 128 records hold 0x01 (121),
 0x05 (3) and 0x21 (4), and the archive's 1,618 records hold the same values plus 0x25.  The head's `+0x11`
-is the **key map**: `func_48449462` reads tone record `+0x11` (through `func_484495E8`), and when it is
+is the **key map**: `TableToneKeyMap` reads tone record `+0x11` (through `func_484495E8`), and when it is
 below 7 it maps a played key through one of the seven tables `func_48449462_Records`.  This happens
 only when M3 0x2025 is 1, for `KeyZoneNoteResolve` 0x484516EC.  The factory kits use 0..6, and the User
 Kit uses 1, like Standard Kit1.  The other 21 head bytes (lane kn7000-ic21, 2026-11-07, read in MAME while

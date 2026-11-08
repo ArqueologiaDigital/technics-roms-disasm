@@ -383,23 +383,23 @@ data_4870423C:
 # census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x30423C, 0x30424C
 
-func_4840DDB1_Table:	# 64 x u8, 0..63; read by func_4840DDB1_entry 0x4840D61D: `movbu  (a2), d0`; func_4840EAA5_entry 0x4840E721: `movbu  (a1), d0` ...
+JpegEncWriteDqt_Table:	# 64 x u8, 0..63; read by JpegEncWriteDqt_entry 0x4840DDB1: `movbu  (a2), d0`; JpegDecInit_entry 0x4840EAA5: `movbu  (a1), d0` ...
 	tab_u8	0, 1, 8, 16, 9, 2, 3, 10, 17, 24, 32, 25, 18, 11, 4, 5	# [0]
 	tab_u8	12, 19, 26, 33, 40, 48, 41, 34, 27, 20, 13, 6, 7, 14, 21, 28	# [16]
 	tab_u8	35, 42, 49, 56, 57, 50, 43, 36, 29, 22, 15, 23, 30, 37, 44, 51	# [32]
 	tab_u8	58, 59, 52, 45, 38, 31, 39, 46, 53, 60, 61, 54, 47, 55, 62, 63	# [48]
 
-func_4840DE66_Table:	# 2 x REC_func_4840DE66_Table (16 bytes each); read by func_4840DE66 0x4840DE66 `movbu (a0), d0`; func_4840DE66 0x4840DE66 `movbu (a2), d0`; func_4840DE66 0x4840DE66 `movbu (a3), d0`
-	REC_func_4840DE66_Table	x1="\x01\x05\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00"
-	REC_func_4840DE66_Table	x1="\x03\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00"
-func_4840DE66_Records:	# 2 x REC_func_4840DE66_Records (16 bytes each); read by func_4840DE66 0x4840DE66 `movbu (a0), d0`; func_4840DE66 0x4840DE66 `movbu (a2), d0`; func_4840DE66 0x4840DE66 `movbu (a3), d0`
-	REC_func_4840DE66_Records	x1="\x02\x01\x03\x03\x02\x04\x03\x05\x05\x04\x04\x00\x00\x01}"
-	REC_func_4840DE66_Records	x1="\x02\x01\x02\x04\x04\x03\x04\x07\x05\x04\x04\x00\x01\x02w"
+JpegEncWriteDht_Table:	# 2 x REC_JpegEncWriteDht_Table (16 bytes each); read by JpegEncWriteDht 0x4840DE66 `movbu (a0), d0`; JpegEncWriteDht 0x4840DE66 `movbu (a2), d0`; JpegEncWriteDht 0x4840DE66 `movbu (a3), d0`
+	REC_JpegEncWriteDht_Table	x1="\x01\x05\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00"
+	REC_JpegEncWriteDht_Table	x1="\x03\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00"
+JpegEncWriteDht_Records:	# 2 x REC_JpegEncWriteDht_Records (16 bytes each); read by JpegEncWriteDht 0x4840DE66 `movbu (a0), d0`; JpegEncWriteDht 0x4840DE66 `movbu (a2), d0`; JpegEncWriteDht 0x4840DE66 `movbu (a3), d0`
+	REC_JpegEncWriteDht_Records	x1="\x02\x01\x03\x03\x02\x04\x03\x05\x05\x04\x04\x00\x00\x01}"
+	REC_JpegEncWriteDht_Records	x1="\x02\x01\x02\x04\x04\x03\x04\x07\x05\x04\x04\x00\x01\x02w"
 
-func_4840DE66_Table_2:	# 32 x u8, 0..11; read by func_4840DE66 0x4840DE66: `movbu (a2), d0`; func_4840E651 0x4840E651: `movbu (a0), d0`
+JpegEncWriteDht_Table_2:	# 32 x u8, 0..11; read by JpegEncWriteDht 0x4840DE66: `movbu (a2), d0`; JpegHuffMakeCodes 0x4840E651: `movbu (a0), d0`
 	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 0, 0, 0	# [0]
 	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 0, 0, 0	# [16]
-func_4840E651_Table:	# 512 x u8, 0..250; read by func_4840DE66 0x4840DE66: `movbu (a2), d0`; func_4840E651 0x4840E651: `movbu (a0), d0`
+JpegHuffMakeCodes_Table:	# 512 x u8, 0..250; read by JpegEncWriteDht 0x4840DE66: `movbu (a2), d0`; JpegHuffMakeCodes 0x4840E651: `movbu (a0), d0`
 	tab_u8	1, 2, 3, 0, 4, 17, 5, 18, 33, 49, 65, 6, 19, 81, 97, 7	# [0]
 	tab_u8	34, 113, 20, 50, 129, 145, 161, 8, 35, 66, 177, 193, 21, 82, 209, 240	# [16]
 	tab_u8	36, 51, 98, 114, 130, 9, 10, 22, 23, 24, 25, 26, 37, 38, 39, 40	# [32]
@@ -433,9 +433,9 @@ func_4840E651_Table:	# 512 x u8, 0..250; read by func_4840DE66 0x4840DE66: `movb
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [480]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [496]
 
-func_4840D7B5_Records:	# 2 x REC_func_4840D7B5_Records (64 bytes each); read by func_4840D7B5 0x4840D7B5 `movbu (a1), d0`
-	REC_func_4840D7B5_Records	index=16, x1="\x0B\n\x10\x18(3=\x0C\x0C\x0E\x13\x1A:<7\x0E\x0D\x10\x18(9E8\x0E\x11\x16\x1D3WP>\x12\x16%8DmgM\x18#7@Qhq\\1@NWgyxeH\\_bpdgc"
-	REC_func_4840D7B5_Records	index=17, x1="\x12\x18/cccc\x12\x15\x1ABcccc\x18\x1A8ccccc/Bcccccccccccccccccccccccccccccccccccccc"
+JpegEncTablesInit_Records:	# 2 x REC_JpegEncTablesInit_Records (64 bytes each); read by JpegEncTablesInit 0x4840D7B5 `movbu (a1), d0`
+	REC_JpegEncTablesInit_Records	index=16, x1="\x0B\n\x10\x18(3=\x0C\x0C\x0E\x13\x1A:<7\x0E\x0D\x10\x18(9E8\x0E\x11\x16\x1D3WP>\x12\x16%8DmgM\x18#7@Qhq\\1@NWgyxeH\\_bpdgc"
+	REC_JpegEncTablesInit_Records	index=17, x1="\x12\x18/cccc\x12\x15\x1ABcccc\x18\x1A8ccccc/Bcccccccccccccccccccccccccccccccccccccc"
 
 ptrs_4870456C:
 	.long	func_4841023B
@@ -13884,13 +13884,13 @@ data_4872A815:
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x32A815, 0x32A818
 
 ptrs_4872A818:
-	.long	func_484386C5
-	.long	func_484386DF
-	.long	func_484386FC
-	.long	func_484387AD
-	.long	func_484387C5
+	.long	MemPadAllocPtrGet
+	.long	MemPadAllocPtrSet
+	.long	MemPadAllocFits
+	.long	MemPadRecData
+	.long	MemPadRecDataSet
 
-func_48439B24_Table:	# 2 x u16, 0..18; read by func_48439B24 0x48439B24: `movhu (a0), d0`; func_48439CCA 0x48439CCA: `movhu (a0), d0` ...
+RhyStreamBeatsInsert_Table:	# 2 x u16, 0..18; read by RhyStreamBeatsInsert 0x48439B24: `movhu (a0), d0`; RhyStreamBytesDelete 0x48439CCA: `movhu (a0), d0` ...
 	tab_u16	18, 0
 
 Str_Technics_Rhythms:	.asciz "Technics Rhythms"
@@ -13913,17 +13913,17 @@ ptrs_4872A864:
 	.long	MemStyleVarRecData
 	.long	MemStyleVarRecDataSet
 
-func_48439B24_Table_2:	# 2 x u16, 0..60; read by func_48439B24 0x48439B24: `movhu (a0), d0`; func_48439BD4 0x48439BD4: `movhu (a2), d0` ...
+RhyStreamBeatsInsert_Table_2:	# 2 x u16, 0..60; read by RhyStreamBeatsInsert 0x48439B24: `movhu (a0), d0`; func_48439BD4 0x48439BD4: `movhu (a2), d0` ...
 	tab_u16	60, 0
 
 Str_TPAD:	.asciz "TPAD"
 	.space	11, 0x00
 
-func_48438492_Block:	# 3 bytes, copied whole by func_48438492 0x48438492: memcpy(.., 3)
+MemPadAreaHeaderRestamp_Block:	# 3 bytes, copied whole by MemPadAreaHeaderRestamp 0x48438492: memcpy(.., 3)
 	tab_u8	0, 160, 0	# [0]
 # census: opaque -- unknown-dump: 3 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x32A88F, 0x32A892
-func_48438492_Block_2:	# 26 bytes, copied whole by func_48438492 0x48438492: memcpy(.., 26)
+MemPadAreaHeaderRestamp_Block_2:	# 26 bytes, copied whole by MemPadAreaHeaderRestamp 0x48438492: memcpy(.., 26)
 	tab_u8	0, 3, 0, 96, 16, 6, 16, 2, 0, 2, 0, 15, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
 
@@ -22180,32 +22180,32 @@ ptrs_48732758:
 	.long	loc_48448BF8
 	.space	128, 0xFF
 
-func_48449451_Records_p0_0:	# REC_func_48449451_Records_p0 (128 bytes)
-	REC_func_48449451_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-func_48449451_Records_p0_1:	# REC_func_48449451_Records_p0 (128 bytes)
-	REC_func_48449451_Records_p0	x0="\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\n\x0B\x0C\x0D\x0E\x0F\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1A\x1B\x1C\x1D\x1E\x1F !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\x7F"
-func_48449451_Records_p0_2:	# REC_func_48449451_Records_p0 (128 bytes)
-	REC_func_48449451_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x19\x00\x1A\x1F\x1B\x0C\x0DSU\x06\x16\x1779;\x005Y4\x17(\x03\x04\x05$#&\x02\x18-\x03/\x040\x05%\x12\x13.13@]?\\`EopqrstgfK\x1C'\x00\x00Z[6lJION^_>\n\x0B\x07\x08\x09=<cba\x14,+hiEBACDdejkQPVW:GH\x15MLn\x1E\x1D\x0F)2\x00\x00 \x10\x11"
-func_48449451_Records_p0_3:	# REC_func_48449451_Records_p0 (128 bytes)
-	REC_func_48449451_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x19\x00\x1A\x1F\x1B\x0C\x0DSU\x06\x16\x1779;\x005Y4(&\x03\x04\x05$#'('-\x03/\x040\x05%\x12\x13.13@]?\\`EopqrstgfK\x1C\x02\x00\x00Z[6lJION^_>('\x07\x08\x09=<cba\x14,+hiEBACDdejkQPVW:GH\x15MLn\x1E\x1D\x0F)2\x00\x00 \x10\x11"
-func_48449451_Records_p0_4:	# REC_func_48449451_Records_p0 (128 bytes)
-	REC_func_48449451_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x19\x00\x1A\x1F\x1B\x0C\x0DSU\x06\x16\x1779;\x005Y4\n\x0B\x03\x04\x05$#&\x0B\x18-\x03/\x040\x05%\x12\x13.13@]?\\`EopqrstgfK\x1C'\x00\x00Z[6lJION^_>\n\x0B\x07\x08\x09=<cba\x14,+hiEBACDdejkQPVW:GH\x15MLn\x1E\x1D\x0F)2\x00\x00 \x10\x11"
-func_48449451_Records_p0_5:	# REC_func_48449451_Records_p0 (128 bytes)
-	REC_func_48449451_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00,-.+'\x00\x00\x003\x19(\x1D>bLf00de7/\x001\x00\x00\x00\x00)\x00`\x00&:a\x00*c[\\^]Z\x00YK\x00FWXUop\x00\x00\x00\x00\x00\x00\x00\x00mm\x00\x00\x00\x00\x00\x00\x00nn\x00\x00\x00\x00\x00\x00\x00\x00\x1Ag\x00\x00\x00H\x00D\x00\x00m\x00nn\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00_\x00\x00\x00\x00\x1B\x1B\x1C"
-func_48449451_Records_p0_6:	# REC_func_48449451_Records_p0 (128 bytes)
-	REC_func_48449451_Records_p0	x0="\x00\x00'!\"#\x15UVWST\x11\x12\x00x~\x7F01]r\x16\x17(\x0C\x0E\x10Dwv\x0F}~\x7F%$/&E y0_^)2+-3z4\x1E\x1CJ\x18<\x19o\x1AYXR75dcef:ipqMLCtsONlk`\x13\x1D\x14mn\x00\x1DHI86PQ9\\[ZghBA`aijKKu;<=>?@\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-func_48449451_Records_p0_7:	# REC_func_48449451_Records_p0 (128 bytes)
-	REC_func_48449451_Records_p0	x0="\x00\x00E!\"#\x15UVWVV\x11\x12\x00x~\x7F01]r\x16\x17(\x0C\x0E\x10Dwv\x0F}~\x7F%$/ &'y0_^)2+-3z4\x1E\x1CJ\x18<\x19o\x1AYXR75dcef:ipqMLCtsONlk`\x13\x1D\x14mn\x00\x1DHI86PQ9\\[ZghBA`aijKKu;<=>?@\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-func_48449451_Records_p0_8:	# REC_func_48449451_Records_p0 (128 bytes)
-	REC_func_48449451_Records_p0	x0="\x00\x00\x00!\"#\x15UVWST\x11\x12\x00x~\x7F01]r\x16\x17(\x0C\x0E\x10Dwv\x0F}~\x7F%$/&E y0_^)2+-3z4\x1E\x1CJ\x18<\x19o\x1AYXR75dcef:ipqMLCtsONlk`\x13\x1D\x14mn\x00\x1DHI86PQ9\\[ZghBA`aijKKu;<=>?@\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-func_48449451_Records_p0_9:	# REC_func_48449451_Records_p0 (128 bytes)
-	REC_func_48449451_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x18_~\x7F\x1A\x00\x00\x00\x00\x00\x00\x00\x00/\x13\x19+3\x12\x0F\x10\x11$ &\x00\x17\x00\x00\x00#\x00\x000\x00\x00\x00\x1B\x00\x00\x00\x00\x00f\x00>\x00d\x00\x00<\x1D\x00\x00\x00\x00\x00\x00\x00\x00AA?@;95687x-1\x1C4!\"\x1E`\x00\x00LLKLKBCBBCC\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-func_48449451_Records_p0_10:	# REC_func_48449451_Records_p0 (128 bytes)
-	REC_func_48449451_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x1E:\x180\x002\x1A\x0F}\x00\x00%$/&7 ABCDEFGHIJKLM5\x18;\x19o\x1A\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00pq\x00\x00\x00ts\x00\x0089\x00\x13\x007mn\x00\x1D\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x006\x00u\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-func_48449451_Records_p0_11:	# REC_func_48449451_Records_p0 (128 bytes)
-	REC_func_48449451_Records_p0	x0="\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\n\x0B\x0C\x0D\x0E\x0F\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1A\x1B\x1C\x1D\x1E\x1F !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\x7F"
+TableToneKeyMap_Records_p0_0:	# REC_TableToneKeyMap_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+TableToneKeyMap_Records_p0_1:	# REC_TableToneKeyMap_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_Records_p0	x0="\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\n\x0B\x0C\x0D\x0E\x0F\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1A\x1B\x1C\x1D\x1E\x1F !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\x7F"
+TableToneKeyMap_Records_p0_2:	# REC_TableToneKeyMap_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x19\x00\x1A\x1F\x1B\x0C\x0DSU\x06\x16\x1779;\x005Y4\x17(\x03\x04\x05$#&\x02\x18-\x03/\x040\x05%\x12\x13.13@]?\\`EopqrstgfK\x1C'\x00\x00Z[6lJION^_>\n\x0B\x07\x08\x09=<cba\x14,+hiEBACDdejkQPVW:GH\x15MLn\x1E\x1D\x0F)2\x00\x00 \x10\x11"
+TableToneKeyMap_Records_p0_3:	# REC_TableToneKeyMap_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x19\x00\x1A\x1F\x1B\x0C\x0DSU\x06\x16\x1779;\x005Y4(&\x03\x04\x05$#'('-\x03/\x040\x05%\x12\x13.13@]?\\`EopqrstgfK\x1C\x02\x00\x00Z[6lJION^_>('\x07\x08\x09=<cba\x14,+hiEBACDdejkQPVW:GH\x15MLn\x1E\x1D\x0F)2\x00\x00 \x10\x11"
+TableToneKeyMap_Records_p0_4:	# REC_TableToneKeyMap_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x19\x00\x1A\x1F\x1B\x0C\x0DSU\x06\x16\x1779;\x005Y4\n\x0B\x03\x04\x05$#&\x0B\x18-\x03/\x040\x05%\x12\x13.13@]?\\`EopqrstgfK\x1C'\x00\x00Z[6lJION^_>\n\x0B\x07\x08\x09=<cba\x14,+hiEBACDdejkQPVW:GH\x15MLn\x1E\x1D\x0F)2\x00\x00 \x10\x11"
+TableToneKeyMap_Records_p0_5:	# REC_TableToneKeyMap_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00,-.+'\x00\x00\x003\x19(\x1D>bLf00de7/\x001\x00\x00\x00\x00)\x00`\x00&:a\x00*c[\\^]Z\x00YK\x00FWXUop\x00\x00\x00\x00\x00\x00\x00\x00mm\x00\x00\x00\x00\x00\x00\x00nn\x00\x00\x00\x00\x00\x00\x00\x00\x1Ag\x00\x00\x00H\x00D\x00\x00m\x00nn\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00_\x00\x00\x00\x00\x1B\x1B\x1C"
+TableToneKeyMap_Records_p0_6:	# REC_TableToneKeyMap_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_Records_p0	x0="\x00\x00'!\"#\x15UVWST\x11\x12\x00x~\x7F01]r\x16\x17(\x0C\x0E\x10Dwv\x0F}~\x7F%$/&E y0_^)2+-3z4\x1E\x1CJ\x18<\x19o\x1AYXR75dcef:ipqMLCtsONlk`\x13\x1D\x14mn\x00\x1DHI86PQ9\\[ZghBA`aijKKu;<=>?@\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+TableToneKeyMap_Records_p0_7:	# REC_TableToneKeyMap_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_Records_p0	x0="\x00\x00E!\"#\x15UVWVV\x11\x12\x00x~\x7F01]r\x16\x17(\x0C\x0E\x10Dwv\x0F}~\x7F%$/ &'y0_^)2+-3z4\x1E\x1CJ\x18<\x19o\x1AYXR75dcef:ipqMLCtsONlk`\x13\x1D\x14mn\x00\x1DHI86PQ9\\[ZghBA`aijKKu;<=>?@\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+TableToneKeyMap_Records_p0_8:	# REC_TableToneKeyMap_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_Records_p0	x0="\x00\x00\x00!\"#\x15UVWST\x11\x12\x00x~\x7F01]r\x16\x17(\x0C\x0E\x10Dwv\x0F}~\x7F%$/&E y0_^)2+-3z4\x1E\x1CJ\x18<\x19o\x1AYXR75dcef:ipqMLCtsONlk`\x13\x1D\x14mn\x00\x1DHI86PQ9\\[ZghBA`aijKKu;<=>?@\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+TableToneKeyMap_Records_p0_9:	# REC_TableToneKeyMap_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x18_~\x7F\x1A\x00\x00\x00\x00\x00\x00\x00\x00/\x13\x19+3\x12\x0F\x10\x11$ &\x00\x17\x00\x00\x00#\x00\x000\x00\x00\x00\x1B\x00\x00\x00\x00\x00f\x00>\x00d\x00\x00<\x1D\x00\x00\x00\x00\x00\x00\x00\x00AA?@;95687x-1\x1C4!\"\x1E`\x00\x00LLKLKBCBBCC\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+TableToneKeyMap_Records_p0_10:	# REC_TableToneKeyMap_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x1E:\x180\x002\x1A\x0F}\x00\x00%$/&7 ABCDEFGHIJKLM5\x18;\x19o\x1A\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00pq\x00\x00\x00ts\x00\x0089\x00\x13\x007mn\x00\x1D\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x006\x00u\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+TableToneKeyMap_Records_p0_11:	# REC_TableToneKeyMap_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_Records_p0	x0="\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\n\x0B\x0C\x0D\x0E\x0F\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1A\x1B\x1C\x1D\x1E\x1F !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\x7F"
 
-func_48449451_Table:	# 128 x u8, 0..112; read by func_48449451_entry 0x48449385: `movbu  (d0, a0), d0`
+TableToneKeyMap_Table:	# 128 x u8, 0..112; read by TableToneKeyMap_entry 0x48449451: `movbu  (d0, a0), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0	# [16]
 	tab_u8	18, 0, 52, 36, 24, 53, 38, 49, 38, 36, 37, 24, 11, 38, 44, 38	# [32]
@@ -22216,20 +22216,20 @@ func_48449451_Table:	# 128 x u8, 0..112; read by func_48449451_entry 0x48449385:
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [112]
 
 # 1 records of 12 bytes up to the end marker (+8, 32 bits) that M3HookDispatch 0x4C0216FD: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
-func_4C0216FD_Selected_0:
+M3HookDispatch_Selected_0:
 	.long	0xff00, 0xd000, TempoSyncSetDispatch
 	.long	0x0, 0x0, 0x0	# end
 # 0 records of 12 bytes up to the end marker (+8, 32 bits) that M3HookDispatch 0x4C0216FD: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
-func_4C0216FD_Selected_1:
+M3HookDispatch_Selected_1:
 	.long	0x0, 0x0, 0x0	# end
 # 0 records of 12 bytes up to the end marker (+8, 32 bits) that M3HookDispatch 0x4C0216FD: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
-func_4C0216FD_Selected_2:
+M3HookDispatch_Selected_2:
 	.long	0x0, 0x0, 0x0	# end
 # 8 records of 12 bytes up to the end marker (+8, 32 bits) that M3HookDispatch 0x4C0216FD: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
-func_4C0216FD_Selected_3:
+M3HookDispatch_Selected_3:
 	.long	0xff0000, 0x700000, PlugInCallSlot10
 	.long	0xff0000, 0x700000, func_48582CDF
-	.long	0xff0000, 0x700000, func_484A592D
+	.long	0xff0000, 0x700000, TestPageM3Dispatch
 	.long	0xff00, 0x2000, func_4846AB55
 	.long	0xff00, 0x2000, TempoSyncSetDispatch
 	.long	0xffffff, 0x702040, func_48454FC1
@@ -22237,17 +22237,17 @@ func_4C0216FD_Selected_3:
 	.long	0xff0000, 0x700000, loc_4854BB24
 	.long	0x0, 0x0, 0x0	# end
 # 1 records of 12 bytes up to the end marker (+8, 32 bits) that M3HookDispatch 0x4C0216FD: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
-func_4C0216FD_Selected_4:
+M3HookDispatch_Selected_4:
 	.long	0xff, 0x79, 0x4c01d056
 	.long	0x0, 0x0, 0x0	# end
 # 0 records of 12 bytes up to the end marker (+8, 32 bits) that M3HookDispatch 0x4C0216FD: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
-func_4C0216FD_Selected_5:
+M3HookDispatch_Selected_5:
 	.long	0x0, 0x0, 0x0	# end
 # 0 records of 12 bytes up to the end marker (+8, 32 bits) that M3HookDispatch 0x4C0216FD: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
-func_4C0216FD_Selected_6:
+M3HookDispatch_Selected_6:
 	.long	0x0, 0x0, 0x0	# end
 # 0 records of 12 bytes up to the end marker (+8, 32 bits) that M3HookDispatch 0x4C0216FD: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
-func_4C0216FD_Selected_7:
+M3HookDispatch_Selected_7:
 	.long	0x0, 0x0, 0x0	# end
 # 12 records of 12 bytes up to the end marker (+8, 32 bits) that func_4C0217BB 0x4C0217BB: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
 func_4C0217BB_Selected_0:
@@ -22256,7 +22256,7 @@ func_4C0217BB_Selected_0:
 	.long	0xffff00, 0xc000, 0x4c02133e
 	.long	0xff0000, 0x0, 0x4c023c5f
 	.long	0xff0000, 0x0, func_4844D793
-	.long	0xff0000, 0x0, func_48472AEC
+	.long	0xff0000, 0x0, TechniChordParamHook
 	.long	0xff0000, 0x0, func_484517E5
 	.long	0xff0000, 0x0, func_484B2638
 	.long	0xff0000, 0x0, SndSetupPowerOnInit
@@ -22273,7 +22273,7 @@ func_4C0217BB_Selected_1:
 # 9 records of 12 bytes up to the end marker (+8, 32 bits) that func_4C0217BB 0x4C0217BB: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
 func_4C0217BB_Selected_2:
 	.long	0xff0000, 0x600000, 0x4c01e884
-	.long	0xffffff, 0x600000, func_48472AEC
+	.long	0xffffff, 0x600000, TechniChordParamHook
 	.long	0xffffff, 0x600010, func_48454EA2
 	.long	0xffffff, 0x600012, func_4845D17D
 	.long	0xffffff, 0x600011, func_4845D233
@@ -22284,13 +22284,13 @@ func_4C0217BB_Selected_2:
 	.long	0x0, 0x0, 0x0	# end
 # 26 records of 12 bytes up to the end marker (+8, 32 bits) that func_4C0217BB 0x4C0217BB: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
 func_4C0217BB_Selected_3:
-	.long	0xff0000, 0x700000, func_484A283D
+	.long	0xff0000, 0x700000, TestCtrlM3Handler
 	.long	0xffffff, 0x7020a6, 0x4c01e884
 	.long	0xffffff, 0x7020a1, 0x4c0237ac
 	.long	0xffffff, 0x702032, func_485164B6
 	.long	0xffffff, 0x708000, func_4851B1F7
 	.long	0xffffff, 0x702004, func_48498183
-	.long	0xffffff, 0x708000, func_484796FB
+	.long	0xffffff, 0x708000, StylCnvDiskPresentHook
 	.long	0xffffff, 0x7020a8, func_4856D2F3
 	.long	0xffffff, 0x702083, func_4856D358
 	.long	0xffffff, 0x700000, func_4856D37E
@@ -22313,7 +22313,7 @@ func_4C0217BB_Selected_3:
 	.long	0x0, 0x0, 0x0	# end
 # 3 records of 12 bytes up to the end marker (+8, 32 bits) that func_4C0217BB 0x4C0217BB: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
 func_4C0217BB_Selected_4:
-	.long	0xffffff, 0x900000, func_484A2BCC
+	.long	0xffffff, 0x900000, MidiIoTestM3Handler
 	.long	0xff0000, 0x900000, 0x4c023c5f
 	.long	0xffffff, 0x900000, SoundEditSelEventHandler
 	.long	0x0, 0x0, 0x0	# end
@@ -26522,34 +26522,34 @@ func_484375D9_Table:	# 1035 x u16, 0..33511; read by func_484375D9 0x484375D9: `
 	tab_u16	2, 25, 1	# [1032]
 	.align	4, 0xFF	# pad after func_484375D9_Table
 
-func_484373A6_Records:	# 27 x REC_func_484373A6_Records (44 bytes each); read by func_484373A6 0x484373A6 `call strcpy_entry, [a2], 4`; func_4843751B 0x4843751B `mov (d1, a0), d0`
-	REC_func_484373A6_Records	"     EFFECT     \x00\x00\x00\x00", 881, 629, 375, 376, 296, 552	# [0]
-	REC_func_484373A6_Records	"      POP       \x00\x00\x00\x00", 261, 517, 773, 1029, 366, 622
-	REC_func_484373A6_Records	"   SWING ROCK   \x00\x00\x00\x00", 262, 518, 1030, 774, 365, 621
-	REC_func_484373A6_Records	"  ROCK & ROLL   \x00\x00\x00\x00", 260, 533, 525, 522, 313, 569
-	REC_func_484373A6_Records	"     DANCE      \x00\x00\x00\x00", 784, 1040, 1296, 1552, 314, 570
-	REC_func_484373A6_Records	"      FUNK      \x00\x00\x00\x00", 272, 273, 274, 276, 315, 571
-	REC_func_484373A6_Records	"    LATIN 1     \x00\x00\x00\x00", 310, 566, 306, 305, 317, 573
-	REC_func_484373A6_Records	"    LATIN 2     \x00\x00\x00\x00", 311, 567, 561, 304, 318, 574
-	REC_func_484373A6_Records	"  BALLAD 12/8   \x00\x00\x00\x00", 324, 580, 1091, 835, 299, 555	# [8]
-	REC_func_484373A6_Records	"   BALLAD 4/4   \x00\x00\x00\x00", 1097, 841, 585, 582, 300, 556
-	REC_func_484373A6_Records	"    SHOWBIZ     \x00\x00\x00\x00", 1116, 845, 1603, 579, 298, 554
-	REC_func_484373A6_Records	"    BIGBAND     \x00\x00\x00\x00", 1316, 548, 804, 1060, 316, 572
-	REC_func_484373A6_Records	"   JAZZ COMBO   \x00\x00\x00\x00", 289, 547, 549, 288, 361, 617
-	REC_func_484373A6_Records	"TRADITIONAL 4/4 \x00\x00\x00\x00", 799, 542, 287, 543, 302, 558
-	REC_func_484373A6_Records	"TRADITIONAL 12/8\x00\x00\x00\x00", 286, 798, 1054, 1310, 364, 620
-	REC_func_484373A6_Records	"    COUNTRY     \x00\x00\x00\x00", 1383, 1127, 359, 615, 360, 616
-	REC_func_484373A6_Records	"   BLUEGRASS    \x00\x00\x00\x00", 1126, 1382, 1638, 1894, 363, 619	# [16]
-	REC_func_484373A6_Records	"     GOSPEL     \x00\x00\x00\x00", 782, 526, 271, 527, 319, 575
-	REC_func_484373A6_Records	"   TRAD WALTZ   \x00\x00\x00\x00", 284, 540, 285, 796, 303, 559
-	REC_func_484373A6_Records	"  SWING WALTZ   \x00\x00\x00\x00", 1052, 1308, 1053, 1565, 362, 618
-	REC_func_484373A6_Records	"  USER BANK 1   \x00\x00\x00\x00", 1048576, 1048832, 1049088, 1049344, 1049600, 1049856
-	REC_func_484373A6_Records	"  USER BANK 2   \x00\x00\x00\x00", 1048577, 1048833, 1049089, 1049345, 1049601, 1049857
-	REC_func_484373A6_Records	"  USER BANK 3   \x00\x00\x00\x00", 1048578, 1048834, 1049090, 1049346, 1049602, 1049858
-	REC_func_484373A6_Records	" COMPILE BANK 1 \x00\x00\x00\x00", 1048575, 1048575, 1048575, 1048575, 1048575, 1048575
-	REC_func_484373A6_Records	" COMPILE BANK 2 \x00\x00\x00\x00", 1048575, 1048575, 1048575, 1048575, 1048575, 1048575	# [24]
-	REC_func_484373A6_Records	" CONTROL PRESET \x00\x00\x00\x00", 1048575, 1048575, 1048575, 1048575, 1048575, 1048575
-	REC_func_484373A6_Records	"     CUSTOM     \x00\x00\x00\x00", 2097152, 2097408, 2097664, 2097920, 2098176, 2098432
+PadBankNameGet_Records:	# 27 x REC_PadBankNameGet_Records (44 bytes each); read by PadBankNameGet 0x484373A6 `call strcpy_entry, [a2], 4`; PadIdFromBankSlot 0x4843751B `mov (d1, a0), d0`
+	REC_PadBankNameGet_Records	"     EFFECT     \x00\x00\x00\x00", 881, 629, 375, 376, 296, 552	# [0]
+	REC_PadBankNameGet_Records	"      POP       \x00\x00\x00\x00", 261, 517, 773, 1029, 366, 622
+	REC_PadBankNameGet_Records	"   SWING ROCK   \x00\x00\x00\x00", 262, 518, 1030, 774, 365, 621
+	REC_PadBankNameGet_Records	"  ROCK & ROLL   \x00\x00\x00\x00", 260, 533, 525, 522, 313, 569
+	REC_PadBankNameGet_Records	"     DANCE      \x00\x00\x00\x00", 784, 1040, 1296, 1552, 314, 570
+	REC_PadBankNameGet_Records	"      FUNK      \x00\x00\x00\x00", 272, 273, 274, 276, 315, 571
+	REC_PadBankNameGet_Records	"    LATIN 1     \x00\x00\x00\x00", 310, 566, 306, 305, 317, 573
+	REC_PadBankNameGet_Records	"    LATIN 2     \x00\x00\x00\x00", 311, 567, 561, 304, 318, 574
+	REC_PadBankNameGet_Records	"  BALLAD 12/8   \x00\x00\x00\x00", 324, 580, 1091, 835, 299, 555	# [8]
+	REC_PadBankNameGet_Records	"   BALLAD 4/4   \x00\x00\x00\x00", 1097, 841, 585, 582, 300, 556
+	REC_PadBankNameGet_Records	"    SHOWBIZ     \x00\x00\x00\x00", 1116, 845, 1603, 579, 298, 554
+	REC_PadBankNameGet_Records	"    BIGBAND     \x00\x00\x00\x00", 1316, 548, 804, 1060, 316, 572
+	REC_PadBankNameGet_Records	"   JAZZ COMBO   \x00\x00\x00\x00", 289, 547, 549, 288, 361, 617
+	REC_PadBankNameGet_Records	"TRADITIONAL 4/4 \x00\x00\x00\x00", 799, 542, 287, 543, 302, 558
+	REC_PadBankNameGet_Records	"TRADITIONAL 12/8\x00\x00\x00\x00", 286, 798, 1054, 1310, 364, 620
+	REC_PadBankNameGet_Records	"    COUNTRY     \x00\x00\x00\x00", 1383, 1127, 359, 615, 360, 616
+	REC_PadBankNameGet_Records	"   BLUEGRASS    \x00\x00\x00\x00", 1126, 1382, 1638, 1894, 363, 619	# [16]
+	REC_PadBankNameGet_Records	"     GOSPEL     \x00\x00\x00\x00", 782, 526, 271, 527, 319, 575
+	REC_PadBankNameGet_Records	"   TRAD WALTZ   \x00\x00\x00\x00", 284, 540, 285, 796, 303, 559
+	REC_PadBankNameGet_Records	"  SWING WALTZ   \x00\x00\x00\x00", 1052, 1308, 1053, 1565, 362, 618
+	REC_PadBankNameGet_Records	"  USER BANK 1   \x00\x00\x00\x00", 1048576, 1048832, 1049088, 1049344, 1049600, 1049856
+	REC_PadBankNameGet_Records	"  USER BANK 2   \x00\x00\x00\x00", 1048577, 1048833, 1049089, 1049345, 1049601, 1049857
+	REC_PadBankNameGet_Records	"  USER BANK 3   \x00\x00\x00\x00", 1048578, 1048834, 1049090, 1049346, 1049602, 1049858
+	REC_PadBankNameGet_Records	" COMPILE BANK 1 \x00\x00\x00\x00", 1048575, 1048575, 1048575, 1048575, 1048575, 1048575
+	REC_PadBankNameGet_Records	" COMPILE BANK 2 \x00\x00\x00\x00", 1048575, 1048575, 1048575, 1048575, 1048575, 1048575	# [24]
+	REC_PadBankNameGet_Records	" CONTROL PRESET \x00\x00\x00\x00", 1048575, 1048575, 1048575, 1048575, 1048575, 1048575
+	REC_PadBankNameGet_Records	"     CUSTOM     \x00\x00\x00\x00", 2097152, 2097408, 2097664, 2097920, 2098176, 2098432
 
 StyleNumToBankSlotLUT:	# 2048 x u16, 0..34687; read by ResolveStyleId 0x48435B22: `movhu  (d0, a1), d2`
 	tab_u16	33536, 33281, 33282, 33282, 3075, 33157, 33882, 32776, 3081, 33289, 32776, 33163	# [0]
@@ -26724,7 +26724,7 @@ StyleNumToBankSlotLUT:	# 2048 x u16, 0..34687; read by ResolveStyleId 0x48435B22
 	tab_u16	33132, 33132, 33518, 33263, 33392, 33777, 33394, 33392, 33396, 33396, 33396, 33396	# [2028]
 	tab_u16	33400, 33145, 33146, 33146, 33916, 33533, 33918, 2573	# [2040]
 
-GenreStyleTable:	# 16 x GenreStyleEntry (24 bytes each); read by GetGenreName 0x48435A8E `call memcpy_entry, [a2,a3], 8`; GetGenreStyleCount 0x48435AC8 `movbu (0x11, a0), d0`; func_48435AEE 0x48435AEE `mov (0x14, a0), a0` (+3)
+GenreStyleTable:	# 16 x GenreStyleEntry (24 bytes each); read by GetGenreName 0x48435A8E `call memcpy_entry, [a2,a3], 8`; GetGenreStyleCount 0x48435AC8 `movbu (0x11, a0), d0`; GetGenreStyleId 0x48435AEE `mov (0x14, a0), a0` (+3)
 	GenreStyleEntry	name="   8&16 BEAT    ", x16="\x00", style_count=10, x18="\x00\x00", styles=func_4844D793_Records+256	# [0]
 	GenreStyleEntry	name="   ROCK & POP   ", x16="\x00", style_count=16, x18="\x00\x00", styles=func_4844D793_Records+296
 	GenreStyleEntry	name="     BALLAD     ", x16="\x00", style_count=16, x18="\x00\x00", styles=func_4844D793_Records+360
@@ -26744,15 +26744,15 @@ GenreStyleTable:	# 16 x GenreStyleEntry (24 bytes each); read by GetGenreName 0x
 
 GenreCount:	# u16, a constant; read / written by GetGenreName 0x48435A8E: `movhu (GenreCount), d3`; GetGenreStyleCount 0x48435AC8: `movhu (GenreCount), d2` ...
 	.word	16
-StyleFlatOrdinalBuilder_Var:	# s16, a constant; read / written by StyleFlatOrdinalBuilder 0x4843FAFC: `movhu (StyleFlatOrdinalBuilder_Var), d2`; func_4847F28C 0x4847F28C: `movhu (StyleFlatOrdinalBuilder_Var), d1` ...
+StyleFlatOrdinalBuilder_Var:	# s16, a constant; read / written by StyleFlatOrdinalBuilder 0x4843FAFC: `movhu (StyleFlatOrdinalBuilder_Var), d2`; StyleGenreKindGet 0x4847F28C: `movhu (StyleFlatOrdinalBuilder_Var), d1` ...
 	.word	0
-func_4847F28C_Var:	# u16, a constant; read / written by func_4847F28C 0x4847F28C: `movhu (func_4847F28C_Var), d1`; FuncEdit_rhyGroup 0x4850999E: `movhu (func_4847F28C_Var), d0` ...
+StyleGenreKindGet_Var:	# u16, a constant; read / written by StyleGenreKindGet 0x4847F28C: `movhu (StyleGenreKindGet_Var), d1`; FuncEdit_rhyGroup 0x4850999E: `movhu (StyleGenreKindGet_Var), d0` ...
 	.word	14
 ResolveStyleId_Var:	# u16, a constant; read / written by ResolveStyleId 0x48435B22: `movhu (ResolveStyleId_Var), d0`; AcRvariScreenProc 0x48497780: `movhu (ResolveStyleId_Var), d0` ...
 	.word	15
 AcRvariScreenProc_Var:	# u16, a constant; read / written by AcRvariScreenProc 0x48497780: `movhu (AcRvariScreenProc_Var), d0`; AcRhyVariProc 0x484978EF: `movhu (AcRvariScreenProc_Var), d0` ...
 	.word	1
-ResolveStyleId_Var_2:	# u16, a constant; read / written by ResolveStyleId 0x48435B22: `movhu (ResolveStyleId_Var_2), d0`; func_4847F28C 0x4847F28C: `movhu (ResolveStyleId_Var_2), d1` ...
+ResolveStyleId_Var_2:	# u16, a constant; read / written by ResolveStyleId 0x48435B22: `movhu (ResolveStyleId_Var_2), d0`; StyleGenreKindGet 0x4847F28C: `movhu (ResolveStyleId_Var_2), d1` ...
 	.word	14
 ResolveStyleId_Var_3:	# u16, a constant; read / written by ResolveStyleId 0x48435B22: `movhu (ResolveStyleId_Var_3), d0`; AcRvariScreenProc 0x48497780: `movhu (ResolveStyleId_Var_3), d0` ...
 	.word	1
@@ -26770,7 +26770,7 @@ CountIntroRecordTable:
 	.long	0
 	.long	0
 
-func_48450656_Table:	# 4 x u8, 255..255; read by func_48450656_entry 0x484502AC: `movbu  (a1), d0`; func_484506C8_entry 0x484502AC: `movbu  (a1), d0` ...
+HeldKeyListReleaseAll_Table:	# 4 x u8, 255..255; read by HeldKeyListReleaseAll_entry 0x48450656: `movbu  (a1), d0`; func_484506C8_entry 0x48450656: `movbu  (a1), d0` ...
 	tab_u8	255, 255, 255, 255
 
 ptrs_487370C0:
@@ -26780,156 +26780,156 @@ ptrs_487370C0:
 	.long	loc_484517D2
 ptrs_487370D0:
 	.long	loc_48457727
-	.long	func_4845772A
+	.long	SongBackupRestore
 	.long	func_4845775D
-	.long	func_48457768
+	.long	SeqPlayStateInit
 
-FatBootHead_720K:	# a FAT boot sector's first 32 bytes, a 720 KB disk's (1440 sectors of 512 bytes): func_4847079B 0x4847079B: memcpy(.., 0x20)
+FatBootHead_720K:	# a FAT boot sector's first 32 bytes, a 720 KB disk's (1440 sectors of 512 bytes): FdFormat720K 0x4847079B: memcpy(.., 0x20)
 	FAT_BOOT_HEAD	0xeb, 0x1c, 0x90, "Technics", 512, 2, 1, 2, 112, 1440, 0xf9, 3, 9, 2, 0
 	.byte	0xeb, 0xfe	# +0x1E: the boot code the jump at +0 lands on (EB 1C: +2 + 0x1C), x86 `jmp $`: a loop
 
-func_4847079B_Block:	# 3 bytes, copied whole by func_4847079B 0x4847079B: memcpy(.., 3)
+FdFormat720K_Block:	# 3 bytes, copied whole by FdFormat720K 0x4847079B: memcpy(.., 3)
 	tab_u8	249, 255, 255	# [0]
 
-FatBootHead_1440K:	# a FAT boot sector's first 32 bytes, a 1440 KB disk's (2880 sectors of 512 bytes): func_48470A65 0x48470A65: memcpy(.., 0x20)
+FatBootHead_1440K:	# a FAT boot sector's first 32 bytes, a 1440 KB disk's (2880 sectors of 512 bytes): FdFormat1440K 0x48470A65: memcpy(.., 0x20)
 	FAT_BOOT_HEAD	0xeb, 0x1c, 0x90, "Technics", 512, 1, 1, 2, 224, 2880, 0xf0, 9, 18, 2, 0
 	.byte	0xeb, 0xfe	# +0x1E: the boot code the jump at +0 lands on (EB 1C: +2 + 0x1C), x86 `jmp $`: a loop
 
-func_48470A65_Block:	# 3 bytes, copied whole by func_48470A65 0x48470A65: memcpy(.., 3)
+FdFormat1440K_Block:	# 3 bytes, copied whole by FdFormat1440K 0x48470A65: memcpy(.., 3)
 	tab_u8	240, 255, 255	# [0]
-	.align	4, 0xFF	# pad after func_48470A65_Block
+	.align	4, 0xFF	# pad after FdFormat1440K_Block
 
-func_484361C7_Records:	# 128 x REC_func_484361C7_Records (8 bytes each); read by NoteConvRuleByte1Get 0x484361C7 `movbu (1, a0), d0`; NoteConvRuleByte2Get 0x484361E2 `movbu (2, a0), d0`; NoteConvRuleByte3Get 0x484361FD `movbu (3, a0), d0` (+4)
-	REC_func_484361C7_Records	f0=1, f2=1, key=1	# [0]
-	REC_func_484361C7_Records	f0=1, f2=1, p4=func_484361C7_Records_p4_0
-	REC_func_484361C7_Records	f0=1, f1=1, f2=1, p4=func_484361C7_Records_p4_0
-	REC_func_484361C7_Records	f0=1, f2=1, key=1
-	REC_func_484361C7_Records	f0=1, f2=1, key=1
-	REC_func_484361C7_Records	f0=1, f2=1, key=1
-	REC_func_484361C7_Records	f0=1, f2=1, key=1
-	REC_func_484361C7_Records	f0=1, f2=1, key=1
-	REC_func_484361C7_Records	f0=1, f2=1, key=1	# [8]
-	REC_func_484361C7_Records	f0=1, f2=1, key=1
-	REC_func_484361C7_Records	f0=1, f2=1, key=1
-	REC_func_484361C7_Records	f0=1, f2=1, key=1
-	REC_func_484361C7_Records	f0=1, f2=1, key=1
-	REC_func_484361C7_Records	f0=1, f2=1, key=1
-	REC_func_484361C7_Records	f0=1, f2=1, key=1
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_1
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_2	# [16]
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_4
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_5
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_6
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_7
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_8
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_9
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_10	# [24]
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_8
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3	# [32]
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3	# [40]
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3	# [48]
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3	# [56]
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3	# [64]
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3	# [72]
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_3
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11	# [80]
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_1
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_12
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_13
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11	# [88]
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_14	# [96]
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_15
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_16
-	REC_func_484361C7_Records	f0=1, p4=func_484361C7_Records_p4_1
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_17
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_18
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_19
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_20
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11	# [104]
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11	# [112]
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11	# [120]
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11
-	REC_func_484361C7_Records	p4=func_484361C7_Records_p4_11
+NoteConvRuleByte1Get_Records:	# 128 x REC_NoteConvRuleByte1Get_Records (8 bytes each); read by NoteConvRuleByte1Get 0x484361C7 `movbu (1, a0), d0`; NoteConvRuleByte2Get 0x484361E2 `movbu (2, a0), d0`; NoteConvRuleByte3Get 0x484361FD `movbu (3, a0), d0` (+4)
+	REC_NoteConvRuleByte1Get_Records	f0=1, f2=1, key=1	# [0]
+	REC_NoteConvRuleByte1Get_Records	f0=1, f2=1, p4=NoteConvRuleByte1Get_Records_p4_0
+	REC_NoteConvRuleByte1Get_Records	f0=1, f1=1, f2=1, p4=NoteConvRuleByte1Get_Records_p4_0
+	REC_NoteConvRuleByte1Get_Records	f0=1, f2=1, key=1
+	REC_NoteConvRuleByte1Get_Records	f0=1, f2=1, key=1
+	REC_NoteConvRuleByte1Get_Records	f0=1, f2=1, key=1
+	REC_NoteConvRuleByte1Get_Records	f0=1, f2=1, key=1
+	REC_NoteConvRuleByte1Get_Records	f0=1, f2=1, key=1
+	REC_NoteConvRuleByte1Get_Records	f0=1, f2=1, key=1	# [8]
+	REC_NoteConvRuleByte1Get_Records	f0=1, f2=1, key=1
+	REC_NoteConvRuleByte1Get_Records	f0=1, f2=1, key=1
+	REC_NoteConvRuleByte1Get_Records	f0=1, f2=1, key=1
+	REC_NoteConvRuleByte1Get_Records	f0=1, f2=1, key=1
+	REC_NoteConvRuleByte1Get_Records	f0=1, f2=1, key=1
+	REC_NoteConvRuleByte1Get_Records	f0=1, f2=1, key=1
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_1
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_2	# [16]
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_4
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_5
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_6
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_7
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_8
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_9
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_10	# [24]
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_8
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3	# [32]
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3	# [40]
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3	# [48]
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3	# [56]
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3	# [64]
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3	# [72]
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_3
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11	# [80]
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_1
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_12
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_13
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11	# [88]
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_14	# [96]
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_15
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_16
+	REC_NoteConvRuleByte1Get_Records	f0=1, p4=NoteConvRuleByte1Get_Records_p4_1
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_17
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_18
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_19
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_20
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11	# [104]
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11	# [112]
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11	# [120]
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11
+	REC_NoteConvRuleByte1Get_Records	p4=NoteConvRuleByte1Get_Records_p4_11
 
-func_4843A560_Table:	# 256 x u8, 0..2; read by func_4843A560_entry 0x4843981C: `movbu  (d0, a0), d0`
+func_4843A560_Table:	# 256 x u8, 0..2; read by func_4843A560_entry 0x4843A3E0: `movbu  (d0, a0), d0`
 	tab_u8	2, 2, 0, 2, 2, 2, 1, 0, 0, 2, 0, 0, 2, 2, 2, 2	# [0]
 	tab_u8	2, 2, 1, 1, 1, 1, 1, 0, 0, 0, 2, 2, 2, 2, 2, 2	# [16]
 	tab_u8	2, 2, 2, 0, 0, 0, 0, 2, 0, 2, 1, 2, 1, 2, 1, 2	# [32]
@@ -26951,7 +26951,7 @@ EasyCompGrid_Table:	# 2 x u16, 0..10; read by EasyCompGrid 0x4850B3F6: `movhu (E
 
 func_4843B8C6_Var:	# u32, a constant; read / written by func_4843B8C6 0x4843B8C6: `mov (func_4843B8C6_Var), a0`; func_4843B8C6 0x4843B8C6: `mov (func_4843B8C6_Var), d1` ...
 	.long	0x485cd420
-func_484142D0_Var:	# u32, a constant; read / written by func_484142D0 0x484142D0: `mov (func_484142D0_Var), d0`
+GuiSystemInit_Var:	# u32, a constant; read / written by GuiSystemInit 0x484142D0: `mov (GuiSystemInit_Var), d0`
 	.long	942
 
 # 14 classes; a class id is (0x154 << 16) | its index here (ClassProc 0x4842A804 reads entry id & 0xFFFF, 0x18 bytes each)
@@ -27247,36 +27247,36 @@ Str_JFIF:	.asciz "JFIF"
 # census: opaque -- unknown-dump: 11 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x33A081, 0x33A08C
 
-func_4840D29C_Table:	# 5 x u8, 1..3; read by JpegEncSetup_entry 0x4840D29C: `movbu  (d1, a0), d0`
+JpegEncSetup_Table:	# 5 x u8, 1..3; read by JpegEncSetup_entry 0x4840D29C: `movbu  (d1, a0), d0`
 	tab_u8	1, 3, 3, 3, 3
 
-func_4840EBC3_Table:	# 5 x JpegModeHSampling (4 bytes each); read by JpegEncSetup 0x4840D29C `movbu (1, a1), d0`; JpegEncSetup 0x4840D29C `movbu (2, a3), d0`; JpegEncSetup 0x4840D29C `movbu (3, a3), d0` (+1)
-	JpegModeHSampling	comp0=1
-	JpegModeHSampling	comp0=1, comp1=1, comp2=1
-	JpegModeHSampling	comp0=2, comp1=1, comp2=1
-	JpegModeHSampling	comp0=2, comp1=1, comp2=1
-	JpegModeHSampling	comp0=4, comp1=1, comp2=1
-func_4840EBC3_Table_2:	# 5 x JpegModeVSampling (4 bytes each); read by JpegEncSetup 0x4840D29C `movbu (a0), d0`; JpegEncSetup 0x4840D29C `movbu (a1), d0`
-	JpegModeVSampling	comp0=1
-	JpegModeVSampling	comp0=1, comp1=1, comp2=1
-	JpegModeVSampling	comp0=1, comp1=1, comp2=1
-	JpegModeVSampling	comp0=2, comp1=1, comp2=1
-	JpegModeVSampling	comp0=1, comp1=1, comp2=1
-func_4840D29C_Records_2:	# 5 x JpegModeQuantSel (4 bytes each); read by JpegEncSetup 0x4840D29C `movbu (a0), d0`; JpegEncSetup 0x4840D29C `movbu (a3), d0`
-	JpegModeQuantSel	
-	JpegModeQuantSel	comp1=1, comp2=1
-	JpegModeQuantSel	comp1=1, comp2=1
-	JpegModeQuantSel	comp1=1, comp2=1
-	JpegModeQuantSel	comp1=1, comp2=1
-func_4840D29C_Records:	# 8 x JpegModeHuffSel (4 bytes each); read by JpegEncSetup 0x4840D29C `movbu (a0), d0`; JpegEncSetup 0x4840D29C `movbu (a1), d0`; JpegEncSetup 0x4840D29C `movbu (a3), d0`
-	JpegModeHuffSel	
-	JpegModeHuffSel	comp1=17, comp2=17
-	JpegModeHuffSel	comp1=17, comp2=17
-	JpegModeHuffSel	comp1=17, comp2=17
-	JpegModeHuffSel	comp1=17, comp2=17
-	JpegModeHuffSel	comp0=255, comp1=255, comp2=255, comp3=120
-	JpegModeHuffSel	comp0=72, comp1=23, comp2=80, comp3=120
-	JpegModeHuffSel	comp0=73, comp1=23, comp2=80, comp3=184
+JpegDecModeMatch_Table:	# 5 x REC_JpegDecModeMatch_Table (4 bytes each); read by JpegEncSetup 0x4840D29C `movbu (1, a1), d0`; JpegEncSetup 0x4840D29C `movbu (2, a3), d0`; JpegEncSetup 0x4840D29C `movbu (3, a3), d0` (+1)
+	REC_JpegDecModeMatch_Table	f0=1
+	REC_JpegDecModeMatch_Table	f0=1, f1=1, f2=1
+	REC_JpegDecModeMatch_Table	f0=2, f1=1, f2=1
+	REC_JpegDecModeMatch_Table	f0=2, f1=1, f2=1
+	REC_JpegDecModeMatch_Table	f0=4, f1=1, f2=1
+JpegDecModeMatch_Table_2:	# 5 x REC_JpegDecModeMatch_Table_2 (4 bytes each); read by JpegEncSetup 0x4840D29C `movbu (a0), d0`; JpegEncSetup 0x4840D29C `movbu (a1), d0`
+	REC_JpegDecModeMatch_Table_2	f0=1
+	REC_JpegDecModeMatch_Table_2	f0=1, f1=1, f2=1
+	REC_JpegDecModeMatch_Table_2	f0=1, f1=1, f2=1
+	REC_JpegDecModeMatch_Table_2	f0=2, f1=1, f2=1
+	REC_JpegDecModeMatch_Table_2	f0=1, f1=1, f2=1
+JpegEncSetup_Records_2:	# 5 x REC_JpegEncSetup_Records_2 (4 bytes each); read by JpegEncSetup 0x4840D29C `movbu (a0), d0`; JpegEncSetup 0x4840D29C `movbu (a3), d0`
+	REC_JpegEncSetup_Records_2	
+	REC_JpegEncSetup_Records_2	f1=1, f2=1
+	REC_JpegEncSetup_Records_2	f1=1, f2=1
+	REC_JpegEncSetup_Records_2	f1=1, f2=1
+	REC_JpegEncSetup_Records_2	f1=1, f2=1
+JpegEncSetup_Records:	# 8 x REC_JpegEncSetup_Records (4 bytes each); read by JpegEncSetup 0x4840D29C `movbu (a0), d0`; JpegEncSetup 0x4840D29C `movbu (a1), d0`; JpegEncSetup 0x4840D29C `movbu (a3), d0`
+	REC_JpegEncSetup_Records	
+	REC_JpegEncSetup_Records	f1=17, f2=17
+	REC_JpegEncSetup_Records	f1=17, f2=17
+	REC_JpegEncSetup_Records	f1=17, f2=17
+	REC_JpegEncSetup_Records	f1=17, f2=17
+	REC_JpegEncSetup_Records	f0=255, f1=255, f2=255, f3=120
+	REC_JpegEncSetup_Records	f0=72, f1=23, f2=80, f3=120
+	REC_JpegEncSetup_Records	f0=73, f1=23, f2=80, f3=184
 # census: opaque -- unknown-dump: 3 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x33A0ED, 0x33A0F0
 func_48485F7E_Records:	# 3 x REC_func_48485F7E_Records (16 bytes each); read by func_48485F7E 0x48485F7E `mov (d0, a0), d1`; func_48485FE7 0x48485FE7 `mov (d0, a0), d1`; func_484860B4 0x484860B4 `mov (d0, a0), d1`
@@ -28210,7 +28210,7 @@ StyleGenre_Organ_Stylist_Styles:	# StyleGenre "Organ Stylist"'s 27 styles, Genre
 	.long	Text_Ballermann+850, StyleSetups_Organ_Stylist_Jive_Organist
 	.long	0, 0
 
-StyleGenreTable:	# 12 x StyleGenre (8 bytes each); read by func_4847B60C 0x4847B60C `mov (d0, a0), a1`; func_4847B65A 0x4847B65A `mov (4, a0), a0`; func_4847BA31 0x4847BA31 `mov (4, a0), a3` (+7)
+StyleGenreTable:	# 12 x StyleGenre (8 bytes each); read by StyleGenreListTextBuild 0x4847B60C `mov (d0, a0), a1`; StyleGenreSelect 0x4847B65A `mov (4, a0), a0`; StyleSubCatHeaderBuild 0x4847BA31 `mov (4, a0), a3` (+7)
 	StyleGenre	name=Text_Rock_Pop, styles=StyleGenre_Rock_Pop_Styles	# [0]
 	StyleGenre	name=Text_Rock_Pop+17, styles=StyleGenre_Easy_Listening_Styles
 	StyleGenre	name=Text_Rock_Pop+34, styles=StyleGenre_Soul_Gospel_Styles
@@ -28224,142 +28224,142 @@ StyleGenreTable:	# 12 x StyleGenre (8 bytes each); read by func_4847B60C 0x4847B
 	StyleGenre	name=Text_Rock_Pop+170, styles=StyleGenre_Organ_Stylist_Styles
 	StyleGenre	
 
-# 4 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D072_List:
+# 4 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List:
 	.word	0x24d, 0x4e, 0x3ce, 0x3c5, 0xffff
-# 2 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D072_List_2:
+# 2 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_2:
 	.word	0xea, 0x2b4, 0xffff
-# 2 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D072_List_3:
+# 2 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_3:
 	.word	0x152, 0x410, 0xffff
-# 4 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D072_List_4:
+# 4 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_4:
 	.word	0xd2, 0x1c9, 0x5e, 0xd1, 0xffff
-# 5 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D072_List_5:
+# 5 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_5:
 	.word	0x10c, 0x394, 0x142, 0x6a, 0x5, 0xffff
-# 5 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D072_List_6:
+# 5 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_6:
 	.word	0x240, 0x32, 0x3, 0x7e, 0x376, 0xffff
-# 9 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D072_List_7:
+# 9 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_7:
 	.word	0x39, 0x1bd, 0x37, 0x4a, 0xcb, 0xa4, 0xc8, 0xcc, 0x91, 0xffff
-# 3 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D072_List_8:
+# 3 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_8:
 	.word	0x87, 0x24e, 0x5a, 0xffff
-# 27 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D072_List_9:
+# 27 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_9:
 	.word	0x2f9, 0x2d7, 0x116, 0x1ce, 0x23b, 0x186, 0xda, 0xaa, 0x33f, 0x15b, 0x335, 0x2fc, 0x2e6, 0x1de, 0x382, 0x350, 0x29c, 0x67, 0x256, 0x3be, 0x174, 0x308, 0x2fb, 0x412, 0x431, 0x36f, 0x3f6, 0xffff
-# 112 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D072_List_10:
+# 112 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_10:
 	.word	0x5c, 0x1be, 0x30f, 0x40a, 0x219, 0x3d4, 0x437, 0x40b, 0x409, 0x408, 0x3eb, 0x50, 0x128, 0xa0, 0xa7, 0x3cb, 0xb0, 0x1a1, 0xec, 0x166, 0x135, 0x216, 0x13f, 0x41f, 0x3a9, 0x257, 0x1e3, 0x103, 0xf6, 0x2b7, 0x2c2, 0x2eb, 0x3a1, 0x255, 0x12, 0x316, 0x22a, 0x228, 0x1db, 0x206, 0x14a, 0x420, 0x23d, 0x254, 0xf0, 0x4d, 0xe4, 0x183, 0x12e, 0x138, 0x35e, 0x1e6, 0x8e, 0xb6, 0x5d, 0x23e, 0x347, 0x1fa, 0x20e, 0x6b, 0x3a6, 0x3b0, 0x194, 0x76, 0x2bd, 0x1f7, 0x1f6, 0xa9, 0x75, 0x12b, 0x12a, 0x115, 0xbd, 0x2e0, 0x31a, 0x318, 0x31b, 0x10e, 0x10f, 0x10d, 0x69, 0x1e, 0x88, 0x35f, 0x426, 0x30a, 0x30c, 0x18, 0x5b, 0x47, 0xa1, 0x56, 0x2c6, 0x39d, 0x2de, 0x1ed, 0x5f, 0x17d, 0x167, 0x7, 0x2ca, 0x27f, 0x324, 0x1f0, 0x416, 0x14c, 0x30d, 0x14e, 0x309, 0x397, 0x222, 0x3e0, 0xffff
-# 83 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D072_List_11:
+# 83 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_11:
 	.word	0x122, 0x356, 0x1b4, 0x2b3, 0x389, 0x1b5, 0x252, 0x34f, 0x322, 0x31c, 0x395, 0x39e, 0x19e, 0x1b7, 0x3fd, 0x1a9, 0x31f, 0x31d, 0x165, 0x300, 0x3db, 0x178, 0x317, 0x2bc, 0x77, 0x38c, 0x19b, 0x407, 0x3b3, 0x1b8, 0x386, 0x108, 0x100, 0xb5, 0x1f9, 0xc2, 0x162, 0xd9, 0xd8, 0x1d1, 0x15, 0x3da, 0x95, 0x311, 0x427, 0x190, 0x2d8, 0x417, 0x2ee, 0x179, 0x191, 0x3d7, 0x28c, 0x269, 0x3bb, 0xb8, 0x35c, 0x3bc, 0x38d, 0x117, 0x261, 0x327, 0x30b, 0x3f7, 0x2cf, 0x378, 0x2a4, 0x2b9, 0x2ad, 0x2ae, 0x2ac, 0x2af, 0x3e4, 0x2d4, 0x217, 0x197, 0x213, 0x29d, 0x315, 0x314, 0x359, 0x35a, 0x1a8, 0xffff
-# 47 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D072_List_12:
+# 47 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_12:
 	.word	0x102, 0x253, 0x225, 0x351, 0x146, 0x340, 0x34b, 0xfb, 0x369, 0x368, 0x36a, 0xf9, 0x282, 0xb4, 0x23, 0xbc, 0x62, 0x422, 0x325, 0x248, 0x0, 0x1b2, 0x127, 0x126, 0x175, 0xe1, 0x141, 0x2e7, 0x425, 0x233, 0xbf, 0xe9, 0xfe, 0x2aa, 0xb1, 0x171, 0x3f8, 0x3fb, 0x3fa, 0x3f9, 0x232, 0x319, 0x3ba, 0x21, 0x344, 0x34, 0xa5, 0xffff
-# 20 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D072_List_13:
+# 20 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_13:
 	.word	0x1c8, 0x48, 0x204, 0x2e8, 0xb2, 0x346, 0x3a4, 0x345, 0x210, 0x40c, 0x3e2, 0x19f, 0x3e5, 0x2f2, 0x16b, 0x208, 0x20b, 0x15e, 0x40d, 0x97, 0xffff
-# 66 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D072_List_14:
+# 66 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_14:
 	.word	0xc, 0x3fc, 0x215, 0x221, 0x185, 0x17c, 0x1cc, 0x182, 0x2d1, 0x158, 0x7a, 0x3ca, 0x223, 0x27, 0x33e, 0x1a7, 0x2d3, 0x2b6, 0x380, 0x24b, 0x323, 0x25d, 0x1ae, 0x120, 0x372, 0x13, 0x2be, 0x112, 0x3c4, 0x292, 0x414, 0x379, 0x2b2, 0x2b1, 0xcd, 0x3dd, 0x3dc, 0x3de, 0x3df, 0x406, 0x41d, 0x133, 0x13a, 0x118, 0x18a, 0x2f8, 0x15f, 0xbb, 0x307, 0x367, 0x40f, 0x3ff, 0x286, 0x114, 0x384, 0x281, 0x28e, 0x387, 0x22e, 0x296, 0x25b, 0x28a, 0x28b, 0x29e, 0x98, 0x288, 0xffff
-# 41 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D072_List_15:
+# 41 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_15:
 	.word	0x361, 0x37e, 0x23c, 0x399, 0x3c3, 0x12c, 0x3c6, 0x3a0, 0x1e5, 0x1d8, 0x150, 0x244, 0x81, 0x83, 0x2e9, 0x3a3, 0x355, 0x13e, 0x8d, 0x26e, 0x71, 0x273, 0x26c, 0x2a2, 0x270, 0x272, 0x3c8, 0x155, 0x271, 0x31, 0x3e3, 0x306, 0x27e, 0x3b9, 0x2f7, 0x287, 0x38f, 0xa, 0x9f, 0x119, 0x33d, 0xffff
-# 60 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D072_List_16:
+# 60 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_16:
 	.word	0x391, 0x1d3, 0x436, 0x1d9, 0x1ee, 0x64, 0x18f, 0x2d2, 0x33b, 0xff, 0x329, 0x331, 0x429, 0x2b8, 0x7b, 0x2c5, 0x1e9, 0x36b, 0x349, 0xc7, 0xc6, 0x78, 0xc5, 0x25c, 0x2cc, 0x2cd, 0x3bf, 0x58, 0x22f, 0x3d3, 0x84, 0x3b8, 0x2b0, 0x41b, 0x8, 0x3a5, 0x1fc, 0x1f4, 0x34a, 0x2ef, 0x10a, 0x277, 0x2a3, 0x2c1, 0x211, 0x3f2, 0x3ed, 0x4, 0x305, 0x262, 0x432, 0x129, 0x328, 0x11e, 0x237, 0x235, 0x234, 0x236, 0xeb, 0x334, 0xffff
-# 9 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D072_List_17:
+# 9 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_17:
 	.word	0x74, 0x279, 0x1d6, 0x36d, 0x21f, 0x202, 0x337, 0x336, 0x342, 0xffff
-# 19 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D072_List_18:
+# 19 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_18:
 	.word	0x35b, 0x34c, 0x33c, 0x3e9, 0x106, 0x433, 0xde, 0xdf, 0xdd, 0x113, 0x164, 0x3d1, 0x1c5, 0x90, 0x212, 0x1b3, 0x15a, 0x283, 0x38a, 0xffff
-# 12 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D072_List_19:
+# 12 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_19:
 	.word	0x1c, 0x226, 0x2ba, 0x36c, 0x2bb, 0x231, 0x21e, 0x2ff, 0x405, 0x39c, 0x21a, 0x24, 0xffff
-# 44 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D072_List_20:
+# 44 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_20:
 	.word	0xa2, 0x3c1, 0x29f, 0x263, 0xee, 0x26b, 0x2d6, 0x348, 0xd3, 0x143, 0x411, 0xd6, 0x37f, 0xe5, 0x310, 0x312, 0x207, 0x144, 0x24f, 0x149, 0x169, 0x8c, 0x14b, 0x1b6, 0x3cd, 0x2e2, 0x275, 0x16f, 0x250, 0xe2, 0x125, 0x1e4, 0x377, 0x25, 0x239, 0x2d5, 0x1c0, 0x14, 0xb3, 0x189, 0x1, 0x3b5, 0x1ca, 0xf4, 0xffff
-# 49 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D072_List_21:
+# 49 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_21:
 	.word	0x251, 0x1c1, 0x10, 0x1f2, 0x1bf, 0x2db, 0x2d9, 0x2dd, 0x338, 0x333, 0x11d, 0x374, 0x2f1, 0x66, 0x339, 0x358, 0x8f, 0x32b, 0x107, 0x180, 0x2da, 0x101, 0x362, 0x6c, 0x230, 0x242, 0x31e, 0x1cd, 0x381, 0x393, 0xc3, 0x1a, 0x22, 0x16e, 0x18b, 0x19d, 0x193, 0x294, 0x22d, 0x148, 0x2e4, 0x396, 0x290, 0x37d, 0x3aa, 0x52, 0x371, 0x3a7, 0x1b, 0xffff
-# 21 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D072_List_22:
+# 21 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_22:
 	.word	0x36, 0x2a5, 0x2c4, 0x2b5, 0xe0, 0x16c, 0x357, 0xac, 0x2ce, 0x161, 0x2cb, 0x121, 0x1ad, 0x423, 0x1c3, 0x2c3, 0x238, 0x42d, 0x22c, 0x245, 0xed, 0xffff
-# 26 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D072_List_23:
+# 26 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_23:
 	.word	0x32c, 0x170, 0x1eb, 0x3c0, 0x1a0, 0xe6, 0x1bb, 0x1a4, 0xc1, 0x172, 0x3fe, 0x428, 0x2, 0x1aa, 0x18d, 0xa3, 0x1a5, 0x176, 0x35d, 0x123, 0x1df, 0x65, 0x1fd, 0x205, 0x421, 0x38b, 0xffff
-# 51 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D072_List_24:
+# 51 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_24:
 	.word	0x297, 0x36e, 0x363, 0x398, 0x28, 0x1d7, 0x147, 0x19c, 0x330, 0x1ec, 0x1da, 0x365, 0x1fe, 0x390, 0x1f3, 0x1cf, 0x168, 0x136, 0x375, 0x2c7, 0x3f5, 0x17e, 0x19a, 0x401, 0x354, 0x9e, 0x274, 0x7d, 0x68, 0x33, 0x353, 0x383, 0x38e, 0x220, 0x25a, 0x85, 0x3c7, 0x43, 0x19, 0x3d6, 0x3ae, 0x55, 0x57, 0x2c, 0x2e, 0x4f, 0x40, 0x59, 0x53, 0x2fd, 0x37a, 0xffff
-# 4 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D072_List_25:
+# 4 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_25:
 	.word	0x1b9, 0x13c, 0x424, 0x402, 0xffff
-# 46 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D072_List_26:
+# 46 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_26:
 	.word	0x284, 0x28f, 0x293, 0x1c7, 0xa8, 0x7c, 0xfd, 0x17, 0x419, 0xc9, 0x27a, 0x246, 0x34d, 0xd0, 0x1e2, 0x3c, 0x42a, 0x370, 0x39a, 0x385, 0x41, 0x26f, 0x278, 0x3d5, 0x403, 0x14f, 0x41e, 0x2dc, 0x99, 0x60, 0x3ac, 0xb7, 0x26, 0x2a9, 0x17f, 0x72, 0x70, 0x1cb, 0x3ec, 0x96, 0x51, 0x11a, 0x3b4, 0x303, 0x2fa, 0x21d, 0xffff
-# 201 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D072_List_27:
+# 201 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_27:
 	.word	0x130, 0x321, 0x14d, 0x20a, 0x39f, 0x1f1, 0x320, 0x366, 0x243, 0x418, 0x1ac, 0x18e, 0xce, 0x1ea, 0x73, 0xe3, 0x291, 0x3ab, 0x3f1, 0xab, 0x11f, 0x1e7, 0xf8, 0x229, 0x13d, 0x41c, 0x3e, 0x105, 0x24a, 0x29, 0x1af, 0x61, 0x109, 0x111, 0x18c, 0x6d, 0x25e, 0x1a6, 0x20f, 0x20d, 0x20c, 0x79, 0x63, 0x1d2, 0x151, 0x1bc, 0x3ad, 0x154, 0x35, 0x3b1, 0x26d, 0x187, 0x140, 0x38, 0x352, 0x276, 0x30e, 0x3ee, 0x1d4, 0x37b, 0x39b, 0xca, 0x3c9, 0x3b7, 0x1dd, 0x3b6, 0x157, 0x413, 0x37c, 0x3f, 0x104, 0x415, 0x134, 0x26a, 0x93, 0xd4, 0x373, 0x3d2, 0x3b2, 0x4c, 0x3a, 0x3bd, 0x388, 0x3cc, 0x12f, 0x203, 0xa6, 0x280, 0xae, 0x41a, 0x224, 0x32a, 0x29a, 0x267, 0x2f, 0xd5, 0xba, 0x29b, 0x265, 0x298, 0x259, 0xd7, 0x28d, 0x20, 0x258, 0xb9, 0x266, 0x260, 0x2ea, 0x2a6, 0x2a8, 0x23f, 0x227, 0x24c, 0x15c, 0x1c2, 0x3e1, 0x2c9, 0x341, 0xaf, 0x2a, 0x435, 0x27b, 0x8a, 0x21b, 0x27c, 0x430, 0x1e0, 0xcf, 0xc4, 0x2f5, 0x94, 0x17a, 0x285, 0x45, 0x1a2, 0x3c2, 0xdc, 0x1d0, 0x1fb, 0x11c, 0x326, 0x214, 0x404, 0x16a, 0x173, 0x132, 0x1a3, 0x249, 0x302, 0x80, 0xd, 0x1d, 0x241, 0x4b, 0x3d0, 0x1c4, 0x16, 0x264, 0x9d, 0x184, 0x34e, 0x27d, 0x1e1, 0x198, 0x1d5, 0x2d, 0x3a2, 0x6, 0x11, 0x9c, 0x2fe, 0x2bf, 0x3d, 0x3f4, 0x49, 0x7f, 0x2ec, 0x25f, 0xfc, 0xf3, 0x196, 0x1f8, 0x42, 0xf5, 0xf1, 0x3a8, 0xf7, 0x2f0, 0x2f3, 0x2f4, 0x9, 0x3b, 0x313, 0xdb, 0x289, 0x54, 0x3af, 0x44, 0x82, 0x92, 0xffff
-# 50 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D072_List_28:
+# 50 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_28:
 	.word	0x392, 0x23a, 0x2a1, 0x6e, 0x2d0, 0x360, 0x32d, 0x32e, 0x15d, 0x32f, 0x343, 0x139, 0xbe, 0x8b, 0x6f, 0x2ab, 0x33a, 0x1ab, 0x13b, 0x137, 0x1ef, 0x2a0, 0x3ea, 0x42b, 0xe8, 0x209, 0x295, 0x10b, 0x16d, 0x3ef, 0x1ff, 0x434, 0x1ba, 0x1dc, 0x2f6, 0x11b, 0x2df, 0x181, 0xc0, 0x3e6, 0x1b0, 0x124, 0x2e1, 0x3f3, 0x30, 0x177, 0x247, 0x40e, 0x301, 0xe7, 0xffff
-# 10 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D072_List_29:
+# 10 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_29:
 	.word	0x22b, 0x195, 0xef, 0xb, 0x42e, 0x159, 0x1c6, 0xf2, 0x9a, 0x3cf, 0xffff
-# 11 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D072_List_30:
+# 11 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_30:
 	.word	0x2c8, 0xfa, 0x364, 0x2b, 0x145, 0x304, 0x160, 0x110, 0x268, 0x3d9, 0x21c, 0xffff
-# 31 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D072_List_31:
+# 31 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_31:
 	.word	0x332, 0x1b1, 0x218, 0x156, 0x192, 0x400, 0x153, 0x200, 0x3f0, 0x3e8, 0x201, 0x17b, 0x42f, 0xf, 0xad, 0x199, 0x3d8, 0x299, 0x2c0, 0x1f, 0x9b, 0x163, 0x2e3, 0x12d, 0x46, 0x131, 0x188, 0x3e7, 0x2ed, 0x42c, 0x89, 0xffff
-# 5 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D072_List_32:
+# 5 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_32:
 	.word	0x2a7, 0x1f5, 0x1e8, 0xe, 0x86, 0xffff
-# 1 entries of 16 bits up to the end marker that func_4847D072 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
-func_4847D072_List_33:
+# 1 entries of 16 bits up to the end marker that StyleAlphaPageTextBuild 0x4847D072: `movhu (a2), d0` / `cmp 0xffff, d0`, `add 2, a2` stops at, then the marker
+StyleAlphaPageTextBuild_List_33:
 	.word	0x2e5, 0xffff
 	.byte	0xff, 0xff	# the marker's fill to a 4-byte boundary
 
-func_4847C996_Records:	# 34 x REC_func_4847C996_Records (8 bytes each); read by func_4847C996 0x4847C996 `call func_4847C966, 0, 0`; func_4847C996 0x4847C996 `mov (4, a0), a0`; func_4847C996 0x4847C996 `mov (d2, a2), a1` (+6)
-	REC_func_4847C996_Records	text=Str_1_38, index=func_4847D072_List	# [0]
-	REC_func_4847C996_Records	text=Str_2_42, index=func_4847D072_List_2
-	REC_func_4847C996_Records	text=Str_3_32, index=func_4847D072_List_3
-	REC_func_4847C996_Records	text=Str_5_29, index=func_4847D072_List_4
-	REC_func_4847C996_Records	text=Str_6_26, index=func_4847D072_List_5
-	REC_func_4847C996_Records	text=Str_7_16, index=func_4847D072_List_6
-	REC_func_4847C996_Records	text=Str_8_16, index=func_4847D072_List_7
-	REC_func_4847C996_Records	text=Str_9_16, index=func_4847D072_List_8
-	REC_func_4847C996_Records	text=Str_A_30, index=func_4847D072_List_9	# [8]
-	REC_func_4847C996_Records	text=Str_B_18, index=func_4847D072_List_10
-	REC_func_4847C996_Records	text=Str_C_27, index=func_4847D072_List_11
-	REC_func_4847C996_Records	text=Str_D_14, index=func_4847D072_List_12
-	REC_func_4847C996_Records	text=Str_E_14, index=func_4847D072_List_13
-	REC_func_4847C996_Records	text=Str_F_19, index=func_4847D072_List_14
-	REC_func_4847C996_Records	text=Str_G_14, index=func_4847D072_List_15
-	REC_func_4847C996_Records	text=Str_H_5, index=func_4847D072_List_16
-	REC_func_4847C996_Records	text=Str_I_6, index=func_4847D072_List_17	# [16]
-	REC_func_4847C996_Records	text=Str_J_5, index=func_4847D072_List_18
-	REC_func_4847C996_Records	text=Str_K_5, index=func_4847D072_List_19
-	REC_func_4847C996_Records	text=Str_L_5, index=func_4847D072_List_20
-	REC_func_4847C996_Records	text=Str_M_5, index=func_4847D072_List_21
-	REC_func_4847C996_Records	text=Str_N_6, index=func_4847D072_List_22
-	REC_func_4847C996_Records	text=Str_O_5, index=func_4847D072_List_23
-	REC_func_4847C996_Records	text=Str_P_13, index=func_4847D072_List_24
-	REC_func_4847C996_Records	text=Str_Q_8, index=func_4847D072_List_25	# [24]
-	REC_func_4847C996_Records	text=Str_R_5, index=func_4847D072_List_26
-	REC_func_4847C996_Records	text=Str_S_6, index=func_4847D072_List_27
-	REC_func_4847C996_Records	text=Str_T_5, index=func_4847D072_List_28
-	REC_func_4847C996_Records	text=Str_U_5, index=func_4847D072_List_29
-	REC_func_4847C996_Records	text=Str_V_5, index=func_4847D072_List_30
-	REC_func_4847C996_Records	text=Str_W_5, index=func_4847D072_List_31
-	REC_func_4847C996_Records	text=Str_Y_6, index=func_4847D072_List_32
-	REC_func_4847C996_Records	text=Str_Z_5, index=func_4847D072_List_33	# [32]
-	REC_func_4847C996_Records	
+StyleAlphaHeaderBuild_Records:	# 34 x REC_StyleAlphaHeaderBuild_Records (8 bytes each); read by StyleAlphaHeaderBuild 0x4847C996 `call U16ListLastIndex, 0, 0`; StyleAlphaHeaderBuild 0x4847C996 `mov (4, a0), a0`; StyleAlphaHeaderBuild 0x4847C996 `mov (d2, a2), a1` (+6)
+	REC_StyleAlphaHeaderBuild_Records	text=Str_1_38, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List	# [0]
+	REC_StyleAlphaHeaderBuild_Records	text=Str_2_42, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_2
+	REC_StyleAlphaHeaderBuild_Records	text=Str_3_32, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_3
+	REC_StyleAlphaHeaderBuild_Records	text=Str_5_29, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_4
+	REC_StyleAlphaHeaderBuild_Records	text=Str_6_26, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_5
+	REC_StyleAlphaHeaderBuild_Records	text=Str_7_16, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_6
+	REC_StyleAlphaHeaderBuild_Records	text=Str_8_16, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_7
+	REC_StyleAlphaHeaderBuild_Records	text=Str_9_16, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_8
+	REC_StyleAlphaHeaderBuild_Records	text=Str_A_30, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_9	# [8]
+	REC_StyleAlphaHeaderBuild_Records	text=Str_B_18, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_10
+	REC_StyleAlphaHeaderBuild_Records	text=Str_C_27, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_11
+	REC_StyleAlphaHeaderBuild_Records	text=Str_D_14, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_12
+	REC_StyleAlphaHeaderBuild_Records	text=Str_E_14, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_13
+	REC_StyleAlphaHeaderBuild_Records	text=Str_F_19, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_14
+	REC_StyleAlphaHeaderBuild_Records	text=Str_G_14, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_15
+	REC_StyleAlphaHeaderBuild_Records	text=Str_H_5, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_16
+	REC_StyleAlphaHeaderBuild_Records	text=Str_I_6, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_17	# [16]
+	REC_StyleAlphaHeaderBuild_Records	text=Str_J_5, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_18
+	REC_StyleAlphaHeaderBuild_Records	text=Str_K_5, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_19
+	REC_StyleAlphaHeaderBuild_Records	text=Str_L_5, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_20
+	REC_StyleAlphaHeaderBuild_Records	text=Str_M_5, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_21
+	REC_StyleAlphaHeaderBuild_Records	text=Str_N_6, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_22
+	REC_StyleAlphaHeaderBuild_Records	text=Str_O_5, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_23
+	REC_StyleAlphaHeaderBuild_Records	text=Str_P_13, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_24
+	REC_StyleAlphaHeaderBuild_Records	text=Str_Q_8, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_25	# [24]
+	REC_StyleAlphaHeaderBuild_Records	text=Str_R_5, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_26
+	REC_StyleAlphaHeaderBuild_Records	text=Str_S_6, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_27
+	REC_StyleAlphaHeaderBuild_Records	text=Str_T_5, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_28
+	REC_StyleAlphaHeaderBuild_Records	text=Str_U_5, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_29
+	REC_StyleAlphaHeaderBuild_Records	text=Str_V_5, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_30
+	REC_StyleAlphaHeaderBuild_Records	text=Str_W_5, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_31
+	REC_StyleAlphaHeaderBuild_Records	text=Str_Y_6, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_32
+	REC_StyleAlphaHeaderBuild_Records	text=Str_Z_5, U16ListLastIndex_a0=StyleAlphaPageTextBuild_List_33	# [32]
+	REC_StyleAlphaHeaderBuild_Records	
 
 PostEvent_Records_p4_0:	# REC_PostEvent_Records_p4 (410 bytes)
 	REC_PostEvent_Records_p4	f0=576, x2="2\x00\x03\x00~\x00v\x03\xBD\x01\xCE\x01\xFC\x02g\x00\xBE\x01\xEC\x00\xC2\x02\xA1\x03 \x04\xE4\x00.\x01\xE6\x01\x1E\x00\x18\x00\x9D\x03\xED\x01\x7F\x02L\x01N\x01\"\x01\xB3\x02\x9E\x03\xD1\x01\x15\x00\x95\x00\xAD\x02\xAE\x02\xAC\x02\xAF\x02\"\x04H\x02\x00\x00\xAA\x02\x0C\x04\x0D\x04\x97\x00\xCC\x01z\x00'\x00\xA7\x01K\x02 \x01r\x03\xB2\x02\xB1\x023\x01\x0F\x04\x8A\x02\x8B\x02\x88\x02,\x01\xA0\x03\xE5\x01\xA3\x03n\x02l\x02\xA2\x021\x00~\x02\x91\x03\xD3\x01\xEE\x01d\x00{\x00x\x00\xB0\x02\x1B\x04\xFC\x01w\x02\xA3\x02\xC1\x02y\x02\x1C\x00\xFF\x02\x9C\x03$\x00\xEE\x00\xE5\x00u\x02o\x01\xE4\x01w\x03%\x00\x14\x00\x01\x00\xB5\x03\xBF\x01t\x03f\x00B\x02\xCD\x01\x93\x03\x1A\x00n\x01q\x03\x1B\x00l\x01!\x01#\x04\xC3\x02-\x04\xED\x00\xE6\x00\xA4\x01\x02\x00\xA5\x01#\x01e\x00\xFD\x01!\x04\xEC\x01\xFE\x01\x90\x03\xCF\x01u\x03t\x02}\x003\x00\x19\x00,\x00.\x00\xFD\x02|\x00\x17\x00\x19\x04z\x02<\x00p\x03o\x02x\x02O\x01&\x00\xA9\x02\x96\x00\xB4\x030\x01M\x01\x9F\x03C\x02\x18\x04\xE7\x01>\x00J\x02\xA6\x01y\x00\xD2\x01\xBC\x01m\x02v\x02\xB7\x03\xB6\x03?\x00s\x03/\x01\x1A\x04\x9A\x02g\x02/\x00\x9B\x02e\x02\x98\x02f\x02\xA8\x02{\x02|\x02\x94\x00\xD0\x012\x01I\x02\x1D\x00A\x02\x16\x00d\x02}\x02-\x00\xA2\x03\xFE\x02=\x00\x7F\x00\x89\x02\x92\x03\xA1\x02\xAB\x02\xEF\x01\xA0\x02m\x01\xFF\x010\x00\x0E\x04\xE7\x00\xEF\x00.\x04/\x04\x99\x02\xC0\x02\x1F\x00-\x011\x01,\x04\xFF\xFF"
@@ -28383,7 +28383,7 @@ PostEvent_Records_p4_s58_0:	# REC_PostEvent_Records_p4_s58 (58 bytes)
 PostEvent_Records_p4_s68_0:	# REC_PostEvent_Records_p4_s68 (68 bytes)
 	REC_PostEvent_Records_p4_s68	f0=358, x2="\x16\x02\x83\x01g\x01\xFD\x03e\x01\x17\x02\xFC\x03\x15\x02\x82\x01\xFF\x03)\x03\xED\x03(\x03\x1F\x02d\x01\x1E\x02+\x03\x80\x01\xFE\x03\x01\x04\x02\x04\x03\x04\xEC\x03\x1D\x02\xEE\x03*\x03\x14\x02\xEF\x03\x81\x01\x1C\x02\x00\x04\xFF\xFF\xFF\xFF"
 
-StyleRecordTable:	# 1080 x MusicStylistSetup (24 bytes each); read by InheritedProc 0x48429564 `call func_48414A4D_entry, [a2], 4`; ApDeleteEvent 0x48429901 `call func_484288AC_entry, [d2,d3,a2,a3], 0x54`; ChangeTitle 0x4842B3F1 `call ApDeleteEvent_entry, [d2], 0x18` (+77)
+StyleRecordTable:	# 1080 x MusicStylistSetup (24 bytes each); read by InheritedProc 0x48429564 `call GuiCallerTaskIdGet_entry, [a2], 4`; ApDeleteEvent 0x48429901 `call DeleteEventForTask_entry, [d2,d3,a2,a3], 0x54`; ChangeTitle 0x4842B3F1 `call ApDeleteEvent_entry, [d2], 0x18` (+77)
 	MusicStylistSetup	panel=StyleRecordTable_p0_0, name=Text_Disco_Hustling, era_pos=36, letter=11, letter_pos=20, x22="\x00\x00"	# [0]
 	MusicStylistSetup	panel=StyleRecordTable_p0_1, name=Text_Disco_Hustling+17, setup=1, era_pos=89, letter=19, letter_pos=40, x22="\x00\x00"
 	MusicStylistSetup	panel=StyleRecordTable_p0_2, name=Text_Disco_Hustling+34, setup=2, era_pos=109, letter=22, letter_pos=12, x22="\x00\x00"
@@ -29464,16 +29464,16 @@ StyleRecordTable:	# 1080 x MusicStylistSetup (24 bytes each); read by InheritedP
 	MusicStylistSetup	panel=StyleRecordTable_p0_325, name=Text_Disco_Hustling+18309, genre=10, style=26, setup=1, era=4, era_pos=110, letter=26, letter_pos=121, x22="\x00\x00"
 	MusicStylistSetup	panel=StyleRecordTable_p0_326, name=Text_Disco_Hustling+18326, genre=10, style=26, setup=2, era=4, era_pos=55, letter=15, letter_pos=2, x22="\x00\x00"
 	MusicStylistSetup	panel=StyleRecordTable_p0_327, name=Text_Disco_Hustling+18343, genre=10, style=26, setup=3, era=4, era_pos=12, letter=9, letter_pos=6, x22="\x00\x00"
-PostEvent_Records:	# 10 x REC_PostEvent_Records (12 bytes each); read by PostEvent 0x484293AD `call func_48414A4D_entry, [a2], 4`; func_4847D633 0x4847D633 `mov (4, a0), a0`; func_4847D633 0x4847D633 `mov (d1, a2), d1` (+16)
-	REC_PostEvent_Records	text=Text_Disco_Hustling+18360, index=PostEvent_Records_p4_s58_0, key=7, x10="\x00\x00"	# [0]
-	REC_PostEvent_Records	text=Text_Disco_Hustling+18377, index=PostEvent_Records_p4_s74_0, key=6, x10="\x00\x00"
-	REC_PostEvent_Records	text=Text_Disco_Hustling+18394, index=PostEvent_Records_p4_s68_0, key=8, x10="\x00\x00"
-	REC_PostEvent_Records	text=Text_Disco_Hustling+18411, index=PostEvent_Records_p4_s138_0, key=5, x10="\x00\x00"
-	REC_PostEvent_Records	text=Text_Disco_Hustling+18428, index=PostEvent_Records_p4_s258_0, key=4, x10="\x00\x00"
-	REC_PostEvent_Records	text=Text_Disco_Hustling+18445, index=PostEvent_Records_p4_s322_0, key=1, x10="\x00\x00"
-	REC_PostEvent_Records	text=Text_Disco_Hustling+18462, index=PostEvent_Records_p4_0, x10="\x00\x00"
-	REC_PostEvent_Records	text=Text_Disco_Hustling+18479, index=Str_N, key=3, x10="\x00\x00"
-	REC_PostEvent_Records	text=Text_Disco_Hustling+18496, index=PostEvent_Records_p4_s386_0, key=2, x10="\x00\x00"	# [8]
+PostEvent_Records:	# 10 x REC_PostEvent_Records (12 bytes each); read by PostEvent 0x484293AD `call GuiCallerTaskIdGet_entry, [a2], 4`; StyleEraHeaderBuild 0x4847D633 `mov (4, a0), a0`; StyleEraHeaderBuild 0x4847D633 `mov (d1, a2), d1` (+16)
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18360, U16ListLastIndex_a0=PostEvent_Records_p4_s58_0, key=7, x10="\x00\x00"	# [0]
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18377, U16ListLastIndex_a0=PostEvent_Records_p4_s74_0, key=6, x10="\x00\x00"
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18394, U16ListLastIndex_a0=PostEvent_Records_p4_s68_0, key=8, x10="\x00\x00"
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18411, U16ListLastIndex_a0=PostEvent_Records_p4_s138_0, key=5, x10="\x00\x00"
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18428, U16ListLastIndex_a0=PostEvent_Records_p4_s258_0, key=4, x10="\x00\x00"
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18445, U16ListLastIndex_a0=PostEvent_Records_p4_s322_0, key=1, x10="\x00\x00"
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18462, U16ListLastIndex_a0=PostEvent_Records_p4_0, x10="\x00\x00"
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18479, U16ListLastIndex_a0=Str_N, key=3, x10="\x00\x00"
+	REC_PostEvent_Records	text=Text_Disco_Hustling+18496, U16ListLastIndex_a0=PostEvent_Records_p4_s386_0, key=2, x10="\x00\x00"	# [8]
 	REC_PostEvent_Records	x10="\x00\x00"
 
 # 13 classes; a class id is (0x14 << 16) | its index here (ClassProc 0x4842A804 reads entry id & 0xFFFF, 0x18 bytes each)
@@ -29945,7 +29945,7 @@ MESSAGE_ResNames:
 .equ WELCOME_Classes_SLOT, 0x44
 WELCOME_Classes:
 	CLASS	Class_AcWelcomeScreen, CLASS_AcWelcomeScreen, WELCOME_Classes, proc=AcWelcomeScreenProc, parent=CLASS_Screen, allsize=40, selfsize=0, cname=ClassName_AcWelcomeScreen, sig=ClassSig_AcWelcomeScreen, fields=ClassFields_AcWelcomeScreen
-	CLASS	Class_AcMPVer, CLASS_AcMPVer, WELCOME_Classes, proc=func_4848A899, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcMPVer, sig=ClassSig_AcMPVer, fields=ClassFields_AcMPVer
+	CLASS	Class_AcMPVer, CLASS_AcMPVer, WELCOME_Classes, proc=VersionTextProc, parent=CLASS_PsParaBox, allsize=40, selfsize=0, cname=ClassName_AcMPVer, sig=ClassSig_AcMPVer, fields=ClassFields_AcMPVer
 	.space	24, 0x00
 WELCOME_Events:
 	.space	4, 0x00
@@ -29955,7 +29955,7 @@ WELCOME_Methods:
 # 2 Function procedures; a function id is (0x41 << 16) | its index (the names are the parallel table at slot 0x49)
 WELCOME_Functions:
 	IDNAME	FN_AcWelcomeScreenProc, AcWelcomeScreenProc, WELCOME_Functions, 0x41
-	IDNAME	FN_AcMPVerProc, func_4848A899, WELCOME_Functions, 0x41
+	IDNAME	FN_AcMPVerProc, VersionTextProc, WELCOME_Functions, 0x41
 	.space	4, 0x00
 
 WELCOME_FunctionNames:
@@ -34818,7 +34818,7 @@ PmemModeBoxProc_Table_4:	# 2 x u8, 144..146; read by PmemModeBoxProc 0x484AAC99:
 	tab_u8	144, 146
 MSAModeBoxProc_Table_4:	# 6 x u8, 0..255; read by MSAModeBoxProc 0x484AA5CE: `movbu  (d0, a2), d0`
 	tab_u8	0, 145, 146, 147, 255, 255
-FSWAssGridCheck_Table_2:	# 44 x u8, 0..255; read by FSWAssGridCheck 0x484A9AED: `movbu  (d0, a0), d1`; func_484AA579_entry 0x484AA534: `movbu  (d0, a0), d0`
+FSWAssGridCheck_Table_2:	# 44 x u8, 0..255; read by FSWAssGridCheck 0x484A9AED: `movbu  (d0, a0), d1`; FSWAssGridIndexFind_entry 0x484AA579: `movbu  (d0, a0), d0`
 	tab_u8	0, 65, 66, 144, 145, 179, 180, 192, 193, 194, 195, 196, 197, 198, 199, 178	# [0]
 	tab_u8	136, 146, 147, 148, 149, 64, 150, 153, 151, 191, 190, 173, 188, 176, 177, 184	# [16]
 	tab_u8	185, 160, 161, 162, 163, 164, 165, 189, 182, 183, 255, 255	# [32]
@@ -39228,11 +39228,11 @@ func_484FFF63_Table:
 	# 4 bytes read by func_484FF7C1 0x484FF7C1 `movbu (8, a0), d0` (+0, u8); the read fields at their widths (u8), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u8	10, 0, 0, 0	# +0
 
-func_484FFF63_Table_2:	# 9 x u32, 0..1215635464; read by func_484FFF63 0x484FFF63: `mov (a1), d0`; func_48508C96 0x48508C96: `mov (a1), d0` ...
+func_484FFF63_Table_2:	# 9 x u32, 0..1215635464; read by func_484FFF63 0x484FFF63: `mov (a1), d0`; CmpRecArrangePosGet 0x48508C96: `mov (a1), d0` ...
 	tab_u32	1214522360, 1215635384, 9, 1214522368, 1215635464, 4, 0, 0	# [0]
 	tab_u32	0	# [8]
 
-func_48500C60_Table:
+PartParamDumpLine_Table:
 	.long	Str_P_1
 	.long	Str_P_2
 	.long	Str_P_3

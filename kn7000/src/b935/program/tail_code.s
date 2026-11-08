@@ -232,7 +232,7 @@ KernelInit:
     movhu   d3, (0x50380d04)
     clr     d0
     mov     d0, (0x50380d08)
-    call    func_4C03CC4B_entry, 0, 0xc
+    call    KernelMemoryInit_entry, 0, 0xc
     mov     (0x50380cc0), d0
     mov     0x50380cc4, a2
     mov     0x44, d1
@@ -246,7 +246,7 @@ KernelInit:
     clr     d0
     movhu   d0, (0x50380cd0)
     movhu   d0, (0x50380cd4)
-    mov     func_4C03DD23, d0
+    mov     KernelIdleTask, d0
     mov     d0, (0x50380ce4)
     mov     (0x50380cc0), a0
     mov     0x50381094, d0
@@ -261,17 +261,17 @@ KernelInit:
     movhu   d0, (0x12, sp)
     clr     d0
     movhu   d0, (0x14, sp)
-    mov     func_4C03B514, d0
+    mov     KernelTimerTask, d0
     mov     d0, (0x18, sp)
     mov     0x1f4, d0
     mov     d0, (0x1c, sp)
-    call    func_4C03BB8A_entry, [d2,d3,a2,a3], 0x2c
+    call    KernelTaskCreateStarted_entry, [d2,d3,a2,a3], 0x2c
     mov     (0x50380cb8), d0
     mov     0x18, d1
     sub     d1, d0
     mov     d0, (0x50380cb8)
     movhu   d2, (0x50380d0c)
-    call    func_48447EF1_entry, 0, 0x24
+    call    KernelTickTaskInit_entry, 0, 0x24
     clr     d0
     movhu   d0, (0x50380d0c)
     mov     (0x50380cb8), d0
@@ -279,9 +279,9 @@ KernelInit:
     add     0x18, d0
     mov     d0, (0x50380cb8)
     clr     d0
-    call    func_4C03B894_entry, [d2,a2], 8
+    call    KernelTaskContextInit_entry, [d2,a2], 8
     call    KernelInitHook, 0, 0
-    call    func_4C03DCBF, 0, 0
+    call    KernelDispatchStart, 0, 0
     ret     [d2,d3,a2], 0x2c
 # KernelWaitRelease  (CPU 0x487b8dcb)
 #   in the data region's tail: a `call` target's register-save prologue
@@ -350,7 +350,7 @@ loc_487B8E2F:
     mulu    d2, d0
     mov     d0, a1
     add     0x503803a8, a1
-    call    func_4C03B900_entry, [a2], 4
+    call    KernelQueueRemove_entry, [a2], 4
     jmp     loc_487B8F1E
 loc_487B8E49:
     mov     a3, a0
@@ -361,7 +361,7 @@ loc_487B8E49:
     mulu    d0, d2
     mov     d2, a1
     add     0x50380218, a1
-    call    func_4C03B900_entry, [a2], 4
+    call    KernelQueueRemove_entry, [a2], 4
     jmp     loc_487B8F1E
 loc_487B8E63:
     mov     a3, a0
@@ -372,7 +372,7 @@ loc_487B8E63:
     mulu    d0, d2
     mov     d2, a1
     add     0x50380538, a1
-    call    func_4C03B900_entry, [a2], 4
+    call    KernelQueueRemove_entry, [a2], 4
     jmp     loc_487B8F1E
 loc_487B8E7D:
     mov     a3, a0
@@ -384,7 +384,7 @@ loc_487B8E7D:
     add     0x50380538, d0
     mov     8, a1
     add     d0, a1
-    call    func_4C03B900_entry, [a2], 4
+    call    KernelQueueRemove_entry, [a2], 4
     jmp     loc_487B8F1E
 loc_487B8E99:
     mov     a3, a0
@@ -395,7 +395,7 @@ loc_487B8E99:
     mulu    d2, d0
     mov     d0, a1
     add     0x50380600, a1
-    call    func_4C03B900_entry, [a2], 4
+    call    KernelQueueRemove_entry, [a2], 4
     bra     loc_487B8F1E
 loc_487B8EB2:
     mov     a3, a0
@@ -407,7 +407,7 @@ loc_487B8EB2:
     mov     d0, a1
     add     0x50380600, a1
     add     8, a1
-    call    func_4C03B900_entry, [a2], 4
+    call    KernelQueueRemove_entry, [a2], 4
 loc_487B8ECB:
     bra     loc_487B8F1E
 loc_487B8ECD:
@@ -419,7 +419,7 @@ loc_487B8ECD:
     mulu    d0, d2
     mov     d2, a1
     add     0x503809e8, a1
-    call    func_4C03B900_entry, [a2], 4
+    call    KernelQueueRemove_entry, [a2], 4
     bra     loc_487B8F1E
 loc_487B8EE6:
     mov     a3, a0
@@ -430,7 +430,7 @@ loc_487B8EE6:
     mulu    d2, d0
     mov     d0, a1
     add     0x50380964, a1
-    call    func_4C03B900_entry, [a2], 4
+    call    KernelQueueRemove_entry, [a2], 4
 loc_487B8EFD:
     bra     loc_487B8F1E
 loc_487B8EFF:
@@ -445,7 +445,7 @@ loc_487B8EFF:
     mulu    d0, d2
     mov     d2, a1
     add     0x50380088, a1
-    call    func_4C03B900_entry, [a2], 4
+    call    KernelQueueRemove_entry, [a2], 4
 loc_487B8F1E:
     mov     (0x38, a3), a0
     cmp     0, a0
@@ -455,7 +455,7 @@ loc_487B8F1E:
     beq     loc_487B8F34
 loc_487B8F2C:
     mov     a3, a0
-    call    func_4C03C410_entry, [a2,a3], 8
+    call    KernelTimeoutQueueRemove_entry, [a2,a3], 8
 loc_487B8F34:
     ret     [d2,a2,a3], 0x1c
 # KernelErrorHook  (CPU 0x487b8f37)
@@ -483,7 +483,7 @@ KernelWaitAbortHook:
 #   (0x50381408 in PROGRAM 941), then jmp KernelInit. The reset code's start-up
 #   0x48407BC1 and 0x4C03DD98 jump here. The KN6000's func_4C3F7793.
 KernelStart:
-    mov     (func_4C03CC4B_Var_3), a3
+    mov     (KernelMemoryInit_Var_3), a3
     mov     a3, sp
     jmp     KernelInit
 # KernelInitHook  (CPU 0x487b8f4b)
@@ -505,6 +505,6 @@ KernelTickIsrDefault:
     and     0xff0f, d0
     movhu   d0, (G6ICR)
     add     -4, sp
-    call    func_4C03DC87_entry, 0, 0xc
+    call    KernelTimerTaskWakeup_entry, 0, 0xc
     add     4, sp
     rets

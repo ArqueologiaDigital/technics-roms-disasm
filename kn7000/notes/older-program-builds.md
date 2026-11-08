@@ -214,13 +214,13 @@ The `func_` count is the number of function labels that no symbol file names:
   **`KeyZoneNoteResolve`** (`kn7000_b893_own.sym`), as are its 941 twin `func_484516EC` and 935's
   `0x484516AA`, by port.  The key-bed router (893 `func_48452422` / `func_48452E82`) calls it for a zone.
   It does nothing for a zone outside 0..0x23.  Otherwise it copies key and velocity and reads the zone's
-  part and that part's SOUND.  A TABLE tone (a kit: `func_48449207` = 2, tone record `+0x10 & 0xC0` =
-  0x40) has its key mapped by `func_48449462` (893 `func_48449420`) through the table that the tone
+  part and that part's SOUND.  A TABLE tone (a kit: `SoundKindGet` = 2, tone record `+0x10 & 0xC0` =
+  0x40) has its key mapped by `TableToneKeyMap` (893 `func_48449420`) through the table that the tone
   record's `+0x11` selects, when M3 0x2025 is 1.  Any other sound gets TRANSPOSE (M3 0x000003 - 64, when
-  M3 0x2013 is 1) plus `func_48451060(8, zone)`.  893's edit: the kit test is a call of
+  M3 0x2013 is 1) plus `KeyZoneParamGet(8, zone)`.  893's edit: the kit test is a call of
   **`SoundTableKeyMapOn`** (893 `0x4845027B` = 941 `0x484502BD`, the same code, named in
   `kn7000_manual.sym`; 941 and 935 inline the test).  A kit it rejects falls through to TRANSPOSE,
-  where 941 and 935 return with the key unchanged.  `func_48449207` and `func_48449462` keep their
+  where 941 and 935 return with the key unchanged.  `SoundKindGet` and `TableToneKeyMap` keep their
   `func_` names because the data source spells labels derived from them (`func_48449462_Records`,
   `_Table`).  The names proposed for the data regeneration are `SoundKindGet` and `TableToneKeyMap`.
   `0x484101FD` was already named (`DspUnitsResetUnused`, `kn7000_b893_own.sym`) when this lane started.

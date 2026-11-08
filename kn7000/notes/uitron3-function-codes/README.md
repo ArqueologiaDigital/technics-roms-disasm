@@ -135,7 +135,7 @@ of the firmware's own: 941 `0x4C03D7E2` (942 `0x4C03DB4A`, 893 `0x4C03D7CF`, KN2
 the KN6000 / KN6500 have neither it nor `sus_tsk`).  Its body (d0 = task id) counts the task's
 TCB +0x12 down by one and, at zero, makes the task ready if its wait state is 2 (suspended only) or
 clears the suspend bit 2: the inverse of `sus_tsk`, which counts +0x12 up (E_QOVR at 0x7FFF) and
-sets that bit.  `sus_tsk`'s three callers call it in mirror order (941 `func_4840139A`:
+sets that bit.  `sus_tsk`'s three callers call it in mirror order (941 `FdcPrgReadDataCmdTasksHeld`:
 `sus_tsk(7)`, `sus_tsk(3)`, work, `rsm_tsk(3)`, `rsm_tsk(7)`).  uITRON's `rsm_tsk` returns E_OBJ
 for a task that is not suspended; this body does not check, and nothing else in the image resumes.
 
@@ -176,10 +176,12 @@ the `V2` line wherever a block has one and prints the disagreement (`--codes`, `
 ## What is not named
 
 - Every error-reporting routine, every wrapper and every body a wrapper calls is named in all seven
-  trees.  Left as func_: the kernel's inner routines no wrapper calls directly and that report no
-  code (the poll cores such as 942 `func_4C03CD31`, the ready-queue and wait-queue helpers
-  `func_4C03B799`, `func_4C03B900`, `func_4C03BA81`, the interrupt lock pair `func_4C03BC8E` /
-  `func_4C03BC93` ...): the function codes say nothing about them.
+  trees.  This lane left as func_ the kernel's inner routines no wrapper calls directly and that
+  report no code (the poll cores such as 942 `func_4C03CD31`, the ready-queue and wait-queue
+  helpers, the interrupt lock pair ...): the function codes say nothing about them.  Lane
+  open14/kn7000-subsystems named many of them from their bodies (`KernelTaskReadyRemove`,
+  `KernelQueueRemove`, `KernelTaskReadyInsert`, `KernelPswGet` / `KernelPswSet` ...;
+  `../kn7000-subsystems/README.md`).
 - The callee records the kernel's `cre_*` services read (`REC_cre_flg_ArgA0`, 12 bytes:
   uITRON's `T_CFLG` {exinf, flgatr, iflgptn} by size) are not typed as uITRON packets yet; `T_CTSK`
   is (`tools/data_struct_names.py`).  Next step: name their fields from `cre_flg_Impl`'s reads.

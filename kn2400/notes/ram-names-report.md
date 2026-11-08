@@ -1,9 +1,9 @@
 # kn2400: RAM addresses named after the named routines that use them
 
 - RAM addresses referenced: 3621, operands 24232
-- accessor: 28 addresses, 148 operands
-- owner: 615 addresses, 2809 operands
+- accessor: 82 addresses, 615 operands
+- owner: 691 addresses, 2953 operands
 - not named:
-  -   2126 several users
-  -    814 one user, a func_ placeholder
-  -      2 accessor of an address a symbol file names already
+  -   2072 several users
+  -    737 one user, a func_ placeholder
+  -      3 accessor of an address a symbol file names already

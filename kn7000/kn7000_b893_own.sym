@@ -86,8 +86,14 @@
 ; 941's KeyZoneNoteResolve (0x484516EC) with an edited body: the same callers (the key-bed router func_48452422 /
 ; func_48452E82 here), the same zone check, part SOUND read and TRANSPOSE path, but the TABLE-tone test is a call of
 ; this build's SoundTableKeyMapOn (0x4845027B, 941 0x484502BD, same code) and a TABLE tone it rejects falls through to
-; the TRANSPOSE path, where 941 returns with the key unchanged.  func_48449420 here is 941's func_48449462 (key map).
-0x48451649  KeyZoneNoteResolve         ; (d0 = key zone 0..0x23, a1 = in {key, velocity}, a0 = out) 941 KeyZoneNoteResolve: key map func_48449420 when SoundTableKeyMapOn(sound) = 1, else TRANSPOSE (M3 0x000003 - 64 when M3 0x2013 = 1) plus func_48451060(8, zone) -- TABLE tones included
+; the TRANSPOSE path, where 941 returns with the key unchanged.  func_48449420 here is 941's TableToneKeyMap (key map).
+0x48451649  KeyZoneNoteResolve         ; (d0 = key zone 0..0x23, a1 = in {key, velocity}, a0 = out) 941 KeyZoneNoteResolve: key map func_48449420 when SoundTableKeyMapOn(sound) = 1, else TRANSPOSE (M3 0x000003 - 64 when M3 0x2013 = 1) plus KeyZoneParamGet(8, zone) -- TABLE tones included
+;
+; ---- the SD AUDIO fast-forward start (lane open14/kn7000-subsystems, 2026-11-07; N-99771106) ----
+; 941's SdAudFfStart (0x48579A66, which the offset map cannot place here) with an edited body: the same caller
+; (MainSDAudPlay_FwdSW), the same SdAudPlayGateGet = 2 test, the same flags and the same SdAudCmdKick, but no tempo
+; reload: 941 adds GetM3EmVal(4) -> TempoBpmReloadWrite before the kick.
+0x485788D8  SdAudFfStart               ; [WRAP+RAM+CALLER] needs SdAudPlayGateGet 2 (else -1): when the player is stopped (SdAudPlayerHalt_Var = 0) SdAudRewStart_Var := 1, seek flag SdAudPlayerHalt_Var_2 := 1 (forward), SdAudCmdKick, 0; only caller MainSDAudPlay_FwdSW; 941 SdAudFfStart minus its tempo reload
 ;
 ; ---- end of the image ----
 0x487F55CE  LibLoadDescriptorTail   ; one byte, 0xF0, after the library loader descriptor's last record (flags 0x8003); the loader (func_484D782E) stops at the record whose flags have bit 15 set and nothing else reads past it -- 941, 935 and 929 end at that record; [INFERENCE] left by the tool that built this image

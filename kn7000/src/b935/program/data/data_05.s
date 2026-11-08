@@ -34739,30 +34739,30 @@ zlib_487B06EC:	# DemoSong10: its panel-memory bank, 14976 bytes, stored as a zli
 .mnbase 0x4FC4F4FC   # the initialised-RAM image: labels are the RAM addresses ResetEntry copies it to
 
 
-func_48400084_Records:	# 3 x REC_func_48400084_Records (4 bytes each); read by func_48400084 0x48400084 `movbu (func_48400084_Records), d0`; func_48400084 0x48400084 `movbu d0, (func_48400084_Records)`; ResetEntry 0x484079EE `mov d0, (a1)`
-	REC_func_48400084_Records	x1="\xFF\xFF\xFF"
-	REC_func_48400084_Records	x1="\x00\x00\x00"
-	REC_func_48400084_Records	x1="\x00\xFF\xFF"
+FdcPrgMotorCtl_Records:	# 3 x REC_FdcPrgMotorCtl_Records (4 bytes each); read by FdcPrgMotorCtl 0x48400084 `movbu (FdcPrgMotorCtl_Records), d0`; FdcPrgMotorCtl 0x48400084 `movbu d0, (FdcPrgMotorCtl_Records)`; ResetEntry 0x484079EE `mov d0, (a1)`
+	REC_FdcPrgMotorCtl_Records	x1="\xFF\xFF\xFF"
+	REC_FdcPrgMotorCtl_Records	x1="\x00\x00\x00"
+	REC_FdcPrgMotorCtl_Records	x1="\x00\xFF\xFF"
 
-func_48402703_Table:	# 4 x u8, 255..255; read by func_48402703 0x48402703: `movbu (func_48402703_Table), d0`; func_48402703 0x48402703: `movbu d0, (func_48402703_Table)`
+FdcPrgMediaChangePoll_Table:	# 4 x u8, 255..255; read by FdcPrgMediaChangePoll 0x48402703: `movbu (FdcPrgMediaChangePoll_Table), d0`; FdcPrgMediaChangePoll 0x48402703: `movbu d0, (FdcPrgMediaChangePoll_Table)`
 	tab_u8	255, 255, 255, 255
-func_4840278D_Table:	# 4 x u8, 0..255; read by func_4840278D 0x4840278D: `movbu (func_4840278D_Table), d0`; func_4840278D 0x4840278D: `movbu d0, (func_4840278D_Table)`
+FdcStrap3MotorCtl_Table:	# 4 x u8, 0..255; read by FdcStrap3MotorCtl 0x4840278D: `movbu (FdcStrap3MotorCtl_Table), d0`; FdcStrap3MotorCtl 0x4840278D: `movbu d0, (FdcStrap3MotorCtl_Table)`
 	tab_u8	0, 255, 255, 255
 
-func_48404920_Var:	# u32, initial value of a RAM variable; read / written by func_48404920 0x48404920: `mov (func_48404920_Var), d0`; func_48404920 0x48404920: `mov d0, (func_48404920_Var)`
+FdcStrap3SeekTestLoop_Var:	# u32, initial value of a RAM variable; read / written by FdcStrap3SeekTestLoop 0x48404920: `mov (FdcStrap3SeekTestLoop_Var), d0`; FdcStrap3SeekTestLoop 0x48404920: `mov d0, (FdcStrap3SeekTestLoop_Var)`
 	.long	0
 
-func_48404B2C_Table:	# 4 x s8, -1..0; read by func_48404B2C 0x48404B2C: `movbu (func_48404B2C_Table), d0`; func_48404B2C 0x48404B2C: `movbu d0, (func_48404B2C_Table)` ...
+FdcStrap3DiskSpinning_Table:	# 4 x s8, -1..0; read by FdcStrap3DiskSpinning 0x48404B2C: `movbu (FdcStrap3DiskSpinning_Table), d0`; FdcStrap3DiskSpinning 0x48404B2C: `movbu d0, (FdcStrap3DiskSpinning_Table)` ...
 	tab_s8	0, -1, -1, -1
 
-func_48404B2C_Var:	# u32, initial value of a RAM variable; read / written by func_48404B2C 0x48404B2C: `mov (func_48404B2C_Var), d1`; func_48404B64 0x48404B64: `mov d0, (func_48404B2C_Var)`
+FdcStrap3DiskSpinning_Var:	# u32, initial value of a RAM variable; read / written by FdcStrap3DiskSpinning 0x48404B2C: `mov (FdcStrap3DiskSpinning_Var), d1`; FdcStrap3IndexIsr 0x48404B64: `mov d0, (FdcStrap3DiskSpinning_Var)`
 	.long	0
-func_48404BA1_Var:	# u8, initial value of a RAM variable; read / written by func_48404BA1 0x48404BA1: `movbu d0, (func_48404BA1_Var)`
+FdcStrap3DiskPresent_Var:	# u8, initial value of a RAM variable; read / written by FdcStrap3DiskPresent 0x48404BA1: `movbu d0, (FdcStrap3DiskPresent_Var)`
 	.byte	0
 
-func_48404BA1_Table:	# 3 x u8, 0..255; read by func_48404BA1 0x48404BA1: `movbu (func_48404BA1_Table), d0`; func_48404BA1 0x48404BA1: `movbu d0, (func_48404BA1_Table)`
+FdcStrap3DiskPresent_Table:	# 3 x u8, 0..255; read by FdcStrap3DiskPresent 0x48404BA1: `movbu (FdcStrap3DiskPresent_Table), d0`; FdcStrap3DiskPresent 0x48404BA1: `movbu d0, (FdcStrap3DiskPresent_Table)`
 	tab_u8	0, 255, 255
-func_48404C9B_Table:	# 4 x u8, 255..255; read by func_48404C9B 0x48404C9B: `movbu (func_48404C9B_Table), d0`; func_48404C9B 0x48404C9B: `movbu d0, (func_48404C9B_Table)`
+FdcStrap3MediaChangePoll_Table:	# 4 x u8, 255..255; read by FdcStrap3MediaChangePoll 0x48404C9B: `movbu (FdcStrap3MediaChangePoll_Table), d0`; FdcStrap3MediaChangePoll 0x48404C9B: `movbu d0, (FdcStrap3MediaChangePoll_Table)`
 	tab_u8	255, 255, 255, 255
 SndCmdStreamWrite_Table:	# 2 x s16, 3..3; read by TgcBufWrite 0x4C003A60: `movhu  (d0, a0), d1`
 	tab_s16	3, 3
@@ -34796,7 +34796,7 @@ func_4C008071_Table:	# 134 x u32, 0..4294967040; read by func_4C008071 0x4C00807
 	tab_u32	2256310, 3197650, 4216746, 5329498, 6556983, 7927715, 9481217, 11273900	# [112]
 	tab_u32	13389162, 15955782, 19183815, 23441087, 29436404, 38735938, 55627445, 97599276	# [120]
 	tab_u32	4294967040, 4294967040, 4294967040, 0, 0, 4294901760	# [128]
-MainMmmControl_Table:	# 256 x u32, 0..4278190080; read by MainMmmControl 0x484162FA: `mov   (a1), d0`; MainMmmControl 0x484162FA: `mov   a0, (a1)` ...; ends at +1024, where MainMmmControl 0x484162FA's loop stops (`cmp func_484165A4_Var, a1`)
+MainMmmControl_Table:	# 256 x u32, 0..4278190080; read by MainMmmControl 0x484162FA: `mov   (a1), d0`; MainMmmControl 0x484162FA: `mov   a0, (a1)` ...; ends at +1024, where MainMmmControl 0x484162FA's loop stops (`cmp MallocSbrk_Var, a1`)
 	tab_u32	4278190080, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [8]
 	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [16]
@@ -34830,9 +34830,9 @@ MainMmmControl_Table:	# 256 x u32, 0..4278190080; read by MainMmmControl 0x48416
 	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [240]
 	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [248]
 
-func_484165A4_Var:	# u32, initial value of a RAM variable; read / written by func_484165A4 0x484165A4: `mov (func_484165A4_Var), a0`; func_484165A4 0x484165A4: `mov d0, (func_484165A4_Var)`
+MallocSbrk_Var:	# u32, initial value of a RAM variable; read / written by MallocSbrk 0x484165A4: `mov (MallocSbrk_Var), a0`; MallocSbrk 0x484165A4: `mov d0, (MallocSbrk_Var)`
 	.long	0x50022004
-func_484165A4_Var_2:	# u32, initial value of a RAM variable; read / written by func_484165A4 0x484165A4: `mov (func_484165A4_Var_2), a0`; func_484165A4 0x484165A4: `mov (func_484165A4_Var_2), d0` ...
+MallocSbrk_Var_2:	# u32, initial value of a RAM variable; read / written by MallocSbrk 0x484165A4: `mov (MallocSbrk_Var_2), a0`; MallocSbrk 0x484165A4: `mov (MallocSbrk_Var_2), d0` ...
 	.long	32768
 Malloc_Var:	# u32, initial value of a RAM variable; read / written by Malloc 0x484165E3: `mov (Malloc_Var), a0`; Malloc 0x484165E3: `mov (Malloc_Var), a2` ...
 	.long	0
@@ -35014,7 +35014,7 @@ AcChordBoxProc_Table_3:
 
 AcTransposeBoxProc_Var:	# u32, initial value of a RAM variable; read / written by AcTransposeBoxProc 0x48421648: `mov (AcTransposeBoxProc_Var), d1`; AcTransposeBoxProc 0x48421648: `mov d0, (AcTransposeBoxProc_Var)`
 	.long	1
-func_4842250D_Var:	# u32, initial value of a RAM variable; read / written by func_4842250D 0x4842250D: `mov (func_4842250D_Var), d0`; func_484225E5 0x484225E5: `mov d0, (func_4842250D_Var)`
+UpdateScreen_Impl_Var:	# u32, initial value of a RAM variable; read / written by UpdateScreen_Impl 0x4842250D: `mov (UpdateScreen_Impl_Var), d0`; SetNeedUpdate_Impl 0x484225E5: `mov d0, (UpdateScreen_Impl_Var)`
 	.long	1
 
 ModeProc_Table:	# 4 x u32, 917504..917504; read by ModeProc 0x4842ADEE: `mov   (d0, a0), d0`; ModeProc 0x4842ADEE: `mov   (d0, a0), d1` ...
@@ -35055,28 +35055,28 @@ DefaultWindow_parent:	# u32, initial value of a RAM variable: the Window Default
 DefaultWindow_child:	# u32, initial value of a RAM variable: the Window DefaultWindow's `child` (+0x28), loaded and dereferenced by WindowProc 0x4841805F: `add 0x28, a1 / mov (a1), a0` -> `mov (a0), d0`
 	.long	0xffffffff
 
-func_48431ED1_Var:	# u8, initial value of a RAM variable; read / written by func_48431ED1 0x48431ED1: `movbu (func_48431ED1_Var), d0`; func_48431F14 0x48431F14: `movbu (func_48431ED1_Var), d0` ...
+UserPadRecPartErase_Var:	# u8, initial value of a RAM variable; read / written by UserPadRecPartErase 0x48431ED1: `movbu (UserPadRecPartErase_Var), d0`; UserPadMeasuresDelete 0x48431F14: `movbu (UserPadRecPartErase_Var), d0` ...
 	.byte	0
-func_48431ED1_Var_2:	# u8, initial value of a RAM variable; read / written by func_48431ED1 0x48431ED1: `movbu (func_48431ED1_Var_2), d0`; func_484323BE 0x484323BE: `movbu (func_48431ED1_Var_2), d0` ...
+UserPadRecPartErase_Var_2:	# u8, initial value of a RAM variable; read / written by UserPadRecPartErase 0x48431ED1: `movbu (UserPadRecPartErase_Var_2), d0`; UserPadRecPartGet 0x484323BE: `movbu (UserPadRecPartErase_Var_2), d0` ...
 	.byte	0
-func_484323E6_Var:	# u8, initial value of a RAM variable; read / written by func_484323E6 0x484323E6: `movbu (func_484323E6_Var), d0`; func_484323EF 0x484323EF: `movbu (func_484323E6_Var), d1` ...
+UserPadAllEraseGet_Var:	# u8, initial value of a RAM variable; read / written by UserPadAllEraseGet 0x484323E6: `movbu (UserPadAllEraseGet_Var), d0`; UserPadAllEraseSet 0x484323EF: `movbu (UserPadAllEraseGet_Var), d1` ...
 	.byte	0
-func_4843240B_Var:	# u8, initial value of a RAM variable; read / written by func_4843240B 0x4843240B: `movbu (func_4843240B_Var), d0`; func_48432414 0x48432414: `movbu (func_4843240B_Var), d1` ...
+UserPadNoteClearGet_Var:	# u8, initial value of a RAM variable; read / written by UserPadNoteClearGet 0x4843240B: `movbu (UserPadNoteClearGet_Var), d0`; UserPadNoteClearSet 0x48432414: `movbu (UserPadNoteClearGet_Var), d1` ...
 	.byte	0
-func_4843BB8E_Var:	# u8, initial value of a RAM variable; read / written by func_4843BB8E 0x4843BB8E: `movbu (func_4843BB8E_Var), d0`; func_4843BB8E 0x4843BB8E: `movbu d2, (func_4843BB8E_Var)` ...
+CmpStyleSelect_Var:	# u8, initial value of a RAM variable; read / written by CmpStyleSelect 0x4843BB8E: `movbu (CmpStyleSelect_Var), d0`; CmpStyleSelect 0x4843BB8E: `movbu d2, (CmpStyleSelect_Var)` ...
 	.byte	0
-func_4843BB8E_Var_2:	# u8, initial value of a RAM variable; read / written by func_4843BB8E 0x4843BB8E: `movbu (func_4843BB8E_Var_2), d1`; func_4843BBE7 0x4843BBE7: `movbu (func_4843BB8E_Var_2), d0` ...
+CmpStyleSelect_Var_2:	# u8, initial value of a RAM variable; read / written by CmpStyleSelect 0x4843BB8E: `movbu (CmpStyleSelect_Var_2), d1`; CmpVariationSelect 0x4843BBE7: `movbu (CmpStyleSelect_Var_2), d0` ...
 	.byte	0
-func_4843BB8E_Var_3:	# u8, initial value of a RAM variable; read / written by func_4843BB8E 0x4843BB8E: `movbu d0, (func_4843BB8E_Var_3)`; func_4843BBDE 0x4843BBDE: `movbu (func_4843BB8E_Var_3), d0` ...
+CmpStyleSelect_Var_3:	# u8, initial value of a RAM variable; read / written by CmpStyleSelect 0x4843BB8E: `movbu d0, (CmpStyleSelect_Var_3)`; CmpCurVariationGet 0x4843BBDE: `movbu (CmpStyleSelect_Var_3), d0` ...
 	.byte	0
-func_4843BD0A_Var:	# u8, initial value of a RAM variable; read / written by func_4843BD0A 0x4843BD0A: `movbu (func_4843BD0A_Var), d0`; func_4843BD13 0x4843BD13: `movbu d0, (func_4843BD0A_Var)` ...
+CmpRecPartGet_Var:	# u8, initial value of a RAM variable; read / written by CmpRecPartGet 0x4843BD0A: `movbu (CmpRecPartGet_Var), d0`; CmpRecPartSet 0x4843BD13: `movbu d0, (CmpRecPartGet_Var)` ...
 	.byte	0
-func_4843BD1E_Var:	# u8, initial value of a RAM variable; read / written by func_4843BD1E 0x4843BD1E: `movbu (func_4843BD1E_Var), d0`; func_4843BD27 0x4843BD27: `movbu (func_4843BD1E_Var), d1` ...
+CmpAllEraseGet_Var:	# u8, initial value of a RAM variable; read / written by CmpAllEraseGet 0x4843BD1E: `movbu (CmpAllEraseGet_Var), d0`; CmpAllEraseSet 0x4843BD27: `movbu (CmpAllEraseGet_Var), d1` ...
 	.byte	0
 
-func_4843BD43_Table:	# 3 x u8, 0..255; read by func_4843BD43 0x4843BD43: `movbu (func_4843BD43_Table), d0`; func_4843BD4C 0x4843BD4C: `movbu (func_4843BD43_Table), d1` ...
+CmpNoteClearGet_Table:	# 3 x u8, 0..255; read by CmpNoteClearGet 0x4843BD43: `movbu (CmpNoteClearGet_Table), d0`; CmpNoteClearSet 0x4843BD4C: `movbu (CmpNoteClearGet_Table), d1` ...
 	tab_u8	0, 255, 255
-func_4844BF9D_Table:	# 128 x u8, 0..39; read by func_4844BF9D_entry 0x4844B4A2: `movbu  (d0, a0), d2`; func_4844BF9D_entry 0x4844B4A2: `movbu  (d1, a0), d2` ...
+func_4844BF9D_Table:	# 128 x u8, 0..39; read by func_4844BF9D_entry 0x4844B6FB: `movbu  (d0, a0), d2`; func_4844BF9D_entry 0x4844B6FB: `movbu  (d1, a0), d2` ...
 	tab_u8	0, 1, 0, 3, 16, 16, 16, 22, 24, 26, 28, 30, 32, 34, 36, 38	# [0]
 	tab_u8	17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 0, 0, 0, 0	# [16]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [32]
@@ -35093,7 +35093,7 @@ func_4844BF9D_Table_2:	# 51 x u16, 0..2068; read by func_4844BF9D 0x4844BF9D: `m
 	tab_u16	1534, 1761, 2068	# [48]
 func_4844BF9D_Table_4:	# 6 x u8, 0..3; read by func_4844BF9D 0x4844BF9D: `movbu (d0, a1), d1`; func_4844CA2A 0x4844CA2A: `movbu (d0, a1), d1`
 	tab_u8	0, 1, 2, 1, 2, 3
-func_4844BF9D_Table_3:	# 8 x u8, 0..255; read by func_4844BF9D_entry 0x4844B4A2: `movbu  (d0, a1), d0`; func_4844BF9D_entry 0x4844B4A2: `movbu  (d0, a2), d0` ...
+func_4844BF9D_Table_3:	# 8 x u8, 0..255; read by func_4844BF9D_entry 0x4844B6FB: `movbu  (d0, a1), d0`; func_4844BF9D_entry 0x4844B6FB: `movbu  (d0, a2), d0` ...
 	tab_u8	0, 16, 32, 48, 64, 80, 255, 255
 
 func_4844DADE_Records:	# 3 x REC_func_4844DADE_Records (2 bytes each); read by func_4844DADE 0x4844DADE `movbu (func_4844DADE_Records), d0`; func_4844DADE 0x4844DADE `movbu (func_4844DADE_Records+1), d0`; func_4844DADE 0x4844DADE `movhu (a1), d0` (+9)
@@ -35138,7 +35138,7 @@ func_484532B6_Table:	# 4 x u16, 0..0; read by func_484532B6 0x484532B6: `movhu  
 func_484532B6_Table_2:	# 6 x u16, 0..0; read by func_484532B6 0x484532B6: `movhu  d0, (a0)`; func_48453461 0x48453461: `movhu  (a3), d1`
 	tab_u16	0, 0, 0, 0, 0, 0
 
-func_4845730E_Table:
+DemoSongLoad_Table:
 	.long	zlib_487964E8
 	.long	zlib_4879676C
 	.long	zlib_487969FC
@@ -35151,7 +35151,7 @@ func_4845730E_Table:
 	.long	zlib_48797DB0
 	.long	data_4872978C
 	.long	data_4872978D
-func_4845730E_Table_2:
+DemoSongLoad_Table_2:
 	.long	zlib_487980B8
 	.long	zlib_4879BE44
 	.long	zlib_4879EE80
@@ -35164,7 +35164,7 @@ func_4845730E_Table_2:
 	.long	zlib_487AC184
 	.long	data_48729788
 	.long	data_48729789
-func_4845730E_Table_3:
+DemoSongLoad_Table_3:
 	.long	zlib_487AE184
 	.long	zlib_487AE5AC
 	.long	zlib_487AE9D4
@@ -35178,66 +35178,66 @@ func_4845730E_Table_3:
 	.long	data_4872978A
 	.long	data_4872978B
 
-func_48457557_Table:	# 4 x u8, 0..255; read by func_48457557 0x48457557: `movbu (func_48457557_Table), d0`; func_48457557 0x48457557: `movbu d0, (func_48457557_Table)`
+SeqStatusBitsService_Table:	# 4 x u8, 0..255; read by SeqStatusBitsService 0x48457557: `movbu (SeqStatusBitsService_Table), d0`; SeqStatusBitsService 0x48457557: `movbu d0, (SeqStatusBitsService_Table)`
 	tab_u8	0, 255, 255, 255
 func_4845D1A1_Table:	# 4 x u8, 0..255; read by func_4845D1A1 0x4845D1A1: `movbu (func_4845D1A1_Table), d0`; func_4845D202 0x4845D202: `movbu d0, (func_4845D1A1_Table)`
 	tab_u8	0, 255, 255, 255
 func_4846134B_Table:	# 2 x u16, 0..65535; read by func_4846134B 0x4846134B: `movhu (func_4846134B_Table), d2`; func_4846134B 0x4846134B: `movhu (func_4846134B_Table), d3` ...
 	tab_u16	0, 65535
-func_4846FE8E_Table:	# 4 x s8, -1..1; read by func_4846FE8E 0x4846FE8E: `movbu d0, (func_4846FE8E_Table)`; func_4847017A 0x4847017A: `movbu (func_4846FE8E_Table), d0` ...
+FloppySectorRead_Table:	# 4 x s8, -1..1; read by FloppySectorRead 0x4846FE8E: `movbu d0, (FloppySectorRead_Table)`; FdSectorsWriteLoop 0x4847017A: `movbu (FloppySectorRead_Table), d0` ...
 	tab_s8	1, -1, -1, -1
 
-func_48470306_Var:	# s8, initial value of a RAM variable; read / written by func_48470306 0x48470306: `movbu (func_48470306_Var), d0`; func_48470306 0x48470306: `movbu d0, (func_48470306_Var)` ...
+SdSectorRead_Var:	# s8, initial value of a RAM variable; read / written by SdSectorRead 0x48470306: `movbu (SdSectorRead_Var), d0`; SdSectorRead 0x48470306: `movbu d0, (SdSectorRead_Var)` ...
 	.byte	0
 
-func_48470306_Table:	# 3 x s8, -1..1; read by func_48470306 0x48470306: `movbu d0, (func_48470306_Table)`; func_4847055D 0x4847055D: `movbu (func_48470306_Table), d0` ...
+SdSectorRead_Table:	# 3 x s8, -1..1; read by SdSectorRead 0x48470306: `movbu d0, (SdSectorRead_Table)`; SdSectorsWriteLoop 0x4847055D: `movbu (SdSectorRead_Table), d0` ...
 	tab_s8	1, -1, -1
 
-func_484706BE_Var:	# u8, initial value of a RAM variable; read / written by func_484706BE 0x484706BE: `movbu d0, (func_484706BE_Var)`
+MediaChangeAck_Var:	# u8, initial value of a RAM variable; read / written by MediaChangeAck 0x484706BE: `movbu d0, (MediaChangeAck_Var)`
 	.byte	1
 
-func_484706A6_Table:	# 3 x u8, 1..255; read by func_484706A6 0x484706A6: `movbu d0, (func_484706A6_Table)`; func_484706BE 0x484706BE: `movbu (func_484706A6_Table), d0` ...
+MediaTypeCacheSet_Table:	# 3 x u8, 1..255; read by MediaTypeCacheSet 0x484706A6: `movbu d0, (MediaTypeCacheSet_Table)`; MediaChangeAck 0x484706BE: `movbu (MediaTypeCacheSet_Table), d0` ...
 	tab_u8	1, 255, 255
 
-func_484706A6_Var:	# u32, initial value of a RAM variable; read / written by func_484706A6 0x484706A6: `mov d0, (func_484706A6_Var)`; func_484706BE 0x484706BE: `mov d0, (func_484706A6_Var)` ...
+MediaTypeCacheSet_Var:	# u32, initial value of a RAM variable; read / written by MediaTypeCacheSet 0x484706A6: `mov d0, (MediaTypeCacheSet_Var)`; MediaChangeAck 0x484706BE: `mov d0, (MediaTypeCacheSet_Var)` ...
 	.long	1
-func_48472249_Var:	# u32, initial value of a RAM variable; read / written by func_48472249 0x48472249: `mov (func_48472249_Var), d0`; func_484724F2 0x484724F2: `mov d0, (func_48472249_Var)` ...
+FileStreamReaderTask_Var:	# u32, initial value of a RAM variable; read / written by FileStreamReaderTask 0x48472249: `mov (FileStreamReaderTask_Var), d0`; FileStreamOpen 0x484724F2: `mov d0, (FileStreamReaderTask_Var)` ...
 	.long	0
 
-func_484721FD_Table:	# 4 x u8, 0..255; read by func_484721FD 0x484721FD: `movbu (func_484721FD_Table), d0`; func_48472422 0x48472422: `movbu (func_484721FD_Table), d0` ...
+FileStreamBlockFill_Table:	# 4 x u8, 0..255; read by FileStreamBlockFill 0x484721FD: `movbu (FileStreamBlockFill_Table), d0`; FileStreamClose 0x48472422: `movbu (FileStreamBlockFill_Table), d0` ...
 	tab_u8	0, 255, 255, 255
 
-func_48472571_Var:	# u32, initial value of a RAM variable; read / written by func_48472571 0x48472571: `mov (func_48472571_Var), d0`; func_48472571 0x48472571: `mov (func_48472571_Var), d1` ...
+StreamTestDataSmfStep_Var:	# u32, initial value of a RAM variable; read / written by StreamTestDataSmfStep 0x48472571: `mov (StreamTestDataSmfStep_Var), d0`; StreamTestDataSmfStep 0x48472571: `mov (StreamTestDataSmfStep_Var), d1` ...
 	.long	0
 
-func_48472571_Table:	# 2 x s16, -1..0; read by func_48472571 0x48472571: `movhu (func_48472571_Table), d0`; func_48472571 0x48472571: `movhu d0, (func_48472571_Table)`
+StreamTestDataSmfStep_Table:	# 2 x s16, -1..0; read by StreamTestDataSmfStep 0x48472571: `movhu (StreamTestDataSmfStep_Table), d0`; StreamTestDataSmfStep 0x48472571: `movhu d0, (StreamTestDataSmfStep_Table)`
 	tab_s16	0, -1
-func_4847292F_Table:	# 4 x s8, -1..0; read by func_4847292F 0x4847292F: `movbu (func_4847292F_Table), d0`; func_4847292F 0x4847292F: `movbu d0, (func_4847292F_Table)`
+FileStreamMbxInit_Table:	# 4 x s8, -1..0; read by FileStreamMbxInit 0x4847292F: `movbu (FileStreamMbxInit_Table), d0`; FileStreamMbxInit 0x4847292F: `movbu d0, (FileStreamMbxInit_Table)`
 	tab_s8	0, -1, -1, -1
-func_48472966_Table:	# 4 x s8, -1..0; read by func_48472966 0x48472966: `movbu (func_48472966_Table), d0`; func_48472966 0x48472966: `movbu d0, (func_48472966_Table)`
+SdJobPost_Table:	# 4 x s8, -1..0; read by SdJobPost 0x48472966: `movbu (SdJobPost_Table), d0`; SdJobPost 0x48472966: `movbu d0, (SdJobPost_Table)`
 	tab_s8	0, -1, -1, -1
-func_48472AEF_Table_2:	# 19 x u16, 0..0; read by func_48472AEF 0x48472AEF: `movhu  (a1), d0`; func_48472AEF 0x48472AEF: `movhu  d0, (func_48472AEF_Table_2)` ...
+TechniChordUpdate_Table_2:	# 19 x u16, 0..0; read by TechniChordUpdate 0x48472AEF: `movhu  (a1), d0`; TechniChordUpdate 0x48472AEF: `movhu  d0, (TechniChordUpdate_Table_2)` ...
 	tab_u16	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u16	0, 0, 0, 0, 0, 0, 0	# [12]
 
-func_48472AEF_Var:	# s8, initial value of a RAM variable; read / written by func_48472AEF 0x48472AEF: `movbu (func_48472AEF_Var), d0`; func_48472AEF 0x48472AEF: `movbu d0, (a0)` ...
+func_48472AEF_Var:	# s8, initial value of a RAM variable; read / written by TechniChordUpdate 0x48472AEF: `movbu (func_48472AEF_Var), d0`; TechniChordUpdate 0x48472AEF: `movbu d0, (a0)` ...
 	.byte	0
-func_48472AEF_Var_2:	# s8, initial value of a RAM variable; read / written by func_48472AEF 0x48472AEF: `movbu d0, (1, a0)`; func_48472AEF 0x48472AEF: `movbu d0, (1, a1)` ...
+TechniChordUpdate_Var:	# s8, initial value of a RAM variable; read / written by TechniChordUpdate 0x48472AEF: `movbu d0, (1, a0)`; TechniChordUpdate 0x48472AEF: `movbu d0, (1, a1)` ...
 	.byte	0
 
-func_48472AEF_Table_3:	# 20 x u16, 0..0; read by func_48472AEF 0x48472AEF: `movhu  d0, (a0)`; func_48473790 0x48473790: `movhu  (a1), d0` ...
+TechniChordUpdate_Table_3:	# 20 x u16, 0..0; read by TechniChordUpdate 0x48472AEF: `movhu  d0, (a0)`; TechniChordNotesDiffSend 0x48473790: `movhu  (a1), d0` ...
 	tab_u16	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u16	0, 0, 0, 0, 0, 0, 0, 0	# [12]
 
-func_48472AEF_Table_4:	# REC_func_48472D01_ArgA0 (8 bytes): the layout func_48472D01 0x48472D01 reads through its argument a0 (passed by func_48472AEF 0x48472AEF `call func_48472D01_entry, [d2,d3,a2,a3], 0x10`)
-	REC_func_48472D01_ArgA0	x2="\x00\x00", x6="\x00\x00"
+TechniChordUpdate_Table_4:	# REC_TechniChordHeldKeyFind_ArgA0 (8 bytes): the layout TechniChordHeldKeyFind 0x48472D01 reads through its argument a0 (passed by TechniChordUpdate 0x48472AEF `call TechniChordHeldKeyFind_entry, [d2,d3,a2,a3], 0x10`)
+	REC_TechniChordHeldKeyFind_ArgA0	x2="\x00\x00", x6="\x00\x00"
 	# then 15 x u16 up to the next label, which no instruction is seen to read (the table the field reads ran on into them)
 	tab_u16	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +8
 
-func_48472AEF_Var_3:	# 2 x u8, 0..0; read by func_48472AEF_entry 0x48471641: `movbu  (a0), d0`; func_48472AEF_entry 0x48471641: `movbu  (a1), d0`
+TechniChordUpdate_Var_3:	# 2 x u8, 0..0; read by TechniChordUpdate_entry 0x48472AEF: `movbu  (a0), d0`; TechniChordUpdate_entry 0x48472AEF: `movbu  (a1), d0`
 	tab_u8	0, 0
 
-func_48473A44_Var:	# u32, initial value of a RAM variable; read / written by func_48473A44 0x48473A44: `mov (func_48473A44_Var), d0`; func_48473A44 0x48473A44: `mov d0, (func_48473A44_Var)` ...
+TechniChordDelayTick_Var:	# u32, initial value of a RAM variable; read / written by TechniChordDelayTick 0x48473A44: `mov (TechniChordDelayTick_Var), d0`; TechniChordDelayTick 0x48473A44: `mov d0, (TechniChordDelayTick_Var)` ...
 	.long	0
 
 configuration_table:	# zlib 1.0.4 deflate.c: per level {good_length, max_lazy, nice_length, max_chain; func} (10 x config; found by its contents, zlib_tables.py)
@@ -35315,7 +35315,7 @@ Str_Insert_Style_Disk_of_Technics_KN_1000_75_2:	.asciz "Insert Style Disk of    
 Str_V1_0:	.asciz "V1.0"
 	.align	4, 0xFF	# pad after Str_V1_0
 
-func_4847A810_Table:	# 16 x u8, 32..85; read by func_4847A810_entry 0x484796BB: `movbu  (d0, a3), d1`
+StylCnvTechnicsInstall_Table:	# 16 x u8, 32..85; read by StylCnvTechnicsInstall_entry 0x4847A810: `movbu  (d0, a3), d1`
 	tab_u8	75, 78, 51, 48, 48, 48, 32, 83, 79, 85, 78, 68, 32, 82, 65, 77
 
 OneTouchPlay_window:	# u32, initial value of a RAM variable: the TtlScreen OneTouchPlay's `window` (+0x24), loaded and dereferenced by ScreenProc 0x484177CE: `mov (0x24, a3), a0` -> `mov d0, (a0)`
@@ -35397,26 +35397,26 @@ CUR_STYLE_IDX:	# u16, initial value of a RAM variable; read / written by AcStyle
 AcStyleNameProc_Var:	# u16, initial value of a RAM variable; read / written by AcStyleNameProc 0x4847B1DF: `movhu (AcStyleNameProc_Var), d0`; AcCustomListBoxProc 0x4847E22B: `movhu (AcStyleNameProc_Var), d0` ...
 	.word	0
 
-func_4847B629_Table:	# 2 x u16, 0..65535; read by func_4847B629 0x4847B629: `movhu d0, (func_4847B629_Table)`; func_4847BBF7 0x4847BBF7: `movhu d0, (func_4847B629_Table)` ...
+StyleGenreSelect_Table:	# 2 x u16, 0..65535; read by StyleGenreSelect 0x4847B629: `movhu d0, (StyleGenreSelect_Table)`; StyleSubCatStep 0x4847BBF7: `movhu d0, (StyleGenreSelect_Table)` ...
 	tab_u16	0, 65535
 
-func_48481B83_Var:	# u32, initial value of a RAM variable; read / written by func_48481B83 0x48481B83: `mov (func_48481B83_Var), d0`; func_48481B83 0x48481B83: `mov d0, (func_48481B83_Var)`
+DpGetByte_Var:	# u32, initial value of a RAM variable; read / written by DpGetByte 0x48481B83: `mov (DpGetByte_Var), d0`; DpGetByte 0x48481B83: `mov d0, (DpGetByte_Var)`
 	.long	22
-func_484802DF_Var:	# u32, initial value of a RAM variable; read / written by func_484802DF 0x484802DF: `mov d0, (func_484802DF_Var)`; func_48481089 0x48481089: `mov (func_484802DF_Var), d0` ...
+DpSetupByType_Var:	# u32, initial value of a RAM variable; read / written by DpSetupByType 0x484802DF: `mov d0, (DpSetupByType_Var)`; func_48481089 0x48481089: `mov (DpSetupByType_Var), d0` ...
 	.long	0
-func_4847FBC7_Var:	# u32, initial value of a RAM variable; read / written by func_4847FBC7 0x4847FBC7: `mov (func_4847FBC7_Var), d0`; func_4847FBC7 0x4847FBC7: `mov d0, (func_4847FBC7_Var)`
+DpEventPump_Var:	# u32, initial value of a RAM variable; read / written by DpEventPump 0x4847FBC7: `mov (DpEventPump_Var), d0`; DpEventPump 0x4847FBC7: `mov d0, (DpEventPump_Var)`
 	.long	0
-GetBeatSeq_Var:	# u16, initial value of a RAM variable; read / written by GetBeatSeq 0x484453C6: `movhu d0, (a2)`; func_48480F76 0x48480F76: `movhu (GetBeatSeq_Var), d0` ...
+GetBeatSeq_Var:	# u16, initial value of a RAM variable; read / written by GetBeatSeq 0x484453C6: `movhu d0, (a2)`; DpTransportCtrl 0x48480F76: `movhu (GetBeatSeq_Var), d0` ...
 	.word	0
-GetBeatSeq_Var_2:	# u16, initial value of a RAM variable; read / written by GetBeatSeq 0x484453C6: `movhu d0, (a3)`; func_48480F76 0x48480F76: `movhu (GetBeatSeq_Var_2), d1` ...
+GetBeatSeq_Var_2:	# u16, initial value of a RAM variable; read / written by GetBeatSeq 0x484453C6: `movhu d0, (a3)`; DpTransportCtrl 0x48480F76: `movhu (GetBeatSeq_Var_2), d1` ...
 	.word	0
 
-func_484814C5_Table:	# 4 x u8, 0..255; read by func_484814C5 0x484814C5: `movbu (func_484814C5_Table), d0`; func_484814C5 0x484814C5: `movbu (func_484814C5_Table), d3` ...
+DpSmfRingFill_Table:	# 4 x u8, 0..255; read by DpSmfRingFill 0x484814C5: `movbu (DpSmfRingFill_Table), d0`; DpSmfRingFill 0x484814C5: `movbu (DpSmfRingFill_Table), d3` ...
 	tab_u8	0, 255, 255, 255
-func_4848324C_Table:	# 4 x u8, 0..255; read by func_4848324C 0x4848324C: `movbu (func_4848324C_Table), d0`; func_48483317 0x48483317: `movbu d0, (func_4848324C_Table)`
+DpSmf1StreamClose_Table:	# 4 x u8, 0..255; read by DpSmf1StreamClose 0x4848324C: `movbu (DpSmf1StreamClose_Table), d0`; DpSmf1StreamOpen 0x48483317: `movbu d0, (DpSmf1StreamClose_Table)`
 	tab_u8	0, 255, 255, 255
 
-func_484825D5_Var:	# u32, initial value of a RAM variable; read / written by func_484825D5 0x484825D5: `mov (func_484825D5_Var), d0`; func_48483317 0x48483317: `mov d0, (func_484825D5_Var)`
+DpSmf1ReaderTask_Var:	# u32, initial value of a RAM variable; read / written by DpSmf1ReaderTask 0x484825D5: `mov (DpSmf1ReaderTask_Var), d0`; DpSmf1StreamOpen 0x48483317: `mov d0, (DpSmf1ReaderTask_Var)`
 	.long	0
 
 func_48483389_Table:	# 4 x s8, -1..0; read by func_48483389 0x48483389: `movbu (func_48483389_Table), d0`; func_48483389 0x48483389: `movbu d0, (func_48483389_Table)`
@@ -35603,7 +35603,7 @@ FactoryInitial_window:	# u32, initial value of a RAM variable: the Screen Factor
 MPVersion_window:	# u32, initial value of a RAM variable: the Screen MPVersion's `window` (+0x24), loaded and dereferenced by ScreenProc 0x484177CE: `mov (0x24, a3), a0` -> `mov d0, (a0)`
 	.long	0xffffffff
 
-func_4848A868_Table:
+VersionTextProc_Table:
 	.long	Str_PAL_4
 	.long	Str_NTSC_4
 
@@ -36074,60 +36074,60 @@ ApcRevChkWin_GridBox1_prow:	# u32, initial value of a RAM variable: the AcGridBo
 ApcRevChkWin_GridBox1_crow:	# u32, initial value of a RAM variable: the AcGridBox ApcRevChkWin_GridBox1's `crow` (+0x40), loaded and dereferenced by PsGridBoxProc 0x4841A03B: `mov (0x40, a1), a1` -> `mov a0, (a1)`
 	.long	0
 
-func_4848B05A_Records_p4_0:	# REC_func_4848B05A_Records_p4 (4 bytes)
-	REC_func_4848B05A_Records_p4	index=func_4848B05A_Records_p4_p0_10
-func_4848B05A_Records_p4_1:	# REC_func_4848B05A_Records_p4 (4 bytes)
-	REC_func_4848B05A_Records_p4	index=func_4848B05A_Records_p4_p0_11
-func_4848B05A_Records_p4_2:	# REC_func_4848B05A_Records_p4 (4 bytes)
-	REC_func_4848B05A_Records_p4	index=func_4848B05A_Records_p4_p0_12
-func_4848B05A_Records_p4_3:	# REC_func_4848B05A_Records_p4 (4 bytes)
-	REC_func_4848B05A_Records_p4	index=func_4848B05A_Records_p4_p0_13
-func_4848B05A_Records_p4_4:	# REC_func_4848B05A_Records_p4 (4 bytes)
-	REC_func_4848B05A_Records_p4	index=func_4848B05A_Records_p4_p0_14
-func_4848B05A_Records_p4_5:	# REC_func_4848B05A_Records_p4 (4 bytes)
-	REC_func_4848B05A_Records_p4	index=func_4848B05A_Records_p4_p0_15
-func_4848B05A_Records_p4_6:	# REC_func_4848B05A_Records_p4 (4 bytes)
-	REC_func_4848B05A_Records_p4	index=func_4848B05A_Records_p4_p0_16
-func_4848B05A_Records_p4_7:	# REC_func_4848B05A_Records_p4 (4 bytes)
-	REC_func_4848B05A_Records_p4	index=func_4848B05A_Records_p4_p0_17
-func_4848B05A_Records_p4_8:	# REC_func_4848B05A_Records_p4 (4 bytes)
-	REC_func_4848B05A_Records_p4	index=func_4848B05A_Records_p4_p0_18
-func_4848B05A_Records_p4_9:	# REC_func_4848B05A_Records_p4 (4 bytes)
-	REC_func_4848B05A_Records_p4	index=func_4848B05A_Records_p4_p0_19
-func_4848B05A_Records_p4_10:	# REC_func_4848B05A_Records_p4 (4 bytes)
-	REC_func_4848B05A_Records_p4	index=func_4848B05A_Records_p4_p0_20
-func_4848B05A_Records_p4_11:	# REC_func_4848B05A_Records_p4 (4 bytes)
-	REC_func_4848B05A_Records_p4	index=func_4848B05A_Records_p4_p0_21
-func_4848B05A_Records_p4_12:	# REC_func_4848B05A_Records_p4 (4 bytes)
-	REC_func_4848B05A_Records_p4	index=func_4848B05A_Records_p4_p0_22
-func_4848B05A_Records_p4_13:	# REC_func_4848B05A_Records_p4 (4 bytes)
-	REC_func_4848B05A_Records_p4	index=func_4848B05A_Records_p4_p0_23
-func_4848B05A_Records_p4_14:	# REC_func_4848B05A_Records_p4 (4 bytes)
-	REC_func_4848B05A_Records_p4	index=func_4848B05A_Records_p4_p0_24
-func_4848B05A_Records_p4_15:	# REC_func_4848B05A_Records_p4 (4 bytes)
-	REC_func_4848B05A_Records_p4	index=func_4848B05A_Records_p4_p0_25
-func_4848B05A_Records_p4_16:	# REC_func_4848B05A_Records_p4 (4 bytes)
-	REC_func_4848B05A_Records_p4	index=func_4848B05A_Records_p4_p0_26
-func_4848B05A_Records_p4_17:	# REC_func_4848B05A_Records_p4 (4 bytes)
-	REC_func_4848B05A_Records_p4	index=func_4848B05A_Records_p4_p0_0
-func_4848B05A_Records_p4_18:	# REC_func_4848B05A_Records_p4 (4 bytes)
-	REC_func_4848B05A_Records_p4	index=func_4848B05A_Records_p4_p0_1
-func_4848B05A_Records_p4_19:	# REC_func_4848B05A_Records_p4 (4 bytes)
-	REC_func_4848B05A_Records_p4	index=func_4848B05A_Records_p4_p0_2
-func_4848B05A_Records_p4_20:	# REC_func_4848B05A_Records_p4 (4 bytes)
-	REC_func_4848B05A_Records_p4	index=func_4848B05A_Records_p4_p0_3
-func_4848B05A_Records_p4_21:	# REC_func_4848B05A_Records_p4 (4 bytes)
-	REC_func_4848B05A_Records_p4	index=func_4848B05A_Records_p4_p0_4
-func_4848B05A_Records_p4_22:	# REC_func_4848B05A_Records_p4 (4 bytes)
-	REC_func_4848B05A_Records_p4	index=func_4848B05A_Records_p4_p0_5
-func_4848B05A_Records_p4_23:	# REC_func_4848B05A_Records_p4 (4 bytes)
-	REC_func_4848B05A_Records_p4	index=func_4848B05A_Records_p4_p0_6
-func_4848B05A_Records_p4_24:	# REC_func_4848B05A_Records_p4 (4 bytes)
-	REC_func_4848B05A_Records_p4	index=func_4848B05A_Records_p4_p0_7
-func_4848B05A_Records_p4_25:	# REC_func_4848B05A_Records_p4 (4 bytes)
-	REC_func_4848B05A_Records_p4	index=func_4848B05A_Records_p4_p0_8
-func_4848B05A_Records_p4_26:	# REC_func_4848B05A_Records_p4 (4 bytes)
-	REC_func_4848B05A_Records_p4	index=func_4848B05A_Records_p4_p0_9
+PartParamTableSelect_Records_p4_0:	# REC_PartParamTableSelect_Records_p4 (4 bytes)
+	REC_PartParamTableSelect_Records_p4	index=PartParamTableSelect_Records_p4_p0_10
+PartParamTableSelect_Records_p4_1:	# REC_PartParamTableSelect_Records_p4 (4 bytes)
+	REC_PartParamTableSelect_Records_p4	index=PartParamTableSelect_Records_p4_p0_11
+PartParamTableSelect_Records_p4_2:	# REC_PartParamTableSelect_Records_p4 (4 bytes)
+	REC_PartParamTableSelect_Records_p4	index=PartParamTableSelect_Records_p4_p0_12
+PartParamTableSelect_Records_p4_3:	# REC_PartParamTableSelect_Records_p4 (4 bytes)
+	REC_PartParamTableSelect_Records_p4	index=PartParamTableSelect_Records_p4_p0_13
+PartParamTableSelect_Records_p4_4:	# REC_PartParamTableSelect_Records_p4 (4 bytes)
+	REC_PartParamTableSelect_Records_p4	index=PartParamTableSelect_Records_p4_p0_14
+PartParamTableSelect_Records_p4_5:	# REC_PartParamTableSelect_Records_p4 (4 bytes)
+	REC_PartParamTableSelect_Records_p4	index=PartParamTableSelect_Records_p4_p0_15
+PartParamTableSelect_Records_p4_6:	# REC_PartParamTableSelect_Records_p4 (4 bytes)
+	REC_PartParamTableSelect_Records_p4	index=PartParamTableSelect_Records_p4_p0_16
+PartParamTableSelect_Records_p4_7:	# REC_PartParamTableSelect_Records_p4 (4 bytes)
+	REC_PartParamTableSelect_Records_p4	index=PartParamTableSelect_Records_p4_p0_17
+PartParamTableSelect_Records_p4_8:	# REC_PartParamTableSelect_Records_p4 (4 bytes)
+	REC_PartParamTableSelect_Records_p4	index=PartParamTableSelect_Records_p4_p0_18
+PartParamTableSelect_Records_p4_9:	# REC_PartParamTableSelect_Records_p4 (4 bytes)
+	REC_PartParamTableSelect_Records_p4	index=PartParamTableSelect_Records_p4_p0_19
+PartParamTableSelect_Records_p4_10:	# REC_PartParamTableSelect_Records_p4 (4 bytes)
+	REC_PartParamTableSelect_Records_p4	index=PartParamTableSelect_Records_p4_p0_20
+PartParamTableSelect_Records_p4_11:	# REC_PartParamTableSelect_Records_p4 (4 bytes)
+	REC_PartParamTableSelect_Records_p4	index=PartParamTableSelect_Records_p4_p0_21
+PartParamTableSelect_Records_p4_12:	# REC_PartParamTableSelect_Records_p4 (4 bytes)
+	REC_PartParamTableSelect_Records_p4	index=PartParamTableSelect_Records_p4_p0_22
+PartParamTableSelect_Records_p4_13:	# REC_PartParamTableSelect_Records_p4 (4 bytes)
+	REC_PartParamTableSelect_Records_p4	index=PartParamTableSelect_Records_p4_p0_23
+PartParamTableSelect_Records_p4_14:	# REC_PartParamTableSelect_Records_p4 (4 bytes)
+	REC_PartParamTableSelect_Records_p4	index=PartParamTableSelect_Records_p4_p0_24
+PartParamTableSelect_Records_p4_15:	# REC_PartParamTableSelect_Records_p4 (4 bytes)
+	REC_PartParamTableSelect_Records_p4	index=PartParamTableSelect_Records_p4_p0_25
+PartParamTableSelect_Records_p4_16:	# REC_PartParamTableSelect_Records_p4 (4 bytes)
+	REC_PartParamTableSelect_Records_p4	index=PartParamTableSelect_Records_p4_p0_26
+PartParamTableSelect_Records_p4_17:	# REC_PartParamTableSelect_Records_p4 (4 bytes)
+	REC_PartParamTableSelect_Records_p4	index=PartParamTableSelect_Records_p4_p0_0
+PartParamTableSelect_Records_p4_18:	# REC_PartParamTableSelect_Records_p4 (4 bytes)
+	REC_PartParamTableSelect_Records_p4	index=PartParamTableSelect_Records_p4_p0_1
+PartParamTableSelect_Records_p4_19:	# REC_PartParamTableSelect_Records_p4 (4 bytes)
+	REC_PartParamTableSelect_Records_p4	index=PartParamTableSelect_Records_p4_p0_2
+PartParamTableSelect_Records_p4_20:	# REC_PartParamTableSelect_Records_p4 (4 bytes)
+	REC_PartParamTableSelect_Records_p4	index=PartParamTableSelect_Records_p4_p0_3
+PartParamTableSelect_Records_p4_21:	# REC_PartParamTableSelect_Records_p4 (4 bytes)
+	REC_PartParamTableSelect_Records_p4	index=PartParamTableSelect_Records_p4_p0_4
+PartParamTableSelect_Records_p4_22:	# REC_PartParamTableSelect_Records_p4 (4 bytes)
+	REC_PartParamTableSelect_Records_p4	index=PartParamTableSelect_Records_p4_p0_5
+PartParamTableSelect_Records_p4_23:	# REC_PartParamTableSelect_Records_p4 (4 bytes)
+	REC_PartParamTableSelect_Records_p4	index=PartParamTableSelect_Records_p4_p0_6
+PartParamTableSelect_Records_p4_24:	# REC_PartParamTableSelect_Records_p4 (4 bytes)
+	REC_PartParamTableSelect_Records_p4	index=PartParamTableSelect_Records_p4_p0_7
+PartParamTableSelect_Records_p4_25:	# REC_PartParamTableSelect_Records_p4 (4 bytes)
+	REC_PartParamTableSelect_Records_p4	index=PartParamTableSelect_Records_p4_p0_8
+PartParamTableSelect_Records_p4_26:	# REC_PartParamTableSelect_Records_p4 (4 bytes)
+	REC_PartParamTableSelect_Records_p4	index=PartParamTableSelect_Records_p4_p0_9
 
 TtSqmixer_Table:	# 49 x u16, 0..255; read by TtSqmixer 0x4848DE21: `movhu  d0, (-2, a0)`
 	tab_u16	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11	# [0]
@@ -36137,9 +36137,9 @@ TtSqmixer_Table:	# 49 x u16, 0..255; read by TtSqmixer 0x4848DE21: `movhu  d0, (
 	tab_u16	1	# [48]
 	.align	4, 0xFF	# pad after TtSqmixer_Table
 
-func_4848DF37_Var:	# u32, initial value of a RAM variable; read / written by func_4848DF37 0x4848DF37: `mov (func_4848DF37_Var), a0`; func_4848DF46 0x4848DF46: `mov a0, (func_4848DF37_Var)`
+MixerColumnRecGet_Var:	# u32, initial value of a RAM variable; read / written by MixerColumnRecGet 0x4848DF37: `mov (MixerColumnRecGet_Var), a0`; MixerColumnTableSet 0x4848DF46: `mov a0, (MixerColumnRecGet_Var)`
 	.long	0x485ecd60
-func_4848DF4F_Var:	# u32, initial value of a RAM variable; read / written by func_4848DF4F 0x4848DF4F: `mov (func_4848DF4F_Var), a0`; func_4848DF5C 0x4848DF5C: `mov a0, (func_4848DF4F_Var)`
+MixerColumnPartGet_Var:	# u32, initial value of a RAM variable; read / written by MixerColumnPartGet 0x4848DF4F: `mov (MixerColumnPartGet_Var), a0`; MixerColumnPartListSet 0x4848DF5C: `mov a0, (MixerColumnPartGet_Var)`
 	.long	0x485ed394
 
 AcMixPartSoundProc_Table:
@@ -39742,7 +39742,7 @@ TgcBufWrite_Var:	# u8, initial value of a RAM variable; read / written by TgcBuf
 func_484A345B_Var:	# u8, initial value of a RAM variable; read / written by func_484A345B 0x484A345B: `movbu d0, (func_484A345B_Var)`
 	.byte	245
 
-func_484A346F_Table:	# 2 x u8, 97..100; read by func_484A346F 0x484A346F: `movbu d0, (func_484A346F_Table)`; func_484A3515 0x484A3515: `movbu (func_484A346F_Table), d0` ...
+SineSweepStop_Table:	# 2 x u8, 97..100; read by SineSweepStop 0x484A346F: `movbu d0, (SineSweepStop_Table)`; SineSweepTick 0x484A3515: `movbu (SineSweepStop_Table), d0` ...
 	tab_u8	97, 100
 
 SndCmdStreamWrite_Var_4:	# u8, initial value of a RAM variable; read / written by TgcBufWrite 0x4C003A60: `movbu (a2), d2`
@@ -39755,15 +39755,15 @@ func_484A345B_Var_2:	# u8, initial value of a RAM variable; read / written by fu
 Str_a_3:	.asciz "a"
 	.align	4, 0xFF	# pad after Str_a_3
 
-func_484A3A65_Var:	# u32, initial value of a RAM variable; read / written by func_484A3A65 0x484A3A65: `mov (func_484A3A65_Var), a0`; func_484A3A65 0x484A3A65: `mov (func_484A3A65_Var), d0` ...
+SdTestRunAndCount_Var:	# u32, initial value of a RAM variable; read / written by SdTestRunAndCount 0x484A3A65: `mov (SdTestRunAndCount_Var), a0`; SdTestRunAndCount 0x484A3A65: `mov (SdTestRunAndCount_Var), d0` ...
 	.long	0
-func_484A3A65_Var_2:	# u32, initial value of a RAM variable; read / written by func_484A3A65 0x484A3A65: `mov (func_484A3A65_Var_2), d0`; func_484A3A65 0x484A3A65: `mov (func_484A3A65_Var_2), d1` ...
+SdTestRunAndCount_Var_2:	# u32, initial value of a RAM variable; read / written by SdTestRunAndCount 0x484A3A65: `mov (SdTestRunAndCount_Var_2), d0`; SdTestRunAndCount 0x484A3A65: `mov (SdTestRunAndCount_Var_2), d1` ...
 	.long	0
-func_484A3A65_Var_3:	# u32, initial value of a RAM variable; read / written by func_484A3A65 0x484A3A65: `mov (func_484A3A65_Var_3), a0`; func_484A3A65 0x484A3A65: `mov (func_484A3A65_Var_3), d0` ...
+SdTestRunAndCount_Var_3:	# u32, initial value of a RAM variable; read / written by SdTestRunAndCount 0x484A3A65: `mov (SdTestRunAndCount_Var_3), a0`; SdTestRunAndCount 0x484A3A65: `mov (SdTestRunAndCount_Var_3), d0` ...
 	.long	0
-func_484A4005_Var:	# u32, initial value of a RAM variable; read / written by func_484A4005 0x484A4005: `mov d0, (func_484A4005_Var)`
+BoardFlashChecksumCheck_Var:	# u32, initial value of a RAM variable; read / written by BoardFlashChecksumCheck 0x484A4005: `mov d0, (BoardFlashChecksumCheck_Var)`
 	.long	0
-func_484A4005_Var_2:	# u32, initial value of a RAM variable; read / written by func_484A4005 0x484A4005: `mov d3, (func_484A4005_Var_2)`
+BoardFlashChecksumCheck_Var_2:	# u32, initial value of a RAM variable; read / written by BoardFlashChecksumCheck 0x484A4005: `mov d3, (BoardFlashChecksumCheck_Var_2)`
 	.long	0
 SndCmdStreamWrite_Var_6:	# u8, initial value of a RAM variable; read / written by TgcBufWrite 0x4C003A60: `movbu (a2), d2`
 	.byte	4

@@ -176,7 +176,7 @@ already in the Sound Arranger ... Turn Sound Arranger off to return to the facto
   -1 (0x5003A472). `func_48441DEB` then overwrites the eight part templates' program bytes and CC94
   with the record's (`func_4843FFD0`). `TtSndArg` / `MainSNDARG_SetSndaParaCur` (`func_4843FEAF`,
   `func_4843FF83`) read and write the current rhythm's record. `func_4844003A` imports a 'ZZZ' file of
-  five entries a record from a file read at offset 0x5800 / 0x640 / 0x6A0 (`func_48437D57`).
+  five entries a record from a file read at offset 0x5800 / 0x640 / 0x6A0 (`SndArgFileImport`).
   `[INFERENCE]` That file is another model's.
 
 Matching a record against a style's own eight part programs found no match (2026-10-29). That fits:

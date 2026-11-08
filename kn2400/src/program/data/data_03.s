@@ -1876,32 +1876,32 @@ ptrs_4854667C:
 	.long	loc_4860A1C7
 	.space	128, 0xFF
 
-func_4860AA20_entry_L35_Records_p0_0:	# REC_func_4860AA20_entry_L35_Records_p0 (128 bytes)
-	REC_func_4860AA20_entry_L35_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-func_4860AA20_entry_L35_Records_p0_1:	# REC_func_4860AA20_entry_L35_Records_p0 (128 bytes)
-	REC_func_4860AA20_entry_L35_Records_p0	x0="\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\n\x0B\x0C\x0D\x0E\x0F\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1A\x1B\x1C\x1D\x1E\x1F !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\x7F"
-func_4860AA20_entry_L35_Records_p0_2:	# REC_func_4860AA20_entry_L35_Records_p0 (128 bytes)
-	REC_func_4860AA20_entry_L35_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x19\x00\x1A\x1F\x1B\x0C\x0DSU\x06\x16\x1779;\x005Y4\x17(\x03\x04\x05$#&\x02\x18-\x03/\x040\x05%\x12\x13.13@]?\\`EopqrstgfK\x1C'\x00\x00Z[6lJION^_>\n\x0B\x07\x08\x09=<cba\x14,+hiEBACDdejkQPVW:GH\x15MLn\x1E\x1D\x0F)2\x00\x00 \x10\x11"
-func_4860AA20_entry_L35_Records_p0_3:	# REC_func_4860AA20_entry_L35_Records_p0 (128 bytes)
-	REC_func_4860AA20_entry_L35_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x19\x00\x1A\x1F\x1B\x0C\x0DSU\x06\x16\x1779;\x005Y4(&\x03\x04\x05$#'('-\x03/\x040\x05%\x12\x13.13@]?\\`EopqrstgfK\x1C\x02\x00\x00Z[6lJION^_>('\x07\x08\x09=<cba\x14,+hiEBACDdejkQPVW:GH\x15MLn\x1E\x1D\x0F)2\x00\x00 \x10\x11"
-func_4860AA20_entry_L35_Records_p0_4:	# REC_func_4860AA20_entry_L35_Records_p0 (128 bytes)
-	REC_func_4860AA20_entry_L35_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x19\x00\x1A\x1F\x1B\x0C\x0DSU\x06\x16\x1779;\x005Y4\n\x0B\x03\x04\x05$#&\x0B\x18-\x03/\x040\x05%\x12\x13.13@]?\\`EopqrstgfK\x1C'\x00\x00Z[6lJION^_>\n\x0B\x07\x08\x09=<cba\x14,+hiEBACDdejkQPVW:GH\x15MLn\x1E\x1D\x0F)2\x00\x00 \x10\x11"
-func_4860AA20_entry_L35_Records_p0_5:	# REC_func_4860AA20_entry_L35_Records_p0 (128 bytes)
-	REC_func_4860AA20_entry_L35_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00,-.+'\x00\x00\x003\x19(\x1D>bLf00de7/\x001\x00\x00\x00\x00)\x00`\x00&:a\x00*c[\\^]Z\x00YK\x00FWXUop\x00\x00\x00\x00\x00\x00\x00\x00mm\x00\x00\x00\x00\x00\x00\x00nn\x00\x00\x00\x00\x00\x00\x00\x00\x1Ag\x00\x00\x00H\x00D\x00\x00m\x00nn\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00_\x00\x00\x00\x00\x1B\x1B\x1C"
-func_4860AA20_entry_L35_Records_p0_6:	# REC_func_4860AA20_entry_L35_Records_p0 (128 bytes)
-	REC_func_4860AA20_entry_L35_Records_p0	x0="\x00\x00'!\"#\x15UVWST\x11\x12\x00x~\x7F01]r\x16\x17(\x0C\x0E\x10Dwv\x0F}~\x7F%$/&E y0_^)2+-3z4\x1E\x1CJ\x18<\x19o\x1AYXR75dcef:ipqMLCtsONlk`\x13\x1D\x14mn\x00\x1DHI86PQ9\\[ZghBA`aijKKu;<=>?@\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-func_4860AA20_entry_L35_Records_p0_7:	# REC_func_4860AA20_entry_L35_Records_p0 (128 bytes)
-	REC_func_4860AA20_entry_L35_Records_p0	x0="\x00\x00E!\"#\x15UVWVV\x11\x12\x00x~\x7F01]r\x16\x17(\x0C\x0E\x10Dwv\x0F}~\x7F%$/ &'y0_^)2+-3z4\x1E\x1CJ\x18<\x19o\x1AYXR75dcef:ipqMLCtsONlk`\x13\x1D\x14mn\x00\x1DHI86PQ9\\[ZghBA`aijKKu;<=>?@\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-func_4860AA20_entry_L35_Records_p0_8:	# REC_func_4860AA20_entry_L35_Records_p0 (128 bytes)
-	REC_func_4860AA20_entry_L35_Records_p0	x0="\x00\x00\x00!\"#\x15UVWST\x11\x12\x00x~\x7F01]r\x16\x17(\x0C\x0E\x10Dwv\x0F}~\x7F%$/&E y0_^)2+-3z4\x1E\x1CJ\x18<\x19o\x1AYXR75dcef:ipqMLCtsONlk`\x13\x1D\x14mn\x00\x1DHI86PQ9\\[ZghBA`aijKKu;<=>?@\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-func_4860AA20_entry_L35_Records_p0_9:	# REC_func_4860AA20_entry_L35_Records_p0 (128 bytes)
-	REC_func_4860AA20_entry_L35_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x18_~\x7F\x1A\x00\x00\x00\x00\x00\x00\x00\x00/\x13\x19+3\x12\x0F\x10\x11$ &\x00\x17\x00\x00\x00#\x00\x000\x00\x00\x00\x1B\x00\x00\x00\x00\x00f\x00>\x00d\x00\x00<\x1D\x00\x00\x00\x00\x00\x00\x00\x00AA?@;95687x-1\x1C4!\"\x1E`\x00\x00LLKLKBCBBCC\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-func_4860AA20_entry_L35_Records_p0_10:	# REC_func_4860AA20_entry_L35_Records_p0 (128 bytes)
-	REC_func_4860AA20_entry_L35_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x1E:\x180\x002\x1A\x0F}\x00\x00%$/&7 ABCDEFGHIJKLM5\x18;\x19o\x1A\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00pq\x00\x00\x00ts\x00\x0089\x00\x13\x007mn\x00\x1D\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x006\x00u\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-func_4860AA20_entry_L35_Records_p0_11:	# REC_func_4860AA20_entry_L35_Records_p0 (128 bytes)
-	REC_func_4860AA20_entry_L35_Records_p0	x0="\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\n\x0B\x0C\x0D\x0E\x0F\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1A\x1B\x1C\x1D\x1E\x1F !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\x7F"
+TableToneKeyMap_entry_L35_Records_p0_0:	# REC_TableToneKeyMap_entry_L35_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_entry_L35_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+TableToneKeyMap_entry_L35_Records_p0_1:	# REC_TableToneKeyMap_entry_L35_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_entry_L35_Records_p0	x0="\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\n\x0B\x0C\x0D\x0E\x0F\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1A\x1B\x1C\x1D\x1E\x1F !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\x7F"
+TableToneKeyMap_entry_L35_Records_p0_2:	# REC_TableToneKeyMap_entry_L35_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_entry_L35_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x19\x00\x1A\x1F\x1B\x0C\x0DSU\x06\x16\x1779;\x005Y4\x17(\x03\x04\x05$#&\x02\x18-\x03/\x040\x05%\x12\x13.13@]?\\`EopqrstgfK\x1C'\x00\x00Z[6lJION^_>\n\x0B\x07\x08\x09=<cba\x14,+hiEBACDdejkQPVW:GH\x15MLn\x1E\x1D\x0F)2\x00\x00 \x10\x11"
+TableToneKeyMap_entry_L35_Records_p0_3:	# REC_TableToneKeyMap_entry_L35_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_entry_L35_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x19\x00\x1A\x1F\x1B\x0C\x0DSU\x06\x16\x1779;\x005Y4(&\x03\x04\x05$#'('-\x03/\x040\x05%\x12\x13.13@]?\\`EopqrstgfK\x1C\x02\x00\x00Z[6lJION^_>('\x07\x08\x09=<cba\x14,+hiEBACDdejkQPVW:GH\x15MLn\x1E\x1D\x0F)2\x00\x00 \x10\x11"
+TableToneKeyMap_entry_L35_Records_p0_4:	# REC_TableToneKeyMap_entry_L35_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_entry_L35_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x19\x00\x1A\x1F\x1B\x0C\x0DSU\x06\x16\x1779;\x005Y4\n\x0B\x03\x04\x05$#&\x0B\x18-\x03/\x040\x05%\x12\x13.13@]?\\`EopqrstgfK\x1C'\x00\x00Z[6lJION^_>\n\x0B\x07\x08\x09=<cba\x14,+hiEBACDdejkQPVW:GH\x15MLn\x1E\x1D\x0F)2\x00\x00 \x10\x11"
+TableToneKeyMap_entry_L35_Records_p0_5:	# REC_TableToneKeyMap_entry_L35_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_entry_L35_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00,-.+'\x00\x00\x003\x19(\x1D>bLf00de7/\x001\x00\x00\x00\x00)\x00`\x00&:a\x00*c[\\^]Z\x00YK\x00FWXUop\x00\x00\x00\x00\x00\x00\x00\x00mm\x00\x00\x00\x00\x00\x00\x00nn\x00\x00\x00\x00\x00\x00\x00\x00\x1Ag\x00\x00\x00H\x00D\x00\x00m\x00nn\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00_\x00\x00\x00\x00\x1B\x1B\x1C"
+TableToneKeyMap_entry_L35_Records_p0_6:	# REC_TableToneKeyMap_entry_L35_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_entry_L35_Records_p0	x0="\x00\x00'!\"#\x15UVWST\x11\x12\x00x~\x7F01]r\x16\x17(\x0C\x0E\x10Dwv\x0F}~\x7F%$/&E y0_^)2+-3z4\x1E\x1CJ\x18<\x19o\x1AYXR75dcef:ipqMLCtsONlk`\x13\x1D\x14mn\x00\x1DHI86PQ9\\[ZghBA`aijKKu;<=>?@\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+TableToneKeyMap_entry_L35_Records_p0_7:	# REC_TableToneKeyMap_entry_L35_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_entry_L35_Records_p0	x0="\x00\x00E!\"#\x15UVWVV\x11\x12\x00x~\x7F01]r\x16\x17(\x0C\x0E\x10Dwv\x0F}~\x7F%$/ &'y0_^)2+-3z4\x1E\x1CJ\x18<\x19o\x1AYXR75dcef:ipqMLCtsONlk`\x13\x1D\x14mn\x00\x1DHI86PQ9\\[ZghBA`aijKKu;<=>?@\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+TableToneKeyMap_entry_L35_Records_p0_8:	# REC_TableToneKeyMap_entry_L35_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_entry_L35_Records_p0	x0="\x00\x00\x00!\"#\x15UVWST\x11\x12\x00x~\x7F01]r\x16\x17(\x0C\x0E\x10Dwv\x0F}~\x7F%$/&E y0_^)2+-3z4\x1E\x1CJ\x18<\x19o\x1AYXR75dcef:ipqMLCtsONlk`\x13\x1D\x14mn\x00\x1DHI86PQ9\\[ZghBA`aijKKu;<=>?@\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+TableToneKeyMap_entry_L35_Records_p0_9:	# REC_TableToneKeyMap_entry_L35_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_entry_L35_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x18_~\x7F\x1A\x00\x00\x00\x00\x00\x00\x00\x00/\x13\x19+3\x12\x0F\x10\x11$ &\x00\x17\x00\x00\x00#\x00\x000\x00\x00\x00\x1B\x00\x00\x00\x00\x00f\x00>\x00d\x00\x00<\x1D\x00\x00\x00\x00\x00\x00\x00\x00AA?@;95687x-1\x1C4!\"\x1E`\x00\x00LLKLKBCBBCC\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+TableToneKeyMap_entry_L35_Records_p0_10:	# REC_TableToneKeyMap_entry_L35_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_entry_L35_Records_p0	x0="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x1E:\x180\x002\x1A\x0F}\x00\x00%$/&7 ABCDEFGHIJKLM5\x18;\x19o\x1A\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00pq\x00\x00\x00ts\x00\x0089\x00\x13\x007mn\x00\x1D\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x006\x00u\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+TableToneKeyMap_entry_L35_Records_p0_11:	# REC_TableToneKeyMap_entry_L35_Records_p0 (128 bytes)
+	REC_TableToneKeyMap_entry_L35_Records_p0	x0="\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\n\x0B\x0C\x0D\x0E\x0F\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1A\x1B\x1C\x1D\x1E\x1F !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\x7F"
 
-func_4860AA20_Table:	# 128 x u8, 0..112; read by func_4860AA20_entry : `movbu	(d0, a0), d0`
+TableToneKeyMap_Table:	# 128 x u8, 0..112; read by TableToneKeyMap_entry : `movbu	(d0, a0), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0	# [16]
 	tab_u8	18, 0, 52, 36, 24, 53, 38, 49, 38, 36, 37, 24, 11, 38, 44, 38	# [32]
@@ -1929,7 +1929,7 @@ func_50150244_entry_L8c_Selected_2:
 func_50150244_entry_L8c_Selected_3:
 	.long	0xff0000, 0x700000, loc_4860948B
 	.long	0xff0000, 0x700000, func_48703E2C
-	.long	0xff0000, 0x700000, func_48663F5A
+	.long	0xff0000, 0x700000, TestPageM3Dispatch
 	.long	0xff00, 0x2000, func_4862BBE5
 	.long	0xff00, 0x2000, TempoSyncSetDispatch
 	.long	0xff00, 0x3000, TempoSyncSetDispatch
@@ -2008,7 +2008,7 @@ func_50150302_entry_L9d_Selected_3:
 # 4 records of 12 bytes up to the end marker (+8, 32 bits) that func_50150302 0x50150302: `mov (a3), d0` / `cmp 0, d0`, `add 0xc, a3` stops at, then the marker
 func_50150302_entry_L9d_Selected_4:
 	.long	0xffffff, 0x900000, loc_486094E6
-	.long	0xffffff, 0x900000, func_486621BD
+	.long	0xffffff, 0x900000, MidiIoTestM3Handler
 	.long	0xff0000, 0x900000, func_50152322
 	.long	0xffffff, 0x900000, func_486FC671
 	.long	0x0, 0x0, 0x0	# end
@@ -6221,7 +6221,7 @@ func_486B63A3_entry_L4c_Var:	# u16, a constant; read / written by func_486B63A3_
 	.word	0
 AcMspCompileBnkNmBoxProc_L39_Var:	# u16, a constant; read / written by AcMspCompileBnkNmBoxProc_L39 0x486B613F: `movhu (AcMspCompileBnkNmBoxProc_L39_Var), d1`; AcMspCompileBnkNmBoxProc_L66 0x486B616C: `movhu (AcMspCompileBnkNmBoxProc_L39_Var), d1` ...
 	.word	23
-func_486B63A3_entry_L73_Var:	# u16, a constant; read / written by func_486B63A3_entry_L73 0x486B6418: `movhu (func_486B63A3_entry_L73_Var), d0`; func_501750B7_entry_L35 0x501750F1: `movhu (func_486B63A3_entry_L73_Var), d0` ...
+func_486B63A3_entry_L73_Var:	# u16, a constant; read / written by func_486B63A3_entry_L73 0x486B6418: `movhu (func_486B63A3_entry_L73_Var), d0`; PadBankNameGet_entry_L35 0x501750F1: `movhu (func_486B63A3_entry_L73_Var), d0` ...
 	.word	2
 MainPadRun_entry_L64_Var:	# u16, a constant; read / written by MainPadRun_entry_L64 0x4865690F: `movhu (MainPadRun_entry_L64_Var), d0`; MainPadRun_entry_L64 0x4865690F: `movhu (MainPadRun_entry_L64_Var), d1` ...
 	.word	25
@@ -6229,33 +6229,33 @@ MainPadRun_entry_L64_Var:	# u16, a constant; read / written by MainPadRun_entry_
 MainPadRun_entry_L64_Table:	# 2 x u16, 1..65535; read by MainPadRun_entry_L64 0x4865690F: `movhu (MainPadRun_entry_L64_Table), d0`; MainPadRun_entry_Lfd 0x486569A8: `movhu (MainPadRun_entry_L64_Table), d0` ...
 	tab_u16	1, 65535
 
-func_501750B7_entry_L66_Records:	# 26 x REC_func_501750B7_entry_L66_Records (44 bytes each); read by func_501751E5_entry_L9f 0x50175289 `mov (d1, a0), d0`; func_501750B7_entry_L66 0x50175122 `call strcpy_entry, [a2], 4`
-	REC_func_501750B7_entry_L66_Records	"     EFFECT     \x00\x00\x00\x00", 628, 629, 375, 376, 296, 552	# [0]
-	REC_func_501750B7_entry_L66_Records	"      POP       \x00\x00\x00\x00", 1285, 1541, 1797, 1029, 878, 1134
-	REC_func_501750B7_entry_L66_Records	"   SWING ROCK   \x00\x00\x00\x00", 262, 518, 1030, 774, 365, 621
-	REC_func_501750B7_entry_L66_Records	"  ROCK & ROLL   \x00\x00\x00\x00", 260, 533, 525, 522, 825, 1081
-	REC_func_501750B7_entry_L66_Records	"     DANCE      \x00\x00\x00\x00", 1808, 787, 1043, 1552, 826, 1082
-	REC_func_501750B7_entry_L66_Records	"      FUNK      \x00\x00\x00\x00", 272, 273, 274, 276, 315, 571
-	REC_func_501750B7_entry_L66_Records	"    LATIN 1     \x00\x00\x00\x00", 310, 566, 306, 305, 317, 573
-	REC_func_501750B7_entry_L66_Records	"    LATIN 2     \x00\x00\x00\x00", 311, 567, 561, 304, 318, 574
-	REC_func_501750B7_entry_L66_Records	"  BALLAD 12/8   \x00\x00\x00\x00", 324, 580, 1091, 835, 299, 555	# [8]
-	REC_func_501750B7_entry_L66_Records	"   BALLAD 4/4   \x00\x00\x00\x00", 1097, 841, 585, 582, 812, 1068
-	REC_func_501750B7_entry_L66_Records	"    SHOWBIZ     \x00\x00\x00\x00", 1116, 845, 1603, 579, 298, 554
-	REC_func_501750B7_entry_L66_Records	"    BIGBAND     \x00\x00\x00\x00", 1316, 548, 804, 1060, 316, 572
-	REC_func_501750B7_entry_L66_Records	"   JAZZ COMBO   \x00\x00\x00\x00", 289, 547, 549, 288, 873, 1129
-	REC_func_501750B7_entry_L66_Records	"TRADITIONAL 4/4 \x00\x00\x00\x00", 799, 542, 287, 543, 302, 558
-	REC_func_501750B7_entry_L66_Records	"TRADITIONAL 12/8\x00\x00\x00\x00", 286, 798, 1054, 1310, 364, 620
-	REC_func_501750B7_entry_L66_Records	"    COUNTRY     \x00\x00\x00\x00", 1383, 1127, 359, 615, 360, 616
-	REC_func_501750B7_entry_L66_Records	"   BLUEGRASS    \x00\x00\x00\x00", 1126, 1382, 1638, 1894, 363, 619	# [16]
-	REC_func_501750B7_entry_L66_Records	"     GOSPEL     \x00\x00\x00\x00", 782, 526, 271, 527, 319, 575
-	REC_func_501750B7_entry_L66_Records	"   TRAD WALTZ   \x00\x00\x00\x00", 284, 540, 285, 796, 303, 559
-	REC_func_501750B7_entry_L66_Records	"  SWING WALTZ   \x00\x00\x00\x00", 1052, 1308, 1053, 1565, 362, 618
-	REC_func_501750B7_entry_L66_Records	"  USER BANK 1   \x00\x00\x00\x00", 1048576, 1048832, 1049088, 1049344, 1049600, 1049856
-	REC_func_501750B7_entry_L66_Records	"  USER BANK 2   \x00\x00\x00\x00", 1048577, 1048833, 1049089, 1049345, 1049601, 1049857
-	REC_func_501750B7_entry_L66_Records	"  USER BANK 3   \x00\x00\x00\x00", 1048578, 1048834, 1049090, 1049346, 1049602, 1049858
-	REC_func_501750B7_entry_L66_Records	" COMPILE BANK 1 \x00\x00\x00\x00", 1048575, 1048575, 1048575, 1048575, 1048575, 1048575
-	REC_func_501750B7_entry_L66_Records	" COMPILE BANK 2 \x00\x00\x00\x00", 1048575, 1048575, 1048575, 1048575, 1048575, 1048575	# [24]
-	REC_func_501750B7_entry_L66_Records	" CONTROL PRESET \x00\x00\x00\x00", 1048575, 1048575, 1048575, 1048575, 1048575, 1048575
+PadBankNameGet_entry_L66_Records:	# 26 x REC_PadBankNameGet_entry_L66_Records (44 bytes each); read by PadIdFromBankSlot_entry_L9f 0x50175289 `mov (d1, a0), d0`; PadBankNameGet_entry_L66 0x50175122 `call strcpy_entry, [a2], 4`
+	REC_PadBankNameGet_entry_L66_Records	"     EFFECT     \x00\x00\x00\x00", 628, 629, 375, 376, 296, 552	# [0]
+	REC_PadBankNameGet_entry_L66_Records	"      POP       \x00\x00\x00\x00", 1285, 1541, 1797, 1029, 878, 1134
+	REC_PadBankNameGet_entry_L66_Records	"   SWING ROCK   \x00\x00\x00\x00", 262, 518, 1030, 774, 365, 621
+	REC_PadBankNameGet_entry_L66_Records	"  ROCK & ROLL   \x00\x00\x00\x00", 260, 533, 525, 522, 825, 1081
+	REC_PadBankNameGet_entry_L66_Records	"     DANCE      \x00\x00\x00\x00", 1808, 787, 1043, 1552, 826, 1082
+	REC_PadBankNameGet_entry_L66_Records	"      FUNK      \x00\x00\x00\x00", 272, 273, 274, 276, 315, 571
+	REC_PadBankNameGet_entry_L66_Records	"    LATIN 1     \x00\x00\x00\x00", 310, 566, 306, 305, 317, 573
+	REC_PadBankNameGet_entry_L66_Records	"    LATIN 2     \x00\x00\x00\x00", 311, 567, 561, 304, 318, 574
+	REC_PadBankNameGet_entry_L66_Records	"  BALLAD 12/8   \x00\x00\x00\x00", 324, 580, 1091, 835, 299, 555	# [8]
+	REC_PadBankNameGet_entry_L66_Records	"   BALLAD 4/4   \x00\x00\x00\x00", 1097, 841, 585, 582, 812, 1068
+	REC_PadBankNameGet_entry_L66_Records	"    SHOWBIZ     \x00\x00\x00\x00", 1116, 845, 1603, 579, 298, 554
+	REC_PadBankNameGet_entry_L66_Records	"    BIGBAND     \x00\x00\x00\x00", 1316, 548, 804, 1060, 316, 572
+	REC_PadBankNameGet_entry_L66_Records	"   JAZZ COMBO   \x00\x00\x00\x00", 289, 547, 549, 288, 873, 1129
+	REC_PadBankNameGet_entry_L66_Records	"TRADITIONAL 4/4 \x00\x00\x00\x00", 799, 542, 287, 543, 302, 558
+	REC_PadBankNameGet_entry_L66_Records	"TRADITIONAL 12/8\x00\x00\x00\x00", 286, 798, 1054, 1310, 364, 620
+	REC_PadBankNameGet_entry_L66_Records	"    COUNTRY     \x00\x00\x00\x00", 1383, 1127, 359, 615, 360, 616
+	REC_PadBankNameGet_entry_L66_Records	"   BLUEGRASS    \x00\x00\x00\x00", 1126, 1382, 1638, 1894, 363, 619	# [16]
+	REC_PadBankNameGet_entry_L66_Records	"     GOSPEL     \x00\x00\x00\x00", 782, 526, 271, 527, 319, 575
+	REC_PadBankNameGet_entry_L66_Records	"   TRAD WALTZ   \x00\x00\x00\x00", 284, 540, 285, 796, 303, 559
+	REC_PadBankNameGet_entry_L66_Records	"  SWING WALTZ   \x00\x00\x00\x00", 1052, 1308, 1053, 1565, 362, 618
+	REC_PadBankNameGet_entry_L66_Records	"  USER BANK 1   \x00\x00\x00\x00", 1048576, 1048832, 1049088, 1049344, 1049600, 1049856
+	REC_PadBankNameGet_entry_L66_Records	"  USER BANK 2   \x00\x00\x00\x00", 1048577, 1048833, 1049089, 1049345, 1049601, 1049857
+	REC_PadBankNameGet_entry_L66_Records	"  USER BANK 3   \x00\x00\x00\x00", 1048578, 1048834, 1049090, 1049346, 1049602, 1049858
+	REC_PadBankNameGet_entry_L66_Records	" COMPILE BANK 1 \x00\x00\x00\x00", 1048575, 1048575, 1048575, 1048575, 1048575, 1048575
+	REC_PadBankNameGet_entry_L66_Records	" COMPILE BANK 2 \x00\x00\x00\x00", 1048575, 1048575, 1048575, 1048575, 1048575, 1048575	# [24]
+	REC_PadBankNameGet_entry_L66_Records	" CONTROL PRESET \x00\x00\x00\x00", 1048575, 1048575, 1048575, 1048575, 1048575, 1048575
 
 func_50173851_Table:	# 2048 x u16, 0..34490; read by ResolveStyleId 0x50173853: `movhu	(d0, a1), d2`
 	tab_u16	33536, 33281, 33282, 33282, 1795, 32772, 33882, 33672, 33672, 33672, 33672, 33163	# [0]
@@ -6446,15 +6446,15 @@ GetGenreName_entry_L14_Records:	# 12 x REC_GetGenreName_entry_L14_Records (24 by
 
 GetGenreName_Var:	# u16, a constant; read / written by GetGenreName 0x501737BF: `movhu (GetGenreName_Var), d3`; GetGenreStyleCount 0x501737F9: `movhu (GetGenreName_Var), d2` ...
 	.word	12
-func_486417BB_Var:	# s16, a constant; read / written by func_486417BB 0x486417BB: `movhu (func_486417BB_Var), d1`; func_486417BB 0x486417BB: `movhu (func_486417BB_Var), d2` ...
+StyleGenreKindGet_Var:	# s16, a constant; read / written by StyleGenreKindGet 0x486417BB: `movhu (StyleGenreKindGet_Var), d1`; StyleGenreKindGet 0x486417BB: `movhu (StyleGenreKindGet_Var), d2` ...
 	.word	0
-func_486417BB_Var_2:	# u16, a constant; read / written by func_486417BB 0x486417BB: `movhu (func_486417BB_Var_2), d1`; FuncEdit_rhyGroup_L1e1 0x486AF2D0: `movhu (func_486417BB_Var_2), d0` ...
+StyleGenreKindGet_Var_2:	# u16, a constant; read / written by StyleGenreKindGet 0x486417BB: `movhu (StyleGenreKindGet_Var_2), d1`; FuncEdit_rhyGroup_L1e1 0x486AF2D0: `movhu (StyleGenreKindGet_Var_2), d0` ...
 	.word	11
 AcRvariScreenProc_L2a_Var:	# u16, a constant; read / written by AcRvariScreenProc_L2a 0x48658DF7: `movhu (AcRvariScreenProc_L2a_Var), d0`; AcRvariScreenProc_L2a 0x48658DF7: `movhu (AcRvariScreenProc_L2a_Var), d1` ...
 	.word	11
 AcRvariScreenProc_L2a_Var_2:	# u16, a constant; read / written by AcRvariScreenProc_L2a 0x48658DF7: `movhu (AcRvariScreenProc_L2a_Var_2), d0`; AcRhyVariProc_L280 0x486591BC: `movhu (AcRvariScreenProc_L2a_Var_2), d0` ...
 	.word	1
-func_486417BB_entry_L1e_Var:	# u16, a constant; read / written by func_486417BB_entry_L1e 0x486417DB: `movhu (func_486417BB_entry_L1e_Var), d1`; AcRvariScreenProc_L88 0x48658E55: `movhu (func_486417BB_entry_L1e_Var), d0` ...
+StyleGenreKindGet_entry_L1e_Var:	# u16, a constant; read / written by StyleGenreKindGet_entry_L1e 0x486417DB: `movhu (StyleGenreKindGet_entry_L1e_Var), d1`; AcRvariScreenProc_L88 0x48658E55: `movhu (StyleGenreKindGet_entry_L1e_Var), d0` ...
 	.word	65535
 AcRvariScreenProc_L88_Var:	# u16, a constant; read / written by AcRvariScreenProc_L88 0x48658E55: `movhu (AcRvariScreenProc_L88_Var), d0`; AcRhyVariProc_L2ce 0x4865920A: `movhu (AcRvariScreenProc_L88_Var), d0` ...
 	.word	0
@@ -6472,7 +6472,7 @@ StyleVariationNameGet_entry_L25_Table:
 	.long	0
 	.long	0
 
-func_48611924_Table:	# 4 x u8, 255..255; read by func_48611924_entry : `movbu	(a1), d0`; func_48611996_entry : `movbu	(a1), d0` ...
+HeldKeyListReleaseAll_Table:	# 4 x u8, 255..255; read by HeldKeyListReleaseAll_entry : `movbu	(a1), d0`; func_48611996_entry : `movbu	(a1), d0` ...
 	tab_u8	255, 255, 255, 255
 
 ptrs_4854B1E4:
@@ -6482,24 +6482,24 @@ ptrs_4854B1E4:
 	.long	loc_48612ABE
 ptrs_4854B1F4:
 	.long	loc_486187C4
-	.long	func_486187C7
+	.long	SongBackupRestore
 	.long	loc_486187FA
 	.long	loc_48618805
 
-FatBootHead_720K:	# a FAT boot sector's first 32 bytes, a 720 KB disk's (1440 sectors of 512 bytes): func_4863182B 0x4863182B: memcpy(.., 0x20)
+FatBootHead_720K:	# a FAT boot sector's first 32 bytes, a 720 KB disk's (1440 sectors of 512 bytes): FdFormat720K 0x4863182B: memcpy(.., 0x20)
 	FAT_BOOT_HEAD	0xeb, 0x1c, 0x90, "Technics", 512, 2, 1, 2, 112, 1440, 0xf9, 3, 9, 2, 0
 	.byte	0xeb, 0xfe	# +0x1E: the boot code the jump at +0 lands on (EB 1C: +2 + 0x1C), x86 `jmp $`: a loop
 
-func_4863182B_entry_L9e_Block:	# 3 bytes, copied whole by func_4863182B_entry_L9e 0x486318CE: memcpy(.., 3); func_4863182B_entry_L149 0x48631979: memcpy(.., 3)
+FdFormat720K_entry_L9e_Block:	# 3 bytes, copied whole by FdFormat720K_entry_L9e 0x486318CE: memcpy(.., 3); FdFormat720K_entry_L149 0x48631979: memcpy(.., 3)
 	tab_u8	249, 255, 255	# [0]
 
-FatBootHead_1440K:	# a FAT boot sector's first 32 bytes, a 1440 KB disk's (2880 sectors of 512 bytes): func_48631AF5 0x48631AF5: memcpy(.., 0x20)
+FatBootHead_1440K:	# a FAT boot sector's first 32 bytes, a 1440 KB disk's (2880 sectors of 512 bytes): FdFormat1440K 0x48631AF5: memcpy(.., 0x20)
 	FAT_BOOT_HEAD	0xeb, 0x1c, 0x90, "Technics", 512, 1, 1, 2, 224, 2880, 0xf0, 9, 18, 2, 0
 	.byte	0xeb, 0xfe	# +0x1E: the boot code the jump at +0 lands on (EB 1C: +2 + 0x1C), x86 `jmp $`: a loop
 
-func_48631AF5_entry_L9e_Block:	# 3 bytes, copied whole by func_48631AF5_entry_L9e 0x48631B98: memcpy(.., 3); func_48631AF5_entry_L11b 0x48631C15: memcpy(.., 3)
+FdFormat1440K_entry_L9e_Block:	# 3 bytes, copied whole by FdFormat1440K_entry_L9e 0x48631B98: memcpy(.., 3); FdFormat1440K_entry_L11b 0x48631C15: memcpy(.., 3)
 	tab_u8	240, 255, 255	# [0]
-	.align	4, 0xFF	# pad after func_48631AF5_entry_L9e_Block
+	.align	4, 0xFF	# pad after FdFormat1440K_entry_L9e_Block
 
 NoteConvRules:	# 128 x NoteConvRule (8 bytes each); read by NoteConvRuleByte1Get_L9 0x50173F01 `movbu (1, a0), d0`; NoteConvRuleByte2Get_L9 0x50173F1C `movbu (2, a0), d0`; NoteConvRuleByte3Get_L9 0x50173F37 `movbu (3, a0), d0` (+12)
 	NoteConvRule	is_melody=1, no_third_adj=1, no_transpose=1	# [0]
@@ -15828,10 +15828,10 @@ Str_JFIF:	.asciz "JFIF"
 
 func_485E8EDD_Table:	# 5 x u8, 1..3; read by JpegEncSetup_entry : `movbu	(d1, a0), d0`
 	tab_u8	1, 3, 3, 3, 3
-func_485EA803_entry_L30_Table:	# 20 x u8, 0..4; read by func_485EA803_entry_L30 0x485EA838: `movbu (a3), d0`
+JpegDecModeMatch_entry_L30_Table:	# 20 x u8, 0..4; read by JpegDecModeMatch_entry_L30 0x485EA838: `movbu (a3), d0`
 	tab_u8	1, 0, 0, 0, 1, 1, 1, 0, 2, 1, 1, 0, 2, 1, 1, 0	# [0]
 	tab_u8	4, 1, 1, 0	# [16]
-func_485EA803_entry_L30_Table_2:	# 20 x u8, 0..2; read by func_485EA803_entry_L30 0x485EA838: `movbu (a0), d0`
+JpegDecModeMatch_entry_L30_Table_2:	# 20 x u8, 0..2; read by JpegDecModeMatch_entry_L30 0x485EA838: `movbu (a0), d0`
 	tab_u8	1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 2, 1, 1, 0	# [0]
 	tab_u8	1, 1, 1, 0	# [16]
 data_4856F57D:
@@ -16693,7 +16693,7 @@ StyleSetups_Era_1930s:	# the setups (u16 MusicStylistSetup numbers) under era "1
 	.word	626, 627, 625, 649, 648, 624, 651, 650, 0xffff
 	.align	4, 0xFF	# pad after StyleSetups_Era_1930s
 
-StyleRecordTable:	# 720 x MusicStylistSetup (24 bytes each); read by MssNameFunc_Lcb 0x4863E96A `mov (4, a0), a1`; func_4863E9FF 0x4863E9FF `mov (4, a0), a1`; func_4863EA37 0x4863EA37 `mov (4, a0), a1` (+116)
+StyleRecordTable:	# 720 x MusicStylistSetup (24 bytes each); read by MssNameFunc_Lcb 0x4863E96A `mov (4, a0), a1`; StyleRecNameGet 0x4863E9FF `mov (4, a0), a1`; func_4863EA37 0x4863EA37 `mov (4, a0), a1` (+116)
 	MusicStylistSetup	panel=StylePanel_Hippie_Piano_1, name=Text_Hippie_Piano, era_pos=56, letter=15, letter_pos=30, x22="\x00\x00"	# [0]
 	MusicStylistSetup	panel=StylePanel_FlowerPower_Rock_2, name=Text_Hippie_Piano+17, setup=1, era_pos=35, letter=13, letter_pos=11, x22="\x00\x00"
 	MusicStylistSetup	panel=StylePanel_Woddstock_Harp_3, name=Text_Hippie_Piano+34, setup=2, era_pos=129, letter=30, letter_pos=17, x22="\x00\x00"
@@ -18572,7 +18572,7 @@ StyleSetups_Era_1930s_2:	# the setups (u16 MusicStylistSetup numbers) under era 
 	.word	626, 627, 625, 649, 648, 624, 651, 650, 0xffff
 	.align	4, 0xFF	# pad after StyleSetups_Era_1930s_2
 
-StyleRecordTableKN2400:	# 680 x MusicStylistSetup_2 (24 bytes each); read by MssNameFunc_Lcb 0x4863E96A `mov (4, a0), a1`; func_4863E9FF 0x4863E9FF `mov (4, a0), a1`; func_4863EA37 0x4863EA37 `mov (4, a0), a1` (+56)
+StyleRecordTableKN2400:	# 680 x MusicStylistSetup_2 (24 bytes each); read by MssNameFunc_Lcb 0x4863E96A `mov (4, a0), a1`; StyleRecNameGet 0x4863E9FF `mov (4, a0), a1`; func_4863EA37 0x4863EA37 `mov (4, a0), a1` (+56)
 	MusicStylistSetup_2	panel=StylePanel_Hippie_Piano_1, name=Text_Hippie_Piano_2, era_pos=49, letter=15, letter_pos=25, x22="\x00\x00"	# [0]
 	MusicStylistSetup_2	panel=StylePanel_FlowerPower_Rock_2, name=Text_Hippie_Piano_2+17, setup=1, era_pos=31, letter=13, letter_pos=11, x22="\x00\x00"
 	MusicStylistSetup_2	panel=StylePanel_Woddstock_Harp_3, name=Text_Hippie_Piano_2+34, setup=2, era_pos=117, letter=30, letter_pos=17, x22="\x00\x00"
@@ -26976,7 +26976,7 @@ GetFocusObject_Records:
 	# 4 bytes read by func_486A52E8_La 0x486A52F2 `movbu (8, a0), d0` (+0, u8); the read fields at their widths (u8), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
 	tab_u8	10, 0, 0, 0	# +0
 
-func_486A5AA3_entry_L4e_Table:	# 9 x u32, 0..1213742212; read by func_486A5AA3_entry_L4e 0x486A5AF6: `mov (a1), d0`; func_486AE3E4_entry_L56 0x486AE43F: `mov (a1), d0` ...
+func_486A5AA3_entry_L4e_Table:	# 9 x u32, 0..1213742212; read by func_486A5AA3_entry_L4e 0x486A5AF6: `mov (a1), d0`; CmpRecArrangePosGet_entry_L56 0x486AE43F: `mov (a1), d0` ...
 	tab_u32	1212836576, 1213742132, 9, 1212836584, 1213742212, 4, 0, 0	# [0]
 	tab_u32	0	# [8]
 
@@ -35791,131 +35791,131 @@ APC_ResNames:
 .incbin_range "baserom/kn2400_program.rom", 0x18CA30, 0x18CA34
 
 func_486F8461_entry_L18_Table:
-	.long	func_486F84EC_Voicing
-	.long	func_486F84EC_Voicing_2
-	.long	func_486F84EC_Voicing_3
-	.long	func_486F84EC_Voicing_4
-	.long	func_486F84EC_Voicing_5
-	.long	func_486F84EC_Voicing_6
-	.long	func_486F84EC_Voicing_7
-	.long	func_486F84EC_Voicing_8
-	.long	func_486F84EC_Voicing_9
-	.long	func_486F84EC_Voicing_10
-	.long	func_486F84EC_Voicing_11
-	.long	func_486F84EC_Voicing_12
-	.long	func_486F84EC_Voicing_13
-	.long	func_486F84EC_Voicing_14
-	.long	func_486F84EC_Voicing_15
-	.long	func_486F84EC_Voicing_16
-	.long	func_486F84EC_Voicing_17
-	.long	func_486F84EC_Voicing_18
-	.long	func_486F84EC_Voicing_19
-	.long	func_486F84EC_Voicing_20
-	.long	func_486F84EC_Voicing_21
-	.long	func_486F84EC_Voicing_22
+	.long	ChordFinderNotesGet_Voicing
+	.long	ChordFinderNotesGet_Voicing_2
+	.long	ChordFinderNotesGet_Voicing_3
+	.long	ChordFinderNotesGet_Voicing_4
+	.long	ChordFinderNotesGet_Voicing_5
+	.long	ChordFinderNotesGet_Voicing_6
+	.long	ChordFinderNotesGet_Voicing_7
+	.long	ChordFinderNotesGet_Voicing_8
+	.long	ChordFinderNotesGet_Voicing_9
+	.long	ChordFinderNotesGet_Voicing_10
+	.long	ChordFinderNotesGet_Voicing_11
+	.long	ChordFinderNotesGet_Voicing_12
+	.long	ChordFinderNotesGet_Voicing_13
+	.long	ChordFinderNotesGet_Voicing_14
+	.long	ChordFinderNotesGet_Voicing_15
+	.long	ChordFinderNotesGet_Voicing_16
+	.long	ChordFinderNotesGet_Voicing_17
+	.long	ChordFinderNotesGet_Voicing_18
+	.long	ChordFinderNotesGet_Voicing_19
+	.long	ChordFinderNotesGet_Voicing_20
+	.long	ChordFinderNotesGet_Voicing_21
+	.long	ChordFinderNotesGet_Voicing_22
 func_486F8461_entry_L36_Table:
-	.long	func_486F84EC_Voicing
-	.long	func_486F84EC_Voicing_2
-	.long	func_486F84EC_Voicing_3
-	.long	func_486F84EC_Voicing_4
-	.long	func_486F84EC_Voicing_5
-	.long	func_486F84EC_Voicing_6
-	.long	func_486F84EC_Voicing_7
-	.long	func_486F84EC_Voicing_8
-	.long	func_486F84EC_Voicing_9
-	.long	func_486F84EC_Voicing_10
-	.long	func_486F84EC_Voicing_23
-	.long	func_486F84EC_Voicing_12
-	.long	func_486F84EC_Voicing_24
-	.long	func_486F84EC_Voicing_14
-	.long	func_486F84EC_Voicing_25
-	.long	func_486F84EC_Voicing_16
-	.long	func_486F84EC_Voicing_17
-	.long	func_486F84EC_Voicing_26
-	.long	func_486F84EC_Voicing_19
-	.long	func_486F84EC_Voicing_27
-	.long	func_486F84EC_Voicing_21
-	.long	func_486F84EC_Voicing_22
-	.long	func_486F84EC_Voicing_28
-	.long	func_486F84EC_Voicing_29
-	.long	func_486F84EC_Voicing_30
-	.long	func_486F84EC_Voicing_31
-	.long	func_486F84EC_Voicing_32
-	.long	func_486F84EC_Voicing_33
-	.long	func_486F84EC_Voicing_34
-	.long	func_486F84EC_Voicing_35
-	.long	func_486F84EC_Voicing_36
-	.long	func_486F84EC_Voicing_37
-	.long	func_486F84EC_Voicing_38
-	.long	func_486F84EC_Voicing_39
-	.long	func_486F84EC_Voicing_40
-	.long	func_486F84EC_Voicing_41
-	.long	func_486F84EC_Voicing_42
-	.long	func_486F84EC_Voicing_43
-	.long	func_486F84EC_Voicing_44
+	.long	ChordFinderNotesGet_Voicing
+	.long	ChordFinderNotesGet_Voicing_2
+	.long	ChordFinderNotesGet_Voicing_3
+	.long	ChordFinderNotesGet_Voicing_4
+	.long	ChordFinderNotesGet_Voicing_5
+	.long	ChordFinderNotesGet_Voicing_6
+	.long	ChordFinderNotesGet_Voicing_7
+	.long	ChordFinderNotesGet_Voicing_8
+	.long	ChordFinderNotesGet_Voicing_9
+	.long	ChordFinderNotesGet_Voicing_10
+	.long	ChordFinderNotesGet_Voicing_23
+	.long	ChordFinderNotesGet_Voicing_12
+	.long	ChordFinderNotesGet_Voicing_24
+	.long	ChordFinderNotesGet_Voicing_14
+	.long	ChordFinderNotesGet_Voicing_25
+	.long	ChordFinderNotesGet_Voicing_16
+	.long	ChordFinderNotesGet_Voicing_17
+	.long	ChordFinderNotesGet_Voicing_26
+	.long	ChordFinderNotesGet_Voicing_19
+	.long	ChordFinderNotesGet_Voicing_27
+	.long	ChordFinderNotesGet_Voicing_21
+	.long	ChordFinderNotesGet_Voicing_22
+	.long	ChordFinderNotesGet_Voicing_28
+	.long	ChordFinderNotesGet_Voicing_29
+	.long	ChordFinderNotesGet_Voicing_30
+	.long	ChordFinderNotesGet_Voicing_31
+	.long	ChordFinderNotesGet_Voicing_32
+	.long	ChordFinderNotesGet_Voicing_33
+	.long	ChordFinderNotesGet_Voicing_34
+	.long	ChordFinderNotesGet_Voicing_35
+	.long	ChordFinderNotesGet_Voicing_36
+	.long	ChordFinderNotesGet_Voicing_37
+	.long	ChordFinderNotesGet_Voicing_38
+	.long	ChordFinderNotesGet_Voicing_39
+	.long	ChordFinderNotesGet_Voicing_40
+	.long	ChordFinderNotesGet_Voicing_41
+	.long	ChordFinderNotesGet_Voicing_42
+	.long	ChordFinderNotesGet_Voicing_43
+	.long	ChordFinderNotesGet_Voicing_44
 func_486F8461_entry_L18_Table_2:
-	.long	func_486F84EC_Inversions
-	.long	func_486F84EC_Inversions_2
-	.long	func_486F84EC_Inversions_3
-	.long	func_486F84EC_Inversions_4
-	.long	func_486F84EC_Inversions_5
-	.long	func_486F84EC_Inversions_6
-	.long	func_486F84EC_Inversions_7
-	.long	func_486F84EC_Inversions_8
-	.long	func_486F84EC_Inversions_9
-	.long	func_486F84EC_Inversions_10
-	.long	func_486F84EC_Inversions_11
-	.long	func_486F84EC_Inversions_12
-	.long	func_486F84EC_Inversions_13
-	.long	func_486F84EC_Inversions_14
-	.long	func_486F84EC_Inversions_15
-	.long	func_486F84EC_Inversions_16
-	.long	func_486F84EC_Inversions_17
-	.long	func_486F84EC_Inversions_18
-	.long	func_486F84EC_Inversions_19
-	.long	func_486F84EC_Inversions_20
-	.long	func_486F84EC_Inversions_21
-	.long	func_486F84EC_Inversions_22
+	.long	ChordFinderNotesGet_Inversions
+	.long	ChordFinderNotesGet_Inversions_2
+	.long	ChordFinderNotesGet_Inversions_3
+	.long	ChordFinderNotesGet_Inversions_4
+	.long	ChordFinderNotesGet_Inversions_5
+	.long	ChordFinderNotesGet_Inversions_6
+	.long	ChordFinderNotesGet_Inversions_7
+	.long	ChordFinderNotesGet_Inversions_8
+	.long	ChordFinderNotesGet_Inversions_9
+	.long	ChordFinderNotesGet_Inversions_10
+	.long	ChordFinderNotesGet_Inversions_11
+	.long	ChordFinderNotesGet_Inversions_12
+	.long	ChordFinderNotesGet_Inversions_13
+	.long	ChordFinderNotesGet_Inversions_14
+	.long	ChordFinderNotesGet_Inversions_15
+	.long	ChordFinderNotesGet_Inversions_16
+	.long	ChordFinderNotesGet_Inversions_17
+	.long	ChordFinderNotesGet_Inversions_18
+	.long	ChordFinderNotesGet_Inversions_19
+	.long	ChordFinderNotesGet_Inversions_20
+	.long	ChordFinderNotesGet_Inversions_21
+	.long	ChordFinderNotesGet_Inversions_22
 func_486F8461_entry_L36_Table_2:
-	.long	func_486F84EC_Inversions
-	.long	func_486F84EC_Inversions_2
-	.long	func_486F84EC_Inversions_3
-	.long	func_486F84EC_Inversions_4
-	.long	func_486F84EC_Inversions_5
-	.long	func_486F84EC_Inversions_6
-	.long	func_486F84EC_Inversions_7
-	.long	func_486F84EC_Inversions_8
-	.long	func_486F84EC_Inversions_23
-	.long	func_486F84EC_Inversions_10
-	.long	func_486F84EC_Inversions_24
-	.long	func_486F84EC_Inversions_12
-	.long	func_486F84EC_Inversions_25
-	.long	func_486F84EC_Inversions_14
-	.long	func_486F84EC_Inversions_26
-	.long	func_486F84EC_Inversions_16
-	.long	func_486F84EC_Inversions_17
-	.long	func_486F84EC_Inversions_27
-	.long	func_486F84EC_Inversions_19
-	.long	func_486F84EC_Inversions_28
-	.long	func_486F84EC_Inversions_29
-	.long	func_486F84EC_Inversions_30
-	.long	func_486F84EC_Inversions_31
-	.long	func_486F84EC_Inversions_32
-	.long	func_486F84EC_Inversions_33
-	.long	func_486F84EC_Inversions_34
-	.long	func_486F84EC_Inversions_35
-	.long	func_486F84EC_Inversions_36
-	.long	func_486F84EC_Inversions_37
-	.long	func_486F84EC_Inversions_38
-	.long	func_486F84EC_Inversions_39
-	.long	func_486F84EC_Inversions_40
-	.long	func_486F84EC_Inversions_41
-	.long	func_486F84EC_Inversions_42
-	.long	func_486F84EC_Inversions_43
-	.long	func_486F84EC_Inversions_44
-	.long	func_486F84EC_Inversions_45
-	.long	func_486F84EC_Inversions_46
-	.long	func_486F84EC_Inversions_47
+	.long	ChordFinderNotesGet_Inversions
+	.long	ChordFinderNotesGet_Inversions_2
+	.long	ChordFinderNotesGet_Inversions_3
+	.long	ChordFinderNotesGet_Inversions_4
+	.long	ChordFinderNotesGet_Inversions_5
+	.long	ChordFinderNotesGet_Inversions_6
+	.long	ChordFinderNotesGet_Inversions_7
+	.long	ChordFinderNotesGet_Inversions_8
+	.long	ChordFinderNotesGet_Inversions_23
+	.long	ChordFinderNotesGet_Inversions_10
+	.long	ChordFinderNotesGet_Inversions_24
+	.long	ChordFinderNotesGet_Inversions_12
+	.long	ChordFinderNotesGet_Inversions_25
+	.long	ChordFinderNotesGet_Inversions_14
+	.long	ChordFinderNotesGet_Inversions_26
+	.long	ChordFinderNotesGet_Inversions_16
+	.long	ChordFinderNotesGet_Inversions_17
+	.long	ChordFinderNotesGet_Inversions_27
+	.long	ChordFinderNotesGet_Inversions_19
+	.long	ChordFinderNotesGet_Inversions_28
+	.long	ChordFinderNotesGet_Inversions_29
+	.long	ChordFinderNotesGet_Inversions_30
+	.long	ChordFinderNotesGet_Inversions_31
+	.long	ChordFinderNotesGet_Inversions_32
+	.long	ChordFinderNotesGet_Inversions_33
+	.long	ChordFinderNotesGet_Inversions_34
+	.long	ChordFinderNotesGet_Inversions_35
+	.long	ChordFinderNotesGet_Inversions_36
+	.long	ChordFinderNotesGet_Inversions_37
+	.long	ChordFinderNotesGet_Inversions_38
+	.long	ChordFinderNotesGet_Inversions_39
+	.long	ChordFinderNotesGet_Inversions_40
+	.long	ChordFinderNotesGet_Inversions_41
+	.long	ChordFinderNotesGet_Inversions_42
+	.long	ChordFinderNotesGet_Inversions_43
+	.long	ChordFinderNotesGet_Inversions_44
+	.long	ChordFinderNotesGet_Inversions_45
+	.long	ChordFinderNotesGet_Inversions_46
+	.long	ChordFinderNotesGet_Inversions_47
 	.long	loc_486FA4F2
 	.long	loc_486FA4F5
 	.long	loc_486FA4F8

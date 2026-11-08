@@ -66,7 +66,7 @@ lcs / llt / lne), with aN holding data address B at the loop head and B + s at t
 linear, so it knows aN only when nothing but constants stepped it), and End - B a whole number >= 2 of s:
 a `("bound", B)` access.  `gen_data_s.loop_end()` applies it in `struct_arrays()`, the pass that runs a
 stepped or indexed array on while its records are free: the array whose record boundary B is ends at End,
-and the table header cites the compare (`...; ends at +20, where func_4850DF34 0x4850DF34's loop stops
+and the table header cites the compare (`...; ends at +20, where CmpMCopyFieldApply 0x4850DF34's loop stops
 (`cmp func_4850DF34_Table+20, a2`)`).  Only bottom-tested loops count: a loop that compares before its
 step (`cmp End, aN` / exit / `bra` back) does not show the step at the compare.  Bounds found: 40 in
 build 941 (`MainMmmControl_Table` 260 -> 256 entries; its +1024 / +1028 are `MainMmmControl`'s two
@@ -128,13 +128,13 @@ for the siblings too: the KN2400's 12-byte blocks the switch descriptors' `p8` l
 ## 4. What enters func_487B8FB2: nothing -- `KernelTickIsrDefault`
 
 The routine after `KernelInitHook` clears bits 4..7 of G6ICR 0x34000118 (acknowledges interrupt group 6),
-calls func_4C03DC87 (which wakes the task (0x50380000) points at, E_OBJ when it is dormant, E_QOVR at 0x7FFF
+calls KernelTimerTaskWakeup (which wakes the task (0x50380000) points at, E_OBJ when it is dormant, E_QOVR at 0x7FFF
 queued wake-ups) and returns with `rets`.  That is the interrupt-handler shape: `LibIrqScheduler`
 (lib 0x4C03DE26) reads the accepted group from 0x34000200, finds the request in GxICR, maps it through the
 RAM table 0x50380A6C to an index and calls the handler from the RAM table 0x50380B64 with `calls (a2)`.
 The table is filled by KernelInit (every entry the default `loc_4C03DEE9`) and by the def_int service
 func_4C03DB21, from a packet {attribute, handler, level, ICR address}.  The only def_int of G6ICR is
-func_48447F33's (the application start-up KernelInit calls): interrupt 1, handler `KernelTickHandler`
+KernelTickTaskInit's (the application start-up KernelInit calls): interrupt 1, handler `KernelTickHandler`
 (lib 0x4C02BB05, the 1 kHz tick), level 6, ICR 0x34000118.  No word of the program, table or IC18 image
 holds 0x487B8FB2, no instruction names it, and no branch reaches it.  So it is the kernel
 configuration's default tick handler, which the application replaced [INFERENCE].  All four models have

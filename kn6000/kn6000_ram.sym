@@ -3,7 +3,7 @@
 ; evidence classes (accessor: a named Get/Set/Is routine's only variable; owner: every
 ; direct reference lies in one named routine).  Columns: RAM address, name, ; class, evidence.
 ;
-; 25 accessor names over 290 operands, 478 owner names over 2088 operands; 3192 RAM addresses referenced
+; 65 accessor names over 635 operands, 537 owner names over 2212 operands; 3192 RAM addresses referenced
 0x50007A98  localeconv_Ram	; owner: 2 references, all in localeconv
 0x50007A9C  localeconv_Ram_2	; owner: 1 references, all in localeconv
 0x50007AA0  localeconv_Ram_3	; owner: 1 references, all in localeconv
@@ -22,6 +22,8 @@
 0x50007AC5  localeconv_Ram_16	; owner: 1 references, all in localeconv
 0x50007AC6  localeconv_Ram_17	; owner: 1 references, all in localeconv
 0x50007AC7  localeconv_Ram_18	; owner: 1 references, all in localeconv
+0x50007AC8  M3SendProcessGui_Ram	; owner: 3 references, all in M3SendProcessGui
+0x50007ACC  M3SendProcessGui_Ram_2	; owner: 4 references, all in M3SendProcessGui
 0x50007AD0  CaptureLcd_Ram	; owner: 3 references, all in CaptureLcd
 0x50007AD4  CaptureLcdArea_Ram	; owner: 3 references, all in CaptureLcdArea
 0x50007AD8  SetModeLed_Ram	; owner: 3 references, all in SetModeLed
@@ -47,8 +49,10 @@
 0x5000FB7C  BitEditCheck_Ram	; owner: 1 references, all in BitEditCheck
 0x50010340  DbMemoProc_Ram	; owner: 2 references, all in DbMemoProc
 0x50010380  DbMemoryDumpProc_Ram	; owner: 4 references, all in DbMemoryDumpProc
+0x5001239C  DrawRing_Reset_Ram	; owner: 1 references, all in DrawRing_Reset
 0x500177F4  InitializeObjectTable_Ram	; owner: 1 references, all in InitializeObjectTable
 0x50017BF4  InitializeObjectTable_Ram_2	; owner: 1 references, all in InitializeObjectTable
+0x5001A25C  EasySetTableClear_Ram	; owner: 1 references, all in EasySetTableClear
 0x5001AE4C  RegisterEasySet_Ram	; owner: 1 references, all in RegisterEasySet
 0x5001AF79  PanelTransaction_Ram	; owner: 4 references, all in PanelTransaction
 0x5001AF7A  PanelFrameDecode_Ram	; owner: 2 references, all in PanelFrameDecode
@@ -72,6 +76,7 @@
 0x5002DD48  HelpLang3Check_Ram	; owner: 5 references, all in HelpLang3Check
 0x5002DD60  HelpLang4Check_Ram	; owner: 5 references, all in HelpLang4Check
 0x5002DE38  StyleUnitsPtr	; accessor: StyleUnitsPtrGet (getter)
+0x50030E7C  UserPadEditMode	; accessor: UserPadEditModeGet (getter)
 0x5003374E  MetronomeBeatTask_Ram	; owner: 3 references, all in MetronomeBeatTask
 0x50033750  MetronomeBeatTask_Ram_2	; owner: 2 references, all in MetronomeBeatTask
 0x50033752  MetronomeBeatTask_Ram_3	; owner: 2 references, all in MetronomeBeatTask
@@ -134,6 +139,7 @@
 0x5004B670  CustomCopySure2_Ram	; owner: 2 references, all in CustomCopySure2
 0x5004B770  CustomCopySure2_Ram_2	; owner: 8 references, all in CustomCopySure2
 0x5004B774  FE_Dummy_Ram	; owner: 8 references, all in FE_Dummy
+0x5004B778  SeqInfoNum3Text_Ram	; owner: 2 references, all in SeqInfoNum3Text
 0x5004B798  FuncEdit_rhyGroup_Ram	; owner: 3 references, all in FuncEdit_rhyGroup
 0x5004B79C  FuncEdit_rhyName_Ram	; owner: 3 references, all in FuncEdit_rhyName
 0x5004B7A0  AcTimeSigBoxProc_Ram	; owner: 4 references, all in AcTimeSigBoxProc
@@ -225,6 +231,13 @@
 0x5004B918  AcStepRecBoxProc_Ram_20	; owner: 6 references, all in AcStepRecBoxProc
 0x5004B924  NameGetFuncCall_Ram	; owner: 1 references, all in NameGetFuncCall
 0x5004B934  NameGetFuncCall_Ram_2	; owner: 1 references, all in NameGetFuncCall
+0x5004C7B6  HeldKeyListsInit_Ram	; owner: 1 references, all in HeldKeyListsInit
+0x5004C7BC  HeldKeyListsInit_Ram_2	; owner: 1 references, all in HeldKeyListsInit
+0x5004C7BE  HeldKeyListsInit_Ram_3	; owner: 1 references, all in HeldKeyListsInit
+0x5004C7C0  HeldKeyListsInit_Ram_4	; owner: 1 references, all in HeldKeyListsInit
+0x5004C7C2  HeldKeyListsInit_Ram_5	; owner: 1 references, all in HeldKeyListsInit
+0x5004D4A4  KeyZoneRangeAccess_Ram	; owner: 6 references, all in KeyZoneRangeAccess
+0x5004D530  KeyZoneParamAccess_Ram	; owner: 16 references, all in KeyZoneParamAccess
 0x5004D7A8  EzDeffSe_Ram	; owner: 8 references, all in EzDeffSe
 0x5004D7AC  PortamentOnSe_Ram	; owner: 6 references, all in PortamentOnSe
 0x5004D7B0  PortamentTimeSe_Ram	; owner: 8 references, all in PortamentTimeSe
@@ -290,10 +303,47 @@
 0x5004EE88  SeqRecPart	; accessor: GetSeqRecPart (getter), SetSeqRecPart (setter)
 0x5004EE8A  SeqRecSrtR	; accessor: GetSeqRecSrtR (getter), SetSeqRecSrtR (setter)
 0x5004EE8C  MeasSeq	; accessor: GetMeasSeq (getter), SetMeasSeq (setter)
+0x5004EE8E  SeqMode	; accessor: SeqModeGet (getter)
 0x5004EE90  SeqSongNo	; accessor: GetSeqSongNo (getter)
+0x5004EE92  SeqPlyPartSaved	; accessor: SeqPlyPartSavedGet (getter), SeqPlyPartSavedSet (setter)
+0x5004EE94  SeqPlyPartModeSave	; accessor: SeqPlyPartModeSaveGet (getter), SeqPlyPartModeSaveSet (setter)
+0x5004EE98  SeqStatusBits	; accessor: SeqStatusBitsGet (getter)
+0x5004EE99  SeqPlyActiveFlag	; accessor: SeqPlyActiveFlagGet (getter), SeqPlyActiveFlagSet (setter)
+0x5004EE9A  SeqCycPlyStartMeas	; accessor: SeqCycPlyStartMeasGet (getter), SeqCycPlyStartMeasSet (setter)
+0x5004EE9C  SeqCycPlyEndMeas	; accessor: SeqCycPlyEndMeasGet (getter), SeqCycPlyEndMeasSet (setter)
+0x5004EE9E  SeqCycRecStartMeas	; accessor: SeqCycRecStartMeasGet (getter), SeqCycRecStartMeasSet (setter)
+0x5004EEA0  SeqCycRecEndMeas	; accessor: SeqCycRecEndMeasGet (getter), SeqCycRecEndMeasSet (setter)
+0x5004EEA2  SeqAutoPunchInMeas	; accessor: SeqAutoPunchInMeasGet (getter), SeqAutoPunchInMeasSet (setter)
+0x5004EEA4  SeqAutoPunchOutMeas	; accessor: SeqAutoPunchOutMeasGet (getter), SeqAutoPunchOutMeasSet (setter)
+0x5004EEA6  SeqAutoPunchPreRoll	; accessor: SeqAutoPunchPreRollGet (getter), SeqAutoPunchPreRollSet (setter)
+0x5004EEB8  SeqPunchState	; accessor: SeqPunchStateGet (getter), SeqPunchStateSet (setter)
+0x5005CBA5  MdlyContinueFlag	; accessor: MdlyContinueFlagGet (getter), MdlyContinueFlagSet (setter)
 0x5005CBAC  DemoCtlTimer	; accessor: GetDemoCtlTimer (getter)
+0x5005CBD0  NoteEditMeas	; accessor: NoteEditMeasGet (getter)
+0x5005CBD2  NoteEditViewMeas	; accessor: NoteEditViewMeasGet (getter)
+0x5005CBD6  NoteEditTick	; accessor: NoteEditTickGet (getter)
+0x5005CBD7  NoteEditNote	; accessor: NoteEditNoteGet (getter)
+0x5005CBE0  NoteEditInc	; accessor: NoteEditIncGet (getter)
+0x5005CBE4  SeqEditDefaultsInit_Ram	; owner: 1 references, all in SeqEditDefaultsInit
+0x5005CBFE  NoteEditClock	; accessor: NoteEditClockGet (getter)
+0x5005CC08  DrumEditInstr	; accessor: DrumEditInstrGet (getter)
+0x5005CC0B  NoteEditSolo	; accessor: NoteEditSoloGet (getter)
+0x5005CCAA  StepRecCtlVal	; accessor: StepRecCtlValGet (getter)
+0x5005CCDC  StepRecMode	; accessor: StepRecModeGet (getter)
+0x5005CCDF  StepRecLeftLen	; accessor: StepRecLeftLenGet (getter)
+0x5005CCE0  StepRecRightLen	; accessor: StepRecRightLenGet (getter)
+0x5005CCE1  StepRecPhrase	; accessor: StepRecPhraseGet (getter)
+0x5005CCE2  StepRecNote	; accessor: StepRecNoteGet (getter)
+0x5005CCE3  StepRecVel	; accessor: StepRecVelGet (getter)
 0x5005CF48  GetVolumeLabel_Ram	; owner: 1 references, all in GetVolumeLabel
 0x5005CF53  GetVolumeLabel_Ram_2	; owner: 1 references, all in GetVolumeLabel
+0x5005CF54  PianoDiscFindFirst_Ram	; owner: 2 references, all in PianoDiscFindFirst
+0x5005CF78  FileStreamReaderTask_Ram	; owner: 5 references, all in FileStreamReaderTask
+0x5005CF7C  StreamTestDataSmfStep_Ram	; owner: 1 references, all in StreamTestDataSmfStep
+0x5005D9E8  FileStreamGetByte_Ram	; owner: 3 references, all in FileStreamGetByte
+0x5005D9F0  PianoDiscDetect_Ram	; owner: 1 references, all in PianoDiscDetect
+0x5005DDF0  PianoDiscEntrySelect_Ram	; owner: 2 references, all in PianoDiscEntrySelect
+0x5005DDF2  PianoDiscDirRead_Ram	; owner: 1 references, all in PianoDiscDirRead
 0x5005DDF8  TechniChordCompute_Ram	; owner: 1 references, all in TechniChordCompute
 0x5005DE06  tr_static_init_Ram	; owner: 1 references, all in tr_static_init
 0x5005E204  _tr_align_Ram	; owner: 4 references, all in _tr_align
@@ -399,6 +449,11 @@
 0x50060418  SaveRcm_HD_Impl_Ram_5	; owner: 4 references, all in SaveRcm_HD_Impl
 0x5006041C  SaveRcm_HD_Impl_Ram_6	; owner: 1 references, all in SaveRcm_HD_Impl
 0x50060420  SaveRcm_HD_Impl_Ram_7	; owner: 1 references, all in SaveRcm_HD_Impl
+0x500606D0  FmmSaveNameSet_Ram	; owner: 1 references, all in FmmSaveNameSet
+0x5006196A  FmmSmfNameSet_Ram	; owner: 1 references, all in FmmSmfNameSet
+0x500620C4  FmmCstNameSet_Ram	; owner: 1 references, all in FmmCstNameSet
+0x5006214C  FmmLoadFilterMask	; accessor: FmmLoadFilterMaskGet (getter)
+0x5006214E  FmmSaveFilterMask	; accessor: FmmSaveFilterMaskGet (getter)
 0x50062300  ZFileDeflatePart_Ram	; owner: 1 references, all in ZFileDeflatePart
 0x50072334  ZArenaReset_Ram	; owner: 1 references, all in ZArenaReset
 0x50072335  ZArenaReset_Ram_2	; owner: 1 references, all in ZArenaReset
@@ -421,12 +476,31 @@
 0x500B699E  PsFileNmTwoBoxProc_Ram_2	; owner: 3 references, all in PsFileNmTwoBoxProc
 0x500B69A0  PsOptionTwoBoxProc_Ram	; owner: 4 references, all in PsOptionTwoBoxProc
 0x500B69A8  DspEffectAssign_Ram	; owner: 1 references, all in DspEffectAssign
+0x500B75F6  StylCnvTechnicsInstall_Ram	; owner: 1 references, all in StylCnvTechnicsInstall
+0x500B8347  StylCnvTechnicsInstall_Ram_2	; owner: 1 references, all in StylCnvTechnicsInstall
+0x500B834D  StylCnvTechnicsInstall_Ram_3	; owner: 1 references, all in StylCnvTechnicsInstall
+0x500B8351  StylCnvTechnicsInstall_Ram_4	; owner: 1 references, all in StylCnvTechnicsInstall
 0x500B8354  MssNameFunc_Ram	; owner: 2 references, all in MssNameFunc
 0x500B8364  MssNameFunc_Ram_2	; owner: 2 references, all in MssNameFunc
 0x500B8365  MssNameFunc_Ram_3	; owner: 1 references, all in MssNameFunc
 0x500B8375  MssNameFunc_Ram_4	; owner: 1 references, all in MssNameFunc
+0x500B8408  FlashSectorRewrite_Ram	; owner: 3 references, all in FlashSectorRewrite
+0x500C8408  DpSmfChannelEvent_Ram	; owner: 3 references, all in DpSmfChannelEvent
+0x500C96C4  DpSmf1ReaderTask_Ram	; owner: 3 references, all in DpSmf1ReaderTask
+0x500C9F18  DpSmf1ReaderTask_Ram_2	; owner: 1 references, all in DpSmf1ReaderTask
+0x500D336C  DpSmf1StreamGetByte_Ram	; owner: 3 references, all in DpSmf1StreamGetByte
 0x500D3C30  DConsoleProc_Ram	; owner: 2 references, all in DConsoleProc
+0x500D3C70  MemPadArea	; accessor: MemPadAreaBase (address)
+0x500DDC8C  JpegDecModeMatch_Ram	; owner: 5 references, all in JpegDecModeMatch
+0x500DDC94  JpegDecReadApp_Ram	; owner: 1 references, all in JpegDecReadApp
+0x500DDC98  JpegDecReadScan_Ram	; owner: 1 references, all in JpegDecReadScan
+0x500DDC9C  JpegDecMcu_Ram	; owner: 1 references, all in JpegDecMcu
+0x500DDCA4  JpegDecMcu_Ram_2	; owner: 1 references, all in JpegDecMcu
 0x500DDCD8  JpegEngine_Ram	; owner: 5 references, all in JpegEngine
+0x500DDCFC  JpegDecMcu_Ram_3	; owner: 2 references, all in JpegDecMcu
+0x500DE55C  JpegDecReadDht_Ram	; owner: 4 references, all in JpegDecReadDht
+0x500DE75C  JpegDecReadDht_Ram_2	; owner: 4 references, all in JpegDecReadDht
+0x50180004  GuiCallerTaskIdGet_Ram	; owner: 1 references, all in GuiCallerTaskIdGet
 0x50180734  KernelInit_Ram	; owner: 1 references, all in KernelInit
 0x50180C80  KernelInit_Ram_2	; owner: 3 references, all in KernelInit
 0x50180C88  KernelInit_Ram_3	; owner: 1 references, all in KernelInit
@@ -437,22 +511,37 @@
 0x50180CA0  KernelInit_Ram_8	; owner: 1 references, all in KernelInit
 0x50180CA4  KernelInit_Ram_9	; owner: 1 references, all in KernelInit
 0x50180CA8  KernelInit_Ram_10	; owner: 1 references, all in KernelInit
+0x50180CD0  KernelTaskContextInit_Ram	; owner: 2 references, all in KernelTaskContextInit
+0x50180CD8  KernelTaskContextInit_Ram_2	; owner: 2 references, all in KernelTaskContextInit
 0x50180E60  KernelInit_Ram_11	; owner: 1 references, all in KernelInit
 0x50181054  KernelInit_Ram_12	; owner: 1 references, all in KernelInit
 0x501811D4  KernelInit_Ram_13	; owner: 1 references, all in KernelInit
 0x501813C8  KernelInit_Ram_14	; owner: 1 references, all in KernelInit
+0x5020000E  GuiTaskObjectsCreate_Ram	; owner: 1 references, all in GuiTaskObjectsCreate
+0x50200012  GuiTaskObjectsCreate_Ram_2	; owner: 1 references, all in GuiTaskObjectsCreate
+0x50200016  GuiTaskObjectsCreate_Ram_3	; owner: 1 references, all in GuiTaskObjectsCreate
 0x5020042C  VRAM	; accessor: GetVRAMAddr (address)
 0x5024B42C  WPAL1	; accessor: GetWPAL1Addr (address)
 0x5024B82C  WPAL2	; accessor: GetWPAL2Addr (address)
+0x5024BC30  DrawRing_Reset_Ram_2	; owner: 1 references, all in DrawRing_Reset
 0x5024F668  InitializeResource_Ram	; owner: 1 references, all in InitializeResource
 0x5024F66C  PanelRxIsr_Ram	; owner: 1 references, all in PanelRxIsr
 0x5025037E  PanelLedMirrorResetA_Ram	; owner: 1 references, all in PanelLedMirrorResetA
 0x50250577  StyleBoundRecByteCf	; accessor: StyleBoundRecByteCfGet (getter)
 0x50250578  StyleCountInBound	; accessor: StyleCountInBoundGet (getter)
+0x5025057C  StyleBoundAuxPtr	; accessor: StyleBoundAuxPtrGet (getter)
+0x502505AD  PadCurTimeSigByte	; accessor: PadCurTimeSigByteGet (getter)
+0x502505CA  CmpMemoryFreePercentGet_Ram	; owner: 1 references, all in CmpMemoryFreePercentGet
+0x50276DF6  UserPadMemoryFreePercentGet_Ram	; owner: 1 references, all in UserPadMemoryFreePercentGet
 0x50276E12  TempoTick96Isr_Ram	; owner: 2 references, all in TempoTick96Isr
+0x50276E28  RhyClockTickCount	; accessor: RhyClockTickCountGet (getter)
+0x50276E2E  PadClockBeatsPerBarSet_Ram	; owner: 1 references, all in PadClockBeatsPerBarSet
+0x50276E32  PadClockTickCount	; accessor: PadClockTickCountGet (getter)
+0x50276E3C  MetroClockTickCount	; accessor: MetroClockTickCountGet (getter)
 0x50276E48  TimBase	; accessor: GetTimBase (getter)
 0x50276E52  KeybedFifoRead_Ram	; owner: 2 references, all in KeybedFifoRead
 0x50276E53  KeybedFifoRead_Ram_2	; owner: 2 references, all in KeybedFifoRead
+0x50276E94  SoundRamBase	; accessor: SoundRamBaseGet (getter)
 0x50276E9E  TgcBufWrite_Ram_2	; owner: 1 references, all in TgcBufWrite
 0x5027E480  TgPartToneDescScratch	; accessor: TgPartToneDescScratchPtr (address)
 0x5027E4A7  TgPartLocalEditRecBuildAll_Ram	; owner: 1 references, all in TgPartLocalEditRecBuildAll
@@ -474,7 +563,12 @@
 0x5028803C  NameGetFuncCall_Ram_11	; owner: 1 references, all in NameGetFuncCall
 0x50288040  NameGetFuncCall_Ram_12	; owner: 1 references, all in NameGetFuncCall
 0x50288086  NameGetFuncCall_Ram_13	; owner: 1 references, all in NameGetFuncCall
+0x50288158  EffEditUnitLoad_Ram	; owner: 7 references, all in EffEditUnitLoad
+0x5028818C  FdcStrap3SeekTestLoop_Ram	; owner: 4 references, all in FdcStrap3SeekTestLoop
 0x502883FC  FsOpen_Ram	; owner: 1 references, all in FsOpen
+0x50288524  FatCacheSectorGet_Ram	; owner: 1 references, all in FatCacheSectorGet
+0x50288532  FatCacheSectorGet_Ram_2	; owner: 1 references, all in FatCacheSectorGet
+0x5028B63C  PianoDiscDirRead_Ram_2	; owner: 2 references, all in PianoDiscDirRead
 0x5028CCB0  ZArenaReset_Ram_5	; owner: 1 references, all in ZArenaReset
 0x5028CCB1  ZArenaReset_Ram_6	; owner: 1 references, all in ZArenaReset
 0x5028CCB8  ZArenaReset_Ram_7	; owner: 1 references, all in ZArenaReset
@@ -487,9 +581,14 @@
 0x50380000  MemStyleArea	; accessor: MemStyleAreaBase (address)
 0x50380070  MemStyleRecPtr_Ram	; owner: 1 references, all in MemStyleRecPtr
 0x503801F0  MemStyleVarRecPtr_Ram	; owner: 1 references, all in MemStyleVarRecPtr
+0x503A5900  SongRecNameSet_Ram	; owner: 1 references, all in SongRecNameSet
 0x503A5920  Rec8E0Field120Ptr_Ram	; owner: 1 references, all in Rec8E0Field120Ptr
+0x503A613A  SongBackupSongNo	; accessor: SongBackupSongNoGet (getter), SongBackupSongNoSet (setter)
 0x503AB4D0  SongPageStore	; accessor: SongPageStorePtr (address)
 0x504EEB12  RomTestChecksums_Ram	; owner: 1 references, all in RomTestChecksums
+0x8402F534  SoundRamSoundUpconvert_Ram	; owner: 1 references, all in SoundRamSoundUpconvert
+0x84036434  SoundRamRecPtrByMsb_Ram	; owner: 1 references, all in SoundRamRecPtrByMsb
+0x840365DB  SoundRamRecPtrByMsb_Ram_2	; owner: 1 references, all in SoundRamRecPtrByMsb
 0x8403ACDC  SoundRamSumUpdate_Ram	; owner: 1 references, all in SoundRamSumUpdate
 0x900000B0  TtSndArg_Ram_4	; owner: 2 references, all in TtSndArg
 0x90008028  MicPresetStore_Ram	; owner: 4 references, all in MicPresetStore

@@ -596,14 +596,14 @@ CmpPrtCpyEditFunc_Table:	# 12 x REC_CmpPrtCpyEditFunc_Table (2 bytes each); read
 	REC_CmpPrtCpyEditFunc_Table	key=3
 	REC_CmpPrtCpyEditFunc_Table	key=6
 	REC_CmpPrtCpyEditFunc_Table	key=9
-	REC_CmpPrtCpyEditFunc_Table	sprintf_d0=1
-	REC_CmpPrtCpyEditFunc_Table	sprintf_d0=1, key=3
-	REC_CmpPrtCpyEditFunc_Table	sprintf_d0=1, key=6
-	REC_CmpPrtCpyEditFunc_Table	sprintf_d0=1, key=9
-	REC_CmpPrtCpyEditFunc_Table	sprintf_d0=2	# [8]
-	REC_CmpPrtCpyEditFunc_Table	sprintf_d0=2, key=3
-	REC_CmpPrtCpyEditFunc_Table	sprintf_d0=2, key=6
-	REC_CmpPrtCpyEditFunc_Table	sprintf_d0=2, key=9
+	REC_CmpPrtCpyEditFunc_Table	GetGenreStyleId_d1=1
+	REC_CmpPrtCpyEditFunc_Table	GetGenreStyleId_d1=1, key=3
+	REC_CmpPrtCpyEditFunc_Table	GetGenreStyleId_d1=1, key=6
+	REC_CmpPrtCpyEditFunc_Table	GetGenreStyleId_d1=1, key=9
+	REC_CmpPrtCpyEditFunc_Table	GetGenreStyleId_d1=2	# [8]
+	REC_CmpPrtCpyEditFunc_Table	GetGenreStyleId_d1=2, key=3
+	REC_CmpPrtCpyEditFunc_Table	GetGenreStyleId_d1=2, key=6
+	REC_CmpPrtCpyEditFunc_Table	GetGenreStyleId_d1=2, key=9
 
 # 7 classes; a class id is (0xa4 << 16) | its index here (ClassProc 0x4842A7C0 reads entry id & 0xFFFF, 0x18 bytes each)
 .equ MSP_Classes_SLOT, 0xa4
@@ -6685,8 +6685,8 @@ DEMO_ApFunctionNames:
 
 # 2 MainFunction procedures; a function id is (0x1c3 << 16) | its index (the names are the parallel table at slot 0x1cb)
 DEMO_MainFunctions:
-	IDNAME	FN_MdDemo, func_4854DA95, DEMO_MainFunctions, 0x1c3
-	IDNAME	FN_TtDemoMenu, func_4854DC49, DEMO_MainFunctions, 0x1c3
+	IDNAME	FN_MdDemo, FeatureDemoEventProc, DEMO_MainFunctions, 0x1c3
+	IDNAME	FN_TtDemoMenu, DemoStartEventProc, DEMO_MainFunctions, 0x1c3
 	.space	4, 0x00
 
 DEMO_MainFunctionNames:
@@ -10123,131 +10123,131 @@ APC_ResNames:
 .incbin_range "baserom/kn7000_program_b935.rom", 0x36372C, 0x363730
 
 func_4856DB99_Table:
-	.long	func_4856DC24_Voicing
-	.long	func_4856DC24_Voicing_2
-	.long	func_4856DC24_Voicing_3
-	.long	func_4856DC24_Voicing_4
-	.long	func_4856DC24_Voicing_5
-	.long	func_4856DC24_Voicing_6
-	.long	func_4856DC24_Voicing_7
-	.long	func_4856DC24_Voicing_8
-	.long	func_4856DC24_Voicing_9
-	.long	func_4856DC24_Voicing_10
-	.long	func_4856DC24_Voicing_11
-	.long	func_4856DC24_Voicing_12
-	.long	func_4856DC24_Voicing_13
-	.long	func_4856DC24_Voicing_14
-	.long	func_4856DC24_Voicing_15
-	.long	func_4856DC24_Voicing_16
-	.long	func_4856DC24_Voicing_17
-	.long	func_4856DC24_Voicing_18
-	.long	func_4856DC24_Voicing_19
-	.long	func_4856DC24_Voicing_20
-	.long	func_4856DC24_Voicing_21
-	.long	func_4856DC24_Voicing_22
+	.long	ChordFinderNotesGet_Voicing
+	.long	ChordFinderNotesGet_Voicing_2
+	.long	ChordFinderNotesGet_Voicing_3
+	.long	ChordFinderNotesGet_Voicing_4
+	.long	ChordFinderNotesGet_Voicing_5
+	.long	ChordFinderNotesGet_Voicing_6
+	.long	ChordFinderNotesGet_Voicing_7
+	.long	ChordFinderNotesGet_Voicing_8
+	.long	ChordFinderNotesGet_Voicing_9
+	.long	ChordFinderNotesGet_Voicing_10
+	.long	ChordFinderNotesGet_Voicing_11
+	.long	ChordFinderNotesGet_Voicing_12
+	.long	ChordFinderNotesGet_Voicing_13
+	.long	ChordFinderNotesGet_Voicing_14
+	.long	ChordFinderNotesGet_Voicing_15
+	.long	ChordFinderNotesGet_Voicing_16
+	.long	ChordFinderNotesGet_Voicing_17
+	.long	ChordFinderNotesGet_Voicing_18
+	.long	ChordFinderNotesGet_Voicing_19
+	.long	ChordFinderNotesGet_Voicing_20
+	.long	ChordFinderNotesGet_Voicing_21
+	.long	ChordFinderNotesGet_Voicing_22
 func_4856DB99_Table_2:
-	.long	func_4856DC24_Voicing
-	.long	func_4856DC24_Voicing_2
-	.long	func_4856DC24_Voicing_3
-	.long	func_4856DC24_Voicing_4
-	.long	func_4856DC24_Voicing_5
-	.long	func_4856DC24_Voicing_6
-	.long	func_4856DC24_Voicing_7
-	.long	func_4856DC24_Voicing_8
-	.long	func_4856DC24_Voicing_9
-	.long	func_4856DC24_Voicing_10
-	.long	func_4856DC24_Voicing_23
-	.long	func_4856DC24_Voicing_12
-	.long	func_4856DC24_Voicing_24
-	.long	func_4856DC24_Voicing_14
-	.long	func_4856DC24_Voicing_25
-	.long	func_4856DC24_Voicing_16
-	.long	func_4856DC24_Voicing_17
-	.long	func_4856DC24_Voicing_26
-	.long	func_4856DC24_Voicing_19
-	.long	func_4856DC24_Voicing_27
-	.long	func_4856DC24_Voicing_21
-	.long	func_4856DC24_Voicing_22
-	.long	func_4856DC24_Voicing_28
-	.long	func_4856DC24_Voicing_29
-	.long	func_4856DC24_Voicing_30
-	.long	func_4856DC24_Voicing_31
-	.long	func_4856DC24_Voicing_32
-	.long	func_4856DC24_Voicing_33
-	.long	func_4856DC24_Voicing_34
-	.long	func_4856DC24_Voicing_35
-	.long	func_4856DC24_Voicing_36
-	.long	func_4856DC24_Voicing_37
-	.long	func_4856DC24_Voicing_38
-	.long	func_4856DC24_Voicing_39
-	.long	func_4856DC24_Voicing_40
-	.long	func_4856DC24_Voicing_41
-	.long	func_4856DC24_Voicing_42
-	.long	func_4856DC24_Voicing_43
-	.long	func_4856DC24_Voicing_44
+	.long	ChordFinderNotesGet_Voicing
+	.long	ChordFinderNotesGet_Voicing_2
+	.long	ChordFinderNotesGet_Voicing_3
+	.long	ChordFinderNotesGet_Voicing_4
+	.long	ChordFinderNotesGet_Voicing_5
+	.long	ChordFinderNotesGet_Voicing_6
+	.long	ChordFinderNotesGet_Voicing_7
+	.long	ChordFinderNotesGet_Voicing_8
+	.long	ChordFinderNotesGet_Voicing_9
+	.long	ChordFinderNotesGet_Voicing_10
+	.long	ChordFinderNotesGet_Voicing_23
+	.long	ChordFinderNotesGet_Voicing_12
+	.long	ChordFinderNotesGet_Voicing_24
+	.long	ChordFinderNotesGet_Voicing_14
+	.long	ChordFinderNotesGet_Voicing_25
+	.long	ChordFinderNotesGet_Voicing_16
+	.long	ChordFinderNotesGet_Voicing_17
+	.long	ChordFinderNotesGet_Voicing_26
+	.long	ChordFinderNotesGet_Voicing_19
+	.long	ChordFinderNotesGet_Voicing_27
+	.long	ChordFinderNotesGet_Voicing_21
+	.long	ChordFinderNotesGet_Voicing_22
+	.long	ChordFinderNotesGet_Voicing_28
+	.long	ChordFinderNotesGet_Voicing_29
+	.long	ChordFinderNotesGet_Voicing_30
+	.long	ChordFinderNotesGet_Voicing_31
+	.long	ChordFinderNotesGet_Voicing_32
+	.long	ChordFinderNotesGet_Voicing_33
+	.long	ChordFinderNotesGet_Voicing_34
+	.long	ChordFinderNotesGet_Voicing_35
+	.long	ChordFinderNotesGet_Voicing_36
+	.long	ChordFinderNotesGet_Voicing_37
+	.long	ChordFinderNotesGet_Voicing_38
+	.long	ChordFinderNotesGet_Voicing_39
+	.long	ChordFinderNotesGet_Voicing_40
+	.long	ChordFinderNotesGet_Voicing_41
+	.long	ChordFinderNotesGet_Voicing_42
+	.long	ChordFinderNotesGet_Voicing_43
+	.long	ChordFinderNotesGet_Voicing_44
 func_4856DB99_Table_3:
-	.long	func_4856DC24_Inversions
-	.long	func_4856DC24_Inversions_2
-	.long	func_4856DC24_Inversions_3
-	.long	func_4856DC24_Inversions_4
-	.long	func_4856DC24_Inversions_5
-	.long	func_4856DC24_Inversions_6
-	.long	func_4856DC24_Inversions_7
-	.long	func_4856DC24_Inversions_8
-	.long	func_4856DC24_Inversions_9
-	.long	func_4856DC24_Inversions_10
-	.long	func_4856DC24_Inversions_11
-	.long	func_4856DC24_Inversions_12
-	.long	func_4856DC24_Inversions_13
-	.long	func_4856DC24_Inversions_14
-	.long	func_4856DC24_Inversions_15
-	.long	func_4856DC24_Inversions_16
-	.long	func_4856DC24_Inversions_17
-	.long	func_4856DC24_Inversions_18
-	.long	func_4856DC24_Inversions_19
-	.long	func_4856DC24_Inversions_20
-	.long	func_4856DC24_Inversions_21
-	.long	func_4856DC24_Inversions_22
+	.long	ChordFinderNotesGet_Inversions
+	.long	ChordFinderNotesGet_Inversions_2
+	.long	ChordFinderNotesGet_Inversions_3
+	.long	ChordFinderNotesGet_Inversions_4
+	.long	ChordFinderNotesGet_Inversions_5
+	.long	ChordFinderNotesGet_Inversions_6
+	.long	ChordFinderNotesGet_Inversions_7
+	.long	ChordFinderNotesGet_Inversions_8
+	.long	ChordFinderNotesGet_Inversions_9
+	.long	ChordFinderNotesGet_Inversions_10
+	.long	ChordFinderNotesGet_Inversions_11
+	.long	ChordFinderNotesGet_Inversions_12
+	.long	ChordFinderNotesGet_Inversions_13
+	.long	ChordFinderNotesGet_Inversions_14
+	.long	ChordFinderNotesGet_Inversions_15
+	.long	ChordFinderNotesGet_Inversions_16
+	.long	ChordFinderNotesGet_Inversions_17
+	.long	ChordFinderNotesGet_Inversions_18
+	.long	ChordFinderNotesGet_Inversions_19
+	.long	ChordFinderNotesGet_Inversions_20
+	.long	ChordFinderNotesGet_Inversions_21
+	.long	ChordFinderNotesGet_Inversions_22
 func_4856DB99_Table_4:
-	.long	func_4856DC24_Inversions
-	.long	func_4856DC24_Inversions_2
-	.long	func_4856DC24_Inversions_3
-	.long	func_4856DC24_Inversions_4
-	.long	func_4856DC24_Inversions_5
-	.long	func_4856DC24_Inversions_6
-	.long	func_4856DC24_Inversions_7
-	.long	func_4856DC24_Inversions_8
-	.long	func_4856DC24_Inversions_23
-	.long	func_4856DC24_Inversions_10
-	.long	func_4856DC24_Inversions_24
-	.long	func_4856DC24_Inversions_12
-	.long	func_4856DC24_Inversions_25
-	.long	func_4856DC24_Inversions_14
-	.long	func_4856DC24_Inversions_26
-	.long	func_4856DC24_Inversions_16
-	.long	func_4856DC24_Inversions_17
-	.long	func_4856DC24_Inversions_27
-	.long	func_4856DC24_Inversions_19
-	.long	func_4856DC24_Inversions_28
-	.long	func_4856DC24_Inversions_29
-	.long	func_4856DC24_Inversions_30
-	.long	func_4856DC24_Inversions_31
-	.long	func_4856DC24_Inversions_32
-	.long	func_4856DC24_Inversions_33
-	.long	func_4856DC24_Inversions_34
-	.long	func_4856DC24_Inversions_35
-	.long	func_4856DC24_Inversions_36
-	.long	func_4856DC24_Inversions_37
-	.long	func_4856DC24_Inversions_38
-	.long	func_4856DC24_Inversions_39
-	.long	func_4856DC24_Inversions_40
-	.long	func_4856DC24_Inversions_41
-	.long	func_4856DC24_Inversions_42
-	.long	func_4856DC24_Inversions_43
-	.long	func_4856DC24_Inversions_44
-	.long	func_4856DC24_Inversions_45
-	.long	func_4856DC24_Inversions_46
-	.long	func_4856DC24_Inversions_47
+	.long	ChordFinderNotesGet_Inversions
+	.long	ChordFinderNotesGet_Inversions_2
+	.long	ChordFinderNotesGet_Inversions_3
+	.long	ChordFinderNotesGet_Inversions_4
+	.long	ChordFinderNotesGet_Inversions_5
+	.long	ChordFinderNotesGet_Inversions_6
+	.long	ChordFinderNotesGet_Inversions_7
+	.long	ChordFinderNotesGet_Inversions_8
+	.long	ChordFinderNotesGet_Inversions_23
+	.long	ChordFinderNotesGet_Inversions_10
+	.long	ChordFinderNotesGet_Inversions_24
+	.long	ChordFinderNotesGet_Inversions_12
+	.long	ChordFinderNotesGet_Inversions_25
+	.long	ChordFinderNotesGet_Inversions_14
+	.long	ChordFinderNotesGet_Inversions_26
+	.long	ChordFinderNotesGet_Inversions_16
+	.long	ChordFinderNotesGet_Inversions_17
+	.long	ChordFinderNotesGet_Inversions_27
+	.long	ChordFinderNotesGet_Inversions_19
+	.long	ChordFinderNotesGet_Inversions_28
+	.long	ChordFinderNotesGet_Inversions_29
+	.long	ChordFinderNotesGet_Inversions_30
+	.long	ChordFinderNotesGet_Inversions_31
+	.long	ChordFinderNotesGet_Inversions_32
+	.long	ChordFinderNotesGet_Inversions_33
+	.long	ChordFinderNotesGet_Inversions_34
+	.long	ChordFinderNotesGet_Inversions_35
+	.long	ChordFinderNotesGet_Inversions_36
+	.long	ChordFinderNotesGet_Inversions_37
+	.long	ChordFinderNotesGet_Inversions_38
+	.long	ChordFinderNotesGet_Inversions_39
+	.long	ChordFinderNotesGet_Inversions_40
+	.long	ChordFinderNotesGet_Inversions_41
+	.long	ChordFinderNotesGet_Inversions_42
+	.long	ChordFinderNotesGet_Inversions_43
+	.long	ChordFinderNotesGet_Inversions_44
+	.long	ChordFinderNotesGet_Inversions_45
+	.long	ChordFinderNotesGet_Inversions_46
+	.long	ChordFinderNotesGet_Inversions_47
 	.long	loc_4856FBFB
 	.long	loc_4856FBFE
 	.long	loc_4856FC01

@@ -16,7 +16,7 @@ MainSEQ_SeqSongNameSet:
 loc_48540047:
     extbu   d0
     mov     a2, a0
-    call    func_48455F62_entry, [d2,a2], 0x1c
+    call    SongRecNameSet_entry, [d2,a2], 0x1c
     mov     d3, d0
     ret     [d2,d3,a2], 0x1c
 # MainSEQ_PanelWrite_SE  (CPU 0x48540054)
@@ -53,7 +53,7 @@ MainSEQ_SongClrNameParaDraw:
     add     0x1c, a2
     mov     d2, d0
     mov     a2, a0
-    call    func_48455FAB_entry, [d2], 0x18
+    call    SongRecNameGet_entry, [d2], 0x18
     clr     d0
     movbu   d0, (0x2c, sp)
     mov     Str_SONG_2d_16s_3d, d0
@@ -120,7 +120,7 @@ MainSEQ_SongClear_SE:
     mov     (0x28, sp), d0
     add     d3, d2
     extbu   d0
-    call    func_4845E192_entry, [d2], 0x10
+    call    SongClear_entry, [d2], 0x10
     clr     d0
     call    func_4853F2A1_entry, [d2], 0x18
     mov     3, d0
@@ -143,13 +143,13 @@ loc_4854019F:
     call    GetTitleNow_entry, 0, 0x10
     and     0xff, d0
     extbu   d0
-    call    func_48462EC0_entry, [d2], 0x10
+    call    SeqTitleEnterDispatch_entry, [d2], 0x10
     bra     loc_485401C5
 loc_485401B3:
     call    GetTitleOld_entry, 0, 0x10
     and     0xff, d0
     extbu   d0
-    call    func_48462F2B_entry, [d2], 0x10
+    call    SeqTitleLeaveDispatch_entry, [d2], 0x10
 loc_485401C5:
     clr     d0
     bra     loc_485401C9
@@ -169,7 +169,7 @@ func_485401CC_entry:
     beq     loc_485401F0
     ret     0, 0x14
 loc_485401F0:
-    call    func_484566D5_entry, 0, 0x10
+    call    SongFreePercentAboveReserve_entry, 0, 0x10
     movhu   d0, (Str_d_2)
     mov     -1, d0
     mov     0x00e50000, d1
@@ -179,11 +179,11 @@ loc_485401F0:
     mov     -1, d0
     mov     0x00e50000, d1
     call    ApPostEvent_entry, [d2], 0x1c
-    call    func_4842B9E3, 0, 0
+    call    TitleIdLastSetGet, 0, 0
     exthu   d0
     cmp     0x85, d0
     beq     loc_4854023D
-    call    func_4842B9E3, 0, 0
+    call    TitleIdLastSetGet, 0, 0
     exthu   d0
     cmp     0x87, d0
     beq     loc_4854023D
@@ -241,7 +241,7 @@ loc_485402CB:
     mov     d3, d0
     extbu   d0
     mov     a3, a0
-    call    func_48455FAB_entry, [d2], 0x18
+    call    SongRecNameGet_entry, [d2], 0x18
     clr     d0
     movbu   d0, (0x30, sp)
     mov     Str_2d_16s_3d_2, d0
@@ -299,7 +299,7 @@ MainSEQ_CurSongSet_NoPlayDisp:
     cmp     0xa, d2
     bgt     loc_485403BC
     mov     d2, d0
-    call    func_4853F284_entry, 0, 0xc
+    call    MdSeqCurSongSetNoPlay_entry, 0, 0xc
     exth    d0
     cmp     0, d0
     bne     loc_4854039C
@@ -340,7 +340,7 @@ loc_485403D3:
     mov     1, d3
     mov     d2, d0
     extbu   d0
-    call    func_4845E270_entry, [d2], 0x14
+    call    SongTrackErase_entry, [d2], 0x14
 loc_485403E4:
     inc     d2
     add     2, a2
@@ -391,7 +391,7 @@ loc_48540454:
     call    GetTitleNow_entry, 0, 0x10
     and     0xff, d0
     extbu   d0
-    call    func_48462EC0_entry, [d2], 0x10
+    call    SeqTitleEnterDispatch_entry, [d2], 0x10
     mov     AcSeqPlayRecBoxProc_Table, a0
     setlb
     clr     d0
@@ -404,7 +404,7 @@ loc_4854047B:
     call    GetTitleOld_entry, 0, 0x10
     and     0xff, d0
     extbu   d0
-    call    func_48462F2B_entry, [d2], 0x10
+    call    SeqTitleLeaveDispatch_entry, [d2], 0x10
 loc_4854048D:
     clr     d0
     bra     loc_48540491
@@ -418,9 +418,9 @@ MainSEQ_SwInAutoPunchSwSeq:
     add     -0x14, sp
     mov     d1, d3
     mov     d0, a2
-    call    func_484549D4, 0, 0
+    call    SeqAutoPunchFlagGet, 0, 0
     mov     d0, d2
-    call    func_484549F9_entry, [d2], 0x10
+    call    SeqAutoPunchToggle_entry, [d2], 0x10
     extbu   d0
     cmp     0, d0
     beq     loc_48540505
@@ -478,18 +478,18 @@ MainSEQ_SwInPunchInSeq:
     add     -0x14, sp
     mov     d1, d2
     mov     d0, d3
-    call    func_484549D4, 0, 0
+    call    SeqAutoPunchFlagGet, 0, 0
     extbu   d0
     cmp     0, d0
     bne     loc_48540596
-    call    func_484553ED_entry, 0, 0x14
+    call    SeqPunchInOutSwitch_entry, 0, 0x14
     exth    d0
     cmp     0, d0
     bne     loc_4854056F
     mov     1, d0
     call    func_4853F2A1_entry, [d2], 0x18
 loc_4854056F:
-    call    func_484553DB, 0, 0
+    call    SeqPunchStateGet, 0, 0
     mov     0, a0
     extbu   d0
     cmp     1, d0
@@ -502,7 +502,7 @@ loc_4854057F:
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
     bra     loc_485405A9
 loc_48540596:
-    call    func_484553ED_entry, 0, 0x14
+    call    SeqPunchInOutSwitch_entry, 0, 0x14
     exth    d0
     cmp     0, d0
     bne     loc_485405A9
@@ -528,7 +528,7 @@ MainSEQ_SwInAutoPunchMeas:
     lsr     16, d1
     and     0xffff, d1
     exthu   d1
-    call    func_48455297_entry, [d2,d3,a2,a3], 0x1c
+    call    SeqAutoPunchRangeSet_entry, [d2,d3,a2,a3], 0x1c
     add     d2, d3
     mov     d3, d0
     ret     [d2,d3], 0x1c
@@ -545,7 +545,7 @@ MainSEQ_SeqAutoPunch_Reload:
     mov     d0, d3
     mov     a2, d0
     add     0x20, d0
-    call    func_48455275_entry, [d2,a2,a3], 0x14
+    call    SeqAutoPunchRangeGet_entry, [d2,a2,a3], 0x14
     movhu   (0x1c, sp), d1
     mov     (MainSEQ_SeqCycPly_Reload_Records+32), d0
     mov     d1, (0x10, sp)
@@ -618,8 +618,8 @@ loc_485406CD:
     call    GetTitleNow_entry, 0, 0x10
     and     0xff, d0
     extbu   d0
-    call    func_48462EC0_entry, [d2], 0x10
-    call    func_484549D4, 0, 0
+    call    SeqTitleEnterDispatch_entry, [d2], 0x10
+    call    SeqAutoPunchFlagGet, 0, 0
     extbu   d0
     cmp     0, d0
     beq     loc_48540712
@@ -638,7 +638,7 @@ loc_48540712:
     call    func_4853F2A1_entry, [d2], 0x18
     jmp     loc_485407BF
 loc_4854071B:
-    call    func_48454817, 0, 0
+    call    SeqRecMetroFlagGet, 0, 0
     mov     0, a0
     extbu   d0
     cmp     0, d0
@@ -649,7 +649,7 @@ loc_4854072B:
     mov     SeqPunchMetTgl_id, d0
     mov     MT_SetParam, d1
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-    call    func_484549D4, 0, 0
+    call    SeqAutoPunchFlagGet, 0, 0
     mov     0, a0
     extbu   d0
     cmp     0, d0
@@ -660,7 +660,7 @@ loc_48540750:
     mov     SeqPunchAutoTgl_id, d0
     mov     MT_SetParam, d1
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-    call    func_484553DB, 0, 0
+    call    SeqPunchStateGet, 0, 0
     mov     0, a0
     extbu   d0
     cmp     1, d0
@@ -671,7 +671,7 @@ loc_48540775:
     mov     SeqPunchPunchTgl_id, d0
     mov     MT_SetParam, d1
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-    call    func_484549D4, 0, 0
+    call    SeqAutoPunchFlagGet, 0, 0
     extbu   d0
     cmp     0, d0
     beq     loc_485407BF
@@ -685,7 +685,7 @@ loc_485407A9:
     call    GetTitleOld_entry, 0, 0x10
     and     0xff, d0
     extbu   d0
-    call    func_48462F2B_entry, [d2], 0x10
+    call    SeqTitleLeaveDispatch_entry, [d2], 0x10
     bra     loc_485407BF
     bra     loc_485407C0
 loc_485407BF:
@@ -718,10 +718,10 @@ loc_485407F6:
     call    GetTitleNow_entry, 0, 0x10
     and     0xff, d0
     extbu   d0
-    call    func_48462EC0_entry, [d2], 0x10
+    call    SeqTitleEnterDispatch_entry, [d2], 0x10
     bra     loc_48540858
 loc_4854080A:
-    call    func_48454817, 0, 0
+    call    SeqRecMetroFlagGet, 0, 0
     mov     0, a0
     extbu   d0
     cmp     0, d0
@@ -742,7 +742,7 @@ loc_48540842:
     call    GetTitleOld_entry, 0, 0x10
     and     0xff, d0
     extbu   d0
-    call    func_48462F2B_entry, [d2], 0x10
+    call    SeqTitleLeaveDispatch_entry, [d2], 0x10
     bra     loc_48540858
     bra     loc_48540859
 loc_48540858:
@@ -1107,7 +1107,7 @@ loc_48540B9B:
     call    GetTitleNow_entry, 0, 0x10
     and     0xff, d0
     extbu   d0
-    call    func_48462EC0_entry, [d2], 0x10
+    call    SeqTitleEnterDispatch_entry, [d2], 0x10
     clr     d0
     call    func_4853F2A1_entry, [d2], 0x18
     bra     loc_48540BFD
@@ -1120,7 +1120,7 @@ loc_48540BB5:
     call    GetTitleOld_entry, 0, 0x10
     and     0xff, d0
     extbu   d0
-    call    func_48462F2B_entry, [d2], 0x10
+    call    SeqTitleLeaveDispatch_entry, [d2], 0x10
     bra     loc_48540BFD
 loc_48540BDF:
     clr     d0
@@ -1223,8 +1223,8 @@ loc_48540CB9:
     call    GetTitleNow_entry, 0, 0x10
     and     0xff, d0
     extbu   d0
-    call    func_48462EC0_entry, [d2], 0x10
-    call    func_48461515_entry, 0, 8
+    call    SeqTitleEnterDispatch_entry, [d2], 0x10
+    call    SeqMdlyPlyEnter_entry, 0, 8
     clr     d0
     call    func_4853F2A1_entry, [d2], 0x18
     call    func_4853FA2B_entry, [d2], 0x18
@@ -1244,19 +1244,19 @@ loc_48540D02:
     call    func_4853F2A1_entry, [d2], 0x18
     bra     loc_48540D75
 loc_48540D0B:
-    call    func_4842B9E3, 0, 0
+    call    TitleIdLastSetGet, 0, 0
     exthu   d0
     cmp     0x72, d0
     beq     loc_48540D1F
     clr     d0
     call    MidiRealtimeModeSet, 0, 0
 loc_48540D1F:
-    call    func_4846158C, 0, 0
+    call    SeqMdlyPlyLeave, 0, 0
     call    func_484FBC7B_entry, 0, 8
     call    GetTitleOld_entry, 0, 0x10
     and     0xff, d0
     extbu   d0
-    call    func_48462F2B_entry, [d2], 0x10
+    call    SeqTitleLeaveDispatch_entry, [d2], 0x10
     bra     loc_48540D75
 loc_48540D41:
     mov     (0x24, sp), a0
@@ -1266,10 +1266,10 @@ loc_48540D41:
     beq     loc_48540D56
     bra     loc_48540D75
 loc_48540D4D:
-    call    func_484616A8_entry, 0, 0x14
+    call    MdlyPlyNext_entry, 0, 0x14
     bra     loc_48540D75
 loc_48540D56:
-    call    func_484615AC_entry, 0, 8
+    call    SeqMdlyPlySwQuit_entry, 0, 8
     bra     loc_48540D75
 loc_48540D5F:
     call    CheckNotDrawFlag_entry, 0, 0x10
@@ -1318,8 +1318,8 @@ loc_48540DC4:
     call    GetTitleNow_entry, 0, 0x10
     and     0xff, d0
     extbu   d0
-    call    func_48462EC0_entry, [d2], 0x10
-    call    func_484614FA_entry, 0, 0xc
+    call    SeqTitleEnterDispatch_entry, [d2], 0x10
+    call    DkMdlyPlyEnter_entry, 0, 0xc
     clr     d0
     call    func_4853F2A1_entry, [d2], 0x18
     call    func_4853FA2B_entry, [d2], 0x18
@@ -1339,19 +1339,19 @@ loc_48540E0D:
     call    func_4853F2A1_entry, [d2], 0x18
     bra     loc_48540E80
 loc_48540E16:
-    call    func_4842B9E3, 0, 0
+    call    TitleIdLastSetGet, 0, 0
     exthu   d0
     cmp     0x71, d0
     beq     loc_48540E2A
     clr     d0
     call    MidiRealtimeModeSet, 0, 0
 loc_48540E2A:
-    call    func_48461582, 0, 0
+    call    DkMdlyPlyLeave, 0, 0
     call    func_484FBC7B_entry, 0, 8
     call    GetTitleOld_entry, 0, 0x10
     and     0xff, d0
     extbu   d0
-    call    func_48462F2B_entry, [d2], 0x10
+    call    SeqTitleLeaveDispatch_entry, [d2], 0x10
     bra     loc_48540E80
 loc_48540E4C:
     mov     (0x24, sp), a0
@@ -1361,10 +1361,10 @@ loc_48540E4C:
     beq     loc_48540E61
     bra     loc_48540E80
 loc_48540E58:
-    call    func_4846169D_entry, 0, 8
+    call    DkMdlyPlySwNext_entry, 0, 8
     bra     loc_48540E80
 loc_48540E61:
-    call    func_48461596_entry, 0, 8
+    call    DkMdlyPlySwQuit_entry, 0, 8
     bra     loc_48540E80
 loc_48540E6A:
     call    CheckNotDrawFlag_entry, 0, 0x10
@@ -1397,7 +1397,7 @@ MainSEQ_TrackCopySongParaDraw:
     add     0x18, a3
     mov     d2, d0
     mov     a3, a0
-    call    func_48455FAB_entry, [d2], 0x18
+    call    SongRecNameGet_entry, [d2], 0x18
     clr     d0
     movbu   d0, (0x28, sp)
     mov     a2, (8, sp)
@@ -1787,11 +1787,11 @@ func_48541243:
 func_48541243_entry:
     mov     1, d0
     call    func_4853F2A1_entry, [d2], 0x18
-    call    func_484549D4, 0, 0
+    call    SeqAutoPunchFlagGet, 0, 0
     extbu   d0
     cmp     0, d0
     bne     loc_4854127E
-    call    func_484553DB, 0, 0
+    call    SeqPunchStateGet, 0, 0
     mov     0, a0
     extbu   d0
     cmp     1, d0
@@ -1883,13 +1883,13 @@ loc_48541351:
 loc_48541353:
     mov     d2, d0
     ret     [d2], 0xc
-
-func_48541357:
+# MainSEQ_EditViewFollow  (CPU 0x48541357)
+MainSEQ_EditViewFollow:
     movm    [d2], (sp)
     add     -0x14, sp
-func_48541357_entry:
+MainSEQ_EditViewFollow_entry:
     mov     d0, d2
-    call    func_4846557D, 0, 0
+    call    NoteEditViewMeasGet, 0, 0
     movhu   d0, (AcNoteEditBoxProc_Table_6)
     call    GetTitleNow_entry, 0, 0x10
     and     0xff, d0
@@ -1946,7 +1946,7 @@ loc_485413E1:
     call    ApPostEvent_entry, [d2], 0x1c
     ret     [d2], 0x18
 loc_4854140D:
-    call    func_484655F3, 0, 0
+    call    DrumEditInstrGet, 0, 0
     extbu   d0
     cmp     0x7f, d0
     bgt     loc_48541459
@@ -1983,10 +1983,10 @@ loc_48541459:
     mov     0x0176000a, d1
     call    ApPostEvent_entry, [d2], 0x1c
     ret     [d2], 0x18
-
-func_48541485:
+# MainSEQ_StepRecUpdatePost  (CPU 0x48541485)
+MainSEQ_StepRecUpdatePost:
     add     -0x14, sp
-func_48541485_entry:
+MainSEQ_StepRecUpdatePost_entry:
     call    func_484671B3, 0, 0
     movhu   d0, (AcNoteEditBoxProc_Table_6)
     mov     SeqSRUpdate_id, d0
@@ -2211,9 +2211,9 @@ loc_485416C2:
 loc_485416D3:
     call    func_484671B3, 0, 0
     movhu   d0, (a2)
-    call    func_484671BC, 0, 0
+    call    StepRecNoteGet, 0, 0
     movhu   d0, (2, a2)
-    call    func_484671C5, 0, 0
+    call    StepRecVelGet, 0, 0
     movhu   d0, (4, a2)
     call    func_484671E9, 0, 0
     movhu   d0, (6, a2)
@@ -2232,11 +2232,11 @@ loc_485416D3:
     bne     loc_48541731
     ret     [d2,d3,a2,a3], 0x30
 loc_48541731:
-    call    func_484671CE, 0, 0
+    call    StepRecLeftLenGet, 0, 0
     movhu   d0, (a2)
-    call    func_484671D7, 0, 0
+    call    StepRecRightLenGet, 0, 0
     movhu   d0, (2, a2)
-    call    func_484671E0, 0, 0
+    call    StepRecPhraseGet, 0, 0
     movhu   d0, (4, a2)
     mov     a2, (0x10, sp)
     mov     SeqInfo2_SR_id, d0
@@ -2473,11 +2473,11 @@ loc_48541A20:
     bne     loc_48541A46
     ret     [d2,d3,a2,a3], 0x30
 loc_48541A46:
-    call    func_484671CE, 0, 0
+    call    StepRecLeftLenGet, 0, 0
     movhu   d0, (a2)
-    call    func_484671D7, 0, 0
+    call    StepRecRightLenGet, 0, 0
     movhu   d0, (2, a2)
-    call    func_484671E0, 0, 0
+    call    StepRecPhraseGet, 0, 0
     movhu   d0, (4, a2)
     mov     a2, (0x10, sp)
     mov     SeqInfo2_SR_id, d0
@@ -2530,7 +2530,7 @@ loc_48541AED:
 loc_48541AFE:
     call    func_484671B3, 0, 0
     movhu   d0, (a2)
-    call    func_48467225, 0, 0
+    call    StepRecVolumeGet, 0, 0
     movhu   d0, (2, a2)
     mov     a2, (0x10, sp)
     mov     SeqInfo3_SR_id, d0
@@ -2549,7 +2549,7 @@ loc_48541B3A:
     bne     loc_48541B4B
     ret     [d2,d3,a2,a3], 0x30
 loc_48541B4B:
-    call    func_484671F2, 0, 0
+    call    StepRecCtlParamIdGet, 0, 0
     mov     d0, d2
     call    func_484671B3, 0, 0
     movhu   d0, (a2)
@@ -2557,7 +2557,7 @@ loc_48541B4B:
     lsr     16, d2
     and     0xffff, d2
     movhu   d2, (4, a2)
-    call    func_48467204, 0, 0
+    call    StepRecCtlValGet, 0, 0
     movhu   d0, (6, a2)
     mov     a2, (0x10, sp)
     mov     SeqInfo4_SR_id, d0
@@ -2605,11 +2605,11 @@ loc_48541C08:
     mov     a0, a3
     cmp     0, a3
     beq     loc_48541C86
-    call    func_4846BF2B, 0, 0
+    call    StepRecCueStlGet, 0, 0
     mov     d0, d2
-    call    func_4846BE76, 0, 0
+    call    StepRecCueValGet, 0, 0
     mov     d0, d3
-    call    func_4846BE76, 0, 0
+    call    StepRecCueValGet, 0, 0
     extbu   d2
     asl     16, d2
     exth    d3
@@ -2969,17 +2969,17 @@ loc_48541F8E:
     call    GetTitleNow_entry, 0, 0x10
     and     0xff, d0
     extbu   d0
-    call    func_48462EC0_entry, [d2], 0x10
+    call    SeqTitleEnterDispatch_entry, [d2], 0x10
     clr     d0
     call    func_4853F2A1_entry, [d2], 0x18
     clr     d0
     bra     loc_48541FCD
 loc_48541FA9:
-    call    func_4845A5E8_entry, [d2], 0x10
+    call    SeqRecStopRequest_entry, [d2], 0x10
     call    GetTitleOld_entry, 0, 0x10
     and     0xff, d0
     extbu   d0
-    call    func_48462F2B_entry, [d2], 0x10
+    call    SeqTitleLeaveDispatch_entry, [d2], 0x10
     clr     d0
     bra     loc_48541FCD
 loc_48541FC5:
@@ -3353,16 +3353,16 @@ MainSEQ_NoteEditRedraw_entry:
     lne
     mov     (0x3c, sp), a0
     movbu   (a0), d3
-    call    func_48465586, 0, 0
+    call    NoteEditClockGet, 0, 0
     movhu   d0, (0x24, sp)
-    call    func_4846557D, 0, 0
+    call    NoteEditViewMeasGet, 0, 0
     mov     d0, d2
-    call    func_4846558F, 0, 0
+    call    NoteEditMeasGet, 0, 0
     exthu   d2
     exthu   d0
     cmp     d0, d2
     ble     loc_48542331
-    call    func_4846558F, 0, 0
+    call    NoteEditMeasGet, 0, 0
     exthu   d0
     call    func_48464B4F_entry, [d2,d3], 0x18
     clr     d0
@@ -3378,11 +3378,11 @@ loc_48542331:
     add     -1, d0
     cmp     d0, d1
     ble     loc_4854235F
-    call    func_4846558F, 0, 0
+    call    NoteEditMeasGet, 0, 0
     exthu   d0
     call    func_48464B4F_entry, [d2,d3], 0x18
     call    func_48542540_entry, 0, 0x14
-    call    func_485425A3_entry, [a2,a3], 0x24
+    call    MainSEQ_EditInfoDeliver_entry, [a2,a3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x50
 loc_4854235F:
@@ -3525,7 +3525,7 @@ loc_485424A4:
     beq     loc_485424B6
     jmp     loc_48542531
 loc_485424B6:
-    call    func_484655F3, 0, 0
+    call    DrumEditInstrGet, 0, 0
     movhu   (0x38, sp), d1
     mov     d0, d2
     exth    d1
@@ -3578,14 +3578,14 @@ loc_4854250F:
     call    ApPostEvent_entry, [d2], 0x1c
 loc_48542531:
     call    func_48542540_entry, 0, 0x14
-    call    func_485425A3_entry, [a2,a3], 0x24
+    call    MainSEQ_EditInfoDeliver_entry, [a2,a3], 0x24
     mov     (0x58, sp), d0
     ret     [d2,d3,a2,a3], 0x50
 
 func_48542540:
     add     -0x14, sp
 func_48542540_entry:
-    call    func_4846557D, 0, 0
+    call    NoteEditViewMeasGet, 0, 0
     movhu   d0, (AcNoteEditBoxProc_Table_6)
     call    GetTitleNow_entry, 0, 0x10
     and     0xff, d0
@@ -3609,11 +3609,11 @@ loc_48542585:
     call    ApPostEvent_entry, [d2], 0x1c
 loc_485425A0:
     ret     0, 0x14
-
-func_485425A3:
+# MainSEQ_EditInfoDeliver  (CPU 0x485425a3)
+MainSEQ_EditInfoDeliver:
     movm    [a2,a3], (sp)
     add     -0x1c, sp
-func_485425A3_entry:
+MainSEQ_EditInfoDeliver_entry:
     mov     0xe, d0
     call    Malloc_entry, [d2,a2,a3], 0x28
     mov     a0, a2
@@ -3632,35 +3632,35 @@ loc_485425B9:
     exth    d0
     cmp     0, d0
     bne     loc_48542617
-    call    func_4846558F, 0, 0
+    call    NoteEditMeasGet, 0, 0
     movhu   d0, (a2)
-    call    func_48465598, 0, 0
+    call    NoteEditBeatGet, 0, 0
     movhu   d0, (2, a2)
-    call    func_484655A2, 0, 0
+    call    NoteEditTickGet, 0, 0
     movhu   d0, (4, a2)
-    call    func_484655AB, 0, 0
+    call    NoteEditNoteGet, 0, 0
     movhu   d0, (6, a2)
-    call    func_484655B4, 0, 0
+    call    NoteEditVelGet, 0, 0
     movhu   d0, (8, a2)
-    call    func_484655CF, 0, 0
+    call    NoteEditLenGet, 0, 0
     movhu   d0, (0xa, a2)
-    call    func_484655EA, 0, 0
+    call    NoteEditIncGet, 0, 0
     movhu   d0, (0xc, a2)
     bra     loc_4854265B
 loc_48542617:
-    call    func_4846558F, 0, 0
+    call    NoteEditMeasGet, 0, 0
     movhu   d0, (a2)
-    call    func_48465598, 0, 0
+    call    NoteEditBeatGet, 0, 0
     movhu   d0, (2, a2)
-    call    func_484655A2, 0, 0
+    call    NoteEditTickGet, 0, 0
     movhu   d0, (4, a2)
     mov     0x0000ffff, d0
     movhu   d0, (6, a2)
-    call    func_484655B4, 0, 0
+    call    NoteEditVelGet, 0, 0
     movhu   d0, (8, a2)
-    call    func_484655CF, 0, 0
+    call    NoteEditLenGet, 0, 0
     movhu   d0, (0xa, a2)
-    call    func_484655EA, 0, 0
+    call    NoteEditIncGet, 0, 0
     movhu   d0, (0xc, a2)
 loc_4854265B:
     call    GetTitleNow_entry, 0, 0x10
@@ -3696,12 +3696,12 @@ MainSEQ_SwInMeas_NE:
     mov     d0, d2
     mov     a2, d0
     extbu   d0
-    call    func_48464ADB_entry, [d2,d3], 0x10
+    call    NoteEditMeasureStep_entry, [d2,d3], 0x10
     exth    d0
     cmp     0, d0
     bne     loc_485426D5
     call    func_48542540_entry, 0, 0x14
-    call    func_485425A3_entry, [a2,a3], 0x24
+    call    MainSEQ_EditInfoDeliver_entry, [a2,a3], 0x24
 loc_485426D5:
     add     d3, d2
     mov     d2, d0
@@ -3716,11 +3716,11 @@ MainSEQ_SwInPos_NE:
     mov     d0, d2
     mov     a2, d0
     extbu   d0
-    call    func_48464BE8_entry, [d2,d3], 0x10
+    call    NoteEditPosStep_entry, [d2,d3], 0x10
     exth    d0
     cmp     0, d0
     bne     loc_485426F9
-    call    func_485425A3_entry, [a2,a3], 0x24
+    call    MainSEQ_EditInfoDeliver_entry, [a2,a3], 0x24
 loc_485426F9:
     add     d3, d2
     mov     d2, d0
@@ -3735,11 +3735,11 @@ MainSEQ_SwInNote_NE:
     mov     d0, d2
     mov     a2, d0
     extbu   d0
-    call    func_48464D1B_entry, [d2,d3], 0x10
+    call    NoteEditNoteSwStep_entry, [d2,d3], 0x10
     exth    d0
     cmp     0, d0
     bne     loc_4854271D
-    call    func_485425A3_entry, [a2,a3], 0x24
+    call    MainSEQ_EditInfoDeliver_entry, [a2,a3], 0x24
 loc_4854271D:
     add     d3, d2
     mov     d2, d0
@@ -3754,11 +3754,11 @@ MainSEQ_SwInVel_NE:
     mov     d0, d2
     mov     a2, d0
     extbu   d0
-    call    func_48464E44_entry, 0, 8
+    call    NoteEditVelSwStep_entry, 0, 8
     exth    d0
     cmp     0, d0
     bne     loc_48542741
-    call    func_485425A3_entry, [a2,a3], 0x24
+    call    MainSEQ_EditInfoDeliver_entry, [a2,a3], 0x24
 loc_48542741:
     add     d3, d2
     mov     d2, d0
@@ -3773,11 +3773,11 @@ MainSEQ_SwInLen_NE:
     mov     d0, d2
     mov     a2, d0
     extbu   d0
-    call    func_48464F4A_entry, [d2,d3], 0x10
+    call    NoteEditLenSwStep_entry, [d2,d3], 0x10
     exth    d0
     cmp     0, d0
     bne     loc_48542765
-    call    func_485425A3_entry, [a2,a3], 0x24
+    call    MainSEQ_EditInfoDeliver_entry, [a2,a3], 0x24
 loc_48542765:
     add     d3, d2
     mov     d2, d0
@@ -3792,11 +3792,11 @@ MainSEQ_SwInInc_NE:
     mov     d0, d2
     mov     a2, d0
     extbu   d0
-    call    func_48465099, 0, 0
+    call    NoteEditIncStep, 0, 0
     exth    d0
     cmp     0, d0
     bne     loc_48542789
-    call    func_485425A3_entry, [a2,a3], 0x24
+    call    MainSEQ_EditInfoDeliver_entry, [a2,a3], 0x24
 loc_48542789:
     add     d3, d2
     mov     d2, d0
@@ -3811,11 +3811,11 @@ MainSEQ_SwInCursor_NE:
     mov     d0, d2
     mov     a2, d0
     extbu   d0
-    call    func_484651B5_entry, [d2], 0x10
+    call    NoteEditCursorStep_entry, [d2], 0x10
     exth    d0
     cmp     0, d0
     bne     loc_485427AD
-    call    func_485425A3_entry, [a2,a3], 0x24
+    call    MainSEQ_EditInfoDeliver_entry, [a2,a3], 0x24
 loc_485427AD:
     add     d3, d2
     mov     d2, d0
@@ -3827,11 +3827,11 @@ MainSEQ_SwInErs_NE:
     add     -8, sp
     mov     d1, d3
     mov     d0, d2
-    call    func_48465129_entry, [d2], 0x10
+    call    NoteEditEventErase_entry, [d2], 0x10
     exth    d0
     cmp     0, d0
     bne     loc_485427CC
-    call    func_485425A3_entry, [a2,a3], 0x24
+    call    MainSEQ_EditInfoDeliver_entry, [a2,a3], 0x24
 loc_485427CC:
     mov     (0x20, sp), d0
     add     d3, d2
@@ -3869,11 +3869,11 @@ loc_48542804:
     add     0xc, d0
     movhu   d0, (0x5016060c)
 loc_48542826:
-    call    func_484650E2_entry, [d2], 4
+    call    NoteEditGraphFieldMark_entry, [d2], 4
     exth    d0
     cmp     0, d0
     bne     loc_48542837
-    call    func_485425A3_entry, [a2,a3], 0x24
+    call    MainSEQ_EditInfoDeliver_entry, [a2,a3], 0x24
 loc_48542837:
     add     d2, d3
     mov     a2, d0
@@ -3908,7 +3908,7 @@ loc_4854287C:
     call    GetTitleNow_entry, 0, 0x10
     and     0xff, d0
     extbu   d0
-    call    func_48462EC0_entry, [d2], 0x10
+    call    SeqTitleEnterDispatch_entry, [d2], 0x10
     clr     d0
     call    func_4853F2A1_entry, [d2], 0x18
     mov     AcSeqPlayRecBoxProc_Table, a0
@@ -3918,14 +3918,14 @@ loc_4854287C:
     add     2, a0
     cmp     AcSeqTrackNumBoxProc_Table, a0
     lcs
-    call    func_4842B9E3, 0, 0
+    call    TitleIdLastSetGet, 0, 0
     exthu   d0
     cmp     0x89, d0
     bne     loc_485428C5
     clr     d0
-    call    func_4846BF34, 0, 0
+    call    StepRecCueStlSet, 0, 0
     clr     d0
-    call    func_4846BE7F, 0, 0
+    call    StepRecCueValSet, 0, 0
 loc_485428C5:
     clr     d0
     bra     loc_485428E5
@@ -3933,7 +3933,7 @@ loc_485428C8:
     call    GetTitleOld_entry, 0, 0x10
     and     0xff, d0
     extbu   d0
-    call    func_48462F2B_entry, [d2], 0x10
+    call    SeqTitleLeaveDispatch_entry, [d2], 0x10
     clr     d0
     bra     loc_485428E5
 loc_485428DD:
@@ -3977,27 +3977,27 @@ loc_4854292D:
     call    GetTitleNow_entry, 0, 0x10
     and     0xff, d0
     extbu   d0
-    call    func_48462EC0_entry, [d2], 0x10
+    call    SeqTitleEnterDispatch_entry, [d2], 0x10
     clr     d0
     call    func_4853F2A1_entry, [d2], 0x18
-    call    func_4846557D, 0, 0
+    call    NoteEditViewMeasGet, 0, 0
     movhu   d0, (AcNoteEditBoxProc_Table_6)
-    call    func_485425A3_entry, [a2,a3], 0x24
+    call    MainSEQ_EditInfoDeliver_entry, [a2,a3], 0x24
     clr     d0
     bra     loc_48542992
 loc_4854295A:
     call    GetTitleOld_entry, 0, 0x10
     and     0xff, d0
     extbu   d0
-    call    func_48462F2B_entry, [d2], 0x10
+    call    SeqTitleLeaveDispatch_entry, [d2], 0x10
     clr     d0
     bra     loc_48542992
 loc_4854296F:
     clr     d0
     call    func_4853F2A1_entry, [d2], 0x18
-    call    func_4846557D, 0, 0
+    call    NoteEditViewMeasGet, 0, 0
     movhu   d0, (AcNoteEditBoxProc_Table_6)
-    call    func_485425A3_entry, [a2,a3], 0x24
+    call    MainSEQ_EditInfoDeliver_entry, [a2,a3], 0x24
     clr     d0
     bra     loc_48542992
 loc_4854298A:
@@ -4015,8 +4015,8 @@ MainSEQ_SwInSolo_NE:
     add     -0x14, sp
     mov     d1, d2
     mov     d0, d3
-    call    func_48454893, 0, 0
-    call    func_484654FE_entry, [d2], 0x14
+    call    SeqCycPlyFlagGet, 0, 0
+    call    NoteEditSoloToggle_entry, [d2], 0x14
     exth    d0
     cmp     0, d0
     beq     loc_485429DF
@@ -4076,13 +4076,13 @@ loc_48542A45:
     call    GetTitleNow_entry, 0, 0x10
     and     0xff, d0
     extbu   d0
-    call    func_48462EC0_entry, [d2], 0x10
+    call    SeqTitleEnterDispatch_entry, [d2], 0x10
     clr     d0
     call    func_4853F2A1_entry, [d2], 0x18
     clr     d0
     ret     [d2,d3], 0x1c
 loc_48542A61:
-    call    func_4846560C, 0, 0
+    call    NoteEditSoloGet, 0, 0
     mov     0, a0
     exthu   d0
     cmp     0, d0
@@ -4093,7 +4093,7 @@ loc_48542A71:
     mov     SeqNoteSoloTgl_id, d0
     mov     MT_SetParam, d1
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-    call    func_4846560C, 0, 0
+    call    NoteEditSoloGet, 0, 0
     mov     0, a0
     exthu   d0
     cmp     0, d0
@@ -4114,7 +4114,7 @@ loc_48542ABE:
     call    GetTitleOld_entry, 0, 0x10
     and     0xff, d0
     extbu   d0
-    call    func_48462F2B_entry, [d2], 0x10
+    call    SeqTitleLeaveDispatch_entry, [d2], 0x10
     clr     d0
     bra     loc_48542ADA
 loc_48542AD3:
@@ -4135,11 +4135,11 @@ MainSEQ_SwInSound_DE:
     mov     d0, d2
     mov     a2, d0
     extbu   d0
-    call    func_48465430_entry, [d2], 0xc
+    call    DrumEditSoundStep_entry, [d2], 0xc
     exth    d0
     cmp     0, d0
     bne     loc_48542AFA
-    call    func_485425A3_entry, [a2,a3], 0x24
+    call    MainSEQ_EditInfoDeliver_entry, [a2,a3], 0x24
 loc_48542AFA:
     add     d3, d2
     mov     d2, d0
@@ -4155,7 +4155,7 @@ MainSEQ_SwInEnter_DE:
     exth    d0
     cmp     0, d0
     bne     loc_48542B19
-    call    func_485425A3_entry, [a2,a3], 0x24
+    call    MainSEQ_EditInfoDeliver_entry, [a2,a3], 0x24
 loc_48542B19:
     mov     (0x20, sp), d0
     add     d3, d2
@@ -4203,27 +4203,27 @@ loc_48542B82:
     call    GetTitleNow_entry, 0, 0x10
     and     0xff, d0
     extbu   d0
-    call    func_48462EC0_entry, [d2], 0x10
+    call    SeqTitleEnterDispatch_entry, [d2], 0x10
     clr     d0
     call    func_4853F2A1_entry, [d2], 0x18
-    call    func_4846557D, 0, 0
+    call    NoteEditViewMeasGet, 0, 0
     movhu   d0, (AcNoteEditBoxProc_Table_6)
-    call    func_485425A3_entry, [a2,a3], 0x24
+    call    MainSEQ_EditInfoDeliver_entry, [a2,a3], 0x24
     clr     d0
     bra     loc_48542BE7
 loc_48542BAF:
     call    GetTitleOld_entry, 0, 0x10
     and     0xff, d0
     extbu   d0
-    call    func_48462F2B_entry, [d2], 0x10
+    call    SeqTitleLeaveDispatch_entry, [d2], 0x10
     clr     d0
     bra     loc_48542BE7
 loc_48542BC4:
     clr     d0
     call    func_4853F2A1_entry, [d2], 0x18
-    call    func_4846557D, 0, 0
+    call    NoteEditViewMeasGet, 0, 0
     movhu   d0, (AcNoteEditBoxProc_Table_6)
-    call    func_485425A3_entry, [a2,a3], 0x24
+    call    MainSEQ_EditInfoDeliver_entry, [a2,a3], 0x24
     clr     d0
     bra     loc_48542BE7
 loc_48542BDF:
@@ -4325,7 +4325,7 @@ MainSEQ_SwInLeftLength_SR:
     mov     d0, d2
     mov     a2, d0
     extbu   d0
-    call    func_484668DD_entry, 0, 0x10
+    call    StepRecLeftLenStep_entry, 0, 0x10
     exth    d0
     cmp     0, d0
     bne     loc_48542CA7
@@ -4344,7 +4344,7 @@ MainSEQ_SwInRightLength_SR:
     mov     d0, d2
     mov     a2, d0
     extbu   d0
-    call    func_484668FF_entry, 0, 0x10
+    call    StepRecRightLenStep_entry, 0, 0x10
     exth    d0
     cmp     0, d0
     bne     loc_48542CCB
@@ -4363,7 +4363,7 @@ MainSEQ_SwInPhrs_SR:
     mov     d0, d2
     mov     a2, d0
     extbu   d0
-    call    func_48466920_entry, 0, 0x10
+    call    StepRecPhraseStep_entry, 0, 0x10
     exth    d0
     cmp     0, d0
     bne     loc_48542CEF
@@ -4382,7 +4382,7 @@ MainSEQ_SwInCursor_SR:
     mov     d0, d3
     mov     a2, d0
     extbu   d0
-    call    func_48466AC7_entry, 0, 0xc
+    call    StepRecCursorStep_entry, 0, 0xc
     exth    d0
     cmp     0, d0
     bne     loc_48542D3D
@@ -4457,7 +4457,7 @@ MainSEQ_SwInVolume_SR:
     mov     d0, d2
     mov     a2, d0
     extbu   d0
-    call    func_48466C6C_entry, [d2], 0x18
+    call    StepRecVolumeStep_entry, [d2], 0x18
     exth    d0
     cmp     0, d0
     bne     loc_48542DAD
@@ -4476,7 +4476,7 @@ MainSEQ_SwInCtlSts_SR:
     mov     d0, d2
     mov     a2, d0
     extbu   d0
-    call    func_48466CEE_entry, 0, 0x10
+    call    StepRecCtlStsStep_entry, 0, 0x10
     exth    d0
     cmp     0, d0
     bne     loc_48542DD1
@@ -4495,7 +4495,7 @@ MainSEQ_SwInCtlVal_SR:
     mov     d0, d2
     mov     a2, d0
     extbu   d0
-    call    func_48466D19_entry, [d2], 0x1c
+    call    StepRecCtlValStep_entry, [d2], 0x1c
     exth    d0
     cmp     0, d0
     bne     loc_48542DF5
@@ -4511,7 +4511,7 @@ MainSEQ_SwInCtlYes_SR:
     add     -0x14, sp
     mov     d1, d3
     mov     d0, d2
-    call    func_48467073_entry, [a2], 0x14
+    call    StepRecEventInsert_entry, [a2], 0x14
     exth    d0
     cmp     0, d0
     bne     loc_48542E24
@@ -4574,7 +4574,7 @@ MainSEQ_SwInTrkClr_SR:
     add     -0x10, sp
     mov     d1, d3
     mov     d0, d2
-    call    func_48466C34_entry, 0, 0xc
+    call    StepRecTrackClearDo_entry, 0, 0xc
     exth    d0
     cmp     0, d0
     bne     loc_48542EA0
@@ -4593,7 +4593,7 @@ MainSEQ_SwInCueYes_SR:
     add     -0x14, sp
     mov     d1, d3
     mov     d0, d2
-    call    func_4846BE88_entry, 0, 8
+    call    StepRecCueInsert_entry, 0, 8
     exth    d0
     cmp     0, d0
     bne     loc_48542ED1
@@ -4618,7 +4618,7 @@ MainSEQ_SwInCueVal_SR:
     mov     d0, d2
     mov     a2, d0
     extbu   d0
-    call    func_4846BEDB_entry, [d2,d3], 0x14
+    call    StepRecCueValStep_entry, [d2,d3], 0x14
     exth    d0
     cmp     0, d0
     bne     loc_48542EF7
@@ -4637,7 +4637,7 @@ MainSEQ_SwInCueStl_SR:
     mov     d0, d2
     mov     a2, d0
     extbu   d0
-    call    func_4846BF3D_entry, [d2,a2], 0x14
+    call    StepRecCueStlStep_entry, [d2,a2], 0x14
     exth    d0
     cmp     0, d0
     bne     loc_48542F1B
@@ -6157,7 +6157,7 @@ MainSEQ_SwInBal_SR:
     add     -8, sp
     mov     d1, d3
     mov     d0, d2
-    call    func_48466941_entry, 0, 0x10
+    call    StepRecBalanceOpen_entry, 0, 0x10
     exth    d0
     cmp     0, d0
     bne     loc_48543D18
@@ -6413,7 +6413,7 @@ loc_48543F1B:
     call    GetTitleNow_entry, 0, 0x10
     and     0xff, d0
     extbu   d0
-    call    func_48462EC0_entry, [d2], 0x10
+    call    SeqTitleEnterDispatch_entry, [d2], 0x10
     movbu   (0x50160608), d0
     clr     d1
     mov     d0, (0x10, sp)
@@ -6453,7 +6453,7 @@ loc_48543F86:
     call    GetTitleOld_entry, 0, 0x10
     and     0xff, d0
     extbu   d0
-    call    func_48462F2B_entry, [d2], 0x10
+    call    SeqTitleLeaveDispatch_entry, [d2], 0x10
     clr     d0
     bra     loc_48543FC7
 loc_48543FA6:
@@ -6518,7 +6518,7 @@ MainSEQ_PlaylistSetting:
     jmp     loc_485440DF
 loc_4854403B:
     clr     d0
-    call    func_4845637D_entry, 0, 0x10
+    call    SongRecPlaylistGet_entry, 0, 0x10
     mov     d0, d3
     cmp     0x5000f, a2
     beq     loc_48544056
@@ -6583,7 +6583,7 @@ loc_485440B4:
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d3, d1
-    call    func_48456394_entry, [d2], 0x18
+    call    SongRecPlaylistSet_entry, [d2], 0x18
 loc_485440DF:
     mov     (0x30, sp), d0
     add     a3, d0
@@ -6604,7 +6604,7 @@ MainSEQ_TempoAdjust:
     jmp     loc_485441A8
 loc_485440FD:
     clr     d0
-    call    func_484563B1_entry, 0, 0x10
+    call    SongRecTempoAdjustGet_entry, 0, 0x10
     mov     d0, d3
     cmp     0x5000f, a2
     beq     loc_48544118
@@ -6673,7 +6673,7 @@ loc_48544160:
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     mov     d3, d1
-    call    func_484563C9_entry, [d2], 0x18
+    call    SongRecTempoAdjustSet_entry, [d2], 0x18
 loc_485441A8:
     mov     (0x34, sp), d0
     add     a3, d0
@@ -8163,7 +8163,7 @@ loc_4854508D:
     mov     0x5008155c, a2
     clr     d0
     mov     a2, a0
-    call    func_48455FAB_entry, [d2], 0x18
+    call    SongRecNameGet_entry, [d2], 0x18
     clr     d0
     movbu   d0, (0x5008156c)
     mov     0x50151c39, d0
@@ -8183,9 +8183,9 @@ loc_4854508D:
     clr     d0
     ret     [d2,a2], 0x20
 loc_485450DC:
-    call    func_4852FF03_entry, 0, 0xc
+    call    FmmCurFileIndexGet_entry, 0, 0xc
     exthu   d0
-    call    func_4852FF6B_entry, [d2], 0x10
+    call    FmmFileNameGet_entry, [d2], 0x10
     mov     a0, a1
     mov     0x10, d0
     mov     0x50160628, a0
@@ -8203,7 +8203,7 @@ loc_48545117:
     mov     d0, (8, sp)
     mov     Str_SONG_02d, d0
     mov     d0, (0xc, sp)
-    call    func_4852FF03_entry, 0, 0xc
+    call    FmmCurFileIndexGet_entry, 0, 0xc
     exth    d0
     inc     d0
     mov     d0, (0x10, sp)
@@ -8220,11 +8220,11 @@ loc_48545155:
     clr     d0
     mov     0x50152250, a2
     mov     a2, a0
-    call    func_48455FAB_entry, [d2], 0x18
+    call    SongRecNameGet_entry, [d2], 0x18
     mov     a2, a0
     clr     d0
     movbu   d0, (0x50152260)
-    call    func_4852F9A0, 0, 0
+    call    FmmTextSanitize, 0, 0
     movbu   (0x5015226f), d0
     mov     0x5015226f, a1
     cmp     0, d0
@@ -8244,7 +8244,7 @@ loc_485451A0:
     movbu   d0, (0x5015228e)
     mov     0x5015228e, a2
     mov     a2, a0
-    call    func_4852F9A0, 0, 0
+    call    FmmTextSanitize, 0, 0
     movbu   (0x50152303), d0
     mov     0x50152303, a1
     cmp     0, d0
@@ -9063,7 +9063,7 @@ loc_48545908:
     mov     d2, a1
     movbu   (a1), d0
     mov     (0x34, sp), a1
-    call    func_48545B4D_entry, [d2,a2,a3], 0x20
+    call    SeqSongInfoTagSet_entry, [d2,a2,a3], 0x20
     mov     d3, a0
     clr     d0
     movbu   d0, (a0)
@@ -9095,7 +9095,7 @@ loc_4854594D:
     mov     d2, a1
     movbu   (a1), d0
     mov     (0x34, sp), a1
-    call    func_48545B4D_entry, [d2,a2,a3], 0x20
+    call    SeqSongInfoTagSet_entry, [d2,a2,a3], 0x20
     mov     d3, a0
     mov     1, d0
     movbu   d0, (a0)
@@ -9253,7 +9253,7 @@ loc_48545A89:
     mov     d2, a1
     movbu   (a1), d0
     mov     (0x2c, sp), a1
-    call    func_48545B4D_entry, [d2,a2,a3], 0x20
+    call    SeqSongInfoTagSet_entry, [d2,a2,a3], 0x20
     mov     d2, a0
     movbu   (2, a0), d0
     mov     d3, a0
@@ -9273,7 +9273,7 @@ loc_48545AB4:
     mov     d2, a1
     movbu   (a1), d0
     mov     (0x2c, sp), a1
-    call    func_48545B4D_entry, [d2,a2,a3], 0x20
+    call    SeqSongInfoTagSet_entry, [d2,a2,a3], 0x20
     mov     d2, a0
     movbu   (2, a0), d0
     mov     d3, a0
@@ -9330,11 +9330,11 @@ func_48545B35_entry:
     mov     0x5008177c, a1
     call    func_485456C6_entry, [d2,d3,a2,a3], 0x54
     ret     0, 0x10
-
-func_48545B4D:
+# SeqSongInfoTagSet  (CPU 0x48545b4d)
+SeqSongInfoTagSet:
     movm    [d2,a2,a3], (sp)
     add     -0x14, sp
-func_48545B4D_entry:
+SeqSongInfoTagSet_entry:
     mov     a0, a2
     movbu   (a2), d1
     mov     a1, a3
@@ -9373,7 +9373,7 @@ loc_48545B97:
     inc     a2
     mov     a2, a0
     mov     Str_empty_773, a1
-    call    func_4C00369D_entry, [d2,a2,a3], 0xc
+    call    LibStrStr_entry, [d2,a2,a3], 0xc
     mov     a0, a3
     cmp     0, a3
     bne     loc_48545BAE
@@ -9395,7 +9395,7 @@ loc_48545BAE:
     mov     a3, a1
     call    strncpy_entry, [a2,a3], 8
     mov     a2, a0
-    call    func_4852F9A0, 0, 0
+    call    FmmTextSanitize, 0, 0
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -9421,7 +9421,7 @@ loc_48545BF7:
     mov     a3, a1
     call    strncat_entry, [a2,a3], 8
     mov     a2, a0
-    call    func_4852F9A0, 0, 0
+    call    FmmTextSanitize, 0, 0
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -9447,7 +9447,7 @@ loc_48545C4D:
     mov     a3, a1
     call    strncat_entry, [a2,a3], 8
     mov     a2, a0
-    call    func_4852F9A0, 0, 0
+    call    FmmTextSanitize, 0, 0
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -9473,7 +9473,7 @@ loc_48545CA2:
     mov     a3, a1
     call    strncat_entry, [a2,a3], 8
     mov     a2, a0
-    call    func_4852F9A0, 0, 0
+    call    FmmTextSanitize, 0, 0
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -9721,31 +9721,31 @@ func_48545F89:
     add     -0x14, sp
 func_48545F89_entry:
     mov     3, d0
-    call    func_484546F2, 0, 0
+    call    SeqModeSet, 0, 0
     call    func_485466DB, 0, 0
-    call    func_48454893, 0, 0
+    call    SeqCycPlyFlagGet, 0, 0
     movbu   d0, (0x50081991)
     clr     d0
-    call    func_484548A0, 0, 0
-    call    func_484B2E4D_entry, 0, 0x18
+    call    SeqCycPlyFlagSet, 0, 0
+    call    MidiInAllNotesOff_entry, 0, 0x18
     call    GetSeqSongNo, 0, 0
     extbu   d0
-    call    func_484559CA_entry, [d2,d3], 0x1c
+    call    SongRecStoreToSlot_entry, [d2,d3], 0x1c
     call    func_4C021DD5_entry, 0, 8
-    call    func_48457426_entry, [a2], 0x18
+    call    DemoPanelMemBank1Save_entry, [a2], 0x18
     mov     4, d0
     call    func_4C023BB7_entry, [d2], 0x14
     mov     0x2023, d0
     mov     1, d1
-    call    func_484553A7_entry, 0, 0x10
+    call    SeqPutM3Em_entry, 0, 0x10
     mov     0x2020, d0
     clr     d1
-    call    func_484553A7_entry, 0, 0x10
+    call    SeqPutM3Em_entry, 0, 0x10
     mov     0x2041, d0
     clr     d1
-    call    func_484553A7_entry, 0, 0x10
+    call    SeqPutM3Em_entry, 0, 0x10
     call    seq_ini_in_entry, 0, 8
-    call    func_48446722_entry, [d2], 0x10
+    call    PadMetroClockStopRequest_entry, [d2], 0x10
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     0x00204000, d0
@@ -9810,7 +9810,7 @@ loc_485460BB:
     exthu   d3
     cmp     0x21, d3
     ble     loc_485460BB
-    call    func_48454DD6_entry, 0, 0x10
+    call    SeqVolumeMax_entry, 0, 0x10
     call    func_48546682_entry, 0, 0x10
     clr     d0
     movbu   d0, (0x5008198a)
@@ -9818,9 +9818,9 @@ loc_485460BB:
     call    func_48431D01, 0, 0
     call    InitFeatureDemo, 0, 0
     mov     0x22, d0
-    call    func_484B1D65_entry, [d2], 4
+    call    LedBlinkStart_entry, [d2], 4
     mov     1, d0
-    call    func_484B17A3, 0, 0
+    call    LedBlinkRateSet, 0, 0
     mov     3, d0
     call    MidiRealtimeModeSet, 0, 0
     ret     [d2,d3], 0x1c
@@ -9829,40 +9829,40 @@ func_48546130:
     add     -0xc, sp
 func_48546130_entry:
     clr     d0
-    call    func_484546F2, 0, 0
+    call    SeqModeSet, 0, 0
     call    seq_ini_in_entry, 0, 8
     clr     d0
     movbu   d0, (0x5008198e)
     movbu   d0, (0x5008198b)
     movbu   d0, (0x5008198c)
     call    func_484582B4_entry, [d2], 0x14
-    call    func_48459586_entry, 0, 0x14
+    call    SeqPlayStopAtTiming_entry, 0, 0x14
     clr     d0
     call    SetSeqPlyPart_entry, [d2,d3,a2], 0x20
     mov     1, d0
     call    SetMeasSeq, 0, 0
     call    GetSeqSongNo, 0, 0
     extbu   d0
-    call    func_484559FC_entry, [d2,d3], 0x1c
+    call    SongRecLoadFromSlot_entry, [d2,d3], 0x1c
     clr     d0
     movbu   d0, (0x5008198a)
     call    func_48431CFE, 0, 0
-    call    func_4845744B_entry, [a2], 0x18
+    call    DemoPanelMemBank1Restore_entry, [a2], 0x18
     call    func_4C021DE0_entry, 0, 0x10
     movbu   (0x50081991), d0
-    call    func_484548A0, 0, 0
-    call    func_48454E3A_entry, 0, 8
-    call    func_484B2E4D_entry, 0, 0x18
+    call    SeqCycPlyFlagSet, 0, 0
+    call    ApcSeqSliderRoute_entry, 0, 8
+    call    MidiInAllNotesOff_entry, 0, 0x18
     call    ExitFeatureDemo, 0, 0
-    call    func_48453668, 0, 0
-    call    func_4845364F, 0, 0
+    call    SeqOutQueueReset, 0, 0
+    call    SeqRecQueueReset, 0, 0
     mov     0x22, d0
-    call    func_484B1DCC_entry, [d2], 4
-    call    func_48454ED2, 0, 0
+    call    LedBlinkStop_entry, [d2], 4
+    call    SeqPlyActiveFlagGet, 0, 0
     extbu   d0
     cmp     0, d0
     beq     loc_485461F3
-    call    func_48454A96, 0, 0
+    call    SeqPlyPartSavedGet, 0, 0
     exthu   d0
     call    SetSeqPlyPart_entry, [d2,d3,a2], 0x20
 loc_485461F3:
@@ -9875,13 +9875,13 @@ loc_485461F3:
 func_4854620A:
     add     -0xc, sp
     clr     d0
-    call    func_484546F2, 0, 0
+    call    SeqModeSet, 0, 0
     call    seq_ini_in_entry, 0, 8
     clr     d0
     movbu   d0, (0x5008198e)
     movbu   d0, (0x5008198b)
     movbu   d0, (0x5008198c)
-    call    func_48459586_entry, 0, 0x14
+    call    SeqPlayStopAtTiming_entry, 0, 0x14
     clr     d0
     call    SetSeqPlyPart_entry, [d2,d3,a2], 0x20
     mov     1, d0
@@ -9892,10 +9892,10 @@ func_4854620A:
     movbu   (0x5008198f), d0
     exth    d0
     call    EndFeatureDemo_entry, 0, 0x14
-    call    func_48453668, 0, 0
-    call    func_4845364F, 0, 0
+    call    SeqOutQueueReset, 0, 0
+    call    SeqRecQueueReset, 0, 0
     mov     0x22, d0
-    call    func_484B1DCC_entry, [d2], 4
+    call    LedBlinkStop_entry, [d2], 4
     call    func_485466A8_entry, [d2,d3], 0x1c
     clr     d0
     call    MidiRealtimeModeSet, 0, 0
@@ -9925,14 +9925,14 @@ loc_485462B5:
 func_485462BA:
     add     -0xc, sp
 func_485462BA_entry:
-    call    func_484546E9, 0, 0
+    call    SeqModeGet, 0, 0
     extbu   d0
     cmp     3, d0
     bne     loc_485462E8
     call    GetSeqSongNo, 0, 0
     extbu   d0
-    call    func_484559FC_entry, [d2,d3], 0x1c
-    call    func_4845744B_entry, [a2], 0x18
+    call    SongRecLoadFromSlot_entry, [d2,d3], 0x1c
+    call    DemoPanelMemBank1Restore_entry, [a2], 0x18
     call    func_4C02358F_entry, [a2], 4
     bra     loc_4854631E
 loc_485462E8:
@@ -9948,7 +9948,7 @@ loc_485462E8:
 loc_4854630F:
     call    GetSeqSongNo, 0, 0
     extbu   d0
-    call    func_484559FC_entry, [d2,d3], 0x1c
+    call    SongRecLoadFromSlot_entry, [d2,d3], 0x1c
 loc_4854631E:
     ret     0, 0xc
 
@@ -9958,7 +9958,7 @@ func_48546321:
 func_48546321_entry:
     mov     d0, d3
     mov     d1, d2
-    call    func_484546E9, 0, 0
+    call    SeqModeGet, 0, 0
     extbu   d0
     cmp     3, d0
     bne     loc_485463A3
@@ -10027,7 +10027,7 @@ StpDemoPlay_entry:
     call    seq_ini_in_entry, 0, 8
     mov     1, d0
     movhu   d0, (0x50081988)
-    call    func_484B17A3, 0, 0
+    call    LedBlinkRateSet, 0, 0
     call    func_48431D01, 0, 0
     movbu   (0x5008198f), d0
     exth    d0
@@ -10076,7 +10076,7 @@ loc_48546466:
     bra     loc_485464B8
 loc_48546492:
     mov     1, d0
-    call    func_484B17A3, 0, 0
+    call    LedBlinkRateSet, 0, 0
     call    func_48431D01, 0, 0
     movbu   (0x5008198f), d0
     exth    d0
@@ -10093,7 +10093,7 @@ SrtExtDemo:
 SrtExtDemo_entry:
     mov     0xd, d1
     movbu   d1, (0x5008198f)
-    call    func_48457347, 0, 0
+    call    DemoExtSongPtrSet, 0, 0
     mov     9, d0
     movbu   d0, (0x5008198c)
     ret     0, 0xc
@@ -10101,7 +10101,7 @@ SrtExtDemo_entry:
 func_485464D8:
     add     -8, sp
 func_485464D8_entry:
-    call    func_484546E9, 0, 0
+    call    SeqModeGet, 0, 0
     extbu   d0
     cmp     3, d0
     bne     loc_485464F6
@@ -10129,10 +10129,10 @@ loc_4854650C:
     cmp     7, d0
     bne     loc_48546553
     movbu   (0x5008198f), d0
-    call    func_48457350_entry, [d2,d3,a2,a3], 0x28
+    call    DemoSongLoad_entry, [d2,d3,a2,a3], 0x28
     call    func_48457CD9_entry, 0, 8
     mov     3, d0
-    call    func_484B17A3, 0, 0
+    call    LedBlinkRateSet, 0, 0
     movbu   (0x5008198f), d0
     exth    d0
     call    StartFeatureDemo_entry, [d2,a2], 0x18
@@ -10155,7 +10155,7 @@ loc_48546579:
 func_4854657C:
     add     -0x10, sp
 func_4854657C_entry:
-    call    func_484546E9, 0, 0
+    call    SeqModeGet, 0, 0
     extbu   d0
     cmp     3, d0
     bne     loc_485465BC
@@ -10195,7 +10195,7 @@ func_485465BF_entry:
     beq     loc_48546603
     clr     d0
     mov     d0, d1
-    call    func_48445586_entry, [d2,d3], 0x10
+    call    RhyClockPosSet_entry, [d2,d3], 0x10
     mov     4, d0
     call    func_48445DA5_entry, 0, 0xc
     bra     loc_4854660C
@@ -10215,7 +10215,7 @@ func_48546616_entry:
     exth    d0
     call    EndFeatureDemo_entry, 0, 0x14
     mov     1, d0
-    call    func_484B17A3, 0, 0
+    call    LedBlinkRateSet, 0, 0
     movbu   (0x5008198a), d0
     cmp     1, d0
     bne     loc_4854667F
@@ -10249,7 +10249,7 @@ func_48546682:
 func_48546682_entry:
     mov     0x00008031, d0
     clr     d1
-    call    func_484553A7_entry, 0, 0x10
+    call    SeqPutM3Em_entry, 0, 0x10
     ret     0, 0x10
 # GetDemoCtlTimer  (CPU 0x48546696)
 GetDemoCtlTimer:
@@ -10268,7 +10268,7 @@ func_485466A8_entry:
 loc_485466AF:
     clr     d0
     mov     d2, d1
-    call    func_48455C95_entry, 0, 0x10
+    call    SongRecTrackPartGet_entry, 0, 0x10
     mov     d0, d1
     mov     0x7f, d0
     mov     d0, (0x10, sp)
@@ -10308,12 +10308,12 @@ func_485466FB_entry:
     mov     d0, d2
     mov     d1, d3
     movbu   d3, (0x50081995)
-    call    func_48454A96, 0, 0
+    call    SeqPlyPartSavedGet, 0, 0
     exthu   d0
     call    SetSeqPlyPart_entry, [d2,d3,a2], 0x20
     call    GetSeqSongNo, 0, 0
     extbu   d0
-    call    func_484559CA_entry, [d2,d3], 0x1c
+    call    SongRecStoreToSlot_entry, [d2,d3], 0x1c
     call    GetSeqSongNo, 0, 0
     extbu   d2
     inc     d2
@@ -10344,7 +10344,7 @@ func_4854675F:
 func_4854675F_entry:
     mov     d0, d2
     clr     d0
-    call    func_484548A0, 0, 0
+    call    SeqCycPlyFlagSet, 0, 0
     mov     d2, d0
     exth    d0
     cmp     0, d0
@@ -10360,10 +10360,10 @@ func_4854677D:
     add     -0xc, sp
 func_4854677D_entry:
     extbu   d0
-    call    func_484559FC_entry, [d2,d3], 0x1c
+    call    SongRecLoadFromSlot_entry, [d2,d3], 0x1c
     call    GetSeqPlyPart_entry, 0, 0x10
     exthu   d0
-    call    func_48454A9F, 0, 0
+    call    SeqPlyPartSavedSet, 0, 0
     clr     d0
     call    SetSeqPlyPart_entry, [d2,d3,a2], 0x20
     ret     0, 0xc
@@ -10418,7 +10418,7 @@ func_48546801_entry:
     call    func_48546F64_entry, [d2], 0x18
     call    func_48546F92_entry, 0, 0x14
     call    func_48546FD1_entry, [d2], 4
-    call    func_48457071, 0, 0
+    call    ScratchPosReset, 0, 0
     extbu   d2
     mov     d2, d0
     call    func_4854689E_entry, [d2], 0x14
@@ -10435,7 +10435,7 @@ func_48546839_entry:
 loc_48546840:
     clr     d0
     mov     d3, d1
-    call    func_48455C95_entry, 0, 0x10
+    call    SongRecTrackPartGet_entry, 0, 0x10
     mov     d0, d1
     mov     d1, d2
     extbu   d2
@@ -10478,7 +10478,7 @@ func_4854689E_entry:
     cmp     0, d2
     bne     loc_485468B3
     clr     d0
-    call    func_48455D3F_entry, [d2,d3], 0x1c
+    call    SongRecTrackPartsSetLinear_entry, [d2,d3], 0x1c
     bra     loc_485468BB
 loc_485468B3:
     clr     d0
@@ -10486,35 +10486,35 @@ loc_485468B3:
 loc_485468BB:
     mov     0x5020, d0
     mov     1, d1
-    call    func_484553A7_entry, 0, 0x10
+    call    SeqPutM3Em_entry, 0, 0x10
     cmp     0, d2
     bne     loc_485468F9
     mov     0x5023, d0
     clr     d1
-    call    func_484553A7_entry, 0, 0x10
+    call    SeqPutM3Em_entry, 0, 0x10
     mov     0x5021, d0
     clr     d1
-    call    func_484553A7_entry, 0, 0x10
+    call    SeqPutM3Em_entry, 0, 0x10
     mov     0x5022, d0
     clr     d1
-    call    func_484553A7_entry, 0, 0x10
+    call    SeqPutM3Em_entry, 0, 0x10
     mov     0x5024, d0
     clr     d1
-    call    func_484553A7_entry, 0, 0x10
+    call    SeqPutM3Em_entry, 0, 0x10
     bra     loc_48546929
 loc_485468F9:
     mov     0x5023, d0
     mov     1, d1
-    call    func_484553A7_entry, 0, 0x10
+    call    SeqPutM3Em_entry, 0, 0x10
     mov     0x5021, d0
     mov     1, d1
-    call    func_484553A7_entry, 0, 0x10
+    call    SeqPutM3Em_entry, 0, 0x10
     mov     0x5022, d0
     mov     1, d1
-    call    func_484553A7_entry, 0, 0x10
+    call    SeqPutM3Em_entry, 0, 0x10
     mov     0x5024, d0
     mov     1, d1
-    call    func_484553A7_entry, 0, 0x10
+    call    SeqPutM3Em_entry, 0, 0x10
 loc_48546929:
     ret     [d2], 0x14
 
@@ -10590,7 +10590,7 @@ loc_485469BE:
     cmp     1, d0
     bne     loc_485469EA
     mov     0x80, d0
-    call    func_48457106_entry, [d2,d3], 8
+    call    ScratchPosSkip_entry, [d2,d3], 8
     clr     d3
     bra     loc_485469F6
 loc_485469EA:
@@ -10727,7 +10727,7 @@ loc_48546B47:
     mov     d2, (0x10, sp)
     call    func_4854749F_entry, [d2,d3], 0x18
 loc_48546B52:
-    call    func_48455BEE_entry, 0, 0x10
+    call    SongFreePagesGet_entry, 0, 0x10
     exthu   d0
     cmp     0xa, d0
     blt     loc_48546B61
@@ -10749,17 +10749,17 @@ func_48546B69_entry:
     exthu   d2
     mov     d2, d0
     mov     -1, d1
-    call    func_484571EE_entry, [d2], 0x14
+    call    ScratchU32TableASet_entry, [d2], 0x14
     mov     d2, d0
     mov     -1, d1
-    call    func_48457207_entry, [d2], 0x14
+    call    ScratchU32TableBSet_entry, [d2], 0x14
     movhu   (0x500819f8), d1
     clr     d2
     cmp     d2, d1
     ble     loc_48546BB4
 loc_48546B9A:
     mov     d2, d0
-    call    func_484571B8_entry, 0, 0xc
+    call    ScratchU32TableAGet_entry, 0, 0xc
     cmp     -1, d0
     beq     loc_48546BA9
     clr     d3
@@ -10781,14 +10781,14 @@ loc_48546BBD:
     call    func_48547469_entry, [d2], 0x10
     call    func_48547572_entry, 0, 0x14
     call    func_48547F47_entry, 0, 0x14
-    call    func_48454A96, 0, 0
+    call    SeqPlyPartSavedGet, 0, 0
     exthu   d0
     call    SetSeqPlyPart_entry, [d2,d3,a2], 0x20
-    call    func_48457E01_entry, [d2], 0x14
+    call    SeqLocateToStart_entry, [d2], 0x14
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x1c, d1
-    call    func_48455953_entry, [d2,d3], 0x18
+    call    SongRecWordSet_entry, [d2,d3], 0x18
     call    func_48460E37_entry, [d2,d3,a2], 0x1c
     call    func_48547F0C, 0, 0
     extbu   d0
@@ -10845,7 +10845,7 @@ loc_48546C9C:
     cmp     0xffff, d0
     beq     loc_48546CD9
     movhu   (a0), d0
-    call    func_484571B8_entry, 0, 0xc
+    call    ScratchU32TableAGet_entry, 0, 0xc
     cmp     -1, d0
     beq     loc_48546CD9
     mov     (0x28, sp), a0
@@ -10853,13 +10853,13 @@ loc_48546C9C:
     call    func_48546F10_entry, 0, 8
     mov     d0, d1
     mov     d2, d0
-    call    func_48457207_entry, [d2], 0x14
+    call    ScratchU32TableBSet_entry, [d2], 0x14
     mov     (0x28, sp), a0
     movhu   (a0), d2
-    call    func_484570E6, 0, 0
+    call    ScratchPos, 0, 0
     mov     d0, d1
     mov     d2, d0
-    call    func_484571EE_entry, [d2], 0x14
+    call    ScratchU32TableASet_entry, [d2], 0x14
 loc_48546CD9:
     movhu   (0x500819f8), d1
     clr     d3
@@ -10869,11 +10869,11 @@ loc_48546CD9:
     ble     loc_48546D0B
 loc_48546CE6:
     mov     d2, d0
-    call    func_484571CD_entry, 0, 0xc
+    call    ScratchU32TableBGet_entry, 0, 0xc
     cmp     a2, d0
     bcc     loc_48546CFE
     mov     d2, d0
-    call    func_484571CD_entry, 0, 0xc
+    call    ScratchU32TableBGet_entry, 0, 0xc
     mov     d0, a2
     mov     d3, a3
 loc_48546CFE:
@@ -10888,26 +10888,26 @@ loc_48546D0B:
     mov     a3, d3
     exthu   d3
     mov     d3, d0
-    call    func_484571B8_entry, 0, 0xc
-    call    func_484570EF, 0, 0
+    call    ScratchU32TableAGet_entry, 0, 0xc
+    call    ScratchPosSet, 0, 0
     movhu   (0x500819f8), d1
     clr     d2
     cmp     d2, d1
     ble     loc_48546D57
 loc_48546D27:
     mov     d2, d0
-    call    func_484571CD_entry, 0, 0xc
+    call    ScratchU32TableBGet_entry, 0, 0xc
     cmp     -1, d0
     beq     loc_48546D4C
     cmp     d3, d2
     beq     loc_48546D4C
     mov     d2, d0
-    call    func_484571CD_entry, 0, 0xc
+    call    ScratchU32TableBGet_entry, 0, 0xc
     cmp     -1, d0
     beq     loc_48546D4C
     mov     d2, d0
     mov     a2, d1
-    call    func_48457283_entry, [d2,d3], 0x18
+    call    ScratchU32TableBSub_entry, [d2,d3], 0x18
 loc_48546D4C:
     movhu   (0x500819f8), d0
     inc     d2
@@ -10927,7 +10927,7 @@ func_48546D62:
 func_48546D62_entry:
     call    func_48547011, 0, 0
     call    func_48546DB3_entry, [d2,d3], 0x18
-    call    func_4845E17F_entry, 0, 0xc
+    call    SongClearCurrent_entry, 0, 0xc
     call    func_48547014_entry, [d2], 0x14
     exth    d0
     cmp     -1, d0
@@ -10973,20 +10973,20 @@ loc_48546DD8:
     jmp     loc_48546E9F
 loc_48546DE0:
     mov     (0x500819fc), d0
-    call    func_4845718B, 0, 0
+    call    ScratchU32TableABaseSet, 0, 0
     mov     (0x500819fc), d1
     movhu   (0x500819f8), d0
     clr     d2
     asl2    d0
     add     d0, d1
     mov     d1, d0
-    call    func_4845719A, 0, 0
+    call    ScratchU32TableBBaseSet, 0, 0
     mov     (0x500819fc), d1
     movhu   (0x500819f8), d0
     asl     3, d0
     add     d0, d1
     mov     d1, d0
-    call    func_484571A9, 0, 0
+    call    ScratchByteTableBaseSet, 0, 0
     movhu   (0x500819f8), d1
     cmp     d2, d1
     ble     loc_48546E63
@@ -11001,12 +11001,12 @@ loc_48546E25:
 loc_48546E3A:
     call    func_48546EA3_entry, [d2], 0xc
     mov     d0, d3
-    call    func_484570E6, 0, 0
+    call    ScratchPos, 0, 0
     mov     d0, d1
     mov     d2, d0
-    call    func_484571EE_entry, [d2], 0x14
+    call    ScratchU32TableASet_entry, [d2], 0x14
     mov     d3, d0
-    call    func_48457106_entry, [d2,d3], 8
+    call    ScratchPosSkip_entry, [d2,d3], 8
     movhu   (0x500819f8), d1
     inc     d2
     exthu   d2
@@ -11018,16 +11018,16 @@ loc_48546E63:
     ble     loc_48546E9F
 loc_48546E67:
     mov     d2, d0
-    call    func_484571B8_entry, 0, 0xc
-    call    func_484570EF, 0, 0
+    call    ScratchU32TableAGet_entry, 0, 0xc
+    call    ScratchPosSet, 0, 0
     call    func_48546F10_entry, 0, 8
     mov     d0, d1
     mov     d2, d0
-    call    func_48457207_entry, [d2], 0x14
-    call    func_484570E6, 0, 0
+    call    ScratchU32TableBSet_entry, [d2], 0x14
+    call    ScratchPos, 0, 0
     mov     d0, d1
     mov     d2, d0
-    call    func_484571EE_entry, [d2], 0x14
+    call    ScratchU32TableASet_entry, [d2], 0x14
     movhu   (0x500819f8), d0
     inc     d2
     exthu   d2
@@ -11131,11 +11131,11 @@ loc_48546F3F:
 func_48546F42:
     add     -0x14, sp
 func_48546F42_entry:
-    call    func_4845E17F_entry, 0, 0xc
+    call    SongClearCurrent_entry, 0, 0xc
     clr     d0
     mov     d0, (0x10, sp)
     mov     0x1c, d1
-    call    func_48455953_entry, [d2,d3], 0x18
+    call    SongRecWordSet_entry, [d2,d3], 0x18
     call    func_48460E37_entry, [d2,d3,a2], 0x1c
     mov     0x1f, d0
     ret     0, 0x14
@@ -11180,9 +11180,9 @@ func_48546FB8:
     movm    [d2], (sp)
     add     -8, sp
 func_48546FB8_entry:
-    call    func_4845707B, 0, 0
+    call    ScratchReadByte, 0, 0
     mov     d0, d2
-    call    func_484570C8, 0, 0
+    call    ScratchPosNext, 0, 0
     mov     d2, d0
     extbu   d0
     ret     [d2], 0xc
@@ -11228,7 +11228,7 @@ func_48547014:
     movm    [d2], (sp)
     add     -0x10, sp
 func_48547014_entry:
-    call    func_48455BEE_entry, 0, 0x10
+    call    SongFreePagesGet_entry, 0, 0x10
     exthu   d0
     cmp     0x10, d0
     bgt     loc_48547029
@@ -11238,7 +11238,7 @@ loc_48547029:
     mov     1, d2
 loc_4854702B:
     mov     d2, d0
-    call    func_4845673D_entry, [d2,d3,a2], 0x20
+    call    SongTrackFirstPageAlloc_entry, [d2,d3,a2], 0x20
     exth    d0
     cmp     -1, d0
     bne     loc_4854703C
@@ -11247,7 +11247,7 @@ loc_4854702B:
 loc_4854703C:
     clr     d0
     mov     d2, d1
-    call    func_48455E4A_entry, [d2], 0x14
+    call    SongRecTrackStartPageGet_entry, [d2], 0x14
     mov     d2, d1
     add     d1, d1
     add     0x50081c34, d1
@@ -11264,12 +11264,12 @@ loc_4854703C:
     ble     loc_4854702B
     clr     d0
     movbu   d0, (0x50081cf7)
-    call    func_484567B6_entry, [d2,d3], 0x1c
+    call    SongAuxTrackFirstPageAlloc_entry, [d2,d3], 0x1c
     exth    d0
     cmp     0, d0
     bne     loc_4854708E
     clr     d0
-    call    func_48455E71_entry, 0, 0x10
+    call    SongRecAuxTrackStartPageGet_entry, 0, 0x10
     movhu   d0, (0x50081cf4)
     mov     5, d0
     movbu   d0, (0x50081cf6)
@@ -11699,17 +11699,17 @@ func_485473FF_entry:
 loc_48547406:
     clr     d0
     mov     d2, d1
-    call    func_48455D84_entry, [d2], 0x14
+    call    SongRecTrackDataFlagGet_entry, [d2], 0x14
     exth    d0
     cmp     0, d0
     beq     loc_4854743B
     mov     d2, d0
     call    func_4854765B_entry, [d2], 0x14
     mov     0x81, d0
-    call    func_48458F4D_entry, 0, 0x14
-    call    func_48458D72_entry, [d2,d3], 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
+    call    SongWrCurNext_entry, [d2,d3], 0x14
     mov     0x82, d0
-    call    func_48458F4D_entry, 0, 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
     mov     d2, d0
     call    func_485476ED_entry, [d2,d3], 0x1c
 loc_4854743B:
@@ -11719,10 +11719,10 @@ loc_4854743B:
     ble     loc_48547406
     call    func_48547684_entry, 0, 0x10
     mov     0x81, d0
-    call    func_48458F4D_entry, 0, 0x14
-    call    func_48458D72_entry, [d2,d3], 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
+    call    SongWrCurNext_entry, [d2,d3], 0x14
     mov     0x82, d0
-    call    func_48458F4D_entry, 0, 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
     call    func_485476CD_entry, 0, 8
     ret     [d2], 0x14
 
@@ -11733,12 +11733,12 @@ func_48547469_entry:
     mov     1, d2
 loc_48547470:
     mov     d2, d0
-    call    func_48454AA8_entry, [d2,d3], 0x10
+    call    SeqPlyPartSavedBitGet_entry, [d2,d3], 0x10
     exth    d0
     cmp     0, d0
     bne     loc_48547485
     mov     d2, d0
-    call    func_4845E270_entry, [d2], 0x14
+    call    SongTrackErase_entry, [d2], 0x14
 loc_48547485:
     inc     d2
     extbu   d2
@@ -11747,7 +11747,7 @@ loc_48547485:
     movbu   (0x50081cf7), d0
     cmp     0, d0
     bne     loc_4854749C
-    call    func_48456A34_entry, [d2], 0x14
+    call    SongAuxTrackClear_entry, [d2], 0x14
 loc_4854749C:
     ret     [d2], 0x10
 
@@ -11762,7 +11762,7 @@ func_4854749F_entry:
     blt     loc_485474BD
     movhu   (0x28, sp), d0
     extbu   d1
-    call    func_48457220, 0, 0
+    call    ScratchByteTableSet, 0, 0
     bra     loc_485474C3
 loc_485474BD:
     movbu   d1, (0x50081994)
@@ -11797,12 +11797,12 @@ func_485474FC_entry:
     blt     loc_48547531
     movhu   (0x24, sp), d3
     mov     d3, d0
-    call    func_484571E2, 0, 0
+    call    ScratchByteTableGet, 0, 0
     mov     d0, d2
     extbu   d2
     and     0xf0, d2
     mov     d3, d0
-    call    func_484571E2, 0, 0
+    call    ScratchByteTableGet, 0, 0
     movbu   d0, (0x50081cfa)
     bra     loc_48547546
 loc_48547531:
@@ -11832,7 +11832,7 @@ func_48547572_entry:
     mov     d0, (0x10, sp)
     clr     d0
     mov     0x110, d1
-    call    func_48455953_entry, [d2,d3], 0x18
+    call    SongRecWordSet_entry, [d2,d3], 0x18
     call    func_4C01DD70_entry, [d2,d3,a2,a3], 0x20
     ret     0, 0x14
 
@@ -11853,7 +11853,7 @@ func_48547592_entry:
 func_485475B2:
     add     -0xc, sp
 func_485475B2_entry:
-    call    func_48457106_entry, [d2,d3], 8
+    call    ScratchPosSkip_entry, [d2,d3], 8
     ret     0, 0xc
 
 func_485475BF:
@@ -11890,12 +11890,12 @@ loc_485475F7:
     mov     4, d0
     mov     a2, a0
     mov     d2, d1
-    call    func_484582D0_entry, [d2,d3,a2,a3], 0x24
+    call    SongEventFromM3_entry, [d2,d3,a2,a3], 0x24
     exth    d0
     cmp     0, d0
     bne     loc_48547658
     movbu   (0x14, sp), d0
-    call    func_4845BC5B, 0, 0
+    call    SongEventLenGet, 0, 0
     mov     d0, d3
     exth    d0
     cmp     -1, d0
@@ -11925,7 +11925,7 @@ loc_48547646:
     call    func_4854769E_entry, [d2], 0xc
     mov     8, d0
     mov     1, d1
-    call    func_48454ACF_entry, [d2,d3], 0x14
+    call    SeqPlyPartSavedBitSet_entry, [d2,d3], 0x14
 loc_48547658:
     ret     [d2,d3,a2], 0x2c
 
@@ -11943,7 +11943,7 @@ func_4854765B_entry:
     movbu   (d0, a0), d1
     mov     d2, d0
     exthu   d1
-    call    func_48458B45_entry, 0, 0x18
+    call    SongWrCurSet_entry, 0, 0x18
     ret     [d2], 0x14
 
 func_48547684:
@@ -11952,7 +11952,7 @@ func_48547684_entry:
     movbu   (0x50081cf6), d1
     movhu   (0x50081cf4), d0
     exthu   d1
-    call    func_48458B45_entry, 0, 0x18
+    call    SongWrCurSet_entry, 0, 0x18
     ret     0, 0x10
 
 func_4854769E:
@@ -11960,14 +11960,14 @@ func_4854769E:
     add     -8, sp
 func_4854769E_entry:
     mov     d0, d2
-    call    func_48458CD8_entry, 0, 0xc
+    call    SongWrCurPageGet_entry, 0, 0xc
     extbu   d2
     mov     d2, d1
     add     d1, d1
     add     0x50081c34, d1
     mov     d1, a0
     movhu   d0, (-2, a0)
-    call    func_48458D2A_entry, 0, 0xc
+    call    SongWrCurOffsetGet_entry, 0, 0xc
     add     -1, d2
     mov     0x50081c54, a0
     movbu   d0, (d2, a0)
@@ -11976,9 +11976,9 @@ func_4854769E_entry:
 func_485476CD:
     add     -8, sp
 func_485476CD_entry:
-    call    func_48458CD8_entry, 0, 0xc
+    call    SongWrCurPageGet_entry, 0, 0xc
     movhu   d0, (0x50081cf4)
-    call    func_48458D2A_entry, 0, 0xc
+    call    SongWrCurOffsetGet_entry, 0, 0xc
     movbu   d0, (0x50081cf6)
     ret     0, 8
 
@@ -11987,16 +11987,16 @@ func_485476ED:
     add     -0x14, sp
 func_485476ED_entry:
     mov     d0, d2
-    call    func_48458CD8_entry, 0, 0xc
+    call    SongWrCurPageGet_entry, 0, 0xc
     mov     d0, d3
-    call    func_48458D2A_entry, 0, 0xc
+    call    SongWrCurOffsetGet_entry, 0, 0xc
     extbu   d0
     mov     d0, (0x10, sp)
     extbu   d2
     exthu   d3
     mov     d3, d1
     mov     d2, d0
-    call    func_4845603F_entry, [d2,d3], 0x1c
+    call    SongTrackEndPosSet_entry, [d2,d3], 0x1c
     ret     [d2,d3], 0x1c
 
 func_48547713:
@@ -12065,8 +12065,8 @@ func_485477B5:
     add     -0xc, sp
 func_485477B5_entry:
     extbu   d0
-    call    func_48458F4D_entry, 0, 0x14
-    call    func_48458D72_entry, [d2,d3], 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
+    call    SongWrCurNext_entry, [d2,d3], 0x14
     ret     0, 0xc
 
 func_485477CA:
@@ -12172,7 +12172,7 @@ loc_48547835:
 loc_485478A9:
     extbu   d0
     call    func_485477B5_entry, 0, 0xc
-    call    func_48458CD8_entry, 0, 0xc
+    call    SongWrCurPageGet_entry, 0, 0xc
     exthu   d3
     mov     d3, d1
     asl     3, d1
@@ -12180,7 +12180,7 @@ loc_485478A9:
     add     a2, d1
     mov     d1, a0
     movhu   d0, (4, a0)
-    call    func_48458D2A_entry, 0, 0xc
+    call    SongWrCurOffsetGet_entry, 0, 0xc
     mov     d3, d1
     asl     3, d1
     add     a2, d1
@@ -12254,7 +12254,7 @@ func_4854794A_entry:
     add     a2, a3
     movbu   (a3), d1
     mov     d2, (0x10, sp)
-    call    func_48449207_entry, 0, 0x14
+    call    SoundKindGet_entry, 0, 0x14
     extbu   d0
     cmp     2, d0
     bne     loc_485479AE
@@ -12268,7 +12268,7 @@ func_4854794A_entry:
     movbu   (0x3c, sp), d0
     mov     d0, (0x18, sp)
     mov     1, d0
-    call    func_48449462_entry, [d2], 0x18
+    call    TableToneKeyMap_entry, [d2], 0x18
     bra     loc_485479D6
 loc_485479AE:
     mov     a2, a0
@@ -12375,13 +12375,13 @@ loc_48547A76:
     movbu   (2, a3), d1
     movhu   (4, a3), d0
     exthu   d1
-    call    func_48458B45_entry, 0, 0x18
+    call    SongWrCurSet_entry, 0, 0x18
     extbu   d2
     mov     d2, d0
-    call    func_48458F4D_entry, 0, 0x14
-    call    func_48458D72_entry, [d2,d3], 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
+    call    SongWrCurNext_entry, [d2,d3], 0x14
     mov     d3, d0
-    call    func_48458F4D_entry, 0, 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
     ret     [d2,d3,a2,a3], 0x20
 
 func_48547A9F:
@@ -12403,7 +12403,7 @@ func_48547AB5_entry:
     inc     d0
     extbu   d0
     mov     1, d1
-    call    func_48454ACF_entry, [d2,d3], 0x14
+    call    SeqPlyPartSavedBitSet_entry, [d2,d3], 0x14
     ret     0, 0x10
 
 func_48547AD6:
@@ -12496,7 +12496,7 @@ loc_48547B76:
     asl     5, d0
     mov     d0, a0
     add     0x50081d84, a0
-    call    func_484B4035, 0, 0
+    call    MidiContextInit, 0, 0
     inc     d2
     mov     d2, d0
     extbu   d2
@@ -12524,7 +12524,7 @@ func_48547BA0_entry:
     movbu   d0, (0x10, a0)
     mov     func_48547C76, d0
     mov     d0, (0xc, a0)
-    call    func_484B3E8C_entry, 0, 0x10
+    call    MidiInMessageDispatch_entry, 0, 0x10
     ret     [a2], 0x10
 
 func_48547BD7:
@@ -12604,7 +12604,7 @@ loc_48547C56:
     extbu   d0
     mov     d0, (0x10, sp)
     clr     d0
-    call    func_48455C6E_entry, [d2], 0x18
+    call    SongRecTrackPartSet_entry, [d2], 0x18
 loc_48547C72:
     clr     d0
 loc_48547C73:
@@ -12622,7 +12622,7 @@ func_48547C76:
     bne     loc_48547CE3
     clr     d0
     extbu   d1
-    call    func_48455C95_entry, 0, 0x10
+    call    SongRecTrackPartGet_entry, 0, 0x10
     mov     d0, d2
     extbu   d2
     cmp     0x19, d2
@@ -12657,7 +12657,7 @@ loc_48547CE3:
     extbu   d1
     mov     d1, (0x14, sp)
     clr     d0
-    call    func_48455C95_entry, 0, 0x10
+    call    SongRecTrackPartGet_entry, 0, 0x10
     mov     (0x44, sp), d1
     extbu   d0
     asl     24, d0
@@ -12670,14 +12670,14 @@ loc_48547CE3:
     mov     (0x40, sp), d0
     mov     (0x44, sp), d1
     mov     (0x18, sp), a0
-    call    func_484582D0_entry, [d2,d3,a2,a3], 0x24
+    call    SongEventFromM3_entry, [d2,d3,a2,a3], 0x24
     exth    d0
     cmp     0, d0
     beq     loc_48547D14
     jmp     loc_48547E09
 loc_48547D14:
     movbu   (0x1c, sp), d0
-    call    func_4845BC5B, 0, 0
+    call    SongEventLenGet, 0, 0
     mov     d0, d3
     exth    d0
     cmp     -1, d0
@@ -12806,14 +12806,14 @@ func_48547E4D:
     mov     sp, a2
     add     0x14, a2
     mov     a2, a0
-    call    func_484582D0_entry, [d2,d3,a2,a3], 0x24
+    call    SongEventFromM3_entry, [d2,d3,a2,a3], 0x24
     exth    d0
     cmp     0, d0
     beq     loc_48547E7B
     jmp     loc_48547F08
 loc_48547E7B:
     movbu   (0x14, sp), d0
-    call    func_4845BC5B, 0, 0
+    call    SongEventLenGet, 0, 0
     mov     d0, d3
     exth    d0
     cmp     -1, d0
@@ -12845,7 +12845,7 @@ loc_48547EBA:
     call    func_4854769E_entry, [d2], 0xc
     mov     8, d0
     mov     1, d1
-    call    func_48454ACF_entry, [d2,d3], 0x14
+    call    SeqPlyPartSavedBitSet_entry, [d2,d3], 0x14
     bra     loc_48547F08
 loc_48547ECE:
     mov     (a2), d0
@@ -12918,14 +12918,14 @@ func_48547F47_entry:
     clr     d0
     mov     d0, (0x10, sp)
     mov     0xbd, d1
-    call    func_4845592C_entry, [d2,d3], 8
+    call    SongRecByteSet_entry, [d2,d3], 8
     bra     loc_48547F73
 loc_48547F63:
     mov     0xff, d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     0xbd, d1
-    call    func_4845592C_entry, [d2,d3], 8
+    call    SongRecByteSet_entry, [d2,d3], 8
 loc_48547F73:
     call    func_48455711_entry, 0, 0x10
     ret     0, 0x14
@@ -12950,12 +12950,12 @@ SaveSmf_entry:
     mov     -0x7fd1, d0
     ret     [d2], 0x10
 loc_48547FB3:
-    call    func_48454A96, 0, 0
+    call    SeqPlyPartSavedGet, 0, 0
     exthu   d0
     call    SetSeqPlyPart_entry, [d2,d3,a2], 0x20
     call    GetSeqSongNo, 0, 0
     extbu   d0
-    call    func_484559CA_entry, [d2,d3], 0x1c
+    call    SongRecStoreToSlot_entry, [d2,d3], 0x1c
     call    GetSeqSongNo, 0, 0
     movbu   (0x50081fcc), d1
     extbu   d0
@@ -12968,10 +12968,10 @@ loc_48547FB3:
     movbu   (0x50081fcc), d0
     inc     d0
     extbu   d0
-    call    func_484559FC_entry, [d2,d3], 0x1c
+    call    SongRecLoadFromSlot_entry, [d2,d3], 0x1c
     call    GetSeqPlyPart_entry, 0, 0x10
     exthu   d0
-    call    func_48454A9F, 0, 0
+    call    SeqPlyPartSavedSet, 0, 0
     clr     d0
     call    SetSeqPlyPart_entry, [d2,d3,a2], 0x20
     call    func_48548109_entry, 0, 0xc
@@ -12979,16 +12979,16 @@ loc_48547FB3:
 loc_48548019:
     call    func_48548109_entry, 0, 0xc
 loc_4854801E:
-    call    func_4853258A_entry, 0, 0x14
+    call    FmmDiskFreeSpaceRead_entry, 0, 0x14
     mov     d0, (0x50082064)
-    call    func_4852F6DA_entry, 0, 0x10
+    call    SmfSaveFileOpen_entry, 0, 0x10
     exth    d0
     mov     d0, (0x50081fdc)
     cmp     0, d0
     bge     loc_4854803F
     bra     loc_4854808A
 loc_4854803F:
-    call    func_48457071, 0, 0
+    call    ScratchPosReset, 0, 0
     movbu   (0x24, sp), d0
     call    func_48548182_entry, [d2,d3], 0x1c
     mov     (0x50081fdc), d2
@@ -12997,7 +12997,7 @@ loc_4854803F:
     clr     d0
     call    func_48455675, 0, 0
     call    func_4854812E_entry, [a2], 0x1c
-    call    func_4852F6F0_entry, 0, 8
+    call    SmfSaveFileClose_entry, 0, 8
     clr     d0
     mov     d0, (0x50081fdc)
     clr     d2
@@ -13005,8 +13005,8 @@ loc_4854803F:
 loc_48548076:
     exth    d2
     or      0x8000, d2
-    call    func_4852F6F0_entry, 0, 8
-    call    func_4852F6FB_entry, 0, 0xc
+    call    SmfSaveFileClose_entry, 0, 8
+    call    SmfSaveFileRemove_entry, 0, 0xc
 loc_48548089:
     mov     d2, d0
 loc_4854808A:
@@ -13022,11 +13022,11 @@ func_4854808D_entry:
     extbu   d0
     cmp     d0, d2
     bne     loc_485480AC
-    call    func_48454A96, 0, 0
+    call    SeqPlyPartSavedGet, 0, 0
     bra     loc_485480B4
 loc_485480AC:
     mov     d2, d0
-    call    func_48457BB3_entry, 0, 0x10
+    call    SongRecPlyPartGet_entry, 0, 0x10
 loc_485480B4:
     exthu   d0
     mov     d0, a2
@@ -13055,13 +13055,13 @@ loc_485480D1:
     beq     loc_485480FE
     mov     d3, d0
     mov     d2, d1
-    call    func_48455C95_entry, 0, 0x10
+    call    SongRecTrackPartGet_entry, 0, 0x10
     exth    d0
     cmp     0x42, d0
     beq     loc_485480FE
     mov     d3, d0
     mov     d2, d1
-    call    func_48455D84_entry, [d2], 0x14
+    call    SongRecTrackDataFlagGet_entry, [d2], 0x14
     exth    d0
     cmp     0, d0
     beq     loc_485480FE
@@ -13079,7 +13079,7 @@ loc_48548106:
 func_48548109:
     add     -0xc, sp
 func_48548109_entry:
-    call    func_48457E01_entry, [d2], 0x14
+    call    SeqLocateToStart_entry, [d2], 0x14
     mov     1, d0
     call    func_484556A2, 0, 0
     clr     d0
@@ -13091,7 +13091,7 @@ func_4854812E:
     movm    [a2], (sp)
     add     -0x18, sp
 func_4854812E_entry:
-    call    func_484570E6, 0, 0
+    call    ScratchPos, 0, 0
     mov     d0, d1
     mov     0x16, d0
     sub     d0, d1
@@ -13119,7 +13119,7 @@ func_4854812E_entry:
     blt     loc_4854817F
     mov     4, d0
     mov     a2, a0
-    call    func_4853248F_entry, [d2,a2], 0x24
+    call    FmmWrite_entry, [d2,a2], 0x24
 loc_4854817F:
     ret     [a2], 0x1c
 
@@ -13338,7 +13338,7 @@ loc_48548383:
     mov     sp, a2
     mov     a2, d1
     add     0x1c, d1
-    call    func_48458700_entry, [d2,d3,a2,a3], 0x2c
+    call    SongEventToM3_entry, [d2,d3,a2,a3], 0x2c
     exth    d0
     cmp     0, d0
     bne     loc_485483C0
@@ -13380,7 +13380,7 @@ func_485483C9_entry:
     movbu   (0x50081fcc), d0
     inc     d0
     extbu   d0
-    call    func_484559FC_entry, [d2,d3], 0x1c
+    call    SongRecLoadFromSlot_entry, [d2,d3], 0x1c
     call    func_48548109_entry, 0, 0xc
     ret     0, 0x14
 
@@ -13502,7 +13502,7 @@ func_48548511_entry:
     mov     sp, a2
     mov     a2, d1
     add     0x1c, d1
-    call    func_48458700_entry, [d2,d3,a2,a3], 0x2c
+    call    SongEventToM3_entry, [d2,d3,a2,a3], 0x2c
     exth    d0
     cmp     0, d0
     bne     loc_4854855A
@@ -13531,7 +13531,7 @@ func_4854855D_entry:
     mov     sp, a2
     mov     a2, d1
     add     0x1c, d1
-    call    func_48458700_entry, [d2,d3,a2,a3], 0x2c
+    call    SongEventToM3_entry, [d2,d3,a2,a3], 0x2c
     exth    d0
     cmp     0, d0
     bne     loc_4854859C
@@ -13663,7 +13663,7 @@ func_48548683_entry:
     add     0x10, a2
     clr     d0
     mov     a2, a0
-    call    func_48455FAB_entry, [d2], 0x18
+    call    SongRecNameGet_entry, [d2], 0x18
     mov     0x10, d0
     mov     a2, a0
     call    func_48549271_entry, [d2,d3,a2], 0x18
@@ -13737,7 +13737,7 @@ loc_48548755:
 loc_48548757:
     clr     d0
     mov     d2, d1
-    call    func_48455C95_entry, 0, 0x10
+    call    SongRecTrackPartGet_entry, 0, 0x10
     mov     d0, d1
     extbu   d1
     cmp     0x12, d1
@@ -13758,7 +13758,7 @@ loc_48548772:
 loc_4854877F:
     clr     d0
     mov     d2, d1
-    call    func_48455CB5_entry, [d2,d3,a2,a3], 0x20
+    call    SongRecTrackFindByPart_entry, [d2,d3,a2,a3], 0x20
     exth    d0
     cmp     0, d0
     bge     loc_4854879A
@@ -13922,7 +13922,7 @@ func_485488FF_entry:
     mov     1, d2
 loc_48548915:
     mov     d2, d0
-    call    func_48454AA8_entry, [d2,d3], 0x10
+    call    SeqPlyPartSavedBitGet_entry, [d2,d3], 0x10
     exth    d0
     cmp     0, d0
     bne     loc_48548925
@@ -13930,7 +13930,7 @@ loc_48548915:
 loc_48548925:
     clr     d0
     mov     d2, d1
-    call    func_48455C95_entry, 0, 0x10
+    call    SongRecTrackPartGet_entry, 0, 0x10
     extbu   d0
     cmp     0x12, d0
     ble     loc_48548936
@@ -14109,7 +14109,7 @@ func_48548BA7_entry:
     extbu   d3
     clr     d0
     mov     d3, d1
-    call    func_48455C95_entry, 0, 0x10
+    call    SongRecTrackPartGet_entry, 0, 0x10
     extbu   d0
     asl     24, d0
     mov     d0, a2
@@ -14136,7 +14136,7 @@ func_48548BE2_entry:
     mov     d0, a2
     clr     d0
     mov     a2, d1
-    call    func_48455C95_entry, 0, 0x10
+    call    SongRecTrackPartGet_entry, 0, 0x10
     mov     d0, d3
     extbu   d3
     asl     24, d3
@@ -14270,19 +14270,19 @@ func_48548D49_entry:
     mov     0x50082068, a2
 loc_48548D56:
     mov     d2, d0
-    call    func_48454AA8_entry, [d2,d3], 0x10
+    call    SeqPlyPartSavedBitGet_entry, [d2,d3], 0x10
     exth    d0
     cmp     0, d0
     beq     loc_48548D86
     clr     d0
     mov     d2, d1
-    call    func_48455D84_entry, [d2], 0x14
+    call    SongRecTrackDataFlagGet_entry, [d2], 0x14
     exth    d0
     cmp     0, d0
     beq     loc_48548D86
     clr     d0
     mov     d2, d1
-    call    func_48455C95_entry, 0, 0x10
+    call    SongRecTrackPartGet_entry, 0, 0x10
     exth    d0
     cmp     0x42, d0
     beq     loc_48548D86
@@ -14310,19 +14310,19 @@ func_48548D96_entry:
     mov     0x50082068, a2
 loc_48548DA3:
     mov     d2, d0
-    call    func_48454AA8_entry, [d2,d3], 0x10
+    call    SeqPlyPartSavedBitGet_entry, [d2,d3], 0x10
     exth    d0
     cmp     0, d0
     beq     loc_48548DD9
     clr     d0
     mov     d2, d1
-    call    func_48455D84_entry, [d2], 0x14
+    call    SongRecTrackDataFlagGet_entry, [d2], 0x14
     exth    d0
     cmp     0, d0
     beq     loc_48548DD9
     clr     d0
     mov     d2, d1
-    call    func_48455C95_entry, 0, 0x10
+    call    SongRecTrackPartGet_entry, 0, 0x10
     exth    d0
     cmp     0x42, d0
     beq     loc_48548DD9
@@ -14354,7 +14354,7 @@ func_48548DE9_entry:
     add     d3, d2
     clr     d0
     mov     d3, d1
-    call    func_48455C95_entry, 0, 0x10
+    call    SongRecTrackPartGet_entry, 0, 0x10
     clr     d1
     extbu   d0
     cmp     0x41, d0
@@ -14389,13 +14389,13 @@ func_48548E23_entry:
     extbu   d3
     clr     d0
     mov     d3, d1
-    call    func_48455C95_entry, 0, 0x10
+    call    SongRecTrackPartGet_entry, 0, 0x10
     mov     1, d2
     extbu   d0
     mov     d0, a2
 loc_48548E38:
     mov     d2, d0
-    call    func_48454AA8_entry, [d2,d3], 0x10
+    call    SeqPlyPartSavedBitGet_entry, [d2,d3], 0x10
     exth    d0
     cmp     0, d0
     bne     loc_48548E4B
@@ -14406,7 +14406,7 @@ loc_48548E38:
 loc_48548E4B:
     clr     d0
     mov     d2, d1
-    call    func_48455C95_entry, 0, 0x10
+    call    SongRecTrackPartGet_entry, 0, 0x10
     exth    d0
     cmp     d0, a2
     bne     loc_48548E5F
@@ -14417,7 +14417,7 @@ loc_48548E4B:
 loc_48548E5F:
     clr     d0
     mov     d3, d1
-    call    func_48455C95_entry, 0, 0x10
+    call    SongRecTrackPartGet_entry, 0, 0x10
     exth    d0
     cmp     9, d0
     bne     loc_48548E73
@@ -14450,25 +14450,25 @@ func_48548E8C_entry:
     mov     0x500820bc, a3
 loc_48548E9F:
     mov     d3, d0
-    call    func_48454AA8_entry, [d2,d3], 0x10
+    call    SeqPlyPartSavedBitGet_entry, [d2,d3], 0x10
     exth    d0
     cmp     0, d0
     beq     loc_48548EE9
     clr     d0
     mov     d3, d1
-    call    func_48455D84_entry, [d2], 0x14
+    call    SongRecTrackDataFlagGet_entry, [d2], 0x14
     exth    d0
     cmp     0, d0
     beq     loc_48548EE9
     clr     d0
     mov     d3, d1
-    call    func_48455C95_entry, 0, 0x10
+    call    SongRecTrackPartGet_entry, 0, 0x10
     exth    d0
     cmp     0x42, d0
     beq     loc_48548EE9
     clr     d0
     mov     d3, d1
-    call    func_48455E4A_entry, [d2], 0x14
+    call    SongRecTrackStartPageGet_entry, [d2], 0x14
     mov     d3, d1
     add     d1, d1
     add     a2, d1
@@ -14502,12 +14502,12 @@ loc_48548EFF:
     mov     5, d0
     movbu   d0, (0x500820cc)
     clr     d0
-    call    func_48455DAF_entry, 0, 0x10
+    call    SongRecAuxTrackFlagGet_entry, 0, 0x10
     exth    d0
     cmp     0, d0
     beq     loc_48548F43
     clr     d0
-    call    func_48455E71_entry, 0, 0x10
+    call    SongRecAuxTrackStartPageGet_entry, 0, 0x10
     movhu   d0, (0x500820ba)
     mov     5, d0
     movbu   d0, (0x500820cc)
@@ -14536,8 +14536,8 @@ func_48548F46_entry:
     movbu   (a3), d1
     movhu   (a2), d0
     exthu   d1
-    call    func_48458B5E_entry, 0, 0x18
-    call    func_48458F18_entry, 0, 0x10
+    call    SongRdCurSet_entry, 0, 0x18
+    call    SongRdCurByteGet_entry, 0, 0x10
     mov     d0, d1
     extbu   d1
     cmp     0x81, d1
@@ -14554,14 +14554,14 @@ loc_48548F92:
 loc_48548FA5:
     mov     0x50082089, a0
     movbu   d0, (d2, a0)
-    call    func_48458DD4_entry, 0, 0x10
-    call    func_48458F18_entry, 0, 0x10
+    call    SongRdCurNext_entry, 0, 0x10
+    call    SongRdCurByteGet_entry, 0, 0x10
     mov     0x50082078, a0
     movbu   d0, (d2, a0)
 loc_48548FC3:
-    call    func_48458CE9_entry, 0, 0xc
+    call    SongRdCurPageGet_entry, 0, 0xc
     movhu   d0, (a2)
-    call    func_48458D3B_entry, 0, 0xc
+    call    SongRdCurOffsetGet_entry, 0, 0xc
     movbu   d0, (a3)
 loc_48548FD5:
     ret     [d2,a2,a3], 0x1c
@@ -14677,20 +14677,20 @@ func_485490B4_entry:
     mov     d1, a0
     movbu   (a0), d1
     exthu   d1
-    call    func_48458B5E_entry, 0, 0x18
+    call    SongRdCurSet_entry, 0, 0x18
     cmp     0x11, d3
     mov     0x50082089, a0
     movbu   (d2, a0), d0
     movbu   d0, (0x50081fe0)
     bne     loc_48549103
-    call    func_48458F18_entry, 0, 0x10
+    call    SongRdCurByteGet_entry, 0, 0x10
     exth    d0
     cmp     0x91, d0
     beq     loc_4854913D
 loc_48549103:
-    call    func_48458F18_entry, 0, 0x10
+    call    SongRdCurByteGet_entry, 0, 0x10
     extbu   d0
-    call    func_4845BC5B, 0, 0
+    call    SongEventLenGet, 0, 0
     mov     d0, a3
     clr     d2
     clr     d3
@@ -14699,11 +14699,11 @@ loc_48549103:
     cmp     0, a2
     ble     loc_48549173
 loc_4854911D:
-    call    func_48458F18_entry, 0, 0x10
+    call    SongRdCurByteGet_entry, 0, 0x10
     exthu   d2
     mov     0x50081fe1, a0
     movbu   d0, (d2, a0)
-    call    func_48458DD4_entry, 0, 0x10
+    call    SongRdCurNext_entry, 0, 0x10
     inc     d3
     mov     d3, d2
     exthu   d3
@@ -14712,7 +14712,7 @@ loc_4854911D:
     bra     loc_48549173
 loc_4854913D:
     mov     1, d0
-    call    func_48459032_entry, [d2,d3,a2], 0x18
+    call    SongRdCurPeekAt_entry, [d2,d3,a2], 0x18
     mov     d0, a3
     clr     d2
     clr     d3
@@ -14724,21 +14724,21 @@ loc_4854913D:
     mov     2, a2
     add     d0, a2
 loc_48549155:
-    call    func_48458F18_entry, 0, 0x10
+    call    SongRdCurByteGet_entry, 0, 0x10
     exthu   d2
     mov     0x50081fe1, a0
     movbu   d0, (d2, a0)
-    call    func_48458DD4_entry, 0, 0x10
+    call    SongRdCurNext_entry, 0, 0x10
     inc     d3
     mov     d3, d2
     exthu   d3
     cmp     a2, d3
     blt     loc_48549155
 loc_48549173:
-    call    func_48458CE9_entry, 0, 0xc
+    call    SongRdCurPageGet_entry, 0, 0xc
     mov     (0x14, sp), a0
     movhu   d0, (a0)
-    call    func_48458D3B_entry, 0, 0xc
+    call    SongRdCurOffsetGet_entry, 0, 0xc
     mov     (0x10, sp), a0
     movbu   d0, (a0)
     mov     a3, d0
@@ -14773,11 +14773,11 @@ func_4854918E_entry:
     movbu   (a3), d1
     movhu   (a2), d0
     exthu   d1
-    call    func_48458B5E_entry, 0, 0x18
-    call    func_48458DD4_entry, 0, 0x10
-    call    func_48458CE9_entry, 0, 0xc
+    call    SongRdCurSet_entry, 0, 0x18
+    call    SongRdCurNext_entry, 0, 0x10
+    call    SongRdCurPageGet_entry, 0, 0xc
     movhu   d0, (a2)
-    call    func_48458D3B_entry, 0, 0xc
+    call    SongRdCurOffsetGet_entry, 0, 0xc
     movbu   d0, (a3)
 loc_485491F7:
     ret     [d2,a2,a3], 0x1c
@@ -14828,8 +14828,8 @@ func_4854925C:
     add     -0xc, sp
 func_4854925C_entry:
     extbu   d0
-    call    func_4845708C, 0, 0
-    call    func_484570C8, 0, 0
+    call    ScratchWriteByte, 0, 0
+    call    ScratchPosNext, 0, 0
     ret     0, 0xc
 
 func_48549271:
@@ -14859,15 +14859,15 @@ func_4854928F:
     movm    [a2], (sp)
     add     -0x10, sp
 func_4854928F_entry:
-    call    func_484570E6, 0, 0
+    call    ScratchPos, 0, 0
     mov     (0x50082064), a0
     cmp     a0, d0
     bcc     loc_485492C4
     call    InstallScratchPtr, 0, 0
     mov     a0, a2
-    call    func_484570E6, 0, 0
+    call    ScratchPos, 0, 0
     mov     a2, a0
-    call    func_4853248F_entry, [d2,a2], 0x24
+    call    FmmWrite_entry, [d2,a2], 0x24
     mov     d0, (0x50081fdc)
     bra     loc_485492CC
 loc_485492C4:
@@ -15227,7 +15227,7 @@ func_4854955E_entry:
     mov     d0, (0xc, a0)
     movbu   (0x20, sp), d0
     movbu   d0, (0x10, a0)
-    call    func_484B3F71_entry, 0, 0x10
+    call    MidiOutM3Dispatch_entry, 0, 0x10
     ret     [d2], 0x10
 
 func_48549598:
@@ -15255,7 +15255,7 @@ loc_485495B9:
     bne     loc_485495D2
     clr     d0
     mov     d2, d1
-    call    func_48455C95_entry, 0, 0x10
+    call    SongRecTrackPartGet_entry, 0, 0x10
     mov     d0, d3
 loc_485495D2:
     inc     d2
@@ -15269,14 +15269,14 @@ loc_485495D2:
 func_485495DD:
     add     -0xc, sp
 func_485495DD_entry:
-    call    func_484579F8_entry, [d2], 0x10
+    call    SongMemoryClearAll_entry, [d2], 0x10
     call    func_4C02B9D5, 0, 0
     call    func_4C02BA0F_entry, [d2], 0xc
     clr     d0
     call    func_4C02B976_entry, 0, 0xc
-    call    func_48454EBF, 0, 0
+    call    SeqPlyActiveFlagClear, 0, 0
     call    PlayLedCtrlSeq_entry, 0, 0xc
-    call    func_48454E3A_entry, 0, 8
+    call    ApcSeqSliderRoute_entry, 0, 8
     ret     0, 0xc
 
 func_48549615:
@@ -15296,7 +15296,7 @@ func_48549623_entry:
     exth    d1
     cmp     0, d1
     bge     loc_48549638
-    call    func_484579F8_entry, [d2], 0x10
+    call    SongMemoryClearAll_entry, [d2], 0x10
     ret     [d2], 0x10
 loc_48549638:
     clr     d0
@@ -15310,41 +15310,41 @@ loc_4854964A:
     mov     1, d0
     call    SetSeqSongNo, 0, 0
 loc_48549653:
-    call    func_48456EF4_entry, [a2,a3], 0x1c
+    call    SongPagesCompact_entry, [a2,a3], 0x1c
     exthu   d0
     asl     4, d0
     exthu   d0
     call    func_48455B8B_entry, [d2,d3], 0x1c
     call    GetSeqSongNo, 0, 0
     extbu   d0
-    call    func_484559FC_entry, [d2,d3], 0x1c
+    call    SongRecLoadFromSlot_entry, [d2,d3], 0x1c
     cmp     1, d2
     bne     loc_48549688
     call    GetSeqPlyPart_entry, 0, 0x10
     exthu   d0
-    call    func_48454A9F, 0, 0
+    call    SeqPlyPartSavedSet, 0, 0
 loc_48549688:
     call    func_48455BA6_entry, 0, 0x10
     exthu   d0
     cmp     0, d0
     beq     loc_485496B7
     mov     1, d0
-    call    func_48455A9C_entry, [d2,d3,a2], 0x20
+    call    SongFreeListHeadSetAll_entry, [d2,d3,a2], 0x20
     call    func_485499ED_entry, [d2], 0x14
     cmp     0, d2
     bne     loc_485496C0
-    call    func_48454A96, 0, 0
+    call    SeqPlyPartSavedGet, 0, 0
     exthu   d0
     call    SetSeqPlyPart_entry, [d2,d3,a2], 0x20
     bra     loc_485496C0
 loc_485496B7:
     mov     1, d0
-    call    func_48456B9C_entry, [d2,d3,a2], 0x20
+    call    SongFreeChainRebuildFrom_entry, [d2,d3,a2], 0x20
 loc_485496C0:
     call    func_48549B04_entry, 0, 0x14
     call    GetSeqSongNo, 0, 0
     extbu   d0
-    call    func_484559CA_entry, [d2,d3], 0x1c
+    call    SongRecStoreToSlot_entry, [d2,d3], 0x1c
     call    func_48549B2A_entry, [d2], 0x18
     call    func_48460E37_entry, [d2,d3,a2], 0x1c
     clr     d0
@@ -15363,7 +15363,7 @@ loc_485496E2:
 func_485496FB:
     add     -8, sp
 func_485496FB_entry:
-    call    func_484578C7_entry, [d2], 0x18
+    call    SeqSongMemoryInit_entry, [d2], 0x18
     ret     0, 8
 
 func_48549708:
@@ -15381,7 +15381,7 @@ func_48549717:
 func_48549717_entry:
     call    GetSeqSongNo, 0, 0
     extbu   d0
-    call    func_484559CA_entry, [d2,d3], 0x1c
+    call    SongRecStoreToSlot_entry, [d2,d3], 0x1c
     call    GetSeqSongNo, 0, 0
     extbu   d0
     add     -1, d0
@@ -15389,18 +15389,18 @@ func_48549717_entry:
     mov     d0, (0x10, sp)
     mov     1, d0
     mov     0xc7, d1
-    call    func_4845592C_entry, [d2,d3], 8
-    call    func_48454A96, 0, 0
+    call    SongRecByteSet_entry, [d2,d3], 8
+    call    SeqPlyPartSavedGet, 0, 0
     exthu   d0
     mov     d0, (0x10, sp)
     mov     1, d0
     mov     0xc8, d1
-    call    func_48455953_entry, [d2,d3], 0x18
+    call    SongRecWordSet_entry, [d2,d3], 0x18
     call    func_48549BD9_entry, [d2,d3], 0x14
     mov     d0, d2
     call    GetSeqSongNo, 0, 0
     extbu   d0
-    call    func_484559FC_entry, [d2,d3], 0x1c
+    call    SongRecLoadFromSlot_entry, [d2,d3], 0x1c
     mov     1, d0
     call    func_48549B7B_entry, 0, 0x14
     mov     d2, d0
@@ -15428,10 +15428,10 @@ func_48549796_entry:
     extbu   d0
     inc     d0
     extbu   d0
-    call    func_48457D5F_entry, [d2,d3,a2], 0x1c
+    call    SongUsedPagesCount_entry, [d2,d3,a2], 0x1c
     mov     d0, d2
     exthu   d2
-    call    func_48456DCF_entry, [d2], 0x10
+    call    SongFreeChainLength_entry, [d2], 0x10
     exthu   d0
     add     d2, d0
     asl     8, d0
@@ -15443,24 +15443,24 @@ func_485497BA:
     add     -0xc, sp
 func_485497BA_entry:
     mov     d0, d2
-    call    func_48454A96, 0, 0
+    call    SeqPlyPartSavedGet, 0, 0
     exthu   d0
     call    SetSeqPlyPart_entry, [d2,d3,a2], 0x20
     call    GetSeqSongNo, 0, 0
     extbu   d0
-    call    func_484559CA_entry, [d2,d3], 0x1c
+    call    SongRecStoreToSlot_entry, [d2,d3], 0x1c
     extbu   d2
     inc     d2
     mov     d2, d0
     extbu   d0
-    call    func_484559FC_entry, [d2,d3], 0x1c
+    call    SongRecLoadFromSlot_entry, [d2,d3], 0x1c
     extbu   d2
     mov     d2, d0
     call    SetSeqSongNo, 0, 0
-    call    func_4845E17F_entry, 0, 0xc
+    call    SongClearCurrent_entry, 0, 0xc
     call    GetSeqSongNo, 0, 0
     extbu   d0
-    call    func_484559CA_entry, [d2,d3], 0x1c
+    call    SongRecStoreToSlot_entry, [d2,d3], 0x1c
     call    func_48549BD9_entry, [d2,d3], 0x14
     ret     [d2], 0x10
 
@@ -15472,13 +15472,13 @@ func_48549810_entry:
     exth    d1
     cmp     0, d1
     bge     loc_48549825
-    call    func_4845E17F_entry, 0, 0xc
+    call    SongClearCurrent_entry, 0, 0xc
     ret     [d2,d3,a2,a3], 0x2c
 loc_48549825:
-    call    func_48455AD4_entry, 0, 0x10
+    call    SongFreeListHeadGet_entry, 0, 0x10
     exthu   d0
-    call    func_48455A9C_entry, [d2,d3,a2], 0x20
-    call    func_48455AD4_entry, 0, 0x10
+    call    SongFreeListHeadSetAll_entry, [d2,d3,a2], 0x20
+    call    SongFreeListHeadGet_entry, 0, 0x10
     mov     d0, a3
     exthu   d0
     cmp     0, d0
@@ -15493,14 +15493,14 @@ loc_48549846:
     movbu   (0x18, sp), d0
     call    func_4C01EE26_entry, 0, 0xc
     movbu   (0x18, sp), d0
-    call    func_484559FC_entry, [d2,d3], 0x1c
+    call    SongRecLoadFromSlot_entry, [d2,d3], 0x1c
     mov     1, d2
     mov     a3, d3
     exthu   d3
 loc_48549865:
     clr     d0
     mov     d2, d1
-    call    func_48455E4A_entry, [d2], 0x14
+    call    SongRecTrackStartPageGet_entry, [d2], 0x14
     exthu   d0
     cmp     0, d0
     beq     loc_4854989F
@@ -15511,24 +15511,24 @@ loc_48549865:
     mov     d0, (0x10, sp)
     clr     d0
     mov     d2, d1
-    call    func_48455E80_entry, [d2,d3], 0x1c
+    call    SongRecTrackStartPageSet_entry, [d2,d3], 0x1c
     clr     d0
     mov     d2, d1
-    call    func_48455B1D_entry, 0, 0x10
+    call    SongRecTrackEndPageGet_entry, 0, 0x10
     exthu   d0
     add     d3, d0
     exthu   d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     d2, d1
-    call    func_48455AE3_entry, [d2], 0x18
+    call    SongRecTrackEndPageSet_entry, [d2], 0x18
 loc_4854989F:
     inc     d2
     extbu   d2
     cmp     0x10, d2
     ble     loc_48549865
     clr     d0
-    call    func_48455E71_entry, 0, 0x10
+    call    SongRecAuxTrackStartPageGet_entry, 0, 0x10
     exthu   d0
     cmp     0, d0
     beq     loc_485498C8
@@ -15540,14 +15540,14 @@ loc_4854989F:
     add     d0, d1
     exthu   d1
     mov     d2, d0
-    call    func_48455EC0_entry, 0, 0x14
+    call    SongRecAuxTrackStartPageSet_entry, 0, 0x14
 loc_485498C8:
     call    func_48455BA6_entry, 0, 0x10
     exthu   d0
     mov     0x10, d1
     call    LibDiv32, 0, 0
     mov     d0, d2
-    call    func_48455AD4_entry, 0, 0x10
+    call    SongFreeListHeadGet_entry, 0, 0x10
     clr     d3
     exthu   d2
     mov     d2, (0x14, sp)
@@ -15562,7 +15562,7 @@ loc_485498F0:
     mov     a2, d0
     add     d3, d0
     exthu   d0
-    call    func_484563E6_entry, [d2,d3], 0x14
+    call    SongPagePrevGet_entry, [d2,d3], 0x14
     mov     d0, d1
     exthu   d1
     cmp     0xffff, d1
@@ -15574,12 +15574,12 @@ loc_485498F0:
     exthu   d0
     add     a3, d1
     exthu   d1
-    call    func_4845643D_entry, [d2,d3,a2], 0x1c
+    call    SongPagePrevSet_entry, [d2,d3,a2], 0x1c
 loc_48549917:
     mov     a2, d0
     add     d3, d0
     exthu   d0
-    call    func_4845647E_entry, [d2,d3], 0x14
+    call    SongPageNextGet_entry, [d2,d3], 0x14
     mov     d0, d1
     exthu   d1
     cmp     0xffff, d1
@@ -15592,7 +15592,7 @@ loc_48549917:
     add     a3, d1
     exthu   d1
     mov     d2, d0
-    call    func_484564D6_entry, [d2,d3,a2], 0x1c
+    call    SongPageNextSet_entry, [d2,d3,a2], 0x1c
 loc_4854993F:
     mov     (0x14, sp), d0
     inc     d3
@@ -15606,13 +15606,13 @@ loc_48549946:
     call    func_48549A69_entry, 0, 0x10
     call    func_48549B04_entry, 0, 0x14
     movbu   (0x18, sp), d0
-    call    func_484559CA_entry, [d2,d3], 0x1c
+    call    SongRecStoreToSlot_entry, [d2,d3], 0x1c
     call    func_48549B2A_entry, [d2], 0x18
     call    func_48460E37_entry, [d2,d3,a2], 0x1c
     call    func_48457FA9_entry, 0, 0xc
     call    GetSeqPlyPart_entry, 0, 0x10
     exthu   d0
-    call    func_48454A9F, 0, 0
+    call    SeqPlyPartSavedSet, 0, 0
     ret     [d2,d3,a2,a3], 0x2c
 
 func_4854998D:
@@ -15674,7 +15674,7 @@ func_485499ED:
     movm    [d2], (sp)
     add     -0x10, sp
 func_485499ED_entry:
-    call    func_48455AD4_entry, 0, 0x10
+    call    SongFreeListHeadGet_entry, 0, 0x10
     mov     d0, d2
     call    func_48455BA6_entry, 0, 0x10
     exthu   d0
@@ -15691,16 +15691,16 @@ func_485499ED_entry:
 loc_48549A1C:
     mov     d2, d0
     exthu   d0
-    call    func_48455A9C_entry, [d2,d3,a2], 0x20
-    call    func_48455AD4_entry, 0, 0x10
+    call    SongFreeListHeadSetAll_entry, [d2,d3,a2], 0x20
+    call    SongFreeListHeadGet_entry, 0, 0x10
     exthu   d0
     cmp     0xffff, d0
     bne     loc_48549A3F
     clr     d0
-    call    func_48455BB4_entry, [d2,d3,a2], 0x20
+    call    SongFreePagesSetAll_entry, [d2,d3,a2], 0x20
     bra     loc_48549A57
 loc_48549A3F:
-    call    func_48455AD4_entry, 0, 0x10
+    call    SongFreeListHeadGet_entry, 0, 0x10
     exthu   d0
     mov     0x4d8, d1
     sub     d0, d1
@@ -15708,11 +15708,11 @@ loc_48549A3F:
     inc     d1
     exthu   d1
     mov     d1, d0
-    call    func_48455BB4_entry, [d2,d3,a2], 0x20
+    call    SongFreePagesSetAll_entry, [d2,d3,a2], 0x20
 loc_48549A57:
-    call    func_48455AD4_entry, 0, 0x10
+    call    SongFreeListHeadGet_entry, 0, 0x10
     exthu   d0
-    call    func_48456B9C_entry, [d2,d3,a2], 0x20
+    call    SongFreeChainRebuildFrom_entry, [d2,d3,a2], 0x20
     ret     [d2], 0x14
 
 func_48549A69:
@@ -15751,7 +15751,7 @@ func_48549AAD:
 func_48549AAD_entry:
     mov     1, d0
     mov     0xc7, d1
-    call    func_48455981_entry, [d2,d3], 8
+    call    SongRecByteGet_entry, [d2,d3], 8
     extbu   d0
     inc     d0
     extbu   d0
@@ -15760,17 +15760,17 @@ func_48549AAD_entry:
     mov     d0, (0x10, sp)
     mov     1, d0
     mov     0xc7, d1
-    call    func_4845592C_entry, [d2,d3], 8
+    call    SongRecByteSet_entry, [d2,d3], 8
     mov     1, d0
     mov     0xc8, d1
-    call    func_484559A2_entry, [d2,d3], 0x14
+    call    SongRecWordGet_entry, [d2,d3], 0x14
     exthu   d0
-    call    func_48454A9F, 0, 0
+    call    SeqPlyPartSavedSet, 0, 0
     clr     d0
     mov     d0, (0x10, sp)
     mov     1, d0
     mov     0xc8, d1
-    call    func_48455953_entry, [d2,d3], 0x18
+    call    SongRecWordSet_entry, [d2,d3], 0x18
     mov     1, d0
     call    SetMeasSeq, 0, 0
     ret     0, 0x14
@@ -15780,14 +15780,14 @@ func_48549B04:
 func_48549B04_entry:
     clr     d0
     mov     0xbe, d1
-    call    func_48455981_entry, [d2,d3], 8
+    call    SongRecByteGet_entry, [d2,d3], 8
     extbu   d0
     and     0xfffffffd, d0
     extbu   d0
     mov     d0, (0x10, sp)
     clr     d0
     mov     0xbe, d1
-    call    func_4845592C_entry, [d2,d3], 8
+    call    SongRecByteSet_entry, [d2,d3], 8
     ret     0, 0x14
 
 func_48549B2A:
@@ -15798,7 +15798,7 @@ func_48549B2A_entry:
 loc_48549B30:
     mov     d2, d0
     mov     0x112, d1
-    call    func_48455981_entry, [d2,d3], 8
+    call    SongRecByteGet_entry, [d2,d3], 8
     extbu   d0
     cmp     1, d0
     beq     loc_48549B72
@@ -15806,10 +15806,10 @@ loc_48549B30:
     mov     d0, (0x10, sp)
     mov     d2, d0
     mov     0x112, d1
-    call    func_4845592C_entry, [d2,d3], 8
+    call    SongRecByteSet_entry, [d2,d3], 8
     mov     d2, d0
     mov     0x110, d1
-    call    func_484559A2_entry, [d2,d3], 0x14
+    call    SongRecWordGet_entry, [d2,d3], 0x14
     exthu   d0
     cmp     0, d0
     bne     loc_48549B72
@@ -15817,7 +15817,7 @@ loc_48549B30:
     mov     d0, (0x10, sp)
     mov     d2, d0
     mov     0x110, d1
-    call    func_48455953_entry, [d2,d3], 0x18
+    call    SongRecWordSet_entry, [d2,d3], 0x18
 loc_48549B72:
     inc     d2
     extbu   d2
@@ -15832,7 +15832,7 @@ func_48549B7B_entry:
     mov     d0, (0x10, sp)
     mov     1, d0
     mov     4, d1
-    call    func_4845592C_entry, [d2,d3], 8
+    call    SongRecByteSet_entry, [d2,d3], 8
     ret     0, 0x14
 
 func_48549B8F:
@@ -15882,7 +15882,7 @@ func_48549BD9:
     movm    [d2,d3], (sp)
     add     -0xc, sp
 func_48549BD9_entry:
-    call    func_48456EF4_entry, [a2,a3], 0x1c
+    call    SongPagesCompact_entry, [a2,a3], 0x1c
     mov     d0, d3
     exthu   d3
     add     -1, d3
@@ -15895,7 +15895,7 @@ func_48549BD9_entry:
     inc     d2
     exthu   d2
     mov     d2, d0
-    call    func_48456B9C_entry, [d2,d3,a2], 0x20
+    call    SongFreeChainRebuildFrom_entry, [d2,d3,a2], 0x20
     exthu   d3
     mov     d3, d0
     asl     8, d0
@@ -15921,7 +15921,7 @@ func_48549C0C:
 loc_48549C25:
     mov     (0x14, sp), a0
     mov     (0x18, sp), d0
-    call    func_4853248F_entry, [d2,a2], 0x24
+    call    FmmWrite_entry, [d2,a2], 0x24
     mov     d0, d2
     mov     d2, d1
     exth    d1
@@ -15947,35 +15947,35 @@ func_48549C43_entry:
     extbu   d0
     cmp     d3, d0
     bne     loc_48549C69
-    call    func_48454A96, 0, 0
+    call    SeqPlyPartSavedGet, 0, 0
     exthu   d0
     call    SetSeqPlyPart_entry, [d2,d3,a2], 0x20
 loc_48549C69:
     call    GetSeqSongNo, 0, 0
     extbu   d0
-    call    func_484559CA_entry, [d2,d3], 0x1c
+    call    SongRecStoreToSlot_entry, [d2,d3], 0x1c
     call    GetSeqSongNo, 0, 0
     clr     d1
     mov     d1, (0x10, sp)
     extbu   d0
     mov     0xc7, d1
-    call    func_4845592C_entry, [d2,d3], 8
+    call    SongRecByteSet_entry, [d2,d3], 8
     call    GetSeqSongNo, 0, 0
     extbu   d0
     mov     0x1e, d1
-    call    func_484559A2_entry, [d2,d3], 0x14
+    call    SongRecWordGet_entry, [d2,d3], 0x14
     mov     d0, d2
     call    GetSeqSongNo, 0, 0
     exthu   d2
     mov     d2, (0x10, sp)
     extbu   d0
     mov     0xc8, d1
-    call    func_48455953_entry, [d2,d3], 0x18
+    call    SongRecWordSet_entry, [d2,d3], 0x18
     mov     d3, d0
     extbu   d0
     call    func_48549DF1_entry, [d2,d3,a2], 0x1c
     mov     d0, d2
-    call    func_4852FDF2_entry, [a2], 0x14
+    call    FmmDiskFreeSpaceGet_entry, [a2], 0x14
     cmp     0, d0
     bcc     loc_48549CCA
     ret     [d2,d3,a2,a3], 0x28
@@ -15985,7 +15985,7 @@ loc_48549CCA:
     mov     -0x65, d0
     ret     [d2,d3,a2,a3], 0x28
 loc_48549CD2:
-    call    func_48457071, 0, 0
+    call    ScratchPosReset, 0, 0
     mov     d3, d0
     extbu   d0
     call    func_48549E46_entry, [d2,a2], 0x1c
@@ -16014,10 +16014,10 @@ loc_48549CD2:
     asl     4, d1
     exthu   d1
     mov     0x4e, d0
-    call    func_4845709D_entry, 0, 0x10
+    call    ScratchWordSet_entry, 0, 0x10
     mov     4, d0
     clr     d1
-    call    func_484570B2, 0, 0
+    call    ScratchByteSet, 0, 0
     clr     d0
     movhu   d0, (0x14, sp)
     mov     1, d3
@@ -16038,12 +16038,12 @@ loc_48549D27:
     add     0xd1, d2
     mov     0x0000ffff, d1
     mov     d2, d0
-    call    func_4845709D_entry, 0, 0x10
+    call    ScratchWordSet_entry, 0, 0x10
     add     a2, a2
     add     0x78, a2
     mov     a2, d0
     mov     0x0000ffff, d1
-    call    func_4845709D_entry, 0, 0x10
+    call    ScratchWordSet_entry, 0, 0x10
     bra     loc_48549DA4
 loc_48549D71:
     movhu   (0x14, sp), d0
@@ -16059,14 +16059,14 @@ loc_48549D71:
     mov     a2, d1
     inc     d1
     exthu   d1
-    call    func_4845709D_entry, 0, 0x10
+    call    ScratchWordSet_entry, 0, 0x10
     movhu   (a3), d1
     mov     d2, d0
     add     d0, d0
     add     0x78, d0
     add     a2, d1
     exthu   d1
-    call    func_4845709D_entry, 0, 0x10
+    call    ScratchWordSet_entry, 0, 0x10
     movhu   (a3), d0
     add     a2, d0
     movhu   d0, (0x14, sp)
@@ -16082,19 +16082,19 @@ loc_48549DAD:
     bne     loc_48549DC9
     mov     0x114, d0
     mov     0x0000ffff, d1
-    call    func_4845709D_entry, 0, 0x10
+    call    ScratchWordSet_entry, 0, 0x10
     bra     loc_48549DD8
 loc_48549DC9:
     movhu   (0x14, sp), d1
     mov     0x114, d0
     inc     d1
     exthu   d1
-    call    func_4845709D_entry, 0, 0x10
+    call    ScratchWordSet_entry, 0, 0x10
 loc_48549DD8:
     call    InstallScratchPtr, 0, 0
     mov     (0x34, sp), a1
     mov     a0, (a1)
-    call    func_484570E6, 0, 0
+    call    ScratchPos, 0, 0
     mov     (0x38, sp), a0
     mov     d0, (a0)
     clr     d0
@@ -16112,7 +16112,7 @@ func_48549DF1_entry:
 loc_48549E01:
     mov     a2, d0
     mov     d2, d1
-    call    func_48457D92_entry, [d2,d3,a2], 0x1c
+    call    SongRecTrackPageCount_entry, [d2,d3,a2], 0x1c
     mov     d0, d1
     mov     d2, a0
     add     a0, a0
@@ -16126,7 +16126,7 @@ loc_48549E01:
     cmp     0x10, d2
     ble     loc_48549E01
     movbu   (0x24, sp), d0
-    call    func_48457DCC_entry, [d2,d3], 0x14
+    call    SongRecAuxTrackPageCount_entry, [d2,d3], 0x14
     movhu   d0, (0x50082674)
     movhu   (0x50082674), d0
     exthu   d3
@@ -16152,7 +16152,7 @@ func_48549E46_entry:
     mov     a2, a0
     call    memcpy_entry, [a2,a3], 8
     mov     0x8e0, d0
-    call    func_48457106_entry, [d2,d3], 8
+    call    ScratchPosSkip_entry, [d2,d3], 8
     ret     [d2,a2], 0x1c
 
 func_48549E77:
@@ -16170,20 +16170,20 @@ loc_48549E8E:
     movhu   d0, (0x50082652)
     mov     a3, d0
     mov     a2, d1
-    call    func_48455D84_entry, [d2], 0x14
+    call    SongRecTrackDataFlagGet_entry, [d2], 0x14
     exth    d0
     cmp     0, d0
     beq     loc_48549EF5
     mov     a3, d0
     mov     a2, d1
-    call    func_48455E4A_entry, [d2], 0x14
+    call    SongRecTrackStartPageGet_entry, [d2], 0x14
     mov     d0, d2
     exthu   d2
     cmp     0xffff, d2
     beq     loc_48549EE2
 loc_48549EBA:
     mov     d2, d0
-    call    func_4845647E_entry, [d2,d3], 0x14
+    call    SongPageNextGet_entry, [d2,d3], 0x14
     mov     d0, d3
     mov     d3, d1
     exthu   d1
@@ -16212,19 +16212,19 @@ loc_48549EF5:
     movhu   d0, (0x50082652)
     movbu   (0x28, sp), d2
     mov     d2, d0
-    call    func_48455DAF_entry, 0, 0x10
+    call    SongRecAuxTrackFlagGet_entry, 0, 0x10
     exth    d0
     cmp     0, d0
     beq     loc_48549F50
     mov     d2, d0
-    call    func_48455E71_entry, 0, 0x10
+    call    SongRecAuxTrackStartPageGet_entry, 0, 0x10
     mov     d0, d2
     exthu   d2
     cmp     0xffff, d2
     beq     loc_48549F50
 loc_48549F28:
     mov     d2, d0
-    call    func_4845647E_entry, [d2,d3], 0x14
+    call    SongPageNextGet_entry, [d2,d3], 0x14
     mov     d0, d3
     mov     d3, d1
     exthu   d1
@@ -16246,10 +16246,10 @@ func_48549F53:
 func_48549F53_entry:
     mov     d1, a3
     exthu   d0
-    call    func_48456E94, 0, 0
+    call    SongPagePtr, 0, 0
     mov     d0, a2
-    call    func_484570E6, 0, 0
-    call    func_48457180, 0, 0
+    call    ScratchPos, 0, 0
+    call    ScratchPtrAt, 0, 0
     mov     0x100, d0
     mov     a2, a1
     call    memcpy_entry, [a2,a3], 8
@@ -16264,11 +16264,11 @@ func_48549F53_entry:
     exthu   d2
     add     -1, d2
 loc_48549F93:
-    call    func_484570E6, 0, 0
+    call    ScratchPos, 0, 0
     inc     d0
     exthu   d2
     mov     d2, d1
-    call    func_4845709D_entry, 0, 0x10
+    call    ScratchWordSet_entry, 0, 0x10
     mov     0x0000ffff, d2
     mov     a3, d0
     exthu   d0
@@ -16278,13 +16278,13 @@ loc_48549F93:
     mov     d3, d2
     inc     d2
 loc_48549FB3:
-    call    func_484570E6, 0, 0
+    call    ScratchPos, 0, 0
     add     3, d0
     exthu   d2
     mov     d2, d1
-    call    func_4845709D_entry, 0, 0x10
+    call    ScratchWordSet_entry, 0, 0x10
     mov     0x100, d0
-    call    func_48457106_entry, [d2,d3], 8
+    call    ScratchPosSkip_entry, [d2,d3], 8
     ret     [d2,d3,a2,a3], 0x24
 # TransldSeq  (CPU 0x48549fd2)
 TransldSeq:
@@ -16301,24 +16301,24 @@ loc_48549FE4:
     call    func_4854A109_entry, [d2], 0x18
     mov     1, d0
     mov     4, d1
-    call    func_48455981_entry, [d2,d3], 8
+    call    SongRecByteGet_entry, [d2,d3], 8
     exth    d0
     cmp     1, d0
     bne     loc_4854A016
     mov     1, d0
     mov     0xc7, d1
-    call    func_48455981_entry, [d2,d3], 8
+    call    SongRecByteGet_entry, [d2,d3], 8
     extbu   d0
     inc     d0
     extbu   d0
-    call    func_484559FC_entry, [d2,d3], 0x1c
+    call    SongRecLoadFromSlot_entry, [d2,d3], 0x1c
     bra     loc_4854A01F
 loc_4854A016:
     mov     1, d0
-    call    func_484559FC_entry, [d2,d3], 0x1c
+    call    SongRecLoadFromSlot_entry, [d2,d3], 0x1c
 loc_4854A01F:
     mov     1, d0
-    call    func_48455A9C_entry, [d2,d3,a2], 0x20
+    call    SongFreeListHeadSetAll_entry, [d2,d3,a2], 0x20
     call    func_485499ED_entry, [d2], 0x14
     call    func_4854A14A_entry, [d2,d3], 0x14
     call    func_4854A054_entry, [d2], 0x10
@@ -16326,10 +16326,10 @@ loc_4854A01F:
 loc_4854A039:
     mov     d2, d0
     clr     d1
-    call    func_48456394_entry, [d2], 0x18
+    call    SongRecPlaylistSet_entry, [d2], 0x18
     mov     d2, d0
     clr     d1
-    call    func_484563C9_entry, [d2], 0x18
+    call    SongRecTempoAdjustSet_entry, [d2], 0x18
     inc     d2
     extbu   d2
     cmp     0xa, d2
@@ -16387,21 +16387,21 @@ func_4854A0A0_entry:
     mov     0xc1, a2
     mov     d3, d0
     mov     a2, d1
-    call    func_48455981_entry, [d2,d3], 8
+    call    SongRecByteGet_entry, [d2,d3], 8
     clr     d2
 loc_4854A0B4:
     mov     d3, d0
     mov     a2, d1
     add     d2, d1
     exthu   d1
-    call    func_48455981_entry, [d2,d3], 8
+    call    SongRecByteGet_entry, [d2,d3], 8
     extbu   d0
     mov     d0, (0x10, sp)
     mov     d3, d0
     mov     0x100, d1
     add     d2, d1
     exthu   d1
-    call    func_4845592C_entry, [d2,d3], 8
+    call    SongRecByteSet_entry, [d2,d3], 8
     inc     d2
     exthu   d2
     cmp     6, d2
@@ -16414,7 +16414,7 @@ loc_4854A0D8:
     mov     0x100, d1
     add     d2, d1
     exthu   d1
-    call    func_4845592C_entry, [d2,d3], 8
+    call    SongRecByteSet_entry, [d2,d3], 8
     inc     d2
     exthu   d2
     cmp     0x10, d2
@@ -16427,7 +16427,7 @@ loc_4854A0F0:
     mov     a2, d1
     add     d2, d1
     exthu   d1
-    call    func_4845592C_entry, [d2,d3], 8
+    call    SongRecByteSet_entry, [d2,d3], 8
     inc     d2
     exthu   d2
     cmp     6, d2
@@ -16457,7 +16457,7 @@ loc_4854A12E:
     mov     d0, (0x10, sp)
     mov     d2, d0
     mov     0x110, d1
-    call    func_48455953_entry, [d2,d3], 0x18
+    call    SongRecWordSet_entry, [d2,d3], 0x18
 loc_4854A141:
     inc     d2
     extbu   d2
@@ -16473,11 +16473,11 @@ func_4854A14A_entry:
     mov     1, d2
 loc_4854A156:
     mov     d2, d0
-    call    func_484559FC_entry, [d2,d3], 0x1c
+    call    SongRecLoadFromSlot_entry, [d2,d3], 0x1c
     mov     1, d3
 loc_4854A160:
     mov     d3, d0
-    call    func_48456810_entry, [d2,d3], 0x18
+    call    SongTrackHasData_entry, [d2,d3], 0x18
     exth    d0
     cmp     1, d0
     bne     loc_4854A173
@@ -16494,7 +16494,7 @@ loc_4854A173:
     call    func_4854A4F8_entry, [d2], 0x18
 loc_4854A188:
     mov     d2, d0
-    call    func_484559CA_entry, [d2,d3], 0x1c
+    call    SongRecStoreToSlot_entry, [d2,d3], 0x1c
     inc     d2
     extbu   d2
     cmp     0xa, d2
@@ -16510,26 +16510,26 @@ func_4854A199_entry:
     mov     d3, d1
     clr     d0
     mov     d0, (0x10, sp)
-    call    func_48456CAF_entry, [d2,d3,a2], 0x20
+    call    SongRecTrackExportToScratch_entry, [d2,d3,a2], 0x20
     mov     d3, d1
     clr     d0
-    call    func_48455E4A_entry, [d2], 0x14
+    call    SongRecTrackStartPageGet_entry, [d2], 0x14
     mov     d0, d2
     mov     d3, d1
     exthu   d2
     clr     d0
-    call    func_4845606D_entry, [d2,d3], 0x1c
+    call    SongRecTrackClear_entry, [d2,d3], 0x1c
     mov     d2, d0
-    call    func_48456924_entry, [d2,d3,a2], 0x1c
+    call    SongPageChainFree_entry, [d2,d3,a2], 0x1c
     mov     d3, d0
-    call    func_4845673D_entry, [d2,d3,a2], 0x20
+    call    SongTrackFirstPageAlloc_entry, [d2,d3,a2], 0x20
     mov     d3, d1
     clr     d0
-    call    func_48455E4A_entry, [d2], 0x14
+    call    SongRecTrackStartPageGet_entry, [d2], 0x14
     exthu   d0
     mov     5, d1
-    call    func_48458B45_entry, 0, 0x18
-    call    func_48457071, 0, 0
+    call    SongWrCurSet_entry, 0, 0x18
+    call    ScratchPosReset, 0, 0
     movbu   (0x50082678), d0
     cmp     0, d0
     bne     loc_4854A1FB
@@ -16540,15 +16540,15 @@ loc_4854A1FB:
     mov     d3, d0
     call    func_4854A283_entry, [d2,d3,a2,a3], 0x4c
 loc_4854A201:
-    call    func_48458CD8_entry, 0, 0xc
+    call    SongWrCurPageGet_entry, 0, 0xc
     mov     d0, d2
-    call    func_48458D2A_entry, 0, 0xc
+    call    SongWrCurOffsetGet_entry, 0, 0xc
     extbu   d0
     mov     d0, (0x10, sp)
     exthu   d2
     mov     d2, d1
     mov     d3, d0
-    call    func_4845603F_entry, [d2,d3], 0x1c
+    call    SongTrackEndPosSet_entry, [d2,d3], 0x1c
     ret     [d2,d3], 0x1c
 
 func_4854A220:
@@ -16607,7 +16607,7 @@ func_4854A283_entry:
     call    func_484CC42D_entry, [d2], 4
     clr     d0
     mov     d2, d1
-    call    func_48455C95_entry, 0, 0x10
+    call    SongRecTrackPartGet_entry, 0, 0x10
     extbu   d0
     mov     func_4854A283_Table, a0
     movbu   (d0, a0), d1
@@ -16632,7 +16632,7 @@ func_4854A283_entry:
     mov     d0, (0x10, sp)
     movbu   (0x25, sp), d0
     movbu   (0x24, sp), d1
-    call    func_48449207_entry, 0, 0x14
+    call    SoundKindGet_entry, 0, 0x14
     extbu   d0
     cmp     2, d0
     mov     1, d2
@@ -16662,7 +16662,7 @@ loc_4854A32B:
     mov     d0, (0x1c, sp)
 loc_4854A33E:
     mov     a2, a0
-    call    func_4845712E_entry, [d2,d3,a2], 0x14
+    call    ScratchEventFetch_entry, [d2,d3,a2], 0x14
     movbu   (0x28, sp), d1
     cmp     0x80, d1
     bge     loc_4854A352
@@ -16699,20 +16699,20 @@ loc_4854A382:
     jmp     (a0)
 loc_4854A387:
     mov     0x82, d0
-    call    func_48458F4D_entry, 0, 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
     mov     1, d0
     movbu   d0, (0x27, sp)
     jmp     loc_4854A4EB
 loc_4854A399:
     mov     0x84, d0
-    call    func_48458F4D_entry, 0, 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
     mov     1, d0
     movbu   d0, (0x27, sp)
     jmp     loc_4854A4EB
 loc_4854A3AB:
     mov     0x81, d0
-    call    func_48458F4D_entry, 0, 0x14
-    call    func_48458D72_entry, [d2,d3], 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
+    call    SongWrCurNext_entry, [d2,d3], 0x14
     jmp     loc_4854A4EB
 loc_4854A3BF:
     mov     a2, a0
@@ -16761,7 +16761,7 @@ loc_4854A420:
 loc_4854A423:
     mov     a3, d1
     clr     d0
-    call    func_48455C95_entry, 0, 0x10
+    call    SongRecTrackPartGet_entry, 0, 0x10
     extbu   d0
     mov     func_4854A283_Table, a0
     movbu   (d0, a0), d0
@@ -16779,7 +16779,7 @@ loc_4854A423:
     movbu   (0x2a, sp), d0
     mov     d0, (0x18, sp)
     mov     1, d0
-    call    func_48449462_entry, [d2], 0x18
+    call    TableToneKeyMap_entry, [d2], 0x18
     movbu   d0, (0x2a, sp)
     bra     loc_4854A4B2
 loc_4854A46A:
@@ -16818,8 +16818,8 @@ loc_4854A4B4:
     movbu   (d0, a0), d1
     inc     d2
     movbu   (d1, a2), d0
-    call    func_48458F4D_entry, 0, 0x14
-    call    func_48458D72_entry, [d2,d3], 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
+    call    SongWrCurNext_entry, [d2,d3], 0x14
     mov     d2, d0
     exthu   d2
     cmp     6, d2
@@ -16852,7 +16852,7 @@ func_4854A4F8_entry:
 loc_4854A4FF:
     mov     d2, d1
     clr     d0
-    call    func_48455C95_entry, 0, 0x10
+    call    SongRecTrackPartGet_entry, 0, 0x10
     extbu   d0
     mov     func_4854A283_Table, a0
     movbu   (d0, a0), d0
@@ -16862,7 +16862,7 @@ loc_4854A4FF:
     inc     d2
     extbu   d2
     clr     d0
-    call    func_48455C6E_entry, [d2], 0x18
+    call    SongRecTrackPartSet_entry, [d2], 0x18
     cmp     0x10, d2
     ble     loc_4854A4FF
     ret     [d2], 0x18
@@ -16873,14 +16873,14 @@ func_4854A526:
 func_4854A526_entry:
     mov     a0, a2
     movbu   (1, a2), d0
-    call    func_48458F4D_entry, 0, 0x14
-    call    func_48458D72_entry, [d2,d3], 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
+    call    SongWrCurNext_entry, [d2,d3], 0x14
     mov     0xd0, d0
-    call    func_48458F4D_entry, 0, 0x14
-    call    func_48458D72_entry, [d2,d3], 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
+    call    SongWrCurNext_entry, [d2,d3], 0x14
     movbu   (2, a2), d0
-    call    func_48458F4D_entry, 0, 0x14
-    call    func_48458D72_entry, [d2,d3], 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
+    call    SongWrCurNext_entry, [d2,d3], 0x14
     ret     [a2], 0x10
 
 func_4854A562:
@@ -16894,17 +16894,17 @@ func_4854A562_entry:
     call    func_4854A907, 0, 0
 loc_4854A577:
     movbu   (1, a2), d0
-    call    func_48458F4D_entry, 0, 0x14
-    call    func_48458D72_entry, [d2,d3], 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
+    call    SongWrCurNext_entry, [d2,d3], 0x14
     mov     0xe0, d0
-    call    func_48458F4D_entry, 0, 0x14
-    call    func_48458D72_entry, [d2,d3], 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
+    call    SongWrCurNext_entry, [d2,d3], 0x14
     movbu   (2, a2), d0
-    call    func_48458F4D_entry, 0, 0x14
-    call    func_48458D72_entry, [d2,d3], 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
+    call    SongWrCurNext_entry, [d2,d3], 0x14
     movbu   (3, a2), d0
-    call    func_48458F4D_entry, 0, 0x14
-    call    func_48458D72_entry, [d2,d3], 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
+    call    SongWrCurNext_entry, [d2,d3], 0x14
     ret     [a2], 0x10
 
 func_4854A5BE:
@@ -16918,39 +16918,39 @@ func_4854A5BE_entry:
     call    func_4854A94E_entry, [d2,d3], 8
 loc_4854A5D3:
     movbu   (1, a2), d0
-    call    func_48458F4D_entry, 0, 0x14
-    call    func_48458D72_entry, [d2,d3], 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
+    call    SongWrCurNext_entry, [d2,d3], 0x14
     mov     0x80, d0
-    call    func_48458F4D_entry, 0, 0x14
-    call    func_48458D72_entry, [d2,d3], 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
+    call    SongWrCurNext_entry, [d2,d3], 0x14
     movbu   (2, a2), d0
-    call    func_48458F4D_entry, 0, 0x14
-    call    func_48458D72_entry, [d2,d3], 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
+    call    SongWrCurNext_entry, [d2,d3], 0x14
     movbu   (3, a2), d0
-    call    func_48458F4D_entry, 0, 0x14
-    call    func_48458D72_entry, [d2,d3], 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
+    call    SongWrCurNext_entry, [d2,d3], 0x14
     ret     [a2], 0x10
 
 func_4854A61A:
     add     -0xc, sp
 func_4854A61A_entry:
     movbu   (1, a0), d0
-    call    func_48458F4D_entry, 0, 0x14
-    call    func_48458D72_entry, [d2,d3], 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
+    call    SongWrCurNext_entry, [d2,d3], 0x14
     mov     0x85, d0
-    call    func_48458F4D_entry, 0, 0x14
-    call    func_48458D72_entry, [d2,d3], 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
+    call    SongWrCurNext_entry, [d2,d3], 0x14
     ret     0, 0xc
 
 func_4854A642:
     add     -0xc, sp
 func_4854A642_entry:
     movbu   (1, a0), d0
-    call    func_48458F4D_entry, 0, 0x14
-    call    func_48458D72_entry, [d2,d3], 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
+    call    SongWrCurNext_entry, [d2,d3], 0x14
     mov     0x86, d0
-    call    func_48458F4D_entry, 0, 0x14
-    call    func_48458D72_entry, [d2,d3], 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
+    call    SongWrCurNext_entry, [d2,d3], 0x14
     ret     0, 0xc
 
 func_4854A66A:
@@ -16961,7 +16961,7 @@ func_4854A66A_entry:
     extbu   d1
     clr     d0
     mov     a0, a3
-    call    func_48455C95_entry, 0, 0x10
+    call    SongRecTrackPartGet_entry, 0, 0x10
     extbu   d0
     movbu   (2, a3), d1
     mov     func_4854A283_Table, a0
@@ -16973,20 +16973,20 @@ func_4854A66A_entry:
     mov     a2, a0
     mov     d2, d1
     mov     SndArgrScreen_StrBox_PATTERN_id, d0
-    call    func_484582D0_entry, [d2,d3,a2,a3], 0x24
+    call    SongEventFromM3_entry, [d2,d3,a2,a3], 0x24
     exth    d0
     cmp     0, d0
     bne     loc_4854A6E3
     movbu   (0x14, sp), d0
-    call    func_4845BC5B, 0, 0
+    call    SongEventLenGet, 0, 0
     mov     d0, d2
     mov     d2, d1
     exth    d1
     cmp     -1, d1
     beq     loc_4854A6E3
     movbu   (1, a3), d0
-    call    func_48458F4D_entry, 0, 0x14
-    call    func_48458D72_entry, [d2,d3], 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
+    call    SongWrCurNext_entry, [d2,d3], 0x14
     clr     d0
     clr     d3
     mov     d2, d1
@@ -16997,8 +16997,8 @@ func_4854A66A_entry:
 loc_4854A6CC:
     exthu   d0
     movbu   (d0, a2), d0
-    call    func_48458F4D_entry, 0, 0x14
-    call    func_48458D72_entry, [d2,d3], 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
+    call    SongWrCurNext_entry, [d2,d3], 0x14
     inc     d3
     mov     d3, d0
     exthu   d3
@@ -17015,7 +17015,7 @@ func_4854A6E6_entry:
     extbu   d1
     clr     d0
     mov     a0, a3
-    call    func_48455C95_entry, 0, 0x10
+    call    SongRecTrackPartGet_entry, 0, 0x10
     extbu   d0
     mov     func_4854A283_Table, a0
     movbu   (d0, a0), d1
@@ -17037,20 +17037,20 @@ loc_4854A71F:
     add     0x14, a2
     mov     a2, a0
     mov     d2, d0
-    call    func_484582D0_entry, [d2,d3,a2,a3], 0x24
+    call    SongEventFromM3_entry, [d2,d3,a2,a3], 0x24
     exth    d0
     cmp     0, d0
     bne     loc_4854A771
     movbu   (0x14, sp), d0
-    call    func_4845BC5B, 0, 0
+    call    SongEventLenGet, 0, 0
     mov     d0, d2
     mov     d2, d1
     exth    d1
     cmp     -1, d1
     beq     loc_4854A771
     movbu   (1, a3), d0
-    call    func_48458F4D_entry, 0, 0x14
-    call    func_48458D72_entry, [d2,d3], 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
+    call    SongWrCurNext_entry, [d2,d3], 0x14
     clr     d0
     clr     d3
     mov     d2, d1
@@ -17061,8 +17061,8 @@ loc_4854A71F:
 loc_4854A75A:
     exthu   d0
     movbu   (d0, a2), d0
-    call    func_48458F4D_entry, 0, 0x14
-    call    func_48458D72_entry, [d2,d3], 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
+    call    SongWrCurNext_entry, [d2,d3], 0x14
     inc     d3
     mov     d3, d0
     exthu   d3
@@ -17156,12 +17156,12 @@ loc_4854A827:
     mov     0x5008268c, a0
     mov     (d1, a0), d1
     mov     (0x14, sp), a0
-    call    func_484582D0_entry, [d2,d3,a2,a3], 0x24
+    call    SongEventFromM3_entry, [d2,d3,a2,a3], 0x24
     exth    d0
     cmp     0, d0
     bne     loc_4854A89F
     movbu   (0x1c, sp), d0
-    call    func_4845BC5B, 0, 0
+    call    SongEventLenGet, 0, 0
     mov     d0, a2
     mov     d0, d1
     exth    d1
@@ -17170,8 +17170,8 @@ loc_4854A827:
     mov     (0x18, sp), a0
     clr     d2
     movbu   (a0), d0
-    call    func_48458F4D_entry, 0, 0x14
-    call    func_48458D72_entry, [d2,d3], 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
+    call    SongWrCurNext_entry, [d2,d3], 0x14
     mov     a2, d0
     mov     d0, d1
     exthu   d1
@@ -17184,8 +17184,8 @@ loc_4854A885:
     mov     (0x14, sp), a0
     exthu   d2
     movbu   (d2, a0), d0
-    call    func_48458F4D_entry, 0, 0x14
-    call    func_48458D72_entry, [d2,d3], 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
+    call    SongWrCurNext_entry, [d2,d3], 0x14
     inc     d3
     mov     d3, d2
     exthu   d3
@@ -17312,7 +17312,7 @@ func_4854A989_entry:
     extbu   d0
     mov     d0, (0x18, sp)
 loc_4854A99E:
-    call    func_4845707B, 0, 0
+    call    ScratchReadByte, 0, 0
     movbu   d0, (0x20, sp)
     extbu   d0
     btst    0x80, d0
@@ -17325,8 +17325,8 @@ loc_4854A99E:
     jmp     loc_4854AB4B
 loc_4854A9BF:
     movbu   (0x20, sp), d0
-    call    func_48458F4D_entry, 0, 0x14
-    call    func_48458D72_entry, [d2,d3], 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
+    call    SongWrCurNext_entry, [d2,d3], 0x14
     exth    d0
     cmp     -1, d0
     bne     loc_4854A9DF
@@ -17334,7 +17334,7 @@ loc_4854A9BF:
     mov     1, d3
     jmp     loc_4854AB4B
 loc_4854A9DF:
-    call    func_484570C8, 0, 0
+    call    ScratchPosNext, 0, 0
     mov     2, d0
     movbu   d0, (0x1c, sp)
     jmp     loc_4854AB4B
@@ -17347,7 +17347,7 @@ loc_4854A9EE:
     bne     loc_4854AA0F
 loc_4854AA00:
     movbu   (0x20, sp), d0
-    call    func_48458F4D_entry, 0, 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
     mov     1, d3
     jmp     loc_4854AB4B
 loc_4854AA0F:
@@ -17355,8 +17355,8 @@ loc_4854AA0F:
     cmp     0x81, d0
     bne     loc_4854AA47
     mov     0x81, d0
-    call    func_48458F4D_entry, 0, 0x14
-    call    func_48458D72_entry, [d2,d3], 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
+    call    SongWrCurNext_entry, [d2,d3], 0x14
     exth    d0
     cmp     -1, d0
     bne     loc_4854AA38
@@ -17364,13 +17364,13 @@ loc_4854AA0F:
     mov     1, d3
     jmp     loc_4854AB4B
 loc_4854AA38:
-    call    func_484570C8, 0, 0
+    call    ScratchPosNext, 0, 0
     mov     1, d0
     movbu   d0, (0x1c, sp)
     jmp     loc_4854AB4B
 loc_4854AA47:
     movbu   (0x20, sp), d0
-    call    func_4845BC5B, 0, 0
+    call    SongEventLenGet, 0, 0
     mov     d0, d2
     exth    d0
     cmp     -1, d0
@@ -17438,7 +17438,7 @@ loc_4854AAD5:
     mov     (0x18, sp), d0
     mov     a3, a1
     mov     0x5008268c, d1
-    call    func_48458700_entry, [d2,d3,a2,a3], 0x2c
+    call    SongEventToM3_entry, [d2,d3,a2,a3], 0x2c
     exth    d0
     cmp     0, d0
     bne     loc_4854AB4B
@@ -17449,12 +17449,12 @@ loc_4854AAD5:
     mov     a2, a0
     mov     (0x5008267c), d0
     mov     (0x5008268c), d1
-    call    func_484582D0_entry, [d2,d3,a2,a3], 0x24
+    call    SongEventFromM3_entry, [d2,d3,a2,a3], 0x24
     exth    d0
     cmp     0, d0
     bne     loc_4854AB4B
     movbu   (0x20, sp), d0
-    call    func_4845BC5B, 0, 0
+    call    SongEventLenGet, 0, 0
     mov     d0, d1
     exth    d1
     cmp     -1, d1
@@ -17479,15 +17479,15 @@ loc_4854AB54:
 func_4854AB57:
     add     -0xc, sp
 func_4854AB57_entry:
-    call    func_48458E4F_entry, 0, 0x10
+    call    SongWrCurPrev_entry, 0, 0x10
     exth    d0
     cmp     0, d0
     bne     loc_4854AB81
     mov     0x81, d0
-    call    func_48458F4D_entry, 0, 0x14
-    call    func_48458D72_entry, [d2,d3], 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
+    call    SongWrCurNext_entry, [d2,d3], 0x14
     mov     0x82, d0
-    call    func_48458F4D_entry, 0, 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
 loc_4854AB81:
     ret     0, 0xc
 
@@ -17502,11 +17502,11 @@ func_4854AB84_entry:
     cmp     d2, d3
     ble     loc_4854ABC0
 loc_4854AB91:
-    call    func_4845707B, 0, 0
+    call    ScratchReadByte, 0, 0
     extbu   d0
-    call    func_48458F4D_entry, 0, 0x14
-    call    func_484570C8, 0, 0
-    call    func_48458D72_entry, [d2,d3], 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
+    call    ScratchPosNext, 0, 0
+    call    SongWrCurNext_entry, [d2,d3], 0x14
     exth    d0
     cmp     -1, d0
     bne     loc_4854ABBB
@@ -17533,10 +17533,10 @@ func_4854ABC5_entry:
     cmp     0, a2
     ble     loc_4854ABEC
 loc_4854ABD4:
-    call    func_4845707B, 0, 0
+    call    ScratchReadByte, 0, 0
     exthu   d2
     movbu   d0, (d2, a3)
-    call    func_484570C8, 0, 0
+    call    ScratchPosNext, 0, 0
     inc     d3
     mov     d3, d2
     exthu   d3
@@ -17561,8 +17561,8 @@ func_4854ABF0_entry:
 loc_4854ABFF:
     exthu   d0
     movbu   (d0, a3), d0
-    call    func_48458F4D_entry, 0, 0x14
-    call    func_48458D72_entry, [d2,d3], 0x14
+    call    SongWrCurByteSet_entry, 0, 0x14
+    call    SongWrCurNext_entry, [d2,d3], 0x14
     exth    d0
     cmp     -1, d0
     bne     loc_4854AC1D
@@ -17581,20 +17581,20 @@ loc_4854AC23:
 func_4854AC28:
     add     -8, sp
 func_4854AC28_entry:
-    call    func_4845359B_entry, 0, 0x1c
+    call    MplHeapCreate_entry, 0, 0x1c
     call    func_48447FB5, 0, 0
     call    PanelExtSwShadowInit_entry, [d2], 0xc
     call    PanelBtnMaskReset_entry, 0, 8
     call    func_4C023EC9_entry, [d2,d3,a2,a3], 0x24
     call    func_4849EDA9_entry, 0, 0x10
     call    HpFlashCheck_entry, 0, 0x10
-    call    func_484142D0_entry, [d2,d3], 0x1c
-    call    func_484B26CA_entry, 0, 0x70
-    call    func_484B3E22_entry, 0, 0x14
+    call    GuiSystemInit_entry, [d2,d3], 0x1c
+    call    MidiSerialIsrInstall_entry, 0, 0x70
+    call    MidiRxContextsInit_entry, 0, 0x14
     call    func_484C4B0C_entry, 0, 0x10
     call    VoiceArchiveScanBoot_entry, [d2,d3,a2,a3], 0x10
     call    func_484AE6BC_entry, 0, 8
-    call    func_48401E4C_entry, 0, 0x58
+    call    FdcPrgHwInit_entry, 0, 0x58
     call    func_48484499_entry, [d2], 0x18
     call    func_48431D1E, 0, 0
     ret     0, 8
@@ -21271,8 +21271,8 @@ loc_4854CAC6:
 SdPlaylistDbInitAll:
     add     -0xc, sp
 SdPlaylistDbInitAll_entry:
-    call    func_4854CCB5, 0, 0
-    call    func_4854CCE5_entry, [a2], 4
+    call    SdPlaylistIndexReset, 0, 0
+    call    SdPlaylistSlotsReset_entry, [a2], 4
     call    func_4854CD18, 0, 0
     clr     d0
     call    SdPlaylistDbClear_entry, [d2,d3,a2,a3], 0x2c
@@ -21479,16 +21479,16 @@ loc_4854CC92:
     inc     d0
     movbu   d0, (SdPlaylistDbClear_Table)
     ret     [d2,d3,a2,a3], 0x2c
-
-func_4854CCA2:
+# SdPlaylistDbReload  (CPU 0x4854cca2)
+SdPlaylistDbReload:
     add     -0xc, sp
-func_4854CCA2_entry:
+SdPlaylistDbReload_entry:
     exthu   d0
     call    SdPlaylistDbClear_entry, [d2,d3,a2,a3], 0x2c
     call    func_48579247_entry, 0, 8
     ret     0, 0xc
-
-func_4854CCB5:
+# SdPlaylistIndexReset  (CPU 0x4854ccb5)
+SdPlaylistIndexReset:
     clr     d0
     movhu   d0, (0x50082922)
     movhu   d0, (0x50082920)
@@ -21502,10 +21502,10 @@ func_4854CCB5:
     cmp     0x50160e96, a0
     lcs
     retf    0, 0
-
-func_4854CCE5:
+# SdPlaylistSlotsReset  (CPU 0x4854cce5)
+SdPlaylistSlotsReset:
     movm    [a2], (sp)
-func_4854CCE5_entry:
+SdPlaylistSlotsReset_entry:
     mov     0x50160e98, a1
 loc_4854CCED:
     clr     d0
@@ -21545,7 +21545,7 @@ SdPlaylistFileParse_entry:
     add     -0xc1c, sp
     mov     Str_SD_AUDIO_PLM_2, a0
     mov     Str_C_SD_AUDIO_4, a1
-    call    func_4855F36D_entry, [a2,a3], 8
+    call    SdFileExistsCheck_entry, [a2,a3], 8
     extbu   d0
     cmp     0, d0
     bne     loc_4854CD53
@@ -21556,7 +21556,7 @@ loc_4854CD53:
     call    sdfmpath_entry, 0, 0x14
     mov     Str_SD_AUDIO_PLM, a0
     mov     Str_rb_21, a1
-    call    func_4856580E_entry, [a2,a3], 0x98
+    call    SdFileOpen_entry, [a2,a3], 0x98
     exth    d0
     mov     d0, d3
     cmp     0, d0
@@ -21573,7 +21573,7 @@ loc_4854CD83:
     mov     d0, (0x14, sp)
     mov     d0, a0
     mov     0x24, d0
-    call    func_48565AF6_entry, [d2,d3,a2,a3], 0x2c
+    call    SdFileRead_entry, [d2,d3,a2,a3], 0x2c
     mov     d0, d3
     cmp     0, d0
     bge     loc_4854CD9D
@@ -21601,7 +21601,7 @@ loc_4854CDB1:
     movhu   d0, (0x50082920)
     mov     (0x14, sp), a0
     mov     0x1dc, d0
-    call    func_48565AF6_entry, [d2,d3,a2,a3], 0x2c
+    call    SdFileRead_entry, [d2,d3,a2,a3], 0x2c
     mov     d0, d3
     cmp     0, d0
     bge     loc_4854CDE7
@@ -21632,7 +21632,7 @@ loc_4854CDFB:
     mov     d2, (0x501606c4)
     mov     (0x14, sp), a0
     mov     0x800, d0
-    call    func_48565AF6_entry, [d2,d3,a2,a3], 0x2c
+    call    SdFileRead_entry, [d2,d3,a2,a3], 0x2c
     mov     d0, d3
     cmp     0, d0
     bge     loc_4854CE37
@@ -21671,7 +21671,7 @@ loc_4854CE6B:
 loc_4854CE80:
     mov     (0x14, sp), a0
     mov     0x138, d0
-    call    func_48565AF6_entry, [d2,d3,a2,a3], 0x2c
+    call    SdFileRead_entry, [d2,d3,a2,a3], 0x2c
     cmp     0, d0
     bge     loc_4854CE94
     clr     d3
@@ -21713,7 +21713,7 @@ loc_4854CEA6:
     movbu   d0, (0x11, a2)
     mov     (0x14, sp), a0
     mov     0xc8, d0
-    call    func_48565AF6_entry, [d2,d3,a2,a3], 0x2c
+    call    SdFileRead_entry, [d2,d3,a2,a3], 0x2c
     mov     d0, d3
     cmp     0, d0
     blt     loc_4854CF3C
@@ -21750,13 +21750,13 @@ loc_4854CF24:
     bcc     loc_4854CF3C
     jmp     loc_4854CE80
 loc_4854CF3C:
-    call    func_485658D5_entry, 0, 0xc
+    call    SdFileClose_entry, 0, 0xc
     mov     0, a0
     call    sdfmpath_entry, 0, 0x14
     cmp     0, d3
     bge     loc_4854CF5C
-    call    func_4854CCB5, 0, 0
-    call    func_4854CCE5_entry, [a2], 4
+    call    SdPlaylistIndexReset, 0, 0
+    call    SdPlaylistSlotsReset_entry, [a2], 4
     mov     -1, d3
 loc_4854CF5C:
     mov     d3, d0
@@ -21770,7 +21770,7 @@ func_4854CF64_entry:
     add     -0xc1c, sp
     mov     Str_SD_AUDIO_TKM_2, a0
     mov     Str_C_SD_AUDIO_2, a1
-    call    func_4855F36D_entry, [a2,a3], 8
+    call    SdFileExistsCheck_entry, [a2,a3], 8
     extbu   d0
     cmp     0, d0
     bne     loc_4854CF87
@@ -21781,7 +21781,7 @@ loc_4854CF87:
     call    sdfmpath_entry, 0, 0x14
     mov     Str_SD_AUDIO_TKM, a0
     mov     Str_rb_20, a1
-    call    func_4856580E_entry, [a2,a3], 0x98
+    call    SdFileOpen_entry, [a2,a3], 0x98
     exth    d0
     mov     d0, d2
     cmp     0, d0
@@ -21802,7 +21802,7 @@ loc_4854CFB7:
 loc_4854CFC9:
     mov     (0x18, sp), a0
     mov     0x100, d0
-    call    func_48565AF6_entry, [d2,d3,a2,a3], 0x2c
+    call    SdFileRead_entry, [d2,d3,a2,a3], 0x2c
     cmp     0, d0
     bge     loc_4854CFDC
     clr     d2
@@ -21831,7 +21831,7 @@ loc_4854CFED:
     mov     d2, (a3)
     mov     (0x18, sp), a0
     mov     0x14, d0
-    call    func_48565AF6_entry, [d2,d3,a2,a3], 0x2c
+    call    SdFileRead_entry, [d2,d3,a2,a3], 0x2c
     mov     d0, d2
     cmp     0, d0
     blt     loc_4854D053
@@ -21845,7 +21845,7 @@ loc_4854CFED:
     movbu   d0, (0x11, a2)
     mov     (0x14, sp), d0
     clr     d1
-    call    func_48565C14_entry, [d2,d3,a2], 0x20
+    call    SdFileSeek_entry, [d2,d3,a2], 0x20
     exth    d0
     mov     d0, d2
     cmp     0, d0
@@ -21861,7 +21861,7 @@ loc_4854D03E:
     bcc     loc_4854D053
     jmp     loc_4854CFC9
 loc_4854D053:
-    call    func_485658D5_entry, 0, 0xc
+    call    SdFileClose_entry, 0, 0xc
     mov     0, a0
     call    sdfmpath_entry, 0, 0x14
     cmp     0, d2
@@ -22732,7 +22732,7 @@ InitializeBlock28_entry:
 func_4854DAA2:
     add     -8, sp
 func_4854DAA2_entry:
-    call    func_4852FDCA_entry, 0, 8
+    call    FmmMediaTypeGet_entry, 0, 8
     extbu   d0
     exth    d0
     cmp     0, d0
@@ -22749,7 +22749,7 @@ loc_4854DAC0:
     mov     -8, d0
     bra     loc_4854DAD4
 loc_4854DAC4:
-    call    func_48530214_entry, [d2,d3,a2,a3], 0x10
+    call    FmmFileListScan_entry, [d2,d3,a2,a3], 0x10
     mov     d0, d1
     exth    d1
     cmp     0, d1
@@ -22759,8 +22759,8 @@ loc_4854DAD3:
     clr     d0
 loc_4854DAD4:
     ret     0, 8
-
-func_4854DAD7:
+# FeatureDemoEventProc  (CPU 0x4854dad7)
+FeatureDemoEventProc:
     movm    [d2,a2,a3], (sp)
     add     -0x74, sp
     cmp     MT_Init, d1
@@ -22790,7 +22790,7 @@ loc_4854DB13:
     beq     loc_4854DB7F
     jmp     loc_4854DC87
 loc_4854DB20:
-    call    func_485792A0_entry, 0, 0x10
+    call    SdAudStateStop_entry, 0, 0x10
     call    func_48545F89_entry, [d2,d3], 0x1c
     mov     0xf0, d0
     mov     1, d1
@@ -22804,12 +22804,12 @@ loc_4854DB20:
     mov     0x60, d0
     clr     d1
     call    func_484AE299_entry, [d2,d3], 8
-    call    func_484B3984_entry, 0, 0x14
-    call    func_484B39C7_entry, 0, 0x14
-    call    func_484B3A0A_entry, 0, 0x14
+    call    MidiTxAllNotesOffAll_entry, 0, 0x14
+    call    MidiTxAllSoundOffAll_entry, 0, 0x14
+    call    MidiTxResetCtrlAll_entry, 0, 0x14
     mov     4, d0
     mov     3, d1
-    call    func_484B32CC_entry, [d2,d3], 8
+    call    MidiFilterFieldSet_entry, [d2,d3], 8
     clr     d0
     mov     d0, (0x5008294c)
     jmp     loc_4854DC87
@@ -22820,7 +22820,7 @@ loc_4854DB7F:
     call    func_484AE299_entry, [d2,d3], 8
     mov     4, d0
     clr     d1
-    call    func_484B32CC_entry, [d2,d3], 8
+    call    MidiFilterFieldSet_entry, [d2,d3], 8
     clr     d0
     mov     d0, (0x5008294c)
     mov     0, a0
@@ -22871,7 +22871,7 @@ loc_4854DC09:
     jmp     loc_4854DC87
 loc_4854DC16:
     mov     Str_FEATURE_PRE_2, a0
-    call    func_4852FCD5_entry, [a2], 4
+    call    FmmFileExists_entry, [a2], 4
     extbu   d0
     cmp     0, d0
     beq     loc_4854DC87
@@ -22902,7 +22902,7 @@ loc_4854DC16:
     exth    d0
     cmp     0, d0
     blt     loc_4854DC64
-    call    func_4854E1FB_entry, 0, 0xc
+    call    FeatureDemoRun_entry, 0, 0xc
 loc_4854DC64:
     clr     d0
     mov     d2, a0
@@ -22922,8 +22922,8 @@ loc_4854DC87:
     clr     d0
 loc_4854DC88:
     ret     [d2,a2,a3], 0x80
-
-func_4854DC8B:
+# DemoStartEventProc  (CPU 0x4854dc8b)
+DemoStartEventProc:
     movm    [d2,d3], (sp)
     add     -0xc, sp
     mov     d1, d2
@@ -22935,7 +22935,7 @@ func_4854DC8B:
     bra     loc_4854DCBE
 loc_4854DCA4:
     mov     Str_Demo_Start, a0
-    call    func_48487831_entry, [a2,a3], 0x1c
+    call    MemoLogPrint_entry, [a2,a3], 0x1c
     mov     (0x24, sp), d0
     extbu   d0
     inc     d0
@@ -23182,14 +23182,14 @@ loc_4854DF29:
     mov     (0x30, sp), a2
     cmp     0, a2
     beq     loc_4854DF49
-    call    func_4848A4CF, 0, 0
+    call    PleaseWaitWindowId, 0, 0
     mov     5, d1
     mov     d1, (0x10, sp)
     mov     EV_SHOW, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4854DF93
 loc_4854DF49:
-    call    func_4848A4CF, 0, 0
+    call    PleaseWaitWindowId, 0, 0
     mov     5, d1
     mov     d1, (0x10, sp)
     mov     EV_HIDE, d1
@@ -23426,10 +23426,10 @@ FeatureDemoActLoad_entry:
     mov     a2, a0
     call    SswActOpen_entry, [d2,a2], 0x18
     ret     [a2], 0x14
-
-func_4854E1FB:
+# FeatureDemoRun  (CPU 0x4854e1fb)
+FeatureDemoRun:
     add     -0xc, sp
-func_4854E1FB_entry:
+FeatureDemoRun_entry:
     mov     (0x5008294c), d0
     call    SrtExtDemo_entry, 0, 0xc
     ret     0, 0xc
@@ -23450,7 +23450,7 @@ FeaturePreLoad_entry:
     jmp     loc_4854E2CE
 loc_4854E230:
     clr     d2
-    call    func_4853240E_entry, 0, 0x14
+    call    FmmGetc_entry, 0, 0x14
     mov     d0, d1
     exth    d1
     cmp     0x20, d1
@@ -23465,7 +23465,7 @@ loc_4854E23E:
     mov     d1, d2
     inc     d2
 loc_4854E24A:
-    call    func_4853240E_entry, 0, 0x14
+    call    FmmGetc_entry, 0, 0x14
     mov     d0, d1
     exth    d1
     cmp     0x20, d1
@@ -23482,7 +23482,7 @@ loc_4854E257:
     mov     a2, a0
     call    strcat_entry, [a2], 4
     clr     d3
-    call    func_4853240E_entry, 0, 0x14
+    call    FmmGetc_entry, 0, 0x14
     mov     d0, d2
     mov     d2, d1
     exth    d1
@@ -23508,7 +23508,7 @@ loc_4854E295:
     movbu   d2, (d0, a0)
     inc     d3
 loc_4854E2A1:
-    call    func_4853240E_entry, 0, 0x14
+    call    FmmGetc_entry, 0, 0x14
     mov     d0, d2
     mov     d2, d1
     exth    d1
@@ -27687,10 +27687,10 @@ loc_48551118:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
 loc_48551123:
     ret     [d2,d3,a2,a3], 0x24
-
-func_48551126:
+# SdcSpaceFill  (CPU 0x48551126)
+SdcSpaceFill:
     movm    [d2], (sp)
-func_48551126_entry:
+SdcSpaceFill_entry:
     mov     d0, d1
     clr     d0
     exthu   d1
@@ -27708,10 +27708,10 @@ loc_48551138:
     clr     d0
     movbu   d0, (a0)
     retf    [d2], 4
-
-func_4855113E:
+# SdcErrorMsgGet  (CPU 0x4855113e)
+SdcErrorMsgGet:
     movm    [d2,d3], (sp)
-func_4855113E_entry:
+SdcErrorMsgGet_entry:
     movbu   d1, (0x14, sp)
     mov     d0, d2
     mov     d2, d1
@@ -27727,13 +27727,13 @@ func_4855113E_entry:
     extbu   d0
     bra     loc_485511A1
 loc_48551159:
-    movhu   (func_4855113E_Records), d0
+    movhu   (SdcErrorMsgGet_Records), d0
     clr     d2
     exth    d0
     cmp     d0, d1
-    mov     func_4855113E_Records, a0
+    mov     SdcErrorMsgGet_Records, a0
     beq     loc_48551187
-    movhu   (func_4855113E_Records), d0
+    movhu   (SdcErrorMsgGet_Records), d0
     exth    d0
     cmp     d2, d0
     bge     loc_48551187
@@ -27824,7 +27824,7 @@ loc_485511F0:
     mov     d2, d1
     add     d3, d1
     extbu   d1
-    call    func_4855ECA3_entry, [d2,d3,a2], 0x20
+    call    SdDirSongNameGet_entry, [d2,d3,a2], 0x20
     mov     a0, a1
     cmp     0, a1
     beq     loc_48551227
@@ -27843,7 +27843,7 @@ loc_485511F0:
     exthu   d0
     mov     0x10, d1
     mov     a2, a0
-    call    func_4852F8AD_entry, [d2,d3,a2,a3], 0x20
+    call    FmmFileNoNameFormat_entry, [d2,d3,a2,a3], 0x20
     bra     loc_48551239
 loc_48551227:
     mov     0x18, d1
@@ -27854,7 +27854,7 @@ loc_48551227:
     mov     d1, a0
     inc     a0
     mov     0x14, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
 loc_48551239:
     mov     0x18, d0
     nop
@@ -27913,7 +27913,7 @@ loc_48551293:
     mov     (0x1c, sp), d0
     add     d2, d0
     extbu   d0
-    call    func_4855ECFD_entry, [d2,a2], 0x1c
+    call    SdDirFolderNameGet_entry, [d2,a2], 0x1c
     mov     a0, a1
     cmp     0, a1
     beq     loc_485512CA
@@ -27932,7 +27932,7 @@ loc_48551293:
     inc     d0
     exthu   d0
     mov     0x10, d1
-    call    func_4852F8AD_entry, [d2,d3,a2,a3], 0x20
+    call    FmmFileNoNameFormat_entry, [d2,d3,a2,a3], 0x20
     bra     loc_485512DC
 loc_485512CA:
     mov     0x18, d1
@@ -27943,7 +27943,7 @@ loc_485512CA:
     mov     d1, a0
     inc     a0
     mov     0x14, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
 loc_485512DC:
     mov     0x18, d0
     nop
@@ -27992,7 +27992,7 @@ loc_48551316:
     beq     loc_4855133B
     jmp     loc_485513BB
 loc_4855133B:
-    call    func_4855EECB_entry, 0, 0xc
+    call    SdCurFolderIndexGet_entry, 0, 0xc
     mov     d0, d1
     exth    d1
     cmp     0, d1
@@ -28022,7 +28022,7 @@ loc_48551363:
     mov     a3, d1
     add     d3, d1
     extbu   d1
-    call    func_4855ECA3_entry, [d2,d3,a2], 0x20
+    call    SdDirSongNameGet_entry, [d2,d3,a2], 0x20
     mov     a0, a1
     clr     d0
     mov     d0, (0x18, sp)
@@ -28038,7 +28038,7 @@ loc_48551363:
     inc     d2
     mov     d2, a0
     mov     0x10, d1
-    call    func_4852F8AD_entry, [d2,d3,a2,a3], 0x20
+    call    FmmFileNoNameFormat_entry, [d2,d3,a2,a3], 0x20
     mov     0x18, d0
     nop
     nop
@@ -28093,7 +28093,7 @@ loc_485513D1:
     extbu   d2
     extbu   d1
     mov     d2, d0
-    call    func_4855ECA3_entry, [d2,d3,a2], 0x20
+    call    SdDirSongNameGet_entry, [d2,d3,a2], 0x20
     mov     a0, a1
     cmp     0, a1
     beq     loc_4855142D
@@ -28112,7 +28112,7 @@ loc_485513D1:
     exthu   d0
     mov     0x10, d1
     mov     a2, a0
-    call    func_4852F8AD_entry, [d2,d3,a2,a3], 0x20
+    call    FmmFileNoNameFormat_entry, [d2,d3,a2,a3], 0x20
     bra     loc_48551443
 loc_4855142D:
     mov     0x18, d1
@@ -28123,7 +28123,7 @@ loc_4855142D:
     mov     d1, a0
     inc     a0
     mov     0x14, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
 loc_48551443:
     mov     0x18, d0
     nop
@@ -28155,54 +28155,54 @@ func_48551470_entry:
     clr     d2
 loc_4855147B:
     mov     d2, d0
-    call    func_4855F631_entry, [d2], 0xc
+    call    SdCurSongHasType_entry, [d2], 0xc
     extbu   d0
     cmp     0, d0
     beq     loc_48551492
     mov     d2, d0
-    call    func_4855F742_entry, [d2], 4
+    call    SdLoadFilterTypeSet_entry, [d2], 4
     bra     loc_4855149A
 loc_48551492:
     mov     d2, d0
-    call    func_4855F760_entry, [d2], 4
+    call    SdLoadFilterTypeClear_entry, [d2], 4
 loc_4855149A:
     inc     d2
     extbu   d2
     cmp     0xb, d2
     blt     loc_4855147B
     mov     0xb, d0
-    call    func_4855F631_entry, [d2], 0xc
+    call    SdCurSongHasType_entry, [d2], 0xc
     extbu   d0
     cmp     0, d0
     beq     loc_485514C5
     mov     0xc, d0
-    call    func_4855F631_entry, [d2], 0xc
+    call    SdCurSongHasType_entry, [d2], 0xc
     extbu   d0
     cmp     0, d0
     beq     loc_485514C5
     mov     2, d0
-    call    func_4855F742_entry, [d2], 4
+    call    SdLoadFilterTypeSet_entry, [d2], 4
 loc_485514C5:
     call    GetTitleNow_entry, 0, 0x10
     exthu   d0
     cmp     0x108, d0
     beq     loc_4855151B
-    call    func_4855F599_entry, 0, 8
+    call    SdCurSongTypeMaskGet_entry, 0, 8
     mov     d0, d2
     mov     0xb, d0
-    call    func_4855F631_entry, [d2], 0xc
+    call    SdCurSongHasType_entry, [d2], 0xc
     extbu   d0
     cmp     0, d0
     beq     loc_485514FB
     mov     0xc, d0
-    call    func_4855F631_entry, [d2], 0xc
+    call    SdCurSongHasType_entry, [d2], 0xc
     extbu   d0
     cmp     0, d0
     beq     loc_485514FB
     exthu   d2
     or      0x04, d2
 loc_485514FB:
-    call    func_4855F6FA, 0, 0
+    call    SdLoadFilterMaskGet, 0, 0
     exthu   d2
     exthu   d0
     and     d0, d2
@@ -28214,7 +28214,7 @@ loc_485514FB:
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
     bra     loc_48551534
 loc_4855151B:
-    call    func_4855F782, 0, 0
+    call    SdSaveFilterMaskGet, 0, 0
     exthu   d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -28448,7 +28448,7 @@ loc_4855167C:
     nop
     mul     d1, d0
     mov     d0, a2
-    call    func_48560C11_entry, 0, 0xc
+    call    SdSmfCurListGet_entry, 0, 0xc
     mov     (0x18, sp), d1
     clr     d3
     cmp     d2, d1
@@ -28479,7 +28479,7 @@ loc_485516BD:
     mov     a2, d1
     add     d3, d1
     exthu   d1
-    call    func_48560C51_entry, [a2], 0x18
+    call    SdSndListSongNameGet_entry, [a2], 0x18
     mov     (0x20, sp), d1
     mov     a2, d0
     add     d3, d0
@@ -28509,7 +28509,7 @@ loc_485516F7:
     mov     d1, a0
     inc     a0
     mov     0x14, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
 loc_48551709:
     mov     0x18, d1
     nop
@@ -28573,7 +28573,7 @@ loc_4855176F:
     mov     d2, d0
     add     d3, d0
     exthu   d0
-    call    func_4855F9B1_entry, [d2], 0x10
+    call    SdCstEntryGet_entry, [d2], 0x10
     mov     (0x20, sp), d1
     mov     a0, a1
     mov     d2, d0
@@ -28595,7 +28595,7 @@ loc_4855176F:
     exthu   d0
     mov     8, d1
     mov     a2, a0
-    call    func_4852F8AD_entry, [d2,d3,a2,a3], 0x20
+    call    FmmFileNoNameFormat_entry, [d2,d3,a2,a3], 0x20
     bra     loc_485517BA
 loc_485517A8:
     mov     0x18, d1
@@ -28606,7 +28606,7 @@ loc_485517A8:
     mov     d1, a0
     inc     a0
     mov     0x14, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
 loc_485517BA:
     mov     0x18, d0
     nop
@@ -28636,10 +28636,10 @@ SdStateReset_entry:
     clr     d0
     call    SD_SetState, 0, 0
     call    FavFormat_entry, 0, 0x14
-    call    func_4855E8AC_entry, [d2], 0xc
-    call    func_4855EB22_entry, 0, 0x10
+    call    SdFmmTablesReset_entry, [d2], 0xc
+    call    SdNamingDefaultsReset_entry, 0, 0x10
     call    func_4857BE94_entry, 0, 0x14
-    call    func_48579252_entry, 0, 8
+    call    SdAudPlayerReset_entry, 0, 8
     mov     -1, d0
     movhu   d0, (0x50083bac)
     movhu   d0, (0x50083bae)
@@ -28668,10 +28668,10 @@ SdUnmountCleanup:
     add     -8, sp
 SdUnmountCleanup_entry:
     call    FavFormat_entry, 0, 0x14
-    call    func_4855E8AC_entry, [d2], 0xc
-    call    func_4855EB22_entry, 0, 0x10
+    call    SdFmmTablesReset_entry, [d2], 0xc
+    call    SdNamingDefaultsReset_entry, 0, 0x10
     call    func_4857BE94_entry, 0, 0x14
-    call    func_48579252_entry, 0, 8
+    call    SdAudPlayerReset_entry, 0, 8
     mov     -1, d0
     movhu   d0, (0x50083bac)
     movhu   d0, (0x50083bae)
@@ -28835,10 +28835,10 @@ loc_485519EE:
     mov     2, d0
     call    SD_SetState, 0, 0
     mov     0x50083bc8, a0
-    call    func_484729A8_entry, [a2], 0x14
+    call    SdJobPost_entry, [a2], 0x14
     ret     [d2], 0x18
 loc_48551A1F:
-    call    func_48472A52_entry, 0, 0x10
+    call    SdJobPoll_entry, 0, 0x10
     ret     [d2], 0x18
 loc_48551A29:
     call    SdUiMountGateCheck_entry, [d2], 0x18
@@ -29272,7 +29272,7 @@ SdMountWorker:
     add     -8, sp
 SdMountWorker_entry:
     clr     d2
-    call    func_484720FB_entry, 0, 0x1c
+    call    SdMediaInit_entry, 0, 0x1c
     clr     d0
     movbu   d0, (0x50083bc3)
     call    SdCardReadyCheck_entry, 0, 8
@@ -29298,8 +29298,8 @@ loc_48551FD3:
     mov     -8, d0
     bra     loc_48552037
 loc_48551FDD:
-    call    func_4855EA12_entry, [a2], 0x14
-    call    func_4855EAB8_entry, [d2,a2,a3], 0x1c
+    call    SdFreeBytesQuery_entry, [a2], 0x14
+    call    SdVolumeLabelGet_entry, [d2,a2,a3], 0x1c
     call    func_4855E842_entry, 0, 8
     exth    d0
     cmp     d2, d0
@@ -29324,7 +29324,7 @@ loc_48552017:
     mov     d0, d2
     bset    0x04, (0x50083bc3)
 loc_48552029:
-    call    func_4855FBE7_entry, [d2], 0xc
+    call    SdCstListRescan_entry, [d2], 0xc
     movhu   d0, (0x50083bac)
     mov     d2, d0
 loc_48552037:
@@ -29366,7 +29366,7 @@ loc_4855207C:
     mov     1, d0
     call    SD_SetState, 0, 0
 loc_4855209B:
-    call    func_4857926C_entry, 0, 0xc
+    call    SdAudMountReset_entry, 0, 0xc
     clr     d0
     mov     d0, d1
     call    SDModuleModeReq_entry, 0, 0xc
@@ -29377,7 +29377,7 @@ loc_4855209B:
 #   SdCardFsInit + card-ready, then rescan 0x4855fab3
 SdSyncWorker:
     add     -8, sp
-    call    func_484720D0_entry, 0, 0x1c
+    call    SdMediaEnsureInit_entry, 0, 0x1c
     call    SdCardReadyCheck_entry, 0, 8
     exthu   d0
     cmp     0, d0
@@ -29402,7 +29402,7 @@ loc_485520ED:
     mov     -8, d0
     bra     loc_48552108
 loc_485520F8:
-    call    func_4855FAB1_entry, [d2,d3,a2,a3], 0x10
+    call    SdCstListScan_entry, [d2,d3,a2,a3], 0x10
     mov     d0, d1
     exth    d1
     cmp     0, d1
@@ -29459,7 +29459,7 @@ SdMountSyncPost_entry:
     mov     2, d0
     call    SD_SetState, 0, 0
     mov     0x50083bc8, a0
-    call    func_484729A8_entry, [a2], 0x14
+    call    SdJobPost_entry, [a2], 0x14
     ret     0, 0xc
 # SdUiMountGateCheck  (CPU 0x4855219c)
 #   GetProperty(object 0x0210033F, property 0x00060047) != -1 -> 1
@@ -29487,7 +29487,7 @@ loc_485521BE:
 SdMountBusyCheck:
     add     -8, sp
 SdMountBusyCheck_entry:
-    call    func_48472ABB, 0, 0
+    call    SdJobBusyCheck, 0, 0
     extbu   d0
     cmp     0, d0
     beq     loc_485521D6
@@ -29512,8 +29512,8 @@ SdRemountSync_entry:
     clr     d0
     call    SD_SetState, 0, 0
     call    SdUnmountCleanup_entry, 0, 8
-    call    func_4855EA12_entry, [a2], 0x14
-    call    func_4855EAB8_entry, [d2,a2,a3], 0x1c
+    call    SdFreeBytesQuery_entry, [a2], 0x14
+    call    SdVolumeLabelGet_entry, [d2,a2,a3], 0x1c
     call    func_4855E842_entry, 0, 8
     call    func_4857BED3_entry, [d2,d3,a2], 0x14
     call    SdPlaylistLoad_entry, 0, 8
@@ -29523,7 +29523,7 @@ SdRemountSync_entry:
     blt     loc_48552224
     clr     d2
 loc_48552224:
-    call    func_4855FBE7_entry, [d2], 0xc
+    call    SdCstListRescan_entry, [d2], 0xc
     movhu   d0, (0x50083bac)
     mov     d2, d0
     exth    d0
@@ -29707,14 +29707,14 @@ func_4855239A:
     add     -0xc, sp
 func_4855239A_entry:
     clr     d3
-    call    func_4855F680_entry, [d2,d3], 0x10
+    call    SdDirSongCount_entry, [d2,d3], 0x10
     exthu   d0
     cmp     d3, d0
     ble     loc_485523AD
     mov     1, d3
 loc_485523AD:
     clr     d0
-    call    func_48560BB6_entry, 0, 0xc
+    call    SdSndListEntryCountQuery_entry, 0, 0xc
     exth    d0
     cmp     0, d0
     ble     loc_485523C3
@@ -30304,7 +30304,7 @@ loc_485528F4:
 # SdcRenameTechScreenJudge  (CPU 0x485528f8)
 SdcRenameTechScreenJudge:
     add     -0x14, sp
-    call    func_4855F599_entry, 0, 8
+    call    SdCurSongTypeMaskGet_entry, 0, 8
     exthu   d0
     cmp     0, d0
     beq     loc_4855291D
@@ -30417,7 +30417,7 @@ loc_48552A38:
     exth    d0
     cmp     0, d0
     blt     loc_48552A90
-    call    func_48402673_entry, 0, 0x2c
+    call    FdcPrgDiskChangedClear_entry, 0, 0x2c
     extbu   d0
     cmp     0, d0
     beq     loc_48552A7E
@@ -30498,7 +30498,7 @@ loc_48552B37:
     exth    d0
     cmp     0, d0
     blt     loc_48552B8F
-    call    func_48402673_entry, 0, 0x2c
+    call    FdcPrgDiskChangedClear_entry, 0, 0x2c
     extbu   d0
     cmp     0, d0
     beq     loc_48552B7D
@@ -30614,7 +30614,7 @@ loc_48552C68:
 loc_48552C6F:
     jmp     loc_48552DEB
 loc_48552C72:
-    call    func_48472117_entry, 0, 0x1c
+    call    DiskCmdPhaseBlock_entry, 0, 0x1c
     call    GetTitleOld_entry, 0, 0x10
     exthu   d0
     cmp     3, d0
@@ -30691,7 +30691,7 @@ loc_48552D5F:
     clr     d2
 loc_48552D61:
     extbu   d0
-    call    func_4855F742_entry, [d2], 4
+    call    SdLoadFilterTypeSet_entry, [d2], 4
     inc     d2
     mov     d2, d0
     exth    d2
@@ -30708,7 +30708,7 @@ loc_48552D7A:
     movbu   d0, (0x50083bc4)
     bra     loc_48552DA6
 loc_48552D8D:
-    call    func_4855EE91_entry, 0, 0xc
+    call    SdCurSongIndexGet_entry, 0, 0xc
     exth    d0
     cmp     0, d0
     blt     loc_48552DA6
@@ -30716,12 +30716,12 @@ loc_48552D8D:
     bge     loc_48552DA6
     inc     d0
     extbu   d0
-    call    func_4855EE77_entry, [d2], 0x10
+    call    SdCurSongIndexSet_entry, [d2], 0x10
 loc_48552DA6:
     clr     d0
     ret     [d2], 0x24
 loc_48552DAA:
-    call    func_4847212D_entry, 0, 0x1c
+    call    DiskCmdPhaseUnblock_entry, 0, 0x1c
     movbu   (0x50083bc4), d0
     cmp     0, d0
     beq     loc_48552DC2
@@ -30836,7 +30836,7 @@ loc_48552EBA:
 loc_48552EC1:
     jmp     loc_485530B0
 loc_48552EC4:
-    call    func_48472117_entry, 0, 0x1c
+    call    DiskCmdPhaseBlock_entry, 0, 0x1c
     call    SD_GetState, 0, 0
     extbu   d0
     cmp     2, d0
@@ -30935,11 +30935,11 @@ loc_48552FF0:
     cmp     7, d2
     bge     loc_48552FFE
     extbu   d0
-    call    func_4855F7CA_entry, [d2], 4
+    call    SdSaveFilterTypeSet_entry, [d2], 4
     bra     loc_48553006
 loc_48552FFE:
     extbu   d0
-    call    func_4855F7E8_entry, [d2], 4
+    call    SdSaveFilterTypeClear_entry, [d2], 4
 loc_48553006:
     inc     d2
     mov     d2, d0
@@ -30967,7 +30967,7 @@ loc_4855302A:
     clr     d0
     ret     [d2], 0x18
 loc_48553056:
-    call    func_4847212D_entry, 0, 0x1c
+    call    DiskCmdPhaseUnblock_entry, 0, 0x1c
     clr     d0
     mov     d0, d1
     call    SDModuleModeReq_entry, 0, 0xc
@@ -30981,7 +30981,7 @@ loc_48553056:
     bra     loc_485530D0
 loc_48553085:
     mov     SdcSaveSureWin_id, d0
-    call    func_4851AC17_entry, [d2], 0x18
+    call    FmmHasParentWindow_entry, [d2], 0x18
     exth    d0
     cmp     1, d0
     bne     loc_485530AD
@@ -31043,7 +31043,7 @@ loc_4855310D:
 loc_4855311A:
     jmp     loc_48553248
 loc_4855311D:
-    call    func_48472117_entry, 0, 0x1c
+    call    DiskCmdPhaseBlock_entry, 0, 0x1c
     call    SD_GetState, 0, 0
     extbu   d0
     cmp     2, d0
@@ -31131,7 +31131,7 @@ loc_4855322B:
     clr     d0
     ret     0, 0x14
 loc_4855322F:
-    call    func_4847212D_entry, 0, 0x1c
+    call    DiskCmdPhaseUnblock_entry, 0, 0x1c
     clr     d0
     mov     d0, d1
     call    SDModuleModeReq_entry, 0, 0xc
@@ -31214,7 +31214,7 @@ loc_485532E8:
 loc_485532EF:
     jmp     loc_485533DA
 loc_485532F2:
-    call    func_48472117_entry, 0, 0x1c
+    call    DiskCmdPhaseBlock_entry, 0, 0x1c
     call    SD_GetState, 0, 0
     extbu   d0
     cmp     2, d0
@@ -31266,7 +31266,7 @@ loc_48553380:
     movbu   d0, (0x50083bbe)
     ret     0, 0x14
 loc_48553390:
-    call    func_4847212D_entry, 0, 0x1c
+    call    DiskCmdPhaseUnblock_entry, 0, 0x1c
     clr     d0
     mov     d0, d1
     call    SDModuleModeReq_entry, 0, 0xc
@@ -31276,7 +31276,7 @@ loc_48553390:
     ret     0, 0x14
 loc_485533AF:
     mov     SaveSameNameSureWin_id, d0
-    call    func_4851AC17_entry, [d2], 0x18
+    call    FmmHasParentWindow_entry, [d2], 0x18
     exth    d0
     cmp     1, d0
     bne     loc_485533D7
@@ -31359,7 +31359,7 @@ loc_48553465:
 loc_48553472:
     jmp     loc_4855356A
 loc_48553475:
-    call    func_48472117_entry, 0, 0x1c
+    call    DiskCmdPhaseBlock_entry, 0, 0x1c
     call    SD_GetState, 0, 0
     extbu   d0
     cmp     2, d0
@@ -31430,7 +31430,7 @@ loc_4855354D:
     clr     d0
     ret     0, 0x14
 loc_48553551:
-    call    func_4847212D_entry, 0, 0x1c
+    call    DiskCmdPhaseUnblock_entry, 0, 0x1c
     clr     d0
     mov     d0, d1
     call    SDModuleModeReq_entry, 0, 0xc
@@ -31511,7 +31511,7 @@ loc_485535FA:
 loc_48553601:
     jmp     loc_485537EA
 loc_48553604:
-    call    func_48472117_entry, 0, 0x1c
+    call    DiskCmdPhaseBlock_entry, 0, 0x1c
     call    SD_GetState, 0, 0
     extbu   d0
     cmp     2, d0
@@ -31642,7 +31642,7 @@ loc_485537A4:
     clr     d0
     bra     loc_485537EE
 loc_485537A7:
-    call    func_4847212D_entry, 0, 0x1c
+    call    DiskCmdPhaseUnblock_entry, 0, 0x1c
     clr     d0
     mov     d0, d1
     call    SDModuleModeReq_entry, 0, 0xc
@@ -31651,7 +31651,7 @@ loc_485537A7:
     bra     loc_485537EE
 loc_485537BF:
     mov     SdcSaveSureWin_id, d0
-    call    func_4851AC17_entry, [d2], 0x18
+    call    FmmHasParentWindow_entry, [d2], 0x18
     exth    d0
     cmp     1, d0
     bne     loc_485537E7
@@ -31698,7 +31698,7 @@ loc_48553820:
 loc_4855382D:
     jmp     loc_485539ED
 loc_48553830:
-    call    func_48472117_entry, 0, 0x1c
+    call    DiskCmdPhaseBlock_entry, 0, 0x1c
     call    SD_GetState, 0, 0
     extbu   d0
     cmp     2, d0
@@ -31829,7 +31829,7 @@ loc_485539D0:
     clr     d0
     ret     0, 0x14
 loc_485539D4:
-    call    func_4847212D_entry, 0, 0x1c
+    call    DiskCmdPhaseUnblock_entry, 0, 0x1c
     clr     d0
     mov     d0, d1
     call    SDModuleModeReq_entry, 0, 0xc
@@ -31907,7 +31907,7 @@ loc_48553A77:
 loc_48553A84:
     jmp     loc_48553B31
 loc_48553A87:
-    call    func_48472117_entry, 0, 0x1c
+    call    DiskCmdPhaseBlock_entry, 0, 0x1c
     call    SD_GetState, 0, 0
     extbu   d0
     cmp     2, d0
@@ -31957,7 +31957,7 @@ loc_48553B15:
     clr     d0
     ret     0, 0x14
 loc_48553B19:
-    call    func_4847212D_entry, 0, 0x1c
+    call    DiskCmdPhaseUnblock_entry, 0, 0x1c
     clr     d0
     mov     d0, d1
     call    SDModuleModeReq_entry, 0, 0xc
@@ -32031,7 +32031,7 @@ loc_48553BB1:
 loc_48553BBE:
     jmp     loc_48553C5E
 loc_48553BC1:
-    call    func_48472117_entry, 0, 0x1c
+    call    DiskCmdPhaseBlock_entry, 0, 0x1c
     mov     1, d0
     call    SdUiBusyBegin_entry, 0, 0xc
     mov     5, d0
@@ -32043,12 +32043,12 @@ loc_48553BC1:
     exth    d0
     cmp     0, d0
     bge     loc_48553C1A
-    call    func_4851AC03_entry, 0, 8
-    call    func_4855FEB4_entry, [d2], 0xc
+    call    FmmSwRefresh_entry, 0, 8
+    call    SdPrivSmfListRescan_entry, [d2], 0xc
     movhu   d0, (0x50083bae)
-    call    func_4855EAB8_entry, [d2,a2,a3], 0x1c
-    call    func_4855EA12_entry, [a2], 0x14
-    call    func_4851AC03_entry, 0, 8
+    call    SdVolumeLabelGet_entry, [d2,a2,a3], 0x1c
+    call    SdFreeBytesQuery_entry, [a2], 0x14
+    call    FmmSwRefresh_entry, 0, 8
 loc_48553C1A:
     clr     d0
     mov     d0, (0x10, sp)
@@ -32063,7 +32063,7 @@ loc_48553C1A:
     clr     d0
     ret     0, 0x14
 loc_48553C46:
-    call    func_4847212D_entry, 0, 0x1c
+    call    DiskCmdPhaseUnblock_entry, 0, 0x1c
     clr     d0
     mov     d0, d1
     call    SDModuleModeReq_entry, 0, 0xc
@@ -32137,7 +32137,7 @@ loc_48553CDE:
 loc_48553CEB:
     jmp     loc_48553D92
 loc_48553CEE:
-    call    func_48472117_entry, 0, 0x1c
+    call    DiskCmdPhaseBlock_entry, 0, 0x1c
     mov     1, d0
     call    SdUiBusyBegin_entry, 0, 0xc
     mov     5, d0
@@ -32150,12 +32150,12 @@ loc_48553CEE:
     exth    d0
     cmp     0, d0
     bge     loc_48553D4E
-    call    func_4851AC03_entry, 0, 8
-    call    func_4855FEB4_entry, [d2], 0xc
+    call    FmmSwRefresh_entry, 0, 8
+    call    SdPrivSmfListRescan_entry, [d2], 0xc
     movhu   d0, (0x50083bae)
-    call    func_4855EAB8_entry, [d2,a2,a3], 0x1c
-    call    func_4855EA12_entry, [a2], 0x14
-    call    func_4851AC03_entry, 0, 8
+    call    SdVolumeLabelGet_entry, [d2,a2,a3], 0x1c
+    call    SdFreeBytesQuery_entry, [a2], 0x14
+    call    FmmSwRefresh_entry, 0, 8
 loc_48553D4E:
     clr     d0
     mov     d0, (0x10, sp)
@@ -32170,7 +32170,7 @@ loc_48553D4E:
     clr     d0
     ret     0, 0x14
 loc_48553D7A:
-    call    func_4847212D_entry, 0, 0x1c
+    call    DiskCmdPhaseUnblock_entry, 0, 0x1c
     clr     d0
     mov     d0, d1
     call    SDModuleModeReq_entry, 0, 0xc
@@ -32283,11 +32283,11 @@ loc_48553E75:
     call    ApPostEvent_entry, [d2], 0x1c
     mov     1, d0
     call    SdUiBusyBegin_entry, 0, 0xc
-    call    func_4851AC03_entry, 0, 8
-    call    func_48565EC3_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
+    call    SdCardFormatRun_entry, 0, 8
     mov     d0, d2
     call    SdRemountSync_entry, [d2], 0x10
-    call    func_4851AC03_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -32345,7 +32345,7 @@ loc_48553F27:
 loc_48553F63:
     mov     0x63, d1
     mov     d2, d0
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d1
     extbu   d1
     exthu   d1
@@ -32457,7 +32457,7 @@ loc_48554086:
 loc_4855408D:
     jmp     loc_4855418F
 loc_48554090:
-    call    func_48472117_entry, 0, 0x1c
+    call    DiskCmdPhaseBlock_entry, 0, 0x1c
     call    func_4852B490_entry, [d2], 4
     call    func_4852F9C6_entry, [d2], 4
     call    SD_GetState, 0, 0
@@ -32510,7 +32510,7 @@ loc_4855412C:
     clr     d2
 loc_4855412E:
     extbu   d0
-    call    func_4855F742_entry, [d2], 4
+    call    SdLoadFilterTypeSet_entry, [d2], 4
     inc     d2
     mov     d2, d0
     exth    d2
@@ -32528,7 +32528,7 @@ loc_4855415D:
     clr     d0
     ret     [d2], 0x18
 loc_48554161:
-    call    func_4847212D_entry, 0, 0x1c
+    call    DiskCmdPhaseUnblock_entry, 0, 0x1c
     clr     d0
     mov     d0, d1
     call    SDModuleModeReq_entry, 0, 0xc
@@ -32620,7 +32620,7 @@ loc_48554231:
 loc_48554238:
     jmp     loc_4855439C
 loc_4855423B:
-    call    func_48472117_entry, 0, 0x1c
+    call    DiskCmdPhaseBlock_entry, 0, 0x1c
     call    SD_GetState, 0, 0
     extbu   d0
     cmp     2, d0
@@ -32720,7 +32720,7 @@ loc_4855435F:
     exthu   d0
     cmp     0x11f, d0
     beq     loc_48554398
-    call    func_4847212D_entry, 0, 0x1c
+    call    DiskCmdPhaseUnblock_entry, 0, 0x1c
     clr     d0
     mov     d0, d1
     call    SDModuleModeReq_entry, 0, 0xc
@@ -32775,7 +32775,7 @@ loc_48554403:
     call    func_48562647_entry, [d2], 0xc
     exth    d0
     mov     0x60, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     extbu   d2
     mov     d2, d0
@@ -32785,9 +32785,9 @@ loc_48554403:
     clr     d0
     movbu   d0, (0x50083bbf)
 loc_4855443E:
-    call    func_4855E9DB, 0, 0
-    call    func_4855EA12_entry, [a2], 0x14
-    call    func_4851AC03_entry, 0, 8
+    call    SdFreeBytesInvalidate, 0, 0
+    call    SdFreeBytesQuery_entry, [a2], 0x14
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -32977,7 +32977,7 @@ loc_4855462E:
     mov     8, d0
     movbu   d0, (SdcFmmFolderNameFunc_Table)
 loc_4855464C:
-    call    func_4855EECB_entry, 0, 0xc
+    call    SdCurFolderIndexGet_entry, 0, 0xc
     movhu   d0, (0x50082a88)
     exth    d0
     cmp     d3, d0
@@ -32995,7 +32995,7 @@ loc_48554664:
     mov     -1, d0
     mov     0x02150003, d1
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-    call    func_4855EE91_entry, 0, 0xc
+    call    SdCurSongIndexGet_entry, 0, 0xc
     movhu   d0, (0x50082a8a)
     exth    d0
     cmp     d3, d0
@@ -33031,7 +33031,7 @@ loc_485546DC:
     movbu   (SdcFmmFolderNameFunc_Table), d1
     exth    d0
     call    func_4855125F_entry, [d2,d3,a2,a3], 0x30
-    call    func_4855EECB_entry, 0, 0xc
+    call    SdCurFolderIndexGet_entry, 0, 0xc
     movbu   (SdcFmmFolderNameFunc_Table), d1
     exth    d0
     mov     d1, (0x10, sp)
@@ -33051,7 +33051,7 @@ loc_48554721:
     movhu   d0, (0x1a, sp)
     movhu   (0x50082a8a), d0
     movhu   d0, (0x18, sp)
-    call    func_4855ED46, 0, 0
+    call    SdDirFolderMaxGet, 0, 0
     mov     (0x3c, sp), a2
     mov     d0, d2
     extbu   d2
@@ -33249,11 +33249,11 @@ loc_48554909:
     call    func_48562663_entry, [d2,d3,a2,a3], 0xc0
     exth    d0
     mov     0x5d, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     extbu   d2
     call    ResetExtMode, 0, 0
-    call    func_4851AC03_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -33269,17 +33269,17 @@ loc_48554909:
     cmp     d3, d0
     beq     loc_485549B5
     mov     2, d0
-    call    func_4855F703_entry, [d2], 0x14
+    call    SdLoadFilterHasType_entry, [d2], 0x14
     extbu   d0
     cmp     d3, d0
     beq     loc_485549B5
     mov     2, d0
-    call    func_4855F631_entry, [d2], 0xc
+    call    SdCurSongHasType_entry, [d2], 0xc
     extbu   d0
     cmp     d3, d0
     bne     loc_485549A9
     mov     0xb, d0
-    call    func_4855F631_entry, [d2], 0xc
+    call    SdCurSongHasType_entry, [d2], 0xc
     extbu   d0
     cmp     d3, d0
     beq     loc_485549B5
@@ -33326,7 +33326,7 @@ loc_485549EC:
     jmp     loc_48554F62
 loc_48554A18:
     mov     2, d0
-    call    func_4855F78B_entry, [d2], 0x14
+    call    SdSaveFilterHasType_entry, [d2], 0x14
     extbu   d0
     cmp     d3, d0
     beq     loc_48554A68
@@ -33350,7 +33350,7 @@ loc_48554A18:
     call    ApPostEvent_entry, [d2], 0x1c
     jmp     loc_48554F62
 loc_48554A68:
-    call    func_4855F599_entry, 0, 8
+    call    SdCurSongTypeMaskGet_entry, 0, 8
     exthu   d0
     cmp     d3, d0
     beq     loc_48554AA8
@@ -33381,10 +33381,10 @@ loc_48554AA8:
     call    func_48562906_entry, [d2,d3,a2,a3], 0xe0
     exth    d0
     mov     0x60, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     call    ResetExtMode, 0, 0
-    call    func_4851AC03_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -33423,7 +33423,7 @@ loc_48554B4B:
     clr     d0
     movbu   d0, (0x50082a8c)
 loc_48554B5E:
-    call    func_4855F599_entry, 0, 8
+    call    SdCurSongTypeMaskGet_entry, 0, 8
     exthu   d0
     cmp     d3, d0
     beq     loc_48554B9E
@@ -33461,10 +33461,10 @@ loc_48554BD2:
     call    func_48562906_entry, [d2,d3,a2,a3], 0xe0
     exth    d0
     mov     0x60, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     call    ResetExtMode, 0, 0
-    call    func_4851AC03_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -33513,10 +33513,10 @@ loc_48554C88:
     call    func_48562906_entry, [d2,d3,a2,a3], 0xe0
     exth    d0
     mov     0x60, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     call    ResetExtMode, 0, 0
-    call    func_4851AC03_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -33572,12 +33572,12 @@ loc_48554D3A:
     call    func_485634DC_entry, [d2,d3,a2,a3], 0x9c
     exth    d0
     mov     0x60, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     call    ResetExtMode, 0, 0
-    call    func_4851AC03_entry, 0, 8
-    call    func_4855E9DB, 0, 0
-    call    func_4855EA12_entry, [a2], 0x14
+    call    FmmSwRefresh_entry, 0, 8
+    call    SdFreeBytesInvalidate, 0, 0
+    call    SdFreeBytesQuery_entry, [a2], 0x14
     call    func_48562647_entry, [d2], 0xc
     clr     d0
     mov     d0, (0x10, sp)
@@ -33601,7 +33601,7 @@ loc_48554DC0:
     mov     d2, d1
     movbu   d0, (0x14, sp)
     movbu   (0x14, sp), d0
-    call    func_4855F5EC_entry, [d2,d3], 0x10
+    call    SdDirSongTypeMaskGet_entry, [d2,d3], 0x10
     exthu   d0
     cmp     d3, d0
     beq     loc_48554DDC
@@ -33640,16 +33640,16 @@ loc_48554E13:
     call    func_48563617_entry, [d2,d3,a2,a3], 0xfc
     exth    d0
     mov     0x60, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
-    call    func_4851AC03_entry, 0, 8
-    call    func_4855E9DB, 0, 0
-    call    func_4855EA12_entry, [a2], 0x14
-    call    func_4855F2F2_entry, [d2,d3], 0x14
+    call    FmmSwRefresh_entry, 0, 8
+    call    SdFreeBytesInvalidate, 0, 0
+    call    SdFreeBytesQuery_entry, [a2], 0x14
+    call    SdDirScanAll_entry, [d2,d3], 0x14
     movhu   (0x50082a88), d0
     extbu   d2
     extbu   d0
-    call    func_4855F525_entry, [d2,d3], 0x1c
+    call    SdDirFolderStemFixup_entry, [d2,d3], 0x1c
     call    func_48562464_entry, [d2,a2,a3], 0x80
     exthu   d2
     clr     d0
@@ -33683,17 +33683,17 @@ loc_48554EBD:
     call    func_48563617_entry, [d2,d3,a2,a3], 0xfc
     exth    d0
     mov     0x60, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
-    call    func_4851AC03_entry, 0, 8
-    call    func_4855E9DB, 0, 0
-    call    func_4855EA12_entry, [a2], 0x14
-    call    func_4855F2F2_entry, [d2,d3], 0x14
+    call    FmmSwRefresh_entry, 0, 8
+    call    SdFreeBytesInvalidate, 0, 0
+    call    SdFreeBytesQuery_entry, [a2], 0x14
+    call    SdDirScanAll_entry, [d2,d3], 0x14
     movhu   (0x50082a88), d0
     extbu   d2
     movbu   d0, (0x14, sp)
     movbu   (0x14, sp), d0
-    call    func_4855F525_entry, [d2,d3], 0x1c
+    call    SdDirFolderStemFixup_entry, [d2,d3], 0x1c
     call    func_48562464_entry, [d2,a2,a3], 0x80
     exthu   d2
     clr     d0
@@ -33720,7 +33720,7 @@ loc_48554F62:
 loc_48554F75:
     movhu   (0x50082a88), d0
     extbu   d0
-    call    func_4855EEB1_entry, [d2], 0x10
+    call    SdCurFolderIndexSet_entry, [d2], 0x10
     movhu   (0x50082a88), d1
     movbu   (SdcFmmFolderNameFunc_Table), d0
     exth    d1
@@ -33780,7 +33780,7 @@ loc_48554FD6:
 loc_48555027:
     clr     d0
     movhu   d0, (0x50082a8a)
-    call    func_4855EE77_entry, [d2], 0x10
+    call    SdCurSongIndexSet_entry, [d2], 0x10
     movhu   (0x50082a8a), d0
     movbu   (SdcFmmFolderNameFunc_Table), d1
     exth    d0
@@ -33791,7 +33791,7 @@ loc_48555027:
     mov     -1, d0
     mov     0x02150004, d1
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-    call    func_4855EECB_entry, 0, 0xc
+    call    SdCurFolderIndexGet_entry, 0, 0xc
     movbu   (SdcFmmFolderNameFunc_Table), d1
     exth    d0
     mov     d1, (0x10, sp)
@@ -33812,7 +33812,7 @@ loc_4855507F:
 loc_48555092:
     movhu   (0x50082a8a), d0
     extbu   d0
-    call    func_4855EE77_entry, [d2], 0x10
+    call    SdCurSongIndexSet_entry, [d2], 0x10
     movhu   (0x50082a8a), d0
     movbu   (SdcFmmFolderNameFunc_Table), d1
     exth    d0
@@ -33834,7 +33834,7 @@ loc_48555092:
     call    LibDiv32, 0, 0
     cmp     d0, d2
     beq     loc_48555105
-    call    func_4855EECB_entry, 0, 0xc
+    call    SdCurFolderIndexGet_entry, 0, 0xc
     movbu   (SdcFmmFolderNameFunc_Table), d1
     exth    d0
     mov     d1, (0x10, sp)
@@ -33931,7 +33931,7 @@ loc_485551C8:
     bne     loc_485551D6
     jmp     loc_48555289
 loc_485551D6:
-    call    func_4855EECB_entry, 0, 0xc
+    call    SdCurFolderIndexGet_entry, 0, 0xc
     movbu   d0, (0x50082a90)
     extb    d0
     cmp     0, d0
@@ -33939,7 +33939,7 @@ loc_485551D6:
     mov     -1, d0
     movbu   d0, (0x50082a90)
 loc_485551F0:
-    call    func_4855EE91_entry, 0, 0xc
+    call    SdCurSongIndexGet_entry, 0, 0xc
     movbu   d0, (0x50082a91)
     extb    d0
     cmp     0, d0
@@ -33959,10 +33959,10 @@ loc_48555210:
 loc_48555226:
     mov     0x50082a95, a0
     mov     Str_empty_768, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     0x50082a92, a0
     mov     Str_empty_767, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     bra     loc_485552BD
 loc_4855524E:
     inc     d0
@@ -33971,7 +33971,7 @@ loc_4855524E:
     call    func_4851B5E3_entry, [d2], 0x18
     mov     a0, a1
     mov     0x50082a92, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     movbu   (0x50082a91), d0
     mov     2, d1
     extb    d0
@@ -33980,7 +33980,7 @@ loc_4855524E:
     call    func_4851B5E3_entry, [d2], 0x18
     mov     a0, a1
     mov     0x50082a95, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     bra     loc_485552BD
 loc_48555289:
     mov     -1, d0
@@ -33988,10 +33988,10 @@ loc_48555289:
     movbu   d0, (0x50082a91)
     mov     0x50082a92, a0
     mov     Str_empty_766, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     0x50082a95, a0
     mov     Str_empty_765, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
 loc_485552BD:
     mov     -1, d0
     mov     d0, (0x10, sp)
@@ -34014,7 +34014,7 @@ loc_485552E6:
     extb    d0
     cmp     0, d0
     blt     loc_4855531D
-    call    func_4855ECFD_entry, [d2,a2], 0x1c
+    call    SdDirFolderNameGet_entry, [d2,a2], 0x1c
     mov     a0, a1
     cmp     0, a1
     beq     loc_4855530D
@@ -34027,13 +34027,13 @@ loc_4855530D:
     mov     0x500831c4, a3
     mov     a3, a0
     mov     0x10, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
     bra     loc_4855532B
 loc_4855531D:
     mov     0x500831c4, a3
     mov     a3, a0
     mov     0x10, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
 loc_4855532B:
     movbu   (0x50082a91), d1
     clr     d0
@@ -34044,7 +34044,7 @@ loc_4855532B:
     movbu   (0x50082a90), d0
     movbu   d0, (0x14, sp)
     movbu   (0x14, sp), d0
-    call    func_4855ECA3_entry, [d2,d3,a2], 0x20
+    call    SdDirSongNameGet_entry, [d2,d3,a2], 0x20
     mov     a0, a1
     cmp     0, a1
     beq     loc_48555363
@@ -34055,12 +34055,12 @@ loc_4855532B:
 loc_48555363:
     mov     0x500831dd, a0
     mov     0x10, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
     bra     loc_4855537F
 loc_48555372:
     mov     0x500831dd, a0
     mov     0x10, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
 loc_4855537F:
     mov     0x50082a92, d0
     mov     d0, (0x10, sp)
@@ -34217,19 +34217,19 @@ loc_4855554E:
     movbu   d0, (0x50082a90)
     movbu   d0, (0x50082a91)
     mov     Str_empty_764, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     d2, a0
     mov     Str_empty_763, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     0x500831c4, a3
     mov     a3, a0
     mov     0x10, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
     clr     d0
     movbu   d0, (0x500831dc)
     mov     0x500831dd, a0
     mov     0x10, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
     clr     d0
     movhu   d0, (0x50083bb4)
     mov     d2, (0x10, sp)
@@ -34266,7 +34266,7 @@ loc_48555628:
     extb    d0
     cmp     0, d0
     blt     loc_48555672
-    call    func_4855ECFD_entry, [d2,a2], 0x1c
+    call    SdDirFolderNameGet_entry, [d2,a2], 0x1c
     mov     a0, a1
     cmp     0, a1
     beq     loc_4855564F
@@ -34279,7 +34279,7 @@ loc_4855564F:
     mov     0x500831c4, a2
     mov     a2, a0
     mov     0x10, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
 loc_4855565D:
     mov     a2, (0x10, sp)
     mov     SD_LDNM_FOLDNAME_id, d0
@@ -34298,10 +34298,10 @@ loc_48555680:
     mov     0x500831dc, a3
     movbu   d0, (0x14, sp)
     movbu   (0x14, sp), d0
-    call    func_4855EEB1_entry, [d2], 0x10
+    call    SdCurFolderIndexSet_entry, [d2], 0x10
     movbu   (0x50082a91), d0
     extbu   d0
-    call    func_4855EE77_entry, [d2], 0x10
+    call    SdCurSongIndexSet_entry, [d2], 0x10
     clr     d0
     movbu   d0, (0x500831dc)
     movbu   (0x50082a90), d0
@@ -34309,7 +34309,7 @@ loc_48555680:
     movbu   (0x50082a91), d1
     movbu   (0x14, sp), d0
     extbu   d1
-    call    func_4855F5EC_entry, [d2,d3], 0x10
+    call    SdDirSongTypeMaskGet_entry, [d2,d3], 0x10
     exthu   d0
     cmp     0, d0
     beq     loc_4855570D
@@ -34317,7 +34317,7 @@ loc_48555680:
     movbu   (0x50082a91), d1
     extbu   d0
     extbu   d1
-    call    func_4855ECA3_entry, [d2,d3,a2], 0x20
+    call    SdDirSongNameGet_entry, [d2,d3,a2], 0x20
     mov     a0, a1
     cmp     0, a1
     beq     loc_485556FE
@@ -34328,12 +34328,12 @@ loc_48555680:
 loc_485556FE:
     mov     0x500831dd, a0
     mov     0x10, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
     bra     loc_48555720
 loc_4855570D:
     mov     0x500831dd, a0
     mov     Str_NO_SONG, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
 loc_48555720:
     mov     1, d0
     call    func_48551470_entry, [d2], 0x18
@@ -34355,22 +34355,22 @@ loc_48555747:
     mov     0x50082a95, d2
     mov     d2, a0
     mov     Str_empty_762, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     0x50082a92, a2
     mov     a2, a0
     mov     Str_empty_761, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     clr     d0
     movhu   d0, (0x50083bb4)
     mov     0x500831c4, a3
     mov     a3, a0
     mov     0x10, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
     clr     d0
     movbu   d0, (0x500831dc)
     mov     0x500831dd, a0
     mov     0x10, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -34424,11 +34424,11 @@ loc_4855583A:
     call    func_48562663_entry, [d2,d3,a2,a3], 0xc0
     exth    d0
     mov     0x5d, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     extbu   d2
     call    ResetExtMode, 0, 0
-    call    func_4851AC03_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     movhu   d0, (0x50083bb4)
     mov     d0, (0x10, sp)
@@ -34445,17 +34445,17 @@ loc_4855583A:
     cmp     0, d0
     beq     loc_485558F0
     mov     2, d0
-    call    func_4855F703_entry, [d2], 0x14
+    call    SdLoadFilterHasType_entry, [d2], 0x14
     extbu   d0
     cmp     0, d0
     beq     loc_485558F0
     mov     2, d0
-    call    func_4855F631_entry, [d2], 0xc
+    call    SdCurSongHasType_entry, [d2], 0xc
     extbu   d0
     cmp     0, d0
     bne     loc_485558E4
     mov     0xb, d0
-    call    func_4855F631_entry, [d2], 0xc
+    call    SdCurSongHasType_entry, [d2], 0xc
     extbu   d0
     cmp     0, d0
     beq     loc_485558F0
@@ -34528,7 +34528,7 @@ loc_48555977:
     clr     d0
     ret     [d2,d3,a2,a3], 0x2c
 loc_4855597B:
-    call    func_4855EECB_entry, 0, 0xc
+    call    SdCurFolderIndexGet_entry, 0, 0xc
     mov     d0, d2
     mov     d2, d1
     exth    d1
@@ -34539,7 +34539,7 @@ loc_4855597B:
     movbu   d0, (0x500831dc)
     bra     loc_485559D6
 loc_48555998:
-    call    func_4855EE91_entry, 0, 0xc
+    call    SdCurSongIndexGet_entry, 0, 0xc
     mov     d0, d1
     mov     d1, d3
     exth    d3
@@ -34553,7 +34553,7 @@ loc_485559B5:
     mov     d2, d0
     extbu   d0
     extbu   d1
-    call    func_4855ECA3_entry, [d2,d3,a2], 0x20
+    call    SdDirSongNameGet_entry, [d2,d3,a2], 0x20
     mov     a0, a1
     mov     0x500831dc, a2
     clr     d0
@@ -34563,7 +34563,7 @@ loc_485559B5:
     mov     0x10, d1
     mov     d3, d0
     mov     a2, a0
-    call    func_4852F8AD_entry, [d2,d3,a2,a3], 0x20
+    call    FmmFileNoNameFormat_entry, [d2,d3,a2,a3], 0x20
 loc_485559D6:
     mov     a2, (0x10, sp)
     mov     (0x3c, sp), d0
@@ -34587,20 +34587,20 @@ SdcFolderRenameFunc:
 loc_48555A06:
     jmp     loc_48555B60
 loc_48555A09:
-    call    func_4855EECB_entry, 0, 0xc
+    call    SdCurFolderIndexGet_entry, 0, 0xc
     mov     d0, d1
     exth    d1
     cmp     0, d1
     blt     loc_48555A6D
     extbu   d0
-    call    func_4855ECFD_entry, [d2,a2], 0x1c
+    call    SdDirFolderNameGet_entry, [d2,a2], 0x1c
     mov     a0, a1
     cmp     0, a1
     bne     loc_48555A39
     mov     0x5008317c, a3
     mov     a3, a0
     mov     Str_empty_760, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     bra     loc_48555A81
 loc_48555A39:
     movbu   (a1), d0
@@ -34610,12 +34610,12 @@ loc_48555A39:
     mov     0x5008317c, a3
     mov     a3, a0
     mov     Str_empty_759, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     bra     loc_48555A81
 loc_48555A56:
     mov     0x5008317c, a3
     mov     a3, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     clr     d0
     movbu   d0, (0x5008318c)
     bra     loc_48555A81
@@ -34623,24 +34623,24 @@ loc_48555A6D:
     mov     0x5008317c, a3
     mov     a3, a0
     mov     Str_empty_758, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
 loc_48555A81:
     mov     0x50082a98, a0
     mov     a3, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     a3, a1
     mov     (0x30, sp), a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     clr     d0
     ret     [d2,a2,a3], 0x20
 loc_48555A9D:
     mov     0x5008317c, a2
     mov     (0x30, sp), a1
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     0x50082a98, a1
-    call    func_4852F7D7, 0, 0
+    call    FmmStrCmp, 0, 0
     exth    d0
     cmp     0, d0
     bne     loc_48555AC4
@@ -34654,10 +34654,10 @@ loc_48555AC4:
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     call    SdUiBusyBegin_entry, 0, 0xc
-    call    func_4851AC03_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
     mov     a2, a0
-    call    func_4855ED4B_entry, [d2,a2], 0x1c
-    call    func_4855EECB_entry, 0, 0xc
+    call    SdDirCurFolderNameSet_entry, [d2,a2], 0x1c
+    call    SdCurFolderIndexGet_entry, 0, 0xc
     mov     0x60, d2
     mov     d0, d1
     exth    d1
@@ -34667,22 +34667,22 @@ loc_48555AC4:
     call    func_48563063_entry, [d2,a2], 0x4c
     exth    d0
     mov     d2, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     extbu   d2
     mov     d2, d1
     exthu   d1
     cmp     0x23, d1
     bne     loc_48555B3C
-    call    func_4855E9DB, 0, 0
-    call    func_4855EA12_entry, [a2], 0x14
+    call    SdFreeBytesInvalidate, 0, 0
+    call    SdFreeBytesQuery_entry, [a2], 0x14
     call    func_48562647_entry, [d2], 0xc
     exth    d0
     mov     0x60, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     extbu   d2
-    call    func_4851AC03_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
 loc_48555B3C:
     clr     d0
     mov     d0, (0x10, sp)
@@ -34711,13 +34711,13 @@ SdcSongRenameFunc:
 loc_48555B7C:
     jmp     loc_48555CE5
 loc_48555B7F:
-    call    func_4855EECB_entry, 0, 0xc
+    call    SdCurFolderIndexGet_entry, 0, 0xc
     mov     d0, d3
     mov     d3, d1
     exth    d1
     cmp     0, d1
     blt     loc_48555BE9
-    call    func_4855EE91_entry, 0, 0xc
+    call    SdCurSongIndexGet_entry, 0, 0xc
     mov     d0, d1
     mov     d1, d2
     exth    d2
@@ -34727,14 +34727,14 @@ loc_48555B7F:
     extbu   d2
     extbu   d1
     mov     d2, d0
-    call    func_4855ECA3_entry, [d2,d3,a2], 0x20
+    call    SdDirSongNameGet_entry, [d2,d3,a2], 0x20
     mov     a0, a1
     cmp     0, a1
     bne     loc_48555BBB
     mov     0x500831dc, a2
     mov     a2, a0
     mov     0x10, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
     bra     loc_48555BF7
 loc_48555BBB:
     movbu   (a1), d0
@@ -34744,12 +34744,12 @@ loc_48555BBB:
     mov     0x500831dc, a2
     mov     a2, a0
     mov     0x10, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
     bra     loc_48555BF7
 loc_48555BD2:
     mov     0x500831dc, a2
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     clr     d0
     movbu   d0, (0x500831ec)
     bra     loc_48555BF7
@@ -34757,18 +34757,18 @@ loc_48555BE9:
     mov     0x500831dc, a2
     mov     a2, a0
     mov     0x10, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
 loc_48555BF7:
     mov     0x50082ab8, a0
     mov     a2, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     (0x30, sp), a0
     mov     a2, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     clr     d0
     ret     [d2,d3,a2], 0x20
 loc_48555C13:
-    call    func_4855F599_entry, 0, 8
+    call    SdCurSongTypeMaskGet_entry, 0, 8
     exthu   d0
     cmp     0, d0
     bne     loc_48555C22
@@ -34777,10 +34777,10 @@ loc_48555C22:
     mov     0x500831dc, a2
     mov     (0x30, sp), a1
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     0x50082ab8, a1
-    call    func_4852F7D7, 0, 0
+    call    FmmStrCmp, 0, 0
     exth    d0
     cmp     0, d0
     bne     loc_48555C49
@@ -34794,10 +34794,10 @@ loc_48555C49:
     call    ApPostEvent_entry, [d2], 0x1c
     clr     d0
     call    SdUiBusyBegin_entry, 0, 0xc
-    call    func_4851AC03_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
     mov     a2, a0
-    call    func_4855ED8A_entry, [d2,d3,a2], 0x20
-    call    func_4855EECB_entry, 0, 0xc
+    call    SdDirCurSongNameSet_entry, [d2,d3,a2], 0x20
+    call    SdCurFolderIndexGet_entry, 0, 0xc
     mov     0x60, d2
     mov     d0, d1
     exth    d1
@@ -34807,22 +34807,22 @@ loc_48555C49:
     call    func_48563063_entry, [d2,a2], 0x4c
     exth    d0
     mov     d2, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     extbu   d2
     mov     d2, d0
     exthu   d0
     cmp     0x23, d0
     bne     loc_48555CC1
-    call    func_4855E9DB, 0, 0
-    call    func_4855EA12_entry, [a2], 0x14
+    call    SdFreeBytesInvalidate, 0, 0
+    call    SdFreeBytesQuery_entry, [a2], 0x14
     call    func_48562647_entry, [d2], 0xc
     exth    d0
     mov     0x60, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     extbu   d2
-    call    func_4851AC03_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
 loc_48555CC1:
     clr     d0
     mov     d0, (0x10, sp)
@@ -34853,12 +34853,12 @@ SdcSaveFileNameFunc:
     jmp     loc_48555D88
 loc_48555D09:
     mov     0x50083194, a2
-    call    func_4855EDE5, 0, 0
+    call    SdSaveNameBufGet, 0, 0
     mov     a0, a1
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
-    call    func_4852F9A0, 0, 0
+    call    FmmTextSanitize, 0, 0
     mov     a2, (0x10, sp)
     mov     (0x28, sp), d0
     mov     0x0145000f, d1
@@ -34867,26 +34867,26 @@ loc_48555D09:
     bra     loc_48555D89
 loc_48555D3B:
     mov     0x50083194, a2
-    call    func_4855EDE5, 0, 0
+    call    SdSaveNameBufGet, 0, 0
     mov     a0, a1
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
-    call    func_4852F9A0, 0, 0
+    call    FmmTextSanitize, 0, 0
     clr     d0
     movbu   d0, (0x500831a4)
     mov     (0x28, sp), a0
     mov     a2, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     clr     d0
     bra     loc_48555D89
 loc_48555D6D:
     mov     0x50083194, a2
     mov     (0x28, sp), a1
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
-    call    func_4855EDEE_entry, [a2], 0x18
+    call    SdSaveNameBufSet_entry, [a2], 0x18
     clr     d0
     bra     loc_48555D89
 loc_48555D88:
@@ -34922,7 +34922,7 @@ loc_48555DC1:
     add     0x500837ac, a3
     movbu   d0, (a3)
     mov     d2, d0
-    call    func_4852FF6B_entry, [d2], 0x10
+    call    FmmFileNameGet_entry, [d2], 0x10
     mov     a0, a1
     clr     d0
     mov     d0, (0x18, sp)
@@ -34933,7 +34933,7 @@ loc_48555DC1:
     exthu   d0
     mov     6, d1
     mov     a2, a0
-    call    func_4852F8AD_entry, [d2,d3,a2,a3], 0x20
+    call    FmmFileNoNameFormat_entry, [d2,d3,a2,a3], 0x20
     mov     a3, (0x10, sp)
     mov     -1, d0
     mov     0x01450009, d1
@@ -34959,12 +34959,12 @@ func_48555E0E:
 func_48555E0E_entry:
     mov     d1, d3
     mov     d0, d2
-    call    func_4855EECB_entry, 0, 0xc
+    call    SdCurFolderIndexGet_entry, 0, 0xc
     exth    d2
     exth    d0
     cmp     d0, d2
     bne     loc_48555E3D
-    call    func_4855EE91_entry, 0, 0xc
+    call    SdCurSongIndexGet_entry, 0, 0xc
     mov     d3, d2
     exth    d2
     exth    d0
@@ -35004,12 +35004,12 @@ func_48555E52:
 func_48555E52_entry:
     mov     d1, d3
     mov     d0, d2
-    call    func_4855EECB_entry, 0, 0xc
+    call    SdCurFolderIndexGet_entry, 0, 0xc
     exth    d2
     exth    d0
     cmp     d0, d2
     bne     loc_48555E7F
-    call    func_4855EE91_entry, 0, 0xc
+    call    SdCurSongIndexGet_entry, 0, 0xc
     mov     d3, d1
     exth    d1
     exth    d0
@@ -35069,7 +35069,7 @@ loc_48555ECF:
 loc_48555EDA:
     jmp     loc_485564C7
 loc_48555EDD:
-    call    func_4855EECB_entry, 0, 0xc
+    call    SdCurFolderIndexGet_entry, 0, 0xc
     movhu   d0, (0x50082ad8)
     exth    d0
     cmp     0, d0
@@ -35087,7 +35087,7 @@ loc_48555EF6:
     mov     -1, d0
     mov     0x02150003, d1
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
-    call    func_4855EE91_entry, 0, 0xc
+    call    SdCurSongIndexGet_entry, 0, 0xc
     clr     d1
     movhu   d1, (0x50082ada)
     mov     d0, d1
@@ -35143,7 +35143,7 @@ loc_48555F9E:
     movhu   d0, (0x18, sp)
     movhu   (0x50082ada), d0
     movhu   d0, (0x1a, sp)
-    call    func_4855ED46, 0, 0
+    call    SdDirFolderMaxGet, 0, 0
     mov     (0x3c, sp), a0
     mov     d0, d2
     extbu   d2
@@ -35306,7 +35306,7 @@ loc_48556140:
     movbu   (0x14, sp), d0
     movbu   d1, (0x14, sp)
     movbu   (0x14, sp), d1
-    call    func_4855F5EC_entry, [d2,d3], 0x10
+    call    SdDirSongTypeMaskGet_entry, [d2,d3], 0x10
     exthu   d0
     cmp     0, d0
     beq     loc_48556190
@@ -35338,12 +35338,12 @@ loc_48556190:
     call    func_485630E6_entry, [d2,d3,a2,a3], 0x10
     exth    d0
     mov     0x60, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     call    ResetExtMode, 0, 0
-    call    func_4851AC03_entry, 0, 8
-    call    func_4855E9DB, 0, 0
-    call    func_4855EA12_entry, [a2], 0x14
+    call    FmmSwRefresh_entry, 0, 8
+    call    SdFreeBytesInvalidate, 0, 0
+    call    SdFreeBytesQuery_entry, [a2], 0x14
     call    func_48562647_entry, [d2], 0xc
     clr     d0
     mov     d0, (0x10, sp)
@@ -35390,12 +35390,12 @@ loc_48556253:
     call    func_485630E6_entry, [d2,d3,a2,a3], 0x10
     exth    d0
     mov     0x60, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     call    ResetExtMode, 0, 0
-    call    func_4851AC03_entry, 0, 8
-    call    func_4855E9DB, 0, 0
-    call    func_4855EA12_entry, [a2], 0x14
+    call    FmmSwRefresh_entry, 0, 8
+    call    SdFreeBytesInvalidate, 0, 0
+    call    SdFreeBytesQuery_entry, [a2], 0x14
     call    func_48562647_entry, [d2], 0xc
     clr     d0
     mov     d0, (0x10, sp)
@@ -35607,7 +35607,7 @@ loc_485564E8:
     clr     d0
     bra     loc_4855653B
 loc_485564EB:
-    call    func_4855EECB_entry, 0, 0xc
+    call    SdCurFolderIndexGet_entry, 0, 0xc
     mov     d0, d2
     exth    d2
     cmp     0, d2
@@ -35618,7 +35618,7 @@ loc_485564EB:
     bra     loc_48556526
 loc_48556507:
     extbu   d0
-    call    func_4855ECFD_entry, [d2,a2], 0x1c
+    call    SdDirFolderNameGet_entry, [d2,a2], 0x1c
     mov     a0, a1
     mov     0x500831c4, a2
     clr     d0
@@ -35628,7 +35628,7 @@ loc_48556507:
     exthu   d0
     mov     0x10, d1
     mov     a2, a0
-    call    func_4852F8AD_entry, [d2,d3,a2,a3], 0x20
+    call    FmmFileNoNameFormat_entry, [d2,d3,a2,a3], 0x20
 loc_48556526:
     mov     a2, (0x10, sp)
     mov     (0x38, sp), d0
@@ -35640,66 +35640,66 @@ loc_4855653A:
     clr     d0
 loc_4855653B:
     ret     [d2,a2,a3], 0x28
-
-func_4855653E:
+# SdcLoadFilterLineFormat  (CPU 0x4855653e)
+SdcLoadFilterLineFormat:
     movm    [d2,a2], (sp)
     add     -0x10, sp
-func_4855653E_entry:
+SdcLoadFilterLineFormat_entry:
     mov     d0, d2
     mov     a0, a2
     movbu   d2, (a2)
     inc     a2
     extbu   d2
     mov     d2, d0
-    call    func_4855F631_entry, [d2], 0xc
+    call    SdCurSongHasType_entry, [d2], 0xc
     extbu   d0
     cmp     0, d0
     beq     loc_48556584
     mov     d2, d0
-    call    func_4855F703_entry, [d2], 0x14
+    call    SdLoadFilterHasType_entry, [d2], 0x14
     extbu   d0
     cmp     0, d0
     beq     loc_48556574
     mov     Str_YES_6, a1
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     ret     [d2,a2], 0x18
 loc_48556574:
     mov     Str_NO_45, a1
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     bra     loc_485565DF
 loc_48556584:
     cmp     2, d2
     bne     loc_485565D1
     mov     0xb, d0
-    call    func_4855F631_entry, [d2], 0xc
+    call    SdCurSongHasType_entry, [d2], 0xc
     extbu   d0
     cmp     0, d0
     beq     loc_485565D1
     mov     0xc, d0
-    call    func_4855F631_entry, [d2], 0xc
+    call    SdCurSongHasType_entry, [d2], 0xc
     extbu   d0
     cmp     0, d0
     beq     loc_485565D1
     mov     d2, d0
-    call    func_4855F703_entry, [d2], 0x14
+    call    SdLoadFilterHasType_entry, [d2], 0x14
     extbu   d0
     cmp     0, d0
     beq     loc_485565C1
     mov     Str_YES_5, a1
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     bra     loc_485565DF
 loc_485565C1:
     mov     Str_NO_44, a1
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     bra     loc_485565DF
 loc_485565D1:
     mov     Str_empty_757, a1
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
 loc_485565DF:
     ret     [d2,a2], 0x18
 # SdcFmmLoadFilterFunc  (CPU 0x485565e2)
@@ -35733,7 +35733,7 @@ loc_4855661E:
     add     d3, d1
     mov     d1, a0
     extbu   d0
-    call    func_4855653E_entry, [d2,a2], 0x18
+    call    SdcLoadFilterLineFormat_entry, [d2,a2], 0x18
     mov     d2, d0
     asl     4, d0
     mov     d0, d1
@@ -35758,13 +35758,13 @@ loc_4855664D:
     mov     a1, d2
     mov     d2, d0
     extbu   d0
-    call    func_4855F742_entry, [d2], 4
+    call    SdLoadFilterTypeSet_entry, [d2], 4
     bra     loc_48556673
 loc_48556668:
     mov     a1, d2
     mov     d2, d0
     extbu   d0
-    call    func_4855F760_entry, [d2], 4
+    call    SdLoadFilterTypeClear_entry, [d2], 4
 loc_48556673:
     mov     0x50082adc, a2
     mov     d2, d0
@@ -35774,7 +35774,7 @@ loc_48556673:
     add     d0, a0
     mov     d2, d0
     extbu   d0
-    call    func_4855653E_entry, [d2,a2], 0x18
+    call    SdcLoadFilterLineFormat_entry, [d2,a2], 0x18
     extbu   d2
     asl     4, d2
     add     d2, a2
@@ -35788,13 +35788,13 @@ loc_485566A2:
     beq     loc_485566A9
     jmp     loc_485567A4
 loc_485566A9:
-    call    func_4855F599_entry, 0, 8
+    call    SdCurSongTypeMaskGet_entry, 0, 8
     exthu   d0
     cmp     0, d0
     bne     loc_485566B8
     jmp     loc_485567A4
 loc_485566B8:
-    call    func_4855F6FA, 0, 0
+    call    SdLoadFilterMaskGet, 0, 0
     exthu   d0
     cmp     0, d0
     bne     loc_485566C7
@@ -35812,11 +35812,11 @@ loc_485566C7:
     call    func_48562663_entry, [d2,d3,a2,a3], 0xc0
     exth    d0
     mov     0x5d, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     extbu   d2
     call    ResetExtMode, 0, 0
-    call    func_4851AC03_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -35832,17 +35832,17 @@ loc_485566C7:
     cmp     0, d0
     beq     loc_48556777
     mov     2, d0
-    call    func_4855F703_entry, [d2], 0x14
+    call    SdLoadFilterHasType_entry, [d2], 0x14
     extbu   d0
     cmp     0, d0
     beq     loc_48556777
     mov     2, d0
-    call    func_4855F631_entry, [d2], 0xc
+    call    SdCurSongHasType_entry, [d2], 0xc
     extbu   d0
     cmp     0, d0
     bne     loc_4855676B
     mov     0xb, d0
-    call    func_4855F631_entry, [d2], 0xc
+    call    SdCurSongHasType_entry, [d2], 0xc
     extbu   d0
     cmp     0, d0
     beq     loc_48556777
@@ -35872,18 +35872,18 @@ loc_48556787:
 loc_485567A4:
     clr     d0
     ret     [d2,d3,a2], 0x20
-
-func_485567A8:
+# SdcSaveFilterLineFormat  (CPU 0x485567a8)
+SdcSaveFilterLineFormat:
     movm    [d2,a2], (sp)
     add     -0x10, sp
-func_485567A8_entry:
+SdcSaveFilterLineFormat_entry:
     mov     d0, d2
     mov     a0, a2
     movbu   d2, (a2)
     inc     a2
     extbu   d2
     mov     d2, d0
-    call    func_4855F78B_entry, [d2], 0x14
+    call    SdSaveFilterHasType_entry, [d2], 0x14
     extbu   d0
     cmp     0, d0
     beq     loc_48556800
@@ -35895,22 +35895,22 @@ func_485567A8_entry:
     beq     loc_485567E0
     mov     Str_3BANK, a1
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     bra     loc_4855680E
 loc_485567E0:
     mov     Str_ALL_8, a1
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     bra     loc_4855680E
 loc_485567F0:
     mov     Str_YES_4, a1
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     bra     loc_4855680E
 loc_48556800:
     mov     Str_NO_43, a1
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
 loc_4855680E:
     ret     [d2,a2], 0x18
 # SdcFmmSaveFilterFunc  (CPU 0x48556811)
@@ -35935,7 +35935,7 @@ loc_48556839:
     add     d3, d1
     mov     d1, a0
     extbu   d0
-    call    func_485567A8_entry, [d2,a2], 0x18
+    call    SdcSaveFilterLineFormat_entry, [d2,a2], 0x18
     mov     d2, d1
     asl     4, d1
     add     d3, d1
@@ -35963,7 +35963,7 @@ loc_48556870:
     mov     a2, d2
     mov     d2, d0
     extbu   d0
-    call    func_4855F78B_entry, [d2], 0x14
+    call    SdSaveFilterHasType_entry, [d2], 0x14
     extbu   d0
     cmp     0, d0
     beq     loc_485568A1
@@ -35977,13 +35977,13 @@ loc_485568A1:
     call    SetSdSavePM3Bank, 0, 0
     mov     d2, d0
     extbu   d0
-    call    func_4855F7CA_entry, [d2], 4
+    call    SdSaveFilterTypeSet_entry, [d2], 4
     bra     loc_48556903
 loc_485568B3:
     mov     a2, d2
     mov     d2, d0
     extbu   d0
-    call    func_4855F78B_entry, [d2], 0x14
+    call    SdSaveFilterHasType_entry, [d2], 0x14
     extbu   d0
     cmp     0, d0
     beq     loc_48556903
@@ -35996,7 +35996,7 @@ loc_485568B3:
 loc_485568D8:
     mov     d2, d0
     extbu   d0
-    call    func_4855F7E8_entry, [d2], 4
+    call    SdSaveFilterTypeClear_entry, [d2], 4
     bra     loc_48556903
 loc_485568E3:
     cmp     EV_INDEXSW_UP, d1
@@ -36004,13 +36004,13 @@ loc_485568E3:
     mov     a2, d2
     mov     d2, d0
     extbu   d0
-    call    func_4855F7CA_entry, [d2], 4
+    call    SdSaveFilterTypeSet_entry, [d2], 4
     bra     loc_48556903
 loc_485568F8:
     mov     a2, d2
     mov     d2, d0
     extbu   d0
-    call    func_4855F7E8_entry, [d2], 4
+    call    SdSaveFilterTypeClear_entry, [d2], 4
 loc_48556903:
     mov     0x50082b8d, d3
     mov     d2, d1
@@ -36020,7 +36020,7 @@ loc_48556903:
     mov     d1, a0
     mov     d2, d0
     extbu   d0
-    call    func_485567A8_entry, [d2,a2], 0x18
+    call    SdcSaveFilterLineFormat_entry, [d2,a2], 0x18
     extbu   d2
     mov     d2, d0
     asl     4, d0
@@ -36042,12 +36042,12 @@ loc_48556945:
     bge     loc_48556954
     mov     d2, d0
     extbu   d0
-    call    func_4855F7CA_entry, [d2], 4
+    call    SdSaveFilterTypeSet_entry, [d2], 4
     bra     loc_4855695D
 loc_48556954:
     mov     d2, d0
     extbu   d0
-    call    func_4855F7E8_entry, [d2], 4
+    call    SdSaveFilterTypeClear_entry, [d2], 4
 loc_4855695D:
     mov     d3, d1
     asl     4, d1
@@ -36055,7 +36055,7 @@ loc_4855695D:
     add     d1, a0
     extbu   d2
     mov     d2, d0
-    call    func_485567A8_entry, [d2,a2], 0x18
+    call    SdcSaveFilterLineFormat_entry, [d2,a2], 0x18
     mov     d3, d0
     asl     4, d0
     mov     a2, a0
@@ -36081,12 +36081,12 @@ loc_48556999:
     bge     loc_485569A8
     mov     d2, d0
     extbu   d0
-    call    func_4855F7E8_entry, [d2], 4
+    call    SdSaveFilterTypeClear_entry, [d2], 4
     bra     loc_485569B1
 loc_485569A8:
     mov     d2, d0
     extbu   d0
-    call    func_4855F7CA_entry, [d2], 4
+    call    SdSaveFilterTypeSet_entry, [d2], 4
 loc_485569B1:
     mov     d3, d1
     asl     4, d1
@@ -36094,7 +36094,7 @@ loc_485569B1:
     add     d1, a0
     extbu   d2
     mov     d2, d0
-    call    func_485567A8_entry, [d2,a2], 0x18
+    call    SdcSaveFilterLineFormat_entry, [d2,a2], 0x18
     mov     d3, d0
     asl     4, d0
     mov     a2, a0
@@ -36114,7 +36114,7 @@ loc_485569E1:
     beq     loc_485569E8
     jmp     loc_48556B4E
 loc_485569E8:
-    call    func_4855F782, 0, 0
+    call    SdSaveFilterMaskGet, 0, 0
     exthu   d0
     cmp     0, d0
     bne     loc_485569F7
@@ -36134,7 +36134,7 @@ loc_485569F7:
     jmp     loc_48556D57
 loc_48556A22:
     mov     2, d0
-    call    func_4855F78B_entry, [d2], 0x14
+    call    SdSaveFilterHasType_entry, [d2], 0x14
     extbu   d0
     cmp     0, d0
     beq     loc_48556A74
@@ -36158,7 +36158,7 @@ loc_48556A22:
     call    ApPostEvent_entry, [d2], 0x1c
     jmp     loc_48556D57
 loc_48556A74:
-    call    func_4855F599_entry, 0, 8
+    call    SdCurSongTypeMaskGet_entry, 0, 8
     exthu   d0
     cmp     0, d0
     beq     loc_48556AB6
@@ -36189,10 +36189,10 @@ loc_48556AB6:
     call    func_48562906_entry, [d2,d3,a2,a3], 0xe0
     exth    d0
     mov     0x60, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     call    ResetExtMode, 0, 0
-    call    func_4851AC03_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -36231,7 +36231,7 @@ loc_48556B59:
     clr     d0
     movbu   d0, (0x50082b8c)
 loc_48556B6C:
-    call    func_4855F599_entry, 0, 8
+    call    SdCurSongTypeMaskGet_entry, 0, 8
     exthu   d0
     cmp     0, d0
     beq     loc_48556BAE
@@ -36269,10 +36269,10 @@ loc_48556BEC:
     call    func_48562906_entry, [d2,d3,a2,a3], 0xe0
     exth    d0
     mov     0x60, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     call    ResetExtMode, 0, 0
-    call    func_4851AC03_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -36321,10 +36321,10 @@ loc_48556C9A:
     call    func_48562906_entry, [d2,d3,a2,a3], 0xe0
     exth    d0
     mov     0x60, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     call    ResetExtMode, 0, 0
-    call    func_4851AC03_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -36358,14 +36358,14 @@ loc_48556D14:
 loc_48556D20:
     mov     d0, d2
     extbu   d0
-    call    func_4855F7E8_entry, [d2], 4
+    call    SdSaveFilterTypeClear_entry, [d2], 4
     mov     d3, d1
     asl     4, d1
     mov     a2, a0
     add     d1, a0
     extbu   d2
     mov     d2, d0
-    call    func_485567A8_entry, [d2,a2], 0x18
+    call    SdcSaveFilterLineFormat_entry, [d2,a2], 0x18
     mov     d3, d0
     asl     4, d0
     mov     d0, a0
@@ -36386,10 +36386,10 @@ loc_48556D5A:
     clr     d0
 loc_48556D5B:
     ret     [d2,d3,a2], 0x20
-
-func_48556D5E:
+# SdcSortCharRank  (CPU 0x48556d5e)
+SdcSortCharRank:
     movm    [d2], (sp)
-func_48556D5E_entry:
+SdcSortCharRank_entry:
     mov     d0, d2
     clr     d1
     clr     d0
@@ -36550,7 +36550,7 @@ loc_48556E74:
     add     0x500834ac, d0
     add     2, d0
     mov     d0, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     movbu   (0x19, a2), d0
     mov     2, d1
     inc     d0
@@ -36564,7 +36564,7 @@ loc_48556E74:
     add     a3, d0
     add     2, d0
     mov     d0, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     jmp     loc_48556F7B
 loc_48556EF9:
     mov     0x18, d1
@@ -36575,7 +36575,7 @@ loc_48556EF9:
     mov     d1, a0
     inc     a0
     mov     0x10, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
     mov     6, d1
     nop
     nop
@@ -36584,7 +36584,7 @@ loc_48556EF9:
     mov     2, a0
     add     d1, a0
     mov     2, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
     mov     6, d1
     nop
     nop
@@ -36593,7 +36593,7 @@ loc_48556EF9:
     mov     2, a0
     add     d1, a0
     mov     2, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
     bra     loc_48556F7B
 loc_48556F3B:
     mov     0x18, d1
@@ -36604,7 +36604,7 @@ loc_48556F3B:
     mov     d1, a0
     inc     a0
     mov     0x10, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
     mov     6, d1
     nop
     nop
@@ -36613,7 +36613,7 @@ loc_48556F3B:
     mov     2, a0
     add     d1, a0
     mov     2, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
     mov     6, d1
     nop
     nop
@@ -36622,7 +36622,7 @@ loc_48556F3B:
     mov     2, a0
     add     d1, a0
     mov     2, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
 loc_48556F7B:
     mov     6, d0
     nop
@@ -36716,7 +36716,7 @@ loc_48557046:
     beq     loc_485570B2
     extb    d2
     mov     d2, d0
-    call    func_48556D5E_entry, [d2], 4
+    call    SdcSortCharRank_entry, [d2], 4
     extbu   d0
     movhu   d0, (0x50082c44)
     exth    d0
@@ -36759,7 +36759,7 @@ loc_485570D0:
     mov     a0, d2
     cmp     0, d2
     beq     loc_48557158
-    call    func_4855EECB_entry, 0, 0xc
+    call    SdCurFolderIndexGet_entry, 0, 0xc
     mov     0x18, a1
     add     d2, a1
     movbu   (a1), d1
@@ -36767,9 +36767,9 @@ loc_485570D0:
     cmp     d0, d1
     beq     loc_48557105
     movbu   (a1), d0
-    call    func_4855EEB1_entry, [d2], 0x10
+    call    SdCurFolderIndexSet_entry, [d2], 0x10
 loc_48557105:
-    call    func_4855EE91_entry, 0, 0xc
+    call    SdCurSongIndexGet_entry, 0, 0xc
     mov     0x19, a0
     add     d2, a0
     movbu   (a0), d1
@@ -36777,7 +36777,7 @@ loc_48557105:
     cmp     d0, d1
     beq     loc_4855711B
     movbu   (a0), d0
-    call    func_4855EE77_entry, [d2], 0x10
+    call    SdCurSongIndexSet_entry, [d2], 0x10
 loc_4855711B:
     movhu   (0x50082c46), d0
     mov     0xa, d1
@@ -36971,11 +36971,11 @@ loc_485572EA:
     call    func_48562663_entry, [d2,d3,a2,a3], 0xc0
     exth    d0
     mov     0x5d, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     extbu   d2
     call    ResetExtMode, 0, 0
-    call    func_4851AC03_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -36991,17 +36991,17 @@ loc_485572EA:
     cmp     0, d0
     beq     loc_4855739A
     mov     2, d0
-    call    func_4855F703_entry, [d2], 0x14
+    call    SdLoadFilterHasType_entry, [d2], 0x14
     extbu   d0
     cmp     0, d0
     beq     loc_4855739A
     mov     2, d0
-    call    func_4855F631_entry, [d2], 0xc
+    call    SdCurSongHasType_entry, [d2], 0xc
     extbu   d0
     cmp     0, d0
     bne     loc_4855738E
     mov     0xb, d0
-    call    func_4855F631_entry, [d2], 0xc
+    call    SdCurSongHasType_entry, [d2], 0xc
     extbu   d0
     cmp     0, d0
     beq     loc_4855739A
@@ -37099,9 +37099,9 @@ loc_48557401:
     cmp     0, a2
     beq     loc_485574D1
     movbu   (0x18, a2), d0
-    call    func_4855EEB1_entry, [d2], 0x10
+    call    SdCurFolderIndexSet_entry, [d2], 0x10
     movbu   (0x19, a2), d0
-    call    func_4855EE77_entry, [d2], 0x10
+    call    SdCurSongIndexSet_entry, [d2], 0x10
     mov     1, d0
     call    func_48551470_entry, [d2], 0x18
     bra     loc_485574D1
@@ -37226,9 +37226,9 @@ loc_485575D8:
     cmp     0, a2
     beq     loc_48557612
     movbu   (0x18, a2), d0
-    call    func_4855EEB1_entry, [d2], 0x10
+    call    SdCurFolderIndexSet_entry, [d2], 0x10
     movbu   (0x19, a2), d0
-    call    func_4855EE77_entry, [d2], 0x10
+    call    SdCurSongIndexSet_entry, [d2], 0x10
     mov     1, d0
     call    func_48551470_entry, [d2], 0x18
 loc_48557612:
@@ -37426,11 +37426,11 @@ loc_485577E7:
     call    func_48562464_entry, [d2,a2,a3], 0x80
     exth    d0
     mov     0x60, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
-    call    func_4851AC03_entry, 0, 8
-    call    func_4855E9DB, 0, 0
-    call    func_4855EA12_entry, [a2], 0x14
+    call    FmmSwRefresh_entry, 0, 8
+    call    SdFreeBytesInvalidate, 0, 0
+    call    SdFreeBytesQuery_entry, [a2], 0x14
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -37574,7 +37574,7 @@ loc_485579A1:
     mov     0x50082c50, a2
     mov     a2, a0
     mov     Str_USER_LIST_2, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     extbu   d2
     inc     d2
     exthu   d2
@@ -37583,14 +37583,14 @@ loc_485579A1:
     call    func_4851B5E3_entry, [d2], 0x18
     mov     a0, a1
     mov     a2, a0
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     jmp     loc_48557A4A
 loc_485579CE:
     mov     0x50082c50, a2
     mov     a2, a0
     mov     Str_FOLDER_17, a1
-    call    func_4852F762, 0, 0
-    call    func_4855EECB_entry, 0, 0xc
+    call    StrCopy, 0, 0
+    call    SdCurFolderIndexGet_entry, 0, 0xc
     exth    d0
     inc     d0
     exthu   d0
@@ -37598,14 +37598,14 @@ loc_485579CE:
     call    func_4851B5E3_entry, [d2], 0x18
     mov     a0, a1
     mov     a2, a0
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     bra     loc_48557A4A
 loc_485579FE:
     mov     0x50082c50, a2
     mov     a2, a0
     mov     Str_ALL_SONG_CURRENT_FOLDER, a1
-    call    func_4852F762, 0, 0
-    call    func_4855EECB_entry, 0, 0xc
+    call    StrCopy, 0, 0
+    call    SdCurFolderIndexGet_entry, 0, 0xc
     exth    d0
     inc     d0
     exthu   d0
@@ -37613,16 +37613,16 @@ loc_485579FE:
     call    func_4851B5E3_entry, [d2], 0x18
     mov     a0, a1
     mov     a2, a0
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     mov     Str_empty_756, a1
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     bra     loc_48557A4A
 loc_48557A3C:
     mov     0x50082c50, a2
     mov     a2, a0
     mov     0xc, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
 loc_48557A4A:
     mov     a2, (0x10, sp)
     mov     -1, d0
@@ -37640,7 +37640,7 @@ func_48557A62:
     add     -0x18, sp
 func_48557A62_entry:
     mov     d0, d2
-    call    func_4855EECB_entry, 0, 0xc
+    call    SdCurFolderIndexGet_entry, 0, 0xc
     mov     d0, d3
     extbu   d3
     mov     d3, d0
@@ -37660,7 +37660,7 @@ loc_48557A83:
     mov     d0, (0x10, sp)
     mov     d3, d0
     movbu   (0x14, sp), d1
-    call    func_4855F657_entry, [d2], 0x14
+    call    SdDirSongHasType_entry, [d2], 0x14
     mov     0, a2
     extbu   d0
     cmp     0, d0
@@ -37669,7 +37669,7 @@ loc_48557A83:
     mov     d0, (0x10, sp)
     movbu   (0x14, sp), d1
     mov     d3, d0
-    call    func_4855F657_entry, [d2], 0x14
+    call    SdDirSongHasType_entry, [d2], 0x14
     extbu   d0
     cmp     0, d0
     bne     loc_48557AB0
@@ -37685,7 +37685,7 @@ loc_48557ABA:
     clr     d2
 loc_48557ABC:
     extbu   d0
-    call    func_4855F742_entry, [d2], 4
+    call    SdLoadFilterTypeSet_entry, [d2], 4
     inc     d2
     mov     d2, d0
     exth    d2
@@ -37695,14 +37695,14 @@ loc_48557ABC:
     mov     d0, d2
 loc_48557ACC:
     extbu   d0
-    call    func_4855F760_entry, [d2], 4
+    call    SdLoadFilterTypeClear_entry, [d2], 4
     inc     d2
     mov     d2, d0
     exth    d2
     cmp     0xb, d2
     blt     loc_48557ACC
     movbu   (0x14, sp), d0
-    call    func_4855EE77_entry, [d2], 0x10
+    call    SdCurSongIndexSet_entry, [d2], 0x10
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -37726,7 +37726,7 @@ loc_48557ACC:
     call    func_48562663_entry, [d2,d3,a2,a3], 0xc0
     mov     d0, d2
     call    ResetExtMode, 0, 0
-    call    func_4851AC03_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -37751,7 +37751,7 @@ func_48557B7A:
 func_48557B7A_entry:
     mov     d1, d2
     extbu   d0
-    call    func_4855EEB1_entry, [d2], 0x10
+    call    SdCurFolderIndexSet_entry, [d2], 0x10
     extbu   d2
     mov     d2, d0
     call    func_48557A62_entry, [d2,d3,a2,a3], 0x28
@@ -37778,7 +37778,7 @@ func_48557B90_entry:
     extbu   d0
     mov     d3, d1
     extbu   d1
-    call    func_4855E883_entry, [d2], 0x10
+    call    SdFolderSongIndexCheck_entry, [d2], 0x10
     exth    d0
     cmp     0, d0
     bge     loc_48557BC3
@@ -37787,10 +37787,10 @@ func_48557B90_entry:
 loc_48557BC3:
     extbu   d2
     mov     d2, d0
-    call    func_4855EEB1_entry, [d2], 0x10
+    call    SdCurFolderIndexSet_entry, [d2], 0x10
     extbu   d3
     mov     d3, d0
-    call    func_4855EE77_entry, [d2], 0x10
+    call    SdCurSongIndexSet_entry, [d2], 0x10
     mov     5, d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -37803,7 +37803,7 @@ loc_48557BC3:
     call    func_48562663_entry, [d2,d3,a2,a3], 0xc0
     mov     d0, d2
     call    ResetExtMode, 0, 0
-    call    func_4851AC03_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -37858,7 +37858,7 @@ loc_48557C6F:
     bne     loc_48557CA9
     extbu   d2
     mov     d2, d0
-    call    func_48461F36_entry, [d2], 0x10
+    call    SeqSongSelectByIndex_entry, [d2], 0x10
     movbu   (0x50083bdb), d0
     inc     d0
     movbu   d0, (0x50083bdb)
@@ -37951,7 +37951,7 @@ loc_48557D31:
     bne     loc_48557D61
     extbu   d2
     mov     d2, d0
-    call    func_48461F36_entry, [d2], 0x10
+    call    SeqSongSelectByIndex_entry, [d2], 0x10
     movbu   (0x50083bdb), d0
     inc     d0
     movbu   d0, (0x50083bdb)
@@ -37986,7 +37986,7 @@ loc_48557D8F:
     bne     loc_48557DB9
     extbu   d2
     mov     d2, d0
-    call    func_48461F36_entry, [d2], 0x10
+    call    SeqSongSelectByIndex_entry, [d2], 0x10
     movbu   (0x50083bdb), d0
     inc     d0
     movbu   d0, (0x50083bdb)
@@ -38065,7 +38065,7 @@ loc_48557E6E:
     mov     d0, (0x10, sp)
     mov     a3, d0
     mov     d3, d1
-    call    func_4855F657_entry, [d2], 0x14
+    call    SdDirSongHasType_entry, [d2], 0x14
     extbu   d0
     cmp     0, d0
     beq     loc_48557E8C
@@ -38082,7 +38082,7 @@ loc_48557E8C:
     mov     d0, (0x10, sp)
     mov     a3, d0
     mov     d3, d1
-    call    func_4855F657_entry, [d2], 0x14
+    call    SdDirSongHasType_entry, [d2], 0x14
     extbu   d0
     cmp     0, d0
     beq     loc_48557EA8
@@ -38119,7 +38119,7 @@ loc_48557ECB:
     mov     d0, (0x10, sp)
     mov     (0x14, sp), d0
     mov     d3, d1
-    call    func_4855F657_entry, [d2], 0x14
+    call    SdDirSongHasType_entry, [d2], 0x14
     extbu   d0
     cmp     0, d0
     beq     loc_48557EE8
@@ -38136,7 +38136,7 @@ loc_48557EE8:
     mov     d0, (0x10, sp)
     mov     (0x14, sp), d0
     mov     d3, d1
-    call    func_4855F657_entry, [d2], 0x14
+    call    SdDirSongHasType_entry, [d2], 0x14
     extbu   d0
     cmp     0, d0
     beq     loc_48557F03
@@ -38195,7 +38195,7 @@ loc_48557F5D:
 loc_48557F60:
     mov     1, d0
     call    SdUiBusyBegin_entry, 0, 0xc
-    call    func_48472117_entry, 0, 0x1c
+    call    DiskCmdPhaseBlock_entry, 0, 0x1c
     call    GetTitleOld_entry, 0, 0x10
     exthu   d0
     cmp     0x123, d0
@@ -38265,7 +38265,7 @@ loc_48558032:
     movbu   d2, (0x50083bbb)
     movbu   d0, (0x50082c70)
     movbu   d0, (SdcFmmSongMedleyListViewFunc_Table)
-    call    func_4855EECB_entry, 0, 0xc
+    call    SdCurFolderIndexGet_entry, 0, 0xc
     movbu   d0, (0x50082c71)
     extbu   d0
     cmp     d2, d0
@@ -38273,10 +38273,10 @@ loc_48558032:
     clr     d0
     movbu   d0, (0x50082c71)
 loc_4855805B:
-    call    func_48461DAA_entry, 0, 0xc
+    call    MdlySessionBegin_entry, 0, 0xc
     jmp     loc_485583CA
 loc_48558065:
-    call    func_48461837, 0, 0
+    call    MdlyContinueFlagGet, 0, 0
     extbu   d0
     cmp     1, d0
     beq     loc_48558074
@@ -38503,7 +38503,7 @@ loc_485582C0:
     mov     1, d0
     movbu   d0, (0x50083bbb)
 loc_485582ED:
-    call    func_4855EE91_entry, 0, 0xc
+    call    SdCurSongIndexGet_entry, 0, 0xc
     exth    d0
     clr     d1
     mov     Str_empty_755, a0
@@ -38535,7 +38535,7 @@ loc_4855832A:
     call    ChangeTitle_entry, [d2,d3,a2], 0x20
     mov     0x5d, d1
     mov     d3, d0
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d1
     extbu   d1
     exthu   d1
@@ -38551,7 +38551,7 @@ loc_48558364:
     jmp     loc_485580BC
     bra     loc_485583CA
 loc_48558370:
-    call    func_48461837, 0, 0
+    call    MdlyContinueFlagGet, 0, 0
     extbu   d0
     cmp     d2, d0
     bne     loc_485583A7
@@ -38587,10 +38587,10 @@ loc_485583CE:
     beq     loc_485583F1
     clr     d0
     movbu   d0, (SdcFmmSongMedleyListViewFunc_Table)
-    call    func_48461E97_entry, 0, 0xc
+    call    MdlySessionEnd_entry, 0, 0xc
     call    func_4853233C, 0, 0
 loc_485583F1:
-    call    func_4847212D_entry, 0, 0x1c
+    call    DiskCmdPhaseUnblock_entry, 0, 0x1c
     clr     d0
     mov     d2, d1
     call    SDModuleModeReq_entry, 0, 0xc
@@ -38679,7 +38679,7 @@ loc_48558493:
     mov     1, d0
     movbu   d0, (0x50083bbb)
 loc_485584C8:
-    call    func_4855EE91_entry, 0, 0xc
+    call    SdCurSongIndexGet_entry, 0, 0xc
     exth    d0
     clr     d1
     mov     Str_empty_754, a0
@@ -38748,7 +38748,7 @@ loc_48558550:
     mov     1, d0
     movbu   d0, (0x50083bbb)
 loc_48558589:
-    call    func_4855EE91_entry, 0, 0xc
+    call    SdCurSongIndexGet_entry, 0, 0xc
     exth    d0
     clr     d1
     mov     Str_empty_753, a0
@@ -38820,7 +38820,7 @@ loc_48558618:
     mov     1, d0
     movbu   d0, (0x50083bbb)
 loc_48558657:
-    call    func_4855EE91_entry, 0, 0xc
+    call    SdCurSongIndexGet_entry, 0, 0xc
     exth    d0
     clr     d1
     mov     Str_empty_752, a0
@@ -38877,7 +38877,7 @@ loc_485586E0:
     call    ChangeTitle_entry, [d2,d3,a2], 0x20
     mov     0x5d, d1
     mov     d2, d0
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d1
     extbu   d1
     exthu   d1
@@ -38985,7 +38985,7 @@ loc_4855880D:
     clr     d0
     ret     [d2,d3,a2,a3], 0x24
 loc_4855881A:
-    call    func_4855EECB_entry, 0, 0xc
+    call    SdCurFolderIndexGet_entry, 0, 0xc
     movbu   d0, (0x50082c71)
     extbu   d0
     cmp     d2, d0
@@ -39001,7 +39001,7 @@ loc_48558830:
     inc     d0
     movbu   d0, (0x50082c71)
     movbu   (0x50082c71), d0
-    call    func_4855EEB1_entry, [d2], 0x10
+    call    SdCurFolderIndexSet_entry, [d2], 0x10
     clr     d0
     movbu   d0, (0x50082c70)
     movbu   (0x50082c71), d0
@@ -39030,7 +39030,7 @@ loc_4855888E:
     clr     d0
     bra     loc_48558904
 loc_4855889A:
-    call    func_4855EECB_entry, 0, 0xc
+    call    SdCurFolderIndexGet_entry, 0, 0xc
     movbu   d0, (0x50082c71)
     extbu   d0
     cmp     d2, d0
@@ -39044,7 +39044,7 @@ loc_485588B0:
     add     -1, d0
     movbu   d0, (0x50082c71)
     movbu   (0x50082c71), d0
-    call    func_4855EEB1_entry, [d2], 0x10
+    call    SdCurFolderIndexSet_entry, [d2], 0x10
     clr     d0
     movbu   d0, (0x50082c70)
     movbu   (0x50082c71), d0
@@ -39251,7 +39251,7 @@ loc_48558AEE:
     movbu   d1, (a0)
     inc     a0
     mov     Str_CUSTOM_6, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     movbu   (0x50082c74), d0
     mov     0x15, d1
     nop
@@ -39268,7 +39268,7 @@ loc_48558AEE:
     call    func_4851B5E3_entry, [d2], 0x18
     mov     a0, a1
     mov     a2, a0
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     movbu   (0x50082c74), d0
     mov     0x15, d1
     nop
@@ -39300,7 +39300,7 @@ loc_48558AEE:
     call    func_4851F9C8_entry, [a2], 0x14
     mov     a0, a1
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     movbu   (0x50082c75), d0
     mov     0x15, d1
     nop
@@ -39347,7 +39347,7 @@ loc_48558BE2:
 loc_48558C05:
     inc     a0
     mov     Str_FILE_4, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     movhu   (0x50083bac), d0
     mov     d3, d2
     exth    d2
@@ -39366,7 +39366,7 @@ loc_48558C22:
     mov     d2, d0
     exthu   d0
     mov     8, d1
-    call    func_4852F8AD_entry, [d2,d3,a2,a3], 0x20
+    call    FmmFileNoNameFormat_entry, [d2,d3,a2,a3], 0x20
     movbu   (0x50082c78), d0
     mov     0x15, d1
     nop
@@ -39376,7 +39376,7 @@ loc_48558C22:
     mov     d0, a0
     inc     a0
     mov     a2, a1
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     movbu   (0x50082c79), d0
     mov     0x15, d1
     nop
@@ -39393,8 +39393,8 @@ loc_48558C22:
     add     a0, d0
     mov     d0, a0
     inc     a0
-    mov     func_4852F762_Var_13, a1
-    call    func_4852F762, 0, 0
+    mov     StrCopy_Var_13, a1
+    call    StrCopy, 0, 0
     movbu   (0x50082c79), d1
     mov     0x15, d0
     nop
@@ -39404,14 +39404,14 @@ loc_48558C22:
     mov     d1, a0
     inc     a0
     mov     0x10, d0
-    call    func_48520DDD_entry, [d2,d3], 8
+    call    FmmTextPadFix_entry, [d2,d3], 8
     jmp     loc_48558E17
 loc_48558CB2:
     mov     1, d0
     call    SetExtMode, 0, 0
     mov     d3, d0
     exthu   d0
-    call    func_485325B2_entry, [d2], 0x1c
+    call    FmmCstFileNameGet_entry, [d2], 0x1c
     mov     a0, a2
     call    ResetExtMode, 0, 0
     mov     sp, a3
@@ -39424,7 +39424,7 @@ loc_48558CB2:
     exthu   d0
     mov     8, d1
     mov     a2, a1
-    call    func_4852F8AD_entry, [d2,d3,a2,a3], 0x20
+    call    FmmFileNoNameFormat_entry, [d2,d3,a2,a3], 0x20
     movbu   (0x50082c78), d0
     mov     0x15, d1
     nop
@@ -39434,7 +39434,7 @@ loc_48558CB2:
     mov     d0, a0
     inc     a0
     mov     a3, a1
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     movbu   (0x50082c79), d0
     mov     0x15, d1
     nop
@@ -39450,10 +39450,10 @@ loc_48558CB2:
     mulu    d0, d2
     add     a0, d2
     inc     d2
-    call    func_4855FC30_entry, [d2], 0x10
+    call    SdCstCurTitleGet_entry, [d2], 0x10
     mov     a0, a1
     mov     d2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     movbu   (0x50082c79), d1
     mov     0x15, d0
     nop
@@ -39463,7 +39463,7 @@ loc_48558CB2:
     mov     d1, a0
     inc     a0
     mov     0x10, d0
-    call    func_48520DDD_entry, [d2,d3], 8
+    call    FmmTextPadFix_entry, [d2,d3], 8
     jmp     loc_48558E17
 loc_48558D57:
     movhu   (0x50083bac), d0
@@ -39472,17 +39472,17 @@ loc_48558D57:
     bne     loc_48558D72
     inc     a0
     mov     Str_NO_FILE, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     bra     loc_48558DCD
 loc_48558D72:
     inc     a0
     mov     Str_FILE_3, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     1, d0
     call    SetExtMode, 0, 0
     mov     d3, d0
     exthu   d0
-    call    func_485325B2_entry, [d2], 0x1c
+    call    FmmCstFileNameGet_entry, [d2], 0x1c
     mov     a0, a2
     call    ResetExtMode, 0, 0
     mov     sp, a3
@@ -39496,7 +39496,7 @@ loc_48558D72:
     mov     8, d1
     mov     d3, d0
     mov     a2, a1
-    call    func_4852F8AD_entry, [d2,d3,a2,a3], 0x20
+    call    FmmFileNoNameFormat_entry, [d2,d3,a2,a3], 0x20
     movbu   (0x50082c78), d0
     mov     0x15, d1
     nop
@@ -39506,7 +39506,7 @@ loc_48558D72:
     mov     d0, a0
     inc     a0
     mov     a3, a1
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
 loc_48558DCD:
     movbu   (0x50082c79), d2
     mov     0x15, d0
@@ -39517,11 +39517,11 @@ loc_48558DCD:
     movbu   (0x50082c79), d0
     mov     d2, a0
     movbu   d0, (a0)
-    call    func_4855FC30_entry, [d2], 0x10
+    call    SdCstCurTitleGet_entry, [d2], 0x10
     mov     a0, a1
     mov     d2, a0
     inc     a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     movbu   (0x50082c79), d1
     mov     0x15, d0
     nop
@@ -39531,7 +39531,7 @@ loc_48558DCD:
     mov     d1, a0
     inc     a0
     mov     0x10, d0
-    call    func_48520DDD_entry, [d2,d3], 8
+    call    FmmTextPadFix_entry, [d2,d3], 8
 loc_48558E17:
     movbu   (0x50082c78), d0
     mov     0x15, d1
@@ -39564,10 +39564,10 @@ func_48558E61_entry:
     mov     sp, a2
     add     0x10, a2
     mov     a2, a0
-    call    func_48561035_entry, [a2], 0x14
+    call    SdCustomDirPathBuild_entry, [a2], 0x14
     mov     a2, a1
     mov     a3, a0
-    call    func_4855F36D_entry, [a2,a3], 8
+    call    SdFileExistsCheck_entry, [a2,a3], 8
     extbu   d0
     ret     [a2,a3], 0x4c
 # SdcCusLoadSaveSrcDstFunc  (CPU 0x48558e7d)
@@ -39632,13 +39632,13 @@ loc_48558ED8:
 loc_48558F1D:
     mov     d2, d0
     exthu   d0
-    call    func_4855F953_entry, 0, 0xc
+    call    SdCstIndexOutsideWindow_entry, 0, 0xc
     extbu   d0
     cmp     0, d0
     beq     loc_48558F4E
     exthu   d2
     mov     d2, d0
-    call    func_4855F969_entry, [d2,d3], 0x18
+    call    SdCstWindowSetNoScan_entry, [d2,d3], 0x18
     mov     5, d0
     mov     d0, (0x10, sp)
     mov     CacheWaitWin_id, d0
@@ -39649,10 +39649,10 @@ loc_48558F1D:
 loc_48558F4E:
     exthu   d2
     mov     d2, d0
-    call    func_4855F8F7_entry, [d2,d3], 0x18
+    call    SdCstCurIndexSet_entry, [d2,d3], 0x18
     bra     loc_48558F6E
 loc_48558F57:
-    call    func_4855F8D6_entry, 0, 0xc
+    call    SdCstCurIndexGet_entry, 0, 0xc
     movhu   d0, (SdcCusLoadSaveSrcDstFunc_Var_3)
     exth    d0
     cmp     0, d0
@@ -39678,7 +39678,7 @@ loc_48558F91:
     ret     [d2,d3,a2], 0x20
 loc_48558F95:
     mov     SaveSameNameSureWin_id, d0
-    call    func_4851AC17_entry, [d2], 0x18
+    call    FmmHasParentWindow_entry, [d2], 0x18
     exth    d0
     cmp     1, d0
     bne     loc_48558FAB
@@ -39700,15 +39700,15 @@ loc_48558FB8:
     cmp     d0, d1
     blt     loc_48558FE2
     mov     Str_CST_7, a0
-    call    func_4852FACA_entry, [a2], 0x18
+    call    FmmCstNameSet_entry, [a2], 0x18
     bra     loc_48558FF9
 loc_48558FE2:
     cmp     0, d1
     blt     loc_48558FF9
     movhu   (SdcCusLoadSaveSrcDstFunc_Var_3), d0
     exthu   d0
-    call    func_4855F9B1_entry, [d2], 0x10
-    call    func_4852FACA_entry, [a2], 0x18
+    call    SdCstEntryGet_entry, [d2], 0x10
+    call    FmmCstNameSet_entry, [a2], 0x18
 loc_48558FF9:
     mov     3, d0
     mov     d0, (0x10, sp)
@@ -39979,7 +39979,7 @@ loc_48559323:
 loc_48559330:
     clr     d0
     movbu   d0, (SdcCusLoadSaveSrcDstFunc_Table)
-    call    func_4855F8D6_entry, 0, 0xc
+    call    SdCstCurIndexGet_entry, 0, 0xc
     movhu   d0, (SdcCusLoadSaveSrcDstFunc_Var_3)
     exth    d0
     cmp     0, d0
@@ -40000,13 +40000,13 @@ loc_48559367:
     movbu   d0, (0x50082c7d)
     movhu   (SdcCusLoadSaveSrcDstFunc_Var_3), d0
     exthu   d0
-    call    func_4855F953_entry, 0, 0xc
+    call    SdCstIndexOutsideWindow_entry, 0, 0xc
     extbu   d0
     cmp     0, d0
     beq     loc_485593AA
     movhu   (SdcCusLoadSaveSrcDstFunc_Var_3), d0
     exthu   d0
-    call    func_4855F969_entry, [d2,d3], 0x18
+    call    SdCstWindowSetNoScan_entry, [d2,d3], 0x18
     mov     5, d0
     mov     d0, (0x10, sp)
     mov     CacheWaitWin_id, d0
@@ -40017,7 +40017,7 @@ loc_48559367:
 loc_485593AA:
     movhu   (SdcCusLoadSaveSrcDstFunc_Var_3), d0
     exthu   d0
-    call    func_4855F8F7_entry, [d2,d3], 0x18
+    call    SdCstCurIndexSet_entry, [d2,d3], 0x18
 loc_485593B6:
     mov     (SdcCusLoadSaveSrcDstFunc_Var), d0
     mov     MT_ParaDraw, d1
@@ -40059,13 +40059,13 @@ loc_48559424:
 loc_4855944C:
     mov     d2, d0
     exthu   d0
-    call    func_4855F953_entry, 0, 0xc
+    call    SdCstIndexOutsideWindow_entry, 0, 0xc
     extbu   d0
     cmp     0, d0
     beq     loc_4855947D
     exthu   d2
     mov     d2, d0
-    call    func_4855F969_entry, [d2,d3], 0x18
+    call    SdCstWindowSetNoScan_entry, [d2,d3], 0x18
     mov     5, d0
     mov     d0, (0x10, sp)
     mov     CacheWaitWin_id, d0
@@ -40076,7 +40076,7 @@ loc_4855944C:
 loc_4855947D:
     exthu   d2
     mov     d2, d0
-    call    func_4855F8F7_entry, [d2,d3], 0x18
+    call    SdCstCurIndexSet_entry, [d2,d3], 0x18
 loc_48559484:
     mov     -1, d0
     movbu   d0, (0x50082c7d)
@@ -40129,7 +40129,7 @@ loc_4855950E:
     call    func_48562787_entry, [d2,a2], 0x94
     mov     d0, d2
     call    ResetExtMode, 0, 0
-    call    func_4851AC03_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
     exth    d2
     clr     d0
     mov     d0, (0x10, sp)
@@ -40143,7 +40143,7 @@ loc_4855950E:
     call    ApPostEvent_entry, [d2], 0x1c
     mov     d2, d0
     mov     0x5d, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     extbu   d2
     exthu   d2
@@ -40166,7 +40166,7 @@ loc_485595AE:
     mov     DiskWaitWin_id, d0
     mov     EV_SHOW, d1
     call    ApPostEvent_entry, [d2], 0x1c
-    call    func_48532562_entry, 0, 0x14
+    call    FmmCstNamePathGet_entry, 0, 0x14
     call    func_48558E61_entry, [a2,a3], 0x4c
     extbu   d0
     cmp     0, d0
@@ -40197,14 +40197,14 @@ loc_48559618:
     call    func_48562D0B_entry, [d2,a2], 0x98
     exth    d0
     mov     0x60, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     call    ResetExtMode, 0, 0
-    call    func_4855E9DB, 0, 0
-    call    func_4855EA12_entry, [a2], 0x14
-    call    func_4855FBE7_entry, [d2], 0xc
+    call    SdFreeBytesInvalidate, 0, 0
+    call    SdFreeBytesQuery_entry, [a2], 0x14
+    call    SdCstListRescan_entry, [d2], 0xc
     movhu   d0, (0x50083bac)
-    call    func_4851AC03_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -40248,14 +40248,14 @@ loc_485596BE:
     call    func_48562D0B_entry, [d2,a2], 0x98
     exth    d0
     mov     0x60, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     call    ResetExtMode, 0, 0
-    call    func_4855E9DB, 0, 0
-    call    func_4855EA12_entry, [a2], 0x14
-    call    func_4855FBE7_entry, [d2], 0xc
+    call    SdFreeBytesInvalidate, 0, 0
+    call    SdFreeBytesQuery_entry, [a2], 0x14
+    call    SdCstListRescan_entry, [d2], 0xc
     movhu   d0, (0x50083bac)
-    call    func_4851AC03_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -40291,7 +40291,7 @@ loc_4855977E:
 loc_48559785:
     movhu   (SdcCusLoadSaveSrcDstFunc_Var_3), d0
     exthu   d0
-    call    func_4855F953_entry, 0, 0xc
+    call    SdCstIndexOutsideWindow_entry, 0, 0xc
     extbu   d0
     cmp     0, d0
     bne     loc_48559799
@@ -40301,7 +40301,7 @@ loc_48559799:
     movbu   d0, (0x50083bc0)
     movhu   (SdcCusLoadSaveSrcDstFunc_Var_3), d0
     exthu   d0
-    call    func_4855F969_entry, [d2,d3], 0x18
+    call    SdCstWindowSetNoScan_entry, [d2,d3], 0x18
     mov     5, d0
     mov     d0, (0x10, sp)
     mov     CacheWaitWin_id, d0
@@ -40322,7 +40322,7 @@ loc_485597D6:
     cmp     0, d1
     ble     loc_485597F8
     mov     Str_CST_6, a0
-    call    func_4852FACA_entry, [a2], 0x18
+    call    FmmCstNameSet_entry, [a2], 0x18
 loc_485597F8:
     clr     d0
     mov     d0, (0x10, sp)
@@ -40333,7 +40333,7 @@ loc_485597F8:
 loc_4855980A:
     movhu   (SdcCusLoadSaveSrcDstFunc_Var_3), d0
     exthu   d0
-    call    func_4855F8F7_entry, [d2,d3], 0x18
+    call    SdCstCurIndexSet_entry, [d2,d3], 0x18
     movbu   (SdcCusLoadSaveSrcDstFunc_Table), d0
     cmp     0, d0
     beq     loc_48559867
@@ -40346,13 +40346,13 @@ loc_4855980A:
     cmp     0, d1
     ble     loc_48559844
     mov     Str_CST_5, a0
-    call    func_4852FACA_entry, [a2], 0x18
+    call    FmmCstNameSet_entry, [a2], 0x18
     bra     loc_48559857
 loc_48559844:
     movhu   (SdcCusLoadSaveSrcDstFunc_Var_3), d0
     exthu   d0
-    call    func_4855F9B1_entry, [d2], 0x10
-    call    func_4852FACA_entry, [a2], 0x18
+    call    SdCstEntryGet_entry, [d2], 0x10
+    call    FmmCstNameSet_entry, [a2], 0x18
 loc_48559857:
     clr     d0
     mov     d0, (0x10, sp)
@@ -40429,12 +40429,12 @@ loc_48559904:
     jmp     loc_485599D8
 loc_48559907:
     mov     0x50083194, a2
-    call    func_48532562_entry, 0, 0x14
+    call    FmmCstNamePathGet_entry, 0, 0x14
     mov     a0, a1
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
-    call    func_4852F9A0, 0, 0
+    call    FmmTextSanitize, 0, 0
     mov     a2, (0x10, sp)
     mov     SD_CS2_SVASBOX_id, d0
     mov     0x0145000f, d1
@@ -40443,10 +40443,10 @@ loc_48559907:
     ret     [a2], 0x18
 loc_4855993E:
     mov     0x50083194, a2
-    call    func_48532562_entry, 0, 0x14
+    call    FmmCstNamePathGet_entry, 0, 0x14
     mov     a0, a1
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     8, d0
     call    func_485209E6, 0, 0
@@ -40458,16 +40458,16 @@ loc_4855993E:
     bra     loc_485599D9
 loc_48559976:
     mov     0x50083194, a2
-    call    func_48532562_entry, 0, 0x14
+    call    FmmCstNamePathGet_entry, 0, 0x14
     mov     a0, a1
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     8, d0
     call    func_485209E6, 0, 0
     mov     (0x28, sp), a0
     mov     a2, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     clr     d0
     bra     loc_485599D9
 loc_485599A3:
@@ -40475,15 +40475,15 @@ loc_485599A3:
     mov     (0x28, sp), a1
     mov     a2, a0
     mov     8, d0
-    call    func_4852F77C, 0, 0
+    call    StrCopyPad, 0, 0
     mov     a2, a0
     mov     8, d0
     call    func_485209E6, 0, 0
     mov     a2, a0
     mov     Str_CST_4, a1
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
-    call    func_4852FACA_entry, [a2], 0x18
+    call    FmmCstNameSet_entry, [a2], 0x18
     clr     d0
     bra     loc_485599D9
 loc_485599D8:
@@ -40513,7 +40513,7 @@ loc_48559A08:
 loc_48559A13:
     jmp     loc_48559E99
 loc_48559A16:
-    call    func_4855F8D6_entry, 0, 0xc
+    call    SdCstCurIndexGet_entry, 0, 0xc
     movhu   d0, (0x50082c80)
     exth    d0
     cmp     0, d0
@@ -40545,7 +40545,7 @@ loc_48559A5F:
     ret     [d2,d3,a2,a3], 0x24
 loc_48559A63:
     mov     SdcDeleteSureWin_id, d0
-    call    func_4851AC17_entry, [d2], 0x18
+    call    FmmHasParentWindow_entry, [d2], 0x18
     exth    d0
     cmp     1, d0
     bne     loc_48559A79
@@ -40735,12 +40735,12 @@ loc_48559C38:
     call    func_4856467C_entry, [d2,a2,a3], 0x5c
     exth    d0
     mov     0x60, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
-    call    func_4851AC03_entry, 0, 8
-    call    func_4855EAB8_entry, [d2,a2,a3], 0x1c
-    call    func_4855EA12_entry, [a2], 0x14
-    call    func_4855FBE7_entry, [d2], 0xc
+    call    FmmSwRefresh_entry, 0, 8
+    call    SdVolumeLabelGet_entry, [d2,a2,a3], 0x1c
+    call    SdFreeBytesQuery_entry, [a2], 0x14
+    call    SdCstListRescan_entry, [d2], 0xc
     movhu   d0, (0x50083bac)
     clr     d0
     mov     d0, (0x10, sp)
@@ -40781,12 +40781,12 @@ loc_48559CD6:
     call    func_4856467C_entry, [d2,a2,a3], 0x5c
     exth    d0
     mov     0x60, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
-    call    func_4851AC03_entry, 0, 8
-    call    func_4855EAB8_entry, [d2,a2,a3], 0x1c
-    call    func_4855EA12_entry, [a2], 0x14
-    call    func_4855FBE7_entry, [d2], 0xc
+    call    FmmSwRefresh_entry, 0, 8
+    call    SdVolumeLabelGet_entry, [d2,a2,a3], 0x1c
+    call    SdFreeBytesQuery_entry, [a2], 0x14
+    call    SdCstListRescan_entry, [d2], 0xc
     movhu   d0, (0x50083bac)
     clr     d0
     mov     d0, (0x10, sp)
@@ -40823,13 +40823,13 @@ loc_48559D6A:
 loc_48559D7D:
     movhu   (0x50082c80), d0
     exthu   d0
-    call    func_4855F953_entry, 0, 0xc
+    call    SdCstIndexOutsideWindow_entry, 0, 0xc
     extbu   d0
     cmp     0, d0
     beq     loc_48559DCB
     movhu   (0x50082c80), d0
     exthu   d0
-    call    func_4855F969_entry, [d2,d3], 0x18
+    call    SdCstWindowSetNoScan_entry, [d2,d3], 0x18
     mov     1, d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -40845,7 +40845,7 @@ loc_48559D7D:
 loc_48559DCB:
     movhu   (0x50082c80), d0
     exthu   d0
-    call    func_4855F8F7_entry, [d2,d3], 0x18
+    call    SdCstCurIndexSet_entry, [d2,d3], 0x18
 loc_48559DD7:
     movhu   (0x50082c80), d0
     mov     0x14, d1
@@ -40934,17 +40934,17 @@ SdcCstSongRenameFunc:
 loc_48559EB5:
     jmp     loc_48559FED
 loc_48559EB8:
-    call    func_4855F8D6_entry, 0, 0xc
+    call    SdCstCurIndexGet_entry, 0, 0xc
     mov     d0, d1
     exth    d1
     cmp     0, d1
     blt     loc_48559F18
     exthu   d0
-    call    func_4855F9B1_entry, [d2], 0x10
+    call    SdCstEntryGet_entry, [d2], 0x10
     mov     a0, a1
     mov     0x500831dc, a2
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     movbu   (a2), d0
     clr     d1
     extb    d0
@@ -40987,24 +40987,24 @@ loc_48559F18:
     mov     0x500831dc, a2
     mov     a2, a0
     mov     Str_empty_651, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
 loc_48559F2C:
     mov     0x50082c84, a0
     mov     a2, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     (0x2c, sp), a0
     mov     a2, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     clr     d0
     ret     [d2,a2], 0x1c
 loc_48559F48:
     mov     0x500831dc, a2
     mov     (0x2c, sp), a1
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     0x50082c84, a1
-    call    func_4852F7D7, 0, 0
+    call    FmmStrCmp, 0, 0
     exth    d0
     cmp     0, d0
     bne     loc_48559F6F
@@ -41013,7 +41013,7 @@ loc_48559F48:
 loc_48559F6F:
     mov     a2, a0
     mov     Str_CST_3, a1
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     mov     5, d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -41025,12 +41025,12 @@ loc_48559F6F:
     call    func_485646D5_entry, [d2,d3,a2,a3], 0x10
     exth    d0
     mov     0x60, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
-    call    func_4851AC03_entry, 0, 8
-    call    func_4855FBE7_entry, [d2], 0xc
+    call    FmmSwRefresh_entry, 0, 8
+    call    SdCstListRescan_entry, [d2], 0xc
     movhu   d0, (0x50083bac)
-    call    func_4851AC03_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -41083,7 +41083,7 @@ loc_4855A03E:
     clr     d0
     ret     [d2,d3,a2,a3], 0x2c
 loc_4855A042:
-    call    func_48560C11_entry, 0, 0xc
+    call    SdSmfCurListGet_entry, 0, 0xc
     movhu   d0, (0x50082ca6)
     exth    d0
     cmp     0, d0
@@ -41099,7 +41099,7 @@ loc_4855A059:
 loc_4855A06A:
     movhu   (0x50082ca6), d0
     exthu   d0
-    call    func_48560BB6_entry, 0, 0xc
+    call    SdSndListEntryCountQuery_entry, 0, 0xc
     movhu   d0, (0x50082ca4)
     movhu   (0x50082ca4), d0
     exth    d0
@@ -41108,14 +41108,14 @@ loc_4855A06A:
     clr     d0
     movhu   d0, (0x50082ca4)
 loc_4855A08E:
-    call    func_48560C31_entry, 0, 0xc
+    call    SdSmfCurEntryGet_entry, 0, 0xc
     movhu   d0, (0x50082ca8)
     exth    d0
     cmp     0, d0
     bge     loc_4855A0AC
     clr     d0
     movhu   d0, (0x50082ca8)
-    call    func_48560BF7_entry, [d2], 0x10
+    call    SdSmfCurEntrySet_entry, [d2], 0x10
     bra     loc_4855A0C9
 loc_4855A0AC:
     movhu   (0x50082ca8), d1
@@ -41126,7 +41126,7 @@ loc_4855A0AC:
     blt     loc_4855A0C9
     clr     d0
     movhu   d0, (0x50082ca8)
-    call    func_48560BF7_entry, [d2], 0x10
+    call    SdSmfCurEntrySet_entry, [d2], 0x10
 loc_4855A0C9:
     movhu   (0x50082ca4), d0
     exth    d0
@@ -41156,11 +41156,11 @@ loc_4855A10B:
     beq     loc_4855A122
     clr     d0
     movhu   d0, (0x50082ca6)
-    call    func_48560BDD_entry, [d2], 0x10
+    call    SdSmfCurListSet_entry, [d2], 0x10
 loc_4855A122:
     movhu   (0x50082ca6), d0
     exthu   d0
-    call    func_48560BB6_entry, 0, 0xc
+    call    SdSndListEntryCountQuery_entry, 0, 0xc
     movhu   d0, (0x50082ca4)
     movhu   (0x50082ca4), d0
     exth    d0
@@ -41181,7 +41181,7 @@ loc_4855A146:
 loc_4855A168:
     movhu   (0x50082ca8), d0
     exth    d0
-    call    func_48560BF7_entry, [d2], 0x10
+    call    SdSmfCurEntrySet_entry, [d2], 0x10
     movhu   (0x50082ca8), d0
     mov     0x10, d1
     exth    d0
@@ -41453,7 +41453,7 @@ loc_4855A404:
     mov     (0x38, sp), a0
     cmp     0x50010, a0
     bne     loc_4855A42D
-    call    func_48560BA3_entry, 0, 8
+    call    SdSndPlaylistCountQuery_entry, 0, 8
     movhu   (0x50082ca6), d2
     exth    d0
     exth    d2
@@ -41623,11 +41623,11 @@ loc_4855A57A:
     call    func_485627C0_entry, [d2,d3,a2,a3], 0x80
     exth    d0
     mov     0x5d, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     extbu   d2
     call    ResetExtMode, 0, 0
-    call    func_4851AC03_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -41708,12 +41708,12 @@ loc_4855A6AC:
     call    func_48562D90_entry, [d2,d3,a2,a3], 0x40
     exth    d0
     mov     0x60, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     call    ResetExtMode, 0, 0
-    call    func_4855E9DB, 0, 0
-    call    func_4855EA12_entry, [a2], 0x14
-    call    func_4851AC03_entry, 0, 8
+    call    SdFreeBytesInvalidate, 0, 0
+    call    SdFreeBytesQuery_entry, [a2], 0x14
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -41787,12 +41787,12 @@ loc_4855A7B3:
     call    func_48562E9A_entry, [d2,d3,a2,a3], 0x64
     exth    d0
     mov     0x60, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     call    ResetExtMode, 0, 0
-    call    func_4855E9DB, 0, 0
-    call    func_4855EA12_entry, [a2], 0x14
-    call    func_4851AC03_entry, 0, 8
+    call    SdFreeBytesInvalidate, 0, 0
+    call    SdFreeBytesQuery_entry, [a2], 0x14
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -41856,12 +41856,12 @@ loc_4855A8B3:
     call    func_48562E9A_entry, [d2,d3,a2,a3], 0x64
     exth    d0
     mov     0x60, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     call    ResetExtMode, 0, 0
-    call    func_4855E9DB, 0, 0
-    call    func_4855EA12_entry, [a2], 0x14
-    call    func_4851AC03_entry, 0, 8
+    call    SdFreeBytesInvalidate, 0, 0
+    call    SdFreeBytesQuery_entry, [a2], 0x14
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -41910,12 +41910,12 @@ loc_4855A97D:
     call    func_48562D90_entry, [d2,d3,a2,a3], 0x40
     exth    d0
     mov     0x60, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     call    ResetExtMode, 0, 0
-    call    func_4855E9DB, 0, 0
-    call    func_4855EA12_entry, [a2], 0x14
-    call    func_4851AC03_entry, 0, 8
+    call    SdFreeBytesInvalidate, 0, 0
+    call    SdFreeBytesQuery_entry, [a2], 0x14
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -41955,12 +41955,12 @@ loc_4855AA40:
     call    func_48563E8A_entry, [d2,d3,a2,a3], 0x64
     exth    d0
     mov     0x60, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     call    ResetExtMode, 0, 0
-    call    func_4855E9DB, 0, 0
-    call    func_4855EA12_entry, [a2], 0x14
-    call    func_4851AC03_entry, 0, 8
+    call    SdFreeBytesInvalidate, 0, 0
+    call    SdFreeBytesQuery_entry, [a2], 0x14
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -42128,10 +42128,10 @@ loc_4855AC49:
 loc_4855AC5A:
     clr     d0
     movhu   d0, (0x50082ca8)
-    call    func_48560BF7_entry, [d2], 0x10
+    call    SdSmfCurEntrySet_entry, [d2], 0x10
     movhu   (0x50082ca6), d0
     exthu   d0
-    call    func_48560BB6_entry, 0, 0xc
+    call    SdSndListEntryCountQuery_entry, 0, 0xc
     movhu   d0, (0x50082ca4)
     movhu   (0x50082ca4), d0
     exth    d0
@@ -42163,7 +42163,7 @@ loc_4855ACA8:
 loc_4855ACC8:
     movhu   (0x50082ca6), d0
     exth    d0
-    call    func_48560BDD_entry, [d2], 0x10
+    call    SdSmfCurListSet_entry, [d2], 0x10
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -42189,7 +42189,7 @@ loc_4855AD06:
     bne     loc_4855AD19
     jmp     loc_4855AE18
 loc_4855AD19:
-    call    func_48560BF7_entry, [d2], 0x10
+    call    SdSmfCurEntrySet_entry, [d2], 0x10
     movhu   (0x50082ca8), d0
     mov     0x10, d1
     exth    d0
@@ -42301,7 +42301,7 @@ SdcSmfSeqToSongNumFunc_entry:
     mov     0x50082cac, a2
     mov     a2, a0
     mov     Str_TO_SONG, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     movbu   (0x50083bb8), d0
     mov     2, d1
     inc     d0
@@ -42309,7 +42309,7 @@ SdcSmfSeqToSongNumFunc_entry:
     call    func_4851B5E3_entry, [d2], 0x18
     mov     a0, a1
     mov     a2, a0
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, (0x10, sp)
     mov     SD_LDM_TO_NUM_BOX_id, d0
     mov     0x0145000f, d1
@@ -42353,12 +42353,12 @@ SdcSmfSaveSongNameFunc:
     jmp     loc_4855AF50
 loc_4855AED7:
     mov     0x50083194, a2
-    call    func_48560B59, 0, 0
+    call    SdSmfSaveNameGet, 0, 0
     mov     a0, a1
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
-    call    func_4852F9A0, 0, 0
+    call    FmmTextSanitize, 0, 0
     mov     a2, (0x10, sp)
     mov     (0x28, sp), d0
     mov     0x0145000f, d1
@@ -42367,26 +42367,26 @@ loc_4855AED7:
     bra     loc_4855AF51
 loc_4855AF07:
     mov     0x50083194, a2
-    call    func_48560B59, 0, 0
+    call    SdSmfSaveNameGet, 0, 0
     mov     a0, a1
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
-    call    func_4852F9A0, 0, 0
+    call    FmmTextSanitize, 0, 0
     clr     d0
     movbu   d0, (0x500831a4)
     mov     (0x28, sp), a0
     mov     a2, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     clr     d0
     bra     loc_4855AF51
 loc_4855AF37:
     mov     0x50083194, a2
     mov     (0x28, sp), a1
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
-    call    func_48560B3A_entry, [a2], 0x18
+    call    SdSmfSaveNameSet_entry, [a2], 0x18
     clr     d0
     bra     loc_4855AF51
 loc_4855AF50:
@@ -42403,7 +42403,7 @@ SdcSmfSeqFromSongNumFunc_entry:
     mov     0x50082cec, a2
     mov     a2, a0
     mov     Str_FROM_SONG, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     movbu   (0x50083bb8), d0
     mov     2, d1
     inc     d0
@@ -42411,7 +42411,7 @@ SdcSmfSeqFromSongNumFunc_entry:
     call    func_4851B5E3_entry, [d2], 0x18
     mov     a0, a1
     mov     a2, a0
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, (0x10, sp)
     mov     SD_SVM_FROM_NUM_BOX_id, d0
     mov     0x0145000f, d1
@@ -42508,9 +42508,9 @@ loc_4855B085:
     clr     d0
     ret     [d2,d3,a2,a3], 0x24
 loc_4855B095:
-    call    func_48560C11_entry, 0, 0xc
+    call    SdSmfCurListGet_entry, 0, 0xc
     mov     d0, d3
-    call    func_48560C31_entry, 0, 0xc
+    call    SdSmfCurEntryGet_entry, 0, 0xc
     mov     d0, a3
     mov     d3, d1
     exth    d1
@@ -42530,40 +42530,40 @@ loc_4855B095:
     bge     loc_4855B0D3
     mov     0x500831dc, a2
     mov     a2, a0
-    mov     func_4852F762_Var_14, a1
-    call    func_4852F762, 0, 0
+    mov     StrCopy_Var_14, a1
+    call    StrCopy, 0, 0
     bra     loc_4855B12F
 loc_4855B0D3:
     mov     0x500831dc, a2
     mov     a2, a0
     mov     Str_TR, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     d2, d0
     exthu   d0
     mov     3, d1
     call    func_4851B5E3_entry, [d2], 0x18
     mov     a0, a1
     mov     a2, a0
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     mov     Str_empty_751, a1
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     mov     0x500831e4, a0
     extbu   d3
     mov     a3, d1
     exthu   d1
     mov     d3, d0
-    call    func_48560C51_entry, [a2], 0x18
+    call    SdSndListSongNameGet_entry, [a2], 0x18
     bra     loc_4855B12F
 loc_4855B11B:
     mov     0x500831dc, a2
     mov     a2, a0
-    mov     func_4852F762_Var_15, a1
-    call    func_4852F762, 0, 0
+    mov     StrCopy_Var_15, a1
+    call    StrCopy, 0, 0
 loc_4855B12F:
     mov     a2, a0
     mov     0x18, d0
-    call    func_48520DDD_entry, [d2,d3], 8
+    call    FmmTextPadFix_entry, [d2,d3], 8
     mov     a2, (0x10, sp)
     mov     -1, d0
     mov     0x01450011, d1
@@ -42588,12 +42588,12 @@ loc_4855B157:
     call    func_48563E8A_entry, [d2,d3,a2,a3], 0x64
     exth    d0
     mov     0x60, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     call    ResetExtMode, 0, 0
-    call    func_4855E9DB, 0, 0
-    call    func_4855EA12_entry, [a2], 0x14
-    call    func_4851AC03_entry, 0, 8
+    call    SdFreeBytesInvalidate, 0, 0
+    call    SdFreeBytesQuery_entry, [a2], 0x14
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -42699,7 +42699,7 @@ loc_4855B26E:
     add     d3, d0
     inc     d0
     mov     d0, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     0x18, d0
     nop
     nop
@@ -42708,7 +42708,7 @@ loc_4855B26E:
     mov     d0, a0
     inc     a0
     mov     Str_empty_750, a1
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     mov     0x18, d0
     nop
     nop
@@ -42720,7 +42720,7 @@ loc_4855B26E:
     add     d2, d0
     inc     d0
     extbu   d0
-    call    func_48560C7D_entry, [a2], 0x18
+    call    SdSndPlaylistNameGet_entry, [a2], 0x18
     bra     loc_4855B2D9
 loc_4855B2C2:
     mov     0x18, d0
@@ -42730,8 +42730,8 @@ loc_4855B2C2:
     add     d3, d0
     mov     d0, a0
     inc     a0
-    mov     func_4852F762_Var_16, a1
-    call    func_4852F762, 0, 0
+    mov     StrCopy_Var_16, a1
+    call    StrCopy, 0, 0
 loc_4855B2D9:
     mov     0x18, d1
     nop
@@ -42741,7 +42741,7 @@ loc_4855B2D9:
     mov     d1, a0
     inc     a0
     mov     0x14, d0
-    call    func_48520DDD_entry, [d2,d3], 8
+    call    FmmTextPadFix_entry, [d2,d3], 8
     bra     loc_4855B331
 loc_4855B2EE:
     cmp     0, d2
@@ -42754,7 +42754,7 @@ loc_4855B2EE:
     mov     d0, a0
     inc     a0
     mov     Str_NO_PLAYLIST, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     0x18, d1
     nop
     nop
@@ -42763,7 +42763,7 @@ loc_4855B2EE:
     mov     d1, a0
     inc     a0
     mov     0x14, d0
-    call    func_48520DDD_entry, [d2,d3], 8
+    call    FmmTextPadFix_entry, [d2,d3], 8
     bra     loc_4855B331
 loc_4855B31E:
     mov     0x18, d1
@@ -42774,7 +42774,7 @@ loc_4855B31E:
     mov     d1, a0
     inc     a0
     mov     0x14, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
 loc_4855B331:
     mov     0x18, d0
     nop
@@ -42831,7 +42831,7 @@ loc_4855B3A2:
 loc_4855B3A6:
     mov     0xa, d0
     movhu   d0, (SdcFmmSmfPlaylistNameFunc_Table)
-    call    func_48560BA3_entry, 0, 8
+    call    SdSndPlaylistCountQuery_entry, 0, 8
     exth    d0
     add     -1, d0
     movhu   d0, (0x50082d2e)
@@ -42840,14 +42840,14 @@ loc_4855B3A6:
     bgt     loc_4855B3E0
     clr     d0
     movhu   d0, (0x50082d2c)
-    call    func_48560BF7_entry, [d2], 0x10
+    call    SdSmfCurEntrySet_entry, [d2], 0x10
     mov     -1, d0
     mov     d0, (0x10, sp)
     mov     0x02150004, d1
     call    ApDeliveryEvent_entry, [d2,d3,a2], 0x20
     bra     loc_4855B44C
 loc_4855B3E0:
-    call    func_48560C11_entry, 0, 0xc
+    call    SdSmfCurListGet_entry, 0, 0xc
     mov     d0, d1
     exth    d1
     cmp     0, d1
@@ -42855,7 +42855,7 @@ loc_4855B3E0:
     clr     d0
     movhu   d0, (0x50082d2c)
     mov     1, d0
-    call    func_48560BDD_entry, [d2], 0x10
+    call    SdSmfCurListSet_entry, [d2], 0x10
     movhu   (0x50082d2c), d1
     movhu   (SdcFmmSmfPlaylistNameFunc_Table), d0
     exth    d1
@@ -43003,7 +43003,7 @@ loc_4855B55C:
     exth    d0
     inc     d0
     exth    d0
-    call    func_48560BDD_entry, [d2], 0x10
+    call    SdSmfCurListSet_entry, [d2], 0x10
     movhu   (SdcFmmSmfPlaylistNameFunc_Table), d3
     movhu   (0x50082d2c), d0
     mov     d3, d1
@@ -43085,7 +43085,7 @@ loc_4855B64F:
     clr     d0
     ret     [d2,a2], 0x1c
 loc_4855B653:
-    call    func_48560C11_entry, 0, 0xc
+    call    SdSmfCurListGet_entry, 0, 0xc
     mov     d0, d2
     exth    d0
     cmp     0, d0
@@ -43093,7 +43093,7 @@ loc_4855B653:
     mov     0x500831c4, a2
     mov     a2, a0
     mov     Str_Default_Playlist, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     bra     loc_4855B6C3
 loc_4855B674:
     cmp     0, d0
@@ -43105,24 +43105,24 @@ loc_4855B674:
     call    func_4851B5E3_entry, [d2], 0x18
     mov     a0, a1
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     Str_empty_749, a1
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     mov     0x500831c8, a0
     mov     d2, d0
     extbu   d0
-    call    func_48560C7D_entry, [a2], 0x18
+    call    SdSndPlaylistNameGet_entry, [a2], 0x18
     bra     loc_4855B6C3
 loc_4855B6AF:
     mov     0x500831c4, a2
     mov     a2, a0
-    mov     func_4852F762_Var_17, a1
-    call    func_4852F762, 0, 0
+    mov     StrCopy_Var_17, a1
+    call    StrCopy, 0, 0
 loc_4855B6C3:
     mov     a2, a0
     mov     0x14, d0
-    call    func_48520DDD_entry, [d2,d3], 8
+    call    FmmTextPadFix_entry, [d2,d3], 8
     mov     a2, (0x10, sp)
     mov     (0x2c, sp), d0
     mov     0x0145000f, d1
@@ -43164,7 +43164,7 @@ loc_4855B71E:
     call    func_4851ACAE_entry, 0, 0xc
     movhu   d0, (0x50082d32)
     clr     d0
-    call    func_4853059F_entry, [d2,d3], 0x18
+    call    MidCurFileIndexSet_entry, [d2,d3], 0x18
     call    func_48560EA5_entry, [d2], 4
     clr     d0
     ret     [d2,d3,a2,a3], 0x2c
@@ -43184,7 +43184,7 @@ loc_4855B75C:
     mul     d1, d0
     add     d2, d0
     exthu   d0
-    call    func_485305FB_entry, [d2], 0x10
+    call    MidFileNameGet_entry, [d2], 0x10
     mov     1, d0
     mov     d0, (0x18, sp)
     mov     a0, a1
@@ -43204,7 +43204,7 @@ loc_4855B75C:
     inc     d0
     exthu   d0
     mov     0xc, d1
-    call    func_4852F8AD_entry, [d2,d3,a2,a3], 0x20
+    call    FmmFileNoNameFormat_entry, [d2,d3,a2,a3], 0x20
     mov     d2, d0
     asl     5, d0
     mov     a3, d1
@@ -43295,11 +43295,11 @@ loc_4855B86D:
     call    func_48564462_entry, [d2,d3,a2,a3], 0xa8
     exth    d0
     mov     0x60, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     clr     d0
-    call    func_4853059F_entry, [d2,d3], 0x18
-    call    func_4851AC03_entry, 0, 8
+    call    MidCurFileIndexSet_entry, [d2,d3], 0x18
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -43334,7 +43334,7 @@ loc_4855B909:
     nop
     mul     d1, d0
     exthu   d0
-    call    func_4853059F_entry, [d2,d3], 0x18
+    call    MidCurFileIndexSet_entry, [d2,d3], 0x18
     clr     d1
     clr     d2
     mov     0x50083a2c, a3
@@ -43350,7 +43350,7 @@ loc_4855B92A:
     mul     d1, d0
     add     d2, d0
     exthu   d0
-    call    func_485305FB_entry, [d2], 0x10
+    call    MidFileNameGet_entry, [d2], 0x10
     mov     1, d0
     mov     d0, (0x18, sp)
     mov     a0, a1
@@ -43370,7 +43370,7 @@ loc_4855B92A:
     exthu   d0
     mov     a2, a0
     mov     0xc, d1
-    call    func_4852F8AD_entry, [d2,d3,a2,a3], 0x20
+    call    FmmFileNoNameFormat_entry, [d2,d3,a2,a3], 0x20
     mov     d2, d0
     asl     5, d0
     mov     a3, a0
@@ -43404,13 +43404,13 @@ SdcSmfSongRenameFunc:
     beq     loc_4855BA22
     jmp     loc_4855BAC1
 loc_4855B9B0:
-    call    func_48560C11_entry, 0, 0xc
+    call    SdSmfCurListGet_entry, 0, 0xc
     mov     d0, d2
     mov     d2, d1
     exth    d1
     cmp     0, d1
     blt     loc_4855B9F6
-    call    func_48560C31_entry, 0, 0xc
+    call    SdSmfCurEntryGet_entry, 0, 0xc
     mov     d0, d1
     exth    d0
     cmp     0, d0
@@ -43420,14 +43420,14 @@ loc_4855B9B0:
     mov     d2, d0
     mov     0x500831dc, a2
     mov     a2, a0
-    call    func_48560C51_entry, [a2], 0x18
+    call    SdSndListSongNameGet_entry, [a2], 0x18
     movbu   (0x500831dc), d0
     extb    d0
     cmp     0, d0
     bne     loc_4855B9ED
     mov     a2, a0
     mov     0x10, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
     bra     loc_4855BA06
 loc_4855B9ED:
     clr     d0
@@ -43437,24 +43437,24 @@ loc_4855B9F6:
     mov     0x500831dc, a2
     mov     a2, a0
     mov     0x10, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
 loc_4855BA06:
     mov     0x50082d34, a0
     mov     a2, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     (0x2c, sp), a0
     mov     a2, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     clr     d0
     ret     [d2,a2], 0x1c
 loc_4855BA22:
     mov     0x500831dc, a2
     mov     (0x2c, sp), a1
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     0x50082d34, a1
-    call    func_4852F7D7, 0, 0
+    call    FmmStrCmp, 0, 0
     exth    d0
     cmp     0, d0
     bne     loc_4855BA49
@@ -43474,12 +43474,12 @@ loc_4855BA49:
     call    func_48563FC6_entry, [d2,d3,a2,a3], 0x44
     exth    d0
     mov     0x60, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     call    ResetExtMode, 0, 0
-    call    func_4855E9DB, 0, 0
-    call    func_4855EA12_entry, [a2], 0x14
-    call    func_4851AC03_entry, 0, 8
+    call    SdFreeBytesInvalidate, 0, 0
+    call    SdFreeBytesQuery_entry, [a2], 0x14
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -43503,12 +43503,12 @@ SdcNewPlaylistInfoFunc:
     cmp     EV_PAINT, d1
     bne     loc_4855BB02
     mov     0x500831ac, a2
-    call    func_48560B81, 0, 0
+    call    SdPlaylistNameBufGet, 0, 0
     mov     a0, a1
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
-    call    func_4852F9A0, 0, 0
+    call    FmmTextSanitize, 0, 0
     mov     a2, (0x10, sp)
     mov     (0x28, sp), d0
     mov     0x0145000f, d1
@@ -43532,12 +43532,12 @@ SdcPlistNamingFunc:
     jmp     loc_4855BB9F
 loc_4855BB26:
     mov     0x500831ac, a2
-    call    func_48560B81, 0, 0
+    call    SdPlaylistNameBufGet, 0, 0
     mov     a0, a1
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
-    call    func_4852F9A0, 0, 0
+    call    FmmTextSanitize, 0, 0
     mov     a2, (0x10, sp)
     mov     (0x28, sp), d0
     mov     0x0145000f, d1
@@ -43546,26 +43546,26 @@ loc_4855BB26:
     bra     loc_4855BBA0
 loc_4855BB56:
     mov     0x500831ac, a2
-    call    func_48560B81, 0, 0
+    call    SdPlaylistNameBufGet, 0, 0
     mov     a0, a1
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
-    call    func_4852F9A0, 0, 0
+    call    FmmTextSanitize, 0, 0
     clr     d0
     movbu   d0, (0x500831bc)
     mov     (0x28, sp), a0
     mov     a2, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     clr     d0
     bra     loc_4855BBA0
 loc_4855BB86:
     mov     0x500831ac, a2
     mov     (0x28, sp), a1
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
-    call    func_48560B62_entry, [a2], 0x18
+    call    SdPlaylistNameBufSet_entry, [a2], 0x18
     clr     d0
     bra     loc_4855BBA0
 loc_4855BB9F:
@@ -43595,7 +43595,7 @@ loc_4855BBD9:
     jmp     loc_4855C0E7
 loc_4855BBDC:
     clr     d0
-    call    func_4855FD36_entry, [d2,d3], 0x18
+    call    SdPrivSmfCurIndexSet_entry, [d2,d3], 0x18
     movhu   (0x50083bae), d0
     exth    d0
     cmp     0, d0
@@ -43604,7 +43604,7 @@ loc_4855BBDC:
     movhu   d0, (0x50082d54)
     bra     loc_4855BC1A
 loc_4855BBF6:
-    call    func_4855FD15_entry, 0, 0xc
+    call    SdPrivSmfCurIndexGet_entry, 0, 0xc
     mov     d0, d1
     exth    d1
     cmp     0, d1
@@ -43645,7 +43645,7 @@ loc_4855BC49:
     mov     d2, d0
     add     d3, d0
     exthu   d0
-    call    func_4855FC79_entry, [d2,a2], 0x18
+    call    SdPrivSmfFileNameGet_entry, [d2,a2], 0x18
     mov     1, d0
     mov     d0, (0x18, sp)
     mov     a0, a1
@@ -43660,7 +43660,7 @@ loc_4855BC49:
     inc     d0
     exthu   d0
     mov     0xc, d1
-    call    func_4852F8AD_entry, [d2,d3,a2,a3], 0x20
+    call    FmmFileNoNameFormat_entry, [d2,d3,a2,a3], 0x20
     mov     d2, d0
     asl     5, d0
     mov     d0, a0
@@ -43725,7 +43725,7 @@ loc_4855BD00:
     beq     loc_4855BD07
     jmp     loc_4855BEC9
 loc_4855BD07:
-    call    func_48560BA3_entry, 0, 8
+    call    SdSndPlaylistCountQuery_entry, 0, 8
     exth    d0
     add     -1, d0
     cmp     0, d0
@@ -43778,12 +43778,12 @@ loc_4855BD79:
     call    func_48564080_entry, [d2,d3,a2,a3], 0xbc
     exth    d0
     mov     0x60, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
-    call    func_4855FEB4_entry, [d2], 0xc
+    call    SdPrivSmfListRescan_entry, [d2], 0xc
     movhu   d0, (0x50083bae)
     call    ResetExtMode, 0, 0
-    call    func_4851AC03_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -43821,12 +43821,12 @@ loc_4855BE21:
     call    func_48564080_entry, [d2,d3,a2,a3], 0xbc
     exth    d0
     mov     0x60, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
-    call    func_4855FEB4_entry, [d2], 0xc
+    call    SdPrivSmfListRescan_entry, [d2], 0xc
     movhu   d0, (0x50083bae)
     call    ResetExtMode, 0, 0
-    call    func_4851AC03_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -43868,12 +43868,12 @@ loc_4855BED0:
     call    func_48564080_entry, [d2,d3,a2,a3], 0xbc
     exth    d0
     mov     0x60, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
-    call    func_4855FEB4_entry, [d2], 0xc
+    call    SdPrivSmfListRescan_entry, [d2], 0xc
     movhu   d0, (0x50083bae)
     call    ResetExtMode, 0, 0
-    call    func_4851AC03_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -43935,12 +43935,12 @@ loc_4855BFBD:
     call    func_485641CB_entry, [d2,d3,a2], 0x48
     exth    d0
     mov     0x60, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
-    call    func_4855FEB4_entry, [d2], 0xc
+    call    SdPrivSmfListRescan_entry, [d2], 0xc
     movhu   d0, (0x50083bae)
     call    ResetExtMode, 0, 0
-    call    func_4851AC03_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -43976,7 +43976,7 @@ loc_4855C062:
     nop
     mul     d1, d0
     exthu   d0
-    call    func_4855FD36_entry, [d2,d3], 0x18
+    call    SdPrivSmfCurIndexSet_entry, [d2,d3], 0x18
     movhu   (0x50082d54), d0
     mov     0xa, d1
     exth    d0
@@ -43998,7 +43998,7 @@ loc_4855C096:
     mov     d3, d2
     add     d3, d0
     exthu   d0
-    call    func_4855FC79_entry, [d2,a2], 0x18
+    call    SdPrivSmfFileNameGet_entry, [d2,a2], 0x18
     mov     a0, a1
     asl     5, d2
     add     a2, d2
@@ -44011,7 +44011,7 @@ loc_4855C096:
     inc     d0
     exthu   d0
     mov     0xc, d1
-    call    func_4852F8AD_entry, [d2,d3,a2,a3], 0x20
+    call    FmmFileNoNameFormat_entry, [d2,d3,a2,a3], 0x20
     mov     d3, d0
     asl     5, d0
     mov     a2, a0
@@ -44102,7 +44102,7 @@ loc_4855C132:
     mov     2, a2
     add     d2, d0
     exthu   d0
-    call    func_4855FC79_entry, [d2,a2], 0x18
+    call    SdPrivSmfFileNameGet_entry, [d2,a2], 0x18
     mov     1, d0
     mov     d0, (0x18, sp)
     mov     a0, a1
@@ -44116,7 +44116,7 @@ loc_4855C132:
     inc     d0
     exthu   d0
     mov     0xc, d1
-    call    func_4852F8AD_entry, [d2,d3,a2,a3], 0x20
+    call    FmmFileNoNameFormat_entry, [d2,d3,a2,a3], 0x20
     mov     (0x20, sp), d0
     add     d2, d0
     extbu   d0
@@ -44132,7 +44132,7 @@ loc_4855C132:
     mov     2, a0
     add     d0, a0
     mov     Str_empty_748, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     bra     loc_4855C1C7
 loc_4855C1AF:
     mov     6, d0
@@ -44143,7 +44143,7 @@ loc_4855C1AF:
     mov     2, a0
     add     d0, a0
     mov     Str_empty_747, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
 loc_4855C1C7:
     mov     d2, d0
     asl     5, d0
@@ -44186,7 +44186,7 @@ SdcFmmPrivateSmfFileNameFunc:
     beq     loc_4855C280
     jmp     loc_4855C589
 loc_4855C22F:
-    call    func_4855FD15_entry, 0, 0xc
+    call    SdPrivSmfCurIndexGet_entry, 0, 0xc
     movhu   d0, (0x50082d58)
     exth    d0
     cmp     0, d0
@@ -44412,10 +44412,10 @@ loc_4855C43B:
     call    func_48564247_entry, [d2,d3,a2,a3], 0xa4
     exth    d0
     mov     0x60, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     call    ResetExtMode, 0, 0
-    call    func_4851AC03_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -44452,7 +44452,7 @@ loc_4855C4E6:
     movhu   (0x50082d58), d0
     mov     0xa, d3
     exthu   d0
-    call    func_4855FD36_entry, [d2,d3], 0x18
+    call    SdPrivSmfCurIndexSet_entry, [d2,d3], 0x18
     movhu   (0x50082d58), d1
     mov     -1, d0
     exth    d1
@@ -44561,7 +44561,7 @@ loc_4855C5BE:
     inc     d0
     exthu   d0
     mov     0x10, d1
-    call    func_4852F8AD_entry, [d2,d3,a2,a3], 0x20
+    call    FmmFileNoNameFormat_entry, [d2,d3,a2,a3], 0x20
     bra     loc_4855C601
 loc_4855C5EF:
     mov     d2, d1
@@ -44570,7 +44570,7 @@ loc_4855C5EF:
     mov     d1, a0
     inc     a0
     mov     0x10, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
 loc_4855C601:
     mov     d2, d0
     asl     5, d0
@@ -44640,16 +44640,16 @@ loc_4855C678:
     inc     a2
     mov     a2, a0
     mov     Str_SD_SOUND_SONG, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     d2, d0
     mov     3, d1
     call    func_4851B5E3_entry, [d2], 0x18
     mov     a0, a1
     mov     a2, a0
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     mov     Str_empty_746, a1
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x14, sp), a2
     add     -1, d2
     inc     a2
@@ -44657,10 +44657,10 @@ loc_4855C678:
     mov     d2, d1
     exthu   d1
     clr     d0
-    call    func_48560C51_entry, [a2], 0x18
+    call    SdSndListSongNameGet_entry, [a2], 0x18
     mov     a2, a0
     mov     0x10, d0
-    call    func_48520DDD_entry, [d2,d3], 8
+    call    FmmTextPadFix_entry, [d2,d3], 8
     mov     a3, (0x10, sp)
     mov     (0x30, sp), d0
     mov     0x0215000a, d1
@@ -44675,11 +44675,11 @@ loc_4855C6F2:
     mov     a3, a0
     inc     a0
     mov     0x14, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
     mov     (0x14, sp), a0
     mov     0x14, d0
     inc     a0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
     mov     a3, (0x10, sp)
     mov     (0x30, sp), d0
     mov     0x0215000a, d1
@@ -44711,23 +44711,23 @@ loc_4855C74B:
     inc     a2
     mov     a2, a0
     mov     Str_FOLDER_16, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     d3, d0
     add     -1, d3
     mov     2, d1
     call    func_4851B5E3_entry, [d2], 0x18
     mov     a0, a1
     mov     a2, a0
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     mov     Str_SONG_28, a1
     mov     a2, a0
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     mov     d2, d0
     mov     2, d1
     call    func_4851B5E3_entry, [d2], 0x18
     mov     a0, a1
     mov     a2, a0
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x14, sp), a2
     mov     d3, d0
     inc     a2
@@ -44735,13 +44735,13 @@ loc_4855C74B:
     add     -1, d2
     extbu   d2
     mov     d2, d1
-    call    func_4855ECA3_entry, [d2,d3,a2], 0x20
+    call    SdDirSongNameGet_entry, [d2,d3,a2], 0x20
     mov     a0, a1
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     0x10, d0
-    call    func_48520DDD_entry, [d2,d3], 8
+    call    FmmTextPadFix_entry, [d2,d3], 8
     mov     a3, (0x10, sp)
     mov     (0x30, sp), d0
     mov     0x02150009, d1
@@ -44756,11 +44756,11 @@ loc_4855C7D9:
     mov     a3, a0
     inc     a0
     mov     0x14, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
     mov     (0x14, sp), a0
     mov     0x14, d0
     inc     a0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
     mov     a3, (0x10, sp)
     mov     (0x30, sp), d0
     mov     0x02150009, d1
@@ -44776,14 +44776,14 @@ loc_4855C816:
     inc     a2
     mov     a2, a0
     mov     Str_NO_ENTRY, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     0x13, d0
-    call    func_48520DDD_entry, [d2,d3], 8
+    call    FmmTextPadFix_entry, [d2,d3], 8
     mov     (0x14, sp), a0
     mov     0x14, d0
     inc     a0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
     mov     a3, (0x10, sp)
     mov     (0x30, sp), d0
     mov     0x02150009, d1
@@ -44865,7 +44865,7 @@ loc_4855C8E9:
     mov     -1, d1
     add     d2, d1
     exthu   d1
-    call    func_48560CA6_entry, 0, 0x10
+    call    SdSndListEntrySongQuery_entry, 0, 0x10
     exth    d0
     cmp     0, d0
     bgt     loc_4855C901
@@ -44874,9 +44874,9 @@ loc_4855C901:
     add     -1, d2
     exth    d2
     clr     d0
-    call    func_48560BDD_entry, [d2], 0x10
+    call    SdSmfCurListSet_entry, [d2], 0x10
     mov     d2, d0
-    call    func_48560BF7_entry, [d2], 0x10
+    call    SdSmfCurEntrySet_entry, [d2], 0x10
     mov     5, d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -44892,11 +44892,11 @@ loc_4855C901:
     call    func_485627C0_entry, [d2,d3,a2,a3], 0x80
     exth    d0
     mov     0x5d, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d3
     extbu   d3
     call    ResetExtMode, 0, 0
-    call    func_4851AC03_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -44943,11 +44943,11 @@ loc_4855C9D6:
 loc_4855C9DE:
     add     -1, d0
     extbu   d0
-    call    func_4855EEB1_entry, [d2], 0x10
+    call    SdCurFolderIndexSet_entry, [d2], 0x10
     add     -1, d3
     extbu   d3
     mov     d3, d0
-    call    func_4855EE77_entry, [d2], 0x10
+    call    SdCurSongIndexSet_entry, [d2], 0x10
     mov     5, d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -44960,11 +44960,11 @@ loc_4855C9DE:
     call    func_48562663_entry, [d2,d3,a2,a3], 0xc0
     exth    d0
     mov     0x5d, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d3
     extbu   d3
     call    ResetExtMode, 0, 0
-    call    func_4851AC03_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -44980,17 +44980,17 @@ loc_4855C9DE:
     cmp     0, d0
     beq     loc_4855CA9B
     mov     2, d0
-    call    func_4855F703_entry, [d2], 0x14
+    call    SdLoadFilterHasType_entry, [d2], 0x14
     extbu   d0
     cmp     0, d0
     beq     loc_4855CA9B
     mov     2, d0
-    call    func_4855F631_entry, [d2], 0xc
+    call    SdCurSongHasType_entry, [d2], 0xc
     extbu   d0
     cmp     0, d0
     bne     loc_4855CA8F
     mov     0xb, d0
-    call    func_4855F631_entry, [d2], 0xc
+    call    SdCurSongHasType_entry, [d2], 0xc
     extbu   d0
     cmp     0, d0
     beq     loc_4855CA9B
@@ -45261,7 +45261,7 @@ loc_4855CD09:
     mov     0x500835b4, a2
     mov     a2, a0
     mov     0x14, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
     bra     loc_4855CD5C
 loc_4855CD2D:
     movbu   (a1), d0
@@ -45271,7 +45271,7 @@ loc_4855CD2D:
     mov     0x500835b4, a2
     mov     a2, a0
     mov     0x14, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
     bra     loc_4855CD5C
 loc_4855CD46:
     mov     0x500835b4, a2
@@ -45282,7 +45282,7 @@ loc_4855CD46:
     exthu   d0
     mov     0x10, d1
     mov     a2, a0
-    call    func_4852F8AD_entry, [d2,d3,a2,a3], 0x20
+    call    FmmFileNoNameFormat_entry, [d2,d3,a2,a3], 0x20
 loc_4855CD5C:
     mov     a2, (0x10, sp)
     mov     (0x38, sp), d0
@@ -45300,7 +45300,7 @@ loc_4855CD71:
     mov     0x5008359c, a3
     mov     a3, a0
     mov     0x10, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
     bra     loc_4855CDC4
 loc_4855CD93:
     movbu   (a1), d0
@@ -45310,32 +45310,32 @@ loc_4855CD93:
     mov     0x5008359c, a3
     mov     a3, a0
     mov     0x10, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
     bra     loc_4855CDC4
 loc_4855CDAC:
     mov     0x5008359c, a3
     mov     0x10, d0
     mov     a3, a0
-    call    func_4852F77C, 0, 0
+    call    StrCopyPad, 0, 0
     mov     a3, a0
-    call    func_4852F9A0, 0, 0
+    call    FmmTextSanitize, 0, 0
 loc_4855CDC4:
     mov     0x50082d60, a0
     mov     a3, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     a3, a1
     mov     (0x38, sp), a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     clr     d0
     bra     loc_4855CE1D
 loc_4855CDDF:
     mov     0x5008359c, a2
     mov     (0x38, sp), a1
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     0x50082d60, a1
-    call    func_4852F7D7, 0, 0
+    call    FmmStrCmp, 0, 0
     exth    d0
     cmp     0, d0
     bne     loc_4855CE05
@@ -45377,7 +45377,7 @@ loc_4855CE38:
     nop
     mul     d1, d0
     movhu   d0, (0x30, sp)
-    call    func_48560777_entry, 0, 0xc
+    call    SdDcimCurDirIndexGet_entry, 0, 0xc
     mov     d0, d3
     movhu   (0x50083bb0), d0
     mov     d3, d1
@@ -45387,7 +45387,7 @@ loc_4855CE38:
     bge     loc_4855CE64
     mov     d3, d0
     exth    d0
-    call    func_48560939_entry, [d2,d3,a2], 0xc
+    call    SdDcimDirNumberGet_entry, [d2,d3,a2], 0xc
     mov     d0, a2
 loc_4855CE64:
     mov     (0x20, sp), d0
@@ -45421,7 +45421,7 @@ loc_4855CE8C:
     mov     (0x1c, sp), d0
     add     d2, d0
     exthu   d0
-    call    func_4855FEFD_entry, [d2,d3,a2,a3], 0x20
+    call    SdPictFileNameGet_entry, [d2,d3,a2,a3], 0x20
     mov     a0, a2
     cmp     0, a2
     bne     loc_4855CEA5
@@ -45453,7 +45453,7 @@ loc_4855CEAF:
     add     d2, d0
     inc     d0
     exthu   d0
-    call    func_4852F8AD_entry, [d2,d3,a2,a3], 0x20
+    call    FmmFileNoNameFormat_entry, [d2,d3,a2,a3], 0x20
     bra     loc_4855CF3F
 loc_4855CEDA:
     inc4    a2
@@ -45462,14 +45462,14 @@ loc_4855CEDA:
     call    func_4851B5F5_entry, [d2], 0x18
     mov     a0, a1
     mov     d3, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     Str_empty_745, a1
     mov     d3, a0
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x28, sp), a0
     mov     a2, a1
     mov     4, d0
-    call    func_4852F77C, 0, 0
+    call    StrCopyPad, 0, 0
     mov     d3, a1
     clr     d0
     mov     d0, (0x18, sp)
@@ -45485,7 +45485,7 @@ loc_4855CEDA:
     add     d2, d0
     inc     d0
     exthu   d0
-    call    func_4852F8AD_entry, [d2,d3,a2,a3], 0x20
+    call    FmmFileNoNameFormat_entry, [d2,d3,a2,a3], 0x20
     bra     loc_4855CF3F
 loc_4855CF2B:
     mov     0x18, d1
@@ -45496,7 +45496,7 @@ loc_4855CF2B:
     mov     d1, a0
     inc     a0
     mov     0x14, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
 loc_4855CF3F:
     mov     a3, d1
     mov     0x18, d0
@@ -45557,7 +45557,7 @@ SdcFmmPictureDirectryFunc:
     beq     loc_4855CFC0
     jmp     loc_4855D0C7
 loc_4855CFC0:
-    call    func_48560777_entry, 0, 0xc
+    call    SdDcimCurDirIndexGet_entry, 0, 0xc
     movhu   (0x50083bb0), d1
     mov     d0, d2
     exth    d1
@@ -45576,10 +45576,10 @@ loc_4855CFC0:
     mov     0x50082d80, a3
     mov     a3, a0
     mov     Str_FOLDER_15, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     d2, d0
     extbu   d0
-    call    func_4855ECFD_entry, [d2,a2], 0x1c
+    call    SdDirFolderNameGet_entry, [d2,a2], 0x1c
     mov     a0, a1
     cmp     0, a1
     beq     loc_4855D017
@@ -45590,23 +45590,23 @@ loc_4855CFC0:
     exthu   d0
     mov     0x10, d1
     mov     0x50082d87, a0
-    call    func_4852F8AD_entry, [d2,d3,a2,a3], 0x20
+    call    FmmFileNoNameFormat_entry, [d2,d3,a2,a3], 0x20
     jmp     loc_4855D0B6
 loc_4855D017:
     mov     0x50082d87, a0
     mov     0x14, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
     jmp     loc_4855D0B6
 loc_4855D029:
     mov     0x50082d80, a3
     mov     a3, a0
     mov     0x22, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
     jmp     loc_4855D0B6
 loc_4855D03C:
-    call    func_48560777_entry, 0, 0xc
+    call    SdDcimCurDirIndexGet_entry, 0, 0xc
     exth    d0
-    call    func_48560939_entry, [d2,d3,a2], 0xc
+    call    SdDcimDirNumberGet_entry, [d2,d3,a2], 0xc
     exth    d0
     cmp     0x64, d0
     blt     loc_4855D052
@@ -45616,7 +45616,7 @@ loc_4855D052:
     mov     0x50082d80, a3
     mov     a3, a0
     mov     0x22, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
     bra     loc_4855D0B6
 loc_4855D064:
     mov     sp, a2
@@ -45624,27 +45624,27 @@ loc_4855D064:
     mov     0x50082d80, a3
     mov     a3, a0
     mov     Str_Digital_Camera_Images, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
-    call    func_485609AC_entry, [d2,d3,a2,a3], 0x10
+    call    SdDcimCurDirNameGet_entry, [d2,d3,a2,a3], 0x10
     movbu   (0x1c, sp), d0
     extb    d0
     cmp     0, d0
     bne     loc_4855D095
     mov     a3, a0
     mov     0x22, d0
-    call    func_48551126_entry, [d2], 4
+    call    SdcSpaceFill_entry, [d2], 4
     bra     loc_4855D0B6
 loc_4855D095:
     mov     a2, a0
     mov     8, d0
-    call    func_48520DDD_entry, [d2,d3], 8
+    call    FmmTextPadFix_entry, [d2,d3], 8
     mov     a3, a0
     mov     a2, a1
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     mov     a3, a0
     mov     Str_empty_744, a1
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
 loc_4855D0B6:
     mov     a3, (0x10, sp)
     mov     (0x4c, sp), d0
@@ -45697,7 +45697,7 @@ loc_4855D12A:
     beq     loc_4855D184
     bra     loc_4855D19F
 loc_4855D136:
-    call    func_48472117_entry, 0, 0x1c
+    call    DiskCmdPhaseBlock_entry, 0, 0x1c
     call    SdCardUsableCheck_entry, 0, 8
     extbu   d0
     cmp     0, d0
@@ -45705,7 +45705,7 @@ loc_4855D136:
     clr     d0
     call    SdUiBusyBegin_entry, 0, 0xc
     call    func_4855E842_entry, 0, 8
-    call    func_4851AC03_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
 loc_4855D15B:
     movhu   (0x50083bb0), d0
     exth    d0
@@ -45713,14 +45713,14 @@ loc_4855D15B:
     bge     loc_4855D180
     clr     d0
     call    SdUiBusyBegin_entry, 0, 0xc
-    call    func_48560AFB_entry, [d2], 0xc
+    call    SdDcimDirListLoad_entry, [d2], 0xc
     movhu   d0, (0x50083bb0)
-    call    func_4851AC03_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
 loc_4855D180:
     clr     d0
     ret     [d2,d3,a2,a3], 0x2c
 loc_4855D184:
-    call    func_4847212D_entry, 0, 0x1c
+    call    DiskCmdPhaseUnblock_entry, 0, 0x1c
     clr     d0
     mov     d0, d1
     call    SDModuleModeReq_entry, 0, 0xc
@@ -45737,14 +45737,14 @@ loc_4855D1A7:
     mov     0xd, d0
     ret     [d2,d3,a2,a3], 0x2c
 loc_4855D1AC:
-    call    func_48560777_entry, 0, 0xc
+    call    SdDcimCurDirIndexGet_entry, 0, 0xc
     movhu   d0, (0x50082da6)
     exth    d0
     cmp     0, d0
     bge     loc_4855D1C8
     clr     d0
     movhu   d0, (0x50082da6)
-    call    func_48560798_entry, [d2], 0x10
+    call    SdDcimCurDirIndexSet_entry, [d2], 0x10
 loc_4855D1C8:
     mov     5, d0
     mov     d0, (0x10, sp)
@@ -45761,14 +45761,14 @@ loc_4855D1C8:
     blt     loc_4855D208
     sub     d1, d0
     extbu   d0
-    call    func_4856021A_entry, [d2,a2], 0x58
+    call    SdFolderPictListLoad_entry, [d2,a2], 0x58
     movhu   d0, (0x50083bb2)
     bra     loc_4855D213
 loc_4855D208:
-    call    func_48560689_entry, [d2,a2,a3], 0x6c
+    call    SdDcimPictListLoad_entry, [d2,a2,a3], 0x6c
     movhu   d0, (0x50083bb2)
 loc_4855D213:
-    call    func_4855FFD8_entry, 0, 0xc
+    call    SdPictCurIndexGet_entry, 0, 0xc
     movhu   d0, (0x50082da4)
     exth    d0
     cmp     0, d0
@@ -45847,7 +45847,7 @@ loc_4855D2E3:
     call    func_4851B5F5_entry, [d2], 0x18
     mov     a0, a1
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, (0x10, sp)
     mov     UserPictureNumBoxSD_id, d0
     mov     MT_ParaDraw, d1
@@ -46042,7 +46042,7 @@ loc_4855D4AC:
     call    func_485633DB_entry, [d2,d3,a2,a3], 0x64
     exth    d0
     mov     0x5d, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     extbu   d2
     bra     loc_4855D539
@@ -46057,12 +46057,12 @@ loc_4855D519:
     call    func_48563443_entry, [d2,d3,a2,a3], 0x74
     exth    d0
     mov     0x5d, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     extbu   d2
 loc_4855D539:
     call    ResetExtMode, 0, 0
-    call    func_4851AC03_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -46196,7 +46196,7 @@ loc_4855D68F:
     call    func_4851B5F5_entry, [d2], 0x18
     mov     a0, a1
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, (0x10, sp)
     mov     UserPictureNumBoxSD_id, d0
     mov     MT_ParaDraw, d1
@@ -46221,12 +46221,12 @@ loc_4855D6E8:
     movhu   (0x50082da4), d1
     extbu   d0
     exthu   d1
-    call    func_4855FFF9_entry, [d2,d3,a2], 0x5c
+    call    SdFolderPictCurIndexSet_entry, [d2,d3,a2], 0x5c
     bra     loc_4855D716
 loc_4855D70A:
     movhu   (0x50082da4), d0
     exthu   d0
-    call    func_4856026E_entry, [d2,d3,a2,a3], 0x70
+    call    SdDcimPictCurIndexSet_entry, [d2,d3,a2,a3], 0x70
 loc_4855D716:
     movhu   (0x50082da4), d0
     mov     0xa, d1
@@ -46299,7 +46299,7 @@ loc_4855D7C6:
     movhu   d0, (0x50082da4)
     movhu   (0x50082da6), d0
     exthu   d0
-    call    func_48560798_entry, [d2], 0x10
+    call    SdDcimCurDirIndexSet_entry, [d2], 0x10
     mov     5, d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -46315,7 +46315,7 @@ loc_4855D7C6:
     blt     loc_4855D836
     sub     d1, d0
     extbu   d0
-    call    func_4856021A_entry, [d2,a2], 0x58
+    call    SdFolderPictListLoad_entry, [d2,a2], 0x58
     movhu   d0, (0x50083bb2)
     movhu   (0x50082da6), d0
     movhu   (0x50083bb0), d1
@@ -46325,14 +46325,14 @@ loc_4855D7C6:
     movhu   (0x50082da4), d1
     extbu   d0
     exthu   d1
-    call    func_4855FFF9_entry, [d2,d3,a2], 0x5c
+    call    SdFolderPictCurIndexSet_entry, [d2,d3,a2], 0x5c
     bra     loc_4855D84D
 loc_4855D836:
-    call    func_48560689_entry, [d2,a2,a3], 0x6c
+    call    SdDcimPictListLoad_entry, [d2,a2,a3], 0x6c
     movhu   d0, (0x50083bb2)
     movhu   (0x50082da4), d0
     exthu   d0
-    call    func_4856026E_entry, [d2,d3,a2,a3], 0x70
+    call    SdDcimPictCurIndexSet_entry, [d2,d3,a2,a3], 0x70
 loc_4855D84D:
     movhu   (0x50083bb2), d0
     exth    d0
@@ -46424,9 +46424,9 @@ loc_4855D927:
     clr     d0
     ret     [d2,d3,a2,a3], 0x2c
 loc_4855D935:
-    call    func_4855EA80, 0, 0
+    call    SdFreeBytesGet, 0, 0
     mov     d0, a3
-    call    func_4855EA89, 0, 0
+    call    SdTotalBytesGet, 0, 0
     mov     d0, d2
     clr     d0
     mov     d0, (0x14, sp)
@@ -46434,16 +46434,16 @@ loc_4855D935:
     bls     loc_4855D974
     mov     d2, d0
     sub     a3, d0
-    call    func_4C003715, 0, 0
+    call    LibU32ToF32, 0, 0
     mov     d0, d3
     mov     d2, d0
-    call    func_4C003715, 0, 0
+    call    LibU32ToF32, 0, 0
     mov     d0, d1
     mov     d3, d0
-    call    func_4C0037EE_entry, [d2,d3,a2,a3], 0x18
+    call    LibF32Div_entry, [d2,d3,a2,a3], 0x18
     mov     d0, d1
     mov     0x42c80000, d0
-    call    func_4C00333A_entry, [d2,d3,a2,a3], 0x18
+    call    LibF32Mul_entry, [d2,d3,a2,a3], 0x18
     mov     d0, (0x14, sp)
 loc_4855D974:
     mov     a3, d3
@@ -46461,16 +46461,16 @@ loc_4855D974:
     call    func_4851B5E3_entry, [d2], 0x18
     mov     a0, a1
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     Str_empty_743, a1
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     bra     loc_4855D9C6
 loc_4855D9B2:
     mov     0x5008320c, a2
     mov     a2, a0
     mov     Str_empty_742, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
 loc_4855D9C6:
     clr     d0
     mov     d0, mdr
@@ -46487,15 +46487,15 @@ loc_4855D9C6:
     call    func_4851B5E3_entry, [d2], 0x18
     mov     a0, a1
     mov     a2, a0
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     mov     Str_empty_741, a1
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     bra     loc_4855DA0A
 loc_4855D9FC:
     mov     a2, a0
     mov     Str_empty_740, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
 loc_4855DA0A:
     clr     d0
     mov     3, d1
@@ -46506,7 +46506,7 @@ loc_4855DA0A:
     call    func_4851B5E3_entry, [d2], 0x18
     mov     a0, a1
     mov     a2, a0
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     movbu   (a0), d0
     extb    d0
@@ -46542,18 +46542,18 @@ loc_4855DA54:
 loc_4855DA5B:
     mov     a2, a0
     mov     Str_KB_free, a1
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x14, sp), d0
-    call    func_4C001514_entry, [d3,a3], 0x10
+    call    LibF32ToU16_entry, [d3,a3], 0x10
     exthu   d0
     mov     3, d1
     call    func_4851B5E3_entry, [d2], 0x18
     mov     a0, a1
     mov     a2, a0
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     mov     Str_used, a1
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, (0x10, sp)
     mov     (0x3c, sp), d0
     mov     0x0145000f, d1
@@ -46596,10 +46596,10 @@ loc_4855DAE8:
     ret     [d2,a2,a3], 0x20
 loc_4855DAF6:
     mov     0x500831f4, a2
-    call    func_4855EAB8_entry, [d2,a2,a3], 0x1c
+    call    SdVolumeLabelGet_entry, [d2,a2,a3], 0x1c
     mov     a0, a1
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     clr     d0
     movbu   d0, (0x500831ff)
     mov     a2, (0x10, sp)
@@ -46609,11 +46609,11 @@ loc_4855DAF6:
     clr     d0
     ret     [d2,a2,a3], 0x20
 loc_4855DB26:
-    call    func_4855EAB8_entry, [d2,a2,a3], 0x1c
+    call    SdVolumeLabelGet_entry, [d2,a2,a3], 0x1c
     mov     a0, a1
     mov     0x500831f4, a2
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     movbu   (a2), d0
     clr     d1
     extb    d0
@@ -46658,11 +46658,11 @@ loc_4855DB71:
     clr     d0
     ret     [d2,a2,a3], 0x20
 loc_4855DB8D:
-    call    func_4855EAB8_entry, [d2,a2,a3], 0x1c
+    call    SdVolumeLabelGet_entry, [d2,a2,a3], 0x1c
     mov     a0, a1
     mov     0x500831f4, a3
     mov     a3, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     movbu   (a3), d0
     clr     d1
     extb    d0
@@ -46702,21 +46702,21 @@ loc_4855DBD8:
     movbu   d0, (0x500831ff)
     mov     a3, a1
     mov     (0x30, sp), a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     clr     d0
     bra     loc_4855DC42
 loc_4855DBEC:
     mov     0x500831f4, a2
     mov     (0x30, sp), a1
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     clr     d0
     call    SdUiBusyBegin_entry, 0, 0xc
     mov     a2, a0
-    call    func_4855EB15_entry, 0, 0xc
-    call    func_4855E9F9_entry, 0, 0x10
-    call    func_4855EAB8_entry, [d2,a2,a3], 0x1c
-    call    func_4851AC03_entry, 0, 8
+    call    SdVolumeLabelSet_entry, 0, 0xc
+    call    SdVolumeLabelInvalidate_entry, 0, 0x10
+    call    SdVolumeLabelGet_entry, [d2,a2,a3], 0x1c
+    call    FmmSwRefresh_entry, 0, 8
     call    GetModeNow_entry, 0, 0x10
     extbu   d0
     cmp     0x18, d0
@@ -46870,9 +46870,9 @@ loc_4855DD84:
 loc_4855DD8F:
     jmp     loc_4855E068
 loc_4855DD92:
-    call    func_4855EECB_entry, 0, 0xc
+    call    SdCurFolderIndexGet_entry, 0, 0xc
     mov     d0, d3
-    call    func_4855EE91_entry, 0, 0xc
+    call    SdCurSongIndexGet_entry, 0, 0xc
     mov     d0, a2
     exth    d0
     mov     d0, (0x14, sp)
@@ -46881,7 +46881,7 @@ loc_4855DD92:
     mov     (0x14, sp), d1
     call    func_4855DC45, 0, 0
     mov     d0, d2
-    call    func_4855F87A, 0, 0
+    call    SdSingleLoadSelGet, 0, 0
     exth    d0
     cmp     -1, d0
     bne     loc_4855DDD6
@@ -46890,10 +46890,10 @@ loc_4855DD92:
     mov     a2, d1
     extbu   d1
     mov     d3, d0
-    call    func_4855EEEB_entry, [d2,d3,a2], 0x20
+    call    SdDirSongStemGet_entry, [d2,d3,a2], 0x20
     exth    d2
     mov     d2, d0
-    call    func_4855F883, 0, 0
+    call    SdSingleLoadSelSet, 0, 0
     call    func_4851AD71_entry, 0, 0xc
     bra     loc_4855DDF7
 loc_4855DDD6:
@@ -46905,20 +46905,20 @@ loc_4855DDD6:
     extbu   d0
     mov     a2, d1
     extbu   d1
-    call    func_4855EEEB_entry, [d2,d3,a2], 0x20
+    call    SdDirSongStemGet_entry, [d2,d3,a2], 0x20
     mov     d2, d0
-    call    func_4855F883, 0, 0
+    call    SdSingleLoadSelSet, 0, 0
     call    func_4851AD71_entry, 0, 0xc
 loc_4855DDF7:
     mov     1, d0
     call    SetExtMode, 0, 0
-    call    func_4855EECB_entry, 0, 0xc
+    call    SdCurFolderIndexGet_entry, 0, 0xc
     exthu   d0
     call    func_48564782_entry, [d2,a2], 0x58
     exth    d0
     cmp     0, d0
     blt     loc_4855DE43
-    call    func_4855F599_entry, 0, 8
+    call    SdCurSongTypeMaskGet_entry, 0, 8
     mov     d0, d1
     exthu   d1
     mov     (0x14, sp), d0
@@ -46990,11 +46990,11 @@ loc_4855DEEE:
     beq     loc_4855DEF5
     jmp     loc_4855DFB6
 loc_4855DEF5:
-    call    func_4855EE91_entry, 0, 0xc
+    call    SdCurSongIndexGet_entry, 0, 0xc
     mov     d0, d2
     mov     1, d0
     call    SetExtMode, 0, 0
-    call    func_4855EECB_entry, 0, 0xc
+    call    SdCurFolderIndexGet_entry, 0, 0xc
     exthu   d0
     call    func_48564782_entry, [d2,a2], 0x58
     exth    d0
@@ -47002,7 +47002,7 @@ loc_4855DEF5:
     blt     loc_4855DF4D
     clr     d0
     call    func_4851ABA9_entry, [d2], 0xc
-    call    func_4855F599_entry, 0, 8
+    call    SdCurSongTypeMaskGet_entry, 0, 8
     mov     d0, d1
     exth    d2
     exthu   d1
@@ -47046,17 +47046,17 @@ loc_4855DF4D:
 loc_4855DFB6:
     cmp     0xa, a2
     bne     loc_4855E018
-    call    func_4855EE91_entry, 0, 0xc
+    call    SdCurSongIndexGet_entry, 0, 0xc
     mov     d0, d2
     mov     1, d0
     call    SetExtMode, 0, 0
-    call    func_4855EECB_entry, 0, 0xc
+    call    SdCurFolderIndexGet_entry, 0, 0xc
     exthu   d0
     call    func_48564782_entry, [d2,a2], 0x58
     exth    d0
     cmp     0, d0
     blt     loc_4855E00A
-    call    func_4855F599_entry, 0, 8
+    call    SdCurSongTypeMaskGet_entry, 0, 8
     mov     d0, d1
     exth    d2
     exthu   d1
@@ -47316,7 +47316,7 @@ loc_4855E270:
     call    ApPostEvent_entry, [d2], 0x1c
     jmp     loc_4855E506
 loc_4855E2B4:
-    call    func_4855F599_entry, 0, 8
+    call    SdCurSongTypeMaskGet_entry, 0, 8
     exthu   d0
     cmp     0, d0
     beq     loc_4855E2F4
@@ -47348,13 +47348,13 @@ loc_4855E2F4:
     call    func_48562B51_entry, [d2,d3,a2,a3], 0xe0
     exth    d0
     mov     5, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     call    ResetExtMode, 0, 0
-    call    func_4855E9DB, 0, 0
-    call    func_4855EA12_entry, [a2], 0x14
+    call    SdFreeBytesInvalidate, 0, 0
+    call    SdFreeBytesQuery_entry, [a2], 0x14
     call    func_48562647_entry, [d2], 0xc
-    call    func_4851AC03_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -47380,7 +47380,7 @@ loc_4855E37F:
     clr     d0
     movbu   d0, (0x50082db8)
 loc_4855E392:
-    call    func_4855F599_entry, 0, 8
+    call    SdCurSongTypeMaskGet_entry, 0, 8
     exthu   d0
     cmp     0, d0
     beq     loc_4855E3D2
@@ -47419,13 +47419,13 @@ loc_4855E409:
     call    func_48562B51_entry, [d2,d3,a2,a3], 0xe0
     exth    d0
     mov     5, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     call    ResetExtMode, 0, 0
-    call    func_4855E9DB, 0, 0
-    call    func_4855EA12_entry, [a2], 0x14
+    call    SdFreeBytesInvalidate, 0, 0
+    call    SdFreeBytesQuery_entry, [a2], 0x14
     call    func_48562647_entry, [d2], 0xc
-    call    func_4851AC03_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -47462,13 +47462,13 @@ loc_4855E4A8:
     call    func_48562B51_entry, [d2,d3,a2,a3], 0xe0
     exth    d0
     mov     5, d1
-    call    func_4855113E_entry, [d2,d3], 8
+    call    SdcErrorMsgGet_entry, [d2,d3], 8
     mov     d0, d2
     call    ResetExtMode, 0, 0
-    call    func_4855E9DB, 0, 0
-    call    func_4855EA12_entry, [a2], 0x14
+    call    SdFreeBytesInvalidate, 0, 0
+    call    SdFreeBytesQuery_entry, [a2], 0x14
     call    func_48562647_entry, [d2], 0xc
-    call    func_4851AC03_entry, 0, 8
+    call    FmmSwRefresh_entry, 0, 8
     clr     d0
     mov     d0, (0x10, sp)
     mov     DiskWaitWin_id, d0
@@ -47701,7 +47701,7 @@ func_4855E75A_entry:
     clr     d2
     mov     d2, d3
     mov     2, d0
-    call    func_4855F78B_entry, [d2], 0x14
+    call    SdSaveFilterHasType_entry, [d2], 0x14
     extbu   d0
     cmp     d3, d0
     beq     loc_4855E782
@@ -47714,7 +47714,7 @@ func_4855E75A_entry:
     mov     1, d2
 loc_4855E782:
     mov     3, d0
-    call    func_4855F78B_entry, [d2], 0x14
+    call    SdSaveFilterHasType_entry, [d2], 0x14
     extbu   d0
     cmp     d3, d0
     beq     loc_4855E7A3
@@ -47807,8 +47807,8 @@ func_4855E842:
 func_4855E842_entry:
     call    func_48562429_entry, [d2], 0x10
     ret     0, 8
-
-func_4855E84D:
+# SdSongIndexCheck  (CPU 0x4855e84d)
+SdSongIndexCheck:
     extbu   d0
     cmp     0x14, d0
     bge     loc_4855E855
@@ -47818,8 +47818,8 @@ loc_4855E855:
     mov     -1, d0
 loc_4855E857:
     retf    0, 0
-
-func_4855E85A:
+# SdFolderIndexCheck  (CPU 0x4855e85a)
+SdFolderIndexCheck:
     extbu   d0
     cmp     0x63, d0
     bge     loc_4855E862
@@ -47829,8 +47829,8 @@ loc_4855E862:
     mov     -1, d0
 loc_4855E864:
     retf    0, 0
-
-func_4855E867:
+# SdSmfEntryIndexCheck  (CPU 0x4855e867)
+SdSmfEntryIndexCheck:
     exthu   d0
     cmp     0x3e7, d0
     bge     loc_4855E871
@@ -47840,8 +47840,8 @@ loc_4855E871:
     mov     -1, d0
 loc_4855E873:
     retf    0, 0
-
-func_4855E876:
+# SdSmfListIndexCheck  (CPU 0x4855e876)
+SdSmfListIndexCheck:
     extbu   d0
     cmp     0x63, d0
     bge     loc_4855E87E
@@ -47851,14 +47851,14 @@ loc_4855E87E:
     mov     -1, d0
 loc_4855E880:
     retf    0, 0
-
-func_4855E883:
+# SdFolderSongIndexCheck  (CPU 0x4855e883)
+SdFolderSongIndexCheck:
     movm    [d2], (sp)
     add     -0xc, sp
-func_4855E883_entry:
+SdFolderSongIndexCheck_entry:
     mov     d1, d2
     extbu   d0
-    call    func_4855E85A, 0, 0
+    call    SdFolderIndexCheck, 0, 0
     exth    d0
     cmp     0, d0
     bge     loc_4855E898
@@ -47867,7 +47867,7 @@ func_4855E883_entry:
 loc_4855E898:
     extbu   d2
     mov     d2, d0
-    call    func_4855E84D, 0, 0
+    call    SdSongIndexCheck, 0, 0
     exth    d0
     cmp     0, d0
     bge     loc_4855E8A8
@@ -47877,15 +47877,15 @@ loc_4855E8A8:
     clr     d0
 loc_4855E8A9:
     ret     [d2], 0x10
-
-func_4855E8AC:
+# SdFmmTablesReset  (CPU 0x4855e8ac)
+SdFmmTablesReset:
     movm    [d2], (sp)
     add     -8, sp
-func_4855E8AC_entry:
+SdFmmTablesReset_entry:
     clr     d0
     mov     d0, (0x50083cd4)
     movbu   d0, (0x50083cd8)
-    mov     func_4855E8AC_Table, a1
+    mov     SdFmmTablesReset_Table, a1
     mov     0x50083cdc, a0
     mov     -0x13, d1
     setlb
@@ -47897,7 +47897,7 @@ func_4855E8AC_entry:
     lne
     clr     d1
 loc_4855E8D4:
-    mov     func_4855E8AC_Table_3, a1
+    mov     SdFmmTablesReset_Table_3, a1
     mov     9, d2
     nop
     nop
@@ -47918,7 +47918,7 @@ loc_4855E8D4:
     blt     loc_4855E8D4
     clr     d2
 loc_4855E8FA:
-    mov     func_4855E8AC_Table_2, a1
+    mov     SdFmmTablesReset_Table_2, a1
     mov     0x1e, d1
     nop
     nop
@@ -47939,7 +47939,7 @@ loc_4855E8FA:
     blt     loc_4855E8FA
     clr     d2
 loc_4855E920:
-    mov     func_4855E8AC_Table_4, a1
+    mov     SdFmmTablesReset_Table_4, a1
     mov     0xa, d1
     nop
     nop
@@ -47989,91 +47989,91 @@ loc_4855E920:
     movhu   d0, (0x50091820)
     movhu   d0, (0x50091a7a)
     call    func_48560EA5_entry, [d2], 4
-    call    func_4855E9DB, 0, 0
-    call    func_4855E9EA, 0, 0
-    call    func_4855E9F9_entry, 0, 0x10
+    call    SdFreeBytesInvalidate, 0, 0
+    call    SdTotalBytesInvalidate, 0, 0
+    call    SdVolumeLabelInvalidate_entry, 0, 0x10
     ret     [d2], 0xc
-
-func_4855E9DB:
-    mov     (func_4855E8AC_Table), d0
+# SdFreeBytesInvalidate  (CPU 0x4855e9db)
+SdFreeBytesInvalidate:
+    mov     (SdFmmTablesReset_Table), d0
     mov     d0, (0x50083cdc)
     retf    0, 0
-
-func_4855E9EA:
-    mov     (func_4855E8AC_Table+4), d0
+# SdTotalBytesInvalidate  (CPU 0x4855e9ea)
+SdTotalBytesInvalidate:
+    mov     (SdFmmTablesReset_Table+4), d0
     mov     d0, (0x50083ce0)
     retf    0, 0
-
-func_4855E9F9:
+# SdVolumeLabelInvalidate  (CPU 0x4855e9f9)
+SdVolumeLabelInvalidate:
     add     -0x10, sp
-func_4855E9F9_entry:
+SdVolumeLabelInvalidate_entry:
     mov     0x50083ce4, a0
-    mov     func_4855E8AC_Table+8, a1
-    call    func_4852F762, 0, 0
+    mov     SdFmmTablesReset_Table+8, a1
+    call    StrCopy, 0, 0
     ret     0, 0x10
-
-func_4855EA12:
+# SdFreeBytesQuery  (CPU 0x4855ea12)
+SdFreeBytesQuery:
     movm    [a2], (sp)
     add     -0x10, sp
-func_4855EA12_entry:
+SdFreeBytesQuery_entry:
     mov     (0x50083cdc), a0
-    mov     (func_4855E8AC_Table), a1
+    mov     (SdFmmTablesReset_Table), a1
     cmp     a1, a0
     bne     loc_4855EA40
-    call    func_484720D0_entry, 0, 0x1c
+    call    SdMediaEnsureInit_entry, 0, 0x1c
     mov     0x50083ce0, a1
     mov     0x50083cdc, a0
     call    GetDiskFreeSpaceSD_entry, [a2,a3], 0x18
 loc_4855EA40:
     mov     (0x50083cdc), d0
     ret     [a2], 0x14
-
-func_4855EA49:
+# SdTotalBytesQuery  (CPU 0x4855ea49)
+SdTotalBytesQuery:
     movm    [a2], (sp)
     add     -0x10, sp
     mov     (0x50083ce0), a0
-    mov     (func_4855E8AC_Table+4), a1
+    mov     (SdFmmTablesReset_Table+4), a1
     cmp     a1, a0
     bne     loc_4855EA77
-    call    func_484720D0_entry, 0, 0x1c
+    call    SdMediaEnsureInit_entry, 0, 0x1c
     mov     0x50083ce0, a1
     mov     0x50083cdc, a0
     call    GetDiskFreeSpaceSD_entry, [a2,a3], 0x18
 loc_4855EA77:
     mov     (0x50083ce0), d0
     ret     [a2], 0x14
-
-func_4855EA80:
+# SdFreeBytesGet  (CPU 0x4855ea80)
+SdFreeBytesGet:
     mov     (0x50083cdc), d0
     retf    0, 0
-
-func_4855EA89:
+# SdTotalBytesGet  (CPU 0x4855ea89)
+SdTotalBytesGet:
     mov     (0x50083ce0), d0
     retf    0, 0
-
-func_4855EA92:
+# SdFreeSpaceRefresh  (CPU 0x4855ea92)
+SdFreeSpaceRefresh:
     add     -0x10, sp
-func_4855EA92_entry:
-    call    func_484720D0_entry, 0, 0x1c
+SdFreeSpaceRefresh_entry:
+    call    SdMediaEnsureInit_entry, 0, 0x1c
     mov     0x50083cdc, a0
     mov     0x50083ce0, a1
     call    GetDiskFreeSpaceSD_entry, [a2,a3], 0x18
     mov     (0x50083cdc), d0
     ret     0, 0x10
-
-func_4855EAB8:
+# SdVolumeLabelGet  (CPU 0x4855eab8)
+SdVolumeLabelGet:
     movm    [d2,a2,a3], (sp)
     add     -0x10, sp
-func_4855EAB8_entry:
+SdVolumeLabelGet_entry:
     mov     0x50083ce4, d2
-    mov     func_4855E8AC_Table+8, a3
+    mov     SdFmmTablesReset_Table+8, a3
     mov     d2, a0
     mov     a3, a1
-    call    func_4852F7D7, 0, 0
+    call    FmmStrCmp, 0, 0
     exth    d0
     cmp     0, d0
     bne     loc_4855EB10
-    call    func_484720D0_entry, 0, 0x1c
+    call    SdMediaEnsureInit_entry, 0, 0x1c
     call    GetVolumeLabelSD_entry, [d2,a2,a3], 0x5c
     mov     a0, a2
     cmp     0, a2
@@ -48082,7 +48082,7 @@ func_4855EAB8_entry:
     bra     loc_4855EB06
 loc_4855EAF3:
     mov     a3, a1
-    call    func_4852F7D7, 0, 0
+    call    FmmStrCmp, 0, 0
     exth    d0
     cmp     0, d0
     bne     loc_4855EB06
@@ -48090,20 +48090,20 @@ loc_4855EAF3:
 loc_4855EB06:
     mov     d2, a0
     mov     a2, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
 loc_4855EB10:
     mov     d2, a0
     ret     [d2,a2,a3], 0x1c
-
-func_4855EB15:
+# SdVolumeLabelSet  (CPU 0x4855eb15)
+SdVolumeLabelSet:
     add     -0xc, sp
-func_4855EB15_entry:
+SdVolumeLabelSet_entry:
     call    SetVolumeLabelSD_entry, [a2,a3], 0x28
     ret     0, 0xc
-
-func_4855EB22:
+# SdNamingDefaultsReset  (CPU 0x4855eb22)
+SdNamingDefaultsReset:
     add     -0x10, sp
-func_4855EB22_entry:
+SdNamingDefaultsReset_entry:
     mov     0x7f, d0
     movhu   d0, (0x50092186)
     movhu   d0, (0x50092188)
@@ -48113,13 +48113,13 @@ func_4855EB22_entry:
     movbu   d0, (0x5009218b)
     mov     0x50083d2a, a0
     mov     Str_empty_738, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     0x50083d3b, a0
     mov     Str_empty_737, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     0x50083d4c, a0
     mov     Str_NEW_PLAYLIST_5, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     4, d0
     movbu   d0, (0x5009218c)
     clr     d0
@@ -48127,28 +48127,28 @@ func_4855EB22_entry:
     mov     -1, d0
     movhu   d0, (0x5009218e)
     ret     0, 0x10
-
-func_4855EB95:
+# SdDirInfPtrGet  (CPU 0x4855eb95)
+SdDirInfPtrGet:
     mov     FAVORITES_SRAM, a0
     retf    0, 0
-
-func_4855EB9E:
+# SdDirInfSizeGet  (CPU 0x4855eb9e)
+SdDirInfSizeGet:
     mov     0x0000d620, d0
     retf    0, 0
-
-func_4855EBA7:
+# SdDirInfSigSizeGet  (CPU 0x4855eba7)
+SdDirInfSigSizeGet:
     mov     0x10, d0
     retf    0, 0
-
-func_4855EBAC:
+# SdDirInfBodyPtrGet  (CPU 0x4855ebac)
+SdDirInfBodyPtrGet:
     mov     0x50083d82, a0
     retf    0, 0
-
-func_4855EBB5:
+# SdDirInfBodySizeGet  (CPU 0x4855ebb5)
+SdDirInfBodySizeGet:
     mov     0x0000d610, d0
     retf    0, 0
-
-func_4855EBBE:
+# SdDirFolderRecordGet  (CPU 0x4855ebbe)
+SdDirFolderRecordGet:
     mov     d0, d1
     extbu   d1
     cmp     0x63, d1
@@ -48164,10 +48164,10 @@ func_4855EBBE:
 loc_4855EBD6:
     mov     0, a0
     rets
-
-func_4855EBDA:
+# SdDirSongRecordGet  (CPU 0x4855ebda)
+SdDirSongRecordGet:
     movm    [d2], (sp)
-func_4855EBDA_entry:
+SdDirSongRecordGet_entry:
     mov     d1, d2
     mov     d0, d1
     extbu   d1
@@ -48196,10 +48196,10 @@ loc_4855EC06:
     mov     0, a0
 loc_4855EC08:
     ret     [d2], 4
-
-func_4855EC0B:
+# SdDirInfSigCheck  (CPU 0x4855ec0b)
+SdDirInfSigCheck:
     movm    [d2], (sp)
-func_4855EC0B_entry:
+SdDirInfSigCheck_entry:
     clr     d0
     clr     d2
     setlb
@@ -48244,10 +48244,10 @@ FavFormat_entry:
     mov     0x1078, d1
     call    memset_entry, [a2], 4
     ret     0, 0x14
-
-func_4855EC84:
+# SdDirInfSigWrite  (CPU 0x4855ec84)
+SdDirInfSigWrite:
     movm    [d2], (sp)
-func_4855EC84_entry:
+SdDirInfSigWrite_entry:
     clr     d1
     clr     d2
     setlb
@@ -48262,11 +48262,11 @@ func_4855EC84_entry:
     cmp     0x10, d2
     llt
     retf    [d2], 4
-
-func_4855ECA3:
+# SdDirSongNameGet  (CPU 0x4855eca3)
+SdDirSongNameGet:
     movm    [d2,d3,a2], (sp)
     add     -0x14, sp
-func_4855ECA3_entry:
+SdDirSongNameGet_entry:
     mov     d1, d3
     mov     d0, d2
     call    SdCardUsableCheck_entry, 0, 8
@@ -48301,7 +48301,7 @@ loc_4855ECB8:
     add     d1, d2
     mov     d2, a1
     mov     0x10, d0
-    call    func_4852F77C, 0, 0
+    call    StrCopyPad, 0, 0
     clr     d0
     movbu   d0, (0x50083bec)
     mov     a2, a0
@@ -48310,11 +48310,11 @@ loc_4855ECF8:
     mov     0, a0
 loc_4855ECFA:
     ret     [d2,d3,a2], 0x20
-
-func_4855ECFD:
+# SdDirFolderNameGet  (CPU 0x4855ecfd)
+SdDirFolderNameGet:
     movm    [d2,a2], (sp)
     add     -0x14, sp
-func_4855ECFD_entry:
+SdDirFolderNameGet_entry:
     mov     d0, d2
     call    SdCardUsableCheck_entry, 0, 8
     extbu   d0
@@ -48337,7 +48337,7 @@ loc_4855ED11:
     mov     d1, a1
     add     0x50083d82, a1
     mov     0x10, d0
-    call    func_4852F77C, 0, 0
+    call    StrCopyPad, 0, 0
     clr     d0
     movbu   d0, (0x50083c00)
     mov     a2, a0
@@ -48346,57 +48346,57 @@ loc_4855ED41:
     mov     0, a0
 loc_4855ED43:
     ret     [d2,a2], 0x1c
-
-func_4855ED46:
+# SdDirFolderMaxGet  (CPU 0x4855ed46)
+SdDirFolderMaxGet:
     mov     0x63, d0
     retf    0, 0
-
-func_4855ED4B:
+# SdDirCurFolderNameSet  (CPU 0x4855ed4b)
+SdDirCurFolderNameSet:
     movm    [d2,a2], (sp)
     add     -0x14, sp
-func_4855ED4B_entry:
+SdDirCurFolderNameSet_entry:
     mov     a0, a2
     call    SD_GetState, 0, 0
     extbu   d0
     cmp     2, d0
     beq     loc_4855ED87
-    call    func_4855EECB_entry, 0, 0xc
+    call    SdCurFolderIndexGet_entry, 0, 0xc
     mov     d0, d2
     mov     d2, d1
     exth    d1
     cmp     0, d1
     blt     loc_4855ED87
     extbu   d0
-    call    func_4855E85A, 0, 0
+    call    SdFolderIndexCheck, 0, 0
     exth    d0
     cmp     0, d0
     bne     loc_4855ED87
     extbu   d2
     mov     d2, d0
-    call    func_4855EBBE, 0, 0
+    call    SdDirFolderRecordGet, 0, 0
     cmp     0, a0
     beq     loc_4855ED87
     mov     0x10, d0
     mov     a2, a1
-    call    func_4852F77C, 0, 0
+    call    StrCopyPad, 0, 0
 loc_4855ED87:
     ret     [d2,a2], 0x1c
-
-func_4855ED8A:
+# SdDirCurSongNameSet  (CPU 0x4855ed8a)
+SdDirCurSongNameSet:
     movm    [d2,d3,a2], (sp)
     add     -0x14, sp
-func_4855ED8A_entry:
+SdDirCurSongNameSet_entry:
     mov     a0, a2
     call    SD_GetState, 0, 0
     extbu   d0
     cmp     2, d0
     beq     loc_4855EDE2
-    call    func_4855EECB_entry, 0, 0xc
+    call    SdCurFolderIndexGet_entry, 0, 0xc
     mov     d0, d2
     exth    d0
     cmp     0, d0
     blt     loc_4855EDE2
-    call    func_4855EE91_entry, 0, 0xc
+    call    SdCurSongIndexGet_entry, 0, 0xc
     mov     d0, d3
     exth    d0
     cmp     0, d0
@@ -48405,7 +48405,7 @@ func_4855ED8A_entry:
     extbu   d0
     mov     d3, d1
     extbu   d1
-    call    func_4855E883_entry, [d2], 0x10
+    call    SdFolderSongIndexCheck_entry, [d2], 0x10
     exth    d0
     cmp     0, d0
     bne     loc_4855EDE2
@@ -48425,22 +48425,22 @@ func_4855ED8A_entry:
     mov     d2, a0
     mov     0x10, d0
     mov     a2, a1
-    call    func_4852F77C, 0, 0
+    call    StrCopyPad, 0, 0
 loc_4855EDE2:
     ret     [d2,d3,a2], 0x20
-
-func_4855EDE5:
+# SdSaveNameBufGet  (CPU 0x4855ede5)
+SdSaveNameBufGet:
     mov     0x50083d2a, a0
     retf    0, 0
-
-func_4855EDEE:
+# SdSaveNameBufSet  (CPU 0x4855edee)
+SdSaveNameBufSet:
     movm    [a2], (sp)
     add     -0x14, sp
-func_4855EDEE_entry:
+SdSaveNameBufSet_entry:
     mov     a0, a1
     mov     0x10, d0
     mov     0x50083d2a, a0
-    call    func_4852F77C, 0, 0
+    call    StrCopyPad, 0, 0
     clr     d0
     movbu   d0, (0x50083d3a)
     ret     [a2], 0x18
@@ -48454,12 +48454,12 @@ func_4855EE16_entry:
     mov     a0, a1
     mov     6, d0
     mov     0x50083d5d, a0
-    call    func_4852F77C, 0, 0
+    call    StrCopyPad, 0, 0
     clr     d0
     movbu   d0, (0x50083d63)
     ret     [a2], 0x18
-
-func_4855EE35:
+# SdDirSongTypeMaskGetB  (CPU 0x4855ee35)
+SdDirSongTypeMaskGetB:
     movm    [d2,d3], (sp)
     add     -8, sp
     mov     d1, d3
@@ -48498,26 +48498,26 @@ loc_4855EE73:
     clr     d0
 loc_4855EE74:
     ret     [d2,d3], 0x10
-
-func_4855EE77:
+# SdCurSongIndexSet  (CPU 0x4855ee77)
+SdCurSongIndexSet:
     movm    [d2], (sp)
     add     -0xc, sp
-func_4855EE77_entry:
+SdCurSongIndexSet_entry:
     mov     d0, d2
     extbu   d0
-    call    func_4855E84D, 0, 0
+    call    SdSongIndexCheck, 0, 0
     exth    d0
     cmp     -1, d0
     beq     loc_4855EE8E
     movbu   d2, (0x50083d29)
 loc_4855EE8E:
     ret     [d2], 0x10
-
-func_4855EE91:
+# SdCurSongIndexGet  (CPU 0x4855ee91)
+SdCurSongIndexGet:
     add     -0xc, sp
-func_4855EE91_entry:
+SdCurSongIndexGet_entry:
     movbu   (0x50083d29), d0
-    call    func_4855E84D, 0, 0
+    call    SdSongIndexCheck, 0, 0
     exth    d0
     cmp     0, d0
     beq     loc_4855EEA8
@@ -48527,26 +48527,26 @@ loc_4855EEA8:
     movbu   (0x50083d29), d0
 loc_4855EEAE:
     ret     0, 0xc
-
-func_4855EEB1:
+# SdCurFolderIndexSet  (CPU 0x4855eeb1)
+SdCurFolderIndexSet:
     movm    [d2], (sp)
     add     -0xc, sp
-func_4855EEB1_entry:
+SdCurFolderIndexSet_entry:
     mov     d0, d2
     extbu   d0
-    call    func_4855E85A, 0, 0
+    call    SdFolderIndexCheck, 0, 0
     exth    d0
     cmp     -1, d0
     beq     loc_4855EEC8
     movbu   d2, (0x50083d28)
 loc_4855EEC8:
     ret     [d2], 0x10
-
-func_4855EECB:
+# SdCurFolderIndexGet  (CPU 0x4855eecb)
+SdCurFolderIndexGet:
     add     -0xc, sp
-func_4855EECB_entry:
+SdCurFolderIndexGet_entry:
     movbu   (0x50083d28), d0
-    call    func_4855E85A, 0, 0
+    call    SdFolderIndexCheck, 0, 0
     exth    d0
     cmp     0, d0
     beq     loc_4855EEE2
@@ -48556,11 +48556,11 @@ loc_4855EEE2:
     movbu   (0x50083d28), d0
 loc_4855EEE8:
     ret     0, 0xc
-
-func_4855EEEB:
+# SdDirSongStemGet  (CPU 0x4855eeeb)
+SdDirSongStemGet:
     movm    [d2,d3,a2], (sp)
     add     -0x14, sp
-func_4855EEEB_entry:
+SdDirSongStemGet_entry:
     mov     d1, d3
     mov     d0, d2
     mov     a0, a2
@@ -48576,7 +48576,7 @@ loc_4855EF02:
     extbu   d0
     mov     d3, d1
     extbu   d1
-    call    func_4855E883_entry, [d2], 0x10
+    call    SdFolderSongIndexCheck_entry, [d2], 0x10
     exth    d0
     cmp     0, d0
     beq     loc_4855EF15
@@ -48601,16 +48601,16 @@ loc_4855EF15:
     mov     0x20, a1
     add     d0, a1
     mov     6, d0
-    call    func_4852F77C, 0, 0
+    call    StrCopyPad, 0, 0
     clr     d0
     movbu   d0, (6, a2)
 loc_4855EF3E:
     ret     [d2,d3,a2], 0x20
-
-func_4855EF41:
+# SdDirSongStemClear  (CPU 0x4855ef41)
+SdDirSongStemClear:
     movm    [d2,d3], (sp)
     add     -0x14, sp
-func_4855EF41_entry:
+SdDirSongStemClear_entry:
     movbu   d1, (0x28, sp)
     movbu   d0, (0x24, sp)
     call    SD_GetState, 0, 0
@@ -48619,7 +48619,7 @@ func_4855EF41_entry:
     beq     loc_4855EF94
     movbu   (0x24, sp), d0
     movbu   (0x28, sp), d1
-    call    func_4855E883_entry, [d2], 0x10
+    call    SdFolderSongIndexCheck_entry, [d2], 0x10
     exth    d0
     cmp     0, d0
     bne     loc_4855EF94
@@ -48652,11 +48652,11 @@ func_4855EF41_entry:
     llt
 loc_4855EF94:
     ret     [d2,d3], 0x1c
-
-func_4855EF97:
+# SdDirSongTypeMaskClear  (CPU 0x4855ef97)
+SdDirSongTypeMaskClear:
     movm    [d2,d3], (sp)
     add     -0x10, sp
-func_4855EF97_entry:
+SdDirSongTypeMaskClear_entry:
     mov     d1, d3
     mov     d0, d2
     call    SD_GetState, 0, 0
@@ -48667,7 +48667,7 @@ func_4855EF97_entry:
     extbu   d0
     mov     d3, d1
     extbu   d1
-    call    func_4855E883_entry, [d2], 0x10
+    call    SdFolderSongIndexCheck_entry, [d2], 0x10
     exth    d0
     cmp     0, d0
     bne     loc_4855EFD3
@@ -48688,11 +48688,11 @@ func_4855EF97_entry:
     movhu   d0, (0x26, a0)
 loc_4855EFD3:
     ret     [d2,d3], 0x18
-
-func_4855EFD6:
+# SdDirSongNameClear  (CPU 0x4855efd6)
+SdDirSongNameClear:
     movm    [d2,d3], (sp)
     add     -0x14, sp
-func_4855EFD6_entry:
+SdDirSongNameClear_entry:
     movbu   d1, (0x28, sp)
     movbu   d0, (0x24, sp)
     call    SD_GetState, 0, 0
@@ -48701,7 +48701,7 @@ func_4855EFD6_entry:
     beq     loc_4855F02A
     movbu   (0x24, sp), d0
     movbu   (0x28, sp), d1
-    call    func_4855E883_entry, [d2], 0x10
+    call    SdFolderSongIndexCheck_entry, [d2], 0x10
     exth    d0
     cmp     0, d0
     bne     loc_4855F02A
@@ -48735,8 +48735,8 @@ func_4855EFD6_entry:
     llt
 loc_4855F02A:
     ret     [d2,d3], 0x1c
-
-func_4855F02D:
+# SdDirSongEntryClear  (CPU 0x4855f02d)
+SdDirSongEntryClear:
     movm    [d2,d3], (sp)
     add     -0x10, sp
     mov     d1, d3
@@ -48745,19 +48745,19 @@ func_4855F02D:
     extbu   d3
     mov     d2, d0
     mov     d3, d1
-    call    func_4855EFD6_entry, [d2,d3], 0x1c
+    call    SdDirSongNameClear_entry, [d2,d3], 0x1c
     mov     d2, d0
     mov     d3, d1
-    call    func_4855EF41_entry, [d2,d3], 0x1c
+    call    SdDirSongStemClear_entry, [d2,d3], 0x1c
     mov     d3, d1
     mov     d2, d0
-    call    func_4855EF97_entry, [d2,d3], 0x18
+    call    SdDirSongTypeMaskClear_entry, [d2,d3], 0x18
     ret     [d2,d3], 0x18
-
-func_4855F04E:
+# SdSongFileStemFormat  (CPU 0x4855f04e)
+SdSongFileStemFormat:
     movm    [d2,d3,a2], (sp)
     add     -0x10, sp
-func_4855F04E_entry:
+SdSongFileStemFormat_entry:
     mov     a0, a2
     mov     d0, d2
     extbu   d2
@@ -48793,15 +48793,15 @@ func_4855F04E_entry:
     inc     a2
     mov     a2, a0
     mov     Str_KN7, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     clr     d0
     movbu   d0, (6, a2)
     ret     [d2,d3,a2], 0x1c
-
-func_4855F0A3:
+# SdDirInfValidGet  (CPU 0x4855f0a3)
+SdDirInfValidGet:
     add     -8, sp
-func_4855F0A3_entry:
-    call    func_4855EC0B_entry, [d2], 4
+SdDirInfValidGet_entry:
+    call    SdDirInfSigCheck_entry, [d2], 4
     extbu   d0
     cmp     0, d0
     beq     loc_4855F0B3
@@ -48811,11 +48811,11 @@ loc_4855F0B3:
     mov     -0x68, d0
 loc_4855F0B5:
     ret     0, 8
-
-func_4855F0B8:
+# SdFileExtIndexGet  (CPU 0x4855f0b8)
+SdFileExtIndexGet:
     movm    [d2,d3,a2], (sp)
     add     -0x10, sp
-func_4855F0B8_entry:
+SdFileExtIndexGet_entry:
     mov     a0, a2
     movbu   (a2), d0
     clr     d1
@@ -48852,7 +48852,7 @@ loc_4855F0E7:
     mov     d2, d0
     call    func_485322F8, 0, 0
     mov     a2, a1
-    call    func_4852F7D7, 0, 0
+    call    FmmStrCmp, 0, 0
     exth    d0
     cmp     0, d0
     beq     loc_4855F104
@@ -48872,11 +48872,11 @@ loc_4855F10C:
     extbu   d0
 loc_4855F10E:
     ret     [d2,d3,a2], 0x1c
-
-func_4855F111:
+# SdDirSongTypeAdd  (CPU 0x4855f111)
+SdDirSongTypeAdd:
     movm    [d2,d3,a2], (sp)
     add     -0x10, sp
-func_4855F111_entry:
+SdDirSongTypeAdd_entry:
     mov     d1, d3
     mov     d0, d2
     exthu   d0
@@ -48891,7 +48891,7 @@ loc_4855F121:
     mov     -1, d0
     bra     loc_4855F180
 loc_4855F12A:
-    call    func_4855F0B8_entry, [d2,d3,a2], 0x1c
+    call    SdFileExtIndexGet_entry, [d2,d3,a2], 0x1c
     mov     d0, a2
     mov     d0, d1
     exth    d1
@@ -48941,11 +48941,11 @@ loc_4855F17E:
     mov     a2, d0
 loc_4855F180:
     ret     [d2,d3,a2], 0x1c
-
-func_4855F183:
+# SdDirSongFileRegister  (CPU 0x4855f183)
+SdDirSongFileRegister:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x14, sp
-func_4855F183_entry:
+SdDirSongFileRegister_entry:
     mov     a0, (0x34, sp)
     movhu   d1, (0x30, sp)
     mov     d0, a3
@@ -48984,7 +48984,7 @@ loc_4855F1A7:
     exthu   d0
     exthu   d1
     mov     (0x34, sp), a0
-    call    func_4855F111_entry, [d2,d3,a2], 0x1c
+    call    SdDirSongTypeAdd_entry, [d2,d3,a2], 0x1c
     exth    d0
     cmp     0, d0
     blt     loc_4855F235
@@ -49004,7 +49004,7 @@ loc_4855F1A7:
     mov     0x20, a0
     add     d0, a0
     mov     6, d0
-    call    func_4852F77C, 0, 0
+    call    StrCopyPad, 0, 0
     mov     1, d0
     bra     loc_4855F236
 loc_4855F200:
@@ -49024,7 +49024,7 @@ loc_4855F200:
     mov     0x20, a0
     add     d0, a0
     mov     6, d0
-    call    func_4852F800_entry, [d2], 4
+    call    FmmStrNCmp_entry, [d2], 4
     exth    d0
     cmp     0, d0
     bne     loc_4855F235
@@ -49033,29 +49033,29 @@ loc_4855F200:
     exthu   d0
     exthu   d1
     mov     (0x34, sp), a0
-    call    func_4855F111_entry, [d2,d3,a2], 0x1c
+    call    SdDirSongTypeAdd_entry, [d2,d3,a2], 0x1c
 loc_4855F235:
     clr     d0
 loc_4855F236:
     ret     [d2,d3,a2,a3], 0x24
-
-func_4855F239:
+# SdDirFolderScan  (CPU 0x4855f239)
+SdDirFolderScan:
     movm    [d2,d3,a2,a3], (sp)
-func_4855F239_entry:
+SdDirFolderScan_entry:
     add     -0x12c, sp
     mov     0x50083c04, a2
     extbu   d0
     mov     d0, (0x1c, sp)
     mov     a2, a0
-    call    func_48560FB3_entry, [d2,a2,a3], 0x28
+    call    SdTechFolderPathBuild_entry, [d2,a2,a3], 0x28
     mov     a2, a0
     mov     Str_empty_736, a1
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     mov     Str_empty_735, a1
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     clr     d3
-    call    func_484720D0_entry, 0, 0x1c
+    call    SdMediaEnsureInit_entry, 0, 0x1c
     mov     sp, a3
     add     0x20, a3
     mov     a3, a1
@@ -49067,7 +49067,7 @@ func_4855F239_entry:
     mov     8, a2
     add     a3, a2
     mov     a2, a0
-    call    func_485300F6_entry, [d2], 4
+    call    FmmNameSlotParse_entry, [d2], 4
     mov     d0, d1
     mov     d1, d2
     exth    d2
@@ -49078,7 +49078,7 @@ func_4855F239_entry:
     mov     a0, (0x14, sp)
     mov     (0x1c, sp), d0
     mov     a2, a0
-    call    func_4855F183_entry, [d2,d3,a2,a3], 0x24
+    call    SdDirSongFileRegister_entry, [d2,d3,a2,a3], 0x24
     mov     d0, d3
     exth    d3
 loc_4855F2A4:
@@ -49089,7 +49089,7 @@ loc_4855F2A4:
     bne     loc_4855F2E1
 loc_4855F2B2:
     mov     a2, a0
-    call    func_485300F6_entry, [d2], 4
+    call    FmmNameSlotParse_entry, [d2], 4
     mov     d0, d1
     mov     d1, d2
     exth    d2
@@ -49100,7 +49100,7 @@ loc_4855F2B2:
     mov     a0, (0x14, sp)
     mov     (0x1c, sp), d0
     mov     a2, a0
-    call    func_4855F183_entry, [d2,d3,a2,a3], 0x24
+    call    SdDirSongFileRegister_entry, [d2,d3,a2,a3], 0x24
     mov     d3, d1
     exth    d1
     mov     d0, d3
@@ -49119,17 +49119,17 @@ loc_4855F2EA:
     mov     d3, d0
     add     0x12c, sp
     ret     [d2,d3,a2,a3], 0x10
-
-func_4855F2F2:
+# SdDirScanAll  (CPU 0x4855f2f2)
+SdDirScanAll:
     movm    [d2,d3], (sp)
     add     -0xc, sp
-func_4855F2F2_entry:
+SdDirScanAll_entry:
     clr     d3
     mov     d3, d0
     clr     d2
 loc_4855F2FA:
     extbu   d0
-    call    func_4855F239_entry, [d2,d3,a2,a3], 0x10
+    call    SdDirFolderScan_entry, [d2,d3,a2,a3], 0x10
     exth    d3
     exth    d0
     add     d0, d3
@@ -49138,14 +49138,14 @@ loc_4855F2FA:
     exth    d2
     cmp     0x63, d2
     blt     loc_4855F2FA
-    call    func_4855EC84_entry, [d2], 4
+    call    SdDirInfSigWrite_entry, [d2], 4
     mov     d3, d0
     ret     [d2,d3], 0x14
-
-func_4855F313:
+# SdDirCurSongNameStore  (CPU 0x4855f313)
+SdDirCurSongNameStore:
     movm    [d2], (sp)
     add     -0x14, sp
-func_4855F313_entry:
+SdDirCurSongNameStore_entry:
     call    SD_GetState, 0, 0
     extbu   d0
     cmp     2, d0
@@ -49166,35 +49166,35 @@ func_4855F313_entry:
     mov     d2, a0
     mov     0x50083d2a, a1
     mov     0x10, d0
-    call    func_4852F77C, 0, 0
+    call    StrCopyPad, 0, 0
 loc_4855F355:
     ret     [d2], 0x18
-
-func_4855F358:
+# SdDirCurSongNameCommit  (CPU 0x4855f358)
+SdDirCurSongNameCommit:
     add     -8, sp
-func_4855F358_entry:
-    call    func_4855F313_entry, [d2], 0x18
-    call    func_4855EC84_entry, [d2], 4
+SdDirCurSongNameCommit_entry:
+    call    SdDirCurSongNameStore_entry, [d2], 0x18
+    call    SdDirInfSigWrite_entry, [d2], 4
     ret     0, 8
     mov     1, d0
     retf    0, 0
-
-func_4855F36D:
+# SdFileExistsCheck  (CPU 0x4855f36d)
+SdFileExistsCheck:
     movm    [a2,a3], (sp)
-func_4855F36D_entry:
+SdFileExistsCheck_entry:
     add     -0x19c, sp
     mov     a0, a3
     mov     sp, a2
     add     0x10, a2
     mov     a2, a0
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     Str_empty_734, a1
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     mov     a3, a1
-    call    func_4852F7AE, 0, 0
-    call    func_484720D0_entry, 0, 0x1c
+    call    StrAppend, 0, 0
+    call    SdMediaEnsureInit_entry, 0, 0x1c
     mov     sp, a1
     add     0x90, a1
     mov     a2, a0
@@ -49209,10 +49209,10 @@ loc_4855F3B9:
 loc_4855F3BA:
     add     0x19c, sp
     ret     [a2,a3], 8
-
-func_4855F3C1:
+# SdFileSizeGet  (CPU 0x4855f3c1)
+SdFileSizeGet:
     movm    [a2], (sp)
-func_4855F3C1_entry:
+SdFileSizeGet_entry:
     add     -0x11c, sp
     mov     a0, a2
     call    SD_GetState, 0, 0
@@ -49222,7 +49222,7 @@ func_4855F3C1_entry:
     clr     d0
     bra     loc_4855F3F8
 loc_4855F3D5:
-    call    func_484720D0_entry, 0, 0x1c
+    call    SdMediaEnsureInit_entry, 0, 0x1c
     mov     sp, a1
     add     0x10, a1
     mov     a2, a0
@@ -49237,11 +49237,11 @@ loc_4855F3EF:
 loc_4855F3F8:
     add     0x11c, sp
     ret     [a2], 4
-
-func_4855F3FF:
+# SdFileSizeQuery  (CPU 0x4855f3ff)
+SdFileSizeQuery:
     add     -0xc, sp
-func_4855F3FF_entry:
-    call    func_4855F3C1_entry, [a2], 4
+SdFileSizeQuery_entry:
+    call    SdFileSizeGet_entry, [a2], 4
     ret     0, 0xc
 
 func_4855F40A:
@@ -49301,7 +49301,7 @@ func_4855F40A_entry:
     mov     d0, a0
     mov     d2, d0
     extbu   d0
-    call    func_48560FB3_entry, [d2,a2,a3], 0x28
+    call    SdTechFolderPathBuild_entry, [d2,a2,a3], 0x28
     mov     sp, a3
     add     0xb8, a3
     mov     a3, a0
@@ -49309,34 +49309,34 @@ func_4855F40A_entry:
     mov     d3, d1
     extbu   d1
     mov     d2, d0
-    call    func_4855EEEB_entry, [d2,d3,a2], 0x20
+    call    SdDirSongStemGet_entry, [d2,d3,a2], 0x20
     mov     sp, a2
     add     0x98, a2
     mov     a2, a0
     extbu   d3
     mov     a3, a1
     mov     d3, d0
-    call    func_4852F840_entry, [d2], 0x14
+    call    FmmNumberedNameBuild_entry, [d2], 0x14
     mov     sp, a3
     add     0xa8, a3
     mov     a3, a0
     movbu   (0xe0, sp), d0
     mov     a2, a1
-    call    func_4852F882_entry, [d2,a2], 0x18
+    call    FileNameWithExt_entry, [d2,a2], 0x18
     mov     (0x14, sp), a0
     mov     Str_empty_733, a1
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x14, sp), a0
     mov     a3, a1
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     mov     (0x14, sp), a0
-    call    func_4855F3C1_entry, [a2], 4
+    call    SdFileSizeGet_entry, [a2], 4
     ret     [d2,d3,a2,a3], 0xd0
-
-func_4855F4CB:
+# SdDirSongNameCopy  (CPU 0x4855f4cb)
+SdDirSongNameCopy:
     movm    [d2,d3], (sp)
     add     -0x18, sp
-func_4855F4CB_entry:
+SdDirSongNameCopy_entry:
     movbu   d1, (0x2c, sp)
     mov     d0, d3
     call    SD_GetState, 0, 0
@@ -49375,14 +49375,14 @@ func_4855F4CB_entry:
     mulu    d0, d1
     add     d1, a1
     mov     0x10, d0
-    call    func_4852F77C, 0, 0
+    call    StrCopyPad, 0, 0
 loc_4855F522:
     ret     [d2,d3], 0x20
-
-func_4855F525:
+# SdDirFolderStemFixup  (CPU 0x4855f525)
+SdDirFolderStemFixup:
     movm    [d2,d3], (sp)
     add     -0x14, sp
-func_4855F525_entry:
+SdDirFolderStemFixup_entry:
     clr     d1
     clr     d2
     extbu   d0
@@ -49410,7 +49410,7 @@ loc_4855F53D:
     cmp     0, d0
     bne     loc_4855F560
     mov     6, d0
-    call    func_4852F77C, 0, 0
+    call    StrCopyPad, 0, 0
 loc_4855F560:
     inc     d2
     mov     d2, d1
@@ -49418,25 +49418,25 @@ loc_4855F560:
     cmp     0x14, d2
     blt     loc_4855F53D
     ret     [d2,d3], 0x1c
-
-func_4855F56A:
+# SdDirStemFixupAll  (CPU 0x4855f56a)
+SdDirStemFixupAll:
     movm    [d2], (sp)
     add     -0xc, sp
-func_4855F56A_entry:
+SdDirStemFixupAll_entry:
     clr     d2
 loc_4855F570:
     mov     d2, d0
-    call    func_4855F525_entry, [d2,d3], 0x1c
+    call    SdDirFolderStemFixup_entry, [d2,d3], 0x1c
     inc     d2
     extbu   d2
     cmp     0x63, d2
     blt     loc_4855F570
-    call    func_4855EC84_entry, [d2], 4
+    call    SdDirInfSigWrite_entry, [d2], 4
     ret     [d2], 0x10
-
-func_4855F584:
+# SdDirInfSigTest  (CPU 0x4855f584)
+SdDirInfSigTest:
     add     -8, sp
-    call    func_4855EC0B_entry, [d2], 4
+    call    SdDirInfSigCheck_entry, [d2], 4
     extbu   d0
     cmp     0, d0
     beq     loc_4855F594
@@ -49446,10 +49446,10 @@ loc_4855F594:
     mov     -1, d0
 loc_4855F596:
     ret     0, 8
-
-func_4855F599:
+# SdCurSongTypeMaskGet  (CPU 0x4855f599)
+SdCurSongTypeMaskGet:
     add     -8, sp
-func_4855F599_entry:
+SdCurSongTypeMaskGet_entry:
     call    SdCardUsableCheck_entry, 0, 8
     extbu   d0
     cmp     0, d0
@@ -49485,11 +49485,11 @@ loc_4855F5C3:
     movhu   (0x26, a0), d0
 loc_4855F5E9:
     ret     0, 8
-
-func_4855F5EC:
+# SdDirSongTypeMaskGet  (CPU 0x4855f5ec)
+SdDirSongTypeMaskGet:
     movm    [d2,d3], (sp)
     add     -8, sp
-func_4855F5EC_entry:
+SdDirSongTypeMaskGet_entry:
     mov     d1, d3
     mov     d0, d2
     call    SdCardUsableCheck_entry, 0, 8
@@ -49529,11 +49529,11 @@ loc_4855F612:
     movhu   (0x26, a0), d0
 loc_4855F62E:
     ret     [d2,d3], 0x10
-
-func_4855F631:
+# SdCurSongHasType  (CPU 0x4855f631)
+SdCurSongHasType:
     movm    [d2], (sp)
     add     -8, sp
-func_4855F631_entry:
+SdCurSongHasType_entry:
     mov     d0, d2
     extbu   d2
     cmp     0xe, d2
@@ -49541,7 +49541,7 @@ func_4855F631_entry:
     clr     d0
     bra     loc_4855F654
 loc_4855F63F:
-    call    func_4855F599_entry, 0, 8
+    call    SdCurSongTypeMaskGet_entry, 0, 8
     mov     1, d1
     asl     d2, d1
     exthu   d1
@@ -49555,11 +49555,11 @@ loc_4855F652:
     mov     1, d0
 loc_4855F654:
     ret     [d2], 0xc
-
-func_4855F657:
+# SdDirSongHasType  (CPU 0x4855f657)
+SdDirSongHasType:
     movm    [d2], (sp)
     add     -0x10, sp
-func_4855F657_entry:
+SdDirSongHasType_entry:
     movbu   (0x24, sp), d2
     cmp     0xe, d2
     blt     loc_4855F666
@@ -49568,7 +49568,7 @@ func_4855F657_entry:
 loc_4855F666:
     extbu   d0
     extbu   d1
-    call    func_4855F5EC_entry, [d2,d3], 0x10
+    call    SdDirSongTypeMaskGet_entry, [d2,d3], 0x10
     mov     1, d1
     asl     d2, d1
     exthu   d1
@@ -49582,11 +49582,11 @@ loc_4855F67B:
     mov     1, d0
 loc_4855F67D:
     ret     [d2], 0x14
-
-func_4855F680:
+# SdDirSongCount  (CPU 0x4855f680)
+SdDirSongCount:
     movm    [d2,d3], (sp)
     add     -8, sp
-func_4855F680_entry:
+SdDirSongCount_entry:
     clr     d3
     call    SdCardUsableCheck_entry, 0, 8
     extbu   d0
@@ -49629,12 +49629,12 @@ loc_4855F6B9:
     mov     d3, d0
 loc_4855F6C5:
     ret     [d2,d3], 0x10
-
-func_4855F6C8:
+# SdCurFolderFileExists  (CPU 0x4855f6c8)
+SdCurFolderFileExists:
     movm    [a2,a3], (sp)
     add     -0x50, sp
     mov     a0, a3
-    call    func_4855EECB_entry, 0, 0xc
+    call    SdCurFolderIndexGet_entry, 0, 0xc
     mov     d0, d1
     exth    d1
     cmp     0, d1
@@ -49646,10 +49646,10 @@ loc_4855F6DC:
     add     0x10, a2
     mov     a2, a0
     extbu   d0
-    call    func_48560FB3_entry, [d2,a2,a3], 0x28
+    call    SdTechFolderPathBuild_entry, [d2,a2,a3], 0x28
     mov     a2, a1
     mov     a3, a0
-    call    func_4855F36D_entry, [a2,a3], 8
+    call    SdFileExistsCheck_entry, [a2,a3], 8
     extbu   d0
     cmp     0, d0
     beq     loc_4855F6F6
@@ -49659,19 +49659,19 @@ loc_4855F6F6:
     clr     d0
 loc_4855F6F7:
     ret     [a2,a3], 0x58
-
-func_4855F6FA:
+# SdLoadFilterMaskGet  (CPU 0x4855f6fa)
+SdLoadFilterMaskGet:
     movhu   (0x50092186), d0
     retf    0, 0
-
-func_4855F703:
+# SdLoadFilterHasType  (CPU 0x4855f703)
+SdLoadFilterHasType:
     movm    [d2], (sp)
     add     -0x10, sp
-func_4855F703_entry:
+SdLoadFilterHasType_entry:
     mov     d0, d2
     movbu   (0x50083d28), d0
     movbu   (0x50083d29), d1
-    call    func_4855E883_entry, [d2], 0x10
+    call    SdFolderSongIndexCheck_entry, [d2], 0x10
     exth    d0
     cmp     0, d0
     bge     loc_4855F722
@@ -49697,10 +49697,10 @@ loc_4855F73D:
     mov     1, d0
 loc_4855F73F:
     ret     [d2], 0x14
-
-func_4855F742:
+# SdLoadFilterTypeSet  (CPU 0x4855f742)
+SdLoadFilterTypeSet:
     movm    [d2], (sp)
-func_4855F742_entry:
+SdLoadFilterTypeSet_entry:
     extbu   d0
     cmp     0xe, d0
     bge     loc_4855F75D
@@ -49713,10 +49713,10 @@ func_4855F742_entry:
     movhu   d1, (0x50092186)
 loc_4855F75D:
     retf    [d2], 4
-
-func_4855F760:
+# SdLoadFilterTypeClear  (CPU 0x4855f760)
+SdLoadFilterTypeClear:
     movm    [d2], (sp)
-func_4855F760_entry:
+SdLoadFilterTypeClear_entry:
     extbu   d0
     cmp     0xe, d0
     bge     loc_4855F77F
@@ -49730,19 +49730,19 @@ func_4855F760_entry:
     movhu   d1, (0x50092186)
 loc_4855F77F:
     retf    [d2], 4
-
-func_4855F782:
+# SdSaveFilterMaskGet  (CPU 0x4855f782)
+SdSaveFilterMaskGet:
     movhu   (0x50092188), d0
     retf    0, 0
-
-func_4855F78B:
+# SdSaveFilterHasType  (CPU 0x4855f78b)
+SdSaveFilterHasType:
     movm    [d2], (sp)
     add     -0x10, sp
-func_4855F78B_entry:
+SdSaveFilterHasType_entry:
     mov     d0, d2
     movbu   (0x50083d28), d0
     movbu   (0x50083d29), d1
-    call    func_4855E883_entry, [d2], 0x10
+    call    SdFolderSongIndexCheck_entry, [d2], 0x10
     exth    d0
     cmp     0, d0
     bge     loc_4855F7AA
@@ -49768,10 +49768,10 @@ loc_4855F7C5:
     mov     1, d0
 loc_4855F7C7:
     ret     [d2], 0x14
-
-func_4855F7CA:
+# SdSaveFilterTypeSet  (CPU 0x4855f7ca)
+SdSaveFilterTypeSet:
     movm    [d2], (sp)
-func_4855F7CA_entry:
+SdSaveFilterTypeSet_entry:
     extbu   d0
     cmp     0xe, d0
     bge     loc_4855F7E5
@@ -49784,10 +49784,10 @@ func_4855F7CA_entry:
     movhu   d1, (0x50092188)
 loc_4855F7E5:
     retf    [d2], 4
-
-func_4855F7E8:
+# SdSaveFilterTypeClear  (CPU 0x4855f7e8)
+SdSaveFilterTypeClear:
     movm    [d2], (sp)
-func_4855F7E8_entry:
+SdSaveFilterTypeClear_entry:
     extbu   d0
     cmp     0xe, d0
     bge     loc_4855F807
@@ -49855,18 +49855,18 @@ ResetSdLoadPM3Bank:
     clr     d0
     movbu   d0, (0x5009218b)
     retf    0, 0
-
-func_4855F87A:
+# SdSingleLoadSelGet  (CPU 0x4855f87a)
+SdSingleLoadSelGet:
     movhu   (0x5009218e), d0
     retf    0, 0
-
-func_4855F883:
+# SdSingleLoadSelSet  (CPU 0x4855f883)
+SdSingleLoadSelSet:
     movhu   d0, (0x5009218e)
     retf    0, 0
-
-func_4855F88C:
+# SdCstIndexState  (CPU 0x4855f88c)
+SdCstIndexState:
     movm    [d2], (sp)
-func_4855F88C_entry:
+SdCstIndexState_entry:
     exth    d0
     cmp     0, d0
     blt     loc_4855F89D
@@ -49906,13 +49906,13 @@ loc_4855F8D2:
     clr     d0
 loc_4855F8D3:
     ret     [d2], 4
-
-func_4855F8D6:
+# SdCstCurIndexGet  (CPU 0x4855f8d6)
+SdCstCurIndexGet:
     add     -0xc, sp
-func_4855F8D6_entry:
+SdCstCurIndexGet_entry:
     movhu   (0x500915ba), d0
     exth    d0
-    call    func_4855F88C_entry, [d2], 4
+    call    SdCstIndexState_entry, [d2], 4
     exth    d0
     cmp     0, d0
     beq     loc_4855F8EE
@@ -49922,15 +49922,15 @@ loc_4855F8EE:
     movhu   (0x500915ba), d0
 loc_4855F8F4:
     ret     0, 0xc
-
-func_4855F8F7:
+# SdCstCurIndexSet  (CPU 0x4855f8f7)
+SdCstCurIndexSet:
     movm    [d2,d3], (sp)
     add     -0x10, sp
-func_4855F8F7_entry:
+SdCstCurIndexSet_entry:
     mov     d0, d2
     mov     d2, d3
     exth    d0
-    call    func_4855F88C_entry, [d2], 4
+    call    SdCstIndexState_entry, [d2], 4
     mov     d0, d1
     exth    d1
     cmp     -1, d1
@@ -49961,18 +49961,18 @@ loc_4855F912:
     mov     d2, d1
 loc_4855F93E:
     movhu   d1, (0x500915c0)
-    call    func_4855FAB1_entry, [d2,d3,a2,a3], 0x10
+    call    SdCstListScan_entry, [d2,d3,a2,a3], 0x10
 loc_4855F949:
     movhu   d3, (0x500915ba)
     mov     d3, d0
 loc_4855F950:
     ret     [d2,d3], 0x18
-
-func_4855F953:
+# SdCstIndexOutsideWindow  (CPU 0x4855f953)
+SdCstIndexOutsideWindow:
     add     -0xc, sp
-func_4855F953_entry:
+SdCstIndexOutsideWindow_entry:
     exth    d0
-    call    func_4855F88C_entry, [d2], 4
+    call    SdCstIndexState_entry, [d2], 4
     exth    d0
     cmp     1, d0
     bne     loc_4855F965
@@ -49982,11 +49982,11 @@ loc_4855F965:
     clr     d0
 loc_4855F966:
     ret     0, 0xc
-
-func_4855F969:
+# SdCstWindowSetNoScan  (CPU 0x4855f969)
+SdCstWindowSetNoScan:
     movm    [d2,d3], (sp)
     add     -0x10, sp
-func_4855F969_entry:
+SdCstWindowSetNoScan_entry:
     mov     0x14, d1
     mov     d0, d3
     exthu   d0
@@ -50012,16 +50012,16 @@ loc_4855F995:
 
 func_4855F9A4:
     add     -8, sp
-    call    func_4852FAC1, 0, 0
+    call    FmmCstNameBufGet, 0, 0
     ret     0, 8
-
-func_4855F9B1:
+# SdCstEntryGet  (CPU 0x4855f9b1)
+SdCstEntryGet:
     movm    [d2], (sp)
     add     -0xc, sp
-func_4855F9B1_entry:
+SdCstEntryGet_entry:
     mov     d0, d2
     exth    d0
-    call    func_4855F88C_entry, [d2], 4
+    call    SdCstIndexState_entry, [d2], 4
     exth    d0
     cmp     0, d0
     beq     loc_4855F9CA
@@ -50041,11 +50041,11 @@ loc_4855F9CA:
     add     0x500915c2, a0
 loc_4855F9E3:
     ret     [d2], 0x10
-
-func_4855F9E6:
+# SdCstWindowTitlesRead  (CPU 0x4855f9e6)
+SdCstWindowTitlesRead:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x14, sp
-func_4855F9E6_entry:
+SdCstWindowTitlesRead_entry:
     mov     d0, d3
     movhu   (0x34, sp), d0
     exth    d1
@@ -50075,7 +50075,7 @@ loc_4855FA0C:
     mov     a3, a0
     add     d0, a0
     mov     Str_rb_17, a1
-    call    func_4856580E_entry, [a2,a3], 0x98
+    call    SdFileOpen_entry, [a2,a3], 0x98
     exth    d0
     cmp     0, d0
     blt     loc_4855FA84
@@ -50083,7 +50083,7 @@ loc_4855FA0C:
     clr     d3
 loc_4855FA29:
     extbu   d2
-    call    func_48565A5D_entry, [d2,d3], 0x14
+    call    SdFileGetc_entry, [d2,d3], 0x14
     mov     Str_J_K, a0
     movbu   (d2, a0), d2
     exth    d0
@@ -50099,7 +50099,7 @@ loc_4855FA29:
     mov     0xd, a0
     add     d0, a0
     mov     Str_empty_732, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     bra     loc_4855FA60
 loc_4855FA59:
     inc     d3
@@ -50110,7 +50110,7 @@ loc_4855FA59:
 loc_4855FA60:
     mov     0x10, d0
     clr     d1
-    call    func_48565C14_entry, [d2,d3,a2], 0x20
+    call    SdFileSeek_entry, [d2,d3,a2], 0x20
     mov     a2, d0
     mov     0x1e, d1
     nop
@@ -50120,8 +50120,8 @@ loc_4855FA60:
     mov     0xd, a0
     add     d1, a0
     mov     0x10, d0
-    call    func_48565AF6_entry, [d2,d3,a2,a3], 0x2c
-    call    func_485658D5_entry, 0, 0xc
+    call    SdFileRead_entry, [d2,d3,a2,a3], 0x2c
+    call    SdFileClose_entry, 0, 0xc
     bra     loc_4855FA9F
 loc_4855FA84:
     mov     a2, d1
@@ -50133,7 +50133,7 @@ loc_4855FA84:
     mov     0xd, a0
     add     d0, a0
     mov     Str_empty_732, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
 loc_4855FA9F:
     mov     a2, d0
     inc     d0
@@ -50145,14 +50145,14 @@ loc_4855FA9F:
     jmp     loc_4855FA0C
 loc_4855FAAE:
     ret     [d2,d3,a2,a3], 0x24
-
-func_4855FAB1:
+# SdCstListScan  (CPU 0x4855fab1)
+SdCstListScan:
     movm    [d2,d3,a2,a3], (sp)
-func_4855FAB1_entry:
+SdCstListScan_entry:
     add     -0x164, sp
     clr     d2
 loc_4855FAB8:
-    mov     func_4855E8AC_Table_2, a1
+    mov     SdFmmTablesReset_Table_2, a1
     mov     0x1e, d1
     nop
     nop
@@ -50174,7 +50174,7 @@ loc_4855FAB8:
     mov     sp, a3
     add     0x18, a3
     mov     a3, a0
-    call    func_48561035_entry, [a2], 0x14
+    call    SdCustomDirPathBuild_entry, [a2], 0x14
     mov     a3, a0
     call    sdfmdopen_entry, [d2,a2], 0x18
     clr     d2
@@ -50185,11 +50185,11 @@ loc_4855FAB8:
 loc_4855FAF4:
     mov     a3, a0
     mov     Str_empty_731, a1
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     mov     a3, a0
     mov     Str_CST_2, a1
-    call    func_4852F7AE, 0, 0
-    call    func_484720D0_entry, 0, 0x1c
+    call    StrAppend, 0, 0
+    call    SdMediaEnsureInit_entry, 0, 0x1c
     mov     sp, a2
     add     0x58, a2
     mov     a3, a0
@@ -50220,7 +50220,7 @@ loc_4855FB2A:
     mov     d0, a0
     add     0x500915c2, a0
     mov     (0x14, sp), a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
 loc_4855FB5E:
     mov     1, d2
     mov     d3, d0
@@ -50247,7 +50247,7 @@ loc_4855FB6D:
     mov     d0, a0
     add     0x500915c2, a0
     mov     (0x14, sp), a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
 loc_4855FB9C:
     inc     d2
     mov     d3, d0
@@ -50260,7 +50260,7 @@ loc_4855FBAA:
     call    _findclose_entry, [a2], 0x10
 loc_4855FBB2:
     mov     a3, a0
-    call    func_48561035_entry, [a2], 0x14
+    call    SdCustomDirPathBuild_entry, [a2], 0x14
     mov     a3, a0
     call    sdfmpath_entry, 0, 0x14
     mov     d2, d0
@@ -50272,22 +50272,22 @@ loc_4855FBB2:
     movhu   (0x500915c0), d1
     exth    d0
     exth    d1
-    call    func_4855F9E6_entry, [d2,d3,a2,a3], 0x24
+    call    SdCstWindowTitlesRead_entry, [d2,d3,a2,a3], 0x24
     mov     0, a0
     call    sdfmpath_entry, 0, 0x14
     mov     d2, d0
     add     0x164, sp
     ret     [d2,d3,a2,a3], 0x10
-
-func_4855FBE7:
+# SdCstListRescan  (CPU 0x4855fbe7)
+SdCstListRescan:
     movm    [d2], (sp)
     add     -8, sp
-func_4855FBE7_entry:
+SdCstListRescan_entry:
     clr     d0
     movhu   d0, (0x500915be)
     mov     0x13, d0
     movhu   d0, (0x500915c0)
-    call    func_4855FAB1_entry, [d2,d3,a2,a3], 0x10
+    call    SdCstListScan_entry, [d2,d3,a2,a3], 0x10
     mov     d0, d2
     exth    d2
     mov     -1, d1
@@ -50307,12 +50307,12 @@ loc_4855FC0A:
     movhu   d1, (0x500915c0)
 loc_4855FC2D:
     ret     [d2], 0xc
-
-func_4855FC30:
+# SdCstCurTitleGet  (CPU 0x4855fc30)
+SdCstCurTitleGet:
     movm    [d2], (sp)
     add     -0xc, sp
-func_4855FC30_entry:
-    call    func_4855F8D6_entry, 0, 0xc
+SdCstCurTitleGet_entry:
+    call    SdCstCurIndexGet_entry, 0, 0xc
     mov     d0, d2
     mov     d2, d1
     exth    d1
@@ -50323,7 +50323,7 @@ func_4855FC30_entry:
 loc_4855FC49:
     exth    d2
     mov     d2, d0
-    call    func_4855F88C_entry, [d2], 4
+    call    SdCstIndexState_entry, [d2], 4
     exth    d0
     cmp     0, d0
     beq     loc_4855FC5D
@@ -50342,14 +50342,14 @@ loc_4855FC5D:
     add     0xd, a0
 loc_4855FC76:
     ret     [d2], 0x10
-
-func_4855FC79:
+# SdPrivSmfFileNameGet  (CPU 0x4855fc79)
+SdPrivSmfFileNameGet:
     movm    [d2,a2], (sp)
     add     -0x10, sp
-func_4855FC79_entry:
+SdPrivSmfFileNameGet_entry:
     mov     d0, d2
     exth    d0
-    call    func_4855FCCB_entry, [d2], 4
+    call    SdPrivSmfIndexState_entry, [d2], 4
     exth    d0
     cmp     0, d0
     beq     loc_4855FC92
@@ -50369,17 +50369,17 @@ loc_4855FC92:
     mul     d1, d0
     mov     d0, a1
     add     0x5009139e, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     mov     a2, a0
     mov     Str_MID_9, a1
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
 loc_4855FCC8:
     ret     [d2,a2], 0x18
-
-func_4855FCCB:
+# SdPrivSmfIndexState  (CPU 0x4855fccb)
+SdPrivSmfIndexState:
     movm    [d2], (sp)
-func_4855FCCB_entry:
+SdPrivSmfIndexState_entry:
     exth    d0
     cmp     0, d0
     blt     loc_4855FCDC
@@ -50419,13 +50419,13 @@ loc_4855FD11:
     clr     d0
 loc_4855FD12:
     ret     [d2], 4
-
-func_4855FD15:
+# SdPrivSmfCurIndexGet  (CPU 0x4855fd15)
+SdPrivSmfCurIndexGet:
     add     -0xc, sp
-func_4855FD15_entry:
+SdPrivSmfCurIndexGet_entry:
     movhu   (0x50091396), d0
     exth    d0
-    call    func_4855FCCB_entry, [d2], 4
+    call    SdPrivSmfIndexState_entry, [d2], 4
     exth    d0
     cmp     0, d0
     beq     loc_4855FD2D
@@ -50435,15 +50435,15 @@ loc_4855FD2D:
     movhu   (0x50091396), d0
 loc_4855FD33:
     ret     0, 0xc
-
-func_4855FD36:
+# SdPrivSmfCurIndexSet  (CPU 0x4855fd36)
+SdPrivSmfCurIndexSet:
     movm    [d2,d3], (sp)
     add     -0x10, sp
-func_4855FD36_entry:
+SdPrivSmfCurIndexSet_entry:
     mov     d0, d2
     mov     d2, d3
     exth    d0
-    call    func_4855FCCB_entry, [d2], 4
+    call    SdPrivSmfIndexState_entry, [d2], 4
     mov     d0, d1
     exth    d1
     cmp     -1, d1
@@ -50474,20 +50474,20 @@ loc_4855FD51:
     mov     d2, d1
 loc_4855FD7D:
     movhu   d1, (0x5009139c)
-    call    func_4855FD9B_entry, [d2,d3,a2,a3], 0x10
+    call    SdPrivSmfListScan_entry, [d2,d3,a2,a3], 0x10
 loc_4855FD88:
     movhu   d3, (0x50091396)
     mov     d3, d0
 loc_4855FD8F:
     ret     [d2,d3], 0x18
-
-func_4855FD92:
+# SdPrivSmfLastIndexGet  (CPU 0x4855fd92)
+SdPrivSmfLastIndexGet:
     movhu   (0x50091398), d0
     retf    0, 0
-
-func_4855FD9B:
+# SdPrivSmfListScan  (CPU 0x4855fd9b)
+SdPrivSmfListScan:
     movm    [d2,d3,a2,a3], (sp)
-func_4855FD9B_entry:
+SdPrivSmfListScan_entry:
     add     -0x160, sp
     call    SD_GetState, 0, 0
     extbu   d0
@@ -50498,7 +50498,7 @@ func_4855FD9B_entry:
 loc_4855FDB0:
     clr     d2
 loc_4855FDB1:
-    mov     func_4855E8AC_Table_3, a1
+    mov     SdFmmTablesReset_Table_3, a1
     mov     9, d1
     nop
     nop
@@ -50520,7 +50520,7 @@ loc_4855FDB1:
     mov     sp, a2
     add     0x14, a2
     mov     a2, a0
-    call    func_4856107A_entry, [a2], 0x14
+    call    SdImexportPathBuild_entry, [a2], 0x14
     mov     a2, a0
     call    sdfmdopen_entry, [d2,a2], 0x18
     clr     d2
@@ -50531,11 +50531,11 @@ loc_4855FDB1:
 loc_4855FDED:
     mov     a2, a0
     mov     Str_empty_730, a1
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     mov     a2, a0
     mov     Str_MID_8, a1
-    call    func_4852F7AE, 0, 0
-    call    func_484720D0_entry, 0, 0x1c
+    call    StrAppend, 0, 0
+    call    SdMediaEnsureInit_entry, 0, 0x1c
     mov     sp, a3
     add     0x54, a3
     mov     a3, a1
@@ -50566,7 +50566,7 @@ loc_4855FE23:
     add     0x5009139e, a0
     mov     a2, a1
     mov     8, d0
-    call    func_4852F77C, 0, 0
+    call    StrCopyPad, 0, 0
 loc_4855FE56:
     mov     1, d2
     mov     d3, d0
@@ -50595,7 +50595,7 @@ loc_4855FE65:
     add     0x5009139e, a0
     mov     a2, a1
     mov     8, d0
-    call    func_4852F77C, 0, 0
+    call    StrCopyPad, 0, 0
 loc_4855FE96:
     inc     d2
     mov     d3, d0
@@ -50611,16 +50611,16 @@ loc_4855FEAC:
 loc_4855FEAD:
     add     0x160, sp
     ret     [d2,d3,a2,a3], 0x10
-
-func_4855FEB4:
+# SdPrivSmfListRescan  (CPU 0x4855feb4)
+SdPrivSmfListRescan:
     movm    [d2], (sp)
     add     -8, sp
-func_4855FEB4_entry:
+SdPrivSmfListRescan_entry:
     clr     d0
     movhu   d0, (0x5009139a)
     mov     0x3b, d0
     movhu   d0, (0x5009139c)
-    call    func_4855FD9B_entry, [d2,d3,a2,a3], 0x10
+    call    SdPrivSmfListScan_entry, [d2,d3,a2,a3], 0x10
     mov     d0, d2
     exth    d2
     mov     -1, d1
@@ -50640,14 +50640,14 @@ loc_4855FED7:
     movhu   d1, (0x5009139c)
 loc_4855FEFA:
     ret     [d2], 0xc
-
-func_4855FEFD:
+# SdPictFileNameGet  (CPU 0x4855fefd)
+SdPictFileNameGet:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x10, sp
-func_4855FEFD_entry:
+SdPictFileNameGet_entry:
     mov     d0, d3
     exth    d0
-    call    func_4855FF8E_entry, [d2], 4
+    call    SdPictIndexState_entry, [d2], 4
     exth    d0
     cmp     0, d0
     beq     loc_4855FF17
@@ -50669,7 +50669,7 @@ loc_4855FF17:
     nop
     mul     d1, d0
     add     d0, a1
-    call    func_4852F762, 0, 0
+    call    StrCopy, 0, 0
     movhu   (0x5009181e), d2
     mov     d3, d0
     exth    d2
@@ -50685,7 +50685,7 @@ loc_4855FF17:
     bne     loc_4855FF6B
     mov     a3, a0
     mov     Str_BMP_7, a1
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
     bra     loc_4855FF8A
 loc_4855FF6B:
     sub     d2, d3
@@ -50699,14 +50699,14 @@ loc_4855FF6B:
     bne     loc_4855FF8A
     mov     a3, a0
     mov     Str_JPG_7, a1
-    call    func_4852F7AE, 0, 0
+    call    StrAppend, 0, 0
 loc_4855FF8A:
     mov     a3, a0
     ret     [d2,d3,a2,a3], 0x20
-
-func_4855FF8E:
+# SdPictIndexState  (CPU 0x4855ff8e)
+SdPictIndexState:
     movm    [d2], (sp)
-func_4855FF8E_entry:
+SdPictIndexState_entry:
     exth    d0
     cmp     0, d0
     blt     loc_4855FF9F
@@ -50746,13 +50746,13 @@ loc_4855FFD4:
     clr     d0
 loc_4855FFD5:
     ret     [d2], 4
-
-func_4855FFD8:
+# SdPictCurIndexGet  (CPU 0x4855ffd8)
+SdPictCurIndexGet:
     add     -0xc, sp
-func_4855FFD8_entry:
+SdPictCurIndexGet_entry:
     movhu   (0x5009181a), d0
     exth    d0
-    call    func_4855FF8E_entry, [d2], 4
+    call    SdPictIndexState_entry, [d2], 4
     exth    d0
     cmp     0, d0
     beq     loc_4855FFF0
@@ -50762,21 +50762,21 @@ loc_4855FFF0:
     movhu   (0x5009181a), d0
 loc_4855FFF6:
     ret     0, 0xc
-
-func_4855FFF9:
+# SdFolderPictCurIndexSet  (CPU 0x4855fff9)
+SdFolderPictCurIndexSet:
     movm    [d2,d3,a2], (sp)
     add     -0x50, sp
-func_4855FFF9_entry:
+SdFolderPictCurIndexSet_entry:
     mov     d1, d2
     mov     sp, a2
     add     0x10, a2
     mov     a2, a0
     extbu   d0
-    call    func_48560FB3_entry, [d2,a2,a3], 0x28
+    call    SdTechFolderPathBuild_entry, [d2,a2,a3], 0x28
     mov     d2, d3
     mov     d3, d0
     exth    d0
-    call    func_4855FF8E_entry, [d2], 4
+    call    SdPictIndexState_entry, [d2], 4
     mov     d0, d1
     exth    d1
     cmp     -1, d1
@@ -50808,7 +50808,7 @@ loc_4856001F:
 loc_4856004B:
     movhu   d1, (0x50091820)
     mov     a2, a0
-    call    func_485600B7_entry, [d2,d3,a2,a3], 0x10
+    call    SdPictListScan_entry, [d2,d3,a2,a3], 0x10
 loc_48560057:
     movhu   d3, (0x5009181a)
     mov     d3, d0
@@ -50816,3747 +50816,3 @@ loc_4856005E:
     ret     [d2,d3,a2], 0x5c
     movhu   (0x5009181c), d0
     retf    0, 0
-
-func_4856006A:
-    movm    [d2,a2], (sp)
-    add     -0x10, sp
-func_4856006A_entry:
-    mov     a0, a2
-    movbu   (a2), d0
-    clr     d2
-    extb    d0
-    cmp     d2, d0
-    beq     loc_485600B2
-    setlb
-    movbu   (a2), d0
-    extb    d0
-    cmp     0x2e, d0
-    bne     loc_485600AC
-    inc     a2
-    mov     a2, a0
-    mov     Str_BMP_6, a1
-    call    func_4852F7D7, 0, 0
-    exth    d0
-    cmp     d2, d0
-    bne     loc_48560096
-    mov     1, d2
-    bra     loc_485600B2
-loc_48560096:
-    mov     Str_JPG_6, a1
-    mov     a2, a0
-    call    func_4852F7D7, 0, 0
-    exth    d0
-    cmp     d2, d0
-    bne     loc_485600B2
-    mov     2, d2
-    bra     loc_485600B2
-loc_485600AC:
-    inc     a2
-    movbu   (a2), d0
-    extb    d0
-    cmp     d2, d0
-    lne
-loc_485600B2:
-    mov     d2, d0
-    extbu   d0
-    ret     [d2,a2], 0x18
-
-func_485600B7:
-    movm    [d2,d3,a2,a3], (sp)
-func_485600B7_entry:
-    add     -0x1a8, sp
-    mov     a0, a3
-    call    SD_GetState, 0, 0
-    extbu   d0
-    cmp     2, d0
-    bne     loc_485600CD
-    mov     -1, d0
-    jmp     loc_48560213
-loc_485600CD:
-    clr     d2
-loc_485600CE:
-    mov     func_4855E8AC_Table_4, a1
-    mov     0xa, d1
-    nop
-    nop
-    mul     d2, d1
-    mov     d1, a0
-    add     0x50091822, a0
-    mov     -0xa, d1
-    setlb
-    movbu   (a1), d0
-    inc     a1
-    movbu   d0, (a0)
-    inc     a0
-    inc     d1
-    lne
-    inc     d2
-    exth    d2
-    cmp     0x3c, d2
-    blt     loc_485600CE
-    mov     sp, a2
-    add     0x1c, a2
-    mov     a2, a0
-    mov     a3, a1
-    call    func_4852F762, 0, 0
-    mov     a2, a0
-    call    sdfmdopen_entry, [d2,a2], 0x18
-    clr     d2
-    exth    d0
-    cmp     d2, d0
-    bge     loc_4856010D
-    jmp     loc_48560212
-loc_4856010D:
-    mov     a2, a0
-    mov     Str_empty_729, a1
-    call    func_4852F7AE, 0, 0
-    call    func_484720D0_entry, 0, 0x1c
-    mov     sp, a0
-    mov     a0, d0
-    add     0x9c, d0
-    mov     d0, (0x14, sp)
-    mov     d0, a1
-    mov     a2, a0
-    call    _findfirst_entry, [d2,a2,a3], 0x28
-    mov     d0, (0x18, sp)
-    cmp     d2, d0
-    bge     loc_4856013D
-    jmp     loc_48560212
-loc_4856013D:
-    mov     (0x14, sp), a3
-    add     8, a3
-    mov     a3, a0
-    call    func_4856006A_entry, [d2,a2], 0x18
-    mov     d0, d3
-    extbu   d0
-    cmp     d2, d0
-    ble     loc_48560194
-    movhu   (0x5009181e), d1
-    exth    d1
-    cmp     d2, d1
-    bgt     loc_48560192
-    movhu   (0x50091820), d0
-    exth    d0
-    cmp     d2, d0
-    blt     loc_48560192
-    mov     a3, a1
-    not     d1
-    inc     d1
-    mov     0x50091822, d2
-    mov     0xa, d0
-    nop
-    nop
-    mul     d0, d1
-    add     d2, d1
-    mov     d1, a0
-    mov     8, d0
-    call    func_4852F77C, 0, 0
-    movhu   (0x5009181e), d0
-    mov     0xa, d1
-    exth    d0
-    not     d0
-    inc     d0
-    nop
-    nop
-    mul     d1, d0
-    add     d0, d2
-    mov     d2, a0
-    movbu   d3, (9, a0)
-loc_48560192:
-    mov     1, d2
-loc_48560194:
-    mov     (0x18, sp), d0
-    mov     (0x14, sp), a0
-    call    _findnext_entry, [d2,d3,a2,a3], 0x48
-    cmp     0, d0
-    bne     loc_48560209
-    mov     0x50091822, a2
-loc_485601A9:
-    mov     a3, a0
-    call    func_4856006A_entry, [d2,a2], 0x18
-    mov     d0, d3
-    extbu   d0
-    cmp     0, d0
-    ble     loc_485601FA
-    movhu   (0x5009181e), d1
-    exth    d2
-    exth    d1
-    cmp     d1, d2
-    blt     loc_485601F9
-    movhu   (0x50091820), d0
-    exth    d0
-    cmp     d0, d2
-    bgt     loc_485601F9
-    mov     d2, d0
-    sub     d1, d0
-    mov     d0, d1
-    mov     a2, a0
-    mov     a3, a1
-    mov     0xa, d0
-    nop
-    nop
-    mul     d0, d1
-    add     d1, a0
-    mov     8, d0
-    call    func_4852F77C, 0, 0
-    movhu   (0x5009181e), d0
-    mov     d2, d1
-    exth    d0
-    sub     d0, d1
-    mov     d1, d0
-    mov     0xa, d1
-    nop
-    nop
-    mul     d1, d0
-    add     a2, d0
-    mov     d0, a0
-    movbu   d3, (9, a0)
-loc_485601F9:
-    inc     d2
-loc_485601FA:
-    mov     (0x18, sp), d0
-    mov     (0x14, sp), a0
-    call    _findnext_entry, [d2,d3,a2,a3], 0x48
-    cmp     0, d0
-    beq     loc_485601A9
-loc_48560209:
-    mov     (0x18, sp), d0
-    call    _findclose_entry, [a2], 0x10
-loc_48560212:
-    mov     d2, d0
-loc_48560213:
-    add     0x1a8, sp
-    ret     [d2,d3,a2,a3], 0x10
-
-func_4856021A:
-    movm    [d2,a2], (sp)
-    add     -0x50, sp
-func_4856021A_entry:
-    mov     sp, a2
-    add     0x10, a2
-    mov     a2, a0
-    extbu   d0
-    call    func_48560FB3_entry, [d2,a2,a3], 0x28
-    clr     d0
-    movhu   d0, (0x5009181e)
-    mov     0x3b, d0
-    movhu   d0, (0x50091820)
-    mov     a2, a0
-    call    func_485600B7_entry, [d2,d3,a2,a3], 0x10
-    mov     d0, d2
-    exth    d2
-    mov     -1, d1
-    add     d2, d1
-    cmp     0, d2
-    bgt     loc_48560248
-    clr     d1
-loc_48560248:
-    movhu   d1, (0x5009181c)
-    movhu   (0x50091820), d2
-    movhu   (0x5009181c), d1
-    exth    d2
-    exth    d1
-    cmp     d1, d2
-    ble     loc_4856026B
-    movhu   (0x5009181c), d1
-    movhu   d1, (0x50091820)
-loc_4856026B:
-    ret     [d2,a2], 0x58
-
-func_4856026E:
-    movm    [d2,d3,a2,a3], (sp)
-    add     -0x60, sp
-func_4856026E_entry:
-    mov     d0, d2
-    mov     d2, d3
-    exth    d0
-    call    func_4855FF8E_entry, [d2], 4
-    mov     d0, d1
-    exth    d1
-    cmp     -1, d1
-    bne     loc_4856028A
-    movhu   (0x5009181a), d0
-    ret     [d2,d3,a2,a3], 0x70
-loc_4856028A:
-    exth    d0
-    cmp     1, d0
-    bne     loc_48560303
-    mov     sp, a2
-    add     0x10, a2
-    mov     a2, a0
-    call    func_485609AC_entry, [d2,d3,a2,a3], 0x10
-    movbu   (0x10, sp), d0
-    extb    d0
-    cmp     0, d0
-    bne     loc_485602A8
-    movhu   (0x5009181a), d0
-    bra     loc_4856030A
-loc_485602A8:
-    mov     sp, a3
-    add     0x20, a3
-    mov     a3, a0
-    exthu   d2
-    mov     Str_C_DCIM, a1
-    call    func_4852F762, 0, 0
-    mov     a3, a0
-    mov     Str_empty_728, a1
-    call    func_4852F7AE, 0, 0
-    mov     a3, a0
-    mov     a2, a1
-    call    func_4852F7AE, 0, 0
-    mov     d2, d0
-    mov     0x3c, d1
-    call    LibDiv32, 0, 0
-    mov     0x3c, d1
-    nop
-    nop
-    mul     d1, d0
-    movhu   d0, (0x5009181e)
-    movhu   (0x5009181c), d2
-    exth    d0
-    add     0x3b, d0
-    exth    d0
-    exth    d2
-    mov     d0, d1
-    cmp     d2, d0
-    blt     loc_485602F7
-    mov     d2, d1
-loc_485602F7:
-    movhu   d1, (0x50091820)
-    mov     a3, a0
-    call    func_4856041B_entry, [d2,d3,a2,a3], 0x10
-loc_48560303:
-    movhu   d3, (0x5009181a)
-    mov     d3, d0
-loc_4856030A:
-    ret     [d2,d3,a2,a3], 0x70
-
-func_4856030D:
-    movm    [d2,d3,a2], (sp)
-    add     -0x14, sp
-func_4856030D_entry:
-    mov     d0, d2
-    mov     a0, a2
-    mov     4, d0
-    call    func_4852F77C, 0, 0
-    exthu   d2
-    inc     d2
-    mov     0x2710, d0
-    ext     d2
-    div     d0, d2
-    mov     mdr, d3
-    mov     0x3e8, d2
-    mov     d3, d0
-    exthu   d0
-    mov     d2, d1
-    call    LibDiv32, 0, 0
-    add     0x30, d0
-    movbu   d0, (4, a2)
-    exthu   d3
-    ext     d3
-    div     d2, d3
-    mov     mdr, d2
-    mov     0x64, d3
-    mov     d2, d0
-    exthu   d0
-    mov     d3, d1
-    call    LibDiv32, 0, 0
-    add     0x30, d0
-    movbu   d0, (5, a2)
-    exthu   d2
-    ext     d2
-    div     d3, d2
-    mov     mdr, d2
-    mov     0xa, d3
-    mov     d2, d0
-    exthu   d0
-    mov     d3, d1
-    call    LibDiv32, 0, 0
-    add     0x30, d0
-    movbu   d0, (6, a2)
-    exthu   d2
-    ext     d2
-    div     d3, d2
-    mov     mdr, d0
-    exthu   d0
-    add     0x30, d0
-    movbu   d0, (7, a2)
-    clr     d0
-    movbu   d0, (8, a2)
-    ret     [d2,d3,a2], 0x20
-
-func_4856037E:
-    movm    [d2,d3,a2,a3], (sp)
-    add     -4, sp
-func_4856037E_entry:
-    inc4    a0
-    movbu   (a0), d0
-    extb    d0
-    cmp     0x30, d0
-    blt     loc_48560392
-    movbu   (a0), d0
-    extb    d0
-    cmp     0x39, d0
-    ble     loc_48560397
-loc_48560392:
-    mov     -1, d0
-    ret     [d2,d3,a2,a3], 0x14
-loc_48560397:
-    mov     a0, a3
-    inc     a3
-    movbu   (a3), d0
-    extb    d0
-    cmp     0x30, d0
-    blt     loc_485603A7
-    movbu   (a3), d0
-    extb    d0
-    cmp     0x39, d0
-    ble     loc_485603AC
-loc_485603A7:
-    mov     -1, d0
-    ret     [d2,d3,a2,a3], 0x14
-loc_485603AC:
-    mov     2, a2
-    add     a0, a2
-    movbu   (a2), d0
-    extb    d0
-    cmp     0x30, d0
-    blt     loc_485603BE
-    movbu   (a2), d0
-    extb    d0
-    cmp     0x39, d0
-    ble     loc_485603C2
-loc_485603BE:
-    mov     -1, d0
-    bra     loc_48560418
-loc_485603C2:
-    mov     3, a1
-    add     a0, a1
-    movbu   (a1), d0
-    extb    d0
-    cmp     0x30, d0
-    blt     loc_485603D4
-    movbu   (a1), d0
-    extb    d0
-    cmp     0x39, d0
-    ble     loc_485603D8
-loc_485603D4:
-    mov     -1, d0
-    bra     loc_48560418
-loc_485603D8:
-    movbu   (a1), d3
-    movbu   (a0), d2
-    movbu   (a3), d1
-    movbu   (a2), d0
-    extb    d3
-    mov     d3, (0, sp)
-    extb    d2
-    extb    d1
-    extb    d0
-    add     -0x30, d2
-    add     -0x30, d1
-    add     -0x30, d0
-    mov     0x3e8, d3
-    nop
-    nop
-    mul     d3, d2
-    mov     0x64, d3
-    nop
-    nop
-    mul     d3, d1
-    add     d1, d2
-    mov     0xa, d1
-    nop
-    nop
-    mul     d1, d0
-    mov     d0, d1
-    mov     (0, sp), d0
-    add     d2, d1
-    add     d1, d0
-    add     -0x30, d0
-    exth    d0
-    cmp     0, d0
-    ble     loc_48560412
-    cmp     0x270f, d0
-    ble     loc_48560416
-loc_48560412:
-    mov     -1, d0
-    bra     loc_48560418
-loc_48560416:
-    add     -1, d0
-loc_48560418:
-    ret     [d2,d3,a2,a3], 0x14
-
-func_4856041B:
-    movm    [d2,d3,a2,a3], (sp)
-func_4856041B_entry:
-    add     -0x180, sp
-    mov     a0, a3
-    clr     d0
-    movhu   d0, (0x1c, sp)
-    call    SD_GetState, 0, 0
-    extbu   d0
-    cmp     2, d0
-    bne     loc_48560435
-    mov     -1, d0
-    jmp     loc_48560682
-loc_48560435:
-    clr     d1
-loc_48560436:
-    mov     func_4855E8AC_Table_4, a1
-    mov     0xa, d2
-    nop
-    nop
-    mul     d1, d2
-    mov     d2, a0
-    add     0x50091822, a0
-    mov     -0xa, d2
-    setlb
-    movbu   (a1), d0
-    inc     a1
-    movbu   d0, (a0)
-    inc     a0
-    inc     d2
-    lne
-    inc     d1
-    exth    d1
-    cmp     0x3c, d1
-    blt     loc_48560436
-    mov     sp, a2
-    add     0x24, a2
-    mov     a2, a0
-    mov     a3, a1
-    call    func_4852F762, 0, 0
-    mov     a2, a0
-    call    sdfmdopen_entry, [d2,a2], 0x18
-    exth    d0
-    cmp     0, d0
-    bge     loc_48560476
-    clr     d0
-    jmp     loc_48560682
-loc_48560476:
-    mov     INSTALL_SCRATCH, a3
-    mov     a3, a0
-    clr     d0
-    mov     0x00011169, d1
-    call    memset_entry, [a2], 4
-    mov     a2, a0
-    mov     Str_empty_727, a1
-    call    func_4852F7AE, 0, 0
-    clr     d3
-    call    func_484720D0_entry, 0, 0x1c
-    mov     sp, a0
-    mov     a0, d0
-    add     0x64, d0
-    mov     d0, (0x18, sp)
-    mov     d0, a1
-    mov     a2, a0
-    call    _findfirst_entry, [d2,a2,a3], 0x28
-    mov     d0, (0x14, sp)
-    cmp     d3, d0
-    bge     loc_485604BA
-    jmp     loc_485605DB
-loc_485604BA:
-    mov     (0x18, sp), a2
-    add     8, a2
-    mov     a2, a0
-    call    func_4856037E_entry, [d2,d3,a2,a3], 0x14
-    mov     d0, d2
-    mov     d2, d1
-    exth    d1
-    cmp     d3, d1
-    blt     loc_48560535
-    exth    d2
-    mov     7, d0
-    nop
-    nop
-    mul     d2, d0
-    add     a3, d0
-    mov     d0, a0
-    movbu   (6, a0), d1
-    cmp     d3, d1
-    bne     loc_48560513
-    mov     7, d1
-    nop
-    nop
-    mul     d2, d1
-    add     a3, d1
-    mov     a2, a1
-    mov     4, d0
-    mov     d1, a0
-    call    func_4852F77C, 0, 0
-    mov     7, d0
-    nop
-    nop
-    mul     d2, d0
-    mov     d0, a0
-    add     a3, a0
-    mov     1, d0
-    movbu   d0, (6, a0)
-    mov     a2, a0
-    call    func_4856006A_entry, [d2,a2], 0x18
-    mov     7, d1
-    nop
-    nop
-    mul     d2, d1
-    mov     d1, a0
-    add     a3, a0
-    movbu   d0, (5, a0)
-    bra     loc_48560533
-loc_48560513:
-    mov     7, d0
-    nop
-    nop
-    mul     d2, d0
-    add     a3, d0
-    mov     d0, a0
-    movbu   (6, a0), d0
-    cmp     1, d0
-    bne     loc_48560533
-    mov     7, d0
-    nop
-    nop
-    mul     d0, d2
-    add     a3, d2
-    mov     2, d0
-    mov     d2, a0
-    movbu   d0, (6, a0)
-loc_48560533:
-    mov     1, d3
-loc_48560535:
-    mov     (0x14, sp), d0
-    mov     (0x18, sp), a0
-    call    _findnext_entry, [d2,d3,a2,a3], 0x48
-    cmp     0, d0
-    beq     loc_48560547
-    jmp     loc_485605D2
-loc_48560547:
-    mov     a2, a0
-    call    func_4856037E_entry, [d2,d3,a2,a3], 0x14
-    mov     d0, d2
-    mov     d2, d1
-    exth    d1
-    cmp     0, d1
-    blt     loc_485605C0
-    exth    d2
-    mov     7, d0
-    nop
-    nop
-    mul     d2, d0
-    mov     d0, a0
-    add     a3, a0
-    movbu   (6, a0), d0
-    cmp     0, d0
-    bne     loc_4856059E
-    mov     7, d1
-    nop
-    nop
-    mul     d2, d1
-    add     a3, d1
-    mov     a2, a1
-    mov     4, d0
-    mov     d1, a0
-    call    func_4852F77C, 0, 0
-    mov     7, d0
-    nop
-    nop
-    mul     d2, d0
-    mov     d0, a0
-    add     a3, a0
-    mov     1, d0
-    movbu   d0, (6, a0)
-    mov     a2, a0
-    call    func_4856006A_entry, [d2,a2], 0x18
-    mov     7, d1
-    nop
-    nop
-    mul     d2, d1
-    mov     d1, a0
-    add     a3, a0
-    movbu   d0, (5, a0)
-    bra     loc_485605BE
-loc_4856059E:
-    mov     7, d0
-    nop
-    nop
-    mul     d2, d0
-    mov     d0, a0
-    add     a3, a0
-    movbu   (6, a0), d0
-    cmp     1, d0
-    bne     loc_485605BE
-    mov     7, d0
-    nop
-    nop
-    mul     d0, d2
-    add     a3, d2
-    mov     2, d0
-    mov     d2, a0
-    movbu   d0, (6, a0)
-loc_485605BE:
-    exth    d3
-    inc     d3
-loc_485605C0:
-    mov     (0x14, sp), d0
-    mov     (0x18, sp), a0
-    call    _findnext_entry, [d2,d3,a2,a3], 0x48
-    cmp     0, d0
-    bne     loc_485605D2
-    jmp     loc_48560547
-loc_485605D2:
-    mov     (0x14, sp), d0
-    call    _findclose_entry, [a2], 0x10
-loc_485605DB:
-    clr     d0
-    clr     d2
-    mov     sp, a0
-    mov     a0, d1
-    add     0x170, d1
-    mov     d1, (0x14, sp)
-    mov     0x50091822, a2
-loc_485605EC:
-    mov     7, d1
-    nop
-    nop
-    mul     d2, d1
-    add     a3, d1
-    mov     d1, a0
-    movbu   (6, a0), d1
-    cmp     1, d1
-    bne     loc_48560673
-    movhu   (0x1c, sp), d3
-    movhu   (0x5009181e), d1
-    exth    d3
-    exth    d1
-    cmp     d1, d3
-    blt     loc_4856066F
-    movhu   (0x50091820), d1
-    exth    d1
-    cmp     d1, d3
-    bgt     loc_4856066F
-    exthu   d0
-    mov     (0x14, sp), a0
-    mov     7, d1
-    nop
-    nop
-    mul     d2, d1
-    add     a3, d1
-    mov     d1, a1
-    call    func_4856030D_entry, [d2,d3,a2], 0x20
-    movhu   (0x5009181e), d0
-    mov     d3, d1
-    exth    d0
-    sub     d0, d1
-    mov     a2, a0
-    mov     (0x14, sp), a1
-    mov     0xa, d0
-    nop
-    nop
-    mul     d0, d1
-    add     d1, a0
-    mov     8, d0
-    call    func_4852F77C, 0, 0
-    mov     7, d0
-    nop
-    nop
-    mul     d2, d0
-    mov     d0, a0
-    add     a3, a0
-    movbu   (5, a0), d1
-    movhu   (0x5009181e), d0
-    mov     d3, a0
-    exth    d0
-    sub     d0, a0
-    mov     a0, d0
-    mov     d2, (0x20, sp)
-    mov     a2, a0
-    mov     0xa, d2
-    nop
-    nop
-    mul     d2, d0
-    mov     (0x20, sp), d2
-    add     d0, a0
-    movbu   d1, (9, a0)
-loc_4856066F:
-    inc     d3
-    movhu   d3, (0x1c, sp)
-loc_48560673:
-    inc     d2
-    mov     d2, d0
-    exth    d2
-    cmp     0x270f, d2
-    bge     loc_4856067F
-    jmp     loc_485605EC
-loc_4856067F:
-    movhu   (0x1c, sp), d0
-loc_48560682:
-    add     0x180, sp
-    ret     [d2,d3,a2,a3], 0x10
-
-func_48560689:
-    movm    [d2,a2,a3], (sp)
-    add     -0x60, sp
-func_48560689_entry:
-    mov     sp, a3
-    add     0x10, a3
-    mov     a3, a0
-    call    func_485609AC_entry, [d2,d3,a2,a3], 0x10
-    movbu   (0x10, sp), d0
-    extb    d0
-    cmp     0, d0
-    bne     loc_485606A2
-    clr     d0
-    bra     loc_4856070C
-loc_485606A2:
-    mov     sp, a2
-    add     0x20, a2
-    mov     a2, a0
-    mov     Str_C_DCIM, a1
-    call    func_4852F762, 0, 0
-    mov     a2, a0
-    mov     Str_empty_726, a1
-    call    func_4852F7AE, 0, 0
-    mov     a2, a0
-    mov     a3, a1
-    call    func_4852F7AE, 0, 0
-    clr     d0
-    movhu   d0, (0x5009181e)
-    mov     0x3b, d0
-    movhu   d0, (0x50091820)
-    mov     a2, a0
-    call    func_4856041B_entry, [d2,d3,a2,a3], 0x10
-    mov     d0, d2
-    exth    d2
-    mov     -1, d1
-    add     d2, d1
-    cmp     0, d2
-    bgt     loc_485606E9
-    clr     d1
-loc_485606E9:
-    movhu   d1, (0x5009181c)
-    movhu   (0x50091820), d2
-    movhu   (0x5009181c), d1
-    exth    d2
-    exth    d1
-    cmp     d1, d2
-    ble     loc_4856070C
-    movhu   (0x5009181c), d1
-    movhu   d1, (0x50091820)
-loc_4856070C:
-    ret     [d2,a2,a3], 0x6c
-
-func_4856070F:
-    movm    [d2,d3], (sp)
-func_4856070F_entry:
-    clr     d0
-    clr     d3
-    setlb
-    mov     0x50091a7e, a0
-    mov     d3, d1
-    add     d1, d1
-    movhu   (d1, a0), d2
-    mov     d0, d1
-    exth    d1
-    add     d2, d1
-    mov     d1, d0
-    inc     d3
-    exth    d3
-    cmp     0x384, d3
-    llt
-    retf    [d2,d3], 8
-
-func_4856072C:
-    movm    [d2], (sp)
-func_4856072C_entry:
-    exth    d0
-    cmp     0, d0
-    blt     loc_4856074C
-    cmp     0x384, d0
-    bge     loc_4856074C
-    mov     0x50091a7e, a0
-    mov     d0, d1
-    add     d1, d1
-    movhu   (d1, a0), d1
-    mov     d0, a1
-    add     a1, a1
-    inc     d1
-    mov     a1, d2
-    movhu   d1, (d2, a0)
-loc_4856074C:
-    mov     d0, a0
-    add     a0, a0
-    mov     a0, d0
-    mov     0x50091a7e, a1
-    movhu   (d0, a1), d0
-    extbu   d0
-    retf    [d2], 4
-
-func_4856075E:
-    exth    d0
-    cmp     0, d0
-    blt     loc_4856076F
-    movhu   (0x50091a7c), d1
-    exth    d1
-    add     0x63, d1
-    cmp     d1, d0
-    ble     loc_48560773
-loc_4856076F:
-    mov     -1, d0
-    bra     loc_48560774
-loc_48560773:
-    clr     d0
-loc_48560774:
-    retf    0, 0
-
-func_48560777:
-    add     -0xc, sp
-func_48560777_entry:
-    movhu   (0x50091a7a), d0
-    exth    d0
-    call    func_4856075E, 0, 0
-    exth    d0
-    cmp     0, d0
-    beq     loc_4856078F
-    mov     -0x68, d0
-    bra     loc_48560795
-loc_4856078F:
-    movhu   (0x50091a7a), d0
-loc_48560795:
-    ret     0, 0xc
-
-func_48560798:
-    movm    [d2], (sp)
-    add     -0xc, sp
-func_48560798_entry:
-    mov     d0, d2
-    exth    d0
-    call    func_4856075E, 0, 0
-    exth    d0
-    cmp     -1, d0
-    bne     loc_485607B1
-    movhu   (0x50091a7a), d0
-    bra     loc_485607B8
-loc_485607B1:
-    movhu   d2, (0x50091a7a)
-    mov     d2, d0
-loc_485607B8:
-    ret     [d2], 0x10
-
-func_485607BB:
-    movm    [d2,d3,a2], (sp)
-    add     -0x10, sp
-func_485607BB_entry:
-    mov     a0, a2
-    mov     d0, d2
-    exthu   d2
-    cmp     0x64, d2
-    blt     loc_48560804
-    cmp     0x3e7, d2
-    bgt     loc_48560804
-    mov     0x64, d3
-    mov     d2, d0
-    mov     d3, d1
-    call    LibDiv32, 0, 0
-    add     0x30, d0
-    movbu   d0, (a2)
-    ext     d2
-    div     d3, d2
-    mov     mdr, d2
-    mov     0xa, d3
-    mov     d2, d0
-    exthu   d0
-    mov     d3, d1
-    call    LibDiv32, 0, 0
-    add     0x30, d0
-    movbu   d0, (1, a2)
-    exthu   d2
-    ext     d2
-    div     d3, d2
-    mov     mdr, d0
-    exthu   d0
-    add     0x30, d0
-    movbu   d0, (2, a2)
-    clr     d0
-    movbu   d0, (3, a2)
-loc_48560804:
-    ret     [d2,d3,a2], 0x1c
-
-func_48560807:
-    movm    [d2,d3,a2], (sp)
-func_48560807_entry:
-    movbu   (a0), d0
-    extb    d0
-    cmp     0x31, d0
-    blt     loc_48560817
-    movbu   (a0), d0
-    extb    d0
-    cmp     0x39, d0
-    ble     loc_4856081C
-loc_48560817:
-    mov     -1, d0
-    ret     [d2,d3,a2], 0xc
-loc_4856081C:
-    mov     a0, a2
-    inc     a2
-    movbu   (a2), d0
-    extb    d0
-    cmp     0x30, d0
-    blt     loc_4856082C
-    movbu   (a2), d0
-    extb    d0
-    cmp     0x39, d0
-    ble     loc_48560830
-loc_4856082C:
-    mov     -1, d0
-    bra     loc_48560875
-loc_48560830:
-    mov     2, a1
-    add     a0, a1
-    movbu   (a1), d0
-    extb    d0
-    cmp     0x30, d0
-    blt     loc_48560842
-    movbu   (a1), d0
-    extb    d0
-    cmp     0x39, d0
-    ble     loc_48560846
-loc_48560842:
-    mov     -1, d0
-    bra     loc_48560875
-loc_48560846:
-    movbu   (a0), d1
-    movbu   (a2), d2
-    movbu   (a1), d3
-    extb    d1
-    extb    d2
-    extb    d3
-    add     -0x30, d1
-    add     -0x30, d2
-    mov     0x64, d0
-    nop
-    nop
-    mul     d0, d1
-    mov     0xa, d0
-    nop
-    nop
-    mul     d0, d2
-    add     d2, d1
-    add     d3, d1
-    mov     -0x30, d0
-    add     d1, d0
-    exth    d0
-    cmp     0x64, d0
-    blt     loc_4856086F
-    cmp     0x3e7, d0
-    ble     loc_48560873
-loc_4856086F:
-    mov     -1, d0
-    bra     loc_48560875
-loc_48560873:
-    add     -0x64, d0
-loc_48560875:
-    ret     [d2,d3,a2], 0xc
-
-func_48560878:
-    movm    [d2,d3,a2,a3], (sp)
-func_48560878_entry:
-    add     -0x19c, sp
-    call    SD_GetState, 0, 0
-    extbu   d0
-    cmp     2, d0
-    bne     loc_4856088C
-    clr     d0
-    jmp     loc_48560932
-loc_4856088C:
-    mov     sp, a2
-    add     0x10, a2
-    mov     a2, a0
-    mov     Str_C_DCIM, a1
-    call    func_4852F762, 0, 0
-    mov     a2, a0
-    call    sdfmdopen_entry, [d2,a2], 0x18
-    clr     d2
-    exth    d0
-    cmp     d2, d0
-    bge     loc_485608AB
-    jmp     loc_48560931
-loc_485608AB:
-    mov     a2, a0
-    mov     Str_empty_725, a1
-    call    func_4852F7AE, 0, 0
-    call    func_484720D0_entry, 0, 0x1c
-    mov     sp, a3
-    add     0x90, a3
-    mov     a3, a1
-    mov     a2, a0
-    call    _findfirst_entry, [d2,a2,a3], 0x28
-    mov     d0, d3
-    cmp     d2, d3
-    blt     loc_48560931
-    movbu   (0x90, sp), d0
-    mov     8, a2
-    add     a3, a2
-    extb    d0
-    btst    0x10, d0
-    beq     loc_485608F2
-    mov     a2, a0
-    call    func_48560807_entry, [d2,d3,a2], 0xc
-    mov     d0, d1
-    exth    d1
-    cmp     d2, d1
-    blt     loc_485608F2
-    exth    d0
-    call    func_4856072C_entry, [d2], 4
-    mov     1, d2
-loc_485608F2:
-    mov     d3, d0
-    mov     a3, a0
-    call    _findnext_entry, [d2,d3,a2,a3], 0x48
-    cmp     0, d0
-    bne     loc_48560929
-loc_485608FF:
-    movbu   (0x90, sp), d0
-    extb    d0
-    btst    0x10, d0
-    beq     loc_4856091C
-    mov     a2, a0
-    call    func_48560807_entry, [d2,d3,a2], 0xc
-    mov     d0, d1
-    exth    d1
-    cmp     0, d1
-    blt     loc_4856091C
-    exth    d0
-    call    func_4856072C_entry, [d2], 4
-    exth    d2
-    inc     d2
-loc_4856091C:
-    mov     d3, d0
-    mov     a3, a0
-    call    _findnext_entry, [d2,d3,a2,a3], 0x48
-    cmp     0, d0
-    beq     loc_485608FF
-loc_48560929:
-    mov     d3, d0
-    call    _findclose_entry, [a2], 0x10
-loc_48560931:
-    mov     d2, d0
-loc_48560932:
-    add     0x19c, sp
-    ret     [d2,d3,a2,a3], 0x10
-
-func_48560939:
-    movm    [d2,d3,a2], (sp)
-func_48560939_entry:
-    clr     d3
-    clr     d2
-    mov     0x50091a7e, a2
-    exth    d0
-    mov     d0, a1
-    setlb
-    mov     d2, a0
-    add     a0, a0
-    mov     a0, d0
-    movhu   (d0, a2), d0
-    cmp     0, d0
-    ble     loc_48560964
-    mov     d2, d0
-    add     d0, d0
-    movhu   (d0, a2), d1
-    exth    d3
-    add     d1, d3
-    mov     d3, d0
-    exth    d0
-    cmp     d0, a1
-    bge     loc_48560964
-    add     0x64, d2
-    mov     d2, d0
-    bra     loc_4856096C
-loc_48560964:
-    inc     d2
-    exth    d2
-    cmp     0x384, d2
-    llt
-    clr     d0
-loc_4856096C:
-    retf    [d2,d3,a2], 0xc
-
-func_4856096F:
-    movm    [d2,d3,a2], (sp)
-func_4856096F_entry:
-    mov     d0, a2
-    clr     d3
-    clr     d2
-    mov     0x50091a7e, a1
-    setlb
-    mov     d2, d1
-    add     d1, d1
-    movhu   (d1, a1), d1
-    cmp     0, d1
-    ble     loc_485609A0
-    mov     a2, d0
-    exth    d0
-    exth    d3
-    cmp     d3, d0
-    blt     loc_48560997
-    mov     d2, d1
-    add     d1, d1
-    movhu   (d1, a1), d1
-    add     d3, d1
-    cmp     d1, d0
-    bge     loc_48560997
-    sub     d3, d0
-    bra     loc_485609A9
-loc_48560997:
-    mov     d2, a0
-    add     a0, a0
-    mov     a0, d0
-    movhu   (d0, a1), d1
-    add     d1, d3
-loc_485609A0:
-    inc     d2
-    exth    d2
-    cmp     0x384, d2
-    llt
-    mov     -1, d0
-loc_485609A9:
-    retf    [d2,d3,a2], 0xc
-
-func_485609AC:
-    movm    [d2,d3,a2,a3], (sp)
-func_485609AC_entry:
-    add     -0x170, sp
-    mov     a0, (0x188, sp)
-    call    SD_GetState, 0, 0
-    extbu   d0
-    cmp     2, d0
-    bne     loc_485609CA
-    mov     (0x188, sp), a0
-    clr     d0
-    movbu   d0, (a0)
-    jmp     loc_48560AF4
-loc_485609CA:
-    movhu   (0x50091a7a), d0
-    mov     sp, a3
-    exth    d0
-    call    func_48560939_entry, [d2,d3,a2], 0xc
-    add     0x14, a3
-    mov     a3, a0
-    exthu   d0
-    clr     d1
-    movbu   d1, (0x14, sp)
-    call    func_485607BB_entry, [d2,d3,a2], 0x1c
-    movbu   (0x14, sp), d0
-    extb    d0
-    cmp     0, d0
-    beq     loc_485609FC
-    mov     a3, a0
-    mov     Str_empty_724, a1
-    call    func_4852F7AE, 0, 0
-    bra     loc_48560A06
-loc_485609FC:
-    mov     (0x188, sp), a0
-    clr     d0
-    movbu   d0, (a0)
-    jmp     loc_48560AF4
-loc_48560A06:
-    mov     sp, a2
-    add     0x24, a2
-    mov     a2, a0
-    mov     Str_C_DCIM, a1
-    call    func_4852F762, 0, 0
-    mov     a2, a0
-    mov     Str_empty_723, a1
-    call    func_4852F7AE, 0, 0
-    mov     a2, a0
-    mov     a3, a1
-    call    func_4852F7AE, 0, 0
-    movhu   (0x50091a7a), d0
-    exth    d0
-    call    func_4856096F_entry, [d2,d3,a2], 0xc
-    mov     d0, d2
-    exth    d0
-    cmp     0, d0
-    bge     loc_48560A4A
-    mov     (0x188, sp), a0
-    clr     d0
-    movbu   d0, (a0)
-    jmp     loc_48560AF4
-loc_48560A4A:
-    mov     sp, a3
-    add     0x64, a3
-    mov     a3, a1
-    mov     a2, a0
-    call    _findfirst_entry, [d2,a2,a3], 0x28
-    mov     d0, d3
-    cmp     0, d3
-    bge     loc_48560A5E
-    jmp     loc_48560AED
-loc_48560A5E:
-    movbu   (0x64, sp), d0
-    extb    d0
-    btst    0x10, d0
-    beq     loc_48560A90
-    exth    d2
-    cmp     0, d2
-    bne     loc_48560A8E
-    add     8, a3
-    mov     (0x188, sp), a0
-    mov     a3, a1
-    mov     8, d0
-    call    func_4852F77C, 0, 0
-    mov     (0x188, sp), a0
-    clr     d0
-    movbu   d0, (8, a0)
-    mov     d3, d0
-    call    _findclose_entry, [a2], 0x10
-    bra     loc_48560AF4
-loc_48560A8E:
-    add     -1, d2
-loc_48560A90:
-    mov     d3, d0
-    mov     a3, a0
-    call    _findnext_entry, [d2,d3,a2,a3], 0x48
-    cmp     0, d0
-    bne     loc_48560ADC
-loc_48560A9D:
-    movbu   (0x64, sp), d0
-    extb    d0
-    btst    0x10, d0
-    beq     loc_48560ACF
-    exth    d2
-    cmp     0, d2
-    bne     loc_48560ACD
-    add     8, a3
-    mov     (0x188, sp), a0
-    mov     a3, a1
-    mov     8, d0
-    call    func_4852F77C, 0, 0
-    mov     (0x188, sp), a0
-    clr     d0
-    movbu   d0, (8, a0)
-    mov     d3, d0
-    call    _findclose_entry, [a2], 0x10
-    bra     loc_48560AF4
-loc_48560ACD:
-    add     -1, d2
-loc_48560ACF:
-    mov     d3, d0
-    mov     a3, a0
-    call    _findnext_entry, [d2,d3,a2,a3], 0x48
-    cmp     0, d0
-    beq     loc_48560A9D
-loc_48560ADC:
-    mov     d3, d0
-    call    _findclose_entry, [a2], 0x10
-    mov     (0x188, sp), a0
-    clr     d0
-    movbu   d0, (a0)
-    bra     loc_48560AF4
-loc_48560AED:
-    mov     (0x188, sp), a0
-    clr     d0
-    movbu   d0, (a0)
-loc_48560AF4:
-    add     0x170, sp
-    ret     [d2,d3,a2,a3], 0x10
-
-func_48560AFB:
-    movm    [d2], (sp)
-    add     -8, sp
-func_48560AFB_entry:
-    call    func_48560878_entry, [d2,d3,a2,a3], 0x10
-    call    func_4856070F_entry, [d2,d3], 8
-    mov     d0, d2
-    exth    d2
-    mov     -1, d1
-    add     d2, d1
-    cmp     0, d2
-    bgt     loc_48560B14
-    clr     d1
-loc_48560B14:
-    movhu   d1, (0x50091a7c)
-    ret     [d2], 0xc
-
-func_48560B1D:
-    add     -0x10, sp
-func_48560B1D_entry:
-    mov     0x50083d64, a0
-    exthu   d0
-    call    func_4857C4A2_entry, [d2,d3,a2,a3], 0x28
-    ret     0, 0x10
-
-func_48560B31:
-    mov     0x50083d64, a0
-    retf    0, 0
-
-func_48560B3A:
-    movm    [a2], (sp)
-    add     -0x14, sp
-func_48560B3A_entry:
-    mov     a0, a1
-    mov     0x10, d0
-    mov     0x50083d3b, a0
-    call    func_4852F77C, 0, 0
-    clr     d0
-    movbu   d0, (0x50083d4b)
-    ret     [a2], 0x18
-
-func_48560B59:
-    mov     0x50083d3b, a0
-    retf    0, 0
-
-func_48560B62:
-    movm    [a2], (sp)
-    add     -0x14, sp
-func_48560B62_entry:
-    mov     a0, a1
-    mov     0x10, d0
-    mov     0x50083d4c, a0
-    call    func_4852F77C, 0, 0
-    clr     d0
-    movbu   d0, (0x50083d5c)
-    ret     [a2], 0x18
-
-func_48560B81:
-    mov     0x50083d4c, a0
-    retf    0, 0
-
-func_48560B8A:
-    add     -0x10, sp
-func_48560B8A_entry:
-    mov     0x50083d4c, a0
-    mov     Str_NEW_PLAYLIST_4, a1
-    call    func_4852F762, 0, 0
-    ret     0, 0x10
-
-func_48560BA3:
-    add     -8, sp
-func_48560BA3_entry:
-    call    func_4857C383_entry, [d2,d3,a2,a3], 0x1c
-    cmp     0, d0
-    bge     loc_48560BB3
-    mov     -1, d0
-loc_48560BB3:
-    ret     0, 8
-
-func_48560BB6:
-    add     -0xc, sp
-func_48560BB6_entry:
-    extbu   d0
-    call    func_4857C289_entry, [d2,d3,a2,a3], 0x20
-    cmp     0, d0
-    blt     loc_48560BD8
-    extbu   d0
-    call    func_4857C3BE_entry, [d2,d3,a2,a3], 0x1c
-    mov     d0, d1
-    mov     -1, d0
-    cmp     0, d1
-    blt     loc_48560BDA
-    mov     d1, d0
-    exth    d0
-    bra     loc_48560BDA
-loc_48560BD8:
-    mov     -1, d0
-loc_48560BDA:
-    ret     0, 0xc
-
-func_48560BDD:
-    movm    [d2], (sp)
-    add     -0xc, sp
-func_48560BDD_entry:
-    mov     d0, d2
-    extbu   d0
-    call    func_4855E876, 0, 0
-    exth    d0
-    cmp     -1, d0
-    beq     loc_48560BF4
-    movbu   d2, (0x50091392)
-loc_48560BF4:
-    ret     [d2], 0x10
-
-func_48560BF7:
-    movm    [d2], (sp)
-    add     -0xc, sp
-func_48560BF7_entry:
-    mov     d0, d2
-    exthu   d0
-    call    func_4855E867, 0, 0
-    exth    d0
-    cmp     -1, d0
-    beq     loc_48560C0E
-    movhu   d2, (0x50091394)
-loc_48560C0E:
-    ret     [d2], 0x10
-
-func_48560C11:
-    add     -0xc, sp
-func_48560C11_entry:
-    movbu   (0x50091392), d0
-    call    func_4855E876, 0, 0
-    exth    d0
-    cmp     -1, d0
-    bne     loc_48560C28
-    mov     -0x68, d0
-    bra     loc_48560C2E
-loc_48560C28:
-    movbu   (0x50091392), d0
-loc_48560C2E:
-    ret     0, 0xc
-
-func_48560C31:
-    add     -0xc, sp
-func_48560C31_entry:
-    movhu   (0x50091394), d0
-    call    func_4855E867, 0, 0
-    exth    d0
-    cmp     -1, d0
-    bne     loc_48560C48
-    mov     -0x68, d0
-    bra     loc_48560C4E
-loc_48560C48:
-    movhu   (0x50091394), d0
-loc_48560C4E:
-    ret     0, 0xc
-
-func_48560C51:
-    movm    [a2], (sp)
-    add     -0x14, sp
-func_48560C51_entry:
-    mov     a0, a2
-    extbu   d0
-    exthu   d1
-    inc     d1
-    exthu   d1
-    call    func_4857C2DA_entry, [d2,d3,a2,a3], 0x20
-    cmp     0, d0
-    ble     loc_48560C77
-    mov     a2, a0
-    exthu   d0
-    mov     0x10, d1
-    call    func_4857C583_entry, [d2], 0x18
-    clr     d0
-    movbu   d0, (0x10, a2)
-    bra     loc_48560C7A
-loc_48560C77:
-    clr     d0
-    movbu   d0, (a2)
-loc_48560C7A:
-    ret     [a2], 0x18
-
-func_48560C7D:
-    movm    [a2], (sp)
-    add     -0x14, sp
-func_48560C7D_entry:
-    mov     a0, a2
-    extbu   d0
-    call    func_4857C289_entry, [d2,d3,a2,a3], 0x20
-    cmp     0, d0
-    ble     loc_48560CA0
-    mov     a2, a0
-    exthu   d0
-    mov     0x10, d1
-    call    func_4857C674_entry, [d2], 0x18
-    clr     d0
-    movbu   d0, (0x10, a2)
-    bra     loc_48560CA3
-loc_48560CA0:
-    clr     d0
-    movbu   d0, (a2)
-loc_48560CA3:
-    ret     [a2], 0x18
-
-func_48560CA6:
-    add     -0x10, sp
-func_48560CA6_entry:
-    extbu   d0
-    exthu   d1
-    inc     d1
-    exthu   d1
-    call    func_4857C2DA_entry, [d2,d3,a2,a3], 0x20
-    cmp     0, d0
-    bge     loc_48560CBA
-    mov     -1, d0
-loc_48560CBA:
-    ret     0, 0x10
-
-func_48560CBD:
-    movm    [d2,d3,a2,a3], (sp)
-    add     -0x3c, sp
-func_48560CBD_entry:
-    call    func_48560C11_entry, 0, 0xc
-    mov     d0, a2
-    exth    d0
-    cmp     0, d0
-    bgt     loc_48560CD3
-    mov     -1, d0
-    ret     [d2,d3,a2,a3], 0x4c
-loc_48560CD3:
-    mov     a2, d0
-    exthu   d0
-    call    func_48560BB6_entry, 0, 0xc
-    mov     d0, d1
-    exth    d0
-    cmp     0, d0
-    bge     loc_48560CE6
-    mov     -1, d0
-    ret     [d2,d3,a2,a3], 0x4c
-loc_48560CE6:
-    movhu   (0x50091398), d0
-    clr     d2
-    exth    d0
-    clr     d3
-    cmp     d2, d0
-    blt     loc_48560D5E
-    mov     sp, a0
-    mov     a0, d0
-    add     0x1c, d0
-    mov     d0, (0x14, sp)
-    exth    d1
-    mov     d1, (0x18, sp)
-    mov     sp, a3
-    add     0x2c, a3
-    mov     a2, d0
-    extbu   d0
-    mov     d0, a2
-loc_48560D04:
-    mov     d2, d0
-    exthu   d0
-    call    func_4855FD36_entry, [d2,d3], 0x18
-    exth    d0
-    cmp     d3, d0
-    beq     loc_48560D13
-    mov     -1, d0
-    bra     loc_48560D5F
-loc_48560D13:
-    exthu   d2
-    mov     d2, d0
-    call    func_4855FC79_entry, [d2,a2], 0x18
-    mov     a0, a1
-    mov     (0x14, sp), a0
-    call    func_4852F762, 0, 0
-    mov     (0x18, sp), d0
-    clr     d1
-    clr     d2
-    cmp     d1, d0
-    ble     loc_48560D51
-loc_48560D2B:
-    mov     a3, a0
-    mov     a2, d0
-    exthu   d1
-    call    func_485610E7_entry, [d2,d3,a2,a3], 0x38
-    mov     a3, a0
-    mov     (0x14, sp), a1
-    mov     8, d0
-    call    func_4852F800_entry, [d2], 4
-    exth    d0
-    cmp     0, d0
-    bne     loc_48560D49
-    mov     1, d0
-    bra     loc_48560D5F
-loc_48560D49:
-    mov     (0x18, sp), d0
-    inc     d2
-    mov     d2, d1
-    exth    d2
-    cmp     d0, d2
-    blt     loc_48560D2B
-loc_48560D51:
-    movhu   (0x50091398), d0
-    inc     d3
-    mov     d3, d2
-    exth    d3
-    exth    d0
-    cmp     d0, d3
-    ble     loc_48560D04
-loc_48560D5E:
-    clr     d0
-loc_48560D5F:
-    ret     [d2,d3,a2,a3], 0x4c
-
-func_48560D62:
-    movm    [d2], (sp)
-func_48560D62_entry:
-    mov     d0, d2
-    extbu   d0
-    cmp     0x63, d0
-    bge     loc_48560D97
-    extbu   d1
-    cmp     0, d1
-    beq     loc_48560D84
-    extbu   d2
-    mov     d2, d0
-    add     d0, d0
-    mov     d0, a0
-    add     0x50092192, a0
-    movhu   (a0), d1
-    or      0x8000, d1
-    movhu   d1, (a0)
-    bra     loc_48560D97
-loc_48560D84:
-    extbu   d2
-    mov     d2, d0
-    add     d0, d0
-    mov     d0, a0
-    add     0x50092192, a0
-    movhu   (a0), d1
-    and     0x7fff, d1
-    movhu   d1, (a0)
-loc_48560D97:
-    retf    [d2], 4
-
-func_48560D9A:
-    movm    [d2], (sp)
-func_48560D9A_entry:
-    mov     d0, d2
-    clr     d0
-    mov     d2, d1
-    extbu   d1
-    cmp     0x63, d1
-    bge     loc_48560DB9
-    extbu   d2
-    mov     d2, d0
-    add     d0, d0
-    mov     0x50092192, a0
-    movhu   (d0, a0), d1
-    mov     1, d0
-    exthu   d1
-    btst    0x8000, d1
-    bne     loc_48560DB9
-    clr     d0
-loc_48560DB9:
-    extbu   d0
-    retf    [d2], 4
-
-func_48560DBD:
-    movm    [d2], (sp)
-func_48560DBD_entry:
-    clr     d0
-    mov     d0, d1
-    clr     d2
-    setlb
-    mov     0x50092192, a0
-    exthu   d1
-    add     d1, d1
-    movhu   (d1, a0), d1
-    btst    0x8000, d1
-    beq     loc_48560DD7
-    mov     d0, d1
-    exthu   d1
-    inc     d1
-    mov     d1, d0
-loc_48560DD7:
-    inc     d2
-    mov     d2, d1
-    exthu   d2
-    cmp     0x63, d2
-    llt
-    retf    [d2], 4
-
-func_48560DE0:
-    movm    [d2,d3], (sp)
-func_48560DE0_entry:
-    mov     d0, d1
-    clr     d3
-    mov     d3, d0
-    clr     d2
-    exthu   d1
-    mov     d1, a0
-    setlb
-    mov     0x50092192, a1
-    mov     d0, d1
-    exthu   d1
-    add     d1, d1
-    movhu   (d1, a1), d1
-    btst    0x8000, d1
-    beq     loc_48560E03
-    exthu   d3
-    cmp     d3, a0
-    bne     loc_48560E02
-    bra     loc_48560E0F
-loc_48560E02:
-    inc     d3
-loc_48560E03:
-    inc     d2
-    mov     d2, d0
-    exthu   d2
-    cmp     0x63, d2
-    llt
-    mov     0x0000ffff, d0
-loc_48560E0F:
-    retf    [d2,d3], 8
-
-func_48560E12:
-    movm    [d2,d3,a2,a3], (sp)
-    add     -4, sp
-func_48560E12_entry:
-    mov     d1, a3
-    mov     d0, d1
-    clr     d3
-    mov     d3, d0
-    clr     d2
-    mov     0x50092192, a1
-    mov     0x8000, a2
-    exthu   d1
-    mov     d1, a0
-    setlb
-    mov     d0, d1
-    exthu   d1
-    mov     d1, d0
-    add     d0, d0
-    movhu   (d0, a1), d0
-    mov     d3, (0, sp)
-    mov     a2, d3
-    and     d0, d3
-    mov     (0, sp), d3
-    beq     loc_48560E62
-    exthu   d3
-    cmp     d3, a0
-    bne     loc_48560E61
-    mov     d1, d0
-    add     d0, d0
-    movhu   (d0, a1), d2
-    mov     d1, d0
-    mov     a2, d3
-    and     d3, d2
-    add     d0, d0
-    movhu   d2, (d0, a1)
-    mov     d1, a0
-    add     a0, a0
-    mov     a0, d0
-    movhu   (d0, a1), d3
-    mov     a3, d0
-    exthu   d0
-    and     0x7fff, d0
-    or      d3, d0
-    add     d1, d1
-    movhu   d0, (d1, a1)
-    bra     loc_48560E68
-loc_48560E61:
-    inc     d3
-loc_48560E62:
-    inc     d2
-    mov     d2, d0
-    exthu   d2
-    cmp     0x63, d2
-    llt
-loc_48560E68:
-    retf    [d2,d3,a2,a3], 0x14
-
-func_48560E6B:
-    movm    [d2,d3,a2], (sp)
-func_48560E6B_entry:
-    clr     d3
-    mov     0xffff, a2
-    mov     d3, d1
-    clr     d2
-    mov     0x50092192, a1
-    exthu   d0
-    mov     d0, a0
-    setlb
-    exthu   d1
-    mov     d1, d0
-    add     d0, d0
-    movhu   (d0, a1), d0
-    btst    0x8000, d0
-    beq     loc_48560E9A
-    exthu   d3
-    cmp     d3, a0
-    bne     loc_48560E99
-    add     d1, d1
-    movhu   (d1, a1), d0
-    exth    d0
-    and     0x7fff, d0
-    mov     d0, a2
-    bra     loc_48560EA0
-loc_48560E99:
-    inc     d3
-loc_48560E9A:
-    inc     d2
-    mov     d2, d1
-    exthu   d2
-    cmp     0x63, d2
-    llt
-loc_48560EA0:
-    mov     a2, d0
-    retf    [d2,d3,a2], 0xc
-
-func_48560EA5:
-    movm    [d2], (sp)
-func_48560EA5_entry:
-    clr     d0
-    mov     0x50092192, a1
-    setlb
-    mov     d0, d1
-    add     d1, d1
-    movhu   (d1, a1), d1
-    mov     d0, a0
-    add     a0, a0
-    and     0x7fff, d1
-    mov     a0, d2
-    movhu   d1, (d2, a1)
-    inc     d0
-    exth    d0
-    cmp     0x63, d0
-    llt
-    retf    [d2], 4
-
-func_48560EC7:
-    movm    [d2], (sp)
-    clr     d0
-    mov     0x50092192, a1
-    setlb
-    mov     d0, d1
-    add     d1, d1
-    movhu   (d1, a1), d1
-    mov     d0, a0
-    add     a0, a0
-    and     0x8000, d1
-    mov     a0, d2
-    movhu   d1, (d2, a1)
-    inc     d0
-    exth    d0
-    cmp     0x63, d0
-    llt
-    retf    [d2], 4
-
-func_48560EE9:
-    movm    [d2,a2,a3], (sp)
-    add     -0x14, sp
-func_48560EE9_entry:
-    mov     a0, a1
-    mov     0x50083ca4, a3
-    mov     8, d0
-    mov     a3, a0
-    call    func_4852F77C, 0, 0
-    mov     8, d0
-    mov     d0, d1
-    setlb
-    mov     0x20, d2
-    extbu   d0
-    movbu   d2, (d0, a3)
-    inc     d1
-    mov     d1, d0
-    extbu   d1
-    cmp     0xf, d1
-    llt
-    clr     d0
-    movbu   d0, (0x50083cb4)
-    mov     a3, a0
-    ret     [d2,a2,a3], 0x20
-
-func_48560F19:
-    movm    [d2], (sp)
-func_48560F19_entry:
-    clr     d0
-    setlb
-    mov     0x0000ffff, d2
-    mov     0x50092258, a0
-    mov     d0, d1
-    add     d1, d1
-    movhu   d2, (d1, a0)
-    inc     d0
-    exth    d0
-    cmp     0x63, d0
-    llt
-    retf    [d2], 4
-
-func_48560F35:
-    movm    [d2], (sp)
-func_48560F35_entry:
-    mov     d0, d2
-    exthu   d2
-    cmp     0x63, d2
-    bge     loc_48560F47
-    exthu   d0
-    add     d0, d0
-    mov     0x50092258, a0
-    movhu   d1, (d0, a0)
-loc_48560F47:
-    retf    [d2], 4
-
-func_48560F4A:
-    mov     0x50092258, a0
-    retf    0, 0
-
-func_48560F53:
-    movm    [d2,d3,a2,a3], (sp)
-    add     -0x14, sp
-func_48560F53_entry:
-    mov     a0, a2
-    mov     d0, d3
-    extbu   d3
-    inc     d3
-    mov     sp, a3
-    add     0x10, a3
-    mov     0x64, d2
-    mov     d3, d0
-    extbu   d0
-    mov     d2, d1
-    call    LibDiv32, 0, 0
-    add     0x30, d0
-    movbu   d0, (0x10, sp)
-    extbu   d3
-    ext     d3
-    div     d2, d3
-    mov     mdr, d2
-    mov     0xa, d3
-    mov     d2, d0
-    extbu   d0
-    mov     d3, d1
-    call    LibDiv32, 0, 0
-    add     0x30, d0
-    movbu   d0, (0x11, sp)
-    extbu   d2
-    ext     d2
-    div     d3, d2
-    mov     mdr, d0
-    extbu   d0
-    add     0x30, d0
-    movbu   d0, (0x12, sp)
-    clr     d0
-    movbu   d0, (0x13, sp)
-    mov     a2, a0
-    mov     Str_TFLD, a1
-    call    func_4852F762, 0, 0
-    mov     a3, a1
-    mov     a2, a0
-    call    func_4852F7AE, 0, 0
-    ret     [d2,d3,a2,a3], 0x24
-
-func_48560FB3:
-    movm    [d2,a2,a3], (sp)
-    add     -0x1c, sp
-func_48560FB3_entry:
-    mov     d0, d2
-    mov     a0, a3
-    call    func_48560FED, 0, 0
-    mov     a0, a1
-    mov     a3, a0
-    call    func_4852F762, 0, 0
-    mov     a3, a0
-    mov     Str_empty_722, a1
-    call    func_4852F7AE, 0, 0
-    mov     sp, a2
-    add     0x10, a2
-    mov     a2, a0
-    extbu   d2
-    mov     d2, d0
-    call    func_48560F53_entry, [d2,d3,a2,a3], 0x24
-    mov     a2, a1
-    mov     a3, a0
-    call    func_4852F7AE, 0, 0
-    ret     [d2,a2,a3], 0x28
-
-func_48560FED:
-    mov     Str_C_PRIVATE_TECHNICS_KN7000, a0
-    retf    0, 0
-
-func_48560FF6:
-    mov     Str_C_15, a0
-    retf    0, 0
-
-func_48560FFF:
-    mov     Str_PRIVATE, a0
-    retf    0, 0
-
-func_48561008:
-    mov     Str_TECHNICS_5, a0
-    retf    0, 0
-
-func_48561011:
-    mov     Str_KN7000_2, a0
-    retf    0, 0
-
-func_4856101A:
-    mov     Str_A_9, a0
-    retf    0, 0
-
-func_48561023:
-    mov     Str_KN7000MN_INF, a0
-    retf    0, 0
-
-func_4856102C:
-    mov     Str_KN7000MN_BAK, a0
-    retf    0, 0
-
-func_48561035:
-    movm    [a2], (sp)
-    add     -0x10, sp
-func_48561035_entry:
-    mov     a0, a2
-    call    func_48560FED, 0, 0
-    mov     a0, a1
-    mov     a2, a0
-    call    func_4852F762, 0, 0
-    mov     a2, a0
-    mov     Str_empty_721, a1
-    call    func_4852F7AE, 0, 0
-    call    func_48561068, 0, 0
-    mov     a0, a1
-    mov     a2, a0
-    call    func_4852F7AE, 0, 0
-    ret     [a2], 0x14
-
-func_48561068:
-    mov     Str_CUSTOM_5, a0
-    retf    0, 0
-
-func_48561071:
-    mov     Str_C_DCIM, a0
-    retf    0, 0
-
-func_4856107A:
-    movm    [a2], (sp)
-    add     -0x10, sp
-func_4856107A_entry:
-    mov     a0, a2
-    mov     Str_C_15, a1
-    call    func_4852F762, 0, 0
-    mov     Str_IMEXPORT_3, a1
-    mov     a2, a0
-    call    func_4852F7AE, 0, 0
-    ret     [a2], 0x14
-
-func_4856109E:
-    mov     Str_IMEXPORT_3, a0
-    retf    0, 0
-
-func_485610A7:
-    movbu   (a0), d0
-    cmp     0, d0
-    beq     loc_485610E4
-    setlb
-    movbu   (a0), d0
-    cmp     0x30, d0
-    blt     loc_485610BA
-    movbu   (a0), d0
-    cmp     0x39, d0
-    ble     loc_485610DE
-loc_485610BA:
-    movbu   (a0), d0
-    cmp     0x41, d0
-    blt     loc_485610C6
-    movbu   (a0), d0
-    cmp     0x5a, d0
-    ble     loc_485610DE
-loc_485610C6:
-    movbu   (a0), d0
-    cmp     0x61, d0
-    blt     loc_485610DA
-    movbu   (a0), d0
-    cmp     0x7a, d0
-    bgt     loc_485610DA
-    movbu   (a0), d0
-    add     -0x20, d0
-    movbu   d0, (a0)
-    bra     loc_485610DE
-loc_485610DA:
-    mov     0x5f, d0
-    movbu   d0, (a0)
-loc_485610DE:
-    inc     a0
-    movbu   (a0), d0
-    cmp     0, d0
-    lne
-loc_485610E4:
-    retf    0, 0
-
-func_485610E7:
-    movm    [d2,d3,a2,a3], (sp)
-    add     -0x28, sp
-func_485610E7_entry:
-    mov     d1, d3
-    mov     sp, a2
-    add     0x14, a2
-    exthu   d3
-    extbu   d0
-    mov     d3, d1
-    mov     a0, a3
-    mov     a2, a0
-    call    func_48560C51_entry, [a2], 0x18
-    movbu   (0x14, sp), d0
-    extb    d0
-    cmp     0, d0
-    beq     loc_48561142
-    mov     a2, a0
-    call    func_485610A7, 0, 0
-    mov     a3, a0
-    mov     6, d0
-    mov     a2, a1
-    call    func_4852F77C, 0, 0
-    mov     0xa, d2
-    mov     d3, d0
-    inc     d0
-    mov     d2, d1
-    call    LibDiv32, 0, 0
-    add     0x30, d0
-    movbu   d0, (6, a3)
-    inc     d3
-    ext     d3
-    div     d2, d3
-    mov     mdr, d3
-    add     0x30, d3
-    movbu   d3, (7, a3)
-    clr     d0
-    movbu   d0, (8, a3)
-    mov     Str_MID_7, a1
-    mov     a3, a0
-    call    func_4852F7AE, 0, 0
-loc_48561142:
-    ret     [d2,d3,a2,a3], 0x38
-
-func_48561145:
-    movm    [d2], (sp)
-    movbu   (0x5009218c), d1
-    mov     d0, d2
-    extbu   d2
-    cmp     d1, d2
-    beq     loc_48561163
-    cmp     5, d2
-    bge     loc_48561163
-    clr     d1
-    movbu   d1, (0x5009218d)
-    movbu   d0, (0x5009218c)
-loc_48561163:
-    retf    [d2], 4
-
-func_48561166:
-    movm    [d2,d3], (sp)
-    add     -8, sp
-func_48561166_entry:
-    mov     d0, d3
-    mov     func_48561166_Table, a1
-    mov     sp, a0
-    mov     -5, d1
-    setlb
-    movbu   (a1), d0
-    inc     a1
-    movbu   d0, (a0)
-    inc     a0
-    inc     d1
-    lne
-    clr     d1
-    clr     d0
-    movbu   (0x5009218c), d2
-    mov     sp, a1
-    setlb
-    movbu   (d0, a1), d0
-    cmp     d0, d2
-    bne     loc_485611E2
-    extbu   d3
-    cmp     0, d3
-    beq     loc_485611BA
-    inc     d1
-    cmp     5, d1
-    bcc     loc_485611A8
-    movbu   (d1, a1), d0
-    movbu   d0, (0x5009218c)
-    clr     d0
-    movbu   d0, (0x5009218d)
-    bra     loc_485611E8
-loc_485611A8:
-    movbu   (0, sp), d0
-    movbu   d0, (0x5009218c)
-    clr     d0
-    movbu   d0, (0x5009218d)
-    bra     loc_485611E8
-loc_485611BA:
-    cmp     0, d1
-    ble     loc_485611D1
-    add     -1, d1
-    movbu   (d1, a1), d0
-    movbu   d0, (0x5009218c)
-    clr     d0
-    movbu   d0, (0x5009218d)
-    bra     loc_485611E8
-loc_485611D1:
-    mov     2, d0
-    movbu   d0, (0x5009218c)
-    clr     d0
-    movbu   d0, (0x5009218d)
-    bra     loc_485611E8
-loc_485611E2:
-    inc     d1
-    extbu   d1
-    mov     d1, d0
-    cmp     5, d0
-    lcs
-loc_485611E8:
-    retf    [d2,d3], 0x10
-
-func_485611EB:
-    movbu   (0x5009218c), d0
-    retf    0, 0
-
-func_485611F4:
-    movm    [d2,d3], (sp)
-    add     -0x14, sp
-func_485611F4_entry:
-    mov     d0, d3
-    clr     d2
-    extbu   d3
-loc_485611FC:
-    mov     2, d0
-    mov     d0, (0x10, sp)
-    mov     d3, d0
-    mov     d2, d1
-    call    func_4855F657_entry, [d2], 0x14
-    extbu   d0
-    cmp     0, d0
-    beq     loc_4856120F
-    mov     d2, d0
-    bra     loc_4856122A
-loc_4856120F:
-    mov     0xb, d0
-    mov     d0, (0x10, sp)
-    mov     d3, d0
-    mov     d2, d1
-    call    func_4855F657_entry, [d2], 0x14
-    extbu   d0
-    cmp     0, d0
-    beq     loc_48561222
-    mov     d2, d0
-    bra     loc_4856122A
-loc_48561222:
-    inc     d2
-    extbu   d2
-    cmp     0x14, d2
-    blt     loc_485611FC
-    mov     -1, d0
-loc_4856122A:
-    ret     [d2,d3], 0x1c
-
-func_4856122D:
-    movm    [d2], (sp)
-    add     -0xc, sp
-    clr     d2
-loc_48561233:
-    mov     d2, d0
-    call    func_485611F4_entry, [d2,d3], 0x1c
-    cmp     0, d0
-    blt     loc_48561247
-    asl     8, d2
-    and     0xff, d0
-    or      d2, d0
-    bra     loc_4856124F
-loc_48561247:
-    inc     d2
-    extbu   d2
-    cmp     0x63, d2
-    blt     loc_48561233
-    mov     -1, d0
-loc_4856124F:
-    ret     [d2], 0x10
-
-func_48561252:
-    extbu   d0
-    cmp     2, d0
-    bgt     loc_4856125F
-    movbu   (0x5009218d), d0
-    bra     loc_48561260
-loc_4856125F:
-    clr     d0
-loc_48561260:
-    retf    0, 0
-
-func_48561263:
-    movm    [d2], (sp)
-    add     -0xc, sp
-func_48561263_entry:
-    mov     d1, d2
-    extbu   d0
-    cmp     2, d0
-    bgt     loc_48561282
-    call    func_4856147C_entry, [d2,d3], 0x10
-    mov     d2, d1
-    extbu   d1
-    extbu   d0
-    inc     d0
-    cmp     d0, d1
-    bgt     loc_48561289
-    movbu   d2, (0x5009218d)
-    bra     loc_48561289
-loc_48561282:
-    clr     d0
-    movbu   d0, (0x5009218d)
-loc_48561289:
-    clr     d0
-    ret     [d2], 0x10
-
-func_4856128D:
-    movbu   (0x50092396), d0
-    retf    0, 0
-
-func_48561296:
-    clr     d0
-    movbu   d0, (0x50092396)
-    retf    0, 0
-
-func_485612A0:
-    add     -0x14, sp
-func_485612A0_entry:
-    call    SdCardUsableCheck_entry, 0, 8
-    extbu   d0
-    cmp     0, d0
-    beq     loc_485612CA
-    mov     0x5009231e, a0
-    mov     0x5008fd52, a1
-    mov     0x78, d0
-    call    memcpy_entry, [a2,a3], 8
-    mov     1, d0
-    movbu   d0, (0x50092396)
-loc_485612CA:
-    ret     0, 0x14
-
-func_485612CD:
-    add     -0x14, sp
-func_485612CD_entry:
-    call    SdCardUsableCheck_entry, 0, 8
-    extbu   d0
-    cmp     0, d0
-    beq     loc_485612F6
-    mov     0x5008fd52, a0
-    mov     0x5009231e, a1
-    mov     0x78, d0
-    call    memcpy_entry, [a2,a3], 8
-    clr     d0
-    movbu   d0, (0x50092396)
-loc_485612F6:
-    ret     0, 0x14
-
-func_485612F9:
-    movm    [d2], (sp)
-    add     -8, sp
-    mov     d0, d2
-    call    SdCardUsableCheck_entry, 0, 8
-    extbu   d0
-    cmp     0, d0
-    bne     loc_4856130D
-    mov     -1, d0
-    bra     loc_48561355
-loc_4856130D:
-    mov     d2, d0
-    extbu   d0
-    cmp     2, d0
-    bgt     loc_48561353
-    movbu   (0x50092396), d0
-    cmp     0, d0
-    beq     loc_48561338
-    movbu   (0x5009218d), d0
-    extbu   d2
-    add     d0, d0
-    mov     0x28, d1
-    nop
-    nop
-    mulu    d2, d1
-    add     0x5009231e, d1
-    mov     d1, a0
-    movbu   (d0, a0), d0
-    extb    d0
-    bra     loc_48561355
-loc_48561338:
-    movbu   (0x5009218d), d0
-    extbu   d2
-    add     d0, d0
-    mov     0x28, d1
-    nop
-    nop
-    mulu    d2, d1
-    add     0x5008fd52, d1
-    mov     d1, a0
-    movbu   (d0, a0), d0
-    extb    d0
-    bra     loc_48561355
-loc_48561353:
-    mov     -1, d0
-loc_48561355:
-    ret     [d2], 0xc
-
-func_48561358:
-    movm    [d2], (sp)
-    add     -8, sp
-    mov     d0, d2
-    call    SdCardUsableCheck_entry, 0, 8
-    extbu   d0
-    cmp     0, d0
-    bne     loc_4856136C
-    mov     -1, d0
-    bra     loc_485613B9
-loc_4856136C:
-    mov     d2, d0
-    extbu   d0
-    cmp     2, d0
-    bgt     loc_485613B7
-    movbu   (0x50092396), d0
-    cmp     0, d0
-    beq     loc_4856139A
-    movbu   (0x5009218d), d1
-    extbu   d2
-    add     d1, d1
-    mov     d1, a0
-    mov     0x28, d0
-    nop
-    nop
-    mulu    d2, d0
-    add     0x5009231e, d0
-    add     d0, a0
-    movbu   (1, a0), d0
-    extb    d0
-    bra     loc_485613B9
-loc_4856139A:
-    movbu   (0x5009218d), d0
-    extbu   d2
-    add     d0, d0
-    mov     0x28, d1
-    nop
-    nop
-    mulu    d1, d2
-    add     0x5008fd52, d2
-    add     d0, d2
-    mov     d2, a0
-    movbu   (1, a0), d0
-    extb    d0
-    bra     loc_485613B9
-loc_485613B7:
-    mov     -1, d0
-loc_485613B9:
-    ret     [d2], 0xc
-
-func_485613BC:
-    movm    [d2,d3], (sp)
-    add     -8, sp
-func_485613BC_entry:
-    mov     d1, d2
-    mov     d0, d3
-    call    SdCardUsableCheck_entry, 0, 8
-    extbu   d0
-    cmp     0, d0
-    bne     loc_485613D1
-    mov     -1, d0
-    bra     loc_48561417
-loc_485613D1:
-    mov     d3, d0
-    extbu   d0
-    cmp     2, d0
-    bgt     loc_48561415
-    mov     d2, d0
-    extbu   d0
-    cmp     0x14, d0
-    bgt     loc_48561415
-    movbu   (0x50092396), d0
-    cmp     0, d0
-    beq     loc_485613FE
-    extbu   d2
-    extbu   d3
-    mov     d2, d1
-    add     d2, d1
-    mov     0x28, d0
-    nop
-    nop
-    mulu    d0, d3
-    add     0x5009231e, d3
-    mov     d3, a0
-    movbu   (d1, a0), d0
-    extb    d0
-    bra     loc_48561417
-loc_485613FE:
-    extbu   d2
-    extbu   d3
-    mov     d2, d1
-    add     d2, d1
-    mov     0x28, d0
-    nop
-    nop
-    mulu    d3, d0
-    add     0x5008fd52, d0
-    mov     d0, a0
-    movbu   (d1, a0), d0
-    extb    d0
-    bra     loc_48561417
-loc_48561415:
-    mov     -1, d0
-loc_48561417:
-    ret     [d2,d3], 0x10
-
-func_4856141A:
-    movm    [d2,d3], (sp)
-    add     -8, sp
-func_4856141A_entry:
-    mov     d1, d2
-    mov     d0, d3
-    call    SdCardUsableCheck_entry, 0, 8
-    extbu   d0
-    cmp     0, d0
-    bne     loc_4856142F
-    mov     -1, d0
-    bra     loc_48561479
-loc_4856142F:
-    mov     d3, d0
-    extbu   d0
-    cmp     2, d0
-    bgt     loc_48561477
-    mov     d2, d0
-    extbu   d0
-    cmp     0x14, d0
-    bgt     loc_48561477
-    movbu   (0x50092396), d0
-    cmp     0, d0
-    beq     loc_4856145E
-    extbu   d2
-    extbu   d3
-    mov     0x28, d0
-    nop
-    nop
-    mulu    d0, d3
-    add     0x5009231e, d3
-    mov     d2, d0
-    add     d2, d0
-    add     d0, d3
-    mov     d3, a0
-    movbu   (1, a0), d0
-    extb    d0
-    bra     loc_48561479
-loc_4856145E:
-    extbu   d2
-    extbu   d3
-    mov     0x28, d0
-    nop
-    nop
-    mulu    d0, d3
-    add     0x5008fd52, d3
-    mov     d2, d0
-    add     d2, d0
-    add     d0, d3
-    mov     d3, a0
-    movbu   (1, a0), d0
-    extb    d0
-    bra     loc_48561479
-loc_48561477:
-    mov     -1, d0
-loc_48561479:
-    ret     [d2,d3], 0x10
-
-func_4856147C:
-    movm    [d2,d3], (sp)
-    add     -8, sp
-func_4856147C_entry:
-    movbu   d0, (0x18, sp)
-    call    SdCardUsableCheck_entry, 0, 8
-    extbu   d0
-    cmp     0, d0
-    bne     loc_48561492
-    mov     -1, d0
-    bra     loc_485614F3
-loc_48561492:
-    movbu   (0x18, sp), d0
-    cmp     2, d0
-    bgt     loc_485614F1
-    movbu   (0x50092396), d0
-    cmp     0, d0
-    beq     loc_485614C9
-    clr     d2
-    clr     d3
-    movbu   (0x18, sp), d1
-    mov     0x28, d0
-    nop
-    nop
-    mulu    d0, d1
-    mov     d1, a0
-    add     0x5009231e, a0
-    setlb
-    mov     d2, d0
-    extbu   d0
-    add     d0, d0
-    movbu   (d0, a0), d0
-    extb    d0
-    cmp     -1, d0
-    beq     loc_485614ED
-    inc     d3
-    mov     d3, d2
-    extbu   d3
-    cmp     0x14, d3
-    llt
-    bra     loc_485614ED
-loc_485614C9:
-    clr     d2
-    clr     d3
-    movbu   (0x18, sp), d1
-    mov     0x28, d0
-    nop
-    nop
-    mulu    d0, d1
-    mov     d1, a0
-    add     0x5008fd52, a0
-    setlb
-    mov     d2, d0
-    extbu   d0
-    add     d0, d0
-    movbu   (d0, a0), d0
-    extb    d0
-    cmp     -1, d0
-    beq     loc_485614ED
-    inc     d3
-    mov     d3, d2
-    extbu   d3
-    cmp     0x14, d3
-    llt
-loc_485614ED:
-    mov     d2, d0
-    extbu   d0
-    bra     loc_485614F3
-loc_485614F1:
-    mov     -1, d0
-loc_485614F3:
-    ret     [d2,d3], 0x10
-
-func_485614F6:
-    movm    [d2,d3,a2,a3], (sp)
-    add     -8, sp
-func_485614F6_entry:
-    movbu   d0, (0x20, sp)
-    call    SdCardUsableCheck_entry, 0, 8
-    extbu   d0
-    cmp     0, d0
-    bne     loc_4856150B
-    ret     [d2,d3,a2,a3], 0x18
-loc_4856150B:
-    movbu   (0x50092396), d0
-    cmp     0, d0
-    bne     loc_48561518
-    ret     [d2,d3,a2,a3], 0x18
-loc_48561518:
-    movbu   (0x20, sp), d0
-    cmp     2, d0
-    ble     loc_48561522
-    ret     [d2,d3,a2,a3], 0x18
-loc_48561522:
-    clr     d0
-    movbu   (0x20, sp), d2
-    mov     0x28, d1
-    nop
-    nop
-    mulu    d1, d2
-    mov     d2, a1
-    add     0x5009231e, a1
-    setlb
-    mov     d0, a0
-    add     a0, a0
-    mov     a0, d1
-    movbu   (d1, a1), d1
-    extb    d1
-    cmp     -1, d1
-    beq     loc_48561547
-    inc     d0
-    exth    d0
-    cmp     0x14, d0
-    llt
-loc_48561547:
-    cmp     0, d0
-    bge     loc_4856154E
-    ret     [d2,d3,a2,a3], 0x18
-loc_4856154E:
-    cmp     0x14, d0
-    blt     loc_48561555
-    ret     [d2,d3,a2,a3], 0x18
-loc_48561555:
-    clr     d3
-    clr     d2
-    movbu   (0x20, sp), d1
-    mov     0x28, d0
-    nop
-    nop
-    mulu    d0, d1
-    mov     d1, a0
-    add     0x5009231e, a0
-    setlb
-    mov     d3, d0
-    extbu   d0
-    add     d0, d0
-    movbu   (d0, a0), d0
-    extb    d0
-    cmp     -1, d0
-    beq     loc_4856157A
-    mov     d2, d3
-    inc     d3
-    mov     d3, d2
-    extbu   d2
-    cmp     0x14, d2
-    llt
-loc_4856157A:
-    movbu   (0x5009218d), d0
-    mov     d0, a3
-    cmp     d0, d2
-    ble     loc_485615B6
-    movbu   (0x20, sp), d1
-    mov     0x28, d0
-    nop
-    nop
-    mulu    d0, d1
-    mov     d1, a2
-    add     0x5009231e, a2
-    setlb
-    mov     a2, a1
-    mov     -1, d0
-    add     d2, d0
-    add     d0, d0
-    add     d0, a1
-    movbu   (a1), d0
-    extbu   d3
-    mov     d3, d1
-    add     d1, d1
-    mov     a2, a0
-    add     d1, a0
-    movbu   d0, (a0)
-    movbu   (1, a1), d0
-    mov     -1, d3
-    movbu   d0, (1, a0)
-    add     d2, d3
-    mov     d3, d2
-    extbu   d2
-    cmp     a3, d2
-    lgt
-loc_485615B6:
-    movbu   (0x20, sp), d1
-    movbu   (0x5009218d), d0
-    mov     0x28, d2
-    nop
-    nop
-    mulu    d2, d1
-    add     0x5009231e, d1
-    add     d0, d0
-    add     d0, d1
-    movbu   (0x50083d28), d0
-    mov     d1, a0
-    movbu   d0, (a0)
-    movbu   (0x50083d29), d0
-    movbu   d0, (1, a0)
-    mov     2, d0
-    movbu   d0, (0x50092396)
-    ret     [d2,d3,a2,a3], 0x18
-
-func_485615EB:
-    movm    [d2,d3], (sp)
-    add     -8, sp
-func_485615EB_entry:
-    mov     d0, d3
-    call    SdCardUsableCheck_entry, 0, 8
-    extbu   d0
-    cmp     0, d0
-    bne     loc_485615FE
-    ret     [d2,d3], 0x10
-loc_485615FE:
-    movbu   (0x50092396), d0
-    cmp     0, d0
-    bne     loc_4856160B
-    ret     [d2,d3], 0x10
-loc_4856160B:
-    mov     d3, d0
-    extbu   d0
-    cmp     2, d0
-    ble     loc_48561614
-    ret     [d2,d3], 0x10
-loc_48561614:
-    clr     d1
-    mov     d3, d2
-    extbu   d2
-    mov     0x28, d0
-    nop
-    nop
-    mulu    d0, d2
-    mov     d2, a0
-    add     0x5009231e, a0
-    setlb
-    mov     d1, d0
-    add     d0, d0
-    movbu   (d0, a0), d0
-    extb    d0
-    cmp     -1, d0
-    beq     loc_48561634
-    inc     d1
-    exth    d1
-    cmp     0x14, d1
-    llt
-loc_48561634:
-    cmp     0, d1
-    ble     loc_48561698
-    movbu   (0x5009218d), d0
-    extbu   d3
-    mov     d0, a0
-    add     a0, a0
-    mov     0x28, d2
-    nop
-    nop
-    mulu    d3, d2
-    add     0x5009231e, d2
-    add     d2, a0
-    movbu   (a0), d0
-    extb    d0
-    cmp     -1, d0
-    beq     loc_48561685
-    movbu   (0x5009218d), d1
-    cmp     0x13, d1
-    bge     loc_48561685
-    setlb
-    mov     d1, d0
-    inc     d0
-    add     d0, d0
-    add     d2, d0
-    mov     d0, a1
-    movbu   (a1), d0
-    inc     d1
-    movbu   d0, (a0)
-    movbu   (1, a1), d0
-    movbu   d0, (1, a0)
-    mov     d1, d0
-    extbu   d0
-    add     d0, d0
-    add     d2, d0
-    mov     d0, a0
-    movbu   (a0), d0
-    extb    d0
-    cmp     -1, d0
-    beq     loc_48561685
-    extbu   d1
-    cmp     0x13, d1
-    llt
-loc_48561685:
-    mov     0x26, a0
-    add     d2, a0
-    mov     -1, d0
-    movbu   d0, (a0)
-    movbu   d0, (1, a0)
-    mov     2, d0
-    movbu   d0, (0x50092396)
-loc_48561698:
-    ret     [d2,d3], 0x10
-
-func_4856169B:
-    movm    [d2,d3,a2,a3], (sp)
-    add     -0x18, sp
-func_4856169B_entry:
-    mov     d0, d2
-    movbu   d1, (0x34, sp)
-    call    func_485612A0_entry, 0, 0x14
-    extbu   d2
-    mov     d2, (8, sp)
-    movbu   (0x34, sp), d1
-    clr     d0
-    mov     d1, a3
-    clr     d3
-loc_485616B3:
-    clr     d1
-    clr     d2
-    extbu   d0
-    mov     d3, (0x10, sp)
-    mov     0x28, d3
-    nop
-    nop
-    mulu    d3, d0
-    mov     (0x10, sp), d3
-    mov     d0, a2
-    add     0x5009231e, a2
-    setlb
-    extbu   d1
-    add     d1, d1
-    mov     a2, a1
-    add     d1, a1
-    movbu   (a1), d0
-    mov     (8, sp), d1
-    extb    d0
-    cmp     d1, d0
-    bne     loc_485616E5
-    mov     a1, a0
-    inc     a0
-    movbu   (a0), d0
-    extb    d0
-    cmp     a3, d0
-    bne     loc_485616E5
-    mov     -1, d0
-    movbu   d0, (a1)
-    movbu   d0, (a0)
-loc_485616E5:
-    inc     d2
-    mov     d2, d1
-    extbu   d2
-    cmp     0x14, d2
-    llt
-    inc     d3
-    mov     d3, d0
-    extbu   d3
-    cmp     3, d3
-    blt     loc_485616B3
-    clr     d3
-    movbu   d3, (0xc, sp)
-    mov     d3, (8, sp)
-loc_485616F8:
-    clr     d0
-    clr     d2
-    movbu   (0xc, sp), d1
-    mov     d0, (0x14, sp)
-    mov     0x28, d3
-    nop
-    nop
-    mulu    d3, d1
-    mov     d2, d3
-    mov     d1, a3
-    add     0x5009231e, a3
-    mov     d1, a2
-    add     0x5008fd52, a2
-    setlb
-    extbu   d0
-    mov     d0, a0
-    add     a0, a0
-    add     a3, a0
-    movbu   (a0), d0
-    extb    d0
-    cmp     -1, d0
-    beq     loc_4856173B
-    mov     a0, a1
-    inc     a1
-    movbu   (a1), d0
-    extb    d0
-    cmp     -1, d0
-    beq     loc_4856173B
-    movbu   (a0), d0
-    extbu   d3
-    movbu   d0, (a2)
-    movbu   (a1), d0
-    inc     d3
-    movbu   d0, (1, a2)
-    add     2, a2
-loc_4856173B:
-    inc     d2
-    mov     d2, d0
-    extbu   d2
-    cmp     0x14, d2
-    llt
-    mov     d3, d2
-    extbu   d2
-    cmp     0x14, d2
-    bge     loc_4856176B
-    movbu   (0xc, sp), d1
-    mov     0x28, d0
-    nop
-    nop
-    mulu    d0, d1
-    add     0x5008fd52, d1
-    setlb
-    extbu   d3
-    mov     d3, d0
-    add     d0, d0
-    add     d1, d0
-    mov     d0, a0
-    mov     -1, d0
-    movbu   d0, (a0)
-    movbu   d0, (1, a0)
-    mov     d2, d3
-    inc     d3
-    mov     d3, d2
-    extbu   d2
-    cmp     0x14, d2
-    llt
-loc_4856176B:
-    mov     (8, sp), d0
-    inc     d0
-    movbu   d0, (0xc, sp)
-    movbu   (0xc, sp), d0
-    mov     d0, (8, sp)
-    cmp     3, d0
-    bge     loc_4856177D
-    jmp     loc_485616F8
-loc_4856177D:
-    call    func_48561296, 0, 0
-    ret     [d2,d3,a2,a3], 0x28
-
-func_48561785:
-    movm    [d2,d3,a2,a3], (sp)
-    add     -0x2c, sp
-func_48561785_entry:
-    call    SdCardUsableCheck_entry, 0, 8
-    extbu   d0
-    cmp     0, d0
-    bne     loc_48561797
-    ret     [d2,d3,a2,a3], 0x3c
-loc_48561797:
-    mov     (func_48561785_Var), a0
-    clr     d0
-    mov     a0, (0x14, sp)
-    movhu   d0, (0x28, sp)
-    mov     d0, (0x20, sp)
-    mov     a0, d0
-    add     0x18, d0
-    mov     d0, (0x1c, sp)
-    mov     a0, d0
-    add     0x19, d0
-    mov     d0, (0x18, sp)
-loc_485617B1:
-    clr     d3
-    clr     d2
-    mov     (0x20, sp), d0
-    mov     0x1f0, d1
-    nop
-    nop
-    mul     d1, d0
-    add     0x50083d82, d0
-    add     0x10, d0
-    mov     d0, (0x24, sp)
-    mov     (0x1c, sp), a3
-    mov     (0x18, sp), a2
-loc_485617CA:
-    mov     (0x24, sp), a1
-    mov     (0x14, sp), a0
-    mov     0x18, d1
-    nop
-    nop
-    mul     d2, d1
-    add     d1, a1
-    mov     0x18, d0
-    call    memcpy_entry, [a2,a3], 8
-    movhu   (0x28, sp), d0
-    movbu   d0, (a3)
-    movbu   d3, (a2)
-    mov     (0x14, sp), d0
-    add     0x1a, a2
-    add     0x1a, d0
-    mov     d0, (0x14, sp)
-    mov     (0x18, sp), d0
-    add     0x1a, a3
-    add     0x1a, d0
-    mov     d0, (0x18, sp)
-    mov     (0x1c, sp), d0
-    mov     d2, d3
-    add     0x1a, d0
-    mov     d0, (0x1c, sp)
-    inc     d3
-    mov     d3, d2
-    exth    d2
-    cmp     0x14, d2
-    blt     loc_485617CA
-    mov     (0x20, sp), d0
-    inc     d0
-    movhu   d0, (0x28, sp)
-    movhu   (0x28, sp), d0
-    exth    d0
-    mov     d0, (0x20, sp)
-    cmp     0x63, d0
-    blt     loc_485617B1
-    clr     d0
-    setlb
-    mov     0x0000ffff, d1
-    mov     0x5009031a, a1
-    mov     d0, a0
-    add     a0, a0
-    mov     a0, d2
-    movhu   d1, (d2, a1)
-    inc     d0
-    exth    d0
-    cmp     0x80, d0
-    llt
-    clr     d0
-    mov     0x5009041a, a1
-    setlb
-    mov     0xff, d1
-    mov     d0, a0
-    add     a0, a0
-    mov     a0, d2
-    movbu   d1, (d2, a1)
-    mov     d0, a0
-    add     a0, a0
-    add     a1, a0
-    movbu   d1, (1, a0)
-    inc     d0
-    exth    d0
-    cmp     0x7bc, d0
-    llt
-    ret     [d2,d3,a2,a3], 0x3c
-
-func_48561857:
-    clr     d1
-    setlb
-    movbu   (a0), d0
-    extb    d0
-    cmp     0x20, d0
-    beq     loc_48561865
-    movbu   (a0), d0
-    extb    d0
-    bra     loc_4856186D
-loc_48561865:
-    inc     a0
-    inc     d1
-    extbu   d1
-    cmp     0x10, d1
-    llt
-    mov     0x20, d0
-loc_4856186D:
-    retf    0, 0
-
-func_48561870:
-    movm    [d2,d3,a2,a3], (sp)
-    add     -4, sp
-    clr     d0
-    movbu   d0, (1, sp)
-    mov     0x10, d3
-    movbu   d3, (0, sp)
-    movbu   (a0), d0
-    mov     a1, a3
-    mov     a0, a2
-    extb    d0
-    cmp     0x20, d0
-    bne     loc_48561899
-    mov     d3, d0
-    setlb
-    inc     a0
-    mov     -1, d3
-    add     d0, d3
-    movbu   (a0), d0
-    extb    d0
-    cmp     0x20, d0
-    bne     loc_48561899
-    mov     d3, d0
-    extbu   d0
-    cmp     0, d0
-    lgt
-loc_48561899:
-    movbu   (a1), d0
-    extb    d0
-    cmp     0x20, d0
-    bne     loc_485618B6
-    mov     0x10, d0
-    setlb
-    inc     a1
-    add     -1, d0
-    movbu   d0, (0, sp)
-    movbu   (a1), d0
-    extb    d0
-    cmp     0x20, d0
-    bne     loc_485618B6
-    movbu   (0, sp), d0
-    cmp     0, d0
-    lgt
-loc_485618B6:
-    mov     d3, d0
-    extbu   d0
-    cmp     0, d0
-    bne     loc_485618BF
-    mov     0x10, d3
-    mov     a2, a0
-loc_485618BF:
-    movbu   (0, sp), d0
-    cmp     0, d0
-    bne     loc_485618CC
-    mov     0x10, d0
-    movbu   d0, (0, sp)
-    mov     a3, a1
-loc_485618CC:
-    extbu   d3
-    cmp     0, d3
-    ble     loc_4856190F
-    movbu   (0, sp), d2
-    cmp     0, d2
-    ble     loc_4856190F
-    setlb
-    movbu   (a0), d0
-    movbu   (a1), d1
-    extb    d0
-    extb    d1
-    cmp     d1, d0
-    bne     loc_485618F0
-    movbu   (a0), d1
-    extb    d1
-    cmp     0, d1
-    bne     loc_485618FB
-    mov     1, d0
-    movbu   d0, (1, sp)
-    bra     loc_4856190F
-loc_485618F0:
-    movbu   (a0), d0
-    movbu   (a1), d1
-    extb    d0
-    extb    d1
-    sub     d1, d0
-    retf    [d2,d3,a2,a3], 0x14
-loc_485618FB:
-    inc     a0
-    inc     a1
-    add     -1, d2
-    movbu   d2, (0, sp)
-    add     -1, d3
-    extbu   d3
-    cmp     0, d3
-    ble     loc_4856190F
-    movbu   (0, sp), d2
-    cmp     0, d2
-    lgt
-loc_4856190F:
-    movbu   (1, sp), d1
-    cmp     0, d1
-    bne     loc_4856193E
-    cmp     0, d3
-    ble     loc_48561927
-    inc     a0
-    movbu   (a0), d0
-    extb    d0
-    cmp     0, d0
-    beq     loc_4856193E
-    movbu   (a0), d0
-    extb    d0
-    bra     loc_4856195D
-loc_48561927:
-    movbu   (0, sp), d0
-    cmp     0, d0
-    ble     loc_4856193E
-    inc     a1
-    movbu   (a1), d0
-    extb    d0
-    cmp     0, d0
-    beq     loc_4856193E
-    movbu   (a1), d0
-    extb    d0
-    not     d0
-    inc     d0
-    bra     loc_4856195D
-loc_4856193E:
-    mov     0x18, a1
-    add     a2, a1
-    movbu   (a1), d1
-    mov     0x18, a0
-    add     a3, a0
-    movbu   (a0), d0
-    cmp     d0, d1
-    beq     loc_48561955
-    movbu   (a1), d0
-    movbu   (a0), d1
-    sub     d1, d0
-    bra     loc_4856195D
-loc_48561955:
-    movbu   (0x19, a2), d0
-    movbu   (0x19, a3), d1
-    sub     d1, d0
-loc_4856195D:
-    retf    [d2,d3,a2,a3], 0x14
-
-func_48561960:
-    movm    [d2,d3,a2,a3], (sp)
-    add     -0x34, sp
-func_48561960_entry:
-    mov     (func_48561785_Var), a0
-    mov     0x7bc, d0
-    mov     0x1a, d1
-    mov     func_48561870, a1
-    call    func_4C00315D_entry, [d2,d3,a2,a3], 0x34
-    mov     (func_48561785_Var), a3
-    mov     0xff, d0
-    movbu   d0, (0x30, sp)
-    mov     0, a2
-    clr     d3
-    mov     0x18, d2
-    add     a3, d2
-    mov     d2, (0x2c, sp)
-    mov     0x19, d1
-    add     a3, d1
-    mov     d1, (0x24, sp)
-    mov     d2, (0x28, sp)
-    mov     d1, (0x18, sp)
-    mov     d2, (0x1c, sp)
-    mov     d1, (0x20, sp)
-loc_485619A0:
-    cmp     0, a3
-    bne     loc_485619A7
-    jmp     loc_48561A5C
-loc_485619A7:
-    mov     a3, a0
-    call    func_48561857, 0, 0
-    mov     d0, d2
-    extb    d0
-    cmp     0, d0
-    ble     loc_485619EC
-    movbu   (0x30, sp), d0
-    mov     d2, d1
-    extbu   d1
-    cmp     d0, d1
-    beq     loc_485619CB
-    mov     d2, d0
-    extbu   d0
-    add     d0, d0
-    mov     0x5009031a, a0
-    mov     a2, d1
-    movhu   d1, (d0, a0)
-    movbu   d2, (0x30, sp)
-loc_485619CB:
-    mov     (0x2c, sp), a0
-    mov     d3, d0
-    movbu   (a0), d1
-    add     d0, d0
-    mov     0x5009041a, a0
-    movbu   d1, (d0, a0)
-    mov     (0x24, sp), a0
-    movbu   (a0), d0
-    mov     d3, a0
-    add     a0, a0
-    add     0x5009041a, a0
-    movbu   d0, (1, a0)
-    bra     loc_48561A5C
-loc_485619EC:
-    mov     d2, d1
-    extbu   d1
-    cmp     0x8b, d1
-    bne     loc_48561A26
-    movbu   (0x30, sp), d0
-    cmp     d0, d1
-    beq     loc_48561A05
-    mov     a2, d0
-    movhu   d0, (0x50090416)
-    movbu   d2, (0x30, sp)
-loc_48561A05:
-    mov     (0x28, sp), a0
-    mov     d3, d0
-    movbu   (a0), d1
-    add     d0, d0
-    mov     0x5009041a, a0
-    movbu   d1, (d0, a0)
-    mov     (0x18, sp), a0
-    movbu   (a0), d0
-    mov     d3, a0
-    add     a0, a0
-    add     0x5009041a, a0
-    movbu   d0, (1, a0)
-    bra     loc_48561A5C
-loc_48561A26:
-    cmp     0x8d, d1
-    bne     loc_48561A5C
-    movbu   (0x30, sp), d0
-    cmp     d0, d1
-    beq     loc_48561A3D
-    mov     a2, d0
-    movhu   d0, (0x50090418)
-    movbu   d2, (0x30, sp)
-loc_48561A3D:
-    mov     (0x1c, sp), a0
-    mov     d3, d0
-    movbu   (a0), d1
-    add     d0, d0
-    mov     0x5009041a, a0
-    movbu   d1, (d0, a0)
-    mov     (0x20, sp), a0
-    movbu   (a0), d0
-    mov     d3, a0
-    add     a0, a0
-    add     0x5009041a, a0
-    movbu   d0, (1, a0)
-loc_48561A5C:
-    mov     (0x20, sp), d0
-    inc     d3
-    mov     d3, a2
-    add     0x1a, a3
-    add     0x1a, d0
-    mov     d0, (0x20, sp)
-    mov     (0x1c, sp), d0
-    exth    d3
-    add     0x1a, d0
-    mov     d0, (0x1c, sp)
-    mov     (0x18, sp), d0
-    add     0x1a, d0
-    mov     d0, (0x18, sp)
-    mov     (0x28, sp), d0
-    add     0x1a, d0
-    mov     d0, (0x28, sp)
-    mov     (0x24, sp), d0
-    add     0x1a, d0
-    mov     d0, (0x24, sp)
-    mov     (0x2c, sp), d0
-    add     0x1a, d0
-    mov     d0, (0x2c, sp)
-    cmp     0x7bc, d3
-    bge     loc_48561A8F
-    jmp     loc_485619A0
-loc_48561A8F:
-    clr     d0
-    movhu   d0, (0x5009031a)
-    ret     [d2,d3,a2,a3], 0x44
-
-func_48561A99:
-    add     -0x10, sp
-func_48561A99_entry:
-    movbu   (0x50083d28), d0
-    movbu   (0x50083d29), d1
-    call    func_4855EBDA_entry, [d2], 4
-    call    func_48561857, 0, 0
-    extb    d0
-    ret     0, 0x10
-
-func_48561AB6:
-    add     -0x10, sp
-func_48561AB6_entry:
-    extbu   d0
-    extbu   d1
-    call    func_4855EBDA_entry, [d2], 4
-    call    func_48561857, 0, 0
-    extb    d0
-    ret     0, 0x10
-
-func_48561AC9:
-    movm    [d2,d3,a2,a3], (sp)
-    add     -0x18, sp
-func_48561AC9_entry:
-    call    func_48561A99_entry, 0, 0x10
-    mov     d0, d2
-    mov     d2, d3
-    extb    d3
-    mov     d3, d0
-    call    func_48561B71_entry, [d2,d3,a2,a3], 0x24
-    exth    d0
-    mov     d0, (0x14, sp)
-    cmp     0, d0
-    bge     loc_48561AE8
-    mov     -1, d0
-    ret     [d2,d3,a2,a3], 0x28
-loc_48561AE8:
-    mov     d2, d0
-    extbu   d0
-    movhu   (0x50090416), d2
-    cmp     0x8b, d0
-    beq     loc_48561B19
-    movhu   (0x50090418), d2
-    cmp     0x8d, d0
-    beq     loc_48561B19
-    cmp     0, d3
-    ble     loc_48561B16
-    mov     d3, a0
-    add     a0, a0
-    mov     0x5009031a, a1
-    mov     a0, d0
-    movhu   (d0, a1), d2
-    bra     loc_48561B19
-loc_48561B16:
-    clr     d0
-    bra     loc_48561B6E
-loc_48561B19:
-    mov     (0x14, sp), d0
-    mov     0, a1
-    clr     d3
-    cmp     d3, d0
-    ble     loc_48561B6D
-    exth    d2
-    mov     0x7bc, a3
-    cmp     a3, d2
-    bge     loc_48561B6D
-    movbu   (0x50083d28), d0
-    mov     0x5009041a, a2
-    mov     d0, (0x10, sp)
-    movbu   (0x50083d29), d0
-    mov     d0, (0xc, sp)
-    setlb
-    mov     d2, a0
-    add     a0, a0
-    mov     a0, d0
-    movbu   (d0, a2), d1
-    mov     (0x10, sp), d0
-    cmp     d0, d1
-    bne     loc_48561B5F
-    mov     d2, d0
-    add     d0, d0
-    add     a2, d0
-    mov     d0, a0
-    movbu   (1, a0), d1
-    mov     (0xc, sp), d0
-    cmp     d0, d1
-    bne     loc_48561B5F
-    mov     a1, d0
-    bra     loc_48561B6E
-loc_48561B5F:
-    mov     (0x14, sp), d0
-    inc     d3
-    mov     d3, a1
-    inc     d2
-    exth    d3
-    cmp     d0, d3
-    bge     loc_48561B6D
-    exth    d2
-    cmp     a3, d2
-    llt
-loc_48561B6D:
-    clr     d0
-loc_48561B6E:
-    ret     [d2,d3,a2,a3], 0x28
-
-func_48561B71:
-    movm    [d2,d3,a2,a3], (sp)
-    add     -0x14, sp
-func_48561B71_entry:
-    mov     0, a2
-    extb    d0
-    mov     d0, (0x10, sp)
-    mov     d0, d1
-    cmp     0, d1
-    bne     loc_48561B85
-    mov     -1, d0
-    ret     [d2,d3,a2,a3], 0x24
-loc_48561B85:
-    extbu   d0
-    movhu   (0x50090416), d2
-    cmp     0x8b, d0
-    beq     loc_48561BB5
-    movhu   (0x50090418), d2
-    cmp     0x8d, d0
-    beq     loc_48561BB5
-    cmp     0, d1
-    ble     loc_48561BB2
-    mov     d1, a0
-    add     a0, a0
-    mov     0x5009031a, a1
-    mov     a0, d0
-    movhu   (d0, a1), d2
-    bra     loc_48561BB5
-loc_48561BB2:
-    clr     d0
-    bra     loc_48561C06
-loc_48561BB5:
-    movhu   (0x5009031a), d0
-    cmp     0, d0
-    bne     loc_48561C04
-    mov     d2, d3
-    exthu   d3
-    cmp     0x7bc, d3
-    blt     loc_48561BCA
-    clr     d0
-    bra     loc_48561C06
-loc_48561BCA:
-    cmp     0x7bc, d3
-    bge     loc_48561C00
-    mov     0x5009041a, a3
-loc_48561BD6:
-    exthu   d2
-    mov     d2, a0
-    mov     d2, d0
-    add     d0, d0
-    movbu   (d0, a3), d0
-    add     a0, a0
-    add     a3, a0
-    movbu   (1, a0), d1
-    extbu   d0
-    extbu   d1
-    call    func_48561AB6_entry, 0, 0x10
-    mov     (0x10, sp), d1
-    extb    d0
-    cmp     d0, d1
-    bne     loc_48561C00
-    mov     a2, d0
-    exthu   d0
-    inc     d0
-    mov     d0, a2
-    inc     d3
-    mov     d3, d2
-    exthu   d3
-    cmp     0x7bc, d3
-    blt     loc_48561BD6
-loc_48561C00:
-    mov     a2, d0
-    bra     loc_48561C06
-loc_48561C04:
-    mov     -1, d0
-loc_48561C06:
-    ret     [d2,d3,a2,a3], 0x24
-
-func_48561C09:
-    movm    [d2,d3,a2], (sp)
-    add     -0x18, sp
-func_48561C09_entry:
-    mov     d0, d3
-    extb    d3
-    cmp     0, d3
-    bne     loc_48561C19
-    mov     0, a0
-    ret     [d2,d3,a2], 0x24
-loc_48561C19:
-    extbu   d0
-    movhu   (0x50090416), d2
-    cmp     0x8b, d0
-    beq     loc_48561C46
-    movhu   (0x50090418), d2
-    cmp     0x8d, d0
-    beq     loc_48561C46
-    cmp     0, d3
-    ble     loc_48561C42
-    mov     d3, d0
-    add     d0, d0
-    mov     0x5009031a, a0
-    movhu   (d0, a0), d2
-    bra     loc_48561C46
-loc_48561C42:
-    mov     0, a0
-    bra     loc_48561CA5
-loc_48561C46:
-    exth    d2
-    exthu   d1
-    mov     d1, d0
-    add     d2, d0
-    cmp     0x7bc, d0
-    blt     loc_48561C54
-    mov     0, a0
-    bra     loc_48561CA5
-loc_48561C54:
-    mov     d1, d0
-    add     d2, d0
-    add     d0, d0
-    mov     0x5009041a, a0
-    movbu   (d0, a0), d3
-    add     d1, d2
-    movbu   d3, (0x14, sp)
-    mov     d2, d0
-    add     d2, d0
-    add     d0, a0
-    movbu   (1, a0), d3
-    movbu   (0x14, sp), d2
-    mov     d3, d1
-    extbu   d1
-    mov     0x50083cb8, a2
-    mov     a2, a0
-    mov     0x1f0, d0
-    nop
-    nop
-    mulu    d0, d2
-    add     0x50083d82, d2
-    add     0x10, d2
-    mov     0x18, d0
-    nop
-    nop
-    mulu    d0, d1
-    add     d1, d2
-    mov     d2, a1
-    call    memcpy_entry, [a2,a3], 8
-    movbu   (0x14, sp), d0
-    mov     a2, a0
-    movbu   d0, (0x50083cd0)
-    movbu   d3, (0x50083cd1)
-loc_48561CA5:
-    ret     [d2,d3,a2], 0x24
-
-func_48561CA8:
-    movbu   (0x50092190), d0
-    retf    0, 0
-
-func_48561CB1:
-    mov     d0, d1
-    extbu   d1
-    cmp     0x28, d1
-    bge     loc_48561CBD
-    movbu   d0, (0x50092190)
-loc_48561CBD:
-    retf    0, 0
-
-func_48561CC0:
-    mov     d0, d1
-    extbu   d1
-    cmp     0x28, d1
-    bge     loc_48561CD7
-    extbu   d0
-    mov     0x22, d1
-    nop
-    nop
-    mulu    d1, d0
-    mov     d0, a0
-    add     FavoritesBankDir, a0
-    rets
-loc_48561CD7:
-    mov     0, a0
-    rets

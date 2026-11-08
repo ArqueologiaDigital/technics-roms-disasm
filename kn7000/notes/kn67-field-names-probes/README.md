@@ -14,14 +14,14 @@ reference images and prints to stdout.
 
 - `m3em_param_map.py` walks `ResourceIdTrie` (KN7000 0x4858B424; KN6000 0x4C1935DC), the nibble trie
   library `func_4C01BB1A` walks for `GetM3Em` / `PutM3Em`. A leaf is a record `{u32 id, u16 type, u16 kind,
-  u16 min, u16 max, u8 block, u8 offset, u8 mask, u8 shift}`. For type 0, `func_4C015602` dispatches on
-  `kind` (table 0x4858C254) and reads the byte through `func_4C01F153(block, offset, mask)`; the block is
+  u16 min, u16 max, u8 block, u8 offset, u8 mask, u8 shift}`. For type 0, `M3GetByKind` dispatches on
+  `kind` (table 0x4858C254) and reads the byte through `M3BlockFieldRead(block, offset, mask)`; the block is
   record +0x0C, or the id's top byte when the id is part-indexed (`func_4C01BC28`). `--blocks` prints the
-  block pointer table (KN7000 0x4858D44C, read by `func_4C021040`; KN6000 0x4C195520): block n is the
+  block pointer table (KN7000 0x4858D44C, read by `M3BlockPtrGet`; KN6000 0x4C195520): block n is the
   payload of the panel record's tag n (0x84000020 + ...), except blocks 0x13-0x1A (ACCOMP1-5, BASS,
   DRUMS1, DRUMS2), which are work RAM 0x500D28C2 + i*0x4A (KN6000 0x5024F686 + i*0x4A).
 - The KN6000 addresses were found by matching the bytes of the KN7000 routines `func_4C01BB1A` and
-  `func_4C021040` in `kn6000/baserom/kn6000_program.rom` (walker at 0x4C02CA6A, block-table reader at
+  `M3BlockPtrGet` in `kn6000/baserom/kn6000_program.rom` (walker at 0x4C02CA6A, block-table reader at
   0x4C031C94).
 - Counts measured 2026-10-29: KN7000 469 records (314 of type 0), KN6000 307 of type 0. The two type-0
   maps agree on every part-record field except the KN7000-only ones (scale bits 0x2000B0-BF at part
