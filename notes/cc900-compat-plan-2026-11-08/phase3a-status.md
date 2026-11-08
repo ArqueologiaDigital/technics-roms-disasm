@@ -24,8 +24,19 @@ no options, as are the loop shapes and the leaf-function register allocator.
    register pair.  Needs last-use information per variable.
 2. **Allocation across calls** (`ra_call.c`, `call.c`, `ctrl.c`): which values go to IZ / QIZ and which to stack
    slots.  It looks cost-based (`regalloc_notes.md`, "open" rows); more targeted micro-tests may be needed.
-3. **The `-O3 -XS` behaviours**: compare `none` and `O3XS` listings of the same micro-test to list them
-   (`score.py ... --opt O3XS` once `codegen.py` reads `opt`).
+3. **The `-O3 -XS` loop optimizations** (`ra_leaf.c` scores 0 at `-O3 -XS`; run `2026-11-08-8-micro-ra`).  Compared
+   with no options, a loop at `-O3` gets:
+   - the array base hoisted out of the loop (`lda XDE,_ga` before it: loop-invariant motion);
+   - the index strength-reduced to a byte offset in its own register, stepped by the element size (`inc 0x2,BC`,
+     `inc 0x4,WA` for long), beside the counter (`inc 0x1,IZ`): an induction variable;
+   - one address computed for loads that share it (`lda XWA,XDE+BC` then `add HL,(XWA)` and `add IY,(XWA)`):
+     common subexpressions;
+   - the bound loaded into a register (`ld IX,(XSP+6)`, compared `cp IZ,IX`), and the loop entered with its test
+     first (`cp IX,0x0 / j le` on the bound);
+   - `while` loops rotated (`j L27` to the test at the bottom, `-XS`) and `*p++` folded into `(XDE+:2)`;
+   - more variables in registers (IZ pushed in a leaf function), in a different order.
+   `codegen.py` reads `opt` (`F.opt`) for the rules it has; these are next.  (`score.py` takes the level from the
+   oracle directory name.)
 4. **Then the library**: score the model on the 123 `LIB/SRC` files against run `2026-11-08-5` (V4.23 at
    `-O3 -XS -DFLOAT`), which also brings the pairs check (`pairs_check.py`) into reach for the model's output once
    it can be assembled.
