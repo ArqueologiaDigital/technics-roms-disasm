@@ -477,7 +477,7 @@
   "was": [
    "N-3912088e"
   ],
-  "plan": "offset-named 941 185->136, 942 185->148, 935 207->140, 893 207->152, KN6000 157->147, KN6500 156->146, KN2400 142->131 (1b0044cb9: reader_alias + T_CFLG, T_DefTimeHandler, AppTaskState, SdCommandFrame, StylePartTemplate, InOutTest*Pos, JpegMode*, BlockPatch); next: func_4841202C_Table_2_p0 / func_48411FEA_Table_2_p0 (effect-type descriptors, five s8 getters func_484120D9..func_4841214D), SndRecTriFieldGet2_Table_2_p0, StartFeatureDemo_Table_p0, MusicStylistPanelData (lane mn10300-data5, 2026-11-08)"
+  "plan": "at 7283a6d69, after the merge with kn7000-subsystems and the reader_unalias fix: offset-named 941 135, 942 145, 935 139, 893 149 (field_names_census.py). Lane mn10300-data5: offset-named 941 185->136, 942 185->148, 935 207->140, 893 207->152, KN6000 157->147, KN6500 156->146, KN2400 142->131 (1b0044cb9: reader_alias + T_CFLG, T_DefTimeHandler, AppTaskState, SdCommandFrame, StylePartTemplate, InOutTest*Pos, JpegMode*, BlockPatch); next: func_4841202C_Table_2_p0 / func_48411FEA_Table_2_p0 (effect-type descriptors, five s8 getters func_484120D9..func_4841214D), SndRecTriFieldGet2_Table_2_p0, StartFeatureDemo_Table_p0, MusicStylistPanelData (lane mn10300-data5, 2026-11-08)"
  },
  "N-24a40225": {
   "status": "RESOLVED",
