@@ -200,6 +200,13 @@ operands the new RAM names spell:
 | KN2400 | 11,166 -> 8,901 | 3,528 -> 4,899 | 20,564 / 2,916 -> 19,952 / 2,786 |
 | HD-SX3 | 765 -> 758      | 179 -> 183     | 0 / 0                            |
 
+`make doc-quality` (`docs/coverage/doc-quality-2026-11-08-01`, against `-07-04`, main's last:
+nothing rose) reads the same: (e) placeholder routine names program 6,282 -> 3,970, program942
+6,281 -> 3,970, program935 6,279 -> 3,967, program893 6,271 -> 3,968, KN6000 5,501 -> 4,577, KN6500
+5,529 -> 4,599, KN2400 6,430 -> 5,060, HD-SX3 459 -> 455; (b) operands spelled as a number outside
+the image KN6000 14,110 -> 13,716, KN6500 14,134 -> 13,739, KN2400 15,464 -> 14,934 (the new RAM
+names); (a) routines without a header program 20,241 -> 20,128.
+
 ## Items
 
 **893's own routines (N-99771106).**  `../mn10300-names-probes/oldbuilds_b893_func_census.py b893`
