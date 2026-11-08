@@ -1,0 +1,4 @@
+none|
+O3XS|-O3 -XS
+Xr|-Xr
+O3XSXr|-O3 -XS -Xr
