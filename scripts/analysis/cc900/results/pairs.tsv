@@ -1,0 +1,292 @@
+image	address	public	member	source	how	detail	our_label
+maincpu v10	eed778	___ctype	_ctype_c	_CTYPE.C	exact	IDE ml,IDE pic,V4.23 ml,v1.10 ml	CType_ClassTable
+maincpu v10	eed778	__ctype	_ctype_c	_CTYPE.C	exact	IDE ml,IDE pic,V4.23 ml,v1.10 ml	CType_ClassTable
+maincpu v10	eed8a4	__doform_c data	__doform_c	__DOFORM.C	exact	IDE pic	Sprintf_HexDigitsLower
+maincpu v10	ff091d	_strstr	_strstr_c	_STRSTR.C	exact	IDE ml,V4.23 ml	TmFlash_CompareStrings
+maincpu v10	ff097d	_strcspn	_strcspn_c	_STRCSPN.C	exact	IDE ml,V4.23 ml	StrSearch_Init
+maincpu v10	ff09a0	_atoi	_atoi_c	_ATOI.C	exact	IDE ml,V4.23 ml	ParseInt16
+maincpu v10	ff09f6	_atol	_atol_c	_ATOL.C	exact	IDE ml,V4.23 ml	ParseInt32
+maincpu v10	ff0ab7	_vsprintf	_sprintf_c	_SPRINTF.C	near	V4.23 ml 0.875	Sprintf_Unlocked+3
+maincpu v10	ff0c92	_strncat	_strncat_c	_STRNCAT.C	exact	IDE ml,V4.23 ml	Strncat
+maincpu v10	ff0cc1	_strncmp	_strncmp_c	_STRNCMP.C	exact	IDE ml,V4.23 ml	String_Compare
+maincpu v10	ff0cf3	_strncpy	_strncpy_c	_STRNCPY.C	exact	IDE ml,V4.23 ml	Strncpy
+maincpu v10	ff0d1e	_memcmp	_memcmp_c	_MEMCMP.C	exact	IDE ml,V4.23 ml,v1.10 ml	Mem_Compare
+maincpu v10	ff0d99	_memcpy	_memcpy_c	_MEMCPY.C	exact	IDE ml,V4.23 ml,v1.10 ml	Mem_Copy
+maincpu v10	ff0dc1	_strcat	_strcat_c	_STRCAT.C	exact	IDE ml,V4.23 ml,v1.10 ml	Strcat
+maincpu v10	ff0de3	_itoa	_itoa_c	_ITOA.C	exact	IDE ml,V4.23 ml	Itoa_Safe
+maincpu v10	ff0e6d	_strchr	_strchr_c	_STRCHR.C	exact	IDE ml,V4.23 ml	Strchr
+maincpu v10	ff0f4d	_strcpy	_strcpy_c	_STRCPY.C	exact	IDE ml,V4.23 ml	Strcpy
+maincpu v10	ff0f76	_sbrk	__sbrk_c	__SBRK.C	near	v1.10 ml 0.889	Strcpy_LoadReg+1
+maincpu v10	ff0f79	.sbrk	__sbrk_c	__SBRK.C	exact	IDE ml,V4.23 ml	Heap_Alloc
+maincpu v10	ff0fa0	_strlen	_strlen_c	_STRLEN.C	exact	IDE ml,V4.23 ml	Strlen
+maincpu v10	ff0fbe	_ltoa	_ltoa_c	_LTOA.C	exact	IDE ml,V4.23 ml	Strlen_LoadParam
+maincpu v10	ff0ffa	_memset	_memset_c	_MEMSET.C	exact	IDE ml,V4.23 ml,v1.10 ml	Memset
+maincpu v10	ff1048	__doprnt	__doform_c	__DOFORM.C	known	by label	Sprintf_Core
+maincpu v10	ff2139	__facnv	__facvt_c	__FACVT.C	near	V4.23 ml 0.953	Sprintf_FormatGGeneral
+maincpu v10	ff27f7	_ultoa	_ultoa_c	_ULTOA.C	exact	IDE ml	Sprintf_ItoaBaseN
+maincpu v10	ff2891	_memccpy	_memccpy_c	_MEMCCPY.C	exact	V4.23 ml	Sprintf_StringNSearch
+maincpu v10	ff28d1	_memchr	_memchr_c	_MEMCHR.C	exact	IDE ml,V4.23 ml,v1.10 ml	Sprintf_MemChr
+maincpu v10	ff28e9	_strnset	_strnset_c	_STRNSET.C	exact	IDE ml,V4.23 ml	Sprintf_StrNSet
+maincpu v10	ff2909	_strrchr	_strrchr_c	_STRRCHR.C	exact	V4.23 ml	Sprintf_StringLength
+maincpu v9	eed778	___ctype	_ctype_c	_CTYPE.C	exact	IDE ml,IDE pic,V4.23 ml,v1.10 ml	CType_ClassTable
+maincpu v9	eed778	__ctype	_ctype_c	_CTYPE.C	exact	IDE ml,IDE pic,V4.23 ml,v1.10 ml	CType_ClassTable
+maincpu v9	eed8a4	__doform_c data	__doform_c	__DOFORM.C	exact	IDE pic	Sprintf_HexDigitsLower
+maincpu v9	ff090f	_strstr	_strstr_c	_STRSTR.C	exact	IDE ml,V4.23 ml	TmFlash_CompareStrings
+maincpu v9	ff096f	_strcspn	_strcspn_c	_STRCSPN.C	exact	IDE ml,V4.23 ml	StrSearch_Init
+maincpu v9	ff0992	_atoi	_atoi_c	_ATOI.C	exact	IDE ml,V4.23 ml	ParseInt16
+maincpu v9	ff09e8	_atol	_atol_c	_ATOL.C	exact	IDE ml,V4.23 ml	ParseInt32
+maincpu v9	ff0c84	_strncat	_strncat_c	_STRNCAT.C	exact	IDE ml,V4.23 ml	Strncat
+maincpu v9	ff0cb3	_strncmp	_strncmp_c	_STRNCMP.C	exact	IDE ml,V4.23 ml	String_Compare
+maincpu v9	ff0ce5	_strncpy	_strncpy_c	_STRNCPY.C	exact	IDE ml,V4.23 ml	Strncpy
+maincpu v9	ff0d10	_memcmp	_memcmp_c	_MEMCMP.C	exact	IDE ml,V4.23 ml,v1.10 ml	Mem_Compare
+maincpu v9	ff0d8b	_memcpy	_memcpy_c	_MEMCPY.C	exact	IDE ml,V4.23 ml,v1.10 ml	Mem_Copy
+maincpu v9	ff0db3	_strcat	_strcat_c	_STRCAT.C	exact	IDE ml,V4.23 ml,v1.10 ml	Strcat
+maincpu v9	ff0dd5	_itoa	_itoa_c	_ITOA.C	exact	IDE ml,V4.23 ml	Itoa_Safe
+maincpu v9	ff0e5f	_strchr	_strchr_c	_STRCHR.C	exact	IDE ml,V4.23 ml	Strchr
+maincpu v9	ff0f3f	_strcpy	_strcpy_c	_STRCPY.C	exact	IDE ml,V4.23 ml	Strcpy
+maincpu v9	ff0f6b	.sbrk	__sbrk_c	__SBRK.C	exact	IDE ml,V4.23 ml	Heap_Alloc
+maincpu v9	ff0f92	_strlen	_strlen_c	_STRLEN.C	exact	IDE ml,V4.23 ml	Strlen
+maincpu v9	ff0fb0	_ltoa	_ltoa_c	_LTOA.C	exact	IDE ml,V4.23 ml	Strlen_LoadParam
+maincpu v9	ff0fec	_memset	_memset_c	_MEMSET.C	exact	IDE ml,V4.23 ml,v1.10 ml	Memset
+maincpu v9	ff103a	__doprnt	__doform_c	__DOFORM.C	known	by label	Sprintf_Core
+maincpu v9	ff27e9	_ultoa	_ultoa_c	_ULTOA.C	exact	IDE ml	Sprintf_ItoaBaseN
+maincpu v9	ff2883	_memccpy	_memccpy_c	_MEMCCPY.C	exact	V4.23 ml	Sprintf_StringNSearch
+maincpu v9	ff28c3	_memchr	_memchr_c	_MEMCHR.C	exact	IDE ml,V4.23 ml,v1.10 ml	Sprintf_MemChr
+maincpu v9	ff28db	_strnset	_strnset_c	_STRNSET.C	exact	IDE ml,V4.23 ml	Sprintf_StrNSet
+maincpu v9	ff28fb	_strrchr	_strrchr_c	_STRRCHR.C	exact	V4.23 ml	Sprintf_StringLength
+maincpu v7	eed778	___ctype	_ctype_c	_CTYPE.C	exact	IDE ml,IDE pic,V4.23 ml,v1.10 ml	CType_ClassTable
+maincpu v7	eed778	__ctype	_ctype_c	_CTYPE.C	exact	IDE ml,IDE pic,V4.23 ml,v1.10 ml	CType_ClassTable
+maincpu v7	eed8a4	__doform_c data	__doform_c	__DOFORM.C	exact	IDE pic	Sprintf_HexDigitsLower
+maincpu v7	ff0140	_strstr	_strstr_c	_STRSTR.C	exact	IDE ml,V4.23 ml	TmFlash_CompareStrings
+maincpu v7	ff01a0	_strcspn	_strcspn_c	_STRCSPN.C	exact	IDE ml,V4.23 ml	StrSearch_Init
+maincpu v7	ff01c3	_atoi	_atoi_c	_ATOI.C	exact	IDE ml,V4.23 ml	ParseInt16
+maincpu v7	ff0219	_atol	_atol_c	_ATOL.C	exact	IDE ml,V4.23 ml	ParseInt32
+maincpu v7	ff02da	_vsprintf	_sprintf_c	_SPRINTF.C	near	V4.23 ml 0.875	Sprintf_Unlocked+3
+maincpu v7	ff04b5	_strncat	_strncat_c	_STRNCAT.C	exact	IDE ml,V4.23 ml	Strncat
+maincpu v7	ff04e4	_strncmp	_strncmp_c	_STRNCMP.C	exact	IDE ml,V4.23 ml	String_Compare
+maincpu v7	ff0516	_strncpy	_strncpy_c	_STRNCPY.C	exact	IDE ml,V4.23 ml	Strncpy
+maincpu v7	ff0541	_memcmp	_memcmp_c	_MEMCMP.C	exact	IDE ml,V4.23 ml,v1.10 ml	Mem_Compare
+maincpu v7	ff05bc	_memcpy	_memcpy_c	_MEMCPY.C	exact	IDE ml,V4.23 ml,v1.10 ml	Mem_Copy
+maincpu v7	ff05e4	_strcat	_strcat_c	_STRCAT.C	exact	IDE ml,V4.23 ml,v1.10 ml	Strcat
+maincpu v7	ff0606	_itoa	_itoa_c	_ITOA.C	exact	IDE ml,V4.23 ml	Itoa_Safe
+maincpu v7	ff0690	_strchr	_strchr_c	_STRCHR.C	exact	IDE ml,V4.23 ml	Strchr
+maincpu v7	ff0770	_strcpy	_strcpy_c	_STRCPY.C	exact	IDE ml,V4.23 ml	Strcpy
+maincpu v7	ff0799	_sbrk	__sbrk_c	__SBRK.C	near	v1.10 ml 0.889	Strcpy_LoadReg+1
+maincpu v7	ff079c	.sbrk	__sbrk_c	__SBRK.C	exact	IDE ml,V4.23 ml	Heap_Alloc
+maincpu v7	ff07c3	_strlen	_strlen_c	_STRLEN.C	exact	IDE ml,V4.23 ml	Strlen
+maincpu v7	ff07e1	_ltoa	_ltoa_c	_LTOA.C	exact	IDE ml,V4.23 ml	Strlen_LoadParam
+maincpu v7	ff081d	_memset	_memset_c	_MEMSET.C	exact	IDE ml,V4.23 ml,v1.10 ml	Memset
+maincpu v7	ff086b	__doprnt	__doform_c	__DOFORM.C	known	by label	Sprintf_Core
+maincpu v7	ff195c	__facnv	__facvt_c	__FACVT.C	near	V4.23 ml 0.953	Sprintf_FormatGGeneral
+maincpu v7	ff201b	_ultoa	_ultoa_c	_ULTOA.C	exact	IDE ml	Sprintf_ItoaBaseN
+maincpu v7	ff20b5	_memccpy	_memccpy_c	_MEMCCPY.C	exact	V4.23 ml	Sprintf_StringNSearch
+maincpu v7	ff20f5	_memchr	_memchr_c	_MEMCHR.C	exact	IDE ml,V4.23 ml,v1.10 ml	Sprintf_MemChr
+maincpu v7	ff210d	_strnset	_strnset_c	_STRNSET.C	exact	IDE ml,V4.23 ml	Sprintf_StrNSet
+maincpu v7	ff212d	_strrchr	_strrchr_c	_STRRCHR.C	exact	V4.23 ml	Sprintf_StringLength
+maincpu v6	eed67c	___ctype	_ctype_c	_CTYPE.C	exact	IDE ml,IDE pic,V4.23 ml,v1.10 ml	CType_ClassTable
+maincpu v6	eed67c	__ctype	_ctype_c	_CTYPE.C	exact	IDE ml,IDE pic,V4.23 ml,v1.10 ml	CType_ClassTable
+maincpu v6	eed7a8	__doform_c data	__doform_c	__DOFORM.C	exact	IDE pic	Sprintf_HexDigitsLower
+maincpu v6	ff0042	_strstr	_strstr_c	_STRSTR.C	exact	IDE ml,V4.23 ml	TmFlash_CompareStrings
+maincpu v6	ff00a2	_strcspn	_strcspn_c	_STRCSPN.C	exact	IDE ml,V4.23 ml	StrSearch_Init
+maincpu v6	ff00c5	_atoi	_atoi_c	_ATOI.C	exact	IDE ml,V4.23 ml	ParseInt16
+maincpu v6	ff011b	_atol	_atol_c	_ATOL.C	exact	IDE ml,V4.23 ml	ParseInt32
+maincpu v6	ff03b7	_strncat	_strncat_c	_STRNCAT.C	exact	IDE ml,V4.23 ml	Strncat
+maincpu v6	ff03e6	_strncmp	_strncmp_c	_STRNCMP.C	exact	IDE ml,V4.23 ml	String_Compare
+maincpu v6	ff0418	_strncpy	_strncpy_c	_STRNCPY.C	exact	IDE ml,V4.23 ml	Strncpy
+maincpu v6	ff0443	_memcmp	_memcmp_c	_MEMCMP.C	exact	IDE ml,V4.23 ml,v1.10 ml	Mem_Compare
+maincpu v6	ff04be	_memcpy	_memcpy_c	_MEMCPY.C	exact	IDE ml,V4.23 ml,v1.10 ml	Mem_Copy
+maincpu v6	ff04e6	_strcat	_strcat_c	_STRCAT.C	exact	IDE ml,V4.23 ml,v1.10 ml	Strcat
+maincpu v6	ff0508	_itoa	_itoa_c	_ITOA.C	exact	IDE ml,V4.23 ml	Itoa_Safe
+maincpu v6	ff0592	_strchr	_strchr_c	_STRCHR.C	exact	IDE ml,V4.23 ml	Strchr
+maincpu v6	ff0672	_strcpy	_strcpy_c	_STRCPY.C	exact	IDE ml,V4.23 ml	Strcpy
+maincpu v6	ff069e	.sbrk	__sbrk_c	__SBRK.C	exact	IDE ml,V4.23 ml	Heap_Alloc
+maincpu v6	ff06c5	_strlen	_strlen_c	_STRLEN.C	exact	IDE ml,V4.23 ml	Strlen
+maincpu v6	ff06e3	_ltoa	_ltoa_c	_LTOA.C	exact	IDE ml,V4.23 ml	Strlen_LoadParam
+maincpu v6	ff071f	_memset	_memset_c	_MEMSET.C	exact	IDE ml,V4.23 ml,v1.10 ml	Memset
+maincpu v6	ff076d	__doprnt	__doform_c	__DOFORM.C	known	by label	Sprintf_Core
+maincpu v6	ff1f1d	_ultoa	_ultoa_c	_ULTOA.C	exact	IDE ml	Sprintf_ItoaBaseN
+maincpu v6	ff1fb7	_memccpy	_memccpy_c	_MEMCCPY.C	exact	V4.23 ml	Sprintf_StringNSearch
+maincpu v6	ff1ff7	_memchr	_memchr_c	_MEMCHR.C	exact	IDE ml,V4.23 ml,v1.10 ml	Sprintf_MemChr
+maincpu v6	ff200f	_strnset	_strnset_c	_STRNSET.C	exact	IDE ml,V4.23 ml	Sprintf_StrNSet
+maincpu v6	ff202f	_strrchr	_strrchr_c	_STRRCHR.C	exact	V4.23 ml	Sprintf_StringLength
+maincpu v5	eed664	___ctype	_ctype_c	_CTYPE.C	exact	IDE ml,IDE pic,V4.23 ml,v1.10 ml	CType_ClassTable
+maincpu v5	eed664	__ctype	_ctype_c	_CTYPE.C	exact	IDE ml,IDE pic,V4.23 ml,v1.10 ml	CType_ClassTable
+maincpu v5	eed790	__doform_c data	__doform_c	__DOFORM.C	exact	IDE pic	Sprintf_HexDigitsLower
+maincpu v5	fefbee	_strstr	_strstr_c	_STRSTR.C	exact	IDE ml,V4.23 ml	TmFlash_CompareStrings
+maincpu v5	fefc4e	_strcspn	_strcspn_c	_STRCSPN.C	exact	IDE ml,V4.23 ml	StrSearch_Init
+maincpu v5	fefc71	_atoi	_atoi_c	_ATOI.C	exact	IDE ml,V4.23 ml	ParseInt16
+maincpu v5	fefcc7	_atol	_atol_c	_ATOL.C	exact	IDE ml,V4.23 ml	ParseInt32
+maincpu v5	feff63	_strncat	_strncat_c	_STRNCAT.C	exact	IDE ml,V4.23 ml	Strncat
+maincpu v5	feff92	_strncmp	_strncmp_c	_STRNCMP.C	exact	IDE ml,V4.23 ml	String_Compare
+maincpu v5	feffc4	_strncpy	_strncpy_c	_STRNCPY.C	exact	IDE ml,V4.23 ml	Strncpy
+maincpu v5	feffef	_memcmp	_memcmp_c	_MEMCMP.C	exact	IDE ml,V4.23 ml,v1.10 ml	Mem_Compare
+maincpu v5	ff006a	_memcpy	_memcpy_c	_MEMCPY.C	exact	IDE ml,V4.23 ml,v1.10 ml	Mem_Copy
+maincpu v5	ff0092	_strcat	_strcat_c	_STRCAT.C	exact	IDE ml,V4.23 ml,v1.10 ml	Strcat
+maincpu v5	ff00b4	_itoa	_itoa_c	_ITOA.C	exact	IDE ml,V4.23 ml	Itoa_Safe
+maincpu v5	ff013e	_strchr	_strchr_c	_STRCHR.C	exact	IDE ml,V4.23 ml	Strchr
+maincpu v5	ff021e	_strcpy	_strcpy_c	_STRCPY.C	exact	IDE ml,V4.23 ml	Strcpy
+maincpu v5	ff024a	.sbrk	__sbrk_c	__SBRK.C	exact	IDE ml,V4.23 ml	Heap_Alloc
+maincpu v5	ff0271	_strlen	_strlen_c	_STRLEN.C	exact	IDE ml,V4.23 ml	Strlen
+maincpu v5	ff028f	_ltoa	_ltoa_c	_LTOA.C	exact	IDE ml,V4.23 ml	Strlen_LoadParam
+maincpu v5	ff02cb	_memset	_memset_c	_MEMSET.C	exact	IDE ml,V4.23 ml,v1.10 ml	Memset
+maincpu v5	ff0319	__doprnt	__doform_c	__DOFORM.C	known	by label	Sprintf_Core
+maincpu v5	ff1ac9	_ultoa	_ultoa_c	_ULTOA.C	exact	IDE ml	Sprintf_ItoaBaseN
+maincpu v5	ff1b63	_memccpy	_memccpy_c	_MEMCCPY.C	exact	V4.23 ml	Sprintf_StringNSearch
+maincpu v5	ff1ba3	_memchr	_memchr_c	_MEMCHR.C	exact	IDE ml,V4.23 ml,v1.10 ml	Sprintf_MemChr
+maincpu v5	ff1bbb	_strnset	_strnset_c	_STRNSET.C	exact	IDE ml,V4.23 ml	Sprintf_StrNSet
+maincpu v5	ff1bdb	_strrchr	_strrchr_c	_STRRCHR.C	exact	V4.23 ml	Sprintf_StringLength
+subcpu v142	00f34e	__trig_c data	__trig_c	__TRIG.C	exact	IDE ml,IDE pic,V4.23 ml	FPConst_InvFact3
+subcpu v142	00f3ba	_g_dbltbl	__float_c	__FLOAT.C	exact	IDE ml,IDE pic,V4.23 ml	FPConst_Pi
+subcpu v142	00f402	_g_ldbltbl	__float_c	__FLOAT.C	exact	IDE ml,IDE pic,V4.23 ml,v1.10 ml	FPConst_NegZero
+subcpu v142	00f420	_g_mathtbl	__math_c	__MATH.C	call	called from _pow	FPConst_MaxNorm
+subcpu v142	00f428	__FloatErrorHandle	trap_c	TRAP.C	call	called from ._fset_dac	FPConst_Zero
+subcpu v142	01f646	_pow_c data	_pow_c	_POW.C	exact	V4.23 ml	FPConst_Int32_Min_As_Double
+subcpu v142	01f6b6	_exp_c data	_exp_c	_EXP.C	exact	V4.23 ml	FPConst_exp_One
+subcpu v142	03d34d	_cos	_cos_c	_COS.C	exact	V4.23 ml	FP_cos
+subcpu v142	03d42e	_fabs	_fabs_c	_FABS.C	exact	IDE ml,V4.23 ml	FP_fabs
+subcpu v142	03d4c9	_tan	_tan_c	_TAN.C	exact	V4.23 ml	FP_tan
+subcpu v142	03d533	_pow	_pow_c	_POW.C	exact	V4.23 ml	FP_pow
+subcpu v142	03d84f	_sin	_sin_c	_SIN.C	exact	V4.23 ml	FP_sin
+subcpu v142	03d98a	__trig	__trig_c	__TRIG.C	exact	V4.23 ml	FP_SinCos_Kernel
+subcpu v142	03e1a5	_modf	_modf_c	_MODF.C	exact	V4.23 ml	FP_modf
+subcpu v142	03e1f1	_frexp	_frexp_c	_FREXP.C	exact	IDE ml,V4.23 ml,v1.10 ml	FP_frexp
+subcpu v142	03e64b	_exp	_exp_c	_EXP.C	exact	V4.23 ml	FP_exp
+subcpu v142	03e731	_log	_log_c	_LOG.C	exact	V4.23 ml	FP_log
+subcpu v142	03e894	__fint	__fint_c	__FINT.C	exact	IDE ml,V4.23 ml	FP_trunc
+subcpu v142	03ea9c	_ldexp	_ldexp_c	_LDEXP.C	exact	IDE ml	FP_ldexp
+subcpu v141	00f34e	__trig_c data	__trig_c	__TRIG.C	exact	IDE ml,IDE pic,V4.23 ml	FPConst_InvFact3
+subcpu v141	00f3ba	_g_dbltbl	__float_c	__FLOAT.C	exact	IDE ml,IDE pic,V4.23 ml	FPConst_Pi
+subcpu v141	00f402	_g_ldbltbl	__float_c	__FLOAT.C	exact	IDE ml,IDE pic,V4.23 ml,v1.10 ml	FPConst_NegZero
+subcpu v141	00f420	_g_mathtbl	__math_c	__MATH.C	call	called from _pow	FPConst_MaxNorm
+subcpu v141	00f428	__FloatErrorHandle	trap_c	TRAP.C	call	called from ._fset_dac	FPConst_Zero
+subcpu v141	01f646	_pow_c data	_pow_c	_POW.C	exact	V4.23 ml	FPConst_Int32_Min_As_Double
+subcpu v141	01f6b6	_exp_c data	_exp_c	_EXP.C	exact	V4.23 ml	FPConst_exp_One
+subcpu v141	03d335	_cos	_cos_c	_COS.C	exact	V4.23 ml	FP_cos
+subcpu v141	03d416	_fabs	_fabs_c	_FABS.C	exact	IDE ml,V4.23 ml	FP_fabs
+subcpu v141	03d4b1	_tan	_tan_c	_TAN.C	exact	V4.23 ml	FP_tan
+subcpu v141	03d51b	_pow	_pow_c	_POW.C	exact	V4.23 ml	FP_pow
+subcpu v141	03d837	_sin	_sin_c	_SIN.C	exact	V4.23 ml	FP_sin
+subcpu v141	03d972	__trig	__trig_c	__TRIG.C	exact	V4.23 ml	FP_SinCos_Kernel
+subcpu v141	03e18d	_modf	_modf_c	_MODF.C	exact	V4.23 ml	FP_modf
+subcpu v141	03e1d9	_frexp	_frexp_c	_FREXP.C	exact	IDE ml,V4.23 ml,v1.10 ml	FP_frexp
+subcpu v141	03e633	_exp	_exp_c	_EXP.C	exact	V4.23 ml	FP_exp
+subcpu v141	03e719	_log	_log_c	_LOG.C	exact	V4.23 ml	FP_log
+subcpu v141	03e87c	__fint	__fint_c	__FINT.C	exact	IDE ml,V4.23 ml	FP_trunc
+subcpu v141	03ea84	_ldexp	_ldexp_c	_LDEXP.C	exact	IDE ml	FP_ldexp
+subcpu v140	00f34e	__trig_c data	__trig_c	__TRIG.C	exact	IDE ml,IDE pic,V4.23 ml	FPConst_InvFact3
+subcpu v140	00f3ba	_g_dbltbl	__float_c	__FLOAT.C	exact	IDE ml,IDE pic,V4.23 ml	FPConst_Pi
+subcpu v140	00f402	_g_ldbltbl	__float_c	__FLOAT.C	exact	IDE ml,IDE pic,V4.23 ml,v1.10 ml	FPConst_NegZero
+subcpu v140	00f420	_g_mathtbl	__math_c	__MATH.C	call	called from _pow	FPConst_MaxNorm
+subcpu v140	00f428	__FloatErrorHandle	trap_c	TRAP.C	call	called from ._fset_dac	FPConst_Zero
+subcpu v140	01f646	_pow_c data	_pow_c	_POW.C	exact	V4.23 ml	FPConst_Int32_Min_As_Double
+subcpu v140	01f6b6	_exp_c data	_exp_c	_EXP.C	exact	V4.23 ml	FPConst_exp_One
+subcpu v140	03d301	_cos	_cos_c	_COS.C	exact	V4.23 ml	FP_cos
+subcpu v140	03d3e2	_fabs	_fabs_c	_FABS.C	exact	IDE ml,V4.23 ml	FP_fabs
+subcpu v140	03d47d	_tan	_tan_c	_TAN.C	exact	V4.23 ml	FP_tan
+subcpu v140	03d4e7	_pow	_pow_c	_POW.C	exact	V4.23 ml	FP_pow
+subcpu v140	03d803	_sin	_sin_c	_SIN.C	exact	V4.23 ml	FP_sin
+subcpu v140	03d93e	__trig	__trig_c	__TRIG.C	exact	V4.23 ml	FP_SinCos_Kernel
+subcpu v140	03e159	_modf	_modf_c	_MODF.C	exact	V4.23 ml	FP_modf
+subcpu v140	03e1a5	_frexp	_frexp_c	_FREXP.C	exact	IDE ml,V4.23 ml,v1.10 ml	FP_frexp
+subcpu v140	03e5ff	_exp	_exp_c	_EXP.C	exact	V4.23 ml	FP_exp
+subcpu v140	03e6e5	_log	_log_c	_LOG.C	exact	V4.23 ml	FP_log
+subcpu v140	03e848	__fint	__fint_c	__FINT.C	exact	IDE ml,V4.23 ml	FP_trunc
+subcpu v140	03ea50	_ldexp	_ldexp_c	_LDEXP.C	exact	IDE ml	FP_ldexp
+table data	9ffb2c	_sbrk	__sbrk_c	__SBRK.C	near	v1.10 ml 0.889	Boot_ChecksumWords__loop+7
+table data	9ffb2f	.sbrk	__sbrk_c	__SBRK.C	exact	IDE ml,V4.23 ml	Boot_sbrk
+table data	9ffb56	_malloc	_malloc_c	_MALLOC.C	exact	IDE ml,V4.23 ml	Boot_malloc
+table data	9ffbdc	_strncmp	_strncmp_c	_STRNCMP.C	exact	IDE ml,V4.23 ml	Boot_memcmp
+hdae v2.06i	23a1a8	__FloatErrorHandle	trap_c	TRAP.C	call	called from ._fset_fac	?
+hdae v2.06i	299ae7	__doprnt	__doform_c	__DOFORM.C	call	called from _sprintf	HDAE5000_DoPrintf
+hdae v2.06i	29abd8	_sprintf	_sprintf_c	_SPRINTF.C	exact	IDE ml,V4.23 ml,v1.10 ml	HDAE5000_SPrintf
+hdae v2.06i	29ac00	_vsprintf	_sprintf_c	_SPRINTF.C	exact	IDE ml,V4.23 ml,v1.10 ml	HDAE5000_VSPrintf
+hdae v2.06i	29ac3b	_itoa	_itoa_c	_ITOA.C	exact	IDE ml,V4.23 ml	HDAE5000_IToA
+hdae v2.06i	29acc5	_ldiv	_ldiv_c	_LDIV.C	exact	IDE ml,v1.10 ml	HDAE5000_LDiv
+hdae v2.06i	29ad08	_ltoa	_ltoa_c	_LTOA.C	exact	IDE ml,V4.23 ml	HDAE5000_LToA
+hdae v2.06i	29ad44	_ultoa	_ultoa_c	_ULTOA.C	exact	IDE ml	HDAE5000_ULToA
+hdae v2.06i	29adcc	_memccpy	_memccpy_c	_MEMCCPY.C	exact	V4.23 ml	HDAE5000_MemCCpy
+hdae v2.06i	29ae0c	_memchr	_memchr_c	_MEMCHR.C	exact	IDE ml,V4.23 ml,v1.10 ml	HDAE5000_MemChr
+hdae v2.06i	29ae24	_memcmp	_memcmp_c	_MEMCMP.C	exact	IDE ml,V4.23 ml,v1.10 ml	HDAE5000_MemCmp
+hdae v2.06i	29ae9f	_memcpy	_memcpy_c	_MEMCPY.C	exact	IDE ml,V4.23 ml,v1.10 ml	HDAE5000_MemCopy
+hdae v2.06i	29aec7	_memset	_memset_c	_MEMSET.C	exact	IDE ml,V4.23 ml,v1.10 ml	HDAE5000_MemFill
+hdae v2.06i	29af0b	_strcat	_strcat_c	_STRCAT.C	exact	IDE ml,V4.23 ml,v1.10 ml	HDAE5000_StrCat
+hdae v2.06i	29af45	_strcpy	_strcpy_c	_STRCPY.C	exact	IDE ml,V4.23 ml	HDAE5000_StrCpy
+hdae v2.06i	29af71	_strlen	_strlen_c	_STRLEN.C	exact	IDE ml,V4.23 ml	HDAE5000_StrLen
+hdae v2.06i	29af8f	_strncat	_strncat_c	_STRNCAT.C	exact	IDE ml,V4.23 ml	HDAE5000_StrNCat
+hdae v2.06i	29afbe	_strncmp	_strncmp_c	_STRNCMP.C	exact	IDE ml,V4.23 ml	HDAE5000_StrNCmp
+hdae v2.06i	29aff0	_strncpy	_strncpy_c	_STRNCPY.C	exact	IDE ml,V4.23 ml	HDAE5000_StrNCpy
+hdae v2.06i	29b01b	_strrev	_strrev_c	_STRREV.C	exact	V4.23 ml	HDAE5000_StrRev
+hdae v2.06i	29b04e	_strupr	_strupr_c	_STRUPR.C	exact	IDE ml,V4.23 ml	HDAE5000_StrUpr
+hdae v2.06i	29b07a	__facnv	__facvt_c	__FACVT.C	near	V4.23 ml 0.953	HDAE5000_FltDec_Convert
+hdae v2.06i	2f9362	___ctype	_ctype_c	_CTYPE.C	exact	IDE ml,IDE pic,V4.23 ml,v1.10 ml	HDAE5000_CType_Table
+hdae v2.06i	2f9362	__ctype	_ctype_c	_CTYPE.C	exact	IDE ml,IDE pic,V4.23 ml,v1.10 ml	HDAE5000_CType_Table
+hdae v2.06i	2f948e	__doform_c data	__doform_c	__DOFORM.C	exact	IDE pic	HDAE5000_HexDigits_Lower
+hdae v2.01i	23a112	__FloatErrorHandle	trap_c	TRAP.C	call	called from ._fset_fac	?
+hdae v2.01i	2993af	__doprnt	__doform_c	__DOFORM.C	call	called from _sprintf	HDAE5000_DoPrintf
+hdae v2.01i	29a4a0	_sprintf	_sprintf_c	_SPRINTF.C	exact	IDE ml,V4.23 ml,v1.10 ml	HDAE5000_SPrintf
+hdae v2.01i	29a4c8	_vsprintf	_sprintf_c	_SPRINTF.C	exact	IDE ml,V4.23 ml,v1.10 ml	HDAE5000_VSPrintf
+hdae v2.01i	29a503	_itoa	_itoa_c	_ITOA.C	exact	IDE ml,V4.23 ml	HDAE5000_IToA
+hdae v2.01i	29a58d	_ldiv	_ldiv_c	_LDIV.C	exact	IDE ml,v1.10 ml	HDAE5000_LDiv
+hdae v2.01i	29a5d0	_ltoa	_ltoa_c	_LTOA.C	exact	IDE ml,V4.23 ml	HDAE5000_LToA
+hdae v2.01i	29a60c	_ultoa	_ultoa_c	_ULTOA.C	exact	IDE ml	HDAE5000_ULToA
+hdae v2.01i	29a694	_memccpy	_memccpy_c	_MEMCCPY.C	exact	V4.23 ml	HDAE5000_MemCCpy
+hdae v2.01i	29a6d4	_memchr	_memchr_c	_MEMCHR.C	exact	IDE ml,V4.23 ml,v1.10 ml	HDAE5000_MemChr
+hdae v2.01i	29a6ec	_memcmp	_memcmp_c	_MEMCMP.C	exact	IDE ml,V4.23 ml,v1.10 ml	HDAE5000_MemCmp
+hdae v2.01i	29a767	_memcpy	_memcpy_c	_MEMCPY.C	exact	IDE ml,V4.23 ml,v1.10 ml	HDAE5000_MemCopy
+hdae v2.01i	29a78f	_memset	_memset_c	_MEMSET.C	exact	IDE ml,V4.23 ml,v1.10 ml	HDAE5000_MemFill
+hdae v2.01i	29a7d3	_strcat	_strcat_c	_STRCAT.C	exact	IDE ml,V4.23 ml,v1.10 ml	HDAE5000_StrCat
+hdae v2.01i	29a80d	_strcpy	_strcpy_c	_STRCPY.C	exact	IDE ml,V4.23 ml	HDAE5000_StrCpy
+hdae v2.01i	29a839	_strlen	_strlen_c	_STRLEN.C	exact	IDE ml,V4.23 ml	HDAE5000_StrLen
+hdae v2.01i	29a857	_strncat	_strncat_c	_STRNCAT.C	exact	IDE ml,V4.23 ml	HDAE5000_StrNCat
+hdae v2.01i	29a886	_strncmp	_strncmp_c	_STRNCMP.C	exact	IDE ml,V4.23 ml	HDAE5000_StrNCmp
+hdae v2.01i	29a8b8	_strncpy	_strncpy_c	_STRNCPY.C	exact	IDE ml,V4.23 ml	HDAE5000_StrNCpy
+hdae v2.01i	29a8e3	_strrev	_strrev_c	_STRREV.C	exact	V4.23 ml	HDAE5000_StrRev
+hdae v2.01i	29a916	_strupr	_strupr_c	_STRUPR.C	exact	IDE ml,V4.23 ml	HDAE5000_StrUpr
+hdae v2.01i	2f884e	___ctype	_ctype_c	_CTYPE.C	exact	IDE ml,IDE pic,V4.23 ml,v1.10 ml	HDAE5000_CType_Table
+hdae v2.01i	2f884e	__ctype	_ctype_c	_CTYPE.C	exact	IDE ml,IDE pic,V4.23 ml,v1.10 ml	HDAE5000_CType_Table
+hdae v2.01i	2f897a	__doform_c data	__doform_c	__DOFORM.C	exact	IDE pic	HDAE5000_HexDigits_Lower
+hdae v1.15i	23d2e4	__FloatErrorHandle	trap_c	TRAP.C	call	called from ._fset_fac	?
+hdae v1.15i	295abe	__doprnt	__doform_c	__DOFORM.C	call	called from _sprintf	HDAE5000_DoPrintf
+hdae v1.15i	296baf	_sprintf	_sprintf_c	_SPRINTF.C	exact	IDE ml,V4.23 ml,v1.10 ml	HDAE5000_SPrintf
+hdae v1.15i	296bd7	_vsprintf	_sprintf_c	_SPRINTF.C	exact	IDE ml,V4.23 ml,v1.10 ml	HDAE5000_VSPrintf
+hdae v1.15i	296c12	_itoa	_itoa_c	_ITOA.C	exact	IDE ml,V4.23 ml	HDAE5000_IToA
+hdae v1.15i	296c9c	_ldiv	_ldiv_c	_LDIV.C	exact	IDE ml,v1.10 ml	HDAE5000_LDiv
+hdae v1.15i	296cdf	_ltoa	_ltoa_c	_LTOA.C	exact	IDE ml,V4.23 ml	HDAE5000_LToA
+hdae v1.15i	296d1b	_ultoa	_ultoa_c	_ULTOA.C	exact	IDE ml	HDAE5000_ULToA
+hdae v1.15i	296da3	_memccpy	_memccpy_c	_MEMCCPY.C	exact	V4.23 ml	HDAE5000_MemCCpy
+hdae v1.15i	296de3	_memchr	_memchr_c	_MEMCHR.C	exact	IDE ml,V4.23 ml,v1.10 ml	HDAE5000_MemChr
+hdae v1.15i	296dfb	_memcmp	_memcmp_c	_MEMCMP.C	exact	IDE ml,V4.23 ml,v1.10 ml	HDAE5000_MemCmp
+hdae v1.15i	296e76	_memcpy	_memcpy_c	_MEMCPY.C	exact	IDE ml,V4.23 ml,v1.10 ml	HDAE5000_MemCopy
+hdae v1.15i	296e9e	_memset	_memset_c	_MEMSET.C	exact	IDE ml,V4.23 ml,v1.10 ml	HDAE5000_MemFill
+hdae v1.15i	296ee2	_strcat	_strcat_c	_STRCAT.C	exact	IDE ml,V4.23 ml,v1.10 ml	HDAE5000_StrCat
+hdae v1.15i	296f1c	_strcpy	_strcpy_c	_STRCPY.C	exact	IDE ml,V4.23 ml	HDAE5000_StrCpy
+hdae v1.15i	296f48	_strlen	_strlen_c	_STRLEN.C	exact	IDE ml,V4.23 ml	HDAE5000_StrLen
+hdae v1.15i	296f66	_strncat	_strncat_c	_STRNCAT.C	exact	IDE ml,V4.23 ml	HDAE5000_StrNCat
+hdae v1.15i	296f95	_strncmp	_strncmp_c	_STRNCMP.C	exact	IDE ml,V4.23 ml	HDAE5000_StrNCmp
+hdae v1.15i	296fc7	_strncpy	_strncpy_c	_STRNCPY.C	exact	IDE ml,V4.23 ml	HDAE5000_StrNCpy
+hdae v1.15i	2e0e66	___ctype	_ctype_c	_CTYPE.C	exact	IDE ml,IDE pic,V4.23 ml,v1.10 ml	HDAE5000_CType_Table
+hdae v1.15i	2e0e66	__ctype	_ctype_c	_CTYPE.C	exact	IDE ml,IDE pic,V4.23 ml,v1.10 ml	HDAE5000_CType_Table
+hdae v1.15i	2e0f92	__doform_c data	__doform_c	__DOFORM.C	exact	IDE pic	HDAE5000_HexDigits_Lower
+hdae v1.10i	23d2e4	__FloatErrorHandle	trap_c	TRAP.C	call	called from ._fset_fac	?
+hdae v1.10i	2959c2	__doprnt	__doform_c	__DOFORM.C	call	called from _sprintf	HDAE5000_DoPrintf
+hdae v1.10i	296ab3	_sprintf	_sprintf_c	_SPRINTF.C	exact	IDE ml,V4.23 ml,v1.10 ml	HDAE5000_SPrintf
+hdae v1.10i	296adb	_vsprintf	_sprintf_c	_SPRINTF.C	exact	IDE ml,V4.23 ml,v1.10 ml	HDAE5000_VSPrintf
+hdae v1.10i	296b16	_itoa	_itoa_c	_ITOA.C	exact	IDE ml,V4.23 ml	HDAE5000_IToA
+hdae v1.10i	296ba0	_ldiv	_ldiv_c	_LDIV.C	exact	IDE ml,v1.10 ml	HDAE5000_LDiv
+hdae v1.10i	296be3	_ltoa	_ltoa_c	_LTOA.C	exact	IDE ml,V4.23 ml	HDAE5000_LToA
+hdae v1.10i	296c1f	_ultoa	_ultoa_c	_ULTOA.C	exact	IDE ml	HDAE5000_ULToA
+hdae v1.10i	296ca7	_memccpy	_memccpy_c	_MEMCCPY.C	exact	V4.23 ml	HDAE5000_MemCCpy
+hdae v1.10i	296ce7	_memchr	_memchr_c	_MEMCHR.C	exact	IDE ml,V4.23 ml,v1.10 ml	HDAE5000_MemChr
+hdae v1.10i	296cff	_memcmp	_memcmp_c	_MEMCMP.C	exact	IDE ml,V4.23 ml,v1.10 ml	HDAE5000_MemCmp
+hdae v1.10i	296d7a	_memcpy	_memcpy_c	_MEMCPY.C	exact	IDE ml,V4.23 ml,v1.10 ml	HDAE5000_MemCopy
+hdae v1.10i	296da2	_memset	_memset_c	_MEMSET.C	exact	IDE ml,V4.23 ml,v1.10 ml	HDAE5000_MemFill
+hdae v1.10i	296de6	_strcat	_strcat_c	_STRCAT.C	exact	IDE ml,V4.23 ml,v1.10 ml	HDAE5000_StrCat
+hdae v1.10i	296e20	_strcpy	_strcpy_c	_STRCPY.C	exact	IDE ml,V4.23 ml	HDAE5000_StrCpy
+hdae v1.10i	296e4c	_strlen	_strlen_c	_STRLEN.C	exact	IDE ml,V4.23 ml	HDAE5000_StrLen
+hdae v1.10i	296e6a	_strncat	_strncat_c	_STRNCAT.C	exact	IDE ml,V4.23 ml	HDAE5000_StrNCat
+hdae v1.10i	296e99	_strncmp	_strncmp_c	_STRNCMP.C	exact	IDE ml,V4.23 ml	HDAE5000_StrNCmp
+hdae v1.10i	296ecb	_strncpy	_strncpy_c	_STRNCPY.C	exact	IDE ml,V4.23 ml	HDAE5000_StrNCpy
+hdae v1.10i	296ef6	__facnv	__facvt_c	__FACVT.C	near	V4.23 ml 0.953	HDAE5000_FltDec_Convert
+hdae v1.10i	2e0cd6	___ctype	_ctype_c	_CTYPE.C	exact	IDE ml,IDE pic,V4.23 ml,v1.10 ml	HDAE5000_CType_Table
+hdae v1.10i	2e0cd6	__ctype	_ctype_c	_CTYPE.C	exact	IDE ml,IDE pic,V4.23 ml,v1.10 ml	HDAE5000_CType_Table
+hdae v1.10i	2e0e02	__doform_c data	__doform_c	__DOFORM.C	exact	IDE pic	HDAE5000_HexDigits_Lower
