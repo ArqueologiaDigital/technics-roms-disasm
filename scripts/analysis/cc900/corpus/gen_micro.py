@@ -11,7 +11,8 @@ how cc900 compiles exactly that (notes/cc900-compat-plan-2026-11-08/PLAN.md, sec
 - assign: compound assignments to globals, locals, through pointers and array elements;
 - mem: pointer, array and struct member access, with constant and variable indices;
 - ctrl: if/else, loops of each form, break/continue, early return, the ternary operator, && and ||;
-- call: calls with 0-4 arguments of mixed types, nested calls, results used in expressions.
+- call: calls with 0-4 arguments of mixed types, nested calls, results used in expressions;
+- ra_leaf, ra_call: register allocation, varying the number, types and uses of variables, loops and calls.
 The output is deterministic, ours, and C89.
 """
 import os, sys
@@ -120,6 +121,52 @@ def call_file():
             'void k_seq(int a) { v1(a); v1(a + 1); v1(a + 2); }', 'int k_keep(int a) { int x = r1(a); v0(); return x + a; }',
             'void k_cond(int a) { if (r1(a)) v0(); }', 'int k_tail(int a) { return r1(a); }']
 
+def ra_files():
+    """register allocation: which variable gets which register, by count, type, use, calls and loops"""
+    leaf = ['/* Register allocation in leaf functions: locals and parameters in loops, returned or not. */',
+            'extern int ga[10]; extern char gca[10]; extern long gla[10];']
+    for n in range(1, 6):
+        vs = ['v%d' % i for i in range(n)]
+        decl = 'int %s;' % ', '.join(vs)
+        init = ' '.join('%s = %d;' % (v, i) for i, v in enumerate(vs))
+        body = ' '.join('%s += ga[i];' % v for v in vs)
+        leaf.append('int ra_leaf%d(int k) { int i; %s %s for (i = 0; i < k; i++) { %s } return v0; }' % (n, decl, init, body))
+        leaf.append('int ra_leafsum%d(int k) { int i; %s %s for (i = 0; i < k; i++) { %s } return %s; }'
+                    % (n, decl, init, body, ' + '.join(vs)))
+    leaf += ['long ra_long(int k) { int i; long s = 0; for (i = 0; i < k; i++) s += gla[i]; return s; }',
+             'char ra_char(int k) { int i; char c = 0; for (i = 0; i < k; i++) c ^= gca[i]; return c; }',
+             'int ra_ptr(int *p, int k) { int s = 0; while (k--) s += *p++; return s; }',
+             'int ra_ptr2(int *p, int *q, int k) { int s = 0; while (k--) s += *p++ * *q++; return s; }',
+             'void ra_ptrcpy(char *d, char *s) { while (*s) *d++ = *s++; *d = 0; }',
+             'int ra_param3(int a, int b, int c) { int i, s = 0; for (i = 0; i < a; i++) s += b * c; return s; }',
+             'int ra_noloop(int a, int b) { int x = a + b; int y = a - b; return x * y; }',
+             'int ra_noloop3(int a, int b) { int x = a + b; int y = a - b; int z = x * y; return z + x + y; }',
+             'int ra_twice(int a) { int x = a * 3; ga[0] = x; ga[1] = x; return x; }',
+             'void ra_dowhile(int n) { do { ga[n] = 0; } while (--n); }',
+             'void ra_while(int n) { while (n--) ga[n] = 0; }',
+             'void ra_for_down(int n) { int i; for (i = n; i > 0; i--) ga[i] = 0; }',
+             'int ra_nested(int n) { int i, j, s = 0; for (i = 0; i < n; i++) for (j = 0; j < n; j++) s += i * j; return s; }']
+    call = ['/* Register allocation across calls: what goes to IZ / QIZ, and what stays in memory. */',
+            'extern void f0(void); extern void f1(int); extern int g1(int); extern long gl1(long); extern int ga[10];']
+    for n in range(1, 5):
+        vs = ['v%d' % i for i in range(n)]
+        call.append('int rc_keep%d(int a) { int %s; %s f0(); return %s; }' % (n, ', '.join(vs),
+                    ' '.join('%s = a + %d;' % (v, i) for i, v in enumerate(vs)), ' + '.join(vs)))
+        call.append('void rc_loop%d(int k) { int i, %s; %s for (i = 0; i < k; i++) { f1(%s); } }' % (n, ', '.join(vs),
+                    ' '.join('%s = %d;' % (v, i) for i, v in enumerate(vs)), ' + '.join(vs)))
+    call += ['int rc_param(int a, int b) { f0(); return a + b; }',
+             'int rc_param_twice(int a) { f1(a); f1(a); return a; }',
+             'int rc_param_thrice(int a) { f1(a); f1(a); f1(a); return a; }',
+             'long rc_long(long a) { long x = gl1(a); f0(); return x + a; }',
+             'int rc_ptr(int *p) { f0(); return *p; }',
+             'int rc_ptr_loop(int *p, int n) { int s = 0; while (n--) s += g1(*p++); return s; }',
+             'int rc_two_loops(int n) { int i, s = 0; for (i = 0; i < n; i++) s += g1(i); for (i = 0; i < n; i++) s -= g1(i); return s; }',
+             'void rc_dowhile(int n) { do { f0(); } while (--n); }',
+             'void rc_while(int n) { while (n--) f0(); }',
+             'void rc_while2(int n) { while (n-- > 0) f0(); }',
+             'void rc_for(int n) { int i; for (i = 0; i < n; i++) f0(); }']
+    return {'ra_leaf.c': leaf, 'ra_call.c': call}
+
 def main():
     out = sys.argv[1]
     d = os.path.join(out, 'micro'); os.makedirs(d, exist_ok=True)
@@ -130,6 +177,7 @@ def main():
         files['cmp_%s.c' % tk] = cmp_file(tk, t)
     files['assign.c'] = assign_file(); files['mem.c'] = mem_file()
     files['ctrl.c'] = ctrl_file(); files['call.c'] = call_file()
+    files.update(ra_files())
     for n, lines in sorted(files.items()):
         open(os.path.join(d, n), 'w').write('\n'.join(lines) + '\n')
     open(os.path.join(out, 'micro-sources.txt'), 'w').write(''.join('micro/%s\n' % n for n in sorted(files)))
