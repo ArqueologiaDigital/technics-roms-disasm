@@ -39,3 +39,20 @@ Source: oracle run `2026-11-08-8-micro-ra` (cc900-oracle commit `403ee45`), file
 - `while (c) body`: the same without init/inc.  `do body while (c)`: body label; body; c jumping back.
 - `x--` as a condition: `ld WA,x / dec 0x1,x / cp WA,0x0` (rc_while, ra_while).
 - a down-counting `for (i = n; i > 0; i--)` tests with `sub DE,0x1 / j gt` (ra_for_down, c_fordown).
+
+## Loops at -O3 -XS (cdecl)
+
+Source: oracle run `2026-11-08-9-micro-optloops` (cc900-oracle commit `5bfb1b2`), `corpus/micro/opt_loops.c`.
+
+| rule                                                                                                                                                                                                                                        | status | evidence                                    |
+|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------|---------------------------------------------|
+| `for (i = 0; i < k; i++)`: accumulators and i initialised, the bound loaded into a register, then `cp bound,0x0` / `ret le` (`j le,exit` when code follows)                                                                                 | fits   | ol_i_acc1, ol_l_acc1, ol_i_clear, ol_i_glob |
+| a global array's base is hoisted (`lda XBC,_ga`) and a byte offset becomes a second induction variable (`ld WA,0x0` before, `inc 0x2,WA` / `inc 0x4` in the latch); the access is `(XBC+WA)`                                                | fits   | ol_i_acc1, ol_l_acc1, ol_i_clear            |
+| char arrays use the counter itself as the offset (`(XWA+DE)`, no second variable)                                                                                                                                                           | fits   | ol_c_acc1, ol_c_clear, ol_c_glob            |
+| two accesses to the same element share one address (`lda XWA,XDE+BC`, then `(XWA)` twice)                                                                                                                                                   | fits   | ol_i_acc2, ol_l_acc2                        |
+| latch: `inc 0x1,i`, `inc esz,offset`, `cp i,bound`, `j lt,body`                                                                                                                                                                             | fits   | every counted loop                          |
+| a constant bound with an index used nowhere else: the counter disappears; the loop walks a pointer to an end pointer (`ld XWA,XBC / lda XBC,XBC+0x14 / add HL,(XWA+:2) / cp XWA,XBC / j ult`)                                               | fits   | ol_i_const, ol_l_const, ol_c_const          |
+| a loop-invariant expression is computed once before the loop (`ld WA,(a) / muls XWA,(b)`)                                                                                                                                                   | fits   | ol_inv                                      |
+| a pointer parameter indexed by i is not strength-reduced: `ld WA,i / exts XWA / add XWA,XWA / add XWA,p` each iteration                                                                                                                     | fits   | ol_ptr, ol_gptr                             |
+| `while (k--)` and `while (*s++)` are rotated: `j test` into the bottom test                                                                                                                                                                 | fits   | ol_ptr_walk, ol_strlen                      |
+| register choice: s in HL when returned directly; counter, bound, base, offset over IX/IY/IZ and WA/BC/DE, differing between examples (acc1: i IX, k DE, base XBC, offset WA; glob: k from a global in WA, base XDE, offset BC; clear: i HL) | open   | ol_*                                        |

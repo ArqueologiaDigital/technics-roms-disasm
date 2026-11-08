@@ -14,6 +14,7 @@ micro/cmp_ui.c
 micro/cmp_ul.c
 micro/ctrl.c
 micro/mem.c
+micro/opt_loops.c
 micro/ra_call.c
 micro/ra_leaf.c
 micro/unop_c.c

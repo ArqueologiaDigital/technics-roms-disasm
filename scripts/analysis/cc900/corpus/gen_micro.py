@@ -12,7 +12,8 @@ how cc900 compiles exactly that (notes/cc900-compat-plan-2026-11-08/PLAN.md, sec
 - mem: pointer, array and struct member access, with constant and variable indices;
 - ctrl: if/else, loops of each form, break/continue, early return, the ternary operator, && and ||;
 - call: calls with 0-4 arguments of mixed types, nested calls, results used in expressions;
-- ra_leaf, ra_call: register allocation, varying the number, types and uses of variables, loops and calls.
+- ra_leaf, ra_call: register allocation, varying the number, types and uses of variables, loops and calls;
+- opt_loops: the -O3 loop optimizations (hoisting, induction variables, address CSE, bounds, rotation).
 The output is deterministic, ours, and C89.
 """
 import os, sys
@@ -167,6 +168,34 @@ def ra_files():
              'void rc_for(int n) { int i; for (i = 0; i < n; i++) f0(); }']
     return {'ra_leaf.c': leaf, 'ra_call.c': call}
 
+def opt_loop_files():
+    """-O3 loop optimizations: hoisting, induction variables, CSE of addresses, bounds in registers, rotation"""
+    out = ['/* -O3 loops: what is hoisted, which induction variables appear, where the bound lives. */',
+           'extern int ga[10], gb[10]; extern char gca[10]; extern long gla[10]; extern int gn; extern int *gp;']
+    for tk, t, arr in (('i', 'int', 'ga'), ('l', 'long', 'gla'), ('c', 'char', 'gca')):
+        for n in range(1, 4):
+            acc = ['s%d' % k for k in range(n)]
+            out.append('%s ol_%s_acc%d(int k) { int i; %s %s; %s for (i = 0; i < k; i++) { %s } return %s; }' % (
+                t, tk, n, t, ', '.join(acc), ' '.join('%s = 0;' % a for a in acc),
+                ' '.join('%s += %s[i];' % (a, arr) for a in acc), ' + '.join(acc)))
+        out.append('%s ol_%s_const(void) { int i; %s s = 0; for (i = 0; i < 10; i++) s += %s[i]; return s; }' % (t, tk, t, arr))
+        out.append('%s ol_%s_glob(void) { int i; %s s = 0; for (i = 0; i < gn; i++) s += %s[i]; return s; }' % (t, tk, t, arr))
+        out.append('void ol_%s_clear(int k) { int i; for (i = 0; i < k; i++) %s[i] = 0; }' % (tk, arr))
+        out.append('void ol_%s_copy(int k) { int i; for (i = 0; i < k; i++) gb[i] = (int)%s[i]; }' % (tk, arr))
+    out += ['int ol_idx_use(int k) { int i, s = 0; for (i = 0; i < k; i++) s += ga[i] * i; return s; }',
+            'int ol_two_arr(int k) { int i, s = 0; for (i = 0; i < k; i++) s += ga[i] + gb[i]; return s; }',
+            'int ol_ptr(int *p, int k) { int i, s = 0; for (i = 0; i < k; i++) s += p[i]; return s; }',
+            'int ol_ptr_walk(int *p, int k) { int s = 0; while (k--) s += *p++; return s; }',
+            'int ol_gptr(int k) { int i, s = 0; for (i = 0; i < k; i++) s += gp[i]; return s; }',
+            'void ol_down(int k) { int i; for (i = k; i > 0; i--) ga[i] = 0; }',
+            'void ol_while(int k) { int i = 0; while (i < k) { ga[i] = i; i++; } }',
+            'void ol_do(int k) { int i = 0; do { ga[i] = 0; i++; } while (i < k); }',
+            'int ol_nested(int k) { int i, j, s = 0; for (i = 0; i < k; i++) for (j = 0; j < k; j++) s += ga[j]; return s; }',
+            'int ol_inv(int k, int a, int b) { int i, s = 0; for (i = 0; i < k; i++) s += a * b; return s; }',
+            'void ol_strcpy(char *d, char *s) { while ((*d++ = *s++) != 0) ; }',
+            'int ol_strlen(char *s) { int n = 0; while (*s++) n++; return n; }']
+    return {'opt_loops.c': out}
+
 def main():
     out = sys.argv[1]
     d = os.path.join(out, 'micro'); os.makedirs(d, exist_ok=True)
@@ -178,6 +207,7 @@ def main():
     files['assign.c'] = assign_file(); files['mem.c'] = mem_file()
     files['ctrl.c'] = ctrl_file(); files['call.c'] = call_file()
     files.update(ra_files())
+    files.update(opt_loop_files())
     for n, lines in sorted(files.items()):
         open(os.path.join(d, n), 'w').write('\n'.join(lines) + '\n')
     open(os.path.join(out, 'micro-sources.txt'), 'w').write(''.join('micro/%s\n' % n for n in sorted(files)))
