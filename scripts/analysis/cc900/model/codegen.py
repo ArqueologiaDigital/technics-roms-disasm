@@ -82,7 +82,28 @@ def mem_operand(F, e):
             d = v.decl
             if d.kind == 'param': return '(XSP+%s)' % hx(d.off + F.push)
             if d.kind in ('global', 'func') and not d.ty.kind == 'array': return '(_%s)' % d.name
+        g = global_offset(v)
+        if g: return '(_%s + %s)' % g if g[1] != '0x0' else '(_%s)' % g[0]
     return None
+
+def global_offset(v):
+    """(name, offset) when v is a global object at a constant offset: ga[3], gs.i (mem.c: m_ga_k, m_gs_i)"""
+    v = strip(v)
+    if v.k == 'index':
+        b = strip(v.base); i = fold(v.idx)
+        if b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array' and i.k == 'const':
+            return (b.decl.name, hx(i.value * v.ty.size))
+    if v.k == 'member' and not v.arrow:
+        b = strip(v.base)
+        if b.k == 'var' and b.decl.kind == 'global':
+            off = [o for n, t, o in b.decl.ty.rec if n == v.name][0]
+            return (b.decl.name, hx(off))
+    return None
+
+def member_offset(v):
+    base_ty = strip(v.base).ty
+    rec = base_ty.base.rec if v.arrow else base_ty.rec
+    return [o for n, t, o in rec if n == v.name][0]
 
 def reg_or_mem(F, e, size):
     e = strip(e)
@@ -143,6 +164,9 @@ def gen(F, e, fam, size, then_ret=False, store=False):
         F.emit('scc', 'eq,%s' % FAM[fam][2]); return fam
     if e.k == 'incdec':
         return gen_incdec(F, e, fam, size, value=True)
+    if e.k == 'load' and strip(e.e).k in ('index', 'member', 'deref') and not strip(e.e).k == 'deref' or \
+       (e.k == 'load' and strip(e.e).k == 'deref' and strip(strip(e.e).e).k != 'incdec'):
+        return gen_load_mem(F, strip(e.e), fam, size)
     if e.k == 'load' and strip(e.e).k == 'deref' and strip(strip(e.e).e).k == 'incdec' and strip(strip(e.e).e).post:
         inc = strip(strip(e.e).e); g = global_name(inc.e)
         if g is None: raise Unsupported('deref incdec')
@@ -158,7 +182,10 @@ def gen(F, e, fam, size, then_ret=False, store=False):
     raise Unsupported(e.k)
 
 def gen_bin(F, e, fam, size, then_ret, store=False):
-    op = e.op; l, r = narrow(e.l, size), narrow(e.r, size)
+    op = e.op
+    if op in '+-' and (strip(e.l).ty.is_ptr() or strip(e.r).ty.is_ptr()):
+        return gen_ptr_arith(F, e, fam, size)
+    l, r = narrow(e.l, size), narrow(e.r, size)
     signed = e.ty.signed if size >= e.ty.size else is_signed(l)
     R = FAM[fam][size]
     if op in SIMPLE_OPS:
@@ -211,6 +238,31 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         F.lines.append(lab + ':')
         return vfam
     raise Unsupported('operator ' + op)
+
+def gen_ptr_arith(F, e, fam, size):
+    """p + i (mem.c: m_padd): index sign-extended and scaled in XWA, then the pointer added;
+    p - q (m_diff): 32-bit difference divided by the element size with C9H_divls"""
+    l, r = strip(e.l), strip(e.r)
+    if l.ty.is_ptr() and r.ty.is_ptr():
+        lm, rm = mem_operand(F, l), mem_operand(F, r)
+        if lm is None or rm is None: raise Unsupported('complex pointer difference')
+        F.emit('ld', 'XWA,%s' % lm); F.emit('sub', 'XWA,%s' % rm)
+        esz = l.ty.base.size
+        if esz > 1:
+            F.emit('ld', 'XBC,%s' % hx(esz)); F.emit('cal', 'C9H_divls'); return 'HL'
+        return move_to(F, 'XWA', fam, 4)
+    if r.ty.is_ptr(): l, r = r, l
+    pm = mem_operand(F, l); ii = r
+    while ii.k == 'cast' and ii.kind == 'IntegralCast': ii = strip(ii.e)
+    im = mem_operand(F, ii)
+    if pm is None or im is None: raise Unsupported('complex pointer arithmetic')
+    esz = l.ty.base.size
+    F.emit('ld', 'WA,%s' % im); F.emit('exts' if ii.ty.signed else 'extz', 'XWA')
+    if esz == 2: F.emit('add', 'XWA,XWA')
+    elif esz > 2: F.emit('sll', '%s,XWA' % hx({4: 2, 8: 3}[esz]))
+    R = FAM[fam][4]
+    if R != 'XWA': F.emit('ld', '%s,XWA' % R)
+    F.emit('add' if e.op == '+' else 'sub', '%s,%s' % (R, pm)); return fam
 
 def gen_mul_const(F, l, k, fam, size, signed=True):
     """long multiply by a constant, by shifts and adds (mul_l_pk, mul_l_gk): binary method from the top bit;
@@ -356,6 +408,128 @@ def gen_incdec(F, e, fam, size, value):
     else: bump(); F.emit('ld', '%s,(%s)' % (FAM[fam][vt.size], g))
     return fam
 
+def gen_load_mem(F, v, fam, size):
+    """load through an index, member or pointer (mem.c)"""
+    R = FAM[fam][size]
+    if v.k == 'member' and v.arrow:
+        pm = mem_operand(F, v.base)
+        if pm is None: raise Unsupported('complex member base')
+        F.emit('ld', 'XWA,%s' % pm); F.emit('ld', '%s,(XWA+%s)' % (R, hx(member_offset(v)))); return fam
+    if v.k == 'deref':
+        pm = mem_operand(F, v.e)
+        if pm is None: raise Unsupported('complex pointer')
+        F.emit('ld', 'XWA,%s' % pm); F.emit('ld', '%s,(XWA)' % R); return fam
+    if v.k == 'index':
+        b = strip(v.base); i = v.idx; esz = v.ty.size
+        ic = fold(i)
+        if b.k == 'load' and ic.k == 'const':                      # p[k]: m_p_k
+            pm = mem_operand(F, b)
+            F.emit('ld', 'XWA,%s' % pm); F.emit('ld', '%s,(XWA+%s)' % (R, hx(ic.value * esz))); return fam
+        if b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array':
+            ii = strip(i); im = mem_operand(F, ii)
+            if im is None: raise Unsupported('complex index')
+            if esz == 1:                                           # m_gca_v
+                F.emit('lda', 'XWA,_%s' % b.decl.name); F.emit('ld', 'BC,%s' % im); F.emit('extz', 'XBC')
+                F.emit('add', 'XBC,XWA'); F.emit('ld', '%s,(XBC)' % R); return fam
+            F.emit('ld', 'WA,%s' % im)                             # m_ga_v, m_gla_v
+            F.emit('add', 'WA,WA') if esz == 2 else F.emit('sla', '%s,WA' % hx({4: 2, 8: 3}[esz]))
+            F.emit('lda', 'XBC,_%s' % b.decl.name); F.emit('ld', '%s,(XBC+WA)' % R); return fam
+        if b.k == 'load':                                          # p[i]: m_p_v, m_lp_v, m_cp_v
+            pm = mem_operand(F, b); ii = strip(i)
+            while ii.k == 'cast' and ii.kind == 'IntegralCast': ii = strip(ii.e)
+            im = mem_operand(F, ii)
+            if pm is None or im is None: raise Unsupported('complex pointer index')
+            F.emit('ld', 'WA,%s' % im); F.emit('exts' if ii.ty.signed else 'extz', 'XWA')
+            if esz == 2: F.emit('add', 'XWA,XWA')
+            elif esz > 2: F.emit('sll', '%s,XWA' % hx({4: 2, 8: 3}[esz]))
+            F.emit('add', 'XWA,%s' % pm); F.emit('ld', '%s,(XWA)' % R); return fam
+    raise Unsupported('memory load ' + v.k)
+
+def lvalue(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False):
+    """set up the address of lvalue lv and return its operand string (assign.c): a global or parameter is a direct
+    operand; *p loads p into `ptr`; a[i] of a global array scales i in `idx` and puts the array in `base`
+    (`(base+idx)`), or with combine=True adds them into `ptr` (`(ptr)`)"""
+    lv = strip(lv)
+    if lv.k == 'var':
+        d = lv.decl
+        if d.kind == 'global': return '(_%s)' % d.name
+        if d.kind == 'param': return '(XSP+%s)' % hx(d.off + F.push)
+    if lv.k == 'deref':
+        m = mem_operand(F, lv.e)
+        if m is None: raise Unsupported('complex pointer')
+        F.emit('ld', '%s,%s' % (ptr, m)); return '(%s)' % ptr
+    if lv.k == 'member' and lv.arrow:                 # mem.c: m_gps_set
+        m = mem_operand(F, lv.base)
+        if m is None: raise Unsupported('complex member base')
+        F.emit('ld', '%s,%s' % (ptr, m)); off = member_offset(lv)
+        return '(%s+%s)' % (ptr, hx(off)) if off else '(%s)' % ptr
+    g = global_offset(lv)
+    if g: return '(_%s + %s)' % g
+    if lv.k == 'index':
+        b, i = strip(lv.base), lv.idx
+        if b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array':
+            esz = lv.ty.size; im = mem_operand(F, i)
+            if im is None: raise Unsupported('complex index')
+            I = FAM[idx[-2:] if len(idx) > 2 else idx][2] if not combine else 'WA'
+            I = idx if not combine else 'WA'
+            F.emit('ld', '%s,%s' % (I, im))
+            if esz == 2: F.emit('add', '%s,%s' % (I, I))
+            elif esz == 4: F.emit('sla', '0x2,%s' % I)
+            if combine:
+                F.emit('lda', '%s,_%s' % (ptr, b.decl.name)); F.emit('lda', '%s,%s+%s' % (ptr, ptr, I))
+                return '(%s)' % ptr
+            F.emit('lda', '%s,_%s' % (base, b.decl.name)); return '(%s+%s)' % (base, idx)
+    raise Unsupported('lvalue ' + lv.k)
+
+def gen_opassign(F, e):
+    """x op= y as a statement (assign.c)"""
+    size = strip(e.l).ty.size; op = e.op
+    r = narrow(e.r, size)
+    signed = strip(e.l).ty.signed
+    if op in SIMPLE_OPS:
+        t = lvalue(F, e.l)
+        gen(F, r, 'WA', size)
+        F.emit(SIMPLE_OPS[op], '%s,%s' % (t, FAM['WA'][size])); return t
+    if op in ('<<', '>>'):
+        t = lvalue(F, e.l, ptr='XDE', idx='DE', base='XHL')
+        mnem = ('sla' if signed else 'sll') if op == '<<' else ('sra' if signed else 'srl')
+        V = FAM['BC'][size]
+        F.emit('ld', '%s,%s' % (V, t))
+        rr = fold(r)
+        if rr.k == 'const':
+            F.emit(mnem, '%s,%s' % (hx(rr.value), V))
+        else:
+            cs = mem_operand(F, r)
+            if cs is None: raise Unsupported('complex shift count')
+            F.emit('ld', '%s,%s' % (FAM['WA'][strip(r).ty.size], cs))
+            if size == 4:
+                lab16 = F.newlabel(); F.emit('bit', '0x4,A'); F.emit('j', 'z,%s' % lab16)
+                F.emit(mnem, '0x0,%s' % V); F.lines.append(lab16 + ':')
+            F.emit('and', 'A,0xf'); lab = F.newlabel(); F.emit('j', 'z,%s' % lab); F.emit(mnem, 'A,%s' % V)
+            F.lines.append(lab + ':')
+        F.emit('ld', '%s,%s' % (t, V)); return t
+    if op in ('*', '/', '%'):
+        if size == 4:
+            t = lvalue(F, e.l)
+            rs = mem_operand(F, r)
+            if rs is None: raise Unsupported('complex long operand')
+            name = {'*': 'mul', '/': 'div', '%': 'rem'}[op] + ('ls' if signed else 'lu')
+            F.emit('ld', 'XWA,%s' % t); F.emit('ld', 'XBC,%s' % rs); F.emit('cal', 'C9H_' + name)
+            F.emit('ld', '%s,XHL' % t); return t
+        t = lvalue(F, e.l, combine=True)
+        rs = mem_operand(F, r)
+        if rs is None: raise Unsupported('complex operand')
+        F.emit('ld', '%s,%s' % (FAM['WA'][size], t))
+        wide = 'XWA' if size == 2 else 'WA'
+        if op == '*':
+            F.emit('muls' if signed else 'mul', '%s,%s' % (wide, rs)); res = FAM['WA'][size]
+        else:
+            F.emit('exts' if signed else 'extz', wide); F.emit('divs' if signed else 'div', '%s,%s' % (wide, rs))
+            res = FAM['WA'][size] if op == '/' else ('QWA' if size == 2 else 'W')
+        if res == 'QWA': F.emit('ld', 'WA,QWA'); res = 'WA'
+        F.emit('ld', '%s,%s' % (t, res)); return t
+    raise Unsupported('opassign ' + op)
+
 def store_global(F, name, e, size):
     F.store_from = None
     fam = gen(F, e, 'WA', size, store=True)
@@ -439,12 +613,30 @@ def gen_stmt(F, s, last):
         return
     if s.k == 'expr' and s.e.k == 'call':
         gen_call(F, s.e); return
+    if s.k == 'expr' and s.e.k == 'opassign':
+        gen_opassign(F, s.e); return
     if s.k == 'expr' and s.e.k == 'incdec':
         gen_incdec(F, s.e, 'WA', 0, value=False); return
     if s.k == 'expr' and s.e.k == 'bin' and s.e.op == '=':
         lv = strip(s.e.l)
         if lv.k == 'var' and lv.decl.kind == 'global':
             store_global(F, lv.decl.name, s.e.r, lv.decl.ty.size); return
+        size = lv.ty.size
+        if lv.ty.kind == 'struct':                   # m_copy: ld XIX,dst / ld XIY,src / ld BC,words / ldirw
+            src = strip(s.e.r)
+            if src.k == 'load': src = strip(src.e)
+            if not (src.k == 'var' and src.decl.kind == 'global'): raise Unsupported('struct source')
+            t = lvalue(F, lv, ptr='XIX')
+            if t != '(XIX)': raise Unsupported('struct destination')
+            F.emit('ld', 'XIY,_%s' % src.decl.name); F.emit('ld', 'BC,%s' % hx(size // 2))
+            F.emit('ldirw', '(XIX+),(XIY+)'); return
+        rc = fold(narrow(s.e.r, size))
+        if rc.k == 'const' and size <= 2:            # m_gps_set: ldb (XWA),0x0
+            t = lvalue(F, lv, ptr='XWA')
+            F.emit('ld' + ('b' if size == 1 else 'w'), '%s,%s' % (t, hx(rc.value))); return
+        t = lvalue(F, lv)                            # m_ga_set, m_gps_set
+        fam = gen(F, s.e.r, 'WA', size)
+        F.emit('ld', '%s,%s' % (t, FAM[fam][size])); return
     raise Unsupported('statement ' + s.k)
 
 def has_helper_call(e):
