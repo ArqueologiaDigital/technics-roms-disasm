@@ -109,7 +109,7 @@ The following images have no hits: the sub-CPU boot (IC30), the custom data, and
 prom_d.
 
 **Which build is closer.**
-- No routine matches only the 2008 runtime, and 17 to 23 per image match only the 2003 one.  So the firmware was
+- No routine matches only the 2008 runtime, and 1 (WSA1 prom_a) to 23 (sub-CPU) per image match only the 2003 one.  So the firmware was
   linked with a runtime closer to the kit CD's than to v1.10's.  The v1.10 runtime rewrote several string routines:
   its `_strcpy` calls `_memchr` and `_memcpy`.
 - The firmware is from 1998 to 2000, older than both builds, so neither is *the* library it used.  Their unchanged
