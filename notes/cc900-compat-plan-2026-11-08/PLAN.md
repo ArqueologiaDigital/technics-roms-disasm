@@ -1,9 +1,11 @@
 # Plan: a cc900-compatible mode for our TLCS-900 LLVM backend (2026-11-08)
 
 **Goal.** Teach our clang/LLVM TLCS-900 backend (`~/compartilhado/llvm-project`, branch `tlcs900_backend`) to
-generate the same code as Toshiba's cc900.  It should be exact for the compiler versions we have, and inferred for
-the one that built the KN5000 firmware.  The compiler versions we have serve as the oracle.  A C function that we
-reconstruct from the firmware could then be compiled back into the ROM's exact bytes ("matching decompilation").
+generate the same code as **the cc900 that Technics used**.  We do not have that compiler.  None of the three
+Toshiba dev-kit compilers we can run is it (1998, 2003, 2009: `notes/toshiba-runtime-xref-2026-11-08/`).  So its
+behaviour is inferred: the dev-kit compilers are the oracle for how cc900 works, and the firmware decides where the
+Technics compiler differs from them (section 2).  A C function that we reconstruct from the firmware could then be
+compiled back into the ROM's exact bytes ("matching decompilation").
 
 **Gate.** All of this is opt-in.  Without the new flags, clang's TLCS-900 output does not change: same ABI, same
 optimisations, same bytes.  The C data tables the disasm build already compiles with clang depend on that.
@@ -20,9 +22,9 @@ optimisations, same bytes.  The C data tables the disasm build already compiles 
 | fact                                                                                                   | evidence                                                                                           |
 |--------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
 | cc900 (thc1, thc2, asm900, tulink) built the firmware, and Toshiba's runtime is linked into it         | `scripts/analysis/compiler_id/README.md`; `notes/toshiba-runtime-xref-2026-11-08/`                 |
-| We can run three cc900 versions, in a VM: V4.23 (1998), the kit CD's IDE (2003), v1.10 (2009)          | `vm-compile/` (V4.23 done); the other two have `thc1.exe`, `thc2.exe`, `asm900.exe`                |
+| We can run three dev-kit cc900 versions, in a VM: V4.23 (1998), the kit CD's IDE (2003), v1.10 (2009)  | `vm-compile/` (V4.23 done); the other two have `thc1.exe`, `thc2.exe`, `asm900.exe`                |
 | V4.23 at `-O3 -XS` rebuilds 147 of the 156 pieces of its own 1997 library                              | `notes/toshiba-runtime-xref-2026-11-08/README.md`, "Running V4.23"                                 |
-| The firmware's compiler is none of the three: a thc2 later than V0.8n.04.11 and earlier than 2003's    | same section; the `__doprnt` case table is 3 bytes off everywhere                                  |
+| The Technics compiler is none of the three: a thc2 later than V0.8n.04.11 and earlier than 2003's      | same section; the `__doprnt` case table is 3 bytes off everywhere                                  |
 | The firmware's runtime was compiled with `-O2`/`-O3` and `-XS`                                         | same section (the other option sets are 12 to 224 bytes off)                                       |
 | The cc900 ABI: arguments on the stack, pushed right to left, the caller pops them; result in XHL       | V4.23's `-S` output for `_ultoa` / `_ldiv` (vm-compile runs); `compiler_id/zerotest_after_call.py` |
 | `int` is 16 bits, pointers 32 bits ("large" / `$MAXIMUM`); struct results via a hidden first argument  | `_ultoa`'s `cpw (XSP+0x3e),0x2` and `exts XWA`; `_ldiv`'s `ld XIX,(XSP+0x18)`                      |
@@ -36,9 +38,40 @@ generator's whole model differs too.  thc2 keeps locals in the frame and works s
 temporary to `(XSP+4)` and reads it back.  Its versions differ in how long they remember what a register holds.
 LLVM's optimiser and register allocator never produce that shape.
 
-## 2. Design
+## 2. Method: inferring the Technics compiler
 
-### 2.1 Two flags, not one
+There are three kinds of evidence.  Each answers a different question:
+
+| evidence                                                                                              | what it gives                                                                                           | limit                                                                       |
+|-------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------|
+| **the dev-kit compilers** (V4.23, 2003, 2009), run in the VM                                          | cc900's output for any C we write, at any option set: as much evidence as we want                       | none of them is the Technics compiler                                       |
+| **source and binary pairs in the firmware**: Toshiba's runtime C sources and their copies in the ROMs | the Technics compiler's own output, on source we know exactly, at the options it used (`-O2`/`-O3 -XS`) | only as many routines as the runtime has, and only the constructs they use  |
+| **the rest of the firmware's compiled code**, without source                                          | how often each idiom occurs in all of the Technics compiler's output that we hold                       | it can rule an idiom in or out, but it cannot show which source produced it |
+
+The inference has three steps:
+1. **Calibrate on the nearest neighbour.**  Make our imitation reproduce V4.23 exactly, on everything the oracle
+   can be given.  V4.23 is the closest compiler we can run that is older than the Technics one, and the only one
+   whose runtime build we have already reproduced.  An exact V4.23 shows that the model has cc900's machinery right.
+   It is the base, not the product.
+2. **List the candidate differences.**  The Technics compiler lies between V4.23 and the 2003 compiler.  So where
+   those two differ on the same input, the Technics compiler probably did one or the other.  Each difference becomes
+   a separate rule that can be switched on or off: the register-contents rule first (V4.23 reloads a value it has
+   just stored; the firmware and 2003 do not).  The 2009 compiler shows which 2003 behaviours lasted, and that helps
+   to group them.  Some Technics behaviours may match neither neighbour; the firmware pairs show those as
+   differences that no rule explains.
+3. **Decide each rule from the firmware.**  The source and binary pairs decide the rules they exercise: compile the
+   runtime sources with each combination of rules, and the firmware's bytes pick one.  The idiom census decides
+   others without source.  If a V4.23-only idiom (for example, a store followed by a reload of the same slot) never
+   occurs in the firmware's compiled code, its rule is off.  A rule that neither decides stays marked undecided.
+   Firmware functions that we later reconstruct (phase 6) decide more.
+
+The result is one personality, `kn5000`: V4.23 plus the decided rules.  The other images that the same tools built
+(sub CPU, HD-AE5000, SX-WSA1R) are checked against it in the same way.  If they need different rules, they get
+personalities of their own.
+
+## 3. Design
+
+### 3.1 Two flags, not one
 
 | flag                           | what it does                                                                                                                                                                                                      | useful without the other?                                                                     |
 |--------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|
@@ -46,19 +79,22 @@ LLVM's optimiser and register allocator never produce that shape.
 | `-mcc900-compat=<personality>` | replaces the optimiser and the code generator with a cc900 imitation.  It implies `-mabi=cc900`                                                                                                                   | no                                                                                            |
 
 Personalities:
-- `v4.23`: the 1998 compiler.  The oracle can verify it exactly.
-- `ide2003` and `v1.10`: the later compilers.  The oracle can verify them exactly.
-- `kn5000`: the firmware's compiler, inferred (phase 4).
+- `kn5000`: the Technics compiler, inferred as in section 2.  This is the product.
+- `v4.23`: the calibration base of step 1.  It stays selectable, because the oracle can check it exactly at any
+  time, so a regression in the shared machinery shows up there first.
+
+The 2003 and 2009 compilers do not become personalities.  Their behaviour enters only as candidate rules.  (If
+someone later wants to match code built with them, the rules make that cheap, but it is not part of this plan.)
 
 The cc900 option set comes with the personality: `-mcc900-opt=0..3` for thc's `-O`, and `-mcc900-size` for `-XS`.
 These are separate from clang's own `-O`, so neither meaning leaks into the other.  Inside LLVM, the settings travel
-as function attributes (`"tlcs900-cc900"="v4.23"`, `"tlcs900-cc900-opt"="3"`, `"tlcs900-cc900-size"`), plus a module
+as function attributes (`"tlcs900-cc900"="kn5000"`, `"tlcs900-cc900-opt"="3"`, `"tlcs900-cc900-size"`), plus a module
 flag for the ABI.  So `llc`, `opt` and lit tests can use them without clang.
 
 The two flags are kept apart on purpose.  The ABI is a real feature for anyone who has Toshiba objects.  The
 imitation is a niche tool for matching.
 
-### 2.2 How the imitation is built inside LLVM (recommendation, confirmed or rejected by the phase 0 spike)
+### 3.2 How the imitation is built inside LLVM (recommendation, confirmed or rejected by the phase 0 spike)
 
 Tuning LLVM's normal pipeline with knobs until it looks like cc900 is rejected.  The SSA passes (mem2reg, GVN,
 instcombine, LICM) and the global register allocator rewrite code in ways thc1 / thc2 never did, and the knobs would
@@ -77,8 +113,8 @@ spread through the default backend.  Instead, the cc900 mode is its own pipeline
    register roles (XWA/WA/A accumulator, XHL results, XBC second operand, XIX/XIY addresses), cc900's choice of
    memory operands, and its frame and slot layout.  It replaces SelectionDAG for these functions.  Its central
    piece is a **register-contents model**: what each register is known to hold after each instruction.  Most version
-   differences are rules in that model.  The V4.23-to-firmware difference is one of them: V4.23 forgets a value it
-   has just stored and reloads it, and the firmware's compiler remembers it.
+   differences are rules in that model.  The one difference we know between V4.23 and the Technics compiler is one
+   of them: V4.23 forgets a value it has just stored and reloads it, and the Technics compiler remembers it.
 4. **"asm900" choices.**  These are branch and call relaxation (`j` to `jr`/`jrl`, `cal` to `call`/`calr`) and the
    section layout (`f_code`, `f_const`, `f_data`, `f_area`, switch tables at the start of `f_const`).  They reuse the
    MC layer, which is already byte-exact, with a cc900 relaxation policy where asm900's choices differ from ours.
@@ -87,7 +123,7 @@ The spike in phase 0 checks this design on a dozen small library routines before
 FastISel-style selector with the register-contents model can reach the oracle's output, that is cheaper than a
 separate tree code generator, and we use it.
 
-### 2.3 Keeping the default untouched
+### 3.3 Keeping the default untouched
 
 - The ABI and the imitation are selected only by the flags and attributes above.  With neither set, the default
   `TargetInfo`, calling convention and pass pipeline run unchanged.
@@ -96,17 +132,20 @@ separate tree code generator, and we use it.
 - A guard test compiles the disasm's C data tables with the new toolchain, without flags, and compares them with the
   old output: `make gate` already does this, because those tables are in the ROMs.
 
-## 3. The oracle: differential testing against Toshiba's compilers
+## 4. The evidence tools
+
+### 4.1 The dev-kit oracle
 
 `notes/toshiba-runtime-xref-2026-11-08/vm-compile/` is the seed.  It grows into a batch service:
 
-| piece      | what it becomes                                                                                                                                                                              |
-|------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| the VM     | one persistent guest with Wine and the three compiler trees.  It compiles a whole corpus in one boot (thousands of files)                                                                    |
-| inputs     | our own C test files (below), Toshiba's library sources (local only), and the C we reconstruct from the firmware                                                                             |
-| outputs    | thc2's `.asm` and asm900's `.rel` for each (version, option set, file).  They are Toshiba-generated, so they are kept out of public repos (D1)                                               |
-| comparison | `ieee695.py` and `lib_match.py` already compare objects piece by piece with relocations masked.  Add a normalised asm-text diff (Toshiba syntax to ours) that shows *where* two outputs part |
-| ledger     | per personality and option set: the fraction of functions byte-identical, and the first differing instruction of each other function. Committed as dated snapshots, like `docs/coverage/`    |
+| piece      | what it becomes                                                                                                                                                                                      |
+|------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| the VM     | one persistent guest with Wine and the three compiler trees.  It compiles a whole corpus in one boot (thousands of files)                                                                            |
+| inputs     | our own C test files (below), Toshiba's library sources (local only), and the C we reconstruct from the firmware                                                                                     |
+| outputs    | thc2's `.asm` and asm900's `.rel` for each (version, option set, file).  They are Toshiba-generated, so they are kept out of public repos (D1)                                                       |
+| comparison | `ieee695.py` and `lib_match.py` already compare objects piece by piece with relocations masked.  Add a normalised asm-text diff (Toshiba syntax to ours) that shows *where* two outputs part         |
+| ledger     | for `v4.23` against V4.23, per option set: the fraction of functions byte-identical, and the first differing instruction of each other function. Committed as dated snapshots, like `docs/coverage/` |
+| rule list  | every behaviour that differs between V4.23 and the 2003 compiler, each with the smallest test that shows it, and its state for `kn5000`: on, off or undecided                                        |
 
 **Test corpus.**  The library sources cover few C constructs, so the corpus is mostly ours:
 - **Micro-tests.**  One construct per file: each operator at each type (`char`, `int`, `long`, pointers, `float`,
@@ -116,23 +155,36 @@ separate tree code generator, and we use it.
 - **Random programs.**  Small Csmith-style programs restricted to what cc900 accepts (C89, its integer sizes).
   These find interactions the micro-tests miss.
 - **The library sources.**  Their oracle outputs are already measured.
-- **Firmware reconstructions**, as they appear (phase 5).
+- **Firmware reconstructions**, as they appear (phase 6).
 
-## 4. Phases
+### 4.2 The firmware evidence
 
-| phase | what                                                                                                                                                                                                                                                                                        | done when                                                                                                                                                                                                                                                                                                                                      |
-|-------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 0     | **Survey and spike.**  Write down cc900's ABI and frame rules from oracle listings: argument offsets, which registers a call clobbers, struct and float passing, alignment, CPU and memory-model options (`-ml`, `-ms`, H2 selection).  Spike the 2.2 design on ~12 small library routines. | an ABI note with an oracle listing behind each rule; the spike reproduces V4.23's output for most of those routines, or shows why not, and the design in 2.2 is confirmed or revised                                                                                                                                                           |
-| 1     | **Oracle service.**  Batch VM for all three versions, the corpus generator, the normalised diff, the ledger.                                                                                                                                                                                | one command compiles the corpus with all three versions and writes a ledger snapshot; the micro-test corpus covers every construct in section 3                                                                                                                                                                                                |
-| 2     | **`-mabi=cc900`.**  clang `TargetInfo` (16-bit `int`, sizes, alignment), the calling convention, the libcall names, varargs, struct return.                                                                                                                                                 | Code built with our normal optimiser links and runs with Toshiba's `c900ml.lib` (through an IEEE-695-to-ELF converter built on `ieee695.py`, or `tulink` in the VM).  This is checked in MAME's TLCS-900 core or in an emulated KN5000 test harness: call each library routine from our code and compare results. Default-mode tests unchanged |
-| 3     | **Personality `v4.23`.**  The compat pipeline, level by level: `-mcc900-opt=0`, then 1, 2, 3, then each with `-mcc900-size`.                                                                                                                                                                | 100% of micro-tests and of the library sources byte-identical to V4.23's own output at each of the seven option sets; random programs at an agreed rate (≥ 95%), every mismatch triaged                                                                                                                                                        |
-| 4     | **Personality `kn5000`.**  Diff V4.23 and the 2003 compiler on the corpus.  Each behaviour that differs becomes a separate rule (the register-contents rule first).  Turn the rules on one at a time until the firmware's runtime routines come out.                                        | Compiling Toshiba's sources with `kn5000 -mcc900-opt=3 -mcc900-size` gives the firmware's bytes for `_ldiv`, `_ultoa`, `_ldexp`, `__doprnt`, and for every runtime routine the xref found in the firmware. Checked locally: Toshiba's sources are not committed                                                                                |
-| 5     | **Matching decompilation in the disasm.**  A build rule that compiles a `.c` of *code* with `-mcc900-compat=kn5000` into the ROM, under `make gate`.  A diff tool for one function against the ROM.  Later, a permuter.  First targets: small, leaf, Matsushita-written functions.          | the first firmware function built from our C is byte-identical in `make gate`; the ROM status diagram gets a "compiled C code" class                                                                                                                                                                                                           |
-| 6     | **Ports and upkeep.**  `ide2003` and `v1.10` personalities, if wanted (they cost little once phase 4 has the rules); the documentation; the website's backend pages.                                                                                                                        | each personality has its ledger line; README of the backend describes both flags                                                                                                                                                                                                                                                               |
+- **The pairs list.**  Every runtime routine that the xref found in a ROM and whose C source is in `LIB/SRC`, with
+  its address in each image.  For each one, the ledger records whether `kn5000` reproduces it, under which rule
+  settings, and the first differing instruction if it does not.  The sources stay local; the list, addresses and
+  results are committed.
+- **The idiom census.**  For each candidate rule, a detector for the instruction pattern of each of its two
+  behaviours, run over the firmware's compiled code.  These are like the existing `compiler_id/` scripts
+  (`switchidiom.py`, `prologue_saves.py`).  A rule with one behaviour at zero occurrences and the other at many is
+  decided.
 
-Phases 1 and 2 can run in parallel.  Phase 3 needs both.  Phase 4 needs phase 3 and the 2003 oracle.
+## 5. Phases
 
-## 5. Risks
+| phase | what                                                                                                                                                                                                                                                                                                                   | done when                                                                                                                                                                                                                                                                                                                                      |
+|-------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 0     | **Survey and spike.**  Write down cc900's ABI and frame rules from oracle listings: argument offsets, which registers a call clobbers, struct and float passing, alignment, CPU and memory-model options (`-ml`, `-ms`, H2 selection).  Count the firmware pairs.  Spike the 3.2 design on ~12 small library routines. | an ABI note with an oracle listing behind each rule; the pairs list (4.2) committed; the spike reproduces V4.23's output for most of those routines, or shows why not, and the design in 3.2 is confirmed or revised                                                                                                                           |
+| 1     | **Evidence tools.**  The batch VM for all three dev-kit compilers, the corpus generator, the normalised diff, the ledger; the idiom-census framework.                                                                                                                                                                  | one command compiles the corpus with all three versions and writes a ledger snapshot; the micro-test corpus covers every construct in section 4.1                                                                                                                                                                                              |
+| 2     | **`-mabi=cc900`.**  clang `TargetInfo` (16-bit `int`, sizes, alignment), the calling convention, the libcall names, varargs, struct return.                                                                                                                                                                            | Code built with our normal optimiser links and runs with Toshiba's `c900ml.lib` (through an IEEE-695-to-ELF converter built on `ieee695.py`, or `tulink` in the VM).  This is checked in MAME's TLCS-900 core or in an emulated KN5000 test harness: call each library routine from our code and compare results. Default-mode tests unchanged |
+| 3     | **Calibration: `v4.23`.**  The compat pipeline, level by level: `-mcc900-opt=0`, then 1, 2, 3, then each with `-mcc900-size`.  The levels the firmware used (`-O2`/`-O3 -XS`) come first.                                                                                                                              | 100% of micro-tests and of the library sources byte-identical to V4.23's own output at each of the seven option sets; random programs at an agreed rate (≥ 95%), every mismatch triaged                                                                                                                                                        |
+| 4     | **Candidate rules.**  Run the corpus through V4.23, 2003 and 2009 at the firmware's options.  Turn each behaviour where V4.23 and 2003 differ into a switchable rule of the compat pipeline, with its smallest test.                                                                                                   | every V4.23-to-2003 difference in the corpus is either a rule (on, its tests give 2003's output; off, V4.23's) or listed as unexplained                                                                                                                                                                                                        |
+| 5     | **Personality `kn5000`.**  Decide each rule from the firmware (section 2, step 3): the pairs first, then the idiom census.  Look at the pairs that no rule setting reproduces: they are Technics behaviours that neither neighbour has, and they become new rules.                                                     | every firmware pair is byte-identical under `kn5000` (`_ldiv`, `_ultoa`, `_ldexp` and `__doprnt` among them), checked locally; every rule is on, off or explicitly undecided, with its evidence in the rule list                                                                                                                               |
+| 6     | **Matching decompilation in the disasm.**  A build rule that compiles a `.c` of *code* with `-mcc900-compat=kn5000` into the ROM, under `make gate`.  A diff tool for one function against the ROM.  Later, a permuter.  First targets: small, leaf, Matsushita-written functions.                                     | the first firmware function built from our C is byte-identical in `make gate`; the ROM status diagram gets a "compiled C code" class                                                                                                                                                                                                           |
+| 7     | **Other images and upkeep.**  Check the sub CPU, HD-AE5000 and SX-WSA1R pairs against `kn5000`; the documentation; the website's backend pages.  Undecided rules are revisited as phase 6 decides them.                                                                                                                | each image's pairs have a ledger line; the backend's README describes both flags and the rule list                                                                                                                                                                                                                                             |
+
+Phases 1 and 2 can run in parallel.  Phase 3 needs both.  Phase 4 needs phase 3.  Phase 5 needs phase 4.  Phase 6 can
+start once phase 5 has decided the rules that its first functions exercise.
+
+## 6. Risks
 
 - **Information lost between C and LLVM IR.**  thc1 sees the syntax tree.  Some of its choices may depend on things
   clang's IR does not keep (an expression's shape, `for` versus `while`, a temporary's scope).  The `!cc900.*`
@@ -141,15 +193,17 @@ Phases 1 and 2 can run in parallel.  Phase 3 needs both.  Phase 4 needs phase 3 
 - **Behaviours the corpus never exercises.**  A rule that the oracle never shows cannot be learnt.  The
   micro-test generator and the random programs are there to keep that set small.  The ledger's "first differing
   instruction" lists show what remains.
-- **The firmware personality is inferred.**  No oracle exists for it; the firmware's bytes are the only check, and
-  only for code whose C we can reconstruct.  The rules learnt from V4.23-to-2003 may not split the way the firmware's
-  version did.  Phase 4 tests each rule separately against the runtime routines for that reason.
+- **The Technics compiler can only be inferred.**  The pairs are few, and they use few constructs.  Some rules will
+  stay undecided until reconstructed firmware functions exercise them.  The rules learnt from V4.23-to-2003 may also
+  not split the way the Technics version did: one 2003 behaviour may be two changes made at different times.  So
+  phase 5 decides each rule separately, and the pairs that no setting reproduces are treated as new rules.
 - **Two compilers to keep correct.**  The default backend and the compat pipeline share the MC layer and little else.
   The compat pipeline needs its own regression tests, and ABI bugs in it show up only at run time (phase 2's
   emulator check).
-- **Effort.**  Phase 3 is the large one: a second code generator.  Its size is not known until the phase 0 spike.
+- **Effort.**  Phase 3 is the large one: a second code generator, whose size is not known until the phase 0 spike.
+  Phases 4 and 5 are bounded by how many rules the neighbours' differences turn out to need.
 
-## 6. Decisions for Felipe
+## 7. Decisions for Felipe
 
 | #  | decision                                                                                                                                                     | recommendation                                                                                                                       |
 |----|--------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------|
@@ -159,7 +213,7 @@ Phases 1 and 2 can run in parallel.  Phase 3 needs both.  Phase 4 needs phase 3 
 | D4 | Is the backend meant for LLVM upstream one day?                                                                                                              | if so, keep the compat pipeline in its own files behind the attribute check (as planned), so it can stay out of tree                 |
 | D5 | May the oracle VM, its Debian image and Wine stay on the share permanently (about 3 GB in `~/compartilhado/tmp/cc900-vm/`, to move somewhere less volatile)? | yes; the README rebuilds it, but phase 1 runs it often                                                                               |
 
-## 7. Working rules that apply
+## 8. Working rules that apply
 
 - Toshiba executables run only in the VM.  Their outputs and the library sources stay out of this repository and out
   of the LLVM fork.
