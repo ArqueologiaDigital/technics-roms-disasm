@@ -477,7 +477,7 @@
   "was": [
    "N-3912088e"
   ],
-  "plan": "offset-named 941/942 203->185, 935/893 225->207, KN6000 222->157, KN6500 220->156, KN2400 160->142; TG image named by register class (KN6000 TG map below 0x20 unknown, kn6000-tonegen-spec.md s.2); next: func_4C00206A/_4C002055_Records (935/893), func_484288AC_Table, func_4841202C_Table_2_p0 (lane mn10300-data4, 2026-11-06)"
+  "plan": "offset-named 941 185->136, 942 185->148, 935 207->140, 893 207->152, KN6000 157->147, KN6500 156->146, KN2400 142->131 (1b0044cb9: reader_alias + T_CFLG, T_DefTimeHandler, AppTaskState, SdCommandFrame, StylePartTemplate, InOutTest*Pos, JpegMode*, BlockPatch); next: func_4841202C_Table_2_p0 / func_48411FEA_Table_2_p0 (effect-type descriptors, five s8 getters func_484120D9..func_4841214D), SndRecTriFieldGet2_Table_2_p0, StartFeatureDemo_Table_p0, MusicStylistPanelData (lane mn10300-data5, 2026-11-08)"
  },
  "N-24a40225": {
   "status": "RESOLVED",
@@ -615,10 +615,10 @@
   "evidence": "measurement row of appendix item 2 (timer A/B, kn7000_mame 68543bf), not an open item; the upstreaming is tracked as N-ee58a28c"
  },
  "N-2f640c1d": {
-  "status": "ACTIONABLE",
+  "status": "RESOLVED",
   "title": "65 NAKA Viewable elements have no typed record (straddling members, DRAM, string blocks)",
   "size": "M",
-  "plan": "cd67e8859 + a50867fdf; untyped Viewable elements (v10) 45 -> 13. All 13 left are work-RAM view records (slots 0xB5/0xB8/0xB9, ROM image 0xEEDB58..0xEEDD35). Next: split WorkRamInit_Image's .byte rows (ui_widgets/widget_dispatch.s) at the 13 record addresses, label them, run naka_asm_records.py --apply, together with a v6/v5 naka_gui_symbolize.py --apply (the labels rename OBJ_ enum constants in all five trees' C) (lane kn5000-naka2, 2026-11-06)"
+  "evidence": "lane kn5000-naka3 (2026-11-08): a4f943242; untyped Viewable elements (v10) 13 -> 0 (naka_untyped_elements.py)"
  },
  "N-31aaf45b": {
   "status": "RESOLVED",
@@ -1013,7 +1013,7 @@
   "status": "ACTIONABLE",
   "title": "Flag bytes with most numeric uses (audio config, seq play state, accompaniment, SE flags)",
   "size": "L",
-  "plan": "3df5bbad6; 0xC598/0xC59A/0xC59C/0xC59E named per bit; numeric uses (v10) 611 -> 484. Next: 0x28B2 / 0x28B3 per bit, then 0xC1FE (the 358-byte audio state: decide on a record), 0x34CD, 0x35B0, 0xE3E2 (lane kn5000-naka2, 2026-11-06)"
+  "plan": "0578eb2ce + 862b5497a; numeric flag-byte uses (v10) 484 -> 226. Next: 0x34CD, 0x35B0, 0xE3E2 per bit (flag_bit_ops.py lists them), then the most-used fields inside AUDIO_STATE (lane kn5000-naka3, 2026-11-08)"
  },
  "N-52dcf02a": {
   "status": "RESOLVED",
@@ -1243,7 +1243,7 @@
   "was": [
    "N-05cd19fe"
   ],
-  "plan": "KN6500 755/18,340 -> 687/9,791 B; same rules and next step as KN6000 (false-string 2,949 B) (lane mn10300-data4, 2026-11-06)"
+  "plan": "KN6500 687/9,791 -> 653/8,633, same rules; next as KN6000 plus the 1,998-byte false-string piece at 0x37654E (first 1,838 B copy of func_4C16F9FF_Table+322, not item-aligned) (lane mn10300-data5, 2026-11-08)"
  },
  "N-6c3137ef": {
   "status": "RESOLVED",
@@ -1422,7 +1422,7 @@
   "status": "ACTIONABLE",
   "title": "81 titles have no menu path (most TITLE_SE* pages)",
   "size": "M",
-  "plan": "92309965b; titles with a path 162 -> 170 (49 -> 41 without: 23 opened by code no traced path reaches, 18 by nothing found); unknown-path sites 19 -> 18. Next: FileIO_ErrorCodeByteBlock's site (index 119 = TITLE_DKMDLY), the disk dialogs' saved return titles (RAM 0x7F6A/0x7F6E/0x808A/0x843A writers), the boot self-test entry (lane kn5000-naka2, 2026-11-06)"
+  "plan": "8168bbc33; titles with a path 170 -> 179, without 41 -> 32 (15 opened by unreached code, 17 by nothing found); unknown-path sites 18 -> 5. Next: an edge rule for ApPlaySyori's event handlers (MetroOnOffFunc -> EVT_SET_METRO -> ApPlaySyori_OnSetMetro opens TT_SQMETBAL; SQCYCPLY / SQCYCREC likely the same), then the stack-argument sites DiskEvt_PostModeEvent / DiskCap_PostModeEvent (lane kn5000-naka3, 2026-11-08)"
  },
  "N-7d7472a2": {
   "status": "RESOLVED",
@@ -1612,7 +1612,7 @@
   "was": [
    "N-4a4e97bc"
   ],
-  "plan": "KN6000 work-RAM operands 17,752/2,524 -> 17,755/2,522 (+3 on purpose: WORK_RAM_BASE unnamed); RAM pairs 1,613 -> 2,123; RAM names 483 -> 486. Next: more routine names, KN7000 RAM names via ram-map-kn7000.tsv (lane sibling-names2, 2026-11-06)"
+  "plan": "KN6000 work-RAM operands 17,755/2,522 -> 17,339/2,484 (22 hand var rows; owner names 461 -> 478). Next: name the sequencer's variables; no firmware table names work RAM directly (panel memory is copied by offset) (lane sibling-names3, 2026-11-08)"
  },
  "N-91fea94d": {
   "status": "RESOLVED",
@@ -1738,7 +1738,7 @@
   "was": [
    "N-90175c82"
   ],
-  "plan": "893 func_ routines 6,316 -> 6,279 (941 6,327 -> 6,290, 935 6,324 -> 6,287, 942 6,331 -> 6,289): kernel services named; the rest of the backlog remains (lane uitron-names, 2026-11-07)"
+  "plan": "893 func_ 6,271 -> 3,968; own 2 -> 1 (SdAudFfStart, b6488dcfe); next: name 941's func_48579683 and its four checks (func_485797F5, func_4857981F, func_485798AC, func_485798CB), then 893's 0x485785B0 (lane kn7000-subsystems, 2026-11-08)"
  },
  "N-99d09c1a": {
   "status": "RESOLVED",
@@ -2005,7 +2005,7 @@
   "was": [
    "N-cf9c7754"
   ],
-  "plan": "KN2400 790/16,682 -> 769/13,880 B (names_48545C20 1,080 B = icon file-name half, typed; after-string 2,711 -> 1,497); next: func_50186924_Selected_6 856 B (DSP coefficient records, then floats that doubles() misreads) (lane mn10300-data4, 2026-11-06)"
+  "plan": "KN2400 769/13,880 -> 729/12,004 (func_50186924_Selected_6 tail = second copy of the interpolation/float tables, typed by dup_spans; float_pairs fixes the doubles misread); next: labelled-held 6,013 (func_5016594F switch blocks), table-tail 2,351; the 11-point interpolation tables are still split as ArgA0 record + 10 x u32 (typed, not opaque) (lane mn10300-data5, 2026-11-08)"
  },
  "N-b4e82675": {
   "status": "RESOLVED",
@@ -2122,18 +2122,6 @@
   "status": "BLOCKED",
   "title": "Whether IC19 (picture ROM) differs between production runs",
   "blocker": "an IC19 dump from a later-production KN7000 (only the early PROGRAM 893 unit's IC19 is read)"
- },
- "N-b8f49b1e": {
-  "status": "ACTIONABLE",
-  "title": "IC21 fields still to trace: m<id> panel fields, voice-record single fields + 0x27-byte header, TCMP/style +0x70/pad bytes, the 24-field part set-up reader",
-  "size": "L",
-  "was": [
-   "N-e3880498",
-   "N-398ba2d0",
-   "N-141a8cab",
-   "N-eadb1f7f"
-  ],
-  "plan": "065b31aa8 + 0b15e8135 + 065a91958: custom-sound header is a drum-kit tone head (class, key map +0x11 traced), refs per note, voice +0x0D bits 0/2 = layers; next: sub-record / element fields via TgTableToneStage's staged pointers, MAME check on 03custm3 slot 7 (lane kn7000-research2, 2026-11-06)"
  },
  "N-b991a5c9": {
   "status": "RESOLVED",
@@ -2325,7 +2313,7 @@
   "was": [
    "N-82a73a67"
   ],
-  "plan": "KN6500 17,788/2,533 -> 17,791/2,531; RAM pairs 1,636 -> 2,124. Next: as N-8fce01b1 (lane sibling-names2, 2026-11-06)"
+  "plan": "KN6500 17,791/2,531 -> 17,379/2,495 (21 carried var rows; RAM names 486 -> 502). Next: as N-8fce01b1 (lane sibling-names3, 2026-11-08)"
  },
  "N-ccd08682": {
   "status": "RESOLVED",
@@ -2445,7 +2433,7 @@
   "status": "ACTIONABLE",
   "title": "523 field_XX members in NAKA C (was 525; 291 in naka_sequencer_channels.c)",
   "size": "L",
-  "plan": "7bf7a8e1f + 065f55a6f; field_XX 163 -> 141 (v10/v9), 171 -> 149 (v7); naka_sequencer_channels.c 22 -> 0. Next: naka_extension_device.c (40), naka_disk_menu_file_io.c (19), naka_effects_seq.c (16) ... (naka_gui_census.py --files v10) (lane kn5000-naka2, 2026-11-06)"
+  "plan": "23caaee66; field_XX v10/v9 141 -> 112, v7 149 -> 123, v6/v5 171 -> 145 (naka_gui_census.py). Next: write headers, with their readers, for the 92 field_XX that lie in slices without a header (naka_disk_menu_file_io.c 19, naka_effects_seq.c 16), then rerun naka_frame_c_by_asm_slices.py --apply; 18 lie in no slice (lane kn5000-naka3, 2026-11-08)"
  },
  "N-d8d7954f": {
   "status": "RESOLVED",
@@ -2495,7 +2483,7 @@
   "was": [
    "N-5cad02df"
   ],
-  "plan": "KN2400 20,931/2,940 -> 20,908/2,933; accessor names 21 -> 28; RAM pairs 2,258 -> 3,147. Next: as N-8fce01b1 (lane sibling-names2, 2026-11-06)"
+  "plan": "KN2400 20,908/2,933 -> 20,564/2,916 (15 carried var rows; RAM names 641 -> 643). Next: as N-8fce01b1 (lane sibling-names3, 2026-11-08)"
  },
  "N-dcfbe4b5": {
   "status": "RESOLVED",
@@ -2540,7 +2528,7 @@
   "was": [
    "N-afa3d40e"
   ],
-  "plan": "KN6000 764/16,206 -> 696/7,665 B (fx_param_lists 7,091 B, string_ptr_runs); next: table-tails 2,697 B (func_4C03CD2C_entry_L9d_Selected_* tails, ResourceIdLeaf), false-string 994 B, 0x95 text cells 192 B (lane mn10300-data4, 2026-11-06)"
+  "plan": "KN6000 696/7,665 -> 662/6,507 (dispatch lists 660, accordion cells, EQ-label copy); next: func_4C05E846_Block_2 198-byte tail, ResourceIdLeaf tails, false-string 886, labelled-held 2,380 (lane mn10300-data5, 2026-11-08)"
  },
  "N-e0c4b660": {
   "status": "RESOLVED",
@@ -2608,11 +2596,6 @@
   "title": "Sequencer edit titles' parameters 0x25FA-0x2662 per title",
   "size": "M",
   "evidence": "lane kn5000-c (2026-11-02): 2bd7dcbfe (RamPtrs by SQEDT_* name; quantize cells named); quantize working values 0x263a/c/e split off"
- },
- "N-e40c8c93": {
-  "status": "BLOCKED",
-  "blocker": "the records these 157 B (28 splinters) were cut from are in none of the available images (residue_cover.py searched the nine factory sets and IC21); another factory custom-data set would be needed (same as O-kn7000-customdata-unknown-dump-25be5c)",
-  "title": "KN7000 factory CUSTOM banks: the 157 opaque residue bytes"
  },
  "N-e4995227": {
   "status": "BLOCKED",
@@ -2772,7 +2755,7 @@
   "status": "ACTIONABLE",
   "size": "L",
   "title": "IC21 factory banks: field-level questions (pointer to custom-data-ic21.md)",
-  "plan": "pointer row; follows N-b8f49b1e (custom-data-ic21.md \"Open questions\" updated) (lane kn7000-research2, 2026-11-06)"
+  "plan": "f3e24e069: custom-data-ic21.md \"Open questions\" rewritten; kit fields closed; part set-up bytes 15..23 and nine pad setting bytes confirmed unread in emulation. Four stay BLOCKED (no image with 0x42 / SOUND EDIT records; no program older than 893; no KN6000 program older than v7.1; no copy of the factory tool). Left: the m<id> fields (next step as N-b8f49b1e) and the 157 opaque residue bytes (no donor record holds them) (lane kn7000-ic21, 2026-11-08)"
  },
  "N-f3ec939a": {
   "status": "RESOLVED",
@@ -4406,7 +4389,7 @@
   "size": "L",
   "was_status": "RESOLVED",
   "was": "N-02383279",
-  "plan": "KN6000 func_ starts 5,671 -> 5,632 (census func_ 9,910 -> 9,843): the kernel's uITRON services (kn7000/notes/uitron3-function-codes, 72ab17130); next: the rest of the func_ backlog as wave 12 described (KN7000 names by call sites, or hand naming) (lane uitron-names, 2026-11-07)"
+  "plan": "KN6000 func_ starts 5,632 -> 4,577 in wave 13: lane sibling-names3 5,632 -> 5,501 (154 hand rows: file, SMF, test layers; 67638cc4f, 07df18fba; kn7000/notes/sibling-names3/README.md), then lane kn7000-subsystems 5,501 -> 4,577 (aligned names 115 -> 1,040 from 941's 2,312 new names). Next: the shared sequencer core (0x4C11/0x4C12) by its variables first (per-track masks, Seq accessors); name more of 941's remaining 3,970 (sibling-paired ones first) and re-run aligned-names; one routine has two names: KN6000 SoundRamSumUpdate = 941 SoundRamHeaderStamp (lane kn7000-subsystems, 2026-11-08)"
  },
  "N-f22bdce4": {
   "status": "ACTIONABLE",
@@ -4414,14 +4397,14 @@
   "size": "L",
   "was_status": "RESOLVED",
   "was": "N-a6b3dca1",
-  "plan": "KN6500 func_ starts 5,698 -> 5,659 (9,966 -> 9,899); next as N-a810f3f6 (lane uitron-names, 2026-11-07)"
+  "plan": "KN6500 func_ starts 5,659 -> 4,599 in wave 13: sibling-names3 5,659 -> 5,529 (152 rows, 135 carried by port_hand_names.py, a9c81d6b6), kn7000-subsystems 5,529 -> 4,599 (aligned names 114 -> 1,056). Next as N-a810f3f6 (lane kn7000-subsystems, 2026-11-08)"
  },
  "N-b3ba9d8b": {
   "status": "ACTIONABLE",
   "title": "KN2400: 11,678 entries still func_<ADDR>",
   "size": "L",
   "was": "N-391deec6",
-  "plan": "KN2400 func_ starts 6,517 -> 6,480 (11,315 -> 11,254), rsm_tsk included; next as N-a810f3f6 (lane uitron-names, 2026-11-07)"
+  "plan": "KN2400 func_ starts 6,480 -> 5,060 in wave 13: sibling-names3 6,480 -> 6,430 (66 rows, 3b68da9cb, 5d4fab2ae; the 30 short TG twins unchanged), kn7000-subsystems 6,430 -> 5,060 (aligned names 249 -> 1,629). Next as N-a810f3f6 (same sequencer at 0x4861/0x4862) (lane kn7000-subsystems, 2026-11-08)"
  },
  "N-2dea56c9": {
   "status": "RESOLVED",
@@ -4437,12 +4420,12 @@
   "evidence": "lane v6v5-port3 (2026-11-06): 9db322139, 64f0962be, 623ea1281, 508ee51b3 (the four converters per tree; v10/v9/v7 runs write nothing) + 3060ed9e9, 88117fe50, 3c0bcb0b1, 7a1614a38; v6/v5 rom addrs 6 -> 0, ram cells 1 -> 0, field_XX 349 -> 171 (= v7), records 3,259 -> 3,260; make gate exit 0"
  },
  "L-wave12-kn7000-handback-names": {
-  "status": "ACTIONABLE",
+  "status": "RESOLVED",
   "size": "S",
   "area": "KN7000",
   "source": "kn7000/notes/kn7000-research2/README.md:1",
   "title": "KN7000: apply SoundKindGet / TableToneKeyMap (proposed by kn7000-research2) to the .sym files, then sed the data labels derived from them",
-  "plan": "add the two names to the KN7000 builds' .sym files, regenerate program sources, then a sed rename of the data labels the generator derived from the old func_ names (it keeps a label it made before); lanes kn7000-research2 / mn10300-data4 (wave 12 (2026-11-06))"
+  "evidence": "lane kn7000-subsystems (2026-11-08): b8e3a6a35 + b4f55b431: SoundKindGet / TableToneKeyMap in all four builds; their data labels renamed (TableToneKeyMap_Records / _Table)"
  },
  "L-wave12-kn7000-mame-audio-lines": {
   "status": "RESOLVED",
@@ -4454,5 +4437,97 @@
  "N-8280b5e3": {
   "status": "RESOLVED",
   "evidence": "not an open item: it says nothing of v6v5-port3's two items is left; the v6 / v5 field_XX that remain are v7's, tracked as N-d8cf1242 (wave 12 (2026-11-06))"
+ },
+ "L-wave13-kn7000-reader-label-flags": {
+  "status": "ACTIONABLE",
+  "size": "S",
+  "area": "KN7000",
+  "source": "kn7000/notes/kn7000-subsystems/README.md:84",
+  "title": "KN7000: names the kn7000-subsystems readers found wrong -- StyleIdArrayHandler is the style parts' MIDI event output; data labels attached by value (SndArgrScreen_StrBox_PATTERN_id at an M3 CC1 load, Str_empty_266 / Str_a_3 are byte variables); 0x4C0216A3 named twice (M3SetSpecialDispatch / M3HookDispatch)",
+  "plan": "read each body named in the note, rename StyleIdArrayHandler (and its pad twin func_484378EF) by sed in all four builds, teach gen_data_s.py not to name a byte variable or an M3 id after a string it happens to equal, and drop the unused M3SetSpecialDispatch row; lane kn7000-subsystems (wave 13, 2026-11-08)"
+ },
+ "L-wave13-kn7000-table-voices-comment": {
+  "status": "ACTIONABLE",
+  "size": "S",
+  "area": "KN7000",
+  "source": "kn7000/tools/gen_table_voices.py:243",
+  "title": "KN7000: gen_table_voices.py still writes the outdated comment \"+0x0D: VoiceSubRecFetch's selector byte\" into the table sources (+0x0D is the layer mask, kn7000/notes/custom-data-ic21.md)",
+  "plan": "fix the generator's comment, then make -C kn7000 table-src table-src-sp7001 and gate; lane kn7000-ic21 (wave 13, 2026-11-07)"
+ },
+ "N-a61eef2b": {
+  "status": "ACTIONABLE",
+  "title": "IC21: the panel-memory fields named only by their parameter id (m<id>: PM_FX m008010, PM_PART p06, organ nibbles), the six mod<k>_src bytes, shadow +0x4C / +0x50",
+  "size": "L",
+  "was": [
+   "N-e3880498",
+   "N-398ba2d0",
+   "N-141a8cab",
+   "N-eadb1f7f",
+   "N-b8f49b1e"
+  ],
+  "plan": "bdd5aed8f + f3e24e069 + 63af2c0af: the user kit was played in MAME, and every byte it reads is named from its reader (sub-record, element layers, voice head, TABLE head routings and +0x24..+0x26; 8 routines named). Next: the m<id> panel fields (PM_FX m008010, PM_PART p06, organ nibbles) -- recall a CUSTOM one-touch setting in MAME with a write tap on the live panel record and follow parameter 0x008010 and part byte +0x06; then the six mod<k>_src bytes and the TG meaning of shadow +0x4C / +0x50 (lane kn7000-ic21, 2026-11-08)"
+ },
+ "N-ef9a426e": {
+  "status": "BLOCKED",
+  "blocker": "the records these 157 B (28 splinters) were cut from are in none of the available images (residue_cover.py searched the nine factory sets and IC21); another factory custom-data set would be needed (same as O-kn7000-customdata-unknown-dump-25be5c)",
+  "title": "KN7000 factory CUSTOM banks: the 157 opaque residue bytes",
+  "was": [
+   "N-e40c8c93"
+  ]
+ },
+ "N-bacf8639": {
+  "status": "RESOLVED",
+  "title": "IC21 custom-sound block fields (closed note line)",
+  "evidence": "lane kn7000-ic21: the user kit played in MAME, every byte the firmware reads named from its reader (bdd5aed8f + f3e24e069 + 63af2c0af); what is left is N-a61eef2b (wave 13 triage, 2026-11-08)"
+ },
+ "N-004c2811": {
+  "status": "RESOLVED",
+  "title": "IC21 part set-up bytes 15..23 and nine pad setting bytes: no reader (closed note line)",
+  "evidence": "lanes kn7000-research and kn7000-ic21: no reader in the code nor in MAME (f3e24e069); the PAD edit screens' procs are an optional next look, kept under N-f3c6a3ea (wave 13 triage, 2026-11-08)"
+ },
+ "N-03639763": {
+  "status": "RESOLVED",
+  "title": "kn7000-ic21 README section 5, N-b8f49b1e line",
+  "evidence": "a lane README's summary of N-a61eef2b (custom-data-ic21.md:440), tracked there (wave 13 triage, 2026-11-08)"
+ },
+ "N-60bc0aab": {
+  "status": "RESOLVED",
+  "title": "kn7000-ic21 README section 5, N-f3c6a3ea line",
+  "evidence": "a lane README's summary of N-f3c6a3ea, tracked there (wave 13 triage, 2026-11-08)"
+ },
+ "N-f422eda0": {
+  "status": "RESOLVED",
+  "title": "KN7000 demo songs: tempo 250 (closed note line)",
+  "evidence": "song-records.md: the 0x80 event is BPM with no scale (SongEventToM3Tempo, TempoBpmReloadWrite); closed in the note itself (wave 13 triage, 2026-11-08)"
+ },
+ "N-5ceecd0e": {
+  "status": "ACTIONABLE",
+  "size": "L",
+  "title": "KN6000 / KN6500 / KN2400: the shared sequencer core (0x4C11/0x4C12, 0x4861/0x4862) is still mostly func_",
+  "plan": "name its variables first from the named accessors (GetSeqPlyPart ...) and the per-track masks (0x5004EE92 with SetSeqPlyPartBit), then routines by the variables they own; carry KN6000 names by port_hand_names.py; lane sibling-names3 (wave 13 triage, 2026-11-08)"
+ },
+ "N-2bb9e31c": {
+  "status": "ACTIONABLE",
+  "size": "M",
+  "title": "KN6000: Lyrics / PlayDisp display procedures, Fmm*FileNameFunc list helpers, help pages",
+  "plan": "next in routine_graph.py kn6000 --evidence; lane sibling-names3 (wave 13 triage, 2026-11-08)"
+ },
+ "N-27031953": {
+  "status": "ACTIONABLE",
+  "size": "S",
+  "title": "KN2400: the 30 short tone-generator twins",
+  "plan": "name their callers in the RAM-linked library first, then tell the twins apart by the byte variable each reads; lane sibling-names3 (wave 13 triage, 2026-11-08)"
+ },
+ "N-a2b7f511": {
+  "status": "ACTIONABLE",
+  "size": "M",
+  "title": "KN6000 / KN6500 / KN2400: work RAM named from the firmware's own tables",
+  "plan": "few tables hold work-RAM addresses and panel memory is copied by offset; name variables by use (name_ram_by_use.py) as routines get names, see N-8fce01b1; lane sibling-names3 (wave 13 triage, 2026-11-08)"
+ },
+ "N-576f1c7d": {
+  "status": "ACTIONABLE",
+  "size": "S",
+  "title": "KN6000 / KN6500: FileTypeExtTable's strings typed as .byte rows under StrAppend_Lf_List_*",
+  "plan": "teach gen_data_s.py to write \"LSW\" ... \"SEQ\" as .asciz (the KN2400's Text_LSW already is), regenerate, gate; lanes sibling-names3 / mn10300-data5 (wave 13 triage, 2026-11-08)"
  }
 }

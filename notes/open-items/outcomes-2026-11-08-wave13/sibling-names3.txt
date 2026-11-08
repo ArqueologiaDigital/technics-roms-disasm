@@ -1,0 +1,3 @@
+N-8fce01b1  OPEN  KN6000 work-RAM operands 17,755/2,522 -> 17,339/2,484 (22 hand var rows; owner names 461 -> 478). Next: name the sequencer's variables; no firmware table names work RAM directly (panel memory is copied by offset)
+N-cccf0416  OPEN  KN6500 17,791/2,531 -> 17,379/2,495 (21 carried var rows; RAM names 486 -> 502). Next: as N-8fce01b1
+N-dc17693c  OPEN  KN2400 20,908/2,933 -> 20,564/2,916 (15 carried var rows; RAM names 641 -> 643). Next: as N-8fce01b1
