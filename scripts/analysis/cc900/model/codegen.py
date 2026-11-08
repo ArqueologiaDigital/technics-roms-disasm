@@ -24,6 +24,10 @@ FAM = {'WA': {1: 'A', 2: 'WA', 4: 'XWA'}, 'BC': {1: 'C', 2: 'BC', 4: 'XBC'},
        'DE': {1: 'E', 2: 'DE', 4: 'XDE'}, 'HL': {1: 'L', 2: 'HL', 4: 'XHL'}}
 HI = {'WA': 'W', 'BC': 'B', 'DE': 'D', 'HL': 'H'}            # high byte (char remainder)
 Q = {'WA': 'QWA', 'BC': 'QBC', 'DE': 'QDE', 'HL': 'QHL'}       # upper word (int remainder)
+CC_S = {'==': 'eq', '!=': 'ne', '<': 'lt', '<=': 'le', '>': 'gt', '>=': 'ge'}
+CC_U = {'==': 'eq', '!=': 'ne', '<': 'ult', '<=': 'ule', '>': 'ugt', '>=': 'uge'}
+INV = {'eq': 'ne', 'ne': 'eq', 'lt': 'ge', 'ge': 'lt', 'le': 'gt', 'gt': 'le',
+       'ult': 'uge', 'uge': 'ult', 'ule': 'ugt', 'ugt': 'ule', 'z': 'nz', 'nz': 'z'}
 SIMPLE_OPS = {'+': 'add', '-': 'sub', '&': 'and', '|': 'or', '^': 'xor'}
 
 def hx(v):
@@ -31,13 +35,15 @@ def hx(v):
 
 class Fn:
     def __init__(s, f, adecl):
-        s.f = f; s.lines = []; s.adecl = adecl; s.label = 50000; s.push = 0; s.xiz_vars = []
+        s.f = f; s.lines = []; s.adecl = adecl; s.label = 50000; s.push = 0; s.xiz_vars = []; s.pending = 0
         off = 4
         for p in f.params:
             p.off = off; off += 2 if p.ty.size <= 2 else (p.ty.size + 1) // 2 * 2
     def emit(s, op, args=None): s.lines.append('\t' + op + ('\t' + args if args else ''))
     def newlabel(s):
         s.label += 1; return 'L%d' % s.label
+    def newulabel(s):
+        s.ulabel = getattr(s, 'ulabel', 0) + 1; return 'L%d' % s.ulabel
 
 # ------------------------------------------------------------- expression helpers
 
@@ -92,14 +98,57 @@ def is_signed(e):
 
 def gen(F, e, fam, size, then_ret=False, store=False):
     """emit code leaving e's low `size` bytes in register family `fam`; returns the family actually used"""
+    e0 = strip(e)
+    if e0.k == 'cast' and e0.kind == 'IntegralCast' and strip(e0.e).ty.size > size and mem_operand(F, e0.e):
+        # a narrowing cast of a load reads at the source width (unop_*: cast_l_c, cast_i_c)
+        isz = strip(e0.e).ty.size
+        F.emit('ld', '%s,%s' % (FAM[fam][isz], mem_operand(F, e0.e))); return fam
     e = narrow(e, size)
     src = mem_operand(F, e)
     if src is not None:
         F.emit('ld', '%s,%s' % (FAM[fam][size], src)); return fam
     if e.k == 'cast' and e.kind == 'IntegralCast':
         inner = strip(e.e); isz = inner.ty.size
+        if isz == 1 and size == 4 and not inner.ty.signed and mem_operand(F, inner):
+            # unsigned char to long: clear, then load the byte (cast_uc_l)
+            F.emit('ld', '%s,0x0' % FAM[fam][4]); F.emit('ld', '%s,%s' % (FAM[fam][1], mem_operand(F, inner)))
+            return fam
         gen(F, inner, fam, isz)
-        F.emit('exts' if inner.ty.signed else 'extz', FAM[fam][size]); return fam
+        sz = isz
+        while sz < size:                       # one step at a time: exts HL, then exts XHL (cast_c_l)
+            sz *= 2
+            F.emit('exts' if inner.ty.signed else 'extz', FAM[fam][sz])
+        return fam
+    if e.k == 'un' and e.op in ('-', '~'):
+        gen(F, e.e, fam, size)
+        R = FAM[fam][size]
+        if size == 4:                          # neg_l: cpl HL / cpl QHL / inc 1,XHL
+            F.emit('cpl', FAM[fam][2]); F.emit('cpl', Q[fam])
+            if e.op == '-': F.emit('inc', '0x1,%s' % R)
+        else:
+            F.emit('neg' if e.op == '-' else 'cpl', R)
+        return fam
+    if e.k == 'bin' and e.op in CC_S:
+        cc = gen_compare(F, e)
+        if cc in (True, False): F.emit('ld', '%s,%s' % (FAM[fam][2], hx(int(cc))))
+        else: F.emit('scc', '%s,%s' % (cc, FAM[fam][2]))
+        return fam
+    if e.k == 'call': return gen_call(F, e, fam, size)
+    if e.k == 'un' and e.op == '!':
+        x = strip(e.e); xs = x.ty.size; m = mem_operand(F, x)
+        if xs == 4 or m is None:               # lnot_l: ld XWA,x / or XWA,XWA
+            gen(F, x, 'WA', xs); W = FAM['WA'][xs]; F.emit('or', '%s,%s' % (W, W))
+        else:
+            F.emit('cp%s' % ('b' if xs == 1 else 'w'), '%s,0x0' % m)
+        F.emit('scc', 'eq,%s' % FAM[fam][2]); return fam
+    if e.k == 'incdec':
+        return gen_incdec(F, e, fam, size, value=True)
+    if e.k == 'load' and strip(e.e).k == 'deref' and strip(strip(e.e).e).k == 'incdec' and strip(strip(e.e).e).post:
+        inc = strip(strip(e.e).e); g = global_name(inc.e)
+        if g is None: raise Unsupported('deref incdec')
+        F.emit('ld', 'XBC,(%s)' % g); F.emit('ld', 'XWA,%s' % hx(strip(inc.e).ty.base.size))
+        F.emit('add' if inc.op == '++' else 'sub', '(%s),XWA' % g)
+        F.emit('ld', '%s,(XBC)' % FAM[fam][size]); return fam
     if e.k == 'load' and strip(e.e).k == 'var' and getattr(strip(e.e).decl, 'reg', None):
         r = strip(e.e).decl.reg
         if r != fam: F.emit('ld', '%s,%s' % (FAM[fam][size], FAM[r][size]))
@@ -201,6 +250,112 @@ def move_to(F, res, fam, size, keep=False):
     if res != tgt: F.emit('ld', '%s,%s' % (tgt, res))
     return fam
 
+def gen_compare(F, e):
+    """emit the compare for relational/equality node e; return its condition code, or True/False if constant
+    (cmp_*: cp acc,mem; cpw/cpb mem,k; long: ld XWA / cp XWA,k / or XWA,XWA for ==0 and !=0)"""
+    l, r = strip(e.l), strip(e.r)
+    while l.k == 'cast' and l.kind == 'IntegralCast' and strip(l.e).ty.size <= r.ty.size and fold(r).k == 'const':
+        l = strip(l.e)
+    # operands promoted from the same narrower type compare at that type
+    if l.k == 'cast' and r.k == 'cast' and l.kind == r.kind == 'IntegralCast' and strip(l.e).ty.size == strip(r.e).ty.size:
+        l, r = strip(l.e), strip(r.e)
+    if l.k == 'cast' and l.kind == 'IntegralCast' and fold(r).k == 'const':
+        l = strip(l.e)
+    size = l.ty.size; signed = l.ty.signed
+    cc = (CC_S if signed else CC_U)[e.op]
+    rc = fold(r)
+    op = e.op
+    if rc.k == 'const' and rc.value == 0 and not signed:
+        if op in ('<', '>='): return op == '>='
+        op = {'<=': '==', '>': '!='}.get(op, op)          # cmp_ui: le_ui_br0, gt_ui_br0
+        cc = CC_U[op]
+    lm = mem_operand(F, l)
+    if rc.k == 'const' and lm is not None and lm.startswith('(') and size <= 2:
+        F.emit('cp' + ('b' if size == 1 else 'w'), '%s,%s' % (lm, hx(rc.value))); return cc
+    W = FAM['WA'][size]
+    gen(F, l, 'WA', size)
+    if rc.k == 'const' and rc.value == 0 and size == 4 and op in ('==', '!='):
+        F.emit('or', '%s,%s' % (W, W)); return cc
+    rs = mem_operand(F, r)
+    if rs is None: raise Unsupported('complex compare operand')
+    F.emit('cp', '%s,%s' % (W, rs)); return cc
+
+def gen_cond_false(F, c, target):
+    """jump to `target` (a label, or 'RET' for the function exit) when condition c is false; returns the
+    constant value of c when it folds"""
+    c = strip(c)
+    if c.k == 'bin' and c.op in CC_S:
+        cc = gen_compare(F, c)
+        if cc is True: return True
+        if cc is False:
+            F.emit('ret') if target == 'RET' else F.emit('j', target); return
+        F.emit('ret', INV[cc]) if target == 'RET' else F.emit('j', '%s,%s' % (INV[cc], target))
+        return
+    raise Unsupported('condition ' + c.k)
+
+def push_arg(F, a):
+    """push one cdecl argument (call.c: k1, k1k, k3, k4; abi args_caller)"""
+    a0 = strip(a); size = a0.ty.size
+    if size == 1:                                    # a char parameter: sign-extended to a word (call.c: k4)
+        m = mem_operand(F, a0)
+        if m is None: raise Unsupported('complex char argument')
+        F.emit('ld', 'A,%s' % m); F.emit('exts' if a0.ty.signed else 'extz', 'WA'); F.emit('push', 'WA')
+        F.push += 2; return 2
+    if a0.k == 'call':                               # a call result is pushed from HL (call.c: k_nest)
+        gen_call(F, a0); F.emit('push', FAM['HL'][size] if size >= 2 else 'HL'); F.push += max(size, 2)
+        return max(size, 2)
+    if a0.k == 'cast' and a0.kind == 'IntegralCast' and strip(a0.e).ty.size == 1 and size == 2:
+        m = mem_operand(F, a0.e)
+        if m is None: raise Unsupported('complex char argument')
+        F.emit('ld', 'A,%s' % m); F.emit('exts' if strip(a0.e).ty.signed else 'extz', 'WA'); F.emit('push', 'WA')
+        F.push += 2; return 2
+    m = mem_operand(F, a)
+    if size <= 2 and m is not None:
+        F.emit('pushw', m); F.push += 2; return 2
+    if size == 4 and m is not None and m.startswith('('):
+        F.emit('ld', 'XWA,%s' % m); F.emit('push', 'XWA'); F.push += 4; return 4
+    if size == 4 and m is not None:
+        F.emit('ld', 'XWA,%s' % m); F.emit('push', 'XWA'); F.push += 4; return 4
+    fam = gen(F, a, 'WA', size)
+    F.emit('push', FAM[fam][size]); F.push += size; return size
+
+def flush_pops(F):
+    n = F.pending
+    if n:
+        F.emit('inc', '%s,XSP' % hx(n)) if n <= 8 else F.emit('lda', 'XSP,XSP+%s' % hx(n))
+        F.push -= n; F.pending = 0
+
+def gen_call(F, e, fam=None, size=0):
+    fn = strip(e.fn)
+    if fn.k != 'var': raise Unsupported('indirect call')
+    n = 0
+    for a in reversed(e.args): n += push_arg(F, a)
+    F.emit('cal', ('.' if F.adecl else '_') + fn.decl.name)
+    F.pending += n
+    if fam and fam != 'HL': F.emit('ld', '%s,%s' % (FAM[fam][size], FAM['HL'][size]))
+    return fam
+
+def global_name(e):
+    v = strip(e)
+    if v.k == 'var' and v.decl.kind == 'global': return '_' + v.decl.name
+    return None
+
+def gen_incdec(F, e, fam, size, value):
+    """++/-- on a global: incb/incw in memory, long through XWA (unop_*: preinc, postinc_val); *p++ (deref_inc)"""
+    g = global_name(e.e)
+    if g is None: raise Unsupported('incdec target')
+    vt = strip(e.e).ty
+    step = vt.base.size if vt.kind == 'ptr' else 1
+    def bump():
+        if vt.size == 4:
+            F.emit('ld', 'XWA,%s' % hx(step)); F.emit('add' if e.op == '++' else 'sub', '(%s),XWA' % g)
+        else:
+            F.emit(('inc' if e.op == '++' else 'dec') + ('b' if vt.size == 1 else 'w'), '%s,(%s)' % (hx(step), g))
+    if not value: bump(); return None
+    if e.post: F.emit('ld', '%s,(%s)' % (FAM[fam][vt.size], g)); bump()
+    else: bump(); F.emit('ld', '%s,(%s)' % (FAM[fam][vt.size], g))
+    return fam
+
 def store_global(F, name, e, size):
     F.store_from = None
     fam = gen(F, e, 'WA', size, store=True)
@@ -263,8 +418,29 @@ def gen_stmt(F, s, last):
             size = F.f.ret.size
             fam = gen(F, s.value, 'HL', size, then_ret=True)
             if fam != 'HL': F.emit('ld', '%s,%s' % (FAM['HL'][size], FAM[fam][size]))
+        flush_pops(F)
         if F.xiz_vars: F.emit('pop', 'XIZ')
         F.emit('ret'); return
+    if s.k == 'if':
+        if s.els is None:
+            lab = F.newulabel()
+            folded = False
+            k = gen_cond_false(F, s.cond, 'RET' if last else lab)
+            if F.lines[-1] == '\tret' and last:
+                return                               # condition always false: the statement disappears
+            gen_stmt(F, s.then, False)
+            if k is not True: F.lines.append(lab + ':')   # always true: no label (cmp_ui: ge_ui_br0)
+            return
+        lelse, lend = F.newulabel(), F.newulabel()
+        gen_cond_false(F, s.cond, lelse)
+        gen_stmt(F, s.then, False)
+        F.emit('j', lend); F.lines.append(lelse + ':')
+        gen_stmt(F, s.els, last); F.lines.append(lend + ':')
+        return
+    if s.k == 'expr' and s.e.k == 'call':
+        gen_call(F, s.e); return
+    if s.k == 'expr' and s.e.k == 'incdec':
+        gen_incdec(F, s.e, 'WA', 0, value=False); return
     if s.k == 'expr' and s.e.k == 'bin' and s.e.op == '=':
         lv = strip(s.e.l)
         if lv.k == 'var' and lv.decl.kind == 'global':
@@ -292,7 +468,12 @@ def compile_function(f, opt, adecl):
     F.lines.append(('.' if adecl else '_') + f.name + ':')
     plan_registers(F)
     gen_stmt(F, f.body, True)
+    flush_pops(F)
     if not F.lines[-1].startswith('\tret'): F.emit('ret')
+    # a call directly followed by the return becomes a jump (cmp_ui: ge_ui_br0)
+    if len(F.lines) >= 2 and F.lines[-1] == '\tret' and F.lines[-2].startswith('\tcal\t') \
+            and not F.lines[-2].split('\t')[2].startswith(('C9H_', '._f')):
+        F.lines[-2:] = ['\tj\t' + F.lines[-2].split('\t')[2]]
     # a label that only a jump to `ret` uses: the oracle keeps it; nothing to do here yet
     return F.lines
 
