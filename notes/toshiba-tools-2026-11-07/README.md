@@ -40,8 +40,13 @@ it is Toshiba's software.  Its README: the IDE's CD key is 7921, and Toshiba iss
 installers, so run them only in a VM.
 
 The C compiler `SW96CN0-ZCC` v1.10 from archive.org is kept too, at Felipe's request (2026-11-08):
-`~/compartilhado/upstream_repos/file_archive/archive.org/ToshibaTLCS900CompilerV1.10/`, the zip with the sha256 in
-the table above, archive.org's metadata and `SHA256SUMS` (that archive's README, commit 0f0ea74).
+`~/compartilhado/upstream_repos/file_archive/archive.org/ToshibaTLCS900CompilerV1.10/`, a git repository of its own
+whose root commit `b15ec81` holds the zip (sha256 in the table above) and archive.org's metadata as downloaded
+(upstream_repos README, commit 3f360bc).  Later commits there unpack it without running anything: `setup.exe` is an
+InstallShield launcher around an MSI, and `unpacked/msi/install-1033/TOSHIBA/T900/` holds its 41 files, each
+checked against the MSI's own MD5 table.  Among them are `bin/` (cc900, thc1/thc2, asm900, tulink, tulib),
+`lib/c900ml.lib` and `c900pic.lib`, the startup code in `custom/`, and the three manuals as PDF.  That makes the
+side lead below possible for v1.10's runtime as well as the kit CD's.
 
 ## What would settle the hypothesis
 
