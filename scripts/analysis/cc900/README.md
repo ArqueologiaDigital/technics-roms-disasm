@@ -11,9 +11,11 @@ here; this directory holds our scripts, our own C test files and results that co
 | `oracle/job.sh`         | the guest side (runs only in the VM): Wine, `cc900 -S`, then `asm900`                                                                                                                                                                 |
 | `oracle/httpd.py`       | the guest's only channel to the host                                                                                                                                                                                                  |
 | `oracle/compilers.conf` | the compiler names and their install trees in `upstream_repos`                                                                                                                                                                        |
-| `corpus/abi/*.c`        | ABI probes, one question per file (the question is the file's first comment); `corpus/abi-sources.txt`, `corpus/options-abi.txt`                                                                                                      |
+| `corpus/abi/*.c`        | ABI probes, one question per file (the question is the file's first comment); `corpus/abi-sources.txt`, `corpus/options-abi.txt` (cdecl), `corpus/options-adecl.txt` (`-Xr`)                                                          |
 | `pairs.py`              | which runtime routines compiled from C have a known copy in our images?  `python3 -I -B pairs.py > results/pairs.tsv`                                                                                                                 |
 | `pairs_check.py`        | does a set of objects reproduce the firmware at those pairs?  `python3 -I -B pairs_check.py results/pairs.tsv OBJDIR [--tag T] [--md]`                                                                                                |
+| `pairs_compare.py`      | which compilers reproduce which pairs?  `python3 -I -B pairs_compare.py v423=A.tsv ide2003=B.tsv v110=C.tsv [--md]` (A, B, C from `pairs_check.py`)                                                                                   |
+| `idiom_census.py`       | how often does each candidate rule's pattern occur in the firmware?  `python3 -I -B scripts/analysis/cc900/idiom_census.py [TREE ...]` from the repository root                                                                       |
 
 The VM's setup is in `notes/toshiba-runtime-xref-2026-11-08/vm-compile/README.md`; the VM lives in
 `~/compartilhado/cc900-oracle/vm/`.  `pairs.py` and `pairs_check.py` need the linked ELFs (`make all`) and the
@@ -21,10 +23,13 @@ Toshiba library trees in `upstream_repos` (paths in `notes/toshiba-runtime-xref-
 
 ## Results
 
-| file                          | what                                                                                                                       | made by                                                                                                        |
-|-------------------------------|----------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
-| `results/pairs.tsv`           | 291 pairs over 14 images: 263 exact hits, 14 found through calls, 9 near matches, 5 by label (`__doprnt` = `Sprintf_Core`) | `pairs.py`                                                                                                     |
-| `results/pairs_v423_O3XS.tsv` | the baseline: plain V4.23 at `-O3 -XS -DFLOAT` reproduces 226 of the 291 pairs                                             | `pairs_check.py results/pairs.tsv ~/compartilhado/cc900-oracle/runs/2026-11-08-3-v423-xs/out/O3XS --tag '...'` |
+| file                               | what                                                                                                                       | made by                                                                                                        |
+|------------------------------------|----------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
+| `results/pairs.tsv`                | 291 pairs over 14 images: 263 exact hits, 14 found through calls, 9 near matches, 5 by label (`__doprnt` = `Sprintf_Core`) | `pairs.py`                                                                                                     |
+| `results/pairs_v423_O3XS.tsv`      | the baseline: plain V4.23 at `-O3 -XS -DFLOAT` reproduces 226 of the 291 pairs                                             | `pairs_check.py results/pairs.tsv ~/compartilhado/cc900-oracle/runs/2026-11-08-3-v423-xs/out/O3XS --tag '...'` |
+| `results/pairs_libsrc97_*.tsv`     | each dev-kit compiler on the 1997 sources (oracle run `2026-11-08-5`): V4.23 235, 2003 208, v1.10 191 of 291               | `pairs_check.py` on `runs/2026-11-08-5-libsrc97-O3XS/out/<compiler>/O3XS/libsrc`                               |
+| `results/pairs_libsrc97_groups.md` | which compilers reproduce which pairs                                                                                      | `pairs_compare.py ... --md`                                                                                    |
+| `results/idiom_census.md`          | the reload-after-store and djnz-loop detectors over main CPU v10, sub-CPU v142, HD-AE5000                                  | `idiom_census.py`, then `align_md_tables.py`                                                                   |
 
 Of the baseline's 65 other pairs, 18 are `_ctype` (its compile failed under Wine in that run) and 3 are `_sbrk`, a
 near match whose name the compiled object does not define as a piece of its own.  The 44 that differ come from eight

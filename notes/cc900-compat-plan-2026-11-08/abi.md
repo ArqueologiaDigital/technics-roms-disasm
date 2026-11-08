@@ -60,6 +60,34 @@ The two-word push of an address is the source of the `pushw Sym@hi16` / `pushw S
 (CLAUDE.md, "Far pointer as two word pushes").  String literals passed as arguments are pushed the same way
 (varargs:`v_call`).
 
+## The register convention: `__adecl` (`-Xr`), which the firmware's own C uses
+
+cc900 has a second function type.  `__adecl` (a function qualifier, `#pragma adecl`, or `-Xr` for a whole file)
+passes the first three arguments in registers; the documentation is the v1.10 C compiler reference, section 3.2.1,
+and V4.23 already implements it (its `THC1.EXE` holds the strings `adecl` / `cdecl`; oracle run
+`2026-11-08-6-abi-adecl`, cc900-oracle commit `e8a18a4`, probes `corpus/abi/adecl.c` and the others with `-Xr`
+and `-O3 -XS -Xr`).  The three compilers agree on it as well.
+
+| rule                                                                                                                    | evidence                                            |
+|-------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------|
+| 1st argument in A / WA / XWA (by size), 2nd in BC / XBC, 3rd in DE / XDE; a `long` or pointer uses the 32-bit register  | adecl:`d_c`, `d_i2`, `d_l3`, `c_t2`, `c_t3`         |
+| 4th and later arguments on the stack, **pushed left to right** (the 4th first), found from `(XSP+4)` upwards            | adecl:`c_t4`, `c_t5`, `d_i4`, `d_i5`                |
+| the callee removes its stack arguments: `retd N`                                                                        | adecl:`d_i4` (`retd 2`), `d_i5`, `d_l4` (`retd 4`)  |
+| result in L / HL / XHL as for cdecl; a float, double or struct result is refused (`THC1-Error-373`)                     | adecl:`d_*`; `-Xr` on returns.c, args_callee.c      |
+| variadic functions cannot be adecl (`THC1-Error-374`)                                                                   | `-Xr` on varargs.c                                  |
+| symbols take a `.` prefix instead of `_` (`.d_c`), so a cdecl and an adecl function never link to each other by mistake | every adecl listing                                 |
+| a call whose arguments all fit in registers, in tail position, becomes a jump (`j .t1`)                                 | adecl:`c_t1`, `c_t2`, `c_t3`                        |
+| a cdecl function (declared `__cdecl`) is called with the cdecl convention from an adecl file                            | adecl:`c_lib` (`push` / `cal _lib_f` / `inc 6,XSP`) |
+| a register argument needed after a call is kept in IZ/QIZ or homed to a stack slot                                      | adecl:`d_keep`                                      |
+
+**The firmware is mostly adecl.**  Its own functions take arguments in XWA / XBC / XDE and end with `retd` when they
+have stack arguments, and Toshiba's headers declare every library function `__CDECL` (the library sources do too),
+which is what a program compiled with `-Xr` needs.  Its store-then-reload pairs (`ld (xsp+14),xwa` / `ld
+xwa,(xsp+14)`: 124 in main CPU v10, 100 in sub-CPU v142, `scripts/analysis/cc900/idiom_census.py`) include such
+homed register arguments being read back, at least the two looked at so far (`Voice_Calc_LevelPair_PatchAtk`,
+`Flash_EraseSectorAndWrite`): a different case from the cdecl library's reload.  Classifying all of them is phase 4
+work.
+
 ## Registers
 
 - **Callee-saved: XIZ only.**  A function that keeps values across a call puts them in IZ and QIZ (the two halves
@@ -107,4 +135,5 @@ Dense cases: a table of 16-bit offsets in `f_const` (`dw L2-L50000`), read with 
 
 The density threshold of `switch`; bit fields; `size_t` and `ptrdiff_t`; `enum` size; function pointers inside
 structs; `alloca` (if supported); the "minimum" memory model (`-ms`?) and the CPU options, which matter for the
-Neo Geo Pocket by-product (TLCS-900/H); struct arguments of odd sizes.
+Neo Geo Pocket by-product (TLCS-900/H); struct arguments of odd sizes; a `char` as the 2nd or 3rd adecl
+argument (C or E?); whether the firmware's adecl functions really were compiled with `-Xr` or with qualifiers.

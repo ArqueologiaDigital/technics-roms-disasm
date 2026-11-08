@@ -1,3 +1,4 @@
+abi/adecl.c
 abi/args_callee.c
 abi/args_caller.c
 abi/fptr.c
