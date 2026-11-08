@@ -53,7 +53,9 @@ side lead below possible for v1.10's runtime as well as the kit CD's.
 The object version, `SW96RN2-ZCC`, was licensed for free copying of its object code, so its kernel library may
 survive on development kits or in project archives more often than the source.  Either version could be compared
 with the kernel bytes in the KN5000 and WSA1R ROMs.  A side lead: the CC900 C runtime on the kit CD could be
-compared with library routines in the KN5000 images.
+compared with library routines in the KN5000 images.  Done on 2026-11-08 (`../toshiba-runtime-xref-2026-11-08/`): Toshiba's
+C runtime and C startup are linked into every KN5000 program image and the HD-AE5000, but neither tool set holds any
+kernel code, so the kernel question stays open.
 
 The MN10300 "MILK" kernel of the SX-KN7000 family is also uITRON 3.0 (`kn7000/notes/uitron3-function-codes/`), but
 it runs on a Panasonic CPU and is a separate build; it is not expected in Toshiba's product.

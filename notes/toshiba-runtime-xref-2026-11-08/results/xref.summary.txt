@@ -1,0 +1,391 @@
+maincpu v10  eed778 ___ctype | __ctype                 len  256  CType_ClassTable                         IDE ml,IDE pic,v1.10 ml    ambiguous
+maincpu v10  eed8a4 __doform_c data                    len   35  Sprintf_HexDigitsLower                   IDE pic                    no matched refs
+maincpu v10  ff091d _strstr                            len   96  TmFlash_CompareStrings                   IDE ml                     refs confirmed 2
+maincpu v10  ff097d _strcspn                           len   35  StrSearch_Init                           IDE ml                     no matched refs
+maincpu v10  ff09a0 _atoi                              len   86  ParseInt16                               IDE ml                     no matched refs
+maincpu v10  ff09f6 _atol                              len  102  ParseInt32                               IDE ml                     no matched refs
+maincpu v10  ff0a5c C9H_mullu                          len   22  Math_Multiply32                          IDE ml,IDE pic,v1.10 ml,v1.10 pic no matched refs
+maincpu v10  ff0bc3 SDivMod                            len   71  Math_DivModSigned32                      IDE ml                     no matched refs
+maincpu v10  ff0c18 C9H_divlu                          len  122  Math_DivideU32                           IDE ml,v1.10 ml,v1.10 pic  no matched refs
+maincpu v10  ff0c92 _strncat                           len   47  Strncat                                  IDE ml                     no matched refs
+maincpu v10  ff0cc1 _strncmp                           len   50  String_Compare                           IDE ml                     no matched refs
+maincpu v10  ff0cf3 _strncpy                           len   43  Strncpy                                  IDE ml                     no matched refs
+maincpu v10  ff0d1e _memcmp                            len  123  Mem_Compare                              IDE ml,v1.10 ml            no matched refs
+maincpu v10  ff0d99 _memcpy                            len   40  Mem_Copy                                 IDE ml,v1.10 ml            no matched refs
+maincpu v10  ff0dc1 _strcat                            len   34  Strcat                                   IDE ml,v1.10 ml            no matched refs
+maincpu v10  ff0de3 _itoa                              len  138  Itoa_Safe                                IDE ml                     refs confirmed 1
+maincpu v10  ff0e6d _strchr                            len   19  Strchr                                   IDE ml                     no matched refs
+maincpu v10  ff0f4d _strcpy                            len   44  Strcpy                                   IDE ml                     no matched refs
+maincpu v10  ff0f79 .sbrk                              len   39  Heap_Alloc                               IDE ml                     no matched refs
+maincpu v10  ff0fa0 _strlen                            len   30  Strlen                                   IDE ml                     refs confirmed 1
+maincpu v10  ff0fbe _ltoa                              len   60  Strlen_LoadParam                         IDE ml                     refs confirmed 1
+maincpu v10  ff0ffa _memset                            len   68  Memset                                   IDE ml,v1.10 ml            no matched refs
+maincpu v10  ff27f7 _ultoa                             len  136  Sprintf_ItoaBaseN                        IDE ml                     refs confirmed 2
+maincpu v10  ff2880 ._fld_xx                           len   17  Sprintf_CopyBytes10                      IDE ml,IDE pic,v1.10 ml,v1.10 pic no matched refs
+maincpu v10  ff28d1 _memchr                            len   24  Sprintf_MemChr                           IDE ml,v1.10 ml            no matched refs
+maincpu v10  ff28e9 _strnset                           len   32  Sprintf_StrNSet                          IDE ml                     no matched refs
+maincpu v9   eed778 ___ctype | __ctype                 len  256  CType_ClassTable                         IDE ml,IDE pic,v1.10 ml    ambiguous
+maincpu v9   eed8a4 __doform_c data                    len   35  Sprintf_HexDigitsLower                   IDE pic                    no matched refs
+maincpu v9   ff090f _strstr                            len   96  TmFlash_CompareStrings                   IDE ml                     refs confirmed 2
+maincpu v9   ff096f _strcspn                           len   35  StrSearch_Init                           IDE ml                     no matched refs
+maincpu v9   ff0992 _atoi                              len   86  ParseInt16                               IDE ml                     no matched refs
+maincpu v9   ff09e8 _atol                              len  102  ParseInt32                               IDE ml                     no matched refs
+maincpu v9   ff0a4e C9H_mullu                          len   22  Math_Multiply32                          IDE ml,IDE pic,v1.10 ml,v1.10 pic no matched refs
+maincpu v9   ff0bb5 SDivMod                            len   71  Math_DivModSigned32                      IDE ml                     no matched refs
+maincpu v9   ff0c0a C9H_divlu                          len  122  Math_DivideU32                           IDE ml,v1.10 ml,v1.10 pic  no matched refs
+maincpu v9   ff0c84 _strncat                           len   47  Strncat                                  IDE ml                     no matched refs
+maincpu v9   ff0cb3 _strncmp                           len   50  String_Compare                           IDE ml                     no matched refs
+maincpu v9   ff0ce5 _strncpy                           len   43  Strncpy                                  IDE ml                     no matched refs
+maincpu v9   ff0d10 _memcmp                            len  123  Mem_Compare                              IDE ml,v1.10 ml            no matched refs
+maincpu v9   ff0d8b _memcpy                            len   40  Mem_Copy                                 IDE ml,v1.10 ml            no matched refs
+maincpu v9   ff0db3 _strcat                            len   34  Strcat                                   IDE ml,v1.10 ml            no matched refs
+maincpu v9   ff0dd5 _itoa                              len  138  Itoa_Safe                                IDE ml                     refs confirmed 1
+maincpu v9   ff0e5f _strchr                            len   19  Strchr                                   IDE ml                     no matched refs
+maincpu v9   ff0f3f _strcpy                            len   44  Strcpy                                   IDE ml                     no matched refs
+maincpu v9   ff0f6b .sbrk                              len   39  Heap_Alloc                               IDE ml                     no matched refs
+maincpu v9   ff0f92 _strlen                            len   30  Strlen                                   IDE ml                     refs confirmed 1
+maincpu v9   ff0fb0 _ltoa                              len   60  Strlen_LoadParam                         IDE ml                     refs confirmed 1
+maincpu v9   ff0fec _memset                            len   68  Memset                                   IDE ml,v1.10 ml            no matched refs
+maincpu v9   ff27e9 _ultoa                             len  136  Sprintf_ItoaBaseN                        IDE ml                     refs confirmed 2
+maincpu v9   ff2872 ._fld_xx                           len   17  Sprintf_CopyBytes10                      IDE ml,IDE pic,v1.10 ml,v1.10 pic no matched refs
+maincpu v9   ff28c3 _memchr                            len   24  Sprintf_MemChr                           IDE ml,v1.10 ml            no matched refs
+maincpu v9   ff28db _strnset                           len   32  Sprintf_StrNSet                          IDE ml                     no matched refs
+maincpu v7   eed778 ___ctype | __ctype                 len  256  CType_ClassTable                         IDE ml,IDE pic,v1.10 ml    ambiguous
+maincpu v7   eed8a4 __doform_c data                    len   35  Sprintf_HexDigitsLower                   IDE pic                    no matched refs
+maincpu v7   ff0140 _strstr                            len   96  TmFlash_CompareStrings                   IDE ml                     refs confirmed 2
+maincpu v7   ff01a0 _strcspn                           len   35  StrSearch_Init                           IDE ml                     no matched refs
+maincpu v7   ff01c3 _atoi                              len   86  ParseInt16                               IDE ml                     no matched refs
+maincpu v7   ff0219 _atol                              len  102  ParseInt32                               IDE ml                     no matched refs
+maincpu v7   ff027f C9H_mullu                          len   22  Math_Multiply32                          IDE ml,IDE pic,v1.10 ml,v1.10 pic no matched refs
+maincpu v7   ff03e6 SDivMod                            len   71  Math_DivModSigned32                      IDE ml                     no matched refs
+maincpu v7   ff043b C9H_divlu                          len  122  Math_DivideU32                           IDE ml,v1.10 ml,v1.10 pic  no matched refs
+maincpu v7   ff04b5 _strncat                           len   47  Strncat                                  IDE ml                     no matched refs
+maincpu v7   ff04e4 _strncmp                           len   50  String_Compare                           IDE ml                     no matched refs
+maincpu v7   ff0516 _strncpy                           len   43  Strncpy                                  IDE ml                     no matched refs
+maincpu v7   ff0541 _memcmp                            len  123  Mem_Compare                              IDE ml,v1.10 ml            no matched refs
+maincpu v7   ff05bc _memcpy                            len   40  Mem_Copy                                 IDE ml,v1.10 ml            no matched refs
+maincpu v7   ff05e4 _strcat                            len   34  Strcat                                   IDE ml,v1.10 ml            no matched refs
+maincpu v7   ff0606 _itoa                              len  138  Itoa_Safe                                IDE ml                     refs confirmed 1
+maincpu v7   ff0690 _strchr                            len   19  Strchr                                   IDE ml                     no matched refs
+maincpu v7   ff0770 _strcpy                            len   44  Strcpy                                   IDE ml                     no matched refs
+maincpu v7   ff079c .sbrk                              len   39  Heap_Alloc                               IDE ml                     no matched refs
+maincpu v7   ff07c3 _strlen                            len   30  Strlen                                   IDE ml                     refs confirmed 1
+maincpu v7   ff07e1 _ltoa                              len   60  Strlen_LoadParam                         IDE ml                     refs confirmed 1
+maincpu v7   ff081d _memset                            len   68  Memset                                   IDE ml,v1.10 ml            no matched refs
+maincpu v7   ff201b _ultoa                             len  136  Sprintf_ItoaBaseN                        IDE ml                     refs confirmed 2
+maincpu v7   ff20a4 ._fld_xx                           len   17  Sprintf_CopyBytes10                      IDE ml,IDE pic,v1.10 ml,v1.10 pic no matched refs
+maincpu v7   ff20f5 _memchr                            len   24  Sprintf_MemChr                           IDE ml,v1.10 ml            no matched refs
+maincpu v7   ff210d _strnset                           len   32  Sprintf_StrNSet                          IDE ml                     no matched refs
+maincpu v6   eed67c ___ctype | __ctype                 len  256  CType_ClassTable                         IDE ml,IDE pic,v1.10 ml    ambiguous
+maincpu v6   eed7a8 __doform_c data                    len   35  Sprintf_HexDigitsLower                   IDE pic                    no matched refs
+maincpu v6   ff0042 _strstr                            len   96  TmFlash_CompareStrings                   IDE ml                     refs confirmed 2
+maincpu v6   ff00a2 _strcspn                           len   35  StrSearch_Init                           IDE ml                     no matched refs
+maincpu v6   ff00c5 _atoi                              len   86  ParseInt16                               IDE ml                     no matched refs
+maincpu v6   ff011b _atol                              len  102  ParseInt32                               IDE ml                     no matched refs
+maincpu v6   ff0181 C9H_mullu                          len   22  Math_Multiply32                          IDE ml,IDE pic,v1.10 ml,v1.10 pic no matched refs
+maincpu v6   ff02e8 SDivMod                            len   71  Math_DivModSigned32                      IDE ml                     no matched refs
+maincpu v6   ff033d C9H_divlu                          len  122  Math_DivideU32                           IDE ml,v1.10 ml,v1.10 pic  no matched refs
+maincpu v6   ff03b7 _strncat                           len   47  Strncat                                  IDE ml                     no matched refs
+maincpu v6   ff03e6 _strncmp                           len   50  String_Compare                           IDE ml                     no matched refs
+maincpu v6   ff0418 _strncpy                           len   43  Strncpy                                  IDE ml                     no matched refs
+maincpu v6   ff0443 _memcmp                            len  123  Mem_Compare                              IDE ml,v1.10 ml            no matched refs
+maincpu v6   ff04be _memcpy                            len   40  Mem_Copy                                 IDE ml,v1.10 ml            no matched refs
+maincpu v6   ff04e6 _strcat                            len   34  Strcat                                   IDE ml,v1.10 ml            no matched refs
+maincpu v6   ff0508 _itoa                              len  138  Itoa_Safe                                IDE ml                     refs confirmed 1
+maincpu v6   ff0592 _strchr                            len   19  Strchr                                   IDE ml                     no matched refs
+maincpu v6   ff0672 _strcpy                            len   44  Strcpy                                   IDE ml                     no matched refs
+maincpu v6   ff069e .sbrk                              len   39  Heap_Alloc                               IDE ml                     no matched refs
+maincpu v6   ff06c5 _strlen                            len   30  Strlen                                   IDE ml                     refs confirmed 1
+maincpu v6   ff06e3 _ltoa                              len   60  Strlen_LoadParam                         IDE ml                     refs confirmed 1
+maincpu v6   ff071f _memset                            len   68  Memset                                   IDE ml,v1.10 ml            no matched refs
+maincpu v6   ff1f1d _ultoa                             len  136  Sprintf_ItoaBaseN                        IDE ml                     refs confirmed 2
+maincpu v6   ff1fa6 ._fld_xx                           len   17  Sprintf_CopyBytes10                      IDE ml,IDE pic,v1.10 ml,v1.10 pic no matched refs
+maincpu v6   ff1ff7 _memchr                            len   24  Sprintf_MemChr                           IDE ml,v1.10 ml            no matched refs
+maincpu v6   ff200f _strnset                           len   32  Sprintf_StrNSet                          IDE ml                     no matched refs
+maincpu v5   eed664 ___ctype | __ctype                 len  256  CType_ClassTable                         IDE ml,IDE pic,v1.10 ml    ambiguous
+maincpu v5   eed790 __doform_c data                    len   35  Sprintf_HexDigitsLower                   IDE pic                    no matched refs
+maincpu v5   fefbee _strstr                            len   96  TmFlash_CompareStrings                   IDE ml                     refs confirmed 2
+maincpu v5   fefc4e _strcspn                           len   35  StrSearch_Init                           IDE ml                     no matched refs
+maincpu v5   fefc71 _atoi                              len   86  ParseInt16                               IDE ml                     no matched refs
+maincpu v5   fefcc7 _atol                              len  102  ParseInt32                               IDE ml                     no matched refs
+maincpu v5   fefd2d C9H_mullu                          len   22  Math_Multiply32                          IDE ml,IDE pic,v1.10 ml,v1.10 pic no matched refs
+maincpu v5   fefe94 SDivMod                            len   71  Math_DivModSigned32                      IDE ml                     no matched refs
+maincpu v5   fefee9 C9H_divlu                          len  122  Math_DivideU32                           IDE ml,v1.10 ml,v1.10 pic  no matched refs
+maincpu v5   feff63 _strncat                           len   47  Strncat                                  IDE ml                     no matched refs
+maincpu v5   feff92 _strncmp                           len   50  String_Compare                           IDE ml                     no matched refs
+maincpu v5   feffc4 _strncpy                           len   43  Strncpy                                  IDE ml                     no matched refs
+maincpu v5   feffef _memcmp                            len  123  Mem_Compare                              IDE ml,v1.10 ml            no matched refs
+maincpu v5   ff006a _memcpy                            len   40  Mem_Copy                                 IDE ml,v1.10 ml            no matched refs
+maincpu v5   ff0092 _strcat                            len   34  Strcat                                   IDE ml,v1.10 ml            no matched refs
+maincpu v5   ff00b4 _itoa                              len  138  Itoa_Safe                                IDE ml                     refs confirmed 1
+maincpu v5   ff013e _strchr                            len   19  Strchr                                   IDE ml                     no matched refs
+maincpu v5   ff021e _strcpy                            len   44  Strcpy                                   IDE ml                     no matched refs
+maincpu v5   ff024a .sbrk                              len   39  Heap_Alloc                               IDE ml                     no matched refs
+maincpu v5   ff0271 _strlen                            len   30  Strlen                                   IDE ml                     refs confirmed 1
+maincpu v5   ff028f _ltoa                              len   60  Strlen_LoadParam                         IDE ml                     refs confirmed 1
+maincpu v5   ff02cb _memset                            len   68  Memset                                   IDE ml,v1.10 ml            no matched refs
+maincpu v5   ff1ac9 _ultoa                             len  136  Sprintf_ItoaBaseN                        IDE ml                     refs confirmed 2
+maincpu v5   ff1b52 ._fld_xx                           len   17  Sprintf_CopyBytes10                      IDE ml,IDE pic,v1.10 ml,v1.10 pic no matched refs
+maincpu v5   ff1ba3 _memchr                            len   24  Sprintf_MemChr                           IDE ml,v1.10 ml            no matched refs
+maincpu v5   ff1bbb _strnset                           len   32  Sprintf_StrNSet                          IDE ml                     no matched refs
+subcpu v142  00f34e __trig_c data                      len   96  FPConst_InvFact3                         IDE ml,IDE pic             no matched refs
+subcpu v142  00f3ba _g_dbltbl                          len   72  FPConst_Pi                               IDE ml,IDE pic             no matched refs
+subcpu v142  00f402 _g_ldbltbl                         len   30  FPConst_NegZero                          IDE ml,IDE pic,v1.10 ml    no matched refs
+subcpu v142  03d2ac ._fcmp_d                           len   90  FP_dcmp                                  IDE ml,v1.10 ml,v1.10 pic  no matched refs
+subcpu v142  03d306 ._fcmp_f                           len   71  FP_fcmp                                  IDE ml,v1.10 ml,v1.10 pic  no matched refs
+subcpu v142  03d3a4 ._fdiv_d                           len   48  FP_ddiv                                  IDE ml                     callee score ._fdiv_d 0.49, ._fmul_d 0.08
+subcpu v142  03d3d4 ._fdiv_f                           len   48  FP_fdiv                                  IDE ml                     callee score ._fdiv_f 0.88, ._fmul_f 0.21
+subcpu v142  03d404 ._fneg_d                           len   24  FP_DP_CopyOrNegate8                      IDE ml,v1.10 ml,v1.10 pic  no matched refs
+subcpu v142  03d41c ._fneg_f                           len   18  FP_SP_CopyOrNegate4                      IDE ml,v1.10 ml,v1.10 pic  no matched refs
+subcpu v142  03d42e _fabs                              len   29  FP_fabs                                  IDE ml                     refs confirmed 2
+subcpu v142  03d44c ._fld_ulf                          len   25  FP_ftoi                                  IDE ml                     refs confirmed 1
+subcpu v142  03d466 ._fcmp_zd                          len   52  FP_DP_CmpZero64                          IDE ml,v1.10 ml,v1.10 pic  no matched refs
+subcpu v142  03d49a ._fcmp_zf                          len   47  FP_SP_CmpZero32                          IDE ml,v1.10 ml,v1.10 pic  no matched refs
+subcpu v142  03d8ca C9H_mullu                          len   22  Math_Multiply32                          IDE ml,IDE pic,v1.10 ml,v1.10 pic no matched refs
+subcpu v142  03d8e0 ._fsub_d                           len   75  FP_dsub                                  IDE ml                     refs confirmed 2
+subcpu v142  03d92c ._fsub_f                           len   75  FP_fsub                                  IDE ml                     refs confirmed 5
+subcpu v142  03dc14 SDivMod                            len   71  Int_SignedDiv                            IDE ml                     no matched refs
+subcpu v142  03dd36 ._fld_dl                           len   27  FP_ScalarToDP                            IDE ml                     callee score ._fld_dl 1.00, ._fld_dul 0.01
+subcpu v142  03dd51 ._fld_dul                          len   27  FP_DP_CallWithBuf12                      IDE ml                     callee score ._fld_dl 0.00, ._fld_dul 0.50
+subcpu v142  03ddca ._fld_fl                           len   27  FP_SP_CallWithBuf8                       IDE ml                     refs confirmed 1
+subcpu v142  03dde5 ._fld_fl_tail                      len   27  FP_SP_CallWithBuf8b                      IDE ml                     refs confirmed 2
+subcpu v142  03de00 ._fld_uld                          len   25  FP_DP_DecodeToInt                        IDE ml                     refs confirmed 1
+subcpu v142  03de1a ._fcvt_dacl | ._fcvt_facl | ._fcvt_xacl len   25  FP_DP_Normalize                          IDE ml,IDE pic,v1.10 ml,v1.10 pic ambiguous
+subcpu v142  03de33 ._fcvt_facul                       len   90  FP_DP_NormCore                           IDE ml,v1.10 ml,v1.10 pic  no matched refs
+subcpu v142  03de8e ._fcvt_lfac                        len   92  FP_DP_ShiftDecode                        IDE ml                     no matched refs
+subcpu v142  03df38 ._fadd_acf                         len   39  FP_SP_AddMantissa                        IDE ml                     no matched refs
+subcpu v142  03df60 ._fset_acd                         len   60  FP_DP_Decode                             IDE ml,v1.10 ml,v1.10 pic  no matched refs
+subcpu v142  03df9c ._fset_acf                         len   57  FP_SP_Decode                             IDE ml,v1.10 ml,v1.10 pic  no matched refs
+subcpu v142  03dfd6 ._fcvt_dacl | ._fcvt_facl | ._fcvt_xacl len   25  FP_SP_Normalize                          IDE ml,IDE pic,v1.10 ml,v1.10 pic ambiguous
+subcpu v142  03e046 ._fset_dac                         len  105  FP_DP_Encode                             IDE ml,v1.10 ml            no matched refs
+subcpu v142  03e0b0 ._fset_fac                         len   94  FP_SP_Encode                             IDE ml,v1.10 ml            no matched refs
+subcpu v142  03e10e ._fadd_d                           len   75  FP_dadd                                  IDE ml                     refs confirmed 2
+subcpu v142  03e15a ._fadd_f                           len   75  FP_fadd                                  IDE ml                     refs confirmed 5
+subcpu v142  03e1f1 _frexp                             len  158  FP_frexp                                 IDE ml,v1.10 ml            refs confirmed 1
+subcpu v142  03e290 ._fmul_d                           len   48  FP_dmul                                  IDE ml                     callee score ._fdiv_d 0.10, ._fmul_d 0.63
+subcpu v142  03e2c0 ._fmul_f                           len   48  FP_fmul                                  IDE ml                     callee score ._fdiv_f 0.14, ._fmul_f 0.71
+subcpu v142  03e3a0 ._fadj_acf                         len   86  FP_SP_AlignMantissa                      IDE ml,v1.10 ml,v1.10 pic  no matched refs
+subcpu v142  03e5f6 ._fsub_acf                         len   85  FP_SP_SubMantissa                        IDE ml                     no matched refs
+subcpu v142  03e884 SPECIAL_DIV                        len   16  FP_NaN_Handler                           IDE ml,IDE pic,v1.10 ml,v1.10 pic no matched refs
+subcpu v142  03e894 __fint                             len  365  FP_trunc                                 IDE ml                     refs confirmed 2
+subcpu v142  03ea0a SPECIAL_ADD_LD                     len   41  FP_CopyWithSign_D2                       IDE ml,v1.10 ml,v1.10 pic  no matched refs
+subcpu v142  03ea9c _ldexp                             len  305  FP_ldexp                                 IDE ml                     refs confirmed 2
+subcpu v142  03ed0e MUL_XHL_XIY                        len   46  FP_MulMantissa64x64                      IDE ml,IDE pic,v1.10 ml,v1.10 pic no matched refs
+subcpu v142  03ee3e SPECIAL_SUB_LD                     len   49  FP_NegWithSign_D2                        IDE ml,v1.10 ml,v1.10 pic  no matched refs
+subcpu v141  00f34e __trig_c data                      len   96  FPConst_InvFact3                         IDE ml,IDE pic             no matched refs
+subcpu v141  00f3ba _g_dbltbl                          len   72  FPConst_Pi                               IDE ml,IDE pic             no matched refs
+subcpu v141  00f402 _g_ldbltbl                         len   30  FPConst_NegZero                          IDE ml,IDE pic,v1.10 ml    no matched refs
+subcpu v141  03d294 ._fcmp_d                           len   90  FP_dcmp                                  IDE ml,v1.10 ml,v1.10 pic  no matched refs
+subcpu v141  03d2ee ._fcmp_f                           len   71  FP_fcmp                                  IDE ml,v1.10 ml,v1.10 pic  no matched refs
+subcpu v141  03d38c ._fdiv_d                           len   48  FP_ddiv                                  IDE ml                     callee score ._fdiv_d 0.49, ._fmul_d 0.08
+subcpu v141  03d3bc ._fdiv_f                           len   48  FP_fdiv                                  IDE ml                     callee score ._fdiv_f 0.88, ._fmul_f 0.21
+subcpu v141  03d3ec ._fneg_d                           len   24  FP_DP_CopyOrNegate8                      IDE ml,v1.10 ml,v1.10 pic  no matched refs
+subcpu v141  03d404 ._fneg_f                           len   18  FP_SP_CopyOrNegate4                      IDE ml,v1.10 ml,v1.10 pic  no matched refs
+subcpu v141  03d416 _fabs                              len   29  FP_fabs                                  IDE ml                     refs confirmed 2
+subcpu v141  03d434 ._fld_ulf                          len   25  FP_ftoi                                  IDE ml                     refs confirmed 1
+subcpu v141  03d44e ._fcmp_zd                          len   52  FP_DP_CmpZero64                          IDE ml,v1.10 ml,v1.10 pic  no matched refs
+subcpu v141  03d482 ._fcmp_zf                          len   47  FP_SP_CmpZero32                          IDE ml,v1.10 ml,v1.10 pic  no matched refs
+subcpu v141  03d8b2 C9H_mullu                          len   22  Math_Multiply32                          IDE ml,IDE pic,v1.10 ml,v1.10 pic no matched refs
+subcpu v141  03d8c8 ._fsub_d                           len   75  FP_dsub                                  IDE ml                     refs confirmed 2
+subcpu v141  03d914 ._fsub_f                           len   75  FP_fsub                                  IDE ml                     refs confirmed 5
+subcpu v141  03dbfc SDivMod                            len   71  Int_SignedDiv                            IDE ml                     no matched refs
+subcpu v141  03dd1e ._fld_dl                           len   27  FP_ScalarToDP                            IDE ml                     callee score ._fld_dl 1.00, ._fld_dul 0.01
+subcpu v141  03dd39 ._fld_dul                          len   27  FP_DP_CallWithBuf12                      IDE ml                     callee score ._fld_dl 0.00, ._fld_dul 0.50
+subcpu v141  03ddb2 ._fld_fl                           len   27  FP_SP_CallWithBuf8                       IDE ml                     refs confirmed 1
+subcpu v141  03ddcd ._fld_fl_tail                      len   27  FP_SP_CallWithBuf8b                      IDE ml                     refs confirmed 2
+subcpu v141  03dde8 ._fld_uld                          len   25  FP_DP_DecodeToInt                        IDE ml                     refs confirmed 1
+subcpu v141  03de02 ._fcvt_dacl | ._fcvt_facl | ._fcvt_xacl len   25  FP_DP_Normalize                          IDE ml,IDE pic,v1.10 ml,v1.10 pic ambiguous
+subcpu v141  03de1b ._fcvt_facul                       len   90  FP_DP_NormCore                           IDE ml,v1.10 ml,v1.10 pic  no matched refs
+subcpu v141  03de76 ._fcvt_lfac                        len   92  FP_DP_ShiftDecode                        IDE ml                     no matched refs
+subcpu v141  03df20 ._fadd_acf                         len   39  FP_SP_AddMantissa                        IDE ml                     no matched refs
+subcpu v141  03df48 ._fset_acd                         len   60  FP_DP_Decode                             IDE ml,v1.10 ml,v1.10 pic  no matched refs
+subcpu v141  03df84 ._fset_acf                         len   57  FP_SP_Decode                             IDE ml,v1.10 ml,v1.10 pic  no matched refs
+subcpu v141  03dfbe ._fcvt_dacl | ._fcvt_facl | ._fcvt_xacl len   25  FP_SP_Normalize                          IDE ml,IDE pic,v1.10 ml,v1.10 pic ambiguous
+subcpu v141  03e02e ._fset_dac                         len  105  FP_DP_Encode                             IDE ml,v1.10 ml            no matched refs
+subcpu v141  03e098 ._fset_fac                         len   94  FP_SP_Encode                             IDE ml,v1.10 ml            no matched refs
+subcpu v141  03e0f6 ._fadd_d                           len   75  FP_dadd                                  IDE ml                     refs confirmed 2
+subcpu v141  03e142 ._fadd_f                           len   75  FP_fadd                                  IDE ml                     refs confirmed 5
+subcpu v141  03e1d9 _frexp                             len  158  FP_frexp                                 IDE ml,v1.10 ml            refs confirmed 1
+subcpu v141  03e278 ._fmul_d                           len   48  FP_dmul                                  IDE ml                     callee score ._fdiv_d 0.10, ._fmul_d 0.63
+subcpu v141  03e2a8 ._fmul_f                           len   48  FP_fmul                                  IDE ml                     callee score ._fdiv_f 0.14, ._fmul_f 0.71
+subcpu v141  03e388 ._fadj_acf                         len   86  FP_SP_AlignMantissa                      IDE ml,v1.10 ml,v1.10 pic  no matched refs
+subcpu v141  03e5de ._fsub_acf                         len   85  FP_SP_SubMantissa                        IDE ml                     no matched refs
+subcpu v141  03e86c SPECIAL_DIV                        len   16  FP_NaN_Handler                           IDE ml,IDE pic,v1.10 ml,v1.10 pic no matched refs
+subcpu v141  03e87c __fint                             len  365  FP_trunc                                 IDE ml                     refs confirmed 2
+subcpu v141  03e9f2 SPECIAL_ADD_LD                     len   41  FP_CopyWithSign_D2                       IDE ml,v1.10 ml,v1.10 pic  no matched refs
+subcpu v141  03ea84 _ldexp                             len  305  FP_ldexp                                 IDE ml                     refs confirmed 2
+subcpu v141  03ecf6 MUL_XHL_XIY                        len   46  FP_MulMantissa64x64                      IDE ml,IDE pic,v1.10 ml,v1.10 pic no matched refs
+subcpu v141  03ee26 SPECIAL_SUB_LD                     len   49  FP_NegWithSign_D2                        IDE ml,v1.10 ml,v1.10 pic  no matched refs
+subcpu v140  00f34e __trig_c data                      len   96  FPConst_InvFact3                         IDE ml,IDE pic             no matched refs
+subcpu v140  00f3ba _g_dbltbl                          len   72  FPConst_Pi                               IDE ml,IDE pic             no matched refs
+subcpu v140  00f402 _g_ldbltbl                         len   30  FPConst_NegZero                          IDE ml,IDE pic,v1.10 ml    no matched refs
+subcpu v140  03d260 ._fcmp_d                           len   90  FP_dcmp                                  IDE ml,v1.10 ml,v1.10 pic  no matched refs
+subcpu v140  03d2ba ._fcmp_f                           len   71  FP_fcmp                                  IDE ml,v1.10 ml,v1.10 pic  no matched refs
+subcpu v140  03d358 ._fdiv_d                           len   48  FP_ddiv                                  IDE ml                     callee score ._fdiv_d 0.49, ._fmul_d 0.08
+subcpu v140  03d388 ._fdiv_f                           len   48  FP_fdiv                                  IDE ml                     callee score ._fdiv_f 0.88, ._fmul_f 0.21
+subcpu v140  03d3b8 ._fneg_d                           len   24  FP_DP_CopyOrNegate8                      IDE ml,v1.10 ml,v1.10 pic  no matched refs
+subcpu v140  03d3d0 ._fneg_f                           len   18  FP_SP_CopyOrNegate4                      IDE ml,v1.10 ml,v1.10 pic  no matched refs
+subcpu v140  03d3e2 _fabs                              len   29  FP_fabs                                  IDE ml                     refs confirmed 2
+subcpu v140  03d400 ._fld_ulf                          len   25  FP_ftoi                                  IDE ml                     refs confirmed 1
+subcpu v140  03d41a ._fcmp_zd                          len   52  FP_DP_CmpZero64                          IDE ml,v1.10 ml,v1.10 pic  no matched refs
+subcpu v140  03d44e ._fcmp_zf                          len   47  FP_SP_CmpZero32                          IDE ml,v1.10 ml,v1.10 pic  no matched refs
+subcpu v140  03d87e C9H_mullu                          len   22  Math_Multiply32                          IDE ml,IDE pic,v1.10 ml,v1.10 pic no matched refs
+subcpu v140  03d894 ._fsub_d                           len   75  FP_dsub                                  IDE ml                     refs confirmed 2
+subcpu v140  03d8e0 ._fsub_f                           len   75  FP_fsub                                  IDE ml                     refs confirmed 5
+subcpu v140  03dbc8 SDivMod                            len   71  Int_SignedDiv                            IDE ml                     no matched refs
+subcpu v140  03dcea ._fld_dl                           len   27  FP_ScalarToDP                            IDE ml                     callee score ._fld_dl 1.00, ._fld_dul 0.01
+subcpu v140  03dd05 ._fld_dul                          len   27  FP_DP_CallWithBuf12                      IDE ml                     callee score ._fld_dl 0.00, ._fld_dul 0.50
+subcpu v140  03dd7e ._fld_fl                           len   27  FP_SP_CallWithBuf8                       IDE ml                     refs confirmed 1
+subcpu v140  03dd99 ._fld_fl_tail                      len   27  FP_SP_CallWithBuf8b                      IDE ml                     refs confirmed 2
+subcpu v140  03ddb4 ._fld_uld                          len   25  FP_DP_DecodeToInt                        IDE ml                     refs confirmed 1
+subcpu v140  03ddce ._fcvt_dacl | ._fcvt_facl | ._fcvt_xacl len   25  FP_DP_Normalize                          IDE ml,IDE pic,v1.10 ml,v1.10 pic ambiguous
+subcpu v140  03dde7 ._fcvt_facul                       len   90  FP_DP_NormCore                           IDE ml,v1.10 ml,v1.10 pic  no matched refs
+subcpu v140  03de42 ._fcvt_lfac                        len   92  FP_DP_ShiftDecode                        IDE ml                     no matched refs
+subcpu v140  03deec ._fadd_acf                         len   39  FP_SP_AddMantissa                        IDE ml                     no matched refs
+subcpu v140  03df14 ._fset_acd                         len   60  FP_DP_Decode                             IDE ml,v1.10 ml,v1.10 pic  no matched refs
+subcpu v140  03df50 ._fset_acf                         len   57  FP_SP_Decode                             IDE ml,v1.10 ml,v1.10 pic  no matched refs
+subcpu v140  03df8a ._fcvt_dacl | ._fcvt_facl | ._fcvt_xacl len   25  FP_SP_Normalize                          IDE ml,IDE pic,v1.10 ml,v1.10 pic ambiguous
+subcpu v140  03dffa ._fset_dac                         len  105  FP_DP_Encode                             IDE ml,v1.10 ml            no matched refs
+subcpu v140  03e064 ._fset_fac                         len   94  FP_SP_Encode                             IDE ml,v1.10 ml            no matched refs
+subcpu v140  03e0c2 ._fadd_d                           len   75  FP_dadd                                  IDE ml                     refs confirmed 2
+subcpu v140  03e10e ._fadd_f                           len   75  FP_fadd                                  IDE ml                     refs confirmed 5
+subcpu v140  03e1a5 _frexp                             len  158  FP_frexp                                 IDE ml,v1.10 ml            refs confirmed 1
+subcpu v140  03e244 ._fmul_d                           len   48  FP_dmul                                  IDE ml                     callee score ._fdiv_d 0.10, ._fmul_d 0.63
+subcpu v140  03e274 ._fmul_f                           len   48  FP_fmul                                  IDE ml                     callee score ._fdiv_f 0.14, ._fmul_f 0.71
+subcpu v140  03e354 ._fadj_acf                         len   86  FP_SP_AlignMantissa                      IDE ml,v1.10 ml,v1.10 pic  no matched refs
+subcpu v140  03e5aa ._fsub_acf                         len   85  FP_SP_SubMantissa                        IDE ml                     no matched refs
+subcpu v140  03e838 SPECIAL_DIV                        len   16  FP_NaN_Handler                           IDE ml,IDE pic,v1.10 ml,v1.10 pic no matched refs
+subcpu v140  03e848 __fint                             len  365  FP_trunc                                 IDE ml                     refs confirmed 2
+subcpu v140  03e9be SPECIAL_ADD_LD                     len   41  FP_CopyWithSign_D2                       IDE ml,v1.10 ml,v1.10 pic  no matched refs
+subcpu v140  03ea50 _ldexp                             len  305  FP_ldexp                                 IDE ml                     refs confirmed 2
+subcpu v140  03ecc2 MUL_XHL_XIY                        len   46  FP_MulMantissa64x64                      IDE ml,IDE pic,v1.10 ml,v1.10 pic no matched refs
+subcpu v140  03edf2 SPECIAL_SUB_LD                     len   49  FP_NegWithSign_D2                        IDE ml,v1.10 ml,v1.10 pic  no matched refs
+table data   9ffb2f .sbrk                              len   39  Boot_sbrk                                IDE ml                     no matched refs
+table data   9ffb56 _malloc                            len  134  Boot_malloc                              IDE ml                     no matched refs
+table data   9ffbdc _strncmp                           len   50  Boot_memcmp                              IDE ml                     no matched refs
+table data   9ffc0e SDivMod                            len   71  Boot_SDivMod32                           IDE ml                     no matched refs
+table data   9ffc63 C9H_divlu                          len  122  Boot_UDivMod32                           IDE ml,v1.10 ml,v1.10 pic  no matched refs
+hdae v2.06i  29abd8 _sprintf                           len   40  HDAE5000_SPrintf                         IDE ml,v1.10 ml            no matched refs
+hdae v2.06i  29ac00 _vsprintf                          len   59  HDAE5000_VSPrintf                        IDE ml,v1.10 ml            no matched refs
+hdae v2.06i  29ac3b _itoa                              len  138  HDAE5000_IToA                            IDE ml                     refs confirmed 1
+hdae v2.06i  29acc5 _ldiv                              len   67  HDAE5000_LDiv                            IDE ml,v1.10 ml            no matched refs
+hdae v2.06i  29ad08 _ltoa                              len   60  HDAE5000_LToA                            IDE ml                     refs confirmed 1
+hdae v2.06i  29ad44 _ultoa                             len  136  HDAE5000_ULToA                           IDE ml                     refs confirmed 1
+hdae v2.06i  29ae0c _memchr                            len   24  HDAE5000_MemChr                          IDE ml,v1.10 ml            no matched refs
+hdae v2.06i  29ae24 _memcmp                            len  123  HDAE5000_MemCmp                          IDE ml,v1.10 ml            no matched refs
+hdae v2.06i  29ae9f _memcpy                            len   40  HDAE5000_MemCopy                         IDE ml,v1.10 ml            no matched refs
+hdae v2.06i  29aec7 _memset                            len   68  HDAE5000_MemFill                         IDE ml,v1.10 ml            no matched refs
+hdae v2.06i  29af0b _strcat                            len   34  HDAE5000_StrCat                          IDE ml,v1.10 ml            no matched refs
+hdae v2.06i  29af45 _strcpy                            len   44  HDAE5000_StrCpy                          IDE ml                     no matched refs
+hdae v2.06i  29af71 _strlen                            len   30  HDAE5000_StrLen                          IDE ml                     refs confirmed 1
+hdae v2.06i  29af8f _strncat                           len   47  HDAE5000_StrNCat                         IDE ml                     no matched refs
+hdae v2.06i  29afbe _strncmp                           len   50  HDAE5000_StrNCmp                         IDE ml                     no matched refs
+hdae v2.06i  29aff0 _strncpy                           len   43  HDAE5000_StrNCpy                         IDE ml                     no matched refs
+hdae v2.06i  29b04e _strupr                            len   44  HDAE5000_StrUpr                          IDE ml                     no matched refs
+hdae v2.06i  29b72d C9H_mullu                          len   22  HDAE5000_Multiply                        IDE ml,IDE pic,v1.10 ml,v1.10 pic no matched refs
+hdae v2.06i  29b744 ._fset_acf                         len   57  HDAE5000_Float_Unpack                    IDE ml,v1.10 ml,v1.10 pic  no matched refs
+hdae v2.06i  29b77e ._fset_fac                         len   94  HDAE5000_Float_Pack                      IDE ml,v1.10 ml            no matched refs
+hdae v2.06i  29b7e8 ._fld_xx                           len   17  HDAE5000_Copy10                          IDE ml,IDE pic,v1.10 ml,v1.10 pic no matched refs
+hdae v2.06i  29b7fa ._fld_fl                           len   27  HDAE5000_LongToFloat                     IDE ml                     refs confirmed 1
+hdae v2.06i  29b815 ._fld_fl_tail                      len   27  HDAE5000_ULongToFloat                    IDE ml                     refs confirmed 2
+hdae v2.06i  29b830 SPECIAL_DIV                        len   16  HDAE5000_FloatDiv_Special                IDE ml,IDE pic,v1.10 ml,v1.10 pic no matched refs
+hdae v2.06i  29b840 ._fdiv_f                           len   48  HDAE5000_FloatDiv                        IDE ml                     callee score ._fdiv_f 0.88, ._fmul_f 0.21
+hdae v2.06i  29b870 SDivMod                            len   71  HDAE5000_SDivMod32_Common                IDE ml                     no matched refs
+hdae v2.06i  29b942 ._fset_dac                         len  105  HDAE5000_Double_Pack                     IDE ml,v1.10 ml            no matched refs
+hdae v2.06i  29b9ac ._fcvt_dacl | ._fcvt_facl | ._fcvt_xacl len   25  HDAE5000_Long_To_Unpacked                IDE ml,IDE pic,v1.10 ml,v1.10 pic ambiguous
+hdae v2.06i  29b9c5 ._fcvt_facul                       len   90  HDAE5000_ULong_To_Unpacked               IDE ml,v1.10 ml,v1.10 pic  no matched refs
+hdae v2.06i  2f9362 ___ctype | __ctype                 len  256  HDAE5000_CType_Table                     IDE ml,IDE pic,v1.10 ml    ambiguous
+hdae v2.06i  2f948e __doform_c data                    len   35  HDAE5000_HexDigits_Lower                 IDE pic                    no matched refs
+hdae v2.01i  29a4a0 _sprintf                           len   40  HDAE5000_SPrintf                         IDE ml,v1.10 ml            no matched refs
+hdae v2.01i  29a4c8 _vsprintf                          len   59  HDAE5000_VSPrintf                        IDE ml,v1.10 ml            no matched refs
+hdae v2.01i  29a503 _itoa                              len  138  HDAE5000_IToA                            IDE ml                     refs confirmed 1
+hdae v2.01i  29a58d _ldiv                              len   67  HDAE5000_LDiv                            IDE ml,v1.10 ml            no matched refs
+hdae v2.01i  29a5d0 _ltoa                              len   60  HDAE5000_LToA                            IDE ml                     refs confirmed 1
+hdae v2.01i  29a60c _ultoa                             len  136  HDAE5000_ULToA                           IDE ml                     refs confirmed 1
+hdae v2.01i  29a6d4 _memchr                            len   24  HDAE5000_MemChr                          IDE ml,v1.10 ml            no matched refs
+hdae v2.01i  29a6ec _memcmp                            len  123  HDAE5000_MemCmp                          IDE ml,v1.10 ml            no matched refs
+hdae v2.01i  29a767 _memcpy                            len   40  HDAE5000_MemCopy                         IDE ml,v1.10 ml            no matched refs
+hdae v2.01i  29a78f _memset                            len   68  HDAE5000_MemFill                         IDE ml,v1.10 ml            no matched refs
+hdae v2.01i  29a7d3 _strcat                            len   34  HDAE5000_StrCat                          IDE ml,v1.10 ml            no matched refs
+hdae v2.01i  29a80d _strcpy                            len   44  HDAE5000_StrCpy                          IDE ml                     no matched refs
+hdae v2.01i  29a839 _strlen                            len   30  HDAE5000_StrLen                          IDE ml                     refs confirmed 1
+hdae v2.01i  29a857 _strncat                           len   47  HDAE5000_StrNCat                         IDE ml                     no matched refs
+hdae v2.01i  29a886 _strncmp                           len   50  HDAE5000_StrNCmp                         IDE ml                     no matched refs
+hdae v2.01i  29a8b8 _strncpy                           len   43  HDAE5000_StrNCpy                         IDE ml                     no matched refs
+hdae v2.01i  29a916 _strupr                            len   44  HDAE5000_StrUpr                          IDE ml                     no matched refs
+hdae v2.01i  29aff5 C9H_mullu                          len   22  HDAE5000_Multiply                        IDE ml,IDE pic,v1.10 ml,v1.10 pic no matched refs
+hdae v2.01i  29b00c ._fset_acf                         len   57  HDAE5000_Float_Unpack                    IDE ml,v1.10 ml,v1.10 pic  no matched refs
+hdae v2.01i  29b046 ._fset_fac                         len   94  HDAE5000_Float_Pack                      IDE ml,v1.10 ml            no matched refs
+hdae v2.01i  29b0b0 ._fld_xx                           len   17  HDAE5000_Copy10                          IDE ml,IDE pic,v1.10 ml,v1.10 pic no matched refs
+hdae v2.01i  29b0c2 ._fld_fl                           len   27  HDAE5000_LongToFloat                     IDE ml                     refs confirmed 1
+hdae v2.01i  29b0dd ._fld_fl_tail                      len   27  HDAE5000_ULongToFloat                    IDE ml                     refs confirmed 2
+hdae v2.01i  29b0f8 SPECIAL_DIV                        len   16  HDAE5000_FloatDiv_Special                IDE ml,IDE pic,v1.10 ml,v1.10 pic no matched refs
+hdae v2.01i  29b108 ._fdiv_f                           len   48  HDAE5000_FloatDiv                        IDE ml                     callee score ._fdiv_f 0.88, ._fmul_f 0.21
+hdae v2.01i  29b138 SDivMod                            len   71  HDAE5000_SDivMod32_Common                IDE ml                     no matched refs
+hdae v2.01i  29b20a ._fset_dac                         len  105  HDAE5000_Double_Pack                     IDE ml,v1.10 ml            no matched refs
+hdae v2.01i  29b274 ._fcvt_dacl | ._fcvt_facl | ._fcvt_xacl len   25  HDAE5000_Long_To_Unpacked                IDE ml,IDE pic,v1.10 ml,v1.10 pic ambiguous
+hdae v2.01i  29b28d ._fcvt_facul                       len   90  HDAE5000_ULong_To_Unpacked               IDE ml,v1.10 ml,v1.10 pic  no matched refs
+hdae v2.01i  2f884e ___ctype | __ctype                 len  256  HDAE5000_CType_Table                     IDE ml,IDE pic,v1.10 ml    ambiguous
+hdae v2.01i  2f897a __doform_c data                    len   35  HDAE5000_HexDigits_Lower                 IDE pic                    no matched refs
+hdae v1.15i  296baf _sprintf                           len   40  HDAE5000_SPrintf                         IDE ml,v1.10 ml            no matched refs
+hdae v1.15i  296bd7 _vsprintf                          len   59  HDAE5000_VSPrintf                        IDE ml,v1.10 ml            no matched refs
+hdae v1.15i  296c12 _itoa                              len  138  HDAE5000_IToA                            IDE ml                     refs confirmed 1
+hdae v1.15i  296c9c _ldiv                              len   67  HDAE5000_LDiv                            IDE ml,v1.10 ml            no matched refs
+hdae v1.15i  296cdf _ltoa                              len   60  HDAE5000_LToA                            IDE ml                     refs confirmed 1
+hdae v1.15i  296d1b _ultoa                             len  136  HDAE5000_ULToA                           IDE ml                     refs confirmed 1
+hdae v1.15i  296de3 _memchr                            len   24  HDAE5000_MemChr                          IDE ml,v1.10 ml            no matched refs
+hdae v1.15i  296dfb _memcmp                            len  123  HDAE5000_MemCmp                          IDE ml,v1.10 ml            no matched refs
+hdae v1.15i  296e76 _memcpy                            len   40  HDAE5000_MemCopy                         IDE ml,v1.10 ml            no matched refs
+hdae v1.15i  296e9e _memset                            len   68  HDAE5000_MemFill                         IDE ml,v1.10 ml            no matched refs
+hdae v1.15i  296ee2 _strcat                            len   34  HDAE5000_StrCat                          IDE ml,v1.10 ml            no matched refs
+hdae v1.15i  296f1c _strcpy                            len   44  HDAE5000_StrCpy                          IDE ml                     no matched refs
+hdae v1.15i  296f48 _strlen                            len   30  HDAE5000_StrLen                          IDE ml                     refs confirmed 1
+hdae v1.15i  296f66 _strncat                           len   47  HDAE5000_StrNCat                         IDE ml                     no matched refs
+hdae v1.15i  296f95 _strncmp                           len   50  HDAE5000_StrNCmp                         IDE ml                     no matched refs
+hdae v1.15i  296fc7 _strncpy                           len   43  HDAE5000_StrNCpy                         IDE ml                     no matched refs
+hdae v1.15i  2976a5 C9H_mullu                          len   22  HDAE5000_Multiply                        IDE ml,IDE pic,v1.10 ml,v1.10 pic no matched refs
+hdae v1.15i  2976bc ._fset_acf                         len   57  HDAE5000_Float_Unpack                    IDE ml,v1.10 ml,v1.10 pic  no matched refs
+hdae v1.15i  2976f6 ._fset_fac                         len   94  HDAE5000_Float_Pack                      IDE ml,v1.10 ml            no matched refs
+hdae v1.15i  297760 ._fld_xx                           len   17  HDAE5000_Copy10                          IDE ml,IDE pic,v1.10 ml,v1.10 pic no matched refs
+hdae v1.15i  297772 ._fld_fl                           len   27  HDAE5000_LongToFloat                     IDE ml                     refs confirmed 1
+hdae v1.15i  29778d ._fld_fl_tail                      len   27  HDAE5000_ULongToFloat                    IDE ml                     refs confirmed 2
+hdae v1.15i  2977a8 SPECIAL_DIV                        len   16  HDAE5000_FloatDiv_Special                IDE ml,IDE pic,v1.10 ml,v1.10 pic no matched refs
+hdae v1.15i  2977b8 ._fdiv_f                           len   48  HDAE5000_FloatDiv                        IDE ml                     callee score ._fdiv_f 0.88, ._fmul_f 0.21
+hdae v1.15i  2977e8 SDivMod                            len   71  HDAE5000_SDivMod32_Common                IDE ml                     no matched refs
+hdae v1.15i  2978ba ._fset_dac                         len  105  HDAE5000_Double_Pack                     IDE ml,v1.10 ml            no matched refs
+hdae v1.15i  297924 ._fcvt_dacl | ._fcvt_facl | ._fcvt_xacl len   25  HDAE5000_Long_To_Unpacked                IDE ml,IDE pic,v1.10 ml,v1.10 pic ambiguous
+hdae v1.15i  29793d ._fcvt_facul                       len   90  HDAE5000_ULong_To_Unpacked               IDE ml,v1.10 ml,v1.10 pic  no matched refs
+hdae v1.15i  2e0e66 ___ctype | __ctype                 len  256  HDAE5000_CType_Table                     IDE ml,IDE pic,v1.10 ml    ambiguous
+hdae v1.15i  2e0f92 __doform_c data                    len   35  HDAE5000_HexDigits_Lower                 IDE pic                    no matched refs
+hdae v1.10i  296ab3 _sprintf                           len   40  HDAE5000_SPrintf                         IDE ml,v1.10 ml            no matched refs
+hdae v1.10i  296adb _vsprintf                          len   59  HDAE5000_VSPrintf                        IDE ml,v1.10 ml            no matched refs
+hdae v1.10i  296b16 _itoa                              len  138  HDAE5000_IToA                            IDE ml                     refs confirmed 1
+hdae v1.10i  296ba0 _ldiv                              len   67  HDAE5000_LDiv                            IDE ml,v1.10 ml            no matched refs
+hdae v1.10i  296be3 _ltoa                              len   60  HDAE5000_LToA                            IDE ml                     refs confirmed 1
+hdae v1.10i  296c1f _ultoa                             len  136  HDAE5000_ULToA                           IDE ml                     refs confirmed 1
+hdae v1.10i  296ce7 _memchr                            len   24  HDAE5000_MemChr                          IDE ml,v1.10 ml            no matched refs
+hdae v1.10i  296cff _memcmp                            len  123  HDAE5000_MemCmp                          IDE ml,v1.10 ml            no matched refs
+hdae v1.10i  296d7a _memcpy                            len   40  HDAE5000_MemCopy                         IDE ml,v1.10 ml            no matched refs
+hdae v1.10i  296da2 _memset                            len   68  HDAE5000_MemFill                         IDE ml,v1.10 ml            no matched refs
+hdae v1.10i  296de6 _strcat                            len   34  HDAE5000_StrCat                          IDE ml,v1.10 ml            no matched refs
+hdae v1.10i  296e20 _strcpy                            len   44  HDAE5000_StrCpy                          IDE ml                     no matched refs
+hdae v1.10i  296e4c _strlen                            len   30  HDAE5000_StrLen                          IDE ml                     refs confirmed 1
+hdae v1.10i  296e6a _strncat                           len   47  HDAE5000_StrNCat                         IDE ml                     no matched refs
+hdae v1.10i  296e99 _strncmp                           len   50  HDAE5000_StrNCmp                         IDE ml                     no matched refs
+hdae v1.10i  296ecb _strncpy                           len   43  HDAE5000_StrNCpy                         IDE ml                     no matched refs
+hdae v1.10i  2975a9 C9H_mullu                          len   22  HDAE5000_Multiply                        IDE ml,IDE pic,v1.10 ml,v1.10 pic no matched refs
+hdae v1.10i  2975c0 ._fset_acf                         len   57  HDAE5000_Float_Unpack                    IDE ml,v1.10 ml,v1.10 pic  no matched refs
+hdae v1.10i  2975fa ._fset_fac                         len   94  HDAE5000_Float_Pack                      IDE ml,v1.10 ml            no matched refs
+hdae v1.10i  297664 ._fld_xx                           len   17  HDAE5000_Copy10                          IDE ml,IDE pic,v1.10 ml,v1.10 pic no matched refs
+hdae v1.10i  297676 ._fld_fl                           len   27  HDAE5000_LongToFloat                     IDE ml                     refs confirmed 1
+hdae v1.10i  297691 ._fld_fl_tail                      len   27  HDAE5000_ULongToFloat                    IDE ml                     refs confirmed 2
+hdae v1.10i  2976ac SPECIAL_DIV                        len   16  HDAE5000_FloatDiv_Special                IDE ml,IDE pic,v1.10 ml,v1.10 pic no matched refs
+hdae v1.10i  2976bc ._fdiv_f                           len   48  HDAE5000_FloatDiv                        IDE ml                     callee score ._fdiv_f 0.88, ._fmul_f 0.21
+hdae v1.10i  2976ec SDivMod                            len   71  HDAE5000_SDivMod32_Common                IDE ml                     no matched refs
+hdae v1.10i  2977be ._fset_dac                         len  105  HDAE5000_Double_Pack                     IDE ml,v1.10 ml            no matched refs
+hdae v1.10i  297828 ._fcvt_dacl | ._fcvt_facl | ._fcvt_xacl len   25  HDAE5000_Long_To_Unpacked                IDE ml,IDE pic,v1.10 ml,v1.10 pic ambiguous
+hdae v1.10i  297841 ._fcvt_facul                       len   90  HDAE5000_ULong_To_Unpacked               IDE ml,v1.10 ml,v1.10 pic  no matched refs
+hdae v1.10i  2e0cd6 ___ctype | __ctype                 len  256  HDAE5000_CType_Table                     IDE ml,IDE pic,v1.10 ml    ambiguous
+hdae v1.10i  2e0e02 __doform_c data                    len   35  HDAE5000_HexDigits_Lower                 IDE pic                    no matched refs
+wsa1 prom_a  fe68dd C9H_mullu                          len   22  Int_Mul32                                IDE ml,IDE pic,v1.10 ml,v1.10 pic no matched refs
+wsa1 prom_a  fe68f3 SDivMod                            len   71  Int_SignedDiv                            IDE ml                     no matched refs

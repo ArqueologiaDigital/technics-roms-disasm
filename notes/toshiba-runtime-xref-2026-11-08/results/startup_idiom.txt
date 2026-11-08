@@ -1,0 +1,39 @@
+maincpu v10  zero-fill ef0b50  Boot_InitWorkRAM+10                           xde=010000 xbc=02d524
+maincpu v10  zero-fill ef0b85  Boot_InitWorkRAM_ZeroBlock1_Done+10           xde=000400 xbc=00df5d
+maincpu v10  copy      ef0bbf  Boot_InitWorkRAM_ROMCopy1_Start+15            xde=03d524 xhl=eed8c8 xbc=00219e
+maincpu v10  copy      ef0be1  Boot_InitWorkRAM_ROMCopy2_Start+15            xde=00e35e xhl=eefa66 xbc=00095b
+maincpu v9   zero-fill ef0b50  Boot_InitWorkRAM+10                           xde=010000 xbc=02d524
+maincpu v9   zero-fill ef0b85  Boot_InitWorkRAM_ZeroBlock1_Done+10           xde=000400 xbc=00df5d
+maincpu v9   copy      ef0bbf  Boot_InitWorkRAM_ROMCopy1_Start+15            xde=03d524 xhl=eed8c8 xbc=00219e
+maincpu v9   copy      ef0be1  Boot_InitWorkRAM_ROMCopy2_Start+15            xde=00e35e xhl=eefa66 xbc=00095b
+maincpu v7   zero-fill ef0b26  Boot_InitWorkRAM+10                           xde=010000 xbc=02d524
+maincpu v7   zero-fill ef0b5b  Boot_InitWorkRAM_ZeroBlock1_Done+10           xde=000400 xbc=00dec1
+maincpu v7   copy      ef0b95  Boot_InitWorkRAM_ROMCopy1_Start+15            xde=03d524 xhl=eed8c8 xbc=00219e
+maincpu v7   copy      ef0bb7  Boot_InitWorkRAM_ROMCopy2_Start+15            xde=00e2c2 xhl=eefa66 xbc=000931
+maincpu v6   zero-fill ef0a27  Boot_InitWorkRAM+10                           xde=010000 xbc=02d524
+maincpu v6   zero-fill ef0a5c  Boot_InitWorkRAM_ZeroBlock1_Done+10           xde=000400 xbc=00de9d
+maincpu v6   copy      ef0a96  Boot_InitWorkRAM_ROMCopy1_Start+15            xde=03d524 xhl=eed7cc xbc=00219a
+maincpu v6   copy      ef0ab8  Boot_InitWorkRAM_ROMCopy2_Start+15            xde=00e29e xhl=eef966 xbc=000931
+maincpu v5   zero-fill ef0a0f  Boot_InitWorkRAM+10                           xde=010000 xbc=02d524
+maincpu v5   zero-fill ef0a44  Boot_InitWorkRAM_ZeroBlock1_Done+10           xde=000400 xbc=00de9d
+maincpu v5   copy      ef0a7e  Boot_InitWorkRAM_ROMCopy1_Start+15            xde=03d524 xhl=eed7b4 xbc=00219a
+maincpu v5   copy      ef0aa0  Boot_InitWorkRAM_ROMCopy2_Start+15            xde=00e29e xhl=eef94e xbc=000931
+subcpu v142  zero-fill 01fc0b  MemClear_DRAM_And_ExtRAM+10                   xde=03ee76 xbc=0066f2
+subcpu v142  zero-fill 01fc40  MemClear_ExtRAM+10                            xde=000600 xbc=0044cb
+subcpu v141  zero-fill 01fbf4  MemClear_DRAM_And_ExtRAM+10                   xde=03ee5e xbc=0066f2
+subcpu v141  zero-fill 01fc29  MemClear_ExtRAM+10                            xde=000600 xbc=0044cb
+subcpu v140  zero-fill 01fbf4  MemClear_DRAM_And_ExtRAM+10                   xde=03ee2a xbc=0066f2
+subcpu v140  zero-fill 01fc29  MemClear_ExtRAM+10                            xde=000600 xbc=0044cb
+subcpu boot  copy      ff847c  COPY_VECTORS+15                               xde=000400 xhl=ff8f6c xbc=0000e1
+table data   zero-fill 9fb74a  Boot_ClearRAM+10                              xde=00104e xbc=00894a
+table data   zero-fill 9fb77f  Boot_ClearRAM__clear1_aligned+10              xde=000c00 xbc=000443
+table data   copy      9fb7b9  Boot_ClearRAM__clear2_aligned+15              xde=009998 xhl=ffb4dc xbc=00000c
+table data   copy      9fb7db  Boot_ClearRAM__copy1_done+15                  xde=001044 xhl=ffb4d2 xbc=00000a
+hdae v2.06i  zero-fill 28f78f  HDAE5000_Clear_Work_Buffer+10                 xde=22a000 xbc=00f52a
+hdae v2.06i  copy      28f7c9  HDAE5000_Clear_Work_Buffer__no_odd_byte+15    xde=23952a xhl=2f94b2 xbc=000c82
+hdae v2.01i  zero-fill 28f142  HDAE5000_Clear_Work_Buffer+10                 xde=22a000 xbc=00f4ce
+hdae v2.01i  copy      28f17c  HDAE5000_Clear_Work_Buffer__no_odd_byte+15    xde=2394ce xhl=2f899e xbc=000c48
+hdae v1.15i  zero-fill 28c1b7  HDAE5000_Clear_Work_Buffer+10                 xde=22a000 xbc=012914
+hdae v1.15i  copy      28c1f1  HDAE5000_Clear_Work_Buffer__no_odd_byte+15    xde=23c914 xhl=2e0fb6 xbc=0009d4
+hdae v1.10i  zero-fill 28c16e  HDAE5000_Clear_Work_Buffer+10                 xde=22a000 xbc=012914
+hdae v1.10i  copy      28c1a8  HDAE5000_Clear_Work_Buffer__no_odd_byte+15    xde=23c914 xhl=2e0e26 xbc=0009d4

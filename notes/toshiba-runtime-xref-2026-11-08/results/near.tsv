@@ -1,0 +1,26 @@
+image	address	library	public	length	known	score	our_label
+hdae v1.10i	2978e0	IDE ml	._fdiv_acf	149	146	0.877	HDAE5000_Unpacked_Div
+hdae v1.10i	2978e2	v1.10 ml	._fdiv_acf	147	145	0.828	HDAE5000_Unpacked_Div+2
+hdae v1.10i	2e0dd6	IDE ml	f_const	79	78	0.872	HDAE5000_DoPrintf_ConvTable
+hdae v2.06i	29ba64	IDE ml	._fdiv_acf	149	146	0.877	HDAE5000_Unpacked_Div
+hdae v2.06i	29ba66	v1.10 ml	._fdiv_acf	147	145	0.828	HDAE5000_Unpacked_Div+2
+hdae v2.06i	2f9462	IDE ml	f_const	79	78	0.872	HDAE5000_DoPrintf_ConvTable
+maincpu v10	eed878	IDE ml	f_const	79	78	0.872	Sprintf_TypeSwitch
+maincpu v10	ff0ab7	v1.10 ml	_vsprintf	59	40	0.875	Sprintf_Unlocked+3
+maincpu v10	ff0f76	v1.10 ml	_sbrk	42	27	0.889	Strcpy_LoadReg+1
+maincpu v7	eed878	IDE ml	f_const	79	78	0.872	Sprintf_TypeSwitch
+maincpu v7	ff02da	v1.10 ml	_vsprintf	59	40	0.875	Sprintf_Unlocked+3
+maincpu v7	ff0799	v1.10 ml	_sbrk	42	27	0.889	Strcpy_LoadReg+1
+subcpu v142	01f646	IDE ml	f_const	72	72	0.972	FPConst_Int32_Min_As_Double
+subcpu v142	01f666	v1.10 ml	f_const	40	40	0.800	FPConst_pow_IntPower_Seed_One
+subcpu v142	01f6be	IDE ml	f_const	32	32	0.875	FPConst_exp_NonZero_One
+subcpu v142	03d34d	IDE ml	_cos	74	62	0.806	FP_cos
+subcpu v142	03d403	IDE pic	._fneg_d	25	25	0.800	FP_fdiv+47
+subcpu v142	03d4c9	IDE ml	_tan	106	85	0.859	FP_tan
+subcpu v142	03d529	IDE ml	_pow	806	605	0.807	FP_tan_InRange+56
+subcpu v142	03df3a	v1.10 ml	._fadd_acf	37	35	0.800	FP_SP_AddMantissa+2
+subcpu v142	03e4b4	IDE ml	._fdiv_acf	149	146	0.877	FP_SP_DivCore
+subcpu v142	03e4b6	v1.10 ml	._fdiv_acf	147	145	0.828	FP_SP_DivCore+2
+subcpu v142	03e5f8	v1.10 ml	._fsub_acf	83	81	0.914	FP_SP_SubMantissa+2
+subcpu v142	03e731	IDE ml	_log	338	248	0.806	FP_log
+table data	9ffb2c	v1.10 ml	_sbrk	42	27	0.889	Boot_ChecksumWords__loop+7

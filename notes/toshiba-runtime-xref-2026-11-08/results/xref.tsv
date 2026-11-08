@@ -1,0 +1,833 @@
+image	address	library	member	section	public	offset	length	known	our_label	references
+maincpu v10	eed778	v1.10 ml	_ctype_c	f_const	___ctype	0	256	256	CType_ClassTable	
+maincpu v10	ff28d1	v1.10 ml	_memchr_c	f_code	_memchr	0	24	24	Sprintf_MemChr	
+maincpu v10	ff0d1e	v1.10 ml	_memcmp_c	f_code	_memcmp	0	123	123	Mem_Compare	
+maincpu v10	ff0d99	v1.10 ml	_memcpy_c	f_code	_memcpy	0	40	40	Mem_Copy	
+maincpu v10	ff0ffa	v1.10 ml	_memset_c	f_code	_memset	0	68	68	Memset	
+maincpu v10	ff0dc1	v1.10 ml	_strcat_c	f_code	_strcat	0	34	34	Strcat	
+maincpu v10	ff0c18	v1.10 ml	ldivl	f_code	C9H_divlu	87	122	122	Math_DivideU32	
+maincpu v10	ff0a5c	v1.10 ml	lmull	f_code	C9H_mullu	0	22	22	Math_Multiply32	
+maincpu v10	ff2880	v1.10 ml	_ld_xx_s	f_code	._fld_xx	0	17	17	Sprintf_CopyBytes10	
+maincpu v10	ff0c18	v1.10 pic	ldivl	pic_code	C9H_divlu	87	122	122	Math_DivideU32	
+maincpu v10	ff0a5c	v1.10 pic	lmull	pic_code	C9H_mullu	0	22	22	Math_Multiply32	
+maincpu v10	ff2880	v1.10 pic	_ld_xx_s	pic_code	._fld_xx	0	17	17	Sprintf_CopyBytes10	
+maincpu v10	eed778	IDE ml	_ctype_c	f_const	__ctype	0	256	256	CType_ClassTable	
+maincpu v10	ff0f79	IDE ml	__sbrk_c	f_code	.sbrk	0	39	24	Heap_Alloc	_SBRK_size=03d528 _SBRK_size=03d528 _SBRK_break=03d524 _SBRK_break=03d524 _SBRK_size=03d528
+maincpu v10	ff09a0	IDE ml	_atoi_c	f_code	_atoi	0	86	83	ParseInt16	__ctype=eed778
+maincpu v10	ff09f6	IDE ml	_atol_c	f_code	_atol	0	102	99	ParseInt32	__ctype=eed778
+maincpu v10	ff0de3	IDE ml	_itoa_c	f_code	_itoa	0	138	135	Itoa_Safe	_memcpy=ff0d99
+maincpu v10	ff0fbe	IDE ml	_ltoa_c	f_code	_ltoa	0	60	54	Strlen_LoadParam	_ultoa=ff27f7 _ultoa=ff27f7
+maincpu v10	ff27f7	IDE ml	_ultoa_c	f_code	_ultoa	0	136	127	Sprintf_ItoaBaseN	C9H_remlu=ff0c12 C9H_divlu=ff0c18 _memcpy=ff0d99
+maincpu v10	ff28d1	IDE ml	_memchr_c	f_code	_memchr	0	24	24	Sprintf_MemChr	
+maincpu v10	ff0d1e	IDE ml	_memcmp_c	f_code	_memcmp	0	123	123	Mem_Compare	
+maincpu v10	ff0d99	IDE ml	_memcpy_c	f_code	_memcpy	0	40	40	Mem_Copy	
+maincpu v10	ff0ffa	IDE ml	_memset_c	f_code	_memset	0	68	68	Memset	
+maincpu v10	ff0dc1	IDE ml	_strcat_c	f_code	_strcat	0	34	34	Strcat	
+maincpu v10	ff0e6d	IDE ml	_strchr_c	f_code	_strchr	0	19	19	Strchr	
+maincpu v10	ff0f4d	IDE ml	_strcpy_c	f_code	_strcpy	0	44	41	Strcpy	_memccpy=ff2891
+maincpu v10	ff097d	IDE ml	_strcspn_c	f_code	_strcspn	0	35	35	StrSearch_Init	
+maincpu v10	ff0fa0	IDE ml	_strlen_c	f_code	_strlen	0	30	27	Strlen	_memchr=ff28d1
+maincpu v10	ff0c92	IDE ml	_strncat_c	f_code	_strncat	0	47	47	Strncat	
+maincpu v10	ff0cc1	IDE ml	_strncmp_c	f_code	_strncmp	0	50	50	String_Compare	
+maincpu v10	ff0cf3	IDE ml	_strncpy_c	f_code	_strncpy	0	43	43	Strncpy	
+maincpu v10	ff28e9	IDE ml	_strnset_c	f_code	_strnset	0	32	32	Sprintf_StrNSet	
+maincpu v10	ff091d	IDE ml	_strstr_c	f_code	_strstr	0	96	87	TmFlash_CompareStrings	_strlen=ff0fa0 _strlen=ff0fa0 _memcmp=ff0d1e
+maincpu v10	ff0bc3	IDE ml	ldivl	f_code	SDivMod	0	71	71	Math_DivModSigned32	
+maincpu v10	ff0c18	IDE ml	ldivl	f_code	C9H_divlu	85	122	122	Math_DivideU32	
+maincpu v10	ff0a5c	IDE ml	lmull	f_code	C9H_mullu	0	22	22	Math_Multiply32	
+maincpu v10	ff2880	IDE ml	_ld_xx_s	f_code	._fld_xx	0	17	17	Sprintf_CopyBytes10	
+maincpu v10	eed778	IDE pic	_ctype_c	far_pid_data	__ctype	0	256	256	CType_ClassTable	
+maincpu v10	eed8a4	IDE pic	__doform_c	far_pid_data	__doform_c data	0	35	34	Sprintf_HexDigitsLower	
+maincpu v10	ff0a5c	IDE pic	lmull	far_pic	C9H_mullu	0	22	22	Math_Multiply32	
+maincpu v10	ff2880	IDE pic	_ld_xx_s	far_pic	._fld_xx	0	17	17	Sprintf_CopyBytes10	
+maincpu v9	eed778	v1.10 ml	_ctype_c	f_const	___ctype	0	256	256	CType_ClassTable	
+maincpu v9	ff28c3	v1.10 ml	_memchr_c	f_code	_memchr	0	24	24	Sprintf_MemChr	
+maincpu v9	ff0d10	v1.10 ml	_memcmp_c	f_code	_memcmp	0	123	123	Mem_Compare	
+maincpu v9	ff0d8b	v1.10 ml	_memcpy_c	f_code	_memcpy	0	40	40	Mem_Copy	
+maincpu v9	ff0fec	v1.10 ml	_memset_c	f_code	_memset	0	68	68	Memset	
+maincpu v9	ff0db3	v1.10 ml	_strcat_c	f_code	_strcat	0	34	34	Strcat	
+maincpu v9	ff0c0a	v1.10 ml	ldivl	f_code	C9H_divlu	87	122	122	Math_DivideU32	
+maincpu v9	ff0a4e	v1.10 ml	lmull	f_code	C9H_mullu	0	22	22	Math_Multiply32	
+maincpu v9	ff2872	v1.10 ml	_ld_xx_s	f_code	._fld_xx	0	17	17	Sprintf_CopyBytes10	
+maincpu v9	ff0c0a	v1.10 pic	ldivl	pic_code	C9H_divlu	87	122	122	Math_DivideU32	
+maincpu v9	ff0a4e	v1.10 pic	lmull	pic_code	C9H_mullu	0	22	22	Math_Multiply32	
+maincpu v9	ff2872	v1.10 pic	_ld_xx_s	pic_code	._fld_xx	0	17	17	Sprintf_CopyBytes10	
+maincpu v9	eed778	IDE ml	_ctype_c	f_const	__ctype	0	256	256	CType_ClassTable	
+maincpu v9	ff0f6b	IDE ml	__sbrk_c	f_code	.sbrk	0	39	24	Heap_Alloc	_SBRK_size=03d528 _SBRK_size=03d528 _SBRK_break=03d524 _SBRK_break=03d524 _SBRK_size=03d528
+maincpu v9	ff0992	IDE ml	_atoi_c	f_code	_atoi	0	86	83	ParseInt16	__ctype=eed778
+maincpu v9	ff09e8	IDE ml	_atol_c	f_code	_atol	0	102	99	ParseInt32	__ctype=eed778
+maincpu v9	ff0dd5	IDE ml	_itoa_c	f_code	_itoa	0	138	135	Itoa_Safe	_memcpy=ff0d8b
+maincpu v9	ff0fb0	IDE ml	_ltoa_c	f_code	_ltoa	0	60	54	Strlen_LoadParam	_ultoa=ff27e9 _ultoa=ff27e9
+maincpu v9	ff27e9	IDE ml	_ultoa_c	f_code	_ultoa	0	136	127	Sprintf_ItoaBaseN	C9H_remlu=ff0c04 C9H_divlu=ff0c0a _memcpy=ff0d8b
+maincpu v9	ff28c3	IDE ml	_memchr_c	f_code	_memchr	0	24	24	Sprintf_MemChr	
+maincpu v9	ff0d10	IDE ml	_memcmp_c	f_code	_memcmp	0	123	123	Mem_Compare	
+maincpu v9	ff0d8b	IDE ml	_memcpy_c	f_code	_memcpy	0	40	40	Mem_Copy	
+maincpu v9	ff0fec	IDE ml	_memset_c	f_code	_memset	0	68	68	Memset	
+maincpu v9	ff0db3	IDE ml	_strcat_c	f_code	_strcat	0	34	34	Strcat	
+maincpu v9	ff0e5f	IDE ml	_strchr_c	f_code	_strchr	0	19	19	Strchr	
+maincpu v9	ff0f3f	IDE ml	_strcpy_c	f_code	_strcpy	0	44	41	Strcpy	_memccpy=ff2883
+maincpu v9	ff096f	IDE ml	_strcspn_c	f_code	_strcspn	0	35	35	StrSearch_Init	
+maincpu v9	ff0f92	IDE ml	_strlen_c	f_code	_strlen	0	30	27	Strlen	_memchr=ff28c3
+maincpu v9	ff0c84	IDE ml	_strncat_c	f_code	_strncat	0	47	47	Strncat	
+maincpu v9	ff0cb3	IDE ml	_strncmp_c	f_code	_strncmp	0	50	50	String_Compare	
+maincpu v9	ff0ce5	IDE ml	_strncpy_c	f_code	_strncpy	0	43	43	Strncpy	
+maincpu v9	ff28db	IDE ml	_strnset_c	f_code	_strnset	0	32	32	Sprintf_StrNSet	
+maincpu v9	ff090f	IDE ml	_strstr_c	f_code	_strstr	0	96	87	TmFlash_CompareStrings	_strlen=ff0f92 _strlen=ff0f92 _memcmp=ff0d10
+maincpu v9	ff0bb5	IDE ml	ldivl	f_code	SDivMod	0	71	71	Math_DivModSigned32	
+maincpu v9	ff0c0a	IDE ml	ldivl	f_code	C9H_divlu	85	122	122	Math_DivideU32	
+maincpu v9	ff0a4e	IDE ml	lmull	f_code	C9H_mullu	0	22	22	Math_Multiply32	
+maincpu v9	ff2872	IDE ml	_ld_xx_s	f_code	._fld_xx	0	17	17	Sprintf_CopyBytes10	
+maincpu v9	eed778	IDE pic	_ctype_c	far_pid_data	__ctype	0	256	256	CType_ClassTable	
+maincpu v9	eed8a4	IDE pic	__doform_c	far_pid_data	__doform_c data	0	35	34	Sprintf_HexDigitsLower	
+maincpu v9	ff0a4e	IDE pic	lmull	far_pic	C9H_mullu	0	22	22	Math_Multiply32	
+maincpu v9	ff2872	IDE pic	_ld_xx_s	far_pic	._fld_xx	0	17	17	Sprintf_CopyBytes10	
+maincpu v7	eed778	v1.10 ml	_ctype_c	f_const	___ctype	0	256	256	CType_ClassTable	
+maincpu v7	ff20f5	v1.10 ml	_memchr_c	f_code	_memchr	0	24	24	Sprintf_MemChr	
+maincpu v7	ff0541	v1.10 ml	_memcmp_c	f_code	_memcmp	0	123	123	Mem_Compare	
+maincpu v7	ff05bc	v1.10 ml	_memcpy_c	f_code	_memcpy	0	40	40	Mem_Copy	
+maincpu v7	ff081d	v1.10 ml	_memset_c	f_code	_memset	0	68	68	Memset	
+maincpu v7	ff05e4	v1.10 ml	_strcat_c	f_code	_strcat	0	34	34	Strcat	
+maincpu v7	ff043b	v1.10 ml	ldivl	f_code	C9H_divlu	87	122	122	Math_DivideU32	
+maincpu v7	ff027f	v1.10 ml	lmull	f_code	C9H_mullu	0	22	22	Math_Multiply32	
+maincpu v7	ff20a4	v1.10 ml	_ld_xx_s	f_code	._fld_xx	0	17	17	Sprintf_CopyBytes10	
+maincpu v7	ff043b	v1.10 pic	ldivl	pic_code	C9H_divlu	87	122	122	Math_DivideU32	
+maincpu v7	ff027f	v1.10 pic	lmull	pic_code	C9H_mullu	0	22	22	Math_Multiply32	
+maincpu v7	ff20a4	v1.10 pic	_ld_xx_s	pic_code	._fld_xx	0	17	17	Sprintf_CopyBytes10	
+maincpu v7	eed778	IDE ml	_ctype_c	f_const	__ctype	0	256	256	CType_ClassTable	
+maincpu v7	ff079c	IDE ml	__sbrk_c	f_code	.sbrk	0	39	24	Heap_Alloc	_SBRK_size=03d528 _SBRK_size=03d528 _SBRK_break=03d524 _SBRK_break=03d524 _SBRK_size=03d528
+maincpu v7	ff01c3	IDE ml	_atoi_c	f_code	_atoi	0	86	83	ParseInt16	__ctype=eed778
+maincpu v7	ff0219	IDE ml	_atol_c	f_code	_atol	0	102	99	ParseInt32	__ctype=eed778
+maincpu v7	ff0606	IDE ml	_itoa_c	f_code	_itoa	0	138	135	Itoa_Safe	_memcpy=ff05bc
+maincpu v7	ff07e1	IDE ml	_ltoa_c	f_code	_ltoa	0	60	54	Strlen_LoadParam	_ultoa=ff201b _ultoa=ff201b
+maincpu v7	ff201b	IDE ml	_ultoa_c	f_code	_ultoa	0	136	127	Sprintf_ItoaBaseN	C9H_remlu=ff0435 C9H_divlu=ff043b _memcpy=ff05bc
+maincpu v7	ff20f5	IDE ml	_memchr_c	f_code	_memchr	0	24	24	Sprintf_MemChr	
+maincpu v7	ff0541	IDE ml	_memcmp_c	f_code	_memcmp	0	123	123	Mem_Compare	
+maincpu v7	ff05bc	IDE ml	_memcpy_c	f_code	_memcpy	0	40	40	Mem_Copy	
+maincpu v7	ff081d	IDE ml	_memset_c	f_code	_memset	0	68	68	Memset	
+maincpu v7	ff05e4	IDE ml	_strcat_c	f_code	_strcat	0	34	34	Strcat	
+maincpu v7	ff0690	IDE ml	_strchr_c	f_code	_strchr	0	19	19	Strchr	
+maincpu v7	ff0770	IDE ml	_strcpy_c	f_code	_strcpy	0	44	41	Strcpy	_memccpy=ff20b5
+maincpu v7	ff01a0	IDE ml	_strcspn_c	f_code	_strcspn	0	35	35	StrSearch_Init	
+maincpu v7	ff07c3	IDE ml	_strlen_c	f_code	_strlen	0	30	27	Strlen	_memchr=ff20f5
+maincpu v7	ff04b5	IDE ml	_strncat_c	f_code	_strncat	0	47	47	Strncat	
+maincpu v7	ff04e4	IDE ml	_strncmp_c	f_code	_strncmp	0	50	50	String_Compare	
+maincpu v7	ff0516	IDE ml	_strncpy_c	f_code	_strncpy	0	43	43	Strncpy	
+maincpu v7	ff210d	IDE ml	_strnset_c	f_code	_strnset	0	32	32	Sprintf_StrNSet	
+maincpu v7	ff0140	IDE ml	_strstr_c	f_code	_strstr	0	96	87	TmFlash_CompareStrings	_strlen=ff07c3 _strlen=ff07c3 _memcmp=ff0541
+maincpu v7	ff03e6	IDE ml	ldivl	f_code	SDivMod	0	71	71	Math_DivModSigned32	
+maincpu v7	ff043b	IDE ml	ldivl	f_code	C9H_divlu	85	122	122	Math_DivideU32	
+maincpu v7	ff027f	IDE ml	lmull	f_code	C9H_mullu	0	22	22	Math_Multiply32	
+maincpu v7	ff20a4	IDE ml	_ld_xx_s	f_code	._fld_xx	0	17	17	Sprintf_CopyBytes10	
+maincpu v7	eed778	IDE pic	_ctype_c	far_pid_data	__ctype	0	256	256	CType_ClassTable	
+maincpu v7	eed8a4	IDE pic	__doform_c	far_pid_data	__doform_c data	0	35	34	Sprintf_HexDigitsLower	
+maincpu v7	ff027f	IDE pic	lmull	far_pic	C9H_mullu	0	22	22	Math_Multiply32	
+maincpu v7	ff20a4	IDE pic	_ld_xx_s	far_pic	._fld_xx	0	17	17	Sprintf_CopyBytes10	
+maincpu v6	eed67c	v1.10 ml	_ctype_c	f_const	___ctype	0	256	256	CType_ClassTable	
+maincpu v6	ff1ff7	v1.10 ml	_memchr_c	f_code	_memchr	0	24	24	Sprintf_MemChr	
+maincpu v6	ff0443	v1.10 ml	_memcmp_c	f_code	_memcmp	0	123	123	Mem_Compare	
+maincpu v6	ff04be	v1.10 ml	_memcpy_c	f_code	_memcpy	0	40	40	Mem_Copy	
+maincpu v6	ff071f	v1.10 ml	_memset_c	f_code	_memset	0	68	68	Memset	
+maincpu v6	ff04e6	v1.10 ml	_strcat_c	f_code	_strcat	0	34	34	Strcat	
+maincpu v6	ff033d	v1.10 ml	ldivl	f_code	C9H_divlu	87	122	122	Math_DivideU32	
+maincpu v6	ff0181	v1.10 ml	lmull	f_code	C9H_mullu	0	22	22	Math_Multiply32	
+maincpu v6	ff1fa6	v1.10 ml	_ld_xx_s	f_code	._fld_xx	0	17	17	Sprintf_CopyBytes10	
+maincpu v6	ff033d	v1.10 pic	ldivl	pic_code	C9H_divlu	87	122	122	Math_DivideU32	
+maincpu v6	ff0181	v1.10 pic	lmull	pic_code	C9H_mullu	0	22	22	Math_Multiply32	
+maincpu v6	ff1fa6	v1.10 pic	_ld_xx_s	pic_code	._fld_xx	0	17	17	Sprintf_CopyBytes10	
+maincpu v6	eed67c	IDE ml	_ctype_c	f_const	__ctype	0	256	256	CType_ClassTable	
+maincpu v6	ff069e	IDE ml	__sbrk_c	f_code	.sbrk	0	39	24	Heap_Alloc	_SBRK_size=03d528 _SBRK_size=03d528 _SBRK_break=03d524 _SBRK_break=03d524 _SBRK_size=03d528
+maincpu v6	ff00c5	IDE ml	_atoi_c	f_code	_atoi	0	86	83	ParseInt16	__ctype=eed67c
+maincpu v6	ff011b	IDE ml	_atol_c	f_code	_atol	0	102	99	ParseInt32	__ctype=eed67c
+maincpu v6	ff0508	IDE ml	_itoa_c	f_code	_itoa	0	138	135	Itoa_Safe	_memcpy=ff04be
+maincpu v6	ff06e3	IDE ml	_ltoa_c	f_code	_ltoa	0	60	54	Strlen_LoadParam	_ultoa=ff1f1d _ultoa=ff1f1d
+maincpu v6	ff1f1d	IDE ml	_ultoa_c	f_code	_ultoa	0	136	127	Sprintf_ItoaBaseN	C9H_remlu=ff0337 C9H_divlu=ff033d _memcpy=ff04be
+maincpu v6	ff1ff7	IDE ml	_memchr_c	f_code	_memchr	0	24	24	Sprintf_MemChr	
+maincpu v6	ff0443	IDE ml	_memcmp_c	f_code	_memcmp	0	123	123	Mem_Compare	
+maincpu v6	ff04be	IDE ml	_memcpy_c	f_code	_memcpy	0	40	40	Mem_Copy	
+maincpu v6	ff071f	IDE ml	_memset_c	f_code	_memset	0	68	68	Memset	
+maincpu v6	ff04e6	IDE ml	_strcat_c	f_code	_strcat	0	34	34	Strcat	
+maincpu v6	ff0592	IDE ml	_strchr_c	f_code	_strchr	0	19	19	Strchr	
+maincpu v6	ff0672	IDE ml	_strcpy_c	f_code	_strcpy	0	44	41	Strcpy	_memccpy=ff1fb7
+maincpu v6	ff00a2	IDE ml	_strcspn_c	f_code	_strcspn	0	35	35	StrSearch_Init	
+maincpu v6	ff06c5	IDE ml	_strlen_c	f_code	_strlen	0	30	27	Strlen	_memchr=ff1ff7
+maincpu v6	ff03b7	IDE ml	_strncat_c	f_code	_strncat	0	47	47	Strncat	
+maincpu v6	ff03e6	IDE ml	_strncmp_c	f_code	_strncmp	0	50	50	String_Compare	
+maincpu v6	ff0418	IDE ml	_strncpy_c	f_code	_strncpy	0	43	43	Strncpy	
+maincpu v6	ff200f	IDE ml	_strnset_c	f_code	_strnset	0	32	32	Sprintf_StrNSet	
+maincpu v6	ff0042	IDE ml	_strstr_c	f_code	_strstr	0	96	87	TmFlash_CompareStrings	_strlen=ff06c5 _strlen=ff06c5 _memcmp=ff0443
+maincpu v6	ff02e8	IDE ml	ldivl	f_code	SDivMod	0	71	71	Math_DivModSigned32	
+maincpu v6	ff033d	IDE ml	ldivl	f_code	C9H_divlu	85	122	122	Math_DivideU32	
+maincpu v6	ff0181	IDE ml	lmull	f_code	C9H_mullu	0	22	22	Math_Multiply32	
+maincpu v6	ff1fa6	IDE ml	_ld_xx_s	f_code	._fld_xx	0	17	17	Sprintf_CopyBytes10	
+maincpu v6	eed67c	IDE pic	_ctype_c	far_pid_data	__ctype	0	256	256	CType_ClassTable	
+maincpu v6	eed7a8	IDE pic	__doform_c	far_pid_data	__doform_c data	0	35	34	Sprintf_HexDigitsLower	
+maincpu v6	ff0181	IDE pic	lmull	far_pic	C9H_mullu	0	22	22	Math_Multiply32	
+maincpu v6	ff1fa6	IDE pic	_ld_xx_s	far_pic	._fld_xx	0	17	17	Sprintf_CopyBytes10	
+maincpu v5	eed664	v1.10 ml	_ctype_c	f_const	___ctype	0	256	256	CType_ClassTable	
+maincpu v5	ff1ba3	v1.10 ml	_memchr_c	f_code	_memchr	0	24	24	Sprintf_MemChr	
+maincpu v5	feffef	v1.10 ml	_memcmp_c	f_code	_memcmp	0	123	123	Mem_Compare	
+maincpu v5	ff006a	v1.10 ml	_memcpy_c	f_code	_memcpy	0	40	40	Mem_Copy	
+maincpu v5	ff02cb	v1.10 ml	_memset_c	f_code	_memset	0	68	68	Memset	
+maincpu v5	ff0092	v1.10 ml	_strcat_c	f_code	_strcat	0	34	34	Strcat	
+maincpu v5	fefee9	v1.10 ml	ldivl	f_code	C9H_divlu	87	122	122	Math_DivideU32	
+maincpu v5	fefd2d	v1.10 ml	lmull	f_code	C9H_mullu	0	22	22	Math_Multiply32	
+maincpu v5	ff1b52	v1.10 ml	_ld_xx_s	f_code	._fld_xx	0	17	17	Sprintf_CopyBytes10	
+maincpu v5	fefee9	v1.10 pic	ldivl	pic_code	C9H_divlu	87	122	122	Math_DivideU32	
+maincpu v5	fefd2d	v1.10 pic	lmull	pic_code	C9H_mullu	0	22	22	Math_Multiply32	
+maincpu v5	ff1b52	v1.10 pic	_ld_xx_s	pic_code	._fld_xx	0	17	17	Sprintf_CopyBytes10	
+maincpu v5	eed664	IDE ml	_ctype_c	f_const	__ctype	0	256	256	CType_ClassTable	
+maincpu v5	ff024a	IDE ml	__sbrk_c	f_code	.sbrk	0	39	24	Heap_Alloc	_SBRK_size=03d528 _SBRK_size=03d528 _SBRK_break=03d524 _SBRK_break=03d524 _SBRK_size=03d528
+maincpu v5	fefc71	IDE ml	_atoi_c	f_code	_atoi	0	86	83	ParseInt16	__ctype=eed664
+maincpu v5	fefcc7	IDE ml	_atol_c	f_code	_atol	0	102	99	ParseInt32	__ctype=eed664
+maincpu v5	ff00b4	IDE ml	_itoa_c	f_code	_itoa	0	138	135	Itoa_Safe	_memcpy=ff006a
+maincpu v5	ff028f	IDE ml	_ltoa_c	f_code	_ltoa	0	60	54	Strlen_LoadParam	_ultoa=ff1ac9 _ultoa=ff1ac9
+maincpu v5	ff1ac9	IDE ml	_ultoa_c	f_code	_ultoa	0	136	127	Sprintf_ItoaBaseN	C9H_remlu=fefee3 C9H_divlu=fefee9 _memcpy=ff006a
+maincpu v5	ff1ba3	IDE ml	_memchr_c	f_code	_memchr	0	24	24	Sprintf_MemChr	
+maincpu v5	feffef	IDE ml	_memcmp_c	f_code	_memcmp	0	123	123	Mem_Compare	
+maincpu v5	ff006a	IDE ml	_memcpy_c	f_code	_memcpy	0	40	40	Mem_Copy	
+maincpu v5	ff02cb	IDE ml	_memset_c	f_code	_memset	0	68	68	Memset	
+maincpu v5	ff0092	IDE ml	_strcat_c	f_code	_strcat	0	34	34	Strcat	
+maincpu v5	ff013e	IDE ml	_strchr_c	f_code	_strchr	0	19	19	Strchr	
+maincpu v5	ff021e	IDE ml	_strcpy_c	f_code	_strcpy	0	44	41	Strcpy	_memccpy=ff1b63
+maincpu v5	fefc4e	IDE ml	_strcspn_c	f_code	_strcspn	0	35	35	StrSearch_Init	
+maincpu v5	ff0271	IDE ml	_strlen_c	f_code	_strlen	0	30	27	Strlen	_memchr=ff1ba3
+maincpu v5	feff63	IDE ml	_strncat_c	f_code	_strncat	0	47	47	Strncat	
+maincpu v5	feff92	IDE ml	_strncmp_c	f_code	_strncmp	0	50	50	String_Compare	
+maincpu v5	feffc4	IDE ml	_strncpy_c	f_code	_strncpy	0	43	43	Strncpy	
+maincpu v5	ff1bbb	IDE ml	_strnset_c	f_code	_strnset	0	32	32	Sprintf_StrNSet	
+maincpu v5	fefbee	IDE ml	_strstr_c	f_code	_strstr	0	96	87	TmFlash_CompareStrings	_strlen=ff0271 _strlen=ff0271 _memcmp=feffef
+maincpu v5	fefe94	IDE ml	ldivl	f_code	SDivMod	0	71	71	Math_DivModSigned32	
+maincpu v5	fefee9	IDE ml	ldivl	f_code	C9H_divlu	85	122	122	Math_DivideU32	
+maincpu v5	fefd2d	IDE ml	lmull	f_code	C9H_mullu	0	22	22	Math_Multiply32	
+maincpu v5	ff1b52	IDE ml	_ld_xx_s	f_code	._fld_xx	0	17	17	Sprintf_CopyBytes10	
+maincpu v5	eed664	IDE pic	_ctype_c	far_pid_data	__ctype	0	256	256	CType_ClassTable	
+maincpu v5	eed790	IDE pic	__doform_c	far_pid_data	__doform_c data	0	35	34	Sprintf_HexDigitsLower	
+maincpu v5	fefd2d	IDE pic	lmull	far_pic	C9H_mullu	0	22	22	Math_Multiply32	
+maincpu v5	ff1b52	IDE pic	_ld_xx_s	far_pic	._fld_xx	0	17	17	Sprintf_CopyBytes10	
+subcpu v142	00f402	v1.10 ml	__float_c	f_data	_g_ldbltbl	0	30	30	FPConst_NegZero	
+subcpu v142	03e1f1	v1.10 ml	_frexp_c	f_code	_frexp	0	158	146	FP_frexp	._fld_dd=03dce6 ._fcmp_zd=03d466 ._fld_dd=03dce6 ._fld_dd=03dce6
+subcpu v142	03ea0a	v1.10 ml	_spe_add_s	f_code	SPECIAL_ADD_LD	8	41	41	FP_CopyWithSign_D2	
+subcpu v142	03e3a0	v1.10 ml	_adj_acf_s	f_code	._fadj_acf	0	86	86	FP_SP_AlignMantissa	
+subcpu v142	03df60	v1.10 ml	_set_acd_s	f_code	._fset_acd	0	60	60	FP_DP_Decode	
+subcpu v142	03df9c	v1.10 ml	set_acf	f_code	._fset_acf	0	57	57	FP_SP_Decode	
+subcpu v142	03e046	v1.10 ml	_set_dac_s	f_code	._fset_dac	0	105	99	FP_DP_Encode	_errno=040c22 __FloatErrorHandle=00f428
+subcpu v142	03e0b0	v1.10 ml	_set_fac_s	f_code	._fset_fac	0	94	88	FP_SP_Encode	_errno=040c22 __FloatErrorHandle=00f428
+subcpu v142	03d2ac	v1.10 ml	_cmp_d_s	f_code	._fcmp_d	0	90	81	FP_dcmp	TAB_EQ=03d978 TAB_LT=03d97e TAB_GT=03d984
+subcpu v142	03d306	v1.10 ml	_cmp_f_s	f_code	._fcmp_f	0	71	62	FP_fcmp	TAB_EQ=03d978 TAB_LT=03d97e TAB_GT=03d984
+subcpu v142	03d466	v1.10 ml	_cmp_zd_s	f_code	._fcmp_zd	0	52	43	FP_DP_CmpZero64	TAB_EQ=03d978 TAB_LT=03d97e TAB_GT=03d984
+subcpu v142	03d49a	v1.10 ml	_cmp_zf_s	f_code	._fcmp_zf	0	47	38	FP_SP_CmpZero32	TAB_EQ=03d978 TAB_LT=03d97e TAB_GT=03d984
+subcpu v142	03de1a	v1.10 ml	_cvt_dacul_s	f_code	._fcvt_dacl	0	25	25	FP_DP_Normalize	
+subcpu v142	03dfd6	v1.10 ml	_cvt_dacul_s	f_code	._fcvt_dacl	0	25	25	FP_SP_Normalize	
+subcpu v142	03de1a	v1.10 ml	_cvt_facul_s	f_code	._fcvt_facl	0	25	25	FP_DP_Normalize	
+subcpu v142	03dfd6	v1.10 ml	_cvt_facul_s	f_code	._fcvt_facl	0	25	25	FP_SP_Normalize	
+subcpu v142	03de33	v1.10 ml	_cvt_facul_s	f_code	._fcvt_facul	25	90	90	FP_DP_NormCore	
+subcpu v142	03e884	v1.10 ml	_spe_div_s	f_code	SPECIAL_DIV	0	16	16	FP_NaN_Handler	
+subcpu v142	03ed0e	v1.10 ml	_mul32_s	f_code	MUL_XHL_XIY	0	46	46	FP_MulMantissa64x64	
+subcpu v142	03d8ca	v1.10 ml	lmull	f_code	C9H_mullu	0	22	22	Math_Multiply32	
+subcpu v142	03d404	v1.10 ml	_neg_d_s	f_code	._fneg_d	0	24	24	FP_DP_CopyOrNegate8	
+subcpu v142	03d41c	v1.10 ml	_neg_f_s	f_code	._fneg_f	0	18	18	FP_SP_CopyOrNegate4	
+subcpu v142	03ee3e	v1.10 ml	_spe_sub_s	f_code	SPECIAL_SUB_LD	8	49	49	FP_NegWithSign_D2	
+subcpu v142	03de1a	v1.10 ml	_set_dacul_s	f_code	._fcvt_xacl	0	25	25	FP_DP_Normalize	
+subcpu v142	03dfd6	v1.10 ml	_set_dacul_s	f_code	._fcvt_xacl	0	25	25	FP_SP_Normalize	
+subcpu v142	03ea0a	v1.10 pic	_spe_add_s	pic_code	SPECIAL_ADD_LD	8	41	41	FP_CopyWithSign_D2	
+subcpu v142	03e3a0	v1.10 pic	_adj_acf_s	pic_code	._fadj_acf	0	86	86	FP_SP_AlignMantissa	
+subcpu v142	03df60	v1.10 pic	_set_acd_s	pic_code	._fset_acd	0	60	60	FP_DP_Decode	
+subcpu v142	03df9c	v1.10 pic	set_acf	pic_code	._fset_acf	0	57	57	FP_SP_Decode	
+subcpu v142	03d2ac	v1.10 pic	_cmp_d_s	pic_code	._fcmp_d	0	90	81	FP_dcmp	TAB_EQ=03d978 TAB_LT=03d97e TAB_GT=03d984
+subcpu v142	03d306	v1.10 pic	_cmp_f_s	pic_code	._fcmp_f	0	71	62	FP_fcmp	TAB_EQ=03d978 TAB_LT=03d97e TAB_GT=03d984
+subcpu v142	03d466	v1.10 pic	_cmp_zd_s	pic_code	._fcmp_zd	0	52	43	FP_DP_CmpZero64	TAB_EQ=03d978 TAB_LT=03d97e TAB_GT=03d984
+subcpu v142	03d49a	v1.10 pic	_cmp_zf_s	pic_code	._fcmp_zf	0	47	38	FP_SP_CmpZero32	TAB_EQ=03d978 TAB_LT=03d97e TAB_GT=03d984
+subcpu v142	03de1a	v1.10 pic	_cvt_dacul_s	pic_code	._fcvt_dacl	0	25	25	FP_DP_Normalize	
+subcpu v142	03dfd6	v1.10 pic	_cvt_dacul_s	pic_code	._fcvt_dacl	0	25	25	FP_SP_Normalize	
+subcpu v142	03de1a	v1.10 pic	_cvt_facul_s	pic_code	._fcvt_facl	0	25	25	FP_DP_Normalize	
+subcpu v142	03dfd6	v1.10 pic	_cvt_facul_s	pic_code	._fcvt_facl	0	25	25	FP_SP_Normalize	
+subcpu v142	03de33	v1.10 pic	_cvt_facul_s	pic_code	._fcvt_facul	25	90	90	FP_DP_NormCore	
+subcpu v142	03e884	v1.10 pic	_spe_div_s	pic_code	SPECIAL_DIV	0	16	16	FP_NaN_Handler	
+subcpu v142	03ed0e	v1.10 pic	_mul32_s	pic_code	MUL_XHL_XIY	0	46	46	FP_MulMantissa64x64	
+subcpu v142	03d8ca	v1.10 pic	lmull	pic_code	C9H_mullu	0	22	22	Math_Multiply32	
+subcpu v142	03d404	v1.10 pic	_neg_d_s	pic_code	._fneg_d	0	24	24	FP_DP_CopyOrNegate8	
+subcpu v142	03d41c	v1.10 pic	_neg_f_s	pic_code	._fneg_f	0	18	18	FP_SP_CopyOrNegate4	
+subcpu v142	03ee3e	v1.10 pic	_spe_sub_s	pic_code	SPECIAL_SUB_LD	8	49	49	FP_NegWithSign_D2	
+subcpu v142	03de1a	v1.10 pic	_set_dacul_s	pic_code	._fcvt_xacl	0	25	25	FP_DP_Normalize	
+subcpu v142	03dfd6	v1.10 pic	_set_dacul_s	pic_code	._fcvt_xacl	0	25	25	FP_SP_Normalize	
+subcpu v142	03e894	IDE ml	__fint_c	f_code	__fint	0	365	334	FP_trunc	._fld_dd=03dce6 ._fld_dd=03dce6 ._fadd_d=03e10e ._fsub_d=03d8e0 ._fld_dd=03dce6 ._fld_dd=03dce6 ._fld_dd=03dce6
+subcpu v142	00f3ba	IDE ml	__float_c	f_data	_g_dbltbl	12	72	72	FPConst_Pi	
+subcpu v142	00f402	IDE ml	__float_c	f_data	_g_ldbltbl	84	30	30	FPConst_NegZero	
+subcpu v142	00f34e	IDE ml	__trig_c	f_data	__trig_c data	0	96	96	FPConst_InvFact3	
+subcpu v142	03d42e	IDE ml	_fabs_c	f_code	_fabs	0	29	20	FP_fabs	._fcmp_zd=03d466 ._fld_dd=03dce6 ._fneg_d=03d404
+subcpu v142	03e1f1	IDE ml	_frexp_c	f_code	_frexp	0	158	146	FP_frexp	._fld_dd=03dce6 ._fcmp_zd=03d466 ._fld_dd=03dce6 ._fld_dd=03dce6
+subcpu v142	03ea9c	IDE ml	_ldexp_c	f_code	_ldexp	0	305	251	FP_ldexp	._fld_dd=03dce6 ._fcmp_zd=03d466 ._fld_dd=03dce6 _errno=040c22 _g_mathtbl=00f420 ._fneg_d=03d404 ._fld_dd=03dce6 ._fld_dd=03dce6 _errno=040c22 _g_mathtbl=00f420 ._fneg_d=03d404 ._fld_dd=03dce6 _errno=040c22 ._fld_dd=03dce6 ._fld_dd=03dce6
+subcpu v142	03dc14	IDE ml	ldivl	f_code	SDivMod	0	71	71	Int_SignedDiv	
+subcpu v142	03d8ca	IDE ml	lmull	f_code	C9H_mullu	0	22	22	Math_Multiply32	
+subcpu v142	03ea0a	IDE ml	_spe_add_s	f_code	SPECIAL_ADD_LD	8	41	41	FP_CopyWithSign_D2	
+subcpu v142	03e10e	IDE ml	_add_d_s	f_code	._fadd_d	0	75	57	FP_dadd	._fset_acd=03df60 ._fset_acd=03df60 ._fadj_acd=03e2f0 ._fadd_acd=03deea ._fsub_acd=03e54c ._fset_dac=03e046
+subcpu v142	03e15a	IDE ml	_add_f_s	f_code	._fadd_f	0	75	57	FP_fadd	._fset_acf=03df9c ._fset_acf=03df9c ._fadj_acf=03e3a0 ._fadd_acf=03df38 ._fsub_acf=03e5f6 ._fset_fac=03e0b0
+subcpu v142	03df38	IDE ml	_fadd_acf_s	f_code	._fadd_acf	0	39	36	FP_SP_AddMantissa	SPECIAL_ADD_F=03ea02
+subcpu v142	03e3a0	IDE ml	_adj_acf_s	f_code	._fadj_acf	0	86	86	FP_SP_AlignMantissa	
+subcpu v142	03df60	IDE ml	_set_acd_s	f_code	._fset_acd	0	60	60	FP_DP_Decode	
+subcpu v142	03df9c	IDE ml	set_acf	f_code	._fset_acf	0	57	57	FP_SP_Decode	
+subcpu v142	03e046	IDE ml	_set_dac_s	f_code	._fset_dac	0	105	99	FP_DP_Encode	_errno=040c22 __FloatErrorHandle=00f428
+subcpu v142	03e0b0	IDE ml	_set_fac_s	f_code	._fset_fac	0	94	88	FP_SP_Encode	_errno=040c22 __FloatErrorHandle=00f428
+subcpu v142	03d2ac	IDE ml	_cmp_d_s	f_code	._fcmp_d	0	90	81	FP_dcmp	TAB_EQ=03d978 TAB_LT=03d97e TAB_GT=03d984
+subcpu v142	03d306	IDE ml	_cmp_f_s	f_code	._fcmp_f	0	71	62	FP_fcmp	TAB_EQ=03d978 TAB_LT=03d97e TAB_GT=03d984
+subcpu v142	03d466	IDE ml	_cmp_zd_s	f_code	._fcmp_zd	0	52	43	FP_DP_CmpZero64	TAB_EQ=03d978 TAB_LT=03d97e TAB_GT=03d984
+subcpu v142	03d49a	IDE ml	_cmp_zf_s	f_code	._fcmp_zf	0	47	38	FP_SP_CmpZero32	TAB_EQ=03d978 TAB_LT=03d97e TAB_GT=03d984
+subcpu v142	03de1a	IDE ml	_cvt_dacul_s	f_code	._fcvt_dacl	0	25	25	FP_DP_Normalize	
+subcpu v142	03dfd6	IDE ml	_cvt_dacul_s	f_code	._fcvt_dacl	0	25	25	FP_SP_Normalize	
+subcpu v142	03de1a	IDE ml	_cvt_facul_s	f_code	._fcvt_facl	0	25	25	FP_DP_Normalize	
+subcpu v142	03dfd6	IDE ml	_cvt_facul_s	f_code	._fcvt_facl	0	25	25	FP_SP_Normalize	
+subcpu v142	03de33	IDE ml	_cvt_facul_s	f_code	._fcvt_facul	25	90	90	FP_DP_NormCore	
+subcpu v142	03de1a	IDE ml	_set_dacul_s	f_code	._fcvt_xacl	0	25	25	FP_DP_Normalize	
+subcpu v142	03dfd6	IDE ml	_set_dacul_s	f_code	._fcvt_xacl	0	25	25	FP_SP_Normalize	
+subcpu v142	03de8e	IDE ml	_cvt_ulfac_s	f_code	._fcvt_lfac	0	92	89	FP_DP_ShiftDecode	_errno=040c22
+subcpu v142	03dd36	IDE ml	_ld_dl_s	f_code	._fld_dl	0	27	21	FP_ScalarToDP	._fcvt_dacl=03dfd6 ._fset_dac=03e046
+subcpu v142	03dd51	IDE ml	_ld_dl_s	f_code	._fld_dl	0	27	21	FP_DP_CallWithBuf12	._fcvt_dacl=03dfef ._fset_dac=03e046
+subcpu v142	03dd36	IDE ml	_ld_dl_s	f_code	._fld_dul	27	27	21	FP_ScalarToDP	._fcvt_dacul=03dfd6 ._fset_dac=03e046
+subcpu v142	03dd51	IDE ml	_ld_dl_s	f_code	._fld_dul	27	27	21	FP_DP_CallWithBuf12	._fcvt_dacul=03dfef ._fset_dac=03e046
+subcpu v142	03ddca	IDE ml	_ld_fl_s	f_code	._fld_fl	0	27	21	FP_SP_CallWithBuf8	._fcvt_facl=03de1a ._fset_fac=03e0b0
+subcpu v142	03dde5	IDE ml	_ld_fl_s	f_code	._fld_fl	0	27	21	FP_SP_CallWithBuf8b	._fcvt_facl=03de33 ._fset_fac=03e0b0
+subcpu v142	03ddca	IDE ml	_ld_fl_s	f_code	._fld_fl_tail	27	27	21	FP_SP_CallWithBuf8	._fcvt_facul=03de1a ._fset_fac=03e0b0
+subcpu v142	03dde5	IDE ml	_ld_fl_s	f_code	._fld_fl_tail	27	27	21	FP_SP_CallWithBuf8b	._fcvt_facul=03de33 ._fset_fac=03e0b0
+subcpu v142	03dd36	IDE ml	_ld_xl_s	f_code	._fld_xl	0	27	21	FP_ScalarToDP	._fcvt_xacl=03dfd6 ._fset_xac=03e046
+subcpu v142	03dd51	IDE ml	_ld_xl_s	f_code	._fld_xl	0	27	21	FP_DP_CallWithBuf12	._fcvt_xacl=03dfef ._fset_xac=03e046
+subcpu v142	03dd36	IDE ml	_ld_xl_s	f_code	._fld_xul	27	27	21	FP_ScalarToDP	._fcvt_xacul=03dfd6 ._fset_xac=03e046
+subcpu v142	03dd51	IDE ml	_ld_xl_s	f_code	._fld_xul	27	27	21	FP_DP_CallWithBuf12	._fcvt_xacul=03dfef ._fset_xac=03e046
+subcpu v142	03de00	IDE ml	_ld_ld_s	f_code	._fld_uld	0	25	19	FP_DP_DecodeToInt	._fset_acd=03df60 ._fcvt_uldac=03ea34
+subcpu v142	03d44c	IDE ml	_ld_lf_s	f_code	._fld_ulf	0	25	19	FP_ftoi	._fset_acf=03df9c ._fcvt_ulfac=03de8e
+subcpu v142	03de00	IDE ml	_ld_lx_s	f_code	._fld_ulx	0	25	19	FP_DP_DecodeToInt	._fset_acx=03df60 ._fcvt_ulxac=03ea34
+subcpu v142	03e884	IDE ml	_spe_div_s	f_code	SPECIAL_DIV	0	16	16	FP_NaN_Handler	
+subcpu v142	03d3a4	IDE ml	_div_d_s	f_code	._fdiv_d	0	48	36	FP_ddiv	._fset_acd=03df60 ._fset_acd=03df60 ._fdiv_acd=03e3f6 ._fset_dac=03e046
+subcpu v142	03e290	IDE ml	_div_d_s	f_code	._fdiv_d	0	48	36	FP_dmul	._fset_acd=03df60 ._fset_acd=03df60 ._fdiv_acd=03ebce ._fset_dac=03e046
+subcpu v142	03d3d4	IDE ml	_div_f_s	f_code	._fdiv_f	0	48	36	FP_fdiv	._fset_acf=03df9c ._fset_acf=03df9c ._fdiv_acf=03e4b4 ._fset_fac=03e0b0
+subcpu v142	03e2c0	IDE ml	_div_f_s	f_code	._fdiv_f	0	48	36	FP_fmul	._fset_acf=03df9c ._fset_acf=03df9c ._fdiv_acf=03ec9e ._fset_fac=03e0b0
+subcpu v142	03d3a4	IDE ml	_mul_d_s	f_code	._fmul_d	0	48	36	FP_ddiv	._fset_acd=03df60 ._fset_acd=03df60 ._fmul_acd=03e3f6 ._fset_dac=03e046
+subcpu v142	03e290	IDE ml	_mul_d_s	f_code	._fmul_d	0	48	36	FP_dmul	._fset_acd=03df60 ._fset_acd=03df60 ._fmul_acd=03ebce ._fset_dac=03e046
+subcpu v142	03d3d4	IDE ml	_mul_f_s	f_code	._fmul_f	0	48	36	FP_fdiv	._fset_acf=03df9c ._fset_acf=03df9c ._fmul_acf=03e4b4 ._fset_fac=03e0b0
+subcpu v142	03e2c0	IDE ml	_mul_f_s	f_code	._fmul_f	0	48	36	FP_fmul	._fset_acf=03df9c ._fset_acf=03df9c ._fmul_acf=03ec9e ._fset_fac=03e0b0
+subcpu v142	03ed0e	IDE ml	_mul32_s	f_code	MUL_XHL_XIY	0	46	46	FP_MulMantissa64x64	
+subcpu v142	03d404	IDE ml	_neg_d_s	f_code	._fneg_d	0	24	24	FP_DP_CopyOrNegate8	
+subcpu v142	03d41c	IDE ml	_neg_f_s	f_code	._fneg_f	0	18	18	FP_SP_CopyOrNegate4	
+subcpu v142	03ee3e	IDE ml	_spe_sub_s	f_code	SPECIAL_SUB_LD	8	49	49	FP_NegWithSign_D2	
+subcpu v142	03d8e0	IDE ml	_sub_d_s	f_code	._fsub_d	0	75	57	FP_dsub	._fset_acd=03df60 ._fset_acd=03df60 ._fadj_acd=03e2f0 ._fadd_acd=03deea ._fsub_acd=03e54c ._fset_dac=03e046
+subcpu v142	03d92c	IDE ml	_sub_f_s	f_code	._fsub_f	0	75	57	FP_fsub	._fset_acf=03df9c ._fset_acf=03df9c ._fadj_acf=03e3a0 ._fadd_acf=03df38 ._fsub_acf=03e5f6 ._fset_fac=03e0b0
+subcpu v142	03e5f6	IDE ml	_sub_acf_s	f_code	._fsub_acf	0	85	82	FP_SP_SubMantissa	SPECIAL_SUB_F=03ee36
+subcpu v142	00f3ba	IDE pic	__float_c	far_pid_data	_g_dbltbl	12	72	72	FPConst_Pi	
+subcpu v142	00f402	IDE pic	__float_c	far_pid_data	_g_ldbltbl	84	30	30	FPConst_NegZero	
+subcpu v142	00f34e	IDE pic	__trig_c	far_pid_data	__trig_c data	0	96	96	FPConst_InvFact3	
+subcpu v142	03d8ca	IDE pic	lmull	far_pic	C9H_mullu	0	22	22	Math_Multiply32	
+subcpu v142	03de1a	IDE pic	_cvt_dacul_s	far_pic	._fcvt_dacl	0	25	25	FP_DP_Normalize	
+subcpu v142	03dfd6	IDE pic	_cvt_dacul_s	far_pic	._fcvt_dacl	0	25	25	FP_SP_Normalize	
+subcpu v142	03e884	IDE pic	_spe_div_s	far_pic	SPECIAL_DIV	0	16	16	FP_NaN_Handler	
+subcpu v142	03ed0e	IDE pic	_mul32_s	far_pic	MUL_XHL_XIY	0	46	46	FP_MulMantissa64x64	
+subcpu v141	00f402	v1.10 ml	__float_c	f_data	_g_ldbltbl	0	30	30	FPConst_NegZero	
+subcpu v141	03e1d9	v1.10 ml	_frexp_c	f_code	_frexp	0	158	146	FP_frexp	._fld_dd=03dcce ._fcmp_zd=03d44e ._fld_dd=03dcce ._fld_dd=03dcce
+subcpu v141	03e9f2	v1.10 ml	_spe_add_s	f_code	SPECIAL_ADD_LD	8	41	41	FP_CopyWithSign_D2	
+subcpu v141	03e388	v1.10 ml	_adj_acf_s	f_code	._fadj_acf	0	86	86	FP_SP_AlignMantissa	
+subcpu v141	03df48	v1.10 ml	_set_acd_s	f_code	._fset_acd	0	60	60	FP_DP_Decode	
+subcpu v141	03df84	v1.10 ml	set_acf	f_code	._fset_acf	0	57	57	FP_SP_Decode	
+subcpu v141	03e02e	v1.10 ml	_set_dac_s	f_code	._fset_dac	0	105	99	FP_DP_Encode	_errno=040c0a __FloatErrorHandle=00f428
+subcpu v141	03e098	v1.10 ml	_set_fac_s	f_code	._fset_fac	0	94	88	FP_SP_Encode	_errno=040c0a __FloatErrorHandle=00f428
+subcpu v141	03d294	v1.10 ml	_cmp_d_s	f_code	._fcmp_d	0	90	81	FP_dcmp	TAB_EQ=03d960 TAB_LT=03d966 TAB_GT=03d96c
+subcpu v141	03d2ee	v1.10 ml	_cmp_f_s	f_code	._fcmp_f	0	71	62	FP_fcmp	TAB_EQ=03d960 TAB_LT=03d966 TAB_GT=03d96c
+subcpu v141	03d44e	v1.10 ml	_cmp_zd_s	f_code	._fcmp_zd	0	52	43	FP_DP_CmpZero64	TAB_EQ=03d960 TAB_LT=03d966 TAB_GT=03d96c
+subcpu v141	03d482	v1.10 ml	_cmp_zf_s	f_code	._fcmp_zf	0	47	38	FP_SP_CmpZero32	TAB_EQ=03d960 TAB_LT=03d966 TAB_GT=03d96c
+subcpu v141	03de02	v1.10 ml	_cvt_dacul_s	f_code	._fcvt_dacl	0	25	25	FP_DP_Normalize	
+subcpu v141	03dfbe	v1.10 ml	_cvt_dacul_s	f_code	._fcvt_dacl	0	25	25	FP_SP_Normalize	
+subcpu v141	03de02	v1.10 ml	_cvt_facul_s	f_code	._fcvt_facl	0	25	25	FP_DP_Normalize	
+subcpu v141	03dfbe	v1.10 ml	_cvt_facul_s	f_code	._fcvt_facl	0	25	25	FP_SP_Normalize	
+subcpu v141	03de1b	v1.10 ml	_cvt_facul_s	f_code	._fcvt_facul	25	90	90	FP_DP_NormCore	
+subcpu v141	03e86c	v1.10 ml	_spe_div_s	f_code	SPECIAL_DIV	0	16	16	FP_NaN_Handler	
+subcpu v141	03ecf6	v1.10 ml	_mul32_s	f_code	MUL_XHL_XIY	0	46	46	FP_MulMantissa64x64	
+subcpu v141	03d8b2	v1.10 ml	lmull	f_code	C9H_mullu	0	22	22	Math_Multiply32	
+subcpu v141	03d3ec	v1.10 ml	_neg_d_s	f_code	._fneg_d	0	24	24	FP_DP_CopyOrNegate8	
+subcpu v141	03d404	v1.10 ml	_neg_f_s	f_code	._fneg_f	0	18	18	FP_SP_CopyOrNegate4	
+subcpu v141	03ee26	v1.10 ml	_spe_sub_s	f_code	SPECIAL_SUB_LD	8	49	49	FP_NegWithSign_D2	
+subcpu v141	03de02	v1.10 ml	_set_dacul_s	f_code	._fcvt_xacl	0	25	25	FP_DP_Normalize	
+subcpu v141	03dfbe	v1.10 ml	_set_dacul_s	f_code	._fcvt_xacl	0	25	25	FP_SP_Normalize	
+subcpu v141	03e9f2	v1.10 pic	_spe_add_s	pic_code	SPECIAL_ADD_LD	8	41	41	FP_CopyWithSign_D2	
+subcpu v141	03e388	v1.10 pic	_adj_acf_s	pic_code	._fadj_acf	0	86	86	FP_SP_AlignMantissa	
+subcpu v141	03df48	v1.10 pic	_set_acd_s	pic_code	._fset_acd	0	60	60	FP_DP_Decode	
+subcpu v141	03df84	v1.10 pic	set_acf	pic_code	._fset_acf	0	57	57	FP_SP_Decode	
+subcpu v141	03d294	v1.10 pic	_cmp_d_s	pic_code	._fcmp_d	0	90	81	FP_dcmp	TAB_EQ=03d960 TAB_LT=03d966 TAB_GT=03d96c
+subcpu v141	03d2ee	v1.10 pic	_cmp_f_s	pic_code	._fcmp_f	0	71	62	FP_fcmp	TAB_EQ=03d960 TAB_LT=03d966 TAB_GT=03d96c
+subcpu v141	03d44e	v1.10 pic	_cmp_zd_s	pic_code	._fcmp_zd	0	52	43	FP_DP_CmpZero64	TAB_EQ=03d960 TAB_LT=03d966 TAB_GT=03d96c
+subcpu v141	03d482	v1.10 pic	_cmp_zf_s	pic_code	._fcmp_zf	0	47	38	FP_SP_CmpZero32	TAB_EQ=03d960 TAB_LT=03d966 TAB_GT=03d96c
+subcpu v141	03de02	v1.10 pic	_cvt_dacul_s	pic_code	._fcvt_dacl	0	25	25	FP_DP_Normalize	
+subcpu v141	03dfbe	v1.10 pic	_cvt_dacul_s	pic_code	._fcvt_dacl	0	25	25	FP_SP_Normalize	
+subcpu v141	03de02	v1.10 pic	_cvt_facul_s	pic_code	._fcvt_facl	0	25	25	FP_DP_Normalize	
+subcpu v141	03dfbe	v1.10 pic	_cvt_facul_s	pic_code	._fcvt_facl	0	25	25	FP_SP_Normalize	
+subcpu v141	03de1b	v1.10 pic	_cvt_facul_s	pic_code	._fcvt_facul	25	90	90	FP_DP_NormCore	
+subcpu v141	03e86c	v1.10 pic	_spe_div_s	pic_code	SPECIAL_DIV	0	16	16	FP_NaN_Handler	
+subcpu v141	03ecf6	v1.10 pic	_mul32_s	pic_code	MUL_XHL_XIY	0	46	46	FP_MulMantissa64x64	
+subcpu v141	03d8b2	v1.10 pic	lmull	pic_code	C9H_mullu	0	22	22	Math_Multiply32	
+subcpu v141	03d3ec	v1.10 pic	_neg_d_s	pic_code	._fneg_d	0	24	24	FP_DP_CopyOrNegate8	
+subcpu v141	03d404	v1.10 pic	_neg_f_s	pic_code	._fneg_f	0	18	18	FP_SP_CopyOrNegate4	
+subcpu v141	03ee26	v1.10 pic	_spe_sub_s	pic_code	SPECIAL_SUB_LD	8	49	49	FP_NegWithSign_D2	
+subcpu v141	03de02	v1.10 pic	_set_dacul_s	pic_code	._fcvt_xacl	0	25	25	FP_DP_Normalize	
+subcpu v141	03dfbe	v1.10 pic	_set_dacul_s	pic_code	._fcvt_xacl	0	25	25	FP_SP_Normalize	
+subcpu v141	03e87c	IDE ml	__fint_c	f_code	__fint	0	365	334	FP_trunc	._fld_dd=03dcce ._fld_dd=03dcce ._fadd_d=03e0f6 ._fsub_d=03d8c8 ._fld_dd=03dcce ._fld_dd=03dcce ._fld_dd=03dcce
+subcpu v141	00f3ba	IDE ml	__float_c	f_data	_g_dbltbl	12	72	72	FPConst_Pi	
+subcpu v141	00f402	IDE ml	__float_c	f_data	_g_ldbltbl	84	30	30	FPConst_NegZero	
+subcpu v141	00f34e	IDE ml	__trig_c	f_data	__trig_c data	0	96	96	FPConst_InvFact3	
+subcpu v141	03d416	IDE ml	_fabs_c	f_code	_fabs	0	29	20	FP_fabs	._fcmp_zd=03d44e ._fld_dd=03dcce ._fneg_d=03d3ec
+subcpu v141	03e1d9	IDE ml	_frexp_c	f_code	_frexp	0	158	146	FP_frexp	._fld_dd=03dcce ._fcmp_zd=03d44e ._fld_dd=03dcce ._fld_dd=03dcce
+subcpu v141	03ea84	IDE ml	_ldexp_c	f_code	_ldexp	0	305	251	FP_ldexp	._fld_dd=03dcce ._fcmp_zd=03d44e ._fld_dd=03dcce _errno=040c0a _g_mathtbl=00f420 ._fneg_d=03d3ec ._fld_dd=03dcce ._fld_dd=03dcce _errno=040c0a _g_mathtbl=00f420 ._fneg_d=03d3ec ._fld_dd=03dcce _errno=040c0a ._fld_dd=03dcce ._fld_dd=03dcce
+subcpu v141	03dbfc	IDE ml	ldivl	f_code	SDivMod	0	71	71	Int_SignedDiv	
+subcpu v141	03d8b2	IDE ml	lmull	f_code	C9H_mullu	0	22	22	Math_Multiply32	
+subcpu v141	03e9f2	IDE ml	_spe_add_s	f_code	SPECIAL_ADD_LD	8	41	41	FP_CopyWithSign_D2	
+subcpu v141	03e0f6	IDE ml	_add_d_s	f_code	._fadd_d	0	75	57	FP_dadd	._fset_acd=03df48 ._fset_acd=03df48 ._fadj_acd=03e2d8 ._fadd_acd=03ded2 ._fsub_acd=03e534 ._fset_dac=03e02e
+subcpu v141	03e142	IDE ml	_add_f_s	f_code	._fadd_f	0	75	57	FP_fadd	._fset_acf=03df84 ._fset_acf=03df84 ._fadj_acf=03e388 ._fadd_acf=03df20 ._fsub_acf=03e5de ._fset_fac=03e098
+subcpu v141	03df20	IDE ml	_fadd_acf_s	f_code	._fadd_acf	0	39	36	FP_SP_AddMantissa	SPECIAL_ADD_F=03e9ea
+subcpu v141	03e388	IDE ml	_adj_acf_s	f_code	._fadj_acf	0	86	86	FP_SP_AlignMantissa	
+subcpu v141	03df48	IDE ml	_set_acd_s	f_code	._fset_acd	0	60	60	FP_DP_Decode	
+subcpu v141	03df84	IDE ml	set_acf	f_code	._fset_acf	0	57	57	FP_SP_Decode	
+subcpu v141	03e02e	IDE ml	_set_dac_s	f_code	._fset_dac	0	105	99	FP_DP_Encode	_errno=040c0a __FloatErrorHandle=00f428
+subcpu v141	03e098	IDE ml	_set_fac_s	f_code	._fset_fac	0	94	88	FP_SP_Encode	_errno=040c0a __FloatErrorHandle=00f428
+subcpu v141	03d294	IDE ml	_cmp_d_s	f_code	._fcmp_d	0	90	81	FP_dcmp	TAB_EQ=03d960 TAB_LT=03d966 TAB_GT=03d96c
+subcpu v141	03d2ee	IDE ml	_cmp_f_s	f_code	._fcmp_f	0	71	62	FP_fcmp	TAB_EQ=03d960 TAB_LT=03d966 TAB_GT=03d96c
+subcpu v141	03d44e	IDE ml	_cmp_zd_s	f_code	._fcmp_zd	0	52	43	FP_DP_CmpZero64	TAB_EQ=03d960 TAB_LT=03d966 TAB_GT=03d96c
+subcpu v141	03d482	IDE ml	_cmp_zf_s	f_code	._fcmp_zf	0	47	38	FP_SP_CmpZero32	TAB_EQ=03d960 TAB_LT=03d966 TAB_GT=03d96c
+subcpu v141	03de02	IDE ml	_cvt_dacul_s	f_code	._fcvt_dacl	0	25	25	FP_DP_Normalize	
+subcpu v141	03dfbe	IDE ml	_cvt_dacul_s	f_code	._fcvt_dacl	0	25	25	FP_SP_Normalize	
+subcpu v141	03de02	IDE ml	_cvt_facul_s	f_code	._fcvt_facl	0	25	25	FP_DP_Normalize	
+subcpu v141	03dfbe	IDE ml	_cvt_facul_s	f_code	._fcvt_facl	0	25	25	FP_SP_Normalize	
+subcpu v141	03de1b	IDE ml	_cvt_facul_s	f_code	._fcvt_facul	25	90	90	FP_DP_NormCore	
+subcpu v141	03de02	IDE ml	_set_dacul_s	f_code	._fcvt_xacl	0	25	25	FP_DP_Normalize	
+subcpu v141	03dfbe	IDE ml	_set_dacul_s	f_code	._fcvt_xacl	0	25	25	FP_SP_Normalize	
+subcpu v141	03de76	IDE ml	_cvt_ulfac_s	f_code	._fcvt_lfac	0	92	89	FP_DP_ShiftDecode	_errno=040c0a
+subcpu v141	03dd1e	IDE ml	_ld_dl_s	f_code	._fld_dl	0	27	21	FP_ScalarToDP	._fcvt_dacl=03dfbe ._fset_dac=03e02e
+subcpu v141	03dd39	IDE ml	_ld_dl_s	f_code	._fld_dl	0	27	21	FP_DP_CallWithBuf12	._fcvt_dacl=03dfd7 ._fset_dac=03e02e
+subcpu v141	03dd1e	IDE ml	_ld_dl_s	f_code	._fld_dul	27	27	21	FP_ScalarToDP	._fcvt_dacul=03dfbe ._fset_dac=03e02e
+subcpu v141	03dd39	IDE ml	_ld_dl_s	f_code	._fld_dul	27	27	21	FP_DP_CallWithBuf12	._fcvt_dacul=03dfd7 ._fset_dac=03e02e
+subcpu v141	03ddb2	IDE ml	_ld_fl_s	f_code	._fld_fl	0	27	21	FP_SP_CallWithBuf8	._fcvt_facl=03de02 ._fset_fac=03e098
+subcpu v141	03ddcd	IDE ml	_ld_fl_s	f_code	._fld_fl	0	27	21	FP_SP_CallWithBuf8b	._fcvt_facl=03de1b ._fset_fac=03e098
+subcpu v141	03ddb2	IDE ml	_ld_fl_s	f_code	._fld_fl_tail	27	27	21	FP_SP_CallWithBuf8	._fcvt_facul=03de02 ._fset_fac=03e098
+subcpu v141	03ddcd	IDE ml	_ld_fl_s	f_code	._fld_fl_tail	27	27	21	FP_SP_CallWithBuf8b	._fcvt_facul=03de1b ._fset_fac=03e098
+subcpu v141	03dd1e	IDE ml	_ld_xl_s	f_code	._fld_xl	0	27	21	FP_ScalarToDP	._fcvt_xacl=03dfbe ._fset_xac=03e02e
+subcpu v141	03dd39	IDE ml	_ld_xl_s	f_code	._fld_xl	0	27	21	FP_DP_CallWithBuf12	._fcvt_xacl=03dfd7 ._fset_xac=03e02e
+subcpu v141	03dd1e	IDE ml	_ld_xl_s	f_code	._fld_xul	27	27	21	FP_ScalarToDP	._fcvt_xacul=03dfbe ._fset_xac=03e02e
+subcpu v141	03dd39	IDE ml	_ld_xl_s	f_code	._fld_xul	27	27	21	FP_DP_CallWithBuf12	._fcvt_xacul=03dfd7 ._fset_xac=03e02e
+subcpu v141	03dde8	IDE ml	_ld_ld_s	f_code	._fld_uld	0	25	19	FP_DP_DecodeToInt	._fset_acd=03df48 ._fcvt_uldac=03ea1c
+subcpu v141	03d434	IDE ml	_ld_lf_s	f_code	._fld_ulf	0	25	19	FP_ftoi	._fset_acf=03df84 ._fcvt_ulfac=03de76
+subcpu v141	03dde8	IDE ml	_ld_lx_s	f_code	._fld_ulx	0	25	19	FP_DP_DecodeToInt	._fset_acx=03df48 ._fcvt_ulxac=03ea1c
+subcpu v141	03e86c	IDE ml	_spe_div_s	f_code	SPECIAL_DIV	0	16	16	FP_NaN_Handler	
+subcpu v141	03d38c	IDE ml	_div_d_s	f_code	._fdiv_d	0	48	36	FP_ddiv	._fset_acd=03df48 ._fset_acd=03df48 ._fdiv_acd=03e3de ._fset_dac=03e02e
+subcpu v141	03e278	IDE ml	_div_d_s	f_code	._fdiv_d	0	48	36	FP_dmul	._fset_acd=03df48 ._fset_acd=03df48 ._fdiv_acd=03ebb6 ._fset_dac=03e02e
+subcpu v141	03d3bc	IDE ml	_div_f_s	f_code	._fdiv_f	0	48	36	FP_fdiv	._fset_acf=03df84 ._fset_acf=03df84 ._fdiv_acf=03e49c ._fset_fac=03e098
+subcpu v141	03e2a8	IDE ml	_div_f_s	f_code	._fdiv_f	0	48	36	FP_fmul	._fset_acf=03df84 ._fset_acf=03df84 ._fdiv_acf=03ec86 ._fset_fac=03e098
+subcpu v141	03d38c	IDE ml	_mul_d_s	f_code	._fmul_d	0	48	36	FP_ddiv	._fset_acd=03df48 ._fset_acd=03df48 ._fmul_acd=03e3de ._fset_dac=03e02e
+subcpu v141	03e278	IDE ml	_mul_d_s	f_code	._fmul_d	0	48	36	FP_dmul	._fset_acd=03df48 ._fset_acd=03df48 ._fmul_acd=03ebb6 ._fset_dac=03e02e
+subcpu v141	03d3bc	IDE ml	_mul_f_s	f_code	._fmul_f	0	48	36	FP_fdiv	._fset_acf=03df84 ._fset_acf=03df84 ._fmul_acf=03e49c ._fset_fac=03e098
+subcpu v141	03e2a8	IDE ml	_mul_f_s	f_code	._fmul_f	0	48	36	FP_fmul	._fset_acf=03df84 ._fset_acf=03df84 ._fmul_acf=03ec86 ._fset_fac=03e098
+subcpu v141	03ecf6	IDE ml	_mul32_s	f_code	MUL_XHL_XIY	0	46	46	FP_MulMantissa64x64	
+subcpu v141	03d3ec	IDE ml	_neg_d_s	f_code	._fneg_d	0	24	24	FP_DP_CopyOrNegate8	
+subcpu v141	03d404	IDE ml	_neg_f_s	f_code	._fneg_f	0	18	18	FP_SP_CopyOrNegate4	
+subcpu v141	03ee26	IDE ml	_spe_sub_s	f_code	SPECIAL_SUB_LD	8	49	49	FP_NegWithSign_D2	
+subcpu v141	03d8c8	IDE ml	_sub_d_s	f_code	._fsub_d	0	75	57	FP_dsub	._fset_acd=03df48 ._fset_acd=03df48 ._fadj_acd=03e2d8 ._fadd_acd=03ded2 ._fsub_acd=03e534 ._fset_dac=03e02e
+subcpu v141	03d914	IDE ml	_sub_f_s	f_code	._fsub_f	0	75	57	FP_fsub	._fset_acf=03df84 ._fset_acf=03df84 ._fadj_acf=03e388 ._fadd_acf=03df20 ._fsub_acf=03e5de ._fset_fac=03e098
+subcpu v141	03e5de	IDE ml	_sub_acf_s	f_code	._fsub_acf	0	85	82	FP_SP_SubMantissa	SPECIAL_SUB_F=03ee1e
+subcpu v141	00f3ba	IDE pic	__float_c	far_pid_data	_g_dbltbl	12	72	72	FPConst_Pi	
+subcpu v141	00f402	IDE pic	__float_c	far_pid_data	_g_ldbltbl	84	30	30	FPConst_NegZero	
+subcpu v141	00f34e	IDE pic	__trig_c	far_pid_data	__trig_c data	0	96	96	FPConst_InvFact3	
+subcpu v141	03d8b2	IDE pic	lmull	far_pic	C9H_mullu	0	22	22	Math_Multiply32	
+subcpu v141	03de02	IDE pic	_cvt_dacul_s	far_pic	._fcvt_dacl	0	25	25	FP_DP_Normalize	
+subcpu v141	03dfbe	IDE pic	_cvt_dacul_s	far_pic	._fcvt_dacl	0	25	25	FP_SP_Normalize	
+subcpu v141	03e86c	IDE pic	_spe_div_s	far_pic	SPECIAL_DIV	0	16	16	FP_NaN_Handler	
+subcpu v141	03ecf6	IDE pic	_mul32_s	far_pic	MUL_XHL_XIY	0	46	46	FP_MulMantissa64x64	
+subcpu v140	00f402	v1.10 ml	__float_c	f_data	_g_ldbltbl	0	30	30	FPConst_NegZero	
+subcpu v140	03e1a5	v1.10 ml	_frexp_c	f_code	_frexp	0	158	146	FP_frexp	._fld_dd=03dc9a ._fcmp_zd=03d41a ._fld_dd=03dc9a ._fld_dd=03dc9a
+subcpu v140	03e9be	v1.10 ml	_spe_add_s	f_code	SPECIAL_ADD_LD	8	41	41	FP_CopyWithSign_D2	
+subcpu v140	03e354	v1.10 ml	_adj_acf_s	f_code	._fadj_acf	0	86	86	FP_SP_AlignMantissa	
+subcpu v140	03df14	v1.10 ml	_set_acd_s	f_code	._fset_acd	0	60	60	FP_DP_Decode	
+subcpu v140	03df50	v1.10 ml	set_acf	f_code	._fset_acf	0	57	57	FP_SP_Decode	
+subcpu v140	03dffa	v1.10 ml	_set_dac_s	f_code	._fset_dac	0	105	99	FP_DP_Encode	_errno=040bd6 __FloatErrorHandle=00f428
+subcpu v140	03e064	v1.10 ml	_set_fac_s	f_code	._fset_fac	0	94	88	FP_SP_Encode	_errno=040bd6 __FloatErrorHandle=00f428
+subcpu v140	03d260	v1.10 ml	_cmp_d_s	f_code	._fcmp_d	0	90	81	FP_dcmp	TAB_EQ=03d92c TAB_LT=03d932 TAB_GT=03d938
+subcpu v140	03d2ba	v1.10 ml	_cmp_f_s	f_code	._fcmp_f	0	71	62	FP_fcmp	TAB_EQ=03d92c TAB_LT=03d932 TAB_GT=03d938
+subcpu v140	03d41a	v1.10 ml	_cmp_zd_s	f_code	._fcmp_zd	0	52	43	FP_DP_CmpZero64	TAB_EQ=03d92c TAB_LT=03d932 TAB_GT=03d938
+subcpu v140	03d44e	v1.10 ml	_cmp_zf_s	f_code	._fcmp_zf	0	47	38	FP_SP_CmpZero32	TAB_EQ=03d92c TAB_LT=03d932 TAB_GT=03d938
+subcpu v140	03ddce	v1.10 ml	_cvt_dacul_s	f_code	._fcvt_dacl	0	25	25	FP_DP_Normalize	
+subcpu v140	03df8a	v1.10 ml	_cvt_dacul_s	f_code	._fcvt_dacl	0	25	25	FP_SP_Normalize	
+subcpu v140	03ddce	v1.10 ml	_cvt_facul_s	f_code	._fcvt_facl	0	25	25	FP_DP_Normalize	
+subcpu v140	03df8a	v1.10 ml	_cvt_facul_s	f_code	._fcvt_facl	0	25	25	FP_SP_Normalize	
+subcpu v140	03dde7	v1.10 ml	_cvt_facul_s	f_code	._fcvt_facul	25	90	90	FP_DP_NormCore	
+subcpu v140	03e838	v1.10 ml	_spe_div_s	f_code	SPECIAL_DIV	0	16	16	FP_NaN_Handler	
+subcpu v140	03ecc2	v1.10 ml	_mul32_s	f_code	MUL_XHL_XIY	0	46	46	FP_MulMantissa64x64	
+subcpu v140	03d87e	v1.10 ml	lmull	f_code	C9H_mullu	0	22	22	Math_Multiply32	
+subcpu v140	03d3b8	v1.10 ml	_neg_d_s	f_code	._fneg_d	0	24	24	FP_DP_CopyOrNegate8	
+subcpu v140	03d3d0	v1.10 ml	_neg_f_s	f_code	._fneg_f	0	18	18	FP_SP_CopyOrNegate4	
+subcpu v140	03edf2	v1.10 ml	_spe_sub_s	f_code	SPECIAL_SUB_LD	8	49	49	FP_NegWithSign_D2	
+subcpu v140	03ddce	v1.10 ml	_set_dacul_s	f_code	._fcvt_xacl	0	25	25	FP_DP_Normalize	
+subcpu v140	03df8a	v1.10 ml	_set_dacul_s	f_code	._fcvt_xacl	0	25	25	FP_SP_Normalize	
+subcpu v140	03e9be	v1.10 pic	_spe_add_s	pic_code	SPECIAL_ADD_LD	8	41	41	FP_CopyWithSign_D2	
+subcpu v140	03e354	v1.10 pic	_adj_acf_s	pic_code	._fadj_acf	0	86	86	FP_SP_AlignMantissa	
+subcpu v140	03df14	v1.10 pic	_set_acd_s	pic_code	._fset_acd	0	60	60	FP_DP_Decode	
+subcpu v140	03df50	v1.10 pic	set_acf	pic_code	._fset_acf	0	57	57	FP_SP_Decode	
+subcpu v140	03d260	v1.10 pic	_cmp_d_s	pic_code	._fcmp_d	0	90	81	FP_dcmp	TAB_EQ=03d92c TAB_LT=03d932 TAB_GT=03d938
+subcpu v140	03d2ba	v1.10 pic	_cmp_f_s	pic_code	._fcmp_f	0	71	62	FP_fcmp	TAB_EQ=03d92c TAB_LT=03d932 TAB_GT=03d938
+subcpu v140	03d41a	v1.10 pic	_cmp_zd_s	pic_code	._fcmp_zd	0	52	43	FP_DP_CmpZero64	TAB_EQ=03d92c TAB_LT=03d932 TAB_GT=03d938
+subcpu v140	03d44e	v1.10 pic	_cmp_zf_s	pic_code	._fcmp_zf	0	47	38	FP_SP_CmpZero32	TAB_EQ=03d92c TAB_LT=03d932 TAB_GT=03d938
+subcpu v140	03ddce	v1.10 pic	_cvt_dacul_s	pic_code	._fcvt_dacl	0	25	25	FP_DP_Normalize	
+subcpu v140	03df8a	v1.10 pic	_cvt_dacul_s	pic_code	._fcvt_dacl	0	25	25	FP_SP_Normalize	
+subcpu v140	03ddce	v1.10 pic	_cvt_facul_s	pic_code	._fcvt_facl	0	25	25	FP_DP_Normalize	
+subcpu v140	03df8a	v1.10 pic	_cvt_facul_s	pic_code	._fcvt_facl	0	25	25	FP_SP_Normalize	
+subcpu v140	03dde7	v1.10 pic	_cvt_facul_s	pic_code	._fcvt_facul	25	90	90	FP_DP_NormCore	
+subcpu v140	03e838	v1.10 pic	_spe_div_s	pic_code	SPECIAL_DIV	0	16	16	FP_NaN_Handler	
+subcpu v140	03ecc2	v1.10 pic	_mul32_s	pic_code	MUL_XHL_XIY	0	46	46	FP_MulMantissa64x64	
+subcpu v140	03d87e	v1.10 pic	lmull	pic_code	C9H_mullu	0	22	22	Math_Multiply32	
+subcpu v140	03d3b8	v1.10 pic	_neg_d_s	pic_code	._fneg_d	0	24	24	FP_DP_CopyOrNegate8	
+subcpu v140	03d3d0	v1.10 pic	_neg_f_s	pic_code	._fneg_f	0	18	18	FP_SP_CopyOrNegate4	
+subcpu v140	03edf2	v1.10 pic	_spe_sub_s	pic_code	SPECIAL_SUB_LD	8	49	49	FP_NegWithSign_D2	
+subcpu v140	03ddce	v1.10 pic	_set_dacul_s	pic_code	._fcvt_xacl	0	25	25	FP_DP_Normalize	
+subcpu v140	03df8a	v1.10 pic	_set_dacul_s	pic_code	._fcvt_xacl	0	25	25	FP_SP_Normalize	
+subcpu v140	03e848	IDE ml	__fint_c	f_code	__fint	0	365	334	FP_trunc	._fld_dd=03dc9a ._fld_dd=03dc9a ._fadd_d=03e0c2 ._fsub_d=03d894 ._fld_dd=03dc9a ._fld_dd=03dc9a ._fld_dd=03dc9a
+subcpu v140	00f3ba	IDE ml	__float_c	f_data	_g_dbltbl	12	72	72	FPConst_Pi	
+subcpu v140	00f402	IDE ml	__float_c	f_data	_g_ldbltbl	84	30	30	FPConst_NegZero	
+subcpu v140	00f34e	IDE ml	__trig_c	f_data	__trig_c data	0	96	96	FPConst_InvFact3	
+subcpu v140	03d3e2	IDE ml	_fabs_c	f_code	_fabs	0	29	20	FP_fabs	._fcmp_zd=03d41a ._fld_dd=03dc9a ._fneg_d=03d3b8
+subcpu v140	03e1a5	IDE ml	_frexp_c	f_code	_frexp	0	158	146	FP_frexp	._fld_dd=03dc9a ._fcmp_zd=03d41a ._fld_dd=03dc9a ._fld_dd=03dc9a
+subcpu v140	03ea50	IDE ml	_ldexp_c	f_code	_ldexp	0	305	251	FP_ldexp	._fld_dd=03dc9a ._fcmp_zd=03d41a ._fld_dd=03dc9a _errno=040bd6 _g_mathtbl=00f420 ._fneg_d=03d3b8 ._fld_dd=03dc9a ._fld_dd=03dc9a _errno=040bd6 _g_mathtbl=00f420 ._fneg_d=03d3b8 ._fld_dd=03dc9a _errno=040bd6 ._fld_dd=03dc9a ._fld_dd=03dc9a
+subcpu v140	03dbc8	IDE ml	ldivl	f_code	SDivMod	0	71	71	Int_SignedDiv	
+subcpu v140	03d87e	IDE ml	lmull	f_code	C9H_mullu	0	22	22	Math_Multiply32	
+subcpu v140	03e9be	IDE ml	_spe_add_s	f_code	SPECIAL_ADD_LD	8	41	41	FP_CopyWithSign_D2	
+subcpu v140	03e0c2	IDE ml	_add_d_s	f_code	._fadd_d	0	75	57	FP_dadd	._fset_acd=03df14 ._fset_acd=03df14 ._fadj_acd=03e2a4 ._fadd_acd=03de9e ._fsub_acd=03e500 ._fset_dac=03dffa
+subcpu v140	03e10e	IDE ml	_add_f_s	f_code	._fadd_f	0	75	57	FP_fadd	._fset_acf=03df50 ._fset_acf=03df50 ._fadj_acf=03e354 ._fadd_acf=03deec ._fsub_acf=03e5aa ._fset_fac=03e064
+subcpu v140	03deec	IDE ml	_fadd_acf_s	f_code	._fadd_acf	0	39	36	FP_SP_AddMantissa	SPECIAL_ADD_F=03e9b6
+subcpu v140	03e354	IDE ml	_adj_acf_s	f_code	._fadj_acf	0	86	86	FP_SP_AlignMantissa	
+subcpu v140	03df14	IDE ml	_set_acd_s	f_code	._fset_acd	0	60	60	FP_DP_Decode	
+subcpu v140	03df50	IDE ml	set_acf	f_code	._fset_acf	0	57	57	FP_SP_Decode	
+subcpu v140	03dffa	IDE ml	_set_dac_s	f_code	._fset_dac	0	105	99	FP_DP_Encode	_errno=040bd6 __FloatErrorHandle=00f428
+subcpu v140	03e064	IDE ml	_set_fac_s	f_code	._fset_fac	0	94	88	FP_SP_Encode	_errno=040bd6 __FloatErrorHandle=00f428
+subcpu v140	03d260	IDE ml	_cmp_d_s	f_code	._fcmp_d	0	90	81	FP_dcmp	TAB_EQ=03d92c TAB_LT=03d932 TAB_GT=03d938
+subcpu v140	03d2ba	IDE ml	_cmp_f_s	f_code	._fcmp_f	0	71	62	FP_fcmp	TAB_EQ=03d92c TAB_LT=03d932 TAB_GT=03d938
+subcpu v140	03d41a	IDE ml	_cmp_zd_s	f_code	._fcmp_zd	0	52	43	FP_DP_CmpZero64	TAB_EQ=03d92c TAB_LT=03d932 TAB_GT=03d938
+subcpu v140	03d44e	IDE ml	_cmp_zf_s	f_code	._fcmp_zf	0	47	38	FP_SP_CmpZero32	TAB_EQ=03d92c TAB_LT=03d932 TAB_GT=03d938
+subcpu v140	03ddce	IDE ml	_cvt_dacul_s	f_code	._fcvt_dacl	0	25	25	FP_DP_Normalize	
+subcpu v140	03df8a	IDE ml	_cvt_dacul_s	f_code	._fcvt_dacl	0	25	25	FP_SP_Normalize	
+subcpu v140	03ddce	IDE ml	_cvt_facul_s	f_code	._fcvt_facl	0	25	25	FP_DP_Normalize	
+subcpu v140	03df8a	IDE ml	_cvt_facul_s	f_code	._fcvt_facl	0	25	25	FP_SP_Normalize	
+subcpu v140	03dde7	IDE ml	_cvt_facul_s	f_code	._fcvt_facul	25	90	90	FP_DP_NormCore	
+subcpu v140	03ddce	IDE ml	_set_dacul_s	f_code	._fcvt_xacl	0	25	25	FP_DP_Normalize	
+subcpu v140	03df8a	IDE ml	_set_dacul_s	f_code	._fcvt_xacl	0	25	25	FP_SP_Normalize	
+subcpu v140	03de42	IDE ml	_cvt_ulfac_s	f_code	._fcvt_lfac	0	92	89	FP_DP_ShiftDecode	_errno=040bd6
+subcpu v140	03dcea	IDE ml	_ld_dl_s	f_code	._fld_dl	0	27	21	FP_ScalarToDP	._fcvt_dacl=03df8a ._fset_dac=03dffa
+subcpu v140	03dd05	IDE ml	_ld_dl_s	f_code	._fld_dl	0	27	21	FP_DP_CallWithBuf12	._fcvt_dacl=03dfa3 ._fset_dac=03dffa
+subcpu v140	03dcea	IDE ml	_ld_dl_s	f_code	._fld_dul	27	27	21	FP_ScalarToDP	._fcvt_dacul=03df8a ._fset_dac=03dffa
+subcpu v140	03dd05	IDE ml	_ld_dl_s	f_code	._fld_dul	27	27	21	FP_DP_CallWithBuf12	._fcvt_dacul=03dfa3 ._fset_dac=03dffa
+subcpu v140	03dd7e	IDE ml	_ld_fl_s	f_code	._fld_fl	0	27	21	FP_SP_CallWithBuf8	._fcvt_facl=03ddce ._fset_fac=03e064
+subcpu v140	03dd99	IDE ml	_ld_fl_s	f_code	._fld_fl	0	27	21	FP_SP_CallWithBuf8b	._fcvt_facl=03dde7 ._fset_fac=03e064
+subcpu v140	03dd7e	IDE ml	_ld_fl_s	f_code	._fld_fl_tail	27	27	21	FP_SP_CallWithBuf8	._fcvt_facul=03ddce ._fset_fac=03e064
+subcpu v140	03dd99	IDE ml	_ld_fl_s	f_code	._fld_fl_tail	27	27	21	FP_SP_CallWithBuf8b	._fcvt_facul=03dde7 ._fset_fac=03e064
+subcpu v140	03dcea	IDE ml	_ld_xl_s	f_code	._fld_xl	0	27	21	FP_ScalarToDP	._fcvt_xacl=03df8a ._fset_xac=03dffa
+subcpu v140	03dd05	IDE ml	_ld_xl_s	f_code	._fld_xl	0	27	21	FP_DP_CallWithBuf12	._fcvt_xacl=03dfa3 ._fset_xac=03dffa
+subcpu v140	03dcea	IDE ml	_ld_xl_s	f_code	._fld_xul	27	27	21	FP_ScalarToDP	._fcvt_xacul=03df8a ._fset_xac=03dffa
+subcpu v140	03dd05	IDE ml	_ld_xl_s	f_code	._fld_xul	27	27	21	FP_DP_CallWithBuf12	._fcvt_xacul=03dfa3 ._fset_xac=03dffa
+subcpu v140	03ddb4	IDE ml	_ld_ld_s	f_code	._fld_uld	0	25	19	FP_DP_DecodeToInt	._fset_acd=03df14 ._fcvt_uldac=03e9e8
+subcpu v140	03d400	IDE ml	_ld_lf_s	f_code	._fld_ulf	0	25	19	FP_ftoi	._fset_acf=03df50 ._fcvt_ulfac=03de42
+subcpu v140	03ddb4	IDE ml	_ld_lx_s	f_code	._fld_ulx	0	25	19	FP_DP_DecodeToInt	._fset_acx=03df14 ._fcvt_ulxac=03e9e8
+subcpu v140	03e838	IDE ml	_spe_div_s	f_code	SPECIAL_DIV	0	16	16	FP_NaN_Handler	
+subcpu v140	03d358	IDE ml	_div_d_s	f_code	._fdiv_d	0	48	36	FP_ddiv	._fset_acd=03df14 ._fset_acd=03df14 ._fdiv_acd=03e3aa ._fset_dac=03dffa
+subcpu v140	03e244	IDE ml	_div_d_s	f_code	._fdiv_d	0	48	36	FP_dmul	._fset_acd=03df14 ._fset_acd=03df14 ._fdiv_acd=03eb82 ._fset_dac=03dffa
+subcpu v140	03d388	IDE ml	_div_f_s	f_code	._fdiv_f	0	48	36	FP_fdiv	._fset_acf=03df50 ._fset_acf=03df50 ._fdiv_acf=03e468 ._fset_fac=03e064
+subcpu v140	03e274	IDE ml	_div_f_s	f_code	._fdiv_f	0	48	36	FP_fmul	._fset_acf=03df50 ._fset_acf=03df50 ._fdiv_acf=03ec52 ._fset_fac=03e064
+subcpu v140	03d358	IDE ml	_mul_d_s	f_code	._fmul_d	0	48	36	FP_ddiv	._fset_acd=03df14 ._fset_acd=03df14 ._fmul_acd=03e3aa ._fset_dac=03dffa
+subcpu v140	03e244	IDE ml	_mul_d_s	f_code	._fmul_d	0	48	36	FP_dmul	._fset_acd=03df14 ._fset_acd=03df14 ._fmul_acd=03eb82 ._fset_dac=03dffa
+subcpu v140	03d388	IDE ml	_mul_f_s	f_code	._fmul_f	0	48	36	FP_fdiv	._fset_acf=03df50 ._fset_acf=03df50 ._fmul_acf=03e468 ._fset_fac=03e064
+subcpu v140	03e274	IDE ml	_mul_f_s	f_code	._fmul_f	0	48	36	FP_fmul	._fset_acf=03df50 ._fset_acf=03df50 ._fmul_acf=03ec52 ._fset_fac=03e064
+subcpu v140	03ecc2	IDE ml	_mul32_s	f_code	MUL_XHL_XIY	0	46	46	FP_MulMantissa64x64	
+subcpu v140	03d3b8	IDE ml	_neg_d_s	f_code	._fneg_d	0	24	24	FP_DP_CopyOrNegate8	
+subcpu v140	03d3d0	IDE ml	_neg_f_s	f_code	._fneg_f	0	18	18	FP_SP_CopyOrNegate4	
+subcpu v140	03edf2	IDE ml	_spe_sub_s	f_code	SPECIAL_SUB_LD	8	49	49	FP_NegWithSign_D2	
+subcpu v140	03d894	IDE ml	_sub_d_s	f_code	._fsub_d	0	75	57	FP_dsub	._fset_acd=03df14 ._fset_acd=03df14 ._fadj_acd=03e2a4 ._fadd_acd=03de9e ._fsub_acd=03e500 ._fset_dac=03dffa
+subcpu v140	03d8e0	IDE ml	_sub_f_s	f_code	._fsub_f	0	75	57	FP_fsub	._fset_acf=03df50 ._fset_acf=03df50 ._fadj_acf=03e354 ._fadd_acf=03deec ._fsub_acf=03e5aa ._fset_fac=03e064
+subcpu v140	03e5aa	IDE ml	_sub_acf_s	f_code	._fsub_acf	0	85	82	FP_SP_SubMantissa	SPECIAL_SUB_F=03edea
+subcpu v140	00f3ba	IDE pic	__float_c	far_pid_data	_g_dbltbl	12	72	72	FPConst_Pi	
+subcpu v140	00f402	IDE pic	__float_c	far_pid_data	_g_ldbltbl	84	30	30	FPConst_NegZero	
+subcpu v140	00f34e	IDE pic	__trig_c	far_pid_data	__trig_c data	0	96	96	FPConst_InvFact3	
+subcpu v140	03d87e	IDE pic	lmull	far_pic	C9H_mullu	0	22	22	Math_Multiply32	
+subcpu v140	03ddce	IDE pic	_cvt_dacul_s	far_pic	._fcvt_dacl	0	25	25	FP_DP_Normalize	
+subcpu v140	03df8a	IDE pic	_cvt_dacul_s	far_pic	._fcvt_dacl	0	25	25	FP_SP_Normalize	
+subcpu v140	03e838	IDE pic	_spe_div_s	far_pic	SPECIAL_DIV	0	16	16	FP_NaN_Handler	
+subcpu v140	03ecc2	IDE pic	_mul32_s	far_pic	MUL_XHL_XIY	0	46	46	FP_MulMantissa64x64	
+table data	9ffc63	v1.10 ml	ldivl	f_code	C9H_divlu	87	122	122	Boot_UDivMod32	
+table data	9ffc63	v1.10 pic	ldivl	pic_code	C9H_divlu	87	122	122	Boot_UDivMod32	
+table data	9ffb2f	IDE ml	__sbrk_c	f_code	.sbrk	0	39	24	Boot_sbrk	_SBRK_size=00999c _SBRK_size=00999c _SBRK_break=009998 _SBRK_break=009998 _SBRK_size=00999c
+table data	9ffb56	IDE ml	_malloc_c	f_code	_malloc	0	134	122	Boot_malloc	__allocb=0099a0 __allocb=0099a0 __allocb=0099a0 .sbrk=fffb2f
+table data	9ffbdc	IDE ml	_strncmp_c	f_code	_strncmp	0	50	50	Boot_memcmp	
+table data	9ffc0e	IDE ml	ldivl	f_code	SDivMod	0	71	71	Boot_SDivMod32	
+table data	9ffc63	IDE ml	ldivl	f_code	C9H_divlu	85	122	122	Boot_UDivMod32	
+hdae v2.06i	2f9362	v1.10 ml	_ctype_c	f_const	___ctype	0	256	256	HDAE5000_CType_Table	
+hdae v2.06i	29acc5	v1.10 ml	_ldiv_c	f_code	_ldiv	0	67	61	HDAE5000_LDiv	C9H_divls=29b8bb C9H_remls=29b8b7
+hdae v2.06i	29ae0c	v1.10 ml	_memchr_c	f_code	_memchr	0	24	24	HDAE5000_MemChr	
+hdae v2.06i	29ae24	v1.10 ml	_memcmp_c	f_code	_memcmp	0	123	123	HDAE5000_MemCmp	
+hdae v2.06i	29ae9f	v1.10 ml	_memcpy_c	f_code	_memcpy	0	40	40	HDAE5000_MemCopy	
+hdae v2.06i	29aec7	v1.10 ml	_memset_c	f_code	_memset	0	68	68	HDAE5000_MemFill	
+hdae v2.06i	29abd8	v1.10 ml	_sprintf_c	f_code	_sprintf	0	40	30	HDAE5000_SPrintf	__doprnt=299ae7
+hdae v2.06i	29ac00	v1.10 ml	_sprintf_c	f_code	_vsprintf	40	59	40	HDAE5000_VSPrintf	__doprnt=299ae7
+hdae v2.06i	29af0b	v1.10 ml	_strcat_c	f_code	_strcat	0	34	34	HDAE5000_StrCat	
+hdae v2.06i	29b744	v1.10 ml	set_acf	f_code	._fset_acf	0	57	57	HDAE5000_Float_Unpack	
+hdae v2.06i	29b942	v1.10 ml	_set_dac_s	f_code	._fset_dac	0	105	99	HDAE5000_Double_Pack	_errno=230eca __FloatErrorHandle=23a1a8
+hdae v2.06i	29b77e	v1.10 ml	_set_fac_s	f_code	._fset_fac	0	94	88	HDAE5000_Float_Pack	_errno=230eca __FloatErrorHandle=23a1a8
+hdae v2.06i	29b9ac	v1.10 ml	_cvt_dacul_s	f_code	._fcvt_dacl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v2.06i	29b9ac	v1.10 ml	_cvt_facul_s	f_code	._fcvt_facl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v2.06i	29b9c5	v1.10 ml	_cvt_facul_s	f_code	._fcvt_facul	25	90	90	HDAE5000_ULong_To_Unpacked	
+hdae v2.06i	29b830	v1.10 ml	_spe_div_s	f_code	SPECIAL_DIV	0	16	16	HDAE5000_FloatDiv_Special	
+hdae v2.06i	29b72d	v1.10 ml	lmull	f_code	C9H_mullu	0	22	22	HDAE5000_Multiply	
+hdae v2.06i	29b9ac	v1.10 ml	_set_dacul_s	f_code	._fcvt_xacl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v2.06i	29b7e8	v1.10 ml	_ld_xx_s	f_code	._fld_xx	0	17	17	HDAE5000_Copy10	
+hdae v2.06i	29b744	v1.10 pic	set_acf	pic_code	._fset_acf	0	57	57	HDAE5000_Float_Unpack	
+hdae v2.06i	29b9ac	v1.10 pic	_cvt_dacul_s	pic_code	._fcvt_dacl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v2.06i	29b9ac	v1.10 pic	_cvt_facul_s	pic_code	._fcvt_facl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v2.06i	29b9c5	v1.10 pic	_cvt_facul_s	pic_code	._fcvt_facul	25	90	90	HDAE5000_ULong_To_Unpacked	
+hdae v2.06i	29b830	v1.10 pic	_spe_div_s	pic_code	SPECIAL_DIV	0	16	16	HDAE5000_FloatDiv_Special	
+hdae v2.06i	29b72d	v1.10 pic	lmull	pic_code	C9H_mullu	0	22	22	HDAE5000_Multiply	
+hdae v2.06i	29b9ac	v1.10 pic	_set_dacul_s	pic_code	._fcvt_xacl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v2.06i	29b7e8	v1.10 pic	_ld_xx_s	pic_code	._fld_xx	0	17	17	HDAE5000_Copy10	
+hdae v2.06i	2f9362	IDE ml	_ctype_c	f_const	__ctype	0	256	256	HDAE5000_CType_Table	
+hdae v2.06i	29abd8	IDE ml	_sprintf_c	f_code	_sprintf	0	40	30	HDAE5000_SPrintf	__doprnt=299ae7
+hdae v2.06i	29ac00	IDE ml	_sprintf_c	f_code	_vsprintf	40	59	40	HDAE5000_VSPrintf	__doprnt=299ae7
+hdae v2.06i	29ac3b	IDE ml	_itoa_c	f_code	_itoa	0	138	135	HDAE5000_IToA	_memcpy=29ae9f
+hdae v2.06i	29acc5	IDE ml	_ldiv_c	f_code	_ldiv	0	67	61	HDAE5000_LDiv	C9H_divls=29b8bb C9H_remls=29b8b7
+hdae v2.06i	29ad08	IDE ml	_ltoa_c	f_code	_ltoa	0	60	54	HDAE5000_LToA	_ultoa=29ad44 _ultoa=29ad44
+hdae v2.06i	29ad44	IDE ml	_ultoa_c	f_code	_ultoa	0	136	127	HDAE5000_ULToA	C9H_remlu=29b8bf C9H_divlu=29b8c5 _memcpy=29ae9f
+hdae v2.06i	29ae0c	IDE ml	_memchr_c	f_code	_memchr	0	24	24	HDAE5000_MemChr	
+hdae v2.06i	29ae24	IDE ml	_memcmp_c	f_code	_memcmp	0	123	123	HDAE5000_MemCmp	
+hdae v2.06i	29ae9f	IDE ml	_memcpy_c	f_code	_memcpy	0	40	40	HDAE5000_MemCopy	
+hdae v2.06i	29aec7	IDE ml	_memset_c	f_code	_memset	0	68	68	HDAE5000_MemFill	
+hdae v2.06i	29af0b	IDE ml	_strcat_c	f_code	_strcat	0	34	34	HDAE5000_StrCat	
+hdae v2.06i	29af45	IDE ml	_strcpy_c	f_code	_strcpy	0	44	41	HDAE5000_StrCpy	_memccpy=29adcc
+hdae v2.06i	29af71	IDE ml	_strlen_c	f_code	_strlen	0	30	27	HDAE5000_StrLen	_memchr=29ae0c
+hdae v2.06i	29af8f	IDE ml	_strncat_c	f_code	_strncat	0	47	47	HDAE5000_StrNCat	
+hdae v2.06i	29afbe	IDE ml	_strncmp_c	f_code	_strncmp	0	50	50	HDAE5000_StrNCmp	
+hdae v2.06i	29aff0	IDE ml	_strncpy_c	f_code	_strncpy	0	43	43	HDAE5000_StrNCpy	
+hdae v2.06i	29b04e	IDE ml	_strupr_c	f_code	_strupr	0	44	41	HDAE5000_StrUpr	__ctype=2f9362
+hdae v2.06i	29b870	IDE ml	ldivl	f_code	SDivMod	0	71	71	HDAE5000_SDivMod32_Common	
+hdae v2.06i	29b72d	IDE ml	lmull	f_code	C9H_mullu	0	22	22	HDAE5000_Multiply	
+hdae v2.06i	29b744	IDE ml	set_acf	f_code	._fset_acf	0	57	57	HDAE5000_Float_Unpack	
+hdae v2.06i	29b942	IDE ml	_set_dac_s	f_code	._fset_dac	0	105	99	HDAE5000_Double_Pack	_errno=230eca __FloatErrorHandle=23a1a8
+hdae v2.06i	29b77e	IDE ml	_set_fac_s	f_code	._fset_fac	0	94	88	HDAE5000_Float_Pack	_errno=230eca __FloatErrorHandle=23a1a8
+hdae v2.06i	29b9ac	IDE ml	_cvt_dacul_s	f_code	._fcvt_dacl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v2.06i	29b9ac	IDE ml	_cvt_facul_s	f_code	._fcvt_facl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v2.06i	29b9c5	IDE ml	_cvt_facul_s	f_code	._fcvt_facul	25	90	90	HDAE5000_ULong_To_Unpacked	
+hdae v2.06i	29b9ac	IDE ml	_set_dacul_s	f_code	._fcvt_xacl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v2.06i	29b7e8	IDE ml	_ld_xx_s	f_code	._fld_xx	0	17	17	HDAE5000_Copy10	
+hdae v2.06i	29b7fa	IDE ml	_ld_fl_s	f_code	._fld_fl	0	27	21	HDAE5000_LongToFloat	._fcvt_facl=29b9ac ._fset_fac=29b77e
+hdae v2.06i	29b815	IDE ml	_ld_fl_s	f_code	._fld_fl	0	27	21	HDAE5000_ULongToFloat	._fcvt_facl=29b9c5 ._fset_fac=29b77e
+hdae v2.06i	29b7fa	IDE ml	_ld_fl_s	f_code	._fld_fl_tail	27	27	21	HDAE5000_LongToFloat	._fcvt_facul=29b9ac ._fset_fac=29b77e
+hdae v2.06i	29b815	IDE ml	_ld_fl_s	f_code	._fld_fl_tail	27	27	21	HDAE5000_ULongToFloat	._fcvt_facul=29b9c5 ._fset_fac=29b77e
+hdae v2.06i	29b830	IDE ml	_spe_div_s	f_code	SPECIAL_DIV	0	16	16	HDAE5000_FloatDiv_Special	
+hdae v2.06i	29b840	IDE ml	_div_f_s	f_code	._fdiv_f	0	48	36	HDAE5000_FloatDiv	._fset_acf=29b744 ._fset_acf=29b744 ._fdiv_acf=29ba64 ._fset_fac=29b77e
+hdae v2.06i	29b840	IDE ml	_mul_f_s	f_code	._fmul_f	0	48	36	HDAE5000_FloatDiv	._fset_acf=29b744 ._fset_acf=29b744 ._fmul_acf=29ba64 ._fset_fac=29b77e
+hdae v2.06i	2f9362	IDE pic	_ctype_c	far_pid_data	__ctype	0	256	256	HDAE5000_CType_Table	
+hdae v2.06i	2f948e	IDE pic	__doform_c	far_pid_data	__doform_c data	0	35	34	HDAE5000_HexDigits_Lower	
+hdae v2.06i	29b72d	IDE pic	lmull	far_pic	C9H_mullu	0	22	22	HDAE5000_Multiply	
+hdae v2.06i	29b9ac	IDE pic	_cvt_dacul_s	far_pic	._fcvt_dacl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v2.06i	29b7e8	IDE pic	_ld_xx_s	far_pic	._fld_xx	0	17	17	HDAE5000_Copy10	
+hdae v2.06i	29b830	IDE pic	_spe_div_s	far_pic	SPECIAL_DIV	0	16	16	HDAE5000_FloatDiv_Special	
+hdae v2.01i	2f884e	v1.10 ml	_ctype_c	f_const	___ctype	0	256	256	HDAE5000_CType_Table	
+hdae v2.01i	29a58d	v1.10 ml	_ldiv_c	f_code	_ldiv	0	67	61	HDAE5000_LDiv	C9H_divls=29b183 C9H_remls=29b17f
+hdae v2.01i	29a6d4	v1.10 ml	_memchr_c	f_code	_memchr	0	24	24	HDAE5000_MemChr	
+hdae v2.01i	29a6ec	v1.10 ml	_memcmp_c	f_code	_memcmp	0	123	123	HDAE5000_MemCmp	
+hdae v2.01i	29a767	v1.10 ml	_memcpy_c	f_code	_memcpy	0	40	40	HDAE5000_MemCopy	
+hdae v2.01i	29a78f	v1.10 ml	_memset_c	f_code	_memset	0	68	68	HDAE5000_MemFill	
+hdae v2.01i	29a4a0	v1.10 ml	_sprintf_c	f_code	_sprintf	0	40	30	HDAE5000_SPrintf	__doprnt=2993af
+hdae v2.01i	29a4c8	v1.10 ml	_sprintf_c	f_code	_vsprintf	40	59	40	HDAE5000_VSPrintf	__doprnt=2993af
+hdae v2.01i	29a7d3	v1.10 ml	_strcat_c	f_code	_strcat	0	34	34	HDAE5000_StrCat	
+hdae v2.01i	29b00c	v1.10 ml	set_acf	f_code	._fset_acf	0	57	57	HDAE5000_Float_Unpack	
+hdae v2.01i	29b20a	v1.10 ml	_set_dac_s	f_code	._fset_dac	0	105	99	HDAE5000_Double_Pack	_errno=230e6e __FloatErrorHandle=23a112
+hdae v2.01i	29b046	v1.10 ml	_set_fac_s	f_code	._fset_fac	0	94	88	HDAE5000_Float_Pack	_errno=230e6e __FloatErrorHandle=23a112
+hdae v2.01i	29b274	v1.10 ml	_cvt_dacul_s	f_code	._fcvt_dacl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v2.01i	29b274	v1.10 ml	_cvt_facul_s	f_code	._fcvt_facl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v2.01i	29b28d	v1.10 ml	_cvt_facul_s	f_code	._fcvt_facul	25	90	90	HDAE5000_ULong_To_Unpacked	
+hdae v2.01i	29b0f8	v1.10 ml	_spe_div_s	f_code	SPECIAL_DIV	0	16	16	HDAE5000_FloatDiv_Special	
+hdae v2.01i	29aff5	v1.10 ml	lmull	f_code	C9H_mullu	0	22	22	HDAE5000_Multiply	
+hdae v2.01i	29b274	v1.10 ml	_set_dacul_s	f_code	._fcvt_xacl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v2.01i	29b0b0	v1.10 ml	_ld_xx_s	f_code	._fld_xx	0	17	17	HDAE5000_Copy10	
+hdae v2.01i	29b00c	v1.10 pic	set_acf	pic_code	._fset_acf	0	57	57	HDAE5000_Float_Unpack	
+hdae v2.01i	29b274	v1.10 pic	_cvt_dacul_s	pic_code	._fcvt_dacl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v2.01i	29b274	v1.10 pic	_cvt_facul_s	pic_code	._fcvt_facl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v2.01i	29b28d	v1.10 pic	_cvt_facul_s	pic_code	._fcvt_facul	25	90	90	HDAE5000_ULong_To_Unpacked	
+hdae v2.01i	29b0f8	v1.10 pic	_spe_div_s	pic_code	SPECIAL_DIV	0	16	16	HDAE5000_FloatDiv_Special	
+hdae v2.01i	29aff5	v1.10 pic	lmull	pic_code	C9H_mullu	0	22	22	HDAE5000_Multiply	
+hdae v2.01i	29b274	v1.10 pic	_set_dacul_s	pic_code	._fcvt_xacl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v2.01i	29b0b0	v1.10 pic	_ld_xx_s	pic_code	._fld_xx	0	17	17	HDAE5000_Copy10	
+hdae v2.01i	2f884e	IDE ml	_ctype_c	f_const	__ctype	0	256	256	HDAE5000_CType_Table	
+hdae v2.01i	29a4a0	IDE ml	_sprintf_c	f_code	_sprintf	0	40	30	HDAE5000_SPrintf	__doprnt=2993af
+hdae v2.01i	29a4c8	IDE ml	_sprintf_c	f_code	_vsprintf	40	59	40	HDAE5000_VSPrintf	__doprnt=2993af
+hdae v2.01i	29a503	IDE ml	_itoa_c	f_code	_itoa	0	138	135	HDAE5000_IToA	_memcpy=29a767
+hdae v2.01i	29a58d	IDE ml	_ldiv_c	f_code	_ldiv	0	67	61	HDAE5000_LDiv	C9H_divls=29b183 C9H_remls=29b17f
+hdae v2.01i	29a5d0	IDE ml	_ltoa_c	f_code	_ltoa	0	60	54	HDAE5000_LToA	_ultoa=29a60c _ultoa=29a60c
+hdae v2.01i	29a60c	IDE ml	_ultoa_c	f_code	_ultoa	0	136	127	HDAE5000_ULToA	C9H_remlu=29b187 C9H_divlu=29b18d _memcpy=29a767
+hdae v2.01i	29a6d4	IDE ml	_memchr_c	f_code	_memchr	0	24	24	HDAE5000_MemChr	
+hdae v2.01i	29a6ec	IDE ml	_memcmp_c	f_code	_memcmp	0	123	123	HDAE5000_MemCmp	
+hdae v2.01i	29a767	IDE ml	_memcpy_c	f_code	_memcpy	0	40	40	HDAE5000_MemCopy	
+hdae v2.01i	29a78f	IDE ml	_memset_c	f_code	_memset	0	68	68	HDAE5000_MemFill	
+hdae v2.01i	29a7d3	IDE ml	_strcat_c	f_code	_strcat	0	34	34	HDAE5000_StrCat	
+hdae v2.01i	29a80d	IDE ml	_strcpy_c	f_code	_strcpy	0	44	41	HDAE5000_StrCpy	_memccpy=29a694
+hdae v2.01i	29a839	IDE ml	_strlen_c	f_code	_strlen	0	30	27	HDAE5000_StrLen	_memchr=29a6d4
+hdae v2.01i	29a857	IDE ml	_strncat_c	f_code	_strncat	0	47	47	HDAE5000_StrNCat	
+hdae v2.01i	29a886	IDE ml	_strncmp_c	f_code	_strncmp	0	50	50	HDAE5000_StrNCmp	
+hdae v2.01i	29a8b8	IDE ml	_strncpy_c	f_code	_strncpy	0	43	43	HDAE5000_StrNCpy	
+hdae v2.01i	29a916	IDE ml	_strupr_c	f_code	_strupr	0	44	41	HDAE5000_StrUpr	__ctype=2f884e
+hdae v2.01i	29b138	IDE ml	ldivl	f_code	SDivMod	0	71	71	HDAE5000_SDivMod32_Common	
+hdae v2.01i	29aff5	IDE ml	lmull	f_code	C9H_mullu	0	22	22	HDAE5000_Multiply	
+hdae v2.01i	29b00c	IDE ml	set_acf	f_code	._fset_acf	0	57	57	HDAE5000_Float_Unpack	
+hdae v2.01i	29b20a	IDE ml	_set_dac_s	f_code	._fset_dac	0	105	99	HDAE5000_Double_Pack	_errno=230e6e __FloatErrorHandle=23a112
+hdae v2.01i	29b046	IDE ml	_set_fac_s	f_code	._fset_fac	0	94	88	HDAE5000_Float_Pack	_errno=230e6e __FloatErrorHandle=23a112
+hdae v2.01i	29b274	IDE ml	_cvt_dacul_s	f_code	._fcvt_dacl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v2.01i	29b274	IDE ml	_cvt_facul_s	f_code	._fcvt_facl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v2.01i	29b28d	IDE ml	_cvt_facul_s	f_code	._fcvt_facul	25	90	90	HDAE5000_ULong_To_Unpacked	
+hdae v2.01i	29b274	IDE ml	_set_dacul_s	f_code	._fcvt_xacl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v2.01i	29b0b0	IDE ml	_ld_xx_s	f_code	._fld_xx	0	17	17	HDAE5000_Copy10	
+hdae v2.01i	29b0c2	IDE ml	_ld_fl_s	f_code	._fld_fl	0	27	21	HDAE5000_LongToFloat	._fcvt_facl=29b274 ._fset_fac=29b046
+hdae v2.01i	29b0dd	IDE ml	_ld_fl_s	f_code	._fld_fl	0	27	21	HDAE5000_ULongToFloat	._fcvt_facl=29b28d ._fset_fac=29b046
+hdae v2.01i	29b0c2	IDE ml	_ld_fl_s	f_code	._fld_fl_tail	27	27	21	HDAE5000_LongToFloat	._fcvt_facul=29b274 ._fset_fac=29b046
+hdae v2.01i	29b0dd	IDE ml	_ld_fl_s	f_code	._fld_fl_tail	27	27	21	HDAE5000_ULongToFloat	._fcvt_facul=29b28d ._fset_fac=29b046
+hdae v2.01i	29b0f8	IDE ml	_spe_div_s	f_code	SPECIAL_DIV	0	16	16	HDAE5000_FloatDiv_Special	
+hdae v2.01i	29b108	IDE ml	_div_f_s	f_code	._fdiv_f	0	48	36	HDAE5000_FloatDiv	._fset_acf=29b00c ._fset_acf=29b00c ._fdiv_acf=29b32c ._fset_fac=29b046
+hdae v2.01i	29b108	IDE ml	_mul_f_s	f_code	._fmul_f	0	48	36	HDAE5000_FloatDiv	._fset_acf=29b00c ._fset_acf=29b00c ._fmul_acf=29b32c ._fset_fac=29b046
+hdae v2.01i	2f884e	IDE pic	_ctype_c	far_pid_data	__ctype	0	256	256	HDAE5000_CType_Table	
+hdae v2.01i	2f897a	IDE pic	__doform_c	far_pid_data	__doform_c data	0	35	34	HDAE5000_HexDigits_Lower	
+hdae v2.01i	29aff5	IDE pic	lmull	far_pic	C9H_mullu	0	22	22	HDAE5000_Multiply	
+hdae v2.01i	29b274	IDE pic	_cvt_dacul_s	far_pic	._fcvt_dacl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v2.01i	29b0b0	IDE pic	_ld_xx_s	far_pic	._fld_xx	0	17	17	HDAE5000_Copy10	
+hdae v2.01i	29b0f8	IDE pic	_spe_div_s	far_pic	SPECIAL_DIV	0	16	16	HDAE5000_FloatDiv_Special	
+hdae v1.15i	2e0e66	v1.10 ml	_ctype_c	f_const	___ctype	0	256	256	HDAE5000_CType_Table	
+hdae v1.15i	296c9c	v1.10 ml	_ldiv_c	f_code	_ldiv	0	67	61	HDAE5000_LDiv	C9H_divls=297833 C9H_remls=29782f
+hdae v1.15i	296de3	v1.10 ml	_memchr_c	f_code	_memchr	0	24	24	HDAE5000_MemChr	
+hdae v1.15i	296dfb	v1.10 ml	_memcmp_c	f_code	_memcmp	0	123	123	HDAE5000_MemCmp	
+hdae v1.15i	296e76	v1.10 ml	_memcpy_c	f_code	_memcpy	0	40	40	HDAE5000_MemCopy	
+hdae v1.15i	296e9e	v1.10 ml	_memset_c	f_code	_memset	0	68	68	HDAE5000_MemFill	
+hdae v1.15i	296baf	v1.10 ml	_sprintf_c	f_code	_sprintf	0	40	30	HDAE5000_SPrintf	__doprnt=295abe
+hdae v1.15i	296bd7	v1.10 ml	_sprintf_c	f_code	_vsprintf	40	59	40	HDAE5000_VSPrintf	__doprnt=295abe
+hdae v1.15i	296ee2	v1.10 ml	_strcat_c	f_code	_strcat	0	34	34	HDAE5000_StrCat	
+hdae v1.15i	2976bc	v1.10 ml	set_acf	f_code	._fset_acf	0	57	57	HDAE5000_Float_Unpack	
+hdae v1.15i	2978ba	v1.10 ml	_set_dac_s	f_code	._fset_dac	0	105	99	HDAE5000_Double_Pack	_errno=22b3dc __FloatErrorHandle=23d2e4
+hdae v1.15i	2976f6	v1.10 ml	_set_fac_s	f_code	._fset_fac	0	94	88	HDAE5000_Float_Pack	_errno=22b3dc __FloatErrorHandle=23d2e4
+hdae v1.15i	297924	v1.10 ml	_cvt_dacul_s	f_code	._fcvt_dacl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v1.15i	297924	v1.10 ml	_cvt_facul_s	f_code	._fcvt_facl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v1.15i	29793d	v1.10 ml	_cvt_facul_s	f_code	._fcvt_facul	25	90	90	HDAE5000_ULong_To_Unpacked	
+hdae v1.15i	2977a8	v1.10 ml	_spe_div_s	f_code	SPECIAL_DIV	0	16	16	HDAE5000_FloatDiv_Special	
+hdae v1.15i	2976a5	v1.10 ml	lmull	f_code	C9H_mullu	0	22	22	HDAE5000_Multiply	
+hdae v1.15i	297924	v1.10 ml	_set_dacul_s	f_code	._fcvt_xacl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v1.15i	297760	v1.10 ml	_ld_xx_s	f_code	._fld_xx	0	17	17	HDAE5000_Copy10	
+hdae v1.15i	2976bc	v1.10 pic	set_acf	pic_code	._fset_acf	0	57	57	HDAE5000_Float_Unpack	
+hdae v1.15i	297924	v1.10 pic	_cvt_dacul_s	pic_code	._fcvt_dacl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v1.15i	297924	v1.10 pic	_cvt_facul_s	pic_code	._fcvt_facl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v1.15i	29793d	v1.10 pic	_cvt_facul_s	pic_code	._fcvt_facul	25	90	90	HDAE5000_ULong_To_Unpacked	
+hdae v1.15i	2977a8	v1.10 pic	_spe_div_s	pic_code	SPECIAL_DIV	0	16	16	HDAE5000_FloatDiv_Special	
+hdae v1.15i	2976a5	v1.10 pic	lmull	pic_code	C9H_mullu	0	22	22	HDAE5000_Multiply	
+hdae v1.15i	297924	v1.10 pic	_set_dacul_s	pic_code	._fcvt_xacl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v1.15i	297760	v1.10 pic	_ld_xx_s	pic_code	._fld_xx	0	17	17	HDAE5000_Copy10	
+hdae v1.15i	2e0e66	IDE ml	_ctype_c	f_const	__ctype	0	256	256	HDAE5000_CType_Table	
+hdae v1.15i	296baf	IDE ml	_sprintf_c	f_code	_sprintf	0	40	30	HDAE5000_SPrintf	__doprnt=295abe
+hdae v1.15i	296bd7	IDE ml	_sprintf_c	f_code	_vsprintf	40	59	40	HDAE5000_VSPrintf	__doprnt=295abe
+hdae v1.15i	296c12	IDE ml	_itoa_c	f_code	_itoa	0	138	135	HDAE5000_IToA	_memcpy=296e76
+hdae v1.15i	296c9c	IDE ml	_ldiv_c	f_code	_ldiv	0	67	61	HDAE5000_LDiv	C9H_divls=297833 C9H_remls=29782f
+hdae v1.15i	296cdf	IDE ml	_ltoa_c	f_code	_ltoa	0	60	54	HDAE5000_LToA	_ultoa=296d1b _ultoa=296d1b
+hdae v1.15i	296d1b	IDE ml	_ultoa_c	f_code	_ultoa	0	136	127	HDAE5000_ULToA	C9H_remlu=297837 C9H_divlu=29783d _memcpy=296e76
+hdae v1.15i	296de3	IDE ml	_memchr_c	f_code	_memchr	0	24	24	HDAE5000_MemChr	
+hdae v1.15i	296dfb	IDE ml	_memcmp_c	f_code	_memcmp	0	123	123	HDAE5000_MemCmp	
+hdae v1.15i	296e76	IDE ml	_memcpy_c	f_code	_memcpy	0	40	40	HDAE5000_MemCopy	
+hdae v1.15i	296e9e	IDE ml	_memset_c	f_code	_memset	0	68	68	HDAE5000_MemFill	
+hdae v1.15i	296ee2	IDE ml	_strcat_c	f_code	_strcat	0	34	34	HDAE5000_StrCat	
+hdae v1.15i	296f1c	IDE ml	_strcpy_c	f_code	_strcpy	0	44	41	HDAE5000_StrCpy	_memccpy=296da3
+hdae v1.15i	296f48	IDE ml	_strlen_c	f_code	_strlen	0	30	27	HDAE5000_StrLen	_memchr=296de3
+hdae v1.15i	296f66	IDE ml	_strncat_c	f_code	_strncat	0	47	47	HDAE5000_StrNCat	
+hdae v1.15i	296f95	IDE ml	_strncmp_c	f_code	_strncmp	0	50	50	HDAE5000_StrNCmp	
+hdae v1.15i	296fc7	IDE ml	_strncpy_c	f_code	_strncpy	0	43	43	HDAE5000_StrNCpy	
+hdae v1.15i	2977e8	IDE ml	ldivl	f_code	SDivMod	0	71	71	HDAE5000_SDivMod32_Common	
+hdae v1.15i	2976a5	IDE ml	lmull	f_code	C9H_mullu	0	22	22	HDAE5000_Multiply	
+hdae v1.15i	2976bc	IDE ml	set_acf	f_code	._fset_acf	0	57	57	HDAE5000_Float_Unpack	
+hdae v1.15i	2978ba	IDE ml	_set_dac_s	f_code	._fset_dac	0	105	99	HDAE5000_Double_Pack	_errno=22b3dc __FloatErrorHandle=23d2e4
+hdae v1.15i	2976f6	IDE ml	_set_fac_s	f_code	._fset_fac	0	94	88	HDAE5000_Float_Pack	_errno=22b3dc __FloatErrorHandle=23d2e4
+hdae v1.15i	297924	IDE ml	_cvt_dacul_s	f_code	._fcvt_dacl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v1.15i	297924	IDE ml	_cvt_facul_s	f_code	._fcvt_facl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v1.15i	29793d	IDE ml	_cvt_facul_s	f_code	._fcvt_facul	25	90	90	HDAE5000_ULong_To_Unpacked	
+hdae v1.15i	297924	IDE ml	_set_dacul_s	f_code	._fcvt_xacl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v1.15i	297760	IDE ml	_ld_xx_s	f_code	._fld_xx	0	17	17	HDAE5000_Copy10	
+hdae v1.15i	297772	IDE ml	_ld_fl_s	f_code	._fld_fl	0	27	21	HDAE5000_LongToFloat	._fcvt_facl=297924 ._fset_fac=2976f6
+hdae v1.15i	29778d	IDE ml	_ld_fl_s	f_code	._fld_fl	0	27	21	HDAE5000_ULongToFloat	._fcvt_facl=29793d ._fset_fac=2976f6
+hdae v1.15i	297772	IDE ml	_ld_fl_s	f_code	._fld_fl_tail	27	27	21	HDAE5000_LongToFloat	._fcvt_facul=297924 ._fset_fac=2976f6
+hdae v1.15i	29778d	IDE ml	_ld_fl_s	f_code	._fld_fl_tail	27	27	21	HDAE5000_ULongToFloat	._fcvt_facul=29793d ._fset_fac=2976f6
+hdae v1.15i	2977a8	IDE ml	_spe_div_s	f_code	SPECIAL_DIV	0	16	16	HDAE5000_FloatDiv_Special	
+hdae v1.15i	2977b8	IDE ml	_div_f_s	f_code	._fdiv_f	0	48	36	HDAE5000_FloatDiv	._fset_acf=2976bc ._fset_acf=2976bc ._fdiv_acf=2979dc ._fset_fac=2976f6
+hdae v1.15i	2977b8	IDE ml	_mul_f_s	f_code	._fmul_f	0	48	36	HDAE5000_FloatDiv	._fset_acf=2976bc ._fset_acf=2976bc ._fmul_acf=2979dc ._fset_fac=2976f6
+hdae v1.15i	2e0e66	IDE pic	_ctype_c	far_pid_data	__ctype	0	256	256	HDAE5000_CType_Table	
+hdae v1.15i	2e0f92	IDE pic	__doform_c	far_pid_data	__doform_c data	0	35	34	HDAE5000_HexDigits_Lower	
+hdae v1.15i	2976a5	IDE pic	lmull	far_pic	C9H_mullu	0	22	22	HDAE5000_Multiply	
+hdae v1.15i	297924	IDE pic	_cvt_dacul_s	far_pic	._fcvt_dacl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v1.15i	297760	IDE pic	_ld_xx_s	far_pic	._fld_xx	0	17	17	HDAE5000_Copy10	
+hdae v1.15i	2977a8	IDE pic	_spe_div_s	far_pic	SPECIAL_DIV	0	16	16	HDAE5000_FloatDiv_Special	
+hdae v1.10i	2e0cd6	v1.10 ml	_ctype_c	f_const	___ctype	0	256	256	HDAE5000_CType_Table	
+hdae v1.10i	296ba0	v1.10 ml	_ldiv_c	f_code	_ldiv	0	67	61	HDAE5000_LDiv	C9H_divls=297737 C9H_remls=297733
+hdae v1.10i	296ce7	v1.10 ml	_memchr_c	f_code	_memchr	0	24	24	HDAE5000_MemChr	
+hdae v1.10i	296cff	v1.10 ml	_memcmp_c	f_code	_memcmp	0	123	123	HDAE5000_MemCmp	
+hdae v1.10i	296d7a	v1.10 ml	_memcpy_c	f_code	_memcpy	0	40	40	HDAE5000_MemCopy	
+hdae v1.10i	296da2	v1.10 ml	_memset_c	f_code	_memset	0	68	68	HDAE5000_MemFill	
+hdae v1.10i	296ab3	v1.10 ml	_sprintf_c	f_code	_sprintf	0	40	30	HDAE5000_SPrintf	__doprnt=2959c2
+hdae v1.10i	296adb	v1.10 ml	_sprintf_c	f_code	_vsprintf	40	59	40	HDAE5000_VSPrintf	__doprnt=2959c2
+hdae v1.10i	296de6	v1.10 ml	_strcat_c	f_code	_strcat	0	34	34	HDAE5000_StrCat	
+hdae v1.10i	2975c0	v1.10 ml	set_acf	f_code	._fset_acf	0	57	57	HDAE5000_Float_Unpack	
+hdae v1.10i	2977be	v1.10 ml	_set_dac_s	f_code	._fset_dac	0	105	99	HDAE5000_Double_Pack	_errno=22b3dc __FloatErrorHandle=23d2e4
+hdae v1.10i	2975fa	v1.10 ml	_set_fac_s	f_code	._fset_fac	0	94	88	HDAE5000_Float_Pack	_errno=22b3dc __FloatErrorHandle=23d2e4
+hdae v1.10i	297828	v1.10 ml	_cvt_dacul_s	f_code	._fcvt_dacl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v1.10i	297828	v1.10 ml	_cvt_facul_s	f_code	._fcvt_facl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v1.10i	297841	v1.10 ml	_cvt_facul_s	f_code	._fcvt_facul	25	90	90	HDAE5000_ULong_To_Unpacked	
+hdae v1.10i	2976ac	v1.10 ml	_spe_div_s	f_code	SPECIAL_DIV	0	16	16	HDAE5000_FloatDiv_Special	
+hdae v1.10i	2975a9	v1.10 ml	lmull	f_code	C9H_mullu	0	22	22	HDAE5000_Multiply	
+hdae v1.10i	297828	v1.10 ml	_set_dacul_s	f_code	._fcvt_xacl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v1.10i	297664	v1.10 ml	_ld_xx_s	f_code	._fld_xx	0	17	17	HDAE5000_Copy10	
+hdae v1.10i	2975c0	v1.10 pic	set_acf	pic_code	._fset_acf	0	57	57	HDAE5000_Float_Unpack	
+hdae v1.10i	297828	v1.10 pic	_cvt_dacul_s	pic_code	._fcvt_dacl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v1.10i	297828	v1.10 pic	_cvt_facul_s	pic_code	._fcvt_facl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v1.10i	297841	v1.10 pic	_cvt_facul_s	pic_code	._fcvt_facul	25	90	90	HDAE5000_ULong_To_Unpacked	
+hdae v1.10i	2976ac	v1.10 pic	_spe_div_s	pic_code	SPECIAL_DIV	0	16	16	HDAE5000_FloatDiv_Special	
+hdae v1.10i	2975a9	v1.10 pic	lmull	pic_code	C9H_mullu	0	22	22	HDAE5000_Multiply	
+hdae v1.10i	297828	v1.10 pic	_set_dacul_s	pic_code	._fcvt_xacl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v1.10i	297664	v1.10 pic	_ld_xx_s	pic_code	._fld_xx	0	17	17	HDAE5000_Copy10	
+hdae v1.10i	2e0cd6	IDE ml	_ctype_c	f_const	__ctype	0	256	256	HDAE5000_CType_Table	
+hdae v1.10i	296ab3	IDE ml	_sprintf_c	f_code	_sprintf	0	40	30	HDAE5000_SPrintf	__doprnt=2959c2
+hdae v1.10i	296adb	IDE ml	_sprintf_c	f_code	_vsprintf	40	59	40	HDAE5000_VSPrintf	__doprnt=2959c2
+hdae v1.10i	296b16	IDE ml	_itoa_c	f_code	_itoa	0	138	135	HDAE5000_IToA	_memcpy=296d7a
+hdae v1.10i	296ba0	IDE ml	_ldiv_c	f_code	_ldiv	0	67	61	HDAE5000_LDiv	C9H_divls=297737 C9H_remls=297733
+hdae v1.10i	296be3	IDE ml	_ltoa_c	f_code	_ltoa	0	60	54	HDAE5000_LToA	_ultoa=296c1f _ultoa=296c1f
+hdae v1.10i	296c1f	IDE ml	_ultoa_c	f_code	_ultoa	0	136	127	HDAE5000_ULToA	C9H_remlu=29773b C9H_divlu=297741 _memcpy=296d7a
+hdae v1.10i	296ce7	IDE ml	_memchr_c	f_code	_memchr	0	24	24	HDAE5000_MemChr	
+hdae v1.10i	296cff	IDE ml	_memcmp_c	f_code	_memcmp	0	123	123	HDAE5000_MemCmp	
+hdae v1.10i	296d7a	IDE ml	_memcpy_c	f_code	_memcpy	0	40	40	HDAE5000_MemCopy	
+hdae v1.10i	296da2	IDE ml	_memset_c	f_code	_memset	0	68	68	HDAE5000_MemFill	
+hdae v1.10i	296de6	IDE ml	_strcat_c	f_code	_strcat	0	34	34	HDAE5000_StrCat	
+hdae v1.10i	296e20	IDE ml	_strcpy_c	f_code	_strcpy	0	44	41	HDAE5000_StrCpy	_memccpy=296ca7
+hdae v1.10i	296e4c	IDE ml	_strlen_c	f_code	_strlen	0	30	27	HDAE5000_StrLen	_memchr=296ce7
+hdae v1.10i	296e6a	IDE ml	_strncat_c	f_code	_strncat	0	47	47	HDAE5000_StrNCat	
+hdae v1.10i	296e99	IDE ml	_strncmp_c	f_code	_strncmp	0	50	50	HDAE5000_StrNCmp	
+hdae v1.10i	296ecb	IDE ml	_strncpy_c	f_code	_strncpy	0	43	43	HDAE5000_StrNCpy	
+hdae v1.10i	2976ec	IDE ml	ldivl	f_code	SDivMod	0	71	71	HDAE5000_SDivMod32_Common	
+hdae v1.10i	2975a9	IDE ml	lmull	f_code	C9H_mullu	0	22	22	HDAE5000_Multiply	
+hdae v1.10i	2975c0	IDE ml	set_acf	f_code	._fset_acf	0	57	57	HDAE5000_Float_Unpack	
+hdae v1.10i	2977be	IDE ml	_set_dac_s	f_code	._fset_dac	0	105	99	HDAE5000_Double_Pack	_errno=22b3dc __FloatErrorHandle=23d2e4
+hdae v1.10i	2975fa	IDE ml	_set_fac_s	f_code	._fset_fac	0	94	88	HDAE5000_Float_Pack	_errno=22b3dc __FloatErrorHandle=23d2e4
+hdae v1.10i	297828	IDE ml	_cvt_dacul_s	f_code	._fcvt_dacl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v1.10i	297828	IDE ml	_cvt_facul_s	f_code	._fcvt_facl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v1.10i	297841	IDE ml	_cvt_facul_s	f_code	._fcvt_facul	25	90	90	HDAE5000_ULong_To_Unpacked	
+hdae v1.10i	297828	IDE ml	_set_dacul_s	f_code	._fcvt_xacl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v1.10i	297664	IDE ml	_ld_xx_s	f_code	._fld_xx	0	17	17	HDAE5000_Copy10	
+hdae v1.10i	297676	IDE ml	_ld_fl_s	f_code	._fld_fl	0	27	21	HDAE5000_LongToFloat	._fcvt_facl=297828 ._fset_fac=2975fa
+hdae v1.10i	297691	IDE ml	_ld_fl_s	f_code	._fld_fl	0	27	21	HDAE5000_ULongToFloat	._fcvt_facl=297841 ._fset_fac=2975fa
+hdae v1.10i	297676	IDE ml	_ld_fl_s	f_code	._fld_fl_tail	27	27	21	HDAE5000_LongToFloat	._fcvt_facul=297828 ._fset_fac=2975fa
+hdae v1.10i	297691	IDE ml	_ld_fl_s	f_code	._fld_fl_tail	27	27	21	HDAE5000_ULongToFloat	._fcvt_facul=297841 ._fset_fac=2975fa
+hdae v1.10i	2976ac	IDE ml	_spe_div_s	f_code	SPECIAL_DIV	0	16	16	HDAE5000_FloatDiv_Special	
+hdae v1.10i	2976bc	IDE ml	_div_f_s	f_code	._fdiv_f	0	48	36	HDAE5000_FloatDiv	._fset_acf=2975c0 ._fset_acf=2975c0 ._fdiv_acf=2978e0 ._fset_fac=2975fa
+hdae v1.10i	2976bc	IDE ml	_mul_f_s	f_code	._fmul_f	0	48	36	HDAE5000_FloatDiv	._fset_acf=2975c0 ._fset_acf=2975c0 ._fmul_acf=2978e0 ._fset_fac=2975fa
+hdae v1.10i	2e0cd6	IDE pic	_ctype_c	far_pid_data	__ctype	0	256	256	HDAE5000_CType_Table	
+hdae v1.10i	2e0e02	IDE pic	__doform_c	far_pid_data	__doform_c data	0	35	34	HDAE5000_HexDigits_Lower	
+hdae v1.10i	2975a9	IDE pic	lmull	far_pic	C9H_mullu	0	22	22	HDAE5000_Multiply	
+hdae v1.10i	297828	IDE pic	_cvt_dacul_s	far_pic	._fcvt_dacl	0	25	25	HDAE5000_Long_To_Unpacked	
+hdae v1.10i	297664	IDE pic	_ld_xx_s	far_pic	._fld_xx	0	17	17	HDAE5000_Copy10	
+hdae v1.10i	2976ac	IDE pic	_spe_div_s	far_pic	SPECIAL_DIV	0	16	16	HDAE5000_FloatDiv_Special	
+wsa1 prom_a	fe68dd	v1.10 ml	lmull	f_code	C9H_mullu	0	22	22	Int_Mul32	
+wsa1 prom_a	fe68dd	v1.10 pic	lmull	pic_code	C9H_mullu	0	22	22	Int_Mul32	
+wsa1 prom_a	fe68f3	IDE ml	ldivl	f_code	SDivMod	0	71	71	Int_SignedDiv	
+wsa1 prom_a	fe68dd	IDE ml	lmull	f_code	C9H_mullu	0	22	22	Int_Mul32	
+wsa1 prom_a	fe68dd	IDE pic	lmull	far_pic	C9H_mullu	0	22	22	Int_Mul32	
