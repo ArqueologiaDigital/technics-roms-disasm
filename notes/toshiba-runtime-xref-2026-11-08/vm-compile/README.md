@@ -44,14 +44,15 @@ so the base image is never written.  cloud-init (NoCloud, seeded over HTTP throu
 The guest's only channel to the host is `httpd.py` on 127.0.0.1, which serves one directory and accepts uploads of
 bare file names into another.
 
-| file                | what it does                                                                         |
-|---------------------|--------------------------------------------------------------------------------------|
-| `run_vm.sh`         | builds the seed, starts `httpd.py`, boots the VM and waits for it to power off       |
-| `httpd.py`          | the host side of the guest's only channel                                            |
-| `job.sh`            | runs inside the guest (never on the host): Wine, the compile sweep, the upload       |
-| `compare_vm.py`     | compares the objects with the ROM images and with the three libraries                |
-| `sources-all-c.txt` | the `LIB/SRC` files a run compiles: all 123 C files                                  |
-| `options-*.txt`     | the `cc900` option sets a run uses, one per line: a label, a vertical bar, the flags |
+| file                | what it does                                                                                       |
+|---------------------|----------------------------------------------------------------------------------------------------|
+| `run_vm.sh`         | builds the seed, starts `httpd.py`, boots the VM and waits for it to power off                     |
+| `httpd.py`          | the host side of the guest's only channel                                                          |
+| `job.sh`            | runs inside the guest (never on the host): Wine, the compile sweep, the upload                     |
+| `compare_vm.py`     | compares the objects with the ROM images and with the three libraries                              |
+| `summarize.py`      | the per-option-set counts in `../README.md`: `python3 -I -B summarize.py ../results/vm_compile.md` |
+| `sources-all-c.txt` | the `LIB/SRC` files a run compiles: all 123 C files                                                |
+| `options-*.txt`     | the `cc900` option sets a run uses, one per line: a label, a vertical bar, the flags               |
 
 ## Setting it up (no root needed)
 
@@ -77,6 +78,7 @@ W=~/compartilhado/tmp/cc900-vm/run1           # the VM's home: its disk overlay 
 ./run_vm.sh $W sources-all-c.txt options-xs.txt    && mkdir -p $W/x3 && tar -xf $W/out/results.tar -C $W/x3
 mkdir -p $W/xall && for d in $W/x2/* $W/x3/*; do ln -sfn "$d" $W/xall/; done
 python3 -I -B compare_vm.py $W/xall > ../results/vm_compile.md      # about 2 minutes
+python3 -I -B summarize.py ../results/vm_compile.md
 ```
 
 `compare_vm.py` needs the linked ELFs of the byte-identical rebuilds (`make all`), like `../xref_runtime.py`.

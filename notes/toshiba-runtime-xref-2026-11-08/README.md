@@ -323,7 +323,8 @@ before the 2003 rewrites.  V4.23's own thc1 / thc2 (1998-06-04) fitted those dat
 `vm-compile/` runs V4.23's cc900, thc1, thc2 and asm900 under Wine, in a throwaway QEMU/KVM VM (its README says how;
 nothing Toshiba made runs on the host).  The VM compiles all 123 C files of `LIB/SRC` with seven option sets.
 `vm-compile/compare_vm.py` compares every piece of every object with the images and with the three libraries, and
-writes `results/vm_compile.md`.  Each object's SHA-256 is in `results/vm_objects.sha256`.
+writes `results/vm_compile.md`; `vm-compile/summarize.py` counts it into the table below.  Each object's SHA-256 is in
+`results/vm_objects.sha256`.
 
 | options   | pieces | = 1997 | = 2003 | = 2008 | exact hits in our images |
 |-----------|--------|--------|--------|--------|--------------------------|
