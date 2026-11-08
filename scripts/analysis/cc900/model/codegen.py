@@ -341,7 +341,7 @@ def cse_params(F, e):
 
 def free_reg(F, avoid=()):
     live = live_regs(F)
-    for r in ('DE', 'BC', 'HL', 'WA'):
+    for r in ('BC', 'DE', 'HL', 'WA'):
         if r not in live and r not in avoid: return r
     raise Unsupported('no free register')
 
@@ -628,6 +628,8 @@ def lvalue(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False):
             elif esz == 4: F.emit('sla', '0x2,%s' % I)
             if combine:
                 F.emit('lda', '%s,_%s' % (ptr, b.decl.name)); F.emit('lda', '%s,%s+%s' % (ptr, ptr, I))
+                d_i = regvar_of(strip(i).e) if strip(i).k == 'load' else None
+                if d_i is not None and I == FAM[d_i.reg][2]: F.dead.add(d_i)
                 return '(%s)' % ptr
             F.emit('lda', '%s,_%s' % (base, b.decl.name)); return '(%s+%s)' % (base, idx)
     raise Unsupported('lvalue ' + lv.k)
@@ -668,9 +670,22 @@ def gen_opassign(F, e):
             rs = mem_operand(F, r)
             if rs is None: raise Unsupported('complex long operand')
             name = {'*': 'mul', '/': 'div', '%': 'rem'}[op] + ('ls' if signed else 'lu')
+            saved = False
+            if rs == 'XWA':                                # .as_mul_gl: push XIZ / ld XIZ,XWA
+                F.lines.insert(1, '\tpush\tXIZ'); F.push += 4; F.emit('ld', 'XIZ,XWA'); rs = 'XIZ'; saved = True
             F.emit('ld', 'XWA,%s' % t); F.emit('ld', 'XBC,%s' % rs); F.emit('cal', 'C9H_' + name)
-            F.emit('ld', '%s,XHL' % t); return t
-        t = lvalue(F, e.l, combine=True)
+            F.emit('ld', '%s,XHL' % t)
+            if saved: F.pushes.append('XIZ')
+            return t
+        lv = strip(e.l)
+        if lv.k == 'deref' and mem_operand(F, lv.e) == 'XWA':        # .as_mul_ptr: ld XDE,XWA / ld WA,(XDE)
+            pr = free_reg(F, avoid={'WA'}); pd = regvar_of(strip(lv.e).e)
+            pr = 'DE' if pr == 'BC' and 'BC' in live_regs(F) else pr
+            F.emit('ld', '%s,XWA' % FAM[pr][4]); t = '(%s)' % FAM[pr][4]; F.dead.add(pd)
+        else:
+            ptr = 'XBC'
+            if 'BC' in live_regs(F): ptr = FAM[free_reg(F, avoid={'WA', 'BC'})][4]      # .as_mul_arr: XDE
+            t = lvalue(F, e.l, ptr=ptr, combine=True)
         rs = mem_operand(F, r)
         if rs is None: raise Unsupported('complex operand')
         work = 'WA' if 'WA' not in live_regs(F) else free_reg(F, avoid={'WA'})   # .as_mul_gi: muls XBC,WA
@@ -750,11 +765,12 @@ def gen_stmt(F, s, last):
             nxt = body[i + 1] if i + 1 < len(body) else None
             if c.k == 'expr' and c.e.k == 'opassign' and regvar_of(c.e.l) and nxt is not None and nxt.k == 'return' \
                     and nxt.value is not None and strip(nxt.value).k == 'load' and regvar_of(strip(nxt.value).e) is regvar_of(c.e.l) \
-                    and c.e.op in SIMPLE_OPS:
+                    and (c.e.op in SIMPLE_OPS or c.e.op in ('*', '/', '%')):
                 from frontend import N                           # .as_add_loc: ld HL,WA / add HL,BC
                 d = regvar_of(c.e.l)
-                nxt.value = N('bin', op=c.e.op, l=N('load', e=N('var', decl=d, ty=d.ty), ty=d.ty), r=c.e.r, ty=d.ty)
-                F.last_use[d] = None
+                ld = N('load', e=N('var', decl=d, ty=d.ty), ty=d.ty)
+                nxt.value = N('bin', op=c.e.op, l=ld, r=c.e.r, ty=d.ty)
+                F.last_use[d] = id(ld) if c.e.op in ('*', '/', '%') else None   # .as_mul_loc: muls XWA,BC in place
                 i += 1; continue
             trivial = last and nxt is not None and i + 2 == len(body) and nxt.k == 'return' and (
                 nxt.value is None or (strip(nxt.value).k == 'load' and regvar_of(strip(nxt.value).e)

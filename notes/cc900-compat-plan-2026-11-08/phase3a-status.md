@@ -9,9 +9,9 @@ Where the model (`scripts/analysis/cc900/model/`) stands and what comes next.  S
 |--------------------------------------------|---------------|-----------------------------------------------------------|
 | cdecl, no options                          | 96.4%         | values kept in IZ / QIZ across calls; a few address forms |
 | the same against the 2003 / 2009 compilers | 96.0% / 95.8% | the same; the three compilers agree on nearly all of it   |
-| cdecl, `-O3 -XS`                           | 82.5%         | the `-O` behaviours below                                 |
-| adecl (`-Xr`), no options                  | 76.9%         | register parameters under pressure (liveness)             |
-| adecl, `-O3 -XS` (the firmware's)          | 64.8%         | liveness, then the `-O` behaviours                        |
+| cdecl, `-O3 -XS`                           | 87.5%         | the `-O` behaviours below                                 |
+| adecl (`-Xr`), no options                  | 81.8%         | register parameters under pressure (liveness)             |
+| adecl, `-O3 -XS` (the firmware's)          | 81.2%         | liveness, then the `-O` behaviours                        |
 
 Every binary and unary operator, comparison and compound assignment at every integer type is reproduced exactly at
 no options, as are the loop shapes and the leaf-function register allocator.
