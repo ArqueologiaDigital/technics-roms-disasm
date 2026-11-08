@@ -159,6 +159,10 @@ def gen(F, e, fam, size, then_ret=False, store=False):
             F.emit('exts' if inner.ty.signed else 'extz', FAM[fam][sz])
         return fam
     if e.k == 'un' and e.op in ('-', '~'):
+        ur = regvar_of(strip(e.e).e) if strip(e.e).k == 'load' else None
+        if ur is not None and F.opt and dies_here(F, e.e) and ur.reg != fam and ur.reg in ('WA', 'BC', 'DE') and size <= 2:
+            F.emit('neg' if e.op == '-' else 'cpl', FAM[ur.reg][size])     # .neg_i under O3XSXr
+            F.emit('ld', '%s,%s' % (FAM[fam][size], FAM[ur.reg][size])); return fam
         gen(F, e.e, fam, size)
         R = FAM[fam][size]
         if size == 4:                          # neg_l: cpl HL / cpl QHL / inc 1,XHL
@@ -186,7 +190,9 @@ def gen(F, e, fam, size, then_ret=False, store=False):
         gen(F, e.b, fam, size); F.lines.append(lend + ':'); return fam
     if e.k == 'un' and e.op == '!':
         x = strip(e.e); xs = x.ty.size; m = mem_operand(F, x)
-        if xs == 4 or m is None:               # lnot_l: ld XWA,x / or XWA,XWA
+        if m in ('A', 'WA', 'BC', 'DE', 'HL', 'C', 'E', 'L'):                 # .lnot_i: cp WA,0x0
+            F.emit('cp', '%s,0x0' % m)
+        elif xs == 4 or m is None:               # lnot_l: ld XWA,x / or XWA,XWA
             gen(F, x, 'WA', xs); W = FAM['WA'][xs]; F.emit('or', '%s,%s' % (W, W))
         else:
             F.emit('cp%s' % ('b' if xs == 1 else 'w'), '%s,0x0' % m)
@@ -599,6 +605,7 @@ def lvalue(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False):
     if lv.k == 'deref':
         m = mem_operand(F, lv.e)
         if m is None: raise Unsupported('complex pointer')
+        if m.startswith('X'): return '(%s)' % m        # .as_add_ptr: add (XWA),BC
         F.emit('ld', '%s,%s' % (ptr, m)); return '(%s)' % ptr
     if lv.k == 'member' and lv.arrow:                 # mem.c: m_gps_set
         m = mem_operand(F, lv.base)
@@ -612,9 +619,11 @@ def lvalue(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False):
         if b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array':
             esz = lv.ty.size; im = mem_operand(F, i)
             if im is None: raise Unsupported('complex index')
-            I = FAM[idx[-2:] if len(idx) > 2 else idx][2] if not combine else 'WA'
             I = idx if not combine else 'WA'
-            F.emit('ld', '%s,%s' % (I, im))
+            if im in ('WA', 'BC', 'DE') and dies_here(F, i):   # .as_add_arr: add WA,WA / (XDE+WA)
+                I = im
+                idx = im
+            elif im != I: F.emit('ld', '%s,%s' % (I, im))
             if esz == 2: F.emit('add', '%s,%s' % (I, I))
             elif esz == 4: F.emit('sla', '0x2,%s' % I)
             if combine:
@@ -630,6 +639,9 @@ def gen_opassign(F, e):
     signed = strip(e.l).ty.signed
     if op in SIMPLE_OPS:
         t = lvalue(F, e.l)
+        rv = mem_operand(F, r)
+        if rv in ('A', 'C', 'E', 'WA', 'BC', 'DE', 'HL', 'XWA', 'XBC', 'XDE'):
+            F.emit(SIMPLE_OPS[op], '%s,%s' % (t, rv)); return t        # .as_add_ptr: add (XWA),BC
         gen(F, r, 'WA', size)
         F.emit(SIMPLE_OPS[op], '%s,%s' % (t, FAM['WA'][size])); return t
     if op in ('<<', '>>'):
@@ -661,14 +673,15 @@ def gen_opassign(F, e):
         t = lvalue(F, e.l, combine=True)
         rs = mem_operand(F, r)
         if rs is None: raise Unsupported('complex operand')
-        F.emit('ld', '%s,%s' % (FAM['WA'][size], t))
-        wide = 'XWA' if size == 2 else 'WA'
+        work = 'WA' if 'WA' not in live_regs(F) else free_reg(F, avoid={'WA'})   # .as_mul_gi: muls XBC,WA
+        F.emit('ld', '%s,%s' % (FAM[work][size], t))
+        wide = FAM[work][4] if size == 2 else FAM[work][2]
         if op == '*':
-            F.emit('muls' if signed else 'mul', '%s,%s' % (wide, rs)); res = FAM['WA'][size]
+            F.emit('muls' if signed else 'mul', '%s,%s' % (wide, rs)); res = FAM[work][size]
         else:
             F.emit('exts' if signed else 'extz', wide); F.emit('divs' if signed else 'div', '%s,%s' % (wide, rs))
-            res = FAM['WA'][size] if op == '/' else ('QWA' if size == 2 else 'W')
-        if res == 'QWA': F.emit('ld', 'WA,QWA'); res = 'WA'
+            res = FAM[work][size] if op == '/' else (Q[work] if size == 2 else HI[work])
+        if res.startswith('Q'): F.emit('ld', '%s,%s' % (FAM[work][2], res)); res = FAM[work][2]
         F.emit('ld', '%s,%s' % (t, res)); return t
     raise Unsupported('opassign ' + op)
 
@@ -735,6 +748,14 @@ def gen_stmt(F, s, last):
                 raise Unsupported('local ' + c.var.name)
             if c.k == 'decl' and c.init is None: i += 1; continue
             nxt = body[i + 1] if i + 1 < len(body) else None
+            if c.k == 'expr' and c.e.k == 'opassign' and regvar_of(c.e.l) and nxt is not None and nxt.k == 'return' \
+                    and nxt.value is not None and strip(nxt.value).k == 'load' and regvar_of(strip(nxt.value).e) is regvar_of(c.e.l) \
+                    and c.e.op in SIMPLE_OPS:
+                from frontend import N                           # .as_add_loc: ld HL,WA / add HL,BC
+                d = regvar_of(c.e.l)
+                nxt.value = N('bin', op=c.e.op, l=N('load', e=N('var', decl=d, ty=d.ty), ty=d.ty), r=c.e.r, ty=d.ty)
+                F.last_use[d] = None
+                i += 1; continue
             trivial = last and nxt is not None and i + 2 == len(body) and nxt.k == 'return' and (
                 nxt.value is None or (strip(nxt.value).k == 'load' and regvar_of(strip(nxt.value).e)
                                       and regvar_of(strip(nxt.value).e).reg == 'HL'))
