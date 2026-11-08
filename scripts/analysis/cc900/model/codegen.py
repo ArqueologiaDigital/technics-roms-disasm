@@ -40,8 +40,19 @@ class Fn:
     def __init__(s, f, adecl):
         s.f = f; s.lines = []; s.adecl = adecl; s.label = 50000; s.push = 0; s.xiz_vars = []; s.pending = 0
         off = 4
-        for p in f.params:
-            p.off = off; off += 2 if p.ty.size <= 2 else (p.ty.size + 1) // 2 * 2
+        s.retd = 0
+        if adecl:                                   # abi.md: XWA / XBC / XDE, then the stack left to right
+            regs = ['WA', 'BC', 'DE']
+            stack = []
+            for i, p in enumerate(f.params):
+                if i < 3: p.reg = regs[i]
+                else: stack.append(p)
+            for p in reversed(stack):
+                p.off = off; off += 2 if p.ty.size <= 2 else (p.ty.size + 1) // 2 * 2
+            s.retd = off - 4
+        else:
+            for p in f.params:
+                p.off = off; off += 2 if p.ty.size <= 2 else (p.ty.size + 1) // 2 * 2
     def emit(s, op, args=None): s.lines.append('\t' + op + ('\t' + args if args else ''))
     def newlabel(s):
         s.label += 1; return 'L%d' % s.label
@@ -162,6 +173,17 @@ def gen(F, e, fam, size, then_ret=False, store=False):
         else: F.emit('scc', '%s,%s' % (cc, FAM[fam][2]))
         return fam
     if e.k == 'call': return gen_call(F, e, fam, size)
+    if e.k == 'bin' and e.op in ('&&', '||'):        # c_and / c_or: ld HL,0 / conditions / ld HL,1
+        R = FAM[fam][2]
+        F.emit('ld', '%s,0x0' % R)
+        lend = F.newulabel()
+        gen_cond_false(F, e, 'RET' if then_ret else lend)
+        F.emit('ld', '%s,0x1' % R); F.lines.append(lend + ':'); return fam
+    if e.k == 'cond':                                # c_tern
+        lelse, lend = F.newulabel(), F.newulabel()
+        gen_cond_false(F, e.c, lelse)
+        gen(F, e.a, fam, size); F.emit('j', lend); F.lines.append(lelse + ':')
+        gen(F, e.b, fam, size); F.lines.append(lend + ':'); return fam
     if e.k == 'un' and e.op == '!':
         x = strip(e.e); xs = x.ty.size; m = mem_operand(F, x)
         if xs == 4 or m is None:               # lnot_l: ld XWA,x / or XWA,XWA
@@ -366,10 +388,35 @@ def gen_compare(F, e):
     if rs is None: raise Unsupported('complex compare operand')
     F.emit('cp', '%s,%s' % (W, rs)); return cc
 
+def jump(F, cc, target):
+    F.emit('ret', cc) if target == 'RET' else F.emit('j', '%s,%s' % (cc, target))
+
+def gen_cond_true(F, c, target):
+    """jump to target when c is true (ctrl.c: c_orbr's first operand)"""
+    c = strip(c)
+    if c.k == 'bin' and c.op == '||':
+        gen_cond_true(F, c.l, target); gen_cond_true(F, c.r, target); return
+    if c.k == 'bin' and c.op in CC_S:
+        cc = gen_compare(F, c)
+        if cc in (True, False): raise Unsupported('constant condition')
+        jump(F, cc, target); return
+    from frontend import N
+    if c.ty.kind in ('int', 'ptr'):
+        return gen_cond_true(F, N('bin', op='!=', l=c, r=N('const', value=0, ty=c.ty), ty=c.ty), target)
+    raise Unsupported('condition ' + c.k)
+
 def gen_cond_false(F, c, target):
     """jump to `target` (a label, or 'RET' for the function exit) when condition c is false; returns the
     constant value of c when it folds"""
     c = strip(c)
+    if c.k == 'bin' and c.op == '&&':                # c_andbr: both operands jump to the false target
+        gen_cond_false(F, c.l, target); gen_cond_false(F, c.r, target); return None
+    if c.k == 'bin' and c.op == '||':                # c_orbr: first true -> then label; last false -> target
+        lt = F.newulabel(); gen_cond_true(F, c.l, lt); gen_cond_false(F, c.r, target)
+        F.lines.append(lt + ':'); return None
+    if c.k in ('load', 'cast', 'call') and c.ty.kind in ('int', 'ptr'):   # c_if: if (a)
+        from frontend import N
+        return gen_cond_false(F, N('bin', op='!=', l=c, r=N('const', value=0, ty=c.ty), ty=c.ty), target)
     if c.k == 'bin' and c.op in CC_S:
         cc = gen_compare(F, c)
         if cc is True: return True
@@ -643,7 +690,7 @@ def gen_stmt(F, s, last):
         flush_pops(F)
         if F.xiz_vars: F.emit('pop', 'XIZ')
         for r in reversed(F.pushes): F.emit('pop', r)
-        F.emit('ret'); return
+        F.emit('retd', hx(F.retd)) if F.retd else F.emit('ret'); return
     if s.k == 'if':
         if s.els is None:
             lab = F.newulabel()
@@ -656,9 +703,16 @@ def gen_stmt(F, s, last):
             return
         lelse, lend = F.newulabel(), F.newulabel()
         gen_cond_false(F, s.cond, lelse)
-        gen_stmt(F, s.then, False)
-        F.emit('j', lend); F.lines.append(lelse + ':')
-        gen_stmt(F, s.els, last); F.lines.append(lend + ':')
+        gen_stmt(F, s.then, last)
+        if last and not F.xiz_vars and not F.pushes and not F.lines[-1].startswith(('\tret', '\tj\t')):
+            flush_pops(F); F.emit('ret')               # c_ifchain: the exit is duplicated, not jumped to
+        elif not F.lines[-1].startswith(('\tret', '\tj\t')):
+            flush_pops(F); F.emit('j', lend)
+        F.push -= F.pending; F.pending = 0
+        F.lines.append(lelse + ':')
+        gen_stmt(F, s.els, last)
+        if not (last and F.lines[-1].startswith('\tret')):
+            F.lines.append(lend + ':')
         return
     if s.k == 'expr' and s.e.k == 'call':
         gen_call(F, s.e); return
@@ -916,4 +970,6 @@ def compile_unit(unit, opt='none', adecl=False):
         name = ('.' if adecl else '_') + f.name
         try: out[name] = compile_function(f, opt, adecl)
         except Unsupported as ex: out[name] = ['; unsupported: %s' % ex]
+        except (AttributeError, KeyError, ValueError, TypeError, IndexError) as ex:
+            out[name] = ['; model error: %s: %s' % (type(ex).__name__, ex)]     # counted as a mismatch
     return out
