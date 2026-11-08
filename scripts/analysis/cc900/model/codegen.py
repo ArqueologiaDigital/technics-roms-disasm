@@ -263,6 +263,8 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         if size == 4: return gen_long_helper(F, e, l, r, fam, signed)
         rs = mem_operand(F, r)
         work = 'WA'
+        if F.opt and fam in ('HL', 'BC', 'DE') and mem_operand(F, l) and rs and not regvar_of(getattr(strip(l), 'e', l)):
+            work = fam                                  # -O: mul_i_pp -> ld HL,(a) / muls XHL,(b)
         lr = regvar_of(strip(l).e) if strip(l).k == 'load' else None
         if lr is not None and lr.reg == 'WA' and not dies_here(F, l):
             work = free_reg(F, avoid={'WA'})            # mul_i_loc under Xr: ld DE,WA / muls XDE,BC
@@ -303,6 +305,33 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         F.lines.append(lab + ':')
         return vfam
     raise Unsupported('operator ' + op)
+
+def cse_params(F, e):
+    """-O: a memory parameter loaded twice in one expression is loaded once into a temporary (binop_*: *_loc
+    under O3XS): WA for add/sub/and/or/xor chains, BC when the operation needs WA (*, /, %, shifts, char)"""
+    counts = {}
+    def v(n, d):
+        if n.k == 'load' and strip(n.e).k == 'var' and strip(n.e).decl.kind == 'param' and not getattr(strip(n.e).decl, 'reg', None):
+            counts[strip(n.e).decl] = counts.get(strip(n.e).decl, 0) + 1
+    walk(e, v)
+    many = [d for d, c in counts.items() if c >= 2]
+    if len(many) != 1: return False
+    d = many[0]; size = F.f.ret.size; top = narrow(e, size)
+    needs_wa = size == 1 or (top.k == 'bin' and top.op in ('*', '/', '%', '<<', '>>'))
+    if top.k == 'bin' and top.op in ('*', '/', '%') and size == 4: return False
+    tmp = 'BC' if needs_wa else 'WA'
+    F.emit('ld', '%s,(XSP+%s)' % (FAM[tmp][d.ty.size], hx(d.off + F.push)))
+    d.reg = tmp
+    try:
+        fam = gen(F, e, 'HL', size, then_ret=True)
+        if fam != 'HL' and FAM[fam].get(size) != FAM['HL'][size]:
+            F.emit('ld', '%s,%s' % (FAM['HL'][size], FAM[fam][size]))
+    finally:
+        d.reg = None
+    flush_pops(F)
+    for r in reversed(F.pushes): F.emit('pop', r)
+    F.emit('retd', hx(F.retd)) if F.retd else F.emit('ret')
+    return True
 
 def free_reg(F, avoid=()):
     live = live_regs(F)
@@ -713,6 +742,9 @@ def gen_stmt(F, s, last):
             gen_stmt(F, c, (last and i == len(body) - 1) or trivial); i += 1
         return
     if s.k == 'decl': raise Unsupported('decl')
+    if s.k == 'return' and s.value is not None and F.opt:
+        cse = cse_params(F, s.value)
+        if cse: return
     if s.k == 'return':
         if s.value is not None:
             size = F.f.ret.size
