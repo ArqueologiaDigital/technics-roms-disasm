@@ -22,6 +22,9 @@ is under "The 1998 compiler (V4.23)" below; the counts in this note include it.
 - 25 more routines or tables match closely but not exactly.
 - The firmware's runtime is neither of the three builds: it was compiled after 1997-05-26 and before the 2003 build
   (see "The 1998 compiler (V4.23)").  (Before the 1997 build was added: 391 hits, 130 names, 25 near matches.)
+- V4.23's own compiler, run in a throwaway VM on the runtime's sources, rebuilds the 1997 library (147 of its 156
+  pieces byte for byte, at `-O3 -XS`) but not the firmware's copy.  So a different, later code generator built the
+  firmware's runtime ("Running V4.23", below).
 - Most of our labels already described these routines correctly.  About two dozen do not; see "Proposed renames".
 - Toshiba's SFR headers confirm our TMP94C241 register names: 184 of 185 agree.  They also confirm the
   SX-WSA1R's TMP95C061 names, which came from MAME: 93 of 107 agree.
@@ -313,11 +316,54 @@ The routines that match only the 1997 build show the other bound.  `_memccpy`, `
 sub-CPU's math routines were changed again by 2003.
 
 So the firmware's runtime was compiled after 1997-05-26, by a code generator that already dropped that reload, and
-before the 2003 rewrites.  V4.23's own thc1 / thc2 (1998-06-04) fit those dates.  Whether they produced exactly these
-bytes needs them run: compile `LIB/SRC/_LDIV.C`, `_ULTOA.C`, `_LDEXP.C` and `__DOFORM.C` with them, in a VM, and
-compare with the firmware.  Toshiba shipped the runtime's source so that users could rebuild it.  So the firmware's
-runtime may have been rebuilt with its developers' own compiler, and then it would also show which compiler built
-their C.
+before the 2003 rewrites.  V4.23's own thc1 / thc2 (1998-06-04) fitted those dates, so they were run (next section).
+
+### Running V4.23 (2026-11-08): it rebuilds the 1997 library, not the firmware's runtime
+
+`vm-compile/` runs V4.23's cc900, thc1, thc2 and asm900 under Wine, in a throwaway QEMU/KVM VM (its README says how;
+nothing Toshiba made runs on the host).  The VM compiles all 123 C files of `LIB/SRC` with seven option sets.
+`vm-compile/compare_vm.py` compares every piece of every object with the images and with the three libraries, and
+writes `results/vm_compile.md`.  Each object's SHA-256 is in `results/vm_objects.sha256`.
+
+| options   | pieces | = 1997 | = 2003 | = 2008 | exact hits in our images |
+|-----------|--------|--------|--------|--------|--------------------------|
+| (none)    | 157    | 56     | 45     | 16     | 31                       |
+| `-O1`     | 156    | 72     | 55     | 19     | 37                       |
+| `-O2`     | 156    | 107    | 73     | 31     | 44                       |
+| `-O3`     | 157    | 114    | 78     | 31     | 49                       |
+| `-XS`     | 157    | 62     | 51     | 17     | 33                       |
+| `-O2 -XS` | 156    | 136    | 96     | 36     | 54                       |
+| `-O3 -XS` | 156    | 147    | 104    | 37     | 60                       |
+
+Every set also has `-DFLOAT`, which the 1997 `__doform_c` needs: it calls `__facnv`.  "Pieces" are the objects'
+public routines and data sections of at least 8 known bytes.  A row has 156 pieces when one compile failed, with the Wine
+client error `recvmsg: Connection reset by peer`: `_FREE.C` at `-O1`, `__FACVT.C` at `-O2`, `_MEMCPY.C` at
+`-O2 -XS` and `_CTYPE.C` at `-O3 -XS`.  (`-XS4`, a string in cc900, is refused: "Unrecognized option".)
+
+- **`-O3 -XS` is how Toshiba built the library**, and V4.23's thc2 (V0.8n.04.11) is the code generator that built
+  it.  147 of 156 pieces are the 1997 library's, byte for byte, relocated fields masked.  The nine others are the
+  constant sections of `_cosh`, `_log`, `_sinh`, `_sqrt`, `_strtod`, `_tanh` and `__trig`, whose lengths differ from
+  the library's by 8 to 64 bytes, and `__afcnv` (+8 bytes) and `__facnv` (+2 bytes).  `-XS` shows in the loops: a
+  `while` loop jumps to its test at the bottom instead of repeating it at the top (`_strcat`).
+- **With the library's options, the four routines in question come out as the 1997 build's, not the firmware's.**
+  `_ldiv`, `_ultoa`, `_ldexp` and `__doprnt` equal the 1997 library, so they differ from the firmware exactly as that
+  build does.  None of the seven option sets gives the firmware's bytes for any of the four: they have no exact hit
+  in any image.
+- **`__doprnt` confirms the options and shows the difference.**  Its case table at `-O3 -XS` is the 1997 build's,
+  0 272 1677 ... 1764.  The firmware's is 3 lower at every offset except 0 and 105.  With any other set the
+  offsets are 12 to 224 higher, so the firmware's `__doprnt` was built with `-O2` or `-O3` and `-XS`, like the
+  library.
+- **The routines that match the 1997 build are controls.**  `_cos`, `_modf`, `_memccpy`, `_strrchr` and `_strrev`
+  come out of V4.23 equal to the firmware's copies, at the addresses where `xref_runtime.py` found them.  So the compile and the
+  comparison are sound.
+- **The difference is in code generation, not a later pass.**  In `_ldiv`, V4.23 emits `ld (XSP+0x8),XWA` followed
+  by `ld XWA,(XSP+0x8)`, and the firmware has only the store.  In `_ultoa`, the firmware's compiler also drops the
+  reload after the store, but it reloads XWA two instructions later, before `lda XWA,XWA+0x1f`.  So that routine
+  keeps V4.23's 136 bytes, with 7 of them in another order.  A peephole pass over V4.23's output would not give that.
+
+So V4.23 did not compile the firmware's runtime.  The firmware's runtime was rebuilt from the same sources, and
+probably with the same options, by a thc2 that is later than V0.8n.04.11 (or at least different) and earlier than the
+2003 build's.  That build's compiler has not been found.  The firmware's own C was probably compiled with it too.
 
 V4.23's `CUSTOMIZ/C900_H2/IO900H2.H` (TMP94C241, 1997-06-01) is the same file as the kit CD's `Io900h2.h`, apart
 from line endings, so the SFR comparison below holds for it too.
@@ -337,9 +383,8 @@ from line endings, so the SFR comparison below holds for it too.
     entry points and `__ctype`.  For example, `call Math_Multiply32` appears 163 times in `v10/maincpu`'s text,
     not counting compiled-C `.incbin`s.
   - Together with the startup template, that makes the KN5000's C cc900 output, linked with Toshiba's runtime.
-  - The runtime alone does not tell which cc900 version compiled it.  The code generator's output was not compared
-    in this pass, because nothing here runs the Windows compilers.  The 1997 build narrows it: see "The 1998
-    compiler (V4.23)".
+  - The runtime alone does not tell which cc900 version compiled it.  The 1997 build narrows it, and running
+    V4.23's compiler rules that one out: see "The 1998 compiler (V4.23)" and "Running V4.23".
 
 ## Proposed renames (for a later lane; nothing was renamed here)
 
@@ -380,18 +425,19 @@ disagree on exactly these routines; on `._fset_acd` / `._fset_acf` they agree.  
 
 ## Files
 
-| file               | what question it answers / how to run                                                                                                                                                                           |
-|--------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `ieee695.py`       | reads a Toshiba IEEE-695 library: `python3 -I ieee695.py LIB [--dump MEMBER]` lists members, sections, sizes, relocations                                                                                       |
-| `lib_match.py`     | masked search of library pieces in raw images (the matcher the others import); standalone: `python3 -I lib_match.py --lib N=FILE.lib --img N=FILE@BASE`                                                         |
-| `xref_runtime.py`  | which runtime routines are in our images and under which labels: `python3 -I -B xref_runtime.py results/xref.tsv > results/xref.summary.txt`; writes `xref.tsv`, `.resolved.tsv`, `.inferred.tsv`               |
-| `md_tables.py`     | the Markdown tables: `python3 -I -B md_tables.py results/xref.resolved.tsv results/xref.inferred.tsv > results/tables.md`                                                                                       |
-| `near_match.py`    | routines that match nearly (another build): `python3 -I -B near_match.py results/xref.resolved.tsv results/near.tsv` (about 10 minutes)                                                                         |
-| `build_diff.py`    | where the three runtime builds differ, on the hits that some build does not match: `python3 -I -B build_diff.py results/xref.resolved.tsv > results/build_diff.md`                                              |
-| `doform_switch.py` | `__doprnt`'s size per build, from its case table (firmware v10 and the three builds): `python3 -I -B doform_switch.py > results/doform_switch.txt`                                                              |
-| `startup_idiom.py` | where Toshiba's `__startup` loops are: `python3 -I -B startup_idiom.py > results/startup_idiom.txt`                                                                                                             |
-| `sfr_compare.py`   | Toshiba's SFR header against ours: `python3 -I -B sfr_compare.py <Io900h2.h> v10/maincpu/shared/sfr_tmp94c241.s --md > results/sfr_tmp94c241.md` (likewise `Io900h.h` against `wsa1/include/tmp95c061_sfr.inc`) |
-| `common_blocks.py` | exact blocks shared with the ROM monitors and POD firmwares: `python3 -I -B common_blocks.py <unpacked>/rom-monitor/*.bin <Firmware>/*.M25 <Firmware>/*.m25 > results/common_blocks.tsv`                        |
+| file               | what question it answers / how to run                                                                                                                                                                                              |
+|--------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `ieee695.py`       | reads a Toshiba IEEE-695 library: `python3 -I ieee695.py LIB [--dump MEMBER]` lists members, sections, sizes, relocations                                                                                                          |
+| `lib_match.py`     | masked search of library pieces in raw images (the matcher the others import); standalone: `python3 -I lib_match.py --lib N=FILE.lib --img N=FILE@BASE`                                                                            |
+| `xref_runtime.py`  | which runtime routines are in our images and under which labels: `python3 -I -B xref_runtime.py results/xref.tsv > results/xref.summary.txt`; writes `xref.tsv`, `.resolved.tsv`, `.inferred.tsv`                                  |
+| `md_tables.py`     | the Markdown tables: `python3 -I -B md_tables.py results/xref.resolved.tsv results/xref.inferred.tsv > results/tables.md`                                                                                                          |
+| `near_match.py`    | routines that match nearly (another build): `python3 -I -B near_match.py results/xref.resolved.tsv results/near.tsv` (about 10 minutes)                                                                                            |
+| `build_diff.py`    | where the three runtime builds differ, on the hits that some build does not match: `python3 -I -B build_diff.py results/xref.resolved.tsv > results/build_diff.md`                                                                 |
+| `doform_switch.py` | `__doprnt`'s size per build, from its case table (firmware v10 and the three builds): `python3 -I -B doform_switch.py > results/doform_switch.txt`                                                                                 |
+| `vm-compile/`      | does V4.23's compiler reproduce the firmware's runtime?  `run_vm.sh`, `job.sh` (in the VM only), `httpd.py`, `compare_vm.py`; its README gives the setup and commands; writes `results/vm_compile.md`, `results/vm_objects.sha256` |
+| `startup_idiom.py` | where Toshiba's `__startup` loops are: `python3 -I -B startup_idiom.py > results/startup_idiom.txt`                                                                                                                                |
+| `sfr_compare.py`   | Toshiba's SFR header against ours: `python3 -I -B sfr_compare.py <Io900h2.h> v10/maincpu/shared/sfr_tmp94c241.s --md > results/sfr_tmp94c241.md` (likewise `Io900h.h` against `wsa1/include/tmp95c061_sfr.inc`)                    |
+| `common_blocks.py` | exact blocks shared with the ROM monitors and POD firmwares: `python3 -I -B common_blocks.py <unpacked>/rom-monitor/*.bin <Firmware>/*.M25 <Firmware>/*.m25 > results/common_blocks.tsv`                                           |
 
 Inputs and their paths are given in `xref_runtime.py` (`TOSHIBA_V423`, `TOSHIBA_IDE`, `TOSHIBA_V110`):
 - the V4.23 install tree: `~/compartilhado/upstream_repos/file_archive/devrs.com/ngpcbins/`, under
@@ -409,5 +455,6 @@ Open:
   name their internal labels;
 - `__doprnt` in the main CPU and the HD-AE5000 has no exact match; its case table places it between the 1997 and 2003
   builds (`doform_switch.py`);
-- which compiler built the firmware's runtime, and its C: V4.23's thc1 / thc2 fit the dates.  Running them in a VM on
-  the runtime's sources (above) would test it.
+- which compiler built the firmware's runtime, and its C: not V4.23 ("Running V4.23").  It would be a cc900
+  released between mid-1998 and 2003 (thc2 later than V0.8n.04.11).  `vm-compile/` can test any such compiler that
+  turns up: pass its tree as `T900=`.

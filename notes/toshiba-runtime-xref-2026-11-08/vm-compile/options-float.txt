@@ -1,0 +1,4 @@
+default|-DFLOAT
+O1|-O1 -DFLOAT
+O2|-O2 -DFLOAT
+O3|-O3 -DFLOAT
