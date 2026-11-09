@@ -905,6 +905,8 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
             if F.opt and F.adecl and op == '*' and size == 2 and fam == 'HL' and work == 'WA' and lh is not None and \
                     lh.reg in ('IZ', 'QIZ') and 'HL' not in live_regs(F):
                 work = 'HL'                                 # ra_homes.c rh_ll: return a * b with a, b in IZ / QIZ ->
+            if held_after(F, work, e):                      # ra_ptr2 (-O3 -XS -Xr): *p++ * *q++ with p in XWA ->
+                work = free_reg(F, avoid={work})            # not WA (ld WA,(XWA+:2) was wrong code)
             f1 = gen(F, l, work, size)                      # ld HL,IZ / muls XHL,QIZ
             if f1 != work and f1 in FAM and f1 in ('WA', 'BC', 'DE', 'HL'):
                 work = f1                                   # (where gen left it: ra_noloop's a + b in DE, before
@@ -1049,6 +1051,24 @@ def loads_in(e):
     out = []
     walk(e, lambda n, d: out.append(n) if n.k == 'load' and strip(n.e).k == 'var' else None)
     return out
+
+def held_after(F, R, e):
+    """the family R holds a register variable that is still needed after expression e is evaluated, so writing R
+    while building e would be wrong code.  Without real liveness this is an approximation: a variable incremented
+    in e; inside a loop, one read in e by no last read, or a loop variable or parameter e does not read (ra_leaf3's
+    k).  Outside a loop a read in e is taken as the last one (opt_params.c op_two_loops' *d = *s reuses C), and a
+    variable read only by later statements is not seen."""
+    inloop = bool(F.loops) or bool(getattr(F, 'cl_active', None))   # (gen_counted pushes no F.loops entry)
+    for d in list(F.f.params) + list(F.f.decls):
+        if getattr(d, 'reg', None) != R or d in F.dead: continue
+        lds = [x for x in loads_in(e) if regvar_of(strip(x.e)) is d]
+        incs = []
+        walk(e, lambda n, dd: incs.append(n) if n.k == 'incdec' and regvar_of(n.e) is d else None)
+        if lds or incs:
+            if incs or (inloop and not any(dies_here(F, x) for x in lds)): return True
+        elif inloop and (d in getattr(F, 'in_loop', ()) or d.kind == 'param'):
+            return True
+    return False
 
 def free_reg(F, avoid=()):
     live = live_regs(F)
@@ -3468,6 +3488,8 @@ def gen_stmt(F, s, last):
             F.emit('ld', '%s,%s' % (t, FAM['HL'][size])); return   # ld (XSP+0x2),XHL
         if getattr(F, 'store_val_reg', None) and getattr(F, 'ptr_cache', None):
             work = F.store_val_reg                         # _ungetc: c is returned next -> ld HL,(XSP+0x4) / ld (XWA+0x8),HL
+        if work in FAM and held_after(F, work, s.e):       # ra_ptrcpy (-O3 -XS -Xr): *d++ = *s++ with d in XWA ->
+            work = free_reg(F, avoid={work} | {x for x in ('WA', 'BC', 'DE', 'HL') if x in t})   # not A
         fam = gen(F, s.e.r, work, size)                    # opt_temps.c ot_cpy_anb: ld E,(XHL+:1) / ld (XWA+:1),E
         F.emit('ld', '%s,%s' % (t, FAM[fam][size])); return
     raise Unsupported('statement ' + s.k)
@@ -3920,6 +3942,8 @@ def operand(F, e, size, avoid=()):
             return F.cl_active['bcse']
         if getattr(F, 'cl_shared', False):                 # ol_i_acc2: lda XBC,XHL+DE / (XBC) (U1's first temporary)
             T = FAM[F.cl_active.get('tmp') if F.cl_active.get('tmp') in FAM else 'WA'][4]
+            if not getattr(F, 'cl_tmp_done', False) and held_after(F, T[1:], e0):   # (ra_leaf3 -O3 -XS -Xr: k in
+                T = FAM[free_reg(F, avoid={T[1:]})][4]; F.cl_active['tmp'] = T[1:]  # WA, lda XWA,.. was wrong code)
             if not getattr(F, 'cl_tmp_done', False):
                 F.emit('lda', '%s,%s' % (T, F.cl_operand.strip('()'))); F.cl_tmp_done = True
             return '(%s)' % T
