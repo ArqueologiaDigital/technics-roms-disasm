@@ -196,6 +196,10 @@ def mem_operand(F, e):
             pv = strip(v.e)
             if pv.k == 'load' and regvar_of(pv.e) and regvar_of(pv.e).ty.size == 4:
                 return '(%s)' % FAM[regvar_of(pv.e).reg][4]
+            hv = strip(pv.e) if pv.k == 'load' else None     # ls_sl_g, ls_sl_2 (-Xr): s homed in XIZ -> ld L,(XIZ)
+            if hv is not None and hv.k == 'var' and getattr(hv.decl, 'homed', False) and hv.decl.reg == 'XIZ' and \
+                    hv.decl.ty.size == 4 and DEREF_XIZ:
+                return '(XIZ)'
             if pv.k == 'incdec' and pv.post and regvar_of(pv.e) and regvar_of(pv.e).ty.size == 4:
                 d = regvar_of(pv.e); step = d.ty.base.size
                 return '(%s%s:%d)' % (FAM[d.reg][4], '+' if pv.op == '++' else '-', step)
@@ -1046,6 +1050,19 @@ def gen_call_adecl(F, fn, args, fam, size):
         return 'reg' if family_of(m) else 'mem'
     groups = {'reg': [], 'computed': [], 'mem': [], 'const': []}
     for t, a in inreg: groups[kind(a)].append((t, a))
+    parked = []
+    def in_wa(a):                                      # a * / % is computed in XWA whatever its target
+        a0 = strip(a)
+        while a0.k == 'cast' and a0.kind == 'IntegralCast': a0 = strip(a0.e)
+        return a0.k == 'bin' and a0.op in ('*', '/', '%')
+    if any(t == 'WA' for t, _ in groups['reg']):       # ls_cl, ls_cl_noguard under -Xr: ms(p, 0, n * s) with p in
+        busy = {t for t, _ in groups['reg']}             # XIZ -> ld WA,(n) / mul XWA,(s) / ld BC,WA / ld XWA,XIZ /
+        for t, a in list(groups['computed']):            # ld DE,BC / ld BC,0x0: the product first, parked in the
+            if t != 'WA' and in_wa(a) and strip(a).ty.size == 2:   # first free of BC, DE
+                tmp = next((r for r in ('BC', 'DE') if r not in busy and r != t), None)
+                if tmp is None: continue
+                gen(F, strip(a), 'WA', 2); F.emit('ld', '%s,WA' % tmp)
+                parked.append((t, tmp)); groups['computed'].remove((t, a)); busy.add(tmp)
     for t, a in groups['reg']:
         sz = strip(a).ty.size; m = mem_operand(F, strip(a))
         if m != FAM[t][sz]: F.emit('ld', '%s,%s' % (FAM[t][sz], m))
@@ -1058,6 +1075,7 @@ def gen_call_adecl(F, fn, args, fam, size):
             F.emit('exts' if a0.ty.signed else 'extz', FAM[t][2])
         else:
             gen(F, a0, t, a0.ty.size)
+    for t, tmp in parked: F.emit('ld', '%s,%s' % (t, tmp))
     n = 0
     for a in stack: n += push_arg(F, a)
     for t, a in groups['mem'] + groups['const']:
@@ -1833,7 +1851,7 @@ def gen_stmt(F, s, last):
             work = next((r for r in ('WA', 'BC', 'DE', 'HL') if r not in held), 'WA')
         rcall = strip(s.e.r)
         while rcall.k == 'cast' and rcall.kind in ('BitCast', 'NoOp') or (rcall.k == 'cast' and rcall.ty.is_ptr()): rcall = strip(rcall.e)
-        if F.opt and rcall.k == 'call' and lv.k == 'var' and size in (2, 4) and not getattr(lv.decl, 'reg', None):
+        if (F.opt or F.adecl or STORE_XHL_NONE) and rcall.k == 'call' and lv.k == 'var' and size in (2, 4) and not getattr(lv.decl, 'reg', None):
             gen(F, rcall, 'HL', size); flush_pops(F)        # ls_mc / _memccpy: cal _vp / inc 0x8,XSP /
             F.emit('ld', '%s,%s' % (t, FAM['HL'][size])); return   # ld (XSP+0x2),XHL
         fam = gen(F, s.e.r, work, size)                    # opt_temps.c ot_cpy_anb: ld E,(XHL+:1) / ld (XWA+:1),E
@@ -1947,6 +1965,8 @@ def eval_sequence(node, out):
 # 32-bit value is a candidate (research-scratch sessions/2026-11-09_cc900-homes 1baf8a7: _strlen, _calloc, _memccpy,
 # _strcmp, _modf), else the first fit's rule (homes.choose returns None).
 R3_SETS = ('none', 'Xr', 'O3XSXr', 'O3XS')
+STORE_XHL_NONE = True
+DEREF_XIZ = True
 
 def plan_homes(F):
     """adecl: where register parameters and register locals live when a call would clobber them (call.c, adecl.c,
@@ -2148,7 +2168,8 @@ def emit_homes(F):
     """after the frame is known: slot stores first, then the moves into IZ / XIZ (adecl.c d_keep).  A cdecl
     parameter is loaded at its first use instead (_strlen: pushw 0xffff / pushw 0x0 / ld XIZ,(XSP+0xc) / push XIZ;
     call.c k_seq, where the first use is the first instruction)"""
-    for d, r in getattr(F, 'home_stores', []): F.emit('ld', '(XSP+%s),%s' % (hx(d.slot + F.push), r))
+    for d, r in sorted(getattr(F, 'home_stores', []), key=lambda x: x[0].slot):   # ls_cl_noguard: ld (XSP+0x4),BC /
+        F.emit('ld', '(XSP+%s),%s' % (hx(d.slot + F.push), r))                     # ld (XSP+0x6),WA
     F.lazy_homes = {}
     for dst, src in getattr(F, 'home_moves', []):
         if not isinstance(src, str): F.lazy_homes[src] = dst; continue
@@ -3322,7 +3343,8 @@ def plan_frame(F):
             and d.ty.kind not in ('array', 'struct') and (d.uses or d.name.startswith('__'))]
     temps = list(F.array_temps.values()) + [t['decl'] for t in F.cast_temps.values()]
     aggr = [d for d in f.decls if d.kind == 'local' and d.ty.kind in ('array', 'struct') and not getattr(d, 'reg', None)]
-    homed = [d for d in f.params if getattr(d, 'home_slot', False)]          # mul_l_loc under O3XSXr: x, then b
+    homed = [d for d in reversed(f.params) if getattr(d, 'home_slot', False)]   # mul_l_loc under O3XSXr: x, then b;
+                                                     # ls_cl_noguard (-Xr): s at +0x4, n at +0x6 (the last first)
     for d in scal + temps + aggr + homed:
         a = 2 if d.ty.size >= 2 else 1
         pos = (pos + a - 1) // a * a; d.slot = pos; pos += d.ty.size; slots.append(d)
