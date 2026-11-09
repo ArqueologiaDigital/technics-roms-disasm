@@ -24,6 +24,8 @@ how cc900 compiles exactly that (notes/cc900-compat-plan-2026-11-08/PLAN.md, sec
 - ra_chains: chains of two to five + - & | ^ operands (globals, parameters, IZ / QIZ homes, stack slots), in
   leaf functions and after a call, as a return value, a store and an argument: when is the chain built in WA
   and moved (ld HL,WA), and when directly in its target?
+- ra_homes32: a 32-bit local (pointer, long) against a 16-bit parameter for XIZ / IZ across calls (_memccpy gives
+  IZ to n and a slot to pos).
 The output is deterministic, ours, and C89.
 """
 import os, sys
@@ -390,6 +392,36 @@ def ra_chain_files():
         'int ch_loc3(void) { int x = gj + gk + gm; g0(); return x; }']
     return {'ra_chains.c': out + fs}
 
+def ra_home32_files():
+    """_memccpy: n (16-bit parameter, two reads) gets IZ, pos (pointer local, four references) a slot"""
+    out = ['/* A 32-bit local against a 16-bit parameter, both live across a call */',
+           'extern void g0(void); extern void g2(int); extern int g1(int); extern char *fp(int); extern long fl(int);',
+           'extern void *vp(const void *, int, unsigned int); extern void *cp2(void *, const void *, unsigned int);']
+    fs = [
+        'char *h_p(int n) { char *p = fp(n); g2(n); return p; }',
+        'char *h_p_only(int n) { char *p = fp(n); g0(); return p; }',
+        'char *h_p_n1(int n) { char *p = fp(1); g2(n); return p; }',
+        'char *h_p_n3(int n) { char *p = fp(n); g2(n); return p + n; }',
+        'char *h_p_n4(int n) { char *p = fp(n); g2(n); g2(n); return p; }',
+        'char *h_p_if(int n) { char *p = fp(n); if (p == 0) g2(n); return p; }',
+        'char *h_p_asg(int n) { char *p; p = fp(n); g2(n); return p; }',
+        'char *h_p_p3(int n) { char *p = fp(n); g2(n); if (p == 0) return p + 1; return p; }',
+        'char *h_p_m(int n, int m) { char *p = fp(n); g2(m); return p; }',
+        'int h_p_diff(char *s, int n) { char *p = fp(n); g2(n); return p - s; }',
+        'long h_l(int n) { long x = fl(n); g2(n); return x; }',
+        'long h_l_n3(int n) { long x = fl(n); g2(n); return x + n; }',
+        'int h_i(int n) { int x = g1(n); g2(n); return x; }',
+        'char *h_p_un(unsigned int n) { char *p = fp(1); g2(n); return p; }',
+        'void *h_mc(void *s1, const void *s2, int c, unsigned int n) { unsigned char *pos; '
+        'pos = (unsigned char *)vp(s2, c, n); if (pos == 0) { cp2(s1, s2, n); } else { unsigned int nn; '
+        'nn = pos - (unsigned char *)s2 + 1; cp2(s1, s2, nn); } return (void *)pos; }',
+        'void *h_mc_int(void *s1, const void *s2, int c, unsigned int n) { unsigned char *pos; '
+        'pos = (unsigned char *)vp(s2, c, n); if (pos == 0) { cp2(s1, s2, n); } else { cp2(s1, s2, 4); } '
+        'return (void *)pos; }',
+        'void *h_mc_nouse(void *s1, const void *s2, int c, unsigned int n) { unsigned char *pos; '
+        'pos = (unsigned char *)vp(s2, c, n); cp2(s1, s2, n); return (void *)pos; }']
+    return {'ra_homes32.c': out + fs}
+
 def main():
     out = sys.argv[1]
     d = os.path.join(out, 'micro'); os.makedirs(d, exist_ok=True)
@@ -407,6 +439,7 @@ def main():
     files.update(opt_param_files())
     files.update(ra_home_files())
     files.update(ra_chain_files())
+    files.update(ra_home32_files())
     for n, lines in sorted(files.items()):
         open(os.path.join(d, n), 'w').write('\n'.join(lines) + '\n')
     open(os.path.join(out, 'micro-sources.txt'), 'w').write(''.join('micro/%s\n' % n for n in sorted(files)))

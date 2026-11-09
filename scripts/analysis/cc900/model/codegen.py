@@ -18,6 +18,8 @@ Observed rules (v423, none):
 - long `*` `/` `%` call C9H_mulls / C9H_divls / C9H_remls (C9H_*lu unsigned) with XWA, XBC -> XHL (mul_l_pp).
 """
 
+import re
+
 class Unsupported(Exception): pass
 
 FAM = {'WA': {1: 'A', 2: 'WA', 4: 'XWA'}, 'BC': {1: 'C', 2: 'BC', 4: 'XBC'},
@@ -2753,6 +2755,7 @@ def cross_jump(F, lines):
     def is_label(l): return l.endswith(':') and not l.startswith('\t')
     def uncond(l): return l.startswith(('\tret', '\tj\t', '\tretd')) and ',' not in l
     lines = drop_jump_to_next(lines)
+    made = set()
     while True:
         done = False
         for li, lab in enumerate(lines):
@@ -2780,9 +2783,10 @@ def cross_jump(F, lines):
                     for i in sorted(g[:-1], reverse=True): lines[i - 1:i + 1] = ['\tj\t' + N]
                     last = max(i for i, l in enumerate(lines) if l == '\tj\t' + L and lines[i - 1] == X2)
                     lines.insert(last - 1, N + ':')        # the last `X / j L` of the group keeps the code
-            if N: done = True; break
+            if N: done = True; made.add(N); break
         if not done: break
-    return lines
+    def refs(L): return sum(1 for l in lines if l.startswith('\t') and re.search(r'[\t,]%s$' % re.escape(L), l))
+    return [l for l in lines if not (is_label(l) and l[:-1] in made and not refs(l[:-1]))]   # _memccpy: one L50000
 
 def tail_calls_opt(F, lines):
     """-O: cal X / j L (L: ret) becomes j X; a label that lost all its references (and is not a ret cc target)
