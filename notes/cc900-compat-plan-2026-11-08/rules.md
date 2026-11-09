@@ -47,3 +47,10 @@ already in the register.  They differ in when they record it:
 
 This explains every reload difference seen so far with one switch.  In the model it is best implemented as
 register-contents tracking with that switch, rather than as the `setup_struct_temps` special case it is now.
+
+Refined by `_ultoa`: V4.23 keeps load-based knowledge across a store through a pointer (it does not reload after
+`ldb (XWA+0x20),0x0`), the 2003 compiler drops all of it there.  So the two personalities differ in two ways: what
+creates the knowledge (V4.23: loads; 2003: loads and stores) and what a store through a pointer destroys (V4.23:
+nothing of it; 2003: everything).  `codegen.knowledge_pass()` implements both: from the naive sequence
+`lda XWA,XSP+0x10 / ld (XSP+8),XWA / ld XWA,(XSP+8) / ldb (XWA+0x20),0x0 / ld XWA,(XSP+8) / lda XWA,XWA+0x1f` it gives
+V4.23's `_ultoa` prologue for `v4.23` and the 2003 / firmware one for `kn5000`.
