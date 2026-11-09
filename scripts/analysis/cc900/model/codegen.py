@@ -158,6 +158,11 @@ def mem_operand(F, e):
     e = same_size_ptr_cast(strip(e))
     eo = getattr(F, 'elem_ops', None)
     if eo and e.k == 'load' and id(strip(e.e)) in eo: return eo[id(strip(e.e))]   # (shared_base_opassign)
+    lh = getattr(F, 'lazy_homes', None)
+    if lh and e.k == 'load' and strip(e.e).k == 'deref':  # ra_libshapes.c ls_sl_2 (-O3 -XS): *s with s a lazy cdecl
+        pv = strip(strip(e.e).e)                           # home: its load comes first (ld A,(XIZ) read an unloaded
+        if pv.k == 'load' and strip(pv.e).k == 'var' and strip(pv.e).decl in lh:   # XIZ: wrong code)
+            touch_home(F, strip(pv.e).decl)
     if strip(e).k == 'cast':
         ct = cast_temp(F, strip(e))
         if ct: return ct
