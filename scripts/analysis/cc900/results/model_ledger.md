@@ -63,10 +63,10 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-25-micro-arrindexsz, v423/none                       | micro/arr_index_sz.c | 51 / 66 exact (77.3%)    |
 | run 2026-11-09-24-micro-arrindex, v423/O3XS                         | micro/arr_index.c    | 48 / 66 exact (72.7%)    |
 | run 2026-11-09-25-micro-arrindexsz, v423/O3XS                       | micro/arr_index_sz.c | 48 / 66 exact (72.7%)    |
-| run 2026-11-09-24-micro-arrindex, v423/Xr                           | micro/arr_index.c    | 47 / 66 exact (71.2%)    |
-| run 2026-11-09-25-micro-arrindexsz, v423/Xr                         | micro/arr_index_sz.c | 48 / 66 exact (72.7%)    |
-| run 2026-11-09-24-micro-arrindex, v423/O3XSXr                       | micro/arr_index.c    | 47 / 66 exact (71.2%)    |
-| run 2026-11-09-25-micro-arrindexsz, v423/O3XSXr                     | micro/arr_index_sz.c | 47 / 66 exact (71.2%)    |
+| run 2026-11-09-24-micro-arrindex, v423/Xr                           | micro/arr_index.c    | 48 / 66 exact (72.7%)    |
+| run 2026-11-09-25-micro-arrindexsz, v423/Xr                         | micro/arr_index_sz.c | 49 / 66 exact (74.2%)    |
+| run 2026-11-09-24-micro-arrindex, v423/O3XSXr                       | micro/arr_index.c    | 48 / 66 exact (72.7%)    |
+| run 2026-11-09-25-micro-arrindexsz, v423/O3XSXr                     | micro/arr_index_sz.c | 48 / 66 exact (72.7%)    |
 | run 2026-11-09-29-micro-adfp, v423/none                             | probes/adfp.c        | 15 / 15 exact (100.0%)   |
 | run 2026-11-09-29-micro-adfp, v423/O3XS                             | probes/adfp.c        | 15 / 15 exact (100.0%)   |
 | run 2026-11-09-29-micro-adfp, v423/Xr                               | probes/adfp.c        | 15 / 15 exact (100.0%)   |

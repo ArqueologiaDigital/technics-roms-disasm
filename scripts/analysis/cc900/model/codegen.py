@@ -1276,6 +1276,8 @@ def unpromote(x):
     while x.k == 'cast' and x.kind == 'IntegralCast' and strip(x.e).ty.size <= x.ty.size: x = strip(x.e)
     return x
 
+TABLE_BIT_MEM = True                                      # see byte_addr
+
 def byte_addr(F, x):
     """a memory operand for the byte x that `bit n,(...)` can test in place (cond_bits.c: (XSP+0x4), (_guc),
     (XWA), (XWA+0x3), (XWA+0xb), (XSP+0x7)), emitting the pointer load; None when x is not such a byte"""
@@ -1284,6 +1286,21 @@ def byte_addr(F, x):
     m = mem_operand(F, x)
     if m is not None and m.startswith('('): return m
     v = strip(x.e); off = 0
+    if TABLE_BIT_MEM and v.k == 'index' and strip(v.base).k == 'var' and strip(v.base).decl.kind == 'global' and \
+            strip(v.base).decl.ty.kind == 'array' and v.ty.size == 1:
+        uc = strip(v.idx)                                # ctype tests: gtab[(unsigned char)ch] & 0x4 tested in place
+        while uc.k == 'cast' and uc.kind == 'IntegralCast' and uc.ty.size >= 2: uc = strip(uc.e)
+        if uc.k == 'cast' and uc.ty.size == 1 and not uc.ty.signed:
+            ix = strip(uc.e); xm = mem_operand(F, ix)
+            if xm is not None and ix.ty.size in (1, 2) and ix.k == 'load':
+                rv = regvar_of(ix.e)
+                tab = strip(v.base).decl.name
+                if rv is not None and not dies_here(F, ix):   # arr_index.c ai_dig_val (-Xr): ch in A is needed
+                    F.emit('ld', '%s,%s' % ('C' if ix.ty.size == 1 else 'BC', xm))   # after: ld C,A / extz BC /
+                    F.emit('extz', 'BC'); F.emit('lda', 'XDE,_%s' % tab); return '(XDE+BC)'   # bit 0x2,(XDE+BC)
+                W = FAM['WA'][ix.ty.size]                 # cond_bits.c cb_tern: ld WA,c / extz WA / lda XBC,_gtab /
+                if xm != W: F.emit('ld', '%s,%s' % (W, xm))   # bit 0x1,(XBC+WA)
+                F.emit('extz', 'WA'); F.emit('lda', 'XBC,_%s' % tab); return '(XBC+WA)'
     if v.k == 'index' and fold(v.idx).k == 'const' and fold(v.idx).value is not None:
         off = fold(v.idx).value * v.ty.size; v = strip(v.base)
         if v.k == 'load': p = v
@@ -1923,8 +1940,8 @@ def elem_addr_regs(F, lv, b, esz, kind):
     register a char element is (XWA+BC), any other is exts XBC / add XBC,XBC / add XBC,XWA / (XBC)"""
     ib, k = split_index(lv.idx)
     x = strip(ib)
-    while x.k == 'cast' and x.kind == 'IntegralCast' and strip(x.e).ty.size == 2: x = strip(x.e)
-    pair = None
+    while x.k == 'cast' and x.kind == 'IntegralCast' and strip(x.e).ty.size == 2 and x.ty.size >= 2: x = strip(x.e)
+    pair = None                                            # ((unsigned char)ch narrows: ai_xdig_i needs its extz WA)
     if x.k == 'bin' and x.op == '+' and fold(x.r).k != 'const':
         a, c = unpromote(x.l), unpromote(x.r)
         av = regvar_of(a.e) if a.k == 'load' else None; cv = regvar_of(c.e) if c.k == 'load' else None
