@@ -18,7 +18,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-08-4-abi, v423/none                                     | abi/*.c              | 96 / 108 exact (88.9%)   |
 | run 2026-11-08-4-abi, v423/O3XS                                     | abi/*.c              | 96 / 108 exact (88.9%)   |
 | run 2026-11-08-6-abi-adecl, v423/Xr                                 | abi/*.c              | 73 / 80 exact (91.2%)    |
-| run 2026-11-08-6-abi-adecl, v423/O3XSXr                             | abi/*.c              | 72 / 80 exact (90.0%)    |
+| run 2026-11-08-6-abi-adecl, v423/O3XSXr                             | abi/*.c              | 74 / 80 exact (92.5%)    |
 | run 2026-11-09-4-micro-switch, v423/none                            | micro/switch.c       | 22 / 25 exact (88.0%)    |
 | run 2026-11-09-4-micro-switch, v423/Xr                              | micro/switch.c       | 22 / 25 exact (88.0%)    |
 | run 2026-11-09-4-micro-switch, v423/O3XS                            | micro/switch.c       | 22 / 25 exact (88.0%)    |

@@ -614,6 +614,12 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         if fam != 'WA' and reads_reg(r, fam):        # ra_leafsum5: target read later -> compute in WA
             gen_bin(F, e, 'WA', size, then_ret, store)
             F.emit('ld', '%s,%s' % (FAM[fam][size], FAM['WA'][size])); return fam
+        rcv = strip(r)
+        if F.opt and op in ('+', '&', '|', '^') and rcv.k == 'cast' and rcv.kind == 'PointerToIntegral' and \
+                strip(rcv.e).k == 'load' and regvar_of(strip(rcv.e).e) is not None and dies_here(F, strip(rcv.e)) and \
+                strip(l).k == 'load' and regvar_of(strip(l).e) is not None and dies_here(F, l):
+            l, r = r, l                                    # abi adecl.c d_l3: b + (long)c -> add XDE,XBC / ld XHL,XDE
+            l = strip(l.e)
         lr = regvar_of(strip(l).e) if strip(l).k == 'load' else None
         if lr is not None and lr.reg in ('WA', 'BC', 'DE', 'HL') and F.opt and dies_here(F, l) and lr.reg != fam and \
                 lr not in getattr(F, 'no_inplace', ()):
@@ -3373,7 +3379,10 @@ def regvar_stmt(F, e):
             F.emit('inc' if e.op == '+' else 'dec', '%s,%s' % (hx(rc.value), R)); return True
         m = operand(F, e.r, d.ty.size)
         if m is None:                                  # ra_param3: s += b * c -> WA, then add HL,WA
-            fam = gen(F, e.r, 'WA', d.ty.size); m = FAM[fam][d.ty.size]
+            T = getattr(F, 'tfam', None) or 'WA'       # abi adecl.c d_ptr under O3XSXr: s += *p++ with p in XWA ->
+            if T == 'WA' and 'WA' in live_regs(F, except_decl=d):   # ld E,(XWA+:1) / exts DE / add HL,DE (the loop's T;
+                T = free_reg(F, avoid={'WA', d.reg})                 # A would overwrite p)
+            fam = gen(F, e.r, T, d.ty.size); m = FAM[fam][d.ty.size]
         F.emit(SIMPLE_OPS[e.op], '%s,%s' % (R, m)); return True
     if e.k == 'opassign' and regvar_of(e.l) and e.op == '%' and regvar_of(e.l).reg in ('WA', 'BC', 'DE', 'HL') \
             and regvar_of(e.l).ty.size == 2 and mem_operand(F, narrow(e.r, 2)):
