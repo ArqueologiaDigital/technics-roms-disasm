@@ -652,10 +652,13 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         wa_var = [d for d in list(F.f.params) + list(F.f.decls) if getattr(d, 'reg', None) == 'WA' and d not in F.dead
                   and uses_decl(e.r, d)]                   # sv_leaf: a * b + a keeps a in WA -> ld HL,DE / add HL,WA
         if fam != 'WA' and (natural_wa(l) or chain_wa(l)) and not wa_var:   # ra_noloop3: inner levels over a multiply stay in WA
-            gen(F, l, 'WA', size)
-            F.emit('ld', '%s,%s' % (FAM[fam][size], FAM['WA'][size]))
+            f0 = gen(F, l, 'WA', size)
+            src_ = FAM[f0][size] if f0 in FAM and size in FAM[f0] else FAM['WA'][size]   # (where gen left it)
+            if src_ != FAM[fam][size]: F.emit('ld', '%s,%s' % (FAM[fam][size], src_))
         else:
-            gen(F, l, fam, size)
+            f0 = gen(F, l, fam, size)
+            if f0 != fam and f0 in FAM and size in FAM[f0]:   # _rand: Seed * k + 12345 -> the helper's XHL:
+                fam = f0; R = FAM[fam][size]                  # cal C9H_mullu / add XHL,0x3039 (not XWA: wrong code)
         rs = mem_operand(F, r)
         if rs is None:
             other = 'BC' if fam != 'BC' else 'DE'
@@ -3011,6 +3014,7 @@ FP_AGGR = True
 MUL_K_XWA = True
 IFCHAIN_JOIN = True
 BINLOC_XR = True
+GLOBAL_FORWARD = True                              # -O: a global just stored is not reloaded (_rand)
 HOMES_PARAM_ORDER = True                           # adecl entry homes in reverse parameter order (h_p_diff)
 PTR_CHAR_EXTZ = True                               # p + i on a char pointer zero-extends i (h_p_n3, ai_c_p_*)
 SLOT_FROM_HL = True                                # a call result stored to a slot from HL / XHL (h_p)
@@ -6340,6 +6344,12 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong
     import re                                            # no self-moves: the oracle never writes ld XWA,XWA
     F.lines = [l for l in F.lines if not re.match(r'^\tld\t(\w+),\1$', l)]
     if F.opt: F.lines = drop_unreachable(F.lines)        # (without -O a switch keeps its end: sw_jt6 L3: ret)
+    if F.opt and GLOBAL_FORWARD:                          # _rand: ld (_Seed),XHL / ld XWA,(_Seed) -> ld XWA,XHL (the
+        for i in range(len(F.lines) - 1):                 # value just stored, in the next instruction)
+            a = re.match(r'^\tld\t\((_\w+)\),(\w+)$', F.lines[i]); b = re.match(r'^\tld\t(\w+),\((_\w+)\)$', F.lines[i + 1])
+            if a and b and a.group(1) == b.group(2) and family_of(a.group(2)) and family_of(b.group(1)) and \
+                    len(a.group(2)) == len(b.group(1)):
+                F.lines[i + 1] = '\tld\t%s,%s' % (b.group(1), a.group(2))
     F.lines = [l.replace('(XSP+0x0)', '(XSP)') for l in F.lines]   # the oracle writes (XSP), never (XSP+0x0)
     # a call directly followed by the return becomes a jump (cmp_ui: ge_ui_br0)
     if getattr(F, 'naive_loads', False) or (F.opt and not F.adecl): F.lines = knowledge_pass(F.lines, F.personality)
