@@ -14,7 +14,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-08-7-micro, ide2003/Xr, --personality ide2003           | micro/*.c          | 631 / 674 exact (93.6%)  |
 | run 2026-11-08-7-micro, ide2003/O3XSXr, --personality ide2003       | micro/*.c          | 605 / 674 exact (89.8%)  |
 | run 2026-11-08-8-micro-ra, v423/none                                | micro/ra_*.c       | 29 / 42 exact (69.0%)    |
-| run 2026-11-08-8-micro-ra, v423/O3XSXr                              | micro/ra_*.c       | 11 / 42 exact (26.2%)    |
+| run 2026-11-08-8-micro-ra, v423/O3XSXr                              | micro/ra_*.c       | 12 / 42 exact (28.6%)    |
 | run 2026-11-08-6-abi-adecl, v423/Xr                                 | abi/*.c            | 69 / 80 exact (86.2%)    |
 | run 2026-11-08-6-abi-adecl, v423/O3XSXr                             | abi/*.c            | 65 / 80 exact (81.2%)    |
 | run 2026-11-09-4-micro-switch, v423/none                            | micro/switch.c     | 13 / 25 exact (52.0%)    |
@@ -22,7 +22,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-4-micro-switch, v423/O3XS                            | micro/switch.c     | 0 / 25 exact (0.0%)      |
 | run 2026-11-09-4-micro-switch, v423/O3XSXr                          | micro/switch.c     | 20 / 25 exact (80.0%)    |
 | run 2026-11-09-5-micro-optparams, v423/O3XS                         | micro/opt_params.c | 19 / 24 exact (79.2%)    |
-| run 2026-11-09-5-micro-optparams, v423/O3XSXr                       | micro/opt_params.c | 0 / 24 exact (0.0%)      |
+| run 2026-11-09-5-micro-optparams, v423/O3XSXr                       | micro/opt_params.c | 10 / 24 exact (41.7%)    |
 | run 2026-11-09-6-micro-rahomes, v423/none                           | micro/ra_homes.c   | 9 / 25 exact (36.0%)     |
 | run 2026-11-09-6-micro-rahomes, v423/O3XS                           | micro/ra_homes.c   | 7 / 25 exact (28.0%)     |
 | run 2026-11-09-6-micro-rahomes, v423/Xr                             | micro/ra_homes.c   | 16 / 25 exact (64.0%)    |
@@ -40,7 +40,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-10-micro-fptemps, v423/none                          | micro/fp_temps.c   | 33 / 33 exact (100.0%)   |
 | run 2026-11-09-10-micro-fptemps, v423/O3XS                          | micro/fp_temps.c   | 33 / 33 exact (100.0%)   |
 | run 2026-11-09-11-micro-opttemps, v423/Xr                           | micro/opt_temps.c  | 1 / 38 exact (2.6%)      |
-| run 2026-11-09-11-micro-opttemps, v423/O3XSXr                       | micro/opt_temps.c  | 1 / 38 exact (2.6%)      |
+| run 2026-11-09-11-micro-opttemps, v423/O3XSXr                       | micro/opt_temps.c  | 38 / 38 exact (100.0%)   |
 | run 2026-11-08-9-micro-optloops, v423/O3XS                          | micro/opt_loops.c  | 15 / 33 exact (45.5%)    |
 | run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality v4.23      | 1997 LIB/SRC       | 144 / 248 exact (58.1%)  |
 | run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality kn5000     | 1997 LIB/SRC       | 142 / 248 exact (57.3%)  |

@@ -758,7 +758,8 @@ def gen_compare(F, e):
     rvm = mem_operand(F, rv)
     if e.op in ('==', '!=') and size == 1 and lm is not None and lm.startswith('(X') and rvm is not None and \
             rvm.startswith('(X') and not lm.startswith('(XSP') and not rvm.startswith('(XSP'):
-        F.emit('ld', 'A,%s' % rvm); F.emit('cp', 'A,%s' % lm); return cc   # _strncmp: ld A,(XDE) / cp A,(XIX) (guess:
+        T1 = FAM[getattr(F, 'tfam', 'WA')][1]                              # ot_cmp_abn: ld C,(XHL) / cp C,(XWA)
+        F.emit('ld', '%s,%s' % (T1, rvm)); F.emit('cp', '%s,%s' % (T1, lm)); return cc   # _strncmp: ld A,(XDE) / cp A,(XIX) (guess:
                                                                           # one example)
     if rvm in ('A', 'C', 'E', 'L', 'WA', 'BC', 'DE', 'HL') and lm is not None and lm.startswith('(') and e.op in ('==', '!='):
         rr = FAM[[k for k, v in FAM.items() if rvm in v.values()][0]][size]     # _strchr: cp A,(XHL)
@@ -1115,8 +1116,9 @@ def gen_opassign(F, e):
         rv = mem_operand(F, r)
         if rv in ('A', 'C', 'E', 'WA', 'BC', 'DE', 'HL', 'XWA', 'XBC', 'XDE'):
             F.emit(SIMPLE_OPS[op], '%s,%s' % (t, rv)); return t        # .as_add_ptr: add (XWA),BC
-        gen(F, r, 'WA', size)
-        F.emit(SIMPLE_OPS[op], '%s,%s' % (t, FAM['WA'][size])); return t
+        T = getattr(F, 'tfam', 'WA')                        # ot_add_anb: ld E,(XHL+:1) / add (XWA+:1),E
+        gen(F, r, T, size)
+        F.emit(SIMPLE_OPS[op], '%s,%s' % (t, FAM[T][size])); return t
     if op in ('<<', '>>'):
         mnem = ('sla' if signed else 'sll') if op == '<<' else ('sra' if signed else 'srl')
         cnt = mem_operand(F, r) if fold(r).k != 'const' else None
@@ -1195,6 +1197,15 @@ def gen_opassign(F, e):
         F.emit('ld', '%s,%s' % (t, res)); return t
     raise Unsupported('opassign ' + op)
 
+def uses_after_stmt(F, d):
+    """is d read in a statement after the current one (F.next_stmt onwards)?"""
+    nx = getattr(F, 'next_stmt', None)
+    if nx is None: return False
+    body = flat(F.f.body)
+    try: i = body.index(nx)
+    except ValueError: return True
+    return any(uses_decl(x, d) for x in body[i:])
+
 def store_global(F, name, e, size):
     rc = fold(narrow(e, size)) if size <= 2 else None
     if rc is not None and rc.k == 'const' and rc.value is not None:   # _exp, _tan: errno = ERANGE -> ldw (_errno),0x22
@@ -1203,7 +1214,21 @@ def store_global(F, name, e, size):
     if rv is not None and rv.ty.size == size:          # ra_twice: ld (_ga),HL
         F.emit('ld', '(_%s),%s' % (name, FAM[rv.reg][size])); return
     F.store_from = None
-    fam = gen(F, e, 'WA', size, store=True)
+    work = 'WA'
+    if getattr(F, 'tfam', None) and size == 1 and strip(e).k in ('bin', 'cast'):
+        # after an R6 loop (opt_temps.c ot_cnt_abn: gc = *a + *b -> ld C,(XBC) / add C,(XWA)): the first of WA, BC,
+        # DE, HL whose variable is not needed again (b dies at its load, n after the loop)
+        x = strip(e)
+        while x.k == 'cast': x = strip(x.e)
+        need = set()
+        if x.k == 'bin':
+            walk(x.l, lambda m, d: need.add(strip(m.e).decl) if m.k == 'load' and strip(m.e).k == 'var' else None)
+        for d in list(F.f.params) + list(F.f.decls):
+            if getattr(d, 'reg', None) and d not in need and not uses_after_stmt(F, d): continue
+            if getattr(d, 'reg', None): need.add(d)
+        held = {getattr(d, 'reg', None) for d in need}
+        work = next((r for r in ('WA', 'BC', 'DE', 'HL') if r not in held), 'WA')
+    fam = gen(F, e, work, size, store=True)
     reg = F.store_from or FAM[fam][size]
     F.emit('ld', '(_%s),%s' % (name, reg))
 
@@ -1616,7 +1641,7 @@ def gen_stmt(F, s, last):
         rv = regvar_of(strip(s.e.r).e) if strip(s.e.r).k == 'load' else None
         if rv is not None and rv.ty.size == size:
             F.emit('ld', '%s,%s' % (t, FAM[rv.reg][size])); return
-        fam = gen(F, s.e.r, 'WA', size)
+        fam = gen(F, s.e.r, getattr(F, 'tfam', 'WA'), size)   # opt_temps.c ot_cpy_anb: ld E,(XHL+:1) / ld (XWA+:1),E
         F.emit('ld', '%s,%s' % (t, FAM[fam][size])); return
     raise Unsupported('statement ' + s.k)
 
@@ -1967,6 +1992,11 @@ def operand(F, e, size, avoid=()):
 
 def regvar_stmt(F, e):
     """assignments to register variables: v = x, v op= x, v++ (ra_leaf, ctrl)"""
+    if F.opt and e.k == 'opassign' and e.op in '+-' and regvar_of(e.l) and regvar_of(e.l).ty.size == 2 and \
+            char_arith(e.r) and getattr(F, 'tfam', None):
+        d = regvar_of(e.l); T = F.tfam                     # opt_temps.c ot_sum: s += *a++ - *b++ ->
+        gen(F, narrow(e.r, 1), T, 1); F.emit('exts', FAM[T][2])   # ld A,(XHL+:1) / sub A,(XBC+:1) / exts WA /
+        F.emit(SIMPLE_OPS[e.op], '%s,%s' % (FAM[d.reg][2], FAM[T][2])); return True   # add IX,WA
     if e.k == 'bin' and e.op == '=' and strip(e.l).k == 'var' and getattr(strip(e.l).decl, 'reg', None) == 'XIZ' \
             and getattr(strip(e.l).decl, 'homed', False) and strip(e.r).k == 'call':
         gen_call(F, strip(e.r)); flush_pops(F); F.emit('ld', 'XIZ,XHL'); return True   # _calloc: ptr = malloc(...)
@@ -2203,8 +2233,8 @@ def loop_cond(F, c, target, sense):
         inn = F.newulabel(); loop_cond(F, c.l, inn, True); loop_cond(F, c.r, target, False)
         F.lines.append(inn + ':'); return
     if c.k == 'incdec' and c.post and regvar_of(c.e):
-        d = regvar_of(c.e); R = FAM[d.reg][2]
-        F.emit('ld', 'WA,%s' % R); F.emit('dec' if c.op == '--' else 'inc', '0x1,%s' % R); F.emit('cp', 'WA,0x0')
+        d = regvar_of(c.e); R = FAM[d.reg][2]; T = FAM[getattr(F, 'tfam', 'WA')][2]   # opt_temps.c: ld DE,BC / dec 0x1,BC
+        F.emit('ld', '%s,%s' % (T, R)); F.emit('dec' if c.op == '--' else 'inc', '0x1,%s' % R); F.emit('cp', '%s,0x0' % T)
         cc = 'ne' if sense else 'eq'
         F.emit('ret', cc) if target == 'RET' else F.emit('j', '%s,%s' % (cc, target)); return
     if c.k == 'incdec' and not c.post and c.op == '--' and regvar_of(c.e) and F.opt and sense and target != 'RET' \
@@ -2471,6 +2501,32 @@ def live_across_call(body):
         return seen
     return stmt(body, False) is None
 
+def leaf_r6(F):
+    """-O3 -XS -Xr leaf with one while loop: the temporary family T and the parameter moves (leafalloc.py)"""
+    import leafalloc
+    f = F.f
+    ck = leafalloc.classify(f, strip, walk)
+    if ck is None: return False
+    kind, counter = ck
+    params = [p for p in f.params if getattr(p, 'reg', None) in ('WA', 'BC', 'DE')]
+    if len(params) != len(f.params): return False                 # (a stack parameter: move3, not modelled here)
+    locs = [d for d in f.decls if d.kind == 'local']
+    rets = []
+    walk(f.body, lambda n, d: rets.append(strip(strip(n.value).e).decl) if n.k == 'return' and n.value is not None
+         and strip(n.value).k == 'load' and strip(strip(n.value).e).k == 'var' else None)
+    retloc = [d for d in locs if d in rets]
+    if len(locs) > len(retloc) or len(retloc) > 1: return False
+    arrival = {p: p.reg for p in params}
+    T, final, rl = leafalloc.choose(arrival, counter, retloc[0] if retloc else None, kind)
+    mv = leafalloc.moves(params, arrival, final)
+    for p in params: p.reg = final[p]
+    if retloc: retloc[0].reg = rl
+    F.tfam = T or 'WA'
+    for v, src, dst in mv:                                # ot_cpy_abn: ld HL,DE / ld XDE,XWA
+        sz = v.ty.size if v.ty.size in (1, 2, 4) else 4
+        F.emit('ld', '%s,%s' % (FAM[dst][sz], FAM[src][sz]))
+    return True
+
 def plan_leaf(F):
     """the leaf-function allocator of regalloc_notes.md"""
     f = F.f
@@ -2489,6 +2545,7 @@ def plan_leaf(F):
         if n.k == 'load' and strip(n.e).k == 'deref' and not F.opt: temps_bc.append(n)
         if F.opt and n.k == 'bin' and n.op == '=' and store_through_temp(n): temps_bc.append(n)   # _strset
     walk(f.body, visit)
+    if F.opt and F.adecl and not has_call and leaf_r6(F): return True
     if has_call and not (F.opt and not F.adecl and not any(d.kind == 'local' for d in f.decls) and f.params
                          and not live_across_call(f.body)):
         return False                                   # _ltoa at -O3 -XS: nothing read after its calls

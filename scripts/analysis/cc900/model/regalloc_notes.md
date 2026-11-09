@@ -93,3 +93,15 @@ So a free register is used when there is one (HL, IX); otherwise one parameter's
 is not yet clear: WA in `op_cpy_ab` (two moves, a to XDE and n to HL, where taking DE would have needed one) but DE
 in `op_cpy_anb`.  A preference order for T (WA, DE, BC ...) combined with "the counter keeps its register" fits most
 rows; `op_cpy_ab` against `op_cpy_anb` is the case to explain first.
+
+## The rule, fitted (2026-11-09): R6
+
+research-scratch `sessions/2026-11-09_cc900-leaf-temps` (commit `1105e3d`; `fit.py`, `leaf-temps.csv` derived from
+runs `2026-11-09-5-micro-optparams` and `2026-11-09-11-micro-opttemps`) found a rule that reproduces all 62 O3XSXr
+rows and, with different candidate lists, all 38 plain-Xr rows.  It is in `leafalloc.py` (docstring) and used by
+`codegen.leaf_r6`: the loop body's kind (move, heavy, cmp, cmp2, arith, move3, count, word, none) gives T's
+candidates; a candidate's occupant moves to reloc(candidate) (WA -> DE, HL; BC -> HL, IX; DE -> HL); the counter is
+never T's victim (it moves and its family is barred); a returned local reserves HL; the entry moves are
+sequentialised in parameter order.  The code generator then uses T for the `n--` copy, the moved or compared byte,
+and after the loop the first of WA, BC, DE, HL whose variable is not needed again.  opt_temps.c 38 / 38,
+opt_params.c 10 / 24 under O3XSXr (the rest: shapes the classifier does not cover yet, two loops, three pointers).
