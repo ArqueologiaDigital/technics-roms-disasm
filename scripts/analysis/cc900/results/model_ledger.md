@@ -7,7 +7,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-08-7-micro, v423/none                               | micro/*.c         | 651 / 674 exact (96.6%) |
 | run 2026-11-08-7-micro, ide2003/none                            | micro/*.c         | 648 / 674 exact (96.1%) |
 | run 2026-11-08-7-micro, v110/none                               | micro/*.c         | 647 / 674 exact (96.0%) |
-| run 2026-11-08-7-micro, v423/O3XS                               | micro/*.c         | 602 / 674 exact (89.3%) |
+| run 2026-11-08-7-micro, v423/O3XS                               | micro/*.c         | 603 / 674 exact (89.5%) |
 | run 2026-11-08-7-micro, v423/Xr                                 | micro/*.c         | 632 / 674 exact (93.8%) |
 | run 2026-11-08-7-micro, v423/O3XSXr                             | micro/*.c         | 605 / 674 exact (89.8%) |
 | run 2026-11-08-8-micro-ra, v423/none                            | micro/ra_*.c      | 23 / 42 exact (54.8%)   |

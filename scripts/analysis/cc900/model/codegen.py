@@ -279,6 +279,44 @@ def gen(F, e, fam, size, then_ret=False, store=False):
                 if a.op == '-': F.emit('inc', '0x1,%s' % R)
             else: F.emit('neg' if a.op == '-' else 'cpl', R)
             F.lines.append(lelse + ':'); F.lines.append(lend + ':'); return fam
+    if e.k == 'cond' and F.opt:
+        c, a, b = strip(e.c), strip(e.a), strip(e.b)
+        def simple(x):
+            x = strip(narrow(x, size))
+            return 0 if fold(x).k == 'const' else 1 if mem_operand(F, x) is not None else 2
+        R = FAM[fam][size]
+        if c.k == 'bin' and c.op in CC_S and min(simple(a), simple(b)) <= 1 and \
+                strip(c.l).k == 'load' and (fold(c.r).k == 'const' or strip(c.r).k == 'load'):
+            # -O: the simpler arm goes to the result register first, the other is computed only when needed
+            # (ctrl.c c_tern: ld WA,(a) / ld HL,(b) / cp WA,HL / ret ge / ld HL,WA; _strncmp: ld L,0x0 / ... )
+            pre_then = simple(a) < simple(b)
+            pre, other = (a, b) if pre_then else (b, a)
+            if family_of(mem_operand(F, strip(narrow(pre, size))) or '') and family_of(mem_operand(F, strip(narrow(other, size))) or ''):
+                pre = None                                 # both arms in registers: the plain form (c_tern under -Xr)
+        else: pre = None
+        if pre is not None:
+            lskip, lend = F.newulabel(), F.newulabel()
+            lm = mem_operand(F, c.l); rv = strip(c.r)
+            tmpv = None
+            if pre.k == 'load' and strip(pre.e).k == 'var' and rv.k == 'load' and strip(rv.e).k == 'var' and \
+                    strip(rv.e).decl is strip(pre.e).decl and lm is not None and lm.startswith('('):
+                cs = strip(c.l).ty.size
+                F.emit('ld', '%s,%s' % (FAM['WA'][cs], lm))
+                F.emit('ld', '%s,%s' % (R, mem_operand(F, pre)))
+                F.emit('cp', '%s,%s' % (FAM['WA'][cs], R))
+                cc = (CC_S if strip(c.l).ty.signed else CC_U)[c.op]
+                lv = strip(strip(c.l).e)
+                if lv.k == 'var': tmpv = (lv.decl, getattr(lv.decl, 'reg', None)); lv.decl.reg = 'WA'
+            else:
+                gen(F, pre, fam, size)
+                cc = gen_compare(F, c)
+                if cc in (True, False): raise Unsupported('constant ?: condition')
+            jcc = INV[cc] if not pre_then else cc
+            F.emit('ret', jcc) if then_ret else F.emit('j', '%s,%s' % (jcc, lend))
+            try: gen(F, other, fam, size)
+            finally:
+                if tmpv: tmpv[0].reg = tmpv[1]
+            F.lines.append(lskip + ':'); F.lines.append(lend + ':'); return fam
     if e.k == 'cond':                                # c_tern
         lelse, lend = F.newulabel(), F.newulabel()
         gen_cond_false(F, e.c, lelse)
@@ -1906,6 +1944,12 @@ def plan_leaf(F):
     narrowed = set()
     walk(f.body, lambda n, dep: narrowed.add(strip(strip(n.e).e).decl) if n.k == 'cast' and n.kind == 'IntegralCast'
          and n.ty.size == 1 and strip(n.e).k == 'load' and strip(strip(n.e).e).k == 'var' else None)
+    hl_busy = set()                                       # _strncmp: the ?: result is set in L while s1 is live
+    def hb(n, dep):
+        if n.k == 'return' and n.value is not None and strip(n.value).k in ('cond',) or \
+                (n.k == 'return' and n.value is not None and strip(n.value).k == 'bin' and strip(n.value).op in ('&&', '||')):
+            walk(n.value, lambda m, dd: hl_busy.add(strip(m.e).decl) if m.k == 'load' and strip(m.e).k == 'var' else None)
+    walk(f.body, hb)
     if F.opt:
         free = ['WA'] + [r for r in free if r != 'WA'] if 'WA' not in free else free
     for d in order:
@@ -1917,7 +1961,7 @@ def plan_leaf(F):
         if d.ty.size == 4: cand = [r for r in free if r in ('BC', 'DE', 'HL', 'IX', 'IY')]
         elif d.ty.size == 1: cand = [r for r in free if r in ('BC', 'DE', 'HL')]
         else: cand = free
-        cand = [r for r in cand if r != 'WA']
+        cand = [r for r in cand if r != 'WA' and not (r == 'HL' and d in hl_busy)]
         if not cand: raise Unsupported('out of registers')
         d.reg = cand[0]; free.remove(cand[0])
         if d.kind == 'param': F.param_copies.append(d)
