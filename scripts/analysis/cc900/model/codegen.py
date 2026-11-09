@@ -40,6 +40,10 @@ class Fn:
     def __init__(s, f, adecl):
         s.f = f; s.lines = []; s.adecl = adecl; s.label = 50000; s.push = 0; s.xiz_vars = []; s.pending = 0
         off = 4
+        s.sret = None
+        if f.ret is not None and f.ret.kind == 'struct' and f.ret.size > 4 and not adecl:
+            from frontend import Decl, Type                  # abi.md: the hidden first argument (_ldiv)
+            s.sret = Decl('__sret', Type('ptr', 4, 2, base=f.ret, spell='sret'), '', 'param'); s.sret.off = 4; off = 8
         s.retd = 0
         if adecl:                                   # abi.md: XWA / XBC / XDE, then the stack left to right
             regs = ['WA', 'BC', 'DE']
@@ -53,6 +57,7 @@ class Fn:
         else:
             for p in f.params:
                 p.off = off; off += 2 if p.ty.size <= 2 else (p.ty.size + 1) // 2 * 2
+        if s.sret is not None: f.params = [s.sret] + [p for p in f.params if p is not s.sret]
     def emit(s, op, args=None): s.lines.append('\t' + op + ('\t' + args if args else ''))
     def newlabel(s):
         s.label += 1; return 'L%d' % s.label
@@ -418,7 +423,7 @@ def gen_long_helper(F, e, l, r, fam, signed):
     ls, rs = reg_or_mem(F, l, 4), reg_or_mem(F, r, 4)
     if ls is None or rs is None: raise Unsupported('complex long helper operands')
     # provisional (two examples, mul_l_loc): XBC first when a register variable is involved
-    if F.xiz_vars:
+    if F.xiz_vars and any(d.kind == 'local' for d in F.xiz_vars):
         F.emit('ld', 'XBC,%s' % rs); F.emit('ld', 'XWA,%s' % ls)
     else:
         F.emit('ld', 'XWA,%s' % ls); F.emit('ld', 'XBC,%s' % rs)
@@ -766,6 +771,20 @@ def uses_decl(node, d):
     walk(node, v)
     return bool(found)
 
+def setup_struct_temps(F, c):
+    """_ldiv: lda XWA,XSP+slot / ld (tB),XWA / [V4.23: ld XWA,(tB)] / ld (tA),XWA, before the first member store"""
+    for d, t in getattr(F, 'struct_temps', {}).items():
+        if t['done']: continue
+        hit = []
+        walk(c, lambda n, dep: hit.append(n) if id(n) in t['stores'] else None)
+        if not hit: continue
+        F.emit('lda', 'XWA,XSP+%s' % hx(d.slot + F.push))
+        F.emit('ld', '(XSP+%s),XWA' % hx(t['tB'].slot + F.push))
+        if F.personality == 'v4.23':                      # rules.md: reload-after-store (kn5000 = 2003: no reload)
+            F.emit('ld', 'XWA,(XSP+%s)' % hx(t['tB'].slot + F.push))
+        F.emit('ld', '(XSP+%s),XWA' % hx(t['tA'].slot + F.push))
+        t['done'] = True; t['n'] = 0
+
 def flat(s):
     if s.k == 'block':
         out = []
@@ -787,11 +806,14 @@ def gen_stmt(F, s, last):
                     order = []
                     walk(stretch, lambda n, dep: order.append(n.decl) if n.k == 'var' else None)
                     return order.index(d) if d in order else 1 << 30
-                need = [d for d in F.deferred if any(uses_decl(x, d) for x in stretch)]
+                need = [d for d in F.deferred if any(uses_decl(x, d) for x in stretch)
+                        and (d.reg != 'XIZ' or (c.k in ('expr', 'return', 'decl') and uses_decl(c, d)))]   # _ldiv: XIZ at its statement
                 own = sorted([d for d in need if uses_decl(c, d)], key=first_use)
                 rest = sorted([d for d in need if d not in own], key=first_use)
                 for d in rest + own:                       # _strncpy: n, s2, then s1 (its own statement); _strchr: s, c
-                    F.emit('ld', '%s,(XSP+%s)' % (FAM[d.reg][d.ty.size], hx(d.off + F.push))); F.deferred.remove(d)
+                    setup_struct_temps(F, c)
+                    F.emit('ld', '%s,(XSP+%s)' % ('XIZ' if d.reg == 'XIZ' else FAM[d.reg][d.ty.size], hx(d.off + F.push)))
+                    F.deferred.remove(d)
             if c.k == 'decl' and getattr(c.var, 'reg', None) not in (None, 'XIZ', 'WA') and c.var.kind == 'local':
                 if c.init is not None:
                     from frontend import N
@@ -837,6 +859,15 @@ def gen_stmt(F, s, last):
     if s.k == 'return' and s.value is not None and F.opt:
         cse = cse_params(F, s.value)
         if cse: return
+    if s.k == 'return' and s.value is not None and F.sret is not None:
+        v = strip(s.value)
+        if v.k == 'load' and strip(v.e).k == 'var' and hasattr(strip(v.e).decl, 'slot'):
+            d = strip(v.e).decl                        # _ldiv: ld XIX,(sret) / lda XIY,XSP+slot / ld BC,n / ldirw
+            F.emit('ld', 'XIX,(XSP+%s)' % hx(F.sret.off + F.push)); F.emit('lda', 'XIY,XSP+%s' % hx(d.slot + F.push))
+            F.emit('ld', 'BC,%s' % hx(d.ty.size // 2)); F.emit('ldirw', '(XIX+),(XIY+)')
+            if F.xiz_vars: F.emit('pop', 'XIZ')
+            epilogue(F); F.emit('ret'); return
+        raise Unsupported('struct return')
     if s.k == 'return':
         if s.value is not None:
             size = F.f.ret.size
@@ -897,6 +928,14 @@ def gen_stmt(F, s, last):
         if lv.k == 'var' and lv.decl.kind == 'global':
             store_global(F, lv.decl.name, s.e.r, lv.decl.ty.size); return
         size = lv.ty.size
+        if lv.k == 'member' and not lv.arrow and strip(lv.base).k == 'var' and strip(lv.base).decl in getattr(F, 'struct_temps', {}):
+            d = strip(lv.base).decl; t = F.struct_temps[d]
+            setup_struct_temps(F, s)
+            fam = gen(F, s.e.r, 'HL', size)              # _ldiv: value first (XHL from the helper), then the address
+            tmp = t['tA'] if t['n'] == 0 else t['tB']; t['n'] += 1
+            F.emit('ld', 'XWA,(XSP+%s)' % hx(tmp.slot + F.push))
+            off = [o for n, ty, o in d.ty.rec if n == lv.name][0]
+            F.emit('ld', '%s,%s' % ('(XWA+%s)' % hx(off) if off else '(XWA)', FAM[fam][size])); return
         if lv.ty.kind == 'struct':                   # m_copy: ld XIX,dst / ld XIY,src / ld BC,words / ldirw
             src = strip(s.e.r)
             if src.k == 'load': src = strip(src.e)
@@ -925,6 +964,19 @@ def has_helper_call(e):
 
 def plan_registers(F):
     body = flat(F.f.body)
+    helper_uses = {}
+    def hv(n, d):
+        if n.k == 'bin' and n.op in '*/%' and n.ty.size == 4 and fold(n.r).k != 'const':
+            for side in (n.l, n.r):
+                sv = strip(side)
+                if sv.k == 'load' and strip(sv.e).k == 'var' and strip(sv.e).decl.kind == 'param':
+                    helper_uses[strip(sv.e).decl] = helper_uses.get(strip(sv.e).decl, 0) + (1 if side is n.l else 0)
+    walk(F.f.body, hv)
+    for d, k in helper_uses.items():
+        if k >= 2 and d.ty.size == 4 and not F.xiz_vars:  # _ldiv: numer in XIZ across the two helper calls
+            d.reg = 'XIZ'; F.xiz_vars.append(d); F.deferred = getattr(F, 'deferred', []) + [d]
+            F.emit('push', 'XIZ'); F.push = 4
+            return
     for i, c in enumerate(body):
         if c.k == 'decl' and c.init is not None and c.var.ty.size == 4 and has_helper_call(c.init):
             later = body[i + 1:]
@@ -1321,16 +1373,27 @@ def plan_frame(F):
     declaration order); parameters move up by the frame size"""
     f = F.f; pos = 0; slots = []
     calls = []
-    walk(f.body, lambda n, d: calls.append(n) if n.k == 'call' else None)
+    walk(f.body, lambda n, d: calls.append(n) if n.k == 'call' or (n.k == 'bin' and n.op in '*/%' and n.ty.size == 4
+         and fold(n.r).k != 'const') else None)
     if not calls: F.frame = 0; return                   # leaf functions: every local is in a register or folded
+    # D: a struct local written member by member gets two address temporaries below it (_ldiv: (XSP+4), (XSP+8))
+    F.struct_temps = {}
+    for d in f.decls:
+        if d.kind == 'local' and d.ty.kind == 'struct':
+            stores = []
+            walk(f.body, lambda n, dep: stores.append(n) if n.k == 'bin' and n.op == '=' and strip(n.l).k == 'member'
+                 and not strip(n.l).arrow and strip(strip(n.l).base).k == 'var' and strip(strip(n.l).base).decl is d else None)
+            if len(stores) == 2:
+                from frontend import Decl, Type
+                ta = Decl('__tA', Type('ptr', 4, 2, spell='t'), '', 'local'); tb = Decl('__tB', Type('ptr', 4, 2, spell='t'), '', 'local')
+                F.struct_temps[d] = {'stores': [id(x) for x in stores], 'tA': ta, 'tB': tb, 'done': False}
+                f.decls = [x for x in f.decls if x is not d] + [ta, tb, d]
     for d in f.decls:
         if d.kind != 'local' or getattr(d, 'reg', None) or foldable(f, d): continue
         a = 2 if d.ty.size >= 2 else 1
         pos = (pos + a - 1) // a * a; d.slot = pos; pos += d.ty.size; slots.append(d)
     if not slots: F.frame = 0; return
     size = (pos + 1) // 2 * 2; F.frame = size
-    saved = F.push
-    for d in slots: d.slot += saved
     for p in f.params:
         if hasattr(p, 'off'): p.off += size
     F.lines.insert(1, '\tdec\t%s,XSP' % hx(size) if size <= 8 else '\tlda\tXSP,XSP-%s' % hx(size))
@@ -1340,8 +1403,9 @@ def epilogue(F):
     if getattr(F, 'frame', 0):
         F.emit('inc', '%s,XSP' % hx(F.frame)) if F.frame <= 8 else F.emit('lda', 'XSP,XSP+%s' % hx(F.frame))
 
-def compile_function(f, opt, adecl):
+def compile_function(f, opt, adecl, personality='v4.23'):
     F = Fn(f, adecl)
+    F.personality = personality
     F.opt = opt != 'none'; F.dead = set()
     compute_last_uses(F)
     F.lines.append(('.' if adecl else '_') + f.name + ':')
@@ -1361,11 +1425,11 @@ def compile_function(f, opt, adecl):
     # a label that only a jump to `ret` uses: the oracle keeps it; nothing to do here yet
     return F.lines
 
-def compile_unit(unit, opt='none', adecl=False):
+def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
     out = {}
     for f in unit.functions:
         name = ('.' if adecl else '_') + f.name
-        try: out[name] = compile_function(f, opt, adecl)
+        try: out[name] = compile_function(f, opt, adecl, personality)
         except Unsupported as ex: out[name] = ['; unsupported: %s' % ex]
         except (AttributeError, KeyError, ValueError, TypeError, IndexError) as ex:
             out[name] = ['; model error: %s: %s' % (type(ex).__name__, ex)]     # counted as a mismatch

@@ -22,3 +22,12 @@ functions built from the library's shapes (`rules.c`, run `2026-11-09-1-micro-ru
 Pairs that no rule setting explains yet (`__doprnt`, `__facnv`, `__doform` data, `_vsprintf` in two images, `_sbrk`,
 `__FloatErrorHandle`) are the next source of rules: once the model reproduces V4.23's output for them, the remaining
 differences from the firmware are rules that neither neighbour has.
+
+## In the reference model
+
+The reload-after-store rule is the model's first personality switch (`codegen.py`, `setup_struct_temps`,
+`--personality v4.23|kn5000` in `score.py`).  On `_ldiv` (1997 source, `-O3 -XS -DFLOAT`, oracle run
+`2026-11-08-5`) the model with `v4.23` gives exactly V4.23's listing, and with `kn5000` exactly the 2003 compiler's,
+whose object reproduces the firmware's `_ldiv` pair (`scripts/analysis/cc900/results/pairs_libsrc97_ide2003.tsv`);
+the crossed comparisons differ.  `_ldiv` is the first routine where the inferred Technics personality reproduces the
+firmware and V4.23 does not.
