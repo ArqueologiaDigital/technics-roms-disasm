@@ -59,6 +59,15 @@ def temp(F, size):
     F.ftemp_max = max(getattr(F, 'ftemp_max', 0), F.ftemp_used)
     return getattr(F, 'ftemp_top', 0) - F.ftemp_used
 
+class Cell:
+    """a temporary allocated at its first write (fp_temps.c: t_ci's long temporary sits above the double that
+    the conversion writes after it)"""
+    def __init__(s, size): s.size = size; s.off = None
+
+def alloc(F, cell):
+    if cell.off is None: cell.off = temp(F, cell.size)
+    return cell.off
+
 def slot_addr(F, off): return 'XSP+%s' % C().hx(off + F.push) if off + F.push else 'XSP'
 def slot_mem(F, off): return '(%s)' % slot_addr(F, off)
 
@@ -145,6 +154,8 @@ def dest_first(F, dest):
 
 def dest_last(F, dest):
     if dest[0] == 'sret': return
+    if dest[0] == 'xiz': F.emit('ld', 'XWA,XIZ'); return             # t_mla: lda XBC,.. / lda XDE,.. / ld XWA,XIZ
+    if dest[0] == 'cell': F.emit('lda', 'XWA,%s' % slot_addr(F, alloc(F, dest[1]))); return
     if dest[0] == 'slot': F.emit('lda', 'XWA,%s' % slot_addr(F, dest[1])); return
     if dest[0] == 'lv':
         if not lvalue_addr(F, dest[1], 'XWA'): raise C().Unsupported('fp destination')
@@ -152,14 +163,64 @@ def dest_last(F, dest):
     raise C().Unsupported('fp destination')
 
 def prepare(F, ops):
-    """operands that are not in memory are computed into temporaries first, the right one first (d_four)"""
+    """operands that are not in memory are computed into temporaries first, the right one first (d_four,
+    t_st_mm: gd4 * gd2 into +0x18, then gd2 * gd3 into +0x10, then the sum into _gd)"""
     out = [None] * len(ops)
     for i in reversed(range(len(ops))):
-        e = fp_value_cast(ops[i])
-        if not addressable(F, e):
-            off = temp(F, e.ty.size); eval_into(F, e, ('slot', off)); out[i] = ('slot', off)
-        else: out[i] = e
+        out[i] = eval_val(F, ops[i], None)
     return out
+
+def has_call(e):
+    found = []
+    C().walk(e, lambda n, d: found.append(n) if n.k == 'call' else None)
+    return bool(found) or getattr(e, 'k', None) == 'call'
+
+def eval_val(F, e, hint):
+    """make FP value e an operand: e itself when it is in memory, else a temporary ('slot', off).  hint: a Cell the
+    caller would like the value in.  An operation writes over its computed left operand's temporary (t_chain4:
+    three products in +0xc; t_mm: (gd*gd2 into +0x10) + (gd3*gd4 into +0x18) -> +0x10); a call gets its own
+    temporary unless it is handed one (t_call_a: fd(a) into +0x10, the sum into the hint +0x18)."""
+    e = fp_value_cast(e)
+    if addressable(F, e): return e
+    if e.k == 'call':
+        cell = hint if hint is not None else Cell(e.ty.size)
+        call_into(F, e, ('cell', cell)); return ('slot', cell.off)
+    if e.k in ('bin', 'un', 'cast') and not (e.k == 'cast' and e.kind == 'IntegralToFloating'):
+        ops = [e.l, e.r] if e.k == 'bin' else [e.e]
+        comp = [i for i, x in enumerate(ops) if not addressable(F, fp_value_cast(x))]
+        vals = [fp_value_cast(x) for x in ops]
+        if len(comp) == 2:
+            vals[1] = eval_val(F, ops[1], hint); vals[0] = eval_val(F, ops[0], None); dst = ('slot', vals[0][1])
+        elif len(comp) == 1 and fp_value_cast(ops[comp[0]]).k != 'call':
+            vals[comp[0]] = eval_val(F, ops[comp[0]], hint); dst = vals[comp[0]]
+        else:
+            if comp: vals[comp[0]] = eval_val(F, ops[comp[0]], None)
+            cell = hint if hint is not None else Cell(e.ty.size)
+            op_into(F, e, vals, ('cell', cell)); return ('slot', cell.off)
+        op_into(F, e, vals, dst); return dst
+    cell = hint if hint is not None else Cell(e.ty.size)
+    eval_into(F, e, ('cell', cell)); return ('slot', cell.off)
+
+def op_into(F, e, vals, dest):
+    """the helper call of a +-*/, unary - or float/double conversion node whose operands are ready"""
+    if e.k == 'bin':
+        name = '._f%s_%s' % ({'+': 'add', '-': 'sub', '*': 'mul', '/': 'div'}[e.op], sfx(e.ty))
+        if e.op in '+*' and isinstance(vals[1], tuple) and not isinstance(vals[0], tuple):
+            vals = [vals[1], vals[0]]                      # t_amla: gd3 + gd*gd2 -> XBC = the product, XDE = _gd3
+        if F.opt and dest[0] not in ('sret', 'xiz'):
+            sa, sb, sd = simple_addr(F, vals[0]), simple_addr(F, vals[1]), dest_simple(F, dest)
+            if sa is not None and sa == sd and sb is not None:   # d_add_asg: lda XWA,_gd / ld XBC,XWA / lda XDE,_gd2
+                F.emit('lda', 'XWA,%s' % sd); F.emit('ld', 'XBC,XWA'); put_addr(F, vals[1], 'XDE'); F.emit('cal', name); return
+            if sa is not None and sa == sb and sd is not None:   # d_loc: lda XDE,XSP+0x10 / ld XBC,XDE / lda XWA,XSP
+                put_addr(F, vals[1], 'XDE'); F.emit('ld', 'XBC,XDE'); F.emit('lda', 'XWA,%s' % sd); F.emit('cal', name); return
+        if F.opt and dest[0] == 'sret':
+            sa, sb = simple_addr(F, vals[0]), simple_addr(F, vals[1])
+            if sa is not None and sa == sb:
+                dest_first(F, dest); put_addr(F, vals[1], 'XDE'); F.emit('ld', 'XBC,XDE'); F.emit('cal', name); return
+        emit_operands(F, dest, vals); F.emit('cal', name); return
+    if e.k == 'un':
+        emit_operands(F, dest, vals); F.emit('cal', '._fneg_%s' % sfx(e.ty)); return
+    emit_operands(F, dest, vals); F.emit('cal', '._fld_%s%s' % (sfx(e.ty), sfx(strip(e.e).ty)))
 
 def addr_kind(F, x):
     """'lda' when the address is a name, a stack offset or a constant; 'ld' when it has to be loaded, copied from a
@@ -175,7 +236,7 @@ def addr_kind(F, x):
 
 def dest_kind(F, dest):
     if dest[0] == 'sret': return 'ld'
-    if dest[0] == 'slot': return 'lda'
+    if dest[0] in ('slot', 'cell', 'xiz'): return 'lda'
     from frontend import N
     return addr_kind(F, N('load', e=dest[1], ty=dest[1].ty))
 
@@ -226,25 +287,11 @@ def eval_into(F, e, dest):
     """compute FP expression e and store it at dest: ('sret',), ('slot', off), ('lv', lvalue node)"""
     cg = C(); e = fp_value_cast(e)
     if e.k == 'bin' and e.op in '+-*/' and len(e.op) == 1:
-        a = prepare(F, [e.l, e.r])
-        name = '._f%s_%s' % ({'+': 'add', '-': 'sub', '*': 'mul', '/': 'div'}[e.op], sfx(e.ty))
-        if F.opt and dest[0] != 'sret':
-            sa, sb, sd = simple_addr(F, a[0]), simple_addr(F, a[1]), dest_simple(F, dest)
-            if sa is not None and sa == sd and sb is not None:   # d_add_asg: lda XWA,_gd / ld XBC,XWA / lda XDE,_gd2
-                F.emit('lda', 'XWA,%s' % sd); F.emit('ld', 'XBC,XWA'); put_addr(F, a[1], 'XDE'); F.emit('cal', name); return
-            if sa is not None and sa == sb and sd is not None:   # d_loc: lda XDE,XSP+0x10 / ld XBC,XDE / lda XWA,XSP
-                put_addr(F, a[1], 'XDE'); F.emit('ld', 'XBC,XDE'); F.emit('lda', 'XWA,%s' % sd); F.emit('cal', name); return
-        if F.opt and dest[0] == 'sret':
-            sa, sb = simple_addr(F, a[0]), simple_addr(F, a[1])
-            if sa is not None and sa == sb:
-                dest_first(F, dest); put_addr(F, a[1], 'XDE'); F.emit('ld', 'XBC,XDE'); F.emit('cal', name); return
-        emit_operands(F, dest, a)
-        F.emit('cal', name)
-        return
+        op_into(F, e, prepare(F, [e.l, e.r]), dest); return
     if e.k == 'un' and e.op == '-':
-        a = prepare(F, [e.e])
-        emit_operands(F, dest, a)
-        F.emit('cal', '._fneg_%s' % sfx(e.ty)); return
+        op_into(F, e, prepare(F, [e.e]), dest); return
+    if e.k == 'cond':
+        cond_into(F, e, dest); return
     if e.k == 'cast' and e.kind == 'IntegralToFloating':
         src = strip(e.e)
         while src.k == 'cast' and src.kind == 'IntegralCast' and strip(src.e).ty.size <= src.ty.size and src.ty.size <= 2:
@@ -264,9 +311,7 @@ def eval_into(F, e, dest):
         if not first: dest_last(F, dest)
         F.emit('cal', name); return
     if e.k == 'cast' and e.kind == 'FloatingCast':
-        a = prepare(F, [e.e])
-        emit_operands(F, dest, a)
-        F.emit('cal', '._fld_%s%s' % (sfx(e.ty), sfx(strip(e.e).ty))); return
+        op_into(F, e, prepare(F, [e.e]), dest); return
     if e.k == 'call':
         call_into(F, e, dest); return
     if e.k not in ('load', 'fconst'): raise C().Unsupported('fp ' + e.k + ' ' + str(getattr(e, 'op', getattr(e, 'kind', ''))))
@@ -278,9 +323,7 @@ def push_fp_arg(F, a):
     """a double argument: high half first, through XIY / XIX (d_call1: lda XIY,XSP+0x18 / ld XIX,(XIY+0x4) /
     push XIX / ld XIX,(XIY) / push XIX)"""
     a = fp_value_cast(a)
-    if not addressable(F, a):
-        off = temp(F, a.ty.size); eval_into(F, a, ('slot', off)); F.emit('lda', 'XIY,%s' % slot_addr(F, off))
-    else: addr_of(F, a, 'XIY')
+    put_addr(F, eval_val(F, a, None), 'XIY')
     if a.ty.size == 8:
         F.emit('ld', 'XIX,(XIY+0x4)'); F.emit('push', 'XIX'); F.push += 4
     F.emit('ld', 'XIX,(XIY)'); F.emit('push', 'XIX'); F.push += 4
@@ -290,7 +333,9 @@ def call_into(F, e, dest):
     """a call returning double: the caller's temporary's address is the hidden first argument"""
     cg = C()
     fn = strip(e.fn)
-    off = temp(F, 8) if dest[0] != 'slot' else dest[1]
+    if dest[0] == 'cell': off = alloc(F, dest[1])
+    elif dest[0] == 'slot': off = dest[1]
+    else: off = temp(F, 8)
     n = 0
     for a in reversed(e.args):
         if is_fp(strip(a).ty): n += push_fp_arg(F, a)
@@ -298,7 +343,7 @@ def call_into(F, e, dest):
     F.emit('lda', 'XWA,%s' % slot_addr(F, off)); F.emit('push', 'XWA'); F.push += 4; n += 4
     F.emit('cal', '_' + fn.decl.name)
     F.emit('lda' if n > 8 else 'inc', 'XSP,XSP+%s' % cg.hx(n) if n > 8 else '%s,XSP' % cg.hx(n)); F.push -= n
-    if dest[0] != 'slot' or dest[1] != off:
+    if dest[0] not in ('slot', 'cell') or (dest[0] == 'slot' and dest[1] != off):
         first = dest_first(F, dest); F.emit('lda', 'XBC,%s' % slot_addr(F, off))
         if not first: dest_last(F, dest)
         F.emit('cal', '._fld_dd')
@@ -306,6 +351,14 @@ def call_into(F, e, dest):
 def gen_return(F, v):
     """return of a double (hidden pointer) or a float (XHL, through a frame temporary)"""
     if F.f.ret.size == 8:
+        mode = root_mode(F, v)
+        if mode == 'xiz':                                    # t_mla: ld XIZ,(XSP+0x18) ... ld XWA,XIZ / cal ._fadd_d
+            F.emit('ld', 'XIZ,(XSP+%s)' % C().hx(F.sret.off + F.push)); eval_into(F, v, ('xiz',)); return
+        if mode == 'copy':                                   # t_mm: ... ld XWA,(XSP+0x24) / lda XBC,XSP+0x10 / cal ._fld_dd
+            t1 = Cell(8); alloc(F, t1)
+            loc = eval_val(F, v, t1)
+            F.emit('ld', 'XWA,(XSP+%s)' % C().hx(F.sret.off + F.push)); put_addr(F, loc, 'XBC'); F.emit('cal', '._fld_dd')
+            return
         eval_into(F, v, ('sret',)); return
     off = F.fret_slot if getattr(F, 'fret_slot', None) is not None else temp(F, 4)
     eval_into(F, v, ('slot', off))
@@ -340,12 +393,15 @@ def truth(F, c, value):
     compare(F, N('bin', op='!=', l=c, r=z, ty=c.ty), value)
 
 def to_int(F, e, size):
-    """FloatingToIntegral: through a 4-byte temporary (d_to_i), result in XHL; returns the temp's offset"""
+    """FloatingToIntegral: through a 4-byte temporary (d_to_i), result in XHL; returns the temp's offset.  For an
+    int result the temporary is taken before the operand is built (t_to_i_e: +0x14 above the double at +0xc), for
+    a long after it (t_to_l: the double at +0x10, the long at +0xc)"""
     src = strip(e.e)
     signed = e.ty.signed
+    early = temp(F, 4) if e.ty.size <= 2 else None
     a = prepare(F, [src])
     put_addr(F, a[0], 'XBC')
-    off = temp(F, 4)
+    off = early if early is not None else temp(F, 4)
     F.emit('lda', 'XWA,%s' % slot_addr(F, off))
     F.emit('cal', '._fld_%s%s' % ('l' if signed else 'ul', sfx(src.ty)))
     return off
@@ -393,3 +449,40 @@ def dest_simple(F, dest):
         from frontend import N
         return simple_addr(F, N('load', e=dest[1], ty=dest[1].ty))
     return None
+
+def root_mode(F, v):
+    """how a returned double reaches the hidden pointer (fp_temps.c): 'direct' when the last operation has no
+    computed operand (ld XWA,(XSP+0x4) first); 'xiz' when it has one that involves no call (t_mla, t_ci, t_neg) or
+    is a ?: (t_cond); 'copy' when it has two, or a call result (t_mm, t_call_a, t_call_only, d_call_i): built in a
+    temporary, then ._fld_dd"""
+    e = fp_value_cast(v)
+    if addressable(F, e): return 'direct'
+    if e.k == 'call': return 'copy'
+    if e.k == 'cond': return 'xiz'
+    if e.k == 'cast' and e.kind == 'IntegralToFloating': return 'direct'
+    ops = [e.l, e.r] if e.k == 'bin' else [e.e] if e.k in ('un', 'cast') else []
+    comp = [x for x in ops if not addressable(F, fp_value_cast(x))]
+    if not comp: return 'direct'
+    if len(comp) == 2 or any(has_call(x) for x in comp): return 'copy'
+    return 'xiz'
+
+def needs_xiz(F):
+    """does a return keep the hidden pointer in XIZ (push XIZ in the prologue)?"""
+    if not (is_fp(F.f.ret) and F.f.ret.size == 8): return False
+    rets = []
+    C().walk(F.f.body, lambda n, d: rets.append(n) if n.k == 'return' and n.value is not None else None)
+    return any(root_mode(F, r.value) == 'xiz' for r in rets)
+
+def cond_into(F, e, dest):
+    """a ?: of doubles: the result in a temporary, then copied (t_cond: ... L1: lda XBC,XSP+0xc / ld XWA,XIZ /
+    cal ._fld_dd); the first arm is built in its own temporary and copied, the second built in place (t_cond_e)"""
+    cg = C()
+    r = Cell(8); alloc(F, r)
+    lelse = F.newulabel(); lend = F.newulabel()
+    cg.gen_cond_false(F, e.c, lelse)
+    a = eval_val(F, e.a, None)
+    emit_operands(F, ('cell', r), [a]); F.emit('cal', '._fld_dd')
+    F.emit('j', lend); F.lines.append(lelse + ':')
+    eval_into(F, e.b, ('cell', r))
+    F.lines.append(lend + ':')
+    emit_operands(F, dest, [('slot', r.off)]); F.emit('cal', '._fld_dd')

@@ -35,8 +35,10 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-8-micro-homes32, v423/O3XS                           | micro/ra_homes32.c | 4 / 17 exact (23.5%)    |
 | run 2026-11-09-8-micro-homes32, v423/Xr                             | micro/ra_homes32.c | 4 / 17 exact (23.5%)    |
 | run 2026-11-09-8-micro-homes32, v423/O3XSXr                         | micro/ra_homes32.c | 5 / 17 exact (29.4%)    |
-| run 2026-11-09-9-micro-fp, v423/none                                | micro/fp.c         | 99 / 108 exact (91.7%)  |
-| run 2026-11-09-9-micro-fp, v423/O3XS                                | micro/fp.c         | 98 / 108 exact (90.7%)  |
+| run 2026-11-09-9-micro-fp, v423/none                                | micro/fp.c         | 104 / 108 exact (96.3%) |
+| run 2026-11-09-9-micro-fp, v423/O3XS                                | micro/fp.c         | 102 / 108 exact (94.4%) |
+| run 2026-11-09-10-micro-fptemps, v423/none                          | micro/fp_temps.c   | 32 / 33 exact (97.0%)   |
+| run 2026-11-09-10-micro-fptemps, v423/O3XS                          | micro/fp_temps.c   | 31 / 33 exact (93.9%)   |
 | run 2026-11-08-9-micro-optloops, v423/O3XS                          | micro/opt_loops.c  | 15 / 33 exact (45.5%)   |
 | run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality v4.23      | 1997 LIB/SRC       | 126 / 188 exact (67.0%) |
 | run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality kn5000     | 1997 LIB/SRC       | 124 / 188 exact (66.0%) |

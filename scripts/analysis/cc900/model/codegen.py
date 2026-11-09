@@ -505,6 +505,10 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         # shifts and adds for a constant with few one bits (mul_l_pk: *10); _rand's *1103515245 and *301 (5 or
         # more one bits) call C9H_mul*; the threshold between 3 and 5 is a guess
         return gen_mul_const(F, l, fold(r).value, fam, size, signed)
+    rc0 = fold(r)
+    if op == '*' and size == 2 and signed and rc0.k == 'const' and rc0.value in (2, 4, 8, 16, 32, 64, 128, 256):
+        gen(F, l, fam, size)                              # fp_temps.c t_i_e: gi * 2 -> ld WA,(_gi) / sla 0x1,WA
+        F.emit('sla', '%s,%s' % (hx(rc0.value.bit_length() - 1), R)); return fam
     if op in ('*', '/', '%'):
         if size == 4: return gen_long_helper(F, e, l, r, fam, signed)
         rs = mem_operand(F, r)
@@ -2716,6 +2720,8 @@ def fp_plan_frame(F):
         top -= (d.ty.size + 1) // 2 * 2; d.slot = top
     F.ftemp_top = top; F.ftemp_used = 0; F.fret_slot = size - fret if fret else None
     F.frame = size
+    if fpgen.needs_xiz(F) and not F.xiz_vars:              # fp_temps.c t_mla: lda XSP,XSP-0x10 / push XIZ
+        F.lines.insert(1, '\tpush\tXIZ'); F.push += 4; F.xiz_vars.append('sret'); F.save_reg = 'XIZ'
     if not size: return
     for p in f.params:
         if hasattr(p, 'off'): p.off += size

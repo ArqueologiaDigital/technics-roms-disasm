@@ -206,12 +206,20 @@ of the frame and the temporaries below them, in a region twice their size; `-O3 
 already in a register.  fp.c: 99 / 108 (none), 98 / 108 (`-O3 -XS`).  Under `-Xr` thc1 refuses double results
 (THC1-Error-373), so only cdecl matters.
 
-Open: run 10 (`corpus/micro/fp_temps.c`, oracle `9ce5a95`) shows when the hidden result pointer is kept in XIZ (the
-returned expression's top operation has exactly one computed operand: `ld XIZ,(XSP+..)` right before the return's
-code, the result written through `ld XWA,XIZ`), when the result is built in a temporary and copied (two computed
-operands, or a call result as an operand), and how the temporaries are handed down (the top operation's temporary
-is reserved first and the right operand built in it; an operation writes over its left operand's temporary).  Not
-modelled yet.
+Run 10 (`corpus/micro/fp_temps.c`, oracle `9ce5a95`), now in the model (`root_mode`, `eval_val`, `cond_into`):
+- the hidden result pointer is kept in XIZ when the returned expression's last operation has exactly one computed
+  operand and no call is involved (`push XIZ` in the prologue, `ld XIZ,(XSP+..)` right before the return's code,
+  the result written through `ld XWA,XIZ`), or for a `?:`;
+- the result is built in a temporary and copied when that operation has two computed operands or a call result
+  (t_mm, t_call_a, d_call_i); the copy's temporary is reserved first and the right operand built in it;
+- an operation writes over its computed left operand's temporary (t_chain4: three products in one); temporaries are
+  allocated at their first write (t_ci: the long above the double), except an int conversion's, taken before its
+  operand (t_to_i_e);
+- for `+` and `*` the computed operand goes to XBC (t_amla: `gd3 + gd*gd2`);
+- int `x * 2^k` is `sla k` (t_i_e).
+fp.c: 104 / 108 (none), 102 / 108 (`-O3 -XS`); fp_temps.c: 32 / 33, 31 / 33.  Left: the shared exit after an
+if / else with a frame (t_cmp_e), `-O`'s hoisting of the branches' common first instructions (d_cond, `_fabs`),
+the loop's index arithmetic (d_loop), a double argument in a call statement (d_call_v).
 
 ## Priorities after 2026-11-09
 
