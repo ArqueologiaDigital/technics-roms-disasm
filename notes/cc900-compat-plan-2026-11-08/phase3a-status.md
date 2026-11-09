@@ -254,7 +254,11 @@ What is left, in order:
    opt_loops.c 15 / 33 under O3XS): blocks `_itoa`, `_atoi`, `_atol`, `_strrchr`, `_strstr` and the math routines
    with integer loops (`_ldexp`, `_frexp`, `_fint`).
 3. **The rest of the library**: `__trig` (operand order of `+` / `*` with a member, `&xn` arguments, `++xn` on a
-   double), `__doprnt`, `_vsprintf`, `_strcspn` (`goto`).
+   double), `__doprnt`, `_vsprintf`, `_strcspn` (`goto`).  `_log` now compiles (integer slot locals sit above the FP
+   locals, `&nptr` is `lda XWA,XSP+..` / `push XWA`, a `do ... while` FP test uses the relation and `j ne`) but its
+   temporaries are spread over the frame (0x44, 0x3c, 0x34, 0x2c, 0x24 for one statement's and the loop's): a
+   function-wide, lifetime-based slot choice that one example does not decide; a probe of several statements with
+   temporaries is the next step there.
 4. **cdecl `-O3 -XS` switch to lookup table** (0 of 25; not used under `-Xr`).
 5. **Phase 3b**: the LLVM implementation, once the model's rules stop moving as fast.
 

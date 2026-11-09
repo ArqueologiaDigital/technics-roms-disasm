@@ -217,6 +217,12 @@ def gen(F, e, fam, size, then_ret=False, store=False):
     e0 = strip(e)
     if e0.k == 'cast' and same_size_ptr_cast(e0) is not e0:
         return gen(F, same_size_ptr_cast(e0), fam, size, then_ret, store)
+    if e0.k == 'addr' and strip(e0.e).k == 'var' and size == 4:      # _log: frexp(x / SQRT2, &nptr) ->
+        d = strip(e0.e).decl; R = FAM[fam][4]                          # lda XWA,XSP+0x68 / push XWA
+        if d.kind == 'global': F.emit('lda', '%s,_%s' % (R, d.name)); return fam
+        off = getattr(d, 'slot', None) if d.kind == 'local' else (getattr(d, 'slot', None) or getattr(d, 'off', None))
+        if off is not None:
+            F.emit('lda', '%s,%s' % (R, 'XSP+%s' % hx(off + F.push) if off + F.push else 'XSP')); return fam
     if e0.k == 'bin' and e0.op in CC_S and fpgen.is_fp(strip(e0.l).ty):
         fpgen.compare(F, e0, True); return move_to(F, FAM['HL'][size] if size in FAM['HL'] else 'HL', fam, size)
     if e0.k == 'un' and e0.op == '!' and fpgen.is_fp(strip(e0.e).ty):
@@ -2305,6 +2311,10 @@ def loop_cond(F, c, target, sense):
     if c.k in ('load', 'cast') and c.ty.kind in ('int', 'ptr'):         # while (*s): compare with 0
         from frontend import N
         return loop_cond(F, N('bin', op='!=', l=c, r=N('const', value=0, ty=c.ty), ty=c.ty), target, sense)
+    if c.k == 'bin' and c.op in CC_S and fpgen.is_fp(strip(c.l).ty):   # _log: do ... while (last != s) -> ld DE,0x5 /
+        fpgen.compare(F, c, sense); F.emit('cp', 'HL,0x0')                # ... / j ne (the relation itself)
+        cc = 'ne'
+        F.emit('ret', cc) if target == 'RET' else F.emit('j', '%s,%s' % (cc, target)); return
     if c.k == 'bin' and c.op in CC_S:
         cc = gen_compare(F, c)
         if cc is True or cc is False: raise Unsupported('constant loop condition')
@@ -2907,14 +2917,14 @@ def fp_plan_frame(F):
     locs = [d for d in f.decls if d.kind == 'local' and fpgen.is_fp(d.ty) and (d.uses or True)]
     ints = [d for d in f.decls if d.kind == 'local' and not getattr(d, 'reg', None) and not fpgen.is_fp(d.ty)
             and not foldable(f, d) and d.ty.kind not in ('array', 'struct') and d.uses]
-    if ints: raise Unsupported('integer slot local beside floating point')
+    I = sum((d.ty.size + 1) // 2 * 2 for d in ints)          # _log: nptr (address taken) at the very top
     L = sum((d.ty.size + 1) // 2 * 2 for d in locs)
     fret = 4 if fpgen.is_fp(f.ret) and f.ret.size == 4 else 0
     T = 2 * F.fp_temps
-    size = L + T + fret
+    size = I + L + T + fret
     size = (size + 1) // 2 * 2
     top = size - fret
-    for d in locs:
+    for d in ints + locs:
         top -= (d.ty.size + 1) // 2 * 2; d.slot = top
     F.ftemp_top = top; F.ftemp_used = 0; F.fret_slot = size - fret if fret else None
     F.frame = size

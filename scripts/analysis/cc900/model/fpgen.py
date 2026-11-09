@@ -53,6 +53,10 @@ def const_block(F):
 
 def strip(e): return C().strip(e)
 
+def stmt_reset(F):
+    """the temporaries of one statement are free again at the next (_log: many statements, one small region)"""
+    if getattr(F, 'fp_temps', None) is not None: F.ftemp_used = 0
+
 def temp(F, size):
     """a frame temporary, allocated from the top of the frame region down (fp.c: d_from_i at (XSP+0x4) of 8)"""
     F.ftemp_used = getattr(F, 'ftemp_used', 0) + size
