@@ -2015,13 +2015,41 @@ def gen_loop(F, s, last):
     def getc():
         if cont[0] is None: cont[0] = F.newulabel()
         return cont[0]
-    if s.cond is not None: loop_cond(F, s.cond, 'RET' if after_ret and not F.loops else exitl, False)
+    rotated = None
+    if F.opt and s.k == 'for' and s.cond is not None:
+        ini = flat(s.init) if s.init is not None else []
+        cnd = strip(s.cond)
+        iv = strip(strip(ini[0].e).l) if len(ini) == 1 and ini[0].k == 'expr' and strip(ini[0].e).k == 'bin' and \
+            strip(ini[0].e).op == '=' else None
+        k0 = fold(strip(ini[0].e).r) if iv is not None else None
+        lv = strip(cnd.l) if cnd.k == 'bin' else None
+        while lv is not None and lv.k == 'cast': lv = strip(lv.e)
+        if iv is not None and iv.k == 'var' and k0.k == 'const' and cnd.k == 'bin' and cnd.op in CC_S and \
+                lv is not None and lv.k == 'load' and strip(lv.e).k == 'var' and strip(lv.e).decl is iv.decl:
+            # -O: the first test knows i's start (c_for: for (i = 0; i < n; ...) -> cpw (XSP+0x6),0x0 / j le,L1)
+            x = strip(cnd.r)
+            while x.k == 'cast' and x.kind == 'IntegralCast': x = strip(x.e)
+            xm = mem_operand(F, x); sz = x.ty.size
+            swap = {'<': '>', '>': '<', '<=': '>=', '>=': '<=', '==': '==', '!=': '!='}[cnd.op]
+            cc = (CC_S if x.ty.signed else CC_U)[swap]
+            if xm is not None:
+                F.emit('cp' + ('' if family_of(xm) else ('w' if sz == 2 else 'b' if sz == 1 else '')), '%s,%s' % (xm, hx(k0.value)))
+                tgt = 'RET' if after_ret and not F.loops else exitl
+                F.emit('ret', INV[cc]) if tgt == 'RET' else F.emit('j', '%s,%s' % (INV[cc], tgt))
+                rotated = 'tested'
+        if rotated is None:                                # c_fordown: ld IZ,(n) / j L1 / body / L1: cp IZ,0x0 / j gt
+            rotated = F.newulabel(); F.emit('j', rotated)
+    if rotated is not None: pass
+    elif s.cond is not None: loop_cond(F, s.cond, 'RET' if after_ret and not F.loops else exitl, False)
     F.lines.append(body + ':')
     F.loops.append((exitl, getc)); gen_stmt(F, s.body, False); flush_pops(F); F.loops.pop()
     if cont[0]: F.lines.append(cont[0] + ':')
     inc = strip(s.inc) if s.k == 'for' and s.inc is not None else None
     cnd = strip(s.cond) if s.cond is not None else None
-    if inc is not None and inc.k == 'incdec' and inc.op == '--' and regvar_of(inc.e) and cnd is not None \
+    if rotated not in (None, 'tested'):
+        if s.inc is not None: gen_stmt(F, N_expr(s.inc), False)
+        F.lines.append(rotated + ':'); loop_cond(F, s.cond, body, True); F.lines.append(exitl + ':'); return
+    if inc is not None and inc.k == 'incdec' and inc.op == '--' and regvar_of(inc.e) and cnd is not None and not rotated \
             and cnd.k == 'bin' and cnd.op in ('>', '!=') and fold(cnd.r).k == 'const' and fold(cnd.r).value == 0 \
             and regvar_of(getattr(strip(cnd.l), 'e', cnd.l)) is regvar_of(inc.e):
         d = regvar_of(inc.e)                                       # ra_for_down: sub DE,0x1 / j gt
