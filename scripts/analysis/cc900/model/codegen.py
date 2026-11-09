@@ -2351,6 +2351,10 @@ def elem_addr(F, lv, kind):
             I = 'BC' if getattr(F, 'idx_avoid_wa', False) and wa_live else 'WA'   # (-Xr ai_us_g_sh: i stays in WA)
             idx_into(I); F.emit('exts', 'X' + I); scale32(F, 'X' + I, esz)
             B = getattr(F, 'force_base', None) or 'XBC'     # (ai_l_g_div: XIZ across the helper; ai_l_g_mul: XDE)
+            if IDX_GUARD and B != 'XIZ' and (held_after(F, B[1:], lv) or any(
+                    getattr(d, 'reg', None) == B[1:] and d not in F.dead and d in getattr(F, 'in_loop', ())
+                    for d in list(F.f.params) + list(F.f.decls))):   # (arr_index.c ai_carry none: ld XDE,_gsa
+                raise Unsupported('array base over a live register')   # over i in DE)
             F.emit('ld', '%s,%s' % (B, g)); F.emit('add', '%s,X%s' % (B, I)); return '(%s)' % B
         if (kind == 'load' and not plain) or kind == 'cmp':   # ai_mul10: cpw (XBC+WA),0x0
             idx_into('WA'); scale16(F, 'WA', esz); F.emit('lda', 'XBC,%s' % g); return '(XBC+WA)'
