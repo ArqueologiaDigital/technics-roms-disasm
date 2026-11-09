@@ -59,10 +59,10 @@ reference model (cdecl, `-O3 -XS -DFLOAT`, as the library was built), translates
 image's own addresses: the pairs' publics, the image's labels, the helpers named in the runtime cross-reference),
 assembles and links it with llvm-mc / ld.lld at the pair's address, and compares the bytes with the image.
 
-| personality | byte-identical pairs | which                                                                                                                                                                                                                          |
-|-------------|----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `v4.23`     | 131 (22 differ)      | `_ltoa`, `_strcat`, `_strncpy`, `_strncat`, `_strcpy`, `_strlen`, `_memset`, `_memcmp`, `_memchr`, `_memcpy`, `__ctype` x9 each, `_strncmp` x10, `_strchr` x5, `_strnset` x5, `__FloatErrorHandle` x3, sub CPU float tables x9 |
-| `kn5000`    | 171 (19 differ)      | the same 131, plus `_ultoa` (main CPU v10, v9, v7, v6, v5, HD-AE5000 x4) and `_ldiv` (HD-AE5000 x4); `_modf`, `_fabs`, `_sin`, `_cos`, `_tan`, `_exp` (sub CPU x3 each); `.sbrk` (main CPU x5); `_vsprintf` (HD-AE5000 x4)     |
+| personality | byte-identical pairs | which                                                                                                                                                                                                                                       |
+|-------------|----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `v4.23`     | 131 (22 differ)      | `_ltoa`, `_strcat`, `_strncpy`, `_strncat`, `_strcpy`, `_strlen`, `_memset`, `_memcmp`, `_memchr`, `_memcpy`, `__ctype` x9 each, `_strncmp` x10, `_strchr` x5, `_strnset` x5, `__FloatErrorHandle` x3, sub CPU float tables x9              |
+| `kn5000`    | 175 (15 differ)      | the same 131, plus `_ultoa` (main CPU v10, v9, v7, v6, v5, HD-AE5000 x4) and `_ldiv` (HD-AE5000 x4); `_modf`, `_fabs`, `_sin`, `_cos`, `_tan`, `_exp` (sub CPU x3 each); `.sbrk` (main CPU x5); `_sprintf`, `_vsprintf` (HD-AE5000 x4 each) |
 
 `_ltoa` came later the same day (`-O` keeps the parameters of a function with calls in scratch registers when no
 value is read after a call; and asm900 writes a 32-bit `cp XDE,0x0` with the long immediate, `ea cf 00 00 00 00`, not
@@ -90,7 +90,7 @@ forms of `cpi` / `cpir` / `cpd` / `cpdr`.  The block transfers with explicit ope
 bare `ldi` is the `(XWA+)` form (`80 10`) where `ldib (XIX+),(XIY+)` is `85 10` (`_memcpy`).
 
 Output: `scripts/analysis/cc900/results/pairs_model_kn5000.tsv`; command in `scripts/analysis/cc900/model/README.md`.
-(Earlier runs the same day: 36, 51, 63, 90, 108, 117, 126, 135, 144, 147, 150, 156, 159, 162, 167; the rules added in between are in those commits.  The library sources end in
+(Earlier runs the same day: 36, 51, 63, 90, 108, 117, 126, 135, 144, 147, 150, 156, 159, 162, 167, 171; the rules added in between are in those commits.  The library sources end in
 a DOS end-of-file byte, which the front end now cuts.)
 
 ### Per image (phase 7: a line per image)

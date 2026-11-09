@@ -183,7 +183,7 @@ table data	9ffb2f	.sbrk	__SBRK.C	34	27 diff first +3
 table data	9ffb56	_malloc	_MALLOC.C	-	model: ; unsupported: lvalue var
 table data	9ffbdc	_strncmp	_STRNCMP.C	50	MATCH
 hdae v2.06i	299ae7	__doprnt	__DOFORM.C	-	model: ; unsupported: operator =
-hdae v2.06i	29abd8	_sprintf	_SPRINTF.C	-	static __str: uses disagree
+hdae v2.06i	29abd8	_sprintf	_SPRINTF.C	40	MATCH
 hdae v2.06i	29ac00	_vsprintf	_SPRINTF.C	33	MATCH
 hdae v2.06i	29ac3b	_itoa	_ITOA.C	-	model: ; unsupported: incdec target
 hdae v2.06i	29acc5	_ldiv	_LDIV.C	67	MATCH
@@ -206,7 +206,7 @@ hdae v2.06i	29b07a	__facnv	__FACVT.C	-	model: ; unsupported: var
 hdae v2.06i	2f9362	___ctype	_CTYPE.C	-	model: no function
 hdae v2.06i	2f9362	__ctype	_CTYPE.C	256	MATCH
 hdae v2.01i	2993af	__doprnt	__DOFORM.C	-	model: ; unsupported: operator =
-hdae v2.01i	29a4a0	_sprintf	_SPRINTF.C	-	static __str: uses disagree
+hdae v2.01i	29a4a0	_sprintf	_SPRINTF.C	40	MATCH
 hdae v2.01i	29a4c8	_vsprintf	_SPRINTF.C	33	MATCH
 hdae v2.01i	29a503	_itoa	_ITOA.C	-	model: ; unsupported: incdec target
 hdae v2.01i	29a58d	_ldiv	_LDIV.C	67	MATCH
@@ -228,7 +228,7 @@ hdae v2.01i	29a916	_strupr	_STRUPR.C	-	model: ; unsupported: condition bin
 hdae v2.01i	2f884e	___ctype	_CTYPE.C	-	model: no function
 hdae v2.01i	2f884e	__ctype	_CTYPE.C	256	MATCH
 hdae v1.15i	295abe	__doprnt	__DOFORM.C	-	model: ; unsupported: operator =
-hdae v1.15i	296baf	_sprintf	_SPRINTF.C	-	static __str: uses disagree
+hdae v1.15i	296baf	_sprintf	_SPRINTF.C	40	MATCH
 hdae v1.15i	296bd7	_vsprintf	_SPRINTF.C	33	MATCH
 hdae v1.15i	296c12	_itoa	_ITOA.C	-	model: ; unsupported: incdec target
 hdae v1.15i	296c9c	_ldiv	_LDIV.C	67	MATCH
@@ -248,7 +248,7 @@ hdae v1.15i	296fc7	_strncpy	_STRNCPY.C	43	MATCH
 hdae v1.15i	2e0e66	___ctype	_CTYPE.C	-	model: no function
 hdae v1.15i	2e0e66	__ctype	_CTYPE.C	256	MATCH
 hdae v1.10i	2959c2	__doprnt	__DOFORM.C	-	model: ; unsupported: operator =
-hdae v1.10i	296ab3	_sprintf	_SPRINTF.C	-	static __str: uses disagree
+hdae v1.10i	296ab3	_sprintf	_SPRINTF.C	40	MATCH
 hdae v1.10i	296adb	_vsprintf	_SPRINTF.C	33	MATCH
 hdae v1.10i	296b16	_itoa	_ITOA.C	-	model: ; unsupported: incdec target
 hdae v1.10i	296ba0	_ldiv	_LDIV.C	67	MATCH
@@ -268,4 +268,4 @@ hdae v1.10i	296ecb	_strncpy	_STRNCPY.C	43	MATCH
 hdae v1.10i	296ef6	__facnv	__FACVT.C	-	model: ; unsupported: var
 hdae v1.10i	2e0cd6	___ctype	_CTYPE.C	-	model: no function
 hdae v1.10i	2e0cd6	__ctype	_CTYPE.C	256	MATCH
-# MATCH 171, model cannot 79, differs 19, outside image 4
+# MATCH 175, model cannot 79, differs 15, outside image 4

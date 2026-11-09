@@ -710,6 +710,15 @@ def gen_ptr_arith(F, e, fam, size):
         bsz = e.ty.base.size if e.ty is not None and e.ty.is_ptr() and e.ty.base is not None else l.ty.base.size
         k = rc.value * bsz * (1 if e.op == '+' else -1)   # va_start: (va_list)&n + 2 counts chars, not ints
         R = FAM[fam][4]
+        la = strip(l)
+        while la.k in ('cast', 'noop'): la = strip(la.e)
+        if F.opt and la.k == 'addr' and strip(la.e).k == 'var':   # _sprintf's va_start at -O3: (char *)&format + 4 ->
+            # lda XWA,XSP+0x10 (without -O the constant is added after: varargs.c v_sum lda XWA,XSP+0x4 / inc 0x2,XWA)
+            d = strip(la.e).decl
+            off = getattr(d, 'slot', None) if d.kind == 'local' else getattr(d, 'off', None)
+            if off is not None and not getattr(d, 'reg', None):
+                t = off + F.push + k
+                F.emit('lda', '%s,%s' % (R, 'XSP+%s' % hx(t) if t else 'XSP')); return fam
         lr = operand(F, l, 4)
         if lr is not None and not lr.startswith('(') and lr != R:
             F.emit('lda', '%s,%s%s%s' % (R, lr, '+' if k >= 0 else '-', hx(abs(k))))   # _ltoa: lda XWA,XBC+0x1
@@ -1169,6 +1178,12 @@ def lvalue(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False):
         if d.kind == 'static' and getattr(d, 'init', None) is None: return '(%s)' % fpgen.static_label(F, d)
         if d.kind == 'param': return '(XSP+%s)' % hx(d.off + F.push)
         if d.kind == 'local' and hasattr(d, 'slot'): return '(XSP+%s)' % hx(d.slot + F.push)
+    if lv.k == 'deref' and strip(lv.e).k == 'incdec' and strip(lv.e).post and strip(strip(lv.e).e).k == 'var' and \
+            strip(strip(lv.e).e).decl.kind == 'global' and strip(strip(lv.e).e).decl.ty.is_ptr():
+        pv = strip(lv.e); g = strip(pv.e).decl          # __strOut: *_str++ = c -> ld XBC,(__str) / ld XWA,0x1 /
+        F.emit('ld', '%s,(_%s)' % (ptr, g.name))           # add (__str),XWA / ... / ld (XBC),A
+        F.emit('ld', 'XWA,%s' % hx(g.ty.base.size)); F.emit('add' if pv.op == '++' else 'sub', '(_%s),XWA' % g.name)
+        return '(%s)' % ptr
     if lv.k == 'deref':
         pv = strip(lv.e)
         if pv.k == 'incdec' and pv.post and regvar_of(pv.e) and regvar_of(pv.e).ty.size == 4:
@@ -3055,6 +3070,29 @@ def merge_address_inits(f):
                         if uses_decl(st, dc.var): break
     walk(f.body, visit)
 
+def propagate_global_copies(f):
+    """cdecl -O: after `G = p;` (G a global, p a parameter) the next statement reads p for G when it has no call
+    and writes neither (_sprintf: _str = s; _str[0] = '\\0'; -> ld (__str),XWA / ldb (XWA),0x0)"""
+    def writes(n, d):
+        w = []
+        walk(n, lambda m, dd: w.append(m) if (m.k in ('bin', 'opassign') and (m.k == 'opassign' or m.op == '=')
+             and strip(m.l).k == 'var' and strip(m.l).decl is d) or (m.k == 'incdec' and strip(m.e).k == 'var'
+             and strip(m.e).decl is d) else None)
+        return bool(w)
+    def visit(n, d):
+        if n.k != 'block': return
+        b = n.body
+        for k in range(len(b) - 1):
+            c, nx = b[k], b[k + 1]
+            if c.k != 'expr' or strip(c.e).k != 'bin' or strip(c.e).op != '=': continue
+            g = strip(strip(c.e).l); src = strip(strip(c.e).r)
+            if g.k != 'var' or g.decl.kind != 'global' or src.k != 'load' or strip(src.e).k != 'var': continue
+            p = strip(src.e).decl
+            if p.kind != 'param' or nx.k not in ('expr',) or has_helper_call(nx) or writes(nx, g.decl) or writes(nx, p):
+                continue
+            substitute(nx, g.decl, src)
+    walk(f.body, visit)
+
 def N_block():
     from frontend import N
     return N('block', body=[])
@@ -3191,8 +3229,9 @@ def epilogue(F):
     for r in reversed(F.pushes): F.emit('pop', r)
     if getattr(F, 'frame', 0):
         n = F.frame
-        if getattr(F, 'fp_temps', None) is not None and F.lines and F.lines[-1].startswith(('\tinc\t', '\tlda\tXSP,XSP+')) \
-                and not F.pushes and not F.xiz_vars:              # fp.c d_call_v: cal _vd / lda XSP,XSP+0x18 (8 + 0x10)
+        if F.lines and F.lines[-1].startswith(('\tinc\t', '\tlda\tXSP,XSP+')) and F.lines[-1].endswith(('XSP',)) or \
+                (F.lines and F.lines[-1].startswith('\tlda\tXSP,XSP+')) and not F.pushes and not F.xiz_vars:
+            # fp.c d_call_v: cal _vd / lda XSP,XSP+0x18 (8 + 0x10); _sprintf: cal __doprnt / lda XSP,XSP+0x10
             m = re.match(r'^\t(?:inc\t(0x[0-9a-f]+),XSP|lda\tXSP,XSP\+(0x[0-9a-f]+))$', F.lines[-1])
             if m: n += int(m.group(1) or m.group(2), 16); F.lines.pop()
         F.emit('inc', '%s,XSP' % hx(n)) if n <= 8 else F.emit('lda', 'XSP,XSP+%s' % hx(n))
@@ -3423,6 +3462,7 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None):
     if personality not in PERSONALITIES: raise ValueError('unknown personality %s' % personality)
     personality = PERSONALITIES[personality]
     merge_address_inits(f)
+    if opt != 'none' and not adecl: propagate_global_copies(f)
     F = Fn(f, adecl)
     F.fp_temps = fp_temps
     F.personality = personality
@@ -3453,6 +3493,7 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None):
                 if k + 1 < len(F.lines) and F.lines[k + 1] == '\tret': F.lines[i] = '\tret\t' + m.group(1)
     import re                                            # no self-moves: the oracle never writes ld XWA,XWA
     F.lines = [l for l in F.lines if not re.match(r'^\tld\t(\w+),\1$', l)]
+    F.lines = [l.replace('(XSP+0x0)', '(XSP)') for l in F.lines]   # the oracle writes (XSP), never (XSP+0x0)
     # a call directly followed by the return becomes a jump (cmp_ui: ge_ui_br0)
     if getattr(F, 'naive_loads', False) or (F.opt and not F.adecl): F.lines = knowledge_pass(F.lines, F.personality)
     elif F.personality != 'v4.23': F.lines = store_knowledge(F.lines)
