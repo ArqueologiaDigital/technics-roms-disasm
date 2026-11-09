@@ -121,6 +121,7 @@ class Builder:
                 if n.get('storageClass') != 'extern': u.globals.append(d)
             elif k == 'FunctionDecl':
                 d = Decl(n['name'], s.ty(n), n.get('storageClass', ''), 'func'); s.decls[n['id']] = d
+                d.implicit = bool(n.get('isImplicit'))           # no prototype in scope (implicit or builtin)
                 u.decls[n['name']] = d
                 body = [c for c in n.get('inner', []) if c.get('kind') == 'CompoundStmt']
                 if body:
@@ -176,7 +177,9 @@ class Builder:
         if k == 'StringLiteral': return N('string', value=n['value'], ty=t)
         if k == 'DeclRefExpr':
             d = s.decls.get(n['referencedDecl']['id'])
-            if d is None: d = Decl(n['referencedDecl'].get('name', '?'), t, '', 'func'); s.decls[n['referencedDecl']['id']] = d
+            if d is None:
+                d = Decl(n['referencedDecl'].get('name', '?'), t, '', 'func'); s.decls[n['referencedDecl']['id']] = d
+                d.implicit = True                                # declared nowhere in the file: implicit
             d.uses += 1
             return N('var', decl=d, ty=t)
         if k == 'ImplicitCastExpr' or k == 'CStyleCastExpr':
@@ -187,7 +190,11 @@ class Builder:
                 return N('decay' if ck == 'ArrayToPointerDecay' else 'noop', e=e, ty=t)
             return N('cast', kind=ck, e=e, ty=t)
         if k == 'BinaryOperator':
-            return N('bin', op=n['opcode'], l=s.expr(I[0]), r=s.expr(I[1]), ty=t)
+            l, r = s.expr(I[0]), s.expr(I[1])
+            if n['opcode'] == '-' and l.ty is not None and r.ty is not None and l.ty.kind in ('ptr', 'array') \
+                    and r.ty.kind in ('ptr', 'array'):
+                t = parse_type('long', s.recs, s.typedefs)   # cc900's ptrdiff_t is long (abi.md)
+            return N('bin', op=n['opcode'], l=l, r=r, ty=t)
         if k == 'CompoundAssignOperator':
             return N('opassign', op=n['opcode'][:-1], l=s.expr(I[0]), r=s.expr(I[1]), ty=t,
                      cty=parse_type(n['computeResultType']['qualType'], s.recs, s.typedefs))
@@ -205,6 +212,12 @@ class Builder:
         if k == 'CallExpr': return N('call', fn=s.expr(I[0]), args=[s.expr(c) for c in I[1:]], ty=t)
         if k == 'ConditionalOperator': return N('cond', c=s.expr(I[0]), a=s.expr(I[1]), b=s.expr(I[2]), ty=t)
         if k == 'UnaryExprOrTypeTraitExpr':
+            if n.get('name') == 'sizeof':                # cc900 sizes: sizeof(type) or sizeof expr
+                if 'argType' in n:
+                    at = n['argType']; size = parse_type(at.get('desugaredQualType', at['qualType']), s.recs, s.typedefs).size
+                else:
+                    size = s.ty(I[0]).size
+                return N('const', value=size, ty=t)
             return N('const', value=None, sizeof=n.get('argType', {}).get('qualType'), ty=t)
         if k == 'ConstantExpr': return s.expr(I[0])
         raise ValueError('unsupported expression %s' % k)

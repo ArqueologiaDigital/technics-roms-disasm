@@ -54,3 +54,10 @@ creates the knowledge (V4.23: loads; 2003: loads and stores) and what a store th
 nothing of it; 2003: everything).  `codegen.knowledge_pass()` implements both: from the naive sequence
 `lda XWA,XSP+0x10 / ld (XSP+8),XWA / ld XWA,(XSP+8) / ldb (XWA+0x20),0x0 / ld XWA,(XSP+8) / lda XWA,XWA+0x1f` it gives
 V4.23's `_ultoa` prologue for `v4.23` and the 2003 / firmware one for `kn5000`.
+
+`_ultoa` is reproduced the same way (2026-11-09): from one naive load sequence, `knowledge_pass()` gives V4.23's
+listing for `v4.23` and the 2003 listing (the firmware's `_ultoa` pair) for `kn5000`.  So two of the three
+routines that the firmware shares with the 2003 compiler but not with V4.23 (`_ldiv`, `_ultoa`; `_ldexp` is next)
+now come out of the kn5000 personality as the firmware has them.  One refinement the loop body needed: a store
+through a pointer erases only what the 2003 compiler knows about its own temporaries, not about user variables
+(`*p` reuses XWA after `ld (XWA),L` in both compilers).

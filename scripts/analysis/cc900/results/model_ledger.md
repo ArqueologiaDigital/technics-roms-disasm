@@ -8,10 +8,10 @@
 | run 2026-11-08-7-micro, v110/none          | micro/*.c                                     | 646 / 674 exact (95.8%) |
 | run 2026-11-08-7-micro, v423/O3XS          | micro/*.c                                     | 590 / 674 exact (87.5%) |
 | run 2026-11-08-7-micro, v423/Xr            | micro/*.c                                     | 552 / 674 exact (81.9%) |
-| run 2026-11-08-7-micro, v423/O3XSXr        | micro/*.c                                     | 548 / 674 exact (81.3%) |
+| run 2026-11-08-7-micro, v423/O3XSXr        | micro/*.c                                     | 549 / 674 exact (81.5%) |
 | run 2026-11-08-8-micro-ra, v423/O3XSXr     | micro/ra_*.c                                  | 0 / 42 exact (0.0%)     |
 | run 2026-11-08-9-micro-optloops, v423/O3XS | micro/opt_loops.c                             | 15 / 33 exact (45.5%)   |
-| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS  | 1997 LIB/SRC (the files the front end parses) | 11 / 71 exact (15.5%)   |
+| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS  | 1997 LIB/SRC (the files the front end parses) | 13 / 71 exact (18.3%)   |
 
 The library row: `score.py ORACLE $C/libsrc/*.C -D__900__ -D__LARGE__ -DFLOAT -D__CDECL= '-D__ASM(x)=' -I$C/inc`, where `$C` is
 a scratch copy of V4.23's `LIB/SRC` (`libsrc/`) and `INCLUDE` (`inc/`, with lower-case symlinks `ctype.h -> CTYPE.H`

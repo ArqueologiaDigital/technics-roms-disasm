@@ -73,15 +73,31 @@ def strip(e):
 def narrow(e, size):
     """the value of e, known to be needed only in its low `size` bytes: drop integral casts that widen"""
     e = strip(e)
-    while e.k == 'cast' and e.kind == 'IntegralCast' and strip(e.e).ty.size >= size:
-        e = strip(e.e)
+    while e.k == 'cast' and e.kind == 'IntegralCast' and strip(e.e).ty.size >= size and not wide_divide(strip(e.e), size):
+        e = strip(e.e)                                   # / % >> on wide operands keep their width (_ultoa: val % radix)
     if e.k == 'cast' and e.kind == 'IntegralCast' and strip(e.e).ty.size < size:
         return e
     return e
 
+def operand_width(x):
+    x = strip(x)
+    while x.k == 'cast' and x.kind == 'IntegralCast' and strip(x.e).ty.size <= x.ty.size: x = strip(x.e)
+    return 0 if fold(x).k == 'const' else x.ty.size
+
+def wide_divide(e, size):
+    """/ % >> whose operands are wider than `size`: narrowing would change the result (binop_c div_c: char operands
+    narrow; _ultoa: val % radix on longs does not)"""
+    return e.k == 'bin' and e.op in ('/', '%', '>>') and e.ty.size > size and \
+        max(operand_width(e.l), operand_width(e.r) if e.op != '>>' else 0) > size
+
 def fold(e):
     """constant folding of integral casts of constants"""
     e = strip(e)
+    if e.k == 'bin' and e.op in ('+', '-', '*') and fold(e.l).k == 'const' and fold(e.r).k == 'const' and \
+            fold(e.l).value is not None and fold(e.r).value is not None:
+        from frontend import N                           # sizeof(buf) - 1
+        a, b = fold(e.l).value, fold(e.r).value
+        return N('const', value={'+': a + b, '-': a - b, '*': a * b}[e.op], ty=e.ty)
     if e.k == 'cast' and e.kind in ('NullToPointer', 'IntegralToPointer') and fold(e.e).k == 'const':
         from frontend import N
         return N('const', value=fold(e.e).value, ty=e.ty)
@@ -96,7 +112,14 @@ def fold(e):
 
 def mem_operand(F, e):
     """a memory or immediate operand string for e, or None"""
+    if strip(e).k == 'cast':
+        ct = cast_temp(F, strip(e))
+        if ct: return ct
     e = fold(e)
+    if e.k == 'load' and strip(e.e).k == 'deref' and getattr(F, 'naive_loads', False):
+        pv = strip(strip(e.e).e)                          # _ultoa: ld XWA,(p) / ... (XWA)
+        if pv.k == 'load' and strip(pv.e).k == 'var' and hasattr(strip(pv.e).decl, 'slot'):
+            F.emit('ld', 'XWA,(XSP+%s)' % hx(strip(pv.e).decl.slot + F.push)); return '(XWA)'
     if e.k == 'const' and e.value is not None: return hx(e.value)
     if e.k == 'load':
         v = strip(e.e)
@@ -192,6 +215,13 @@ def gen(F, e, fam, size, then_ret=False, store=False):
         else: F.emit('scc', '%s,%s' % (cc, FAM[fam][2]))
         return fam
     if e.k == 'call': return gen_call(F, e, fam, size)
+    if e.k == 'addr' and strip(e.e).k == 'index' and local_array_of(strip(e.e).base) in getattr(F, 'array_temps', {}) \
+            and fold(strip(e.e).idx).k == 'const':
+        a = local_array_of(strip(e.e).base); array_base(F, a)   # _ultoa: p = &buf[31] -> lda XWA,XWA+0x1f
+        off = fold(strip(e.e).idx).value * strip(e.e).ty.size
+        if off: F.emit('lda', 'XWA,XWA+%s' % hx(off))
+        if fam != 'WA': F.emit('ld', '%s,XWA' % FAM[fam][4])
+        return fam
     if e.k == 'bin' and e.op in ('&&', '||'):        # c_and / c_or: ld HL,0 / conditions / ld HL,1
         R = FAM[fam][2]
         F.emit('ld', '%s,0x0' % R)
@@ -238,6 +268,15 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
     l, r = narrow(e.l, size), narrow(e.r, size)
     signed = e.ty.signed if size >= e.ty.size else is_signed(l)
     R = FAM[fam][size]
+    wide_l = strip(strip(l).e) if strip(l).k == 'cast' else strip(l)
+    if op in SIMPLE_OPS and size < wide_l.ty.size and wide_divide(wide_l, size):
+        inner = wide_l; w = inner.ty.size                  # _ultoa: cal C9H_remlu / add L,0x30
+        f2 = gen(F, inner, fam, w); R1 = FAM[f2][size]
+        rc = fold(r); rs = mem_operand(F, r)
+        if op in '+-' and rc.k == 'const' and 1 <= rc.value <= 8:
+            F.emit('inc' if op == '+' else 'dec', '%s,%s' % (hx(rc.value), R1))
+        else: F.emit(SIMPLE_OPS[op], '%s,%s' % (R1, rs))
+        return f2
     if op in SIMPLE_OPS:
         if fam != 'WA' and reads_reg(r, fam):        # ra_leafsum5: target read later -> compute in WA
             gen_bin(F, e, 'WA', size, then_ret, store)
@@ -379,8 +418,11 @@ def gen_ptr_arith(F, e, fam, size):
     l, r = strip(e.l), strip(e.r)
     if l.ty.is_ptr() and r.ty.is_ptr():
         lm, rm = mem_operand(F, l), mem_operand(F, r)
+        if lm is None and strip(l).k in ('addr', 'decay'):
+            gen(F, l, 'WA', 4); lm = 'XWA'                     # _ultoa: &buf[33] - p
         if lm is None or rm is None: raise Unsupported('complex pointer difference')
-        F.emit('ld', 'XWA,%s' % lm); F.emit('sub', 'XWA,%s' % rm)
+        if lm != 'XWA': F.emit('ld', 'XWA,%s' % lm)
+        F.emit('sub', 'XWA,%s' % rm)
         esz = l.ty.base.size
         if esz > 1:
             F.emit('ld', 'XBC,%s' % hx(esz)); F.emit('cal', 'C9H_divls'); return 'HL'
@@ -508,6 +550,15 @@ def gen_cond_false(F, c, target):
     if c.k in ('load', 'cast', 'call') and c.ty.kind in ('int', 'ptr'):   # c_if: if (a)
         from frontend import N
         return gen_cond_false(F, N('bin', op='!=', l=c, r=N('const', value=0, ty=c.ty), ty=c.ty), target)
+    if c.k == 'bin' and c.op in ('==', '!=') and strip(c.l).k == 'opassign' and fold(c.r).k == 'const' and fold(c.r).value == 0:
+        oa = strip(c.l); lvv = strip(oa.l)
+        d = lvv.decl if lvv.k == 'var' and getattr(lvv.decl, 'reg', None) == 'XIZ' else None
+        if d is not None:              # _ultoa: (val /= radix) == 0 -> ld XIZ,XHL / or XIZ,XIZ
+            from frontend import N
+            fam = gen(F, N('bin', op=oa.op, l=N('load', e=oa.l, ty=oa.ty), r=oa.r, ty=oa.ty), 'HL', 4)
+            F.emit('ld', 'XIZ,%s' % FAM[fam][4]); F.emit('or', 'XIZ,XIZ')
+            cc = 'eq' if c.op == '==' else 'ne'
+            F.emit('ret', INV[cc]) if target == 'RET' else F.emit('j', '%s,%s' % (INV[cc], target)); return None
     if c.k == 'bin' and c.op in CC_S:
         cc = gen_compare(F, c)
         if cc is True: return True
@@ -553,7 +604,11 @@ def gen_call(F, e, fam=None, size=0):
     fn = strip(e.fn)
     if fn.k != 'var': raise Unsupported('indirect call')
     n = 0
-    for a in reversed(e.args): n += push_arg(F, a)
+    args = e.args
+    if getattr(fn.decl, 'implicit', False):            # _ultoa: memcpy undeclared -> the long difference is pushed whole
+        args = [strip(a.e) if strip(a).k == 'cast' and strip(a).kind == 'IntegralCast' and strip(a.e).ty.size > strip(a).ty.size
+                else a for a in args]
+    for a in reversed(args): n += push_arg(F, a)
     F.emit('cal', ('.' if F.adecl else '_') + fn.decl.name)
     F.pending += n
     if fam and fam != 'HL': F.emit('ld', '%s,%s' % (FAM[fam][size], FAM['HL'][size]))
@@ -567,6 +622,8 @@ def global_name(e):
 def gen_incdec(F, e, fam, size, value):
     """++/-- on a global: incb/incw in memory, long through XWA (unop_*: preinc, postinc_val); *p++ (deref_inc)"""
     g = global_name(e.e)
+    if g is None and strip(e.e).k == 'var' and hasattr(strip(e.e).decl, 'slot'):
+        g = 'XSP+%s' % hx(strip(e.e).decl.slot + F.push)     # _ultoa: p-- -> ld XWA,0x1 / sub (XSP+4),XWA
     if g is None: raise Unsupported('incdec target')
     vt = strip(e.e).ty
     step = vt.base.size if vt.kind == 'ptr' else 1
@@ -622,6 +679,14 @@ def lvalue(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False):
     operand; *p loads p into `ptr`; a[i] of a global array scales i in `idx` and puts the array in `base`
     (`(base+idx)`), or with combine=True adds them into `ptr` (`(ptr)`)"""
     lv = strip(lv)
+    if lv.k == 'index' and local_array_of(lv.base) is not None and fold(lv.idx).k == 'const' and \
+            local_array_of(lv.base) in getattr(F, 'array_temps', {}):
+        array_base(F, local_array_of(lv.base))          # _ultoa: buf[32] = 0 -> (XWA+0x20)
+        off = fold(lv.idx).value * lv.ty.size
+        return '(XWA+%s)' % hx(off) if off else '(XWA)'
+    if lv.k == 'deref' and strip(lv.e).k == 'load' and strip(strip(lv.e).e).k == 'var' and \
+            hasattr(strip(strip(lv.e).e).decl, 'slot') and getattr(F, 'naive_loads', False):
+        F.emit('ld', 'XWA,(XSP+%s)' % hx(strip(strip(lv.e).e).decl.slot + F.push)); return '(XWA)'
     if getattr(F, 'cl_active', None) and lv.k == 'index' and strip(lv.base).k == 'var' and \
             strip(lv.base).decl is F.cl_active['arr']:
         return F.cl_operand                                  # ol_i_clear: ldw (XBC+WA),0x0
@@ -677,6 +742,9 @@ def gen_opassign(F, e):
     size = strip(e.l).ty.size; op = e.op
     r = narrow(e.r, size)
     signed = strip(e.l).ty.signed
+    if op in SIMPLE_OPS and fold(r).k == 'const' and size <= 2 and getattr(F, 'naive_loads', False):
+        t = lvalue(F, e.l)                                # _ultoa: *p += 39 -> addb (XWA),0x27
+        F.emit(SIMPLE_OPS[op] + ('b' if size == 1 else 'w'), '%s,%s' % (t, hx(fold(r).value))); return t
     if op in SIMPLE_OPS:
         t = lvalue(F, e.l)
         rv = mem_operand(F, r)
@@ -777,6 +845,28 @@ def uses_decl(node, d):
     walk(node, v)
     return bool(found)
 
+def array_base(F, d):
+    """XWA = &array, through its compiler temporary (naive load; knowledge_pass thins it per personality)"""
+    t = F.array_temps[d]
+    if not getattr(t, 'set', False):
+        F.emit('lda', 'XWA,XSP+%s' % hx(d.slot + F.push)); F.emit('ld', '(XSP+%s),XWA' % hx(t.slot + F.push)); t.set = True
+    F.emit('ld', 'XWA,(XSP+%s)' % hx(t.slot + F.push))
+
+def cast_temp(F, e):
+    """the per-iteration temporary of a widened parameter (_ultoa: ld WA,(radix) / exts XWA / ld (XSP+0xc),XWA)"""
+    for d, t in getattr(F, 'cast_temps', {}).items():
+        if id(e) in t['nodes']:
+            if not t['done']:
+                F.emit('ld', 'WA,(XSP+%s)' % hx(d.off + F.push)); F.emit('exts' if d.ty.signed else 'extz', 'XWA')
+                F.emit('ld', '(XSP+%s),XWA' % hx(t['decl'].slot + F.push)); t['done'] = True
+            return '(XSP+%s)' % hx(t['decl'].slot + F.push)
+    return None
+
+def local_array_of(e):
+    e = strip(e)
+    if e.k == 'var' and e.decl.kind == 'local' and e.decl.ty.kind == 'array': return e.decl
+    return None
+
 def setup_struct_temps(F, c):
     """_ldiv: lda XWA,XSP+slot / ld (tB),XWA / [V4.23: ld XWA,(tB)] / ld (tA),XWA, before the first member store"""
     for d, t in getattr(F, 'struct_temps', {}).items():
@@ -812,7 +902,7 @@ def gen_stmt(F, s, last):
                     walk(stretch, lambda n, dep: order.append(n.decl) if n.k == 'var' else None)
                     return order.index(d) if d in order else 1 << 30
                 need = [d for d in F.deferred if any(uses_decl(x, d) for x in stretch)
-                        and (d.reg != 'XIZ' or (c.k in ('expr', 'return', 'decl') and uses_decl(c, d)))]   # _ldiv: XIZ at its statement
+                        and (d.reg != 'XIZ' or (c.k in ('expr', 'return', 'decl', 'while', 'for', 'do') and uses_decl(c, d)))]
                 own = sorted([d for d in need if uses_decl(c, d)], key=first_use)
                 rest = sorted([d for d in need if d not in own], key=first_use)
                 for d in rest + own:                       # _strncpy: n, s2, then s1 (its own statement); _strchr: s, c
@@ -867,6 +957,7 @@ def gen_stmt(F, s, last):
     if s.k == 'return' and F.opt and getattr(F, 'shared_exit', None) and id(s) in F.shared_exit['early']:
         flush_pops(F); F.emit('j', F.shared_exit['label']); return       # _ultoa: j L50000
     if s.k == 'return' and F.opt and getattr(F, 'shared_exit', None) and id(s) == F.shared_exit['last']:
+        flush_pops(F)                                      # _ultoa: lda XSP,XSP+0xc before L50000
         F.lines.append(F.shared_exit['label'] + ':')
     if s.k == 'return' and s.value is not None and F.sret is not None:
         v = strip(s.value)
@@ -887,6 +978,13 @@ def gen_stmt(F, s, last):
         if F.xiz_vars: F.emit('pop', 'XIZ')
         epilogue(F)
         F.emit('retd', hx(F.retd)) if F.retd else F.emit('ret'); return
+    if s.k == 'if' and s.els is None and F.loops and flat(s.then) and flat(s.then)[0].k == 'break' and len(flat(s.then)) == 1:
+        c = strip(s.cond)                                  # _ultoa: if ((val /= radix) == 0) break;
+        if c.k == 'bin' and c.op in ('==', '!=') and strip(c.l).k == 'opassign':
+            from frontend import N
+            inv = N('bin', op='!=' if c.op == '==' else '==', l=c.l, r=c.r, ty=c.ty)
+            gen_cond_false(F, inv, F.loops[-1][0]); F.newulabel(); return
+        lab = F.newulabel(); gen_cond_true(F, c, F.loops[-1][0]); return
     if s.k == 'if' and s.els is None and F.opt and not F.pending and not F.pushes and not F.xiz_vars and \
             flat(s.then) and flat(s.then)[0].k == 'return' and len(flat(s.then)) == 1 and (
             flat(s.then)[0].value is None or (strip(flat(s.then)[0].value).k == 'load' and regvar_of(strip(flat(s.then)[0].value).e)
@@ -957,6 +1055,10 @@ def gen_stmt(F, s, last):
         if rc.k == 'const' and size <= 2:            # m_gps_set: ldb (XWA),0x0
             t = lvalue(F, lv, ptr='XWA', idx='WA', base='XBC')     # ra_while: ldw (XBC+WA),0x0
             F.emit('ld' + ('b' if size == 1 else 'w'), '%s,%s' % (t, hx(rc.value))); return
+        if has_helper_call(s.e.r) and strip(lv).k == 'deref':
+            fam = gen(F, s.e.r, 'HL', size)              # _ultoa: value first (XHL / L), then the address
+            t = lvalue(F, lv, ptr='XWA')
+            F.emit('ld', '%s,%s' % (t, FAM[fam][size])); return
         t = lvalue(F, lv)                            # m_ga_set, m_gps_set
         rv = regvar_of(strip(s.e.r).e) if strip(s.e.r).k == 'load' else None
         if rv is not None and rv.ty.size == size:
@@ -975,6 +1077,9 @@ def plan_registers(F):
     body = flat(F.f.body)
     helper_uses = {}
     def hv(n, d):
+        if n.k == 'opassign' and n.op in '*/%' and strip(n.l).ty.size == 4 and fold(n.r).k != 'const' and \
+                strip(n.l).k == 'var' and strip(n.l).decl.kind == 'param':        # _ultoa: val /= radix
+            helper_uses[strip(n.l).decl] = helper_uses.get(strip(n.l).decl, 0) + 1
         if n.k == 'bin' and n.op in '*/%' and n.ty.size == 4 and fold(n.r).k != 'const':
             for side in (n.l, n.r):
                 sv = strip(side)
@@ -1146,6 +1251,13 @@ def gen_loop(F, s, last):
         if cont[0]: F.lines.append(cont[0] + ':')
         loop_cond(F, s.cond, body, True)
         return
+    if s.k == 'while' and s.cond is not None and fold(s.cond).k == 'const' and fold(s.cond).value:
+        body = F.newulabel(); exitl = F.newulabel()        # _ultoa: while (1) { ... break; ... }
+        F.lines.append(body + ':')
+        for t in getattr(F, 'cast_temps', {}).values():
+            if t['loop'] == id(s): t['done'] = False
+        F.loops.append((exitl, lambda: body)); gen_stmt(F, s.body, False); F.loops.pop()
+        F.emit('j', body); F.lines.append(exitl + ':'); return
     if s.k == 'while' and F.opt and s.cond is not None:  # -XS rotation: j test / body / test (_strcat)
         test = F.newulabel(); body = F.newulabel()
         F.emit('j', test); F.lines.append(body + ':')
@@ -1397,15 +1509,41 @@ def plan_frame(F):
                 ta = Decl('__tA', Type('ptr', 4, 2, spell='t'), '', 'local'); tb = Decl('__tB', Type('ptr', 4, 2, spell='t'), '', 'local')
                 F.struct_temps[d] = {'stores': [id(x) for x in stores], 'tA': ta, 'tB': tb, 'done': False}
                 f.decls = [x for x in f.decls if x is not d] + [ta, tb, d]
-    for d in f.decls:
-        if d.kind != 'local' or getattr(d, 'reg', None) or foldable(f, d): continue
+    from frontend import Decl, Type
+    F.array_temps = {}; F.cast_temps = {}
+    for d in f.decls:                                    # _ultoa: a local array's address in a compiler temporary
+        if d.kind == 'local' and d.ty.kind == 'array' and d.uses:
+            F.array_temps[d] = Decl('__a_' + d.name, Type('ptr', 4, 2, spell='t'), '', 'local')
+    loops = []
+    walk(f.body, lambda n, dep: loops.append(n) if n.k in ('for', 'while', 'do') else None)
+    for lp in loops:                                     # _ultoa: (unsigned long)radix once per iteration
+        casts = {}
+        def cv(n, dep):
+            if n.k == 'cast' and n.kind == 'IntegralCast' and n.ty.size == 4 and strip(n.e).k == 'load' and \
+                    strip(strip(n.e).e).k == 'var' and strip(strip(n.e).e).decl.kind == 'param' and strip(n.e).ty.size == 2:
+                key = strip(strip(n.e).e).decl; casts.setdefault(key, []).append(n)
+        walk(lp.body, cv)
+        for d, ns in casts.items():
+            if len(ns) >= 2:
+                F.cast_temps[d] = {'decl': Decl('__c_' + d.name, Type('int', 4, 2, spell='t'), '', 'local'),
+                                   'nodes': {id(n) for n in ns}, 'loop': id(lp), 'done': False}
+    scal = [d for d in f.decls if d.kind == 'local' and not getattr(d, 'reg', None) and not foldable(f, d)
+            and d.ty.kind not in ('array', 'struct') and (d.uses or d.name.startswith('__'))]
+    temps = list(F.array_temps.values()) + [t['decl'] for t in F.cast_temps.values()]
+    aggr = [d for d in f.decls if d.kind == 'local' and d.ty.kind in ('array', 'struct') and not getattr(d, 'reg', None)]
+    for d in scal + temps + aggr:
         a = 2 if d.ty.size >= 2 else 1
         pos = (pos + a - 1) // a * a; d.slot = pos; pos += d.ty.size; slots.append(d)
+    if F.array_temps or F.cast_temps: F.naive_loads = True
     if not slots: F.frame = 0; return
     size = (pos + 1) // 2 * 2; F.frame = size
     for p in f.params:
         if hasattr(p, 'off'): p.off += size
     F.lines.insert(1, '\tdec\t%s,XSP' % hx(size) if size <= 8 else '\tlda\tXSP,XSP-%s' % hx(size))
+    TEMP_SLOTS.clear()
+    for t in list(F.array_temps.values()) + [x['decl'] for x in F.cast_temps.values()] + \
+             [x for v in getattr(F, 'struct_temps', {}).values() for x in (v['tA'], v['tB'])]:
+        TEMP_SLOTS.add('(XSP+%s)' % hx(t.slot + F.push))
 
 def epilogue(F):
     for r in reversed(F.pushes): F.emit('pop', r)
@@ -1441,8 +1579,10 @@ def knowledge_pass(lines, personality):
     out = []; known = {}
     for l in lines:
         t = l.strip()
-        if t.endswith(':') or t.startswith(('cal', 'call', 'j', 'ret', 'djnz')):
+        if t.endswith(':') or t.startswith(('cal', 'call', 'ret', 'djnz')) or (t.startswith('j') and ',' not in t):
             known = {}; out.append(l); continue
+        if t.startswith('j'):                              # a conditional jump: the fall-through keeps what it knows
+            out.append(l); continue
         parts = t.split(None, 1); op = parts[0]; args = parts[1].split(',') if len(parts) > 1 else []
         args = [a.strip() for a in args]
         if op == 'ld' and len(args) == 2 and args[0].startswith('(XSP') and family_of(args[1]):
@@ -1455,13 +1595,16 @@ def knowledge_pass(lines, personality):
             if f in known and known[f] == (args[0], args[1]): continue
             known[f] = (args[0], args[1]); out.append(l); continue
         if args and args[0].startswith('(X') and not args[0].startswith('(XSP'):
-            if personality != 'v4.23': known = {}           # a store through a pointer may alias any slot
+            if personality != 'v4.23':                      # a store through a pointer: temporaries are forgotten
+                known = {k: v for k, v in known.items() if v[1] not in TEMP_SLOTS}
         elif args and family_of(args[0].rstrip(':')):
             known.pop(family_of(args[0]), None)
         elif op in ('pop', 'ldir', 'ldirw', 'ldi', 'ldiw'):
             known = {}
         out.append(l)
     return out
+
+TEMP_SLOTS = set()                                         # operand strings of compiler-temporary slots (per function)
 
 def store_knowledge(lines):
     """rules.md, the reload rule: the 2003 / Technics compiler also knows R holds M after a store ld (M),R, until a
