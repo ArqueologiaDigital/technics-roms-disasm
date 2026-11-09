@@ -89,6 +89,11 @@ for c in none O3XS; do    # FP parameters and arguments under both conventions (
 done
 row "run 2026-11-09-29-micro-adfp, v423/Xr" "probes/adfp.c" "$O/2026-11-09-29-micro-adfp/out/v423/Xr/probes" corpus/probes/adfp.c --opt none --adecl
 row "run 2026-11-09-29-micro-adfp, v423/O3XSXr" "probes/adfp.c" "$O/2026-11-09-29-micro-adfp/out/v423/O3XSXr/probes" corpus/probes/adfp.c --opt O3XS --adecl
+for c in none O3XS; do    # int arithmetic on a char done in the byte (corpus/probes/chnarrow.c)
+  row "run 2026-11-09-30-micro-chnarrow, v423/$c" "probes/chnarrow.c" "$O/2026-11-09-30-micro-chnarrow/out/v423/$c/probes" corpus/probes/chnarrow.c --opt $c
+done
+row "run 2026-11-09-30-micro-chnarrow, v423/Xr" "probes/chnarrow.c" "$O/2026-11-09-30-micro-chnarrow/out/v423/Xr/probes" corpus/probes/chnarrow.c --opt none --adecl
+row "run 2026-11-09-30-micro-chnarrow, v423/O3XSXr" "probes/chnarrow.c" "$O/2026-11-09-30-micro-chnarrow/out/v423/O3XSXr/probes" corpus/probes/chnarrow.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do

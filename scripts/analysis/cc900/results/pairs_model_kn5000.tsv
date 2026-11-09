@@ -141,7 +141,7 @@ subcpu v142	03d533	_pow	_POW.C	-	model: ; unsupported: local p	exact
 subcpu v142	03d84f	_sin	_SIN.C	123	MATCH	exact
 subcpu v142	03d98a	__trig	__TRIG.C	-	unresolved	exact
 subcpu v142	03e1a5	_modf	_MODF.C	76	MATCH	exact
-subcpu v142	03e1f1	_frexp	_FREXP.C	191	181 diff first +0	exact
+subcpu v142	03e1f1	_frexp	_FREXP.C	188	185 diff first +0	exact
 subcpu v142	03e64b	_exp	_EXP.C	230	MATCH	exact
 subcpu v142	03e731	_log	_LOG.C	338	15 diff first +52	exact
 subcpu v142	03e894	__fint	__FINT.C	-	model: ; unsupported: local maru	exact
@@ -157,7 +157,7 @@ subcpu v141	03d51b	_pow	_POW.C	-	model: ; unsupported: local p	exact
 subcpu v141	03d837	_sin	_SIN.C	123	MATCH	exact
 subcpu v141	03d972	__trig	__TRIG.C	-	unresolved	exact
 subcpu v141	03e18d	_modf	_MODF.C	76	MATCH	exact
-subcpu v141	03e1d9	_frexp	_FREXP.C	191	181 diff first +0	exact
+subcpu v141	03e1d9	_frexp	_FREXP.C	188	185 diff first +0	exact
 subcpu v141	03e633	_exp	_EXP.C	230	MATCH	exact
 subcpu v141	03e719	_log	_LOG.C	338	15 diff first +52	exact
 subcpu v141	03e87c	__fint	__FINT.C	-	model: ; unsupported: local maru	exact
@@ -173,7 +173,7 @@ subcpu v140	03d4e7	_pow	_POW.C	-	model: ; unsupported: local p	exact
 subcpu v140	03d803	_sin	_SIN.C	123	MATCH	exact
 subcpu v140	03d93e	__trig	__TRIG.C	-	unresolved	exact
 subcpu v140	03e159	_modf	_MODF.C	76	MATCH	exact
-subcpu v140	03e1a5	_frexp	_FREXP.C	191	181 diff first +0	exact
+subcpu v140	03e1a5	_frexp	_FREXP.C	188	185 diff first +0	exact
 subcpu v140	03e5ff	_exp	_EXP.C	230	MATCH	exact
 subcpu v140	03e6e5	_log	_LOG.C	338	15 diff first +52	exact
 subcpu v140	03e848	__fint	__FINT.C	-	model: ; unsupported: local maru	exact

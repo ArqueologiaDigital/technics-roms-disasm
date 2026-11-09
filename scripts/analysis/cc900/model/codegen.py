@@ -375,7 +375,12 @@ def gen(F, e, fam, size, then_ret=False, store=False):
             # unsigned char to long: clear, then load the byte (cast_uc_l)
             F.emit('ld', '%s,0x0' % FAM[fam][4]); F.emit('ld', '%s,%s' % (FAM[fam][1], mem_operand(F, inner)))
             return fam
-        gen(F, inner, fam, isz)
+        if CHAR_NARROW and isz == 1 and size == 2 and not F.opt and fam != 'WA' and getattr(inner, 'narrowed', False) \
+                and inner.op in ('+', '-') and fold(inner.r).k == 'const' and strip(inner.l).k == 'load' and \
+                (mem_operand(F, inner.l) or '').startswith('('):
+            f2 = gen(F, inner, 'WA', 1)        # chnarrow.c cn_sub_k (no -O): ld A,(XSP+0x4) / sub A,0x30 / ld L,A /
+            F.emit('ld', '%s,%s' % (FAM[fam][1], FAM[f2][1]))   # exts HL (& | and a char operand work in L; a char
+        else: gen(F, inner, fam, isz)          # result, binop_c.c add_c_pk, too)
         sz = isz
         while sz < size:                       # one step at a time: exts HL, then exts XHL (cast_c_l)
             sz *= 2
@@ -449,8 +454,19 @@ def gen(F, e, fam, size, then_ret=False, store=False):
             F.lines.append(lelse + ':'); F.lines.append(lend + ':'); return fam
     if e.k == 'cond' and F.opt:
         c, a, b = strip(e.c), strip(e.a), strip(e.b)
+        truth = False
+        if TERN_TRUTH_PRE and c.k == 'load' and strip(c.e).k == 'var' and c.ty.kind == 'int' and c.ty.size == 2:
+            from frontend import N                   # chnarrow.c cn_tern under -O3 -XS: k ? c - 32 : c as k != 0
+            c = N('bin', op='!=', l=c, r=N('const', value=0, ty=c.ty), ty=e.ty)   # (ld L,(c) / cpw (k),0x0 / ...)
+            truth = True
+        def _opd(x):
+            x = strip(x)
+            return x.k == 'cast' and x.kind == 'IntegralCast' and strip(x.e).k == 'bin'
+        bsz = 1 if size == 2 and byte_arms(e) is not None and (_opd(a) or _opd(b)) else size   # (char arms with a
+                                                     # char operation: measured as bytes, cn_tern; cn_tern_cc's two
+                                                     # loads keep the plain form)
         def simple(x):
-            x = strip(narrow(x, size))
+            x = strip(narrow(x, bsz))
             return 0 if fold(x).k == 'const' else 1 if mem_operand(F, x) is not None else 2
         R = FAM[fam][size]
         if c.k == 'bin' and c.op in CC_S and min(simple(a), simple(b)) <= 1 and \
@@ -461,6 +477,8 @@ def gen(F, e, fam, size, then_ret=False, store=False):
             pre, other = (a, b) if pre_then else (b, a)
             if family_of(mem_operand(F, strip(narrow(pre, size))) or '') and family_of(mem_operand(F, strip(narrow(other, size))) or ''):
                 pre = None                                 # both arms in registers: the plain form (c_tern under -Xr)
+            elif truth and not (mem_operand(F, strip(narrow(pre, bsz))) or '').startswith('('):
+                pre = None                                 # (_atoi: neg ? -n : n with n in IY keeps the plain form)
         else: pre = None
         def char_valued(x):                                # an int built only from chars and small constants
             x = strip(x)
@@ -468,8 +486,10 @@ def gen(F, e, fam, size, then_ret=False, store=False):
             if x.k == 'cast' and x.kind == 'IntegralCast' and strip(x.e).ty.size == 1: return True
             if x.k == 'bin' and x.op in ('+', '-', '&', '|', '^'): return char_valued(x.l) and char_valued(x.r)
             return False
-        narrow_ok = pre is not None and size == 2 and char_valued(a) and char_valued(b) and \
-            (strip(a).k == 'bin' or strip(b).k == 'bin')
+        def binish(x):                                     # (char_narrow writes (int)(*s1 - *s2) as a cast)
+            x = strip(x)
+            return x.k == 'bin' or x.k == 'cast' and x.kind == 'IntegralCast' and strip(x.e).k == 'bin'
+        narrow_ok = pre is not None and size == 2 and char_valued(a) and char_valued(b) and (binish(a) or binish(b))
         if pre is not None:
             lskip, lend = F.newulabel(), F.newulabel()
             lm = mem_operand(F, c.l); rv = strip(c.r)
@@ -491,18 +511,42 @@ def gen(F, e, fam, size, then_ret=False, store=False):
             if narrow_ok:                                  # _strncmp: ... j eq,L5 / ... / ld L,A / L5: exts HL
                 F.emit('j', '%s,%s' % (jcc, lend))
                 o = strip(narrow(other, 1))
+                pv = strip(narrow(pre, 1))
+                same = o.k == 'bin' and o.op in SIMPLE_OPS and pv.k == 'load' and strip(pv.e).k == 'var' and \
+                    strip(o.l).k == 'load' and strip(strip(o.l).e).k == 'var' and strip(strip(o.l).e).decl is strip(pv.e).decl
                 try:
-                    if o.k == 'bin' and fam != 'WA':
+                    if same and operand(F, o.r, 1) is not None:   # cn_tern: the pre arm loaded c -> sub L,0x20 in place
+                        rc_ = fold(o.r)
+                        if o.op in '+-' and rc_.k == 'const' and 1 <= rc_.value <= 8:
+                            F.emit('inc' if o.op == '+' else 'dec', '%s,%s' % (hx(rc_.value), FAM[fam][1]))
+                        else: F.emit(SIMPLE_OPS[o.op], '%s,%s' % (FAM[fam][1], operand(F, o.r, 1)))
+                    elif o.k == 'bin' and fam != 'WA':
                         f2 = gen(F, o, 'WA', 1); F.emit('ld', '%s,%s' % (FAM[fam][1], FAM[f2][1]))
                     else: gen(F, o, fam, 1)
                 finally:
                     if tmpv: tmpv[0].reg = tmpv[1]
-                F.lines.append(lend + ':'); F.emit('exts' if e.ty.signed else 'extz', FAM[fam][2]); return fam
+                if not pre_then: F.lines.append(lskip + ':')   # (cn_tern, the else arm first: L2: / L1: as in the
+                F.lines.append(lend + ':')                     # plain pre form; _strncmp's then arm: one label)
+                sg = byte_arms(e)
+                F.emit('exts' if (sg if sg is not None else e.ty.signed) else 'extz', FAM[fam][2]); return fam
             F.emit('ret', jcc) if then_ret else F.emit('j', '%s,%s' % (jcc, lend))
             try: gen(F, other, fam, size)
             finally:
                 if tmpv: tmpv[0].reg = tmpv[1]
             F.lines.append(lskip + ':'); F.lines.append(lend + ':'); return fam
+    bs = byte_arms(e) if e.k == 'cond' and size == 2 else None
+    if bs is not None:                               # chnarrow.c cn_tern: k ? c - 32 : c -> ... / ld L,A / j L1 /
+        lelse, lend = F.newulabel(), F.newulabel()   # L2: ld L,(XSP+0x4) / L1: exts HL (cn_tern_cc too)
+        gen_cond_false(F, e.c, lelse)
+        def arm(x):
+            x = strip(narrow(x, 1))
+            if not F.opt and fam != 'WA' and getattr(x, 'narrowed', False) and x.op in ('+', '-') and \
+                    fold(x.r).k == 'const' and (mem_operand(F, x.l) or '').startswith('('):
+                f2 = gen(F, x, 'WA', 1); F.emit('ld', '%s,%s' % (FAM[fam][1], FAM[f2][1]))   # (ld A,.. / sub A,0x20 /
+            else: gen(F, x, fam, 1)                                                          # ld L,A, as a return)
+        arm(e.a); F.emit('j', lend); F.lines.append(lelse + ':')
+        arm(e.b); F.lines.append(lend + ':')
+        F.emit('exts' if bs else 'extz', FAM[fam][2]); return fam
     if e.k == 'cond':                                # c_tern
         lelse, lend = F.newulabel(), F.newulabel()
         gen_cond_false(F, e.c, lelse)
@@ -652,8 +696,8 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         lv = regvar_of(strip(l).e)
         if lv is None and mem_operand(F, l) is not None:   # ch_g3_rep: gi + gi -> ld HL,(_gi) / sla 0x1,HL
             gen(F, l, fam, size); F.emit('sla', '0x1,%s' % R); return fam
-    if op in SIMPLE_OPS and F.opt and not e.ty.is_ptr() and strip(l).k == 'bin':
-        T = 'WA' if (chain_wa(l) or natural_wa(l)) else None
+    if op in SIMPLE_OPS and F.opt and not e.ty.is_ptr() and (strip(l).k == 'bin' or char_widen(F, l)):
+        T = 'WA' if (chain_wa(l) or natural_wa(l) or char_widen(F, l)) else None
         lf = strip(l)
         while lf.k == 'bin' and lf.op in SIMPLE_OPS: lf = strip(narrow(lf.l, size))
         lv = regvar_of(lf.e) if lf.k == 'load' else None
@@ -709,7 +753,7 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
             return other
         wa_var = [d for d in list(F.f.params) + list(F.f.decls) if getattr(d, 'reg', None) == 'WA' and d not in F.dead
                   and uses_decl(e.r, d)]                   # sv_leaf: a * b + a keeps a in WA -> ld HL,DE / add HL,WA
-        if fam != 'WA' and (natural_wa(l) or chain_wa(l)) and not wa_var:   # ra_noloop3: inner levels over a multiply stay in WA
+        if fam != 'WA' and (natural_wa(l) or chain_wa(l) or char_widen(F, l)) and not wa_var:   # ra_noloop3: inner levels over a multiply stay in WA
             f0 = gen(F, l, 'WA', size)
             src_ = FAM[f0][size] if f0 in FAM and size in FAM[f0] else FAM['WA'][size]   # (where gen left it)
             if src_ != FAM[fam][size]: F.emit('ld', '%s,%s' % (FAM[fam][size], src_))
@@ -945,6 +989,34 @@ def free_reg(F, avoid=()):
     for r in ('BC', 'DE', 'HL', 'WA'):
         if r not in live and r not in avoid: return r
     raise Unsupported('no free register')
+
+def byte_arms(e):
+    """a ?: whose two arms are chars (or char operations, char_narrow) of one signedness, or one of them a constant
+    that fits: the signedness (True / False), else None"""
+    if not CHAR_NARROW: return None
+    sg = []
+    for x in (e.a, e.b):
+        x = strip(x)
+        if fold(x).k == 'const':
+            if fold(x).value is None or not 0 <= fold(x).value <= 127: return None
+            continue
+        if not (x.k == 'cast' and x.kind == 'IntegralCast' and x.ty.size == 2 and strip(x.e).ty is not None and
+                strip(x.e).ty.kind == 'int' and strip(x.e).ty.size == 1): return None
+        sg.append(strip(x.e).ty.signed)
+    if not sg or len(set(sg)) != 1: return None
+    return sg[0]
+
+def char_widen(F, x):
+    """a char in memory widened to int as the left operand of + - & | ^: cc900 widens it in WA (chnarrow.c
+    cn_sub_big: ld A,(XSP+0x4) / exts WA / ld HL,WA / sub HL,0x12c; -O3 -XS: ... / sub WA,0x12c / ld HL,WA)"""
+    if not CHAR_WIDEN_WA: return False
+    x = strip(x)
+    if not (x.k == 'cast' and x.kind == 'IntegralCast' and x.ty.size == 2 and strip(x.e).ty is not None and
+            strip(x.e).ty.size == 1 and strip(x.e).k == 'load'): return False
+    m = mem_operand(F, strip(x.e))
+    return m is not None and m.startswith('(')
+
+CHAR_WIDEN_WA = True
 
 def natural_wa(e):
     e = strip(e)
@@ -1360,6 +1432,47 @@ def bit_cond(F, c):
         else: F.emit('bit', '%s,%s' % (hx(n), xr))
     else: F.emit('and', '%s,%s' % (xr, hx(m)))
     return sense
+
+CHAR_NARROW = True                                        # see char_narrow
+OR_BIT_SET = True                                         # see compile_function
+TERN_TRUTH_PRE = True                                     # see gen's -O ?: path
+RET_CC_KEEPS = True                                       # see knowledge_pass
+
+def char_narrow(body):
+    """cc900 does int + - & | ^ of a char and a constant that fits a byte, or of two chars, on the byte and
+    extends the result (probes/chnarrow.c, run 2026-11-09-30-micro-chnarrow: c - 48 -> sub A,0x30 / ld L,A /
+    exts HL).  The byte is unsigned when either side is: an unsigned char, or a constant 128..255 (c + 200 ->
+    add A,0xc8 / ... / extz HL).  A constant that needs a word (c - 300), an int operand or * widen first.
+    Rewritten in place: (int)x op k becomes (int)(x op k) with a char-typed operation."""
+    from frontend import N, Type
+    def chr_of(x):
+        x = strip(x)
+        if x.k == 'cast' and x.kind == 'IntegralCast' and x.ty.size == 2 and strip(x.e).ty is not None and \
+                strip(x.e).ty.kind == 'int' and strip(x.e).ty.size == 1:
+            return strip(x.e)
+        return None
+    def visit(n, d):
+        if not (n.k == 'bin' and n.op in ('+', '-', '&', '|', '^') and n.ty is not None and n.ty.kind == 'int' and
+                n.ty.size == 2):
+            return
+        x = chr_of(n.l)
+        if x is None: return
+        rk = fold(n.r); y = chr_of(n.r); op = n.op
+        if rk.k == 'const' and rk.value is not None and op in ('+', '-') and -255 <= rk.value < 0:
+            op = '-' if op == '+' else '+'               # cond_bits.c cb_tern_char: c + ('A' - 'a') -> sub 0x20
+            rk = N('const', value=-rk.value, ty=rk.ty)
+        if rk.k == 'const' and rk.value is not None and 0 <= rk.value <= 255:
+            signed = x.ty.signed and rk.value <= 127
+            ct = Type('int', 1, 1, signed=signed, spell='char' if signed else 'unsigned char')
+            r = N('const', value=rk.value, ty=ct)
+        elif y is not None:
+            signed = x.ty.signed and y.ty.signed
+            ct = Type('int', 1, 1, signed=signed, spell='char' if signed else 'unsigned char'); r = y
+        else: return
+        inner = N('bin', op=op, l=x, r=r, ty=ct, narrowed=True)
+        it = n.ty
+        n.__dict__.clear(); n.k = 'cast'; n.kind = 'IntegralCast'; n.e = inner; n.ty = it
+    walk(body, visit)
 
 def copy_propagate(f):
     """-O: a local assigned exactly once, from a parameter that the function never writes, is that parameter
@@ -6168,6 +6281,9 @@ def knowledge_pass(lines, personality):
     out = []; known = {}; prev = None
     for l in lines:
         t = l.strip()
+        if RET_CC_KEEPS and t.startswith('ret\t') and t != 'ret\t' and not t.startswith('retd'):
+            out.append(l); prev = None; continue           # ret eq: the fall-through keeps it (cn_tern_i under -O3 -XS:
+                                                           # ld HL,(c) / cpw (k),0x0 / ret eq / sub HL,0x20)
         if t.endswith(':') or t.startswith(('cal', 'call', 'ret', 'djnz')) or (t.startswith('j') and ',' not in t):
             known = {}; out.append(l); prev = None; continue
         if t.startswith('j'):                              # a conditional jump: the fall-through keeps what it knows
@@ -6509,6 +6625,7 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong
     F.personality = personality
     F.opt = opt != 'none'; F.dead = set(); F.had_goto = bool(gotos); CUR_OPT[0] = F.opt
     if F.opt: bool_returns(f.body)
+    if CHAR_NARROW: char_narrow(f.body)
     if F.opt and COPY_PROP: copy_propagate(f)
     compute_last_uses(F)
     F.lines.append(('.' if adecl else '_') + f.name + ':')
@@ -6548,6 +6665,14 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong
                 if k + 1 < len(F.lines) and F.lines[k + 1] == '\tret': F.lines[i] = '\tret\t' + m.group(1)
     import re                                            # no self-moves: the oracle never writes ld XWA,XWA
     F.lines = [l for l in F.lines if not re.match(r'^\tld\t(\w+),\1$', l)]
+    if OR_BIT_SET:                                       # a one-bit or is set: chnarrow.c cn_or_k c | 0x20 -> set
+        for i, l in enumerate(F.lines):                  # 0x5,L (no or R,<bit> in any oracle listing so far); kept
+            m = re.match(r'^\tor\t(A|W|B|C|D|E|H|L|WA|BC|DE|HL|IX|IY|IZ),0x([0-9a-f]+)$', l)   # when the flags
+            if not m: continue                                                               # are read next
+            v = int(m.group(2), 16); w = 8 if len(m.group(1)) == 1 else 16
+            nxt = F.lines[i + 1] if i + 1 < len(F.lines) else ''
+            if v and v & (v - 1) == 0 and v < (1 << w) and not re.match(r'^\t(j|scc|ret|jr)\t\w+,|^\tret\t\w+$|^\tscc', nxt):
+                F.lines[i] = '\tset\t%s,%s' % (hx(v.bit_length() - 1), m.group(1))
     if F.opt: F.lines = drop_unreachable(F.lines)        # (without -O a switch keeps its end: sw_jt6 L3: ret)
     if F.opt and GLOBAL_FORWARD:                          # _rand: ld (_Seed),XHL / ld XWA,(_Seed) -> ld XWA,XHL (the
         for i in range(len(F.lines) - 1):                 # value just stored, in the next instruction)

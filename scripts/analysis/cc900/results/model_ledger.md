@@ -71,6 +71,10 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-29-micro-adfp, v423/O3XS                             | probes/adfp.c        | 15 / 15 exact (100.0%)   |
 | run 2026-11-09-29-micro-adfp, v423/Xr                               | probes/adfp.c        | 15 / 15 exact (100.0%)   |
 | run 2026-11-09-29-micro-adfp, v423/O3XSXr                           | probes/adfp.c        | 15 / 15 exact (100.0%)   |
+| run 2026-11-09-30-micro-chnarrow, v423/none                         | probes/chnarrow.c    | 17 / 20 exact (85.0%)    |
+| run 2026-11-09-30-micro-chnarrow, v423/O3XS                         | probes/chnarrow.c    | 17 / 20 exact (85.0%)    |
+| run 2026-11-09-30-micro-chnarrow, v423/Xr                           | probes/chnarrow.c    | 6 / 20 exact (30.0%)     |
+| run 2026-11-09-30-micro-chnarrow, v423/O3XSXr                       | probes/chnarrow.c    | 13 / 20 exact (65.0%)    |
 | run 2026-11-09-9-micro-fp, v423/none                                | micro/fp.c           | 108 / 108 exact (100.0%) |
 | run 2026-11-09-9-micro-fp, v423/O3XS                                | micro/fp.c           | 108 / 108 exact (100.0%) |
 | run 2026-11-09-10-micro-fptemps, v423/none                          | micro/fp_temps.c     | 33 / 33 exact (100.0%)   |
