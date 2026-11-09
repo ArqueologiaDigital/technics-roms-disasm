@@ -3976,8 +3976,11 @@ def operand(F, e, size, avoid=()):
             return F.cl_active['bcse']
         if getattr(F, 'cl_shared', False):                 # ol_i_acc2: lda XBC,XHL+DE / (XBC) (U1's first temporary)
             T = FAM[F.cl_active.get('tmp') if F.cl_active.get('tmp') in FAM else 'WA'][4]
-            if not getattr(F, 'cl_tmp_done', False) and held_after(F, T[1:], e0):   # (ra_leaf3 -O3 -XS -Xr: k in
-                T = FAM[free_reg(F, avoid={T[1:]})][4]; F.cl_active['tmp'] = T[1:]  # WA, lda XWA,.. was wrong code)
+            opnd = F.cl_operand.strip('()')
+            clash = T[1:] in opnd.replace('X', ' ').split('+') or T in opnd.split('+')   # (ol_l_acc3: the offset in BC)
+            if not getattr(F, 'cl_tmp_done', False) and (held_after(F, T[1:], e0) or clash):   # (ra_leaf3 -O3 -XS -Xr:
+                busy_ = {x.lstrip('X') for x in opnd.split('+')}                        # k in WA, lda XWA,.. was
+                T = FAM[free_reg(F, avoid={T[1:]} | busy_)][4]; F.cl_active['tmp'] = T[1:]   # wrong code)
             if not getattr(F, 'cl_tmp_done', False):
                 F.emit('lda', '%s,%s' % (T, F.cl_operand.strip('()'))); F.cl_tmp_done = True
             return '(%s)' % T
