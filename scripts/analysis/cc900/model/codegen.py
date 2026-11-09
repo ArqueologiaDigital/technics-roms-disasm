@@ -3651,13 +3651,25 @@ def gen_stmt(F, s, last):
         rv0 = regvar_of(strip(s.e.r).e) if strip(s.e.r).k == 'load' else None
         if PTR_ELEM_REGVAL and not F.opt and not F.adecl and rv0 is not None and rv0.ty.size == size and \
                 lv.k == 'index' and strip(lv.base).k == 'load' and strip(lv.base).ty.is_ptr() and \
-                fold(lv.idx).k != 'const' and rv0.reg not in ('WA',):
+                fold(lv.idx).k != 'const' and rv0.reg not in ('WA',) and 'WA' not in live_regs(F):
             t = lvalue(F, lv, kind='storek')         # lnr.c r_p_wri (none): p[i] = i with i in IX -> ld WA,IX /
             F.emit('ld', '%s,%s' % (t, FAM[rv0.reg][size])); return   # exts XWA / add XWA,XWA / add XWA,(p) / ld (XWA),IX
+        if PTR_ELEM_REGVAL and not F.opt and rv0 is not None and rv0.ty.size == size and rv0.reg != 'WA' and \
+                'WA' not in live_regs(F) and lv.k == 'deref' and strip(lv.e).k == 'load' and strip(strip(lv.e).e).k == 'var' and \
+                not getattr(strip(strip(lv.e).e).decl, 'reg', None):
+            t = lvalue(F, lv, ptr='XWA')             # lnr.c r_gp_wr (none, -Xr): *gp = i with i in IX ->
+            F.emit('ld', '%s,%s' % (t, FAM[rv0.reg][size])); return   # ld XWA,(_gp) / ld (XWA),IX
         if COPY_ELEM_DE and not F.opt and gidx(lv) and gidx(s.e.r) and not ({'DE', 'HL'} & live_regs(F)):
             t = lvalue(F, lv, idx='DE', base='XHL')   # opt_loops.c ol_i_copy (none): gb[i] = ga[i] -> ld DE,IX /
         else:                                        # add DE,DE / lda XHL,_gb / ... lda XBC,_ga / ld (XHL+DE),WA
+            nl = len(F.lines)
             t = lvalue(F, lv)                        # m_ga_set, m_gps_set
+            if STORE_ADDR_GUARD and not F.opt:       # lnr.c r_gp_wr (-Xr): ld XBC,(_gp) over d3 in BC
+                for d in list(F.f.params) + list(F.f.decls):
+                    r_ = getattr(d, 'reg', None)
+                    if r_ in FAM and d not in F.dead and clobbers(F.lines[nl:], '(%s)' % FAM[r_][4]) and \
+                            held_after(F, r_, s.e):
+                        raise Unsupported('store address over a live register')
         rv = regvar_of(strip(s.e.r).e) if strip(s.e.r).k == 'load' else None
         if rv is not None and rv.ty.size == size:
             F.emit('ld', '%s,%s' % (t, FAM[rv.reg][size])); return
