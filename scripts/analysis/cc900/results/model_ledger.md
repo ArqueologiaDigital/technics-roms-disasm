@@ -15,7 +15,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-08-7-micro, ide2003/O3XSXr, --personality ide2003       | micro/*.c          | 605 / 674 exact (89.8%)  |
 | run 2026-11-08-8-micro-ra, v423/none                                | micro/ra_*.c       | 29 / 42 exact (69.0%)    |
 | run 2026-11-08-8-micro-ra, v423/O3XSXr                              | micro/ra_*.c       | 12 / 42 exact (28.6%)    |
-| run 2026-11-08-6-abi-adecl, v423/Xr                                 | abi/*.c            | 69 / 80 exact (86.2%)    |
+| run 2026-11-08-6-abi-adecl, v423/Xr                                 | abi/*.c            | 70 / 80 exact (87.5%)    |
 | run 2026-11-08-6-abi-adecl, v423/O3XSXr                             | abi/*.c            | 65 / 80 exact (81.2%)    |
 | run 2026-11-09-4-micro-switch, v423/none                            | micro/switch.c     | 13 / 25 exact (52.0%)    |
 | run 2026-11-09-4-micro-switch, v423/Xr                              | micro/switch.c     | 22 / 25 exact (88.0%)    |
@@ -39,7 +39,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-9-micro-fp, v423/O3XS                                | micro/fp.c         | 108 / 108 exact (100.0%) |
 | run 2026-11-09-10-micro-fptemps, v423/none                          | micro/fp_temps.c   | 33 / 33 exact (100.0%)   |
 | run 2026-11-09-10-micro-fptemps, v423/O3XS                          | micro/fp_temps.c   | 33 / 33 exact (100.0%)   |
-| run 2026-11-09-11-micro-opttemps, v423/Xr                           | micro/opt_temps.c  | 1 / 38 exact (2.6%)      |
+| run 2026-11-09-11-micro-opttemps, v423/Xr                           | micro/opt_temps.c  | 33 / 38 exact (86.8%)    |
 | run 2026-11-09-11-micro-opttemps, v423/O3XSXr                       | micro/opt_temps.c  | 38 / 38 exact (100.0%)   |
 | run 2026-11-08-9-micro-optloops, v423/O3XS                          | micro/opt_loops.c  | 15 / 33 exact (45.5%)    |
 | run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality v4.23      | 1997 LIB/SRC       | 144 / 248 exact (58.1%)  |

@@ -108,3 +108,10 @@ opt_params.c 22 / 24 under O3XSXr: loops with no temporary are skipped when choo
 counter in `n-- && ...` counts, `*a == *b && *a` is cmp2, a stack counter goes to the first free of DE, HL, IX, IY
 (op_three: `ld IX,(XSP+0x4)`, `retd 0x2`), the 16-bit temporary of a word body is T (op_sum2: IX).  Left: the two
 `heavy` bodies, where `a[1]`'s address goes to T and `a++` moves up before the load.
+
+Plain `-Xr` (rule R1 of the same fit, in `leafalloc.choose(opt=False)`): WA for move / heavy / arith / cmp2, BC for
+cmp, no counter clause, relocation WA -> DE, HL, IX, BC -> DE, HL, IX, DE -> HL, IX, and the returned local keeps HL.
+A `while` whose condition compares two bytes is rotated without `-O` too (ot_cmp_*, ot_len2); `n--` and `*s++` tests
+are repeated in front (ctrl.c c_cnt, c_clear).  A jump to an exit that is only `ret` is `ret cc`; in
+`gc = *a + *b` the operand whose dying pointer holds the target family is loaded first (`ld C,(XBC)` /
+`add C,(XWA)`).  opt_temps.c under `-Xr`: 33 / 38.

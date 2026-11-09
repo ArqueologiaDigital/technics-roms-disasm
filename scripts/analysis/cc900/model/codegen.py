@@ -475,6 +475,12 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
             # add WA,DE / ld HL,WA; ra_noloop3: muls XWA,DE / add WA,HL / add WA,DE / ld HL,WA)
             f2 = gen_bin(F, e, T, size, then_ret, store)
             F.emit('ld', '%s,%s' % (FAM[fam][size], FAM[f2][size])); return fam
+    if op in ('+', '&', '|', '^') and fam != 'WA' and getattr(F, 'tfam', None) and reads_reg(r, fam) and not reads_reg(l, fam):
+        rr = strip(r)                                # ot_cnt_abn: gc = *a + *b with b in XBC dying -> ld C,(XBC) /
+        while rr.k == 'cast': rr = strip(rr.e)       # add C,(XWA)
+        if rr.k == 'load' and strip(rr.e).k == 'deref':
+            from frontend import N
+            return gen_bin(F, N('bin', op=op, l=e.r, r=e.l, ty=e.ty), fam, size, then_ret, store)
     if op in SIMPLE_OPS:
         if fam != 'WA' and reads_reg(r, fam):        # ra_leafsum5: target read later -> compute in WA
             gen_bin(F, e, 'WA', size, then_ret, store)
@@ -2004,7 +2010,7 @@ def regvar_stmt(F, e):
         d = regvar_of(e.l); T = F.tfam                     # op_sum2: s += *p++ + *q++ -> ld IX,(XBC+:2) /
         gen(F, e.r, T, 2)                                  # add IX,(XWA+:2) / add HL,IX
         F.emit(SIMPLE_OPS[e.op], '%s,%s' % (FAM[d.reg][2], FAM[T][2])); return True
-    if F.opt and e.k == 'opassign' and e.op in '+-' and regvar_of(e.l) and regvar_of(e.l).ty.size == 2 and \
+    if e.k == 'opassign' and e.op in '+-' and regvar_of(e.l) and regvar_of(e.l).ty.size == 2 and \
             char_arith(e.r) and getattr(F, 'tfam', None):
         d = regvar_of(e.l); T = F.tfam                     # opt_temps.c ot_sum: s += *a++ - *b++ ->
         gen(F, narrow(e.r, 1), T, 1); F.emit('exts', FAM[T][2])   # ld A,(XHL+:1) / sub A,(XBC+:1) / exts WA /
@@ -2313,6 +2319,19 @@ def gen_counted(F, s, last, cl):
     F.emit('cp', '%s,%s' % (I, K)); F.emit('j', 'lt,%s' % body)
     F.lines.append(exitl + ':')
 
+def byte_compare_in(c):
+    found = []
+    def v(n, d):
+        if n.k == 'bin' and n.op in ('==', '!='):
+            ok = True
+            for x in (n.l, n.r):
+                x = strip(x)
+                while x.k == 'cast': x = strip(x.e)
+                ok = ok and x.k == 'load' and strip(x.e).k == 'deref' and x.ty.size == 1
+            if ok: found.append(n)
+    walk(c, v)
+    return bool(found)
+
 def gen_loop(F, s, last):
     """for / while / do (regalloc_notes.md, loop shapes); labels: exit first, then body"""
     cl = getattr(F, 'counted', {}).get(id(s))
@@ -2337,7 +2356,9 @@ def gen_loop(F, s, last):
             if t['loop'] == id(s): t['done'] = False
         F.loops.append((exitl, lambda: body)); gen_stmt(F, s.body, False); flush_pops(F); F.loops.pop()
         F.emit('j', body); F.lines.append(exitl + ':'); return
-    if s.k == 'while' and F.opt and s.cond is not None:  # -XS rotation: j test / body / test (_strcat)
+    if s.k == 'while' and s.cond is not None and (F.opt or (F.adecl and byte_compare_in(s.cond))):
+        # -XS rotation: j test / body / test (_strcat); plain -Xr rotates a test that compares two bytes too
+        # (opt_temps.c ot_cmp_abn, ot_len2), and repeats the others in front (ctrl.c c_cnt, c_clear)
         test = F.newulabel(); body = F.newulabel()
         F.emit('j', test); F.lines.append(body + ':')
         cont = [None]
@@ -2530,7 +2551,8 @@ def leaf_r6(F):
     retloc = [d for d in locs if d in rets]
     if len(locs) > len(retloc) or len(retloc) > 1: return False
     arrival = {p: p.reg for p in params}
-    T, final, rl = leafalloc.choose(arrival, counter, retloc[0] if retloc else None, kind)
+    try: T, final, rl = leafalloc.choose(arrival, counter, retloc[0] if retloc else None, kind, opt=F.opt)
+    except leafalloc.Fail: return False
     mv = leafalloc.moves(params, arrival, final)
     for p in params: p.reg = final[p]
     if retloc: retloc[0].reg = rl
@@ -2563,7 +2585,7 @@ def plan_leaf(F):
         if n.k == 'load' and strip(n.e).k == 'deref' and not F.opt: temps_bc.append(n)
         if F.opt and n.k == 'bin' and n.op == '=' and store_through_temp(n): temps_bc.append(n)   # _strset
     walk(f.body, visit)
-    if F.opt and F.adecl and not has_call and leaf_r6(F): return True
+    if F.adecl and not has_call and leaf_r6(F): return True
     if has_call and not (F.opt and not F.adecl and not any(d.kind == 'local' for d in f.decls) and f.params
                          and not live_across_call(f.body)):
         return False                                   # _ltoa at -O3 -XS: nothing read after its calls
@@ -3131,6 +3153,13 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None):
     if F.opt and getattr(F, 'fp_temps', None) is not None: F.lines = fpgen.hoist_common(F.lines)
     if F.opt: F.lines = tail_calls_opt(F, cross_jump(F, F.lines))
     else: F.lines = tail_calls(F.lines, getattr(F, 'switch_table', False))
+    if not F.opt and getattr(F, 'tfam', None):           # ot_cmp_anb under -Xr: j eq,L3 ... L3: ret -> ret eq
+        import re as _rx
+        for i, l in enumerate(F.lines):
+            m = _rx.match(r'^\tj\t(\w+),(L\d+)$', l)
+            if m and m.group(2) + ':' in F.lines:
+                k = F.lines.index(m.group(2) + ':')
+                if k + 1 < len(F.lines) and F.lines[k + 1] == '\tret': F.lines[i] = '\tret\t' + m.group(1)
     import re                                            # no self-moves: the oracle never writes ld XWA,XWA
     F.lines = [l for l in F.lines if not re.match(r'^\tld\t(\w+),\1$', l)]
     # a call directly followed by the return becomes a jump (cmp_ui: ge_ui_br0)

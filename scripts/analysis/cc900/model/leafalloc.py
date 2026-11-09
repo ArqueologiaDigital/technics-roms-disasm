@@ -21,11 +21,19 @@ KINDS = {'move': (['DE', 'WA', 'BC'], 'evict', True), 'heavy': (['DE', 'WA', 'BC
          'count': (['DE', 'HL', 'IX'], 'free-only', False), 'word': (['DE', 'HL', 'IX'], 'free-only', False),
          'none': ([], 'none', False)}
 
+# plain -Xr (rule R1 of the same fit, 38 of 38 rows): WA for move / heavy / arith / cmp2, BC for cmp, no counter
+# clause, wider relocation lists, and the returned local keeps HL (a victim goes to IX instead)
+RELOC_XR = {'WA': ['DE', 'HL', 'IX'], 'BC': ['DE', 'HL', 'IX'], 'DE': ['HL', 'IX']}
+KINDS_XR = dict(KINDS, move=(['WA'], 'evict', False), heavy=(['WA'], 'evict', False), arith=(['WA'], 'evict', False),
+                cmp2=(['WA'], 'evict', False), cmp=(['BC'], 'evict', False))
+
 class Fail(Exception): pass
 
-def choose(arrival, counter, retloc, kind):
+def choose(arrival, counter, retloc, kind, opt=True):
     """arrival: {var: family}; returns (T, final {var: family}, retloc family or None)"""
-    pref, policy, excl_n = KINDS[kind]
+    global RELOC
+    pref, policy, excl_n = (KINDS if opt else KINDS_XR)[kind]
+    RELOC_USE = RELOC if opt else RELOC_XR
     occ0 = {f: v for v, f in arrival.items()}
     def attempt(yielding):
         occ = dict(occ0); where = {v: f for f, v in occ.items()}
@@ -35,7 +43,7 @@ def choose(arrival, counter, retloc, kind):
             if f == cand or occ.get(f) is not None: return False
             return yielding or f not in reserved
         def relocate(v, src, cand):
-            for f in RELOC.get(src, []):
+            for f in RELOC_USE.get(src, []):
                 if free(f, cand):
                     if f in reserved: yielded.add(reserved.pop(f))
                     del occ[src]; occ[f] = v; where[v] = f; return True
@@ -59,7 +67,9 @@ def choose(arrival, counter, retloc, kind):
             if relocate(v, cand, cand): return cand, where, reserved, yielded
         raise Fail
     try: T, where, reserved, yielded = attempt(False)
-    except Fail: T, where, reserved, yielded = attempt(True)
+    except Fail:
+        if not opt: raise
+        T, where, reserved, yielded = attempt(True)
     rl = None
     if retloc is not None: rl = 'IX' if retloc in yielded else 'HL'
     return T, where, rl
