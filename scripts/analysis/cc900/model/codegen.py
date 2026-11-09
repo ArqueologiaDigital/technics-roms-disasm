@@ -876,9 +876,48 @@ def gen_compare(F, e):
 def jump(F, cc, target):
     F.emit('ret', cc) if target == 'RET' else F.emit('j', '%s,%s' % (cc, target))
 
+def table_test(c):
+    """(table global, index expression, bit) when c is `tab[(unsigned char)(x)] & (1 << bit)` (ctype.h's isdigit(),
+    islower() ...), else None"""
+    c = strip(c)
+    while c.k == 'cast' and c.kind == 'IntegralCast': c = strip(c.e)
+    if c.k != 'bin' or c.op != '&': return None
+    m = fold(c.r)
+    if m.k != 'const' or m.value is None or m.value <= 0 or m.value & (m.value - 1): return None
+    x = strip(c.l)
+    while x.k == 'cast' and x.kind == 'IntegralCast': x = strip(x.e)
+    if x.k != 'load' or strip(x.e).k != 'index': return None
+    ix = strip(x.e); base = strip(ix.base)
+    while base.k in ('decay', 'cast'): base = strip(base.e)
+    if base.k != 'var' or base.decl.kind != 'global' or x.ty.size != 1: return None
+    idx = strip(ix.idx)
+    while idx.k == 'cast' and idx.kind == 'IntegralCast' and idx.ty.size >= 2: idx = strip(idx.e)
+    if not (idx.k == 'cast' and idx.ty.size == 1 and not idx.ty.signed): return None
+    return base.decl, strip(idx.e), m.value.bit_length() - 1
+
+def gen_table_test(F, tt):
+    """ld A,<x> / extz WA / [lda XBC,_tab] / bit k,(XBC+WA); returns 'ne' (the condition is true on ne)
+    (_strupr, _atoi: the index in t1 = WA, the base in its L2 register, hoisted or per use)"""
+    tab, x, bit = tt
+    m = mem_operand(F, x)
+    if m is None: raise Unsupported('table index')
+    if m not in ('A',):
+        F.emit('ld', 'A,%s' % (FAM[family_of(m)][1] if family_of(m) else m))
+    F.emit('extz', 'WA')
+    l2 = getattr(F, 'l2', {})
+    breg = l2.get('tab_inv', {}).get(tab)
+    if breg is None:
+        breg = l2.get('tab_once', {}).get(tab)
+        if breg is None: raise Unsupported('table base')
+        F.emit('lda', 'X%s,_%s' % (breg, tab.name))
+    F.emit('bit', '%s,(X%s+WA)' % (hx(bit), breg))
+    return 'ne'
+
 def gen_cond_true(F, c, target):
     """jump to target when c is true (ctrl.c: c_orbr's first operand)"""
     c = strip(c)
+    if table_test(c) and getattr(F, 'l2', None):
+        jump(F, gen_table_test(F, table_test(c)), target); return
     if c.k == 'un' and c.op == '!': return gen_cond_false(F, c.e, target)
     if c.k == 'bin' and c.op == '||':
         gen_cond_true(F, c.l, target); gen_cond_true(F, c.r, target); return
@@ -902,6 +941,9 @@ def gen_cond_false(F, c, target):
     """jump to `target` (a label, or 'RET' for the function exit) when condition c is false; returns the
     constant value of c when it folds"""
     c = strip(c)
+    if table_test(c) and getattr(F, 'l2', None):
+        cc = gen_table_test(F, table_test(c))
+        F.emit('ret', INV[cc]) if target == 'RET' else F.emit('j', '%s,%s' % (INV[cc], target)); return None
     if c.k == 'un' and c.op == '!':
         gen_cond_true(F, c.e, target); return None
     if c.k == 'bin' and c.op == '&&':                # c_andbr: both operands jump to the false target
@@ -1574,7 +1616,8 @@ def gen_stmt(F, s, last):
             if c.k == 'decl' and c.init is None: i += 1; continue
             nxt = body[i + 1] if i + 1 < len(body) else None
             if F.opt and c.k == 'expr' and c.e.k == 'bin' and c.e.op == '=' and strip(c.e.l).k == 'deref' and nxt is not None \
-                    and nxt.k == 'expr' and strip(nxt.e).k == 'incdec' and strip(nxt.e).op == '++':
+                    and nxt.k == 'expr' and strip(nxt.e).k == 'incdec' and strip(nxt.e).op == '++' and \
+                    id(c.e) not in getattr(F, 'l2', {}).get('held', {}):     # _strupr: a held store is not folded
                 pv = strip(strip(c.e.l).e); iv = strip(strip(nxt.e).e)
                 if pv.k == 'load' and regvar_of(pv.e) and regvar_of(iv) is regvar_of(pv.e):
                     from frontend import N                   # _strncpy: ldb (XIX+:1),0x0
@@ -1843,6 +1886,13 @@ def gen_stmt(F, s, last):
             F.emit('lda', 'XBC,%s+:%d' % (FAM[pd.reg][4], pd.ty.base.size))
             F.emit('ld', '%s,%s' % (FAM['WA'][sv.ty.size], mem_operand(F, N_load(sv))))
             F.emit('ld', '(XBC),%s' % FAM['WA'][size]); return
+        hr = getattr(F, 'l2', {}).get('held', {}).get(id(s.e))
+        if hr is not None and lv.k == 'deref':           # _strupr: ld XDE,XIX / (the value) / ld (XDE),A
+            pv = strip(lv.e); pd = regvar_of(pv.e) if pv.k == 'load' else None
+            if pd is None: raise Unsupported('held store address')
+            F.emit('ld', 'X%s,%s' % (hr, FAM[pd.reg][4]))
+            fam = gen(F, s.e.r, getattr(F, 'tfam', 'WA'), size)
+            F.emit('ld', '(X%s),%s' % (hr, FAM[fam][size])); return
         t = lvalue(F, lv)                            # m_ga_set, m_gps_set
         rv = regvar_of(strip(s.e.r).e) if strip(s.e.r).k == 'load' else None
         if rv is not None and rv.ty.size == size:
@@ -3001,6 +3051,109 @@ def leaf_r6(F):
         used.add(r); p.reg = r; F.emit('ld', '%s,(XSP+%s)' % (FAM[r][2], hx(p.off + F.push)))
     return True
 
+def leaf_l2(F):
+    """cdecl -O3 -XS leaf functions with a table lookup (ctype.h): rule L2 (l2alloc.py; research-scratch
+    sessions/2026-11-09_cc900-leaf-o3xs).  Classifies the parameters, locals and temporaries, allocates them, and
+    leaves the temporaries' registers in F.l2: t1 (the index / byte scratch), tab_inv / tab_once (table bases,
+    hoisted or per use), held (store addresses copied before the value is built)."""
+    import l2alloc
+    f = F.f
+    tabs = []; loops = []
+    def find(n, dep):
+        if table_test(n): tabs.append((table_test(n), dep, n))
+        if n.k in ('for', 'while', 'do'): loops.append(n)
+    walk(f.body, find)
+    if not tabs: return False
+    pos = {}; k = [0]
+    def order(n, dep):
+        k[0] += 1
+        if n.k == 'var' and n.decl not in pos: pos[n.decl] = k[0]
+        if table_test(n) and ('tab', table_test(n)[0]) not in pos: pos[('tab', table_test(n)[0])] = k[0]
+    walk(f.body, order)
+    rets = set()
+    walk(f.body, lambda n, d: rets.add(strip(strip(n.value).e).decl) if n.k == 'return' and n.value is not None and
+         strip(n.value).k == 'load' and strip(strip(n.value).e).k == 'var' else None)
+    inloop = {}; modified = set(); loopmod = set(); derefidx = set(); held_ptr = set(); held_nodes = []
+    def info(n, dep):
+        if n.k == 'var' and dep: inloop[n.decl] = inloop.get(n.decl, 0) + 1
+        if n.k == 'incdec' and strip(n.e).k == 'var':
+            modified.add(strip(n.e).decl)
+            if dep: loopmod.add(strip(n.e).decl)
+        if n.k in ('opassign',) and strip(n.l).k == 'var':
+            modified.add(strip(n.l).decl)
+            if dep: loopmod.add(strip(n.l).decl)
+        if n.k == 'bin' and n.op == '=' and strip(n.l).k == 'var':
+            modified.add(strip(n.l).decl)
+            if dep: loopmod.add(strip(n.l).decl)
+        if table_test(n):
+            x = table_test(n)[1]
+            while x.k == 'cast': x = strip(x.e)
+            if x.k == 'load' and strip(x.e).k == 'deref':
+                pv = strip(strip(x.e).e)
+                if pv.k == 'load' and strip(pv.e).k == 'var': derefidx.add(strip(pv.e).decl)
+        if n.k == 'bin' and n.op == '=' and strip(n.l).k == 'deref':
+            r = []
+            walk(n.r, lambda m, dd: r.append(m) if m.k == 'cond' or table_test(m) else None)
+            pv = strip(strip(n.l).e)
+            if r and pv.k == 'load' and strip(pv.e).k == 'var':
+                held_ptr.add(strip(pv.e).decl); held_nodes.append(n)
+    walk(f.body, info)
+    objs = []
+    W = lambda d: 32 if d.ty.size == 4 else 16 if d.ty.size == 2 else 8
+    used = [d for d in dict.fromkeys(list(f.params) + list(f.decls)) if d in pos and d.ty.kind in ('int', 'ptr')
+            and not d.addr_taken]
+    for d in used:
+        if d.kind not in ('param', 'local'): continue
+        idx = (f.params if d.kind == 'param' else [x for x in f.decls if x.kind == 'local']).index(d)
+        if d in rets: cls = 'ret'
+        elif d.kind == 'param':
+            if d.ty.kind == 'ptr' and d in loopmod: cls = 'walkh' if (d in derefidx or d in held_ptr) else 'walk'
+            elif d not in inloop: cls = 'out'
+            elif d in loopmod and d.ty.kind == 'int': cls = 'cnt'
+            else: return False                              # ro / rld parameters: not yet
+        else:
+            if d in loopmod: cls = 'loc'
+            else: cls = 'loc'
+        objs.append(dict(name=d, cls=cls, w=W(d), decl=idx, pos=pos.get(d, 0)))
+    objs.append(dict(name='t1', cls='t1', w=16))
+    tab_cls = {}
+    for (tab, x, bit), dep, n in tabs:
+        if tab in tab_cls: continue
+        if not dep: return False
+        cond_use = any(table_test(strip(lp.cond)) or any(table_test(m) for m in [lp.cond]) for lp in loops
+                       if getattr(lp, 'cond', None) is not None and uses_table(lp.cond, tab))
+        per_iter = sum(1 for t in tabs if t[0][0] is tab)
+        tab_cls[tab] = 'inv' if cond_use else ('once' if per_iter == 1 else 'multi')
+        objs.append(dict(name=('tab', tab), cls=tab_cls[tab], w=32, pos=pos.get(('tab', tab), 0)))
+    for i, hn in enumerate(held_nodes): objs.append(dict(name=('held', i), cls='held', w=32))
+    got = l2alloc.allocate(objs)
+    if any(v is None for v in got.values()): return False
+    BYTE = {'A': 'WA', 'C': 'BC', 'E': 'DE', 'L': 'HL'}
+    def fam(r):
+        if r.startswith('X'): return r[1:]
+        if r in ('WA', 'BC', 'DE', 'HL', 'IX', 'IY', 'IZ'): return r
+        return BYTE.get(r)                             # W / B / D / H and the Q halves: not yet
+    if any(fam(v) is None for v in got.values()): return False
+    F.l2 = {'t1': fam(got['t1']), 'tab_inv': {}, 'tab_once': {}, 'held': {}}
+    for o in objs:
+        r = got[o['name']]
+        if isinstance(o['name'], tuple) and o['name'][0] == 'tab':
+            F.l2['tab_inv' if o['cls'] == 'inv' else 'tab_once'][o['name'][1]] = fam(r)
+        elif isinstance(o['name'], tuple) and o['name'][0] == 'held':
+            F.l2['held'][id(held_nodes[o['name'][1]])] = fam(r)
+        elif o['name'] != 't1':
+            d = o['name']; d.reg = fam(r)
+            if d.kind == 'param': F.param_copies.append(d)
+    F.deferred = list(F.param_copies)
+    F.tfam = F.l2['t1']
+    return True
+
+def uses_table(n, tab):
+    found = []
+    walk(n, lambda m, d: found.append(m) if table_test(m) and table_test(m)[0] is tab else None)
+    if table_test(n) and table_test(n)[0] is tab: return True
+    return bool(found)
+
 def plan_leaf(F):
     """the leaf-function allocator of regalloc_notes.md"""
     f = F.f
@@ -3019,6 +3172,7 @@ def plan_leaf(F):
         if n.k == 'load' and strip(n.e).k == 'deref' and not F.opt: temps_bc.append(n)
         if F.opt and n.k == 'bin' and n.op == '=' and store_through_temp(n): temps_bc.append(n)   # _strset
     walk(f.body, visit)
+    if F.opt and not F.adecl and not has_call and leaf_l2(F): return True
     if F.adecl and not has_call and leaf_r6(F): return True
     if F.opt and not has_call and leaf_u1(F): return True
     if has_call and not (F.opt and not F.adecl and not any(d.kind == 'local' for d in f.decls) and f.params

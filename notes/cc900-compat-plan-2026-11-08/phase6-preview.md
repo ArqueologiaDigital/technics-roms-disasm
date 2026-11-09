@@ -67,7 +67,7 @@ assembles and links it with llvm-mc / ld.lld at the pair's address, and compares
 | personality | byte-identical pairs | which                                                                                                                                                                                                                                                                                                                                                                   |
 |-------------|----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `v4.23`     | 172 (18 differ)      | `_ltoa`, `_strcat`, `_strncpy`, `_strncat`, `_strcpy`, `_strlen`, `_memset`, `_memcmp`, `_memchr`, `_memcpy`, `_memccpy`, `__ctype` x9 each, `_strncmp` x10, `_strchr` x5, `_strnset` x5, `.sbrk` x6, `__FloatErrorHandle` x3, sub CPU float tables x9; `_modf`, `_fabs`, `_sin`, `_cos`, `_tan`, `_exp` (sub CPU x3 each); `_sprintf`, `_vsprintf` (HD-AE5000 x4 each) |
-| `kn5000`    | 185 (5 differ)       | the same 172, plus `_ultoa` (main CPU v10, v9, v7, v6, v5, HD-AE5000 x4) and `_ldiv` (HD-AE5000 x4)                                                                                                                                                                                                                                                                     |
+| `kn5000`    | 187 (5 differ)       | the same 172, plus `_ultoa` (main CPU v10, v9, v7, v6, v5, HD-AE5000 x4) and `_ldiv` (HD-AE5000 x4); `_strupr` (HD-AE5000 v2.06i, v2.01i)                                                                                                                                                                                                                               |
 
 `_ltoa` came later the same day (`-O` keeps the parameters of a function with calls in scratch registers when no
 value is read after a call; and asm900 writes a 32-bit `cp XDE,0x0` with the long immediate, `ea cf 00 00 00 00`, not
@@ -121,8 +121,8 @@ a DOS end-of-file byte, which the front end now cuts.)
 | subcpu v141 | 16    | 10        | 1      | 5                | 0                      |
 | subcpu v140 | 16    | 10        | 1      | 5                | 0                      |
 | table data  | 3     | 2         | 0      | 1                | 1                      |
-| hdae v2.06i | 21    | 17        | 0      | 4                | 1                      |
-| hdae v2.01i | 21    | 17        | 0      | 4                | 0                      |
+| hdae v2.06i | 21    | 18        | 0      | 3                | 1                      |
+| hdae v2.01i | 21    | 18        | 0      | 3                | 0                      |
 | hdae v1.15i | 19    | 17        | 0      | 2                | 0                      |
 | hdae v1.10i | 19    | 17        | 0      | 2                | 1                      |
 
