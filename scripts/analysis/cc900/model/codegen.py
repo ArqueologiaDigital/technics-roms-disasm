@@ -1475,7 +1475,8 @@ def gen_switch(F, s, last):
         if ext: F.emit(ext, 'WA')
     exit_is_ret = last and not F.pushes and not F.xiz_vars and not getattr(F, 'frame', 0) and not F.pending
     def to_default(cc):
-        if deflab == end and exit_is_ret: F.emit('ret', cc)
+        if deflab == end and exit_is_ret:
+            F.emit('ret', cc); F.ret_refs = getattr(F, 'ret_refs', set()) | {end}   # still a reference to end
         else: F.emit('j', '%s,%s' % (cc, deflab))
     n = len(vals); lo = min(v for v, _, _ in vals) if vals else 0; hi = max(v for v, _, _ in vals) if vals else 0
     table = n >= 5 and hi - lo + 1 <= 2 * n
@@ -2019,6 +2020,85 @@ def store_knowledge(lines):
         out.append(l)
     return out
 
+def drop_jump_to_next(lines):
+    def is_label(l): return l.endswith(':') and not l.startswith('\t')
+    out = []
+    for i, l in enumerate(lines):
+        if l.startswith('\tj\t') and ',' not in l:
+            k = i + 1; labs = set()
+            while k < len(lines) and is_label(lines[k]): labs.add(lines[k][:-1]); k += 1
+            if l.split('\t')[2] in labs: continue
+        out.append(l)
+    return out
+
+def cross_jump(F, lines):
+    """-O tail merging (switch.c and ctrl.c under -O3 -XS -Xr).  Jumps to the next label go first.  Then, for each
+    label L, the instruction before each `j L` is compared with the one that falls into L: if they are equal the
+    jumps move up to a new label before the falling instruction (sw_jt6: ld WA,0xa / j L50000 ... ld WA,0xf /
+    L50000: cal .f1 / L3: ret); with no matching fall-through, two or more equal ones merge into the last
+    (sw_jt6d: ld WA,0xf / L50002: cal .f1 / j L9).  Repeats while tails match."""
+    def is_label(l): return l.endswith(':') and not l.startswith('\t')
+    def uncond(l): return l.startswith(('\tret', '\tj\t', '\tretd')) and ',' not in l
+    lines = drop_jump_to_next(lines)
+    while True:
+        done = False
+        for li, lab in enumerate(lines):
+            if not is_label(lab): continue
+            L = lab[:-1]
+            k = li - 1
+            while k >= 0 and is_label(lines[k]): k -= 1
+            X = lines[k] if k >= 0 and not uncond(lines[k]) and not lines[k].startswith('\tj') else None
+            jumps = [i for i, l in enumerate(lines) if l == '\tj\t' + L and i > 0 and not is_label(lines[i - 1])
+                     and not lines[i - 1].startswith(('\tj', '\tret'))]
+            js = [i for i in jumps if X is not None and lines[i - 1] == X]
+            N = None
+            if js:                                         # merge into the fall-through
+                N = F.newlabel()
+                for i in sorted(js, reverse=True): lines[i - 1:i + 1] = ['\tj\t' + N]
+                k = [i for i in range(len(lines)) if lines[i] == lab][0] - 1
+                while is_label(lines[k]): k -= 1
+                lines.insert(k, N + ':')
+            else:
+                byx = {}
+                for i in jumps: byx.setdefault(lines[i - 1], []).append(i)
+                grp = [g for g in byx.values() if len(g) >= 2]
+                if grp:
+                    g = grp[0]; X2 = lines[g[0] - 1]; N = F.newlabel()
+                    for i in sorted(g[:-1], reverse=True): lines[i - 1:i + 1] = ['\tj\t' + N]
+                    last = max(i for i, l in enumerate(lines) if l == '\tj\t' + L and lines[i - 1] == X2)
+                    lines.insert(last - 1, N + ':')        # the last `X / j L` of the group keeps the code
+            if N: done = True; break
+        if not done: break
+    return lines
+
+def tail_calls_opt(F, lines):
+    """-O: cal X / j L (L: ret) becomes j X; a label that lost all its references (and is not a ret cc target)
+    goes, after which cal X / ret becomes j X and a ret after an unconditional jump goes (sw_jt6d: L17: j .f0)"""
+    def is_label(l): return l.endswith(':') and not l.startswith('\t')
+    def leads_to_ret(i):
+        while i < len(lines) and is_label(lines[i]): i += 1
+        return i < len(lines) and lines[i] == '\tret'
+    pos = {l[:-1]: i for i, l in enumerate(lines) if is_label(l)}
+    out = list(lines); touched = set()
+    for i, l in enumerate(lines):
+        if not l.startswith('\tcal\t') or l.split('\t')[2].startswith(('C9H_', '._f')) or l.endswith(';stack'): continue
+        nxt = lines[i + 1] if i + 1 < len(lines) else ''
+        if nxt.startswith('\tj\t') and ',' not in nxt and nxt.split('\t')[2] in pos and leads_to_ret(pos[nxt.split('\t')[2]]):
+            out[i] = '\tj\t' + l.split('\t')[2]; out[i + 1] = None; touched.add(nxt.split('\t')[2])
+    out = [l for l in out if l is not None]
+    refs = lambda L: any(L in x.split('\t')[-1].split(',') or x.endswith(',' + L) or x.endswith('\t' + L)
+                         for x in out if not is_label(x))
+    out = [l for l in out if not (is_label(l) and l[:-1] in touched and not refs(l[:-1])
+                                  and l[:-1] not in getattr(F, 'ret_refs', set()))]
+    res = []
+    for i, l in enumerate(out):
+        if l == '\tret' and res and res[-1].startswith('\tcal\t') and res[-1].split('\t')[2].startswith('.') \
+                and not res[-1].endswith(';stack'):
+            res[-1] = '\tj\t' + res[-1].split('\t')[2]; continue
+        if l == '\tret' and res and res[-1].startswith('\tj\t') and ',' not in res[-1]: continue
+        res.append(l)
+    return res
+
 def tail_calls(lines, keep_end):
     """cal X directly followed by j L, where L leads to ret, becomes j X (switch.c sw_jt6, ctrl.c c_ifchain under
     -Xr; a cal that falls into L: ret stays, cmp_i eq_i_br).  A ret left unreferenced after an unconditional jump is dropped, except a switch
@@ -2069,7 +2149,8 @@ def compile_function(f, opt, adecl, personality='v4.23'):
         epilogue(F)
         F.emit('ret')
     for t in reversed(getattr(F, 'tables', [])): F.lines[1:1] = t     # switch tables right after the label
-    F.lines = tail_calls(F.lines, getattr(F, 'switch_table', False))
+    if F.opt: F.lines = tail_calls_opt(F, cross_jump(F, F.lines))
+    else: F.lines = tail_calls(F.lines, getattr(F, 'switch_table', False))
     import re                                            # no self-moves: the oracle never writes ld XWA,XWA
     F.lines = [l for l in F.lines if not re.match(r'^\tld\t(\w+),\1$', l)]
     # a call directly followed by the return becomes a jump (cmp_ui: ge_ui_br0)

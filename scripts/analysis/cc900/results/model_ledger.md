@@ -17,7 +17,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-4-micro-switch, v423/none                        | micro/switch.c    | 2 / 25 exact (8.0%)     |
 | run 2026-11-09-4-micro-switch, v423/Xr                          | micro/switch.c    | 22 / 25 exact (88.0%)   |
 | run 2026-11-09-4-micro-switch, v423/O3XS                        | micro/switch.c    | 0 / 25 exact (0.0%)     |
-| run 2026-11-09-4-micro-switch, v423/O3XSXr                      | micro/switch.c    | 0 / 25 exact (0.0%)     |
+| run 2026-11-09-4-micro-switch, v423/O3XSXr                      | micro/switch.c    | 20 / 25 exact (80.0%)   |
 | run 2026-11-08-9-micro-optloops, v423/O3XS                      | micro/opt_loops.c | 15 / 33 exact (45.5%)   |
 | run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality v4.23  | 1997 LIB/SRC      | 17 / 72 exact (23.6%)   |
 | run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality kn5000 | 1997 LIB/SRC      | 15 / 72 exact (20.8%)   |
