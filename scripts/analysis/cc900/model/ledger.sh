@@ -66,4 +66,8 @@ done
 for c in none O3XS; do    # -Xr: a double return is THC1-Error-373 under adecl
   row "run 2026-11-09-15-micro-fporder, v423/$c" "micro/fp_order.c" "$O/2026-11-09-15-micro-fporder/out/v423/$c" corpus/micro/fp_order.c
 done
+for c in none O3XS; do    # FP slot probes of research-scratch sessions/2026-11-09_cc900-fp-prepass (corpus/probes/)
+  row "run 2026-11-09-18-micro-fpprepass, v423/$c" "probes/fpp1.c" "$O/2026-11-09-18-micro-fpprepass/out/v423/$c/micro" corpus/probes/fpp1.c --opt $c
+  row "run 2026-11-09-19-micro-fpprepass2, v423/$c" "probes/fpp2.c" "$O/2026-11-09-19-micro-fpprepass2/out/v423/$c/micro" corpus/probes/fpp2.c --opt $c
+done
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c

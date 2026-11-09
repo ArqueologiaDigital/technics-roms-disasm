@@ -43,6 +43,10 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-14-micro-libshapes, v423/O3XSXr                      | micro/ra_libshapes.c | 13 / 21 exact (61.9%)    |
 | run 2026-11-09-15-micro-fporder, v423/none                          | micro/fp_order.c     | 10 / 18 exact (55.6%)    |
 | run 2026-11-09-15-micro-fporder, v423/O3XS                          | micro/fp_order.c     | 8 / 18 exact (44.4%)     |
+| run 2026-11-09-18-micro-fpprepass, v423/none                        | probes/fpp1.c        | 15 / 71 exact (21.1%)    |
+| run 2026-11-09-19-micro-fpprepass2, v423/none                       | probes/fpp2.c        | 10 / 49 exact (20.4%)    |
+| run 2026-11-09-18-micro-fpprepass, v423/O3XS                        | probes/fpp1.c        | 16 / 71 exact (22.5%)    |
+| run 2026-11-09-19-micro-fpprepass2, v423/O3XS                       | probes/fpp2.c        | 10 / 49 exact (20.4%)    |
 | run 2026-11-09-9-micro-fp, v423/none                                | micro/fp.c           | 108 / 108 exact (100.0%) |
 | run 2026-11-09-9-micro-fp, v423/O3XS                                | micro/fp.c           | 108 / 108 exact (100.0%) |
 | run 2026-11-09-10-micro-fptemps, v423/none                          | micro/fp_temps.c     | 33 / 33 exact (100.0%)   |

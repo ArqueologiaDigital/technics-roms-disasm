@@ -90,17 +90,26 @@ class FrameAlloc:
     allocator whose depth is D' (the longs pooled like op slots)."""
     def __init__(s, nlong, pooled_longs=False):
         s.slots = []; s.depth = 0; s.nlong = 0; s.region = None; s.n = max(nlong, 1); s.pool_l = pooled_longs
+        s.stack = []                                     # rule R6 (E3): freed op slots, the last freed on top
         if nlong and not pooled_longs and LONG_TOP:        # fo_conv2: the long above the double built before it
             s.region = [4 * (s.n - i) for i in range(s.n)]; s.depth = 4 * s.n
     def begin_stmt(s):
-        for sl in s.slots:
-            if sl[2] == 'op' or (sl[2] == 'long' and s.pool_l): sl[3] = False
+        for sl in sorted(s.slots, key=lambda x: x[0]):   # (research-scratch sessions/2026-11-09_cc900-fp-prepass,
+            if (sl[2] == 'op' or (sl[2] == 'long' and s.pool_l)) and sl[3]:   # b804104): shallow first, so the
+                sl[3] = False                                                   # deepest ends on top
+                if sl[0] in s.stack: s.stack.remove(sl[0])
+                s.stack.append(sl[0])
     def get(s, size, kind):
         if kind == 'long': s.nlong += 1
         reusable = kind == 'op' or (kind == 'long' and s.pool_l)
         free = [x for x in s.slots if reusable and not x[3] and x[1] == size and x[2] == kind]
-        if free:
-            sl = min(free, key=lambda x: x[0]); sl[3] = True; return sl[0]
+        if free:                                         # R6: the free slot freed last (_atan's returns, __trig)
+            depths = {x[0] for x in free}
+            onstack = [d for d in s.stack if d in depths]
+            pick = onstack[-1] if onstack else min(depths)
+            sl = [x for x in free if x[0] == pick][0]; sl[3] = True
+            if pick in s.stack: s.stack.remove(pick)
+            return sl[0]
         if kind == 'long' and not s.pool_l:
             if s.region is None:
                 base = s.depth; s.depth += 4 * s.n
