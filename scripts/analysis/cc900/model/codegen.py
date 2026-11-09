@@ -1086,9 +1086,22 @@ def u1_operand(F, v):
     if getattr(F, 'u1_i', None) is None or v.k != 'index': return None
     b = strip(v.base); ix = strip(v.idx)
     while ix.k == 'cast': ix = strip(ix.e)
-    if not (b.k == 'load' and regvar_of(b.e) and ix.k == 'load' and strip(ix.e).k == 'var' and strip(ix.e).decl is F.u1_i):
+    rl = getattr(F, 'u1_reload', {})
+    pd = strip(b.e).decl if b.k == 'load' and strip(b.e).k == 'var' else None
+    if not (b.k == 'load' and (regvar_of(b.e) or pd in rl) and ix.k == 'load' and strip(ix.e).k == 'var'
+            and strip(ix.e).decl is F.u1_i):
         return None
-    P = FAM[regvar_of(b.e).reg][4]; I = FAM[F.u1_i.reg][2]
+    I = FAM[F.u1_i.reg][2]
+    if pd in rl:                                         # cdecl: the pointer reloaded at its use
+        P = FAM[rl[pd]][4]
+        if v.ty.size == 1:
+            F.emit('ld', '%s,(XSP+%s)' % (P, hx(pd.off + F.push))); return '(%s+%s)' % (P, I)
+        T = getattr(F, 'u1_chain', None); XT = FAM[T][4]
+        F.emit('ld', '%s,%s' % (FAM[T][2], I)); F.emit('exts', XT)
+        if v.ty.size == 2: F.emit('add', '%s,%s' % (XT, XT))
+        else: F.emit('sll', '%s,%s' % (hx({4: 2, 8: 3}[v.ty.size]), XT))
+        F.emit('ld', '%s,(XSP+%s)' % (P, hx(pd.off + F.push))); F.emit('add', '%s,%s' % (XT, P)); return '(%s)' % XT
+    P = FAM[regvar_of(b.e).reg][4]
     if v.ty.size == 1: return '(%s+%s)' % (P, I)
     T = getattr(F, 'u1_chain', None)
     if T is None: return None
@@ -2626,6 +2639,10 @@ def gen_loop(F, s, last):
                          '==': operator.eq, '!=': operator.ne}[cnd.op](k0.value, fold(x).value)
                 if not holds: F.emit('j', exitl) if not (after_ret and not F.loops) else F.emit('ret')
                 rotated = 'tested'; xm = None
+            if xm is not None and getattr(F, 'u1_bound', None) is not None and not F.adecl and \
+                    getattr(F.u1_bound, 'reg', None) and not getattr(F, 'u1_bound_loaded', False):
+                d = F.u1_bound; F.u1_bound_loaded = True          # opt_counted.c O3XS: ld BC,(XSP+0x8) / cp BC,0x0
+                F.emit('ld', '%s,(XSP+%s)' % (FAM[d.reg][d.ty.size], hx(d.off + F.push)))
             if xm is not None:
                 F.emit('cp' + ('' if family_of(xm) else ('w' if sz == 2 else 'b' if sz == 1 else '')), '%s,%s' % (xm, hx(k0.value)))
                 tgt = 'RET' if after_ret and not F.loops else exitl
@@ -2788,7 +2805,8 @@ def leaf_u1(F):
     inc = strip(lp.inc)
     if not (inc.k == 'incdec' and inc.op == '++' and strip(inc.e).k == 'var' and strip(inc.e).decl is i): return False
     params = list(f.params)
-    if any(getattr(p, 'reg', None) not in ('WA', 'BC', 'DE') for p in params): return False
+    cdecl = not F.adecl
+    if not cdecl and any(getattr(p, 'reg', None) not in ('WA', 'BC', 'DE') for p in params): return False
     acc = []; bad = []
     def v(n, d):
         if n.k == 'index':
@@ -2808,6 +2826,7 @@ def leaf_u1(F):
          and strip(n.value).k == 'load' and strip(strip(n.value).e).k == 'var' else None)
     retv = [d for d in locs if d in rets]
     if len(retv) > 1: return False
+    if cdecl: return leaf_u1_cdecl(F, lp, i, kv, params, acc, locs, retv)
     used = {p.reg for p in params}
     order = ('WA', 'BC', 'DE', 'HL', 'IX', 'IY', 'IZ')
     def take():
@@ -2839,6 +2858,46 @@ def leaf_u1(F):
         F.emit('ld', '%s,%s' % (FAM[dst][sz], FAM[src][sz]))
     if 'IZ' in used and any(getattr(d, 'reg', None) == 'IZ' for d in locs) or getattr(F, 'u1_chain', None) == 'IZ':
         F.emit('push', 'IZ'); F.push = 2; F.pushes = ['IZ']
+    return True
+
+def leaf_u1_cdecl(F, lp, i, kv, params, acc, locs, retv):
+    """U1 under cdecl -O3 -XS (opt_counted.c O3XS): the loop bound gets a register, loaded just before the first
+    test; a pointer read once per iteration is reloaded at each use into its own register; the first temporary takes
+    WA (the byte, through the pointer it is loaded through; else the index chain); then the kept parameters and the
+    directly used pointers in reverse declaration order, the chain operands' reload registers, the other locals, the
+    counter (oc_sum_pn: chain WA, n BC, p's reload XDE, s HL, i IX; oc_cpy_abn: b's reload WA, n BC, a's DE, i HL)"""
+    used = set(); order = ('WA', 'BC', 'DE', 'HL', 'IX', 'IY', 'IZ')
+    def take():
+        r = next((g for g in order if g not in used), None)
+        if r is None: raise Unsupported('out of registers')
+        used.add(r); return r
+    if retv: retv[0].reg = 'HL'; used.add('HL')
+    bound = strip(kv.e).decl
+    others = [p for p in params if p is not bound and p not in {q for q, _ in acc}]
+    if others: return False                              # (a parameter used otherwise: not modelled here)
+    ptrs = []
+    for p_, sz in acc:
+        if p_ not in ptrs: ptrs.append(p_)
+    loads = []
+    walk(lp.body, lambda m, dd: loads.append(m) if m.k == 'load' and strip(m.e).k == 'index' and m.ty.size == 1 else None)
+    byte_src = None
+    if loads:
+        b = strip(strip(loads[0].e).base); byte_src = strip(b.e).decl if b.k == 'load' and strip(b.e).k == 'var' else None
+    wide = [p_ for p_, sz in acc if sz > 1]
+    F.u1_reload = {}
+    if byte_src is not None: F.u1_reload[byte_src] = 'WA'; used.add('WA'); F.tfam = 'WA'
+    elif wide: F.u1_chain = take()
+    direct = [p_ for p_ in ptrs if p_ not in F.u1_reload and all(sz == 1 for q, sz in acc if q is p_)]
+    for p_ in reversed(params):                          # kept parameters and direct bases, reverse declaration order
+        if p_ is bound: bound.reg = take()
+        elif p_ in direct: F.u1_reload[p_] = take()
+    for p_ in ptrs:
+        if p_ not in F.u1_reload: F.u1_reload[p_] = take()   # chain operands' reloads
+    for d in reversed([d for d in locs if d is not i and d not in retv and d.uses]):
+        d.reg = take()
+    if i not in retv: i.reg = take()
+    F.u1_i = i; F.u1_bound = bound
+    if 'IZ' in used: F.emit('push', 'IZ'); F.push = 2; F.pushes = ['IZ']
     return True
 
 def leaf_r6(F):
@@ -2893,7 +2952,7 @@ def plan_leaf(F):
         if F.opt and n.k == 'bin' and n.op == '=' and store_through_temp(n): temps_bc.append(n)   # _strset
     walk(f.body, visit)
     if F.adecl and not has_call and leaf_r6(F): return True
-    if F.adecl and F.opt and not has_call and leaf_u1(F): return True
+    if F.opt and not has_call and leaf_u1(F): return True
     if has_call and not (F.opt and not F.adecl and not any(d.kind == 'local' for d in f.decls) and f.params
                          and not live_across_call(f.body)):
         return False                                   # _ltoa at -O3 -XS: nothing read after its calls

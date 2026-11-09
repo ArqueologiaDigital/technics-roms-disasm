@@ -128,4 +128,7 @@ parameter to the first free of DE, HL: `ld XHL,XBC`) or the index chain (`ld DE,
 `add XDE,XWA` / `(XDE)`), then the other locals in reverse declaration order, then the counter; a char array is
 indexed `(Xp+i)`.  opt_counted.c O3XSXr 2 -> 24 of 32; micro O3XSXr 632 -> 635.  Not yet: a long constant store's
 temporary class, two arrays (the held address copy), down-counting loops, nested loops, the `ldirw` block copy,
-and the O3XS / Xr variants.
+and the Xr variant.  Under cdecl `-O3 -XS` (`leaf_u1_cdecl`): the bound gets a register loaded just before
+the first test, a pointer read once per iteration is reloaded at each use (a chain operand: `ld XDE,(XSP+0x4)` /
+`add XWA,XDE`; a direct base: `ld XDE,(XSP+0x4)` / `ld XWA,(XSP+0x8)` / `ld A,(XWA+HL)`), the first temporary takes WA;
+opt_counted.c O3XS 2 -> 16 of 32.

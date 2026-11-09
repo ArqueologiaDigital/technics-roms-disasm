@@ -7,10 +7,10 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-08-7-micro, v423/none                                   | micro/*.c           | 667 / 674 exact (99.0%)  |
 | run 2026-11-08-7-micro, ide2003/none                                | micro/*.c           | 664 / 674 exact (98.5%)  |
 | run 2026-11-08-7-micro, v110/none                                   | micro/*.c           | 663 / 674 exact (98.4%)  |
-| run 2026-11-08-7-micro, v423/O3XS                                   | micro/*.c           | 632 / 674 exact (93.8%)  |
+| run 2026-11-08-7-micro, v423/O3XS                                   | micro/*.c           | 634 / 674 exact (94.1%)  |
 | run 2026-11-08-7-micro, v423/Xr                                     | micro/*.c           | 637 / 674 exact (94.5%)  |
 | run 2026-11-08-7-micro, v423/O3XSXr                                 | micro/*.c           | 635 / 674 exact (94.2%)  |
-| run 2026-11-08-7-micro, ide2003/O3XS, --personality ide2003         | micro/*.c           | 631 / 674 exact (93.6%)  |
+| run 2026-11-08-7-micro, ide2003/O3XS, --personality ide2003         | micro/*.c           | 633 / 674 exact (93.9%)  |
 | run 2026-11-08-7-micro, ide2003/Xr, --personality ide2003           | micro/*.c           | 631 / 674 exact (93.6%)  |
 | run 2026-11-08-7-micro, ide2003/O3XSXr, --personality ide2003       | micro/*.c           | 628 / 674 exact (93.2%)  |
 | run 2026-11-08-8-micro-ra, v423/none                                | micro/ra_*.c        | 29 / 42 exact (69.0%)    |
@@ -44,12 +44,12 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-11-micro-opttemps, v423/Xr                           | micro/opt_temps.c   | 33 / 38 exact (86.8%)    |
 | run 2026-11-09-11-micro-opttemps, v423/O3XSXr                       | micro/opt_temps.c   | 38 / 38 exact (100.0%)   |
 | run 2026-11-09-12-micro-optcounted, v423/none                       | micro/opt_counted.c | 12 / 32 exact (37.5%)    |
-| run 2026-11-09-12-micro-optcounted, v423/O3XS                       | micro/opt_counted.c | 2 / 32 exact (6.2%)      |
+| run 2026-11-09-12-micro-optcounted, v423/O3XS                       | micro/opt_counted.c | 16 / 32 exact (50.0%)    |
 | run 2026-11-09-12-micro-optcounted, v423/Xr                         | micro/opt_counted.c | 1 / 32 exact (3.1%)      |
 | run 2026-11-09-12-micro-optcounted, v423/O3XSXr                     | micro/opt_counted.c | 24 / 32 exact (75.0%)    |
 | run 2026-11-09-13-micro-fpstmts, v423/none                          | micro/fp_stmts.c    | 14 / 16 exact (87.5%)    |
 | run 2026-11-09-13-micro-fpstmts, v423/O3XS                          | micro/fp_stmts.c    | 9 / 16 exact (56.2%)     |
-| run 2026-11-08-9-micro-optloops, v423/O3XS                          | micro/opt_loops.c   | 15 / 33 exact (45.5%)    |
+| run 2026-11-08-9-micro-optloops, v423/O3XS                          | micro/opt_loops.c   | 16 / 33 exact (48.5%)    |
 | run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality v4.23      | 1997 LIB/SRC        | 149 / 248 exact (60.1%)  |
 | run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality kn5000     | 1997 LIB/SRC        | 147 / 248 exact (59.3%)  |
 | run 2026-11-08-5-libsrc97-O3XS, ide2003/O3XS, --personality ide2003 | 1997 LIB/SRC        | 143 / 248 exact (57.7%)  |
