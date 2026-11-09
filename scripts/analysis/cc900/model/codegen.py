@@ -469,8 +469,10 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         if size == 4: return gen_long_helper(F, e, l, r, fam, signed)
         rs = mem_operand(F, r)
         work = 'WA'
-        if F.opt and fam in ('HL', 'BC', 'DE') and mem_operand(F, l) and rs and not regvar_of(getattr(strip(l), 'e', l)):
-            work = fam                                  # -O: mul_i_pp -> ld HL,(a) / muls XHL,(b)
+        if F.opt and fam in ('HL', 'BC', 'DE') and mem_operand(F, l) and rs and not regvar_of(getattr(strip(l), 'e', l)) \
+                and (size == 2 or op == '*'):
+            work = fam                                  # -O: mul_i_pp -> ld HL,(a) / muls XHL,(b); a char / or %
+                                                        # stays in WA (div_c_pp: ld A,(a) / exts WA / divs WA,(b) / ld L,A)
         lr = regvar_of(strip(l).e) if strip(l).k == 'load' else None
         if lr is not None and lr.reg == 'WA' and not dies_here(F, l):
             work = free_reg(F, avoid={'WA'})            # mul_i_loc under Xr: ld DE,WA / muls XDE,BC
@@ -1203,7 +1205,7 @@ def gen_stmt(F, s, last):
             if c.k == 'decl' and c.init is not None and c.var.kind == 'local' and not c.var.addr_taken:
                 rest = body[i + 1:]
                 u = uses_of(rest, c.var, [])
-                if len(u) == 1 and c.var.ty.size >= 2:
+                if len(u) == 1 and (c.var.ty.size >= 2 or (F.opt and not F.adecl)):   # cdecl -O folds a char local too (add_c_loc)
                     for x in rest: substitute(x, c.var, c.init)
                     i += 1; continue
                 if len(u) >= 1 and c.var.ty.size == 1:
