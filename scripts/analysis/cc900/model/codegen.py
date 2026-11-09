@@ -1636,6 +1636,7 @@ STORE_GLOBAL_FREE = True                                  # see store_global (r_
 KLOOP_VALUE_WA = True                                     # see plan_leaf (r_ga_rd)
 SHIFT_VALUE_FREE = True                                   # see gen_bin's variable shift (r_shl_i)
 HOMED_WRITES = True                                       # see regvar_stmt (_strtok)
+LOCAL_ARRAY_INIT = True                                   # see gen_stmt's decl (__fint's maru)
 DEC_CMP_SUB = True                                        # dec 0x1,R / cp R,0x0 -> sub R,0x1 (opt_counted.c oc_down)
 TERN_TRUTH_PRE = True                                     # see gen's -O ?: path
 RET_CC_KEEPS = True                                       # see knowledge_pass
@@ -3364,7 +3365,7 @@ def gen_stmt(F, s, last):
                                                      # (mul_l_loc under O3XSXr: x = a * b stays in a slot)
                     for x in rest: substitute(x, c.var, c.init)   # cdecl -O folds a char local too (add_c_loc)
                     i += 1; continue
-                if getattr(c.var, 'slot', None) is not None and c.var.ty.size >= 2:
+                if getattr(c.var, 'slot', None) is not None and c.var.ty.size >= 2 and strip(c.init).k != 'initlist':
                     slot_init(F, c.var, c.init); i += 1; continue
                 calls_after = []
                 for x in rest: walk(x, lambda n, d: calls_after.append(n) if n.k == 'call' else None)
@@ -3379,6 +3380,21 @@ def gen_stmt(F, s, last):
                     if r_ in ('W', 'B', 'D', 'H'):
                         r_ = {'W': 'WA', 'B': 'BC', 'D': 'DE', 'H': 'HL'}[r_]; c.var.rem_hi = True
                     c.var.reg = r_; i += 1; continue
+                if LOCAL_ARRAY_INIT and c.var.ty.kind == 'array' and strip(c.init).k == 'initlist' and \
+                        getattr(c.var, 'slot', None) is not None and c.var.ty.base.size in (1, 2, 4) and \
+                        c.var.ty.size % 2 == 0:
+                    es = c.var.ty.base.size; n_ = c.var.ty.size // es; vals = []
+                    for it in strip(c.init).items:
+                        v_ = fold(it)
+                        if v_.k != 'const' or v_.value is None: raise Unsupported('local array initialiser')
+                        vals.append(str(v_.value & ((1 << (8 * es)) - 1)))
+                    vals += ['0'] * (n_ - len(vals))
+                    lab = 'S%d' % fpgen.FCONST[0]; fpgen.FCONST[0] += 1   # __fint: ld XIY,S1 / lda XIX,XSP+0x18 /
+                    F.fconsts = getattr(F, 'fconsts', []) + [(lab, vals, 'init%d' % es)]   # ld BC,0x4 /
+                    F.emit('ld', 'XIY,%s' % lab)                                          # ldirw (XIX+),(XIY+)
+                    F.emit('lda', 'XIX,XSP+%s' % hx(c.var.slot + F.push))
+                    F.emit('ld', 'BC,%s' % hx(c.var.ty.size // 2)); F.emit('ldirw', '(XIX+),(XIY+)')
+                    i += 1; continue
                 raise Unsupported('local ' + c.var.name)
             if c.k == 'decl' and c.init is None: i += 1; continue
             nxt = body[i + 1] if i + 1 < len(body) else None
@@ -7032,7 +7048,8 @@ def fp_plan_frame(F):
     f = F.f
     locs = [d for d in f.decls if d.kind == 'local' and fpgen.is_fp(d.ty) and (d.uses or True)]
     ints = [d for d in f.decls if d.kind == 'local' and not getattr(d, 'reg', None) and not fpgen.is_fp(d.ty)
-            and not foldable(f, d) and (d.ty.kind not in ('array', 'struct') or FP_AGGR and d.ty.kind == 'struct')
+            and not foldable(f, d) and (d.ty.kind not in ('array', 'struct') or FP_AGGR and d.ty.kind == 'struct' or
+                                        LOCAL_ARRAY_INIT and d.ty.kind == 'array')   # (__fint: maru, work)
             and d.uses]                                    # _frexp: the union d (8 bytes) in the frame
     ints += [d for d in f.params if getattr(d, 'home_slot', False)]   # adecl homes, below the locals, the last
                     # parameter lowest (probes/adfp.c ad_ifi: dec 0x6,XSP / push IZ / ld (XSP+0x2),DE / ld (XSP+0x4),XBC)

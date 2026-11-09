@@ -69,6 +69,9 @@ def const_block(F):
     out = ['f_const section romdata large align=2,2']
     for lab, v, size in F.fconsts:
         if size == 'str': out += [lab + ':', '\tdb\t%s,0' % v]; continue
+        if isinstance(size, str) and size.startswith('init'):   # __fint: unsigned short maru[4] = {0, ...} ->
+            out += [lab + ':', '\t%s\t%s' % ({'1': 'db', '2': 'dw', '4': 'dd'}[size[4:]], ','.join(v))]   # S1: dw 0,0,0,0
+            continue
         out += ['\talign\t2', lab + ':', '\t%s\t%s' % ('fdatad' if size == 8 else 'fdataf', fdata(v))]
     return out + ['f_code section code large align=1,1'] + area_block(F)
 
