@@ -4021,6 +4021,8 @@ def operand(F, e, size, avoid=()):
             if im is None: raise Unsupported('complex index')
             if esz == 1 and im in ('BC', 'DE', 'HL'):          # ra_char: lda XWA,_gca / (XWA+BC)
                 F.emit('lda', 'XWA,_%s' % b.decl.name); return '(XWA+%s)' % im
+            if IDX_GUARD and (held_after(F, 'WA', e0) or held_after(F, 'BC', e0)):   # ra_leaf4 under -Xr: the bound
+                raise Unsupported('index register holds a live variable')        # k in WA (wrong code before)
             F.emit('ld', 'WA,%s' % im)
             F.emit('add', 'WA,WA') if esz == 2 else F.emit('sla', '%s,WA' % hx({4: 2, 8: 3}[esz]))
             F.emit('lda', 'XBC,_%s' % b.decl.name); return '(XBC+WA)'
