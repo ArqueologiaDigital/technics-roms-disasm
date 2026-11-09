@@ -21,8 +21,8 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-5-micro-optparams, v423/O3XS                     | micro/opt_params.c | 19 / 24 exact (79.2%)   |
 | run 2026-11-09-5-micro-optparams, v423/O3XSXr                   | micro/opt_params.c | 0 / 24 exact (0.0%)     |
 | run 2026-11-08-9-micro-optloops, v423/O3XS                      | micro/opt_loops.c  | 15 / 33 exact (45.5%)   |
-| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality v4.23  | 1997 LIB/SRC       | 110 / 147 exact (74.8%) |
-| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality kn5000 | 1997 LIB/SRC       | 108 / 147 exact (73.5%) |
+| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality v4.23  | 1997 LIB/SRC       | 111 / 147 exact (75.5%) |
+| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality kn5000 | 1997 LIB/SRC       | 109 / 147 exact (74.1%) |
 | run 2026-11-09-3-proxy-tiny, v423/O3XSXr                        | firmware/tiny.c    | 6 / 6 exact (100.0%)    |
 
 The library rows count listing pieces: since inline assembly is passed through (2026-11-09), an inline-assembly

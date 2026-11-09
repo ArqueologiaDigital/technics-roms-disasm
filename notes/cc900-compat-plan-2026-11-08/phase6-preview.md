@@ -59,15 +59,15 @@ reference model (cdecl, `-O3 -XS -DFLOAT`, as the library was built), translates
 image's own addresses: the pairs' publics, the image's labels, the helpers named in the runtime cross-reference),
 assembles and links it with llvm-mc / ld.lld at the pair's address, and compares the bytes with the image.
 
-| personality | byte-identical pairs | which                                                                                                                                                                                 |
-|-------------|----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `v4.23`     | 95 (22 differ)       | `_strcat` x9, `_strncpy` x9, `_strncmp` x10, `_strlen` x9, `_memset` x9, `_memcmp` x9, `_memchr` x9, `_memcpy` x9, `__ctype` x9, `_strchr` x5, `_strnset` x5, `__FloatErrorHandle` x3 |
-| `kn5000`    | 108 (9 differ)       | the same 95, plus `_ultoa` (main CPU v10, v9, v7, v6, v5, HD-AE5000 x4) and `_ldiv` (HD-AE5000 x4)                                                                                    |
+| personality | byte-identical pairs | which                                                                                                                                                                                        |
+|-------------|----------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `v4.23`     | 113 (22 differ)      | `_strcat`, `_strncpy`, `_strncat`, `_strcpy`, `_strlen`, `_memset`, `_memcmp`, `_memchr`, `_memcpy`, `__ctype` x9 each, `_strncmp` x10, `_strchr` x5, `_strnset` x5, `__FloatErrorHandle` x3 |
+| `kn5000`    | 126 (9 differ)       | the same 113, plus `_ultoa` (main CPU v10, v9, v7, v6, v5, HD-AE5000 x4) and `_ldiv` (HD-AE5000 x4)                                                                                          |
 
 The 13 the kn5000 personality adds are the two routines in which the firmware's code differs from V4.23's output:
 the reload rule (`rules.md`) accounts for them, and with it they come out byte-identical with no Toshiba program in
 the chain.  The 9 that differ are `_memccpy`, where the model does not yet reproduce V4.23 either (register choice
-around its two calls).  The other 152 are routines the model does not compile yet (`goto` in `_strcspn`, the
+around its two calls).  The other 134 are routines the model does not compile yet (`goto` in `_strcspn`, the
 floating-point formatter `__doprnt`, the math routines), or that are data the model does not emit.
 
 Inline assembly (`__ASM("...")`, `_memset`, `_memcmp`, `_memchr`) is passed through as thc1 does: the front end turns
@@ -78,5 +78,5 @@ forms of `cpi` / `cpir` / `cpd` / `cpdr`.  The block transfers with explicit ope
 bare `ldi` is the `(XWA+)` form (`80 10`) where `ldib (XIX+),(XIY+)` is `85 10` (`_memcpy`).
 
 Output: `scripts/analysis/cc900/results/pairs_model_kn5000.tsv`; command in `scripts/analysis/cc900/model/README.md`.
-(Earlier runs the same day: 36, 51, 63, 90; the rules added in between are in those commits.  The library sources end in
+(Earlier runs the same day: 36, 51, 63, 90, 108, 117; the rules added in between are in those commits.  The library sources end in
 a DOS end-of-file byte, which the front end now cuts.)

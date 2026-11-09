@@ -1177,7 +1177,7 @@ def gen_stmt(F, s, last):
                 # order (op_cat, op_cat2, op_cat_b; _strncat)
                 at_start = not any(l.startswith('\t') and not l.startswith(('\tpush', '\tdec\t', '\tlda\tXSP')) for l in F.lines[1:])
                 pidx = {d: k for k, d in enumerate(F.f.params)}
-                order_key = lambda d: -pidx[d] if at_start else pidx[d]
+                order_key = lambda d: (d.reg == 'WA', -pidx[d] if at_start else pidx[d])   # WA last (_strchr: s, c)
                 if any(d.kind != 'param' for d in need): rest = sorted([d for d in need if d not in own], key=first_use)
                 else:
                     rest = sorted([d for d in need if d not in own], key=order_key)
