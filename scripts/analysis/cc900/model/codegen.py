@@ -966,7 +966,7 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
             if reads_reg(r, work): raise Unsupported('multiply operands')
             n0 = len(F.lines)
             gen(F, r, ro, size); rs = FAM[ro][size]
-            if STORE_ADDR_GUARD and clobbers(F.lines[n0:], '(%s)' % FAM[work][4]):   # lnr.c r_ga_mul (none):
+            if STORE_ADDR_GUARD and clobbers(F.lines[n0:], '(%s)' % (FAM[work].get(4) or work)):   # lnr.c r_ga_mul (none):
                 raise Unsupported('the right operand overwrites the left')         # ga[i] * gb[i] reloaded WA
         wide = FAM[work][4] if size == 2 else FAM[work][2]
         if op == '*':
@@ -1628,6 +1628,7 @@ HELD_LATER = True                                         # see held_after (lnr.
 PTR_ELEM_REGVAL = True                                    # see gen_stmt's store (r_p_wri)
 PTR_ELEM_XDE = True                                       # see gen_opassign (s_add_gw)
 STORE_GLOBAL_FREE = True                                  # see store_global (r_p_rd)
+KLOOP_VALUE_WA = True                                     # see plan_leaf (r_ga_rd)
 DEC_CMP_SUB = True                                        # dec 0x1,R / cp R,0x0 -> sub R,0x1 (opt_counted.c oc_down)
 TERN_TRUTH_PRE = True                                     # see gen's -O ?: path
 RET_CC_KEEPS = True                                       # see knowledge_pass
@@ -3695,7 +3696,7 @@ def gen_stmt(F, s, last):
                 fold(lv.idx).k != 'const' and rv0.reg not in ('WA',) and 'WA' not in live_regs(F):
             t = lvalue(F, lv, kind='storek')         # lnr.c r_p_wri (none): p[i] = i with i in IX -> ld WA,IX /
             F.emit('ld', '%s,%s' % (t, FAM[rv0.reg][size])); return   # exts XWA / add XWA,XWA / add XWA,(p) / ld (XWA),IX
-        if PTR_ELEM_REGVAL and not F.opt and rv0 is not None and rv0.ty.size == size and rv0.reg != 'WA' and \
+        if PTR_ELEM_REGVAL and rv0 is not None and rv0.ty.size == size and rv0.reg != 'WA' and \
                 'WA' not in live_regs(F) and lv.k == 'deref' and strip(lv.e).k == 'load' and strip(strip(lv.e).e).k == 'var' and \
                 not getattr(strip(strip(lv.e).e).decl, 'reg', None):
             t = lvalue(F, lv, ptr='XWA')             # lnr.c r_gp_wr (none, -Xr): *gp = i with i in IX ->
@@ -3705,10 +3706,10 @@ def gen_stmt(F, s, last):
         else:                                        # add DE,DE / lda XHL,_gb / ... lda XBC,_ga / ld (XHL+DE),WA
             nl = len(F.lines)
             t = lvalue(F, lv)                        # m_ga_set, m_gps_set
-            if STORE_ADDR_GUARD and not F.opt:       # lnr.c r_gp_wr (-Xr): ld XBC,(_gp) over d3 in BC
+            if STORE_ADDR_GUARD:                     # lnr.c r_gp_wr (-Xr): ld XBC,(_gp) over d3 in BC
                 for d in list(F.f.params) + list(F.f.decls):
                     r_ = getattr(d, 'reg', None)
-                    if r_ in FAM and d not in F.dead and clobbers(F.lines[nl:], '(%s)' % FAM[r_][4]) and \
+                    if r_ in FAM and d not in F.dead and clobbers(F.lines[nl:], '(%s)' % (FAM[r_].get(4) or r_)) and \
                             held_after(F, r_, s.e):
                         raise Unsupported('store address over a live register')
         rv = regvar_of(strip(s.e.r).e) if strip(s.e.r).k == 'load' else None
@@ -5595,6 +5596,12 @@ def u1_global(F, lp, cl, rets0, outer=None):
         tmp = u1alloc.Obj('const', 'temp1', 32); objs.append(tmp)     # ol_l_clear: ld XBC,0x0 / ld (XHL+DE),XBC
     elif reads and inop and not stores and cl['esz'] == 2:
         tmp = u1alloc.Obj('value', 'temp1', 16); objs.append(tmp)
+    elif KLOOP_VALUE_WA and reads and not stores and not inop and any(
+            x.k == 'expr' and strip(x.e).k == 'bin' and strip(x.e).op == '=' and strip(strip(x.e).l).k == 'var' and
+            strip(strip(x.e).l).decl.kind == 'global' and unc(strip(x.e).r) in reads
+            for x in flat(cl.get('body', lp.body))):
+        tmp = u1alloc.Obj('gvalue', 'temp1', 16); objs.append(tmp)   # lnr.c r_ga_rd (-O3 -XS): gr = ga[i] ->
+                                                                     # ld WA,(XDE+BC) / ld (_gr),WA
     elif reads and stores or len(stores) > 1 or inop: return False   # other value temporaries
     offs = {}; bases = {}
     for a_, esz in order:
@@ -5628,6 +5635,9 @@ def u1_global(F, lp, cl, rets0, outer=None):
             o.what.reg = o.reg; continue                 # a char accumulator in a high half (ol_c_acc2: s1 in B)
         if o.what is kp and not F.adecl: kp.reg = fam; continue
         if o is tmp:
+            if o.what == 'gvalue':                         # (store_global loads the value into WA)
+                if fam != 'WA': raise Unsupported('global store value not in WA')
+                continue
             if o.what == 'tmp': cl['tmp'] = fam
             elif o.what == 'value': F.u1_value = fam
             else: F.tfam = fam
@@ -6534,6 +6544,12 @@ def plan_leaf(F):
                 cl['i'].reg = None
                 return True
             if shared or stores_long: reserved.add('WA')
+            if KLOOP_VALUE_WA:                             # lnr.c r_ga_rd (-O3 -XS): gr = ga[i] loads the element
+                gst = []                                   # into WA, so the offset is BC (ld WA,(XDE+BC) /
+                walk(loops[0].body, lambda n, d: gst.append(n) if n.k == 'bin' and n.op == '=' and   # ld (_gr),WA)
+                     strip(n.l).k == 'var' and strip(n.l).decl.kind == 'global' and
+                     strip(n.r).k == 'load' and strip(strip(n.r).e).k == 'index' else None)
+                if gst: reserved.add('WA')
             locs = [d for d in f.decls if d.kind == 'local' and d.ty.kind == 'int' and not d.addr_taken]
             for d in locs:
                 if d in rets0: d.reg = 'HL'; reserved.add('HL')
@@ -6550,6 +6566,7 @@ def plan_leaf(F):
             if kd.kind != 'global' and not cl.get('k_in_reg'): order.append(kp)
             order += [d for d in reversed(locs) if not getattr(d, 'reg', None)]
             for x in order:
+                if not free: raise Unsupported('out of registers')   # (lnr.c r_ga_rd -O3 -XS: V4.23 takes QWA)
                 x.reg = free.pop(0)
             if shared: cl['tmp'] = 'WA'
             F.pushes = ['IZ'] if any(getattr(x, 'reg', None) == 'IZ' for x in order + locs) else []
