@@ -1009,6 +1009,11 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
                                                                  cv_ in getattr(F, 'in_loop', ())):
             vfam = free_reg(F, avoid={vfam, 'WA'}); V = FAM[vfam][size]   # cond_bits.c cb_for: 1 << i with i in BC,
                                                                            # needed again: the value elsewhere
+        if SHIFT_VALUE_FREE and vfam != fam and held_after(F, vfam, e) and family_of(cs) != FAM[vfam][4]:
+            alt = next((x for x in ('BC', 'DE', 'HL', 'IX', 'IY') if x != vfam and not held_after(F, x, e) and
+                        family_of(cs) != FAM[x][4]), None)  # lnr.c r_shl_i (-O3 -XS): d3 in BC, gr = 1 << i
+            if alt is None: raise Unsupported('no free register for the shifted value')
+            vfam = alt; V = FAM[vfam][size]
         if family_of(cs) == FAM[vfam][4]:                 # the count lives where the value is built (cb_shift: s in BC,
             if fold(l).k != 'const': raise Unsupported('shift count register')   # 0x8000 >> s): the count first
             F.emit('ld', '%s,%s' % (FAM['WA'][strip(r).ty.size], cs)); gen(F, l, vfam, size)
@@ -1629,6 +1634,7 @@ PTR_ELEM_REGVAL = True                                    # see gen_stmt's store
 PTR_ELEM_XDE = True                                       # see gen_opassign (s_add_gw)
 STORE_GLOBAL_FREE = True                                  # see store_global (r_p_rd)
 KLOOP_VALUE_WA = True                                     # see plan_leaf (r_ga_rd)
+SHIFT_VALUE_FREE = True                                   # see gen_bin's variable shift (r_shl_i)
 DEC_CMP_SUB = True                                        # dec 0x1,R / cp R,0x0 -> sub R,0x1 (opt_counted.c oc_down)
 TERN_TRUTH_PRE = True                                     # see gen's -O ?: path
 RET_CC_KEEPS = True                                       # see knowledge_pass
@@ -3152,6 +3158,27 @@ def uses_of(node, d, acc):
         if hasattr(v, 'k') or isinstance(v, list): uses_of(v, d, acc)
     return acc
 
+def ptr_elem_in_loops(f):
+    """does a loop read p[i] (computed index) through a pointer variable kept in memory (its address is built in
+    XWA)?  (lnr4.c h5: c ^= s[i] -> c is not A)"""
+    hit = []
+    def v(n, dep):
+        if dep and n.k == 'index' and fold(n.idx).k != 'const' and strip(n.base).k == 'load' and \
+                strip(n.base).ty.is_ptr() and strip(strip(n.base).e).k == 'var' and \
+                strip(strip(n.base).e).decl.kind == 'param': hit.append(n)
+    walk(f.body, v)
+    return bool(hit)
+
+def written_in(nodes, d):
+    """is d assigned, op-assigned or incremented anywhere in nodes?"""
+    hit = []
+    def v(n, dep):
+        if n.k == 'incdec' and strip(n.e).k == 'var' and strip(n.e).decl is d: hit.append(n)
+        if n.k in ('opassign', 'bin') and (n.k == 'opassign' or n.op == '=') and strip(n.l).k == 'var' and \
+                strip(n.l).decl is d: hit.append(n)
+    for x in nodes if isinstance(nodes, list) else [nodes]: walk(x, v)
+    return bool(hit)
+
 def substitute(node, d, repl):
     for key, v in list(node.__dict__.items()):
         if hasattr(v, 'k'):
@@ -3329,7 +3356,8 @@ def gen_stmt(F, s, last):
                 u = uses_of(rest, c.var, [])
                 helper_res = getattr(c.var, 'no_fold', False)
                 if len(u) == 1 and (c.var.ty.size >= 2 or (F.opt and not F.adecl)) and not call_before_use(rest, c.var) \
-                        and not helper_res:                  # (mul_l_loc under O3XSXr: x = a * b stays in a slot)
+                        and not helper_res and not written_in(rest, c.var):   # (lnr4.c h5: c ^= s[i] then gc = c)
+                                                     # (mul_l_loc under O3XSXr: x = a * b stays in a slot)
                     for x in rest: substitute(x, c.var, c.init)   # cdecl -O folds a char local too (add_c_loc)
                     i += 1; continue
                 if getattr(c.var, 'slot', None) is not None and c.var.ty.size >= 2:
@@ -4472,7 +4500,10 @@ def regvar_stmt(F, e):
                 dies_here(F, cx):                      # assign_expr.c ae_c_loop (-O): n += c, c dying in C ->
             W = FAM[cv.reg][2]; F.dead.add(cv)         # exts BC / add HL,BC
             F.emit('exts' if cx.ty.signed else 'extz', W); F.emit(SIMPLE_OPS[e.op], '%s,%s' % (R, W)); return True
+        n_op = len(F.lines)
         m = operand(F, e.r, d.ty.size)
+        if STORE_ADDR_GUARD and m is not None and d.reg in FAM and clobbers(F.lines[n_op:], '(%s)' % (FAM[d.reg].get(4) or d.reg)):
+            raise Unsupported('the operand overwrites the op= variable')   # (lnr4.c h5 -O3 -XS: c in A, s[i] in XWA)
         if m is None:                                  # ra_param3: s += b * c -> WA, then add HL,WA
             T = getattr(F, 'u1_value', None) or getattr(F, 'tfam', None) or 'WA'   # U1's value temporary (ol_idx_use:
             if T == 'WA' and 'WA' in live_regs(F, except_decl=d):   # ld BC,(XIX+DE) / muls XBC,IY); else the loop's T
@@ -6663,6 +6694,7 @@ def plan_leaf(F):
             if d.kind == 'param': F.param_copies.append(d)
             continue
         if F.opt and CHAR_LOCAL_WA and d.kind == 'local' and d.ty.size == 1 and 'WA' in free and \
+                not ptr_elem_in_loops(f) and \
                 not any(getattr(p_, 'reg', None) == 'WA' for p_ in f.params) and \
                 sum(1 for x in order if x.kind == 'local' and x.ty.size == 1) == 1:   # (one char local only: the
                                                                      # 1997 library's _strnicmp compares c1 through A
@@ -6886,7 +6918,8 @@ def foldable(f, d):
     for i, c in enumerate(body):
         if c.k == 'decl' and c.var is d:
             if c.init is None or d.addr_taken or d.ty.size < 2 or getattr(d, 'no_fold', False): return False
-            return len(uses_of(body[i + 1:], d, [])) == 1 and not call_before_use(body[i + 1:], d)
+            return len(uses_of(body[i + 1:], d, [])) == 1 and not call_before_use(body[i + 1:], d) and \
+                not written_in(body[i + 1:], d)
     return False
 
 def slot_init(F, d, init):
@@ -6905,7 +6938,11 @@ def slot_init(F, d, init):
     if r0.k == 'call' and not has_helper_call(r0.fn) and size in (2, 4) and SLOT_FROM_HL:
         gen_call(F, r0); flush_pops(F)                     # ra_homes32.c h_p under O3XSXr: cal .fp /
         F.emit('ld', '%s,%s' % (S, FAM['HL'][size])); return True   # ld (XSP+0x2),XHL
-    fam = gen(F, init, 'WA', size)
+    W = 'WA'
+    if STORE_ADDR_GUARD and any(getattr(x, 'reg', None) == 'WA' and x not in F.dead and x is not d
+                                for x in list(F.f.params) + list(F.f.decls)):
+        W = free_reg(F, avoid={'WA'})                      # switch.c sw_local (-Xr): x in WA, r = 0 (wrong code)
+    fam = gen(F, init, W, size)
     F.emit('ld', '%s,%s' % (S, FAM[fam][size])); return True
 
 def plan_frame(F):
