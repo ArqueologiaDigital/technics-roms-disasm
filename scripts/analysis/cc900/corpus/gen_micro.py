@@ -20,7 +20,10 @@ how cc900 compiles exactly that (notes/cc900-compat-plan-2026-11-08/PLAN.md, sec
 - opt_params: leaf loops at -O whose parameters live in registers, varying declaration order, first use,
   use counts and where the loop starts, to find the order in which -O loads them;
 - ra_homes: values live across a call (locals and parameters, one to four of them, with different use counts
-  and declaration orders), to find which go to IZ, QIZ, XIZ or a stack slot.
+  and declaration orders), to find which go to IZ, QIZ, XIZ or a stack slot;
+- ra_chains: chains of two to five + - & | ^ operands (globals, parameters, IZ / QIZ homes, stack slots), in
+  leaf functions and after a call, as a return value, a store and an argument: when is the chain built in WA
+  and moved (ld HL,WA), and when directly in its target?
 The output is deterministic, ours, and C89.
 """
 import os, sys
@@ -342,6 +345,51 @@ def ra_home_files():
         'void rh_loop_call2(int n) { int i; for (i = 0; i < n; i++) { g0(); g1(i); } }']
     return {'ra_homes.c': out + fs}
 
+def ra_chain_files():
+    """WA then ld HL,WA, or directly in HL? (rh_ppp vs rh_lll in ra_homes.c)"""
+    out = ['/* Operand chains: built in WA and moved, or built in the target? */',
+           'extern void g0(void); extern int g1(int); extern int gi, gj, gk, gm, gn;']
+    fs = [
+        # leaf, globals only
+        'int ch_g2(void) { return gi + gj; }',
+        'int ch_g3(void) { return gi + gj + gk; }',
+        'int ch_g4(void) { return gi + gj + gk + gm; }',
+        'int ch_g5(void) { return gi + gj + gk + gm + gn; }',
+        'int ch_g3_sub(void) { return gi - gj - gk; }',
+        'int ch_g3_mix(void) { return gi + gj - gk; }',
+        'int ch_g3_and(void) { return gi & gj & gk; }',
+        'int ch_g3_xor(void) { return gi ^ gj | gk; }',
+        'int ch_g3_rep(void) { return gi + gi + gj; }',
+        'int ch_g3_rep2(void) { return gi + gj + gj; }',
+        'int ch_g3_k(void) { return gi + gj + 100; }',
+        'int ch_g3_k1(void) { return gi + 100 + gj; }',
+        # leaf, parameters (registers under -Xr, stack under cdecl)
+        'int ch_p3(int a, int b, int c) { return a + b + c; }',
+        'int ch_p4(int a, int b, int c) { return a + b + c + a; }',
+        'int ch_pg2(int a) { return a + gi + gj; }',
+        'int ch_gp2(int a) { return gi + a + gj; }',
+        'int ch_ggp(int a) { return gi + gj + a; }',
+        'int ch_p2g(int a, int b) { return a + b + gi; }',
+        # after a call: a parameter homed in IZ, the rest globals
+        'int ch_c_pg2(int a) { g0(); return a + gi + gj; }',
+        'int ch_c_gp2(int a) { g0(); return gi + a + gj; }',
+        'int ch_c_ggp(int a) { g0(); return gi + gj + a; }',
+        'int ch_c_g3(void) { g0(); return gi + gj + gk; }',
+        'int ch_c_g4p(int a) { g0(); return gi + gj + gk + a; }',
+        'int ch_c_pg3(int a) { g0(); return a + gi + gj + gk; }',
+        # after a call: three locals (IZ, QIZ, a slot) in each order
+        'int ch_c_xyz(int a, int b, int c) { int x = a + b, y = b + c, z = a + c; g0(); return x + y + z; }',
+        'int ch_c_zyx(int a, int b, int c) { int x = a + b, y = b + c, z = a + c; g0(); return z + y + x; }',
+        'int ch_c_yxz(int a, int b, int c) { int x = a + b, y = b + c, z = a + c; g0(); return y + x + z; }',
+        'int ch_c_xzy(int a, int b, int c) { int x = a + b, y = b + c, z = a + c; g0(); return x + z + y; }',
+        'int ch_c_xyg(int a, int b, int c) { int x = a + b, y = b + c, z = a + c; g0(); return x + y + gi + z; }',
+        # not a return value
+        'void ch_st3(void) { gi = gj + gk + gm; }',
+        'void ch_st4(void) { gi = gj + gk + gm + gn; }',
+        'void ch_arg3(void) { g1(gj + gk + gm); }',
+        'int ch_loc3(void) { int x = gj + gk + gm; g0(); return x; }']
+    return {'ra_chains.c': out + fs}
+
 def main():
     out = sys.argv[1]
     d = os.path.join(out, 'micro'); os.makedirs(d, exist_ok=True)
@@ -358,6 +406,7 @@ def main():
     files.update(switch_files())
     files.update(opt_param_files())
     files.update(ra_home_files())
+    files.update(ra_chain_files())
     for n, lines in sorted(files.items()):
         open(os.path.join(d, n), 'w').write('\n'.join(lines) + '\n')
     open(os.path.join(out, 'micro-sources.txt'), 'w').write(''.join('micro/%s\n' % n for n in sorted(files)))
