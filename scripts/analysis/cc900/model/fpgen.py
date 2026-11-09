@@ -81,6 +81,8 @@ def stmt_reset(F):
     """the temporaries of one statement are free again at the next (_log: many statements, one small region)"""
     if getattr(F, 'fp_temps', None) is not None: F.ftemp_used = 0
 
+SRET_HOME_EARLY = True                             # see needs_sret_home (_floor)
+CALL_INTO_LOCAL = True                             # see call_into (_floor)
 RANK_CONST = True
 MEMBER_FIRST = True
 LONG_TOP = False                                   # tried for fo_conv2: costs fp_temps t_* and fp_stmts O3XS 9 -> 5
@@ -508,6 +510,9 @@ def call_into(F, e, dest, arg_hint=None):
         F.emit('cal', '_' + fn.decl.name); F.pending += n; return
     if arg_hint is not None:
         n += push_args()
+    if CALL_INTO_LOCAL and dest[0] == 'lv' and strip(dest[1]).k == 'var' and strip(dest[1]).decl.kind == 'local' and \
+            getattr(strip(dest[1]).decl, 'slot', None) is not None and strip(dest[1]).decl.ty.size == 8 and not F.adecl:
+        dest = ('slot', strip(dest[1]).decl.slot)          # _floor: k = _fint(xx) -> the hidden pointer is k's own slot
     if dest[0] == 'lazyres':                               # the hint if the arguments left it free (call_val)
         off = alloc(F, dest[1], 'call') if dest[1].off is None else temp(F, 8, 'call')
         dest = ('slot', off)
@@ -776,6 +781,15 @@ def needs_sret_home(F):
     C().walk(F.f.body, lambda n, d: rets.append(n) if n.k == 'return' and n.value is not None else None)
     calls = []
     C().walk(F.f.body, lambda n, d: calls.append(n) if n.k == 'call' else None)
+    if len(rets) >= 2 and SRET_HOME_EARLY:
+        # _floor, _ceil: the two returns are the arms of the function's last if / else, so they share one exit and one
+        # load of the pointer (hoisted above the test): no home.  A return before later code (_sin, _tan) needs it twice.
+        body = C().flat(F.f.body); last = body[-1] if body else None
+        inlast = []
+        if last is not None and last.k == 'if':
+            C().walk(last, lambda n, d: inlast.append(n) if n.k == 'return' and n.value is not None else None)
+        if len(inlast) == len(rets) and all(root_mode(F, r.value) == 'direct' for r in rets): return False
+        # (_sin: both arms return a call's result, _trig(...), and the pointer is homed)
     return len(rets) >= 2 and (bool(calls) or any(root_mode(F, r.value) != 'direct' for r in rets))
     # (_fabs: both direct and only helper calls, no home; _tan: both direct, but sin / cos before the second)
 
