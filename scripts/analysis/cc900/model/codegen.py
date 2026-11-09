@@ -637,27 +637,43 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         if lr is not None and lr.reg == 'WA' and not dies_here(F, l):
             work = free_reg(F, avoid={'WA'})            # mul_i_loc under Xr: ld DE,WA / muls XDE,BC
         if lr is not None and lr.reg == 'WA' and dies_here(F, l): F.dead.add(lr)
-        rr = regvar_of(strip(r).e) if strip(r).k == 'load' else None
+        def uncast(x):
+            x = strip(x)
+            while x.k == 'cast' and x.kind == 'IntegralCast': x = strip(x.e)
+            return x
+        rr = regvar_of(uncast(r).e) if uncast(r).k == 'load' else None
         sl = strip(l)
-        if F.adecl and not F.opt and work == 'WA' and lr is None and rr is not None and rr.reg == 'WA' and size == 2 \
-                and BINLOC_XR and sl.k == 'bin' and sl.op in ('*', '/', '%'):
+        lu = uncast(l); lvd = regvar_of(lu.e) if lu.k == 'load' else None
+        dying_var = lvd is not None and lvd.reg not in ('WA',) and dies_here(F, lu) and size == 1
+        if F.adecl and not F.opt and work == 'WA' and rr is not None and rr.reg == 'WA' and size in (1, 2) \
+                and BINLOC_XR and (lr is None and lu.k == 'bin' and lu.op in ('*', '/', '%') or dying_var):
+            sl = lu if lu.k == 'bin' else None
             # binop-loc rule 3.3 (research-scratch sessions/2026-11-09_cc900-binop-loc): mul_i_loc under -Xr,
             # (a * b) * a -> ld DE,WA / muls XDE,BC (a live) / ld BC,DE / muls XBC,WA: the first free pair once the
             # left operand is built (b dead), never the right operand's WA
-            F.keep_once = True; F.keep_q = sl.op == '%'
-            f1 = gen(F, l, 'WA', size); F.keep_once = False; F.keep_q = False
+            if then_ret:                                    # in the returned expression, a variable it does not
+                for d in list(F.f.params) + list(F.f.decls):   # read is dead (mul_c_loc: b, after x = a * b)
+                    if getattr(d, 'reg', None) and not uses_decl(e, d): F.dead.add(d)
+            if sl is None:                                  # mul_c_loc under -Xr: x (the first product, a char
+                f1 = lvd.reg; F.dead.add(lvd)               # register variable in DE) dies here
+                if getattr(lvd, 'rem_hi', False): f1 = HI[lvd.reg]
+            else:
+                F.keep_once = True; F.keep_q = sl.op == '%'           # (a byte operation keeps its family too)
+                f1 = gen(F, l, 'WA', size); F.keep_once = False; F.keep_q = False
             for ld_ in loads_in(l):
                 v = regvar_of(strip(ld_.e))
                 if v is not None and dies_here(F, ld_): F.dead.add(v)
             rem = getattr(F, 'last_remainder', None)
             w2 = free_reg(F, avoid={'WA', rr.reg})
-            src = f1 if f1.startswith('Q') else FAM[f1][2]
-            if src != FAM[w2][2]: F.emit('ld', '%s,%s' % (FAM[w2][2], src))
-            work = w2; wide = FAM[work][4]
-            if op == '*': F.emit('muls' if signed else 'mul', '%s,%s' % (wide, FAM[rr.reg][2])); res = FAM[work][2]
+            if size == 2: src = f1 if f1.startswith('Q') else FAM[f1][2]
+            else: src = f1 if f1 in ('W', 'B', 'D', 'H') else FAM[f1][1]          # mod_c_loc: the remainder in D
+            if src != FAM[w2][size]: F.emit('ld', '%s,%s' % (FAM[w2][size], src))  # -> ld C,D
+            work = w2; wide = FAM[work][4] if size == 2 else FAM[work][2]
+            ro = FAM[rr.reg][size]
+            if op == '*': F.emit('muls' if signed else 'mul', '%s,%s' % (wide, ro)); res = FAM[work][size]
             else:
-                F.emit('exts' if signed else 'extz', wide); F.emit('divs' if signed else 'div', '%s,%s' % (wide, FAM[rr.reg][2]))
-                res = FAM[work][2] if op == '/' else Q[work]
+                F.emit('exts' if signed else 'extz', wide); F.emit('divs' if signed else 'div', '%s,%s' % (wide, ro))
+                res = FAM[work][size] if op == '/' else (Q[work] if size == 2 else HI[work])
             return move_to(F, res, fam, size)
         if F.opt and size == 2 and op in '*/' and sl.k == 'bin' and sl.op in '*/' and work == 'WA':
             F.keep_once = True                          # mul_i_loc under O3XSXr: (a * b) * a keeps the product in DE:
@@ -690,6 +706,8 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
             gen(F, l, fam, size)
             F.emit(mnem, '%s,%s' % (hx(rr.value), R)); return fam
         vfam = 'BC' if fam == 'WA' else fam
+        if F.adecl and BINLOC_XR and fam == 'WA' and getattr(F, 'xr_reloc', False):
+            vfam = free_reg(F, avoid={'WA'})               # binop-loc 3.1: shl_c_loc under -Xr, the inner shift in L
         V = FAM[vfam][size]
         gen(F, l, vfam, size)
         cs = mem_operand(F, r)
@@ -778,6 +796,7 @@ def xr_shift_reloc(F):
         a.reg, b.reg = 'BC', 'DE'
     elif size == 1:                                      # Q
         F.emit('ld', 'E,A'); a.reg = 'DE'
+    F.xr_reloc = True
 
 def loads_in(e):
     out = []
@@ -931,7 +950,7 @@ def gen_long_helper(F, e, l, r, fam, signed):
 def move_to(F, res, fam, size, keep=False):
     tgt = FAM[fam][size]
     if keep: return 'HL'
-    if getattr(F, 'keep_q', False) and res.startswith('Q'):   # mod_i_loc under -Xr: the remainder stays in QDE
+    if getattr(F, 'keep_q', False) and (res.startswith('Q') or res in ('W', 'B', 'D', 'H')):   # mod_i_loc / mod_c_loc
         F.keep_q = False; F.keep_once = False; return res
     if getattr(F, 'keep_once', False) and family_of(res) and res in FAM[family_of(res)[1:]].values() \
             and res == FAM[family_of(res)[1:]].get(size):
@@ -1791,7 +1810,13 @@ def gen_stmt(F, s, last):
                     fam = gen(F, c.init, 'WA', 1)            # _strstr: char c = *s2; -> ld A,(XWA) / ld (XSP+0x8),A
                     F.emit('ld', '(XSP+%s),%s' % (hx(c.var.slot + F.push), FAM[fam][1])); i += 1; continue
                 if len(u) >= 1 and c.var.ty.size == 1:
-                    c.var.reg = gen(F, c.init, 'WA', 1); i += 1; continue
+                    wa_live = F.adecl and BINLOC_XR and any(getattr(d, 'reg', None) == 'WA' and d not in F.dead and
+                                                            any(uses_decl(x, d) for x in rest) for d in F.f.params)
+                    if wa_live: F.keep_once = True; F.keep_q = True   # mul_c_loc under -Xr: x stays in E (a in A);
+                    r_ = gen(F, c.init, 'WA', 1); F.keep_once = False; F.keep_q = False   # mod_c_loc: in D
+                    if r_ in ('W', 'B', 'D', 'H'):
+                        r_ = {'W': 'WA', 'B': 'BC', 'D': 'DE', 'H': 'HL'}[r_]; c.var.rem_hi = True
+                    c.var.reg = r_; i += 1; continue
                 raise Unsupported('local ' + c.var.name)
             if c.k == 'decl' and c.init is None: i += 1; continue
             nxt = body[i + 1] if i + 1 < len(body) else None
