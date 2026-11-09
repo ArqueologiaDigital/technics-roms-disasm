@@ -1082,6 +1082,12 @@ def gen_compare(F, e):
         rs = mem_operand(F, r)
         if rs is None: raise Unsupported('complex compare operand')
         F.emit('cp', '%s,%s' % (lm, rs)); return cc
+    rvr = regvar_of(strip(r).e) if strip(r).k == 'load' else None
+    if F.adecl and lm is None and rvr is not None and l.k == 'load' and strip(l.e).k == 'index' and size == 2 and \
+            rvr.reg in FAM and not getattr(F, 'l2', None) and not getattr(F, 'cl_active', None) and \
+            not getattr(F, 'u1_i', None):
+        ea = elem_addr(F, strip(l.e), 'cmp')               # .c_find: cp (XIX),DE
+        if ea is not None: F.emit('cp', '%s,%s' % (ea, FAM[rvr.reg][size])); return cc
     if rc.k == 'const' and lm is None and l.k == 'load' and strip(l.e).k == 'index' and size == 2 and \
             not getattr(F, 'l2', None) and not getattr(F, 'cl_active', None):
         lm = elem_addr(F, strip(l.e), 'cmp')               # ai_mul10: if (gsa[i] == 0) -> cpw (XBC+WA),0x0
@@ -1791,6 +1797,18 @@ def elem_addr(F, lv, kind):
     if F.adecl:
         r = elem_addr_regs(F, lv, b, esz, kind)
         if r is not None: return r
+        if kind in ('load', 'cmp') and plain and b.k == 'load' and b.ty.is_ptr() and regvar_of(b.e) is not None and \
+                regvar_of(b.e).ty.size == 4 and not (esz == 1 and kind == 'load'):
+            iv = regvar_of(unpromote(lv.idx).e)              # ctrl.c c_sum / c_find under -Xr: the pointer in XWA,
+            if iv is not None and iv.reg in FAM and iv.ty.size == 2:   # the counter live -> a free register:
+                P = FAM[regvar_of(b.e).reg][4]               # ld DE,IX / exts XDE / add XDE,XDE / add XDE,XWA / (XDE)
+                live = live_regs(F) | {regvar_of(b.e).reg, iv.reg}
+                T = next((r for r in LEAF_SEQ if r in ('BC', 'DE', 'HL', 'IX', 'IY') and r not in live), None)
+                if T is not None:
+                    X = FAM[T][4]
+                    F.emit('ld', '%s,%s' % (FAM[T][2], FAM[iv.reg][2]))
+                    F.emit('exts' if iv.ty.signed else 'extz', X); scale32(F, X, esz); F.emit('add', '%s,%s' % (X, P))
+                    return '(%s)' % X
     def idx_into(R):                                   # the index (16-bit) into register family R
         f = gen(F, narrow(lv.idx, 2), R, 2)
         if f != R: F.emit('ld', '%s,%s' % (FAM[R][2], FAM[f][2]))
@@ -3083,6 +3101,10 @@ def operand(F, e, size, avoid=()):
             F.emit('add' if inc.op == '++' else 'sub', '%s,XWA' % slot); return '(XBC)'
     m = mem_operand(F, e0)
     if m is not None: return m
+    if F.adecl and e0.k == 'load' and strip(e0.e).k == 'index' and not getattr(F, 'l2', None) and \
+            not getattr(F, 'cl_active', None) and not getattr(F, 'u1_i', None):
+        ea = elem_addr(F, strip(e0.e), 'load')             # .c_sum: add HL,(XDE)
+        if ea is not None: return ea
     if e0.k == 'load' and strip(e0.e).k == 'index':
         v = strip(e0.e); b = strip(v.base); esz = v.ty.size
         if b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array':
@@ -4281,7 +4303,7 @@ def uses_table(n, tab):
 def plan_leaf(F):
     """the leaf-function allocator of regalloc_notes.md"""
     f = F.f
-    has_call = []; loopvars = {}; modified = set(); deep = set(); temps_bc = []
+    has_call = []; loopvars = {}; modified = set(); deep = set(); temps_bc = []; temps_ptr = []
     def visit(n, depth):
         if n.k == 'call' or fpgen.is_fp_op(n): has_call.append(n)
         if n.k == 'load' and strip(n.e).k == 'var':
@@ -4294,6 +4316,8 @@ def plan_leaf(F):
         if n.k == 'index' and strip(n.base).k == 'var' and strip(n.base).decl.ty.kind == 'array' and n.ty.size >= 2 and fold(n.idx).k != 'const':
             temps_bc.append(n)
         if n.k == 'load' and strip(n.e).k == 'deref' and not F.opt: temps_bc.append(n)
+        if F.adecl and n.k == 'index' and strip(n.base).k == 'load' and fold(n.idx).k != 'const' and depth:
+            temps_ptr.append(n)                            # .c_sum: p[i] in a loop needs a free address register
         if F.opt and n.k == 'bin' and n.op == '=' and store_through_temp(n): temps_bc.append(n)   # _strset
     walk(f.body, visit)
     if F.opt and not F.adecl and (not has_call or one_early_call(F)) and leaf_l2(F): return True
@@ -4384,10 +4408,15 @@ def plan_leaf(F):
     order = params + list(reversed(locals_))
     if F.opt: order = list(reversed(locals_)) + list(reversed(params))      # _strcat at -O: s, s2, s1
     free = [r for r in LEAF_SEQ if not (r == 'BC' and temps_bc)]
+    if F.adecl:                                            # .c_sum: the parameters' own registers are taken
+        free = [r for r in free if not any(getattr(p_, 'reg', None) == r and p_ not in order for p_ in f.params)]
     for d in order:
         if d in rets and 'HL' in free:
             d.reg = 'HL'; free.remove('HL')
             if d.kind == 'param': F.param_copies.append(d)        # _strchr: ld XHL,(XSP+4)
+    if F.adecl and temps_ptr:                              # .c_sum: i IX (DE is p[i]'s address); .c_find: i HL, IX
+        t_ = next((r for r in free if r in ('BC', 'DE', 'HL', 'IX', 'IY')), None)
+        if t_ is not None: free.remove(t_)
     narrowed = set()
     walk(f.body, lambda n, dep: narrowed.add(strip(strip(n.e).e).decl) if n.k == 'cast' and n.kind == 'IntegralCast'
          and n.ty.size == 1 and strip(n.e).k == 'load' and strip(strip(n.e).e).k == 'var' else None)
