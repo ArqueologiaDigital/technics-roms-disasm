@@ -7,12 +7,31 @@
 # Further LLVM changes must be new commits on top.
 
 Branch: tlcs900_backend
-Commit: a3a81863f87d (a3a81863f87d4fbd5a9b728ec12d7a55da456360)
-Date: 2026-10-02
-Subject: [TLCS900] The register-indexed operand (xrr+rr) on every memory operation
+Commit: edc018e026cb (edc018e026cbc54448261f7a8a37ae10eda79570)
+Date: 2026-11-09
+Subject: [TLCS900] README: the -mabi=cc900 ABI
 
-Binary: llvm-mc sha256 118bb4d6766e60b3a76bd04cf7b085871aa10094e27db784b2dea665f3b1f975
+Binary: llvm-mc sha256 7fe4d1936d8452c47f83a5b13a969e71e1b158741bae0590b12ff629870523d7
         preserved at ~/compartilhado/toolchain-snapshot/llvm-mc.snap
+        built INCREMENTALLY (ninja) from the committed tree at edc018e026cb, not
+        from scratch: llvm-objdump 5cc4cc67173c (unchanged, already preserved as
+        llvm-objdump.snap.a3a81863f87d-5cc4cc67), llc de6f27f5a0e9,
+        clang-21 d008606fdcf5, lld ab9becd7cc75, llvm-objcopy f84eb6d7665d and
+        llvm-nm 05865ae366f8.
+
+⚠ PIN PROMOTED ON 2026-11-09 (UPDATE 22, -mabi=cc900):
+  a3a81863f87d / 118bb4d6 -> edc018e026cb / 7fe4d193.  Eight commits add Toshiba
+  cc900's ABI behind -mabi=cc900 / -mcc900-adecl (notes/cc900-compat-plan-2026-11-08/
+  phase2.md).  Default output is unchanged: the 104 v10/maincpu C objects are
+  byte-identical apart from clang's version string in .comment (research-scratch
+  9c5a528), llc output for every TLCS900 .ll test is identical, the 105 TLCS900
+  CodeGen/MC lit tests pass, and `make gate` and `make gate-wsa1` PASS (every
+  rebuilt ROM byte-identical).  llvm-mc's sha changed because of its embedded
+  version string and the shared size table entry of RETD (now 3 bytes; nothing in
+  the trees uses retd's size through llvm-mc).  Prior snapshot kept at
+  llvm-mc.snap.a3a81863f87d-118bb4d6.  The LLVM: trailer is now edc018e026cb.
+
+⚠ PREVIOUS PIN (a3a81863f87d / 118bb4d6, 2026-10-02) was
         built FROM SCRATCH from the committed, clean tree (every TLCS900
         object, .inc and library deleted, the binaries removed,
         CCACHE_DISABLE=1) -- twice, same sha, as for llvm-objdump
