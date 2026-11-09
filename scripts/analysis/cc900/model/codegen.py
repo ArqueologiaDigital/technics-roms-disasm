@@ -948,10 +948,23 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         if F.adecl and BINLOC_XR and fam == 'WA' and getattr(F, 'xr_reloc', False):
             vfam = free_reg(F, avoid={'WA'})               # binop-loc 3.1: shl_c_loc under -Xr, the inner shift in L
         V = FAM[vfam][size]
-        gen(F, l, vfam, size)
         cs = mem_operand(F, r)
         if cs is None: raise Unsupported('complex shift count')
-        F.emit('ld', '%s,%s' % (FAM['WA'][strip(r).ty.size], cs))
+        cv_ = regvar_of(strip(unpromote(r)).e) if strip(unpromote(r)).k == 'load' else None
+        wv = [d for d in list(F.f.params) + list(F.f.decls) if getattr(d, 'reg', None) == 'WA' and d not in F.dead
+              and d is not cv_]
+        def wa_ok(d):                                     # read by e itself (copied out first: as_shl_loc), and not
+            lds = [x for x in loads_in(e) if regvar_of(strip(x.e)) is d]   # inside a loop without dying there
+            return bool(lds) and (not F.loops or any(dies_here(F, x) for x in lds))
+        if IDX_GUARD and family_of(cs) != 'XWA' and wv and not all(wa_ok(d) for d in wv):
+            raise Unsupported('shift count over a live WA')   # (cond_bits.c cb_shift -O3 -XS -Xr: x in WA, read by the
+                                                               # enclosing & after the shift)
+        if family_of(cs) == FAM[vfam][4]:                 # the count lives where the value is built (cb_shift: s in BC,
+            if fold(l).k != 'const': raise Unsupported('shift count register')   # 0x8000 >> s): the count first
+            F.emit('ld', '%s,%s' % (FAM['WA'][strip(r).ty.size], cs)); gen(F, l, vfam, size)
+        else:
+            gen(F, l, vfam, size)
+            F.emit('ld', '%s,%s' % (FAM['WA'][strip(r).ty.size], cs))
         if size == 4:
             lab16 = F.newlabel()
             F.emit('bit', '0x4,A'); F.emit('j', 'z,%s' % lab16); F.emit(mnem, '0x0,%s' % V)
