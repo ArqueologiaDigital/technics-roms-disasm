@@ -962,7 +962,10 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
                 lds = [x for x in loads_in(r) if regvar_of(strip(x.e)) is d]
                 if not lds or not any(dies_here(F, x) for x in lds): raise Unsupported('multiply operands')
             if reads_reg(r, work): raise Unsupported('multiply operands')
+            n0 = len(F.lines)
             gen(F, r, ro, size); rs = FAM[ro][size]
+            if STORE_ADDR_GUARD and clobbers(F.lines[n0:], '(%s)' % FAM[work][4]):   # lnr.c r_ga_mul (none):
+                raise Unsupported('the right operand overwrites the left')         # ga[i] * gb[i] reloaded WA
         wide = FAM[work][4] if size == 2 else FAM[work][2]
         if op == '*':
             F.emit('muls' if signed else 'mul', '%s,%s' % (wide, rs))
@@ -1137,6 +1140,8 @@ def held_after(F, R, e):
             if incs or (inloop and not any(dies_here(F, x) for x in lds)): return True
         elif inloop and (d in getattr(F, 'in_loop', ()) or d.kind == 'param'):
             return True
+        elif HELD_LATER and d in read_after_top(F):         # lnr.c r_p_wri (none): d3 in BC is read after the loop,
+            return True                                    # so p[i] = i must not build its address in XBC
     return False
 
 class LazyLabel:
@@ -1617,6 +1622,8 @@ LEAF_NONE_LN1 = True                                      # see plan_leaf (model
 COPY_ELEM_DE = True                                       # see gen_stmt's store (ol_i_copy)
 STORE_ADDR_GUARD = True                                   # see clobbers
 REG_MEMBER = True                                         # see mem_operand (ae_fl_chain)
+HELD_LATER = True                                         # see held_after (lnr.c's dummies)
+PTR_ELEM_REGVAL = True                                    # see gen_stmt's store (r_p_wri)
 DEC_CMP_SUB = True                                        # dec 0x1,R / cp R,0x0 -> sub R,0x1 (opt_counted.c oc_down)
 TERN_TRUTH_PRE = True                                     # see gen's -O ?: path
 RET_CC_KEEPS = True                                       # see knowledge_pass
@@ -3163,7 +3170,29 @@ def flat(s):
         return out
     return [s]
 
+def read_after_top(F):
+    """the variables whose first reference after the current top-level statement is a read (live there); a
+    statement that is not `d = e` with e free of d counts as a read"""
+    tops = getattr(F, 'top_stmts', None)
+    k = getattr(F, 'cur_top', None)
+    if tops is None or k is None: return set()
+    memo = F.__dict__.setdefault('_read_after', {})
+    if k in memo: return memo[k]
+    out = set(); seen = set()
+    for st in tops[k + 1:]:
+        for d in list(F.f.params) + list(F.f.decls):
+            if d in seen or not getattr(d, 'reg', None) or not uses_decl(st, d): continue
+            seen.add(d)
+            e = strip(st.e) if st.k == 'expr' else None
+            if not (e is not None and e.k == 'bin' and e.op == '=' and strip(e.l).k == 'var' and strip(e.l).decl is d
+                    and not uses_decl(e.r, d)):
+                out.add(d)
+    memo[k] = out
+    return out
+
 def gen_stmt(F, s, last):
+    tix = getattr(F, 'top_ix', None)
+    if tix is not None and id(s) in tix: F.cur_top = tix[id(s)]
     if s.k != 'block' and getattr(F, 'fp_temps', None) is not None:
         fpgen.begin_stmt(F); F._root_done = False; fpgen.hoist_elems(F, s)         # R5g: a statement's op temporaries are free at the next
         e = getattr(s, 'e', None) if s.k == 'expr' else None
@@ -3619,6 +3648,12 @@ def gen_stmt(F, s, last):
             bb = strip(x.base)
             while bb.k in ('decay', 'cast', 'noop') and getattr(bb, 'e', None) is not None: bb = strip(bb.e)
             return bb.k == 'var' and bb.decl.kind == 'global' and bb.decl.ty.kind == 'array'
+        rv0 = regvar_of(strip(s.e.r).e) if strip(s.e.r).k == 'load' else None
+        if PTR_ELEM_REGVAL and not F.opt and not F.adecl and rv0 is not None and rv0.ty.size == size and \
+                lv.k == 'index' and strip(lv.base).k == 'load' and strip(lv.base).ty.is_ptr() and \
+                fold(lv.idx).k != 'const' and rv0.reg not in ('WA',):
+            t = lvalue(F, lv, kind='storek')         # lnr.c r_p_wri (none): p[i] = i with i in IX -> ld WA,IX /
+            F.emit('ld', '%s,%s' % (t, FAM[rv0.reg][size])); return   # exts XWA / add XWA,XWA / add XWA,(p) / ld (XWA),IX
         if COPY_ELEM_DE and not F.opt and gidx(lv) and gidx(s.e.r) and not ({'DE', 'HL'} & live_regs(F)):
             t = lvalue(F, lv, idx='DE', base='XHL')   # opt_loops.c ol_i_copy (none): gb[i] = ga[i] -> ld DE,IX /
         else:                                        # add DE,DE / lda XHL,_gb / ... lda XBC,_ga / ld (XHL+DE),WA
@@ -7292,6 +7327,7 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong
         F.emit('ld', '%s,(XSP+%s)' % (FAM[d.reg][d.ty.size], hx(d.off + F.push)))   # (after the frame: offsets)
     emit_homes(F)
     if F.opt: plan_shared_exit(F)
+    F.top_stmts = flat(f.body); F.top_ix = {id(x): k for k, x in enumerate(F.top_stmts)}
     gen_stmt(F, f.body, True)
     flush_pops(F)
     if not F.lines[-1].startswith('\tret') and not (getattr(F, 'no_exit', False) and F.lines[-1].startswith('\tj\t')

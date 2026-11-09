@@ -75,11 +75,11 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-30-micro-chnarrow, v423/O3XS                         | probes/chnarrow.c    | 18 / 20 exact (90.0%)    |
 | run 2026-11-09-30-micro-chnarrow, v423/Xr                           | probes/chnarrow.c    | 19 / 20 exact (95.0%)    |
 | run 2026-11-09-30-micro-chnarrow, v423/O3XSXr                       | probes/chnarrow.c    | 18 / 20 exact (90.0%)    |
-| run 2026-11-09-31-micro-lnr, v423/none                              | probes/lnr.c         | 25 / 50 exact (50.0%)    |
+| run 2026-11-09-31-micro-lnr, v423/none                              | probes/lnr.c         | 26 / 50 exact (52.0%)    |
 | run 2026-11-09-31-micro-lnr, v423/O3XS                              | probes/lnr.c         | 3 / 50 exact (6.0%)      |
 | run 2026-11-09-31-micro-lnr, v423/Xr                                | probes/lnr.c         | 8 / 50 exact (16.0%)     |
 | run 2026-11-09-31-micro-lnr, v423/O3XSXr                            | probes/lnr.c         | 6 / 50 exact (12.0%)     |
-| run 2026-11-09-32-micro-lnr2, v423/none                             | probes/lnr2.c        | 19 / 43 exact (44.2%)    |
+| run 2026-11-09-32-micro-lnr2, v423/none                             | probes/lnr2.c        | 20 / 43 exact (46.5%)    |
 | run 2026-11-09-32-micro-lnr2, v423/O3XS                             | probes/lnr2.c        | 0 / 43 exact (0.0%)      |
 | run 2026-11-09-32-micro-lnr2, v423/Xr                               | probes/lnr2.c        | 3 / 43 exact (7.0%)      |
 | run 2026-11-09-32-micro-lnr2, v423/O3XSXr                           | probes/lnr2.c        | 5 / 43 exact (11.6%)     |
@@ -97,7 +97,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-10-micro-fptemps, v423/O3XS                          | micro/fp_temps.c     | 33 / 33 exact (100.0%)   |
 | run 2026-11-09-11-micro-opttemps, v423/Xr                           | micro/opt_temps.c    | 35 / 38 exact (92.1%)    |
 | run 2026-11-09-11-micro-opttemps, v423/O3XSXr                       | micro/opt_temps.c    | 38 / 38 exact (100.0%)   |
-| run 2026-11-09-12-micro-optcounted, v423/none                       | micro/opt_counted.c  | 27 / 32 exact (84.4%)    |
+| run 2026-11-09-12-micro-optcounted, v423/none                       | micro/opt_counted.c  | 28 / 32 exact (87.5%)    |
 | run 2026-11-09-12-micro-optcounted, v423/O3XS                       | micro/opt_counted.c  | 29 / 32 exact (90.6%)    |
 | run 2026-11-09-12-micro-optcounted, v423/Xr                         | micro/opt_counted.c  | 31 / 32 exact (96.9%)    |
 | run 2026-11-09-12-micro-optcounted, v423/O3XSXr                     | micro/opt_counted.c  | 32 / 32 exact (100.0%)   |
