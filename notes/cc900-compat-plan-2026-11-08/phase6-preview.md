@@ -102,19 +102,20 @@ a DOS end-of-file byte, which the front end now cuts.)
 
 | image       | pairs | identical | differ | not compiled yet |
 |-------------|-------|-----------|--------|------------------|
-| maincpu v10 | 28    | 16        | 2      | 10               |
-| maincpu v9  | 25    | 16        | 1      | 8                |
-| maincpu v7  | 28    | 16        | 2      | 10               |
-| maincpu v6  | 25    | 16        | 1      | 8                |
-| maincpu v5  | 25    | 16        | 1      | 8                |
+| maincpu v10 | 27    | 16        | 2      | 9                |
+| maincpu v9  | 24    | 16        | 1      | 7                |
+| maincpu v7  | 27    | 16        | 2      | 9                |
+| maincpu v6  | 24    | 16        | 1      | 7                |
+| maincpu v5  | 24    | 16        | 1      | 7                |
 | subcpu v142 | 16    | 10        | 0      | 6                |
 | subcpu v141 | 16    | 10        | 0      | 6                |
 | subcpu v140 | 16    | 10        | 0      | 6                |
 | table data  | 4     | 1         | 1      | 2                |
-| hdae v2.06i | 23    | 15        | 1      | 7                |
-| hdae v2.01i | 22    | 15        | 1      | 6                |
-| hdae v1.15i | 20    | 15        | 1      | 4                |
-| hdae v1.10i | 21    | 15        | 1      | 5                |
+| hdae v2.06i | 22    | 16        | 1      | 5                |
+| hdae v2.01i | 21    | 16        | 1      | 4                |
+| hdae v1.15i | 19    | 16        | 1      | 2                |
+| hdae v1.10i | 20    | 16        | 1      | 3                |
 
 The sub CPU's pairs are mostly the floating-point routines, which the model does not compile yet; the one that
-differs on the main CPU and the HD-AE5000 is `_memccpy`.  The SX-WSA1R images have no pairs in `pairs.tsv`.
+differs on the main CPU and the HD-AE5000 is `_memccpy`.  `pairs.tsv` also lists `___ctype` at `__ctype`'s address in
+every image that has it; `pairs_model.py` reports it as `alias of __ctype` and the table does not count it.  The SX-WSA1R images have no pairs in `pairs.tsv`.

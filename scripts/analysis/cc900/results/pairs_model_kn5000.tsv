@@ -1,5 +1,5 @@
 image	address	public	source	length	result
-maincpu v10	eed778	___ctype	_CTYPE.C	-	model: no function
+maincpu v10	eed778	___ctype	_CTYPE.C	-	alias of __ctype
 maincpu v10	eed778	__ctype	_CTYPE.C	256	MATCH
 maincpu v10	ff091d	_strstr	_STRSTR.C	-	model: ; unsupported: complex compare operand
 maincpu v10	ff097d	_strcspn	_STRCSPN.C	-	model: ; unsupported: statement goto
@@ -27,7 +27,7 @@ maincpu v10	ff2891	_memccpy	_MEMCCPY.C	64	59 diff first +1
 maincpu v10	ff28d1	_memchr	_MEMCHR.C	24	MATCH
 maincpu v10	ff28e9	_strnset	_STRNSET.C	32	MATCH
 maincpu v10	ff2909	_strrchr	_STRRCHR.C	-	model: ; unsupported: load
-maincpu v9	eed778	___ctype	_CTYPE.C	-	model: no function
+maincpu v9	eed778	___ctype	_CTYPE.C	-	alias of __ctype
 maincpu v9	eed778	__ctype	_CTYPE.C	256	MATCH
 maincpu v9	ff090f	_strstr	_STRSTR.C	-	model: ; unsupported: complex compare operand
 maincpu v9	ff096f	_strcspn	_STRCSPN.C	-	model: ; unsupported: statement goto
@@ -52,7 +52,7 @@ maincpu v9	ff2883	_memccpy	_MEMCCPY.C	64	59 diff first +1
 maincpu v9	ff28c3	_memchr	_MEMCHR.C	24	MATCH
 maincpu v9	ff28db	_strnset	_STRNSET.C	32	MATCH
 maincpu v9	ff28fb	_strrchr	_STRRCHR.C	-	model: ; unsupported: load
-maincpu v7	eed778	___ctype	_CTYPE.C	-	model: no function
+maincpu v7	eed778	___ctype	_CTYPE.C	-	alias of __ctype
 maincpu v7	eed778	__ctype	_CTYPE.C	256	MATCH
 maincpu v7	ff0140	_strstr	_STRSTR.C	-	model: ; unsupported: complex compare operand
 maincpu v7	ff01a0	_strcspn	_STRCSPN.C	-	model: ; unsupported: statement goto
@@ -80,7 +80,7 @@ maincpu v7	ff20b5	_memccpy	_MEMCCPY.C	64	59 diff first +1
 maincpu v7	ff20f5	_memchr	_MEMCHR.C	24	MATCH
 maincpu v7	ff210d	_strnset	_STRNSET.C	32	MATCH
 maincpu v7	ff212d	_strrchr	_STRRCHR.C	-	model: ; unsupported: load
-maincpu v6	eed67c	___ctype	_CTYPE.C	-	model: no function
+maincpu v6	eed67c	___ctype	_CTYPE.C	-	alias of __ctype
 maincpu v6	eed67c	__ctype	_CTYPE.C	256	MATCH
 maincpu v6	ff0042	_strstr	_STRSTR.C	-	model: ; unsupported: complex compare operand
 maincpu v6	ff00a2	_strcspn	_STRCSPN.C	-	model: ; unsupported: statement goto
@@ -105,7 +105,7 @@ maincpu v6	ff1fb7	_memccpy	_MEMCCPY.C	64	59 diff first +1
 maincpu v6	ff1ff7	_memchr	_MEMCHR.C	24	MATCH
 maincpu v6	ff200f	_strnset	_STRNSET.C	32	MATCH
 maincpu v6	ff202f	_strrchr	_STRRCHR.C	-	model: ; unsupported: load
-maincpu v5	eed664	___ctype	_CTYPE.C	-	model: no function
+maincpu v5	eed664	___ctype	_CTYPE.C	-	alias of __ctype
 maincpu v5	eed664	__ctype	_CTYPE.C	256	MATCH
 maincpu v5	fefbee	_strstr	_STRSTR.C	-	model: ; unsupported: complex compare operand
 maincpu v5	fefc4e	_strcspn	_STRCSPN.C	-	model: ; unsupported: statement goto
@@ -203,7 +203,7 @@ hdae v2.06i	29aff0	_strncpy	_STRNCPY.C	43	MATCH
 hdae v2.06i	29b01b	_strrev	_STRREV.C	-	model: ; unsupported: lvalue var
 hdae v2.06i	29b04e	_strupr	_STRUPR.C	-	model: ; unsupported: condition bin
 hdae v2.06i	29b07a	__facnv	__FACVT.C	-	model: ; unsupported: var
-hdae v2.06i	2f9362	___ctype	_CTYPE.C	-	model: no function
+hdae v2.06i	2f9362	___ctype	_CTYPE.C	-	alias of __ctype
 hdae v2.06i	2f9362	__ctype	_CTYPE.C	256	MATCH
 hdae v2.01i	2993af	__doprnt	__DOFORM.C	-	model: ; unsupported: operator =
 hdae v2.01i	29a4a0	_sprintf	_SPRINTF.C	40	MATCH
@@ -225,7 +225,7 @@ hdae v2.01i	29a886	_strncmp	_STRNCMP.C	50	MATCH
 hdae v2.01i	29a8b8	_strncpy	_STRNCPY.C	43	MATCH
 hdae v2.01i	29a8e3	_strrev	_STRREV.C	-	model: ; unsupported: lvalue var
 hdae v2.01i	29a916	_strupr	_STRUPR.C	-	model: ; unsupported: condition bin
-hdae v2.01i	2f884e	___ctype	_CTYPE.C	-	model: no function
+hdae v2.01i	2f884e	___ctype	_CTYPE.C	-	alias of __ctype
 hdae v2.01i	2f884e	__ctype	_CTYPE.C	256	MATCH
 hdae v1.15i	295abe	__doprnt	__DOFORM.C	-	model: ; unsupported: operator =
 hdae v1.15i	296baf	_sprintf	_SPRINTF.C	40	MATCH
@@ -245,7 +245,7 @@ hdae v1.15i	296f48	_strlen	_STRLEN.C	30	MATCH
 hdae v1.15i	296f66	_strncat	_STRNCAT.C	47	MATCH
 hdae v1.15i	296f95	_strncmp	_STRNCMP.C	50	MATCH
 hdae v1.15i	296fc7	_strncpy	_STRNCPY.C	43	MATCH
-hdae v1.15i	2e0e66	___ctype	_CTYPE.C	-	model: no function
+hdae v1.15i	2e0e66	___ctype	_CTYPE.C	-	alias of __ctype
 hdae v1.15i	2e0e66	__ctype	_CTYPE.C	256	MATCH
 hdae v1.10i	2959c2	__doprnt	__DOFORM.C	-	model: ; unsupported: operator =
 hdae v1.10i	296ab3	_sprintf	_SPRINTF.C	40	MATCH
@@ -266,6 +266,6 @@ hdae v1.10i	296e6a	_strncat	_STRNCAT.C	47	MATCH
 hdae v1.10i	296e99	_strncmp	_STRNCMP.C	50	MATCH
 hdae v1.10i	296ecb	_strncpy	_STRNCPY.C	43	MATCH
 hdae v1.10i	296ef6	__facnv	__FACVT.C	-	model: ; unsupported: var
-hdae v1.10i	2e0cd6	___ctype	_CTYPE.C	-	model: no function
+hdae v1.10i	2e0cd6	___ctype	_CTYPE.C	-	alias of __ctype
 hdae v1.10i	2e0cd6	__ctype	_CTYPE.C	256	MATCH
-# MATCH 175, model cannot 79, differs 15, outside image 4
+# MATCH 175, model cannot 70, differs 15, alias 9, outside image 4

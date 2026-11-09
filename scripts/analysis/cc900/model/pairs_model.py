@@ -79,6 +79,10 @@ def main():
                 except Exception as ex: units[path] = {'__error__': str(ex)}
             out = units[path]
             lines = codegen.FULL.get(pub) or out.get(pub)    # whole function (inline-assembly labels included), or data
+            if not lines:                                  # ___ctype: a second public at __ctype's address
+                twin = [q[2] for q in rs if q[1] == r[1] and q[2] != pub and (codegen.FULL.get(q[2]) or out.get(q[2]))]
+                if twin:
+                    tally['alias'] += 1; print('\t'.join([img, r[1], pub, src, '-', 'alias of %s' % twin[0]])); continue
             if not lines or not lines[0].endswith(':'):
                 res = 'model: ' + (lines[0][:40] if lines else 'no function')
                 tally['model cannot'] += 1; print('\t'.join([img, r[1], pub, src, '-', res])); continue
