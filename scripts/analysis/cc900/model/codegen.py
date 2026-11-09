@@ -1635,6 +1635,7 @@ PTR_ELEM_XDE = True                                       # see gen_opassign (s_
 STORE_GLOBAL_FREE = True                                  # see store_global (r_p_rd)
 KLOOP_VALUE_WA = True                                     # see plan_leaf (r_ga_rd)
 SHIFT_VALUE_FREE = True                                   # see gen_bin's variable shift (r_shl_i)
+HOMED_WRITES = True                                       # see regvar_stmt (_strtok)
 DEC_CMP_SUB = True                                        # dec 0x1,R / cp R,0x0 -> sub R,0x1 (opt_counted.c oc_down)
 TERN_TRUTH_PRE = True                                     # see gen's -O ?: path
 RET_CC_KEEPS = True                                       # see knowledge_pass
@@ -4373,6 +4374,22 @@ def regvar_stmt(F, e):
     if e.k == 'bin' and e.op == '=' and strip(e.l).k == 'var' and getattr(strip(e.l).decl, 'reg', None) == 'XIZ' \
             and getattr(strip(e.l).decl, 'homed', False) and strip(e.r).k == 'call':
         gen_call(F, strip(e.r)); flush_pops(F); F.emit('ld', 'XIZ,XHL'); return True   # _calloc: ptr = malloc(...)
+    hz = strip(e.l).decl if e.k in ('bin', 'opassign') and strip(e.l).k == 'var' and \
+        getattr(strip(e.l).decl, 'reg', None) == 'XIZ' and getattr(strip(e.l).decl, 'homed', False) and \
+        strip(e.l).decl.ty.size == 4 else None
+    if HOMED_WRITES and hz is not None and e.k == 'bin' and e.op == '=' and \
+            (mem_operand(F, e.r) or '').startswith(('(_', '(S')):
+        F.emit('ld', 'XIZ,%s' % mem_operand(F, e.r)); return True   # _strtok: s1 = save -> ld XIZ,(S1)
+    if HOMED_WRITES and hz is not None and e.k == 'opassign' and e.op in '+-' and hz.ty.is_ptr() and \
+            hz.ty.base.size == 1:
+        r0 = strip(e.r)
+        while r0.k == 'cast' and r0.kind == 'IntegralCast': r0 = strip(r0.e)
+        if r0.k == 'call' and not has_helper_call(r0.fn) and r0.ty.size == 2:
+            gen_call(F, r0); flush_pops(F)               # _strtok: s1 += strspn(s1, s2) -> cal _strspn /
+            F.emit('extz' if not r0.ty.signed else 'exts', 'XHL')   # inc 0x8,XSP / extz XHL / add XIZ,XHL
+            F.emit(SIMPLE_OPS[e.op], 'XIZ,XHL'); return True
+    if HOMED_WRITES and hz is not None and e.k in ('bin', 'opassign'):
+        raise Unsupported('write to a variable homed in XIZ')   # (its slot is not its home: wrong code)
     if e.k == 'bin' and e.op == '=' and regvar_of(e.l) and not F.opt and regvar_of(e.l).ty.is_ptr() and \
             strip(e.r).k == 'bin' and strip(e.r).op in '+-' and regvar_of(e.l).reg != 'WA':
         d = regvar_of(e.l)                             # va_start without -O: lda XWA,XSP+0x4 / inc 0x2,XWA /
