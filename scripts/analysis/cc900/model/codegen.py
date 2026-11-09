@@ -143,6 +143,9 @@ def mem_operand(F, e):
     if e.k == 'const' and e.value is not None:            # c_find: -1 in a 16-bit context is 0xffff
         sz = e.ty.size if getattr(e, 'ty', None) is not None and e.ty.size in (1, 2, 4) else 4
         return hx(e.value & ((1 << (8 * sz)) - 1)) if e.value < 0 else hx(e.value)
+    if e.k == 'load' and strip(e.e).k == 'index' and getattr(F, 'u1_i', None) is not None:
+        u1 = u1_operand(F, strip(e.e))                   # oc_sum_pn: add HL,(XDE) after the chain
+        if u1 is not None: return u1
     if e.k == 'load' and strip(e.e).k == 'index' and fold(strip(e.e).idx).k == 'const':
         bb = strip(strip(e.e).base)                      # Toshiba's va_arg as an operand: s += va_arg(ap, int) ->
         while bb.k == 'cast': bb = strip(bb.e)           # inc 0x2,XBC / add HL,(XBC-0x2)
@@ -815,6 +818,9 @@ def gen_compare(F, e):
         T1 = FAM[getattr(F, 'tfam', 'WA')][1]                              # ot_cmp_abn: ld C,(XHL) / cp C,(XWA)
         F.emit('ld', '%s,%s' % (T1, rvm)); F.emit('cp', '%s,%s' % (T1, lm)); return cc   # _strncmp: ld A,(XDE) / cp A,(XIX) (guess:
                                                                           # one example)
+    if getattr(F, 'u1_i', None) is not None and lm is not None and lm.startswith('(') and rvm in \
+            ('A', 'C', 'E', 'L', 'WA', 'BC', 'DE', 'HL', 'IX', 'IY') and rv.k == 'load' and regvar_of(rv.e):
+        F.emit('cp', '%s,%s' % (lm, rvm)); return cc     # oc_cnt_c: cp (XWA+IX),E; oc_find: cp (XIX),DE
     if rvm in ('A', 'C', 'E', 'L', 'WA', 'BC', 'DE', 'HL') and lm is not None and lm.startswith('(') and e.op in ('==', '!='):
         rr = FAM[[k for k, v in FAM.items() if rvm in v.values()][0]][size]     # _strchr: cp A,(XHL)
         F.emit('cp', '%s,%s' % (rr, lm)); return cc
@@ -1065,6 +1071,24 @@ def gen_incdec(F, e, fam, size, value):
     else: bump(); F.emit('ld', '%s,(%s)' % (FAM[fam][vt.size], g))
     return fam
 
+def u1_operand(F, v):
+    """p[i] with p and i in registers after leaf_u1: (Xp+i) for chars, else the index chain in its register
+    (ld DE,IX / exts XDE / add XDE,XDE / add XDE,XWA -> (XDE))"""
+    if getattr(F, 'u1_i', None) is None or v.k != 'index': return None
+    b = strip(v.base); ix = strip(v.idx)
+    while ix.k == 'cast': ix = strip(ix.e)
+    if not (b.k == 'load' and regvar_of(b.e) and ix.k == 'load' and strip(ix.e).k == 'var' and strip(ix.e).decl is F.u1_i):
+        return None
+    P = FAM[regvar_of(b.e).reg][4]; I = FAM[F.u1_i.reg][2]
+    if v.ty.size == 1: return '(%s+%s)' % (P, I)
+    T = getattr(F, 'u1_chain', None)
+    if T is None: return None
+    XT = FAM[T][4]
+    F.emit('ld', '%s,%s' % (FAM[T][2], I)); F.emit('exts', XT)
+    if v.ty.size == 2: F.emit('add', '%s,%s' % (XT, XT))
+    else: F.emit('sll', '%s,%s' % (hx({4: 2, 8: 3}[v.ty.size]), XT))
+    F.emit('add', '%s,%s' % (XT, P)); return '(%s)' % XT
+
 def gen_load_mem(F, v, fam, size):
     """load through an index, member or pointer (mem.c)"""
     R = FAM[fam][size]
@@ -1094,6 +1118,8 @@ def gen_load_mem(F, v, fam, size):
             F.emit('ld', 'WA,%s' % im)                             # m_ga_v, m_gla_v
             F.emit('add', 'WA,WA') if esz == 2 else F.emit('sla', '%s,WA' % hx({4: 2, 8: 3}[esz]))
             F.emit('lda', 'XBC,_%s' % b.decl.name); F.emit('ld', '%s,(XBC+WA)' % R); return fam
+        u1 = u1_operand(F, v)
+        if u1 is not None: F.emit('ld', '%s,%s' % (R, u1)); return fam
         bb = strip(b)
         while bb.k == 'cast': bb = strip(bb.e)
         if bb.k == 'opassign' and bb.op in '+-' and regvar_of(bb.l) and fold(bb.r).k == 'const' and fold(i).k == 'const':
@@ -1124,6 +1150,8 @@ def lvalue(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False):
     operand; *p loads p into `ptr`; a[i] of a global array scales i in `idx` and puts the array in `base`
     (`(base+idx)`), or with combine=True adds them into `ptr` (`(ptr)`)"""
     lv = strip(lv)
+    u1 = u1_operand(F, lv) if getattr(F, 'u1_i', None) is not None else None
+    if u1 is not None: return u1                         # oc_cpy_abn: ld (XWA+IX),C; oc_clr_i: ldw (XDE),0x0
     if lv.k == 'index' and local_array_of(lv.base) is not None and fold(lv.idx).k == 'const' and \
             local_array_of(lv.base) in getattr(F, 'array_temps', {}):
         array_base(F, local_array_of(lv.base))          # _ultoa: buf[32] = 0 -> (XWA+0x20)
@@ -2111,6 +2139,12 @@ def regvar_stmt(F, e):
         gen(F, e.r, T, 2)                                  # add IX,(XWA+:2) / add HL,IX
         F.emit(SIMPLE_OPS[e.op], '%s,%s' % (FAM[d.reg][2], FAM[T][2])); return True
     if e.k == 'opassign' and e.op in '+-' and regvar_of(e.l) and regvar_of(e.l).ty.size == 2 and \
+            getattr(F, 'u1_i', None) is not None and getattr(F, 'tfam', None) and strip(e.r).k == 'cast' and \
+            strip(strip(e.r).e).k == 'load' and strip(strip(e.r).e).ty.size == 1:
+        d = regvar_of(e.l); T = F.tfam                     # oc_sum_c: s += p[i] -> ld C,(XWA+IX) / exts BC / add HL,BC
+        gen(F, strip(strip(e.r).e), T, 1); F.emit('exts' if strip(strip(e.r).e).ty.signed else 'extz', FAM[T][2])
+        F.emit(SIMPLE_OPS[e.op], '%s,%s' % (FAM[d.reg][2], FAM[T][2])); return True
+    if e.k == 'opassign' and e.op in '+-' and regvar_of(e.l) and regvar_of(e.l).ty.size == 2 and \
             char_arith(e.r) and getattr(F, 'tfam', None):
         d = regvar_of(e.l); T = F.tfam                     # opt_temps.c ot_sum: s += *a++ - *b++ ->
         gen(F, narrow(e.r, 1), T, 1); F.emit('exts', FAM[T][2])   # ld A,(XHL+:1) / sub A,(XBC+:1) / exts WA /
@@ -2708,6 +2742,84 @@ def live_across_call(body):
         return seen
     return stmt(body, False) is None
 
+def leaf_u1(F):
+    """-O3 -XS -Xr leaf with one counted for loop over pointer parameters (rule U1, research-scratch
+    sessions/2026-11-09_cc900-counted-loops 6357bd2): the parameters keep their registers, a returned local takes
+    HL, then the byte temporary (C; BC's parameter moves to the first free of DE, HL) or the index chain, then the
+    other locals in reverse declaration order, then the counter, each the first free of WA, BC, DE, HL, IX, IY, IZ"""
+    f = F.f
+    loops = []
+    walk(f.body, lambda n, d: loops.append(n) if n.k in ('for', 'while', 'do') else None)
+    if len(loops) != 1 or loops[0].k != 'for': return False
+    lp = loops[0]
+    if lp.init is None or lp.cond is None or lp.inc is None: return False
+    ini = flat(lp.init)
+    if len(ini) != 1 or ini[0].k != 'expr' or strip(ini[0].e).k != 'bin' or strip(ini[0].e).op != '=': return False
+    iv = strip(strip(ini[0].e).l)
+    if iv.k != 'var' or iv.decl.kind != 'local' or iv.decl.ty.size != 2 or fold(strip(ini[0].e).r).k != 'const': return False
+    i = iv.decl
+    c = strip(lp.cond)
+    if not (c.k == 'bin' and c.op == '<' and strip(c.l).k == 'load' and strip(strip(c.l).e).k == 'var'
+            and strip(strip(c.l).e).decl is i): return False
+    kv = strip(c.r)
+    while kv.k == 'cast': kv = strip(kv.e)
+    if not (kv.k == 'load' and strip(kv.e).k == 'var' and strip(kv.e).decl.kind == 'param'): return False
+    inc = strip(lp.inc)
+    if not (inc.k == 'incdec' and inc.op == '++' and strip(inc.e).k == 'var' and strip(inc.e).decl is i): return False
+    params = list(f.params)
+    if any(getattr(p, 'reg', None) not in ('WA', 'BC', 'DE') for p in params): return False
+    acc = []; bad = []
+    def v(n, d):
+        if n.k == 'index':
+            b = strip(n.base); ix = strip(n.idx)
+            while ix.k == 'cast': ix = strip(ix.e)
+            if b.k == 'load' and strip(b.e).k == 'var' and strip(b.e).decl in params and ix.k == 'load' and \
+                    strip(ix.e).k == 'var' and strip(ix.e).decl is i:
+                acc.append((strip(b.e).decl, n.ty.size))
+            else: bad.append(n)
+        if n.k == 'call' or fpgen.is_fp_op(n): bad.append(n)
+    walk(lp.body, v)
+    if bad or not acc or len({p for p, _ in acc}) > 2: return False
+    if len({p for p, _ in acc if _ > 1}) > 1: return False          # two wide arrays: the held copy, not modelled
+    locs = [d for d in f.decls if d.kind == 'local']
+    rets = []
+    walk(f.body, lambda n, d: rets.append(strip(strip(n.value).e).decl) if n.k == 'return' and n.value is not None
+         and strip(n.value).k == 'load' and strip(strip(n.value).e).k == 'var' else None)
+    retv = [d for d in locs if d in rets]
+    if len(retv) > 1: return False
+    used = {p.reg for p in params}
+    order = ('WA', 'BC', 'DE', 'HL', 'IX', 'IY', 'IZ')
+    def take():
+        r = next((g for g in order if g not in used), None)
+        if r is None: raise Unsupported('out of registers')
+        used.add(r); return r
+    if retv: retv[0].reg = 'HL'; used.add('HL')
+    moves = []
+    byte = []                                            # a char loaded into a register: stored or widened, not
+    def bv(n, d):                                        # compared (oc_cnt_c: cp (XWA+IX),E) nor a constant store
+        if n.k in ('bin', 'opassign') and (n.k == 'opassign' or n.op == '=') and fold(n.r).k != 'const':
+            walk(n.r, lambda m, dd: byte.append(m) if m.k == 'load' and strip(m.e).k == 'index' and m.ty.size == 1 else None)
+    walk(lp.body, bv)
+    wide = [sz for _, sz in acc if sz > 1]
+    if byte:                                             # oc_cpy_abn: ld XHL,XBC (b out of BC), C the byte
+        occ = [p for p in params if p.reg == 'BC']
+        if occ:
+            nr = next((g for g in ('DE', 'HL') if g not in used), None)
+            if nr is None: return False
+            moves.append((occ[0], 'BC', nr)); used.discard('BC'); used.add(nr); occ[0].reg = nr
+        used.add('BC'); F.tfam = 'BC'
+    if wide: F.u1_chain = take()                         # oc_sum_pn: the chain in DE
+    for d in reversed([d for d in locs if d is not i and d not in retv and d.uses]):
+        d.reg = take()
+    if i not in retv: i.reg = take()                     # oc_sum_pn: i in IX; oc_find: i returned, in HL
+    F.u1_i = i
+    for v_, src, dst in moves:
+        sz = v_.ty.size if v_.ty.size in (1, 2, 4) else 4
+        F.emit('ld', '%s,%s' % (FAM[dst][sz], FAM[src][sz]))
+    if 'IZ' in used and any(getattr(d, 'reg', None) == 'IZ' for d in locs) or getattr(F, 'u1_chain', None) == 'IZ':
+        F.emit('push', 'IZ'); F.push = 2; F.pushes = ['IZ']
+    return True
+
 def leaf_r6(F):
     """-O3 -XS -Xr leaf with one while loop: the temporary family T and the parameter moves (leafalloc.py)"""
     import leafalloc
@@ -2760,6 +2872,7 @@ def plan_leaf(F):
         if F.opt and n.k == 'bin' and n.op == '=' and store_through_temp(n): temps_bc.append(n)   # _strset
     walk(f.body, visit)
     if F.adecl and not has_call and leaf_r6(F): return True
+    if F.adecl and F.opt and not has_call and leaf_u1(F): return True
     if has_call and not (F.opt and not F.adecl and not any(d.kind == 'local' for d in f.decls) and f.params
                          and not live_across_call(f.body)):
         return False                                   # _ltoa at -O3 -XS: nothing read after its calls

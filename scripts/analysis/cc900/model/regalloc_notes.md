@@ -115,3 +115,17 @@ A `while` whose condition compares two bytes is rotated without `-O` too (ot_cmp
 are repeated in front (ctrl.c c_cnt, c_clear).  A jump to an exit that is only `ret` is `ret cc`; in
 `gc = *a + *b` the operand whose dying pointer holds the target family is loaded first (`ld C,(XBC)` /
 `add C,(XWA)`).  opt_temps.c under `-Xr`: 33 / 38.
+
+## Counted loops under `-O3 -XS -Xr`: rule U1 (2026-11-09)
+
+research-scratch `sessions/2026-11-09_cc900-counted-loops` (commit `6357bd2`; data from runs
+`2026-11-09-12-micro-optcounted`, `2026-11-08-9-micro-optloops`, ctrl.c / mem.c) fitted one allocator for counted
+`for` loops: 61 / 64 rows under O3XSXr, 63 / 65 under Xr, 58 / 64 under O3XS (its README states it in full: object
+classes visited in a fixed order, each object the first free of WA, BC, DE, HL, IX, IY, IZ).  `codegen.leaf_u1`
+implements the part for one loop over pointer parameters under O3XSXr: parameters keep their registers, a returned
+variable (an accumulator, or the counter itself in `oc_find`) takes HL, then the byte temporary (C, evicting BC's
+parameter to the first free of DE, HL: `ld XHL,XBC`) or the index chain (`ld DE,IX` / `exts XDE` / `add XDE,XDE` /
+`add XDE,XWA` / `(XDE)`), then the other locals in reverse declaration order, then the counter; a char array is
+indexed `(Xp+i)`.  opt_counted.c O3XSXr 2 -> 24 of 32; micro O3XSXr 632 -> 635.  Not yet: a long constant store's
+temporary class, two arrays (the held address copy), down-counting loops, nested loops, the `ldirw` block copy,
+and the O3XS / Xr variants.

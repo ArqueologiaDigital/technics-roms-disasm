@@ -9,10 +9,10 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-08-7-micro, v110/none                                   | micro/*.c           | 663 / 674 exact (98.4%)  |
 | run 2026-11-08-7-micro, v423/O3XS                                   | micro/*.c           | 632 / 674 exact (93.8%)  |
 | run 2026-11-08-7-micro, v423/Xr                                     | micro/*.c           | 637 / 674 exact (94.5%)  |
-| run 2026-11-08-7-micro, v423/O3XSXr                                 | micro/*.c           | 632 / 674 exact (93.8%)  |
+| run 2026-11-08-7-micro, v423/O3XSXr                                 | micro/*.c           | 635 / 674 exact (94.2%)  |
 | run 2026-11-08-7-micro, ide2003/O3XS, --personality ide2003         | micro/*.c           | 631 / 674 exact (93.6%)  |
 | run 2026-11-08-7-micro, ide2003/Xr, --personality ide2003           | micro/*.c           | 631 / 674 exact (93.6%)  |
-| run 2026-11-08-7-micro, ide2003/O3XSXr, --personality ide2003       | micro/*.c           | 625 / 674 exact (92.7%)  |
+| run 2026-11-08-7-micro, ide2003/O3XSXr, --personality ide2003       | micro/*.c           | 628 / 674 exact (93.2%)  |
 | run 2026-11-08-8-micro-ra, v423/none                                | micro/ra_*.c        | 29 / 42 exact (69.0%)    |
 | run 2026-11-08-8-micro-ra, v423/O3XSXr                              | micro/ra_*.c        | 12 / 42 exact (28.6%)    |
 | run 2026-11-08-4-abi, v423/none                                     | abi/*.c             | 96 / 108 exact (88.9%)   |
@@ -46,7 +46,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-12-micro-optcounted, v423/none                       | micro/opt_counted.c | 12 / 32 exact (37.5%)    |
 | run 2026-11-09-12-micro-optcounted, v423/O3XS                       | micro/opt_counted.c | 2 / 32 exact (6.2%)      |
 | run 2026-11-09-12-micro-optcounted, v423/Xr                         | micro/opt_counted.c | 1 / 32 exact (3.1%)      |
-| run 2026-11-09-12-micro-optcounted, v423/O3XSXr                     | micro/opt_counted.c | 2 / 32 exact (6.2%)      |
+| run 2026-11-09-12-micro-optcounted, v423/O3XSXr                     | micro/opt_counted.c | 24 / 32 exact (75.0%)    |
 | run 2026-11-09-13-micro-fpstmts, v423/none                          | micro/fp_stmts.c    | 1 / 16 exact (6.2%)      |
 | run 2026-11-09-13-micro-fpstmts, v423/O3XS                          | micro/fp_stmts.c    | 0 / 16 exact (0.0%)      |
 | run 2026-11-08-9-micro-optloops, v423/O3XS                          | micro/opt_loops.c   | 15 / 33 exact (45.5%)    |
