@@ -81,6 +81,19 @@ no options, as are the loop shapes and the leaf-function register allocator.
    loops over two arrays (`ol_i_copy`, `ol_two_arr`).
 5. The remaining unsupported constructs in the library (goto, indirect calls, `operator =` inside expressions).
 
+## A proxy route for matching work (2026-11-09)
+
+Until the model or the LLVM implementation is complete, the Technics compiler can be approximated as **V4.23 in the
+oracle VM plus the reload rule**: compile with V4.23 (`-O3 -XS`), apply `rule_transform.py`, assemble with asm900 in
+the VM.  On the firmware pairs this reproduces 242 of 291, against 235 for V4.23 alone; with the model's `_ultoa` the
+rule accounts for 251.  It is usable now for phase 6 experiments (compile a candidate C function, compare with the
+ROM), within the VM rule.
+
+Open pairs: `__doprnt` (beyond both neighbours: a variable in IZ and two missing `decw` sequences, probably a later
+`__DOFORM.C`), `__facnv`, `__doform` data, `_vsprintf` (the firmware stores XWA to the buffer pointer before loading
+it from `(XSP+4)`: the first two instructions swapped relative to V4.23's, which no rule seen so far produces), `_sbrk`,
+`___ctype` naming, `__FloatErrorHandle`.
+
 ## How to resume
 
 ```sh
