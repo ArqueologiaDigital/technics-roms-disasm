@@ -2,23 +2,29 @@
 """Translate the model's Toshiba-syntax listing into our LLVM TLCS-900 syntax, choosing asm900's encodings.
 
 usage: python3 -I -B to_llvm.py FILE.c SYMBOLS.txt [--opt O3XS] [--adecl] [--personality kn5000] [--only NAME,...]
-Compiles FILE.c with the reference model, then rewrites each function for llvm-mc:
-- mnemonics and operands in our syntax (`ld (xwa+), c`, `scc nz, wa`, `cp a, 0:i3`);
-- the encodings asm900 picks by default: 3-bit immediates for `cp`/`ld` of 0..7 to a register (`:i3`),
-  post-increment operands without an explicit step when it equals the data size, byte/word immediate stores
-  written `ld` / `ldw` as our assembler expects;
-- absolute addresses: a C global `_name` is looked up (without its `_`) in SYMBOLS.txt (`NAME 0xADDR` rows, e.g.
-  symbols/maincpu_v10_symbols_reference.txt plus a map for RAM variables) and written `(ADDR:16)` below 0x10000,
-  `(ADDR:24)` above (`(ADDR:8)` below 0x100), the forms the firmware shows asm900/tulink choosing.
-Prints one assembly file on stdout; each function becomes a global label.  Covers the instructions the six
-functions of corpus/firmware/tiny.c need; anything else is left as `; untranslated: ...` so the assembler stops.
+                                [-D...] [-I...]
+Compiles FILE.c with the reference model and prints one llvm-mc source on stdout; each function becomes a global
+label (its name without the `_` / `.` prefix).  As a module, translate_function(name, lines, syms) does the same for
+one function and returns its lines; relax() turns out-of-reach jr into jrl.
+
+The encodings asm900 picks, read from the firmware (v10 String_Compare, Strcat, the phase 6 functions):
+- `ld r8,n` is the 2-byte compact form (`ld l, 0x0:opc`); `ld r16/r32,n` and `cp r,n` with n in 0..7 the 3-bit
+  form (`ld hl, 0:i3`, `cp bc, 0:i3`);
+- `j cc,L` / `j L` are `jr` when the target is in reach and `jrl` otherwise; `cal _f` is `call` with a 24-bit
+  address; a 16-bit push / pop of WA..IZ is the 1-byte form;
+- an absolute operand is `(ADDR:8)` below 0x100, `(ADDR:16)` below 0x10000, `(ADDR:24)` above.
+SYMBOLS.txt rows are `NAME 0xADDR`; a C name is looked up with and without its `_` / `.` prefix.  An instruction the
+translator does not know is written as `; untranslated: ...`, so that the assembler stops on it.
 """
 import os, re, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-import frontend, codegen
 
-CC = {'eq': 'z', 'ne': 'nz'}
+CC = {'eq': 'z', 'ne': 'nz', 'lt': 'lt', 'le': 'le', 'gt': 'gt', 'ge': 'ge', 'ult': 'c', 'uge': 'nc', 'ugt': 'ugt',
+      'ule': 'ule', 'm': 'mi', 'p': 'pl', 'z': 'z', 'nz': 'nz', 'c': 'c', 'nc': 'nc', 'ov': 'ov', 'nov': 'nov', 't': 't'}
+R8 = {'A', 'W', 'B', 'C', 'D', 'E', 'H', 'L'}
+REGS = re.compile(r'^(Q?[WABCDEHL]|Q?(WA|BC|DE|HL|IX|IY|IZ|SP)|X(WA|BC|DE|HL|IX|IY|IZ|SP)|Q?I[XYZ][LH])$')
+NUM = re.compile(r'^-?(0x[0-9a-fA-F]+|\d+)$')
 
 def load_symbols(path):
     out = {}
@@ -29,50 +35,145 @@ def load_symbols(path):
             except ValueError: pass
     return out
 
-def addr(sym, syms):
-    n = sym[1:] if sym.startswith(('_', '.')) else sym
-    if n not in syms: raise KeyError('no address for %s' % sym)
-    a = syms[n]
+def lookup(sym, syms):
+    for n in (sym, sym.lstrip('_.')):
+        if n in syms: return syms[n]
+    raise KeyError('no address for %s' % sym)
+
+def absaddr(a):
     return '(0x%x:%d)' % (a, 8 if a < 0x100 else 16 if a < 0x10000 else 24)
 
-def operand(o, syms):
-    o = o.strip()
-    m = re.match(r'^\(([_.][A-Za-z0-9_]+)\)$', o)
-    if m: return addr(m.group(1), syms)
-    m = re.match(r'^\((X\w+)\+:(\d)\)$', o)
-    if m: return '(%s+)' % m.group(1).lower()
-    return o.lower()
+def num(s):
+    s = s.strip(); neg = s.startswith('-'); s = s.lstrip('-')
+    v = int(s, 16) if s.lower().startswith('0x') else int(s)
+    return -v if neg else v
 
-def translate(line, syms):
-    t = line.strip()
-    if t.endswith(':'): return t.lstrip('_.') if t[0] in '_.' else t
-    parts = t.split(None, 1); op = parts[0]; args = [a.strip() for a in parts[1].split(',')] if len(parts) > 1 else []
-    if op == 'ret' and not args: return '\tret'
-    if op == 'scc': return '\tscc %s, %s' % (CC.get(args[0], args[0]), args[1].lower())
-    if op in ('cp', 'ld') and len(args) == 2 and re.match(r'^0x[0-7]$', args[1]) and re.match(r'^[A-Z]{1,3}$', args[0]):
-        return '\t%s %s, %d:i3' % (op, args[0].lower(), int(args[1], 16))      # asm900's short immediate
-    if op in ('ldb', 'ldw'):
-        return '\t%s %s, %s' % ('ld' if op == 'ldb' else 'ldw', operand(args[0], syms), args[1])
-    if op in ('ld', 'add', 'sub', 'and', 'or', 'xor', 'cp'):
-        return '\t%s %s, %s' % (op, operand(args[0], syms), operand(args[1], syms))
-    return '\t; untranslated: ' + t
+def operand(o, syms, locals_):
+    """one Toshiba operand in our syntax, or None"""
+    o = o.strip()
+    if REGS.match(o): return o.lower()
+    m = re.match(r'^\(([_.][A-Za-z0-9_]+)(?:\s*\+\s*(0x[0-9a-fA-F]+|\d+))?\)$', o)
+    if m: return absaddr(lookup(m.group(1), syms) + (num(m.group(2)) if m.group(2) else 0))
+    m = re.match(r'^\((X\w+)\+:(\d)\)$', o)                     # post-increment
+    if m: return '(%s+:%s)' % (m.group(1).lower(), m.group(2))
+    m = re.match(r'^\(-(X\w+):(\d)\)$', o)                       # pre-decrement
+    if m: return '(-%s:%s)' % (m.group(1).lower(), m.group(2))
+    m = re.match(r'^\((X\w+)\+(0x[0-9a-fA-F]+|\d+)\)$', o)       # (xsp+4)
+    if m: return '(%s+%d)' % (m.group(1).lower(), num(m.group(2)))
+    m = re.match(r'^\((X\w+)-(0x[0-9a-fA-F]+|\d+)\)$', o)
+    if m: return '(%s-%d)' % (m.group(1).lower(), num(m.group(2)))
+    m = re.match(r'^\((X\w+)\+(\w+)\)$', o)                     # (xix+hl)
+    if m: return '(%s+%s)' % (m.group(1).lower(), m.group(2).lower())
+    m = re.match(r'^\((X\w+)\)$', o)
+    if m: return '(%s)' % m.group(1).lower()
+    if NUM.match(o): return o.lower()
+    if re.match(r'^[_.][A-Za-z0-9_]+$', o): return '0x%x' % lookup(o, syms)
+    if o in locals_: return o
+    return None
+
+def size_suffix(op):
+    """cpb / ldb ... -> cp / ld (the operand decides the size in our syntax); the word forms keep their w"""
+    if op in ('ldw', 'cpw', 'addw', 'subw', 'andw', 'orw', 'xorw', 'incw', 'decw'): return op[:-1], 'w'
+    if op.endswith('b') and op[:-1] in ('ld', 'cp', 'add', 'sub', 'and', 'or', 'xor', 'inc', 'dec'): return op[:-1], 'b'
+    return op, ''
+
+def translate_line(t, syms, locals_):
+    if t.endswith(':') and not t.startswith('\t'): return t
+    parts = t.strip().split(None, 1); op = parts[0]
+    raw = [a.strip() for a in re.split(r',(?![^()]*\))', parts[1])] if len(parts) > 1 else []
+    if op == 'align': return '\t.balign %s' % raw[0]
+    if op in ('db', 'dw', 'dl'):
+        out = []
+        for a in raw:
+            if a.startswith('"'): out.append('\t.ascii %s' % a); continue
+            if '-' in a and not a.startswith('-') and all(x.strip() in locals_ for x in a.split('-')): v = a
+            else: v = operand(a, syms, locals_) or a
+            out.append('\t%s %s' % ({'db': '.byte', 'dw': '.short', 'dl': '.long'}[op], v))
+        return '\n'.join(out)
+    if op == 'ret': return '\tret' if not raw else '\tret %s' % CC[raw[0]]
+    if op == 'retd': return '\tretd %d' % num(raw[0])
+    if op == 'cal': return '\tcall 0x%x' % lookup(raw[0], syms)
+    if op == 'j':
+        if len(raw) == 1:
+            if raw[0] in locals_: return '\tjr %s' % raw[0]
+            m = re.match(r'^(X\w+)\+(\w+)$', raw[0])
+            if m: return '\tjp t, (%s+%s)' % (m.group(1).lower(), m.group(2).lower())
+            return '\tjp 0x%x' % lookup(raw[0], syms)
+        return '\tjr %s, %s' % (CC[raw[0]], raw[1])
+    if op == 'djnz': return '\tdjnz %s, %s' % (raw[0].lower(), raw[1])
+    if op in ('ldir', 'ldirw', 'ldi', 'ldiw', 'lddr', 'lddrw', 'ldd', 'lddw') and raw in ([], ['(XIX+)', '(XIY+)'], ['(XIX-)', '(XIY-)']):
+        return '\t' + op                                  # _ldiv: ldirw (XIX+),(XIY+) -> ldirw (95 11)
+    if op == 'scc': return '\tscc %s, %s' % (CC[raw[0]], raw[1].lower())
+    if op in ('push', 'pop') and raw[0] in ('WA', 'BC', 'DE', 'HL', 'IX', 'IY', 'IZ'):
+        return '\t%sw %s' % (op, raw[0].lower())                      # the 1-byte 16-bit forms
+    if op == 'lda':
+        dst = raw[0].lower(); src = raw[1]
+        m = re.match(r'^(X\w+)\+:(\d)$', src)
+        if m: return '\tlda %s, (%s+:%s)' % (dst, m.group(1).lower(), m.group(2))
+        m = re.match(r'^(X\w+)([+-])(0x[0-9a-fA-F]+|\d+)$', src)
+        if m: return '\tlda %s, (%s%s%d)' % (dst, m.group(1).lower(), m.group(2), num(m.group(3)))
+        m = re.match(r'^(X\w+)\+(\w+)$', src)
+        if m: return '\tlda %s, (%s+%s)' % (dst, m.group(1).lower(), m.group(2).lower())
+        if src.startswith(('_', '.')): return '\tlda %s, %s' % (dst, absaddr(lookup(src, syms)))
+        if src in locals_: return '\tlda %s, (%s:24)' % (dst, src)
+        if NUM.match(src): return '\tlda %s, %s' % (dst, absaddr(num(src)))
+        return '\t; untranslated: ' + t.strip()
+    base, sz = size_suffix(op)
+    args = [operand(a, syms, locals_) for a in raw]
+    if any(a is None for a in args): return '\t; untranslated: ' + t.strip()
+    if base in ('inc', 'dec') and len(args) == 2:
+        return '\t%s%s %d, %s' % (base, 'w' if sz == 'w' else '', num(args[0]), args[1])
+    if base == 'ld' and len(args) == 2 and raw[0] in R8 and NUM.match(raw[1]):
+        return '\tld %s, 0x%x:opc' % (args[0], num(raw[1]) & 0xff)            # String_Compare: ld l, 0x0:opc
+    if base in ('ld', 'cp') and len(args) == 2 and REGS.match(raw[0]) and re.match(r'^(0x[0-7]|[0-7])$', raw[1]) \
+            and (raw[0] not in R8 or base == 'cp'):
+        return '\t%s %s, %d:i3' % (base, args[0], num(raw[1]))               # ld hl, 0:i3 / cp bc, 0:i3
+    if sz == 'w' and base in ('ld', 'cp', 'add', 'sub', 'and', 'or', 'xor'):
+        return '\t%sw %s' % (base, ', '.join(args))
+    return '\t%s %s' % (base, ', '.join(args)) if args else '\t' + base
+
+def translate_function(name, lines, syms):
+    locals_ = {l[:-1] for l in lines if l.endswith(':') and not l.startswith('\t')}
+    out = []
+    for l in lines:
+        if 'section' in l: continue
+        if l.endswith(':') and not l.startswith('\t') and l[:-1] == name:
+            bare = name.lstrip('_.')
+            out += ['\t.globl %s' % bare, bare + ':']; continue
+        out.append(translate_line(l, syms, locals_))
+    return out
+
+def relax(text, assemble):
+    """asm900's j: jr when the target is in reach, else jrl.  `assemble(text)` returns llvm-mc's stderr; each line
+    it reports out of range becomes jrl, until none is."""
+    lines = text.split('\n')
+    for _ in range(20):
+        err = assemble('\n'.join(lines))
+        bad = sorted({int(m.group(1)) for m in re.finditer(r':(\d+):\d+: error: [^\n]*(out of range|too far|range)', err)})
+        if not bad: return '\n'.join(lines)
+        changed = False
+        for n in bad:
+            l = lines[n - 1]
+            if '\tjr ' in l: lines[n - 1] = l.replace('\tjr ', '\tjrl '); changed = True
+        if not changed: return '\n'.join(lines)
+    return '\n'.join(lines)
 
 def main():
+    import frontend, codegen
     a = sys.argv[1:]
     src, symf = a[0], a[1]
     opt = a[a.index('--opt') + 1] if '--opt' in a else 'O3XS'
     pers = a[a.index('--personality') + 1] if '--personality' in a else 'kn5000'
     only = a[a.index('--only') + 1].split(',') if '--only' in a else None
+    defines = [x[2:] for x in a if x.startswith('-D')]; incs = [x[2:] for x in a if x.startswith('-I')]
     syms = load_symbols(symf)
-    unit = frontend.load(src, adecl='--adecl' in a)
+    unit = frontend.load(src, defines, incs, adecl='--adecl' in a)
     out = codegen.compile_unit(unit, opt=opt, adecl='--adecl' in a, personality=pers)
     print('\t.text')
     for name, lines in out.items():
-        bare = name.lstrip('_.')
-        if only and bare not in only: continue
-        print('\t.globl %s' % bare)
-        for l in lines:
-            if 'section' in l: continue
-            print(translate(l, syms))
+        if only and name.lstrip('_.') not in only: continue
+        if not lines or not lines[0].endswith(':') or lines[0][:-1] != name: continue   # data objects, unsupported
+        print('\n'.join(translate_function(name, lines, syms)))
 
-main()
+if __name__ == '__main__':
+    main()

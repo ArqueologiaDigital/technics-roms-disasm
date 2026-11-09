@@ -50,3 +50,23 @@ firmware's bytes with no Toshiba program involved.  The translator covers only t
 an unknown line is emitted as `; untranslated:` so that a wider corpus fails loudly instead of silently.  The
 address-width rule is read from the firmware's own encodings; whether tulink decides it from the final address
 (as assumed) or from a section attribute is not yet tested.
+
+## The firmware's library pairs from Toshiba's C with our tools only (2026-11-09)
+
+`model/pairs_model.py` takes every source/binary pair of `results/pairs.tsv`, compiles the library source with the
+reference model (cdecl, `-O3 -XS -DFLOAT`, as the library was built), translates the function with
+`model/to_llvm.py` (asm900's encodings; `jr` / `jrl` by reach; `cal` as a 24-bit `call`; absolute operands through the
+image's own addresses: the pairs' publics, the image's labels, the helpers named in the runtime cross-reference),
+assembles and links it with llvm-mc / ld.lld at the pair's address, and compares the bytes with the image.
+
+| personality | byte-identical pairs | which                                                                                              |
+|-------------|----------------------|----------------------------------------------------------------------------------------------------|
+| `v4.23`     | 23                   | `_strcat` (9 images), `_strncpy` (9), `_strchr` (5)                                                |
+| `kn5000`    | 36                   | the same 23, plus `_ultoa` (main CPU v10, v9, v7, v6, v5, HD-AE5000 x4) and `_ldiv` (HD-AE5000 x4) |
+
+The 13 the kn5000 personality adds are the two routines in which the firmware's code differs from V4.23's output:
+the reload rule (`rules.md`) accounts for them, and with it they come out byte-identical with no Toshiba program in
+the chain.  Of the other pairs, 222 are routines the model does not compile yet (inline-assembly sources such as
+`_strlen`, `_memcpy`; unsupported constructs such as `goto` in `_strcspn`), and 15 differ: `_strncmp` (11 images; the
+`?:` result computed at char width, and the operand order of `*s1 == *s2`) and `_strnset` (5).  Output:
+`scripts/analysis/cc900/results/pairs_model_kn5000.tsv`; command in `scripts/analysis/cc900/model/README.md`.
