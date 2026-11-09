@@ -51,6 +51,16 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-28-micro-fpe2b, v423/none                            | probes/fpp4.c        | 8 / 59 exact (13.6%)     |
 | run 2026-11-09-26-micro-fpe2, v423/O3XS                             | probes/fpp3.c        | 29 / 59 exact (49.2%)    |
 | run 2026-11-09-28-micro-fpe2b, v423/O3XS                            | probes/fpp4.c        | 8 / 59 exact (13.6%)     |
+| run 2026-11-09-36-micro-fpe2c, v423/none                            | probes/fpp5.c        | 4 / 100 exact (4.0%)     |
+| run 2026-11-09-36-micro-fpe2c, v423/O3XS                            | probes/fpp5.c        | 4 / 100 exact (4.0%)     |
+| run 2026-11-09-38-micro-fpe2d, v423/none                            | probes/fpp6.c        | 4 / 56 exact (7.1%)      |
+| run 2026-11-09-38-micro-fpe2d, v423/O3XS                            | probes/fpp6.c        | 1 / 56 exact (1.8%)      |
+| run 2026-11-09-39-micro-fpe2e, v423/none                            | probes/fpp7.c        | 5 / 79 exact (6.3%)      |
+| run 2026-11-09-39-micro-fpe2e, v423/O3XS                            | probes/fpp7.c        | 5 / 79 exact (6.3%)      |
+| run 2026-11-09-40-micro-fpe2f, v423/none                            | probes/fpp8.c        | 0 / 108 exact (0.0%)     |
+| run 2026-11-09-40-micro-fpe2f, v423/O3XS                            | probes/fpp8.c        | 0 / 108 exact (0.0%)     |
+| run 2026-11-09-41-micro-fpe2g, v423/none                            | probes/fpp9.c        | 4 / 60 exact (6.7%)      |
+| run 2026-11-09-41-micro-fpe2g, v423/O3XS                            | probes/fpp9.c        | 4 / 60 exact (6.7%)      |
 | run 2026-11-09-22-micro-condbits, v423/none                         | micro/cond_bits.c    | 114 / 117 exact (97.4%)  |
 | run 2026-11-09-22-micro-condbits, v423/O3XS                         | micro/cond_bits.c    | 113 / 117 exact (96.6%)  |
 | run 2026-11-09-22-micro-condbits, v423/Xr                           | micro/cond_bits.c    | 114 / 117 exact (97.4%)  |

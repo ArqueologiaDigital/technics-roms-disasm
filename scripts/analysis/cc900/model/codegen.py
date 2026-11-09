@@ -6265,6 +6265,7 @@ def leaf_r6(F):
     return True
 
 L2_NOLOOP = True                                   # see leaf_l2 (__todigit)
+L2_ONCE_MEM = True                                 # see leaf_l2 (__todigit)
 L2_WIDE = False
 THREAD_ALL = True
 
@@ -6377,6 +6378,8 @@ def leaf_l2(F):
         elif d.kind == 'param' and d in copy_only and d not in loopmod: continue   # _itoa: u = val; val no object
         elif d.kind == 'param':
             if d.ty.kind == 'ptr' and d in loopmod: cls = 'walkh' if (d in derefidx or d in held_ptr) else 'walk'
+            elif d not in inloop and L2_ONCE_MEM and len(uses_of(f.body, d, [])) == 1 and d not in modified and \
+                    not loops: continue                      # __todigit: base, compared once -> cp BC,(XSP+0x6)
             elif d not in inloop: cls = 'out'
             elif d in loopmod and d.ty.kind == 'int': cls = 'cnt'
             elif d not in modified and (d in narrowed_params or inloop.get(d, 0) >= 2): cls = 'ro'   # _strrchr: (char)c
