@@ -362,7 +362,30 @@ Done since (2026-11-09, late night):
   switch.c O3XSXr 20 -> 25 of 25.
 - **Wrong code fixed** under -Xr: `p[i]` with `p` in XWA no longer builds the index in WA, and the leaf allocator no
   longer gives a local the register a parameter arrives in (c_sum).
-- **Micro corpus: none 671, O3XS 671, Xr 673, O3XSXr 674 of 674** (the firmware's option set byte-identical).
+- **Micro corpus: 674 / 674 under none, O3XS, Xr and O3XSXr** (run `2026-11-08-7-micro`; reached at 7b7b12f73).
+- **Rule U1** (the counted-loop allocator of research-scratch `sessions/2026-11-09_cc900-counted-loops`) is ported as
+  `model/u1alloc.py`: opt_counted O3XSXr 32 / 32, Xr 31, O3XS 29; opt_loops O3XS 28, Xr 30, O3XSXr 29 of 33.
+- **Without -O**: pointer parameters walked by a pointer-test loop get registers (WA first when no byte temporary);
+  BC is kept free for pointer stores.
+- **Switches**: -O return-value tables, byte compare chains with an `scc` tail; switch.c O3XSXr 25 / 25, none 22,
+  O3XS 22, Xr 22.
+- **Homes across calls** under -O3 -XS -Xr:
+  - QIZ is never an arithmetic destination;
+  - a product of homes, or a char pointer plus a home index, is built in the result register;
+  - a homed XIZ local is built in place;
+  - a call result goes to its slot from XHL;
+  - entry stores and moves come in reverse parameter order.
+  ra_homes O3XSXr 14 -> 21, homes32 6 -> 13.
+- **Wrong code fixed** under adecl:
+  - c_mix pushed a stack argument through XWA while A held an argument;
+  - d_ptr loaded a byte into A, the low byte of a pointer in XWA.
+- Left in the newer topics:
+  - cross-statement CSE of parameter loads (ra_chains `ch_c_*`), and binop-loc's chain register for longer chains;
+  - the two-element `g[i-1] += g[i] >> 8` form, and long-element `*=` / `/=` targets (arr_index);
+  - a table test with a live register selector (cond_bits `cb_tern`);
+  - -Xr shift-count shuffles;
+  - FP argument conventions under adecl (abi `c_f` / `c_d`).
+  Library (v4.23) 161 / 248; pairs kn5000 223.
 
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
