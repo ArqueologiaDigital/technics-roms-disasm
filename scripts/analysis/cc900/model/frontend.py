@@ -53,6 +53,9 @@ def parse_type(spell, recs, typedefs):
     m = re.match(r'^(.*)\((\*+)\)\s*\((.*)\)$', t)          # pointer to function
     if m:
         return Type('ptr', 4, 2, base=Type('func', 0, 1, spell=t), spell=spell)
+    m = re.match(r'^(.*?)\s*\(\*\)\s*((?:\[\d*\])+)$', t)     # pointer to array (mem.c m_2d: int (*)[4])
+    if m:
+        return Type('ptr', 4, 2, base=parse_type(m.group(1) + ' ' + m.group(2), recs, typedefs), spell=spell)
     m = re.match(r'^(.*?)\s*\((.*)\)$', t)                   # function type
     if m and not t.endswith('*'):
         ft = Type('func', 0, 1, ret=parse_type(m.group(1), recs, typedefs), spell=spell); ft.cdecl = cdecl

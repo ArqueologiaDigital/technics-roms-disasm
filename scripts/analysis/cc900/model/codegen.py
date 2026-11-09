@@ -529,6 +529,15 @@ def gen(F, e, fam, size, then_ret=False, store=False):
     if F.opt and e.k == 'bin' and e.op in ('+', '&', '|', '^') and deref_load(e.l) and deref_load(e.r):
         from frontend import N                           # op_sum2, op_three: *p++ + *q++ loads q first
         e = N('bin', op=e.op, l=e.r, r=e.l, ty=e.ty)
+    if e.k == 'addr' and strip(e.e).k == 'index' and fam != 'WA':
+        x = strip(e.e); b = strip(x.base); ii = strip(x.idx)
+        while ii.k == 'cast' and ii.kind == 'IntegralCast': ii = strip(ii.e)
+        im = mem_operand(F, ii)
+        if b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array' and im is not None and ii.ty.size == 2:
+            R2 = FAM[fam][2]; X = FAM[fam][4]                 # m_addr: &ga[i] -> ld HL,(i) / add HL,HL / lda XWA,_ga /
+            if im != R2: F.emit('ld', '%s,%s' % (R2, im))   # extz XHL / add XHL,XWA (-Xr: ld HL,WA)
+            scale_reg(F, R2, x.ty.size, 'sla')
+            F.emit('lda', 'XWA,_%s' % b.decl.name); F.emit('extz', X); F.emit('add', '%s,XWA' % X); return fam
     if e.k == 'bin':
         return gen_bin(F, e, fam, size, then_ret, store)
     raise Unsupported(e.k)
@@ -909,20 +918,26 @@ def gen_ptr_arith(F, e, fam, size):
     if pm is None or im is None: raise Unsupported('complex pointer arithmetic')
     esz = l.ty.base.size
     iv = regvar_of(ii.e) if ii.k == 'load' else None
-    if F.opt and iv is not None and iv.reg in ('BC', 'DE', 'HL') and dies_here(F, ii) and ii.ty.size == 2:
-        X = FAM[iv.reg][4]; F.dead.add(iv)          # mem.c m_p_v under O3XSXr: exts XBC / add XBC,XBC / add XBC,XWA
-        F.emit('exts' if ii.ty.signed else 'extz', X)
+    opn = 'add' if e.op == '+' else 'sub'
+    if iv is not None and iv.reg in ('BC', 'DE', 'HL') and dies_here(F, ii) and ii.ty.size == 2:
+        X = FAM[iv.reg][4]; F.dead.add(iv)          # mem.c m_padd under -Xr: exts XBC / add XBC,XBC, then
+        F.emit('exts' if ii.ty.signed else 'extz', X)   # -O: add XBC,XWA / ld XHL,XBC; none: ld XHL,XBC / add XHL,XWA
         if esz == 2: F.emit('add', '%s,%s' % (X, X))
         elif esz > 2: F.emit('sll', '%s,%s' % (hx({4: 2, 8: 3}[esz]), X))
-        F.emit('add' if e.op == '+' else 'sub', '%s,%s' % (X, pm))
-        if fam != iv.reg and not getattr(F, 'ptr_keep', False): F.emit('ld', '%s,%s' % (FAM[fam][4], X)); return fam
-        return iv.reg
+        if fam != iv.reg and not getattr(F, 'ptr_keep', False):
+            R = FAM[fam][4]
+            if F.opt: F.emit(opn, '%s,%s' % (X, pm)); F.emit('ld', '%s,%s' % (R, X))
+            else: F.emit('ld', '%s,%s' % (R, X)); F.emit(opn, '%s,%s' % (R, pm))
+            return fam
+        F.emit(opn, '%s,%s' % (X, pm)); return iv.reg
     F.emit('ld', 'WA,%s' % im); F.emit('exts' if ii.ty.signed else 'extz', 'XWA')
     if esz == 2: F.emit('add', 'XWA,XWA')
     elif esz > 2: F.emit('sll', '%s,XWA' % hx({4: 2, 8: 3}[esz]))
     R = FAM[fam][4]
+    if F.opt and R != 'XWA' and pm != 'XWA':          # m_padd under -O3 -XS: add XWA,(XSP+0x4) / ld XHL,XWA
+        F.emit(opn, 'XWA,%s' % pm); F.emit('ld', '%s,XWA' % R); return fam
     if R != 'XWA': F.emit('ld', '%s,XWA' % R)
-    F.emit('add' if e.op == '+' else 'sub', '%s,%s' % (R, pm)); return fam
+    F.emit(opn, '%s,%s' % (R, pm)); return fam
 
 def gen_mul_const(F, l, k, fam, size, signed=True):
     """long multiply by a constant, by shifts and adds (mul_l_pk, mul_l_gk): binary method from the top bit;
@@ -1398,6 +1413,12 @@ def u1_operand(F, v):
     else: F.emit('sll', '%s,%s' % (hx({4: 2, 8: 3}[v.ty.size]), XT))
     F.emit('add', '%s,%s' % (XT, P)); return '(%s)' % XT
 
+def scale_reg(F, X, sz, shift):
+    """multiply register X by the element size sz: add X,X for 2, `shift` n,X for 4 / 8 (mem.c)"""
+    if sz == 2: F.emit('add', '%s,%s' % (X, X))
+    elif sz in (4, 8, 16, 32, 64): F.emit(shift, '%s,%s' % (hx(sz.bit_length() - 1), X))
+    elif sz != 1: raise Unsupported('element size %d' % sz)
+
 def gen_load_mem(F, v, fam, size):
     """load through an index, member or pointer (mem.c)"""
     R = FAM[fam][size]
@@ -1427,6 +1448,45 @@ def gen_load_mem(F, v, fam, size):
             F.emit('ld', 'WA,%s' % im)                             # m_ga_v, m_gla_v
             F.emit('add', 'WA,WA') if esz == 2 else F.emit('sla', '%s,WA' % hx({4: 2, 8: 3}[esz]))
             F.emit('lda', 'XBC,_%s' % b.decl.name); F.emit('ld', '%s,(XBC+WA)' % R); return fam
+        if b.k == 'member' and b.arrow and b.ty.kind == 'array':
+            # m_gps_a: gps->a[k] -> ld WA,(k) / add WA,WA / add WA,0xc / ld C,A / ld XWA,(_gps) / ld HL,(XWA+C):
+            # cc900 indexes the member array with the low byte of the scaled offset (every option set)
+            pm = mem_operand(F, b.base); ii = strip(i)
+            while ii.k == 'cast' and ii.kind == 'IntegralCast': ii = strip(ii.e)
+            im = mem_operand(F, ii)
+            if pm is not None and im is not None and pm.startswith('(') and esz in (1, 2, 4, 8):
+                if im != 'WA': F.emit('ld', 'WA,%s' % im)
+                scale_reg(F, 'WA', esz, 'sla')
+                off = member_offset(b)
+                if off: F.emit('add', 'WA,%s' % hx(off))
+                F.emit('ld', 'C,A'); F.emit('ld', 'XWA,%s' % pm); F.emit('ld', '%s,(XWA+C)' % R); return fam
+        if b.k == 'index' and b.ty.kind == 'array' and strip(b.base).k == 'load' and \
+                strip(strip(b.base).e).k == 'var' and strip(strip(b.base).e).decl.kind == 'param':
+            # m_2d: a[i][j] through int (*a)[4]: the column term first, then the row term, the sum, the pointer
+            d = strip(strip(b.base).e).decl
+            pm = FAM[d.reg][4] if getattr(d, 'reg', None) else '(XSP+%s)' % hx(d.off + F.push)
+            row = b.ty.size
+            def term(x, sz, dflt):
+                x = strip(x)
+                while x.k == 'cast' and x.kind == 'IntegralCast': x = strip(x.e)
+                xv = regvar_of(x.e) if x.k == 'load' else None
+                if xv is not None and xv.reg in ('BC', 'DE', 'HL') and dies_here(F, x) and x.ty.size == 2:
+                    X = FAM[xv.reg][4]; F.dead.add(xv)               # -Xr: exts XDE / add XDE,XDE
+                    F.emit('exts' if x.ty.signed else 'extz', X)
+                else:
+                    xm = mem_operand(F, x)
+                    if xm is None: raise Unsupported('complex 2-d index')
+                    if F.opt or dflt == 'WA':                         # -O3 -XS: ld BC,(j) / exts XBC
+                        X = FAM[dflt][4]; F.emit('ld', '%s,%s' % (FAM[dflt][2], xm))
+                        F.emit('exts' if x.ty.signed else 'extz', X)
+                    else:                                             # none: ld WA,(j) / exts XWA / ld XBC,XWA
+                        F.emit('ld', 'WA,%s' % xm); F.emit('exts' if x.ty.signed else 'extz', 'XWA')
+                        X = FAM[dflt][4]; F.emit('ld', '%s,XWA' % X)
+                scale_reg(F, X, sz, 'sll')
+                return X
+            J = term(i, esz, 'BC'); I = term(b.idx, row, 'WA' if J != 'XWA' else 'BC')
+            F.emit('add', '%s,%s' % (I, J)); F.emit('add', '%s,%s' % (I, pm)); F.emit('ld', '%s,(%s)' % (R, I))
+            return fam
         u1 = u1_operand(F, v)
         if u1 is not None: F.emit('ld', '%s,%s' % (R, u1)); return fam
         bb = strip(b)
@@ -1445,8 +1505,8 @@ def gen_load_mem(F, v, fam, size):
             if pm is None or im is None: raise Unsupported('complex pointer index')
             iv = regvar_of(ii.e) if ii.k == 'load' else None
             W = 'XWA'
-            if F.opt and iv is not None and iv.reg in ('BC', 'DE', 'HL') and dies_here(F, ii) and ii.ty.size == 2:
-                W = FAM[iv.reg][4]; F.dead.add(iv)          # m_p_v under O3XSXr: exts XBC / add XBC,XBC / add XBC,XWA /
+            if iv is not None and iv.reg in ('BC', 'DE', 'HL') and dies_here(F, ii) and ii.ty.size == 2:
+                W = FAM[iv.reg][4]; F.dead.add(iv)          # m_p_v under -Xr, O3XSXr: exts XBC / add XBC,XBC / add XBC,XWA /
             else: F.emit('ld', 'WA,%s' % im)                # ld HL,(XBC)
             F.emit('exts' if ii.ty.signed else 'extz', W)
             if esz == 2: F.emit('add', '%s,%s' % (W, W))
@@ -2117,6 +2177,10 @@ def gen_stmt(F, s, last):
             src = strip(s.e.r)
             if src.k == 'load': src = strip(src.e)
             if not (src.k == 'var' and src.decl.kind == 'global'): raise Unsupported('struct source')
+            pv = regvar_of(strip(lv.e).e) if lv.k == 'deref' and strip(lv.e).k == 'load' else None
+            if pv is not None and getattr(pv, 'reg', None):         # m_copy under -Xr: the source first,
+                F.emit('ld', 'XIY,_%s' % src.decl.name); F.emit('ld', 'XIX,%s' % FAM[pv.reg][4])   # ld XIX,XWA
+                F.emit('ld', 'BC,%s' % hx(size // 2)); F.emit('ldirw', '(XIX+),(XIY+)'); return
             t = lvalue(F, lv, ptr='XIX')
             if t != '(XIX)': raise Unsupported('struct destination')
             F.emit('ld', 'XIY,_%s' % src.decl.name); F.emit('ld', 'BC,%s' % hx(size // 2))
