@@ -786,8 +786,9 @@ def cse_params(F, e):
     under O3XS): WA for add/sub/and/or/xor chains, BC when the operation needs WA (*, /, %, shifts, char)"""
     counts = {}
     def v(n, d):
-        if n.k == 'load' and strip(n.e).k == 'var' and strip(n.e).decl.kind == 'param' and not getattr(strip(n.e).decl, 'reg', None):
-            counts[strip(n.e).decl] = counts.get(strip(n.e).decl, 0) + 1
+        if n.k == 'load' and strip(n.e).k == 'var' and strip(n.e).decl.kind == 'param' and not getattr(strip(n.e).decl, 'reg', None) \
+                and hasattr(strip(n.e).decl, 'off'):       # (an adecl parameter homed in a slot is read twice from
+            counts[strip(n.e).decl] = counts.get(strip(n.e).decl, 0) + 1   # there: ra_homes.c rh_pp_b2)
     walk(e, v)
     many = [d for d, c in counts.items() if c >= 2]
     if len(many) != 1: return False
@@ -3538,7 +3539,14 @@ def regvar_stmt(F, e):
             if T == 'WA' and 'WA' in live_regs(F, except_decl=d):   # ld BC,(XIX+DE) / muls XBC,IY); else the loop's T
                 T = free_reg(F, avoid={'WA', d.reg})                 # (abi adecl.c d_ptr: ld E,(XWA+:1); A would
                                                                      # overwrite p)
-            fam = gen(F, e.r, T, d.ty.size); m = FAM[fam][d.ty.size]
+            if strip(e.r).k == 'call' and R.startswith('Q'):
+                gen_call(F, strip(e.r)); flush_pops(F); m = FAM['HL'][d.ty.size]   # (the result stays in HL)
+            else:
+                fam = gen(F, e.r, T, d.ty.size); m = FAM[fam][d.ty.size]
+        if R.startswith('Q') and d.ty.size == 2:           # ra_homes.c rh_loop: s += g1(i) with s in QIZ ->
+            W = 'WA' if m not in ('WA', 'A') else 'BC'     # ld WA,QIZ / add WA,HL / ld QIZ,WA (QIZ is never the
+            F.emit('ld', '%s,%s' % (W, R)); F.emit(SIMPLE_OPS[e.op], '%s,%s' % (W, m)); F.emit('ld', '%s,%s' % (R, W))
+            return True                                    # destination of arithmetic)
         F.emit(SIMPLE_OPS[e.op], '%s,%s' % (R, m)); return True
     if e.k == 'opassign' and regvar_of(e.l) and e.op == '%' and regvar_of(e.l).reg in ('WA', 'BC', 'DE', 'HL') \
             and regvar_of(e.l).ty.size == 2 and mem_operand(F, narrow(e.r, 2)):

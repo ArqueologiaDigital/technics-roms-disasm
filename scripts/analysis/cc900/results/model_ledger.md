@@ -15,20 +15,20 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-08-7-micro, ide2003/O3XSXr, --personality ide2003       | micro/*.c            | 660 / 674 exact (97.9%)  |
 | run 2026-11-08-8-micro-ra, v423/none                                | micro/ra_*.c         | 33 / 42 exact (78.6%)    |
 | run 2026-11-08-8-micro-ra, v423/O3XSXr                              | micro/ra_*.c         | 23 / 42 exact (54.8%)    |
-| run 2026-11-08-4-abi, v423/none                                     | abi/*.c              | 97 / 108 exact (89.8%)   |
+| run 2026-11-08-4-abi, v423/none                                     | abi/*.c              | 98 / 108 exact (90.7%)   |
 | run 2026-11-08-4-abi, v423/O3XS                                     | abi/*.c              | 97 / 108 exact (89.8%)   |
 | run 2026-11-08-6-abi-adecl, v423/Xr                                 | abi/*.c              | 73 / 80 exact (91.2%)    |
-| run 2026-11-08-6-abi-adecl, v423/O3XSXr                             | abi/*.c              | 74 / 80 exact (92.5%)    |
+| run 2026-11-08-6-abi-adecl, v423/O3XSXr                             | abi/*.c              | 75 / 80 exact (93.8%)    |
 | run 2026-11-09-4-micro-switch, v423/none                            | micro/switch.c       | 22 / 25 exact (88.0%)    |
 | run 2026-11-09-4-micro-switch, v423/Xr                              | micro/switch.c       | 22 / 25 exact (88.0%)    |
 | run 2026-11-09-4-micro-switch, v423/O3XS                            | micro/switch.c       | 22 / 25 exact (88.0%)    |
 | run 2026-11-09-4-micro-switch, v423/O3XSXr                          | micro/switch.c       | 25 / 25 exact (100.0%)   |
 | run 2026-11-09-5-micro-optparams, v423/O3XS                         | micro/opt_params.c   | 19 / 24 exact (79.2%)    |
 | run 2026-11-09-5-micro-optparams, v423/O3XSXr                       | micro/opt_params.c   | 22 / 24 exact (91.7%)    |
-| run 2026-11-09-6-micro-rahomes, v423/none                           | micro/ra_homes.c     | 12 / 25 exact (48.0%)    |
+| run 2026-11-09-6-micro-rahomes, v423/none                           | micro/ra_homes.c     | 13 / 25 exact (52.0%)    |
 | run 2026-11-09-6-micro-rahomes, v423/O3XS                           | micro/ra_homes.c     | 9 / 25 exact (36.0%)     |
-| run 2026-11-09-6-micro-rahomes, v423/Xr                             | micro/ra_homes.c     | 17 / 25 exact (68.0%)    |
-| run 2026-11-09-6-micro-rahomes, v423/O3XSXr                         | micro/ra_homes.c     | 14 / 25 exact (56.0%)    |
+| run 2026-11-09-6-micro-rahomes, v423/Xr                             | micro/ra_homes.c     | 18 / 25 exact (72.0%)    |
+| run 2026-11-09-6-micro-rahomes, v423/O3XSXr                         | micro/ra_homes.c     | 17 / 25 exact (68.0%)    |
 | run 2026-11-09-7-micro-chains, v423/none                            | micro/ra_chains.c    | 28 / 33 exact (84.8%)    |
 | run 2026-11-09-7-micro-chains, v423/O3XS                            | micro/ra_chains.c    | 26 / 33 exact (78.8%)    |
 | run 2026-11-09-7-micro-chains, v423/Xr                              | micro/ra_chains.c    | 26 / 33 exact (78.8%)    |
