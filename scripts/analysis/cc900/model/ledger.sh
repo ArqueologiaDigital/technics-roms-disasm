@@ -9,6 +9,10 @@ row() { printf '%s | %s | ' "$1" "$2"; shift 2; python3 -I -B model/score.py "$@
 for c in v423/none ide2003/none v110/none v423/O3XS v423/Xr v423/O3XSXr; do
   row "run 2026-11-08-7-micro, $c" "micro/*.c" "$O/2026-11-08-7-micro/out/$c" corpus/micro/*.c
 done
+# the by-product personalities against their own compilers (phase 7, decision D6)
+for c in O3XS Xr O3XSXr; do
+  row "run 2026-11-08-7-micro, ide2003/$c, --personality ide2003" "micro/*.c" "$O/2026-11-08-7-micro/out/ide2003/$c" corpus/micro/*.c --personality ide2003
+done
 for c in none O3XSXr; do
   row "run 2026-11-08-8-micro-ra, v423/$c" "micro/ra_*.c" "$O/2026-11-08-8-micro-ra/out/v423/$c" corpus/micro/ra_*.c
 done
@@ -29,4 +33,6 @@ for p in v4.23 kn5000; do
   row "run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality $p" "1997 LIB/SRC" \
     "$O/2026-11-08-5-libsrc97-O3XS/out/v423/O3XS" "$C"/libsrc/*.C -D__900__ -D__LARGE__ -DFLOAT -D__CDECL= '-D__ASM(x)=' -I"$C"/inc --personality $p
 done
+row "run 2026-11-08-5-libsrc97-O3XS, ide2003/O3XS, --personality ide2003" "1997 LIB/SRC" \
+  "$O/2026-11-08-5-libsrc97-O3XS/out/ide2003/O3XS" "$C"/libsrc/*.C -D__900__ -D__LARGE__ -DFLOAT -D__CDECL= '-D__ASM(x)=' -I"$C"/inc --personality ide2003
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c

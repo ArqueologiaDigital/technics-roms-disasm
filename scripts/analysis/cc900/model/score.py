@@ -2,7 +2,7 @@
 """Score the cc900 reference model against oracle listings, function by function.
 
 usage: python3 -I -B score.py ORACLE_DIR FILE.c [FILE.c ...] [--opt none|O3XS] [--adecl] [--show N] [--strict]
-       [-DNAME[=V] ...] [-IDIR ...]   (passed to clang's front end)  [--personality v4.23|kn5000]
+       [-DNAME[=V] ...] [-IDIR ...]   (passed to clang's front end)  [--personality v4.23|kn5000|ide2003|v1.10]
 ORACLE_DIR is one compiler/option directory of an oracle run, e.g.
 ~/compartilhado/cc900-oracle/runs/2026-11-08-7-micro/out/v423/none; each FILE.c is looked up there by its path
 relative to the corpus root (the part from `micro/` or `abi/` on).  For every function the model compiles, its

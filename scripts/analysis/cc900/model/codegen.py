@@ -2588,7 +2588,16 @@ def tail_calls(lines, keep_end):
         if not any(lab in x for x in out[:-2]): out = out[:-2]
     return out
 
+PERSONALITIES = {
+    # name: the rule set (rules.md).  v4.23 is Toshiba's 1998 compiler; kn5000 is the Technics compiler as inferred
+    # from the firmware (V4.23 plus the reload rule's 2003 side); ide2003 and v1.10 are the dev-kit compilers of 2003
+    # and 2009 (phase 7 by-products, decision D6).  On the corpus so far the 2003 and 2009 compilers differ from the
+    # kn5000 rule set in no rule the model has: their own ledger lines show where they still differ.
+    'v4.23': 'v4.23', 'kn5000': 'kn5000', 'ide2003': 'kn5000', 'v1.10': 'kn5000'}
+
 def compile_function(f, opt, adecl, personality='v4.23'):
+    if personality not in PERSONALITIES: raise ValueError('unknown personality %s' % personality)
+    personality = PERSONALITIES[personality]
     F = Fn(f, adecl)
     F.personality = personality
     F.opt = opt != 'none'; F.dead = set()
