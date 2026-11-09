@@ -286,12 +286,34 @@ Done since (2026-11-09, evening):
   the address); `pairs.tsv`'s near matches and aliases are counted apart.  kn5000 personality **185** identical,
   v4.23 172; 5 differ (`_log` x3, the main CPU's near-match `_vsprintf` x2).
 
+Done since (2026-11-09, night):
+- **L2 in the model** (`model/l2alloc.py`, `codegen.leaf_l2`).  It runs for cdecl `-O` functions with:
+  - a ctype table test;
+  - one call before the loops, or a final `return f(...)`;
+  - a `goto`;
+  - any function the old leaf path rejects as Unsupported.
+  It needs these code shapes:
+  - ctype tests `bit k,(XBC+WA)`, the table base hoisted or per use;
+  - held store addresses;
+  - in-place `num*10 + (c-'0')`;
+  - guarded `djnz` loops;
+  - `goto` to a return;
+  - `(-XHL:1)`;
+  - Q-register locals, `div XWA,DE` with the remainder from QWA, a local array in XIZ;
+  - jump threading.
+  `_strupr`, `_strlwr`, `_atoi`, `_atol`, `_strrchr`, `_strcspn` and `_itoa` are byte-identical.
+- `_strstr` (homes path): a `char` local stored across calls, pops merged with the next call's, branch inversion
+  after the tails merge.
+- FP: rule R6 (E3, freed op slots reused last-first; research-scratch `sessions/2026-11-09_cc900-fp-prepass`,
+  b804104); E2, the order slots are created in, is still open.
+- **Pairs: kn5000 221, v4.23 208** byte-identical (from 185 / 172).  Library 158 / 248 pieces (v4.23).
+
 Next, in order:
-1. **The cdecl `-O3 -XS` leaf allocator L2** (research-scratch `sessions/2026-11-09_cc900-leaf-o3xs`, b58b51b):
-   119 of 131 functions, all six target routines (`_atoi`, `_atol`, `_strupr`, `_strrev`, `_strrchr`, `_itoa`: 28
-   pairs).  The model must first generate their shapes (ctype-table conditions, hoisted table bases, `?:` stores,
-   strength-reduced pointer copies), then place the objects by L2's class order.
-2. **FP call slots** (E2 / E3): an agent is fitting the prepass with new probes (`_log`, `__trig`, `_tanh`).
+1. **Straight-line register shuffles** (the `*_loc` binop family: 22 / 30 / 25 of the micro misses under -Xr,
+   -O3 -XS -Xr, -O3 -XS): an agent is fitting them.
+2. What still keeps pairs from compiling: `__doprnt` (9), the FP routines `__trig`, `_pow`, `_frexp`, `_ldexp`,
+   `__fint` (3 each, waiting on E2 and on union / `fp destination` support), `_strrev` (2: strength-reduced pointer
+   copies), `_malloc`.
 3. Then phase 3b.
 
 ## How to resume
