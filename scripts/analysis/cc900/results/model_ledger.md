@@ -7,11 +7,11 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-08-7-micro, v423/none                                   | micro/*.c            | 671 / 674 exact (99.6%)  |
 | run 2026-11-08-7-micro, ide2003/none                                | micro/*.c            | 667 / 674 exact (99.0%)  |
 | run 2026-11-08-7-micro, v110/none                                   | micro/*.c            | 665 / 674 exact (98.7%)  |
-| run 2026-11-08-7-micro, v423/O3XS                                   | micro/*.c            | 671 / 674 exact (99.6%)  |
-| run 2026-11-08-7-micro, v423/Xr                                     | micro/*.c            | 673 / 674 exact (99.9%)  |
+| run 2026-11-08-7-micro, v423/O3XS                                   | micro/*.c            | 672 / 674 exact (99.7%)  |
+| run 2026-11-08-7-micro, v423/Xr                                     | micro/*.c            | 674 / 674 exact (100.0%) |
 | run 2026-11-08-7-micro, v423/O3XSXr                                 | micro/*.c            | 674 / 674 exact (100.0%) |
-| run 2026-11-08-7-micro, ide2003/O3XS, --personality ide2003         | micro/*.c            | 669 / 674 exact (99.3%)  |
-| run 2026-11-08-7-micro, ide2003/Xr, --personality ide2003           | micro/*.c            | 666 / 674 exact (98.8%)  |
+| run 2026-11-08-7-micro, ide2003/O3XS, --personality ide2003         | micro/*.c            | 670 / 674 exact (99.4%)  |
+| run 2026-11-08-7-micro, ide2003/Xr, --personality ide2003           | micro/*.c            | 667 / 674 exact (99.0%)  |
 | run 2026-11-08-7-micro, ide2003/O3XSXr, --personality ide2003       | micro/*.c            | 660 / 674 exact (97.9%)  |
 | run 2026-11-08-8-micro-ra, v423/none                                | micro/ra_*.c         | 33 / 42 exact (78.6%)    |
 | run 2026-11-08-8-micro-ra, v423/O3XSXr                              | micro/ra_*.c         | 18 / 42 exact (42.9%)    |
@@ -59,8 +59,8 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-25-micro-arrindexsz, v423/none                       | micro/arr_index_sz.c | 51 / 66 exact (77.3%)    |
 | run 2026-11-09-24-micro-arrindex, v423/O3XS                         | micro/arr_index.c    | 48 / 66 exact (72.7%)    |
 | run 2026-11-09-25-micro-arrindexsz, v423/O3XS                       | micro/arr_index_sz.c | 48 / 66 exact (72.7%)    |
-| run 2026-11-09-24-micro-arrindex, v423/Xr                           | micro/arr_index.c    | 46 / 66 exact (69.7%)    |
-| run 2026-11-09-25-micro-arrindexsz, v423/Xr                         | micro/arr_index_sz.c | 47 / 66 exact (71.2%)    |
+| run 2026-11-09-24-micro-arrindex, v423/Xr                           | micro/arr_index.c    | 47 / 66 exact (71.2%)    |
+| run 2026-11-09-25-micro-arrindexsz, v423/Xr                         | micro/arr_index_sz.c | 48 / 66 exact (72.7%)    |
 | run 2026-11-09-24-micro-arrindex, v423/O3XSXr                       | micro/arr_index.c    | 47 / 66 exact (71.2%)    |
 | run 2026-11-09-25-micro-arrindexsz, v423/O3XSXr                     | micro/arr_index_sz.c | 47 / 66 exact (71.2%)    |
 | run 2026-11-09-9-micro-fp, v423/none                                | micro/fp.c           | 108 / 108 exact (100.0%) |
@@ -70,16 +70,21 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-11-micro-opttemps, v423/Xr                           | micro/opt_temps.c    | 33 / 38 exact (86.8%)    |
 | run 2026-11-09-11-micro-opttemps, v423/O3XSXr                       | micro/opt_temps.c    | 38 / 38 exact (100.0%)   |
 | run 2026-11-09-12-micro-optcounted, v423/none                       | micro/opt_counted.c  | 16 / 32 exact (50.0%)    |
-| run 2026-11-09-12-micro-optcounted, v423/O3XS                       | micro/opt_counted.c  | 16 / 32 exact (50.0%)    |
-| run 2026-11-09-12-micro-optcounted, v423/Xr                         | micro/opt_counted.c  | 11 / 32 exact (34.4%)    |
-| run 2026-11-09-12-micro-optcounted, v423/O3XSXr                     | micro/opt_counted.c  | 24 / 32 exact (75.0%)    |
+| run 2026-11-09-12-micro-optcounted, v423/O3XS                       | micro/opt_counted.c  | 29 / 32 exact (90.6%)    |
+| run 2026-11-09-12-micro-optcounted, v423/Xr                         | micro/opt_counted.c  | 31 / 32 exact (96.9%)    |
+| run 2026-11-09-12-micro-optcounted, v423/O3XSXr                     | micro/opt_counted.c  | 32 / 32 exact (100.0%)   |
 | run 2026-11-09-13-micro-fpstmts, v423/none                          | micro/fp_stmts.c     | 14 / 16 exact (87.5%)    |
 | run 2026-11-09-13-micro-fpstmts, v423/O3XS                          | micro/fp_stmts.c     | 9 / 16 exact (56.2%)     |
-| run 2026-11-08-9-micro-optloops, v423/O3XS                          | micro/opt_loops.c    | 16 / 33 exact (48.5%)    |
+| run 2026-11-08-9-micro-optloops, v423/O3XS                          | micro/opt_loops.c    | 27 / 33 exact (81.8%)    |
 | run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality v4.23      | 1997 LIB/SRC         | 161 / 248 exact (64.9%)  |
 | run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality kn5000     | 1997 LIB/SRC         | 159 / 248 exact (64.1%)  |
 | run 2026-11-08-5-libsrc97-O3XS, ide2003/O3XS, --personality ide2003 | 1997 LIB/SRC         | 152 / 248 exact (61.3%)  |
 | run 2026-11-09-3-proxy-tiny, v423/O3XSXr                            | firmware/tiny.c      | 6 / 6 exact (100.0%)     |
+| run 2026-11-08-8-micro-ra, v423/O3XS                                | micro/ra_*.c         | 19 / 42 exact (45.2%)    |
+| run 2026-11-08-8-micro-ra, v423/Xr                                  | micro/ra_*.c         | 23 / 42 exact (54.8%)    |
+| run 2026-11-08-9-micro-optloops, v423/none                          | micro/opt_loops.c    | 22 / 33 exact (66.7%)    |
+| run 2026-11-08-9-micro-optloops, v423/Xr                            | micro/opt_loops.c    | 30 / 33 exact (90.9%)    |
+| run 2026-11-08-9-micro-optloops, v423/O3XSXr                        | micro/opt_loops.c    | 29 / 33 exact (87.9%)    |
 
 The library rows count listing pieces: since inline assembly is passed through (2026-11-09), an inline-assembly
 label named `_x` / `.x` starts a piece of its own, as in Toshiba's listing, so the total rose from 79 to 144; anonymous typedef'd unions (FLOAT.H) then brought more files in (188), and on 2026-11-09 the files that include

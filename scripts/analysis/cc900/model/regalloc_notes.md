@@ -159,9 +159,50 @@ implements the part for one loop over pointer parameters under O3XSXr: parameter
 variable (an accumulator, or the counter itself in `oc_find`) takes HL, then the byte temporary (C, evicting BC's
 parameter to the first free of DE, HL: `ld XHL,XBC`) or the index chain (`ld DE,IX` / `exts XDE` / `add XDE,XDE` /
 `add XDE,XWA` / `(XDE)`), then the other locals in reverse declaration order, then the counter; a char array is
-indexed `(Xp+i)`.  opt_counted.c O3XSXr 2 -> 24 of 32; micro O3XSXr 632 -> 635.  Not yet: a long constant store's
-temporary class, two arrays (the held address copy), down-counting loops, nested loops, the `ldirw` block copy,
-and the Xr variant.  Under cdecl `-O3 -XS` (`leaf_u1_cdecl`): the bound gets a register loaded just before
+indexed `(Xp+i)`.  opt_counted.c O3XSXr 2 -> 24 of 32; micro O3XSXr 632 -> 635.  (Then not yet, all
+added later the same day, see below: a long constant store's temporary class, two arrays (the held address copy),
+down-counting loops, nested loops, the `ldirw` block copy, and the Xr variant.)  Under cdecl `-O3 -XS` (`leaf_u1_cdecl`): the bound gets a register loaded just before
 the first test, a pointer read once per iteration is reloaded at each use (a chain operand: `ld XDE,(XSP+0x4)` /
 `add XWA,XDE`; a direct base: `ld XDE,(XSP+0x4)` / `ld XWA,(XSP+0x8)` / `ld A,(XWA+HL)`), the first temporary takes WA;
 opt_counted.c O3XS 2 -> 16 of 32.
+
+Since 2026-11-09 (later the same day) the allocation itself is `model/u1alloc.py`, a port of the session's engine
+(`fit.py`): objects in classes visited in U1's order, the first free register at each object's width, Q halves, bytes
+A W C B E D L H, the returned-sum HL / L preference, the byte temporary C with BC's parameter evicted to DE / HL.
+codegen.py builds the objects from the C and calls it from four places:
+- `u1_global` (via `plan_leaf` and `counted_loop`): -O counted loops over global arrays, both ABIs.  The first
+  temporary is the shared element address (ra_leaf2 `lda XBC,XIX+DE`), a long constant (ol_l_clear `ld XBC,0x0`) or
+  a loaded value (ol_i_copy, ol_idx_use `ld BC,(XIX+DE)` / `muls XBC,IY`); one offset IV per element size and the
+  bases in first-use order (an assignment's source first: ol_l_copy `lda XIY,_gb` / `lda XIX,_gla` / `ld DE,0x0` /
+  `ld HL,0x0`, the increments in reverse); the while / do forms (ol_while, ol_do, which has no guard and no exit
+  label); nested loops with the base hoisted out of the inner one only (ol_nested); `for (i = k; i > 0; i--)`
+  (ol_down: `ld DE,WA` / `cp DE,0x0` / `ret le` / `lda XBC,_ga` / `ld WA,DE` / `add WA,WA` / ... / `dec 0x2,WA`).
+  Under cdecl the bound is a kept parameter (`ld IX,(XSP+0x4)` before the guard), a do loop's bound stays on the stack
+  (`cp DE,(XSP+0x4)`), the byte temporary is A.
+- `leaf_u1_adecl` / `leaf_u1_cdecl` (via `leaf_u1`): loops over pointer parameters, -O and plain -Xr.  A long
+  constant is the first temporary (oc_clr_l `ld XDE,0x0` under -Xr, `ld XWA,0x0` under cdecl), two int arrays get the
+  held copy (oc_add2 `ld XIY,XHL` / `add XIY,XWA` / `add XHL,XBC` / `ld HL,(XHL)` / `add (XIY),HL`; plain -Xr
+  recomputes the scaled index), nested loops take the counters in reverse declaration order (oc_nested j IY, i IZ),
+  `for (i = n - 1; i >= 0; i--)` frees n's register (oc_down: -O3 -XS -Xr `ld DE,BC` at entry and `dec 0x1,DE` / `j
+  L1` that the tail merge must not fold; plain -Xr `sub DE,0x1` / `ret lt`), `if (p[i] > m) m = p[i]` loads the
+  element once into the chain register (-O only), a global pointer is a chain operand (`add XBC,(_gp)`).  Under
+  cdecl a parameter used twice is kept and loaded at its first use (oc_max), one read once per iteration stays on the
+  stack (oc_find `cp WA,(XSP+0xa)`), a chain operand's reload takes the first free of WA BC DE HL, else is read as a
+  memory operand (oc_nested `add XWA,(XSP+0x4)`).
+- `u1_plain_global`: plain -Xr loops over global arrays.  Each access rebuilds its address (`ld BC,IX` / `add BC,BC`
+  / `lda XDE,_ga` / `(XDE+BC)`); the access computed last gets the first temporaries (ol_i_copy: gb's HL / XIX come
+  first in the code, ga's BC / XDE first in the allocation; ol_two_arr likewise).
+- `leaf_u1_noarr`, `u1_down2`, `u1_block_copy`: `s += b * c` with b, c parameters is hoisted under -O (ra_param3
+  `muls XBC,DE` after the guard; cdecl ol_inv `ld WA,(XSP+0x6)` / `muls XWA,(XSP+0x8)`, class inv) and a value
+  temporary otherwise (`ld IX,BC` / `muls XIX,DE`); `for (; n > 0; n--) s += p[n - 1]` (oc_down2, -Xr only: the
+  derived IV n - 1 under -O); a char copy of an even constant count from a global array to a pointer parameter is
+  `ldirw` of words under -O (oc_cpy_g).
+- -O, one char element read by several statements (`U1_BYTE_CSE`): loaded once into the byte temporary (C, cdecl A)
+  and the accumulators packed in byte halves, high ones included (ol_c_acc3: s0 H, s1 L, s2 B; cdecl s2 W; FAM has
+  entries W, B, D, H for them); the returned sum is added in place, `add H,L` / `add H,B` / `ld L,H`.
+Switches `U1_CDECL_GLOBAL`, `U1_PLAIN_XR` and `U1_BYTE_CSE` turn those parts off.  Not implemented: the README's
+exceptions (three reads of one wide global with the base copies and Q halves, ra_leaf3..5 and ol_*_acc3; ol_two_arr
+under -O; cdecl oc_sum2 / oc_add2 and ol_l_copy; plain -Xr oc_clr_l), cdecl oc_down2 (its reload takes IX, against
+the WA..HL rule above), nested loops without arrays under cdecl (ra_nested).  Results (`sh model/ledger.sh`):
+opt_counted.c O3XSXr 24 -> 32 / 32, O3XS 16 -> 29, Xr 11 -> 31; opt_loops.c O3XS 16 -> 27 / 33, O3XSXr 14 -> 29, Xr 10 ->
+30; ra_*.c O3XSXr 13 -> 18 / 42; micro O3XS 671 -> 672, Xr 673 -> 674 (ctrl.c c_find, c_copy).
