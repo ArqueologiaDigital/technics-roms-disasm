@@ -1324,9 +1324,10 @@ def gen_stmt(F, s, last):
             if k is not True: F.lines.append(lab + ':')   # always true: no label (cmp_ui: ge_ui_br0)
             return
         lelse, lend = F.newulabel(), F.newulabel()
+        before_trivial_ret = getattr(F, 'trivial_ret_next', False)   # c_ifelse: r = a; else r = b; return r -> j L2
         gen_cond_false(F, s.cond, lelse)
         gen_stmt(F, s.then, last)
-        if last and not F.xiz_vars and not F.pushes and not F.lines[-1].startswith(('\tret', '\tj\t')):
+        if last and not before_trivial_ret and not F.xiz_vars and not F.pushes and not F.lines[-1].startswith(('\tret', '\tj\t')):
             flush_pops(F); F.emit('ret')               # c_ifchain: the exit is duplicated, not jumped to
         elif not F.lines[-1].startswith(('\tret', '\tj\t')):
             flush_pops(F); F.emit('j', lend)
@@ -2045,6 +2046,8 @@ def plan_leaf(F):
         uses = {}
         walk(f.body, lambda n, d: uses.__setitem__(strip(n.e).decl, uses.get(strip(n.e).decl, 0) + 1)
              if n.k == 'load' and strip(n.e).k == 'var' else None)
+        walk(f.body, lambda n, d: uses.__setitem__(strip(n.l).decl, uses.get(strip(n.l).decl, 0) + 1)
+             if n.k == 'bin' and n.op == '=' and strip(n.l).k == 'var' else None)   # c_ifelse: r = a; else r = b
         multi = [d for d in f.decls if d.kind == 'local' and uses.get(d, 0) >= 2 and d.ty.kind == 'int']
         if not multi: return False
     rets = []
