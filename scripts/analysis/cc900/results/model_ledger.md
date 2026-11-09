@@ -16,7 +16,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-08-8-micro-ra, v423/none                                | micro/ra_*.c        | 29 / 42 exact (69.0%)    |
 | run 2026-11-08-8-micro-ra, v423/O3XSXr                              | micro/ra_*.c        | 12 / 42 exact (28.6%)    |
 | run 2026-11-08-4-abi, v423/none                                     | abi/*.c             | 96 / 108 exact (88.9%)   |
-| run 2026-11-08-4-abi, v423/O3XS                                     | abi/*.c             | 92 / 108 exact (85.2%)   |
+| run 2026-11-08-4-abi, v423/O3XS                                     | abi/*.c             | 93 / 108 exact (86.1%)   |
 | run 2026-11-08-6-abi-adecl, v423/Xr                                 | abi/*.c             | 72 / 80 exact (90.0%)    |
 | run 2026-11-08-6-abi-adecl, v423/O3XSXr                             | abi/*.c             | 67 / 80 exact (83.8%)    |
 | run 2026-11-09-4-micro-switch, v423/none                            | micro/switch.c      | 13 / 25 exact (52.0%)    |
@@ -50,9 +50,9 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-13-micro-fpstmts, v423/none                          | micro/fp_stmts.c    | 1 / 16 exact (6.2%)      |
 | run 2026-11-09-13-micro-fpstmts, v423/O3XS                          | micro/fp_stmts.c    | 0 / 16 exact (0.0%)      |
 | run 2026-11-08-9-micro-optloops, v423/O3XS                          | micro/opt_loops.c   | 15 / 33 exact (45.5%)    |
-| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality v4.23      | 1997 LIB/SRC        | 144 / 248 exact (58.1%)  |
-| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality kn5000     | 1997 LIB/SRC        | 142 / 248 exact (57.3%)  |
-| run 2026-11-08-5-libsrc97-O3XS, ide2003/O3XS, --personality ide2003 | 1997 LIB/SRC        | 138 / 248 exact (55.6%)  |
+| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality v4.23      | 1997 LIB/SRC        | 146 / 248 exact (58.9%)  |
+| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality kn5000     | 1997 LIB/SRC        | 144 / 248 exact (58.1%)  |
+| run 2026-11-08-5-libsrc97-O3XS, ide2003/O3XS, --personality ide2003 | 1997 LIB/SRC        | 140 / 248 exact (56.5%)  |
 | run 2026-11-09-3-proxy-tiny, v423/O3XSXr                            | firmware/tiny.c     | 6 / 6 exact (100.0%)     |
 
 The library rows count listing pieces: since inline assembly is passed through (2026-11-09), an inline-assembly

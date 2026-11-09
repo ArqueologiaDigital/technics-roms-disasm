@@ -929,8 +929,12 @@ def push_arg(F, a):
         F.emit('ld', 'A,%s' % m); F.emit('exts' if strip(a0.e).ty.signed else 'extz', 'WA'); F.emit('push', 'WA')
         F.push += 2; return 2
     sx = a0
-    while sx.k in ('decay', 'cast') and getattr(sx, 'kind', 'ArrayToPointerDecay') in ('ArrayToPointerDecay', 'NoOp', 'BitCast'):
+    while sx.k in ('decay', 'cast') and getattr(sx, 'kind', 'ArrayToPointerDecay') in ('ArrayToPointerDecay', 'NoOp', 'BitCast',
+                                                                                    'FunctionToPointerDecay'):
         sx = strip(sx.e)
+    if sx.k == 'var' and sx.decl.kind == 'func' and a.ty is not None and a.ty.is_ptr():
+        F.emit('pushw', '_%s >> 16' % sx.decl.name); F.emit('pushw', '_%s & 0xffff' % sx.decl.name)   # _sprintf:
+        F.push += 4; return 4                                                     # pushw __strOut >> 16 / ...
     if sx.k == 'string' and a.ty is not None and a.ty.is_ptr():   # abi varargs.c v_call: pushw S1 >> 16 / pushw S1 & 0xffff
         lab = fpgen.string_label(F, sx.value)
         F.emit('pushw', '%s >> 16' % lab); F.emit('pushw', '%s & 0xffff' % lab); F.push += 4; return 4
@@ -3337,7 +3341,7 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None):
     import re                                            # no self-moves: the oracle never writes ld XWA,XWA
     F.lines = [l for l in F.lines if not re.match(r'^\tld\t(\w+),\1$', l)]
     # a call directly followed by the return becomes a jump (cmp_ui: ge_ui_br0)
-    if getattr(F, 'naive_loads', False): F.lines = knowledge_pass(F.lines, F.personality)
+    if getattr(F, 'naive_loads', False) or (F.opt and not F.adecl): F.lines = knowledge_pass(F.lines, F.personality)
     elif F.personality != 'v4.23': F.lines = store_knowledge(F.lines)
     if len(F.lines) >= 2 and F.lines[-1] == '\tret' and F.lines[-2].startswith('\tcal\t') \
             and not F.lines[-2].split('\t')[2].startswith(('C9H_', '._f')) and not F.lines[-2].endswith(';stack'):

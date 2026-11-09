@@ -5,7 +5,7 @@ maincpu v10	ff091d	_strstr	_STRSTR.C	-	model: ; unsupported: complex compare ope
 maincpu v10	ff097d	_strcspn	_STRCSPN.C	-	model: ; unsupported: statement goto
 maincpu v10	ff09a0	_atoi	_ATOI.C	-	model: ; unsupported: loop condition bin
 maincpu v10	ff09f6	_atol	_ATOL.C	-	model: ; unsupported: loop condition bin
-maincpu v10	ff0ab7	_vsprintf	_SPRINTF.C	-	model: ; unsupported: var
+maincpu v10	ff0ab7	_vsprintf	_SPRINTF.C	-	no address for __str
 maincpu v10	ff0c92	_strncat	_STRNCAT.C	47	MATCH
 maincpu v10	ff0cc1	_strncmp	_STRNCMP.C	50	MATCH
 maincpu v10	ff0cf3	_strncpy	_STRNCPY.C	43	MATCH
@@ -20,7 +20,7 @@ maincpu v10	ff0f79	.sbrk	__SBRK.C	39	MATCH
 maincpu v10	ff0fa0	_strlen	_STRLEN.C	30	MATCH
 maincpu v10	ff0fbe	_ltoa	_LTOA.C	60	MATCH
 maincpu v10	ff0ffa	_memset	_MEMSET.C	68	MATCH
-maincpu v10	ff1048	__doprnt	__DOFORM.C	-	model: ; unsupported: indirect call
+maincpu v10	ff1048	__doprnt	__DOFORM.C	-	model: ; unsupported: operator =
 maincpu v10	ff2139	__facnv	__FACVT.C	-	model: ; unsupported: var
 maincpu v10	ff27f7	_ultoa	_ULTOA.C	136	MATCH
 maincpu v10	ff2891	_memccpy	_MEMCCPY.C	64	59 diff first +1
@@ -46,7 +46,7 @@ maincpu v9	ff0f6b	.sbrk	__SBRK.C	39	MATCH
 maincpu v9	ff0f92	_strlen	_STRLEN.C	30	MATCH
 maincpu v9	ff0fb0	_ltoa	_LTOA.C	60	MATCH
 maincpu v9	ff0fec	_memset	_MEMSET.C	68	MATCH
-maincpu v9	ff103a	__doprnt	__DOFORM.C	-	model: ; unsupported: indirect call
+maincpu v9	ff103a	__doprnt	__DOFORM.C	-	model: ; unsupported: operator =
 maincpu v9	ff27e9	_ultoa	_ULTOA.C	136	MATCH
 maincpu v9	ff2883	_memccpy	_MEMCCPY.C	64	59 diff first +1
 maincpu v9	ff28c3	_memchr	_MEMCHR.C	24	MATCH
@@ -58,7 +58,7 @@ maincpu v7	ff0140	_strstr	_STRSTR.C	-	model: ; unsupported: complex compare oper
 maincpu v7	ff01a0	_strcspn	_STRCSPN.C	-	model: ; unsupported: statement goto
 maincpu v7	ff01c3	_atoi	_ATOI.C	-	model: ; unsupported: loop condition bin
 maincpu v7	ff0219	_atol	_ATOL.C	-	model: ; unsupported: loop condition bin
-maincpu v7	ff02da	_vsprintf	_SPRINTF.C	-	model: ; unsupported: var
+maincpu v7	ff02da	_vsprintf	_SPRINTF.C	-	no address for __str
 maincpu v7	ff04b5	_strncat	_STRNCAT.C	47	MATCH
 maincpu v7	ff04e4	_strncmp	_STRNCMP.C	50	MATCH
 maincpu v7	ff0516	_strncpy	_STRNCPY.C	43	MATCH
@@ -73,7 +73,7 @@ maincpu v7	ff079c	.sbrk	__SBRK.C	39	MATCH
 maincpu v7	ff07c3	_strlen	_STRLEN.C	30	MATCH
 maincpu v7	ff07e1	_ltoa	_LTOA.C	60	MATCH
 maincpu v7	ff081d	_memset	_MEMSET.C	68	MATCH
-maincpu v7	ff086b	__doprnt	__DOFORM.C	-	model: ; unsupported: indirect call
+maincpu v7	ff086b	__doprnt	__DOFORM.C	-	model: ; unsupported: operator =
 maincpu v7	ff195c	__facnv	__FACVT.C	-	model: ; unsupported: var
 maincpu v7	ff201b	_ultoa	_ULTOA.C	136	MATCH
 maincpu v7	ff20b5	_memccpy	_MEMCCPY.C	64	59 diff first +1
@@ -99,7 +99,7 @@ maincpu v6	ff069e	.sbrk	__SBRK.C	39	MATCH
 maincpu v6	ff06c5	_strlen	_STRLEN.C	30	MATCH
 maincpu v6	ff06e3	_ltoa	_LTOA.C	60	MATCH
 maincpu v6	ff071f	_memset	_MEMSET.C	68	MATCH
-maincpu v6	ff076d	__doprnt	__DOFORM.C	-	model: ; unsupported: indirect call
+maincpu v6	ff076d	__doprnt	__DOFORM.C	-	model: ; unsupported: operator =
 maincpu v6	ff1f1d	_ultoa	_ULTOA.C	136	MATCH
 maincpu v6	ff1fb7	_memccpy	_MEMCCPY.C	64	59 diff first +1
 maincpu v6	ff1ff7	_memchr	_MEMCHR.C	24	MATCH
@@ -124,7 +124,7 @@ maincpu v5	ff024a	.sbrk	__SBRK.C	39	MATCH
 maincpu v5	ff0271	_strlen	_STRLEN.C	30	MATCH
 maincpu v5	ff028f	_ltoa	_LTOA.C	60	MATCH
 maincpu v5	ff02cb	_memset	_MEMSET.C	68	MATCH
-maincpu v5	ff0319	__doprnt	__DOFORM.C	-	model: ; unsupported: indirect call
+maincpu v5	ff0319	__doprnt	__DOFORM.C	-	model: ; unsupported: operator =
 maincpu v5	ff1ac9	_ultoa	_ULTOA.C	136	MATCH
 maincpu v5	ff1b63	_memccpy	_MEMCCPY.C	64	59 diff first +1
 maincpu v5	ff1ba3	_memchr	_MEMCHR.C	24	MATCH
@@ -182,9 +182,9 @@ table data	9ffb2c	_sbrk	__SBRK.C	-	model: no function
 table data	9ffb2f	.sbrk	__SBRK.C	34	27 diff first +3
 table data	9ffb56	_malloc	_MALLOC.C	-	model: ; unsupported: lvalue var
 table data	9ffbdc	_strncmp	_STRNCMP.C	50	MATCH
-hdae v2.06i	299ae7	__doprnt	__DOFORM.C	-	model: ; unsupported: indirect call
-hdae v2.06i	29abd8	_sprintf	_SPRINTF.C	-	model: ; unsupported: statement expr
-hdae v2.06i	29ac00	_vsprintf	_SPRINTF.C	-	model: ; unsupported: var
+hdae v2.06i	299ae7	__doprnt	__DOFORM.C	-	model: ; unsupported: operator =
+hdae v2.06i	29abd8	_sprintf	_SPRINTF.C	-	no address for __str
+hdae v2.06i	29ac00	_vsprintf	_SPRINTF.C	-	no address for __str
 hdae v2.06i	29ac3b	_itoa	_ITOA.C	-	model: ; unsupported: incdec target
 hdae v2.06i	29acc5	_ldiv	_LDIV.C	67	MATCH
 hdae v2.06i	29ad08	_ltoa	_LTOA.C	60	MATCH
@@ -205,9 +205,9 @@ hdae v2.06i	29b04e	_strupr	_STRUPR.C	-	model: ; unsupported: condition bin
 hdae v2.06i	29b07a	__facnv	__FACVT.C	-	model: ; unsupported: var
 hdae v2.06i	2f9362	___ctype	_CTYPE.C	-	model: no function
 hdae v2.06i	2f9362	__ctype	_CTYPE.C	256	MATCH
-hdae v2.01i	2993af	__doprnt	__DOFORM.C	-	model: ; unsupported: indirect call
-hdae v2.01i	29a4a0	_sprintf	_SPRINTF.C	-	model: ; unsupported: statement expr
-hdae v2.01i	29a4c8	_vsprintf	_SPRINTF.C	-	model: ; unsupported: var
+hdae v2.01i	2993af	__doprnt	__DOFORM.C	-	model: ; unsupported: operator =
+hdae v2.01i	29a4a0	_sprintf	_SPRINTF.C	-	no address for __str
+hdae v2.01i	29a4c8	_vsprintf	_SPRINTF.C	-	no address for __str
 hdae v2.01i	29a503	_itoa	_ITOA.C	-	model: ; unsupported: incdec target
 hdae v2.01i	29a58d	_ldiv	_LDIV.C	67	MATCH
 hdae v2.01i	29a5d0	_ltoa	_LTOA.C	60	MATCH
@@ -227,9 +227,9 @@ hdae v2.01i	29a8e3	_strrev	_STRREV.C	-	model: ; unsupported: lvalue var
 hdae v2.01i	29a916	_strupr	_STRUPR.C	-	model: ; unsupported: condition bin
 hdae v2.01i	2f884e	___ctype	_CTYPE.C	-	model: no function
 hdae v2.01i	2f884e	__ctype	_CTYPE.C	256	MATCH
-hdae v1.15i	295abe	__doprnt	__DOFORM.C	-	model: ; unsupported: indirect call
-hdae v1.15i	296baf	_sprintf	_SPRINTF.C	-	model: ; unsupported: statement expr
-hdae v1.15i	296bd7	_vsprintf	_SPRINTF.C	-	model: ; unsupported: var
+hdae v1.15i	295abe	__doprnt	__DOFORM.C	-	model: ; unsupported: operator =
+hdae v1.15i	296baf	_sprintf	_SPRINTF.C	-	no address for __str
+hdae v1.15i	296bd7	_vsprintf	_SPRINTF.C	-	no address for __str
 hdae v1.15i	296c12	_itoa	_ITOA.C	-	model: ; unsupported: incdec target
 hdae v1.15i	296c9c	_ldiv	_LDIV.C	67	MATCH
 hdae v1.15i	296cdf	_ltoa	_LTOA.C	60	MATCH
@@ -247,9 +247,9 @@ hdae v1.15i	296f95	_strncmp	_STRNCMP.C	50	MATCH
 hdae v1.15i	296fc7	_strncpy	_STRNCPY.C	43	MATCH
 hdae v1.15i	2e0e66	___ctype	_CTYPE.C	-	model: no function
 hdae v1.15i	2e0e66	__ctype	_CTYPE.C	256	MATCH
-hdae v1.10i	2959c2	__doprnt	__DOFORM.C	-	model: ; unsupported: indirect call
-hdae v1.10i	296ab3	_sprintf	_SPRINTF.C	-	model: ; unsupported: statement expr
-hdae v1.10i	296adb	_vsprintf	_SPRINTF.C	-	model: ; unsupported: var
+hdae v1.10i	2959c2	__doprnt	__DOFORM.C	-	model: ; unsupported: operator =
+hdae v1.10i	296ab3	_sprintf	_SPRINTF.C	-	no address for __str
+hdae v1.10i	296adb	_vsprintf	_SPRINTF.C	-	no address for __str
 hdae v1.10i	296b16	_itoa	_ITOA.C	-	model: ; unsupported: incdec target
 hdae v1.10i	296ba0	_ldiv	_LDIV.C	67	MATCH
 hdae v1.10i	296be3	_ltoa	_LTOA.C	60	MATCH
@@ -268,4 +268,4 @@ hdae v1.10i	296ecb	_strncpy	_STRNCPY.C	43	MATCH
 hdae v1.10i	296ef6	__facnv	__FACVT.C	-	model: ; unsupported: var
 hdae v1.10i	2e0cd6	___ctype	_CTYPE.C	-	model: no function
 hdae v1.10i	2e0cd6	__ctype	_CTYPE.C	256	MATCH
-# MATCH 167, model cannot 89, differs 10, outside image 4, unresolved symbol 3
+# MATCH 167, model cannot 79, unresolved symbol 13, differs 10, outside image 4
