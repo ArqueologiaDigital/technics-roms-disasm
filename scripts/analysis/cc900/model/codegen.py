@@ -2236,6 +2236,10 @@ def gen_opassign(F, e):
         F.emit(SIMPLE_OPS[op], '%s,%s' % (t, FAM[T][size])); return t
     if op in ('<<', '>>'):
         mnem = ('sla' if signed else 'sll') if op == '<<' else ('sra' if signed else 'srl')
+        lvg = strip(e.l)
+        if fold(r).k == 'const' and fold(r).value == 1 and size <= 2 and lvg.k == 'var' and lvg.decl.kind == 'global':
+            F.emit(mnem + ('b' if size == 1 else 'w'), '(_%s)' % lvg.decl.name)   # cb_while_g: gi <<= 1 -> slaw (_gi)
+            return '(_%s)' % lvg.decl.name
         cnt = mem_operand(F, r) if fold(r).k != 'const' else None
         lv = strip(e.l); ia = strip(lv.idx) if lv.k == 'index' else None
         if F.adecl and size == 2 and cnt in ('BC', 'DE'):
@@ -2696,6 +2700,9 @@ def gen_stmt(F, s, last):
             cc = gen_compare(F, c)
             if cc not in (True, False):
                 F.emit('ret', cc); F.lines.append(lab + ':'); return
+        bt = bit_cond(F, c) if not fpgen.is_fp(c.ty) else None
+        if bt is not None:                                 # cond_bits.c cb_loc: if (n & 1) return n; -> bit 0x0,HL /
+            F.emit('ret', bt); F.lines.append(lab + ':'); return   # ret ne
         if (c.k == 'un' and c.op == '!') or c.ty.kind in ('int', 'ptr'):
             from frontend import N                         # _strncat: if (!*s1) return (s); -> cpb (XIX),0x0 / ret eq
             x = strip(c.e) if c.k == 'un' else c           # (no label after it: the loop body goes on)
@@ -3515,6 +3522,11 @@ def regvar_stmt(F, e):
         fam = gen(F, e.r, tgt, d.ty.size)
         if FAM[fam][d.ty.size] != R: F.emit('ld', '%s,%s' % (R, FAM[fam][d.ty.size]))
         return True
+    if e.k == 'opassign' and regvar_of(e.l) and e.op in ('<<', '>>') and fold(e.r).k == 'const' and \
+            fold(e.r).value is not None and 1 <= fold(e.r).value <= 16 and regvar_of(e.l).reg in FAM:
+        d = regvar_of(e.l); R = FAM[d.reg].get(d.ty.size, FAM[d.reg].get(2))   # cond_bits.c cb_while: x >>= 1 with x
+        mn = ('sla' if d.ty.signed else 'sll') if e.op == '<<' else ('sra' if d.ty.signed else 'srl')   # in WA ->
+        F.emit(mn, '%s,%s' % (hx(fold(e.r).value), R)); return True                                     # srl 0x1,WA
     if e.k == 'opassign' and regvar_of(e.l) and e.op in SIMPLE_OPS:
         d = regvar_of(e.l); R = FAM[d.reg].get(d.ty.size, FAM[d.reg].get(2))
         rc = fold(narrow(e.r, d.ty.size))
