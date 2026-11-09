@@ -869,6 +869,7 @@ def gen_call(F, e, fam=None, size=0):
                 else a for a in args]
     if F.adecl and not getattr(fn.decl.ty, 'cdecl', False):
         return gen_call_adecl(F, fn, args, fam, size)
+    if not args and F.pending: flush_pops(F)           # h_p_only: cal _fp / inc 0x2,XSP / ld XIZ,XHL / cal _g0
     for a in reversed(args): n += push_arg(F, a)
     F.emit('cal', '_' + fn.decl.name)                  # cdecl, also from an adecl file (adecl.c: c_lib)
     F.pending += n
@@ -1238,6 +1239,7 @@ def gen_stmt(F, s, last):
         i = 0
         while i < len(body):
             c = body[i]
+            F.next_stmt = body[i + 1] if i + 1 < len(body) else None
             if getattr(F, 'deferred', None):
                 j = i
                 while j < len(body) and body[j].k not in ('for', 'while', 'do'): j += 1
@@ -1284,7 +1286,12 @@ def gen_stmt(F, s, last):
                     regvar_stmt(F, N('bin', op='=', l=N('var', decl=c.var, ty=c.var.ty), r=c.init, ty=c.var.ty))
                 i += 1; continue
             if c.k == 'decl' and getattr(c.var, 'reg', None) == 'XIZ':
-                if c.init is not None: fam = gen(F, c.init, 'HL', 4); F.emit('ld', 'XIZ,%s' % FAM[fam][4])
+                if c.init is not None:
+                    fam = gen(F, c.init, 'HL', 4)
+                    nxc = strip(F.next_stmt.e) if F.next_stmt is not None and F.next_stmt.k == 'expr' else None
+                    if strip(c.init).k == 'call' and (nxc is None or nxc.k != 'call' or not nxc.args):
+                        flush_pops(F)                      # h_p_only: cal _fp / inc 0x2,XSP / ld XIZ,XHL / cal _g0
+                    F.emit('ld', 'XIZ,%s' % FAM[fam][4])
                 i += 1; continue
             if c.k == 'decl' and c.init is not None and c.var.kind == 'local' and not c.var.addr_taken:
                 rest = body[i + 1:]
@@ -1399,6 +1406,8 @@ def gen_stmt(F, s, last):
         epi = F.opt and (F.xiz_vars or F.pushes or getattr(F, 'frame', 0)) and not getattr(F, 'shared_exit', None)
         if s.value is not None:
             size = F.f.ret.size
+            if not has_helper_call(s.value) and F.pending:
+                flush_pops(F)                              # h_p, h_p_diff: inc 0x4,XSP / ld XHL,XIZ (none too)
             fam = gen(F, s.value, 'HL', size, then_ret=True)
             if fam != 'HL' and FAM[fam].get(size) != FAM['HL'][size]:
                 F.emit('ld', '%s,%s' % (FAM['HL'][size], FAM[fam].get(size, FAM[fam].get(2))))
@@ -1897,7 +1906,11 @@ def regvar_stmt(F, e):
         if m is not None: F.emit('ld', '%s,%s' % (R, m)); return True
         if strip(e.r).k == 'call':                     # k_keep: cal .r1 / ld QIZ,HL (cdecl: inc 0x2,XSP first)
             gen_call(F, strip(e.r))
-            if R != FAM['HL'][d.ty.size]: flush_pops(F)   # (_strcpy: a local in XHL needs no move, the pops wait)
+            nx = getattr(F, 'next_stmt', None)
+            nxc = strip(nx.e) if nx is not None and nx.k == 'expr' else None
+            if R != FAM['HL'][d.ty.size] and (F.opt or nxc is None or nxc.k != 'call' or not nxc.args):
+                flush_pops(F)       # (_strcpy: a local in XHL needs no move, the pops wait); h_p: cdecl merges the
+                                    # pops with the next call's when that call has arguments (inc 0x4,XSP after _g2)
             F.emit('ld', '%s,%s' % (R, FAM['HL'][d.ty.size])); return True
         r0 = strip(e.r)
         ops = []; x = r0

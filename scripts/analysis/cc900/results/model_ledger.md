@@ -13,7 +13,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-08-7-micro, ide2003/O3XS, --personality ide2003         | micro/*.c          | 631 / 674 exact (93.6%) |
 | run 2026-11-08-7-micro, ide2003/Xr, --personality ide2003           | micro/*.c          | 631 / 674 exact (93.6%) |
 | run 2026-11-08-7-micro, ide2003/O3XSXr, --personality ide2003       | micro/*.c          | 605 / 674 exact (89.8%) |
-| run 2026-11-08-8-micro-ra, v423/none                                | micro/ra_*.c       | 26 / 42 exact (61.9%)   |
+| run 2026-11-08-8-micro-ra, v423/none                                | micro/ra_*.c       | 29 / 42 exact (69.0%)   |
 | run 2026-11-08-8-micro-ra, v423/O3XSXr                              | micro/ra_*.c       | 11 / 42 exact (26.2%)   |
 | run 2026-11-08-6-abi-adecl, v423/Xr                                 | abi/*.c            | 69 / 80 exact (86.2%)   |
 | run 2026-11-08-6-abi-adecl, v423/O3XSXr                             | abi/*.c            | 65 / 80 exact (81.2%)   |
@@ -31,6 +31,10 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-7-micro-chains, v423/O3XS                            | micro/ra_chains.c  | 26 / 33 exact (78.8%)   |
 | run 2026-11-09-7-micro-chains, v423/Xr                              | micro/ra_chains.c  | 25 / 33 exact (75.8%)   |
 | run 2026-11-09-7-micro-chains, v423/O3XSXr                          | micro/ra_chains.c  | 27 / 33 exact (81.8%)   |
+| run 2026-11-09-8-micro-homes32, v423/none                           | micro/ra_homes32.c | 7 / 17 exact (41.2%)    |
+| run 2026-11-09-8-micro-homes32, v423/O3XS                           | micro/ra_homes32.c | 4 / 17 exact (23.5%)    |
+| run 2026-11-09-8-micro-homes32, v423/Xr                             | micro/ra_homes32.c | 4 / 17 exact (23.5%)    |
+| run 2026-11-09-8-micro-homes32, v423/O3XSXr                         | micro/ra_homes32.c | 5 / 17 exact (29.4%)    |
 | run 2026-11-08-9-micro-optloops, v423/O3XS                          | micro/opt_loops.c  | 15 / 33 exact (45.5%)   |
 | run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality v4.23      | 1997 LIB/SRC       | 124 / 188 exact (66.0%) |
 | run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality kn5000     | 1997 LIB/SRC       | 122 / 188 exact (64.9%) |

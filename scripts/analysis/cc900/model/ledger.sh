@@ -31,6 +31,9 @@ done
 for c in none O3XS Xr O3XSXr; do
   row "run 2026-11-09-7-micro-chains, v423/$c" "micro/ra_chains.c" "$O/2026-11-09-7-micro-chains/out/v423/$c" corpus/micro/ra_chains.c
 done
+for c in none O3XS Xr O3XSXr; do
+  row "run 2026-11-09-8-micro-homes32, v423/$c" "micro/ra_homes32.c" "$O/2026-11-09-8-micro-homes32/out/v423/$c" corpus/micro/ra_homes32.c
+done
 row "run 2026-11-08-9-micro-optloops, v423/O3XS" "micro/opt_loops.c" "$O/2026-11-08-9-micro-optloops/out/v423/O3XS" corpus/micro/opt_loops.c
 for p in v4.23 kn5000; do
   row "run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality $p" "1997 LIB/SRC" \
