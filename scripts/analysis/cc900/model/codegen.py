@@ -1609,6 +1609,7 @@ IF_FLUSH_POPS = True                                      # see gen_stmt's if
 ADDR_CLOBBER_SWAP = True                                  # see gen_bin
 CHAR_NARROW_TERN = True                                   # see char_narrow
 LOOP_FLUSH_POPS = True                                    # see gen_loop
+SWITCH_LOOP_LABEL = True                                  # see gen_switch
 
 def char_narrow(body):
     """cc900 does int + - & | ^ of a char and a constant that fits a byte, or of two chars, on the byte and
@@ -4421,6 +4422,7 @@ def gen_switch(F, s, last):
     tested inverted and falls into its body; a char selector is extended to a word first (exts / extz WA).
     A selector variable that a case body also reads is copied to a free register without -O (sw_local: ld BC,WA)."""
     cases = switch_cases(s.body, [])
+    in_loop_last = bool(F.loops) and getattr(F, 'next_stmt', 'x') is None   # (the last statement of a loop body)
     F.case_labels = getattr(F, 'case_labels', {})
     F.case_inner = getattr(F, 'case_inner', set())       # case 2: case 3: share one label (sw_fall, sw_ev)
     for c in cases:                                        # (a side table: a back pointer would make the tree cyclic)
@@ -4613,7 +4615,9 @@ def gen_switch(F, s, last):
     import re as _re                                       # an end nothing reaches is not written (sw_dense, sw_sparse:
     reached = end in getattr(F, 'ret_refs', set()) or any(_re.search(r'[\t,]%s$' % end, l) for l in F.lines) or \
         not F.lines[-1].startswith(('\tret', '\tj\t', '\tretd'))          # every arm returns)
-    if reached: F.lines.append(end + ':')
+    if reached and SWITCH_LOOP_LABEL and in_loop_last and not F.opt:
+        F.lines.append(F.newulabel() + ':')               # switch.c sw_loop (no -O): the switch's own end label stays
+    if reached: F.lines.append(end + ':')                  # unreferenced before the loop's continue label
     F.switch_table = getattr(F, 'switch_table', False) or table
 
 def loop_cond(F, c, target, sense):
