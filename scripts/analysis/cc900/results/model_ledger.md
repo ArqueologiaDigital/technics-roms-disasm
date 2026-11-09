@@ -4,13 +4,13 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 
 | oracle                                                          | corpus             | exact                   |
 |-----------------------------------------------------------------|--------------------|-------------------------|
-| run 2026-11-08-7-micro, v423/none                               | micro/*.c          | 651 / 674 exact (96.6%) |
-| run 2026-11-08-7-micro, ide2003/none                            | micro/*.c          | 648 / 674 exact (96.1%) |
-| run 2026-11-08-7-micro, v110/none                               | micro/*.c          | 647 / 674 exact (96.0%) |
-| run 2026-11-08-7-micro, v423/O3XS                               | micro/*.c          | 603 / 674 exact (89.5%) |
+| run 2026-11-08-7-micro, v423/none                               | micro/*.c          | 653 / 674 exact (96.9%) |
+| run 2026-11-08-7-micro, ide2003/none                            | micro/*.c          | 650 / 674 exact (96.4%) |
+| run 2026-11-08-7-micro, v110/none                               | micro/*.c          | 649 / 674 exact (96.3%) |
+| run 2026-11-08-7-micro, v423/O3XS                               | micro/*.c          | 604 / 674 exact (89.6%) |
 | run 2026-11-08-7-micro, v423/Xr                                 | micro/*.c          | 632 / 674 exact (93.8%) |
 | run 2026-11-08-7-micro, v423/O3XSXr                             | micro/*.c          | 605 / 674 exact (89.8%) |
-| run 2026-11-08-8-micro-ra, v423/none                            | micro/ra_*.c       | 23 / 42 exact (54.8%)   |
+| run 2026-11-08-8-micro-ra, v423/none                            | micro/ra_*.c       | 24 / 42 exact (57.1%)   |
 | run 2026-11-08-8-micro-ra, v423/O3XSXr                          | micro/ra_*.c       | 9 / 42 exact (21.4%)    |
 | run 2026-11-08-6-abi-adecl, v423/Xr                             | abi/*.c            | 58 / 80 exact (72.5%)   |
 | run 2026-11-08-6-abi-adecl, v423/O3XSXr                         | abi/*.c            | 58 / 80 exact (72.5%)   |

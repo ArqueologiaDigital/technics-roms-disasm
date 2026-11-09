@@ -1503,7 +1503,8 @@ def plan_homes(F):
     ld IZ,WA); then an int local defined before a call and used after it goes to IZ, else QIZ (k_keep: ld QIZ,HL).
     With -O every parameter that is an operand of a long helper is homed too (mul_l_pp: push XIZ /
     ld (XSP+0x4),XBC / ld XIZ,XWA); the long locals plan_registers put in XIZ come first (mul_l_loc under -Xr)."""
-    if not F.adecl and not F.opt: return                  # cdecl -O: call.c k_seq: push IZ / ld IZ,(XSP+0x6)
+    # cdecl -O: call.c k_seq: push IZ / ld IZ,(XSP+0x6); without -O as well, but a parameter (already in memory)
+    # only when it is read three or more times (k_seq), while k_keep's a (twice) stays on the stack
     raw = eval_sequence(F.f.body, [])
     def unwrap(x, path=()):                                # ('branch', if, side, item) -> (item, path)
         while x[0] == 'branch': path = path + ((x[1], x[2]),); x = x[3]
@@ -1539,11 +1540,14 @@ def plan_homes(F):
                     sv = strip(side)
                     if sv.k == 'load' and strip(sv.e).k == 'var' and strip(sv.e).decl.kind == 'param': helper_ops.append(strip(sv.e).decl)
         walk(F.f.body, hv)
+    nrefs = {}
+    for y in seq:
+        if y[0] in ('use', 'def'): nrefs[y[1]] = nrefs.get(y[1], 0) + 1
     if F.adecl:
         params = [d for d in F.f.params if getattr(d, 'reg', None) in ('WA', 'BC', 'DE') and (d in across or d in helper_ops)]
     else:
         params = [d for d in F.f.params if not getattr(d, 'reg', None) and d in across and d.ty.kind in ('int', 'ptr')
-                  and d.ty.size in (2, 4) and d is not F.sret]
+                  and d.ty.size in (2, 4) and d is not F.sret and (F.opt or nrefs.get(d, 0) >= 3)]
     locs = [d for d in across if d.kind == 'local' and not getattr(d, 'reg', None) and d.ty.size in (1, 2, 4)
             and d.ty.kind in ('int', 'ptr') and not d.addr_taken]
     weight = {}                  # references, not weighted by loops: c_for i (4) before n (1), c_nested i (5) before j (4)
@@ -1661,8 +1665,10 @@ def regvar_stmt(F, e):
         if rc.k == 'const': F.emit('ld', '%s,%s' % (R, hx(rc.value))); return True
         m = operand(F, e.r, d.ty.size)
         if m is not None: F.emit('ld', '%s,%s' % (R, m)); return True
-        if strip(e.r).k == 'call':                     # k_keep: cal .r1 / ld QIZ,HL
-            gen_call(F, strip(e.r)); F.emit('ld', '%s,%s' % (R, FAM['HL'][d.ty.size])); return True
+        if strip(e.r).k == 'call':                     # k_keep: cal .r1 / ld QIZ,HL (cdecl: inc 0x2,XSP first)
+            gen_call(F, strip(e.r))
+            if R != FAM['HL'][d.ty.size]: flush_pops(F)   # (_strcpy: a local in XHL needs no move, the pops wait)
+            F.emit('ld', '%s,%s' % (R, FAM['HL'][d.ty.size])); return True
         tgt = d.reg if d.reg in ('BC', 'DE', 'HL', 'WA') else 'WA'      # ra_noloop3: ld DE,(a) / add DE,(b)
         fam = gen(F, e.r, tgt, d.ty.size)
         if FAM[fam][d.ty.size] != R: F.emit('ld', '%s,%s' % (R, FAM[fam][d.ty.size]))
