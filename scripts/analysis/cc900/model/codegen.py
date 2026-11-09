@@ -1624,6 +1624,7 @@ STORE_ADDR_GUARD = True                                   # see clobbers
 REG_MEMBER = True                                         # see mem_operand (ae_fl_chain)
 HELD_LATER = True                                         # see held_after (lnr.c's dummies)
 PTR_ELEM_REGVAL = True                                    # see gen_stmt's store (r_p_wri)
+PTR_ELEM_XDE = True                                       # see gen_opassign (s_add_gw)
 DEC_CMP_SUB = True                                        # dec 0x1,R / cp R,0x0 -> sub R,0x1 (opt_counted.c oc_down)
 TERN_TRUTH_PRE = True                                     # see gen's -O ?: path
 RET_CC_KEEPS = True                                       # see knowledge_pass
@@ -2450,7 +2451,9 @@ def elem_addr(F, lv, kind):
         elif F.opt and plain:                              # ai_i_p_add under -O3 -XS: ld BC,(i) / exts XBC /
             idx_into('BC'); F.emit('exts', 'XBC'); scale32(F, 'XBC', esz)   # add XBC,XBC / add XBC,(p)
         else:
-            idx_into('WA'); F.emit('exts', 'XWA'); scale32(F, 'XWA', esz); F.emit('ld', 'XBC,XWA')
+            B = getattr(F, 'force_base', None) or 'XBC'    # (lnr3.c s_add_gw: XDE, the value needs XBC)
+            idx_into('WA'); F.emit('exts', 'XWA'); scale32(F, 'XWA', esz); F.emit('ld', '%s,XWA' % B)
+            F.emit('add', '%s,%s' % (B, pm)); return '(%s)' % B
         F.emit('add', 'XBC,%s' % pm); return '(XBC)'
     return None
 
@@ -2921,7 +2924,23 @@ def gen_opassign(F, e):
             used = set(re.findall(r'X?(WA|BC|DE|HL|IX|IY)', t))
             if used - {'DE'} or not t.startswith('(X'): raise Unsupported('element op= element: target operand')
             gen(F, r, 'WA', size); F.emit(SIMPLE_OPS[op], '%s,%s' % (t, FAM['WA'][size])); return t
-        t = lvalue(F, e.l, kind='andk' if rk else 'add')
+        pde = PTR_ELEM_XDE and heavy and not F.opt and not F.adecl and lvg.k == 'index' and not gdst and \
+            strip(lvg.base).k == 'load' and strip(lvg.base).ty.is_ptr() and fold(lvg.idx).k != 'const' and \
+            lvg.ty.size == 2
+        if pde:                                            # (only when the right side reads a global array's element
+            ga_ = []                                       # through XBC: ai_i_p_carry keeps XBC)
+            walk(r, lambda n, d: ga_.append(n) if n.k == 'index' and fold(n.idx).k != 'const' and
+                 strip(n.base).k in ('var', 'decay') and getattr(strip(strip(n.base).e) if strip(n.base).k == 'decay'
+                                                             else strip(n.base), 'decl', None) is not None and
+                 (strip(strip(n.base).e) if strip(n.base).k == 'decay' else strip(n.base)).decl.kind == 'global'
+                 else None)
+            cands = ('DE', 'HL', 'IX', 'IY') if ga_ else ('BC', 'DE', 'HL', 'IX', 'IY')
+            pde = next(('X' + x for x in cands if not held_after(F, x, e)), None)   # (the first free one: lnr4.c
+            if pde == 'XBC': pde = None                    # h17 XIX; lnr.c r_p_acc, d3 in BC: XDE)
+        if pde: F.force_base = pde                         # lnr3.c s_add_gw (none): p[i] += gw[i] -> ld XDE,XWA /
+        try: t = lvalue(F, e.l, kind='andk' if rk else 'add')   # add XDE,(p) / ... ld XBC,_gw / ... / add (XDE),WA
+        finally:
+            if pde: F.force_base = None
         if rk and size <= 2 and strip(e.l).k == 'index':  # arr_index_sz.c ai_i_g_and: andw (XBC+WA),0xff
             F.emit(SIMPLE_OPS[op] + ('b' if size == 1 else 'w'), '%s,%s' % (t, hx(fold(r).value & 0xffff))); return t
         rv = mem_operand(F, r)
@@ -2938,7 +2957,10 @@ def gen_opassign(F, e):
         rc = fold(r)
         if F.opt and size == 4 and rc.k == 'const' and rc.value is not None and 0 <= rc.value < 0x10000:
             F.emit('lda', '%s,%s' % (FAM[T][4], hx(rc.value)))   # ai_l_g_and under -O3 -XS: lda XWA,0xff
-        else: gen(F, r, T, size)
+        else:
+            n0 = len(F.lines); gen(F, r, T, size)
+            if STORE_ADDR_GUARD and clobbers(F.lines[n0:], t):
+                raise Unsupported('the right side overwrites the op= address')   # (wrong code otherwise)
         F.emit(SIMPLE_OPS[op], '%s,%s' % (t, FAM[T][size])); return t
     if op in ('<<', '>>'):
         mnem = ('sla' if signed else 'sll') if op == '<<' else ('sra' if signed else 'srl')
