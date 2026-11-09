@@ -2132,6 +2132,7 @@ def eval_sequence(node, out):
 # 32-bit value is a candidate (research-scratch sessions/2026-11-09_cc900-homes 1baf8a7: _strlen, _calloc, _memccpy,
 # _strcmp, _modf), else the first fit's rule (homes.choose returns None).
 R3_SETS = ('none', 'Xr', 'O3XSXr', 'O3XS')
+FP_AGGR = True
 STORE_XHL_NONE = True
 DEREF_XIZ = True
 
@@ -3950,7 +3951,8 @@ def fp_plan_frame(F):
     f = F.f
     locs = [d for d in f.decls if d.kind == 'local' and fpgen.is_fp(d.ty) and (d.uses or True)]
     ints = [d for d in f.decls if d.kind == 'local' and not getattr(d, 'reg', None) and not fpgen.is_fp(d.ty)
-            and not foldable(f, d) and d.ty.kind not in ('array', 'struct') and d.uses]
+            and not foldable(f, d) and (d.ty.kind not in ('array', 'struct') or FP_AGGR and d.ty.kind == 'struct')
+            and d.uses]                                    # _frexp: the union d (8 bytes) in the frame
     I = sum((d.ty.size + 1) // 2 * 2 for d in ints)          # _log: nptr (address taken) at the very top
     L = sum((d.ty.size + 1) // 2 * 2 for d in locs)
     rets = []

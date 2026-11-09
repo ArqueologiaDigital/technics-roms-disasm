@@ -180,6 +180,10 @@ def lvalue_addr(F, v, reg):
         g = cg.global_offset(v)
         if g and g[0] != '__param__':
             F.emit('lda', '%s,_%s + %s' % (reg, g[0], g[1]) if g[1] != '0x0' else '%s,_%s' % (reg, g[0])); return True
+        b = strip(v.base)
+        if b.k == 'var' and b.decl.kind == 'local' and getattr(b.decl, 'slot', None) is not None:
+            off = cg.member_offset(v)                      # _frexp: d.d = x -> lda XWA,XSP+0x2 (a local union)
+            F.emit('lda', '%s,%s' % (reg, slot_addr(F, b.decl.slot + off))); return True
         gi = elem_member(v)
         if gi:                                             # _cos: PAI5 = g_dbltbl[2].val -> lda XBC,_g_dbltbl + 0x10
             F.emit('lda', '%s,_%s + %s' % (reg, gi[0], cg.hx(gi[1])) if gi[1] else '%s,_%s' % (reg, gi[0])); return True
