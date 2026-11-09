@@ -2371,6 +2371,10 @@ def elem_addr(F, lv, kind):
         if kind in ('load', 'storek'):                    # ai_clear: p[i] = 0 -> add XWA,(XSP+0x4) / ldw (XWA),0x0
             idx_into('WA'); F.emit('extz' if esz == 1 else 'exts', 'XWA'); scale32(F, 'XWA', esz)
             F.emit('add', 'XWA,%s' % pm); return '(XWA)'
+        if IDX_GUARD and (held_after(F, 'BC', lv) or any(
+                getattr(d, 'reg', None) == 'BC' and d not in F.dead and d in getattr(F, 'in_loop', ())
+                for d in list(F.f.params) + list(F.f.decls))) and not getattr(F, 'force_base', None):
+            raise Unsupported('pointer element address over a live BC')   # (oc_add2, ai_div10 none: i in BC)
         if esz == 1:
             if plain or F.opt: idx_into('BC')
             else: idx_into('WA'); F.emit('ld', 'BC,WA')
