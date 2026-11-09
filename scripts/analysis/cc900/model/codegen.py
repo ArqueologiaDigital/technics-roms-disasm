@@ -738,6 +738,47 @@ def cse_params(F, e):
     F.emit('retd', hx(F.retd)) if F.retd else F.emit('ret')
     return True
 
+def xr_shift_reloc(F):
+    """binop-loc rule 4 (research-scratch sessions/2026-11-09_cc900-binop-loc): under -Xr a parameter in WA that is
+    read again after a shift's count load leaves WA at entry.  Policy T: an int / long function takes P (a to BC,
+    b from BC to DE: ld DE,BC / ld BC,WA), a char one Q (b keeps BC, a to DE: ld E,A).  Only the corpus shape is
+    taken: one returned expression of variable-count shifts over the two register parameters."""
+    f = F.f
+    body = [x for x in flat(f.body) if not (x.k == 'decl' and x.init is None)]
+    import copy as _copy
+    if len(body) == 2 and body[0].k == 'decl' and body[0].init is not None and body[1].k == 'return':
+        memo = {id(d): d for d in list(f.params) + list(f.decls)}       # (the declarations stay shared)
+        e2 = _copy.deepcopy(body[1].value, memo)
+        holder = type('H', (), {})(); holder.v = e2
+        def subst(n):
+            for key, v in list(n.__dict__.items()):
+                if hasattr(v, 'k'):
+                    if v.k == 'load' and strip(v.e).k == 'var' and strip(v.e).decl is body[0].var: setattr(n, key, body[0].init)
+                    else: subst(v)
+        if strip(e2).k == 'load' and strip(strip(e2).e).k == 'var' and strip(strip(e2).e).decl is body[0].var: e2 = body[0].init
+        else: subst(e2)
+        from frontend import N
+        body = [N('return', value=e2)]
+    if len(body) != 1 or body[0].k != 'return' or body[0].value is None: return
+    ps = [d for d in f.params if getattr(d, 'reg', None) in ('WA', 'BC')]
+    if len(ps) != 2 or ps[0].reg != 'WA' or ps[1].reg != 'BC' or ps[0].ty.size != ps[1].ty.size: return
+    a, b = ps
+    e = strip(body[0].value)
+    while e.k == 'cast': e = strip(e.e)
+    shifts = []
+    def sh(n, d):
+        if n.k == 'bin' and n.op in ('<<', '>>') and fold(n.r).k != 'const': shifts.append(n)
+    walk(e, sh)
+    if len(shifts) < 2 or not (e.k == 'bin' and e.op in ('<<', '>>')): return
+    reads = [strip(n.e).decl for n in loads_in(e)]
+    if reads.count(a) < 2: return
+    size = a.ty.size
+    if f.ret.size >= 2 and size >= 2:                    # P
+        F.emit('ld', '%s,%s' % (FAM['DE'][size], FAM['BC'][size])); F.emit('ld', '%s,%s' % (FAM['BC'][size], FAM['WA'][size]))
+        a.reg, b.reg = 'BC', 'DE'
+    elif size == 1:                                      # Q
+        F.emit('ld', 'E,A'); a.reg = 'DE'
+
 def loads_in(e):
     out = []
     walk(e, lambda n, d: out.append(n) if n.k == 'load' and strip(n.e).k == 'var' else None)
@@ -4334,6 +4375,7 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong
     compute_last_uses(F)
     F.lines.append(('.' if adecl else '_') + f.name + ':')
     F.loops = []; F.param_copies = []; F.pushes = []
+    if adecl and BINLOC_XR: xr_shift_reloc(F)
     if not plan_leaf(F): plan_registers(F); plan_homes(F)
     plan_frame(F)
     for d in getattr(F, 'l2', {}).get('entry', []) if getattr(F, 'l2', None) else []:
