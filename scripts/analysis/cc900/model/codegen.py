@@ -409,6 +409,12 @@ def gen(F, e, fam, size, then_ret=False, store=False):
         if off: F.emit('lda', 'XWA,XWA+%s' % hx(off))
         if fam != 'WA': F.emit('ld', '%s,XWA' % FAM[fam][4])
         return fam
+    if e.k == 'bin' and e.op in ('&&', '||') and has_helper_call(e) and not getattr(F, 'preset_hl', False):
+        R = FAM[fam][2]                              # _ispunct: return isascii(c) && !isalnum(c) && ...: a call
+        lfalse, lend = F.newulabel(), F.newulabel()  # replaces HL, so no preset: ... j ne,L1 / ld HL,0x1 / j L2 /
+        gen_cond_false(F, e, lfalse)                 # L1: ld HL,0x0 / L2:
+        F.emit('ld', '%s,0x1' % R); F.emit('j', lend)
+        F.lines.append(lfalse + ':'); F.emit('ld', '%s,0x0' % R); F.lines.append(lend + ':'); return fam
     if e.k == 'bin' and e.op in ('&&', '||'):        # c_and / c_or: ld HL,0 / conditions / ld HL,1
         R = FAM[fam][2]
         if not getattr(F, 'preset_hl', False): F.emit('ld', '%s,0x0' % R)
