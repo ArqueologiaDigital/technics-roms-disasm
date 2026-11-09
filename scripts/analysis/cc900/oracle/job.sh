@@ -8,6 +8,7 @@
 #   sources.txt    paths of the files to compile, relative to the corpus root, with "/"
 #   options.txt    "label|cc900 flags" per line
 # and, for every compiler x option set x source, runs `cc900 <flags> -I<tree>\INCLUDE -S` and then ASM900 with no
+# options on the .asm (a source that is itself .asm is only assembled); and
 # options on the .asm (cc900 -c fails under Wine: its assembler pass reports "No source file found in invocation").
 # Results go to W\<compiler>\<label>\<source path minus .c>.{asm,rel,cc.log,as.log}, sent back as results.tar.
 set -u
@@ -49,6 +50,11 @@ while IFS='|' read -r name tarball; do
             rel=${src%.*}; dir=$(dirname "$rel"); base=$(basename "$rel"); file=$(basename "$src")
             d="$C/W/$name/$label/$dir"; mkdir -p "$d"
             cp "$C/SRC/$src" "$d/$file"
+            case "$file" in *.asm|*.ASM)                  # an assembly listing: assemble it as it is
+                ( cd "$d" && timeout 120 wine "C:\\CC\\$name\\BIN\\ASM900.EXE" "$file" >"$base.as.log" 2>&1
+                  echo "exit $?" >>"$base.as.log" )
+                continue ;;
+            esac
             winsrc=$(printf '%s' "$src" | tr '/' '\\')
             ( cd "$d" && timeout 120 wine "C:\\CC\\$name\\BIN\\CC900.EXE" $flags -I"C:\\CC\\$name\\INCLUDE" \
                   -I"C:\\SRC\\$(dirname "$winsrc")" -S "$file" >"$base.cc.log" 2>&1; echo "exit $?" >>"$base.cc.log"
