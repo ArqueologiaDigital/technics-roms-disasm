@@ -2881,6 +2881,7 @@ FP_AGGR = True
 MUL_K_XWA = True
 IFCHAIN_JOIN = True
 BINLOC_XR = True
+CDECL_TAILCALL = True                              # -O: cal _f / ret (nothing between) is j _f (sw_jt6d)
 EXIT_PLACEMENT = True                              # -O: an exit block nothing falls into moves (switch.c sw_evtab)
 CJ_TRAMPOLINES = True                              # -O: arms the tail merge empties go (switch.c sw_ev)
 RET_TAILS = True                                   # -O cross jumping of `cal X / ret` tails (switch.c sw_ret)
@@ -5091,8 +5092,20 @@ def tail_calls_opt(F, lines):
             if k is not None:
                 while k < len(out) and is_label(out[k]): k += 1
                 if k < len(out) and out[k] == '\tret': out[i] = '\tret\t' + cc
+    if CDECL_TAILCALL:                                     # switch.c sw_jt6d under O3XS: `cal _f0 / L2: ret` with
+        rr = getattr(F, 'ret_refs', set())                 # L2 unreferenced -> j _f0 (cmp_i eq_i_br keeps
+        drop = set()                                       # `cal _hit / L1: ret`: L1 was jumped to)
+        for i in range(1, len(out) - 1):
+            if is_label(out[i]) and out[i - 1].startswith('\tcal\t_') and out[i + 1] == '\tret' and \
+                    not refs(out[i][:-1]) and out[i][:-1] not in rr and re.match(r'^L\d+$', out[i][:-1]) and \
+                    out[i][:-1] not in getattr(F, 'gen_refs', set()) and out[i][:-1] not in getattr(F, 'if_joins', set()):
+                drop.add(i)
+        out = [l for i, l in enumerate(out) if i not in drop]
     res = []
     for i, l in enumerate(out):
+        if l == '\tret' and res and res[-1].startswith('\tcal\t_') and CDECL_TAILCALL and \
+                not res[-1].endswith(';stack') and not res[-1].split('\t')[2].startswith('C9H_'):
+            res[-1] = '\tj\t' + res[-1].split('\t')[2]; continue
         if l == '\tret' and res and res[-1].startswith('\tcal\t') and res[-1].split('\t')[2].startswith('.') \
                 and not res[-1].split('\t')[2].startswith('._f') and not res[-1].endswith(';stack'):   # fp.c: cal ._fadd_d / ret
             res[-1] = '\tj\t' + res[-1].split('\t')[2]; continue
@@ -5179,6 +5192,8 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong
         if F.xiz_vars: F.emit('pop', F.save_reg)
         epilogue(F)
         F.emit('retd', hx(F.retd)) if F.retd else F.emit('ret')   # op_three: an adecl stack parameter -> retd 0x2
+    import re as _rg
+    F.gen_refs = {m for l in F.lines if l.startswith('\t') for m in _rg.findall(r'\b(L\d+)\b', l)}   # labels jumped to
     for t in reversed(getattr(F, 'tables', [])): F.lines[1:1] = t     # switch tables right after the label
     if F.opt and getattr(F, 'fp_temps', None) is not None: F.lines = fpgen.hoist_common(F.lines)
     if F.opt and getattr(F, 'l2', None): F.lines = thread_jumps(F.lines, getattr(F, 'user_labels', set()))
