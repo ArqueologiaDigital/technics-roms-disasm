@@ -80,3 +80,26 @@ bare `ldi` is the `(XWA+)` form (`80 10`) where `ldib (XIX+),(XIY+)` is `85 10` 
 Output: `scripts/analysis/cc900/results/pairs_model_kn5000.tsv`; command in `scripts/analysis/cc900/model/README.md`.
 (Earlier runs the same day: 36, 51, 63, 90, 108, 117; the rules added in between are in those commits.  The library sources end in
 a DOS end-of-file byte, which the front end now cuts.)
+
+### Per image (phase 7: a line per image)
+
+`python3 -I -B model/pairs_summary.py ../results/pairs_model_kn5000.tsv` (from `scripts/analysis/cc900`):
+
+| image       | pairs | identical | differ | not compiled yet |
+|-------------|-------|-----------|--------|------------------|
+| maincpu v10 | 28    | 14        | 1      | 13               |
+| maincpu v9  | 25    | 14        | 1      | 10               |
+| maincpu v7  | 28    | 14        | 1      | 13               |
+| maincpu v6  | 25    | 14        | 1      | 10               |
+| maincpu v5  | 25    | 14        | 1      | 10               |
+| subcpu v142 | 16    | 1         | 0      | 15               |
+| subcpu v141 | 16    | 1         | 0      | 15               |
+| subcpu v140 | 16    | 1         | 0      | 15               |
+| table data  | 4     | 1         | 0      | 3                |
+| hdae v2.06i | 23    | 13        | 1      | 9                |
+| hdae v2.01i | 22    | 13        | 1      | 8                |
+| hdae v1.15i | 20    | 13        | 1      | 6                |
+| hdae v1.10i | 21    | 13        | 1      | 7                |
+
+The sub CPU's pairs are mostly the floating-point routines, which the model does not compile yet; the one that
+differs on the main CPU and the HD-AE5000 is `_memccpy`.  The SX-WSA1R images have no pairs in `pairs.tsv`.
