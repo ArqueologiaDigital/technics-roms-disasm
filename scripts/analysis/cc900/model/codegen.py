@@ -1987,6 +1987,9 @@ def gen_load_mem(F, v, fam, size):
         pm = mem_operand(F, v.e)
         if pm is None: raise Unsupported('complex pointer')
         F.emit('ld', 'XWA,%s' % pm); F.emit('ld', '%s,(XWA)' % R); return fam
+    if v.k == 'index' and getattr(F, 'u1x', None) and id(v) in F.u1x['acc']:
+        if F.u1x.get('wide') and v.ty.size == 4 and size == 2: R = FAM[fam][4]   # plain -Xr ol_l_copy: ld XBC,(XDE+BC)
+        F.emit('ld', '%s,%s' % (R, u1x_op(F, v))); return fam
     if v.k == 'index' and getattr(F, 'cl_active', None) and F.cl_active.get('u1') and cl_op(F, v.base):
         if F.cl_active.get('copy_wide') and v.ty.size == 4 and size == 2: R = FAM[fam][4]   # ol_l_copy: ld XBC,(XIX+DE)
         F.emit('ld', '%s,%s' % (R, cl_op(F, v.base))); return fam  # ol_idx_use: ld BC,(XIX+DE) / muls XBC,IY
@@ -2102,6 +2105,7 @@ def lvalue(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False, kind='store'):
     lv = strip(lv)
     u1 = u1_operand(F, lv) if getattr(F, 'u1_i', None) is not None else None
     if u1 is not None: return u1                         # oc_cpy_abn: ld (XWA+IX),C; oc_clr_i: ldw (XDE),0x0
+    if lv.k == 'index' and getattr(F, 'u1x', None) and id(lv) in F.u1x['acc']: return u1x_op(F, lv)
     if lv.k == 'index' and not getattr(F, 'l2', None) and not getattr(F, 'cl_active', None) and \
             not (ptr == 'XBC' and idx == 'BC' and base == 'XDE' and not combine and kind == 'store' and False):
         ea = elem_addr(F, lv, 'rmw' if combine else kind)   # arr_index.c
@@ -2685,7 +2689,7 @@ def gen_stmt(F, s, last):
                     F.lines.append(lab + ':')                   # _strncat's return (s) does not
                 return
         raise Unsupported('conditional return')
-    if s.k == 'if' and s.els is None and getattr(F, 'u1_chain', None) and u1_cse_if(F, s): return
+    if s.k == 'if' and s.els is None and F.opt and getattr(F, 'u1_chain', None) and u1_cse_if(F, s): return
     if s.k == 'if':
         if s.els is None:
             lab = F.newulabel()
@@ -3210,6 +3214,15 @@ def touch_home(F, d):
     if lh and d in lh:
         dst = lh.pop(d); F.emit('ld', '%s,(XSP+%s)' % (dst, hx(d.off + F.push)))
 
+def u1x_op(F, v):
+    """plain -Xr (U1, u1_plain_global): a global array element indexed by the counter, its address built at each
+    access in its own temporaries: ld BC,IX / add BC,BC / lda XDE,_ga -> (XDE+BC); a char lda XBC,_gca -> (XBC+IX)"""
+    C, B = F.u1x['acc'][id(v)]; I = FAM[F.u1x['i'].reg][2]; esz = v.ty.size
+    if C is not None:
+        F.emit('ld', '%s,%s' % (FAM[C][2], I)); scale16(F, FAM[C][2], esz)
+    F.emit('lda', '%s,_%s' % (FAM[B][4], strip(v.base).decl.name))
+    return '(%s+%s)' % (FAM[B][4], FAM[C][2] if C is not None else I)
+
 def cl_op(F, base):
     """the operand of a global array of the active -O counted loop ((XB+O), (XB+i)), or None"""
     cl = getattr(F, 'cl_active', None); b = strip(base)
@@ -3227,6 +3240,8 @@ def operand(F, e, size, avoid=()):
     m = mem_operand(F, e)
     if m is not None: return m
     e0 = narrow(e, size)
+    if getattr(F, 'u1x', None) and e0.k == 'load' and strip(e0.e).k == 'index' and id(strip(e0.e)) in F.u1x['acc']:
+        return u1x_op(F, strip(e0.e))                    # plain -Xr ol_i_acc1: ld BC,IX / add BC,BC / lda XDE,_ga
     if getattr(F, 'cl_active', None) and e0.k == 'load' and strip(e0.e).k == 'index' and cl_op(F, strip(e0.e).base):
         if getattr(F, 'cl_shared', False):                 # ol_i_acc2: lda XBC,XHL+DE / (XBC) (U1's first temporary)
             T = FAM[F.cl_active.get('tmp') if F.cl_active.get('tmp') in FAM else 'WA'][4]
@@ -4199,7 +4214,114 @@ def u1_while_parts(F, s):
     if len(sets) != 1: return None
     return i, strip(st[-1].e), st[:-1]
 
-U1_CDECL_GLOBAL = True                                  # U1 for -O3 -XS (cdecl) counted loops over global arrays
+U1_CDECL_GLOBAL = True
+U1_PLAIN_XR = True                                      # U1 for plain -Xr counted loops over pointer parameters                                  # U1 for -O3 -XS (cdecl) counted loops over global arrays
+
+def u1_plain_global(F):
+    """rule U1 under plain -Xr for one counted for loop over global arrays (opt_loops.c under Xr): nothing is
+    hoisted; each access builds its address in a chain register and a base register (ld BC,IX / add BC,BC / lda
+    XDE,_ga / (XDE+BC); a char element only the base, lda XBC,_gca / (XBC+IX)).  The temporaries of the access
+    computed last are allocated first (ol_i_copy: gb's address in HL / XIX first in the code, ga's in BC / XDE); the
+    first of them is the first temporary, unless a long constant (ol_l_clear: ld XBC,0x0) or the byte loaded in place
+    through its base (ol_c_copy: lda XBC,_gca / ld C,(XBC+IX)) comes first; then the locals and the counter."""
+    import u1alloc
+    f = F.f; W = {1: 8, 2: 16, 4: 32}
+    loops = []
+    walk(f.body, lambda n, d: loops.append(n) if n.k in ('for', 'while', 'do') else None)
+    if len(loops) != 1 or loops[0].k != 'for': return False
+    lp = loops[0]; h = u1_for_head(lp)
+    if h is None: return False
+    i, kv = h
+    if any(getattr(p_, 'reg', None) not in ('WA', 'BC', 'DE') for p_ in f.params): return False
+    st = flat(lp.body)
+    if not st or any(x.k != 'expr' for x in st): return False
+    def gacc(x):
+        x = strip(x)
+        while x.k == 'cast': x = strip(x.e)
+        if x.k != 'load' or strip(x.e).k != 'index': return None
+        v = strip(x.e); b = strip(v.base); ix = strip(v.idx)
+        while ix.k == 'cast': ix = strip(ix.e)
+        if b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array' and getattr(b.decl.ty, 'count', 0) \
+                and ix.k == 'load' and strip(ix.e).k == 'var' and strip(ix.e).decl is i and v.ty.size in (1, 2, 4):
+            return v
+        return None
+    shapes = []; accs = []; lconst = False; byte_src = False; wide = False
+    for x in st:
+        e = x.e
+        if e.k == 'opassign' and e.op in SIMPLE_OPS and regvar_like(e.l, f) and gacc(e.r) is not None:
+            g = [gacc(e.r)]; shape = ('acc', g[0].ty.size)
+        elif e.k == 'bin' and e.op == '=' and strip(e.l).k == 'index' and gacc(u1_load_node(e.l)) is not None:
+            lv = strip(e.l); r = strip(e.r)
+            if fold(r).k == 'const' and fold(r).value is not None:
+                g = [lv]; shape = ('k', lv.ty.size)
+                if lv.ty.size == 4: lconst = True
+            elif r.k == 'load' and strip(r.e).k == 'var' and strip(r.e).decl is i:
+                g = [lv]; shape = ('i', lv.ty.size)
+            elif gacc(e.r) is not None and strip(e.l).ty.size <= 2:
+                rv = gacc(e.r); g = [lv, rv]; shape = ('copy', lv.ty.size, rv.ty.size)
+                if rv.ty.size == 1: byte_src = True
+                if rv.ty.size == 4: wide = True
+            else: return False
+        else: return False
+        shapes.append(shape); accs.append(g)
+    if len(set(shapes)) != 1: return False
+    rf = u1alloc.RegFile()
+    mentioned = set()
+    walk([lp.cond, lp.body, lp.inc], lambda n, d: mentioned.add(n.decl) if n.k == 'var' else None)
+    for p_ in f.params:
+        if p_ in mentioned: rf.take(u1alloc.regname(p_.reg, W.get(p_.ty.size, 32)))
+    locs = [d for d in f.decls if d.kind == 'local']
+    if any(d.addr_taken or d.ty.kind not in ('int', 'ptr') or d.ty.size not in W for d in locs if d.uses): return False
+    rets = []
+    walk(f.body, lambda n, d: rets.append(strip(strip(n.value).e).decl) if n.k == 'return' and n.value is not None
+         and strip(n.value).k == 'load' and strip(strip(n.value).e).k == 'var' else None)
+    retv = [d for d in locs if d in rets]
+    if len(retv) > 1 or i in retv: return False
+    if retv: rf.take(u1alloc.RESULT[W[retv[0].ty.size]])
+    # the template: the first statement's accesses in code order (an assignment's target first), each group
+    # [chain (wide elements), base]; the groups are taken in reverse
+    tmpl = accs[0]
+    groups = []
+    for k_, v in enumerate(tmpl):
+        g = []
+        if v.ty.size > 1: g.append(u1alloc.Obj(('chain', k_), 'chain', 16))
+        g.append(u1alloc.Obj(('base', k_), 'chain', 32))
+        groups.append(g)
+    objs = []; key = 0
+    for g in reversed(groups):
+        for o in g: o.key = key; key += 1; objs.append(o)
+    if lconst: objs.append(u1alloc.Obj('const', 'temp1', 32))
+    elif byte_src: groups[-1][-1].cls = 'temp1'          # ol_c_copy: the byte loaded in place through its base
+    else: min(objs, key=lambda o: o.key).cls = 'temp1'
+    pref = u1_sum_pref(f, locs)
+    pos = {d: k for k, d in enumerate(locs)}
+    for d in locs:
+        if d is i or d in retv or not d.uses: continue
+        objs.append(u1alloc.Obj(d, 'acc', W[d.ty.size], pos[d], pref=d is pref))
+    objs.append(u1alloc.Obj(i, 'ctr', 16, pos[i]))
+    try: u1alloc.allocate(objs, rf)
+    except u1alloc.Fail: return False
+    if any(o.reg.startswith('Q') or (o.reg in u1alloc.BYTEFAM and u1alloc.HALVES[u1alloc.family(o.reg)][0] != o.reg)
+           for o in objs): return False
+    if retv: retv[0].reg = 'HL'
+    regs = {}
+    for o in objs:
+        if isinstance(o.what, tuple): regs[o.what] = u1alloc.family(o.reg)
+        elif o.what == 'const': F.tfam = u1alloc.family(o.reg)
+        else: o.what.reg = u1alloc.family(o.reg)
+    acc = {}
+    for g in accs:
+        for k_, v in enumerate(g):
+            acc[id(v)] = (regs.get(('chain', k_)), regs[('base', k_)])
+    F.u1x = {'i': i, 'acc': acc, 'wide': wide}
+    if len(tmpl) == 2:                                   # the copy's value: in the source's chain (ld BC,(XDE+BC)),
+        F.tfam = regs.get(('chain', 1)) or regs[('base', 1)]   # a char in its base's low byte (ld C,(XBC+IX))
+    if any(u1alloc.family(o.reg) == 'IZ' for o in objs): F.emit('push', 'IZ'); F.push = 2; F.pushes = ['IZ']
+    return True
+
+def regvar_like(x, f):
+    x = strip(x)
+    return x.k == 'var' and x.decl.kind == 'local' and x.decl.ty.kind == 'int'
 
 def u1_sum_pref(f, locs):
     """`return s0 + s1` prefers s0 for HL, `return s0 + s1 + s2` s1 (rule U1 step 7)"""
@@ -4446,7 +4568,7 @@ def leaf_u1(F):
     elif len(loops) != 1 or loops[0].k != 'for': return False
     else:
         lp = loops[0]; h = u1_for_head(lp)
-        if h is None and F.adecl: h = u1_down_head(lp)
+        if h is None and F.adecl and F.opt: h = u1_down_head(lp)   # (plain -Xr: sub DE,0x1 / ret lt, not modelled)
         if h is None: return False
         i, kv = h; outer = None
     params = list(f.params)
@@ -4464,7 +4586,7 @@ def leaf_u1(F):
             else: bad.append(n)
         if n.k == 'call' or fpgen.is_fp_op(n): bad.append(n)
     walk(lp.body, v)
-    if not bad and not acc and F.adecl:                  # ra_param3, ol_inv, ra_nested: no array at all
+    if not bad and not acc and F.adecl and F.opt:        # ra_param3, ol_inv, ra_nested: no array at all
         locs = [d for d in f.decls if d.kind == 'local']
         rets = []
         walk(f.body, lambda n, d: rets.append(strip(strip(n.value).e).decl) if n.k == 'return' and n.value is not None
@@ -4561,6 +4683,8 @@ def leaf_u1_adecl(F, lp, ctrs, params, acc, locs, retv):
         except u1alloc.Fail: return False
         rf.take('B')                                     # (the byte is widened in BC: oc_sum_c exts BC)
     objs = []
+    if not F.opt and (lconst or len({p_ for p_, sz in acc if sz > 1}) > 1): return False   # plain -Xr oc_clr_l,
+                                                         # oc_add2: the chain / recomputation differ (not modelled)
     if len({p_ for p_, sz in acc if sz > 1}) > 1: objs.append(u1alloc.Obj('held', 'held', 32))   # oc_add2: XIY
     if lconst: objs.append(u1alloc.Obj('const', 'temp1', 32))
     if wide: objs.append(u1alloc.Obj('chain', 'temp1' if not lconst else 'chain', 32))
@@ -5014,7 +5138,8 @@ def plan_leaf(F):
     walk(f.body, visit)
     if F.opt and not F.adecl and (not has_call or one_early_call(F)) and leaf_l2(F): return True
     if F.adecl and not has_call and leaf_r6(F): return True
-    if F.opt and not has_call and leaf_u1(F): return True
+    if (F.opt or (F.adecl and U1_PLAIN_XR)) and not has_call and leaf_u1(F): return True   # plain -Xr: U1 too
+    if F.adecl and not F.opt and U1_PLAIN_XR and not has_call and u1_plain_global(F): return True
     if has_call and not (F.opt and not F.adecl and not any(d.kind == 'local' for d in f.decls) and f.params
                          and not live_across_call(f.body)):
         return False                                   # _ltoa at -O3 -XS: nothing read after its calls
