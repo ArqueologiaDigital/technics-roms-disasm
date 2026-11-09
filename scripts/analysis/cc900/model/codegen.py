@@ -736,7 +736,11 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
             f1 = gen(F, l, work, size); F.keep_once = False   # muls XDE,BC / muls XDE,WA / ld HL,DE
             work = f1
         else:
-            gen(F, l, work, size)
+            lh = regvar_of(strip(l).e) if strip(l).k == 'load' else None
+            if F.opt and F.adecl and op == '*' and size == 2 and fam == 'HL' and work == 'WA' and lh is not None and \
+                    lh.reg in ('IZ', 'QIZ') and 'HL' not in live_regs(F):
+                work = 'HL'                                 # ra_homes.c rh_ll: return a * b with a, b in IZ / QIZ ->
+            gen(F, l, work, size)                           # ld HL,IZ / muls XHL,QIZ
         if rs is None:                                  # ra_noloop: muls XWA,BC
             gen(F, r, 'BC', size); rs = FAM['BC'][size]
         wide = FAM[work][4] if size == 2 else FAM[work][2]
