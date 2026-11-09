@@ -49,3 +49,11 @@ set only by tlcs900 under cc900; packed structs are exempt.
 
 The default (non-cc900) convention reads a 5th argument from `(xsp)`, the return address, instead of `(xsp+4)`.
 Fixing it changes default output, so it was left for a separate, deliberate change.
+
+## Not yet done: the exit criterion
+
+PLAN.md asks that code built with `-mabi=cc900` link and run against Toshiba's `c900ml.lib`, checked in emulation.
+That needs an IEEE-695-to-ELF converter for the library objects (built on
+`notes/toshiba-runtime-xref-2026-11-08/ieee695.py`) or a link with `tulink` in the oracle VM, plus a small harness
+that calls each library routine and compares results (MAME's TLCS-900 core).  Until then the ABI is checked
+against the oracle's listings and by the lit tests only.
