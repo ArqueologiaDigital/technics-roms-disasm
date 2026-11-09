@@ -542,10 +542,18 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
             work = fam                                  # -O: mul_i_pp -> ld HL,(a) / muls XHL,(b); a char / or %
                                                         # stays in WA (div_c_pp: ld A,(a) / exts WA / divs WA,(b) / ld L,A)
         lr = regvar_of(strip(l).e) if strip(l).k == 'load' else None
+        if F.opt and lr is not None and lr.reg in ('BC', 'DE', 'HL') and dies_here(F, l) and size == 2 and op in '*/':
+            work = lr.reg; F.dead.add(lr)               # mul_i_loc under O3XSXr: x in DE dying -> muls XDE,WA / ld HL,DE
         if lr is not None and lr.reg == 'WA' and not dies_here(F, l):
             work = free_reg(F, avoid={'WA'})            # mul_i_loc under Xr: ld DE,WA / muls XDE,BC
         if lr is not None and lr.reg == 'WA' and dies_here(F, l): F.dead.add(lr)
-        gen(F, l, work, size)
+        sl = strip(l)
+        if F.opt and size == 2 and op in '*/' and sl.k == 'bin' and sl.op in '*/' and work == 'WA':
+            F.keep_once = True                          # mul_i_loc under O3XSXr: (a * b) * a keeps the product in DE:
+            f1 = gen(F, l, work, size); F.keep_once = False   # muls XDE,BC / muls XDE,WA / ld HL,DE
+            work = f1
+        else:
+            gen(F, l, work, size)
         if rs is None:                                  # ra_noloop: muls XWA,BC
             gen(F, r, 'BC', size); rs = FAM['BC'][size]
         wide = FAM[work][4] if size == 2 else FAM[work][2]
@@ -561,6 +569,12 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
     if op in ('<<', '>>'):
         mnem = ('sla' if signed else 'sll') if op == '<<' else ('sra' if signed else 'srl')
         rr = strip(r)
+        lr0 = regvar_of(strip(l).e) if strip(l).k == 'load' else None
+        if rr.k == 'const' and F.opt and lr0 is not None and lr0.reg in ('WA', 'BC', 'DE', 'HL') and lr0.reg != fam \
+                and dies_here(F, l) and lr0.ty.size == size:
+            F.dead.add(lr0)                                # binop_i.c shl_i_pk under O3XSXr: sla 0x3,WA / ld HL,WA
+            F.emit(mnem, '%s,%s' % (hx(rr.value), FAM[lr0.reg][size])); F.emit('ld', '%s,%s' % (R, FAM[lr0.reg][size]))
+            return fam
         if rr.k == 'const':
             gen(F, l, fam, size)
             F.emit(mnem, '%s,%s' % (hx(rr.value), R)); return fam
@@ -732,6 +746,9 @@ def gen_long_helper(F, e, l, r, fam, signed):
 def move_to(F, res, fam, size, keep=False):
     tgt = FAM[fam][size]
     if keep: return 'HL'
+    if getattr(F, 'keep_once', False) and family_of(res) and res in FAM[family_of(res)[1:]].values() \
+            and res == FAM[family_of(res)[1:]].get(size):
+        F.keep_once = False; return family_of(res)[1:]  # the caller works where the value already is
     if res != tgt: F.emit('ld', '%s,%s' % (tgt, res))
     return fam
 
