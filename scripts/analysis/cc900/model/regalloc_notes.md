@@ -67,3 +67,29 @@ picks v0 in IZ (a tie, broken by an order still unknown).  rc_loop2-4: i in IZ c
 local in QIZ is used as a register operand (`add WA,QIZ`, free), and the others stay in slots.  A model would
 enumerate the few assignments of the candidates to {IZ, QIZ, slot}, weight each use by its loop depth, and take the
 cheapest; the weights (instructions, bytes or cycles) are to be fitted to the oracle.
+
+## Leaf loops under `-O3 -XS -Xr`: parameters that arrive in registers (run 2026-11-09-5-micro-optparams)
+
+Data for the next allocator step (the model scores 0 of 24 here).  Each parameter arrives in WA / BC / DE; the loop
+needs a temporary family T for the `n--` copy (`ld T16,n / dec n / cp T16,0x0`) and, when a byte is copied, for the
+byte (T8).  The allocator picks T and moves out whichever parameter held it:
+
+| function       | arrival                      | after allocation   | T          |
+|----------------|------------------------------|--------------------|------------|
+| `op_cpy_ab`    | a XWA, b XBC, n DE           | a XDE, b XBC, n HL | WA / A     |
+| `op_cpy_nab`   | n WA, a XBC, b XDE           | n WA, a XBC, b XHL | DE / E     |
+| `op_cpy_anb`   | a XWA, n BC, b XDE           | a XWA, n BC, b XHL | DE / E     |
+| `op_cmp_ab`    | a XWA, b XBC, n DE           | a XWA, b XHL, n DE | C          |
+| `op_two`       | a XWA, b XBC                 | a XDE, b XBC       | A          |
+| `op_two_loops` | a XWA, b XBC                 | unchanged          | C (at end) |
+| `op_fill`      | a XWA, n BC, c E             | unchanged          | HL         |
+| `op_fill2`     | c A, n BC, a XDE             | unchanged          | HL         |
+| `op_sum2`      | p XWA, q XBC, n DE           | unchanged, s HL    | IX         |
+| `op_three`     | d XWA, s XBC, t XDE, n stack | n IX               | HL / L     |
+| `op_heavy_a`   | a XWA, b XBC, n DE           | b XIX, s HL        | BC / C     |
+| `op_ret_a`     | a XWA, b XBC, n DE           | b XIX, r XHL       | BC / C     |
+
+So a free register is used when there is one (HL, IX); otherwise one parameter's register is taken, and which one
+is not yet clear: WA in `op_cpy_ab` (two moves, a to XDE and n to HL, where taking DE would have needed one) but DE
+in `op_cpy_anb`.  A preference order for T (WA, DE, BC ...) combined with "the counter keeps its register" fits most
+rows; `op_cpy_ab` against `op_cpy_anb` is the case to explain first.
