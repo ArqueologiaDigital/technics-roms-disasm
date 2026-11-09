@@ -6,4 +6,4 @@ _start:
 	di
 	ld	xsp, 0xe8000
 	call	cc900_test
-done:	jr	done		; a named label: llvm-mc resolves a backward numeric label (1: / jr 1b) wrongly (phase2.md)
+done:	jr	done		; (a numeric label 1: / jr 1b was mis-encoded before UPDATE 23, phase2.md)

@@ -65,4 +65,7 @@ Two backend bugs the test found, both outside the default code paths that the RO
 - **numeric local labels:** llvm-mc encodes `jr 1b` / `jr 2f` with the label's section offset as the displacement
   (`68 02` for a jump from offset 3 back to offset 2).  This made the first runs fail mysteriously: the test's end
   loop jumped into the middle of the test function and overwrote its results.  Named labels are correct.
-Both are to be fixed in the fork as separate, deliberate changes (like the default-ABI fifth-argument bug above).
+The label bug is fixed in the fork (`91a65b6ddfd1`, TOOLCHAIN_VERSION UPDATE 23: `make gate` and `make gate-wsa1`
+still byte-identical, a new lit test).  The missing relaxation is still open: it belongs in the code generator
+(branch relaxation choosing `jrl`), not in the assembler, since the ROM sources' explicit `jr` must stay an error when
+out of range.

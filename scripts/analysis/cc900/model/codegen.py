@@ -1638,31 +1638,95 @@ def plan_homes(F):
                   and d.ty.size in (2, 4) and d is not F.sret and (F.opt or nrefs.get(d, 0) >= 3)]
     locs = [d for d in across if d.kind == 'local' and not getattr(d, 'reg', None) and d.ty.size in (1, 2, 4)
             and d.ty.kind in ('int', 'ptr') and not d.addr_taken]
-    weight = {}                  # references, not weighted by loops: c_for i (4) before n (1), c_nested i (5) before j (4)
-    for y in seq:
-        if y[0] in ('use', 'def'): weight[y[1]] = weight.get(y[1], 0) + 1
-    order = sorted(params + locs, key=lambda d: -weight.get(d, 0))     # stable: parameters first on a tie (k_keep)
+    # The home rule fitted to runs 2026-11-08-7/-8 and 2026-11-09-6 (research-scratch sessions/2026-11-09_cc900-homes,
+    # fit_homes.py BEST; exact home right for 93/107 rows without options, 96/117 under -Xr, 98/107 under
+    # -O3 -XS -Xr, 61/97 under cdecl -O3 -XS):
+    # 1. score = reads + writes, loops not weighted, a while / for test counted twice, a read that is the bound of
+    #    a loop compare (i < n) not counted, x++ / x op= y a read and a write; a value born on the stack (a cdecl
+    #    parameter, an adecl stack parameter) loses 2;
+    # 2. candidates: values live across a call with a score of 1 or more; under adecl only the first parameter;
+    # 3. order: score, highest first; on a tie locals before parameters, and among locals the one nearest the
+    #    middle of the declaration list (the later on a tie);
+    # 4. the first gets IZ (XIZ if it is 32-bit, taking the whole register); the next 16-bit candidate gets the other
+    #    half when both are locals, or one is a call result, or their scores add up to 5 or more; the rest memory;
+    # 5. of the two, the one declared earlier (parameters first) has IZ.
+    sc = {}
+    def bump(d, k): sc[d] = sc.get(d, 0) + k
+    def count(n, k=1, bound=None):
+        if isinstance(n, list):
+            for x in n: count(x, k, bound)
+            return
+        if not hasattr(n, 'k'): return
+        if n.k == 'load' and strip(n.e).k == 'var' and n is not bound: bump(strip(n.e).decl, k)
+        if n.k in ('incdec', 'opassign'):
+            v = strip(n.e if n.k == 'incdec' else n.l)
+            if v.k == 'var': bump(v.decl, 2 * k)
+        if n.k == 'bin' and n.op == '=' and strip(n.l).k == 'var': bump(strip(n.l).decl, k)
+        if n.k == 'decl' and getattr(n, 'init', None) is not None: bump(n.var, k)
+        for key, v in n.__dict__.items():
+            if not (hasattr(v, 'k') or isinstance(v, list)): continue
+            if n.k in ('while', 'for') and key == 'cond':
+                c = strip(v); b = None
+                if c.k == 'bin' and c.op in CC_S:
+                    rb = strip(c.r)
+                    while rb.k == 'cast': rb = strip(rb.e)
+                    b = rb if rb.k == 'load' else None
+                count(v, 2 * k, b)
+            else: count(v, k, bound)
+    count(F.f.body)
+    def stack_born(d): return d.kind == 'param' and not getattr(d, 'reg', None) and d not in getattr(F, 'homed_regs', {})
+    born = {d: stack_born(d) for d in F.f.params}
+    penal = 0 if (F.opt and not F.adecl) else 2            # cdecl -O homes a parameter read twice too (k_keep, rh_lp_x2)
+    def score(d): return sc.get(d, 0) - (penal if born.get(d) else 0)
+    call_res = set()
+    walk(F.f.body, lambda n, dep: call_res.add(n.var) if n.k == 'decl' and getattr(n, 'init', None) is not None
+         and has_helper_call(n.init) else None)
+    walk(F.f.body, lambda n, dep: call_res.add(strip(n.l).decl) if n.k == 'bin' and n.op == '=' and
+         strip(n.l).k == 'var' and has_helper_call(n.r) else None)
+    if F.adecl:
+        first = F.f.params[0] if F.f.params else None
+        cands = [d for d in params if d is first and score(d) >= 1]
+    else:
+        cands = [d for d in F.f.params if not getattr(d, 'reg', None) and d in across and d.ty.kind in ('int', 'ptr')
+                 and d.ty.size in (2, 4) and d is not F.sret and score(d) >= 1]
+    cands += [d for d in locs if score(d) >= 1]
+    ldecl = [d for d in F.f.decls if d.kind == 'local']
+    mid = (len(ldecl) - 1) / 2.0
+    def okey(d):
+        if d.kind == 'param': return (-score(d), 1, 0, 0)
+        i = ldecl.index(d) if d in ldecl else 0
+        return (-score(d), 0, abs(i - mid), -i)
+    order = sorted(cands, key=okey)
+    winners = []
+    if order and not F.xiz_vars:
+        w1 = order[0]; winners = [w1]
+        if w1.ty.size <= 2:
+            rest = [d for d in order[1:] if d.ty.size <= 2]
+            if rest:
+                w2 = rest[0]
+                if (w1.kind == 'local' and w2.kind == 'local') or w1 in call_res or w2 in call_res or \
+                        score(w1) + score(w2) >= 5:
+                    winners.append(w2)
+    def dkey(d): return (0, F.f.params.index(d)) if d.kind == 'param' else (1, ldecl.index(d) if d in ldecl else 0)
+    winners_sorted = sorted(winners, key=dkey)
     used = {'IZ': False, 'QIZ': False}
     for d in F.xiz_vars: used['IZ'] = used['QIZ'] = True
     moves = []; stores = []
-    for d in order:                                        # k_keep: a -> IZ, then x -> QIZ
+    for d in winners_sorted:
+        if d.ty.size == 4:
+            if d.kind == 'param':
+                src = FAM[d.reg][4] if getattr(d, 'reg', None) else d
+                moves.append(('XIZ', src))
+            d.reg = 'XIZ'; d.homed = True; used['IZ'] = used['QIZ'] = True; F.xiz_vars.append(d)
+            continue
+        r = 'IZ' if not used['IZ'] else 'QIZ'
         if d.kind == 'param':
-            src = FAM[d.reg][d.ty.size] if getattr(d, 'reg', None) else d    # cdecl: loaded from its slot
-            if d.ty.size == 4 and not used['IZ'] and not used['QIZ']:
-                moves.append(('XIZ', src)); d.reg = 'XIZ'; d.homed = True; used['IZ'] = used['QIZ'] = True
-                F.xiz_vars.append(d)
-            elif d.ty.size <= 2 and not used['IZ']:
-                moves.append(('IZ', src)); d.reg = 'IZ'; used['IZ'] = True; F.xiz_vars.append(d)
-            elif not F.adecl: continue
-            else:
-                stores.append((d, FAM[d.reg][d.ty.size])); d.home_slot = True; d.reg = None
-        elif d.ty.size == 4:                               # _calloc: p = malloc(...) in XIZ, n stays on the stack
-            if not used['IZ'] and not used['QIZ']:
-                d.reg = 'XIZ'; d.homed = True; used['IZ'] = used['QIZ'] = True; F.xiz_vars.append(d)
-        else:
-            r = 'IZ' if not used['IZ'] else 'QIZ' if not used['QIZ'] else None
-            if r: d.reg = r; used[r] = True; F.xiz_vars.append(d)
-            if r == 'IZ' and getattr(F, 'opt', False) is not None: pass
+            src = FAM[d.reg][d.ty.size] if getattr(d, 'reg', None) else d
+            moves.append((r, src))
+        d.reg = r; used[r] = True; F.xiz_vars.append(d)
+    for d in params:                                       # adecl register parameters that lost: a slot at entry
+        if d not in winners and F.adecl and getattr(d, 'reg', None) in ('WA', 'BC', 'DE'):
+            stores.append((d, FAM[d.reg][d.ty.size])); d.home_slot = True; d.reg = None
     if F.opt:                                              # _strlen: ss = memchr(...) stays in XHL (no call after it)
         rets = []
         walk(F.f.body, lambda n, dep: rets.append(n) if n.k == 'return' and n.value is not None else None)

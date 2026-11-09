@@ -7,17 +7,25 @@
 # Further LLVM changes must be new commits on top.
 
 Branch: tlcs900_backend
-Commit: edc018e026cb (edc018e026cbc54448261f7a8a37ae10eda79570)
+Commit: 91a65b6ddfd1 (91a65b6ddfd114319f634b347c4c7030bd8ba420)
 Date: 2026-11-09
-Subject: [TLCS900] README: the -mabi=cc900 ABI
+Subject: [TLCS900] Numeric local labels are PC-relative branch targets
 
-Binary: llvm-mc sha256 7fe4d1936d8452c47f83a5b13a969e71e1b158741bae0590b12ff629870523d7
+Binary: llvm-mc sha256 28bb21afa5bd0ebf70c1f53b12b6e27058c1f41f3e8e9b04a7e8d033c31d6558
         preserved at ~/compartilhado/toolchain-snapshot/llvm-mc.snap
-        built INCREMENTALLY (ninja) from the committed tree at edc018e026cb, not
-        from scratch: llvm-objdump 5cc4cc67173c (unchanged, already preserved as
-        llvm-objdump.snap.a3a81863f87d-5cc4cc67), llc de6f27f5a0e9,
-        clang-21 d008606fdcf5, lld ab9becd7cc75, llvm-objcopy f84eb6d7665d and
-        llvm-nm 05865ae366f8.
+        built INCREMENTALLY (ninja) from the committed tree at 91a65b6ddfd1 (one
+        file changed since edc018e026cb, TLCS900MCCodeEmitter.cpp), not from scratch.
+
+⚠ PIN PROMOTED ON 2026-11-09 (UPDATE 23, numeric local labels):
+  edc018e026cb / 7fe4d193 -> 91a65b6ddfd1 / 28bb21af.  llvm-mc encoded a branch to a
+  numeric local label ("jr 1b") with the label's section offset as the displacement,
+  taking the label for a "." reference; only a SUBTRACTED "."-like symbol now selects
+  the as-is path (scripts/analysis/cc900/phase2-mame found it; notes/cc900-compat-
+  plan-2026-11-08/phase2.md).  No ROM source uses numeric labels or "." in a branch:
+  `make gate` and `make gate-wsa1` PASS (every rebuilt ROM byte-identical), the 106
+  TLCS900 CodeGen/MC lit tests pass (one new: MC/TLCS900/numeric-local-labels.s).
+  Prior snapshot kept at llvm-mc.snap.edc018e026cb-7fe4d193.  The LLVM: trailer is now
+  91a65b6ddfd1.
 
 ⚠ PIN PROMOTED ON 2026-11-09 (UPDATE 22, -mabi=cc900):
   a3a81863f87d / 118bb4d6 -> edc018e026cb / 7fe4d193.  Eight commits add Toshiba

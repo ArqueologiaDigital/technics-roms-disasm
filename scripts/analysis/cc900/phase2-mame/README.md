@@ -28,5 +28,6 @@ Two backend gaps this test found (phase2.md):
 - clang cannot emit an object file for a function with a conditional branch out of `jr` range: the TLCS900 backend
   does not relax `jr` to `jrl` ("fixup value out of range for 8-bit relative branch").  `run.sh` compiles to
   assembly and relaxes with `../model/to_llvm.py`'s `relax()`;
-- llvm-mc resolves a numeric local label (`1:` / `jr 1b`, `jr 2f`) to the label's offset instead of a PC-relative
-  displacement (`jr 1b` from offset 3 to offset 2 assembles as `68 02`).  `start.s` uses a named label.
+- llvm-mc resolved a numeric local label (`1:` / `jr 1b`, `jr 2f`) to the label's offset instead of a PC-relative
+  displacement (`jr 1b` from offset 3 to offset 2 assembled as `68 02`); fixed in the fork, TOOLCHAIN_VERSION
+  UPDATE 23.  `start.s` keeps a named label.
