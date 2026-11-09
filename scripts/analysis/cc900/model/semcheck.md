@@ -21,6 +21,7 @@ From `scripts/analysis/cc900` (all need the private oracle runs under `~/compart
     python3 -I -B model/test_interp.py                       # interpreter hand checks, all four option sets
     python3 -I -B model/semcheck.py ORACLE_DIR FILE.c ...    # same arguments as score.py; --why lists not-checked
     python3 -I -B model/semcheck.py --ledger --results results/semcheck.md    # every micro/ and probes/ row
+    python3 -I -B model/semcheck.py --ledger --library --results results/semcheck.md   # and the 1997 library row
 
 For example, `python3 -I -B model/semcheck.py ~/compartilhado/cc900-oracle/runs/2026-11-09-24-micro-arrindex/out/v423/none
 corpus/micro/arr_index.c`.  Further options: `--trials N` (default 48), `--limit STEPS` (default 10000 instructions

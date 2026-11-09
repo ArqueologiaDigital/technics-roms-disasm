@@ -4,7 +4,8 @@
 usage: python3 -I -B semcheck.py ORACLE_DIR FILE.c [FILE.c ...] [--opt none|O3XS] [--adecl] [--personality P]
                                   [-DNAME[=V] ...] [-IDIR ...] [--trials N] [--limit STEPS] [--only NAME[,NAME]]
                                   [--model-dir DIR] [--verbose]
-       python3 -I -B semcheck.py --ledger [--all-compilers] [--results FILE.md] [--trials N] [--jobs N] [--model-dir DIR]
+       python3 -I -B semcheck.py --ledger [--all-compilers] [--library] [--results FILE.md] [--trials N] [--jobs N]
+                                 [--model-dir DIR]
 
 The first form takes the same arguments as score.py.  For every function of every FILE.c it compiles the function
 with the model (codegen.compile_unit, the options score.py would use) and takes the oracle's code from ORACLE_DIR's
@@ -14,8 +15,9 @@ the memory state at the call), XSP after the return and XIZ.  It prints one line
 equal, DIFFERENT, not checked) and one line per DIFFERENT function with the first differing output.  Exit status 1
 when any function is DIFFERENT.
 
---ledger runs every micro/ and probes/ row of ledger.sh (only the V4.23 compiler unless --all-compilers) and, with
---results, writes the summary tables.  --model-dir DIR imports codegen/frontend/listing from DIR instead (an older
+--ledger runs every micro/ and probes/ row of ledger.sh (only the V4.23 compiler unless --all-compilers), and with
+--library also the 1997 library row (V4.23, -O3 -XS; FP functions are not checked); with --results it writes the
+summary tables.  --model-dir DIR imports codegen/frontend/listing from DIR instead (an older
 revision extracted with `git archive`), to see whether a known bug is caught.
 """
 import os, sys, re, struct, zlib, random, subprocess
@@ -462,7 +464,7 @@ def summarise(res):
     for _, _, v, _ in res: c[v] += 1
     return c
 
-def ledger_rows(all_compilers):
+def ledger_rows(all_compilers, library=False):
     text = open(os.path.join(HERE, 'ledger.sh')).read()
     text = re.sub(r'^row\(\) \{.*\}$', lambda _: "row() { printf '%s\\037' \"$@\"; printf '\\036'; }", text,
                   count=1, flags=re.M)
@@ -473,8 +475,10 @@ def ledger_rows(all_compilers):
         if len(f) < 4: continue
         f = f[:-1] if f[-1] == '' else f
         label, corpus, rest = f[0], f[1], f[2:]
-        if not corpus.startswith(('micro/', 'probes/')): continue
+        lib = library and corpus == '1997 LIB/SRC'         # --library: the 1997 library row too (V4.23's personality)
+        if not corpus.startswith(('micro/', 'probes/')) and not lib: continue
         odir = rest[0]; files = []; opts = rest[1:]
+        if lib and _arg(opts, '--personality', 'v4.23') != 'v4.23': continue
         while opts and not opts[0].startswith('-'): files.append(opts.pop(0))
         if not all_compilers and '/v423/' not in odir: continue
         opt = _arg(opts, '--opt'); adecl = '--adecl' in opts; pers = _arg(opts, '--personality', 'v4.23')
@@ -500,7 +504,7 @@ def main():
     only = set(_arg(a, '--only').split(',')) if '--only' in a else None
     verbose = '--verbose' in a
     if '--ledger' in a:
-        rows = ledger_rows('--all-compilers' in a)
+        rows = ledger_rows('--all-compilers' in a, '--library' in a)
         seen = set(); table_rows = []; diffs = []; totals = {}; reasons = {}; todo = []
         for r in rows:
             key = (r['odir'], tuple(r['files']), r['opt'], r['adecl'], r['personality'])
