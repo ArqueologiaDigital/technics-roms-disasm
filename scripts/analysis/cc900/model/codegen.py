@@ -52,8 +52,9 @@ class Fn:
             regs = ['WA', 'BC', 'DE']
             stack = []
             for i, p in enumerate(f.params):
-                if i < 3: p.reg = regs[i]
-                else: stack.append(p)
+                if i < 3 and p.ty.kind != 'struct': p.reg = regs[i]
+                else: stack.append(p)                  # abi structs.c s_pair: a struct is on the stack (its register
+                                                       # position is used up: a guess, abi.md)
             for p in reversed(stack):
                 p.off = off; off += 2 if p.ty.size <= 2 else (p.ty.size + 1) // 2 * 2
             s.retd = off - 4
@@ -143,6 +144,7 @@ def mem_operand(F, e):
             if d.kind == 'param': return '(XSP+%s)' % hx(d.off + F.push)
             if d.kind in ('global', 'func') and not d.ty.kind == 'array': return '(_%s)' % d.name
         g = global_offset(v)
+        if g and g[0] == '__param__': return '(XSP+%s)' % hx(g[1].off + g[2] + F.push)   # s_pair: ld HL,(XSP+0x6)
         if g: return '(_%s + %s)' % g if g[1] != '0x0' else '(_%s)' % g[0]
         if v.k == 'deref':                              # _strcat at -O: (XDE), (XBC+:1)
             pv = strip(v.e)
@@ -162,6 +164,8 @@ def global_offset(v):
             return (b.decl.name, hx(i.value * v.ty.size))
     if v.k == 'member' and not v.arrow:
         b = strip(v.base)
+        if b.k == 'var' and b.decl.kind == 'param' and hasattr(b.decl, 'off') and not getattr(b.decl, 'reg', None):
+            return ('__param__', b.decl, member_offset(v))
         if b.k == 'var' and b.decl.kind == 'global':
             off = [o for n, t, o in b.decl.ty.rec if n == v.name][0]
             return (b.decl.name, hx(off))
@@ -742,6 +746,16 @@ def gen_cond_false(F, c, target):
 def push_arg(F, a):
     """push one cdecl argument (call.c: k1, k1k, k3, k4; abi args_caller)"""
     a0 = strip(a); size = a0.ty.size
+    if a0.ty.kind == 'struct':                       # abi structs.c s_pass_pair / s_pass_big: room on the stack, then
+        src = strip(a0.e) if a0.k == 'load' else a0      # a block copy into it (two words: ldiw twice; more: ldirw)
+        if not (src.k == 'var' and src.decl.kind == 'global'): raise Unsupported('struct argument')
+        n = (size + 1) // 2 * 2
+        F.emit('dec', '%s,XSP' % hx(n)) if n <= 8 else F.emit('lda', 'XSP,XSP-%s' % hx(n))
+        F.emit('ld', 'XIY,_%s' % src.decl.name); F.emit('ld', 'XIX,XSP')
+        if n // 2 <= 2:
+            for _ in range(n // 2): F.emit('ldiw', '(XIX+),(XIY+)')
+        else: F.emit('ld', 'BC,%s' % hx(n // 2)); F.emit('ldirw', '(XIX+),(XIY+)')
+        F.push += n; return n
     if size == 1:                                    # a char parameter: sign-extended to a word (call.c: k4)
         m = mem_operand(F, a0)
         if m is None: raise Unsupported('complex char argument')
@@ -947,6 +961,7 @@ def lvalue(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False):
         F.emit('ld', '%s,%s' % (ptr, m)); off = member_offset(lv)
         return '(%s+%s)' % (ptr, hx(off)) if off else '(%s)' % ptr
     g = global_offset(lv)
+    if g and g[0] == '__param__': return '(XSP+%s)' % hx(g[1].off + g[2] + F.push)   # a member of a struct parameter
     if g: return '(_%s + %s)' % g if g[1] != '0x0' else '(_%s)' % g[0]
     if lv.k == 'index' and strip(lv.base).k == 'load' and fold(lv.idx).k == 'const':
         m = mem_operand(F, lv.base)                      # _ultoa: ld XWA,(s) / ldb (XWA),0x0
@@ -1417,6 +1432,12 @@ def gen_stmt(F, s, last):
             F.emit('ld', 'XWA,(XSP+%s)' % hx(tmp.slot + F.push))
             off = [o for n, ty, o in d.ty.rec if n == lv.name][0]
             F.emit('ld', '%s,%s' % ('(XWA+%s)' % hx(off) if off else '(XWA)', FAM[fam][size])); return
+        if lv.ty.kind == 'struct' and lv.k == 'deref' and strip(strip(s.e.r).e if strip(s.e.r).k == 'load' else s.e.r).k == 'deref':
+            sp = strip(strip(strip(s.e.r).e).e) if strip(s.e.r).k == 'load' else strip(strip(s.e.r).e)
+            sm = mem_operand(F, sp); dm = mem_operand(F, lv.e)   # abi structs.c s_copy: ld XIY,XBC / ld XIX,XWA /
+            if sm is not None and dm is not None:              # ld BC,0x8 / ldirw
+                F.emit('ld', 'XIY,%s' % sm); F.emit('ld', 'XIX,%s' % dm)
+                F.emit('ld', 'BC,%s' % hx(size // 2)); F.emit('ldirw', '(XIX+),(XIY+)'); return
         if lv.ty.kind == 'struct':                   # m_copy: ld XIX,dst / ld XIY,src / ld BC,words / ldirw
             src = strip(s.e.r)
             if src.k == 'load': src = strip(src.e)
