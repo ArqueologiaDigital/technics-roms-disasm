@@ -1702,6 +1702,69 @@ def scale16(F, R, esz):
     if esz == 2: F.emit('add', '%s,%s' % (R, R))
     elif esz in (4, 8): F.emit('sla', '%s,%s' % (hx({4: 2, 8: 3}[esz]), R))
 
+def elem_addr_regs(F, lv, b, esz, kind):
+    """-Xr: an element whose index is a register parameter that dies here (arr_index_sz.c under -Xr): the index is
+    adjusted and scaled in place (inc 0x1,WA / add WA,WA); a global's base is XBC for a load, a constant op or a
+    compare, XDE for a store or + - & | ^ with a variable, lda XBC,XBC+WA for * / %; through a pointer in a
+    register a char element is (XWA+BC), any other is exts XBC / add XBC,XBC / add XBC,XWA / (XBC)"""
+    ib, k = split_index(lv.idx)
+    x = strip(ib)
+    while x.k == 'cast' and x.kind == 'IntegralCast' and strip(x.e).ty.size == 2: x = strip(x.e)
+    pair = None
+    if x.k == 'bin' and x.op == '+' and fold(x.r).k != 'const':
+        a, c = unpromote(x.l), unpromote(x.r)
+        av = regvar_of(a.e) if a.k == 'load' else None; cv = regvar_of(c.e) if c.k == 'load' else None
+        if av is None or cv is None or not dies_here(F, a): return None
+        pair = (av, cv); iv = av
+    else:
+        x = unpromote(x)
+        iv = regvar_of(x.e) if x.k == 'load' else None
+        if iv is None or iv.ty.size != 2 or iv.reg not in ('WA', 'BC', 'DE', 'HL') or not dies_here(F, x): return None
+    if iv.kind != 'param' or F.loops: return None          # (a loop counter's last use is not its death: c_sum)
+    R = FAM[iv.reg][2]
+    def adjust(kk):
+        if pair: F.emit('add', '%s,%s' % (R, FAM[pair[1].reg][2]))
+        if kk: F.emit('inc' if kk > 0 else 'dec', '%s,%s' % (hx(abs(kk)), R)) if abs(kk) <= 8 else \
+            F.emit('add', '%s,%s' % (R, hx(kk & 0xffff)))
+        F.dead.add(iv)
+    if b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array' and not getattr(b.decl.ty, 'count', 0) \
+            and esz > 1:
+        if esz == 4 and kind in ('rmw', 'andk'): return None
+        g = '_' + b.decl.name; X = FAM[iv.reg][4]          # arr_index.c under -Xr: exts XWA / add XWA,XWA /
+        adjust(k); F.emit('exts', X); scale32(F, X, esz)   # ld XDE,_gsa / add XDE,XWA / (XDE)
+        base = 'XDE' if kind in ('store', 'add') else 'XBC'
+        if base == X: return None
+        F.emit('ld', '%s,%s' % (base, g)); F.emit('add', '%s,%s' % (base, X)); return '(%s)' % base
+    if b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array' and (getattr(b.decl.ty, 'count', 0) or esz == 1):
+        g = '_' + b.decl.name
+        if esz == 4 and kind == 'andk' and iv.reg == 'WA' and not pair:   # ai_l_g_and: the constant needs XWA ->
+            F.emit('ld', 'BC,WA'); F.dead.add(iv)                         # ld BC,WA / sla 0x2,BC / lda XDE,_gla /
+            if k: F.emit('inc' if k > 0 else 'dec', '%s,BC' % hx(abs(k)))  # (XDE+BC)
+            scale16(F, 'BC', esz); F.emit('lda', 'XDE,%s' % g); return '(XDE+BC)'
+        if esz == 4 and kind in ('rmw', 'andk'): return None
+        if esz == 1:
+            adjust(0)
+            sym = g if not k else '%s + %s' % (g, hx(k & 0xffffffff))
+        else:
+            adjust(k); scale16(F, R, esz); sym = g
+        if kind == 'rmw':                                  # .as_mul_arr: the operand in BC -> XDE
+            P = 'XDE' if 'BC' in live_regs(F, except_decl=iv) else 'XBC'
+            F.emit('lda', '%s,%s' % (P, sym)); F.emit('lda', '%s,%s+%s' % (P, P, R)); return '(%s)' % P
+        base = 'XDE' if kind in ('store', 'add') else 'XBC'
+        if base[1:] == iv.reg: return None
+        F.emit('lda', '%s,%s' % (base, sym)); return '(%s+%s)' % (base, R)
+    if b.k == 'load' and b.ty.is_ptr() and regvar_of(b.e) is not None and regvar_of(b.e).ty.size == 4:
+        P = FAM[regvar_of(b.e).reg][4]
+        if esz == 4 and kind == 'rmw': return None
+        adjust(k)
+        if dies_here(F, b): F.dead.add(regvar_of(b.e))    # ai_i_p_div: the value then takes WA
+        if esz == 1 and kind in ('load', 'store', 'storek', 'add') and iv.ty.signed:
+            return '(%s+%s)' % (P, R)                       # (an unsigned index: .m_cp_v extz XBC / (XBC))
+        X = FAM[iv.reg][4]
+        F.emit('exts' if iv.ty.signed else 'extz', X); scale32(F, X, esz); F.emit('add', '%s,%s' % (X, P))
+        return '(%s)' % X
+    return None
+
 def elem_addr(F, lv, kind):
     """the operand of array element lv for the forms of arr_index.c / arr_index_sz.c (runs 2026-11-09-24 / -25),
     or None (nothing emitted) for the plain forms the older paths write.  kind: 'load', 'store', 'add' (a + - & | ^
@@ -1725,6 +1788,9 @@ def elem_addr(F, lv, kind):
     ic = fold(lv.idx)
     if ic.k == 'const': return None
     plain = is_plain_index(lv.idx)
+    if F.adecl:
+        r = elem_addr_regs(F, lv, b, esz, kind)
+        if r is not None: return r
     def idx_into(R):                                   # the index (16-bit) into register family R
         f = gen(F, narrow(lv.idx, 2), R, 2)
         if f != R: F.emit('ld', '%s,%s' % (FAM[R][2], FAM[f][2]))
