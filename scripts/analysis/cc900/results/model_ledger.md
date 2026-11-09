@@ -40,9 +40,9 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-10-micro-fptemps, v423/none                          | micro/fp_temps.c   | 32 / 33 exact (97.0%)   |
 | run 2026-11-09-10-micro-fptemps, v423/O3XS                          | micro/fp_temps.c   | 31 / 33 exact (93.9%)   |
 | run 2026-11-08-9-micro-optloops, v423/O3XS                          | micro/opt_loops.c  | 15 / 33 exact (45.5%)   |
-| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality v4.23      | 1997 LIB/SRC       | 126 / 188 exact (67.0%) |
-| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality kn5000     | 1997 LIB/SRC       | 124 / 188 exact (66.0%) |
-| run 2026-11-08-5-libsrc97-O3XS, ide2003/O3XS, --personality ide2003 | 1997 LIB/SRC       | 125 / 188 exact (66.5%) |
+| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality v4.23      | 1997 LIB/SRC       | 127 / 188 exact (67.6%) |
+| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality kn5000     | 1997 LIB/SRC       | 125 / 188 exact (66.5%) |
+| run 2026-11-08-5-libsrc97-O3XS, ide2003/O3XS, --personality ide2003 | 1997 LIB/SRC       | 126 / 188 exact (67.0%) |
 | run 2026-11-09-3-proxy-tiny, v423/O3XSXr                            | firmware/tiny.c    | 6 / 6 exact (100.0%)    |
 
 The library rows count listing pieces: since inline assembly is passed through (2026-11-09), an inline-assembly

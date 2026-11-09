@@ -135,7 +135,7 @@ subcpu v142	00f402	_g_ldbltbl	__FLOAT.C	30	MATCH
 subcpu v142	00f420	_g_mathtbl	__MATH.C	8	MATCH
 subcpu v142	00f428	__FloatErrorHandle	TRAP.C	4	MATCH
 subcpu v142	03d34d	_cos	_COS.C	-	model: no function
-subcpu v142	03d42e	_fabs	_FABS.C	35	20 diff first +9
+subcpu v142	03d42e	_fabs	_FABS.C	29	MATCH
 subcpu v142	03d4c9	_tan	_TAN.C	-	model: no function
 subcpu v142	03d533	_pow	_POW.C	-	model: no function
 subcpu v142	03d84f	_sin	_SIN.C	-	model: no function
@@ -151,7 +151,7 @@ subcpu v141	00f402	_g_ldbltbl	__FLOAT.C	30	MATCH
 subcpu v141	00f420	_g_mathtbl	__MATH.C	8	MATCH
 subcpu v141	00f428	__FloatErrorHandle	TRAP.C	4	MATCH
 subcpu v141	03d335	_cos	_COS.C	-	model: no function
-subcpu v141	03d416	_fabs	_FABS.C	35	21 diff first +9
+subcpu v141	03d416	_fabs	_FABS.C	29	MATCH
 subcpu v141	03d4b1	_tan	_TAN.C	-	model: no function
 subcpu v141	03d51b	_pow	_POW.C	-	model: no function
 subcpu v141	03d837	_sin	_SIN.C	-	model: no function
@@ -167,7 +167,7 @@ subcpu v140	00f402	_g_ldbltbl	__FLOAT.C	30	MATCH
 subcpu v140	00f420	_g_mathtbl	__MATH.C	8	MATCH
 subcpu v140	00f428	__FloatErrorHandle	TRAP.C	4	MATCH
 subcpu v140	03d301	_cos	_COS.C	-	model: no function
-subcpu v140	03d3e2	_fabs	_FABS.C	35	21 diff first +9
+subcpu v140	03d3e2	_fabs	_FABS.C	29	MATCH
 subcpu v140	03d47d	_tan	_TAN.C	-	model: no function
 subcpu v140	03d4e7	_pow	_POW.C	-	model: no function
 subcpu v140	03d803	_sin	_SIN.C	-	model: no function
@@ -268,4 +268,4 @@ hdae v1.10i	296ecb	_strncpy	_STRNCPY.C	43	MATCH
 hdae v1.10i	296ef6	__facnv	__FACVT.C	-	model: ; unsupported: var
 hdae v1.10i	2e0cd6	___ctype	_CTYPE.C	-	model: no function
 hdae v1.10i	2e0cd6	__ctype	_CTYPE.C	256	MATCH
-# MATCH 147, model cannot 110, differs 12, outside image 4
+# MATCH 150, model cannot 110, differs 9, outside image 4

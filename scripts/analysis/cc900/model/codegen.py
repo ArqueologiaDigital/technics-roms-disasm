@@ -2973,6 +2973,7 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None):
         epilogue(F)
         F.emit('ret')
     for t in reversed(getattr(F, 'tables', [])): F.lines[1:1] = t     # switch tables right after the label
+    if F.opt and getattr(F, 'fp_temps', None) is not None: F.lines = fpgen.hoist_common(F.lines)
     if F.opt: F.lines = tail_calls_opt(F, cross_jump(F, F.lines))
     else: F.lines = tail_calls(F.lines, getattr(F, 'switch_table', False))
     import re                                            # no self-moves: the oracle never writes ld XWA,XWA

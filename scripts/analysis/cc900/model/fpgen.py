@@ -486,3 +486,53 @@ def cond_into(F, e, dest):
     eval_into(F, e.b, ('cell', r))
     F.lines.append(lend + ':')
     emit_operands(F, dest, [('slot', r.off)]); F.emit('cal', '._fld_dd')
+
+def hoist_common(lines):
+    """-O3 -XS: after `cal ._fcmp_*` / `cp HL,0x0` / `j cc,L`, an ld / lda that both branches set before their
+    first call moves above the test, each one right after the compare's call (_fabs: lda XBC,XSP+0x8 /
+    ld XWA,(XSP+0x4) / cp HL,0x0; d_cond: lda XWA,XSP+0xc), unless an earlier instruction of either branch uses its
+    register"""
+    import re
+    def regs(t):
+        return set(re.findall(r'\bX?(WA|BC|DE|HL|IX|IY|IZ)\b|\b([ABCDEHLW])\b', t))
+    def fam(t):
+        out = set()
+        for m in re.findall(r'\b(?:X|Q)?(WA|BC|DE|HL|IX|IY|IZ)\b', t): out.add(m)
+        for m in re.findall(r'\b([AW])\b', t): out.add('WA')
+        for m in re.findall(r'\b([BC])\b', t): out.add('BC')
+        for m in re.findall(r'\b([DE])\b', t): out.add('DE')
+        for m in re.findall(r'\b([HL])\b', t): out.add('HL')
+        return out
+    def prefix(i):
+        out = []
+        while i < len(lines) and lines[i].startswith('\t') and not lines[i].startswith(('\tcal', '\tj', '\tret')):
+            out.append(i); i += 1
+        return out
+    i = 0
+    while i < len(lines):
+        if lines[i].startswith('\tcal\t._fcmp') and i + 2 < len(lines) and lines[i + 1] == '\tcp\tHL,0x0' \
+                and lines[i + 2].startswith('\tj\t') and ',' in lines[i + 2]:
+            target = lines[i + 2].split(',')[1]
+            try: li = lines.index(target + ':')
+            except ValueError: i += 1; continue
+            a, b = prefix(i + 3), prefix(li + 1)
+            gone_a, gone_b, hoisted = set(), set(), []
+            for k, ia in enumerate(a):
+                t = lines[ia]
+                if not re.match(r'^\t(ld|lda)\t', t): continue
+                dst, src = t.split('\t')[2].split(',', 1)
+                if 'HL' in fam(dst): continue
+                hits = [x for x in b if lines[x] == t and x not in gone_b]
+                if not hits: continue
+                kb = b.index(hits[0])
+                before = [lines[x] for x in a[:k] if x not in gone_a] + [lines[x] for x in b[:kb] if x not in gone_b]
+                if any(fam(dst) & fam(u) for u in before): continue
+                if any(fam(u.split('\t')[2].split(',')[0]) & fam(src) for u in before if u.count('\t') >= 2): continue
+                gone_a.add(ia); gone_b.add(hits[0]); hoisted.append(t)
+            if hoisted:
+                keep = [l for x, l in enumerate(lines) if x not in gone_a and x not in gone_b]
+                pos = i + 1
+                for t in hoisted: keep.insert(pos, t)
+                lines[:] = keep; i += len(hoisted)
+        i += 1
+    return lines
