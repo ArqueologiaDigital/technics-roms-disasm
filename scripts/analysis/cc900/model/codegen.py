@@ -1055,7 +1055,7 @@ def gen_call_adecl(F, fn, args, fam, size):
         a0 = strip(a)
         while a0.k == 'cast' and a0.kind == 'IntegralCast': a0 = strip(a0.e)
         return a0.k == 'bin' and a0.op in ('*', '/', '%')
-    if any(t == 'WA' for t, _ in groups['reg']):       # ls_cl, ls_cl_noguard under -Xr: ms(p, 0, n * s) with p in
+    if not F.opt and any(t == 'WA' for t, _ in groups['reg']):   # ls_cl, ls_cl_noguard under -Xr: ms(p, 0, n * s), p in
         busy = {t for t, _ in groups['reg']}             # XIZ -> ld WA,(n) / mul XWA,(s) / ld BC,WA / ld XWA,XIZ /
         for t, a in list(groups['computed']):            # ld DE,BC / ld BC,0x0: the product first, parked in the
             if t != 'WA' and in_wa(a) and strip(a).ty.size == 2:   # first free of BC, DE
@@ -1078,7 +1078,12 @@ def gen_call_adecl(F, fn, args, fam, size):
     for t, tmp in parked: F.emit('ld', '%s,%s' % (t, tmp))
     n = 0
     for a in stack: n += push_arg(F, a)
-    for t, a in groups['mem'] + groups['const']:
+    def on_stack(a): return (mem_operand(F, strip(a)) or '').startswith('(XSP')
+    if F.opt:                                          # -O: memory, then constants, then frame slots (adecl.c c_t2:
+        order = [x for x in groups['mem'] if not on_stack(x[1])] + groups['const'] + \
+                [x for x in groups['mem'] if on_stack(x[1])]   # ld BC,(_gi) / ld WA,0x1; ls_mc_n1: ld XWA,0x0 /
+    else: order = groups['mem'] + groups['const']               # ld BC,0x0 / ld DE,(XSP+0x4))
+    for t, a in order:
         sz = strip(a).ty.size; F.emit('ld', '%s,%s' % (FAM[t][sz], mem_operand(F, strip(a)) if fold(strip(a)).k != 'const'
                                                      else hx(fold(strip(a)).value)))
     F.emit('cal', '.' + fn.decl.name + ('\t;stack' if n else ''))      # the callee pops: no tail jump (c_t4)
