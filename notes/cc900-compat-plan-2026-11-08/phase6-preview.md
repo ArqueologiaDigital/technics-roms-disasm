@@ -62,7 +62,7 @@ assembles and links it with llvm-mc / ld.lld at the pair's address, and compares
 | personality | byte-identical pairs | which                                                                                                                                                                                                                 |
 |-------------|----------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `v4.23`     | 122 (22 differ)      | `_strcat`, `_strncpy`, `_strncat`, `_strcpy`, `_strlen`, `_memset`, `_memcmp`, `_memchr`, `_memcpy`, `__ctype` x9 each, `_strncmp` x10, `_strchr` x5, `_strnset` x5, `__FloatErrorHandle` x3, sub CPU float tables x9 |
-| `kn5000`    | 135 (9 differ)       | the same 113, plus `_ultoa` (main CPU v10, v9, v7, v6, v5, HD-AE5000 x4) and `_ldiv` (HD-AE5000 x4)                                                                                                                   |
+| `kn5000`    | 135 (9 differ)       | the same 122, plus `_ultoa` (main CPU v10, v9, v7, v6, v5, HD-AE5000 x4) and `_ldiv` (HD-AE5000 x4)                                                                                                                   |
 
 The 13 the kn5000 personality adds are the two routines in which the firmware's code differs from V4.23's output:
 the reload rule (`rules.md`) accounts for them, and with it they come out byte-identical with no Toshiba program in
