@@ -1235,6 +1235,11 @@ def gen_stmt(F, s, last):
                 F.last_use[d] = id(ld) if c.e.op in ('*', '/') else None   # .as_mul_loc: muls XWA,BC in place;
                 # .as_mod_loc under O3XSXr is not: ld HL,WA / exts XHL / divs XHL,BC / ld HL,QHL
                 i += 1; continue
+            if c.k == 'switch' and nxt is not None and nxt.k == 'return' and i + 2 == len(body):
+                F.switch_after = nxt                       # abi switch.c sw_char: the return after the switch goes
+                gen_stmt(F, c, False)                      # right after the compare chain
+                if getattr(F, 'switch_after', None) is None: i += 2; continue
+                F.switch_after = None; i += 1; continue
             if F.opt and not F.adecl and c.k == 'expr' and c.e.k == 'opassign' and strip(c.e.l).k == 'var' and \
                     not getattr(strip(c.e.l).decl, 'reg', None) and strip(c.e.l).decl.kind in ('param', 'local') and \
                     nxt is not None and nxt.k == 'return' and nxt.value is not None and strip(nxt.value).k == 'load' and \
@@ -1784,7 +1789,7 @@ def switch_cases(body, acc):
 
 def gen_switch(F, s, last):
     """switch (oracle run 2026-11-09-4-micro-switch, v423, -Xr and -O3 -XS -Xr).
-    Five or more case values spanning at most twice their number: a jump table of 16-bit offsets from a base label
+    Six or more case values spanning at most twice their number: a jump table of 16-bit offsets from a base label
     (dw Lcase-Lbase, holes to the default), placed in f_const right after the function label; the selector is
     range-checked (sub lo, then cp R,0 / j lt; without sub cp R,0 / j m; unsigned only cp R,hi / j ugt) and
     dispatched with add R,R / lda XIX,S / ld R,(XIX+R) / lda XIX,Lbase / j XIX+R (long: add XR,XR / add XR,S /
@@ -1809,9 +1814,15 @@ def gen_switch(F, s, last):
             vals.append((v, F.case_labels[id(c)], c))
     deflab = default or end
     e = strip(s.value); ext = None
+    nv = len([c for c in cases if c.k != 'default'])
+    vv = [data_value(c.value) for c in cases if c.k != 'default']
+    will_table = nv >= 6 and None not in vv and max(vv) - min(vv) + 1 <= 2 * nv
     if e.k == 'cast' and e.kind == 'IntegralCast' and strip(e.e).ty.size == 1:
         ext = 'exts' if strip(e.e).ty.signed else 'extz'; e = strip(e.e)
-    size = max(2, e.ty.size); signed = strip(s.value).ty.signed
+        if not will_table and mem_operand(F, e) is not None and family_of(mem_operand(F, e)):
+            ext = None; chain_char = True                  # sw_char: a chain compares A itself (cp A,0x65)
+    size = max(2, e.ty.size) if ext or will_table or e.ty.size != 1 else 1
+    signed = strip(s.value).ty.signed
     m = mem_operand(F, e)
     sel = strip(e.e).decl if e.k == 'load' and strip(e.e).k == 'var' else None
     in_body = sel is not None and uses_decl(s.body, sel)
@@ -1833,7 +1844,7 @@ def gen_switch(F, s, last):
             F.emit('ret', cc); F.ret_refs = getattr(F, 'ret_refs', set()) | {end}   # still a reference to end
         else: F.emit('j', '%s,%s' % (cc, deflab))
     n = len(vals); lo = min(v for v, _, _ in vals) if vals else 0; hi = max(v for v, _, _ in vals) if vals else 0
-    table = n >= 5 and hi - lo + 1 <= 2 * n
+    table = n >= 6 and hi - lo + 1 <= 2 * n               # 5 cases are a chain (abi switch.c sw_char, sw_long)
     order = list(cases)
     if table:
         base = F.newulabel(); S = 'S%d' % (90000 + len(getattr(F, 'tables', [])))
@@ -1866,10 +1877,14 @@ def gen_switch(F, s, last):
                    for vv, l, c in vals if vv == v]
         ranges = [g for g in groups if g[1] - g[0] >= 2]
         entries = sorted(singles, key=lambda g: -g[0]) + sorted(ranges, key=lambda g: -g[0])
+        after = getattr(F, 'switch_after', None) if not default else None
+        def cpz(v):                                        # sw_long: a long compared with 0 is or XWA,XWA
+            if v == 0 and size == 4: F.emit('or', '%s,%s' % (R, R))
+            else: F.emit('cp', '%s,%s' % (R, hx(v)))
         for i, g in enumerate(entries):
-            lastone = i == len(entries) - 1
+            lastone = i == len(entries) - 1 and after is None
             if g[0] == g[1]:
-                F.emit('cp', '%s,%s' % (R, hx(g[0])))
+                cpz(g[0])
                 if lastone:
                     to_default('ne')
                     first = [c for c in cases if F.case_labels[id(c)] == g[2]]
@@ -1883,7 +1898,9 @@ def gen_switch(F, s, last):
                 if not lastone: F.lines.append(skip + ':')
                 elif default:                                  # sw_ev: the default body follows the range test
                     order = [c for c in cases if c.k == 'default'] + [c for c in cases if c.k != 'default']
-        if not entries: to_default('t') if False else F.emit('j', deflab)
+        if not entries: F.emit('j', deflab)
+        if after is not None:                              # the return after the switch, then the case bodies
+            gen_stmt(F, after, True); F.switch_after = None
     if exit_is_ret and not F.opt: F.switch_rets = getattr(F, 'switch_rets', set()) | {end}
     F.loops.append((end, F.loops[-1][1] if F.loops else (lambda: end)))
     items = flat(s.body) if s.body.k == 'block' else [s.body]
@@ -1897,7 +1914,10 @@ def gen_switch(F, s, last):
         items = items[:-1]                                 # sw_jt6d: default: f0(); break; -> cal .f0 / L9: ret
     for it in items: gen_stmt(F, it, False)
     F.loops.pop()
-    F.lines.append(end + ':')
+    import re as _re                                       # an end nothing reaches is not written (sw_dense, sw_sparse:
+    reached = end in getattr(F, 'ret_refs', set()) or any(_re.search(r'[\t,]%s$' % end, l) for l in F.lines) or \
+        not F.lines[-1].startswith(('\tret', '\tj\t', '\tretd'))          # every arm returns)
+    if reached: F.lines.append(end + ':')
     F.switch_table = getattr(F, 'switch_table', False) or table
 
 def loop_cond(F, c, target, sense):
