@@ -1914,6 +1914,9 @@ def loop_cond(F, c, target, sense):
         F.emit('ld', 'WA,%s' % R); F.emit('dec' if c.op == '--' else 'inc', '0x1,%s' % R); F.emit('cp', 'WA,0x0')
         cc = 'ne' if sense else 'eq'
         F.emit('ret', cc) if target == 'RET' else F.emit('j', '%s,%s' % (cc, target)); return
+    if c.k == 'incdec' and not c.post and c.op == '--' and regvar_of(c.e) and F.opt and sense and target != 'RET' \
+            and regvar_of(c.e).ty.size == 2:
+        F.emit('djnz', '%s,%s' % (FAM[regvar_of(c.e).reg][2], target)); return   # c_do under O3XS: djnz IZ,L1
     if c.k == 'incdec' and not c.post and regvar_of(c.e):          # ra_dowhile: dec DE / ld WA,DE / cp WA,0
         d = regvar_of(c.e); R = FAM[d.reg][2]
         F.emit('dec' if c.op == '--' else 'inc', '0x1,%s' % R); F.emit('ld', 'WA,%s' % R); F.emit('cp', 'WA,0x0')
