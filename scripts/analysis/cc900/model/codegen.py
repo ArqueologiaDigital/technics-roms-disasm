@@ -3064,6 +3064,7 @@ FP_AGGR = True
 MUL_K_XWA = True
 IFCHAIN_JOIN = True
 BINLOC_XR = True
+ARG_LOCAL_WA = True                                # -O: a local read only as an argument of the returned call: XWA
 MEMBER_RUNS = True                                 # cdecl -O: p->f stores load p once (_fassign, _ungetc)
 GLOBAL_FORWARD = True                              # -O: a global just stored is not reloaded (_rand)
 HOMES_PARAM_ORDER = True                           # adecl entry homes in reverse parameter order (h_p_diff)
@@ -3298,7 +3299,15 @@ def plan_homes(F):
         hl = [d for d in F.f.decls if d.kind == 'local' and not getattr(d, 'reg', None) and d not in across and
               not d.addr_taken and d.ty.kind in ('int', 'ptr') and d.ty.size in (2, 4) and
               (any(uses_decl(r, d) for r in rets) or d in from_call)]
-        if len(hl) == 1 and not any(getattr(x, 'reg', None) == 'HL' for x in list(F.f.params) + list(F.f.decls)):
+        def only_call_arg(d):                              # _fscanf: return _doscan(format, args, ...) reads args only
+            for r in rets:                                 # as an argument, which the call's result replaces: XWA
+                rv = strip(r.value)                        # (lda XWA,XSP+0xc / pushw ... / push XWA), not HL
+                if not (rv.k == 'call' and any(uses_decl(a, d) for a in rv.args) and not uses_decl(rv.fn, d)): return False
+            return d not in from_call and any(uses_decl(r, d) for r in rets)
+        if len(hl) == 1 and ARG_LOCAL_WA and only_call_arg(hl[0]) and hl[0].ty.size == 4 and \
+                not any(getattr(x, 'reg', None) == 'WA' for x in list(F.f.params) + list(F.f.decls)):
+            hl[0].reg = 'WA'
+        elif len(hl) == 1 and not any(getattr(x, 'reg', None) == 'HL' for x in list(F.f.params) + list(F.f.decls)):
             hl[0].reg = 'HL'
     pairs = []                                             # k_expr: r1(a) + r1(a + 1) keeps the right result in QIZ
     walk(F.f.body, lambda n, dep: pairs.append(n) if n.k == 'bin' and n.op in SIMPLE_OPS and strip(n.l).k == 'call'
