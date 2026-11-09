@@ -27,7 +27,8 @@ class Unsupported(Exception): pass
 FAM = {'WA': {1: 'A', 2: 'WA', 4: 'XWA'}, 'BC': {1: 'C', 2: 'BC', 4: 'XBC'},
        'DE': {1: 'E', 2: 'DE', 4: 'XDE'}, 'HL': {1: 'L', 2: 'HL', 4: 'XHL'},
        'IX': {2: 'IX', 4: 'XIX'}, 'IY': {2: 'IY', 4: 'XIY'}, 'IZ': {2: 'IZ', 4: 'XIZ'},
-       'QWA': {2: 'QWA'}, 'QIZ': {2: 'QIZ'}, 'XIZ': {4: 'XIZ'}}
+       'QWA': {2: 'QWA'}, 'QIZ': {2: 'QIZ'}, 'XIZ': {4: 'XIZ'},
+       'QBC': {2: 'QBC'}, 'QDE': {2: 'QDE'}, 'QHL': {2: 'QHL'}, 'QIX': {2: 'QIX'}, 'QIY': {2: 'QIY'}}   # _itoa: u in QBC
 LEAF_SEQ = ['BC', 'DE', 'HL', 'IX', 'IY', 'IZ', 'QWA']        # regalloc_notes.md
 HI = {'WA': 'W', 'BC': 'B', 'DE': 'D', 'HL': 'H'}            # high byte (char remainder)
 Q = {'WA': 'QWA', 'BC': 'QBC', 'DE': 'QDE', 'HL': 'QHL'}       # upper word (int remainder)
@@ -245,9 +246,49 @@ def esize_of(b):
     t = strip(b.l).ty
     return t.base.size if t.kind in ('ptr', 'array') and t.base is not None else 1
 
+def l2_array_base(F, ar):
+    """L2: a local array's address in its register, set at the first use (_itoa: lda XIZ,XSP+0x4)"""
+    done = F.l2.setdefault('arr_done', set())
+    if ar not in done:
+        F.emit('lda', 'X%s,XSP+%s' % (F.l2['arr'][ar], hx(ar.slot + F.push))); done.add(ar)
+
+def l2_elem_addr(F, e):
+    """`&buf[k]` with buf an L2 array held in a register: 'XIZ+0x10' (after setting the base), else None"""
+    x = strip(e.e)
+    if x.k != 'index' or fold(x.idx).k != 'const': return None
+    ar = local_array_of(x.base)
+    if ar is None or ar not in F.l2.get('arr', {}): return None
+    l2_array_base(F, ar); off = fold(x.idx).value * x.ty.size; R = 'X' + F.l2['arr'][ar]
+    return '%s+%s' % (R, hx(off)) if off else R
+
+def l2_divide(F, e):
+    """L2 (_itoa): an unsigned 16-bit u / x or u % x whose divisor is a per-iteration conversion copy: the copy
+    (ld DE,BC, once per iteration), the dividend widened in t1 (ld WA,QBC / extz XWA), div XWA,DE; returns the
+    family of the result (WA: the quotient, or ld WA,QWA for the remainder)"""
+    l, r = strip(e.l), strip(e.r)
+    while l.k == 'cast' and l.kind == 'IntegralCast' and strip(l.e).ty.size == l.ty.size: l = strip(l.e)
+    cv = getattr(F, 'l2_convs', {}).get(id(r)) if r.k == 'cast' else None
+    if cv is None or e.ty.size != 2 or e.ty.signed: return None
+    creg = F.l2['conv'][cv]; done = F.l2.setdefault('conv_done', set())
+    if cv not in done:
+        F.emit('ld', '%s,%s' % (FAM[creg][2], FAM[cv.reg][2])); done.add(cv)
+    m = mem_operand(F, l)
+    if m is None: return None
+    if m != 'WA': F.emit('ld', 'WA,%s' % m)
+    F.emit('extz', 'XWA'); F.emit('div', 'XWA,%s' % FAM[creg][2])
+    if e.op == '%': F.emit('ld', 'WA,QWA')
+    return 'WA'
+
 def gen(F, e, fam, size, then_ret=False, store=False):
     """emit code leaving e's low `size` bytes in register family `fam`; returns the family actually used"""
     e0 = strip(e)
+    if getattr(F, 'l2', None) and e0.k == 'addr' and l2_elem_addr(F, e0) is not None:
+        F.emit('lda', '%s,%s' % (FAM[fam][4], l2_elem_addr(F, e0))); return fam   # _itoa: lda XWA,XIZ+0x12
+    if getattr(F, 'l2', None) and e0.k == 'bin' and e0.op in ('/', '%'):
+        r = l2_divide(F, e0)
+        if r is not None:
+            if fam != r and size >= 2: F.emit('ld', '%s,%s' % (FAM[fam][size], FAM[r][size])); return fam
+            return r
     if e0.k == 'cast' and same_size_ptr_cast(e0) is not e0:
         return gen(F, same_size_ptr_cast(e0), fam, size, then_ret, store)
     sx = e0
@@ -816,6 +857,15 @@ def move_to(F, res, fam, size, keep=False):
     if res != tgt: F.emit('ld', '%s,%s' % (tgt, res))
     return fam
 
+def l2_opassign_value(F, oa):
+    """(u /= radix) as a value in L2: the division into t1, stored back to u's register; returns u's register"""
+    v = strip(oa.l)
+    if not (v.k == 'var' and getattr(v.decl, 'reg', None) and oa.op in ('/', '%')): return None
+    from frontend import N
+    r = l2_divide(F, N('bin', op=oa.op, l=N('load', e=oa.l, ty=v.ty), r=oa.r, ty=v.ty))
+    if r is None: return None
+    R = FAM[v.decl.reg][2]; F.emit('ld', '%s,%s' % (R, FAM[r][2])); return R
+
 def gen_compare(F, e):
     """emit the compare for relational/equality node e; return its condition code, or True/False if constant
     (cmp_*: cp acc,mem; cpw/cpb mem,k; long: ld XWA / cp XWA,k / or XWA,XWA for ==0 and !=0)"""
@@ -824,12 +874,14 @@ def gen_compare(F, e):
         from frontend import N
         e = N('bin', op={'<': '>', '>': '<', '<=': '>=', '>=': '<=', '==': '==', '!=': '!='}[e.op], l=e.r, r=e.l, ty=e.ty)
         l, r = strip(e.l), strip(e.r)
-    while l.k == 'cast' and l.kind == 'IntegralCast' and strip(l.e).ty.size <= r.ty.size and fold(r).k == 'const':
+    while l.k == 'cast' and l.kind == 'IntegralCast' and strip(l.e).ty.size <= r.ty.size and fold(r).k == 'const' and \
+            not (strip(l.e).ty.size == l.ty.size and strip(l.e).ty.signed != l.ty.signed):   # _itoa: (int)u < 0
         l = strip(l.e)
     # operands promoted from the same narrower type compare at that type
     if l.k == 'cast' and r.k == 'cast' and l.kind == r.kind == 'IntegralCast' and strip(l.e).ty.size == strip(r.e).ty.size:
         l, r = strip(l.e), strip(r.e)
-    if l.k == 'cast' and l.kind == 'IntegralCast' and fold(r).k == 'const':
+    if l.k == 'cast' and l.kind == 'IntegralCast' and fold(r).k == 'const' and \
+            not (strip(l.e).ty.size == l.ty.size and strip(l.e).ty.signed != l.ty.signed):   # _itoa: (int)u < 0
         l = strip(l.e)
     size = l.ty.size; signed = l.ty.signed
     cc = (CC_S if signed else CC_U)[e.op]
@@ -869,6 +921,9 @@ def gen_compare(F, e):
     if rc.k == 'const' and rc.value == 0 and size == 4 and op in ('==', '!=') and lm in ('XIZ', 'XBC', 'XDE', 'XHL', 'XWA'):
         if F.opt: flush_pops(F, True)                    # _strlen: cal _memchr / inc 0x8,XSP / or XHL,XHL
         F.emit('or', '%s,%s' % (lm, lm)); return cc     # _calloc: if (ptr) -> or XIZ,XIZ
+    if getattr(F, 'l2', None) and l.k == 'opassign' and rc.k == 'const':   # _itoa: if ((u /= radix) == 0) ->
+        R = l2_opassign_value(F, l)                                         # ... / ld QBC,WA / cp QBC,0x0
+        if R is not None: F.emit('cp', '%s,%s' % (R, hx(rc.value))); return cc
     W = FAM['WA'][size]
     gen(F, l, 'WA', size)
     if rc.k == 'const' and rc.value == 0 and size == 4 and op in ('==', '!='):
@@ -1148,6 +1203,13 @@ def gen_incdec(F, e, fam, size, value):
     """++/-- on a global: incb/incw in memory, long through XWA (unop_*: preinc, postinc_val); *p++ (deref_inc)"""
     g = global_name(e.e)
     xv = strip(e.e)
+    if not value and regvar_of(xv) and getattr(F, 'l2', None):
+        d = regvar_of(xv); R = FAM[d.reg].get(d.ty.size, FAM[d.reg].get(2))
+        step = d.ty.base.size if d.ty.kind == 'ptr' else 1
+        k = F.l2.setdefault('const', {})
+        if d in k:                                       # _itoa: sign = 0 ... sign++ -> ld IX,0x1 (the value is known)
+            v = k.pop(d) + (step if e.op == '++' else -step); F.emit('ld', '%s,%s' % (R, hx(v & 0xffff))); return None
+        F.emit('inc' if e.op == '++' else 'dec', '%s,%s' % (hx(step), R)); return None
     if not value and xv.k == 'var' and getattr(xv.decl, 'reg', None) == 'XIZ' and xv.decl.ty.size == 4:
         step = xv.decl.ty.base.size if xv.decl.ty.kind == 'ptr' else 1    # _strstr: ++s1 with s1 in XIZ
         F.emit('inc' if e.op == '++' else 'dec', '%s,XIZ' % hx(step)); return None
@@ -1262,6 +1324,18 @@ def lvalue(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False):
     lv = strip(lv)
     u1 = u1_operand(F, lv) if getattr(F, 'u1_i', None) is not None else None
     if u1 is not None: return u1                         # oc_cpy_abn: ld (XWA+IX),C; oc_clr_i: ldw (XDE),0x0
+    if lv.k == 'deref':
+        pv = strip(lv.e)                                 # _itoa: *--p = '-' -> ldb (-XIY:1),0x2d
+        if pv.k == 'incdec' and not pv.post and pv.op == '--' and regvar_of(pv.e) and regvar_of(pv.e).ty.size == 4:
+            d = regvar_of(pv.e); return '(-%s:%d)' % (FAM[d.reg][4], d.ty.base.size)
+        if pv.k == 'load' and strip(pv.e).k == 'var' and regvar_of(pv.e) and regvar_of(pv.e).ty.size == 4 and \
+                getattr(F, 'l2', None):                  # _itoa: *p = ... -> (XIY)
+            return '(%s)' % FAM[regvar_of(pv.e).reg][4]
+    if lv.k == 'index' and getattr(F, 'l2', None) and local_array_of(lv.base) in F.l2.get('arr', {}) and \
+            fold(lv.idx).k == 'const':                   # _itoa: buf[17] = 0 with buf in XIZ -> (XIZ+0x11)
+        ar = local_array_of(lv.base); l2_array_base(F, ar)
+        off = fold(lv.idx).value * lv.ty.size; R = 'X' + F.l2['arr'][ar]
+        return '(%s+%s)' % (R, hx(off)) if off else '(%s)' % R
     if lv.k == 'index' and local_array_of(lv.base) is not None and fold(lv.idx).k == 'const' and \
             local_array_of(lv.base) in getattr(F, 'array_temps', {}):
         array_base(F, local_array_of(lv.base))          # _ultoa: buf[32] = 0 -> (XWA+0x20)
@@ -1343,7 +1417,8 @@ def gen_opassign(F, e):
     size = strip(e.l).ty.size; op = e.op
     r = narrow(e.r, size)
     signed = strip(e.l).ty.signed
-    if op in SIMPLE_OPS and fold(r).k == 'const' and size <= 2 and getattr(F, 'naive_loads', False):
+    if op in SIMPLE_OPS and fold(r).k == 'const' and size <= 2 and (getattr(F, 'naive_loads', False) or
+                                                                    getattr(F, 'l2', None)):   # _itoa: addb (XIY),0x27
         t = lvalue(F, e.l)                                # _ultoa: *p += 39 -> addb (XWA),0x27
         F.emit(SIMPLE_OPS[op] + ('b' if size == 1 else 'w'), '%s,%s' % (t, hx(fold(r).value))); return t
     if op in SIMPLE_OPS:
@@ -1580,7 +1655,9 @@ def gen_stmt(F, s, last):
                     eval_walk(stretch, order)
                     return order.index(d) if d in order else 1 << 30
                 need = [d for d in F.deferred if any(uses_decl(x, d) for x in stretch)
-                        and (d.reg != 'XIZ' or (c.k in ('expr', 'return', 'decl', 'while', 'for', 'do') and uses_decl(c, d)))]
+                        and (d.reg != 'XIZ' or (c.k in ('expr', 'return', 'decl', 'while', 'for', 'do') and uses_decl(c, d)))
+                        and not (getattr(F, 'l2', None) and c.k == 'decl' and d in F.l2.get('ro', ()))]   # _itoa: radix
+                                                                    # after sign = 0, at its first use
                 own = sorted([d for d in need if uses_decl(c, d)], key=first_use)
                 # run 2026-11-09-5-micro-optparams: loaded at the start of the function, reverse declaration order
                 # (op_cpy_ab, op_cmp_ab, op_three ...: whatever the uses); later, before a second loop, declaration
@@ -1767,6 +1844,7 @@ def gen_stmt(F, s, last):
             flush_pops(F)
             if not getattr(F, 'exit_label', None): F.exit_label = F.newlabel()
             F.emit('j', F.exit_label); return
+        if getattr(F, 'l2', None): flush_pops(F)          # _itoa: cal _memcpy / lda XSP,XSP+0xa / L3: pop XIZ
         if epi and getattr(F, 'exit_label', None): F.lines.append(F.exit_label + ':')
         flush_pops(F)
         if F.xiz_vars: F.emit('pop', F.save_reg)
@@ -2335,6 +2413,12 @@ def regvar_stmt(F, e):
         F.emit('ld', '%s,%s' % (FAM[d.reg][4], FAM[f2][4])); return True
     if e.k == 'bin' and e.op == '=' and regvar_of(e.l) and getattr(F, 'l2', None):
         d = regvar_of(e.l); R = FAM[d.reg].get(d.ty.size, FAM[d.reg].get(2)); r0 = strip(e.r)
+        if r0.k == 'addr' and d.ty.size == 4 and l2_elem_addr(F, r0) is not None:   # p = &buf[16] -> lda XIY,XIZ+0x10
+            F.emit('lda', '%s,%s' % (R, l2_elem_addr(F, r0))); return True
+        if d.reg.startswith('Q'):                          # u = val with u in QBC -> ld WA,(val) / ld QBC,WA
+            m = operand(F, e.r, 2)
+            if m is not None and m.startswith('('):
+                F.emit('ld', 'WA,%s' % m); F.emit('ld', '%s,WA' % R); return True
         while r0.k == 'cast' and r0.kind == 'IntegralCast' and strip(r0.e).ty.size == r0.ty.size: r0 = strip(r0.e)
         if r0.k == 'bin' and r0.op in ('+', '-') and strip(r0.l).k == 'call' and fold(r0.r).k == 'const' and \
                 d.ty.size == 2:                            # _strrchr: i = strlen(s) + 1 -> cal _strlen / inc 0x4,XSP /
@@ -2355,7 +2439,10 @@ def regvar_stmt(F, e):
     if e.k == 'bin' and e.op == '=' and regvar_of(e.l):
         d = regvar_of(e.l); R = FAM[d.reg].get(d.ty.size, FAM[d.reg].get(2))
         rc = fold(narrow(e.r, d.ty.size))
-        if rc.k == 'const': F.emit('ld', '%s,%s' % (R, hx(rc.value))); return True
+        if getattr(F, 'l2', None): F.l2.setdefault('const', {}).pop(d, None)
+        if rc.k == 'const':
+            if getattr(F, 'l2', None) and not F.loops: F.l2['const'][d] = rc.value
+            F.emit('ld', '%s,%s' % (R, hx(rc.value))); return True
         m = operand(F, e.r, d.ty.size)
         if m is not None: F.emit('ld', '%s,%s' % (R, m)); return True
         if strip(e.r).k == 'call':                     # k_keep: cal .r1 / ld QIZ,HL (cdecl: inc 0x2,XSP first)
@@ -2447,6 +2534,9 @@ def regvar_stmt(F, e):
     if e.k == 'incdec' and regvar_of(e.e):
         d = regvar_of(e.e); R = FAM[d.reg].get(d.ty.size, FAM[d.reg].get(2))
         step = d.ty.base.size if d.ty.kind == 'ptr' else 1
+        k = getattr(F, 'l2', None) and F.l2.setdefault('const', {})
+        if k and d in k:                                 # _itoa: sign = 0 ... sign++ -> ld IX,0x1
+            v = k.pop(d) + (step if e.op == '++' else -step); F.emit('ld', '%s,%s' % (R, hx(v & 0xffff))); return True
         F.emit('inc' if e.op == '++' else 'dec', '%s,%s' % (hx(step), R)); return True
     return False
 
@@ -2767,6 +2857,8 @@ def gen_loop(F, s, last):
     if cl: return gen_counted(F, s, last, cl)
     if s.k == 'for' and s.init is not None: gen_stmt(F, s.init, False)
     l2 = getattr(F, 'l2', None)
+    if l2: l2['conv_done'] = set(); l2['const'] = {}        # _itoa: the radix copy once per iteration; a known
+                                                           # constant is not known inside a loop (_strcspn: ++len)
     if l2 and s.k == 'for' and s.cond is not None and s.inc is not None:
         cv = strip(s.cond); iv = strip(s.inc)            # _strrchr: for (...; i; --i) -> cp BC,0x0 / j eq,L1 /
         cvar = strip(cv.e).decl if cv.k == 'load' and strip(cv.e).k == 'var' else None   # ld WA,(c) / L2: ... /
@@ -3161,7 +3253,9 @@ def leaf_l2(F):
         seq = eval_sequence(f.body, [])
         ci = next((i for i, x in enumerate(seq) if x[0] in ('call', 'rcall')), None)
         li = next((i for i, x in enumerate(seq) if x[0] == 'loop'), None)
-        if ci is None or (li is not None and ci > li): return False    # _ultoa: memcpy last -- not yet
+        late = ci is not None and li is not None and ci > li and last_is_call_return(f)
+        if ci is None or (li is not None and ci > li and not late): return False   # _ultoa: memcpy last -- not yet
+        if late: ci = len(seq)                            # _itoa: return memcpy(...) -- nothing lives across it
         before = {x[1] for x in seq[:ci] if x[0] in ('use', 'def')}    # _strrchr: c, first read after the call,
                                                                         # stays where it arrived
         for x in seq[ci + 1:]:
@@ -3222,6 +3316,7 @@ def leaf_l2(F):
         if n.k == 'load' and strip(n.e).k == 'var': reads[strip(n.e).decl] = reads.get(strip(n.e).decl, 0) + 1
         if n.k == 'bin' and n.op == '=' and strip(n.l).k == 'var' and strip(n.l).decl.kind == 'local':
             r = strip(n.r)
+            while r.k == 'cast' and r.kind == 'IntegralCast' and strip(r.e).ty.size == r.ty.size: r = strip(r.e)
             if r.k == 'load' and strip(r.e).k == 'var': copies[strip(r.e).decl] = copies.get(strip(r.e).decl, 0) + 1
     walk(f.body, rc)
     copy_only = {d for d in f.params if reads.get(d, 0) and reads.get(d, 0) == copies.get(d, 0) and d not in modified}
@@ -3240,6 +3335,7 @@ def leaf_l2(F):
         idx = (f.params if d.kind == 'param' else [x for x in f.decls if x.kind == 'local']).index(d)
         if d in across: cls = 'call'
         elif d in rets: cls = 'ret'
+        elif d.kind == 'param' and d in copy_only and d not in loopmod: continue   # _itoa: u = val; val no object
         elif d.kind == 'param':
             if d.ty.kind == 'ptr' and d in loopmod: cls = 'walkh' if (d in derefidx or d in held_ptr) else 'walk'
             elif d not in inloop: cls = 'out'
@@ -3251,7 +3347,24 @@ def leaf_l2(F):
         else:
             cls = 'body' if d in body_locals else 'loc'      # _atoi: c = *nptr++ inside the loop -> the early group
         objs.append(dict(name=d, cls=cls, w=W(d), decl=idx, pos=pos.get(d, 0)))
-    if tabs or needs_scratch(F, loops): objs.append(dict(name='t1', cls='t1', w=16))
+    divides = []
+    for lp in loops: walk(lp, lambda n, d: divides.append(n) if (n.k == 'bin' and n.op in ('/', '%') or
+                                                                n.k == 'opassign' and n.op in ('/', '%')) else None)
+    if tabs or needs_scratch(F, loops) or divides:
+        objs.append(dict(name='t1', cls='t1', w=32 if divides else 16))   # _itoa: the dividend, extz XWA / div XWA,DE
+    convs = {}                                           # _itoa: (unsigned)radix in both divisions -> a copy (multi)
+    for lp in loops:
+        def cv(n, d):
+            if n.k == 'cast' and n.kind == 'IntegralCast' and strip(n.e).k == 'load' and strip(strip(n.e).e).k == 'var' \
+                    and strip(strip(n.e).e).decl.kind == 'param' and n.ty.signed != strip(n.e).ty.signed:
+                convs.setdefault(strip(strip(n.e).e).decl, []).append(n)
+        walk(lp, cv)
+    for d, ns in convs.items():
+        if len(ns) >= 2: objs.append(dict(name=('conv', d), cls='multi', w=16)); F.l2_convs = {id(n): d for n in ns}
+    for d in dict.fromkeys(f.decls):
+        if d.kind == 'local' and d.ty.kind == 'array' and d in pos:
+            idx = [x for x in f.decls if x.kind == 'local'].index(d)
+            objs.append(dict(name=d, cls='arr', w=32, decl=idx, pos=pos.get(d, 0)))
     tab_cls = {}
     for (tab, x, bit), dep, n in tabs:
         if tab in tab_cls: continue
@@ -3268,6 +3381,7 @@ def leaf_l2(F):
     def fam(r):
         if r.startswith('X'): return r[1:]
         if r in ('WA', 'BC', 'DE', 'HL', 'IX', 'IY', 'IZ'): return r
+        if r in ('QWA', 'QBC', 'QDE', 'QHL', 'QIX', 'QIY', 'QIZ'): return r     # a 16-bit upper half (_itoa: u)
         return BYTE.get(r)                             # W / B / D / H and the Q halves: not yet
     if any(fam(v) is None for v in got.values()): return False
     F.l2 = {'t1': fam(got['t1']) if 't1' in got else None, 'tab_inv': {}, 'tab_once': {}, 'held': {}, 'body': body_locals}
@@ -3277,10 +3391,21 @@ def leaf_l2(F):
             F.l2['tab_inv' if o['cls'] == 'inv' else 'tab_once'][o['name'][1]] = fam(r)
         elif isinstance(o['name'], tuple) and o['name'][0] == 'held':
             F.l2['held'][id(held_nodes[o['name'][1]])] = fam(r)
+        elif isinstance(o['name'], tuple) and o['name'][0] == 'conv':
+            F.l2.setdefault('conv', {})[o['name'][1]] = fam(r)
+        elif o['cls'] == 'arr':
+            F.l2.setdefault('arr', {})[o['name']] = fam(r)
         elif o['name'] != 't1':
             d = o['name']; d.reg = fam(r)
             if d.kind == 'param': F.param_copies.append(d)
     F.deferred = list(F.param_copies)
+    if any(r in ('IZ', 'XIZ') for o, r in ((o, got[o['name']]) for o in objs) if o['cls'] == 'arr'):
+        F.xiz_vars = ['arr']; F.save_reg = 'XIZ'; F.emit('push', 'XIZ'); F.push = 4   # _itoa: buf in XIZ
+    ro_params = {o['name'] for o in objs if o['cls'] == 'ro' and not isinstance(o['name'], tuple)}
+    F.l2['ro'] = ro_params
+    if objs and any(o['cls'] == 'arr' for o in objs):   # _itoa: s (ret) at entry, radix (ro) at its first use
+        F.l2['entry'] = list(reversed([d for d in F.param_copies if d not in ro_params and getattr(d, 'reg', None) != 'XIZ']))
+        for d in F.l2['entry']: F.deferred.remove(d)
     F.l2['pre'] = [d for d in F.param_copies if d in narrowed_params and d not in modified]   # _strrchr: c after
     F.deferred = [d for d in F.deferred if d not in F.l2['pre']]                               # the loop's guard
     if F.l2['t1']: F.tfam = F.l2['t1']
@@ -3306,6 +3431,15 @@ def needs_scratch(F, loops):
         if n.k == 'incdec' and n.post: found.append(n)
     for lp in loops: walk(lp, v)
     return bool(found)
+
+def last_is_call_return(f):
+    """the function's last statement is `return f(...)`, its only call (_itoa: return memcpy(s, p, ...))"""
+    b = f.body
+    while hasattr(b, 'k') and b.k == 'block' and b.body: b = b.body[-1]
+    if not (hasattr(b, 'k') and b.k == 'return' and b.value is not None): return False
+    v = strip(b.value)
+    while v.k == 'cast': v = strip(v.e)
+    return v.k == 'call'
 
 def one_early_call(F):
     """the function makes one call, outside every loop, and no FP operation (_strrchr, _strrev: strlen first)"""
@@ -3688,7 +3822,7 @@ def plan_frame(F):
     from frontend import Decl, Type
     F.array_temps = {}; F.cast_temps = {}
     for d in f.decls:                                    # _ultoa: a local array's address in a compiler temporary
-        if d.kind == 'local' and d.ty.kind == 'array' and d.uses:
+        if d.kind == 'local' and d.ty.kind == 'array' and d.uses and d not in getattr(F, 'l2', {}).get('arr', {}):
             F.array_temps[d] = Decl('__a_' + d.name, Type('ptr', 4, 2, spell='t'), '', 'local')
     loops = []
     walk(f.body, lambda n, dep: loops.append(n) if n.k in ('for', 'while', 'do') else None)
@@ -4070,6 +4204,8 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong
     F.loops = []; F.param_copies = []; F.pushes = []
     if not plan_leaf(F): plan_registers(F); plan_homes(F)
     plan_frame(F)
+    for d in getattr(F, 'l2', {}).get('entry', []) if getattr(F, 'l2', None) else []:
+        F.emit('ld', '%s,(XSP+%s)' % (FAM[d.reg][d.ty.size], hx(d.off + F.push)))   # (after the frame: offsets)
     emit_homes(F)
     if F.opt: plan_shared_exit(F)
     gen_stmt(F, f.body, True)

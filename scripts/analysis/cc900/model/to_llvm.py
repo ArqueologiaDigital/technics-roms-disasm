@@ -170,6 +170,7 @@ def translate_line(t, syms, locals_):
             and (raw[0] not in R8 or base == 'cp') and not (base == 'cp' and raw[0].startswith('X')):
         # ld hl, 0:i3 / cp bc, 0:i3; a 32-bit cp takes the long immediate (firmware _ltoa: cp XDE,0x0 is
         # ea cf 00 00 00 00, not ea d8)
+        if raw[0].startswith('Q'): return '\t%s %s, %d' % (base, args[0], num(raw[1]))   # cp QBC,0 -> d7 e6 d8
         return '\t%s %s, %d:i3' % (base, args[0], num(raw[1]))
     if base == 'ld' and len(args) == 2 and raw[0] in ('WA', 'BC', 'DE', 'HL', 'IX', 'IY', 'IZ', 'SP') and NUM.match(raw[1]):
         return '\tldw %s, 0x%x' % (args[0], num(raw[1]) & 0xffff)            # _strlen: ld HL,0xffff -> 33 ff ff

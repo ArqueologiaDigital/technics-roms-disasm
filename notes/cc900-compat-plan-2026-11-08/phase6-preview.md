@@ -64,10 +64,10 @@ reference model (cdecl, `-O3 -XS -DFLOAT`, as the library was built), translates
 image's own addresses: the pairs' publics, the image's labels, the helpers named in the runtime cross-reference),
 assembles and links it with llvm-mc / ld.lld at the pair's address, and compares the bytes with the image.
 
-| personality | byte-identical pairs | which                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-|-------------|----------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `v4.23`     | 199 (18 differ)      | `_ltoa`, `_strcat`, `_strncpy`, `_strncat`, `_strcpy`, `_strlen`, `_memset`, `_memcmp`, `_memchr`, `_memcpy`, `_memccpy`, `__ctype` x9 each, `_strncmp` x10, `_strchr` x5, `_strnset` x5, `.sbrk` x6, `_atoi` x5, `_atol` x5, `_strrchr` x5, `_strcspn` x5, `_strstr` x5, `_strupr` x2, `__FloatErrorHandle` x3, sub CPU float tables x9; `_modf`, `_fabs`, `_sin`, `_cos`, `_tan`, `_exp` (sub CPU x3 each); `_sprintf`, `_vsprintf` (HD-AE5000 x4 each) |
-| `kn5000`    | 212 (5 differ)       | the same 199, plus `_ultoa` (main CPU v10, v9, v7, v6, v5, HD-AE5000 x4) and `_ldiv` (HD-AE5000 x4)                                                                                                                                                                                                                                                                                                                                                       |
+| personality | byte-identical pairs | which                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+|-------------|----------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `v4.23`     | 208 (18 differ)      | `_ltoa`, `_strcat`, `_strncpy`, `_strncat`, `_strcpy`, `_strlen`, `_memset`, `_memcmp`, `_memchr`, `_memcpy`, `_memccpy`, `__ctype` x9 each, `_strncmp` x10, `_strchr` x5, `_strnset` x5, `.sbrk` x6, `_atoi` x5, `_atol` x5, `_strrchr` x5, `_strcspn` x5, `_strstr` x5, `_itoa` x9, `_strupr` x2, `__FloatErrorHandle` x3, sub CPU float tables x9; `_modf`, `_fabs`, `_sin`, `_cos`, `_tan`, `_exp` (sub CPU x3 each); `_sprintf`, `_vsprintf` (HD-AE5000 x4 each) |
+| `kn5000`    | 221 (5 differ)       | the same 208, plus `_ultoa` (main CPU v10, v9, v7, v6, v5, HD-AE5000 x4) and `_ldiv` (HD-AE5000 x4)                                                                                                                                                                                                                                                                                                                                                                   |
 
 `_ltoa` came later the same day (`-O` keeps the parameters of a function with calls in scratch registers when no
 value is read after a call; and asm900 writes a 32-bit `cp XDE,0x0` with the long immediate, `ea cf 00 00 00 00`, not
@@ -112,19 +112,19 @@ a DOS end-of-file byte, which the front end now cuts.)
 
 | image       | pairs | identical | differ | not compiled yet | near match, unverified |
 |-------------|-------|-----------|--------|------------------|------------------------|
-| maincpu v10 | 24    | 22        | 0      | 2                | 3                      |
-| maincpu v9  | 24    | 22        | 0      | 2                | 0                      |
-| maincpu v7  | 24    | 22        | 0      | 2                | 3                      |
-| maincpu v6  | 24    | 22        | 0      | 2                | 0                      |
-| maincpu v5  | 24    | 22        | 0      | 2                | 0                      |
+| maincpu v10 | 24    | 23        | 0      | 1                | 3                      |
+| maincpu v9  | 24    | 23        | 0      | 1                | 0                      |
+| maincpu v7  | 24    | 23        | 0      | 1                | 3                      |
+| maincpu v6  | 24    | 23        | 0      | 1                | 0                      |
+| maincpu v5  | 24    | 23        | 0      | 1                | 0                      |
 | subcpu v142 | 16    | 10        | 1      | 5                | 0                      |
 | subcpu v141 | 16    | 10        | 1      | 5                | 0                      |
 | subcpu v140 | 16    | 10        | 1      | 5                | 0                      |
 | table data  | 3     | 2         | 0      | 1                | 1                      |
-| hdae v2.06i | 21    | 18        | 0      | 3                | 1                      |
-| hdae v2.01i | 21    | 18        | 0      | 3                | 0                      |
-| hdae v1.15i | 19    | 17        | 0      | 2                | 0                      |
-| hdae v1.10i | 19    | 17        | 0      | 2                | 1                      |
+| hdae v2.06i | 21    | 19        | 0      | 2                | 1                      |
+| hdae v2.01i | 21    | 19        | 0      | 2                | 0                      |
+| hdae v1.15i | 19    | 18        | 0      | 1                | 0                      |
+| hdae v1.10i | 19    | 18        | 0      | 1                | 1                      |
 
 The sub CPU's pairs are mostly the floating-point routines, which the model does not compile yet; the one that
 differed on the main CPU and the HD-AE5000, `_memccpy`, is now byte-identical too.  `pairs.tsv` also lists `___ctype` at `__ctype`'s address in
