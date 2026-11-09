@@ -59,15 +59,18 @@ reference model (cdecl, `-O3 -XS -DFLOAT`, as the library was built), translates
 image's own addresses: the pairs' publics, the image's labels, the helpers named in the runtime cross-reference),
 assembles and links it with llvm-mc / ld.lld at the pair's address, and compares the bytes with the image.
 
-| personality | byte-identical pairs | which                                                                                                                                                                                                                 |
-|-------------|----------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `v4.23`     | 122 (22 differ)      | `_strcat`, `_strncpy`, `_strncat`, `_strcpy`, `_strlen`, `_memset`, `_memcmp`, `_memchr`, `_memcpy`, `__ctype` x9 each, `_strncmp` x10, `_strchr` x5, `_strnset` x5, `__FloatErrorHandle` x3, sub CPU float tables x9 |
-| `kn5000`    | 135 (9 differ)       | the same 122, plus `_ultoa` (main CPU v10, v9, v7, v6, v5, HD-AE5000 x4) and `_ldiv` (HD-AE5000 x4)                                                                                                                   |
+| personality | byte-identical pairs | which                                                                                                                                                                                                                          |
+|-------------|----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `v4.23`     | 131 (22 differ)      | `_ltoa`, `_strcat`, `_strncpy`, `_strncat`, `_strcpy`, `_strlen`, `_memset`, `_memcmp`, `_memchr`, `_memcpy`, `__ctype` x9 each, `_strncmp` x10, `_strchr` x5, `_strnset` x5, `__FloatErrorHandle` x3, sub CPU float tables x9 |
+| `kn5000`    | 144 (9 differ)       | the same 131, plus `_ultoa` (main CPU v10, v9, v7, v6, v5, HD-AE5000 x4) and `_ldiv` (HD-AE5000 x4)                                                                                                                            |
 
-The 13 the kn5000 personality adds are the two routines in which the firmware's code differs from V4.23's output:
+`_ltoa` came later the same day (`-O` keeps the parameters of a function with calls in scratch registers when no
+value is read after a call; and asm900 writes a 32-bit `cp XDE,0x0` with the long immediate, `ea cf 00 00 00 00`, not
+the 3-bit form `ea d8` that MAME also decodes); the V4.23 personality then matches it too, so it is not one of the
+personality's additions.  The 13 the kn5000 personality adds are the two routines in which the firmware's code differs from V4.23's output:
 the reload rule (`rules.md`) accounts for them, and with it they come out byte-identical with no Toshiba program in
 the chain.  The 9 that differ are `_memccpy`, where the model does not yet reproduce V4.23 either (register choice
-around its two calls).  The other 134 are routines the model does not compile yet (`goto` in `_strcspn`, the
+around its two calls).  The other 116 (`model cannot` in the TSV) are routines the model does not compile yet (`goto` in `_strcspn`, the
 floating-point formatter `__doprnt`, the math routines), or that are data the model does not emit.
 
 Inline assembly (`__ASM("...")`, `_memset`, `_memcmp`, `_memchr`) is passed through as thc1 does: the front end turns
@@ -78,7 +81,7 @@ forms of `cpi` / `cpir` / `cpd` / `cpdr`.  The block transfers with explicit ope
 bare `ldi` is the `(XWA+)` form (`80 10`) where `ldib (XIX+),(XIY+)` is `85 10` (`_memcpy`).
 
 Output: `scripts/analysis/cc900/results/pairs_model_kn5000.tsv`; command in `scripts/analysis/cc900/model/README.md`.
-(Earlier runs the same day: 36, 51, 63, 90, 108, 117, 126; the rules added in between are in those commits.  The library sources end in
+(Earlier runs the same day: 36, 51, 63, 90, 108, 117, 126, 135; the rules added in between are in those commits.  The library sources end in
 a DOS end-of-file byte, which the front end now cuts.)
 
 ### Per image (phase 7: a line per image)
@@ -87,19 +90,19 @@ a DOS end-of-file byte, which the front end now cuts.)
 
 | image       | pairs | identical | differ | not compiled yet |
 |-------------|-------|-----------|--------|------------------|
-| maincpu v10 | 28    | 14        | 1      | 13               |
-| maincpu v9  | 25    | 14        | 1      | 10               |
-| maincpu v7  | 28    | 14        | 1      | 13               |
-| maincpu v6  | 25    | 14        | 1      | 10               |
-| maincpu v5  | 25    | 14        | 1      | 10               |
+| maincpu v10 | 28    | 15        | 1      | 12               |
+| maincpu v9  | 25    | 15        | 1      | 9                |
+| maincpu v7  | 28    | 15        | 1      | 12               |
+| maincpu v6  | 25    | 15        | 1      | 9                |
+| maincpu v5  | 25    | 15        | 1      | 9                |
 | subcpu v142 | 16    | 4         | 0      | 12               |
 | subcpu v141 | 16    | 4         | 0      | 12               |
 | subcpu v140 | 16    | 4         | 0      | 12               |
 | table data  | 4     | 1         | 0      | 3                |
-| hdae v2.06i | 23    | 13        | 1      | 9                |
-| hdae v2.01i | 22    | 13        | 1      | 8                |
-| hdae v1.15i | 20    | 13        | 1      | 6                |
-| hdae v1.10i | 21    | 13        | 1      | 7                |
+| hdae v2.06i | 23    | 14        | 1      | 8                |
+| hdae v2.01i | 22    | 14        | 1      | 7                |
+| hdae v1.15i | 20    | 14        | 1      | 5                |
+| hdae v1.10i | 21    | 14        | 1      | 6                |
 
 The sub CPU's pairs are mostly the floating-point routines, which the model does not compile yet; the one that
 differs on the main CPU and the HD-AE5000 is `_memccpy`.  The SX-WSA1R images have no pairs in `pairs.tsv`.

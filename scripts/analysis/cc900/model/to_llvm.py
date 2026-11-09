@@ -147,8 +147,10 @@ def translate_line(t, syms, locals_):
     if base == 'ld' and len(args) == 2 and raw[0] in R8 and NUM.match(raw[1]):
         return '\tld %s, 0x%x:opc' % (args[0], num(raw[1]) & 0xff)            # String_Compare: ld l, 0x0:opc
     if base in ('ld', 'cp') and len(args) == 2 and REGS.match(raw[0]) and re.match(r'^(0x[0-7]|[0-7])$', raw[1]) \
-            and (raw[0] not in R8 or base == 'cp'):
-        return '\t%s %s, %d:i3' % (base, args[0], num(raw[1]))               # ld hl, 0:i3 / cp bc, 0:i3
+            and (raw[0] not in R8 or base == 'cp') and not (base == 'cp' and raw[0].startswith('X')):
+        # ld hl, 0:i3 / cp bc, 0:i3; a 32-bit cp takes the long immediate (firmware _ltoa: cp XDE,0x0 is
+        # ea cf 00 00 00 00, not ea d8)
+        return '\t%s %s, %d:i3' % (base, args[0], num(raw[1]))
     if base == 'ld' and len(args) == 2 and raw[0] in ('WA', 'BC', 'DE', 'HL', 'IX', 'IY', 'IZ', 'SP') and NUM.match(raw[1]):
         return '\tldw %s, 0x%x' % (args[0], num(raw[1]) & 0xffff)            # _strlen: ld HL,0xffff -> 33 ff ff
     if sz == 'w' and base in ('ld', 'cp', 'add', 'sub', 'and', 'or', 'xor'):

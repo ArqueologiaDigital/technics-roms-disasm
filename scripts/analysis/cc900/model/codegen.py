@@ -628,6 +628,19 @@ def gen_ptr_arith(F, e, fam, size):
             F.emit('ld', 'XBC,%s' % hx(esz)); F.emit('cal', 'C9H_divls'); return 'HL'
         return move_to(F, 'XWA', fam, 4)
     if r.ty.is_ptr(): l, r = r, l
+    rc = fold(r)
+    if rc.k == 'const' and rc.value is not None:
+        k = rc.value * l.ty.base.size * (1 if e.op == '+' else -1)
+        R = FAM[fam][4]
+        lr = operand(F, l, 4)
+        if lr is not None and not lr.startswith('(') and lr != R:
+            F.emit('lda', '%s,%s%s%s' % (R, lr, '+' if k >= 0 else '-', hx(abs(k))))   # _ltoa: lda XWA,XBC+0x1
+            return fam
+        f2 = gen(F, l, fam, 4); R = FAM[f2][4]                          # _ltoa: cal _ultoa / lda XSP,XSP+0xa /
+        if strip(l).k == 'call' and F.opt: flush_pops(F)                 # dec 0x1,XHL
+        if 1 <= abs(k) <= 8: F.emit('inc' if k > 0 else 'dec', '%s,%s' % (hx(abs(k)), R))
+        elif k: F.emit('add', '%s,%s' % (R, hx(k & 0xffffffff)))
+        return f2
     pm = mem_operand(F, l); ii = r
     while ii.k == 'cast' and ii.kind == 'IntegralCast': ii = strip(ii.e)
     im = mem_operand(F, ii)
@@ -713,7 +726,8 @@ def gen_compare(F, e):
     if rvm in ('A', 'C', 'E', 'L', 'WA', 'BC', 'DE', 'HL') and lm is not None and lm.startswith('(') and e.op in ('==', '!='):
         rr = FAM[[k for k, v in FAM.items() if rvm in v.values()][0]][size]     # _strchr: cp A,(XHL)
         F.emit('cp', '%s,%s' % (rr, lm)); return cc
-    if regvar_of(getattr(l, 'e', l)) and lm in ('BC', 'DE', 'HL', 'IX', 'IY', 'IZ'):   # ra_leaf: cp IX,(XSP+4)
+    if regvar_of(getattr(l, 'e', l)) and lm in ('BC', 'DE', 'HL', 'IX', 'IY', 'IZ', 'XBC', 'XDE', 'XHL', 'XIX', 'XIY') and \
+            not (lm.startswith('X') and rc.k == 'const' and rc.value == 0 and op in ('==', '!=')):   # _ltoa: cp XDE,0x0
         rs = mem_operand(F, r)
         if rs is None: raise Unsupported('complex compare operand')
         F.emit('cp', '%s,%s' % (lm, rs)); return cc
@@ -811,7 +825,15 @@ def push_arg(F, a):
         if m is None: raise Unsupported('complex char argument')
         F.emit('ld', 'A,%s' % m); F.emit('exts' if strip(a0.e).ty.signed else 'extz', 'WA'); F.emit('push', 'WA')
         F.push += 2; return 2
-    m = mem_operand(F, a)
+    a1 = a0
+    while a1.k == 'cast' and a1.kind == 'IntegralCast' and strip(a1.e).ty.size == size: a1 = strip(a1.e)
+    if a1.k == 'un' and a1.op in ('-', '~') and size >= 2:
+        x = strip(a1.e)
+        ur = regvar_of(x.e) if x.k == 'load' else None
+        if ur is not None and ur.reg in ('BC', 'DE') and dies_here(F, x) and F.opt:
+            fam = gen(F, a1, ur.reg, size)              # _ltoa: cpl DE / cpl QDE / inc 0x1,XDE / push XDE
+            F.emit('push', FAM[fam][size]); F.push += size; return size
+    m = mem_operand(F, a1)
     if size <= 2 and m is not None and family_of(m):    # a register: push IZ (call.c k_seq under O3XS)
         F.emit('push', m if size == 2 else FAM[family_of(m)[1:]][2]); F.push += 2; return 2
     if size <= 2 and m is not None:
@@ -1248,7 +1270,8 @@ def gen_stmt(F, s, last):
                 if any(d.kind != 'param' for d in need): rest = sorted([d for d in need if d not in own], key=first_use)
                 else:
                     rest = sorted([d for d in need if d not in own], key=order_key)
-                    if c.k in ('for', 'while', 'do'): own = sorted(own, key=order_key)   # the loop needs them all
+                    if c.k in ('for', 'while', 'do') or (c.k == 'if' and at_start and getattr(F, 'nonleaf_regs', False)):
+                        own = sorted(own, key=order_key)   # the loop needs them all; _ltoa's if: s, val, then radix
                 for d in rest + own:                       # _strncpy: n, s2, then s1 (its own statement); _strchr: s, c
                     setup_struct_temps(F, c)
                     F.emit('ld', '%s,(XSP+%s)' % ('XIZ' if d.reg == 'XIZ' else FAM[d.reg][d.ty.size], hx(d.off + F.push)))
@@ -2303,6 +2326,58 @@ def counted_loop(F, s):
         return {'i': iv.decl, 'kconst': kconst.value, 'arr': arrays[0][0], 'esz': arrays[0][1]}
     return {'i': iv.decl, 'k': strip(kv.e).decl, 'arr': arrays[0][0], 'esz': arrays[0][1]}
 
+def live_across_call(body):
+    """is a variable read after a call on some path?  A branch that ends in a return does not carry its call on
+    (_ltoa: the then-branch returns ultoa(...) - 1, the else-branch reads the parameters again); inside one
+    expression only reads in the call's own arguments count as before it."""
+    def reads(n):
+        out = []
+        walk(n, lambda m, d: out.append(m) if m.k == 'load' and strip(m.e).k == 'var' else None)
+        return out
+    def calls(n):
+        out = []
+        walk(n, lambda m, d: out.append(m) if m.k == 'call' else None)
+        return out
+    def expr_bad(e, seen):
+        cs = calls(e)
+        if seen and reads(e): return True
+        if not cs: return False
+        inside = [set(id(x) for a in c.args for x in reads(a)) for c in cs]
+        return any(not all(id(x) in s for s in inside) for x in reads(e))   # k_expr: r1(a) + r1(a + 1) keeps a
+    def ends_return(st):
+        if st is None: return False
+        if st.k == 'return': return True
+        if st.k == 'block' and st.body: return ends_return(st.body[-1])
+        return False
+    def stmts(lst, seen):
+        for st in lst:
+            r = stmt(st, seen)
+            if r is None: return None
+            seen = r
+        return seen
+    def stmt(st, seen):                                # -> new 'call seen' state, or None if a read follows a call
+        if st is None: return seen
+        k = st.k
+        if k == 'block': return stmts(st.body, seen)
+        if k == 'decl': return seen if st.init is None else (None if expr_bad(st.init, seen) else seen or bool(calls(st.init)))
+        if k in ('expr', 'return'):
+            e = st.e if k == 'expr' else st.value
+            if e is None: return seen
+            if expr_bad(e, seen): return None
+            return seen or bool(calls(e))
+        if k == 'if':
+            if expr_bad(st.cond, seen): return None
+            seen = seen or bool(calls(st.cond))
+            a = stmt(st.then, seen); b = stmt(st.els, seen)
+            if a is None or b is None: return None
+            return (a and not ends_return(st.then)) or (b and not ends_return(st.els))
+        if k in ('for', 'while', 'do'):
+            if calls(st) and reads(st): return None
+            return seen
+        if calls(st): return None
+        return seen
+    return stmt(body, False) is None
+
 def plan_leaf(F):
     """the leaf-function allocator of regalloc_notes.md"""
     f = F.f
@@ -2321,7 +2396,20 @@ def plan_leaf(F):
         if n.k == 'load' and strip(n.e).k == 'deref' and not F.opt: temps_bc.append(n)
         if F.opt and n.k == 'bin' and n.op == '=' and store_through_temp(n): temps_bc.append(n)   # _strset
     walk(f.body, visit)
-    if has_call: return False
+    if has_call and not (F.opt and not F.adecl and not any(d.kind == 'local' for d in f.decls) and f.params
+                         and not live_across_call(f.body)):
+        return False                                   # _ltoa at -O3 -XS: nothing read after its calls
+    if has_call:
+        uses = {}
+        walk(f.body, lambda n, d: uses.__setitem__(strip(n.e).decl, uses.get(strip(n.e).decl, 0) + 1)
+             if n.k == 'load' and strip(n.e).k == 'var' else None)
+        free = ['WA', 'BC', 'DE', 'HL']
+        for d in reversed(f.params):                   # _ltoa: radix WA, s XBC, val XDE
+            if uses.get(d, 0) >= 2 and d.ty.kind in ('int', 'ptr') and free:
+                d.reg = free.pop(0); F.param_copies.append(d)
+        if not F.param_copies: return False
+        F.deferred = list(F.param_copies); F.nonleaf_regs = True
+        return True
     hasloop = []
     walk(f.body, lambda n, d: hasloop.append(1) if n.k in ('for', 'while', 'do') else None)
     if not hasloop:
@@ -2439,10 +2527,25 @@ def compute_last_uses(F):
     F.in_loop = set()
     walk(F.f.body, v)
     for d in F.in_loop: F.last_use[d] = None
+    F.branch_last = set()                              # _ltoa: -val dies in the branch that returns
+    def ends_return(st):
+        if st is None: return False
+        if st.k == 'return': return True
+        return st.k == 'block' and bool(st.body) and ends_return(st.body[-1])
+    def b(n, depth):
+        if n.k == 'if' and not depth:
+            for br in (n.then, n.els):
+                if ends_return(br):
+                    last = {}
+                    walk(br, lambda m, dd: last.__setitem__(strip(m.e).decl, None if dd else id(m))
+                         if m.k == 'load' and strip(m.e).k == 'var' else None)
+                    F.branch_last.update(x for d, x in last.items() if x is not None and d not in F.in_loop)
+    walk(F.f.body, b)
 
 def dies_here(F, e):
     e = strip(e)
-    return e.k == 'load' and strip(e.e).k == 'var' and F.last_use.get(strip(e.e).decl, 'x') == id(e)
+    return e.k == 'load' and strip(e.e).k == 'var' and (F.last_use.get(strip(e.e).decl, 'x') == id(e)
+                                                         or id(e) in getattr(F, 'branch_last', ()))
 
 def live_regs(F, except_decl=None):
     out = set()
