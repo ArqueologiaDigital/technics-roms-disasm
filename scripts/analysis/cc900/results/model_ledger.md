@@ -36,7 +36,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-8-micro-homes32, v423/none                           | micro/ra_homes32.c   | 7 / 17 exact (41.2%)     |
 | run 2026-11-09-8-micro-homes32, v423/O3XS                           | micro/ra_homes32.c   | 8 / 17 exact (47.1%)     |
 | run 2026-11-09-8-micro-homes32, v423/Xr                             | micro/ra_homes32.c   | 5 / 17 exact (29.4%)     |
-| run 2026-11-09-8-micro-homes32, v423/O3XSXr                         | micro/ra_homes32.c   | 6 / 17 exact (35.3%)     |
+| run 2026-11-09-8-micro-homes32, v423/O3XSXr                         | micro/ra_homes32.c   | 10 / 17 exact (58.8%)    |
 | run 2026-11-09-14-micro-libshapes, v423/none                        | micro/ra_libshapes.c | 10 / 21 exact (47.6%)    |
 | run 2026-11-09-14-micro-libshapes, v423/O3XS                        | micro/ra_libshapes.c | 16 / 21 exact (76.2%)    |
 | run 2026-11-09-14-micro-libshapes, v423/Xr                          | micro/ra_libshapes.c | 12 / 21 exact (57.1%)    |

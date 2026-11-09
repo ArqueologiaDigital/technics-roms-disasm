@@ -2997,6 +2997,7 @@ FP_AGGR = True
 MUL_K_XWA = True
 IFCHAIN_JOIN = True
 BINLOC_XR = True
+SLOT_FROM_HL = True                                # a call result stored to a slot from HL / XHL (h_p)
 WALKED_OPT_WA = True                               # -O3 -XS: c_cnt's lone walked pointer takes XWA too
 WALKED_PTRS = True                                 # no -O: pointers a pointer-test loop walks get registers (c_cnt)
 KILL_AFTER_CALL = True                             # homes: a def after a call on its path kills (sw_local)
@@ -5793,6 +5794,9 @@ def slot_init(F, d, init):
                 if src.startswith('('): F.emit('ld', 'WA,%s' % src); src = 'WA'
                 F.emit(opn, '%s,%s' % (S, src))
             return True
+    if r0.k == 'call' and not has_helper_call(r0.fn) and size in (2, 4) and SLOT_FROM_HL:
+        gen_call(F, r0); flush_pops(F)                     # ra_homes32.c h_p under O3XSXr: cal .fp /
+        F.emit('ld', '%s,%s' % (S, FAM['HL'][size])); return True   # ld (XSP+0x2),XHL
     fam = gen(F, init, 'WA', size)
     F.emit('ld', '%s,%s' % (S, FAM[fam][size])); return True
 
