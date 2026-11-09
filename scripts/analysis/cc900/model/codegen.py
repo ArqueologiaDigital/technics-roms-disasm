@@ -1490,6 +1490,7 @@ TERN_ARM_WA = True                                        # see gen's plain ?: p
 LONG_RMW_XIZ = True                                       # see gen_opassign
 KCONST_MULTI = True                                       # see gen_counted
 PTR_KLOOP = True                                          # see ptr_kloop
+STORE_FROM_WORK = True                                    # see store_global
 
 def char_narrow(body):
     """cc900 does int + - & | ^ of a char and a constant that fits a byte, or of two chars, on the byte and
@@ -2882,7 +2883,10 @@ def store_global(F, name, e, size):
         work = next((r for r in ('WA', 'BC', 'DE', 'HL') if r not in held), 'WA')
     fam = gen(F, e, work, size, store=True)
     reg = F.store_from or FAM[fam][size]
-    F.emit('ld', '(_%s),%s' % (name, reg))
+    if STORE_FROM_WORK and F.opt and F.lines and size >= 2:   # -O: the value is stored from where it was computed
+        m = re.match(r'^\tld\t%s,(BC|DE|HL|IX|IY|XBC|XDE|XHL|XIX|XIY)$' % reg, F.lines[-1])   # (assign_expr.c
+        if m and len(m.group(1)) == len(reg): F.lines.pop(); reg = m.group(1)   # ae_i_chain_ll -O3 -XS -Xr:
+    F.emit('ld', '(_%s),%s' % (name, reg))                                      # add BC,WA / ld (_gr),BC)
 
 # ------------------------------------------------------------- statements
 

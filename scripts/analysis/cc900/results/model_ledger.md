@@ -49,7 +49,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-19-micro-fpprepass2, v423/O3XS                       | probes/fpp2.c        | 10 / 49 exact (20.4%)    |
 | run 2026-11-09-26-micro-fpe2, v423/none                             | probes/fpp3.c        | 27 / 59 exact (45.8%)    |
 | run 2026-11-09-28-micro-fpe2b, v423/none                            | probes/fpp4.c        | 8 / 59 exact (13.6%)     |
-| run 2026-11-09-26-micro-fpe2, v423/O3XS                             | probes/fpp3.c        | 27 / 59 exact (45.8%)    |
+| run 2026-11-09-26-micro-fpe2, v423/O3XS                             | probes/fpp3.c        | 28 / 59 exact (47.5%)    |
 | run 2026-11-09-28-micro-fpe2b, v423/O3XS                            | probes/fpp4.c        | 8 / 59 exact (13.6%)     |
 | run 2026-11-09-22-micro-condbits, v423/none                         | micro/cond_bits.c    | 113 / 117 exact (96.6%)  |
 | run 2026-11-09-22-micro-condbits, v423/O3XS                         | micro/cond_bits.c    | 113 / 117 exact (96.6%)  |
@@ -58,7 +58,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-23-micro-assignexpr, v423/none                       | micro/assign_expr.c  | 30 / 43 exact (69.8%)    |
 | run 2026-11-09-23-micro-assignexpr, v423/O3XS                       | micro/assign_expr.c  | 31 / 43 exact (72.1%)    |
 | run 2026-11-09-23-micro-assignexpr, v423/Xr                         | micro/assign_expr.c  | 27 / 43 exact (62.8%)    |
-| run 2026-11-09-23-micro-assignexpr, v423/O3XSXr                     | micro/assign_expr.c  | 36 / 43 exact (83.7%)    |
+| run 2026-11-09-23-micro-assignexpr, v423/O3XSXr                     | micro/assign_expr.c  | 37 / 43 exact (86.0%)    |
 | run 2026-11-09-24-micro-arrindex, v423/none                         | micro/arr_index.c    | 56 / 66 exact (84.8%)    |
 | run 2026-11-09-25-micro-arrindexsz, v423/none                       | micro/arr_index_sz.c | 57 / 66 exact (86.4%)    |
 | run 2026-11-09-24-micro-arrindex, v423/O3XS                         | micro/arr_index.c    | 60 / 66 exact (90.9%)    |
