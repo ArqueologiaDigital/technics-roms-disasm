@@ -24,6 +24,9 @@ how cc900 compiles exactly that (notes/cc900-compat-plan-2026-11-08/PLAN.md, sec
 - ra_chains: chains of two to five + - & | ^ operands (globals, parameters, IZ / QIZ homes, stack slots), in
   leaf functions and after a call, as a return value, a store and an argument: when is the chain built in WA
   and moved (ld HL,WA), and when directly in its target?
+- fp: float and double: arithmetic, compares as values and branches (with zero and with operands), conversions to
+  and from every integer type, calls with double arguments and results, temporaries, locals, arrays and members
+  (the library is built -DFLOAT; its math routines are most of the sub CPU's firmware pairs);
 - ra_homes32: a 32-bit local (pointer, long) against a 16-bit parameter for XIZ / IZ across calls (_memccpy gives
   IZ to n and a slot to pos).
 The output is deterministic, ours, and C89.
@@ -422,6 +425,71 @@ def ra_home32_files():
         'pos = (unsigned char *)vp(s2, c, n); cp2(s1, s2, n); return (void *)pos; }']
     return {'ra_homes32.c': out + fs}
 
+def fp_files():
+    """floating point: helper calls through operand addresses, temporaries, conversions (abi.md: helpers)"""
+    out = ['/* Floating point: helpers, temporaries, conversions */',
+           'extern double gd, gd2, gd3; extern float gf, gf2; extern int gi; extern long gl; extern unsigned int gu;',
+           'extern unsigned long gul; extern char gc; extern unsigned char guc; extern double gda[4];',
+           'struct sd { int k; double v; }; extern struct sd gs; extern double fd(double); extern double fd2(double, double);',
+           'extern void vd(double); extern int fi(void); extern double *gpd;']
+    fs = []
+    for op, n in (('+', 'add'), ('-', 'sub'), ('*', 'mul'), ('/', 'div')):
+        fs += ['double d_%s_gg(void) { return gd %s gd2; }' % (n, op),
+               'double d_%s_pp(double a, double b) { return a %s b; }' % (n, op),
+               'double d_%s_pk(double a) { return a %s 2.5; }' % (n, op),
+               'void d_%s_st(void) { gd = gd2 %s gd3; }' % (n, op),
+               'float f_%s_gg(void) { return gf %s gf2; }' % (n, op),
+               'void d_%s_asg(void) { gd %s= gd2; }' % (n, op)]
+    fs += ['double d_three(void) { return gd * gd2 + gd3; }',
+           'double d_three2(void) { return gd + gd2 * gd3; }',
+           'double d_four(double a, double b) { return (a + b) * (a - b); }',
+           'double d_neg(double a) { return -a; }',
+           'double d_ret_p(double a) { return a; }',
+           'double d_ret_g(void) { return gd; }',
+           'double d_ret_k(void) { return 1.0; }',
+           'double d_ret_0(void) { return 0.0; }',
+           'void d_st_k(void) { gd = 3.0; }',
+           'void d_st_0(void) { gd = 0; }',
+           'void d_copy(void) { gd = gd2; }',
+           'double d_loc(double a) { double t = a * a; return t + t; }',
+           'double d_loc2(double a, double b) { double t = a * b; double u = a + b; return t / u; }']
+    for op, n in (('==', 'eq'), ('!=', 'ne'), ('<', 'lt'), ('<=', 'le'), ('>', 'gt'), ('>=', 'ge')):
+        fs += ['int d_c%s_gg(void) { return gd %s gd2; }' % (n, op),
+               'int d_c%s_z(double a) { return a %s 0.0; }' % (n, op),
+               'int d_b%s_gg(void) { if (gd %s gd2) return 1; return 2; }' % (n, op),
+               'int d_b%s_z(double a) { if (a %s 0.0) return 1; return 2; }' % (n, op)]
+    fs += ['int d_bk(double a) { if (a < 1.5) return 1; return 2; }',
+           'int d_not(double a) { return !a; }',
+           'int d_if(double a) { if (a) return 1; return 2; }',
+           'int f_clt(void) { return gf < gf2; }']
+    for t, n in (('int', 'i'), ('long', 'l'), ('unsigned int', 'u'), ('unsigned long', 'ul'), ('char', 'c'),
+                 ('unsigned char', 'uc')):
+        g = {'i': 'gi', 'l': 'gl', 'u': 'gu', 'ul': 'gul', 'c': 'gc', 'uc': 'guc'}[n]
+        fs += ['double d_from_%s(void) { return %s; }' % (n, g),
+               '%s d_to_%s(void) { return gd; }' % (t, n),
+               'void d_st_%s(void) { gd = %s; }' % (n, g),
+               'void d_to_%s_st(void) { %s = gd; }' % (n, g)]
+    fs += ['double d_from_f(void) { return gf; }',
+           'float f_from_d(void) { return gd; }',
+           'double d_from_ip(int i) { return i; }',
+           'int d_to_ip(double a) { return a; }',
+           'double d_mix(int i) { return gd * i; }',
+           'double d_call1(double a) { return fd(a); }',
+           'double d_call2(void) { return fd2(gd, gd2); }',
+           'double d_call_e(double a) { return fd(a * 2.0) + a; }',
+           'void d_call_v(void) { vd(gd + gd2); }',
+           'double d_call_i(void) { return fi() * gd; }',
+           'double d_arr(int i) { return gda[i]; }',
+           'void d_arr_st(int i, double v) { gda[i] = v; }',
+           'double d_mem(void) { return gs.v; }',
+           'double d_ptr(double *p) { return *p; }',
+           'void d_ptr_st(double *p, double v) { *p = v; }',
+           'double d_gptr(void) { return *gpd * 2.0; }',
+           'double d_cond(double a, double b) { return a > b ? a : b; }',
+           'double d_loop(int n) { double s = 0.0; int i; for (i = 0; i < n; i++) s += gda[i]; return s; }',
+           'double d_inc(double a) { a += 1.0; return a; }']
+    return {'fp.c': out + fs}
+
 def main():
     out = sys.argv[1]
     d = os.path.join(out, 'micro'); os.makedirs(d, exist_ok=True)
@@ -440,6 +508,7 @@ def main():
     files.update(ra_home_files())
     files.update(ra_chain_files())
     files.update(ra_home32_files())
+    files.update(fp_files())
     for n, lines in sorted(files.items()):
         open(os.path.join(d, n), 'w').write('\n'.join(lines) + '\n')
     open(os.path.join(out, 'micro-sources.txt'), 'w').write(''.join('micro/%s\n' % n for n in sorted(files)))
