@@ -206,3 +206,11 @@ under -O; cdecl oc_sum2 / oc_add2 and ol_l_copy; plain -Xr oc_clr_l), cdecl oc_d
 the WA..HL rule above), nested loops without arrays under cdecl (ra_nested).  Results (`sh model/ledger.sh`):
 opt_counted.c O3XSXr 24 -> 32 / 32, O3XS 16 -> 29, Xr 11 -> 31; opt_loops.c O3XS 16 -> 27 / 33, O3XSXr 14 -> 29, Xr 10 ->
 30; ra_*.c O3XSXr 13 -> 18 / 42; micro O3XS 671 -> 672, Xr 673 -> 674 (ctrl.c c_find, c_copy).
+
+## cdecl -O leaf (old path): register order, a hypothesis that failed (2026-11-09)
+
+The old -O leaf path (`plan_leaf`) gives registers to locals before parameters, each in reverse declaration order
+(`_strcat`: s, s2, s1).  `_strspn` does not fit: the oracle has s1 in XBC and the local s in XDE.  Ordering every
+candidate by its first reference in the source instead fits `_strspn` and `_strcat`, but sh model/ledger.sh fell
+sharply: opt_params O3XS 21 -> 5 of 24, library 169 -> 165.  So the order is not first use.  The change was
+reverted and `_strspn` is still open.
