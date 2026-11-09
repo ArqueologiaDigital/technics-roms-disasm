@@ -34,11 +34,11 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-7-micro-chains, v423/Xr                              | micro/ra_chains.c    | 26 / 33 exact (78.8%)    |
 | run 2026-11-09-7-micro-chains, v423/O3XSXr                          | micro/ra_chains.c    | 28 / 33 exact (84.8%)    |
 | run 2026-11-09-8-micro-homes32, v423/none                           | micro/ra_homes32.c   | 7 / 17 exact (41.2%)     |
-| run 2026-11-09-8-micro-homes32, v423/O3XS                           | micro/ra_homes32.c   | 6 / 17 exact (35.3%)     |
+| run 2026-11-09-8-micro-homes32, v423/O3XS                           | micro/ra_homes32.c   | 8 / 17 exact (47.1%)     |
 | run 2026-11-09-8-micro-homes32, v423/Xr                             | micro/ra_homes32.c   | 5 / 17 exact (29.4%)     |
 | run 2026-11-09-8-micro-homes32, v423/O3XSXr                         | micro/ra_homes32.c   | 6 / 17 exact (35.3%)     |
 | run 2026-11-09-14-micro-libshapes, v423/none                        | micro/ra_libshapes.c | 10 / 21 exact (47.6%)    |
-| run 2026-11-09-14-micro-libshapes, v423/O3XS                        | micro/ra_libshapes.c | 14 / 21 exact (66.7%)    |
+| run 2026-11-09-14-micro-libshapes, v423/O3XS                        | micro/ra_libshapes.c | 16 / 21 exact (76.2%)    |
 | run 2026-11-09-14-micro-libshapes, v423/Xr                          | micro/ra_libshapes.c | 12 / 21 exact (57.1%)    |
 | run 2026-11-09-14-micro-libshapes, v423/O3XSXr                      | micro/ra_libshapes.c | 13 / 21 exact (61.9%)    |
 | run 2026-11-09-15-micro-fporder, v423/none                          | micro/fp_order.c     | 10 / 18 exact (55.6%)    |
@@ -56,9 +56,9 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-13-micro-fpstmts, v423/none                          | micro/fp_stmts.c     | 14 / 16 exact (87.5%)    |
 | run 2026-11-09-13-micro-fpstmts, v423/O3XS                          | micro/fp_stmts.c     | 9 / 16 exact (56.2%)     |
 | run 2026-11-08-9-micro-optloops, v423/O3XS                          | micro/opt_loops.c    | 16 / 33 exact (48.5%)    |
-| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality v4.23      | 1997 LIB/SRC         | 156 / 248 exact (62.9%)  |
-| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality kn5000     | 1997 LIB/SRC         | 154 / 248 exact (62.1%)  |
-| run 2026-11-08-5-libsrc97-O3XS, ide2003/O3XS, --personality ide2003 | 1997 LIB/SRC         | 148 / 248 exact (59.7%)  |
+| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality v4.23      | 1997 LIB/SRC         | 157 / 248 exact (63.3%)  |
+| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality kn5000     | 1997 LIB/SRC         | 155 / 248 exact (62.5%)  |
+| run 2026-11-08-5-libsrc97-O3XS, ide2003/O3XS, --personality ide2003 | 1997 LIB/SRC         | 149 / 248 exact (60.1%)  |
 | run 2026-11-09-3-proxy-tiny, v423/O3XSXr                            | firmware/tiny.c      | 6 / 6 exact (100.0%)     |
 
 The library rows count listing pieces: since inline assembly is passed through (2026-11-09), an inline-assembly

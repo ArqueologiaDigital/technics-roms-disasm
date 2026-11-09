@@ -1147,6 +1147,10 @@ def global_name(e):
 def gen_incdec(F, e, fam, size, value):
     """++/-- on a global: incb/incw in memory, long through XWA (unop_*: preinc, postinc_val); *p++ (deref_inc)"""
     g = global_name(e.e)
+    xv = strip(e.e)
+    if not value and xv.k == 'var' and getattr(xv.decl, 'reg', None) == 'XIZ' and xv.decl.ty.size == 4:
+        step = xv.decl.ty.base.size if xv.decl.ty.kind == 'ptr' else 1    # _strstr: ++s1 with s1 in XIZ
+        F.emit('inc' if e.op == '++' else 'dec', '%s,XIZ' % hx(step)); return None
     if g is None and strip(e.e).k == 'var' and hasattr(strip(e.e).decl, 'slot'):
         g = 'XSP+%s' % hx(strip(e.e).decl.slot + F.push)     # _ultoa: p-- -> ld XWA,0x1 / sub (XSP+4),XWA
     if g is None and strip(e.e).k == 'var' and strip(e.e).decl.kind == 'static' and getattr(strip(e.e).decl, 'init', None) is None:
@@ -1616,6 +1620,11 @@ def gen_stmt(F, s, last):
                     i += 1; continue
                 if getattr(c.var, 'slot', None) is not None and c.var.ty.size >= 2:
                     slot_init(F, c.var, c.init); i += 1; continue
+                calls_after = []
+                for x in rest: walk(x, lambda n, d: calls_after.append(n) if n.k == 'call' else None)
+                if len(u) >= 1 and c.var.ty.size == 1 and getattr(c.var, 'slot', None) is not None and calls_after:
+                    fam = gen(F, c.init, 'WA', 1)            # _strstr: char c = *s2; -> ld A,(XWA) / ld (XSP+0x8),A
+                    F.emit('ld', '(XSP+%s),%s' % (hx(c.var.slot + F.push), FAM[fam][1])); i += 1; continue
                 if len(u) >= 1 and c.var.ty.size == 1:
                     c.var.reg = gen(F, c.init, 'WA', 1); i += 1; continue
                 raise Unsupported('local ' + c.var.name)
@@ -1794,6 +1803,7 @@ def gen_stmt(F, s, last):
     if s.k == 'if':
         if s.els is None:
             lab = F.newulabel()
+            F.if_joins = getattr(F, 'if_joins', set()) | {lab}
             folded = False
             k = gen_cond_false(F, s.cond, 'RET' if last else lab)
             if F.lines[-1] == '\tret' and last:
@@ -1915,7 +1925,13 @@ def gen_stmt(F, s, last):
         rcall = strip(s.e.r)
         while rcall.k == 'cast' and rcall.kind in ('BitCast', 'NoOp') or (rcall.k == 'cast' and rcall.ty.is_ptr()): rcall = strip(rcall.e)
         if (F.opt or F.adecl or STORE_XHL_NONE) and rcall.k == 'call' and lv.k == 'var' and size in (2, 4) and not getattr(lv.decl, 'reg', None):
-            gen(F, rcall, 'HL', size); flush_pops(F)        # ls_mc / _memccpy: cal _vp / inc 0x8,XSP /
+            gen(F, rcall, 'HL', size)                       # ls_mc / _memccpy: cal _vp / inc 0x8,XSP /
+            nx = getattr(F, 'next_stmt', None); nxe = strip(nx.e) if nx is not None and nx.k == 'expr' else None
+            nxc = strip(nxe.r) if nxe is not None and nxe.k == 'bin' and nxe.op == '=' else nxe
+            while nxc is not None and nxc.k == 'cast': nxc = strip(nxc.e)
+            if not (nxc is not None and nxc.k == 'call' and nxc.args):   # _strstr: len1 = strlen(s1); len2 = strlen(s2)
+                flush_pops(F)                                            # -> the pops merge (inc 0x8,XSP)
+            t = lvalue(F, lv)                                   # (the slot's offset after the pending pushes)
             F.emit('ld', '%s,%s' % (t, FAM['HL'][size])); return   # ld (XSP+0x2),XHL
         fam = gen(F, s.e.r, work, size)                    # opt_temps.c ot_cpy_anb: ld E,(XHL+:1) / ld (XWA+:1),E
         F.emit('ld', '%s,%s' % (t, FAM[fam][size])); return
@@ -3124,6 +3140,7 @@ def leaf_r6(F):
     return True
 
 L2_WIDE = False
+THREAD_ALL = True
 
 def leaf_l2(F):
     """cdecl -O3 -XS leaf functions with a table lookup (ctype.h): rule L2 (l2alloc.py; research-scratch
@@ -3891,14 +3908,15 @@ def cross_jump(F, lines):
     return [l for l in lines if not (is_label(l) and l[:-1] in made and not refs(l[:-1]) and   # _memccpy: one L50000
                                      (l[:-1] in made_new or not named(l[:-1])))]
 
-def thread_jumps(lines, keep=()):
+def thread_jumps(lines, keep=(), full=True, joins=()):
     """-O jump threading (_atoi: if (isdigit(c)) ... else break; inside for (;;) -> j eq,L6 to the exit, the arm's
     end j L5 to the loop top): a jump to a label whose next instruction is `j X` goes to X; adjacent labels merge
     into the first; a `label: j X` block that nothing reaches after an unconditional jump goes."""
     def is_label(l): return l.endswith(':') and not l.startswith('\t')
     alias = {}
     for i in range(1, len(lines)):
-        if is_label(lines[i]) and is_label(lines[i - 1]) and lines[i][:-1] not in keep and lines[i - 1][:-1] not in keep:
+        if is_label(lines[i]) and is_label(lines[i - 1]) and lines[i][:-1] not in keep and lines[i - 1][:-1] not in keep \
+                and (full or lines[i][:-1] in joins or lines[i - 1][:-1] in joins):   # _strstr: L6: L5: -> one
             a = lines[i - 1][:-1]
             alias[lines[i][:-1]] = alias.get(a, a)
     lines = [l for i, l in enumerate(lines) if not (is_label(l) and l[:-1] in alias)]
@@ -3908,7 +3926,7 @@ def thread_jumps(lines, keep=()):
     def retarget(l, new):
         return re.sub(r'(L\d+)$', new, l)
     lines = [retarget(l, alias[tgt(l).group(3)]) if tgt(l) and tgt(l).group(3) in alias else l for l in lines]
-    for _ in range(8):
+    for _ in range(8 if full else 0):                  # (not outside L2: _strncpy keeps its L3: j L4 trampoline)
         where = {l[:-1]: i for i, l in enumerate(lines) if is_label(l)}
         changed = False
         for i, l in enumerate(lines):
@@ -3924,6 +3942,11 @@ def thread_jumps(lines, keep=()):
         m1, m2 = tgt(lines[i]), tgt(lines[i + 1])
         if m1 and m2 and m1.group(2) and m2.group(2) is None and lines[i + 2] == m1.group(3) + ':' and m1.group(2) in INV:
             lines[i] = '\tj\t%s,%s' % (INV[m1.group(2)], m2.group(3)); lines[i + 1] = '\t;dead'
+            L = m1.group(3)
+            if not any(re.search(r'[\t,]%s$' % L, l) for l in lines if l.startswith('\t') and l != '\t;dead') and \
+                    not (i + 3 < len(lines) and lines[i + 3].startswith('\tdjnz')) and L not in keep:
+                lines[i + 2] = '\t;dead'                  # _strstr: the label the inversion emptied goes (not
+                                                         # _strrchr's L4: djnz)
     lines = [l for l in lines if l != '\t;dead']
     where = {l[:-1]: i for i, l in enumerate(lines) if is_label(l)}
     for i, l in enumerate(lines):                      # _strcspn: j eq,L6 ... L6: ret -> ret eq
@@ -3941,6 +3964,7 @@ def thread_jumps(lines, keep=()):
         if nx and nx.group(2) is None and prev.startswith(('\tj\t', '\tret')) and ',' not in prev:
             drop.update((i, i + 1))
     lines = [l for i, l in enumerate(lines) if i not in drop]
+    if not full: return lines
     return [l for i, l in enumerate(lines) if not (is_label(l) and re.match(r'^L\d+$', l[:-1]) and not refs(l[:-1]) and
                                                    l[:-1] not in keep and
             not (i + 1 < len(lines) and lines[i + 1].startswith('\tdjnz')))]   # _strrchr: L4: djnz BC,L2 stays
@@ -4058,6 +4082,8 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong
     if F.opt and getattr(F, 'fp_temps', None) is not None: F.lines = fpgen.hoist_common(F.lines)
     if F.opt and getattr(F, 'l2', None): F.lines = thread_jumps(F.lines, getattr(F, 'user_labels', set()))
     if F.opt: F.lines = tail_calls_opt(F, cross_jump(F, F.lines))
+    if F.opt and not getattr(F, 'l2', None) and THREAD_ALL:      # after the tails merge (_strstr: return s1 twice)
+        F.lines = thread_jumps(F.lines, getattr(F, 'user_labels', set()), full=False, joins=getattr(F, 'if_joins', set()))
     else: F.lines = tail_calls(F.lines, getattr(F, 'switch_table', False))
     if not F.opt and getattr(F, 'tfam', None):           # ot_cmp_anb under -Xr: j eq,L3 ... L3: ret -> ret eq
         import re as _rx
