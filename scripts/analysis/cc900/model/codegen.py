@@ -810,6 +810,15 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
             if rs is None: raise Unsupported('complex right operand')
             F.emit(SIMPLE_OPS[op], '%s,%s' % (FAM[other][size], rs))
             return other
+        if ADDR_CLOBBER_SWAP and fam in ('WA', 'BC', 'DE', 'HL'):   # opt_temps.c ot_cnt_ban (-Xr): *a + *b with b
+            rm_ = mem_operand(F, r) if strip(r).k == 'load' else None   # in XWA: ld A,(XBC) would destroy b before
+            lm_ = mem_operand(F, l) if strip(l).k == 'load' else None   # add A,(XWA); read through XWA first
+            X_ = FAM[fam][4]
+            if rm_ and rm_.startswith('(') and X_ in rm_:
+                if op in ('+', '&', '|', '^') and not (lm_ and X_ in lm_):
+                    from frontend import N
+                    return gen_bin(F, N('bin', op=op, l=e.r, r=e.l, ty=e.ty), fam, size, then_ret, store)
+                raise Unsupported('operand address in the target register')
         wa_var = [d for d in list(F.f.params) + list(F.f.decls) if getattr(d, 'reg', None) == 'WA' and d not in F.dead
                   and uses_decl(e.r, d)]                   # sv_leaf: a * b + a keeps a in WA -> ld HL,DE / add HL,WA
         if fam != 'WA' and (natural_wa(l) or chain_wa(l) or char_widen(F, l)) and not wa_var:   # ra_noloop3: inner levels over a multiply stay in WA
@@ -1576,6 +1585,7 @@ EMPTY_WHILE_ONE_LABEL = True                              # see gen_loop
 IDX_GUARD = True                                          # see elem_addr
 LEAF_KEEP_TAKEN = True                                    # see plan_leaf
 IF_FLUSH_POPS = True                                      # see gen_stmt's if
+ADDR_CLOBBER_SWAP = True                                  # see gen_bin
 
 def char_narrow(body):
     """cc900 does int + - & | ^ of a char and a constant that fits a byte, or of two chars, on the byte and
