@@ -101,6 +101,27 @@ with the hand counts for 318 of 324 values (`check_model_features.py`).  The 6 t
 - `n-- > 0` (`rc_while2`);
 - `rc_two_loops`' counter.
 
+## Leaf loops without options: rule LN1 (`model/leafnone.py`, 2026-11-09)
+
+Fitted in research-scratch `sessions/2026-11-09_cc900-leaf-none` (`rule.py`, commit 3d847d0) on 275 leaf functions
+with a register variable (the micro corpora and the probes `lnr.c`, `lnr2.c`, `lnr3.c`, runs 2026-11-09-31 to -33).
+It reproduces all 275 there (624 of 624 variables); the model's own rule got 165.  On `lnr4.c`, written afterwards
+and run as a held-out check (run 2026-11-09-34), it predicted 9 of 18 functions before six fixes and 15 of 18
+after, so expect misses on new code.  The parts that are descriptions rather than mechanisms: the soft
+temporaries, the early / late split of pointer parameters, and the order of variables born inside a loop.
+
+`plan_leaf` (no options, cdecl, a loop, no call) still decides which variables get a register; LN1 then chooses
+their registers (`LEAF_NONE_LN1`).  When LN1 wants a Q register or none, the model's choice stays.  Two templates
+had to follow it:
+- a copy between two global-array elements puts the store address in DE / XHL (`COPY_ELEM_DE`; `ol_i_copy`:
+  `ld DE,IX / add DE,DE / lda XHL,_gb / ... lda XBC,_ga / ld (XHL+DE),WA`);
+- a member through a pointer in a register is addressed directly (`REG_MEMBER`; `ae_fl_chain`:
+  `cpw (XBC+0x4),0x4 / ld XBC,(XBC)`).
+
+`STORE_ADDR_GUARD` refuses a store whose value overwrites the store address's registers (it turned the 1997
+library's `__doudigit` at -O3 -XS from wrong code into "unsupported").  Ledger (none): micro_ra 33 -> 34, opt_counted
+25 -> 27, cond_bits 113 -> 114, assign_expr 30 -> 31, opt_loops 23 -> 27; no row fell.
+
 ## Leaf loops under `-O3 -XS -Xr`: parameters that arrive in registers (run 2026-11-09-5-micro-optparams)
 
 Data for the next allocator step (the model scores 0 of 24 here).  Each parameter arrives in WA / BC / DE; the loop

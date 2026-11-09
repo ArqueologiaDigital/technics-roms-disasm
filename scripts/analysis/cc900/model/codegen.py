@@ -212,6 +212,11 @@ def mem_operand(F, e):
                 if d.kind == 'param' and not getattr(d, 'reg', None) and hasattr(d, 'off'):
                     return '(XSP+%s)' % hx(d.off + k + F.push)
                 if d.kind == 'local' and hasattr(d, 'slot'): return '(XSP+%s)' % hx(d.slot + k + F.push)
+        if REG_MEMBER and not F.opt and not F.adecl and v.k == 'member' and v.arrow:
+            pv = strip(v.base)                           # assign_expr.c ae_fl_chain (none): cp in XBC ->
+            if pv.k == 'load' and regvar_of(pv.e) and regvar_of(pv.e).ty.size == 4:   # cpw (XBC+0x4),0x4 /
+                X = FAM[regvar_of(pv.e).reg][4]; off = member_offset(v)            # ld XBC,(XBC)
+                return '(%s+%s)' % (X, hx(off)) if off else '(%s)' % X
         g = global_offset(v)
         if g and g[0] == '__param__': return '(XSP+%s)' % hx(g[1].off + g[2] + F.push)   # s_pair: ld HL,(XSP+0x6)
         if g: return '(_%s + %s)' % g if g[1] != '0x0' else '(_%s)' % g[0]
@@ -1608,6 +1613,10 @@ def bit_cond(F, c):
 
 CHAR_NARROW = True                                        # see char_narrow
 OR_BIT_SET = True                                         # see compile_function
+LEAF_NONE_LN1 = True                                      # see plan_leaf (model/leafnone.py)
+COPY_ELEM_DE = True                                       # see gen_stmt's store (ol_i_copy)
+STORE_ADDR_GUARD = True                                   # see clobbers
+REG_MEMBER = True                                         # see mem_operand (ae_fl_chain)
 DEC_CMP_SUB = True                                        # dec 0x1,R / cp R,0x0 -> sub R,0x1 (opt_counted.c oc_down)
 TERN_TRUTH_PRE = True                                     # see gen's -O ?: path
 RET_CC_KEEPS = True                                       # see knowledge_pass
@@ -3602,7 +3611,18 @@ def gen_stmt(F, s, last):
             F.emit('ld', 'X%s,%s' % (hr, FAM[pd.reg][4]))
             fam = gen(F, s.e.r, getattr(F, 'tfam', 'WA'), size)
             F.emit('ld', '(X%s),%s' % (hr, FAM[fam][size])); return
-        t = lvalue(F, lv)                            # m_ga_set, m_gps_set
+        def gidx(x):                                 # a global array's element at a computed index
+            x = strip(x)
+            while x.k == 'cast': x = strip(x.e)
+            if x.k == 'load': x = strip(x.e)
+            if x.k != 'index' or fold(x.idx).k == 'const': return False
+            bb = strip(x.base)
+            while bb.k in ('decay', 'cast', 'noop') and getattr(bb, 'e', None) is not None: bb = strip(bb.e)
+            return bb.k == 'var' and bb.decl.kind == 'global' and bb.decl.ty.kind == 'array'
+        if COPY_ELEM_DE and not F.opt and gidx(lv) and gidx(s.e.r) and not ({'DE', 'HL'} & live_regs(F)):
+            t = lvalue(F, lv, idx='DE', base='XHL')   # opt_loops.c ol_i_copy (none): gb[i] = ga[i] -> ld DE,IX /
+        else:                                        # add DE,DE / lda XHL,_gb / ... lda XBC,_ga / ld (XHL+DE),WA
+            t = lvalue(F, lv)                        # m_ga_set, m_gps_set
         rv = regvar_of(strip(s.e.r).e) if strip(s.e.r).k == 'load' else None
         if rv is not None and rv.ty.size == size:
             F.emit('ld', '%s,%s' % (t, FAM[rv.reg][size])); return
@@ -3628,9 +3648,25 @@ def gen_stmt(F, s, last):
             work = F.store_val_reg                         # _ungetc: c is returned next -> ld HL,(XSP+0x4) / ld (XWA+0x8),HL
         if work in FAM and held_after(F, work, s.e):       # ra_ptrcpy (-O3 -XS -Xr): *d++ = *s++ with d in XWA ->
             work = free_reg(F, avoid={work} | {x for x in ('WA', 'BC', 'DE', 'HL') if x in t})   # not A
+        n0 = len(F.lines)
         fam = gen(F, s.e.r, work, size)                    # opt_temps.c ot_cpy_anb: ld E,(XHL+:1) / ld (XWA+:1),E
+        if STORE_ADDR_GUARD and clobbers(F.lines[n0:], t):
+            raise Unsupported('the value overwrites the store address')    # (wrong code otherwise)
         F.emit('ld', '%s,%s' % (t, FAM[fam][size])); return
     raise Unsupported('statement ' + s.k)
+
+def clobbers(lines, operand):
+    """does any of lines write a register that the memory operand (XDE+BC) / (XBC) is built from?"""
+    import re
+    if not operand.startswith('('): return False
+    fams = {family_of(r) for r in re.findall(r'\b(X?(?:WA|BC|DE|HL|IX|IY|IZ))\b', operand)} - {None}
+    if not fams: return False
+    for l in lines:
+        m = re.match(r'^\t(ld|lda|add|adc|sub|sbc|and|or|xor|sla|sll|sra|srl|rl|rr|rlc|rrc|exts|extz|mul|muls|div|divs|'
+                     r'neg|cpl|pop|inc|dec|ex|ldw|ldb)\t(?:0x[0-9a-f]+,)?([A-Z]+)\b', l)
+        if m and not m.group(2).startswith(('XSP', 'SP')) and family_of(m.group(2)) in fams: return True
+        if l.startswith('\tcal'): return True
+    return False
 
 def char_arith(x):
     """an int expression of +, -, &, |, ^ over chars only (both operands promoted from char)"""
@@ -6521,6 +6557,13 @@ def plan_leaf(F):
         if not cand: raise Unsupported('out of registers')
         d.reg = cand[0]; free.remove(cand[0])
         if d.kind == 'param': F.param_copies.append(d)
+    if LEAF_NONE_LN1 and not F.opt and not F.adecl and hasloop and not has_call:
+        import leafnone                                    # rule LN1 (model/leafnone.py) replaces the registers of
+        inreg = [d for d in leafnone.variables(f) if getattr(d, 'reg', None)]     # the variables kept in one
+        try: got = leafnone.allocate(f, set(inreg))
+        except Exception: got = {}
+        if inreg and all(got.get(d, '-') in FAM and not got[d].startswith('Q') for d in inreg):
+            for d in inreg: d.reg = got[d]
     if any(getattr(d, 'reg', None) == 'IZ' for d in order): F.emit('push', 'IZ'); F.push = 2; F.pushes = ['IZ']
     if F.opt:
         F.deferred = list(F.param_copies)              # loaded at first use (_strcat: ld XBC,(XSP+8) late)

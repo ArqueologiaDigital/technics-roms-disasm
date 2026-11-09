@@ -13,7 +13,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-08-7-micro, ide2003/O3XS, --personality ide2003         | micro/*.c            | 672 / 674 exact (99.7%)  |
 | run 2026-11-08-7-micro, ide2003/Xr, --personality ide2003           | micro/*.c            | 667 / 674 exact (99.0%)  |
 | run 2026-11-08-7-micro, ide2003/O3XSXr, --personality ide2003       | micro/*.c            | 660 / 674 exact (97.9%)  |
-| run 2026-11-08-8-micro-ra, v423/none                                | micro/ra_*.c         | 33 / 42 exact (78.6%)    |
+| run 2026-11-08-8-micro-ra, v423/none                                | micro/ra_*.c         | 34 / 42 exact (81.0%)    |
 | run 2026-11-08-8-micro-ra, v423/O3XSXr                              | micro/ra_*.c         | 24 / 42 exact (57.1%)    |
 | run 2026-11-08-4-abi, v423/none                                     | abi/*.c              | 102 / 108 exact (94.4%)  |
 | run 2026-11-08-4-abi, v423/O3XS                                     | abi/*.c              | 100 / 108 exact (92.6%)  |
@@ -51,11 +51,11 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-28-micro-fpe2b, v423/none                            | probes/fpp4.c        | 8 / 59 exact (13.6%)     |
 | run 2026-11-09-26-micro-fpe2, v423/O3XS                             | probes/fpp3.c        | 29 / 59 exact (49.2%)    |
 | run 2026-11-09-28-micro-fpe2b, v423/O3XS                            | probes/fpp4.c        | 8 / 59 exact (13.6%)     |
-| run 2026-11-09-22-micro-condbits, v423/none                         | micro/cond_bits.c    | 113 / 117 exact (96.6%)  |
+| run 2026-11-09-22-micro-condbits, v423/none                         | micro/cond_bits.c    | 114 / 117 exact (97.4%)  |
 | run 2026-11-09-22-micro-condbits, v423/O3XS                         | micro/cond_bits.c    | 113 / 117 exact (96.6%)  |
 | run 2026-11-09-22-micro-condbits, v423/Xr                           | micro/cond_bits.c    | 114 / 117 exact (97.4%)  |
 | run 2026-11-09-22-micro-condbits, v423/O3XSXr                       | micro/cond_bits.c    | 113 / 117 exact (96.6%)  |
-| run 2026-11-09-23-micro-assignexpr, v423/none                       | micro/assign_expr.c  | 30 / 43 exact (69.8%)    |
+| run 2026-11-09-23-micro-assignexpr, v423/none                       | micro/assign_expr.c  | 31 / 43 exact (72.1%)    |
 | run 2026-11-09-23-micro-assignexpr, v423/O3XS                       | micro/assign_expr.c  | 37 / 43 exact (86.0%)    |
 | run 2026-11-09-23-micro-assignexpr, v423/Xr                         | micro/assign_expr.c  | 27 / 43 exact (62.8%)    |
 | run 2026-11-09-23-micro-assignexpr, v423/O3XSXr                     | micro/assign_expr.c  | 41 / 43 exact (95.3%)    |
@@ -81,7 +81,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-10-micro-fptemps, v423/O3XS                          | micro/fp_temps.c     | 33 / 33 exact (100.0%)   |
 | run 2026-11-09-11-micro-opttemps, v423/Xr                           | micro/opt_temps.c    | 35 / 38 exact (92.1%)    |
 | run 2026-11-09-11-micro-opttemps, v423/O3XSXr                       | micro/opt_temps.c    | 38 / 38 exact (100.0%)   |
-| run 2026-11-09-12-micro-optcounted, v423/none                       | micro/opt_counted.c  | 25 / 32 exact (78.1%)    |
+| run 2026-11-09-12-micro-optcounted, v423/none                       | micro/opt_counted.c  | 27 / 32 exact (84.4%)    |
 | run 2026-11-09-12-micro-optcounted, v423/O3XS                       | micro/opt_counted.c  | 29 / 32 exact (90.6%)    |
 | run 2026-11-09-12-micro-optcounted, v423/Xr                         | micro/opt_counted.c  | 31 / 32 exact (96.9%)    |
 | run 2026-11-09-12-micro-optcounted, v423/O3XSXr                     | micro/opt_counted.c  | 32 / 32 exact (100.0%)   |
@@ -94,7 +94,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-3-proxy-tiny, v423/O3XSXr                            | firmware/tiny.c      | 6 / 6 exact (100.0%)     |
 | run 2026-11-08-8-micro-ra, v423/O3XS                                | micro/ra_*.c         | 20 / 42 exact (47.6%)    |
 | run 2026-11-08-8-micro-ra, v423/Xr                                  | micro/ra_*.c         | 23 / 42 exact (54.8%)    |
-| run 2026-11-08-9-micro-optloops, v423/none                          | micro/opt_loops.c    | 23 / 33 exact (69.7%)    |
+| run 2026-11-08-9-micro-optloops, v423/none                          | micro/opt_loops.c    | 27 / 33 exact (81.8%)    |
 | run 2026-11-08-9-micro-optloops, v423/Xr                            | micro/opt_loops.c    | 30 / 33 exact (90.9%)    |
 | run 2026-11-08-9-micro-optloops, v423/O3XSXr                        | micro/opt_loops.c    | 30 / 33 exact (90.9%)    |
 
