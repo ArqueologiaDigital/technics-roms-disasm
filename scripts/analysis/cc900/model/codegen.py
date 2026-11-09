@@ -2445,7 +2445,10 @@ def elem_addr(F, lv, kind):
         if PTR_INDEX_REG and esz == 1 and kind == 'load' and im0 in ('IZ', 'QIZ', 'IX', 'IY') and ii.ty.size == 2:
             F.emit('ld', 'XWA,%s' % pm); return '(XWA+%s)' % im0   # ra_homes.c rh_int_ptr: n in IZ -> ld XWA,(p) /
         if kind in ('load', 'storek'):                    # ai_clear: p[i] = 0 -> add XWA,(XSP+0x4) / ldw (XWA),0x0
-            idx_into('WA'); F.emit('extz' if esz == 1 else 'exts', 'XWA'); scale32(F, 'XWA', esz)
+            ii_ = unpromote(lv.idx)                         # (adecl: by the index's own sign; no -Xr listing zero-
+            ext_ = 'exts' if ii_.ty is not None and ii_.ty.signed else 'extz'   # extends a signed one: ra_homes.c
+            idx_into('WA'); F.emit(ext_ if F.adecl and esz == 1 else 'extz' if esz == 1 else 'exts', 'XWA')   # rh_ptr_int)
+            scale32(F, 'XWA', esz)
             F.emit('add', 'XWA,%s' % pm); return '(XWA)'
         if IDX_GUARD and (held_after(F, 'BC', lv) or any(
                 getattr(d, 'reg', None) == 'BC' and d not in F.dead and d in getattr(F, 'in_loop', ())
