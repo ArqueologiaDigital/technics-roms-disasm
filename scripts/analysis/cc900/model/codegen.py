@@ -2659,6 +2659,10 @@ def lvalue(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False, kind='store'):
                 F.emit('ld', '%s,%s' % (I2, im)); I = idx = I2
                 if base[1:] == I2 or base == 'XBC' and I2 == 'BC': base = 'XDE' if I2 != 'DE' else 'XHL'
             elif im != I: F.emit('ld', '%s,%s' % (I, im))
+            if IDX_GUARD and not combine and (held_after(F, base[1:], lv) or any(
+                    getattr(d, 'reg', None) == base[1:] and d not in F.dead and d in getattr(F, 'in_loop', ())
+                    for d in list(F.f.params) + list(F.f.decls))):   # opt_loops.c ol_i_copy (none): lda XDE,_gb
+                raise Unsupported('array base over a live register')   # over i in DE (wrong code)
             if esz == 2: F.emit('add', '%s,%s' % (I, I))
             elif esz == 4: F.emit('sla', '0x2,%s' % I)
             if combine:
