@@ -99,15 +99,20 @@ it from `(XSP+4)`: the first two instructions swapped relative to V4.23's, which
 The firmware is compiled `-O3 -XS -Xr` (adecl).  Work since the table at the top concentrated there; scores from
 `model/ledger.sh` (the full table is `results/model_ledger.md`):
 
-| oracle (v423)                  | corpus            | before    | now         |
-|--------------------------------|-------------------|-----------|-------------|
-| micro, `-Xr`                   | micro/*.c (674)   | 552 (82%) | 631 (93.6%) |
-| micro, `-O3 -XS -Xr`           | micro/*.c (674)   | 549 (81%) | 594 (88.1%) |
-| ABI probes, `-Xr`              | abi/*.c (80)      | 7         | 58          |
-| switch, `-Xr`                  | micro/switch.c    | (new run) | 22 / 25     |
-| switch, `-O3 -XS -Xr`          | micro/switch.c    | (new run) | 20 / 25     |
-| register corpus, `-O3 -XS -Xr` | micro/ra_*.c (42) | 0         | 9           |
-| firmware, `-O3 -XS -Xr`        | firmware/tiny.c   | 6 / 6     | 6 / 6       |
+| oracle (v423)                  | corpus              | morning   | evening       |
+|--------------------------------|---------------------|-----------|---------------|
+| micro, no options              | micro/*.c (674)     | 650       | 667 (99.0%)   |
+| micro, `-O3 -XS`               | micro/*.c (674)     | 590       | 632 (93.8%)   |
+| micro, `-Xr`                   | micro/*.c (674)     | 552 (82%) | 637 (94.5%)   |
+| micro, `-O3 -XS -Xr`           | micro/*.c (674)     | 549 (81%) | 612 (90.8%)   |
+| ABI probes, `-Xr`              | abi/*.c (80)        | 7         | 58            |
+| switch, `-Xr`                  | micro/switch.c (25) | (new run) | 22            |
+| switch, `-O3 -XS -Xr`          | micro/switch.c (25) | (new run) | 20            |
+| register corpus, `-O3 -XS -Xr` | micro/ra_*.c (42)   | 0         | 11            |
+| parameters, `-O3 -XS`          | micro/opt_params.c  | (new run) | 19 / 24       |
+| 1997 library, `-O3 -XS`        | LIB/SRC pieces      | 13 / 71   | 111 / 147     |
+| firmware, `-O3 -XS -Xr`        | firmware/tiny.c     | 6 / 6     | 6 / 6         |
+| firmware library pairs         | `pairs_model.py`    | (none)    | 126 identical |
 
 What the model now does (codegen.py; each rule cites its oracle function):
 - adecl callers: arguments in WA / BC / DE by size, the rest pushed left to right, in the order register moves,
