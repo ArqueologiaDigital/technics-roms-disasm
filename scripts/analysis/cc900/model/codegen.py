@@ -657,9 +657,9 @@ def gen_compare(F, e):
     if rc.k == 'const' and lm is not None and lm.startswith('(') and size <= 2:
         F.emit('cp' + ('b' if size == 1 else 'w'), '%s,%s' % (lm, hx(rc.value))); return cc
     if l.k == 'call' and rc.k == 'const' and size == 2:   # k_cond, c_break: cal .r1 / cp HL,0x0 (cdecl too)
-        gen_call(F, l); flush_pops(F); F.emit('cp', 'HL,%s' % hx(rc.value)); return cc   # _toupper: inc 0x2,XSP first
+        gen_call(F, l); flush_pops(F, True); F.emit('cp', 'HL,%s' % hx(rc.value)); return cc   # _toupper: inc 0x2,XSP
     if rc.k == 'const' and rc.value == 0 and size == 4 and op in ('==', '!=') and lm in ('XIZ', 'XBC', 'XDE', 'XHL', 'XWA'):
-        if F.opt: flush_pops(F)                          # _strlen: cal _memchr / inc 0x8,XSP / or XHL,XHL
+        if F.opt: flush_pops(F, True)                    # _strlen: cal _memchr / inc 0x8,XSP / or XHL,XHL
         F.emit('or', '%s,%s' % (lm, lm)); return cc     # _calloc: if (ptr) -> or XIZ,XIZ
     W = FAM['WA'][size]
     gen(F, l, 'WA', size)
@@ -752,10 +752,14 @@ def push_arg(F, a):
     fam = gen(F, a, 'WA', size)
     F.emit('push', FAM[fam][size]); F.push += size; return size
 
-def flush_pops(F):
+def flush_pops(F, before_test=False):
+    """release the stack arguments of earlier calls; more than 8 bytes is lda XSP,XSP+n, or add XSP,n when a test
+    of the call's result follows (_strcpy: add XSP,0xc / or XHL,XHL; _strstr: add XSP,0xa)"""
     n = F.pending
     if n:
-        F.emit('inc', '%s,XSP' % hx(n)) if n <= 8 else F.emit('lda', 'XSP,XSP+%s' % hx(n))
+        if n <= 8: F.emit('inc', '%s,XSP' % hx(n))
+        elif before_test: F.emit('add', 'XSP,%s' % hx(n))
+        else: F.emit('lda', 'XSP,XSP+%s' % hx(n))
         F.push -= n; F.pending = 0
 
 def gen_call(F, e, fam=None, size=0):
@@ -907,6 +911,16 @@ def lvalue(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False):
             d = regvar_of(pv.e)
             return '(%s%s:%d)' % (FAM[d.reg][4], '+' if pv.op == '++' else '-', d.ty.base.size)
         m = mem_operand(F, lv.e)
+        pe = strip(lv.e)
+        while pe.k == 'cast': pe = strip(pe.e)
+        if m is None and pe.k == 'bin' and pe.op == '+' and fold(pe.r).k == 'const':
+            bv = strip(pe.l)
+            while bv.k == 'cast': bv = strip(bv.e)
+            bm = mem_operand(F, bv) if bv.k == 'load' else None
+            if bm is not None and bm.startswith('X') and not 0 <= fold(pe.r).value <= 0x7fff or bm == 'XIZ':
+                F.emit('ld', 'XWA,%s' % bm)                # _strcpy: *((char *)s1 + 0xffff) = 0 ->
+                F.emit('add', 'XWA,%s' % hx(fold(pe.r).value))   # ld XWA,XIZ / add XWA,0xffff / ldb (XWA),0x0
+                return '(XWA)'
         if m is None: raise Unsupported('complex pointer')
         if m.startswith('X'): return '(%s)' % m        # .as_add_ptr: add (XWA),BC
         F.emit('ld', '%s,%s' % (ptr, m)); return '(%s)' % ptr
@@ -1520,8 +1534,12 @@ def plan_homes(F):
     if F.opt:                                              # _strlen: ss = memchr(...) stays in XHL (no call after it)
         rets = []
         walk(F.f.body, lambda n, dep: rets.append(n) if n.k == 'return' and n.value is not None else None)
+        from_call = set()                                  # _strcpy: endPtr = memccpy(...) is only tested: XHL too
+        walk(F.f.body, lambda n, dep: from_call.add(strip(n.l).decl) if n.k == 'bin' and n.op == '=' and
+             strip(n.l).k == 'var' and strip(n.r).k in ('call', 'cast') and has_helper_call(n.r) else None)
         hl = [d for d in F.f.decls if d.kind == 'local' and not getattr(d, 'reg', None) and d not in across and
-              not d.addr_taken and d.ty.kind in ('int', 'ptr') and d.ty.size in (2, 4) and any(uses_decl(r, d) for r in rets)]
+              not d.addr_taken and d.ty.kind in ('int', 'ptr') and d.ty.size in (2, 4) and
+              (any(uses_decl(r, d) for r in rets) or d in from_call)]
         if len(hl) == 1 and not any(getattr(x, 'reg', None) == 'HL' for x in list(F.f.params) + list(F.f.decls)):
             hl[0].reg = 'HL'
     pairs = []                                             # k_expr: r1(a) + r1(a + 1) keeps the right result in QIZ
