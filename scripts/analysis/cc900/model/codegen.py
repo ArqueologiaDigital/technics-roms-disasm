@@ -1520,6 +1520,7 @@ ASSIGN_CMP_INPLACE = True                                 # see gen_compare
 LOOP_COND_DEF = True                                      # see compute_last_uses
 CHAR_LOCAL_WA = True                                      # see plan_leaf
 ASSIGN_OPERAND_INPLACE = True                             # see gen_bin
+POSTDEC_FREE = True                                       # see loop_cond
 
 def char_narrow(body):
     """cc900 does int + - & | ^ of a char and a constant that fits a byte, or of two chars, on the byte and
@@ -2563,6 +2564,13 @@ def lvalue(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False, kind='store'):
             if im in ('WA', 'BC', 'DE') and dies_here(F, i):   # .as_add_arr: add WA,WA / (XDE+WA)
                 I = im
                 idx = im
+            elif im == I and family_of(im):                # the index variable's own register, still needed:
+                busy = live_regs(F) | {ptr[1:]}            # scale a copy (ra_while under -O3 -XS -Xr: n in WA ->
+                I2 = next((x for x in ('BC', 'DE', 'HL') if x not in busy), None)   # ld BC,WA / add BC,BC /
+                if I2 is None:                             # lda XDE,_ga / ldw (XDE+BC),0x0; the scaling in place
+                    raise Unsupported('index register')    # was wrong code)
+                F.emit('ld', '%s,%s' % (I2, im)); I = idx = I2
+                if base[1:] == I2 or base == 'XBC' and I2 == 'BC': base = 'XDE' if I2 != 'DE' else 'XHL'
             elif im != I: F.emit('ld', '%s,%s' % (I, im))
             if esz == 2: F.emit('add', '%s,%s' % (I, I))
             elif esz == 4: F.emit('sla', '0x2,%s' % I)
@@ -4489,6 +4497,8 @@ def loop_cond(F, c, target, sense):
         F.lines.append(inn + ':'); return
     if c.k == 'incdec' and c.post and regvar_of(c.e):
         d = regvar_of(c.e); R = FAM[d.reg][2]; T = FAM[getattr(F, 'tfam', 'WA')][2]   # opt_temps.c: ld DE,BC / dec 0x1,BC
+        if POSTDEC_FREE and F.adecl and F.opt and d.reg == 'WA' and T == 'DE' and 'BC' not in live_regs(F):
+            T = 'BC'                                       # ra_while (-O3 -XS -Xr): n in WA -> ld BC,WA / dec 0x1,WA
         F.emit('ld', '%s,%s' % (T, R)); F.emit('dec' if c.op == '--' else 'inc', '0x1,%s' % R); F.emit('cp', '%s,0x0' % T)
         cc = 'ne' if sense else 'eq'
         F.emit('ret', cc) if target == 'RET' else F.emit('j', '%s,%s' % (cc, target)); return
