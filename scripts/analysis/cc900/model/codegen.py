@@ -882,7 +882,7 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         F.emit('sla', '%s,%s' % (hx(rc0.value.bit_length() - 1), R)); return fam
     if op in ('*', '/', '%'):
         if size == 4: return gen_long_helper(F, e, l, r, fam, signed)
-        rs = mem_operand(F, r)
+        rs = mem_operand(F, r); n_rs = len(F.lines)
         work = 'WA'
         if F.opt and fam in ('HL', 'BC', 'DE') and mem_operand(F, l) and rs and not regvar_of(getattr(strip(l), 'e', l)) \
                 and (size == 2 and op != '%' or op == '*'):       # (mod_i_pp under O3XS: divs XWA / ld HL,QWA)
@@ -955,6 +955,8 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
             f1 = gen(F, l, work, size)                      # ld HL,IZ / muls XHL,QIZ
             if f1 != work and f1 in FAM and f1 in ('WA', 'BC', 'DE', 'HL'):
                 work = f1                                   # (where gen left it: ra_noloop's a + b in DE, before
+        if STORE_ADDR_GUARD and rs is not None and clobbers(F.lines[n_rs:], rs):
+            raise Unsupported('the left operand overwrites the right operand\'s address')   # (lnr3.c s_mul -Xr)
         if rs is None:                                  # ra_noloop: muls XWA,BC   (a - b took WA: wrong code)
             ro = 'BC' if work != 'BC' else 'DE'
             occ = [d for d in list(F.f.params) + list(F.f.decls) if getattr(d, 'reg', None) == ro and d not in F.dead]
@@ -2964,13 +2966,18 @@ def gen_opassign(F, e):
             F.emit('exts' if strip(rw.e).ty.signed else 'extz', W); F.dead.add(cv)   # exts BC / add HL,BC
             F.emit(SIMPLE_OPS[op], '%s,%s' % (t, W)); return t
         T = getattr(F, 'tfam', 'WA')                        # ot_add_anb: ld E,(XHL+:1) / add (XWA+:1),E
+        if STORE_GLOBAL_FREE and T in FAM and held_after(F, T, e):   # lnr3.c s_add_g (-Xr): p in XWA -> not WA
+            used_ = set(re.findall(r'X?(WA|BC|DE|HL|IX|IY)', t))
+            T = next((x for x in ('WA', 'BC', 'DE', 'HL', 'IX', 'IY') if x not in used_ and not held_after(F, x, e)), None)
+            if T is None: raise Unsupported('no free register for the op= value')
         rc = fold(r)
         if F.opt and size == 4 and rc.k == 'const' and rc.value is not None and 0 <= rc.value < 0x10000:
             F.emit('lda', '%s,%s' % (FAM[T][4], hx(rc.value)))   # ai_l_g_and under -O3 -XS: lda XWA,0xff
         else:
-            n0 = len(F.lines); gen(F, r, T, size)
+            n0 = len(F.lines); T_ = gen(F, r, T, size)
             if STORE_ADDR_GUARD and clobbers(F.lines[n0:], t):
                 raise Unsupported('the right side overwrites the op= address')   # (wrong code otherwise)
+            if T_ in FAM and T_ != T: T = T_               # lnr2.c p_body3 (-Xr): n + n + n ends in DE, n in WA
         F.emit(SIMPLE_OPS[op], '%s,%s' % (t, FAM[T][size])); return t
     if op in ('<<', '>>'):
         mnem = ('sla' if signed else 'sll') if op == '<<' else ('sra' if signed else 'srl')
@@ -4235,6 +4242,11 @@ def operand(F, e, size, avoid=()):
             pm = mem_operand(F, b); ii = strip(v.idx)
             while ii.k == 'cast' and ii.kind == 'IntegralCast': ii = strip(ii.e)
             im = mem_operand(F, ii)
+            if pm in ('XWA', 'XBC', 'XDE', 'XHL', 'XIX', 'XIY', 'XIZ') and esz == 1 and ii.ty.signed and \
+                    im in ('WA', 'BC', 'DE', 'HL', 'IX', 'IY', 'IZ'):
+                return '(%s+%s)' % (pm, im)                # lnr4.c h5 (-Xr): c ^= s[i] -> xor E,(XWA+HL)
+            if pm is not None and pm.startswith('X') and family_of(pm) == 'WA':
+                raise Unsupported('element through a pointer in XWA')   # (h5: add XWA,XWA was wrong code)
             if pm is not None and im is not None and 'WA' not in avoid:
                 F.emit('ld', 'WA,%s' % im); F.emit('exts' if ii.ty.signed else 'extz', 'XWA')
                 if esz == 2: F.emit('add', 'XWA,XWA')
