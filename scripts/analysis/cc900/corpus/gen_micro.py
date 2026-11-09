@@ -33,6 +33,7 @@ how cc900 compiles exactly that (notes/cc900-compat-plan-2026-11-08/PLAN.md, sec
   sum and count-only bodies, to find which register family the loop's temporaries take and which parameter moves;
 - opt_counted: counted for loops over arrays and pointers (sum, copy, find, clear, two arrays, down-counting),
   parameters in every order, int / char / long elements, to find the -O counter, bound, base and offset registers;
+- fp_stmts: FP temporaries over several statements, branches and loops (where _log's slots come from);
 - ra_homes32: a 32-bit local (pointer, long) against a 16-bit parameter for XIZ / IZ across calls (_memccpy gives
   IZ to n and a slot to pos).
 The output is deterministic, ours, and C89.
@@ -598,6 +599,29 @@ def opt_counted_files():
            'int oc_nested(int *p, int n, int m) { int s = 0; int i, j; for (i = 0; i < n; i++) for (j = 0; j < m; j++) s += p[j]; return s; }']
     return {'opt_counted.c': out + fs}
 
+def fp_stmt_files():
+    """how temporary slots are shared between statements (_log: 0x44, 0x3c, 0x34, 0x2c, 0x24)"""
+    out = ['/* FP temporaries over several statements */',
+           'extern double gd, gd2, gd3, gd4; extern double fd(double); extern int gi; extern long gl;']
+    fs = [
+        'void s_two(void) { gd = gd2 * gd3 + gd4; gd2 = gd3 * gd4 + gd; }',
+        'void s_two_b(void) { gd = gd2 * gd3 + gd4; gd2 = (gd3 + gd4) * (gd + gd2); }',
+        'void s_three(void) { gd = gd2 * gd3 + gd4; gd2 = gd3 * gd4 + gd; gd3 = gd * gd2 + gd4; }',
+        'void s_conv2(void) { gd = gd2 * gi; gd2 = gd3 * gi + gd; }',
+        'void s_conv_first(void) { gd = gi * gd2 + gd3; gd2 = gd3 * gd4 + gd; }',
+        'void s_call2(void) { gd = fd(gd2) + gd3; gd2 = fd(gd3 * gd4) + gd; }',
+        'double s_loc(double a) { double t; t = a * a + gd; t = t * a + gd2; return t; }',
+        'double s_loc2(double a) { double t, u; t = a * a + gd; u = t * a + gd2; return t + u; }',
+        'void s_if(int c) { if (c) gd = gd2 * gd3 + gd4; else gd = gd3 * gd4 + gd2; }',
+        'void s_if2(int c) { if (c) gd = gd2 * gd3 + gd4; gd2 = gd3 * gd4 + gd; }',
+        'void s_loop(int n) { int i; for (i = 0; i < n; i++) gd = gd * gd2 + gd3; }',
+        'void s_loop2(int n) { int i; gd4 = gd * gd2 + gd3; for (i = 0; i < n; i++) gd = gd * gd2 + i; }',
+        'void s_loop3(int n) { int i; for (i = 0; i < n; i++) { gd = gd * gd2 + gd3; gd2 = gd2 * gd3 + i; } }',
+        'double s_ret2(double a) { gd = a * a + gd2; return a * gd + gd3; }',
+        'long s_mix(double a) { gd = a * a + gd2; return (long)(a * gd); }',
+        'void s_conv_l(void) { gd = gd2 * gl; gl = gd * gd3; }']
+    return {'fp_stmts.c': out + fs}
+
 def main():
     out = sys.argv[1]
     d = os.path.join(out, 'micro'); os.makedirs(d, exist_ok=True)
@@ -620,6 +644,7 @@ def main():
     files.update(fp_temp_files())
     files.update(opt_temp_files())
     files.update(opt_counted_files())
+    files.update(fp_stmt_files())
     for n, lines in sorted(files.items()):
         open(os.path.join(d, n), 'w').write('\n'.join(lines) + '\n')
     open(os.path.join(out, 'micro-sources.txt'), 'w').write(''.join('micro/%s\n' % n for n in sorted(files)))
