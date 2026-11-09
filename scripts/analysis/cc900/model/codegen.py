@@ -836,6 +836,13 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
                 other = next((x for x in ('BC', 'DE', 'HL') if x != fam and not held_after(F, x, r) and
                               x not in live_regs(F)), None)
                 if other is None: raise Unsupported('right operand register')
+            rx = strip(r)
+            while rx.k == 'cast' and rx.kind == 'IntegralCast': rx = strip(rx.e)
+            if IDX_GUARD and fam in ('WA', 'BC') and rx.k == 'load' and strip(rx.e).k == 'index' and \
+                    fold(strip(rx.e).idx).k != 'const' and not getattr(F, 'cl_active', None) and \
+                    not getattr(F, 'l2', None) and not getattr(F, 'u1_i', None) and not getattr(F, 'elem_ops', None):
+                raise Unsupported('element read over the left value')   # (ol_two_arr: ga[i] in WA, then gb[i]'s
+                                                                       # index built in WA: wrong code)
             gen(F, r, other, size); rs = FAM[other][size]
         elif op == '+' and same_leaf(l, r) and regvar_of(strip(r).e) is not None:
             rs = R                                     # rh_lp_x2: x + x with x in QIZ -> ld WA,QIZ / add WA,WA
