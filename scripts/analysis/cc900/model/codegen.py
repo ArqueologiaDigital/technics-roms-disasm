@@ -538,7 +538,8 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
     if op in '+-' and (strip(e.l).ty.is_ptr() or strip(e.r).ty.is_ptr()):
         return gen_ptr_arith(F, e, fam, size)
     l, r = narrow(e.l, size), narrow(e.r, size)
-    signed = e.ty.signed if size >= e.ty.size else is_signed(l)
+    signed = e.ty.signed if size >= e.ty.size else is_signed(e.l if UNPROMOTED_SIGN else l)   # (before narrowing
+                                                     # drops the cast to unsigned char: mul_uc_loc)
     R = FAM[fam][size]
     wide_l = strip(strip(l).e) if strip(l).k == 'cast' else strip(l)
     if op in SIMPLE_OPS and size < wide_l.ty.size and wide_divide(wide_l, size):
