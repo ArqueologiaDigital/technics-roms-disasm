@@ -1568,6 +1568,7 @@ PTR_INDEX_REG = True                                      # see gen_load_mem
 EMPTY_WHILE_ONE_LABEL = True                              # see gen_loop
 IDX_GUARD = True                                          # see elem_addr
 LEAF_KEEP_TAKEN = True                                    # see plan_leaf
+IF_FLUSH_POPS = True                                      # see gen_stmt's if
 
 def char_narrow(body):
     """cc900 does int + - & | ^ of a char and a constant that fits a byte, or of two chars, on the byte and
@@ -3363,7 +3364,12 @@ def gen_stmt(F, s, last):
         raise Unsupported('conditional return')
     if s.k == 'if' and s.els is None and F.opt and getattr(F, 'u1_chain', None) and u1_cse_if(F, s): return
     if s.k == 'if':
-        if s.els is None:
+        fpc = []
+        walk(s.cond, lambda n, d: fpc.append(n) if fpgen.is_fp_op(n) else None)
+        if F.pending and IF_FLUSH_POPS and not fpc: flush_pops(F, True)   # ra_homes32.c h_p_p3: g2(n); if (p == 0)
+                                                          # ...: the call's pops before the test (an FP test places them
+                                                          # itself, before the helper's addresses)
+        if s.els is None:                                 # (only one arm popped them before: wrong code)
             lab = F.newulabel()
             F.if_joins = getattr(F, 'if_joins', set()) | {lab}
             folded = False
