@@ -21,7 +21,7 @@ maincpu v10	0xff0f79	.sbrk	__SBRK.C	exact	39	=
 maincpu v10	0xff0fa0	_strlen	_STRLEN.C	exact	30	=	
 maincpu v10	0xff0fbe	_ltoa	_LTOA.C	exact	60	=	
 maincpu v10	0xff0ffa	_memset	_MEMSET.C	exact	68	=	
-maincpu v10	0xff1048	__doprnt	__DOFORM.C	known	4354	3978 diff	+10
+maincpu v10	0xff1048	__doprnt	__DOFORM.C	known	4358	1226 diff	+2674
 maincpu v10	0xff2139	__facnv	__FACVT.C	near	1718	1320 diff	+236
 maincpu v10	0xff27f7	_ultoa	_ULTOA.C	exact	133	89 diff	+25
 maincpu v10	0xff2891	_memccpy	_MEMCCPY.C	exact	64	=	
@@ -48,7 +48,7 @@ maincpu v9	0xff0f6b	.sbrk	__SBRK.C	exact	39	=
 maincpu v9	0xff0f92	_strlen	_STRLEN.C	exact	30	=	
 maincpu v9	0xff0fb0	_ltoa	_LTOA.C	exact	60	=	
 maincpu v9	0xff0fec	_memset	_MEMSET.C	exact	68	=	
-maincpu v9	0xff103a	__doprnt	__DOFORM.C	known	4354	3978 diff	+10
+maincpu v9	0xff103a	__doprnt	__DOFORM.C	known	4358	1226 diff	+2674
 maincpu v9	0xff27e9	_ultoa	_ULTOA.C	exact	133	89 diff	+25
 maincpu v9	0xff2883	_memccpy	_MEMCCPY.C	exact	64	=	
 maincpu v9	0xff28c3	_memchr	_MEMCHR.C	exact	24	=	
@@ -76,7 +76,7 @@ maincpu v7	0xff079c	.sbrk	__SBRK.C	exact	39	=
 maincpu v7	0xff07c3	_strlen	_STRLEN.C	exact	30	=	
 maincpu v7	0xff07e1	_ltoa	_LTOA.C	exact	60	=	
 maincpu v7	0xff081d	_memset	_MEMSET.C	exact	68	=	
-maincpu v7	0xff086b	__doprnt	__DOFORM.C	known	4354	3978 diff	+10
+maincpu v7	0xff086b	__doprnt	__DOFORM.C	known	4358	1226 diff	+2674
 maincpu v7	0xff195c	__facnv	__FACVT.C	near	1718	1320 diff	+236
 maincpu v7	0xff201b	_ultoa	_ULTOA.C	exact	133	89 diff	+25
 maincpu v7	0xff20b5	_memccpy	_MEMCCPY.C	exact	64	=	
@@ -103,7 +103,7 @@ maincpu v6	0xff069e	.sbrk	__SBRK.C	exact	39	=
 maincpu v6	0xff06c5	_strlen	_STRLEN.C	exact	30	=	
 maincpu v6	0xff06e3	_ltoa	_LTOA.C	exact	60	=	
 maincpu v6	0xff071f	_memset	_MEMSET.C	exact	68	=	
-maincpu v6	0xff076d	__doprnt	__DOFORM.C	known	4354	3978 diff	+10
+maincpu v6	0xff076d	__doprnt	__DOFORM.C	known	4358	1226 diff	+2674
 maincpu v6	0xff1f1d	_ultoa	_ULTOA.C	exact	133	89 diff	+25
 maincpu v6	0xff1fb7	_memccpy	_MEMCCPY.C	exact	64	=	
 maincpu v6	0xff1ff7	_memchr	_MEMCHR.C	exact	24	=	
@@ -129,7 +129,7 @@ maincpu v5	0xff024a	.sbrk	__SBRK.C	exact	39	=
 maincpu v5	0xff0271	_strlen	_STRLEN.C	exact	30	=	
 maincpu v5	0xff028f	_ltoa	_LTOA.C	exact	60	=	
 maincpu v5	0xff02cb	_memset	_MEMSET.C	exact	68	=	
-maincpu v5	0xff0319	__doprnt	__DOFORM.C	known	4354	3978 diff	+10
+maincpu v5	0xff0319	__doprnt	__DOFORM.C	known	4358	1226 diff	+2674
 maincpu v5	0xff1ac9	_ultoa	_ULTOA.C	exact	133	89 diff	+25
 maincpu v5	0xff1b63	_memccpy	_MEMCCPY.C	exact	64	=	
 maincpu v5	0xff1ba3	_memchr	_MEMCHR.C	exact	24	=	
@@ -197,7 +197,7 @@ table data	0x9ffb2f	.sbrk	__SBRK.C	exact	39	=
 table data	0x9ffb56	_malloc	_MALLOC.C	exact	134	=	
 table data	0x9ffbdc	_strncmp	_STRNCMP.C	exact	50	=	
 hdae v2.06i	0x23a1a8	__FloatErrorHandle	TRAP.C	call	4	4 diff	+0
-hdae v2.06i	0x299ae7	__doprnt	__DOFORM.C	call	4354	3984 diff	+10
+hdae v2.06i	0x299ae7	__doprnt	__DOFORM.C	call	4358	1226 diff	+2674
 hdae v2.06i	0x29abd8	_sprintf	_SPRINTF.C	exact	40	=	
 hdae v2.06i	0x29ac00	_vsprintf	_SPRINTF.C	exact	59	=	
 hdae v2.06i	0x29ac3b	_itoa	_ITOA.C	exact	138	=	
@@ -222,7 +222,7 @@ hdae v2.06i	0x2f9362	___ctype	_CTYPE.C	exact	0	no piece
 hdae v2.06i	0x2f9362	__ctype	_CTYPE.C	exact	256	=	
 hdae v2.06i	0x2f948e	__doform_c data	__DOFORM.C	exact	79	78 diff	+0
 hdae v2.01i	0x23a112	__FloatErrorHandle	TRAP.C	call	4	4 diff	+0
-hdae v2.01i	0x2993af	__doprnt	__DOFORM.C	call	4354	3984 diff	+10
+hdae v2.01i	0x2993af	__doprnt	__DOFORM.C	call	4358	1226 diff	+2674
 hdae v2.01i	0x29a4a0	_sprintf	_SPRINTF.C	exact	40	=	
 hdae v2.01i	0x29a4c8	_vsprintf	_SPRINTF.C	exact	59	=	
 hdae v2.01i	0x29a503	_itoa	_ITOA.C	exact	138	=	
@@ -246,7 +246,7 @@ hdae v2.01i	0x2f884e	___ctype	_CTYPE.C	exact	0	no piece
 hdae v2.01i	0x2f884e	__ctype	_CTYPE.C	exact	256	=	
 hdae v2.01i	0x2f897a	__doform_c data	__DOFORM.C	exact	79	78 diff	+0
 hdae v1.15i	0x23d2e4	__FloatErrorHandle	TRAP.C	call	4	4 diff	+0
-hdae v1.15i	0x295abe	__doprnt	__DOFORM.C	call	4354	3983 diff	+10
+hdae v1.15i	0x295abe	__doprnt	__DOFORM.C	call	4358	1226 diff	+2674
 hdae v1.15i	0x296baf	_sprintf	_SPRINTF.C	exact	40	=	
 hdae v1.15i	0x296bd7	_vsprintf	_SPRINTF.C	exact	59	=	
 hdae v1.15i	0x296c12	_itoa	_ITOA.C	exact	138	=	
@@ -268,7 +268,7 @@ hdae v1.15i	0x2e0e66	___ctype	_CTYPE.C	exact	0	no piece
 hdae v1.15i	0x2e0e66	__ctype	_CTYPE.C	exact	256	=	
 hdae v1.15i	0x2e0f92	__doform_c data	__DOFORM.C	exact	79	78 diff	+0
 hdae v1.10i	0x23d2e4	__FloatErrorHandle	TRAP.C	call	4	4 diff	+0
-hdae v1.10i	0x2959c2	__doprnt	__DOFORM.C	call	4354	3984 diff	+10
+hdae v1.10i	0x2959c2	__doprnt	__DOFORM.C	call	4358	1226 diff	+2674
 hdae v1.10i	0x296ab3	_sprintf	_SPRINTF.C	exact	40	=	
 hdae v1.10i	0x296adb	_vsprintf	_SPRINTF.C	exact	59	=	
 hdae v1.10i	0x296b16	_itoa	_ITOA.C	exact	138	=	
@@ -290,4 +290,4 @@ hdae v1.10i	0x296ef6	__facnv	__FACVT.C	near	1718	1320 diff	+236
 hdae v1.10i	0x2e0cd6	___ctype	_CTYPE.C	exact	0	no piece	
 hdae v1.10i	0x2e0cd6	__ctype	_CTYPE.C	exact	256	=	
 hdae v1.10i	0x2e0e02	__doform_c data	__DOFORM.C	exact	79	78 diff	+0
-V4.23 listings + kn5000 reload rule, asm900 (run 2026-11-09-2-v423-kn5000rule-asm): 291 pairs: = 242, diff 37, no piece 12
+V4.23 listings + kn5000 reload rule (final form), asm900 (oracle run 2026-11-09-2): 291 pairs: = 242, diff 37, no piece 12
