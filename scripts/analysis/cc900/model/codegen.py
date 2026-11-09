@@ -1541,6 +1541,7 @@ LOOP_COND_DEF = True                                      # see compute_last_use
 CHAR_LOCAL_WA = True                                      # see plan_leaf
 ASSIGN_OPERAND_INPLACE = True                             # see gen_bin
 POSTDEC_FREE = True                                       # see loop_cond
+PTR_INDEX_REG = True                                      # see gen_load_mem
 
 def char_narrow(body):
     """cc900 does int + - & | ^ of a char and a constant that fits a byte, or of two chars, on the byte and
@@ -2296,6 +2297,9 @@ def elem_addr(F, lv, kind):
         pm = mem_operand(F, b)
         if pm is None or not pm.startswith('(') or (kind == 'load' and plain and esz > 1) or kind == 'cmp': return None
         if kind == 'rmw' and esz == 4: return None
+        ii = unpromote(lv.idx); im0 = mem_operand(F, ii) if ii.k == 'load' else None
+        if PTR_INDEX_REG and esz == 1 and kind == 'load' and im0 in ('IZ', 'QIZ', 'IX', 'IY') and ii.ty.size == 2:
+            F.emit('ld', 'XWA,%s' % pm); return '(XWA+%s)' % im0   # ra_homes.c rh_int_ptr: n in IZ -> ld XWA,(p) /
         if kind in ('load', 'storek'):                    # ai_clear: p[i] = 0 -> add XWA,(XSP+0x4) / ldw (XWA),0x0
             idx_into('WA'); F.emit('extz' if esz == 1 else 'exts', 'XWA'); scale32(F, 'XWA', esz)
             F.emit('add', 'XWA,%s' % pm); return '(XWA)'
