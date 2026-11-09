@@ -101,8 +101,16 @@ def load(path, defines=(), includes=(), adecl=False):
     cmd = [CLANG, '-target', 'tlcs900', '-mabi=cc900', '-std=c89', '-fsyntax-only', '-Xclang', '-ast-dump=json',
            '-Wno-everything', '-D__cdecl=__attribute__((tlcs900_cdecl))', '-D__adecl=__attribute__((tlcs900_adecl))']
     if adecl: cmd.append('-mcc900-adecl')
-    cmd += ['-D' + d for d in defines] + ['-I' + i for i in includes] + ['-x', 'c', path]
-    ast = json.loads(subprocess.run(cmd, capture_output=True, text=True, check=True).stdout)
+    src = path
+    data = open(path, 'rb').read()
+    if b'\x1a' in data:                                   # a DOS end-of-file byte (_STRLEN.C, _MEMCPY.C ...): cut there
+        import tempfile
+        fd, src = tempfile.mkstemp(suffix='.c'); os.write(fd, data[:data.index(b'\x1a')]); os.close(fd)
+        includes = list(includes) + [os.path.dirname(os.path.abspath(path))]
+    cmd += ['-D' + d for d in defines] + ['-I' + i for i in includes] + ['-x', 'c', src]
+    try: ast = json.loads(subprocess.run(cmd, capture_output=True, text=True, check=True).stdout)
+    finally:
+        if src != path: os.unlink(src)
     return Builder(path).unit(ast)
 
 class Builder:

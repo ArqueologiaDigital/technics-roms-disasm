@@ -9,7 +9,7 @@ one function and returns its lines; relax() turns out-of-reach jr into jrl.
 
 The encodings asm900 picks, read from the firmware (v10 String_Compare, Strcat, the phase 6 functions):
 - `ld r8,n` is the 2-byte compact form (`ld l, 0x0:opc`); `ld r16/r32,n` and `cp r,n` with n in 0..7 the 3-bit
-  form (`ld hl, 0:i3`, `cp bc, 0:i3`);
+  form (`ld hl, 0:i3`, `cp bc, 0:i3`); a larger `ld r16,n` the 3-byte compact form (`ldw hl, 0xffff`, _strlen);
 - `j cc,L` / `j L` are `jr` when the target is in reach and `jrl` otherwise; `cal _f` is `call` with a 24-bit
   address; a 16-bit push / pop of WA..IZ is the 1-byte form;
 - an absolute operand is `(ADDR:8)` below 0x100, `(ADDR:16)` below 0x10000, `(ADDR:24)` above.
@@ -128,6 +128,8 @@ def translate_line(t, syms, locals_):
     if base in ('ld', 'cp') and len(args) == 2 and REGS.match(raw[0]) and re.match(r'^(0x[0-7]|[0-7])$', raw[1]) \
             and (raw[0] not in R8 or base == 'cp'):
         return '\t%s %s, %d:i3' % (base, args[0], num(raw[1]))               # ld hl, 0:i3 / cp bc, 0:i3
+    if base == 'ld' and len(args) == 2 and raw[0] in ('WA', 'BC', 'DE', 'HL', 'IX', 'IY', 'IZ', 'SP') and NUM.match(raw[1]):
+        return '\tldw %s, 0x%x' % (args[0], num(raw[1]) & 0xffff)            # _strlen: ld HL,0xffff -> 33 ff ff
     if sz == 'w' and base in ('ld', 'cp', 'add', 'sub', 'and', 'or', 'xor'):
         return '\t%sw %s' % (base, ', '.join(args))
     return '\t%s %s' % (base, ', '.join(args)) if args else '\t' + base

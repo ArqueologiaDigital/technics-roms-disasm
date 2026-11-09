@@ -126,6 +126,7 @@ def mem_operand(F, e):
         v = strip(e.e)
         if v.k == 'var':
             d = v.decl
+            if getattr(F, 'lazy_homes', None) and d in F.lazy_homes: touch_home(F, d)
             if getattr(d, 'reg', None) and d.reg != 'XIZ':
                 return FAM[d.reg].get(d.ty.size) or FAM[d.reg][2]
             if getattr(d, 'homed', False) and d.reg == 'XIZ': return 'XIZ'
@@ -175,6 +176,10 @@ def is_signed(e):
 
 # ------------------------------------------------------------- code generation
 
+def esize_of(b):
+    t = strip(b.l).ty
+    return t.base.size if t.kind in ('ptr', 'array') and t.base is not None else 1
+
 def gen(F, e, fam, size, then_ret=False, store=False):
     """emit code leaving e's low `size` bytes in register family `fam`; returns the family actually used"""
     e0 = strip(e)
@@ -196,7 +201,10 @@ def gen(F, e, fam, size, then_ret=False, store=False):
             strip(e0.e).op in SIMPLE_OPS:
         b = strip(e0.e); lv = strip(b.l); rm = mem_operand(F, b.r)
         d = regvar_of(lv.e) if lv.k == 'load' else None
-        if d is not None and d.reg in ('WA', 'BC', 'DE', 'HL') and dies_here(F, lv) and rm is not None and not family_of(rm):
+        if strip(b.l).ty.kind in ('ptr', 'array') and b.op == '-' and esize_of(b) > 1: rm = None   # m_diff: scaled
+        elif rm is not None and family_of(rm) and rm.startswith('X') and b.ty.size == 4: pass   # _strlen: sub XHL,XIZ
+        elif rm is not None and family_of(rm): rm = None
+        if d is not None and d.reg in ('WA', 'BC', 'DE', 'HL') and dies_here(F, lv) and rm is not None:
             F.emit(SIMPLE_OPS[b.op], '%s,%s' % (FAM[d.reg][b.ty.size], rm))   # sw_ev: sub XBC,0x2000 / ld WA,BC
             if d.reg != fam: F.emit('ld', '%s,%s' % (FAM[fam][size], FAM[d.reg][size]))
             return fam
@@ -649,6 +657,7 @@ def gen_compare(F, e):
     if l.k == 'call' and rc.k == 'const' and size == 2:   # k_cond, c_break: cal .r1 / cp HL,0x0 (cdecl too)
         gen_call(F, l); flush_pops(F); F.emit('cp', 'HL,%s' % hx(rc.value)); return cc   # _toupper: inc 0x2,XSP first
     if rc.k == 'const' and rc.value == 0 and size == 4 and op in ('==', '!=') and lm in ('XIZ', 'XBC', 'XDE', 'XHL', 'XWA'):
+        if F.opt: flush_pops(F)                          # _strlen: cal _memchr / inc 0x8,XSP / or XHL,XHL
         F.emit('or', '%s,%s' % (lm, lm)); return cc     # _calloc: if (ptr) -> or XIZ,XIZ
     W = FAM['WA'][size]
     gen(F, l, 'WA', size)
@@ -1107,6 +1116,9 @@ def flat(s):
     return [s]
 
 def gen_stmt(F, s, last):
+    if s.k in ('if', 'for', 'while', 'do', 'switch') and getattr(F, 'lazy_homes', None):
+        for d in [d for d in F.f.params if d in F.lazy_homes and uses_decl(s, d)]:
+            touch_home(F, d)                               # c_while: ld IZ,(XSP+0x6) before the loop
     if s.k == 'block':
         body = flat(s)
         i = 0
@@ -1462,7 +1474,7 @@ def plan_homes(F):
         params = [d for d in F.f.params if getattr(d, 'reg', None) in ('WA', 'BC', 'DE') and (d in across or d in helper_ops)]
     else:
         params = [d for d in F.f.params if not getattr(d, 'reg', None) and d in across and d.ty.kind in ('int', 'ptr')
-                  and d.ty.size == 2 and d is not F.sret]
+                  and d.ty.size in (2, 4) and d is not F.sret]
     locs = [d for d in across if d.kind == 'local' and not getattr(d, 'reg', None) and d.ty.size in (1, 2, 4)
             and d.ty.kind in ('int', 'ptr') and not d.addr_taken]
     weight = {}                  # references, not weighted by loops: c_for i (4) before n (1), c_nested i (5) before j (4)
@@ -1490,6 +1502,13 @@ def plan_homes(F):
             r = 'IZ' if not used['IZ'] else 'QIZ' if not used['QIZ'] else None
             if r: d.reg = r; used[r] = True; F.xiz_vars.append(d)
             if r == 'IZ' and getattr(F, 'opt', False) is not None: pass
+    if F.opt:                                              # _strlen: ss = memchr(...) stays in XHL (no call after it)
+        rets = []
+        walk(F.f.body, lambda n, dep: rets.append(n) if n.k == 'return' and n.value is not None else None)
+        hl = [d for d in F.f.decls if d.kind == 'local' and not getattr(d, 'reg', None) and d not in across and
+              not d.addr_taken and d.ty.kind in ('int', 'ptr') and d.ty.size in (2, 4) and any(uses_decl(r, d) for r in rets)]
+        if len(hl) == 1 and not any(getattr(x, 'reg', None) == 'HL' for x in list(F.f.params) + list(F.f.decls)):
+            hl[0].reg = 'HL'
     pairs = []                                             # k_expr: r1(a) + r1(a + 1) keeps the right result in QIZ
     walk(F.f.body, lambda n, dep: pairs.append(n) if n.k == 'bin' and n.op in SIMPLE_OPS and strip(n.l).k == 'call'
          and strip(n.r).k == 'call' else None)
@@ -1505,11 +1524,20 @@ def plan_homes(F):
     F.home_moves = moves; F.home_stores = stores
 
 def emit_homes(F):
-    """after the frame is known: slot stores first, then the moves into IZ / XIZ (adecl.c d_keep)"""
+    """after the frame is known: slot stores first, then the moves into IZ / XIZ (adecl.c d_keep).  A cdecl
+    parameter is loaded at its first use instead (_strlen: pushw 0xffff / pushw 0x0 / ld XIZ,(XSP+0xc) / push XIZ;
+    call.c k_seq, where the first use is the first instruction)"""
     for d, r in getattr(F, 'home_stores', []): F.emit('ld', '(XSP+%s),%s' % (hx(d.slot + F.push), r))
+    F.lazy_homes = {}
     for dst, src in getattr(F, 'home_moves', []):
-        if not isinstance(src, str): src = '(XSP+%s)' % hx(src.off + F.push)
+        if not isinstance(src, str): F.lazy_homes[src] = dst; continue
         F.emit('ld', '%s,%s' % (dst, src))
+
+def touch_home(F, d):
+    """emit the deferred load of a homed cdecl parameter at its first use"""
+    lh = getattr(F, 'lazy_homes', None)
+    if lh and d in lh:
+        dst = lh.pop(d); F.emit('ld', '%s,(XSP+%s)' % (dst, hx(d.off + F.push)))
 
 def regvar_of(e):
     v = strip(e)
