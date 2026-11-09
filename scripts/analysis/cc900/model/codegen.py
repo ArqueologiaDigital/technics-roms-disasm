@@ -6264,6 +6264,7 @@ def leaf_r6(F):
         used.add(r); p.reg = r; F.emit('ld', '%s,(XSP+%s)' % (FAM[r][2], hx(p.off + F.push)))
     return True
 
+L2_NOLOOP = True                                   # see leaf_l2 (__todigit)
 L2_WIDE = False
 THREAD_ALL = True
 
@@ -6426,7 +6427,7 @@ def leaf_l2(F):
     tab_cls = {}
     for (tab, x, bit), dep, n in tabs:
         if tab in tab_cls: continue
-        if not dep: return False
+        if not dep and not L2_NOLOOP: return False       # (__todigit: table tests in straight-line code)
         cond_use = any(table_test(strip(lp.cond)) or any(table_test(m) for m in [lp.cond]) for lp in loops
                        if getattr(lp, 'cond', None) is not None and uses_table(lp.cond, tab))
         per_iter = sum(1 for t in tabs if t[0][0] is tab)
@@ -7707,25 +7708,47 @@ def emit_data(unit, out):
         elif d.ty.kind == 'array' and e.k == 'string':
             lines.append('\tdb\t%s,0' % e.value)
         elif d.ty.kind == 'array' and e.k == 'initlist' and d.ty.base.kind == 'struct':
-            rows = []                                      # __FLOAT.C g_dbltbl: one db row per element (its bytes)
-            def flat_bytes(x):
-                x = strip(x)
-                if x.k == 'initlist':
-                    out = []
-                    for y in x.items: out += flat_bytes(y)
+            rows = []                                      # __FLOAT.C g_dbltbl: one db row per element (its bytes);
+            def flat_fields(x, ty):                        # __AFCNV.C normtab: each field at its own width, eight a
+                x = strip(x)                               # line (dl -3529,41638,... / align 1 / dl 63128)
+                if ty.kind == 'struct':
+                    if x.k != 'initlist': return None
+                    out = []; fields = list(ty.rec)
+                    if len(fields) > 1 and all(off_ == 0 for _, _, off_ in fields):   # a union: its first member
+                        fields = fields[:1]                                           # (__FLOAT.C g_dbltbl: dat[8])
+                    for k_, (fname, fty, foff) in enumerate(fields):
+                        it = x.items[k_] if k_ < len(x.items) else None
+                        r_ = flat_fields(it, fty) if it is not None else [(0, fty.base.size if fty.kind == 'array'
+                                                                               else fty.size)] * (fty.size // (fty.base.size
+                                                                               if fty.kind == 'array' else fty.size))
+                        if r_ is None: return None
+                        out += r_
+                    return out
+                if ty.kind == 'array':
+                    if x.k != 'initlist': return None
+                    out = []; n_ = ty.size // ty.base.size
+                    for k_ in range(n_):
+                        it = x.items[k_] if k_ < len(x.items) else None
+                        r_ = flat_fields(it, ty.base) if it is not None else [(0, ty.base.size)]
+                        if r_ is None: return None
+                        out += r_
                     return out
                 v = data_value(x)
-                return None if v is None else [v & 0xff]
+                return None if v is None else [(v, ty.size)]
             ok = True
             for it in e.items:
-                b = flat_bytes(it)
-                if b is None: ok = False; break
-                b = b + [0] * max(0, d.ty.base.size - len(b))
-                rows += [b[k:k + 8] for k in range(0, len(b), 8)]   # g_ldbltbl: ten bytes are 8 + 2 lines
+                vals_ = flat_fields(it, d.ty.base)
+                if vals_ is None or any(w_ not in (1, 2, 4) for _, w_ in vals_): ok = False; break
+                run = []
+                for v_, w_ in vals_:                       # rows of up to eight values of one width per element
+                    if run and (run[-1][1] != w_ or len(run) == 8): rows.append(run); run = []
+                    run.append((v_, w_))
+                if run: rows.append(run)
             if not ok: continue
             for i, row in enumerate(rows):
                 if i: lines.append('\talign\t1')
-                lines.append('\tdb\t%s' % ','.join(str(v) for v in row))
+                w_ = {1: 'db', 2: 'dw', 4: 'dl'}[row[0][1]]
+                lines.append('\t%s\t%s' % (w_, ','.join(str(v & 0xff if w_ == 'db' else v) for v, _ in row)))
         elif d.ty.kind == 'array' and e.k == 'initlist' and d.ty.base.kind == 'int':
             vals = [data_value(x) for x in e.items]        # _CTYPE.C: db 32,32,... eight a line, align 1 between
             if None in vals: continue
