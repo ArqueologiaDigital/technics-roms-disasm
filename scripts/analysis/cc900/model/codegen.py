@@ -946,6 +946,16 @@ def flush_pops(F, before_test=False):
 
 def gen_call(F, e, fam=None, size=0):
     fn = strip(e.fn)
+    if fn.k != 'var' and not F.adecl and fn.ty is not None and fn.ty.is_ptr():
+        n = 0                                          # abi fptr.c fp_call: pushw (XSP+0x4) / ld XWA,(_gfp) /
+        if not e.args and F.pending: flush_pops(F)     # call XWA / inc 0x2,XSP
+        for a in reversed(e.args): n += push_arg(F, a)
+        pm = mem_operand(F, fn)
+        if pm is None: raise Unsupported('indirect call through an expression')
+        if pm != 'XWA': F.emit('ld', 'XWA,%s' % pm)
+        F.emit('call', 'XWA'); F.pending += n
+        if fam and fam != 'HL': F.emit('ld', '%s,%s' % (FAM[fam][size], FAM['HL'][size]))
+        return fam
     if fn.k != 'var': raise Unsupported('indirect call')
     n = 0
     args = e.args

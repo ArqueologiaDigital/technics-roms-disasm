@@ -105,6 +105,8 @@ def translate_line(t, syms, locals_):
             return '\tjp 0x%x' % lookup(raw[0], syms)
         return '\tjr %s, %s' % (CC[raw[0]], raw[1])
     if op == 'djnz': return '\tdjnz %s, %s' % (raw[0].lower(), raw[1])
+    if op == 'call' and len(raw) == 1 and re.match(r'^X(WA|BC|DE|HL|IX|IY|IZ)$', raw[0]):
+        return '\tcall (%s)' % raw[0].lower()                    # an indirect call: call XWA (abi fptr.c fp_call)
     if op in ('jr', 'jrl'):                                # inline assembly writes jr / jrl itself (_MEMSET.C)
         return '\t%s %s' % (op, raw[0]) if len(raw) == 1 else '\t%s %s, %s' % (op, CC[raw[0].lower()], raw[1])
     if op in ('sll', 'srl', 'sla', 'sra', 'rlc', 'rrc', 'rl', 'rr') and len(raw) == 2 and NUM.match(raw[0]):

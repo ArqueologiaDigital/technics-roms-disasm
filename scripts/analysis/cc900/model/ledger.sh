@@ -16,6 +16,9 @@ done
 for c in none O3XSXr; do
   row "run 2026-11-08-8-micro-ra, v423/$c" "micro/ra_*.c" "$O/2026-11-08-8-micro-ra/out/v423/$c" corpus/micro/ra_*.c
 done
+for c in none O3XS; do
+  row "run 2026-11-08-4-abi, v423/$c" "abi/*.c" "$O/2026-11-08-4-abi/out/v423/$c" corpus/abi/*.c
+done
 for c in Xr O3XSXr; do
   row "run 2026-11-08-6-abi-adecl, v423/$c" "abi/*.c" "$O/2026-11-08-6-abi-adecl/out/v423/$c" corpus/abi/*.c
 done
