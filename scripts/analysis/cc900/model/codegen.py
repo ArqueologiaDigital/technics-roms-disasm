@@ -3300,6 +3300,8 @@ def u1_held_stmt(F, e):
     def addrs(p, q):
         F.emit('ld', '%s,%s' % (FAM[T][2], I)); F.emit('exts', XT); F.emit('add', '%s,%s' % (XT, XT))
         F.emit('ld', '%s,%s' % (XH, XT)); F.emit('add', '%s,%s' % (XH, FAM[p.reg][4]))
+        if not F.opt:                                    # plain -Xr recomputes the scaled index (oc_add2)
+            F.emit('ld', '%s,%s' % (FAM[T][2], I)); F.emit('exts', XT); F.emit('add', '%s,%s' % (XT, XT))
         F.emit('add', '%s,%s' % (XT, FAM[q.reg][4])); F.emit('ld', '%s,(%s)' % (FAM[T][2], XT))
     if e.k == 'opassign' and e.op in SIMPLE_OPS and strip(e.l).k == 'index':
         p = elem(u1_load_node(e.l)); q = elem(e.r)
@@ -3939,6 +3941,16 @@ def gen_loop(F, s, last):
     """for / while / do (regalloc_notes.md, loop shapes); labels: exit first, then body"""
     cl = getattr(F, 'counted', {}).get(id(s))
     if cl: return gen_counted(F, s, last, cl)
+    dx = getattr(F, 'u1_down_xr', None)
+    if dx is not None and dx[0] is s:                    # plain -Xr oc_down: ld DE,BC / sub DE,0x1 / ret lt / L1: ... /
+        I = FAM[cl_i(s).reg][2]                          # sub DE,0x1 / j ge,L1 / L2:
+        exitl = F.newulabel(); body = F.newulabel()
+        F.emit('ld', '%s,%s' % (I, FAM[dx[1].reg][2])); F.emit('sub', '%s,0x1' % I)
+        after_ret = last and not F.xiz_vars and not F.pushes and not F.pending
+        F.emit('ret', 'lt') if after_ret and not F.loops else F.emit('j', 'lt,%s' % exitl)
+        F.lines.append(body + ':')
+        F.loops.append((exitl, lambda: body)); gen_stmt(F, s.body, False); flush_pops(F); F.loops.pop()
+        F.emit('sub', '%s,0x1' % I); F.emit('j', 'ge,%s' % body); F.lines.append(exitl + ':'); return
     if s.k == 'for' and s.init is not None:
         gen_stmt(F, s.init, False)
         if getattr(F, 'u1_down', None) is s: F.lines[-1] += '\t;u1'   # oc_down: dec 0x1,DE / j L1 is not merged
@@ -4228,12 +4240,27 @@ def u1_plain_global(F):
     f = F.f; W = {1: 8, 2: 16, 4: 32}
     loops = []
     walk(f.body, lambda n, d: loops.append(n) if n.k in ('for', 'while', 'do') else None)
-    if len(loops) != 1 or loops[0].k != 'for': return False
-    lp = loops[0]; h = u1_for_head(lp)
-    if h is None: return False
-    i, kv = h
+    loops0 = list(loops)
+    oi = None
+    if len(loops) == 2 and all(x.k == 'for' for x in loops):   # ol_nested under -Xr: j IX, i IY
+        ob = loops[0].body
+        while ob is not None and ob.k == 'block' and len(ob.body) == 1: ob = ob.body[0]
+        oh = u1_for_head(loops[0]) if ob is loops[1] else None
+        if oh is None: return False
+        oi = oh[0]; loops = [loops[1]]
+    if len(loops) != 1: return False
+    lp = loops[0]
+    if lp.k == 'for':
+        h = u1_for_head(lp)
+        if h is None or h[0] is oi: return False
+        i, kv = h; st = flat(lp.body)
+    else:                                                # ol_while, ol_do: int i = 0; while (i < k) { ...; i++; }
+        w = u1_while_parts(F, lp)
+        c = strip(lp.cond)
+        if w is None or not (c.k == 'bin' and c.op == '<' and strip(c.l).k == 'load' and strip(strip(c.l).e).k == 'var'
+                             and strip(strip(c.l).e).decl is w[0]): return False
+        i = w[0]; st = w[2]
     if any(getattr(p_, 'reg', None) not in ('WA', 'BC', 'DE') for p_ in f.params): return False
-    st = flat(lp.body)
     if not st or any(x.k != 'expr' for x in st): return False
     def gacc(x):
         x = strip(x)
@@ -4248,8 +4275,13 @@ def u1_plain_global(F):
     shapes = []; accs = []; lconst = False; byte_src = False; wide = False
     for x in st:
         e = x.e
+        r0 = strip(e.r) if e.k == 'opassign' else None
         if e.k == 'opassign' and e.op in SIMPLE_OPS and regvar_like(e.l, f) and gacc(e.r) is not None:
             g = [gacc(e.r)]; shape = ('acc', g[0].ty.size)
+        elif e.k == 'opassign' and e.op in '+-' and regvar_like(e.l, f) and r0.k == 'bin' and r0.op == '*' and \
+                r0.ty.size == 2 and gacc(r0.l) is not None and gacc(r0.l).ty.size == 2 and strip(r0.r).k == 'load' \
+                and strip(strip(r0.r).e).k == 'var':     # ol_idx_use: ld BC,(XDE+BC) / muls XBC,IX / add HL,BC
+            g = [gacc(r0.l)]; shape = ('mul', 2)
         elif e.k == 'bin' and e.op == '=' and strip(e.l).k == 'index' and gacc(u1_load_node(e.l)) is not None:
             lv = strip(e.l); r = strip(e.r)
             if fold(r).k == 'const' and fold(r).value is not None:
@@ -4267,7 +4299,8 @@ def u1_plain_global(F):
     if len(set(shapes)) != 1: return False
     rf = u1alloc.RegFile()
     mentioned = set()
-    walk([lp.cond, lp.body, lp.inc], lambda n, d: mentioned.add(n.decl) if n.k == 'var' else None)
+    walk([lp.cond, lp.body, getattr(lp, 'inc', None)] + ([loops0[0].cond] if oi is not None else []),
+         lambda n, d: mentioned.add(n.decl) if n.k == 'var' else None)
     for p_ in f.params:
         if p_ in mentioned: rf.take(u1alloc.regname(p_.reg, W.get(p_.ty.size, 32)))
     locs = [d for d in f.decls if d.kind == 'local']
@@ -4296,9 +4329,12 @@ def u1_plain_global(F):
     pref = u1_sum_pref(f, locs)
     pos = {d: k for k, d in enumerate(locs)}
     for d in locs:
-        if d is i or d in retv or not d.uses: continue
+        if d is i or d is oi or d in retv or not d.uses: continue
         objs.append(u1alloc.Obj(d, 'acc', W[d.ty.size], pos[d], pref=d is pref))
     objs.append(u1alloc.Obj(i, 'ctr', 16, pos[i]))
+    if oi is not None:
+        if oi in retv: return False
+        objs.append(u1alloc.Obj(oi, 'ctr', 16, pos[oi]))
     try: u1alloc.allocate(objs, rf)
     except u1alloc.Fail: return False
     if any(o.reg.startswith('Q') or (o.reg in u1alloc.BYTEFAM and u1alloc.HALVES[u1alloc.family(o.reg)][0] != o.reg)
@@ -4314,6 +4350,7 @@ def u1_plain_global(F):
         for k_, v in enumerate(g):
             acc[id(v)] = (regs.get(('chain', k_)), regs[('base', k_)])
     F.u1x = {'i': i, 'acc': acc, 'wide': wide}
+    if shapes[0][0] == 'mul': F.u1_value = regs[('chain', 0)]
     if len(tmpl) == 2:                                   # the copy's value: in the source's chain (ld BC,(XDE+BC)),
         F.tfam = regs.get(('chain', 1)) or regs[('base', 1)]   # a char in its base's low byte (ld C,(XBC+IX))
     if any(u1alloc.family(o.reg) == 'IZ' for o in objs): F.emit('push', 'IZ'); F.push = 2; F.pushes = ['IZ']
@@ -4533,6 +4570,10 @@ def u1_for_head(lp):
     if not (inc.k == 'incdec' and inc.op == '++' and strip(inc.e).k == 'var' and strip(inc.e).decl is i): return None
     return i, kv
 
+def cl_i(s):
+    """the counter of for (i = ...; ...; i--)"""
+    return strip(strip(s.inc).e).decl
+
 def u1_down_head(lp):
     """for (i = n - 1; i >= 0; i--) with i an int local and n a parameter (oc_down): (i, None)"""
     if lp.init is None or lp.cond is None or lp.inc is None: return None
@@ -4568,7 +4609,7 @@ def leaf_u1(F):
     elif len(loops) != 1 or loops[0].k != 'for': return False
     else:
         lp = loops[0]; h = u1_for_head(lp)
-        if h is None and F.adecl and F.opt: h = u1_down_head(lp)   # (plain -Xr: sub DE,0x1 / ret lt, not modelled)
+        if h is None: h = u1_down_head(lp)               # oc_down: for (i = n - 1; i >= 0; i--)
         if h is None: return False
         i, kv = h; outer = None
     params = list(f.params)
@@ -4586,7 +4627,7 @@ def leaf_u1(F):
             else: bad.append(n)
         if n.k == 'call' or fpgen.is_fp_op(n): bad.append(n)
     walk(lp.body, v)
-    if not bad and not acc and F.adecl and F.opt:        # ra_param3, ol_inv, ra_nested: no array at all
+    if not bad and not acc and F.adecl:                  # ra_param3, ol_inv, ra_nested: no array at all
         locs = [d for d in f.decls if d.kind == 'local']
         rets = []
         walk(f.body, lambda n, d: rets.append(strip(strip(n.value).e).decl) if n.k == 'return' and n.value is not None
@@ -4627,6 +4668,7 @@ def leaf_u1_noarr(F, lp, ctrs, params, locs, retv):
          (n.k == 'opassign' or n.op == '=') and strip(n.l).k == 'var' else None)
     inv = all(x in params and x not in modified for x in xs) and xs[0] is not xs[1]
     if not inv and not all(x in ctrs for x in xs): return False
+    if not F.opt: inv = False                            # plain -Xr: nothing hoisted (ra_param3: ld IX,BC / muls XIX,DE)
     if inv and len(ctrs) != 1: return False
     rf = u1alloc.RegFile()
     for p_ in params: rf.take(p_.reg)
@@ -4683,8 +4725,7 @@ def leaf_u1_adecl(F, lp, ctrs, params, acc, locs, retv):
         except u1alloc.Fail: return False
         rf.take('B')                                     # (the byte is widened in BC: oc_sum_c exts BC)
     objs = []
-    if not F.opt and (lconst or len({p_ for p_, sz in acc if sz > 1}) > 1): return False   # plain -Xr oc_clr_l,
-                                                         # oc_add2: the chain / recomputation differ (not modelled)
+    if not F.opt and lconst: return False                # plain -Xr oc_clr_l: exception 3 of the README
     if len({p_ for p_, sz in acc if sz > 1}) > 1: objs.append(u1alloc.Obj('held', 'held', 32))   # oc_add2: XIY
     if lconst: objs.append(u1alloc.Obj('const', 'temp1', 32))
     if wide: objs.append(u1alloc.Obj('chain', 'temp1' if not lconst else 'chain', 32))
@@ -4710,7 +4751,8 @@ def leaf_u1_adecl(F, lp, ctrs, params, acc, locs, retv):
     F.u1_i = ctrs[-1]
     for v_, src, dst in moves:
         F.emit('ld', '%s,%s' % (dst, src))
-    if down:                                             # oc_down: ld DE,BC at entry, dec 0x1,DE as the loop's init
+    if down and not F.opt: F.u1_down_xr = (lp, dn)      # plain -Xr oc_down: ld DE,BC / sub DE,0x1 / ret lt
+    elif down:                                           # oc_down: ld DE,BC at entry, dec 0x1,DE as the loop's init
         from frontend import N
         i = ctrs[-1]
         F.emit('ld', '%s,%s' % (FAM[i.reg][2], FAM[dn.reg][2]))
@@ -4736,7 +4778,10 @@ def leaf_u1_cdecl(F, lp, i, kv, params, acc, locs, retv, outer=None, okv=None):
     rf = u1alloc.RegFile(); objs = []
     if any(d.ty.size not in W for d in locs if d.uses): return False
     if retv: rf.take(u1alloc.RESULT[W[retv[0].ty.size]])
-    bound = strip(kv.e).decl
+    down = kv is None                                    # O3XS oc_down: for (i = n - 1; i >= 0; i--)
+    dn = strip(strip(strip(strip(flat(lp.init)[0].e).r).l).e).decl if down else None
+    if down and outer is not None: return False
+    bound = strip(kv.e).decl if not down else None
     obound = strip(okv.e).decl if okv is not None else None
     if obound is not None and obound is not bound and obound.ty.size != 2: return False
     ptrs = []
@@ -4746,8 +4791,9 @@ def leaf_u1_cdecl(F, lp, i, kv, params, acc, locs, retv, outer=None, okv=None):
     walk(F.f.body, lambda n, d: nuse.__setitem__(n.decl, nuse.get(n.decl, 0) + 1) if n.k == 'var' else None)
     inloop = {}
     walk(lp.body, lambda n, d: inloop.__setitem__(n.decl, inloop.get(n.decl, 0) + 1) if n.k == 'var' else None)
-    kept = [p_ for p_ in params if p_ is not bound and p_ is not obound and nuse.get(p_, 0) > 1]   # oc_max: p[0], p[i]
-    others = [p_ for p_ in params if p_ is not bound and p_ is not obound and p_ not in ptrs]
+    kept = [p_ for p_ in params if p_ is not bound and p_ is not obound and p_ is not dn and nuse.get(p_, 0) > 1]
+    others = [p_ for p_ in params if p_ is not bound and p_ is not obound and p_ is not dn and p_ not in ptrs]
+    if down and nuse.get(dn, 0) != 1: return False      # (oc_max: p[0] and p[i] keep p)
     if any(p_ in kept or inloop.get(p_, 0) != 1 for p_ in others): return False  # (k: once per iteration, stacked)
     if any(p_.ty.size not in W for p_ in kept): return False
     loads = []
@@ -4818,6 +4864,12 @@ def leaf_u1_cdecl(F, lp, i, kv, params, acc, locs, retv, outer=None, okv=None):
         F.param_copies.append(p_)
     F.deferred = list(kept)
     F.u1_i = i; F.u1_bound = bound
+    if down:                                             # ld DE,(XSP+0x8) / dec 0x1,DE / j L1 (the dec not merged)
+        from frontend import N
+        lp.init = N('block', body=[
+            N('expr', e=N('bin', op='=', l=N('var', decl=i, ty=i.ty), r=N_load(dn), ty=i.ty)),
+            N('expr', e=N('incdec', op='--', post=False, e=N('var', decl=i, ty=i.ty), ty=i.ty))])
+        F.u1_down = lp
     if obound is not None: F.u1_bounds = [obound] + ([bound] if bound is not obound else [])
     if any(u1alloc.family(o.reg) == 'IZ' for o in objs): F.emit('push', 'IZ'); F.push = 2; F.pushes = ['IZ']
     return True
