@@ -270,6 +270,30 @@ What is left, in order:
    `cpw (XSP+0x4),0x7` / `ret ne`.  switch.c O3XS 0 -> 20 of 25; left: fall-through, the event-handler shapes.
 5. **Phase 3b**: the LLVM implementation, once the model's rules stop moving as fast.
 
+Done since (2026-11-09, evening):
+- **Homes across calls** (item 1): rule R3-set under none, `-Xr` and `-O3 -XS -Xr`, and R4 under cdecl `-O3 -XS`
+  when a 32-bit value is a candidate (`model/homes.py`; research-scratch `sessions/2026-11-09_cc900-homes`, a6e6b09
+  and 1baf8a7, with run `2026-11-09-14-micro-libshapes`).  With the `-O` call-tail merge, call results stored
+  from XHL, and single-use values pushed directly, `_memccpy` is byte-identical (9 pairs).
+- **`-Xr` / `-O3 -XS -Xr` calls**: a computed product built before a register variable moves into WA (parked in
+  BC without `-O`), register parameters stored at entry into slots in reverse order, global memory / constants /
+  frame slots in that order under `-O`.  ra_libshapes Xr 7 -> 12, O3XSXr 5 -> 13 of 21.
+- **`_log`'s shapes** (run `2026-11-09-15-micro-fporder`): a table element opposite an int conversion is held in
+  XIZ (`elem_hoists`); a discarded double result still gets its hidden-argument temporary; constants second in
+  commutative ops; a static union member's address first.  `_log` now assembles: 15 of 338 bytes differ, all slot
+  depths (E2 / E3).
+- **Pairs**: `.sbrk` (table data) right once a `large` extern is taken as 24-bit (asm900 reads the declaration, not
+  the address); `pairs.tsv`'s near matches and aliases are counted apart.  kn5000 personality **185** identical,
+  v4.23 172; 5 differ (`_log` x3, the main CPU's near-match `_vsprintf` x2).
+
+Next, in order:
+1. **The cdecl `-O3 -XS` leaf allocator L2** (research-scratch `sessions/2026-11-09_cc900-leaf-o3xs`, b58b51b):
+   119 of 131 functions, all six target routines (`_atoi`, `_atol`, `_strupr`, `_strrev`, `_strrchr`, `_itoa`: 28
+   pairs).  The model must first generate their shapes (ctype-table conditions, hoisted table bases, `?:` stores,
+   strength-reduced pointer copies), then place the objects by L2's class order.
+2. **FP call slots** (E2 / E3): an agent is fitting the prepass with new probes (`_log`, `__trig`, `_tanh`).
+3. Then phase 3b.
+
 ## How to resume
 
 ```sh
