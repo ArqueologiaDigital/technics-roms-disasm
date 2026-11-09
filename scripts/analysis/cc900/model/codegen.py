@@ -754,6 +754,21 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
             # add WA,DE / ld HL,WA; ra_noloop3: muls XWA,DE / add WA,HL / add WA,DE / ld HL,WA)
             f2 = gen_bin(F, e, T, size, then_ret, store)
             F.emit('ld', '%s,%s' % (FAM[fam][size], FAM[f2][size])); return fam
+    il = strip(l)
+    if XR_CHAIN_INPLACE and F.adecl and not F.opt and op in SIMPLE_OPS and size == 2 and il.k == 'bin' and \
+            il.op in SIMPLE_OPS and strip(il.l).k == 'load' and regvar_of(strip(il.l).e) is not None and \
+            regvar_of(strip(il.l).e).reg in ('WA', 'BC', 'DE') and regvar_of(strip(il.l).e).reg != fam and \
+            dies_here(F, strip(il.l)) and not il.ty.is_ptr() and not e.ty.is_ptr() and operand(F, il.r, size) is not None:
+        lv0 = regvar_of(strip(il.l).e); W0 = FAM[lv0.reg][size]   # ra_chains.c ch_p3 (-Xr): a + b + c ->
+        F.emit(SIMPLE_OPS[il.op], '%s,%s' % (W0, operand(F, il.r, size))); F.dead.add(lv0)   # add WA,BC / ld HL,WA /
+        F.emit('ld', '%s,%s' % (R, W0))                                                         # add HL,DE
+        rs0 = operand(F, r, size)
+        if rs0 is None: raise Unsupported('chain operand')
+        rc0 = fold(r)
+        if op in '+-' and rc0.k == 'const' and rc0.value is not None and 1 <= rc0.value <= 8:
+            F.emit('inc' if op == '+' else 'dec', '%s,%s' % (hx(rc0.value), R))
+        else: F.emit(SIMPLE_OPS[op], '%s,%s' % (R, rs0))
+        return fam
     if op in ('+', '&', '|', '^') and fam != 'WA' and getattr(F, 'tfam', None) and reads_reg(r, fam) and not reads_reg(l, fam):
         rr = strip(r)                                # ot_cnt_abn: gc = *a + *b with b in XBC dying -> ld C,(XBC) /
         while rr.k == 'cast': rr = strip(rr.e)       # add C,(XWA)
@@ -1618,6 +1633,7 @@ LOOP_FLUSH_POPS = True                                    # see gen_loop
 SWITCH_LOOP_LABEL = True                                  # see gen_switch
 CHAR_CONST_PUSHW = True                                   # see push_arg
 CSE_GLOBALS = True                                        # see cse_params
+XR_CHAIN_INPLACE = True                                   # see gen_bin
 
 def char_narrow(body):
     """cc900 does int + - & | ^ of a char and a constant that fits a byte, or of two chars, on the byte and
