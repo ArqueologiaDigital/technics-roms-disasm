@@ -22,7 +22,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-4-micro-switch, v423/O3XS                            | micro/switch.c     | 0 / 25 exact (0.0%)      |
 | run 2026-11-09-4-micro-switch, v423/O3XSXr                          | micro/switch.c     | 20 / 25 exact (80.0%)    |
 | run 2026-11-09-5-micro-optparams, v423/O3XS                         | micro/opt_params.c | 19 / 24 exact (79.2%)    |
-| run 2026-11-09-5-micro-optparams, v423/O3XSXr                       | micro/opt_params.c | 10 / 24 exact (41.7%)    |
+| run 2026-11-09-5-micro-optparams, v423/O3XSXr                       | micro/opt_params.c | 22 / 24 exact (91.7%)    |
 | run 2026-11-09-6-micro-rahomes, v423/none                           | micro/ra_homes.c   | 9 / 25 exact (36.0%)     |
 | run 2026-11-09-6-micro-rahomes, v423/O3XS                           | micro/ra_homes.c   | 7 / 25 exact (28.0%)     |
 | run 2026-11-09-6-micro-rahomes, v423/Xr                             | micro/ra_homes.c   | 16 / 25 exact (64.0%)    |

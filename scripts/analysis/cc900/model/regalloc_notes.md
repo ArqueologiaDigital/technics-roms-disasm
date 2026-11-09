@@ -104,4 +104,7 @@ candidates; a candidate's occupant moves to reloc(candidate) (WA -> DE, HL; BC -
 never T's victim (it moves and its family is barred); a returned local reserves HL; the entry moves are
 sequentialised in parameter order.  The code generator then uses T for the `n--` copy, the moved or compared byte,
 and after the loop the first of WA, BC, DE, HL whose variable is not needed again.  opt_temps.c 38 / 38,
-opt_params.c 10 / 24 under O3XSXr (the rest: shapes the classifier does not cover yet, two loops, three pointers).
+opt_params.c 22 / 24 under O3XSXr: loops with no temporary are skipped when choosing the kind (op_cat), a
+counter in `n-- && ...` counts, `*a == *b && *a` is cmp2, a stack counter goes to the first free of DE, HL, IX, IY
+(op_three: `ld IX,(XSP+0x4)`, `retd 0x2`), the 16-bit temporary of a word body is T (op_sum2: IX).  Left: the two
+`heavy` bodies, where `a[1]`'s address goes to T and `a++` moves up before the load.

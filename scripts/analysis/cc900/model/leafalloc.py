@@ -76,41 +76,57 @@ def moves(order, arrival, final):
     return out
 
 def classify(f, strip, walk):
-    """(kind, counter decl) of a function whose body is one while loop (plus returns / simple statements), or None"""
+    """(kind, counter decl) of a leaf function made of while loops and simple statements, or None.  Loops with no
+    temporary (`while (*a) a++;`) are skipped; the others must agree on one kind (op_cat: the second loop's move)."""
     loops = []
     walk(f.body, lambda n, d: loops.append(n) if n.k in ('for', 'while', 'do') else None)
-    if len(loops) != 1 or loops[0].k != 'while': return None
-    w = loops[0]; c = strip(w.cond)
-    def byte_deref(e):
+    if not loops or any(l.k != 'while' for l in loops): return None
+    def unc(e):
         e = strip(e)
         while e.k == 'cast': e = strip(e.e)
+        return e
+    def byte_deref(e):
+        e = unc(e)
         return e.k == 'load' and strip(e.e).k == 'deref' and e.ty.size == 1
     def derefs(n, size):
         out = []
         walk(n, lambda m, d: out.append(m) if m.k == 'load' and strip(m.e).k == 'deref' and m.ty.size == size else None)
         return out
-    counter = None
-    if c.k == 'incdec' and c.post and c.op == '--' and strip(c.e).k == 'var' and strip(c.e).decl.kind == 'param':
-        counter = strip(c.e).decl
-    elif c.k == 'bin' and c.op == '&&':
-        l = strip(c.l)
-        while l.k == 'cast': l = strip(l.e)
-        r = strip(c.r)
-        if l.k == 'load' and strip(l.e).k == 'var' and strip(l.e).decl.kind == 'param' and r.k == 'bin' and \
-                r.op in ('==', '!=') and byte_deref(r.l) and byte_deref(r.r):
-            return 'cmp', strip(l.e).decl
-        return None
-    elif c.k == 'bin' and c.op in ('==', '!=') and byte_deref(c.l) and byte_deref(c.r):
-        return 'cmp2', None
-    else: return None
-    if derefs(w.body, 2): return 'word', counter
-    stores = []
-    walk(w.body, lambda m, d: stores.append(m) if m.k in ('bin', 'opassign') and (m.k == 'opassign' or m.op == '=') else None)
-    for st in stores:
-        lv = strip(st.l)
-        if lv.k == 'deref' and st.ty.size == 1 and derefs(st.r, 1): return 'move', counter
-        if lv.k == 'var' and lv.decl.kind == 'local' and derefs(st.r, 1):
-            r = strip(st.r)
-            while r.k == 'cast': r = strip(r.e)
-            return ('arith', counter) if r.k == 'bin' else ('heavy', counter)
-    return 'count', counter
+    def is_cnt(e):
+        e = unc(e)
+        return e.k == 'incdec' and e.post and e.op == '--' and strip(e.e).k == 'var' and strip(e.e).decl.kind == 'param'
+    def byte_cmp(e):
+        e = unc(e)
+        return e.k == 'bin' and e.op in ('==', '!=') and byte_deref(e.l) and byte_deref(e.r)
+    found = []
+    for w in loops:
+        c = unc(w.cond); counter = None; extra = None
+        if is_cnt(c): counter = strip(unc(c).e).decl
+        elif c.k == 'bin' and c.op == '&&' and (is_cnt(c.l) or is_cnt(c.r)):   # op_cat3: n-- && *b
+            counter = strip(unc(c.l if is_cnt(c.l) else c.r).e).decl
+        elif c.k == 'bin' and c.op == '&&':
+            l = unc(c.l)
+            if l.k == 'load' and strip(l.e).k == 'var' and strip(l.e).decl.kind == 'param' and byte_cmp(c.r):
+                found.append(('cmp', strip(l.e).decl)); continue
+            if byte_cmp(c.l) or byte_cmp(c.r): found.append(('cmp2', None)); continue   # op_two: *a == *b && *a
+            return None
+        elif byte_cmp(c): found.append(('cmp2', None)); continue
+        elif byte_deref(c) or (c.k == 'load' and c.ty.kind in ('int', 'ptr')):
+            if not derefs(w.body, 1) and not derefs(w.body, 2): continue          # while (*a) a++;: no temporary
+            return None
+        else: return None
+        if derefs(w.body, 2): found.append(('word', counter)); continue
+        stores = []
+        walk(w.body, lambda m, d: stores.append(m) if m.k in ('bin', 'opassign') and (m.k == 'opassign' or m.op == '=') else None)
+        kind = 'count'
+        for st in stores:
+            lv = strip(st.l)
+            if lv.k == 'deref' and st.ty.size == 1 and derefs(st.r, 1):
+                kind = 'move3' if len([p for p in f.params if p.ty.is_ptr()]) >= 3 else 'move'; break
+            if lv.k == 'var' and lv.decl.kind == 'local' and derefs(st.r, 1):
+                r = unc(st.r)
+                kind = 'arith' if r.k == 'bin' else 'heavy'; break
+        found.append((kind, counter))
+    if not found: return ('none', None)
+    if len({k for k, _ in found}) != 1: return None
+    return found[0]

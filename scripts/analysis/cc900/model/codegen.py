@@ -1641,7 +1641,14 @@ def gen_stmt(F, s, last):
         rv = regvar_of(strip(s.e.r).e) if strip(s.e.r).k == 'load' else None
         if rv is not None and rv.ty.size == size:
             F.emit('ld', '%s,%s' % (t, FAM[rv.reg][size])); return
-        fam = gen(F, s.e.r, getattr(F, 'tfam', 'WA'), size)   # opt_temps.c ot_cpy_anb: ld E,(XHL+:1) / ld (XWA+:1),E
+        work = getattr(F, 'tfam', 'WA')
+        if getattr(F, 'tfam', None) and not F.loops and size == 1:   # op_two_loops: *a = *b after the loops ->
+            need = set()                                             # ld C,(XBC) / ld (XWA),C
+            walk(lv, lambda m, d: need.add(strip(m.e).decl) if m.k == 'load' and strip(m.e).k == 'var' else None)
+            need |= {d for d in list(F.f.params) + list(F.f.decls) if getattr(d, 'reg', None) and uses_after_stmt(F, d)}
+            held = {getattr(d, 'reg', None) for d in need}
+            work = next((r for r in ('WA', 'BC', 'DE', 'HL') if r not in held), 'WA')
+        fam = gen(F, s.e.r, work, size)                    # opt_temps.c ot_cpy_anb: ld E,(XHL+:1) / ld (XWA+:1),E
         F.emit('ld', '%s,%s' % (t, FAM[fam][size])); return
     raise Unsupported('statement ' + s.k)
 
@@ -1992,6 +1999,11 @@ def operand(F, e, size, avoid=()):
 
 def regvar_stmt(F, e):
     """assignments to register variables: v = x, v op= x, v++ (ra_leaf, ctrl)"""
+    if F.opt and e.k == 'opassign' and e.op in '+-' and regvar_of(e.l) and regvar_of(e.l).ty.size == 2 and \
+            getattr(F, 'tkind', None) == 'word' and strip(e.r).k == 'bin':
+        d = regvar_of(e.l); T = F.tfam                     # op_sum2: s += *p++ + *q++ -> ld IX,(XBC+:2) /
+        gen(F, e.r, T, 2)                                  # add IX,(XWA+:2) / add HL,IX
+        F.emit(SIMPLE_OPS[e.op], '%s,%s' % (FAM[d.reg][2], FAM[T][2])); return True
     if F.opt and e.k == 'opassign' and e.op in '+-' and regvar_of(e.l) and regvar_of(e.l).ty.size == 2 and \
             char_arith(e.r) and getattr(F, 'tfam', None):
         d = regvar_of(e.l); T = F.tfam                     # opt_temps.c ot_sum: s += *a++ - *b++ ->
@@ -2509,7 +2521,8 @@ def leaf_r6(F):
     if ck is None: return False
     kind, counter = ck
     params = [p for p in f.params if getattr(p, 'reg', None) in ('WA', 'BC', 'DE')]
-    if len(params) != len(f.params): return False                 # (a stack parameter: move3, not modelled here)
+    stackp = [p for p in f.params if p not in params]
+    if any(p.ty.size > 2 for p in stackp): return False
     locs = [d for d in f.decls if d.kind == 'local']
     rets = []
     walk(f.body, lambda n, d: rets.append(strip(strip(n.value).e).decl) if n.k == 'return' and n.value is not None
@@ -2521,10 +2534,15 @@ def leaf_r6(F):
     mv = leafalloc.moves(params, arrival, final)
     for p in params: p.reg = final[p]
     if retloc: retloc[0].reg = rl
-    F.tfam = T or 'WA'
+    F.tfam = T or 'WA'; F.tkind = kind
     for v, src, dst in mv:                                # ot_cpy_abn: ld HL,DE / ld XDE,XWA
         sz = v.ty.size if v.ty.size in (1, 2, 4) else 4
         F.emit('ld', '%s,%s' % (FAM[dst][sz], FAM[src][sz]))
+    used = set(final.values()) | {T} | ({rl} if rl else set())
+    for p in stackp:                                      # op_three: n from the stack into the first free of DE, HL,
+        r = next((g for g in ('DE', 'HL', 'IX', 'IY') if g not in used), None)   # IX, IY -> ld IX,(XSP+0x4)
+        if r is None: return False
+        used.add(r); p.reg = r; F.emit('ld', '%s,(XSP+%s)' % (FAM[r][2], hx(p.off + F.push)))
     return True
 
 def plan_leaf(F):
@@ -3108,7 +3126,7 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None):
     if not F.lines[-1].startswith('\tret'):
         if F.xiz_vars: F.emit('pop', F.save_reg)
         epilogue(F)
-        F.emit('ret')
+        F.emit('retd', hx(F.retd)) if F.retd else F.emit('ret')   # op_three: an adecl stack parameter -> retd 0x2
     for t in reversed(getattr(F, 'tables', [])): F.lines[1:1] = t     # switch tables right after the label
     if F.opt and getattr(F, 'fp_temps', None) is not None: F.lines = fpgen.hoist_common(F.lines)
     if F.opt: F.lines = tail_calls_opt(F, cross_jump(F, F.lines))
