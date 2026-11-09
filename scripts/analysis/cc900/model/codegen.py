@@ -1608,6 +1608,7 @@ def bit_cond(F, c):
 
 CHAR_NARROW = True                                        # see char_narrow
 OR_BIT_SET = True                                         # see compile_function
+DEC_CMP_SUB = True                                        # dec 0x1,R / cp R,0x0 -> sub R,0x1 (opt_counted.c oc_down)
 TERN_TRUTH_PRE = True                                     # see gen's -O ?: path
 RET_CC_KEEPS = True                                       # see knowledge_pass
 TERN_ARM_LAST = True                                      # see compute_last_uses
@@ -7288,6 +7289,12 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong
             nxt = F.lines[i + 1] if i + 1 < len(F.lines) else ''
             if v and v & (v - 1) == 0 and v < (1 << w) and not re.match(r'^\t(j|scc|ret|jr)\t\w+,|^\tret\t\w+$|^\tscc', nxt):
                 F.lines[i] = '\tset\t%s,%s' % (hx(v.bit_length() - 1), m.group(1))
+    if DEC_CMP_SUB:                                      # i-- then i >= 0: sub BC,0x1 / j ge (dec on a register sets no
+        for i in range(len(F.lines) - 1):                # flags; no oracle listing has dec 0x1,R / cp R,0x0; the
+            m = F.lines[i] and re.match(r'^\tdec\t0x1,(\w+)$', F.lines[i])   # overflow flag of sub ends opt_counted.c oc_down
+            if m and F.lines[i + 1] == '\tcp\t%s,0x0' % m.group(1):    # at n = -32768)
+                F.lines[i] = '\tsub\t%s,0x1' % m.group(1); F.lines[i + 1] = None
+        F.lines = [l for l in F.lines if l is not None]
     if F.opt and RET_KNOWN_GLOBAL: F.lines = ret_known_global(F.lines)
     if F.opt: F.lines = drop_unreachable(F.lines)        # (without -O a switch keeps its end: sw_jt6 L3: ret)
     if F.opt and GLOBAL_FORWARD:                          # _rand: ld (_Seed),XHL / ld XWA,(_Seed) -> ld XWA,XHL (the

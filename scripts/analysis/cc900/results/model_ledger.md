@@ -81,7 +81,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-10-micro-fptemps, v423/O3XS                          | micro/fp_temps.c     | 33 / 33 exact (100.0%)   |
 | run 2026-11-09-11-micro-opttemps, v423/Xr                           | micro/opt_temps.c    | 35 / 38 exact (92.1%)    |
 | run 2026-11-09-11-micro-opttemps, v423/O3XSXr                       | micro/opt_temps.c    | 38 / 38 exact (100.0%)   |
-| run 2026-11-09-12-micro-optcounted, v423/none                       | micro/opt_counted.c  | 24 / 32 exact (75.0%)    |
+| run 2026-11-09-12-micro-optcounted, v423/none                       | micro/opt_counted.c  | 25 / 32 exact (78.1%)    |
 | run 2026-11-09-12-micro-optcounted, v423/O3XS                       | micro/opt_counted.c  | 29 / 32 exact (90.6%)    |
 | run 2026-11-09-12-micro-optcounted, v423/Xr                         | micro/opt_counted.c  | 31 / 32 exact (96.9%)    |
 | run 2026-11-09-12-micro-optcounted, v423/O3XSXr                     | micro/opt_counted.c  | 32 / 32 exact (100.0%)   |
