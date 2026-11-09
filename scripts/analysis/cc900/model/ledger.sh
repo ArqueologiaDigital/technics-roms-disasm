@@ -40,6 +40,9 @@ done
 for c in none O3XS; do
   row "run 2026-11-09-10-micro-fptemps, v423/$c" "micro/fp_temps.c" "$O/2026-11-09-10-micro-fptemps/out/v423/$c" corpus/micro/fp_temps.c
 done
+for c in Xr O3XSXr; do
+  row "run 2026-11-09-11-micro-opttemps, v423/$c" "micro/opt_temps.c" "$O/2026-11-09-11-micro-opttemps/out/v423/$c" corpus/micro/opt_temps.c
+done
 row "run 2026-11-08-9-micro-optloops, v423/O3XS" "micro/opt_loops.c" "$O/2026-11-08-9-micro-optloops/out/v423/O3XS" corpus/micro/opt_loops.c
 for p in v4.23 kn5000; do
   row "run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality $p" "1997 LIB/SRC" \

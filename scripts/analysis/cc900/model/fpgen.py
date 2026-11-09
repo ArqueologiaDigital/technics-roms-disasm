@@ -110,6 +110,10 @@ def lvalue_addr(F, v, reg):
                 F.emit('lda', '%s,_%s + %s' % (reg, b.decl.name, cg.hx(i.value * v.ty.size))); return True
             im = cg.mem_operand(F, cg.narrow(v.idx, 2))
             if im is None: return False
+            if not im.startswith('(') and reg == 'XDE' and cg.family_of(im) not in (None, 'XWA', 'XBC'):
+                F.emit('ld', 'WA,%s' % im)                     # d_loop: ld WA,IZ / sla 0x3,WA / lda XBC,_gda /
+                F.emit('sla', '%s,WA' % cg.hx({8: 3, 4: 2}[v.ty.size]))   # lda XDE,XBC+WA
+                F.emit('lda', 'XBC,_%s' % b.decl.name); F.emit('lda', 'XDE,XBC+WA'); return True
             scratch = {'XWA': 'XBC', 'XBC': 'XDE', 'XDE': 'XBC'}[reg]
             r16 = cg.FAM[cg.family_of(reg)[1:]][2]
             F.emit('ld', '%s,%s' % (r16, im))                                    # d_arr: ld BC,(XSP+0x8) / sla 0x3,BC /
@@ -194,7 +198,11 @@ def eval_val(F, e, hint):
         elif len(comp) == 1 and fp_value_cast(ops[comp[0]]).k != 'call':
             vals[comp[0]] = eval_val(F, ops[comp[0]], hint); dst = vals[comp[0]]
         else:
-            if comp: vals[comp[0]] = eval_val(F, ops[comp[0]], None)
+            if comp:                                         # d_call_e: fd(a * 2.0) + a: the argument's product takes
+                c0 = fp_value_cast(ops[comp[0]])             # the hint (+0x18), fd's result a fresh one (+0x10), the
+                if c0.k == 'call':                           # sum the hint again
+                    cc = Cell(c0.ty.size); call_into(F, c0, ('cell', cc), arg_hint=hint); vals[comp[0]] = ('slot', cc.off)
+                else: vals[comp[0]] = eval_val(F, ops[comp[0]], None)
             cell = hint if hint is not None else Cell(e.ty.size)
             op_into(F, e, vals, ('cell', cell)); return ('slot', cell.off)
         op_into(F, e, vals, dst); return dst
@@ -209,8 +217,12 @@ def op_into(F, e, vals, dest):
             vals = [vals[1], vals[0]]                      # t_amla: gd3 + gd*gd2 -> XBC = the product, XDE = _gd3
         if F.opt and dest[0] not in ('sret', 'xiz'):
             sa, sb, sd = simple_addr(F, vals[0]), simple_addr(F, vals[1]), dest_simple(F, dest)
-            if sa is not None and sa == sd and sb is not None:   # d_add_asg: lda XWA,_gd / ld XBC,XWA / lda XDE,_gd2
-                F.emit('lda', 'XWA,%s' % sd); F.emit('ld', 'XBC,XWA'); put_addr(F, vals[1], 'XDE'); F.emit('cal', name); return
+            if sa is not None and sa == sd:                  # d_add_asg: lda XWA,_gd / ld XBC,XWA / lda XDE,_gd2; a
+                k = addr_kind(F, vals[1])                    # computed XDE first (d_loop: lda XDE,XBC+WA / lda XWA,..)
+                if k == 'ld': put_addr(F, vals[1], 'XDE')
+                F.emit('lda', 'XWA,%s' % sd); F.emit('ld', 'XBC,XWA')
+                if k != 'ld': put_addr(F, vals[1], 'XDE')
+                F.emit('cal', name); return
             if sa is not None and sa == sb and sd is not None:   # d_loc: lda XDE,XSP+0x10 / ld XBC,XDE / lda XWA,XSP
                 put_addr(F, vals[1], 'XDE'); F.emit('ld', 'XBC,XDE'); F.emit('lda', 'XWA,%s' % sd); F.emit('cal', name); return
         if F.opt and dest[0] == 'sret':
@@ -319,27 +331,34 @@ def eval_into(F, e, dest):
     emit_operands(F, dest, [e])
     F.emit('cal', '._fld_%s%s' % (sfx(e.ty), sfx(e.ty)))
 
-def push_fp_arg(F, a):
+def push_fp_arg(F, a, hint=None):
     """a double argument: high half first, through XIY / XIX (d_call1: lda XIY,XSP+0x18 / ld XIX,(XIY+0x4) /
     push XIX / ld XIX,(XIY) / push XIX)"""
     a = fp_value_cast(a)
-    put_addr(F, eval_val(F, a, None), 'XIY')
+    put_addr(F, eval_val(F, a, hint), 'XIY')
     if a.ty.size == 8:
         F.emit('ld', 'XIX,(XIY+0x4)'); F.emit('push', 'XIX'); F.push += 4
     F.emit('ld', 'XIX,(XIY)'); F.emit('push', 'XIX'); F.push += 4
     return a.ty.size
 
-def call_into(F, e, dest):
+def call_into(F, e, dest, arg_hint=None):
     """a call returning double: the caller's temporary's address is the hidden first argument"""
     cg = C()
     fn = strip(e.fn)
+    n = 0
+    hints = [arg_hint]
+    def push_args():
+        k = 0
+        for a in reversed(e.args):
+            if is_fp(strip(a).ty): k += push_fp_arg(F, a, hints.pop() if hints else None)
+            else: k += cg.push_arg(F, a)
+        return k
+    if arg_hint is not None:
+        n += push_args()
     if dest[0] == 'cell': off = alloc(F, dest[1])
     elif dest[0] == 'slot': off = dest[1]
     else: off = temp(F, 8)
-    n = 0
-    for a in reversed(e.args):
-        if is_fp(strip(a).ty): n += push_fp_arg(F, a)
-        else: n += cg.push_arg(F, a)
+    if arg_hint is None: n += push_args()
     F.emit('lda', 'XWA,%s' % slot_addr(F, off)); F.emit('push', 'XWA'); F.push += 4; n += 4
     F.emit('cal', '_' + fn.decl.name)
     F.emit('lda' if n > 8 else 'inc', 'XSP,XSP+%s' % cg.hx(n) if n > 8 else '%s,XSP' % cg.hx(n)); F.push -= n
@@ -355,7 +374,12 @@ def gen_return(F, v):
         if mode == 'xiz':                                    # t_mla: ld XIZ,(XSP+0x18) ... ld XWA,XIZ / cal ._fadd_d
             F.emit('ld', 'XIZ,(XSP+%s)' % C().hx(F.sret.off + F.push)); eval_into(F, v, ('xiz',)); return
         if mode == 'copy':                                   # t_mm: ... ld XWA,(XSP+0x24) / lda XBC,XSP+0x10 / cal ._fld_dd
-            t1 = Cell(8); alloc(F, t1)
+            t1 = Cell(8)
+            e0 = fp_value_cast(v)
+            ops = [e0.l, e0.r] if e0.k == 'bin' else [e0.e] if e0.k in ('un', 'cast') else []
+            if e0.k == 'call' or any(fp_value_cast(x).k == 'call' for x in ops):
+                alloc(F, t1)                                 # t_call_a: the sum's +0x18 above fd(a)'s +0x10; d_call_i
+                                                             # (a conversion of fi()) takes it at its first write
             loc = eval_val(F, v, t1)
             F.emit('ld', 'XWA,(XSP+%s)' % C().hx(F.sret.off + F.push)); put_addr(F, loc, 'XBC'); F.emit('cal', '._fld_dd')
             return
@@ -531,8 +555,19 @@ def hoist_common(lines):
                 gone_a.add(ia); gone_b.add(hits[0]); hoisted.append(t)
             if hoisted:
                 keep = [l for x, l in enumerate(lines) if x not in gone_a and x not in gone_b]
+                order = {'XBC': 0, 'XDE': 1, 'XWA': 2}            # _fabs: lda XBC / ld XWA; t_cond_e: lda XBC / lda XDE
+                hoisted.sort(key=lambda t: order.get(t.split('\t')[2].split(',')[0], 3))
                 pos = i + 1
-                for t in hoisted: keep.insert(pos, t)
+                for t in reversed(hoisted): keep.insert(pos, t)
                 lines[:] = keep; i += len(hoisted)
         i += 1
     return lines
+
+def call_stmt(F, e):
+    """a call whose arguments include a double (d_call_v: vd(gd + gd2)): the double pushed through XIY / XIX, the
+    pops released at once"""
+    cg = C(); fn = strip(e.fn); n = 0
+    for a in reversed(e.args):
+        if is_fp(strip(a).ty): n += push_fp_arg(F, a)
+        else: n += cg.push_arg(F, a)
+    F.emit('cal', '_' + fn.decl.name); F.pending += n

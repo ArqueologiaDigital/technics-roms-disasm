@@ -217,9 +217,13 @@ Run 10 (`corpus/micro/fp_temps.c`, oracle `9ce5a95`), now in the model (`root_mo
   operand (t_to_i_e);
 - for `+` and `*` the computed operand goes to XBC (t_amla: `gd3 + gd*gd2`);
 - int `x * 2^k` is `sla k` (t_i_e).
-fp.c: 104 / 108 (none), 102 / 108 (`-O3 -XS`); fp_temps.c: 32 / 33, 31 / 33.  Left: the shared exit after an
-if / else with a frame (t_cmp_e), `-O`'s hoisting of the branches' common first instructions (d_cond, `_fabs`),
-the loop's index arithmetic (d_loop), a double argument in a call statement (d_call_v).
+Later the same day: a call's computed argument takes the reserved temporary (d_call_e); the copy's temporary is
+reserved up front only when the operand is itself a call (d_call_i); a call statement with a double argument
+(d_call_v), whose argument pops merge into the frame release; an index in a register (`lda XDE,XBC+WA`, d_loop);
+helper calls are never cross-jumped (d_cond); `-O`'s address reuse also when XDE was computed first or the second
+operand is a constant (d_loop, d_inc); the branches' common loads hoisted above an FP test, sorted XBC, XDE, XWA
+(`_fabs`, t_cond_e); returns share one exit when there is a frame, without `-O` too (t_cmp_e).  fp.c: 108 / 108 at
+none and `-O3 -XS`; fp_temps.c: 33 / 33 at both.
 
 ## Priorities after 2026-11-09
 

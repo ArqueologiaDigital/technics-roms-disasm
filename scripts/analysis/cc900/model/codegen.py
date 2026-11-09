@@ -1389,7 +1389,7 @@ def gen_stmt(F, s, last):
             if not getattr(F, 'cl_active', None): F.cl_tmp_done = False
         return
     if s.k == 'decl': raise Unsupported('decl')
-    if s.k == 'return' and s.value is not None and F.opt:
+    if s.k == 'return' and s.value is not None and F.opt and not fpgen.is_fp(F.f.ret):
         cse = cse_params(F, s.value)
         if cse: return
     if s.k == 'return' and F.opt and getattr(F, 'shared_exit', None) and id(s) in F.shared_exit['early']:
@@ -1416,6 +1416,8 @@ def gen_stmt(F, s, last):
             if F.xiz_vars: F.emit('pop', F.save_reg)
             epilogue(F); F.emit('ret'); return
         raise Unsupported('struct return')
+    if s.k == 'expr' and s.e.k == 'call' and any(fpgen.is_fp(strip(a).ty) for a in s.e.args):
+        fpgen.call_stmt(F, s.e); return
     if s.k == 'expr' and s.e.k == 'call' and strip(s.e.fn).k == 'var' and strip(s.e.fn).decl.name == '__cc900_asm':
         import listing, ast as _ast                        # __ASM("..."): the text as it is (_MEMSET.C)
         lit = strip(s.e.args[0])
@@ -1437,7 +1439,8 @@ def gen_stmt(F, s, last):
         F.emit('exts' if F.f.ret.signed else 'extz', 'HL'); flush_pops(F)
         F.emit('retd', hx(F.retd)) if F.retd else F.emit('ret'); return
     if s.k == 'return':
-        epi = F.opt and (F.xiz_vars or F.pushes or getattr(F, 'frame', 0)) and not getattr(F, 'shared_exit', None)
+        epi = (F.opt or getattr(F, 'fp_temps', None) is not None) and (F.xiz_vars or F.pushes or getattr(F, 'frame', 0)) \
+            and not getattr(F, 'shared_exit', None)       # fp_temps.c t_cmp_e (none too): ld HL,0x1 / j L50000
         if s.value is not None:
             size = F.f.ret.size
             if not has_helper_call(s.value) and F.pending:
@@ -2730,7 +2733,12 @@ def fp_plan_frame(F):
 def epilogue(F):
     for r in reversed(F.pushes): F.emit('pop', r)
     if getattr(F, 'frame', 0):
-        F.emit('inc', '%s,XSP' % hx(F.frame)) if F.frame <= 8 else F.emit('lda', 'XSP,XSP+%s' % hx(F.frame))
+        n = F.frame
+        if getattr(F, 'fp_temps', None) is not None and F.lines and F.lines[-1].startswith(('\tinc\t', '\tlda\tXSP,XSP+')) \
+                and not F.pushes and not F.xiz_vars:              # fp.c d_call_v: cal _vd / lda XSP,XSP+0x18 (8 + 0x10)
+            m = re.match(r'^\t(?:inc\t(0x[0-9a-f]+),XSP|lda\tXSP,XSP\+(0x[0-9a-f]+))$', F.lines[-1])
+            if m: n += int(m.group(1) or m.group(2), 16); F.lines.pop()
+        F.emit('inc', '%s,XSP' % hx(n)) if n <= 8 else F.emit('lda', 'XSP,XSP+%s' % hx(n))
 
 def plan_shared_exit(F):
     """-XS: returns of the same simple value share the last one's code (_ultoa: two return (s) -> j L50000)"""
@@ -2843,7 +2851,8 @@ def cross_jump(F, lines):
             L = lab[:-1]
             k = li - 1
             while k >= 0 and is_label(lines[k]): k -= 1
-            X = lines[k] if k >= 0 and not uncond(lines[k]) and not lines[k].startswith('\tj') else None
+            X = lines[k] if k >= 0 and not uncond(lines[k]) and not lines[k].startswith('\tj') \
+                and not lines[k].startswith('\tcal\t._f') else None        # fp.c d_cond: each arm keeps its ._fld_dd
             jumps = [i for i, l in enumerate(lines) if l == '\tj\t' + L and i > 0 and not is_label(lines[i - 1])
                      and not lines[i - 1].startswith(('\tj', '\tret'))]
             js = [i for i in jumps if X is not None and lines[i - 1] == X]
@@ -2856,7 +2865,8 @@ def cross_jump(F, lines):
                 lines.insert(k, N + ':')
             else:
                 byx = {}
-                for i in jumps: byx.setdefault(lines[i - 1], []).append(i)
+                for i in jumps:
+                    if not lines[i - 1].startswith('\tcal\t._f'): byx.setdefault(lines[i - 1], []).append(i)
                 grp = [g for g in byx.values() if len(g) >= 2]
                 if grp:
                     g = grp[0]; X2 = lines[g[0] - 1]; N = F.newlabel()
