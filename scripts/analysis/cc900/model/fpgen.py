@@ -79,6 +79,7 @@ def stmt_reset(F):
     if getattr(F, 'fp_temps', None) is not None: F.ftemp_used = 0
 
 RANK_CONST = True
+MEMBER_FIRST = True
 LONG_TOP = False                                   # tried for fo_conv2: costs fp_temps t_* and fp_stmts O3XS 9 -> 5
 
 class FrameAlloc:
@@ -326,7 +327,10 @@ def addr_kind(F, x):
     if e.k == 'fconst': return 'lda'
     if e.k == 'load':
         v = strip(e.e)
-        if v.k == 'var' or (v.k == 'member' and not v.arrow): return 'lda'
+        if v.k == 'var': return 'lda'
+        if v.k == 'member' and not v.arrow:            # _log: x / SQRT2 (s_logtbl.val, a static union) -> lda XDE,
+            b = strip(v.base)                            # _s_logtbl before lda XBC,x
+            return 'ld' if MEMBER_FIRST and b.k == 'var' and (b.decl.kind == 'static' or b.decl.storage == 'static') else 'lda'
         if v.k == 'index' and C().fold(v.idx).k == 'const': return 'lda'
     return 'ld'
 
