@@ -711,6 +711,10 @@ def hoist_common(lines):
             target = lines[i + 2].split(',')[1]
             try: li = lines.index(target + ':')
             except ValueError: i += 1; continue
+            pv = lines[li - 1] if li else ''
+            if not (pv.startswith(('\tj\t', '\tjp\t')) and ',' not in pv or pv.startswith('\tret')):
+                i += 1; continue                           # (the target is also reached by falling in, after a call
+                                                           # that may change the register: _fmod's ._fneg_d / L10)
             a, b = prefix(i + 3), prefix(li + 1)
             gone_a, gone_b, hoisted = set(), set(), []
             for k, ia in enumerate(a):
