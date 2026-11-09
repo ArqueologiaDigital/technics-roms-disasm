@@ -616,6 +616,12 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
             gen_bin(F, e, 'WA', size, then_ret, store)
             F.emit('ld', '%s,%s' % (FAM[fam][size], FAM['WA'][size])); return fam
         rcv = strip(r)
+        if F.opt and F.adecl and op in ('+', '&', '|', '^') and size == 4 and rcv.k == 'cast' and \
+                rcv.kind == 'IntegralCast' and strip(rcv.e).ty.size == 2 and strip(rcv.e).k == 'load' and \
+                regvar_of(strip(rcv.e).e) is not None and regvar_of(strip(rcv.e).e).reg in ('IZ', 'QIZ') and \
+                (mem_operand(F, l) or '').startswith('('):
+            l, r = r, l                                    # ra_homes32.c h_l_n3: x + n, x a slot long, n in IZ ->
+            rcv = strip(r)                                 # ld HL,IZ / exts XHL / add XHL,(XSP+0x2)
         if F.opt and op in ('+', '&', '|', '^') and rcv.k == 'cast' and rcv.kind == 'PointerToIntegral' and \
                 strip(rcv.e).k == 'load' and regvar_of(strip(rcv.e).e) is not None and dies_here(F, strip(rcv.e)) and \
                 strip(l).k == 'load' and regvar_of(strip(l).e) is not None and dies_here(F, l):
