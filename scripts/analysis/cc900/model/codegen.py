@@ -964,6 +964,10 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         if IDX_GUARD and family_of(cs) != 'XWA' and wv and not all(wa_ok(d) for d in wv):
             raise Unsupported('shift count over a live WA')   # (cond_bits.c cb_shift -O3 -XS -Xr: x in WA, read by the
                                                                # enclosing & after the shift)
+        if family_of(cs) == FAM[vfam][4] and cv_ is not None and (held_after(F, vfam, e) or
+                                                                 cv_ in getattr(F, 'in_loop', ())):
+            vfam = free_reg(F, avoid={vfam, 'WA'}); V = FAM[vfam][size]   # cond_bits.c cb_for: 1 << i with i in BC,
+                                                                           # needed again: the value elsewhere
         if family_of(cs) == FAM[vfam][4]:                 # the count lives where the value is built (cb_shift: s in BC,
             if fold(l).k != 'const': raise Unsupported('shift count register')   # 0x8000 >> s): the count first
             F.emit('ld', '%s,%s' % (FAM['WA'][strip(r).ty.size], cs)); gen(F, l, vfam, size)
