@@ -145,6 +145,19 @@ Switch under cdecl -O3 -XS (0 of 25): V4.23 turns a switch whose cases all call 
 constants into a lookup table of the arguments (`sw_jt6`: `db 10 ... db 15`, `ld A,(XIX+WA) / exts WA / push WA /
 cal _f1`).  Under `-O3 -XS -Xr` (the firmware's options) it does not, so this is left for later.
 
+The IZ / QIZ / slot choice for values live across a call: run `2026-11-09-6-micro-rahomes` (`corpus/micro/ra_homes.c`,
+cc900-oracle `df41bd5`, all four option sets) gives the data; the rule is not settled yet.  What it shows under `-Xr`:
+- two locals: IZ for the first declared, QIZ for the second, whatever their use counts (`rh_ll`, `rh_ll_y2`,
+  `rh_ll_x2`; `rh_ll_rev` swaps with the declarations);
+- three or four locals: the first declared goes to a stack slot (`rh_lll`, `rh_lll_z2`), with four the last as well
+  (`rh_llll`); which of the others gets IZ differs between `rh_lll` (z) and `rh_lll_z2` (y);
+- a local and a parameter with two references each: the local gets IZ and the parameter a slot (`rh_lp`); with three
+  references for either, both get registers, the parameter IZ and the local QIZ (`rh_lp_x2`, `rh_lp_a2`, `rh_lp_call`);
+- two or three parameters: the first gets IZ, the others slots (`rh_pp*`, `rh_ppp`); a long or pointer gets XIZ;
+- QIZ is never the destination of arithmetic: `ld QIZ,BC / add BC,DE / ld QIZ,BC` (`rh_lll`).
+Without -O (cdecl) parameters already on the stack are mostly left there (`rh_pp`, `rh_p1`).  This looks like a
+cost model (QIZ costs moves, a slot costs a store and a frame); fitting it is the next allocator step.
+
 Still open on this convention: the `-O` register allocator for loops (`ra_leaf2..5`: which values go to IX / IY /
 IZ / QDE ...), `sw_local` (a local kept in HL across a call), placement of the code after a switch next to the
 first case (`sw_evtab`), loops in the switch's continue label (`sw_loop`), long helper homes at `-O` (`mul_l_loc`).

@@ -20,6 +20,10 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-4-micro-switch, v423/O3XSXr                      | micro/switch.c     | 20 / 25 exact (80.0%)   |
 | run 2026-11-09-5-micro-optparams, v423/O3XS                     | micro/opt_params.c | 19 / 24 exact (79.2%)   |
 | run 2026-11-09-5-micro-optparams, v423/O3XSXr                   | micro/opt_params.c | 0 / 24 exact (0.0%)     |
+| run 2026-11-09-6-micro-rahomes, v423/none                       | micro/ra_homes.c   | 6 / 25 exact (24.0%)    |
+| run 2026-11-09-6-micro-rahomes, v423/O3XS                       | micro/ra_homes.c   | 2 / 25 exact (8.0%)     |
+| run 2026-11-09-6-micro-rahomes, v423/Xr                         | micro/ra_homes.c   | 4 / 25 exact (16.0%)    |
+| run 2026-11-09-6-micro-rahomes, v423/O3XSXr                     | micro/ra_homes.c   | 4 / 25 exact (16.0%)    |
 | run 2026-11-08-9-micro-optloops, v423/O3XS                      | micro/opt_loops.c  | 15 / 33 exact (45.5%)   |
 | run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality v4.23  | 1997 LIB/SRC       | 111 / 147 exact (75.5%) |
 | run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality kn5000 | 1997 LIB/SRC       | 109 / 147 exact (74.1%) |
