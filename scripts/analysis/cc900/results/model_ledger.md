@@ -4,9 +4,9 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 
 | oracle                                                          | corpus             | exact                   |
 |-----------------------------------------------------------------|--------------------|-------------------------|
-| run 2026-11-08-7-micro, v423/none                               | micro/*.c          | 657 / 674 exact (97.5%) |
-| run 2026-11-08-7-micro, ide2003/none                            | micro/*.c          | 654 / 674 exact (97.0%) |
-| run 2026-11-08-7-micro, v110/none                               | micro/*.c          | 653 / 674 exact (96.9%) |
+| run 2026-11-08-7-micro, v423/none                               | micro/*.c          | 661 / 674 exact (98.1%) |
+| run 2026-11-08-7-micro, ide2003/none                            | micro/*.c          | 658 / 674 exact (97.6%) |
+| run 2026-11-08-7-micro, v110/none                               | micro/*.c          | 657 / 674 exact (97.5%) |
 | run 2026-11-08-7-micro, v423/O3XS                               | micro/*.c          | 606 / 674 exact (89.9%) |
 | run 2026-11-08-7-micro, v423/Xr                                 | micro/*.c          | 634 / 674 exact (94.1%) |
 | run 2026-11-08-7-micro, v423/O3XSXr                             | micro/*.c          | 607 / 674 exact (90.1%) |

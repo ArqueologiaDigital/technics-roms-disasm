@@ -1950,7 +1950,7 @@ def gen_loop(F, s, last):
             if cont[0] is None: cont[0] = F.newulabel()
             return cont[0]
         exitl = None
-        F.loops.append((None, getc)); gen_stmt(F, s.body, False); F.loops.pop()
+        F.loops.append((None, getc)); gen_stmt(F, s.body, False); flush_pops(F); F.loops.pop()
         if cont[0]: F.lines.append(cont[0] + ':')
         loop_cond(F, s.cond, body, True)
         return
@@ -1959,7 +1959,7 @@ def gen_loop(F, s, last):
         F.lines.append(body + ':')
         for t in getattr(F, 'cast_temps', {}).values():
             if t['loop'] == id(s): t['done'] = False
-        F.loops.append((exitl, lambda: body)); gen_stmt(F, s.body, False); F.loops.pop()
+        F.loops.append((exitl, lambda: body)); gen_stmt(F, s.body, False); flush_pops(F); F.loops.pop()
         F.emit('j', body); F.lines.append(exitl + ':'); return
     if s.k == 'while' and F.opt and s.cond is not None:  # -XS rotation: j test / body / test (_strcat)
         test = F.newulabel(); body = F.newulabel()
@@ -1968,7 +1968,7 @@ def gen_loop(F, s, last):
         def getc2():
             if cont[0] is None: cont[0] = F.newulabel()
             return cont[0]
-        F.loops.append((None, getc2)); gen_stmt(F, s.body, False); F.loops.pop()
+        F.loops.append((None, getc2)); gen_stmt(F, s.body, False); flush_pops(F); F.loops.pop()
         F.lines.append(test + ':')
         loop_cond(F, s.cond, body, True)
         return
@@ -1979,7 +1979,7 @@ def gen_loop(F, s, last):
         return cont[0]
     if s.cond is not None: loop_cond(F, s.cond, 'RET' if after_ret and not F.loops else exitl, False)
     F.lines.append(body + ':')
-    F.loops.append((exitl, getc)); gen_stmt(F, s.body, False); F.loops.pop()
+    F.loops.append((exitl, getc)); gen_stmt(F, s.body, False); flush_pops(F); F.loops.pop()
     if cont[0]: F.lines.append(cont[0] + ':')
     inc = strip(s.inc) if s.k == 'for' and s.inc is not None else None
     cnd = strip(s.cond) if s.cond is not None else None
