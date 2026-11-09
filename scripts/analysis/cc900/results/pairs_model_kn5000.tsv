@@ -6,14 +6,14 @@ maincpu v10	ff097d	_strcspn	_STRCSPN.C	-	model: ; unsupported: statement goto
 maincpu v10	ff09a0	_atoi	_ATOI.C	-	model: ; unsupported: loop condition bin
 maincpu v10	ff09f6	_atol	_ATOL.C	-	model: ; unsupported: loop condition bin
 maincpu v10	ff0ab7	_vsprintf	_SPRINTF.C	-	model: ; unsupported: var
-maincpu v10	ff0c92	_strncat	_STRNCAT.C	-	model: ; unsupported: conditional return
+maincpu v10	ff0c92	_strncat	_STRNCAT.C	47	MATCH
 maincpu v10	ff0cc1	_strncmp	_STRNCMP.C	50	MATCH
 maincpu v10	ff0cf3	_strncpy	_STRNCPY.C	43	MATCH
 maincpu v10	ff0d1e	_memcmp	_MEMCMP.C	123	MATCH
 maincpu v10	ff0d99	_memcpy	_MEMCPY.C	40	MATCH
 maincpu v10	ff0dc1	_strcat	_STRCAT.C	34	MATCH
 maincpu v10	ff0de3	_itoa	_ITOA.C	-	model: ; unsupported: incdec target
-maincpu v10	ff0e6d	_strchr	_STRCHR.C	19	MATCH
+maincpu v10	ff0e6d	_strchr	_STRCHR.C	19	6 diff first +0
 maincpu v10	ff0f4d	_strcpy	_STRCPY.C	44	MATCH
 maincpu v10	ff0f76	_sbrk	__SBRK.C	-	model: ; unsupported: cast
 maincpu v10	ff0f79	.sbrk	__SBRK.C	-	model: no function
@@ -33,14 +33,14 @@ maincpu v9	ff090f	_strstr	_STRSTR.C	-	model: ; unsupported: complex compare oper
 maincpu v9	ff096f	_strcspn	_STRCSPN.C	-	model: ; unsupported: statement goto
 maincpu v9	ff0992	_atoi	_ATOI.C	-	model: ; unsupported: loop condition bin
 maincpu v9	ff09e8	_atol	_ATOL.C	-	model: ; unsupported: loop condition bin
-maincpu v9	ff0c84	_strncat	_STRNCAT.C	-	model: ; unsupported: conditional return
+maincpu v9	ff0c84	_strncat	_STRNCAT.C	47	MATCH
 maincpu v9	ff0cb3	_strncmp	_STRNCMP.C	50	MATCH
 maincpu v9	ff0ce5	_strncpy	_STRNCPY.C	43	MATCH
 maincpu v9	ff0d10	_memcmp	_MEMCMP.C	123	MATCH
 maincpu v9	ff0d8b	_memcpy	_MEMCPY.C	40	MATCH
 maincpu v9	ff0db3	_strcat	_STRCAT.C	34	MATCH
 maincpu v9	ff0dd5	_itoa	_ITOA.C	-	model: ; unsupported: incdec target
-maincpu v9	ff0e5f	_strchr	_STRCHR.C	19	MATCH
+maincpu v9	ff0e5f	_strchr	_STRCHR.C	19	6 diff first +0
 maincpu v9	ff0f3f	_strcpy	_STRCPY.C	44	MATCH
 maincpu v9	ff0f6b	.sbrk	__SBRK.C	-	model: no function
 maincpu v9	ff0f92	_strlen	_STRLEN.C	30	MATCH
@@ -59,14 +59,14 @@ maincpu v7	ff01a0	_strcspn	_STRCSPN.C	-	model: ; unsupported: statement goto
 maincpu v7	ff01c3	_atoi	_ATOI.C	-	model: ; unsupported: loop condition bin
 maincpu v7	ff0219	_atol	_ATOL.C	-	model: ; unsupported: loop condition bin
 maincpu v7	ff02da	_vsprintf	_SPRINTF.C	-	model: ; unsupported: var
-maincpu v7	ff04b5	_strncat	_STRNCAT.C	-	model: ; unsupported: conditional return
+maincpu v7	ff04b5	_strncat	_STRNCAT.C	47	MATCH
 maincpu v7	ff04e4	_strncmp	_STRNCMP.C	50	MATCH
 maincpu v7	ff0516	_strncpy	_STRNCPY.C	43	MATCH
 maincpu v7	ff0541	_memcmp	_MEMCMP.C	123	MATCH
 maincpu v7	ff05bc	_memcpy	_MEMCPY.C	40	MATCH
 maincpu v7	ff05e4	_strcat	_STRCAT.C	34	MATCH
 maincpu v7	ff0606	_itoa	_ITOA.C	-	model: ; unsupported: incdec target
-maincpu v7	ff0690	_strchr	_STRCHR.C	19	MATCH
+maincpu v7	ff0690	_strchr	_STRCHR.C	19	6 diff first +0
 maincpu v7	ff0770	_strcpy	_STRCPY.C	44	MATCH
 maincpu v7	ff0799	_sbrk	__SBRK.C	-	model: ; unsupported: cast
 maincpu v7	ff079c	.sbrk	__SBRK.C	-	model: no function
@@ -86,14 +86,14 @@ maincpu v6	ff0042	_strstr	_STRSTR.C	-	model: ; unsupported: complex compare oper
 maincpu v6	ff00a2	_strcspn	_STRCSPN.C	-	model: ; unsupported: statement goto
 maincpu v6	ff00c5	_atoi	_ATOI.C	-	model: ; unsupported: loop condition bin
 maincpu v6	ff011b	_atol	_ATOL.C	-	model: ; unsupported: loop condition bin
-maincpu v6	ff03b7	_strncat	_STRNCAT.C	-	model: ; unsupported: conditional return
+maincpu v6	ff03b7	_strncat	_STRNCAT.C	47	MATCH
 maincpu v6	ff03e6	_strncmp	_STRNCMP.C	50	MATCH
 maincpu v6	ff0418	_strncpy	_STRNCPY.C	43	MATCH
 maincpu v6	ff0443	_memcmp	_MEMCMP.C	123	MATCH
 maincpu v6	ff04be	_memcpy	_MEMCPY.C	40	MATCH
 maincpu v6	ff04e6	_strcat	_STRCAT.C	34	MATCH
 maincpu v6	ff0508	_itoa	_ITOA.C	-	model: ; unsupported: incdec target
-maincpu v6	ff0592	_strchr	_STRCHR.C	19	MATCH
+maincpu v6	ff0592	_strchr	_STRCHR.C	19	6 diff first +0
 maincpu v6	ff0672	_strcpy	_STRCPY.C	44	MATCH
 maincpu v6	ff069e	.sbrk	__SBRK.C	-	model: no function
 maincpu v6	ff06c5	_strlen	_STRLEN.C	30	MATCH
@@ -111,14 +111,14 @@ maincpu v5	fefbee	_strstr	_STRSTR.C	-	model: ; unsupported: complex compare oper
 maincpu v5	fefc4e	_strcspn	_STRCSPN.C	-	model: ; unsupported: statement goto
 maincpu v5	fefc71	_atoi	_ATOI.C	-	model: ; unsupported: loop condition bin
 maincpu v5	fefcc7	_atol	_ATOL.C	-	model: ; unsupported: loop condition bin
-maincpu v5	feff63	_strncat	_STRNCAT.C	-	model: ; unsupported: conditional return
+maincpu v5	feff63	_strncat	_STRNCAT.C	47	MATCH
 maincpu v5	feff92	_strncmp	_STRNCMP.C	50	MATCH
 maincpu v5	feffc4	_strncpy	_STRNCPY.C	43	MATCH
 maincpu v5	feffef	_memcmp	_MEMCMP.C	123	MATCH
 maincpu v5	ff006a	_memcpy	_MEMCPY.C	40	MATCH
 maincpu v5	ff0092	_strcat	_STRCAT.C	34	MATCH
 maincpu v5	ff00b4	_itoa	_ITOA.C	-	model: ; unsupported: incdec target
-maincpu v5	ff013e	_strchr	_STRCHR.C	19	MATCH
+maincpu v5	ff013e	_strchr	_STRCHR.C	19	6 diff first +0
 maincpu v5	ff021e	_strcpy	_STRCPY.C	44	MATCH
 maincpu v5	ff024a	.sbrk	__SBRK.C	-	model: no function
 maincpu v5	ff0271	_strlen	_STRLEN.C	30	MATCH
@@ -197,7 +197,7 @@ hdae v2.06i	29aec7	_memset	_MEMSET.C	68	MATCH
 hdae v2.06i	29af0b	_strcat	_STRCAT.C	34	MATCH
 hdae v2.06i	29af45	_strcpy	_STRCPY.C	44	MATCH
 hdae v2.06i	29af71	_strlen	_STRLEN.C	30	MATCH
-hdae v2.06i	29af8f	_strncat	_STRNCAT.C	-	model: ; unsupported: conditional return
+hdae v2.06i	29af8f	_strncat	_STRNCAT.C	47	MATCH
 hdae v2.06i	29afbe	_strncmp	_STRNCMP.C	50	MATCH
 hdae v2.06i	29aff0	_strncpy	_STRNCPY.C	43	MATCH
 hdae v2.06i	29b01b	_strrev	_STRREV.C	-	model: ; unsupported: lvalue var
@@ -220,7 +220,7 @@ hdae v2.01i	29a78f	_memset	_MEMSET.C	68	MATCH
 hdae v2.01i	29a7d3	_strcat	_STRCAT.C	34	MATCH
 hdae v2.01i	29a80d	_strcpy	_STRCPY.C	44	MATCH
 hdae v2.01i	29a839	_strlen	_STRLEN.C	30	MATCH
-hdae v2.01i	29a857	_strncat	_STRNCAT.C	-	model: ; unsupported: conditional return
+hdae v2.01i	29a857	_strncat	_STRNCAT.C	47	MATCH
 hdae v2.01i	29a886	_strncmp	_STRNCMP.C	50	MATCH
 hdae v2.01i	29a8b8	_strncpy	_STRNCPY.C	43	MATCH
 hdae v2.01i	29a8e3	_strrev	_STRREV.C	-	model: ; unsupported: lvalue var
@@ -242,7 +242,7 @@ hdae v1.15i	296e9e	_memset	_MEMSET.C	68	MATCH
 hdae v1.15i	296ee2	_strcat	_STRCAT.C	34	MATCH
 hdae v1.15i	296f1c	_strcpy	_STRCPY.C	44	MATCH
 hdae v1.15i	296f48	_strlen	_STRLEN.C	30	MATCH
-hdae v1.15i	296f66	_strncat	_STRNCAT.C	-	model: ; unsupported: conditional return
+hdae v1.15i	296f66	_strncat	_STRNCAT.C	47	MATCH
 hdae v1.15i	296f95	_strncmp	_STRNCMP.C	50	MATCH
 hdae v1.15i	296fc7	_strncpy	_STRNCPY.C	43	MATCH
 hdae v1.15i	2e0e66	___ctype	_CTYPE.C	-	model: no function
@@ -262,10 +262,10 @@ hdae v1.10i	296da2	_memset	_MEMSET.C	68	MATCH
 hdae v1.10i	296de6	_strcat	_STRCAT.C	34	MATCH
 hdae v1.10i	296e20	_strcpy	_STRCPY.C	44	MATCH
 hdae v1.10i	296e4c	_strlen	_STRLEN.C	30	MATCH
-hdae v1.10i	296e6a	_strncat	_STRNCAT.C	-	model: ; unsupported: conditional return
+hdae v1.10i	296e6a	_strncat	_STRNCAT.C	47	MATCH
 hdae v1.10i	296e99	_strncmp	_STRNCMP.C	50	MATCH
 hdae v1.10i	296ecb	_strncpy	_STRNCPY.C	43	MATCH
 hdae v1.10i	296ef6	__facnv	__FACVT.C	-	model: no function
 hdae v1.10i	2e0cd6	___ctype	_CTYPE.C	-	model: no function
 hdae v1.10i	2e0cd6	__ctype	_CTYPE.C	256	MATCH
-# model cannot 143, MATCH 117, differs 9, outside image 4
+# model cannot 134, MATCH 121, differs 14, outside image 4

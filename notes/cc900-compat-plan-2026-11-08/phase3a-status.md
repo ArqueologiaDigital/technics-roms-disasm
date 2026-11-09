@@ -126,10 +126,15 @@ Library and firmware pairs (later the same day): the library at `-O3 -XS` is 110
 assembly is now passed through, so its labels split pieces as in the listings), and `model/pairs_model.py` rebuilds
 117 firmware library pairs byte-identical with our own tools (`phase6-preview.md`).
 
-Open allocator question, from the string routines: the order in which `-O` loads the parameters it keeps in
-registers.  Loaded together at the start: `_strncpy` and `_strncmp` take n, s2, s1 (reverse declaration order),
-`_stricmp` s2, s1, but `_memicmp` n, s1, s2; loaded before a second loop, `_strncat` takes s2, n (declaration
-order).  The model gets the first group right and `_strncat` / `_memicmp` wrong; more examples are needed.
+The order of -O's parameter loads, settled by run `2026-11-09-5-micro-optparams` (`corpus/micro/opt_params.c`,
+cc900-oracle `560f24e`): parameters loaded at the start of the function come in reverse declaration order whatever
+their uses (all 24 functions); those loaded later, before a second loop, in declaration order (`op_cat`, `op_cat2`,
+`op_cat_b`, as `_strncat`); a parameter copied into a local is loaded at that copy (`op_ret_b`, `_memicmp`).  The same
+run showed that `*p++ + *q++` loads the right operand first (as `*s1 == *s2` does), that a returned char-valued int
+is computed at char width (`op_two`: `ld L,(XDE) / sub L,(XBC) / exts HL`), and that only a cast parameter is stored
+through an address temporary (`op_fill` stores a char directly).  Under `-Xr` the same functions show the register
+allocator moving parameters out of the scratch registers a loop needs (`op_cpy_nab`: n stays in WA, the temporaries
+are DE / E, the pointer leaves XDE for XHL): the model has no allocator for that yet (0 of 24).
 
 Still open on this convention: the `-O` register allocator for loops (`ra_leaf2..5`: which values go to IX / IY /
 IZ / QDE ...), `sw_local` (a local kept in HL across a call), placement of the code after a switch next to the

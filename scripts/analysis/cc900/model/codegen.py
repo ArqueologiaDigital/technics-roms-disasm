@@ -388,6 +388,13 @@ def gen(F, e, fam, size, then_ret=False, store=False):
         F.emit(SIMPLE_OPS[e.op], '%s,%s' % (FAM['HL'][size], T))
         if fam != 'HL': F.emit('ld', '%s,%s' % (FAM[fam][size], FAM['HL'][size]))
         return fam
+    def deref_load(x):
+        x = strip(x)
+        while x.k == 'cast' and x.kind == 'IntegralCast': x = strip(x.e)
+        return x.k == 'load' and strip(x.e).k == 'deref'
+    if F.opt and e.k == 'bin' and e.op in ('+', '&', '|', '^') and deref_load(e.l) and deref_load(e.r):
+        from frontend import N                           # op_sum2, op_three: *p++ + *q++ loads q first
+        e = N('bin', op=e.op, l=e.r, r=e.l, ty=e.ty)
     if e.k == 'bin':
         return gen_bin(F, e, fam, size, then_ret, store)
     raise Unsupported(e.k)
@@ -1165,7 +1172,16 @@ def gen_stmt(F, s, last):
                 need = [d for d in F.deferred if any(uses_decl(x, d) for x in stretch)
                         and (d.reg != 'XIZ' or (c.k in ('expr', 'return', 'decl', 'while', 'for', 'do') and uses_decl(c, d)))]
                 own = sorted([d for d in need if uses_decl(c, d)], key=first_use)
-                rest = sorted([d for d in need if d not in own], key=first_use)
+                # run 2026-11-09-5-micro-optparams: loaded at the start of the function, reverse declaration order
+                # (op_cpy_ab, op_cmp_ab, op_three ...: whatever the uses); later, before a second loop, declaration
+                # order (op_cat, op_cat2, op_cat_b; _strncat)
+                at_start = not any(l.startswith('\t') and not l.startswith(('\tpush', '\tdec\t', '\tlda\tXSP')) for l in F.lines[1:])
+                pidx = {d: k for k, d in enumerate(F.f.params)}
+                order_key = lambda d: -pidx[d] if at_start else pidx[d]
+                if any(d.kind != 'param' for d in need): rest = sorted([d for d in need if d not in own], key=first_use)
+                else:
+                    rest = sorted([d for d in need if d not in own], key=order_key)
+                    if c.k in ('for', 'while', 'do'): own = sorted(own, key=order_key)   # the loop needs them all
                 for d in rest + own:                       # _strncpy: n, s2, then s1 (its own statement); _strchr: s, c
                     setup_struct_temps(F, c)
                     F.emit('ld', '%s,(XSP+%s)' % ('XIZ' if d.reg == 'XIZ' else FAM[d.reg][d.ty.size], hx(d.off + F.push)))
@@ -1249,6 +1265,12 @@ def gen_stmt(F, s, last):
         if v.k == 'load' and strip(v.e).k == 'var' and strip(v.e).decl.name.lstrip('_') in PSEUDO and \
                 strip(v.e).decl.name.startswith('__'):
             flush_pops(F); epilogue(F); F.emit('ret'); return    # return (void *)__XHL: the value is already there
+    if s.k == 'return' and s.value is not None and F.opt and F.f.ret.size == 2 and char_arith(s.value) and \
+            not (F.xiz_vars or F.pushes or getattr(F, 'frame', 0)):
+        fam = gen(F, narrow(s.value, 1), 'HL', 1)          # op_two: return *a - *b -> ld L,(XDE) / sub L,(XBC) / exts HL
+        if fam != 'HL': F.emit('ld', 'L,%s' % FAM[fam][1])
+        F.emit('exts' if F.f.ret.signed else 'extz', 'HL'); flush_pops(F)
+        F.emit('retd', hx(F.retd)) if F.retd else F.emit('ret'); return
     if s.k == 'return':
         epi = F.opt and (F.xiz_vars or F.pushes or getattr(F, 'frame', 0)) and not getattr(F, 'shared_exit', None)
         if s.value is not None:
@@ -1373,6 +1395,16 @@ def gen_stmt(F, s, last):
         F.emit('ld', '%s,%s' % (t, FAM[fam][size])); return
     raise Unsupported('statement ' + s.k)
 
+def char_arith(x):
+    """an int expression of +, -, &, |, ^ over chars only (both operands promoted from char)"""
+    x = strip(x)
+    if x.k != 'bin' or x.op not in ('+', '-', '&', '|', '^'): return False
+    def ch(y):
+        y = strip(y)
+        if y.k == 'cast' and y.kind == 'IntegralCast' and strip(y.e).ty.size == 1: return True
+        return y.k == 'bin' and char_arith(y)
+    return ch(x.l) and ch(x.r)
+
 def N_load(d):
     from frontend import N
     return N('load', e=N('var', decl=d, ty=d.ty), ty=d.ty)
@@ -1383,8 +1415,10 @@ def store_through_temp(n):
     lv = strip(n.l)
     if lv.k != 'deref' or strip(lv.e).k != 'incdec' or not strip(lv.e).post: return None
     v = strip(n.r)
+    if v.k != 'cast': return None                          # op_fill: a char parameter is stored directly
     while v.k == 'cast': v = strip(v.e)
-    if v.k == 'load' and strip(v.e).k == 'var' and strip(v.e).decl.kind == 'param': return strip(v.e).decl
+    if v.k == 'load' and strip(v.e).k == 'var' and strip(v.e).decl.kind == 'param' and strip(v.e).decl.ty.size > 1:
+        return strip(v.e).decl
     return None
 
 def has_helper_call(e):
