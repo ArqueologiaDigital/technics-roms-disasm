@@ -326,6 +326,29 @@ Next, in order:
    copies), `_malloc`.
 3. Then phase 3b.
 
+Done since (2026-11-09, late night):
+- **Long helpers** (binop-loc section 6): the operand order of `C9H_mulls` / `divls` / `remls` copies, and under
+  `-O3 -XS -Xr` the homes of a helper-only function (first operand parameter in XIZ, a helper result in a slot).
+  binop_l / binop_ul are 50 / 50 under every option set.
+- **mem.c addressing**: `gps->a[k]` (cc900 indexes with the low byte of the scaled offset: `ld C,A /
+  (XWA+C)`), `&ga[i]`, `a[i][j]` through `int (*)[4]`, `-Xr` index scaling in the index's own register.
+  mem.c is 21 / 21 everywhere.
+- **`x & mask` as a condition** (new topic cond_bits.c, run `2026-11-09-22-micro-condbits`).  A one-bit mask is
+  `bit n`: in memory for a byte, except bit 7 of a signed char; on WA / QWA for an int or a long.  Any other mask
+  is `and`.  Under `-O`, `if (c) return 1; return 0;` becomes `scc`.  109 / 109 / 108 / 108 of 117.
+- **Assignment as a value** (new topic assign_expr.c, run `2026-11-09-23-micro-assignexpr`): stored right to left
+  from one register, and compared in that register.  30 / 26 / 27 / 27 of 43; what is left is which register a
+  local assigned in a condition gets.
+- **Calls through pointers**: `(*p->fn)(...)` is `ld XWA,(p) / ld XWA,(XWA+off) / call XWA`.  Char arguments from
+  an int in IZ (`ld A,IZL`) and `*s++` (`ld A,(XIZ+:1)`; from a slot `ld XWA,(XSP+d) / ld C,(XWA+:1) /
+  ld (XSP+d),XWA / extz BC / push BC`).  `_fputc` and `_fputs` are byte-identical.
+- Micro: none 671, O3XS 669, Xr 670, O3XSXr 671 of 674.  Library (v4.23) 161 / 248.  Pairs: kn5000 223.
+
+**A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
+`ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
+(`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
+pipeline can emit them.
+
 ## How to resume
 
 ```sh

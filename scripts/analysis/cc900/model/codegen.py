@@ -1412,6 +1412,32 @@ def push_arg(F, a):
         F.push += n; return n
     if size == 1:                                    # a char parameter: sign-extended to a word (call.c: k4)
         m = mem_operand(F, a0)
+        b0 = a0
+        while b0.k == 'cast' and b0.kind == 'IntegralCast' and strip(b0.e).ty.size == 1: b0 = strip(b0.e)
+        if m is None and b0.k == 'load' and strip(b0.e).k == 'deref':   # _fputs: *s++ with s in XIZ ->
+            pv = strip(strip(b0.e).e)                                     # ld A,(XIZ+:1)
+            if pv.k == 'incdec' and pv.post and strip(pv.e).k == 'var' and \
+                    getattr(strip(pv.e).decl, 'reg', None) in ('XIZ', 'BC', 'DE', 'HL', 'IX', 'IY') and \
+                    strip(pv.e).decl.ty.size == 4:
+                d = strip(pv.e).decl; X = 'XIZ' if d.reg == 'XIZ' else FAM[d.reg][4]
+                m = '(%s%s:%d)' % (X, '+' if pv.op == '++' else '-', d.ty.base.size)
+            elif pv.k == 'incdec' and pv.post and strip(pv.e).k == 'var' and not getattr(strip(pv.e).decl, 'reg', None) \
+                    and strip(pv.e).decl.ty.size == 4:
+                sm = lvalue(F, strip(pv.e))                # _fwrite: *p++ with p in a slot -> ld XWA,(XSP+0x4) /
+                if sm.startswith('(XSP'):                  # ld C,(XWA+:1) / ld (XSP+0x4),XWA / extz BC / push BC
+                    F.emit('ld', 'XWA,%s' % sm)
+                    F.emit('ld', 'C,(XWA%s:%d)' % ('+' if pv.op == '++' else '-', strip(pv.e).decl.ty.base.size))
+                    F.emit('ld', '%s,XWA' % sm)
+                    F.emit('exts' if a0.ty.signed else 'extz', 'BC'); F.emit('push', 'BC'); F.push += 2; return 2
+        if m is None:                                # _fputc: (char)c of an int in IZ -> ld A,IZL / extz WA
+            x = a0
+            while x.k == 'cast' and x.kind == 'IntegralCast': x = strip(x.e)
+            if x.k == 'load' and x.ty.size in (2, 4):
+                if strip(x.e).k == 'var': touch_home(F, strip(x.e).decl)   # ld IZ,(XSP+0x6) first
+                xm = reg_or_mem(F, x, x.ty.size)
+                if xm is not None and xm.startswith('('): m = xm          # the low byte is at the same address
+                elif xm in ('IX', 'IY', 'IZ', 'XIX', 'XIY', 'XIZ'): m = xm.lstrip('X') + 'L'
+                elif xm is not None and family_of(xm): m = FAM[family_of(xm)[1:]][1]
         if m is None: raise Unsupported('complex char argument')
         F.emit('ld', 'A,%s' % m); F.emit('exts' if a0.ty.signed else 'extz', 'WA'); F.emit('push', 'WA')
         F.push += 2; return 2
@@ -1467,12 +1493,17 @@ def flush_pops(F, before_test=False):
 
 def gen_call(F, e, fam=None, size=0):
     fn = strip(e.fn)
+    if fn.k == 'deref' and strip(fn.e).ty is not None and strip(fn.e).ty.is_ptr():
+        fn = strip(fn.e)                               # _fputc: (*stream->out)(c) calls through the pointer itself
     if fn.k != 'var' and not F.adecl and fn.ty is not None and fn.ty.is_ptr():
         n = 0                                          # abi fptr.c fp_call: pushw (XSP+0x4) / ld XWA,(_gfp) /
         if not e.args and F.pending: flush_pops(F)     # call XWA / inc 0x2,XSP
         for a in reversed(e.args): n += push_arg(F, a)
         pm = mem_operand(F, fn)
-        if pm is None: raise Unsupported('indirect call through an expression')
+        if pm is None:                                 # _fputc: ld XWA,(XSP+0xa) / ld XWA,(XWA) / call XWA
+            fr = gen(F, fn, 'WA', 4)
+            if fr != 'WA': F.emit('ld', 'XWA,%s' % FAM[fr][4])
+            pm = 'XWA'
         if pm != 'XWA': F.emit('ld', 'XWA,%s' % pm)
         F.emit('call', 'XWA'); F.pending += n
         if fam and fam != 'HL': F.emit('ld', '%s,%s' % (FAM[fam][size], FAM['HL'][size]))
