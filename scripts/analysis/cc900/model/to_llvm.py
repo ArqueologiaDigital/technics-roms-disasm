@@ -12,7 +12,9 @@ The encodings asm900 picks, read from the firmware (v10 String_Compare, Strcat, 
   form (`ld hl, 0:i3`, `cp bc, 0:i3`); a larger `ld r16,n` the 3-byte compact form (`ldw hl, 0xffff`, _strlen);
 - `j cc,L` / `j L` are `jr` when the target is in reach and `jrl` otherwise; `cal _f` is `call` with a 24-bit
   address; a 16-bit push / pop of WA..IZ is the 1-byte form;
-- an absolute operand is `(ADDR:8)` below 0x100, `(ADDR:16)` below 0x10000, `(ADDR:24)` above.
+- an absolute operand is `(ADDR:8)` below 0x100, `(ADDR:16)` below 0x10000, `(ADDR:24)` above -- except a symbol
+  the compiler declared `extern large` (every extern of the 1997 library, which is built `__LARGE__`), which is always
+  24-bit: the table data's `.sbrk` reads `_SBRK_size` at 0x999c as `e2 9c 99 00 23`.  Set LARGE_DATA for such code.
 SYMBOLS.txt rows are `NAME 0xADDR`; a C name is looked up with and without its `_` / `.` prefix.  An instruction the
 translator does not know is written as `; untranslated: ...`, so that the assembler stops on it.
 """
@@ -40,7 +42,10 @@ def lookup(sym, syms):
         if n in syms: return syms[n]
     raise KeyError('no address for %s' % sym)
 
-def absaddr(a):
+LARGE_DATA = False                                       # named absolute operands are `extern large`: 24-bit
+
+def absaddr(a, named=False):
+    if named and LARGE_DATA: return '(0x%x:24)' % a
     return '(0x%x:%d)' % (a, 8 if a < 0x100 else 16 if a < 0x10000 else 24)
 
 def num(s):
@@ -53,7 +58,7 @@ def operand(o, syms, locals_):
     o = o.strip()
     if REGS.match(o): return o.lower()
     m = re.match(r'^\(([_.][A-Za-z0-9_]+)(?:\s*\+\s*(0x[0-9a-fA-F]+|\d+))?\)$', o)
-    if m: return absaddr(lookup(m.group(1), syms) + (num(m.group(2)) if m.group(2) else 0))
+    if m: return absaddr(lookup(m.group(1), syms) + (num(m.group(2)) if m.group(2) else 0), named=True)
     m = re.match(r'^\((X\w+)\+:(\d)\)$', o)                     # post-increment
     if m: return '(%s+:%s)' % (m.group(1).lower(), m.group(2))
     m = re.match(r'^\(-(X\w+):(\d)\)$', o)                       # pre-decrement

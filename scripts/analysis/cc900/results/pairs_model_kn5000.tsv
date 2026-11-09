@@ -179,7 +179,7 @@ subcpu v140	03e6e5	_log	_LOG.C	-	constant S50010 not in the image	exact
 subcpu v140	03e848	__fint	__FINT.C	-	model: ; unsupported: local maru	exact
 subcpu v140	03ea50	_ldexp	_LDEXP.C	-	model: ; unsupported: fp destination	exact
 table data	9ffb2c	_sbrk	__SBRK.C	-	model: no function	near
-table data	9ffb2f	.sbrk	__SBRK.C	34	27 diff first +3	exact
+table data	9ffb2f	.sbrk	__SBRK.C	39	MATCH	exact
 table data	9ffb56	_malloc	_MALLOC.C	-	model: ; unsupported: lvalue var	exact
 table data	9ffbdc	_strncmp	_STRNCMP.C	50	MATCH	exact
 hdae v2.06i	299ae7	__doprnt	__DOFORM.C	-	model: ; unsupported: operator =	call
@@ -268,4 +268,4 @@ hdae v1.10i	296ecb	_strncpy	_STRNCPY.C	43	MATCH	exact
 hdae v1.10i	296ef6	__facnv	__FACVT.C	-	model: ; unsupported: var	near
 hdae v1.10i	2e0cd6	___ctype	_CTYPE.C	-	alias of __ctype	exact
 hdae v1.10i	2e0cd6	__ctype	_CTYPE.C	256	MATCH	exact
-# MATCH 175, model cannot 70, differs 15, alias 9, outside image 4
+# MATCH 176, model cannot 70, differs 14, alias 9, outside image 4

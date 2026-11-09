@@ -47,6 +47,7 @@ def main():
     defines = ['__900__', '__LARGE__', 'FLOAT', '__CDECL=', '__ASM(x)=']
     units = {}
     tally = collections.Counter(); shown = 0
+    to_llvm.LARGE_DATA = True                              # the library is built __LARGE__: its externs are large
     print('image\taddress\tpublic\tsource\tlength\tresult\thow')     # how: pairs.tsv's (exact / near / call / known)
     for img, rs in byimg.items():
         if want and img not in want: continue

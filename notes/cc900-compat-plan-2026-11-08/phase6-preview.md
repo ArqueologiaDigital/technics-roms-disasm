@@ -48,8 +48,13 @@ commands are in `scripts/analysis/cc900/model/README.md`; the output, 2026-11-09
 So for these six the whole chain -- guessed C, clang's front end, the reference model, our assembler -- gives the
 firmware's bytes with no Toshiba program involved.  The translator covers only the instructions these six need;
 an unknown line is emitted as `; untranslated:` so that a wider corpus fails loudly instead of silently.  The
-address-width rule is read from the firmware's own encodings; whether tulink decides it from the final address
-(as assumed) or from a section attribute is not yet tested.
+address-width rule is read from the firmware's own encodings.  **Tested later the same day:** the final address does
+not decide it.  The table data's `.sbrk` reads `_SBRK_size`, at 0x999c, with a 24-bit operand
+(`ld XHL,(0x00999c)`, `e2 9c 99 00 23`), and its listing declares the variable `extern large`.  Every extern of the
+1997 library is declared that way (828 of 828), and so are tiny.c's (`extern large _g8d3e`), yet the firmware encodes
+`(0x8d3e:16)`.  So the width follows the declaration: a `large` extern takes 24 bits whatever its address, and the
+firmware's own variables below 0x10000 must have been declared another way (a near or tiny area).  How exactly is
+still open.  `to_llvm.LARGE_DATA` makes named operands 24-bit; `pairs_model.py` sets it.
 
 ## The firmware's library pairs from Toshiba's C with our tools only (2026-11-09)
 
@@ -59,10 +64,10 @@ reference model (cdecl, `-O3 -XS -DFLOAT`, as the library was built), translates
 image's own addresses: the pairs' publics, the image's labels, the helpers named in the runtime cross-reference),
 assembles and links it with llvm-mc / ld.lld at the pair's address, and compares the bytes with the image.
 
-| personality | byte-identical pairs | which                                                                                                                                                                                                                                       |
-|-------------|----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `v4.23`     | 131 (22 differ)      | `_ltoa`, `_strcat`, `_strncpy`, `_strncat`, `_strcpy`, `_strlen`, `_memset`, `_memcmp`, `_memchr`, `_memcpy`, `__ctype` x9 each, `_strncmp` x10, `_strchr` x5, `_strnset` x5, `__FloatErrorHandle` x3, sub CPU float tables x9              |
-| `kn5000`    | 175 (15 differ)      | the same 131, plus `_ultoa` (main CPU v10, v9, v7, v6, v5, HD-AE5000 x4) and `_ldiv` (HD-AE5000 x4); `_modf`, `_fabs`, `_sin`, `_cos`, `_tan`, `_exp` (sub CPU x3 each); `.sbrk` (main CPU x5); `_sprintf`, `_vsprintf` (HD-AE5000 x4 each) |
+| personality | byte-identical pairs | which                                                                                                                                                                                                                                                             |
+|-------------|----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `v4.23`     | 131 (22 differ)      | `_ltoa`, `_strcat`, `_strncpy`, `_strncat`, `_strcpy`, `_strlen`, `_memset`, `_memcmp`, `_memchr`, `_memcpy`, `__ctype` x9 each, `_strncmp` x10, `_strchr` x5, `_strnset` x5, `__FloatErrorHandle` x3, sub CPU float tables x9                                    |
+| `kn5000`    | 176 (14 differ)      | the same 131, plus `_ultoa` (main CPU v10, v9, v7, v6, v5, HD-AE5000 x4) and `_ldiv` (HD-AE5000 x4); `_modf`, `_fabs`, `_sin`, `_cos`, `_tan`, `_exp` (sub CPU x3 each); `.sbrk` (main CPU x5); `_sprintf`, `_vsprintf` (HD-AE5000 x4 each), `.sbrk` (table data) |
 
 `_ltoa` came later the same day (`-O` keeps the parameters of a function with calls in scratch registers when no
 value is read after a call; and asm900 writes a 32-bit `cp XDE,0x0` with the long immediate, `ea cf 00 00 00 00`, not
@@ -72,8 +77,11 @@ personality's additions.  `_modf` (sub CPU v142, v141, v140) is the first floati
 `pairs_model.py` takes its address from the image's own `lda XBC,...` operand and checks that the image holds that
 double there.  The 13 the kn5000 personality adds are the two routines in which the firmware's code differs from V4.23's output:
 the reload rule (`rules.md`) accounts for them, and with it they come out byte-identical with no Toshiba program in
-the chain.  The 10 that differ are `_memccpy` x9, where the model does not yet reproduce V4.23 either (register choice
-around its two calls), and the table data's `.sbrk` (its addresses are encoded differently; not looked at yet).
+the chain.  The 14 that differ:
+- `_memccpy` x9, where the model does not yet reproduce V4.23 either (register choice around its two calls);
+- `_log` x3, whose FP constant `S50010` the model places where the image has none;
+- the main CPU's `_vsprintf` x2, a near match only (below).
+The table data's `.sbrk` came right once a `large` extern was taken as 24-bit (below).
 `.sbrk` is declared `__adecl` in a cdecl file; the front end now reads the attribute per function.  A static
 (`__str`, a static function's address `__strOut`) has no public symbol in the image either: `pairs_model.py` gives it
 a placeholder, takes its address from the image's own operands (a 24-bit address, or a `pushw` hi / lo pair) and
@@ -111,7 +119,7 @@ a DOS end-of-file byte, which the front end now cuts.)
 | subcpu v142 | 16    | 10        | 0      | 6                | 0                      |
 | subcpu v141 | 16    | 10        | 0      | 6                | 0                      |
 | subcpu v140 | 16    | 10        | 0      | 6                | 0                      |
-| table data  | 3     | 1         | 1      | 1                | 1                      |
+| table data  | 3     | 2         | 0      | 1                | 1                      |
 | hdae v2.06i | 21    | 16        | 1      | 4                | 1                      |
 | hdae v2.01i | 21    | 16        | 1      | 4                | 0                      |
 | hdae v1.15i | 19    | 16        | 1      | 2                | 0                      |
