@@ -1489,6 +1489,7 @@ TERN_NO_MERGE = True                                      # see cross_jump
 TERN_ARM_WA = True                                        # see gen's plain ?: path
 LONG_RMW_XIZ = True                                       # see gen_opassign
 KCONST_MULTI = True                                       # see gen_counted
+PTR_KLOOP = True                                          # see ptr_kloop
 
 def char_narrow(body):
     """cc900 does int + - & | ^ of a char and a constant that fits a byte, or of two chars, on the byte and
@@ -2424,6 +2425,8 @@ def lvalue(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False, kind='store'):
     operand; *p loads p into `ptr`; a[i] of a global array scales i in `idx` and puts the array in `base`
     (`(base+idx)`), or with combine=True adds them into `ptr` (`(ptr)`)"""
     lv = strip(lv)
+    eo = getattr(F, 'elem_ops', None)
+    if eo and id(lv) in eo: return eo[id(lv)]           # (gen_counted's pointer loop, shared_base_opassign)
     u1 = u1_operand(F, lv) if getattr(F, 'u1_i', None) is not None else None
     if u1 is not None: return u1                         # oc_cpy_abn: ld (XWA+IX),C; oc_clr_i: ldw (XDE),0x0
     if lv.k == 'index' and getattr(F, 'u1x', None) and id(lv) in F.u1x['acc']: return u1x_op(F, lv)
@@ -2574,9 +2577,10 @@ def sized_pair_noopt(F, lv, r, heavy, size, op):
     F.emit('ld', 'DE,%s' % T); scale16(F, 'DE', esz); F.emit('lda', 'XHL,_%s' % g.name)
     if keep:
         F.emit('ld', 'WA,BC'); scale16(F, 'WA', esz)
-        F.elem_ops = {id(src): '(XBC+WA)'}; F.lines.append('\tlda\tXBC,_%s' % g.name)
+        eo0 = getattr(F, 'elem_ops', None) or {}; F.elem_ops = dict(eo0); F.elem_ops[id(src)] = '(XBC+WA)'
+        F.lines.append('\tlda\tXBC,_%s' % g.name)
         try: f2 = gen(F, r, 'WA', size)
-        finally: F.elem_ops = {}
+        finally: F.elem_ops = eo0
         F.emit(SIMPLE_OPS[op], '(XHL+DE),%s' % FAM[f2][size]); return True
     f2 = gen(F, r, 'WA', size)
     F.emit(SIMPLE_OPS[op], '(XHL+DE),%s' % FAM[f2][size]); return True
@@ -2624,9 +2628,9 @@ def shared_base_opassign(F, e, lv, r, heavy, size, op):
         F.emit('exts', 'X' + I); scale32(F, 'X' + I, esz); F.emit('add', '%s,X%s' % (B, I))
         t = '(XHL)'; so = '(%s)' % B
     if ir is not None: F.dead.add(iv)
-    F.elem_ops = {id(src): so}
+    eo0 = getattr(F, 'elem_ops', None) or {}; F.elem_ops = dict(eo0); F.elem_ops[id(src)] = so
     try: f2 = gen(F, r, V, size)
-    finally: F.elem_ops = {}
+    finally: F.elem_ops = eo0
     F.emit(SIMPLE_OPS[op], '%s,%s' % (t, FAM[f2][size]))
     return True
 
@@ -2672,9 +2676,9 @@ def pointer_pair_opassign(F, e, lv, r, heavy, size, op):
         F.emit('ld', '%s,%s' % (PB, mem_operand(F, strip(lv.base)))); F.emit('ld', '%s,XWA' % D)
         F.emit('add', '%s,%s' % (D, PB)); t = '(%s)' % D
         F.emit('exts', 'XBC'); scale32(F, 'XBC', esz); F.emit('add', 'XBC,%s' % PB)
-    F.elem_ops = {id(src): '(XBC)'}
+    eo0 = getattr(F, 'elem_ops', None) or {}; F.elem_ops = dict(eo0); F.elem_ops[id(src)] = '(XBC)'
     try: f2 = gen(F, r, 'HL' if helper and size == 4 else 'WA', size)
-    finally: F.elem_ops = {}
+    finally: F.elem_ops = eo0
     F.emit(SIMPLE_OPS[op], '%s,%s' % (t, FAM[f2][size]))
     return True
 
@@ -2695,6 +2699,7 @@ def gen_opassign(F, e):
         walk(r, lambda n, d: heavy.append(n) if n.k == 'load' and (strip(n.e).k == 'deref' or strip(n.e).k == 'index'
              and not (fold(strip(n.e).idx).k == 'const' and strip(strip(n.e).base).k == 'var')) else None)
         lvg = strip(e.l)
+        if id(lvg) in (getattr(F, 'elem_ops', None) or {}): heavy = []   # (a loop operand already: gen_counted)
         gdst = lvg.k == 'index' and strip(lvg.base).k == 'var' and strip(lvg.base).decl.kind == 'global'
         if heavy and F.opt and lvg.k == 'index' and not gdst and not getattr(F, 'l2', None) and \
                 not getattr(F, 'u1_i', None) and not getattr(F, 'cl_active', None) and \
@@ -4481,8 +4486,63 @@ def loop_cond(F, c, target, sense):
         F.emit('ret', cc) if target == 'RET' else F.emit('j', '%s,%s' % (cc, target)); return
     raise Unsupported('loop condition ' + c.k)
 
+def ptr_kloop(F, s):
+    """-O: for (i = 0; i < K; i++) { straight-line statements } whose every array access is p[i + k], k >= 0, on
+    one pointer parameter p, i used nowhere else, and the last access p[i] (arr_index.c ai_div10): a description
+    for gen_counted, else None"""
+    if s.k != 'for' or s.init is None or s.cond is None or s.inc is None: return None
+    ini = flat(s.init)
+    if len(ini) != 1 or ini[0].k != 'expr' or strip(ini[0].e).k != 'bin' or strip(ini[0].e).op != '=': return None
+    iv = strip(strip(ini[0].e).l); v0 = fold(strip(ini[0].e).r)
+    if iv.k != 'var' or iv.decl.kind != 'local' or iv.decl.ty.size != 2 or v0.k != 'const' or v0.value != 0: return None
+    c = strip(s.cond); kc = fold(c.r) if c.k == 'bin' else None
+    if not (c.k == 'bin' and c.op == '<' and strip(c.l).k == 'load' and strip(strip(c.l).e).k == 'var' and
+            strip(strip(c.l).e).decl is iv.decl and kc is not None and kc.k == 'const' and kc.value and kc.value > 0):
+        return None
+    inc = strip(s.inc)
+    if not (inc.k == 'incdec' and inc.op == '++' and strip(inc.e).k == 'var' and strip(inc.e).decl is iv.decl): return None
+    stmts = flat(s.body)
+    if not stmts or any(x.k != 'expr' for x in stmts): return None
+    accs = []; bad = []; pvs = set()
+    def v(n, d):
+        if n.k == 'index':
+            b = strip(n.base); bi, k = split_index(n.idx); bi = unpromote(bi)
+            if b.k == 'load' and strip(b.e).k == 'var' and strip(b.e).decl.kind == 'param' and \
+                    strip(b.e).decl.ty.is_ptr() and bi.k == 'load' and strip(bi.e).k == 'var' and \
+                    strip(bi.e).decl is iv.decl and k >= 0:
+                accs.append((n, k)); pvs.add(strip(b.e).decl)
+            else: bad.append(n)
+        if n.k in ('call', 'deref') or fpgen.is_fp_op(n): bad.append(n)
+        if n.k in ('incdec', 'opassign') and strip(n.e if n.k == 'incdec' else n.l).k == 'var': bad.append(n)
+        if n.k == 'bin' and n.op == '=' and strip(n.l).k == 'var': bad.append(n)
+    for x in stmts: walk(x, v)
+    if bad or len(pvs) != 1 or not accs: return None
+    uses = []
+    walk(s.body, lambda n, d: uses.append(n) if n.k == 'load' and strip(n.e).k == 'var' and strip(n.e).decl is iv.decl else None)
+    if len(uses) != len(accs) or accs[-1][1] != 0: return None
+    esz = accs[0][0].ty.size
+    if any(n.ty.size != esz for n, _ in accs): return None
+    return {'pk': True, 'p': pvs.pop(), 'K': kc.value, 'esz': esz, 'accs': accs}
+
 def gen_counted(F, s, last, cl):
     """the -O counted loop (ol_i_acc1 .. ol_c_glob)"""
+    if cl.get('pk'):                                       # arr_index.c ai_div10: ld XWA,(t) / ld XBC,XWA /
+        p = cl['p']; esz = cl['esz']                       # lda XDE,XWA+0x12 / L2: ... (XBC) ... (XBC+0x2) ... /
+        if getattr(p, 'reg', None) not in (None, 'WA'): raise Unsupported('pointer loop base')   # (XBC+:2) /
+        if not getattr(p, 'reg', None): F.emit('ld', 'XWA,(XSP+%s)' % hx(p.off + F.push))   # cp XBC,XDE / j ult,L2
+        F.emit('ld', 'XBC,XWA'); F.emit('lda', 'XDE,XWA+%s' % hx(cl['K'] * esz))
+        F.dead.add(p)                                      # (-Xr: XWA is free for the values: ld WA,(XBC))
+        body = F.newulabel(); F.newulabel()
+        F.lines.append(body + ':'); n0 = len(F.lines)
+        F.elem_ops = {id(n): '(XBC+%s)' % hx(k * esz) if k else '(XBC)' for n, k in cl['accs']}
+        try: gen_stmt(F, s.body, False)
+        finally: F.elem_ops = {}
+        for j in range(len(F.lines) - 1, n0 - 1, -1):     # the last access steps the pointer
+            if '(XBC)' in F.lines[j]:
+                F.lines[j] = F.lines[j].replace('(XBC)', '(XBC+:%d)' % esz); break
+        else: raise Unsupported('pointer loop step')
+        F.emit('cp', 'XBC,XDE'); F.emit('j', 'ult,%s' % body)
+        return
     if 'kconst' in cl and KCONST_MULTI:
         idx = []; cont = []
         walk(s.body, lambda n, d: idx.append(n) if n.k == 'index' and strip(n.base).k == 'var' and
@@ -6021,6 +6081,12 @@ def plan_leaf(F):
             temps_ptr.append(n)                            # .c_sum: p[i] in a loop needs a free address register
         if F.opt and n.k == 'bin' and n.op == '=' and store_through_temp(n): temps_bc.append(n)   # _strset
     walk(f.body, visit)
+    if F.opt and PTR_KLOOP and not has_call:
+        lps = []
+        walk(f.body, lambda n, d: lps.append(n) if n.k in ('for', 'while', 'do') else None)
+        pk = ptr_kloop(F, lps[0]) if len(lps) == 1 else None
+        if pk is not None:
+            F.counted = {id(lps[0]): pk}; return True        # arr_index.c ai_div10 (gen_counted)
     if F.opt and not F.adecl and (not has_call or one_early_call(F)) and leaf_l2(F): return True
     if F.adecl and not has_call and leaf_r6(F): return True
     if (F.opt or (F.adecl and U1_PLAIN_XR)) and not has_call and leaf_u1(F): return True   # plain -Xr: U1 too
