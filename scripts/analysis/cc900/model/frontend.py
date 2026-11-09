@@ -125,6 +125,12 @@ class Builder:
             elif k == 'VarDecl':
                 d = Decl(n['name'], s.ty(n), n.get('storageClass', ''), 'global')
                 d.init = n.get('inner'); s.decls[n['id']] = d; u.decls[n['name']] = d
+                q = n['type']['qualType']                        # const object: f_const (globals.c c_val, c_str)
+                d.const = (q.startswith('const ') and '*' not in q) or q.rstrip().endswith('const')
+                d.init_expr = None
+                if d.init:
+                    try: d.init_expr = s.expr(d.init[0])
+                    except Exception: d.init_expr = None
                 if n.get('storageClass') != 'extern': u.globals.append(d)
             elif k == 'FunctionDecl':
                 d = Decl(n['name'], s.ty(n), n.get('storageClass', ''), 'func'); s.decls[n['id']] = d

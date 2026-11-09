@@ -727,6 +727,9 @@ def gen_load_mem(F, v, fam, size):
         if b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array':
             ii = strip(i); im = mem_operand(F, ii)
             if im is None: raise Unsupported('complex index')
+            if esz == 1 and im in ('WA', 'BC', 'DE', 'HL'):       # globals.c gl_index: lda XBC,_ext_arr / ld L,(XBC+WA)
+                base = 'XBC' if im == 'WA' else 'XWA'
+                F.emit('lda', '%s,_%s' % (base, b.decl.name)); F.emit('ld', '%s,(%s+%s)' % (R, base, im)); return fam
             if esz == 1:                                           # m_gca_v
                 F.emit('lda', 'XWA,_%s' % b.decl.name); F.emit('ld', 'BC,%s' % im); F.emit('extz', 'XBC')
                 F.emit('add', 'XBC,XWA'); F.emit('ld', '%s,(XBC)' % R); return fam
@@ -1890,8 +1893,69 @@ def compile_function(f, opt, adecl, personality='v4.23'):
     # a label that only a jump to `ret` uses: the oracle keeps it; nothing to do here yet
     return F.lines
 
+def data_value(e):
+    """the constant value of a global's initializer (sizes.c: sizeof, offsetof spelt with a null pointer, (char)0x80 < 0)"""
+    e = strip(e)
+    if e.k == 'cast' and e.kind == 'PointerToIntegral':
+        a = strip(e.e)
+        if a.k == 'addr' and strip(a.e).k == 'member' and strip(a.e).arrow:
+            b = strip(strip(a.e).base)
+            if b.k == 'cast' and fold(b.e).k == 'const' and fold(b.e).value == 0: return member_offset(strip(a.e))
+    if e.k == 'cast' and e.kind == 'IntegralCast':
+        v = data_value(e.e)
+        if v is None: return None
+        v &= (1 << (8 * e.ty.size)) - 1
+        if e.ty.signed and v >= 1 << (8 * e.ty.size - 1): v -= 1 << (8 * e.ty.size)
+        return v
+    if e.k == 'un' and e.op == '-':
+        v = data_value(e.e); return None if v is None else -v
+    if e.k == 'bin':
+        a, b = data_value(e.l), data_value(e.r)
+        if a is None or b is None: return None
+        ops = {'+': a + b, '-': a - b, '*': a * b, '<': int(a < b), '>': int(a > b), '<=': int(a <= b),
+               '>=': int(a >= b), '==': int(a == b), '!=': int(a != b), '&': a & b, '|': a | b, '^': a ^ b}
+        return ops.get(e.op)
+    f = fold(e)
+    return f.value if f.k == 'const' else None
+
+def emit_data(unit, out):
+    """global data as thc2 lists it (globals.c, sizes.c): initialized objects in declaration order (const ones in
+    f_const, the rest in f_data), each followed by the string literals it points to (_g_strp: dl S1 / S1: db
+    "hello",0); uninitialized objects last (f_area, dsb N).  Labels keep `_` in -Xr files too."""
+    sn = [0]
+    bss = []
+    for d in unit.globals:
+        if d.ty.kind == 'func': continue
+        name = '_' + d.name
+        if d.init_expr is None:
+            if not d.init: bss.append(d)
+            continue
+        e = strip(d.init_expr); lines = [name + ':']; tail = []
+        if d.ty.kind == 'int':
+            v = data_value(e)
+            if v is None: continue
+            lines.append('\t%s\t%d' % ({1: 'db', 2: 'dw', 4: 'dl'}[d.ty.size], v))
+        elif d.ty.kind == 'float' and d.ty.size == 8 and e.k in ('fconst', 'cast'):
+            v = e.value if e.k == 'fconst' else getattr(strip(e.e), 'value', None)
+            if v is None: continue
+            m, x = ('%.20e' % v).split('e')
+            lines.append('\tfdatad\t%se%s%03d' % (m, x[0], abs(int(x))))
+        elif d.ty.kind == 'array' and e.k == 'string':
+            lines.append('\tdb\t%s,0' % e.value)
+        elif d.ty.kind == 'ptr' and strip(e).k in ('decay', 'string', 'noop') and strip(getattr(strip(e), 'e', e)).k == 'string':
+            sn[0] += 1; lab = 'S%d' % sn[0]
+            lines.append('\tdl\t' + lab); tail = [lab + ':', '\tdb\t%s,0' % strip(getattr(strip(e), 'e', e)).value]
+        elif d.ty.kind == 'ptr' and data_value(e) is not None:
+            lines.append('\tdl\t%d' % data_value(e))
+        else:
+            continue
+        out[name] = lines + tail
+    for d in bss:
+        out['_' + d.name] = ['_' + d.name + ':', '\tdsb\t%d' % d.ty.size]
+
 def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
     out = {}
+    emit_data(unit, out)
     for f in unit.functions:
         name = ('.' if adecl else '_') + f.name
         try: out[name] = compile_function(f, opt, adecl, personality)
