@@ -1235,6 +1235,19 @@ def gen_stmt(F, s, last):
                 F.last_use[d] = id(ld) if c.e.op in ('*', '/') else None   # .as_mul_loc: muls XWA,BC in place;
                 # .as_mod_loc under O3XSXr is not: ld HL,WA / exts XHL / divs XHL,BC / ld HL,QHL
                 i += 1; continue
+            if F.opt and not F.adecl and c.k == 'expr' and c.e.k == 'opassign' and strip(c.e.l).k == 'var' and \
+                    not getattr(strip(c.e.l).decl, 'reg', None) and strip(c.e.l).decl.kind in ('param', 'local') and \
+                    nxt is not None and nxt.k == 'return' and nxt.value is not None and strip(nxt.value).k == 'load' and \
+                    strip(strip(nxt.value).e).k == 'var' and strip(strip(nxt.value).e).decl is strip(c.e.l).decl:
+                from frontend import N                     # assign.c *_loc under O3XS: the store to a is dead
+                d = strip(c.e.l).decl
+                b = N('bin', op=c.e.op, l=N('load', e=N('var', decl=d, ty=d.ty), ty=d.ty), r=c.e.r, ty=d.ty)
+                if c.e.op in ('*', '/'):                   # as_mul_loc: ld WA,(a) / muls XWA,(v) / ld HL,WA
+                    f2 = gen(F, b, 'WA', d.ty.size); F.emit('ld', '%s,%s' % (FAM['HL'][d.ty.size], FAM[f2][d.ty.size]))
+                    flush_pops(F); epilogue(F); F.emit('retd', hx(F.retd)) if F.retd else F.emit('ret')
+                else:
+                    gen_stmt(F, N('return', value=b), last)   # as_add_loc: ld HL,(a) / add HL,(v)
+                i += 2; continue
             if F.opt and c.k == 'if' and c.els is not None and nxt is not None and nxt.k == 'return' and \
                     nxt.value is not None and strip(nxt.value).k == 'load' and strip(strip(nxt.value).e).k == 'var':
                 rv = strip(strip(nxt.value).e).decl
