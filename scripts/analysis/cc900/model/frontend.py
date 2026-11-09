@@ -47,13 +47,16 @@ class Records:
 def parse_type(spell, recs, typedefs):
     t = spell.strip()
     t = re.sub(r'\b(const|volatile|__restrict|restrict)\b', '', t).strip()
+    cdecl = 'tlcs900_cdecl' in t                             # a __cdecl function called from an adecl file (c_lib)
+    t = re.sub(r'__attribute__\(\(tlcs900_[ac]decl\)\)', '', t).strip()
     t = re.sub(r'\s+', ' ', t)
     m = re.match(r'^(.*)\((\*+)\)\s*\((.*)\)$', t)          # pointer to function
     if m:
         return Type('ptr', 4, 2, base=Type('func', 0, 1, spell=t), spell=spell)
     m = re.match(r'^(.*?)\s*\((.*)\)$', t)                   # function type
     if m and not t.endswith('*'):
-        return Type('func', 0, 1, ret=parse_type(m.group(1), recs, typedefs), spell=spell)
+        ft = Type('func', 0, 1, ret=parse_type(m.group(1), recs, typedefs), spell=spell); ft.cdecl = cdecl
+        return ft
     m = re.match(r'^(.*)\[(\d*)\]$', t)
     if m:
         b = parse_type(m.group(1), recs, typedefs); n = int(m.group(2) or 0)
@@ -92,8 +95,12 @@ class Function:
 class Unit:
     def __init__(s): s.functions = []; s.globals = []; s.decls = {}
 
-def load(path, defines=(), includes=()):
-    cmd = [CLANG, '-target', 'tlcs900', '-std=c89', '-fsyntax-only', '-Xclang', '-ast-dump=json', '-Wno-everything']
+def load(path, defines=(), includes=(), adecl=False):
+    """adecl=True parses as cc900 -Xr does: clang's -mcc900-adecl, so that only an explicit __cdecl function type
+    carries tlcs900_cdecl (without it every function type is spelt with it)"""
+    cmd = [CLANG, '-target', 'tlcs900', '-mabi=cc900', '-std=c89', '-fsyntax-only', '-Xclang', '-ast-dump=json',
+           '-Wno-everything', '-D__cdecl=__attribute__((tlcs900_cdecl))', '-D__adecl=__attribute__((tlcs900_adecl))']
+    if adecl: cmd.append('-mcc900-adecl')
     cmd += ['-D' + d for d in defines] + ['-I' + i for i in includes] + ['-x', 'c', path]
     ast = json.loads(subprocess.run(cmd, capture_output=True, text=True, check=True).stdout)
     return Builder(path).unit(ast)

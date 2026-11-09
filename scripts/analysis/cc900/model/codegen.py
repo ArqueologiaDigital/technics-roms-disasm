@@ -39,6 +39,7 @@ def hx(v):
 class Fn:
     def __init__(s, f, adecl):
         s.f = f; s.lines = []; s.adecl = adecl; s.label = 50000; s.push = 0; s.xiz_vars = []; s.pending = 0
+        s.save_reg = 'XIZ'                         # push IZ when only IZ holds a value (call.c k_seq, adecl.c d_keep)
         off = 4
         s.sret = None
         if f.ret is not None and f.ret.kind == 'struct' and f.ret.size > 4 and not adecl:
@@ -127,7 +128,9 @@ def mem_operand(F, e):
             d = v.decl
             if getattr(d, 'reg', None) and d.reg != 'XIZ':
                 return FAM[d.reg].get(d.ty.size) or FAM[d.reg][2]
+            if getattr(d, 'homed', False) and d.reg == 'XIZ': return 'XIZ'
             if d.kind == 'local' and hasattr(d, 'slot'): return '(XSP+%s)' % hx(d.slot + F.push)
+            if d.kind == 'param' and hasattr(d, 'slot'): return '(XSP+%s)' % hx(d.slot + F.push)   # homed (d_keep)
             if d.kind == 'param': return '(XSP+%s)' % hx(d.off + F.push)
             if d.kind in ('global', 'func') and not d.ty.kind == 'array': return '(_%s)' % d.name
         g = global_offset(v)
@@ -530,6 +533,8 @@ def gen_compare(F, e):
         F.emit('cp', '%s,%s' % (lm, rs)); return cc
     if rc.k == 'const' and lm is not None and lm.startswith('(') and size <= 2:
         F.emit('cp' + ('b' if size == 1 else 'w'), '%s,%s' % (lm, hx(rc.value))); return cc
+    if l.k == 'call' and rc.k == 'const' and size == 2:   # k_cond, c_break: cal .r1 / cp HL,0x0 (cdecl too)
+        gen_call(F, l); F.emit('cp', 'HL,%s' % hx(rc.value)); return cc
     W = FAM['WA'][size]
     gen(F, l, 'WA', size)
     if rc.k == 'const' and rc.value == 0 and size == 4 and op in ('==', '!='):
@@ -628,9 +633,54 @@ def gen_call(F, e, fam=None, size=0):
     if getattr(fn.decl, 'implicit', False):            # _ultoa: memcpy undeclared -> the long difference is pushed whole
         args = [strip(a.e) if strip(a).k == 'cast' and strip(a).kind == 'IntegralCast' and strip(a.e).ty.size > strip(a).ty.size
                 else a for a in args]
+    if F.adecl and not getattr(fn.decl.ty, 'cdecl', False):
+        return gen_call_adecl(F, fn, args, fam, size)
     for a in reversed(args): n += push_arg(F, a)
-    F.emit('cal', ('.' if F.adecl else '_') + fn.decl.name)
+    F.emit('cal', '_' + fn.decl.name)                  # cdecl, also from an adecl file (adecl.c: c_lib)
     F.pending += n
+    if fam and fam != 'HL': F.emit('ld', '%s,%s' % (FAM[fam][size], FAM['HL'][size]))
+    return fam
+
+def gen_call_adecl(F, fn, args, fam, size):
+    """a call to an adecl function (abi.md; adecl.c c_t1..c_t5, call.c under -Xr).  The first three arguments go to
+    WA / BC / DE (by size: A, WA, XWA ...), the rest are pushed left to right and the callee pops them (retd).
+    Order (call.c k4: ld BC,WA / ld A,(_gc) / exts WA / pushw 0x3 / ld XDE,(_gl); adecl.c c_t2: ld BC,(_gi) /
+    ld WA,0x1; c_t5: ld XWA,0x4 / push XWA / pushw 0x5 / ld XWA,(_gl) / ld XBC,0x2 / ld XDE,0x3):
+    register variables moved into place first, then computed arguments (a char is loaded and extended to a word),
+    then the stack arguments, then plain memory operands, then constants; each group left to right."""
+    regs = ['WA', 'BC', 'DE']; inreg = []; stack = []
+    for i, a in enumerate(args):
+        if i < 3 and strip(a).ty.kind != 'struct' and strip(a).ty.size <= 4: inreg.append((regs[i], a))
+        else: stack.append(a)
+    def kind(a):
+        a0 = strip(a)
+        if a0.ty.size == 1: return 'computed'
+        if fold(a0).k == 'const': return 'const'
+        if a0.k != 'load': return 'computed'
+        m = mem_operand(F, a0)
+        if m is None: return 'computed'
+        return 'reg' if family_of(m) else 'mem'
+    groups = {'reg': [], 'computed': [], 'mem': [], 'const': []}
+    for t, a in inreg: groups[kind(a)].append((t, a))
+    for t, a in groups['reg']:
+        sz = strip(a).ty.size; m = mem_operand(F, strip(a))
+        if m != FAM[t][sz]: F.emit('ld', '%s,%s' % (FAM[t][sz], m))
+    for t, a in groups['computed']:
+        a0 = strip(a)
+        if a0.ty.size == 1:
+            m = mem_operand(F, a0)
+            if m is not None and m != FAM[t][1]: F.emit('ld', '%s,%s' % (FAM[t][1], m))
+            elif m is None: gen(F, a0, t, 1)
+            F.emit('exts' if a0.ty.signed else 'extz', FAM[t][2])
+        else:
+            gen(F, a0, t, a0.ty.size)
+    n = 0
+    for a in stack: n += push_arg(F, a)
+    for t, a in groups['mem'] + groups['const']:
+        sz = strip(a).ty.size; F.emit('ld', '%s,%s' % (FAM[t][sz], mem_operand(F, strip(a)) if fold(strip(a)).k != 'const'
+                                                     else hx(fold(strip(a)).value)))
+    F.emit('cal', '.' + fn.decl.name + ('\t;stack' if n else ''))      # the callee pops: no tail jump (c_t4)
+    F.push -= n
     if fam and fam != 'HL': F.emit('ld', '%s,%s' % (FAM[fam][size], FAM['HL'][size]))
     return fam
 
@@ -1015,7 +1065,7 @@ def gen_stmt(F, s, last):
             d = strip(v.e).decl                        # _ldiv: ld XIX,(sret) / lda XIY,XSP+slot / ld BC,n / ldirw
             F.emit('ld', 'XIX,(XSP+%s)' % hx(F.sret.off + F.push)); F.emit('lda', 'XIY,XSP+%s' % hx(d.slot + F.push))
             F.emit('ld', 'BC,%s' % hx(d.ty.size // 2)); F.emit('ldirw', '(XIX+),(XIY+)')
-            if F.xiz_vars: F.emit('pop', 'XIZ')
+            if F.xiz_vars: F.emit('pop', F.save_reg)
             epilogue(F); F.emit('ret'); return
         raise Unsupported('struct return')
     if s.k == 'return':
@@ -1025,7 +1075,7 @@ def gen_stmt(F, s, last):
             if fam != 'HL' and FAM[fam].get(size) != FAM['HL'][size]:
                 F.emit('ld', '%s,%s' % (FAM['HL'][size], FAM[fam].get(size, FAM[fam].get(2))))
         flush_pops(F)
-        if F.xiz_vars: F.emit('pop', 'XIZ')
+        if F.xiz_vars: F.emit('pop', F.save_reg)
         epilogue(F)
         F.emit('retd', hx(F.retd)) if F.retd else F.emit('ret'); return
     if s.k == 'if' and s.els is None and F.loops and flat(s.then) and flat(s.then)[0].k == 'break' and len(flat(s.then)) == 1:
@@ -1149,6 +1199,114 @@ def plan_registers(F):
     if F.xiz_vars:
         F.emit('push', 'XIZ'); F.push = 4
 
+def eval_sequence(node, out):
+    """('use', decl) / ('def', decl) / ('call',) / ('loop', [...]) in evaluation order, operands before operators"""
+    if isinstance(node, list):
+        for x in node: eval_sequence(x, out)
+        return out
+    if not hasattr(node, 'k'): return out
+    if node.k in ('for', 'while', 'do'):
+        if node.k == 'for' and getattr(node, 'init', None) is not None: eval_sequence(node.init, out)   # c_fordown
+        inner = []
+        for key, v in node.__dict__.items():
+            if key != 'init' and (hasattr(v, 'k') or isinstance(v, list)): eval_sequence(v, inner)
+        out.append(('loop', inner)); out.extend(inner); return out
+    if node.k == 'return':                                 # a call in a return clobbers nothing that is used later
+        inner = eval_sequence(getattr(node, 'value', None), []) if getattr(node, 'value', None) is not None else []
+        out.extend(('rcall',) if x == ('call',) else x for x in inner); return out
+    if node.k == 'if':                                     # c_ifchain: the else branch is not after the then's call
+        eval_sequence(node.cond, out)
+        a = eval_sequence(node.then, []); b = eval_sequence(getattr(node, 'els', None), []) if getattr(node, 'els', None) else []
+        out.extend(('branch', id(node), 'then', x) for x in a); out.extend(('branch', id(node), 'else', x) for x in b)
+        return out
+    if node.k == 'decl' and getattr(node, 'init', None) is not None:
+        eval_sequence(node.init, out); out.append(('def', node.var)); return out
+    if node.k == 'bin' and node.op == '=' and strip(node.l).k == 'var':
+        eval_sequence(node.r, out); out.append(('def', strip(node.l).decl)); return out
+    for v in node.__dict__.values():
+        if hasattr(v, 'k') or isinstance(v, list): eval_sequence(v, out)
+    if node.k == 'load' and strip(node.e).k == 'var': out.append(('use', strip(node.e).decl))
+    if node.k == 'incdec' and strip(node.e).k == 'var': out.append(('use', strip(node.e).decl))   # c_while: n--
+    if node.k == 'opassign' and strip(node.l).k == 'var': out.append(('use', strip(node.l).decl))
+    if node.k == 'call' or (node.k == 'bin' and node.op in '*/%' and node.ty.size == 4 and fold(node.r).k != 'const'):
+        out.append(('call',))
+    return out
+
+def plan_homes(F):
+    """adecl: where register parameters and register locals live when a call would clobber them (call.c, adecl.c,
+    binop_l.c under -Xr and -O3 -XS -Xr).  A parameter used after a call (or in a loop that calls) goes to IZ / XIZ
+    by size, the next ones to stack slots stored at entry (d_keep: dec 0x2,XSP / push IZ / ld (XSP+0x2),BC /
+    ld IZ,WA); then an int local defined before a call and used after it goes to IZ, else QIZ (k_keep: ld QIZ,HL).
+    With -O every parameter that is an operand of a long helper is homed too (mul_l_pp: push XIZ /
+    ld (XSP+0x4),XBC / ld XIZ,XWA); the long locals plan_registers put in XIZ come first (mul_l_loc under -Xr)."""
+    if not F.adecl: return
+    raw = eval_sequence(F.f.body, [])
+    def unwrap(x, path=()):                                # ('branch', if, side, item) -> (item, path)
+        while x[0] == 'branch': path = path + ((x[1], x[2]),); x = x[3]
+        return x, dict(path)
+    def lift(lst):
+        out = []
+        for x in lst:
+            it, path = unwrap(x)
+            if it[0] == 'loop': it = ('loop', [unwrap(y)[0] for y in it[1]])
+            out.append((it, path))
+        return out
+    seq0 = lift(raw); seq = [it for it, _ in seq0]
+    if not any(x[0] == 'call' for x in seq): return
+    def compatible(p, q): return all(q.get(k, v) == v for k, v in p.items())
+    across = []
+    def mark(d):
+        if d not in across: across.append(d)
+    for i, (x, px) in enumerate(seq0):
+        if x[0] == 'call':
+            before = {y[1] for y, py in seq0[:i] if y[0] in ('use', 'def')}
+            for y, py in seq0[i + 1:]:
+                if y[0] == 'use' and compatible(px, py) and (y[1].kind == 'param' or y[1] in before): mark(y[1])
+        if x[0] == 'loop' and any(y[0] == 'call' for y in x[1]):
+            for y in x[1]:
+                if y[0] == 'use': mark(y[1])
+    helper_ops = []
+    if F.opt:
+        def hv(n, dep):
+            if n.k == 'bin' and n.op in '*/%' and n.ty.size == 4 and fold(n.r).k != 'const' or \
+                    n.k == 'bin' and n.op in '/%' and n.ty.size == 4:
+                for side in (n.l, n.r):
+                    sv = strip(side)
+                    if sv.k == 'load' and strip(sv.e).k == 'var' and strip(sv.e).decl.kind == 'param': helper_ops.append(strip(sv.e).decl)
+        walk(F.f.body, hv)
+    params = [d for d in F.f.params if getattr(d, 'reg', None) in ('WA', 'BC', 'DE') and (d in across or d in helper_ops)]
+    locs = [d for d in across if d.kind == 'local' and not getattr(d, 'reg', None) and d.ty.size <= 2]
+    weight = {}                  # references, not weighted by loops: c_for i (4) before n (1), c_nested i (5) before j (4)
+    for y in seq:
+        if y[0] in ('use', 'def'): weight[y[1]] = weight.get(y[1], 0) + 1
+    order = sorted(params + locs, key=lambda d: -weight.get(d, 0))     # stable: parameters first on a tie (k_keep)
+    used = {'IZ': False, 'QIZ': False}
+    for d in F.xiz_vars: used['IZ'] = used['QIZ'] = True
+    moves = []; stores = []
+    for d in order:                                        # k_keep: a -> IZ, then x -> QIZ
+        if d.kind == 'param':
+            if d.ty.size == 4 and not used['IZ'] and not used['QIZ']:
+                moves.append(('XIZ', FAM[d.reg][4])); d.reg = 'XIZ'; d.homed = True; used['IZ'] = used['QIZ'] = True
+                F.xiz_vars.append(d)
+            elif d.ty.size <= 2 and not used['IZ']:
+                moves.append(('IZ', FAM[d.reg][2])); d.reg = 'IZ'; used['IZ'] = True; F.xiz_vars.append(d)
+            else:
+                stores.append((d, FAM[d.reg][d.ty.size])); d.home_slot = True; d.reg = None
+        else:
+            r = 'IZ' if not used['IZ'] else 'QIZ' if not used['QIZ'] else None
+            if r: d.reg = r; used[r] = True; F.xiz_vars.append(d)
+            if r == 'IZ' and getattr(F, 'opt', False) is not None: pass
+    if not (moves or stores or locs): return
+    if F.xiz_vars and not any(l == '\tpush\tXIZ' for l in F.lines):
+        F.save_reg = 'XIZ' if used['QIZ'] else 'IZ'
+        F.emit('push', F.save_reg); F.push = 4 if F.save_reg == 'XIZ' else 2
+    F.home_moves = moves; F.home_stores = stores
+
+def emit_homes(F):
+    """after the frame is known: slot stores first, then the moves into IZ / XIZ (adecl.c d_keep)"""
+    for d, r in getattr(F, 'home_stores', []): F.emit('ld', '(XSP+%s),%s' % (hx(d.slot + F.push), r))
+    for dst, src in getattr(F, 'home_moves', []): F.emit('ld', '%s,%s' % (dst, src))
+
 def regvar_of(e):
     v = strip(e)
     if v.k == 'var' and getattr(v.decl, 'reg', None) and v.decl.reg != 'XIZ': return v.decl
@@ -1195,6 +1353,8 @@ def regvar_stmt(F, e):
         if rc.k == 'const': F.emit('ld', '%s,%s' % (R, hx(rc.value))); return True
         m = operand(F, e.r, d.ty.size)
         if m is not None: F.emit('ld', '%s,%s' % (R, m)); return True
+        if strip(e.r).k == 'call':                     # k_keep: cal .r1 / ld QIZ,HL
+            gen_call(F, strip(e.r)); F.emit('ld', '%s,%s' % (R, FAM['HL'][d.ty.size])); return True
         tgt = d.reg if d.reg in ('BC', 'DE', 'HL', 'WA') else 'WA'      # ra_noloop3: ld DE,(a) / add DE,(b)
         fam = gen(F, e.r, tgt, d.ty.size)
         if FAM[fam][d.ty.size] != R: F.emit('ld', '%s,%s' % (R, FAM[fam][d.ty.size]))
@@ -1598,7 +1758,8 @@ def plan_frame(F):
             and d.ty.kind not in ('array', 'struct') and (d.uses or d.name.startswith('__'))]
     temps = list(F.array_temps.values()) + [t['decl'] for t in F.cast_temps.values()]
     aggr = [d for d in f.decls if d.kind == 'local' and d.ty.kind in ('array', 'struct') and not getattr(d, 'reg', None)]
-    for d in scal + temps + aggr:
+    homed = [d for d in f.params if getattr(d, 'home_slot', False)]          # mul_l_loc under O3XSXr: x, then b
+    for d in scal + temps + aggr + homed:
         a = 2 if d.ty.size >= 2 else 1
         pos = (pos + a - 1) // a * a; d.slot = pos; pos += d.ty.size; slots.append(d)
     if F.array_temps or F.cast_temps: F.naive_loads = True
@@ -1707,13 +1868,14 @@ def compile_function(f, opt, adecl, personality='v4.23'):
     compute_last_uses(F)
     F.lines.append(('.' if adecl else '_') + f.name + ':')
     F.loops = []; F.param_copies = []; F.pushes = []
-    if not plan_leaf(F): plan_registers(F)
+    if not plan_leaf(F): plan_registers(F); plan_homes(F)
     plan_frame(F)
+    emit_homes(F)
     if F.opt: plan_shared_exit(F)
     gen_stmt(F, f.body, True)
     flush_pops(F)
     if not F.lines[-1].startswith('\tret'):
-        if F.xiz_vars: F.emit('pop', 'XIZ')
+        if F.xiz_vars: F.emit('pop', F.save_reg)
         epilogue(F)
         F.emit('ret')
     import re                                            # no self-moves: the oracle never writes ld XWA,XWA
@@ -1722,8 +1884,9 @@ def compile_function(f, opt, adecl, personality='v4.23'):
     if getattr(F, 'naive_loads', False): F.lines = knowledge_pass(F.lines, F.personality)
     elif F.personality != 'v4.23': F.lines = store_knowledge(F.lines)
     if len(F.lines) >= 2 and F.lines[-1] == '\tret' and F.lines[-2].startswith('\tcal\t') \
-            and not F.lines[-2].split('\t')[2].startswith(('C9H_', '._f')):
+            and not F.lines[-2].split('\t')[2].startswith(('C9H_', '._f')) and not F.lines[-2].endswith(';stack'):
         F.lines[-2:] = ['\tj\t' + F.lines[-2].split('\t')[2]]
+    F.lines = [l[:-len('\t;stack')] if l.endswith('\t;stack') else l for l in F.lines]
     # a label that only a jump to `ret` uses: the oracle keeps it; nothing to do here yet
     return F.lines
 

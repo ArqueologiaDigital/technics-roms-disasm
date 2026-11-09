@@ -64,7 +64,7 @@ def main():
     pers = a[a.index('--personality') + 1] if '--personality' in a else 'kn5000'
     only = a[a.index('--only') + 1].split(',') if '--only' in a else None
     syms = load_symbols(symf)
-    unit = frontend.load(src)
+    unit = frontend.load(src, adecl='--adecl' in a)
     out = codegen.compile_unit(unit, opt=opt, adecl='--adecl' in a, personality=pers)
     print('\t.text')
     for name, lines in out.items():

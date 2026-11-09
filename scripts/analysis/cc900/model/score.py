@@ -40,7 +40,7 @@ def main():
         op = oracle_path(odir, f)
         if not os.path.exists(op): print('%-28s no oracle listing' % os.path.basename(f)); continue
         want = listing.split(open(op, encoding='latin-1').read())
-        try: unit = frontend.load(f, defines, incs)
+        try: unit = frontend.load(f, defines, incs, adecl=adecl)
         except Exception as ex: print('%-28s front end failed: %s' % (os.path.basename(f), str(ex).splitlines()[-1][:80])); continue
         got = codegen.compile_unit(unit, opt=opt, adecl=adecl, personality=personality)
         n = good = 0
