@@ -156,6 +156,8 @@ def fold(e):
 def mem_operand(F, e):
     """a memory or immediate operand string for e, or None"""
     e = same_size_ptr_cast(strip(e))
+    eo = getattr(F, 'elem_ops', None)
+    if eo and e.k == 'load' and id(strip(e.e)) in eo: return eo[id(strip(e.e))]   # (shared_base_opassign)
     if strip(e).k == 'cast':
         ct = cast_temp(F, strip(e))
         if ct: return ct
@@ -1176,6 +1178,11 @@ def gen_mul_const(F, l, k, fam, size, signed=True):
         F.emit('add', '%s,%s' % (W, X))
         if fam != 'WA': F.emit('ld', '%s,%s' % (R, W))
         return fam
+    ldm = []
+    walk(l, lambda n, d: ldm.append(n) if n.k == 'bin' and n.op in ('/', '%') and n.ty is not None and n.ty.size == 4 else None)
+    if x is None and k & (k - 1) == 0 and (has_helper_call(l) or ldm):   # arr_index.c ai_l_p_carry: p[i] % 10 * 256 ->
+        f = gen(F, l, fam, size); X = FAM[f][size]                   # cal C9H_remls / sla 0x8,XHL
+        F.emit('sla' if signed else 'sll', '%s,%s' % (hx(k.bit_length() - 1), X)); return f
     if x is None: raise Unsupported('complex multiplicand')
     if x.startswith('(_'):                       # an absolute operand is loaded once into XBC
         F.emit('ld', '%s,%s' % (FAM['BC'][size], x)); F.emit('ld', '%s,%s' % (R, FAM['BC'][size])); x = FAM['BC'][size]
@@ -2243,12 +2250,12 @@ def elem_addr(F, lv, kind):
             if plain or F.opt: idx_into('BC')
             else: idx_into('WA'); F.emit('ld', 'BC,WA')
             F.emit('extz', 'XBC')
-        elif F.opt and plain:                              # ai_i_p_add under -O3 -XS: ld BC,(i) / exts XBC /
-            idx_into('BC'); F.emit('exts', 'XBC'); scale32(F, 'XBC', esz)   # add XBC,XBC / add XBC,(p)
         elif getattr(F, 'force_base', None) and esz == 4:  # ai_l_p_div: ld WA,(i) / exts XWA / sll 0x2,XWA /
-            B = F.force_base                               # ld XIZ,XWA / add XIZ,(p)
+            B = F.force_base                               # ld XIZ,XWA / add XIZ,(p) (-O3 -XS too)
             idx_into('WA'); F.emit('exts', 'XWA'); scale32(F, 'XWA', esz); F.emit('ld', '%s,XWA' % B)
             F.emit('add', '%s,%s' % (B, pm)); return '(%s)' % B
+        elif F.opt and plain:                              # ai_i_p_add under -O3 -XS: ld BC,(i) / exts XBC /
+            idx_into('BC'); F.emit('exts', 'XBC'); scale32(F, 'XBC', esz)   # add XBC,XBC / add XBC,(p)
         else:
             idx_into('WA'); F.emit('exts', 'XWA'); scale32(F, 'XWA', esz); F.emit('ld', 'XBC,XWA')
         F.emit('add', 'XBC,%s' % pm); return '(XBC)'
@@ -2541,6 +2548,7 @@ def shared_base_opassign(F, e, lv, r, heavy, size, op):
     -O3 -XS -Xr (i in WA) the same with I = WA, base XBC.  A char array keeps 16-bit indexes and one base:
     ld DE,WA / dec 0x1,DE / lda XBC,_gca / ld A,(XBC+WA) / sra 0x8,A / add (XBC+DE),A.  True when written."""
     if len(heavy) != 1 or not SHARED_BASE: return False
+    if strip(lv.base).k == 'load': return pointer_pair_opassign(F, e, lv, r, heavy, size, op)
     g = strip(lv.base).decl
     if g.ty.kind != 'array' or getattr(g.ty, 'count', 0): return False
     src = strip(heavy[0].e)
@@ -2577,6 +2585,52 @@ def shared_base_opassign(F, e, lv, r, heavy, size, op):
 
 SHARED_BASE = True
 
+def pointer_pair_opassign(F, e, lv, r, heavy, size, op):
+    """-O: p[i + k] op= f(p[i]) (arr_index.c ai_*_p_carry).  -O3 -XS -Xr, p in XWA and i in BC: ld DE,BC /
+    inc 0x1,DE / exts XDE / add XDE,XDE / add XDE,XWA / exts XBC / add XBC,XBC / add XBC,XWA / ld WA,(XBC) / ... /
+    add (XDE),WA.  -O3 -XS: ld BC,(i) / ld WA,BC / inc 0x1,WA / exts XWA / add XWA,XWA / ld XHL,(p) / ld XDE,XWA /
+    add XDE,XHL / exts XBC / add XBC,XBC / add XBC,XHL / ld WA,(XBC) / ... / add (XDE),WA.  When the right side
+    calls a helper (a long %), the target goes to XIZ (push XIZ; -O3 -XS: p in XDE) and the value comes in XHL:
+    cal C9H_remls / sla 0x8,XHL / add (XIZ),XHL.  True when written."""
+    pb = strip(strip(lv.base).e); src = strip(heavy[0].e)
+    if pb.k != 'var' or pb.decl.kind != 'param' or not pb.decl.ty.is_ptr(): return False
+    if src.k != 'index' or strip(src.base).k != 'load' or strip(strip(src.base).e).k != 'var' or \
+            strip(strip(src.base).e).decl is not pb.decl: return False
+    bd, k = split_index(lv.idx); bs, k2 = split_index(src.idx)
+    bd, bs = unpromote(bd), unpromote(bs)
+    if k2 != 0 or k == 0 or bd.k != 'load' or bs.k != 'load' or strip(bd.e).k != 'var' or strip(bs.e).k != 'var' or \
+            strip(bd.e).decl is not strip(bs.e).decl: return False
+    iv = strip(bd.e).decl; pv = pb.decl; esz = lv.ty.size
+    if iv.ty.size != 2 or esz == 1: return False
+    ldm = []
+    walk(r, lambda n, d: ldm.append(n) if n.k == 'bin' and n.op in ('/', '%') and n.ty is not None and n.ty.size == 4 else None)
+    helper = has_helper_call(r) or bool(ldm)              # (a long % 10 is C9H_remls)
+    if helper and (F.xiz_vars or len(F.lines) != 1): return False
+    regs = getattr(pv, 'reg', None), getattr(iv, 'reg', None)
+    if regs != ('WA', 'BC') and regs != (None, None): return False
+    def adj(R):
+        F.emit('inc' if k > 0 else 'dec', '%s,%s' % (hx(abs(k)), R)) if abs(k) <= 8 else F.emit('add', '%s,%s' % (R, hx(k & 0xffff)))
+    if helper:
+        F.lines.insert(1, '\tpush\tXIZ'); F.push += 4; F.pushes.append('XIZ')
+    if regs == ('WA', 'BC'):
+        F.emit('ld', 'DE,BC'); adj('DE'); F.emit('exts', 'XDE'); scale32(F, 'XDE', esz)
+        if helper: F.emit('ld', 'XIZ,XDE'); F.emit('add', 'XIZ,XWA'); t = '(XIZ)'
+        else: F.emit('add', 'XDE,XWA'); t = '(XDE)'
+        F.emit('exts', 'XBC'); scale32(F, 'XBC', esz); F.emit('add', 'XBC,XWA')
+        F.dead.add(iv); F.dead.add(pv)
+    else:
+        F.emit('ld', 'BC,%s' % mem_operand(F, bd)); F.emit('ld', 'WA,BC'); adj('WA')
+        F.emit('exts', 'XWA'); scale32(F, 'XWA', esz)
+        PB = 'XDE' if helper else 'XHL'; D = 'XIZ' if helper else 'XDE'
+        F.emit('ld', '%s,%s' % (PB, mem_operand(F, strip(lv.base)))); F.emit('ld', '%s,XWA' % D)
+        F.emit('add', '%s,%s' % (D, PB)); t = '(%s)' % D
+        F.emit('exts', 'XBC'); scale32(F, 'XBC', esz); F.emit('add', 'XBC,%s' % PB)
+    F.elem_ops = {id(src): '(XBC)'}
+    try: f2 = gen(F, r, 'HL' if helper and size == 4 else 'WA', size)
+    finally: F.elem_ops = {}
+    F.emit(SIMPLE_OPS[op], '%s,%s' % (t, FAM[f2][size]))
+    return True
+
 def gen_opassign(F, e):
     """x op= y as a statement (assign.c)"""
     size = strip(e.l).ty.size; op = e.op
@@ -2595,6 +2649,9 @@ def gen_opassign(F, e):
              and not (fold(strip(n.e).idx).k == 'const' and strip(strip(n.e).base).k == 'var')) else None)
         lvg = strip(e.l)
         gdst = lvg.k == 'index' and strip(lvg.base).k == 'var' and strip(lvg.base).decl.kind == 'global'
+        if heavy and F.opt and lvg.k == 'index' and not gdst and not getattr(F, 'l2', None) and \
+                not getattr(F, 'u1_i', None) and not getattr(F, 'cl_active', None) and \
+                shared_base_opassign(F, e, lvg, r, heavy, size, op): return None      # p[i + 1] += f(p[i])
         if heavy and gdst and not getattr(F, 'l2', None) and \
                 not getattr(F, 'u1_i', None) and not getattr(F, 'cl_active', None):
             if F.opt:
