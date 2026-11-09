@@ -5662,8 +5662,13 @@ def plan_leaf(F):
         walked = [d for d in f.params if d in walked]
         if F.opt:                                          # -O3 -XS: only a loop with no byte temporary at all, and
             nbody = []                                     # then WA (c_cnt: cpb (XWA+:1),0x0 / inc 0x1,HL)
-            for w in loops_: walk(w.body, lambda m, dep: nbody.append(m) if (m.k == 'load' and strip(m.e).k == 'deref') or
-                                  (m.k == 'bin' and m.op == '=') else None)   # (_strset's store needs WA)
+            cmpk = set()                                   # (__doform.c _zerochk: a byte compared with a constant,
+            for w in loops_:                               # cpb (XWA+:1),0x30, needs no register)
+                walk(w.body, lambda m, dep: [cmpk.add(id(x)) for x in (unc(m.l), unc(m.r))] if m.k == 'bin' and
+                     m.op in CC_S and (fold(m.l).k == 'const' or fold(m.r).k == 'const') else None)
+            for w in loops_: walk(w.body, lambda m, dep: nbody.append(m) if (m.k == 'load' and strip(m.e).k == 'deref'
+                                  and id(m) not in cmpk) or (m.k == 'bin' and m.op == '=') else None)   # (_strset's
+                                                                                                    # store needs WA)
             if needs_a or nbody or len(walked) != 1 or len(loops_) != 1: walked = []
         cands = (['WA'] if not needs_a else []) + [r for r in ('BC', 'DE', 'HL') if not (r == 'BC' and temps_bc)]
         for d in reversed(walked):
@@ -6124,11 +6129,14 @@ def place_exit_blocks(lines):
             k = i - 1
             while k >= 0 and is_label(lines[k]): k -= 1
             if k >= 0 and uncond(lines[k]) and i == k + 1:
-                e = i + 1
-                while e < len(lines) and not uncond(lines[e]) and not is_label(lines[e]) and not lines[e].startswith('\tj'): e += 1
-                if e < len(lines) and lines[e] == '\tret' and e - i <= 3:
-                    L = lines[i][:-1]
-                    first = next((j for j in range(k) if lines[j] == '\tj\t' + L), None)
+                e = i + 1                                  # (__doform.c _zerochk: a rotated loop's test block
+                while e < len(lines) and is_label(lines[e]): e += 1   # with its j ne,L2 moves too; L3: L1: both)
+                labs = {l_[:-1] for l_ in lines[i:e]}
+                while e < len(lines) and not uncond(lines[e]) and not is_label(lines[e]) and \
+                        not (lines[e].startswith('\tj') and ',' not in lines[e]): e += 1
+                if e < len(lines) and lines[e] == '\tret' and e - i <= 7:
+                    first = next((j for j in range(k) if lines[j].startswith('\tj\t') and ',' not in lines[j] and
+                                  lines[j].split('\t')[2] in labs), None)
                     if first is not None:
                         block = lines[i:e + 1]
                         del lines[i:e + 1]
