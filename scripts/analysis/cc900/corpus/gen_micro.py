@@ -31,6 +31,8 @@ how cc900 compiles exactly that (notes/cc900-compat-plan-2026-11-08/PLAN.md, sec
   rather than the result built in a temporary and copied (fp.c: d_three vs d_four);
 - opt_temps: -O3 -XS -Xr leaf loops: two pointers and a count in every argument order, with copy, compare, fill,
   sum and count-only bodies, to find which register family the loop's temporaries take and which parameter moves;
+- opt_counted: counted for loops over arrays and pointers (sum, copy, find, clear, two arrays, down-counting),
+  parameters in every order, int / char / long elements, to find the -O counter, bound, base and offset registers;
 - ra_homes32: a 32-bit local (pointer, long) against a 16-bit parameter for XIZ / IZ across calls (_memccpy gives
   IZ to n and a slot to pos).
 The output is deterministic, ours, and C89.
@@ -559,6 +561,43 @@ def opt_temp_files():
            'int ot_len2(char *a, char *b) { int n = 0; while (*a++ == *b++) n++; return n; }']
     return {'opt_temps.c': out + fs}
 
+def opt_counted_files():
+    """counted loops: which registers the counter, the bound, the base and the offset take (ctrl.c c_sum, c_find,
+    c_copy; opt_loops.c)"""
+    import itertools
+    out = ['/* Counted loops: counter, bound, base and offset registers */',
+           'extern int gia[10]; extern char gca[10]; extern long gla[10]; extern int gi;']
+    fs = []
+    for perm in itertools.permutations(['int *p', 'int n']):
+        tag = ''.join(x[-1] for x in perm)
+        fs.append('int oc_sum_%s(%s) { int s = 0; int i; for (i = 0; i < n; i++) s += p[i]; return s; }' % (tag, ', '.join(perm)))
+    for perm in itertools.permutations(['char *a', 'char *b', 'int n']):
+        tag = ''.join(x[-1] for x in perm)
+        fs.append('void oc_cpy_%s(%s) { int i; for (i = 0; i < n; i++) a[i] = b[i]; }' % (tag, ', '.join(perm)))
+    for perm in itertools.permutations(['int *p', 'int n', 'int k']):
+        tag = ''.join(x[-1] for x in perm)
+        fs.append('int oc_find_%s(%s) { int i; for (i = 0; i < n; i++) if (p[i] == k) return i; return -1; }'
+                  % (tag, ', '.join(perm)))
+    fs += ['void oc_clr_i(int *p, int n) { int i; for (i = 0; i < n; i++) p[i] = 0; }',
+           'void oc_clr_c(char *p, int n) { int i; for (i = 0; i < n; i++) p[i] = 0; }',
+           'void oc_clr_l(long *p, int n) { int i; for (i = 0; i < n; i++) p[i] = 0; }',
+           'long oc_sum_l(long *p, int n) { long s = 0; int i; for (i = 0; i < n; i++) s += p[i]; return s; }',
+           'int oc_sum_c(char *p, int n) { int s = 0; int i; for (i = 0; i < n; i++) s += p[i]; return s; }',
+           'int oc_sum2(int *p, int *q, int n) { int s = 0; int i; for (i = 0; i < n; i++) s += p[i] * q[i]; return s; }',
+           'void oc_add2(int *p, int *q, int n) { int i; for (i = 0; i < n; i++) p[i] += q[i]; }',
+           'int oc_sum_i_first(int *p, int n) { int i; int s = 0; for (i = 0; i < n; i++) s += p[i]; return s; }',
+           'int oc_sum_g(int n) { int s = 0; int i; for (i = 0; i < n; i++) s += gia[i]; return s; }',
+           'int oc_sum_gk(void) { int s = 0; int i; for (i = 0; i < 10; i++) s += gia[i]; return s; }',
+           'void oc_cpy_g(char *a) { int i; for (i = 0; i < 10; i++) a[i] = gca[i]; }',
+           'int oc_down(int *p, int n) { int s = 0; int i; for (i = n - 1; i >= 0; i--) s += p[i]; return s; }',
+           'int oc_down2(int *p, int n) { int s = 0; for (; n > 0; n--) s += p[n - 1]; return s; }',
+           'int oc_cnt_c(char *p, int n, char c) { int k = 0; int i; for (i = 0; i < n; i++) if (p[i] == c) k++; return k; }',
+           'int oc_max(int *p, int n) { int m = p[0]; int i; for (i = 1; i < n; i++) if (p[i] > m) m = p[i]; return m; }',
+           'void oc_fill_i(int *p, int n, int v) { int i; for (i = 0; i < n; i++) p[i] = v; }',
+           'void oc_idx(int *p, int n) { int i; for (i = 0; i < n; i++) p[i] = i; }',
+           'int oc_nested(int *p, int n, int m) { int s = 0; int i, j; for (i = 0; i < n; i++) for (j = 0; j < m; j++) s += p[j]; return s; }']
+    return {'opt_counted.c': out + fs}
+
 def main():
     out = sys.argv[1]
     d = os.path.join(out, 'micro'); os.makedirs(d, exist_ok=True)
@@ -580,6 +619,7 @@ def main():
     files.update(fp_files())
     files.update(fp_temp_files())
     files.update(opt_temp_files())
+    files.update(opt_counted_files())
     for n, lines in sorted(files.items()):
         open(os.path.join(d, n), 'w').write('\n'.join(lines) + '\n')
     open(os.path.join(out, 'micro-sources.txt'), 'w').write(''.join('micro/%s\n' % n for n in sorted(files)))
