@@ -628,7 +628,7 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         rs = mem_operand(F, r)
         work = 'WA'
         if F.opt and fam in ('HL', 'BC', 'DE') and mem_operand(F, l) and rs and not regvar_of(getattr(strip(l), 'e', l)) \
-                and (size == 2 or op == '*'):
+                and (size == 2 and op != '%' or op == '*'):       # (mod_i_pp under O3XS: divs XWA / ld HL,QWA)
             work = fam                                  # -O: mul_i_pp -> ld HL,(a) / muls XHL,(b); a char / or %
                                                         # stays in WA (div_c_pp: ld A,(a) / exts WA / divs WA,(b) / ld L,A)
         lr = regvar_of(strip(l).e) if strip(l).k == 'load' else None
@@ -830,6 +830,8 @@ def gen_mul_const(F, l, k, fam, size, signed=True):
     if x is None: raise Unsupported('complex multiplicand')
     if x.startswith('(_'):                       # an absolute operand is loaded once into XBC
         F.emit('ld', '%s,%s' % (FAM['BC'][size], x)); F.emit('ld', '%s,%s' % (R, FAM['BC'][size])); x = FAM['BC'][size]
+    elif F.opt and x.startswith('(XSP') and fam != 'WA' and MUL_K_XWA:   # mul_l_pk under O3XS: ld XWA,(a) /
+        W = FAM['WA'][size]; F.emit('ld', '%s,%s' % (W, x)); F.emit('ld', '%s,%s' % (R, W)); x = W   # ld XHL,XWA
     else:
         F.emit('ld', '%s,%s' % (R, x))
     bits = bin(k)[3:]; run = 0
@@ -2140,6 +2142,7 @@ def eval_sequence(node, out):
 # _strcmp, _modf), else the first fit's rule (homes.choose returns None).
 R3_SETS = ('none', 'Xr', 'O3XSXr', 'O3XS')
 FP_AGGR = True
+MUL_K_XWA = True
 STORE_XHL_NONE = True
 DEREF_XIZ = True
 
