@@ -1543,6 +1543,7 @@ ASSIGN_OPERAND_INPLACE = True                             # see gen_bin
 POSTDEC_FREE = True                                       # see loop_cond
 PTR_INDEX_REG = True                                      # see gen_load_mem
 EMPTY_WHILE_ONE_LABEL = True                              # see gen_loop
+IDX_GUARD = True                                          # see elem_addr
 
 def char_narrow(body):
     """cc900 does int + - & | ^ of a char and a constant that fits a byte, or of two chars, on the byte and
@@ -2261,6 +2262,8 @@ def elem_addr(F, lv, kind):
                     F.emit('exts' if iv.ty.signed else 'extz', X); scale32(F, X, esz); F.emit('add', '%s,%s' % (X, P))
                     return '(%s)' % X
     def idx_into(R):                                   # the index (16-bit) into register family R
+        if IDX_GUARD and held_after(F, R, lv):           # (ol_two_arr -O3 -XS -Xr: the index over k in WA)
+            raise Unsupported('index register holds a live variable')
         f = gen(F, narrow(lv.idx, 2), R, 2)
         if f != R: F.emit('ld', '%s,%s' % (FAM[R][2], FAM[f][2]))
     if b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array':
