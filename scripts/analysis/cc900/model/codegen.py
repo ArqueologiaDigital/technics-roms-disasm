@@ -203,6 +203,9 @@ def mem_operand(F, e):
             if pv.k == 'incdec' and pv.post and regvar_of(pv.e) and regvar_of(pv.e).ty.size == 4:
                 d = regvar_of(pv.e); step = d.ty.base.size
                 return '(%s%s:%d)' % (FAM[d.reg][4], '+' if pv.op == '++' else '-', step)
+            if pv.k == 'incdec' and not pv.post and pv.op == '--' and regvar_of(pv.e) and regvar_of(pv.e).ty.size == 4:
+                d = regvar_of(pv.e)                      # _strrchr: *(--s0) -> (-XHL:1)
+                return '(-%s:%d)' % (FAM[d.reg][4], d.ty.base.size)
     return None
 
 def global_offset(v):
@@ -2312,6 +2315,25 @@ def regvar_stmt(F, e):
         d = regvar_of(e.l)                             # va_start without -O: lda XWA,XSP+0x4 / inc 0x2,XWA /
         f2 = gen(F, e.r, 'WA', 4)                       # ld XBC,XWA
         F.emit('ld', '%s,%s' % (FAM[d.reg][4], FAM[f2][4])); return True
+    if e.k == 'bin' and e.op == '=' and regvar_of(e.l) and getattr(F, 'l2', None):
+        d = regvar_of(e.l); R = FAM[d.reg].get(d.ty.size, FAM[d.reg].get(2)); r0 = strip(e.r)
+        while r0.k == 'cast' and r0.kind == 'IntegralCast' and strip(r0.e).ty.size == r0.ty.size: r0 = strip(r0.e)
+        if r0.k == 'bin' and r0.op in ('+', '-') and strip(r0.l).k == 'call' and fold(r0.r).k == 'const' and \
+                d.ty.size == 2:                            # _strrchr: i = strlen(s) + 1 -> cal _strlen / inc 0x4,XSP /
+            gen_call(F, strip(r0.l)); flush_pops(F)         # inc 0x1,HL / ld BC,HL
+            k = fold(r0.r).value
+            if 1 <= k <= 8: F.emit('inc' if r0.op == '+' else 'dec', '%s,HL' % hx(k))
+            else: F.emit(SIMPLE_OPS[r0.op], 'HL,%s' % hx(k))
+            if R != 'HL': F.emit('ld', '%s,HL' % R)
+            return True
+        if r0.k == 'bin' and r0.op == '+' and d.ty.size == 4 and r0.ty.is_ptr() and r0.ty.base.size == 1:
+            pl, il = strip(r0.l), strip(r0.r)              # _strrchr: s0 = s + i -> lda XHL,XIZ+BC
+            while il.k == 'cast' and il.kind == 'IntegralCast': il = strip(il.e)
+            pv = strip(pl.e) if pl.k == 'load' else None; iv = strip(il.e) if il.k == 'load' else None
+            pd = pv.decl if pv is not None and pv.k == 'var' and getattr(pv.decl, 'reg', None) else None
+            idd = iv.decl if iv is not None and iv.k == 'var' and getattr(iv.decl, 'reg', None) else None
+            if pd is not None and idd is not None and idd.ty.size == 2:
+                F.emit('lda', '%s,%s+%s' % (R, 'XIZ' if pd.reg == 'XIZ' else FAM[pd.reg][4], FAM[idd.reg][2])); return True
     if e.k == 'bin' and e.op == '=' and regvar_of(e.l):
         d = regvar_of(e.l); R = FAM[d.reg].get(d.ty.size, FAM[d.reg].get(2))
         rc = fold(narrow(e.r, d.ty.size))
@@ -2727,6 +2749,20 @@ def gen_loop(F, s, last):
     if cl: return gen_counted(F, s, last, cl)
     if s.k == 'for' and s.init is not None: gen_stmt(F, s.init, False)
     l2 = getattr(F, 'l2', None)
+    if l2 and s.k == 'for' and s.cond is not None and s.inc is not None:
+        cv = strip(s.cond); iv = strip(s.inc)            # _strrchr: for (...; i; --i) -> cp BC,0x0 / j eq,L1 /
+        cvar = strip(cv.e).decl if cv.k == 'load' and strip(cv.e).k == 'var' else None   # ld WA,(c) / L2: ... /
+        if cvar is not None and getattr(cvar, 'reg', None) in ('BC', 'DE', 'HL', 'WA') and cvar.ty.size == 2 and \
+                iv.k == 'incdec' and iv.op == '--' and strip(iv.e).k == 'var' and strip(iv.e).decl is cvar:   # L4: djnz
+            R = FAM[cvar.reg][2]; exitl, bodyl, contl = F.newulabel(), F.newulabel(), F.newulabel()
+            F.emit('cp', '%s,0x0' % R); F.emit('j', 'eq,%s' % exitl)
+            for d in l2.get('pre', []):
+                F.emit('ld', '%s,(XSP+%s)' % (FAM[d.reg][d.ty.size], hx(d.off + F.push)))
+            l2['pre'] = []
+            F.lines.append(bodyl + ':')
+            F.loops.append((exitl, lambda: contl)); gen_stmt(F, s.body, False); flush_pops(F); F.loops.pop()
+            F.lines.append(contl + ':'); F.emit('djnz', '%s,%s' % (R, bodyl)); F.lines.append(exitl + ':')
+            return
     if l2:                                                # _atoi: lda XBC,__ctype before the first loop that tests it
         for tab, reg in list(l2.get('tab_inv', {}).items()):
             if tab not in l2.setdefault('inv_done', set()) and uses_table(s, tab):
@@ -3097,7 +3133,21 @@ def leaf_l2(F):
         if table_test(n): tabs.append((table_test(n), dep, n))
         if n.k in ('for', 'while', 'do'): loops.append(n)
     walk(f.body, find)
-    if not tabs: return False
+    early = one_early_call(F)
+    if not tabs and not (early and loops): return False
+    across = set()
+    if early:                                            # _strrchr: s is read after strlen(s) -> XIZ
+        seq = eval_sequence(f.body, [])
+        ci = next((i for i, x in enumerate(seq) if x[0] in ('call', 'rcall')), None)
+        li = next((i for i, x in enumerate(seq) if x[0] == 'loop'), None)
+        if ci is None or (li is not None and ci > li): return False    # _ultoa: memcpy last -- not yet
+        before = {x[1] for x in seq[:ci] if x[0] in ('use', 'def')}    # _strrchr: c, first read after the call,
+                                                                        # stays where it arrived
+        for x in seq[ci + 1:]:
+            if x[0] == 'use' and x[1] in before: across.add(x[1])
+            if x[0] == 'loop':
+                for y in x[1]:
+                    if y[0] == 'use' and y[1] in before: across.add(y[1])
     pos = {}; k = [0]
     def order(n, dep):
         k[0] += 1
@@ -3140,6 +3190,18 @@ def leaf_l2(F):
         if n.k == 'opassign' and strip(n.l).k == 'var': bumped.add(strip(n.l).decl)
     walk(f.body, fw)
     body_locals = {d for d, dep in first_write.items() if dep and d not in bumped and d.kind == 'local'}
+    counters = set()                                     # a for's counter: set in its init, stepped, tested
+    for lp in loops:
+        if lp.k == 'for' and lp.inc is not None:
+            iv = strip(lp.inc)
+            v = strip(iv.e) if iv.k == 'incdec' else strip(iv.l) if iv.k == 'opassign' else None
+            if v is not None and v.k == 'var' and v.decl.kind == 'local': counters.add(v.decl)
+    narrowed_params = set()                              # a parameter used as (char)p in a loop: hoisted (_strrchr)
+    def nar(n, dep):
+        if dep and n.k == 'cast' and n.kind == 'IntegralCast' and n.ty.size == 1 and strip(n.e).k == 'load' and \
+                strip(strip(n.e).e).k == 'var' and strip(strip(n.e).e).decl.kind == 'param':
+            narrowed_params.add(strip(strip(n.e).e).decl)
+    walk(f.body, nar)
     objs = []
     W = lambda d: 32 if d.ty.size == 4 else 16 if d.ty.size == 2 else 8
     used = [d for d in dict.fromkeys(list(f.params) + list(f.decls)) if d in pos and d.ty.kind in ('int', 'ptr')
@@ -3147,16 +3209,19 @@ def leaf_l2(F):
     for d in used:
         if d.kind not in ('param', 'local'): continue
         idx = (f.params if d.kind == 'param' else [x for x in f.decls if x.kind == 'local']).index(d)
-        if d in rets: cls = 'ret'
+        if d in across: cls = 'call'
+        elif d in rets: cls = 'ret'
         elif d.kind == 'param':
             if d.ty.kind == 'ptr' and d in loopmod: cls = 'walkh' if (d in derefidx or d in held_ptr) else 'walk'
             elif d not in inloop: cls = 'out'
             elif d in loopmod and d.ty.kind == 'int': cls = 'cnt'
-            else: return False                              # ro / rld parameters: not yet
+            elif d not in modified and (d in narrowed_params or inloop.get(d, 0) >= 2): cls = 'ro'   # _strrchr: (char)c
+            else: return False                              # rld parameters: not yet
+        elif d in counters: cls = 'ctr'                     # _strrchr: for (i = ...; i; --i)
         else:
             cls = 'body' if d in body_locals else 'loc'      # _atoi: c = *nptr++ inside the loop -> the early group
         objs.append(dict(name=d, cls=cls, w=W(d), decl=idx, pos=pos.get(d, 0)))
-    objs.append(dict(name='t1', cls='t1', w=16))
+    if tabs or needs_scratch(F, loops): objs.append(dict(name='t1', cls='t1', w=16))
     tab_cls = {}
     for (tab, x, bit), dep, n in tabs:
         if tab in tab_cls: continue
@@ -3175,7 +3240,7 @@ def leaf_l2(F):
         if r in ('WA', 'BC', 'DE', 'HL', 'IX', 'IY', 'IZ'): return r
         return BYTE.get(r)                             # W / B / D / H and the Q halves: not yet
     if any(fam(v) is None for v in got.values()): return False
-    F.l2 = {'t1': fam(got['t1']), 'tab_inv': {}, 'tab_once': {}, 'held': {}, 'body': body_locals}
+    F.l2 = {'t1': fam(got['t1']) if 't1' in got else None, 'tab_inv': {}, 'tab_once': {}, 'held': {}, 'body': body_locals}
     for o in objs:
         r = got[o['name']]
         if isinstance(o['name'], tuple) and o['name'][0] == 'tab':
@@ -3186,8 +3251,46 @@ def leaf_l2(F):
             d = o['name']; d.reg = fam(r)
             if d.kind == 'param': F.param_copies.append(d)
     F.deferred = list(F.param_copies)
-    F.tfam = F.l2['t1']
+    F.l2['pre'] = [d for d in F.param_copies if d in narrowed_params and d not in modified]   # _strrchr: c after
+    F.deferred = [d for d in F.deferred if d not in F.l2['pre']]                               # the loop's guard
+    if F.l2['t1']: F.tfam = F.l2['t1']
+    if any(getattr(d, 'reg', None) == 'IZ' for d in across):    # a 32-bit value across the call: XIZ
+        for d in across:
+            if d.reg == 'IZ' and d.ty.size == 4: d.reg = 'XIZ'; d.homed = True
+        F.xiz_vars = [d for d in across]; F.save_reg = 'XIZ'
+        F.emit('push', 'XIZ'); F.push = 4
     return True
+
+def needs_scratch(F, loops):
+    """does a loop need L2's t1: a byte moved from memory to memory, or two memory bytes compared, an `n--`
+    test copy (_strrchr's loop compares *(--s0) with c's register: no)"""
+    found = []
+    def regish(x):
+        x = strip(x)
+        while x.k == 'cast': x = strip(x.e)
+        return x.k == 'load' and strip(x.e).k == 'var' or fold(x).k == 'const'
+    def v(n, d):
+        if not d: return
+        if n.k == 'bin' and n.op == '=' and strip(n.l).k == 'deref' and not regish(n.r): found.append(n)
+        if n.k == 'bin' and n.op in CC_S and not regish(n.l) and not regish(n.r): found.append(n)
+        if n.k == 'incdec' and n.post: found.append(n)
+    for lp in loops: walk(lp, v)
+    return bool(found)
+
+def one_early_call(F):
+    """the function makes one call, outside every loop, and no FP operation (_strrchr, _strrev: strlen first)"""
+    calls = []
+    def visit(n, depth):                                 # a for's init runs once: not inside the loop
+        if isinstance(n, list):
+            for x in n: visit(x, depth)
+            return
+        if not hasattr(n, 'k'): return
+        if n.k == 'call' or fpgen.is_fp_op(n): calls.append((n, depth))
+        for key, v in n.__dict__.items():
+            if hasattr(v, 'k') or isinstance(v, list):
+                visit(v, depth + (1 if n.k in ('for', 'while', 'do') and key != 'init' else 0))
+    visit(F.f.body, 0)
+    return len(calls) == 1 and calls[0][0].k == 'call' and not calls[0][1] and strip(calls[0][0].fn).k == 'var'
 
 def uses_table(n, tab):
     found = []
@@ -3213,7 +3316,7 @@ def plan_leaf(F):
         if n.k == 'load' and strip(n.e).k == 'deref' and not F.opt: temps_bc.append(n)
         if F.opt and n.k == 'bin' and n.op == '=' and store_through_temp(n): temps_bc.append(n)   # _strset
     walk(f.body, visit)
-    if F.opt and not F.adecl and not has_call and leaf_l2(F): return True
+    if F.opt and not F.adecl and (not has_call or one_early_call(F)) and leaf_l2(F): return True
     if F.adecl and not has_call and leaf_r6(F): return True
     if F.opt and not has_call and leaf_u1(F): return True
     if has_call and not (F.opt and not F.adecl and not any(d.kind == 'local' for d in f.decls) and f.params
@@ -3773,6 +3876,11 @@ def thread_jumps(lines):
             if nx and nx.group(2) is None and nx.group(3) != m.group(3):
                 lines[i] = retarget(l, nx.group(3)); changed = True
         if not changed: break
+    for i in range(len(lines) - 2):                     # _strrchr: j ne,L3 / j L4 / L3: -> j eq,L4 / L3:
+        m1, m2 = tgt(lines[i]), tgt(lines[i + 1])
+        if m1 and m2 and m1.group(2) and m2.group(2) is None and lines[i + 2] == m1.group(3) + ':' and m1.group(2) in INV:
+            lines[i] = '\tj\t%s,%s' % (INV[m1.group(2)], m2.group(3)); lines[i + 1] = '\t;dead'
+    lines = [l for l in lines if l != '\t;dead']
     def refs(L): return any(re.search(r'[\t,]%s$' % L, l) for l in lines if l.startswith('\t'))
     drop = set()
     for i, l in enumerate(lines):

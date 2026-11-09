@@ -64,10 +64,10 @@ reference model (cdecl, `-O3 -XS -DFLOAT`, as the library was built), translates
 image's own addresses: the pairs' publics, the image's labels, the helpers named in the runtime cross-reference),
 assembles and links it with llvm-mc / ld.lld at the pair's address, and compares the bytes with the image.
 
-| personality | byte-identical pairs | which                                                                                                                                                                                                                                                                                                                                                                                                         |
-|-------------|----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `v4.23`     | 184 (18 differ)      | `_ltoa`, `_strcat`, `_strncpy`, `_strncat`, `_strcpy`, `_strlen`, `_memset`, `_memcmp`, `_memchr`, `_memcpy`, `_memccpy`, `__ctype` x9 each, `_strncmp` x10, `_strchr` x5, `_strnset` x5, `.sbrk` x6, `_atoi` x5, `_atol` x5, `_strupr` x2, `__FloatErrorHandle` x3, sub CPU float tables x9; `_modf`, `_fabs`, `_sin`, `_cos`, `_tan`, `_exp` (sub CPU x3 each); `_sprintf`, `_vsprintf` (HD-AE5000 x4 each) |
-| `kn5000`    | 197 (5 differ)       | the same 184, plus `_ultoa` (main CPU v10, v9, v7, v6, v5, HD-AE5000 x4) and `_ldiv` (HD-AE5000 x4)                                                                                                                                                                                                                                                                                                           |
+| personality | byte-identical pairs | which                                                                                                                                                                                                                                                                                                                                                                                                                        |
+|-------------|----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `v4.23`     | 189 (18 differ)      | `_ltoa`, `_strcat`, `_strncpy`, `_strncat`, `_strcpy`, `_strlen`, `_memset`, `_memcmp`, `_memchr`, `_memcpy`, `_memccpy`, `__ctype` x9 each, `_strncmp` x10, `_strchr` x5, `_strnset` x5, `.sbrk` x6, `_atoi` x5, `_atol` x5, `_strrchr` x5, `_strupr` x2, `__FloatErrorHandle` x3, sub CPU float tables x9; `_modf`, `_fabs`, `_sin`, `_cos`, `_tan`, `_exp` (sub CPU x3 each); `_sprintf`, `_vsprintf` (HD-AE5000 x4 each) |
+| `kn5000`    | 202 (5 differ)       | the same 189, plus `_ultoa` (main CPU v10, v9, v7, v6, v5, HD-AE5000 x4) and `_ldiv` (HD-AE5000 x4)                                                                                                                                                                                                                                                                                                                          |
 
 `_ltoa` came later the same day (`-O` keeps the parameters of a function with calls in scratch registers when no
 value is read after a call; and asm900 writes a 32-bit `cp XDE,0x0` with the long immediate, `ea cf 00 00 00 00`, not
@@ -112,11 +112,11 @@ a DOS end-of-file byte, which the front end now cuts.)
 
 | image       | pairs | identical | differ | not compiled yet | near match, unverified |
 |-------------|-------|-----------|--------|------------------|------------------------|
-| maincpu v10 | 24    | 19        | 0      | 5                | 3                      |
-| maincpu v9  | 24    | 19        | 0      | 5                | 0                      |
-| maincpu v7  | 24    | 19        | 0      | 5                | 3                      |
-| maincpu v6  | 24    | 19        | 0      | 5                | 0                      |
-| maincpu v5  | 24    | 19        | 0      | 5                | 0                      |
+| maincpu v10 | 24    | 20        | 0      | 4                | 3                      |
+| maincpu v9  | 24    | 20        | 0      | 4                | 0                      |
+| maincpu v7  | 24    | 20        | 0      | 4                | 3                      |
+| maincpu v6  | 24    | 20        | 0      | 4                | 0                      |
+| maincpu v5  | 24    | 20        | 0      | 4                | 0                      |
 | subcpu v142 | 16    | 10        | 1      | 5                | 0                      |
 | subcpu v141 | 16    | 10        | 1      | 5                | 0                      |
 | subcpu v140 | 16    | 10        | 1      | 5                | 0                      |

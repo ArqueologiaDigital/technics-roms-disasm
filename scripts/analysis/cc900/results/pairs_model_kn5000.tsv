@@ -26,7 +26,7 @@ maincpu v10	ff27f7	_ultoa	_ULTOA.C	136	MATCH	exact
 maincpu v10	ff2891	_memccpy	_MEMCCPY.C	64	MATCH	exact
 maincpu v10	ff28d1	_memchr	_MEMCHR.C	24	MATCH	exact
 maincpu v10	ff28e9	_strnset	_STRNSET.C	32	MATCH	exact
-maincpu v10	ff2909	_strrchr	_STRRCHR.C	-	model: ; unsupported: load	exact
+maincpu v10	ff2909	_strrchr	_STRRCHR.C	39	MATCH	exact
 maincpu v9	eed778	___ctype	_CTYPE.C	-	alias of __ctype	exact
 maincpu v9	eed778	__ctype	_CTYPE.C	256	MATCH	exact
 maincpu v9	ff090f	_strstr	_STRSTR.C	-	model: ; unsupported: incdec target	exact
@@ -51,7 +51,7 @@ maincpu v9	ff27e9	_ultoa	_ULTOA.C	136	MATCH	exact
 maincpu v9	ff2883	_memccpy	_MEMCCPY.C	64	MATCH	exact
 maincpu v9	ff28c3	_memchr	_MEMCHR.C	24	MATCH	exact
 maincpu v9	ff28db	_strnset	_STRNSET.C	32	MATCH	exact
-maincpu v9	ff28fb	_strrchr	_STRRCHR.C	-	model: ; unsupported: load	exact
+maincpu v9	ff28fb	_strrchr	_STRRCHR.C	39	MATCH	exact
 maincpu v7	eed778	___ctype	_CTYPE.C	-	alias of __ctype	exact
 maincpu v7	eed778	__ctype	_CTYPE.C	256	MATCH	exact
 maincpu v7	ff0140	_strstr	_STRSTR.C	-	model: ; unsupported: incdec target	exact
@@ -79,7 +79,7 @@ maincpu v7	ff201b	_ultoa	_ULTOA.C	136	MATCH	exact
 maincpu v7	ff20b5	_memccpy	_MEMCCPY.C	64	MATCH	exact
 maincpu v7	ff20f5	_memchr	_MEMCHR.C	24	MATCH	exact
 maincpu v7	ff210d	_strnset	_STRNSET.C	32	MATCH	exact
-maincpu v7	ff212d	_strrchr	_STRRCHR.C	-	model: ; unsupported: load	exact
+maincpu v7	ff212d	_strrchr	_STRRCHR.C	39	MATCH	exact
 maincpu v6	eed67c	___ctype	_CTYPE.C	-	alias of __ctype	exact
 maincpu v6	eed67c	__ctype	_CTYPE.C	256	MATCH	exact
 maincpu v6	ff0042	_strstr	_STRSTR.C	-	model: ; unsupported: incdec target	exact
@@ -104,7 +104,7 @@ maincpu v6	ff1f1d	_ultoa	_ULTOA.C	136	MATCH	exact
 maincpu v6	ff1fb7	_memccpy	_MEMCCPY.C	64	MATCH	exact
 maincpu v6	ff1ff7	_memchr	_MEMCHR.C	24	MATCH	exact
 maincpu v6	ff200f	_strnset	_STRNSET.C	32	MATCH	exact
-maincpu v6	ff202f	_strrchr	_STRRCHR.C	-	model: ; unsupported: load	exact
+maincpu v6	ff202f	_strrchr	_STRRCHR.C	39	MATCH	exact
 maincpu v5	eed664	___ctype	_CTYPE.C	-	alias of __ctype	exact
 maincpu v5	eed664	__ctype	_CTYPE.C	256	MATCH	exact
 maincpu v5	fefbee	_strstr	_STRSTR.C	-	model: ; unsupported: incdec target	exact
@@ -129,7 +129,7 @@ maincpu v5	ff1ac9	_ultoa	_ULTOA.C	136	MATCH	exact
 maincpu v5	ff1b63	_memccpy	_MEMCCPY.C	64	MATCH	exact
 maincpu v5	ff1ba3	_memchr	_MEMCHR.C	24	MATCH	exact
 maincpu v5	ff1bbb	_strnset	_STRNSET.C	32	MATCH	exact
-maincpu v5	ff1bdb	_strrchr	_STRRCHR.C	-	model: ; unsupported: load	exact
+maincpu v5	ff1bdb	_strrchr	_STRRCHR.C	39	MATCH	exact
 subcpu v142	00f3ba	_g_dbltbl	__FLOAT.C	72	MATCH	exact
 subcpu v142	00f402	_g_ldbltbl	__FLOAT.C	30	MATCH	exact
 subcpu v142	00f420	_g_mathtbl	__MATH.C	8	MATCH	call
@@ -200,7 +200,7 @@ hdae v2.06i	29af71	_strlen	_STRLEN.C	30	MATCH	exact
 hdae v2.06i	29af8f	_strncat	_STRNCAT.C	47	MATCH	exact
 hdae v2.06i	29afbe	_strncmp	_STRNCMP.C	50	MATCH	exact
 hdae v2.06i	29aff0	_strncpy	_STRNCPY.C	43	MATCH	exact
-hdae v2.06i	29b01b	_strrev	_STRREV.C	-	model: ; unsupported: complex pointer arithmeti	exact
+hdae v2.06i	29b01b	_strrev	_STRREV.C	-	model: ; unsupported: lvalue var	exact
 hdae v2.06i	29b04e	_strupr	_STRUPR.C	44	MATCH	exact
 hdae v2.06i	29b07a	__facnv	__FACVT.C	-	model: ; unsupported: var	near
 hdae v2.06i	2f9362	___ctype	_CTYPE.C	-	alias of __ctype	exact
@@ -223,7 +223,7 @@ hdae v2.01i	29a839	_strlen	_STRLEN.C	30	MATCH	exact
 hdae v2.01i	29a857	_strncat	_STRNCAT.C	47	MATCH	exact
 hdae v2.01i	29a886	_strncmp	_STRNCMP.C	50	MATCH	exact
 hdae v2.01i	29a8b8	_strncpy	_STRNCPY.C	43	MATCH	exact
-hdae v2.01i	29a8e3	_strrev	_STRREV.C	-	model: ; unsupported: complex pointer arithmeti	exact
+hdae v2.01i	29a8e3	_strrev	_STRREV.C	-	model: ; unsupported: lvalue var	exact
 hdae v2.01i	29a916	_strupr	_STRUPR.C	44	MATCH	exact
 hdae v2.01i	2f884e	___ctype	_CTYPE.C	-	alias of __ctype	exact
 hdae v2.01i	2f884e	__ctype	_CTYPE.C	256	MATCH	exact
@@ -268,4 +268,4 @@ hdae v1.10i	296ecb	_strncpy	_STRNCPY.C	43	MATCH	exact
 hdae v1.10i	296ef6	__facnv	__FACVT.C	-	model: ; unsupported: var	near
 hdae v1.10i	2e0cd6	___ctype	_CTYPE.C	-	alias of __ctype	exact
 hdae v1.10i	2e0cd6	__ctype	_CTYPE.C	256	MATCH	exact
-# MATCH 197, model cannot 58, alias 9, differs 5, outside image 4
+# MATCH 202, model cannot 53, alias 9, differs 5, outside image 4
