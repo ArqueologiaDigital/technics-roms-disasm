@@ -2145,6 +2145,14 @@ def lvalue(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False, kind='store'):
         if d.kind == 'param': return '(XSP+%s)' % hx(d.off + F.push)
         if d.kind == 'local' and hasattr(d, 'slot'): return '(XSP+%s)' % hx(d.slot + F.push)
     if lv.k == 'deref' and strip(lv.e).k == 'incdec' and strip(lv.e).post and strip(strip(lv.e).e).k == 'var' and \
+            strip(strip(lv.e).e).decl.kind in ('param', 'local') and strip(strip(lv.e).e).decl.ty.is_ptr() and \
+            not getattr(strip(strip(lv.e).e).decl, 'reg', None):
+        pv = strip(lv.e); g = strip(pv.e).decl; P = ptr if ptr != 'XWA' else 'XBC'   # ctrl.c c_clear: *p++ = 0 ->
+        sl = lvalue(F, strip(pv.e))                        # ld XBC,(XSP+0x4) / ld XWA,0x1 / add (XSP+0x4),XWA /
+        F.emit('ld', '%s,%s' % (P, sl)); F.emit('ld', 'XWA,%s' % hx(g.ty.base.size))   # ldb (XBC),0x0
+        F.emit('add' if pv.op == '++' else 'sub', '%s,XWA' % sl)
+        return '(%s)' % P
+    if lv.k == 'deref' and strip(lv.e).k == 'incdec' and strip(lv.e).post and strip(strip(lv.e).e).k == 'var' and \
             strip(strip(lv.e).e).decl.kind == 'global' and strip(strip(lv.e).e).decl.ty.is_ptr():
         pv = strip(lv.e); g = strip(pv.e).decl          # __strOut: *_str++ = c -> ld XBC,(__str) / ld XWA,0x1 /
         F.emit('ld', '%s,(_%s)' % (ptr, g.name))           # add (__str),XWA / ... / ld (XBC),A
@@ -2964,6 +2972,7 @@ FP_AGGR = True
 MUL_K_XWA = True
 IFCHAIN_JOIN = True
 BINLOC_XR = True
+WALKED_PTRS = True                                 # no -O: pointers a pointer-test loop walks get registers (c_cnt)
 KILL_AFTER_CALL = True                             # homes: a def after a call on its path kills (sw_local)
 CDECL_TAILCALL = True                              # -O: cal _f / ret (nothing between) is j _f (sw_jt6d)
 EXIT_PLACEMENT = True                              # -O: an exit block nothing falls into moves (switch.c sw_evtab)
@@ -5366,6 +5375,11 @@ def plan_leaf(F):
         if n.k == 'index' and strip(n.base).k == 'var' and strip(n.base).decl.ty.kind == 'array' and n.ty.size >= 2 and fold(n.idx).k != 'const':
             temps_bc.append(n)
         if n.k == 'load' and strip(n.e).k == 'deref' and not F.opt: temps_bc.append(n)
+        if not F.opt and n.k == 'bin' and n.op == '=' and strip(n.l).k == 'index' and \
+                strip(strip(n.l).base).k == 'load' and fold(strip(n.l).idx).k != 'const' and fold(n.r).k != 'const':
+            temps_bc.append(n)                             # ctrl.c c_copy: d[i] = s[i] -> ld BC,DE / extz XBC: i in DE
+        if not F.opt and n.k == 'bin' and n.op == '=' and strip(n.l).k == 'deref' and strip(strip(n.l).e).k == 'incdec':
+            temps_bc.append(n)                             # c_clear: *p++ = 0 -> ld XBC,(p) / ...: n in DE
         if F.adecl and n.k == 'index' and strip(n.base).k == 'load' and fold(n.idx).k != 'const' and depth:
             temps_ptr.append(n)                            # .c_sum: p[i] in a loop needs a free address register
         if F.opt and n.k == 'bin' and n.op == '=' and store_through_temp(n): temps_bc.append(n)   # _strset
@@ -5476,9 +5490,34 @@ def plan_leaf(F):
     walk(f.body, lambda n, dep: stored.add(store_through_temp(n)) if n.k == 'bin' and n.op == '=' and store_through_temp(n) else None)
     params = [d for d in f.params if d.ty.kind in okind and not d.addr_taken and (d in modified or d in deep or (F.opt and d in loopvars))
               and not (F.opt and d in stored and loopvars.get(d, 0) <= 1)]
+    walked = []                                            # without -O: a loop driven by a pointer test keeps the
+    if not F.opt and not F.adecl and WALKED_PTRS:          # pointers it walks in registers (ctrl.c c_cnt: while (*s++)
+        def unc(x):                                        # -> s in XWA; ra_ptrcpy: while (*s) *d++ = *s++ -> s XBC,
+            x = strip(x)                                   # d XDE); a counted `while (n--)` does not (c_clear, ra_ptr)
+            while x.k == 'cast': x = strip(x.e)
+            return x
+        loops_ = []
+        walk(f.body, lambda n, dep: loops_.append(n) if n.k == 'while' else None)
+        needs_a = False
+        for w in loops_:
+            c = unc(w.cond)
+            if not (c.k == 'load' and strip(c.e).k == 'deref'): continue
+            for n_ in [w.cond, w.body]:
+                walk(n_, lambda m, dep: walked.append(strip(m.e).decl) if m.k == 'incdec' and m.post and
+                     strip(m.e).k == 'var' and strip(m.e).decl.kind == 'param' and strip(m.e).decl.ty.is_ptr() and
+                     strip(m.e).decl not in walked else None)
+            st = []
+            walk(w.body, lambda m, dep: st.append(m) if m.k == 'bin' and m.op == '=' and unc(m.r).k == 'load' and
+                 strip(unc(m.r).e).k == 'deref' else None)
+            if st: needs_a = True
+        walked = [d for d in f.params if d in walked]
+        cands = (['WA'] if not needs_a else []) + [r for r in ('BC', 'DE', 'HL') if not (r == 'BC' and temps_bc)]
+        for d in reversed(walked):
+            if cands: d.reg = cands.pop(0); F.param_copies.append(d)
+    params = [d for d in params if d not in walked]
     order = params + list(reversed(locals_))
     if F.opt: order = list(reversed(locals_)) + list(reversed(params))      # _strcat at -O: s, s2, s1
-    free = [r for r in LEAF_SEQ if not (r == 'BC' and temps_bc)]
+    free = [r for r in LEAF_SEQ if not (r == 'BC' and temps_bc) and not any(getattr(w_, 'reg', None) == r for w_ in walked)]
     if F.adecl:                                            # .c_sum: the parameters' own registers are taken
         free = [r for r in free if not any(getattr(p_, 'reg', None) == r and p_ not in order for p_ in f.params)]
     for d in order:
