@@ -50,9 +50,14 @@ def parse_type(spell, recs, typedefs):
     cdecl = 'tlcs900_cdecl' in t                             # a __cdecl function called from an adecl file (c_lib)
     t = re.sub(r'__attribute__\(\(tlcs900_[ac]decl\)\)', '', t).strip()
     t = re.sub(r'\s+', ' ', t)
-    m = re.match(r'^(.*)\((\*+)\)\s*\((.*)\)$', t)          # pointer to function
-    if m:
-        return Type('ptr', 4, 2, base=Type('func', 0, 1, spell=t), spell=spell)
+    if t.endswith(')'):                                      # the outermost (...) at the end: a function type or a
+        depth = 0; k = len(t) - 1                            # pointer to one (abi fptr.c fp_arg: int (int (*)(int),
+        for k in range(len(t) - 1, -1, -1):                  # int) is a function returning int, not a pointer)
+            depth += {')': 1, '(': -1}.get(t[k], 0)
+            if depth == 0: break
+        head = t[:k].rstrip()
+        if re.search(r'\(\*+\)$', head):                      # pointer to function
+            return Type('ptr', 4, 2, base=Type('func', 0, 1, spell=t), spell=spell)
     m = re.match(r'^(.*?)\s*\(\*\)\s*((?:\[\d*\])+)$', t)     # pointer to array (mem.c m_2d: int (*)[4])
     if m:
         return Type('ptr', 4, 2, base=parse_type(m.group(1) + ' ' + m.group(2), recs, typedefs), spell=spell)
