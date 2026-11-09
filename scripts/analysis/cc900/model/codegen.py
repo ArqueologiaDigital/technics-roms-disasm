@@ -1480,6 +1480,7 @@ RET_CC_KEEPS = True                                       # see knowledge_pass
 TERN_ARM_LAST = True                                      # see compute_last_uses
 TERN_NO_MERGE = True                                      # see cross_jump
 TERN_ARM_WA = True                                        # see gen's plain ?: path
+LONG_RMW_XIZ = True                                       # see gen_opassign
 
 def char_narrow(body):
     """cc900 does int + - & | ^ of a char and a constant that fits a byte, or of two chars, on the byte and
@@ -2119,7 +2120,7 @@ def elem_addr_regs(F, lv, b, esz, kind):
         if esz == 4 and kind in ('rmw', 'andk'): return None
         g = '_' + b.decl.name; X = FAM[iv.reg][4]          # arr_index.c under -Xr: exts XWA / add XWA,XWA /
         adjust(k); F.emit('exts', X); scale32(F, X, esz)   # ld XDE,_gsa / add XDE,XWA / (XDE)
-        base = 'XDE' if kind in ('store', 'add') else 'XBC'
+        base = getattr(F, 'force_base', None) or ('XDE' if kind in ('store', 'add') else 'XBC')
         if base == X: return None
         F.emit('ld', '%s,%s' % (base, g)); F.emit('add', '%s,%s' % (base, X)); return '(%s)' % base
     if b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array' and (getattr(b.decl.ty, 'count', 0) or esz == 1):
@@ -2148,7 +2149,10 @@ def elem_addr_regs(F, lv, b, esz, kind):
         if esz == 1 and kind in ('load', 'store', 'storek', 'add') and iv.ty.signed:
             return '(%s+%s)' % (P, R)                       # (an unsigned index: .m_cp_v extz XBC / (XBC))
         X = FAM[iv.reg][4]
-        F.emit('exts' if iv.ty.signed else 'extz', X); scale32(F, X, esz); F.emit('add', '%s,%s' % (X, P))
+        F.emit('exts' if iv.ty.signed else 'extz', X); scale32(F, X, esz)
+        if getattr(F, 'force_base', None):                 # ai_l_p_div: ld XIZ,XBC / add XIZ,XWA
+            B = F.force_base; F.emit('ld', '%s,%s' % (B, X)); F.emit('add', '%s,%s' % (B, P)); return '(%s)' % B
+        F.emit('add', '%s,%s' % (X, P))
         return '(%s)' % X
     return None
 
@@ -2215,7 +2219,8 @@ def elem_addr(F, lv, kind):
             if kind == 'rmw' and esz == 4: return None
             if kind == 'cmp': return None
             idx_into('WA'); F.emit('exts', 'XWA'); scale32(F, 'XWA', esz)
-            F.emit('ld', 'XBC,%s' % g); F.emit('add', 'XBC,XWA'); return '(XBC)'
+            B = getattr(F, 'force_base', None) or 'XBC'     # (ai_l_g_div: XIZ across the helper; ai_l_g_mul: XDE)
+            F.emit('ld', '%s,%s' % (B, g)); F.emit('add', '%s,XWA' % B); return '(%s)' % B
         if (kind == 'load' and not plain) or kind == 'cmp':   # ai_mul10: cpw (XBC+WA),0x0
             idx_into('WA'); scale16(F, 'WA', esz); F.emit('lda', 'XBC,%s' % g); return '(XBC+WA)'
         if kind in ('store', 'storek') and not plain:
@@ -2238,6 +2243,10 @@ def elem_addr(F, lv, kind):
             F.emit('extz', 'XBC')
         elif F.opt and plain:                              # ai_i_p_add under -O3 -XS: ld BC,(i) / exts XBC /
             idx_into('BC'); F.emit('exts', 'XBC'); scale32(F, 'XBC', esz)   # add XBC,XBC / add XBC,(p)
+        elif getattr(F, 'force_base', None) and esz == 4:  # ai_l_p_div: ld WA,(i) / exts XWA / sll 0x2,XWA /
+            B = F.force_base                               # ld XIZ,XWA / add XIZ,(p)
+            idx_into('WA'); F.emit('exts', 'XWA'); scale32(F, 'XWA', esz); F.emit('ld', '%s,XWA' % B)
+            F.emit('add', '%s,%s' % (B, pm)); return '(%s)' % B
         else:
             idx_into('WA'); F.emit('exts', 'XWA'); scale32(F, 'XWA', esz); F.emit('ld', 'XBC,XWA')
         F.emit('add', 'XBC,%s' % pm); return '(XBC)'
@@ -2587,12 +2596,39 @@ def gen_opassign(F, e):
             F.lines.append(lab + ':')
         F.emit('ld', '%s,%s' % (t, V)); return t
     if op in ('*', '/', '%'):
+        rk = fold(r)
+        if size == 4 and op == '*' and rk.k == 'const' and rk.value is not None and rk.value > 0 and \
+                bin(rk.value).count('1') <= 3 and strip(e.l).k in ('index', 'deref') and LONG_RMW_XIZ:
+            F.force_base = 'XDE'
+            try: t = lvalue(F, e.l)                        # arr_index.c ai_l_g_mul: gla[i] *= 10 inline, no helper:
+            finally: F.force_base = None
+            if 'XWA' in t or 'XBC' in t: raise Unsupported('long element multiply address')   # ld XWA,(XDE) /
+            F.emit('ld', 'XWA,%s' % t); F.emit('ld', 'XBC,XWA')                    # ld XBC,XWA / sla 0x2,XWA /
+            bits = bin(rk.value)[3:]; run = 0                                      # add XWA,XBC / add XWA,XWA /
+            for b_ in bits:                                                        # ld (XDE),XWA
+                run += 1
+                if b_ == '1': F.emit('sla' if signed else 'sll', '%s,XWA' % hx(run)); F.emit('add', 'XWA,XBC'); run = 0
+            if run == 1: F.emit('add', 'XWA,XWA')
+            elif run > 1: F.emit('sla' if signed else 'sll', '%s,XWA' % hx(run))
+            F.emit('ld', '%s,XWA' % t); return t
         if size == 4:
-            t = lvalue(F, e.l)
+            lvx = strip(e.l); held = False
+            if LONG_RMW_XIZ and lvx.k in ('index', 'deref') and not F.xiz_vars and len(F.lines) == 1:
+                F.lines.insert(1, '\tpush\tXIZ'); F.push += 4; F.pushes.append('XIZ'); held = True
+                F.force_base = 'XIZ'                       # arr_index.c ai_l_g_div (-O3 -XS -Xr): the element's
+            try: t = lvalue(F, e.l)                        # address lives across the helper in XIZ: push XIZ /
+            finally: F.force_base = None                   # ... / ld XIZ,_gla / add XIZ,XWA / ld XWA,(XIZ) /
+            if re.search(r'\(X(WA|BC|DE|HL|IX|IY)', t) or (held and 'XIZ' not in t):   # lda XBC,0xa / cal C9H_divls /
+                raise Unsupported('long element address across a helper')        # ld (XIZ),XHL / pop XIZ
             rs = mem_operand(F, r)
             if rs is None: raise Unsupported('complex long operand')
+            if F.opt and fold(r).k == 'const' and fold(r).value is not None and 0 <= fold(r).value < 0x10000:
+                rs = None                                  # (lda XBC,0xa under -O, as gen_long_helper)
             name = {'*': 'mul', '/': 'div', '%': 'rem'}[op] + ('ls' if signed else 'lu')
             saved = False
+            if rs is None:
+                F.emit('ld', 'XWA,%s' % t); F.emit('lda', 'XBC,%s' % hx(fold(r).value)); F.emit('cal', 'C9H_' + name)
+                F.emit('ld', '%s,XHL' % t); return t
             if rs == 'XWA' and not F.opt:                  # .as_mul_gl under Xr: ld XBC,XWA / ld XWA,(_gl)
                 F.emit('ld', 'XBC,XWA'); F.emit('ld', 'XWA,%s' % t); F.emit('cal', 'C9H_' + name)
                 F.emit('ld', '%s,XHL' % t); return t
