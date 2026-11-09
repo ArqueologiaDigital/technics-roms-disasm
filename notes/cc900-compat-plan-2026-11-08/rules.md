@@ -61,3 +61,22 @@ routines that the firmware shares with the 2003 compiler but not with V4.23 (`_l
 now come out of the kn5000 personality as the firmware has them.  One refinement the loop body needed: a store
 through a pointer erases only what the 2003 compiler knows about its own temporaries, not about user variables
 (`*p` reuses XWA after `ld (XWA),L` in both compilers).
+
+## The reload rule, final form (2026-11-09, from `__doprnt`)
+
+`__doprnt` decided between the two formulations above.  The firmware (and the 2003 compiler) keep
+`ld (XSP+8),WA / cpw (XSP+8),0x0 / j ge,L / ld WA,(XSP+8)`: a reload two instructions after the store.  So the 2003
+compiler does not learn from stores in general.  The rule that fits every case:
+
+- **both compilers** learn "R holds slot M" from a load, and keep it until a label, a call, an unconditional jump,
+  a write to R or a write to M (not across nothing else: conditional jumps and stores through pointers keep it);
+- **the 2003 / Technics compiler** also drops a load that **immediately** follows a store of the same register to
+  the same slot.
+
+`codegen.knowledge_pass()` implements this.  Results: `_ldiv` and `_ultoa` come out of the model exactly as V4.23's
+listing (`v4.23`) and as the 2003 / firmware listing (`kn5000`); applied to V4.23's own library listings it leaves
+every routine the firmware shares with V4.23 unchanged and maps V4.23 to the 2003 code exactly for 214 of the 248
+functions (209 are already identical), among them `_ldexp`, `_ldiv`, `_fmod`, `_strtol` and `__doprnt`
+(`scripts/analysis/cc900/results/rule_on_listings.md`).  The firmware's `__doprnt` still differs from the 2003
+compiler's (a variable kept in IZ, two `cp (XSP+0x1a),...` / `decw 1,(XSP+0x12)` sequences absent): a later
+revision of `__DOFORM.C`, or a rule neither neighbour has.

@@ -17,7 +17,7 @@
 | `_memccpy`    | v423                | yes                         | no              | no           |
 | `_modf`       | v423                | yes                         | no              | no           |
 | `_qsort`      | -                   | yes                         | no              | no           |
-| `_realloc`    | -                   | no                          | no              | no           |
+| `_realloc`    | -                   | yes                         | no              | no           |
 | `_sin`        | v423                | yes                         | no              | no           |
 | `_sinh`       | -                   | yes                         | no              | no           |
 | `_sqrt`       | -                   | yes                         | no              | no           |
@@ -31,7 +31,7 @@
 | `_mltint`     | -                   | yes                         | no              | no           |
 | `_round`      | -                   | yes                         | no              | no           |
 | `_sgl_set`    | -                   | yes                         | no              | no           |
-| `__doprnt`    | (none)              | no                          | no              | no           |
+| `__doprnt`    | (none)              | no                          | yes             | no           |
 | `__dofloat`   | -                   | yes                         | no              | no           |
 | `__dofloat_f` | -                   | yes                         | no              | no           |
 | `__dofloat_e` | -                   | yes                         | no              | no           |
@@ -40,4 +40,4 @@
 | `_sftlog`     | -                   | yes                         | no              | no           |
 | `__trig`      | v423                | yes                         | no              | no           |
 
-248 functions; 209 identical in V4.23 and 2003; the rule maps V4.23 to 2003 exactly for 212 of 248.
+248 functions; 209 identical in V4.23 and 2003; the rule maps V4.23 to 2003 exactly for 214 of 248.

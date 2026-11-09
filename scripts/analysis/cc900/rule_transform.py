@@ -20,7 +20,7 @@ def main():
     codegen.TEMP_SLOTS.clear()
     total = 0
     for f in sorted(glob.glob(os.path.join(src, '*.asm'))):
-        raw = open(f, encoding='latin-1').read().split('\n')
+        raw = open(f, encoding='latin-1', newline='').read().split('\n')
         clean = [listing.clean(l) for l in raw]
         idx = [i for i, c in enumerate(clean) if c]           # analysed lines, in order
         kept = codegen.knowledge_pass([clean[i] for i in idx], pers)
@@ -28,7 +28,7 @@ def main():
         for i in idx:                                         # knowledge_pass only removes lines
             if j < len(kept) and kept[j] == clean[i]: j += 1
             else: drop.add(i)
-        open(os.path.join(dst, os.path.basename(f)), 'w', encoding='latin-1').write(
+        open(os.path.join(dst, os.path.basename(f)), 'w', encoding='latin-1', newline='').write(
             '\n'.join(l for i, l in enumerate(raw) if i not in drop))
         if drop: print('%-16s %d load(s) removed' % (os.path.basename(f), len(drop)))
         total += len(drop)
