@@ -78,7 +78,7 @@ def main():
                     units[path] = codegen.compile_unit(u, opt='O3XS', adecl=False, personality=pers)
                 except Exception as ex: units[path] = {'__error__': str(ex)}
             out = units[path]
-            lines = out.get(pub)
+            lines = codegen.FULL.get(pub) or out.get(pub)    # whole function (inline-assembly labels included), or data
             if not lines or not lines[0].endswith(':'):
                 res = 'model: ' + (lines[0][:40] if lines else 'no function')
                 tally['model cannot'] += 1; print('\t'.join([img, r[1], pub, src, '-', res])); continue

@@ -33,6 +33,8 @@ INV = {'eq': 'ne', 'ne': 'eq', 'lt': 'ge', 'ge': 'lt', 'le': 'gt', 'gt': 'le',
        'ult': 'uge', 'uge': 'ult', 'ule': 'ugt', 'ugt': 'ule', 'z': 'nz', 'nz': 'z'}
 SIMPLE_OPS = {'+': 'add', '-': 'sub', '&': 'and', '|': 'or', '^': 'xor'}
 
+PSEUDO = ('XWA', 'XBC', 'XDE', 'XHL', 'XIX', 'XIY', 'XIZ', 'WA', 'BC', 'DE', 'HL', 'IX', 'IY', 'IZ', 'A', 'L')
+
 def hx(v):
     return '0x%x' % (v & 0xffffffff) if v >= 0 else '0x%x' % (v & 0xffffffff)
 
@@ -1220,6 +1222,19 @@ def gen_stmt(F, s, last):
             if F.xiz_vars: F.emit('pop', F.save_reg)
             epilogue(F); F.emit('ret'); return
         raise Unsupported('struct return')
+    if s.k == 'expr' and s.e.k == 'call' and strip(s.e.fn).k == 'var' and strip(s.e.fn).decl.name == '__cc900_asm':
+        import listing, ast as _ast                        # __ASM("..."): the text as it is (_MEMSET.C)
+        lit = strip(s.e.args[0])
+        while lit.k in ('cast', 'decay', 'noop'): lit = strip(lit.e)
+        l = listing.clean(_ast.literal_eval(lit.value))
+        if l: F.lines.append(l)
+        return
+    if s.k == 'return' and s.value is not None:
+        v = strip(s.value)
+        while v.k == 'cast': v = strip(v.e)
+        if v.k == 'load' and strip(v.e).k == 'var' and strip(v.e).decl.name.lstrip('_') in PSEUDO and \
+                strip(v.e).decl.name.startswith('__'):
+            flush_pops(F); epilogue(F); F.emit('ret'); return    # return (void *)__XHL: the value is already there
     if s.k == 'return':
         epi = F.opt and (F.xiz_vars or F.pushes or getattr(F, 'frame', 0)) and not getattr(F, 'shared_exit', None)
         if s.value is not None:
@@ -2450,12 +2465,21 @@ def emit_data(unit, out):
     for d in bss:
         out['_' + d.name] = ['_' + d.name + ':', '\tdsb\t%d' % d.ty.size]
 
+FULL = {}
+
 def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
     out = {}
     emit_data(unit, out)
     for f in unit.functions:
         name = ('.' if adecl else '_') + f.name
-        try: out[name] = compile_function(f, opt, adecl, personality)
+        try:
+            full = compile_function(f, opt, adecl, personality)
+            FULL[name] = full                              # the whole function, for pairs_model.py
+            import re as _re                               # an inline-assembly label named _x / .x starts a new piece in
+            cur = name; out[cur] = []                      # a listing (listing.split), so the model's output does too
+            for i, l in enumerate(full):
+                if i and _re.match(r'^[._][A-Za-z0-9_]+:$', l) and l[:-1] not in out: cur = l[:-1]; out[cur] = []
+                out[cur].append(l)
         except Unsupported as ex: out[name] = ['; unsupported: %s' % ex]
         except (AttributeError, KeyError, ValueError, TypeError, IndexError) as ex:
             out[name] = ['; model error: %s: %s' % (type(ex).__name__, ex)]     # counted as a mismatch

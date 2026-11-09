@@ -95,12 +95,23 @@ class Function:
 class Unit:
     def __init__(s): s.functions = []; s.globals = []; s.decls = {}
 
+PSEUDO_REGS = ('XWA', 'XBC', 'XDE', 'XHL', 'XIX', 'XIY', 'XIZ', 'WA', 'BC', 'DE', 'HL', 'IX', 'IY', 'IZ', 'A', 'L')
+
 def load(path, defines=(), includes=(), adecl=False):
     """adecl=True parses as cc900 -Xr does: clang's -mcc900-adecl, so that only an explicit __cdecl function type
     carries tlcs900_cdecl (without it every function type is spelt with it)"""
     cmd = [CLANG, '-target', 'tlcs900', '-mabi=cc900', '-std=c89', '-fsyntax-only', '-Xclang', '-ast-dump=json',
            '-Wno-everything', '-D__cdecl=__attribute__((tlcs900_cdecl))', '-D__adecl=__attribute__((tlcs900_adecl))']
     if adecl: cmd.append('-mcc900-adecl')
+    # cc900's inline assembly and pseudo-registers (LIB/SRC): __ASM("...") is kept as an asm statement, and the
+    # registers __XHL, __HL ... become variables whose names the code generator recognises
+    defines = [d if d not in ('__ASM(x)=',) else '__ASM(x)=__cc900_asm(x)' for d in defines]
+    import tempfile
+    fdh, hdr = tempfile.mkstemp(suffix='.h')
+    os.write(fdh, ('extern void __cc900_asm(const char *);\n' + ''.join('extern %s __%s;\n' % (
+        'unsigned long' if r.startswith('X') else 'unsigned int' if len(r) == 2 else 'unsigned char', r)
+        for r in PSEUDO_REGS)).encode()); os.close(fdh)
+    cmd += ['-include', hdr]
     src = path
     data = open(path, 'rb').read()
     if b'\x1a' in data:                                   # a DOS end-of-file byte (_STRLEN.C, _MEMCPY.C ...): cut there
@@ -111,6 +122,7 @@ def load(path, defines=(), includes=(), adecl=False):
     try: ast = json.loads(subprocess.run(cmd, capture_output=True, text=True, check=True).stdout)
     finally:
         if src != path: os.unlink(src)
+        os.unlink(hdr)
     return Builder(path).unit(ast)
 
 class Builder:

@@ -67,8 +67,12 @@ def operand(o, syms, locals_):
     m = re.match(r'^\((X\w+)\)$', o)
     if m: return '(%s)' % m.group(1).lower()
     if NUM.match(o): return o.lower()
-    if re.match(r'^[_.][A-Za-z0-9_]+$', o): return '0x%x' % lookup(o, syms)
     if o in locals_: return o
+    m = re.match(r'^\((X\w+)\+\)$', o)                         # inline assembly: (XIX+), (-XIX)
+    if m: return '(%s+)' % m.group(1).lower()
+    m = re.match(r'^\(-(X\w+)\)$', o)
+    if m: return '(-%s)' % m.group(1).lower()
+    if re.match(r'^[_.][A-Za-z0-9_]+$', o): return '0x%x' % lookup(o, syms)
     return None
 
 def size_suffix(op):
@@ -101,6 +105,16 @@ def translate_line(t, syms, locals_):
             return '\tjp 0x%x' % lookup(raw[0], syms)
         return '\tjr %s, %s' % (CC[raw[0]], raw[1])
     if op == 'djnz': return '\tdjnz %s, %s' % (raw[0].lower(), raw[1])
+    if op in ('jr', 'jrl'):                                # inline assembly writes jr / jrl itself (_MEMSET.C)
+        return '\t%s %s' % (op, raw[0]) if len(raw) == 1 else '\t%s %s, %s' % (op, CC[raw[0].lower()], raw[1])
+    if op in ('sll', 'srl', 'sla', 'sra', 'rlc', 'rrc', 'rl', 'rr') and len(raw) == 2 and NUM.match(raw[0]):
+        return '\t%s %s, %d' % (op, raw[1].lower(), num(raw[0]))   # Toshiba: count first (srl 2,BC)
+    if op in ('cpir', 'cpirw', 'cpdr', 'cpdrw', 'cpi', 'cpiw', 'cpd', 'cpdw') and len(raw) == 2:
+        m = re.match(r'^\((X(WA|BC|DE|HL|IX|IY|IZ|SP))[+-]\)$', raw[1])
+        if m:                                              # llvm-mc knows only the operand-less form: the bytes
+            r = ['XWA', 'XBC', 'XDE', 'XHL', 'XIX', 'XIY', 'XIZ', 'XSP'].index(m.group(1))
+            sub = {'cpi': 0x14, 'cpir': 0x15, 'cpd': 0x16, 'cpdr': 0x17}[op.rstrip('w')]
+            return '\t.byte 0x%02x, 0x%02x\t; %s' % ((0x90 if op.endswith('w') else 0x80) + r, sub, t.strip())
     if op in ('ldir', 'ldirw', 'ldi', 'ldiw', 'lddr', 'lddrw', 'ldd', 'lddw') and raw in ([], ['(XIX+)', '(XIY+)'], ['(XIX-)', '(XIY-)']):
         return '\t' + op                                  # _ldiv: ldirw (XIX+),(XIY+) -> ldirw (95 11)
     if op == 'scc': return '\tscc %s, %s' % (CC[raw[0]], raw[1].lower())
