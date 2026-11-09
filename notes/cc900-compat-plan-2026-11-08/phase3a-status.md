@@ -45,6 +45,28 @@ no options, as are the loop shapes and the leaf-function register allocator.
    `-O3 -XS -DFLOAT`), which also brings the pairs check (`pairs_check.py`) into reach for the model's output once
    it can be assembled.
 
+## Progress since (2026-11-09)
+
+- Library at `-O3 -XS` (run `2026-11-08-5`, the 71 functions that parse with Toshiba's headers): **10 exact**,
+  among them `_strcat`, `_strchr` and `_strncpy`, three of the firmware pairs that every compiler reproduces.
+- `-O3` counted loops over one global array (`opt_loops.c`): 15 of 33, with the allocation rule in
+  `regalloc_notes.md` (Loops at -O3 -XS); constant bounds walk a pointer to an end pointer.
+- Stack-slot frames for non-leaf functions are in place; the IZ / QIZ choice is not (hypothesis in
+  `regalloc_notes.md`).
+
+## The next steps, concretely
+
+1. **Struct locals and compiler temporaries** (`_ldiv`, `_div`, and `r_divmod` in `rules.c`).  V4.23 turns
+   `dv.quot = ...; dv.rem = ...` on a struct local into stores through address temporaries kept in stack slots
+   (`lda XWA,XSP+0xc` / `ld (XSP+8),XWA` / [reload] / `ld (XSP+4),XWA`), and returns the struct through the hidden
+   pointer with `ldirw`.  Once the model writes `_ldiv`, switching the reload-after-store rule (rules.md) should
+   give the firmware's bytes: the first pair that the kn5000 personality reproduces and V4.23 does not.
+2. **The IZ / QIZ choice** across calls (`ra_call.c`, `rc_keep3` vs `rc_keep4` are the hard pair).
+3. **Indexed stores into local arrays** (`_ultoa`, `_itoa`, `_ltoa`): the second rule-bearing pair.
+4. **char loops with byte registers** (`ol_c_acc2`, `ol_c_acc3`: L, W, H as accumulators, the element in A) and
+   loops over two arrays (`ol_i_copy`, `ol_two_arr`).
+5. The remaining unsupported constructs in the library (goto, indirect calls, `operator =` inside expressions).
+
 ## How to resume
 
 ```sh
