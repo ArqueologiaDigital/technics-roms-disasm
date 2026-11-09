@@ -17,9 +17,10 @@ import frontend, listing, codegen
 
 def oracle_path(odir, src):
     p = os.path.abspath(src).replace('\\', '/')
-    for root in ('/micro/', '/abi/', '/libsrc/', '/firmware/'):
-        if root in p: return os.path.join(odir, root.strip('/') + '/' + os.path.basename(p)[:-2] + '.asm')
-    return os.path.join(odir, os.path.basename(p)[:-2] + '.asm')
+    name = os.path.basename(p)[:-2] + '.asm'
+    for root, sub in (('/micro/', 'micro'), ('/abi/', 'abi'), ('/libsrc/', 'libsrc'), ('/firmware/', 'fw')):
+        if root in p and os.path.exists(os.path.join(odir, sub, name)): return os.path.join(odir, sub, name)
+    return os.path.join(odir, name)                          # run_oracle.sh files corpus/firmware/ under fw/
 
 def main():
     a = sys.argv[1:]

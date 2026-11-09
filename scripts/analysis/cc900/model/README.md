@@ -19,5 +19,5 @@ written from it and tested against it.
     python3 -I -B check_bytes.py "$TMPDIR/tiny.s" ../../../../original_ROMs/kn5000_v10_program.rom \
         ../../../../symbols/maincpu_v10_symbols_reference.txt 0xe00000
 
-`../results/model_ledger.md` records the scores (regenerate with the loop in its commit message).  The oracle
+`../results/model_ledger.md` records the scores; `sh model/ledger.sh` (from `scripts/analysis/cc900`) regenerates them.  The oracle
 directories are `~/compartilhado/cc900-oracle/runs/2026-11-08-7-micro/out/<compiler>/<options>`.

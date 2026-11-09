@@ -175,7 +175,17 @@ def is_signed(e):
 def gen(F, e, fam, size, then_ret=False, store=False):
     """emit code leaving e's low `size` bytes in register family `fam`; returns the family actually used"""
     e0 = strip(e)
-    if e0.k == 'cast' and e0.kind == 'IntegralCast' and strip(e0.e).ty.size > size and mem_operand(F, e0.e):
+    if e0.k == 'cast' and e0.kind == 'IntegralCast' and strip(e0.e).ty.size > size and mem_operand(F, e0.e) and \
+            family_of(mem_operand(F, e0.e)):
+        # a narrowing cast of a register variable (unop_*, v423 Xr / O3XSXr): without -O it is moved at the narrow
+        # width (.cast_i_c: ld L,A; .cast_l_i: ld HL,WA); with -O at the source width (ld HL,WA; ld XHL,XWA), except
+        # long to char (ld L,A)
+        isz = strip(e0.e).ty.size; r = family_of(mem_operand(F, e0.e))[1:]
+        w = (1 if size == 1 and isz == 4 else isz) if F.opt else size
+        if r != fam: F.emit('ld', '%s,%s' % (FAM[fam][w], FAM[r][w]))
+        return fam
+    if e0.k == 'cast' and e0.kind == 'IntegralCast' and strip(e0.e).ty.size > size and mem_operand(F, e0.e) and \
+            not family_of(mem_operand(F, e0.e)):
         # a narrowing cast of a load reads at the source width (unop_*: cast_l_c, cast_i_c)
         isz = strip(e0.e).ty.size
         F.emit('ld', '%s,%s' % (FAM[fam][isz], mem_operand(F, e0.e))); return fam
@@ -186,6 +196,10 @@ def gen(F, e, fam, size, then_ret=False, store=False):
         return fam
     if e.k == 'cast' and e.kind == 'IntegralCast':
         inner = strip(e.e); isz = inner.ty.size
+        if isz == 1 and size == 4 and not inner.ty.signed and F.opt and family_of(mem_operand(F, inner) or ''):
+            F.emit('ld', '%s,%s' % (FAM[fam][1], mem_operand(F, inner)))   # .cast_uc_l under O3XSXr
+            F.emit('ld', '%s,0x0' % FAM[fam][1].replace('L', 'H').replace('A', 'W').replace('C', 'B').replace('E', 'D'))
+            F.emit('extz', FAM[fam][4]); return fam
         if isz == 1 and size == 4 and not inner.ty.signed and mem_operand(F, inner):
             # unsigned char to long: clear, then load the byte (cast_uc_l)
             F.emit('ld', '%s,0x0' % FAM[fam][4]); F.emit('ld', '%s,%s' % (FAM[fam][1], mem_operand(F, inner)))
@@ -197,9 +211,15 @@ def gen(F, e, fam, size, then_ret=False, store=False):
             F.emit('exts' if inner.ty.signed else 'extz', FAM[fam][sz])
         return fam
     if e.k == 'un' and e.op in ('-', '~'):
-        ur = regvar_of(strip(e.e).e) if strip(e.e).k == 'load' else None
-        if ur is not None and F.opt and dies_here(F, e.e) and ur.reg != fam and ur.reg in ('WA', 'BC', 'DE') and size <= 2:
-            F.emit('neg' if e.op == '-' else 'cpl', FAM[ur.reg][size])     # .neg_i under O3XSXr
+        x = strip(e.e)
+        while x.k == 'cast' and x.kind == 'IntegralCast' and strip(x.e).ty.size <= x.ty.size: x = strip(x.e)
+        ur = regvar_of(x.e) if x.k == 'load' else None           # .not_c: ~ on a promoted char
+        if ur is not None and dies_here(F, x) and ur.reg != fam and ur.reg in ('WA', 'BC', 'DE') and \
+                (e.op == '~' or F.opt):                        # without -O only ~ works in place (.neg_i: ld HL,WA / neg HL)
+            if size == 4:                                      # .not_l under Xr: cpl WA / cpl QWA / ld XHL,XWA
+                F.emit('cpl', FAM[ur.reg][2]); F.emit('cpl', Q[ur.reg])
+                if e.op == '-': F.emit('inc', '0x1,%s' % FAM[ur.reg][4])
+            else: F.emit('neg' if e.op == '-' else 'cpl', FAM[ur.reg][size])     # .neg_i, .not_i under Xr
             F.emit('ld', '%s,%s' % (FAM[fam][size], FAM[ur.reg][size])); return fam
         gen(F, e.e, fam, size)
         R = FAM[fam][size]
@@ -753,8 +773,27 @@ def gen_opassign(F, e):
         gen(F, r, 'WA', size)
         F.emit(SIMPLE_OPS[op], '%s,%s' % (t, FAM['WA'][size])); return t
     if op in ('<<', '>>'):
-        t = lvalue(F, e.l, ptr='XDE', idx='DE', base='XHL')
         mnem = ('sla' if signed else 'sll') if op == '<<' else ('sra' if signed else 'srl')
+        cnt = mem_operand(F, r) if fold(r).k != 'const' else None
+        lv = strip(e.l); ia = strip(lv.idx) if lv.k == 'index' else None
+        if F.adecl and size == 2 and cnt in ('BC', 'DE'):
+            # the count needs WA, so a variable in WA moves out (assign.c under Xr and O3XSXr):
+            # .as_shl_ptr: ld DE,BC / ld XBC,XWA / ld HL,(XBC) / ld WA,DE / ... / ld (XBC),HL
+            # .as_shl_arr: ld HL,WA / add HL,HL / lda XIX,_ga / ld DE,(XIX+HL) / ld WA,BC / ... / ld (XIX+HL),DE
+            t = None
+            if lv.k == 'deref' and mem_operand(F, lv.e) == 'XWA':
+                if cnt == 'BC': F.emit('ld', 'DE,BC'); cnt = 'DE'
+                F.emit('ld', 'XBC,XWA'); t = '(XBC)'; taken = {'BC', cnt}
+            elif lv.k == 'index' and strip(lv.base).k == 'var' and strip(lv.base).decl.kind == 'global' and \
+                    strip(lv.base).decl.ty.kind == 'array' and mem_operand(F, lv.idx) == 'WA':
+                F.emit('ld', 'HL,WA'); F.emit('add', 'HL,HL'); F.emit('lda', 'XIX,_%s' % strip(lv.base).decl.name)
+                t = '(XIX+HL)'; taken = {'HL', cnt}
+            if t is not None:
+                V = [x for x in ('HL', 'DE', 'BC') if x not in taken][0]
+                F.emit('ld', '%s,%s' % (V, t)); F.emit('ld', 'WA,%s' % cnt)
+                F.emit('and', 'A,0xf'); lab = F.newlabel(); F.emit('j', 'z,%s' % lab); F.emit(mnem, 'A,%s' % V)
+                F.lines.append(lab + ':'); F.emit('ld', '%s,%s' % (t, V)); return t
+        t = lvalue(F, e.l, ptr='XDE', idx='DE', base='XHL')
         V = FAM['BC'][size]
         F.emit('ld', '%s,%s' % (V, t))
         rr = fold(r)
@@ -777,7 +816,10 @@ def gen_opassign(F, e):
             if rs is None: raise Unsupported('complex long operand')
             name = {'*': 'mul', '/': 'div', '%': 'rem'}[op] + ('ls' if signed else 'lu')
             saved = False
-            if rs == 'XWA':                                # .as_mul_gl: push XIZ / ld XIZ,XWA
+            if rs == 'XWA' and not F.opt:                  # .as_mul_gl under Xr: ld XBC,XWA / ld XWA,(_gl)
+                F.emit('ld', 'XBC,XWA'); F.emit('ld', 'XWA,%s' % t); F.emit('cal', 'C9H_' + name)
+                F.emit('ld', '%s,XHL' % t); return t
+            if rs == 'XWA':                                # .as_mul_gl under O3XSXr: push XIZ / ld XIZ,XWA
                 F.lines.insert(1, '\tpush\tXIZ'); F.push += 4; F.emit('ld', 'XIZ,XWA'); rs = 'XIZ'; saved = True
             F.emit('ld', 'XWA,%s' % t); F.emit('ld', 'XBC,%s' % rs); F.emit('cal', 'C9H_' + name)
             F.emit('ld', '%s,XHL' % t)
@@ -802,7 +844,9 @@ def gen_opassign(F, e):
         else:
             F.emit('exts' if signed else 'extz', wide); F.emit('divs' if signed else 'div', '%s,%s' % (wide, rs))
             res = FAM[work][size] if op == '/' else (Q[work] if size == 2 else HI[work])
-        if res.startswith('Q'): F.emit('ld', '%s,%s' % (FAM[work][2], res)); res = FAM[work][2]
+        if res.startswith('Q'):                            # .as_mod_gi: ld WA,QBC into the dead operand's register
+            dst = 'WA' if work == 'WA' or (rs == 'WA' and dies_here(F, narrow(r, size))) else FAM[work][2]
+            F.emit('ld', '%s,%s' % (dst, res)); res = dst
         F.emit('ld', '%s,%s' % (t, res)); return t
     raise Unsupported('opassign ' + op)
 
@@ -936,12 +980,18 @@ def gen_stmt(F, s, last):
                     gen_stmt(F, c, False); i += 2; continue
             if c.k == 'expr' and c.e.k == 'opassign' and regvar_of(c.e.l) and nxt is not None and nxt.k == 'return' \
                     and nxt.value is not None and strip(nxt.value).k == 'load' and regvar_of(strip(nxt.value).e) is regvar_of(c.e.l) \
-                    and (c.e.op in SIMPLE_OPS or c.e.op in ('*', '/', '%')):
+                    and (c.e.op in ('*', '/') or F.opt and c.e.op in tuple(SIMPLE_OPS) + ('%', '<<', '>>')):
+                # without -O only * and / fold into the return; + - & | ^ % << >> work on the variable's register,
+                # then the return moves it (.as_add_loc, .as_mod_loc, .as_shl_loc under Xr)
                 from frontend import N                           # .as_add_loc: ld HL,WA / add HL,BC
                 d = regvar_of(c.e.l)
+                if c.e.op == '%' and d.ty.size == 2 and d.reg in ('WA', 'BC', 'DE') and 'HL' not in live_regs(F):
+                    F.emit('ld', 'HL,%s' % FAM[d.reg][2]); d.reg = 'HL'   # .as_mod_loc under O3XSXr: the variable
+                    gen_stmt(F, c, False); i += 1; continue               # moves to HL, then exts XHL / divs XHL,BC
                 ld = N('load', e=N('var', decl=d, ty=d.ty), ty=d.ty)
                 nxt.value = N('bin', op=c.e.op, l=ld, r=c.e.r, ty=d.ty)
-                F.last_use[d] = id(ld) if c.e.op in ('*', '/', '%') else None   # .as_mul_loc: muls XWA,BC in place
+                F.last_use[d] = id(ld) if c.e.op in ('*', '/') else None   # .as_mul_loc: muls XWA,BC in place;
+                # .as_mod_loc under O3XSXr is not: ld HL,WA / exts XHL / divs XHL,BC / ld HL,QHL
                 i += 1; continue
             trivial = last and nxt is not None and i + 2 == len(body) and nxt.k == 'return' and (
                 nxt.value is None or (strip(nxt.value).k == 'load' and regvar_of(strip(nxt.value).e)
@@ -1158,6 +1208,23 @@ def regvar_stmt(F, e):
         if m is None:                                  # ra_param3: s += b * c -> WA, then add HL,WA
             fam = gen(F, e.r, 'WA', d.ty.size); m = FAM[fam][d.ty.size]
         F.emit(SIMPLE_OPS[e.op], '%s,%s' % (R, m)); return True
+    if e.k == 'opassign' and regvar_of(e.l) and e.op == '%' and regvar_of(e.l).reg in ('WA', 'BC', 'DE', 'HL') \
+            and regvar_of(e.l).ty.size == 2 and mem_operand(F, narrow(e.r, 2)):
+        d = regvar_of(e.l); signed = d.ty.signed       # .as_mod_loc under Xr: exts XWA / divs XWA,BC / ld WA,QWA
+        F.emit('exts' if signed else 'extz', FAM[d.reg][4])
+        F.emit('divs' if signed else 'div', '%s,%s' % (FAM[d.reg][4], mem_operand(F, narrow(e.r, 2))))
+        F.emit('ld', '%s,%s' % (FAM[d.reg][2], Q[d.reg])); return True
+    if e.k == 'opassign' and regvar_of(e.l) and e.op in ('<<', '>>') and regvar_of(e.l).ty.size == 2 \
+            and fold(e.r).k != 'const' and mem_operand(F, narrow(e.r, 2)) in ('BC', 'DE'):
+        d = regvar_of(e.l); signed = d.ty.signed       # .as_shl_loc under Xr: ld DE,WA / ld WA,BC / and A,0xf / sla A,DE
+        mnem = ('sla' if signed else 'sll') if e.op == '<<' else ('sra' if signed else 'srl')
+        cnt = mem_operand(F, narrow(e.r, 2))
+        if d.reg == 'WA':
+            nr = [r for r in ('BC', 'DE', 'HL') if r not in live_regs(F) | {family_of(cnt)[1:]}][0]
+            F.emit('ld', '%s,WA' % nr); d.reg = nr
+        F.emit('ld', 'WA,%s' % cnt)
+        F.emit('and', 'A,0xf'); lab = F.newlabel(); F.emit('j', 'z,%s' % lab); F.emit(mnem, 'A,%s' % d.reg)
+        F.lines.append(lab + ':'); return True
     if e.k == 'incdec' and regvar_of(e.e):
         d = regvar_of(e.e); R = FAM[d.reg].get(d.ty.size, FAM[d.reg].get(2))
         step = d.ty.base.size if d.ty.kind == 'ptr' else 1
@@ -1649,6 +1716,8 @@ def compile_function(f, opt, adecl, personality='v4.23'):
         if F.xiz_vars: F.emit('pop', 'XIZ')
         epilogue(F)
         F.emit('ret')
+    import re                                            # no self-moves: the oracle never writes ld XWA,XWA
+    F.lines = [l for l in F.lines if not re.match(r'^\tld\t(\w+),\1$', l)]
     # a call directly followed by the return becomes a jump (cmp_ui: ge_ui_br0)
     if getattr(F, 'naive_loads', False): F.lines = knowledge_pass(F.lines, F.personality)
     elif F.personality != 'v4.23': F.lines = store_knowledge(F.lines)
