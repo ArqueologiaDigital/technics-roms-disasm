@@ -452,6 +452,31 @@ Run it after every change, beside the ledger and the pairs:
 `python3 -I -B model/semcheck.py --ledger --jobs 4 --results results/semcheck.md`. The DIFFERENT count must not
 rise.
 
+Leaf registers without options, and what the lnr probes showed (2026-11-09, night):
+- **Rule LN1** (`model/leafnone.py`, `regalloc_notes.md`) now chooses the registers of a leaf function with a loop
+  under no options.  It came from an agent's fit (research-scratch `sessions/2026-11-09_cc900-leaf-none`): 275 / 275
+  fitted functions, 15 / 18 on the held-out `lnr4.c` after six fixes.  Ledger: micro_ra 33 -> 34, opt_counted
+  25 -> 27, cond_bits 113 -> 114, assign_expr 30 -> 31, opt_loops 23 -> 27 (none).
+- **The probes `lnr.c` .. `lnr4.c` joined the ledger** at all four sets (runs `2026-11-09-31` .. `-34`).  They keep
+  three locals live across each loop, and semcheck found **61 more wrong-code functions** in them: templates that
+  wrote a register still holding a variable read after the loop.  All 61 are gone, each fixed to V4.23's form or
+  refused:
+  - `held_after` now also sees a variable whose first reference after the current statement is a read
+    (`read_after_top`); a write first (`d1 = g1`) leaves it free;
+  - the element and store templates take the first free register where V4.23 does (`p[i] op= x`: XBC, XDE, XHL,
+    XIX, XIY; `*gp = i` and `p[i] = i`: XWA; `gr = p[i]` under -Xr: the address register; `1 << i`: the next free);
+  - generic guards (`clobbers`, `STORE_ADDR_GUARD`) refuse a store, op= or multiply whose code overwrites its own
+    address or a live variable;
+  - a local written in between was folded into its single read (`h5`: `gc = c` stored c's initial value); fixed
+    in both the fold and `foldable`.
+  Probe scores, none: lnr 25 -> 28, lnr2 19 -> 22, lnr3 6 -> 12, lnr4 5 -> 6; the other sets are 0-9 of 18-50:
+  the probes' crowded loops need QWA / QDE and loop-invariant hoisting (`*gp`, `n + n` into DE before the loop),
+  which the model does not have.
+- Also: `i--` then `i >= 0` is `sub R,0x1` + a signed branch (no `dec` / `cp R,0x0` pair in any listing; they differ
+  when n = -32768), and an if/else arm does not `ret` before a frame is released (`s_if`).
+- semcheck DIFFERENT: 10 -> 5.  Left: `rh_ptr_int` (O3XSXr homes), `_fmod`, `_strtok`, `_tanh`, `__trig` (O3XS
+  library).  Library 172 / 248, pairs kn5000 223: unchanged throughout.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
