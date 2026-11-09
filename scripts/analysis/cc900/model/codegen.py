@@ -1586,6 +1586,7 @@ IDX_GUARD = True                                          # see elem_addr
 LEAF_KEEP_TAKEN = True                                    # see plan_leaf
 IF_FLUSH_POPS = True                                      # see gen_stmt's if
 ADDR_CLOBBER_SWAP = True                                  # see gen_bin
+CHAR_NARROW_TERN = True                                   # see char_narrow
 
 def char_narrow(body):
     """cc900 does int + - & | ^ of a char and a constant that fits a byte, or of two chars, on the byte and
@@ -1599,7 +1600,16 @@ def char_narrow(body):
         if x.k == 'cast' and x.kind == 'IntegralCast' and x.ty.size == 2 and strip(x.e).ty is not None and \
                 strip(x.e).ty.kind == 'int' and strip(x.e).ty.size == 1:
             return strip(x.e)
+        if CHAR_NARROW_TERN and x.k == 'cond' and x.ty is not None and x.ty.size == 2:   # arr_index.c ai_up_sub:
+            sg = byte_arms(x)                                                    # (c ? ch - 32 : ch) - 55 is done in
+            if sg is not None:                                                   # the byte too
+                def arm(a):
+                    a = strip(a)
+                    if fold(a).k == 'const': return N('const', value=fold(a).value, ty=ct0(sg))
+                    return strip(a.e)
+                return N('cond', c=x.c, a=arm(x.a), b=arm(x.b), ty=ct0(sg))
         return None
+    def ct0(sg): return Type('int', 1, 1, signed=sg, spell='char' if sg else 'unsigned char')
     def visit(n, d):
         if not (n.k == 'bin' and n.op in ('+', '-', '&', '|', '^') and n.ty is not None and n.ty.kind == 'int' and
                 n.ty.size == 2):
@@ -1622,6 +1632,7 @@ def char_narrow(body):
         it = n.ty
         n.__dict__.clear(); n.k = 'cast'; n.kind = 'IntegralCast'; n.e = inner; n.ty = it
     walk(body, visit)
+    if CHAR_NARROW_TERN: walk(body, visit)                 # (a second pass sees the arms the first one narrowed)
 
 def copy_propagate(f):
     """-O: a local assigned exactly once, from a parameter that the function never writes, is that parameter
