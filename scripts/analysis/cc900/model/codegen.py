@@ -925,6 +925,8 @@ def gen_ptr_arith(F, e, fam, size):
         esz = l.ty.base.size
         if esz > 1:
             F.emit('ld', 'XBC,%s' % hx(esz)); F.emit('cal', 'C9H_divls'); return 'HL'
+        if size == 2 and fam != 'WA':                      # ra_homes32.c h_p_diff: return p - s (int) -> sub XWA,(s) /
+            F.emit('ld', '%s,WA' % FAM[fam][2]); return fam   # ld HL,WA
         return move_to(F, 'XWA', fam, 4)
     if r.ty.is_ptr(): l, r = r, l
     rc = fold(r)
@@ -968,10 +970,16 @@ def gen_ptr_arith(F, e, fam, size):
             else: F.emit('ld', '%s,%s' % (R, X)); F.emit(opn, '%s,%s' % (R, pm))
             return fam
         F.emit(opn, '%s,%s' % (X, pm)); return iv.reg
-    F.emit('ld', 'WA,%s' % im); F.emit('exts' if ii.ty.signed else 'extz', 'XWA')
+    ext = 'extz' if esz == 1 and PTR_CHAR_EXTZ else ('exts' if ii.ty.signed else 'extz')   # (a char pointer's index
+    R = FAM[fam][4]                                                                         # is zero-extended)
+    if F.opt and F.adecl and im in ('IZ', 'QIZ') and R != 'XWA' and pm.startswith('('):
+        F.emit('ld', '%s,%s' % (FAM[fam][2], im)); F.emit(ext, R)   # h_p_n3: return p + n with n in IZ ->
+        if esz == 2: F.emit('add', '%s,%s' % (R, R))                # ld HL,IZ / extz XHL / add XHL,(XSP+0x2)
+        elif esz > 2: F.emit('sll', '%s,%s' % (hx({4: 2, 8: 3}[esz]), R))
+        F.emit('add' if e.op == '+' else 'sub', '%s,%s' % (R, pm)); return fam
+    F.emit('ld', 'WA,%s' % im); F.emit(ext, 'XWA')
     if esz == 2: F.emit('add', 'XWA,XWA')
     elif esz > 2: F.emit('sll', '%s,XWA' % hx({4: 2, 8: 3}[esz]))
-    R = FAM[fam][4]
     if F.opt and R != 'XWA' and pm != 'XWA':          # m_padd under -O3 -XS: add XWA,(XSP+0x4) / ld XHL,XWA
         F.emit(opn, 'XWA,%s' % pm); F.emit('ld', '%s,XWA' % R); return fam
     if R != 'XWA': F.emit('ld', '%s,XWA' % R)
@@ -2997,6 +3005,8 @@ FP_AGGR = True
 MUL_K_XWA = True
 IFCHAIN_JOIN = True
 BINLOC_XR = True
+HOMES_PARAM_ORDER = True                           # adecl entry homes in reverse parameter order (h_p_diff)
+PTR_CHAR_EXTZ = True                               # p + i on a char pointer zero-extends i (h_p_n3, ai_c_p_*)
 SLOT_FROM_HL = True                                # a call result stored to a slot from HL / XHL (h_p)
 WALKED_OPT_WA = True                               # -O3 -XS: c_cnt's lone walked pointer takes XWA too
 WALKED_PTRS = True                                 # no -O: pointers a pointer-test loop walks get registers (c_cnt)
@@ -3247,9 +3257,22 @@ def emit_homes(F):
     """after the frame is known: slot stores first, then the moves into IZ / XIZ (adecl.c d_keep).  A cdecl
     parameter is loaded at its first use instead (_strlen: pushw 0xffff / pushw 0x0 / ld XIZ,(XSP+0xc) / push XIZ;
     call.c k_seq, where the first use is the first instruction)"""
+    F.lazy_homes = {}
+    if HOMES_PARAM_ORDER and F.adecl:                      # adecl: stores and moves together in reverse parameter
+        arr = {}                                           # order (d_keep: ld (XSP+0x2),BC / ld IZ,WA; ra_homes32.c
+        for k_, p_ in enumerate(F.f.params):               # h_p_diff: ld IZ,BC / ld (XSP+0x6),XWA)
+            if k_ < 3: arr[('WA', 'BC', 'DE')[k_]] = k_
+        ops = []
+        for d, r in getattr(F, 'home_stores', []):
+            ops.append((F.f.params.index(d) if d in F.f.params else -1, -d.slot, ('ld', '(XSP+%s),%s' % (hx(d.slot + F.push), r))))
+        for dst, src in getattr(F, 'home_moves', []):
+            if not isinstance(src, str): F.lazy_homes[src] = dst; continue
+            fam_ = family_of(src); fam_ = fam_[1:] if fam_ and fam_.startswith('X') else fam_
+            ops.append((arr.get(fam_, -1), 0, ('ld', '%s,%s' % (dst, src))))
+        for _, _, (op_, a_) in sorted(ops, key=lambda x: (-x[0], x[1])): F.emit(op_, a_)
+        return
     for d, r in sorted(getattr(F, 'home_stores', []), key=lambda x: x[0].slot):   # ls_cl_noguard: ld (XSP+0x4),BC /
         F.emit('ld', '(XSP+%s),%s' % (hx(d.slot + F.push), r))                     # ld (XSP+0x6),WA
-    F.lazy_homes = {}
     for dst, src in getattr(F, 'home_moves', []):
         if not isinstance(src, str): F.lazy_homes[src] = dst; continue
         F.emit('ld', '%s,%s' % (dst, src))
