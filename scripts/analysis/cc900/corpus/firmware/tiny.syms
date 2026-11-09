@@ -1,0 +1,7 @@
+# Addresses of the RAM variables tiny.c names, for model/to_llvm.py (NAME 0xADDRESS).
+# LSW_FILTER and ROOT_OBJECT: v10/maincpu/shared/ram_variables.s.  g8d3e / g35140: the absolute operands of
+# BitMapOut_StorePresetValue (0x8d3e:16) and SmfMedley_RawData (35140:16) in the v10 source, unnamed there.
+LSW_FILTER 0x276c6
+ROOT_OBJECT 0x2bc18
+g8d3e 0x8d3e
+g35140 0x8944

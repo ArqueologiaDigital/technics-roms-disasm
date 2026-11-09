@@ -22,6 +22,31 @@ All six have the firmware's instruction sequence.  Two findings:
   tulink pick the short form from where the symbol lands, so our toolchain must do the same for cc900-compat output.
 
 **The reference model does the same without Toshiba's compiler:** `model/score.py` on `corpus/firmware/tiny.c`
-(`--opt O3XS --adecl`, against the run's listing) scores 6 of 6.  What is still missing for a byte-exact build from
-our own tools is the step from the model's Toshiba-syntax listing to bytes: a translation to our LLVM syntax (or an
-LLVM-syntax emitter) and the 16/24-bit address choice.
+(`--opt O3XS --adecl`, against the run's listing) scores 6 of 6.  
+
+## From C to ROM bytes with our own tools only
+
+`model/to_llvm.py` rewrites the model's listing in our llvm-mc syntax and makes asm900's choices:
+- the 3-bit immediate for `cp`/`ld` of 0..7 to a register (`cp a, 0:i3`, `c9 d8`);
+- a post-increment operand with the data size as its step (`(xwa+)`);
+- the absolute-address width from where the variable lies: `(ADDR:8)` below 0x100, `(ADDR:16)` below 0x10000,
+  `(ADDR:24)` above.  The addresses come from a symbol file (`corpus/firmware/tiny.syms`).
+
+`model/check_bytes.py` assembles the result with llvm-mc (UPDATE 22 toolchain) and compares each function with
+`original_ROMs/kn5000_v10_program.rom` at the address `symbols/maincpu_v10_symbols_reference.txt` gives it.  The
+commands are in `scripts/analysis/cc900/model/README.md`; the output, 2026-11-09:
+
+| function                     | bytes | result |
+|------------------------------|-------|--------|
+| `SetLswFilter`               | 8     | MATCH  |
+| `SetRootObject`              | 6     | MATCH  |
+| `BitMapOut_StorePresetValue` | 5     | MATCH  |
+| `SmfMedley_RawData`          | 9     | MATCH  |
+| `TrimPad_NullTerminate`      | 4     | MATCH  |
+| `FmtNum_WriteSpacePad`       | 11    | MATCH  |
+
+So for these six the whole chain -- guessed C, clang's front end, the reference model, our assembler -- gives the
+firmware's bytes with no Toshiba program involved.  The translator covers only the instructions these six need;
+an unknown line is emitted as `; untranslated:` so that a wider corpus fails loudly instead of silently.  The
+address-width rule is read from the firmware's own encodings; whether tulink decides it from the final address
+(as assumed) or from a section attribute is not yet tested.
