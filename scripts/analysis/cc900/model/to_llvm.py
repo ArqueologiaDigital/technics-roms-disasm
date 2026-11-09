@@ -91,6 +91,8 @@ def translate_line(t, syms, locals_):
     parts = t.strip().split(None, 1); op = parts[0]
     raw = [a.strip() for a in re.split(r',(?![^()]*\))', parts[1])] if len(parts) > 1 else []
     if op == 'align': return '\t.balign %s' % raw[0]
+    if op == 'dfb' and len(raw) == 2: return '\t.fill %s, 1, %s' % (raw[0], raw[1])   # _CTYPE.C: dfb 128,0
+    if op == 'dsb' and len(raw) == 1: return '\t.zero %s' % raw[0]
     if op in ('db', 'dw', 'dl'):
         out = []
         for a in raw:

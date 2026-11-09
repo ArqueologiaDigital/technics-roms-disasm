@@ -1637,6 +1637,7 @@ KLOOP_VALUE_WA = True                                     # see plan_leaf (r_ga_
 SHIFT_VALUE_FREE = True                                   # see gen_bin's variable shift (r_shl_i)
 HOMED_WRITES = True                                       # see regvar_stmt (_strtok)
 LOCAL_ARRAY_INIT = True                                   # see gen_stmt's decl (__fint's maru)
+ARRAY_TAIL_DFB = True                                     # see the data emitter (_CTYPE.C)
 DEC_CMP_SUB = True                                        # dec 0x1,R / cp R,0x0 -> sub R,0x1 (opt_counted.c oc_down)
 TERN_TRUTH_PRE = True                                     # see gen's -O ?: path
 RET_CC_KEEPS = True                                       # see knowledge_pass
@@ -7628,12 +7629,16 @@ def emit_data(unit, out):
         elif d.ty.kind == 'array' and e.k == 'initlist' and d.ty.base.kind == 'int':
             vals = [data_value(x) for x in e.items]        # _CTYPE.C: db 32,32,... eight a line, align 1 between
             if None in vals: continue
-            vals += [0] * (d.ty.count - len(vals)) if d.ty.count else []
+            pad = max(0, d.ty.count - len(vals)) if d.ty.count else 0
+            if not ARRAY_TAIL_DFB: vals += [0] * pad; pad = 0
             w = {1: 'db', 2: 'dw', 4: 'dl'}[d.ty.base.size]
             rows = [vals[i:i + 8] for i in range(0, len(vals), 8)]
             for i, row in enumerate(rows):
                 if i: lines.append('\talign\t1')
                 lines.append('\t%s\t%s' % (w, ','.join(str(v) for v in row)))
+            if pad:                                        # _CTYPE.C: the 128 elements past the initialiser are
+                if rows: lines.append('\talign\t1')      # one dfb 128,0
+                lines.append('\tdfb\t%d,0' % (pad * d.ty.base.size))
         elif d.ty.kind == 'ptr' and strip(e).k in ('decay', 'string', 'noop') and strip(getattr(strip(e), 'e', e)).k == 'string':
             sn[0] += 1; lab = 'S%d' % sn[0]
             lines.append('\tdl\t' + lab); tail = [lab + ':', '\tdb\t%s,0' % strip(getattr(strip(e), 'e', e)).value]
