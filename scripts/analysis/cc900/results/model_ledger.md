@@ -12,3 +12,8 @@
 | run 2026-11-08-8-micro-ra, v423/O3XSXr     | micro/ra_*.c                                  | 0 / 42 exact (0.0%)     |
 | run 2026-11-08-9-micro-optloops, v423/O3XS | micro/opt_loops.c                             | 15 / 33 exact (45.5%)   |
 | run 2026-11-08-5-libsrc97-O3XS, v423/O3XS  | 1997 LIB/SRC (the files the front end parses) | 3 / 24 exact (12.5%)    |
+
+The library row: `score.py ORACLE $C/libsrc/*.C -D__900__ -D__LARGE__ -DFLOAT -D__CDECL= '-D__ASM(x)=' -I$C/inc`, where `$C` is
+a scratch copy of V4.23's `LIB/SRC` (`libsrc/`) and `INCLUDE` (`inc/`, with lower-case symlinks `ctype.h -> CTYPE.H`
+so that clang finds Toshiba's headers before the host's), made from `upstream_repos/file_archive/devrs.com/ngpcbins`.
+Routines written in inline assembly (`__ASM`, `__HL` pseudo-registers) are not counted.
