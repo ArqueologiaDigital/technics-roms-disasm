@@ -699,6 +699,15 @@ def gen_ptr_arith(F, e, fam, size):
     im = mem_operand(F, ii)
     if pm is None or im is None: raise Unsupported('complex pointer arithmetic')
     esz = l.ty.base.size
+    iv = regvar_of(ii.e) if ii.k == 'load' else None
+    if F.opt and iv is not None and iv.reg in ('BC', 'DE', 'HL') and dies_here(F, ii) and ii.ty.size == 2:
+        X = FAM[iv.reg][4]; F.dead.add(iv)          # mem.c m_p_v under O3XSXr: exts XBC / add XBC,XBC / add XBC,XWA
+        F.emit('exts' if ii.ty.signed else 'extz', X)
+        if esz == 2: F.emit('add', '%s,%s' % (X, X))
+        elif esz > 2: F.emit('sll', '%s,%s' % (hx({4: 2, 8: 3}[esz]), X))
+        F.emit('add' if e.op == '+' else 'sub', '%s,%s' % (X, pm))
+        if fam != iv.reg and not getattr(F, 'ptr_keep', False): F.emit('ld', '%s,%s' % (FAM[fam][4], X)); return fam
+        return iv.reg
     F.emit('ld', 'WA,%s' % im); F.emit('exts' if ii.ty.signed else 'extz', 'XWA')
     if esz == 2: F.emit('add', 'XWA,XWA')
     elif esz > 2: F.emit('sll', '%s,XWA' % hx({4: 2, 8: 3}[esz]))
@@ -1046,10 +1055,15 @@ def gen_load_mem(F, v, fam, size):
             while ii.k == 'cast' and ii.kind == 'IntegralCast': ii = strip(ii.e)
             im = mem_operand(F, ii)
             if pm is None or im is None: raise Unsupported('complex pointer index')
-            F.emit('ld', 'WA,%s' % im); F.emit('exts' if ii.ty.signed else 'extz', 'XWA')
-            if esz == 2: F.emit('add', 'XWA,XWA')
-            elif esz > 2: F.emit('sll', '%s,XWA' % hx({4: 2, 8: 3}[esz]))
-            F.emit('add', 'XWA,%s' % pm); F.emit('ld', '%s,(XWA)' % R); return fam
+            iv = regvar_of(ii.e) if ii.k == 'load' else None
+            W = 'XWA'
+            if F.opt and iv is not None and iv.reg in ('BC', 'DE', 'HL') and dies_here(F, ii) and ii.ty.size == 2:
+                W = FAM[iv.reg][4]; F.dead.add(iv)          # m_p_v under O3XSXr: exts XBC / add XBC,XBC / add XBC,XWA /
+            else: F.emit('ld', 'WA,%s' % im)                # ld HL,(XBC)
+            F.emit('exts' if ii.ty.signed else 'extz', W)
+            if esz == 2: F.emit('add', '%s,%s' % (W, W))
+            elif esz > 2: F.emit('sll', '%s,%s' % (hx({4: 2, 8: 3}[esz]), W))
+            F.emit('add', '%s,%s' % (W, pm)); F.emit('ld', '%s,(%s)' % (R, W)); return fam
     raise Unsupported('memory load ' + v.k)
 
 def lvalue(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False):
