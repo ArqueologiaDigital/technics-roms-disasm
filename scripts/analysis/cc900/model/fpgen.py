@@ -715,6 +715,9 @@ def hoist_common(lines):
             if not (pv.startswith(('\tj\t', '\tjp\t')) and ',' not in pv or pv.startswith('\tret')):
                 i += 1; continue                           # (the target is also reached by falling in, after a call
                                                            # that may change the register: _fmod's ._fneg_d / L10)
+            if sum(1 for l in lines if l.startswith('\tj') and l.endswith((',' + target, '\t' + target))) != 1:
+                i += 1; continue                           # (another jump reaches it after a call: _tanh's L2, where
+                                                           # the hoisted ld DE,0x0 held only on the first path)
             a, b = prefix(i + 3), prefix(li + 1)
             gone_a, gone_b, hoisted = set(), set(), []
             for k, ia in enumerate(a):
