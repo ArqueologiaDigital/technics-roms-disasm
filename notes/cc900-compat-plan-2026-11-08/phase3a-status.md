@@ -257,8 +257,12 @@ What is left, in order:
    double), `__doprnt`, `_vsprintf`, `_strcspn` (`goto`).  `_log` now compiles (integer slot locals sit above the FP
    locals, `&nptr` is `lda XWA,XSP+..` / `push XWA`, a `do ... while` FP test uses the relation and `j ne`) but its
    temporaries are spread over the frame (0x44, 0x3c, 0x34, 0x2c, 0x24 for one statement's and the loop's): a
-   function-wide, lifetime-based slot choice that one example does not decide; a probe of several statements with
-   temporaries is the next step there.
+   function-wide, lifetime-based slot choice.  Fitted from run `2026-11-09-13-micro-fpstmts` in research-scratch
+   `sessions/2026-11-09_cc900-fp-frame` (7f6721d) and now `fpgen.FrameAlloc`: op slots pooled per statement,
+   call and long slots never reused, the longs in one region taken deepest first, the region D + D' (the depth plus
+   the depth with the longs pooled), a statement storing to a global takes its root's slot first.  fp_stmts.c 1 -> 14
+   (none) and 0 -> 9 (O3XS) of 16; `_log` still differs in 6 of 10 slots (call slots placed ahead of earlier
+   temporaries, research-scratch README E2 / E3).
 4. **cdecl `-O3 -XS` switch to lookup table**: done for `f(constant); break;` cases with no hole (a byte table,
    `align 1` / `db` per entry; `lda XIX,S` / `ld A,(XIX+WA)` / `exts WA` / `push WA` / `cal _f`; a long selector
    `add XWA,S` / `ld A,(XWA)`; a default after the call); an arm's pops are released before its `break` (they used

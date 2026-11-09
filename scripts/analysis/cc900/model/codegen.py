@@ -1441,6 +1441,12 @@ def flat(s):
     return [s]
 
 def gen_stmt(F, s, last):
+    if s.k != 'block' and getattr(F, 'fp_temps', None) is not None:
+        fpgen.begin_stmt(F); F._root_done = False         # R5g: a statement's op temporaries are free at the next
+        e = getattr(s, 'e', None) if s.k == 'expr' else None
+        e = strip(e) if e is not None else None
+        F.stmt_global = e is not None and ((e.k == 'bin' and e.op == '=') or e.k == 'opassign') and \
+            strip(e.l).k == 'var' and strip(e.l).decl.kind == 'global'
     if s.k in ('if', 'for', 'while', 'do', 'switch') and getattr(F, 'lazy_homes', None):
         for d in [d for d in F.f.params if d in F.lazy_homes and uses_decl(s, d)]:
             touch_home(F, d)                               # c_while: ld IZ,(XSP+0x6) before the loop
@@ -3208,7 +3214,7 @@ def fp_plan_frame(F):
     walk(f.body, lambda n, d: rets.append(n) if n.k == 'return' and n.value is not None else None)
     simple = all(fpgen.fp_value_cast(r.value).k == 'load' and strip(fpgen.fp_value_cast(r.value).e).k == 'var' for r in rets)
     fret = 4 if fpgen.is_fp(f.ret) and f.ret.size == 4 and not simple else 0   # (r_f: ld XHL,(_gf), no frame)
-    T = 2 * F.fp_temps
+    T = F.fp_temps                                         # the region, D + D' (fpgen.FrameAlloc)
     size = I + L + T + fret
     size = (size + 1) // 2 * 2
     top = size - fret
@@ -3449,22 +3455,22 @@ PERSONALITIES = {
     # kn5000 rule set in no rule the model has: their own ledger lines show where they still differ.
     'v4.23': 'v4.23', 'kn5000': 'kn5000', 'ide2003': 'kn5000', 'v1.10': 'kn5000'}
 
-def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None):
+def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong=0):
     if fp_temps is None and fpgen.uses_fp(f):
         import copy, sys                                    # pass 1 measures the floating-point temporaries
         sys.setrecursionlimit(max(sys.getrecursionlimit(), 200000))
         save = fpgen.FCONST[0]
         try:
             F1 = compile_function(copy.deepcopy(f), opt, adecl, personality, fp_temps=0)
-            need = F1.ftemp_used_total
+            need = F1.ftemp_used_total; nlong = F1._fa.nlong if '_fa' in F1.__dict__ else 0
         finally: fpgen.FCONST[0] = save
-        return compile_function(f, opt, adecl, personality, fp_temps=need).lines
+        return compile_function(f, opt, adecl, personality, fp_temps=need, fp_nlong=nlong).lines
     if personality not in PERSONALITIES: raise ValueError('unknown personality %s' % personality)
     personality = PERSONALITIES[personality]
     merge_address_inits(f)
     if opt != 'none' and not adecl: propagate_global_copies(f)
     F = Fn(f, adecl)
-    F.fp_temps = fp_temps
+    F.fp_temps = fp_temps; F.fp_nlong = fp_nlong
     F.personality = personality
     F.opt = opt != 'none'; F.dead = set()
     compute_last_uses(F)

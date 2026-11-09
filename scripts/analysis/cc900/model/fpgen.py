@@ -78,19 +78,55 @@ def stmt_reset(F):
     """the temporaries of one statement are free again at the next (_log: many statements, one small region)"""
     if getattr(F, 'fp_temps', None) is not None: F.ftemp_used = 0
 
-def temp(F, size):
-    """a frame temporary, allocated from the top of the frame region down (fp.c: d_from_i at (XSP+0x4) of 8)"""
-    F.ftemp_used = getattr(F, 'ftemp_used', 0) + size
-    F.ftemp_max = max(getattr(F, 'ftemp_max', 0), F.ftemp_used)
-    return getattr(F, 'ftemp_top', 0) - F.ftemp_used
+class FrameAlloc:
+    """FP temporaries as depths below the top of the temporary region (rule R5g of research-scratch
+    sessions/2026-11-09_cc900-fp-frame, 7f6721d): op slots are pooled and free again at each statement (the free slot
+    nearest the top, else a new one below all); call and long slots are never reused; the function's first long
+    reserves room for all its longs (counted in pass 1), handed out deepest first.  pooled_longs: the shadow
+    allocator whose depth is D' (the longs pooled like op slots)."""
+    def __init__(s, nlong, pooled_longs=False):
+        s.slots = []; s.depth = 0; s.nlong = 0; s.region = None; s.n = max(nlong, 1); s.pool_l = pooled_longs
+    def begin_stmt(s):
+        for sl in s.slots:
+            if sl[2] == 'op' or (sl[2] == 'long' and s.pool_l): sl[3] = False
+    def get(s, size, kind):
+        if kind == 'long': s.nlong += 1
+        reusable = kind == 'op' or (kind == 'long' and s.pool_l)
+        free = [x for x in s.slots if reusable and not x[3] and x[1] == size and x[2] == kind]
+        if free:
+            sl = min(free, key=lambda x: x[0]); sl[3] = True; return sl[0]
+        if kind == 'long' and not s.pool_l:
+            if s.region is None:
+                base = s.depth; s.depth += 4 * s.n
+                s.region = [base + 4 * (s.n - i) for i in range(s.n)]       # deepest first
+            if s.region: d = s.region.pop(0)
+            else: s.depth += 4; d = s.depth
+            s.slots.append([d, 4, 'long', True]); return d
+        s.depth += size; s.slots.append([s.depth, size, kind, True]); return s.depth
+
+def frame_allocs(F):
+    if '_fa' not in F.__dict__:
+        F._fa = FrameAlloc(getattr(F, 'fp_nlong', 0)); F._fb = FrameAlloc(getattr(F, 'fp_nlong', 0), True)
+    return F._fa, F._fb
+
+def begin_stmt(F):
+    if getattr(F, 'fp_temps', None) is None: return
+    A, B = frame_allocs(F); A.begin_stmt(); B.begin_stmt()
+
+def temp(F, size, kind='op'):
+    """a frame temporary (FrameAlloc); the region is D + D' (s_conv2: 16 + 12 = 28; no long: twice D)"""
+    A, B = frame_allocs(F)
+    d = A.get(size, kind); B.get(size, kind)
+    F.ftemp_max = max(getattr(F, 'ftemp_max', 0), A.depth + B.depth)
+    return getattr(F, 'ftemp_top', 0) - d
 
 class Cell:
     """a temporary allocated at its first write (fp_temps.c: t_ci's long temporary sits above the double that
     the conversion writes after it)"""
     def __init__(s, size): s.size = size; s.off = None
 
-def alloc(F, cell):
-    if cell.off is None: cell.off = temp(F, cell.size)
+def alloc(F, cell, kind='op'):
+    if cell.off is None: cell.off = temp(F, cell.size, kind)
     return cell.off
 
 def slot_addr(F, off): return 'XSP+%s' % C().hx(off + F.push) if off + F.push else 'XSP'
@@ -330,13 +366,36 @@ def int_to_long_temp(F, e, reg_family):
         fam = cg.gen(F, e, reg_family, t.size)
         if t.size == 2: F.emit('exts' if t.signed else 'extz', cg.FAM[fam][4])
         R4 = cg.FAM[fam][4]
-    off = temp(F, 4)
+    off = temp(F, 4, 'long')
     F.emit('ld', '%s,%s' % (slot_mem(F, off), R4))
     return off
 
 def eval_into(F, e, dest):
     """compute FP expression e and store it at dest: ('sret',), ('slot', off), ('lv', lvalue node)"""
     cg = C(); e = fp_value_cast(e)
+    gdest = dest[0] == 'lv' and strip(dest[1]).k == 'var' and strip(dest[1]).decl.kind == 'global'
+    if gdest and e.k == 'cast' and e.kind == 'IntegralToFloating':
+        pass
+    if gdest and getattr(F, 'stmt_global', False) and e.k in ('bin', 'un') and (e.k == 'un' or len(e.op) == 1) and \
+            (e.k == 'un' or e.op in '+-*/') and not getattr(F, '_root_done', False):
+        # fp_stmts.c (R5g): a statement that stores an operation to a global takes the root's slot first and builds
+        # its computed operand there (s_conv2: the double above the long; s_call2: +0x28 unused)
+        ops = [e.l, e.r] if e.k == 'bin' else [e.e]
+        comp = [i for i, x in enumerate(ops) if not addressable(F, fp_value_cast(x))]
+        if comp:
+            F._root_done = True
+            cell = Cell(e.ty.size); alloc(F, cell)
+            vals = [fp_value_cast(x) for x in ops]
+            first = comp[-1] if len(comp) == 2 else comp[0]
+            c0 = fp_value_cast(ops[first])
+            if c0.k == 'call':
+                cc = Cell(c0.ty.size); call_into(F, c0, ('cell', cc), arg_hint=cell); vals[first] = ('slot', cc.off)
+            elif c0.k == 'cast' and c0.kind == 'IntegralToFloating':
+                eval_into(F, c0, ('cell', cell)); vals[first] = ('slot', cell.off)
+            else: vals[first] = eval_val(F, ops[first], cell)
+            for i in comp:
+                if i != first: vals[i] = eval_val(F, ops[i], None)
+            op_into(F, e, vals, dest); return
     if e.k == 'bin' and e.op in '+-*/' and len(e.op) == 1:
         op_into(F, e, prepare(F, [e.l, e.r]), dest); return
     if e.k == 'un' and e.op == '-':
@@ -400,11 +459,11 @@ def call_into(F, e, dest, arg_hint=None):
     if arg_hint is not None:
         n += push_args()
     if dest[0] == 'lazyres':                               # the hint if the arguments left it free (call_val)
-        off = alloc(F, dest[1]) if dest[1].off is None else temp(F, 8)
+        off = alloc(F, dest[1], 'call') if dest[1].off is None else temp(F, 8, 'call')
         dest = ('slot', off)
-    elif dest[0] == 'cell': off = alloc(F, dest[1])
+    elif dest[0] == 'cell': off = alloc(F, dest[1], 'call')
     elif dest[0] == 'slot': off = dest[1]
-    else: off = temp(F, 8)
+    else: off = temp(F, 8, 'call')
     F.last_call_off = off
     if arg_hint is None: n += push_args()
     F.emit('lda', 'XWA,%s' % slot_addr(F, off)); F.emit('push', 'XWA'); F.push += 4; n += 4
@@ -483,10 +542,10 @@ def to_int(F, e, size):
     a long after it (t_to_l: the double at +0x10, the long at +0xc)"""
     src = strip(e.e)
     signed = e.ty.signed
-    early = temp(F, 4) if e.ty.size <= 2 else None
+    early = temp(F, 4, 'long') if e.ty.size <= 2 else None
     a = prepare(F, [src])
     put_addr(F, a[0], 'XBC')
-    off = early if early is not None else temp(F, 4)
+    off = early if early is not None else temp(F, 4, 'long')
     F.emit('lda', 'XWA,%s' % slot_addr(F, off))
     F.emit('cal', '._fld_%s%s' % ('l' if signed else 'ul', sfx(src.ty)))
     return off
@@ -641,7 +700,7 @@ def call_val(F, e, hint):
     temporary if that is still free, else a fresh one (-x at +0x28, the result at +0x20; the other arm's result at
     +0x18)"""
     if any(has_call(fp_value_cast(a)) for a in e.args if is_fp(strip(a).ty)):
-        alloc(F, hint)                                   # _cos: _trig(x, fabs(x) + PAI5, 0): the result's slot first
+        alloc(F, hint, 'call')                           # _cos: _trig(x, fabs(x) + PAI5, 0): the result's slot first
         call_into(F, e, ('cell', hint)); return ('slot', hint.off)   # (+0x28), then the sum (+0x20), then fabs (+0x18)
     call_into(F, e, ('lazyres', hint), arg_hint=hint)
     return ('slot', F.last_call_off)
