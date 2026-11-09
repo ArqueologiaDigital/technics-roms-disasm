@@ -1414,6 +1414,9 @@ def gen_stmt(F, s, last):
             flush_pops(F); F.emit('ret'); return
         F.emit('j', F.loops[-1][0]); return
     if s.k == 'continue': F.emit('j', F.loops[-1][1]()); return
+    if s.k == 'expr' and s.e.k == 'bin' and s.e.op == ',':      # a, b as a statement: a then b (_strrchr's for)
+        from frontend import N
+        gen_stmt(F, N('expr', e=s.e.l), False); gen_stmt(F, N('expr', e=s.e.r), False); return
     if s.k == 'expr' and regvar_stmt(F, s.e): return
     if s.k == 'expr' and s.e.k == 'opassign':
         gen_opassign(F, s.e); return
