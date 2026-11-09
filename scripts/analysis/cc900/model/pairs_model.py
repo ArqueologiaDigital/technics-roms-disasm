@@ -82,6 +82,9 @@ def main():
             if not lines or not lines[0].endswith(':'):
                 res = 'model: ' + (lines[0][:40] if lines else 'no function')
                 tally['model cannot'] += 1; print('\t'.join([img, r[1], pub, src, '-', res])); continue
+            consts, _ = to_llvm.split_consts(lines)
+            PH = 0xfffff0                                  # FP constants: the linker placed them; take each address from
+            for k, lab in enumerate(consts): syms[lab] = PH - 8 * k   # the image's own operand, check the double there
             try: text = '\t.text\n' + '\n'.join(to_llvm.translate_function(pub, lines, syms)) + '\n'
             except KeyError as ex:
                 tally['unresolved symbol'] += 1; print('\t'.join([img, r[1], pub, src, '-', str(ex).strip("'")])); continue
@@ -91,6 +94,20 @@ def main():
             addr = int(r[1], 16)
             text = to_llvm.relax(text, lambda t: assemble(t, addr)[1])
             code, err = assemble(text, addr)
+            bad_const = None
+            if consts and code is not None:
+                import struct
+                for lab in consts:
+                    ph = syms[lab].to_bytes(3, 'little'); at = code.find(ph)
+                    rb = read(addr + at, 3) if at >= 0 else None
+                    real = int.from_bytes(rb, 'little') if rb else None
+                    wantb = struct.pack('<d' if consts[lab][0] == 'fdatad' else '<f', float(consts[lab][1]))
+                    if real is None or read(real, len(wantb)) != wantb: bad_const = lab; break
+                    text = text.replace('0x%x' % syms[lab], '0x%x' % real); syms[lab] = real
+                code, err = assemble(text, addr)
+            if bad_const:
+                tally['differs'] += 1; print('\t'.join([img, r[1], pub, src, '-', 'constant %s not in the image' % bad_const]))
+                continue
             if code is None:
                 tally['assembler'] += 1
                 print('\t'.join([img, r[1], pub, src, '-', 'llvm: ' + err.strip().splitlines()[0][:90]])); continue

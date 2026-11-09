@@ -136,6 +136,8 @@ def translate_line(t, syms, locals_):
         m = re.match(r'^(X\w+)\+(\w+)$', src)
         if m: return '\tlda %s, (%s+%s)' % (dst, m.group(1).lower(), m.group(2).lower())
         if src.startswith(('_', '.')): return '\tlda %s, %s' % (dst, absaddr(lookup(src, syms)))
+        if src in syms: return '\tlda %s, %s' % (dst, absaddr(syms[src]))      # an FP constant placed by the linker
+        if re.match(r'^X(WA|BC|DE|HL|IX|IY|IZ|SP)$', src): return '\tlda %s, (%s)' % (dst, src.lower())   # lda XWA,XSP
         if src in locals_: return '\tlda %s, (%s:24)' % (dst, src)
         if NUM.match(src): return '\tlda %s, %s' % (dst, absaddr(num(src)))
         return '\t; untranslated: ' + t.strip()
@@ -157,7 +159,24 @@ def translate_line(t, syms, locals_):
         return '\t%sw %s' % (base, ', '.join(args))
     return '\t%s %s' % (base, ', '.join(args)) if args else '\t' + base
 
+CONSTS = {}
+
+def split_consts(lines):
+    """the f_const block of FP constants (fpgen.py): {label: (directive, value text)} and the lines without it"""
+    consts = {}; out = []; inconst = False; lab = None
+    for l in lines:
+        if l.startswith('f_const'): inconst = True; continue
+        if l.startswith('f_code'): inconst = False; continue
+        if inconst:
+            if l.endswith(':'): lab = l[:-1]
+            elif l.startswith('\tfdata'): consts[lab] = tuple(l.strip().split('\t'))
+            continue
+        out.append(l)
+    return consts, out
+
 def translate_function(name, lines, syms):
+    consts, lines = split_consts(lines)
+    CONSTS.clear(); CONSTS.update(consts)
     locals_ = {l[:-1] for l in lines if l.endswith(':') and not l.startswith('\t')}
     out = []
     for l in lines:

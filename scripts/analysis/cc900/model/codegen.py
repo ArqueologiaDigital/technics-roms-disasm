@@ -19,6 +19,7 @@ Observed rules (v423, none):
 """
 
 import re
+import fpgen
 
 class Unsupported(Exception): pass
 
@@ -46,7 +47,8 @@ class Fn:
         s.save_reg = 'XIZ'                         # push IZ when only IZ holds a value (call.c k_seq, adecl.c d_keep)
         off = 4
         s.sret = None
-        if f.ret is not None and f.ret.kind == 'struct' and f.ret.size > 4 and not adecl:
+        if f.ret is not None and (f.ret.kind == 'struct' and f.ret.size > 4 or f.ret.kind == 'float' and f.ret.size == 8) \
+                and not adecl:
             from frontend import Decl, Type                  # abi.md: the hidden first argument (_ldiv)
             s.sret = Decl('__sret', Type('ptr', 4, 2, base=f.ret, spell='sret'), '', 'param'); s.sret.off = 4; off = 8
         s.retd = 0
@@ -197,6 +199,13 @@ def esize_of(b):
 def gen(F, e, fam, size, then_ret=False, store=False):
     """emit code leaving e's low `size` bytes in register family `fam`; returns the family actually used"""
     e0 = strip(e)
+    if e0.k == 'bin' and e0.op in CC_S and fpgen.is_fp(strip(e0.l).ty):
+        fpgen.compare(F, e0, True); return move_to(F, FAM['HL'][size] if size in FAM['HL'] else 'HL', fam, size)
+    if e0.k == 'un' and e0.op == '!' and fpgen.is_fp(strip(e0.e).ty):
+        fpgen.truth(F, e0.e, False); return move_to(F, FAM['HL'][size], fam, size)      # d_not: ld BC,0x4
+    if e0.k == 'cast' and e0.kind == 'FloatingToIntegral':
+        off = fpgen.to_int(F, e0, size)                     # d_to_i: ... cal ._fld_ld / ld XHL,(XSP+0x4)
+        F.emit('ld', '%s,%s' % (FAM[fam][4], fpgen.slot_mem(F, off))); return fam
     if e0.k == 'cast' and e0.kind == 'IntegralCast' and strip(e0.e).ty.size > size and mem_operand(F, e0.e) and \
             family_of(mem_operand(F, e0.e)):
         # a narrowing cast of a register variable (unop_*, v423 Xr / O3XSXr): without -O it is moved at the narrow
@@ -760,6 +769,10 @@ def gen_cond_true(F, c, target):
     if c.k == 'bin' and c.op == '&&':                # _isalpha: (c>='a' && c<='z') || ... -> j lt,L1 / j le,L2 / L1:
         lf = F.newulabel(); gen_cond_false(F, c.l, lf); gen_cond_true(F, c.r, target)
         F.lines.append(lf + ':'); return
+    if c.k == 'bin' and c.op in CC_S and fpgen.is_fp(strip(c.l).ty):
+        fpgen.compare(F, c, True); F.emit('cp', 'HL,0x0'); jump(F, 'ne', target); return
+    if fpgen.is_fp(c.ty):
+        fpgen.truth(F, c, True); F.emit('cp', 'HL,0x0'); jump(F, 'ne', target); return
     if c.k == 'bin' and c.op in CC_S:
         cc = gen_compare(F, c)
         if cc in (True, False): raise Unsupported('constant condition')
@@ -780,6 +793,10 @@ def gen_cond_false(F, c, target):
     if c.k == 'bin' and c.op == '||':                # c_orbr: first true -> then label; last false -> target
         lt = F.newulabel(); gen_cond_true(F, c.l, lt); gen_cond_false(F, c.r, target)
         F.lines.append(lt + ':'); return None
+    if c.k == 'bin' and c.op in CC_S and fpgen.is_fp(strip(c.l).ty):   # d_blt_gg: ld DE,0x2 (>=) / cal ._fcmp_d /
+        fpgen.compare(F, c, False); F.emit('cp', 'HL,0x0'); jump(F, 'ne', target); return None   # cp HL,0x0 / j ne
+    if fpgen.is_fp(c.ty):                              # d_if: ld BC,0x4 (==) / cal ._fcmp_zd
+        fpgen.truth(F, c, False); F.emit('cp', 'HL,0x0'); jump(F, 'ne', target); return None
     if c.k in ('load', 'cast', 'call') and c.ty.kind in ('int', 'ptr'):   # c_if: if (a)
         from frontend import N
         return gen_cond_false(F, N('bin', op='!=', l=c, r=N('const', value=0, ty=c.ty), ty=c.ty), target)
@@ -1293,6 +1310,8 @@ def gen_stmt(F, s, last):
                         flush_pops(F)                      # h_p_only: cal _fp / inc 0x2,XSP / ld XIZ,XHL / cal _g0
                     F.emit('ld', 'XIZ,%s' % FAM[fam][4])
                 i += 1; continue
+            if c.k == 'decl' and c.init is not None and fpgen.is_fp(c.var.ty):
+                fpgen.eval_into(F, c.init, ('lv', N_var(c.var))); i += 1; continue
             if c.k == 'decl' and c.init is not None and c.var.kind == 'local' and not c.var.addr_taken:
                 rest = body[i + 1:]
                 u = uses_of(rest, c.var, [])
@@ -1334,6 +1353,7 @@ def gen_stmt(F, s, last):
                 if getattr(F, 'switch_after', None) is None: i += 2; continue
                 F.switch_after = None; i += 1; continue
             if F.opt and not F.adecl and c.k == 'expr' and c.e.k == 'opassign' and strip(c.e.l).k == 'var' and \
+                    not fpgen.is_fp(strip(c.e.l).ty) and \
                     not getattr(strip(c.e.l).decl, 'reg', None) and strip(c.e.l).decl.kind in ('param', 'local') and \
                     nxt is not None and nxt.k == 'return' and nxt.value is not None and strip(nxt.value).k == 'load' and \
                     strip(strip(nxt.value).e).k == 'var' and strip(strip(nxt.value).e).decl is strip(c.e.l).decl:
@@ -1373,6 +1393,16 @@ def gen_stmt(F, s, last):
     if s.k == 'return' and F.opt and getattr(F, 'shared_exit', None) and id(s) == F.shared_exit['last']:
         flush_pops(F)                                      # _ultoa: lda XSP,XSP+0xc before L50000
         F.lines.append(F.shared_exit['label'] + ':')
+    if s.k == 'return' and s.value is not None and fpgen.is_fp(F.f.ret):
+        fpgen.gen_return(F, s.value); flush_pops(F)                   # run 2026-11-09-9-micro-fp (fpgen.py)
+        if F.xiz_vars: F.emit('pop', F.save_reg)
+        epilogue(F); F.emit('ret'); return
+    if s.k == 'expr' and s.e.k in ('bin', 'opassign') and (s.e.k == 'opassign' or s.e.op == '=') and \
+            fpgen.is_fp(strip(s.e.l).ty):
+        fpgen.gen_assign(F, s.e); return
+    if s.k == 'expr' and s.e.k == 'bin' and s.e.op == '=' and strip(s.e.r).k == 'cast' and \
+            strip(s.e.r).kind == 'FloatingToIntegral' and strip(s.e.l).ty.size == 4 and fpgen.lvalue_direct(F, s.e):
+        return                                             # d_to_l_st: lda XBC,_gd / lda XWA,_gl / cal ._fld_ld
     if s.k == 'return' and s.value is not None and F.sret is not None:
         v = strip(s.value)
         if v.k == 'load' and strip(v.e).k == 'var' and hasattr(strip(v.e).decl, 'slot'):
@@ -1579,7 +1609,7 @@ def store_through_temp(n):
 def has_helper_call(e):
     if not hasattr(e, 'k'): return False
     if e.k == 'bin' and e.op in '*/%' and e.ty.size == 4 and fold(e.r).k != 'const': return True
-    if e.k == 'call': return True
+    if e.k == 'call' or fpgen.is_fp_op(e): return True
     return any(has_helper_call(v) for v in e.__dict__.values() if hasattr(v, 'k'))
 
 def plan_registers(F):
@@ -1647,7 +1677,8 @@ def eval_sequence(node, out):
     if node.k == 'load' and strip(node.e).k == 'var': out.append(('use', strip(node.e).decl))
     if node.k == 'incdec' and strip(node.e).k == 'var': out.append(('use', strip(node.e).decl))   # c_while: n--
     if node.k == 'opassign' and strip(node.l).k == 'var': out.append(('use', strip(node.l).decl))
-    if node.k == 'call' or (node.k == 'bin' and node.op in '*/%' and node.ty.size == 4 and fold(node.r).k != 'const'):
+    if node.k == 'call' or (node.k == 'bin' and node.op in '*/%' and node.ty.size == 4 and fold(node.r).k != 'const') \
+            or fpgen.is_fp_op(node):
         out.append(('call',))
     return out
 
@@ -2329,7 +2360,7 @@ def counted_loop(F, s):
                     and strip(ix.e).k == 'var' and strip(ix.e).decl is iv.decl:
                 if b.decl not in [a for a, _ in arrays]: arrays.append((b.decl, n.ty.size))
             else: bad.append(n)
-        if n.k == 'call': bad.append(n)
+        if n.k == 'call' or fpgen.is_fp_op(n): bad.append(n)
     walk(s.body, v)
     if bad or len(arrays) != 1: return None
     if kconst is not None:
@@ -2351,13 +2382,13 @@ def live_across_call(body):
         return out
     def calls(n):
         out = []
-        walk(n, lambda m, d: out.append(m) if m.k == 'call' else None)
+        walk(n, lambda m, d: out.append(m) if m.k == 'call' or fpgen.is_fp_op(m) else None)
         return out
     def expr_bad(e, seen):
         cs = calls(e)
         if seen and reads(e): return True
         if not cs: return False
-        inside = [set(id(x) for a in c.args for x in reads(a)) for c in cs]
+        inside = [set(id(x) for a in getattr(c, 'args', [c]) for x in reads(a)) for c in cs]
         return any(not all(id(x) in s for s in inside) for x in reads(e))   # k_expr: r1(a) + r1(a + 1) keeps a
     def ends_return(st):
         if st is None: return False
@@ -2398,7 +2429,7 @@ def plan_leaf(F):
     f = F.f
     has_call = []; loopvars = {}; modified = set(); deep = set(); temps_bc = []
     def visit(n, depth):
-        if n.k == 'call': has_call.append(n)
+        if n.k == 'call' or fpgen.is_fp_op(n): has_call.append(n)
         if n.k == 'load' and strip(n.e).k == 'var':
             d = strip(n.e).decl
             if depth: loopvars[d] = loopvars.get(d, 0) + 1
@@ -2569,6 +2600,10 @@ def live_regs(F, except_decl=None):
         if r and d is not except_decl and d not in F.dead: out.add(r)
     return out
 
+def N_var(d):
+    from frontend import N
+    return N('var', decl=d, ty=d.ty)
+
 def call_before_use(rest, d):
     """a call in the statements before the one that reads d: cc900 then keeps d (ch_c_xyz: x in a slot)"""
     for c in rest:
@@ -2607,8 +2642,9 @@ def plan_frame(F):
     """stack slots for locals without a register (rc_loop2-4: dec N,XSP / push XIZ / slots from (XSP+4) in
     declaration order); parameters move up by the frame size"""
     f = F.f; pos = 0; slots = []
+    if getattr(F, 'fp_temps', None) is not None: return fp_plan_frame(F)
     calls = []
-    walk(f.body, lambda n, d: calls.append(n) if n.k == 'call' or (n.k == 'bin' and n.op in '*/%' and n.ty.size == 4
+    walk(f.body, lambda n, d: calls.append(n) if n.k == 'call' or fpgen.is_fp_op(n) or (n.k == 'bin' and n.op in '*/%' and n.ty.size == 4
          and fold(n.r).k != 'const') else None)
     if not calls: F.frame = 0; return                   # leaf functions: every local is in a register or folded
     # D: a struct local written member by member gets two address temporaries below it (_ldiv: (XSP+4), (XSP+8))
@@ -2659,6 +2695,31 @@ def plan_frame(F):
     for t in list(F.array_temps.values()) + [x['decl'] for x in F.cast_temps.values()] + \
              [x for v in getattr(F, 'struct_temps', {}).values() for x in (v['tA'], v['tB'])]:
         TEMP_SLOTS.add('(XSP+%s)' % hx(t.slot + F.push))
+
+def fp_plan_frame(F):
+    """a function that does floating point (fp.c): FP locals from the top of the frame down in declaration order
+    (d_loc2: t at +0x8, u at +0x0), then the temporaries below them, in a region twice their size (d_from_i: a
+    4-byte temporary at (XSP+0x4) of 8; d_four: two doubles at +0x18 and +0x10 of 0x20); a float result has its
+    own 4 bytes (f_add_gg: dec 0x4,XSP / ... / ld XHL,(XSP))"""
+    f = F.f
+    locs = [d for d in f.decls if d.kind == 'local' and fpgen.is_fp(d.ty) and (d.uses or True)]
+    ints = [d for d in f.decls if d.kind == 'local' and not getattr(d, 'reg', None) and not fpgen.is_fp(d.ty)
+            and not foldable(f, d) and d.ty.kind not in ('array', 'struct') and d.uses]
+    if ints: raise Unsupported('integer slot local beside floating point')
+    L = sum((d.ty.size + 1) // 2 * 2 for d in locs)
+    fret = 4 if fpgen.is_fp(f.ret) and f.ret.size == 4 else 0
+    T = 2 * F.fp_temps
+    size = L + T + fret
+    size = (size + 1) // 2 * 2
+    top = size - fret
+    for d in locs:
+        top -= (d.ty.size + 1) // 2 * 2; d.slot = top
+    F.ftemp_top = top; F.ftemp_used = 0; F.fret_slot = size - fret if fret else None
+    F.frame = size
+    if not size: return
+    for p in f.params:
+        if hasattr(p, 'off'): p.off += size
+    F.lines.insert(1, '\tdec\t%s,XSP' % hx(size) if size <= 8 else '\tlda\tXSP,XSP-%s' % hx(size))
 
 def epilogue(F):
     for r in reversed(F.pushes): F.emit('pop', r)
@@ -2831,7 +2892,7 @@ def tail_calls_opt(F, lines):
     res = []
     for i, l in enumerate(out):
         if l == '\tret' and res and res[-1].startswith('\tcal\t') and res[-1].split('\t')[2].startswith('.') \
-                and not res[-1].endswith(';stack'):
+                and not res[-1].split('\t')[2].startswith('._f') and not res[-1].endswith(';stack'):   # fp.c: cal ._fadd_d / ret
             res[-1] = '\tj\t' + res[-1].split('\t')[2]; continue
         if l == '\tret' and res and res[-1].startswith('\tj\t') and ',' not in res[-1]: continue
         res.append(l)
@@ -2876,10 +2937,20 @@ PERSONALITIES = {
     # kn5000 rule set in no rule the model has: their own ledger lines show where they still differ.
     'v4.23': 'v4.23', 'kn5000': 'kn5000', 'ide2003': 'kn5000', 'v1.10': 'kn5000'}
 
-def compile_function(f, opt, adecl, personality='v4.23'):
+def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None):
+    if fp_temps is None and fpgen.uses_fp(f):
+        import copy, sys                                    # pass 1 measures the floating-point temporaries
+        sys.setrecursionlimit(max(sys.getrecursionlimit(), 200000))
+        save = fpgen.FCONST[0]
+        try:
+            F1 = compile_function(copy.deepcopy(f), opt, adecl, personality, fp_temps=0)
+            need = F1.ftemp_used_total
+        finally: fpgen.FCONST[0] = save
+        return compile_function(f, opt, adecl, personality, fp_temps=need).lines
     if personality not in PERSONALITIES: raise ValueError('unknown personality %s' % personality)
     personality = PERSONALITIES[personality]
     F = Fn(f, adecl)
+    F.fp_temps = fp_temps
     F.personality = personality
     F.opt = opt != 'none'; F.dead = set()
     compute_last_uses(F)
@@ -2907,7 +2978,10 @@ def compile_function(f, opt, adecl, personality='v4.23'):
             and not F.lines[-2].split('\t')[2].startswith(('C9H_', '._f')) and not F.lines[-2].endswith(';stack'):
         F.lines[-2:] = ['\tj\t' + F.lines[-2].split('\t')[2]]
     F.lines = [l[:-len('\t;stack')] if l.endswith('\t;stack') else l for l in F.lines]
+    F.lines[1:1] = fpgen.const_block(F)                  # fp.c: d_add_pk: f_const ... S50000: fdatad ... f_code
     # a label that only a jump to `ret` uses: the oracle keeps it; nothing to do here yet
+    if fp_temps is not None:
+        F.ftemp_used_total = getattr(F, 'ftemp_max', 0); return F
     return F.lines
 
 def data_value(e):

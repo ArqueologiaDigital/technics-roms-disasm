@@ -62,15 +62,18 @@ assembles and links it with llvm-mc / ld.lld at the pair's address, and compares
 | personality | byte-identical pairs | which                                                                                                                                                                                                                          |
 |-------------|----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `v4.23`     | 131 (22 differ)      | `_ltoa`, `_strcat`, `_strncpy`, `_strncat`, `_strcpy`, `_strlen`, `_memset`, `_memcmp`, `_memchr`, `_memcpy`, `__ctype` x9 each, `_strncmp` x10, `_strchr` x5, `_strnset` x5, `__FloatErrorHandle` x3, sub CPU float tables x9 |
-| `kn5000`    | 144 (9 differ)       | the same 131, plus `_ultoa` (main CPU v10, v9, v7, v6, v5, HD-AE5000 x4) and `_ldiv` (HD-AE5000 x4)                                                                                                                            |
+| `kn5000`    | 147 (12 differ)      | the same 131, plus `_ultoa` (main CPU v10, v9, v7, v6, v5, HD-AE5000 x4) and `_ldiv` (HD-AE5000 x4); `_modf` (sub CPU x3)                                                                                                      |
 
 `_ltoa` came later the same day (`-O` keeps the parameters of a function with calls in scratch registers when no
 value is read after a call; and asm900 writes a 32-bit `cp XDE,0x0` with the long immediate, `ea cf 00 00 00 00`, not
 the 3-bit form `ea d8` that MAME also decodes); the V4.23 personality then matches it too, so it is not one of the
-personality's additions.  The 13 the kn5000 personality adds are the two routines in which the firmware's code differs from V4.23's output:
+personality's additions.  `_modf` (sub CPU v142, v141, v140) is the first floating-point routine rebuilt this way
+(`model/fpgen.py`, run `2026-11-09-9-micro-fp`); its constant `0.0` sits in `f_const`, placed by the linker, so
+`pairs_model.py` takes its address from the image's own `lda XBC,...` operand and checks that the image holds that
+double there.  The 13 the kn5000 personality adds are the two routines in which the firmware's code differs from V4.23's output:
 the reload rule (`rules.md`) accounts for them, and with it they come out byte-identical with no Toshiba program in
-the chain.  The 9 that differ are `_memccpy`, where the model does not yet reproduce V4.23 either (register choice
-around its two calls).  The other 116 (`model cannot` in the TSV) are routines the model does not compile yet (`goto` in `_strcspn`, the
+the chain.  The 12 that differ are `_memccpy` x9, where the model does not yet reproduce V4.23 either (register choice
+around its two calls), and `_fabs` x3 (the `-O` hoisting of the two branches' common first instructions).  The other 110 (`model cannot` in the TSV) are routines the model does not compile yet (`goto` in `_strcspn`, the
 floating-point formatter `__doprnt`, the math routines), or that are data the model does not emit.
 
 Inline assembly (`__ASM("...")`, `_memset`, `_memcmp`, `_memchr`) is passed through as thc1 does: the front end turns
@@ -81,7 +84,7 @@ forms of `cpi` / `cpir` / `cpd` / `cpdr`.  The block transfers with explicit ope
 bare `ldi` is the `(XWA+)` form (`80 10`) where `ldib (XIX+),(XIY+)` is `85 10` (`_memcpy`).
 
 Output: `scripts/analysis/cc900/results/pairs_model_kn5000.tsv`; command in `scripts/analysis/cc900/model/README.md`.
-(Earlier runs the same day: 36, 51, 63, 90, 108, 117, 126, 135; the rules added in between are in those commits.  The library sources end in
+(Earlier runs the same day: 36, 51, 63, 90, 108, 117, 126, 135, 144; the rules added in between are in those commits.  The library sources end in
 a DOS end-of-file byte, which the front end now cuts.)
 
 ### Per image (phase 7: a line per image)
@@ -95,9 +98,9 @@ a DOS end-of-file byte, which the front end now cuts.)
 | maincpu v7  | 28    | 15        | 1      | 12               |
 | maincpu v6  | 25    | 15        | 1      | 9                |
 | maincpu v5  | 25    | 15        | 1      | 9                |
-| subcpu v142 | 16    | 4         | 0      | 12               |
-| subcpu v141 | 16    | 4         | 0      | 12               |
-| subcpu v140 | 16    | 4         | 0      | 12               |
+| subcpu v142 | 16    | 5         | 1      | 10               |
+| subcpu v141 | 16    | 5         | 1      | 10               |
+| subcpu v140 | 16    | 5         | 1      | 10               |
 | table data  | 4     | 1         | 0      | 3                |
 | hdae v2.06i | 23    | 14        | 1      | 8                |
 | hdae v2.01i | 22    | 14        | 1      | 7                |

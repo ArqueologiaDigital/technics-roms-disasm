@@ -196,6 +196,23 @@ add HL,WA / add HL,WA`; `ch_p4` the same for a parameter).  (cdecl `-O` homing a
 `ch_c_gp2`, was fixed the same day: under cdecl `-O` a stack-born parameter loses 1, not 0, in the home score;
 ra_chains O3XS 21 -> 26, ra_homes O3XS 6 -> 7.)
 
+## Floating point (runs `2026-11-09-9-micro-fp` and `-10-micro-fptemps`, 2026-11-09)
+
+`model/fpgen.py` (its docstring lists the rules): every operation is a runtime call on addresses; the result
+address is set first when it has to be loaded, copied or computed and last when it is a name or a stack offset;
+constants go to `f_const` at the start of the function; relation codes `<=` 0, `<` 1, `>=` 2, `>` 3, `==` 4, `!=` 5,
+a branch taking the negated relation's; integer conversions go through a 4-byte temporary; FP locals sit at the top
+of the frame and the temporaries below them, in a region twice their size; `-O3 -XS` copies an address that is
+already in a register.  fp.c: 99 / 108 (none), 98 / 108 (`-O3 -XS`).  Under `-Xr` thc1 refuses double results
+(THC1-Error-373), so only cdecl matters.
+
+Open: run 10 (`corpus/micro/fp_temps.c`, oracle `9ce5a95`) shows when the hidden result pointer is kept in XIZ (the
+returned expression's top operation has exactly one computed operand: `ld XIZ,(XSP+..)` right before the return's
+code, the result written through `ld XWA,XIZ`), when the result is built in a temporary and copied (two computed
+operands, or a call result as an operand), and how the temporaries are handed down (the top operation's temporary
+is reserved first and the right operand built in it; an operation writes over its left operand's temporary).  Not
+modelled yet.
+
 ## Priorities after 2026-11-09
 
 1. **The cost-based allocator.**  The IZ / QIZ / slot choice across calls (run `2026-11-09-6-micro-rahomes`) and the
