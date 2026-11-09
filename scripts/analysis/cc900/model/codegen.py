@@ -569,6 +569,14 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         from frontend import N                           # arr_index.c ai_i_p_carry: x % 10 * 256 -> sla 0x8,WA
         e = N('bin', op='<<', l=e.l, r=N('const', value=fold(e.r).value.bit_length() - 1, ty=e.r.ty), ty=e.ty)
         op = '<<'
+    rk_ = fold(e.r)
+    if F.opt and POW2_UNSIGNED and op in ('%', '/') and e.ty.kind == 'int' and not e.ty.signed and rk_.k == 'const' and \
+            rk_.value is not None and rk_.value >= 2 and rk_.value & (rk_.value - 1) == 0:
+        from frontend import N                           # __doform.c _doodigit: unsigned long val % 8 -> and XWA,0x7,
+        if op == '%':                                    # val / 8 -> srl 0x3,XDE (no helper call)
+            e = N('bin', op='&', l=e.l, r=N('const', value=rk_.value - 1, ty=e.r.ty), ty=e.ty); op = '&'
+        else:
+            e = N('bin', op='>>', l=e.l, r=N('const', value=rk_.value.bit_length() - 1, ty=e.r.ty), ty=e.ty); op = '>>'
     if op in '+-' and (strip(e.l).ty.is_ptr() or strip(e.r).ty.is_ptr()):
         return gen_ptr_arith(F, e, fam, size)
     l, r = narrow(e.l, size), narrow(e.r, size)
@@ -1304,6 +1312,14 @@ def copy_propagate(f):
                     if isinstance(val, list): val[i] = x.l
                     else: setattr(node, key, x.l)
     simplify(f.body)
+    def pow2_opassign(n, dep):                             # _doodigit: val /= 8 (unsigned long) -> srl 0x3,XDE
+        if POW2_UNSIGNED and n.k == 'opassign' and n.op in ('/', '%') and strip(n.l).ty is not None and \
+                strip(n.l).ty.kind == 'int' and not strip(n.l).ty.signed:
+            k = fold(n.r)
+            if k.k == 'const' and k.value is not None and k.value >= 2 and k.value & (k.value - 1) == 0:
+                if n.op == '/': n.op = '>>'; n.r = N('const', value=k.value.bit_length() - 1, ty=n.r.ty)
+                else: n.op = '&'; n.r = N('const', value=k.value - 1, ty=n.r.ty)
+    walk(f.body, pow2_opassign)
     assigns = {}; writes = set(); addr = set()
     def v(n, dep):
         if n.k == 'bin' and n.op == '=' and strip(n.l).k == 'var': assigns.setdefault(strip(n.l).decl, []).append(n)
@@ -3064,6 +3080,7 @@ FP_AGGR = True
 MUL_K_XWA = True
 IFCHAIN_JOIN = True
 BINLOC_XR = True
+POW2_UNSIGNED = True                               # -O: unsigned % / by 2^k are and / srl (_doodigit)
 ARG_LOCAL_WA = True                                # -O: a local read only as an argument of the returned call: XWA
 MEMBER_RUNS = True                                 # cdecl -O: p->f stores load p once (_fassign, _ungetc)
 GLOBAL_FORWARD = True                              # -O: a global just stored is not reloaded (_rand)
