@@ -905,9 +905,17 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
             if F.opt and F.adecl and op == '*' and size == 2 and fam == 'HL' and work == 'WA' and lh is not None and \
                     lh.reg in ('IZ', 'QIZ') and 'HL' not in live_regs(F):
                 work = 'HL'                                 # ra_homes.c rh_ll: return a * b with a, b in IZ / QIZ ->
-            gen(F, l, work, size)                           # ld HL,IZ / muls XHL,QIZ
-        if rs is None:                                  # ra_noloop: muls XWA,BC
-            gen(F, r, 'BC', size); rs = FAM['BC'][size]
+            f1 = gen(F, l, work, size)                      # ld HL,IZ / muls XHL,QIZ
+            if f1 != work and f1 in FAM and f1 in ('WA', 'BC', 'DE', 'HL'):
+                work = f1                                   # (where gen left it: ra_noloop's a + b in DE, before
+        if rs is None:                                  # ra_noloop: muls XWA,BC   (a - b took WA: wrong code)
+            ro = 'BC' if work != 'BC' else 'DE'
+            occ = [d for d in list(F.f.params) + list(F.f.decls) if getattr(d, 'reg', None) == ro and d not in F.dead]
+            for d in occ:                                   # the variable in ro must die within r
+                lds = [x for x in loads_in(r) if regvar_of(strip(x.e)) is d]
+                if not lds or not any(dies_here(F, x) for x in lds): raise Unsupported('multiply operands')
+            if reads_reg(r, work): raise Unsupported('multiply operands')
+            gen(F, r, ro, size); rs = FAM[ro][size]
         wide = FAM[work][4] if size == 2 else FAM[work][2]
         if op == '*':
             F.emit('muls' if signed else 'mul', '%s,%s' % (wide, rs))
