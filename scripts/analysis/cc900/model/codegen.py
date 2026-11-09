@@ -3086,6 +3086,7 @@ FP_AGGR = True
 MUL_K_XWA = True
 IFCHAIN_JOIN = True
 BINLOC_XR = True
+ONCE_READ_MEM = True                               # cdecl -O: a parameter read once per iteration stays in memory
 POW2_UNSIGNED = True                               # -O: unsigned % / by 2^k are and / srl (_doodigit)
 ARG_LOCAL_WA = True                                # -O: a local read only as an argument of the returned call: XWA
 MEMBER_RUNS = True                                 # cdecl -O: p->f stores load p once (_fassign, _ungetc)
@@ -5514,6 +5515,13 @@ def uses_table(n, tab):
     if table_test(n) and table_test(n)[0] is tab: return True
     return bool(found)
 
+def narrowed_to_char(f, d):
+    """d is read through a conversion to a char somewhere in f (_strchr's (char)c)"""
+    hit = []
+    walk(f.body, lambda n, dep: hit.append(n) if n.k == 'cast' and n.kind == 'IntegralCast' and n.ty.size == 1 and
+         strip(n.e).k == 'load' and strip(strip(n.e).e).k == 'var' and strip(strip(n.e).e).decl is d else None)
+    return bool(hit)
+
 def plan_leaf(F):
     """the leaf-function allocator of regalloc_notes.md"""
     f = F.f
@@ -5644,7 +5652,11 @@ def plan_leaf(F):
     stored = set()                                         # _strset: c, only ever stored, stays on the stack
     walk(f.body, lambda n, dep: stored.add(store_through_temp(n)) if n.k == 'bin' and n.op == '=' and store_through_temp(n) else None)
     params = [d for d in f.params if d.ty.kind in okind and not d.addr_taken and (d in modified or d in deep or (F.opt and d in loopvars))
-              and not (F.opt and d in stored and loopvars.get(d, 0) <= 1)]
+              and not (F.opt and d in stored and loopvars.get(d, 0) <= 1)
+              and not (F.opt and not F.adecl and ONCE_READ_MEM and d not in modified and d not in deep and
+                       loopvars.get(d, 0) == 1 and d.uses == 1 and not narrowed_to_char(f, d))]   # _strpbrk: s = s2 once per
+                                                                    # outer iteration (not _strchr's (char)c, in WA) ->
+                                                                    # ld XBC,(XSP+0x8) each time
     walked = []                                            # without -O: a loop driven by a pointer test keeps the
     if (not F.opt or WALKED_OPT_WA) and not F.adecl and WALKED_PTRS:   # pointers it walks in registers (c_cnt: while (*s++)
         def unc(x):                                        # -> s in XWA; ra_ptrcpy: while (*s) *d++ = *s++ -> s XBC,
