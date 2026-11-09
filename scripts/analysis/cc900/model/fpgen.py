@@ -269,6 +269,7 @@ def emit_operands(F, dest, ops):
     """the result address and the operand addresses: those that are loaded, copied or computed first, in XWA, XBC,
     XDE order (d_add_gg: ld XWA,(XSP+0x4); _modf: ld XDE,XIZ / lda XBC,XSP+0x24 / lda XWA,XSP+0x14), then the
     named and stack ones in XBC, XDE, XWA order (d_add_st: lda XBC,_gd2 / lda XDE,_gd3 / lda XWA,_gd)"""
+    C().flush_pops(F)                                      # the pending call pops go before a helper's addresses
     items = [('XWA', None)] + list(zip(('XBC', 'XDE'), ops))
     kinds = {'XWA': dest_kind(F, dest)}
     for r, x in items[1:]: kinds[r] = addr_kind(F, x)
@@ -378,8 +379,9 @@ def call_into(F, e, dest, arg_hint=None):
     if arg_hint is None: n += push_args()
     F.emit('lda', 'XWA,%s' % slot_addr(F, off)); F.emit('push', 'XWA'); F.push += 4; n += 4
     F.emit('cal', '_' + fn.decl.name)
-    F.emit('lda' if n > 8 else 'inc', 'XSP,XSP+%s' % cg.hx(n) if n > 8 else '%s,XSP' % cg.hx(n)); F.push -= n
+    F.pending += n                                         # _tan: cos's pops wait for sin's (lda XSP,XSP+0x18)
     if dest[0] not in ('slot', 'cell') or (dest[0] == 'slot' and dest[1] != off):
+        cg.flush_pops(F)
         first = dest_first(F, dest); F.emit('lda', 'XBC,%s' % slot_addr(F, off))
         if not first: dest_last(F, dest)
         F.emit('cal', '._fld_dd')
@@ -392,7 +394,7 @@ def gen_return(F, v):
             if mode == 'copy':
                 t1 = Cell(8)
                 loc = eval_val(F, v, t1) if fp_value_cast(v).k != 'call' else call_val(F, fp_value_cast(v), t1)
-                F.emit('ld', 'XWA,XIZ'); put_addr(F, loc, 'XBC'); F.emit('cal', '._fld_dd'); return
+                C().flush_pops(F); F.emit('ld', 'XWA,XIZ'); put_addr(F, loc, 'XBC'); F.emit('cal', '._fld_dd'); return
             eval_into(F, v, ('xizh',)); return
         if mode == 'xiz':                                    # t_mla: ld XIZ,(XSP+0x18) ... ld XWA,XIZ / cal ._fadd_d
             F.emit('ld', 'XIZ,(XSP+%s)' % C().hx(F.sret.off + F.push)); eval_into(F, v, ('xiz',)); return
@@ -404,6 +406,7 @@ def gen_return(F, v):
                 alloc(F, t1)                                 # t_call_a: the sum's +0x18 above fd(a)'s +0x10; d_call_i
                                                              # (a conversion of fi()) takes it at its first write
             loc = eval_val(F, v, t1) if e0.k != 'call' else call_val(F, e0, t1)
+            C().flush_pops(F)
             F.emit('ld', 'XWA,(XSP+%s)' % C().hx(F.sret.off + F.push)); put_addr(F, loc, 'XBC'); F.emit('cal', '._fld_dd')
             return
         eval_into(F, v, ('sret',)); return
@@ -426,6 +429,7 @@ def compare(F, c, value):
     cg = C()
     op = c.op if value else NEG[c.op]
     l, r = fp_value_cast(c.l), fp_value_cast(c.r)
+    cg.flush_pops(F)
     if r.k == 'fconst' and r.value == 0.0 or (strip(r).k == 'cast' and strip(strip(r).e).k == 'const' and strip(strip(r).e).value == 0):
         a = prepare(F, [l]); put_addr(F, a[0], 'XWA')
         F.emit('ld', 'BC,%s' % cg.hx(REL[op])); F.emit('cal', '._fcmp_z%s' % sfx(l.ty)); return
@@ -613,7 +617,10 @@ def needs_sret_home(F):
     if not (is_fp(F.f.ret) and F.f.ret.size == 8): return False
     rets = []
     C().walk(F.f.body, lambda n, d: rets.append(n) if n.k == 'return' and n.value is not None else None)
-    return len(rets) >= 2 and any(root_mode(F, r.value) != 'direct' for r in rets)   # (_fabs: both direct, no home)
+    calls = []
+    C().walk(F.f.body, lambda n, d: calls.append(n) if n.k == 'call' else None)
+    return len(rets) >= 2 and (bool(calls) or any(root_mode(F, r.value) != 'direct' for r in rets))
+    # (_fabs: both direct and only helper calls, no home; _tan: both direct, but sin / cos before the second)
 
 def elem_member(v):
     """(global name, offset) of g[k].m with a constant k"""

@@ -147,6 +147,14 @@ def mem_operand(F, e):
             if d.kind == 'param' and hasattr(d, 'slot'): return '(XSP+%s)' % hx(d.slot + F.push)   # homed (d_keep)
             if d.kind == 'param': return '(XSP+%s)' % hx(d.off + F.push)
             if d.kind in ('global', 'func') and not d.ty.kind == 'array': return '(_%s)' % d.name
+        if v.k == 'index' and fold(v.idx).k == 'const':     # _tan: ((unsigned short *)&x)[3] -> (XSP+off+6)
+            b = strip(v.base)
+            while b.k == 'cast': b = strip(b.e)
+            if b.k == 'addr' and strip(b.e).k == 'var':
+                d = strip(b.e).decl; k = fold(v.idx).value * v.ty.size
+                if d.kind == 'param' and not getattr(d, 'reg', None) and hasattr(d, 'off'):
+                    return '(XSP+%s)' % hx(d.off + k + F.push)
+                if d.kind == 'local' and hasattr(d, 'slot'): return '(XSP+%s)' % hx(d.slot + k + F.push)
         g = global_offset(v)
         if g and g[0] == '__param__': return '(XSP+%s)' % hx(g[1].off + g[2] + F.push)   # s_pair: ld HL,(XSP+0x6)
         if g: return '(_%s + %s)' % g if g[1] != '0x0' else '(_%s)' % g[0]
@@ -715,6 +723,10 @@ def gen_compare(F, e):
     """emit the compare for relational/equality node e; return its condition code, or True/False if constant
     (cmp_*: cp acc,mem; cpw/cpb mem,k; long: ld XWA / cp XWA,k / or XWA,XWA for ==0 and !=0)"""
     l, r = strip(e.l), strip(e.r)
+    if fold(l).k == 'const' and fold(r).k != 'const':      # _tan: LMTPOW <= (p[3] & 0x7ff0) -> cp WA,0x41e0 / j ult
+        from frontend import N
+        e = N('bin', op={'<': '>', '>': '<', '<=': '>=', '>=': '<=', '==': '==', '!=': '!='}[e.op], l=e.r, r=e.l, ty=e.ty)
+        l, r = strip(e.l), strip(e.r)
     while l.k == 'cast' and l.kind == 'IntegralCast' and strip(l.e).ty.size <= r.ty.size and fold(r).k == 'const':
         l = strip(l.e)
     # operands promoted from the same narrower type compare at that type
@@ -2622,6 +2634,32 @@ def live_regs(F, except_decl=None):
         if r and d is not except_decl and d not in F.dead: out.add(r)
     return out
 
+def merge_address_inits(f):
+    """`T *p; ... p = (T *)&x;` with no use of p before: the assignment becomes p's initial value, so that a single
+    use folds (_tan: p = (unsigned short *)&x; ... p[3] -> ld WA,(XSP+0x3a))"""
+    def is_addr(e):
+        e = strip(e)
+        while e.k == 'cast': e = strip(e.e)
+        return e.k == 'addr' and strip(e.e).k == 'var' and strip(e.e).decl.kind in ('param', 'local')
+    def visit(n, d):
+        if n.k != 'block': return
+        body = n.body
+        for i, c in enumerate(body):
+            if c.k == 'block' and all(x.k == 'decl' for x in c.body):
+                for dc in c.body:
+                    if dc.init is not None or not dc.var.ty.is_ptr(): continue
+                    for j in range(i + 1, len(body)):
+                        st = body[j]
+                        if st.k == 'expr' and st.e.k == 'bin' and st.e.op == '=' and strip(st.e.l).k == 'var' and \
+                                strip(st.e.l).decl is dc.var and is_addr(st.e.r):
+                            dc.init = st.e.r; body[j] = N_block(); break
+                        if uses_decl(st, dc.var): break
+    walk(f.body, visit)
+
+def N_block():
+    from frontend import N
+    return N('block', body=[])
+
 def N_var(d):
     from frontend import N
     return N('var', decl=d, ty=d.ty)
@@ -2982,6 +3020,7 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None):
         return compile_function(f, opt, adecl, personality, fp_temps=need).lines
     if personality not in PERSONALITIES: raise ValueError('unknown personality %s' % personality)
     personality = PERSONALITIES[personality]
+    merge_address_inits(f)
     F = Fn(f, adecl)
     F.fp_temps = fp_temps
     F.personality = personality

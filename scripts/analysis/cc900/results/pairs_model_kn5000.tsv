@@ -136,10 +136,10 @@ subcpu v142	00f420	_g_mathtbl	__MATH.C	8	MATCH
 subcpu v142	00f428	__FloatErrorHandle	TRAP.C	4	MATCH
 subcpu v142	03d34d	_cos	_COS.C	87	MATCH
 subcpu v142	03d42e	_fabs	_FABS.C	29	MATCH
-subcpu v142	03d4c9	_tan	_TAN.C	-	model: ; unsupported: integer slot local beside
+subcpu v142	03d4c9	_tan	_TAN.C	106	MATCH
 subcpu v142	03d533	_pow	_POW.C	-	model: ; unsupported: integer slot local beside
 subcpu v142	03d84f	_sin	_SIN.C	123	MATCH
-subcpu v142	03d98a	__trig	__TRIG.C	-	model: ; unsupported: integer slot local beside
+subcpu v142	03d98a	__trig	__TRIG.C	-	model: ; unsupported: addr
 subcpu v142	03e1a5	_modf	_MODF.C	76	MATCH
 subcpu v142	03e1f1	_frexp	_FREXP.C	-	model: ; unsupported: integer slot local beside
 subcpu v142	03e64b	_exp	_EXP.C	230	MATCH
@@ -152,10 +152,10 @@ subcpu v141	00f420	_g_mathtbl	__MATH.C	8	MATCH
 subcpu v141	00f428	__FloatErrorHandle	TRAP.C	4	MATCH
 subcpu v141	03d335	_cos	_COS.C	87	MATCH
 subcpu v141	03d416	_fabs	_FABS.C	29	MATCH
-subcpu v141	03d4b1	_tan	_TAN.C	-	model: ; unsupported: integer slot local beside
+subcpu v141	03d4b1	_tan	_TAN.C	106	MATCH
 subcpu v141	03d51b	_pow	_POW.C	-	model: ; unsupported: integer slot local beside
 subcpu v141	03d837	_sin	_SIN.C	123	MATCH
-subcpu v141	03d972	__trig	__TRIG.C	-	model: ; unsupported: integer slot local beside
+subcpu v141	03d972	__trig	__TRIG.C	-	model: ; unsupported: addr
 subcpu v141	03e18d	_modf	_MODF.C	76	MATCH
 subcpu v141	03e1d9	_frexp	_FREXP.C	-	model: ; unsupported: integer slot local beside
 subcpu v141	03e633	_exp	_EXP.C	230	MATCH
@@ -168,10 +168,10 @@ subcpu v140	00f420	_g_mathtbl	__MATH.C	8	MATCH
 subcpu v140	00f428	__FloatErrorHandle	TRAP.C	4	MATCH
 subcpu v140	03d301	_cos	_COS.C	87	MATCH
 subcpu v140	03d3e2	_fabs	_FABS.C	29	MATCH
-subcpu v140	03d47d	_tan	_TAN.C	-	model: ; unsupported: integer slot local beside
+subcpu v140	03d47d	_tan	_TAN.C	106	MATCH
 subcpu v140	03d4e7	_pow	_POW.C	-	model: ; unsupported: integer slot local beside
 subcpu v140	03d803	_sin	_SIN.C	123	MATCH
-subcpu v140	03d93e	__trig	__TRIG.C	-	model: ; unsupported: integer slot local beside
+subcpu v140	03d93e	__trig	__TRIG.C	-	model: ; unsupported: addr
 subcpu v140	03e159	_modf	_MODF.C	76	MATCH
 subcpu v140	03e1a5	_frexp	_FREXP.C	-	model: ; unsupported: integer slot local beside
 subcpu v140	03e5ff	_exp	_EXP.C	230	MATCH
@@ -268,4 +268,4 @@ hdae v1.10i	296ecb	_strncpy	_STRNCPY.C	43	MATCH
 hdae v1.10i	296ef6	__facnv	__FACVT.C	-	model: ; unsupported: var
 hdae v1.10i	2e0cd6	___ctype	_CTYPE.C	-	model: no function
 hdae v1.10i	2e0cd6	__ctype	_CTYPE.C	256	MATCH
-# MATCH 159, model cannot 101, differs 9, outside image 4
+# MATCH 162, model cannot 98, differs 9, outside image 4

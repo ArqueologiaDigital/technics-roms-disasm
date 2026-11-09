@@ -231,7 +231,10 @@ negated relation and jumps on `eq` (`_exp`'s `break`); the destination equal to 
 (`lda XWA,w` / `ld XDE,XWA`); an element of a global struct array (`g_dbltbl[2].val`) ranks first among `+` / `*`
 operands (`_cos`); a node whose operands contain a call takes its temporary before evaluating them (`_cos`:
 `_trig`'s result at +0x28, the sum at +0x20, `fabs`'s at +0x18), otherwise at its first write (`_sin`: `-x` at +0x28,
-`_trig`'s result at +0x20).
+`_trig`'s result at +0x20).  `_tan`: a call's argument pops wait for the next call's (`cal _cos` ... `cal _sin` /
+`lda XSP,XSP+0x18`); a pointer assigned once from `&x` folds into its single use (`p[3]` -> `ld WA,(XSP+0x3a)`); a
+constant on the left of a compare is swapped (`LMTPOW <= ...` -> `cp WA,0x41e0` / `j ult`); the hidden pointer is
+homed in XIZ for two returns when the function makes a real call, even if both returns are direct copies.
 
 ## Priorities after 2026-11-09
 
