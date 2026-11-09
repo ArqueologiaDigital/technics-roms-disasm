@@ -1497,6 +1497,8 @@ KCONST_MULTI = True                                       # see gen_counted
 PTR_KLOOP = True                                          # see ptr_kloop
 STORE_FROM_WORK = True                                    # see store_global
 ASSIGN_CMP_INPLACE = True                                 # see gen_compare
+LOOP_COND_DEF = True                                      # see compute_last_uses
+CHAR_LOCAL_WA = True                                      # see plan_leaf
 
 def char_narrow(body):
     """cc900 does int + - & | ^ of a char and a constant that fits a byte, or of two chars, on the byte and
@@ -2730,6 +2732,13 @@ def gen_opassign(F, e):
         rv = mem_operand(F, r)
         if rv in ('A', 'C', 'E', 'WA', 'BC', 'DE', 'HL', 'XWA', 'XBC', 'XDE'):
             F.emit(SIMPLE_OPS[op], '%s,%s' % (t, rv)); return t        # .as_add_ptr: add (XWA),BC
+        rw = strip(r)
+        if F.opt and size == 2 and rw.k == 'cast' and rw.kind == 'IntegralCast' and strip(rw.e).k == 'load' and \
+                strip(rw.e).ty.size == 1 and regvar_of(strip(rw.e).e) is not None and dies_here(F, strip(rw.e)) and \
+                regvar_of(strip(rw.e).e).reg in ('WA', 'BC', 'DE', 'HL') and FAM[regvar_of(strip(rw.e).e).reg][2] not in t:
+            cv = regvar_of(strip(rw.e).e); W = FAM[cv.reg][2]   # ae_c_loop (-O3 -XS -Xr): n += c, c dying in C ->
+            F.emit('exts' if strip(rw.e).ty.signed else 'extz', W); F.dead.add(cv)   # exts BC / add HL,BC
+            F.emit(SIMPLE_OPS[op], '%s,%s' % (t, W)); return t
         T = getattr(F, 'tfam', 'WA')                        # ot_add_anb: ld E,(XHL+:1) / add (XWA+:1),E
         rc = fold(r)
         if F.opt and size == 4 and rc.k == 'const' and rc.value is not None and 0 <= rc.value < 0x10000:
@@ -4124,6 +4133,12 @@ def regvar_stmt(F, e):
         rc = fold(narrow(e.r, d.ty.size))
         if e.op in '+-' and rc.k == 'const' and 1 <= rc.value <= 8:
             F.emit('inc' if e.op == '+' else 'dec', '%s,%s' % (hx(rc.value), R)); return True
+        rw = strip(e.r); cx = strip(rw.e) if rw.k == 'cast' and rw.kind == 'IntegralCast' else None
+        cv = regvar_of(cx.e) if cx is not None and cx.k == 'load' and cx.ty.size == 1 else None
+        if F.opt and d.ty.size == 2 and cv is not None and cv is not d and cv.reg in ('WA', 'BC', 'DE', 'HL') and \
+                dies_here(F, cx):                      # assign_expr.c ae_c_loop (-O): n += c, c dying in C ->
+            W = FAM[cv.reg][2]; F.dead.add(cv)         # exts BC / add HL,BC
+            F.emit('exts' if cx.ty.signed else 'extz', W); F.emit(SIMPLE_OPS[e.op], '%s,%s' % (R, W)); return True
         m = operand(F, e.r, d.ty.size)
         if m is None:                                  # ra_param3: s += b * c -> WA, then add HL,WA
             T = getattr(F, 'u1_value', None) or getattr(F, 'tfam', None) or 'WA'   # U1's value temporary (ol_idx_use:
@@ -6272,6 +6287,9 @@ def plan_leaf(F):
             d.reg = 'WA'; free.remove('WA')
             if d.kind == 'param': F.param_copies.append(d)
             continue
+        if F.opt and CHAR_LOCAL_WA and d.kind == 'local' and d.ty.size == 1 and 'WA' in free and \
+                not any(getattr(p_, 'reg', None) == 'WA' for p_ in f.params):   # (adecl: a parameter's XWA)
+            d.reg = 'WA'; free.remove('WA'); continue      # assign_expr.c ae_c_loop (-O3 -XS): c in A
         if d.ty.size == 4: cand = [r for r in free if r in ('BC', 'DE', 'HL', 'IX', 'IY')]
         elif d.ty.size == 1: cand = [r for r in free if r in ('BC', 'DE', 'HL')]
         else: cand = free
@@ -6312,6 +6330,19 @@ def compute_last_uses(F):
                     walk(br, lambda m, dd: last.__setitem__(strip(m.e).decl, None if dd else id(m))
                          if m.k == 'load' and strip(m.e).k == 'var' else None)
                     F.branch_last.update(x for d, x in last.items() if x is not None and d not in F.in_loop)
+        if n.k == 'while' and LOOP_COND_DEF:              # assign_expr.c ae_c_loop: while ((c = *s++) != 0) n += c ->
+            defs = []                                      # c is set by the test before every read, so its last read
+            walk(n.cond, lambda m, dd: defs.append(strip(m.l).decl) if m.k == 'bin' and m.op == '=' and
+                 strip(m.l).k == 'var' and strip(m.l).decl.kind == 'local' else None)   # in the body is its death
+            for d in defs:                                 # (-O3 -XS -Xr: exts BC / add HL,BC)
+                inside = []; total = []
+                walk(n, lambda m, dd: inside.append(m) if m.k == 'load' and strip(m.e).k == 'var' and strip(m.e).decl is d else None)
+                walk(F.f.body, lambda m, dd: total.append(m) if m.k == 'load' and strip(m.e).k == 'var' and strip(m.e).decl is d else None)
+                inb = []
+                walk(n.body, lambda m, dd: inb.append(m) if m.k == 'load' and strip(m.e).k == 'var' and strip(m.e).decl is d else None)
+                incond = []
+                walk(n.cond, lambda m, dd: incond.append(m) if m.k == 'load' and strip(m.e).k == 'var' and strip(m.e).decl is d else None)
+                if len(inside) == len(total) and inb and not incond: F.branch_last.add(id(inb[-1]))
         if n.k == 'cond' and not depth and TERN_ARM_LAST:  # chnarrow.c cn_tern (adecl): k ? c - 32 : c -> c dies in
             last = {}                                      # each arm: sub A,0x20 / ld L,A ... ld L,A
             walk(n.a, lambda m, dd: last.__setitem__(strip(m.e).decl, None if dd else id(m))
