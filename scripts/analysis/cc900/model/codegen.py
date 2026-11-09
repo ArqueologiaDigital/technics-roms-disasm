@@ -1914,8 +1914,10 @@ def gen_stmt(F, s, last):
         before_trivial_ret = getattr(F, 'trivial_ret_next', False)   # c_ifelse: r = a; else r = b; return r -> j L2
         gen_cond_false(F, s.cond, lelse)
         gen_stmt(F, s.then, last)
-        if last and not before_trivial_ret and not F.xiz_vars and not F.pushes and not F.lines[-1].startswith(('\tret', '\tj\t')):
-            flush_pops(F); F.emit('ret')               # c_ifchain: the exit is duplicated, not jumped to
+        if last and not before_trivial_ret and not F.xiz_vars and not F.pushes and not F.lines[-1].startswith(('\tret', '\tj\t')) \
+                and not (F.opt and IFCHAIN_JOIN and not F.adecl):
+            flush_pops(F); F.emit('ret')               # c_ifchain: the exit is duplicated, not jumped to (cdecl -O
+                                                       # jumps to the join and the tails merge: pushw 0xa / j L2)
         elif not F.lines[-1].startswith(('\tret', '\tj\t')):
             flush_pops(F); F.emit('j', lend)
         F.push -= F.pending; F.pending = 0
@@ -2143,6 +2145,7 @@ def eval_sequence(node, out):
 R3_SETS = ('none', 'Xr', 'O3XSXr', 'O3XS')
 FP_AGGR = True
 MUL_K_XWA = True
+IFCHAIN_JOIN = True
 STORE_XHL_NONE = True
 DEREF_XIZ = True
 
@@ -4100,7 +4103,7 @@ def cross_jump(F, lines):
     def is_label(l): return l.endswith(':') and not l.startswith('\t')
     def uncond(l): return l.startswith(('\tret', '\tj\t', '\tretd')) and ',' not in l
     lines = drop_jump_to_next(lines)
-    made = set(); made_new = set()
+    made = set(); made_new = set(); F.cj_labels = made_new
     while True:
         done = False
         for li, lab in enumerate(lines):
@@ -4316,7 +4319,8 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong
     if F.opt and getattr(F, 'l2', None): F.lines = thread_jumps(F.lines, getattr(F, 'user_labels', set()))
     if F.opt: F.lines = tail_calls_opt(F, cross_jump(F, F.lines))
     if F.opt and not getattr(F, 'l2', None) and THREAD_ALL:      # after the tails merge (_strstr: return s1 twice)
-        F.lines = thread_jumps(F.lines, getattr(F, 'user_labels', set()), full=False, joins=getattr(F, 'if_joins', set()))
+        F.lines = thread_jumps(F.lines, getattr(F, 'user_labels', set()), full=False,
+                               joins=getattr(F, 'if_joins', set()) | getattr(F, 'cj_labels', set()))
     else: F.lines = tail_calls(F.lines, getattr(F, 'switch_table', False))
     if not F.opt and getattr(F, 'tfam', None):           # ot_cmp_anb under -Xr: j eq,L3 ... L3: ret -> ret eq
         import re as _rx
