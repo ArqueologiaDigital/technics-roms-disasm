@@ -238,15 +238,25 @@ homed in XIZ for two returns when the function makes a real call, even if both r
 
 ## Priorities after 2026-11-09
 
-1. **The cost-based allocator.**  The IZ / QIZ / slot choice across calls (run `2026-11-09-6-micro-rahomes`) and the
-   `-Xr` leaf loops' temporary family (run `2026-11-09-5-micro-optparams`, `regalloc_notes.md`) block the register
-   corpus, `saves.c`, `_itoa` / `_ltoa` / `_atoi` / `_atol` and most of `opt_params` under `-Xr`.  The data is in
-   those two runs; the next step is a hypothesis-testing harness over them rather than more single rules.
-2. **Floating point.**  The library was built `-DFLOAT`; doubles travel through adecl helpers that take pointers to
-   the operands (`_fabs`: `lda XWA,XSP+0x8 / ld BC,0x1 / cal ._fcmp_zd`, `._fld_dd` to copy into the hidden result,
-   `._fneg_d`).  About 50 firmware pairs wait on it, most of the sub CPU's (`model/pairs_summary.py`).
-3. **cdecl `-O3 -XS` switch to lookup table** (0 of 25 there; not used under `-Xr`, so after 1 and 2).
-4. **Phase 3b**: the LLVM implementation, once the model's rules stop moving as fast.
+Done since the list below was first written (2026-11-09, later):
+- the `-Xr` leaf loop's temporary family: rule R6 (`-O3 -XS -Xr`) and R1 (`-Xr`), fitted in research-scratch
+  `sessions/2026-11-09_cc900-leaf-temps` and implemented in `model/leafalloc.py` (`regalloc_notes.md`, end):
+  opt_temps.c 38 / 38 (O3XSXr) and 33 / 38 (Xr), opt_params.c 22 / 24 (O3XSXr);
+- floating point (`model/fpgen.py`): fp.c 108 / 108 and fp_temps.c 33 / 33 at none and `-O3 -XS`; the sub CPU's
+  `_modf`, `_fabs`, `_sin`, `_cos`, `_tan`, `_exp` byte-identical (18 pairs);
+- `-O`'s in-place work on a dying register for shifts, `*`, `/` and indexes: micro O3XSXr 612 -> 632 of 674.
+
+What is left, in order:
+1. **The IZ / QIZ / slot choice across calls** (runs `2026-11-09-6-micro-rahomes`, `-7-micro-chains`,
+   `-8-micro-homes32`; a refit of research-scratch `sessions/2026-11-09_cc900-homes` with the new data is running).
+   It blocks `_memccpy` (9 pairs), ra_homes, ra_homes32 and the three-local cases of ra_chains.
+2. **The `-O` counted-loop allocator** (ctrl.c's c_sum, c_find, c_copy: counters in IX, `(XHL+IX)` addressing;
+   opt_loops.c 15 / 33 under O3XS): blocks `_itoa`, `_atoi`, `_atol`, `_strrchr`, `_strstr` and the math routines
+   with integer loops (`_ldexp`, `_frexp`, `_fint`).
+3. **The rest of the library**: `__trig` (operand order of `+` / `*` with a member, `&xn` arguments, `++xn` on a
+   double), `__doprnt`, `_vsprintf`, `_strcspn` (`goto`).
+4. **cdecl `-O3 -XS` switch to lookup table** (0 of 25; not used under `-Xr`).
+5. **Phase 3b**: the LLVM implementation, once the model's rules stop moving as fast.
 
 ## How to resume
 
