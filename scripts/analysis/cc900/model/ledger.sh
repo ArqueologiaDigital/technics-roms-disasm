@@ -114,6 +114,11 @@ for c in none O3XS; do    # LN1 held-out check (predictions recorded before the 
 done
 row "run 2026-11-09-34-micro-lnr4, v423/Xr" "probes/lnr4.c" "$O/2026-11-09-34-micro-lnr4/out/v423/Xr/probes" corpus/probes/lnr4.c --opt none --adecl
 row "run 2026-11-09-34-micro-lnr4, v423/O3XSXr" "probes/lnr4.c" "$O/2026-11-09-34-micro-lnr4/out/v423/O3XSXr/probes" corpus/probes/lnr4.c --opt O3XS --adecl
+for c in none O3XS; do    # does `register` move a home (corpus/probes/regkw.c)
+  row "run 2026-11-09-35-micro-regkw, v423/$c" "probes/regkw.c" "$O/2026-11-09-35-micro-regkw/out/v423/$c/probes" corpus/probes/regkw.c --opt $c
+done
+row "run 2026-11-09-35-micro-regkw, v423/Xr" "probes/regkw.c" "$O/2026-11-09-35-micro-regkw/out/v423/Xr/probes" corpus/probes/regkw.c --opt none --adecl
+row "run 2026-11-09-35-micro-regkw, v423/O3XSXr" "probes/regkw.c" "$O/2026-11-09-35-micro-regkw/out/v423/O3XSXr/probes" corpus/probes/regkw.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do

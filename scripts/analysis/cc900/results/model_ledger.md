@@ -91,6 +91,10 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-34-micro-lnr4, v423/O3XS                             | probes/lnr4.c        | 0 / 18 exact (0.0%)      |
 | run 2026-11-09-34-micro-lnr4, v423/Xr                               | probes/lnr4.c        | 2 / 18 exact (11.1%)     |
 | run 2026-11-09-34-micro-lnr4, v423/O3XSXr                           | probes/lnr4.c        | 1 / 18 exact (5.6%)      |
+| run 2026-11-09-35-micro-regkw, v423/none                            | probes/regkw.c       | 0 / 12 exact (0.0%)      |
+| run 2026-11-09-35-micro-regkw, v423/O3XS                            | probes/regkw.c       | 2 / 12 exact (16.7%)     |
+| run 2026-11-09-35-micro-regkw, v423/Xr                              | probes/regkw.c       | 3 / 12 exact (25.0%)     |
+| run 2026-11-09-35-micro-regkw, v423/O3XSXr                          | probes/regkw.c       | 0 / 12 exact (0.0%)      |
 | run 2026-11-09-9-micro-fp, v423/none                                | micro/fp.c           | 108 / 108 exact (100.0%) |
 | run 2026-11-09-9-micro-fp, v423/O3XS                                | micro/fp.c           | 108 / 108 exact (100.0%) |
 | run 2026-11-09-10-micro-fptemps, v423/none                          | micro/fp_temps.c     | 33 / 33 exact (100.0%)   |
