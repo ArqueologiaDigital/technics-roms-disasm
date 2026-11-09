@@ -2549,6 +2549,37 @@ def combine_indexed(F, t, D):
     F.lines[-1] = '\tlda\tXBC,%s' % sym; F.emit('lda', '%s,XBC+%s' % (D, m.group(2)))
     return '(%s)' % D
 
+def sized_pair_noopt(F, lv, r, heavy, size, op):
+    """no -O, g a sized global array: g[i + k] op= f(g[i]) (arr_index_sz.c ai_*_g_sh): the target's index in DE
+    and its base in XHL, the source as any element read.  none: ld WA,(i) / dec 0x1,WA / ld DE,WA / sla 0x2,DE /
+    lda XHL,_gla / ld WA,(i) / sla 0x2,WA / lda XBC,_gla / ld XWA,(XBC+WA) / sra 0x8,XWA / add (XHL+DE),XWA;
+    -Xr with i in WA: ld BC,WA / dec 0x1,BC / ld DE,BC / ...  True when written."""
+    g = strip(lv.base).decl; esz = lv.ty.size
+    if len(heavy) != 1 or not getattr(g.ty, 'count', 0) or esz == 1 or not SHARED_BASE: return False
+    src = strip(heavy[0].e)
+    if src.k != 'index' or strip(src.base).k != 'var' or strip(src.base).decl is not g: return False
+    bd, k = split_index(lv.idx); bs, k2 = split_index(src.idx)
+    bd, bs = unpromote(bd), unpromote(bs)
+    if k2 != 0 or k == 0 or bd.k != 'load' or bs.k != 'load' or strip(bd.e).k != 'var' or strip(bs.e).k != 'var' or \
+            strip(bd.e).decl is not strip(bs.e).decl or strip(bd.e).decl.ty.size != 2: return False
+    iv = strip(bd.e).decl; ir = getattr(iv, 'reg', None)
+    if ir is not None and ir != 'WA': return False
+    T = 'BC' if ir else 'WA'
+    keep = ir is None and esz == 2                       # none, 16-bit elements: i loaded once into BC and reused
+    if ir: F.emit('ld', 'BC,WA')                         # (ld BC,(i) / ld WA,BC / dec 0x1,WA / ... / ld WA,BC /
+    elif keep: F.emit('ld', 'BC,%s' % mem_operand(F, bd)); F.emit('ld', 'WA,BC')   # add WA,WA); a long element
+    else: F.emit('ld', 'WA,%s' % mem_operand(F, bd))     # reloads it (ai_l_g_sh: two ld WA,(i)) -- as observed
+    F.emit('inc' if k > 0 else 'dec', '%s,%s' % (hx(abs(k)), T)) if abs(k) <= 8 else F.emit('add', '%s,%s' % (T, hx(k & 0xffff)))
+    F.emit('ld', 'DE,%s' % T); scale16(F, 'DE', esz); F.emit('lda', 'XHL,_%s' % g.name)
+    if keep:
+        F.emit('ld', 'WA,BC'); scale16(F, 'WA', esz)
+        F.elem_ops = {id(src): '(XBC+WA)'}; F.lines.append('\tlda\tXBC,_%s' % g.name)
+        try: f2 = gen(F, r, 'WA', size)
+        finally: F.elem_ops = {}
+        F.emit(SIMPLE_OPS[op], '(XHL+DE),%s' % FAM[f2][size]); return True
+    f2 = gen(F, r, 'WA', size)
+    F.emit(SIMPLE_OPS[op], '(XHL+DE),%s' % FAM[f2][size]); return True
+
 def shared_base_opassign(F, e, lv, r, heavy, size, op):
     """-O: g[i + k] op= f(g[i]) with g a global array of unknown size (arr_index.c ai_*_g_sh): the index copied
     and adjusted in DE, the base loaded once and copied for the target, the source added to it.
@@ -2559,7 +2590,8 @@ def shared_base_opassign(F, e, lv, r, heavy, size, op):
     if len(heavy) != 1 or not SHARED_BASE: return False
     if strip(lv.base).k == 'load': return pointer_pair_opassign(F, e, lv, r, heavy, size, op)
     g = strip(lv.base).decl
-    if g.ty.kind != 'array' or getattr(g.ty, 'count', 0): return False
+    if g.ty.kind != 'array': return False
+    sized = bool(getattr(g.ty, 'count', 0))
     src = strip(heavy[0].e)
     if src.k != 'index' or strip(src.base).k != 'var' or strip(src.base).decl is not g: return False
     bd, k = split_index(lv.idx); bs, k2 = split_index(src.idx)
@@ -2578,7 +2610,12 @@ def shared_base_opassign(F, e, lv, r, heavy, size, op):
     B = 'XBC' if I == 'WA' else 'XWA'
     F.emit('ld', 'DE,%s' % I)
     F.emit('inc' if k > 0 else 'dec', '%s,DE' % hx(abs(k))) if abs(k) <= 8 else F.emit('add', 'DE,%s' % hx(k & 0xffff))
-    if esz == 1:
+    V = 'WA'
+    if sized and esz > 1:                              # arr_index_sz.c: 16-bit indexes and one base: ld DE,WA /
+        scale16(F, 'DE', esz); F.emit('lda', '%s,_%s' % (B, g.name))   # dec 0x1,DE / add DE,DE / lda XBC,_gia /
+        scale16(F, I, esz); t = '(%s+DE)' % B; so = '(%s+%s)' % (B, I)   # add WA,WA / ld WA,(XBC+WA) / ... /
+        V = 'BC' if B == 'XWA' else 'WA'                 # add (XBC+DE),WA (-O3 -XS, base XWA: the value in BC)
+    elif esz == 1:
         F.emit('lda', '%s,_%s' % (B, g.name)); t = '(%s+DE)' % B; so = '(%s+%s)' % (B, I)
     else:
         F.emit('exts', 'XDE'); scale32(F, 'XDE', esz)
@@ -2587,7 +2624,7 @@ def shared_base_opassign(F, e, lv, r, heavy, size, op):
         t = '(XHL)'; so = '(%s)' % B
     if ir is not None: F.dead.add(iv)
     F.elem_ops = {id(src): so}
-    try: f2 = gen(F, r, 'WA', size)
+    try: f2 = gen(F, r, V, size)
     finally: F.elem_ops = {}
     F.emit(SIMPLE_OPS[op], '%s,%s' % (t, FAM[f2][size]))
     return True
@@ -2666,6 +2703,7 @@ def gen_opassign(F, e):
             if F.opt:
                 if shared_base_opassign(F, e, lvg, r, heavy, size, op): return None
                 raise Unsupported('element op= element (-O shares the base)')   # (other shapes)
+            if sized_pair_noopt(F, lvg, r, heavy, size, op): return None
             F.force_base = 'XDE'                           # ai_i_g_sh, no -O: the target's address in XDE first
             F.idx_avoid_wa = True                          # (-Xr: ld BC,WA / dec 0x1,BC / ... / ld XDE,_gsa /
             try: t = lvalue(F, e.l, kind='add')            # add XDE,XBC), then the right side through XBC /
