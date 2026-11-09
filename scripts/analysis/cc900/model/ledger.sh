@@ -60,4 +60,7 @@ for p in v4.23 kn5000; do
 done
 row "run 2026-11-08-5-libsrc97-O3XS, ide2003/O3XS, --personality ide2003" "1997 LIB/SRC" \
   "$O/2026-11-08-5-libsrc97-O3XS/out/ide2003/O3XS" "$C"/libsrc/*.C -D__900__ -D__LARGE__ -DFLOAT -D__CDECL= '-D__ASM(x)=' -I"$C"/inc --personality ide2003
+for c in none O3XS Xr O3XSXr; do
+  row "run 2026-11-09-14-micro-libshapes, v423/$c" "micro/ra_libshapes.c" "$O/2026-11-09-14-micro-libshapes/out/v423/$c" corpus/micro/ra_libshapes.c
+done
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c

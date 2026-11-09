@@ -35,7 +35,9 @@ how cc900 compiles exactly that (notes/cc900-compat-plan-2026-11-08/PLAN.md, sec
   parameters in every order, int / char / long elements, to find the -O counter, bound, base and offset registers;
 - fp_stmts: FP temporaries over several statements, branches and loops (where _log's slots come from);
 - ra_homes32: a 32-bit local (pointer, long) against a 16-bit parameter for XIZ / IZ across calls (_memccpy gives
-  IZ to n and a slot to pos).
+  IZ to n and a slot to pos);
+- ra_libshapes: the shapes between _calloc (a pointer from a call wins XIZ over two 16-bit parameters), _memccpy (a
+  16-bit parameter wins IZ over the pointer) and _strlen (a lone pointer parameter read twice takes XIZ) at -O3 -XS.
 The output is deterministic, ours, and C89.
 """
 import os, sys
@@ -432,6 +434,51 @@ def ra_home32_files():
         'pos = (unsigned char *)vp(s2, c, n); cp2(s1, s2, n); return (void *)pos; }']
     return {'ra_homes32.c': out + fs}
 
+def ra_libshape_files():
+    """which of a call-result pointer, a pointer parameter and 16-bit parameters gets XIZ / IZ (cdecl -O3 -XS first)"""
+    out = ['/* Library-shaped homes: _calloc, _memccpy, _strlen and the steps between them */',
+           'extern void *al(unsigned int); extern void *ms(void *, int, unsigned int); extern void g0(void);',
+           'extern void g2(unsigned int); extern char *ch(const char *, int, unsigned int);',
+           'extern void *vp(const void *, int, unsigned int); extern void *cp2(void *, const void *, unsigned int);']
+    fs = [
+        # _calloc and its reductions
+        'void *ls_cl(unsigned int n, unsigned int s) { void *p; if (!n || !s) return 0; p = al(n * s); '
+        'if (p) ms(p, 0, n * s); return p; }',
+        'void *ls_cl_noguard(unsigned int n, unsigned int s) { void *p; p = al(n * s); if (p) ms(p, 0, n * s); return p; }',
+        'void *ls_cl1(unsigned int n) { void *p; if (!n) return 0; p = al(n); if (p) ms(p, 0, n); return p; }',
+        'void *ls_cl1_noguard(unsigned int n) { void *p; p = al(n); if (p) ms(p, 0, n); return p; }',
+        'void *ls_cl1_always(unsigned int n) { void *p; p = al(n); ms(p, 0, n); return p; }',
+        'void *ls_cl1_notest(unsigned int n) { void *p; p = al(n); g2(n); return p; }',
+        'void *ls_cl1_ptest(unsigned int n) { void *p; p = al(n); if (p) g2(n); return p; }',
+        'void *ls_cl1_pneg(unsigned int n) { void *p; p = al(n); if (p == 0) g2(n); return p; }',
+        'void *ls_cl1_parg(unsigned int n) { void *p; p = al(n); if (p) ms(p, 0, 4); return p; }',
+        'void *ls_cl_mul1(unsigned int n, unsigned int s) { void *p; p = al(n * s); if (p) ms(p, 0, n); return p; }',
+        # _memccpy and its reductions
+        'void *ls_mc(void *s1, const void *s2, int c, unsigned int n) { unsigned char *pos; '
+        'pos = (unsigned char *)vp(s2, c, n); if (pos == 0) { cp2(s1, s2, n); } else { unsigned int nn; '
+        'nn = pos - (unsigned char *)s2 + 1; cp2(s1, s2, nn); } return (void *)pos; }',
+        'void *ls_mc_nos1(const void *s2, int c, unsigned int n) { unsigned char *pos; '
+        'pos = (unsigned char *)vp(s2, c, n); if (pos == 0) { cp2(0, s2, n); } else { '
+        'cp2(0, s2, pos - (unsigned char *)s2 + 1); } return (void *)pos; }',
+        'void *ls_mc_non(void *s1, const void *s2, int c) { unsigned char *pos; '
+        'pos = (unsigned char *)vp(s2, c, 8); if (pos == 0) { cp2(s1, s2, 8); } else { '
+        'cp2(s1, s2, pos - (unsigned char *)s2 + 1); } return (void *)pos; }',
+        'void *ls_mc_test(const void *s2, unsigned int n) { unsigned char *pos; '
+        'pos = (unsigned char *)vp(s2, 0, n); if (pos == 0) cp2(0, s2, n); return (void *)pos; }',
+        'void *ls_mc_n1(unsigned int n) { unsigned char *pos; pos = (unsigned char *)vp(0, 0, n); '
+        'if (pos == 0) g2(n); return (void *)pos; }',
+        'void *ls_mc_n1p(unsigned int n) { unsigned char *pos; pos = (unsigned char *)vp(0, 0, n); '
+        'if (pos) g2(n); return (void *)pos; }',
+        # _strlen and its neighbours
+        'unsigned int ls_sl(const char *s) { char *ss; ss = ch(s, 0, 0xffff); if (ss == 0) return 0xffff; '
+        'return (unsigned int)(ss - (char *)s); }',
+        'unsigned int ls_sl_n(const char *s, unsigned int n) { char *ss; ss = ch(s, 0, n); if (ss == 0) return n; '
+        'return (unsigned int)(ss - (char *)s); }',
+        'unsigned int ls_sl_g(const char *s) { g0(); return (unsigned int)(*s); }',
+        'unsigned int ls_sl_2(const char *s) { g2(*s); return (unsigned int)(*s); }',
+        'char *ls_sl_ret(const char *s) { char *ss; ss = ch(s, 0, 4); if (ss == 0) return (char *)s; return ss; }']
+    return {'ra_libshapes.c': out + fs}
+
 def fp_files():
     """floating point: helper calls through operand addresses, temporaries, conversions (abi.md: helpers)"""
     out = ['/* Floating point: helpers, temporaries, conversions */',
@@ -640,6 +687,7 @@ def main():
     files.update(ra_home_files())
     files.update(ra_chain_files())
     files.update(ra_home32_files())
+    files.update(ra_libshape_files())
     files.update(fp_files())
     files.update(fp_temp_files())
     files.update(opt_temp_files())
