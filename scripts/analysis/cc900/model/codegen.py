@@ -1265,7 +1265,8 @@ def gen_stmt(F, s, last):
         if v.k == 'load' and strip(v.e).k == 'var' and strip(v.e).decl.name.lstrip('_') in PSEUDO and \
                 strip(v.e).decl.name.startswith('__'):
             flush_pops(F); epilogue(F); F.emit('ret'); return    # return (void *)__XHL: the value is already there
-    if s.k == 'return' and s.value is not None and F.opt and F.f.ret.size == 2 and char_arith(s.value) and \
+    if s.k == 'return' and s.value is not None and F.f.ret.size == 2 and char_arith(s.value) and \
+            (F.opt or strip(strip(s.value).l).k == 'cast' and strip(strip(strip(s.value).l).e).k == 'call') and \
             not (F.xiz_vars or F.pushes or getattr(F, 'frame', 0)):
         fam = gen(F, narrow(s.value, 1), 'HL', 1)          # op_two: return *a - *b -> ld L,(XDE) / sub L,(XBC) / exts HL
         if fam != 'HL': F.emit('ld', 'L,%s' % FAM[fam][1])
@@ -1403,7 +1404,8 @@ def char_arith(x):
         y = strip(y)
         if y.k == 'cast' and y.kind == 'IntegralCast' and strip(y.e).ty.size == 1: return True
         return y.k == 'bin' and char_arith(y)
-    return ch(x.l) and ch(x.r)
+    def small(y): return fold(y).k == 'const' and fold(y).value is not None and -128 <= fold(y).value <= 127
+    return (ch(x.l) and ch(x.r)) or (ch(x.l) and small(x.r) and x.op in ('+', '-'))   # call.c k_rc: rc() + 1
 
 def N_load(d):
     from frontend import N
