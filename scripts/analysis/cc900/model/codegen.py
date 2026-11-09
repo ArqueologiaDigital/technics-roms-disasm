@@ -2156,13 +2156,15 @@ def value_table(F, s, cases, vals, default, lo, hi):
             F.vt_default = c; i += 2 if i + 1 < len(items) and items[i + 1].k == 'break' else 1; continue
         if c.k != 'case': return None
         body = c.body
-        if body is None or body.k != 'expr' or strip(body.e).k != 'call': return None
-        call = strip(body.e); f = strip(call.fn)
+        isret = body is not None and body.k == 'return' and body.value is not None and strip(body.value).k == 'call'
+        if body is None or not (isret or (body.k == 'expr' and strip(body.e).k == 'call')): return None
+        call = strip(body.value if isret else body.e); f = strip(call.fn)
         if f.k != 'var' or len(call.args) != 1 or fold(call.args[0]).k != 'const': return None
         k = fold(call.args[0]).value
         if not -128 <= k <= 127: return None
-        if fn is None: fn = f
-        elif f.decl is not fn.decl: return None
+        if fn is None: fn = f; F.vt_ret = isret
+        elif f.decl is not fn.decl or F.vt_ret != isret: return None
+        if isret: byval[data_value(c.value)] = k; i += 1; continue   # sw_ret: case k: return g1(k + 1);
         if i + 1 >= len(items) or items[i + 1].k != 'break': return None
         byval[data_value(c.value)] = k; i += 2
     return (fn, byval) if fn is not None else None
@@ -2206,6 +2208,16 @@ def gen_switch(F, s, last):
     m = mem_operand(F, e)
     sel = strip(e.e).decl if e.k == 'load' and strip(e.e).k == 'var' else None
     in_body = sel is not None and uses_decl(s.body, sel)
+    if F.opt and not F.adecl and nv == 1 and default is None and m is not None and m.startswith('(') and \
+            e.ty.size == 2 and not ext and not in_body:   # sw_one under O3XS: cpw (XSP+0x4),0x7 / ret ne
+        exit_is_ret = last and not F.pushes and not F.xiz_vars and not getattr(F, 'frame', 0) and not F.pending
+        F.emit('cpw', '%s,%s' % (m, hx(vv[0] & 0xffff)))
+        if exit_is_ret: F.emit('ret', 'ne'); F.ret_refs = getattr(F, 'ret_refs', set()) | {end}
+        else: F.emit('j', 'ne,%s' % end)
+        F.case_labels[id(vals[0][2])] = None
+        F.loops.append((end, F.loops[-1][1] if F.loops else (lambda: end)))
+        for it in (flat(s.body) if s.body.k == 'block' else [s.body]): gen_stmt(F, it, False)
+        F.loops.pop(); F.lines.append(end + ':'); return
     if m is not None and family_of(m) and not ext:
         R = FAM[family_of(m)[1:] if family_of(m) != 'XIZ' else 'IZ'][size]
         keep = in_body or (sel is not None and sel.reg in ('IZ', 'QIZ', 'XIZ'))   # sw_loop: ld WA,IZ
@@ -2243,6 +2255,7 @@ def gen_switch(F, s, last):
         if size == 4: F.emit('add', '%s,%s' % (R, S)); F.emit('ld', 'A,(%s)' % R)
         else: F.emit('lda', 'XIX,%s' % S); F.emit('ld', 'A,(XIX+%s)' % R)
         F.emit('exts', 'WA'); F.emit('push', 'WA'); F.emit('cal', '_' + fn.decl.name); F.emit('inc', '0x2,XSP')
+        if getattr(F, 'vt_ret', False): F.emit('ret')    # sw_ret: ... cal _g1 / inc 0x2,XSP / ret / L: ld HL,0x0
         dc = getattr(F, 'vt_default', None); F.vt_default = None
         if dc is not None:                               # sw_jt6d: ... inc 0x2,XSP / ret / L1: j _f0
             F.emit('ret') if exit_is_ret else F.emit('j', end)

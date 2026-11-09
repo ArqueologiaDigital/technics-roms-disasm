@@ -262,8 +262,8 @@ What is left, in order:
 4. **cdecl `-O3 -XS` switch to lookup table**: done for `f(constant); break;` cases with no hole (a byte table,
    `align 1` / `db` per entry; `lda XIX,S` / `ld A,(XIX+WA)` / `exts WA` / `push WA` / `cal _f`; a long selector
    `add XWA,S` / `ld A,(XWA)`; a default after the call); an arm's pops are released before its `break` (they used
-   to add up across arms).  switch.c O3XS 0 -> 18 of 25; left: `return g(k)` cases (sw_ret), a single case
-   (`cpw (XSP+0x4),0x7`), fall-through, the event-handler shapes.
+   to add up across arms).  `return g(k)` cases too (sw_ret: then `ret`); a single case on a memory selector is
+   `cpw (XSP+0x4),0x7` / `ret ne`.  switch.c O3XS 0 -> 20 of 25; left: fall-through, the event-handler shapes.
 5. **Phase 3b**: the LLVM implementation, once the model's rules stop moving as fast.
 
 ## How to resume
