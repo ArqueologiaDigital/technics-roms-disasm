@@ -119,7 +119,12 @@ def load(path, defines=(), includes=(), adecl=False):
         fd, src = tempfile.mkstemp(suffix='.c'); os.write(fd, data[:data.index(b'\x1a')]); os.close(fd)
         includes = list(includes) + [os.path.dirname(os.path.abspath(path))]
     cmd += ['-D' + d for d in defines] + ['-I' + i for i in includes] + ['-x', 'c', src]
-    try: ast = json.loads(subprocess.run(cmd, capture_output=True, text=True, check=True).stdout)
+    try:
+        r = subprocess.run(cmd, capture_output=True, text=True)
+        if r.returncode and 'conflicting types' in r.stderr:   # _MEMCPY.C: memcpy(void *, void *, ...) against
+            r = subprocess.run(cmd[:-3] + ['-Dconst='] + cmd[-3:], capture_output=True, text=True)   # string.h's const
+        if r.returncode: raise subprocess.CalledProcessError(r.returncode, cmd, r.stdout, r.stderr)
+        ast = json.loads(r.stdout)
     finally:
         if src != path: os.unlink(src)
         os.unlink(hdr)
@@ -253,4 +258,8 @@ class Builder:
                 return N('const', value=size, ty=t)
             return N('const', value=None, sizeof=n.get('argType', {}).get('qualType'), ty=t)
         if k == 'ConstantExpr': return s.expr(I[0])
+        if k == 'InitListExpr':                          # _CTYPE.C; a partly initialised array lists its elements
+            items = I if I else n.get('array_filler', [])[1:]   # after the filler under array_filler
+            return N('initlist', items=[s.expr(c) for c in items], ty=t)
+        if k == 'ImplicitValueInitExpr': return N('const', value=0, ty=t)
         raise ValueError('unsupported expression %s' % k)

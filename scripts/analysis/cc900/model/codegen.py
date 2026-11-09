@@ -2454,6 +2454,15 @@ def emit_data(unit, out):
             lines.append('\tfdatad\t%se%s%03d' % (m, x[0], abs(int(x))))
         elif d.ty.kind == 'array' and e.k == 'string':
             lines.append('\tdb\t%s,0' % e.value)
+        elif d.ty.kind == 'array' and e.k == 'initlist' and d.ty.base.kind == 'int':
+            vals = [data_value(x) for x in e.items]        # _CTYPE.C: db 32,32,... eight a line, align 1 between
+            if None in vals: continue
+            vals += [0] * (d.ty.count - len(vals)) if d.ty.count else []
+            w = {1: 'db', 2: 'dw', 4: 'dl'}[d.ty.base.size]
+            rows = [vals[i:i + 8] for i in range(0, len(vals), 8)]
+            for i, row in enumerate(rows):
+                if i: lines.append('\talign\t1')
+                lines.append('\t%s\t%s' % (w, ','.join(str(v) for v in row)))
         elif d.ty.kind == 'ptr' and strip(e).k in ('decay', 'string', 'noop') and strip(getattr(strip(e), 'e', e)).k == 'string':
             sn[0] += 1; lab = 'S%d' % sn[0]
             lines.append('\tdl\t' + lab); tail = [lab + ':', '\tdb\t%s,0' % strip(getattr(strip(e), 'e', e)).value]

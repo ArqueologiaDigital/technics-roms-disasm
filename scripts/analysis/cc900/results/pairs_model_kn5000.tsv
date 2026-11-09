@@ -1,6 +1,6 @@
 image	address	public	source	length	result
 maincpu v10	eed778	___ctype	_CTYPE.C	-	model: no function
-maincpu v10	eed778	__ctype	_CTYPE.C	-	model: no function
+maincpu v10	eed778	__ctype	_CTYPE.C	256	MATCH
 maincpu v10	ff091d	_strstr	_STRSTR.C	-	model: ; unsupported: complex compare operand
 maincpu v10	ff097d	_strcspn	_STRCSPN.C	-	model: ; unsupported: statement goto
 maincpu v10	ff09a0	_atoi	_ATOI.C	-	model: ; unsupported: loop condition bin
@@ -10,7 +10,7 @@ maincpu v10	ff0c92	_strncat	_STRNCAT.C	-	model: ; unsupported: conditional retur
 maincpu v10	ff0cc1	_strncmp	_STRNCMP.C	50	MATCH
 maincpu v10	ff0cf3	_strncpy	_STRNCPY.C	43	MATCH
 maincpu v10	ff0d1e	_memcmp	_MEMCMP.C	123	MATCH
-maincpu v10	ff0d99	_memcpy	_MEMCPY.C	-	model: no function
+maincpu v10	ff0d99	_memcpy	_MEMCPY.C	40	MATCH
 maincpu v10	ff0dc1	_strcat	_STRCAT.C	34	MATCH
 maincpu v10	ff0de3	_itoa	_ITOA.C	-	model: ; unsupported: incdec target
 maincpu v10	ff0e6d	_strchr	_STRCHR.C	19	MATCH
@@ -28,7 +28,7 @@ maincpu v10	ff28d1	_memchr	_MEMCHR.C	24	MATCH
 maincpu v10	ff28e9	_strnset	_STRNSET.C	32	MATCH
 maincpu v10	ff2909	_strrchr	_STRRCHR.C	-	model: ; unsupported: statement expr
 maincpu v9	eed778	___ctype	_CTYPE.C	-	model: no function
-maincpu v9	eed778	__ctype	_CTYPE.C	-	model: no function
+maincpu v9	eed778	__ctype	_CTYPE.C	256	MATCH
 maincpu v9	ff090f	_strstr	_STRSTR.C	-	model: ; unsupported: complex compare operand
 maincpu v9	ff096f	_strcspn	_STRCSPN.C	-	model: ; unsupported: statement goto
 maincpu v9	ff0992	_atoi	_ATOI.C	-	model: ; unsupported: loop condition bin
@@ -37,7 +37,7 @@ maincpu v9	ff0c84	_strncat	_STRNCAT.C	-	model: ; unsupported: conditional return
 maincpu v9	ff0cb3	_strncmp	_STRNCMP.C	50	MATCH
 maincpu v9	ff0ce5	_strncpy	_STRNCPY.C	43	MATCH
 maincpu v9	ff0d10	_memcmp	_MEMCMP.C	123	MATCH
-maincpu v9	ff0d8b	_memcpy	_MEMCPY.C	-	model: no function
+maincpu v9	ff0d8b	_memcpy	_MEMCPY.C	40	MATCH
 maincpu v9	ff0db3	_strcat	_STRCAT.C	34	MATCH
 maincpu v9	ff0dd5	_itoa	_ITOA.C	-	model: ; unsupported: incdec target
 maincpu v9	ff0e5f	_strchr	_STRCHR.C	19	MATCH
@@ -53,7 +53,7 @@ maincpu v9	ff28c3	_memchr	_MEMCHR.C	24	MATCH
 maincpu v9	ff28db	_strnset	_STRNSET.C	32	MATCH
 maincpu v9	ff28fb	_strrchr	_STRRCHR.C	-	model: ; unsupported: statement expr
 maincpu v7	eed778	___ctype	_CTYPE.C	-	model: no function
-maincpu v7	eed778	__ctype	_CTYPE.C	-	model: no function
+maincpu v7	eed778	__ctype	_CTYPE.C	256	MATCH
 maincpu v7	ff0140	_strstr	_STRSTR.C	-	model: ; unsupported: complex compare operand
 maincpu v7	ff01a0	_strcspn	_STRCSPN.C	-	model: ; unsupported: statement goto
 maincpu v7	ff01c3	_atoi	_ATOI.C	-	model: ; unsupported: loop condition bin
@@ -63,7 +63,7 @@ maincpu v7	ff04b5	_strncat	_STRNCAT.C	-	model: ; unsupported: conditional return
 maincpu v7	ff04e4	_strncmp	_STRNCMP.C	50	MATCH
 maincpu v7	ff0516	_strncpy	_STRNCPY.C	43	MATCH
 maincpu v7	ff0541	_memcmp	_MEMCMP.C	123	MATCH
-maincpu v7	ff05bc	_memcpy	_MEMCPY.C	-	model: no function
+maincpu v7	ff05bc	_memcpy	_MEMCPY.C	40	MATCH
 maincpu v7	ff05e4	_strcat	_STRCAT.C	34	MATCH
 maincpu v7	ff0606	_itoa	_ITOA.C	-	model: ; unsupported: incdec target
 maincpu v7	ff0690	_strchr	_STRCHR.C	19	MATCH
@@ -81,7 +81,7 @@ maincpu v7	ff20f5	_memchr	_MEMCHR.C	24	MATCH
 maincpu v7	ff210d	_strnset	_STRNSET.C	32	MATCH
 maincpu v7	ff212d	_strrchr	_STRRCHR.C	-	model: ; unsupported: statement expr
 maincpu v6	eed67c	___ctype	_CTYPE.C	-	model: no function
-maincpu v6	eed67c	__ctype	_CTYPE.C	-	model: no function
+maincpu v6	eed67c	__ctype	_CTYPE.C	256	MATCH
 maincpu v6	ff0042	_strstr	_STRSTR.C	-	model: ; unsupported: complex compare operand
 maincpu v6	ff00a2	_strcspn	_STRCSPN.C	-	model: ; unsupported: statement goto
 maincpu v6	ff00c5	_atoi	_ATOI.C	-	model: ; unsupported: loop condition bin
@@ -90,7 +90,7 @@ maincpu v6	ff03b7	_strncat	_STRNCAT.C	-	model: ; unsupported: conditional return
 maincpu v6	ff03e6	_strncmp	_STRNCMP.C	50	MATCH
 maincpu v6	ff0418	_strncpy	_STRNCPY.C	43	MATCH
 maincpu v6	ff0443	_memcmp	_MEMCMP.C	123	MATCH
-maincpu v6	ff04be	_memcpy	_MEMCPY.C	-	model: no function
+maincpu v6	ff04be	_memcpy	_MEMCPY.C	40	MATCH
 maincpu v6	ff04e6	_strcat	_STRCAT.C	34	MATCH
 maincpu v6	ff0508	_itoa	_ITOA.C	-	model: ; unsupported: incdec target
 maincpu v6	ff0592	_strchr	_STRCHR.C	19	MATCH
@@ -106,7 +106,7 @@ maincpu v6	ff1ff7	_memchr	_MEMCHR.C	24	MATCH
 maincpu v6	ff200f	_strnset	_STRNSET.C	32	MATCH
 maincpu v6	ff202f	_strrchr	_STRRCHR.C	-	model: ; unsupported: statement expr
 maincpu v5	eed664	___ctype	_CTYPE.C	-	model: no function
-maincpu v5	eed664	__ctype	_CTYPE.C	-	model: no function
+maincpu v5	eed664	__ctype	_CTYPE.C	256	MATCH
 maincpu v5	fefbee	_strstr	_STRSTR.C	-	model: ; unsupported: complex compare operand
 maincpu v5	fefc4e	_strcspn	_STRCSPN.C	-	model: ; unsupported: statement goto
 maincpu v5	fefc71	_atoi	_ATOI.C	-	model: ; unsupported: loop condition bin
@@ -115,7 +115,7 @@ maincpu v5	feff63	_strncat	_STRNCAT.C	-	model: ; unsupported: conditional return
 maincpu v5	feff92	_strncmp	_STRNCMP.C	50	MATCH
 maincpu v5	feffc4	_strncpy	_STRNCPY.C	43	MATCH
 maincpu v5	feffef	_memcmp	_MEMCMP.C	123	MATCH
-maincpu v5	ff006a	_memcpy	_MEMCPY.C	-	model: no function
+maincpu v5	ff006a	_memcpy	_MEMCPY.C	40	MATCH
 maincpu v5	ff0092	_strcat	_STRCAT.C	34	MATCH
 maincpu v5	ff00b4	_itoa	_ITOA.C	-	model: ; unsupported: incdec target
 maincpu v5	ff013e	_strchr	_STRCHR.C	19	MATCH
@@ -192,7 +192,7 @@ hdae v2.06i	29ad44	_ultoa	_ULTOA.C	136	MATCH
 hdae v2.06i	29adcc	_memccpy	_MEMCCPY.C	78	72 diff first +1
 hdae v2.06i	29ae0c	_memchr	_MEMCHR.C	24	MATCH
 hdae v2.06i	29ae24	_memcmp	_MEMCMP.C	123	MATCH
-hdae v2.06i	29ae9f	_memcpy	_MEMCPY.C	-	model: no function
+hdae v2.06i	29ae9f	_memcpy	_MEMCPY.C	40	MATCH
 hdae v2.06i	29aec7	_memset	_MEMSET.C	68	MATCH
 hdae v2.06i	29af0b	_strcat	_STRCAT.C	34	MATCH
 hdae v2.06i	29af45	_strcpy	_STRCPY.C	-	model: ; unsupported: complex pointer
@@ -204,7 +204,7 @@ hdae v2.06i	29b01b	_strrev	_STRREV.C	-	model: ; unsupported: lvalue var
 hdae v2.06i	29b04e	_strupr	_STRUPR.C	-	model: ; unsupported: condition bin
 hdae v2.06i	29b07a	__facnv	__FACVT.C	-	model: no function
 hdae v2.06i	2f9362	___ctype	_CTYPE.C	-	model: no function
-hdae v2.06i	2f9362	__ctype	_CTYPE.C	-	model: no function
+hdae v2.06i	2f9362	__ctype	_CTYPE.C	256	MATCH
 hdae v2.01i	2993af	__doprnt	__DOFORM.C	-	model: no function
 hdae v2.01i	29a4a0	_sprintf	_SPRINTF.C	-	model: ; unsupported: statement expr
 hdae v2.01i	29a4c8	_vsprintf	_SPRINTF.C	-	model: ; unsupported: var
@@ -215,7 +215,7 @@ hdae v2.01i	29a60c	_ultoa	_ULTOA.C	136	MATCH
 hdae v2.01i	29a694	_memccpy	_MEMCCPY.C	78	72 diff first +1
 hdae v2.01i	29a6d4	_memchr	_MEMCHR.C	24	MATCH
 hdae v2.01i	29a6ec	_memcmp	_MEMCMP.C	123	MATCH
-hdae v2.01i	29a767	_memcpy	_MEMCPY.C	-	model: no function
+hdae v2.01i	29a767	_memcpy	_MEMCPY.C	40	MATCH
 hdae v2.01i	29a78f	_memset	_MEMSET.C	68	MATCH
 hdae v2.01i	29a7d3	_strcat	_STRCAT.C	34	MATCH
 hdae v2.01i	29a80d	_strcpy	_STRCPY.C	-	model: ; unsupported: complex pointer
@@ -226,7 +226,7 @@ hdae v2.01i	29a8b8	_strncpy	_STRNCPY.C	43	MATCH
 hdae v2.01i	29a8e3	_strrev	_STRREV.C	-	model: ; unsupported: lvalue var
 hdae v2.01i	29a916	_strupr	_STRUPR.C	-	model: ; unsupported: condition bin
 hdae v2.01i	2f884e	___ctype	_CTYPE.C	-	model: no function
-hdae v2.01i	2f884e	__ctype	_CTYPE.C	-	model: no function
+hdae v2.01i	2f884e	__ctype	_CTYPE.C	256	MATCH
 hdae v1.15i	295abe	__doprnt	__DOFORM.C	-	model: no function
 hdae v1.15i	296baf	_sprintf	_SPRINTF.C	-	model: ; unsupported: statement expr
 hdae v1.15i	296bd7	_vsprintf	_SPRINTF.C	-	model: ; unsupported: var
@@ -237,7 +237,7 @@ hdae v1.15i	296d1b	_ultoa	_ULTOA.C	136	MATCH
 hdae v1.15i	296da3	_memccpy	_MEMCCPY.C	78	72 diff first +1
 hdae v1.15i	296de3	_memchr	_MEMCHR.C	24	MATCH
 hdae v1.15i	296dfb	_memcmp	_MEMCMP.C	123	MATCH
-hdae v1.15i	296e76	_memcpy	_MEMCPY.C	-	model: no function
+hdae v1.15i	296e76	_memcpy	_MEMCPY.C	40	MATCH
 hdae v1.15i	296e9e	_memset	_MEMSET.C	68	MATCH
 hdae v1.15i	296ee2	_strcat	_STRCAT.C	34	MATCH
 hdae v1.15i	296f1c	_strcpy	_STRCPY.C	-	model: ; unsupported: complex pointer
@@ -246,7 +246,7 @@ hdae v1.15i	296f66	_strncat	_STRNCAT.C	-	model: ; unsupported: conditional retur
 hdae v1.15i	296f95	_strncmp	_STRNCMP.C	50	MATCH
 hdae v1.15i	296fc7	_strncpy	_STRNCPY.C	43	MATCH
 hdae v1.15i	2e0e66	___ctype	_CTYPE.C	-	model: no function
-hdae v1.15i	2e0e66	__ctype	_CTYPE.C	-	model: no function
+hdae v1.15i	2e0e66	__ctype	_CTYPE.C	256	MATCH
 hdae v1.10i	2959c2	__doprnt	__DOFORM.C	-	model: no function
 hdae v1.10i	296ab3	_sprintf	_SPRINTF.C	-	model: ; unsupported: statement expr
 hdae v1.10i	296adb	_vsprintf	_SPRINTF.C	-	model: ; unsupported: var
@@ -257,7 +257,7 @@ hdae v1.10i	296c1f	_ultoa	_ULTOA.C	136	MATCH
 hdae v1.10i	296ca7	_memccpy	_MEMCCPY.C	78	72 diff first +1
 hdae v1.10i	296ce7	_memchr	_MEMCHR.C	24	MATCH
 hdae v1.10i	296cff	_memcmp	_MEMCMP.C	123	MATCH
-hdae v1.10i	296d7a	_memcpy	_MEMCPY.C	-	model: no function
+hdae v1.10i	296d7a	_memcpy	_MEMCPY.C	40	MATCH
 hdae v1.10i	296da2	_memset	_MEMSET.C	68	MATCH
 hdae v1.10i	296de6	_strcat	_STRCAT.C	34	MATCH
 hdae v1.10i	296e20	_strcpy	_STRCPY.C	-	model: ; unsupported: complex pointer
@@ -267,5 +267,5 @@ hdae v1.10i	296e99	_strncmp	_STRNCMP.C	50	MATCH
 hdae v1.10i	296ecb	_strncpy	_STRNCPY.C	43	MATCH
 hdae v1.10i	296ef6	__facnv	__FACVT.C	-	model: no function
 hdae v1.10i	2e0cd6	___ctype	_CTYPE.C	-	model: no function
-hdae v1.10i	2e0cd6	__ctype	_CTYPE.C	-	model: no function
-# model cannot 170, MATCH 90, differs 9, outside image 4
+hdae v1.10i	2e0cd6	__ctype	_CTYPE.C	256	MATCH
+# model cannot 152, MATCH 108, differs 9, outside image 4

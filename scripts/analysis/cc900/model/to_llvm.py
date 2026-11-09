@@ -115,8 +115,15 @@ def translate_line(t, syms, locals_):
             r = ['XWA', 'XBC', 'XDE', 'XHL', 'XIX', 'XIY', 'XIZ', 'XSP'].index(m.group(1))
             sub = {'cpi': 0x14, 'cpir': 0x15, 'cpd': 0x16, 'cpdr': 0x17}[op.rstrip('w')]
             return '\t.byte 0x%02x, 0x%02x\t; %s' % ((0x90 if op.endswith('w') else 0x80) + r, sub, t.strip())
-    if op in ('ldir', 'ldirw', 'ldi', 'ldiw', 'lddr', 'lddrw', 'ldd', 'lddw') and raw in ([], ['(XIX+)', '(XIY+)'], ['(XIX-)', '(XIY-)']):
-        return '\t' + op                                  # _ldiv: ldirw (XIX+),(XIY+) -> ldirw (95 11)
+    bop = {'ldib': 'ldi', 'ldirb': 'ldir', 'lddb': 'ldd', 'lddrb': 'lddr'}.get(op, op)
+    if bop in ('ldir', 'ldirw', 'ldi', 'ldiw', 'lddr', 'lddrw', 'ldd', 'lddw'):
+        # block transfers as their bytes: 0x80 (byte) / 0x90 (word) + 3 for (XDE+),(XHL+) or 5 for (XIX+),(XIY+), then
+        # 0x10 ldi, 0x11 ldir, 0x12 ldd, 0x13 lddr (_memcpy: ldib (XIX+),(XIY+) = 85 10; llvm-mc's bare ldi is 80 10)
+        r = 5 if raw[:1] in (['(XIX+)'], ['(XIX-)']) else 3 if raw[:1] in (['(XDE+)'], ['(XDE-)']) else 5 if not raw else None
+        if r is not None:
+            sub = {'ldi': 0x10, 'ldir': 0x11, 'ldd': 0x12, 'lddr': 0x13}[bop.rstrip('w') if bop not in ('ldd',) else 'ldd']
+            word = bop.endswith('w') and bop not in ('ldd',)
+            return '\t.byte 0x%02x, 0x%02x\t; %s' % ((0x90 if word else 0x80) + r, sub, t.strip())
     if op == 'scc': return '\tscc %s, %s' % (CC[raw[0]], raw[1].lower())
     if op in ('push', 'pop') and raw[0] in ('WA', 'BC', 'DE', 'HL', 'IX', 'IY', 'IZ'):
         return '\t%sw %s' % (op, raw[0].lower())                      # the 1-byte 16-bit forms
