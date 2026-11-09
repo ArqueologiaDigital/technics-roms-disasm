@@ -135,5 +135,4 @@ Dense cases: a table of 16-bit offsets in `f_const` (`dw L2-L50000`), read with 
 
 The density threshold of `switch`; bit fields; `size_t` and `ptrdiff_t`; `enum` size; function pointers inside
 structs; `alloca` (if supported); the "minimum" memory model (`-ms`?) and the CPU options, which matter for the
-Neo Geo Pocket by-product (TLCS-900/H); struct arguments of odd sizes; a `char` as the 2nd or 3rd adecl
-argument (C or E?); whether the firmware's adecl functions really were compiled with `-Xr` or with qualifiers.
+Neo Geo Pocket by-product (TLCS-900/H); struct arguments of odd sizes; a `char` as the 3rd adecl argument (E?; the 2nd is C, confirmed by `FmtNum_WriteSpacePad`, phase6-preview.md); whether the firmware's adecl functions really were compiled with `-Xr` or with qualifiers.
