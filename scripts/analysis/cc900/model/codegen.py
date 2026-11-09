@@ -1488,6 +1488,7 @@ TERN_ARM_LAST = True                                      # see compute_last_use
 TERN_NO_MERGE = True                                      # see cross_jump
 TERN_ARM_WA = True                                        # see gen's plain ?: path
 LONG_RMW_XIZ = True                                       # see gen_opassign
+KCONST_MULTI = True                                       # see gen_counted
 
 def char_narrow(body):
     """cc900 does int + - & | ^ of a char and a constant that fits a byte, or of two chars, on the byte and
@@ -4482,6 +4483,26 @@ def loop_cond(F, c, target, sense):
 
 def gen_counted(F, s, last, cl):
     """the -O counted loop (ol_i_acc1 .. ol_c_glob)"""
+    if 'kconst' in cl and KCONST_MULTI:
+        idx = []; cont = []
+        walk(s.body, lambda n, d: idx.append(n) if n.k == 'index' and strip(n.base).k == 'var' and
+             strip(n.base).decl is cl['arr'] else None)
+        walk(s.body, lambda n, d: cont.append(n) if n.k == 'continue' else None)
+        if len(idx) > 1 or cont:                           # arr_index.c ai_mul10 (-O): the element read three times
+            esz = cl['esz']                                # and a continue -> lda XWA,_gsa / ld XBC,XWA /
+            F.emit('lda', 'XWA,_%s' % cl['arr'].name); F.emit('ld', 'XBC,XWA')   # lda XDE,XWA+0x14 / L4: cpw (XBC),..
+            F.emit('lda', 'XDE,XWA+%s' % hx(cl['kconst'] * esz))                 # / ... / L6: inc 0x2,XBC /
+            body = F.newulabel(); contl = F.newulabel(); end = F.newulabel()     # cp XBC,XDE / j ult,L4
+            F.lines.append(body + ':')
+            F.cl_operand = '(XBC)'; F.cl_active = cl; F.cl_shared = False
+            F.elem_ops = {id(n): '(XBC)' for n in idx}
+            F.loops.append((end, lambda: contl))
+            try: gen_stmt(F, s.body, False)
+            finally:
+                F.loops.pop(); F.cl_active = None; F.cl_operand = None; F.elem_ops = {}
+            F.lines.append(contl + ':'); F.emit('inc', '%s,XBC' % hx(esz)); F.emit('cp', 'XBC,XDE')
+            F.emit('j', 'ult,%s' % body)
+            return
     if 'kconst' in cl:                                     # ol_i_const: walk a pointer to an end pointer
         F.emit('lda', 'XBC,_%s' % cl['arr'].name); F.emit('ld', 'XWA,XBC')
         F.emit('lda', 'XBC,XBC+%s' % hx(cl['kconst'] * cl['esz']))
