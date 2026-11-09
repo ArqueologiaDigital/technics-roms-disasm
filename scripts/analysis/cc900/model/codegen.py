@@ -1113,6 +1113,16 @@ def held_after(F, R, e):
             return True
     return False
 
+class LazyLabel:
+    """a loop's break label that exists only once something jumps to it (str() makes it)"""
+    def __init__(s, make): s.make = make
+    def __str__(s): return s.make()
+    def __add__(s, o): return str(s) + o
+    def __radd__(s, o): return o + str(s)
+    def __mod__(s, o): return str(s) % o
+    def __eq__(s, o): return False
+    def __hash__(s): return id(s)
+
 def free_reg(F, avoid=()):
     live = live_regs(F)
     for r in ('BC', 'DE', 'HL', 'WA'):
@@ -1431,7 +1441,11 @@ def gen_compare(F, e):
     if getattr(F, 'u1_i', None) is not None and lm is not None and lm.startswith('(X') and l.k == 'load' and \
             strip(l.e).k == 'index':                       # cdecl oc_find: the chain is built once (by mem_operand)
         f0 = 'WA'; F.emit('ld', '%s,%s' % (FAM['WA'][size], lm))   # -> ld WA,(XWA) / cp WA,(XSP+0xa)
-    else: f0 = gen(F, l, 'WA', size)
+    else:
+        if IDX_GUARD and any(getattr(d, 'reg', None) == 'WA' and d not in F.dead and uses_decl(r, d) and
+                             not uses_decl(l, d) for d in list(F.f.params) + list(F.f.decls)):
+            raise Unsupported('compare operand over a variable in WA')   # (c1 != c2 with c2 in A: ld A,C / cp A,A)
+        f0 = gen(F, l, 'WA', size)
     W = FAM[f0][size]                                      # (the value's own register: ae_i_ptr cp BC,0x0)
     if rc.k == 'const' and rc.value == 0 and size == 4 and op in ('==', '!='):
         F.emit('or', '%s,%s' % (W, W)); return cc
@@ -4948,13 +4962,18 @@ def gen_loop(F, s, last):
             F.lines.append(body + ':'); loop_cond(F, s.cond, body, True); return
         test = F.newulabel(); body = F.newulabel()
         F.emit('j', test); F.lines.append(body + ':')
-        cont = [None]
+        cont = [None]; brk = [None]
         def getc2():
             if cont[0] is None: cont[0] = F.newulabel()
             return cont[0]
-        F.loops.append((None, getc2)); gen_stmt(F, s.body, False); flush_pops(F); F.loops.pop()
+        def getb():                                        # the break label, made on first use (_strnicmp: a break
+                                                           # jumped to None: wrong code)
+            if brk[0] is None: brk[0] = F.newulabel()
+            return brk[0]
+        F.loops.append((LazyLabel(getb), getc2)); gen_stmt(F, s.body, False); flush_pops(F); F.loops.pop()
         F.lines.append(test + ':')
         loop_cond(F, s.cond, body, True)
+        if brk[0] is not None: F.lines.append(brk[0] + ':')
         return
     exitl = F.newulabel(); body = F.newulabel()
     cont = [None]
@@ -6455,7 +6474,10 @@ def plan_leaf(F):
             if d.kind == 'param': F.param_copies.append(d)
             continue
         if F.opt and CHAR_LOCAL_WA and d.kind == 'local' and d.ty.size == 1 and 'WA' in free and \
-                not any(getattr(p_, 'reg', None) == 'WA' for p_ in f.params):   # (adecl: a parameter's XWA)
+                not any(getattr(p_, 'reg', None) == 'WA' for p_ in f.params) and \
+                sum(1 for x in order if x.kind == 'local' and x.ty.size == 1) == 1:   # (one char local only: the
+                                                                     # 1997 library's _strnicmp compares c1 through A
+                                                                     # while c2 sat there: wrong code)
             d.reg = 'WA'; free.remove('WA'); continue      # assign_expr.c ae_c_loop (-O3 -XS): c in A
         if d.ty.size == 4: cand = [r for r in free if r in ('BC', 'DE', 'HL', 'IX', 'IY')]
         elif d.ty.size == 1: cand = [r for r in free if r in ('BC', 'DE', 'HL')]
