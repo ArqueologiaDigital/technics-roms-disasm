@@ -3333,7 +3333,9 @@ def gen_stmt(F, s, last):
             lab = F.newulabel()
             F.if_joins = getattr(F, 'if_joins', set()) | {lab}
             folded = False
-            k = gen_cond_false(F, s.cond, 'RET' if last else lab)
+            bare = not F.xiz_vars and not F.pushes and not getattr(F, 'frame', 0)   # ra_libshapes.c ls_sl_ret: a
+            k = gen_cond_false(F, s.cond, 'RET' if last and bare else lab)          # pushed XIZ is popped first
+                                                                                   # (ret ne was wrong code)
             if F.lines[-1] == '\tret' and last:
                 return                               # condition always false: the statement disappears
             gen_stmt(F, s.then, False)
