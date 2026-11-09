@@ -1018,7 +1018,8 @@ def cse_params(F, e):
     finally:
         d.reg = None
     flush_pops(F)
-    for r in reversed(F.pushes): F.emit('pop', r)
+    if F.xiz_vars: F.emit('pop', F.save_reg)              # ra_homes.c rh_lp_a2 (-O3 -XS): IZ was pushed and never
+    epilogue(F)                                            # popped (wrong code)
     F.emit('retd', hx(F.retd)) if F.retd else F.emit('ret')
     return True
 
