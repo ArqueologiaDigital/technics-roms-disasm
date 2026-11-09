@@ -4,15 +4,15 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 
 | oracle                                                              | corpus               | exact                    |
 |---------------------------------------------------------------------|----------------------|--------------------------|
-| run 2026-11-08-7-micro, v423/none                                   | micro/*.c            | 667 / 674 exact (99.0%)  |
-| run 2026-11-08-7-micro, ide2003/none                                | micro/*.c            | 664 / 674 exact (98.5%)  |
-| run 2026-11-08-7-micro, v110/none                                   | micro/*.c            | 663 / 674 exact (98.4%)  |
-| run 2026-11-08-7-micro, v423/O3XS                                   | micro/*.c            | 634 / 674 exact (94.1%)  |
-| run 2026-11-08-7-micro, v423/Xr                                     | micro/*.c            | 637 / 674 exact (94.5%)  |
-| run 2026-11-08-7-micro, v423/O3XSXr                                 | micro/*.c            | 635 / 674 exact (94.2%)  |
-| run 2026-11-08-7-micro, ide2003/O3XS, --personality ide2003         | micro/*.c            | 633 / 674 exact (93.9%)  |
-| run 2026-11-08-7-micro, ide2003/Xr, --personality ide2003           | micro/*.c            | 631 / 674 exact (93.6%)  |
-| run 2026-11-08-7-micro, ide2003/O3XSXr, --personality ide2003       | micro/*.c            | 628 / 674 exact (93.2%)  |
+| run 2026-11-08-7-micro, v423/none                                   | micro/*.c            | 668 / 674 exact (99.1%)  |
+| run 2026-11-08-7-micro, ide2003/none                                | micro/*.c            | 665 / 674 exact (98.7%)  |
+| run 2026-11-08-7-micro, v110/none                                   | micro/*.c            | 664 / 674 exact (98.5%)  |
+| run 2026-11-08-7-micro, v423/O3XS                                   | micro/*.c            | 635 / 674 exact (94.2%)  |
+| run 2026-11-08-7-micro, v423/Xr                                     | micro/*.c            | 638 / 674 exact (94.7%)  |
+| run 2026-11-08-7-micro, v423/O3XSXr                                 | micro/*.c            | 636 / 674 exact (94.4%)  |
+| run 2026-11-08-7-micro, ide2003/O3XS, --personality ide2003         | micro/*.c            | 634 / 674 exact (94.1%)  |
+| run 2026-11-08-7-micro, ide2003/Xr, --personality ide2003           | micro/*.c            | 632 / 674 exact (93.8%)  |
+| run 2026-11-08-7-micro, ide2003/O3XSXr, --personality ide2003       | micro/*.c            | 629 / 674 exact (93.3%)  |
 | run 2026-11-08-8-micro-ra, v423/none                                | micro/ra_*.c         | 32 / 42 exact (76.2%)    |
 | run 2026-11-08-8-micro-ra, v423/O3XSXr                              | micro/ra_*.c         | 12 / 42 exact (28.6%)    |
 | run 2026-11-08-4-abi, v423/none                                     | abi/*.c              | 96 / 108 exact (88.9%)   |

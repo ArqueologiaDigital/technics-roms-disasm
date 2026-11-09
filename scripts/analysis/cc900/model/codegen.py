@@ -820,6 +820,13 @@ def gen_mul_const(F, l, k, fam, size, signed=True):
     a run of doublings before an add is `sla n`, a final single doubling `add r,r`"""
     R = FAM[fam][size]
     x = mem_operand(F, l)
+    if x is None and strip(l).k == 'call' and k == 2:   # k_l: rl(a) * 2 -> cal _rl / inc 0x4,XSP / ld XWA,XHL /
+        gen_call(F, strip(l)); flush_pops(F); X = FAM['HL'][size]; W = FAM['WA'][size]   # add XWA,XHL / ld XHL,XWA
+        F.emit('ld', '%s,%s' % (W, X))
+        if F.adecl and fam == 'HL': F.emit('add', '%s,%s' % (X, W)); return fam   # -Xr: ld XWA,XHL / add XHL,XWA
+        F.emit('add', '%s,%s' % (W, X))
+        if fam != 'WA': F.emit('ld', '%s,%s' % (R, W))
+        return fam
     if x is None: raise Unsupported('complex multiplicand')
     if x.startswith('(_'):                       # an absolute operand is loaded once into XBC
         F.emit('ld', '%s,%s' % (FAM['BC'][size], x)); F.emit('ld', '%s,%s' % (R, FAM['BC'][size])); x = FAM['BC'][size]
