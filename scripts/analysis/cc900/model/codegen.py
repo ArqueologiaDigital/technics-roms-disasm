@@ -786,8 +786,7 @@ def setup_struct_temps(F, c):
         if not hit: continue
         F.emit('lda', 'XWA,XSP+%s' % hx(d.slot + F.push))
         F.emit('ld', '(XSP+%s),XWA' % hx(t['tB'].slot + F.push))
-        if F.personality == 'v4.23':                      # rules.md: reload-after-store (kn5000 = 2003: no reload)
-            F.emit('ld', 'XWA,(XSP+%s)' % hx(t['tB'].slot + F.push))
+        F.emit('ld', 'XWA,(XSP+%s)' % hx(t['tB'].slot + F.push))   # removed for kn5000 by store_knowledge()
         F.emit('ld', '(XSP+%s),XWA' % hx(t['tA'].slot + F.push))
         t['done'] = True; t['n'] = 0
 
@@ -1425,6 +1424,43 @@ def plan_shared_exit(F):
     if len(rets) >= 2 and key(rets[-1]) is not None and key(rets[-1]) != 'void' and all(key(r) == key(rets[-1]) for r in rets):
         F.shared_exit = {'label': F.newlabel(), 'early': {id(r) for r in rets[:-1]}, 'last': id(rets[-1])}
 
+REG_ALIASES = {'XWA': ('XWA', 'WA', 'A', 'W', 'QWA'), 'XBC': ('XBC', 'BC', 'B', 'C', 'QBC'),
+               'XDE': ('XDE', 'DE', 'D', 'E', 'QDE'), 'XHL': ('XHL', 'HL', 'H', 'L', 'QHL'),
+               'XIX': ('XIX', 'IX', 'QIX'), 'XIY': ('XIY', 'IY', 'QIY'), 'XIZ': ('XIZ', 'IZ', 'QIZ')}
+
+def family_of(r):
+    for k, v in REG_ALIASES.items():
+        if r in v: return k
+    return None
+
+def store_knowledge(lines):
+    """rules.md, the reload rule: the 2003 / Technics compiler also knows R holds M after a store ld (M),R, until a
+    label, a call, a write to R, a write to M, or a store through a pointer; a load ld R,(M) it knows is dropped"""
+    import re
+    out = []; known = {}                                   # family -> (register spelling, memory operand)
+    for l in lines:
+        t = l.strip()
+        if t.endswith(':') or t.startswith(('cal', 'call', 'j', 'ret', 'djnz')):
+            known = {}; out.append(l); continue
+        parts = t.split(None, 1); op = parts[0]; args = parts[1].split(',') if len(parts) > 1 else []
+        args = [a.strip() for a in args]
+        if op == 'ld' and len(args) == 2 and args[0].startswith('(XSP') and family_of(args[1]):
+            for k in list(known):
+                if known[k][1] == args[0]: del known[k]
+            known[family_of(args[1])] = (args[1], args[0]); out.append(l); continue
+        if op == 'ld' and len(args) == 2 and family_of(args[0]) and args[1].startswith('(XSP'):
+            f = family_of(args[0])
+            if f in known and known[f] == (args[0], args[1]): continue      # the reload the 2003 compiler drops
+            known[f] = (args[0], args[1]); out.append(l); continue
+        if args and args[0].startswith('(X') and not args[0].startswith('(XSP'):
+            known = {}                                     # a store through a pointer may alias any slot
+        elif args and family_of(args[0].rstrip(':')):
+            known.pop(family_of(args[0]), None)
+        elif op in ('push', 'pop', 'ldir', 'ldirw', 'ldi', 'ldiw'):
+            known = {} if op != 'push' else known
+        out.append(l)
+    return out
+
 def compile_function(f, opt, adecl, personality='v4.23'):
     F = Fn(f, adecl)
     F.personality = personality
@@ -1442,6 +1478,7 @@ def compile_function(f, opt, adecl, personality='v4.23'):
         epilogue(F)
         F.emit('ret')
     # a call directly followed by the return becomes a jump (cmp_ui: ge_ui_br0)
+    if F.personality != 'v4.23': F.lines = store_knowledge(F.lines)
     if len(F.lines) >= 2 and F.lines[-1] == '\tret' and F.lines[-2].startswith('\tcal\t') \
             and not F.lines[-2].split('\t')[2].startswith(('C9H_', '._f')):
         F.lines[-2:] = ['\tj\t' + F.lines[-2].split('\t')[2]]
