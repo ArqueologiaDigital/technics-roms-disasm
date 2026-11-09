@@ -1691,6 +1691,15 @@ def operand(F, e, size, avoid=()):
             F.emit('ld', 'WA,%s' % im)
             F.emit('add', 'WA,WA') if esz == 2 else F.emit('sla', '%s,WA' % hx({4: 2, 8: 3}[esz]))
             F.emit('lda', 'XBC,_%s' % b.decl.name); return '(XBC+WA)'
+        if b.k == 'load' and fold(v.idx).k != 'const':      # c_sum: s += p[i] -> ... add XWA,(p) / add HL,(XWA)
+            pm = mem_operand(F, b); ii = strip(v.idx)
+            while ii.k == 'cast' and ii.kind == 'IntegralCast': ii = strip(ii.e)
+            im = mem_operand(F, ii)
+            if pm is not None and im is not None and 'WA' not in avoid:
+                F.emit('ld', 'WA,%s' % im); F.emit('exts' if ii.ty.signed else 'extz', 'XWA')
+                if esz == 2: F.emit('add', 'XWA,XWA')
+                elif esz > 2: F.emit('sll', '%s,XWA' % hx({4: 2, 8: 3}[esz]))
+                F.emit('add', 'XWA,%s' % pm); return '(XWA)'
     return None
 
 def regvar_stmt(F, e):
