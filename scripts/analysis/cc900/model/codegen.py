@@ -217,6 +217,11 @@ def gen(F, e, fam, size, then_ret=False, store=False):
     e0 = strip(e)
     if e0.k == 'cast' and same_size_ptr_cast(e0) is not e0:
         return gen(F, same_size_ptr_cast(e0), fam, size, then_ret, store)
+    sx = e0
+    while sx.k in ('decay', 'cast') and getattr(sx, 'kind', 'ArrayToPointerDecay') in ('ArrayToPointerDecay', 'NoOp', 'BitCast'):
+        sx = strip(sx.e)
+    if sx.k == 'string' and size == 4:                               # abi globals.c gl_lit: return "lit" ->
+        F.emit('lda', '%s,%s' % (FAM[fam][4], fpgen.string_label(F, sx.value))); return fam   # lda XHL,S2
     if e0.k == 'addr' and strip(e0.e).k == 'var' and size == 4:      # _log: frexp(x / SQRT2, &nptr) ->
         d = strip(e0.e).decl; R = FAM[fam][4]                          # lda XWA,XSP+0x68 / push XWA
         if d.kind == 'global': F.emit('lda', '%s,_%s' % (R, d.name)); return fam
@@ -1263,6 +1268,8 @@ def store_global(F, name, e, size):
     rc = fold(narrow(e, size)) if size <= 2 else None
     if rc is not None and rc.k == 'const' and rc.value is not None:   # _exp, _tan: errno = ERANGE -> ldw (_errno),0x22
         F.emit('ld' + ('b' if size == 1 else 'w'), '(_%s),%s' % (name, hx(rc.value & ((1 << (8 * size)) - 1)))); return
+    if strip(e).k == 'call' and not has_helper_call(strip(e).fn):   # abi returns.c use_i: cal _x_i / ld (_gi),HL
+        gen_call(F, strip(e)); flush_pops(F); F.emit('ld', '(_%s),%s' % (name, FAM['HL'][size])); return
     rv = regvar_of(getattr(strip(e), 'e', e)) if strip(e).k == 'load' else None
     if rv is not None and rv.ty.size == size:          # ra_twice: ld (_ga),HL
         F.emit('ld', '(_%s),%s' % (name, FAM[rv.reg][size])); return

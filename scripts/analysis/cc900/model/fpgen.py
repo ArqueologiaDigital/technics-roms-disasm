@@ -44,10 +44,17 @@ def const_label(F, v, ty):
     F.fconsts = getattr(F, 'fconsts', []) + [(lab, v, ty.size)]
     return lab
 
+def string_label(F, text):
+    """a string literal in a function: f_const at the start, no align (abi globals.c gl_lit: S2: db "lit",0)"""
+    lab = 'S%d' % FCONST[0]; FCONST[0] += 1
+    F.fconsts = getattr(F, 'fconsts', []) + [(lab, text, 'str')]
+    return lab
+
 def const_block(F):
     if not getattr(F, 'fconsts', None): return []
     out = ['f_const section romdata large align=2,2']
     for lab, v, size in F.fconsts:
+        if size == 'str': out += [lab + ':', '\tdb\t%s,0' % v]; continue
         out += ['\talign\t2', lab + ':', '\t%s\t%s' % ('fdatad' if size == 8 else 'fdataf', fdata(v))]
     return out + ['f_code section code large align=1,1']
 
