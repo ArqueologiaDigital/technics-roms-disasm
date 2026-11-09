@@ -1830,6 +1830,22 @@ def regvar_stmt(F, e):
             gen_call(F, strip(e.r))
             if R != FAM['HL'][d.ty.size]: flush_pops(F)   # (_strcpy: a local in XHL needs no move, the pops wait)
             F.emit('ld', '%s,%s' % (R, FAM['HL'][d.ty.size])); return True
+        r0 = strip(e.r)
+        if d.reg in ('IZ', 'QIZ') and d.ty.size == 2 and r0.k == 'bin' and r0.op in SIMPLE_OPS:
+            lm = mem_operand(F, narrow(r0.l, 2)); rc = fold(narrow(r0.r, 2)); rm = mem_operand(F, narrow(r0.r, 2))
+            if lm is not None and (rm is not None or rc.k == 'const'):
+                if rc.k == 'const' and r0.op in '+-' and 1 <= (rc.value or 0) <= 8:
+                    F.emit('ld', '%s,%s' % (R, lm))        # rh_l1 / rh_lp_x2: ld IZ,WA / inc 0x1,IZ; ld QIZ,IZ / inc 0x1,QIZ
+                    F.emit('inc' if r0.op == '+' else 'dec', '%s,%s' % (hx(rc.value), R)); return True
+                if d.reg == 'IZ':                          # rh_ll: ld IZ,WA / add IZ,BC
+                    F.emit('ld', 'IZ,%s' % lm); F.emit(SIMPLE_OPS[r0.op], 'IZ,%s' % (rm if rm is not None else hx(rc.value)))
+                    return True
+                lv = regvar_of(strip(narrow(r0.l, 2)).e) if strip(narrow(r0.l, 2)).k == 'load' else None
+                if lv is not None and lv.reg in ('WA', 'BC', 'DE', 'HL') and dies_here(F, strip(narrow(r0.l, 2))):
+                    L = FAM[lv.reg][2]                     # rh_ll: ld QIZ,WA / sub WA,BC / ld QIZ,WA (QIZ takes no arithmetic)
+                    F.emit('ld', 'QIZ,%s' % L)
+                    F.emit(SIMPLE_OPS[r0.op], '%s,%s' % (L, rm if rm is not None else hx(rc.value)))
+                    F.emit('ld', 'QIZ,%s' % L); return True
         tgt = d.reg if d.reg in ('BC', 'DE', 'HL', 'WA') else 'WA'      # ra_noloop3: ld DE,(a) / add DE,(b)
         fam = gen(F, e.r, tgt, d.ty.size)
         if FAM[fam][d.ty.size] != R: F.emit('ld', '%s,%s' % (R, FAM[fam][d.ty.size]))

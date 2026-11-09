@@ -15,18 +15,18 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-08-7-micro, ide2003/O3XSXr, --personality ide2003       | micro/*.c          | 605 / 674 exact (89.8%) |
 | run 2026-11-08-8-micro-ra, v423/none                                | micro/ra_*.c       | 26 / 42 exact (61.9%)   |
 | run 2026-11-08-8-micro-ra, v423/O3XSXr                              | micro/ra_*.c       | 11 / 42 exact (26.2%)   |
-| run 2026-11-08-6-abi-adecl, v423/Xr                                 | abi/*.c            | 68 / 80 exact (85.0%)   |
-| run 2026-11-08-6-abi-adecl, v423/O3XSXr                             | abi/*.c            | 64 / 80 exact (80.0%)   |
+| run 2026-11-08-6-abi-adecl, v423/Xr                                 | abi/*.c            | 69 / 80 exact (86.2%)   |
+| run 2026-11-08-6-abi-adecl, v423/O3XSXr                             | abi/*.c            | 65 / 80 exact (81.2%)   |
 | run 2026-11-09-4-micro-switch, v423/none                            | micro/switch.c     | 13 / 25 exact (52.0%)   |
 | run 2026-11-09-4-micro-switch, v423/Xr                              | micro/switch.c     | 22 / 25 exact (88.0%)   |
 | run 2026-11-09-4-micro-switch, v423/O3XS                            | micro/switch.c     | 0 / 25 exact (0.0%)     |
 | run 2026-11-09-4-micro-switch, v423/O3XSXr                          | micro/switch.c     | 20 / 25 exact (80.0%)   |
 | run 2026-11-09-5-micro-optparams, v423/O3XS                         | micro/opt_params.c | 19 / 24 exact (79.2%)   |
 | run 2026-11-09-5-micro-optparams, v423/O3XSXr                       | micro/opt_params.c | 0 / 24 exact (0.0%)     |
-| run 2026-11-09-6-micro-rahomes, v423/none                           | micro/ra_homes.c   | 6 / 25 exact (24.0%)    |
-| run 2026-11-09-6-micro-rahomes, v423/O3XS                           | micro/ra_homes.c   | 2 / 25 exact (8.0%)     |
-| run 2026-11-09-6-micro-rahomes, v423/Xr                             | micro/ra_homes.c   | 4 / 25 exact (16.0%)    |
-| run 2026-11-09-6-micro-rahomes, v423/O3XSXr                         | micro/ra_homes.c   | 4 / 25 exact (16.0%)    |
+| run 2026-11-09-6-micro-rahomes, v423/none                           | micro/ra_homes.c   | 8 / 25 exact (32.0%)    |
+| run 2026-11-09-6-micro-rahomes, v423/O3XS                           | micro/ra_homes.c   | 4 / 25 exact (16.0%)    |
+| run 2026-11-09-6-micro-rahomes, v423/Xr                             | micro/ra_homes.c   | 10 / 25 exact (40.0%)   |
+| run 2026-11-09-6-micro-rahomes, v423/O3XSXr                         | micro/ra_homes.c   | 6 / 25 exact (24.0%)    |
 | run 2026-11-08-9-micro-optloops, v423/O3XS                          | micro/opt_loops.c  | 15 / 33 exact (45.5%)   |
 | run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality v4.23      | 1997 LIB/SRC       | 123 / 188 exact (65.4%) |
 | run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality kn5000     | 1997 LIB/SRC       | 121 / 188 exact (64.4%) |
