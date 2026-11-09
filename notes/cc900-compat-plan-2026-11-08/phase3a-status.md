@@ -437,6 +437,21 @@ Array elements (2026-11-09, night), from runs `2026-11-09-24-micro-arrindex` / `
   output, run on random inputs against the oracle's code, would catch them; phase 3's random-program tests
   need one anyway.
 
+The behavioural check (2026-11-09, late): `model/semcheck.py` (commit 43da7f613, README `model/semcheck.md`) runs
+the model's code and the oracle's in a TLCS-900 interpreter on random inputs and compares what a caller sees. Its
+first run found 74 DIFFERENT functions over the micro and probe corpora, 63 of them wrong code in the model, all in
+functions that did not match the oracle's text. After the fixes that followed it reports 12, with no ledger row lost
+on the way (`results/semcheck.md`):
+- 3 differ only where the C overflows (`ai_shift` x2, `oc_down`, none);
+- the rest are none-mode loops whose counter the model puts where cc900 does not (`ai_carry`, `ai_div10`,
+  `oc_add2`, `oc_clr_l`, `ol_two_arr`), and `rh_ptr_int` under -O3 -XS -Xr, a homes choice;
+- the guards added on the way (`held_after`, `IDX_GUARD`) refuse a function instead of writing wrong code
+  when a register they would overwrite still holds a variable. They approximate liveness; see
+  `held_after`'s docstring.
+Run it after every change, beside the ledger and the pairs:
+`python3 -I -B model/semcheck.py --ledger --jobs 4 --results results/semcheck.md`. The DIFFERENT count must not
+rise.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
