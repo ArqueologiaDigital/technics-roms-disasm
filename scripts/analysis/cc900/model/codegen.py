@@ -143,6 +143,14 @@ def mem_operand(F, e):
     if e.k == 'const' and e.value is not None:            # c_find: -1 in a 16-bit context is 0xffff
         sz = e.ty.size if getattr(e, 'ty', None) is not None and e.ty.size in (1, 2, 4) else 4
         return hx(e.value & ((1 << (8 * sz)) - 1)) if e.value < 0 else hx(e.value)
+    if e.k == 'load' and strip(e.e).k == 'index' and fold(strip(e.e).idx).k == 'const':
+        bb = strip(strip(e.e).base)                      # Toshiba's va_arg as an operand: s += va_arg(ap, int) ->
+        while bb.k == 'cast': bb = strip(bb.e)           # inc 0x2,XBC / add HL,(XBC-0x2)
+        if bb.k == 'opassign' and bb.op in '+-' and regvar_of(bb.l) and fold(bb.r).k == 'const':
+            d = regvar_of(bb.l); X = FAM[d.reg][4]
+            F.emit('inc' if bb.op == '+' else 'dec', '%s,%s' % (hx(fold(bb.r).value), X))
+            off = fold(strip(e.e).idx).value * e.ty.size
+            return '(%s%s%s)' % (X, '+' if off >= 0 else '-', hx(abs(off))) if off else '(%s)' % X
     if e.k == 'load':
         v = strip(e.e)
         if v.k == 'var':
@@ -696,7 +704,8 @@ def gen_ptr_arith(F, e, fam, size):
     if r.ty.is_ptr(): l, r = r, l
     rc = fold(r)
     if rc.k == 'const' and rc.value is not None:
-        k = rc.value * l.ty.base.size * (1 if e.op == '+' else -1)
+        bsz = e.ty.base.size if e.ty is not None and e.ty.is_ptr() and e.ty.base is not None else l.ty.base.size
+        k = rc.value * bsz * (1 if e.op == '+' else -1)   # va_start: (va_list)&n + 2 counts chars, not ints
         R = FAM[fam][4]
         lr = operand(F, l, 4)
         if lr is not None and not lr.startswith('(') and lr != R:
@@ -919,6 +928,12 @@ def push_arg(F, a):
         if m is None: raise Unsupported('complex char argument')
         F.emit('ld', 'A,%s' % m); F.emit('exts' if strip(a0.e).ty.signed else 'extz', 'WA'); F.emit('push', 'WA')
         F.push += 2; return 2
+    sx = a0
+    while sx.k in ('decay', 'cast') and getattr(sx, 'kind', 'ArrayToPointerDecay') in ('ArrayToPointerDecay', 'NoOp', 'BitCast'):
+        sx = strip(sx.e)
+    if sx.k == 'string' and a.ty is not None and a.ty.is_ptr():   # abi varargs.c v_call: pushw S1 >> 16 / pushw S1 & 0xffff
+        lab = fpgen.string_label(F, sx.value)
+        F.emit('pushw', '%s >> 16' % lab); F.emit('pushw', '%s & 0xffff' % lab); F.push += 4; return 4
     a1 = a0
     while a1.k == 'cast' and a1.kind == 'IntegralCast' and strip(a1.e).ty.size == size: a1 = strip(a1.e)
     if a1.k == 'un' and a1.op in ('-', '~') and size >= 2:
@@ -1075,6 +1090,15 @@ def gen_load_mem(F, v, fam, size):
             F.emit('ld', 'WA,%s' % im)                             # m_ga_v, m_gla_v
             F.emit('add', 'WA,WA') if esz == 2 else F.emit('sla', '%s,WA' % hx({4: 2, 8: 3}[esz]))
             F.emit('lda', 'XBC,_%s' % b.decl.name); F.emit('ld', '%s,(XBC+WA)' % R); return fam
+        bb = strip(b)
+        while bb.k == 'cast': bb = strip(bb.e)
+        if bb.k == 'opassign' and bb.op in '+-' and regvar_of(bb.l) and fold(bb.r).k == 'const' and fold(i).k == 'const':
+            d = regvar_of(bb.l); X = FAM[d.reg][4]                 # Toshiba's va_arg: ((int *)(ap += 2))[-1] ->
+            step = fold(bb.r).value                                # inc 0x2,XBC / ld WA,(XBC-0x2)
+            F.emit('inc' if bb.op == '+' else 'dec', '%s,%s' % (hx(step), X))
+            off = fold(i).value * esz
+            F.emit('ld', '%s,(%s%s%s)' % (R, X, '+' if off >= 0 else '-', hx(abs(off))) if off else '%s,(%s)' % (R, X))
+            return fam
         if b.k == 'load':                                          # p[i]: m_p_v, m_lp_v, m_cp_v
             pm = mem_operand(F, b); ii = strip(i)
             while ii.k == 'cast' and ii.kind == 'IntegralCast': ii = strip(ii.e)
@@ -1660,6 +1684,12 @@ def gen_stmt(F, s, last):
         flush_pops(F)                                      # switch.c under O3XS: each arm's pops before its jump (cross-
         F.emit('j', F.loops[-1][0]); return                # jumping then merges cal _f1 / inc 0x2,XSP)
     if s.k == 'continue': F.emit('j', F.loops[-1][1]()); return
+    if s.k == 'expr' and s.e.k == 'noop' and s.e.ty is not None and s.e.ty.kind == 'void':
+        from frontend import N                                                     # (void)(ap = ...) as a statement
+        return gen_stmt(F, N('expr', e=s.e.e), last)
+    if s.k == 'expr' and strip(s.e).k == 'cast' and strip(s.e).kind == 'ToVoid':   # (void)(ap = ...): Toshiba's
+        from frontend import N                                                     # va_start
+        return gen_stmt(F, N('expr', e=strip(strip(s.e).e)), last)
     if s.k == 'expr' and s.e.k == 'bin' and s.e.op == ',':      # a, b as a statement: a then b (_strrchr's for)
         from frontend import N
         gen_stmt(F, N('expr', e=s.e.l), False); gen_stmt(F, N('expr', e=s.e.r), False); return
@@ -2084,6 +2114,11 @@ def regvar_stmt(F, e):
     if e.k == 'bin' and e.op == '=' and strip(e.l).k == 'var' and getattr(strip(e.l).decl, 'reg', None) == 'XIZ' \
             and getattr(strip(e.l).decl, 'homed', False) and strip(e.r).k == 'call':
         gen_call(F, strip(e.r)); flush_pops(F); F.emit('ld', 'XIZ,XHL'); return True   # _calloc: ptr = malloc(...)
+    if e.k == 'bin' and e.op == '=' and regvar_of(e.l) and not F.opt and regvar_of(e.l).ty.is_ptr() and \
+            strip(e.r).k == 'bin' and strip(e.r).op in '+-' and regvar_of(e.l).reg != 'WA':
+        d = regvar_of(e.l)                             # va_start without -O: lda XWA,XSP+0x4 / inc 0x2,XWA /
+        f2 = gen(F, e.r, 'WA', 4)                       # ld XBC,XWA
+        F.emit('ld', '%s,%s' % (FAM[d.reg][4], FAM[f2][4])); return True
     if e.k == 'bin' and e.op == '=' and regvar_of(e.l):
         d = regvar_of(e.l); R = FAM[d.reg].get(d.ty.size, FAM[d.reg].get(2))
         rc = fold(narrow(e.r, d.ty.size))
@@ -2744,7 +2779,7 @@ def plan_leaf(F):
         walk(f.body, lambda n, d: uses.__setitem__(strip(n.l).decl, uses.get(strip(n.l).decl, 0) + 1)
              if n.k == 'bin' and n.op == '=' and strip(n.l).k == 'var' else None)   # c_ifelse: r = a; else r = b
         multi = [d for d in f.decls if d.kind == 'local' and uses.get(d, 0) >= 2 and
-                 (d.ty.kind == 'int' or (F.opt and d.ty.kind == 'ptr'))]          # .sbrk: addr in XHL
+                 (d.ty.kind == 'int' or d.ty.kind == 'ptr')]          # .sbrk: addr in XHL; v_long: ap
         if not multi: return False
     rets = []
     walk(f.body, lambda n, d: rets.append(strip(strip(n.value).e).decl) if n.k == 'return' and n.value is not None and strip(n.value).k == 'load' and strip(strip(n.value).e).k == 'var' else None)
@@ -2795,12 +2830,13 @@ def plan_leaf(F):
             if F.pushes: F.emit('push', 'IZ'); F.push = 2
             return True
     okind = ('int', 'ptr') if F.opt else ('int',)
-    locals_ = [d for d in f.decls if d.kind == 'local' and not d.addr_taken and d.ty.kind in okind]
+    locals_ = [d for d in f.decls if d.kind == 'local' and not d.addr_taken and d.ty.kind in ('int', 'ptr')]
+    # (pointer locals get registers without -O too: varargs.c v_sum's ap in XBC; pointer parameters do not, ra_ptr)
     if not hasloop:
         locals_ = multi
     stored = set()                                         # _strset: c, only ever stored, stays on the stack
     walk(f.body, lambda n, dep: stored.add(store_through_temp(n)) if n.k == 'bin' and n.op == '=' and store_through_temp(n) else None)
-    params = [d for d in f.params if d.ty.kind in okind and (d in modified or d in deep or (F.opt and d in loopvars))
+    params = [d for d in f.params if d.ty.kind in okind and not d.addr_taken and (d in modified or d in deep or (F.opt and d in loopvars))
               and not (F.opt and d in stored and loopvars.get(d, 0) <= 1)]
     order = params + list(reversed(locals_))
     if F.opt: order = list(reversed(locals_)) + list(reversed(params))      # _strcat at -O: s, s2, s1
