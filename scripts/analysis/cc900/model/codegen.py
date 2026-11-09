@@ -7218,6 +7218,8 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong
     flush_pops(F)
     if not F.lines[-1].startswith('\tret') and not (getattr(F, 'no_exit', False) and F.lines[-1].startswith('\tj\t')
                                                    and ',' not in F.lines[-1]):
+        xl = getattr(F, 'exit_label', None)                # a void function's early return jumps here (the 1997
+        if xl and (xl + ':') not in F.lines: F.lines.append(xl + ':')   # library's _sgl_set: j L50001 to nothing)
         if F.xiz_vars: F.emit('pop', F.save_reg)
         epilogue(F)
         F.emit('retd', hx(F.retd)) if F.retd else F.emit('ret')   # op_three: an adecl stack parameter -> retd 0x2
