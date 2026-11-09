@@ -335,6 +335,7 @@ def op_into(F, e, vals, dest):
     emit_operands(F, dest, vals); F.emit('cal', '._fld_%s%s' % (sfx(e.ty), sfx(strip(e.e).ty)))
 
 LOCAL_MEMBER_FIRST = True                                 # see addr_kind
+SAME_OPERAND_COPY = True                                  # see emit_operands
 
 def addr_kind(F, x):
     """'lda' when the address is a name, a stack offset or a constant; 'ld' when it has to be loaded, copied from a
@@ -372,6 +373,12 @@ def emit_operands(F, dest, ops):
             if not dest_first(F, dest): dest_last(F, dest)
         else: put_addr(F, x, r)
     held = [(r, x) for r, x in items[1:] if in_xiz(x)]     # fo_mem_n: lda XBC,.. / lda XWA,.. / ld XDE,XIZ
+    if F.opt and SAME_OPERAND_COPY and len(ops) == 2 and not held and kinds['XBC'] == kinds['XDE'] == 'lda' and \
+            not isinstance(ops[0], tuple) and not isinstance(ops[1], tuple) and C().same_leaf(ops[0], ops[1]):
+        if kinds['XWA'] == 'ld': do('XWA', None)           # (a result address that is loaded goes first)
+        put_addr(F, ops[1], 'XDE'); F.emit('ld', 'XBC,XDE')   # fp_stmts.c s_loc (-O3 -XS): a * a -> lda XDE,XSP+0x20 /
+        if kinds['XWA'] != 'ld': do('XWA', None)           # ld XBC,XDE / lda XWA,.. (one address, copied)
+        return
     for r, x in items:
         if kinds[r] == 'ld' and (r, x) not in held: do(r, x)
     for r, x in items[1:] + items[:1]:
