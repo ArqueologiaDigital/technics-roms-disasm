@@ -14,6 +14,7 @@ micro/cmp_ui.c
 micro/cmp_ul.c
 micro/ctrl.c
 micro/fp.c
+micro/fp_order.c
 micro/fp_stmts.c
 micro/fp_temps.c
 micro/mem.c

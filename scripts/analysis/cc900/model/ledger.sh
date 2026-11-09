@@ -63,4 +63,7 @@ row "run 2026-11-08-5-libsrc97-O3XS, ide2003/O3XS, --personality ide2003" "1997 
 for c in none O3XS Xr O3XSXr; do
   row "run 2026-11-09-14-micro-libshapes, v423/$c" "micro/ra_libshapes.c" "$O/2026-11-09-14-micro-libshapes/out/v423/$c" corpus/micro/ra_libshapes.c
 done
+for c in none O3XS; do    # -Xr: a double return is THC1-Error-373 under adecl
+  row "run 2026-11-09-15-micro-fporder, v423/$c" "micro/fp_order.c" "$O/2026-11-09-15-micro-fporder/out/v423/$c" corpus/micro/fp_order.c
+done
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c

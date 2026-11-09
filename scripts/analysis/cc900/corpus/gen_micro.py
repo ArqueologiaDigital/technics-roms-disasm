@@ -37,7 +37,9 @@ how cc900 compiles exactly that (notes/cc900-compat-plan-2026-11-08/PLAN.md, sec
 - ra_homes32: a 32-bit local (pointer, long) against a 16-bit parameter for XIZ / IZ across calls (_memccpy gives
   IZ to n and a slot to pos);
 - ra_libshapes: the shapes between _calloc (a pointer from a call wins XIZ over two 16-bit parameters), _memccpy (a
-  16-bit parameter wins IZ over the pointer) and _strlen (a lone pointer parameter read twice takes XIZ) at -O3 -XS.
+  16-bit parameter wins IZ over the pointer) and _strlen (a lone pointer parameter read twice takes XIZ) at -O3 -XS;
+- fp_order: which operand of a double + or * is built first, and when a table element's address is kept in XIZ
+  across a conversion helper (_log: LN2 * nptr + 2 * s, LN2 = g_dbltbl[3].val).
 The output is deterministic, ours, and C89.
 """
 import os, sys
@@ -479,6 +481,32 @@ def ra_libshape_files():
         'char *ls_sl_ret(const char *s) { char *ss; ss = ch(s, 0, 4); if (ss == 0) return (char *)s; return ss; }']
     return {'ra_libshapes.c': out + fs}
 
+def fp_order_files():
+    """_log's return expression and its neighbours: left or right operand first, element address kept in XIZ"""
+    out = ['/* Operand order of double expressions with conversions and table elements */',
+           'typedef union { unsigned char c[8]; double val; } DB;',
+           'extern DB gtab[]; extern double gd, gd2, gda[]; extern double fd(double); extern int gi;']
+    fs = [
+        'double fo_log(int n, double s) { return gtab[3].val * n + 2 * s; }',
+        'double fo_log_rev(int n, double s) { return 2 * s + gtab[3].val * n; }',
+        'double fo_conv2(int n, double s) { return n * 2.0 + s * 3.0; }',
+        'double fo_conv2_rev(int n, double s) { return s * 3.0 + n * 2.0; }',
+        'double fo_mem_n(int n) { return gtab[3].val * n; }',
+        'double fo_n_mem(int n) { return n * gtab[3].val; }',
+        'double fo_glob_n(int n, double s) { return gd * n + 2 * s; }',
+        'double fo_arr_n(int n, double s) { return gda[3] * n + 2 * s; }',
+        'double fo_mem_call(double x) { return gtab[3].val * fd(x); }',
+        'double fo_mem_add(int n) { return gtab[3].val + n; }',
+        'double fo_mem_sub(int n) { return gtab[3].val - n; }',
+        'double fo_mem_div(int n) { return gtab[3].val / n; }',
+        'double fo_n_div(int n) { return n / gtab[3].val; }',
+        'double fo_gi(double s) { return gtab[3].val * gi + s; }',
+        'double fo_two_conv(int n, int m) { return (double)n * m; }',
+        'double fo_mem_mem(int n) { return gtab[3].val * gtab[2].val + n; }',
+        'void fo_store(int n, double s) { gd = gtab[3].val * n + 2 * s; }',
+        'double fo_loc(int n, double s) { double t; t = gtab[3].val * n; return t + 2 * s; }']
+    return {'fp_order.c': out + fs}
+
 def fp_files():
     """floating point: helper calls through operand addresses, temporaries, conversions (abi.md: helpers)"""
     out = ['/* Floating point: helpers, temporaries, conversions */',
@@ -688,6 +716,7 @@ def main():
     files.update(ra_chain_files())
     files.update(ra_home32_files())
     files.update(ra_libshape_files())
+    files.update(fp_order_files())
     files.update(fp_files())
     files.update(fp_temp_files())
     files.update(opt_temp_files())

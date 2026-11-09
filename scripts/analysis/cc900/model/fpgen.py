@@ -78,6 +78,9 @@ def stmt_reset(F):
     """the temporaries of one statement are free again at the next (_log: many statements, one small region)"""
     if getattr(F, 'fp_temps', None) is not None: F.ftemp_used = 0
 
+RANK_CONST = True
+LONG_TOP = False                                   # tried for fo_conv2: costs fp_temps t_* and fp_stmts O3XS 9 -> 5
+
 class FrameAlloc:
     """FP temporaries as depths below the top of the temporary region (rule R5g of research-scratch
     sessions/2026-11-09_cc900-fp-frame, 7f6721d): op slots are pooled and free again at each statement (the free slot
@@ -86,6 +89,8 @@ class FrameAlloc:
     allocator whose depth is D' (the longs pooled like op slots)."""
     def __init__(s, nlong, pooled_longs=False):
         s.slots = []; s.depth = 0; s.nlong = 0; s.region = None; s.n = max(nlong, 1); s.pool_l = pooled_longs
+        if nlong and not pooled_longs and LONG_TOP:        # fo_conv2: the long above the double built before it
+            s.region = [4 * (s.n - i) for i in range(s.n)]; s.depth = 4 * s.n
     def begin_stmt(s):
         for sl in s.slots:
             if sl[2] == 'op' or (sl[2] == 'long' and s.pool_l): sl[3] = False
@@ -238,7 +243,9 @@ def prepare(F, ops):
     """operands that are not in memory are computed into temporaries first, the right one first (d_four,
     t_st_mm: gd4 * gd2 into +0x18, then gd2 * gd3 into +0x10, then the sum into _gd)"""
     out = [None] * len(ops)
-    for i in reversed(range(len(ops))):
+    order = list(reversed(range(len(ops))))
+    if len(ops) == 2 and holds_xiz(ops[0]) and not holds_xiz(ops[1]): order = [0, 1]   # fo_log: LN2 * n before 2 * s
+    for i in order:
         out[i] = eval_val(F, ops[i], None)
     return out
 
@@ -261,7 +268,9 @@ def eval_val(F, e, hint):
         ops = [e.l, e.r] if e.k == 'bin' else [e.e]
         comp = [i for i, x in enumerate(ops) if not addressable(F, fp_value_cast(x))]
         vals = [fp_value_cast(x) for x in ops]
-        if len(comp) == 2:
+        if len(comp) == 2 and holds_xiz(ops[0]) and not holds_xiz(ops[1]):
+            vals[0] = eval_val(F, ops[0], hint); vals[1] = eval_val(F, ops[1], None); dst = ('slot', vals[1][1])
+        elif len(comp) == 2:
             vals[1] = eval_val(F, ops[1], hint); vals[0] = eval_val(F, ops[0], None); dst = ('slot', vals[0][1])
         elif len(comp) == 1 and fp_value_cast(ops[comp[0]]).k != 'call':
             vals[comp[0]] = eval_val(F, ops[comp[0]], hint); dst = vals[comp[0]]
@@ -281,6 +290,7 @@ def eval_val(F, e, hint):
 def op_into(F, e, vals, dest):
     """the helper call of a +-*/, unary - or float/double conversion node whose operands are ready"""
     if e.k == 'bin':
+        C().flush_pops(F)                                  # _log: x /= ldexp(1, nptr) -> cal _ldexp / lda XSP,XSP+0x1e first
         name = '._f%s_%s' % ({'+': 'add', '-': 'sub', '*': 'mul', '/': 'div'}[e.op], sfx(e.ty))
         if e.op in '+*' and rank(F, vals[1]) > rank(F, vals[0]) and not (
                 simple_addr(F, vals[0]) is not None and simple_addr(F, vals[0]) == dest_simple(F, dest)):   # _exp: t = t * w
@@ -338,13 +348,16 @@ def emit_operands(F, dest, ops):
         if r == 'XWA':
             if not dest_first(F, dest): dest_last(F, dest)
         else: put_addr(F, x, r)
+    held = [(r, x) for r, x in items[1:] if in_xiz(x)]     # fo_mem_n: lda XBC,.. / lda XWA,.. / ld XDE,XIZ
     for r, x in items:
-        if kinds[r] == 'ld': do(r, x)
+        if kinds[r] == 'ld' and (r, x) not in held: do(r, x)
     for r, x in items[1:] + items[:1]:
-        if kinds[r] == 'lda': do(r, x)
+        if kinds[r] == 'lda' and (r, x) not in held: do(r, x)
+    for r, x in held: do(r, x)
 
 def put_addr(F, x, reg):
     if isinstance(x, tuple): F.emit('lda', '%s,%s' % (reg, slot_addr(F, x[1])))
+    elif in_xiz(x): F.emit('ld', '%s,XIZ' % reg)            # a hoisted element (elem_hoists)
     else: addr_of(F, x, reg)
 
 def int_to_long_temp(F, e, reg_family):
@@ -469,6 +482,7 @@ def call_into(F, e, dest, arg_hint=None):
     F.emit('lda', 'XWA,%s' % slot_addr(F, off)); F.emit('push', 'XWA'); F.push += 4; n += 4
     F.emit('cal', '_' + fn.decl.name)
     F.pending += n                                         # _tan: cos's pops wait for sin's (lda XSP,XSP+0x18)
+    if dest[0] == 'discard': return
     if dest[0] not in ('slot', 'cell') or (dest[0] == 'slot' and dest[1] != off):
         cg.flush_pops(F)
         first = dest_first(F, dest); F.emit('lda', 'XBC,%s' % slot_addr(F, off))
@@ -479,6 +493,7 @@ def gen_return(F, v):
     """return of a double (hidden pointer) or a float (XHL, through a frame temporary)"""
     if F.f.ret.size == 8:
         mode = root_mode(F, v)
+        if mode == 'xiz' and holds_xiz(v): mode = 'copy'    # fo_mem_n: the product in a temporary, then copied
         if getattr(F, 'sret_home', False):                 # _sin: two returns -> the pointer homed in XIZ at entry
             if mode == 'copy':
                 t1 = Cell(8)
@@ -688,7 +703,10 @@ def hoist_common(lines):
 
 def call_stmt(F, e):
     """a call whose arguments include a double (d_call_v: vd(gd + gd2)): the double pushed through XIY / XIX, the
-    pops released at once"""
+    pops released at once.  A double result that is thrown away still gets a frame temporary whose address is the
+    hidden first argument (_log: frexp(x / SQRT2, &nptr) -> lda XWA,XSP+0x4c / push XWA / cal _frexp)."""
+    if is_fp(e.ty) and e.ty.size == 8:
+        call_into(F, e, ('discard',)); return
     cg = C(); fn = strip(e.fn); n = 0
     for a in reversed(e.args):
         if is_fp(strip(a).ty): n += push_fp_arg(F, a)
@@ -725,9 +743,65 @@ def elem_member(v):
     if a.k != 'var' or a.decl.kind != 'global' or a.decl.ty.kind != 'array' or i.k != 'const': return None
     return (a.decl.name, i.value * b.ty.size + C().member_offset(v))
 
+def const_elem(v):
+    """(global name, offset) of g[k].m or g[k] with a constant k, else None"""
+    r = elem_member(v)
+    if r: return r
+    v = strip(v)
+    if v.k != 'index': return None
+    a = strip(v.base); i = C().fold(v.idx)
+    if a.k != 'var' or a.decl.kind != 'global' or a.decl.ty.kind != 'array' or i.k != 'const': return None
+    return (a.decl.name, i.value * v.ty.size)
+
+def elem_hoists(e):
+    """the constant-index global elements that are an operand of a double + - * / whose other operand is an integer
+    converted to double: V4.23 loads such an element's address into XIZ before the statement and keeps it across the
+    conversion's helper call (run 2026-11-09-15-micro-fporder: fo_log, fo_mem_n, fo_arr_n ...; _log's LN2 * nptr,
+    LN2 = g_dbltbl[3].val: lda XIZ,_g_dbltbl + 0x18 / ... / ld XDE,XIZ / cal ._fmul_d).  Not when the other operand
+    is a call (fo_mem_call) or another element (fo_mem_mem)."""
+    out = []
+    def visit(n, d):
+        if n.k == 'bin' and n.op in ('+', '-', '*', '/') and is_fp(getattr(n, 'ty', None)):
+            for a, b in ((n.l, n.r), (n.r, n.l)):
+                a, b = fp_value_cast(a), fp_value_cast(b)
+                if a.k == 'load' and const_elem(a.e) and b.k == 'cast' and b.kind == 'IntegralToFloating':
+                    out.append(a)
+    if hasattr(e, 'k'): visit(e, 0); C().walk(e, visit)
+    return out
+
+def has_elem_hoist(F):
+    found = []
+    C().walk(F.f.body, lambda n, d: found.extend(elem_hoists(n)) if n.k in ('expr', 'return', 'decl') else None)
+    return bool(found)
+
+def hoist_elems(F, s):
+    """at the start of statement s: lda XIZ,<element> for its first hoisted element (elem_hoists)"""
+    e = getattr(s, 'e', None) if s.k == 'expr' else getattr(s, 'value', None) if s.k == 'return' else \
+        getattr(s, 'init', None) if s.k == 'decl' else None
+    if e is None or not hasattr(e, 'k'): return
+    hs = elem_hoists(e)
+    if not hs: return
+    name, off = const_elem(hs[0].e)
+    text = '_%s + %s' % (name, C().hx(off)) if off else '_%s' % name
+    F.emit('lda', 'XIZ,%s' % text)
+    for h in hs:
+        if const_elem(h.e) == (name, off): h._xiz = True
+
+def in_xiz(x):
+    return not isinstance(x, tuple) and getattr(fp_value_cast(x), '_xiz', False)
+
+def holds_xiz(e):
+    found = []
+    if hasattr(e, 'k'):
+        if in_xiz(e): return True
+        C().walk(e, lambda n, d: found.append(n) if getattr(n, '_xiz', False) else None)
+    return bool(found)
+
 def rank(F, x):
     """the order of commutative operands: an element or member of a global first, then a temporary, then the rest"""
     if isinstance(x, tuple): return 1
     e = fp_value_cast(x)
+    if getattr(e, '_xiz', False): return -1                 # fo_mem_n: XBC = the conversion, XDE = XIZ
+    if e.k == 'fconst' and RANK_CONST: return -0.5          # fo_log, _log: 2 * s -> XBC = s, XDE = the constant
     if e.k == 'load' and (elem_member(e.e) or strip(e.e).k == 'member'): return 2   # (not d_loop's gda[i])
     return 0

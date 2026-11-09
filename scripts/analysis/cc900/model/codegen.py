@@ -1456,7 +1456,7 @@ def flat(s):
 
 def gen_stmt(F, s, last):
     if s.k != 'block' and getattr(F, 'fp_temps', None) is not None:
-        fpgen.begin_stmt(F); F._root_done = False         # R5g: a statement's op temporaries are free at the next
+        fpgen.begin_stmt(F); F._root_done = False; fpgen.hoist_elems(F, s)         # R5g: a statement's op temporaries are free at the next
         e = getattr(s, 'e', None) if s.k == 'expr' else None
         e = strip(e) if e is not None else None
         F.stmt_global = e is not None and ((e.k == 'bin' and e.op == '=') or e.k == 'opassign') and \
@@ -1637,7 +1637,8 @@ def gen_stmt(F, s, last):
             if F.xiz_vars: F.emit('pop', F.save_reg)
             epilogue(F); F.emit('ret'); return
         raise Unsupported('struct return')
-    if s.k == 'expr' and s.e.k == 'call' and any(fpgen.is_fp(strip(a).ty) for a in s.e.args):
+    if s.k == 'expr' and s.e.k == 'call' and (any(fpgen.is_fp(strip(a).ty) for a in s.e.args) or
+                                             fpgen.is_fp(s.e.ty) and s.e.ty.size == 8):
         fpgen.call_stmt(F, s.e); return
     if s.k == 'expr' and s.e.k == 'call' and strip(s.e.fn).k == 'var' and strip(s.e.fn).decl.name == '__cc900_asm':
         import listing, ast as _ast                        # __ASM("..."): the text as it is (_MEMSET.C)
@@ -2121,7 +2122,7 @@ def plan_homes(F):
             if not F.xiz_vars: F.xiz_vars.append(None)
     if not (moves or stores or locs or pairs): return
     if F.xiz_vars and not any(l == '\tpush\tXIZ' for l in F.lines):
-        F.save_reg = 'XIZ' if used['QIZ'] else 'IZ'
+        F.save_reg = 'XIZ' if used['QIZ'] or (fpgen.uses_fp(F.f) and fpgen.has_elem_hoist(F)) else 'IZ'   # _log
         F.emit('push', F.save_reg); F.push = 4 if F.save_reg == 'XIZ' else 2
     F.home_moves = moves; F.home_stores = stores
 
@@ -3304,7 +3305,7 @@ def fp_plan_frame(F):
         top -= (d.ty.size + 1) // 2 * 2; d.slot = top
     F.ftemp_top = top; F.ftemp_used = 0; F.fret_slot = size - fret if fret else None
     F.frame = size
-    if fpgen.needs_xiz(F) and not F.xiz_vars:              # fp_temps.c t_mla: lda XSP,XSP-0x10 / push XIZ
+    if (fpgen.needs_xiz(F) or fpgen.has_elem_hoist(F)) and not F.xiz_vars:   # fp_temps.c t_mla: push XIZ
         F.lines.insert(1, '\tpush\tXIZ'); F.push += 4; F.xiz_vars.append('sret'); F.save_reg = 'XIZ'
         if fpgen.needs_sret_home(F):                       # _sin: ld XIZ,(XSP+0x38) right after the push
             F.sret_home = True; F.lines.insert(2, '\tld\tXIZ,(XSP+%s)' % hx(F.sret.off + size + F.push))
