@@ -256,7 +256,8 @@ def gen(F, e, fam, size, then_ret=False, store=False):
         return fam
     if e.k == 'bin' and e.op in ('&&', '||'):        # c_and / c_or: ld HL,0 / conditions / ld HL,1
         R = FAM[fam][2]
-        F.emit('ld', '%s,0x0' % R)
+        if not getattr(F, 'preset_hl', False): F.emit('ld', '%s,0x0' % R)
+        F.preset_hl = False
         lend = F.newulabel()
         gen_cond_false(F, e, 'RET' if then_ret else lend)
         F.emit('ld', '%s,0x1' % R); F.lines.append(lend + ':'); return fam
@@ -289,6 +290,10 @@ def gen(F, e, fam, size, then_ret=False, store=False):
         r = strip(e.e).decl.reg
         if r != fam: F.emit('ld', '%s,%s' % (FAM[fam][size], FAM[r].get(size, FAM[r].get(2))))
         return fam if r != fam else r
+    if e.k == 'bin' and e.op in '+-' and len(e.op) == 1 and e.ty.kind == 'int' and fold(e.r).k == 'const' and \
+            fold(e.r).value is not None and fold(e.r).value < 0:
+        from frontend import N                           # __toupper: c + ('A' - 'a') -> sub HL,0x20
+        e = N('bin', op='-' if e.op == '+' else '+', l=e.l, r=N('const', value=-fold(e.r).value, ty=e.ty), ty=e.ty)
     if e.k == 'bin':
         return gen_bin(F, e, fam, size, then_ret, store)
     raise Unsupported(e.k)
@@ -412,6 +417,9 @@ def cse_params(F, e):
     needs_wa = size == 1 or (top.k == 'bin' and top.op in ('*', '/', '%', '<<', '>>'))
     if top.k == 'bin' and top.op in ('*', '/', '%') and size == 4: return False
     tmp = 'BC' if needs_wa else 'WA'
+    if top.k == 'bin' and top.op in ('&&', '||'):          # _isdigit: ld HL,0x0 before ld WA,(XSP+0x4)
+        F.emit('ld', '%s,0x0' % FAM['HL'][2]); F.preset_hl = True
+        tmp = 'WA'
     F.emit('ld', '%s,(XSP+%s)' % (FAM[tmp][d.ty.size], hx(d.off + F.push)))
     d.reg = tmp
     try:
@@ -561,6 +569,9 @@ def gen_cond_true(F, c, target):
     if c.k == 'un' and c.op == '!': return gen_cond_false(F, c.e, target)
     if c.k == 'bin' and c.op == '||':
         gen_cond_true(F, c.l, target); gen_cond_true(F, c.r, target); return
+    if c.k == 'bin' and c.op == '&&':                # _isalpha: (c>='a' && c<='z') || ... -> j lt,L1 / j le,L2 / L1:
+        lf = F.newulabel(); gen_cond_false(F, c.l, lf); gen_cond_true(F, c.r, target)
+        F.lines.append(lf + ':'); return
     if c.k == 'bin' and c.op in CC_S:
         cc = gen_compare(F, c)
         if cc in (True, False): raise Unsupported('constant condition')
