@@ -397,6 +397,25 @@ Done since (2026-11-09, late night):
   - FP argument conventions under adecl (abi `c_f` / `c_d`).
   Library (v4.23) 161 / 248; pairs kn5000 223.
 
+Done since (2026-11-09, evening), each from a probe run of its own (`corpus/probes/README.md`):
+- **FP parameters and arguments under adecl** (`probes/adfp.c`, run `2026-11-09-29-micro-adfp`: 15 / 15 at all four
+  sets): a double is on the stack and uses up its register position; a float travels in its register, through a
+  4-byte frame temporary on the caller's side and a slot at entry on the callee's (abi.md).  abi 98 -> 99 (none),
+  adecl abi 73 -> 75 (-Xr), 75 -> 77 (-O3 -XS -Xr).
+- **A call on the right is built first** (`a + f(x)`, `a + (x > 0.0)`): the model used to load `a` into HL and then
+  call, which is wrong code.
+- **Int arithmetic on a char is done in the byte** (`probes/chnarrow.c`, run `2026-11-09-30-micro-chnarrow`;
+  `codegen.char_narrow`): `c - 48` is `sub A,0x30` and an extension, unsigned when either side is (`c + 200`);
+  `c * k` is the byte multiply; a `?:` with char arms is extended once after the join.  19 / 18 / 19 / 18 of 20.
+- **Two wrong-code fixes in table tests under adecl** (arr_index.c `ai_xdig_i`, `ai_dig_val`): the narrowing
+  `(unsigned char)` cast of a register index was dropped, and a table byte was loaded over the char it is indexed
+  by.  The byte is now tested in place (`bit 0x2,(XDE+BC)`), as cc900 does.
+- Smaller rules: local union elements as `(XSP+d)` operands that keep a zero displacement (`(XSP+0x0)`); a one-bit
+  `or` is `set`; `ret eq` keeps what the reload rule knows; a `?:` arm is exclusive for last uses.
+- **`_vsprintf`** was misread as a swap; it is one extra reload, most probably from a Technics source variant (see
+  the open-pairs paragraph above).
+  Micro 674 / 674 at all four sets throughout; library (v4.23) 169 / 248; pairs kn5000 223.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
