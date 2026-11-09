@@ -339,7 +339,8 @@ def gen(F, e, fam, size, then_ret=False, store=False):
         if strip(b.l).ty.kind in ('ptr', 'array') and b.op == '-' and esize_of(b) > 1: rm = None   # m_diff: scaled
         elif rm is not None and family_of(rm) and rm.startswith('X') and b.ty.size == 4: pass   # _strlen: sub XHL,XIZ
         elif rm is not None and family_of(rm): rm = None
-        if d is not None and d.reg in ('WA', 'BC', 'DE', 'HL') and dies_here(F, lv) and rm is not None:
+        if d is not None and d.reg in ('WA', 'BC', 'DE', 'HL') and dies_here(F, lv) and rm is not None and \
+                d not in getattr(F, 'no_inplace', ()):
             F.emit(SIMPLE_OPS[b.op], '%s,%s' % (FAM[d.reg][b.ty.size], rm))   # sw_ev: sub XBC,0x2000 / ld WA,BC
             if d.reg != fam: F.emit('ld', '%s,%s' % (FAM[fam][size], FAM[d.reg][size]))
             return fam
@@ -607,7 +608,8 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
             gen_bin(F, e, 'WA', size, then_ret, store)
             F.emit('ld', '%s,%s' % (FAM[fam][size], FAM['WA'][size])); return fam
         lr = regvar_of(strip(l).e) if strip(l).k == 'load' else None
-        if lr is not None and lr.reg in ('WA', 'BC', 'DE', 'HL') and F.opt and dies_here(F, l) and lr.reg != fam:
+        if lr is not None and lr.reg in ('WA', 'BC', 'DE', 'HL') and F.opt and dies_here(F, l) and lr.reg != fam and \
+                lr not in getattr(F, 'no_inplace', ()):
             # -O: a dying register operand is computed in place, then moved (add_i_pp under O3XSXr)
             F.dead.add(lr)
             rs = operand(F, r, size)
@@ -2881,6 +2883,7 @@ FP_AGGR = True
 MUL_K_XWA = True
 IFCHAIN_JOIN = True
 BINLOC_XR = True
+KILL_AFTER_CALL = True                             # homes: a def after a call on its path kills (sw_local)
 CDECL_TAILCALL = True                              # -O: cal _f / ret (nothing between) is j _f (sw_jt6d)
 EXIT_PLACEMENT = True                              # -O: an exit block nothing falls into moves (switch.c sw_evtab)
 CJ_TRAMPOLINES = True                              # -O: arms the tail merge empties go (switch.c sw_ev)
@@ -2952,8 +2955,11 @@ def plan_homes(F):
     for i, (x, px) in enumerate(seq0):
         if x[0] in ('call', 'rcall'):
             before = {y[1] for y, py in seq0[:i] if y[0] in ('use', 'def')}
-            for y, py in seq0[i + 1:]:
+            killed = set()                                 # switch.c sw_local: r = g1(x) redefines r on the call's
+            for y, py in seq0[i + 1:]:                     # own path, so the later `return r` does not keep r live
+                if KILL_AFTER_CALL and y[0] == 'def' and compatible(px, py) and px: killed.add(y[1])   # across it
                 if x[0] == 'rcall' and (y[0] != 'use' or len(y) < 3 or y[2] != x[1]): continue
+                if y[0] == 'use' and y[1] in killed: continue
                 if y[0] == 'use' and compatible(px, py) and (y[1].kind == 'param' or y[1] in before): mark(y[1])
         if x[0] == 'loop' and any(y[0] == 'call' for y in x[1]):
             for y in x[1]:
@@ -3259,7 +3265,7 @@ def regvar_stmt(F, e):
         if getattr(F, 'l2', None): F.l2.setdefault('const', {}).pop(d, None)
         if rc.k == 'const':
             if getattr(F, 'l2', None) and not F.loops: F.l2['const'][d] = rc.value
-            F.emit('ld', '%s,%s' % (R, hx(rc.value))); return True
+            F.emit('ld', '%s,%s' % (R, hx(rc.value & ((1 << (8 * d.ty.size)) - 1)))); return True   # .sw_local: -1 is 0xffff
         m = operand(F, e.r, d.ty.size)
         if m is not None: F.emit('ld', '%s,%s' % (R, m)); return True
         if strip(e.r).k == 'call':                     # k_keep: cal .r1 / ld QIZ,HL (cdecl: inc 0x2,XSP first)
@@ -3447,12 +3453,16 @@ def gen_switch(F, s, last):
     if m is not None and family_of(m) and not ext:
         R = FAM[family_of(m)[1:] if family_of(m) != 'XIZ' else 'IZ'][size]
         keep = in_body or (sel is not None and sel.reg in ('IZ', 'QIZ', 'XIZ'))   # sw_loop: ld WA,IZ
-        if keep and not F.opt:
-            used = {getattr(d, 'reg', None) for d in list(F.f.params) + list(F.f.decls)
-                    if getattr(d, 'reg', None) and (d.kind != 'param' or uses_decl(F.f.body, d))}
+        n_ = len(vals); lo_ = min(v for v, _, _ in vals) if vals else 0; hi_ = max(v for v, _, _ in vals) if vals else 0
+        is_tab = n_ >= 6 and hi_ - lo_ + 1 <= 2 * n_       # (a jump table; a compare chain keeps the register: sw_ev)
+        if keep and (not F.opt or (F.adecl and in_body and is_tab and sel is not None and sel.reg in ('WA', 'BC', 'DE'))):
+            used = {getattr(d, 'reg', None) for d in list(F.f.params) + list(F.f.decls)   # (.sw_local under O3XSXr:
+                    if getattr(d, 'reg', None) and (d.kind != 'param' or uses_decl(F.f.body, d))}   # ld BC,WA)
             nr = [r for r in ('WA', 'BC', 'DE', 'HL') if r not in used][0]
             F.emit('ld', '%s,%s' % (FAM[nr][size], R)); R = FAM[nr][size]
-        elif keep and F.opt and not F.adecl and sel is not None and sel.reg in ('IZ', 'QIZ'):
+            if F.opt and sel is not None: F.no_inplace = getattr(F, 'no_inplace', set()) | {sel}   # .sw_local: x + 1
+                                                     # in an arm is ld HL,WA / inc 0x1,HL, not done in place
+        elif keep and F.opt and sel is not None and sel.reg in ('IZ', 'QIZ') and (not F.adecl or is_tab):
             F.emit('ld', '%s,%s' % (FAM['WA'][size], R)); R = FAM['WA'][size]   # sw_loop under O3XS: ld WA,IZ
     else:
         fam = gen(F, e, 'WA', e.ty.size) if not (m and family_of(m) == 'XWA') else 'WA'
