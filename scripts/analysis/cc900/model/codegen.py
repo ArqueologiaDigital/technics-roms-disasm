@@ -3479,6 +3479,7 @@ def gen_stmt(F, s, last):
         gen_stmt(F, s.then, last)
         arm_call = F.pending or F.lines[-1].startswith('\tcal\t')
         if last and not before_trivial_ret and not F.xiz_vars and not F.pushes and not F.lines[-1].startswith(('\tret', '\tj\t')) \
+                and not getattr(F, 'frame', 0) \
                 and not (F.opt and IFCHAIN_JOIN and arm_call):   # (an arm without a call returns
                                                                                   # itself: cb_c_else_80 under O3XS)
             flush_pops(F); F.emit('ret')               # c_ifchain: the exit is duplicated, not jumped to (cdecl -O
@@ -3488,8 +3489,8 @@ def gen_stmt(F, s, last):
         F.push -= F.pending; F.pending = 0
         F.lines.append(lelse + ':')
         gen_stmt(F, s.els, last)
-        if last and not before_trivial_ret and not F.xiz_vars and not F.pushes and \
-                not F.lines[-1].startswith(('\tret', '\tj\t')) and not F.opt:
+        if last and not before_trivial_ret and not F.xiz_vars and not F.pushes and not getattr(F, 'frame', 0) and \
+                not F.lines[-1].startswith(('\tret', '\tj\t')) and not F.opt:   # (a frame is released once, at the join: s_if)
             flush_pops(F); F.emit('ret'); return            # c_ifchain under none: the last arm returns too
         import re as _re
         jumped = any(_re.search(r'[\t,]%s$' % lend, l) for l in F.lines)
