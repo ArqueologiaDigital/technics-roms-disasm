@@ -10,5 +10,5 @@
 | run 2026-11-08-7-micro, v423/Xr            | micro/*.c                                     | 552 / 674 exact (81.9%) |
 | run 2026-11-08-7-micro, v423/O3XSXr        | micro/*.c                                     | 548 / 674 exact (81.3%) |
 | run 2026-11-08-8-micro-ra, v423/O3XSXr     | micro/ra_*.c                                  | 0 / 42 exact (0.0%)     |
-| run 2026-11-08-9-micro-optloops, v423/O3XS | micro/opt_loops.c                             | 12 / 33 exact (36.4%)   |
+| run 2026-11-08-9-micro-optloops, v423/O3XS | micro/opt_loops.c                             | 15 / 33 exact (45.5%)   |
 | run 2026-11-08-5-libsrc97-O3XS, v423/O3XS  | 1997 LIB/SRC (the files the front end parses) | 3 / 24 exact (12.5%)    |

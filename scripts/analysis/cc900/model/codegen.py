@@ -1029,6 +1029,16 @@ def loop_cond(F, c, target, sense):
 
 def gen_counted(F, s, last, cl):
     """the -O counted loop (ol_i_acc1 .. ol_c_glob)"""
+    if 'kconst' in cl:                                     # ol_i_const: walk a pointer to an end pointer
+        F.emit('lda', 'XBC,_%s' % cl['arr'].name); F.emit('ld', 'XWA,XBC')
+        F.emit('lda', 'XBC,XBC+%s' % hx(cl['kconst'] * cl['esz']))
+        body = F.newulabel(); F.newulabel()
+        F.lines.append(body + ':')
+        F.cl_operand = '(XWA+:%d)' % cl['esz']; F.cl_active = cl; F.cl_shared = False
+        gen_stmt(F, s.body, False)
+        F.cl_active = None; F.cl_operand = None
+        F.emit('cp', 'XWA,XBC'); F.emit('j', 'ult,%s' % body)
+        return
     i = cl['i']; I = FAM[i.reg][2]; K = FAM[cl['kp'].reg][2]
     F.emit('ld', '%s,0x0' % I)
     kd = cl['k']
@@ -1135,7 +1145,9 @@ def counted_loop(F, s):
             and strip(strip(c.l).e).decl is iv.decl): return None
     kv = strip(c.r)
     while kv.k == 'cast': kv = strip(kv.e)
-    if not (kv.k == 'load' and strip(kv.e).k == 'var' and strip(kv.e).decl.kind in ('param', 'global')): return None
+    kconst = fold(c.r) if fold(c.r).k == 'const' else None
+    if kconst is None and not (kv.k == 'load' and strip(kv.e).k == 'var' and strip(kv.e).decl.kind in ('param', 'global')):
+        return None
     inc = strip(s.inc)
     if not (inc.k == 'incdec' and inc.op == '++' and strip(inc.e).k == 'var' and strip(inc.e).decl is iv.decl): return None
     arrays = []; bad = []
@@ -1150,6 +1162,13 @@ def counted_loop(F, s):
         if n.k == 'call': bad.append(n)
     walk(s.body, v)
     if bad or len(arrays) != 1: return None
+    if kconst is not None:
+        other = []                                       # ol_i_const: only if i has no other use
+        walk(s.body, lambda n, d: other.append(n) if n.k == 'load' and strip(n.e).k == 'var' and strip(n.e).decl is iv.decl else None)
+        nidx = []
+        walk(s.body, lambda n, d: nidx.append(n) if n.k == 'index' else None)
+        if len(other) != len(nidx) or kconst.value <= 0: return None
+        return {'i': iv.decl, 'kconst': kconst.value, 'arr': arrays[0][0], 'esz': arrays[0][1]}
     return {'i': iv.decl, 'k': strip(kv.e).decl, 'arr': arrays[0][0], 'esz': arrays[0][1]}
 
 def plan_leaf(F):
@@ -1198,6 +1217,12 @@ def plan_leaf(F):
             walk(f.body, lambda n, d: rets0.append(strip(strip(n.value).e).decl) if n.k == 'return' and n.value is not None
                  and strip(n.value).k == 'load' and strip(strip(n.value).e).k == 'var' else None)
             reserved = set()
+            if 'kconst' in cl:
+                locs = [d for d in f.decls if d.kind == 'local' and d.ty.kind == 'int' and not d.addr_taken and d is not cl['i']]
+                for d in locs:
+                    if d in rets0: d.reg = 'HL'
+                cl['i'].reg = None
+                return True
             if shared or stores_long: reserved.add('WA')
             locs = [d for d in f.decls if d.kind == 'local' and d.ty.kind == 'int' and not d.addr_taken]
             for d in locs:
