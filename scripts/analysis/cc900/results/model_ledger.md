@@ -45,6 +45,8 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-12-micro-optcounted, v423/O3XS                       | micro/opt_counted.c | 2 / 32 exact (6.2%)      |
 | run 2026-11-09-12-micro-optcounted, v423/Xr                         | micro/opt_counted.c | 1 / 32 exact (3.1%)      |
 | run 2026-11-09-12-micro-optcounted, v423/O3XSXr                     | micro/opt_counted.c | 2 / 32 exact (6.2%)      |
+| run 2026-11-09-13-micro-fpstmts, v423/none                          | micro/fp_stmts.c    | 1 / 16 exact (6.2%)      |
+| run 2026-11-09-13-micro-fpstmts, v423/O3XS                          | micro/fp_stmts.c    | 0 / 16 exact (0.0%)      |
 | run 2026-11-08-9-micro-optloops, v423/O3XS                          | micro/opt_loops.c   | 15 / 33 exact (45.5%)    |
 | run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality v4.23      | 1997 LIB/SRC        | 144 / 248 exact (58.1%)  |
 | run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality kn5000     | 1997 LIB/SRC        | 142 / 248 exact (57.3%)  |
