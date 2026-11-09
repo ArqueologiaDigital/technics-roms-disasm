@@ -240,7 +240,7 @@ class Builder:
         if k == 'SwitchStmt': return N('switch', value=s.expr(I[0]), body=s.stmt(I[1]))
         if k == 'CaseStmt': return N('case', value=s.expr(I[0]), body=s.stmt(I[1]) if len(I) > 1 else None)
         if k == 'DefaultStmt': return N('default', body=s.stmt(I[0]) if I else None)
-        if k == 'LabelStmt': return N('label', name=n['name'], body=s.stmt(I[0]))
+        if k == 'LabelStmt': return N('label', name=n['name'], decl=n.get('declId'), body=s.stmt(I[0]))
         if k == 'GotoStmt': return N('goto', target=n.get('targetLabelDeclId'))
         return N('expr', e=s.expr(n))
 

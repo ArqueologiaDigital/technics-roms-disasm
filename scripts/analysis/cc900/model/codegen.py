@@ -1831,6 +1831,8 @@ def gen_stmt(F, s, last):
         if F.case_labels[id(s)] and id(s) not in F.case_inner: F.lines.append(F.case_labels[id(s)] + ':')
         if s.body is not None: gen_stmt(F, s.body, False)
         return
+    if s.k == 'ulabel':                                    # a user label left by goto_returns (_strcspn's bye: stays)
+        lab = F.newulabel(); F.lines.append(lab + ':'); F.user_labels = getattr(F, 'user_labels', set()) | {lab}; return
     if s.k == 'break':
         if F.loops[-1][0] in getattr(F, 'switch_rets', set()):   # sw_jt6 under none: each case returns itself
             flush_pops(F); F.emit('ret'); return
@@ -3121,6 +3123,8 @@ def leaf_r6(F):
         used.add(r); p.reg = r; F.emit('ld', '%s,(XSP+%s)' % (FAM[r][2], hx(p.off + F.push)))
     return True
 
+L2_WIDE = False
+
 def leaf_l2(F):
     """cdecl -O3 -XS leaf functions with a table lookup (ctype.h): rule L2 (l2alloc.py; research-scratch
     sessions/2026-11-09_cc900-leaf-o3xs).  Classifies the parameters, locals and temporaries, allocates them, and
@@ -3134,7 +3138,7 @@ def leaf_l2(F):
         if n.k in ('for', 'while', 'do'): loops.append(n)
     walk(f.body, find)
     early = one_early_call(F)
-    if not tabs and not (early and loops): return False
+    if not tabs and not (early and loops) and not ((L2_WIDE or getattr(F, 'had_goto', False)) and loops): return False
     across = set()
     if early:                                            # _strrchr: s is read after strlen(s) -> XIZ
         seq = eval_sequence(f.body, [])
@@ -3196,6 +3200,14 @@ def leaf_l2(F):
             iv = strip(lp.inc)
             v = strip(iv.e) if iv.k == 'incdec' else strip(iv.l) if iv.k == 'opassign' else None
             if v is not None and v.k == 'var' and v.decl.kind == 'local': counters.add(v.decl)
+    reads = {}; copies = {}                              # a parameter read only as the source of `local = p`
+    def rc(n, dep):
+        if n.k == 'load' and strip(n.e).k == 'var': reads[strip(n.e).decl] = reads.get(strip(n.e).decl, 0) + 1
+        if n.k == 'bin' and n.op == '=' and strip(n.l).k == 'var' and strip(n.l).decl.kind == 'local':
+            r = strip(n.r)
+            if r.k == 'load' and strip(r.e).k == 'var': copies[strip(r.e).decl] = copies.get(strip(r.e).decl, 0) + 1
+    walk(f.body, rc)
+    copy_only = {d for d in f.params if reads.get(d, 0) and reads.get(d, 0) == copies.get(d, 0) and d not in modified}
     narrowed_params = set()                              # a parameter used as (char)p in a loop: hoisted (_strrchr)
     def nar(n, dep):
         if dep and n.k == 'cast' and n.kind == 'IntegralCast' and n.ty.size == 1 and strip(n.e).k == 'load' and \
@@ -3216,6 +3228,7 @@ def leaf_l2(F):
             elif d not in inloop: cls = 'out'
             elif d in loopmod and d.ty.kind == 'int': cls = 'cnt'
             elif d not in modified and (d in narrowed_params or inloop.get(d, 0) >= 2): cls = 'ro'   # _strrchr: (char)c
+            elif d in copy_only: continue                   # _strcspn: s = s2 -> ld XDE,(XSP+0x8), s2 no object
             else: return False                              # rld parameters: not yet
         elif d in counters: cls = 'ctr'                     # _strrchr: for (i = ...; i; --i)
         else:
@@ -3523,6 +3536,37 @@ def propagate_global_copies(f):
                 continue
             substitute(nx, g.decl, src)
     walk(f.body, visit)
+
+def N_ublock(body):
+    from frontend import N
+    return N('block', body=[N('ulabel'), body])
+
+def goto_returns(f):
+    """`goto L` where L labels a `return` becomes that return (_strcspn: goto bye; ... bye: return (len); ->
+    ret eq inside the loop), and the label gives way to its statement"""
+    import copy as _copy
+    labels = {}
+    walk(f.body, lambda n, d: labels.__setitem__(n.decl, n) if n.k == 'label' and getattr(n, 'decl', None) else None)
+    def ret_of(lab):
+        b = lab.body
+        while hasattr(b, 'k') and b.k == 'block' and len(b.body) == 1: b = b.body[0]
+        return b if hasattr(b, 'k') and b.k == 'return' else None
+    def fix(n):
+        for key, v in list(n.__dict__.items()):
+            if hasattr(v, 'k'):
+                if v.k == 'goto' and v.target in labels and ret_of(labels[v.target]) is not None:
+                    setattr(n, key, _copy.deepcopy(ret_of(labels[v.target])))
+                elif v.k == 'label' and v in labels.values():
+                    setattr(n, key, N_ublock(v.body)); fix(v.body)
+                else: fix(v)
+            elif isinstance(v, list):
+                for i, x in enumerate(v):
+                    if not hasattr(x, 'k'): continue
+                    if x.k == 'goto' and x.target in labels and ret_of(labels[x.target]) is not None:
+                        v[i] = _copy.deepcopy(ret_of(labels[x.target]))
+                    elif x.k == 'label' and x in labels.values(): v[i] = N_ublock(x.body); fix(x.body)
+                    else: fix(x)
+    fix(f)
 
 def forward_single_use(f):
     """-O: a local written once by a call-free expression and read once, as the last argument of the call that makes
@@ -3847,14 +3891,14 @@ def cross_jump(F, lines):
     return [l for l in lines if not (is_label(l) and l[:-1] in made and not refs(l[:-1]) and   # _memccpy: one L50000
                                      (l[:-1] in made_new or not named(l[:-1])))]
 
-def thread_jumps(lines):
+def thread_jumps(lines, keep=()):
     """-O jump threading (_atoi: if (isdigit(c)) ... else break; inside for (;;) -> j eq,L6 to the exit, the arm's
     end j L5 to the loop top): a jump to a label whose next instruction is `j X` goes to X; adjacent labels merge
     into the first; a `label: j X` block that nothing reaches after an unconditional jump goes."""
     def is_label(l): return l.endswith(':') and not l.startswith('\t')
     alias = {}
     for i in range(1, len(lines)):
-        if is_label(lines[i]) and is_label(lines[i - 1]):
+        if is_label(lines[i]) and is_label(lines[i - 1]) and lines[i][:-1] not in keep and lines[i - 1][:-1] not in keep:
             a = lines[i - 1][:-1]
             alias[lines[i][:-1]] = alias.get(a, a)
     lines = [l for i, l in enumerate(lines) if not (is_label(l) and l[:-1] in alias)]
@@ -3881,6 +3925,13 @@ def thread_jumps(lines):
         if m1 and m2 and m1.group(2) and m2.group(2) is None and lines[i + 2] == m1.group(3) + ':' and m1.group(2) in INV:
             lines[i] = '\tj\t%s,%s' % (INV[m1.group(2)], m2.group(3)); lines[i + 1] = '\t;dead'
     lines = [l for l in lines if l != '\t;dead']
+    where = {l[:-1]: i for i, l in enumerate(lines) if is_label(l)}
+    for i, l in enumerate(lines):                      # _strcspn: j eq,L6 ... L6: ret -> ret eq
+        m = tgt(l)
+        if m and m.group(2):
+            j = where.get(m.group(3)); k = j + 1 if j is not None else None
+            while k is not None and k < len(lines) and is_label(lines[k]): k += 1
+            if k is not None and k < len(lines) and lines[k] == '\tret': lines[i] = '\tret\t%s' % m.group(2)
     def refs(L): return any(re.search(r'[\t,]%s$' % L, l) for l in lines if l.startswith('\t'))
     drop = set()
     for i, l in enumerate(lines):
@@ -3889,7 +3940,10 @@ def thread_jumps(lines):
         prev = next((lines[k] for k in range(i - 1, -1, -1) if k not in drop), '')
         if nx and nx.group(2) is None and prev.startswith(('\tj\t', '\tret')) and ',' not in prev:
             drop.update((i, i + 1))
-    return [l for i, l in enumerate(lines) if i not in drop]
+    lines = [l for i, l in enumerate(lines) if i not in drop]
+    return [l for i, l in enumerate(lines) if not (is_label(l) and re.match(r'^L\d+$', l[:-1]) and not refs(l[:-1]) and
+                                                   l[:-1] not in keep and
+            not (i + 1 < len(lines) and lines[i + 1].startswith('\tdjnz')))]   # _strrchr: L4: djnz BC,L2 stays
 
 def tail_calls_opt(F, lines):
     """-O: cal X / j L (L: ret) becomes j X; a label that lost all its references (and is not a ret cc target)
@@ -3980,10 +4034,13 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong
     personality = PERSONALITIES[personality]
     merge_address_inits(f)
     if opt != 'none' and not adecl: propagate_global_copies(f); forward_single_use(f)
+    gotos = []
+    walk(f.body, lambda n, d: gotos.append(n) if n.k == 'goto' else None)
+    goto_returns(f)
     F = Fn(f, adecl)
     F.fp_temps = fp_temps; F.fp_nlong = fp_nlong
     F.personality = personality
-    F.opt = opt != 'none'; F.dead = set()
+    F.opt = opt != 'none'; F.dead = set(); F.had_goto = bool(gotos)
     compute_last_uses(F)
     F.lines.append(('.' if adecl else '_') + f.name + ':')
     F.loops = []; F.param_copies = []; F.pushes = []
@@ -3999,7 +4056,7 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong
         F.emit('retd', hx(F.retd)) if F.retd else F.emit('ret')   # op_three: an adecl stack parameter -> retd 0x2
     for t in reversed(getattr(F, 'tables', [])): F.lines[1:1] = t     # switch tables right after the label
     if F.opt and getattr(F, 'fp_temps', None) is not None: F.lines = fpgen.hoist_common(F.lines)
-    if F.opt and getattr(F, 'l2', None): F.lines = thread_jumps(F.lines)
+    if F.opt and getattr(F, 'l2', None): F.lines = thread_jumps(F.lines, getattr(F, 'user_labels', set()))
     if F.opt: F.lines = tail_calls_opt(F, cross_jump(F, F.lines))
     else: F.lines = tail_calls(F.lines, getattr(F, 'switch_table', False))
     if not F.opt and getattr(F, 'tfam', None):           # ot_cmp_anb under -Xr: j eq,L3 ... L3: ret -> ret eq
@@ -4123,7 +4180,16 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
         fa = adecl or getattr(f, 'adecl_attr', False)        # an __adecl function in a cdecl file (__SBRK.C: .sbrk)
         name = ('.' if fa else '_') + f.name
         try:
-            full = compile_function(f, opt, fa, personality)
+            import copy as _copy
+            spare = _copy.deepcopy(f) if opt != 'none' and not fa else None
+            try:
+                full = compile_function(f, opt, fa, personality)
+            except Unsupported:                            # cdecl -O: what the old leaf path cannot write, L2 may
+                if spare is None: raise                    # (_strcspn); never instead of a function it can write
+                global L2_WIDE
+                L2_WIDE = True
+                try: full = compile_function(spare, opt, fa, personality)
+                finally: L2_WIDE = False
             FULL[name] = full                              # the whole function, for pairs_model.py
             import re as _re                               # an inline-assembly label named _x / .x starts a new piece in
             cur = name; out[cur] = []                      # a listing (listing.split), so the model's output does too

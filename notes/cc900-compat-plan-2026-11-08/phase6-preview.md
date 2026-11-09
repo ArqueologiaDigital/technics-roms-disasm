@@ -64,10 +64,10 @@ reference model (cdecl, `-O3 -XS -DFLOAT`, as the library was built), translates
 image's own addresses: the pairs' publics, the image's labels, the helpers named in the runtime cross-reference),
 assembles and links it with llvm-mc / ld.lld at the pair's address, and compares the bytes with the image.
 
-| personality | byte-identical pairs | which                                                                                                                                                                                                                                                                                                                                                                                                                        |
-|-------------|----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `v4.23`     | 189 (18 differ)      | `_ltoa`, `_strcat`, `_strncpy`, `_strncat`, `_strcpy`, `_strlen`, `_memset`, `_memcmp`, `_memchr`, `_memcpy`, `_memccpy`, `__ctype` x9 each, `_strncmp` x10, `_strchr` x5, `_strnset` x5, `.sbrk` x6, `_atoi` x5, `_atol` x5, `_strrchr` x5, `_strupr` x2, `__FloatErrorHandle` x3, sub CPU float tables x9; `_modf`, `_fabs`, `_sin`, `_cos`, `_tan`, `_exp` (sub CPU x3 each); `_sprintf`, `_vsprintf` (HD-AE5000 x4 each) |
-| `kn5000`    | 202 (5 differ)       | the same 189, plus `_ultoa` (main CPU v10, v9, v7, v6, v5, HD-AE5000 x4) and `_ldiv` (HD-AE5000 x4)                                                                                                                                                                                                                                                                                                                          |
+| personality | byte-identical pairs | which                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+|-------------|----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `v4.23`     | 194 (18 differ)      | `_ltoa`, `_strcat`, `_strncpy`, `_strncat`, `_strcpy`, `_strlen`, `_memset`, `_memcmp`, `_memchr`, `_memcpy`, `_memccpy`, `__ctype` x9 each, `_strncmp` x10, `_strchr` x5, `_strnset` x5, `.sbrk` x6, `_atoi` x5, `_atol` x5, `_strrchr` x5, `_strcspn` x5, `_strupr` x2, `__FloatErrorHandle` x3, sub CPU float tables x9; `_modf`, `_fabs`, `_sin`, `_cos`, `_tan`, `_exp` (sub CPU x3 each); `_sprintf`, `_vsprintf` (HD-AE5000 x4 each) |
+| `kn5000`    | 207 (5 differ)       | the same 194, plus `_ultoa` (main CPU v10, v9, v7, v6, v5, HD-AE5000 x4) and `_ldiv` (HD-AE5000 x4)                                                                                                                                                                                                                                                                                                                                         |
 
 `_ltoa` came later the same day (`-O` keeps the parameters of a function with calls in scratch registers when no
 value is read after a call; and asm900 writes a 32-bit `cp XDE,0x0` with the long immediate, `ea cf 00 00 00 00`, not
@@ -92,7 +92,7 @@ V4.23 and the HD-AE5000 keep XWA; and `pairs.tsv` puts its public 3 bytes past i
 ff0ab4).  A different build of the library, or a rule for the main CPU; not decided.  `pairs.tsv` itself found it only as a near match
 (`near`, V4.23 ml 0.875, at `Sprintf_Unlocked+3`), so it may not be the library routine at all.  `_fabs` came with `-O`'s hoisting of the two branches' common first instructions above the test
 (`fpgen.hoist_common`).  `_exp` showed one more asm900 choice: `lda` of a symbol always takes the 24-bit address
-(`lda XBC,_g_mathtbl` at 0xf420 is `f2 20 f4 00 31`), where an `ld` of a variable below 0x10000 takes 16 bits.  The other 110 (`model cannot` in the TSV) are routines the model does not compile yet (`goto` in `_strcspn`, the
+(`lda XBC,_g_mathtbl` at 0xf420 is `f2 20 f4 00 31`), where an `ld` of a variable below 0x10000 takes 16 bits.  The other 110 (`model cannot` in the TSV) are routines the model does not compile yet (the
 floating-point formatter `__doprnt`, the math routines), or that are data the model does not emit.
 
 Inline assembly (`__ASM("...")`, `_memset`, `_memcmp`, `_memchr`) is passed through as thc1 does: the front end turns
@@ -112,11 +112,11 @@ a DOS end-of-file byte, which the front end now cuts.)
 
 | image       | pairs | identical | differ | not compiled yet | near match, unverified |
 |-------------|-------|-----------|--------|------------------|------------------------|
-| maincpu v10 | 24    | 20        | 0      | 4                | 3                      |
-| maincpu v9  | 24    | 20        | 0      | 4                | 0                      |
-| maincpu v7  | 24    | 20        | 0      | 4                | 3                      |
-| maincpu v6  | 24    | 20        | 0      | 4                | 0                      |
-| maincpu v5  | 24    | 20        | 0      | 4                | 0                      |
+| maincpu v10 | 24    | 21        | 0      | 3                | 3                      |
+| maincpu v9  | 24    | 21        | 0      | 3                | 0                      |
+| maincpu v7  | 24    | 21        | 0      | 3                | 3                      |
+| maincpu v6  | 24    | 21        | 0      | 3                | 0                      |
+| maincpu v5  | 24    | 21        | 0      | 3                | 0                      |
 | subcpu v142 | 16    | 10        | 1      | 5                | 0                      |
 | subcpu v141 | 16    | 10        | 1      | 5                | 0                      |
 | subcpu v140 | 16    | 10        | 1      | 5                | 0                      |
