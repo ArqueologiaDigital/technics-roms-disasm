@@ -1589,7 +1589,8 @@ def push_arg(F, a):
     if size == 4 and m is not None and m in ('XIZ', 'XBC', 'XDE', 'XHL', 'XIX', 'XIY'):
         F.emit('push', m); F.push += 4; return 4          # _calloc: push XIZ
     if size == 4 and m is not None and m.startswith('('):
-        F.emit('ld', 'XWA,%s' % m); F.emit('push', 'XWA'); F.push += 4; return 4
+        X = 'X' + (getattr(F, 'arg_tmp', None) or 'WA')     # (adecl c_mix: XBC while A holds an argument)
+        F.emit('ld', '%s,%s' % (X, m)); F.emit('push', X); F.push += 4; return 4
     if size == 4 and m is not None:
         F.emit('ld', 'XWA,%s' % m); F.emit('push', 'XWA'); F.push += 4; return 4
     fam = gen(F, a, 'WA', size)
@@ -1650,8 +1651,8 @@ def gen_call_adecl(F, fn, args, fam, size):
         else: stack.append(a)
     def kind(a):
         a0 = strip(a)
-        if a0.ty.size == 1: return 'computed'
-        if fold(a0).k == 'const': return 'const'
+        if fold(a0).k == 'const' and fold(a0).value is not None: return 'const'   # abi args_caller.c c_ci: t_c(5) ->
+        if a0.ty.size == 1: return 'computed'                                        # ld WA,0x5
         if a0.k != 'load': return 'computed'
         m = mem_operand(F, a0)
         if m is None: return 'computed'
@@ -1685,15 +1686,22 @@ def gen_call_adecl(F, fn, args, fam, size):
             gen(F, a0, t, a0.ty.size)
     for t, tmp in parked: F.emit('ld', '%s,%s' % (t, tmp))
     n = 0
+    held = {t for t, _ in groups['reg']} | {t for t, _ in groups['computed']} | {t for t, _ in parked}
+    if 'WA' in held and stack:                         # c_mix: c already in A -> the pointer goes through XBC
+        F.arg_tmp = next((r for r in ('BC', 'DE', 'HL') if r not in held), None)
     for a in stack: n += push_arg(F, a)
+    F.arg_tmp = None
     def on_stack(a): return (mem_operand(F, strip(a)) or '').startswith('(XSP')
     if F.opt:                                          # -O: memory, then constants, then frame slots (adecl.c c_t2:
         order = [x for x in groups['mem'] if not on_stack(x[1])] + groups['const'] + \
                 [x for x in groups['mem'] if on_stack(x[1])]   # ld BC,(_gi) / ld WA,0x1; ls_mc_n1: ld XWA,0x0 /
     else: order = groups['mem'] + groups['const']               # ld BC,0x0 / ld DE,(XSP+0x4))
     for t, a in order:
-        sz = strip(a).ty.size; F.emit('ld', '%s,%s' % (FAM[t][sz], mem_operand(F, strip(a)) if fold(strip(a)).k != 'const'
-                                                     else hx(fold(strip(a)).value)))
+        sz = strip(a).ty.size
+        if fold(strip(a)).k == 'const':
+            sz = max(2, sz); v = fold(strip(a)).value & ((1 << (8 * sz)) - 1)
+            F.emit('ld', '%s,%s' % (FAM[t][sz], hx(v))); continue
+        F.emit('ld', '%s,%s' % (FAM[t][sz], mem_operand(F, strip(a))))
     F.emit('cal', '.' + fn.decl.name + ('\t;stack' if n else ''))      # the callee pops: no tail jump (c_t4)
     F.push -= n
     if fam and fam != 'HL': F.emit('ld', '%s,%s' % (FAM[fam][size], FAM['HL'][size]))
@@ -3404,6 +3412,25 @@ def switch_cases(body, acc):
         if hasattr(v, 'k') or isinstance(v, list): switch_cases(v, acc)
     return acc
 
+def return_table(F, s, vals, lo, hi):
+    """-O: a dense switch from 0 whose every case and default is `return constant` (bytes) becomes a byte table with
+    the default's value as one more entry (abi switch.c sw_dense, either ABI: cp WA,0x0 / j m,L1 / cp WA,0x5 /
+    j le,L2 / L1: ld WA,0x6 / L2: lda XIX,S / ld L,(XIX+WA) / exts HL / ret).  Returns (byval, default) or None"""
+    if not F.opt or lo != 0: return None
+    if sorted(v for v, _, _ in vals) != list(range(lo, hi + 1)): return None
+    items = flat(s.body) if s.body.k == 'block' else [s.body]
+    byval = {}; dflt = None
+    for c in items:
+        if c.k not in ('case', 'default'): return None
+        b = c.body
+        if b is None or b.k != 'return' or b.value is None: return None
+        v = fold(b.value)
+        if v.k != 'const' or v.value is None or not -128 <= v.value <= 127: return None
+        if c.k == 'default': dflt = v.value
+        else: byval[data_value(c.value)] = v.value
+    if dflt is None or F.f.ret is None or F.f.ret.size != 2: return None
+    return byval, dflt
+
 def value_table(F, s, cases, vals, default, lo, hi):
     """cdecl -O3 -XS: a dense switch whose every case is `f(constant); break;` with one f and no default, and no
     hole, becomes a byte table of the constants (not under -Xr: switch.c O3XSXr keeps the jump table)"""
@@ -3463,8 +3490,9 @@ def gen_switch(F, s, last):
     will_table = nv >= 6 and None not in vv and max(vv) - min(vv) + 1 <= 2 * nv
     if e.k == 'cast' and e.kind == 'IntegralCast' and strip(e.e).ty.size == 1:
         ext = 'exts' if strip(e.e).ty.signed else 'extz'; e = strip(e.e)
-        if not will_table and mem_operand(F, e) is not None and family_of(mem_operand(F, e)):
-            ext = None; chain_char = True                  # sw_char: a chain compares A itself (cp A,0x65)
+        if not will_table and mem_operand(F, e) is not None and (family_of(mem_operand(F, e)) or F.opt):
+            ext = None; chain_char = True                  # sw_char: a chain compares A itself (cp A,0x65; under -O3 -XS
+                                                           # from memory too: ld A,(XSP+0x4) / cp A,0x65)
     size = max(2, e.ty.size) if ext or will_table or e.ty.size != 1 else 1
     signed = strip(s.value).ty.signed
     m = mem_operand(F, e)
@@ -3506,6 +3534,23 @@ def gen_switch(F, s, last):
     n = len(vals); lo = min(v for v, _, _ in vals) if vals else 0; hi = max(v for v, _, _ in vals) if vals else 0
     table = n >= 6 and hi - lo + 1 <= 2 * n               # 5 cases are a chain (abi switch.c sw_char, sw_long)
     order = list(cases)
+    rt = return_table(F, s, vals, lo, hi) if table else None
+    if rt is not None:
+        byval, dflt = rt
+        S = 'S%d' % (90000 + len(getattr(F, 'tables', [])))
+        rows = ['\talign\t2', S + ':']
+        for v in range(lo, hi + 1): rows += ['\talign\t1', '\tdb\t%d' % byval[v]]
+        rows += ['\talign\t1', '\tdb\t%d' % dflt]
+        F.tables = getattr(F, 'tables', []) + [rows]
+        La, Lb = F.newulabel(), F.newulabel()
+        F.emit('cp', '%s,0x0' % R); F.emit('j', 'm,%s' % La)
+        F.emit('cp', '%s,%s' % (R, hx(hi))); F.emit('j', 'le,%s' % Lb)
+        F.lines.append(La + ':'); F.emit('ld', '%s,%s' % (R, hx(hi + 1)))
+        F.lines.append(Lb + ':'); F.emit('lda', 'XIX,%s' % S); F.emit('ld', 'L,(XIX+%s)' % R); F.emit('exts', 'HL')
+        flush_pops(F)
+        if F.xiz_vars: F.emit('pop', F.save_reg)
+        epilogue(F); F.emit('retd', hx(F.retd)) if getattr(F, 'retd', 0) else F.emit('ret')
+        return
     vt = value_table(F, s, cases, vals, default, lo, hi) if table else None
     if vt is not None:                                   # switch.c under O3XS: every case calls one function with a
         fn, byval = vt                                   # constant: a table of the constants (sw_jt6, sw_jtoff, sw_jtl)
@@ -3571,6 +3616,17 @@ def gen_switch(F, s, last):
             lastone = i == len(entries) - 1 and after is None
             if g[0] == g[1]:
                 cpz(g[0])
+                lc = [c for c in cases if F.case_labels[id(c)] == g[2]]
+                aft = getattr(F, 'switch_after', None)
+                if F.opt and i == len(entries) - 1 and aft is not None and not default and lc and \
+                        lc[0].body is not None and lc[0].body.k == 'return' and fold(lc[0].body.value).k == 'const' and \
+                        fold(lc[0].body.value).value == 1 and aft.k == 'return' and aft.value is not None and \
+                        fold(aft.value).k == 'const' and fold(aft.value).value == 0 and not F.pushes and \
+                        not F.xiz_vars and not getattr(F, 'frame', 0):
+                    F.emit('scc', 'eq,HL'); F.emit('ret')       # abi switch.c sw_char: the last value returns 1, the
+                    F.switch_after = None; after = None         # return after the switch 0 -> cp A,0x61 / scc eq,HL
+                    F.skip_cases = getattr(F, 'skip_cases', set()) | {id(lc[0])}
+                    continue
                 if lastone:
                     to_default('ne')
                     first = [c for c in cases if F.case_labels[id(c)] == g[2]]
@@ -3598,7 +3654,9 @@ def gen_switch(F, s, last):
     if len(items) >= 2 and items[-1].k == 'break' and any(x.k == 'default' for x in items[-2:-1]) or \
             (len(items) >= 2 and items[-1].k == 'break' and items[-2].k == 'default'):
         items = items[:-1]                                 # sw_jt6d: default: f0(); break; -> cal .f0 / L9: ret
-    for it in items: gen_stmt(F, it, False)
+    for it in items:
+        if id(it) in getattr(F, 'skip_cases', ()): continue
+        gen_stmt(F, it, False)
     F.loops.pop()
     import re as _re                                       # an end nothing reaches is not written (sw_dense, sw_sparse:
     reached = end in getattr(F, 'ret_refs', set()) or any(_re.search(r'[\t,]%s$' % end, l) for l in F.lines) or \
