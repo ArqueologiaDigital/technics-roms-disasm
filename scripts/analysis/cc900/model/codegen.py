@@ -1720,7 +1720,7 @@ def plan_homes(F):
     count(F.f.body)
     def stack_born(d): return d.kind == 'param' and not getattr(d, 'reg', None) and d not in getattr(F, 'homed_regs', {})
     born = {d: stack_born(d) for d in F.f.params}
-    penal = 0 if (F.opt and not F.adecl) else 2            # cdecl -O homes a parameter read twice too (k_keep, rh_lp_x2)
+    penal = 1 if (F.opt and not F.adecl) else 2            # cdecl -O homes a parameter read twice too (k_keep, rh_lp_x2)
     def score(d): return sc.get(d, 0) - (penal if born.get(d) else 0)
     call_res = set()
     walk(F.f.body, lambda n, dep: call_res.add(n.var) if n.k == 'decl' and getattr(n, 'init', None) is not None

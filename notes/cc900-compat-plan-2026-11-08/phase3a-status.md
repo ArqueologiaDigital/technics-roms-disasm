@@ -192,8 +192,9 @@ gives x every time.  The IZ / QIZ split differs between `-Xr` and cdecl for `x +
 without), and the two-local rule (earlier declaration gets IZ) does not hold for `x + y + gi + z` (y gets IZ).  Five
 data points do not decide it; a probe permuting three and four locals over the use order is the next step here.
 Other misses left in the run: `-O`'s reuse of a global read twice (`ch_g3_rep2`: `ld WA,(_gj) / ld HL,(_gi) /
-add HL,WA / add HL,WA`; `ch_p4` the same for a parameter), and cdecl `-O` homing a parameter read once after a call
-(the model gives it IZ; V4.23 reads it from the stack: `ch_c_gp2`).
+add HL,WA / add HL,WA`; `ch_p4` the same for a parameter).  (cdecl `-O` homing a parameter read once after a call,
+`ch_c_gp2`, was fixed the same day: under cdecl `-O` a stack-born parameter loses 1, not 0, in the home score;
+ra_chains O3XS 21 -> 26, ra_homes O3XS 6 -> 7.)
 
 ## Priorities after 2026-11-09
 

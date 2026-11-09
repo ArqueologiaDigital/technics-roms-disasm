@@ -24,11 +24,11 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-5-micro-optparams, v423/O3XS                         | micro/opt_params.c | 19 / 24 exact (79.2%)   |
 | run 2026-11-09-5-micro-optparams, v423/O3XSXr                       | micro/opt_params.c | 0 / 24 exact (0.0%)     |
 | run 2026-11-09-6-micro-rahomes, v423/none                           | micro/ra_homes.c   | 9 / 25 exact (36.0%)    |
-| run 2026-11-09-6-micro-rahomes, v423/O3XS                           | micro/ra_homes.c   | 6 / 25 exact (24.0%)    |
+| run 2026-11-09-6-micro-rahomes, v423/O3XS                           | micro/ra_homes.c   | 7 / 25 exact (28.0%)    |
 | run 2026-11-09-6-micro-rahomes, v423/Xr                             | micro/ra_homes.c   | 16 / 25 exact (64.0%)   |
 | run 2026-11-09-6-micro-rahomes, v423/O3XSXr                         | micro/ra_homes.c   | 13 / 25 exact (52.0%)   |
 | run 2026-11-09-7-micro-chains, v423/none                            | micro/ra_chains.c  | 28 / 33 exact (84.8%)   |
-| run 2026-11-09-7-micro-chains, v423/O3XS                            | micro/ra_chains.c  | 21 / 33 exact (63.6%)   |
+| run 2026-11-09-7-micro-chains, v423/O3XS                            | micro/ra_chains.c  | 26 / 33 exact (78.8%)   |
 | run 2026-11-09-7-micro-chains, v423/Xr                              | micro/ra_chains.c  | 25 / 33 exact (75.8%)   |
 | run 2026-11-09-7-micro-chains, v423/O3XSXr                          | micro/ra_chains.c  | 27 / 33 exact (81.8%)   |
 | run 2026-11-08-9-micro-optloops, v423/O3XS                          | micro/opt_loops.c  | 15 / 33 exact (45.5%)   |
