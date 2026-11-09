@@ -205,7 +205,9 @@ class Builder:
                             pd = Decl(c.get('name', ''), s.ty(c), '', 'param'); s.decls[c['id']] = pd
                             params.append(pd); s.fdecls.append(pd)
                     tree = s.stmt(body[0])
-                    u.functions.append(Function(n['name'], d.ty.ret, params, tree, s.fdecls))
+                    fn = Function(n['name'], d.ty.ret, params, tree, s.fdecls)
+                    fn.adecl_attr = 'tlcs900_adecl' in n.get('type', {}).get('qualType', '')   # __SBRK.C: __adecl sbrk
+                    u.functions.append(fn)
         return u
 
     def stmt(s, n):

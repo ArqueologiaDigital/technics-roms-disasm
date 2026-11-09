@@ -98,9 +98,16 @@ def wide_divide(e, size):
     return e.k == 'bin' and e.op in ('/', '%', '>>') and e.ty.size > size and \
         max(operand_width(e.l), operand_width(e.r) if e.op != '>>' else 0) > size
 
+def same_size_ptr_cast(e):
+    """an integer <-> pointer cast between equal sizes changes nothing (__SBRK.C: (void *)SBRK_size)"""
+    while e.k == 'cast' and e.kind in ('IntegralToPointer', 'PointerToIntegral') and strip(e.e).ty is not None \
+            and strip(e.e).ty.size == e.ty.size:
+        e = strip(e.e)
+    return e
+
 def fold(e):
     """constant folding of integral casts of constants"""
-    e = strip(e)
+    e = same_size_ptr_cast(strip(e))
     if e.k == 'un' and e.op == '-' and fold(e.e).k == 'const' and fold(e.e).value is not None:
         from frontend import N                           # c_find: return -1 -> ld HL,0xffff
         v = -fold(e.e).value; sz = e.ty.size if e.ty is not None else 2
@@ -124,6 +131,7 @@ def fold(e):
 
 def mem_operand(F, e):
     """a memory or immediate operand string for e, or None"""
+    e = same_size_ptr_cast(strip(e))
     if strip(e).k == 'cast':
         ct = cast_temp(F, strip(e))
         if ct: return ct
@@ -207,6 +215,8 @@ def esize_of(b):
 def gen(F, e, fam, size, then_ret=False, store=False):
     """emit code leaving e's low `size` bytes in register family `fam`; returns the family actually used"""
     e0 = strip(e)
+    if e0.k == 'cast' and same_size_ptr_cast(e0) is not e0:
+        return gen(F, same_size_ptr_cast(e0), fam, size, then_ret, store)
     if e0.k == 'bin' and e0.op in CC_S and fpgen.is_fp(strip(e0.l).ty):
         fpgen.compare(F, e0, True); return move_to(F, FAM['HL'][size] if size in FAM['HL'] else 'HL', fam, size)
     if e0.k == 'un' and e0.op == '!' and fpgen.is_fp(strip(e0.e).ty):
@@ -753,6 +763,9 @@ def gen_compare(F, e):
     if rvm in ('A', 'C', 'E', 'L', 'WA', 'BC', 'DE', 'HL') and lm is not None and lm.startswith('(') and e.op in ('==', '!='):
         rr = FAM[[k for k, v in FAM.items() if rvm in v.values()][0]][size]     # _strchr: cp A,(XHL)
         F.emit('cp', '%s,%s' % (rr, lm)); return cc
+    if lm is not None and lm.startswith('(_') and rvm is not None and family_of(rvm) and size >= 2 and \
+            rv.k == 'load' and regvar_of(rv.e):              # .sbrk: SBRK_size < size -> cp (_SBRK_size),XWA
+        F.emit('cp', '%s,%s' % (lm, rvm)); return cc
     if regvar_of(getattr(l, 'e', l)) and lm in ('BC', 'DE', 'HL', 'IX', 'IY', 'IZ', 'XBC', 'XDE', 'XHL', 'XIX', 'XIY') and \
             not (lm.startswith('X') and rc.k == 'const' and rc.value == 0 and op in ('==', '!=')):   # _ltoa: cp XDE,0x0
         rs = mem_operand(F, r)
@@ -2498,7 +2511,8 @@ def plan_leaf(F):
              if n.k == 'load' and strip(n.e).k == 'var' else None)
         walk(f.body, lambda n, d: uses.__setitem__(strip(n.l).decl, uses.get(strip(n.l).decl, 0) + 1)
              if n.k == 'bin' and n.op == '=' and strip(n.l).k == 'var' else None)   # c_ifelse: r = a; else r = b
-        multi = [d for d in f.decls if d.kind == 'local' and uses.get(d, 0) >= 2 and d.ty.kind == 'int']
+        multi = [d for d in f.decls if d.kind == 'local' and uses.get(d, 0) >= 2 and
+                 (d.ty.kind == 'int' or (F.opt and d.ty.kind == 'ptr'))]          # .sbrk: addr in XHL
         if not multi: return False
     rets = []
     walk(f.body, lambda n, d: rets.append(strip(strip(n.value).e).decl) if n.k == 'return' and n.value is not None and strip(n.value).k == 'load' and strip(strip(n.value).e).k == 'var' else None)
@@ -3152,9 +3166,10 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
     out = {}
     emit_data(unit, out)
     for f in unit.functions:
-        name = ('.' if adecl else '_') + f.name
+        fa = adecl or getattr(f, 'adecl_attr', False)        # an __adecl function in a cdecl file (__SBRK.C: .sbrk)
+        name = ('.' if fa else '_') + f.name
         try:
-            full = compile_function(f, opt, adecl, personality)
+            full = compile_function(f, opt, fa, personality)
             FULL[name] = full                              # the whole function, for pairs_model.py
             import re as _re                               # an inline-assembly label named _x / .x starts a new piece in
             cur = name; out[cur] = []                      # a listing (listing.split), so the model's output does too

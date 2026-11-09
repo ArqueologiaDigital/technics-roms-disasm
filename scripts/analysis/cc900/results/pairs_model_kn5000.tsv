@@ -15,8 +15,8 @@ maincpu v10	ff0dc1	_strcat	_STRCAT.C	34	MATCH
 maincpu v10	ff0de3	_itoa	_ITOA.C	-	model: ; unsupported: incdec target
 maincpu v10	ff0e6d	_strchr	_STRCHR.C	19	MATCH
 maincpu v10	ff0f4d	_strcpy	_STRCPY.C	44	MATCH
-maincpu v10	ff0f76	_sbrk	__SBRK.C	-	model: ; unsupported: cast
-maincpu v10	ff0f79	.sbrk	__SBRK.C	-	model: no function
+maincpu v10	ff0f76	_sbrk	__SBRK.C	-	model: no function
+maincpu v10	ff0f79	.sbrk	__SBRK.C	39	MATCH
 maincpu v10	ff0fa0	_strlen	_STRLEN.C	30	MATCH
 maincpu v10	ff0fbe	_ltoa	_LTOA.C	60	MATCH
 maincpu v10	ff0ffa	_memset	_MEMSET.C	68	MATCH
@@ -42,7 +42,7 @@ maincpu v9	ff0db3	_strcat	_STRCAT.C	34	MATCH
 maincpu v9	ff0dd5	_itoa	_ITOA.C	-	model: ; unsupported: incdec target
 maincpu v9	ff0e5f	_strchr	_STRCHR.C	19	MATCH
 maincpu v9	ff0f3f	_strcpy	_STRCPY.C	44	MATCH
-maincpu v9	ff0f6b	.sbrk	__SBRK.C	-	model: no function
+maincpu v9	ff0f6b	.sbrk	__SBRK.C	39	MATCH
 maincpu v9	ff0f92	_strlen	_STRLEN.C	30	MATCH
 maincpu v9	ff0fb0	_ltoa	_LTOA.C	60	MATCH
 maincpu v9	ff0fec	_memset	_MEMSET.C	68	MATCH
@@ -68,8 +68,8 @@ maincpu v7	ff05e4	_strcat	_STRCAT.C	34	MATCH
 maincpu v7	ff0606	_itoa	_ITOA.C	-	model: ; unsupported: incdec target
 maincpu v7	ff0690	_strchr	_STRCHR.C	19	MATCH
 maincpu v7	ff0770	_strcpy	_STRCPY.C	44	MATCH
-maincpu v7	ff0799	_sbrk	__SBRK.C	-	model: ; unsupported: cast
-maincpu v7	ff079c	.sbrk	__SBRK.C	-	model: no function
+maincpu v7	ff0799	_sbrk	__SBRK.C	-	model: no function
+maincpu v7	ff079c	.sbrk	__SBRK.C	39	MATCH
 maincpu v7	ff07c3	_strlen	_STRLEN.C	30	MATCH
 maincpu v7	ff07e1	_ltoa	_LTOA.C	60	MATCH
 maincpu v7	ff081d	_memset	_MEMSET.C	68	MATCH
@@ -95,7 +95,7 @@ maincpu v6	ff04e6	_strcat	_STRCAT.C	34	MATCH
 maincpu v6	ff0508	_itoa	_ITOA.C	-	model: ; unsupported: incdec target
 maincpu v6	ff0592	_strchr	_STRCHR.C	19	MATCH
 maincpu v6	ff0672	_strcpy	_STRCPY.C	44	MATCH
-maincpu v6	ff069e	.sbrk	__SBRK.C	-	model: no function
+maincpu v6	ff069e	.sbrk	__SBRK.C	39	MATCH
 maincpu v6	ff06c5	_strlen	_STRLEN.C	30	MATCH
 maincpu v6	ff06e3	_ltoa	_LTOA.C	60	MATCH
 maincpu v6	ff071f	_memset	_MEMSET.C	68	MATCH
@@ -120,7 +120,7 @@ maincpu v5	ff0092	_strcat	_STRCAT.C	34	MATCH
 maincpu v5	ff00b4	_itoa	_ITOA.C	-	model: ; unsupported: incdec target
 maincpu v5	ff013e	_strchr	_STRCHR.C	19	MATCH
 maincpu v5	ff021e	_strcpy	_STRCPY.C	44	MATCH
-maincpu v5	ff024a	.sbrk	__SBRK.C	-	model: no function
+maincpu v5	ff024a	.sbrk	__SBRK.C	39	MATCH
 maincpu v5	ff0271	_strlen	_STRLEN.C	30	MATCH
 maincpu v5	ff028f	_ltoa	_LTOA.C	60	MATCH
 maincpu v5	ff02cb	_memset	_MEMSET.C	68	MATCH
@@ -178,8 +178,8 @@ subcpu v140	03e5ff	_exp	_EXP.C	230	MATCH
 subcpu v140	03e6e5	_log	_LOG.C	-	model: ; unsupported: integer slot local beside
 subcpu v140	03e848	__fint	__FINT.C	-	model: ; unsupported: integer slot local beside
 subcpu v140	03ea50	_ldexp	_LDEXP.C	-	model: ; unsupported: integer slot local beside
-table data	9ffb2c	_sbrk	__SBRK.C	-	model: ; unsupported: cast
-table data	9ffb2f	.sbrk	__SBRK.C	-	model: no function
+table data	9ffb2c	_sbrk	__SBRK.C	-	model: no function
+table data	9ffb2f	.sbrk	__SBRK.C	34	27 diff first +3
 table data	9ffb56	_malloc	_MALLOC.C	-	model: ; unsupported: lvalue var
 table data	9ffbdc	_strncmp	_STRNCMP.C	50	MATCH
 hdae v2.06i	299ae7	__doprnt	__DOFORM.C	-	model: ; unsupported: integer slot local beside
@@ -268,4 +268,4 @@ hdae v1.10i	296ecb	_strncpy	_STRNCPY.C	43	MATCH
 hdae v1.10i	296ef6	__facnv	__FACVT.C	-	model: ; unsupported: var
 hdae v1.10i	2e0cd6	___ctype	_CTYPE.C	-	model: no function
 hdae v1.10i	2e0cd6	__ctype	_CTYPE.C	256	MATCH
-# MATCH 162, model cannot 98, differs 9, outside image 4
+# MATCH 167, model cannot 92, differs 10, outside image 4
