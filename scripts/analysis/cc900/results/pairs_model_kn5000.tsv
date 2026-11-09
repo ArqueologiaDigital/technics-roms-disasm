@@ -200,7 +200,7 @@ hdae v2.06i	29af71	_strlen	_STRLEN.C	30	MATCH	exact
 hdae v2.06i	29af8f	_strncat	_STRNCAT.C	47	MATCH	exact
 hdae v2.06i	29afbe	_strncmp	_STRNCMP.C	50	MATCH	exact
 hdae v2.06i	29aff0	_strncpy	_STRNCPY.C	43	MATCH	exact
-hdae v2.06i	29b01b	_strrev	_STRREV.C	-	model: ; unsupported: lvalue var	exact
+hdae v2.06i	29b01b	_strrev	_STRREV.C	51	MATCH	exact
 hdae v2.06i	29b04e	_strupr	_STRUPR.C	44	MATCH	exact
 hdae v2.06i	29b07a	__facnv	__FACVT.C	-	model: ; unsupported: var	near
 hdae v2.06i	2f9362	___ctype	_CTYPE.C	-	alias of __ctype	exact
@@ -223,7 +223,7 @@ hdae v2.01i	29a839	_strlen	_STRLEN.C	30	MATCH	exact
 hdae v2.01i	29a857	_strncat	_STRNCAT.C	47	MATCH	exact
 hdae v2.01i	29a886	_strncmp	_STRNCMP.C	50	MATCH	exact
 hdae v2.01i	29a8b8	_strncpy	_STRNCPY.C	43	MATCH	exact
-hdae v2.01i	29a8e3	_strrev	_STRREV.C	-	model: ; unsupported: lvalue var	exact
+hdae v2.01i	29a8e3	_strrev	_STRREV.C	51	MATCH	exact
 hdae v2.01i	29a916	_strupr	_STRUPR.C	44	MATCH	exact
 hdae v2.01i	2f884e	___ctype	_CTYPE.C	-	alias of __ctype	exact
 hdae v2.01i	2f884e	__ctype	_CTYPE.C	256	MATCH	exact
@@ -268,4 +268,4 @@ hdae v1.10i	296ecb	_strncpy	_STRNCPY.C	43	MATCH	exact
 hdae v1.10i	296ef6	__facnv	__FACVT.C	-	model: ; unsupported: var	near
 hdae v1.10i	2e0cd6	___ctype	_CTYPE.C	-	alias of __ctype	exact
 hdae v1.10i	2e0cd6	__ctype	_CTYPE.C	256	MATCH	exact
-# MATCH 221, model cannot 34, alias 9, differs 5, outside image 4
+# MATCH 223, model cannot 32, alias 9, differs 5, outside image 4
