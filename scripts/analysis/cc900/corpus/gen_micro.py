@@ -41,7 +41,9 @@ how cc900 compiles exactly that (notes/cc900-compat-plan-2026-11-08/PLAN.md, sec
 - fp_order: which operand of a double + or * is built first, and when a table element's address is kept in XIZ
   across a conversion helper (_log: LN2 * nptr + 2 * s, LN2 = g_dbltbl[3].val);
 - cond_bits: x & mask as a branch condition at each type, operand kind and mask shape, negated, in loops, under
-  && / || and in ?: (the library's `if (d.c[7] & 0x80)`, `if (n & 1)`, `if (stream->flag & __UNGETC)`).
+  && / || and in ?: (the library's `if (d.c[7] & 0x80)`, `if (n & 1)`, `if (stream->flag & __UNGETC)`);
+- assign_expr: assignment as a value (chains, compared, tested, returned, passed) at char, int, long and pointer
+  (the library's `pp = cp = _allocb`, `(c1 = toupper(*s1)) == (c2 = toupper(*s2))`, `(*s = c) != '\\n'`).
 The output is deterministic, ours, and C89.
 """
 import os, sys
@@ -753,6 +755,42 @@ def cond_bits_files():
         'int cb_ret_bool(int x) { return (x & 0x80) != 0; }']
     return {'cond_bits.c': out + fs}
 
+def assign_expr_files():
+    """assignment used as a value (the library's `pp = cp = _allocb` (_free), `(c1 = toupper(*s1)) ==
+    (c2 = toupper(*s2))` (_stricmp), `if ((*s = c) != '\\n')` (_fgets)): chains, assignments compared, tested,
+    returned, passed and added, at char, int, long and pointer, to globals, locals, parameters and through
+    pointers"""
+    out = ['/* Assignment as a value */',
+           'struct fl { struct fl *next; int size; };',
+           'extern char gc, gc2; extern int gi, gi2, gi3; extern long gl, gl2; extern char *gp, *gp2;',
+           'extern struct fl *gfl; extern int f(int); extern int g(void); extern char *h(void); extern int gr;']
+    fs = []
+    for tk, t, g, g2 in (('c', 'char', 'gc', 'gc2'), ('i', 'int', 'gi', 'gi2'), ('l', 'long', 'gl', 'gl2'),
+                         ('p', 'char *', 'gp', 'gp2')):
+        fs += ['void ae_%s_chain_gg(%s x) { %s = %s = x; }' % (tk, t, g, g2),
+               'void ae_%s_chain_lg(%s x) { %s y; %s = y = x; gr = (int)(y != 0); }' % (tk, t, t, g),
+               '%s ae_%s_ret_g(%s x) { return (%s = x); }' % (t, tk, t, g),
+               'int ae_%s_eq_g(%s x) { if ((%s = x) == 0) return 2; return 3; }' % (tk, t, g),
+               'int ae_%s_ne_l(%s x) { %s y; if ((y = x) != 0) return (int)(y == x); return 3; }' % (tk, t, t),
+               'int ae_%s_two(%s x, %s z) { if ((%s = x) == (%s = z)) return 2; return 3; }' % (tk, t, t, g, g2),
+               'void ae_%s_ptr(%s *p, %s x) { if ((*p = x) != 0) gr = 2; }' % (tk, t, t)]
+    fs += ['void ae_c_ptr_nl(char *s, unsigned char c) { if ((*s = c) != 10) s++; gp = s; }',
+           'int ae_c_loop(char *s) { char c; int n = 0; while ((c = *s++) != 0) n += c; return n; }',
+           'int ae_i_call(void) { int v; if ((v = g()) < 0) return 0; return v; }',
+           'int ae_i_call_g(void) { if ((gi = g()) < 0) return 0; return gi; }',
+           'char *ae_p_call(void) { char *q; if ((q = h()) == 0) return gp; return q; }',
+           'void ae_i_arg(int x) { f(gi = x); }',
+           'int ae_i_add(int x) { int y; y = (gi = x) + 1; return y; }',
+           'void ae_i_chain3(int x) { gi = gi2 = gi3 = x; }',
+           'void ae_i_chain_k(void) { gi = gi2 = 7; }',
+           'void ae_i_chain_ll(int x) { int a, b; a = b = x; gr = a + b; }',
+           'void ae_fl_chain(void) { struct fl *cp, *pp; for (pp = cp = gfl; cp; pp = cp, cp = cp->next) if (cp->size > 4) break; gfl = pp; }',
+           'int ae_c_tou(char *s1, char *s2) { char c1, c2; while ((c1 = *s1) == (c2 = *s2)) { if (!c1) return 0; s1++; s2++; } return c1 - c2; }',
+           'int ae_i_while(int *p) { int v, n = 0; while ((v = *p++) > 0) n += v; return n; }',
+           'void ae_i_member(struct fl *p, int x) { if ((p->size = x) == 0) gr = 1; }',
+           'void ae_i_opassign(int x) { gi += (gi2 = x); }']
+    return {'assign_expr.c': out + fs}
+
 def main():
     out = sys.argv[1]
     d = os.path.join(out, 'micro'); os.makedirs(d, exist_ok=True)
@@ -779,6 +817,7 @@ def main():
     files.update(opt_counted_files())
     files.update(fp_stmt_files())
     files.update(cond_bits_files())
+    files.update(assign_expr_files())
     for n, lines in sorted(files.items()):
         open(os.path.join(d, n), 'w').write('\n'.join(lines) + '\n')
     open(os.path.join(out, 'micro-sources.txt'), 'w').write(''.join('micro/%s\n' % n for n in sorted(files)))

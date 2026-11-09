@@ -20,7 +20,7 @@ maincpu v10	ff0f79	.sbrk	__SBRK.C	39	MATCH	exact
 maincpu v10	ff0fa0	_strlen	_STRLEN.C	30	MATCH	exact
 maincpu v10	ff0fbe	_ltoa	_LTOA.C	60	MATCH	exact
 maincpu v10	ff0ffa	_memset	_MEMSET.C	68	MATCH	exact
-maincpu v10	ff1048	__doprnt	__DOFORM.C	-	model: ; unsupported: operator =	known
+maincpu v10	ff1048	__doprnt	__DOFORM.C	-	model: ; unsupported: deref incdec	known
 maincpu v10	ff2139	__facnv	__FACVT.C	-	model: ; unsupported: var	near
 maincpu v10	ff27f7	_ultoa	_ULTOA.C	136	MATCH	exact
 maincpu v10	ff2891	_memccpy	_MEMCCPY.C	64	MATCH	exact
@@ -46,7 +46,7 @@ maincpu v9	ff0f6b	.sbrk	__SBRK.C	39	MATCH	exact
 maincpu v9	ff0f92	_strlen	_STRLEN.C	30	MATCH	exact
 maincpu v9	ff0fb0	_ltoa	_LTOA.C	60	MATCH	exact
 maincpu v9	ff0fec	_memset	_MEMSET.C	68	MATCH	exact
-maincpu v9	ff103a	__doprnt	__DOFORM.C	-	model: ; unsupported: operator =	known
+maincpu v9	ff103a	__doprnt	__DOFORM.C	-	model: ; unsupported: deref incdec	known
 maincpu v9	ff27e9	_ultoa	_ULTOA.C	136	MATCH	exact
 maincpu v9	ff2883	_memccpy	_MEMCCPY.C	64	MATCH	exact
 maincpu v9	ff28c3	_memchr	_MEMCHR.C	24	MATCH	exact
@@ -73,7 +73,7 @@ maincpu v7	ff079c	.sbrk	__SBRK.C	39	MATCH	exact
 maincpu v7	ff07c3	_strlen	_STRLEN.C	30	MATCH	exact
 maincpu v7	ff07e1	_ltoa	_LTOA.C	60	MATCH	exact
 maincpu v7	ff081d	_memset	_MEMSET.C	68	MATCH	exact
-maincpu v7	ff086b	__doprnt	__DOFORM.C	-	model: ; unsupported: operator =	known
+maincpu v7	ff086b	__doprnt	__DOFORM.C	-	model: ; unsupported: deref incdec	known
 maincpu v7	ff195c	__facnv	__FACVT.C	-	model: ; unsupported: var	near
 maincpu v7	ff201b	_ultoa	_ULTOA.C	136	MATCH	exact
 maincpu v7	ff20b5	_memccpy	_MEMCCPY.C	64	MATCH	exact
@@ -99,7 +99,7 @@ maincpu v6	ff069e	.sbrk	__SBRK.C	39	MATCH	exact
 maincpu v6	ff06c5	_strlen	_STRLEN.C	30	MATCH	exact
 maincpu v6	ff06e3	_ltoa	_LTOA.C	60	MATCH	exact
 maincpu v6	ff071f	_memset	_MEMSET.C	68	MATCH	exact
-maincpu v6	ff076d	__doprnt	__DOFORM.C	-	model: ; unsupported: operator =	known
+maincpu v6	ff076d	__doprnt	__DOFORM.C	-	model: ; unsupported: deref incdec	known
 maincpu v6	ff1f1d	_ultoa	_ULTOA.C	136	MATCH	exact
 maincpu v6	ff1fb7	_memccpy	_MEMCCPY.C	64	MATCH	exact
 maincpu v6	ff1ff7	_memchr	_MEMCHR.C	24	MATCH	exact
@@ -124,7 +124,7 @@ maincpu v5	ff024a	.sbrk	__SBRK.C	39	MATCH	exact
 maincpu v5	ff0271	_strlen	_STRLEN.C	30	MATCH	exact
 maincpu v5	ff028f	_ltoa	_LTOA.C	60	MATCH	exact
 maincpu v5	ff02cb	_memset	_MEMSET.C	68	MATCH	exact
-maincpu v5	ff0319	__doprnt	__DOFORM.C	-	model: ; unsupported: operator =	known
+maincpu v5	ff0319	__doprnt	__DOFORM.C	-	model: ; unsupported: deref incdec	known
 maincpu v5	ff1ac9	_ultoa	_ULTOA.C	136	MATCH	exact
 maincpu v5	ff1b63	_memccpy	_MEMCCPY.C	64	MATCH	exact
 maincpu v5	ff1ba3	_memchr	_MEMCHR.C	24	MATCH	exact
@@ -182,7 +182,7 @@ table data	9ffb2c	_sbrk	__SBRK.C	-	model: no function	near
 table data	9ffb2f	.sbrk	__SBRK.C	39	MATCH	exact
 table data	9ffb56	_malloc	_MALLOC.C	-	model: ; unsupported: complex pointer arithmeti	exact
 table data	9ffbdc	_strncmp	_STRNCMP.C	50	MATCH	exact
-hdae v2.06i	299ae7	__doprnt	__DOFORM.C	-	model: ; unsupported: operator =	call
+hdae v2.06i	299ae7	__doprnt	__DOFORM.C	-	model: ; unsupported: deref incdec	call
 hdae v2.06i	29abd8	_sprintf	_SPRINTF.C	40	MATCH	exact
 hdae v2.06i	29ac00	_vsprintf	_SPRINTF.C	33	MATCH	exact
 hdae v2.06i	29ac3b	_itoa	_ITOA.C	138	MATCH	exact
@@ -205,7 +205,7 @@ hdae v2.06i	29b04e	_strupr	_STRUPR.C	44	MATCH	exact
 hdae v2.06i	29b07a	__facnv	__FACVT.C	-	model: ; unsupported: var	near
 hdae v2.06i	2f9362	___ctype	_CTYPE.C	-	alias of __ctype	exact
 hdae v2.06i	2f9362	__ctype	_CTYPE.C	256	MATCH	exact
-hdae v2.01i	2993af	__doprnt	__DOFORM.C	-	model: ; unsupported: operator =	call
+hdae v2.01i	2993af	__doprnt	__DOFORM.C	-	model: ; unsupported: deref incdec	call
 hdae v2.01i	29a4a0	_sprintf	_SPRINTF.C	40	MATCH	exact
 hdae v2.01i	29a4c8	_vsprintf	_SPRINTF.C	33	MATCH	exact
 hdae v2.01i	29a503	_itoa	_ITOA.C	138	MATCH	exact
@@ -227,7 +227,7 @@ hdae v2.01i	29a8e3	_strrev	_STRREV.C	51	MATCH	exact
 hdae v2.01i	29a916	_strupr	_STRUPR.C	44	MATCH	exact
 hdae v2.01i	2f884e	___ctype	_CTYPE.C	-	alias of __ctype	exact
 hdae v2.01i	2f884e	__ctype	_CTYPE.C	256	MATCH	exact
-hdae v1.15i	295abe	__doprnt	__DOFORM.C	-	model: ; unsupported: operator =	call
+hdae v1.15i	295abe	__doprnt	__DOFORM.C	-	model: ; unsupported: deref incdec	call
 hdae v1.15i	296baf	_sprintf	_SPRINTF.C	40	MATCH	exact
 hdae v1.15i	296bd7	_vsprintf	_SPRINTF.C	33	MATCH	exact
 hdae v1.15i	296c12	_itoa	_ITOA.C	138	MATCH	exact
@@ -247,7 +247,7 @@ hdae v1.15i	296f95	_strncmp	_STRNCMP.C	50	MATCH	exact
 hdae v1.15i	296fc7	_strncpy	_STRNCPY.C	43	MATCH	exact
 hdae v1.15i	2e0e66	___ctype	_CTYPE.C	-	alias of __ctype	exact
 hdae v1.15i	2e0e66	__ctype	_CTYPE.C	256	MATCH	exact
-hdae v1.10i	2959c2	__doprnt	__DOFORM.C	-	model: ; unsupported: operator =	call
+hdae v1.10i	2959c2	__doprnt	__DOFORM.C	-	model: ; unsupported: deref incdec	call
 hdae v1.10i	296ab3	_sprintf	_SPRINTF.C	40	MATCH	exact
 hdae v1.10i	296adb	_vsprintf	_SPRINTF.C	33	MATCH	exact
 hdae v1.10i	296b16	_itoa	_ITOA.C	138	MATCH	exact

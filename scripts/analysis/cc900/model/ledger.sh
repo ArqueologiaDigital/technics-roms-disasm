@@ -73,4 +73,7 @@ done
 for c in none O3XS Xr O3XSXr; do
   row "run 2026-11-09-22-micro-condbits, v423/$c" "micro/cond_bits.c" "$O/2026-11-09-22-micro-condbits/out/v423/$c" corpus/micro/cond_bits.c
 done
+for c in none O3XS Xr O3XSXr; do
+  row "run 2026-11-09-23-micro-assignexpr, v423/$c" "micro/assign_expr.c" "$O/2026-11-09-23-micro-assignexpr/out/v423/$c" corpus/micro/assign_expr.c
+done
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c

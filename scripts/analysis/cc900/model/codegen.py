@@ -385,6 +385,8 @@ def gen(F, e, fam, size, then_ret=False, store=False):
             F.emit('neg' if e.op == '-' else 'cpl', R)
         return fam
     if e.k == 'bin' and e.op in ('==', '!=') and and_truth(F, e, fam) is not None: return fam
+    if e.k == 'bin' and e.op == '=' and not fpgen.is_fp(e.ty):
+        return gen_assign_value(F, e, fam, size)
     if e.k == 'bin' and e.op in CC_S:
         cc = gen_compare(F, e)
         if cc in (True, False): F.emit('ld', '%s,%s' % (FAM[fam][2], hx(int(cc))))
@@ -1077,8 +1079,24 @@ def gen_compare(F, e):
     if getattr(F, 'l2', None) and l.k == 'opassign' and rc.k == 'const':   # _itoa: if ((u /= radix) == 0) ->
         R = l2_opassign_value(F, l)                                         # ... / ld QBC,WA / cp QBC,0x0
         if R is not None: F.emit('cp', '%s,%s' % (R, hx(rc.value))); return cc
-    W = FAM['WA'][size]
-    gen(F, l, 'WA', size)
+    la = l
+    if la.k == 'bin' and la.op == '=' and strip(la.l).k == 'var' and getattr(strip(la.l).decl, 'reg', None) in \
+            ('BC', 'DE', 'HL', 'IX', 'IY') and rc.k == 'const' and rc.value == 0 and op in ('==', '!='):
+        fv = gen_assign_value(F, la, 'WA', size)           # ae_i_ne_l: ld BC,(XSP+0x4) / ld WA,BC / cp WA,0x0
+        F.emit('ld', '%s,%s' % (FAM['WA'][size], FAM[fv][size]))
+        W = FAM['WA'][size]
+        F.emit('or', '%s,%s' % (W, W)) if size == 4 else F.emit('cp', '%s,0x0' % W); return cc
+    ra = strip(r)
+    while ra.k == 'cast' and ra.kind == 'IntegralCast': ra = strip(ra.e)
+    if ra.k == 'bin' and ra.op == '=' and mem_operand(F, r) is None:
+        fr = gen_assign_value(F, ra, 'WA', size, in_place=True)   # assign_expr.c ae_i_two: (gi = x) == (gi2 = z)
+        la2 = strip(l)                                     # -> ld WA,(z) / ld (_gi2),WA / ld BC,(x) / ld (_gi),BC /
+        while la2.k == 'cast' and la2.kind == 'IntegralCast': la2 = strip(la2.e)
+        fl = gen_assign_value(F, la2, 'BC' if fr == 'WA' else 'WA', size, in_place=True) if \
+            la2.k == 'bin' and la2.op == '=' else gen(F, l, 'BC' if fr == 'WA' else 'WA', size)
+        if fl == fr: raise Unsupported('compare of two assignments in one register')
+        F.emit('cp', '%s,%s' % (FAM[fl][size], FAM[fr][size])); return cc   # cp BC,WA
+    f0 = gen(F, l, 'WA', size); W = FAM[f0][size]          # (the value's own register: ae_i_ptr cp BC,0x0)
     if rc.k == 'const' and rc.value == 0 and size == 4 and op in ('==', '!='):
         F.emit('or', '%s,%s' % (W, W)); return cc
     rs = mem_operand(F, r)
@@ -1272,6 +1290,43 @@ def and_truth(F, e, fam):
     F.emit('scc', '%s,%s' % ('eq' if e.op == '==' else 'ne', FAM[fam][2])); return fam
 
 HIGHB8 = {'WA': 'W', 'BC': 'B', 'DE': 'D', 'HL': 'H'}
+
+def gen_assign_value(F, e, fam, size, in_place=False):
+    """an assignment used as a value (assign_expr.c): the value is built once in a register and stored, and the
+    register is the expression's value.  A global, parameter or slot is stored directly (ld WA,(XSP+0x4) /
+    ld (_gi2),WA / ld (_gi),WA for gi = gi2 = x); through a pointer the address goes to XWA first and the value to
+    BC's family (ld XWA,(XSP+0x4) / ld C,(XSP+0x8) / ld (XWA),C)"""
+    lv = strip(e.l); vs = lv.ty.size
+    if fpgen.is_fp(lv.ty) or lv.ty.kind == 'struct': raise Unsupported('operator =')
+    rv = narrow(e.r, vs)
+    if lv.k == 'var' and getattr(lv.decl, 'reg', None) in FAM and lv.decl.reg != 'XIZ':
+        d = lv.decl                                        # ae_c_ne_l: (y = x) with y in C -> ld C,(XSP+0x4)
+        f2 = gen(F, rv, d.reg, vs)
+        if f2 != d.reg: F.emit('ld', '%s,%s' % (FAM[d.reg][vs], FAM[f2][vs]))
+        return d.reg
+    if lv.k == 'var' and getattr(lv.decl, 'reg', None):
+        raise Unsupported('operator = to a register variable')
+    if lv.k == 'var':
+        t = lvalue(F, lv)
+        if strip(rv).k == 'call' and not has_helper_call(strip(rv).fn):   # ae_i_call_g: cal _g / ld (_gi),HL /
+            gen_call(F, strip(rv)); flush_pops(F)                        # cp HL,0x0
+            F.emit('ld', '%s,%s' % (t, FAM['HL'][vs])); return 'HL'
+        sv = unpromote(rv)
+        src = regvar_of(sv.e) if sv.k == 'load' and sv.ty.size == vs else None
+        if src is not None and src.reg in FAM and (in_place or src.reg == fam):   # .ae_i_two under -Xr:
+            F.emit('ld', '%s,%s' % (t, FAM[src.reg][vs])); return src.reg   # ld (_gi2),BC / ld (_gi),WA / cp WA,BC
+        if src is not None and src.reg in FAM:             # .ae_i_ret_g: ld HL,WA / ld (_gi),HL
+            F.emit('ld', '%s,%s' % (FAM[fam][vs], FAM[src.reg][vs])); F.emit('ld', '%s,%s' % (t, FAM[fam][vs]))
+            return fam
+        f2 = gen(F, rv, fam, vs)
+        F.emit('ld', '%s,%s' % (t, FAM[f2][vs])); return f2
+    if lv.k in ('deref', 'member', 'index'):
+        if fam in ('WA',):
+            t = lvalue(F, lv, ptr='XWA')
+            if 'XBC' in t or 'BC' in t.replace('XBC', ''): raise Unsupported('operator = through BC')
+            f2 = gen(F, rv, 'BC', vs)
+            F.emit('ld', '%s,%s' % (t, FAM[f2][vs])); return f2
+    raise Unsupported('operator =')
 
 def gen_cond_true(F, c, target):
     """jump to target when c is true (ctrl.c: c_orbr's first operand)"""
@@ -1879,6 +1934,12 @@ def uses_after_stmt(F, d):
     return any(uses_decl(x, d) for x in body[i:])
 
 def store_global(F, name, e, size):
+    ia = strip(e)
+    while ia.k == 'cast' and ia.kind == 'IntegralCast': ia = strip(ia.e)
+    if ia.k == 'bin' and ia.op == '=' and strip(ia.l).k == 'var' and strip(ia.l).decl.kind == 'global' and size <= 2 \
+            and strip(ia.l).decl.ty.size == size and fold(narrow(ia.r, size)).k == 'const':
+        store_global(F, strip(ia.l).decl.name, ia.r, size)   # ae_i_chain_k: gi = gi2 = 7 -> ldw (_gi2),0x7 /
+        store_global(F, name, ia.r, size); return            # ldw (_gi),0x7
     rc = fold(narrow(e, size)) if size <= 2 else None
     if rc is not None and rc.k == 'const' and rc.value is not None:   # _exp, _tan: errno = ERANGE -> ldw (_errno),0x22
         F.emit('ld' + ('b' if size == 1 else 'w'), '(_%s),%s' % (name, hx(rc.value & ((1 << (8 * size)) - 1)))); return

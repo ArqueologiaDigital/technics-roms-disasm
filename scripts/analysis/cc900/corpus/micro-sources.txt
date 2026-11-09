@@ -1,4 +1,5 @@
 micro/assign.c
+micro/assign_expr.c
 micro/binop_c.c
 micro/binop_i.c
 micro/binop_l.c
