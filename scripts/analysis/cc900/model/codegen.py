@@ -1037,6 +1037,9 @@ def gen_compare(F, e):
     """emit the compare for relational/equality node e; return its condition code, or True/False if constant
     (cmp_*: cp acc,mem; cpw/cpb mem,k; long: ld XWA / cp XWA,k / or XWA,XWA for ==0 and !=0)"""
     l, r = strip(e.l), strip(e.r)
+    if F.opt and unpromote(l).k == 'load' and unpromote(r).k == 'load' and strip(unpromote(l).e).k == 'var' and \
+            strip(unpromote(r).e).k == 'var' and strip(unpromote(l).e).decl is strip(unpromote(r).e).decl:
+        return e.op in ('==', '<=', '>=')                # ae_i_ne_l after copy propagation: y == x -> 1
     if fold(l).k == 'const' and fold(r).k != 'const':      # _tan: LMTPOW <= (p[3] & 0x7ff0) -> cp WA,0x41e0 / j ult
         from frontend import N
         e = N('bin', op={'<': '>', '>': '<', '<=': '>=', '>=': '<=', '==': '==', '!=': '!='}[e.op], l=e.r, r=e.l, ty=e.ty)
@@ -1239,6 +1242,59 @@ def bit_cond(F, c):
         else: F.emit('bit', '%s,%s' % (hx(n), xr))
     else: F.emit('and', '%s,%s' % (xr, hx(m)))
     return sense
+
+def copy_propagate(f):
+    """-O: a local assigned exactly once, from a parameter that the function never writes, is that parameter
+    (assign_expr.c under -O3 -XS: ae_i_ne_l `if ((y = x) != 0) return (int)(y == x);` -> cpw (XSP+0x4),0x0 /
+    ld HL,0x1; ae_i_chain_lg `gi = y = x; gr = (int)(y != 0);` -> the value held in WA serves both).  The
+    assignment keeps its value where one is used; a statement that is only `y = x` disappears."""
+    import copy as _copy
+    from frontend import N
+    assigns = {}; writes = set(); addr = set()
+    def v(n, dep):
+        if n.k == 'bin' and n.op == '=' and strip(n.l).k == 'var': assigns.setdefault(strip(n.l).decl, []).append(n)
+        if n.k in ('opassign',) and strip(n.l).k == 'var': writes.add(strip(n.l).decl)
+        if n.k == 'incdec' and strip(n.e).k == 'var': writes.add(strip(n.e).decl)
+        if n.k == 'addr' and strip(n.e).k == 'var': addr.add(strip(n.e).decl)
+    walk(f.body, v)
+    decl_init = []
+    walk(f.body, lambda n, dep: decl_init.append(n) if n.k == 'decl' and n.init is not None else None)
+    inited = {c.var for c in decl_init}
+    for d, al in assigns.items():
+        if d.kind != 'local' or len(al) != 1 or d in writes or d in addr or d in inited or d.ty.kind not in ('int', 'ptr'):
+            continue
+        a = al[0]; src = strip(a.r)
+        while src.k == 'cast' and src.kind == 'NoOp': src = strip(src.e)
+        if not (src.k == 'load' and strip(src.e).k == 'var'): continue
+        p = strip(src.e).decl
+        if p.kind != 'param' or p in writes or p in addr or p in assigns or p.ty.size != d.ty.size or p.ty.kind != d.ty.kind:
+            continue
+        repl = N('load', e=N('var', decl=p, ty=p.ty), ty=p.ty)
+        def rewrite(node):                                 # y = x as a value -> x; uses of y -> x
+            for key, val in list(node.__dict__.items()):
+                items = val if isinstance(val, list) else [val]
+                for i, x in enumerate(items):
+                    if not hasattr(x, 'k'): continue
+                    if x is a:
+                        new = _copy.copy(repl)
+                        if isinstance(val, list): val[i] = new
+                        else: setattr(node, key, new)
+                        continue
+                    if x.k == 'load' and strip(x.e).k == 'var' and strip(x.e).decl is d:
+                        new = _copy.copy(repl)
+                        if isinstance(val, list): val[i] = new
+                        else: setattr(node, key, new)
+                        continue
+                    rewrite(x)
+        rewrite(f.body)
+        def prune(node):                                   # a statement that was only `y = x` is now `x;`: drop it
+            if getattr(node, 'k', None) == 'block':
+                node.body = [c for c in node.body if not (c.k == 'expr' and strip(c.e).k == 'load' and
+                                                          strip(strip(c.e).e).k == 'var')]
+            for key, val in list(node.__dict__.items()):
+                for x in (val if isinstance(val, list) else [val]):
+                    if hasattr(x, 'k'): prune(x)
+        prune(f.body)
 
 def bool_returns(s):
     """-O: `if (c) return 1; return 0;` is `return c` as a truth value (cond_bits.c under -O3 -XS: and A,0x80 /
@@ -2825,6 +2881,7 @@ FP_AGGR = True
 MUL_K_XWA = True
 IFCHAIN_JOIN = True
 BINLOC_XR = True
+COPY_PROP = True                                   # -O copy propagation (assign_expr.c, copy_propagate)
 UNPROMOTED_SIGN = True
 STORE_XHL_NONE = True
 DEREF_XIZ = True
@@ -4792,6 +4849,11 @@ def knowledge_pass(lines, personality):
             if personality != 'v4.23' and prev == (args[0], args[1]):
                 prev = None; continue                      # the 2003 peephole: store, then reload of it
             known[f] = (args[0], args[1]); out.append(l); prev = None; continue
+        if op in ('cpb', 'cpw') and len(args) == 2 and args[0].startswith('(XSP'):
+            w = 1 if op == 'cpb' else 2                    # ae_c_chain_lg: ld A,(XSP+0x4) / ld (_gc),A / cp A,0x0
+            hit = [r for r, m in known.values() if m == args[0] and len(r) == w and not r.startswith('Q')]
+            if hit:
+                out.append('\tcp\t%s,%s' % (hit[0], args[1])); prev = None; continue
         if args and family_of(args[0].rstrip(':')):
             known.pop(family_of(args[0]), None)
         elif op in ('pop', 'ldir', 'ldirw', 'ldi', 'ldiw'):
@@ -5046,6 +5108,7 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong
     F.personality = personality
     F.opt = opt != 'none'; F.dead = set(); F.had_goto = bool(gotos)
     if F.opt: bool_returns(f.body)
+    if F.opt and COPY_PROP: copy_propagate(f)
     compute_last_uses(F)
     F.lines.append(('.' if adecl else '_') + f.name + ':')
     F.loops = []; F.param_copies = []; F.pushes = []

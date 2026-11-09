@@ -52,9 +52,9 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-22-micro-condbits, v423/Xr                           | micro/cond_bits.c    | 108 / 117 exact (92.3%)  |
 | run 2026-11-09-22-micro-condbits, v423/O3XSXr                       | micro/cond_bits.c    | 108 / 117 exact (92.3%)  |
 | run 2026-11-09-23-micro-assignexpr, v423/none                       | micro/assign_expr.c  | 30 / 43 exact (69.8%)    |
-| run 2026-11-09-23-micro-assignexpr, v423/O3XS                       | micro/assign_expr.c  | 27 / 43 exact (62.8%)    |
+| run 2026-11-09-23-micro-assignexpr, v423/O3XS                       | micro/assign_expr.c  | 31 / 43 exact (72.1%)    |
 | run 2026-11-09-23-micro-assignexpr, v423/Xr                         | micro/assign_expr.c  | 27 / 43 exact (62.8%)    |
-| run 2026-11-09-23-micro-assignexpr, v423/O3XSXr                     | micro/assign_expr.c  | 28 / 43 exact (65.1%)    |
+| run 2026-11-09-23-micro-assignexpr, v423/O3XSXr                     | micro/assign_expr.c  | 36 / 43 exact (83.7%)    |
 | run 2026-11-09-24-micro-arrindex, v423/none                         | micro/arr_index.c    | 50 / 66 exact (75.8%)    |
 | run 2026-11-09-25-micro-arrindexsz, v423/none                       | micro/arr_index_sz.c | 51 / 66 exact (77.3%)    |
 | run 2026-11-09-24-micro-arrindex, v423/O3XS                         | micro/arr_index.c    | 48 / 66 exact (72.7%)    |
