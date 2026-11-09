@@ -68,6 +68,27 @@ local in QIZ is used as a register operand (`add WA,QIZ`, free), and the others 
 enumerate the few assignments of the candidates to {IZ, QIZ, slot}, weight each use by its loop depth, and take the
 cheapest; the weights (instructions, bytes or cycles) are to be fitted to the oracle.
 
+**Superseded (2026-11-09)** by a fitted priority rule: a cost model of this kind fitted worse than a greedy priority
+list (research-scratch `sessions/2026-11-09_cc900-homes`, `fit_homes.py`, 200 hand-read values over 79 functions).
+The rule now in the model is R3-set (`model/homes.py`):
+- the score is reads + writes, less the costs fitted per option set;
+- the order is by score under cdecl, and by score / live-range length (in quads) under adecl;
+- IZ goes to the first candidate (XIZ if it is 32-bit), QIZ to the next 16-bit one by a pair test.
+
+`codegen.plan_homes` uses it under no options, `-Xr` and `-O3 -XS -Xr` (ledger: micro_ra none 29 -> 32 of 42,
+ra_homes none 9 -> 10, ra_chains Xr 25 -> 26 and O3XSXr 27 -> 28; no row fell).  Under cdecl `-O3 -XS` the first
+fit's rule stays: R3-set with two refinements gets 142 of 158 values right there, against 132 for R3-set and 94 for
+the first fit. The refinements, both in `homes.py` (fit by `fit_o3xs_counter.py`):
+- a parameter read only as a loop bound is no candidate when a local that is more than a counter competes;
+- an accumulator `s += g1(i)` takes no QIZ.
+
+It still loses 4 listings of the 1997 library: `_strlen`, `_calloc`, `_strcmp`, `_modf`.  `homes.py`'s features agree
+with the hand counts for 318 of 324 values (`check_model_features.py`).  The 6 that differ:
+- the -O copy merge (`rc_keep1-4`);
+- the -O tail merge (`h_mc`, `h_mc_int`);
+- `n-- > 0` (`rc_while2`);
+- `rc_two_loops`' counter.
+
 ## Leaf loops under `-O3 -XS -Xr`: parameters that arrive in registers (run 2026-11-09-5-micro-optparams)
 
 Data for the next allocator step (the model scores 0 of 24 here).  Each parameter arrives in WA / BC / DE; the loop
