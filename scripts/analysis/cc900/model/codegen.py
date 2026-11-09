@@ -1554,9 +1554,20 @@ def plan_homes(F):
                     sv = strip(side)
                     if sv.k == 'load' and strip(sv.e).k == 'var' and strip(sv.e).decl.kind == 'param': helper_ops.append(strip(sv.e).decl)
         walk(F.f.body, hv)
-    nrefs = {}
-    for y in seq:
-        if y[0] in ('use', 'def'): nrefs[y[1]] = nrefs.get(y[1], 0) + 1
+    nrefs = {}                                             # references as code: x-- reads and writes (2), and a
+    def cnt(n, k=1):                                       # while / for condition appears twice (top and bottom)
+        if isinstance(n, list):
+            for x in n: cnt(x, k)
+            return
+        if not hasattr(n, 'k'): return
+        if n.k == 'load' and strip(n.e).k == 'var': nrefs[strip(n.e).decl] = nrefs.get(strip(n.e).decl, 0) + k
+        if n.k in ('incdec', 'opassign'):
+            v = strip(n.e if n.k == 'incdec' else n.l)
+            if v.k == 'var': nrefs[v.decl] = nrefs.get(v.decl, 0) + 2 * k
+        for key, v in n.__dict__.items():
+            if hasattr(v, 'k') or isinstance(v, list):
+                cnt(v, 2 * k if n.k in ('while', 'for') and key == 'cond' and not F.opt else k)
+    cnt(F.f.body)                                          # (c_while: n homed; c_do's single --n is not)
     if F.adecl:
         params = [d for d in F.f.params if getattr(d, 'reg', None) in ('WA', 'BC', 'DE') and (d in across or d in helper_ops)]
     else:
@@ -1868,6 +1879,14 @@ def loop_cond(F, c, target, sense):
     if c.k == 'incdec' and not c.post and regvar_of(c.e):          # ra_dowhile: dec DE / ld WA,DE / cp WA,0
         d = regvar_of(c.e); R = FAM[d.reg][2]
         F.emit('dec' if c.op == '--' else 'inc', '0x1,%s' % R); F.emit('ld', 'WA,%s' % R); F.emit('cp', 'WA,0x0')
+        cc = 'ne' if sense else 'eq'
+        F.emit('ret', cc) if target == 'RET' else F.emit('j', '%s,%s' % (cc, target)); return
+    if c.k == 'incdec' and strip(c.e).k == 'var' and not regvar_of(c.e) and mem_operand(F, N_load(strip(c.e).decl)):
+        d = strip(c.e).decl; m = mem_operand(F, N_load(d)); W = FAM['WA'][d.ty.size]
+        op = ('dec' if c.op == '--' else 'inc') + ('w' if d.ty.size == 2 else 'b' if d.ty.size == 1 else '')
+        if c.post: F.emit('ld', '%s,%s' % (W, m)); F.emit(op, '0x1,%s' % m)
+        else: F.emit(op, '0x1,%s' % m); F.emit('ld', '%s,%s' % (W, m))   # c_do: decw 0x1,(XSP+0x4) / ld WA,(XSP+0x4)
+        F.emit('cp', '%s,0x0' % W)
         cc = 'ne' if sense else 'eq'
         F.emit('ret', cc) if target == 'RET' else F.emit('j', '%s,%s' % (cc, target)); return
     if c.k in ('load', 'cast') and c.ty.kind in ('int', 'ptr'):         # while (*s): compare with 0

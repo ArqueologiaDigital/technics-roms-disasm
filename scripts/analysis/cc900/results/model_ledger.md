@@ -4,13 +4,13 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 
 | oracle                                                          | corpus             | exact                   |
 |-----------------------------------------------------------------|--------------------|-------------------------|
-| run 2026-11-08-7-micro, v423/none                               | micro/*.c          | 655 / 674 exact (97.2%) |
-| run 2026-11-08-7-micro, ide2003/none                            | micro/*.c          | 652 / 674 exact (96.7%) |
-| run 2026-11-08-7-micro, v110/none                               | micro/*.c          | 651 / 674 exact (96.6%) |
+| run 2026-11-08-7-micro, v423/none                               | micro/*.c          | 657 / 674 exact (97.5%) |
+| run 2026-11-08-7-micro, ide2003/none                            | micro/*.c          | 654 / 674 exact (97.0%) |
+| run 2026-11-08-7-micro, v110/none                               | micro/*.c          | 653 / 674 exact (96.9%) |
 | run 2026-11-08-7-micro, v423/O3XS                               | micro/*.c          | 606 / 674 exact (89.9%) |
 | run 2026-11-08-7-micro, v423/Xr                                 | micro/*.c          | 634 / 674 exact (94.1%) |
 | run 2026-11-08-7-micro, v423/O3XSXr                             | micro/*.c          | 607 / 674 exact (90.1%) |
-| run 2026-11-08-8-micro-ra, v423/none                            | micro/ra_*.c       | 24 / 42 exact (57.1%)   |
+| run 2026-11-08-8-micro-ra, v423/none                            | micro/ra_*.c       | 26 / 42 exact (61.9%)   |
 | run 2026-11-08-8-micro-ra, v423/O3XSXr                          | micro/ra_*.c       | 9 / 42 exact (21.4%)    |
 | run 2026-11-08-6-abi-adecl, v423/Xr                             | abi/*.c            | 58 / 80 exact (72.5%)   |
 | run 2026-11-08-6-abi-adecl, v423/O3XSXr                         | abi/*.c            | 58 / 80 exact (72.5%)   |
