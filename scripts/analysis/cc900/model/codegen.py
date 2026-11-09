@@ -446,7 +446,9 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
             if rs is None: raise Unsupported('complex right operand')
             F.emit(SIMPLE_OPS[op], '%s,%s' % (FAM[other][size], rs))
             return other
-        if fam != 'WA' and natural_wa(l):              # ra_noloop3: inner levels over a multiply stay in WA
+        wa_var = [d for d in list(F.f.params) + list(F.f.decls) if getattr(d, 'reg', None) == 'WA' and d not in F.dead
+                  and uses_decl(e.r, d)]                   # sv_leaf: a * b + a keeps a in WA -> ld HL,DE / add HL,WA
+        if fam != 'WA' and natural_wa(l) and not wa_var:   # ra_noloop3: inner levels over a multiply stay in WA
             gen(F, l, 'WA', size)
             F.emit('ld', '%s,%s' % (FAM[fam][size], FAM['WA'][size]))
         else:
