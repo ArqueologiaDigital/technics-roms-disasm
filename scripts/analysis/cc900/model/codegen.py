@@ -771,6 +771,18 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
                 strip(l).k == 'load' and regvar_of(strip(l).e) is not None and dies_here(F, l):
             l, r = r, l                                    # abi adecl.c d_l3: b + (long)c -> add XDE,XBC / ld XHL,XDE
             l = strip(l.e)
+        la_ = strip(l)
+        if F.opt and ASSIGN_OPERAND_INPLACE and la_.k == 'bin' and la_.op == '=' and strip(la_.l).k == 'var' and \
+                strip(la_.l).decl.kind == 'global' and strip(la_.r).k == 'load' and regvar_of(strip(la_.r).e) and \
+                regvar_of(strip(la_.r).e).reg in ('WA', 'BC', 'DE', 'HL') and dies_here(F, strip(la_.r)) and \
+                regvar_of(strip(la_.r).e).reg != fam and strip(la_.l).decl.ty.size == size and operand(F, r, size):
+            xv = regvar_of(strip(la_.r).e); X = FAM[xv.reg][size]   # assign_expr.c ae_i_add (-O3 -XS -Xr):
+            F.emit('ld', '(_%s),%s' % (strip(la_.l).decl.name, X)); F.dead.add(xv)   # (gi = x) + 1 ->
+            rc = fold(r)                                            # ld (_gi),WA / inc 0x1,WA / ld HL,WA
+            if op in '+-' and rc.k == 'const' and 1 <= rc.value <= 8:
+                F.emit('inc' if op == '+' else 'dec', '%s,%s' % (hx(rc.value), X))
+            else: F.emit(SIMPLE_OPS[op], '%s,%s' % (X, operand(F, r, size)))
+            F.emit('ld', '%s,%s' % (FAM[fam][size], X)); return fam
         lr = regvar_of(strip(l).e) if strip(l).k == 'load' else None
         if lr is not None and lr.reg in ('WA', 'BC', 'DE', 'HL') and F.opt and dies_here(F, l) and lr.reg != fam and \
                 lr not in getattr(F, 'no_inplace', ()):
@@ -1499,6 +1511,7 @@ STORE_FROM_WORK = True                                    # see store_global
 ASSIGN_CMP_INPLACE = True                                 # see gen_compare
 LOOP_COND_DEF = True                                      # see compute_last_uses
 CHAR_LOCAL_WA = True                                      # see plan_leaf
+ASSIGN_OPERAND_INPLACE = True                             # see gen_bin
 
 def char_narrow(body):
     """cc900 does int + - & | ^ of a char and a constant that fits a byte, or of two chars, on the byte and
@@ -7061,6 +7074,7 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong
             nxt = F.lines[i + 1] if i + 1 < len(F.lines) else ''
             if v and v & (v - 1) == 0 and v < (1 << w) and not re.match(r'^\t(j|scc|ret|jr)\t\w+,|^\tret\t\w+$|^\tscc', nxt):
                 F.lines[i] = '\tset\t%s,%s' % (hx(v.bit_length() - 1), m.group(1))
+    if F.opt and RET_KNOWN_GLOBAL: F.lines = ret_known_global(F.lines)
     if F.opt: F.lines = drop_unreachable(F.lines)        # (without -O a switch keeps its end: sw_jt6 L3: ret)
     if F.opt and GLOBAL_FORWARD:                          # _rand: ld (_Seed),XHL / ld XWA,(_Seed) -> ld XWA,XHL (the
         for i in range(len(F.lines) - 1):                 # value just stored, in the next instruction)
@@ -7175,6 +7189,34 @@ def emit_data(unit, out):
         out['_' + d.name] = ['_' + d.name + ':', '\tdsb\t%d' % d.ty.size]
 
 FULL = {}
+
+RET_KNOWN_GLOBAL = True
+
+def ret_known_global(lines):
+    """-O: j cc,L where L is `ld HL,(_g)` / `ret` and HL was just stored to _g in the same block becomes ret cc
+    (assign_expr.c ae_i_call_g: cal .g / ld (_gi),HL / cp HL,0x0 / ret ge / ld HL,0x0 / ret)"""
+    import re as _r
+    out = list(lines)
+    for i, l in enumerate(out):
+        m = _r.match(r'^\tj\t(\w+),(L\d+)$', l)
+        if not m: continue
+        if (m.group(2) + ':') not in out: continue
+        k = out.index(m.group(2) + ':')
+        if k + 2 >= len(out) or out[k + 2] != '\tret': continue
+        lm = _r.match(r'^\tld\t(X?HL),\((_\w+)\)$', out[k + 1])
+        if not lm: continue
+        R, g = lm.group(1), lm.group(2)
+        ok = False
+        for j in range(i - 1, -1, -1):                   # back to the store, in the same block
+            t = out[j]
+            if t == '\tld\t(%s),%s' % (g, R): ok = True; break
+            if t.endswith(':') or t.startswith(('\tcal', '\tcall', '\tj', '\tret')): break
+            if t.startswith(('\tcp', '\tbit')): continue   # (compares write no register)
+            ops = t.split('\t')[2] if t.count('\t') >= 2 else ''
+            dst = ops.split(',')[0] if ops else ''
+            if dst in ('L', 'H', 'HL', 'XHL', 'QHL') or ('(%s' % g) in ops and not t.startswith('\tcp'): break
+        if ok: out[i] = '\tret\t' + m.group(1)
+    return out
 
 def drop_unreachable(lines):
     """code after an unconditional ret / retd / j behind a label nothing jumps to is never reached, and the oracle
