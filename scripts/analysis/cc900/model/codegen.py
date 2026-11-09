@@ -1010,8 +1010,13 @@ def cse_params(F, e):
         if n.k == 'load' and strip(n.e).k == 'var' and strip(n.e).decl.kind == 'param' and not getattr(strip(n.e).decl, 'reg', None) \
                 and hasattr(strip(n.e).decl, 'off'):       # (an adecl parameter homed in a slot is read twice from
             counts[strip(n.e).decl] = counts.get(strip(n.e).decl, 0) + 1   # there: ra_homes.c rh_pp_b2)
+        if CSE_GLOBALS and n.k == 'load' and strip(n.e).k == 'var' and strip(n.e).decl.kind == 'global' and \
+                strip(n.e).decl.ty.kind == 'int' and strip(n.e).decl.ty.size == 2:   # ra_chains.c ch_g3_rep2 (-O3 -XS):
+            counts[strip(n.e).decl] = counts.get(strip(n.e).decl, 0) + 1         # gi + gj + gj -> ld WA,(_gj) first
     walk(e, v)
-    many = [d for d, c in counts.items() if c >= 2]
+    pairs_ = []                                            # (gi + gi itself stays ld HL,(_gi) / sla 0x1,HL: ch_g3_rep)
+    walk(e, lambda n, dd: pairs_.append(n) if n.k == 'bin' and same_leaf(n.l, n.r) else None)
+    many = [d for d, c in counts.items() if c >= 2 and not (d.kind == 'global' and pairs_)]
     if len(many) != 1: return False
     d = many[0]; size = F.f.ret.size; top = narrow(e, size)
     if top.k == 'cond': return False                       # _abs: the ?: loads j into HL itself
@@ -1034,7 +1039,8 @@ def cse_params(F, e):
     if top.k == 'bin' and top.op in ('&&', '||'):          # _isdigit: ld HL,0x0 before ld WA,(XSP+0x4)
         F.emit('ld', '%s,0x0' % FAM['HL'][2]); F.preset_hl = True
         tmp = 'WA'
-    F.emit('ld', '%s,(XSP+%s)' % (FAM[tmp][d.ty.size], hx(d.off + F.push)))
+    if d.kind == 'global': F.emit('ld', '%s,(_%s)' % (FAM[tmp][d.ty.size], d.name))
+    else: F.emit('ld', '%s,(XSP+%s)' % (FAM[tmp][d.ty.size], hx(d.off + F.push)))
     d.reg = tmp
     try:
         fam = gen(F, e, chain, size, then_ret=chain == 'HL')
@@ -1611,6 +1617,7 @@ CHAR_NARROW_TERN = True                                   # see char_narrow
 LOOP_FLUSH_POPS = True                                    # see gen_loop
 SWITCH_LOOP_LABEL = True                                  # see gen_switch
 CHAR_CONST_PUSHW = True                                   # see push_arg
+CSE_GLOBALS = True                                        # see cse_params
 
 def char_narrow(body):
     """cc900 does int + - & | ^ of a char and a constant that fits a byte, or of two chars, on the byte and
