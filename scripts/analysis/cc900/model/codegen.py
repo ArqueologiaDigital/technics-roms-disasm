@@ -477,6 +477,7 @@ def jump(F, cc, target):
 def gen_cond_true(F, c, target):
     """jump to target when c is true (ctrl.c: c_orbr's first operand)"""
     c = strip(c)
+    if c.k == 'un' and c.op == '!': return gen_cond_false(F, c.e, target)
     if c.k == 'bin' and c.op == '||':
         gen_cond_true(F, c.l, target); gen_cond_true(F, c.r, target); return
     if c.k == 'bin' and c.op in CC_S:
@@ -492,6 +493,8 @@ def gen_cond_false(F, c, target):
     """jump to `target` (a label, or 'RET' for the function exit) when condition c is false; returns the
     constant value of c when it folds"""
     c = strip(c)
+    if c.k == 'un' and c.op == '!':
+        gen_cond_true(F, c.e, target); return None
     if c.k == 'bin' and c.op == '&&':                # c_andbr: both operands jump to the false target
         gen_cond_false(F, c.l, target); gen_cond_false(F, c.r, target); return None
     if c.k == 'bin' and c.op == '||':                # c_orbr: first true -> then label; last false -> target
@@ -621,6 +624,7 @@ def lvalue(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False):
         d = lv.decl
         if d.kind == 'global': return '(_%s)' % d.name
         if d.kind == 'param': return '(XSP+%s)' % hx(d.off + F.push)
+        if d.kind == 'local' and hasattr(d, 'slot'): return '(XSP+%s)' % hx(d.slot + F.push)
     if lv.k == 'deref':
         pv = strip(lv.e)
         if pv.k == 'incdec' and pv.post and regvar_of(pv.e) and regvar_of(pv.e).ty.size == 4:
@@ -841,7 +845,7 @@ def gen_stmt(F, s, last):
                 F.emit('ld', '%s,%s' % (FAM['HL'][size], FAM[fam].get(size, FAM[fam].get(2))))
         flush_pops(F)
         if F.xiz_vars: F.emit('pop', 'XIZ')
-        for r in reversed(F.pushes): F.emit('pop', r)
+        epilogue(F)
         F.emit('retd', hx(F.retd)) if F.retd else F.emit('ret'); return
     if s.k == 'if' and s.els is None and F.opt and not F.pending and not F.pushes and not F.xiz_vars and \
             flat(s.then) and flat(s.then)[0].k == 'return' and len(flat(s.then)) == 1 and (
@@ -1303,6 +1307,39 @@ def live_regs(F, except_decl=None):
         if r and d is not except_decl and d not in F.dead: out.add(r)
     return out
 
+def foldable(f, d):
+    """a local that gen_stmt folds into its single use (no slot needed)"""
+    body = flat(f.body)
+    for i, c in enumerate(body):
+        if c.k == 'decl' and c.var is d:
+            if c.init is None or d.addr_taken or d.ty.size < 2: return False
+            return len(uses_of(body[i + 1:], d, [])) == 1
+    return False
+
+def plan_frame(F):
+    """stack slots for locals without a register (rc_loop2-4: dec N,XSP / push XIZ / slots from (XSP+4) in
+    declaration order); parameters move up by the frame size"""
+    f = F.f; pos = 0; slots = []
+    calls = []
+    walk(f.body, lambda n, d: calls.append(n) if n.k == 'call' else None)
+    if not calls: F.frame = 0; return                   # leaf functions: every local is in a register or folded
+    for d in f.decls:
+        if d.kind != 'local' or getattr(d, 'reg', None) or foldable(f, d): continue
+        a = 2 if d.ty.size >= 2 else 1
+        pos = (pos + a - 1) // a * a; d.slot = pos; pos += d.ty.size; slots.append(d)
+    if not slots: F.frame = 0; return
+    size = (pos + 1) // 2 * 2; F.frame = size
+    saved = F.push
+    for d in slots: d.slot += saved
+    for p in f.params:
+        if hasattr(p, 'off'): p.off += size
+    F.lines.insert(1, '\tdec\t%s,XSP' % hx(size) if size <= 8 else '\tlda\tXSP,XSP-%s' % hx(size))
+
+def epilogue(F):
+    for r in reversed(F.pushes): F.emit('pop', r)
+    if getattr(F, 'frame', 0):
+        F.emit('inc', '%s,XSP' % hx(F.frame)) if F.frame <= 8 else F.emit('lda', 'XSP,XSP+%s' % hx(F.frame))
+
 def compile_function(f, opt, adecl):
     F = Fn(f, adecl)
     F.opt = opt != 'none'; F.dead = set()
@@ -1310,10 +1347,12 @@ def compile_function(f, opt, adecl):
     F.lines.append(('.' if adecl else '_') + f.name + ':')
     F.loops = []; F.param_copies = []; F.pushes = []
     if not plan_leaf(F): plan_registers(F)
+    plan_frame(F)
     gen_stmt(F, f.body, True)
     flush_pops(F)
     if not F.lines[-1].startswith('\tret'):
-        for r in reversed(F.pushes): F.emit('pop', r)
+        if F.xiz_vars: F.emit('pop', 'XIZ')
+        epilogue(F)
         F.emit('ret')
     # a call directly followed by the return becomes a jump (cmp_ui: ge_ui_br0)
     if len(F.lines) >= 2 and F.lines[-1] == '\tret' and F.lines[-2].startswith('\tcal\t') \

@@ -56,3 +56,14 @@ Source: oracle run `2026-11-08-9-micro-optloops` (cc900-oracle commit `5bfb1b2`)
 | a pointer parameter indexed by i is not strength-reduced: `ld WA,i / exts XWA / add XWA,XWA / add XWA,p` each iteration                                                                                                                     | fits   | ol_ptr, ol_gptr                             |
 | `while (k--)` and `while (*s++)` are rotated: `j test` into the bottom test                                                                                                                                                                 | fits   | ol_ptr_walk, ol_strlen                      |
 | register choice: s in HL when returned directly; counter, bound, base, offset over IX/IY/IZ and WA/BC/DE, differing between examples (acc1: i IX, k DE, base XBC, offset WA; glob: k from a global in WA, base XDE, offset BC; clear: i HL) | open   | ol_*                                        |
+
+## Hypothesis for the IZ / QIZ choice (not yet implemented)
+
+The call tests fit a cost-based choice better than any fixed order.  QIZ cannot be pushed or compared with memory
+directly (`ld WA,QIZ` first), so each such use of a QIZ variable costs an extra instruction per execution; a variable
+in a stack slot costs a memory operand per use.  rc_loop1: putting i in IZ (QIZ for v0, pushed every iteration) and
+putting v0 in IZ (QIZ for i, compared every iteration) each cost one extra instruction per iteration, and the oracle
+picks v0 in IZ (a tie, broken by an order still unknown).  rc_loop2-4: i in IZ costs nothing extra, the last
+local in QIZ is used as a register operand (`add WA,QIZ`, free), and the others stay in slots.  A model would
+enumerate the few assignments of the candidates to {IZ, QIZ, slot}, weight each use by its loop depth, and take the
+cheapest; the weights (instructions, bytes or cycles) are to be fitted to the oracle.
