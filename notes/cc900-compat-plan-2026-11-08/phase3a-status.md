@@ -344,6 +344,26 @@ Done since (2026-11-09, late night):
   ld (XSP+d),XWA / extz BC / push BC`).  `_fputc` and `_fputs` are byte-identical.
 - Micro: none 671, O3XS 669, Xr 670, O3XSXr 671 of 674.  Library (v4.23) 161 / 248.  Pairs: kn5000 223.
 
+- **Array elements** (new topic arr_index.c / arr_index_sz.c, runs `2026-11-09-24` / `-25`):
+  - an array of known size keeps a computed index in 16 bits; an incomplete one (`extern int a[]`) sign-extends it
+    in XWA and adds an immediate base;
+  - a char array folds the constant into the symbol (`lda XBC,_gca + 0x1`);
+  - through a pointer, `exts` (`extz` for a char element);
+  - under -Xr the index is adjusted and scaled in its own register.
+  46-51 of 66 per option set.
+- **-O copy and constant propagation** of single-assignment locals, and `x + 0` simplification: assign_expr O3XSXr
+  28 -> 36, micro-ra O3XSXr 13 -> 18.
+- **-O layout**:
+  - identical `cal X / ret` tails merge into the last copy;
+  - an arm the merge empties goes;
+  - an exit block nothing falls into moves to its first jump;
+  - cdecl tail calls `j _f`;
+  - unreachable code goes.
+  switch.c O3XSXr 20 -> 25 of 25.
+- **Wrong code fixed** under -Xr: `p[i]` with `p` in XWA no longer builds the index in WA, and the leaf allocator no
+  longer gives a local the register a parameter arrives in (c_sum).
+- **Micro corpus: none 671, O3XS 671, Xr 673, O3XSXr 674 of 674** (the firmware's option set byte-identical).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
