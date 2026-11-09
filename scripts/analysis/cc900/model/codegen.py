@@ -294,6 +294,13 @@ def gen(F, e, fam, size, then_ret=False, store=False):
             fold(e.r).value is not None and fold(e.r).value < 0:
         from frontend import N                           # __toupper: c + ('A' - 'a') -> sub HL,0x20
         e = N('bin', op='-' if e.op == '+' else '+', l=e.l, r=N('const', value=-fold(e.r).value, ty=e.ty), ty=e.ty)
+    if e.k == 'bin' and e.op in SIMPLE_OPS and strip(e.l).k == 'call' and strip(e.r).k == 'call' and getattr(F, 'call_temp', None):
+        T = FAM[F.call_temp][2] if F.call_temp == 'IZ' else 'QIZ'     # k_expr: the right call first, kept in QIZ
+        gen_call(F, strip(e.r)); F.emit('ld', '%s,%s' % (T, FAM['HL'][size]))
+        gen_call(F, strip(e.l)); flush_pops(F) if F.opt else None
+        F.emit(SIMPLE_OPS[e.op], '%s,%s' % (FAM['HL'][size], T))
+        if fam != 'HL': F.emit('ld', '%s,%s' % (FAM[fam][size], FAM['HL'][size]))
+        return fam
     if e.k == 'bin':
         return gen_bin(F, e, fam, size, then_ret, store)
     raise Unsupported(e.k)
@@ -505,7 +512,7 @@ def gen_long_helper(F, e, l, r, fam, signed):
     ls, rs = reg_or_mem(F, l, 4), reg_or_mem(F, r, 4)
     if ls is None or rs is None: raise Unsupported('complex long helper operands')
     # provisional (two examples, mul_l_loc): XBC first when a register variable is involved
-    if F.xiz_vars and any(d.kind == 'local' for d in F.xiz_vars):
+    if F.xiz_vars and any(d is not None and d.kind == 'local' for d in F.xiz_vars):
         F.emit('ld', 'XBC,%s' % rs); F.emit('ld', 'XWA,%s' % ls)
     else:
         F.emit('ld', 'XWA,%s' % ls); F.emit('ld', 'XBC,%s' % rs)
@@ -630,6 +637,8 @@ def push_arg(F, a):
         F.emit('ld', 'A,%s' % m); F.emit('exts' if strip(a0.e).ty.signed else 'extz', 'WA'); F.emit('push', 'WA')
         F.push += 2; return 2
     m = mem_operand(F, a)
+    if size <= 2 and m is not None and family_of(m):    # a register: push IZ (call.c k_seq under O3XS)
+        F.emit('push', m if size == 2 else FAM[family_of(m)[1:]][2]); F.push += 2; return 2
     if size <= 2 and m is not None:
         F.emit('pushw', m); F.push += 2; return 2
     if size == 4 and m is not None and m.startswith('('):
@@ -1242,7 +1251,9 @@ def eval_sequence(node, out):
         out.append(('loop', inner)); out.extend(inner); return out
     if node.k == 'return':                                 # a call in a return clobbers nothing that is used later
         inner = eval_sequence(getattr(node, 'value', None), []) if getattr(node, 'value', None) is not None else []
-        out.extend(('rcall',) if x == ('call',) else x for x in inner); return out
+        rid = id(node)                                     # but within the return itself it does (k_expr)
+        out.extend(('rcall', rid) if x == ('call',) else (x + (rid,) if x[0] == 'use' else x) for x in inner)
+        return out
     if node.k == 'switch':                                 # case bodies are alternatives (switch.c sw_local, sw_ev)
         eval_sequence(node.value, out)
         items = node.body.body if node.body.k == 'block' else [node.body]
@@ -1276,7 +1287,7 @@ def plan_homes(F):
     ld IZ,WA); then an int local defined before a call and used after it goes to IZ, else QIZ (k_keep: ld QIZ,HL).
     With -O every parameter that is an operand of a long helper is homed too (mul_l_pp: push XIZ /
     ld (XSP+0x4),XBC / ld XIZ,XWA); the long locals plan_registers put in XIZ come first (mul_l_loc under -Xr)."""
-    if not F.adecl: return
+    if not F.adecl and not F.opt: return                  # cdecl -O: call.c k_seq: push IZ / ld IZ,(XSP+0x6)
     raw = eval_sequence(F.f.body, [])
     def unwrap(x, path=()):                                # ('branch', if, side, item) -> (item, path)
         while x[0] == 'branch': path = path + ((x[1], x[2]),); x = x[3]
@@ -1289,15 +1300,16 @@ def plan_homes(F):
             out.append((it, path))
         return out
     seq0 = lift(raw); seq = [it for it, _ in seq0]
-    if not any(x[0] == 'call' for x in seq): return
+    if not any(x[0] in ('call', 'rcall') for x in seq): return
     def compatible(p, q): return all(q.get(k, v) == v for k, v in p.items())
     across = []
     def mark(d):
         if d not in across: across.append(d)
     for i, (x, px) in enumerate(seq0):
-        if x[0] == 'call':
+        if x[0] in ('call', 'rcall'):
             before = {y[1] for y, py in seq0[:i] if y[0] in ('use', 'def')}
             for y, py in seq0[i + 1:]:
+                if x[0] == 'rcall' and (y[0] != 'use' or len(y) < 3 or y[2] != x[1]): continue
                 if y[0] == 'use' and compatible(px, py) and (y[1].kind == 'param' or y[1] in before): mark(y[1])
         if x[0] == 'loop' and any(y[0] == 'call' for y in x[1]):
             for y in x[1]:
@@ -1311,7 +1323,11 @@ def plan_homes(F):
                     sv = strip(side)
                     if sv.k == 'load' and strip(sv.e).k == 'var' and strip(sv.e).decl.kind == 'param': helper_ops.append(strip(sv.e).decl)
         walk(F.f.body, hv)
-    params = [d for d in F.f.params if getattr(d, 'reg', None) in ('WA', 'BC', 'DE') and (d in across or d in helper_ops)]
+    if F.adecl:
+        params = [d for d in F.f.params if getattr(d, 'reg', None) in ('WA', 'BC', 'DE') and (d in across or d in helper_ops)]
+    else:
+        params = [d for d in F.f.params if not getattr(d, 'reg', None) and d in across and d.ty.kind in ('int', 'ptr')
+                  and d.ty.size == 2 and d is not F.sret]
     locs = [d for d in across if d.kind == 'local' and not getattr(d, 'reg', None) and d.ty.size <= 2]
     weight = {}                  # references, not weighted by loops: c_for i (4) before n (1), c_nested i (5) before j (4)
     for y in seq:
@@ -1322,18 +1338,28 @@ def plan_homes(F):
     moves = []; stores = []
     for d in order:                                        # k_keep: a -> IZ, then x -> QIZ
         if d.kind == 'param':
+            src = FAM[d.reg][d.ty.size] if getattr(d, 'reg', None) else d    # cdecl: loaded from its slot
             if d.ty.size == 4 and not used['IZ'] and not used['QIZ']:
-                moves.append(('XIZ', FAM[d.reg][4])); d.reg = 'XIZ'; d.homed = True; used['IZ'] = used['QIZ'] = True
+                moves.append(('XIZ', src)); d.reg = 'XIZ'; d.homed = True; used['IZ'] = used['QIZ'] = True
                 F.xiz_vars.append(d)
             elif d.ty.size <= 2 and not used['IZ']:
-                moves.append(('IZ', FAM[d.reg][2])); d.reg = 'IZ'; used['IZ'] = True; F.xiz_vars.append(d)
+                moves.append(('IZ', src)); d.reg = 'IZ'; used['IZ'] = True; F.xiz_vars.append(d)
+            elif not F.adecl: continue
             else:
                 stores.append((d, FAM[d.reg][d.ty.size])); d.home_slot = True; d.reg = None
         else:
             r = 'IZ' if not used['IZ'] else 'QIZ' if not used['QIZ'] else None
             if r: d.reg = r; used[r] = True; F.xiz_vars.append(d)
             if r == 'IZ' and getattr(F, 'opt', False) is not None: pass
-    if not (moves or stores or locs): return
+    pairs = []                                             # k_expr: r1(a) + r1(a + 1) keeps the right result in QIZ
+    walk(F.f.body, lambda n, dep: pairs.append(n) if n.k == 'bin' and n.op in SIMPLE_OPS and strip(n.l).k == 'call'
+         and strip(n.r).k == 'call' else None)
+    if pairs:
+        r = 'IZ' if not used['IZ'] else 'QIZ' if not used['QIZ'] else None
+        if r:
+            used[r] = True; F.call_temp = r
+            if not F.xiz_vars: F.xiz_vars.append(None)
+    if not (moves or stores or locs or pairs): return
     if F.xiz_vars and not any(l == '\tpush\tXIZ' for l in F.lines):
         F.save_reg = 'XIZ' if used['QIZ'] else 'IZ'
         F.emit('push', F.save_reg); F.push = 4 if F.save_reg == 'XIZ' else 2
@@ -1342,7 +1368,9 @@ def plan_homes(F):
 def emit_homes(F):
     """after the frame is known: slot stores first, then the moves into IZ / XIZ (adecl.c d_keep)"""
     for d, r in getattr(F, 'home_stores', []): F.emit('ld', '(XSP+%s),%s' % (hx(d.slot + F.push), r))
-    for dst, src in getattr(F, 'home_moves', []): F.emit('ld', '%s,%s' % (dst, src))
+    for dst, src in getattr(F, 'home_moves', []):
+        if not isinstance(src, str): src = '(XSP+%s)' % hx(src.off + F.push)
+        F.emit('ld', '%s,%s' % (dst, src))
 
 def regvar_of(e):
     v = strip(e)
