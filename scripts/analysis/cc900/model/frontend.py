@@ -97,6 +97,26 @@ class Unit:
 
 PSEUDO_REGS = ('XWA', 'XBC', 'XDE', 'XHL', 'XIX', 'XIY', 'XIZ', 'WA', 'BC', 'DE', 'HL', 'IX', 'IY', 'IZ', 'A', 'L')
 
+CLEAN_DIRS = {}
+
+def clean_include_dir(d):
+    """an include directory whose headers end in a DOS end-of-file byte (V4.23's errno.h) is mirrored, once per
+    process, under $TMPDIR with each file cut at that byte; others are used as they are"""
+    d = os.path.abspath(d)
+    if d in CLEAN_DIRS: return CLEAN_DIRS[d]
+    names = [n for n in os.listdir(d) if os.path.isfile(os.path.join(d, n))] if os.path.isdir(d) else []
+    if not any(b'\x1a' in open(os.path.join(d, n), 'rb').read() for n in names):
+        CLEAN_DIRS[d] = d; return d
+    import tempfile, atexit, shutil
+    m = tempfile.mkdtemp(prefix='cc900-inc-')
+    atexit.register(shutil.rmtree, m, True)
+    for n in os.listdir(d):
+        q = os.path.join(d, n)
+        if os.path.isfile(q):
+            data = open(q, 'rb').read()
+            open(os.path.join(m, n), 'wb').write(data[:data.index(b'\x1a')] if b'\x1a' in data else data)
+    CLEAN_DIRS[d] = m; return m
+
 def load(path, defines=(), includes=(), adecl=False):
     """adecl=True parses as cc900 -Xr does: clang's -mcc900-adecl, so that only an explicit __cdecl function type
     carries tlcs900_cdecl (without it every function type is spelt with it)"""
@@ -118,6 +138,7 @@ def load(path, defines=(), includes=(), adecl=False):
         import tempfile
         fd, src = tempfile.mkstemp(suffix='.c'); os.write(fd, data[:data.index(b'\x1a')]); os.close(fd)
         includes = list(includes) + [os.path.dirname(os.path.abspath(path))]
+    includes = [clean_include_dir(i) for i in includes]
     cmd += ['-D' + d for d in defines] + ['-I' + i for i in includes] + ['-x', 'c', src]
     try:
         r = subprocess.run(cmd, capture_output=True, text=True)
@@ -136,7 +157,16 @@ class Builder:
 
     def ty(s, node):
         q = node.get('type', {})
-        return parse_type(q.get('desugaredQualType', q.get('qualType', 'int')), s.recs, s.typedefs)
+        t = q.get('desugaredQualType', q.get('qualType', 'int'))
+        if re.search(r'(struct|union) \([^)]*(unnamed|anonymous)[^)]*\)', t) and getattr(s, 'last_anon', None):
+            t = re.sub(r'(struct|union) \([^)]*(unnamed|anonymous)[^)]*\)', s.last_anon, t)   # _ldexp: a local
+        return parse_type(t, s.recs, s.typedefs)                                           # union { ... } d;
+
+    def record(s, n):
+        fields = [(f['name'], s.ty(f)) for f in n.get('inner', []) if f.get('kind') == 'FieldDecl']
+        name = n.get('name', 'anon%s' % n['id'])
+        s.recs.layout(name, fields, n.get('tagUsed') == 'union')
+        if 'name' not in n: s.last_anon = '%s %s' % ('union' if n.get('tagUsed') == 'union' else 'struct', name)
 
     def unit(s, ast):
         u = Unit()
@@ -184,6 +214,7 @@ class Builder:
         if k == 'DeclStmt':
             out = []
             for v in I:
+                if v.get('kind') == 'RecordDecl' and v.get('completeDefinition'): s.record(v); continue
                 if v.get('kind') != 'VarDecl': continue
                 d = Decl(v['name'], s.ty(v), v.get('storageClass', ''), 'local' if v.get('storageClass') != 'static' else 'static')
                 s.decls[v['id']] = d; s.fdecls.append(d)

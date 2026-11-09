@@ -20,7 +20,7 @@ maincpu v10	ff0f79	.sbrk	__SBRK.C	-	model: no function
 maincpu v10	ff0fa0	_strlen	_STRLEN.C	30	MATCH
 maincpu v10	ff0fbe	_ltoa	_LTOA.C	60	MATCH
 maincpu v10	ff0ffa	_memset	_MEMSET.C	68	MATCH
-maincpu v10	ff1048	__doprnt	__DOFORM.C	-	model: no function
+maincpu v10	ff1048	__doprnt	__DOFORM.C	-	model: ; unsupported: integer slot local beside
 maincpu v10	ff2139	__facnv	__FACVT.C	-	model: ; unsupported: var
 maincpu v10	ff27f7	_ultoa	_ULTOA.C	136	MATCH
 maincpu v10	ff2891	_memccpy	_MEMCCPY.C	64	59 diff first +1
@@ -46,7 +46,7 @@ maincpu v9	ff0f6b	.sbrk	__SBRK.C	-	model: no function
 maincpu v9	ff0f92	_strlen	_STRLEN.C	30	MATCH
 maincpu v9	ff0fb0	_ltoa	_LTOA.C	60	MATCH
 maincpu v9	ff0fec	_memset	_MEMSET.C	68	MATCH
-maincpu v9	ff103a	__doprnt	__DOFORM.C	-	model: no function
+maincpu v9	ff103a	__doprnt	__DOFORM.C	-	model: ; unsupported: integer slot local beside
 maincpu v9	ff27e9	_ultoa	_ULTOA.C	136	MATCH
 maincpu v9	ff2883	_memccpy	_MEMCCPY.C	64	59 diff first +1
 maincpu v9	ff28c3	_memchr	_MEMCHR.C	24	MATCH
@@ -73,7 +73,7 @@ maincpu v7	ff079c	.sbrk	__SBRK.C	-	model: no function
 maincpu v7	ff07c3	_strlen	_STRLEN.C	30	MATCH
 maincpu v7	ff07e1	_ltoa	_LTOA.C	60	MATCH
 maincpu v7	ff081d	_memset	_MEMSET.C	68	MATCH
-maincpu v7	ff086b	__doprnt	__DOFORM.C	-	model: no function
+maincpu v7	ff086b	__doprnt	__DOFORM.C	-	model: ; unsupported: integer slot local beside
 maincpu v7	ff195c	__facnv	__FACVT.C	-	model: ; unsupported: var
 maincpu v7	ff201b	_ultoa	_ULTOA.C	136	MATCH
 maincpu v7	ff20b5	_memccpy	_MEMCCPY.C	64	59 diff first +1
@@ -99,7 +99,7 @@ maincpu v6	ff069e	.sbrk	__SBRK.C	-	model: no function
 maincpu v6	ff06c5	_strlen	_STRLEN.C	30	MATCH
 maincpu v6	ff06e3	_ltoa	_LTOA.C	60	MATCH
 maincpu v6	ff071f	_memset	_MEMSET.C	68	MATCH
-maincpu v6	ff076d	__doprnt	__DOFORM.C	-	model: no function
+maincpu v6	ff076d	__doprnt	__DOFORM.C	-	model: ; unsupported: integer slot local beside
 maincpu v6	ff1f1d	_ultoa	_ULTOA.C	136	MATCH
 maincpu v6	ff1fb7	_memccpy	_MEMCCPY.C	64	59 diff first +1
 maincpu v6	ff1ff7	_memchr	_MEMCHR.C	24	MATCH
@@ -124,7 +124,7 @@ maincpu v5	ff024a	.sbrk	__SBRK.C	-	model: no function
 maincpu v5	ff0271	_strlen	_STRLEN.C	30	MATCH
 maincpu v5	ff028f	_ltoa	_LTOA.C	60	MATCH
 maincpu v5	ff02cb	_memset	_MEMSET.C	68	MATCH
-maincpu v5	ff0319	__doprnt	__DOFORM.C	-	model: no function
+maincpu v5	ff0319	__doprnt	__DOFORM.C	-	model: ; unsupported: integer slot local beside
 maincpu v5	ff1ac9	_ultoa	_ULTOA.C	136	MATCH
 maincpu v5	ff1b63	_memccpy	_MEMCCPY.C	64	59 diff first +1
 maincpu v5	ff1ba3	_memchr	_MEMCHR.C	24	MATCH
@@ -134,55 +134,55 @@ subcpu v142	00f3ba	_g_dbltbl	__FLOAT.C	72	MATCH
 subcpu v142	00f402	_g_ldbltbl	__FLOAT.C	30	MATCH
 subcpu v142	00f420	_g_mathtbl	__MATH.C	8	MATCH
 subcpu v142	00f428	__FloatErrorHandle	TRAP.C	4	MATCH
-subcpu v142	03d34d	_cos	_COS.C	-	model: no function
+subcpu v142	03d34d	_cos	_COS.C	-	model: ; model error: KeyError: 8
 subcpu v142	03d42e	_fabs	_FABS.C	29	MATCH
-subcpu v142	03d4c9	_tan	_TAN.C	-	model: no function
-subcpu v142	03d533	_pow	_POW.C	-	model: no function
-subcpu v142	03d84f	_sin	_SIN.C	-	model: no function
-subcpu v142	03d98a	__trig	__TRIG.C	-	model: no function
+subcpu v142	03d4c9	_tan	_TAN.C	-	model: ; unsupported: integer slot local beside
+subcpu v142	03d533	_pow	_POW.C	-	model: ; unsupported: integer slot local beside
+subcpu v142	03d84f	_sin	_SIN.C	-	model: ; model error: KeyError: 8
+subcpu v142	03d98a	__trig	__TRIG.C	-	model: ; unsupported: integer slot local beside
 subcpu v142	03e1a5	_modf	_MODF.C	76	MATCH
-subcpu v142	03e1f1	_frexp	_FREXP.C	-	model: no function
-subcpu v142	03e64b	_exp	_EXP.C	-	model: no function
-subcpu v142	03e731	_log	_LOG.C	-	model: no function
-subcpu v142	03e894	__fint	__FINT.C	-	model: no function
-subcpu v142	03ea9c	_ldexp	_LDEXP.C	-	model: no function
+subcpu v142	03e1f1	_frexp	_FREXP.C	-	model: ; unsupported: integer slot local beside
+subcpu v142	03e64b	_exp	_EXP.C	-	model: ; unsupported: fp operand member
+subcpu v142	03e731	_log	_LOG.C	-	model: ; unsupported: integer slot local beside
+subcpu v142	03e894	__fint	__FINT.C	-	model: ; unsupported: integer slot local beside
+subcpu v142	03ea9c	_ldexp	_LDEXP.C	-	model: ; unsupported: integer slot local beside
 subcpu v141	00f3ba	_g_dbltbl	__FLOAT.C	72	MATCH
 subcpu v141	00f402	_g_ldbltbl	__FLOAT.C	30	MATCH
 subcpu v141	00f420	_g_mathtbl	__MATH.C	8	MATCH
 subcpu v141	00f428	__FloatErrorHandle	TRAP.C	4	MATCH
-subcpu v141	03d335	_cos	_COS.C	-	model: no function
+subcpu v141	03d335	_cos	_COS.C	-	model: ; model error: KeyError: 8
 subcpu v141	03d416	_fabs	_FABS.C	29	MATCH
-subcpu v141	03d4b1	_tan	_TAN.C	-	model: no function
-subcpu v141	03d51b	_pow	_POW.C	-	model: no function
-subcpu v141	03d837	_sin	_SIN.C	-	model: no function
-subcpu v141	03d972	__trig	__TRIG.C	-	model: no function
+subcpu v141	03d4b1	_tan	_TAN.C	-	model: ; unsupported: integer slot local beside
+subcpu v141	03d51b	_pow	_POW.C	-	model: ; unsupported: integer slot local beside
+subcpu v141	03d837	_sin	_SIN.C	-	model: ; model error: KeyError: 8
+subcpu v141	03d972	__trig	__TRIG.C	-	model: ; unsupported: integer slot local beside
 subcpu v141	03e18d	_modf	_MODF.C	76	MATCH
-subcpu v141	03e1d9	_frexp	_FREXP.C	-	model: no function
-subcpu v141	03e633	_exp	_EXP.C	-	model: no function
-subcpu v141	03e719	_log	_LOG.C	-	model: no function
-subcpu v141	03e87c	__fint	__FINT.C	-	model: no function
-subcpu v141	03ea84	_ldexp	_LDEXP.C	-	model: no function
+subcpu v141	03e1d9	_frexp	_FREXP.C	-	model: ; unsupported: integer slot local beside
+subcpu v141	03e633	_exp	_EXP.C	-	model: ; unsupported: fp operand member
+subcpu v141	03e719	_log	_LOG.C	-	model: ; unsupported: integer slot local beside
+subcpu v141	03e87c	__fint	__FINT.C	-	model: ; unsupported: integer slot local beside
+subcpu v141	03ea84	_ldexp	_LDEXP.C	-	model: ; unsupported: integer slot local beside
 subcpu v140	00f3ba	_g_dbltbl	__FLOAT.C	72	MATCH
 subcpu v140	00f402	_g_ldbltbl	__FLOAT.C	30	MATCH
 subcpu v140	00f420	_g_mathtbl	__MATH.C	8	MATCH
 subcpu v140	00f428	__FloatErrorHandle	TRAP.C	4	MATCH
-subcpu v140	03d301	_cos	_COS.C	-	model: no function
+subcpu v140	03d301	_cos	_COS.C	-	model: ; model error: KeyError: 8
 subcpu v140	03d3e2	_fabs	_FABS.C	29	MATCH
-subcpu v140	03d47d	_tan	_TAN.C	-	model: no function
-subcpu v140	03d4e7	_pow	_POW.C	-	model: no function
-subcpu v140	03d803	_sin	_SIN.C	-	model: no function
-subcpu v140	03d93e	__trig	__TRIG.C	-	model: no function
+subcpu v140	03d47d	_tan	_TAN.C	-	model: ; unsupported: integer slot local beside
+subcpu v140	03d4e7	_pow	_POW.C	-	model: ; unsupported: integer slot local beside
+subcpu v140	03d803	_sin	_SIN.C	-	model: ; model error: KeyError: 8
+subcpu v140	03d93e	__trig	__TRIG.C	-	model: ; unsupported: integer slot local beside
 subcpu v140	03e159	_modf	_MODF.C	76	MATCH
-subcpu v140	03e1a5	_frexp	_FREXP.C	-	model: no function
-subcpu v140	03e5ff	_exp	_EXP.C	-	model: no function
-subcpu v140	03e6e5	_log	_LOG.C	-	model: no function
-subcpu v140	03e848	__fint	__FINT.C	-	model: no function
-subcpu v140	03ea50	_ldexp	_LDEXP.C	-	model: no function
+subcpu v140	03e1a5	_frexp	_FREXP.C	-	model: ; unsupported: integer slot local beside
+subcpu v140	03e5ff	_exp	_EXP.C	-	model: ; unsupported: fp operand member
+subcpu v140	03e6e5	_log	_LOG.C	-	model: ; unsupported: integer slot local beside
+subcpu v140	03e848	__fint	__FINT.C	-	model: ; unsupported: integer slot local beside
+subcpu v140	03ea50	_ldexp	_LDEXP.C	-	model: ; unsupported: integer slot local beside
 table data	9ffb2c	_sbrk	__SBRK.C	-	model: ; unsupported: cast
 table data	9ffb2f	.sbrk	__SBRK.C	-	model: no function
 table data	9ffb56	_malloc	_MALLOC.C	-	model: ; unsupported: lvalue var
 table data	9ffbdc	_strncmp	_STRNCMP.C	50	MATCH
-hdae v2.06i	299ae7	__doprnt	__DOFORM.C	-	model: no function
+hdae v2.06i	299ae7	__doprnt	__DOFORM.C	-	model: ; unsupported: integer slot local beside
 hdae v2.06i	29abd8	_sprintf	_SPRINTF.C	-	model: ; unsupported: statement expr
 hdae v2.06i	29ac00	_vsprintf	_SPRINTF.C	-	model: ; unsupported: var
 hdae v2.06i	29ac3b	_itoa	_ITOA.C	-	model: ; unsupported: incdec target
@@ -205,7 +205,7 @@ hdae v2.06i	29b04e	_strupr	_STRUPR.C	-	model: ; unsupported: condition bin
 hdae v2.06i	29b07a	__facnv	__FACVT.C	-	model: ; unsupported: var
 hdae v2.06i	2f9362	___ctype	_CTYPE.C	-	model: no function
 hdae v2.06i	2f9362	__ctype	_CTYPE.C	256	MATCH
-hdae v2.01i	2993af	__doprnt	__DOFORM.C	-	model: no function
+hdae v2.01i	2993af	__doprnt	__DOFORM.C	-	model: ; unsupported: integer slot local beside
 hdae v2.01i	29a4a0	_sprintf	_SPRINTF.C	-	model: ; unsupported: statement expr
 hdae v2.01i	29a4c8	_vsprintf	_SPRINTF.C	-	model: ; unsupported: var
 hdae v2.01i	29a503	_itoa	_ITOA.C	-	model: ; unsupported: incdec target
@@ -227,7 +227,7 @@ hdae v2.01i	29a8e3	_strrev	_STRREV.C	-	model: ; unsupported: lvalue var
 hdae v2.01i	29a916	_strupr	_STRUPR.C	-	model: ; unsupported: condition bin
 hdae v2.01i	2f884e	___ctype	_CTYPE.C	-	model: no function
 hdae v2.01i	2f884e	__ctype	_CTYPE.C	256	MATCH
-hdae v1.15i	295abe	__doprnt	__DOFORM.C	-	model: no function
+hdae v1.15i	295abe	__doprnt	__DOFORM.C	-	model: ; unsupported: integer slot local beside
 hdae v1.15i	296baf	_sprintf	_SPRINTF.C	-	model: ; unsupported: statement expr
 hdae v1.15i	296bd7	_vsprintf	_SPRINTF.C	-	model: ; unsupported: var
 hdae v1.15i	296c12	_itoa	_ITOA.C	-	model: ; unsupported: incdec target
@@ -247,7 +247,7 @@ hdae v1.15i	296f95	_strncmp	_STRNCMP.C	50	MATCH
 hdae v1.15i	296fc7	_strncpy	_STRNCPY.C	43	MATCH
 hdae v1.15i	2e0e66	___ctype	_CTYPE.C	-	model: no function
 hdae v1.15i	2e0e66	__ctype	_CTYPE.C	256	MATCH
-hdae v1.10i	2959c2	__doprnt	__DOFORM.C	-	model: no function
+hdae v1.10i	2959c2	__doprnt	__DOFORM.C	-	model: ; unsupported: integer slot local beside
 hdae v1.10i	296ab3	_sprintf	_SPRINTF.C	-	model: ; unsupported: statement expr
 hdae v1.10i	296adb	_vsprintf	_SPRINTF.C	-	model: ; unsupported: var
 hdae v1.10i	296b16	_itoa	_ITOA.C	-	model: ; unsupported: incdec target

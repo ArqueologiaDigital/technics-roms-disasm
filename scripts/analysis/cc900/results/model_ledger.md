@@ -40,13 +40,15 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-10-micro-fptemps, v423/none                          | micro/fp_temps.c   | 32 / 33 exact (97.0%)   |
 | run 2026-11-09-10-micro-fptemps, v423/O3XS                          | micro/fp_temps.c   | 31 / 33 exact (93.9%)   |
 | run 2026-11-08-9-micro-optloops, v423/O3XS                          | micro/opt_loops.c  | 15 / 33 exact (45.5%)   |
-| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality v4.23      | 1997 LIB/SRC       | 127 / 188 exact (67.6%) |
-| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality kn5000     | 1997 LIB/SRC       | 125 / 188 exact (66.5%) |
-| run 2026-11-08-5-libsrc97-O3XS, ide2003/O3XS, --personality ide2003 | 1997 LIB/SRC       | 126 / 188 exact (67.0%) |
+| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality v4.23      | 1997 LIB/SRC       | 138 / 248 exact (55.6%) |
+| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality kn5000     | 1997 LIB/SRC       | 136 / 248 exact (54.8%) |
+| run 2026-11-08-5-libsrc97-O3XS, ide2003/O3XS, --personality ide2003 | 1997 LIB/SRC       | 137 / 248 exact (55.2%) |
 | run 2026-11-09-3-proxy-tiny, v423/O3XSXr                            | firmware/tiny.c    | 6 / 6 exact (100.0%)    |
 
 The library rows count listing pieces: since inline assembly is passed through (2026-11-09), an inline-assembly
-label named `_x` / `.x` starts a piece of its own, as in Toshiba's listing, so the total rose from 79 to 144; anonymous typedef'd unions (FLOAT.H) then brought more files in (188).
+label named `_x` / `.x` starts a piece of its own, as in Toshiba's listing, so the total rose from 79 to 144; anonymous typedef'd unions (FLOAT.H) then brought more files in (188), and on 2026-11-09 the files that include
+`errno.h` (which ends in a DOS end-of-file byte; the front end now mirrors such include directories with the byte
+cut) and unnamed local unions (`_ldexp`, `_frexp`, `_fint`) brought 248.
 The two V4.23 library rows score against V4.23's listing, so the kn5000 personality's lower count is expected: it
 differs from V4.23 where the firmware does (`_ldiv`, `_ultoa`).  The `ide2003` rows are the phase 7 by-product: the
 2003 compiler's personality scored against that compiler's own listings.
