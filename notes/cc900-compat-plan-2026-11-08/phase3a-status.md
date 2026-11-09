@@ -223,7 +223,13 @@ reserved up front only when the operand is itself a call (d_call_i); a call stat
 helper calls are never cross-jumped (d_cond); `-O`'s address reuse also when XDE was computed first or the second
 operand is a constant (d_loop, d_inc); the branches' common loads hoisted above an FP test, sorted XBC, XDE, XWA
 (`_fabs`, t_cond_e); returns share one exit when there is a frame, without `-O` too (t_cmp_e).  fp.c: 108 / 108 at
-none and `-O3 -XS`; fp_temps.c: 33 / 33 at both.
+none and `-O3 -XS`; fp_temps.c: 33 / 33 at both.  From the library's math routines: two returns of a double that are
+not the direct form keep the hidden pointer homed in XIZ from the entry (`_sin`; copies then `ld XWA,XIZ` first); a
+returned call's computed argument takes the reserved temporary (`_sin`); a negated FP constant is a constant, and a
+constant store to an int global is `ldw (_errno),0x22` (`_exp`); a jump-if-true FP condition also computes the
+negated relation and jumps on `eq` (`_exp`'s `break`); the destination equal to the right operand is copied to XDE
+(`lda XWA,w` / `ld XDE,XWA`); an element of a global struct array (`g_dbltbl[2].val`) ranks first among `+` / `*`
+operands (`_cos`).  Open: `_cos`'s temporaries (a lifetime-based slot choice; four bytes differ).
 
 ## Priorities after 2026-11-09
 

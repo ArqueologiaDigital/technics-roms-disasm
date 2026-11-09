@@ -102,6 +102,7 @@ def main():
                     rb = read(addr + at, 3) if at >= 0 else None
                     real = int.from_bytes(rb, 'little') if rb else None
                     wantb = struct.pack('<d' if consts[lab][0] == 'fdatad' else '<f', float(consts[lab][1]))
+                    if os.environ.get('PM_DEBUG'): sys.stderr.write('%s %s at=%s real=%s\n' % (pub, lab, at, hex(real) if real else None))
                     if real is None or read(real, len(wantb)) != wantb: bad_const = lab; break
                     text = text.replace('0x%x' % syms[lab], '0x%x' % real); syms[lab] = real
                 code, err = assemble(text, addr)

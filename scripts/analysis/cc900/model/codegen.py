@@ -773,10 +773,10 @@ def gen_cond_true(F, c, target):
     if c.k == 'bin' and c.op == '&&':                # _isalpha: (c>='a' && c<='z') || ... -> j lt,L1 / j le,L2 / L1:
         lf = F.newulabel(); gen_cond_false(F, c.l, lf); gen_cond_true(F, c.r, target)
         F.lines.append(lf + ':'); return
-    if c.k == 'bin' and c.op in CC_S and fpgen.is_fp(strip(c.l).ty):
-        fpgen.compare(F, c, True); F.emit('cp', 'HL,0x0'); jump(F, 'ne', target); return
+    if c.k == 'bin' and c.op in CC_S and fpgen.is_fp(strip(c.l).ty):   # _exp: if (ret == old) break; -> ld DE,0x5 /
+        fpgen.compare(F, c, False); F.emit('cp', 'HL,0x0'); jump(F, 'eq', target); return   # ... / j eq (the negation)
     if fpgen.is_fp(c.ty):
-        fpgen.truth(F, c, True); F.emit('cp', 'HL,0x0'); jump(F, 'ne', target); return
+        fpgen.truth(F, c, False); F.emit('cp', 'HL,0x0'); jump(F, 'eq', target); return
     if c.k == 'bin' and c.op in CC_S:
         cc = gen_compare(F, c)
         if cc in (True, False): raise Unsupported('constant condition')
@@ -1171,6 +1171,9 @@ def gen_opassign(F, e):
     raise Unsupported('opassign ' + op)
 
 def store_global(F, name, e, size):
+    rc = fold(narrow(e, size)) if size <= 2 else None
+    if rc is not None and rc.k == 'const' and rc.value is not None:   # _exp, _tan: errno = ERANGE -> ldw (_errno),0x22
+        F.emit('ld' + ('b' if size == 1 else 'w'), '(_%s),%s' % (name, hx(rc.value & ((1 << (8 * size)) - 1)))); return
     rv = regvar_of(getattr(strip(e), 'e', e)) if strip(e).k == 'load' else None
     if rv is not None and rv.ty.size == size:          # ra_twice: ld (_ga),HL
         F.emit('ld', '(_%s),%s' % (name, FAM[rv.reg][size])); return
@@ -1399,6 +1402,12 @@ def gen_stmt(F, s, last):
         F.lines.append(F.shared_exit['label'] + ':')
     if s.k == 'return' and s.value is not None and fpgen.is_fp(F.f.ret):
         fpgen.gen_return(F, s.value); flush_pops(F)                   # run 2026-11-09-9-micro-fp (fpgen.py)
+        rets = []
+        walk(F.f.body, lambda n, d: rets.append(n) if n.k == 'return' else None)
+        if (F.xiz_vars or F.pushes or getattr(F, 'frame', 0)) and rets and s is not rets[-1]:
+            if not getattr(F, 'exit_label', None): F.exit_label = F.newlabel()
+            F.emit('j', F.exit_label); return                         # _sin: ... cal ._fld_dd / j L2
+        if getattr(F, 'exit_label', None): F.lines.append(F.exit_label + ':')
         if F.xiz_vars: F.emit('pop', F.save_reg)
         epilogue(F); F.emit('ret'); return
     if s.k == 'expr' and s.e.k in ('bin', 'opassign') and (s.e.k == 'opassign' or s.e.op == '=') and \
@@ -2294,6 +2303,12 @@ def gen_loop(F, s, last):
             xm = mem_operand(F, x); sz = x.ty.size
             swap = {'<': '>', '>': '<', '<=': '>=', '>=': '<=', '==': '==', '!=': '!='}[cnd.op]
             cc = (CC_S if x.ty.signed else CC_U)[swap]
+            if fold(x).k == 'const' and fold(x).value is not None:     # _exp: for (i = 1; i <= LOP; ...): both known,
+                import operator                                        # the first test is decided now
+                holds = {'<': operator.lt, '<=': operator.le, '>': operator.gt, '>=': operator.ge,
+                         '==': operator.eq, '!=': operator.ne}[cnd.op](k0.value, fold(x).value)
+                if not holds: F.emit('j', exitl) if not (after_ret and not F.loops) else F.emit('ret')
+                rotated = 'tested'; xm = None
             if xm is not None:
                 F.emit('cp' + ('' if family_of(xm) else ('w' if sz == 2 else 'b' if sz == 1 else '')), '%s,%s' % (xm, hx(k0.value)))
                 tgt = 'RET' if after_ret and not F.loops else exitl
@@ -2725,6 +2740,8 @@ def fp_plan_frame(F):
     F.frame = size
     if fpgen.needs_xiz(F) and not F.xiz_vars:              # fp_temps.c t_mla: lda XSP,XSP-0x10 / push XIZ
         F.lines.insert(1, '\tpush\tXIZ'); F.push += 4; F.xiz_vars.append('sret'); F.save_reg = 'XIZ'
+        if fpgen.needs_sret_home(F):                       # _sin: ld XIZ,(XSP+0x38) right after the push
+            F.sret_home = True; F.lines.insert(2, '\tld\tXIZ,(XSP+%s)' % hx(F.sret.off + size + F.push))
     if not size: return
     for p in f.params:
         if hasattr(p, 'off'): p.off += size

@@ -81,6 +81,9 @@ def fp_value_cast(e):
         if c.k == 'const' and c.value is not None:
             from frontend import N
             return N('fconst', value=float(c.value), ty=e.ty)
+    if e.k == 'un' and e.op == '-' and fp_value_cast(e.e).k == 'fconst':      # _exp: -708.396 is a constant
+        from frontend import N
+        return N('fconst', value=-fp_value_cast(e.e).value, ty=e.ty)
     return e
 
 def lvalue_addr(F, v, reg):
@@ -101,6 +104,9 @@ def lvalue_addr(F, v, reg):
         g = cg.global_offset(v)
         if g and g[0] != '__param__':
             F.emit('lda', '%s,_%s + %s' % (reg, g[0], g[1]) if g[1] != '0x0' else '%s,_%s' % (reg, g[0])); return True
+        gi = elem_member(v)
+        if gi:                                             # _cos: PAI5 = g_dbltbl[2].val -> lda XBC,_g_dbltbl + 0x10
+            F.emit('lda', '%s,_%s + %s' % (reg, gi[0], cg.hx(gi[1])) if gi[1] else '%s,_%s' % (reg, gi[0])); return True
         return False
     if v.k == 'index':
         b = strip(v.base)
@@ -148,6 +154,7 @@ def dest_first(F, dest):
     (d_add_gg: ld XWA,(XSP+0x4)), a pointer (d_ptr_st), an indexed element (d_arr_st); a named or stack object's
     address is formed last (d_add_st: lda XWA,_gd)"""
     if dest[0] == 'sret': F.emit('ld', 'XWA,(XSP+%s)' % C().hx(F.sret.off + F.push)); return True
+    if dest[0] == 'xizh': F.emit('ld', 'XWA,XIZ'); return True      # the homed pointer: a register copy, first
     if dest[0] == 'lv':
         v = strip(dest[1])
         named = v.k == 'var' or (v.k == 'member' and not v.arrow) or (v.k == 'index' and C().fold(v.idx).k == 'const')
@@ -157,7 +164,7 @@ def dest_first(F, dest):
     return False
 
 def dest_last(F, dest):
-    if dest[0] == 'sret': return
+    if dest[0] in ('sret', 'xizh'): return
     if dest[0] == 'xiz': F.emit('ld', 'XWA,XIZ'); return             # t_mla: lda XBC,.. / lda XDE,.. / ld XWA,XIZ
     if dest[0] == 'cell': F.emit('lda', 'XWA,%s' % slot_addr(F, alloc(F, dest[1]))); return
     if dest[0] == 'slot': F.emit('lda', 'XWA,%s' % slot_addr(F, dest[1])); return
@@ -213,8 +220,10 @@ def op_into(F, e, vals, dest):
     """the helper call of a +-*/, unary - or float/double conversion node whose operands are ready"""
     if e.k == 'bin':
         name = '._f%s_%s' % ({'+': 'add', '-': 'sub', '*': 'mul', '/': 'div'}[e.op], sfx(e.ty))
-        if e.op in '+*' and isinstance(vals[1], tuple) and not isinstance(vals[0], tuple):
-            vals = [vals[1], vals[0]]                      # t_amla: gd3 + gd*gd2 -> XBC = the product, XDE = _gd3
+        if e.op in '+*' and rank(F, vals[1]) > rank(F, vals[0]) and not (
+                simple_addr(F, vals[0]) is not None and simple_addr(F, vals[0]) == dest_simple(F, dest)):   # _exp: t = t * w
+            vals = [vals[1], vals[0]]                      # t_amla: gd3 + gd*gd2 -> XBC = the product, XDE = _gd3;
+                                                           # _cos: fabs(x) + PAI5 -> XBC = _g_dbltbl + 0x10
         if F.opt and dest[0] not in ('sret', 'xiz'):
             sa, sb, sd = simple_addr(F, vals[0]), simple_addr(F, vals[1]), dest_simple(F, dest)
             if sa is not None and sa == sd:                  # d_add_asg: lda XWA,_gd / ld XBC,XWA / lda XDE,_gd2; a
@@ -222,6 +231,9 @@ def op_into(F, e, vals, dest):
                 if k == 'ld': put_addr(F, vals[1], 'XDE')
                 F.emit('lda', 'XWA,%s' % sd); F.emit('ld', 'XBC,XWA')
                 if k != 'ld': put_addr(F, vals[1], 'XDE')
+                F.emit('cal', name); return
+            if sb is not None and sb == sd and sa is not None and sa != sb:   # _exp: w = x / w -> lda XBC,x /
+                put_addr(F, vals[0], 'XBC'); F.emit('lda', 'XWA,%s' % sd); F.emit('ld', 'XDE,XWA')   # lda XWA,w / ld XDE,XWA
                 F.emit('cal', name); return
             if sa is not None and sa == sb and sd is not None:   # d_loc: lda XDE,XSP+0x10 / ld XBC,XDE / lda XWA,XSP
                 put_addr(F, vals[1], 'XDE'); F.emit('ld', 'XBC,XDE'); F.emit('lda', 'XWA,%s' % sd); F.emit('cal', name); return
@@ -247,7 +259,7 @@ def addr_kind(F, x):
     return 'ld'
 
 def dest_kind(F, dest):
-    if dest[0] == 'sret': return 'ld'
+    if dest[0] in ('sret', 'xizh'): return 'ld'
     if dest[0] in ('slot', 'cell', 'xiz'): return 'lda'
     from frontend import N
     return addr_kind(F, N('load', e=dest[1], ty=dest[1].ty))
@@ -355,9 +367,13 @@ def call_into(F, e, dest, arg_hint=None):
         return k
     if arg_hint is not None:
         n += push_args()
-    if dest[0] == 'cell': off = alloc(F, dest[1])
+    if dest[0] == 'lazyres':                               # the hint if the arguments left it free (call_val)
+        off = alloc(F, dest[1]) if dest[1].off is None else temp(F, 8)
+        dest = ('slot', off)
+    elif dest[0] == 'cell': off = alloc(F, dest[1])
     elif dest[0] == 'slot': off = dest[1]
     else: off = temp(F, 8)
+    F.last_call_off = off
     if arg_hint is None: n += push_args()
     F.emit('lda', 'XWA,%s' % slot_addr(F, off)); F.emit('push', 'XWA'); F.push += 4; n += 4
     F.emit('cal', '_' + fn.decl.name)
@@ -371,16 +387,22 @@ def gen_return(F, v):
     """return of a double (hidden pointer) or a float (XHL, through a frame temporary)"""
     if F.f.ret.size == 8:
         mode = root_mode(F, v)
+        if getattr(F, 'sret_home', False):                 # _sin: two returns -> the pointer homed in XIZ at entry
+            if mode == 'copy':
+                t1 = Cell(8)
+                loc = eval_val(F, v, t1) if fp_value_cast(v).k != 'call' else call_val(F, fp_value_cast(v), t1)
+                F.emit('ld', 'XWA,XIZ'); put_addr(F, loc, 'XBC'); F.emit('cal', '._fld_dd'); return
+            eval_into(F, v, ('xizh',)); return
         if mode == 'xiz':                                    # t_mla: ld XIZ,(XSP+0x18) ... ld XWA,XIZ / cal ._fadd_d
             F.emit('ld', 'XIZ,(XSP+%s)' % C().hx(F.sret.off + F.push)); eval_into(F, v, ('xiz',)); return
         if mode == 'copy':                                   # t_mm: ... ld XWA,(XSP+0x24) / lda XBC,XSP+0x10 / cal ._fld_dd
             t1 = Cell(8)
             e0 = fp_value_cast(v)
             ops = [e0.l, e0.r] if e0.k == 'bin' else [e0.e] if e0.k in ('un', 'cast') else []
-            if e0.k == 'call' or any(fp_value_cast(x).k == 'call' for x in ops):
+            if any(fp_value_cast(x).k == 'call' for x in ops):
                 alloc(F, t1)                                 # t_call_a: the sum's +0x18 above fd(a)'s +0x10; d_call_i
                                                              # (a conversion of fi()) takes it at its first write
-            loc = eval_val(F, v, t1)
+            loc = eval_val(F, v, t1) if e0.k != 'call' else call_val(F, e0, t1)
             F.emit('ld', 'XWA,(XSP+%s)' % C().hx(F.sret.off + F.push)); put_addr(F, loc, 'XBC'); F.emit('cal', '._fld_dd')
             return
         eval_into(F, v, ('sret',)); return
@@ -493,6 +515,7 @@ def root_mode(F, v):
 def needs_xiz(F):
     """does a return keep the hidden pointer in XIZ (push XIZ in the prologue)?"""
     if not (is_fp(F.f.ret) and F.f.ret.size == 8): return False
+    if needs_sret_home(F): return True
     rets = []
     C().walk(F.f.body, lambda n, d: rets.append(n) if n.k == 'return' and n.value is not None else None)
     return any(root_mode(F, r.value) == 'xiz' for r in rets)
@@ -529,7 +552,9 @@ def hoist_common(lines):
         return out
     def prefix(i):
         out = []
-        while i < len(lines) and lines[i].startswith('\t') and not lines[i].startswith(('\tcal', '\tj', '\tret')):
+        while i < len(lines) and lines[i].startswith('\t') and not lines[i].startswith(('\tcal', '\tj', '\tret', '\tpush',
+                                                                                    '\tpop', '\tinc\t', '\tdec\t')) \
+                and 'XSP,XSP' not in lines[i]:             # _sin: after pushw 0x1, XSP+0x2e is another slot
             out.append(i); i += 1
         return out
     i = 0
@@ -571,3 +596,35 @@ def call_stmt(F, e):
         if is_fp(strip(a).ty): n += push_fp_arg(F, a)
         else: n += cg.push_arg(F, a)
     F.emit('cal', '_' + fn.decl.name); F.pending += n
+
+def call_val(F, e, hint):
+    """a returned call (_sin: _trig(x, -x, 1)): its computed argument takes the reserved temporary, its result the
+    temporary if that is still free, else a fresh one (-x at +0x28, the result at +0x20; the other arm's result at
+    +0x18)"""
+    used = hint.off is not None
+    call_into(F, e, ('cell', Cell(8)) if False else ('lazyres', hint), arg_hint=hint)
+    return ('slot', F.last_call_off)
+
+def needs_sret_home(F):
+    """two or more returns of a double keep the hidden pointer in XIZ from the start (_sin)"""
+    if not (is_fp(F.f.ret) and F.f.ret.size == 8): return False
+    rets = []
+    C().walk(F.f.body, lambda n, d: rets.append(n) if n.k == 'return' and n.value is not None else None)
+    return len(rets) >= 2 and any(root_mode(F, r.value) != 'direct' for r in rets)   # (_fabs: both direct, no home)
+
+def elem_member(v):
+    """(global name, offset) of g[k].m with a constant k"""
+    v = strip(v)
+    if v.k != 'member' or v.arrow: return None
+    b = strip(v.base)
+    if b.k != 'index': return None
+    a = strip(b.base); i = C().fold(b.idx)
+    if a.k != 'var' or a.decl.kind != 'global' or a.decl.ty.kind != 'array' or i.k != 'const': return None
+    return (a.decl.name, i.value * b.ty.size + C().member_offset(v))
+
+def rank(F, x):
+    """the order of commutative operands: an element or member of a global first, then a temporary, then the rest"""
+    if isinstance(x, tuple): return 1
+    e = fp_value_cast(x)
+    if e.k == 'load' and (elem_member(e.e) or strip(e.e).k == 'member'): return 2   # (not d_loop's gda[i])
+    return 0

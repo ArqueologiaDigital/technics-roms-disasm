@@ -135,8 +135,12 @@ def translate_line(t, syms, locals_):
         if m: return '\tlda %s, (%s%s%d)' % (dst, m.group(1).lower(), m.group(2), num(m.group(3)))
         m = re.match(r'^(X\w+)\+(\w+)$', src)
         if m: return '\tlda %s, (%s+%s)' % (dst, m.group(1).lower(), m.group(2).lower())
-        if src.startswith(('_', '.')): return '\tlda %s, %s' % (dst, absaddr(lookup(src, syms)))
-        if src in syms: return '\tlda %s, %s' % (dst, absaddr(syms[src]))      # an FP constant placed by the linker
+        # lda of a symbol takes the 24-bit address whatever its value (sub CPU _exp: lda XBC,_g_mathtbl at 0xf420 is
+        # f2 20 f4 00 31, not the 16-bit form)
+        m = re.match(r'^([_.]\w+) \+ (0x[0-9a-fA-F]+|\d+)$', src)
+        if m: return '\tlda %s, (0x%x:24)' % (dst, lookup(m.group(1), syms) + num(m.group(2)))   # _cos: _g_dbltbl + 0x10
+        if src.startswith(('_', '.')): return '\tlda %s, (0x%x:24)' % (dst, lookup(src, syms))
+        if src in syms: return '\tlda %s, (0x%x:24)' % (dst, syms[src])      # an FP constant placed by the linker
         if re.match(r'^X(WA|BC|DE|HL|IX|IY|IZ|SP)$', src): return '\tlda %s, (%s)' % (dst, src.lower())   # lda XWA,XSP
         if src in locals_: return '\tlda %s, (%s:24)' % (dst, src)
         if NUM.match(src): return '\tlda %s, %s' % (dst, absaddr(num(src)))
