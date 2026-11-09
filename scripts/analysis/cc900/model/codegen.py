@@ -1387,7 +1387,10 @@ def gen_stmt(F, s, last):
         if F.case_labels[id(s)] and id(s) not in F.case_inner: F.lines.append(F.case_labels[id(s)] + ':')
         if s.body is not None: gen_stmt(F, s.body, False)
         return
-    if s.k == 'break': F.emit('j', F.loops[-1][0]); return
+    if s.k == 'break':
+        if F.loops[-1][0] in getattr(F, 'switch_rets', set()):   # sw_jt6 under none: each case returns itself
+            flush_pops(F); F.emit('ret'); return
+        F.emit('j', F.loops[-1][0]); return
     if s.k == 'continue': F.emit('j', F.loops[-1][1]()); return
     if s.k == 'expr' and regvar_stmt(F, s.e): return
     if s.k == 'expr' and s.e.k == 'opassign':
@@ -1881,6 +1884,7 @@ def gen_switch(F, s, last):
                 elif default:                                  # sw_ev: the default body follows the range test
                     order = [c for c in cases if c.k == 'default'] + [c for c in cases if c.k != 'default']
         if not entries: to_default('t') if False else F.emit('j', deflab)
+    if exit_is_ret and not F.opt: F.switch_rets = getattr(F, 'switch_rets', set()) | {end}
     F.loops.append((end, F.loops[-1][1] if F.loops else (lambda: end)))
     items = flat(s.body) if s.body.k == 'block' else [s.body]
     if order is not cases and order[0].k == 'default':     # move the default's statements to the front

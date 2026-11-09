@@ -136,6 +136,10 @@ through an address temporary (`op_fill` stores a char directly).  Under `-Xr` th
 allocator moving parameters out of the scratch registers a loop needs (`op_cpy_nab`: n stays in WA, the temporaries
 are DE / E, the pointer leaves XDE for XHL): the model has no allocator for that yet (0 of 24).
 
+Switch under cdecl -O3 -XS (0 of 25): V4.23 turns a switch whose cases all call one function with different
+constants into a lookup table of the arguments (`sw_jt6`: `db 10 ... db 15`, `ld A,(XIX+WA) / exts WA / push WA /
+cal _f1`).  Under `-O3 -XS -Xr` (the firmware's options) it does not, so this is left for later.
+
 Still open on this convention: the `-O` register allocator for loops (`ra_leaf2..5`: which values go to IX / IY /
 IZ / QDE ...), `sw_local` (a local kept in HL across a call), placement of the code after a switch next to the
 first case (`sw_evtab`), loops in the switch's continue label (`sw_loop`), long helper homes at `-O` (`mul_l_loc`).
