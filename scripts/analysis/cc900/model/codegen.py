@@ -1610,6 +1610,7 @@ ADDR_CLOBBER_SWAP = True                                  # see gen_bin
 CHAR_NARROW_TERN = True                                   # see char_narrow
 LOOP_FLUSH_POPS = True                                    # see gen_loop
 SWITCH_LOOP_LABEL = True                                  # see gen_switch
+CHAR_CONST_PUSHW = True                                   # see push_arg
 
 def char_narrow(body):
     """cc900 does int + - & | ^ of a char and a constant that fits a byte, or of two chars, on the byte and
@@ -1941,6 +1942,9 @@ def push_arg(F, a):
             for _ in range(n // 2): F.emit('ldiw', '(XIX+),(XIY+)')
         else: F.emit('ld', 'BC,%s' % hx(n // 2)); F.emit('ldirw', '(XIX+),(XIY+)')
         F.push += n; return n
+    if size == 1 and fold(a0).k == 'const' and fold(a0).value is not None and CHAR_CONST_PUSHW:
+        F.emit('pushw', hx(fold(a0).value & 0xffff)); F.push += 2; return 2   # abi args_caller.c c_ci: t_c(5) ->
+                                                                             # pushw 0x5
     if size == 1:                                    # a char parameter: sign-extended to a word (call.c: k4)
         m = mem_operand(F, a0)
         b0 = a0
@@ -4444,9 +4448,9 @@ def gen_switch(F, s, last):
     will_table = nv >= 6 and None not in vv and max(vv) - min(vv) + 1 <= 2 * nv
     if e.k == 'cast' and e.kind == 'IntegralCast' and strip(e.e).ty.size == 1:
         ext = 'exts' if strip(e.e).ty.signed else 'extz'; e = strip(e.e)
-        if not will_table and mem_operand(F, e) is not None and (family_of(mem_operand(F, e)) or F.opt):
-            ext = None; chain_char = True                  # sw_char: a chain compares A itself (cp A,0x65; under -O3 -XS
-                                                           # from memory too: ld A,(XSP+0x4) / cp A,0x65)
+        if not will_table and mem_operand(F, e) is not None:
+            ext = None; chain_char = True                  # sw_char: a chain compares A itself (cp A,0x65; from memory
+                                                           # too, every set: ld A,(XSP+0x4) / cp A,0x65)
     size = max(2, e.ty.size) if ext or will_table or e.ty.size != 1 else 1
     signed = strip(s.value).ty.signed
     m = mem_operand(F, e)
