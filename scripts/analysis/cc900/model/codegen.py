@@ -361,7 +361,9 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         else:
             F.emit(SIMPLE_OPS[op], '%s,%s' % (R, rs))
         return fam
-    if op == '*' and size == 4 and fold(r).k == 'const' and fold(r).value > 0:
+    if op == '*' and size == 4 and fold(r).k == 'const' and fold(r).value > 0 and bin(fold(r).value).count('1') <= 3:
+        # shifts and adds for a constant with few one bits (mul_l_pk: *10); _rand's *1103515245 and *301 (5 or
+        # more one bits) call C9H_mul*; the threshold between 3 and 5 is a guess
         return gen_mul_const(F, l, fold(r).value, fam, size, signed)
     if op in ('*', '/', '%'):
         if size == 4: return gen_long_helper(F, e, l, r, fam, signed)
@@ -512,10 +514,15 @@ def gen_long_helper(F, e, l, r, fam, signed):
     ls, rs = reg_or_mem(F, l, 4), reg_or_mem(F, r, 4)
     if ls is None or rs is None: raise Unsupported('complex long helper operands')
     # provisional (two examples, mul_l_loc): XBC first when a register variable is involved
-    if F.xiz_vars and any(d is not None and d.kind == 'local' for d in F.xiz_vars):
-        F.emit('ld', 'XBC,%s' % rs); F.emit('ld', 'XWA,%s' % ls)
+    rc = fold(r)
+    if F.opt and rc.k == 'const' and rc.value is not None and 0 <= rc.value < 0x10000:
+        rs_ld = ('lda', 'XBC,%s' % hx(rc.value))        # -O: div_l_pk, _rand: lda XBC,0xa / lda XBC,0x7fff
     else:
-        F.emit('ld', 'XWA,%s' % ls); F.emit('ld', 'XBC,%s' % rs)
+        rs_ld = ('ld', 'XBC,%s' % rs)
+    if F.xiz_vars and any(d is not None and d.kind == 'local' for d in F.xiz_vars):
+        F.emit(*rs_ld); F.emit('ld', 'XWA,%s' % ls)
+    else:
+        F.emit('ld', 'XWA,%s' % ls); F.emit(*rs_ld)
     F.emit('cal', 'C9H_' + name)
     return 'HL' if fam == 'HL' else move_to(F, 'XHL', fam, 4, keep=True)
 
@@ -558,7 +565,9 @@ def gen_compare(F, e):
     if rc.k == 'const' and lm is not None and lm.startswith('(') and size <= 2:
         F.emit('cp' + ('b' if size == 1 else 'w'), '%s,%s' % (lm, hx(rc.value))); return cc
     if l.k == 'call' and rc.k == 'const' and size == 2:   # k_cond, c_break: cal .r1 / cp HL,0x0 (cdecl too)
-        gen_call(F, l); F.emit('cp', 'HL,%s' % hx(rc.value)); return cc
+        gen_call(F, l); flush_pops(F); F.emit('cp', 'HL,%s' % hx(rc.value)); return cc   # _toupper: inc 0x2,XSP first
+    if rc.k == 'const' and rc.value == 0 and size == 4 and op in ('==', '!=') and lm in ('XIZ', 'XBC', 'XDE', 'XHL', 'XWA'):
+        F.emit('or', '%s,%s' % (lm, lm)); return cc     # _calloc: if (ptr) -> or XIZ,XIZ
     W = FAM['WA'][size]
     gen(F, l, 'WA', size)
     if rc.k == 'const' and rc.value == 0 and size == 4 and op in ('==', '!='):
@@ -641,6 +650,8 @@ def push_arg(F, a):
         F.emit('push', m if size == 2 else FAM[family_of(m)[1:]][2]); F.push += 2; return 2
     if size <= 2 and m is not None:
         F.emit('pushw', m); F.push += 2; return 2
+    if size == 4 and m is not None and m in ('XIZ', 'XBC', 'XDE', 'XHL', 'XIX', 'XIY'):
+        F.emit('push', m); F.push += 4; return 4          # _calloc: push XIZ
     if size == 4 and m is not None and m.startswith('('):
         F.emit('ld', 'XWA,%s' % m); F.emit('push', 'XWA'); F.push += 4; return 4
     if size == 4 and m is not None:
@@ -1041,7 +1052,8 @@ def gen_stmt(F, s, last):
                     regvar_stmt(F, N('bin', op='=', l=N('var', decl=c.var, ty=c.var.ty), r=c.init, ty=c.var.ty))
                 i += 1; continue
             if c.k == 'decl' and getattr(c.var, 'reg', None) == 'XIZ':
-                fam = gen(F, c.init, 'HL', 4); F.emit('ld', 'XIZ,%s' % FAM[fam][4]); i += 1; continue
+                if c.init is not None: fam = gen(F, c.init, 'HL', 4); F.emit('ld', 'XIZ,%s' % FAM[fam][4])
+                i += 1; continue
             if c.k == 'decl' and c.init is not None and c.var.kind == 'local' and not c.var.addr_taken:
                 rest = body[i + 1:]
                 u = uses_of(rest, c.var, [])
@@ -1101,11 +1113,17 @@ def gen_stmt(F, s, last):
             epilogue(F); F.emit('ret'); return
         raise Unsupported('struct return')
     if s.k == 'return':
+        epi = F.opt and (F.xiz_vars or F.pushes or getattr(F, 'frame', 0)) and not getattr(F, 'shared_exit', None)
         if s.value is not None:
             size = F.f.ret.size
             fam = gen(F, s.value, 'HL', size, then_ret=True)
             if fam != 'HL' and FAM[fam].get(size) != FAM['HL'][size]:
                 F.emit('ld', '%s,%s' % (FAM['HL'][size], FAM[fam].get(size, FAM[fam].get(2))))
+        if epi and not last:                               # -XS: _calloc: ld XHL,0x0 / j L3 ... L3: pop XIZ / ret
+            flush_pops(F)
+            if not getattr(F, 'exit_label', None): F.exit_label = F.newlabel()
+            F.emit('j', F.exit_label); return
+        if epi and getattr(F, 'exit_label', None): F.lines.append(F.exit_label + ':')
         flush_pops(F)
         if F.xiz_vars: F.emit('pop', F.save_reg)
         epilogue(F)
@@ -1136,6 +1154,7 @@ def gen_stmt(F, s, last):
             if F.lines[-1] == '\tret' and last:
                 return                               # condition always false: the statement disappears
             gen_stmt(F, s.then, False)
+            flush_pops(F)                                # _calloc: inc 0x8,XSP before the join label
             if k is not True: F.lines.append(lab + ':')   # always true: no label (cmp_ui: ge_ui_br0)
             return
         lelse, lend = F.newulabel(), F.newulabel()
@@ -1328,7 +1347,8 @@ def plan_homes(F):
     else:
         params = [d for d in F.f.params if not getattr(d, 'reg', None) and d in across and d.ty.kind in ('int', 'ptr')
                   and d.ty.size == 2 and d is not F.sret]
-    locs = [d for d in across if d.kind == 'local' and not getattr(d, 'reg', None) and d.ty.size <= 2]
+    locs = [d for d in across if d.kind == 'local' and not getattr(d, 'reg', None) and d.ty.size in (1, 2, 4)
+            and d.ty.kind in ('int', 'ptr') and not d.addr_taken]
     weight = {}                  # references, not weighted by loops: c_for i (4) before n (1), c_nested i (5) before j (4)
     for y in seq:
         if y[0] in ('use', 'def'): weight[y[1]] = weight.get(y[1], 0) + 1
@@ -1347,6 +1367,9 @@ def plan_homes(F):
             elif not F.adecl: continue
             else:
                 stores.append((d, FAM[d.reg][d.ty.size])); d.home_slot = True; d.reg = None
+        elif d.ty.size == 4:                               # _calloc: p = malloc(...) in XIZ, n stays on the stack
+            if not used['IZ'] and not used['QIZ']:
+                d.reg = 'XIZ'; d.homed = True; used['IZ'] = used['QIZ'] = True; F.xiz_vars.append(d)
         else:
             r = 'IZ' if not used['IZ'] else 'QIZ' if not used['QIZ'] else None
             if r: d.reg = r; used[r] = True; F.xiz_vars.append(d)
@@ -1412,6 +1435,9 @@ def operand(F, e, size, avoid=()):
 
 def regvar_stmt(F, e):
     """assignments to register variables: v = x, v op= x, v++ (ra_leaf, ctrl)"""
+    if e.k == 'bin' and e.op == '=' and strip(e.l).k == 'var' and getattr(strip(e.l).decl, 'reg', None) == 'XIZ' \
+            and getattr(strip(e.l).decl, 'homed', False) and strip(e.r).k == 'call':
+        gen_call(F, strip(e.r)); flush_pops(F); F.emit('ld', 'XIZ,XHL'); return True   # _calloc: ptr = malloc(...)
     if e.k == 'bin' and e.op == '=' and regvar_of(e.l):
         d = regvar_of(e.l); R = FAM[d.reg].get(d.ty.size, FAM[d.reg].get(2))
         rc = fold(narrow(e.r, d.ty.size))
