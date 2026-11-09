@@ -1227,6 +1227,17 @@ def gen_stmt(F, s, last):
                 F.last_use[d] = id(ld) if c.e.op in ('*', '/') else None   # .as_mul_loc: muls XWA,BC in place;
                 # .as_mod_loc under O3XSXr is not: ld HL,WA / exts XHL / divs XHL,BC / ld HL,QHL
                 i += 1; continue
+            if F.opt and c.k == 'if' and c.els is not None and nxt is not None and nxt.k == 'return' and \
+                    nxt.value is not None and strip(nxt.value).k == 'load' and strip(strip(nxt.value).e).k == 'var':
+                rv = strip(strip(nxt.value).e).decl
+                th, el = flat(c.then), flat(c.els)
+                def asg(st):
+                    return len(st) == 1 and st[0].k == 'expr' and st[0].e.k == 'bin' and st[0].e.op == '=' and \
+                        strip(st[0].e.l).k == 'var' and strip(st[0].e.l).decl is rv
+                if asg(th) and asg(el) and rv.kind == 'local':
+                    from frontend import N                     # c_ifelse under O3XS: as return c ? a : b (c_tern)
+                    gen_stmt(F, N('return', value=N('cond', c=c.cond, a=th[0].e.r, b=el[0].e.r, ty=rv.ty)), last)
+                    i += 2; continue
             trivial = last and nxt is not None and i + 2 == len(body) and nxt.k == 'return' and (
                 nxt.value is None or (strip(nxt.value).k == 'load' and regvar_of(strip(nxt.value).e)
                                       and regvar_of(strip(nxt.value).e).reg == 'HL'))
