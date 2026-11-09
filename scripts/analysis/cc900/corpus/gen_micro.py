@@ -27,6 +27,8 @@ how cc900 compiles exactly that (notes/cc900-compat-plan-2026-11-08/PLAN.md, sec
 - fp: float and double: arithmetic, compares as values and branches (with zero and with operands), conversions to
   and from every integer type, calls with double arguments and results, temporaries, locals, arrays and members
   (the library is built -DFLOAT; its math routines are most of the sub CPU's firmware pairs);
+- fp_temps: nested double expressions: where the temporaries go, and when the hidden result pointer is kept in XIZ
+  rather than the result built in a temporary and copied (fp.c: d_three vs d_four);
 - ra_homes32: a 32-bit local (pointer, long) against a 16-bit parameter for XIZ / IZ across calls (_memccpy gives
   IZ to n and a slot to pos).
 The output is deterministic, ours, and C89.
@@ -490,6 +492,47 @@ def fp_files():
            'double d_inc(double a) { a += 1.0; return a; }']
     return {'fp.c': out + fs}
 
+def fp_temp_files():
+    """d_three (gd * gd2 + gd3) keeps the hidden pointer in XIZ; d_four ((a + b) * (a - b)) builds its result in a
+    temporary and copies it"""
+    out = ['/* Nested double expressions: temporaries and the result pointer */',
+           'extern double gd, gd2, gd3, gd4; extern double fd(double); extern void g0(void); extern int gi;']
+    fs = [
+        'double t_mla(void) { return gd * gd2 + gd3; }',
+        'double t_amla(void) { return gd3 + gd * gd2; }',
+        'double t_mm(void) { return gd * gd2 + gd3 * gd4; }',
+        'double t_am(void) { return (gd + gd2) * gd3; }',
+        'double t_ma(void) { return gd3 * (gd + gd2); }',
+        'double t_chain3(void) { return gd * gd2 * gd3; }',
+        'double t_chain4(void) { return gd * gd2 * gd3 * gd4; }',
+        'double t_neg(void) { return -(gd * gd2); }',
+        'double t_negl(void) { return -gd * gd2; }',
+        'double t_mla_p(double a, double b, double c) { return a * b + c; }',
+        'double t_mm_p(double a, double b) { return (a + b) * (a - b); }',
+        'double t_mm_p2(double a, double b, double c, double d) { return a * b + c * d; }',
+        'double t_ci(int i) { return gd * i; }',
+        'double t_ic(int i) { return i * gd; }',
+        'double t_ci2(int i) { return gd * i + gd2; }',
+        'double t_call_a(double a) { return fd(a) + gd; }',
+        'double t_a_call(double a) { return gd + fd(a); }',
+        'double t_call_only(double a) { return fd(a); }',
+        'double t_g0_mla(void) { g0(); return gd * gd2 + gd3; }',
+        'double t_mla_g0(void) { double t = gd * gd2 + gd3; g0(); return t; }',
+        'void t_st_mla(void) { gd = gd2 * gd3 + gd4; }',
+        'void t_st_mm(void) { gd = gd2 * gd3 + gd4 * gd2; }',
+        'void t_st_am(void) { gd = (gd2 + gd3) * gd4; }',
+        'double t_loc_mla(void) { double t = gd * gd2 + gd3; return t; }',
+        'double t_loc_mla2(void) { double t = gd * gd2 + gd3; return t * t; }',
+        'double t_two_loc(void) { double t = gd * gd2; double u = t + gd3; return u * gd4; }',
+        'double t_cond(double a, double b) { return a > b ? a : b; }',
+        'double t_cond_e(double a, double b) { return a > b ? a * b : a + b; }',
+        'int t_cmp_mla(void) { return gd * gd2 + gd3 < gd4; }',
+        'int t_cmp_e(void) { if (gd * gd2 < gd3) return 1; return 2; }',
+        'long t_to_l(void) { return (long)(gd * gd2); }',
+        'int t_to_i_e(void) { return (int)(gd * gd2 + gd3); }',
+        'double t_i_e(void) { return (double)(gi * 2) + gd; }']
+    return {'fp_temps.c': out + fs}
+
 def main():
     out = sys.argv[1]
     d = os.path.join(out, 'micro'); os.makedirs(d, exist_ok=True)
@@ -509,6 +552,7 @@ def main():
     files.update(ra_chain_files())
     files.update(ra_home32_files())
     files.update(fp_files())
+    files.update(fp_temp_files())
     for n, lines in sorted(files.items()):
         open(os.path.join(d, n), 'w').write('\n'.join(lines) + '\n')
     open(os.path.join(out, 'micro-sources.txt'), 'w').write(''.join('micro/%s\n' % n for n in sorted(files)))
