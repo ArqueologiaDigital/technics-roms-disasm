@@ -7,16 +7,16 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-08-7-micro, v423/none                                   | micro/*.c            | 674 / 674 exact (100.0%) |
 | run 2026-11-08-7-micro, ide2003/none                                | micro/*.c            | 670 / 674 exact (99.4%)  |
 | run 2026-11-08-7-micro, v110/none                                   | micro/*.c            | 667 / 674 exact (99.0%)  |
-| run 2026-11-08-7-micro, v423/O3XS                                   | micro/*.c            | 672 / 674 exact (99.7%)  |
+| run 2026-11-08-7-micro, v423/O3XS                                   | micro/*.c            | 674 / 674 exact (100.0%) |
 | run 2026-11-08-7-micro, v423/Xr                                     | micro/*.c            | 674 / 674 exact (100.0%) |
 | run 2026-11-08-7-micro, v423/O3XSXr                                 | micro/*.c            | 674 / 674 exact (100.0%) |
-| run 2026-11-08-7-micro, ide2003/O3XS, --personality ide2003         | micro/*.c            | 670 / 674 exact (99.4%)  |
+| run 2026-11-08-7-micro, ide2003/O3XS, --personality ide2003         | micro/*.c            | 672 / 674 exact (99.7%)  |
 | run 2026-11-08-7-micro, ide2003/Xr, --personality ide2003           | micro/*.c            | 667 / 674 exact (99.0%)  |
 | run 2026-11-08-7-micro, ide2003/O3XSXr, --personality ide2003       | micro/*.c            | 660 / 674 exact (97.9%)  |
 | run 2026-11-08-8-micro-ra, v423/none                                | micro/ra_*.c         | 33 / 42 exact (78.6%)    |
 | run 2026-11-08-8-micro-ra, v423/O3XSXr                              | micro/ra_*.c         | 23 / 42 exact (54.8%)    |
 | run 2026-11-08-4-abi, v423/none                                     | abi/*.c              | 97 / 108 exact (89.8%)   |
-| run 2026-11-08-4-abi, v423/O3XS                                     | abi/*.c              | 96 / 108 exact (88.9%)   |
+| run 2026-11-08-4-abi, v423/O3XS                                     | abi/*.c              | 97 / 108 exact (89.8%)   |
 | run 2026-11-08-6-abi-adecl, v423/Xr                                 | abi/*.c              | 73 / 80 exact (91.2%)    |
 | run 2026-11-08-6-abi-adecl, v423/O3XSXr                             | abi/*.c              | 74 / 80 exact (92.5%)    |
 | run 2026-11-09-4-micro-switch, v423/none                            | micro/switch.c       | 22 / 25 exact (88.0%)    |
@@ -75,7 +75,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-12-micro-optcounted, v423/O3XSXr                     | micro/opt_counted.c  | 32 / 32 exact (100.0%)   |
 | run 2026-11-09-13-micro-fpstmts, v423/none                          | micro/fp_stmts.c     | 14 / 16 exact (87.5%)    |
 | run 2026-11-09-13-micro-fpstmts, v423/O3XS                          | micro/fp_stmts.c     | 9 / 16 exact (56.2%)     |
-| run 2026-11-08-9-micro-optloops, v423/O3XS                          | micro/opt_loops.c    | 27 / 33 exact (81.8%)    |
+| run 2026-11-08-9-micro-optloops, v423/O3XS                          | micro/opt_loops.c    | 28 / 33 exact (84.8%)    |
 | run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality v4.23      | 1997 LIB/SRC         | 161 / 248 exact (64.9%)  |
 | run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality kn5000     | 1997 LIB/SRC         | 159 / 248 exact (64.1%)  |
 | run 2026-11-08-5-libsrc97-O3XS, ide2003/O3XS, --personality ide2003 | 1997 LIB/SRC         | 152 / 248 exact (61.3%)  |

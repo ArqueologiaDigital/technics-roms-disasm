@@ -2562,7 +2562,13 @@ def gen_stmt(F, s, last):
                 from frontend import N                     # assign.c *_loc under O3XS: the store to a is dead
                 d = strip(c.e.l).decl
                 b = N('bin', op=c.e.op, l=N('load', e=N('var', decl=d, ty=d.ty), ty=d.ty), r=c.e.r, ty=d.ty)
-                if c.e.op in ('*', '/'):                   # as_mul_loc: ld WA,(a) / muls XWA,(v) / ld HL,WA
+                rm_ = mem_operand(F, narrow(c.e.r, d.ty.size))
+                if c.e.op == '%' and d.ty.size == 2 and rm_ is not None and rm_.startswith('('):
+                    F.emit('ld', 'HL,%s' % mem_operand(F, b.l))   # as_mod_loc: ld HL,(a) / exts XHL / divs XHL,(v) /
+                    F.emit('exts' if d.ty.signed else 'extz', 'XHL')   # ld HL,QHL (return a % b: WA, assign.c too)
+                    F.emit('divs' if d.ty.signed else 'div', 'XHL,%s' % rm_); F.emit('ld', 'HL,QHL')
+                    flush_pops(F); epilogue(F); F.emit('retd', hx(F.retd)) if F.retd else F.emit('ret')
+                elif c.e.op in ('*', '/'):                 # as_mul_loc: ld WA,(a) / muls XWA,(v) / ld HL,WA
                     f2 = gen(F, b, 'WA', d.ty.size); F.emit('ld', '%s,%s' % (FAM['HL'][d.ty.size], FAM[f2][d.ty.size]))
                     flush_pops(F); epilogue(F); F.emit('retd', hx(F.retd)) if F.retd else F.emit('ret')
                 else:
@@ -2972,6 +2978,7 @@ FP_AGGR = True
 MUL_K_XWA = True
 IFCHAIN_JOIN = True
 BINLOC_XR = True
+WALKED_OPT_WA = True                               # -O3 -XS: c_cnt's lone walked pointer takes XWA too
 WALKED_PTRS = True                                 # no -O: pointers a pointer-test loop walks get registers (c_cnt)
 KILL_AFTER_CALL = True                             # homes: a def after a call on its path kills (sw_local)
 CDECL_TAILCALL = True                              # -O: cal _f / ret (nothing between) is j _f (sw_jt6d)
@@ -5491,7 +5498,7 @@ def plan_leaf(F):
     params = [d for d in f.params if d.ty.kind in okind and not d.addr_taken and (d in modified or d in deep or (F.opt and d in loopvars))
               and not (F.opt and d in stored and loopvars.get(d, 0) <= 1)]
     walked = []                                            # without -O: a loop driven by a pointer test keeps the
-    if not F.opt and not F.adecl and WALKED_PTRS:          # pointers it walks in registers (ctrl.c c_cnt: while (*s++)
+    if (not F.opt or WALKED_OPT_WA) and not F.adecl and WALKED_PTRS:   # pointers it walks in registers (c_cnt: while (*s++)
         def unc(x):                                        # -> s in XWA; ra_ptrcpy: while (*s) *d++ = *s++ -> s XBC,
             x = strip(x)                                   # d XDE); a counted `while (n--)` does not (c_clear, ra_ptr)
             while x.k == 'cast': x = strip(x.e)
@@ -5511,6 +5518,11 @@ def plan_leaf(F):
                  strip(unc(m.r).e).k == 'deref' else None)
             if st: needs_a = True
         walked = [d for d in f.params if d in walked]
+        if F.opt:                                          # -O3 -XS: only a loop with no byte temporary at all, and
+            nbody = []                                     # then WA (c_cnt: cpb (XWA+:1),0x0 / inc 0x1,HL)
+            for w in loops_: walk(w.body, lambda m, dep: nbody.append(m) if (m.k == 'load' and strip(m.e).k == 'deref') or
+                                  (m.k == 'bin' and m.op == '=') else None)   # (_strset's store needs WA)
+            if needs_a or nbody or len(walked) != 1 or len(loops_) != 1: walked = []
         cands = (['WA'] if not needs_a else []) + [r for r in ('BC', 'DE', 'HL') if not (r == 'BC' and temps_bc)]
         for d in reversed(walked):
             if cands: d.reg = cands.pop(0); F.param_copies.append(d)
