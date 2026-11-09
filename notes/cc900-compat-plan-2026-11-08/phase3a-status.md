@@ -416,6 +416,27 @@ Done since (2026-11-09, evening), each from a probe run of its own (`corpus/prob
   the open-pairs paragraph above).
   Micro 674 / 674 at all four sets throughout; library (v4.23) 169 / 248; pairs kn5000 223.
 
+Array elements (2026-11-09, night), from runs `2026-11-09-24-micro-arrindex` / `-25-micro-arrindexsz`:
+- **Wrong code fixed**, all in compound assignments to array elements:
+  - a long element with `*` / `/` / `%` kept its address in XDE / XBC across the helper call. cc900 builds it in
+    XIZ (`push XIZ`), at every option set; a multiply by a constant with few one bits is inline instead;
+  - `g[i-1] += g[i] >> 8` overwrote the target's address (none) or the index (`-O3 -XS -Xr`);
+  - a sized long array's `(XDE+WA)` target lost its index to the loaded value; cc900 makes the address one
+    register (`lda XBC,_gla` / `lda XDE,XBC+WA`).
+  The model now refuses any target operand that the right side could clobber.
+- **The two-element forms**: under -O, cc900 shares the array base between `g[i+k]` and `g[i]` (`shared_base_opassign`),
+  or uses DE / XIZ for a pointer target (`pointer_pair_opassign`). Without -O it puts the target in XDE (sized:
+  `(XHL+DE)`, `sized_pair_noopt`).
+- arr_index 50 / 48 / 49 / 49 -> 56 / 58 / 55 / 59 of 66 (none / O3XS / Xr / O3XSXr); arr_index_sz
+  51 / 48 / 49 / 48 -> 57 / 58 / 56 / 59.
+- Left: the strength-reduced loops (`ai_div10`, `ai_mul10`, `ai_carry`, `ai_shift`: an end pointer and `(XBC+:2)`),
+  the char forms (`ai_c_g_sh`, and `ai_c_p_carry`, which cc900 reduces to `inc 0x1,BC`), and the table-test
+  preloads (`ai_up`).
+- **A missing instrument**: three of these wrong-code bugs were found only by reading the model's output beside
+  the oracle's. A function that does not match is not checked for meaning. An interpreter for the model's
+  output, run on random inputs against the oracle's code, would catch them; phase 3's random-program tests
+  need one anyway.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
