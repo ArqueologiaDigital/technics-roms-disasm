@@ -2500,6 +2500,13 @@ def gen_stmt(F, s, last):
                     regvar_stmt(F, N('bin', op='=', l=N('var', decl=c.var, ty=c.var.ty), r=c.init, ty=c.var.ty))
                 i += 1; continue
             if c.k == 'decl' and getattr(c.var, 'reg', None) == 'XIZ':
+                ci = strip(c.init) if c.init is not None else None
+                if ci is not None and F.opt and F.adecl and ci.k == 'bin' and ci.op in ('+', '-') and \
+                        fold(ci.r).k == 'const' and fold(ci.r).value is not None and 1 <= abs(fold(ci.r).value) <= 8 and \
+                        unpromote(ci.l).k == 'load':
+                    fam = gen(F, c.init, 'IZ', 4)          # ra_homes.c rh_ptr / rh_long under O3XSXr: built in XIZ
+                    if fam != 'IZ': F.emit('ld', 'XIZ,%s' % FAM[fam][4])   # (lda XIZ,XWA+0x1; ld XIZ,(XSP+0x4) /
+                    i += 1; continue                       # inc 0x1,XIZ)
                 if c.init is not None:
                     fam = gen(F, c.init, 'HL', 4)
                     nxc = strip(F.next_stmt.e) if F.next_stmt is not None and F.next_stmt.k == 'expr' else None
