@@ -94,6 +94,26 @@ for c in none O3XS; do    # int arithmetic on a char done in the byte (corpus/pr
 done
 row "run 2026-11-09-30-micro-chnarrow, v423/Xr" "probes/chnarrow.c" "$O/2026-11-09-30-micro-chnarrow/out/v423/Xr/probes" corpus/probes/chnarrow.c --opt none --adecl
 row "run 2026-11-09-30-micro-chnarrow, v423/O3XSXr" "probes/chnarrow.c" "$O/2026-11-09-30-micro-chnarrow/out/v423/O3XSXr/probes" corpus/probes/chnarrow.c --opt O3XS --adecl
+for c in none O3XS; do    # leaf-loop registers without options (rule LN1, model/leafnone.py): what loop bodies reserve (corpus/probes/lnr.c)
+  row "run 2026-11-09-31-micro-lnr, v423/$c" "probes/lnr.c" "$O/2026-11-09-31-micro-lnr/out/v423/$c/probes" corpus/probes/lnr.c --opt $c
+done
+row "run 2026-11-09-31-micro-lnr, v423/Xr" "probes/lnr.c" "$O/2026-11-09-31-micro-lnr/out/v423/Xr/probes" corpus/probes/lnr.c --opt none --adecl
+row "run 2026-11-09-31-micro-lnr, v423/O3XSXr" "probes/lnr.c" "$O/2026-11-09-31-micro-lnr/out/v423/O3XSXr/probes" corpus/probes/lnr.c --opt O3XS --adecl
+for c in none O3XS; do    # LN1, second round: counter first, parameter order (corpus/probes/lnr2.c)
+  row "run 2026-11-09-32-micro-lnr2, v423/$c" "probes/lnr2.c" "$O/2026-11-09-32-micro-lnr2/out/v423/$c/probes" corpus/probes/lnr2.c --opt $c
+done
+row "run 2026-11-09-32-micro-lnr2, v423/Xr" "probes/lnr2.c" "$O/2026-11-09-32-micro-lnr2/out/v423/Xr/probes" corpus/probes/lnr2.c --opt none --adecl
+row "run 2026-11-09-32-micro-lnr2, v423/O3XSXr" "probes/lnr2.c" "$O/2026-11-09-32-micro-lnr2/out/v423/O3XSXr/probes" corpus/probes/lnr2.c --opt O3XS --adecl
+for c in none O3XS; do    # LN1, third round: held addresses, pointer first references (corpus/probes/lnr3.c)
+  row "run 2026-11-09-33-micro-lnr3, v423/$c" "probes/lnr3.c" "$O/2026-11-09-33-micro-lnr3/out/v423/$c/probes" corpus/probes/lnr3.c --opt $c
+done
+row "run 2026-11-09-33-micro-lnr3, v423/Xr" "probes/lnr3.c" "$O/2026-11-09-33-micro-lnr3/out/v423/Xr/probes" corpus/probes/lnr3.c --opt none --adecl
+row "run 2026-11-09-33-micro-lnr3, v423/O3XSXr" "probes/lnr3.c" "$O/2026-11-09-33-micro-lnr3/out/v423/O3XSXr/probes" corpus/probes/lnr3.c --opt O3XS --adecl
+for c in none O3XS; do    # LN1 held-out check (predictions recorded before the run) (corpus/probes/lnr4.c)
+  row "run 2026-11-09-34-micro-lnr4, v423/$c" "probes/lnr4.c" "$O/2026-11-09-34-micro-lnr4/out/v423/$c/probes" corpus/probes/lnr4.c --opt $c
+done
+row "run 2026-11-09-34-micro-lnr4, v423/Xr" "probes/lnr4.c" "$O/2026-11-09-34-micro-lnr4/out/v423/Xr/probes" corpus/probes/lnr4.c --opt none --adecl
+row "run 2026-11-09-34-micro-lnr4, v423/O3XSXr" "probes/lnr4.c" "$O/2026-11-09-34-micro-lnr4/out/v423/O3XSXr/probes" corpus/probes/lnr4.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do
