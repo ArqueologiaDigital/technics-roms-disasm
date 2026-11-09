@@ -401,7 +401,9 @@ def gen(F, e, fam, size, then_ret=False, store=False):
                 (mem_operand(F, inner.l) or '').startswith('('):
             f2 = gen(F, inner, 'WA', 1)        # chnarrow.c cn_sub_k (no -O): ld A,(XSP+0x4) / sub A,0x30 / ld L,A /
             F.emit('ld', '%s,%s' % (FAM[fam][1], FAM[f2][1]))   # exts HL (& | and a char operand work in L; a char
-        else: gen(F, inner, fam, isz)          # result, binop_c.c add_c_pk, too)
+        else:
+            f2 = gen(F, inner, fam, isz)       # result, binop_c.c add_c_pk, too)
+            if isz >= size and f2 in FAM and f2 != fam: return f2   # (the value stayed where the chain built it)
         sz = isz
         while sz < size:                       # one step at a time: exts HL, then exts XHL (cast_c_l)
             sz *= 2
@@ -664,6 +666,7 @@ def plain_hl_tree(F, x):
     return False
 
 def gen_bin(F, e, fam, size, then_ret, store=False):
+    any_fam = getattr(F, 'any_fam', False); F.any_fam = False   # (push_arg's hint, for this level only)
     op = e.op
     if op == '*' and size == 2 and e.ty.kind == 'int' and fold(e.r).k == 'const' and fold(e.r).value is not None and \
             fold(e.r).value >= 8 and fold(e.r).value & (fold(e.r).value - 1) == 0:
@@ -758,6 +761,7 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
             # -O keeps the whole chain in its working register (ch_g4: add WA,(_gm) / ld HL,WA; ch_p3: add WA,BC /
             # add WA,DE / ld HL,WA; ra_noloop3: muls XWA,DE / add WA,HL / add WA,DE / ld HL,WA)
             f2 = gen_bin(F, e, T, size, then_ret, store)
+            if any_fam and f2 in FAM: return f2             # (a pushed argument: ___fmemccpy push XHL, no copy)
             F.emit('ld', '%s,%s' % (FAM[fam][size], FAM[f2][size])); return fam
     il = strip(l)
     if XR_CHAIN_INPLACE and F.adecl and not F.opt and op in SIMPLE_OPS and size == 2 and il.k == 'bin' and \
@@ -1236,9 +1240,16 @@ def gen_ptr_arith(F, e, fam, size):
         if lm is None and strip(l).k in ('addr', 'decay'):
             gen(F, l, 'WA', 4); lm = 'XWA'                     # _ultoa: &buf[33] - p
         if lm is None or rm is None: raise Unsupported('complex pointer difference')
+        esz = l.ty.base.size
+        if PTRDIFF_INPLACE and F.opt and lm in ('XBC', 'XDE', 'XHL') and esz == 1 and l.k == 'load' and \
+                dies_here(F, l) and family_of(rm) != family_of(lm):
+            F.emit('sub', '%s,%s' % (lm, rm))               # ___fmemccpy (-O3 -XS): pos - s2 with pos dying in XHL ->
+            dl = regvar_of(l.e)                             # sub XHL,(XSP+0xc) (then inc 0x1,XHL / push XHL)
+            if dl is not None: F.dead.add(dl)
+            if size == 2 and fam != lm[1:]: F.emit('ld', '%s,%s' % (FAM[fam][2], lm[1:])); return fam
+            return lm[1:]
         if lm != 'XWA': F.emit('ld', 'XWA,%s' % lm)
         F.emit('sub', 'XWA,%s' % rm)
-        esz = l.ty.base.size
         if esz > 1:
             F.emit('ld', 'XBC,%s' % hx(esz)); F.emit('cal', 'C9H_divls'); return 'HL'
         if size == 2 and fam != 'WA':                      # ra_homes32.c h_p_diff: return p - s (int) -> sub XWA,(s) /
@@ -1638,6 +1649,10 @@ SHIFT_VALUE_FREE = True                                   # see gen_bin's variab
 HOMED_WRITES = True                                       # see regvar_stmt (_strtok)
 LOCAL_ARRAY_INIT = True                                   # see gen_stmt's decl (__fint's maru)
 ARRAY_TAIL_DFB = True                                     # see the data emitter (_CTYPE.C)
+STORE_FORWARD = True                                      # see store_forward (_strtok)
+POP_LDA_LIVE = True                                       # see gen_stmt's if (___fmemccpy)
+PTRDIFF_INPLACE = True                                    # see gen_ptr_arith (___fmemccpy)
+PUSH_ANY_FAM = True                                       # see push_arg / gen_bin (___fmemccpy)
 DEC_CMP_SUB = True                                        # dec 0x1,R / cp R,0x0 -> sub R,0x1 (opt_counted.c oc_down)
 TERN_TRUTH_PRE = True                                     # see gen's -O ?: path
 RET_CC_KEEPS = True                                       # see knowledge_pass
@@ -2068,7 +2083,9 @@ def push_arg(F, a):
         F.emit('ld', '%s,%s' % (X, m)); F.emit('push', X); F.push += 4; return 4
     if size == 4 and m is not None:
         F.emit('ld', 'XWA,%s' % m); F.emit('push', 'XWA'); F.push += 4; return 4
-    fam = gen(F, a, 'WA', size)
+    F.any_fam = PUSH_ANY_FAM
+    try: fam = gen(F, a, 'WA', size)
+    finally: F.any_fam = False
     F.emit('push', FAM[fam][size]); F.push += size; return size
 
 def flush_pops(F, before_test=False):
@@ -3283,6 +3300,7 @@ def gen_stmt(F, s, last):
         while i < len(body):
             c = body[i]
             F.next_stmt = body[i + 1] if i + 1 < len(body) else None
+            F.prev_stmt = body[i - 1] if i else None
             if F.opt and not F.adecl and MEMBER_RUNS and getattr(F, 'ptr_run_end', -1) == i:
                 F.ptr_cache = {}; F.store_val_reg = None
             if F.opt and not F.adecl and MEMBER_RUNS and not getattr(F, 'ptr_cache', None):
@@ -3586,7 +3604,15 @@ def gen_stmt(F, s, last):
     if s.k == 'if':
         fpc = []
         walk(s.cond, lambda n, d: fpc.append(n) if fpgen.is_fp_op(n) else None)
-        if F.pending and IF_FLUSH_POPS and not fpc: flush_pops(F, True)   # ra_homes32.c h_p_p3: g2(n); if (p == 0)
+        if F.pending and IF_FLUSH_POPS and not fpc:       # ra_homes32.c h_p_p3: g2(n); if (p == 0)
+            live_res = False                                # the previous statement's `v = call()`: v read after the
+            pv = getattr(F, 'prev_stmt', None)              # test -> lda XSP,XSP+n (___fmemccpy: pos - s2 in the else
+            pe = strip(pv.e) if pv is not None and pv.k == 'expr' else None   # arm); only tested -> add XSP,n
+            if POP_LDA_LIVE and pe is not None and pe.k == 'bin' and pe.op == '=' and strip(pe.l).k == 'var' and \
+                    strip(pe.r).k == 'call':                # (_strcpy: endPtr == NULL; _strstr: memcmp() == 0)
+                v_ = strip(pe.l).decl
+                live_res = any(uses_decl(x, v_) for x in (s.then, s.els) if x is not None) or uses_after_stmt(F, v_)
+            flush_pops(F, not live_res)
                                                           # ...: the call's pops before the test (an FP test places them
                                                           # itself, before the helper's addresses)
         if s.els is None:                                 # (only one arm popped them before: wrong code)
@@ -7189,6 +7215,79 @@ def store_knowledge(lines):
         out.append(l)
     return out
 
+def _spell(fam):
+    """the spellings of a register family by width: {4: 'XHL', 2: 'HL', 1: 'L', 'hi': 'H', 'q': 'QHL'}
+    (fam as family_of names it, 'XHL', or as FAM does, 'HL')"""
+    if fam and fam.startswith('X'): fam = fam[1:]
+    out = dict(FAM.get(fam, {}))
+    if fam in HIGHB8: out['hi'] = HIGHB8[fam]
+    if fam in ('WA', 'BC', 'DE', 'HL'): out['q'] = 'Q' + fam
+    return out
+
+def store_forward(lines):
+    """-O: after `ld (M),R` with M a global or static, a later `ld R2,(M)` in the same straight-line region is
+    dropped and R2's uses read R instead, until R2 or R is written again (_strtok: save = strpbrk(s1, s2);
+    if (save) { *save = 0; ... } -> ld (S1),XHL / or XHL,XHL / j eq,L4 / ldb (XHL),0x0).  The region ends at a
+    label, a call, a jump without a condition or a ret; `or R,R` keeps R's value and does not end it."""
+    import re
+    def writes(t, fam):
+        """does instruction t (stripped) write a register of family fam?  (its first operand, unless a compare,
+        test, push or a store to memory; `or R,R` of the same register keeps its value)"""
+        parts = t.split(None, 1); op = parts[0]; args = [x.strip() for x in parts[1].split(',')] if len(parts) > 1 else []
+        if not args: return op in ('pop',) and False
+        if op in ('cp', 'cpb', 'cpw', 'bit', 'push', 'pushw', 'cal', 'call', 'ldir', 'ldirw'): return op in ('ldir', 'ldirw')
+        if op == 'or' and len(args) == 2 and args[0] == args[1]: return False
+        if op in ('ex',): return any(family_of(x) == fam for x in args)
+        if op in ('inc', 'dec') and len(args) == 2: return family_of(args[1]) == fam
+        if op == 'pop': return family_of(args[0]) == fam
+        if args[0].startswith('('): return False
+        return family_of(args[0]) == fam
+    def mentions(t, fam):
+        sp = _spell(fam)
+        return any(re.search(r'(?<![A-Z])%s(?![A-Z])' % re.escape(v), t) for v in sp.values())
+    def rename(t, f_from, f_to):
+        a, b = _spell(f_from), _spell(f_to)
+        for k, v in a.items():
+            if k in b: t = re.sub(r'(?<![A-Z])%s(?![A-Z])' % re.escape(v), b[k], t)
+        return t
+    out = list(lines); i = 0
+    while i < len(out):
+        t = out[i].strip()
+        m = re.match(r'^ld\t(\((?:_\w+|S\d+)\)),(X?(?:WA|BC|DE|HL|IX|IY))$', t)
+        if not m: i += 1; continue
+        M, R = m.group(1), m.group(2); fR = family_of(R)
+        j = i + 1
+        while j < len(out):
+            u = out[j].strip()
+            if u.endswith(':') or u.startswith(('cal', 'call', 'ret', 'djnz')) or (u.startswith('j') and ',' not in u): break
+            if u.startswith('j'): j += 1; continue
+            mm = re.match(r'^ld\t(X?(?:WA|BC|DE|HL|IX|IY)),%s$' % re.escape(M), u)
+            if mm and len(mm.group(1)) == len(R) and family_of(mm.group(1)) != fR:
+                R2 = mm.group(1); f2 = family_of(R2)        # the reload: rename R2's uses to R until R2 is written
+                k = j + 1; ok = True; ren = []
+                while k < len(out):
+                    v = out[k].strip()
+                    if v.endswith(':') or v.startswith(('cal', 'call', 'ret', 'djnz')) or (v.startswith('j') and ',' not in v): break
+                    if v.startswith('j'): k += 1; continue
+                    parts = v.split(None, 1); vargs = [x.strip() for x in parts[1].split(',')] if len(parts) > 1 else []
+                    if parts[0] in ('ld', 'lda', 'pop') and vargs and family_of(vargs[0]) == f2 and \
+                            not any(mentions(x, f2) for x in vargs[1:]): break   # R2 defined again: the range ends
+                    if parts[0] == 'or' and len(vargs) == 2 and vargs[0] == vargs[1] and family_of(vargs[0]) == f2:
+                        ren.append(k); k += 1; continue    # or XWA,XWA: a test, renamed (or XHL,XHL keeps R)
+                    if writes(v, f2): ok = False; break     # a read-modify-write of R2: not renamed (it would
+                                                            # change R)
+                    if mentions(v, f2): ren.append(k)
+                    if writes(v, fR): ok = False; break     # R changes while R2 would still read it
+                    k += 1
+                if not ok: j += 1; continue
+                for k_ in ren: out[k_] = rename(out[k_], f2, fR)
+                del out[j]; continue
+            if writes(u, fR) or (u.startswith('ld\t') and u.split('\t')[1].split(',')[0] == M): break
+            if mm: j += 1; continue
+            j += 1
+        i += 1
+    return out
+
 def drop_jump_to_next(lines):
     def is_label(l): return l.endswith(':') and not l.startswith('\t')
     out = []
@@ -7540,6 +7639,7 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong
             if a and b and a.group(1) == b.group(2) and family_of(a.group(2)) and family_of(b.group(1)) and \
                     len(a.group(2)) == len(b.group(1)):
                 F.lines[i + 1] = '\tld\t%s,%s' % (b.group(1), a.group(2))
+    if F.opt and STORE_FORWARD: F.lines = store_forward(F.lines)   # _strtok: ld (S1),XHL / or XHL,XHL / ldb (XHL),0x0
     F.lines = [l.replace('(XSP+0x0)', '(XSP)').replace('(XSP+0x0~)', '(XSP+0x0)') for l in F.lines]   # the oracle
     # writes (XSP) for a variable at the stack pointer, but (XSP+0x0) for an element of a local aggregate (ZERO_DISP:
     # cond_bits.c cb_union_n0, ld WA,(XSP+0x0) for d.n[0])
