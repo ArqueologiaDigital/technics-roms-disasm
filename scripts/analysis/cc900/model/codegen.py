@@ -96,6 +96,10 @@ def wide_divide(e, size):
 def fold(e):
     """constant folding of integral casts of constants"""
     e = strip(e)
+    if e.k == 'un' and e.op == '-' and fold(e.e).k == 'const' and fold(e.e).value is not None:
+        from frontend import N                           # c_find: return -1 -> ld HL,0xffff
+        v = -fold(e.e).value; sz = e.ty.size if e.ty is not None else 2
+        return N('const', value=v, ty=e.ty)
     if e.k == 'bin' and e.op in ('+', '-', '*') and fold(e.l).k == 'const' and fold(e.r).k == 'const' and \
             fold(e.l).value is not None and fold(e.r).value is not None:
         from frontend import N                           # sizeof(buf) - 1
@@ -123,7 +127,9 @@ def mem_operand(F, e):
         pv = strip(strip(e.e).e)                          # _ultoa: ld XWA,(p) / ... (XWA)
         if pv.k == 'load' and strip(pv.e).k == 'var' and hasattr(strip(pv.e).decl, 'slot'):
             F.emit('ld', 'XWA,(XSP+%s)' % hx(strip(pv.e).decl.slot + F.push)); return '(XWA)'
-    if e.k == 'const' and e.value is not None: return hx(e.value)
+    if e.k == 'const' and e.value is not None:            # c_find: -1 in a 16-bit context is 0xffff
+        sz = e.ty.size if getattr(e, 'ty', None) is not None and e.ty.size in (1, 2, 4) else 4
+        return hx(e.value & ((1 << (8 * sz)) - 1)) if e.value < 0 else hx(e.value)
     if e.k == 'load':
         v = strip(e.e)
         if v.k == 'var':
@@ -384,7 +390,7 @@ def gen(F, e, fam, size, then_ret=False, store=False):
     if e.k == 'bin' and e.op in SIMPLE_OPS and strip(e.l).k == 'call' and strip(e.r).k == 'call' and getattr(F, 'call_temp', None):
         T = FAM[F.call_temp][2] if F.call_temp == 'IZ' else 'QIZ'     # k_expr: the right call first, kept in QIZ
         gen_call(F, strip(e.r)); F.emit('ld', '%s,%s' % (T, FAM['HL'][size]))
-        gen_call(F, strip(e.l)); flush_pops(F) if F.opt else None
+        gen_call(F, strip(e.l)); flush_pops(F)              # k_expr: inc 0x4,XSP before add HL,IZ (none too)
         F.emit(SIMPLE_OPS[e.op], '%s,%s' % (FAM['HL'][size], T))
         if fam != 'HL': F.emit('ld', '%s,%s' % (FAM[fam][size], FAM['HL'][size]))
         return fam
@@ -1299,6 +1305,8 @@ def gen_stmt(F, s, last):
         if F.xiz_vars: F.emit('pop', F.save_reg)
         epilogue(F)
         F.emit('retd', hx(F.retd)) if F.retd else F.emit('ret'); return
+    if s.k == 'if' and s.els is None and F.loops and flat(s.then) and flat(s.then)[0].k == 'continue' and len(flat(s.then)) == 1:
+        flush_pops(F); gen_cond_true(F, s.cond, F.loops[-1][1]()); return   # c_cont: j ne,L3 (the continue label)
     if s.k == 'if' and s.els is None and F.loops and flat(s.then) and flat(s.then)[0].k == 'break' and len(flat(s.then)) == 1:
         c = strip(s.cond)                                  # _ultoa: if ((val /= radix) == 0) break;
         if c.k == 'bin' and c.op in ('==', '!=') and strip(c.l).k == 'opassign':
@@ -1306,7 +1314,7 @@ def gen_stmt(F, s, last):
             inv = N('bin', op='!=' if c.op == '==' else '==', l=c.l, r=c.r, ty=c.ty)
             gen_cond_false(F, inv, F.loops[-1][0]); F.newulabel(); return
         lab = F.newulabel(); gen_cond_true(F, c, F.loops[-1][0]); return
-    if s.k == 'if' and s.els is None and F.opt and not F.pending and not F.pushes and not F.xiz_vars and \
+    if s.k == 'if' and s.els is None and not F.pending and not F.pushes and not F.xiz_vars and \
             flat(s.then) and flat(s.then)[0].k == 'return' and len(flat(s.then)) == 1 and (
             flat(s.then)[0].value is None or (strip(flat(s.then)[0].value).k == 'load' and regvar_of(strip(flat(s.then)[0].value).e)
                                               and regvar_of(strip(flat(s.then)[0].value).e).reg == 'HL')):
@@ -1321,7 +1329,9 @@ def gen_stmt(F, s, last):
             x = strip(c.e) if c.k == 'un' else c           # (no label after it: the loop body goes on)
             cc = gen_compare(F, N('bin', op='==' if c.k == 'un' else '!=', l=x, r=N('const', value=0, ty=x.ty), ty=c.ty))
             if cc not in (True, False):
-                F.emit('ret', cc); return
+                F.emit('ret', cc)
+                if not F.opt: F.lines.append(lab + ':')    # c_inf under none keeps the label; _strncat at -O not
+                return
         raise Unsupported('conditional return')
     if s.k == 'if':
         if s.els is None:
@@ -1345,7 +1355,11 @@ def gen_stmt(F, s, last):
         F.push -= F.pending; F.pending = 0
         F.lines.append(lelse + ':')
         gen_stmt(F, s.els, last)
+        if last and not before_trivial_ret and not F.xiz_vars and not F.pushes and \
+                not F.lines[-1].startswith(('\tret', '\tj\t')) and not F.opt:
+            flush_pops(F); F.emit('ret'); return            # c_ifchain under none: the last arm returns too
         if not (last and F.lines[-1].startswith('\tret')):
+            flush_pops(F)                                  # c_ifchain: inc 0x2,XSP before the join labels
             F.lines.append(lend + ':')
         return
     if s.k == 'expr' and s.e.k == 'call':
