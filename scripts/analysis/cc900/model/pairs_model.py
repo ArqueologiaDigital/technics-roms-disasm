@@ -47,7 +47,7 @@ def main():
     defines = ['__900__', '__LARGE__', 'FLOAT', '__CDECL=', '__ASM(x)=']
     units = {}
     tally = collections.Counter(); shown = 0
-    print('image\taddress\tpublic\tsource\tlength\tresult')
+    print('image\taddress\tpublic\tsource\tlength\tresult\thow')     # how: pairs.tsv's (exact / near / call / known)
     for img, rs in byimg.items():
         if want and img not in want: continue
         elf = images.get(img)
@@ -82,10 +82,10 @@ def main():
             if not lines:                                  # ___ctype: a second public at __ctype's address
                 twin = [q[2] for q in rs if q[1] == r[1] and q[2] != pub and (codegen.FULL.get(q[2]) or out.get(q[2]))]
                 if twin:
-                    tally['alias'] += 1; print('\t'.join([img, r[1], pub, src, '-', 'alias of %s' % twin[0]])); continue
+                    tally['alias'] += 1; print('\t'.join([img, r[1], pub, src, '-', 'alias of %s' % twin[0], r[5]])); continue
             if not lines or not lines[0].endswith(':'):
                 res = 'model: ' + (lines[0][:40] if lines else 'no function')
-                tally['model cannot'] += 1; print('\t'.join([img, r[1], pub, src, '-', res])); continue
+                tally['model cannot'] += 1; print('\t'.join([img, r[1], pub, src, '-', res, r[5]])); continue
             consts, _ = to_llvm.split_consts(lines)
             PH = 0xfffff0                                  # FP constants: the linker placed them; take each address from
             for k, lab in enumerate(consts): syms[lab] = PH - 8 * k   # the image's own operand, check the double there
@@ -98,12 +98,12 @@ def main():
                     if name in syms or not name.startswith('_'): text = None; break
                     statics[name] = (0xf0 - len(statics)) << 16 | (0xfe10 - 0x111 * len(statics)); syms[name] = statics[name]
             if text is None:
-                tally['unresolved symbol'] += 1; print('\t'.join([img, r[1], pub, src, '-', 'unresolved']))
+                tally['unresolved symbol'] += 1; print('\t'.join([img, r[1], pub, src, '-', 'unresolved', r[5]]))
                 for n_ in statics: syms.pop(n_, None)
                 continue
             if '; untranslated' in text:
                 bad = [l for l in text.split('\n') if 'untranslated' in l][0].strip()
-                tally['untranslated'] += 1; print('\t'.join([img, r[1], pub, src, '-', bad])); continue
+                tally['untranslated'] += 1; print('\t'.join([img, r[1], pub, src, '-', bad, r[5]])); continue
             addr = int(r[1], 16)
             text = to_llvm.relax(text, lambda t: assemble(t, addr)[1])
             code, err = assemble(text, addr)
@@ -141,14 +141,14 @@ def main():
                 code, err = assemble(text, addr)
             for n_ in statics: syms.pop(n_, None)
             if bad_static:
-                tally['differs'] += 1; print('\t'.join([img, r[1], pub, src, '-', 'static %s: uses disagree' % bad_static]))
+                tally['differs'] += 1; print('\t'.join([img, r[1], pub, src, '-', 'static %s: uses disagree' % bad_static, r[5]]))
                 continue
             if bad_const:
-                tally['differs'] += 1; print('\t'.join([img, r[1], pub, src, '-', 'constant %s not in the image' % bad_const]))
+                tally['differs'] += 1; print('\t'.join([img, r[1], pub, src, '-', 'constant %s not in the image' % bad_const, r[5]]))
                 continue
             if code is None:
                 tally['assembler'] += 1
-                print('\t'.join([img, r[1], pub, src, '-', 'llvm: ' + err.strip().splitlines()[0][:90]])); continue
+                print('\t'.join([img, r[1], pub, src, '-', 'llvm: ' + err.strip().splitlines()[0][:90], r[5]])); continue
             ref = read(addr, len(code))
             if ref is None: tally['outside image'] += 1; continue
             diff = [i for i in range(len(code)) if code[i] != ref[i]]
@@ -158,7 +158,7 @@ def main():
                 if shown < show:
                     shown += 1
                     sys.stderr.write('---- %s %s\n%s\nours %s\nrom  %s\n' % (img, pub, text, code.hex(' '), ref.hex(' ')))
-            print('\t'.join([img, r[1], pub, src, str(len(code)), res]))
+            print('\t'.join([img, r[1], pub, src, str(len(code)), res, r[5]]))
     print('# ' + ', '.join('%s %d' % kv for kv in tally.most_common()))
 
 if __name__ == '__main__':

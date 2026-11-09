@@ -80,7 +80,8 @@ a placeholder, takes its address from the image's own operands (a 24-bit address
 requires every use to agree on one address.  The main CPU's `_vsprintf` (v10, v7) is not V4.23's nor the
 HD-AE5000's: it reloads `s` after `_str = s` (`ld (0x03c21c),XWA` / `ld XWA,(XSP+0x04)` / `ld (XWA),0x0`), where
 V4.23 and the HD-AE5000 keep XWA; and `pairs.tsv` puts its public 3 bytes past its first instruction (ff0ab7 for
-ff0ab4).  A different build of the library, or a rule for the main CPU; not decided.  `_fabs` came with `-O`'s hoisting of the two branches' common first instructions above the test
+ff0ab4).  A different build of the library, or a rule for the main CPU; not decided.  `pairs.tsv` itself found it only as a near match
+(`near`, V4.23 ml 0.875, at `Sprintf_Unlocked+3`), so it may not be the library routine at all.  `_fabs` came with `-O`'s hoisting of the two branches' common first instructions above the test
 (`fpgen.hoist_common`).  `_exp` showed one more asm900 choice: `lda` of a symbol always takes the 24-bit address
 (`lda XBC,_g_mathtbl` at 0xf420 is `f2 20 f4 00 31`), where an `ld` of a variable below 0x10000 takes 16 bits.  The other 110 (`model cannot` in the TSV) are routines the model does not compile yet (`goto` in `_strcspn`, the
 floating-point formatter `__doprnt`, the math routines), or that are data the model does not emit.
@@ -100,22 +101,26 @@ a DOS end-of-file byte, which the front end now cuts.)
 
 `python3 -I -B model/pairs_summary.py ../results/pairs_model_kn5000.tsv` (from `scripts/analysis/cc900`):
 
-| image       | pairs | identical | differ | not compiled yet |
-|-------------|-------|-----------|--------|------------------|
-| maincpu v10 | 27    | 16        | 2      | 9                |
-| maincpu v9  | 24    | 16        | 1      | 7                |
-| maincpu v7  | 27    | 16        | 2      | 9                |
-| maincpu v6  | 24    | 16        | 1      | 7                |
-| maincpu v5  | 24    | 16        | 1      | 7                |
-| subcpu v142 | 16    | 10        | 0      | 6                |
-| subcpu v141 | 16    | 10        | 0      | 6                |
-| subcpu v140 | 16    | 10        | 0      | 6                |
-| table data  | 4     | 1         | 1      | 2                |
-| hdae v2.06i | 22    | 16        | 1      | 5                |
-| hdae v2.01i | 21    | 16        | 1      | 4                |
-| hdae v1.15i | 19    | 16        | 1      | 2                |
-| hdae v1.10i | 20    | 16        | 1      | 3                |
+| image       | pairs | identical | differ | not compiled yet | near match, unverified |
+|-------------|-------|-----------|--------|------------------|------------------------|
+| maincpu v10 | 24    | 16        | 1      | 7                | 3                      |
+| maincpu v9  | 24    | 16        | 1      | 7                | 0                      |
+| maincpu v7  | 24    | 16        | 1      | 7                | 3                      |
+| maincpu v6  | 24    | 16        | 1      | 7                | 0                      |
+| maincpu v5  | 24    | 16        | 1      | 7                | 0                      |
+| subcpu v142 | 16    | 10        | 0      | 6                | 0                      |
+| subcpu v141 | 16    | 10        | 0      | 6                | 0                      |
+| subcpu v140 | 16    | 10        | 0      | 6                | 0                      |
+| table data  | 3     | 1         | 1      | 1                | 1                      |
+| hdae v2.06i | 21    | 16        | 1      | 4                | 1                      |
+| hdae v2.01i | 21    | 16        | 1      | 4                | 0                      |
+| hdae v1.15i | 19    | 16        | 1      | 2                | 0                      |
+| hdae v1.10i | 19    | 16        | 1      | 2                | 1                      |
 
 The sub CPU's pairs are mostly the floating-point routines, which the model does not compile yet; the one that
 differs on the main CPU and the HD-AE5000 is `_memccpy`.  `pairs.tsv` also lists `___ctype` at `__ctype`'s address in
-every image that has it; `pairs_model.py` reports it as `alias of __ctype` and the table does not count it.  The SX-WSA1R images have no pairs in `pairs.tsv`.
+every image that has it; `pairs_model.py` reports it as `alias of __ctype` and the table does not count it.  The
+`near match, unverified` column counts `pairs.tsv`'s `near` rows that are not byte-identical, outside `pairs`:
+- `_sbrk` (main CPU v10 and v7, table data) is the last bytes of the routine before `.sbrk` (`pop XIZ` / `ret`);
+- the main CPU's `_vsprintf`;
+- `__facnv` (main CPU v10 and v7, HD-AE5000 v2.06i and v1.10i), which the model cannot compile yet.  The SX-WSA1R images have no pairs in `pairs.tsv`.
