@@ -31,3 +31,19 @@ The reload-after-store rule is the model's first personality switch (`codegen.py
 whose object reproduces the firmware's `_ldiv` pair (`scripts/analysis/cc900/results/pairs_libsrc97_ide2003.tsv`);
 the crossed comparisons differ.  `_ldiv` is the first routine where the inferred Technics personality reproduces the
 firmware and V4.23 does not.
+
+## The reload rule, stated precisely (from `_ldiv` and `_ultoa`)
+
+Both compilers track which register holds the value of which memory location, and skip a load whose value is
+already in the register.  They differ in when they record it:
+
+- **V4.23** records "R holds M" after a load `ld R,(M)` only.  After a store `ld (M),R` the register is not known to
+  hold M, so the next use of M reloads it (`ld (XSP+8),XWA` / `ld XWA,(XSP+8)`, `_ldiv`, `_ultoa`, `r_buf`).
+- **2003** (and the Technics compiler) also records it after a store.  Like all such knowledge it is forgotten at a
+  store through a pointer, which might alias M.  `_ldiv`: `ld (XSP+8),XWA` / `ld (XSP+4),XWA`, only direct stores in
+  between, so no reload.  `_ultoa`: `ld (XSP+8),XWA` / `ldb (XWA+0x20),0x0` (a store through XWA) /
+  `ld XWA,(XSP+8)` / `lda XWA,XWA+0x1f`: the indirect store invalidated the knowledge, so XWA is reloaded before it
+  is used again.
+
+This explains every reload difference seen so far with one switch.  In the model it is best implemented as
+register-contents tracking with that switch, rather than as the `setup_struct_temps` special case it is now.
