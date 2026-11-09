@@ -1282,6 +1282,12 @@ def gen_stmt(F, s, last):
             cc = gen_compare(F, c)
             if cc not in (True, False):
                 F.emit('ret', cc); F.lines.append(lab + ':'); return
+        if (c.k == 'un' and c.op == '!') or c.ty.kind in ('int', 'ptr'):
+            from frontend import N                         # _strncat: if (!*s1) return (s); -> cpb (XIX),0x0 / ret eq
+            x = strip(c.e) if c.k == 'un' else c           # (no label after it: the loop body goes on)
+            cc = gen_compare(F, N('bin', op='==' if c.k == 'un' else '!=', l=x, r=N('const', value=0, ty=x.ty), ty=c.ty))
+            if cc not in (True, False):
+                F.emit('ret', cc); return
         raise Unsupported('conditional return')
     if s.k == 'if':
         if s.els is None:

@@ -122,6 +122,15 @@ What the model now does (codegen.py; each rule cites its oracle function):
   j lt / cp XBC,0x5 / j gt / add XBC,XBC / add XBC,S / ld BC,(XBC) / lda XIX,L / j XIX+BC`), compare chains with
   ranges, and `-O` cross-jumping (identical tails merged), tail calls.
 
+Library and firmware pairs (later the same day): the library at `-O3 -XS` is 110 of 147 listing pieces (inline
+assembly is now passed through, so its labels split pieces as in the listings), and `model/pairs_model.py` rebuilds
+117 firmware library pairs byte-identical with our own tools (`phase6-preview.md`).
+
+Open allocator question, from the string routines: the order in which `-O` loads the parameters it keeps in
+registers.  Loaded together at the start: `_strncpy` and `_strncmp` take n, s2, s1 (reverse declaration order),
+`_stricmp` s2, s1, but `_memicmp` n, s1, s2; loaded before a second loop, `_strncat` takes s2, n (declaration
+order).  The model gets the first group right and `_strncat` / `_memicmp` wrong; more examples are needed.
+
 Still open on this convention: the `-O` register allocator for loops (`ra_leaf2..5`: which values go to IX / IY /
 IZ / QDE ...), `sw_local` (a local kept in HL across a call), placement of the code after a switch next to the
 first case (`sw_evtab`), loops in the switch's continue label (`sw_loop`), long helper homes at `-O` (`mul_l_loc`).
