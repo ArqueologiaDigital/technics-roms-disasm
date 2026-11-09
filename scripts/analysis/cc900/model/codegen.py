@@ -2567,7 +2567,7 @@ def gen_stmt(F, s, last):
         gen_stmt(F, s.then, last)
         arm_call = F.pending or F.lines[-1].startswith('\tcal\t')
         if last and not before_trivial_ret and not F.xiz_vars and not F.pushes and not F.lines[-1].startswith(('\tret', '\tj\t')) \
-                and not (F.opt and IFCHAIN_JOIN and not F.adecl and arm_call):   # (an arm without a call returns
+                and not (F.opt and IFCHAIN_JOIN and arm_call):   # (an arm without a call returns
                                                                                   # itself: cb_c_else_80 under O3XS)
             flush_pops(F); F.emit('ret')               # c_ifchain: the exit is duplicated, not jumped to (cdecl -O
                                                        # jumps to the join and the tails merge: pushw 0xa / j L2)
@@ -3504,6 +3504,18 @@ def loop_cond(F, c, target, sense):
         F.emit('ld', '%s,%s' % (T, R)); F.emit('dec' if c.op == '--' else 'inc', '0x1,%s' % R); F.emit('cp', '%s,0x0' % T)
         cc = 'ne' if sense else 'eq'
         F.emit('ret', cc) if target == 'RET' else F.emit('j', '%s,%s' % (cc, target)); return
+    if c.k == 'bin' and c.op in CC_S and strip(c.l).k == 'incdec' and strip(c.l).post and regvar_of(strip(c.l).e) and \
+            fold(c.r).k == 'const' and fold(c.r).value is not None and regvar_of(strip(c.l).e).ty.size == 2:
+        d = regvar_of(strip(c.l).e); R = FAM[d.reg][2]   # c_clear: while (n-- > 0) with n in BC, p in XWA ->
+        T = getattr(F, 'tfam', None)                        # ld DE,BC / dec 0x1,BC / cp DE,0x0 / j gt
+        if T is None:
+            live = live_regs(F)
+            T = next((r for r in ('WA', 'BC', 'DE', 'HL') if r not in live and r != d.reg), None)
+        if T is not None:
+            F.emit('ld', '%s,%s' % (FAM[T][2], R)); F.emit('dec' if strip(c.l).op == '--' else 'inc', '0x1,%s' % R)
+            F.emit('cp', '%s,%s' % (FAM[T][2], hx(fold(c.r).value & 0xffff)))
+            cc = (CC_S if d.ty.signed else CC_U)[c.op]; cc = cc if sense else INV[cc]
+            F.emit('ret', cc) if target == 'RET' else F.emit('j', '%s,%s' % (cc, target)); return
     if c.k == 'incdec' and not c.post and c.op == '--' and regvar_of(c.e) and F.opt and sense and target != 'RET' \
             and regvar_of(c.e).ty.size == 2:
         F.emit('djnz', '%s,%s' % (FAM[regvar_of(c.e).reg][2], target)); return   # c_do under O3XS: djnz IZ,L1
@@ -3726,7 +3738,10 @@ def gen_loop(F, s, last):
     cnd = strip(s.cond) if s.cond is not None else None
     if rotated not in (None, 'tested'):
         if s.inc is not None: gen_stmt(F, N_expr(s.inc), False)
-        F.lines.append(rotated + ':'); loop_cond(F, s.cond, body, True); F.lines.append(exitl + ':'); return
+        F.lines.append(rotated + ':'); loop_cond(F, s.cond, body, True)
+        import re as _re                                   # c_fordown at -O: no exit label when nothing breaks out
+        if any(_re.search(r'[\t,]%s$' % exitl, l) for l in F.lines): F.lines.append(exitl + ':')
+        return
     if inc is not None and inc.k == 'incdec' and inc.op == '--' and regvar_of(inc.e) and cnd is not None and not rotated \
             and cnd.k == 'bin' and cnd.op in ('>', '!=') and fold(cnd.r).k == 'const' and fold(cnd.r).value == 0 \
             and regvar_of(getattr(strip(cnd.l), 'e', cnd.l)) is regvar_of(inc.e):
