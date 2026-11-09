@@ -1894,7 +1894,8 @@ def gen_stmt(F, s, last):
             cc = gen_compare(F, N('bin', op='==' if c.k == 'un' else '!=', l=x, r=N('const', value=0, ty=x.ty), ty=c.ty))
             if cc not in (True, False):
                 F.emit('ret', cc)
-                if not F.opt: F.lines.append(lab + ':')    # c_inf under none keeps the label; _strncat at -O not
+                if not F.opt or flat(s.then)[0].value is None:   # c_inf keeps the label (a plain return); at -O
+                    F.lines.append(lab + ':')                   # _strncat's return (s) does not
                 return
         raise Unsupported('conditional return')
     if s.k == 'if':
@@ -3036,6 +3037,8 @@ def gen_loop(F, s, last):
     if s.k == 'for' and s.inc is not None: gen_stmt(F, N_expr(s.inc), False)
     if s.cond is not None: loop_cond(F, s.cond, body, True)
     else: F.emit('j', body)
+    if s.cond is None and F.opt and not any(re.search(r'[\t,]%s$' % exitl, l) for l in F.lines if l.startswith('\t')):
+        F.no_exit = True; return                       # c_inf at -O: for (;;) with no break -> nothing after j L1
     F.lines.append(exitl + ':')
 
 def N_expr(e):
@@ -4310,7 +4313,8 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong
     if F.opt: plan_shared_exit(F)
     gen_stmt(F, f.body, True)
     flush_pops(F)
-    if not F.lines[-1].startswith('\tret'):
+    if not F.lines[-1].startswith('\tret') and not (getattr(F, 'no_exit', False) and F.lines[-1].startswith('\tj\t')
+                                                   and ',' not in F.lines[-1]):
         if F.xiz_vars: F.emit('pop', F.save_reg)
         epilogue(F)
         F.emit('retd', hx(F.retd)) if F.retd else F.emit('ret')   # op_three: an adecl stack parameter -> retd 0x2
