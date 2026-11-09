@@ -4927,13 +4927,21 @@ def gen_counted(F, s, last, cl):
             F.emit('j', 'ult,%s' % body)
             return
     if 'kconst' in cl:                                     # ol_i_const: walk a pointer to an end pointer
+        for d in list(F.f.params) + list(F.f.decls):       # (lnr.c o_n_in -O3 -XS -Xr: n in WA is read in the
+            if d is not cl['i'] and getattr(d, 'reg', None) in ('WA', 'BC') and d not in F.dead and \
+                    (uses_decl(s.body, d) or d in read_after_top(F)):   # body; V4.23 hoists n + n into DE first)
+                raise Unsupported('pointer loop over a live WA / BC')
+        n0 = len(F.lines)
         F.emit('lda', 'XBC,_%s' % cl['arr'].name); F.emit('ld', 'XWA,XBC')
         F.emit('lda', 'XBC,XBC+%s' % hx(cl['kconst'] * cl['esz']))
         body = F.newulabel(); F.newulabel()
         F.lines.append(body + ':')
         F.cl_operand = '(XWA+:%d)' % cl['esz']; F.cl_active = cl; F.cl_shared = False
+        nb = len(F.lines)
         gen_stmt(F, s.body, False)
         F.cl_active = None; F.cl_operand = None
+        if STORE_ADDR_GUARD and clobbers(F.lines[nb:], '(XWA+XBC)'):
+            raise Unsupported('the loop body overwrites the walking pointers')   # (o_n_in: ld BC,WA: wrong code)
         F.emit('cp', 'XWA,XBC'); F.emit('j', 'ult,%s' % body)
         return
     i = cl['i']; I = FAM[i.reg][2]
