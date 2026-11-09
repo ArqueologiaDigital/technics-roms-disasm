@@ -951,6 +951,10 @@ def cse_params(F, e):
     if len(many) != 1: return False
     d = many[0]; size = F.f.ret.size; top = narrow(e, size)
     if top.k == 'cond': return False                       # _abs: the ?: loads j into HL itself
+    t0 = strip(top)
+    while t0.k == 'cast': t0 = strip(t0.e)
+    if t0.k == 'bin' and t0.op in ('==', '!=', '<=', '>=', '<', '>') and same_leaf(t0.l, t0.r):
+        return False                                       # assign_expr.c ae_i_ne_l: y == x with y = x folds
     needs_wa = size == 1 or (top.k == 'bin' and top.op in ('*', '/', '%', '<<', '>>'))
     if top.k == 'bin' and top.op in ('*', '/', '%') and size == 4: return False
     tmp = 'BC' if needs_wa else 'WA'
@@ -1324,8 +1328,9 @@ def gen_compare(F, e):
     if la.k == 'bin' and la.op == '=' and strip(la.l).k == 'var' and getattr(strip(la.l).decl, 'reg', None) in \
             ('BC', 'DE', 'HL', 'IX', 'IY') and rc.k == 'const' and rc.value == 0 and op in ('==', '!='):
         fv = gen_assign_value(F, la, 'WA', size)           # ae_i_ne_l: ld BC,(XSP+0x4) / ld WA,BC / cp WA,0x0
-        F.emit('ld', '%s,%s' % (FAM['WA'][size], FAM[fv][size]))
-        W = FAM['WA'][size]
+        if F.opt and ASSIGN_CMP_INPLACE: W = FAM[fv][size]   # -O: the variable's own register (assign_expr.c
+        else:                                              # ae_c_loop -O3 -XS -Xr: ld C,(XWA+:1) / cp C,0x0)
+            F.emit('ld', '%s,%s' % (FAM['WA'][size], FAM[fv][size])); W = FAM['WA'][size]
         F.emit('or', '%s,%s' % (W, W)) if size == 4 else F.emit('cp', '%s,0x0' % W); return cc
     ra = strip(r)
     while ra.k == 'cast' and ra.kind == 'IntegralCast': ra = strip(ra.e)
@@ -1491,6 +1496,7 @@ LONG_RMW_XIZ = True                                       # see gen_opassign
 KCONST_MULTI = True                                       # see gen_counted
 PTR_KLOOP = True                                          # see ptr_kloop
 STORE_FROM_WORK = True                                    # see store_global
+ASSIGN_CMP_INPLACE = True                                 # see gen_compare
 
 def char_narrow(body):
     """cc900 does int + - & | ^ of a char and a constant that fits a byte, or of two chars, on the byte and
