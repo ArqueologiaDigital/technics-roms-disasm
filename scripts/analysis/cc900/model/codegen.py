@@ -428,7 +428,8 @@ def gen(F, e, fam, size, then_ret=False, store=False):
     if e.k == 'cond':                                # c_tern
         lelse, lend = F.newulabel(), F.newulabel()
         gen_cond_false(F, e.c, lelse)
-        if F.opt and strip(e.a).k == 'bin' and fam != 'WA':   # _toupper: ld WA,IZ / sub WA,0x20 / ld HL,WA / j L2
+        if F.opt and (strip(e.a).k == 'bin' or strip(e.a).k == 'un' and strip(e.a).op in ('-', '~')) and fam != 'WA':
+            # _toupper: ld WA,IZ / sub WA,0x20 / ld HL,WA / j L2; _atoi: ld WA,IY / neg WA / ld HL,WA
             f2 = gen(F, e.a, 'WA', size); F.emit('ld', '%s,%s' % (FAM[fam][size], FAM[f2][size]))
         else: gen(F, e.a, fam, size)
         F.emit('j', lend); F.lines.append(lelse + ':')
@@ -901,8 +902,10 @@ def gen_table_test(F, tt):
     tab, x, bit = tt
     m = mem_operand(F, x)
     if m is None: raise Unsupported('table index')
+    fm = family_of(m); fm = fm[1:] if fm and fm.startswith('X') else fm
+    if fm and 1 not in FAM.get(fm, {}): raise Unsupported('table index in a register without a byte')
     if m not in ('A',):
-        F.emit('ld', 'A,%s' % (FAM[family_of(m)][1] if family_of(m) else m))
+        F.emit('ld', 'A,%s' % (FAM[fm][1] if fm else m))
     F.emit('extz', 'WA')
     l2 = getattr(F, 'l2', {})
     breg = l2.get('tab_inv', {}).get(tab)
@@ -2348,6 +2351,29 @@ def regvar_stmt(F, e):
                     F.emit('ld', 'QIZ,%s' % L)
                     F.emit(SIMPLE_OPS[r0.op], '%s,%s' % (L, rm if rm is not None else hx(rc.value)))
                     F.emit('ld', 'QIZ,%s' % L); return True
+        if getattr(F, 'l2', None) and r0.k == 'bin' and r0.op in ('+', '-') and d.ty.size == 2:
+            a0, b0 = strip(narrow(r0.l, 2)), strip(narrow(r0.r, 2))   # _atoi: num = num * 10 + (c - '0') ->
+            if a0.k == 'bin' and a0.op == '*' and strip(a0.l).k == 'load' and regvar_of(strip(a0.l).e) is d and \
+                    fold(a0.r).k == 'const' and b0.k == 'bin' and b0.op in ('+', '-') and fold(b0.r).k == 'const' and \
+                    strip(b0.l).k == 'load' and regvar_of(strip(b0.l).e) and (dies_here(F, strip(b0.l)) or
+                                                                     regvar_of(strip(b0.l).e) in F.l2.get('body', ())):
+                w = regvar_of(strip(b0.l).e); Wr = FAM[w.reg][2]           # sub DE,0x30 / muls XIY,0xa / add IY,DE
+                F.emit(SIMPLE_OPS[b0.op], '%s,%s' % (Wr, hx(fold(b0.r).value)))
+                F.emit('muls' if d.ty.signed else 'mul', 'X%s,%s' % (d.reg, hx(fold(a0.r).value)))
+                F.emit(SIMPLE_OPS[r0.op], '%s,%s' % (R, Wr)); return True
+        if getattr(F, 'l2', None) and r0.k == 'bin' and r0.op in ('+', '-') and d.ty.size == 4:
+            a0, b0 = strip(r0.l), strip(r0.r)              # _atol: num = num * 10 + (c - '0') with num long ->
+            bw = b0                                         # sub DE,0x30 / ld WA,DE / exts XWA / ld XDE,XIY /
+            while bw.k == 'cast' and bw.kind == 'IntegralCast': bw = strip(bw.e)   # sla 0x2,XDE / add XDE,XIY /
+            if a0.k == 'bin' and a0.op == '*' and strip(a0.l).k == 'load' and regvar_of(strip(a0.l).e) is d and \
+                    fold(a0.r).k == 'const' and bw.k == 'bin' and bw.op in ('+', '-') and fold(bw.r).k == 'const' and \
+                    strip(bw.l).k == 'load' and regvar_of(strip(bw.l).e) and strip(bw.l).ty.size == 2 and \
+                    regvar_of(strip(bw.l).e) in F.l2.get('body', ()) and F.l2.get('t1') == 'WA':   # add XDE,XDE /
+                w = regvar_of(strip(bw.l).e); Wr = FAM[w.reg][2]                                   # ld XIY,XDE /
+                F.emit(SIMPLE_OPS[bw.op], '%s,%s' % (Wr, hx(fold(bw.r).value)))                    # add XIY,XWA
+                F.emit('ld', 'WA,%s' % Wr); F.emit('exts' if bw.ty.signed else 'extz', 'XWA')
+                fam = gen(F, a0, w.reg, 4)
+                F.emit('ld', '%s,%s' % (R, FAM[fam][4])); F.emit(SIMPLE_OPS[r0.op], '%s,XWA' % R); return True
         tgt = d.reg if d.reg in ('BC', 'DE', 'HL', 'WA') else 'WA'      # ra_noloop3: ld DE,(a) / add DE,(b)
         fam = gen(F, e.r, tgt, d.ty.size)
         if FAM[fam][d.ty.size] != R: F.emit('ld', '%s,%s' % (R, FAM[fam][d.ty.size]))
@@ -2596,6 +2622,9 @@ def gen_switch(F, s, last):
 def loop_cond(F, c, target, sense):
     """jump to target when c is true (sense) or false (not sense); x-- as condition (rc_while)"""
     c = strip(c)
+    if table_test(c) and getattr(F, 'l2', None):         # _atoi: while (isspace(*nptr)) -> ... / bit 0x3,(XBC+WA)
+        cc = gen_table_test(F, table_test(c)); cc = cc if sense else INV[cc]
+        F.emit('ret', cc) if target == 'RET' else F.emit('j', '%s,%s' % (cc, target)); return
     if c.k == 'bin' and c.op == '&&' and sense:          # _strncpy: first false -> past the loop, last true -> body
         out = F.newulabel(); loop_cond(F, c.l, out, False); loop_cond(F, c.r, target, True)
         F.lines.append(out + ':'); return
@@ -2697,6 +2726,11 @@ def gen_loop(F, s, last):
     cl = getattr(F, 'counted', {}).get(id(s))
     if cl: return gen_counted(F, s, last, cl)
     if s.k == 'for' and s.init is not None: gen_stmt(F, s.init, False)
+    l2 = getattr(F, 'l2', None)
+    if l2:                                                # _atoi: lda XBC,__ctype before the first loop that tests it
+        for tab, reg in list(l2.get('tab_inv', {}).items()):
+            if tab not in l2.setdefault('inv_done', set()) and uses_table(s, tab):
+                F.emit('lda', 'X%s,_%s' % (reg, tab.name)); l2['inv_done'].add(tab)
     after_ret = last and not F.xiz_vars and not F.pushes and not F.pending
     if s.k == 'do':
         body = F.newulabel(); F.lines.append(body + ':')
@@ -3098,6 +3132,14 @@ def leaf_l2(F):
             if r and pv.k == 'load' and strip(pv.e).k == 'var':
                 held_ptr.add(strip(pv.e).decl); held_nodes.append(n)
     walk(f.body, info)
+    first_write = {}; bumped = set()                     # body: first assigned by a plain = inside a loop body,
+    def fw(n, dep):                                      # never incremented or compound-assigned
+        if n.k == 'bin' and n.op == '=' and strip(n.l).k == 'var': first_write.setdefault(strip(n.l).decl, dep)
+        if n.k == 'decl' and getattr(n, 'init', None) is not None: first_write.setdefault(n.var, dep)
+        if n.k == 'incdec' and strip(n.e).k == 'var': bumped.add(strip(n.e).decl)
+        if n.k == 'opassign' and strip(n.l).k == 'var': bumped.add(strip(n.l).decl)
+    walk(f.body, fw)
+    body_locals = {d for d, dep in first_write.items() if dep and d not in bumped and d.kind == 'local'}
     objs = []
     W = lambda d: 32 if d.ty.size == 4 else 16 if d.ty.size == 2 else 8
     used = [d for d in dict.fromkeys(list(f.params) + list(f.decls)) if d in pos and d.ty.kind in ('int', 'ptr')
@@ -3112,8 +3154,7 @@ def leaf_l2(F):
             elif d in loopmod and d.ty.kind == 'int': cls = 'cnt'
             else: return False                              # ro / rld parameters: not yet
         else:
-            if d in loopmod: cls = 'loc'
-            else: cls = 'loc'
+            cls = 'body' if d in body_locals else 'loc'      # _atoi: c = *nptr++ inside the loop -> the early group
         objs.append(dict(name=d, cls=cls, w=W(d), decl=idx, pos=pos.get(d, 0)))
     objs.append(dict(name='t1', cls='t1', w=16))
     tab_cls = {}
@@ -3134,7 +3175,7 @@ def leaf_l2(F):
         if r in ('WA', 'BC', 'DE', 'HL', 'IX', 'IY', 'IZ'): return r
         return BYTE.get(r)                             # W / B / D / H and the Q halves: not yet
     if any(fam(v) is None for v in got.values()): return False
-    F.l2 = {'t1': fam(got['t1']), 'tab_inv': {}, 'tab_once': {}, 'held': {}}
+    F.l2 = {'t1': fam(got['t1']), 'tab_inv': {}, 'tab_once': {}, 'held': {}, 'body': body_locals}
     for o in objs:
         r = got[o['name']]
         if isinstance(o['name'], tuple) and o['name'][0] == 'tab':
@@ -3703,6 +3744,45 @@ def cross_jump(F, lines):
     return [l for l in lines if not (is_label(l) and l[:-1] in made and not refs(l[:-1]) and   # _memccpy: one L50000
                                      (l[:-1] in made_new or not named(l[:-1])))]
 
+def thread_jumps(lines):
+    """-O jump threading (_atoi: if (isdigit(c)) ... else break; inside for (;;) -> j eq,L6 to the exit, the arm's
+    end j L5 to the loop top): a jump to a label whose next instruction is `j X` goes to X; adjacent labels merge
+    into the first; a `label: j X` block that nothing reaches after an unconditional jump goes."""
+    def is_label(l): return l.endswith(':') and not l.startswith('\t')
+    alias = {}
+    for i in range(1, len(lines)):
+        if is_label(lines[i]) and is_label(lines[i - 1]):
+            a = lines[i - 1][:-1]
+            alias[lines[i][:-1]] = alias.get(a, a)
+    lines = [l for i, l in enumerate(lines) if not (is_label(l) and l[:-1] in alias)]
+    def tgt(l):
+        m = re.match(r'^\t(j)\t(?:([a-z]+),)?(L\d+)$', l)
+        return m
+    def retarget(l, new):
+        return re.sub(r'(L\d+)$', new, l)
+    lines = [retarget(l, alias[tgt(l).group(3)]) if tgt(l) and tgt(l).group(3) in alias else l for l in lines]
+    for _ in range(8):
+        where = {l[:-1]: i for i, l in enumerate(lines) if is_label(l)}
+        changed = False
+        for i, l in enumerate(lines):
+            m = tgt(l)
+            if not m: continue
+            j = where.get(m.group(3))
+            if j is None or j + 1 >= len(lines): continue
+            nx = tgt(lines[j + 1])
+            if nx and nx.group(2) is None and nx.group(3) != m.group(3):
+                lines[i] = retarget(l, nx.group(3)); changed = True
+        if not changed: break
+    def refs(L): return any(re.search(r'[\t,]%s$' % L, l) for l in lines if l.startswith('\t'))
+    drop = set()
+    for i, l in enumerate(lines):
+        if i in drop or not is_label(l) or refs(l[:-1]) or i + 1 >= len(lines): continue
+        nx = tgt(lines[i + 1])
+        prev = next((lines[k] for k in range(i - 1, -1, -1) if k not in drop), '')
+        if nx and nx.group(2) is None and prev.startswith(('\tj\t', '\tret')) and ',' not in prev:
+            drop.update((i, i + 1))
+    return [l for i, l in enumerate(lines) if i not in drop]
+
 def tail_calls_opt(F, lines):
     """-O: cal X / j L (L: ret) becomes j X; a label that lost all its references (and is not a ret cc target)
     goes, after which cal X / ret becomes j X and a ret after an unconditional jump goes (sw_jt6d: L17: j .f0)"""
@@ -3811,6 +3891,7 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong
         F.emit('retd', hx(F.retd)) if F.retd else F.emit('ret')   # op_three: an adecl stack parameter -> retd 0x2
     for t in reversed(getattr(F, 'tables', [])): F.lines[1:1] = t     # switch tables right after the label
     if F.opt and getattr(F, 'fp_temps', None) is not None: F.lines = fpgen.hoist_common(F.lines)
+    if F.opt and getattr(F, 'l2', None): F.lines = thread_jumps(F.lines)
     if F.opt: F.lines = tail_calls_opt(F, cross_jump(F, F.lines))
     else: F.lines = tail_calls(F.lines, getattr(F, 'switch_table', False))
     if not F.opt and getattr(F, 'tfam', None):           # ot_cmp_anb under -Xr: j eq,L3 ... L3: ret -> ret eq

@@ -3,8 +3,8 @@ maincpu v10	eed778	___ctype	_CTYPE.C	-	alias of __ctype	exact
 maincpu v10	eed778	__ctype	_CTYPE.C	256	MATCH	exact
 maincpu v10	ff091d	_strstr	_STRSTR.C	-	model: ; unsupported: incdec target	exact
 maincpu v10	ff097d	_strcspn	_STRCSPN.C	-	model: ; unsupported: statement goto	exact
-maincpu v10	ff09a0	_atoi	_ATOI.C	-	model: ; unsupported: loop condition bin	exact
-maincpu v10	ff09f6	_atol	_ATOL.C	-	model: ; unsupported: loop condition bin	exact
+maincpu v10	ff09a0	_atoi	_ATOI.C	86	MATCH	exact
+maincpu v10	ff09f6	_atol	_ATOL.C	102	MATCH	exact
 maincpu v10	ff0ab7	_vsprintf	_SPRINTF.C	33	5 diff first +0	near
 maincpu v10	ff0c92	_strncat	_STRNCAT.C	47	MATCH	exact
 maincpu v10	ff0cc1	_strncmp	_STRNCMP.C	50	MATCH	exact
@@ -31,8 +31,8 @@ maincpu v9	eed778	___ctype	_CTYPE.C	-	alias of __ctype	exact
 maincpu v9	eed778	__ctype	_CTYPE.C	256	MATCH	exact
 maincpu v9	ff090f	_strstr	_STRSTR.C	-	model: ; unsupported: incdec target	exact
 maincpu v9	ff096f	_strcspn	_STRCSPN.C	-	model: ; unsupported: statement goto	exact
-maincpu v9	ff0992	_atoi	_ATOI.C	-	model: ; unsupported: loop condition bin	exact
-maincpu v9	ff09e8	_atol	_ATOL.C	-	model: ; unsupported: loop condition bin	exact
+maincpu v9	ff0992	_atoi	_ATOI.C	86	MATCH	exact
+maincpu v9	ff09e8	_atol	_ATOL.C	102	MATCH	exact
 maincpu v9	ff0c84	_strncat	_STRNCAT.C	47	MATCH	exact
 maincpu v9	ff0cb3	_strncmp	_STRNCMP.C	50	MATCH	exact
 maincpu v9	ff0ce5	_strncpy	_STRNCPY.C	43	MATCH	exact
@@ -56,8 +56,8 @@ maincpu v7	eed778	___ctype	_CTYPE.C	-	alias of __ctype	exact
 maincpu v7	eed778	__ctype	_CTYPE.C	256	MATCH	exact
 maincpu v7	ff0140	_strstr	_STRSTR.C	-	model: ; unsupported: incdec target	exact
 maincpu v7	ff01a0	_strcspn	_STRCSPN.C	-	model: ; unsupported: statement goto	exact
-maincpu v7	ff01c3	_atoi	_ATOI.C	-	model: ; unsupported: loop condition bin	exact
-maincpu v7	ff0219	_atol	_ATOL.C	-	model: ; unsupported: loop condition bin	exact
+maincpu v7	ff01c3	_atoi	_ATOI.C	86	MATCH	exact
+maincpu v7	ff0219	_atol	_ATOL.C	102	MATCH	exact
 maincpu v7	ff02da	_vsprintf	_SPRINTF.C	33	5 diff first +0	near
 maincpu v7	ff04b5	_strncat	_STRNCAT.C	47	MATCH	exact
 maincpu v7	ff04e4	_strncmp	_STRNCMP.C	50	MATCH	exact
@@ -84,8 +84,8 @@ maincpu v6	eed67c	___ctype	_CTYPE.C	-	alias of __ctype	exact
 maincpu v6	eed67c	__ctype	_CTYPE.C	256	MATCH	exact
 maincpu v6	ff0042	_strstr	_STRSTR.C	-	model: ; unsupported: incdec target	exact
 maincpu v6	ff00a2	_strcspn	_STRCSPN.C	-	model: ; unsupported: statement goto	exact
-maincpu v6	ff00c5	_atoi	_ATOI.C	-	model: ; unsupported: loop condition bin	exact
-maincpu v6	ff011b	_atol	_ATOL.C	-	model: ; unsupported: loop condition bin	exact
+maincpu v6	ff00c5	_atoi	_ATOI.C	86	MATCH	exact
+maincpu v6	ff011b	_atol	_ATOL.C	102	MATCH	exact
 maincpu v6	ff03b7	_strncat	_STRNCAT.C	47	MATCH	exact
 maincpu v6	ff03e6	_strncmp	_STRNCMP.C	50	MATCH	exact
 maincpu v6	ff0418	_strncpy	_STRNCPY.C	43	MATCH	exact
@@ -109,8 +109,8 @@ maincpu v5	eed664	___ctype	_CTYPE.C	-	alias of __ctype	exact
 maincpu v5	eed664	__ctype	_CTYPE.C	256	MATCH	exact
 maincpu v5	fefbee	_strstr	_STRSTR.C	-	model: ; unsupported: incdec target	exact
 maincpu v5	fefc4e	_strcspn	_STRCSPN.C	-	model: ; unsupported: statement goto	exact
-maincpu v5	fefc71	_atoi	_ATOI.C	-	model: ; unsupported: loop condition bin	exact
-maincpu v5	fefcc7	_atol	_ATOL.C	-	model: ; unsupported: loop condition bin	exact
+maincpu v5	fefc71	_atoi	_ATOI.C	86	MATCH	exact
+maincpu v5	fefcc7	_atol	_ATOL.C	102	MATCH	exact
 maincpu v5	feff63	_strncat	_STRNCAT.C	47	MATCH	exact
 maincpu v5	feff92	_strncmp	_STRNCMP.C	50	MATCH	exact
 maincpu v5	feffc4	_strncpy	_STRNCPY.C	43	MATCH	exact
@@ -268,4 +268,4 @@ hdae v1.10i	296ecb	_strncpy	_STRNCPY.C	43	MATCH	exact
 hdae v1.10i	296ef6	__facnv	__FACVT.C	-	model: ; unsupported: var	near
 hdae v1.10i	2e0cd6	___ctype	_CTYPE.C	-	alias of __ctype	exact
 hdae v1.10i	2e0cd6	__ctype	_CTYPE.C	256	MATCH	exact
-# MATCH 187, model cannot 68, alias 9, differs 5, outside image 4
+# MATCH 197, model cannot 58, alias 9, differs 5, outside image 4

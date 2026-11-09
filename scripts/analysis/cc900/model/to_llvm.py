@@ -99,6 +99,9 @@ def translate_line(t, syms, locals_):
             else: v = operand(a, syms, locals_) or a
             out.append('\t%s %s' % ({'db': '.byte', 'dw': '.short', 'dl': '.long'}[op], v))
         return '\n'.join(out)
+    if op in ('mul', 'muls', 'div', 'divs') and len(raw) == 2 and raw[0].startswith('X') and NUM.match(raw[1]):
+        return '\t%s %s, %d' % (op, raw[0][1:].lower(), num(raw[1]))   # muls XIY,0xa -> muls iy, 10 (dd 09 0a 00):
+                                                                        # with an immediate llvm-mc names the 16-bit source
     if op == 'ret': return '\tret' if not raw else '\tret %s' % CC[raw[0]]
     if op == 'retd': return '\tretd %d' % num(raw[0])
     if op == 'cal': return '\tcall 0x%x' % lookup(raw[0], syms)
