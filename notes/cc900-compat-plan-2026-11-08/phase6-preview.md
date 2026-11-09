@@ -20,3 +20,8 @@ All six have the firmware's instruction sequence.  Two findings:
 - **Address width:** the firmware uses 16-bit absolute addresses (`:16`) for variables below 0x10000 and 24-bit ones
   above; the listing leaves that to the assembler and linker.  A byte-exact build needs the same choice: asm900 /
   tulink pick the short form from where the symbol lands, so our toolchain must do the same for cc900-compat output.
+
+**The reference model does the same without Toshiba's compiler:** `model/score.py` on `corpus/firmware/tiny.c`
+(`--opt O3XS --adecl`, against the run's listing) scores 6 of 6.  What is still missing for a byte-exact build from
+our own tools is the step from the model's Toshiba-syntax listing to bytes: a translation to our LLVM syntax (or an
+LLVM-syntax emitter) and the 16/24-bit address choice.

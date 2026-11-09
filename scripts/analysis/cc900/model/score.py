@@ -17,7 +17,7 @@ import frontend, listing, codegen
 
 def oracle_path(odir, src):
     p = os.path.abspath(src).replace('\\', '/')
-    for root in ('/micro/', '/abi/', '/libsrc/'):
+    for root in ('/micro/', '/abi/', '/libsrc/', '/firmware/'):
         if root in p: return os.path.join(odir, root.strip('/') + '/' + os.path.basename(p)[:-2] + '.asm')
     return os.path.join(odir, os.path.basename(p)[:-2] + '.asm')
 
