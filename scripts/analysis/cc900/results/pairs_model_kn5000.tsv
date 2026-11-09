@@ -21,7 +21,7 @@ maincpu v10	ff0fa0	_strlen	_STRLEN.C	30	MATCH
 maincpu v10	ff0fbe	_ltoa	_LTOA.C	-	model: ; unsupported: complex pointer arithmeti
 maincpu v10	ff0ffa	_memset	_MEMSET.C	68	MATCH
 maincpu v10	ff1048	__doprnt	__DOFORM.C	-	model: no function
-maincpu v10	ff2139	__facnv	__FACVT.C	-	model: ; unsupported: local exp
+maincpu v10	ff2139	__facnv	__FACVT.C	-	model: ; unsupported: var
 maincpu v10	ff27f7	_ultoa	_ULTOA.C	136	MATCH
 maincpu v10	ff2891	_memccpy	_MEMCCPY.C	64	59 diff first +1
 maincpu v10	ff28d1	_memchr	_MEMCHR.C	24	MATCH
@@ -74,7 +74,7 @@ maincpu v7	ff07c3	_strlen	_STRLEN.C	30	MATCH
 maincpu v7	ff07e1	_ltoa	_LTOA.C	-	model: ; unsupported: complex pointer arithmeti
 maincpu v7	ff081d	_memset	_MEMSET.C	68	MATCH
 maincpu v7	ff086b	__doprnt	__DOFORM.C	-	model: no function
-maincpu v7	ff195c	__facnv	__FACVT.C	-	model: ; unsupported: local exp
+maincpu v7	ff195c	__facnv	__FACVT.C	-	model: ; unsupported: var
 maincpu v7	ff201b	_ultoa	_ULTOA.C	136	MATCH
 maincpu v7	ff20b5	_memccpy	_MEMCCPY.C	64	59 diff first +1
 maincpu v7	ff20f5	_memchr	_MEMCHR.C	24	MATCH
@@ -202,7 +202,7 @@ hdae v2.06i	29afbe	_strncmp	_STRNCMP.C	50	MATCH
 hdae v2.06i	29aff0	_strncpy	_STRNCPY.C	43	MATCH
 hdae v2.06i	29b01b	_strrev	_STRREV.C	-	model: ; unsupported: lvalue var
 hdae v2.06i	29b04e	_strupr	_STRUPR.C	-	model: ; unsupported: condition bin
-hdae v2.06i	29b07a	__facnv	__FACVT.C	-	model: ; unsupported: local exp
+hdae v2.06i	29b07a	__facnv	__FACVT.C	-	model: ; unsupported: var
 hdae v2.06i	2f9362	___ctype	_CTYPE.C	-	model: no function
 hdae v2.06i	2f9362	__ctype	_CTYPE.C	256	MATCH
 hdae v2.01i	2993af	__doprnt	__DOFORM.C	-	model: no function
@@ -265,7 +265,7 @@ hdae v1.10i	296e4c	_strlen	_STRLEN.C	30	MATCH
 hdae v1.10i	296e6a	_strncat	_STRNCAT.C	47	MATCH
 hdae v1.10i	296e99	_strncmp	_STRNCMP.C	50	MATCH
 hdae v1.10i	296ecb	_strncpy	_STRNCPY.C	43	MATCH
-hdae v1.10i	296ef6	__facnv	__FACVT.C	-	model: ; unsupported: local exp
+hdae v1.10i	296ef6	__facnv	__FACVT.C	-	model: ; unsupported: var
 hdae v1.10i	2e0cd6	___ctype	_CTYPE.C	-	model: no function
 hdae v1.10i	2e0cd6	__ctype	_CTYPE.C	256	MATCH
 # MATCH 135, model cannot 125, differs 9, outside image 4

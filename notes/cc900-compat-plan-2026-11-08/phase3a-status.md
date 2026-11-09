@@ -162,6 +162,39 @@ Still open on this convention: the `-O` register allocator for loops (`ra_leaf2.
 IZ / QDE ...), `sw_local` (a local kept in HL across a call), placement of the code after a switch next to the
 first case (`sw_evtab`), loops in the switch's continue label (`sw_loop`), long helper homes at `-O` (`mul_l_loc`).
 
+## Operand chains and the code around homes (run `2026-11-09-7-micro-chains`, 2026-11-09)
+
+`corpus/micro/ra_chains.c` (33 functions; cc900-oracle `bc43c90`, V4.23, all four option sets) asks where a chain of
+`+ - & | ^` operands is built.  The answer, the same with and without `-Xr`:
+- a chain of two or three operands led by memory (a global, a stack parameter, a slot) is built in its target:
+  `ld HL,(_gi) / add HL,(_gj) / add HL,(_gk)` (`ch_g3`, `ch_c_xyz`);
+- a chain of four or more, or one led by an IZ / QIZ home, is built in WA, moved, and the last operand added in the
+  target: `ld WA,(_gi) / add WA,(_gj) / add WA,(_gk) / ld HL,WA / add HL,(_gm)` (`ch_g4`); `ld WA,IZ / add WA,(_gi) /
+  ld HL,WA / add HL,(_gj)` (`ch_c_pg2`);
+- at `-O` the whole chain stays in its working register (WA, or a dying parameter's register) and moves at the end:
+  `add WA,BC / add WA,DE / ld HL,WA` (`ch_p3`), as `ra_noloop3` already showed after a multiply;
+- a constant moves to the end of a `+` chain at every level (`gi + 100 + gj`: `add HL,(_gj) / add HL,0x64`);
+- `x + x` of a variable in memory is `sla 0x1,HL` (`ch_g3_rep`); of one in a register, `add WA,WA` (`rh_lp_x2`);
+- a store or an argument is built in WA (`ch_st3`, `ch_arg3`); a local homed in IZ is built in IZ
+  (`ch_loc3`: `ld IZ,(_gj) / add IZ,(_gk) / add IZ,(_gm)`);
+- a local that is read once but after a call is not folded into its use: it gets a slot, built in place
+  (`ld (XSP+0x4),WA / add (XSP+0x4),BC` under `-Xr`; cdecl `ld WA,(a) / ld (XSP+0x4),WA / ld WA,(b) / add (XSP+0x4),WA`).
+- a 16-bit local homed in IZ is computed in IZ (`ld IZ,WA / add IZ,BC`); one in QIZ is loaded, computed in its first
+  operand's register and stored again (`ld QIZ,WA / sub WA,BC / ld QIZ,WA`), or, when that operand stays live,
+  through a free register (`ch_c_xyg`: `ld QIZ,WA / ld HL,QIZ / add HL,BC / ld QIZ,HL`; not modelled yet).
+These rules are in `model/codegen.py` (`chain_wa`, `same_leaf`, `slot_init`, `call_before_use`).  Ledger: ra_chains
+28 / 21 / 25 / 27 of 33 (none / O3XS / Xr / O3XSXr), ra_homes 9 / 6 / 16 / 13 of 25 (from 6 / 2 / 4 / 4).
+
+**Still open: which of three locals live across a call gets the slot, and which IZ.**  With the same declarations
+(`x = a + b, y = b + c, z = a + c`) the slot goes to x when the return is `x + y + z`, `z + y + x` or `y + x + z`,
+to y for `x + z + y` and to z for `x + y + gi + z`.  The fitted home rule (nearest the middle of the declarations)
+gives x every time.  The IZ / QIZ split differs between `-Xr` and cdecl for `x + y + z` (z gets IZ under `-Xr`, y
+without), and the two-local rule (earlier declaration gets IZ) does not hold for `x + y + gi + z` (y gets IZ).  Five
+data points do not decide it; a probe permuting three and four locals over the use order is the next step here.
+Other misses left in the run: `-O`'s reuse of a global read twice (`ch_g3_rep2`: `ld WA,(_gj) / ld HL,(_gi) /
+add HL,WA / add HL,WA`; `ch_p4` the same for a parameter), and cdecl `-O` homing a parameter read once after a call
+(the model gives it IZ; V4.23 reads it from the stack: `ch_c_gp2`).
+
 ## Priorities after 2026-11-09
 
 1. **The cost-based allocator.**  The IZ / QIZ / slot choice across calls (run `2026-11-09-6-micro-rahomes`) and the

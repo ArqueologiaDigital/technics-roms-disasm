@@ -425,6 +425,27 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
             F.emit('inc' if op == '+' else 'dec', '%s,%s' % (hx(rc.value), R1))
         else: F.emit(SIMPLE_OPS[op], '%s,%s' % (R1, rs))
         return f2
+    if op == '+' and strip(r).k != 'const':          # ch_g3_k1: gi + 100 + gj -> ld HL,(_gi) / add HL,(_gj) / add HL,0x64
+        sl = strip(l)
+        if sl.k == 'bin' and sl.op == '+' and fold(sl.r).k == 'const' and not sl.ty.is_ptr() and not e.ty.is_ptr():
+            from frontend import N
+            e = N('bin', op='+', l=N('bin', op='+', l=sl.l, r=e.r, ty=sl.ty), r=sl.r, ty=e.ty)
+            return gen_bin(F, e, fam, size, then_ret, store)
+    if op == '+' and same_leaf(l, r):
+        lv = regvar_of(strip(l).e)
+        if lv is None and mem_operand(F, l) is not None:   # ch_g3_rep: gi + gi -> ld HL,(_gi) / sla 0x1,HL
+            gen(F, l, fam, size); F.emit('sla', '0x1,%s' % R); return fam
+    if op in SIMPLE_OPS and F.opt and not e.ty.is_ptr() and strip(l).k == 'bin':
+        T = 'WA' if (chain_wa(l) or natural_wa(l)) else None
+        lf = strip(l)
+        while lf.k == 'bin' and lf.op in SIMPLE_OPS: lf = strip(narrow(lf.l, size))
+        lv = regvar_of(lf.e) if lf.k == 'load' else None
+        if T is None and lv is not None and lv.reg in ('WA', 'BC', 'DE', 'HL') and dies_here(F, lf): T = lv.reg
+        if T is not None and T != fam and not reads_reg(r, T):
+            # -O keeps the whole chain in its working register (ch_g4: add WA,(_gm) / ld HL,WA; ch_p3: add WA,BC /
+            # add WA,DE / ld HL,WA; ra_noloop3: muls XWA,DE / add WA,HL / add WA,DE / ld HL,WA)
+            f2 = gen_bin(F, e, T, size, then_ret, store)
+            F.emit('ld', '%s,%s' % (FAM[fam][size], FAM[f2][size])); return fam
     if op in SIMPLE_OPS:
         if fam != 'WA' and reads_reg(r, fam):        # ra_leafsum5: target read later -> compute in WA
             gen_bin(F, e, 'WA', size, then_ret, store)
@@ -452,7 +473,7 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
             return other
         wa_var = [d for d in list(F.f.params) + list(F.f.decls) if getattr(d, 'reg', None) == 'WA' and d not in F.dead
                   and uses_decl(e.r, d)]                   # sv_leaf: a * b + a keeps a in WA -> ld HL,DE / add HL,WA
-        if fam != 'WA' and natural_wa(l) and not wa_var:   # ra_noloop3: inner levels over a multiply stay in WA
+        if fam != 'WA' and (natural_wa(l) or chain_wa(l)) and not wa_var:   # ra_noloop3: inner levels over a multiply stay in WA
             gen(F, l, 'WA', size)
             F.emit('ld', '%s,%s' % (FAM[fam][size], FAM['WA'][size]))
         else:
@@ -461,6 +482,8 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         if rs is None:
             other = 'BC' if fam != 'BC' else 'DE'
             gen(F, r, other, size); rs = FAM[other][size]
+        elif op == '+' and same_leaf(l, r) and regvar_of(strip(r).e) is not None:
+            rs = R                                     # rh_lp_x2: x + x with x in QIZ -> ld WA,QIZ / add WA,WA
         rc = fold(r)
         if op in '+-' and rc.k == 'const' and 1 <= rc.value <= 8:
             F.emit('inc' if op == '+' else 'dec', '%s,%s' % (hx(rc.value), R))
@@ -562,6 +585,25 @@ def natural_wa(e):
     if e.k == 'bin' and e.op in ('*', '/', '%') and e.ty.size <= 2: return True
     if e.k == 'bin' and e.op in SIMPLE_OPS: return natural_wa(e.l)
     return False
+
+def same_leaf(a, b):
+    """two reads of the same variable (a + a)"""
+    a, b = strip(a), strip(b)
+    if a.k != 'load' or b.k != 'load': return False
+    x, y = strip(a.e), strip(b.e)
+    return x.k == 'var' and y.k == 'var' and x.decl is y.decl and a.ty.size == b.ty.size
+
+def chain_wa(l):
+    """the left side of a + - & | ^ chain that cc900 builds in WA and moves (ld HL,WA) before the last operand: one
+    of three or more operands (ch_g4: ld WA,(_gi) / add WA,(_gj) / add WA,(_gk) / ld HL,WA / add HL,(_gm)), or a pair
+    led by an IZ / QIZ home (ch_c_pg2: ld WA,IZ / add WA,(_gi) / ld HL,WA); a pair led by memory is built in the
+    target (ch_g3, ch_c_xyz: ld HL,(XSP+0x4) / add HL,QIZ / add HL,IZ).  Run 2026-11-09-7-micro-chains."""
+    l = strip(l)
+    if l.k != 'bin' or l.op not in SIMPLE_OPS or l.ty.is_ptr(): return False
+    ll = strip(l.l)
+    if ll.k == 'bin' and ll.op in SIMPLE_OPS and not ll.ty.is_ptr(): return True
+    lv = regvar_of(ll.e) if ll.k == 'load' else None
+    return lv is not None and lv.reg in ('IZ', 'QIZ', 'XIZ')
 
 def reads_reg(e, fam):
     found = []
@@ -1222,9 +1264,11 @@ def gen_stmt(F, s, last):
             if c.k == 'decl' and c.init is not None and c.var.kind == 'local' and not c.var.addr_taken:
                 rest = body[i + 1:]
                 u = uses_of(rest, c.var, [])
-                if len(u) == 1 and (c.var.ty.size >= 2 or (F.opt and not F.adecl)):   # cdecl -O folds a char local too (add_c_loc)
-                    for x in rest: substitute(x, c.var, c.init)
+                if len(u) == 1 and (c.var.ty.size >= 2 or (F.opt and not F.adecl)) and not call_before_use(rest, c.var):
+                    for x in rest: substitute(x, c.var, c.init)   # cdecl -O folds a char local too (add_c_loc)
                     i += 1; continue
+                if getattr(c.var, 'slot', None) is not None and c.var.ty.size >= 2:
+                    slot_init(F, c.var, c.init); i += 1; continue
                 if len(u) >= 1 and c.var.ty.size == 1:
                     c.var.reg = gen(F, c.init, 'WA', 1); i += 1; continue
                 raise Unsupported('local ' + c.var.name)
@@ -1831,6 +1875,15 @@ def regvar_stmt(F, e):
             if R != FAM['HL'][d.ty.size]: flush_pops(F)   # (_strcpy: a local in XHL needs no move, the pops wait)
             F.emit('ld', '%s,%s' % (R, FAM['HL'][d.ty.size])); return True
         r0 = strip(e.r)
+        ops = []; x = r0
+        while x.k == 'bin' and x.op in SIMPLE_OPS and not x.ty.is_ptr():
+            ops.append((x.op, narrow(x.r, 2))); x = strip(narrow(x.l, 2))
+        if d.reg == 'IZ' and d.ty.size == 2 and len(ops) >= 2 and x.k == 'load' and regvar_of(x.e) is None \
+                and mem_operand(F, x) is not None and all(mem_operand(F, o) is not None or fold(o).k == 'const' for _, o in ops):
+            F.emit('ld', 'IZ,%s' % mem_operand(F, x))      # ch_loc3: ld IZ,(_gj) / add IZ,(_gk) / add IZ,(_gm)
+            for op, o in reversed(ops):
+                F.emit(SIMPLE_OPS[op], 'IZ,%s' % (mem_operand(F, o) if fold(o).k != 'const' else hx(fold(o).value)))
+            return True
         if d.reg in ('IZ', 'QIZ') and d.ty.size == 2 and r0.k == 'bin' and r0.op in SIMPLE_OPS:
             lm = mem_operand(F, narrow(r0.l, 2)); rc = fold(narrow(r0.r, 2)); rm = mem_operand(F, narrow(r0.r, 2))
             if lm is not None and (rm is not None or rc.k == 'const'):
@@ -2398,14 +2451,39 @@ def live_regs(F, except_decl=None):
         if r and d is not except_decl and d not in F.dead: out.add(r)
     return out
 
+def call_before_use(rest, d):
+    """a call in the statements before the one that reads d: cc900 then keeps d (ch_c_xyz: x in a slot)"""
+    for c in rest:
+        if uses_decl(c, d): return False
+        found = []
+        walk(c, lambda n, dep: found.append(n) if getattr(n, 'k', None) == 'call' else None)
+        if found: return True
+    return False
+
 def foldable(f, d):
     """a local that gen_stmt folds into its single use (no slot needed)"""
     body = flat(f.body)
     for i, c in enumerate(body):
         if c.k == 'decl' and c.var is d:
             if c.init is None or d.addr_taken or d.ty.size < 2: return False
-            return len(uses_of(body[i + 1:], d, [])) == 1
+            return len(uses_of(body[i + 1:], d, [])) == 1 and not call_before_use(body[i + 1:], d)
     return False
+
+def slot_init(F, d, init):
+    """a slot local's initial value: built in the slot when it is an operand pair (ch_c_xyz under -Xr:
+    ld (XSP+0x4),WA / add (XSP+0x4),BC; cdecl: ld WA,(a) / ld (XSP+0x4),WA / ld WA,(b) / add (XSP+0x4),WA)"""
+    from frontend import N
+    S = mem_operand(F, N('load', e=N('var', decl=d, ty=d.ty), ty=d.ty))
+    r0 = strip(init); size = d.ty.size
+    if size == 2 and r0.k == 'bin' and r0.op in SIMPLE_OPS and not r0.ty.is_ptr():
+        lo = operand(F, narrow(r0.l, 2), 2); ro = operand(F, narrow(r0.r, 2), 2)
+        if lo is not None and ro is not None:
+            for src, opn in ((lo, 'ld'), (ro, SIMPLE_OPS[r0.op])):
+                if src.startswith('('): F.emit('ld', 'WA,%s' % src); src = 'WA'
+                F.emit(opn, '%s,%s' % (S, src))
+            return True
+    fam = gen(F, init, 'WA', size)
+    F.emit('ld', '%s,%s' % (S, FAM[fam][size])); return True
 
 def plan_frame(F):
     """stack slots for locals without a register (rc_loop2-4: dec N,XSP / push XIZ / slots from (XSP+4) in

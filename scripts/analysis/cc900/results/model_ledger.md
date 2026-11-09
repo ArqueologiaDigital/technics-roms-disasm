@@ -23,10 +23,14 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-4-micro-switch, v423/O3XSXr                          | micro/switch.c     | 20 / 25 exact (80.0%)   |
 | run 2026-11-09-5-micro-optparams, v423/O3XS                         | micro/opt_params.c | 19 / 24 exact (79.2%)   |
 | run 2026-11-09-5-micro-optparams, v423/O3XSXr                       | micro/opt_params.c | 0 / 24 exact (0.0%)     |
-| run 2026-11-09-6-micro-rahomes, v423/none                           | micro/ra_homes.c   | 8 / 25 exact (32.0%)    |
-| run 2026-11-09-6-micro-rahomes, v423/O3XS                           | micro/ra_homes.c   | 4 / 25 exact (16.0%)    |
-| run 2026-11-09-6-micro-rahomes, v423/Xr                             | micro/ra_homes.c   | 10 / 25 exact (40.0%)   |
-| run 2026-11-09-6-micro-rahomes, v423/O3XSXr                         | micro/ra_homes.c   | 6 / 25 exact (24.0%)    |
+| run 2026-11-09-6-micro-rahomes, v423/none                           | micro/ra_homes.c   | 9 / 25 exact (36.0%)    |
+| run 2026-11-09-6-micro-rahomes, v423/O3XS                           | micro/ra_homes.c   | 6 / 25 exact (24.0%)    |
+| run 2026-11-09-6-micro-rahomes, v423/Xr                             | micro/ra_homes.c   | 16 / 25 exact (64.0%)   |
+| run 2026-11-09-6-micro-rahomes, v423/O3XSXr                         | micro/ra_homes.c   | 13 / 25 exact (52.0%)   |
+| run 2026-11-09-7-micro-chains, v423/none                            | micro/ra_chains.c  | 28 / 33 exact (84.8%)   |
+| run 2026-11-09-7-micro-chains, v423/O3XS                            | micro/ra_chains.c  | 21 / 33 exact (63.6%)   |
+| run 2026-11-09-7-micro-chains, v423/Xr                              | micro/ra_chains.c  | 25 / 33 exact (75.8%)   |
+| run 2026-11-09-7-micro-chains, v423/O3XSXr                          | micro/ra_chains.c  | 27 / 33 exact (81.8%)   |
 | run 2026-11-08-9-micro-optloops, v423/O3XS                          | micro/opt_loops.c  | 15 / 33 exact (45.5%)   |
 | run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality v4.23      | 1997 LIB/SRC       | 123 / 188 exact (65.4%) |
 | run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality kn5000     | 1997 LIB/SRC       | 121 / 188 exact (64.4%) |
