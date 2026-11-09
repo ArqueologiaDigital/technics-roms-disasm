@@ -506,6 +506,14 @@ def gen(F, e, fam, size, then_ret=False, store=False):
         return gen_load_mem(F, strip(e.e), fam, size)
     if e.k == 'load' and strip(e.e).k == 'deref' and strip(strip(e.e).e).k == 'incdec' and strip(strip(e.e).e).post:
         inc = strip(strip(e.e).e); g = global_name(inc.e)
+        pv = strip(inc.e)
+        if g is None and pv.k == 'var' and not getattr(pv.decl, 'reg', None) and pv.decl.ty.size == 4 and \
+                fam != 'WA' and size in FAM.get(fam, {}):
+            sm = lvalue(F, pv)                             # __doprnt: c = *fmt++ with fmt in a slot ->
+            if sm.startswith('(XSP'):                      # ld XWA,(XSP+0x52) / ld C,(XWA+:1) / ld (XSP+0x52),XWA
+                F.emit('ld', 'XWA,%s' % sm)
+                F.emit('ld', '%s,(XWA%s:%d)' % (FAM[fam][size], '+' if inc.op == '++' else '-', pv.decl.ty.base.size))
+                F.emit('ld', '%s,XWA' % sm); return fam
         if g is None: raise Unsupported('deref incdec')
         F.emit('ld', 'XBC,(%s)' % g); F.emit('ld', 'XWA,%s' % hx(strip(inc.e).ty.base.size))
         F.emit('add' if inc.op == '++' else 'sub', '(%s),XWA' % g)
@@ -547,6 +555,11 @@ def gen(F, e, fam, size, then_ret=False, store=False):
 
 def gen_bin(F, e, fam, size, then_ret, store=False):
     op = e.op
+    if op == '*' and size == 2 and e.ty.kind == 'int' and fold(e.r).k == 'const' and fold(e.r).value is not None and \
+            fold(e.r).value >= 8 and fold(e.r).value & (fold(e.r).value - 1) == 0:
+        from frontend import N                           # arr_index.c ai_i_p_carry: x % 10 * 256 -> sla 0x8,WA
+        e = N('bin', op='<<', l=e.l, r=N('const', value=fold(e.r).value.bit_length() - 1, ty=e.r.ty), ty=e.ty)
+        op = '<<'
     if op in '+-' and (strip(e.l).ty.is_ptr() or strip(e.r).ty.is_ptr()):
         return gen_ptr_arith(F, e, fam, size)
     l, r = narrow(e.l, size), narrow(e.r, size)
@@ -1069,6 +1082,9 @@ def gen_compare(F, e):
         rs = mem_operand(F, r)
         if rs is None: raise Unsupported('complex compare operand')
         F.emit('cp', '%s,%s' % (lm, rs)); return cc
+    if rc.k == 'const' and lm is None and l.k == 'load' and strip(l.e).k == 'index' and size == 2 and \
+            not getattr(F, 'l2', None) and not getattr(F, 'cl_active', None):
+        lm = elem_addr(F, strip(l.e), 'cmp')               # ai_mul10: if (gsa[i] == 0) -> cpw (XBC+WA),0x0
     if rc.k == 'const' and lm is not None and lm.startswith('(') and size <= 2:
         F.emit('cp' + ('b' if size == 1 else 'w'), '%s,%s' % (lm, hx(rc.value))); return cc
     if l.k == 'call' and rc.k == 'const' and size == 2:   # k_cond, c_break: cal .r1 / cp HL,0x0 (cdecl too)
@@ -1299,6 +1315,13 @@ def gen_assign_value(F, e, fam, size, in_place=False):
     lv = strip(e.l); vs = lv.ty.size
     if fpgen.is_fp(lv.ty) or lv.ty.kind == 'struct': raise Unsupported('operator =')
     rv = narrow(e.r, vs)
+    if lv.k == 'var' and getattr(lv.decl, 'reg', None) in ('IX', 'IY', 'IZ') and vs == 2:
+        x = strip(rv)
+        if x.k == 'cast' and x.kind == 'IntegralCast' and strip(x.e).ty.size == 1:
+            d = lv.decl; inner = strip(x.e)                # __doprnt: c = *fmt++ with c in IZ -> ... ld C,(XWA+:1) /
+            fb = gen(F, inner, 'BC', 1)                    # ... / ld IZL,C / exts IZ
+            F.emit('ld', '%sL,%s' % (d.reg, FAM[fb][1]))
+            F.emit('exts' if inner.ty.signed else 'extz', d.reg); return d.reg
     if lv.k == 'var' and getattr(lv.decl, 'reg', None) in FAM and lv.decl.reg != 'XIZ':
         d = lv.decl                                        # ae_c_ne_l: (y = x) with y in C -> ld C,(XSP+0x4)
         f2 = gen(F, rv, d.reg, vs)
@@ -1658,6 +1681,103 @@ def scale_reg(F, X, sz, shift):
     elif sz in (4, 8, 16, 32, 64): F.emit(shift, '%s,%s' % (hx(sz.bit_length() - 1), X))
     elif sz != 1: raise Unsupported('element size %d' % sz)
 
+def split_index(i):
+    """an index i as (base, k): i = base + k with k a constant (k = 0 when there is none)"""
+    x = strip(i)
+    while x.k == 'cast' and x.kind == 'IntegralCast' and strip(x.e).ty.size == x.ty.size: x = strip(x.e)
+    if x.k == 'bin' and x.op in ('+', '-') and fold(x.r).k == 'const' and fold(x.r).value is not None:
+        return x.l, fold(x.r).value * (1 if x.op == '+' else -1)
+    return i, 0
+
+def is_plain_index(i):
+    x = strip(i)
+    while x.k == 'cast' and x.kind == 'IntegralCast': x = strip(x.e)
+    return x.k == 'load' and strip(x.e).k == 'var'
+
+def scale32(F, X, esz):
+    if esz == 2: F.emit('add', '%s,%s' % (X, X))
+    elif esz in (4, 8): F.emit('sll', '%s,%s' % (hx({4: 2, 8: 3}[esz]), X))
+
+def scale16(F, R, esz):
+    if esz == 2: F.emit('add', '%s,%s' % (R, R))
+    elif esz in (4, 8): F.emit('sla', '%s,%s' % (hx({4: 2, 8: 3}[esz]), R))
+
+def elem_addr(F, lv, kind):
+    """the operand of array element lv for the forms of arr_index.c / arr_index_sz.c (runs 2026-11-09-24 / -25),
+    or None (nothing emitted) for the plain forms the older paths write.  kind: 'load', 'store', 'add' (a + - & | ^
+    compound with a variable), 'andk' (with a constant) or 'rmw' (* / % and the rest).
+    - a global char array: an index i + k folds k into the symbol (lda XBC,_gca + 0x1 / (XBC+WA); a store
+      ld BC,(i) / lda XDE,_gca + 0x1 / (XDE+BC)); a compound target lda XWA,_gca / ld BC,(i) / extz XBC /
+      add XBC,XWA / (XBC);
+    - a sized global array: a computed index stays 16-bit (inc 0x1,WA / add WA,WA / lda XBC,_gia / (XBC+WA); a
+      store copies it to BC: ld BC,WA / add BC,BC / lda XDE,_gia / (XDE+BC)); a constant-mask compound
+      (XBC+WA);
+    - an incomplete global array: the index is sign-extended and scaled in XWA, the base an immediate
+      (exts XWA / add XWA,XWA / ld XBC,_gia / add XBC,XWA / (XBC));
+    - through a pointer: exts (extz for a char element) and scaled in XWA, added to the pointer: a load
+      add XWA,(p) / (XWA); a store or compound ld XBC,XWA / add XBC,(p) / (XBC) (a char: ld BC,(i) / extz XBC)"""
+    lv = strip(lv)
+    if lv.k != 'index': return None
+    b = strip(lv.base); esz = lv.ty.size
+    while b.k in ('decay', 'cast', 'noop') and b.ty is not None and b.ty.is_ptr() and strip(getattr(b, 'e', b)) is not b \
+            and strip(b.e).k == 'var' and strip(b.e).decl.ty.kind == 'array':
+        b = strip(b.e)
+    ic = fold(lv.idx)
+    if ic.k == 'const': return None
+    plain = is_plain_index(lv.idx)
+    def idx_into(R):                                   # the index (16-bit) into register family R
+        f = gen(F, narrow(lv.idx, 2), R, 2)
+        if f != R: F.emit('ld', '%s,%s' % (FAM[R][2], FAM[f][2]))
+    if b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array':
+        g = '_' + b.decl.name; sized = getattr(b.decl.ty, 'count', 0)
+        if esz == 1:
+            if kind == 'cmp': return None
+            if kind in ('load', 'store', 'storek'):
+                if kind == 'storek': kind = 'store'
+                if plain: return None
+                base_e, k = split_index(lv.idx)
+                sym = g if not k else '%s + %s' % (g, hx(k & 0xffffffff))
+                if kind == 'load':
+                    f = gen(F, narrow(base_e, 2), 'WA', 2)
+                    if f != 'WA': F.emit('ld', 'WA,%s' % FAM[f][2])
+                    F.emit('lda', 'XBC,%s' % sym); return '(XBC+WA)'
+                f = gen(F, narrow(base_e, 2), 'BC', 2)
+                if f != 'BC': F.emit('ld', 'BC,%s' % FAM[f][2])
+                F.emit('lda', 'XDE,%s' % sym); return '(XDE+BC)'
+            if not plain: return None
+            F.emit('lda', 'XWA,%s' % g); idx_into('BC'); F.emit('extz', 'XBC'); F.emit('add', 'XBC,XWA'); return '(XBC)'
+        if not sized:
+            if kind == 'rmw' and esz == 4: return None
+            if kind == 'cmp': return None
+            idx_into('WA'); F.emit('exts', 'XWA'); scale32(F, 'XWA', esz)
+            F.emit('ld', 'XBC,%s' % g); F.emit('add', 'XBC,XWA'); return '(XBC)'
+        if (kind == 'load' and not plain) or kind == 'cmp':   # ai_mul10: cpw (XBC+WA),0x0
+            idx_into('WA'); scale16(F, 'WA', esz); F.emit('lda', 'XBC,%s' % g); return '(XBC+WA)'
+        if kind in ('store', 'storek') and not plain:
+            if F.opt: idx_into('BC')                       # -O3 -XS: ld BC,(i) / inc 0x1,BC (no copy through WA)
+            else: idx_into('WA'); F.emit('ld', 'BC,WA')
+            scale16(F, 'BC', esz); F.emit('lda', 'XDE,%s' % g); return '(XDE+BC)'
+        if kind == 'andk' and plain and esz == 2:
+            idx_into('WA'); scale16(F, 'WA', esz); F.emit('lda', 'XBC,%s' % g); return '(XBC+WA)'
+        return None
+    if b.k == 'load' and b.ty.is_ptr():
+        pm = mem_operand(F, b)
+        if pm is None or not pm.startswith('(') or (kind == 'load' and plain and esz > 1) or kind == 'cmp': return None
+        if kind == 'rmw' and esz == 4: return None
+        if kind in ('load', 'storek'):                    # ai_clear: p[i] = 0 -> add XWA,(XSP+0x4) / ldw (XWA),0x0
+            idx_into('WA'); F.emit('extz' if esz == 1 else 'exts', 'XWA'); scale32(F, 'XWA', esz)
+            F.emit('add', 'XWA,%s' % pm); return '(XWA)'
+        if esz == 1:
+            if plain or F.opt: idx_into('BC')
+            else: idx_into('WA'); F.emit('ld', 'BC,WA')
+            F.emit('extz', 'XBC')
+        elif F.opt and plain:                              # ai_i_p_add under -O3 -XS: ld BC,(i) / exts XBC /
+            idx_into('BC'); F.emit('exts', 'XBC'); scale32(F, 'XBC', esz)   # add XBC,XBC / add XBC,(p)
+        else:
+            idx_into('WA'); F.emit('exts', 'XWA'); scale32(F, 'XWA', esz); F.emit('ld', 'XBC,XWA')
+        F.emit('add', 'XBC,%s' % pm); return '(XBC)'
+    return None
+
 def gen_load_mem(F, v, fam, size):
     """load through an index, member or pointer (mem.c)"""
     R = FAM[fam][size]
@@ -1671,6 +1791,8 @@ def gen_load_mem(F, v, fam, size):
         if pm is None: raise Unsupported('complex pointer')
         F.emit('ld', 'XWA,%s' % pm); F.emit('ld', '%s,(XWA)' % R); return fam
     if v.k == 'index':
+        ea = elem_addr(F, v, 'load')
+        if ea is not None: F.emit('ld', '%s,%s' % (R, ea)); return fam
         b = strip(v.base); i = v.idx; esz = v.ty.size
         ic = fold(i)
         if b.k == 'load' and ic.k == 'const':                      # p[k]: m_p_k
@@ -1678,6 +1800,15 @@ def gen_load_mem(F, v, fam, size):
             F.emit('ld', 'XWA,%s' % pm); F.emit('ld', '%s,(XWA+%s)' % (R, hx(ic.value * esz))); return fam
         if b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array':
             ii = strip(i); im = mem_operand(F, ii)
+            uc = ii
+            while uc.k == 'cast' and uc.kind == 'IntegralCast' and uc.ty.size >= 2: uc = strip(uc.e)
+            if im is None and esz == 1 and uc.k == 'cast' and uc.ty.size == 1 and not uc.ty.signed:
+                x = strip(uc.e); xm = mem_operand(F, x)    # ai_xdig: gtab[(unsigned char)ch] -> ld A,(XSP+0x4) /
+                if xm is not None and x.ty.size in (1, 2):  # extz WA / lda XBC,_gtab / ld A,(XBC+WA)
+                    W = FAM['WA'][x.ty.size]
+                    if xm != W: F.emit('ld', '%s,%s' % (W, xm))
+                    F.emit('extz', 'WA'); F.emit('lda', 'XBC,_%s' % b.decl.name)
+                    F.emit('ld', '%s,(XBC+WA)' % R); return fam
             if im is None: raise Unsupported('complex index')
             if esz == 1 and im in ('WA', 'BC', 'DE', 'HL'):       # globals.c gl_index: lda XBC,_ext_arr / ld L,(XBC+WA)
                 base = 'XBC' if im == 'WA' else 'XWA'
@@ -1760,13 +1891,17 @@ def gen_load_mem(F, v, fam, size):
             F.emit('add', '%s,%s' % (W, pm)); F.emit('ld', '%s,(%s)' % (R, W)); return fam
     raise Unsupported('memory load ' + v.k)
 
-def lvalue(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False):
+def lvalue(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False, kind='store'):
     """set up the address of lvalue lv and return its operand string (assign.c): a global or parameter is a direct
     operand; *p loads p into `ptr`; a[i] of a global array scales i in `idx` and puts the array in `base`
     (`(base+idx)`), or with combine=True adds them into `ptr` (`(ptr)`)"""
     lv = strip(lv)
     u1 = u1_operand(F, lv) if getattr(F, 'u1_i', None) is not None else None
     if u1 is not None: return u1                         # oc_cpy_abn: ld (XWA+IX),C; oc_clr_i: ldw (XDE),0x0
+    if lv.k == 'index' and not getattr(F, 'l2', None) and not getattr(F, 'cl_active', None) and \
+            not (ptr == 'XBC' and idx == 'BC' and base == 'XDE' and not combine and kind == 'store' and False):
+        ea = elem_addr(F, lv, 'rmw' if combine else kind)   # arr_index.c
+        if ea is not None: return ea
     if lv.k == 'deref' and getattr(F, 'l2', None) and F.l2.get('ivmap'):
         pv = strip(lv.e)                                 # _strrev: *p = ... through the copy p' (XBC), the last
         if pv.k == 'load' and strip(pv.e).k == 'var' and strip(pv.e).decl in F.l2['ivmap']:   # one post-incremented
@@ -1870,12 +2005,18 @@ def gen_opassign(F, e):
         t = lvalue(F, e.l)                                # _ultoa: *p += 39 -> addb (XWA),0x27
         F.emit(SIMPLE_OPS[op] + ('b' if size == 1 else 'w'), '%s,%s' % (t, hx(fold(r).value))); return t
     if op in SIMPLE_OPS:
-        t = lvalue(F, e.l)
+        rk = fold(r).k == 'const' and fold(r).value is not None
+        t = lvalue(F, e.l, kind='andk' if rk else 'add')
+        if rk and size <= 2 and strip(e.l).k == 'index':  # arr_index_sz.c ai_i_g_and: andw (XBC+WA),0xff
+            F.emit(SIMPLE_OPS[op] + ('b' if size == 1 else 'w'), '%s,%s' % (t, hx(fold(r).value & 0xffff))); return t
         rv = mem_operand(F, r)
         if rv in ('A', 'C', 'E', 'WA', 'BC', 'DE', 'HL', 'XWA', 'XBC', 'XDE'):
             F.emit(SIMPLE_OPS[op], '%s,%s' % (t, rv)); return t        # .as_add_ptr: add (XWA),BC
         T = getattr(F, 'tfam', 'WA')                        # ot_add_anb: ld E,(XHL+:1) / add (XWA+:1),E
-        gen(F, r, T, size)
+        rc = fold(r)
+        if F.opt and size == 4 and rc.k == 'const' and rc.value is not None and 0 <= rc.value < 0x10000:
+            F.emit('lda', '%s,%s' % (FAM[T][4], hx(rc.value)))   # ai_l_g_and under -O3 -XS: lda XWA,0xff
+        else: gen(F, r, T, size)
         F.emit(SIMPLE_OPS[op], '%s,%s' % (t, FAM[T][size])); return t
     if op in ('<<', '>>'):
         mnem = ('sla' if signed else 'sll') if op == '<<' else ('sra' if signed else 'srl')
@@ -1898,7 +2039,7 @@ def gen_opassign(F, e):
                 F.emit('ld', '%s,%s' % (V, t)); F.emit('ld', 'WA,%s' % cnt)
                 F.emit('and', 'A,0xf'); lab = F.newlabel(); F.emit('j', 'z,%s' % lab); F.emit(mnem, 'A,%s' % V)
                 F.lines.append(lab + ':'); F.emit('ld', '%s,%s' % (t, V)); return t
-        t = lvalue(F, e.l, ptr='XDE', idx='DE', base='XHL')
+        t = lvalue(F, e.l, ptr='XDE', idx='DE', base='XHL', kind='rmw')
         V = FAM['BC'][size]
         F.emit('ld', '%s,%s' % (V, t))
         rr = fold(r)
@@ -2443,7 +2584,7 @@ def gen_stmt(F, s, last):
             F.emit('ldirw', '(XIX+),(XIY+)'); return
         rc = fold(narrow(s.e.r, size))
         if rc.k == 'const' and size <= 2:            # m_gps_set: ldb (XWA),0x0
-            t = lvalue(F, lv, ptr='XWA', idx='WA', base='XBC')     # ra_while: ldw (XBC+WA),0x0
+            t = lvalue(F, lv, ptr='XWA', idx='WA', base='XBC', kind='storek')   # ra_while: ldw (XBC+WA),0x0
             F.emit('ld' + ('b' if size == 1 else 'w'), '%s,%s' % (t, hx(rc.value))); return
         if has_helper_call(s.e.r) and strip(lv).k == 'deref':
             fam = gen(F, s.e.r, 'HL', size)              # _ultoa: value first (XHL / L), then the address

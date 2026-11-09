@@ -1,3 +1,5 @@
+micro/arr_index.c
+micro/arr_index_sz.c
 micro/assign.c
 micro/assign_expr.c
 micro/binop_c.c

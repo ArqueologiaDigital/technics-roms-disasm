@@ -76,4 +76,8 @@ done
 for c in none O3XS Xr O3XSXr; do
   row "run 2026-11-09-23-micro-assignexpr, v423/$c" "micro/assign_expr.c" "$O/2026-11-09-23-micro-assignexpr/out/v423/$c" corpus/micro/assign_expr.c
 done
+for c in none O3XS Xr O3XSXr; do
+  row "run 2026-11-09-24-micro-arrindex, v423/$c" "micro/arr_index.c" "$O/2026-11-09-24-micro-arrindex/out/v423/$c" corpus/micro/arr_index.c
+  row "run 2026-11-09-25-micro-arrindexsz, v423/$c" "micro/arr_index_sz.c" "$O/2026-11-09-25-micro-arrindexsz/out/v423/$c" corpus/micro/arr_index_sz.c
+done
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c

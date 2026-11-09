@@ -43,7 +43,10 @@ how cc900 compiles exactly that (notes/cc900-compat-plan-2026-11-08/PLAN.md, sec
 - cond_bits: x & mask as a branch condition at each type, operand kind and mask shape, negated, in loops, under
   && / || and in ?: (the library's `if (d.c[7] & 0x80)`, `if (n & 1)`, `if (stream->flag & __UNGETC)`);
 - assign_expr: assignment as a value (chains, compared, tested, returned, passed) at char, int, long and pointer
-  (the library's `pp = cp = _allocb`, `(c1 = toupper(*s1)) == (c2 = toupper(*s2))`, `(*s = c) != '\\n'`).
+  (the library's `pp = cp = _allocb`, `(c1 = toupper(*s1)) == (c2 = toupper(*s2))`, `(*s = c) != '\\n'`);
+- arr_index, arr_index_sz: array elements with computed indexes (i+1, i-1, i+j), compound assignments to them,
+  and ctype tests with several bits on a char parameter (the library's __facvt div10 / mul10, _todigit), with
+  unsized and with sized extern arrays.
 The output is deterministic, ours, and C89.
 """
 import os, sys
@@ -791,6 +794,48 @@ def assign_expr_files():
            'void ae_i_opassign(int x) { gi += (gi2 = x); }']
     return {'assign_expr.c': out + fs}
 
+def arr_index_files():
+    """array elements with computed indexes (the library's t[i+1] += t[i] % 10 * 256, t[i] /= 10 (__facvt div10),
+    ftbl[i-1] += ftbl[i] >> 8, ftbl[i] &= 0xff (mul10)) and ctype tests with several bits on a char parameter
+    (_todigit: isxdigit(ch), toupper(ch)): reads, stores and compound assignments through a global array and a
+    pointer parameter at char, unsigned short, int and long, indexes i+1, i-1, i+j, 2*i, in loops and alone"""
+    return {'arr_index.c': arr_index_lines(''), 'arr_index_sz.c': arr_index_lines('32')}
+
+def arr_index_lines(n):
+    """arr_index.c with unsized extern arrays (n = ''), arr_index_sz.c with sized ones (n = '32': cc900 uses 16-bit
+    index arithmetic for an array of known size, assign.c's ga[10], and 32-bit for an incomplete one)"""
+    out = ['/* Array elements with computed indexes%s */' % (' (sized extern arrays)' if n else ''),
+           'extern char gca[%s]; extern unsigned short gsa[%s]; extern int gia[%s]; extern long gla[%s]; extern int gr;'
+           % (n, n, n, n),
+           'extern unsigned char gtab[%s];' % (n and '256')]
+    fs = []
+    for tk, t, g in (('c', 'char', 'gca'), ('us', 'unsigned short', 'gsa'), ('i', 'int', 'gia'), ('l', 'long', 'gla')):
+        fs += ['%s ai_%s_g_p1(int i) { return %s[i + 1]; }' % (t, tk, g),
+               '%s ai_%s_g_m1(int i) { return %s[i - 1]; }' % (t, tk, g),
+               '%s ai_%s_g_ij(int i, int j) { return %s[i + j]; }' % (t, tk, g),
+               'void ai_%s_g_st_p1(int i, %s x) { %s[i + 1] = x; }' % (tk, t, g),
+               'void ai_%s_g_add(int i, %s x) { %s[i] += x; }' % (tk, t, g),
+               'void ai_%s_g_and(int i) { %s[i] &= 0xff; }' % (tk, g),
+               'void ai_%s_g_mul(int i) { %s[i] *= 10; }' % (tk, g),
+               'void ai_%s_g_div(int i) { %s[i] /= 10; }' % (tk, g),
+               'void ai_%s_g_sh(int i) { %s[i - 1] += %s[i] >> 8; }' % (tk, g, g),
+               '%s ai_%s_p_p1(%s *p, int i) { return p[i + 1]; }' % (t, tk, t),
+               'void ai_%s_p_st_m1(%s *p, int i, %s x) { p[i - 1] = x; }' % (tk, t, t),
+               'void ai_%s_p_add(%s *p, int i, %s x) { p[i] += x; }' % (tk, t, t),
+               'void ai_%s_p_div(%s *p, int i) { p[i] /= 10; }' % (tk, t),
+               'void ai_%s_p_carry(%s *p, int i) { p[i + 1] += p[i] %% 10 * 256; }' % (tk, t)]
+    fs += ['void ai_div10(unsigned short *t) { int i; for (i = 0; i < 9; i++) { t[i + 1] += t[i] % 10 * 256; t[i] /= 10; } }',
+           'void ai_mul10(void) { int i; for (i = 0; i < 10; i++) { if (gsa[i] == 0) continue; gsa[i] *= 10; } }',
+           'void ai_carry(void) { int i; for (i = 9; i > 0; i--) { if (gsa[i] >= 256) { gsa[i - 1] += gsa[i] >> 8; gsa[i] &= 0xff; } } }',
+           'void ai_clear(int *a, int n) { int i; for (i = 0; i < n; i++) a[i] = 0; }',
+           'void ai_shift(unsigned short *a, int n) { int i; for (i = n - 1; i > 0; i--) a[i] = a[i - 1]; a[0] = 0; }',
+           'int ai_xdig(char ch) { if (gtab[(unsigned char)ch] & 0x44) return 1; return 2; }',
+           'int ai_xdig_i(int ch) { if (gtab[(unsigned char)ch] & 0x44) return 1; return 2; }',
+           'int ai_dig_val(char ch) { int n; if (gtab[(unsigned char)ch] & 0x4) n = ch - 48; else return -1; return n; }',
+           'int ai_up(char ch) { return (gtab[(unsigned char)ch] & 0x2) ? ch - 32 : ch; }',
+           'int ai_up_sub(char ch) { return ((gtab[(unsigned char)ch] & 0x2) ? ch - 32 : ch) - 55; }']
+    return out + fs
+
 def main():
     out = sys.argv[1]
     d = os.path.join(out, 'micro'); os.makedirs(d, exist_ok=True)
@@ -818,6 +863,7 @@ def main():
     files.update(fp_stmt_files())
     files.update(cond_bits_files())
     files.update(assign_expr_files())
+    files.update(arr_index_files())
     for n, lines in sorted(files.items()):
         open(os.path.join(d, n), 'w').write('\n'.join(lines) + '\n')
     open(os.path.join(out, 'micro-sources.txt'), 'w').write(''.join('micro/%s\n' % n for n in sorted(files)))
