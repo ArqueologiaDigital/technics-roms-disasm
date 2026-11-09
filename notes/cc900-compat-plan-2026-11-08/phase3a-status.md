@@ -213,7 +213,8 @@ constants go to `f_const` at the start of the function; relation codes `<=` 0, `
 a branch taking the negated relation's; integer conversions go through a 4-byte temporary; FP locals sit at the top
 of the frame and the temporaries below them, in a region twice their size; `-O3 -XS` copies an address that is
 already in a register.  fp.c: 99 / 108 (none), 98 / 108 (`-O3 -XS`).  Under `-Xr` thc1 refuses double results
-(THC1-Error-373), so only cdecl matters.
+(THC1-Error-373); FP parameters and arguments are allowed there (corpus/probes/adfp.c, 15 / 15 at all four sets
+since 2026-11-09).
 
 Run 10 (`corpus/micro/fp_temps.c`, oracle `9ce5a95`), now in the model (`root_mode`, `eval_val`, `cond_into`):
 - the hidden result pointer is kept in XIZ when the returned expression's last operation has exactly one computed

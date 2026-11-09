@@ -15,10 +15,10 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-08-7-micro, ide2003/O3XSXr, --personality ide2003       | micro/*.c            | 660 / 674 exact (97.9%)  |
 | run 2026-11-08-8-micro-ra, v423/none                                | micro/ra_*.c         | 33 / 42 exact (78.6%)    |
 | run 2026-11-08-8-micro-ra, v423/O3XSXr                              | micro/ra_*.c         | 23 / 42 exact (54.8%)    |
-| run 2026-11-08-4-abi, v423/none                                     | abi/*.c              | 98 / 108 exact (90.7%)   |
-| run 2026-11-08-4-abi, v423/O3XS                                     | abi/*.c              | 97 / 108 exact (89.8%)   |
-| run 2026-11-08-6-abi-adecl, v423/Xr                                 | abi/*.c              | 73 / 80 exact (91.2%)    |
-| run 2026-11-08-6-abi-adecl, v423/O3XSXr                             | abi/*.c              | 75 / 80 exact (93.8%)    |
+| run 2026-11-08-4-abi, v423/none                                     | abi/*.c              | 99 / 108 exact (91.7%)   |
+| run 2026-11-08-4-abi, v423/O3XS                                     | abi/*.c              | 98 / 108 exact (90.7%)   |
+| run 2026-11-08-6-abi-adecl, v423/Xr                                 | abi/*.c              | 75 / 80 exact (93.8%)    |
+| run 2026-11-08-6-abi-adecl, v423/O3XSXr                             | abi/*.c              | 77 / 80 exact (96.2%)    |
 | run 2026-11-09-4-micro-switch, v423/none                            | micro/switch.c       | 22 / 25 exact (88.0%)    |
 | run 2026-11-09-4-micro-switch, v423/Xr                              | micro/switch.c       | 22 / 25 exact (88.0%)    |
 | run 2026-11-09-4-micro-switch, v423/O3XS                            | micro/switch.c       | 22 / 25 exact (88.0%)    |
@@ -67,10 +67,10 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-25-micro-arrindexsz, v423/Xr                         | micro/arr_index_sz.c | 48 / 66 exact (72.7%)    |
 | run 2026-11-09-24-micro-arrindex, v423/O3XSXr                       | micro/arr_index.c    | 47 / 66 exact (71.2%)    |
 | run 2026-11-09-25-micro-arrindexsz, v423/O3XSXr                     | micro/arr_index_sz.c | 47 / 66 exact (71.2%)    |
-| run 2026-11-09-29-micro-adfp, v423/none                             | probes/adfp.c        | 11 / 15 exact (73.3%)    |
-| run 2026-11-09-29-micro-adfp, v423/O3XS                             | probes/adfp.c        | 8 / 15 exact (53.3%)     |
-| run 2026-11-09-29-micro-adfp, v423/Xr                               | probes/adfp.c        | 1 / 15 exact (6.7%)      |
-| run 2026-11-09-29-micro-adfp, v423/O3XSXr                           | probes/adfp.c        | 1 / 15 exact (6.7%)      |
+| run 2026-11-09-29-micro-adfp, v423/none                             | probes/adfp.c        | 15 / 15 exact (100.0%)   |
+| run 2026-11-09-29-micro-adfp, v423/O3XS                             | probes/adfp.c        | 15 / 15 exact (100.0%)   |
+| run 2026-11-09-29-micro-adfp, v423/Xr                               | probes/adfp.c        | 15 / 15 exact (100.0%)   |
+| run 2026-11-09-29-micro-adfp, v423/O3XSXr                           | probes/adfp.c        | 15 / 15 exact (100.0%)   |
 | run 2026-11-09-9-micro-fp, v423/none                                | micro/fp.c           | 108 / 108 exact (100.0%) |
 | run 2026-11-09-9-micro-fp, v423/O3XS                                | micro/fp.c           | 108 / 108 exact (100.0%) |
 | run 2026-11-09-10-micro-fptemps, v423/none                          | micro/fp_temps.c     | 33 / 33 exact (100.0%)   |

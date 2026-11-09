@@ -4,16 +4,16 @@
 `edc018e026cb`.  Without the new flags the output is unchanged.  The fork's
 `llvm/lib/Target/TLCS900/README.md` documents the ABI.
 
-| #  | commit         | what it does                                                                                                         |
-|----|----------------|----------------------------------------------------------------------------------------------------------------------|
-| 1  | `80fb7c8b63d8` | `retd` is 3 bytes but was sized as 2, which miscounted branch distances (nothing emitted `retd` before)             |
-| 2  | `f9b58e842847` | LLVM calling conventions `tlcs900_cdeclcc` (124), `tlcs900_adeclcc` (125), one for the C9H helpers (126), IR keywords |
-| 3  | `4cb68a4bb249` | backend `-target-abi=cc900`: data layout, cdecl, adecl with `retd N`, XHL results, hidden result pointer, XIZ the only callee-saved register, `C9H_divls/divlu/remls/remlu` with XWA/XBC (`TLCS900ISelLoweringCC900.cpp`, 8 tests in `llvm/test/CodeGen/TLCS900/cc900/`) |
-| 4  | `bf843df4bd75` | memcpy/memmove with a 16-bit length (cc900's `size_t`), which crashed the backend                                    |
-| 5  | `c94ae968b1ae` | clang attributes `tlcs900_cdecl` / `tlcs900_adecl`, `-fdefault-calling-conv=tlcs900_adecl`, cc900's adecl restrictions as errors |
-| 6  | `f40366e5265c` | clang `-mabi=cc900`: sizes, alignments, `size_t` = unsigned int, `ptrdiff_t` = long, `wchar_t` = int (Toshiba's STDDEF.H); `-mcc900-adecl`; the module flag |
-| 7  | `b338ef3daac0` | clang's cc900 argument and result classification (`clang/lib/CodeGen/Targets/TLCS900.cpp`)                          |
-| 8  | `edc018e026cb` | the README section                                                                                                    |
+| # | commit         | what it does                                                                                                                                                                                                                                                             |
+|---|----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1 | `80fb7c8b63d8` | `retd` is 3 bytes but was sized as 2, which miscounted branch distances (nothing emitted `retd` before)                                                                                                                                                                  |
+| 2 | `f9b58e842847` | LLVM calling conventions `tlcs900_cdeclcc` (124), `tlcs900_adeclcc` (125), one for the C9H helpers (126), IR keywords                                                                                                                                                    |
+| 3 | `4cb68a4bb249` | backend `-target-abi=cc900`: data layout, cdecl, adecl with `retd N`, XHL results, hidden result pointer, XIZ the only callee-saved register, `C9H_divls/divlu/remls/remlu` with XWA/XBC (`TLCS900ISelLoweringCC900.cpp`, 8 tests in `llvm/test/CodeGen/TLCS900/cc900/`) |
+| 4 | `bf843df4bd75` | memcpy/memmove with a 16-bit length (cc900's `size_t`), which crashed the backend                                                                                                                                                                                        |
+| 5 | `c94ae968b1ae` | clang attributes `tlcs900_cdecl` / `tlcs900_adecl`, `-fdefault-calling-conv=tlcs900_adecl`, cc900's adecl restrictions as errors                                                                                                                                         |
+| 6 | `f40366e5265c` | clang `-mabi=cc900`: sizes, alignments, `size_t` = unsigned int, `ptrdiff_t` = long, `wchar_t` = int (Toshiba's STDDEF.H); `-mcc900-adecl`; the module flag                                                                                                              |
+| 7 | `b338ef3daac0` | clang's cc900 argument and result classification (`clang/lib/CodeGen/Targets/TLCS900.cpp`)                                                                                                                                                                               |
+| 8 | `edc018e026cb` | the README section                                                                                                                                                                                                                                                       |
 
 One small generic clang hook was added for "a struct of one char has sizeof 2": `TargetInfo::getMinRecordAlign()`,
 set only by tlcs900 under cc900; packed structs are exempt.
@@ -37,8 +37,9 @@ set only by tlcs900 under cc900; packed structs are exempt.
 - Callers move XSP (`sub xsp,N`, stores, call, `add xsp,N`) instead of pushing: the stack layout is cc900's, the
   code is not.  That is phase 3b's concern.
 - No extension attributes: a callee extends a narrow argument itself if needed; the caller does not.
-- Unprobed: a struct or double among the first three adecl arguments (put on the stack, using up its register
-  position); a char as the 2nd/3rd adecl argument (assumed C / E); long double's encoding (x87 80-bit placeholder);
+- Unprobed: a struct among the first three adecl arguments (put on the stack, using up its register position). A
+  double there was probed on 2026-11-09 (corpus/probes/adfp.c, run `2026-11-09-29-micro-adfp`): it is on the stack
+  and uses up its position, and a float is in its register (abi.md). A char as the 2nd/3rd adecl argument (assumed C / E); long double's encoding (x87 80-bit placeholder);
   union alignment; whether char arrays get the even-address rule.
 - C9H helpers are assumed to preserve XIZ; long multiply stays inline, so `C9H_mulls` is registered but unused.
 - memset's length is passed as 4 bytes (harmless: it is the last argument and cc900 reads the low half).

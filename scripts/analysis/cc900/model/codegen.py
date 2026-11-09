@@ -583,8 +583,10 @@ def plain_hl_tree(F, x):
     x = strip(x)
     while x.k == 'cast' and x.kind == 'IntegralCast' and strip(x.e).ty.size == x.ty.size: x = strip(x.e)
     if x.k in ('load', 'const'):
-        if x.k == 'load' and (strip(x.e).k != 'var' or getattr(strip(x.e).decl, 'reg', None)): return False
-        m = mem_operand(F, x); return m is not None and not family_of(m)
+        if x.k == 'load' and (strip(x.e).k != 'var' or getattr(strip(x.e).decl, 'reg', None) not in
+                              (None, 'IZ', 'QIZ', 'XIZ')): return False
+        m = mem_operand(F, x)                          # (a home in IZ survives the call: ad_di -Xr, add HL,IZ)
+        return m is not None and (not family_of(m) or family_of(m) in ('IZ', 'QIZ', 'XIZ'))
     if x.k == 'bin' and x.op in ('+', '-', '&', '|', '^') and x.ty.size == 2:
         return plain_hl_tree(F, x.l) and strip(x.r).k in ('load', 'const') and plain_hl_tree(F, x.r)
     return False
@@ -607,18 +609,25 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
     if op in '+-' and (strip(e.l).ty.is_ptr() or strip(e.r).ty.is_ptr()):
         return gen_ptr_arith(F, e, fam, size)
     l, r = narrow(e.l, size), narrow(e.r, size)
-    if CALL_RIGHT_FIRST and op in SIMPLE_OPS and size == 2 and not F.adecl and has_helper_call(r) and \
+    if CALL_RIGHT_FIRST and op in SIMPLE_OPS and size == 2 and has_helper_call(r) and \
             not has_helper_call(l) and plain_hl_tree(F, l):
         hf = gen(F, r, 'HL', size)                       # probes/adfp.c ad_di: a + (x > 0.0) -> cal ._fcmp_zd /
-        if hf != 'HL': F.emit('ld', 'HL,%s' % FAM[hf][2])   # add HL,(XSP+0xc); ad_idi: a + b + (x > 0.0) ->
-        flush_pops(F)                                    # ... cal / ld WA,HL / ld HL,(a) / add HL,(b) / add HL,WA
+        if hf != 'HL': F.emit('ld', 'HL,%s' % FAM[hf][2])   # add HL,(XSP+0xc) (-Xr: add HL,IZ)
+        flush_pops(F)
         lm = mem_operand(F, l)
         if op in ('+', '&', '|', '^') and lm is not None:
             F.emit(SIMPLE_OPS[op], 'HL,%s' % lm)
-        else:
-            F.emit('ld', 'WA,HL'); lf = gen(F, l, 'HL', size)
+        elif not F.adecl:                                # ad_idi: a + b + (x > 0.0) -> cal / ld WA,HL / ld HL,(a) /
+            T = 'BC' if F.opt else 'WA'                  # add HL,(b) / add HL,WA (-O3 -XS: BC)
+            F.emit('ld', '%s,HL' % T); lf = gen(F, l, 'HL', size)
             if lf != 'HL': raise Unsupported('call-first left operand')
-            F.emit(SIMPLE_OPS[op], 'HL,WA')
+            F.emit(SIMPLE_OPS[op], 'HL,%s' % T)
+        else:                                            # -Xr: ld WA,HL / ld BC,IZ / add BC,(XSP+0x2) / ld HL,BC /
+            T, B = ('BC', 'WA') if F.opt else ('WA', 'BC')   # add HL,WA; -O3 -XS -Xr: ld BC,HL / ld WA,IZ /
+            F.emit('ld', '%s,HL' % T); lf = gen(F, l, B, size)   # add WA,(XSP+0x2) / add WA,BC / ld HL,WA
+            if lf != B: raise Unsupported('call-first left operand')
+            if F.opt: F.emit(SIMPLE_OPS[op], '%s,%s' % (B, T)); F.emit('ld', 'HL,%s' % B)
+            else: F.emit('ld', 'HL,%s' % B); F.emit(SIMPLE_OPS[op], 'HL,%s' % T)
         if fam != 'HL': F.emit('ld', '%s,HL' % FAM[fam][size])
         return fam
     signed = e.ty.signed if size >= e.ty.size else is_signed(e.l if UNPROMOTED_SIGN else l)   # (before narrowing
@@ -1780,19 +1789,25 @@ def gen_call_adecl(F, fn, args, fam, size):
     held = {t for t, _ in groups['reg']} | {t for t, _ in groups['computed']} | {t for t, _ in parked}
     if 'WA' in held and stack:                         # c_mix: c already in A -> the pointer goes through XBC
         F.arg_tmp = next((r for r in ('BC', 'DE', 'HL') if r not in held), None)
-    for a in stack: n += push_arg(F, a)
-    F.arg_tmp = None
+    for a in stack: n += fpgen.push_fp_arg(F, a) if fpgen.is_fp(strip(a).ty) else push_arg(F, a)   # ac_di: a double
+    F.arg_tmp = None                                   # through XIY / XIX; ac_iiif: a fourth float ld XWA,(_gf) / push
     def on_stack(a): return (mem_operand(F, strip(a)) or '').startswith('(XSP')
     if F.opt:                                          # -O: memory, then constants, then frame slots (adecl.c c_t2:
         order = [x for x in groups['mem'] if not on_stack(x[1])] + groups['const'] + \
                 [x for x in groups['mem'] if on_stack(x[1])]   # ld BC,(_gi) / ld WA,0x1; ls_mc_n1: ld XWA,0x0 /
     else: order = groups['mem'] + groups['const']               # ld BC,0x0 / ld DE,(XSP+0x4))
-    for t, a in order:
-        sz = strip(a).ty.size
-        if fold(strip(a)).k == 'const':
+    fslot = getattr(F, 'farg_slot', None); fwa = False   # probes/adfp.c ac_fi: a float in a register goes through a
+    for k_, (t, a) in enumerate(order):                       # frame temporary: ld XWA,(_gf) / ld (XSP),XWA / ld BC,(_gi)
+        sz = strip(a).ty.size                                # / ld XWA,(XSP) (XWA reloaded after later loads; ac_if,
+        if fold(strip(a)).k == 'const':                      # ac_ifi: XBC is not)
             sz = max(2, sz); v = fold(strip(a)).value & ((1 << (8 * sz)) - 1)
             F.emit('ld', '%s,%s' % (FAM[t][sz], hx(v))); continue
         F.emit('ld', '%s,%s' % (FAM[t][sz], mem_operand(F, strip(a))))
+        if fpgen.is_fp(strip(a).ty):
+            if fslot is None: raise Unsupported('float argument temporary')
+            F.emit('ld', '(XSP+%s),%s' % (hx(fslot + F.push), FAM[t][4]) if fslot + F.push else '(XSP),%s' % FAM[t][4])
+            fwa = t == 'WA' and k_ < len(order) - 1
+    if fwa: F.emit('ld', 'XWA,(XSP+%s)' % hx(fslot + F.push) if fslot + F.push else 'XWA,(XSP)')
     F.emit('cal', '.' + fn.decl.name + ('\t;stack' if n else ''))      # the callee pops: no tail jump (c_t4)
     F.push -= n
     if fam and fam != 'HL': F.emit('ld', '%s,%s' % (FAM[fam][size], FAM['HL'][size]))
@@ -3109,6 +3124,9 @@ def eval_sequence(node, out):
         eval_sequence(node.init, out); out.append(('def', node.var)); return out
     if node.k == 'bin' and node.op == '=' and strip(node.l).k == 'var':
         eval_sequence(node.r, out); out.append(('def', strip(node.l).decl)); return out
+    if CALL_RIGHT_FIRST and node.k == 'bin' and node.op in SIMPLE_OPS and has_helper_call(node.r) and \
+            not has_helper_call(node.l) and node.ty is not None and node.ty.size == 2:
+        eval_sequence(node.r, out); eval_sequence(node.l, out); return out   # probes/adfp.c ad_di: a + (x > 0.0)
     for v in node.__dict__.values():
         if hasattr(v, 'k') or isinstance(v, list): eval_sequence(v, out)
     if node.k == 'load' and strip(node.e).k == 'var': out.append(('use', strip(node.e).decl))
@@ -3272,8 +3290,10 @@ def plan_homes(F):
         if vals and not F.xiz_vars:
             feats = homes.features(F.f.body, F.f.params, F.opt)
             for d in vals: feats.setdefault(d, homes.Feat())
-            winners = homes.choose(vals, feats, setname, F.adecl, stack_born, call_res,
-                                   lambda d: F.f.params.index(d), lambda d: ldecl.index(d) if d in ldecl else 0, helper_ops,
+            rp = [d for d in F.f.params if not (F.adecl and d.ty.kind == 'float')]   # (adecl: a double is on the
+            winners = homes.choose(vals, feats, setname, F.adecl, stack_born, call_res,  # stack, a float goes to a
+                                   lambda d: rp.index(d) if d in rp else F.f.params.index(d),   # slot: ad_di, ad_fi)
+                                   lambda d: ldecl.index(d) if d in ldecl else 0, helper_ops,
                                    homes.uses(F.f.body, F.f.params) if setname == 'O3XS' else None)
         winners_sorted = winners
     if winners is None or setname not in R3_SETS:
@@ -3355,6 +3375,10 @@ def plan_homes(F):
     for d in params:                                       # adecl register parameters that lost: a slot at entry
         if d not in winners and F.adecl and getattr(d, 'reg', None) in ('WA', 'BC', 'DE'):
             stores.append((d, FAM[d.reg][d.ty.size])); d.home_slot = True; d.reg = None
+    if F.adecl:                                            # a float parameter is used through its address: a slot at
+        for d in F.f.params:                               # entry (probes/adfp.c ad_fi: ld (XSP+0x2),XWA)
+            if d.ty.kind == 'float' and d.ty.size == 4 and getattr(d, 'reg', None) in ('WA', 'BC', 'DE'):
+                stores.append((d, FAM[d.reg][4])); d.home_slot = True; d.reg = None
     if F.opt:                                              # _strlen: ss = memchr(...) stays in XHL (no call after it)
         rets = []
         walk(F.f.body, lambda n, dep: rets.append(n) if n.k == 'return' and n.value is not None else None)
@@ -6051,19 +6075,31 @@ def fp_plan_frame(F):
     ints = [d for d in f.decls if d.kind == 'local' and not getattr(d, 'reg', None) and not fpgen.is_fp(d.ty)
             and not foldable(f, d) and (d.ty.kind not in ('array', 'struct') or FP_AGGR and d.ty.kind == 'struct')
             and d.uses]                                    # _frexp: the union d (8 bytes) in the frame
+    ints += [d for d in f.params if getattr(d, 'home_slot', False)]   # adecl homes, below the locals, the last
+                    # parameter lowest (probes/adfp.c ad_ifi: dec 0x6,XSP / push IZ / ld (XSP+0x2),DE / ld (XSP+0x4),XBC)
     I = sum((d.ty.size + 1) // 2 * 2 for d in ints)          # _log: nptr (address taken) at the very top
     L = sum((d.ty.size + 1) // 2 * 2 for d in locs)
     rets = []
     walk(f.body, lambda n, d: rets.append(n) if n.k == 'return' and n.value is not None else None)
     simple = all(fpgen.fp_value_cast(r.value).k == 'load' and strip(fpgen.fp_value_cast(r.value).e).k == 'var' for r in rets)
     fret = 4 if fpgen.is_fp(f.ret) and f.ret.size == 4 and not simple else 0   # (r_f: ld XHL,(_gf), no frame)
+    fargs = 0                                              # adecl: a float argument in a register position has a
+    if F.adecl:                                            # 4-byte temporary of its own (probes/adfp.c ac_fi: dec 0x4,
+        def fa(n, d):                                      # XSP; where it sits among other slots is not probed yet:
+            nonlocal fargs                                 # here at the top, below a float result)
+            if n.k == 'call' and strip(n.fn).k == 'var' and not getattr(strip(n.fn).decl.ty, 'cdecl', False) and \
+                    any(i < 3 and fpgen.is_fp(strip(a).ty) and strip(a).ty.size == 4 for i, a in enumerate(n.args)):
+                fargs = 4
+        walk(f.body, fa)
+    fret += fargs
     T = F.fp_temps                                         # the region, D + D' (fpgen.FrameAlloc)
     size = I + L + T + fret
     size = (size + 1) // 2 * 2
     top = size - fret
     for d in ints + locs:
         top -= (d.ty.size + 1) // 2 * 2; d.slot = top
-    F.ftemp_top = top; F.ftemp_used = 0; F.fret_slot = size - fret if fret else None
+    F.ftemp_top = top; F.ftemp_used = 0; F.fret_slot = size - (fret - fargs) if fret - fargs else None
+    F.farg_slot = size - fret if fargs else None
     F.frame = size
     if (fpgen.needs_xiz(F) or fpgen.has_elem_hoist(F)) and not F.xiz_vars:   # fp_temps.c t_mla: push XIZ
         F.lines.insert(1, '\tpush\tXIZ'); F.push += 4; F.xiz_vars.append('sret'); F.save_reg = 'XIZ'

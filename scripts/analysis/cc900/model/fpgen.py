@@ -168,6 +168,8 @@ def lvalue_addr(F, v, reg):
     if v.k == 'var':
         d = v.decl
         if d.kind == 'global': F.emit('lda', '%s,_%s' % (reg, d.name)); return True
+        if d.kind == 'param' and getattr(d, 'home_slot', False):   # adecl float stored at entry (adfp.c ad_fi)
+            F.emit('lda', '%s,%s' % (reg, slot_addr(F, d.slot))); return True
         if d.kind == 'param' and not getattr(d, 'reg', None): F.emit('lda', '%s,%s' % (reg, slot_addr(F, d.off))); return True
         if d.kind == 'local' and hasattr(d, 'slot'): F.emit('lda', '%s,%s' % (reg, slot_addr(F, d.slot))); return True
         return False
@@ -467,6 +469,10 @@ def push_fp_arg(F, a, hint=None):
     """a double argument: high half first, through XIY / XIX (d_call1: lda XIY,XSP+0x18 / ld XIX,(XIY+0x4) /
     push XIX / ld XIX,(XIY) / push XIX)"""
     a = fp_value_cast(a)
+    if a.ty.size == 4 and a.k == 'load' and strip(a.e).k == 'var':
+        m = C().mem_operand(F, a)                          # probes/adfp.c ac_fi: a float variable -> ld XWA,(_gf) /
+        if m is not None and m.startswith('('):            # push XWA
+            F.emit('ld', 'XWA,%s' % m); F.emit('push', 'XWA'); F.push += 4; return 4
     put_addr(F, eval_val(F, a, hint), 'XIY')
     if a.ty.size == 8:
         F.emit('ld', 'XIX,(XIY+0x4)'); F.emit('push', 'XIX'); F.push += 4
@@ -729,6 +735,8 @@ def call_stmt(F, e):
     if is_fp(e.ty) and e.ty.size == 8:
         call_into(F, e, ('discard',)); return
     cg = C(); fn = strip(e.fn); n = 0
+    if F.adecl and fn.k == 'var' and not getattr(fn.decl.ty, 'cdecl', False):
+        cg.gen_call(F, e); return                          # probes/adfp.c ac_*: the adecl sequence (gen_call_adecl)
     for a in reversed(e.args):
         if is_fp(strip(a).ty): n += push_fp_arg(F, a)
         else: n += cg.push_arg(F, a)
