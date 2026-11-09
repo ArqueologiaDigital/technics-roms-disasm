@@ -5515,6 +5515,13 @@ def uses_table(n, tab):
     if table_test(n) and table_test(n)[0] is tab: return True
     return bool(found)
 
+def read_in_for_init(f, d):
+    """d's reads are all in the init of a for loop (which runs once per iteration of the loop around it:
+    _strpbrk's `for (s = s2; ...)` inside `for ( ; *s1; ++s1)`)"""
+    inits = []
+    walk(f.body, lambda n, dep: inits.append(n.init) if n.k == 'for' and getattr(n, 'init', None) is not None else None)
+    return bool(inits) and sum(1 for x in inits if uses_decl(x, d)) == 1
+
 def narrowed_to_char(f, d):
     """d is read through a conversion to a char somewhere in f (_strchr's (char)c)"""
     hit = []
@@ -5653,7 +5660,8 @@ def plan_leaf(F):
     walk(f.body, lambda n, dep: stored.add(store_through_temp(n)) if n.k == 'bin' and n.op == '=' and store_through_temp(n) else None)
     params = [d for d in f.params if d.ty.kind in okind and not d.addr_taken and (d in modified or d in deep or (F.opt and d in loopvars))
               and not (F.opt and d in stored and loopvars.get(d, 0) <= 1)
-              and not (F.opt and not F.adecl and ONCE_READ_MEM and d not in modified and d not in deep and
+              and not (F.opt and not F.adecl and ONCE_READ_MEM and d not in modified and
+                       (d not in deep or read_in_for_init(f, d)) and
                        loopvars.get(d, 0) == 1 and d.uses == 1 and not narrowed_to_char(f, d))]   # _strpbrk: s = s2 once per
                                                                     # outer iteration (not _strchr's (char)c, in WA) ->
                                                                     # ld XBC,(XSP+0x8) each time
