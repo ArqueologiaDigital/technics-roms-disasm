@@ -294,6 +294,14 @@ def gen(F, e, fam, size, then_ret=False, store=False):
             if family_of(mem_operand(F, strip(narrow(pre, size))) or '') and family_of(mem_operand(F, strip(narrow(other, size))) or ''):
                 pre = None                                 # both arms in registers: the plain form (c_tern under -Xr)
         else: pre = None
+        def char_valued(x):                                # an int built only from chars and small constants
+            x = strip(x)
+            if fold(x).k == 'const': return fold(x).value is not None and -128 <= fold(x).value <= 127
+            if x.k == 'cast' and x.kind == 'IntegralCast' and strip(x.e).ty.size == 1: return True
+            if x.k == 'bin' and x.op in ('+', '-', '&', '|', '^'): return char_valued(x.l) and char_valued(x.r)
+            return False
+        narrow_ok = pre is not None and size == 2 and char_valued(a) and char_valued(b) and \
+            (strip(a).k == 'bin' or strip(b).k == 'bin')
         if pre is not None:
             lskip, lend = F.newulabel(), F.newulabel()
             lm = mem_operand(F, c.l); rv = strip(c.r)
@@ -308,10 +316,20 @@ def gen(F, e, fam, size, then_ret=False, store=False):
                 lv = strip(strip(c.l).e)
                 if lv.k == 'var': tmpv = (lv.decl, getattr(lv.decl, 'reg', None)); lv.decl.reg = 'WA'
             else:
-                gen(F, pre, fam, size)
+                gen(F, pre, fam, 1 if narrow_ok else size)
                 cc = gen_compare(F, c)
                 if cc in (True, False): raise Unsupported('constant ?: condition')
             jcc = INV[cc] if not pre_then else cc
+            if narrow_ok:                                  # _strncmp: ... j eq,L5 / ... / ld L,A / L5: exts HL
+                F.emit('j', '%s,%s' % (jcc, lend))
+                o = strip(narrow(other, 1))
+                try:
+                    if o.k == 'bin' and fam != 'WA':
+                        f2 = gen(F, o, 'WA', 1); F.emit('ld', '%s,%s' % (FAM[fam][1], FAM[f2][1]))
+                    else: gen(F, o, fam, 1)
+                finally:
+                    if tmpv: tmpv[0].reg = tmpv[1]
+                F.lines.append(lend + ':'); F.emit('exts' if e.ty.signed else 'extz', FAM[fam][2]); return fam
             F.emit('ret', jcc) if then_ret else F.emit('j', '%s,%s' % (jcc, lend))
             try: gen(F, other, fam, size)
             finally:
@@ -615,6 +633,10 @@ def gen_compare(F, e):
     rv = r
     while rv.k == 'cast' and rv.kind == 'IntegralCast': rv = strip(rv.e)
     rvm = mem_operand(F, rv)
+    if e.op in ('==', '!=') and size == 1 and lm is not None and lm.startswith('(X') and rvm is not None and \
+            rvm.startswith('(X') and not lm.startswith('(XSP') and not rvm.startswith('(XSP'):
+        F.emit('ld', 'A,%s' % rvm); F.emit('cp', 'A,%s' % lm); return cc   # _strncmp: ld A,(XDE) / cp A,(XIX) (guess:
+                                                                          # one example)
     if rvm in ('A', 'C', 'E', 'L', 'WA', 'BC', 'DE', 'HL') and lm is not None and lm.startswith('(') and e.op in ('==', '!='):
         rr = FAM[[k for k, v in FAM.items() if rvm in v.values()][0]][size]     # _strchr: cp A,(XHL)
         F.emit('cp', '%s,%s' % (rr, lm)); return cc
@@ -1094,9 +1116,23 @@ def gen_stmt(F, s, last):
                 j = i
                 while j < len(body) and body[j].k not in ('for', 'while', 'do'): j += 1
                 stretch = body[i:j + 1]
+                def eval_walk(n, acc):                     # evaluation order: *s1 == *s2 reads s2 first (_strncmp)
+                    if isinstance(n, list):
+                        for x in n: eval_walk(x, acc)
+                        return
+                    if not hasattr(n, 'k'): return
+                    if n.k == 'var': acc.append(n.decl)
+                    kids = [v for v in n.__dict__.values() if hasattr(v, 'k') or isinstance(v, list)]
+                    def dl(x):
+                        x = strip(x)
+                        while x.k == 'cast': x = strip(x.e)
+                        return x.k == 'load' and strip(x.e).k == 'deref'
+                    if n.k == 'bin' and n.op in ('==', '!=') and dl(n.l) and dl(n.r):
+                        kids = [n.r, n.l]
+                    for v in kids: eval_walk(v, acc)
                 def first_use(d):
                     order = []
-                    walk(stretch, lambda n, dep: order.append(n.decl) if n.k == 'var' else None)
+                    eval_walk(stretch, order)
                     return order.index(d) if d in order else 1 << 30
                 need = [d for d in F.deferred if any(uses_decl(x, d) for x in stretch)
                         and (d.reg != 'XIZ' or (c.k in ('expr', 'return', 'decl', 'while', 'for', 'do') and uses_decl(c, d)))]
@@ -1276,6 +1312,12 @@ def gen_stmt(F, s, last):
             fam = gen(F, s.e.r, 'HL', size)              # _ultoa: value first (XHL / L), then the address
             t = lvalue(F, lv, ptr='XWA')
             F.emit('ld', '%s,%s' % (t, FAM[fam][size])); return
+        sv = store_through_temp(s.e) if F.opt else None
+        if sv is not None and not getattr(sv, 'reg', None) and regvar_of(strip(strip(lv.e).e)) is not None:
+            pd = regvar_of(strip(strip(lv.e).e))         # _strset: lda XBC,XDE+:1 / ld WA,(XSP+0x8) / ld (XBC),A
+            F.emit('lda', 'XBC,%s+:%d' % (FAM[pd.reg][4], pd.ty.base.size))
+            F.emit('ld', '%s,%s' % (FAM['WA'][sv.ty.size], mem_operand(F, N_load(sv))))
+            F.emit('ld', '(XBC),%s' % FAM['WA'][size]); return
         t = lvalue(F, lv)                            # m_ga_set, m_gps_set
         rv = regvar_of(strip(s.e.r).e) if strip(s.e.r).k == 'load' else None
         if rv is not None and rv.ty.size == size:
@@ -1283,6 +1325,20 @@ def gen_stmt(F, s, last):
         fam = gen(F, s.e.r, 'WA', size)
         F.emit('ld', '%s,%s' % (t, FAM[fam][size])); return
     raise Unsupported('statement ' + s.k)
+
+def N_load(d):
+    from frontend import N
+    return N('load', e=N('var', decl=d, ty=d.ty), ty=d.ty)
+
+def store_through_temp(n):
+    """*p++ = v with v a parameter read from memory: -O computes the address first into a temporary (_strset:
+    lda XBC,XDE+:1 / ld WA,(XSP+0x8) / ld (XBC),A); returns the parameter, or None"""
+    lv = strip(n.l)
+    if lv.k != 'deref' or strip(lv.e).k != 'incdec' or not strip(lv.e).post: return None
+    v = strip(n.r)
+    while v.k == 'cast': v = strip(v.e)
+    if v.k == 'load' and strip(v.e).k == 'var' and strip(v.e).decl.kind == 'param': return strip(v.e).decl
+    return None
 
 def has_helper_call(e):
     if not hasattr(e, 'k'): return False
@@ -1871,6 +1927,7 @@ def plan_leaf(F):
         if n.k == 'index' and strip(n.base).k == 'var' and strip(n.base).decl.ty.kind == 'array' and n.ty.size >= 2 and fold(n.idx).k != 'const':
             temps_bc.append(n)
         if n.k == 'load' and strip(n.e).k == 'deref' and not F.opt: temps_bc.append(n)
+        if F.opt and n.k == 'bin' and n.op == '=' and store_through_temp(n): temps_bc.append(n)   # _strset
     walk(f.body, visit)
     if has_call: return False
     hasloop = []
@@ -1933,7 +1990,10 @@ def plan_leaf(F):
     locals_ = [d for d in f.decls if d.kind == 'local' and not d.addr_taken and d.ty.kind in okind]
     if not hasloop:
         locals_ = multi
-    params = [d for d in f.params if d.ty.kind in okind and (d in modified or d in deep or (F.opt and d in loopvars))]
+    stored = set()                                         # _strset: c, only ever stored, stays on the stack
+    walk(f.body, lambda n, dep: stored.add(store_through_temp(n)) if n.k == 'bin' and n.op == '=' and store_through_temp(n) else None)
+    params = [d for d in f.params if d.ty.kind in okind and (d in modified or d in deep or (F.opt and d in loopvars))
+              and not (F.opt and d in stored and loopvars.get(d, 0) <= 1)]
     order = params + list(reversed(locals_))
     if F.opt: order = list(reversed(locals_)) + list(reversed(params))      # _strcat at -O: s, s2, s1
     free = [r for r in LEAF_SEQ if not (r == 'BC' and temps_bc)]
@@ -2221,6 +2281,14 @@ def tail_calls_opt(F, lines):
                          for x in out if not is_label(x))
     out = [l for l in out if not (is_label(l) and l[:-1] in touched and not refs(l[:-1])
                                   and l[:-1] not in getattr(F, 'ret_refs', set()))]
+    pos2 = {l[:-1]: i for i, l in enumerate(out) if is_label(l)}
+    for i, l in enumerate(out):                            # _strnset: j eq,L3 (L3: ret) -> ret eq
+        if l.startswith('\tj\t') and ',' in l:
+            cc, L = l.split('\t')[2].split(',')
+            k = pos2.get(L)
+            if k is not None:
+                while k < len(out) and is_label(out[k]): k += 1
+                if k < len(out) and out[k] == '\tret': out[i] = '\tret\t' + cc
     res = []
     for i, l in enumerate(out):
         if l == '\tret' and res and res[-1].startswith('\tcal\t') and res[-1].split('\t')[2].startswith('.') \

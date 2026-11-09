@@ -19,8 +19,8 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-4-micro-switch, v423/O3XS                        | micro/switch.c    | 0 / 25 exact (0.0%)     |
 | run 2026-11-09-4-micro-switch, v423/O3XSXr                      | micro/switch.c    | 20 / 25 exact (80.0%)   |
 | run 2026-11-08-9-micro-optloops, v423/O3XS                      | micro/opt_loops.c | 15 / 33 exact (45.5%)   |
-| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality v4.23  | 1997 LIB/SRC      | 35 / 72 exact (48.6%)   |
-| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality kn5000 | 1997 LIB/SRC      | 33 / 72 exact (45.8%)   |
+| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality v4.23  | 1997 LIB/SRC      | 38 / 72 exact (52.8%)   |
+| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality kn5000 | 1997 LIB/SRC      | 36 / 72 exact (50.0%)   |
 | run 2026-11-09-3-proxy-tiny, v423/O3XSXr                        | firmware/tiny.c   | 6 / 6 exact (100.0%)    |
 
 The two library rows score against V4.23's listing, so the kn5000 personality's lower count is expected: it
