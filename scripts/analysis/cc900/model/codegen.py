@@ -2881,6 +2881,8 @@ FP_AGGR = True
 MUL_K_XWA = True
 IFCHAIN_JOIN = True
 BINLOC_XR = True
+EXIT_PLACEMENT = True                              # -O: an exit block nothing falls into moves (switch.c sw_evtab)
+CJ_TRAMPOLINES = True                              # -O: arms the tail merge empties go (switch.c sw_ev)
 RET_TAILS = True                                   # -O cross jumping of `cal X / ret` tails (switch.c sw_ret)
 COPY_PROP = True                                   # -O copy propagation (assign_expr.c, copy_propagate)
 UNPROMOTED_SIGN = True
@@ -4903,6 +4905,31 @@ def drop_jump_to_next(lines):
         out.append(l)
     return out
 
+def place_exit_blocks(lines):
+    """-O: a block ending in ret that nothing falls into (the code before it ends in ret / j) moves to replace the
+    first unconditional jump to it (switch.c sw_evtab under O3XSXr: the default arm returns, so `L10: ld HL,0x1 /
+    ret` goes after case 0x2000's `cal .f1`, which then falls into it)"""
+    def is_label(l): return l.endswith(':') and not l.startswith('\t')
+    def uncond(l): return l.startswith(('\tret', '\tj\t', '\tretd')) and ',' not in l
+    i = 0
+    while i < len(lines):
+        if is_label(lines[i]) and re.match(r'^L\d+$', lines[i][:-1]):
+            k = i - 1
+            while k >= 0 and is_label(lines[k]): k -= 1
+            if k >= 0 and uncond(lines[k]) and i == k + 1:
+                e = i + 1
+                while e < len(lines) and not uncond(lines[e]) and not is_label(lines[e]) and not lines[e].startswith('\tj'): e += 1
+                if e < len(lines) and lines[e] == '\tret' and e - i <= 3:
+                    L = lines[i][:-1]
+                    first = next((j for j in range(k) if lines[j] == '\tj\t' + L), None)
+                    if first is not None:
+                        block = lines[i:e + 1]
+                        del lines[i:e + 1]
+                        lines[first:first + 1] = block
+                        i = 0; continue
+        i += 1
+    return lines
+
 def cross_jump(F, lines):
     """-O tail merging (switch.c and ctrl.c under -O3 -XS -Xr).  Jumps to the next label go first.  Then, for each
     label L, the instruction before each `j L` is compared with the one that falls into L: if they are equal the
@@ -4912,6 +4939,7 @@ def cross_jump(F, lines):
     def is_label(l): return l.endswith(':') and not l.startswith('\t')
     def uncond(l): return l.startswith(('\tret', '\tj\t', '\tretd')) and ',' not in l
     lines = drop_jump_to_next(lines)
+    if EXIT_PLACEMENT: lines = place_exit_blocks(lines)
     made = set(); made_new = set(); F.cj_labels = made_new
     while True:
         done = False
@@ -4958,6 +4986,18 @@ def cross_jump(F, lines):
                 pos = max(i for i, l in enumerate(lines) if l == '\tret' and i > 0 and lines[i - 1] == X)
                 lines.insert(pos - 1, N + ':'); continue
         if not done: break
+    if CJ_TRAMPOLINES:                                     # switch.c sw_ev under O3XSXr: an arm the merge reduced to
+        while True:                                        # `L1: j N` (after a ret / j) goes, and its jumps go to N
+            hit = None                                     # (j eq,L50039)
+            for i in range(1, len(lines) - 1):
+                if is_label(lines[i]) and re.match(r'^\tj\t(L\d+)$', lines[i + 1]) and uncond(lines[i - 1]) and \
+                        lines[i + 1].split('\t')[2] in made_new and re.match(r'^L\d+$', lines[i][:-1]):
+                    hit = i; break
+            if hit is None: break
+            L = lines[hit][:-1]; T = lines[hit + 1].split('\t')[2]
+            del lines[hit:hit + 2]
+            lines = [re.sub(r'([\t,])%s$' % re.escape(L), r'\g<1>%s' % T, l) if l.startswith('\t') else l for l in lines]
+            lines = [re.sub(r'\b%s-' % re.escape(L), '%s-' % T, l) if l.startswith('\tdw') else l for l in lines]
     def refs(L): return sum(1 for l in lines if l.startswith('\t') and re.search(r'[\t,]%s$' % re.escape(L), l))
     def named(L): return any(re.search(r'\b%s\b' % re.escape(L), l) for l in lines if not (is_label(l) and l[:-1] == L))
     return [l for l in lines if not (is_label(l) and l[:-1] in made and not refs(l[:-1]) and   # _memccpy: one L50000
@@ -5144,7 +5184,9 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong
     if F.opt and getattr(F, 'l2', None): F.lines = thread_jumps(F.lines, getattr(F, 'user_labels', set()))
     if F.opt: F.lines = tail_calls_opt(F, cross_jump(F, F.lines))
     if F.opt and not getattr(F, 'l2', None) and THREAD_ALL:      # after the tails merge (_strstr: return s1 twice)
-        F.lines = thread_jumps(F.lines, getattr(F, 'user_labels', set()), full=False,
+        import re as _rt                                   # (a jump table's case labels keep their own name:
+        tab = {m for l in F.lines if l.startswith('\tdw') for m in _rt.findall(r'\b(L\d+)-', l)}   # sw_evtab L1, L9)
+        F.lines = thread_jumps(F.lines, getattr(F, 'user_labels', set()) | tab, full=False,
                                joins=getattr(F, 'if_joins', set()) | getattr(F, 'cj_labels', set()))
     else: F.lines = tail_calls(F.lines, getattr(F, 'switch_table', False))
     if not F.opt and getattr(F, 'tfam', None):           # ot_cmp_anb under -Xr: j eq,L3 ... L3: ret -> ret eq
