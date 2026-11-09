@@ -242,7 +242,12 @@ def reg_or_mem(F, e, size):
     return mem_operand(F, e)
 
 def is_signed(e):
-    return strip(e).ty.signed
+    x = strip(e)                                         # binop-loc 1.1: an operation narrowed to its operands'
+    if UNPROMOTED_SIGN:                                  # width keeps their own signedness (mul_uc_loc under O3XS:
+        while x.k == 'cast' and x.kind == 'IntegralCast' and strip(x.e).ty is not None and \
+                strip(x.e).ty.size < x.ty.size:          # mul WA,C, not muls)
+            x = strip(x.e)
+    return x.ty.signed
 
 # ------------------------------------------------------------- code generation
 
@@ -748,13 +753,22 @@ def cse_params(F, e):
     needs_wa = size == 1 or (top.k == 'bin' and top.op in ('*', '/', '%', '<<', '>>'))
     if top.k == 'bin' and top.op in ('*', '/', '%') and size == 4: return False
     tmp = 'BC' if needs_wa else 'WA'
+    chain = 'HL'
+    if size == 1 and BINLOC_XR and top.k == 'bin' and top.op in tuple(SIMPLE_OPS) + ('<<', '>>'):
+        # binop-loc rule 5 (cdecl O3XS): a byte chain is never L -- C under a shift, A without -- and moves to L at the
+        # end; the parameter read twice takes the first byte the count (A) and the chain have not claimed
+        # (add_c_loc: ld C,(a) / ld A,C / add A,(b) / add A,C / ld L,A; shl_c_loc: a in E, the chain in C)
+        shifts = []
+        walk(e, lambda n, dd: shifts.append(n) if n.k == 'bin' and n.op in ('<<', '>>') else None)
+        chain = 'BC' if shifts else 'WA'
+        tmp = next(f_ for f_ in ('WA', 'BC', 'DE', 'HL') if f_ != chain and not (shifts and f_ == 'WA'))
     if top.k == 'bin' and top.op in ('&&', '||'):          # _isdigit: ld HL,0x0 before ld WA,(XSP+0x4)
         F.emit('ld', '%s,0x0' % FAM['HL'][2]); F.preset_hl = True
         tmp = 'WA'
     F.emit('ld', '%s,(XSP+%s)' % (FAM[tmp][d.ty.size], hx(d.off + F.push)))
     d.reg = tmp
     try:
-        fam = gen(F, e, 'HL', size, then_ret=True)
+        fam = gen(F, e, chain, size, then_ret=chain == 'HL')
         if fam != 'HL' and FAM[fam].get(size) != FAM['HL'][size]:
             F.emit('ld', '%s,%s' % (FAM['HL'][size], FAM[fam][size]))
     finally:
@@ -2250,6 +2264,7 @@ FP_AGGR = True
 MUL_K_XWA = True
 IFCHAIN_JOIN = True
 BINLOC_XR = True
+UNPROMOTED_SIGN = True
 STORE_XHL_NONE = True
 DEREF_XIZ = True
 
