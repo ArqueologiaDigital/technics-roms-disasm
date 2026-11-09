@@ -2881,6 +2881,7 @@ FP_AGGR = True
 MUL_K_XWA = True
 IFCHAIN_JOIN = True
 BINLOC_XR = True
+RET_TAILS = True                                   # -O cross jumping of `cal X / ret` tails (switch.c sw_ret)
 COPY_PROP = True                                   # -O copy propagation (assign_expr.c, copy_propagate)
 UNPROMOTED_SIGN = True
 STORE_XHL_NONE = True
@@ -4944,6 +4945,18 @@ def cross_jump(F, lines):
                     last = max(i for i, l in enumerate(lines) if l == '\tj\t' + L and lines[i - 1] == X2)
                     lines.insert(last - 1, N + ':')        # the last `X / j L` of the group keeps the code
             if N: done = True; made.add(N); break
+        if not done and RET_TAILS:                         # switch.c sw_ret under O3XSXr: arms ending in the same
+            byx = {}                                       # `cal .g1 / ret` keep the last copy, the others jump to it
+            for i, l in enumerate(lines):                  # (ld WA,0x1 / j L9 ... ld WA,0x6 / L9: j .g1)
+                if l == '\tret' and i > 0 and not is_label(lines[i - 1]) and lines[i - 1].startswith('\tcal\t') and \
+                        not lines[i - 1].startswith('\tcal\t._f') and not lines[i - 1].startswith('\tcal\tC9H_'):
+                    byx.setdefault(lines[i - 1], []).append(i)
+            grp = [(x, g) for x, g in byx.items() if len(g) >= 2]
+            if grp:
+                X, g = grp[0]; N = F.newlabel(); made_new.add(N); made.add(N)
+                for i in sorted(g[:-1], reverse=True): lines[i - 1:i + 1] = ['\tj\t' + N]
+                pos = max(i for i, l in enumerate(lines) if l == '\tret' and i > 0 and lines[i - 1] == X)
+                lines.insert(pos - 1, N + ':'); continue
         if not done: break
     def refs(L): return sum(1 for l in lines if l.startswith('\t') and re.search(r'[\t,]%s$' % re.escape(L), l))
     def named(L): return any(re.search(r'\b%s\b' % re.escape(L), l) for l in lines if not (is_label(l) and l[:-1] == L))
