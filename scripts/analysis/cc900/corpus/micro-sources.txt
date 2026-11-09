@@ -17,6 +17,7 @@ micro/mem.c
 micro/opt_loops.c
 micro/ra_call.c
 micro/ra_leaf.c
+micro/rules.c
 micro/unop_c.c
 micro/unop_i.c
 micro/unop_l.c

@@ -36,10 +36,37 @@ def sub1_jrne(code, k):
     m = re.match(r'sub (bc|wa|de|hl|ix|iy|iz|b|c|a) ?, ?1$', code[k][1])
     return bool(m) and k + 1 < len(code) and re.match(r'jrl? (ne|nz) ?,', code[k + 1][1]) is not None
 
+def lda_store_reload(code, k):
+    """V4.23: lda xr,(xsp+d) / ld (xsp+e),xr / ld xr,(xsp+e)  (micro rules.c r_buf)"""
+    if not re.match(r'lda (x\w+) ?, ?\(xsp ?\+ ?', code[k][1]) or k + 2 >= len(code): return False
+    r = code[k][1].split()[1].rstrip(',')
+    return store_reload(code, k + 1) and re.match(r'ld ' + SLOT + r' ?, ?' + r + '$', code[k + 1][1]) is not None
+
+def lda_store_use(code, k):
+    """2003: lda xr,(xsp+d) / ld (xsp+e),xr / then not a reload of the slot"""
+    if not re.match(r'lda (x\w+) ?, ?\(xsp ?\+ ?', code[k][1]) or k + 2 >= len(code): return False
+    r = code[k][1].split()[1].rstrip(',')
+    if not re.match(r'ld ' + SLOT + r' ?, ?' + r + '$', code[k + 1][1]): return False
+    return not store_reload(code, k + 1)
+
+def add_then_dec1(code, k):
+    """V4.23: add xr,xs / dec 1,xr  (micro rules.c r_rev)"""
+    m = re.match(r'add (x\w+) ?, ?(x\w+)$', code[k][1])
+    return bool(m) and k + 1 < len(code) and re.match(r'dec 1 ?, ?' + m.group(1) + '$', code[k + 1][1]) is not None
+
+def lda_minus1_add(code, k):
+    """2003: lda xr,(xs-1) / add xr,xt"""
+    m = re.match(r'lda (x\w+) ?, ?\(x\w+ ?- ?1\)$', code[k][1])
+    return bool(m) and k + 1 < len(code) and re.match(r'add ' + m.group(1) + r' ?, ?x\w+$', code[k + 1][1]) is not None
+
 RULES = [
     ('reload-after-store', 'store then reload of the same (xsp+d) slot', store_reload),
     ('djnz-loop', '`djnz` (V4.23 keeps it)', djnz),
     ('djnz-loop', '`sub r,1` + `jr ne` (2003 replaces djnz with it)', sub1_jrne),
+    ('reload-after-lda', 'lda / store / reload of the slot (V4.23)', lda_store_reload),
+    ('reload-after-lda', 'lda / store / no reload (2003)', lda_store_use),
+    ('lda-offset-fold', 'add xr,xs / dec 1,xr (V4.23)', add_then_dec1),
+    ('lda-offset-fold', 'lda xr,(xs-1) / add (2003)', lda_minus1_add),
 ]
 
 def main():
