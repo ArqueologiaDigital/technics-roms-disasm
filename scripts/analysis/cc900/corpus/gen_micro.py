@@ -16,7 +16,9 @@ how cc900 compiles exactly that (notes/cc900-compat-plan-2026-11-08/PLAN.md, sec
 - opt_loops: the -O3 loop optimizations (hoisting, induction variables, address CSE, bounds, rotation);
 - rules: shapes of the library routines whose code changed between V4.23 and 2003 (rule triggers);
 - switch: switch statements with statement bodies (jump tables, compare chains, ranges), at int, char,
-  unsigned and long, the shapes of the firmware's event handlers (dispatch on a long event code).
+  unsigned and long, the shapes of the firmware's event handlers (dispatch on a long event code);
+- opt_params: leaf loops at -O whose parameters live in registers, varying declaration order, first use,
+  use counts and where the loop starts, to find the order in which -O loads them.
 The output is deterministic, ours, and C89.
 """
 import os, sys
@@ -266,6 +268,40 @@ def switch_files():
         'default: return g1(obj); } return 1; }']
     return {'switch.c': out}
 
+def opt_param_files():
+    """the order of -O's parameter loads (phase3a-status.md, open allocator question)"""
+    out = ['/* Parameters kept in registers by -O: in which order are they loaded? */', 'extern int gi;']
+    fs = [
+        # all needed by the first loop, loaded at the start
+        'void op_cpy_ab(char *a, char *b, int n) { while (n--) *a++ = *b++; }',
+        'void op_cpy_ba(char *a, char *b, int n) { while (n--) *b++ = *a++; }',
+        'void op_cpy_nab(int n, char *a, char *b) { while (n--) *a++ = *b++; }',
+        'void op_cpy_anb(char *a, int n, char *b) { while (n--) *a++ = *b++; }',
+        'int op_cmp_ab(char *a, char *b, int n) { while (n && *a == *b) { a++; b++; n--; } return n; }',
+        'int op_cmp_ba(char *a, char *b, int n) { while (n && *b == *a) { b++; a++; n--; } return n; }',
+        'int op_sum2(int *p, int *q, int n) { int s = 0; while (n--) s += *p++ + *q++; return s; }',
+        'int op_sum2q(int *p, int *q, int n) { int s = 0; while (n--) s += *q++ + *p++; return s; }',
+        'void op_fill(char *a, int n, char c) { while (n--) *a++ = c; }',
+        'void op_fill2(char c, int n, char *a) { while (n--) *a++ = c; }',
+        'int op_two(char *a, char *b) { while (*a == *b && *a) { a++; b++; } return *a - *b; }',
+        'int op_two_ba(char *a, char *b) { while (*b == *a && *b) { b++; a++; } return *b - *a; }',
+        # first loop needs one, a second loop the others
+        'void op_cat(char *a, char *b, int n) { while (*a) a++; while (n--) *a++ = *b++; }',
+        'void op_cat2(char *a, int n, char *b) { while (*a) a++; while (n--) *a++ = *b++; }',
+        'void op_cat3(char *a, char *b, int n) { while (*a) a++; while (n-- && *b) *a++ = *b++; }',
+        'void op_cat4(char *a, char *b, int n) { while (*a) a++; while (*b && n--) *a++ = *b++; }',
+        'void op_cat_b(char *a, char *b, int n) { while (*b) b++; while (n--) *b++ = *a++; }',
+        'void op_two_loops(char *a, char *b) { while (*a) a++; while (*b) b++; *a = *b; }',
+        # three pointers
+        'void op_three(char *d, char *s, char *t, int n) { while (n--) *d++ = *s++ + *t++; }',
+        'void op_three2(char *s, char *t, char *d, int n) { while (n--) *d++ = *s++ + *t++; }',
+        # uses counted differently
+        'int op_heavy_a(char *a, char *b, int n) { int s = 0; while (n--) { s += *a; s += a[1]; a++; b++; } return s; }',
+        'int op_heavy_b(char *a, char *b, int n) { int s = 0; while (n--) { s += *b; s += b[1]; a++; b++; } return s; }',
+        'char *op_ret_a(char *a, char *b, int n) { char *r = a; while (n--) *a++ = *b++; return r; }',
+        'char *op_ret_b(char *a, char *b, int n) { char *r = b; while (n--) *a++ = *b++; return r; }']
+    return {'opt_params.c': out + fs}
+
 def main():
     out = sys.argv[1]
     d = os.path.join(out, 'micro'); os.makedirs(d, exist_ok=True)
@@ -280,6 +316,7 @@ def main():
     files.update(opt_loop_files())
     files.update(rule_files())
     files.update(switch_files())
+    files.update(opt_param_files())
     for n, lines in sorted(files.items()):
         open(os.path.join(d, n), 'w').write('\n'.join(lines) + '\n')
     open(os.path.join(out, 'micro-sources.txt'), 'w').write(''.join('micro/%s\n' % n for n in sorted(files)))
