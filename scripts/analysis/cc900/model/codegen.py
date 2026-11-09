@@ -1608,6 +1608,7 @@ LEAF_KEEP_TAKEN = True                                    # see plan_leaf
 IF_FLUSH_POPS = True                                      # see gen_stmt's if
 ADDR_CLOBBER_SWAP = True                                  # see gen_bin
 CHAR_NARROW_TERN = True                                   # see char_narrow
+LOOP_FLUSH_POPS = True                                    # see gen_loop
 
 def char_narrow(body):
     """cc900 does int + - & | ^ of a char and a constant that fits a byte, or of two chars, on the byte and
@@ -4960,7 +4961,8 @@ def gen_loop(F, s, last):
         if EMPTY_WHILE_ONE_LABEL and not flat(s.body):     # opt_loops.c ol_strcpy: while ((*d++ = *s++) != 0) ;
             body = F.newulabel(); F.newulabel()            # -> L1: ... / j ne,L1 (one label, no jump in)
             F.lines.append(body + ':'); loop_cond(F, s.cond, body, True); return
-        test = F.newulabel(); body = F.newulabel()
+        if F.pending and LOOP_FLUSH_POPS: flush_pops(F)    # the 1997 library's _fread: fgetc(stream)'s pop went into
+        test = F.newulabel(); body = F.newulabel()          # the loop body and ran every iteration (wrong code)
         F.emit('j', test); F.lines.append(body + ':')
         cont = [None]; brk = [None]
         def getc2():
