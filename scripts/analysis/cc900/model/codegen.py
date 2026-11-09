@@ -1629,7 +1629,8 @@ def gen_stmt(F, s, last):
     if s.k == 'break':
         if F.loops[-1][0] in getattr(F, 'switch_rets', set()):   # sw_jt6 under none: each case returns itself
             flush_pops(F); F.emit('ret'); return
-        F.emit('j', F.loops[-1][0]); return
+        flush_pops(F)                                      # switch.c under O3XS: each arm's pops before its jump (cross-
+        F.emit('j', F.loops[-1][0]); return                # jumping then merges cal _f1 / inc 0x2,XSP)
     if s.k == 'continue': F.emit('j', F.loops[-1][1]()); return
     if s.k == 'expr' and s.e.k == 'bin' and s.e.op == ',':      # a, b as a statement: a then b (_strrchr's for)
         from frontend import N
@@ -2141,6 +2142,31 @@ def switch_cases(body, acc):
         if hasattr(v, 'k') or isinstance(v, list): switch_cases(v, acc)
     return acc
 
+def value_table(F, s, cases, vals, default, lo, hi):
+    """cdecl -O3 -XS: a dense switch whose every case is `f(constant); break;` with one f and no default, and no
+    hole, becomes a byte table of the constants (not under -Xr: switch.c O3XSXr keeps the jump table)"""
+    if not F.opt or F.adecl: return None
+    if sorted(v for v, _, _ in vals) != list(range(lo, hi + 1)): return None
+    items = flat(s.body) if s.body.k == 'block' else [s.body]
+    fn = None; byval = {}
+    i = 0
+    while i < len(items):
+        c = items[i]
+        if c.k == 'default':                             # sw_jt6d: default: f0(); break; after the table call
+            F.vt_default = c; i += 2 if i + 1 < len(items) and items[i + 1].k == 'break' else 1; continue
+        if c.k != 'case': return None
+        body = c.body
+        if body is None or body.k != 'expr' or strip(body.e).k != 'call': return None
+        call = strip(body.e); f = strip(call.fn)
+        if f.k != 'var' or len(call.args) != 1 or fold(call.args[0]).k != 'const': return None
+        k = fold(call.args[0]).value
+        if not -128 <= k <= 127: return None
+        if fn is None: fn = f
+        elif f.decl is not fn.decl: return None
+        if i + 1 >= len(items) or items[i + 1].k != 'break': return None
+        byval[data_value(c.value)] = k; i += 2
+    return (fn, byval) if fn is not None else None
+
 def gen_switch(F, s, last):
     """switch (oracle run 2026-11-09-4-micro-switch, v423, -Xr and -O3 -XS -Xr).
     Six or more case values spanning at most twice their number: a jump table of 16-bit offsets from a base label
@@ -2188,6 +2214,8 @@ def gen_switch(F, s, last):
                     if getattr(d, 'reg', None) and (d.kind != 'param' or uses_decl(F.f.body, d))}
             nr = [r for r in ('WA', 'BC', 'DE', 'HL') if r not in used][0]
             F.emit('ld', '%s,%s' % (FAM[nr][size], R)); R = FAM[nr][size]
+        elif keep and F.opt and not F.adecl and sel is not None and sel.reg in ('IZ', 'QIZ'):
+            F.emit('ld', '%s,%s' % (FAM['WA'][size], R)); R = FAM['WA'][size]   # sw_loop under O3XS: ld WA,IZ
     else:
         fam = gen(F, e, 'WA', e.ty.size) if not (m and family_of(m) == 'XWA') else 'WA'
         R = FAM['WA'][size]
@@ -2200,6 +2228,31 @@ def gen_switch(F, s, last):
     n = len(vals); lo = min(v for v, _, _ in vals) if vals else 0; hi = max(v for v, _, _ in vals) if vals else 0
     table = n >= 6 and hi - lo + 1 <= 2 * n               # 5 cases are a chain (abi switch.c sw_char, sw_long)
     order = list(cases)
+    vt = value_table(F, s, cases, vals, default, lo, hi) if table else None
+    if vt is not None:                                   # switch.c under O3XS: every case calls one function with a
+        fn, byval = vt                                   # constant: a table of the constants (sw_jt6, sw_jtoff, sw_jtl)
+        S = 'S%d' % (90000 + len(getattr(F, 'tables', [])))
+        rows = ['\talign\t2', S + ':']
+        for v in range(lo, hi + 1): rows += ['\talign\t1', '\tdb\t%d' % byval[v]]
+        F.tables = getattr(F, 'tables', []) + [rows]
+        if lo != 0:
+            F.emit('sub', '%s,%s' % (R, hx(lo & ((1 << (8 * size)) - 1)))); F.emit('cp', '%s,0x0' % R); to_default('lt')
+        elif signed:
+            F.emit('cp', '%s,0x0' % R); to_default('m')
+        F.emit('cp', '%s,%s' % (R, hx(hi - lo))); to_default('gt' if signed or lo != 0 else 'ugt')
+        if size == 4: F.emit('add', '%s,%s' % (R, S)); F.emit('ld', 'A,(%s)' % R)
+        else: F.emit('lda', 'XIX,%s' % S); F.emit('ld', 'A,(XIX+%s)' % R)
+        F.emit('exts', 'WA'); F.emit('push', 'WA'); F.emit('cal', '_' + fn.decl.name); F.emit('inc', '0x2,XSP')
+        dc = getattr(F, 'vt_default', None); F.vt_default = None
+        if dc is not None:                               # sw_jt6d: ... inc 0x2,XSP / ret / L1: j _f0
+            F.emit('ret') if exit_is_ret else F.emit('j', end)
+            F.lines.append(F.case_labels[id(dc)] + ':')
+            if dc.body is not None: gen_stmt(F, dc.body, exit_is_ret)
+            F.lines.append(end + ':')                    # (unreferenced: dropped, so cal _f0 / ret becomes j _f0)
+        else:
+            F.lines.append(end + ':'); F.ret_refs = getattr(F, 'ret_refs', set()) | {end}
+        F.switch_table = True
+        return
     if table:
         base = F.newulabel(); S = 'S%d' % (90000 + len(getattr(F, 'tables', [])))
         bylab = {v: l for v, l, _ in vals}
