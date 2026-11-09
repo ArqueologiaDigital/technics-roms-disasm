@@ -29,6 +29,8 @@ how cc900 compiles exactly that (notes/cc900-compat-plan-2026-11-08/PLAN.md, sec
   (the library is built -DFLOAT; its math routines are most of the sub CPU's firmware pairs);
 - fp_temps: nested double expressions: where the temporaries go, and when the hidden result pointer is kept in XIZ
   rather than the result built in a temporary and copied (fp.c: d_three vs d_four);
+- opt_temps: -O3 -XS -Xr leaf loops: two pointers and a count in every argument order, with copy, compare, fill,
+  sum and count-only bodies, to find which register family the loop's temporaries take and which parameter moves;
 - ra_homes32: a 32-bit local (pointer, long) against a 16-bit parameter for XIZ / IZ across calls (_memccpy gives
   IZ to n and a slot to pos).
 The output is deterministic, ours, and C89.
@@ -533,6 +535,30 @@ def fp_temp_files():
         'double t_i_e(void) { return (double)(gi * 2) + gd; }']
     return {'fp_temps.c': out + fs}
 
+def opt_temp_files():
+    """which family is the loop's temporary (the n-- copy, the byte), and who moves out of it (opt_params.c)"""
+    import itertools
+    out = ['/* -O3 -XS -Xr leaf loops: the register family of the temporaries */', 'extern int gi; extern char gc;']
+    bodies = [('cpy', 'void', 'while (n--) *a++ = *b++;'),
+              ('cmp', 'int', 'while (n && *a == *b) { a++; b++; n--; } return n;'),
+              ('add', 'void', 'while (n--) *a++ += *b++;'),
+              ('sum', 'int', 'int s = 0; while (n--) s += *a++ - *b++; return s;'),
+              ('cnt', 'void', 'while (n--) { a++; b++; } gc = *a + *b;')]
+    fs = []
+    for bn, rt, body in bodies:
+        for perm in itertools.permutations(['char *a', 'char *b', 'int n']):
+            tag = ''.join(x[-1] for x in perm)
+            fs.append('%s ot_%s_%s(%s) { %s }' % (rt, bn, tag, ', '.join(perm), body))
+    fs += ['void ot_fill_acn(char *a, char c, int n) { while (n--) *a++ = c; }',
+           'void ot_fill_anc(char *a, int n, char c) { while (n--) *a++ = c; }',
+           'void ot_fill_can(char c, char *a, int n) { while (n--) *a++ = c; }',
+           'void ot_fill_nac(int n, char *a, char c) { while (n--) *a++ = c; }',
+           'void ot_one_an(char *a, int n) { while (n--) *a++ = 0; }',
+           'void ot_one_na(int n, char *a) { while (n--) *a++ = 0; }',
+           'int ot_len(char *a) { int n = 0; while (*a++) n++; return n; }',
+           'int ot_len2(char *a, char *b) { int n = 0; while (*a++ == *b++) n++; return n; }']
+    return {'opt_temps.c': out + fs}
+
 def main():
     out = sys.argv[1]
     d = os.path.join(out, 'micro'); os.makedirs(d, exist_ok=True)
@@ -553,6 +579,7 @@ def main():
     files.update(ra_home32_files())
     files.update(fp_files())
     files.update(fp_temp_files())
+    files.update(opt_temp_files())
     for n, lines in sorted(files.items()):
         open(os.path.join(d, n), 'w').write('\n'.join(lines) + '\n')
     open(os.path.join(out, 'micro-sources.txt'), 'w').write(''.join('micro/%s\n' % n for n in sorted(files)))
