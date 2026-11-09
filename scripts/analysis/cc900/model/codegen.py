@@ -192,9 +192,18 @@ def gen(F, e, fam, size, then_ret=False, store=False):
         # a narrowing cast of a load reads at the source width (unop_*: cast_l_c, cast_i_c)
         isz = strip(e0.e).ty.size
         F.emit('ld', '%s,%s' % (FAM[fam][isz], mem_operand(F, e0.e))); return fam
+    if e0.k == 'cast' and e0.kind == 'IntegralCast' and strip(e0.e).ty.size > size and strip(e0.e).k == 'bin' and \
+            strip(e0.e).op in SIMPLE_OPS:
+        b = strip(e0.e); lv = strip(b.l); rm = mem_operand(F, b.r)
+        d = regvar_of(lv.e) if lv.k == 'load' else None
+        if d is not None and d.reg in ('WA', 'BC', 'DE', 'HL') and dies_here(F, lv) and rm is not None and not family_of(rm):
+            F.emit(SIMPLE_OPS[b.op], '%s,%s' % (FAM[d.reg][b.ty.size], rm))   # sw_ev: sub XBC,0x2000 / ld WA,BC
+            if d.reg != fam: F.emit('ld', '%s,%s' % (FAM[fam][size], FAM[d.reg][size]))
+            return fam
     e = narrow(e, size)
     src = mem_operand(F, e)
     if src is not None:
+        if src.startswith('X') and size < 4 and src[1:] in FAM: src = FAM[src[1:]][size]   # a long register, narrowed
         if src != FAM[fam][size]: F.emit('ld', '%s,%s' % (FAM[fam][size], src))
         return fam
     if e.k == 'cast' and e.kind == 'IntegralCast':
@@ -1126,6 +1135,12 @@ def gen_stmt(F, s, last):
         gen_call(F, s.e); return
     if s.k in ('for', 'while', 'do'):
         gen_loop(F, s, last); return
+    if s.k == 'switch':
+        gen_switch(F, s, last); return
+    if s.k in ('case', 'default'):                         # a case label inside a switch body (gen_switch)
+        if F.case_labels[id(s)] and id(s) not in F.case_inner: F.lines.append(F.case_labels[id(s)] + ':')
+        if s.body is not None: gen_stmt(F, s.body, False)
+        return
     if s.k == 'break': F.emit('j', F.loops[-1][0]); return
     if s.k == 'continue': F.emit('j', F.loops[-1][1]()); return
     if s.k == 'expr' and regvar_stmt(F, s.e): return
@@ -1217,6 +1232,14 @@ def eval_sequence(node, out):
     if node.k == 'return':                                 # a call in a return clobbers nothing that is used later
         inner = eval_sequence(getattr(node, 'value', None), []) if getattr(node, 'value', None) is not None else []
         out.extend(('rcall',) if x == ('call',) else x for x in inner); return out
+    if node.k == 'switch':                                 # case bodies are alternatives (switch.c sw_local, sw_ev)
+        eval_sequence(node.value, out)
+        items = node.body.body if node.body.k == 'block' else [node.body]
+        side = 0
+        for it in items:
+            if it.k in ('case', 'default'): side += 1
+            out.extend(('branch', id(node), side, x) for x in eval_sequence(it, []))
+        return out
     if node.k == 'if':                                     # c_ifchain: the else branch is not after the then's call
         eval_sequence(node.cond, out)
         a = eval_sequence(node.then, []); b = eval_sequence(getattr(node, 'els', None), []) if getattr(node, 'els', None) else []
@@ -1394,6 +1417,133 @@ def regvar_stmt(F, e):
         F.emit('inc' if e.op == '++' else 'dec', '%s,%s' % (hx(step), R)); return True
     return False
 
+def switch_cases(body, acc):
+    """the case and default nodes of a switch body, nested ones (case 2: case 3:) included, in source order"""
+    if isinstance(body, list):
+        for x in body: switch_cases(x, acc)
+        return acc
+    if not hasattr(body, 'k') or body.k == 'switch': return acc
+    if body.k in ('case', 'default'): acc.append(body)
+    for key, v in body.__dict__.items():
+        if hasattr(v, 'k') or isinstance(v, list): switch_cases(v, acc)
+    return acc
+
+def gen_switch(F, s, last):
+    """switch (oracle run 2026-11-09-4-micro-switch, v423, -Xr and -O3 -XS -Xr).
+    Five or more case values spanning at most twice their number: a jump table of 16-bit offsets from a base label
+    (dw Lcase-Lbase, holes to the default), placed in f_const right after the function label; the selector is
+    range-checked (sub lo, then cp R,0 / j lt; without sub cp R,0 / j m; unsigned only cp R,hi / j ugt) and
+    dispatched with add R,R / lda XIX,S / ld R,(XIX+R) / lda XIX,Lbase / j XIX+R (long: add XR,XR / add XR,S /
+    ld R,(XR)).  Otherwise a compare chain: single values from the highest down (cp R,v / j eq,Lv), runs of three
+    or more values with one body as ranges (cp R,hi / j gt / cp R,lo / j ge,Lbody); the last single value is
+    tested inverted and falls into its body; a char selector is extended to a word first (exts / extz WA).
+    A selector variable that a case body also reads is copied to a free register without -O (sw_local: ld BC,WA)."""
+    cases = switch_cases(s.body, [])
+    F.case_labels = getattr(F, 'case_labels', {})
+    F.case_inner = getattr(F, 'case_inner', set())       # case 2: case 3: share one label (sw_fall, sw_ev)
+    for c in cases:                                        # (a side table: a back pointer would make the tree cyclic)
+        if id(c) not in F.case_labels: F.case_labels[id(c)] = F.newulabel()
+        if c.body is not None and c.body.k in ('case', 'default'):
+            F.case_labels[id(c.body)] = F.case_labels[id(c)]; F.case_inner.add(id(c.body))
+    end = F.newulabel()
+    vals = []; default = None
+    for c in cases:
+        if c.k == 'default': default = F.case_labels[id(c)]
+        else:
+            v = data_value(c.value)
+            if v is None: raise Unsupported('case value')
+            vals.append((v, F.case_labels[id(c)], c))
+    deflab = default or end
+    e = strip(s.value); ext = None
+    if e.k == 'cast' and e.kind == 'IntegralCast' and strip(e.e).ty.size == 1:
+        ext = 'exts' if strip(e.e).ty.signed else 'extz'; e = strip(e.e)
+    size = max(2, e.ty.size); signed = strip(s.value).ty.signed
+    m = mem_operand(F, e)
+    sel = strip(e.e).decl if e.k == 'load' and strip(e.e).k == 'var' else None
+    in_body = sel is not None and uses_decl(s.body, sel)
+    if m is not None and family_of(m) and not ext:
+        R = FAM[family_of(m)[1:] if family_of(m) != 'XIZ' else 'IZ'][size]
+        keep = in_body or (sel is not None and sel.reg in ('IZ', 'QIZ', 'XIZ'))   # sw_loop: ld WA,IZ
+        if keep and not F.opt:
+            used = {getattr(d, 'reg', None) for d in list(F.f.params) + list(F.f.decls)
+                    if getattr(d, 'reg', None) and (d.kind != 'param' or uses_decl(F.f.body, d))}
+            nr = [r for r in ('WA', 'BC', 'DE', 'HL') if r not in used][0]
+            F.emit('ld', '%s,%s' % (FAM[nr][size], R)); R = FAM[nr][size]
+    else:
+        fam = gen(F, e, 'WA', e.ty.size) if not (m and family_of(m) == 'XWA') else 'WA'
+        R = FAM['WA'][size]
+        if ext: F.emit(ext, 'WA')
+    exit_is_ret = last and not F.pushes and not F.xiz_vars and not getattr(F, 'frame', 0) and not F.pending
+    def to_default(cc):
+        if deflab == end and exit_is_ret: F.emit('ret', cc)
+        else: F.emit('j', '%s,%s' % (cc, deflab))
+    n = len(vals); lo = min(v for v, _, _ in vals) if vals else 0; hi = max(v for v, _, _ in vals) if vals else 0
+    table = n >= 5 and hi - lo + 1 <= 2 * n
+    order = list(cases)
+    if table:
+        base = F.newulabel(); S = 'S%d' % (90000 + len(getattr(F, 'tables', [])))
+        bylab = {v: l for v, l, _ in vals}
+        F.tables = getattr(F, 'tables', []) + [['\talign\t2', S + ':'] +
+                   ['\tdw\t%s-%s' % (bylab.get(v, deflab), base) for v in range(lo, hi + 1)]]
+        if lo != 0:
+            F.emit('sub', '%s,%s' % (R, hx(lo & ((1 << (8 * size)) - 1)))); F.emit('cp', '%s,0x0' % R); to_default('lt')
+        elif signed:
+            F.emit('cp', '%s,0x0' % R); to_default('m')
+        F.emit('cp', '%s,%s' % (R, hx(hi - lo))); to_default('gt' if signed or lo != 0 else 'ugt')
+        if size == 4:
+            r16 = FAM[family_of(R)[1:]][2]
+            F.emit('add', '%s,%s' % (R, R)); F.emit('add', '%s,%s' % (R, S)); F.emit('ld', '%s,(%s)' % (r16, R))
+        else:
+            r16 = R
+            F.emit('add', '%s,%s' % (R, R)); F.emit('lda', 'XIX,%s' % S); F.emit('ld', '%s,(XIX+%s)' % (R, R))
+        F.emit('lda', 'XIX,%s' % base); F.emit('j', 'XIX+%s' % r16)
+        F.lines.append(base + ':')
+    else:
+        groups = []                                        # (lo, hi, label) runs with one body
+        for v, l, c in sorted(vals, key=lambda x: x[0]):
+            body = c
+            while body.body is not None and body.body.k == 'case': body = body.body
+            key = id(body)
+            if groups and groups[-1][3] == key and groups[-1][1] == v - 1: groups[-1][1] = v
+            else: groups.append([v, v, l, key])
+        singles = [g for g in groups if g[1] - g[0] < 2]
+        singles = [[v, v, F.case_labels[id(c)], None] for g in singles for v in range(g[0], g[1] + 1)
+                   for vv, l, c in vals if vv == v]
+        ranges = [g for g in groups if g[1] - g[0] >= 2]
+        entries = sorted(singles, key=lambda g: -g[0]) + sorted(ranges, key=lambda g: -g[0])
+        for i, g in enumerate(entries):
+            lastone = i == len(entries) - 1
+            if g[0] == g[1]:
+                F.emit('cp', '%s,%s' % (R, hx(g[0])))
+                if lastone:
+                    to_default('ne')
+                    first = [c for c in cases if F.case_labels[id(c)] == g[2]]
+                    if first and cases and cases[0] is not first[0]: F.emit('j', g[2])
+                    elif first: F.case_labels[id(first[0])] = None     # sw_jt4: the body it falls into has no label
+                else: F.emit('j', 'eq,%s' % g[2])
+            else:
+                skip = deflab if lastone else F.newulabel()
+                F.emit('cp', '%s,%s' % (R, hx(g[1]))); F.emit('j', 'gt,%s' % skip)
+                F.emit('cp', '%s,%s' % (R, hx(g[0]))); F.emit('j', 'ge,%s' % g[2])
+                if not lastone: F.lines.append(skip + ':')
+                elif default:                                  # sw_ev: the default body follows the range test
+                    order = [c for c in cases if c.k == 'default'] + [c for c in cases if c.k != 'default']
+        if not entries: to_default('t') if False else F.emit('j', deflab)
+    F.loops.append((end, F.loops[-1][1] if F.loops else (lambda: end)))
+    items = flat(s.body) if s.body.k == 'block' else [s.body]
+    if order is not cases and order[0].k == 'default':     # move the default's statements to the front
+        di = [i for i, x in enumerate(items) if x is order[0] or (x.k == 'case' and any(y is order[0] for y in switch_cases(x, [])))][0]
+        nj = [i for i in range(di + 1, len(items)) if items[i].k in ('case', 'default')]
+        stop = nj[0] if nj else len(items)
+        items = items[di:stop] + items[:di] + items[stop:]
+    if len(items) >= 2 and items[-1].k == 'break' and any(x.k == 'default' for x in items[-2:-1]) or \
+            (len(items) >= 2 and items[-1].k == 'break' and items[-2].k == 'default'):
+        items = items[:-1]                                 # sw_jt6d: default: f0(); break; -> cal .f0 / L9: ret
+    for it in items: gen_stmt(F, it, False)
+    F.loops.pop()
+    F.lines.append(end + ':')
+    F.switch_table = getattr(F, 'switch_table', False) or table
+
 def loop_cond(F, c, target, sense):
     """jump to target when c is true (sense) or false (not sense); x-- as condition (rc_while)"""
     c = strip(c)
@@ -1442,8 +1592,9 @@ def gen_counted(F, s, last, cl):
     i = cl['i']; I = FAM[i.reg][2]; K = FAM[cl['kp'].reg][2]
     F.emit('ld', '%s,0x0' % I)
     kd = cl['k']
-    km = '(XSP+%s)' % hx(kd.off + F.push) if kd.kind == 'param' else '(_%s)' % kd.name
-    F.emit('ld', '%s,%s' % (K, km))
+    if not cl.get('k_in_reg'):
+        km = '(XSP+%s)' % hx(kd.off + F.push) if kd.kind == 'param' else '(_%s)' % kd.name
+        F.emit('ld', '%s,%s' % (K, km))
     F.emit('cp', '%s,0x0' % K)
     exitl = F.newulabel(); body = F.newulabel()
     trivial = last and not F.pushes
@@ -1634,13 +1785,17 @@ def plan_leaf(F):
             locs = [d for d in f.decls if d.kind == 'local' and d.ty.kind == 'int' and not d.addr_taken]
             for d in locs:
                 if d in rets0: d.reg = 'HL'; reserved.add('HL')
-            free = [r for r in seq if r not in reserved]
             kd = cl['k']; kp = Pseudo('bound', 2); cl['kp'] = kp
+            for p_ in f.params:                            # adecl: register parameters keep their registers
+                if getattr(p_, 'reg', None) in seq: reserved.add(p_.reg)
+            if getattr(kd, 'reg', None) in seq:            # ra_leaf1 under O3XSXr: the bound stays in WA (cp IX,WA)
+                kp.reg = kd.reg; cl['k_in_reg'] = True
+            free = [r for r in seq if r not in reserved]
             order = []
             if kd.kind == 'global': order.append(kp)
             if cl['esz'] > 1: cl['off'] = Pseudo('offset', 2); order.append(cl['off'])
             cl['base'] = Pseudo('base', 4); order.append(cl['base'])
-            if kd.kind != 'global': order.append(kp)
+            if kd.kind != 'global' and not cl.get('k_in_reg'): order.append(kp)
             order += [d for d in reversed(locs) if not getattr(d, 'reg', None)]
             for x in order:
                 x.reg = free.pop(0)
@@ -1864,6 +2019,38 @@ def store_knowledge(lines):
         out.append(l)
     return out
 
+def tail_calls(lines, keep_end):
+    """cal X directly followed by j L, where L leads to ret, becomes j X (switch.c sw_jt6, ctrl.c c_ifchain under
+    -Xr; a cal that falls into L: ret stays, cmp_i eq_i_br).  A ret left unreferenced after an unconditional jump is dropped, except a switch
+    table's end (sw_jt6 keeps L3: ret, the chain sw_jt4 does not)."""
+    def is_label(l): return l.endswith(':') and not l.startswith('\t')
+    def leads_to_ret(i):
+        while i < len(lines) and is_label(lines[i]): i += 1
+        return i < len(lines) and lines[i] == '\tret'
+    pos = {l[:-1]: i for i, l in enumerate(lines) if is_label(l)}
+    out = list(lines)
+    for i, l in enumerate(lines):
+        if not l.startswith('\tcal\t') or l.split('\t')[2].startswith(('C9H_', '._f')): continue
+        nxt = lines[i + 1] if i + 1 < len(lines) else ''
+        if nxt.startswith('\tj\t') and ',' not in nxt and nxt.split('\t')[2] in pos and leads_to_ret(pos[nxt.split('\t')[2]]):
+            out[i] = '\tj\t' + l.split('\t')[2]; out[i + 1] = None
+        elif nxt == '\tret' and l.split('\t')[2].startswith('.') and not l.endswith(';stack'):
+            out[i] = '\tj\t' + l.split('\t')[2]; out[i + 1] = None        # sw_ret: return g1(1) -> j .g1
+    out = [l for l in out if l is not None]
+    res = []                                               # a jump to the next label goes (sw_local: ld HL,0x7 / L128:)
+    for i, l in enumerate(out):
+        if l.startswith('\tj\t') and ',' not in l:
+            k = i + 1; labs = set()
+            while k < len(out) and is_label(out[k]): labs.add(out[k][:-1]); k += 1
+            if l.split('\t')[2] in labs: continue
+        res.append(l)
+    out = res
+    if not keep_end and len(out) >= 3 and out[-1] == '\tret' and is_label(out[-2]) and out[-3].startswith('\tj\t') \
+            and ',' not in out[-3]:
+        lab = out[-2][:-1]
+        if not any(lab in x for x in out[:-2]): out = out[:-2]
+    return out
+
 def compile_function(f, opt, adecl, personality='v4.23'):
     F = Fn(f, adecl)
     F.personality = personality
@@ -1881,6 +2068,8 @@ def compile_function(f, opt, adecl, personality='v4.23'):
         if F.xiz_vars: F.emit('pop', F.save_reg)
         epilogue(F)
         F.emit('ret')
+    for t in reversed(getattr(F, 'tables', [])): F.lines[1:1] = t     # switch tables right after the label
+    F.lines = tail_calls(F.lines, getattr(F, 'switch_table', False))
     import re                                            # no self-moves: the oracle never writes ld XWA,XWA
     F.lines = [l for l in F.lines if not re.match(r'^\tld\t(\w+),\1$', l)]
     # a call directly followed by the return becomes a jump (cmp_ui: ge_ui_br0)
