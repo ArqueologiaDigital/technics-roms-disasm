@@ -77,8 +77,8 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-30-micro-chnarrow, v423/O3XSXr                       | probes/chnarrow.c    | 18 / 20 exact (90.0%)    |
 | run 2026-11-09-31-micro-lnr, v423/none                              | probes/lnr.c         | 28 / 50 exact (56.0%)    |
 | run 2026-11-09-31-micro-lnr, v423/O3XS                              | probes/lnr.c         | 3 / 50 exact (6.0%)      |
-| run 2026-11-09-31-micro-lnr, v423/Xr                                | probes/lnr.c         | 8 / 50 exact (16.0%)     |
-| run 2026-11-09-31-micro-lnr, v423/O3XSXr                            | probes/lnr.c         | 6 / 50 exact (12.0%)     |
+| run 2026-11-09-31-micro-lnr, v423/Xr                                | probes/lnr.c         | 9 / 50 exact (18.0%)     |
+| run 2026-11-09-31-micro-lnr, v423/O3XSXr                            | probes/lnr.c         | 7 / 50 exact (14.0%)     |
 | run 2026-11-09-32-micro-lnr2, v423/none                             | probes/lnr2.c        | 22 / 43 exact (51.2%)    |
 | run 2026-11-09-32-micro-lnr2, v423/O3XS                             | probes/lnr2.c        | 0 / 43 exact (0.0%)      |
 | run 2026-11-09-32-micro-lnr2, v423/Xr                               | probes/lnr2.c        | 3 / 43 exact (7.0%)      |

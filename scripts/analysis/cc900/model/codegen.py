@@ -1625,6 +1625,7 @@ REG_MEMBER = True                                         # see mem_operand (ae_
 HELD_LATER = True                                         # see held_after (lnr.c's dummies)
 PTR_ELEM_REGVAL = True                                    # see gen_stmt's store (r_p_wri)
 PTR_ELEM_XDE = True                                       # see gen_opassign (s_add_gw)
+STORE_GLOBAL_FREE = True                                  # see store_global (r_p_rd)
 DEC_CMP_SUB = True                                        # dec 0x1,R / cp R,0x0 -> sub R,0x1 (opt_counted.c oc_down)
 TERN_TRUTH_PRE = True                                     # see gen's -O ?: path
 RET_CC_KEEPS = True                                       # see knowledge_pass
@@ -2507,8 +2508,17 @@ def gen_load_mem(F, v, fam, size):
             if esz == 1:                                           # m_gca_v
                 F.emit('lda', 'XWA,_%s' % b.decl.name); F.emit('ld', 'BC,%s' % im); F.emit('extz', 'XBC')
                 F.emit('add', 'XBC,XWA'); F.emit('ld', '%s,(XBC)' % R); return fam
+            if STORE_GLOBAL_FREE and fam in ('BC', 'DE', 'HL') and held_after(F, 'WA', v) and \
+                    not reads_reg(i, fam):                 # lnr.c r_ga_rd (-Xr): k in WA -> ld BC,IZ / add BC,BC /
+                B = next((x for x in ('DE', 'HL', 'IX', 'IY') if x != fam and not held_after(F, x, v)), None)
+                if B is None: raise Unsupported('index register holds a live variable')   # lda XDE,_ga /
+                F.emit('ld', '%s,%s' % (fam, im))                                         # ld BC,(XDE+BC)
+                F.emit('add', '%s,%s' % (fam, fam)) if esz == 2 else F.emit('sla', '%s,%s' % (hx({4: 2, 8: 3}[esz]), fam))
+                F.emit('lda', 'X%s,_%s' % (B, b.decl.name)); F.emit('ld', '%s,(X%s+%s)' % (R, B, fam)); return fam
             if IDX_GUARD and (held_after(F, 'WA', v) or held_after(F, 'BC', v)) and fam not in ('WA', 'BC'):
                 raise Unsupported('index register holds a live variable')   # (ol_two_arr -O3 -XS -Xr: k in WA)
+            if STORE_ADDR_GUARD and held_after(F, 'WA', v):
+                raise Unsupported('index register holds a live variable')   # (r_ga_rd -Xr: wrong code)
             F.emit('ld', 'WA,%s' % im)                             # m_ga_v, m_gla_v
             F.emit('add', 'WA,WA') if esz == 2 else F.emit('sla', '%s,WA' % hx({4: 2, 8: 3}[esz]))
             F.emit('lda', 'XBC,_%s' % b.decl.name); F.emit('ld', '%s,(XBC+WA)' % R); return fam
@@ -3113,7 +3123,9 @@ def store_global(F, name, e, size):
             if getattr(d, 'reg', None): need.add(d)
         held = {getattr(d, 'reg', None) for d in need}
         work = next((r for r in ('WA', 'BC', 'DE', 'HL') if r not in held), 'WA')
-    fam = gen(F, e, work, size, store=True)
+    elif STORE_GLOBAL_FREE and held_after(F, 'WA', e):  # lnr.c r_p_rd (-Xr): gr = p[i] with p in XWA -> ld DE,IZ /
+        work = next((r for r in ('BC', 'DE', 'HL') if not held_after(F, r, e)), 'WA')   # ... / ld DE,(XDE) /
+    fam = gen(F, e, work, size, store=True)                                           # ld (_gr),DE
     reg = F.store_from or FAM[fam][size]
     if STORE_FROM_WORK and F.opt and F.lines and size >= 2:   # -O: the value is stored from where it was computed
         m = re.match(r'^\tld\t%s,(BC|DE|HL|IX|IY|XBC|XDE|XHL|XIX|XIY)$' % reg, F.lines[-1])   # (assign_expr.c
