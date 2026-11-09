@@ -82,7 +82,8 @@ def strip(e):
 def narrow(e, size):
     """the value of e, known to be needed only in its low `size` bytes: drop integral casts that widen"""
     e = strip(e)
-    while e.k == 'cast' and e.kind == 'IntegralCast' and strip(e.e).ty.size >= size and not wide_divide(strip(e.e), size):
+    while e.k == 'cast' and e.kind == 'IntegralCast' and strip(e.e).ty.size >= size and not wide_divide(strip(e.e), size) \
+            and not ptrdiff_arith(strip(e.e)):
         e = strip(e.e)                                   # / % >> on wide operands keep their width (_ultoa: val % radix)
     if e.k == 'cast' and e.kind == 'IntegralCast' and strip(e.e).ty.size < size:
         return e
@@ -98,6 +99,17 @@ def wide_divide(e, size):
     narrow; _ultoa: val % radix on longs does not)"""
     return e.k == 'bin' and e.op in ('/', '%', '>>') and e.ty.size > size and \
         max(operand_width(e.l), operand_width(e.r) if e.op != '>>' else 0) > size
+
+def ptrdiff_arith(e):
+    """an + / - on a pointer difference: cc900 does it at the difference's 32 bits even when the result is narrowed
+    (_memccpy: (unsigned)(pos - s2 + 1) -> sub XWA,(XSP+0xe) / inc 0x1,XWA / push WA)"""
+    if e.k != 'bin' or e.op not in ('+', '-'): return False
+    for x in (e.l, e.r):
+        x = strip(x)
+        while x.k == 'cast' and x.kind in ('IntegralCast', 'NoOp'): x = strip(x.e)
+        if x.k == 'bin' and x.op == '-' and strip(x.l).ty is not None and strip(x.l).ty.is_ptr() and \
+                strip(x.r).ty is not None and strip(x.r).ty.is_ptr(): return True
+    return False
 
 def same_size_ptr_cast(e):
     """an integer <-> pointer cast between equal sizes changes nothing (__SBRK.C: (void *)SBRK_size)"""
@@ -1719,6 +1731,7 @@ def gen_stmt(F, s, last):
             if k is not True: F.lines.append(lab + ':')   # always true: no label (cmp_ui: ge_ui_br0)
             return
         lelse, lend = F.newulabel(), F.newulabel()
+        F.if_joins = getattr(F, 'if_joins', set()) | {lend}
         before_trivial_ret = getattr(F, 'trivial_ret_next', False)   # c_ifelse: r = a; else r = b; return r -> j L2
         gen_cond_false(F, s.cond, lelse)
         gen_stmt(F, s.then, last)
@@ -1818,6 +1831,11 @@ def gen_stmt(F, s, last):
             need |= {d for d in list(F.f.params) + list(F.f.decls) if getattr(d, 'reg', None) and uses_after_stmt(F, d)}
             held = {getattr(d, 'reg', None) for d in need}
             work = next((r for r in ('WA', 'BC', 'DE', 'HL') if r not in held), 'WA')
+        rcall = strip(s.e.r)
+        while rcall.k == 'cast' and rcall.kind in ('BitCast', 'NoOp') or (rcall.k == 'cast' and rcall.ty.is_ptr()): rcall = strip(rcall.e)
+        if F.opt and rcall.k == 'call' and lv.k == 'var' and size in (2, 4) and not getattr(lv.decl, 'reg', None):
+            gen(F, rcall, 'HL', size); flush_pops(F)        # ls_mc / _memccpy: cal _vp / inc 0x8,XSP /
+            F.emit('ld', '%s,%s' % (t, FAM['HL'][size])); return   # ld (XSP+0x2),XHL
         fam = gen(F, s.e.r, work, size)                    # opt_temps.c ot_cpy_anb: ld E,(XHL+:1) / ld (XWA+:1),E
         F.emit('ld', '%s,%s' % (t, FAM[fam][size])); return
     raise Unsupported('statement ' + s.k)
@@ -1925,11 +1943,10 @@ def eval_sequence(node, out):
         out.append(('call',))
     return out
 
-# where homes.choose (R3-set) replaces the first fit's rule.  Not -O3 -XS: there R3-set, even with homes.py's two
-# refinements (142 of 158 values right against the first fit's 61 of 97 / 94 of 158), loses _strlen (a 32-bit
-# parameter read twice: XIZ), _calloc (a 32-bit call result read three times beats a parameter read twice), _strcmp
-# and _modf of the 1997 library, and gains no listing; the first fit's rule stays until library-shaped probes decide.
-R3_SETS = ('none', 'Xr', 'O3XSXr')
+# where homes.choose replaces the first fit's rule: R3-set under none, -Xr, -O3 -XS -Xr; under -O3 -XS rule R4 when a
+# 32-bit value is a candidate (research-scratch sessions/2026-11-09_cc900-homes 1baf8a7: _strlen, _calloc, _memccpy,
+# _strcmp, _modf), else the first fit's rule (homes.choose returns None).
+R3_SETS = ('none', 'Xr', 'O3XSXr', 'O3XS')
 
 def plan_homes(F):
     """adecl: where register parameters and register locals live when a call would clobber them (call.c, adecl.c,
@@ -2020,10 +2037,11 @@ def plan_homes(F):
             feats = homes.features(F.f.body, F.f.params, F.opt)
             for d in vals: feats.setdefault(d, homes.Feat())
             winners = homes.choose(vals, feats, setname, F.adecl, stack_born, call_res,
-                                   lambda d: F.f.params.index(d), lambda d: ldecl.index(d) if d in ldecl else 0, helper_ops)
+                                   lambda d: F.f.params.index(d), lambda d: ldecl.index(d) if d in ldecl else 0, helper_ops,
+                                   homes.uses(F.f.body, F.f.params) if setname == 'O3XS' else None)
         winners_sorted = winners
-    else:
-        # the first fit's rule (fit_homes.py BEST): kept where R3-set loses listings (see R3_SETS)
+    if winners is None or setname not in R3_SETS:
+        # the first fit's rule (fit_homes.py BEST): -O3 -XS without a 32-bit candidate (homes.choose returns None)
         sc = {}
         def bump(d, k): sc[d] = sc.get(d, 0) + k
         def count(n, k=1, bound=None):
@@ -3182,6 +3200,43 @@ def propagate_global_copies(f):
             substitute(nx, g.decl, src)
     walk(f.body, visit)
 
+def forward_single_use(f):
+    """-O: a local written once by a call-free expression and read once, as the last argument of the call that makes
+    the next statement, is not stored: the expression is pushed in its place (_memccpy, ls_mc: nn = pos - s2 + 1;
+    cp2(s1, s2, nn) -> sub XWA,(XSP+0xe) / inc 0x1,XWA / push WA)"""
+    refs = {}
+    def count(n, dep):
+        if n.k == 'var': refs[n.decl] = refs.get(n.decl, 0) + 1
+    walk(f.body, count)
+    gone = []
+    def pure(e):
+        bad = []
+        walk(e, lambda n, dd: bad.append(n) if n.k in ('call', 'incdec', 'opassign') or
+             (n.k == 'bin' and n.op == '=') else None)
+        return not bad
+    def visit(n, d):
+        if n.k != 'block': return
+        b = n.body
+        for k in range(len(b) - 1):
+            c, nx = b[k], b[k + 1]
+            if not (c.k == 'expr' and strip(c.e).k == 'bin' and strip(c.e).op == '=' and strip(strip(c.e).l).k == 'var'):
+                continue
+            v = strip(strip(c.e).l).decl; rhs = strip(c.e).r
+            if v.kind != 'local' or v.addr_taken or v.ty.kind not in ('int', 'ptr') or refs.get(v, 0) != 2 or not pure(rhs):
+                continue
+            if not (nx.k == 'expr' and strip(nx.e).k == 'call' and strip(nx.e).args): continue
+            last = strip(nx.e).args[-1]; x = last
+            while x.k in ('cast', 'noop', 'decay') and x.k != 'load': x = x.e
+            if not (x.k == 'load' and strip(x.e).k == 'var' and strip(x.e).decl is v): continue
+            strip(nx.e).args[-1] = rhs; b[k] = N_block(); gone.append(v)
+    walk(f.body, visit)
+    for v in gone:
+        if v in f.decls: f.decls.remove(v)
+    def drop_decl(n, dep):
+        if n.k == 'block':
+            n.body = [x for x in n.body if not (x.k == 'decl' and x.var in gone)]
+    walk(f.body, drop_decl)
+
 def N_block():
     from frontend import N
     return N('block', body=[])
@@ -3428,7 +3483,7 @@ def cross_jump(F, lines):
     def is_label(l): return l.endswith(':') and not l.startswith('\t')
     def uncond(l): return l.startswith(('\tret', '\tj\t', '\tretd')) and ',' not in l
     lines = drop_jump_to_next(lines)
-    made = set()
+    made = set(); made_new = set()
     while True:
         done = False
         for li, lab in enumerate(lines):
@@ -3443,7 +3498,9 @@ def cross_jump(F, lines):
             js = [i for i in jumps if X is not None and lines[i - 1] == X]
             N = None
             if js:                                         # merge into the fall-through
-                N = F.newlabel()
+                N = F.newlabel(); made_new.add(N)
+                if L in getattr(F, 'if_joins', ()): made.add(L)   # ls_mc: the arms' join label goes (a switch's end
+                                                                 # label stays, sw_jt6: L9: ret)
                 for i in sorted(js, reverse=True): lines[i - 1:i + 1] = ['\tj\t' + N]
                 k = [i for i in range(len(lines)) if lines[i] == lab][0] - 1
                 while is_label(lines[k]): k -= 1
@@ -3454,14 +3511,16 @@ def cross_jump(F, lines):
                     if not lines[i - 1].startswith('\tcal\t._f'): byx.setdefault(lines[i - 1], []).append(i)
                 grp = [g for g in byx.values() if len(g) >= 2]
                 if grp:
-                    g = grp[0]; X2 = lines[g[0] - 1]; N = F.newlabel()
+                    g = grp[0]; X2 = lines[g[0] - 1]; N = F.newlabel(); made_new.add(N)
                     for i in sorted(g[:-1], reverse=True): lines[i - 1:i + 1] = ['\tj\t' + N]
                     last = max(i for i, l in enumerate(lines) if l == '\tj\t' + L and lines[i - 1] == X2)
                     lines.insert(last - 1, N + ':')        # the last `X / j L` of the group keeps the code
             if N: done = True; made.add(N); break
         if not done: break
     def refs(L): return sum(1 for l in lines if l.startswith('\t') and re.search(r'[\t,]%s$' % re.escape(L), l))
-    return [l for l in lines if not (is_label(l) and l[:-1] in made and not refs(l[:-1]))]   # _memccpy: one L50000
+    def named(L): return any(re.search(r'\b%s\b' % re.escape(L), l) for l in lines if not (is_label(l) and l[:-1] == L))
+    return [l for l in lines if not (is_label(l) and l[:-1] in made and not refs(l[:-1]) and   # _memccpy: one L50000
+                                     (l[:-1] in made_new or not named(l[:-1])))]
 
 def tail_calls_opt(F, lines):
     """-O: cal X / j L (L: ret) becomes j X; a label that lost all its references (and is not a ret cc target)
@@ -3551,7 +3610,7 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong
     if personality not in PERSONALITIES: raise ValueError('unknown personality %s' % personality)
     personality = PERSONALITIES[personality]
     merge_address_inits(f)
-    if opt != 'none' and not adecl: propagate_global_copies(f)
+    if opt != 'none' and not adecl: propagate_global_copies(f); forward_single_use(f)
     F = Fn(f, adecl)
     F.fp_temps = fp_temps; F.fp_nlong = fp_nlong
     F.personality = personality

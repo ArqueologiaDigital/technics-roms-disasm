@@ -82,7 +82,19 @@ the first fit. The refinements, both in `homes.py` (fit by `fit_o3xs_counter.py`
 - a parameter read only as a loop bound is no candidate when a local that is more than a counter competes;
 - an accumulator `s += g1(i)` takes no QIZ.
 
-It still loses 4 listings of the 1997 library: `_strlen`, `_calloc`, `_strcmp`, `_modf`.  `homes.py`'s features agree
+It still loses 4 listings of the 1997 library: `_strlen`, `_calloc`, `_strcmp`, `_modf`.
+
+**R4 (2026-11-09, research-scratch `1baf8a7`, `fit_o3xs_uses.py`)** replaces it under cdecl `-O3 -XS` whenever a
+32-bit value is a candidate.  Fitted on run `2026-11-09-14-micro-libshapes` and the library, it gets 203 of 213 O3XS
+values right, with all five library routines.  It orders by how each value is used (`homes.uses`):
+- **Demoted:** a 32-bit local passed to a call or read inside an `if` arm; a 32-bit parameter read as an operand
+  inside an arm; a 16-bit parameter not passed directly before its first call.
+- **Class 0:** a parameter passed as an argument after its first call (outside any arm when it is 16-bit).
+- **Then:** score, span, locals before parameters.
+
+Without a 32-bit candidate `homes.choose` returns None and the first fit's rule decides (`rh_lp`, `sv_keep_across`).
+Ledger: ra_libshapes O3XS 11 -> 14, homes32 O3XS 4 -> 6 and O3XSXr 5 -> 6, library 149 -> 150 (v4.23) and
+147 -> 148 (kn5000).  Pairs: `_memccpy` x9, 176 -> 185.  `homes.py`'s features agree
 with the hand counts for 318 of 324 values (`check_model_features.py`).  The 6 that differ:
 - the -O copy merge (`rc_keep1-4`);
 - the -O tail merge (`h_mc`, `h_mc_int`);

@@ -1,6 +1,10 @@
 """Where a value live across a call lives: IZ / QIZ / XIZ / a frame slot / its stack arrival (rule R3-set).
 
-Under -O3 -XS two refinements (research-scratch sessions/2026-11-09_cc900-homes/fit_o3xs_counter.py, 132 -> 142 of
+Under -O3 -XS rule R4 (research-scratch sessions/2026-11-09_cc900-homes, fit_o3xs_uses.py, 1baf8a7: 203 of 213 O3XS
+values, the 1997 library's _strlen, _calloc, _memccpy, _strcmp, _modf all right): with a 32-bit candidate the order is
+(demoted, class, -score, span, locals before parameters), from how each value is used (uses() below); without one,
+choose() returns None and codegen keeps the first fit's rule, which gets the 16-bit contests (rh_lp,
+sv_keep_across) that R4's fallback misses.  The R3 order keeps two refinements (research-scratch sessions/2026-11-09_cc900-homes/fit_o3xs_counter.py, 132 -> 142 of
 158 values): a parameter read only as a loop bound is no candidate when a local that is more than a loop counter is
 (rh_loop, c_for: i, read in the body, IZ; n memory; rc_for: i only counts, n IZ), and an accumulator written by
 arithmetic in a loop (s += g1(i)) takes no QIZ.
@@ -30,7 +34,8 @@ Features of a value (homes.csv's columns):
 # rule parameters per option set (fit_homes.py BEST3_SET)
 SETS = {
     'none':   dict(ld=2, cw=1, cv=0, p32=0, norm=0, pf=1, sp=1, tie='ldecl', fp=1, qt='pri', TQ=2),
-    'O3XS':   dict(ld=1, cw=0, cv=0, p32=1, norm=0, pf='mix', sp=1, tie='ldecl', fp=1, qt='pair', TQ=3, qacc=1),
+    'O3XS':   dict(ld=1, cw=0, cv=0, p32=1, p32k='L', norm=0, pf=1, sp=1, tie='ldecl', fp=1, qt='pair', TQ=3, qacc=1,
+                   mixx=1, r4=1),
     'Xr':     dict(ld=2, cw=1, cv=1, p32=0, norm=1, pf=0, sp=0, tie='decl', fp=2, qt='pair', TQ=2),
     'O3XSXr': dict(ld=0, cw=1, cv=1, p32=1, norm=1, pf=0, sp=0, tie='ldecl', fp=3, qt='pair', TQ=2),
 }
@@ -64,6 +69,7 @@ class Feat:
 
 def features(body, params, opt):
     """{decl: Feat} for every variable referenced in body"""
+    if opt: mark_merged_tails(body)
     F = {}
     def f(d):
         if d not in F: F[d] = Feat()
@@ -75,7 +81,7 @@ def features(body, params, opt):
         if isinstance(n, list):
             for x in n: count(x, k, bound, once, ctl)
             return
-        if not hasattr(n, 'k'): return
+        if not hasattr(n, 'k') or getattr(n, '_merged', False): return
         if n.k == 'load' and strip(n.e).k == 'var':
             d = strip(n.e).decl
             if n is bound: f(d).u_cmp += k
@@ -226,6 +232,40 @@ def features(body, params, opt):
     return F
 
 
+def same_expr(a, b):
+    """structural equality of two expression trees (the same variables, constants and operators)"""
+    if not (hasattr(a, 'k') and hasattr(b, 'k')) or a.k != b.k: return False
+    if a.k == 'var': return a.decl is b.decl
+    if a.k == 'const': return a.value == b.value
+    for key in ('op', 'kind'):
+        if getattr(a, key, None) != getattr(b, key, None): return False
+    ka, kb = list(kids(a)), list(kids(b))
+    return len(ka) == len(kb) and all(x[0] == y[0] and same_expr(x[1], y[1]) for x, y in zip(ka, kb))
+
+
+def last_call(arm):
+    n = arm
+    while hasattr(n, 'k') and n.k == 'block' and n.body: n = n.body[-1]
+    if hasattr(n, 'k') and n.k == 'expr' and hasattr(n.e, 'k') and strip(n.e).k == 'call': return strip(n.e)
+    return None
+
+
+def mark_merged_tails(body):
+    """-O cross-jumping (_memccpy: both arms end in memcpy(s1, s2, x)): the arguments the two arms' final calls share,
+    from the first, are pushed once after the arms meet; mark the else arm's copies _merged (counted once)"""
+    def visit(n):
+        if not hasattr(n, 'k'): return
+        if n.k == 'if' and n.els is not None:
+            a, b = last_call(n.then), last_call(n.els)
+            if a is not None and b is not None and same_expr(a.fn, b.fn) and len(a.args) == len(b.args):
+                k = 0
+                while k < len(a.args) and same_expr(a.args[k], b.args[k]): k += 1
+                if k < len(a.args):                        # identical calls are a different merge
+                    for x in b.args[:k]: x._merged = True
+        for _, c in kids(n): visit(c)
+    visit(body)
+
+
 def has_incdec(n):
     if not hasattr(n, 'k'): return False
     if n.k == 'incdec': return True
@@ -243,21 +283,22 @@ def init_var(init):
     return None
 
 
-def choose(vals, feats, setname, adecl, stack_born, call_res, pidx, lidx, helper_ops=()):
+def choose(vals, feats, setname, adecl, stack_born, call_res, pidx, lidx, helper_ops=(), uses=None):
     """-> the winners [first, second?] in IZ-then-QIZ order (decl order), the rule's (1)-(5)."""
     p = SETS[setname]
     def score(d):
         x = feats[d]
         w = x.reads + x.writes - p['cw'] * x.u_cmp + p['cv'] * x.u_conv
         if stack_born(d): w -= p['ld']
-        if d.ty.size == 4 and d not in helper_ops: w -= p['p32']      # mul_l_pp: an operand of a long helper is homed
+        if d.ty.size == 4 and d not in helper_ops and (p.get('p32k') != 'L' or d.kind != 'param'):
+            w -= p['p32']                                                # mul_l_pp: an operand of a long helper is homed
         return w
     def allowed(d):
         if not adecl or d.kind != 'param' or p['fp'] == 0 or pidx(d) == 0: return True
         if p['fp'] == 1: return False
         return feats[d].argwa or (p['fp'] == 3 and stack_born(d))
     sc = {d: (score(d) if allowed(d) else -99) for d in vals}
-    if p['pf'] == 'mix':
+    if p.get('mixx'):
         rival = any(d.kind != 'param' and not feats[d].counter_only() and sc[d] >= 1 for d in vals)
         for d in vals:                                                   # c_for: n stays where it arrived
             x = feats[d]
@@ -268,9 +309,20 @@ def choose(vals, feats, setname, adecl, stack_born, call_res, pidx, lidx, helper
         return (1, pidx(d)) if d.kind == 'param' else (0, lidx(d))       # ldecl
     def key(d):
         cls = 0 if (p['pf'] and d.kind == 'param' and sc[d] >= 1) else 1
-        if p['pf'] == 'mix':                 # -O3 -XS: parameters before 32-bit locals only (h_p), else by score (rh_lp)
-            cls = 1 if (d.kind != 'param' and d.ty.size == 4) else 0
         return (cls, -pri[d], feats[d].span if p['sp'] else 0, tie(d))
+    if p.get('r4') and not any(d.ty.size == 4 and sc[d] >= 1 for d in vals):
+        return None                          # no 32-bit candidate: the caller's first-fit rule (rh_lp: x IZ, a memory)
+    if p.get('r4') and uses is not None:
+        def key(d):                          # R4 (-O3 -XS with a 32-bit candidate): how the value is used
+            u = uses.get(d) or Uses(); f = u.feats(); big = d.ty.size == 4
+            if big and d.kind != 'param': dem = f['A_any'] or f['arm']
+            elif big: dem = f['X_arm']
+            elif d.kind == 'param': dem = not f['A_pre']
+            else: dem = False
+            if d.kind != 'param': cls = 1
+            elif big: cls = 0 if f['A_post'] else 1
+            else: cls = 0 if f['A_post_u'] else 1
+            return (int(bool(dem)), cls, -sc[d], feats[d].span, tie(d))
     cand = [d for d in sorted(vals, key=key) if sc[d] >= 1]
     if not cand: return []
     first = cand[0]
@@ -287,3 +339,92 @@ def choose(vals, feats, setname, adecl, stack_born, call_res, pidx, lidx, helper
         break
     gdecl = lambda d: (0, pidx(d)) if d.kind == 'param' else (1, lidx(d))
     return sorted(winners, key=gdecl)
+
+
+# ---- R4's use kinds (research-scratch sessions/2026-11-09_cc900-homes/use_kinds.py, 1baf8a7) ----------------------
+class Uses:
+    """the reads of one value: (kind, arm, pos).  kind A = the value itself is a call argument, T = a test (if /
+    while / for / ?: condition, !v, v == 0, v != 0, an && / || operand there), R = returned, X = anything else; arm =
+    inside an if / else arm (not its condition, not code after an if that returns); pos = calls evaluated before it
+    (a call's arguments are read before the call).  A value lives across call c when defined before c and read at
+    pos >= c; the first such c splits its reads into pre and post."""
+    def __init__(s): s.reads = []; s.defpos = None
+    def cross(s):
+        d = s.defpos or 0
+        return d + 1 if any(p > d for _, _, p in s.reads) else None
+    def feats(s):
+        c = s.cross()
+        pre = [r for r in s.reads if c is None or r[2] < c]
+        post = [r for r in s.reads if c is not None and r[2] >= c]
+        has = lambda rs, k, arm=None: any(r[0] == k and (arm is None or r[1] == arm) for r in rs)
+        return dict(A_pre=has(pre, 'A'), A_post=has(post, 'A'), A_post_u=has(post, 'A', 0),
+                    X_arm=any(r[0] == 'X' and r[1] for r in s.reads), arm=any(r[1] for r in s.reads),
+                    A_any=has(s.reads, 'A'))
+
+
+def uses(body, params):
+    """{decl: Uses} for every variable of the function (-O: merged call tails read once, mark_merged_tails)"""
+    mark_merged_tails(body)
+    U = {}; ncall = [0]
+    def u(d):
+        if d not in U: U[d] = Uses()
+        return U[d]
+    for d in params: u(d).defpos = 0
+    def read(d, kind, arm): u(d).reads.append((kind, arm, ncall[0]))
+    def write(d):
+        if u(d).defpos is None: u(d).defpos = ncall[0]
+    def zero(e): e = strip(e); return e.k == 'const' and e.value == 0
+    def ex(n, ctx, arm):
+        if n is None or not hasattr(n, 'k') or getattr(n, '_merged', False): return
+        k = n.k
+        if k in ('noop', 'decay', 'cast'): return ex(n.e, ctx, arm)
+        if k == 'load':
+            e = strip(n.e)
+            if e.k == 'var': return read(e.decl, ctx, arm)
+            return ex(n.e, 'X', arm)
+        if k == 'call':
+            for a in n.args: ex(a, 'A', arm)
+            if n.fn.k not in ('var', 'decay', 'noop'): ex(n.fn, 'X', arm)
+            ncall[0] += 1; return
+        if k == 'bin' and n.op == '=':
+            v = strip(n.l); ex(n.r, 'X', arm)
+            if v.k == 'var': return write(v.decl)
+            return ex(n.l, 'X', arm)
+        if k in ('incdec', 'opassign'):
+            v = strip(n.e if k == 'incdec' else n.l)
+            if k == 'opassign': ex(n.r, 'X', arm)
+            if v.k == 'var': read(v.decl, 'X', arm); return write(v.decl)
+            return ex(n.e if k == 'incdec' else n.l, 'X', arm)
+        if ctx == 'T' and k == 'bin' and n.op in ('==', '!=') and (zero(n.l) or zero(n.r)):
+            return ex(n.r if zero(n.l) else n.l, 'T', arm)
+        if ctx == 'T' and k == 'bin' and n.op in ('&&', '||'): ex(n.l, 'T', arm); return ex(n.r, 'T', arm)
+        if ctx == 'T' and k == 'un' and n.op == '!': return ex(n.e, 'T', arm)
+        for _, c in kids(n): ex(c, 'X', arm)
+    def st(n, arm):
+        if n is None: return
+        if isinstance(n, list):
+            for x in n: st(x, arm)
+            return
+        k = n.k
+        if k == 'block': return st(n.body, arm)
+        if k == 'decl':
+            if getattr(n, 'init', None) is not None: ex(n.init, 'X', arm); write(n.var)
+            return
+        if k == 'expr': return ex(getattr(n, 'e', None), 'S', arm)
+        if k == 'return': return ex(n.value, 'R', arm) if n.value is not None else None
+        if k == 'if': ex(n.cond, 'T', arm); st(n.then, 1); st(n.els, 1); return
+        if k in ('while', 'do', 'for'):
+            if k == 'for' and n.init is not None:
+                st(n.init, arm) if n.init.k in ('block', 'decl', 'expr') else ex(n.init, 'S', arm)
+            if k != 'do' and n.cond is not None: ex(n.cond, 'T', arm)
+            st(n.body, arm)
+            if k == 'for' and n.inc is not None: ex(n.inc, 'S', arm)
+            if k == 'do': ex(n.cond, 'T', arm)
+            return
+        if k == 'switch': ex(n.value, 'T', arm); return st(n.body, 1)
+        if k in ('break', 'continue', 'goto', 'label', 'case', 'default'):
+            for _, c in kids(n): st(c, arm)
+            return
+        ex(n, 'S', arm)
+    st(body, 0)
+    return U

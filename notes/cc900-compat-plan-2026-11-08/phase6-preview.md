@@ -64,10 +64,10 @@ reference model (cdecl, `-O3 -XS -DFLOAT`, as the library was built), translates
 image's own addresses: the pairs' publics, the image's labels, the helpers named in the runtime cross-reference),
 assembles and links it with llvm-mc / ld.lld at the pair's address, and compares the bytes with the image.
 
-| personality | byte-identical pairs | which                                                                                                                                                                                                                                                                                                                                                       |
-|-------------|----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `v4.23`     | 163 (27 differ)      | `_ltoa`, `_strcat`, `_strncpy`, `_strncat`, `_strcpy`, `_strlen`, `_memset`, `_memcmp`, `_memchr`, `_memcpy`, `__ctype` x9 each, `_strncmp` x10, `_strchr` x5, `_strnset` x5, `.sbrk` x6, `__FloatErrorHandle` x3, sub CPU float tables x9; `_modf`, `_fabs`, `_sin`, `_cos`, `_tan`, `_exp` (sub CPU x3 each); `_sprintf`, `_vsprintf` (HD-AE5000 x4 each) |
-| `kn5000`    | 176 (14 differ)      | the same 163, plus `_ultoa` (main CPU v10, v9, v7, v6, v5, HD-AE5000 x4) and `_ldiv` (HD-AE5000 x4)                                                                                                                                                                                                                                                         |
+| personality | byte-identical pairs | which                                                                                                                                                                                                                                                                                                                                                                   |
+|-------------|----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `v4.23`     | 172 (18 differ)      | `_ltoa`, `_strcat`, `_strncpy`, `_strncat`, `_strcpy`, `_strlen`, `_memset`, `_memcmp`, `_memchr`, `_memcpy`, `_memccpy`, `__ctype` x9 each, `_strncmp` x10, `_strchr` x5, `_strnset` x5, `.sbrk` x6, `__FloatErrorHandle` x3, sub CPU float tables x9; `_modf`, `_fabs`, `_sin`, `_cos`, `_tan`, `_exp` (sub CPU x3 each); `_sprintf`, `_vsprintf` (HD-AE5000 x4 each) |
+| `kn5000`    | 185 (5 differ)       | the same 172, plus `_ultoa` (main CPU v10, v9, v7, v6, v5, HD-AE5000 x4) and `_ldiv` (HD-AE5000 x4)                                                                                                                                                                                                                                                                     |
 
 `_ltoa` came later the same day (`-O` keeps the parameters of a function with calls in scratch registers when no
 value is read after a call; and asm900 writes a 32-bit `cp XDE,0x0` with the long immediate, `ea cf 00 00 00 00`, not
@@ -77,10 +77,11 @@ personality's additions.  `_modf` (sub CPU v142, v141, v140) is the first floati
 `pairs_model.py` takes its address from the image's own `lda XBC,...` operand and checks that the image holds that
 double there.  The 13 the kn5000 personality adds are the two routines in which the firmware's code differs from V4.23's output:
 the reload rule (`rules.md`) accounts for them, and with it they come out byte-identical with no Toshiba program in
-the chain.  The 14 that differ:
-- `_memccpy` x9, where the model does not yet reproduce V4.23 either (register choice around its two calls);
-- `_log` x3, whose FP constant `S50010` the model places where the image has none;
-- the main CPU's `_vsprintf` x2, a near match only (below).
+the chain.  The 5 that differ are `_log` x3 (20 of 338 bytes) and the main CPU's `_vsprintf` x2, a near match only (below).
+`_memccpy` x9 came right with the -O3 -XS home rule R4 (`model/homes.py`).  Three more -O behaviours were needed:
+- the arms' identical call tails are merged (`cross_jump`, counted once for the homes);
+- a call result is stored straight from XHL after its pops;
+- a value written once and pushed once by the next call is not stored.
 The table data's `.sbrk` came right once a `large` extern was taken as 24-bit (below).
 `.sbrk` is declared `__adecl` in a cdecl file; the front end now reads the attribute per function.  A static
 (`__str`, a static function's address `__strOut`) has no public symbol in the image either: `pairs_model.py` gives it
@@ -111,22 +112,22 @@ a DOS end-of-file byte, which the front end now cuts.)
 
 | image       | pairs | identical | differ | not compiled yet | near match, unverified |
 |-------------|-------|-----------|--------|------------------|------------------------|
-| maincpu v10 | 24    | 16        | 1      | 7                | 3                      |
-| maincpu v9  | 24    | 16        | 1      | 7                | 0                      |
-| maincpu v7  | 24    | 16        | 1      | 7                | 3                      |
-| maincpu v6  | 24    | 16        | 1      | 7                | 0                      |
-| maincpu v5  | 24    | 16        | 1      | 7                | 0                      |
-| subcpu v142 | 16    | 10        | 0      | 6                | 0                      |
-| subcpu v141 | 16    | 10        | 0      | 6                | 0                      |
-| subcpu v140 | 16    | 10        | 0      | 6                | 0                      |
+| maincpu v10 | 24    | 17        | 0      | 7                | 3                      |
+| maincpu v9  | 24    | 17        | 0      | 7                | 0                      |
+| maincpu v7  | 24    | 17        | 0      | 7                | 3                      |
+| maincpu v6  | 24    | 17        | 0      | 7                | 0                      |
+| maincpu v5  | 24    | 17        | 0      | 7                | 0                      |
+| subcpu v142 | 16    | 10        | 1      | 5                | 0                      |
+| subcpu v141 | 16    | 10        | 1      | 5                | 0                      |
+| subcpu v140 | 16    | 10        | 1      | 5                | 0                      |
 | table data  | 3     | 2         | 0      | 1                | 1                      |
-| hdae v2.06i | 21    | 16        | 1      | 4                | 1                      |
-| hdae v2.01i | 21    | 16        | 1      | 4                | 0                      |
-| hdae v1.15i | 19    | 16        | 1      | 2                | 0                      |
-| hdae v1.10i | 19    | 16        | 1      | 2                | 1                      |
+| hdae v2.06i | 21    | 17        | 0      | 4                | 1                      |
+| hdae v2.01i | 21    | 17        | 0      | 4                | 0                      |
+| hdae v1.15i | 19    | 17        | 0      | 2                | 0                      |
+| hdae v1.10i | 19    | 17        | 0      | 2                | 1                      |
 
 The sub CPU's pairs are mostly the floating-point routines, which the model does not compile yet; the one that
-differs on the main CPU and the HD-AE5000 is `_memccpy`.  `pairs.tsv` also lists `___ctype` at `__ctype`'s address in
+differed on the main CPU and the HD-AE5000, `_memccpy`, is now byte-identical too.  `pairs.tsv` also lists `___ctype` at `__ctype`'s address in
 every image that has it; `pairs_model.py` reports it as `alias of __ctype` and the table does not count it.  The
 `near match, unverified` column counts `pairs.tsv`'s `near` rows that are not byte-identical, outside `pairs`:
 - `_sbrk` (main CPU v10 and v7, table data) is the last bytes of the routine before `.sbrk` (`pop XIZ` / `ret`);
