@@ -5080,6 +5080,7 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong
                 if k + 1 < len(F.lines) and F.lines[k + 1] == '\tret': F.lines[i] = '\tret\t' + m.group(1)
     import re                                            # no self-moves: the oracle never writes ld XWA,XWA
     F.lines = [l for l in F.lines if not re.match(r'^\tld\t(\w+),\1$', l)]
+    if F.opt: F.lines = drop_unreachable(F.lines)        # (without -O a switch keeps its end: sw_jt6 L3: ret)
     F.lines = [l.replace('(XSP+0x0)', '(XSP)') for l in F.lines]   # the oracle writes (XSP), never (XSP+0x0)
     # a call directly followed by the return becomes a jump (cmp_ui: ge_ui_br0)
     if getattr(F, 'naive_loads', False) or (F.opt and not F.adecl): F.lines = knowledge_pass(F.lines, F.personality)
@@ -5184,6 +5185,27 @@ def emit_data(unit, out):
         out['_' + d.name] = ['_' + d.name + ':', '\tdsb\t%d' % d.ty.size]
 
 FULL = {}
+
+def drop_unreachable(lines):
+    """code after an unconditional ret / retd / j behind a label nothing jumps to is never reached, and the oracle
+    does not write it (assign_expr.c ae_i_call: j ge,L1 became ret ge, so `L1: ret` after `ld HL,0x0 / ret` goes;
+    cmp_i.c eq_i_br keeps its `L1: ret`, which the call falls into)"""
+    import re
+    def refs(L):
+        return any(re.search(r'[\t,]%s(?:-\w+)?$' % re.escape(L), l) or re.search(r'\b%s-' % re.escape(L), l)
+                   for l in lines if not l.endswith(':'))
+    out = []; dead = False; changed = False
+    for l in lines:
+        is_lab = l.endswith(':') and not l.startswith('\t')
+        if is_lab and (refs(l[:-1]) or not l[:-1].startswith('L')): dead = False
+        elif is_lab and dead: changed = True; continue
+        if dead and not is_lab and not l.startswith(('\tdw', '\tdb', '\talign', 'f_', 'S', '\tfdata')):
+            changed = True; continue
+        out.append(l)
+        t = l.strip()
+        if not is_lab and (t == 'ret' or t.startswith('retd') or (t.startswith('j\t') and ',' not in t) or t.startswith('jp\t')):
+            dead = True
+    return out
 
 def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
     out = {}
