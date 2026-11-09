@@ -51,10 +51,10 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-28-micro-fpe2b, v423/none                            | probes/fpp4.c        | 8 / 59 exact (13.6%)     |
 | run 2026-11-09-26-micro-fpe2, v423/O3XS                             | probes/fpp3.c        | 27 / 59 exact (45.8%)    |
 | run 2026-11-09-28-micro-fpe2b, v423/O3XS                            | probes/fpp4.c        | 8 / 59 exact (13.6%)     |
-| run 2026-11-09-22-micro-condbits, v423/none                         | micro/cond_bits.c    | 111 / 117 exact (94.9%)  |
-| run 2026-11-09-22-micro-condbits, v423/O3XS                         | micro/cond_bits.c    | 111 / 117 exact (94.9%)  |
-| run 2026-11-09-22-micro-condbits, v423/Xr                           | micro/cond_bits.c    | 111 / 117 exact (94.9%)  |
-| run 2026-11-09-22-micro-condbits, v423/O3XSXr                       | micro/cond_bits.c    | 110 / 117 exact (94.0%)  |
+| run 2026-11-09-22-micro-condbits, v423/none                         | micro/cond_bits.c    | 113 / 117 exact (96.6%)  |
+| run 2026-11-09-22-micro-condbits, v423/O3XS                         | micro/cond_bits.c    | 113 / 117 exact (96.6%)  |
+| run 2026-11-09-22-micro-condbits, v423/Xr                           | micro/cond_bits.c    | 113 / 117 exact (96.6%)  |
+| run 2026-11-09-22-micro-condbits, v423/O3XSXr                       | micro/cond_bits.c    | 112 / 117 exact (95.7%)  |
 | run 2026-11-09-23-micro-assignexpr, v423/none                       | micro/assign_expr.c  | 30 / 43 exact (69.8%)    |
 | run 2026-11-09-23-micro-assignexpr, v423/O3XS                       | micro/assign_expr.c  | 31 / 43 exact (72.1%)    |
 | run 2026-11-09-23-micro-assignexpr, v423/Xr                         | micro/assign_expr.c  | 27 / 43 exact (62.8%)    |
@@ -67,6 +67,10 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-25-micro-arrindexsz, v423/Xr                         | micro/arr_index_sz.c | 48 / 66 exact (72.7%)    |
 | run 2026-11-09-24-micro-arrindex, v423/O3XSXr                       | micro/arr_index.c    | 47 / 66 exact (71.2%)    |
 | run 2026-11-09-25-micro-arrindexsz, v423/O3XSXr                     | micro/arr_index_sz.c | 47 / 66 exact (71.2%)    |
+| run 2026-11-09-29-micro-adfp, v423/none                             | probes/adfp.c        | 11 / 15 exact (73.3%)    |
+| run 2026-11-09-29-micro-adfp, v423/O3XS                             | probes/adfp.c        | 8 / 15 exact (53.3%)     |
+| run 2026-11-09-29-micro-adfp, v423/Xr                               | probes/adfp.c        | 1 / 15 exact (6.7%)      |
+| run 2026-11-09-29-micro-adfp, v423/O3XSXr                           | probes/adfp.c        | 1 / 15 exact (6.7%)      |
 | run 2026-11-09-9-micro-fp, v423/none                                | micro/fp.c           | 108 / 108 exact (100.0%) |
 | run 2026-11-09-9-micro-fp, v423/O3XS                                | micro/fp.c           | 108 / 108 exact (100.0%) |
 | run 2026-11-09-10-micro-fptemps, v423/none                          | micro/fp_temps.c     | 33 / 33 exact (100.0%)   |

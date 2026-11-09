@@ -332,6 +332,8 @@ def op_into(F, e, vals, dest):
         emit_operands(F, dest, vals); F.emit('cal', '._fneg_%s' % sfx(e.ty)); return
     emit_operands(F, dest, vals); F.emit('cal', '._fld_%s%s' % (sfx(e.ty), sfx(strip(e.e).ty)))
 
+LOCAL_MEMBER_FIRST = True                                 # see addr_kind
+
 def addr_kind(F, x):
     """'lda' when the address is a name, a stack offset or a constant; 'ld' when it has to be loaded, copied from a
     register or computed"""
@@ -343,6 +345,8 @@ def addr_kind(F, x):
         if v.k == 'var': return 'lda'
         if v.k == 'member' and not v.arrow:            # _log: x / SQRT2 (s_logtbl.val, a static union) -> lda XDE,
             b = strip(v.base)                            # _s_logtbl before lda XBC,x
+            if LOCAL_MEMBER_FIRST and b.k == 'var' and b.decl.kind == 'local' and getattr(b.decl, 'storage', None) != 'static':
+                return 'ld'                              # cond_bits.c cb_union_c7: d.d = x -> lda XWA,XSP / lda XBC,..
             return 'ld' if MEMBER_FIRST and b.k == 'var' and (b.decl.kind == 'static' or b.decl.storage == 'static') else 'lda'
         if v.k == 'index' and C().fold(v.idx).k == 'const': return 'lda'
     return 'ld'

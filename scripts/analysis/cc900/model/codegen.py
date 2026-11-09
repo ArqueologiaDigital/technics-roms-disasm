@@ -59,9 +59,11 @@ class Fn:
             regs = ['WA', 'BC', 'DE']
             stack = []
             for i, p in enumerate(f.params):
-                if i < 3 and p.ty.kind != 'struct': p.reg = regs[i]
+                if i < 3 and p.ty.kind != 'struct' and not (p.ty.kind == 'float' and p.ty.size == 8): p.reg = regs[i]
                 else: stack.append(p)                  # abi structs.c s_pair: a struct is on the stack (its register
-                                                       # position is used up: a guess, abi.md)
+                                                       # position is used up: a guess, abi.md); a double too, and its
+                                                       # position is used up (probes/adfp.c ad_idi: b in DE); a float
+                                                       # is in its register like a long (ad_fi: x in XWA)
             for p in reversed(stack):
                 p.off = off; off += 2 if p.ty.size <= 2 else (p.ty.size + 1) // 2 * 2
             s.retd = off - 4
@@ -176,6 +178,11 @@ def mem_operand(F, e):
             F.emit('inc' if bb.op == '+' else 'dec', '%s,%s' % (hx(fold(bb.r).value), X))
             off = fold(strip(e.e).idx).value * e.ty.size
             return '(%s%s%s)' % (X, '+' if off >= 0 else '-', hx(abs(off))) if off else '(%s)' % X
+        if bb.k == 'member' and not bb.arrow and strip(bb.base).k == 'var' and strip(bb.base).decl.kind == 'local' \
+                and getattr(strip(bb.base).decl, 'slot', None) is not None and fold(strip(e.e).idx).value is not None:
+            t = strip(bb.base).decl.slot + F.push + member_offset(bb) + fold(strip(e.e).idx).value * e.ty.size
+            return '(XSP+%s)' % hx(t) if t else '(XSP+0x0~)'   # cb_union_c7 / _n0: d.c[7] -> (XSP+0x7), d.n[0] ->
+                                                            # (XSP+0x0): an element keeps its zero (see ZERO_DISP)
     if e.k == 'load':
         v = strip(e.e)
         if v.k == 'var':
@@ -568,6 +575,20 @@ def gen(F, e, fam, size, then_ret=False, store=False):
         return gen_bin(F, e, fam, size, then_ret, store)
     raise Unsupported(e.k)
 
+CALL_RIGHT_FIRST = True                                   # see gen_bin
+
+def plain_hl_tree(F, x):
+    """x is built in HL from memory operands alone (no other register): a variable in memory, a constant, or a
+    + - & | ^ of them whose right side is such an operand"""
+    x = strip(x)
+    while x.k == 'cast' and x.kind == 'IntegralCast' and strip(x.e).ty.size == x.ty.size: x = strip(x.e)
+    if x.k in ('load', 'const'):
+        if x.k == 'load' and (strip(x.e).k != 'var' or getattr(strip(x.e).decl, 'reg', None)): return False
+        m = mem_operand(F, x); return m is not None and not family_of(m)
+    if x.k == 'bin' and x.op in ('+', '-', '&', '|', '^') and x.ty.size == 2:
+        return plain_hl_tree(F, x.l) and strip(x.r).k in ('load', 'const') and plain_hl_tree(F, x.r)
+    return False
+
 def gen_bin(F, e, fam, size, then_ret, store=False):
     op = e.op
     if op == '*' and size == 2 and e.ty.kind == 'int' and fold(e.r).k == 'const' and fold(e.r).value is not None and \
@@ -586,6 +607,20 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
     if op in '+-' and (strip(e.l).ty.is_ptr() or strip(e.r).ty.is_ptr()):
         return gen_ptr_arith(F, e, fam, size)
     l, r = narrow(e.l, size), narrow(e.r, size)
+    if CALL_RIGHT_FIRST and op in SIMPLE_OPS and size == 2 and not F.adecl and has_helper_call(r) and \
+            not has_helper_call(l) and plain_hl_tree(F, l):
+        hf = gen(F, r, 'HL', size)                       # probes/adfp.c ad_di: a + (x > 0.0) -> cal ._fcmp_zd /
+        if hf != 'HL': F.emit('ld', 'HL,%s' % FAM[hf][2])   # add HL,(XSP+0xc); ad_idi: a + b + (x > 0.0) ->
+        flush_pops(F)                                    # ... cal / ld WA,HL / ld HL,(a) / add HL,(b) / add HL,WA
+        lm = mem_operand(F, l)
+        if op in ('+', '&', '|', '^') and lm is not None:
+            F.emit(SIMPLE_OPS[op], 'HL,%s' % lm)
+        else:
+            F.emit('ld', 'WA,HL'); lf = gen(F, l, 'HL', size)
+            if lf != 'HL': raise Unsupported('call-first left operand')
+            F.emit(SIMPLE_OPS[op], 'HL,WA')
+        if fam != 'HL': F.emit('ld', '%s,HL' % FAM[fam][size])
+        return fam
     signed = e.ty.signed if size >= e.ty.size else is_signed(e.l if UNPROMOTED_SIGN else l)   # (before narrowing
                                                      # drops the cast to unsigned char: mul_uc_loc)
     R = FAM[fam][size]
@@ -1247,7 +1282,7 @@ def byte_addr(F, x):
         elif v.k == 'member' and not v.arrow and strip(v.base).k == 'var' and strip(v.base).decl.kind == 'local' and \
                 getattr(strip(v.base).decl, 'slot', None) is not None:
             t = strip(v.base).decl.slot + F.push + member_offset(v) + off    # cb_union_c7: bit 0x7,(XSP+0x7)
-            return '(XSP+%s)' % hx(t) if t else '(XSP)'
+            return '(XSP+%s)' % hx(t) if t else '(XSP+0x0~)'
         else: return None
     elif v.k == 'deref': p = v.e
     elif v.k == 'member' and v.arrow: off = member_offset(v); p = v.base
@@ -2265,6 +2300,12 @@ def lvalue(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False, kind='store'):
     g = global_offset(lv)
     if g and g[0] == '__param__': return '(XSP+%s)' % hx(g[1].off + g[2] + F.push)   # a member of a struct parameter
     if g: return '(_%s + %s)' % g if g[1] != '0x0' else '(_%s)' % g[0]
+    if lv.k == 'index' and fold(lv.idx).k == 'const' and fold(lv.idx).value is not None:
+        bb = strip(lv.base)                              # _frexp: d.n[3] = ... -> (XSP+0x6), as mem_operand reads it
+        if bb.k == 'member' and not bb.arrow and strip(bb.base).k == 'var' and strip(bb.base).decl.kind == 'local' \
+                and getattr(strip(bb.base).decl, 'slot', None) is not None:
+            t = strip(bb.base).decl.slot + F.push + member_offset(bb) + fold(lv.idx).value * lv.ty.size
+            return '(XSP+%s)' % hx(t) if t else '(XSP+0x0~)'
     if lv.k == 'index' and strip(lv.base).k == 'load' and fold(lv.idx).k == 'const':
         m = mem_operand(F, lv.base)                      # _ultoa: ld XWA,(s) / ldb (XWA),0x0
         if m is not None:
@@ -6461,7 +6502,9 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong
             if a and b and a.group(1) == b.group(2) and family_of(a.group(2)) and family_of(b.group(1)) and \
                     len(a.group(2)) == len(b.group(1)):
                 F.lines[i + 1] = '\tld\t%s,%s' % (b.group(1), a.group(2))
-    F.lines = [l.replace('(XSP+0x0)', '(XSP)') for l in F.lines]   # the oracle writes (XSP), never (XSP+0x0)
+    F.lines = [l.replace('(XSP+0x0)', '(XSP)').replace('(XSP+0x0~)', '(XSP+0x0)') for l in F.lines]   # the oracle
+    # writes (XSP) for a variable at the stack pointer, but (XSP+0x0) for an element of a local aggregate (ZERO_DISP:
+    # cond_bits.c cb_union_n0, ld WA,(XSP+0x0) for d.n[0])
     # a call directly followed by the return becomes a jump (cmp_ui: ge_ui_br0)
     if getattr(F, 'naive_loads', False) or (F.opt and not F.adecl): F.lines = knowledge_pass(F.lines, F.personality)
     elif F.personality != 'v4.23': F.lines = store_knowledge(F.lines)

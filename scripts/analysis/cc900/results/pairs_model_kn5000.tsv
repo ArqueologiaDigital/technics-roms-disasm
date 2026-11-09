@@ -141,11 +141,11 @@ subcpu v142	03d533	_pow	_POW.C	-	model: ; unsupported: local p	exact
 subcpu v142	03d84f	_sin	_SIN.C	123	MATCH	exact
 subcpu v142	03d98a	__trig	__TRIG.C	-	unresolved	exact
 subcpu v142	03e1a5	_modf	_MODF.C	76	MATCH	exact
-subcpu v142	03e1f1	_frexp	_FREXP.C	-	model: ; unsupported: memory load index	exact
+subcpu v142	03e1f1	_frexp	_FREXP.C	191	181 diff first +0	exact
 subcpu v142	03e64b	_exp	_EXP.C	230	MATCH	exact
 subcpu v142	03e731	_log	_LOG.C	338	15 diff first +52	exact
 subcpu v142	03e894	__fint	__FINT.C	-	model: ; unsupported: local maru	exact
-subcpu v142	03ea9c	_ldexp	_LDEXP.C	-	model: ; unsupported: memory load index	exact
+subcpu v142	03ea9c	_ldexp	_LDEXP.C	-	constant S50020 not in the image	exact
 subcpu v141	00f3ba	_g_dbltbl	__FLOAT.C	72	MATCH	exact
 subcpu v141	00f402	_g_ldbltbl	__FLOAT.C	30	MATCH	exact
 subcpu v141	00f420	_g_mathtbl	__MATH.C	8	MATCH	call
@@ -157,11 +157,11 @@ subcpu v141	03d51b	_pow	_POW.C	-	model: ; unsupported: local p	exact
 subcpu v141	03d837	_sin	_SIN.C	123	MATCH	exact
 subcpu v141	03d972	__trig	__TRIG.C	-	unresolved	exact
 subcpu v141	03e18d	_modf	_MODF.C	76	MATCH	exact
-subcpu v141	03e1d9	_frexp	_FREXP.C	-	model: ; unsupported: memory load index	exact
+subcpu v141	03e1d9	_frexp	_FREXP.C	191	181 diff first +0	exact
 subcpu v141	03e633	_exp	_EXP.C	230	MATCH	exact
 subcpu v141	03e719	_log	_LOG.C	338	15 diff first +52	exact
 subcpu v141	03e87c	__fint	__FINT.C	-	model: ; unsupported: local maru	exact
-subcpu v141	03ea84	_ldexp	_LDEXP.C	-	model: ; unsupported: memory load index	exact
+subcpu v141	03ea84	_ldexp	_LDEXP.C	-	constant S50020 not in the image	exact
 subcpu v140	00f3ba	_g_dbltbl	__FLOAT.C	72	MATCH	exact
 subcpu v140	00f402	_g_ldbltbl	__FLOAT.C	30	MATCH	exact
 subcpu v140	00f420	_g_mathtbl	__MATH.C	8	MATCH	call
@@ -173,11 +173,11 @@ subcpu v140	03d4e7	_pow	_POW.C	-	model: ; unsupported: local p	exact
 subcpu v140	03d803	_sin	_SIN.C	123	MATCH	exact
 subcpu v140	03d93e	__trig	__TRIG.C	-	unresolved	exact
 subcpu v140	03e159	_modf	_MODF.C	76	MATCH	exact
-subcpu v140	03e1a5	_frexp	_FREXP.C	-	model: ; unsupported: memory load index	exact
+subcpu v140	03e1a5	_frexp	_FREXP.C	191	181 diff first +0	exact
 subcpu v140	03e5ff	_exp	_EXP.C	230	MATCH	exact
 subcpu v140	03e6e5	_log	_LOG.C	338	15 diff first +52	exact
 subcpu v140	03e848	__fint	__FINT.C	-	model: ; unsupported: local maru	exact
-subcpu v140	03ea50	_ldexp	_LDEXP.C	-	model: ; unsupported: memory load index	exact
+subcpu v140	03ea50	_ldexp	_LDEXP.C	-	constant S50020 not in the image	exact
 table data	9ffb2c	_sbrk	__SBRK.C	-	model: no function	near
 table data	9ffb2f	.sbrk	__SBRK.C	39	MATCH	exact
 table data	9ffb56	_malloc	_MALLOC.C	-	model: ; unsupported: complex pointer arithmeti	exact
@@ -268,4 +268,4 @@ hdae v1.10i	296ecb	_strncpy	_STRNCPY.C	43	MATCH	exact
 hdae v1.10i	296ef6	__facnv	__FACVT.C	-	model: ; unsupported: var	near
 hdae v1.10i	2e0cd6	___ctype	_CTYPE.C	-	alias of __ctype	exact
 hdae v1.10i	2e0cd6	__ctype	_CTYPE.C	256	MATCH	exact
-# MATCH 223, model cannot 29, alias 9, differs 5, outside image 4, unresolved symbol 3
+# MATCH 223, model cannot 23, differs 11, alias 9, outside image 4, unresolved symbol 3

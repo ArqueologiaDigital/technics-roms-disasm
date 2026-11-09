@@ -84,6 +84,11 @@ for c in none O3XS Xr O3XSXr; do
   row "run 2026-11-09-24-micro-arrindex, v423/$c" "micro/arr_index.c" "$O/2026-11-09-24-micro-arrindex/out/v423/$c" corpus/micro/arr_index.c
   row "run 2026-11-09-25-micro-arrindexsz, v423/$c" "micro/arr_index_sz.c" "$O/2026-11-09-25-micro-arrindexsz/out/v423/$c" corpus/micro/arr_index_sz.c
 done
+for c in none O3XS; do    # FP parameters and arguments under both conventions (corpus/probes/adfp.c)
+  row "run 2026-11-09-29-micro-adfp, v423/$c" "probes/adfp.c" "$O/2026-11-09-29-micro-adfp/out/v423/$c/probes" corpus/probes/adfp.c --opt $c
+done
+row "run 2026-11-09-29-micro-adfp, v423/Xr" "probes/adfp.c" "$O/2026-11-09-29-micro-adfp/out/v423/Xr/probes" corpus/probes/adfp.c --opt none --adecl
+row "run 2026-11-09-29-micro-adfp, v423/O3XSXr" "probes/adfp.c" "$O/2026-11-09-29-micro-adfp/out/v423/O3XSXr/probes" corpus/probes/adfp.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do
