@@ -137,7 +137,7 @@ subcpu v142	00f428	__FloatErrorHandle	TRAP.C	4	MATCH	call
 subcpu v142	03d34d	_cos	_COS.C	87	MATCH	exact
 subcpu v142	03d42e	_fabs	_FABS.C	29	MATCH	exact
 subcpu v142	03d4c9	_tan	_TAN.C	106	MATCH	exact
-subcpu v142	03d533	_pow	_POW.C	-	model: ; unsupported: lvalue var	exact
+subcpu v142	03d533	_pow	_POW.C	-	model: ; unsupported: local p	exact
 subcpu v142	03d84f	_sin	_SIN.C	123	MATCH	exact
 subcpu v142	03d98a	__trig	__TRIG.C	-	unresolved	exact
 subcpu v142	03e1a5	_modf	_MODF.C	76	MATCH	exact
@@ -153,7 +153,7 @@ subcpu v141	00f428	__FloatErrorHandle	TRAP.C	4	MATCH	call
 subcpu v141	03d335	_cos	_COS.C	87	MATCH	exact
 subcpu v141	03d416	_fabs	_FABS.C	29	MATCH	exact
 subcpu v141	03d4b1	_tan	_TAN.C	106	MATCH	exact
-subcpu v141	03d51b	_pow	_POW.C	-	model: ; unsupported: lvalue var	exact
+subcpu v141	03d51b	_pow	_POW.C	-	model: ; unsupported: local p	exact
 subcpu v141	03d837	_sin	_SIN.C	123	MATCH	exact
 subcpu v141	03d972	__trig	__TRIG.C	-	unresolved	exact
 subcpu v141	03e18d	_modf	_MODF.C	76	MATCH	exact
@@ -169,7 +169,7 @@ subcpu v140	00f428	__FloatErrorHandle	TRAP.C	4	MATCH	call
 subcpu v140	03d301	_cos	_COS.C	87	MATCH	exact
 subcpu v140	03d3e2	_fabs	_FABS.C	29	MATCH	exact
 subcpu v140	03d47d	_tan	_TAN.C	106	MATCH	exact
-subcpu v140	03d4e7	_pow	_POW.C	-	model: ; unsupported: lvalue var	exact
+subcpu v140	03d4e7	_pow	_POW.C	-	model: ; unsupported: local p	exact
 subcpu v140	03d803	_sin	_SIN.C	123	MATCH	exact
 subcpu v140	03d93e	__trig	__TRIG.C	-	unresolved	exact
 subcpu v140	03e159	_modf	_MODF.C	76	MATCH	exact

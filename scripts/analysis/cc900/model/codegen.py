@@ -1252,6 +1252,17 @@ def copy_propagate(f):
     assignment keeps its value where one is used; a statement that is only `y = x` disappears."""
     import copy as _copy
     from frontend import N
+    def simplify(node):                                    # x + 0, x - 0 -> x (ra_call.c rc_keep1: v0 = a + 0)
+        for key, val in list(node.__dict__.items()):
+            items = val if isinstance(val, list) else [val]
+            for i, x in enumerate(items):
+                if not hasattr(x, 'k'): continue
+                simplify(x)
+                if x.k == 'bin' and x.op in ('+', '-') and fold(x.r).k == 'const' and fold(x.r).value == 0 and \
+                        not x.ty.is_ptr() and strip(x.l).ty is not None and strip(x.l).ty.size == x.ty.size:
+                    if isinstance(val, list): val[i] = x.l
+                    else: setattr(node, key, x.l)
+    simplify(f.body)
     assigns = {}; writes = set(); addr = set()
     def v(n, dep):
         if n.k == 'bin' and n.op == '=' and strip(n.l).k == 'var': assigns.setdefault(strip(n.l).decl, []).append(n)
@@ -1267,11 +1278,16 @@ def copy_propagate(f):
             continue
         a = al[0]; src = strip(a.r)
         while src.k == 'cast' and src.kind == 'NoOp': src = strip(src.e)
-        if not (src.k == 'load' and strip(src.e).k == 'var'): continue
-        p = strip(src.e).decl
-        if p.kind != 'param' or p in writes or p in addr or p in assigns or p.ty.size != d.ty.size or p.ty.kind != d.ty.kind:
-            continue
-        repl = N('load', e=N('var', decl=p, ty=p.ty), ty=p.ty)
+        sc = fold(narrow(a.r, d.ty.size)) if d.ty.kind == 'int' else None
+        if sc is not None and sc.k == 'const' and sc.value is not None and CONST_PROP:
+            repl = N('const', value=sc.value, ty=d.ty)       # ra_call.c rc_loop1: v0 = 0 ... f1(v0) -> ld WA,0x0
+        elif not (src.k == 'load' and strip(src.e).k == 'var'): continue
+        else:
+            p = strip(src.e).decl
+            if p.kind != 'param' or p in writes or p in addr or p in assigns or p.ty.size != d.ty.size or \
+                    p.ty.kind != d.ty.kind:
+                continue
+            repl = N('load', e=N('var', decl=p, ty=p.ty), ty=p.ty)
         def rewrite(node):                                 # y = x as a value -> x; uses of y -> x
             for key, val in list(node.__dict__.items()):
                 items = val if isinstance(val, list) else [val]
@@ -1291,12 +1307,16 @@ def copy_propagate(f):
         rewrite(f.body)
         def prune(node):                                   # a statement that was only `y = x` is now `x;`: drop it
             if getattr(node, 'k', None) == 'block':
-                node.body = [c for c in node.body if not (c.k == 'expr' and strip(c.e).k == 'load' and
-                                                          strip(strip(c.e).e).k == 'var')]
+                node.body = [c for c in node.body if not (c.k == 'expr' and (strip(c.e).k == 'load' and
+                             strip(strip(c.e).e).k == 'var' or strip(c.e).k == 'const'))]
             for key, val in list(node.__dict__.items()):
                 for x in (val if isinstance(val, list) else [val]):
                     if hasattr(x, 'k'): prune(x)
         prune(f.body)
+    cnt = {}                                               # the front end's use counts are stale now (plan_frame
+    walk(f.body, lambda n, dep: cnt.__setitem__(n.decl, cnt.get(n.decl, 0) + 1) if n.k == 'var' else None)   # slots:
+    for d in list(f.params) + list(f.decls):                # rc_loop1's v0 has none left)
+        if hasattr(d, 'uses') and isinstance(d.uses, int): d.uses = cnt.get(d, 0)
 
 def bool_returns(s):
     """-O: `if (c) return 1; return 0;` is `return c` as a truth value (cond_bits.c under -O3 -XS: and A,0x80 /
@@ -2888,6 +2908,7 @@ CDECL_TAILCALL = True                              # -O: cal _f / ret (nothing b
 EXIT_PLACEMENT = True                              # -O: an exit block nothing falls into moves (switch.c sw_evtab)
 CJ_TRAMPOLINES = True                              # -O: arms the tail merge empties go (switch.c sw_ev)
 RET_TAILS = True                                   # -O cross jumping of `cal X / ret` tails (switch.c sw_ret)
+CONST_PROP = True                                  # -O: a local assigned one constant is that constant (rc_loop1)
 COPY_PROP = True                                   # -O copy propagation (assign_expr.c, copy_propagate)
 UNPROMOTED_SIGN = True
 STORE_XHL_NONE = True
