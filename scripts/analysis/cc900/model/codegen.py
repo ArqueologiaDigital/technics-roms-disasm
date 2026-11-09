@@ -261,10 +261,31 @@ def gen(F, e, fam, size, then_ret=False, store=False):
         lend = F.newulabel()
         gen_cond_false(F, e, 'RET' if then_ret else lend)
         F.emit('ld', '%s,0x1' % R); F.lines.append(lend + ':'); return fam
+    if e.k == 'cond' and F.opt:
+        c, a, b = strip(e.c), strip(e.a), strip(e.b)
+        v = strip(b.e).decl if b.k == 'load' and strip(b.e).k == 'var' else None
+        if v is not None and c.k == 'bin' and c.op in CC_S and strip(c.l).k == 'load' and strip(strip(c.l).e).k == 'var' \
+                and strip(strip(c.l).e).decl is v and fold(c.r).k == 'const' and a.k == 'un' and a.op in ('-', '~') \
+                and strip(a.e).k == 'load' and strip(strip(a.e).e).k == 'var' and strip(strip(a.e).e).decl is v \
+                and mem_operand(F, b) is not None:
+            R = FAM[fam][size]                       # _abs: ld HL,(XSP+0x4) / cp HL,0x0 / ret ge / neg HL
+            lelse, lend = F.newulabel(), F.newulabel()
+            if mem_operand(F, b) != R: F.emit('ld', '%s,%s' % (R, mem_operand(F, b)))
+            F.emit('cp', '%s,%s' % (R, hx(fold(c.r).value)))
+            cc = (CC_S if v.ty.signed else CC_U)[c.op]
+            F.emit('ret', INV[cc]) if then_ret else F.emit('j', '%s,%s' % (INV[cc], lelse))
+            if size == 4:                            # _labs: cpl HL / cpl QHL / inc 0x1,XHL
+                F.emit('cpl', FAM[fam][2]); F.emit('cpl', Q[fam])
+                if a.op == '-': F.emit('inc', '0x1,%s' % R)
+            else: F.emit('neg' if a.op == '-' else 'cpl', R)
+            F.lines.append(lelse + ':'); F.lines.append(lend + ':'); return fam
     if e.k == 'cond':                                # c_tern
         lelse, lend = F.newulabel(), F.newulabel()
         gen_cond_false(F, e.c, lelse)
-        gen(F, e.a, fam, size); F.emit('j', lend); F.lines.append(lelse + ':')
+        if F.opt and strip(e.a).k == 'bin' and fam != 'WA':   # _toupper: ld WA,IZ / sub WA,0x20 / ld HL,WA / j L2
+            f2 = gen(F, e.a, 'WA', size); F.emit('ld', '%s,%s' % (FAM[fam][size], FAM[f2][size]))
+        else: gen(F, e.a, fam, size)
+        F.emit('j', lend); F.lines.append(lelse + ':')
         gen(F, e.b, fam, size); F.lines.append(lend + ':'); return fam
     if e.k == 'un' and e.op == '!':
         x = strip(e.e); xs = x.ty.size; m = mem_operand(F, x)
@@ -423,6 +444,7 @@ def cse_params(F, e):
     many = [d for d, c in counts.items() if c >= 2]
     if len(many) != 1: return False
     d = many[0]; size = F.f.ret.size; top = narrow(e, size)
+    if top.k == 'cond': return False                       # _abs: the ?: loads j into HL itself
     needs_wa = size == 1 or (top.k == 'bin' and top.op in ('*', '/', '%', '<<', '>>'))
     if top.k == 'bin' and top.op in ('*', '/', '%') and size == 4: return False
     tmp = 'BC' if needs_wa else 'WA'
