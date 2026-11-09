@@ -573,10 +573,10 @@ def compare(F, c, value):
     l, r = fp_value_cast(c.l), fp_value_cast(c.r)
     cg.flush_pops(F)
     if r.k == 'fconst' and r.value == 0.0 or (strip(r).k == 'cast' and strip(strip(r).e).k == 'const' and strip(strip(r).e).value == 0):
-        a = prepare(F, [l]); put_addr(F, a[0], 'XWA')
+        a = prepare(F, [l]); cg.flush_pops(F); put_addr(F, a[0], 'XWA')
         F.emit('ld', 'BC,%s' % cg.hx(REL[op])); F.emit('cal', '._fcmp_z%s' % sfx(l.ty)); return
-    a = prepare(F, [l, r])
-    put_addr(F, a[0], 'XWA'); put_addr(F, a[1], 'XBC')
+    a = prepare(F, [l, r]); cg.flush_pops(F)              # fpp1.c b1: fd(..) >= 0.5 -> cal _fd / lda XSP,XSP+0xc
+    put_addr(F, a[0], 'XWA'); put_addr(F, a[1], 'XBC')     # before the compare (inside the then arm was wrong code)
     F.emit('ld', 'DE,%s' % cg.hx(REL[op])); F.emit('cal', '._fcmp_%s' % sfx(l.ty))
 
 def truth(F, c, value):
