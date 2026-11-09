@@ -1542,6 +1542,7 @@ CHAR_LOCAL_WA = True                                      # see plan_leaf
 ASSIGN_OPERAND_INPLACE = True                             # see gen_bin
 POSTDEC_FREE = True                                       # see loop_cond
 PTR_INDEX_REG = True                                      # see gen_load_mem
+EMPTY_WHILE_ONE_LABEL = True                              # see gen_loop
 
 def char_narrow(body):
     """cc900 does int + - & | ^ of a char and a constant that fits a byte, or of two chars, on the byte and
@@ -1773,7 +1774,11 @@ def gen_assign_value(F, e, fam, size, in_place=False):
         if fam in ('WA',):
             t = lvalue(F, lv, ptr='XWA')
             if 'XBC' in t or 'BC' in t.replace('XBC', ''): raise Unsupported('operator = through BC')
-            f2 = gen(F, rv, 'BC', vs)
+            V = 'BC'
+            if held_after(F, 'BC', e):                     # opt_loops.c ol_strcpy (-Xr): *d++ = *s++ with s in
+                V = next((r for r in ('DE', 'HL') if r not in t and not held_after(F, r, e)), None)   # XBC: the byte
+                if V is None: raise Unsupported('operator = value register')   # in E (ld C,(XBC+:1) was wrong code)
+            f2 = gen(F, rv, V, vs)
             F.emit('ld', '%s,%s' % (t, FAM[f2][vs])); return f2
     raise Unsupported('operator =')
 
@@ -4851,6 +4856,9 @@ def gen_loop(F, s, last):
     if s.k == 'while' and s.cond is not None and (F.opt or (F.adecl and byte_compare_in(s.cond))):
         # -XS rotation: j test / body / test (_strcat); plain -Xr rotates a test that compares two bytes too
         # (opt_temps.c ot_cmp_abn, ot_len2), and repeats the others in front (ctrl.c c_cnt, c_clear)
+        if EMPTY_WHILE_ONE_LABEL and not flat(s.body):     # opt_loops.c ol_strcpy: while ((*d++ = *s++) != 0) ;
+            body = F.newulabel(); F.newulabel()            # -> L1: ... / j ne,L1 (one label, no jump in)
+            F.lines.append(body + ':'); loop_cond(F, s.cond, body, True); return
         test = F.newulabel(); body = F.newulabel()
         F.emit('j', test); F.lines.append(body + ':')
         cont = [None]

@@ -96,7 +96,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-08-8-micro-ra, v423/Xr                                  | micro/ra_*.c         | 23 / 42 exact (54.8%)    |
 | run 2026-11-08-9-micro-optloops, v423/none                          | micro/opt_loops.c    | 23 / 33 exact (69.7%)    |
 | run 2026-11-08-9-micro-optloops, v423/Xr                            | micro/opt_loops.c    | 30 / 33 exact (90.9%)    |
-| run 2026-11-08-9-micro-optloops, v423/O3XSXr                        | micro/opt_loops.c    | 29 / 33 exact (87.9%)    |
+| run 2026-11-08-9-micro-optloops, v423/O3XSXr                        | micro/opt_loops.c    | 30 / 33 exact (90.9%)    |
 
 The library rows count listing pieces: since inline assembly is passed through (2026-11-09), an inline-assembly
 label named `_x` / `.x` starts a piece of its own, as in Toshiba's listing, so the total rose from 79 to 144; anonymous typedef'd unions (FLOAT.H) then brought more files in (188), and on 2026-11-09 the files that include
