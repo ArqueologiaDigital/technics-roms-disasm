@@ -308,9 +308,19 @@ Done since (2026-11-09, night):
   b804104); E2, the order slots are created in, is still open.
 - **Pairs: kn5000 221, v4.23 208** byte-identical (from 185 / 172).  Library 158 / 248 pieces (v4.23).
 
+- **Straight-line register shuffles** (research-scratch `sessions/2026-11-09_cc900-binop-loc`, f8143eb, policy T):
+  - `-Xr`: the first free pair for `* / %` after the left operand; the shift-count relocation of the WA parameter
+    (P for int / long, Q for char); a char local kept out of a live WA; remainders never reused in place.
+  - cdecl `-O3 -XS`: byte chains in A / C, never L.
+  - Signedness: a narrowed operation keeps its operands' own signedness.
+  Several of these also fix wrong code that overwrote a live value.  All binop files are 50 / 50 under every
+  option set except the long helpers.  Micro: none 668, O3XS 659, Xr 662, O3XSXr 657 of 674 (from 667 / 634 /
+  637 / 635).
+
 Next, in order:
-1. **Straight-line register shuffles** (the `*_loc` binop family: 22 / 30 / 25 of the micro misses under -Xr,
-   -O3 -XS -Xr, -O3 -XS): an agent is fitting them.
+1. The remaining micro misses: the long-helper argument order and homes (`*_l_loc`, `div_l_pk`; README section 6
+   of the binop-loc session), `ctrl.c` / `mem.c` loops and addressing (pointer parameters in registers without
+   `-O`: c_cnt, c_clear, ra_ptrcpy disagree on when).
 2. What still keeps pairs from compiling: `__doprnt` (9), the FP routines `__trig`, `_pow`, `_frexp`, `_ldexp`,
    `__fint` (3 each, waiting on E2 and on union / `fp destination` support), `_strrev` (2: strength-reduced pointer
    copies), `_malloc`.
