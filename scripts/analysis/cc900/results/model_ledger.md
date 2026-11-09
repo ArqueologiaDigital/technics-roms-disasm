@@ -28,13 +28,13 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-6-micro-rahomes, v423/Xr                             | micro/ra_homes.c   | 4 / 25 exact (16.0%)    |
 | run 2026-11-09-6-micro-rahomes, v423/O3XSXr                         | micro/ra_homes.c   | 4 / 25 exact (16.0%)    |
 | run 2026-11-08-9-micro-optloops, v423/O3XS                          | micro/opt_loops.c  | 15 / 33 exact (45.5%)   |
-| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality v4.23      | 1997 LIB/SRC       | 111 / 147 exact (75.5%) |
-| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality kn5000     | 1997 LIB/SRC       | 109 / 147 exact (74.1%) |
-| run 2026-11-08-5-libsrc97-O3XS, ide2003/O3XS, --personality ide2003 | 1997 LIB/SRC       | 111 / 147 exact (75.5%) |
+| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality v4.23      | 1997 LIB/SRC       | 123 / 188 exact (65.4%) |
+| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality kn5000     | 1997 LIB/SRC       | 121 / 188 exact (64.4%) |
+| run 2026-11-08-5-libsrc97-O3XS, ide2003/O3XS, --personality ide2003 | 1997 LIB/SRC       | 123 / 188 exact (65.4%) |
 | run 2026-11-09-3-proxy-tiny, v423/O3XSXr                            | firmware/tiny.c    | 6 / 6 exact (100.0%)    |
 
 The library rows count listing pieces: since inline assembly is passed through (2026-11-09), an inline-assembly
-label named `_x` / `.x` starts a piece of its own, as in Toshiba's listing, so the total rose from 79 to 144.
+label named `_x` / `.x` starts a piece of its own, as in Toshiba's listing, so the total rose from 79 to 144; anonymous typedef'd unions (FLOAT.H) then brought more files in (188).
 The two V4.23 library rows score against V4.23's listing, so the kn5000 personality's lower count is expected: it
 differs from V4.23 where the firmware does (`_ldiv`, `_ultoa`).  The `ide2003` rows are the phase 7 by-product: the
 2003 compiler's personality scored against that compiler's own listings.

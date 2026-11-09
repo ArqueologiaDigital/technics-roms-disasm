@@ -143,10 +143,15 @@ class Builder:
         for n in ast.get('inner', []):
             k = n.get('kind')
             if k == 'TypedefDecl' and 'name' in n:
-                s.typedefs[n['name']] = n['type'].get('desugaredQualType', n['type']['qualType'])
+                q = n['type'].get('desugaredQualType', n['type']['qualType'])
+                if (q == n['name'] or 'unnamed' in q or 'anonymous' in q) and getattr(s, 'last_anon', None):
+                    q = s.last_anon                          # typedef union { ... } DBLBIT; (FLOAT.H)
+                s.typedefs[n['name']] = q
             elif k == 'RecordDecl' and n.get('completeDefinition'):
                 fields = [(f['name'], s.ty(f)) for f in n.get('inner', []) if f.get('kind') == 'FieldDecl']
-                s.recs.layout(n.get('name', 'anon%s' % n['id']), fields, n.get('tagUsed') == 'union')
+                name = n.get('name', 'anon%s' % n['id'])
+                s.recs.layout(name, fields, n.get('tagUsed') == 'union')
+                if 'name' not in n: s.last_anon = '%s %s' % ('union' if n.get('tagUsed') == 'union' else 'struct', name)
             elif k == 'VarDecl':
                 d = Decl(n['name'], s.ty(n), n.get('storageClass', ''), 'global')
                 d.init = n.get('inner'); s.decls[n['id']] = d; u.decls[n['name']] = d

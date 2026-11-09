@@ -2678,6 +2678,26 @@ def emit_data(unit, out):
             lines.append('\tfdatad\t%se%s%03d' % (m, x[0], abs(int(x))))
         elif d.ty.kind == 'array' and e.k == 'string':
             lines.append('\tdb\t%s,0' % e.value)
+        elif d.ty.kind == 'array' and e.k == 'initlist' and d.ty.base.kind == 'struct':
+            rows = []                                      # __FLOAT.C g_dbltbl: one db row per element (its bytes)
+            def flat_bytes(x):
+                x = strip(x)
+                if x.k == 'initlist':
+                    out = []
+                    for y in x.items: out += flat_bytes(y)
+                    return out
+                v = data_value(x)
+                return None if v is None else [v & 0xff]
+            ok = True
+            for it in e.items:
+                b = flat_bytes(it)
+                if b is None: ok = False; break
+                b = b + [0] * max(0, d.ty.base.size - len(b))
+                rows += [b[k:k + 8] for k in range(0, len(b), 8)]   # g_ldbltbl: ten bytes are 8 + 2 lines
+            if not ok: continue
+            for i, row in enumerate(rows):
+                if i: lines.append('\talign\t1')
+                lines.append('\tdb\t%s' % ','.join(str(v) for v in row))
         elif d.ty.kind == 'array' and e.k == 'initlist' and d.ty.base.kind == 'int':
             vals = [data_value(x) for x in e.items]        # _CTYPE.C: db 32,32,... eight a line, align 1 between
             if None in vals: continue
