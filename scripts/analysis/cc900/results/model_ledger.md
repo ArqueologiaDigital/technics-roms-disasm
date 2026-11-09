@@ -60,13 +60,13 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-23-micro-assignexpr, v423/Xr                         | micro/assign_expr.c  | 27 / 43 exact (62.8%)    |
 | run 2026-11-09-23-micro-assignexpr, v423/O3XSXr                     | micro/assign_expr.c  | 36 / 43 exact (83.7%)    |
 | run 2026-11-09-24-micro-arrindex, v423/none                         | micro/arr_index.c    | 56 / 66 exact (84.8%)    |
-| run 2026-11-09-25-micro-arrindexsz, v423/none                       | micro/arr_index_sz.c | 52 / 66 exact (78.8%)    |
+| run 2026-11-09-25-micro-arrindexsz, v423/none                       | micro/arr_index_sz.c | 54 / 66 exact (81.8%)    |
 | run 2026-11-09-24-micro-arrindex, v423/O3XS                         | micro/arr_index.c    | 58 / 66 exact (87.9%)    |
-| run 2026-11-09-25-micro-arrindexsz, v423/O3XS                       | micro/arr_index_sz.c | 52 / 66 exact (78.8%)    |
+| run 2026-11-09-25-micro-arrindexsz, v423/O3XS                       | micro/arr_index_sz.c | 54 / 66 exact (81.8%)    |
 | run 2026-11-09-24-micro-arrindex, v423/Xr                           | micro/arr_index.c    | 55 / 66 exact (83.3%)    |
-| run 2026-11-09-25-micro-arrindexsz, v423/Xr                         | micro/arr_index_sz.c | 51 / 66 exact (77.3%)    |
+| run 2026-11-09-25-micro-arrindexsz, v423/Xr                         | micro/arr_index_sz.c | 53 / 66 exact (80.3%)    |
 | run 2026-11-09-24-micro-arrindex, v423/O3XSXr                       | micro/arr_index.c    | 59 / 66 exact (89.4%)    |
-| run 2026-11-09-25-micro-arrindexsz, v423/O3XSXr                     | micro/arr_index_sz.c | 53 / 66 exact (80.3%)    |
+| run 2026-11-09-25-micro-arrindexsz, v423/O3XSXr                     | micro/arr_index_sz.c | 55 / 66 exact (83.3%)    |
 | run 2026-11-09-29-micro-adfp, v423/none                             | probes/adfp.c        | 15 / 15 exact (100.0%)   |
 | run 2026-11-09-29-micro-adfp, v423/O3XS                             | probes/adfp.c        | 15 / 15 exact (100.0%)   |
 | run 2026-11-09-29-micro-adfp, v423/Xr                               | probes/adfp.c        | 15 / 15 exact (100.0%)   |

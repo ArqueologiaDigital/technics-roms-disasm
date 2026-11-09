@@ -2540,6 +2540,15 @@ def lvalue(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False, kind='store'):
             F.emit('lda', '%s,_%s' % (base, b.decl.name)); return '(%s+%s)' % (base, idx)
     raise Unsupported('lvalue ' + lv.k)
 
+def combine_indexed(F, t, D):
+    """a sized array's (XR+WA) operand made one address in D (arr_index_sz.c ai_l_g_mul / _div, every set):
+    the lda XR,_g just emitted becomes lda XBC,_g / lda D,XBC+WA"""
+    m = re.match(r'^\((X\w+)\+(WA|DE|HL)\)$', t)
+    if not m or not F.lines or not F.lines[-1].startswith('\tlda\t%s,' % m.group(1)): return t
+    sym = F.lines[-1].split(',', 1)[1]
+    F.lines[-1] = '\tlda\tXBC,%s' % sym; F.emit('lda', '%s,XBC+%s' % (D, m.group(2)))
+    return '(%s)' % D
+
 def shared_base_opassign(F, e, lv, r, heavy, size, op):
     """-O: g[i + k] op= f(g[i]) with g a global array of unknown size (arr_index.c ai_*_g_sh): the index copied
     and adjusted in DE, the base loaded once and copied for the target, the source added to it.
@@ -2722,9 +2731,11 @@ def gen_opassign(F, e):
         if size == 4 and op == '*' and rk.k == 'const' and rk.value is not None and rk.value > 0 and \
                 bin(rk.value).count('1') <= 3 and strip(e.l).k in ('index', 'deref') and LONG_RMW_XIZ:
             F.force_base = 'XDE'
-            try: t = lvalue(F, e.l)                        # arr_index.c ai_l_g_mul: gla[i] *= 10 inline, no helper:
+            try: t = lvalue(F, e.l, idx='WA')              # arr_index.c ai_l_g_mul: gla[i] *= 10 inline, no helper:
             finally: F.force_base = None
-            if 'XWA' in t or 'XBC' in t: raise Unsupported('long element multiply address')   # ld XWA,(XDE) /
+            t = combine_indexed(F, t, 'XDE')
+            if re.search(r'X?(WA|BC|HL|IX|IY)\b', t) or 'XDE' not in t:   # ld XWA,(XDE) /
+                raise Unsupported('long element multiply address')
             F.emit('ld', 'XWA,%s' % t); F.emit('ld', 'XBC,XWA')                    # ld XBC,XWA / sla 0x2,XWA /
             bits = bin(rk.value)[3:]; run = 0                                      # add XWA,XBC / add XWA,XWA /
             for b_ in bits:                                                        # ld (XDE),XWA
@@ -2738,8 +2749,9 @@ def gen_opassign(F, e):
             if LONG_RMW_XIZ and lvx.k in ('index', 'deref') and not F.xiz_vars and len(F.lines) == 1:
                 F.lines.insert(1, '\tpush\tXIZ'); F.push += 4; F.pushes.append('XIZ'); held = True
                 F.force_base = 'XIZ'                       # arr_index.c ai_l_g_div (-O3 -XS -Xr): the element's
-            try: t = lvalue(F, e.l)                        # address lives across the helper in XIZ: push XIZ /
+            try: t = lvalue(F, e.l, idx='WA')              # address lives across the helper in XIZ: push XIZ /
             finally: F.force_base = None                   # ... / ld XIZ,_gla / add XIZ,XWA / ld XWA,(XIZ) /
+            if held: t = combine_indexed(F, t, 'XIZ')
             if re.search(r'\(X(WA|BC|DE|HL|IX|IY)', t) or (held and 'XIZ' not in t):   # lda XBC,0xa / cal C9H_divls /
                 raise Unsupported('long element address across a helper')        # ld (XIZ),XHL / pop XIZ
             rs = mem_operand(F, r)
