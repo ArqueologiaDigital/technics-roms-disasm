@@ -614,6 +614,9 @@ def lvalue(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False):
     operand; *p loads p into `ptr`; a[i] of a global array scales i in `idx` and puts the array in `base`
     (`(base+idx)`), or with combine=True adds them into `ptr` (`(ptr)`)"""
     lv = strip(lv)
+    if getattr(F, 'cl_active', None) and lv.k == 'index' and strip(lv.base).k == 'var' and \
+            strip(lv.base).decl is F.cl_active['arr']:
+        return F.cl_operand                                  # ol_i_clear: ldw (XBC+WA),0x0
     if lv.k == 'var':
         d = lv.decl
         if d.kind == 'global': return '(_%s)' % d.name
@@ -824,6 +827,7 @@ def gen_stmt(F, s, last):
                                       and regvar_of(strip(nxt.value).e).reg == 'HL'))
             F.trivial_ret_next = trivial
             gen_stmt(F, c, (last and i == len(body) - 1) or trivial); i += 1
+            if not getattr(F, 'cl_active', None): F.cl_tmp_done = False
         return
     if s.k == 'decl': raise Unsupported('decl')
     if s.k == 'return' and s.value is not None and F.opt:
@@ -935,6 +939,13 @@ def operand(F, e, size, avoid=()):
     m = mem_operand(F, e)
     if m is not None: return m
     e0 = narrow(e, size)
+    if getattr(F, 'cl_active', None) and e0.k == 'load' and strip(e0.e).k == 'index' and \
+            strip(strip(e0.e).base).k == 'var' and strip(strip(e0.e).base).decl is F.cl_active['arr']:
+        if getattr(F, 'cl_shared', False):                 # ol_i_acc2: lda XWA,XDE+BC / (XWA)
+            if not getattr(F, 'cl_tmp_done', False):
+                F.emit('lda', 'XWA,%s' % F.cl_operand.strip('()')); F.cl_tmp_done = True
+            return '(XWA)'
+        return F.cl_operand
     if e0.k == 'load' and strip(e0.e).k == 'deref' and strip(strip(e0.e).e).k == 'incdec' and strip(strip(e0.e).e).post:
         inc = strip(strip(e0.e).e); pm = mem_operand(F, inc.e) if False else None
         pv = strip(inc.e)
@@ -1016,8 +1027,37 @@ def loop_cond(F, c, target, sense):
         F.emit('ret', cc) if target == 'RET' else F.emit('j', '%s,%s' % (cc, target)); return
     raise Unsupported('loop condition ' + c.k)
 
+def gen_counted(F, s, last, cl):
+    """the -O counted loop (ol_i_acc1 .. ol_c_glob)"""
+    i = cl['i']; I = FAM[i.reg][2]; K = FAM[cl['kp'].reg][2]
+    F.emit('ld', '%s,0x0' % I)
+    kd = cl['k']
+    km = '(XSP+%s)' % hx(kd.off + F.push) if kd.kind == 'param' else '(_%s)' % kd.name
+    F.emit('ld', '%s,%s' % (K, km))
+    F.emit('cp', '%s,0x0' % K)
+    exitl = F.newulabel(); body = F.newulabel()
+    trivial = last and not F.pushes
+    F.emit('ret', 'le') if trivial else F.emit('j', 'le,%s' % exitl)
+    B = FAM[cl['base'].reg][4]
+    F.emit('lda', '%s,_%s' % (B, cl['arr'].name))
+    if 'off' in cl: O = FAM[cl['off'].reg][2]; F.emit('ld', '%s,0x0' % O); X = O
+    else: X = I
+    F.lines.append(body + ':')
+    F.cl_operand = '(%s+%s)' % (B, X); F.cl_tmp_done = False
+    if cl.get('tmp'):
+        F.cl_shared = True
+    F.cl_active = cl
+    gen_stmt(F, s.body, False)
+    F.cl_active = None; F.cl_operand = None; F.cl_tmp_done = False
+    F.emit('inc', '0x1,%s' % I)
+    if 'off' in cl: F.emit('inc', '%s,%s' % (hx(cl['esz']), FAM[cl['off'].reg][2]))
+    F.emit('cp', '%s,%s' % (I, K)); F.emit('j', 'lt,%s' % body)
+    F.lines.append(exitl + ':')
+
 def gen_loop(F, s, last):
     """for / while / do (regalloc_notes.md, loop shapes); labels: exit first, then body"""
+    cl = getattr(F, 'counted', {}).get(id(s))
+    if cl: return gen_counted(F, s, last, cl)
     if s.k == 'for' and s.init is not None: gen_stmt(F, s.init, False)
     after_ret = last and not F.xiz_vars and not F.pushes and not F.pending
     if s.k == 'do':
@@ -1078,6 +1118,40 @@ def walk(node, fn, depth=0):
     for k, v in node.__dict__.items():
         if hasattr(v, 'k') or isinstance(v, list): walk(v, fn, d)
 
+class Pseudo:
+    """a value the -O loop transformation creates: the hoisted base, the byte offset, the bound copy"""
+    def __init__(s, name, size): s.name = name; s.reg = None; s.ty = type('T', (), {'size': size, 'kind': 'int'})()
+
+def counted_loop(F, s):
+    """for (i = 0; i < k; i++) over global arrays indexed by i (regalloc_notes.md, Loops at -O3 -XS):
+    returns a description or None"""
+    if s.k != 'for' or s.init is None or s.cond is None or s.inc is None: return None
+    ini = flat(s.init)
+    if len(ini) != 1 or ini[0].k != 'expr' or strip(ini[0].e).k != 'bin' or strip(ini[0].e).op != '=': return None
+    iv = strip(strip(ini[0].e).l); v0 = fold(strip(ini[0].e).r)
+    if iv.k != 'var' or iv.decl.kind != 'local' or iv.decl.ty.size != 2 or v0.k != 'const' or v0.value != 0: return None
+    c = strip(s.cond)
+    if not (c.k == 'bin' and c.op == '<' and strip(c.l).k == 'load' and strip(strip(c.l).e).k == 'var'
+            and strip(strip(c.l).e).decl is iv.decl): return None
+    kv = strip(c.r)
+    while kv.k == 'cast': kv = strip(kv.e)
+    if not (kv.k == 'load' and strip(kv.e).k == 'var' and strip(kv.e).decl.kind in ('param', 'global')): return None
+    inc = strip(s.inc)
+    if not (inc.k == 'incdec' and inc.op == '++' and strip(inc.e).k == 'var' and strip(inc.e).decl is iv.decl): return None
+    arrays = []; bad = []
+    def v(n, d):
+        if n.k == 'index':
+            b = strip(n.base); ix = strip(n.idx)
+            while ix.k == 'cast': ix = strip(ix.e)
+            if b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array' and ix.k == 'load' \
+                    and strip(ix.e).k == 'var' and strip(ix.e).decl is iv.decl:
+                if b.decl not in [a for a, _ in arrays]: arrays.append((b.decl, n.ty.size))
+            else: bad.append(n)
+        if n.k == 'call': bad.append(n)
+    walk(s.body, v)
+    if bad or len(arrays) != 1: return None
+    return {'i': iv.decl, 'k': strip(kv.e).decl, 'arr': arrays[0][0], 'esz': arrays[0][1]}
+
 def plan_leaf(F):
     """the leaf-function allocator of regalloc_notes.md"""
     f = F.f
@@ -1106,6 +1180,42 @@ def plan_leaf(F):
         if not multi: return False
     rets = []
     walk(f.body, lambda n, d: rets.append(strip(strip(n.value).e).decl) if n.k == 'return' and n.value is not None and strip(n.value).k == 'load' and strip(strip(n.value).e).k == 'var' else None)
+    F.counted = {}
+    if F.opt:
+        loops = []
+        walk(f.body, lambda n, d: loops.append(n) if n.k == 'for' else None)
+        if len(loops) == 1 and counted_loop(F, loops[0]) and not has_call:
+            cl = counted_loop(F, loops[0]); F.counted[id(loops[0])] = cl
+            uses_in_body = {}
+            walk(loops[0].body, lambda n, d: uses_in_body.__setitem__(strip(n.base).decl, uses_in_body.get(strip(n.base).decl, 0) + 1)
+                 if n.k == 'index' else None)
+            shared = uses_in_body.get(cl['arr'], 0) >= 2 and cl['esz'] > 1
+            stores_long = []
+            walk(loops[0].body, lambda n, d: stores_long.append(n) if n.k == 'bin' and n.op == '=' and strip(n.l).k == 'index'
+                 and strip(n.l).ty.size == 4 else None)
+            seq = ['WA', 'BC', 'DE', 'HL', 'IX', 'IY', 'IZ']
+            rets0 = []
+            walk(f.body, lambda n, d: rets0.append(strip(strip(n.value).e).decl) if n.k == 'return' and n.value is not None
+                 and strip(n.value).k == 'load' and strip(strip(n.value).e).k == 'var' else None)
+            reserved = set()
+            if shared or stores_long: reserved.add('WA')
+            locs = [d for d in f.decls if d.kind == 'local' and d.ty.kind == 'int' and not d.addr_taken]
+            for d in locs:
+                if d in rets0: d.reg = 'HL'; reserved.add('HL')
+            free = [r for r in seq if r not in reserved]
+            kd = cl['k']; kp = Pseudo('bound', 2); cl['kp'] = kp
+            order = []
+            if kd.kind == 'global': order.append(kp)
+            if cl['esz'] > 1: cl['off'] = Pseudo('offset', 2); order.append(cl['off'])
+            cl['base'] = Pseudo('base', 4); order.append(cl['base'])
+            if kd.kind != 'global': order.append(kp)
+            order += [d for d in reversed(locs) if not getattr(d, 'reg', None)]
+            for x in order:
+                x.reg = free.pop(0)
+            if shared: cl['tmp'] = 'WA'
+            F.pushes = ['IZ'] if any(getattr(x, 'reg', None) == 'IZ' for x in order + locs) else []
+            if F.pushes: F.emit('push', 'IZ'); F.push = 2
+            return True
     okind = ('int', 'ptr') if F.opt else ('int',)
     locals_ = [d for d in f.decls if d.kind == 'local' and not d.addr_taken and d.ty.kind in okind]
     if not hasloop:
