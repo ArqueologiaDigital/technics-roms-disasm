@@ -634,6 +634,12 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         lr = regvar_of(strip(l).e) if strip(l).k == 'load' else None
         if F.opt and lr is not None and lr.reg in ('BC', 'DE', 'HL') and dies_here(F, l) and size == 2 and op in '*/':
             work = lr.reg; F.dead.add(lr)               # mul_i_loc under O3XSXr: x in DE dying -> muls XDE,WA / ld HL,DE
+        lc = strip(l)
+        while lc.k == 'cast' and lc.kind == 'IntegralCast': lc = strip(lc.e)
+        lrc = regvar_of(lc.e) if lc.k == 'load' else None
+        if F.opt and F.adecl and BINLOC_XR and lrc is not None and lrc.reg in ('BC', 'DE', 'HL') and size == 1 and \
+                op in '*/' and dies_here(F, lc) and not getattr(lrc, 'rem_hi', False):
+            work = lrc.reg; F.dead.add(lrc)             # mul_c_loc under O3XSXr: muls DE,A / ld L,E (in place)
         if lr is not None and lr.reg == 'WA' and not dies_here(F, l):
             work = free_reg(F, avoid={'WA'})            # mul_i_loc under Xr: ld DE,WA / muls XDE,BC
         if lr is not None and lr.reg == 'WA' and dies_here(F, l): F.dead.add(lr)
@@ -645,8 +651,10 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         sl = strip(l)
         lu = uncast(l); lvd = regvar_of(lu.e) if lu.k == 'load' else None
         dying_var = lvd is not None and lvd.reg not in ('WA',) and dies_here(F, lu) and size == 1
-        if F.adecl and not F.opt and work == 'WA' and rr is not None and rr.reg == 'WA' and size in (1, 2) \
+        rem_left = (lu.k == 'bin' and lu.op == '%') or (lvd is not None and getattr(lvd, 'rem_hi', False))
+        if F.adecl and (not F.opt or rem_left) and work == 'WA' and rr is not None and rr.reg == 'WA' and size in (1, 2) \
                 and BINLOC_XR and (lr is None and lu.k == 'bin' and lu.op in ('*', '/', '%') or dying_var):
+            # (a remainder is never reused in place, -O3 too: mod_c_loc / mod_i_loc under O3XSXr)
             sl = lu if lu.k == 'bin' else None
             # binop-loc rule 3.3 (research-scratch sessions/2026-11-09_cc900-binop-loc): mul_i_loc under -Xr,
             # (a * b) * a -> ld DE,WA / muls XDE,BC (a live) / ld BC,DE / muls XBC,WA: the first free pair once the
