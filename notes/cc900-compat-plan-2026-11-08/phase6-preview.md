@@ -77,7 +77,10 @@ around its two calls), and the table data's `.sbrk` (its addresses are encoded d
 `.sbrk` is declared `__adecl` in a cdecl file; the front end now reads the attribute per function.  A static
 (`__str`, a static function's address `__strOut`) has no public symbol in the image either: `pairs_model.py` gives it
 a placeholder, takes its address from the image's own operands (a 24-bit address, or a `pushw` hi / lo pair) and
-requires every use to agree on one address.  `_fabs` came with `-O`'s hoisting of the two branches' common first instructions above the test
+requires every use to agree on one address.  The main CPU's `_vsprintf` (v10, v7) is not V4.23's nor the
+HD-AE5000's: it reloads `s` after `_str = s` (`ld (0x03c21c),XWA` / `ld XWA,(XSP+0x04)` / `ld (XWA),0x0`), where
+V4.23 and the HD-AE5000 keep XWA; and `pairs.tsv` puts its public 3 bytes past its first instruction (ff0ab7 for
+ff0ab4).  A different build of the library, or a rule for the main CPU; not decided.  `_fabs` came with `-O`'s hoisting of the two branches' common first instructions above the test
 (`fpgen.hoist_common`).  `_exp` showed one more asm900 choice: `lda` of a symbol always takes the 24-bit address
 (`lda XBC,_g_mathtbl` at 0xf420 is `f2 20 f4 00 31`), where an `ld` of a variable below 0x10000 takes 16 bits.  The other 110 (`model cannot` in the TSV) are routines the model does not compile yet (`goto` in `_strcspn`, the
 floating-point formatter `__doprnt`, the math routines), or that are data the model does not emit.
