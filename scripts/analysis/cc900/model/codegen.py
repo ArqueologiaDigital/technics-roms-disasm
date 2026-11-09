@@ -1395,7 +1395,10 @@ def gen_compare(F, e):
     if la.k == 'bin' and la.op == '=' and strip(la.l).k == 'var' and getattr(strip(la.l).decl, 'reg', None) in \
             ('BC', 'DE', 'HL', 'IX', 'IY') and rc.k == 'const' and rc.value == 0 and op in ('==', '!='):
         fv = gen_assign_value(F, la, 'WA', size)           # ae_i_ne_l: ld BC,(XSP+0x4) / ld WA,BC / cp WA,0x0
-        if F.opt and ASSIGN_CMP_INPLACE: W = FAM[fv][size]   # -O: the variable's own register (assign_expr.c
+        if (F.opt and ASSIGN_CMP_INPLACE) or held_after(F, 'WA', la) or any(
+                getattr(d, 'reg', None) == 'WA' and d not in F.dead and d in getattr(F, 'in_loop', ())
+                for d in list(F.f.params) + list(F.f.decls)):   # (-Xr ae_c_loop: s in XWA, ld A,E was wrong code)
+            W = FAM[fv][size]                              # -O: the variable's own register (assign_expr.c
         else:                                              # ae_c_loop -O3 -XS -Xr: ld C,(XWA+:1) / cp C,0x0)
             F.emit('ld', '%s,%s' % (FAM['WA'][size], FAM[fv][size])); W = FAM['WA'][size]
         F.emit('or', '%s,%s' % (W, W)) if size == 4 else F.emit('cp', '%s,0x0' % W); return cc
