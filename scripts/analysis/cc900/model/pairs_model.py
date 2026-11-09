@@ -85,9 +85,18 @@ def main():
             consts, _ = to_llvm.split_consts(lines)
             PH = 0xfffff0                                  # FP constants: the linker placed them; take each address from
             for k, lab in enumerate(consts): syms[lab] = PH - 8 * k   # the image's own operand, check the double there
-            try: text = '\t.text\n' + '\n'.join(to_llvm.translate_function(pub, lines, syms)) + '\n'
-            except KeyError as ex:
-                tally['unresolved symbol'] += 1; print('\t'.join([img, r[1], pub, src, '-', str(ex).strip("'")])); continue
+            statics = {}                                   # a static (no public symbol): placed by the linker; its
+            text = None                                    # address is taken from the image's own operand below
+            for _ in range(8):
+                try: text = '\t.text\n' + '\n'.join(to_llvm.translate_function(pub, lines, syms)) + '\n'; break
+                except KeyError as ex:
+                    name = str(ex).strip("'").replace('no address for ', '').strip()
+                    if name in syms or not name.startswith('_'): text = None; break
+                    statics[name] = (0xf0 - len(statics)) << 16 | (0xfe10 - 0x111 * len(statics)); syms[name] = statics[name]
+            if text is None:
+                tally['unresolved symbol'] += 1; print('\t'.join([img, r[1], pub, src, '-', 'unresolved']))
+                for n_ in statics: syms.pop(n_, None)
+                continue
             if '; untranslated' in text:
                 bad = [l for l in text.split('\n') if 'untranslated' in l][0].strip()
                 tally['untranslated'] += 1; print('\t'.join([img, r[1], pub, src, '-', bad])); continue
@@ -106,6 +115,30 @@ def main():
                     if real is None or read(real, len(wantb)) != wantb: bad_const = lab; break
                     text = text.replace('0x%x' % syms[lab], '0x%x' % real); syms[lab] = real
                 code, err = assemble(text, addr)
+            bad_static = None
+            if statics and code is not None:
+                for name, ph in statics.items():
+                    pat = ph.to_bytes(3, 'little'); addrs = set(); at = code.find(pat)
+                    while at >= 0:
+                        rb = read(addr + at, 3)
+                        if rb: addrs.add(int.from_bytes(rb, 'little'))
+                        at = code.find(pat, at + 1)
+                    pp = bytes([0x0b, (ph >> 16) & 0xff, (ph >> 24) & 0xff, 0x0b, ph & 0xff, (ph >> 8) & 0xff])
+                    at = code.find(pp)                     # pushw hi / pushw lo of the address
+                    while at >= 0:
+                        rb = read(addr + at, 6)
+                        if rb and rb[0] == 0x0b and rb[3] == 0x0b:
+                            addrs.add((rb[1] | rb[2] << 8) << 16 | rb[4] | rb[5] << 8)
+                        at = code.find(pp, at + 1)
+                    if len(addrs) != 1: bad_static = name; break     # every use must agree on one address
+                    real = addrs.pop(); text = text.replace('0x%x' % ph, '0x%x' % real)
+                    text = text.replace('pushw 0x%x' % ((ph >> 16) & 0xffff), 'pushw 0x%x' % ((real >> 16) & 0xffff))
+                    text = text.replace('pushw 0x%x' % (ph & 0xffff), 'pushw 0x%x' % (real & 0xffff))
+                code, err = assemble(text, addr)
+            for n_ in statics: syms.pop(n_, None)
+            if bad_static:
+                tally['differs'] += 1; print('\t'.join([img, r[1], pub, src, '-', 'static %s: uses disagree' % bad_static]))
+                continue
             if bad_const:
                 tally['differs'] += 1; print('\t'.join([img, r[1], pub, src, '-', 'constant %s not in the image' % bad_const]))
                 continue

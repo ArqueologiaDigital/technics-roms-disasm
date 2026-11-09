@@ -105,6 +105,10 @@ def translate_line(t, syms, locals_):
             return '\tjp 0x%x' % lookup(raw[0], syms)
         return '\tjr %s, %s' % (CC[raw[0]], raw[1])
     if op == 'djnz': return '\tdjnz %s, %s' % (raw[0].lower(), raw[1])
+    m = re.match(r'^([_.]\w+|S\d+) (>> 16|& 0xffff)$', ' '.join(raw)) if op == 'pushw' else None
+    if m:                                                # an address pushed as two words (abi returns.c use_d,
+        a = syms[m.group(1)] if m.group(1) in syms else lookup(m.group(1), syms)   # _sprintf: pushw __strOut >> 16)
+        return '\tpushw 0x%x' % ((a >> 16) & 0xffff if m.group(2) == '>> 16' else a & 0xffff)
     if op == 'call' and len(raw) == 1 and re.match(r'^X(WA|BC|DE|HL|IX|IY|IZ)$', raw[0]):
         return '\tcall (%s)' % raw[0].lower()                    # an indirect call: call XWA (abi fptr.c fp_call)
     if op in ('jr', 'jrl'):                                # inline assembly writes jr / jrl itself (_MEMSET.C)
