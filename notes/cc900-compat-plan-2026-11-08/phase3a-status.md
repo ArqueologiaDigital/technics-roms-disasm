@@ -90,9 +90,18 @@ rule accounts for 251.  It is usable now for phase 6 experiments (compile a cand
 ROM), within the VM rule.
 
 Open pairs: `__doprnt` (beyond both neighbours: a variable in IZ and two missing `decw` sequences, probably a later
-`__DOFORM.C`), `__facnv`, `__doform` data, `_vsprintf` (the firmware stores XWA to the buffer pointer before loading
-it from `(XSP+4)`: the first two instructions swapped relative to V4.23's, which no rule seen so far produces), `_sbrk`,
-`___ctype` naming, `__FloatErrorHandle`.
+`__DOFORM.C`), `__facnv`, `__doform` data, `_vsprintf`, `_sbrk`, `___ctype` naming, `__FloatErrorHandle`.
+
+`_vsprintf` (corrected 2026-11-09): there is no swap. `pairs.py` aligned the near match three bytes into the routine,
+which starts at `Sprintf_Unlocked` itself (0xff0ab4 in v10, 0xff02d7 in v7). From there the main CPU's copy is V4.23's
+with one extra instruction: `ld XWA,(XSP+0x4)` again after `ld (__str),XWA`, before `s[0] = '\0'`. No compiler we have
+produces that reload. The IDE, V4.23 and v1.10 library objects all lack it, and so does the HD-AE5000's copy, which is
+byte-identical to all three. Two compiler rules were tried and dropped:
+- a store to a global clears what the reload rule knows: it also turns the HD-AE5000's `_sprintf` (4 pairs) wrong;
+- no register copies of parameters in a function that stores a global (`plan_leaf`, `_ltoa`'s rule): no effect on its
+  own, because the reload rule then drops the load.
+The routine sits under a locking wrapper, so it was probably built from Technics' own variant of the source (`s`
+reread, for instance through a `volatile` or a macro), not by a different compiler. It stays a known miss.
 
 ## Progress on the firmware's convention (2026-11-09, later)
 
