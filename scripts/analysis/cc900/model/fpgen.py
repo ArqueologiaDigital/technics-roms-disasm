@@ -50,13 +50,27 @@ def string_label(F, text):
     F.fconsts = getattr(F, 'fconsts', []) + [(lab, text, 'str')]
     return lab
 
+def static_label(F, d):
+    """an uninitialised static local: f_area at the start of the function (abi globals.c gl_local_static:
+    f_area section data large align=2,2 / S3: / dsb 2)"""
+    if getattr(d, 'slabel', None) is None:
+        d.slabel = 'S%d' % FCONST[0]; FCONST[0] += 1
+        F.statics = getattr(F, 'statics', []) + [d]
+    return d.slabel
+
+def area_block(F):
+    if not getattr(F, 'statics', None): return []
+    out = ['f_area section data large align=2,2']
+    for d in F.statics: out += [d.slabel + ':', '\tdsb\t%d' % d.ty.size]
+    return out + ['f_code section code large align=1,1']
+
 def const_block(F):
-    if not getattr(F, 'fconsts', None): return []
+    if not getattr(F, 'fconsts', None): return area_block(F)
     out = ['f_const section romdata large align=2,2']
     for lab, v, size in F.fconsts:
         if size == 'str': out += [lab + ':', '\tdb\t%s,0' % v]; continue
         out += ['\talign\t2', lab + ':', '\t%s\t%s' % ('fdatad' if size == 8 else 'fdataf', fdata(v))]
-    return out + ['f_code section code large align=1,1']
+    return out + ['f_code section code large align=1,1'] + area_block(F)
 
 def strip(e): return C().strip(e)
 
@@ -378,6 +392,11 @@ def call_into(F, e, dest, arg_hint=None):
             if is_fp(strip(a).ty): k += push_fp_arg(F, a, hints.pop() if hints else None)
             else: k += cg.push_arg(F, a)
         return k
+    if dest[0] == 'lv' and strip(dest[1]).k == 'var' and strip(dest[1]).decl.kind == 'global' and arg_hint is None:
+        g = strip(dest[1]).decl.name                     # abi returns.c use_d: gd = x_d() -> pushw _gd >> 16 /
+        n += push_args()                                 # pushw _gd & 0xffff / cal _x_d / inc 0x4,XSP
+        F.emit('pushw', '_%s >> 16' % g); F.emit('pushw', '_%s & 0xffff' % g); F.push += 4; n += 4
+        F.emit('cal', '_' + fn.decl.name); F.pending += n; return
     if arg_hint is not None:
         n += push_args()
     if dest[0] == 'lazyres':                               # the hint if the arguments left it free (call_val)
@@ -421,6 +440,10 @@ def gen_return(F, v):
             F.emit('ld', 'XWA,(XSP+%s)' % C().hx(F.sret.off + F.push)); put_addr(F, loc, 'XBC'); F.emit('cal', '._fld_dd')
             return
         eval_into(F, v, ('sret',)); return
+    e = fp_value_cast(v)
+    if e.k == 'load' and strip(e.e).k == 'var':          # abi returns.c r_f: return gf -> ld XHL,(_gf)
+        m = C().mem_operand(F, e)
+        if m is not None: F.emit('ld', 'XHL,%s' % m); return
     off = F.fret_slot if getattr(F, 'fret_slot', None) is not None else temp(F, 4)
     eval_into(F, v, ('slot', off))
     F.emit('ld', 'XHL,%s' % slot_mem(F, off))

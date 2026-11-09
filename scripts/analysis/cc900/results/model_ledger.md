@@ -15,10 +15,10 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-08-7-micro, ide2003/O3XSXr, --personality ide2003       | micro/*.c           | 625 / 674 exact (92.7%)  |
 | run 2026-11-08-8-micro-ra, v423/none                                | micro/ra_*.c        | 29 / 42 exact (69.0%)    |
 | run 2026-11-08-8-micro-ra, v423/O3XSXr                              | micro/ra_*.c        | 12 / 42 exact (28.6%)    |
-| run 2026-11-08-4-abi, v423/none                                     | abi/*.c             | 89 / 105 exact (84.8%)   |
-| run 2026-11-08-4-abi, v423/O3XS                                     | abi/*.c             | 86 / 105 exact (81.9%)   |
-| run 2026-11-08-6-abi-adecl, v423/Xr                                 | abi/*.c             | 71 / 80 exact (88.8%)    |
-| run 2026-11-08-6-abi-adecl, v423/O3XSXr                             | abi/*.c             | 66 / 80 exact (82.5%)    |
+| run 2026-11-08-4-abi, v423/none                                     | abi/*.c             | 94 / 105 exact (89.5%)   |
+| run 2026-11-08-4-abi, v423/O3XS                                     | abi/*.c             | 91 / 105 exact (86.7%)   |
+| run 2026-11-08-6-abi-adecl, v423/Xr                                 | abi/*.c             | 72 / 80 exact (90.0%)    |
+| run 2026-11-08-6-abi-adecl, v423/O3XSXr                             | abi/*.c             | 67 / 80 exact (83.8%)    |
 | run 2026-11-09-4-micro-switch, v423/none                            | micro/switch.c      | 13 / 25 exact (52.0%)    |
 | run 2026-11-09-4-micro-switch, v423/Xr                              | micro/switch.c      | 22 / 25 exact (88.0%)    |
 | run 2026-11-09-4-micro-switch, v423/O3XS                            | micro/switch.c      | 20 / 25 exact (80.0%)    |

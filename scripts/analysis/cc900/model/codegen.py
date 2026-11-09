@@ -155,6 +155,8 @@ def mem_operand(F, e):
             if d.kind == 'param' and hasattr(d, 'slot'): return '(XSP+%s)' % hx(d.slot + F.push)   # homed (d_keep)
             if d.kind == 'param': return '(XSP+%s)' % hx(d.off + F.push)
             if d.kind in ('global', 'func') and not d.ty.kind == 'array': return '(_%s)' % d.name
+            if d.kind == 'static' and not d.ty.kind == 'array' and getattr(d, 'init', None) is None:
+                return '(%s)' % fpgen.static_label(F, d)   # gl_local_static: incw 0x1,(S3) / ld HL,(S3)
         if v.k == 'index' and fold(v.idx).k == 'const':     # _tan: ((unsigned short *)&x)[3] -> (XSP+off+6)
             b = strip(v.base)
             while b.k == 'cast': b = strip(b.e)
@@ -1029,6 +1031,8 @@ def gen_incdec(F, e, fam, size, value):
     g = global_name(e.e)
     if g is None and strip(e.e).k == 'var' and hasattr(strip(e.e).decl, 'slot'):
         g = 'XSP+%s' % hx(strip(e.e).decl.slot + F.push)     # _ultoa: p-- -> ld XWA,0x1 / sub (XSP+4),XWA
+    if g is None and strip(e.e).k == 'var' and strip(e.e).decl.kind == 'static' and getattr(strip(e.e).decl, 'init', None) is None:
+        g = fpgen.static_label(F, strip(e.e).decl)            # gl_local_static: return ++n -> incw 0x1,(S3)
     if g is None: raise Unsupported('incdec target')
     vt = strip(e.e).ty
     step = vt.base.size if vt.kind == 'ptr' else 1
@@ -1106,6 +1110,7 @@ def lvalue(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False):
     if lv.k == 'var':
         d = lv.decl
         if d.kind == 'global': return '(_%s)' % d.name
+        if d.kind == 'static' and getattr(d, 'init', None) is None: return '(%s)' % fpgen.static_label(F, d)
         if d.kind == 'param': return '(XSP+%s)' % hx(d.off + F.push)
         if d.kind == 'local' and hasattr(d, 'slot'): return '(XSP+%s)' % hx(d.slot + F.push)
     if lv.k == 'deref':
@@ -1532,6 +1537,12 @@ def gen_stmt(F, s, last):
             d = strip(v.e).decl                        # _ldiv: ld XIX,(sret) / lda XIY,XSP+slot / ld BC,n / ldirw
             F.emit('ld', 'XIX,(XSP+%s)' % hx(F.sret.off + F.push)); F.emit('lda', 'XIY,XSP+%s' % hx(d.slot + F.push))
             F.emit('ld', 'BC,%s' % hx(d.ty.size // 2)); F.emit('ldirw', '(XIX+),(XIY+)')
+            if F.xiz_vars: F.emit('pop', F.save_reg)
+            epilogue(F); F.emit('ret'); return
+        if v.k == 'load' and strip(v.e).k == 'var' and strip(v.e).decl.kind == 'global':
+            d = strip(v.e).decl                        # abi returns.c r_big: ld XIX,(XSP+0x4) / ld XIY,_gbig /
+            F.emit('ld', 'XIX,(XSP+%s)' % hx(F.sret.off + F.push)); F.emit('ld', 'XIY,_%s' % d.name)   # ld BC,0x8 /
+            F.emit('ld', 'BC,%s' % hx(d.ty.size // 2)); F.emit('ldirw', '(XIX+),(XIY+)')               # ldirw
             if F.xiz_vars: F.emit('pop', F.save_reg)
             epilogue(F); F.emit('ret'); return
         raise Unsupported('struct return')
@@ -3002,7 +3013,10 @@ def fp_plan_frame(F):
             and not foldable(f, d) and d.ty.kind not in ('array', 'struct') and d.uses]
     I = sum((d.ty.size + 1) // 2 * 2 for d in ints)          # _log: nptr (address taken) at the very top
     L = sum((d.ty.size + 1) // 2 * 2 for d in locs)
-    fret = 4 if fpgen.is_fp(f.ret) and f.ret.size == 4 else 0
+    rets = []
+    walk(f.body, lambda n, d: rets.append(n) if n.k == 'return' and n.value is not None else None)
+    simple = all(fpgen.fp_value_cast(r.value).k == 'load' and strip(fpgen.fp_value_cast(r.value).e).k == 'var' for r in rets)
+    fret = 4 if fpgen.is_fp(f.ret) and f.ret.size == 4 and not simple else 0   # (r_f: ld XHL,(_gf), no frame)
     T = 2 * F.fp_temps
     size = I + L + T + fret
     size = (size + 1) // 2 * 2
