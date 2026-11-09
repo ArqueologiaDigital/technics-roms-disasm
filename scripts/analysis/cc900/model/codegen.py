@@ -80,11 +80,18 @@ def strip(e):
     while e.k in ('noop', 'decay'): e = e.e
     return e
 
+CUR_OPT = [True]                                           # the current function's -O (narrow() has no F)
+
+def long_arith_kept(x, size):
+    """without -O a long + - & | ^ narrowed to an int keeps its 32 bits (switch.c sw_ev: f1((int)(ev - 0x2000)) ->
+    ld XWA,(XSP+0x6) / sub XWA,0x2000 / push WA; -O3 -XS narrows it: ld WA,(XSP+0x6) / sub WA,0x2000)"""
+    return not CUR_OPT[0] and x.k == 'bin' and x.op in ('+', '-', '&', '|', '^') and x.ty.size == 4 and size < 4
+
 def narrow(e, size):
     """the value of e, known to be needed only in its low `size` bytes: drop integral casts that widen"""
     e = strip(e)
     while e.k == 'cast' and e.kind == 'IntegralCast' and strip(e.e).ty.size >= size and not wide_divide(strip(e.e), size) \
-            and not ptrdiff_arith(strip(e.e)):
+            and not ptrdiff_arith(strip(e.e)) and not long_arith_kept(strip(e.e), size):
         e = strip(e.e)                                   # / % >> on wide operands keep their width (_ultoa: val % radix)
     if e.k == 'cast' and e.kind == 'IntegralCast' and strip(e.e).ty.size < size:
         return e
@@ -2688,7 +2695,9 @@ def gen_stmt(F, s, last):
     if s.k == 'switch':
         gen_switch(F, s, last); return
     if s.k in ('case', 'default'):                         # a case label inside a switch body (gen_switch)
-        if F.case_labels[id(s)] and id(s) not in F.case_inner: F.lines.append(F.case_labels[id(s)] + ':')
+        if F.case_labels[id(s)] and id(s) not in F.case_inner:
+            if F.pending: flush_pops(F)                    # sw_fall: a case falls into the next one: its pops first
+            F.lines.append(F.case_labels[id(s)] + ':')
         if s.body is not None: gen_stmt(F, s.body, False)
         return
     if s.k == 'ulabel':                                    # a user label left by goto_returns (_strcspn's bye: stays)
@@ -5159,8 +5168,9 @@ def tail_calls(lines, keep_end):
         nxt = lines[i + 1] if i + 1 < len(lines) else ''
         if nxt.startswith('\tj\t') and ',' not in nxt and nxt.split('\t')[2] in pos and leads_to_ret(pos[nxt.split('\t')[2]]):
             out[i] = '\tj\t' + l.split('\t')[2]; out[i + 1] = None
-        elif nxt == '\tret' and l.split('\t')[2].startswith('.') and not l.endswith(';stack'):
-            out[i] = '\tj\t' + l.split('\t')[2]; out[i + 1] = None        # sw_ret: return g1(1) -> j .g1
+        elif nxt == '\tret' and (l.split('\t')[2].startswith('.') or CDECL_TAILCALL and l.split('\t')[2].startswith('_')) \
+                and not l.endswith(';stack'):                # sw_ret: return g1(1) -> j .g1; switch.c sw_jt8 without
+            out[i] = '\tj\t' + l.split('\t')[2]; out[i + 1] = None        # -O: f0(); break; -> j _f0
     out = [l for l in out if l is not None]
     res = []                                               # a jump to the next label goes (sw_local: ld HL,0x7 / L128:)
     for i, l in enumerate(out):
@@ -5170,8 +5180,8 @@ def tail_calls(lines, keep_end):
             if l.split('\t')[2] in labs: continue
         res.append(l)
     out = res
-    if not keep_end and len(out) >= 3 and out[-1] == '\tret' and is_label(out[-2]) and out[-3].startswith('\tj\t') \
-            and ',' not in out[-3]:
+    if not keep_end and len(out) >= 3 and out[-1] == '\tret' and is_label(out[-2]) and \
+            (out[-3].startswith('\tj\t') or out[-3] == '\tret') and ',' not in out[-3]:   # (sw_jt4: ... ret / L4: ret)
         lab = out[-2][:-1]
         if not any(lab in x for x in out[:-2]): out = out[:-2]
     return out
@@ -5203,7 +5213,7 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong
     F = Fn(f, adecl)
     F.fp_temps = fp_temps; F.fp_nlong = fp_nlong
     F.personality = personality
-    F.opt = opt != 'none'; F.dead = set(); F.had_goto = bool(gotos)
+    F.opt = opt != 'none'; F.dead = set(); F.had_goto = bool(gotos); CUR_OPT[0] = F.opt
     if F.opt: bool_returns(f.body)
     if F.opt and COPY_PROP: copy_propagate(f)
     compute_last_uses(F)
