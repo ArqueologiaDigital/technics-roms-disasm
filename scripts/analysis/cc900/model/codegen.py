@@ -77,6 +77,9 @@ def narrow(e, size):
 def fold(e):
     """constant folding of integral casts of constants"""
     e = strip(e)
+    if e.k == 'cast' and e.kind in ('NullToPointer', 'IntegralToPointer') and fold(e.e).k == 'const':
+        from frontend import N
+        return N('const', value=fold(e.e).value, ty=e.ty)
     if e.k == 'cast' and e.kind == 'IntegralCast':
         i = fold(e.e)
         if i.k == 'const' and i.value is not None:
@@ -448,6 +451,12 @@ def gen_compare(F, e):
         op = {'<=': '==', '>': '!='}.get(op, op)          # cmp_ui: le_ui_br0, gt_ui_br0
         cc = CC_U[op]
     lm = mem_operand(F, l)
+    rv = r
+    while rv.k == 'cast' and rv.kind == 'IntegralCast': rv = strip(rv.e)
+    rvm = mem_operand(F, rv)
+    if rvm in ('A', 'C', 'E', 'L', 'WA', 'BC', 'DE', 'HL') and lm is not None and lm.startswith('(') and e.op in ('==', '!='):
+        rr = FAM[[k for k, v in FAM.items() if rvm in v.values()][0]][size]     # _strchr: cp A,(XHL)
+        F.emit('cp', '%s,%s' % (rr, lm)); return cc
     if regvar_of(getattr(l, 'e', l)) and lm in ('BC', 'DE', 'HL', 'IX', 'IY', 'IZ'):   # ra_leaf: cp IX,(XSP+4)
         rs = mem_operand(F, r)
         if rs is None: raise Unsupported('complex compare operand')
@@ -763,9 +772,20 @@ def gen_stmt(F, s, last):
         i = 0
         while i < len(body):
             c = body[i]
-            if c.k == 'decl' and getattr(c.var, 'reg', None) not in (None, 'XIZ', 'WA') and c.var.kind == 'local':
-                for d in [d for d in getattr(F, 'deferred', []) if c.init is not None and uses_decl(c.init, d)]:
+            if getattr(F, 'deferred', None):
+                j = i
+                while j < len(body) and body[j].k not in ('for', 'while', 'do'): j += 1
+                stretch = body[i:j + 1]
+                def first_use(d):
+                    order = []
+                    walk(stretch, lambda n, dep: order.append(n.decl) if n.k == 'var' else None)
+                    return order.index(d) if d in order else 1 << 30
+                need = [d for d in F.deferred if any(uses_decl(x, d) for x in stretch)]
+                own = sorted([d for d in need if uses_decl(c, d)], key=first_use)
+                rest = sorted([d for d in need if d not in own], key=first_use)
+                for d in rest + own:                       # _strncpy: n, s2, then s1 (its own statement); _strchr: s, c
                     F.emit('ld', '%s,(XSP+%s)' % (FAM[d.reg][d.ty.size], hx(d.off + F.push))); F.deferred.remove(d)
+            if c.k == 'decl' and getattr(c.var, 'reg', None) not in (None, 'XIZ', 'WA') and c.var.kind == 'local':
                 if c.init is not None:
                     from frontend import N
                     regvar_stmt(F, N('bin', op='=', l=N('var', decl=c.var, ty=c.var.ty), r=c.init, ty=c.var.ty))
@@ -782,9 +802,14 @@ def gen_stmt(F, s, last):
                     c.var.reg = gen(F, c.init, 'WA', 1); i += 1; continue
                 raise Unsupported('local ' + c.var.name)
             if c.k == 'decl' and c.init is None: i += 1; continue
-            for d in [d for d in getattr(F, 'deferred', []) if uses_decl(c, d)]:
-                F.emit('ld', '%s,(XSP+%s)' % (FAM[d.reg][d.ty.size], hx(d.off + F.push))); F.deferred.remove(d)
             nxt = body[i + 1] if i + 1 < len(body) else None
+            if F.opt and c.k == 'expr' and c.e.k == 'bin' and c.e.op == '=' and strip(c.e.l).k == 'deref' and nxt is not None \
+                    and nxt.k == 'expr' and strip(nxt.e).k == 'incdec' and strip(nxt.e).op == '++':
+                pv = strip(strip(c.e.l).e); iv = strip(strip(nxt.e).e)
+                if pv.k == 'load' and regvar_of(pv.e) and regvar_of(iv) is regvar_of(pv.e):
+                    from frontend import N                   # _strncpy: ldb (XIX+:1),0x0
+                    strip(c.e.l).e = N('incdec', op='++', post=True, e=iv, ty=pv.ty)
+                    gen_stmt(F, c, False); i += 2; continue
             if c.k == 'expr' and c.e.k == 'opassign' and regvar_of(c.e.l) and nxt is not None and nxt.k == 'return' \
                     and nxt.value is not None and strip(nxt.value).k == 'load' and regvar_of(strip(nxt.value).e) is regvar_of(c.e.l) \
                     and (c.e.op in SIMPLE_OPS or c.e.op in ('*', '/', '%')):
@@ -814,6 +839,17 @@ def gen_stmt(F, s, last):
         if F.xiz_vars: F.emit('pop', 'XIZ')
         for r in reversed(F.pushes): F.emit('pop', r)
         F.emit('retd', hx(F.retd)) if F.retd else F.emit('ret'); return
+    if s.k == 'if' and s.els is None and F.opt and not F.pending and not F.pushes and not F.xiz_vars and \
+            flat(s.then) and flat(s.then)[0].k == 'return' and len(flat(s.then)) == 1 and (
+            flat(s.then)[0].value is None or (strip(flat(s.then)[0].value).k == 'load' and regvar_of(strip(flat(s.then)[0].value).e)
+                                              and regvar_of(strip(flat(s.then)[0].value).e).reg == 'HL')):
+        lab = F.newulabel()                                # _strchr: cp A,(XHL) / ret eq
+        c = strip(s.cond)
+        if c.k == 'bin' and c.op in CC_S:
+            cc = gen_compare(F, c)
+            if cc not in (True, False):
+                F.emit('ret', cc); F.lines.append(lab + ':'); return
+        raise Unsupported('conditional return')
     if s.k == 'if':
         if s.els is None:
             lab = F.newulabel()
@@ -950,6 +986,16 @@ def regvar_stmt(F, e):
 def loop_cond(F, c, target, sense):
     """jump to target when c is true (sense) or false (not sense); x-- as condition (rc_while)"""
     c = strip(c)
+    if c.k == 'bin' and c.op == '&&' and sense:          # _strncpy: first false -> past the loop, last true -> body
+        out = F.newulabel(); loop_cond(F, c.l, out, False); loop_cond(F, c.r, target, True)
+        F.lines.append(out + ':'); return
+    if c.k == 'bin' and c.op == '&&' and not sense:
+        loop_cond(F, c.l, target, False); loop_cond(F, c.r, target, False); return
+    if c.k == 'bin' and c.op == '||' and sense:
+        loop_cond(F, c.l, target, True); loop_cond(F, c.r, target, True); return
+    if c.k == 'bin' and c.op == '||' and not sense:
+        inn = F.newulabel(); loop_cond(F, c.l, inn, True); loop_cond(F, c.r, target, False)
+        F.lines.append(inn + ':'); return
     if c.k == 'incdec' and c.post and regvar_of(c.e):
         d = regvar_of(c.e); R = FAM[d.reg][2]
         F.emit('ld', 'WA,%s' % R); F.emit('dec' if c.op == '--' else 'inc', '0x1,%s' % R); F.emit('cp', 'WA,0x0')
@@ -1059,7 +1105,7 @@ def plan_leaf(F):
         multi = [d for d in f.decls if d.kind == 'local' and uses.get(d, 0) >= 2 and d.ty.kind == 'int']
         if not multi: return False
     rets = []
-    walk(f.body, lambda n, d: rets.append(strip(n.value.e).decl) if n.k == 'return' and n.value is not None and strip(n.value).k == 'load' and strip(strip(n.value).e).k == 'var' else None)
+    walk(f.body, lambda n, d: rets.append(strip(strip(n.value).e).decl) if n.k == 'return' and n.value is not None and strip(n.value).k == 'load' and strip(strip(n.value).e).k == 'var' else None)
     okind = ('int', 'ptr') if F.opt else ('int',)
     locals_ = [d for d in f.decls if d.kind == 'local' and not d.addr_taken and d.ty.kind in okind]
     if not hasloop:
@@ -1069,12 +1115,24 @@ def plan_leaf(F):
     if F.opt: order = list(reversed(locals_)) + list(reversed(params))      # _strcat at -O: s, s2, s1
     free = [r for r in LEAF_SEQ if not (r == 'BC' and temps_bc)]
     for d in order:
-        if d in rets and 'HL' in free: d.reg = 'HL'; free.remove('HL')
+        if d in rets and 'HL' in free:
+            d.reg = 'HL'; free.remove('HL')
+            if d.kind == 'param': F.param_copies.append(d)        # _strchr: ld XHL,(XSP+4)
+    narrowed = set()
+    walk(f.body, lambda n, dep: narrowed.add(strip(strip(n.e).e).decl) if n.k == 'cast' and n.kind == 'IntegralCast'
+         and n.ty.size == 1 and strip(n.e).k == 'load' and strip(strip(n.e).e).k == 'var' else None)
+    if F.opt:
+        free = ['WA'] + [r for r in free if r != 'WA'] if 'WA' not in free else free
     for d in order:
         if getattr(d, 'reg', None): continue
+        if F.opt and d in narrowed and d.ty.size == 2 and 'WA' in free:     # guess (_strchr: c in WA)
+            d.reg = 'WA'; free.remove('WA')
+            if d.kind == 'param': F.param_copies.append(d)
+            continue
         if d.ty.size == 4: cand = [r for r in free if r in ('BC', 'DE', 'HL', 'IX', 'IY')]
         elif d.ty.size == 1: cand = [r for r in free if r in ('BC', 'DE', 'HL')]
         else: cand = free
+        cand = [r for r in cand if r != 'WA']
         if not cand: raise Unsupported('out of registers')
         d.reg = cand[0]; free.remove(cand[0])
         if d.kind == 'param': F.param_copies.append(d)
