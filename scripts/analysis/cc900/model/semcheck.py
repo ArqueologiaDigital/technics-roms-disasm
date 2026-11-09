@@ -16,9 +16,10 @@ equal, DIFFERENT, not checked) and one line per DIFFERENT function with the firs
 when any function is DIFFERENT.
 
 --ledger runs every micro/ and probes/ row of ledger.sh (only the V4.23 compiler unless --all-compilers), and with
---library also the 1997 library row (V4.23, -O3 -XS; FP functions are not checked); with --results it writes the
-summary tables.  --model-dir DIR imports codegen/frontend/listing from DIR instead (an older
-revision extracted with `git archive`), to see whether a known bug is caught.
+--library also the 1997 library row (V4.23, -O3 -XS); with --results it writes the summary tables.  The FP runtime
+helpers (`._f*`) are computed as IEEE arithmetic (semcheck.md, "FP helpers").  --model-dir DIR imports
+codegen/frontend/listing from DIR instead (an older revision extracted with `git archive`), to see whether a known
+bug is caught.
 """
 import os, sys, re, struct, zlib, random, subprocess
 
@@ -96,6 +97,9 @@ def gen_int(rng, bits, signed, mode):
     else: v = rng.getrandbits(bits)
     return v & mask
 
+FP_EDGE = [0.0, -0.0, 1.0, -1.0, 0.5, -2.5, 1.5, 3.0, 1e-310, 1e-40, 3.4e38, 3.5e38, 1e308, -1e308,
+           2147483647.5, -2147483648.0, 4294967295.0, 4294967296.0, float('inf'), float('-inf'), float('nan')]
+
 class World:
     """the symbols and initial memory shared by the model's run and the oracle's (one function, one trial)"""
     def __init__(s, unit, data_blocks):
@@ -165,8 +169,10 @@ class Trial:
             for k in range(t.size): out[a + k] = rng.getrandbits(8)
             for fname, ft, off in t.rec or []: s.fill(ft, a + off, rng, out)
         elif t.kind == 'float':
-            if s.mode == 'full': b = bytes(rng.getrandbits(8) for _ in range(t.size))
-            else: b = struct.pack('<f' if t.size == 4 else '<d', float(rng.randint(-3, 9)))[:t.size]
+            if s.mode == 'full' or t.size not in (4, 8): b = bytes(rng.getrandbits(8) for _ in range(t.size))
+            else:
+                v = rng.randint(-6, 18) / 2 if s.mode == 'small' else rng.choice(FP_EDGE)
+                b = float_to_bits(v, 'd' if t.size == 8 else 'f').to_bytes(t.size, 'little')
             for k, c in enumerate(b): out[a + k] = c
         else:
             for k in range(max(t.size, 0)): out[a + k] = rng.getrandbits(8)
@@ -221,6 +227,84 @@ def helper(name, a, b):
     if (sa < 0) != (sb < 0): q = -q
     return (q if name == 'C9H_divls' else sa - q * sb) & 0xFFFFFFFF
 
+# ---------------------------------------------------------------- the FP runtime helpers (semcheck.md, "FP helpers")
+#
+# Conventions as model/fpgen.py emits them and the oracle listings set them up (black box; no Toshiba code read):
+# `._f<add|sub|mul|div>_<d|f>`: (XWA) = (XBC) op (XDE); `._fneg_<d|f>`: (XWA) = -(XBC); `._fld_<to><from>`:
+# (XWA) = (XBC) converted (d double, f float, l long, ul unsigned long; `xx` copies a 10-byte long double);
+# `._fcmp_<d|f>`: HL = 1 when (XWA) REL (XBC) holds, else 0, REL = DE; `._fcmp_z<d|f>`: HL = (XWA) REL 0, REL = BC.
+# Relation codes: <= 0, < 1, >= 2, > 3, == 4, != 5.
+
+FP_HELPER = re.compile(r'^\._f(?:(add|sub|mul|div)_([df])|neg_([df])|cmp_(z?)([df])|ld_(ul|d|f|l|x)(ul|d|f|l|x))$')
+FP_SIZE = {'d': 8, 'f': 4, 'l': 4, 'ul': 4, 'x': 10}
+NAN_BITS = {'d': 0x7FF8000000000000, 'f': 0x7FC00000}
+
+def fp_helper_known(name):
+    """None when semcheck implements the FP helper, else why not"""
+    m = FP_HELPER.match(name)
+    if not m: return 'FP helper %s' % name
+    if m.group(6) is not None and 'x' in (m.group(6), m.group(7)) and (m.group(6), m.group(7)) != ('x', 'x'):
+        return 'FP helper %s (long double format unknown)' % name
+    return None
+
+def fp_bits_to_float(bits, k):
+    return struct.unpack('<d' if k == 'd' else '<f', bits.to_bytes(FP_SIZE[k], 'little'))[0]
+
+def float_to_bits(v, k):
+    """IEEE round to nearest (ctypes: a C cast, overflow -> inf); every NaN is the default quiet NaN"""
+    import ctypes, math
+    if math.isnan(v): return NAN_BITS[k]
+    if k == 'f': v = ctypes.c_float(v).value
+    return int.from_bytes(struct.pack('<d' if k == 'd' else '<f', v), 'little')
+
+def fp_key(bits, k):
+    """a key whose order is IEEE's on numbers (-0 == +0) and puts a NaN beyond the infinity of its sign"""
+    sign = 1 << (8 * FP_SIZE[k] - 1)
+    return -(bits & (sign - 1)) if bits & sign else bits
+
+def fp_to_int(v, k):
+    """C truncation toward zero, modulo 2**32; NaN, infinities and values outside -2**31 .. 2**32-1 give 0x80000000
+    (undefined in C: any fixed answer will do, since both sides call the same helper)"""
+    import math
+    if math.isnan(v) or math.isinf(v): return 0x80000000
+    t = int(v)
+    if not -(1 << 31) <= t < (1 << 32): return 0x80000000
+    return t & 0xFFFFFFFF
+
+def fp_div(a, b):
+    import math
+    if b != 0: return a / b
+    if a == 0 or math.isnan(a): return math.nan
+    return math.copysign(math.inf, a) * math.copysign(1.0, b)
+
+def fp_helper(name, m):
+    """run the FP helper `name` on machine m: -> the value of HL for a compare, else None"""
+    g = FP_HELPER.match(name).groups()
+    XWA, XBC, XDE = (m.get(interp.REGS[r]) for r in ('XWA', 'XBC', 'XDE'))
+    def load(a, k): return m.rd(a, FP_SIZE[k])
+    def store(a, k, bits): m.wr(a, FP_SIZE[k], bits)
+    if g[0]:                                                     # add / sub / mul / div
+        k = g[1]; x = fp_bits_to_float(load(XBC, k), k); y = fp_bits_to_float(load(XDE, k), k)
+        r = {'add': lambda: x + y, 'sub': lambda: x - y, 'mul': lambda: x * y, 'div': lambda: fp_div(x, y)}[g[0]]()
+        store(XWA, k, float_to_bits(r, k)); return None
+    if g[2]:                                                     # neg
+        k = g[2]; store(XWA, k, float_to_bits(-fp_bits_to_float(load(XBC, k), k), k)); return None
+    if g[4]:                                                     # cmp / cmp_z
+        k = g[4]
+        a = fp_key(load(XWA, k), k)
+        if g[3]: b = 0; rel = m.get(interp.REGS['BC'])
+        else: b = fp_key(load(XBC, k), k); rel = m.get(interp.REGS['DE'])
+        if rel > 5: raise interp.Crash('%s with relation code 0x%x' % (name, rel))   # BC / DE not set for it
+        return int([a <= b, a < b, a >= b, a > b, a == b, a != b][rel])
+    to, fr = g[5], g[6]                                          # ld: copy / conversion
+    v = load(XBC, fr)
+    if to == fr: store(XWA, to, v); return None                  # dd, ff, ll, xx: a copy of the bytes
+    if fr in ('l', 'ul'): x = float(interp.sext(v, 32) if fr == 'l' else v)
+    else: x = fp_bits_to_float(v, fr)
+    if to in ('l', 'ul'): store(XWA, to, fp_to_int(x, fr))
+    else: store(XWA, to, float_to_bits(x, to))
+    return None
+
 CLOBBER = ['XWA', 'XBC', 'XDE', 'XHL', 'XIX', 'XIY']
 
 class Hooks:
@@ -242,6 +326,11 @@ class Hooks:
             r = helper(name, m.get(interp.REGS['XWA']), m.get(interp.REGS['XBC']))
             s.clobber(m, 1000 + k); m.set(interp.REGS['XHL'], r)
             return 0
+        if name is not None and name.startswith('._f') and fp_helper_known(name) is None:
+            hl = fp_helper(name, m)                    # not recorded: only its results are observable
+            s.clobber(m, 2000 + k)
+            if hl is not None: m.set(interp.REGS['HL'], hl)
+            return 0
         if name is not None and (name.startswith('C9H_') or name.startswith('._f')):
             raise interp.Unsupported('runtime helper %s' % name)
         if name is None:
@@ -250,7 +339,7 @@ class Hooks:
             conv = name.startswith('.'); key = name[1:]
         sig = s.sites.get(key) if key in s.sites else s.sites.get('*') if name.startswith('*') else None
         sp = m.r[interp.XSP] + 4
-        args = None; pop = 0
+        args = None; pop = 0; outs = []
         if sig is not None:
             types, ret = sig
             hidden = (not conv) and mem_result(ret)
@@ -264,7 +353,10 @@ class Hooks:
                     args.append(('result', 'stack' if in_stack(v) else s.w.sym_name(v))); continue
                 if t.kind in ('ptr', 'array') and in_stack(v):  # address of a local: what it points to
                     n = max(1, min(t.base.size if t.base is not None and t.base.size else 2, 16))
-                    args.append(('&local', tuple(m.rd8(v + j) for j in range(n))))
+                    # bytes not written since entry are uninitialised: frames differ, so their garbage would too
+                    args.append(('&local', tuple(m.rd8(v + j) if ((v + j) & interp.AMASK) in m.written else None
+                                                 for j in range(n))))
+                    outs.append((i, v, n))
                 else: args.append(v)
             pop = stackbytes if conv else 0
             args = tuple(args)
@@ -272,6 +364,10 @@ class Hooks:
         s.calls.append(rec)
         h = mix(s.t.seed, name, args, k)
         s.clobber(m, k)
+        for i, v, n in outs:                           # the callee may write what it is given the address of
+            for j in range(n):                         # (frexp's exponent): the same bytes on both sides
+                b = mix(h, 'out', i, j)
+                m.wr8(v + j, (b % 6 if j % 2 == 0 else 0) if s.t.mode == 'small' else b)
         if sig is not None:
             types, ret = sig
             if ret is not None and ret.kind != 'void':
@@ -296,12 +392,18 @@ class Hooks:
 
 # ---------------------------------------------------------------- one function
 
+def c_params(fn):
+    """the C parameters: codegen.compile_unit prepends the hidden result pointer `__sret` to fn.params, and run_one
+    passes that pointer itself (until 2026-11-09 it was passed twice, every argument of a double- or struct-returning
+    function 4 bytes too high, on both sides alike)"""
+    return [p for p in fn.params if not (p.name == '__sret' and getattr(p.ty, 'spell', '') == 'sret')]
+
 def run_one(prog, trial, fn, file_adecl, argvals, limit):
     m = interp.Machine(trial.init_byte)
     for j, r in enumerate(interp.R32[:7]):
         m.set(interp.REGS[r], (0x5A3C9600 + 0x11111111 * (j + 1)) & 0xFFFFFFFF)
     m.Z = m.C = m.S = m.V = True
-    types = [p.ty for p in fn.params]
+    types = [p.ty for p in c_params(fn)]
     hidden = (not file_adecl) and mem_result(fn.ret)
     lay, stackbytes = layout(([frontend.parse_type('char *', frontend.Records(), {})] if hidden else []) + types,
                              file_adecl)
@@ -331,7 +433,10 @@ def run_one(prog, trial, fn, file_adecl, argvals, limit):
     return out
 
 def describe_args(fn, vals):
-    return ', '.join('%s=%s' % (p.name, hex(v)) for p, v in zip(fn.params, vals))
+    def one(p, v):
+        if p.ty.kind == 'float' and p.ty.size in (4, 8): return '%s=%r' % (p.name, fp_bits_to_float(v, 'd' if p.ty.size == 8 else 'f'))
+        return '%s=%s' % (p.name, hex(v))
+    return ', '.join(one(p, v) for p, v in zip(c_params(fn), vals))
 
 def compare(a, b, w):
     """first difference between the model's outcome a and the oracle's b, or None"""
@@ -362,7 +467,7 @@ def memdiff(x, y, w):
     f = lambda v: '%02x' % v if v is not None else 'unchanged'
     return '%s: model %s, oracle %s' % (w.sym_name(a), f(dx.get(a)), f(dy.get(a)))
 
-FP_CALL = re.compile(r'\b(cal|call|j)\s+\._f')
+FP_CALL = re.compile(r'\b(?:cal|call|j|jp|jr|jrl|calr)\s+(?:\w+\s*,\s*)?(\._f\w+)')
 
 def check_function(fn, name, mlines, olines, unit, data_blocks, adecl, trials, limit, seed0):
     """-> ('equal', None) | ('DIFFERENT', reason) | ('not checked', reason)"""
@@ -370,7 +475,8 @@ def check_function(fn, name, mlines, olines, unit, data_blocks, adecl, trials, l
     if olines is None: return 'not checked', 'no oracle code'
     for side, lines in (('model', mlines), ('oracle', olines)):
         for l in lines:
-            if FP_CALL.search(l): return 'not checked', 'calls an FP helper'
+            fc = FP_CALL.search(l)
+            if fc and fp_helper_known(fc.group(1)): return 'not checked', fp_helper_known(fc.group(1))
             if re.search(r'\bC9H_', l) and not any(h in l for h in HELPERS):
                 return 'not checked', 'runtime helper ' + re.search(r'C9H_\w+', l).group(0)
     if adecl and mem_result(fn.ret): return 'not checked', 'adecl memory result'
@@ -383,8 +489,8 @@ def check_function(fn, name, mlines, olines, unit, data_blocks, adecl, trials, l
         if msg.startswith('undefined label'): return 'DIFFERENT', 'model code uses an %s it never defines' % msg
         return 'not checked', msg if msg.startswith('model:') else 'interp (model code): %s' % msg
     try:
-        for p in fn.params: slot_size(p.ty)
-        layout([p.ty for p in fn.params], adecl)
+        for p in c_params(fn): slot_size(p.ty)
+        layout([p.ty for p in c_params(fn)], adecl)
     except interp.Unsupported as ex: return 'not checked', str(ex)
     inconclusive = 0; done = 0; ndiff = 0; dmodes = set(); first = None
     modes = ['small', 'edge', 'full', 'small']
@@ -395,14 +501,14 @@ def check_function(fn, name, mlines, olines, unit, data_blocks, adecl, trials, l
             for prog in (pm, po):
                 tr = Trial(w, seed, mode)
                 rng = random.Random(mix(seed, 'args'))
-                vals = [tr.arg_value(p.ty, rng) for p in fn.params]
+                vals = [tr.arg_value(p.ty, rng) for p in c_params(fn)]
                 outs.append(run_one(prog, tr, fn, adecl, vals, limit))
             a, b = outs
             if (a['status'] == 'steps') != (b['status'] == 'steps'):     # one side may just be slower
                 outs = []
                 for prog in (pm, po):
                     tr = Trial(w, seed, mode); rng = random.Random(mix(seed, 'args'))
-                    vals = [tr.arg_value(p.ty, rng) for p in fn.params]
+                    vals = [tr.arg_value(p.ty, rng) for p in c_params(fn)]
                     outs.append(run_one(prog, tr, fn, adecl, vals, limit * 4))
                 a, b = outs
         except interp.Unsupported as ex: return 'not checked', 'interp: %s' % ex
@@ -425,7 +531,7 @@ def data_blocks_of(want, unit):
     for name, lines in want.items():
         if name in fnames: continue
         body = [l for l in lines[1:] if 'section' not in l]
-        if not body or not all(l.split()[0] in ('db', 'dw', 'dl', 'dd', 'align', 'fdatad', 'ds') for l in body): continue
+        if not body or not all(l.split()[0] in ('db', 'dw', 'dl', 'dd', 'align', 'fdatad', 'fdataf', 'ds', 'dsb') for l in body): continue
         try:
             p = interp.Program([name + 'x__:'] + body, lambda s: 0, data_base=0)
         except Exception: continue

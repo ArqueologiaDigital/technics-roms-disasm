@@ -4,7 +4,7 @@ It runs one function's lines, as `listing.split` gives them for an oracle listin
 gives them for the model, so that semcheck.py can compare what the two compute (semcheck.md).  It is not an
 assembler: there are no encodings and no cycle counts; code addresses are CODE_BASE + 4 * instruction index, which
 keeps `dw L2-L50000` switch tables and `j XIX+WA` consistent.  Data directives (`db`, `dw`, `dl`, `fdatad`,
-`align`) inside the lines, with or without `section` switches, are laid out from DATA_BASE.
+`fdataf`, `dsb`, `align`) inside the lines, with or without `section` switches, are laid out from DATA_BASE.
 
 Semantics follow MAME's tlcs900 core (src/devices/cpu/tlcs900/900tbl.hxx): flags of add/sub/logic/shifts, `inc` and
 `dec` of a 16/32-bit register leave the flags alone, shift counts are `n & 15` with 0 meaning 16, `(XRR+R16)` and
@@ -231,6 +231,9 @@ def split_operands(s):
 
 def parse_operand(t, symaddr):
     if t in REGS: return Op('r', t, reg=REGS[t])
+    m = re.match(r'^(-?)(X[A-Z]+)(\+?):(\w+)$', t)          # lda XBC,XDE+:1 -- the (r+) / (-r) mode, unbracketed
+    if m and m.group(2) in REGS and bool(m.group(1)) != bool(m.group(3)):
+        return Op('m', t, reg=REGS[m.group(2)], mode='pre' if m.group(1) else 'post', step=int(m.group(4), 0))
     if t in CONDS: return Op('c', t)
     if t.startswith('(') and t.endswith(')'):
         inner = t[1:-1].strip()
@@ -252,7 +255,8 @@ def parse_operand(t, symaddr):
 
 # ---------------------------------------------------------------- program
 
-DATA_DIRS = ('db', 'dw', 'dl', 'dd', 'fdatad', 'fdata', 'ds', 'align')
+DATA_DIRS = ('db', 'dw', 'dl', 'dd', 'fdatad', 'fdataf', 'fdata', 'ds', 'dsb', 'dsw', 'dsl', 'align')
+DS_UNIT = {'ds': 1, 'dsb': 1, 'dsw': 2, 'dsl': 4}
 LABEL = re.compile(r'^([A-Za-z_.$][\w.$]*):')
 
 class Program:
@@ -325,9 +329,9 @@ class Program:
     def _data_size(s, mn, args, dp):
         if mn == 'align':
             a = int(args.split(',')[0], 0); return (-dp) % a
-        if mn == 'ds': return int(args, 0)
+        if mn in DS_UNIT: return DS_UNIT[mn] * int(args, 0)
         if mn in ('fdatad',): return 8 * len(split_operands(args))
-        if mn == 'fdata': return 4 * len(split_operands(args))
+        if mn in ('fdata', 'fdataf'): return 4 * len(split_operands(args))
         w = {'db': 1, 'dw': 2, 'dl': 4, 'dd': 4}[mn]
         n = 0
         for k, v in s._items(args): n += len(v.encode('latin-1')) if k == 'str' else w
@@ -335,9 +339,9 @@ class Program:
 
     def _emit_data(s, mn, args, dp):
         if mn == 'align': return dp + s._data_size(mn, args, dp)
-        if mn == 'ds':
-            return dp + int(args, 0)
-        if mn in ('fdatad', 'fdata'):
+        if mn in DS_UNIT:
+            return dp + DS_UNIT[mn] * int(args, 0)
+        if mn in ('fdatad', 'fdata', 'fdataf'):
             for x in split_operands(args):
                 b = struct.pack('<d' if mn == 'fdatad' else '<f', float(x))
                 for k, c in enumerate(b): s.data[dp + k] = c
@@ -508,6 +512,12 @@ def b_ld(ops, sz, prog, here, text):
 
 @build('lda')
 def b_lda(ops, sz, prog, here, text):
+    if len(ops) == 2 and ops[0].kind == 'r' and ops[1].kind == 'm' and ops[1].mode:   # the address, then the step
+        reg = ops[0].reg; src = ops[1]
+        def f(m): m.set(reg, ea(src, m, src.step) & 0xFFFFFFFF)
+        return f
+    if len(ops) == 2 and ops[1].kind == 'r' and ops[1].reg[2] == 32:      # lda XWA,XSP: the address XSP+0
+        ops = [ops[0], Op('i', ops[1].text, expr=('r', ops[1].reg))]
     if len(ops) != 2 or ops[0].kind != 'r' or ops[1].kind != 'i': raise Unsupported(text)
     reg = ops[0].reg; fe = compile_expr(ops[1].expr)
     def f(m): m.set(reg, fe(m) & 0xFFFFFFFF)

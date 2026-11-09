@@ -34,3 +34,14 @@ arr_index.c	*	_ai_up_sub,.ai_up_sub	oracle narrows: the oracle subtracts 32 and 
 arr_index_sz.c	*	_ai_up_sub,.ai_up_sub	oracle narrows: the oracle subtracts 32 and 55 in the byte, the model in int
 arr_index.c	*	_ai_dig_val,.ai_dig_val	wrong code: jumps to a label the model never emits (would not assemble)
 arr_index_sz.c	*	_ai_dig_val,.ai_dig_val	wrong code: jumps to a label the model never emits (would not assemble)
+# Reviewed 2026-11-09 (FP helpers now computed, semcheck.md "FP helpers") against the model at a157973ab (working tree).
+fp_stmts.c	*	_s_if	wrong code: the then-branch returns without releasing the 16-byte frame
+fpp1.c	*	_b1,_b2,_b4,_c3,_e1,_e2,_e3,_e4,_e6	wrong code: the argument pops of the call in the if condition are placed in the then-branch; the other path leaves them on the stack
+fpp2.c	*	_z6,_z7,_z8,_z9,_z10	wrong code: the argument pops of the call in the if condition are placed in the then-branch; the other path leaves them on the stack
+_ACOS.C	*	_acos	wrong code: the argument pops of fabs (in the if condition) are placed in the then-branch; the other path leaves them on the stack
+_ASIN.C	*	_asin	wrong code: the argument pops of fabs (in the if conditions) are placed in the then-branches; the other paths leave them on the stack
+__TRIG.C	*	__trig	wrong code: the argument pops of modf / fabs (in if conditions) are placed in the then-branches; the other paths leave them on the stack
+_FMOD.C	*	_fmod	wrong code: x1's address is kept in XBC across cal ._fneg_d and used at the join (no oracle code relies on a register but HL or XIZ surviving an FP helper)
+_TANH.C	*	_tanh	wrong code: ld DE,0x0 hoisted above a branch reaches the second ._fcmp_d by a path where the first ._fcmp_d has clobbered DE (the relation code is junk)
+_STRTOK.C	*	_strtok	wrong code: s1 += strspn() is added to (XSP+0x8) while the two arguments are still pushed, i.e. to the saved XIZ, not to s1 (in XIZ)
+__DOFORM.C	*	__doudigit	wrong code: the loop tests XBC (junk after C9H_divlu) instead of the quotient, so it never ends; str is kept in XDE across the helper calls
