@@ -1561,6 +1561,7 @@ POSTDEC_FREE = True                                       # see loop_cond
 PTR_INDEX_REG = True                                      # see gen_load_mem
 EMPTY_WHILE_ONE_LABEL = True                              # see gen_loop
 IDX_GUARD = True                                          # see elem_addr
+LEAF_KEEP_TAKEN = True                                    # see plan_leaf
 
 def char_narrow(body):
     """cc900 does int + - & | ^ of a char and a constant that fits a byte, or of two chars, on the byte and
@@ -6379,6 +6380,10 @@ def plan_leaf(F):
     walk(f.body, hb)
     if F.opt:
         free = ['WA'] + [r for r in free if r != 'WA'] if 'WA' not in free else free
+    if LEAF_KEEP_TAKEN:                                    # a variable that keeps its register takes it out of the
+        for d in order:                                    # pool (assign_expr.c ae_c_tou -O3 -XS -Xr: s2 stays in
+            r_ = getattr(d, 'reg', None)                   # XBC, so c2 must not get C: wrong code)
+            if r_ in free: free.remove(r_)
     for d in order:
         if getattr(d, 'reg', None): continue
         if F.opt and d in narrowed and d.ty.size == 2 and 'WA' in free:     # guess (_strchr: c in WA)
