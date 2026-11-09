@@ -2121,6 +2121,38 @@ def gen_load_mem(F, v, fam, size):
             F.emit('add', '%s,%s' % (W, pm)); F.emit('ld', '%s,(%s)' % (R, W)); return fam
     raise Unsupported('memory load ' + v.k)
 
+def member_run(body, i):
+    """cdecl -O: two or more statements from body[i] storing through members of one memory parameter p
+    (`p->f = v;`, `p->f op= k;`) with no call: (p, length, any non-constant value, the next statement returns a
+    stored parameter) or None.  The pointer is loaded once (_fassign: ld XBC,(XSP+0x4) / ldw (XBC+0xa),0x0 /
+    ld XWA,(XSP+0x8) / ld (XBC+0x4),XWA ...; _ungetc: ld XWA,(XSP+0x6) / ld HL,(XSP+0x4) / ld (XWA+0x8),HL /
+    orw (XWA+0xa),0x4 / ret)"""
+    p = None; n = 0; nonconst = False; vals = []
+    for c in body[i:]:
+        if c.k != 'expr': break
+        e = c.e
+        if not ((e.k == 'bin' and e.op == '=') or (e.k == 'opassign' and e.op in SIMPLE_OPS and fold(e.r).k == 'const')):
+            break
+        lv = strip(e.l)
+        if not (lv.k == 'member' and lv.arrow and strip(lv.base).k == 'load' and strip(strip(lv.base).e).k == 'var'):
+            break
+        d = strip(strip(lv.base).e).decl
+        if d.kind != 'param' or getattr(d, 'reg', None) or not hasattr(d, 'off') or (p is not None and d is not p): break
+        calls = []
+        walk(e.r, lambda m, dep: calls.append(m) if m.k in ('call', 'incdec', 'opassign') or (m.k == 'bin' and m.op == '=') else None)
+        if calls or fpgen.is_fp(lv.ty) or lv.ty.kind == 'struct' or uses_decl(e.r, d): break
+        p = d; n += 1
+        if e.k == 'bin' and fold(e.r).k != 'const': nonconst = True; vals.append(strip(e.r))
+    if n < 2: return None
+    nxt = body[i + n] if i + n < len(body) else None
+    rv = None
+    if nxt is not None and nxt.k == 'return' and nxt.value is not None:
+        x = strip(nxt.value)
+        if x.k == 'load' and strip(x.e).k == 'var' and any(v.k == 'load' and strip(v.e).k == 'var' and
+                                                          strip(v.e).decl is strip(x.e).decl for v in vals):
+            rv = strip(x.e).decl
+    return p, n, nonconst, rv is not None
+
 def lvalue(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False, kind='store'):
     """set up the address of lvalue lv and return its operand string (assign.c): a global or parameter is a direct
     operand; *p loads p into `ptr`; a[i] of a global array scales i in `idx` and puts the array in `base`
@@ -2200,6 +2232,10 @@ def lvalue(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False, kind='store'):
         if m.startswith('X'): return '(%s)' % m        # .as_add_ptr: add (XWA),BC
         F.emit('ld', '%s,%s' % (ptr, m)); return '(%s)' % ptr
     if lv.k == 'member' and lv.arrow:                 # mem.c: m_gps_set
+        bv = strip(lv.base); pc = getattr(F, 'ptr_cache', None) or {}
+        if bv.k == 'load' and strip(bv.e).k == 'var' and strip(bv.e).decl in pc:
+            P = pc[strip(bv.e).decl]; off = member_offset(lv)   # _fassign: stream once in XBC for three stores
+            return '(%s+%s)' % (P, hx(off)) if off else '(%s)' % P
         m = mem_operand(F, lv.base)
         if m is None: raise Unsupported('complex member base')
         F.emit('ld', '%s,%s' % (ptr, m)); off = member_offset(lv)
@@ -2239,7 +2275,9 @@ def gen_opassign(F, e):
     r = narrow(e.r, size)
     signed = strip(e.l).ty.signed
     if op in SIMPLE_OPS and fold(r).k == 'const' and size <= 2 and (getattr(F, 'naive_loads', False) or
-                                                                    getattr(F, 'l2', None)):   # _itoa: addb (XIY),0x27
+                                                                    getattr(F, 'l2', None) or
+                                                                    getattr(F, 'ptr_cache', None)):   # _itoa: addb (XIY),0x27
+                                                                    # (_ungetc: orw (XWA+0xa),0x4)
         t = lvalue(F, e.l)                                # _ultoa: *p += 39 -> addb (XWA),0x27
         F.emit(SIMPLE_OPS[op] + ('b' if size == 1 else 'w'), '%s,%s' % (t, hx(fold(r).value))); return t
     if op in SIMPLE_OPS:
@@ -2469,6 +2507,16 @@ def gen_stmt(F, s, last):
         while i < len(body):
             c = body[i]
             F.next_stmt = body[i + 1] if i + 1 < len(body) else None
+            if F.opt and not F.adecl and MEMBER_RUNS and getattr(F, 'ptr_run_end', -1) == i:
+                F.ptr_cache = {}; F.store_val_reg = None
+            if F.opt and not F.adecl and MEMBER_RUNS and not getattr(F, 'ptr_cache', None):
+                run = member_run(body, i)
+                if run is not None:
+                    p_, n_, nonconst, rets_val = run
+                    R_ = 'XWA' if rets_val or not nonconst else 'XBC'
+                    F.emit('ld', '%s,(XSP+%s)' % (R_, hx(p_.off + F.push)))
+                    F.ptr_cache = {p_: R_}; F.ptr_run_end = i + n_
+                    F.store_val_reg = 'HL' if rets_val else None
             if getattr(F, 'deferred', None):
                 j = i
                 while j < len(body) and body[j].k not in ('for', 'while', 'do'): j += 1
@@ -2898,6 +2946,8 @@ def gen_stmt(F, s, last):
                 flush_pops(F)                                            # -> the pops merge (inc 0x8,XSP)
             t = lvalue(F, lv)                                   # (the slot's offset after the pending pushes)
             F.emit('ld', '%s,%s' % (t, FAM['HL'][size])); return   # ld (XSP+0x2),XHL
+        if getattr(F, 'store_val_reg', None) and getattr(F, 'ptr_cache', None):
+            work = F.store_val_reg                         # _ungetc: c is returned next -> ld HL,(XSP+0x4) / ld (XWA+0x8),HL
         fam = gen(F, s.e.r, work, size)                    # opt_temps.c ot_cpy_anb: ld E,(XHL+:1) / ld (XWA+:1),E
         F.emit('ld', '%s,%s' % (t, FAM[fam][size])); return
     raise Unsupported('statement ' + s.k)
@@ -3014,6 +3064,7 @@ FP_AGGR = True
 MUL_K_XWA = True
 IFCHAIN_JOIN = True
 BINLOC_XR = True
+MEMBER_RUNS = True                                 # cdecl -O: p->f stores load p once (_fassign, _ungetc)
 GLOBAL_FORWARD = True                              # -O: a global just stored is not reloaded (_rand)
 HOMES_PARAM_ORDER = True                           # adecl entry homes in reverse parameter order (h_p_diff)
 PTR_CHAR_EXTZ = True                               # p + i on a char pointer zero-extends i (h_p_n3, ai_c_p_*)
