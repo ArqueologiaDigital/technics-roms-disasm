@@ -14,7 +14,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-08-7-micro, ide2003/Xr, --personality ide2003           | micro/*.c            | 667 / 674 exact (99.0%)  |
 | run 2026-11-08-7-micro, ide2003/O3XSXr, --personality ide2003       | micro/*.c            | 660 / 674 exact (97.9%)  |
 | run 2026-11-08-8-micro-ra, v423/none                                | micro/ra_*.c         | 33 / 42 exact (78.6%)    |
-| run 2026-11-08-8-micro-ra, v423/O3XSXr                              | micro/ra_*.c         | 18 / 42 exact (42.9%)    |
+| run 2026-11-08-8-micro-ra, v423/O3XSXr                              | micro/ra_*.c         | 23 / 42 exact (54.8%)    |
 | run 2026-11-08-4-abi, v423/none                                     | abi/*.c              | 96 / 108 exact (88.9%)   |
 | run 2026-11-08-4-abi, v423/O3XS                                     | abi/*.c              | 96 / 108 exact (88.9%)   |
 | run 2026-11-08-6-abi-adecl, v423/Xr                                 | abi/*.c              | 73 / 80 exact (91.2%)    |
@@ -80,7 +80,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality kn5000     | 1997 LIB/SRC         | 159 / 248 exact (64.1%)  |
 | run 2026-11-08-5-libsrc97-O3XS, ide2003/O3XS, --personality ide2003 | 1997 LIB/SRC         | 152 / 248 exact (61.3%)  |
 | run 2026-11-09-3-proxy-tiny, v423/O3XSXr                            | firmware/tiny.c      | 6 / 6 exact (100.0%)     |
-| run 2026-11-08-8-micro-ra, v423/O3XS                                | micro/ra_*.c         | 19 / 42 exact (45.2%)    |
+| run 2026-11-08-8-micro-ra, v423/O3XS                                | micro/ra_*.c         | 20 / 42 exact (47.6%)    |
 | run 2026-11-08-8-micro-ra, v423/Xr                                  | micro/ra_*.c         | 23 / 42 exact (54.8%)    |
 | run 2026-11-08-9-micro-optloops, v423/none                          | micro/opt_loops.c    | 22 / 33 exact (66.7%)    |
 | run 2026-11-08-9-micro-optloops, v423/Xr                            | micro/opt_loops.c    | 30 / 33 exact (90.9%)    |
