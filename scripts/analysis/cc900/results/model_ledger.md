@@ -59,12 +59,12 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-23-micro-assignexpr, v423/O3XS                       | micro/assign_expr.c  | 37 / 43 exact (86.0%)    |
 | run 2026-11-09-23-micro-assignexpr, v423/Xr                         | micro/assign_expr.c  | 27 / 43 exact (62.8%)    |
 | run 2026-11-09-23-micro-assignexpr, v423/O3XSXr                     | micro/assign_expr.c  | 41 / 43 exact (95.3%)    |
-| run 2026-11-09-24-micro-arrindex, v423/none                         | micro/arr_index.c    | 56 / 66 exact (84.8%)    |
-| run 2026-11-09-25-micro-arrindexsz, v423/none                       | micro/arr_index_sz.c | 57 / 66 exact (86.4%)    |
+| run 2026-11-09-24-micro-arrindex, v423/none                         | micro/arr_index.c    | 57 / 66 exact (86.4%)    |
+| run 2026-11-09-25-micro-arrindexsz, v423/none                       | micro/arr_index_sz.c | 58 / 66 exact (87.9%)    |
 | run 2026-11-09-24-micro-arrindex, v423/O3XS                         | micro/arr_index.c    | 60 / 66 exact (90.9%)    |
 | run 2026-11-09-25-micro-arrindexsz, v423/O3XS                       | micro/arr_index_sz.c | 60 / 66 exact (90.9%)    |
-| run 2026-11-09-24-micro-arrindex, v423/Xr                           | micro/arr_index.c    | 55 / 66 exact (83.3%)    |
-| run 2026-11-09-25-micro-arrindexsz, v423/Xr                         | micro/arr_index_sz.c | 56 / 66 exact (84.8%)    |
+| run 2026-11-09-24-micro-arrindex, v423/Xr                           | micro/arr_index.c    | 56 / 66 exact (84.8%)    |
+| run 2026-11-09-25-micro-arrindexsz, v423/Xr                         | micro/arr_index_sz.c | 57 / 66 exact (86.4%)    |
 | run 2026-11-09-24-micro-arrindex, v423/O3XSXr                       | micro/arr_index.c    | 61 / 66 exact (92.4%)    |
 | run 2026-11-09-25-micro-arrindexsz, v423/O3XSXr                     | micro/arr_index_sz.c | 61 / 66 exact (92.4%)    |
 | run 2026-11-09-29-micro-adfp, v423/none                             | probes/adfp.c        | 15 / 15 exact (100.0%)   |

@@ -3319,11 +3319,18 @@ def gen_stmt(F, s, last):
         if last and not before_trivial_ret and not F.xiz_vars and not F.pushes and \
                 not F.lines[-1].startswith(('\tret', '\tj\t')) and not F.opt:
             flush_pops(F); F.emit('ret'); return            # c_ifchain under none: the last arm returns too
+        import re as _re
+        jumped = any(_re.search(r'[\t,]%s$' % lend, l) for l in F.lines)
         if not (last and F.lines[-1].startswith('\tret')):
             flush_pops(F)                                  # c_ifchain: inc 0x2,XSP before the join labels
-            import re as _re                               # a join no arm jumps to is not written (cb_c_else_80
-            if not (F.opt and last and not any(_re.search(r'[\t,]%s$' % lend, l) for l in F.lines)):  # under O3XSXr)
-                F.lines.append(lend + ':')
+            if not (F.opt and last and not jumped):        # a join no arm jumps to is not written (cb_c_else_80
+                F.lines.append(lend + ':')                 # under O3XSXr)
+        elif jumped:                                       # arr_index.c ai_dig_val: the else arm returns, the then
+            js = [i for i, l in enumerate(F.lines) if l == '\tj\t' + lend]   # arm jumps to the join (a missing label
+            if last and js and len(js) == sum(1 for l in F.lines if _re.search(r'[\t,]%s$' % lend, l)) and \
+                    not F.xiz_vars and not F.pushes:     # before); the join is only the return: each jump returns
+                for i in js: F.lines[i] = '\tret'         # (exts HL / ret, as the oracle at every set)
+            else: F.lines.append(lend + ':')
         return
     if s.k == 'expr' and s.e.k == 'call':
         gen_call(F, s.e); return
@@ -7066,6 +7073,8 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong
                 if k + 1 < len(F.lines) and F.lines[k + 1] == '\tret': F.lines[i] = '\tret\t' + m.group(1)
     import re                                            # no self-moves: the oracle never writes ld XWA,XWA
     F.lines = [l for l in F.lines if not re.match(r'^\tld\t(\w+),\1$', l)]
+    F.lines = [l for i, l in enumerate(F.lines) if not (l == '\tret' and i and F.lines[i - 1] == '\tret')]
+    # (a ret right after a ret is unreachable: arr_index.c ai_dig_val's trivial return after an if)
     if OR_BIT_SET:                                       # a one-bit or is set: chnarrow.c cn_or_k c | 0x20 -> set
         for i, l in enumerate(F.lines):                  # 0x5,L (no or R,<bit> in any oracle listing so far); kept
             m = re.match(r'^\tor\t(A|W|B|C|D|E|H|L|WA|BC|DE|HL|IX|IY|IZ),0x([0-9a-f]+)$', l)   # when the flags
