@@ -1,0 +1,36 @@
+# semcheck.py DIFFERENT verdicts, reviewed by reading the oracle's and the model's listings side by side.
+# file<TAB>compiler/set (or *)<TAB>function(s), comma-separated<TAB>note.  Notes describe the model's code; no oracle code.
+# Reviewed 2026-11-09 against the model at a469016ff (working tree of that day).
+ra_leaf.c	*	.ra_leaf3,.ra_leafsum3,.ra_leaf4,.ra_leafsum4,.ra_leaf5,.ra_leafsum5	wrong code: k (in WA) is overwritten in the loop
+ra_leaf.c	*	.ra_ptr2	wrong code: the p[] load goes to WA, the low half of p (XWA)
+ra_leaf.c	*	.ra_ptrcpy	wrong code: the char goes to A, the low byte of d (XWA)
+ra_leaf.c	*	.ra_noloop	wrong code: multiplies y by y instead of x by y
+ra_leaf.c	*	.ra_dowhile,.ra_while	wrong code: n (in WA) is doubled in place to index ga
+ra_homes.c	*	_rh_lp_a2	wrong code: IZ pushed and never popped, the return address is wrong
+ra_homes.c	*	.rh_int_ptr,.rh_ptr_int	wrong code: the int index is zero-extended, not sign-extended
+ra_homes32.c	*	_h_p_p3	wrong code: the argument of g2 is not removed on the p != 0 path
+opt_temps.c	*	.ot_cnt_ban,.ot_cnt_bna	wrong code: a char goes to A, the low byte of pointer b (XWA), before *b is read
+opt_counted.c	*	_oc_clr_l,_oc_add2	wrong code: i (in BC) is overwritten by the element address in XBC
+opt_counted.c	*	_oc_sum2	wrong code: the p[i] load is discarded and i (in BC) is overwritten
+opt_counted.c	*	_oc_down	UB only: differs only for n = -32768, where n - 1 overflows
+opt_loops.c	*	_ol_i_copy,_ol_l_clear,_ol_l_copy,_ol_c_copy,_ol_while	wrong code: i (in DE) is overwritten by the array base in XDE
+opt_loops.c	*	_ol_c_clear	wrong code: i (in BC) is overwritten by the array base in XBC
+opt_loops.c	*	_ol_two_arr	wrong code: the ga[i] load is discarded
+opt_loops.c	*	.ol_two_arr	wrong code: i (in DE) is overwritten by the gb[i] load
+opt_loops.c	*	_ol_strcpy,.ol_strcpy	wrong code: the char goes to C, the low byte of s (XBC)
+opt_loops.c	*	.ol_i_acc3,.ol_l_acc3	wrong code: k (in WA) is overwritten by the element address in XWA
+ra_libshapes.c	*	_ls_sl_2	wrong code: XIZ is used without being loaded with s
+ra_libshapes.c	*	_ls_sl_ret,.ls_sl_ret	wrong code: returns on ss != 0 without popping XIZ
+cond_bits.c	*	_cb_for	wrong code: i (in BC) is overwritten by the shifted mask
+cond_bits.c	*	.cb_shift	wrong code: s (in BC) is overwritten by the constant 0x8000
+assign_expr.c	*	.ae_c_loop	wrong code: the char is copied to A, the low byte of s (XWA)
+assign_expr.c	*	.ae_c_tou	wrong code: the chars go to A and C, the low bytes of s1 and s2
+arr_index.c	*	_ai_div10	wrong code: i (in BC) is overwritten by the element address in XBC
+arr_index_sz.c	*	_ai_div10	wrong code: i (in BC) is overwritten by the element address in XBC
+arr_index.c	*	_ai_carry,.ai_carry	wrong code: i (in DE) is overwritten by the element address in XDE
+arr_index.c	*	_ai_shift	UB only: differs only for n = -32768, where n - 1 overflows
+arr_index_sz.c	*	_ai_shift	UB only: differs only for n = -32768, where n - 1 overflows
+arr_index.c	*	_ai_up_sub,.ai_up_sub	oracle narrows: the oracle subtracts 32 and 55 in the byte, the model in int
+arr_index_sz.c	*	_ai_up_sub,.ai_up_sub	oracle narrows: the oracle subtracts 32 and 55 in the byte, the model in int
+arr_index.c	*	_ai_dig_val,.ai_dig_val	wrong code: jumps to a label the model never emits (would not assemble)
+arr_index_sz.c	*	_ai_dig_val,.ai_dig_val	wrong code: jumps to a label the model never emits (would not assemble)
