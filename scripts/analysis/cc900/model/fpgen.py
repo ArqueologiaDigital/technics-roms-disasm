@@ -205,12 +205,13 @@ def eval_val(F, e, hint):
         elif len(comp) == 1 and fp_value_cast(ops[comp[0]]).k != 'call':
             vals[comp[0]] = eval_val(F, ops[comp[0]], hint); dst = vals[comp[0]]
         else:
+            cell = hint if hint is not None else Cell(e.ty.size)
             if comp:                                         # d_call_e: fd(a * 2.0) + a: the argument's product takes
                 c0 = fp_value_cast(ops[comp[0]])             # the hint (+0x18), fd's result a fresh one (+0x10), the
-                if c0.k == 'call':                           # sum the hint again
-                    cc = Cell(c0.ty.size); call_into(F, c0, ('cell', cc), arg_hint=hint); vals[comp[0]] = ('slot', cc.off)
+                if c0.k == 'call':                           # sum the hint again; the sum's slot is taken before the
+                    alloc(F, cell)                           # call (_cos: fabs(x) + PAI5 at +0x20, fabs at +0x18)
+                    cc = Cell(c0.ty.size); call_into(F, c0, ('cell', cc), arg_hint=cell); vals[comp[0]] = ('slot', cc.off)
                 else: vals[comp[0]] = eval_val(F, ops[comp[0]], None)
-            cell = hint if hint is not None else Cell(e.ty.size)
             op_into(F, e, vals, ('cell', cell)); return ('slot', cell.off)
         op_into(F, e, vals, dst); return dst
     cell = hint if hint is not None else Cell(e.ty.size)
@@ -601,8 +602,10 @@ def call_val(F, e, hint):
     """a returned call (_sin: _trig(x, -x, 1)): its computed argument takes the reserved temporary, its result the
     temporary if that is still free, else a fresh one (-x at +0x28, the result at +0x20; the other arm's result at
     +0x18)"""
-    used = hint.off is not None
-    call_into(F, e, ('cell', Cell(8)) if False else ('lazyres', hint), arg_hint=hint)
+    if any(has_call(fp_value_cast(a)) for a in e.args if is_fp(strip(a).ty)):
+        alloc(F, hint)                                   # _cos: _trig(x, fabs(x) + PAI5, 0): the result's slot first
+        call_into(F, e, ('cell', hint)); return ('slot', hint.off)   # (+0x28), then the sum (+0x20), then fabs (+0x18)
+    call_into(F, e, ('lazyres', hint), arg_hint=hint)
     return ('slot', F.last_call_off)
 
 def needs_sret_home(F):

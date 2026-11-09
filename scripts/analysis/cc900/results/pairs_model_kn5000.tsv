@@ -134,7 +134,7 @@ subcpu v142	00f3ba	_g_dbltbl	__FLOAT.C	72	MATCH
 subcpu v142	00f402	_g_ldbltbl	__FLOAT.C	30	MATCH
 subcpu v142	00f420	_g_mathtbl	__MATH.C	8	MATCH
 subcpu v142	00f428	__FloatErrorHandle	TRAP.C	4	MATCH
-subcpu v142	03d34d	_cos	_COS.C	87	4 diff first +17
+subcpu v142	03d34d	_cos	_COS.C	87	MATCH
 subcpu v142	03d42e	_fabs	_FABS.C	29	MATCH
 subcpu v142	03d4c9	_tan	_TAN.C	-	model: ; unsupported: integer slot local beside
 subcpu v142	03d533	_pow	_POW.C	-	model: ; unsupported: integer slot local beside
@@ -150,7 +150,7 @@ subcpu v141	00f3ba	_g_dbltbl	__FLOAT.C	72	MATCH
 subcpu v141	00f402	_g_ldbltbl	__FLOAT.C	30	MATCH
 subcpu v141	00f420	_g_mathtbl	__MATH.C	8	MATCH
 subcpu v141	00f428	__FloatErrorHandle	TRAP.C	4	MATCH
-subcpu v141	03d335	_cos	_COS.C	87	4 diff first +17
+subcpu v141	03d335	_cos	_COS.C	87	MATCH
 subcpu v141	03d416	_fabs	_FABS.C	29	MATCH
 subcpu v141	03d4b1	_tan	_TAN.C	-	model: ; unsupported: integer slot local beside
 subcpu v141	03d51b	_pow	_POW.C	-	model: ; unsupported: integer slot local beside
@@ -166,7 +166,7 @@ subcpu v140	00f3ba	_g_dbltbl	__FLOAT.C	72	MATCH
 subcpu v140	00f402	_g_ldbltbl	__FLOAT.C	30	MATCH
 subcpu v140	00f420	_g_mathtbl	__MATH.C	8	MATCH
 subcpu v140	00f428	__FloatErrorHandle	TRAP.C	4	MATCH
-subcpu v140	03d301	_cos	_COS.C	87	4 diff first +17
+subcpu v140	03d301	_cos	_COS.C	87	MATCH
 subcpu v140	03d3e2	_fabs	_FABS.C	29	MATCH
 subcpu v140	03d47d	_tan	_TAN.C	-	model: ; unsupported: integer slot local beside
 subcpu v140	03d4e7	_pow	_POW.C	-	model: ; unsupported: integer slot local beside
@@ -268,4 +268,4 @@ hdae v1.10i	296ecb	_strncpy	_STRNCPY.C	43	MATCH
 hdae v1.10i	296ef6	__facnv	__FACVT.C	-	model: ; unsupported: var
 hdae v1.10i	2e0cd6	___ctype	_CTYPE.C	-	model: no function
 hdae v1.10i	2e0cd6	__ctype	_CTYPE.C	256	MATCH
-# MATCH 156, model cannot 101, differs 12, outside image 4
+# MATCH 159, model cannot 101, differs 9, outside image 4

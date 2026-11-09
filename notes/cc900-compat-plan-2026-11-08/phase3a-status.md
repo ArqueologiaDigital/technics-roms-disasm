@@ -229,7 +229,9 @@ returned call's computed argument takes the reserved temporary (`_sin`); a negat
 constant store to an int global is `ldw (_errno),0x22` (`_exp`); a jump-if-true FP condition also computes the
 negated relation and jumps on `eq` (`_exp`'s `break`); the destination equal to the right operand is copied to XDE
 (`lda XWA,w` / `ld XDE,XWA`); an element of a global struct array (`g_dbltbl[2].val`) ranks first among `+` / `*`
-operands (`_cos`).  Open: `_cos`'s temporaries (a lifetime-based slot choice; four bytes differ).
+operands (`_cos`); a node whose operands contain a call takes its temporary before evaluating them (`_cos`:
+`_trig`'s result at +0x28, the sum at +0x20, `fabs`'s at +0x18), otherwise at its first write (`_sin`: `-x` at +0x28,
+`_trig`'s result at +0x20).
 
 ## Priorities after 2026-11-09
 
