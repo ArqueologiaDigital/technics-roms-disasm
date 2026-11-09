@@ -94,6 +94,38 @@ Open pairs: `__doprnt` (beyond both neighbours: a variable in IZ and two missing
 it from `(XSP+4)`: the first two instructions swapped relative to V4.23's, which no rule seen so far produces), `_sbrk`,
 `___ctype` naming, `__FloatErrorHandle`.
 
+## Progress on the firmware's convention (2026-11-09, later)
+
+The firmware is compiled `-O3 -XS -Xr` (adecl).  Work since the table at the top concentrated there; scores from
+`model/ledger.sh` (the full table is `results/model_ledger.md`):
+
+| oracle (v423)                  | corpus            | before    | now         |
+|--------------------------------|-------------------|-----------|-------------|
+| micro, `-Xr`                   | micro/*.c (674)   | 552 (82%) | 631 (93.6%) |
+| micro, `-O3 -XS -Xr`           | micro/*.c (674)   | 549 (81%) | 594 (88.1%) |
+| ABI probes, `-Xr`              | abi/*.c (80)      | 7         | 58          |
+| switch, `-Xr`                  | micro/switch.c    | (new run) | 22 / 25     |
+| switch, `-O3 -XS -Xr`          | micro/switch.c    | (new run) | 20 / 25     |
+| register corpus, `-O3 -XS -Xr` | micro/ra_*.c (42) | 0         | 9           |
+| firmware, `-O3 -XS -Xr`        | firmware/tiny.c   | 6 / 6     | 6 / 6       |
+
+What the model now does (codegen.py; each rule cites its oracle function):
+- adecl callers: arguments in WA / BC / DE by size, the rest pushed left to right, in the order register moves,
+  computed arguments, stack arguments, memory operands, constants; a `__cdecl` callee is recognised (the front end
+  parses with `-mabi=cc900`, plus `-mcc900-adecl` for an `-Xr` file);
+- homes: a register value live across a call goes to IZ / XIZ / QIZ or a stack slot stored at entry, by reference
+  count, branch-aware (if / switch arms, calls inside a return ignored);
+- liveness-dependent forms: in-place unary and compound operators on dying registers, narrowing casts by width,
+  the `-O` / no-`-O` differences for each;
+- data definitions (db / dw / dl / fdatad / strings / dsb);
+- switch: jump tables of `dw Lcase-Lbase` with the firmware's own dispatch sequence (`sub XBC,0x2000 / cp XBC,0x0 /
+  j lt / cp XBC,0x5 / j gt / add XBC,XBC / add XBC,S / ld BC,(XBC) / lda XIX,L / j XIX+BC`), compare chains with
+  ranges, and `-O` cross-jumping (identical tails merged), tail calls.
+
+Still open on this convention: the `-O` register allocator for loops (`ra_leaf2..5`: which values go to IX / IY /
+IZ / QDE ...), `sw_local` (a local kept in HL across a call), placement of the code after a switch next to the
+first case (`sw_evtab`), loops in the switch's continue label (`sw_loop`), long helper homes at `-O` (`mul_l_loc`).
+
 ## How to resume
 
 ```sh
