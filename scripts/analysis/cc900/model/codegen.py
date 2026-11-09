@@ -375,6 +375,15 @@ def gen(F, e, fam, size, then_ret=False, store=False):
             # unsigned char to long: clear, then load the byte (cast_uc_l)
             F.emit('ld', '%s,0x0' % FAM[fam][4]); F.emit('ld', '%s,%s' % (FAM[fam][1], mem_operand(F, inner)))
             return fam
+        il = strip(inner.l) if getattr(inner, 'narrowed', False) else None
+        ilr = regvar_of(il.e) if il is not None and il.k == 'load' else None
+        onebit = il is not None and inner.op == '|' and fold(inner.r).k == 'const' and fold(inner.r).value and \
+            fold(inner.r).value & (fold(inner.r).value - 1) == 0
+        if CHAR_NARROW and isz == 1 and size == 2 and not F.opt and ilr is not None and \
+                ilr.reg in ('WA', 'BC', 'DE', 'HL') and ilr.reg != fam and dies_here(F, il) and not onebit:
+            f2 = gen(F, inner, ilr.reg, 1)     # chnarrow.c under -Xr, c in A: sub A,0x30 / ld L,A / exts HL (a char
+            F.emit('ld', '%s,%s' % (FAM[fam][1], FAM[f2][1]))   # result, binop_c.c add_c_pp, stays ld L,A / add L,C;
+            F.emit('exts' if inner.ty.signed else 'extz', FAM[fam][2]); return fam   # c | 0x20: ld L,A / set 0x5,L)
         if CHAR_NARROW and isz == 1 and size == 2 and not F.opt and fam != 'WA' and getattr(inner, 'narrowed', False) \
                 and inner.op in ('+', '-') and fold(inner.r).k == 'const' and strip(inner.l).k == 'load' and \
                 (mem_operand(F, inner.l) or '').startswith('('):
@@ -540,20 +549,27 @@ def gen(F, e, fam, size, then_ret=False, store=False):
         gen_cond_false(F, e.c, lelse)
         def arm(x):
             x = strip(narrow(x, 1))
+            xl = strip(x.l) if getattr(x, 'narrowed', False) else None
+            xreg = regvar_of(xl.e) if xl is not None and xl.k == 'load' else None
             if not F.opt and fam != 'WA' and getattr(x, 'narrowed', False) and x.op in ('+', '-') and \
-                    fold(x.r).k == 'const' and (mem_operand(F, x.l) or '').startswith('('):
+                    fold(x.r).k == 'const' and ((mem_operand(F, x.l) or '').startswith('(') or
+                                                xreg is not None and xreg.reg == 'WA'):   # (-Xr: c in A, sub A,0x20)
                 f2 = gen(F, x, 'WA', 1); F.emit('ld', '%s,%s' % (FAM[fam][1], FAM[f2][1]))   # (ld A,.. / sub A,0x20 /
             else: gen(F, x, fam, 1)                                                          # ld L,A, as a return)
-        arm(e.a); F.emit('j', lend); F.lines.append(lelse + ':')
+        F.cond_joins = getattr(F, 'cond_joins', set()) | {lend}
+        dead0 = set(F.dead); arm(e.a); F.dead = dead0; F.emit('j', lend); F.lines.append(lelse + ':')
         arm(e.b); F.lines.append(lend + ':')
         F.emit('exts' if bs else 'extz', FAM[fam][2]); return fam
     if e.k == 'cond':                                # c_tern
         lelse, lend = F.newulabel(), F.newulabel()
         gen_cond_false(F, e.c, lelse)
-        if F.opt and (strip(e.a).k == 'bin' or strip(e.a).k == 'un' and strip(e.a).op in ('-', '~')) and fam != 'WA':
+        if (F.opt or TERN_ARM_WA) and (strip(e.a).k == 'bin' or strip(e.a).k == 'un' and strip(e.a).op in ('-', '~')) \
+                and fam != 'WA':                     # (chnarrow.c cn_tern_i without -O too: ld WA,(c) / sub WA,0x20)
             # _toupper: ld WA,IZ / sub WA,0x20 / ld HL,WA / j L2; _atoi: ld WA,IY / neg WA / ld HL,WA
             f2 = gen(F, e.a, 'WA', size); F.emit('ld', '%s,%s' % (FAM[fam][size], FAM[f2][size]))
-        else: gen(F, e.a, fam, size)
+        else:
+            dead0 = set(F.dead); gen(F, e.a, fam, size); F.dead = dead0   # (the arms are exclusive: cn_tern_i)
+        F.cond_joins = getattr(F, 'cond_joins', set()) | {lend}
         F.emit('j', lend); F.lines.append(lelse + ':')
         gen(F, e.b, fam, size); F.lines.append(lend + ':'); return fam
     if e.k == 'un' and e.op == '!':
@@ -653,6 +669,30 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
     if op in '+-' and (strip(e.l).ty.is_ptr() or strip(e.r).ty.is_ptr()):
         return gen_ptr_arith(F, e, fam, size)
     l, r = narrow(e.l, size), narrow(e.r, size)
+    if CHAR_NARROW and op == '*' and size == 2 and fold(e.r).k == 'const' and fold(e.r).value is not None:
+        cx = strip(e.l)                                  # chnarrow.c cn_mul_k: c * 3 -> ld L,(c) / muls HL,0x3 (the
+        if cx.k == 'cast' and cx.kind == 'IntegralCast' and strip(cx.e).ty is not None and strip(cx.e).ty.size == 1 \
+                and strip(cx.e).k == 'load':             # byte form); -O3 -XS -Xr with c in A: muls WA,0x3 / ld HL,WA
+            x = strip(cx.e); k = fold(e.r).value; sg = x.ty.signed
+            if (sg and -128 <= k <= 127) or (not sg and 0 <= k <= 255):
+                xr = regvar_of(x.e)
+                if F.opt and xr is not None and xr.reg in ('WA', 'BC', 'DE', 'HL') and dies_here(F, x) and xr.reg != fam:
+                    F.dead.add(xr); W = xr.reg
+                else:
+                    gen(F, x, fam, 1); W = fam
+                F.emit('muls' if sg else 'mul', '%s,%s' % (FAM[W][2], hx(k & 0xff)))
+                if W != fam: F.emit('ld', '%s,%s' % (FAM[fam][2], FAM[W][2]))
+                return fam
+    cx = strip(e.l)
+    cr = regvar_of(strip(cx.e).e) if CHAR_NARROW and cx.k == 'cast' and cx.kind == 'IntegralCast' and \
+        strip(cx.e).k == 'load' and strip(cx.e).ty.size == 1 else None
+    if cr is not None and op in SIMPLE_OPS and size == 2 and cr.reg in ('WA', 'BC', 'DE', 'HL') and cr.reg != fam and \
+            dies_here(F, strip(cx.e)) and not reads_reg(r, cr.reg) and operand(F, r, 2) is not None:
+        W = FAM[cr.reg][2]; F.dead.add(cr)               # chnarrow.c cn_sub_big, cn_sub_iv under adecl: the char in A
+        F.emit('exts' if strip(cx.e).ty.signed else 'extz', W)   # widened in place: exts WA / ld HL,WA / sub HL,..
+        if F.opt: F.emit(SIMPLE_OPS[op], '%s,%s' % (W, operand(F, r, 2))); F.emit('ld', '%s,%s' % (FAM[fam][2], W))
+        else: F.emit('ld', '%s,%s' % (FAM[fam][2], W)); F.emit(SIMPLE_OPS[op], '%s,%s' % (FAM[fam][2], operand(F, r, 2)))
+        return fam                                       # (-O3 -XS -Xr: exts WA / sub WA,.. / ld HL,WA)
     if CALL_RIGHT_FIRST and op in SIMPLE_OPS and size == 2 and has_helper_call(r) and \
             not has_helper_call(l) and plain_hl_tree(F, l):
         hf = gen(F, r, 'HL', size)                       # probes/adfp.c ad_di: a + (x > 0.0) -> cal ._fcmp_zd /
@@ -1437,6 +1477,9 @@ CHAR_NARROW = True                                        # see char_narrow
 OR_BIT_SET = True                                         # see compile_function
 TERN_TRUTH_PRE = True                                     # see gen's -O ?: path
 RET_CC_KEEPS = True                                       # see knowledge_pass
+TERN_ARM_LAST = True                                      # see compute_last_uses
+TERN_NO_MERGE = True                                      # see cross_jump
+TERN_ARM_WA = True                                        # see gen's plain ?: path
 
 def char_narrow(body):
     """cc900 does int + - & | ^ of a char and a constant that fits a byte, or of two chars, on the byte and
@@ -5964,6 +6007,14 @@ def compute_last_uses(F):
                     walk(br, lambda m, dd: last.__setitem__(strip(m.e).decl, None if dd else id(m))
                          if m.k == 'load' and strip(m.e).k == 'var' else None)
                     F.branch_last.update(x for d, x in last.items() if x is not None and d not in F.in_loop)
+        if n.k == 'cond' and not depth and TERN_ARM_LAST:  # chnarrow.c cn_tern (adecl): k ? c - 32 : c -> c dies in
+            last = {}                                      # each arm: sub A,0x20 / ld L,A ... ld L,A
+            walk(n.a, lambda m, dd: last.__setitem__(strip(m.e).decl, None if dd else id(m))
+                 if m.k == 'load' and strip(m.e).k == 'var' else None)
+            inb = set()
+            walk(n.b, lambda m, dd: inb.add(id(m)) if m.k == 'load' and strip(m.e).k == 'var' else None)
+            F.branch_last.update(x for d, x in last.items() if x is not None and d not in F.in_loop and
+                                 F.last_use.get(d) in inb)
     walk(F.f.body, b)
 
 def dies_here(F, e):
@@ -6397,7 +6448,8 @@ def cross_jump(F, lines):
         for li, lab in enumerate(lines):
             if not is_label(lab): continue
             L = lab[:-1]
-            k = li - 1
+            if TERN_NO_MERGE and L in getattr(F, 'cond_joins', ()): continue   # a ?: keeps both arms' moves
+            k = li - 1                                     # (chnarrow.c cn_tern -O3 -XS -Xr: ld L,A twice)
             while k >= 0 and is_label(lines[k]): k -= 1
             X = lines[k] if k >= 0 and not uncond(lines[k]) and not lines[k].startswith('\tj') \
                 and not lines[k].startswith('\tcal\t._f') else None        # fp.c d_cond: each arm keeps its ._fld_dd
