@@ -39,7 +39,9 @@ how cc900 compiles exactly that (notes/cc900-compat-plan-2026-11-08/PLAN.md, sec
 - ra_libshapes: the shapes between _calloc (a pointer from a call wins XIZ over two 16-bit parameters), _memccpy (a
   16-bit parameter wins IZ over the pointer) and _strlen (a lone pointer parameter read twice takes XIZ) at -O3 -XS;
 - fp_order: which operand of a double + or * is built first, and when a table element's address is kept in XIZ
-  across a conversion helper (_log: LN2 * nptr + 2 * s, LN2 = g_dbltbl[3].val).
+  across a conversion helper (_log: LN2 * nptr + 2 * s, LN2 = g_dbltbl[3].val);
+- cond_bits: x & mask as a branch condition at each type, operand kind and mask shape, negated, in loops, under
+  && / || and in ?: (the library's `if (d.c[7] & 0x80)`, `if (n & 1)`, `if (stream->flag & __UNGETC)`).
 The output is deterministic, ours, and C89.
 """
 import os, sys
@@ -697,6 +699,60 @@ def fp_stmt_files():
         'void s_conv_l(void) { gd = gd2 * gl; gl = gd * gd3; }']
     return {'fp_stmts.c': out + fs}
 
+def cond_bits_files():
+    """x & mask as a branch condition (the library's `if (d.c[7] & 0x80)`, `if (stream->flag & __UNGETC)`,
+    `if (n & 1)`): each integer type, operand kind and mask shape, the negated forms, and the condition in a loop,
+    under && / ||, in ?: and beside an else"""
+    out = ['/* x & mask as a condition */',
+           'struct st { int flag; char c; long l; unsigned char b[4]; };',
+           'typedef union { double d; unsigned char c[8]; unsigned int n[4]; } DU;',
+           'extern char gc; extern unsigned char guc; extern int gi; extern unsigned int gui; extern long gl;',
+           'extern unsigned long gul; extern int gr; extern unsigned char gtab[]; extern struct st *gps;',
+           'extern int f(int);']
+    fs = []
+    masks = {'c': ['0x1', '0x80', '0x10', '0xf'], 'uc': ['0x1', '0x80', '0x10', '0xf0'],
+             'i': ['0x1', '0x8000', '0x100', '0x10', '0xff', '0x7ff0'], 'ui': ['0x1', '0x8000', '0x100', '0xf00'],
+             'l': ['0x1', '0x80000000', '0x10000', '0xff00'], 'ul': ['0x1', '0x80000000', '0x100', '0xffff0000']}
+    for tk, t in INT_TYPES:
+        g = 'g' + tk
+        for m in masks[tk]:
+            mm = m[2:]
+            fs.append('int cb_%s_p_%s(%s x) { if (x & %s) return 1; return 0; }' % (tk, mm, t, m))
+            fs.append('int cb_%s_g_%s(void) { if (%s & %s) return 1; return 0; }' % (tk, mm, g, m))
+        m = masks[tk][1]; mm = m[2:]
+        fs += ['int cb_%s_not_%s(%s x) { if (!(x & %s)) return 1; return 0; }' % (tk, mm, t, m),
+               'int cb_%s_eq0_%s(%s x) { if ((x & %s) == 0) return 1; return 0; }' % (tk, mm, t, m),
+               'int cb_%s_ne0_%s(%s x) { if ((x & %s) != 0) return 1; return 0; }' % (tk, mm, t, m),
+               'int cb_%s_ptr_%s(%s *p) { if (*p & %s) return 1; return 0; }' % (tk, mm, t, m),
+               'int cb_%s_idx_%s(%s *p) { if (p[3] & %s) return 1; return 0; }' % (tk, mm, t, m),
+               'void cb_%s_else_%s(%s x) { if (x & %s) gr = 1; else gr = 2; }' % (tk, mm, t, m),
+               'int cb_%s_var(%s x, %s y) { if (x & y) return 1; return 0; }' % (tk, t, t)]
+    fs += [
+        'int cb_mem_flag(struct st *p) { if (p->flag & 0x4) return 1; return 0; }',
+        'int cb_mem_flag_g(void) { if (gps->flag & 0x4) return 1; return 0; }',
+        'int cb_mem_c(struct st *p) { if (p->c & 0x80) return 1; return 0; }',
+        'int cb_mem_l(struct st *p) { if (p->l & 0x100) return 1; return 0; }',
+        'int cb_mem_b(struct st *p) { if (p->b[3] & 0x80) return 1; return 0; }',
+        'int cb_union_c7(double x) { DU d; d.d = x; if (d.c[7] & 0x80) return 1; return 0; }',
+        'int cb_union_n0(double x) { DU d; d.d = x; if (!(d.n[0] & 0xf000)) return 1; return 0; }',
+        'int cb_loc(int a, int b) { int n; n = a + b; if (n & 1) return n; return 0; }',
+        'int cb_cast(long x) { if ((int)x & 1) return 1; return 0; }',
+        'int cb_call(int x) { if (f(x) & 0x8) return 1; return 0; }',
+        'int cb_shift(int x, int s) { if (x & (0x8000 >> s)) return 1; return 0; }',
+        'int cb_or_mask(int x) { if (x & (0x2 | 0x4)) return 1; return 0; }',
+        'int cb_and_and(int x, int y) { if ((x & 1) && y) return 1; return 0; }',
+        'int cb_and_and2(int x, int y) { if (y && (x & 0x80)) return 1; return 0; }',
+        'int cb_or_or(int x, int y) { if (y || (x & 0x6)) return 1; return 0; }',
+        'int cb_tern(int c) { return (gtab[(unsigned char)c] & 0x2) ? c - 32 : c; }',
+        'int cb_tern_char(char c) { return (gtab[(unsigned char)c] & 0x2) ? c + (\'A\' - \'a\') : c; }',
+        'int cb_while(unsigned int x) { int n = 0; while (x & 1) { x >>= 1; n++; } return n; }',
+        'int cb_while_g(void) { int n = 0; while (gi & 0x80) { gi <<= 1; n++; } return n; }',
+        'int cb_for(int x) { int i, n = 0; for (i = 0; i < 8; i++) if (x & (1 << i)) n++; return n; }',
+        'int cb_lt_mask(unsigned int *p) { if (0x7ff0 <= (p[3] & 0x7ff0)) return 1; return 0; }',
+        'int cb_ret_val(int x) { return x & 0x80; }',
+        'int cb_ret_bool(int x) { return (x & 0x80) != 0; }']
+    return {'cond_bits.c': out + fs}
+
 def main():
     out = sys.argv[1]
     d = os.path.join(out, 'micro'); os.makedirs(d, exist_ok=True)
@@ -722,6 +778,7 @@ def main():
     files.update(opt_temp_files())
     files.update(opt_counted_files())
     files.update(fp_stmt_files())
+    files.update(cond_bits_files())
     for n, lines in sorted(files.items()):
         open(os.path.join(d, n), 'w').write('\n'.join(lines) + '\n')
     open(os.path.join(out, 'micro-sources.txt'), 'w').write(''.join('micro/%s\n' % n for n in sorted(files)))

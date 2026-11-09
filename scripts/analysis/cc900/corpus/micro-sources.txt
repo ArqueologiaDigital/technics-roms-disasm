@@ -12,6 +12,7 @@ micro/cmp_l.c
 micro/cmp_uc.c
 micro/cmp_ui.c
 micro/cmp_ul.c
+micro/cond_bits.c
 micro/ctrl.c
 micro/fp.c
 micro/fp_order.c

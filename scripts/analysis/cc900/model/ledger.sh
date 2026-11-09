@@ -70,4 +70,7 @@ for c in none O3XS; do    # FP slot probes of research-scratch sessions/2026-11-
   row "run 2026-11-09-18-micro-fpprepass, v423/$c" "probes/fpp1.c" "$O/2026-11-09-18-micro-fpprepass/out/v423/$c/micro" corpus/probes/fpp1.c --opt $c
   row "run 2026-11-09-19-micro-fpprepass2, v423/$c" "probes/fpp2.c" "$O/2026-11-09-19-micro-fpprepass2/out/v423/$c/micro" corpus/probes/fpp2.c --opt $c
 done
+for c in none O3XS Xr O3XSXr; do
+  row "run 2026-11-09-22-micro-condbits, v423/$c" "micro/cond_bits.c" "$O/2026-11-09-22-micro-condbits/out/v423/$c" corpus/micro/cond_bits.c
+done
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c

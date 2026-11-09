@@ -126,11 +126,11 @@ def fold(e):
         from frontend import N                           # c_find: return -1 -> ld HL,0xffff
         v = -fold(e.e).value; sz = e.ty.size if e.ty is not None else 2
         return N('const', value=v, ty=e.ty)
-    if e.k == 'bin' and e.op in ('+', '-', '*') and fold(e.l).k == 'const' and fold(e.r).k == 'const' and \
-            fold(e.l).value is not None and fold(e.r).value is not None:
-        from frontend import N                           # sizeof(buf) - 1
+    if e.k == 'bin' and e.op in ('+', '-', '*', '|', '&', '^') and fold(e.l).k == 'const' and fold(e.r).k == 'const' \
+            and fold(e.l).value is not None and fold(e.r).value is not None:
+        from frontend import N                           # sizeof(buf) - 1; cond_bits.c: x & (0x2 | 0x4)
         a, b = fold(e.l).value, fold(e.r).value
-        return N('const', value={'+': a + b, '-': a - b, '*': a * b}[e.op], ty=e.ty)
+        return N('const', value={'+': a + b, '-': a - b, '*': a * b, '|': a | b, '&': a & b, '^': a ^ b}[e.op], ty=e.ty)
     if e.k == 'cast' and e.kind in ('NullToPointer', 'IntegralToPointer') and fold(e.e).k == 'const':
         from frontend import N
         return N('const', value=fold(e.e).value, ty=e.ty)
@@ -384,6 +384,7 @@ def gen(F, e, fam, size, then_ret=False, store=False):
         else:
             F.emit('neg' if e.op == '-' else 'cpl', R)
         return fam
+    if e.k == 'bin' and e.op in ('==', '!=') and and_truth(F, e, fam) is not None: return fam
     if e.k == 'bin' and e.op in CC_S:
         cc = gen_compare(F, e)
         if cc in (True, False): F.emit('ld', '%s,%s' % (FAM[fam][2], hx(int(cc))))
@@ -1126,6 +1127,152 @@ def gen_table_test(F, tt):
     F.emit('bit', '%s,(X%s+WA)' % (hx(bit), breg))
     return 'ne'
 
+def unpromote(x):
+    x = strip(x)
+    while x.k == 'cast' and x.kind == 'IntegralCast' and strip(x.e).ty.size <= x.ty.size: x = strip(x.e)
+    return x
+
+def byte_addr(F, x):
+    """a memory operand for the byte x that `bit n,(...)` can test in place (cond_bits.c: (XSP+0x4), (_guc),
+    (XWA), (XWA+0x3), (XWA+0xb), (XSP+0x7)), emitting the pointer load; None when x is not such a byte"""
+    x = strip(x)
+    if x.k != 'load': return None
+    m = mem_operand(F, x)
+    if m is not None and m.startswith('('): return m
+    v = strip(x.e); off = 0
+    if v.k == 'index' and fold(v.idx).k == 'const' and fold(v.idx).value is not None:
+        off = fold(v.idx).value * v.ty.size; v = strip(v.base)
+        if v.k == 'load': p = v
+        elif v.k == 'member' and v.arrow: off += member_offset(v); p = v.base
+        elif v.k == 'member' and not v.arrow and strip(v.base).k == 'var' and strip(v.base).decl.kind == 'local' and \
+                getattr(strip(v.base).decl, 'slot', None) is not None:
+            t = strip(v.base).decl.slot + F.push + member_offset(v) + off    # cb_union_c7: bit 0x7,(XSP+0x7)
+            return '(XSP+%s)' % hx(t) if t else '(XSP)'
+        else: return None
+    elif v.k == 'deref': p = v.e
+    elif v.k == 'member' and v.arrow: off = member_offset(v); p = v.base
+    else: return None
+    pm = mem_operand(F, p)
+    if pm is None: return None
+    if pm != 'XWA':
+        if pm.startswith('X') or pm.startswith('('): F.emit('ld', 'XWA,%s' % pm)
+        else: return None
+    return '(XWA+%s)' % hx(off) if off else '(XWA)'
+
+def bit_cond(F, c):
+    """x & mask as a branch condition (cond_bits.c, no -O form): a one-bit mask is `bit n`, in memory for a byte
+    (except bit 7 of a signed char, which is loaded first), on WA / QWA for an int or a long; another mask is
+    `and`.  Emits the test and returns the condition code that means `c is true`, or None (nothing emitted) when
+    c is not of that shape"""
+    c = strip(c); sense = 'ne'
+    if c.k == 'bin' and c.op in ('==', '!=') and fold(c.r).k == 'const' and fold(c.r).value == 0:
+        sense = 'eq' if c.op == '==' else 'ne'; c = strip(c.l)
+        while c.k == 'cast' and c.kind == 'IntegralCast': c = strip(c.e)
+    if not (c.k == 'bin' and c.op == '&' and c.ty.kind == 'int'): return None
+    l, r = c.l, c.r
+    if fold(l).k == 'const': l, r = r, l
+    x = unpromote(l); xs = x.ty.size; rc = fold(r)
+    if xs not in (1, 2, 4) or x.ty.kind not in ('int', 'ptr'): return None
+    if rc.k != 'const' or rc.value is None:
+        y = unpromote(r)
+        if y.ty.size != xs: return None
+        xr = reg_or_mem(F, x, xs); yr = reg_or_mem(F, y, xs)
+        if yr is None and reg_or_mem(F, x, xs) is not None and xs == 2 and not F.adecl:
+            fam = gen(F, y, 'BC', xs); yr = FAM[fam][xs]      # cb_shift: ld BC,0x8000 / ... / srl A,BC / and WA,BC
+        if yr is None: return None
+        if xr is None or xr.startswith('('):
+            fam = gen(F, x, 'WA', xs); xr = FAM[fam][xs]
+        F.emit('and', '%s,%s' % (xr, yr)); return sense
+    m = rc.value & {1: 0xff, 2: 0xffff, 4: 0xffffffff}[c.ty.size]
+    if xs == 1 and m > 0xff or m == 0: return None
+    single = m & (m - 1) == 0; n = m.bit_length() - 1
+    if xs == 1 and single and not (x.ty.signed and n == 7):
+        a = byte_addr(F, x)
+        if a is not None: F.emit('bit', '%s,%s' % (hx(n), a)); return sense
+    xr = reg_or_mem(F, x, xs)
+    if x.k == 'call':                                  # cb_call: cal _f / inc 0x2,XSP / bit 0x3,HL
+        fam = gen(F, x, 'HL', xs); flush_pops(F); xr = FAM[fam][xs]
+    elif xr is None or xr.startswith('(') or xr == 'XIZ':
+        fam = gen(F, x, 'WA', xs); xr = FAM[fam][xs]
+    if single:
+        if xs == 4: F.emit('bit', '%s,%s' % (hx(n - 16), 'Q' + xr[1:]) if n >= 16 else '%s,%s' % (hx(n), xr[1:]))
+        else: F.emit('bit', '%s,%s' % (hx(n), xr))
+    else: F.emit('and', '%s,%s' % (xr, hx(m)))
+    return sense
+
+def bool_returns(s):
+    """-O: `if (c) return 1; return 0;` is `return c` as a truth value (cond_bits.c under -O3 -XS: and A,0x80 /
+    cp A,0x0 / scc ne,HL; cb_lt_mask: scc uge,HL), and with 0 / 1 its negation; c is a comparison, x & m or !"""
+    from frontend import N
+    if getattr(s, 'k', None) != 'block': return
+    for c in s.body:
+        for f in ('then', 'els', 'body'):
+            x = getattr(c, f, None)
+            if hasattr(x, 'k'): bool_returns(x)
+    def ret_const(x):
+        while getattr(x, 'k', None) == 'block' and len(x.body) == 1: x = x.body[0]
+        if getattr(x, 'k', None) != 'return' or x.value is None: return None
+        v = fold(x.value)
+        return v.value if v.k == 'const' and v.value in (0, 1) and not fpgen.is_fp(v.ty) else None
+    i = 0
+    while i + 1 < len(s.body):
+        c, nx = s.body[i], s.body[i + 1]
+        if c.k == 'if' and c.els is None and ret_const(c.then) is not None and ret_const(nx) is not None and \
+                ret_const(c.then) != ret_const(nx):
+            cond = strip(c.cond); neg = ret_const(c.then) == 0
+            while cond.k == 'un' and cond.op == '!': cond = strip(cond.e); neg = not neg
+            ok = cond.k == 'bin' and (cond.op in CC_S or cond.op == '&') and not fpgen.is_fp(strip(cond.l).ty) and \
+                cond.ty.kind == 'int'
+            if ok:
+                rt = nx.value.ty
+                if cond.op == '&':
+                    v = N('bin', op='==' if neg else '!=', l=cond, r=N('const', value=0, ty=cond.ty), ty=rt)
+                elif neg:
+                    v = N('bin', op={'==': '!=', '!=': '==', '<': '>=', '>=': '<', '>': '<=', '<=': '>'}[cond.op],
+                          l=cond.l, r=cond.r, ty=rt)
+                else: v = cond
+                s.body[i:i + 2] = [N('return', value=v)]
+                continue
+        i += 1
+
+def and_truth(F, e, fam):
+    """(x & m) != 0 as a value (cond_bits.c cb_ret_bool; the -O form of the if-return): the and at the operand's
+    width, cp R,0x0 (or XWA,XWA for a long), scc; -O writes & 0xff of an int as ld W,0x0 and & 0xffff0000 of a long
+    as ld WA,0x0.  Returns None (nothing emitted) when e is not of that shape"""
+    if not (e.k == 'bin' and e.op in ('==', '!=') and fold(e.r).k == 'const' and fold(e.r).value == 0): return None
+    a = strip(e.l)
+    while a.k == 'cast' and a.kind == 'IntegralCast': a = strip(a.e)
+    if not (a.k == 'bin' and a.op == '&' and a.ty.kind == 'int'): return None
+    l, r = a.l, a.r
+    if fold(l).k == 'const': l, r = r, l
+    x = unpromote(l); xs = x.ty.size; rc = fold(r)
+    if xs not in (1, 2, 4): return None
+    if rc.k == 'const' and rc.value is not None:
+        m = rc.value & {1: 0xff, 2: 0xffff, 4: 0xffffffff}[a.ty.size]
+        if xs == 1 and m > 0xff: return None
+        ro = hx(m)
+    else:
+        y = unpromote(r)
+        if y.ty.size != xs: return None
+        ro = reg_or_mem(F, y, xs); m = None
+        if ro is None:
+            if reg_or_mem(F, x, xs) is None or xs != 2 or F.adecl: return None
+            f2 = gen(F, y, 'BC', xs); ro = FAM[f2][xs]
+    if x.k == 'call':
+        xf = gen(F, x, 'HL', xs); flush_pops(F)
+    else:
+        xr = reg_or_mem(F, x, xs)
+        xf = family_of(xr) if xr is not None and not xr.startswith('(') and xr != 'XIZ' else None
+        if xf is None or xf not in FAM: xf = gen(F, x, 'WA', xs)
+    R = FAM[xf][xs]
+    if F.opt and m == 0xff and xs == 2 and xf in ('WA', 'BC', 'DE', 'HL'): F.emit('ld', '%s,0x0' % HIGHB8[xf])
+    elif F.opt and m == 0xffff0000 and xs == 4: F.emit('ld', '%s,0x0' % FAM[xf][2])
+    else: F.emit('and', '%s,%s' % (R, ro))
+    F.emit('or', '%s,%s' % (R, R)) if xs == 4 else F.emit('cp', '%s,0x0' % R)
+    F.emit('scc', '%s,%s' % ('eq' if e.op == '==' else 'ne', FAM[fam][2])); return fam
+
+HIGHB8 = {'WA': 'W', 'BC': 'B', 'DE': 'D', 'HL': 'H'}
+
 def gen_cond_true(F, c, target):
     """jump to target when c is true (ctrl.c: c_orbr's first operand)"""
     c = strip(c)
@@ -1137,6 +1284,9 @@ def gen_cond_true(F, c, target):
     if c.k == 'bin' and c.op == '&&':                # _isalpha: (c>='a' && c<='z') || ... -> j lt,L1 / j le,L2 / L1:
         lf = F.newulabel(); gen_cond_false(F, c.l, lf); gen_cond_true(F, c.r, target)
         F.lines.append(lf + ':'); return
+    if not fpgen.is_fp(c.ty):
+        bt = bit_cond(F, c)
+        if bt is not None: jump(F, bt, target); return
     if c.k == 'bin' and c.op in CC_S and fpgen.is_fp(strip(c.l).ty):   # _exp: if (ret == old) break; -> ld DE,0x5 /
         fpgen.compare(F, c, False); F.emit('cp', 'HL,0x0'); jump(F, 'eq', target); return   # ... / j eq (the negation)
     if fpgen.is_fp(c.ty):
@@ -1164,6 +1314,9 @@ def gen_cond_false(F, c, target):
     if c.k == 'bin' and c.op == '||':                # c_orbr: first true -> then label; last false -> target
         lt = F.newulabel(); gen_cond_true(F, c.l, lt); gen_cond_false(F, c.r, target)
         F.lines.append(lt + ':'); return None
+    if not fpgen.is_fp(c.ty):
+        bt = bit_cond(F, c)                            # cond_bits.c: bit 0x7,(XSP+0x4) / j eq
+        if bt is not None: jump(F, INV[bt], target); return None
     if c.k == 'bin' and c.op in CC_S and fpgen.is_fp(strip(c.l).ty):   # d_blt_gg: ld DE,0x2 (>=) / cal ._fcmp_d /
         fpgen.compare(F, c, False); F.emit('cp', 'HL,0x0'); jump(F, 'ne', target); return None   # cp HL,0x0 / j ne
     if fpgen.is_fp(c.ty):                              # d_if: ld BC,0x4 (==) / cal ._fcmp_zd
@@ -1187,7 +1340,7 @@ def gen_cond_false(F, c, target):
             F.emit('ret') if target == 'RET' else F.emit('j', target); return
         F.emit('ret', INV[cc]) if target == 'RET' else F.emit('j', '%s,%s' % (INV[cc], target))
         return
-    raise Unsupported('condition ' + c.k)
+    raise Unsupported('condition ' + c.k + (' ' + c.op if c.k in ('bin', 'un') else ''))
 
 def push_arg(F, a):
     """push one cdecl argument (call.c: k1, k1k, k3, k4; abi args_caller)"""
@@ -1425,7 +1578,8 @@ def gen_load_mem(F, v, fam, size):
     if v.k == 'member' and v.arrow:
         pm = mem_operand(F, v.base)
         if pm is None: raise Unsupported('complex member base')
-        F.emit('ld', 'XWA,%s' % pm); F.emit('ld', '%s,(XWA+%s)' % (R, hx(member_offset(v)))); return fam
+        off = member_offset(v)                     # cond_bits.c cb_mem_flag: offset 0 is ld WA,(XWA)
+        F.emit('ld', 'XWA,%s' % pm); F.emit('ld', '%s,%s' % (R, '(XWA+%s)' % hx(off) if off else '(XWA)')); return fam
     if v.k == 'deref':
         pm = mem_operand(F, v.e)
         if pm is None: raise Unsupported('complex pointer')
@@ -1448,6 +1602,12 @@ def gen_load_mem(F, v, fam, size):
             F.emit('ld', 'WA,%s' % im)                             # m_ga_v, m_gla_v
             F.emit('add', 'WA,WA') if esz == 2 else F.emit('sla', '%s,WA' % hx({4: 2, 8: 3}[esz]))
             F.emit('lda', 'XBC,_%s' % b.decl.name); F.emit('ld', '%s,(XBC+WA)' % R); return fam
+        if b.k == 'member' and b.arrow and b.ty.kind == 'array' and ic.k == 'const' and ic.value is not None:
+            pm = mem_operand(F, b.base)                    # cond_bits.c cb_mem_b: p->b[3] -> ld A,(XWA+0xb)
+            if pm is not None:
+                off = member_offset(b) + ic.value * esz
+                if pm != 'XWA': F.emit('ld', 'XWA,%s' % pm)
+                F.emit('ld', '%s,%s' % (R, '(XWA+%s)' % hx(off) if off else '(XWA)')); return fam
         if b.k == 'member' and b.arrow and b.ty.kind == 'array':
             # m_gps_a: gps->a[k] -> ld WA,(k) / add WA,WA / add WA,0xc / ld C,A / ld XWA,(_gps) / ld HL,(XWA+C):
             # cc900 indexes the member array with the low byte of the scaled offset (every option set)
@@ -2106,8 +2266,10 @@ def gen_stmt(F, s, last):
         before_trivial_ret = getattr(F, 'trivial_ret_next', False)   # c_ifelse: r = a; else r = b; return r -> j L2
         gen_cond_false(F, s.cond, lelse)
         gen_stmt(F, s.then, last)
+        arm_call = F.pending or F.lines[-1].startswith('\tcal\t')
         if last and not before_trivial_ret and not F.xiz_vars and not F.pushes and not F.lines[-1].startswith(('\tret', '\tj\t')) \
-                and not (F.opt and IFCHAIN_JOIN and not F.adecl):
+                and not (F.opt and IFCHAIN_JOIN and not F.adecl and arm_call):   # (an arm without a call returns
+                                                                                  # itself: cb_c_else_80 under O3XS)
             flush_pops(F); F.emit('ret')               # c_ifchain: the exit is duplicated, not jumped to (cdecl -O
                                                        # jumps to the join and the tails merge: pushw 0xa / j L2)
         elif not F.lines[-1].startswith(('\tret', '\tj\t')):
@@ -2120,7 +2282,9 @@ def gen_stmt(F, s, last):
             flush_pops(F); F.emit('ret'); return            # c_ifchain under none: the last arm returns too
         if not (last and F.lines[-1].startswith('\tret')):
             flush_pops(F)                                  # c_ifchain: inc 0x2,XSP before the join labels
-            F.lines.append(lend + ':')
+            import re as _re                               # a join no arm jumps to is not written (cb_c_else_80
+            if not (F.opt and last and not any(_re.search(r'[\t,]%s$' % lend, l) for l in F.lines)):  # under O3XSXr)
+                F.lines.append(lend + ':')
         return
     if s.k == 'expr' and s.e.k == 'call':
         gen_call(F, s.e); return
@@ -3060,6 +3224,11 @@ def loop_cond(F, c, target, sense):
     if c.k in ('load', 'cast') and c.ty.kind in ('int', 'ptr'):         # while (*s): compare with 0
         from frontend import N
         return loop_cond(F, N('bin', op='!=', l=c, r=N('const', value=0, ty=c.ty), ty=c.ty), target, sense)
+    if not fpgen.is_fp(c.ty):
+        bt = bit_cond(F, c)                                # cond_bits.c cb_while: bit 0x0,WA / j ne,L1
+        if bt is not None:
+            cc = bt if sense else INV[bt]
+            F.emit('ret', cc) if target == 'RET' else F.emit('j', '%s,%s' % (cc, target)); return
     if c.k == 'bin' and c.op in CC_S and fpgen.is_fp(strip(c.l).ty):   # _log: do ... while (last != s) -> ld DE,0x5 /
         fpgen.compare(F, c, sense); F.emit('cp', 'HL,0x0')                # ... / j ne (the relation itself)
         cc = 'ne'
@@ -4533,6 +4702,7 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong
     F.fp_temps = fp_temps; F.fp_nlong = fp_nlong
     F.personality = personality
     F.opt = opt != 'none'; F.dead = set(); F.had_goto = bool(gotos)
+    if F.opt: bool_returns(f.body)
     compute_last_uses(F)
     F.lines.append(('.' if adecl else '_') + f.name + ':')
     F.loops = []; F.param_copies = []; F.pushes = []
