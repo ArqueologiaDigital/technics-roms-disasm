@@ -818,6 +818,10 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         rs = mem_operand(F, r)
         if rs is None:
             other = 'BC' if fam != 'BC' else 'DE'
+            if IDX_GUARD and held_after(F, other, r):       # (ol_two_arr: DE held i)
+                other = next((x for x in ('BC', 'DE', 'HL') if x != fam and not held_after(F, x, r) and
+                              x not in live_regs(F)), None)
+                if other is None: raise Unsupported('right operand register')
             gen(F, r, other, size); rs = FAM[other][size]
         elif op == '+' and same_leaf(l, r) and regvar_of(strip(r).e) is not None:
             rs = R                                     # rh_lp_x2: x + x with x in QIZ -> ld WA,QIZ / add WA,WA
@@ -2376,6 +2380,8 @@ def gen_load_mem(F, v, fam, size):
             if esz == 1:                                           # m_gca_v
                 F.emit('lda', 'XWA,_%s' % b.decl.name); F.emit('ld', 'BC,%s' % im); F.emit('extz', 'XBC')
                 F.emit('add', 'XBC,XWA'); F.emit('ld', '%s,(XBC)' % R); return fam
+            if IDX_GUARD and (held_after(F, 'WA', v) or held_after(F, 'BC', v)) and fam not in ('WA', 'BC'):
+                raise Unsupported('index register holds a live variable')   # (ol_two_arr -O3 -XS -Xr: k in WA)
             F.emit('ld', 'WA,%s' % im)                             # m_ga_v, m_gla_v
             F.emit('add', 'WA,WA') if esz == 2 else F.emit('sla', '%s,WA' % hx({4: 2, 8: 3}[esz]))
             F.emit('lda', 'XBC,_%s' % b.decl.name); F.emit('ld', '%s,(XBC+WA)' % R); return fam
