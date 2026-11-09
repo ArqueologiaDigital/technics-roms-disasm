@@ -2218,9 +2218,11 @@ def elem_addr(F, lv, kind):
         if not sized:
             if kind == 'rmw' and esz == 4: return None
             if kind == 'cmp': return None
-            idx_into('WA'); F.emit('exts', 'XWA'); scale32(F, 'XWA', esz)
+            wa_live = any(getattr(d, 'reg', None) == 'WA' and d not in F.dead for d in list(F.f.params) + list(F.f.decls))
+            I = 'BC' if getattr(F, 'idx_avoid_wa', False) and wa_live else 'WA'   # (-Xr ai_us_g_sh: i stays in WA)
+            idx_into(I); F.emit('exts', 'X' + I); scale32(F, 'X' + I, esz)
             B = getattr(F, 'force_base', None) or 'XBC'     # (ai_l_g_div: XIZ across the helper; ai_l_g_mul: XDE)
-            F.emit('ld', '%s,%s' % (B, g)); F.emit('add', '%s,XWA' % B); return '(%s)' % B
+            F.emit('ld', '%s,%s' % (B, g)); F.emit('add', '%s,X%s' % (B, I)); return '(%s)' % B
         if (kind == 'load' and not plain) or kind == 'cmp':   # ai_mul10: cpw (XBC+WA),0x0
             idx_into('WA'); scale16(F, 'WA', esz); F.emit('lda', 'XBC,%s' % g); return '(XBC+WA)'
         if kind in ('store', 'storek') and not plain:
@@ -2542,6 +2544,21 @@ def gen_opassign(F, e):
         F.emit(SIMPLE_OPS[op] + ('b' if size == 1 else 'w'), '%s,%s' % (t, hx(fold(r).value))); return t
     if op in SIMPLE_OPS:
         rk = fold(r).k == 'const' and fold(r).value is not None
+        heavy = []                                         # the right side reads memory through an address
+        walk(r, lambda n, d: heavy.append(n) if n.k == 'load' and (strip(n.e).k == 'deref' or strip(n.e).k == 'index'
+             and not (fold(strip(n.e).idx).k == 'const' and strip(strip(n.e).base).k == 'var')) else None)
+        lvg = strip(e.l)
+        gdst = lvg.k == 'index' and strip(lvg.base).k == 'var' and strip(lvg.base).decl.kind == 'global'
+        if heavy and gdst and not getattr(F, 'l2', None) and \
+                not getattr(F, 'u1_i', None) and not getattr(F, 'cl_active', None):
+            if F.opt: raise Unsupported('element op= element (-O shares the base)')   # ai_i_g_sh under -O3 -XS
+            F.force_base = 'XDE'                           # ai_i_g_sh, no -O: the target's address in XDE first
+            F.idx_avoid_wa = True                          # (-Xr: ld BC,WA / dec 0x1,BC / ... / ld XDE,_gsa /
+            try: t = lvalue(F, e.l, kind='add')            # add XDE,XBC), then the right side through XBC /
+            finally: F.force_base = None; F.idx_avoid_wa = False   # ld WA,(XBC) / sra 0x8,WA / add (XDE),WA
+            used = set(re.findall(r'X?(WA|BC|DE|HL|IX|IY)', t))
+            if used - {'DE'} or not t.startswith('(X'): raise Unsupported('element op= element: target operand')
+            gen(F, r, 'WA', size); F.emit(SIMPLE_OPS[op], '%s,%s' % (t, FAM['WA'][size])); return t
         t = lvalue(F, e.l, kind='andk' if rk else 'add')
         if rk and size <= 2 and strip(e.l).k == 'index':  # arr_index_sz.c ai_i_g_and: andw (XBC+WA),0xff
             F.emit(SIMPLE_OPS[op] + ('b' if size == 1 else 'w'), '%s,%s' % (t, hx(fold(r).value & 0xffff))); return t
