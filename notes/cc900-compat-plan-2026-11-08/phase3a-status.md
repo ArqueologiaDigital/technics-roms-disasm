@@ -62,7 +62,21 @@ no options, as are the loop shapes and the leaf-function register allocator.
    pointer with `ldirw`.  Once the model writes `_ldiv`, switching the reload-after-store rule (rules.md) should
    give the firmware's bytes: the first pair that the kn5000 personality reproduces and V4.23 does not.
 2. **The IZ / QIZ choice** across calls (`ra_call.c`, `rc_keep3` vs `rc_keep4` are the hard pair).
-3. **Indexed stores into local arrays** (`_ultoa`, `_itoa`, `_ltoa`): the second rule-bearing pair.
+3. **Local arrays** (`_ultoa`, `_itoa`, `_ltoa`): the second rule-bearing pair.  Done since: struct temporaries
+   (`_ldiv` reproduced in both personalities), shared exits for identical returns under `-XS`, `s[k] = ...` through
+   a pointer parameter.  What `_ultoa` still needs, read from the V4.23 and 2003 listings (run `2026-11-08-5`):
+   - a local array's address goes to a compiler temporary at its first use (`lda XWA,XSP+0x10` / `ld (XSP+8),XWA`);
+     V4.23 reloads it at once; the 2003 compiler (and so the firmware) keeps XWA for a store through it
+     (`ldb (XWA+0x20),0x0`) and reloads it before computing a new address from it (`lda XWA,XWA+0x1f`).  So the
+     reload rule's 2003 side is "reload before an address computation, not before a store through the register";
+   - frame order: scalar locals first (declaration order), then compiler temporaries (creation order), then arrays
+     and structs; dead locals (`u`) and copies (`q = s`) take no slot;
+   - `(unsigned long)radix`, used by both helper calls of an iteration, is computed once per iteration into a
+     temporary slot (`ld WA,(radix)` / `exts XWA` / `ld (XSP+0xc),XWA`), and XBC is loaded from it;
+   - a parameter kept in XIZ is loaded before the loop that first uses it (`ld XIZ,(val)` before `L4`), but inside
+     an `if` that first uses it (`_ldiv`);
+   - `p--` on a slot pointer is `ld XWA,0x1` / `sub (slot),XWA`; `*p` operations reuse the XWA that still holds p
+     after a store through it (`ld (XWA),L` / `cpb (XWA),0x39` / `addb (XWA),0x27`).
 4. **char loops with byte registers** (`ol_c_acc2`, `ol_c_acc3`: L, W, H as accumulators, the element in A) and
    loops over two arrays (`ol_i_copy`, `ol_two_arr`).
 5. The remaining unsupported constructs in the library (goto, indirect calls, `operator =` inside expressions).

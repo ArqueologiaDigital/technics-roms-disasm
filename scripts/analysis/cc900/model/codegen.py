@@ -646,6 +646,12 @@ def lvalue(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False):
         return '(%s+%s)' % (ptr, hx(off)) if off else '(%s)' % ptr
     g = global_offset(lv)
     if g: return '(_%s + %s)' % g if g[1] != '0x0' else '(_%s)' % g[0]
+    if lv.k == 'index' and strip(lv.base).k == 'load' and fold(lv.idx).k == 'const':
+        m = mem_operand(F, lv.base)                      # _ultoa: ld XWA,(s) / ldb (XWA),0x0
+        if m is not None:
+            if m.startswith('('): F.emit('ld', '%s,%s' % (ptr if ptr != 'XBC' else 'XWA', m)); m = ptr if ptr != 'XBC' else 'XWA'
+            off = fold(lv.idx).value * lv.ty.size
+            return '(%s+%s)' % (m, hx(off)) if off else '(%s)' % m
     if lv.k == 'index':
         b, i = strip(lv.base), lv.idx
         if b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array':
@@ -859,6 +865,10 @@ def gen_stmt(F, s, last):
     if s.k == 'return' and s.value is not None and F.opt:
         cse = cse_params(F, s.value)
         if cse: return
+    if s.k == 'return' and F.opt and getattr(F, 'shared_exit', None) and id(s) in F.shared_exit['early']:
+        flush_pops(F); F.emit('j', F.shared_exit['label']); return       # _ultoa: j L50000
+    if s.k == 'return' and F.opt and getattr(F, 'shared_exit', None) and id(s) == F.shared_exit['last']:
+        F.lines.append(F.shared_exit['label'] + ':')
     if s.k == 'return' and s.value is not None and F.sret is not None:
         v = strip(s.value)
         if v.k == 'load' and strip(v.e).k == 'var' and hasattr(strip(v.e).decl, 'slot'):
@@ -1403,6 +1413,18 @@ def epilogue(F):
     if getattr(F, 'frame', 0):
         F.emit('inc', '%s,XSP' % hx(F.frame)) if F.frame <= 8 else F.emit('lda', 'XSP,XSP+%s' % hx(F.frame))
 
+def plan_shared_exit(F):
+    """-XS: returns of the same simple value share the last one's code (_ultoa: two return (s) -> j L50000)"""
+    rets = []
+    walk(F.f.body, lambda n, d: rets.append(n) if n.k == 'return' else None)
+    def key(r):
+        v = strip(r.value) if r.value is not None else None
+        if v is None: return 'void'
+        if v.k == 'load' and strip(v.e).k == 'var': return 'var:%s' % strip(v.e).decl.name
+        return None
+    if len(rets) >= 2 and key(rets[-1]) is not None and key(rets[-1]) != 'void' and all(key(r) == key(rets[-1]) for r in rets):
+        F.shared_exit = {'label': F.newlabel(), 'early': {id(r) for r in rets[:-1]}, 'last': id(rets[-1])}
+
 def compile_function(f, opt, adecl, personality='v4.23'):
     F = Fn(f, adecl)
     F.personality = personality
@@ -1412,6 +1434,7 @@ def compile_function(f, opt, adecl, personality='v4.23'):
     F.loops = []; F.param_copies = []; F.pushes = []
     if not plan_leaf(F): plan_registers(F)
     plan_frame(F)
+    if F.opt: plan_shared_exit(F)
     gen_stmt(F, f.body, True)
     flush_pops(F)
     if not F.lines[-1].startswith('\tret'):
