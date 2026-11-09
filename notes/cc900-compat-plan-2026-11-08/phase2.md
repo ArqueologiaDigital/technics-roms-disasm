@@ -50,10 +50,19 @@ set only by tlcs900 under cc900; packed structs are exempt.
 The default (non-cc900) convention reads a 5th argument from `(xsp)`, the return address, instead of `(xsp+4)`.
 Fixing it changes default output, so it was left for a separate, deliberate change.
 
-## Not yet done: the exit criterion
+## The exit criterion: met through the firmware's copies of the library (2026-11-09)
 
 PLAN.md asks that code built with `-mabi=cc900` link and run against Toshiba's `c900ml.lib`, checked in emulation.
-That needs an IEEE-695-to-ELF converter for the library objects (built on
-`notes/toshiba-runtime-xref-2026-11-08/ieee695.py`) or a link with `tulink` in the oracle VM, plus a small harness
-that calls each library routine and compares results (MAME's TLCS-900 core).  Until then the ABI is checked
-against the oracle's listings and by the lit tests only.
+`scripts/analysis/cc900/phase2-mame/` does this without converting the IEEE-695 library: the KN5000 v10 firmware
+already contains Toshiba-compiled library routines (the source/binary pairs) and the `C9H_*` helpers, so the test
+program, built by our clang with `-mabi=cc900`, is linked against those addresses and run in MAME's kn5000 driver.
+`strlen`, `strcpy`, `strcat`, `strncmp`, `strchr`, `memset`, `memcpy`, `ultoa` and the long division helpers
+`C9H_divlu` / `C9H_remlu` all return the expected values: **PASS** (the README there has the command and the values).
+
+Two backend bugs the test found, both outside the default code paths that the ROM build uses:
+- **no `jr` to `jrl` relaxation:** clang fails with "fixup value out of range for 8-bit relative branch" on a
+  function whose conditional branch spans more than 127 bytes; the test relaxes the assembly itself;
+- **numeric local labels:** llvm-mc encodes `jr 1b` / `jr 2f` with the label's section offset as the displacement
+  (`68 02` for a jump from offset 3 back to offset 2).  This made the first runs fail mysteriously: the test's end
+  loop jumped into the middle of the test function and overwrote its results.  Named labels are correct.
+Both are to be fixed in the fork as separate, deliberate changes (like the default-ABI fifth-argument bug above).
