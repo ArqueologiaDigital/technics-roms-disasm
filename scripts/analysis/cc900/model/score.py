@@ -2,6 +2,7 @@
 """Score the cc900 reference model against oracle listings, function by function.
 
 usage: python3 -I -B score.py ORACLE_DIR FILE.c [FILE.c ...] [--opt none|O3XS] [--adecl] [--show N] [--strict]
+       [-DNAME[=V] ...] [-IDIR ...]   (passed to clang's front end)
 ORACLE_DIR is one compiler/option directory of an oracle run, e.g.
 ~/compartilhado/cc900-oracle/runs/2026-11-08-7-micro/out/v423/none; each FILE.c is looked up there by its path
 relative to the corpus root (the part from `micro/` or `abi/` on).  For every function the model compiles, its
@@ -25,6 +26,8 @@ def main():
     opt = a[a.index('--opt') + 1] if '--opt' in a else None
     show = int(a[a.index('--show') + 1]) if '--show' in a else 0
     strict = '--strict' in a; adecl = '--adecl' in a
+    defines = [x[2:] for x in a if x.startswith('-D')]; incs = [x[2:] for x in a if x.startswith('-I')]
+    a = [x for x in a if not x.startswith(('-D', '-I'))]
     pos = [x for i, x in enumerate(a) if not x.startswith('--') and (i == 0 or a[i - 1] not in ('--opt', '--show'))]
     odir, files = pos[0], pos[1:]
     base = os.path.basename(os.path.normpath(odir))          # infer from the oracle directory name
@@ -35,7 +38,8 @@ def main():
         op = oracle_path(odir, f)
         if not os.path.exists(op): print('%-28s no oracle listing' % os.path.basename(f)); continue
         want = listing.split(open(op, encoding='latin-1').read())
-        unit = frontend.load(f)
+        try: unit = frontend.load(f, defines, incs)
+        except Exception as ex: print('%-28s front end failed: %s' % (os.path.basename(f), str(ex).splitlines()[-1][:80])); continue
         got = codegen.compile_unit(unit, opt=opt, adecl=adecl)
         n = good = 0
         for name, wl in want.items():

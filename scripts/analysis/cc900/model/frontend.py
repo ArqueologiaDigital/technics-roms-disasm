@@ -94,7 +94,7 @@ class Unit:
 
 def load(path, defines=(), includes=()):
     cmd = [CLANG, '-target', 'tlcs900', '-std=c89', '-fsyntax-only', '-Xclang', '-ast-dump=json', '-Wno-everything']
-    cmd += ['-D' + d for d in defines] + ['-I' + i for i in includes] + [path]
+    cmd += ['-D' + d for d in defines] + ['-I' + i for i in includes] + ['-x', 'c', path]
     ast = json.loads(subprocess.run(cmd, capture_output=True, text=True, check=True).stdout)
     return Builder(path).unit(ast)
 

@@ -101,6 +101,13 @@ def mem_operand(F, e):
             if d.kind in ('global', 'func') and not d.ty.kind == 'array': return '(_%s)' % d.name
         g = global_offset(v)
         if g: return '(_%s + %s)' % g if g[1] != '0x0' else '(_%s)' % g[0]
+        if v.k == 'deref':                              # _strcat at -O: (XDE), (XBC+:1)
+            pv = strip(v.e)
+            if pv.k == 'load' and regvar_of(pv.e) and regvar_of(pv.e).ty.size == 4:
+                return '(%s)' % FAM[regvar_of(pv.e).reg][4]
+            if pv.k == 'incdec' and pv.post and regvar_of(pv.e) and regvar_of(pv.e).ty.size == 4:
+                d = regvar_of(pv.e); step = d.ty.base.size
+                return '(%s%s:%d)' % (FAM[d.reg][4], '+' if pv.op == '++' else '-', step)
     return None
 
 def global_offset(v):
@@ -603,6 +610,10 @@ def lvalue(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False):
         if d.kind == 'global': return '(_%s)' % d.name
         if d.kind == 'param': return '(XSP+%s)' % hx(d.off + F.push)
     if lv.k == 'deref':
+        pv = strip(lv.e)
+        if pv.k == 'incdec' and pv.post and regvar_of(pv.e) and regvar_of(pv.e).ty.size == 4:
+            d = regvar_of(pv.e)
+            return '(%s%s:%d)' % (FAM[d.reg][4], '+' if pv.op == '++' else '-', d.ty.base.size)
         m = mem_operand(F, lv.e)
         if m is None: raise Unsupported('complex pointer')
         if m.startswith('X'): return '(%s)' % m        # .as_add_ptr: add (XWA),BC
@@ -732,6 +743,13 @@ def substitute(node, d, repl):
                     if x.k == 'load' and strip(x.e).k == 'var' and strip(x.e).decl is d: v[i] = repl
                     else: substitute(x, d, repl)
 
+def uses_decl(node, d):
+    found = []
+    def v(n, depth):
+        if n.k == 'var' and n.decl is d: found.append(n)
+    walk(node, v)
+    return bool(found)
+
 def flat(s):
     if s.k == 'block':
         out = []
@@ -746,6 +764,8 @@ def gen_stmt(F, s, last):
         while i < len(body):
             c = body[i]
             if c.k == 'decl' and getattr(c.var, 'reg', None) not in (None, 'XIZ', 'WA') and c.var.kind == 'local':
+                for d in [d for d in getattr(F, 'deferred', []) if c.init is not None and uses_decl(c.init, d)]:
+                    F.emit('ld', '%s,(XSP+%s)' % (FAM[d.reg][d.ty.size], hx(d.off + F.push))); F.deferred.remove(d)
                 if c.init is not None:
                     from frontend import N
                     regvar_stmt(F, N('bin', op='=', l=N('var', decl=c.var, ty=c.var.ty), r=c.init, ty=c.var.ty))
@@ -762,6 +782,8 @@ def gen_stmt(F, s, last):
                     c.var.reg = gen(F, c.init, 'WA', 1); i += 1; continue
                 raise Unsupported('local ' + c.var.name)
             if c.k == 'decl' and c.init is None: i += 1; continue
+            for d in [d for d in getattr(F, 'deferred', []) if uses_decl(c, d)]:
+                F.emit('ld', '%s,(XSP+%s)' % (FAM[d.reg][d.ty.size], hx(d.off + F.push))); F.deferred.remove(d)
             nxt = body[i + 1] if i + 1 < len(body) else None
             if c.k == 'expr' and c.e.k == 'opassign' and regvar_of(c.e.l) and nxt is not None and nxt.k == 'return' \
                     and nxt.value is not None and strip(nxt.value).k == 'load' and regvar_of(strip(nxt.value).e) is regvar_of(c.e.l) \
@@ -921,7 +943,8 @@ def regvar_stmt(F, e):
         F.emit(SIMPLE_OPS[e.op], '%s,%s' % (R, m)); return True
     if e.k == 'incdec' and regvar_of(e.e):
         d = regvar_of(e.e); R = FAM[d.reg].get(d.ty.size, FAM[d.reg].get(2))
-        F.emit('inc' if e.op == '++' else 'dec', '0x1,%s' % R); return True
+        step = d.ty.base.size if d.ty.kind == 'ptr' else 1
+        F.emit('inc' if e.op == '++' else 'dec', '%s,%s' % (hx(step), R)); return True
     return False
 
 def loop_cond(F, c, target, sense):
@@ -960,6 +983,17 @@ def gen_loop(F, s, last):
         exitl = None
         F.loops.append((None, getc)); gen_stmt(F, s.body, False); F.loops.pop()
         if cont[0]: F.lines.append(cont[0] + ':')
+        loop_cond(F, s.cond, body, True)
+        return
+    if s.k == 'while' and F.opt and s.cond is not None:  # -XS rotation: j test / body / test (_strcat)
+        test = F.newulabel(); body = F.newulabel()
+        F.emit('j', test); F.lines.append(body + ':')
+        cont = [None]
+        def getc2():
+            if cont[0] is None: cont[0] = F.newulabel()
+            return cont[0]
+        F.loops.append((None, getc2)); gen_stmt(F, s.body, False); F.loops.pop()
+        F.lines.append(test + ':')
         loop_cond(F, s.cond, body, True)
         return
     exitl = F.newulabel(); body = F.newulabel()
@@ -1013,7 +1047,7 @@ def plan_leaf(F):
         if n.k == 'bin' and n.op == '=' and strip(n.l).k == 'var': modified.add(strip(n.l).decl)
         if n.k == 'index' and strip(n.base).k == 'var' and strip(n.base).decl.ty.kind == 'array' and n.ty.size >= 2 and fold(n.idx).k != 'const':
             temps_bc.append(n)
-        if n.k == 'load' and strip(n.e).k == 'deref': temps_bc.append(n)
+        if n.k == 'load' and strip(n.e).k == 'deref' and not F.opt: temps_bc.append(n)
     walk(f.body, visit)
     if has_call: return False
     hasloop = []
@@ -1026,26 +1060,31 @@ def plan_leaf(F):
         if not multi: return False
     rets = []
     walk(f.body, lambda n, d: rets.append(strip(n.value.e).decl) if n.k == 'return' and n.value is not None and strip(n.value).k == 'load' and strip(strip(n.value).e).k == 'var' else None)
-    locals_ = [d for d in f.decls if d.kind == 'local' and not d.addr_taken and d.ty.kind == 'int']
+    okind = ('int', 'ptr') if F.opt else ('int',)
+    locals_ = [d for d in f.decls if d.kind == 'local' and not d.addr_taken and d.ty.kind in okind]
     if not hasloop:
         locals_ = multi
-    params = [d for d in f.params if d.ty.kind == 'int' and (d in modified or d in deep)]
+    params = [d for d in f.params if d.ty.kind in okind and (d in modified or d in deep or (F.opt and d in loopvars))]
     order = params + list(reversed(locals_))
+    if F.opt: order = list(reversed(locals_)) + list(reversed(params))      # _strcat at -O: s, s2, s1
     free = [r for r in LEAF_SEQ if not (r == 'BC' and temps_bc)]
     for d in order:
         if d in rets and 'HL' in free: d.reg = 'HL'; free.remove('HL')
     for d in order:
         if getattr(d, 'reg', None): continue
-        if d.ty.size == 4: cand = [r for r in free if r in ('BC', 'DE', 'HL')]
+        if d.ty.size == 4: cand = [r for r in free if r in ('BC', 'DE', 'HL', 'IX', 'IY')]
         elif d.ty.size == 1: cand = [r for r in free if r in ('BC', 'DE', 'HL')]
         else: cand = free
         if not cand: raise Unsupported('out of registers')
         d.reg = cand[0]; free.remove(cand[0])
         if d.kind == 'param': F.param_copies.append(d)
     if any(getattr(d, 'reg', None) == 'IZ' for d in order): F.emit('push', 'IZ'); F.push = 2; F.pushes = ['IZ']
-    for d in F.param_copies:
-        R = FAM[d.reg][d.ty.size]
-        F.emit('ld', '%s,(XSP+%s)' % (R, hx(d.off + F.push)))
+    if F.opt:
+        F.deferred = list(F.param_copies)              # loaded at first use (_strcat: ld XBC,(XSP+8) late)
+    else:
+        for d in F.param_copies:
+            R = FAM[d.reg][d.ty.size]
+            F.emit('ld', '%s,(XSP+%s)' % (R, hx(d.off + F.push)))
     return True
 
 def compute_last_uses(F):
