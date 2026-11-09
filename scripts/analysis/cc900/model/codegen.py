@@ -2257,6 +2257,8 @@ def elem_addr(F, lv, kind):
 def gen_load_mem(F, v, fam, size):
     """load through an index, member or pointer (mem.c)"""
     R = FAM[fam][size]
+    eo = getattr(F, 'elem_ops', None)
+    if eo and id(v) in eo: F.emit('ld', '%s,%s' % (R, eo[id(v)])); return fam   # (shared_base_opassign)
     if v.k == 'member' and v.arrow:
         pm = mem_operand(F, v.base)
         if pm is None: raise Unsupported('complex member base')
@@ -2531,6 +2533,50 @@ def lvalue(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False, kind='store'):
             F.emit('lda', '%s,_%s' % (base, b.decl.name)); return '(%s+%s)' % (base, idx)
     raise Unsupported('lvalue ' + lv.k)
 
+def shared_base_opassign(F, e, lv, r, heavy, size, op):
+    """-O: g[i + k] op= f(g[i]) with g a global array of unknown size (arr_index.c ai_*_g_sh): the index copied
+    and adjusted in DE, the base loaded once and copied for the target, the source added to it.
+    -O3 -XS (i in memory): ld BC,(i) / ld DE,BC / dec 0x1,DE / exts XDE / add XDE,XDE / lda XWA,_gia /
+    ld XHL,XWA / add XHL,XDE / exts XBC / add XBC,XBC / add XWA,XBC / ld WA,(XWA) / sra 0x8,WA / add (XHL),WA;
+    -O3 -XS -Xr (i in WA) the same with I = WA, base XBC.  A char array keeps 16-bit indexes and one base:
+    ld DE,WA / dec 0x1,DE / lda XBC,_gca / ld A,(XBC+WA) / sra 0x8,A / add (XBC+DE),A.  True when written."""
+    if len(heavy) != 1 or not SHARED_BASE: return False
+    g = strip(lv.base).decl
+    if g.ty.kind != 'array' or getattr(g.ty, 'count', 0): return False
+    src = strip(heavy[0].e)
+    if src.k != 'index' or strip(src.base).k != 'var' or strip(src.base).decl is not g: return False
+    bd, k = split_index(lv.idx); bs, k2 = split_index(src.idx)
+    bd, bs = unpromote(bd), unpromote(bs)
+    if k2 != 0 or k == 0 or bd.k != 'load' or bs.k != 'load' or strip(bd.e).k != 'var' or strip(bs.e).k != 'var' or \
+            strip(bd.e).decl is not strip(bs.e).decl: return False
+    iv = strip(bd.e).decl
+    if iv.ty.size != 2: return False
+    esz = lv.ty.size
+    ir = getattr(iv, 'reg', None)
+    if ir is not None and ir != 'WA': return False
+    if ir is None:
+        I = 'WA' if esz == 1 else 'BC'
+        F.emit('ld', '%s,%s' % (I, mem_operand(F, bd)))
+    else: I = 'WA'
+    B = 'XBC' if I == 'WA' else 'XWA'
+    F.emit('ld', 'DE,%s' % I)
+    F.emit('inc' if k > 0 else 'dec', '%s,DE' % hx(abs(k))) if abs(k) <= 8 else F.emit('add', 'DE,%s' % hx(k & 0xffff))
+    if esz == 1:
+        F.emit('lda', '%s,_%s' % (B, g.name)); t = '(%s+DE)' % B; so = '(%s+%s)' % (B, I)
+    else:
+        F.emit('exts', 'XDE'); scale32(F, 'XDE', esz)
+        F.emit('lda', '%s,_%s' % (B, g.name)); F.emit('ld', 'XHL,%s' % B); F.emit('add', 'XHL,XDE')
+        F.emit('exts', 'X' + I); scale32(F, 'X' + I, esz); F.emit('add', '%s,X%s' % (B, I))
+        t = '(XHL)'; so = '(%s)' % B
+    if ir is not None: F.dead.add(iv)
+    F.elem_ops = {id(src): so}
+    try: f2 = gen(F, r, 'WA', size)
+    finally: F.elem_ops = {}
+    F.emit(SIMPLE_OPS[op], '%s,%s' % (t, FAM[f2][size]))
+    return True
+
+SHARED_BASE = True
+
 def gen_opassign(F, e):
     """x op= y as a statement (assign.c)"""
     size = strip(e.l).ty.size; op = e.op
@@ -2551,7 +2597,9 @@ def gen_opassign(F, e):
         gdst = lvg.k == 'index' and strip(lvg.base).k == 'var' and strip(lvg.base).decl.kind == 'global'
         if heavy and gdst and not getattr(F, 'l2', None) and \
                 not getattr(F, 'u1_i', None) and not getattr(F, 'cl_active', None):
-            if F.opt: raise Unsupported('element op= element (-O shares the base)')   # ai_i_g_sh under -O3 -XS
+            if F.opt:
+                if shared_base_opassign(F, e, lvg, r, heavy, size, op): return None
+                raise Unsupported('element op= element (-O shares the base)')   # (other shapes)
             F.force_base = 'XDE'                           # ai_i_g_sh, no -O: the target's address in XDE first
             F.idx_avoid_wa = True                          # (-Xr: ld BC,WA / dec 0x1,BC / ... / ld XDE,_gsa /
             try: t = lvalue(F, e.l, kind='add')            # add XDE,XBC), then the right side through XBC /
