@@ -637,7 +637,28 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         if lr is not None and lr.reg == 'WA' and not dies_here(F, l):
             work = free_reg(F, avoid={'WA'})            # mul_i_loc under Xr: ld DE,WA / muls XDE,BC
         if lr is not None and lr.reg == 'WA' and dies_here(F, l): F.dead.add(lr)
+        rr = regvar_of(strip(r).e) if strip(r).k == 'load' else None
         sl = strip(l)
+        if F.adecl and not F.opt and work == 'WA' and lr is None and rr is not None and rr.reg == 'WA' and size == 2 \
+                and BINLOC_XR and sl.k == 'bin' and sl.op in ('*', '/', '%'):
+            # binop-loc rule 3.3 (research-scratch sessions/2026-11-09_cc900-binop-loc): mul_i_loc under -Xr,
+            # (a * b) * a -> ld DE,WA / muls XDE,BC (a live) / ld BC,DE / muls XBC,WA: the first free pair once the
+            # left operand is built (b dead), never the right operand's WA
+            F.keep_once = True; F.keep_q = sl.op == '%'
+            f1 = gen(F, l, 'WA', size); F.keep_once = False; F.keep_q = False
+            for ld_ in loads_in(l):
+                v = regvar_of(strip(ld_.e))
+                if v is not None and dies_here(F, ld_): F.dead.add(v)
+            rem = getattr(F, 'last_remainder', None)
+            w2 = free_reg(F, avoid={'WA', rr.reg})
+            src = f1 if f1.startswith('Q') else FAM[f1][2]
+            if src != FAM[w2][2]: F.emit('ld', '%s,%s' % (FAM[w2][2], src))
+            work = w2; wide = FAM[work][4]
+            if op == '*': F.emit('muls' if signed else 'mul', '%s,%s' % (wide, FAM[rr.reg][2])); res = FAM[work][2]
+            else:
+                F.emit('exts' if signed else 'extz', wide); F.emit('divs' if signed else 'div', '%s,%s' % (wide, FAM[rr.reg][2]))
+                res = FAM[work][2] if op == '/' else Q[work]
+            return move_to(F, res, fam, size)
         if F.opt and size == 2 and op in '*/' and sl.k == 'bin' and sl.op in '*/' and work == 'WA':
             F.keep_once = True                          # mul_i_loc under O3XSXr: (a * b) * a keeps the product in DE:
             f1 = gen(F, l, work, size); F.keep_once = False   # muls XDE,BC / muls XDE,WA / ld HL,DE
@@ -716,6 +737,11 @@ def cse_params(F, e):
     for r in reversed(F.pushes): F.emit('pop', r)
     F.emit('retd', hx(F.retd)) if F.retd else F.emit('ret')
     return True
+
+def loads_in(e):
+    out = []
+    walk(e, lambda n, d: out.append(n) if n.k == 'load' and strip(n.e).k == 'var' else None)
+    return out
 
 def free_reg(F, avoid=()):
     live = live_regs(F)
@@ -864,6 +890,8 @@ def gen_long_helper(F, e, l, r, fam, signed):
 def move_to(F, res, fam, size, keep=False):
     tgt = FAM[fam][size]
     if keep: return 'HL'
+    if getattr(F, 'keep_q', False) and res.startswith('Q'):   # mod_i_loc under -Xr: the remainder stays in QDE
+        F.keep_q = False; F.keep_once = False; return res
     if getattr(F, 'keep_once', False) and family_of(res) and res in FAM[family_of(res)[1:]].values() \
             and res == FAM[family_of(res)[1:]].get(size):
         F.keep_once = False; return family_of(res)[1:]  # the caller works where the value already is
@@ -2147,6 +2175,7 @@ R3_SETS = ('none', 'Xr', 'O3XSXr', 'O3XS')
 FP_AGGR = True
 MUL_K_XWA = True
 IFCHAIN_JOIN = True
+BINLOC_XR = True
 STORE_XHL_NONE = True
 DEREF_XIZ = True
 
