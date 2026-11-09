@@ -963,7 +963,19 @@ def gen_long_helper(F, e, l, r, fam, signed):
         rs_ld = ('lda', 'XBC,%s' % hx(rc.value))        # -O: div_l_pk, _rand: lda XBC,0xa / lda XBC,0x7fff
     else:
         rs_ld = ('ld', 'XBC,%s' % rs)
-    if F.xiz_vars and any(d is not None and d.kind == 'local' for d in F.xiz_vars):
+    if F.opt and F.adecl and BINLOC_XR and bool(family_of(ls)) != bool(family_of(rs)):
+        # binop-loc section 6, -O3 -XS -Xr: the register copy first (mul_l_loc: ld XBC,XIZ / ld XWA,(XSP+0x4))
+        if family_of(ls): F.emit('ld', 'XWA,%s' % ls); F.emit(*rs_ld)
+        else: F.emit(*rs_ld); F.emit('ld', 'XWA,%s' % ls)
+    elif F.opt and not F.adecl and BINLOC_XR:
+        # cdecl -O3 -XS: XWA first, except a memory right operand beside a local held in XIZ, which is loaded
+        # first (mul_l_loc: ld XBC,(a) / ld XWA,XIZ); a parameter in XIZ keeps XWA first (_ldiv, _ultoa:
+        # ld XWA,XIZ / ld XBC,(XSP+0x20))
+        if not ls.startswith('(') and rs.startswith('(') and \
+                any(d is not None and d.kind == 'local' for d in F.xiz_vars):
+            F.emit(*rs_ld); F.emit('ld', 'XWA,%s' % ls)
+        else: F.emit('ld', 'XWA,%s' % ls); F.emit(*rs_ld)
+    elif F.xiz_vars and any(d is not None and d.kind == 'local' for d in F.xiz_vars):
         F.emit(*rs_ld); F.emit('ld', 'XWA,%s' % ls)
     else:
         F.emit('ld', 'XWA,%s' % ls); F.emit(*rs_ld)
@@ -1822,7 +1834,9 @@ def gen_stmt(F, s, last):
             if c.k == 'decl' and c.init is not None and c.var.kind == 'local' and not c.var.addr_taken:
                 rest = body[i + 1:]
                 u = uses_of(rest, c.var, [])
-                if len(u) == 1 and (c.var.ty.size >= 2 or (F.opt and not F.adecl)) and not call_before_use(rest, c.var):
+                helper_res = getattr(c.var, 'no_fold', False)
+                if len(u) == 1 and (c.var.ty.size >= 2 or (F.opt and not F.adecl)) and not call_before_use(rest, c.var) \
+                        and not helper_res:                  # (mul_l_loc under O3XSXr: x = a * b stays in a slot)
                     for x in rest: substitute(x, c.var, c.init)   # cdecl -O folds a char local too (add_c_loc)
                     i += 1; continue
                 if getattr(c.var, 'slot', None) is not None and c.var.ty.size >= 2:
@@ -2206,6 +2220,7 @@ def plan_registers(F):
             F.emit('push', 'XIZ'); F.push = 4
             return
     for i, c in enumerate(body):
+        if F.adecl and F.opt and BINLOC_XR: break        # -O3 -XS -Xr: the helper result takes a slot (mul_l_loc)
         if c.k == 'decl' and c.init is not None and c.var.ty.size == 4 and has_helper_call(c.init):
             later = body[i + 1:]
             if any(has_helper_call(getattr(x, 'value', None) or getattr(x, 'e', None)) for x in later):
@@ -2290,6 +2305,39 @@ def plan_homes(F):
             out.append((it, path))
         return out
     seq0 = lift(raw); seq = [it for it, _ in seq0]
+    def long_helper(n):
+        return n.k == 'bin' and n.ty is not None and n.ty.size == 4 and (n.op in '/%' or n.op == '*' and
+               not (fold(n.r).k == 'const' and fold(n.r).value is not None and fold(n.r).value > 0 and
+                    bin(fold(n.r).value).count('1') <= 3))
+    helpers = []
+    walk(F.f.body, lambda n, d: helpers.append(n) if long_helper(n) else None)
+    real_calls = []                                        # eval_sequence counts the helpers as calls too
+    walk(F.f.body, lambda n, d: real_calls.append(n) if n.k == 'call' or fpgen.is_fp_op(n) else None)
+    helper_only = F.adecl and F.opt and BINLOC_XR and helpers and not real_calls
+    if helper_only:
+        # binop-loc section 6: -O3 -XS -Xr treats a long helper's arguments as live across it (div_l_pk:
+        # push XIZ / ld XIZ,XWA / ld XWA,XIZ / lda XBC,0xa / cal C9H_divls); the first parameter that is an
+        # operand gets XIZ, the other parameters and the helper results slots (mul_l_loc)
+        ops = []
+        for h in helpers:
+            for side in (h.l, h.r):
+                sv = strip(side)
+                while sv.k == 'cast': sv = strip(sv.e)
+                if sv.k == 'load' and strip(sv.e).k == 'var' and strip(sv.e).decl.kind == 'param' and \
+                        strip(sv.e).decl not in ops: ops.append(strip(sv.e).decl)
+        ops.sort(key=lambda d: F.f.params.index(d))
+        if ops and getattr(ops[0], 'reg', None) in ('WA', 'BC', 'DE') and ops[0].ty.size == 4:
+            w = ops[0]; src = FAM[w.reg][4]
+            F.home_moves = [('XIZ', src)]; F.home_stores = []
+            for d in ops[1:]:
+                if getattr(d, 'reg', None) in ('WA', 'BC', 'DE'):
+                    F.home_stores.append((d, FAM[d.reg][d.ty.size])); d.home_slot = True; d.reg = None
+            w.reg = 'XIZ'; w.homed = True; F.xiz_vars.append(w)
+            F.save_reg = 'XIZ'; F.emit('push', 'XIZ'); F.push = 4
+            for c in flat(F.f.body):                      # a helper's result used by a later helper: a slot
+                if c.k == 'decl' and c.init is not None and c.var.ty.size == 4 and has_helper_call(c.init):
+                    c.var.no_fold = True
+            return
     if not any(x[0] in ('call', 'rcall') for x in seq): return
     def compatible(p, q): return all(q.get(k, v) == v for k, v in p.items())
     across = []
@@ -3999,7 +4047,7 @@ def foldable(f, d):
     body = flat(f.body)
     for i, c in enumerate(body):
         if c.k == 'decl' and c.var is d:
-            if c.init is None or d.addr_taken or d.ty.size < 2: return False
+            if c.init is None or d.addr_taken or d.ty.size < 2 or getattr(d, 'no_fold', False): return False
             return len(uses_of(body[i + 1:], d, [])) == 1 and not call_before_use(body[i + 1:], d)
     return False
 
