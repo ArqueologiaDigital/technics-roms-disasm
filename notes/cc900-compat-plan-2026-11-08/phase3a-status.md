@@ -162,6 +162,18 @@ Still open on this convention: the `-O` register allocator for loops (`ra_leaf2.
 IZ / QDE ...), `sw_local` (a local kept in HL across a call), placement of the code after a switch next to the
 first case (`sw_evtab`), loops in the switch's continue label (`sw_loop`), long helper homes at `-O` (`mul_l_loc`).
 
+## Priorities after 2026-11-09
+
+1. **The cost-based allocator.**  The IZ / QIZ / slot choice across calls (run `2026-11-09-6-micro-rahomes`) and the
+   `-Xr` leaf loops' temporary family (run `2026-11-09-5-micro-optparams`, `regalloc_notes.md`) block the register
+   corpus, `saves.c`, `_itoa` / `_ltoa` / `_atoi` / `_atol` and most of `opt_params` under `-Xr`.  The data is in
+   those two runs; the next step is a hypothesis-testing harness over them rather than more single rules.
+2. **Floating point.**  The library was built `-DFLOAT`; doubles travel through adecl helpers that take pointers to
+   the operands (`_fabs`: `lda XWA,XSP+0x8 / ld BC,0x1 / cal ._fcmp_zd`, `._fld_dd` to copy into the hidden result,
+   `._fneg_d`).  About 50 firmware pairs wait on it, most of the sub CPU's (`model/pairs_summary.py`).
+3. **cdecl `-O3 -XS` switch to lookup table** (0 of 25 there; not used under `-Xr`, so after 1 and 2).
+4. **Phase 3b**: the LLVM implementation, once the model's rules stop moving as fast.
+
 ## How to resume
 
 ```sh
