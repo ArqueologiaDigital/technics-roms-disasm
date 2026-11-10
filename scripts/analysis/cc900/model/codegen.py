@@ -27,6 +27,11 @@ import homes2
 
 class Unsupported(Exception): pass
 
+class LiveClobber(Unsupported):
+    """the live-register guard fired on a register temporary (plan_regtemps): compile_function retries with the
+    next candidate home"""
+    def __init__(s, msg, decl): Unsupported.__init__(s, msg); s.decl = decl
+
 FAM = {'WA': {1: 'A', 2: 'WA', 4: 'XWA'}, 'BC': {1: 'C', 2: 'BC', 4: 'XBC'},
        'DE': {1: 'E', 2: 'DE', 4: 'XDE'}, 'HL': {1: 'L', 2: 'HL', 4: 'XHL'},
        'IX': {2: 'IX', 4: 'XIX'}, 'IY': {2: 'IY', 4: 'XIY'}, 'IZ': {2: 'IZ', 4: 'XIZ'},
@@ -79,6 +84,9 @@ class Fn:
         if args is not None and 'None' in args: raise Unsupported('operand None in %s %s' % (op, args))   # (r4_07_06)
         if op == 'ld' and args is not None and re.match(r'^(WA|BC|DE|HL|IX|IY|IZ),[WABCDEHL]$', args):
             raise Unsupported('a byte into a word: ld %s' % args)   # (r2_02_05 -Xr: ld WA,A for a char index)
+        if op == 'cp' and args is not None:
+            m_ = re.match(r'^([WABCDEHL]),0x([0-9a-f]{3,})$', args)   # (r3_01_02: cp A,0xffc2 -> cp A,0xc2)
+            if m_: args = '%s,%s' % (m_.group(1), hx(int(m_.group(2), 16) & 0xff))
         if op in ('ldw', 'ldb') and args is not None:
             m_ = re.match(r'^(.*),0x([0-9a-f]+)$', args)   # an immediate store is masked to its width (r1_08_15 wrote
             if m_ and len(m_.group(2)) > (4 if op == 'ldw' else 2):   # ldw ..,0xffffff00)
@@ -90,21 +98,30 @@ class Fn:
             for fam_ in written_fams(op, args):
                 cur_k = getattr(getattr(s, 'cur_stmt', None), 'k', None)
                 for d in list(s.f.params) + (list(s.f.decls) if LIVE_LOCAL_GUARD else []):
+                    rt_ = getattr(d, 'regtemp', False)
                     if cur_k == 'return' or getattr(s, 'in_return', False) or d in getattr(s, 'deferred', ()) or \
-                            (d.kind != 'param' and (op == 'cal' or cur_k is None or getattr(s, 'counted', None) or
+                            (d.kind != 'param' and ((op == 'cal' and not rt_) or cur_k is None or getattr(s, 'counted', None) or
                                                     not local_defined_before(s, d))):
                         continue                         # (nothing is live after a return: _strlen's ld HL,0xffff; a
                                                          # deferred copy is not loaded yet; a call's clobber of a local's
                                                          # home is its planner's business: homes2a R55; a counted-loop
                                                          # planner's init: ol_c_acc3's ld H,0x0; a local not assigned
                                                          # yet: lnr3 s_add2_u's d1)
+                    if rt_ and not param_live_after(s, d) and uses_decl(getattr(s, 'cur_stmt', None), d) and \
+                            (op == 'cal' or self_update(op, args, d) or
+                             op in ('exts', 'extz') and args in (d.reg, 'X' + d.reg) or   # (lo_c_G0a: exts WA / push WA)
+                             re.search(r'\b(X?%s|%s)\b' % (d.reg, {'WA': 'A', 'BC': 'C', 'DE': 'E', 'HL': 'L'}[d.reg]),
+                                       args.split(',', 1)[1] if ',' in args else '')):
+                        continue                         # (the read that consumes it: lo_i_G0e add WA,(_hi))
                     if getattr(d, 'reg', None) in ('WA', 'BC', 'DE', 'HL') and 'X' + d.reg == fam_ and d not in s.dead and \
-                            param_live_after(s, d) and not assigns_decl(getattr(s, 'cur_stmt', None), d) and \
+                            (param_live_after(s, d) or rt_ and uses_decl(getattr(s, 'cur_stmt', None), d)) and \
+                            not assigns_decl(getattr(s, 'cur_stmt', None), d) and \
                             not (assigns_decl(getattr(s, 'top_cur', None), d) and
                                  (getattr(getattr(s, 'top_cur', None), 'k', None) not in ('while', 'do', 'for') or
                                   self_update(op, args, d))) and \
                             not (op == 'ld' and own_slot(s, d, args)) and \
                             not re.search(r',(X?IZ|QIZ|QIZH|IZL|X?IX|X?IY)$', args):   # (a read of a home: the
+                        if rt_: raise LiveClobber('%s %s over the register temporary %s in %s' % (op, args, d.name, d.reg), d)
                         raise Unsupported('%s %s over the live parameter %s in %s' % (op, args, d.name, d.reg))   # parameter moved there, c_fordown)
         s.lines.append('\t' + op + ('\t' + args if args else ''))
     def newlabel(s):
@@ -332,13 +349,19 @@ def mem_operand(F, e):
                 return '(-%s:%d)' % (FAM[d.reg][4], d.ty.base.size)
     return None
 
+GLOBAL_MEMBER_ELEM = True                                 # gs.a[3] is a static operand (random r1_02_07, r1_05_12)
+ADDR_GLOBAL_CONST = True                                  # &gia[5], &gs.a[2]: lda R,_gia + 0xa (random r1_01_12)
+
 def global_offset(v):
-    """(name, offset) when v is a global object at a constant offset: ga[3], gs.i (mem.c: m_ga_k, m_gs_i)"""
+    """(name, offset) when v is a global object at a constant offset: ga[3], gs.i, gs.a[3] (mem.c: m_ga_k, m_gs_i)"""
     v = strip(v)
     if v.k == 'index':
         b = strip(v.base); i = fold(v.idx)
         if b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array' and i.k == 'const':
             return (b.decl.name, hx(i.value * v.ty.size))
+        if GLOBAL_MEMBER_ELEM and b.k == 'member' and not b.arrow and i.k == 'const' and i.value is not None and \
+                strip(b.base).k == 'var' and strip(b.base).decl.kind == 'global':   # gs.a[3] -> (_gs + 0x14)
+            return (strip(b.base).decl.name, hx(member_offset(b) + i.value * v.ty.size))   # (random r1_02_07)
     if v.k == 'member' and not v.arrow:
         b = strip(v.base)
         if b.k == 'var' and b.decl.kind == 'param' and hasattr(b.decl, 'off') and not getattr(b.decl, 'reg', None):
@@ -424,6 +447,11 @@ def gen(F, e, fam, size, then_ret=False, store=False):
         sx = strip(sx.e)
     if sx.k == 'string' and size == 4:                               # abi globals.c gl_lit: return "lit" ->
         F.emit('lda', '%s,%s' % (FAM[fam][4], fpgen.string_label(F, sx.value))); return fam   # lda XHL,S2
+    if ADDR_GLOBAL_CONST and e0.k == 'addr' and strip(e0.e).k in ('index', 'member') and size == 4 and \
+            global_offset(strip(e0.e)) is not None and global_offset(strip(e0.e))[0] != '__param__':
+        g = global_offset(strip(e0.e))                       # vp(&gca[4]) -> lda XWA,_gca + 0x4 / push XWA;
+        F.emit('lda', '%s,%s' % (FAM[fam][4], '_%s + %s' % g if g[1] != '0x0' else '_%s' % g[0]))   # gpi = &gia[5]
+        return fam
     if e0.k == 'addr' and strip(e0.e).k == 'var' and size == 4:      # _log: frexp(x / SQRT2, &nptr) ->
         d = strip(e0.e).decl; R = FAM[fam][4]                          # lda XWA,XSP+0x68 / push XWA
         if d.kind == 'global': F.emit('lda', '%s,_%s' % (R, d.name)); return fam
@@ -1074,6 +1102,7 @@ def evorder_bin(F, e, op, l, r, fam, size, ctx='HL'):
                                                            # (a parameter the function never reads holds nothing:
                                                            # -Xr s_DG keeps ld XWA,(_gps) with c unused)
     ACC = 'WA' if mulop else fam                           # ctx HL: the result register; ctx WA (a stored value):
+    if mulop and getattr(F, 'mul_acc_fam', None) == fam and fam in ('BC', 'DE'): ACC = fam   # (store_plan: divs XBC)
     if op == '*' and F.opt and not acc_v and not src_v: ACC = fam   # WA reserved (evorder_st.c es_s_GB: the source in
     if op == '/' and F.opt and not acc_v and ctx == 'HL': ACC = fam   # (d_GG, d_GB -O: divs XHL,src; d_BG: XWA)
     if mulop and (ak == 'X' or 'WA' in live): return None           # BC); ctx ANY (a pushed argument): decided after
@@ -1183,7 +1212,13 @@ def evorder_bin(F, e, op, l, r, fam, size, ctx='HL'):
         f_ = gen(F, acc, ACC, size)
         if f_ != ACC:
             if f_ not in FAM or size not in FAM[f_]: raise Unsupported('evorder accumulator')
+            rt_ = regvar_of(strip(acc).e) if strip(acc).k == 'load' else None
             if F.opt and op == '*' and f_ in ('BC', 'DE') and f_ not in taken: ACC = f_; R = FAM[ACC][size]   # (m_SG -O:
+            elif REGTEMP_INPLACE and not mulop and rt_ is not None and getattr(rt_, 'regtemp', False) and \
+                    dies_here(F, strip(acc)) and (rt_.reg == 'HL' or F.opt) and f_ == rt_.reg:
+                ACC = fam = f_; R = FAM[ACC][size]       # a dying register temporary in HL is the accumulator in place
+                                                         # (lo_i_R0e: cal _ri / add HL,(_hi) / ld (_hi2),HL; from BC it
+                                                         # moves, lo_i_Gge: ld WA,BC / add WA,(_hi), except under -O)
             else: F.emit('ld', '%s,%s' % (R, FAM[f_][size]))                                # muls XBC,(_hi) / ld HL,BC)
     if any(clobbers(F.lines[n1:], g) for g in guard if g): raise Unsupported('evorder accumulator overwrote the source')
     if mulop: return ev_mul_div(F, e, op, ACC, fam, size, src_op)
@@ -1480,7 +1515,11 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
             src_ = FAM[f0][size] if f0 in FAM and size in FAM[f0] else FAM['WA'][size]   # (where gen left it)
             if src_ != FAM[fam][size]: F.emit('ld', '%s,%s' % (FAM[fam][size], src_))
         else:
-            f0 = gen(F, l, fam, size)
+            rtl = regvar_of(strip(l).e) if strip(l).k == 'load' else None
+            if REGTEMP_INPLACE and rtl is not None and getattr(rtl, 'regtemp', False) and dies_here(F, strip(l)) and \
+                    (rtl.reg == 'HL' or F.opt) and rtl.reg in FAM and size in FAM[rtl.reg]:
+                fam = f0 = rtl.reg; R = FAM[fam][size]; F.dead.add(rtl)   # lo_i_R0e: cal _ri / add HL,(_hi) in place
+            else: f0 = gen(F, l, fam, size)
             if f0 != fam and f0 in FAM and size in FAM[f0]:   # _rand: Seed * k + 12345 -> the helper's XHL:
                 fam = f0; R = FAM[fam][size]                  # cal C9H_mullu / add XHL,0x3039 (not XWA: wrong code)
         rs = mem_operand(F, r)
@@ -1526,6 +1565,7 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         rs = mem_operand(F, r); n_rs = len(F.lines)
         if size == 1 and rs is not None and rs.startswith('0x'): rs = hx(int(rs, 16) & 0xff)   # r2_01_17: muls WA,0xa6
         work = 'WA'
+        if getattr(F, 'mul_acc_fam', None) == fam and fam in ('BC', 'DE') and size == 2: work = fam   # (store_plan)
         if F.opt and fam in ('HL', 'BC', 'DE') and mem_operand(F, l) and rs and not regvar_of(getattr(strip(l), 'e', l)) \
                 and (size == 2 and op != '%' or op == '*'):       # (mod_i_pp under O3XS: divs XWA / ld HL,QWA)
             work = fam                                  # -O: mul_i_pp -> ld HL,(a) / muls XHL,(b); a char / or %
@@ -1833,6 +1873,7 @@ def held_after(F, R, e):
     inloop = bool(F.loops) or bool(getattr(F, 'cl_active', None))   # (gen_counted pushes no F.loops entry)
     for d in list(F.f.params) + list(F.f.decls):
         if getattr(d, 'reg', None) != R or d in F.dead: continue
+        if R == 'WA' and getattr(d, 'regtemp', False): continue   # (plan_regtemps: the WA trial sees WA free)
         lds = [x for x in loads_in(e) if regvar_of(strip(x.e)) is d]
         incs = []
         walk(e, lambda n, dd: incs.append(n) if n.k == 'incdec' and regvar_of(n.e) is d else None)
@@ -2189,7 +2230,7 @@ def gen_long_helper(F, e, l, r, fam, signed):
                 any(d is not None and d.kind == 'local' for d in F.xiz_vars):
             F.emit(*rs_ld); F.emit('ld', 'XWA,%s' % ls)
         else: F.emit('ld', 'XWA,%s' % ls); F.emit(*rs_ld)
-    elif F.xiz_vars and any(d is not None and d.kind == 'local' for d in F.xiz_vars):
+    elif F.xiz_vars and any(d is not None and getattr(d, 'kind', None) == 'local' for d in F.xiz_vars):
         F.emit(*rs_ld); F.emit('ld', 'XWA,%s' % ls)
     else:
         F.emit('ld', 'XWA,%s' % ls); F.emit(*rs_ld)
@@ -3004,6 +3045,9 @@ def push_arg(F, a):
         F.emit('pushw', m); F.push += 2; return 2
     if size == 4 and m is not None and m in ('XIZ', 'XBC', 'XDE', 'XHL', 'XIX', 'XIY'):
         F.emit('push', m); F.push += 4; return 4          # _calloc: push XIZ
+    if XIZ_DIRECT_INIT and not F.opt and size == 4 and a1.k == 'load' and strip(a1.e).k == 'var' and \
+            getattr(strip(a1.e).decl, 'reg', None) == 'XIZ':
+        F.emit('push', 'XIZ'); F.push += 4; return 4      # lo_p_Rca: push XIZ (not through XWA)
     if size == 4 and m is not None and m.startswith('('):
         X = 'X' + (getattr(F, 'arg_tmp', None) or 'WA')     # (adecl c_mix: XBC while A holds an argument)
         F.emit('ld', '%s,%s' % (X, m)); F.emit('push', X); F.push += 4; return 4
@@ -3313,6 +3357,11 @@ def elem_addr_regs(F, lv, b, esz, kind):
             if k: F.emit('inc' if k > 0 else 'dec', '%s,BC' % hx(abs(k)))  # (XDE+BC)
             scale16(F, 'BC', esz); F.emit('lda', 'XDE,%s' % g); return '(XDE+BC)'
         if esz == 4 and kind in ('rmw', 'andk'): return None
+        if esz > 1 and not iv.ty.signed and kind == 'load' and not pair and UIDX32:
+            X = FAM[iv.reg][4]; adjust(k); F.emit('extz', X); scale32(F, X, esz)   # r3_08_11 -Xr: an unsigned index
+            base = 'XBC' if iv.reg != 'BC' else 'XDE'                             # extended whole: extz XWA /
+            F.emit('ld', '%s,%s' % (base, g)); F.emit('add', '%s,%s' % (base, X))  # add XWA,XWA / ld XBC,_gia /
+            return '(%s)' % base                                                  # add XBC,XWA / (XBC)
         if esz == 1:
             adjust(0)
             sym = g if not k else '%s + %s' % (g, hx(k & 0xffffffff))
@@ -3531,7 +3580,8 @@ def gen_load_mem(F, v, fam, size):
                 raise Unsupported('index register holds a live variable')   # (r_ga_rd -Xr: wrong code)
             F.emit('ld', 'WA,%s' % im)                             # m_ga_v, m_gla_v
             F.emit('add', 'WA,WA') if esz == 2 else F.emit('sla', '%s,WA' % hx({4: 2, 8: 3}[esz]))
-            F.emit('lda', 'XBC,_%s' % b.decl.name); F.emit('ld', '%s,(XBC+WA)' % R); return fam
+            B_ = 'XDE' if 'XBC' in getattr(F, 'sp_busy', ()) else 'XBC'   # (store_plan st_i_DX: the pointer in XBC)
+            F.emit('lda', '%s,_%s' % (B_, b.decl.name)); F.emit('ld', '%s,(%s+WA)' % (R, B_)); return fam
         if b.k == 'member' and b.arrow and b.ty.kind == 'array' and ic.k == 'const' and ic.value is not None:
             pm = mem_operand(F, b.base)                    # cond_bits.c cb_mem_b: p->b[3] -> ld A,(XWA+0xb)
             if pm is not None:
@@ -4150,8 +4200,12 @@ def gen_opassign(F, e):
             t = lvalue(F, e.l, ptr=ptr, combine=True)
         rs = mem_operand(F, r)
         if rs is None: raise Unsupported('complex operand')
-        work = 'WA' if 'WA' not in live_regs(F) else free_reg(F, avoid={'WA'} | {x[1:] for x in ('XBC', 'XDE', 'XHL') if x in t})   # .as_mul_gi: muls XBC,WA
-        F.emit('ld', '%s,%s' % (FAM[work][size], t))
+        in_t = {f_[1:] for f_ in ('XWA', 'XBC', 'XDE', 'XHL') if f_ in t} | \
+               {{'A': 'WA', 'C': 'BC', 'E': 'DE', 'L': 'HL'}[m_] for m_ in re.findall(r'\+([ACEL])\)', t)} | \
+               {m_ for m_ in re.findall(r'\+(WA|BC|DE|HL)\)', t)}      # the registers the address is built from
+        work = 'WA' if 'WA' not in live_regs(F) and 'WA' not in in_t else free_reg(F, avoid={'WA'} | in_t)   # .as_mul_gi: muls XBC,WA
+        n_t = len(F.lines)                                 # (r2_06_15: gia[u] /= 10 through (XBC+WA) divided in XWA and
+        F.emit('ld', '%s,%s' % (FAM[work][size], t))      # stored through the quotient; r4_02_10: guca[t] /= 7 in (XWA))
         wide = FAM[work][4] if size == 2 else FAM[work][2]
         if op == '*':
             F.emit('muls' if signed else 'mul', '%s,%s' % (wide, rs)); res = FAM[work][size]
@@ -4161,6 +4215,7 @@ def gen_opassign(F, e):
         if res.startswith('Q'):                            # .as_mod_gi: ld WA,QBC into the dead operand's register
             dst = 'WA' if work == 'WA' or (rs == 'WA' and dies_here(F, narrow(r, size))) else FAM[work][2]
             F.emit('ld', '%s,%s' % (dst, res)); res = dst
+        if STORE_ADDR_GUARD and clobbers(F.lines[n_t:], t): raise Unsupported('the op= operation overwrites its address')
         F.emit('ld', '%s,%s' % (t, res)); return t
     raise Unsupported('opassign ' + op)
 
@@ -4187,7 +4242,13 @@ def store_global(F, name, e, size):
         gen_call(F, strip(e)); flush_pops(F); F.emit('ld', '(_%s),%s' % (name, FAM['HL'][size])); return
     rv = regvar_of(getattr(strip(e), 'e', e)) if strip(e).k == 'load' else None
     if rv is not None and rv.ty.size == size:          # ra_twice: ld (_ga),HL
+        if FAM[rv.reg][size] == 'QIZH':                # lo_c_Gcs: ld A,QIZH / ld (_hc2),A (no ld (mem),QIZH)
+            F.emit('ld', 'A,QIZH'); F.emit('ld', '(_%s),A' % name); return
         F.emit('ld', '(_%s),%s' % (name, FAM[rv.reg][size])); return
+    xv = strip(strip(e).e) if strip(e).k == 'load' else None
+    if XIZ_DIRECT_INIT and not F.opt and size == 4 and xv is not None and xv.k == 'var' and \
+            getattr(xv.decl, 'reg', None) == 'XIZ':
+        F.emit('ld', '(_%s),XIZ' % name); return         # lo_l_Gcs: ld (_hl2),XIZ (not through XWA)
     F.store_from = None
     work = 'WA'
     if getattr(F, 'tfam', None) and size == 1 and strip(e).k in ('bin', 'cast'):
@@ -4378,7 +4439,12 @@ def gen_stmt(F, s, last):
         if s is F.f.body and getattr(F, 'guard_armed', False): F.guard_on = True   # (after the prologue, real pass only)
         while i < len(body):
             c = body[i]; F.cur_stmt = c; F.cur_rest = body[i + 1:]   # (cur_rest: the innermost block's remainder)
-            if s is F.f.body: F.top_cur = c; F.top_rest = body[i + 1:]
+            if s is F.f.body:
+                F.top_cur = c; F.top_rest = body[i + 1:]
+                for d_ in F.f.decls:                       # a register temporary is free once nothing after it reads it
+                    if getattr(d_, 'regtemp', False) and d_ not in F.dead and not uses_decl(c, d_) and \
+                            not any(uses_decl(y_, d_) for y_ in F.top_rest):
+                        F.dead.add(d_)
             F.next_stmt = body[i + 1] if i + 1 < len(body) else None
             F.prev_stmt = body[i - 1] if i else None
             if F.opt and not F.adecl and MEMBER_RUNS and getattr(F, 'ptr_run_end', -1) == i:
@@ -4440,7 +4506,8 @@ def gen_stmt(F, s, last):
                     setup_struct_temps(F, c)
                     F.emit('ld', '%s,(XSP+%s)' % ('XIZ' if d.reg == 'XIZ' else FAM[d.reg][d.ty.size], hx(d.off + F.push)))
                     F.deferred.remove(d)
-            if c.k == 'decl' and getattr(c.var, 'reg', None) not in (None, 'XIZ', 'WA') and c.var.kind == 'local':
+            if c.k == 'decl' and c.var.kind == 'local' and (getattr(c.var, 'reg', None) not in (None, 'XIZ', 'WA') or
+                                                          getattr(c.var, 'reg', None) == 'WA' and getattr(c.var, 'regtemp', False)):
                 if c.init is not None:
                     from frontend import N
                     regvar_stmt(F, N('bin', op='=', l=N('var', decl=c.var, ty=c.var.ty), r=c.init, ty=c.var.ty))
@@ -4453,8 +4520,34 @@ def gen_stmt(F, s, last):
                     fam = gen(F, c.init, 'IZ', 4)          # ra_homes.c rh_ptr / rh_long under O3XSXr: built in XIZ
                     if fam != 'IZ': F.emit('ld', 'XIZ,%s' % FAM[fam][4])   # (lda XIZ,XWA+0x1; ld XIZ,(XSP+0x4) /
                     i += 1; continue                       # inc 0x1,XIZ)
+                ci_ = strip(c.init) if c.init is not None else None
+                while ci_ is not None and ci_.k == 'cast' and ci_.kind in ('IntegralCast', 'NoOp', 'BitCast') and \
+                        strip(ci_.e).ty is not None and strip(ci_.e).ty.size == 4: ci_ = strip(ci_.e)
+                if XIZ_DIRECT_INIT and not F.opt and ci_ is not None and mem_operand(F, ci_) is not None and \
+                        not getattr(F, 'l2', None):     # lo_l_Gcs: ld XIZ,(_gl) (not through XHL)
+                    F.emit('ld', 'XIZ,%s' % mem_operand(F, ci_)); i += 1; continue
+                if XIZ_DIRECT_INIT and not F.opt and ci_ is not None and ci_.k == 'bin' and ci_.op in ('+', '&', '|', '^') and \
+                        fold(ci_.l).k == 'const' and fold(ci_.r).k != 'const' and mem_operand(F, ci_.r) is not None:
+                    from frontend import N                 # r3_08_11: 54549UL + gul -> ld XIZ,(_gul) / add XIZ,0xd515
+                    ci_ = N('bin', op=ci_.op, l=ci_.r, r=ci_.l, ty=ci_.ty)
+                if XIZ_DIRECT_INIT and not F.opt and ci_ is not None and ci_.k == 'bin' and \
+                        (ci_.op in SIMPLE_OPS or ci_.op in ('<<', '>>') and fold(ci_.r).k == 'const') and \
+                        not ci_.ty.is_ptr() and mem_operand(F, ci_.l) is not None and fold(ci_.l).k != 'const' and \
+                        (mem_operand(F, ci_.r) is not None or fold(ci_.r).k == 'const') and not getattr(F, 'l2', None):
+                    F.emit('ld', 'XIZ,%s' % mem_operand(F, ci_.l))   # lo_l_Bcs: ld XIZ,(_gl) / add XIZ,(_hl);
+                    rc_ = fold(ci_.r)                                 # lo_ul_Bcs: srl 0x3,XIZ
+                    if ci_.op in ('<<', '>>') and rc_.k == 'const':
+                        emit_shift(F, ('sla' if ci_.ty.signed else 'sll') if ci_.op == '<<' else ('sra' if ci_.ty.signed else 'srl'), rc_.value, 'XIZ')
+                    elif rc_.k == 'const' and ci_.op in '+-' and 1 <= (rc_.value or 0) <= 8:
+                        F.emit('inc' if ci_.op == '+' else 'dec', '%s,XIZ' % hx(rc_.value))
+                    else: F.emit(SIMPLE_OPS[ci_.op], 'XIZ,%s' % (mem_operand(F, ci_.r) if rc_.k != 'const' else hx(rc_.value & 0xffffffff)))
+                    i += 1; continue
                 if c.init is not None:
-                    fam = gen(F, c.init, 'HL', 4)
+                    if ci_ is not None and ci_.k == 'bin' and ci_.ty.is_ptr() and \
+                            any(unpromote(y).ty is not None and unpromote(y).ty.size == 1 for y in (ci_.l, ci_.r)):
+                        raise Unsupported('a char index into an XIZ pointer home')   # (r1_04_19: ld XIZ,0x0 / ld IZL,A /
+                    fam = gen(F, c.init, 'WA' if XIZ_DIRECT_INIT and not F.opt and ci_ is not None and ci_.k == 'bin'
+                              and ci_.ty.is_ptr() else 'HL', 4)   # (lo_p_Bcs: ld XWA,(_gp) / inc 0x1,XWA / ld XIZ,XWA)
                     nxc = strip(F.next_stmt.e) if F.next_stmt is not None and F.next_stmt.k == 'expr' else None
                     if strip(c.init).k == 'call' and (nxc is None or nxc.k != 'call' or not nxc.args):
                         flush_pops(F)                      # h_p_only: cal _fp / inc 0x2,XSP / ld XIZ,XHL / cal _g0
@@ -4848,6 +4941,8 @@ def gen_stmt(F, s, last):
             if t != '(XIX)': raise Unsupported('struct destination')
             F.emit('ld', 'XIY,_%s' % src.decl.name); F.emit('ld', 'BC,%s' % hx(size // 2))
             F.emit('ldirw', '(XIX+),(XIY+)'); return
+        if STORE_PLAN and not getattr(F, 'l2', None) and not getattr(F, 'u1_i', None) and \
+                not getattr(F, 'cl_active', None) and store_plan(F, lv, s.e.r, size): return
         rc = fold(narrow(s.e.r, size))
         if rc.k == 'const' and size <= 2:            # m_gps_set: ldb (XWA),0x0
             t = lvalue(F, lv, ptr='XWA', idx='WA', base='XBC', kind='storek')   # ra_while: ldw (XBC+WA),0x0
@@ -4950,12 +5045,17 @@ def gen_stmt(F, s, last):
         if work in FAM and held_after(F, work, s.e):       # ra_ptrcpy (-O3 -XS -Xr): *d++ = *s++ with d in XWA ->
             work = free_reg(F, avoid={work} | {x for x in ('WA', 'BC', 'DE', 'HL') if x in t})   # not A
         n0 = len(F.lines); push0 = F.push
+        rv_ = strip(s.e.r)
+        if XIZ_DIRECT_INIT and not F.opt and size == 4 and rv_.k == 'load' and strip(rv_.e).k == 'var' and \
+                getattr(strip(rv_.e).decl, 'reg', None) == 'XIZ':
+            F.emit('ld', '%s,XIZ' % t); return             # lo_l_Gcs: ld (_hl2),XIZ (not through XWA)
         fam = gen(F, s.e.r, work, size)                    # opt_temps.c ot_cpy_anb: ld E,(XHL+:1) / ld (XWA+:1),E
         if STORE_ADDR_GUARD and clobbers(F.lines[n0:], t):
             raise Unsupported('the value overwrites the store address')    # (wrong code otherwise)
         if F.push != push0 and t.startswith('(XSP'):        # r2_08_13: a = r2(..) << 11: the pops are still pending
             if lv.k != 'var': raise Unsupported('store address moved by the value')
             t = lvalue(F, lv, kind='storev')
+        if FAM[fam][size] == 'QIZH': F.emit('ld', 'A,QIZH'); fam = 'WA'   # (lo_c_Gcs: ld A,QIZH / ld (_hc2),A)
         F.emit('ld', '%s,%s' % (t, FAM[fam][size])); return
     raise Unsupported('statement ' + s.k)
 
@@ -5096,7 +5196,8 @@ def plan_registers(F):
             return
     for i, c in enumerate(body):
         if F.adecl and F.opt and BINLOC_XR: break        # -O3 -XS -Xr: the helper result takes a slot (mul_l_loc)
-        if c.k == 'decl' and c.init is not None and c.var.ty.size == 4 and has_helper_call(c.init):
+        if c.k == 'decl' and c.init is not None and c.var.ty.size == 4 and has_helper_call(c.init) and \
+                not getattr(c.var, 'regtemp_pre', False):   # (lo_l_R0a: a long call result read next stays in XHL)
             later = body[i + 1:]
             if any(has_helper_call(getattr(x, 'value', None) or getattr(x, 'e', None)) for x in later):
                 c.var.reg = 'XIZ'; F.xiz_vars.append(c.var)
@@ -5243,6 +5344,7 @@ def plan_homes(F):
     def compatible(p, q): return all(q.get(k, v) == v for k, v in p.items())
     across = []
     def mark(d):
+        if getattr(d, 'regtemp_pre', False): return      # (plan_regtemps: no call in its live range; lo_l_R0a)
         if d not in across: across.append(d)
     for i, (x, px) in enumerate(seq0):
         if x[0] in ('call', 'rcall'):
@@ -5455,10 +5557,11 @@ def homes2_choose(F, vals, setname):
     parameter stays in its stack arrival, a losing local gets a frame slot."""
     regp = {d for d in F.f.params if getattr(d, 'reg', None) in ('WA', 'BC', 'DE')}
     H = homes2.predict(F.f, setname, regp)
-    pool = list(vals)
+    pool = [d for d in vals if not getattr(d, 'regtemp_pre', False)]
     if homes2.CANDIDATES == 'rule':
         pool += [d for d in F.f.decls if d.kind == 'local' and d not in vals and not getattr(d, 'reg', None)
-                 and d.ty.size in (1, 2, 4) and d.ty.kind in ('int', 'ptr') and not d.addr_taken]
+                 and d.ty.size in (1, 2, 4) and d.ty.kind in ('int', 'ptr') and not d.addr_taken and
+                 not getattr(d, 'regtemp_pre', False)]
     return {d: H[d] for d in pool if H.get(d) in ('IZ', 'QIZ', 'XIZ')}
 
 def emit_homes(F):
@@ -5649,6 +5752,8 @@ def regvar_stmt(F, e):
     if e.k in ('opassign', 'incdec') and regvar_of(e.l if e.k == 'opassign' else e.e):
         touch_home(F, regvar_of(e.l if e.k == 'opassign' else e.e))   # (r2_08_15)
     if e.k == 'bin' and e.op == '=' and regvar_of(e.l) and regvar_of(e.l).reg == 'QIZH':
+        if strip(e.r).k == 'call':                          # lo_c_Rca: cal _rc / ld QIZH,L
+            gen_call(F, strip(e.r)); flush_pops(F); F.emit('ld', 'QIZH,L'); return True
         f_ = gen(F, narrow(e.r, 1), 'WA', 1)                # r2_00_13: char t = gc2 -> ld A,(_gc2) / ld QIZH,A
         F.emit('ld', 'QIZH,%s' % FAM[f_][1]); return True   # (ld QIZH,(_gc2) is not an instruction)
     if F.opt and e.k == 'opassign' and e.op in '+-' and regvar_of(e.l) and regvar_of(e.l).ty.size == 2 and \
@@ -5690,7 +5795,8 @@ def regvar_stmt(F, e):
     if HOMED_WRITES and hz is not None and e.k in ('bin', 'opassign'):
         raise Unsupported('write to a variable homed in XIZ')   # (its slot is not its home: wrong code)
     if e.k == 'bin' and e.op == '=' and regvar_of(e.l) and not F.opt and regvar_of(e.l).ty.is_ptr() and \
-            strip(e.r).k == 'bin' and strip(e.r).op in '+-' and regvar_of(e.l).reg != 'WA':
+            (strip(e.r).k == 'bin' and strip(e.r).op in '+-' or
+             strip(e.r).k == 'addr' and getattr(regvar_of(e.l), 'regtemp', False)) and regvar_of(e.l).reg != 'WA':
         d = regvar_of(e.l)                             # va_start without -O: lda XWA,XSP+0x4 / inc 0x2,XWA /
         f2 = gen(F, e.r, 'WA', 4)                       # ld XBC,XWA
         F.emit('ld', '%s,%s' % (FAM[d.reg][4], FAM[f2][4])); return True
@@ -5797,6 +5903,8 @@ def regvar_stmt(F, e):
                 fam = gen(F, a0, w.reg, 4)
                 F.emit('ld', '%s,%s' % (R, FAM[fam][4])); F.emit(SIMPLE_OPS[r0.op], '%s,XWA' % R); return True
         tgt = d.reg if d.reg in ('BC', 'DE', 'HL', 'WA') else 'WA'      # ra_noloop3: ld DE,(a) / add DE,(b)
+        if getattr(d, 'regtemp', False) and d.ty.size == 1 and strip(e.r).k not in ('load', 'const'):
+            tgt = 'WA'                                     # (lo_c_Bgs: ld A,(_gc) / add A,(_hc) / ld C,A)
         fam = gen(F, e.r, tgt, d.ty.size)
         if FAM[fam][d.ty.size] != R: F.emit('ld', '%s,%s' % (R, FAM[fam][d.ty.size]))
         return True
@@ -8116,6 +8224,7 @@ def live_regs(F, except_decl=None):
     out = set()
     for d in list(F.f.params) + list(F.f.decls):
         r = getattr(d, 'reg', None)
+        if r == 'WA' and getattr(d, 'regtemp', False): continue   # (plan_regtemps: the WA trial sees WA free)
         if r and d is not except_decl and d not in F.dead: out.add(r)
     return out
 
@@ -8312,6 +8421,346 @@ def slot_init(F, d, init):
         W = free_reg(F, avoid={'WA'})                      # switch.c sw_local (-Xr): x in WA, r = 0 (wrong code)
     fam = gen(F, init, W, size)
     F.emit('ld', '%s,%s' % (S, FAM[fam][size])); return True
+
+STORE_PLAN = True                                         # see store_plan
+
+def sp_plain_ptr(F, e):
+    """the memory operand of a pointer that is a plain variable (global, slot local, stack parameter), else None"""
+    e = strip(e)
+    while e.k == 'cast' and e.ty is not None and e.ty.size == 4: e = strip(e.e)
+    if e.k != 'load' or strip(e.e).k != 'var': return None
+    d = strip(e.e).decl
+    if getattr(d, 'reg', None) or not d.ty.is_ptr(): return None
+    return mem_operand(F, e)
+
+def sp_plain_index(F, e):
+    """(memory operand, signed) of an int-sized index that is a plain variable, or (under -Xr) the parameter in WA
+    that dies here (st_i_XB -Xr: add WA,WA / lda XBC,_gia, the index in place), else None"""
+    e = strip(e)
+    while e.k == 'cast' and e.kind == 'IntegralCast': e = strip(e.e)
+    if e.k != 'load' or strip(e.e).k != 'var' or e.ty is None or e.ty.size != 2: return None
+    d = strip(e.e).decl
+    if getattr(d, 'reg', None):
+        if d.reg == 'WA' and d.kind == 'param' and dies_here(F, e) and not getattr(d, 'regtemp', False):
+            F.sp_index_param = d; return ('WA', e.ty.signed)
+        return None
+    m = mem_operand(F, e)
+    return (m, e.ty.signed) if m is not None else None
+
+def sp_lvalue_kind(F, lv):
+    """'P' *p / p->m at offset 0, 'D' p->m with a displacement, 'X' garr[i], 'Y' p->arr[i], 'Q' p[i], 'S' a static
+    member or constant element, with what each needs; None where the shape is not one of these"""
+    lv = strip(lv)
+    if lv.k == 'deref':
+        pm = sp_plain_ptr(F, lv.e)
+        return ('P', pm, 0) if pm is not None else None
+    if lv.k == 'member' and lv.arrow:
+        pm = sp_plain_ptr(F, lv.base)
+        if pm is None: return None
+        off = member_offset(lv)
+        return ('D' if off else 'P', pm, off)
+    if lv.k == 'index' and fold(lv.idx).k != 'const':
+        b = strip(lv.base); ii = sp_plain_index(F, lv.idx)
+        if ii is None: return None
+        while b.k in ('decay', 'cast', 'noop') and getattr(b, 'e', None) is not None: b = strip(b.e)
+        if b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array': return ('X', b.decl, ii)
+        if b.k == 'member' and b.arrow and b.ty.kind == 'array':
+            pm = sp_plain_ptr(F, b.base)
+            return ('Y', pm, member_offset(b), ii) if pm is not None else None
+        if b.k == 'load':
+            pm = sp_plain_ptr(F, b)
+            return ('Q', pm, ii) if pm is not None else None
+        return None
+    g = global_offset(lv)
+    if g is not None and g[0] != '__param__' and lv.k in ('member', 'index'):
+        return ('S', '(_%s + %s)' % g if g[1] != '0x0' else '(_%s)' % g[0], '_%s + %s' % g if g[1] != '0x0' else '_%s' % g[0])
+    return None
+
+def sp_value_kind(F, rv, size):
+    """'L' a load or (for a long) a constant or !x, 'B' + - & | ^ or an int !x, 'M' int * / %, 'H' a long helper,
+    'S' a shift by a variable, 'C' a call, 'T' ?:, None otherwise"""
+    x = strip(rv)
+    while x.k == 'cast' and x.kind in ('IntegralCast', 'NoOp', 'BitCast'): x = strip(x.e)
+    if x.k == 'call': return 'C' if not has_helper_call(x.fn) else None
+    if x.k == 'cond': return 'T' if all(mem_operand(F, strip(y)) is not None or fold(strip(y)).k == 'const'
+                                        for y in (x.b, x.c)) and mem_operand(F, x.a) is not None else None
+    if x.k == 'un' and x.op == '!':
+        xi = strip(x.e)
+        while xi.k == 'cast' and xi.kind == 'IntegralCast': xi = strip(xi.e)
+        if not (xi.k == 'load' and mem_operand(F, xi) is not None and strip(xi.e).k in ('var', 'member') and
+                not (strip(xi.e).k == 'member' and strip(xi.e).arrow)): return None   # (r1_03_03: !gps->l loads
+        return 'L' if size == 4 else 'B'                                               # through XWA, the address)
+    if x.k == 'const': return 'L' if size == 4 else 'K'
+    if x.k == 'load':
+        if mem_operand(F, x) is not None: return 'L'
+        k = sp_lvalue_kind(F, x.e)
+        if k is None: return None
+        return 'X' if k[0] == 'X' else ('L' if k[0] in ('P', 'D') else None)   # (hps->a[c], hpi[c] as values: unprobed)
+    if x.k == 'bin':
+        lk = strip(x.l); rk = strip(x.r)
+        while lk.k == 'cast' and lk.kind == 'IntegralCast': lk = strip(lk.e)
+        while rk.k == 'cast' and rk.kind == 'IntegralCast': rk = strip(rk.e)
+        simple = lambda y: y.k == 'const' or (y.k == 'load' and mem_operand(F, y) is not None and
+                                              strip(y.e).k in ('var', 'member') and not (strip(y.e).k == 'member' and strip(y.e).arrow))
+        if not (simple(lk) and simple(rk)): return None
+        if x.op in ('<<', '>>'): return 'S' if rk.k != 'const' else 'B'
+        if x.op in ('+', '-', '&', '|', '^'): return 'B'
+        if x.op in ('*', '/', '%'):
+            if size == 4 or x.ty.size == 4:                # (st_l_DU: hl / 7L is C9H_divls too)
+                return 'H' if has_helper_call(x) or x.op in ('/', '%') or rk.k != 'const' else 'B'
+            return 'M'
+    return None
+
+def store_plan(F, lv, rv, size):
+    """the order and the registers of a store's address and value (corpus/probes/stord.c, run
+    2026-11-10-15-micro-stord, the same at the four option sets).  The address comes first and the value second,
+    except after a call (st_i_DC: cal _ri / ld XWA,(_gps) / ld (XWA+0x2),HL).  A plain *p takes XBC with the value
+    in WA whatever the value (st_i_PB: ld XBC,(_gpi) / ld WA,(_hi) / sub WA,(_hj) / ld (XBC),WA); a member with a
+    displacement takes XBC before a loaded value in WA and XWA before a computed value in BC (st_i_DB: ld XWA,(_gps) /
+    ld BC,(_hi) / sub BC,(_hj) / ld (XWA+0x2),BC; st_i_DV: divs XBC,(_hj)); a global element takes BC / XDE with the
+    value in WA, or WA / XBC with the value in DE for a difference or a ! (st_i_XB: ld WA,(c) / add WA,WA /
+    lda XBC,_gia / ld DE,(_hi) / sub DE,(_hj) / ld (XBC+WA),DE); a member array element through a pointer the same
+    with E / XBC and C / XWA (st_i_YG, st_i_YB; st_i_YM: ld E,A / ld XWA,(_gps) / ld BC,(_hi) / muls XBC,(_hj)); p[i]
+    builds its address in XWA and moves it to XBC (st_i_QG: ld WA,(c) / exts XWA / add XWA,XWA / ld XBC,XWA /
+    add XBC,(_gpi) / ld WA,(_hi) / ld (XBC),WA), straight in XWA after a call.  A shift's value goes to the next free
+    register with the count in WA (st_i_DS: XBC / DE; st_i_PS: XDE / BC; st_i_XS: BC / XDE / HL).  A ?: value takes
+    its address first in XBC, a displacement added (st_i_DT: ld XBC,(_gps) / inc 0x2,XBC), a static member too
+    (st_i_MT: lda XBC,_gs + 0x2).  A long helper's store through a pointer keeps the address in XIZ across the call
+    (st_l_DV: push XIZ / ld XIZ,(_gps) / ... / cal C9H_divls / ld (XIZ+0x4),XHL / pop XIZ).  A char value computes
+    in WA and stores A; a char element at an int index adds the zero-extended index to the array's address
+    (st_c_XG: lda XWA,_gca / ld BC,(c) / extz XBC / add XBC,XWA / ld WA,(_hc) / ld (XBC),A).  Returns False where
+    the shape is not one of these, so that the older paths decide."""
+    if F.opt: return False                                 # (the -O sets are not probed through this path yet: _ungetc)
+    lk = sp_lvalue_kind(F, lv)
+    if lk is None: return False
+    vk = sp_value_kind(F, rv, size)
+    if vk is None: return False
+    L = lk[0]
+    if size not in (1, 2, 4): return False
+    F.sp_index_param = None
+    lk = sp_lvalue_kind(F, lv)                             # (again: sp_index_param is set by the index)
+    ip = getattr(F, 'sp_index_param', None)
+    live = {r for r in live_regs(F) if r not in ('WA', 'BC', 'DE', 'HL') or any(
+        d is not ip and getattr(d, 'reg', None) == r and d not in F.dead and
+        (param_live_after(F, d) or uses_decl(rv, d)) for d in list(F.f.params) + list(F.f.decls))}
+    if live & {'WA', 'BC', 'DE', 'HL'}: return False      # (register variables still read: the older paths)
+    if ip is not None and vk == 'C': return False          # (-Xr st_i_XC: c is saved in IZ around the call: unmodelled)
+    if ip is not None and size == 1 and L in ('X', 'Q'):   # -Xr st_c_QG: ld XDE,(_gp) / ld BC,(_hc) / ld (XDE+WA),C;
+        if vk not in ('L', 'B', 'M'): return False         # st_c_XG: lda XDE,_gca / ...: the index stays in WA
+        if L == 'Q': F.emit('ld', 'XDE,%s' % lk[1])
+        else: F.emit('lda', 'XDE,_%s' % lk[1].name)
+        F.dead.add(ip); n1 = len(F.lines)
+        fam = gen(F, rv, 'BC', 1)
+        if fam != 'BC' or clobbers(F.lines[n1:], '(XDE+WA)'): raise Unsupported('store_plan: the -Xr char element value')
+        F.emit('ld', '(XDE+WA),C'); return True
+    x = strip(rv)
+    while x.k == 'cast' and x.kind in ('IntegralCast', 'NoOp', 'BitCast'): x = strip(x.e)
+    if L == 'S' and vk not in ('T', 'C'): return False     # (a static lvalue with a plain value: the older paths)
+    if vk == 'K':                                          # the address in the WA family, then ldw / ldb mem,K
+        rc = fold(narrow(rv, size))
+        if rc.k != 'const' or rc.value is None: return False
+        t = sp_address(F, lk, size, 'XWA', 'WA', 'XBC', 'K')
+        if t is None: return False
+        F.emit('ld' + ('b' if size == 1 else 'w'), '%s,%s' % (t, imm_of(rc, size))); return True
+    if vk == 'H' and L not in ('P', 'D', 'Q'): return False   # (an element: through a slot and IZ, unmodelled)
+    if vk == 'H' and (any(not isinstance(z, str) for z in F.xiz_vars) or not getattr(F, 'store_xiz', False)): return False
+    if vk == 'S' and L == 'Y': return False                # (st_i_YS: the index copied to IX, unmodelled)
+    if vk == 'X' and L in ('Y', 'S'): return False         # (the value's base moves to XDE there: unmodelled)
+    byte = size == 1
+    if byte and L == 'Y' and vk == 'S': return False       # (st_c_YS: the value in HL, the count copied: unmodelled)
+    # --- the plan: (address register(s), value register)
+    if vk == 'C':                                          # the call first, then the address in the WA family
+        fam = gen(F, x, 'HL', size); flush_pops(F)
+        if fam != 'HL': return False
+        if L == 'S': F.emit('ld', '%s,%s' % (lk[1], FAM['HL'][size])); return True   # st_i_MC: ld (_gs + 0x2),HL
+        t = sp_address(F, lk, size, 'XWA', 'WA', 'XBC', 'C')
+        if t is None: return False
+        F.emit('ld', '%s,%s' % (t, FAM['HL'][size])); return True
+    if vk == 'H':
+        t = sp_address(F, lk, size, 'XIZ', None, None, 'E')   # the pointer in XIZ across the helper
+        if t is None: return False
+        fam = gen(F, x, 'HL', 4)
+        if fam != 'HL': return False
+        F.emit('ld', '%s,XHL' % t); return True
+    if vk == 'T':
+        t = sp_address(F, lk, size, 'XWA' if L == 'Y' else 'XBC', 'C' if L == 'Y' else 'WA', 'XBC', 'T')
+        if t is None: return False
+        fam = gen(F, rv, 'WA', size)
+        F.emit('ld', '%s,%s' % (t, FAM[fam][size])); return True
+    if vk == 'X':                                          # an element value keeps WA / XBC; the address moves over
+        P, I, B, V = {'P': ('XDE', None, None, 'WA'), 'X': (None, 'DE', 'XHL', 'WA'), 'Q': ('XDE', None, None, 'WA'),
+                      'D': ('XBC', None, None, 'WA')}[L]   # (st_i_DX: the pointer keeps XBC, the value's base XDE)
+        # (st_i_PX: ld XDE,(_gpi) / ld WA,(c) / add WA,WA / lda XBC,_hia / ld WA,(XBC+WA) / ld (XDE),WA; st_i_XX:
+        # ld DE,(c) / add DE,DE / lda XHL,_gia / ...; st_i_QX: ld XDE,XWA / add XDE,(_gpi))
+    elif byte:                                             # a char value computes in WA and stores A
+        if vk == 'S': P, I, B, V = 'XDE', 'DE', 'XDE', 'BC'
+        elif L == 'Y': P, I, B, V = 'XBC', 'E', None, 'WA'    # st_c_YG: ld E,A / ld XBC,(_gps) / ... / ld (XBC+E),A
+        else: P, I, B, V = 'XBC', 'BC', 'XBC', 'WA'
+    elif vk == 'S':
+        P, I, B, V = {'P': ('XDE', None, None, 'BC'), 'D': ('XBC', None, None, 'DE'), 'X': (None, 'BC', 'XDE', 'HL'),
+                      'Q': ('XDE', None, None, 'BC')}[L]
+    elif vk in ('B',) or (vk == 'L' and False):
+        P, I, B, V = {'P': ('XBC', None, None, 'WA'), 'D': ('XWA', None, None, 'BC'), 'X': (None, 'WA', 'XBC', 'DE'),
+                      'Y': ('XWA', 'C', None, 'DE'), 'Q': ('XBC', None, None, 'WA')}[L]
+    elif vk == 'M':
+        P, I, B, V = {'P': ('XBC', None, None, 'WA'), 'D': ('XWA', None, None, 'BC'), 'X': (None, 'BC', 'XDE', 'WA'),
+                      'Y': ('XWA', 'E', None, 'BC'), 'Q': ('XBC', None, None, 'WA')}[L]
+    else:                                                  # 'L'
+        P, I, B, V = {'P': ('XBC', None, None, 'WA'), 'D': ('XBC', None, None, 'WA'), 'X': (None, 'BC', 'XDE', 'WA'),
+                      'Y': ('XBC', 'E', None, 'WA'), 'Q': ('XBC', None, None, 'WA')}[L]
+    if size == 4 and vk == 'B' and L == 'D': P, V = 'XWA', 'BC'   # (st_l_DB: ld XWA,(_gps) / ld XBC,(_hl) / sub XBC,(_hm))
+    n0 = len(F.lines)
+    t = sp_address(F, lk, size, P, I, B, vk)
+    if t is None: del F.lines[n0:]; return False
+    if ip is not None: F.dead.add(ip)
+    n1 = len(F.lines)                                      # (the value's code, after the address's)
+    if vk == 'M': F.mul_acc_fam = V
+    if vk == 'X' and L == 'D': F.sp_busy = {'XBC'}
+    try: fam = gen(F, rv, V, size)
+    finally: F.mul_acc_fam = None; F.sp_busy = set()
+    if fam != V:
+        if vk == 'S' and fam in FAM and size in FAM[fam]: V = fam   # (the shift's own register choice)
+        elif byte and fam in FAM: V = fam
+        else: raise Unsupported('store_plan: the value landed in %s, not %s [%s %s]' % (fam, V, L, vk))
+    if clobbers(F.lines[n1:], t): raise Unsupported('store_plan: the value overwrote the address [%s %s]' % (L, vk))
+    F.emit('ld', '%s,%s' % (t, FAM[V][size])); return True
+
+def sp_address(F, lk, size, P, I, B, vk):
+    """emit the address of the lvalue lk (sp_lvalue_kind) and return its operand: P the pointer register, I the index
+    register, B the base register (None = not used by this shape)"""
+    L = lk[0]
+    if L == 'S':
+        F.emit('lda', 'XBC,%s' % lk[2]); return '(XBC)'
+    if L in ('P', 'D'):
+        pm, off = lk[1], lk[2]
+        if vk == 'T' and off:                              # st_i_DT: ld XBC,(_gps) / inc 0x2,XBC
+            F.emit('ld', '%s,%s' % (P, pm)); F.emit('inc' if off <= 8 else 'add', '%s,%s' % (hx(off), P) if off <= 8 else '%s,%s' % (P, hx(off)))
+            return '(%s)' % P
+        F.emit('ld', '%s,%s' % (P, pm))
+        return '(%s+%s)' % (P, hx(off)) if off else '(%s)' % P
+    if L == 'X':
+        arr, (im, signed) = lk[1], lk[2]
+        if size == 1:                                      # st_c_XG: lda XWA,_gca / ld BC,(c) / extz XBC / add XBC,XWA
+            X = 'XDE' if vk in ('S', 'X') else 'XBC'
+            F.emit('lda', 'XWA,_%s' % arr.name); F.emit('ld', '%s,%s' % (X[1:], im))
+            F.emit('extz', X); F.emit('add', '%s,XWA' % X); return '(%s)' % X
+        F.emit('ld', '%s,%s' % (I, im)); scale_reg(F, I, size, 'sla')
+        if vk == 'T':                                      # st_i_XT: lda XBC,_gia / lda XBC,XBC+WA
+            F.emit('lda', '%s,_%s' % (B, arr.name)); F.emit('lda', '%s,%s+%s' % (B, B, I)); return '(%s)' % B
+        F.emit('lda', '%s,_%s' % (B, arr.name)); return '(%s+%s)' % (B, I)
+    if L == 'Y':
+        pm, off, (im, signed) = lk[1], lk[2], lk[3]
+        F.emit('ld', 'WA,%s' % im)
+        if size > 1: scale_reg(F, 'WA', size, 'sla')
+        if off: F.emit('inc' if off <= 8 else 'add', '%s,WA' % hx(off) if off <= 8 else 'WA,%s' % hx(off))
+        if vk in ('K', 'C'): I, P = 'C', 'XWA'                  # st_i_YK: ld C,A / ld XWA,(_gps) / ldw (XWA+C),0x7
+        F.emit('ld', '%s,A' % I); F.emit('ld', '%s,%s' % (P, pm))
+        if vk == 'T': F.emit('lda', 'XBC,%s+%s' % (P, I)); return '(XBC)'
+        return '(%s+%s)' % (P, I)
+    if L == 'Q':
+        pm, (im, signed) = lk[1], lk[2]
+        if size == 1:                                      # st_c_QG: ld XWA,(_gp) / ld BC,(c) / extz XBC / add XBC,XWA
+            X = 'XDE' if vk in ('S', 'X') else 'XBC'
+            F.emit('ld', 'XWA,%s' % pm); F.emit('ld', '%s,%s' % (X[1:], im))
+            F.emit('extz', X); F.emit('add', '%s,XWA' % X); return '(%s)' % X
+        F.emit('ld', 'WA,%s' % im); F.emit('exts' if signed else 'extz', 'XWA')
+        if size == 2: F.emit('add', 'XWA,XWA')
+        else: F.emit('sll', '0x2,XWA')
+        if P == 'XWA': F.emit('add', 'XWA,%s' % pm); return '(XWA)'
+        F.emit('ld', '%s,XWA' % P); F.emit('add', '%s,%s' % (P, pm)); return '(%s)' % P
+    return None
+
+def plan_store_xiz(F):
+    """before the frame: a long helper stored through a pointer keeps the address in XIZ across the call
+    (st_l_DV); when nothing else uses XIZ the prologue saves it for those stores"""
+    if not STORE_PLAN or F.xiz_vars or F.opt: return
+    hit = []
+    def v(n, d):
+        if n.k == 'bin' and n.op == '=' and n.ty is not None and n.ty.size == 4 and strip(n.r).k != 'call':
+            k = sp_lvalue_kind(F, n.l)
+            if k is not None and k[0] in ('P', 'D', 'Q') and sp_value_kind(F, n.r, 4) == 'H': hit.append(n)
+    walk(F.f.body, v)
+    if hit:
+        F.store_xiz = True; F.xiz_vars.append('stores'); F.save_reg = 'XIZ'; F.emit('push', 'XIZ'); F.push = 4
+
+REGTEMP = True                                            # see plan_regtemps
+REGTEMP_INPLACE = True                                    # a dying HL temporary takes the operator in place (evorder_bin)
+XIZ_DIRECT_INIT = True                                    # an XIZ home's initialiser is loaded or computed in XIZ
+REGTEMP_PICK = [{}]                                       # decl name -> index of the candidate home being tried
+
+def plan_regtemps(F):
+    """without -O a local with an initialiser whose value never lives across a call is a register temporary
+    (corpus/probes/loc0.c, run 2026-11-10-14-micro-loc0): WA when nothing intervenes between its declaration and
+    its uses (lo_i_G0d: ld WA,(_gi) / ld (_hi2),WA / push WA), else the lowest of BC, DE, HL that the code in
+    between does not write (lo_i_Ggs: ld BC,(_gi) / ld WA,(_hj) / ld (_hi),WA / ld (_hi2),BC; random r1_00_07:
+    XHL behind an element update that uses BC and DE; r1_04_12: XDE behind a pointer store through XBC); a call
+    result stays in HL (lo_i_Rgs: cal _ri / ... / ld (_hi2),HL).  A byte takes the low half (lo_c_Ggs: ld C,(_gc)),
+    a long or pointer the whole register (lo_l_Ggs: ld XBC,(_gl)).  The candidates are tried in that order: the
+    live-register guard raises LiveClobber when the code in between writes the home, and compile_function retries
+    with the next one; when all fail the local keeps its slot.  The values that live across a call are homes2's
+    (IZ / QIZ / XIZ)."""
+    for d, cands in regtemp_candidates(F):
+        if getattr(d, 'reg', None) or getattr(d, 'home_slot', False): continue
+        k = REGTEMP_PICK[0].get(d.name, 0)
+        if k >= len(cands): continue                       # every candidate was clobbered: the slot
+        d.reg = cands[k]; d.regtemp = True
+
+def regtemp_premark(F):
+    """before the home planners: the locals plan_regtemps will home are no candidates for IZ / XIZ (lo_l_R0a: a long
+    call result read once by the next call stays in XHL, where homes2 would put it in XIZ)"""
+    for d, cands in regtemp_candidates(F):
+        if cands: d.regtemp_pre = True
+
+def regtemp_candidates(F):
+    """[(decl, [candidate homes])] for plan_regtemps, from the body alone (its docstring says which locals)"""
+    if not REGTEMP or F.opt or getattr(F, 'l2', None) or getattr(F, 'leaf', None): return []
+    out = []
+    body = flat(F.f.body)
+    live_params = set()
+    def calls_in(n):
+        out = []
+        walk(n, lambda m, dep: out.append(m) if m.k == 'call' or fpgen.is_fp_op(m) else None)
+        return out
+    for i, c in enumerate(body):
+        if c.k != 'decl' or c.init is None: continue
+        d = c.var
+        if d.kind != 'local' or d.addr_taken or \
+                getattr(d, 'no_fold', False) or d.ty.kind in ('array', 'struct') or fpgen.is_fp(d.ty) or \
+                d.ty.size not in (1, 2, 4) or not d.uses: continue
+        rest = body[i + 1:]
+        used = [k for k, x in enumerate(rest) if uses_decl(x, d)]
+        if not used: continue
+        last = used[-1]
+        if any(calls_in(x) for x in rest[:last]): continue      # a call in between: homes2's case
+        lx = rest[last]
+        cl = calls_in(lx)
+        if cl:                                             # the last statement may call once, with the local among the
+            if len(cl) != 1 or cl[0].k != 'call' or (lx.k == 'expr' and strip(lx.e) is not cl[0]) or lx.k != 'expr' or \
+                    not any(uses_decl(a_, d) for a_ in cl[0].args) or any(calls_in(a_) for a_ in cl[0].args):
+                continue                                   # arguments it dies in (lo_i_Gga: push BC / cal _vi)
+        if has_helper_call(c.init) and strip(c.init).k != 'call': continue
+        nx_ = rest[0]
+        nxcall_ = nx_.k == 'expr' and strip(nx_.e).k == 'call'
+        ci = strip(c.init)
+        while ci.k == 'cast': ci = strip(ci.e)
+        if last == 0 and foldable(F.f, d) and not nxcall_ and ci.k != 'call': continue   # read once by the next
+        # statement: folded there; a call result instead stays in HL and takes the operator there (lo_i_R0e: cal _ri /
+        # add HL,(_hi) / ld (_hi2),HL)
+        ci = strip(c.init)                                 # (binop_i.c add_i_loc: int x = a + b; return x; -> ld HL,(a) /
+                                                           # add HL,(b)); an argument is materialized (lo_i_G0a:
+                                                           # ld WA,(_gi) / push WA, not pushw (_gi))
+        while ci.k == 'cast': ci = strip(ci.e)
+        if last == 0 and d.ty.size == 1 and len(used) == 1 and rest[0].k == 'return': continue   # (a byte returned
+                                                           # next: the older rule below, binop_c.c shl_c_loc: x in C)
+        cands = ['HL', 'BC', 'DE'] if ci.k == 'call' else ['WA', 'BC', 'DE', 'HL']
+        # (WA is tried with the code in between written as if WA were free -- live_regs hides a WA temporary -- so
+        # that a statement that computes anything moves the temporary to BC: lo_i_Ggs ld BC,(_gi) / ld WA,(_hj),
+        # while lo_i_G0d's store and push keep it in WA)
+        for p in F.f.params:                               # -Xr: a register parameter still read keeps its register
+            if getattr(p, 'reg', None) in ('WA', 'BC', 'DE') and any(uses_decl(x, p) for x in body[i:]):
+                cands = [r for r in cands if r != p.reg]
+        out.append((d, cands))
+    return out
 
 def plan_frame(F):
     """stack slots for locals without a register (rc_loop2-4: dec N,XSP / push XIZ / slots from (XSP+4) in
@@ -8880,6 +9329,20 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong
                 except Exception: remap = None
         finally: fpgen.FCONST[0] = save
         return compile_function(f, opt, adecl, personality, fp_temps=need, fp_nlong=nlong, fp_remap=remap).lines
+    if not REGTEMP or opt != 'none':
+        return compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_remap)
+    import copy
+    picks = {}; base = copy.deepcopy(f); save = fpgen.FCONST[0]
+    while True:
+        REGTEMP_PICK[0] = picks
+        try: return compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_remap)
+        except LiveClobber as ex:                          # the register temporary's home was written: next candidate
+            if os.environ.get('CC900_RT_DEBUG'): print('  regtemp retry %s: %s' % (f.name, ex))
+            picks[ex.decl.name] = picks.get(ex.decl.name, 0) + 1
+            f = copy.deepcopy(base); fpgen.FCONST[0] = save
+        finally: REGTEMP_PICK[0] = {}
+
+def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_remap):
     if personality not in PERSONALITIES: raise ValueError('unknown personality %s' % personality)
     personality = PERSONALITIES[personality]
     merge_address_inits(f)
@@ -8898,7 +9361,7 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong
     F.lines.append(('.' if adecl else '_') + f.name + ':')
     F.loops = []; F.param_copies = []; F.pushes = []
     if adecl and BINLOC_XR: xr_shift_reloc(F)
-    if not plan_leaf(F): plan_registers(F); plan_homes(F)
+    if not plan_leaf(F): regtemp_premark(F); plan_registers(F); plan_homes(F); plan_regtemps(F); plan_store_xiz(F)
     plan_frame(F)
     for d in getattr(F, 'l2', {}).get('entry', []) if getattr(F, 'l2', None) else []:
         F.emit('ld', '%s,(XSP+%s)' % (FAM[d.reg][d.ty.size], hx(d.off + F.push)))   # (after the frame: offsets)

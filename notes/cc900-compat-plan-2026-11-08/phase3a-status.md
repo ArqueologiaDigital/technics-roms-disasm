@@ -643,6 +643,59 @@ pointer addresses first, the source value, the accumulator value, plain loads wi
 constants last, pointer loads last in place; `long_helper_order` in `gen_long_helper`; the probe reads 246 / 124 / 211 / 109 of 507 at none / -O3 -XS / -Xr / -O3 -XS -Xr
 (30 / 31 / 30 before).  Gate: no ledger row down, the eight cmpord and evorder_lh rows added, semcheck DIFFERENT 31 -> 31, pairs 223 MATCH.
 
+**Register temporaries** (2026-11-10, afternoon; `corpus/probes/loc0.c`, 512 functions, run `2026-11-10-14-micro-loc0`;
+research-scratch `sessions/2026-11-10_cc900-refusals/`): the random corpora's commonest refusal was a local with an
+initialiser (`int *t = gpi;`, `unsigned long t = gula[5];`, `unsigned char t = guc + 212;`: 150 to 190 functions per
+set).  The probe (8 types x 4 initialisers x 4 statements in between x 4 uses) shows the rule, the same at the four
+option sets: a local whose value never lives across a call is a register temporary -- WA when nothing but its own uses
+follows the declaration (`ld WA,(_gi) / ld (_hi2),WA / push WA`), else the lowest of BC, DE, HL that the code in between
+does not write (`ld BC,(_gi) / ld WA,(_hj) / ld (_hi),WA / ld (_hi2),BC`; random r1_00_07 XHL behind an element update
+that uses BC and DE), a call result in HL / L / XHL where it takes the operator in place (`cal _ri / add HL,(_hi) /
+ld (_hi2),HL`); a byte in the low half (`ld C,(_gc)`; a computed byte through A, `ld A,(_gc) / add A,(_hc) / ld C,A`); a
+pointer sum through XWA (`ld XWA,(_gp) / inc 0x1,XWA / ld XBC,XWA`); the values that live across a call stay homes2's
+(IZ / QIZ / XIZ, loaded or computed directly: `ld XIZ,(_gl)`, `srl 0x3,XIZ`, stored and pushed directly, `ld (_hl2),XIZ`,
+`push XIZ`, a QIZH through A).  `plan_regtemps` / `regtemp_candidates` in codegen.py, without -O: the candidates are
+tried in order and the live-register guard's `LiveClobber` makes `compile_function` retry with the next one (the WA
+trial generates the code in between as if WA were free, `live_regs` / `held_after` hide a WA temporary, so a statement
+that computes anything moves the temporary to BC); when all fail the local keeps its slot.  A local read once by the
+next statement is still folded there, except a call argument (materialized: `ld WA,(_gi) / push WA`) and a call result.
+`regtemp_premark` runs before the home planners so that homes2 and plan_registers leave those locals alone (a long
+call result read next by a call stays in XHL).  The probe reads 510 / 132 / 510 / 147 of 512 at none / -O3 -XS / -Xr /
+-O3 -XS -Xr (116 / 112 / 130 / 127 before; the two left are a pointer offset from a plan_registers XIZ home; -O is
+not modelled yet).  Also in this batch: `gs.a[3]` is a static operand (`(_gs + 0x14)`, `global_offset`), `&gia[5]` /
+`&gca[4]` a single `lda` (`ADDR_GLOBAL_CONST`).  Over the four random corpora at none the functions refused whole fell
+from 549 to 502 of 800 (`stmt_bisect.py`, which compiles each statement of a refused function alone to name the
+statement behind the refusal).  The next probe, `corpus/probes/stord.c` (432 functions, run `2026-11-10-15-micro-stord`),
+maps the order and registers of a store's address and value, the next two refusals ("the value overwrites the store
+address", "complex long helper operands"); the model read 212 / 202 / 199 / 171 of it before any rule.
+
+**The store rule** (2026-11-10, afternoon; `store_plan` / `sp_address` / `plan_store_xiz` in codegen.py, the same at
+the four option sets): the address first and the value second, except after a call (`cal _ri / ld XWA,(_gps) /
+ld (XWA+0x2),HL`).  A plain `*p` takes XBC with the value in WA whatever the value; a member with a displacement
+takes XBC before a loaded value in WA and XWA before a computed value in BC (`ld XWA,(_gps) / ld BC,(_hi) /
+sub BC,(_hj) / ld (XWA+0x2),BC`; `divs XBC,(_hj)`: the multiply and divide paths take the planner's accumulator); a
+global element takes BC / XDE with the value in WA, or WA / XBC with the value in DE for a difference or a `!`; a
+member array element through a pointer the same with E / XBC and C / XWA; `p[i]` builds its address in XWA and moves
+it to XBC, straight in XWA after a call; a shift's value goes to the next free register with the count in WA; a `?:`
+value takes its address first in XBC, a displacement added (`inc 0x2,XBC`), a static member too (`lda XBC,_gs + 0x2`);
+an element value keeps WA / XBC and the address moves over (`ld XDE,(_gpi)`; `ld DE,(c) / add DE,DE / lda XHL,_gia`;
+a member's pointer keeps XBC and the element's base moves to XDE); a long helper's store through a pointer keeps the
+address in XIZ across the call (`push XIZ / ld XIZ,(_gps) / ... / cal C9H_divls / ld (XIZ+0x4),XHL / pop XIZ`,
+`plan_store_xiz` saves XIZ in the prologue); a char value computes in WA and stores A, a char element at an int index
+adds the zero-extended index to the array's address (`lda XWA,_gca / ld BC,(c) / extz XBC / add XBC,XWA`); under -Xr
+the index parameter in WA is used in place.  The probe reads 337 / 202 / 286 / 171 of 432 at none / -O3 -XS / -Xr /
+-O3 -XS -Xr (212 / 202 / 199 / 171 before; the -O sets wait for the planner to run under -O).  What is left: a value
+that divides by an indexed element (the value first, then the address), an indexed left operand of a divide, a long
+helper into an element (the index in IZ and the base in a slot), a shift whose count is also the index, and the char
+arithmetic that loads a char global as a word (`ld WA,(_hc) / sub WA,(_hd) / ld (_gc),A`, the model's byte ops).
+The semantic check of the first gate found six wrong-code shapes the wider rules had reached, fixed in the same
+batch: a register temporary clobbered within its own statement (the guard now counts a read later in the statement:
+r2_08_14, r3_08_15, r3_03_00), a byte compare with an unmasked immediate (`cp A,0xffc2`: r3_01_02), a pointer plus a
+char index into an XIZ home (refused: the oracle zero-extends it through IZL and interleaves the next statement,
+r1_04_19), an unsigned register-parameter index extended whole (r3_08_11), the XIZ initialiser's constant left
+operand; two out-of-range index verdicts (r3_01_02, r3_01_06) are reviewed as UB in `model/semcheck_review.tsv`.
+Gate: no ledger row down (15 rows up, among them random1 at none 9 -> 16 and at -Xr 4 -> 13), the eight loc0 and stord rows added; pairs 223 MATCH; semcheck DIFFERENT 31 -> 59, the 28 new verdicts all out-of-range indexes that the model and the oracle extend differently (UB), reviewed in model/semcheck_review.tsv (the rows for the -O stord ones reach results/semcheck.md at the next run).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

@@ -98,6 +98,42 @@ o 7 fica inteiro. Nas rotinas auxiliares de `long`, o esquerdo vai em `XWA` e o 
 dos ponteiros primeiro, as constantes por último e as cargas dos ponteiros por último, no lugar. As três sondas
 passaram, respectivamente, de 86 para 252, de 0 para 429 e de 30 para 246 funções exatas sem opções.
 
+## Onde mora uma variável local
+
+Dois terços das funções aleatórias eram recusadas inteiras, e uma recusa esconde as outras: a função tem oito
+comandos e o modelo desiste no primeiro que não sabe compilar. Um pequeno bissector (`stmt_bisect.py`, no
+`research-scratch`) compila cada comando de uma função recusada sozinho e diz qual deles é o culpado. O campeão,
+de longe, era a declaração de uma variável local com valor inicial: `int *t = gpi;`, `unsigned long t = gula[5];`,
+`unsigned char t = guc + 212;`. O modelo só sabia duas coisas sobre elas: dobrar a variável no único uso, ou
+guardá-la em `IZ` quando sobrevive a uma chamada.
+
+A sonda `loc0.c` (512 funções: oito tipos, quatro inicializadores, quatro comandos intermediários, quatro usos)
+mostrou a regra inteira, igual nas quatro combinações de opções. Uma local cujo valor não atravessa nenhuma chamada
+é um *temporário em registrador*: fica em `WA` quando só os próprios usos a seguem; senão vai para o mais baixo de
+`BC`, `DE`, `HL` que o código intermediário não escreve; o resultado de uma chamada fica em `HL` e recebe o operador
+ali mesmo (`cal _ri / add HL,(_hi)`); um `char` ocupa a metade baixa (`ld C,(_gc)`), mas um `char` calculado passa
+por `A` antes; a soma de ponteiro passa por `XWA`. O modelo tenta os candidatos em ordem e deixa a própria guarda de
+registradores vivos acusar quando o código intermediário escreve a casa escolhida, recomeçando com a seguinte.
+A sonda passou de 116 para 510 funções exatas sem opções, e as funções aleatórias recusadas inteiras caíram de 546
+para 497 em 800.
+
+## O endereço antes do valor, menos quando não
+
+A segunda recusa mais comum era "o valor sobrescreve o endereço da atribuição": o modelo calculava o endereço de
+`gps->i = gps->a[a] % a` em `XWA`, e a divisão, que precisa de `XWA`, o destruía. Em vez de adivinhar, outra sonda
+(`stord.c`, 432 funções: oito formas de lado esquerdo, dezoito de lado direito, em `int`, `long` e `char`) mediu a
+ordem e os registradores de cada combinação. O compilador original calcula o endereço primeiro e o valor depois,
+exceto depois de uma chamada, quando o endereço vem depois (`cal _ri / ld XWA,(_gps) / ld (XWA+0x2),HL`). Um `*p`
+simples vai para `XBC` com o valor em `WA`, seja qual for o valor; um membro com deslocamento vai para `XBC` antes de
+um valor carregado em `WA`, mas para `XWA` antes de um valor calculado em `BC` (`ld XWA,(_gps) / ld BC,(_hi) /
+sub BC,(_hj) / ld (XWA+0x2),BC`); um elemento de vetor global usa `BC` e `XDE`, ou `WA` e `XBC` com o valor em `DE`
+quando o valor é uma subtração; a rotina auxiliar de `long` guarda o endereço em `XIZ` através da chamada. O modelo
+ganhou um planejador de atribuições com essa tabela; a sonda foi de 212 para 337 funções exatas sem opções.
+
+O verificador semântico pagou de novo: ao compilar funções que antes recusava, o modelo errou em seis formas novas,
+entre elas um temporário destruído dentro do próprio comando que o lia e uma comparação de byte com constante de
+dezesseis bits (`cp A,0xffc2`). Todas foram corrigidas antes de o lote entrar.
+
 ## Onde isso deixa o modelo
 
 No fechamento do dia: as 674 funções do corpus pequeno exatas nas quatro combinações de

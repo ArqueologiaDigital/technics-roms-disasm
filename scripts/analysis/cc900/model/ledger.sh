@@ -191,6 +191,16 @@ for c in none O3XS; do    # the arguments of the long * / % helpers by operand k
 done
 row "run 2026-11-10-13-micro-evorder4, v423/Xr" "probes/evorder_lh.c" "$O/2026-11-10-13-micro-evorder4/out/v423/Xr/probes" corpus/probes/evorder_lh.c --opt none --adecl
 row "run 2026-11-10-13-micro-evorder4, v423/O3XSXr" "probes/evorder_lh.c" "$O/2026-11-10-13-micro-evorder4/out/v423/O3XSXr/probes" corpus/probes/evorder_lh.c --opt O3XS --adecl
+for c in none O3XS; do    # where a local with an initialiser lives (corpus/probes/loc0.c, plan_regtemps)
+  row "run 2026-11-10-14-micro-loc0, v423/$c" "probes/loc0.c" "$O/2026-11-10-14-micro-loc0/out/v423/$c/probes" corpus/probes/loc0.c --opt $c
+done
+row "run 2026-11-10-14-micro-loc0, v423/Xr" "probes/loc0.c" "$O/2026-11-10-14-micro-loc0/out/v423/Xr/probes" corpus/probes/loc0.c --opt none --adecl
+row "run 2026-11-10-14-micro-loc0, v423/O3XSXr" "probes/loc0.c" "$O/2026-11-10-14-micro-loc0/out/v423/O3XSXr/probes" corpus/probes/loc0.c --opt O3XS --adecl
+for c in none O3XS; do    # the order and registers of a store's address and value (corpus/probes/stord.c)
+  row "run 2026-11-10-15-micro-stord, v423/$c" "probes/stord.c" "$O/2026-11-10-15-micro-stord/out/v423/$c/probes" corpus/probes/stord.c --opt $c
+done
+row "run 2026-11-10-15-micro-stord, v423/Xr" "probes/stord.c" "$O/2026-11-10-15-micro-stord/out/v423/Xr/probes" corpus/probes/stord.c --opt none --adecl
+row "run 2026-11-10-15-micro-stord, v423/O3XSXr" "probes/stord.c" "$O/2026-11-10-15-micro-stord/out/v423/O3XSXr/probes" corpus/probes/stord.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do
