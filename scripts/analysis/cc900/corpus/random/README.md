@@ -200,3 +200,36 @@ once after a call lives in XIZ without -O (`r3_05_00`: `push XIZ / ld XIZ,(_gp)`
 -O3 -XS a loop-invariant element address is hoisted into a stack slot (`r3_02_00`: `lda XWA,_gula+0x1c / ld (XSP+0x2),XWA`)
 and a repeated argument is loaded once and pushed twice (`ld WA,(_gi2) / push WA / push WA`); and `-(int)gul` is
 `ld XWA,(_gul) / ld HL,WA / neg HL`.
+
+## The fourth corpus (2026-11-10, `corpus/random4/`, run 2026-11-10-7-micro-random4)
+
+Seed 4's 200 functions, checked against the model at a4fc98542 (the third corpus's fixes), found 27 DIFFERENT lines,
+about thirteen functions.  After this batch the fourth corpus reads 53 / 47 / 47 / 47 checked and 2 / 1 / 3 / 3
+DIFFERENT (8 / 4 / 7 / 4 exact), the nine verdicts reviewed in `model/semcheck_review.tsv` as UB only (an int or char
+index out of its array: `r4_03_00`, `r4_08_02`, `r4_08_17`, `r4_08_19`); the earlier corpora keep their counts and the
+second loses `r2_06_02`.  Fixed from this corpus:
+- a constant shift was not folded, so `guca[i] -= 236 >> 6` shifted `0xec` in a byte (`r4_03_11`; `fold` now folds
+  `<<` and `>>`, a right shift of the value masked to its type: `~0x10000UL >> 3` is `0x1fffdfff`, `r1_02_00`);
+  constants are masked to their type on emission (`return 32767 * 5` is `ld HL,0x7ffb`, `r4_09_15`);
+- a **compare of a narrowing cast**, `(unsigned char)gul != 255`, compared all 32 bits: the cast-dropping rule of
+  `gen_compare` was meant for widening casts; a byte of a wider memory value is compared as `ld XWA,(_gul) / cp A,0xff`
+  (`r4_04_11`);
+- `&gia[b]` with an unsigned `b` doubled the index in 16 bits before extending it (`r4_01_02`: `extz XWA` first);
+- `(long)-guca[2]`: V4.23 negates the byte and zero-extends it, `ld A,(_guca+0x2) / neg A / ld W,0x0 / extz XWA`
+  (`r4_00_12`; not C, imitated);
+- `(unsigned int)gc - 255` is not done in the byte: an unsigned int operation is `exts WA / sub WA,0xff`
+  (`r4_09_15`; `char_narrow` narrows signed int operations only);
+- **last uses**: `a--` and `a op= ..` read `a` without a load node, so `gua[a]` before `while (a-- > 0)` counted as
+  a's last use and its register was scaled in place (`r4_00_03`; `compute_last_uses` clears the last use at them);
+  a death in a returning `if` arm reached the code after it (`r4_08_02`: the `if` restores `F.dead` when its arm
+  returns);
+- the **live-local guard** covers the current block (`F.cur_rest`: `gua[a]` later in the same `if` block after
+  `ld XWA,(_gp)`, `r4_09_15`) and no longer takes a loop that assigns the variable as a licence to write its
+  register inside the loop, except for the variable's own updates (`self_update`: `dec 0x1,BC` for `n--`,
+  `_strncat`); `r4_04_14`'s `t` in A, overwritten by `ld XWA,(_gps)` inside the loop, is refused; an operand that
+  spells `None` is refused at `emit` (`r4_07_06`: `t[6]` with `t` in XIZ).
+
+Shapes this corpus shows and the model does not write yet: a char parameter read twice under `-Xr` is copied to E
+at entry (`r4_09_15`: `ld E,A / extz DE`); a `?:` whose first arm is a constant loads it into the result register
+before the test (`r4_04_11`: `ld XHL,0xa3d3 / ld XWA,(_gul) / cp A,0xff / j ne,L1`); a char local lives in E across
+a loop (`r4_04_14`, `scc eq,DE`), and an unused `int *u = gpi` emits no load.

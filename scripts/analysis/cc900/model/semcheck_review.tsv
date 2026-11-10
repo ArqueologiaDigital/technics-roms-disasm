@@ -54,3 +54,7 @@ r2_s_06.c	v423/O3XSXr	.r2_06_02	UB only: gula[b] with b = 0x13b6 reads past the 
 r2_s_09.c	v423/Xr,v423/O3XSXr	.r2_09_07	UB only: gca[t] with a negative char t (the model zero-extends the spilled char, the oracle keeps t in E and sign-extends)
 r3_s_07.c	v423/Xr,v423/O3XSXr	.r3_07_00	UB only: gca[c] and guca[c] with c negative (0xc514): the model zero-extends the slot-held int index (ld BC,(XSP) / extz XBC / add XBC,XWA) where V4.23 homes c in IZ and (XWA+IZ) sign-extends it; in range they agree
 r3_s_01.c	v423/O3XSXr	.r3_01_06	UB only: guca[t] with t = gia[4] negative: the model homes t in IZ and zero-extends the index (ld BC,IZ / extz XBC / add XBC,XWA) where V4.23 keeps t in a slot and (XBC+WA) sign-extends it; in range they agree
+r4_s_03.c	v423/Xr,v423/O3XSXr	.r4_03_00	UB only: gca[a] with a negative (0xb4cf): the model zero-extends the IZ-homed int index (ld BC,IZ / extz XBC / add XBC,XWA) where V4.23 reads (XWA+IZ); in range they agree
+r4_s_08.c	*	_r4_08_17,.r4_08_17	UB only: gca[t] %= 16 with t = gi arbitrary (0x8000 and larger): out of the array; the model zero-extends the index (extz XBC / add XBC,XWA) where V4.23 uses lda XBC,XWA+IZ
+r4_s_08.c	v423/Xr,v423/O3XSXr	.r4_08_19	UB only: gca[t] with t = gia[1] & *gpi arbitrary, then guca[u] with the char read there: out of the array (edge / full trials only)
+r4_s_08.c	v423/none,v423/O3XS	_r4_08_02	UB only: guca[c] with c = (char)0xff: the model zero-extends the slot-held char index (ld XWA,0x0 / ld A,(XSP+0xc) / add XWA,XBC) where V4.23 reads (XWA+E); in range they agree

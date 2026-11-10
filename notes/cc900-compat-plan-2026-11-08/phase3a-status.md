@@ -582,6 +582,13 @@ switch's compare chain was skipped by an arm that `break`s.  Gate: no ledger row
 random3 rows added; semcheck DIFFERENT 21 -> 23 (`r2_04_19` gone, the three UB-only random3 rows added).  The exact counts of the random corpora
 stay at 1-2 % (random3: 3 / 2 / 4 / 2 of 200); the shapes seen there and not written yet are listed at the end of that README section.
 
+The fourth random corpus (2026-11-10, morning; `corpus/random4/`, run `2026-11-10-7-micro-random4`): 27 DIFFERENT
+lines against a4fc98542; one batch (`corpus/random/README.md`, "The fourth corpus") leaves the nine UB-only verdicts
+of four functions, reviewed.  Beyond the corpus the batch fixed constant shifts in `fold` (a negative constant's
+right shift was arithmetic: `~0x10000UL >> 3`), the compare of a narrowing cast, and two last-use holes (`a--` as a
+read, a death in a returning arm).  Gate: no ledger row down, random1 none 8 -> 9, random4 8 / 4 / 7 / 4 of 200;
+semcheck DIFFERENT 23 -> 31 (`r2_06_02` gone, the nine random4 rows added); pairs 223.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

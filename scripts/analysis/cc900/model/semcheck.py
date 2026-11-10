@@ -582,14 +582,14 @@ def ledger_rows(all_compilers, library=False):
         f = f[:-1] if f[-1] == '' else f
         label, corpus, rest = f[0], f[1], f[2:]
         lib = library and corpus == '1997 LIB/SRC'         # --library: the 1997 library row too (V4.23's personality)
-        if not corpus.startswith(('micro/', 'probes/', 'random/', 'random2/', 'random3/')) and not lib: continue   # (random*/: gen_random.py)
+        if not corpus.startswith(('micro/', 'probes/', 'random/', 'random2/', 'random3/', 'random4/')) and not lib: continue   # (random*/: gen_random.py)
         odir = rest[0]; files = []; opts = rest[1:]
         if lib and _arg(opts, '--personality', 'v4.23') != 'v4.23': continue
         while opts and not opts[0].startswith('-'): files.append(opts.pop(0))
         if not all_compilers and '/v423/' not in odir: continue
         opt = _arg(opts, '--opt'); adecl = '--adecl' in opts; pers = _arg(opts, '--personality', 'v4.23')
         base = os.path.basename(os.path.normpath(odir))
-        if base in ('micro', 'probes', 'random', 'random2', 'random3'): base = os.path.basename(os.path.dirname(os.path.normpath(odir)))
+        if base in ('micro', 'probes', 'random', 'random2', 'random3', 'random4'): base = os.path.basename(os.path.dirname(os.path.normpath(odir)))
         if opt is None: opt = 'O3XS' if base.startswith('O3XS') else 'none'
         if base.endswith('Xr'): adecl = True
         sets = base

@@ -156,6 +156,11 @@ for c in none O3XS; do    # the third random corpus, gen_random.py seed 3
 done
 row "run 2026-11-10-6-micro-random3, v423/Xr" "random3/*.c" "$O/2026-11-10-6-micro-random3/out/v423/Xr/random3" corpus/random3/*.c --opt none --adecl
 row "run 2026-11-10-6-micro-random3, v423/O3XSXr" "random3/*.c" "$O/2026-11-10-6-micro-random3/out/v423/O3XSXr/random3" corpus/random3/*.c --opt O3XS --adecl
+for c in none O3XS; do    # the fourth random corpus, gen_random.py seed 4
+  row "run 2026-11-10-7-micro-random4, v423/$c" "random4/*.c" "$O/2026-11-10-7-micro-random4/out/v423/$c/random4" corpus/random4/*.c --opt $c
+done
+row "run 2026-11-10-7-micro-random4, v423/Xr" "random4/*.c" "$O/2026-11-10-7-micro-random4/out/v423/Xr/random4" corpus/random4/*.c --opt none --adecl
+row "run 2026-11-10-7-micro-random4, v423/O3XSXr" "random4/*.c" "$O/2026-11-10-7-micro-random4/out/v423/O3XSXr/random4" corpus/random4/*.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do
