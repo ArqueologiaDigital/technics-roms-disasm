@@ -751,6 +751,33 @@ Gate: no ledger row down (random2 at none 5 -> 6, the four cmpordl rows added); 
 
 **The compare rule under -O** (`CMP_WIDE_OPT`, the same patch): 553 of the oracle's 680 forms are the same at -O3 -XS; the variants are the truth value straight into BC / DE, a negation or difference computed in its own register, `lda XWA,0x100` for the long constant, one index shared by two elements, the plain branch form of a ?: as a compare operand, and a char member's address straight into XBC.  cmpordl.c: 674 / 668 / 546 / 544 of 680.  Gate: no ledger row down (random2 at -O3 -XS 1 -> 2, cmpordl at -O3 -XS 152 -> 668 and at -O3 -XS -Xr 152 -> 546); pairs 223 MATCH; semcheck DIFFERENT 55 -> 43: the 12 cmpordl.c char-negation verdicts of the previous gate are gone, the model negating the byte as cc900 does under -O too.
 
+**Binary operations with addressed operands** (`corpus/probes/evorder_ad.c`, 1,116 functions, run 2026-11-10-17; the rule is
+`bin_wide`): the random corpora's commonest refusal after the compares, "the right operand overwrites the left".  The
+right's address is taken first and the left loads; a left pointer's own load comes before it; a commutative operation of
+two addressed sides loads the right and keeps the left as the memory operand; a call comes first and is the accumulator;
+a multiply by a member through a pointer puts the pointer in XWA and the accumulator in BC; a divide extends the dividend
+(a constant one not).  987 / 946 / 882 / 850 of 1,116 (590 / 580 / 508 / 498 before).  Two calls in a long operation
+now keep the right result in XIZ: the call-pair planner had given them the 16-bit IZ, and the semantic check caught it.
+
+**A guard for fitted tables** (`cw_pin` / `cw_guard`): both rules record each address and value register they form with the
+line at which it became ready, and refuse an instruction that reads one after a later line wrote a register it is built
+from; a register index is checked where it is read.  Its first runs found wrong code in pairs the probes never contained
+(a generic operand computed over the other side's register, a member-array index in C overwritten by the other pointer,
+a call over -Xr's index in WA).  The probes' semantic check now reads 0 verdicts at the four option sets, except one
+out-of-range index (UB).  The random corpora also reached an older clash: a floating-point element hoist (`lda XIZ,...`)
+over locals homed in IZ and QIZ (r3_08_05), now refused in `fpgen.hoist_elems`.
+
+**The compare operands of the second wave** (`corpus/probes/cmpordl2.c`, 572 functions, run 2026-11-10-18): a pointer at a
+constant index, a call with arguments, the widening casts (through A into BC for the right, XWA for the left; the zero
+extension of a byte to a long as `ld XWA,0x0 / ld A,(_guc)`), a narrowing cast of a long to a byte, a member array
+through a pointer (the index in a byte register: `ld E,A / cp WA,(XBC+E)`), and a generic computed operand.  Two findings
+beyond the kinds: cc900 keeps an explicit widening cast as a conversion where an implicit promotion compares at the
+narrower width (the frontend now marks `CStyleCastExpr`), and a local with an initialiser and no use is still computed
+into WA (`int t = gi;` -> `ld WA,(_gi)`), which was the random corpora's "local t" refusal.  A local used once as an
+element index stays a register temporary (`ld BC,(_gi) / add BC,BC / lda XDE,_hia`), and -Xr's index parameter in WA is
+used the same way.  cmpordl2.c: 388 of 572 (17 before); cmpordl.c at -Xr 546 -> 586.  Random corpora at none: refused
+whole 472 -> 451, exact 42 -> 43.  Gate: no ledger row down (21 rows up, the eight evorder_ad and cmpordl2 rows added; cmpordl at -Xr 546 -> 586, cmpord at -Xr 363 -> 405, evorder_st at -Xr 397 -> 420); pairs 223 MATCH (three _pow refusal reasons changed); semcheck DIFFERENT 43 -> 51, the 8 new verdicts all out-of-range indexes reviewed as UB in model/semcheck_review.tsv (cmpordl2 cc_l_YF / cc_e_YF, r2_05_11, r2_07_14).  The regression finder shows six functions newly inexact against 8b3c63aad (evorder_ad ea_i_div_DD, ea_i_rem_DD, ea_i_mul_KD; cmpordl -Xr cc_e_XG, cc_l_XE, cc_l_XG, cc_l_XM), fixed in the next commit (research-scratch fac6ec2).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

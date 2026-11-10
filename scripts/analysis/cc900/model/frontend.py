@@ -272,7 +272,7 @@ class Builder:
             if ck == 'LValueToRValue': return N('load', e=e, ty=t)
             if ck in ('NoOp', 'FunctionToPointerDecay', 'ArrayToPointerDecay', 'BitCast', 'ToVoid'):
                 return N('decay' if ck == 'ArrayToPointerDecay' else 'noop', e=e, ty=t)
-            return N('cast', kind=ck, e=e, ty=t)
+            return N('cast', kind=ck, e=e, ty=t, explicit=(k == 'CStyleCastExpr'))   # (cc900 keeps an explicit widening cast)
         if k == 'BinaryOperator':
             l, r = s.expr(I[0]), s.expr(I[1])
             if n['opcode'] == '-' and l.ty is not None and r.ty is not None and l.ty.kind in ('ptr', 'array') \

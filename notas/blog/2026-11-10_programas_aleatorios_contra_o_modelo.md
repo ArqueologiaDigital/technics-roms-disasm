@@ -162,6 +162,36 @@ comparação de duas constantes, que o modelo compila certo mas com um rótulo a
 `-O3 -XS` o original gera o mesmo código em 553 das 680; o modelo passa a aplicar a regra
 também ali na rodada seguinte.
 
+## O operando endereçado, e o que o compilador faz com um cast
+
+A sonda seguinte, `evorder_ad.c`, cruza os operandos "endereçados" (um ponteiro desreferenciado,
+um membro via ponteiro, um elemento de vetor, uma chamada) com os oito operadores binários, em
+int, long e char: 1.116 funções. A regra que sai é a mesma das comparações, agora para somas e
+produtos: o endereço do operando da direita é calculado antes, o da esquerda é carregado depois
+(`ld XBC,(_hpi) / ld WA,(_gi) / sub WA,(XBC)`), um ponteiro à esquerda tem a própria carga antes
+de tudo, e uma operação comutativa entre dois operandos endereçados carrega o da *direita* e deixa
+o da esquerda como operando de memória, exatamente como o `==`. Uma chamada vem primeiro e é o
+acumulador (`cal _gfi / sub HL,(_hi)`). O modelo sobe de 590 para 954 das 1.116 funções.
+
+Duas descobertas vieram de fora das tabelas. A primeira: duas chamadas numa operação de long
+("gfl() + hfl()") eram compiladas pelo caminho antigo guardando o primeiro resultado em IZ, um
+registrador de 16 bits; a verificação semântica pegou, e agora o resultado vai para XIZ, como no
+original.
+
+Tabelas medidas por sondas têm um defeito previsível: o programa aleatório sempre traz o par que a
+sonda não trouxe. Por isso as duas regras novas ganharam uma guarda. Cada endereço e cada valor que
+montam fica anotado com a linha em que ficou pronto, e uma instrução que lê um deles depois que
+outra linha escreveu num registrador de que ele depende é recusada. Na primeira rodada a guarda
+encontrou três formas de código errado que nenhuma sonda continha. Encontrou também uma colisão
+antiga, que só agora ficou alcançável: o código de ponto flutuante usava XIZ para endereçar um
+elemento de vetor dentro de um laço cujo contador morava justamente em IZ. A segunda veio da sonda das comparações de segunda leva (`cmpordl2.c`, 572
+funções com casts, índices locais, vetores em structs via ponteiro): o compilador original trata
+um cast *explícito* que alarga (`(long)gc < 7L`) como uma conversão de verdade, com `exts WA /
+exts XWA`, enquanto a promoção implícita do mesmo char é comparada no byte. O frontend passa a
+marcar os casts escritos no fonte. E uma variável local inicializada e nunca usada ainda é
+calculada, em WA, e jogada fora: era a recusa "local t" que aparecia em dezenas de programas
+aleatórios.
+
 ## Onde isso deixa o modelo
 
 No fechamento do dia: as 674 funções do corpus pequeno exatas nas quatro combinações de

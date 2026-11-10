@@ -206,6 +206,16 @@ for c in none O3XS; do    # the operands of long and char compares (corpus/probe
 done
 row "run 2026-11-10-16-micro-cmpordl, v423/Xr" "probes/cmpordl.c" "$O/2026-11-10-16-micro-cmpordl/out/v423/Xr/probes" corpus/probes/cmpordl.c --opt none --adecl
 row "run 2026-11-10-16-micro-cmpordl, v423/O3XSXr" "probes/cmpordl.c" "$O/2026-11-10-16-micro-cmpordl/out/v423/O3XSXr/probes" corpus/probes/cmpordl.c --opt O3XS --adecl
+for c in none O3XS; do    # the order of evaluation with addressed operands and calls (corpus/probes/evorder_ad.c)
+  row "run 2026-11-10-17-micro-evorder_ad, v423/$c" "probes/evorder_ad.c" "$O/2026-11-10-17-micro-evorder_ad/out/v423/$c/probes" corpus/probes/evorder_ad.c --opt $c
+done
+row "run 2026-11-10-17-micro-evorder_ad, v423/Xr" "probes/evorder_ad.c" "$O/2026-11-10-17-micro-evorder_ad/out/v423/Xr/probes" corpus/probes/evorder_ad.c --opt none --adecl
+row "run 2026-11-10-17-micro-evorder_ad, v423/O3XSXr" "probes/evorder_ad.c" "$O/2026-11-10-17-micro-evorder_ad/out/v423/O3XSXr/probes" corpus/probes/evorder_ad.c --opt O3XS --adecl
+for c in none O3XS; do    # compare operands of the second wave: casts, pointer indexes, local indexes (corpus/probes/cmpordl2.c)
+  row "run 2026-11-10-18-micro-cmpordl2, v423/$c" "probes/cmpordl2.c" "$O/2026-11-10-18-micro-cmpordl2/out/v423/$c/probes" corpus/probes/cmpordl2.c --opt $c
+done
+row "run 2026-11-10-18-micro-cmpordl2, v423/Xr" "probes/cmpordl2.c" "$O/2026-11-10-18-micro-cmpordl2/out/v423/Xr/probes" corpus/probes/cmpordl2.c --opt none --adecl
+row "run 2026-11-10-18-micro-cmpordl2, v423/O3XSXr" "probes/cmpordl2.c" "$O/2026-11-10-18-micro-cmpordl2/out/v423/O3XSXr/probes" corpus/probes/cmpordl2.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do

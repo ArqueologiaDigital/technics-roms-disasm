@@ -926,6 +926,11 @@ def hoist_elems(F, s):
     if not hs: return
     name, off = const_elem(hs[0].e)
     text = '_%s + %s' % (name, C().hx(off)) if off else '_%s' % name
+    cg = C()                                           # (r3_08_05: i in IZ and t in QIZ are live here; the lda
+    for d in list(F.f.params) + list(F.f.decls):        #  overwrote them: refused, a slot home is unmodelled)
+        if getattr(d, 'reg', None) in ('IZ', 'QIZ', 'XIZ', 'QIZH') and d not in F.dead and \
+                (cg.uses_decl(s, d) or cg.uses_after_stmt(F, d) or F.loops):
+            raise cg.Unsupported('a floating-point element hoist over the XIZ home of %s' % d.name)
     F.emit('lda', 'XIZ,%s' % text)
     for h in hs:
         if const_elem(h.e) == (name, off): h._xiz = True
