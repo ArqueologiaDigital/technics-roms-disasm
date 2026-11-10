@@ -124,7 +124,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-10-1-micro-random1, v423/none                           | random/*.c           | 16 / 200 exact (8.0%)    |
 | run 2026-11-10-1-micro-random1, v423/O3XS                           | random/*.c           | 6 / 200 exact (3.0%)     |
 | run 2026-11-10-1-micro-random1, v423/Xr                             | random/*.c           | 13 / 200 exact (6.5%)    |
-| run 2026-11-10-1-micro-random1, v423/O3XSXr                         | random/*.c           | 5 / 200 exact (2.5%)     |
+| run 2026-11-10-1-micro-random1, v423/O3XSXr                         | random/*.c           | 6 / 200 exact (3.0%)     |
 | run 2026-11-10-5-micro-random2, v423/none                           | random2/*.c          | 5 / 200 exact (2.5%)     |
 | run 2026-11-10-5-micro-random2, v423/O3XS                           | random2/*.c          | 1 / 200 exact (0.5%)     |
 | run 2026-11-10-5-micro-random2, v423/Xr                             | random2/*.c          | 6 / 200 exact (3.0%)     |
@@ -134,9 +134,9 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-10-6-micro-random3, v423/Xr                             | random3/*.c          | 9 / 200 exact (4.5%)     |
 | run 2026-11-10-6-micro-random3, v423/O3XSXr                         | random3/*.c          | 3 / 200 exact (1.5%)     |
 | run 2026-11-10-7-micro-random4, v423/none                            | random4/*.c          | 13 / 200 exact (6.5%)    |
-| run 2026-11-10-7-micro-random4, v423/O3XS                            | random4/*.c          | 4 / 200 exact (2.0%)     |
-| run 2026-11-10-7-micro-random4, v423/Xr                              | random4/*.c          | 12 / 200 exact (6.0%)    |
-| run 2026-11-10-7-micro-random4, v423/O3XSXr                          | random4/*.c          | 5 / 200 exact (2.5%)     |
+| run 2026-11-10-7-micro-random4, v423/O3XS                            | random4/*.c          | 5 / 200 exact (2.5%)     |
+| run 2026-11-10-7-micro-random4, v423/Xr                              | random4/*.c          | 13 / 200 exact (6.5%)    |
+| run 2026-11-10-7-micro-random4, v423/O3XSXr                          | random4/*.c          | 6 / 200 exact (3.0%)     |
 | run 2026-11-10-9-micro-evorder, v423/none                            | probes/evorder.c     | 442 / 507 exact (87.2%)  |
 | run 2026-11-10-9-micro-evorder, v423/O3XS                            | probes/evorder.c     | 394 / 507 exact (77.7%)  |
 | run 2026-11-10-9-micro-evorder, v423/Xr                              | probes/evorder.c     | 356 / 507 exact (70.2%)  |
@@ -166,9 +166,9 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-10-14-micro-loc0, v423/Xr                               | probes/loc0.c        | 510 / 512 exact (99.6%)  |
 | run 2026-11-10-14-micro-loc0, v423/O3XSXr                           | probes/loc0.c        | 380 / 512 exact (74.2%)  |
 | run 2026-11-10-15-micro-stord, v423/none                            | probes/stord.c       | 337 / 432 exact (78.0%)  |
-| run 2026-11-10-15-micro-stord, v423/O3XS                            | probes/stord.c       | 202 / 432 exact (46.8%)  |
+| run 2026-11-10-15-micro-stord, v423/O3XS                            | probes/stord.c       | 303 / 432 exact (70.1%)  |
 | run 2026-11-10-15-micro-stord, v423/Xr                              | probes/stord.c       | 293 / 432 exact (67.8%)  |
-| run 2026-11-10-15-micro-stord, v423/O3XSXr                          | probes/stord.c       | 171 / 432 exact (39.6%)  |
+| run 2026-11-10-15-micro-stord, v423/O3XSXr                          | probes/stord.c       | 273 / 432 exact (63.2%)  |
 | run 2026-11-09-9-micro-fp, v423/none                                | micro/fp.c           | 108 / 108 exact (100.0%) |
 | run 2026-11-09-9-micro-fp, v423/O3XS                                | micro/fp.c           | 108 / 108 exact (100.0%) |
 | run 2026-11-09-10-micro-fptemps, v423/none                          | micro/fp_temps.c     | 33 / 33 exact (100.0%)   |

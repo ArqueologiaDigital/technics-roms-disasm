@@ -724,6 +724,17 @@ which takes the low byte of the scaled offset plus the member offset (r2_03_08: 
 ld (XBC+A),HL`); the `(XBC+A)` byte store form kept to -Xr (r2_05_07 at none); a pointer plus a char index is no
 register temporary (r3_03_11); and the stack-address local is folded under -O only (fpp11 q17 at none keeps it in WA).  Gate: no ledger row down (12 rows up: loc0 at -O3 -XS 132 -> 436 and at -O3 -XS -Xr 147 -> 380, six random rows), pairs 223 MATCH, semcheck DIFFERENT 59 -> 57 with no new verdict.
 
+**The store rule under -O; the unsigned index's IZ home** (2026-11-10, afternoon, third batch): `store_plan` runs
+under -O as well, outside a pointer run (`_fassign`'s and `_ungetc`'s cached stream pointer keep their register; a
+first try without that exclusion cost them), with three -O variants from the probe: `p[i]`'s address is built in its
+own register (`ld BC,(c) / exts XBC / add XBC,XBC / add XBC,(_gpi)`), a char member array's index is computed in the
+index register's word (`ld DE,(c) / add DE,0x20 / ld XBC,(_gps)`), and the XIZ save for a long helper's store applies
+too; an index already in WA (-Xr) keeps the -O0 forms.  stord reads 337 / 303 / 293 / 273 of 432 (337 / 202 / 293 /
+171 before).  The -O refusal of an unsigned element index is lifted when the index's home is IZ / QIZ or memory,
+which the oracle copies out first (r1_01_15 -O3 -XS: `ld WA,IZ / extz XWA / add XWA,XWA / ld XBC,_gua`).  Over the
+four random corpora at -O3 -XS: refused whole 515 -> 484, exact 14 -> 15 (the bisector's -O tally: compares 53, long
+helpers 46, stores 43 before this batch's store change).  Gate: no ledger row down (7 rows up: stord at -O3 -XS 202 -> 303 and at -O3 -XS -Xr 171 -> 273, random4 at three sets and random1 at -O3 -XS -Xr by one each); pairs 223 MATCH; semcheck DIFFERENT 57 -> 43: 22 of the -O stord index verdicts are gone, and the 8 new ones are 4 stord out-of-range indexes at -O3 -XS (UB, extended differently), r4_02_10 at the two -O sets (already reviewed as UB for every set) and r3_00_04 at the two -O sets, where cc900 hoists the call both branches begin with above the if's condition and the model keeps the C order; all in model/semcheck_review.tsv.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

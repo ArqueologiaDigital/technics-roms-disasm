@@ -3457,7 +3457,11 @@ def elem_addr(F, lv, kind):
             # random r1_08_00: an unsigned int index is zero-extended whole, as for an incomplete array:
             # ld WA,(i) / extz XWA / sll 0x2,XWA / ld XDE,_gula / add XDE,XWA / and (XDE),XWA; guca[a] ->
             # ld WA,(i) / extz XWA / ld XBC,_guca / add XBC,XWA / ld A,(XBC)
-            if F.opt or F.adecl: raise Unsupported('unsigned index')   # (-O / -Xr: the index's home lives on)
+            uv_ = regvar_of(ui.e) if ui.k == 'load' else None
+            if (F.opt or F.adecl) and not (ui.k == 'load' and (uv_ is None or uv_.reg in ('IZ', 'QIZ'))):
+                raise Unsupported('unsigned index')        # (-O / -Xr: a register-parameter index's home lives on;
+                                                           # an IZ home is copied out first: r1_01_15 O3XS ld WA,IZ /
+                                                           # extz XWA / add XWA,XWA / ld XBC,_gua)
             idx_into('WA'); F.emit('extz', 'XWA'); scale32(F, 'XWA', esz)
             B = getattr(F, 'force_base', None) or ('XDE' if kind == 'add' else 'XBC')
             F.emit('ld', '%s,%s' % (B, g)); F.emit('add', '%s,XWA' % B); return '(%s)' % B
@@ -8599,7 +8603,8 @@ def store_plan(F, lv, rv, size):
     in WA and stores A; a char element at an int index adds the zero-extended index to the array's address
     (st_c_XG: lda XWA,_gca / ld BC,(c) / extz XBC / add XBC,XWA / ld WA,(_hc) / ld (XBC),A).  Returns False where
     the shape is not one of these, so that the older paths decide."""
-    if F.opt: return False                                 # (the -O sets are not probed through this path yet: _ungetc)
+    if F.opt and (getattr(F, 'ptr_cache', None) or getattr(F, 'store_val_reg', None) or getattr(F, 'member_cache', None)):
+        return False                                       # (-O: a pointer run keeps its register: _fassign, _ungetc)
     lk = sp_lvalue_kind(F, lv)
     if lk is None: return False
     vk = sp_value_kind(F, rv, size)
@@ -8732,6 +8737,11 @@ def sp_address(F, lk, size, P, I, B, vk):
         F.emit('lda', '%s,%s' % (B, sym)); return '(%s+%s)' % (B, I)
     if L == 'Y':
         pm, off, (im, signed) = lk[1], lk[2], lk[3]
+        if F.opt and size == 1 and vk not in ('K', 'C', 'T') and im != 'WA':   # -O st_c_YG: ld DE,(c) / add DE,0x20 /
+            W_ = {'E': 'DE', 'C': 'BC', 'L': 'HL'}[I]
+            F.emit('ld', '%s,%s' % (W_, im))
+            if off: F.emit('inc' if off <= 8 else 'add', '%s,%s' % (hx(off), W_) if off <= 8 else '%s,%s' % (W_, hx(off)))
+            F.emit('ld', '%s,%s' % (P, pm)); return '(%s+%s)' % (P, I)
         F.emit('ld', 'WA,%s' % im)
         if size > 1: scale_reg(F, 'WA', size, 'sla')
         if off: F.emit('inc' if off <= 8 else 'add', '%s,WA' % hx(off) if off <= 8 else 'WA,%s' % hx(off))
@@ -8745,6 +8755,12 @@ def sp_address(F, lk, size, P, I, B, vk):
             X = 'XDE' if vk in ('S', 'X') else 'XBC'
             F.emit('ld', 'XWA,%s' % pm); F.emit('ld', '%s,%s' % (X[1:], im))
             F.emit('extz', X); F.emit('add', '%s,XWA' % X); return '(%s)' % X
+        if F.opt and P != 'XWA' and im != 'WA':            # -O: built in its own register (st_i_QG O3XS: ld BC,(c) /
+            I_ = P[1:]                                     # exts XBC / add XBC,XBC / add XBC,(_gpi))
+            F.emit('ld', '%s,%s' % (I_, im)); F.emit('exts' if signed else 'extz', P)
+            if size == 2: F.emit('add', '%s,%s' % (P, P))
+            else: F.emit('sll', '0x2,%s' % P)
+            F.emit('add', '%s,%s' % (P, pm)); return '(%s)' % P
         F.emit('ld', 'WA,%s' % im); F.emit('exts' if signed else 'extz', 'XWA')
         if size == 2: F.emit('add', 'XWA,XWA')
         else: F.emit('sll', '0x2,XWA')
@@ -8755,7 +8771,7 @@ def sp_address(F, lk, size, P, I, B, vk):
 def plan_store_xiz(F):
     """before the frame: a long helper stored through a pointer keeps the address in XIZ across the call
     (st_l_DV); when nothing else uses XIZ the prologue saves it for those stores"""
-    if not STORE_PLAN or F.xiz_vars or F.opt: return
+    if not STORE_PLAN or F.xiz_vars: return
     hit = []
     def v(n, d):
         if n.k == 'bin' and n.op == '=' and n.ty is not None and n.ty.size == 4 and strip(n.r).k != 'call':
