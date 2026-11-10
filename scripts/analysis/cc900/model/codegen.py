@@ -79,6 +79,10 @@ class Fn:
         if args is not None and 'None' in args: raise Unsupported('operand None in %s %s' % (op, args))   # (r4_07_06)
         if op == 'ld' and args is not None and re.match(r'^(WA|BC|DE|HL|IX|IY|IZ),[WABCDEHL]$', args):
             raise Unsupported('a byte into a word: ld %s' % args)   # (r2_02_05 -Xr: ld WA,A for a char index)
+        if op in ('ldw', 'ldb') and args is not None:
+            m_ = re.match(r'^(.*),0x([0-9a-f]+)$', args)   # an immediate store is masked to its width (r1_08_15 wrote
+            if m_ and len(m_.group(2)) > (4 if op == 'ldw' else 2):   # ldw ..,0xffffff00)
+                args = '%s,%s' % (m_.group(1), hx(int(m_.group(2), 16) & (0xffff if op == 'ldw' else 0xff)))
         if LIVE_PARAM_GUARD and (s.adecl or LIVE_LOCAL_GUARD) and getattr(s, 'guard_on', False) and args is not None and \
                 getattr(s, 'u1_i', None) is None and not getattr(s, 'u1x', None) and not getattr(s, 'cl_active', None) \
                 and not getattr(s, 'l2', None) and not getattr(s, 'u1_inv', None):   # (the loop allocators keep their
@@ -172,7 +176,13 @@ def fold(e):
         return N('const', value=int(not fold(e.e).value), ty=e.ty)
     if e.k == 'un' and e.op == '~' and FOLD_NOT and fold(e.e).k == 'const' and fold(e.e).value is not None:
         from frontend import N                           # _fgetc: stream->flag &= ~__UNGETC -> andw (XBC),0xfffb
-        return N('const', value=~fold(e.e).value, ty=e.ty)
+        v = fold(e.e).value
+        n = N('const', value=~v, ty=e.ty)
+        if 128 <= v <= 255: n.byte_unsigned = True       # V4.23 types a constant 128..255 as an unsigned char: ~255
+        return n                                         # keeps 0xff00 for further folding (-8 ^ ~255 is 0xf8) but
+                                                         # materializes as its low byte (gpi[1] = ~255 -> ldw ..,0x0,
+                                                         # pushw 0x0, ld IZ,0x0; ~139 * x -> mul WA,0x74); ~4 stays
+                                                         # 0xfffb (_fgetc) and 16 - 255 is 0xff11.  Imitated.
     if e.k == 'bin' and e.op in ('+', '-', '*', '|', '&', '^', '<<', '>>') and fold(e.l).k == 'const' and \
             fold(e.r).k == 'const' and fold(e.l).value is not None and fold(e.r).value is not None and \
             (e.op not in ('<<', '>>') or 0 <= fold(e.r).value < 32):
@@ -181,8 +191,10 @@ def fold(e):
         if e.op == '>>' and e.ty is not None and e.ty.size in (1, 2, 4):   # 0xec in a byte)
             sz = 8 * e.ty.size; a &= (1 << sz) - 1         # (r1_02_00: ~0x10000UL >> 3 is a logical shift of the
             if e.ty.signed and a & (1 << (sz - 1)): a -= 1 << sz   # 32-bit value, 0x1fffdfff; Python's >> of the
-        return N('const', value={'+': a + b, '-': a - b, '*': a * b, '|': a | b, '&': a & b, '^': a ^ b,   # negative
-                                 '<<': a << b, '>>': a >> b}[e.op], ty=e.ty)                               # int was wrong)
+        if e.op == '<<': v = a << b                      # (computed per operator: a dict evaluated every entry, and
+        elif e.op == '>>': v = a >> b                    # -8 ^ ~255 raised "negative shift count")
+        else: v = {'+': a + b, '-': a - b, '*': a * b, '|': a | b, '&': a & b, '^': a ^ b}[e.op]
+        return N('const', value=v, ty=e.ty)
     if e.k == 'bin' and e.op in ('<', '<=', '>', '>=', '==', '!=') and FOLD_CONST_CMP and fold(e.l).k == 'const' and \
             fold(e.r).k == 'const' and fold(e.l).value is not None and fold(e.r).value is not None:
         from frontend import N                           # r2_06_17: gca[a] & 0x7 || 39 < 3 -> the second test is gone
@@ -218,6 +230,12 @@ def fold(e):
             return N('const', value=v, ty=e.ty)
     return e
 
+def imm_of(c, size):
+    """the immediate for a folded constant at a store or op-assign of `size` bytes: masked to the width, or to a
+    byte when V4.23 typed it as an unsigned char (fold's ~K rule: gpi[1] = ~255 -> ldw (XWA+0x2),0x0)"""
+    if getattr(c, 'byte_unsigned', False): return hx(c.value & 0xff)
+    return hx(c.value & ((1 << (8 * size)) - 1))
+
 def mem_operand(F, e):
     """a memory or immediate operand string for e, or None"""
     e = same_size_ptr_cast(strip(e))
@@ -238,6 +256,7 @@ def mem_operand(F, e):
             F.emit('ld', 'XWA,(XSP+%s)' % hx(strip(pv.e).decl.slot + F.push)); return '(XWA)'
     if e.k == 'const' and e.value is not None:            # c_find: -1 in a 16-bit context is 0xffff
         sz = e.ty.size if getattr(e, 'ty', None) is not None and e.ty.size in (1, 2, 4) else 4
+        if getattr(e, 'byte_unsigned', False): return hx(e.value & 0xff)   # (~255 materializes as 0: see fold)
         return hx(e.value & ((1 << (8 * sz)) - 1))        # (r4_09_15: return 32767 * 5 -> ld HL,0x7ffb)
     if e.k == 'load' and strip(e.e).k == 'index' and getattr(F, 'u1_i', None) is not None:
         u1 = u1_operand(F, strip(e.e))                   # oc_sum_pn: add HL,(XDE) after the chain
@@ -882,6 +901,20 @@ def ev_unfitted_pair(F, l, r):
     if kl is None or kr is None: return False
     return 'S' in (kl, kr) or 'X' in (kl, kr)
 
+def ev_mul_div(F, e, op, ACC, fam, size, src_op):
+    """the multiply or divide of evorder_bin's accumulator (evorder_d.c: ld WA,(_gi) / exts XWA / divs XWA,BC /
+    ld HL,WA; the remainder ld HL,QWA; -O with a plain left: divs XHL,src)"""
+    X = FAM[ACC][4]
+    if op == '*':
+        F.emit('muls' if e.ty.signed else 'mul', '%s,%s' % (X, src_op))
+        if fam != ACC: F.emit('ld', '%s,%s' % (FAM[fam][size], FAM[ACC][size]))
+        return fam
+    F.emit('exts' if e.ty.signed else 'extz', X)
+    F.emit('divs' if e.ty.signed else 'div', '%s,%s' % (X, src_op))
+    res = FAM[ACC][size] if op == '/' else Q[ACC]
+    if res != FAM[fam][size]: F.emit('ld', '%s,%s' % (FAM[fam][size], res))
+    return fam
+
 def evorder_bin(F, e, op, l, r, fam, size, ctx='HL'):
     """the order of evaluation of V4.23's binary operators at 16 bits (corpus/probes/evorder.c, run
     2026-11-10-9-micro-evorder, the same at the four option sets).  One operand is the accumulator (HL; XWA for *),
@@ -913,6 +946,7 @@ def evorder_bin(F, e, op, l, r, fam, size, ctx='HL'):
             if False else gen_bin(F, N('bin', op='-', l=N('const', value=k, ty=lx.l.ty), r=lx.r, ty=e.ty), fam, size, False)
     if (lx.k == 'cond' and cr == 'A') or (rx.k == 'cond' and cl == 'A'): return None   # (s_MT: lda XWA,_gs first)
     comm = op in ('+', '&', '|', '^', '*')
+    mulop = op in ('*', '/', '%')                          # the accumulator is XWA (divs XWA,src; the remainder in QWA)
     if comm:
         if cr == 'V' and cl != 'V': acc, src = r, l
         elif cl == 'V': acc, src = l, r
@@ -933,10 +967,12 @@ def evorder_bin(F, e, op, l, r, fam, size, ctx='HL'):
                                             if getattr(d_, 'reg', None) == r_ and d_ not in F.dead)}
                                                            # (a parameter the function never reads holds nothing:
                                                            # -Xr s_DG keeps ld XWA,(_gps) with c unused)
-    ACC = 'WA' if op == '*' else fam                       # ctx HL: the result register; ctx WA (a stored value):
+    ACC = 'WA' if mulop else fam                           # ctx HL: the result register; ctx WA (a stored value):
     if op == '*' and F.opt and not acc_v and not src_v: ACC = fam   # WA reserved (evorder_st.c es_s_GB: the source in
-    if op == '*' and (ak == 'X' or 'WA' in live): return None       # BC); ctx ANY (a pushed argument): decided after
-    if ctx == 'ANY' and op != '*': ACC = None              # the plan, the first free family (ea_s_GB: BC after the
+    if op == '/' and F.opt and not acc_v and ctx == 'HL': ACC = fam   # (d_GG, d_GB -O: divs XHL,src; d_BG: XWA)
+    if mulop and (ak == 'X' or 'WA' in live): return None           # BC); ctx ANY (a pushed argument): decided after
+    if mulop and ctx != 'HL' and ctx != 'WA' and ctx != 'ANY': return None
+    if ctx == 'ANY' and not mulop: ACC = None              # the plan, the first free family (ea_s_GB: BC after the
     def decl_order(x):                                     # a folded single-use local: the order it was declared in
         d_ = getattr(strip(x), 'from_local', None) or getattr(ev_uncast(x), 'from_local', None)
         return F.f.decls.index(d_) if d_ is not None and d_ in F.f.decls else None
@@ -945,7 +981,7 @@ def evorder_bin(F, e, op, l, r, fam, size, ctx='HL'):
     # register plan: an index claims WA and XBC first, then the source value WA (BC when the accumulator's code
     # needs WA), then pointers take the next free family; a right pointer prefers XWA; for * the accumulator's
     # pointer may use XWA (m_PG: ld XWA,(_gpi) / ld WA,(XWA) / muls XWA,(_hi))
-    acc_wa = ev_natural_wa(F, acc) or (op == '*' and ACC == 'WA') or ACC == 'WA'   # the accumulator's code needs WA
+    acc_wa = ev_natural_wa(F, acc) or (mulop and ACC == 'WA') or ACC == 'WA'   # the accumulator's code needs WA
     src_nat_wa = src_v and ev_core(src).k == 'un' and ev_core(src).op in ('!', '-') and not (F.opt and acc_wa)
                                                            # ! - on the source side: WA (under -O too: s_XN O3XS
                                                            # scc eq,WA), unless -O and the accumulator needs WA: then
@@ -957,9 +993,9 @@ def evorder_bin(F, e, op, l, r, fam, size, ctx='HL'):
         raise Unsupported('evorder: no free register')
     plan = {}                                               # id(node) -> (P, I, B) or value family
     order = [l, r]
-    hard_wa = acc_wa or src_nat_wa or src_shift or op == '*'   # WA is spoken for before the indexes (m_GX -O:
+    hard_wa = acc_wa or src_nat_wa or src_shift or mulop   # WA is spoken for before the indexes (m_GX -O:
     if hard_wa: taken.add('WA')
-    acc_self = (ACC == 'WA' or op == '*') and ak is not None and not src_nat_wa and not src_shift   # the WA (or multiply)
+    acc_self = (ACC == 'WA' or mulop) and ak is not None and not src_nat_wa and not src_shift   # the WA (or multiply)
                                                             # accumulator is loaded from
     if acc_self and 'WA' in taken: taken.discard('WA')      # its own pointer or index (es_s_PP: ld XWA,(_gpi) ... ld WA,(XWA))
     if acc_self and ak == 'P': plan[id(acc)] = ('XWA', None, None); taken.add('WA')
@@ -978,7 +1014,7 @@ def evorder_bin(F, e, op, l, r, fam, size, ctx='HL'):
     for x in order:
         if id(x) in plan or ev_addr_kind(F, x) != 'P': continue
         plan[id(x)] = ('X' + pick(), None, None)
-    if op == '*' or ACC == 'WA': taken.add('WA')
+    if mulop or ACC == 'WA': taken.add('WA')
     if ACC is None:                                        # ctx ANY: the accumulator takes its index register (ea_s_XB:
         if ev_natural_wa(F, acc): ACC = 'WA'               # (ea_s_NG, ea_s_NB: the ! owns WA, computed there)
         elif ak == 'X': ACC = next(k for k, v in FAM.items() if v.get(2) == plan[id(acc)][1])
@@ -987,7 +1023,7 @@ def evorder_bin(F, e, op, l, r, fam, size, ctx='HL'):
             ACC = next((f_ for f_ in ('WA', 'BC', 'DE', 'HL') if f_ not in taken), None)
             if ACC is None: return None
         fam = ACC
-    if ctx == 'ANY' and op == '*': fam = 'WA'              # (_calloc: mul XWA,(XSP+0xa) / push WA)
+    if ctx == 'ANY' and mulop: fam = 'WA'                  # (_calloc: mul XWA,(XSP+0xa) / push WA)
     # emission
     n_addr = len(F.lines); operands = {}
     for x in order:
@@ -1006,10 +1042,7 @@ def evorder_bin(F, e, op, l, r, fam, size, ctx='HL'):
         if f_ not in FAM or size not in FAM[f_] or f_ == ACC: raise Unsupported('evorder source after the accumulator')
         if clobbers(F.lines[n0:], '(%s)' % FAM[ACC][4]): raise Unsupported('evorder source overwrote the accumulator')
         src_op = FAM[f_][size]
-        if op == '*':
-            F.emit('muls' if e.ty.signed else 'mul', '%s,%s' % (FAM[ACC][4], src_op))
-            if fam != ACC: F.emit('ld', '%s,%s' % (FAM[fam][size], FAM[ACC][size]))
-            return fam
+        if mulop: return ev_mul_div(F, e, op, ACC, fam, size, src_op)
         F.emit(SIMPLE_OPS[op], '%s,%s' % (R, src_op)); return fam
     if src_v:
         V = plan['V']; n0 = len(F.lines)
@@ -1047,10 +1080,7 @@ def evorder_bin(F, e, op, l, r, fam, size, ctx='HL'):
             if F.opt and op == '*' and f_ in ('BC', 'DE') and f_ not in taken: ACC = f_; R = FAM[ACC][size]   # (m_SG -O:
             else: F.emit('ld', '%s,%s' % (R, FAM[f_][size]))                                # muls XBC,(_hi) / ld HL,BC)
     if any(clobbers(F.lines[n1:], g) for g in guard if g): raise Unsupported('evorder accumulator overwrote the source')
-    if op == '*':
-        F.emit('muls' if e.ty.signed else 'mul', '%s,%s' % (FAM[ACC][4], src_op))
-        if fam != ACC: F.emit('ld', '%s,%s' % (FAM[fam][size], FAM[ACC][size]))
-        return fam
+    if mulop: return ev_mul_div(F, e, op, ACC, fam, size, src_op)
     rc = fold(src) if src is r else None
     if op in '+-' and acc is l and rc is not None and rc.k == 'const' and rc.value is not None and 1 <= rc.value <= 8:
         F.emit('inc' if op == '+' else 'dec', '%s,%s' % (hx(rc.value), R))
@@ -1222,14 +1252,14 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         return fam
     ev_ctx = 'ANY' if any_fam and fam == 'WA' else fam     # evorder.c: HL (a returned value); evorder_st.c: WA (a
     if EVORDER and size in (2, 4) and ev_ctx in ('HL', 'WA', 'ANY') and \
-            (op in SIMPLE_OPS or op == '*' and size == 2 and (fold(r).k != 'const' or ev_class(F, l) == 'V')) \
+            (op in SIMPLE_OPS or op in ('*', '/', '%') and size == 2 and (fold(r).k != 'const' or ev_class(F, l) == 'V')) \
             and not any(nodes_in(x, 'call') or has_helper_call(x) or fpgen.is_fp_op(x) or
                         any(regvar_of(strip(y.e)) is not None for y in loads_in(x)) for x in (l, r)) and \
             not getattr(F, 'cl_active', None) and not getattr(F, 'l2', None) and \
             getattr(F, 'u1_i', None) is None and not getattr(F, 'elem_ops', None) and not getattr(F, 'tfam', None):
         ev = evorder_bin(F, e, op, l, r, fam, size, ev_ctx)   # stored value), ANY (a pushed argument); evorder_l.c: longs
         if ev is not None: return ev                       # which operand is the accumulator, the order of their code
-    if EVORDER and size in (2, 4) and ev_ctx in ('HL', 'WA', 'ANY') and (op in SIMPLE_OPS or op == '*') and \
+    if EVORDER and size in (2, 4) and ev_ctx in ('HL', 'WA', 'ANY') and (op in SIMPLE_OPS or op in ('*', '/', '%')) and \
             (F.opt or F.adecl) and ev_unfitted_pair(F, l, r):   # (evorder.c s_XX, x_XS, s_PX -Xr ...: the older paths
         raise Unsupported('unfitted operand pair (evorder)')   # were wrong code there; refused until the pair is probed)
     if op in ('+', '&', '|', '^') and fam != 'WA' and getattr(F, 'tfam', None) and reads_reg(r, fam) and not reads_reg(l, fam):
@@ -1361,7 +1391,8 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
                                                                        # index built in WA: wrong code)
             n_r_ = len(F.lines); gen(F, r, other, size); rs = FAM[other][size]
             if RIGHT_CLOBBER_GUARD and clobbers(F.lines[n_r_:], '(%s)' % (FAM[fam][4] if size < 4 else FAM[fam][4])):
-                raise Unsupported('the right operand overwrites the left')   # (r2_02_18, r2_05_13, r2_06_05: wrong code)
+                raise Unsupported('the right operand overwrites the left [%s %s %s size %d in %s]' % (
+                    op, strip(l).k, strip(r).k, size, fam))      # (r2_02_18, r2_05_13, r2_06_05: wrong code)
         elif op == '+' and same_leaf(l, r) and regvar_of(strip(r).e) is not None:
             rs = R                                     # rh_lp_x2: x + x with x in QIZ -> ld WA,QIZ / add WA,WA
         rc = fold(r)
@@ -1470,7 +1501,8 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
             n0 = len(F.lines)
             gen(F, r, ro, size); rs = FAM[ro][size]
             if STORE_ADDR_GUARD and clobbers(F.lines[n0:], '(%s)' % (FAM[work].get(4) or work)):   # lnr.c r_ga_mul (none):
-                raise Unsupported('the right operand overwrites the left')         # ga[i] * gb[i] reloaded WA
+                raise Unsupported('the right operand overwrites the left [%s %s %s size %d in %s]' % (
+                    op, strip(l).k, strip(r).k, size, work))                        # ga[i] * gb[i] reloaded WA
         wide = FAM[work][4] if size == 2 else FAM[work][2]
         if op == '*':
             F.emit('muls' if signed else 'mul', '%s,%s' % (wide, rs))
@@ -3721,7 +3753,7 @@ def gen_opassign(F, e):
                                                                     getattr(F, 'ptr_cache', None)):   # _itoa: addb (XIY),0x27
                                                                     # (_ungetc: orw (XWA+0xa),0x4)
         t = lvalue(F, e.l)                                # _ultoa: *p += 39 -> addb (XWA),0x27
-        F.emit(SIMPLE_OPS[op] + ('b' if size == 1 else 'w'), '%s,%s' % (t, hx(fold(r).value & ((1 << (8 * size)) - 1)))); return t
+        F.emit(SIMPLE_OPS[op] + ('b' if size == 1 else 'w'), '%s,%s' % (t, imm_of(fold(r), size))); return t
     if op in SIMPLE_OPS and OPB_GLOBAL and fold(r).k == 'const' and fold(r).value is not None and size == 1 and \
             strip(e.l).k == 'var' and strip(e.l).decl.kind == 'global' and not getattr(strip(e.l).decl, 'reg', None):
         t = lvalue(F, e.l)                                 # random r1_03_19: gc |= ~'A' -> orb (_gc),0xbe
@@ -3778,7 +3810,7 @@ def gen_opassign(F, e):
             if op in '+-' and 1 <= abs(kv) <= 8 and INC_ELEM:   # chidx.c kc2: gia[c] += 3 -> incw 0x3,(XBC+A)
                 F.emit(('inc' if (op == '+') == (kv > 0) else 'dec') + ('b' if size == 1 else 'w'), '%s,%s' % (hx(abs(kv)), t))
                 return t
-            F.emit(SIMPLE_OPS[op] + ('b' if size == 1 else 'w'), '%s,%s' % (t, hx(kv & 0xffff))); return t
+            F.emit(SIMPLE_OPS[op] + ('b' if size == 1 else 'w'), '%s,%s' % (t, imm_of(fold(r), size) if fold(r).k == 'const' else hx(kv & 0xffff))); return t
         rv = mem_operand(F, r)
         if rv in ('A', 'C', 'E', 'WA', 'BC', 'DE', 'HL', 'XWA', 'XBC', 'XDE'):
             F.emit(SIMPLE_OPS[op], '%s,%s' % (t, rv)); return t        # .as_add_ptr: add (XWA),BC
@@ -3936,7 +3968,7 @@ def store_global(F, name, e, size):
         store_global(F, name, ia.r, size); return            # ldw (_gi),0x7
     rc = fold(narrow(e, size)) if size <= 2 else None
     if rc is not None and rc.k == 'const' and rc.value is not None:   # _exp, _tan: errno = ERANGE -> ldw (_errno),0x22
-        F.emit('ld' + ('b' if size == 1 else 'w'), '(_%s),%s' % (name, hx(rc.value & ((1 << (8 * size)) - 1)))); return
+        F.emit('ld' + ('b' if size == 1 else 'w'), '(_%s),%s' % (name, imm_of(rc, size))); return
     if strip(e).k == 'call' and not has_helper_call(strip(e).fn):   # abi returns.c use_i: cal _x_i / ld (_gi),HL
         gen_call(F, strip(e)); flush_pops(F); F.emit('ld', '(_%s),%s' % (name, FAM['HL'][size])); return
     rv = regvar_of(getattr(strip(e), 'e', e)) if strip(e).k == 'load' else None
@@ -4337,7 +4369,8 @@ def gen_stmt(F, s, last):
         flush_pops(F); F.emit('j', F.shared_exit['label']); return       # _ultoa: j L50000
     if s.k == 'return' and F.opt and getattr(F, 'shared_exit', None) and id(s) == F.shared_exit['last']:
         flush_pops(F)                                      # _ultoa: lda XSP,XSP+0xc before L50000
-        F.lines.append(F.shared_exit['label'] + ':')
+        if s.value is not None and nodes_in(s.value, 'call'): F.shared_exit_pending = F.shared_exit['label']
+        else: F.lines.append(F.shared_exit['label'] + ':')   # (r3_03_06: the label after cal _rl / inc 0x4,XSP, so
     if s.k == 'return' and s.value is not None and fpgen.is_fp(F.f.ret):
         fpgen.gen_return(F, s.value); flush_pops(F)                   # run 2026-11-09-9-micro-fp (fpgen.py)
         rets = []
@@ -4407,8 +4440,9 @@ def gen_stmt(F, s, last):
             if not getattr(F, 'exit_label', None): F.exit_label = F.newlabel()
             F.emit('j', F.exit_label); return
         if getattr(F, 'l2', None): flush_pops(F)          # _itoa: cal _memcpy / lda XSP,XSP+0xa / L3: pop XIZ
-        if epi and getattr(F, 'exit_label', None): F.lines.append(F.exit_label + ':')
-        flush_pops(F)
+        flush_pops(F)                                      # (r3_03_06: the last return's call pops before the exit
+        if epi and getattr(F, 'exit_label', None): F.lines.append(F.exit_label + ':')   # label an early return jumps to)
+        if getattr(F, 'shared_exit_pending', None): F.lines.append(F.shared_exit_pending + ':'); F.shared_exit_pending = None
         if F.xiz_vars: F.emit('pop', F.save_reg)
         epilogue(F)
         F.emit('retd', hx(F.retd)) if F.retd else F.emit('ret'); return
@@ -4603,7 +4637,7 @@ def gen_stmt(F, s, last):
         rc = fold(narrow(s.e.r, size))
         if rc.k == 'const' and size <= 2:            # m_gps_set: ldb (XWA),0x0
             t = lvalue(F, lv, ptr='XWA', idx='WA', base='XBC', kind='storek')   # ra_while: ldw (XBC+WA),0x0
-            F.emit('ld' + ('b' if size == 1 else 'w'), '%s,%s' % (t, hx(rc.value))); return
+            F.emit('ld' + ('b' if size == 1 else 'w'), '%s,%s' % (t, imm_of(rc, size))); return
         if has_helper_call(s.e.r) and strip(lv).k == 'deref':
             fam = gen(F, s.e.r, 'HL', size)              # _ultoa: value first (XHL / L), then the address
             t = lvalue(F, lv, ptr='XWA')

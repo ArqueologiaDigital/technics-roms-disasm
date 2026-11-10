@@ -620,6 +620,15 @@ of it: `clobbers()` sees `scc` (a `scc eq,BC` over a member store's address in X
 `emit` refuses a byte register loaded into a word register (`ld WA,A` for a char index under -Xr, `r2_02_05`, from an
 older path the committed model's refusal of the return expression had masked).  Gate: no ledger row down (micro 674 / 674 at all four sets, chidx 50 / 50, library 186 / 184 / 174, pairs kn5000 223 MATCH); random2 none and -Xr 2 -> 3; evorder.c -O3 -XS 383 -> 394, -Xr 198 -> 356, -O3 -XS -Xr 155 -> 315; eight rows added; semcheck DIFFERENT 31 -> 31 (r2_06_05 and r2_02_05 became refusals).
 
+A fourth probe (`corpus/probes/evorder_d.c`, the int kinds for `/` and `%`, run `2026-11-10-11-micro-evorder3`): the
+same order with a multiply's registers (the left accumulates in WA, `exts XWA / divs XWA,src / ld HL,WA`, the
+remainder from QWA; under -O a plain left divides in HL).  `ev_mul_div` covers them; the probe reads 252 / 202 /
+214 / 180 of 338 at none / -O3 -XS / -Xr / -O3 -XS -Xr (86 / 78 / 86 before), no wrong code.  Three findings from
+functions the wider rule now compiles: V4.23 types a constant 128..255 as an unsigned char, so `~255` is 0, `~139` is
+0x74 and `-8 ^ ~255` folds in the byte to 0xf8, while `~4` stays 0xfffb (imitated in `fold`); an immediate stored by
+`ldw` / `ldb` is masked at emit; and the exit label of an early return goes after the last return's call pops
+(`r3_03_06` crashed).  Gate: no ledger row down (micro 674 / 674 at all four sets, chidx 50 / 50, library 186 / 184 / 174, pairs kn5000 223 MATCH), the four evorder_d rows added; semcheck DIFFERENT 31 -> 31 (the functions the wider rule exposed are equal or refused).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

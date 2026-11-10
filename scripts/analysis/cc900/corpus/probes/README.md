@@ -29,6 +29,7 @@ copied here so the ledger (`model/ledger.sh`) can score the model against its or
 | `evorder.c`  | the order in which V4.23 evaluates the two operands of - ^ * by operand kind (13 x 13 kinds, `gen_evorder.py`, the left side reads g* and the right h* globals): a right operand that needs code goes first (value into WA, or BC when the left needs WA; its address into XWA or (XBC+WA)), an addressed left goes first; the same at the four option sets (run 2026-11-10-9-micro-evorder; -8 is the same-symbol draft) |
 | `evorder_st.c` | the same int kinds as a value stored into a global (`es_*`: the accumulator is WA, the source takes BC) and as a pushed argument (`ea_*`: the source takes WA, the accumulator the first free family), for - and ^ (`gen_evorder2.py`, run 2026-11-10-10-micro-evorder2) |
 | `evorder_l.c` | the kinds as longs, returned (`el_*`: the same rule in XHL / XWA; `!l` and `-l` go through XWA), for - and ^ (`gen_evorder2.py`, run 2026-11-10-10-micro-evorder2) |
+| `evorder_d.c` | the int kinds for / and % (`ed_*`): the same order rule with the accumulator in WA (`exts XWA / divs XWA,src / ld HL,WA`, the remainder from QWA; -O with a plain left: `divs XHL`), the source in BC (`gen_evorder3.py`, run 2026-11-10-11-micro-evorder3) |
 
 Score one with (from `scripts/analysis/cc900`; the listing directory and `--opt` are given explicitly):
 
