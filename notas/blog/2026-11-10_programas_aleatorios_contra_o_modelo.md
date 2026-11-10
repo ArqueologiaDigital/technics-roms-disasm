@@ -134,6 +134,34 @@ O verificador semântico pagou de novo: ao compilar funções que antes recusava
 entre elas um temporário destruído dentro do próprio comando que o lia e uma comparação de byte com constante de
 dezesseis bits (`cp A,0xffc2`). Todas foram corrigidas antes de o lote entrar.
 
+## Comparar longs e chars
+
+Com as variáveis locais e as atribuições no lugar, a recusa mais comum que sobrou nos
+programas aleatórios foi "operando de comparação complexo": o modelo sabia comparar dois
+inteiros de 16 bits em todas as combinações (a sonda `cmpord.c`, de manhã), mas não dois
+longs nem dois chars. A sonda `cmpordl.c` repete a tabela para esses dois tamanhos: catorze
+tipos de operando para long (constante, global, membro, ponteiro, elemento, `!x`, `-x`,
+diferença, `256L - x`, `?:`, deslocamento, membro via ponteiro, chamada), doze para char,
+cada um de cada lado de `<` e de `==`, 680 funções.
+
+A tabela é a dos inteiros com os registradores de 32 e de 8 bits, e três coisas que os
+inteiros não tinham mostrado. Primeiro, `==` não é `<` com outro salto: quando os dois
+lados são memória ou endereço, é o *direito* que é carregado (`ld XWA,(_hs + 0x4) /
+cp XWA,(_gs + 0x4)`), e quando o direito é um valor calculado ou uma chamada, a instrução
+inverte os operandos (`cal _hfl / cp XHL,(_gl)` em vez do `cp (_gl),XHL` do `<`). Segundo,
+um `?:` como operando mantém a forma com desvio, e o outro lado tem o endereço tomado
+*antes* dela (`lda XBC,_gs + 0x4`, depois os dois braços em XWA, depois `cp (XBC),XWA`).
+Terceiro, e este é o tipo de coisa que só se vê medindo: dois operandos derivados de chars
+são comparados no byte, embora o C os promova a int (`-gc < hc` vira `ld A,(_gc) / neg A /
+cp A,(_hc)`), exceto um `!c`, que é comparado como palavra contra o outro lado estendido
+com sinal.
+
+A sonda sai de 158 para 674 das 680 funções exatas sem otimização. As seis que faltam são
+duas chamadas de função dos dois lados (o original guarda o primeiro resultado em XIZ) e a
+comparação de duas constantes, que o modelo compila certo mas com um rótulo a mais. Sob
+`-O3 -XS` o original gera o mesmo código em 553 das 680; o modelo passa a aplicar a regra
+também ali na rodada seguinte.
+
 ## Onde isso deixa o modelo
 
 No fechamento do dia: as 674 funções do corpus pequeno exatas nas quatro combinações de

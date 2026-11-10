@@ -939,6 +939,345 @@ def ev_unfitted_pair(F, l, r):
     return 'S' in (kl, kr) or 'X' in (kl, kr)
 
 CMP_ORDER = True                                          # see cmp_order
+CMP_WIDE = True                                           # see cmp_wide
+
+def cw_char_derived(x):
+    """x computes from signed chars and small constants only (!c, -c, c - d, i ? c : d, a call returning char), so that
+    cc900 compares it at the byte although C promotes it to int (cmpordl.c cc_l_UG: ld A,(_gc) / neg A / cp A,(_hc))"""
+    x = strip(x)
+    while x.k == 'cast' and x.kind == 'IntegralCast': x = strip(x.e)
+    if x.k == 'const': return x.value is not None and -128 <= x.value <= 127
+    if x.k == 'load': return x.ty is not None and x.ty.size == 1 and x.ty.signed
+    if x.k == 'call': return x.ty is not None and x.ty.size == 1 and x.ty.signed
+    if x.k == 'un' and x.op in ('-', '!'): return cw_char_derived(x.e)
+    if x.k == 'bin' and x.op in ('+', '-', '&', '|', '^'): return cw_char_derived(x.l) and cw_char_derived(x.r)
+    if x.k == 'cond': return cw_char_derived(x.a) and cw_char_derived(x.b)
+    return False
+
+def cw_load(F, k, size, base='XBC', idx='WA'):
+    """load an operand of kind G / M / P / D / X into XWA / A and return the register (the == rule's right side:
+    ld XWA,(_hpl) / ld XWA,(XWA); ld WA,(c) / sla 0x2,WA / lda XBC,_hla / ld XWA,(XBC+WA); size 1: lda XWA,_hca /
+    ld BC,(c) / extz XBC / add XBC,XWA / ld A,(XBC))"""
+    R = 'XWA' if size == 4 else 'A'
+    if k[0] in ('G', 'M'): F.emit('ld', '%s,%s' % (R, k[1])); return R
+    if k[0] in ('P', 'D'):
+        F.emit('ld', 'XWA,%s' % k[1]); F.emit('ld', '%s,%s' % (R, '(XWA+%s)' % hx(k[2]) if k[2] else '(XWA)')); return R
+    if k[0] == 'X':
+        if size == 1:
+            I = base[1:]
+            F.emit('lda', 'XWA,%s' % k[1]); F.emit('ld', '%s,%s' % (I, k[2])); F.emit('extz', base); F.emit('add', '%s,XWA' % base)
+            F.emit('ld', 'A,(%s)' % base); return 'A'
+        F.emit('ld', '%s,%s' % (idx, k[2])); scale_reg(F, idx, size, 'sla'); F.emit('lda', '%s,%s' % (base, k[1]))
+        F.emit('ld', 'XWA,(%s+%s)' % (base, idx)); return 'XWA'
+    raise Unsupported('cw_load %s' % k[0])
+
+def cw_kind(F, x, size):
+    """the operand kinds of cmp_wide: ('K',), ('G', mem), ('M', mem) for a static member or constant element,
+    ('P', ptrmem, 0) / ('D', ptrmem, off) through a plain pointer, ('X', sym, idxmem, signed) a global or static
+    member array at a plain int index, ('N',) ('U',) ('B',) ('T',) ('S',) computed, ('F',) a call; None otherwise"""
+    x0 = strip(x)
+    while x0.k == 'cast' and x0.kind in ('IntegralCast', 'NoOp', 'BitCast') and x0.ty is not None and \
+            strip(x0.e).ty is not None and (strip(x0.e).ty.size == size or x0.k == 'cast' and strip(x0.e).k == 'un'):
+        x0 = strip(x0.e)
+    if x0.k == 'const': return ('K',)
+    if x0.k == 'call':
+        return ('F',) if not x0.args and not has_helper_call(x0.fn) and x0.ty is not None and x0.ty.size == size else None
+    if x0.k == 'un' and x0.op in ('!', '-'):
+        xi = strip(x0.e)
+        while xi.k == 'cast' and xi.kind == 'IntegralCast': xi = strip(xi.e)
+        if xi.k == 'load' and mem_operand(F, xi) is not None and not family_of(mem_operand(F, xi)) and \
+                strip(xi.e).k in ('var', 'member') and not (strip(xi.e).k == 'member' and strip(xi.e).arrow) and \
+                xi.ty is not None and xi.ty.size == size:
+            return ('N',) if x0.op == '!' else ('U',)
+        return None
+    if x0.k == 'bin' and x0.op in ('+', '-', '&', '|', '^') and x0.ty is not None and (x0.ty.size == size or size == 1):
+        def simple(y):
+            y = strip(y)
+            while y.k == 'cast' and y.kind == 'IntegralCast': y = strip(y.e)
+            return y.k == 'const' or (y.k == 'load' and mem_operand(F, y) is not None and not family_of(mem_operand(F, y))
+                                      and strip(y.e).k in ('var', 'member') and not (strip(y.e).k == 'member' and strip(y.e).arrow))
+        return ('B',) if simple(x0.l) and simple(x0.r) and not (fold(x0.l).k == 'const' and fold(x0.r).k == 'const') else None
+    if x0.k == 'bin' and x0.op in ('<<', '>>') and x0.ty is not None and x0.ty.size == size and fold(x0.r).k != 'const':
+        xl, xr = strip(x0.l), strip(x0.r)
+        while xr.k == 'cast' and xr.kind == 'IntegralCast': xr = strip(xr.e)
+        if xl.k == 'load' and mem_operand(F, xl) is not None and not family_of(mem_operand(F, xl)) and \
+                xr.k == 'load' and mem_operand(F, xr) is not None and not family_of(mem_operand(F, xr)): return ('S',)
+        return None
+    if x0.k == 'cond':
+        ok = lambda y: unpromote(y).k == 'load' and mem_operand(F, unpromote(y)) is not None and \
+            not family_of(mem_operand(F, unpromote(y))) and strip(unpromote(y).e).k == 'var'
+        return ('T',) if ok(x0.c) and ok(x0.a) and ok(x0.b) and unpromote(x0.a).ty.size == size and \
+            unpromote(x0.b).ty.size == size else None
+    if x0.k != 'load' or x0.ty is None or x0.ty.size != size: return None
+    v = strip(x0.e)
+    if v.k == 'var':
+        m = mem_operand(F, x0)
+        return ('G', m) if m is not None and not family_of(m) else None
+    if v.k == 'deref':
+        pm = sp_plain_ptr(F, v.e)
+        return ('P', pm, 0) if pm is not None else None
+    if v.k == 'member' and v.arrow:
+        pm = sp_plain_ptr(F, v.base)
+        if pm is None: return None
+        off = member_offset(v)
+        return ('D', pm, off) if off else ('P', pm, 0)
+    if v.k == 'member' or (v.k == 'index' and fold(v.idx).k == 'const'):
+        g = global_offset(v)
+        if g is None or g[0] == '__param__': return None
+        return ('M', '(_%s + %s)' % g if g[1] != '0x0' else '(_%s)' % g[0])
+    if v.k == 'index':
+        ii = sp_plain_index(F, v.idx)
+        if ii is None or ii[0] == 'WA': return None
+        b = strip(v.base)
+        while b.k in ('decay', 'cast', 'noop') and getattr(b, 'e', None) is not None: b = strip(b.e)
+        if b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array': return ('X', '_' + b.decl.name, ii[0], ii[1])
+        if b.k == 'member' and not b.arrow and b.ty.kind == 'array' and strip(b.base).k == 'var' and strip(b.base).decl.kind == 'global':
+            off = member_offset(b)
+            return ('X', '_%s + %s' % (strip(b.base).decl.name, hx(off)) if off else '_' + strip(b.base).decl.name, ii[0], ii[1])
+    return None
+
+def cw_addr(F, k, size, P='XBC', I='BC', B='XDE', combine=False):
+    """emit the address of an operand of kind P / D / X / M and return it: the pointer in P, the index in I with the
+    base in B (size 4: ld I,(c) / sla 0x2,I / lda B,sym -> (B+I); size 1: lda XWA,sym / ld I,(c) / extz XI /
+    add XI,XWA -> (XI)); combine=True adds the index into the base (lda B,B+I -> (B))"""
+    if k[0] in ('P', 'D'):
+        F.emit('ld', '%s,%s' % (P, k[1]))
+        if combine and k[2]: F.emit('inc' if k[2] <= 8 else 'add', '%s,%s' % (hx(k[2]), P) if k[2] <= 8 else '%s,%s' % (P, hx(k[2]))); return '(%s)' % P
+        return '(%s+%s)' % (P, hx(k[2])) if k[2] else '(%s)' % P
+    if k[0] == 'X':
+        sym, im, signed = k[1], k[2], k[3]
+        if size == 1:
+            X = 'X' + I
+            F.emit('lda', 'XWA,%s' % sym); F.emit('ld', '%s,%s' % (I, im)); F.emit('extz', X); F.emit('add', '%s,XWA' % X)
+            return '(%s)' % X
+        F.emit('ld', '%s,%s' % (I, im)); scale_reg(F, I, size, 'sla'); F.emit('lda', '%s,%s' % (B, sym))
+        if combine: F.emit('lda', '%s,%s+%s' % (B, B, I)); return '(%s)' % B
+        return '(%s+%s)' % (B, I)
+    if k[0] == 'M':
+        if combine: F.emit('lda', '%s,%s' % (P, k[1][1:-1])); return '(%s)' % P
+        return k[1]
+    if k[0] == 'G': return k[1]
+    return None
+
+def cw_value(F, x, k, size, R):
+    """emit the value of x (kind k) into register family R and return its spelling"""
+    if k[0] == 'F':
+        fam = gen(F, x, 'HL', size)
+        if fam != 'HL': raise Unsupported('cmp_wide: a call result not in HL')
+        return FAM['HL'][size]
+    fam = gen(F, x, R, size)
+    if fam not in FAM or size not in FAM[fam]: raise Unsupported('cmp_wide: value in %s' % fam)
+    if fam != R: raise Unsupported('cmp_wide: the value landed in %s, not %s [%s]' % (fam, R, k[0]))
+    return FAM[R][size]
+
+def cmp_wide(F, e, l, r, size, op, cc):
+    """the operands of a long (size 4) or char (size 1) compare, after corpus/probes/cmpordl.c (run
+    2026-11-10-16-micro-cmpordl, the same at the four option sets up to -O's in-place forms, so applied without -O):
+    a memory or addressed left is loaded into XWA / A against a constant or memory right (ld XWA,(_gl) / cp XWA,0x7;
+    chars: cpb (_gc),0x7 against a constant); a right pointer or element's address comes first (ld XBC,(_hpl) /
+    ld XWA,(_gl) / cp XWA,(XBC); ld BC,(c) / sla 0x2,BC / lda XDE,_hla), the left pointer's own load before it
+    (ld XWA,(_gpl) / ld XBC,(_hpl) / ld XWA,(XWA)); a computed right goes first into XWA and the left stays in memory
+    (ld XWA,(_hl) / sub XWA,(_hm) / cp (_gl),XWA; == : cp XWA,(_gl)), a left pointer in XBC before it, a member with
+    a displacement in XWA with the right in XBC for a difference (ld XWA,(_gps) / ld XBC,(_hl) / sub XBC,(_hm) /
+    cp (XWA+0x4),XBC) and in XBC with the right in XWA for a ! or - ; two computed operands: the one that needs WA (!,
+    -) takes XWA and the other XBC, else the right XWA and the left XBC (cp XBC,XWA), both needing WA: the right moves
+    to XBC; a shift's value takes XBC with the count in WA (a right shift first; a left shift takes XDE before a right
+    pointer or computed value); a call comes first and its result stays in XHL / L (cal _hfl / cp (_gl),XHL); a ?:
+    on the left takes a static member's, element's or pointer's address in XWA first and its arms into XBC
+    (lda XWA,_hs + 0x4 / ... / cp XBC,(XWA)); == of an addressed left against a static member, element, pointer or
+    element right loads the right into XWA (ld XBC,(_gpl) / ld XWA,(_hs + 0x4) / cp XWA,(XBC)).  Chars compare at the
+    byte except against a ! (the truth value): the other side is sign-extended to a word (cpb (_hc),0x0 / scc eq,WA /
+    ld BC,WA / ld A,(_gc) / exts WA / cp WA,BC).  None where the pair is not in the table."""
+    lk, rk = cw_kind(F, l, size), cw_kind(F, r, size)
+    if lk is None or rk is None or lk[0] == 'K': return None
+    if size == 1 and ('S' in (lk[0], rk[0])): return None   # (char shifts: not probed)
+    live = {r_ for r_ in live_regs(F) & {'WA', 'BC', 'DE', 'HL'} if any(      # (a register parameter the body never
+        uses_decl(F.f.body, d_) for d_ in list(F.f.params) + list(F.f.decls)    #  reads is free: -Xr's c in WA)
+        if getattr(d_, 'reg', None) == r_ and d_ not in F.dead)}
+    if live: return None
+    ordered = op in ('<', '<=', '>', '>=')
+    L, R = lk[0], rk[0]
+    W = {4: ('XWA', 'XBC', 'XDE', 'XHL'), 1: ('A', 'C', 'E', 'L')}[size]
+    XW, XB, XD, XH = W
+    def value(x, k, Rfam): return cw_value(F, x, k, size, Rfam)
+    def ld(dst, src): F.emit('ld', '%s,%s' % (dst, src))
+    def cp(a, b): F.emit('cp', '%s,%s' % (a, b)); return cc
+    def cpmem(mem, reg):                                  # a memory left against a register right
+        return cp(mem, reg) if ordered else cp(reg, mem)
+    memk = ('G', 'M'); addrk = ('P', 'D', 'X'); compk = ('N', 'U', 'B', 'T'); wak = ('N', 'U')
+    # ---- the right is a constant or memory
+    if R == 'K':
+        kv = fold(r).value
+        if kv is None: return None
+        if kv == 0: return None                            # (the older path: or XWA,XWA for a long's == 0 / != 0, r4_09_15;
+                                                           #  cmp_uc.c ge_uc_br0 folds an unsigned >= 0 to j _hit)
+        K = hx(kv & (0xffffffff if size == 4 else 0xff))
+        if size == 1 and L in memk + addrk:              # cc_l_GK: cpb (_gc),0x7; cc_l_PK: ld XWA,(_gp) / cpb (XWA),0x7
+            if L in memk: F.emit('cpb', '%s,%s' % (lk[1], K)); return cc
+            a = cw_addr(F, lk, size, P='XWA', I='BC')
+            F.emit('cpb', '%s,%s' % (a, K)); return cc
+        if L == 'N' and size == 1 and kv not in (0, 1): K = '0x1'   # (the truth value, as cmpord.c ci_l_NK)
+        if L == 'N' and size == 1:
+            v = value(l, lk, 'WA'); return cp('WA', K)     # cc_l_NK: cpb (_gc),0x0 / scc eq,WA / cp WA,0x1
+        Rl = XB if L == 'S' else (XH if L == 'F' else XW)
+        v = value(l, lk, {'XWA': 'WA', 'XBC': 'BC', 'XHL': 'HL', 'A': 'WA', 'C': 'BC', 'L': 'HL'}[Rl])
+        return cp(v, K)
+    if R in memk:
+        if not ordered and L == 'M' and R == 'M': ld(XW, rk[1]); return cp(XW, lk[1])
+        if not ordered and L == 'F' and R == 'M': v = value(l, lk, 'HL'); return cp(rk[1], v)   # cl_e_FM: cp (_hs + 0x4),XHL
+        if L == 'T' and R == 'M':                         # cl_l_TM: lda XWA,_hs + 0x4 / arms into XBC / cp XBC,(XWA)
+            if size == 1: F.emit('lda', 'XWA,%s' % rk[1][1:-1]); v = value(l, lk, 'BC'); return cp(v, '(XWA)')
+            F.emit('lda', 'XWA,%s' % rk[1][1:-1]); v = value(l, lk, 'BC'); return cp(v, '(XWA)')
+        if not ordered and L in addrk and R == 'M':       # cl_e_PM: ld XBC,(_gpl) / ld XWA,(_hs + 0x4) / cp XWA,(XBC)
+            a = cw_addr(F, lk, size, P='XBC', I='BC', B='XDE'); ld(XW, rk[1]); return cp(XW, a)
+        if L == 'N' and size == 1:                        # cc_l_NG: ld A,(_hc) / ld C,A / exts BC / cpb .. / scc eq,WA / cp WA,BC
+            ld('A', rk[1]); ld('C', 'A'); F.emit('exts', 'BC'); v = value(l, lk, 'WA'); return cp('WA', 'BC')
+        Rl = XB if L == 'S' else (XH if L == 'F' else XW)
+        v = value(l, lk, {'XWA': 'WA', 'XBC': 'BC', 'XHL': 'HL', 'A': 'WA', 'C': 'BC', 'L': 'HL'}[Rl])
+        return cp(v, rk[1])
+    # ---- the right is a pointer, a member through a pointer or an element
+    if R in addrk:
+        if L == 'F':                                       # cl_l_FP: cal _gfl / ld XWA,(_hpl) / cp XHL,(XWA); cl_e_FP: cp (XWA),XHL
+            v = value(l, lk, 'HL'); a = cw_addr(F, rk, size, P='XWA', I='WA' if size == 4 else 'BC', B='XBC')
+            return cp(v, a) if ordered else cp(a, v)
+        if not ordered and L == 'M':                       # cl_e_MP: ld XWA,(_hpl) / ld XWA,(XWA) / cp XWA,(_gs + 0x4)
+            v = cw_load(F, rk, size); return cp(v, lk[1])
+        if L == 'T':                                       # cl_l_TP: ld XWA,(_hpl) / arms into XBC / cp XBC,(XWA)
+            if R == 'X' and size == 4:                     # cl_l_TX: the element's address combined in XWA
+                F.emit('ld', 'WA,%s' % rk[2]); scale_reg(F, 'WA', size, 'sla'); F.emit('lda', 'XBC,%s' % rk[1])
+                F.emit('exts' if rk[3] else 'extz', 'XWA'); F.emit('add', 'XWA,XBC'); a = '(XWA)'
+            else: a = cw_addr(F, rk, size, P='XWA', I='BC', B='XWA', combine=True)
+            v = value(l, lk, 'WA' if size == 1 and R == 'X' else 'BC'); return cp(v, a)
+        if L in ('B',) or (L == 'S' and R != 'X'):        # cl_l_BP: ld XWA,(_hpl) / ld XBC,(_gl) / sub XBC,(_gm) / cp XBC,(XWA)
+            if size == 1:                                  # cc_l_BP: ld XBC,(_hp) / ld A,(_gc) / sub A,(_gd) / cp A,(XBC)
+                a = cw_addr(F, rk, size, P='XBC', I='BC'); v = value(l, lk, 'WA'); return cp(v, a)
+            if R == 'X':                                   # cl_l_BX: index WA / XBC, the left in XDE
+                a = cw_addr(F, rk, size, P='XWA', I='WA', B='XBC'); v = value(l, lk, 'DE'); return cp(v, a)
+            if L == 'S':                                   # cl_l_SP: ld XBC,(_hpl) / ld XDE,(_gl) ... / cp XDE,(XBC)
+                a = cw_addr(F, rk, size, P='XBC', I='BC', B='XDE'); v = value(l, lk, 'DE'); return cp(v, a)
+            a = cw_addr(F, rk, size, P='XWA', I='WA', B='XBC'); v = value(l, lk, 'BC'); return cp(v, a)
+        if L == 'S':                                       # cl_l_SX: index BC / XDE, the shift in XHL
+            a = cw_addr(F, rk, size, P='XBC', I='BC', B='XDE'); v = value(l, lk, 'HL'); return cp(v, a)
+        if L in addrk:
+            if not ordered and L in addrk:                 # == : the right loads (cl_e_PP: ld XBC,(_gpl) / ld XWA,(_hpl) / ld XWA,(XWA))
+                if R == 'X' and size == 4:
+                    if L == 'P': ld('XDE', lk[1]); v = cw_load(F, rk, size, base='XBC'); return cp(v, '(XDE)')   # cl_e_PX
+                    if L == 'D': a = cw_addr(F, lk, size, P='XBC'); v = cw_load(F, rk, size, base='XDE'); return cp(v, a)   # cl_e_DX
+                    F.emit('ld', 'DE,%s' % lk[2]); scale_reg(F, 'DE', size, 'sla'); F.emit('lda', 'XHL,%s' % lk[1])   # cl_e_XX
+                    v = cw_load(F, rk, size, base='XBC'); return cp(v, '(XHL+DE)')
+                if R == 'X' and size == 1 and L in ('P', 'D'):   # cc_e_PX: ld XDE,(_gp) / the element through XBC / cp A,(XDE)
+                    ld('XDE', lk[1]); v = cw_load(F, rk, size, base='XBC'); return cp(v, '(XDE+%s)' % hx(lk[2]) if lk[2] else '(XDE)')
+                if R == 'X' and L == 'X':                  # cc_e_XX: the left at (XDE), the right through XBC
+                    a = cw_addr(F, lk, size, I='DE'); v = cw_load(F, rk, size, base='XBC'); return cp(v, a)
+                a = cw_addr(F, lk, size, P='XBC', I='BC', B='XDE')
+                v = cw_load(F, rk, size, base='XDE' if L == 'X' else 'XBC'); return cp(v, a)
+            if L == 'X':                                   # cl_l_XP: index WA / XBC, the right pointer in XDE, the left in XWA
+                if size == 1:                              # cc_l_XP: lda XWA,_gca / ld DE,(c) / extz XDE / add XDE,XWA / ld XBC,(_hp) / ld A,(XDE) / cp A,(XBC)
+                    al = cw_addr(F, lk, size, I='DE'); a = cw_addr(F, rk, size, P='XBC', I='BC'); ld('A', al); return cp('A', a)
+                if R == 'D':                               # cl_l_XD: the element's base in XDE, the pointer in XBC
+                    F.emit('ld', 'WA,%s' % lk[2]); scale_reg(F, 'WA', size, 'sla'); F.emit('lda', 'XDE,%s' % lk[1])
+                    a = cw_addr(F, rk, size, P='XBC'); ld(XW, '(XDE+WA)'); return cp(XW, a)
+                F.emit('ld', 'WA,%s' % lk[2]); scale_reg(F, 'WA', size, 'sla'); F.emit('lda', 'XBC,%s' % lk[1])
+                a = cw_addr(F, rk, size, P='XDE', I='BC', B='XDE') if R != 'X' else None
+                if R == 'X':                               # cl_l_XX: left XHL+WA, right XDE+BC
+                    F.lines.pop(); F.emit('lda', 'XHL,%s' % lk[1]); a = cw_addr(F, rk, size, P='XDE', I='BC', B='XDE')
+                    ld(XW, '(XHL+WA)'); return cp(XW, a)
+                ld(XW, '(XBC+WA)'); return cp(XW, a)
+            # a left pointer: its own load, the right's address, the left's deref (cl_l_PP, cl_l_DP, cl_l_PX, cl_l_DX)
+            PL = 'XDE' if (R == 'X' and size == 1) else 'XWA'
+            ld(PL, lk[1])
+            a = cw_addr(F, rk, size, P='XBC', I='BC', B='XDE')
+            ld(XW, '(%s+%s)' % (PL, hx(lk[2])) if lk[2] else '(%s)' % PL); return cp(XW, a)
+        # a memory, ! or - left: the right's address first, the left into XWA
+        if size == 1 and L == 'N':                        # cc_l_NP: ld XWA,(_hp) / ld A,(XWA) / ld C,A / exts BC / ...
+            a = cw_addr(F, rk, size, P='XWA', I='BC'); ld('A', a); ld('C', 'A'); F.emit('exts', 'BC')
+            v = value(l, lk, 'WA'); return cp('WA', 'BC')
+        a = cw_addr(F, rk, size, P='XBC', I='BC', B='XDE')
+        v = value(l, lk, 'WA'); return cp(v, a)
+    # ---- the right is a call
+    if R == 'F':
+        if L == 'F': return None                           # (cl_l_FF: the right result saved in XIZ: unmodelled)
+        vr = value(r, rk, 'HL')
+        if L in memk: return cpmem(lk[1], vr) if L == 'G' else cp(lk[1], vr)   # cl_l_GF: cp (_gl),XHL; cl_e_GF: cp XHL,(_gl); cl_e_MF: cp (_gs + 0x4),XHL
+        if L in addrk:                                     # cl_l_PF: ld XWA,(_gpl) / cp (XWA),XHL; cc_l_XF: cp (XBC),L
+            a = cw_addr(F, lk, size, P='XWA', I='WA' if size == 4 else 'BC', B='XBC'); return cp(a, vr)
+        if L == 'N' and size == 1:                        # cc_l_NF: ld C,L / exts BC / cpb .. / scc eq,WA / cp WA,BC
+            ld('C', 'L'); F.emit('exts', 'BC'); value(l, lk, 'WA'); return cp('WA', 'BC')
+        v = value(l, lk, 'BC' if L == 'S' else 'WA'); return cp(v, vr)
+    # ---- the right is a shift
+    if R == 'S':
+        if L in memk:                                      # cl_l_GS: shift into XBC / cp (_gl),XBC
+            vr = value(r, rk, 'BC'); return cpmem(lk[1], vr)
+        if L == 'P':                                       # cl_l_PS: ld XDE,(_gpl) / shift into XBC / cp (XDE),XBC
+            a = cw_addr(F, lk, size, P='XDE'); vr = value(r, rk, 'BC'); return cpmem(a, vr)
+        if L in ('D', 'X'):                                # cl_l_DS: ld XBC,(_gps) / shift XDE / cp (XBC+0x4),XDE;
+            a = cw_addr(F, lk, size, P='XBC', I='BC', B='XDE')   # cl_l_XS: index BC / XDE, shift XHL
+            vr = value(r, rk, 'DE' if L == 'D' else 'HL'); return cpmem(a, vr)
+        if L == 'F':                                       # cl_l_FS: cal _gfl / the shift into XBC / cp XHL,XBC; == cp XBC,XHL
+            v = value(l, lk, 'HL'); vr = value(r, rk, 'BC'); return cp(v, vr) if ordered else cp(vr, v)
+        vr = value(r, rk, 'BC')
+        v = value(l, lk, 'DE' if L == 'S' else 'WA'); return cp(v, vr)   # cl_l_BS: cp XWA,XBC; cl_l_SS: cp XDE,XBC
+    # ---- the right is computed (N, U, B, T)
+    if R in compk:
+        if size == 1 and R == 'N':                        # cc_l_GN: cpb (_hc),0x0 / scc eq,WA / ld BC,WA / ld A,(_gc) / exts WA / cp WA,BC
+            if L == 'N':                                   # cc_l_NN: cpb (_hc),0 / scc eq,WA / cpb (_gc),0 / scc eq,BC / cp BC,WA
+                value(r, rk, 'WA'); value(l, lk, 'BC'); return cp('BC', 'WA')
+            if L == 'F':                                   # cc_l_FN: cal _gfc / ld C,L / exts BC / cpb (_hc),0x0 / scc eq,WA / cp BC,WA
+                value(l, lk, 'HL'); ld('C', 'L'); F.emit('exts', 'BC'); value(r, rk, 'WA'); return cp('BC', 'WA') if ordered else cp('WA', 'BC')
+            if L == 'X': value(r, rk, 'WA'); ld('DE', 'WA'); a = cw_addr(F, lk, size, P='XWA', I='BC'); ld('A', a); F.emit('exts', 'WA'); return cp('WA', 'DE')
+            value(r, rk, 'WA'); ld('BC', 'WA')
+            if L in memk: ld('A', lk[1])
+            elif L in ('P', 'D'): a = cw_addr(F, lk, size, P='XWA'); ld('A', a)
+            else: v = value(l, lk, 'WA')
+            F.emit('exts', 'WA'); return cp('WA', 'BC')
+        if size == 1 and L == 'N':                        # cc_l_NB: right into A / ld C,A / exts BC / cpb (_gc),0 / scc eq,WA / cp WA,BC
+            value(r, rk, 'WA'); ld('C', 'A'); F.emit('exts', 'BC'); value(l, lk, 'WA'); return cp('WA', 'BC')
+        if L in memk:                                      # cl_l_GB: ld XWA,(_hl) / sub XWA,(_hm) / cp (_gl),XWA
+            if L == 'M' and R == 'T':                      # cl_l_MT: lda XBC,_gs + 0x4 / the arms into XWA / cp (XBC),XWA
+                if size == 1 and ' + ' not in lk[1]: F.emit('lda', 'XWA,%s' % lk[1][1:-1]); ld('XBC', 'XWA')   # cc_l_MT: through XWA
+                else: F.emit('lda', 'XBC,%s' % lk[1][1:-1])
+                vr = value(r, rk, 'WA'); return cpmem('(XBC)', vr)
+            vr = value(r, rk, 'WA'); return cpmem(lk[1], vr)
+        if L == 'P':                                       # cl_l_PB: ld XBC,(_gpl) / right into XWA / cp (XBC),XWA
+            a = cw_addr(F, lk, size, P='XBC'); vr = value(r, rk, 'WA'); return cpmem(a, vr)
+        if L == 'D':
+            if R in wak or R == 'T':                       # cl_l_DN: ld XBC,(_gps) / right XWA / cp (XBC+0x4),XWA; cl_l_DT: inc 0x4,XBC
+                a = cw_addr(F, lk, size, P='XBC', combine=(R == 'T')); vr = value(r, rk, 'WA'); return cpmem(a, vr)
+            a = cw_addr(F, lk, size, P='XWA'); vr = value(r, rk, 'BC'); return cpmem(a, vr)   # cl_l_DB: cp (XWA+0x4),XBC
+        if L == 'X':
+            if size == 1:                                  # cc_l_XB: the element's address in XBC, the right into A
+                a = cw_addr(F, lk, size, P='XWA', I='BC'); vr = value(r, rk, 'WA'); return cpmem(a, vr)
+            if R in wak:                                   # cl_l_XN: index BC / XDE, right XWA, cp (XDE+BC),XWA
+                a = cw_addr(F, lk, size, P='XBC', I='BC', B='XDE'); vr = value(r, rk, 'WA'); return cpmem(a, vr)
+            if R == 'T':                                   # cl_l_XT: index WA / XBC, lda XBC,XBC+WA, arms XWA, cp (XBC),XWA
+                a = cw_addr(F, lk, size, P='XBC', I='WA', B='XBC', combine=True); vr = value(r, rk, 'WA'); return cpmem(a, vr)
+            a = cw_addr(F, lk, size, P='XBC', I='WA', B='XBC'); vr = value(r, rk, 'DE'); return cpmem(a, vr)   # cl_l_XB
+        if L == 'F':                                       # cl_l_FB: cal / right into XWA / cp XHL,XWA; == cp XWA,XHL
+            v = value(l, lk, 'HL'); vr = value(r, rk, 'WA'); return cp(v, vr) if ordered else cp(vr, v)
+        if L == 'S':                                       # cl_l_SB: right first into XBC, the shift into XDE, cp XDE,XBC
+            if R == 'N': gen(F, r, 'WA', 2); ld('BC', 'WA'); F.emit('exts', 'XBC')
+            elif R == 'U': value(r, rk, 'WA'); ld(XB, XW)
+            else: value(r, rk, 'BC')
+            v = value(l, lk, 'DE'); return cp(v, XB)
+        # both computed
+        if size == 1:
+            if L == 'T' and R in ('U', 'B'):               # cc_l_TU: right into A / arms into C / cp C,A
+                value(r, rk, 'WA'); value(l, lk, 'BC'); return cp('C', 'A')
+            if L in ('U', 'B') and R in ('U', 'B'):        # cc_l_UU: right into A / ld C,A / left into A / cp A,C
+                value(r, rk, 'WA'); ld('C', 'A'); v = value(l, lk, 'WA'); return cp(v, 'C')
+            if L == 'T' and R == 'T':                      # cc_l_TT: right arms A, left arms C, cp C,A
+                value(r, rk, 'WA'); value(l, lk, 'BC'); return cp('C', 'A')
+            if R == 'T':                                   # cc_l_BT: right arms into C, left into A, cp A,C
+                value(r, rk, 'BC'); v = value(l, lk, 'WA'); return cp(v, 'C')
+            return None
+        if L in wak and R in wak:                          # cl_l_NN: right in WA -> XBC, left XWA, cp XWA,XBC
+            if R == 'N': gen(F, r, 'WA', 2); ld('BC', 'WA'); F.emit('exts', 'XBC')
+            else: value(r, rk, 'WA'); ld('XBC', 'XWA')
+            v = value(l, lk, 'WA'); return cp(v, 'XBC')
+        if L in wak:                                       # cl_l_NB: right into XBC, left XWA, cp XWA,XBC
+            value(r, rk, 'BC'); v = value(l, lk, 'WA'); return cp(v, 'XBC')
+        vr = value(r, rk, 'WA'); v = value(l, lk, 'BC'); return cp(v, vr)   # cl_l_BB, cl_l_BN: cp XBC,XWA
+    return None
 
 def cmp_order(F, e, l, r, size, op, cc, swapped=False):
     """the operands of a 16-bit compare (corpus/probes/cmpord.c, run 2026-11-10-12-micro-cmpord; the order of the
@@ -2273,24 +2612,34 @@ def gen_compare(F, e):
         lo = -(1 << (8 * t_.size - 1)) if t_.signed else 0
         return lo <= k_ <= (1 << (8 * t_.size - (1 if t_.signed else 0))) - 1
     while l.k == 'cast' and l.kind == 'IntegralCast' and strip(l.e).ty.size <= r.ty.size and fold(r).k == 'const' and \
+            not (CMP_WIDE and l.ty.size == 4 and ev_core(strip(l.e)).k == 'un' and ev_core(strip(l.e)).op == '!') and \
             not (strip(l.e).ty.size == l.ty.size and strip(l.e).ty.signed != l.ty.signed) and \
             (not CMP_CONST_FITS or fits_(fold(r).value, strip(l.e).ty)):   # _itoa: (int)u < 0
         l = strip(l.e)
     # operands promoted from the same narrower type compare at that type
-    if l.k == 'cast' and r.k == 'cast' and l.kind == r.kind == 'IntegralCast' and strip(l.e).ty.size == strip(r.e).ty.size:
-        l, r = strip(l.e), strip(r.e)
+    if l.k == 'cast' and r.k == 'cast' and l.kind == r.kind == 'IntegralCast' and strip(l.e).ty.size == strip(r.e).ty.size and \
+            not (CMP_WIDE and l.ty.size == 4 and any(ev_core(strip(x.e)).k == 'un' and ev_core(strip(x.e)).op == '!' for x in (l, r))):
+        l, r = strip(l.e), strip(r.e)                      # ((long)!gl < (long)!hl compares the longs: cmpordl.c cl_l_NN)
     if l.k == 'cast' and l.kind == 'IntegralCast' and fold(r).k == 'const' and strip(l.e).ty.size <= l.ty.size and \
             not (strip(l.e).ty.size == l.ty.size and strip(l.e).ty.signed != l.ty.signed) and \
+            not (CMP_WIDE and l.ty.size == 4 and ev_core(strip(l.e)).k == 'un' and ev_core(strip(l.e)).op == '!') and \
             (not CMP_CONST_FITS or fits_(fold(r).value, strip(l.e).ty)):   # _itoa: (int)u < 0 (a widening cast only:
         l = strip(l.e)                                     # r4_04_11's (unsigned char)gul != 255 keeps its byte)
     size = l.ty.size; signed = l.ty.signed
     cc = (CC_S if signed else CC_U)[e.op]
     rc = fold(r)
     op = e.op
-    if CMP_ORDER and ev_core(l).k == 'un' and ev_core(l).op == '!' and rc.k == 'const' and rc.value not in (None, 0, 1) \
+    if CMP_ORDER and size != 4 and ev_core(l).k == 'un' and ev_core(l).op == '!' and rc.k == 'const' and rc.value not in (None, 0, 1) \
             and not getattr(F, 'cmp_as_value', False):     # (in a condition only: ci_l_NK cp WA,0x1, cv_l_NK cp WA,0x7)
         from frontend import N                           # V4.23 compares !x with the truth value of the constant:
         r = N('const', value=1, ty=rc.ty); rc = r        # !gi == 7 -> cp WA,0x1 (cmpord.c ci_e_NK, ci_l_NK; imitated)
+    if CMP_WIDE and (size in (1, 4) or size == 2 and cw_char_derived(l) and cw_char_derived(r)) and \
+            not getattr(F, 'l2', None) and not getattr(F, 'cl_active', None) and \
+            getattr(F, 'u1_i', None) is None and not getattr(F, 'elem_ops', None) and not F.opt and \
+            not any(any(regvar_of(strip(y.e)) is not None for y in loads_in(x)) for x in (l, r)):
+        csz = 1 if size == 2 else size                     # (cc900 compares two char-derived values at the byte:
+        co = cmp_wide(F, e, l, r, csz, op, cc if csz == size else CC_S[e.op])   # cmpordl.c cc_l_UG ld A / neg A / cp A,(_hc))
+        if co is not None: return co
     if CMP_ORDER and size == 2 and not getattr(F, 'l2', None) and not getattr(F, 'cl_active', None) and \
             getattr(F, 'u1_i', None) is None and not getattr(F, 'elem_ops', None) and not any(
                 nodes_in(x, 'call') or has_helper_call(x) or fpgen.is_fp_op(x) or

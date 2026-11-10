@@ -735,6 +735,20 @@ which the oracle copies out first (r1_01_15 -O3 -XS: `ld WA,IZ / extz XWA / add 
 four random corpora at -O3 -XS: refused whole 515 -> 484, exact 14 -> 15 (the bisector's -O tally: compares 53, long
 helpers 46, stores 43 before this batch's store change).  Gate: no ledger row down (7 rows up: stord at -O3 -XS 202 -> 303 and at -O3 -XS -Xr 171 -> 273, random4 at three sets and random1 at -O3 -XS -Xr by one each); pairs 223 MATCH; semcheck DIFFERENT 57 -> 43: 22 of the -O stord index verdicts are gone, and the 8 new ones are 4 stord out-of-range indexes at -O3 -XS (UB, extended differently), r4_02_10 at the two -O sets (already reviewed as UB for every set) and r3_00_04 at the two -O sets, where cc900 hoists the call both branches begin with above the if's condition and the model keeps the C order; all in model/semcheck_review.tsv.
 
+**The operands of long and char compares** (`corpus/probes/cmpordl.c`, 680 functions, run 2026-11-10-16; the rule is
+`cmp_wide`, developed on a scratch copy while the previous gate ran: research-scratch
+`sessions/2026-11-10_cc900-refusals/patch_cmpwide.py`).  The probe crosses 14 long operand kinds (constant, global,
+static member, deref, constant element, element at c, !, -, difference, 256L - x, ?:, shift by c, member through a
+pointer, call) and 12 char kinds on both sides of < and ==.  The table it gives is the one `cmp_order` gave for ints,
+with the long and byte registers, plus three things ints did not show: == loads the right side when both operands are
+memories or addressed and reverses the instruction's operands for a computed or call right; a ?: keeps the plain
+branch form and takes the other side's address first; and two char-derived operands compare at the byte although C
+promotes them (`-gc < hc`: `ld A,(_gc) / neg A / cp A,(_hc)`), except a !, which compares as a word.  The probe reads
+674 / 152 / 546 / 152 of 680 at none / -O3 -XS / -Xr / -O3 -XS -Xr (158 / 148 / 158 / 148 before); the -O sets wait for
+the rule to run under -O (553 of the oracle's 680 forms are the same there; the next commit), -Xr for the element and
+shift kinds whose index is the parameter in WA.  Random corpora at none: refused whole 476 -> 472, exact 41 -> 42.
+Gate: no ledger row down (random2 at none 5 -> 6, the four cmpordl rows added); pairs 223 MATCH; semcheck DIFFERENT 43 -> 55, the 12 new verdicts all cmpordl.c char negations at the two -O sets, where the model's -O path still negates the promoted word as C says and cc900 negates the byte (reviewed in model/semcheck_review.tsv; the -O rule of the next commit imitates it).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
