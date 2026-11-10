@@ -500,6 +500,17 @@ The library and the fitted rules of three agents (2026-11-09 night to 2026-11-10
 - semcheck: 61 wrong-code functions found by the lnr probes and 32 by the fpp probes are all fixed or refused;
   11 remain in fpp7 / fpp8 (FP argument stacks), 2 in homes2b, plus `__trig` (reviewed, not observable).
 
+State at 2026-11-10 02:00 (commit 5b8c6bf8b): micro 674 / 674 at all four sets; library 185 / 248 (v4.23),
+183 (kn5000), 174 (ide2003); pairs kn5000 223 MATCH; semcheck DIFFERENT 1 (`__trig`, reviewed).  The window rule
+plus the pop fixes took the FP probes from 4-36 to 44 / 51 / 86 / 29 / 31 / 21 / 6 of 59 / 59 / 100 / 56 / 79 / 108 /
+60 (fpp3-fpp9, none).  Two FP operand rules came from fpp7: the operand with more calls is evaluated first (the
+right one on a tie), and for `+` / `*` the operand computed last is passed in XBC.  `_fgetc` matches through a
+member-address cache (p in XDE, the twice-used member's address in XBC).  Left in the library, by kind: register
+homes (`_fread`, `_fwrite`, `_frexp`, `_ldexp`, `_sgl_set`, `_normlz2`: the homes2 port decides), rule L2 shapes
+(`_strspn`, `_stricmp`, `_strnicmp`, `__todigit`'s byte temporaries), FP slot sharing E3 (`_log`, `_sqrt`, `cosh`,
+`sinh`, `tanh`, `atan2`), `__doprnt` and the `__afcnv` / `__facvt` families (unsupported constructs: local array
+element stores, `_frccal`'s unrolled compare chain).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
