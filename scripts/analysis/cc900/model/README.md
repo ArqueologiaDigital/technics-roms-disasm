@@ -11,6 +11,16 @@ written from it and tested against it.
 | `codegen.py`     | the code generator; each rule cites the oracle listing it comes from                                                    |
 | `homes.py`       | which values live across a call get IZ / QIZ / XIZ: rules R3-set and R4 (`codegen.plan_homes`)                          |
 | `homes2.py`      | the same question by the fitted homes2 rule (a Chow-style priority colouring), behind `codegen.HOMES2` / `CC900_HOMES2` |
+| `leafnone.py`    | rule LN1: the registers of a cdecl leaf function with a loop, without options                                           |
+| `leafalloc.py`   | rule R6: the `-O3 -XS -Xr` leaf loop's temporary family and parameter moves                                             |
+| `l2alloc.py`     | rule L2: the register allocator of cdecl `-O3 -XS` leaf functions                                                       |
+| `u1alloc.py`     | rule U1: the register allocator of counted loops                                                                        |
+| `chidx.py`       | char indexes: an element address or pointer sum whose index is a char, at every option set (`probes/chidx.c`)           |
+| `fpgen.py`       | floating point: helper calls, frame temporaries, FP arguments and results (`micro/fp.c`, `fp_temps.c`, `fp_stmts.c`)    |
+| `fpwindow.py`    | rule E2 (the window rule): the order of a function's FP frame temporaries                                               |
+| `fpe3.py`        | rules E3: how many FP temporaries a function uses and which slot each operation writes; installed over `fpgen.py`       |
+| `interp.py`      | an interpreter for TLCS-900/H2 assembly in the listing syntax (`test_interp.py` checks it)                              |
+| `semcheck.py`    | does the model's code compute what the oracle's computes?  Random trials through `interp.py` (`semcheck.md`)            |
 | `score.py`       | model against oracle, per function: `python3 -I -B score.py ORACLE_DIR FILE.c ... [--opt O3XS] [--adecl] [--show N]`    |
 | `to_llvm.py`     | the model's listing rewritten in our llvm-mc syntax, with asm900's encodings and the 8/16/24-bit address choice         |
 | `check_bytes.py` | assembles `to_llvm.py` output with llvm-mc and compares each function's bytes with a ROM image                          |

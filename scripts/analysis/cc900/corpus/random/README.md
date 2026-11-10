@@ -73,3 +73,26 @@ global pointer stores through an unset register (`r1_07_13`, `r1_04_17`); a long
 (`r1_01_15`, `r1_01_18`); under `-Xr` an argument that is a constant long expression (`vl(3L / 3L)`, `r1_02_06`), a
 `?:` with an always-false compare on a register parameter (`r1_05_01`) and a compare of a char-indexed element
 (`r1_06_08`, an extra call); an unsigned char index of 0xff addressed differently (`r1_04_19`).
+
+## Second pass (2026-11-10, later: the chidx / E3 batch)
+
+The wrong code the first pass found is fixed or refused, and the char-index shapes it exposed are a module of their
+own (`model/chidx.py`, probe `probes/chidx.c`, run `2026-11-10-4-micro-chidx`: 50 / 50 at every option set).  Fixed
+from this corpus in that batch: `!` of a long helper result or a shifted long tested the wrong register (`r1_00_05`,
+`r1_09_14`); `61613L * gl2` loads the variable first; a shift count expression over a register variable is computed
+at the variable's width, in a register no live variable holds (`r1_06_19`, `r1_09_14`); an adecl call's computed
+byte argument is taken from where it was computed; an unsigned int index on a sized global array is zero-extended
+whole (`r1_08_00`, refused under `-O` / `-Xr`); `clobbers` knows that `(XDE+C)` is built from XBC; the pending pops of
+a call are released before an expression statement that makes no call and does not assign a register variable
+(`r1_02_19`); `gua[a] = gua[a] + gua[6]` evaluates the value first, into DE, and `gua[a] + gua[6]` builds the
+element's address, loads the plain operand and adds the element.
+
+| option set   | exact     | semcheck: checked / equal / DIFFERENT | not checked |
+|--------------|-----------|---------------------------------------|-------------|
+| none         | 8 / 200   | 67 / 64 / 3                           | 133         |
+| `-O3 -XS`    | 2 / 200   | 62 / 55 / 7                           | 138         |
+| `-Xr`        | 4 / 200   | 58 / 47 / 11                          | 142         |
+| `-O3 -XS -Xr`| 2 / 200   | 59 / 48 / 11                          | 141         |
+
+The 32 DIFFERENT functions left are in `r1_s_01` to `r1_s_08` (`r1_s_04` has 14 of them, mostly under `-Xr`); each is
+wrong code in the model until fixed or reviewed into `model/semcheck_review.tsv`.

@@ -528,6 +528,7 @@ def call_into(F, e, dest, arg_hint=None):
     hints = [arg_hint]
     def push_args():
         k = 0
+        cg.args_begin(F)                                 # (fpp11 q15: no pop release between the pushes)
         for a in reversed(e.args):
             if is_fp(strip(a).ty): k += push_fp_arg(F, a, hints.pop() if hints else None)
             else: k += cg.push_arg(F, a)
@@ -536,7 +537,7 @@ def call_into(F, e, dest, arg_hint=None):
         g = strip(dest[1]).decl.name                     # abi returns.c use_d: gd = x_d() -> pushw _gd >> 16 /
         n += push_args()                                 # pushw _gd & 0xffff / cal _x_d / inc 0x4,XSP
         F.emit('pushw', '_%s >> 16' % g); F.emit('pushw', '_%s & 0xffff' % g); F.push += 4; n += 4
-        F.emit('cal', '_' + fn.decl.name); F.pending += n; return
+        F.emit('cal', '_' + fn.decl.name); cg.args_end(F); F.pending += n; return
     if arg_hint is not None:
         n += push_args()
     if CALL_INTO_LOCAL and dest[0] == 'lv' and strip(dest[1]).k == 'var' and strip(dest[1]).decl.kind == 'local' and \
@@ -551,7 +552,7 @@ def call_into(F, e, dest, arg_hint=None):
     F.last_call_off = off
     if arg_hint is None: n += push_args()
     F.emit('lda', 'XWA,%s' % slot_addr(F, off)); F.emit('push', 'XWA'); F.push += 4; n += 4
-    F.emit('cal', '_' + fn.decl.name)
+    F.emit('cal', '_' + fn.decl.name); cg.args_end(F)
     F.pending += n                                         # _tan: cos's pops wait for sin's (lda XSP,XSP+0x18)
     if dest[0] == 'discard': return
     if dest[0] not in ('slot', 'cell') or (dest[0] == 'slot' and dest[1] != off):
@@ -941,3 +942,9 @@ def rank(F, x):
     if e.k == 'fconst' and RANK_CONST: return -0.5          # fo_log, _log: 2 * s -> XBC = s, XDE = the constant
     if e.k == 'load' and (elem_member(e.e) or strip(e.e).k == 'member'): return 2   # (not d_loop's gda[i])
     return 0
+
+
+FPE3 = True                                                 # the E3 slot rules of fpe3.py, installed over this module
+if FPE3:
+    import fpe3
+    fpe3.install()

@@ -45,3 +45,4 @@ _FMOD.C	*	_fmod	wrong code: x1's address is kept in XBC across cal ._fneg_d and 
 _TANH.C	*	_tanh	wrong code: ld DE,0x0 hoisted above a branch reaches the second ._fcmp_d by a path where the first ._fcmp_d has clobbered DE (the relation code is junk) (fixed: bfdb0cb5b)
 _STRTOK.C	*	_strtok	wrong code: s1 += strspn() is added to (XSP+0x8) while the two arguments are still pushed, i.e. to the saved XIZ, not to s1 (in XIZ) (fixed: 68f9fbde4)
 __DOFORM.C	*	__doudigit	wrong code: the loop tests XBC (junk after C9H_divlu) instead of the quotient, so it never ends; str is kept in XDE across the helper calls (fixed: 05bfa0948 (now refused))
+fpp10.c	*	_s01,_s04,_s05,_s10	UB only: y is read before any assignment (y = f * 2.0 + f / y; x / y), so the result depends on what the frame slot held; the model and the oracle allot y different slots (E3)

@@ -527,6 +527,34 @@ plan_homes's own candidates may be homed.  Measured with the ledger, the pairs a
   (XSP+0x20),0xfffff801`, which llvm-mc refuses; `_ldexp` when `nn` is in memory); the rule's linearizer now
   walks a calling operand before its siblings are read (`a + b + (x > 0.0)`, adfp ad_idi).
 
+Char indexes (2026-11-10, `model/chidx.py`; probe `corpus/probes/chidx.c`, run `2026-11-10-4-micro-chidx`, found by
+the random corpus r1_02_12 / r1_03_19 / r1_04_01): an element address or pointer sum whose index is a char.  V4.23
+keeps a signed char in the byte wherever the addressing mode takes an 8-bit index register (`ld A,(c) / add A,(c) /
+lda XBC,_gia / ld HL,(XBC+A)`; a char array's index zero-extended whole, `ld XWA,0x0 / ld A,(c) / add XWA,XBC`),
+and widens an unsigned char to a word first (`extz WA / add WA,WA / (XBC+WA)`).  An index expression of chars
+(`c + 1`, `c + d`, `u * 2`) is computed in the byte, so `gia[u * 2]` reads element `(u * 2) & 0xff`: the
+compiler's own wrong code, imitated (semcheck had reported fu2 DIFFERENT against the correct model).  `-O3 -XS`
+loads the char straight into the register it is widened in (`ld C,(c) / exts BC / add BC,BC`) or into the other
+scratch byte for the byte doubling (`ld C,(c) / ld A,C / add A,C`); `-Xr` takes the parameter's byte in the
+addressing mode (`lda XBC,_gca / ld L,(XBC+A)`; `ld L,(XWA+C)`), doubles a register variable into the first free
+byte (`ld C,A / add C,A / lda XWA,_gia / (XWA+C)`; `ld E,C / add E,C / (XWA+E)` when XWA holds the struct
+pointer) and scales by four in place (`sla 0x2,A`).  The module's docstring has the forms by base kind, element
+size and read / store / sum.  chidx.c: none 48 -> 50, O3XS 24 -> 50, Xr 0 -> 50, O3XSXr 0 -> 50 of 50 (the two -Xr
+rows had been the old index path's wrong code: `ld BC,A`, `ld WA,A`).
+
+The E3 rules installed and the random corpus's wrong code (2026-11-10, later).  `model/fpe3.py` (the E3 session's
+rules, ported by an agent and hooked over `fpgen.py` behind `fpgen.FPE3`) took the FP probes from
+44 / 51 / 86 / 29 / 31 / 21 / 6 / 27 / 8 to 46 / 51 / 86 / 33 / 42 / 46 / 8 / 70 / 43 (fpp3-fpp11, none; fp_order 10 -> 12,
+fpp1 24 -> 31, fpp2 21 -> 25) and the library to 186 / 248 (v4.23), 184 (kn5000); the pairs stay at 223.  Two pop
+rules came out of the semantic check: the pending pops of an earlier call wait under a call's pushed arguments
+(fpp11 q15: `ldexp(f * 2.0, n / 2)` after `frexp` released them between `push WA` and `._fmul_d`, dropping the
+argument), while a call made inside the argument list releases its own at once (`_cos`: `cal _fabs / lda XSP,XSP+0xc`
+before `._fadd_d`); and the pops are released before an expression statement that makes no call, unless it assigns a
+register variable (random r1_02_19 against homes2a B09 / homes2b HP07).  The random corpus's first-pass wrong code is
+fixed (`corpus/random/README.md`, "Second pass"): random1 none 4 -> 8, Xr 2 -> 4 of 200; semcheck DIFFERENT 48 -> 41,
+all but `__trig` in the random corpus (32) and fpp10's four uninitialized-local functions (reviewed).  Gate: no ledger
+row down, micro 674 / 674 at all four sets, chidx 50 / 50 at all four.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

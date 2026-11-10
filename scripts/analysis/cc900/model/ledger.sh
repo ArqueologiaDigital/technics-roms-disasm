@@ -78,6 +78,8 @@ for c in none O3XS; do    # E2 probes of research-scratch sessions/2026-11-09_cc
   row "run 2026-11-09-39-micro-fpe2e, v423/$c" "probes/fpp7.c" "$O/2026-11-09-39-micro-fpe2e/out/v423/$c/probes" corpus/probes/fpp7.c --opt $c
   row "run 2026-11-09-40-micro-fpe2f, v423/$c" "probes/fpp8.c" "$O/2026-11-09-40-micro-fpe2f/out/v423/$c/probes" corpus/probes/fpp8.c --opt $c
   row "run 2026-11-09-41-micro-fpe2g, v423/$c" "probes/fpp9.c" "$O/2026-11-09-41-micro-fpe2g/out/v423/$c/probes" corpus/probes/fpp9.c --opt $c
+  row "run 2026-11-10-2-micro-fpe3a, v423/$c" "probes/fpp10.c" "$O/2026-11-10-2-micro-fpe3a/out/v423/$c/probes" corpus/probes/fpp10.c --opt $c
+  row "run 2026-11-10-3-micro-fpe3b, v423/$c" "probes/fpp11.c" "$O/2026-11-10-3-micro-fpe3b/out/v423/$c/probes" corpus/probes/fpp11.c --opt $c
 done
 for c in none O3XS Xr O3XSXr; do
   row "run 2026-11-09-22-micro-condbits, v423/$c" "micro/cond_bits.c" "$O/2026-11-09-22-micro-condbits/out/v423/$c" corpus/micro/cond_bits.c
@@ -124,6 +126,11 @@ for c in none O3XS; do    # does `register` move a home (corpus/probes/regkw.c)
 done
 row "run 2026-11-09-35-micro-regkw, v423/Xr" "probes/regkw.c" "$O/2026-11-09-35-micro-regkw/out/v423/Xr/probes" corpus/probes/regkw.c --opt none --adecl
 row "run 2026-11-09-35-micro-regkw, v423/O3XSXr" "probes/regkw.c" "$O/2026-11-09-35-micro-regkw/out/v423/O3XSXr/probes" corpus/probes/regkw.c --opt O3XS --adecl
+for c in none O3XS; do    # char indexes: element addresses and pointer sums whose index is a char (corpus/probes/chidx.c)
+  row "run 2026-11-10-4-micro-chidx, v423/$c" "probes/chidx.c" "$O/2026-11-10-4-micro-chidx/out/v423/$c/probes" corpus/probes/chidx.c --opt $c
+done
+row "run 2026-11-10-4-micro-chidx, v423/Xr" "probes/chidx.c" "$O/2026-11-10-4-micro-chidx/out/v423/Xr/probes" corpus/probes/chidx.c --opt none --adecl
+row "run 2026-11-10-4-micro-chidx, v423/O3XSXr" "probes/chidx.c" "$O/2026-11-10-4-micro-chidx/out/v423/O3XSXr/probes" corpus/probes/chidx.c --opt O3XS --adecl
 for c in none O3XS; do    # IZ / QIZ homes across calls, rule homes2 (corpus/probes/homes2a.c)
   row "run 2026-11-09-37-micro-homes2a, v423/$c" "probes/homes2a.c" "$O/2026-11-09-37-micro-homes2a/out/v423/$c/probes" corpus/probes/homes2a.c --opt $c
 done
