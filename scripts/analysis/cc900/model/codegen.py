@@ -1267,6 +1267,12 @@ def reads_reg(e, fam):
     walk(e, v)
     return bool(found)
 
+def load_index16(F, ii, im):
+    """WA = the index ii whose memory operand is im: a char is loaded as a byte and extended by its sign"""
+    if ii.ty is not None and ii.ty.size == 1 and im != 'WA':
+        F.emit('ld', 'A,%s' % im); F.emit('exts' if ii.ty.signed else 'extz', 'WA')
+    elif im != 'WA': F.emit('ld', 'WA,%s' % im)
+
 def gen_ptr_arith(F, e, fam, size):
     """p + i (mem.c: m_padd): index sign-extended and scaled in XWA, then the pointer added;
     p - q (m_diff): 32-bit difference divided by the element size with C9H_divls"""
@@ -1340,7 +1346,10 @@ def gen_ptr_arith(F, e, fam, size):
         if esz == 2: F.emit('add', '%s,%s' % (R, R))                # ld HL,IZ / extz XHL / add XHL,(XSP+0x2)
         elif esz > 2: F.emit('sll', '%s,%s' % (hx({4: 2, 8: 3}[esz]), R))
         F.emit('add' if e.op == '+' else 'sub', '%s,%s' % (R, pm)); return fam
-    F.emit('ld', 'WA,%s' % im); F.emit(ext, 'XWA')
+    if ii.ty is not None and ii.ty.size == 1 and esz == 1 and PTR_CHAR_EXTZ and im != 'WA':
+        F.emit('ld', 'XWA,0x0'); F.emit('ld', 'A,%s' % im)   # random r1_04_02: gs.p + a, a char a on a char pointer:
+    else:                                                  # the byte zero-extended whole (ld XWA,0x0 / ld A,(XSP+0x8))
+        load_index16(F, ii, im); F.emit(ext, 'XWA')       # (random r1_02_12: gpi + c, a char c: ld A,.. / exts WA)
     if esz == 2: F.emit('add', 'XWA,XWA')
     elif esz > 2: F.emit('sll', '%s,XWA' % hx({4: 2, 8: 3}[esz]))
     if F.opt and R != 'XWA' and pm != 'XWA':          # m_padd under -O3 -XS: add XWA,(XSP+0x4) / ld XHL,XWA
@@ -2628,8 +2637,8 @@ def gen_load_mem(F, v, fam, size):
             while ii.k == 'cast' and ii.kind == 'IntegralCast': ii = strip(ii.e)
             im = mem_operand(F, ii)
             if pm is not None and im is not None and pm.startswith('(') and esz in (1, 2, 4, 8):
-                if im != 'WA': F.emit('ld', 'WA,%s' % im)
-                scale_reg(F, 'WA', esz, 'sla')
+                load_index16(F, ii, im)                    # (random r1_03_19: a->a[b] with an unsigned char b ->
+                scale_reg(F, 'WA', esz, 'sla')             # ld A,(XSP+0x8) / extz WA, not a word load)
                 off = member_offset(b)
                 if off: F.emit('add', 'WA,%s' % hx(off))
                 F.emit('ld', 'C,A'); F.emit('ld', 'XWA,%s' % pm); F.emit('ld', '%s,(XWA+C)' % R); return fam
