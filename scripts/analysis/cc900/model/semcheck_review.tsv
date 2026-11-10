@@ -52,3 +52,5 @@ r2_s_06.c	v423/Xr,v423/O3XSXr	.r2_06_13	UB only: gia[a] <<= 4 with a = (char)0xf
 r2_s_08.c	v423/Xr,v423/O3XSXr	.r2_08_17	UB only: guca[c] with c = 0xa133 (negative int index)
 r2_s_06.c	v423/O3XSXr	.r2_06_02	UB only: gula[b] with b = 0x13b6 reads past the array, so the branches taken differ
 r2_s_09.c	v423/Xr,v423/O3XSXr	.r2_09_07	UB only: gca[t] with a negative char t (the model zero-extends the spilled char, the oracle keeps t in E and sign-extends)
+r3_s_07.c	v423/Xr,v423/O3XSXr	.r3_07_00	UB only: gca[c] and guca[c] with c negative (0xc514): the model zero-extends the slot-held int index (ld BC,(XSP) / extz XBC / add XBC,XWA) where V4.23 homes c in IZ and (XWA+IZ) sign-extends it; in range they agree
+r3_s_01.c	v423/O3XSXr	.r3_01_06	UB only: guca[t] with t = gia[4] negative: the model homes t in IZ and zero-extends the index (ld BC,IZ / extz XBC / add XBC,XWA) where V4.23 keeps t in a slot and (XBC+WA) sign-extends it; in range they agree

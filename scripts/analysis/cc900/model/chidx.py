@@ -258,6 +258,8 @@ def base_kind(F, b):
         if d.kind == 'global': return ('gptr', d)
         if d.kind == 'param' and getattr(d, 'reg', None) in BYTE_FAM.values(): return ('rptr', d)
         if d.kind == 'param' and not getattr(d, 'reg', None): return ('pptr', d)
+        if d.kind == 'local' and not getattr(d, 'reg', None) and getattr(d, 'slot', None) is not None:
+            return ('lptr', d)                           # r3_07_16: a pointer local in its slot
     return None
 
 
@@ -411,7 +413,7 @@ def ptr_sum(F, e, fam):
         if ci is None or ci[2] != 'load' or bk is None or bk[0] != 'garr': return None
         c, signed, _ = ci; esz = x.ty.size
         if esz not in (1, 2, 4): return None
-        if getattr(strip(c.e).decl, 'reg', None) and not single_use(strip(c.e).decl): return None
+        if getattr(strip(c.e).decl, 'reg', None) not in (None, 'QIZH') and not single_use(strip(c.e).decl): return None
         src = source(F, c, 'load')
         if src is None: return None
         g = '_' + bk[1].name
@@ -428,15 +430,15 @@ def ptr_sum(F, e, fam):
     ci = char_index(r)
     if ci is None or ci[2] != 'load': return None
     c, signed, _ = ci
-    if getattr(strip(c.e).decl, 'reg', None) and not single_use(strip(c.e).decl): return None
-    esz = l.ty.base.size if l.ty.base is not None else 1
+    if getattr(strip(c.e).decl, 'reg', None) not in (None, 'QIZH') and not single_use(strip(c.e).decl): return None
+    esz = l.ty.base.size if l.ty.base is not None else 1   # (r3_07_16: u in QIZH reads like memory)
     if esz not in (1, 2, 4): return None
     pb = base_kind(F, l)
-    if pb is None or pb[0] not in ('gptr', 'pptr', 'rptr'): return None
+    if pb is None or pb[0] not in ('gptr', 'pptr', 'rptr', 'lptr'): return None
     src = source(F, c, 'load')
     if src is None: return None
     pm = '(_%s)' % pb[1].name if pb[0] == 'gptr' else '(XSP+%s)' % hx(pb[1].off + F.push) if pb[0] == 'pptr' \
-        else FAM[pb[1].reg][4]
+        else '(XSP+%s)' % hx(pb[1].slot + F.push) if pb[0] == 'lptr' else FAM[pb[1].reg][4]
     if e.op == '-':                                        # dc2: ld A / exts WA / add WA,WA / exts XWA / ld XHL,(_gpi) / sub XHL,XWA
         if esz == 1 or not signed or pb[0] != 'gptr': return None
         widen(F, src, 'WA', signed, esz); F.emit('exts', 'XWA')
@@ -445,8 +447,13 @@ def ptr_sum(F, e, fam):
         if not signed or pb[0] != 'gptr': return None
         if src[0] == 'mem' and xr:                         # -Xr r1_04_19: a char in memory: ld XBC,(_gp) / ld A,(b) /
             F.emit('ld', 'XBC,%s' % pm); F.emit('ld', 'A,%s' % src[1]); F.emit('lda', '%s,XBC+A' % R); return fam
+        if src[0] == 'reg' and xr and src[1] == 'A' and getattr(getattr(F, 'cur_stmt', None), 'k', None) != 'return':
+            F.emit('ld', 'XBC,%s' % pm); F.emit('lda', '%s,XBC+A' % R); return fam   # -Xr r3_03_11: char *t = gp + a
+                                                           # -> ld XBC,(_gp) / lda XBC,XBC+A, sign-extended (chidx ac1,
+                                                           # a return, zero-extends through byte_sum below)
         return byte_sum(F, src, fam, ('ld', pm))           # lda XWA,XBC+A (-O3 -XS ac1 into XHL zero-extends, codegen's
                                                            # lda form is for a result in XWA there: r1_04_19 -O3 -XS)
+    if pb[0] == 'lptr' and pb[1].ty.base.size == 1 and not o: return None   # (unprobed: a char pointer local)
     if pb[0] == 'gptr':                                    # ac2 / au2: ... ld HL,WA / add HL,HL / ld XWA,(_gpi) /
         widen(F, src, R2, signed, esz)                     # extz XHL / add XHL,XWA
         F.emit('ld', 'XWA,%s' % pm); F.emit('extz', R); F.emit('add', '%s,XWA' % R); return fam

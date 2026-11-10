@@ -76,15 +76,25 @@ class Fn:
                 p.off = off; off += 2 if p.ty.size <= 2 else (p.ty.size + 1) // 2 * 2
         if s.sret is not None: f.params = [s.sret] + [p for p in f.params if p is not s.sret]
     def emit(s, op, args=None):
-        if LIVE_PARAM_GUARD and s.adecl and getattr(s, 'guard_on', False) and args is not None and \
+        if LIVE_PARAM_GUARD and (s.adecl or LIVE_LOCAL_GUARD) and getattr(s, 'guard_on', False) and args is not None and \
                 getattr(s, 'u1_i', None) is None and not getattr(s, 'u1x', None) and not getattr(s, 'cl_active', None) \
                 and not getattr(s, 'l2', None) and not getattr(s, 'u1_inv', None):   # (the loop allocators keep their
                                                          # registers in their own objects; ol_inv hoists a * b into a's)
             for fam_ in written_fams(op, args):
-                for d in s.f.params:
-                    if getattr(d, 'reg', None) in ('WA', 'BC', 'DE') and 'X' + d.reg == fam_ and d not in s.dead and \
+                cur_k = getattr(getattr(s, 'cur_stmt', None), 'k', None)
+                for d in list(s.f.params) + (list(s.f.decls) if LIVE_LOCAL_GUARD else []):
+                    if cur_k == 'return' or getattr(s, 'in_return', False) or d in getattr(s, 'deferred', ()) or \
+                            (d.kind != 'param' and (op == 'cal' or cur_k is None or getattr(s, 'counted', None) or
+                                                    not local_defined_before(s, d))):
+                        continue                         # (nothing is live after a return: _strlen's ld HL,0xffff; a
+                                                         # deferred copy is not loaded yet; a call's clobber of a local's
+                                                         # home is its planner's business: homes2a R55; a counted-loop
+                                                         # planner's init: ol_c_acc3's ld H,0x0; a local not assigned
+                                                         # yet: lnr3 s_add2_u's d1)
+                    if getattr(d, 'reg', None) in ('WA', 'BC', 'DE', 'HL') and 'X' + d.reg == fam_ and d not in s.dead and \
                             param_live_after(s, d) and not assigns_decl(getattr(s, 'cur_stmt', None), d) and \
                             not assigns_decl(getattr(s, 'top_cur', None), d) and \
+                            not (op == 'ld' and own_slot(s, d, args)) and \
                             not re.search(r',(X?IZ|QIZ|QIZH|IZL|X?IX|X?IY)$', args):   # (a read of a home: the
                         raise Unsupported('%s %s over the live parameter %s in %s' % (op, args, d.name, d.reg))   # parameter moved there, c_fordown)
         s.lines.append('\t' + op + ('\t' + args if args else ''))
@@ -152,6 +162,9 @@ def fold(e):
         from frontend import N                           # c_find: return -1 -> ld HL,0xffff
         v = -fold(e.e).value; sz = e.ty.size if e.ty is not None else 2
         return N('const', value=v, ty=e.ty)
+    if e.k == 'un' and e.op == '!' and FOLD_NOT and fold(e.e).k == 'const' and fold(e.e).value is not None:
+        from frontend import N                           # r3_01_13: !7UL -> 0 (the model had tested it at run time)
+        return N('const', value=int(not fold(e.e).value), ty=e.ty)
     if e.k == 'un' and e.op == '~' and FOLD_NOT and fold(e.e).k == 'const' and fold(e.e).value is not None:
         from frontend import N                           # _fgetc: stream->flag &= ~__UNGETC -> andw (XBC),0xfffb
         return N('const', value=~fold(e.e).value, ty=e.ty)
@@ -474,7 +487,8 @@ def gen(F, e, fam, size, then_ret=False, store=False):
             W_ = free_reg(F, avoid={'WA'})                 # r2_01_01: int t = -gi2 with a in WA -> ld BC,(_gi2) /
             gen(F, e.e, W_, size); F.emit('neg' if e.op == '-' else 'cpl', FAM[W_][size])   # neg BC / ld IZ,BC
             F.emit('ld', '%s,%s' % (FAM[fam][size], FAM[W_][size])); return fam
-        gen(F, e.e, fam, size)
+        f_ = gen(F, e.e, fam, size)
+        if f_ in FAM and size in FAM[f_] and f_ != fam and FAM[f_][size] != FAM[fam][size]: fam = f_   # (r3_09_14)
         R = FAM[fam][size]
         if size == 4:                          # neg_l: cpl HL / cpl QHL / inc 1,XHL
             F.emit('cpl', FAM[fam][2]); F.emit('cpl', Q[fam])
@@ -643,12 +657,16 @@ def gen(F, e, fam, size, then_ret=False, store=False):
             # _toupper: ld WA,IZ / sub WA,0x20 / ld HL,WA / j L2; _atoi: ld WA,IY / neg WA / ld HL,WA
             f2 = gen(F, e.a, 'WA', size); F.emit('ld', '%s,%s' % (FAM[fam][size], FAM[f2][size]))
         else:
+            pend0 = F.pending
             dead0 = set(F.dead); fa_ = gen(F, e.a, fam, size); F.dead = dead0   # (the arms are exclusive: cn_tern_i)
             if fa_ != fam and fa_ in FAM and size in FAM[fa_]: F.emit('ld', '%s,%s' % (FAM[fam][size], FAM[fa_][size]))
+            if F.pending != pend0: flush_pops(F)         # (r3_08_13: an arm's own call pops inside the arm)
         F.cond_joins = getattr(F, 'cond_joins', set()) | {lend}
         F.emit('j', lend); F.lines.append(lelse + ':')
+        pend0 = F.pending
         fb_ = gen(F, e.b, fam, size)
         if fb_ != fam and fb_ in FAM and size in FAM[fb_]: F.emit('ld', '%s,%s' % (FAM[fam][size], FAM[fb_][size]))   # r2_09_13
+        if F.pending != pend0: flush_pops(F)
         F.lines.append(lend + ':'); return fam
     if e.k == 'un' and e.op == '!':
         x = strip(e.e); xs = x.ty.size; m = mem_operand(F, x)
@@ -715,8 +733,10 @@ def gen(F, e, fam, size, then_ret=False, store=False):
         x = strip(e.e); b = strip(x.base); ii = unpromote(x.idx)
         iv = regvar_of(ii.e) if ii.k == 'load' else None
         if b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array' and x.ty.size == 1 and \
-                iv is not None and iv.ty.size == 2 and iv.reg in ('WA', 'BC', 'DE', 'HL', 'IX', 'IY', 'IZ'):
-            X = FAM[fam][4]                                # random r1_00_00: char *u = &gca[t], t in IZ ->
+                iv is not None and iv.ty.size == 2 and iv.reg in ('WA', 'BC', 'DE', 'HL', 'IX', 'IY', 'IZ') and fam == 'WA' \
+                and iv.ty.signed:                          # (r3_07_07: an unsigned index is zero-extended whole)
+            touch_home(F, iv)                              # (r3_07_07: the home is loaded first; r3_04_06: a return
+            X = FAM[fam][4]                                # random r1_00_00: char *u = &gca[t], t in IZ ->   zero-extends)
             F.emit('lda', '%s,_%s' % (X, b.decl.name))     # lda XWA,_gca / lda XWA,XWA+IZ
             F.emit('lda', '%s,%s+%s' % (X, X, FAM[iv.reg][2])); return fam
     if e.k == 'addr' and strip(e.e).k == 'index' and fam != 'WA':
@@ -766,6 +786,10 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         e = N('bin', op='<<', l=e.l, r=N('const', value=fold(e.r).value.bit_length() - 1, ty=e.r.ty), ty=e.ty)
         op = '<<'
     rk_ = fold(e.r)
+    if op in ('%', '/') and F.opt and CHAR_PRODUCT_DIV_GUARD and strip(e.l).k == 'bin' and strip(e.l).op == '*' and \
+            fold(strip(e.l).r).k == 'const' and strip(strip(e.l).l).k == 'cast' and strip(strip(strip(e.l).l).e).ty is not None \
+            and strip(strip(strip(e.l).l).e).ty.size == 1:
+        raise Unsupported('char product remainder')     # (r3_07_12 -O3 -XS: (gca[0] * 61) % 2 -> muls WA,0x3d / exts WA /
     if op == '%' and size in (1, 2) and UCHAR_MOD_AND and rk_.k == 'const' and rk_.value is not None and rk_.value >= 2 and \
             rk_.value & (rk_.value - 1) == 0 and narrow(e.l, 1) is not strip(e.l) and not narrow(e.l, 1).ty.signed and \
             narrow(e.l, 1).ty.size == 1:
@@ -1329,6 +1353,13 @@ def ptr_access(F, x):
     pm = mem_operand(F, base)
     if pm is None or not pm.startswith('('): return None
     return pm, off
+
+def long_helper_node(n):
+    """a long / % or * that calls C9H_* (r3_02_00: the loop counter must not live in BC across it)"""
+    if getattr(n, 'k', None) != 'bin' or n.ty is None or n.ty.size != 4 or n.op not in '*/%': return False
+    r = fold(n.r)
+    if n.op == '*': return not (r.k == 'const' and r.value is not None and r.value > 0 and bin(r.value).count('1') <= 3)
+    return not (not n.ty.signed and r.k == 'const' and r.value and r.value & (r.value - 1) == 0)
 
 def nodes_in(e, kind):
     out = []
@@ -1938,6 +1969,10 @@ NEG_FREE_FAM = True                                       # see gen's unary - (r
 PTR_STORE_FREE = True                                     # see lvalue (r2_06_02)
 FOLD_CONST_CMP = True                                     # see fold (r2_06_17)
 LIVE_PARAM_GUARD = True                                   # see F.emit, written_fams (r2_07_15, r2_09_01)
+LIVE_LOCAL_GUARD = True                                   # the same for register locals (r3_04_08, r3_01_13)
+COND_FLUSH_POPS = True                                    # see gen_cond_false / true (r3_00_13, r3_06_08)
+UIDX32_EXPR = True                                        # see elem_addr (r3_04_11)
+CHAR_PRODUCT_DIV_GUARD = True                             # see gen_bin (r3_07_12)
 VALUE_FIRST_CHIDX = True                                  # see gen_stmt's assignment (r1_02_19)
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -2232,6 +2267,8 @@ def gen_assign_value(F, e, fam, size, in_place=False):
 def gen_cond_true(F, c, target):
     """jump to target when c is true (ctrl.c: c_orbr's first operand)"""
     c = strip(c)
+    if F.pending and COND_FLUSH_POPS and not nodes_in(c, 'call') and not getattr(F, 'arg_bases', None):
+        flush_pops(F)
     if FOLD_CONST_CMP and c.k == 'bin' and c.op in ('&&', '||'):
         fl, fr = fold(c.l), fold(c.r)
         if fr.k == 'const' and fr.value is not None:
@@ -2271,7 +2308,9 @@ def gen_cond_false(F, c, target):
     """jump to `target` (a label, or 'RET' for the function exit) when condition c is false; returns the
     constant value of c when it folds"""
     c = strip(c)
-    if FOLD_CONST_CMP and c.k == 'bin' and c.op in ('&&', '||'):
+    if F.pending and COND_FLUSH_POPS and not nodes_in(c, 'call') and not getattr(F, 'arg_bases', None):
+        flush_pops(F)                                   # (r3_00_13: a ?: with pops pending from an earlier statement
+    if FOLD_CONST_CMP and c.k == 'bin' and c.op in ('&&', '||'):   # released them in one arm only: wrong code)
         fl, fr = fold(c.l), fold(c.r)                   # r2_06_17: gca[a] & 0x7 || 39 < 3 -> the test of gca[a] alone
         if fr.k == 'const' and fr.value is not None:
             if c.op == '||': return None if fr.value else gen_cond_false(F, c.l, target)
@@ -2783,7 +2822,8 @@ def elem_addr(F, lv, kind):
     if b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array':
         g = '_' + b.decl.name; sized = getattr(b.decl.ty, 'count', 0)
         ui = unpromote(lv.idx)
-        if UIDX32 and plain and ui.k == 'load' and ui.ty is not None and ui.ty.size == 2 and not ui.ty.signed and \
+        if UIDX32 and ui.ty is not None and ui.ty.size == 2 and not ui.ty.signed and (plain and ui.k == 'load' or
+                UIDX32_EXPR and ui.k == 'bin' and not has_helper_call(ui)) and \
                 kind in ('load', 'store', 'storek', 'add', 'andk', 'cmp'):
             # random r1_08_00: an unsigned int index is zero-extended whole, as for an incomplete array:
             # ld WA,(i) / extz XWA / sll 0x2,XWA / ld XDE,_gula / add XDE,XWA / and (XDE),XWA; guca[a] ->
@@ -3613,12 +3653,14 @@ def ptr_store_before_use(rest, d, init=None):
     """does a statement before d's first use write what d's initializer read: a store through a pointer or into an
     array element when the initializer reads memory through one (r2_08_05: gpl[2] = 8L after long t = gpl[2] ^ k),
     or a write of a global the initializer reads (r2_05_10: gpi = &gia[u] after int t = *gpi + a)?"""
-    reads = set(); through = []
+    reads = set(); through = []; vreads = set(); calls = []
     if init is not None:
         def rv(n, depth):
             if n.k == 'load' and strip(n.e).k == 'var' and strip(n.e).decl.kind == 'global': reads.add(strip(n.e).decl)
+            if n.k == 'load' and strip(n.e).k == 'var': vreads.add(strip(n.e).decl)
             if n.k == 'load' and (strip(n.e).k in ('deref', 'index') or strip(n.e).k == 'member' and strip(n.e).arrow):
                 through.append(n)
+            if n.k == 'call': calls.append(n)
         walk(init, rv)
     for st in rest:
         if uses_decl(st, d): return False
@@ -3626,8 +3668,9 @@ def ptr_store_before_use(rest, d, init=None):
         def target(t):
             t = strip(t)
             if t.k in ('deref', 'index') or (t.k == 'member' and t.arrow):
-                return init is None or bool(through) or bool(reads)   # (r2_09_01: *gp may alias gs.u; _ultoa: q = s folds)
-            if t.k == 'var' and t.decl in reads: return True
+                return init is None or bool(through) or bool(reads) or bool(calls)   # (r2_09_01: *gp may alias gs.u; _ultoa: q = s folds)
+            if t.k == 'var' and t.decl in vreads: return True   # (r3_01_07: a = gu2 before gpi = t with t = gpi + a)
+            if t.k == 'var' and t.decl.kind == 'global' and (through or calls): return True   # (r3_04_11, r3_07_01)
             if t.k == 'member' and not t.arrow and strip(t.base).k == 'var' and strip(t.base).decl in reads: return True
             return False
         def v(n, depth):
@@ -3857,8 +3900,9 @@ def gen_stmt(F, s, last):
                 rest = body[i + 1:]
                 u = uses_of(rest, c.var, [])
                 helper_res = getattr(c.var, 'no_fold', False)
+                upto = rest[:next((k for k, x in enumerate(rest) if uses_decl(x, c.var)), len(rest)) + 1]
                 if len(u) == 1 and (c.var.ty.size >= 2 or (F.opt and not F.adecl)) and not call_before_use(rest, c.var) \
-                        and not helper_res and not written_in(rest, c.var) and \
+                        and not helper_res and not written_in(upto, c.var) and \
                         not (NO_FOLD_OVER_STORE and ptr_store_before_use(rest, c.var, c.init)):   # (lnr4.c h5: c ^= s[i] then gc = c)
                                                      # (mul_l_loc under O3XSXr: x = a * b stays in a slot)
                     for x in rest: substitute(x, c.var, c.init)   # cdecl -O folds a char local too (add_c_loc)
@@ -3919,7 +3963,8 @@ def gen_stmt(F, s, last):
                 F.last_use[d] = id(ld) if c.e.op in ('*', '/') else None   # .as_mul_loc: muls XWA,BC in place;
                 # .as_mod_loc under O3XSXr is not: ld HL,WA / exts XHL / divs XHL,BC / ld HL,QHL
                 i += 1; continue
-            if c.k == 'switch' and nxt is not None and nxt.k == 'return' and i + 2 == len(body):
+            if c.k == 'switch' and nxt is not None and nxt.k == 'return' and i + 2 == len(body) and \
+                    not switch_breaks(c.body):             # (r3_05_00: an arm that breaks must reach the return)
                 F.switch_after = nxt                       # abi switch.c sw_char: the return after the switch goes
                 gen_stmt(F, c, False)                      # right after the compare chain
                 if getattr(F, 'switch_after', None) is None: i += 2; continue
@@ -4140,7 +4185,7 @@ def gen_stmt(F, s, last):
                 for i in js: F.lines[i] = '\tret'         # (exts HL / ret, as the oracle at every set)
             else: F.lines.append(lend + ':')
         return
-    if s.k == 'expr' and F.pending and POP_MERGE_MAX and POP_FLUSH_NOCALL and not has_helper_call(s.e) and \
+    if s.k == 'expr' and F.pending and POP_MERGE_MAX and POP_FLUSH_NOCALL and not nodes_in(s.e, 'call') and \
             not (strip(s.e).k == 'bin' and strip(s.e).op == '=' and strip(strip(s.e).l).k == 'var' and
                  getattr(strip(strip(s.e).l).decl, 'reg', None)):
         flush_pops(F)                                      # random r1_02_19: vd(gd2); gua[a] = ... -> cal _vd /
@@ -4273,6 +4318,15 @@ def gen_stmt(F, s, last):
             F.emit('ld', '%s,%s' % (t, FAM[rv0.reg][size])); return   # ld XWA,(_gp) / ld (XWA),IX
         if COPY_ELEM_DE and not F.opt and gidx(lv) and gidx(s.e.r) and not ({'DE', 'HL'} & live_regs(F)):
             t = lvalue(F, lv, idx='DE', base='XHL')   # opt_loops.c ol_i_copy (none): gb[i] = ga[i] -> ld DE,IX /
+        elif VALUE_FIRST_CHIDX and lv.k == 'index' and strip(s.e.r).k == 'bin' and strip(s.e.r).op == '=' and \
+                not fpgen.is_fp(lv.ty) and size in (1, 2, 4) and strip(strip(s.e.r).l).k == 'var' and \
+                uses_decl(lv.idx, strip(strip(s.e.r).l).decl):   # (only when the index reads the assigned variable:
+                                                                  # r1_00_05's gula[3] = gul = gula[2] keeps its form)
+            fam = gen(F, s.e.r, 'DE', size)              # r3_05_02: guca[a] = a = (a - guca[4]) / 100: the inner
+            if fam != 'DE': F.emit('ld', '%s,%s' % (FAM['DE'][size], FAM[fam][size]))   # assignment first, the index
+            n2_ = len(F.lines); t = lvalue(F, lv, kind='storev')                        # reads the new a
+            if clobbers(F.lines[n2_:], '(XDE)'): raise Unsupported('element store over its value')
+            F.emit('ld', '%s,%s' % (t, FAM['DE'][size])); return
         elif VALUE_FIRST_CHIDX and chidx.is_elem(F, lv) and size == 1 and chidx.store_byte_shape(F, lv) and \
                 strip(s.e.r).k != 'load' and fold(s.e.r).k != 'const' and not has_helper_call(s.e.r):
             F.emit('lda', 'XBC,%s' % chidx.store_byte_shape(F, lv))   # r2_05_07 (-Xr): guca[a] = (uchar)(gc2 + 2)
@@ -4333,6 +4387,14 @@ def gen_stmt(F, s, last):
         F.emit('ld', '%s,%s' % (t, FAM[fam][size])); return
     raise Unsupported('statement ' + s.k)
 
+_gen_stmt_body = gen_stmt
+def gen_stmt(F, s, last):
+    """gen_stmt with F.in_return raised while a return statement (at any depth) is generated: the live-local guard
+    then knows nothing is read after it (_strlen: if (ss == NULL) return 0xffff; writes ss's HL)"""
+    prev = getattr(F, 'in_return', False); F.in_return = prev or s.k == 'return'
+    try: return _gen_stmt_body(F, s, last)
+    finally: F.in_return = prev
+
 def param_live_after(F, d):
     """is d read by a top-level statement after the current one, or by the current one when it is a loop?
     (the live-parameter guard; inside a loop every read of the next iteration counts)"""
@@ -4343,6 +4405,12 @@ def param_live_after(F, d):
         return any(uses_decl(x, d) for x in (getattr(top, 'cond', None), getattr(top, 'inc', None), top.body) if x is not None)
     return top.k in ('while', 'do') and uses_decl(top, d)
 
+def own_slot(F, d, args):
+    """is this `ld R,(XSP+k)` the reload of d's own slot into its register?  (c_cnt -O3 -XS: ld XWA,(XSP+0x4))"""
+    off = getattr(d, 'off', None) if d.kind == 'param' else getattr(d, 'slot', None)
+    if off is None: return False
+    return args.endswith(',(XSP+%s)' % hx(off + F.push)) or (off + F.push == 0 and args.endswith(',(XSP)'))
+
 def assigns_decl(node, d):
     """does the statement assign, op-assign or ++/-- the variable d (then writing its register is the point)"""
     if node is None or d is None: return False
@@ -4350,6 +4418,8 @@ def assigns_decl(node, d):
     def v(n, depth):
         if n.k in ('bin', 'opassign') and (n.k == 'opassign' or n.op == '=') and strip(n.l).k == 'var' and strip(n.l).decl is d: hit.append(n)
         if n.k == 'incdec' and strip(n.e).k == 'var' and strip(n.e).decl is d: hit.append(n)
+        if n.k == 'decl' and getattr(n, 'var', None) is d: hit.append(n)   # (c_sum: int s = 0 -> ld HL,0x0)
+    if getattr(node, 'k', None) == 'decl' and getattr(node, 'var', None) is d: return True
     walk(node, v)
     return bool(hit)
 
@@ -5985,7 +6055,7 @@ def counted_loop(F, s, multi=False):
                     and strip(ix.e).k == 'var' and strip(ix.e).decl is iv.decl:
                 if b.decl not in [a for a, _ in arrays]: arrays.append((b.decl, n.ty.size))
             else: bad.append(n)
-        if n.k == 'call' or fpgen.is_fp_op(n): bad.append(n)
+        if n.k == 'call' or fpgen.is_fp_op(n) or long_helper_node(n): bad.append(n)
     walk(s.body, v)
     if bad or not arrays or (len(arrays) != 1 and (not multi or kconst is not None)): return None
     if kconst is not None:
@@ -6014,7 +6084,7 @@ def u1_down_loop(F, s, i, k):
                     and strip(ix.e).k == 'var' and strip(ix.e).decl is i:
                 if b.decl not in [a for a, _ in arrays]: arrays.append((b.decl, n.ty.size))
             else: bad.append(n)
-        if n.k == 'call' or fpgen.is_fp_op(n): bad.append(n)
+        if n.k == 'call' or fpgen.is_fp_op(n) or long_helper_node(n): bad.append(n)
     walk(s.body, v)
     walk([x for x in flat(F.f.body) if x is not s] + [s.cond, s.inc], lambda n, d: ks.append(n) if n.k == 'var' and n.decl is k else None)
     if bad or ks or len(arrays) != 1: return None
@@ -6576,7 +6646,7 @@ def leaf_u1(F):
                     strip(ix.e).k == 'var' and strip(ix.e).decl is i:
                 acc.append((strip(b.e).decl, n.ty.size))   # (ol_gptr: gp[i] through a global pointer, -Xr)
             else: bad.append(n)
-        if n.k == 'call' or fpgen.is_fp_op(n): bad.append(n)
+        if n.k == 'call' or fpgen.is_fp_op(n) or long_helper_node(n): bad.append(n)
     walk(lp.body, v)
     if not bad and not acc and (F.adecl or (F.opt and outer is None)):   # ra_param3, ol_inv, ra_nested: no array
         locs = [d for d in f.decls if d.kind == 'local']
@@ -7127,8 +7197,8 @@ def one_early_call(F):
             for x in n: visit(x, depth)
             return
         if not hasattr(n, 'k'): return
-        if n.k == 'call' or fpgen.is_fp_op(n): calls.append((n, depth))
-        for key, v in n.__dict__.items():
+        if n.k == 'call' or fpgen.is_fp_op(n) or (depth and long_helper_node(n)): calls.append((n, depth))
+        for key, v in n.__dict__.items():            # (r3_02_00: gul % gula[7] in the loop calls C9H_remlu)
             if hasattr(v, 'k') or isinstance(v, list):
                 visit(v, depth + (1 if n.k in ('for', 'while', 'do') and key != 'init' else 0))
     visit(F.f.body, 0)
@@ -7159,9 +7229,9 @@ def plan_leaf(F):
     f = F.f
     has_call = []; loopvars = {}; modified = set(); deep = set(); temps_bc = []; temps_ptr = []
     def visit(n, depth):
-        if n.k == 'call' or fpgen.is_fp_op(n): has_call.append(n)
-        if n.k == 'load' and strip(n.e).k == 'var':
-            d = strip(n.e).decl
+        if n.k == 'call' or fpgen.is_fp_op(n) or (depth and long_helper_node(n)): has_call.append(n)   # (r3_02_00 -O3 -XS: gul %
+        if n.k == 'load' and strip(n.e).k == 'var':                                     # gula[7] calls C9H_remlu,
+            d = strip(n.e).decl                                                         # which clobbers a BC counter)
             if depth: loopvars[d] = loopvars.get(d, 0) + 1
             if depth >= 2: deep.add(d)
         if n.k in ('incdec',) and strip(n.e).k == 'var': modified.add(strip(n.e).decl); loopvars[strip(n.e).decl] = loopvars.get(strip(n.e).decl, 0) + (1 if depth else 0)
@@ -7581,14 +7651,39 @@ def N_var(d):
     from frontend import N
     return N('var', decl=d, ty=d.ty)
 
+def local_defined_before(F, d):
+    """has a statement up to the current top-level one assigned local d?  A write to its register before that is harmless."""
+    if d.kind == 'param': return True
+    for x in flat(F.f.body):
+        if x.k == 'decl' and getattr(x, 'var', None) is d:
+            if x.init is not None: return True           # (int d1; without an initializer defines nothing: s_add2_u)
+        elif assigns_decl(x, d): return True
+        if x is getattr(F, 'top_cur', None): return False
+    return True
+
+def switch_breaks(body):
+    """does a switch body break out of the switch itself (a break not inside a nested loop or switch)?"""
+    hit = []
+    def v(n, dep):
+        if not hasattr(n, 'k'): return
+        if n.k == 'break': hit.append(n); return
+        if n.k in ('while', 'do', 'for', 'switch'): return
+        for x in n.__dict__.values():
+            if isinstance(x, list):
+                for y in x: v(y, dep + 1)
+            elif hasattr(x, 'k'): v(x, dep + 1)
+    v(body, 0)
+    return bool(hit)
+
 def call_before_use(rest, d):
     """a call in the statements before the one that reads d: cc900 then keeps d (ch_c_xyz: x in a slot)"""
     for c in rest:
-        if uses_decl(c, d): return False
         found = []
         walk(c, lambda n, dep: found.append(n) if getattr(n, 'k', None) == 'call' else None)
-        if found: return True
-    return False
+        if uses_decl(c, d):                                # a loop, switch or if that calls and reads d: the read
+            return bool(found) and c.k in ('while', 'do', 'for', 'switch', 'if', 'block')   # may follow the call
+        if found: return True                              # (r3_05_00: gps->p = t in a switch arm after vd();
+    return False                                           # r3_00_06: t <= gl2 in a loop body after v2())
 
 def foldable(f, d):
     """a local that gen_stmt folds into its single use (no slot needed)"""
@@ -7790,9 +7885,10 @@ def knowledge_pass(lines, personality):
             if personality != 'v4.23' and prev == (args[0], args[1]):
                 prev = None; continue                      # the 2003 peephole: store, then reload of it
             known[f] = (args[0], args[1]); out.append(l); prev = None; continue
-        if args and args[0].startswith('(XSP') and op not in ('cp', 'cpb', 'cpw', 'bit', 'push', 'pushw', 'ld'):
+        mem_ = args[1] if op in ('inc', 'dec', 'incw', 'decw', 'incb', 'decb') and len(args) == 2 else (args[0] if args else '')
+        if mem_.startswith('(XSP') and op not in ('cp', 'cpb', 'cpw', 'bit', 'push', 'pushw', 'ld'):
             for k in list(known):                          # (r2_04_19: decw 0x1,(XSP) ended BC's copy of i)
-                if known[k][1] == args[0]: del known[k]
+                if known[k][1] == mem_: del known[k]
         if op in ('cpb', 'cpw') and len(args) == 2 and args[0].startswith('(XSP'):
             w = 1 if op == 'cpb' else 2                    # ae_c_chain_lg: ld A,(XSP+0x4) / ld (_gc),A / cp A,0x0
             hit = [r for r, m in known.values() if m == args[0] and len(r) == w and not r.startswith('Q')]

@@ -79,9 +79,18 @@ No fechamento do dia: as 674 funções do corpus pequeno exatas nas quatro combi
 opções; a biblioteca de 1997 em 186 de 248 funções exatas; 223 pares de rotinas do
 firmware reconstruídos byte a byte pelo nosso próprio toolchain; o primeiro corpus
 aleatório sem nenhum veredito de código errado; o segundo com os vereditos restantes
-revisados um a um em `model/semcheck_review.tsv` (quase todos são leituras fora do vetor,
+revisados um a um em `model/semcheck_review.tsv` (todos são leituras fora do vetor,
 comportamento indefinido em C em que o modelo e o original estendem o índice de maneiras
-diferentes), e um caso aberto, um laço contado sob `-O3 -XS`.
+diferentes); o laço contado sob `-O3 -XS` que ficara aberto, fechado na madrugada seguinte.
+
+Uma terceira semente, compilada logo depois, trouxe mais 52 vereditos, e dois deles valem
+registro porque nenhuma sonda os teria pego: uma variável local usada uma única vez, dentro
+de um `switch` ou de um laço que também chama uma função, era "dobrada" no ponto de uso,
+de modo que o modelo relia a variável global *depois* da chamada que podia tê-la alterado;
+e o `return` que segue um `switch` sem `default` era içado para junto da cadeia de
+comparações, de modo que um braço com `break` chegava ao fim da função sem calcular o valor
+de retorno. Um lote de correções deixou a terceira semente com três vereditos, todos
+revisados como comportamento indefinido.
 
 A taxa de funções aleatórias *exatas* continua baixa (2 a 4 %): o modelo ainda recusa dois
 terços delas por construtos que não conhece, e as que compila diferem do original na ordem

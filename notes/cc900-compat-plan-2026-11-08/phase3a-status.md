@@ -573,6 +573,15 @@ twelve above; the first random corpus 0 DIFFERENT at every set.  The exact count
 "heavier operand first", seen in r2_05_13 / r2_06_05 / r2_02_18), the next rule to fit with a probe of its own.
 The blog draft `notas/blog/2026-11-10_programas_aleatorios_contra_o_modelo.md` tells the day for outside readers.
 
+The third random corpus (2026-11-10, early morning; `corpus/random3/`, run `2026-11-10-6-micro-random3`): seed 3's 200
+functions found 52 DIFFERENT verdicts against the model at ca61cff10.  One batch of fixes (`corpus/random/README.md`,
+"The third corpus") leaves 3, all reviewed as UB only, and also closes `r2_04_19`; so no random corpus has an open
+wrong-code verdict.  Two of the fixes matter beyond the corpus: a single-use local was folded into a use inside a
+loop or switch that also made a call (the model re-read the global after the call), and the return hoisted after a
+switch's compare chain was skipped by an arm that `break`s.  Gate: no ledger row down (micro 674 / 674 at all four sets, library 186 / 184 / 174, pairs 223 MATCH), the four
+random3 rows added; semcheck DIFFERENT 21 -> 23 (`r2_04_19` gone, the three UB-only random3 rows added).  The exact counts of the random corpora
+stay at 1-2 % (random3: 3 / 2 / 4 / 2 of 200); the shapes seen there and not written yet are listed at the end of that README section.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

@@ -161,3 +161,42 @@ compared through a stale register copy.  The first corpus stays at 0 DIFFERENT. 
 - and the **live-parameter guard** (`LIVE_PARAM_GUARD`, `F.emit`): under `-Xr`, an instruction that writes WA, BC or
   DE while the parameter there is still read by a later statement makes the model refuse the function (`r2_07_15`,
   `r2_09_01`, `r2_01_01`).  It is off under the loop allocators, which keep their registers in their own objects.
+
+## The third corpus (2026-11-10, `corpus/random3/`, run 2026-11-10-6-micro-random3)
+
+Seed 3's 200 functions (`gen_random.py --seed 3`), compiled by the oracle in the VM and checked against the model at
+ca61cff10 (the second corpus's fixes), found 52 more DIFFERENT verdicts.  After this batch the third corpus reads
+55 / 54 / 48 / 49 checked and 0 / 0 / 1 / 2 DIFFERENT (3 / 2 / 4 / 2 exact), all three reviewed in `model/semcheck_review.tsv` as UB only
+(`r3_07_00`: `gca[c]` with a negative int parameter; `r3_01_06`: `guca[t]` with `t = gia[4]` negative), and the first
+and second corpora stay where they were (0, and the eleven UB-only rows).  `r2_04_19`, the second corpus's open case,
+is fixed here too: the reload-elision pass now sees `decw 0x1,(XSP)` as a write of that slot.  Fixed from this corpus:
+- two **wrong folds across a call**: a single-use local whose use sits in a loop, switch or if that also calls was
+  folded into that use, so the model re-read `gp` / `gps->l` after `vd()` / `v2()` had run (`r3_05_00`, `r3_00_06`;
+  `call_before_use` now treats a compound statement that both calls and reads the local as a call before the use);
+  and the initializer's own global reads block a fold over a later write of that global when the initializer also
+  reads through a pointer or calls (`r3_04_11`, `r3_07_01`, `r3_01_07`);
+- the **return after a switch** was hoisted to the compare chain even when an arm `break`s to it, so that arm returned
+  garbage (`r3_05_00`; `switch_breaks`);
+- a **loop counter in BC across a long helper**: `gul % gula[7]` calls `C9H_remlu`, which the L2 leaf allocator did not
+  count as a call (`r3_02_00` -O3 -XS; `long_helper_node` in `plan_leaf`, `one_early_call` and `counted_loop`);
+- **pending pops** released inside one arm of a `?:` or `if` only (`r3_00_13`, `r3_06_08`, `r3_08_13`: a flush at the
+  condition when nothing is live, and each arm releases its own call's pops);
+- `!7UL` folded (`r3_01_13`); an unsigned int index computed by an expression is zero-extended whole (`r3_04_11`,
+  `UIDX32_EXPR`); `&gca[t]` with t in a home takes the lda form only for a signed index into XWA (`r3_07_07`);
+  `guca[a] = a = (a - guca[4]) / 100` evaluates the inner assignment first (`r3_05_02`); `char *t = gp + a` under
+  `-Xr` is `ld XBC,(_gp) / lda XBC,XBC+A` (`r3_03_11`, chidx); a char local in QIZH reads like memory and a pointer
+  local in its slot is a base (`r3_07_16`); unary `-` / `~` keep the family the operand came back in (`r3_09_14`);
+- and the **live-local guard** (`LIVE_LOCAL_GUARD`): the live-parameter guard now also covers register locals in WA,
+  BC, DE or HL, refusing a function whose code would overwrite one that a later statement reads (`r3_04_08`,
+  `r3_01_13`, `r3_06_06`); `(gca[0] * 61) % 2` under -O3 -XS is refused rather than computed in the wrong width
+  (`r3_07_12`, `CHAR_PRODUCT_DIV_GUARD`).  The first gate of this batch showed the local guard's false positives, each
+  now an exemption: a write inside a `return` statement at any depth (`_strlen`'s `if (ss == NULL) return 0xffff;`),
+  a parameter copy not loaded yet (`F.deferred`), a call's clobber of a local's home (the homes planner's `cal .g1 /
+  ld QIZ,HL`), a counted-loop planner's own init (`ol_c_acc3`'s `ld H,0x0`), and a local no statement has assigned
+  yet (`s_add2_u`'s `int d1;`, `_fscanf`'s `va_list args;`: a declaration without initializer defines nothing).
+
+Shapes the third corpus shows and the model does not write yet (exactness, not correctness): a pointer local read
+once after a call lives in XIZ without -O (`r3_05_00`: `push XIZ / ld XIZ,(_gp)`, the model uses a frame slot); under
+-O3 -XS a loop-invariant element address is hoisted into a stack slot (`r3_02_00`: `lda XWA,_gula+0x1c / ld (XSP+0x2),XWA`)
+and a repeated argument is loaded once and pushed twice (`ld WA,(_gi2) / push WA / push WA`); and `-(int)gul` is
+`ld XWA,(_gul) / ld HL,WA / neg HL`.
