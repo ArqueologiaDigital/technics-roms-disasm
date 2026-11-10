@@ -3699,6 +3699,7 @@ def gen_stmt(F, s, last):
                                                           # before the loop's test (inside the body was wrong code)
         gen_loop(F, s, last); return
     if s.k == 'switch':
+        if F.pending and LOOP_FLUSH_POPS: flush_pops(F)   # fpp7.c m25: the pops before the switch, not in a case arm
         gen_switch(F, s, last); return
     if s.k in ('case', 'default'):                         # a case label inside a switch body (gen_switch)
         if F.case_labels[id(s)] and id(s) not in F.case_inner:

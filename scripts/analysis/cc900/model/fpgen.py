@@ -86,6 +86,7 @@ SRET_HOME_LATE = True                              # the load after the first te
 SRET_HOME_EARLY = True                             # see needs_sret_home (_floor)
 CALL_INTO_LOCAL = True                             # see call_into (_floor)
 WINDOW_RULE = True                                 # fpwindow.plan: the slot order of FP temporaries (E2)
+CALL_OP_LEFT_FIRST = True                          # see eval_val (fpp7 w5, w7)
 RANK_CONST = True
 MEMBER_FIRST = True
 LONG_TOP = False                                   # tried for fo_conv2: costs fp_temps t_* and fp_stmts O3XS 9 -> 5
@@ -300,6 +301,10 @@ def eval_val(F, e, hint):
         vals = [fp_value_cast(x) for x in ops]
         if len(comp) == 2 and holds_xiz(ops[0]) and not holds_xiz(ops[1]):
             vals[0] = eval_val(F, ops[0], hint); vals[1] = eval_val(F, ops[1], None); dst = ('slot', vals[1][1])
+        elif len(comp) == 2 and CALL_OP_LEFT_FIRST and (vals[0].k == 'call') != (vals[1].k == 'call'):
+            vals[0] = eval_val(F, ops[0], hint); vals[1] = eval_val(F, ops[1], None); dst = ('slot', vals[0][1])
+            # fpp7 w5: fd(gd4) + gd2 * gd3 calls first; w7: (fd(gd2) + fd(gd3)) + fd(gd4) adds first, then calls
+            # fd(gd4): one call against one operation keeps the source order (two calls: the right one first)
         elif len(comp) == 2:
             vals[1] = eval_val(F, ops[1], hint); vals[0] = eval_val(F, ops[0], None); dst = ('slot', vals[0][1])
         elif len(comp) == 1 and fp_value_cast(ops[comp[0]]).k != 'call':
