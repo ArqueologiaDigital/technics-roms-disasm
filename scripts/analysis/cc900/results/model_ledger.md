@@ -1,4 +1,4 @@
-# Model ledger: 2026-11-09, model at the commit that adds this file version
+# Model ledger: 2026-11-10, model at the commit that adds this file version (HOMES2 = fallback-noloop)
 
 Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 
@@ -102,7 +102,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-34-micro-lnr4, v423/Xr                               | probes/lnr4.c        | 2 / 18 exact (11.1%)     |
 | run 2026-11-09-34-micro-lnr4, v423/O3XSXr                           | probes/lnr4.c        | 1 / 18 exact (5.6%)      |
 | run 2026-11-09-35-micro-regkw, v423/none                            | probes/regkw.c       | 0 / 12 exact (0.0%)      |
-| run 2026-11-09-35-micro-regkw, v423/O3XS                            | probes/regkw.c       | 2 / 12 exact (16.7%)     |
+| run 2026-11-09-35-micro-regkw, v423/O3XS                            | probes/regkw.c       | 10 / 12 exact (83.3%)    |
 | run 2026-11-09-35-micro-regkw, v423/Xr                              | probes/regkw.c       | 3 / 12 exact (25.0%)     |
 | run 2026-11-09-35-micro-regkw, v423/O3XSXr                          | probes/regkw.c       | 0 / 12 exact (0.0%)      |
 | run 2026-11-09-37-micro-homes2a, v423/none                          | probes/homes2a.c     | 15 / 204 exact (7.4%)    |
@@ -110,7 +110,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-37-micro-homes2a, v423/Xr                            | probes/homes2a.c     | 28 / 204 exact (13.7%)   |
 | run 2026-11-09-37-micro-homes2a, v423/O3XSXr                        | probes/homes2a.c     | 27 / 204 exact (13.2%)   |
 | run 2026-11-09-42-micro-homes2b, v423/none                          | probes/homes2b.c     | 7 / 90 exact (7.8%)      |
-| run 2026-11-09-42-micro-homes2b, v423/O3XS                          | probes/homes2b.c     | 7 / 90 exact (7.8%)      |
+| run 2026-11-09-42-micro-homes2b, v423/O3XS                          | probes/homes2b.c     | 9 / 90 exact (10.0%)     |
 | run 2026-11-09-42-micro-homes2b, v423/Xr                            | probes/homes2b.c     | 11 / 90 exact (12.2%)    |
 | run 2026-11-09-42-micro-homes2b, v423/O3XSXr                        | probes/homes2b.c     | 11 / 90 exact (12.2%)    |
 | run 2026-11-09-9-micro-fp, v423/none                                | micro/fp.c           | 108 / 108 exact (100.0%) |

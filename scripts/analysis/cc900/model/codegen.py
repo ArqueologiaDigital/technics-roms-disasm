@@ -18,9 +18,11 @@ Observed rules (v423, none):
 - long `*` `/` `%` call C9H_mulls / C9H_divls / C9H_remls (C9H_*lu unsigned) with XWA, XBC -> XHL (mul_l_pp).
 """
 
+import os
 import re
 import fpgen
 import homes
+import homes2
 
 class Unsupported(Exception): pass
 
@@ -1468,7 +1470,8 @@ def gen_compare(F, e):
             not getattr(F, 'l2', None) and not getattr(F, 'cl_active', None):
         lm = elem_addr(F, strip(l.e), 'cmp')               # ai_mul10: if (gsa[i] == 0) -> cpw (XBC+WA),0x0
     if rc.k == 'const' and lm is not None and lm.startswith('(') and size <= 2:
-        F.emit('cp' + ('b' if size == 1 else 'w'), '%s,%s' % (lm, hx(rc.value))); return cc
+        F.emit('cp' + ('b' if size == 1 else 'w'), '%s,%s' % (lm, hx(rc.value & (0xff if size == 1 else 0xffff)))); return cc
+        # (the immediate at the operand's width: _ldexp's `nn < -2047` in memory is cpw (XSP+..),0xf801)
     if l.k == 'call' and rc.k == 'const' and size == 2:   # k_cond, c_break: cal .r1 / cp HL,0x0 (cdecl too)
         gen_call(F, l); flush_pops(F, True); F.emit('cp', 'HL,%s' % hx(rc.value)); return cc   # _toupper: inc 0x2,XSP
     if rc.k == 'const' and rc.value == 0 and size == 4 and op in ('==', '!=') and lm in ('XIZ', 'XBC', 'XDE', 'XHL', 'XWA'):
@@ -4030,6 +4033,12 @@ def eval_sequence(node, out):
 # 32-bit value is a candidate (research-scratch sessions/2026-11-09_cc900-homes 1baf8a7: _strlen, _calloc, _memccpy,
 # _strcmp, _modf), else the first fit's rule (homes.choose returns None).
 R3_SETS = ('none', 'Xr', 'O3XSXr', 'O3XS')
+# Which functions the homes2 rule (homes2.py, research-scratch sessions/2026-11-09_cc900-homes2) decides instead of
+# homes.py's R3-set / R4 and the first-fit fallback below: one of homes2.POLICIES.  The environment variable
+# CC900_HOMES2 overrides it, so ledger.sh, pairs_model.py and semcheck.py can measure each policy unchanged.
+# 'fallback-noloop' (2026-11-10) is the one policy that moved no ledger row down (regalloc_notes.md, "The homes2
+# rule, ported"); 'r4keep' gains the most but loses ra_homes Xr / O3XSXr and one micro function per set.
+HOMES2 = os.environ.get('CC900_HOMES2', 'fallback-noloop')
 FP_AGGR = True
 MUL_K_XWA = True
 IFCHAIN_JOIN = True
@@ -4185,7 +4194,13 @@ def plan_homes(F):
                                    lambda d: ldecl.index(d) if d in ldecl else 0, helper_ops,
                                    homes.uses(F.f.body, F.f.params) if setname == 'O3XS' else None)
         winners_sorted = winners
-    if winners is None or setname not in R3_SETS:
+    h2home = None                                          # homes2: {decl: IZ | QIZ | XIZ} when the policy applies
+    if HOMES2 != 'off' and vals and not F.xiz_vars and \
+            homes2.applies(HOMES2, setname, setname == 'O3XS' and winners is not None, F.f):
+        h2home = homes2_choose(F, vals, setname)
+        winners = winners_sorted = sorted(h2home, key=lambda d: (0, F.f.params.index(d)) if d.kind == 'param'
+                                          else (1, ldecl.index(d) if d in ldecl else 0))
+    elif winners is None or setname not in R3_SETS:
         # the first fit's rule (fit_homes.py BEST): -O3 -XS without a 32-bit candidate (homes.choose returns None)
         sc = {}
         def bump(d, k): sc[d] = sc.get(d, 0) + k
@@ -4256,7 +4271,7 @@ def plan_homes(F):
                 moves.append(('XIZ', src))
             d.reg = 'XIZ'; d.homed = True; used['IZ'] = used['QIZ'] = True; F.xiz_vars.append(d)
             continue
-        r = 'IZ' if not used['IZ'] else 'QIZ'
+        r = h2home[d] if h2home is not None else ('IZ' if not used['IZ'] else 'QIZ')   # (homes2 names the half)
         if d.kind == 'param':
             src = FAM[d.reg][d.ty.size] if getattr(d, 'reg', None) else d
             moves.append((r, src))
@@ -4301,6 +4316,20 @@ def plan_homes(F):
         F.save_reg = 'XIZ' if used['QIZ'] or (fpgen.uses_fp(F.f) and fpgen.has_elem_hoist(F)) else 'IZ'   # _log
         F.emit('push', F.save_reg); F.push = 4 if F.save_reg == 'XIZ' else 2
     F.home_moves = moves; F.home_stores = stores
+
+def homes2_choose(F, vals, setname):
+    """the homes2 rule's register homes among plan_homes's candidates: {decl: 'IZ' | 'QIZ' | 'XIZ'}.  The rule
+    sees the whole function (homes2.predict); what it may home is plan_homes's own across-a-call set `vals`
+    (homes2.CANDIDATES 'model'), or also the locals the rule finds live across a call ('rule').  Everything else
+    keeps plan_homes's bookkeeping: a losing adecl register parameter gets a slot store at entry, a losing cdecl
+    parameter stays in its stack arrival, a losing local gets a frame slot."""
+    regp = {d for d in F.f.params if getattr(d, 'reg', None) in ('WA', 'BC', 'DE')}
+    H = homes2.predict(F.f, setname, regp)
+    pool = list(vals)
+    if homes2.CANDIDATES == 'rule':
+        pool += [d for d in F.f.decls if d.kind == 'local' and d not in vals and not getattr(d, 'reg', None)
+                 and d.ty.size in (1, 2, 4) and d.ty.kind in ('int', 'ptr') and not d.addr_taken]
+    return {d: H[d] for d in pool if H.get(d) in ('IZ', 'QIZ', 'XIZ')}
 
 def emit_homes(F):
     """after the frame is known: slot stores first, then the moves into IZ / XIZ (adecl.c d_keep).  A cdecl
@@ -5372,7 +5401,8 @@ def gen_loop(F, s, last):
                 d = F.u1_bound; F.u1_bound_loaded = True          # opt_counted.c O3XS: ld BC,(XSP+0x8) / cp BC,0x0
                 F.emit('ld', '%s,(XSP+%s)' % (FAM[d.reg][d.ty.size], hx(d.off + F.push)))
             if xm is not None:
-                F.emit('cp' + ('' if family_of(xm) else ('w' if sz == 2 else 'b' if sz == 1 else '')), '%s,%s' % (xm, hx(k0.value)))
+                kv = k0.value if family_of(xm) or sz not in (1, 2) else k0.value & (0xff if sz == 1 else 0xffff)
+                F.emit('cp' + ('' if family_of(xm) else ('w' if sz == 2 else 'b' if sz == 1 else '')), '%s,%s' % (xm, hx(kv)))
                 tgt = 'RET' if after_ret and not F.loops else exitl
                 F.emit('ret', INV[cc]) if tgt == 'RET' else F.emit('j', '%s,%s' % (INV[cc], tgt))
                 rotated = 'tested'

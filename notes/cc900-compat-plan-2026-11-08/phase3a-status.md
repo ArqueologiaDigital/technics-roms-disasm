@@ -510,6 +510,22 @@ homes (`_fread`, `_fwrite`, `_frexp`, `_ldexp`, `_sgl_set`, `_normlz2`: the home
 (`_strspn`, `_stricmp`, `_strnicmp`, `__todigit`'s byte temporaries), FP slot sharing E3 (`_log`, `_sqrt`, `cosh`,
 `sinh`, `tanh`, `atan2`), `__doprnt` and the `__afcnv` / `__facvt` families (unsupported constructs: local array
 element stores, `_frccal`'s unrolled compare chain).
+The homes2 rule ported (2026-11-10, `model/homes2.py`; `regalloc_notes.md`, "The homes2 rule, ported"): the
+session's linearizer and colouring, keyed by declaration, applied by `codegen.plan_homes` behind `codegen.HOMES2`
+(environment `CC900_HOMES2`) with nine policies.  Read back through each declaration's register it reproduces the
+rule's homes on homes2a / homes2b and gives 164 of the library's 198 variables (rule 155, homes.py 163), because only
+plan_homes's own candidates may be homed.  Measured with the ledger, the pairs and semcheck at every policy:
+- `all` / `r4keep` gain 144 / 145 functions over the 131 ledger rows (homes2a Xr 28 -> 79, O3XSXr 27 -> 67, held-out
+  homes2b +7 / +4 / +15 / +12, regkw 0 / 2 / 3 / 0 -> 8 / 10 / 7 / 10, ra_chains +2 / +2, micro-ra Xr +4) but lose
+  one micro function per set (`c_nested`, `k_keep`), ra_homes Xr 19 -> 11 and O3XSXr 23 -> 13, micro-ra none -3,
+  abi -1: the adecl parameter-against-local contests, two locals computed from register parameters, and loop
+  counters, where homes.py's pair test and declaration order are right and the rule is not;
+- `fallback-noloop` (cdecl -O3 -XS functions without a loop where `homes.choose` returns None) moves no row down:
+  regkw O3XS 2 -> 10, homes2b O3XS 7 -> 9.  **Adopted.**  The library rows (184 / 182 / 173) and the pairs (223
+  MATCH) are unchanged under every policy.
+- Fixed on the way: a 16-bit or 8-bit memory compare printed its negative immediate at 32 bits (`cpw
+  (XSP+0x20),0xfffff801`, which llvm-mc refuses; `_ldexp` when `nn` is in memory); the rule's linearizer now
+  walks a calling operand before its siblings are read (`a + b + (x > 0.0)`, adfp ad_idi).
 
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
