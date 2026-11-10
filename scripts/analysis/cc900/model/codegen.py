@@ -136,6 +136,9 @@ def fold(e):
         from frontend import N                           # c_find: return -1 -> ld HL,0xffff
         v = -fold(e.e).value; sz = e.ty.size if e.ty is not None else 2
         return N('const', value=v, ty=e.ty)
+    if e.k == 'un' and e.op == '~' and FOLD_NOT and fold(e.e).k == 'const' and fold(e.e).value is not None:
+        from frontend import N                           # _fgetc: stream->flag &= ~__UNGETC -> andw (XBC),0xfffb
+        return N('const', value=~fold(e.e).value, ty=e.ty)
     if e.k == 'bin' and e.op in ('+', '-', '*', '|', '&', '^') and fold(e.l).k == 'const' and fold(e.r).k == 'const' \
             and fold(e.l).value is not None and fold(e.r).value is not None:
         from frontend import N                           # sizeof(buf) - 1; cond_bits.c: x & (0x2 | 0x4)
@@ -212,6 +215,14 @@ def mem_operand(F, e):
                 if d.kind == 'param' and not getattr(d, 'reg', None) and hasattr(d, 'off'):
                     return '(XSP+%s)' % hx(d.off + k + F.push)
                 if d.kind == 'local' and hasattr(d, 'slot'): return '(XSP+%s)' % hx(d.slot + k + F.push)
+        pc_ = getattr(F, 'ptr_cache', None) or {}
+        if pc_ and v.k == 'member' and v.arrow and strip(v.base).k == 'load' and strip(strip(v.base).e).k == 'var' and \
+                strip(strip(v.base).e).decl in pc_:        # _fgetc: ld WA,(XBC) / ld HL,(XDE+0x8) / ld XWA,(XDE+0x4)
+            pd_ = strip(strip(v.base).e).decl; off_ = member_offset(v)
+            mc_ = getattr(F, 'member_cache', None) or {}
+            if (pd_, off_) in mc_: return mc_[(pd_, off_)]
+            P_ = pc_[pd_]
+            return '(%s+%s)' % (P_, hx(off_)) if off_ else '(%s)' % P_
         if REG_MEMBER and not F.opt and not F.adecl and v.k == 'member' and v.arrow:
             pv = strip(v.base)                           # assign_expr.c ae_fl_chain (none): cp in XBC ->
             if pv.k == 'load' and regvar_of(pv.e) and regvar_of(pv.e).ty.size == 4:   # cpw (XBC+0x4),0x4 /
@@ -1657,6 +1668,8 @@ LOOP_FLUSH_POPS = True                                    # see gen_stmt's loops
 POP_MERGE_MAX = 32                                        # see gen_stmt's call statement (fpp7 m14, regkw, _log)
 FP_ARRAY_DATA = True                                      # see the data emitter (_s_coshtbl)
 OPASSIGN_CALL_HL = True                                   # see gen_opassign (homes2b HL05)
+MEMBER_CSE = True                                         # see member_cse (_fgetc)
+FOLD_NOT = True                                           # see fold (~K)
 DEC_CMP_SUB = True                                        # dec 0x1,R / cp R,0x0 -> sub R,0x1 (opt_counted.c oc_down)
 TERN_TRUTH_PRE = True                                     # see gen's -O ?: path
 RET_CC_KEEPS = True                                       # see knowledge_pass
@@ -2643,6 +2656,37 @@ def gen_load_mem(F, v, fam, size):
             F.emit('add', '%s,%s' % (W, pm)); F.emit('ld', '%s,(%s)' % (R, W)); return fam
     raise Unsupported('memory load ' + v.k)
 
+def member_cse(F):
+    """cdecl -O: a function whose pointer parameter p is used only through its members, one member m of which is
+    read and written again: (p, m's offset) -- V4.23 keeps p in XDE and &p->m in XBC for the whole function
+    (_fgetc: if (stream->flag & __UNGETC) { stream->flag &= ~__UNGETC; return stream->unget; } else return
+    (*stream->in)(); -> ld XDE,(XSP+0x4) / lda XBC,XDE+0xa / ld WA,(XBC) / bit 0x2,WA / ... / andw (XBC),0xfffb /
+    ld HL,(XDE+0x8) / ... / ld XWA,(XDE+0x4) / call XWA)"""
+    f = F.f
+    ps = [d for d in f.params if d.ty.is_ptr() and d.ty.base is not None and d.ty.base.kind == 'struct' and
+          not getattr(d, 'reg', None) and hasattr(d, 'off')]
+    if len(ps) != 1: return None
+    p = ps[0]
+    loops = []
+    walk(f.body, lambda n, d: loops.append(n) if n.k in ('for', 'while', 'do', 'switch') else None)
+    if loops: return None
+    uses = []; members = {}
+    def v(n, d):
+        if n.k == 'member' and n.arrow and strip(n.base).k == 'load' and strip(strip(n.base).e).k == 'var' and \
+                strip(strip(n.base).e).decl is p:
+            members.setdefault(member_offset(n), []).append(n)
+        elif n.k == 'var' and n.decl is p: uses.append(n)
+    walk(f.body, v)
+    if len(uses) != sum(len(x) for x in members.values()) or not members: return None
+    twice = [(off, ns) for off, ns in members.items() if len(ns) >= 2]
+    if len(twice) != 1: return None
+    off, ns = twice[0]
+    stores = []
+    walk(f.body, lambda n, d: stores.append(n) if (n.k == 'opassign' or n.k == 'bin' and n.op == '=') and
+         strip(n.l) in ns else None)
+    if not stores or len(stores) == len(ns): return None    # a read and a write of it (not stores only: member_run)
+    return p, off
+
 def member_run(body, i):
     """cdecl -O: two or more statements from body[i] storing through members of one memory parameter p
     (`p->f = v;`, `p->f op= k;`) with no call: (p, length, any non-constant value, the next statement returns a
@@ -2759,6 +2803,8 @@ def lvalue(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False, kind='store'):
         bv = strip(lv.base); pc = getattr(F, 'ptr_cache', None) or {}
         if bv.k == 'load' and strip(bv.e).k == 'var' and strip(bv.e).decl in pc:
             P = pc[strip(bv.e).decl]; off = member_offset(lv)   # _fassign: stream once in XBC for three stores
+            mc_ = getattr(F, 'member_cache', None) or {}
+            if (strip(bv.e).decl, off) in mc_: return mc_[(strip(bv.e).decl, off)]   # _fgetc: andw (XBC),0xfffb
             return '(%s+%s)' % (P, hx(off)) if off else '(%s)' % P
         m = mem_operand(F, lv.base)
         if m is None: raise Unsupported('complex member base')
@@ -2958,7 +3004,7 @@ def gen_opassign(F, e):
                                                                     getattr(F, 'ptr_cache', None)):   # _itoa: addb (XIY),0x27
                                                                     # (_ungetc: orw (XWA+0xa),0x4)
         t = lvalue(F, e.l)                                # _ultoa: *p += 39 -> addb (XWA),0x27
-        F.emit(SIMPLE_OPS[op] + ('b' if size == 1 else 'w'), '%s,%s' % (t, hx(fold(r).value))); return t
+        F.emit(SIMPLE_OPS[op] + ('b' if size == 1 else 'w'), '%s,%s' % (t, hx(fold(r).value & ((1 << (8 * size)) - 1)))); return t
     if op in SIMPLE_OPS and OPASSIGN_CALL_HL and strip(r).k == 'call' and not has_helper_call(strip(r).fn) and \
             size in (2, 4) and not fpgen.is_fp(strip(e.l).ty) and regvar_of(getattr(strip(e.l), 'e', strip(e.l))) is None \
             and strip(e.l).k == 'var':
@@ -3329,6 +3375,13 @@ def gen_stmt(F, s, last):
             F.prev_stmt = body[i - 1] if i else None
             if F.opt and not F.adecl and MEMBER_RUNS and getattr(F, 'ptr_run_end', -1) == i:
                 F.ptr_cache = {}; F.store_val_reg = None
+            if F.opt and not F.adecl and MEMBER_CSE and i == 0 and getattr(F, 'top_stmts', None) is not None and \
+                    s is F.f.body and not getattr(F, 'ptr_cache', None):
+                mc = member_cse(F)
+                if mc is not None:                         # _fgetc: ld XDE,(XSP+0x4) / lda XBC,XDE+0xa: the stream in
+                    p_, moff = mc                          # XDE for every member, the twice-used member's address in XBC
+                    F.emit('ld', 'XDE,(XSP+%s)' % hx(p_.off + F.push)); F.emit('lda', 'XBC,XDE+%s' % hx(moff))
+                    F.ptr_cache = {p_: 'XDE'}; F.member_cache = {(p_, moff): '(XBC)'}; F.ptr_run_end = 10 ** 6
             if F.opt and not F.adecl and MEMBER_RUNS and not getattr(F, 'ptr_cache', None):
                 run = member_run(body, i)
                 if run is not None:
