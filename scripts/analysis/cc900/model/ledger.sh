@@ -166,6 +166,16 @@ for c in none O3XS; do    # the order of evaluation of binary operands, by opera
 done
 row "run 2026-11-10-9-micro-evorder, v423/Xr" "probes/evorder.c" "$O/2026-11-10-9-micro-evorder/out/v423/Xr/probes" corpus/probes/evorder.c --opt none --adecl
 row "run 2026-11-10-9-micro-evorder, v423/O3XSXr" "probes/evorder.c" "$O/2026-11-10-9-micro-evorder/out/v423/O3XSXr/probes" corpus/probes/evorder.c --opt O3XS --adecl
+for c in none O3XS; do    # the order probe as a stored value and as an argument (corpus/probes/evorder_st.c)
+  row "run 2026-11-10-10-micro-evorder2, v423/$c" "probes/evorder_st.c" "$O/2026-11-10-10-micro-evorder2/out/v423/$c/probes" corpus/probes/evorder_st.c --opt $c
+done
+row "run 2026-11-10-10-micro-evorder2, v423/Xr" "probes/evorder_st.c" "$O/2026-11-10-10-micro-evorder2/out/v423/Xr/probes" corpus/probes/evorder_st.c --opt none --adecl
+row "run 2026-11-10-10-micro-evorder2, v423/O3XSXr" "probes/evorder_st.c" "$O/2026-11-10-10-micro-evorder2/out/v423/O3XSXr/probes" corpus/probes/evorder_st.c --opt O3XS --adecl
+for c in none O3XS; do    # the order probe with long operands (corpus/probes/evorder_l.c)
+  row "run 2026-11-10-10-micro-evorder2, v423/$c" "probes/evorder_l.c" "$O/2026-11-10-10-micro-evorder2/out/v423/$c/probes" corpus/probes/evorder_l.c --opt $c
+done
+row "run 2026-11-10-10-micro-evorder2, v423/Xr" "probes/evorder_l.c" "$O/2026-11-10-10-micro-evorder2/out/v423/Xr/probes" corpus/probes/evorder_l.c --opt none --adecl
+row "run 2026-11-10-10-micro-evorder2, v423/O3XSXr" "probes/evorder_l.c" "$O/2026-11-10-10-micro-evorder2/out/v423/O3XSXr/probes" corpus/probes/evorder_l.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do

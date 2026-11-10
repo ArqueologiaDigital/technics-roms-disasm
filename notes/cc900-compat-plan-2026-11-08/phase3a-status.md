@@ -608,6 +608,18 @@ the member's address first, `lda XWA,_gs`), two indexed elements (the index is s
 element (IX), and the -Xr forms, where the parameter in WA is a register variable the rule leaves to the older
 paths.  Gate: no ledger row down (micro 674 / 674 at all four sets, chidx 50 / 50, library 186 / 184 / 174, pairs kn5000 223 MATCH), the four evorder rows added; semcheck DIFFERENT 31 -> 31 (the probe's 34 wrong-code verdicts of the committed model became refusals: 21 / 31 / 72 / 72 functions not checked at none / -O3 -XS / -Xr / -O3 -XS -Xr).
 
+Two more probes the same morning (`corpus/probes/evorder_st.c`: the kinds as a stored value, `es_*`, and as a pushed
+argument, `ea_*`; `corpus/probes/evorder_l.c`: the kinds as longs; run `2026-11-10-10-micro-evorder2`) show the same
+order matrices with each context's registers: a stored value accumulates in WA and the source takes BC; a WA
+accumulator loads from its own pointer or index; a pushed argument lets the source take WA and the accumulator the
+first free family (or its own pointer's, or its index register); longs follow the int rule in XHL / XWA / XBC with
+`!l` / `-l` through XWA.  `evorder_bin` now takes the context (HL, WA, ANY) and sizes 2 and 4, and a parameter the function never reads holds
+no register under -Xr; the probes read evorder.c 442 / 394 / 356 / 315 of 507, evorder_st.c 546 / 465 / 397 / 428
+of 676, evorder_l.c 259 / 191 / 206 / 148 of 338 at none / -O3 -XS / -Xr / -O3 -XS -Xr.  Two safety nets came out
+of it: `clobbers()` sees `scc` (a `scc eq,BC` over a member store's address in XBC was wrong code, `r2_06_05`), and
+`emit` refuses a byte register loaded into a word register (`ld WA,A` for a char index under -Xr, `r2_02_05`, from an
+older path the committed model's refusal of the return expression had masked).  Gate: no ledger row down (micro 674 / 674 at all four sets, chidx 50 / 50, library 186 / 184 / 174, pairs kn5000 223 MATCH); random2 none and -Xr 2 -> 3; evorder.c -O3 -XS 383 -> 394, -Xr 198 -> 356, -O3 -XS -Xr 155 -> 315; eight rows added; semcheck DIFFERENT 31 -> 31 (r2_06_05 and r2_02_05 became refusals).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
