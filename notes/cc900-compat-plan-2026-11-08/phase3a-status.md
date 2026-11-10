@@ -477,6 +477,29 @@ Leaf registers without options, and what the lnr probes showed (2026-11-09, nigh
 - semcheck DIFFERENT: 10 -> 5.  Left: `rh_ptr_int` (O3XSXr homes), `_fmod`, `_strtok`, `_tanh`, `__trig` (O3XS
   library).  Library 172 / 248, pairs kn5000 223: unchanged throughout.
 
+The library and the fitted rules of three agents (2026-11-09 night to 2026-11-10):
+- **Library 172 -> 184 of 248** (v4.23, -O3 -XS; kn5000 170 -> 182) with pairs kn5000 steady at 223, from rules
+  read off single library functions: `store_forward` (a value just stored to a global or static is used from its
+  register: `_strtok`), the argument pop before a test (`add XSP,n` when only the test reads the result, else
+  `lda`), a pointer difference in place, a pushed chain's register (`___fmemccpy`), `k = f()` straight into k's
+  slot and the hidden result pointer homed in XIZ by the homes2 rule (`_floor`, `_ceil`, `acos`), `dfb` tails,
+  width-aware struct arrays and double tables as data (`__ctype`, `_normtab`, `s_coshtbl`, `__fint`'s `maru`).
+- **Pops**: call statements' pops merge up to 32 bytes (two 12-byte `fd()` calls, six 2-byte calls, `frexp` +
+  `ldexp`), and pending pops are released before a loop; both found by semcheck on the fpp7-fpp9 probes, where
+  the model popped inside the loop body (wrong code).
+- **Three fitted rules reported** (research-scratch `sessions/2026-11-09_cc900-fp-e2b`, `_cc900-homes2`,
+  `_cc900-leaf-none`):
+  - LN1 (leaf registers without options) is in `model/leafnone.py`;
+  - the homes2 rule (IZ / QIZ / XIZ across calls: a Chow-style priority colouring by references per span, later-
+    declared of two locals takes IZ, `register` ignored) beats `homes.py` on every probe file (held-out homes2b
+    76 / 67 / 73 / 75 % of values against 47 / 42 / 56 / 52 %) but not yet on the library's variables (78 % vs
+    82 %); its result-pointer part (20 of 21) is ported, the rest waits until it is also better on the library;
+  - the window rule (the order of FP frame temporaries, E2) is `model/fpwindow.py`, hooked into fpgen's two
+    passes behind `WINDOW_RULE` and guarded (no early return, break / continue / goto or long slot): fitted
+    365 / 373 layouts, held-out fpp9 26 / 48.  Its gate is the next entry.
+- semcheck: 61 wrong-code functions found by the lnr probes and 32 by the fpp probes are all fixed or refused;
+  11 remain in fpp7 / fpp8 (FP argument stacks), 2 in homes2b, plus `__trig` (reviewed, not observable).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
