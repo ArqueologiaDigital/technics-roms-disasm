@@ -763,9 +763,12 @@ def call_stmt(F, e):
     """a call whose arguments include a double (d_call_v: vd(gd + gd2)): the double pushed through XIY / XIX, the
     pops released at once.  A double result that is thrown away still gets a frame temporary whose address is the
     hidden first argument (_log: frexp(x / SQRT2, &nptr) -> lda XWA,XSP+0x4c / push XWA / cal _frexp)."""
+    cg = C()
+    if F.pending and cg.POP_MERGE_MAX and F.pending + cg.call_arg_bytes(F, e) > cg.POP_MERGE_MAX:
+        cg.flush_pops(F)                                   # fpp8 mk03: fd(e1); fd(e2); lda XSP,XSP+0x18; fd(e3) ...
     if is_fp(e.ty) and e.ty.size == 8:
         call_into(F, e, ('discard',)); return
-    cg = C(); fn = strip(e.fn); n = 0
+    fn = strip(e.fn); n = 0
     if F.adecl and fn.k == 'var' and not getattr(fn.decl.ty, 'cdecl', False):
         cg.gen_call(F, e); return                          # probes/adfp.c ac_*: the adecl sequence (gen_call_adecl)
     for a in reversed(e.args):

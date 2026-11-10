@@ -1656,6 +1656,7 @@ PUSH_ANY_FAM = True                                       # see push_arg / gen_b
 LOOP_FLUSH_POPS = True                                    # see gen_stmt's loops (fpp7 m14)
 POP_MERGE_MAX = 32                                        # see gen_stmt's call statement (fpp7 m14, regkw, _log)
 FP_ARRAY_DATA = True                                      # see the data emitter (_s_coshtbl)
+OPASSIGN_CALL_HL = True                                   # see gen_opassign (homes2b HL05)
 DEC_CMP_SUB = True                                        # dec 0x1,R / cp R,0x0 -> sub R,0x1 (opt_counted.c oc_down)
 TERN_TRUTH_PRE = True                                     # see gen's -O ?: path
 RET_CC_KEEPS = True                                       # see knowledge_pass
@@ -2958,6 +2959,12 @@ def gen_opassign(F, e):
                                                                     # (_ungetc: orw (XWA+0xa),0x4)
         t = lvalue(F, e.l)                                # _ultoa: *p += 39 -> addb (XWA),0x27
         F.emit(SIMPLE_OPS[op] + ('b' if size == 1 else 'w'), '%s,%s' % (t, hx(fold(r).value))); return t
+    if op in SIMPLE_OPS and OPASSIGN_CALL_HL and strip(r).k == 'call' and not has_helper_call(strip(r).fn) and \
+            size in (2, 4) and not fpgen.is_fp(strip(e.l).ty) and regvar_of(getattr(strip(e.l), 'e', strip(e.l))) is None \
+            and strip(e.l).k == 'var':
+        gen_call(F, strip(r)); flush_pops(F)               # homes2b.c HL05: b ^= g1(a) -> cal _g1 / inc 0x4,XSP /
+        t = lvalue(F, e.l)                                 # xor (XSP+0x4),HL (the slot after the pops, the result as
+        F.emit(SIMPLE_OPS[op], '%s,%s' % (t, FAM['HL'][size])); return t   # it is)
     if op in SIMPLE_OPS:
         rk = fold(r).k == 'const' and fold(r).value is not None
         heavy = []                                         # the right side reads memory through an address
@@ -4601,6 +4608,10 @@ def regvar_stmt(F, e):
                                                                      # overwrite p)
             if strip(e.r).k == 'call' and R.startswith('Q'):
                 gen_call(F, strip(e.r)); flush_pops(F); m = FAM['HL'][d.ty.size]   # (the result stays in HL)
+            elif strip(e.r).k == 'call' and not has_helper_call(strip(e.r).fn) and d.ty.size in (2, 4) and \
+                    OPASSIGN_CALL_HL and R != FAM['HL'][d.ty.size]:
+                gen_call(F, strip(e.r)); m = FAM['HL'][d.ty.size]   # homes2b.c HL05: a += g1(c) -> cal _g1 / add IZ,HL
+                                                                     # (the pops wait for the next call's)
             else:
                 fam = gen(F, e.r, T, d.ty.size); m = FAM[fam][d.ty.size]
         if R.startswith('Q') and d.ty.size == 2:           # ra_homes.c rh_loop: s += g1(i) with s in QIZ ->
@@ -5152,7 +5163,7 @@ def gen_loop(F, s, last):
         N_ = FAM[d2['n'].reg][2]; T = FAM[d2['chain']][2]; XT = FAM[d2['chain']][4]
         exitl = F.newulabel(); body = F.newulabel()
         F.emit('cp', '%s,0x0' % N_)
-        after_ret = last and not F.xiz_vars and not F.pushes and not F.pending
+        after_ret = last and not F.xiz_vars and not F.pushes and not F.pending and not getattr(F, 'frame', 0)
         F.emit('ret', 'le') if after_ret and not F.loops else F.emit('j', 'le,%s' % exitl)
         K = FAM[d2['iv']][2] if d2['iv'] else None
         if K: F.emit('ld', '%s,%s' % (K, N_)); F.emit('dec', '0x1,%s' % K)
@@ -5169,7 +5180,7 @@ def gen_loop(F, s, last):
         I = FAM[cl_i(s).reg][2]                          # sub DE,0x1 / j ge,L1 / L2:
         exitl = F.newulabel(); body = F.newulabel()
         F.emit('ld', '%s,%s' % (I, FAM[dx[1].reg][2])); F.emit('sub', '%s,0x1' % I)
-        after_ret = last and not F.xiz_vars and not F.pushes and not F.pending
+        after_ret = last and not F.xiz_vars and not F.pushes and not F.pending and not getattr(F, 'frame', 0)
         F.emit('ret', 'lt') if after_ret and not F.loops else F.emit('j', 'lt,%s' % exitl)
         F.lines.append(body + ':')
         F.loops.append((exitl, lambda: body)); gen_stmt(F, s.body, False); flush_pops(F); F.loops.pop()
@@ -5228,7 +5239,7 @@ def gen_loop(F, s, last):
         for tab, reg in list(l2.get('tab_inv', {}).items()):
             if tab not in l2.setdefault('inv_done', set()) and uses_table(s, tab):
                 F.emit('lda', 'X%s,_%s' % (reg, tab.name)); l2['inv_done'].add(tab)
-    after_ret = last and not F.xiz_vars and not F.pushes and not F.pending
+    after_ret = last and not F.xiz_vars and not F.pushes and not F.pending and not getattr(F, 'frame', 0)
     if s.k == 'do':
         body = F.newulabel(); F.lines.append(body + ':')
         cont = [None]
