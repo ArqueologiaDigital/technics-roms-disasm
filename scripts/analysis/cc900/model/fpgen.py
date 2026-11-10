@@ -87,6 +87,8 @@ SRET_HOME_EARLY = True                             # see needs_sret_home (_floor
 CALL_INTO_LOCAL = True                             # see call_into (_floor)
 WINDOW_RULE = True                                 # fpwindow.plan: the slot order of FP temporaries (E2)
 CALL_OP_LEFT_FIRST = True                          # see eval_val (fpp7 w5, w7)
+COMMUTE_LAST_XBC = True                            # see eval_into / eval_val (fpp7 w5)
+ROOT_CELL_AFTER_CALL = False                       # the operation after a call takes the root's slot (fpp7 w4)
 RANK_CONST = True
 MEMBER_FIRST = True
 LONG_TOP = False                                   # tried for fo_conv2: costs fp_temps t_* and fp_stmts O3XS 9 -> 5
@@ -280,6 +282,11 @@ def prepare(F, ops):
         out[i] = eval_val(F, ops[i], None)
     return out
 
+def ncalls(e):
+    found = []
+    C().walk(e, lambda n, d: found.append(n) if n.k == 'call' else None)
+    return len(found)
+
 def has_call(e):
     found = []
     C().walk(e, lambda n, d: found.append(n) if n.k == 'call' else None)
@@ -301,10 +308,12 @@ def eval_val(F, e, hint):
         vals = [fp_value_cast(x) for x in ops]
         if len(comp) == 2 and holds_xiz(ops[0]) and not holds_xiz(ops[1]):
             vals[0] = eval_val(F, ops[0], hint); vals[1] = eval_val(F, ops[1], None); dst = ('slot', vals[1][1])
-        elif len(comp) == 2 and CALL_OP_LEFT_FIRST and (vals[0].k == 'call') != (vals[1].k == 'call'):
+        elif len(comp) == 2 and CALL_OP_LEFT_FIRST and ncalls(ops[0]) > ncalls(ops[1]):
             vals[0] = eval_val(F, ops[0], hint); vals[1] = eval_val(F, ops[1], None); dst = ('slot', vals[0][1])
-            # fpp7 w5: fd(gd4) + gd2 * gd3 calls first; w7: (fd(gd2) + fd(gd3)) + fd(gd4) adds first, then calls
-            # fd(gd4): one call against one operation keeps the source order (two calls: the right one first)
+            if e.op in ('+', '*') and COMMUTE_LAST_XBC: vals = [vals[1], vals[0]]   # (the last computed in XBC)
+            # the operand with more calls is evaluated first, the right one on a tie: fpp7 w4 gd2 * gd3 + fd(gd4)
+            # calls first; w5 fd(gd4) + gd2 * gd3 calls first; w7 (fd(gd2) + fd(gd3)) + fd(gd4) adds first (two
+            # calls against one), its inner sum calling fd(gd3) before fd(gd2) (a tie)
         elif len(comp) == 2:
             vals[1] = eval_val(F, ops[1], hint); vals[0] = eval_val(F, ops[0], None); dst = ('slot', vals[0][1])
         elif len(comp) == 1 and fp_value_cast(ops[comp[0]]).k != 'call':
@@ -449,9 +458,8 @@ def eval_into(F, e, dest):
             cell = Cell(e.ty.size); alloc(F, cell)
             vals = [fp_value_cast(x) for x in ops]
             first = comp[-1] if len(comp) == 2 else comp[0]
-            if len(comp) == 2 and CALL_OP_LEFT_FIRST and \
-                    (fp_value_cast(ops[0]).k == 'call') != (fp_value_cast(ops[1]).k == 'call'):
-                first = 0                                    # fpp7 w5 / w7: one call against one operation: source order
+            if len(comp) == 2 and CALL_OP_LEFT_FIRST and ncalls(ops[0]) > ncalls(ops[1]):
+                first = 0                                    # fpp7 w4 / w5 / w7: the operand with more calls first
             c0 = fp_value_cast(ops[first])
             if c0.k == 'call':
                 cc = Cell(c0.ty.size); call_into(F, c0, ('cell', cc), arg_hint=cell); vals[first] = ('slot', cc.off)
@@ -459,8 +467,10 @@ def eval_into(F, e, dest):
                 eval_into(F, c0, ('cell', cell)); vals[first] = ('slot', cell.off)
             else: vals[first] = eval_val(F, ops[first], cell)
             for i in comp:
-                if i != first: vals[i] = eval_val(F, ops[i], None)
-            op_into(F, e, vals, dest); return
+                if i != first: vals[i] = eval_val(F, ops[i], cell if c0.k == 'call' and ROOT_CELL_AFTER_CALL else None)
+            if len(comp) == 2 and first == 0 and e.op in ('+', '*') and COMMUTE_LAST_XBC:
+                vals = [vals[1], vals[0]]                    # the operand computed last goes to XBC (fpp7 w5:
+            op_into(F, e, vals, dest); return                # lda XBC,<product> / lda XDE,<fd's result>)
     if e.k == 'bin' and e.op in '+-*/' and len(e.op) == 1:
         op_into(F, e, prepare(F, [e.l, e.r]), dest); return
     if e.k == 'un' and e.op == '-':
