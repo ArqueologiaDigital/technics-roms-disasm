@@ -81,6 +81,8 @@ def stmt_reset(F):
     """the temporaries of one statement are free again at the next (_log: many statements, one small region)"""
     if getattr(F, 'fp_temps', None) is not None: F.ftemp_used = 0
 
+SRET_HOME_RANGE = True                             # see needs_sret_home (homes2's table)
+SRET_HOME_LATE = True                              # the load after the first test (acos, cosh)
 SRET_HOME_EARLY = True                             # see needs_sret_home (_floor)
 CALL_INTO_LOCAL = True                             # see call_into (_floor)
 RANK_CONST = True
@@ -781,6 +783,48 @@ def needs_sret_home(F):
     C().walk(F.f.body, lambda n, d: rets.append(n) if n.k == 'return' and n.value is not None else None)
     calls = []
     C().walk(F.f.body, lambda n, d: calls.append(n) if n.k == 'call' else None)
+    if SRET_HOME_RANGE:
+        # research-scratch sessions/2026-11-09_cc900-homes2 (sret_table.py, 20 of the library's 21 double functions):
+        # the pointer is homed when a call (real or helper) falls inside its range, from the start of the first
+        # statement that returns to the last return, and nothing else holds a half of XIZ (caller: F.xiz_vars).
+        body = C().flat(F.f.body)
+        def has_ret(st):
+            r = []; C().walk(st, lambda n, d: r.append(n) if n.k == 'return' and n.value is not None else None); return r
+        first = next((i for i, st in enumerate(body) if has_ret(st)), None)
+        if first is None or not rets: return False
+        # the range runs from the first return statement itself to the last one: a return's own top-level operation
+        # does not count (_fabs: return -x), the helpers of a returned call's other arguments do (_sin: _trig(x, -x, 1))
+        order = []
+        def lin(n, d):
+            if n.k == 'return' and n.value is not None: order.append(('ret', n))
+            elif n.k == 'call' or is_fp_op(n) or (n.k == 'bin' and n.op in '*/%' and n.ty is not None and n.ty.size == 4):
+                order.append(('call', n))
+        for st in body[first:]: C().walk(st, lin)
+        ri = [i for i, (k, n) in enumerate(order) if k == 'ret']
+        if not ri: return False
+        own = set()                                        # each return's own value node (and a returned call)
+        for k, n in order:
+            if k == 'ret':
+                v = fp_value_cast(n.value); own.add(id(v))
+        inrange = [n for i, (k, n) in enumerate(order) if k == 'call' and ri[0] < i <= ri[-1] + 0 and id(n) not in own]
+        # (walk order puts a return before its value's nodes, so a returned call's argument helpers lie in range)
+        if not inrange: return False
+        # where the load goes (SRET_HOME_LATE): at entry (sin, tan, atan2), or after the first if's test when a real
+        # call or an initialised double local precedes the first return (acos: fabs(x) > 1.0; cosh: ret = 1.0)
+        # late when a real call precedes the first return (tanh: xx = fabs(x); acos: fabs(x) > 1.0 in the test) or
+        # the first return hands back a double local initialised before (cosh, sinh: ret = K; ... return ret);
+        # otherwise at entry (sin, tan; atan2: ret = 0.0 precedes but the first return is the parameter y)
+        pre = []
+        for st in body[:first]: C().walk(st, lambda n, d: pre.append(n) if n.k == 'call' else None)
+        head = body[first]
+        if head.k == 'if': C().walk(head.cond, lambda n, d: pre.append(n) if n.k == 'call' else None)
+        inits = set()
+        for st in body[:first]:
+            C().walk(st, lambda n, d: inits.add(n.var) if n.k == 'decl' and n.init is not None and is_fp(n.var.ty) else None)
+        r0 = fp_value_cast(has_ret(head)[0].value)
+        ret_init = r0.k == 'load' and strip(r0.e).k == 'var' and strip(r0.e).decl in inits
+        F.sret_home_late = SRET_HOME_LATE and head.k == 'if' and (bool(pre) or ret_init)
+        return True
     if len(rets) >= 2 and SRET_HOME_EARLY:
         # _floor, _ceil: the two returns are the arms of the function's last if / else, so they share one exit and one
         # load of the pointer (hoisted above the test): no home.  A return before later code (_sin, _tan) needs it twice.
@@ -836,6 +880,8 @@ def has_elem_hoist(F):
 
 def hoist_elems(F, s):
     """at the start of statement s: lda XIZ,<element> for its first hoisted element (elem_hoists)"""
+    if getattr(F, 'sret_home', False): return          # _atan2: XIZ holds the result pointer; PAI5 is addressed
+                                                       # directly (lda XBC,_g_dbltbl + 0x10)
     e = getattr(s, 'e', None) if s.k == 'expr' else getattr(s, 'value', None) if s.k == 'return' else \
         getattr(s, 'init', None) if s.k == 'decl' else None
     if e is None or not hasattr(e, 'k'): return

@@ -1653,6 +1653,9 @@ STORE_FORWARD = True                                      # see store_forward (_
 POP_LDA_LIVE = True                                       # see gen_stmt's if (___fmemccpy)
 PTRDIFF_INPLACE = True                                    # see gen_ptr_arith (___fmemccpy)
 PUSH_ANY_FAM = True                                       # see push_arg / gen_bin (___fmemccpy)
+LOOP_FLUSH_POPS = True                                    # see gen_stmt's loops (fpp7 m14)
+POP_MERGE_MAX = 32                                        # see gen_stmt's call statement (fpp7 m14, regkw, _log)
+FP_ARRAY_DATA = True                                      # see the data emitter (_s_coshtbl)
 DEC_CMP_SUB = True                                        # dec 0x1,R / cp R,0x0 -> sub R,0x1 (opt_counted.c oc_down)
 TERN_TRUTH_PRE = True                                     # see gen's -O ?: path
 RET_CC_KEEPS = True                                       # see knowledge_pass
@@ -2083,15 +2086,28 @@ def push_arg(F, a):
         F.emit('ld', '%s,%s' % (X, m)); F.emit('push', X); F.push += 4; return 4
     if size == 4 and m is not None:
         F.emit('ld', 'XWA,%s' % m); F.emit('push', 'XWA'); F.push += 4; return 4
-    F.any_fam = PUSH_ANY_FAM
+    if fpgen.is_fp(strip(a).ty): return fpgen.push_fp_arg(F, a, None)   # _atan2: _sign(y) with a double y, called
+    F.any_fam = PUSH_ANY_FAM                                             # from an int-to-double conversion
     try: fam = gen(F, a, 'WA', size)
     finally: F.any_fam = False
     F.emit('push', FAM[fam][size]); F.push += size; return size
+
+def call_arg_bytes(F, e):
+    """the stack bytes a call statement's arguments take (a double 8, a pointer 4, else 2; a hidden result 4)"""
+    e = strip(e)
+    if e.k != 'call': return 0
+    n = 0
+    for a in e.args:
+        t = strip(a).ty; n += 8 if fpgen.is_fp(t) and t.size == 8 else 4 if t is not None and t.size == 4 else 2
+    rt = getattr(strip(e.fn).ty, 'ret', None) if strip(e.fn).ty is not None else None
+    if rt is not None and fpgen.is_fp(rt) and rt.size == 8: n += 4
+    return n
 
 def flush_pops(F, before_test=False):
     """release the stack arguments of earlier calls; more than 8 bytes is lda XSP,XSP+n, or add XSP,n when a test
     of the call's result follows (_strcpy: add XSP,0xc / or XHL,XHL; _strstr: add XSP,0xa)"""
     n = F.pending
+    F.pending_calls = 0
     if n:
         if n <= 8: F.emit('inc', '%s,XSP' % hx(n))
         elif before_test: F.emit('add', 'XSP,%s' % hx(n))
@@ -3285,6 +3301,9 @@ def read_after_top(F):
 def gen_stmt(F, s, last):
     tix = getattr(F, 'top_ix', None)
     if tix is not None and id(s) in tix: F.cur_top = tix[id(s)]
+    if getattr(F, 'sret_home_pending', None) and tix is not None and id(s) in tix:
+        r_ = []; walk(s, lambda n, d: r_.append(n) if n.k == 'return' and n.value is not None else None)
+        if r_: F.lines.append(F.sret_home_pending + '\t;sret-late'); F.sret_home_pending = None
     if s.k != 'block' and getattr(F, 'fp_temps', None) is not None:
         fpgen.begin_stmt(F); F._root_done = False; fpgen.hoist_elems(F, s)         # R5g: a statement's op temporaries are free at the next
         e = getattr(s, 'e', None) if s.k == 'expr' else None
@@ -3662,8 +3681,15 @@ def gen_stmt(F, s, last):
             else: F.lines.append(lend + ':')
         return
     if s.k == 'expr' and s.e.k == 'call':
-        gen_call(F, s.e); return
+        if F.pending and POP_MERGE_MAX and F.pending + call_arg_bytes(F, s.e) > POP_MERGE_MAX:
+            flush_pops(F)                                  # fpp7.c m14: fd(e1); fd(e2); lda XSP,XSP+0x18; fd(e3); ...
+        gen_call(F, s.e)                                   # (V4.23 merges call statements' pops up to 32 bytes:
+        return                                             # 1,045 pairs of 12-byte fd() calls and never three in
+                                                           # fpp5-fpp9; regkw.c k_plain six 2-byte calls, 0xc; _log
+                                                           # frexp + ldexp, 0x1e)
     if s.k in ('for', 'while', 'do'):
+        if F.pending and LOOP_FLUSH_POPS: flush_pops(F)   # fpp7.c m14: eight fd() calls then a while: the pops come
+                                                          # before the loop's test (inside the body was wrong code)
         gen_loop(F, s, last); return
     if s.k == 'switch':
         gen_switch(F, s, last); return
@@ -4202,7 +4228,8 @@ def plan_homes(F):
             hl[0].reg = 'HL'
     pairs = []                                             # k_expr: r1(a) + r1(a + 1) keeps the right result in QIZ
     walk(F.f.body, lambda n, dep: pairs.append(n) if n.k == 'bin' and n.op in SIMPLE_OPS and strip(n.l).k == 'call'
-         and strip(n.r).k == 'call' else None)
+         and strip(n.r).k == 'call' and not fpgen.is_fp(n.ty) else None)   # (cosh: exp(x) + exp(-x) are doubles
+                                                                           # in frame slots, not a QIZ temporary)
     if pairs:
         r = 'IZ' if not used['IZ'] else 'QIZ' if not used['QIZ'] else None
         if r:
@@ -7111,7 +7138,9 @@ def fp_plan_frame(F):
     if (fpgen.needs_xiz(F) or fpgen.has_elem_hoist(F)) and not F.xiz_vars:   # fp_temps.c t_mla: push XIZ
         F.lines.insert(1, '\tpush\tXIZ'); F.push += 4; F.xiz_vars.append('sret'); F.save_reg = 'XIZ'
         if fpgen.needs_sret_home(F):                       # _sin: ld XIZ,(XSP+0x38) right after the push
-            F.sret_home = True; F.lines.insert(2, '\tld\tXIZ,(XSP+%s)' % hx(F.sret.off + size + F.push))
+            F.sret_home = True
+            if getattr(F, 'sret_home_late', False): F.sret_home_pending = '\tld\tXIZ,(XSP+%s)' % hx(F.sret.off + size + F.push)
+            else: F.lines.insert(2, '\tld\tXIZ,(XSP+%s)' % hx(F.sret.off + size + F.push))
     if not size: return
     for p in f.params:
         if hasattr(p, 'off'): p.off += size
@@ -7653,6 +7682,12 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong
     if len(F.lines) >= 2 and F.lines[-1] == '\tret' and F.lines[-2].startswith('\tcal\t') \
             and not F.lines[-2].split('\t')[2].startswith(('C9H_', '._f')) and not F.lines[-2].endswith(';stack'):
         F.lines[-2:] = ['\tj\t' + F.lines[-2].split('\t')[2]]
+    if any(l.endswith('\t;sret-late') for l in F.lines):    # acos, cosh: the home load sits right before the first
+        k = next(i for i, l in enumerate(F.lines) if l.endswith('\t;sret-late'))   # test's cp HL,0x0
+        ln = F.lines.pop(k)[:-len('\t;sret-late')]
+        j = next((i for i in range(k, len(F.lines)) if F.lines[i] == '\tcp\tHL,0x0' or F.lines[i].endswith(':') or
+                  F.lines[i].startswith('\tj\t')), k)
+        F.lines.insert(j, ln)
     F.lines = [l[:-len('\t;stack')] if l.endswith('\t;stack') else l for l in F.lines]
     F.lines = [l[:-len('\t;u1')] if l.endswith('\t;u1') else l for l in F.lines]
     F.lines[1:1] = fpgen.const_block(F)                  # fp.c: d_add_pk: f_const ... S50000: fdatad ... f_code
@@ -7710,8 +7745,23 @@ def emit_data(unit, out):
             lines.append('\tfdatad\t%se%s%03d' % (m, x[0], abs(int(x))))
         elif d.ty.kind == 'array' and e.k == 'string':
             lines.append('\tdb\t%s,0' % e.value)
-        elif d.ty.kind == 'array' and e.k == 'initlist' and d.ty.base.kind == 'struct':
+        elif FP_ARRAY_DATA and d.ty.kind == 'array' and e.k == 'initlist' and d.ty.base.kind == 'float':
+            import struct                                  # _COSH.C _s_coshtbl: a double table as db rows of its
+            rows = []; ok = True                           # eight bytes (db 0,0,0,0,96,46,230,63)
+            for it in e.items:
+                x = strip(it)
+                while x.k == 'cast': x = strip(x.e)
+                v = x.value if x.k == 'fconst' else (data_value(x) if x.k == 'const' else None)
+                if v is None: ok = False; break
+                rows.append(list(struct.pack('<d' if d.ty.base.size == 8 else '<f', float(v))))
+            if not ok: continue
+            for i, row in enumerate(rows):
+                if i: lines.append('\talign\t1')
+                lines.append('\tdb\t%s' % ','.join(str(v) for v in row))
+        elif e.k == 'initlist' and (d.ty.kind == 'array' and d.ty.base.kind == 'struct' or d.ty.kind == 'struct'):
             rows = []                                      # __FLOAT.C g_dbltbl: one db row per element (its bytes);
+            elems = e.items if d.ty.kind == 'array' else [e]   # _COSH.C s_coshtbl: one DBLBIT union (db row)
+            ety = d.ty.base if d.ty.kind == 'array' else d.ty
             def flat_fields(x, ty):                        # __AFCNV.C normtab: each field at its own width, eight a
                 x = strip(x)                               # line (dl -3529,41638,... / align 1 / dl 63128)
                 if ty.kind == 'struct':
@@ -7739,8 +7789,8 @@ def emit_data(unit, out):
                 v = data_value(x)
                 return None if v is None else [(v, ty.size)]
             ok = True
-            for it in e.items:
-                vals_ = flat_fields(it, d.ty.base)
+            for it in elems:
+                vals_ = flat_fields(it, ety)
                 if vals_ is None or any(w_ not in (1, 2, 4) for _, w_ in vals_): ok = False; break
                 run = []
                 for v_, w_ in vals_:                       # rows of up to eight values of one width per element
