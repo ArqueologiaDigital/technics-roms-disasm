@@ -134,6 +134,11 @@ for c in none O3XS; do    # IZ / QIZ homes across calls, rule homes2 (corpus/pro
 done
 row "run 2026-11-09-42-micro-homes2b, v423/Xr" "probes/homes2b.c" "$O/2026-11-09-42-micro-homes2b/out/v423/Xr/probes" corpus/probes/homes2b.c --opt none --adecl
 row "run 2026-11-09-42-micro-homes2b, v423/O3XSXr" "probes/homes2b.c" "$O/2026-11-09-42-micro-homes2b/out/v423/O3XSXr/probes" corpus/probes/homes2b.c --opt O3XS --adecl
+for c in none O3XS; do    # random C89 programs, gen_random.py seed 1 (corpus/random/README.md)
+  row "run 2026-11-10-1-micro-random1, v423/$c" "random/*.c" "$O/2026-11-10-1-micro-random1/out/v423/$c/random" corpus/random/*.c --opt $c
+done
+row "run 2026-11-10-1-micro-random1, v423/Xr" "random/*.c" "$O/2026-11-10-1-micro-random1/out/v423/Xr/random" corpus/random/*.c --opt none --adecl
+row "run 2026-11-10-1-micro-random1, v423/O3XSXr" "random/*.c" "$O/2026-11-10-1-micro-random1/out/v423/O3XSXr/random" corpus/random/*.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do

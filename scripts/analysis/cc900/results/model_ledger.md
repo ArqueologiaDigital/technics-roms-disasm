@@ -65,7 +65,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-22-micro-condbits, v423/O3XS                         | micro/cond_bits.c    | 113 / 117 exact (96.6%)  |
 | run 2026-11-09-22-micro-condbits, v423/Xr                           | micro/cond_bits.c    | 114 / 117 exact (97.4%)  |
 | run 2026-11-09-22-micro-condbits, v423/O3XSXr                       | micro/cond_bits.c    | 113 / 117 exact (96.6%)  |
-| run 2026-11-09-23-micro-assignexpr, v423/none                       | micro/assign_expr.c  | 31 / 43 exact (72.1%)    |
+| run 2026-11-09-23-micro-assignexpr, v423/none                       | micro/assign_expr.c  | 36 / 43 exact (83.7%)    |
 | run 2026-11-09-23-micro-assignexpr, v423/O3XS                       | micro/assign_expr.c  | 37 / 43 exact (86.0%)    |
 | run 2026-11-09-23-micro-assignexpr, v423/Xr                         | micro/assign_expr.c  | 27 / 43 exact (62.8%)    |
 | run 2026-11-09-23-micro-assignexpr, v423/O3XSXr                     | micro/assign_expr.c  | 41 / 43 exact (95.3%)    |
@@ -113,6 +113,10 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-42-micro-homes2b, v423/O3XS                          | probes/homes2b.c     | 9 / 90 exact (10.0%)     |
 | run 2026-11-09-42-micro-homes2b, v423/Xr                            | probes/homes2b.c     | 11 / 90 exact (12.2%)    |
 | run 2026-11-09-42-micro-homes2b, v423/O3XSXr                        | probes/homes2b.c     | 11 / 90 exact (12.2%)    |
+| run 2026-11-10-1-micro-random1, v423/none                           | random/*.c           | 4 / 200 exact (2.0%)     |
+| run 2026-11-10-1-micro-random1, v423/O3XS                           | random/*.c           | 2 / 200 exact (1.0%)     |
+| run 2026-11-10-1-micro-random1, v423/Xr                             | random/*.c           | 2 / 200 exact (1.0%)     |
+| run 2026-11-10-1-micro-random1, v423/O3XSXr                         | random/*.c           | 2 / 200 exact (1.0%)     |
 | run 2026-11-09-9-micro-fp, v423/none                                | micro/fp.c           | 108 / 108 exact (100.0%) |
 | run 2026-11-09-9-micro-fp, v423/O3XS                                | micro/fp.c           | 108 / 108 exact (100.0%) |
 | run 2026-11-09-10-micro-fptemps, v423/none                          | micro/fp_temps.c     | 33 / 33 exact (100.0%)   |

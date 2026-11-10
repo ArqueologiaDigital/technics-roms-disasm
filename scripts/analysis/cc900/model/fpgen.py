@@ -435,7 +435,9 @@ def int_to_long_temp(F, e, reg_family):
         else: F.emit('ld', '%s,HL' % R2); F.emit('exts' if t.signed else 'extz', R4)   # d_call_i: ld WA,HL / exts XWA
     else:
         fam = cg.gen(F, e, reg_family, t.size)
-        if t.size == 2: F.emit('exts' if t.signed else 'extz', cg.FAM[fam][4])
+        if t.size == 1:                                    # random r1_07_13: (double)*gp with a char *gp ->
+            F.emit('exts' if t.signed else 'extz', cg.FAM[fam][2])   # ld A,(XWA) / exts WA / exts XWA
+        if t.size <= 2: F.emit('exts' if t.signed else 'extz', cg.FAM[fam][4])
         R4 = cg.FAM[fam][4]
     off = temp(F, 4, 'long')
     F.emit('ld', '%s,%s' % (slot_mem(F, off), R4))

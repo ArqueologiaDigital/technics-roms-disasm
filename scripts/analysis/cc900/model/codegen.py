@@ -678,6 +678,12 @@ def plain_hl_tree(F, x):
         return plain_hl_tree(F, x.l) and strip(x.r).k in ('load', 'const') and plain_hl_tree(F, x.r)
     return False
 
+def emit_shift(F, mnem, count, R):
+    """a constant shift: the count field holds 1..15, 16 is written 0x0, more is two shifts (random r1_08_03:
+    gpl[3] >> 26 -> sra 0xa,XWA / sra 0x0,XWA)"""
+    if count > 16 and SHIFT_SPLIT: F.emit(mnem, '%s,%s' % (hx(count - 16), R)); count = 16
+    F.emit(mnem, '%s,%s' % ('0x0' if count == 16 and SHIFT_SPLIT else hx(count), R))
+
 def gen_bin(F, e, fam, size, then_ret, store=False):
     any_fam = getattr(F, 'any_fam', False); F.any_fam = False   # (push_arg's hint, for this level only)
     op = e.op
@@ -721,6 +727,19 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         if F.opt: F.emit(SIMPLE_OPS[op], '%s,%s' % (W, operand(F, r, 2))); F.emit('ld', '%s,%s' % (FAM[fam][2], W))
         else: F.emit('ld', '%s,%s' % (FAM[fam][2], W)); F.emit(SIMPLE_OPS[op], '%s,%s' % (FAM[fam][2], operand(F, r, 2)))
         return fam                                       # (-O3 -XS -Xr: exts WA / sub WA,.. / ld HL,WA)
+    if CONST_LEFT_SWAP and op in ('+', '*', '&', '|', '^') and fold(l).k == 'const' and fold(r).k != 'const' and \
+            mem_operand(F, r) is None and not has_helper_call(r):
+        l, r = r, l; e.l, e.r = e.r, e.l                   # random r1_04_16: 255 ^ gpi[2] -> ld XWA,(_gpi) /
+                                                           # ld WA,(XWA+0x4) / xor WA,0xff (the constant last)
+    if CALL_RIGHT_FIRST and op in SIMPLE_OPS and size in (2, 4) and has_helper_call(r) and not has_helper_call(l) \
+            and not plain_hl_tree(F, l) and not F.adecl and not reads_reg(l, 'HL') and CALL_RIGHT_GENERAL:
+        hf = gen(F, r, 'HL', size)                       # random r1_04_01: gula[a] + rul(gul) -> cal _rul /
+        if hf != 'HL': F.emit('ld', '%s,%s' % (FAM['HL'][size], FAM[hf][size]))   # inc 0x6,XSP / ... /
+        flush_pops(F)                                    # ld XWA,(XBC+A) / add XWA,XHL / ld XHL,XWA
+        lf = gen(F, l, 'WA', size)
+        if lf != 'WA': F.emit('ld', '%s,%s' % (FAM['WA'][size], FAM[lf][size]))
+        F.emit(SIMPLE_OPS[op], '%s,%s' % (FAM['WA'][size], FAM['HL'][size]))
+        return move_to(F, FAM['WA'][size], fam, size)
     if CALL_RIGHT_FIRST and op in SIMPLE_OPS and size == 2 and has_helper_call(r) and \
             not has_helper_call(l) and plain_hl_tree(F, l):
         hf = gen(F, r, 'HL', size)                       # probes/adfp.c ad_di: a + (x > 0.0) -> cal ._fcmp_zd /
@@ -897,6 +916,10 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
     if op == '*' and size == 2 and signed and rc0.k == 'const' and rc0.value in (2, 4, 8, 16, 32, 64, 128, 256):
         gen(F, l, fam, size)                              # fp_temps.c t_i_e: gi * 2 -> ld WA,(_gi) / sla 0x1,WA
         F.emit('sla', '%s,%s' % (hx(rc0.value.bit_length() - 1), R)); return fam
+    if op == '/' and size == 4 and not signed and ULONG_DIV_SHIFT and fold(r).k == 'const' and \
+            fold(r).value and fold(r).value > 0 and fold(r).value & (fold(r).value - 1) == 0:
+        f1 = gen(F, l, fam, 4)                            # random r1_01_15: u / 2UL -> srl 0x1,XWA (no C9H_divlu)
+        emit_shift(F, 'srl', fold(r).value.bit_length() - 1, FAM[f1][4]); return f1
     if op in ('*', '/', '%'):
         if size == 4: return gen_long_helper(F, e, l, r, fam, signed)
         rs = mem_operand(F, r); n_rs = len(F.lines)
@@ -1002,11 +1025,11 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         if rr.k == 'const' and F.opt and lr0 is not None and lr0.reg in ('WA', 'BC', 'DE', 'HL') and lr0.reg != fam \
                 and dies_here(F, l) and lr0.ty.size == size:
             F.dead.add(lr0)                                # binop_i.c shl_i_pk under O3XSXr: sla 0x3,WA / ld HL,WA
-            F.emit(mnem, '%s,%s' % (hx(rr.value), FAM[lr0.reg][size])); F.emit('ld', '%s,%s' % (R, FAM[lr0.reg][size]))
+            emit_shift(F, mnem, rr.value, FAM[lr0.reg][size]); F.emit('ld', '%s,%s' % (R, FAM[lr0.reg][size]))
             return fam
         if rr.k == 'const':
             gen(F, l, fam, size)
-            F.emit(mnem, '%s,%s' % (hx(rr.value), R)); return fam
+            emit_shift(F, mnem, rr.value, R); return fam
         vfam = 'BC' if fam == 'WA' else fam
         if F.adecl and BINLOC_XR and fam == 'WA' and getattr(F, 'xr_reloc', False):
             vfam = free_reg(F, avoid={'WA'})               # binop-loc 3.1: shl_c_loc under -Xr, the inner shift in L
@@ -1650,6 +1673,7 @@ def bit_cond(F, c):
 
 CHAR_NARROW = True                                        # see char_narrow
 OR_BIT_SET = True                                         # see compile_function
+LN1_NOLOOP = True                                         # LN1 for loop-free leaf functions too (assign_expr chain family)
 LEAF_NONE_LN1 = True                                      # see plan_leaf (model/leafnone.py)
 COPY_ELEM_DE = True                                       # see gen_stmt's store (ol_i_copy)
 STORE_ADDR_GUARD = True                                   # see clobbers
@@ -1673,6 +1697,10 @@ FP_ARRAY_DATA = True                                      # see the data emitter
 OPASSIGN_CALL_HL = True                                   # see gen_opassign (homes2b HL05)
 MEMBER_CSE = True                                         # see member_cse (_fgetc)
 FOLD_NOT = True                                           # see fold (~K)
+SHIFT_SPLIT = True                                        # see emit_shift (r1_08_03)
+ULONG_DIV_SHIFT = True                                    # see gen_bin (r1_01_15)
+CONST_LEFT_SWAP = True                                    # see gen_bin (r1_04_16)
+CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
 DEC_CMP_SUB = True                                        # dec 0x1,R / cp R,0x0 -> sub R,0x1 (opt_counted.c oc_down)
 TERN_TRUTH_PRE = True                                     # see gen's -O ?: path
 RET_CC_KEEPS = True                                       # see knowledge_pass
@@ -2780,9 +2808,10 @@ def lvalue(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False, kind='store'):
     if lv.k == 'deref' and strip(lv.e).k == 'incdec' and strip(lv.e).post and strip(strip(lv.e).e).k == 'var' and \
             strip(strip(lv.e).e).decl.kind == 'global' and strip(strip(lv.e).e).decl.ty.is_ptr():
         pv = strip(lv.e); g = strip(pv.e).decl          # __strOut: *_str++ = c -> ld XBC,(__str) / ld XWA,0x1 /
-        F.emit('ld', '%s,(_%s)' % (ptr, g.name))           # add (__str),XWA / ... / ld (XBC),A
+        P = 'XBC' if ptr == 'XWA' else ptr                 # add (__str),XWA / ... / ld (XBC),A  (the step takes XWA:
+        F.emit('ld', '%s,(_%s)' % (P, g.name))             # random r1_07_13 *gpi++ = 100 -> ld XBC,(_gpi) / ldw (XBC),0x64)
         F.emit('ld', 'XWA,%s' % hx(g.ty.base.size)); F.emit('add' if pv.op == '++' else 'sub', '(_%s),XWA' % g.name)
-        return '(%s)' % ptr
+        return '(%s)' % P
     if lv.k == 'deref':
         pv = strip(lv.e)
         if pv.k == 'incdec' and pv.post and regvar_of(pv.e) and regvar_of(pv.e).ty.size == 4:
@@ -3111,7 +3140,7 @@ def gen_opassign(F, e):
         F.emit('ld', '%s,%s' % (V, t))
         rr = fold(r)
         if rr.k == 'const':
-            F.emit(mnem, '%s,%s' % (hx(rr.value), V))
+            emit_shift(F, mnem, rr.value, V)
         else:
             cs = mem_operand(F, r)
             if cs is None: raise Unsupported('complex shift count')
@@ -4959,7 +4988,9 @@ def gen_switch(F, s, last):
                     to_default('ne')
                     first = [c for c in cases if F.case_labels[id(c)] == g[2]]
                     if first and cases and cases[0] is not first[0]: F.emit('j', g[2])
-                    elif first: F.case_labels[id(first[0])] = None     # sw_jt4: the body it falls into has no label
+                    elif first and not any(x[2] == g[2] for x in entries if x is not g):   # (random r1_02_18:
+                        F.case_labels[id(first[0])] = None     # sw_jt4: the body it falls into has no label; unless
+                                                                # another case value jumps to it -- undefined label)
                 else: F.emit('j', 'eq,%s' % g[2])
             else:
                 skip = deflab if lastone else F.newulabel()
@@ -6898,7 +6929,7 @@ def plan_leaf(F):
         if not cand: raise Unsupported('out of registers')
         d.reg = cand[0]; free.remove(cand[0])
         if d.kind == 'param': F.param_copies.append(d)
-    if LEAF_NONE_LN1 and not F.opt and not F.adecl and hasloop and not has_call:
+    if LEAF_NONE_LN1 and not F.opt and not F.adecl and (hasloop or LN1_NOLOOP) and not has_call:
         import leafnone                                    # rule LN1 (model/leafnone.py) replaces the registers of
         inreg = [d for d in leafnone.variables(f) if getattr(d, 'reg', None)]     # the variables kept in one
         try: got = leafnone.allocate(f, set(inreg))
