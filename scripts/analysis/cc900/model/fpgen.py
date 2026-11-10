@@ -449,6 +449,9 @@ def eval_into(F, e, dest):
             cell = Cell(e.ty.size); alloc(F, cell)
             vals = [fp_value_cast(x) for x in ops]
             first = comp[-1] if len(comp) == 2 else comp[0]
+            if len(comp) == 2 and CALL_OP_LEFT_FIRST and \
+                    (fp_value_cast(ops[0]).k == 'call') != (fp_value_cast(ops[1]).k == 'call'):
+                first = 0                                    # fpp7 w5 / w7: one call against one operation: source order
             c0 = fp_value_cast(ops[first])
             if c0.k == 'call':
                 cc = Cell(c0.ty.size); call_into(F, c0, ('cell', cc), arg_hint=cell); vals[first] = ('slot', cc.off)
