@@ -46,3 +46,9 @@ _TANH.C	*	_tanh	wrong code: ld DE,0x0 hoisted above a branch reaches the second 
 _STRTOK.C	*	_strtok	wrong code: s1 += strspn() is added to (XSP+0x8) while the two arguments are still pushed, i.e. to the saved XIZ, not to s1 (in XIZ) (fixed: 68f9fbde4)
 __DOFORM.C	*	__doudigit	wrong code: the loop tests XBC (junk after C9H_divlu) instead of the quotient, so it never ends; str is kept in XDE across the helper calls (fixed: 05bfa0948 (now refused))
 fpp10.c	*	_s01,_s04,_s05,_s10	UB only: y is read before any assignment (y = f * 2.0 + f / y; x / y), so the result depends on what the frame slot held; the model and the oracle allot y different slots (E3)
+r2_s_05.c	*	_r2_05_00,.r2_05_00	UB only: gua[b] / guca[b] with b out of the array (negative or huge): the model zero-extends a memory index where V4.23 sign-extends a homed one; in range they agree
+r2_s_06.c	v423/none,v423/O3XS	_r2_06_17	UB only: gca[a] & 7 with a negative (0xa307): the compound-form zero-extension against the oracle's (XWA+DE)
+r2_s_06.c	v423/Xr,v423/O3XSXr	.r2_06_13	UB only: gia[a] <<= 4 with a = (char)0xfe: out of the array
+r2_s_08.c	v423/Xr,v423/O3XSXr	.r2_08_17	UB only: guca[c] with c = 0xa133 (negative int index)
+r2_s_06.c	v423/O3XSXr	.r2_06_02	UB only: gula[b] with b = 0x13b6 reads past the array, so the branches taken differ
+r2_s_09.c	v423/Xr,v423/O3XSXr	.r2_09_07	UB only: gca[t] with a negative char t (the model zero-extends the spilled char, the oracle keeps t in E and sign-extends)

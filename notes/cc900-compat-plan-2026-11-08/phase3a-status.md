@@ -563,6 +563,16 @@ functions (reviewed).  No ledger row moved; the pairs stay at 223; micro 674 / 6
 sets.  The random corpus's exact counts did not move (8 / 2 / 4 / 2 of 200): what it shows now is unsupported shapes
 and listing differences, not wrong code.
 
+The second random corpus (2026-11-10, night; `corpus/random2/`, run `2026-11-10-5-micro-random2`): 200 functions
+of seed 2 found 81 DIFFERENT verdicts the first corpus had not reached.  Two rounds of fixes (`corpus/random/README.md`,
+"The second corpus"; about twenty rules and guards, among them the live-parameter guard under `-Xr`) leave 12:
+eleven reviewed as UB only in `model/semcheck_review.tsv`, one open (`r2_04_19` -O3 -XS).  Gate: no ledger row
+down (micro 674 / 674 at all four sets, library 186 / 184 / 174, pairs 223 MATCH); semcheck DIFFERENT 9 -> 21, the
+twelve above; the first random corpus 0 DIFFERENT at every set.  The exact counts of the random corpora are still
+1-4 %: what is left there is unsupported shapes and the order in which V4.23 evaluates operands (a Sethi-Ullman-like
+"heavier operand first", seen in r2_05_13 / r2_06_05 / r2_02_18), the next rule to fit with a probe of its own.
+The blog draft `notas/blog/2026-11-10_programas_aleatorios_contra_o_modelo.md` tells the day for outside readers.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

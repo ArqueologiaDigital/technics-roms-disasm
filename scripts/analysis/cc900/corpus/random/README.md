@@ -128,3 +128,36 @@ round taught, each a rule or a guard in `model/codegen.py` (the flag names are i
 - refused rather than wrong: `*p op= k` with the pointer and the value in one register (r1_06_08), the `-O` `?:`
   whose preloaded arm is overwritten by its condition (`TERN_PRE_GUARD`, r1_05_05), an assignment used as a value
   whose value overwrites the pointer in XWA (r1_04_07), an unsigned int index under `-O` / `-Xr` (r1_08_00).
+
+## The second corpus (2026-11-10, `corpus/random2/`, run 2026-11-10-5-micro-random2)
+
+Seed 2's 200 functions, compiled after every fix above, found 81 more DIFFERENT verdicts (17 / 19 / 21 / 24 per set):
+wrong code the first corpus had not reached.  Two rounds later the second corpus reads 54 / 54 / 47 / 49 checked and
+2 / 3 / 3 / 4 DIFFERENT; eleven of those twelve verdicts are reviewed in `model/semcheck_review.tsv` as UB only (an
+array indexed out of range, where the model's zero-extended memory index and the oracle's sign-extended register
+index land on different bytes), and one is open: `r2_04_19` under `-O3 -XS`, a counted loop whose slot counter is
+compared through a stale register copy.  The first corpus stays at 0 DIFFERENT.  Fixed from this corpus:
+- `gps->a[1]` as a right operand (the pointer-in-XWA / left-in-BC form, `ptr_access`), `*gpi - gps->i` (both through
+  pointers: the left value into BC), `gl2 ^ -gpl[1]` and other right operands whose code overwrites a left value
+  already in WA (refused by `RIGHT_CLOBBER_GUARD` when no rule fits);
+- an unsigned int index for a compare (`cpw (XBC),k` after the 32-bit extension); `(unsigned long)gia[4] > 89152UL`
+  compared at 32 bits because the constant does not fit the int (`CMP_CONST_FITS`); `gu % gu` folded to 0 at int
+  size (`FOLD_SELF_DIV`); `39 < 3` and `x || 0` folded (`FOLD_CONST_CMP`); `~guca[3] / 3` in the byte
+  (`CHAR_NARROW_NOT`); `*gp * -90` as `muls WA,0xa6`;
+- a long `/` or `%` by a constant counts as a helper call when the right operand's call is ordered first
+  (`r2_04_15`: `rl()` beside `gs.l % 3L`); the `cse_params` temporary is not kept across a call and counts as a WA
+  variable for the left operand's register (`r2_04_05`, `r2_06_07`);
+- a char array store with a char index and a computed value: base, value in E, index in A (`r2_05_07`); a register
+  op= on a char-indexed element takes `(XHL+C)` (`r2_06_13`); a `?:` whose arms land in different registers is
+  unified (`r2_09_13`); a store to a slot after a value whose evaluation pushed arguments recomputes its offset
+  (`r2_08_13`); a `switch`'s last arm releases its pops before the end label (`r2_06_14`); no conditional return while
+  a register is pushed (`r2_00_13`); `char t = gc2` into QIZH goes through A;
+- a single-use local is not folded into its use across a store that may alias what its initializer read
+  (`r2_08_05`, `r2_05_10`, `r2_09_01`; `_ultoa`'s `q = s` still folds); the reload-elision passes see `decw 0x1,(XSP)`
+  as a write of the slot (`r2_04_19`'s other half); a lazily homed parameter is loaded before `a--` (`r2_08_15`);
+- `-Xr`: a pointer sum or `&g[i]` computed while WA holds a live parameter goes to a free family (`r2_06_01`,
+  `r2_06_17`), unary minus into a home too (`r2_01_01`), a member store through a global pointer while BC holds a
+  parameter (`r2_06_02`), an adecl call's computed argument moved from where it was computed (`r2_09_00`);
+- and the **live-parameter guard** (`LIVE_PARAM_GUARD`, `F.emit`): under `-Xr`, an instruction that writes WA, BC or
+  DE while the parameter there is still read by a later statement makes the model refuse the function (`r2_07_15`,
+  `r2_09_01`, `r2_01_01`).  It is off under the loop allocators, which keep their registers in their own objects.

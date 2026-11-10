@@ -269,6 +269,16 @@ def is_elem(F, lv):
     return bk is not None and bk[0] in ('garr', 'gmem')
 
 
+def store_byte_shape(F, lv):
+    """the symbol when lv is a signed-char-indexed element of a global char array (the (XBC+A) store form of
+    r2_05_07), else None"""
+    lv = strip(lv)
+    if not CHIDX or lv.k != 'index' or lv.ty.size != 1: return None
+    ci = char_index(lv.idx); bk = base_kind(F, lv.base)
+    if ci is None or ci[2] != 'load' or not ci[1] or bk is None or bk[0] != 'garr': return None
+    return '_' + bk[1].name
+
+
 def element(F, lv, kind, fam='WA'):
     if not CHIDX: return None
     lv = strip(lv)
@@ -287,18 +297,23 @@ def element(F, lv, kind, fam='WA'):
     src = source(F, x, how)
     if src is None: return None
     if how == 'load' and src[0] == 'reg' and not single_use(strip(x.e).decl):
-        if how != 'load' or kind != 'load' or esz != 1: return None
-        T = next((t for t in ('C', 'E', 'L') if t != src[1] and t not in busy and BYTE_FAM[t] not in cg.live_regs(F)), None)
-        if T is None: return None                          # -Xr r1_06_01: guca[a] with a read again: ld E,A /
-        F.emit('ld', '%s,%s' % (T, src[1])); src = ('reg', T, True)   # extz DE / lda XHL,_guca / (XHL+DE)
-        busy = busy | {src[1]}
+        if kind == 'load' and esz == 1:
+            T = next((t for t in ('C', 'E', 'L') if t != src[1] and t not in busy and BYTE_FAM[t] not in cg.live_regs(F)), None)
+            if T is None: return None                      # -Xr r1_06_01: guca[a] with a read again: ld E,A /
+            F.emit('ld', '%s,%s' % (T, src[1])); busy = busy | {src[1]}; src = ('reg', T, True)   # extz DE / lda XHL,_guca
+        elif esz == 2 and kind in ('rmw', 'store', 'storek'): busy = busy | {src[1]}   # (the doubling copies: r2_06_13)
+        else: return None
     reg_var = src[0] == 'reg' and src[2]
     if bk[0] in ('garr', 'gmem'):
         if bk[0] == 'garr': sym = '_' + bk[1].name; sized = bk[2]; off = 0
         else: sym = '_' + bk[1]; sized = True; off = bk[2]
         gsym = sym if not off else '%s + %s' % (sym, hx(off))
+        if signed and esz == 1 and bk[0] == 'garr' and kind == 'storeb':   # r2_05_07: the value in E, then (XBC+A)
+            if reg_var: return '(XBC+%s)' % src[1]
+            if src[0] != 'mem': return None
+            F.emit('ld', 'A,%s' % src[1]); return '(XBC+A)'
         if signed and esz == 1 and bk[0] == 'garr':         # rc1 / xc1 / sc1 / lc1: the byte zero-extended whole
-            if kind == 'store': return None
+            if kind in ('store', 'storeb'): return None
             if reg_var:                                    # -Xr: lda XBC,_gca / ld L,(XBC+A)
                 X = 'XBC' if src[1] == 'A' else 'XWA'
                 F.emit('lda', '%s,%s' % (X, gsym)); return '(%s+%s)' % (X, src[1])
@@ -306,6 +321,13 @@ def element(F, lv, kind, fam='WA'):
             F.emit('lda', 'XBC,%s' % gsym); F.emit('ld', 'XWA,0x0'); F.emit('ld', 'A,%s' % src[1])
             F.emit('add', 'XWA,XBC'); return '(XWA)'
         if signed and (sized or esz == 1):                 # rc2 / rc4 / mc1 / mc2 / fc2 / gc2 / hi2 / kc2: (XBC+A)
+            if kind == 'rmw' and esz == 2:                 # r2_06_13: gia[a] <<= 4 -> ld C,A / add C,A / ld E,C /
+                if xr:                                     # lda XHL,_gia / ld BC,(XHL+E) / sla 0x4,BC / ld (XHL+E),BC
+                    live = {BYTE_FAM[b] for b in busy} | set(cg.live_regs(F))
+                    home = next((t for t in ('E', 'C', 'L') if t != src[1] and BYTE_FAM[t] not in live), None)
+                    if home is None: return None
+                else: home = 'C'
+                idx_byte(F, src, esz, home, busy); F.emit('lda', 'XHL,%s' % gsym); return '(XHL+%s)' % home
             if kind == 'store' or (kind == 'storek' and esz == 4):   # vc2 / sc4: the index to C, the base to XDE
                 idx_byte(F, src, esz, 'C', busy); F.emit('lda', 'XDE,%s' % gsym); return '(XDE+C)'
             r = idx_byte(F, src, esz, None if xr else 'A', busy)
