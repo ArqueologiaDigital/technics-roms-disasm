@@ -85,6 +85,7 @@ SRET_HOME_RANGE = True                             # see needs_sret_home (homes2
 SRET_HOME_LATE = True                              # the load after the first test (acos, cosh)
 SRET_HOME_EARLY = True                             # see needs_sret_home (_floor)
 CALL_INTO_LOCAL = True                             # see call_into (_floor)
+WINDOW_RULE = True                                 # fpwindow.plan: the slot order of FP temporaries (E2)
 RANK_CONST = True
 MEMBER_FIRST = True
 LONG_TOP = False                                   # tried for fo_conv2: costs fp_temps t_* and fp_stmts O3XS 9 -> 5
@@ -98,15 +99,20 @@ class FrameAlloc:
     def __init__(s, nlong, pooled_longs=False):
         s.slots = []; s.depth = 0; s.nlong = 0; s.region = None; s.n = max(nlong, 1); s.pool_l = pooled_longs
         s.stack = []                                     # rule R6 (E3): freed op slots, the last freed on top
+        s.log = []; s.nst = 0; s.remap = None            # the request log (fpwindow.plan) and the second pass's remap
         if nlong and not pooled_longs and LONG_TOP:        # fo_conv2: the long above the double built before it
             s.region = [4 * (s.n - i) for i in range(s.n)]; s.depth = 4 * s.n
-    def begin_stmt(s):
+    def begin_stmt(s, st=None):
+        s.nst += 1; s.log.append(('stmt', s.nst, getattr(st, 'k', '?'), st))
         for sl in sorted(s.slots, key=lambda x: x[0]):   # (research-scratch sessions/2026-11-09_cc900-fp-prepass,
             if (sl[2] == 'op' or (sl[2] == 'long' and s.pool_l)) and sl[3]:   # b804104): shallow first, so the
                 sl[3] = False                                                   # deepest ends on top
                 if sl[0] in s.stack: s.stack.remove(sl[0])
                 s.stack.append(sl[0])
     def get(s, size, kind):
+        d = s.get0(size, kind); s.log.append(('get', kind, size, d, s.nst))
+        return s.remap.get(d, d) if s.remap else d         # WINDOW_RULE: the first pass's depth, remapped (fpwindow)
+    def get0(s, size, kind):
         if kind == 'long': s.nlong += 1
         reusable = kind == 'op' or (kind == 'long' and s.pool_l)
         free = [x for x in s.slots if reusable and not x[3] and x[1] == size and x[2] == kind]
@@ -129,11 +135,12 @@ class FrameAlloc:
 def frame_allocs(F):
     if '_fa' not in F.__dict__:
         F._fa = FrameAlloc(getattr(F, 'fp_nlong', 0)); F._fb = FrameAlloc(getattr(F, 'fp_nlong', 0), True)
+        F._fa.remap = getattr(F, 'fp_remap', None) or None
     return F._fa, F._fb
 
-def begin_stmt(F):
+def begin_stmt(F, st=None):
     if getattr(F, 'fp_temps', None) is None: return
-    A, B = frame_allocs(F); A.begin_stmt(); B.begin_stmt()
+    A, B = frame_allocs(F); A.begin_stmt(st); B.begin_stmt(st)
 
 def temp(F, size, kind='op'):
     """a frame temporary (FrameAlloc); the region is D + D' (s_conv2: 16 + 12 = 28; no long: twice D)"""

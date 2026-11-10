@@ -3305,7 +3305,7 @@ def gen_stmt(F, s, last):
         r_ = []; walk(s, lambda n, d: r_.append(n) if n.k == 'return' and n.value is not None else None)
         if r_: F.lines.append(F.sret_home_pending + '\t;sret-late'); F.sret_home_pending = None
     if s.k != 'block' and getattr(F, 'fp_temps', None) is not None:
-        fpgen.begin_stmt(F); F._root_done = False; fpgen.hoist_elems(F, s)         # R5g: a statement's op temporaries are free at the next
+        fpgen.begin_stmt(F, s); F._root_done = False; fpgen.hoist_elems(F, s)         # R5g: a statement's op temporaries are free at the next
         e = getattr(s, 'e', None) if s.k == 'expr' else None
         e = strip(e) if e is not None else None
         F.stmt_global = e is not None and ((e.k == 'bin' and e.op == '=') or e.k == 'opassign') and \
@@ -7583,7 +7583,7 @@ PERSONALITIES = {
     # kn5000 rule set in no rule the model has: their own ledger lines show where they still differ.
     'v4.23': 'v4.23', 'kn5000': 'kn5000', 'ide2003': 'kn5000', 'v1.10': 'kn5000'}
 
-def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong=0):
+def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong=0, fp_remap=None):
     if fp_temps is None and fpgen.uses_fp(f):
         import copy, sys                                    # pass 1 measures the floating-point temporaries
         sys.setrecursionlimit(max(sys.getrecursionlimit(), 200000))
@@ -7591,8 +7591,13 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong
         try:
             F1 = compile_function(copy.deepcopy(f), opt, adecl, personality, fp_temps=0)
             need = F1.ftemp_used_total; nlong = F1._fa.nlong if '_fa' in F1.__dict__ else 0
+            remap = None
+            if fpgen.WINDOW_RULE and '_fa' in F1.__dict__:
+                import fpwindow                             # the slot order of the temporaries (E2), guarded
+                try: remap = fpwindow.plan(F1._fa.log) or None
+                except Exception: remap = None
         finally: fpgen.FCONST[0] = save
-        return compile_function(f, opt, adecl, personality, fp_temps=need, fp_nlong=nlong).lines
+        return compile_function(f, opt, adecl, personality, fp_temps=need, fp_nlong=nlong, fp_remap=remap).lines
     if personality not in PERSONALITIES: raise ValueError('unknown personality %s' % personality)
     personality = PERSONALITIES[personality]
     merge_address_inits(f)
@@ -7601,7 +7606,7 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong
     walk(f.body, lambda n, d: gotos.append(n) if n.k == 'goto' else None)
     goto_returns(f)
     F = Fn(f, adecl)
-    F.fp_temps = fp_temps; F.fp_nlong = fp_nlong
+    F.fp_temps = fp_temps; F.fp_nlong = fp_nlong; F.fp_remap = fp_remap
     F.personality = personality
     F.opt = opt != 'none'; F.dead = set(); F.had_goto = bool(gotos); CUR_OPT[0] = F.opt
     if F.opt: bool_returns(f.body)
