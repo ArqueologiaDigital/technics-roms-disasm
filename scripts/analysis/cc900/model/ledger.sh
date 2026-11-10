@@ -161,6 +161,11 @@ for c in none O3XS; do    # the fourth random corpus, gen_random.py seed 4
 done
 row "run 2026-11-10-7-micro-random4, v423/Xr" "random4/*.c" "$O/2026-11-10-7-micro-random4/out/v423/Xr/random4" corpus/random4/*.c --opt none --adecl
 row "run 2026-11-10-7-micro-random4, v423/O3XSXr" "random4/*.c" "$O/2026-11-10-7-micro-random4/out/v423/O3XSXr/random4" corpus/random4/*.c --opt O3XS --adecl
+for c in none O3XS; do    # the order of evaluation of binary operands, by operand kind (corpus/probes/evorder.c)
+  row "run 2026-11-10-9-micro-evorder, v423/$c" "probes/evorder.c" "$O/2026-11-10-9-micro-evorder/out/v423/$c/probes" corpus/probes/evorder.c --opt $c
+done
+row "run 2026-11-10-9-micro-evorder, v423/Xr" "probes/evorder.c" "$O/2026-11-10-9-micro-evorder/out/v423/Xr/probes" corpus/probes/evorder.c --opt none --adecl
+row "run 2026-11-10-9-micro-evorder, v423/O3XSXr" "probes/evorder.c" "$O/2026-11-10-9-micro-evorder/out/v423/O3XSXr/probes" corpus/probes/evorder.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do

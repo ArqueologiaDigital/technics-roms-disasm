@@ -777,6 +777,253 @@ def gen(F, e, fam, size, then_ret=False, store=False):
     raise Unsupported(e.k)
 
 CALL_RIGHT_FIRST = True                                   # see gen_bin
+EVORDER = True                                            # see evorder_bin
+
+def ev_uncast(x):
+    x = strip(x)
+    while x.k == 'cast' and x.kind == 'IntegralCast' and strip(x.e).ty is not None and strip(x.e).ty.size == x.ty.size:
+        x = strip(x.e)
+    return x
+
+def ev_addr_kind(F, x):
+    """'P' for *p and p->m with p a pointer variable in memory, 'X' for g[i] with g a global array and i an int in
+    memory (the operands whose address needs registers), else None"""
+    x = ev_uncast(x)
+    if x.k != 'load': return None
+    v = strip(x.e)
+    if v.k == 'deref' or (v.k == 'member' and v.arrow):
+        pv = strip(v.e if v.k == 'deref' else v.base)
+        if pv.k == 'load' and strip(pv.e).k == 'var' and not getattr(strip(pv.e).decl, 'reg', None) and \
+                mem_operand(F, pv) is not None and (mem_operand(F, pv) or '').startswith('('): return 'P'
+        return None
+    if v.k == 'index':
+        b = strip(v.base); ii = ev_uncast(v.idx)
+        if b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array' and fold(ii).k != 'const' and \
+                ii.ty is not None and ii.ty.size == 2 and ii.k == 'load' and strip(ii.e).k == 'var' and \
+                not getattr(strip(ii.e).decl, 'reg', None) and v.ty.size in (2, 4) and \
+                (mem_operand(F, ii) or '').startswith('('): return 'X'
+    return None
+
+def ev_left_kind(F, x):
+    """'wa' when the left's own code needs WA (! and unary - go through WA, a shift's count is in A), 'idx' for an
+    indexed element (index in WA, base in XBC), else 'plain'"""
+    x = ev_uncast(x)
+    if x.k == 'un' and x.op in ('!', '-'): return 'wa'
+    if x.k == 'bin' and x.op in ('<<', '>>') and fold(x.r).k != 'const': return 'wa'
+    return 'idx' if ev_addr_kind(F, x) == 'X' else 'plain'
+
+def ev_address(F, x, P, I, B):
+    """emit the address setup of an addressed operand (ev_addr_kind) with the pointer in P, or the index in I and
+    the array in B; return the operand string"""
+    x = ev_uncast(x); v = strip(x.e)
+    if v.k in ('deref', 'member'):
+        pv = strip(v.e if v.k == 'deref' else v.base)
+        F.emit('ld', '%s,%s' % (P, mem_operand(F, pv)))
+        off = member_offset(v) if v.k == 'member' else 0
+        return '(%s+%s)' % (P, hx(off)) if off else '(%s)' % P
+    b = strip(v.base); ii = ev_uncast(v.idx)
+    F.emit('ld', '%s,%s' % (I, mem_operand(F, ii)))
+    if v.ty.size == 2: F.emit('add', '%s,%s' % (I, I))
+    else: F.emit('sla', '%s,%s' % (hx({4: 2, 8: 3}[v.ty.size]), I))
+    F.emit('lda', '%s,_%s' % (B, b.decl.name))
+    return '(%s+%s)' % (B, I)
+
+def ev_class(F, x):
+    """the operand classes of V4.23's binary operators (probes/evorder.c): 'K' a constant; 'G' a plain variable (a
+    symbol or slot operand, or a register variable); 'A' an addressed operand (a struct member or constant-index
+    element, whose symbol carries an offset, or *p, p->m, g[i], whose address needs registers); 'V' a value that
+    needs computing (! - a shift, a + - & | ^ of operands, a ?:)"""
+    x = ev_uncast(x)
+    if fold(x).k == 'const': return 'K'
+    if x.k == 'load':
+        v = strip(x.e)
+        if v.k == 'var': return 'G'
+        if ev_addr_kind(F, x) is not None: return 'A'
+        m = mem_operand(F, x)
+        if m is not None and m.startswith('(') and (v.k == 'member' and not v.arrow or v.k == 'index'): return 'A'
+        return None
+    if x.k == 'un' and x.op in ('!', '-'): return 'V'
+    if x.k == 'bin' and (x.op in SIMPLE_OPS or x.op in ('<<', '>>')): return 'V'
+    if x.k == 'cond': return 'V'
+    return None
+
+def ev_natural_wa(F, x):
+    """the operand's own code needs WA: ! and unary - compute there, a shift's count is in A, an element's index"""
+    x = ev_uncast(x)
+    if x.k == 'un' and x.op == '!': return not F.opt       # -O: scc eq,HL directly (s_NB O3XS)
+    if x.k == 'un' and x.op == '-': return True
+    if x.k == 'bin' and x.op in ('<<', '>>') and fold(x.r).k != 'const': return True
+    return False
+
+def ev_unfitted_pair(F, l, r):
+    """two operands V4.23 pairs in a way the rule has not fitted: two indexed elements, a shift by a variable
+    beside an indexed or addressed operand, or (under -Xr) an indexed element whose index is a register parameter
+    beside an addressed operand (semcheck found the older paths wrong there: evorder.c at -O3 -XS and -Xr)"""
+    def kind(x):
+        x = ev_uncast(x)
+        if x.k == 'bin' and x.op in ('<<', '>>') and fold(x.r).k != 'const': return 'S'
+        if x.k != 'load': return None
+        v = strip(x.e)
+        if v.k == 'index' and fold(v.idx).k != 'const': return 'X'
+        if v.k == 'deref' or (v.k == 'member' and v.arrow): return 'P'
+        return None
+    kl, kr = kind(l), kind(r)
+    if kl is None or kr is None: return False
+    return 'S' in (kl, kr) or 'X' in (kl, kr)
+
+def evorder_bin(F, e, op, l, r, fam, size):
+    """the order of evaluation of V4.23's binary operators at 16 bits (corpus/probes/evorder.c, run
+    2026-11-10-9-micro-evorder, the same at the four option sets).  One operand is the accumulator (HL; XWA for *),
+    the other the instruction's source.  For - the left is the accumulator.  For + & | ^ * (commutative) a value
+    (class V) is the accumulator when the other side is not one, a constant never is, two addressed operands make
+    the right one the accumulator, otherwise the left (x_GB: ld HL,(_hi) / sub HL,(_hj) / xor HL,(_gi); x_MM:
+    ld HL,(_hs) / xor HL,(_gs); x_PG: ld XWA,(_gpi) / ld HL,(XWA) / xor HL,(_hi)).  Code order: the addresses of
+    *p / p->m / g[i] operands in textual order, then the source's value if it needs computing, then the
+    accumulator's value or load, then the operator.  Registers: the source value takes WA (BC when the accumulator's
+    code needs WA: ! - or a shift; DE after an indexed accumulator: s_XB); a ! or - on the source side computes in
+    WA regardless (s_XN: the index moves to BC / XDE); a ! or - that is the accumulator computes in WA and moves to
+    HL (s_NG: scc eq,WA / ld HL,WA).  Addresses take the first free family in WA, BC, DE order after what the other
+    operand needs: the right *p takes XWA and the left XBC (s_PP, x_PP), a left *p takes XDE before a right g[i]
+    (s_PX), a left g[i] keeps WA / XBC and a right *p takes XDE (s_XP).  Returns None where the shape is not one
+    of these (a ?: beside a member or element, two indexed elements, a shift beside an indexed element, ...)."""
+    cl, cr = ev_class(F, l), ev_class(F, r)
+    if cl is None or cr is None: return None
+    lx, rx = ev_uncast(l), ev_uncast(r)
+    if op == '-' and rx.k == 'un' and rx.op == '-' and rx.ty is not None and rx.ty.size == 2 and cl != 'K':
+        from frontend import N                           # s_GU: gi - -hi -> ld HL,(_gi) / add HL,(_hi) (s_KU keeps
+        if lx.k == 'un' and lx.op == '-': return evorder_bin(F, e, '-', rx.e, lx.e, fam, size)   # the neg; s_UU: hi - gi)
+        if lx.k == 'cond' or (lx.k == 'bin' and lx.op == '-' and fold(lx.l).k == 'const'): return None   # (s_CU)
+        return evorder_bin(F, e, '+', l, rx.e, fam, size)
+    if op in '+-' and cr == 'K' and lx.k == 'bin' and lx.op == '-' and fold(lx.l).k == 'const' and \
+            fold(lx.l).value is not None and fold(rx).value is not None:
+        from frontend import N                           # s_CK: (256 - gi) - 7 -> ld HL,0xf9 / sub HL,(_gi)
+        k = fold(lx.l).value + (fold(rx).value if op == '+' else -fold(rx).value)
+        return evorder_bin(F, e, '-', N('bin', op='-', l=N('const', value=k, ty=lx.l.ty), r=lx.r, ty=lx.ty), lx.r, fam, size) \
+            if False else gen_bin(F, N('bin', op='-', l=N('const', value=k, ty=lx.l.ty), r=lx.r, ty=e.ty), fam, size, False)
+    if (lx.k == 'cond' and cr == 'A') or (rx.k == 'cond' and cl == 'A'): return None   # (s_MT: lda XWA,_gs first)
+    comm = op in ('+', '&', '|', '^', '*')
+    if comm:
+        if cr == 'V' and cl != 'V': acc, src = r, l
+        elif cl == 'V': acc, src = l, r
+        elif cr == 'K': acc, src = l, r
+        elif cl == 'K': acc, src = r, l
+        elif cl == 'A' and cr == 'A': acc, src = r, l
+        else: acc, src = l, r
+    else: acc, src = l, r
+    if acc is r and ev_class(F, r) == 'K': return None
+    ak, sk = ev_addr_kind(F, acc), ev_addr_kind(F, src)
+    acc_v = ev_class(F, acc) == 'V'; src_v = ev_class(F, src) == 'V'
+    if ak == 'X' and sk == 'X': return None                # (s_XX, x_XX: the index is shared)
+    src_shift = src_v and ev_natural_wa(F, src) and ev_uncast(src).k == 'bin'
+    acc_shift = acc_v and ev_natural_wa(F, acc) and ev_uncast(acc).k == 'bin'
+    if src_shift and (ak is not None or ev_natural_wa(F, acc)): return None   # (s_XS: IX; s_SS)
+    if acc_shift and sk == 'X': return None                # (s_SX: the index goes through WA)
+    live = live_regs(F)
+    ACC = 'WA' if op == '*' else fam
+    if op == '*' and F.opt and not acc_v and not src_v: ACC = fam   # -O: ld HL,(_gi) / muls XHL,(_hi) (m_GG, m_GP)
+    if op == '*' and (ak == 'X' or 'WA' in live): return None
+    def decl_order(x):                                     # a folded single-use local: the order it was declared in
+        d_ = getattr(strip(x), 'from_local', None) or getattr(ev_uncast(x), 'from_local', None)
+        return F.f.decls.index(d_) if d_ is not None and d_ in F.f.decls else None
+    acc_first = acc_v and src_v and decl_order(acc) is not None and decl_order(src) is not None and \
+        decl_order(acc) < decl_order(src)                  # ra_noloop: x * y with x = a + b, y = a - b -> x in WA first
+    # register plan: an index claims WA and XBC first, then the source value WA (BC when the accumulator's code
+    # needs WA), then pointers take the next free family; a right pointer prefers XWA; for * the accumulator's
+    # pointer may use XWA (m_PG: ld XWA,(_gpi) / ld WA,(XWA) / muls XWA,(_hi))
+    acc_wa = ev_natural_wa(F, acc) or (op == '*' and ACC == 'WA')   # the accumulator's code needs WA
+    src_nat_wa = src_v and ev_natural_wa(F, src) and ev_uncast(src).k == 'un'   # ! - on the source side: WA
+    taken = set(live)
+    def pick(avoid=()):
+        for f_ in ('WA', 'BC', 'DE'):
+            if f_ not in taken and f_ not in avoid: taken.add(f_); return f_
+        raise Unsupported('evorder: no free register')
+    plan = {}                                               # id(node) -> (P, I, B) or value family
+    order = [l, r]
+    hard_wa = acc_wa or src_nat_wa or src_shift or op == '*'   # WA is spoken for before the indexes (m_GX -O:
+    if hard_wa: taken.add('WA')
+    for x in order:                                        # indexes first (s_XB: WA / XBC, the value in DE; s_XN: BC / XDE)
+        if ev_addr_kind(F, x) == 'X':
+            i_ = pick(); b_ = pick(); plan[id(x)] = (None, FAM[i_][2], 'X' + b_)
+    if src_v and not src_nat_wa:                           # then the source value
+        if src_shift: taken.discard('WA'); plan['V'] = pick(('WA',)); taken.add('WA')   # (s_PS: BC, the count in WA)
+        else: plan['V'] = pick()
+    elif src_v: plan['V'] = 'WA'
+    if op == '*' and acc is not None and ak == 'P' and 'WA' in taken and not src_nat_wa and not src_v:
+        taken.discard('WA')                                 # (the multiplicand is loaded from its own pointer)
+    if ev_addr_kind(F, r) == 'P' and id(r) not in plan and 'WA' not in taken:
+        plan[id(r)] = ('XWA', None, None); taken.add('WA') # a right pointer takes XWA (s_PP, x_PP)
+    for x in order:
+        if id(x) in plan or ev_addr_kind(F, x) != 'P': continue
+        plan[id(x)] = ('X' + pick(), None, None)
+    if op == '*': taken.add('WA')
+    # emission
+    n_addr = len(F.lines); operands = {}
+    for x in order:
+        k = ev_addr_kind(F, x)
+        if k is None: continue
+        P, I, B = plan[id(x)]
+        operands[id(x)] = ev_address(F, x, P, I, B)
+    if acc_first:
+        R = FAM[ACC][size]; n1 = len(F.lines)
+        f_ = gen(F, acc, ACC, size)
+        if f_ != ACC:
+            if f_ not in FAM or size not in FAM[f_]: raise Unsupported('evorder accumulator')
+            F.emit('ld', '%s,%s' % (R, FAM[f_][size]))
+        V = plan['V']; n0 = len(F.lines)
+        f_ = gen(F, src, V, size)
+        if f_ not in FAM or size not in FAM[f_] or f_ == ACC: raise Unsupported('evorder source after the accumulator')
+        if clobbers(F.lines[n0:], '(%s)' % FAM[ACC][4]): raise Unsupported('evorder source overwrote the accumulator')
+        src_op = FAM[f_][size]
+        if op == '*':
+            F.emit('muls' if e.ty.signed else 'mul', '%s,%s' % (FAM[ACC][4], src_op))
+            if fam != ACC: F.emit('ld', '%s,%s' % (FAM[fam][size], FAM[ACC][size]))
+            return fam
+        F.emit(SIMPLE_OPS[op], '%s,%s' % (R, src_op)); return fam
+    if src_v:
+        V = plan['V']; n0 = len(F.lines)
+        f_ = gen(F, src, V, size)
+        if f_ not in FAM or size not in FAM[f_]: raise Unsupported('evorder source value')
+        if f_ == 'WA' and acc_wa:
+            if not src_nat_wa: raise Unsupported('evorder source value in WA before a WA accumulator')
+            taken.discard('WA'); m_ = pick(('WA',)); F.emit('ld', '%s,WA' % FAM[m_][size]); f_ = m_   # (s_NN: ld BC,WA)
+        src_op = FAM[f_][size]
+        if id(acc) in operands and clobbers(F.lines[n0:], operands[id(acc)]):
+            raise Unsupported('evorder source overwrote the accumulator address')
+        guard = ['(%s)' % FAM[f_][4]]
+    elif id(src) in operands: src_op = operands[id(src)]; guard = [src_op]
+    else:
+        src_op = mem_operand(F, src); guard = []
+        if src_op is None: return None
+        if op == '*' and size == 1 and src_op.startswith('0x'): src_op = hx(int(src_op, 16) & 0xff)
+    R = FAM[ACC][size]; n1 = len(F.lines); late_move = None
+    if id(acc) in operands:
+        F.emit('ld', '%s,%s' % (R, operands[id(acc)]))
+    elif acc_v and ev_natural_wa(F, acc) and ev_uncast(acc).k == 'un' and ACC != 'WA':
+        f_ = gen(F, acc, 'WA', size)                         # s_NG: cpw (_gi),0x0 / scc eq,WA / ld HL,WA
+        if f_ != 'WA': raise Unsupported('evorder accumulator in WA')
+        if F.opt and ev_uncast(acc).op == '-' and op != '*': late_move = R; R = FAM['WA'][size]   # -O: the operator in WA
+        else: F.emit('ld', '%s,WA' % R)
+    elif acc is l and ACC == 'HL' and (natural_wa(acc) or chain_wa(acc) or char_widen(F, acc)) and \
+            not (src_v and src_op.startswith('WA')):
+        f_ = gen(F, acc, 'WA', size)                         # ra_chains ch_g4: ld WA,(_gi) / add WA,(_gj) / add WA,(_gk) /
+        if f_ not in FAM or size not in FAM[f_]: raise Unsupported('evorder chain accumulator')   # ld HL,WA / add HL,(_gm)
+        F.emit('ld', '%s,%s' % (R, FAM[f_][size]))
+    else:
+        f_ = gen(F, acc, ACC, size)
+        if f_ != ACC:
+            if f_ not in FAM or size not in FAM[f_]: raise Unsupported('evorder accumulator')
+            F.emit('ld', '%s,%s' % (R, FAM[f_][size]))
+    if any(clobbers(F.lines[n1:], g) for g in guard if g): raise Unsupported('evorder accumulator overwrote the source')
+    if op == '*':
+        F.emit('muls' if e.ty.signed else 'mul', '%s,%s' % (FAM[ACC][4], src_op))
+        if fam != ACC: F.emit('ld', '%s,%s' % (FAM[fam][size], FAM[ACC][size]))
+        return fam
+    rc = fold(src) if src is r else None
+    if op in '+-' and acc is l and rc is not None and rc.k == 'const' and rc.value is not None and 1 <= rc.value <= 8:
+        F.emit('inc' if op == '+' else 'dec', '%s,%s' % (hx(rc.value), R))
+    else: F.emit(SIMPLE_OPS[op], '%s,%s' % (R, src_op))
+    if late_move: F.emit('ld', '%s,%s' % (late_move, R))   # (s_UG -O: ld HL,WA after sub WA,(_hi))
+    return fam
 
 def plain_hl_tree(F, x):
     """x is built in HL from memory operands alone (no other register): a variable in memory, a constant, or a
@@ -854,7 +1101,7 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         else: F.emit('ld', '%s,%s' % (FAM[fam][2], W)); F.emit(SIMPLE_OPS[op], '%s,%s' % (FAM[fam][2], operand(F, r, 2)))
         return fam                                       # (-O3 -XS -Xr: exts WA / sub WA,.. / ld HL,WA)
     if CONST_LEFT_SWAP and op in ('+', '*', '&', '|', '^') and fold(l).k == 'const' and fold(r).k != 'const' and \
-            mem_operand(F, r) is None and not has_helper_call(r):
+            (mem_operand(F, r) is None or EVORDER and size == 2) and not has_helper_call(r):   # (evorder x_KG: ld HL,(_hi) / xor HL,0x7)
         l, r = r, l; e.l, e.r = e.r, e.l                   # random r1_04_16: 255 ^ gpi[2] -> ld XWA,(_gpi) /
                                                            # ld WA,(XWA+0x4) / xor WA,0xff (the constant last)
     has_helper_call.const_div = True                     # (r2_04_15: gs.l % 3L beside rl() clobbers the call's XHL)
@@ -940,6 +1187,16 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
             F.emit('inc' if op == '+' else 'dec', '%s,%s' % (hx(rc0.value), R))
         else: F.emit(SIMPLE_OPS[op], '%s,%s' % (R, rs0))
         return fam
+    if EVORDER and size == 2 and fam == 'HL' and (op in SIMPLE_OPS or op == '*') and not any(
+            nodes_in(x, 'call') or has_helper_call(x) or fpgen.is_fp_op(x) or
+            any(regvar_of(strip(y.e)) is not None for y in loads_in(x)) for x in (l, r)) and \
+            not getattr(F, 'cl_active', None) and not getattr(F, 'l2', None) and \
+            getattr(F, 'u1_i', None) is None and not getattr(F, 'elem_ops', None) and not getattr(F, 'tfam', None):
+        ev = evorder_bin(F, e, op, l, r, fam, size)        # probes/evorder.c: which operand is the accumulator, and
+        if ev is not None: return ev                       # the order of the operands' code
+    if EVORDER and size == 2 and fam == 'HL' and (op in SIMPLE_OPS or op == '*') and (F.opt or F.adecl) and \
+            ev_unfitted_pair(F, l, r):                     # (evorder.c s_XX, x_XS, s_PX -Xr ...: the older paths were
+        raise Unsupported('unfitted operand pair (evorder)')   # wrong code there; refused until the pair is probed)
     if op in ('+', '&', '|', '^') and fam != 'WA' and getattr(F, 'tfam', None) and reads_reg(r, fam) and not reads_reg(l, fam):
         rr = strip(r)                                # ot_cnt_abn: gc = *a + *b with b in XBC dying -> ld C,(XBC) /
         while rr.k == 'cast': rr = strip(rr.e)       # add C,(XWA)
@@ -3739,6 +3996,7 @@ def written_in(nodes, d):
     return bool(hit)
 
 def substitute(node, d, repl):
+    if hasattr(repl, 'k'): repl.from_local = d          # (evorder_bin: folded locals keep their declaration order)
     for key, v in list(node.__dict__.items()):
         if hasattr(v, 'k'):
             if v.k == 'load' and strip(v.e).k == 'var' and strip(v.e).decl is d: setattr(node, key, repl)

@@ -73,6 +73,21 @@ objetivo do projeto, recusar é aceitável e errar não é: uma função recusad
 "unsupported" nos números e espera uma regra; uma função errada passaria pelo portão e
 viraria firmware diferente do original.
 
+## A ordem dos operandos, medida de uma vez
+
+Os três primeiros corpora aleatórios tinham uma diferença recorrente que não era erro: em `a - (b - c)` o
+compilador original calculava primeiro o lado direito; em `(256 - a) | !*p`, primeiro o esquerdo. "O operando
+mais pesado primeiro" era a hipótese. Em vez de continuar ajustando caso a caso, uma sonda de 507 funções
+(`corpus/probes/evorder.c`) combinou treze tipos de operando dos dois lados de `-`, `^` e `*`, com o lado
+esquerdo lendo variáveis `g*` e o direito `h*`, de modo que a listagem diz sozinha quem foi calculado antes.
+A regra que saiu é a mesma nas quatro combinações de opções: um operando é o acumulador (HL; XWA na
+multiplicação) e o outro é a fonte da instrução. Na subtração o acumulador é sempre o esquerdo; nos operadores
+comutativos, um valor que precisa de cálculo vira o acumulador, uma constante nunca, dois operandos endereçados
+fazem o da direita vencer, e no resto fica o esquerdo. Os endereços vêm na ordem do texto, depois o valor da
+fonte, depois o acumulador, depois o operador; e os registradores seguem uma fila fixa, com o índice de um vetor
+tomando WA e XBC antes de todo o resto. Com a regra no modelo, a sonda passou de 118 para 442 funções exatas
+sem opções e de 115 para 383 com `-O3 -XS`.
+
 ## Onde isso deixa o modelo
 
 No fechamento do dia: as 674 funções do corpus pequeno exatas nas quatro combinações de

@@ -137,6 +137,10 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-10-7-micro-random4, v423/O3XS                            | random4/*.c          | 4 / 200 exact (2.0%)     |
 | run 2026-11-10-7-micro-random4, v423/Xr                              | random4/*.c          | 7 / 200 exact (3.5%)     |
 | run 2026-11-10-7-micro-random4, v423/O3XSXr                          | random4/*.c          | 4 / 200 exact (2.0%)     |
+| run 2026-11-10-9-micro-evorder, v423/none                            | probes/evorder.c     | 442 / 507 exact (87.2%)  |
+| run 2026-11-10-9-micro-evorder, v423/O3XS                            | probes/evorder.c     | 383 / 507 exact (75.5%)  |
+| run 2026-11-10-9-micro-evorder, v423/Xr                              | probes/evorder.c     | 198 / 507 exact (39.1%)  |
+| run 2026-11-10-9-micro-evorder, v423/O3XSXr                          | probes/evorder.c     | 155 / 507 exact (30.6%)  |
 | run 2026-11-09-9-micro-fp, v423/none                                | micro/fp.c           | 108 / 108 exact (100.0%) |
 | run 2026-11-09-9-micro-fp, v423/O3XS                                | micro/fp.c           | 108 / 108 exact (100.0%) |
 | run 2026-11-09-10-micro-fptemps, v423/none                          | micro/fp_temps.c     | 33 / 33 exact (100.0%)   |

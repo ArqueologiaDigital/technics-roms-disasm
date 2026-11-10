@@ -589,6 +589,25 @@ right shift was arithmetic: `~0x10000UL >> 3`), the compare of a narrowing cast,
 read, a death in a returning arm).  Gate: no ledger row down, random1 none 8 -> 9, random4 8 / 4 / 7 / 4 of 200;
 semcheck DIFFERENT 23 -> 31 (`r2_06_02` gone, the nine random4 rows added); pairs 223.
 
+**The order of evaluation of binary operands** (2026-11-10, morning; `corpus/probes/evorder.c`, 507 functions, run
+`2026-11-10-9-micro-evorder`; the probe generator and the order analyser are in research-scratch
+`sessions/2026-11-10_cc900-evorder/`).  The three random corpora had shown "the heavier operand first"; the probe
+(13 operand kinds x 13, for - ^ *, the left side reading g* globals and the right h*) gives the rule, the same at
+all four option sets: one operand is the accumulator (HL; XWA for *), the other the instruction's source.  For -
+the left is the accumulator; for + & | ^ * a value that needs computing is the accumulator when the other side is
+not one, a constant never is, two addressed operands (*p, p->m, g[i], and a struct member or constant-index
+element too) make the right one the accumulator, otherwise the left.  Code order: the addresses in textual order,
+then the source's value, then the accumulator's value or load, then the operator; registers: an index claims WA /
+XBC first, a value WA (BC when the accumulator's code needs WA), pointers the next free family, a right pointer
+XWA; `!x` and `-x` as the accumulator compute in WA and move to HL (under -O `!x` goes to HL directly and `-x`
+keeps the operator in WA); `a - -b` is `a + b`; `(K1 - x) - K2` folds.  Implemented as `evorder_bin` (flag
+`EVORDER`) in front of the simple-operator and multiply paths for 16-bit operands with the result in HL, no calls,
+helpers or register variables; the probe reads 442 / 383 / 198 / 155 of 507 exact at none / -O3 -XS / -Xr /
+-O3 -XS -Xr (118 / 115 / 118 / 115 before).  Not written yet: a `?:` beside a member or element (V4.23 materializes
+the member's address first, `lda XWA,_gs`), two indexed elements (the index is shared), a shift beside an indexed
+element (IX), and the -Xr forms, where the parameter in WA is a register variable the rule leaves to the older
+paths.  Gate: no ledger row down (micro 674 / 674 at all four sets, chidx 50 / 50, library 186 / 184 / 174, pairs kn5000 223 MATCH), the four evorder rows added; semcheck DIFFERENT 31 -> 31 (the probe's 34 wrong-code verdicts of the committed model became refusals: 21 / 31 / 72 / 72 functions not checked at none / -O3 -XS / -Xr / -O3 -XS -Xr).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
