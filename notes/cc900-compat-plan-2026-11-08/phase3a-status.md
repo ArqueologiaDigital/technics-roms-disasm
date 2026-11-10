@@ -696,6 +696,34 @@ r1_04_19), an unsigned register-parameter index extended whole (r3_08_11), the X
 operand; two out-of-range index verdicts (r3_01_02, r3_01_06) are reviewed as UB in `model/semcheck_review.tsv`.
 Gate: no ledger row down (15 rows up, among them random1 at none 9 -> 16 and at -Xr 4 -> 13), the eight loc0 and stord rows added; pairs 223 MATCH; semcheck DIFFERENT 31 -> 59, the 28 new verdicts all out-of-range indexes that the model and the oracle extend differently (UB), reviewed in model/semcheck_review.tsv (the rows for the -O stord ones reach results/semcheck.md at the next run).
 
+**Register temporaries under -O; more store shapes** (2026-11-10, afternoon, second batch): `plan_regtemps` now runs
+under -O as well (`REGTEMP_OPT`), with the XIZ homes' direct forms there too (`XIZ_DIRECT_OPT`): loc0 reads 436 / 380
+of 512 at -O3 -XS / -O3 -XS -Xr (132 / 147 before).  Two -O refinements came from the probe: under -O3 -XS -Xr a
+temporary whose last read is the argument of the function's final call keeps WA and the code in between moves to BC
+(`ld WA,(_gi) / ld BC,(_hj) / ld (_hi),BC / ld (_hi2),WA / j .vi`; `regtemp_keep_wa`), and a pointer plus a constant
+into a home is one `lda XBC,XWA+0x1`; a byte computed in place is stored from its register (`add C,(_hc) /
+ld (_hc2),C`, `STORE_FROM_WORK` for bytes).  A local initialised with a stack address stays folded (`_tan`'s
+`p = (unsigned short *)&x`), which kept the 1997 library at 186.  Tried and turned off (`REGTEMP_OPT_SCRATCH`): the
+-O source-into-a-scratch-register initialiser (`ld WA,(_hi) / ld BC,(_gi) / add BC,WA`, lo_i_Bgd) costs more loc0 -O3
+-XS rows than it wins; what decides between it and `add BC,(_hi)` (lo_i_Bgs) is not understood.  The store rule gained
+`p->arr[K]` and `p[K]` as members with a displacement (`ld XWA,(_gps) / ldw (XWA+0x14),0x64`; `cal / ld XWA,(_gpi) /
+ld (XWA+0x6),HL`), a member array of a global struct as an element with a static base (`lda XBC,_gs + 0xe`), and a
+sum whose operand reads through the stored pointer, computed first (`ld XWA,(_gps) / ld XBC,(_gla + 0x4) /
+add XBC,(XWA+0x4) / ld XWA,(_gps) / ld (XWA+0x4),XBC`); `++` / `--` on a stack parameter is `incb 0x1,(XSP+0x16)`;
+a char argument that is no plain operand is computed into A (`vc(gps->c)`: `ld XWA,(_gps) / ld A,(XWA) / exts WA /
+push WA`).  The bisector (`stmt_bisect.py`, which now takes `-D` / `-I`) over the 1997 library at -O3 -XS names 42
+functions refused whole, 6 of them at a `++` on a pointer parameter the oracle homes in XIZ (`strtoul`), 5 at an
+element op-assign in a loop (`a[i] <<= y`), the rest one each; its tally is in the research-scratch README.  Over the
+four random corpora at none: refused whole 490 -> 478, exact 38 -> 41.  The first gate of this batch found seven more wrong-code shapes, fixed before the second: store forwarding did
+not end at `scc` (r1_04_12 -O3 -XS: `scc ne,WA / ld (XWA),A` through a stale copy of `gp`); a conditional return in a
+function that returns with `retd` (r1_07_03 -Xr: `ret lt` left the double parameter's 8 bytes); a char index in
+memory loaded as a word by the element lvalue (r2_05_07: `ld BC,(XSP+0xa)` of a char parameter; now the oracle's
+zero-extended form `ld A,.. / ld XDE,0x0 / ld E,A / add XDE,XBC`); a char loaded through a pointer as a char array's
+index sign-extended (`_atof`'s `_ctype[*str]`: `extz WA`); a member array of a global struct at an unsigned index,
+which takes the low byte of the scaled offset plus the member offset (r2_03_08: `add A,0xe / lda XBC,_gs /
+ld (XBC+A),HL`); the `(XBC+A)` byte store form kept to -Xr (r2_05_07 at none); a pointer plus a char index is no
+register temporary (r3_03_11); and the stack-address local is folded under -O only (fpp11 q17 at none keeps it in WA).  Gate: no ledger row down (12 rows up: loc0 at -O3 -XS 132 -> 436 and at -O3 -XS -Xr 147 -> 380, six random rows), pairs 223 MATCH, semcheck DIFFERENT 59 -> 57 with no new verdict.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
