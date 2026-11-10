@@ -555,6 +555,14 @@ fixed (`corpus/random/README.md`, "Second pass"): random1 none 4 -> 8, Xr 2 -> 4
 all but `__trig` in the random corpus (32) and fpp10's four uninitialized-local functions (reviewed).  Gate: no ledger
 row down, micro 674 / 674 at all four sets, chidx 50 / 50 at all four.
 
+The random corpus's second round (2026-11-10, later still): the 32 DIFFERENT functions left after the chidx batch
+are all fixed or refused (`corpus/random/README.md`, "Third pass": fourteen rules and four guards, among them char
+homes in `QIZH`, the `-Xr` first-live-parameter home, the pointer-in-XWA / left-in-BC operand form, the `lda
+XWA,XBC+A` char-pointer sum).  semcheck DIFFERENT 41 -> 9: `__trig` (reviewed) and fpp10's four uninitialized-local
+functions (reviewed).  No ledger row moved; the pairs stay at 223; micro 674 / 674 and chidx 50 / 50 at all four
+sets.  The random corpus's exact counts did not move (8 / 2 / 4 / 2 of 200): what it shows now is unsupported shapes
+and listing differences, not wrong code.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

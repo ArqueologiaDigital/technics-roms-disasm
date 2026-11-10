@@ -653,6 +653,12 @@ def is_fp_op(n):
     if k == 'un' and n.op == '!' and is_fp(getattr(strip(n.e), 'ty', None)): return True
     return False
 
+def is_fp_copy(n):
+    """an FP assignment or ?: (a ._fld_dd / ._fld_dl helper call, which clobbers the registers like a call;
+    random r1_05_01: b in BC across double t = a ? gda[3] : gd2)"""
+    k = getattr(n, 'k', None)
+    return (k == 'bin' and n.op == '=' or k == 'cond') and is_fp(getattr(n, 'ty', None))
+
 def lvalue_direct(F, e):
     """a long destination in memory takes the conversion directly (d_to_l_st)"""
     lv = strip(e.l); src = strip(strip(e.r).e)

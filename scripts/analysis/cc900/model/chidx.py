@@ -96,7 +96,8 @@ def source(F, x, how):
     when it cannot be named.  'mul2' (u * 2) is computed here: the byte scale of its char, left as a temporary."""
     if how in ('load', 'mul2'):
         d = strip(x.e).decl
-        if getattr(d, 'reg', None):
+        if getattr(d, 'reg', None) == 'QIZH': src = ('mem', 'QIZH')   # (r1_04_07: ld A,QIZH / extz WA / ...)
+        elif getattr(d, 'reg', None):
             b = FAM.get(d.reg, {}).get(1)
             if b is None or d.reg == 'XIZ': return None
             src = ('reg', b, True)
@@ -283,9 +284,14 @@ def element(F, lv, kind, fam='WA'):
     o, xr = bool(F.opt), bool(F.adecl)
     hx = cg.hx
     busy = busy_bytes(F, lv.base)
-    if how == 'load' and getattr(strip(x.e).decl, 'reg', None) and not single_use(strip(x.e).decl): return None
     src = source(F, x, how)
     if src is None: return None
+    if how == 'load' and src[0] == 'reg' and not single_use(strip(x.e).decl):
+        if how != 'load' or kind != 'load' or esz != 1: return None
+        T = next((t for t in ('C', 'E', 'L') if t != src[1] and t not in busy and BYTE_FAM[t] not in cg.live_regs(F)), None)
+        if T is None: return None                          # -Xr r1_06_01: guca[a] with a read again: ld E,A /
+        F.emit('ld', '%s,%s' % (T, src[1])); src = ('reg', T, True)   # extz DE / lda XHL,_guca / (XHL+DE)
+        busy = busy | {src[1]}
     reg_var = src[0] == 'reg' and src[2]
     if bk[0] in ('garr', 'gmem'):
         if bk[0] == 'garr': sym = '_' + bk[1].name; sized = bk[2]; off = 0
@@ -311,6 +317,9 @@ def element(F, lv, kind, fam='WA'):
         R = own_fam(F, src) if xr else 'WA'
         widen(F, src, R, signed, esz)
         X = 'XBC' if R == 'WA' else 'XWA'
+        if xr:                                             # the first family that holds nothing (r1_06_01: XHL)
+            live = {'X' + f for f in cg.live_regs(F) if f in BYTE_FAM.values()} | {'X' + BYTE_FAM[b] for b in busy} | {'X' + R}
+            X = next((x for x in ('XWA', 'XBC', 'XDE', 'XHL') if x not in live), X)
         F.emit('lda', '%s,%s' % (X, gsym)); return '(%s+%s)' % (X, R)
     if how not in ('load', 'mul2') and bk[0] not in ('rmem', 'rptr'): return None
     if bk[0] == 'gpmem':                                   # nc2 / nu2: through a global struct pointer
@@ -325,7 +334,8 @@ def element(F, lv, kind, fam='WA'):
         else:
             widen(F, src, 'WA', signed, esz)
             if bk[2]: F.emit('add', 'WA,%s' % hx(bk[2]))
-            if not o: F.emit('ld', 'W,0x0')                # (-O knows W is zero after extz WA)
+            if not o or bk[2]: F.emit('ld', 'W,0x0')       # (-O knows W is zero after extz WA; the offset's add may
+                                                           # carry: r1_03_19 a->a[b] keeps the ld W,0x0)
         F.emit('extz', 'XWA'); F.emit('add', 'XWA,%s' % pm); return '(XWA)'
     if bk[0] == 'rmem':                                    # -Xr oc2: ld E,C / add E,C / ld HL,(XWA+E)
         if kind != 'load': return None
@@ -411,7 +421,10 @@ def ptr_sum(F, e, fam):
         F.emit('ld', '%s,%s' % (R, pm)); F.emit('sub', '%s,XWA' % R); return fam
     if esz == 1:                                           # ac1: ld XWA,(_gp) / ld XHL,0x0 / ld L,im / add XHL,XWA
         if not signed or pb[0] != 'gptr': return None
-        return byte_sum(F, src, fam, ('ld', pm))
+        if src[0] == 'mem' and xr:                         # -Xr r1_04_19: a char in memory: ld XBC,(_gp) / ld A,(b) /
+            F.emit('ld', 'XBC,%s' % pm); F.emit('ld', 'A,%s' % src[1]); F.emit('lda', '%s,XBC+A' % R); return fam
+        return byte_sum(F, src, fam, ('ld', pm))           # lda XWA,XBC+A (-O3 -XS ac1 into XHL zero-extends, codegen's
+                                                           # lda form is for a result in XWA there: r1_04_19 -O3 -XS)
     if pb[0] == 'gptr':                                    # ac2 / au2: ... ld HL,WA / add HL,HL / ld XWA,(_gpi) /
         widen(F, src, R2, signed, esz)                     # extz XHL / add XHL,XWA
         F.emit('ld', 'XWA,%s' % pm); F.emit('extz', R); F.emit('add', '%s,XWA' % R); return fam

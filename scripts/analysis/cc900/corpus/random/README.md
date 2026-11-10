@@ -94,5 +94,37 @@ element's address, loads the plain operand and adds the element.
 | `-Xr`        | 4 / 200   | 58 / 47 / 11                          | 142         |
 | `-O3 -XS -Xr`| 2 / 200   | 59 / 48 / 11                          | 141         |
 
-The 32 DIFFERENT functions left are in `r1_s_01` to `r1_s_08` (`r1_s_04` has 14 of them, mostly under `-Xr`); each is
-wrong code in the model until fixed or reviewed into `model/semcheck_review.tsv`.
+The 32 DIFFERENT functions left were in `r1_s_01` to `r1_s_08` (`r1_s_04` had 14 of them, mostly under `-Xr`).
+
+## Third pass (2026-11-10, later still): no wrong code left in the corpus
+
+Every remaining DIFFERENT function was fixed or refused; semcheck reads 69 / 63 / 58 / 58 checked, all equal, at
+none / `-O3 -XS` / `-Xr` / `-O3 -XS -Xr` (the exact counts are unchanged: 8 / 2 / 4 / 2 of 200).  What the second
+round taught, each a rule or a guard in `model/codegen.py` (the flag names are in parentheses):
+- `!` of a loaded word is `cp WA,0x0`, of a long `or XWA,XWA`; `!gps->c` is `ld XWA,(_gps) / cpb (XWA),0x0`
+  (`NOT_MEMBER_CP`, r1_06_01, r1_01_18);
+- under `-Xr` too, a call on the right of `+ - & | ^` is made first (`CALL_RIGHT_XR`, r1_01_18: the model had kept
+  the left value in BC across `.rul`);
+- `3L / 3L` folds (`FOLD_DIV`, r1_02_06); `(unsigned char) a > 255` folds to 0 (`FOLD_UCHAR_CMP`, r1_05_01);
+- `gc |= ~'A'` on a global char is `orb (_gc),0xbe` at every option set (`OPB_GLOBAL`, r1_03_19);
+- the reload-elision passes know that `sla 0x2,C` ends C's copy of a variable (r1_04_01 under `-O3 -XS`);
+- a char live across a call is never homed in IZ: cdecl puts it in `QIZH` (`ld QIZH,A` / `ld A,QIZH`, pushed as
+  `QIZ` when nothing else of XIZ is used; r1_05_05, r1_05_19), an `-Xr` register parameter goes to a frame slot
+  (`dec 0x2,XSP / ld (XSP),A`, r1_04_01) (`CHAR_HOMES`);
+- `gp + b` (a char pointer plus a char) is `ld XBC,(_gp) / ld A,(b) / lda XWA,XBC+A` under `-Xr`, and under `-O` when
+  the pointer is a plain global and the result goes to XWA (r1_04_19); otherwise the byte is zero-extended whole
+  (r1_04_02, chidx ac1) -- the two forms differ for a char above 127;
+- `-Xr`: a char parameter read again after an element read is copied first (`ld E,A / extz DE / lda XHL,_guca`,
+  r1_06_01), the element's address is built before a right operand that is an expression of registers
+  (`inc 0x8,A / xor A,(XHL+DE)`), and a pointer sum made while A holds a live parameter goes to a free family
+  (`ld DE,BC / exts XDE / add XDE,XDE / add XDE,(_gpi)`, `PTRSUM_FREE_X`);
+- a right operand read through a pointer variable puts the pointer in XWA and the left operand in BC (`ld XWA,(_gpi) /
+  ld BC,(_gi3) / and BC,(XWA)`, `PTR_RIGHT_BC`, r1_06_08, r1_08_07, r1_04_16); with both operands through pointers,
+  the left's pointer goes to XBC (`ld XBC,(_gpl) / ld XWA,(_gpl) / ld XWA,(XWA+0x4) / add XWA,(XBC)`, r1_05_19);
+- `(guca[a] | 128) % 2` is `set 0x7,A / and A,0x1` (`UCHAR_MOD_AND`, r1_04_05); `a->a[b]` with an unsigned char b and
+  a member offset keeps `ld W,0x0` under `-O` (r1_03_19);
+- `-Xr` homes the first register parameter that is live across a call, not the first parameter (`XR_FIRST_LIVE`,
+  r1_05_01), and an FP assignment or `?:` counts as a call for that liveness (`fpgen.is_fp_copy`);
+- refused rather than wrong: `*p op= k` with the pointer and the value in one register (r1_06_08), the `-O` `?:`
+  whose preloaded arm is overwritten by its condition (`TERN_PRE_GUARD`, r1_05_05), an assignment used as a value
+  whose value overwrites the pointer in XWA (r1_04_07), an unsigned int index under `-O` / `-Xr` (r1_08_00).
