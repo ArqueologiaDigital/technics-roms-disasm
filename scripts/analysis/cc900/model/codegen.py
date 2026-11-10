@@ -6374,7 +6374,9 @@ def leaf_l2(F):
         if n.k in ('for', 'while', 'do'): loops.append(n)
     walk(f.body, find)
     early = one_early_call(F)
-    if not tabs and not (early and loops) and not ((L2_WIDE or getattr(F, 'had_goto', False)) and loops): return False
+    if not tabs and not (early and loops) and not ((L2_WIDE and len(loops) >= 2 or getattr(F, 'had_goto', False)) and loops):
+        return False                                     # (L2_WIDE: nested loops only -- _strspn; every loop cost
+                                                         # pairs 223 -> 199, _strncmp / _strncpy among them)
     across = set()
     if early:                                            # _strrchr: s is read after strlen(s) -> XIZ
         seq = eval_sequence(f.body, [])
