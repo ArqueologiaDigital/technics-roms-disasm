@@ -749,6 +749,8 @@ the rule to run under -O (553 of the oracle's 680 forms are the same there; the 
 shift kinds whose index is the parameter in WA.  Random corpora at none: refused whole 476 -> 472, exact 41 -> 42.
 Gate: no ledger row down (random2 at none 5 -> 6, the four cmpordl rows added); pairs 223 MATCH; semcheck DIFFERENT 43 -> 55, the 12 new verdicts all cmpordl.c char negations at the two -O sets, where the model's -O path still negates the promoted word as C says and cc900 negates the byte (reviewed in model/semcheck_review.tsv; the -O rule of the next commit imitates it).
 
+**The compare rule under -O** (`CMP_WIDE_OPT`, the same patch): 553 of the oracle's 680 forms are the same at -O3 -XS; the variants are the truth value straight into BC / DE, a negation or difference computed in its own register, `lda XWA,0x100` for the long constant, one index shared by two elements, the plain branch form of a ?: as a compare operand, and a char member's address straight into XBC.  cmpordl.c: 674 / 668 / 546 / 544 of 680.  Gate: no ledger row down (random2 at -O3 -XS 1 -> 2, cmpordl at -O3 -XS 152 -> 668 and at -O3 -XS -Xr 152 -> 546); pairs 223 MATCH; semcheck DIFFERENT 55 -> 43: the 12 cmpordl.c char-negation verdicts of the previous gate are gone, the model negating the byte as cc900 does under -O too.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

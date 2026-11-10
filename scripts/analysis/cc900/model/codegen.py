@@ -612,7 +612,7 @@ def gen(F, e, fam, size, then_ret=False, store=False):
                 if a.op == '-': F.emit('inc', '0x1,%s' % R)
             else: F.emit('neg' if a.op == '-' else 'cpl', R)
             F.lines.append(lelse + ':'); F.lines.append(lend + ':'); return fam
-    if e.k == 'cond' and F.opt:
+    if e.k == 'cond' and F.opt and not getattr(F, 'cw_plain_cond', False):   # (a compare operand keeps the plain form)
         c, a, b = strip(e.c), strip(e.a), strip(e.b)
         truth = False
         if TERN_TRUTH_PRE and c.k == 'load' and strip(c.e).k == 'var' and c.ty.kind == 'int' and c.ty.size == 2:
@@ -940,6 +940,7 @@ def ev_unfitted_pair(F, l, r):
 
 CMP_ORDER = True                                          # see cmp_order
 CMP_WIDE = True                                           # see cmp_wide
+CMP_WIDE_OPT = True                                       # cmp_wide under -O too (553 of cmpordl.c's 680 forms are the same)
 
 def cw_char_derived(x):
     """x computes from signed chars and small constants only (!c, -c, c - d, i ? c : d, a call returning char), so that
@@ -1059,8 +1060,50 @@ def cw_addr(F, k, size, P='XBC', I='BC', B='XDE', combine=False):
     if k[0] == 'G': return k[1]
     return None
 
+def cw_truth(F, x, R):
+    """!v as a word into R: cpb / cpw (v),0x0 / scc eq,R; a long: ld XWA,(v) / or XWA,XWA / scc eq,R (no extension)"""
+    x0 = strip(x)
+    while x0.k == 'cast': x0 = strip(x0.e)
+    assert x0.k == 'un' and x0.op == '!'
+    xi = strip(x0.e)
+    while xi.k == 'cast' and xi.kind == 'IntegralCast': xi = strip(xi.e)
+    m = mem_operand(F, xi)
+    if xi.ty.size == 4: F.emit('ld', 'XWA,%s' % m); F.emit('or', 'XWA,XWA')
+    else: F.emit('cpb' if xi.ty.size == 1 else 'cpw', '%s,0x0' % m)
+    F.emit('scc', 'eq,%s' % R)
+
 def cw_value(F, x, k, size, R):
     """emit the value of x (kind k) into register family R and return its spelling"""
+    x0 = strip(x)
+    while x0.k == 'cast' and x0.kind == 'IntegralCast': x0 = strip(x0.e)
+    if k[0] == 'B' and size == 4 and x0.op == '-' and fold(x0.l).k == 'const' and fold(x0.l).value is not None:
+        m = mem_operand(F, strip(x0.r))                    # 256L - hl: ld XWA,0x100 / sub XWA,(_hl); -O: lda XWA,0x100
+        if m is not None:
+            F.emit('lda' if F.opt else 'ld', '%s,%s' % (FAM[R][4], hx(fold(x0.l).value & 0xffffffff)))
+            F.emit('sub', '%s,%s' % (FAM[R][4], m)); return FAM[R][4]
+    if k[0] in ('U', 'B') and F.opt and R != 'WA':         # -O: computed in its own register (ld XBC,(_hl) / cpl BC /
+        xi = strip(x0.e) if k[0] == 'U' else None          #  cpl QBC / inc 0x1,XBC; ld C,(_hc) / sub C,(_hd))
+        while xi is not None and xi.k == 'cast' and xi.kind == 'IntegralCast': xi = strip(xi.e)
+        Rr = FAM[R][size]
+        if k[0] == 'U' and mem_operand(F, xi) is not None:
+            F.emit('ld', '%s,%s' % (Rr, mem_operand(F, xi)))
+            if size == 4: F.emit('cpl', FAM[R][2]); F.emit('cpl', Q[R]); F.emit('inc', '0x1,%s' % Rr)
+            else: F.emit('neg', Rr)
+            return Rr
+        if k[0] == 'B':
+            xl, xr = strip(x0.l), strip(x0.r)
+            while xl.k == 'cast' and xl.kind == 'IntegralCast': xl = strip(xl.e)
+            while xr.k == 'cast' and xr.kind == 'IntegralCast': xr = strip(xr.e)
+            ml, mr = mem_operand(F, xl), (hx(fold(xr).value & ((1 << 8 * size) - 1)) if fold(xr).k == 'const' else mem_operand(F, xr))
+            if ml is not None and mr is not None and fold(xl).k != 'const':
+                F.emit('ld', '%s,%s' % (Rr, ml)); F.emit({'+': 'add', '-': 'sub', '&': 'and', '|': 'or', '^': 'xor'}[x0.op], '%s,%s' % (Rr, mr))
+                return Rr
+    if k[0] == 'T':
+        F.cw_plain_cond = True
+        try: fam = gen(F, x, R, size)
+        finally: F.cw_plain_cond = False
+        if fam != R: raise Unsupported('cmp_wide: the ?: landed in %s' % fam)
+        return FAM[R][size]
     if k[0] == 'F':
         fam = gen(F, x, 'HL', size)
         if fam != 'HL': raise Unsupported('cmp_wide: a call result not in HL')
@@ -1131,7 +1174,9 @@ def cmp_wide(F, e, l, r, size, op, cc):
         if not ordered and L in addrk and R == 'M':       # cl_e_PM: ld XBC,(_gpl) / ld XWA,(_hs + 0x4) / cp XWA,(XBC)
             a = cw_addr(F, lk, size, P='XBC', I='BC', B='XDE'); ld(XW, rk[1]); return cp(XW, a)
         if L == 'N' and size == 1:                        # cc_l_NG: ld A,(_hc) / ld C,A / exts BC / cpb .. / scc eq,WA / cp WA,BC
-            ld('A', rk[1]); ld('C', 'A'); F.emit('exts', 'BC'); v = value(l, lk, 'WA'); return cp('WA', 'BC')
+            if F.opt: ld('C', rk[1])                       # -O: ld C,(_hc)
+            else: ld('A', rk[1]); ld('C', 'A')
+            F.emit('exts', 'BC'); cw_truth(F, l, 'WA'); return cp('WA', 'BC')
         Rl = XB if L == 'S' else (XH if L == 'F' else XW)
         v = value(l, lk, {'XWA': 'WA', 'XBC': 'BC', 'XHL': 'HL', 'A': 'WA', 'C': 'BC', 'L': 'HL'}[Rl])
         return cp(v, rk[1])
@@ -1159,6 +1204,14 @@ def cmp_wide(F, e, l, r, size, op, cc):
         if L == 'S':                                       # cl_l_SX: index BC / XDE, the shift in XHL
             a = cw_addr(F, rk, size, P='XBC', I='BC', B='XDE'); v = value(l, lk, 'HL'); return cp(v, a)
         if L in addrk:
+            if L == 'X' and R == 'X' and F.opt and lk[2] == rk[2]:   # -O: one index for both elements
+                if size == 4:
+                    F.emit('ld', 'BC,%s' % lk[2]); scale_reg(F, 'BC', size, 'sla')
+                    if ordered: F.emit('lda', 'XWA,%s' % lk[1]); F.emit('lda', 'XDE,%s' % rk[1]); ld('XWA', '(XWA+BC)'); return cp('XWA', '(XDE+BC)')
+                    F.emit('lda', 'XDE,%s' % lk[1]); F.emit('lda', 'XWA,%s' % rk[1]); ld('XWA', '(XWA+BC)'); return cp('XWA', '(XDE+BC)')
+                if ordered:                                # cc_l_XX: lda XWA,_gca / ld DE,(c) / lda XBC,_hca / ld A,(XWA+DE) / cp A,(XBC+DE)
+                    F.emit('lda', 'XWA,%s' % lk[1]); F.emit('ld', 'DE,%s' % lk[2]); F.emit('lda', 'XBC,%s' % rk[1]); ld('A', '(XWA+DE)'); return cp('A', '(XBC+DE)')
+                F.emit('lda', 'XBC,%s' % lk[1]); F.emit('ld', 'DE,%s' % lk[2]); F.emit('lda', 'XWA,%s' % rk[1]); ld('A', '(XWA+DE)'); return cp('A', '(XBC+DE)')   # cc_e_XX
             if not ordered and L in addrk:                 # == : the right loads (cl_e_PP: ld XBC,(_gpl) / ld XWA,(_hpl) / ld XWA,(XWA))
                 if R == 'X' and size == 4:
                     if L == 'P': ld('XDE', lk[1]); v = cw_load(F, rk, size, base='XBC'); return cp(v, '(XDE)')   # cl_e_PX
@@ -1190,8 +1243,10 @@ def cmp_wide(F, e, l, r, size, op, cc):
             ld(XW, '(%s+%s)' % (PL, hx(lk[2])) if lk[2] else '(%s)' % PL); return cp(XW, a)
         # a memory, ! or - left: the right's address first, the left into XWA
         if size == 1 and L == 'N':                        # cc_l_NP: ld XWA,(_hp) / ld A,(XWA) / ld C,A / exts BC / ...
-            a = cw_addr(F, rk, size, P='XWA', I='BC'); ld('A', a); ld('C', 'A'); F.emit('exts', 'BC')
-            v = value(l, lk, 'WA'); return cp('WA', 'BC')
+            a = cw_addr(F, rk, size, P='XWA', I='BC')
+            if F.opt: ld('C', a)
+            else: ld('A', a); ld('C', 'A')
+            F.emit('exts', 'BC'); cw_truth(F, l, 'WA'); return cp('WA', 'BC')
         a = cw_addr(F, rk, size, P='XBC', I='BC', B='XDE')
         v = value(l, lk, 'WA'); return cp(v, a)
     # ---- the right is a call
@@ -1202,7 +1257,8 @@ def cmp_wide(F, e, l, r, size, op, cc):
         if L in addrk:                                     # cl_l_PF: ld XWA,(_gpl) / cp (XWA),XHL; cc_l_XF: cp (XBC),L
             a = cw_addr(F, lk, size, P='XWA', I='WA' if size == 4 else 'BC', B='XBC'); return cp(a, vr)
         if L == 'N' and size == 1:                        # cc_l_NF: ld C,L / exts BC / cpb .. / scc eq,WA / cp WA,BC
-            ld('C', 'L'); F.emit('exts', 'BC'); value(l, lk, 'WA'); return cp('WA', 'BC')
+            if F.opt: F.emit('exts', 'HL'); cw_truth(F, l, 'WA'); return cp('WA', 'HL')   # -O: exts HL / cp WA,HL
+            ld('C', 'L'); F.emit('exts', 'BC'); cw_truth(F, l, 'WA'); return cp('WA', 'BC')
         v = value(l, lk, 'BC' if L == 'S' else 'WA'); return cp(v, vr)
     # ---- the right is a shift
     if R == 'S':
@@ -1221,20 +1277,28 @@ def cmp_wide(F, e, l, r, size, op, cc):
     if R in compk:
         if size == 1 and R == 'N':                        # cc_l_GN: cpb (_hc),0x0 / scc eq,WA / ld BC,WA / ld A,(_gc) / exts WA / cp WA,BC
             if L == 'N':                                   # cc_l_NN: cpb (_hc),0 / scc eq,WA / cpb (_gc),0 / scc eq,BC / cp BC,WA
-                value(r, rk, 'WA'); value(l, lk, 'BC'); return cp('BC', 'WA')
+                cw_truth(F, r, 'WA'); cw_truth(F, l, 'BC'); return cp('BC', 'WA')
             if L == 'F':                                   # cc_l_FN: cal _gfc / ld C,L / exts BC / cpb (_hc),0x0 / scc eq,WA / cp BC,WA
-                value(l, lk, 'HL'); ld('C', 'L'); F.emit('exts', 'BC'); value(r, rk, 'WA'); return cp('BC', 'WA') if ordered else cp('WA', 'BC')
-            if L == 'X': value(r, rk, 'WA'); ld('DE', 'WA'); a = cw_addr(F, lk, size, P='XWA', I='BC'); ld('A', a); F.emit('exts', 'WA'); return cp('WA', 'DE')
-            value(r, rk, 'WA'); ld('BC', 'WA')
+                value(l, lk, 'HL')
+                if F.opt: F.emit('exts', 'HL'); cw_truth(F, r, 'WA'); return cp('HL', 'WA') if ordered else cp('WA', 'HL')
+                ld('C', 'L'); F.emit('exts', 'BC'); cw_truth(F, r, 'WA'); return cp('BC', 'WA') if ordered else cp('WA', 'BC')
+            if L == 'X':                                   # cc_l_XN: scc eq,WA / ld DE,WA (-O: scc eq,DE) / the element / exts WA / cp WA,DE
+                if F.opt: cw_truth(F, r, 'DE')
+                else: cw_truth(F, r, 'WA'); ld('DE', 'WA')
+                a = cw_addr(F, lk, size, P='XWA', I='BC'); ld('A', a); F.emit('exts', 'WA'); return cp('WA', 'DE')
+            if F.opt: cw_truth(F, r, 'BC')
+            else: cw_truth(F, r, 'WA'); ld('BC', 'WA')
             if L in memk: ld('A', lk[1])
             elif L in ('P', 'D'): a = cw_addr(F, lk, size, P='XWA'); ld('A', a)
             else: v = value(l, lk, 'WA')
             F.emit('exts', 'WA'); return cp('WA', 'BC')
         if size == 1 and L == 'N':                        # cc_l_NB: right into A / ld C,A / exts BC / cpb (_gc),0 / scc eq,WA / cp WA,BC
-            value(r, rk, 'WA'); ld('C', 'A'); F.emit('exts', 'BC'); value(l, lk, 'WA'); return cp('WA', 'BC')
+            if F.opt: value(r, rk, 'BC')                   # -O: the right computed in C (ld C,(_hc) / neg C; the ?: arms into C)
+            else: value(r, rk, 'WA'); ld('C', 'A')
+            F.emit('exts', 'BC'); cw_truth(F, l, 'WA'); return cp('WA', 'BC')
         if L in memk:                                      # cl_l_GB: ld XWA,(_hl) / sub XWA,(_hm) / cp (_gl),XWA
             if L == 'M' and R == 'T':                      # cl_l_MT: lda XBC,_gs + 0x4 / the arms into XWA / cp (XBC),XWA
-                if size == 1 and ' + ' not in lk[1]: F.emit('lda', 'XWA,%s' % lk[1][1:-1]); ld('XBC', 'XWA')   # cc_l_MT: through XWA
+                if size == 1 and ' + ' not in lk[1] and not F.opt: F.emit('lda', 'XWA,%s' % lk[1][1:-1]); ld('XBC', 'XWA')   # cc_l_MT: through XWA
                 else: F.emit('lda', 'XBC,%s' % lk[1][1:-1])
                 vr = value(r, rk, 'WA'); return cpmem('(XBC)', vr)
             vr = value(r, rk, 'WA'); return cpmem(lk[1], vr)
@@ -1255,7 +1319,11 @@ def cmp_wide(F, e, l, r, size, op, cc):
         if L == 'F':                                       # cl_l_FB: cal / right into XWA / cp XHL,XWA; == cp XWA,XHL
             v = value(l, lk, 'HL'); vr = value(r, rk, 'WA'); return cp(v, vr) if ordered else cp(vr, v)
         if L == 'S':                                       # cl_l_SB: right first into XBC, the shift into XDE, cp XDE,XBC
-            if R == 'N': gen(F, r, 'WA', 2); ld('BC', 'WA'); F.emit('exts', 'XBC')
+            if R == 'N':
+                if F.opt: cw_truth(F, r, 'BC')
+                else: cw_truth(F, r, 'WA'); ld('BC', 'WA')
+                F.emit('exts', 'XBC')
+            elif R == 'U' and F.opt: value(r, rk, 'BC')
             elif R == 'U': value(r, rk, 'WA'); ld(XB, XW)
             else: value(r, rk, 'BC')
             v = value(l, lk, 'DE'); return cp(v, XB)
@@ -1263,15 +1331,21 @@ def cmp_wide(F, e, l, r, size, op, cc):
         if size == 1:
             if L == 'T' and R in ('U', 'B'):               # cc_l_TU: right into A / arms into C / cp C,A
                 value(r, rk, 'WA'); value(l, lk, 'BC'); return cp('C', 'A')
-            if L in ('U', 'B') and R in ('U', 'B'):        # cc_l_UU: right into A / ld C,A / left into A / cp A,C
-                value(r, rk, 'WA'); ld('C', 'A'); v = value(l, lk, 'WA'); return cp(v, 'C')
+            if L in ('U', 'B') and R in ('U', 'B'):        # cc_l_UU: right into A / ld C,A / left into A / cp A,C (-O: right in C)
+                if F.opt: value(r, rk, 'BC')
+                else: value(r, rk, 'WA'); ld('C', 'A')
+                v = value(l, lk, 'WA'); return cp(v, 'C')
             if L == 'T' and R == 'T':                      # cc_l_TT: right arms A, left arms C, cp C,A
                 value(r, rk, 'WA'); value(l, lk, 'BC'); return cp('C', 'A')
             if R == 'T':                                   # cc_l_BT: right arms into C, left into A, cp A,C
                 value(r, rk, 'BC'); v = value(l, lk, 'WA'); return cp(v, 'C')
             return None
         if L in wak and R in wak:                          # cl_l_NN: right in WA -> XBC, left XWA, cp XWA,XBC
-            if R == 'N': gen(F, r, 'WA', 2); ld('BC', 'WA'); F.emit('exts', 'XBC')
+            if R == 'N':                                   # (-O: scc eq,BC / exts XBC)
+                if F.opt: cw_truth(F, r, 'BC')
+                else: cw_truth(F, r, 'WA'); ld('BC', 'WA')
+                F.emit('exts', 'XBC')
+            elif F.opt: value(r, rk, 'BC')                 # (-O: ld XBC,(_hl) / cpl BC / cpl QBC / inc 0x1,XBC)
             else: value(r, rk, 'WA'); ld('XBC', 'XWA')
             v = value(l, lk, 'WA'); return cp(v, 'XBC')
         if L in wak:                                       # cl_l_NB: right into XBC, left XWA, cp XWA,XBC
@@ -2635,7 +2709,7 @@ def gen_compare(F, e):
         r = N('const', value=1, ty=rc.ty); rc = r        # !gi == 7 -> cp WA,0x1 (cmpord.c ci_e_NK, ci_l_NK; imitated)
     if CMP_WIDE and (size in (1, 4) or size == 2 and cw_char_derived(l) and cw_char_derived(r)) and \
             not getattr(F, 'l2', None) and not getattr(F, 'cl_active', None) and \
-            getattr(F, 'u1_i', None) is None and not getattr(F, 'elem_ops', None) and not F.opt and \
+            getattr(F, 'u1_i', None) is None and not getattr(F, 'elem_ops', None) and (not F.opt or CMP_WIDE_OPT) and \
             not any(any(regvar_of(strip(y.e)) is not None for y in loads_in(x)) for x in (l, r)):
         csz = 1 if size == 2 else size                     # (cc900 compares two char-derived values at the byte:
         co = cmp_wide(F, e, l, r, csz, op, cc if csz == size else CC_S[e.op])   # cmpordl.c cc_l_UG ld A / neg A / cp A,(_hc))
