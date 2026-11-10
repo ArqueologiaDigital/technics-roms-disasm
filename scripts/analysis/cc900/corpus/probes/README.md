@@ -30,6 +30,8 @@ copied here so the ledger (`model/ledger.sh`) can score the model against its or
 | `evorder_st.c` | the same int kinds as a value stored into a global (`es_*`: the accumulator is WA, the source takes BC) and as a pushed argument (`ea_*`: the source takes WA, the accumulator the first free family), for - and ^ (`gen_evorder2.py`, run 2026-11-10-10-micro-evorder2) |
 | `evorder_l.c` | the kinds as longs, returned (`el_*`: the same rule in XHL / XWA; `!l` and `-l` go through XWA), for - and ^ (`gen_evorder2.py`, run 2026-11-10-10-micro-evorder2) |
 | `evorder_d.c` | the int kinds for / and % (`ed_*`): the same order rule with the accumulator in WA (`exts XWA / divs XWA,src / ld HL,WA`, the remainder from QWA; -O with a plain left: `divs XHL`), the source in BC (`gen_evorder3.py`, run 2026-11-10-11-micro-evorder3) |
+| `cmpord.c`    | the int kinds on both sides of `<` and `==` as an `if` condition (`ci_l_*`, `ci_e_*`) and of `<` as a value (`cv_l_*`): the same order rule as the operators, the compare instruction's operands per kind pair (a memory left stays in memory against a computed right: `cp (_gi),WA` for `<`, `cp WA,(_gi)` for `==`; a shift's value in BC) (`gen_cmpord.py`, run 2026-11-10-12-micro-cmpord) |
+| `evorder_lh.c` | the long kinds on both sides of `*`, `/`, `%` (`eh_*`), which call `C9H_mulls` / `divls` / `remls`: the left argument in XWA and the right in XBC (`*` puts the operator rule's accumulator in XWA), pointer addresses first, the source value, the accumulator value, plain loads (a plain variable before a member), constants last, pointer loads last in place (`gen_evorder_lh.py`, run 2026-11-10-13-micro-evorder4) |
 
 Score one with (from `scripts/analysis/cc900`; the listing directory and `--opt` are given explicitly):
 

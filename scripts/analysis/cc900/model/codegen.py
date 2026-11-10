@@ -538,7 +538,9 @@ def gen(F, e, fam, size, then_ret=False, store=False):
     if e.k == 'bin' and e.op == '=' and not fpgen.is_fp(e.ty):
         return gen_assign_value(F, e, fam, size)
     if e.k == 'bin' and e.op in CC_S:
-        cc = gen_compare(F, e)
+        F.cmp_as_value = True                            # (cmpord.c cv_l_NK: !gi < 7 keeps the 7 as a value)
+        try: cc = gen_compare(F, e)
+        finally: F.cmp_as_value = False
         if cc in (True, False): F.emit('ld', '%s,%s' % (FAM[fam][2], hx(int(cc))))
         else: F.emit('scc', '%s,%s' % (cc, FAM[fam][2]))
         return fam
@@ -844,6 +846,13 @@ def ev_address(F, x, P, I, B):
         return '(%s+%s)' % (P, hx(off)) if off else '(%s)' % P
     b = strip(v.base); ii = ev_uncast(v.idx)
     F.emit('ld', '%s,%s' % (I, mem_operand(F, ii)))
+    if not ii.ty.signed:                                   # an unsigned index is extended whole (UIDX32; r2_01_11:
+        XI = 'X' + I                                       # gua[a] -> ld WA,(a) / extz XWA / add XWA,XWA / ld XBC,_gua /
+        F.emit('extz', XI)                                 # add XBC,XWA / (XBC))
+        if v.ty.size == 2: F.emit('add', '%s,%s' % (XI, XI))
+        else: F.emit('sll', '%s,%s' % (hx({4: 2, 8: 3}[v.ty.size]), XI))
+        F.emit('ld', '%s,_%s' % (B, b.decl.name)); F.emit('add', '%s,%s' % (B, XI))
+        return '(%s)' % B
     if v.ty.size == 2: F.emit('add', '%s,%s' % (I, I))
     else: F.emit('sla', '%s,%s' % (hx({4: 2, 8: 3}[v.ty.size]), I))
     F.emit('lda', '%s,_%s' % (B, b.decl.name))
@@ -900,6 +909,103 @@ def ev_unfitted_pair(F, l, r):
                     (kr in ('S', 'X') and (kl is not None or ev_class(F, l) == 'V'))): return True   # (el_s_NS -Xr)
     if kl is None or kr is None: return False
     return 'S' in (kl, kr) or 'X' in (kl, kr)
+
+CMP_ORDER = True                                          # see cmp_order
+
+def cmp_order(F, e, l, r, size, op, cc, swapped=False):
+    """the operands of a 16-bit compare (corpus/probes/cmpord.c, run 2026-11-10-12-micro-cmpord; the order of the
+    operand-order rule): a computed right goes to WA and a memory left stays in memory (cp (_gi),WA for an ordered
+    compare, cp WA,(_gi) for == / !=); a computed left goes to WA against a memory right (cp WA,(_hi)); two computed
+    operands: the right first into WA, the left into BC (cp BC,WA), unless the left is a unary minus, which owns WA
+    (the right then in BC); a shift's value is in BC with the count in WA (cp (_gi),BC; cp BC,(_hi)); a left *p stays
+    (XBC) against a computed right (cp (XBC),WA) and loads into WA against a memory right; a right *p takes XBC
+    (cp WA,(XBC)); a left g[i] stays (XBC+WA) against a computed right (cp (XBC+WA),DE); a right g[i] takes BC / XDE
+    against a left loaded into WA (cp WA,(XDE+BC)); a constant right is cpw mem,K or cp reg,K.  None where the shape
+    is not one of these (two memory operands, a ?: beside a member or element, two indexed elements, ...)."""
+    cl, cr = ev_class(F, l), ev_class(F, r)
+    if cl is None or cr is None or cl == 'K': return None
+    lk, rk = ev_addr_kind(F, l), ev_addr_kind(F, r)
+    lx, rx = ev_core(l), ev_core(r)
+    if any(getattr(x, 'ty', None) is None or x.ty.size != 2 for x in (lx, rx) if x.k != 'const'): return None
+    lv, rv = cl == 'V', cr == 'V'                          # (r1_05_18: two char-narrowed operations compare as bytes)
+    if not (lv or rv or lk is not None or rk is not None): return None   # two memory operands: the older paths
+    if (lx.k == 'cond' and cr == 'A' and rk is None) or (rx.k == 'cond' and cl == 'A' and lk is None): return None
+    if lk == 'X' and rk == 'X': return None                # (ci_l_MT: lda XWA,_gs first; a cond beside *p is plain)
+    ordered = op in ('<', '<=', '>', '>=')
+    def shift(x): return x.k == 'bin' and x.op in ('<<', '>>') and fold(x.r).k != 'const'
+    lS, rS = lv and shift(lx), rv and shift(rx)
+    lU = lv and lx.k == 'un' and lx.op == '-'
+    if (lS or rS) and 'X' in (lk, rk): return None         # (ci_l_XS, ci_l_SX: the index goes through WA)
+    rconst = fold(r).k == 'const' and fold(r).value is not None
+    if not ordered and not swapped and not lv and not rv and cl != 'G' and cr != 'G' and (lk or rk):
+        return cmp_order(F, e, r, l, size, op, cc, True)   # == of two offset or addressed operands: the right loads
+    if lx.k == 'cond' and rk == 'X': return None           # (ci_e_MP: ld XWA,(_hpi) / ld WA,(XWA) / cp WA,(_gs);
+    live = {r_ for r_ in live_regs(F) if any(uses_decl(F.f.body, d_) for d_ in list(F.f.params) + list(F.f.decls)
+                                            if getattr(d_, 'reg', None) == r_ and d_ not in F.dead)}
+    taken = set(live)
+    def pick(avoid=()):
+        for f_ in ('WA', 'BC', 'DE', 'HL'):
+            if f_ not in taken and f_ not in avoid: taken.add(f_); return f_
+        raise Unsupported('cmp_order: no free register')
+    if lS or rS: taken.add('WA')                           # the count
+    plan = {}
+    if lU: plan['L'] = 'WA'; taken.add('WA')                # ci_l_UB: neg WA, the right in BC
+    if lk == 'X':                                          # an indexed element claims its registers first, on either
+        i_ = pick(); b_ = pick(); plan['LA'] = (None, FAM[i_][2], 'X' + b_)   # side (ci_l_XB: (XBC+WA) stays, the
+    if rk == 'X': i_ = pick(); b_ = pick(); plan['RA'] = (None, FAM[i_][2], 'X' + b_)   # right value in DE; ci_l_NX:
+    if rk == 'P' and (rv or lv): plan['RA'] = ('X' + pick(), None, None)   # cp DE,(XBC+WA)); a right *p before a left
+    if not rv and not rconst:                              # (ci_l_NP: cp BC,(XWA); ci_l_UP: cp WA,(XBC)); against a
+        if lk == 'P': plan['LA'] = ('X' + pick(), None, None); plan['L'] = plan['LA'][0][1:]   # memory or addressed
+        elif lk == 'X': plan['L'] = next(k for k, v in FAM.items() if v.get(2) == plan['LA'][1])   # right the left
+        elif not lv: plan['L'] = pick()                    # loads into a register: ci_l_PG: ld XWA,(_gpi) / ld WA,(XWA) /
+    elif rconst and lk == 'P': plan['LA'] = ('X' + pick(), None, None)   # cp WA,(_hi); ci_l_XG: ld WA,(XBC+WA); ci_l_GX:
+    if rk == 'P' and 'RA' not in plan: plan['RA'] = ('X' + pick(), None, None)   # ld WA,(_gi).  A constant right keeps the left in
+    if rv: plan['R'] = pick()                              # memory (ci_l_PK: cpw (XWA),0x7); two pointers: the left first
+    if lv and 'L' not in plan: plan['L'] = pick()          # ci_l_NB: the left value in BC
+    if lk == 'P' and 'LA' not in plan: plan['LA'] = ('X' + pick(), None, None)   # ci_l_PB: XBC behind the right's WA
+    # emission: addresses in textual order, the right value, the left value or load, the compare
+    lm = rm = None
+    if 'LA' in plan: lm = ev_address(F, l, *plan['LA'])
+    if 'RA' in plan: rm = ev_address(F, r, *plan['RA'])
+    n0 = len(F.lines)
+    if rv:
+        f_ = gen(F, r, plan['R'], size)
+        if f_ not in FAM or size not in FAM[f_]: raise Unsupported('cmp_order right value')
+        R = FAM[f_][size]
+        if lm and clobbers(F.lines[n0:], lm): raise Unsupported('cmp_order right over the left address')
+    elif rm is not None: R = rm
+    else: R = mem_operand(F, r)
+    if R is None: return None
+    n1 = len(F.lines)
+    if lv:
+        f_ = gen(F, l, plan['L'], size)
+        if f_ not in FAM or size not in FAM[f_]: raise Unsupported('cmp_order left value')
+        L = FAM[f_][size]
+    elif 'L' in plan:                                      # a memory or addressed left loaded into a register
+        src = lm if lm else mem_operand(F, l)
+        if src is None: return None
+        F.emit('ld', '%s,%s' % (FAM[plan['L']][size], src)); L = FAM[plan['L']][size]
+        if rm is not None and clobbers(F.lines[n1:], rm): raise Unsupported('cmp_order left load over the right address')
+    elif lm is not None: L = lm
+    else: L = mem_operand(F, l)
+    if L is None: return None
+    if rv and clobbers(F.lines[n1:], '(%s)' % FAM[f_ if False else plan['R']][4]) and not lv:
+        raise Unsupported('cmp_order left over the right value')
+    if (rv or rm is not None) and clobbers(F.lines[n1:], rm or '(%s)' % FAM[plan['R']][4]):
+        raise Unsupported('cmp_order left over the right')
+    Lreg = L in ('WA', 'BC', 'DE', 'HL'); Rreg = R in ('WA', 'BC', 'DE', 'HL')
+    rc = fold(r)
+    if rc.k == 'const' and rc.value is not None and not rv:
+        K = hx(rc.value & 0xffff)
+        if Lreg: F.emit('cp', '%s,%s' % (L, K))
+        else: F.emit('cpw', '%s,%s' % (L, K))
+        return cc
+    if Lreg: F.emit('cp', '%s,%s' % (L, R)); return cc
+    if Rreg:
+        if ordered: F.emit('cp', '%s,%s' % (L, R))         # cp (_gi),WA
+        else: F.emit('cp', '%s,%s' % (R, L))               # cp WA,(_gi)
+        return cc
+    return None
 
 def ev_mul_div(F, e, op, ACC, fam, size, src_op):
     """the multiply or divide of evorder_bin's accumulator (evorder_d.c: ld WA,(_gi) / exts XWA / divs XWA,BC /
@@ -1137,7 +1243,9 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         else:
             e = N('bin', op='>>', l=e.l, r=N('const', value=rk_.value.bit_length() - 1, ty=e.r.ty), ty=e.ty); op = '>>'
     if op in '+-' and (strip(e.l).ty.is_ptr() or strip(e.r).ty.is_ptr()):
-        return gen_ptr_arith(F, e, fam, size)
+        F.ptr_arg_ctx = any_fam                          # (gen_ptr_arith: a pushed pointer sum zero-extends its char)
+        try: return gen_ptr_arith(F, e, fam, size)
+        finally: F.ptr_arg_ctx = False
     l, r = narrow(e.l, size), narrow(e.r, size)
     if CHAR_NARROW and op == '*' and size == 2 and fold(e.r).k == 'const' and fold(e.r).value is not None:
         cx = strip(e.l)                                  # chnarrow.c cn_mul_k: c * 3 -> ld L,(c) / muls HL,0x3 (the
@@ -1886,8 +1994,11 @@ def gen_ptr_arith(F, e, fam, size):
             else: F.emit('ld', '%s,%s' % (R, X)); F.emit(opn, '%s,%s' % (R, pm))
             return fam
         F.emit(opn, '%s,%s' % (X, pm)); return iv.reg
-    ext = 'extz' if esz == 1 and PTR_CHAR_EXTZ else ('exts' if ii.ty.signed else 'extz')   # (a char pointer's index
-    R = FAM[fam][4]                                                                         # is zero-extended)
+    ext = 'extz' if esz == 1 and PTR_CHAR_EXTZ and (getattr(F, 'ptr_arg_ctx', False) or not ii.ty.signed or
+                                                   ii.ty.size != 1) else ('exts' if ii.ty.signed else 'extz')
+    R = FAM[fam][4]                                      # (a char pointer's index is zero-extended: h_p_n3's int n,
+                                                         # extz XHL; a char index too when the sum is pushed, r1_04_02;
+                                                         # a stored char index is sign-extended, r1_00_13)
     if F.adecl and PTRSUM_FREE_X and 'WA' in live_regs(F) and ii.ty is not None and ii.ty.size == 2 and im is not None \
             and not im.startswith('(XWA') and (im != 'WA' or not dies_here(F, ii)) and pm.startswith('(') and \
             'XWA' not in pm and esz in (1, 2, 4):
@@ -1910,10 +2021,11 @@ def gen_ptr_arith(F, e, fam, size):
             (F.adecl or F.opt and pm.startswith('(_') and ' ' not in pm) and pm != 'XBC' and not im.startswith('(XBC'):
         F.emit('ld', 'XBC,%s' % pm); F.emit('ld', 'A,%s' % im)   # -O / -Xr (r1_04_19, r1_04_02): gp + b ->
         F.emit('lda', '%s,XBC+A' % R); return fam               # ld XBC,(_gp) / ld A,(b) / lda XWA,XBC+A
-    if ii.ty is not None and ii.ty.size == 1 and esz == 1 and PTR_CHAR_EXTZ and im != 'WA':
-        F.emit('ld', 'XWA,0x0'); F.emit('ld', 'A,%s' % im)   # random r1_04_02: gs.p + a, a char a on a char pointer:
-    else:                                                  # the byte zero-extended whole (ld XWA,0x0 / ld A,(XSP+0x8))
-        load_index16(F, ii, im); F.emit(ext, 'XWA')       # (random r1_02_12: gpi + c, a char c: ld A,.. / exts WA)
+    if ii.ty is not None and ii.ty.size == 1 and esz == 1 and PTR_CHAR_EXTZ and im != 'WA' and \
+            (getattr(F, 'ptr_arg_ctx', False) or not ii.ty.signed):
+        F.emit('ld', 'XWA,0x0'); F.emit('ld', 'A,%s' % im)   # random r1_04_02: vp(gs.p + a), a char a on a char pointer,
+    else:                                                  # pushed: the byte zero-extended whole (ld XWA,0x0 / ld A,(XSP+0x8));
+        load_index16(F, ii, im); F.emit(ext, 'XWA')       # stored it is sign-extended (r1_00_13: gp = gs.p + a -> ld A,.. /
     if esz == 2: F.emit('add', 'XWA,XWA')
     elif esz > 2: F.emit('sll', '%s,XWA' % hx({4: 2, 8: 3}[esz]))
     if F.opt and R != 'XWA' and pm != 'XWA':          # m_padd under -O3 -XS: add XWA,(XSP+0x4) / ld XHL,XWA
@@ -1963,11 +2075,101 @@ def gen_shift_count(F, r):
     if rv and all(v is not None and v.ty.size == 2 for v in rv): return gen(F, r, 'WA', 2)   # (-O3 -XS r1_09_14: t in BC -> ld WA,BC)
     return gen(F, narrow(r, 1), 'WA', 1)
 
+LONG_HELPER_ORDER = True                                  # see long_helper_order
+
+def long_helper_order(F, e, l, r):
+    """the arguments of a long * / % helper when one operand needs code (corpus/probes/evorder_lh.c, run
+    2026-11-10-13-micro-evorder4): the left goes to XWA and the right to XBC, except that * (commutative) puts the
+    operand the operator rule makes the accumulator in XWA (m_GB: ld XWA,(_hl) / sub XWA,(_hm) / ld XBC,(_gl); m_PP:
+    the right pointer in XWA).  Code order: the pointers' addresses in textual order, each into its own argument
+    register; the source value (XBC: a ! tests in XWA and lands in BC, scc eq,BC / exts XBC; a unary minus computes
+    in XWA and moves, ld XBC,XWA; a shift's value in XBC with the count in WA); the accumulator value (XWA; a shift
+    moves ld XWA,XBC); the plain loads, a plain variable before a member or element (d_MG: ld XBC,(_hl) /
+    ld XWA,(_gs+0xa)); constants last (d_KB: ld XWA,0x7 after the right value); the pointers' loads last, in
+    place (m_GP: ld XBC,(XBC)).  Emits up to the arguments; returns False where the shape is not one of these
+    (an indexed element goes through a slot and XIZ, a member through a pointer through XIZ, two values and a
+    pointer, ...)."""
+    cl, cr = ev_class(F, l), ev_class(F, r)
+    if cl is None or cr is None or (cl == 'K' and cr == 'K'): return False
+    if cl != 'V' and cr != 'V' and ev_addr_kind(F, l) is None and ev_addr_kind(F, r) is None: return False
+    def kind(x):
+        k = ev_addr_kind(F, x)
+        if k == 'P' and strip(ev_uncast(x).e).k == 'member': return 'D'   # (through XIZ: unprobed)
+        return k
+    lk, rk = kind(l), kind(r)
+    if 'X' in (lk, rk) or 'D' in (lk, rk): return False
+    if e.op == '*':
+        if cr == 'V' and cl != 'V': acc, src = r, l
+        elif cl == 'V': acc, src = l, r
+        elif cr == 'K': acc, src = l, r
+        elif cl == 'K': acc, src = r, l
+        elif cl == 'A' and cr == 'A': acc, src = r, l
+        else: acc, src = l, r
+    else: acc, src = l, r
+    if ev_class(F, acc) == 'K': return False
+    def vshift(x): return ev_core(x).k == 'bin' and ev_core(x).op in ('<<', '>>') and fold(ev_core(x).r).k != 'const'
+    if vshift(l) and vshift(r): return False               # (eh_r_SS: the two counts share WA; unprobed)
+    if vshift(acc) and ev_class(F, src) == 'V': return False   # (eh_r_ST: the shift's XBC over the source value)
+    reg = {id(acc): 'XWA', id(src): 'XBC'}
+    def is_v(x): return ev_class(F, x) == 'V'
+    if any(regvar_of(strip(y.e)) is not None for x in (l, r) for y in loads_in(x)): return False
+    if nodes_in(l, 'call') or nodes_in(r, 'call') or fpgen.is_fp_op(l) or fpgen.is_fp_op(r): return False
+    # 1. pointer addresses, textual
+    for x in (l, r):
+        if kind(x) == 'P':
+            pv = strip(strip(ev_uncast(x).e).e)
+            F.emit('ld', '%s,%s' % (reg[id(x)], mem_operand(F, pv)))
+    n0 = len(F.lines)
+    # 2. the source value
+    if is_v(src):
+        sx = ev_core(src)
+        if sx.k == 'un' and sx.op == '!':
+            f_ = gen(F, sx.e, 'WA', 4)
+            if f_ != 'WA': raise Unsupported('long helper: ! operand')
+            F.emit('or', 'XWA,XWA'); F.emit('scc', 'eq,BC'); F.emit('exts', 'XBC')
+        elif sx.k == 'un' and sx.op == '-':
+            f_ = gen(F, src, 'WA', 4)
+            if f_ != 'WA': raise Unsupported('long helper: - operand')
+            F.emit('ld', 'XBC,XWA')
+        else:
+            f_ = gen(F, src, 'BC', 4)
+            if f_ != 'BC': raise Unsupported('long helper: source value')
+        if kind(acc) == 'P' and clobbers(F.lines[n0:], '(XWA)'): raise Unsupported('long helper: source over the pointer')
+    n1 = len(F.lines)
+    # 3. the accumulator value
+    if is_v(acc):
+        f_ = gen(F, acc, 'WA', 4)
+        if f_ == 'BC': F.emit('ld', 'XWA,XBC')           # (m_SG: the shifted value moves)
+        elif f_ != 'WA': raise Unsupported('long helper: accumulator value')
+        if is_v(src) and clobbers(F.lines[n1:], '(XBC)') and f_ != 'BC': raise Unsupported('long helper: accumulator over the source')
+        if kind(src) == 'P' and clobbers(F.lines[n1:], '(XBC)'): raise Unsupported('long helper: accumulator over the pointer')
+    # 4. plain loads: a plain variable before a member or element, ties textual
+    plain = [x for x in (l, r) if not is_v(x) and kind(x) is None and ev_class(F, x) != 'K']
+    plain.sort(key=lambda x: 0 if ev_class(F, x) == 'G' else 1)
+    for x in plain:
+        m = mem_operand(F, x)
+        if m is None: raise Unsupported('long helper: plain operand')
+        F.emit('ld', '%s,%s' % (reg[id(x)], m))
+    # 5. constants
+    for x in (l, r):
+        if ev_class(F, x) == 'K':
+            v = fold(x).value
+            if F.opt and reg[id(x)] == 'XBC' and 0 <= v < 0x10000: F.emit('lda', 'XBC,%s' % hx(v))   # (div_l_pk -O)
+            else: F.emit('ld', '%s,%s' % (reg[id(x)], hx(v & 0xffffffff)))
+    # 6. the pointers' loads, in place
+    for x in (l, r):
+        if kind(x) == 'P': F.emit('ld', '%s,(%s)' % (reg[id(x)], reg[id(x)]))
+    return True
+
 def gen_long_helper(F, e, l, r, fam, signed):
     name = {'*': 'mul', '/': 'div', '%': 'rem'}[e.op] + ('ls' if signed else 'lu')
     if e.op == '*' and CONST_LEFT_SWAP and fold(l).k == 'const' and fold(r).k != 'const':
         l, r = r, l                                      # random r1_00_05: 61613L * gl2 -> ld XWA,(_gl2) / ld XBC,0xf0ad
     ls, rs = reg_or_mem(F, l, 4), reg_or_mem(F, r, 4)
+    if (ls is None or rs is None) and LONG_HELPER_ORDER and not getattr(F, 'l2', None) and \
+            not getattr(F, 'cl_active', None) and getattr(F, 'u1_i', None) is None and long_helper_order(F, e, l, r):
+        F.emit('cal', 'C9H_' + name)
+        return 'HL' if fam == 'HL' else move_to(F, 'XHL', fam, 4, keep=True)
     if ls is None or rs is None: raise Unsupported('complex long helper operands')
     # provisional (two examples, mul_l_loc): XBC first when a register variable is involved
     rc = fold(r)
@@ -2044,6 +2246,16 @@ def gen_compare(F, e):
     cc = (CC_S if signed else CC_U)[e.op]
     rc = fold(r)
     op = e.op
+    if CMP_ORDER and ev_core(l).k == 'un' and ev_core(l).op == '!' and rc.k == 'const' and rc.value not in (None, 0, 1) \
+            and not getattr(F, 'cmp_as_value', False):     # (in a condition only: ci_l_NK cp WA,0x1, cv_l_NK cp WA,0x7)
+        from frontend import N                           # V4.23 compares !x with the truth value of the constant:
+        r = N('const', value=1, ty=rc.ty); rc = r        # !gi == 7 -> cp WA,0x1 (cmpord.c ci_e_NK, ci_l_NK; imitated)
+    if CMP_ORDER and size == 2 and not getattr(F, 'l2', None) and not getattr(F, 'cl_active', None) and \
+            getattr(F, 'u1_i', None) is None and not getattr(F, 'elem_ops', None) and not any(
+                nodes_in(x, 'call') or has_helper_call(x) or fpgen.is_fp_op(x) or
+                any(regvar_of(strip(y.e)) is not None for y in loads_in(x)) for x in (l, r)):
+        co = cmp_order(F, e, l, r, size, op, cc)
+        if co is not None: return co
     if l.k == 'cast' and l.kind == 'IntegralCast' and size == 1 and strip(l.e).ty.size > 1 and rc.k == 'const' and \
             rc.value is not None and strip(l.e).k == 'load' and mem_operand(F, strip(l.e)) is not None and \
             mem_operand(F, strip(l.e)).startswith('('):   # r4_04_11: (unsigned char)gul != 255 -> ld XWA,(_gul) /
@@ -3509,7 +3721,9 @@ def lvalue(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False, kind='store'):
         d = lv.decl
         if d.kind == 'global': return '(_%s)' % d.name
         if d.kind == 'static' and getattr(d, 'init', None) is None: return '(%s)' % fpgen.static_label(F, d)
-        if d.kind == 'param': return '(XSP+%s)' % hx(d.off + F.push)
+        if d.kind == 'param':
+            if not hasattr(d, 'off'): raise Unsupported('register parameter as an lvalue')   # (r4_01_09 -Xr: *c++ = ..)
+            return '(XSP+%s)' % hx(d.off + F.push)
         if d.kind == 'local' and hasattr(d, 'slot'): return '(XSP+%s)' % hx(d.slot + F.push)
     if lv.k == 'deref' and strip(lv.e).k == 'incdec' and strip(lv.e).post and strip(strip(lv.e).e).k == 'var' and \
             strip(strip(lv.e).e).decl.kind in ('param', 'local') and strip(strip(lv.e).e).decl.ty.is_ptr() and \
@@ -5523,7 +5737,7 @@ def regvar_stmt(F, e):
         if getattr(F, 'l2', None): F.l2.setdefault('const', {}).pop(d, None)
         if rc.k == 'const':
             if getattr(F, 'l2', None) and not F.loops: F.l2['const'][d] = rc.value
-            F.emit('ld', '%s,%s' % (R, hx(rc.value & ((1 << (8 * d.ty.size)) - 1)))); return True   # .sw_local: -1 is 0xffff
+            F.emit('ld', '%s,%s' % (R, imm_of(rc, d.ty.size))); return True   # .sw_local: -1 is 0xffff; r3_02_11: ~255 is 0
         m = operand(F, e.r, d.ty.size)
         if m is not None: F.emit('ld', '%s,%s' % (R, m)); return True
         if strip(e.r).k == 'call':                     # k_keep: cal .r1 / ld QIZ,HL (cdecl: inc 0x2,XSP first)
@@ -5906,9 +6120,12 @@ def gen_switch(F, s, last):
     if len(items) >= 2 and items[-1].k == 'break' and any(x.k == 'default' for x in items[-2:-1]) or \
             (len(items) >= 2 and items[-1].k == 'break' and items[-2].k == 'default'):
         items = items[:-1]                                 # sw_jt6d: default: f0(); break; -> cal .f0 / L9: ret
-    for it in items:
+    for i_, it in enumerate(items):
         if id(it) in getattr(F, 'skip_cases', ()): continue
-        gen_stmt(F, it, False)
+        rest_ = items[i_ + 1:]                             # the live guard's remainder: the fall-through path only, up to
+        stop_ = next((k for k, x in enumerate(rest_) if x.k in ('break', 'return')), len(rest_))   # the next break
+        F.cur_rest = rest_[:stop_]                         # (r1_00_13 -Xr: case 0: ... falls into default: gp = gs.p + a,
+        gen_stmt(F, it, False)                             # a in A across the first arm's ._fsub_d was wrong code; arms
     if F.pending and not F.lines[-1].startswith(('\tret', '\tj\t', '\tretd')): flush_pops(F)   # (r2_06_14)
     F.loops.pop()
     import re as _re                                       # an end nothing reaches is not written (sw_dense, sw_sparse:

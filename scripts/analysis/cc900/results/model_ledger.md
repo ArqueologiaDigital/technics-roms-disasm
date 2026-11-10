@@ -153,6 +153,14 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-10-11-micro-evorder3, v423/O3XS                          | probes/evorder_d.c   | 202 / 338 exact (59.8%)  |
 | run 2026-11-10-11-micro-evorder3, v423/Xr                            | probes/evorder_d.c   | 214 / 338 exact (63.3%)  |
 | run 2026-11-10-11-micro-evorder3, v423/O3XSXr                        | probes/evorder_d.c   | 180 / 338 exact (53.3%)  |
+| run 2026-11-10-12-micro-cmpord, v423/none                           | probes/cmpord.c      | 429 / 507 exact (84.6%)  |
+| run 2026-11-10-12-micro-cmpord, v423/O3XS                           | probes/cmpord.c      | 378 / 507 exact (74.6%)  |
+| run 2026-11-10-12-micro-cmpord, v423/Xr                             | probes/cmpord.c      | 363 / 507 exact (71.6%)  |
+| run 2026-11-10-12-micro-cmpord, v423/O3XSXr                         | probes/cmpord.c      | 315 / 507 exact (62.1%)  |
+| run 2026-11-10-13-micro-evorder4, v423/none                         | probes/evorder_lh.c  | 246 / 507 exact (48.5%)  |
+| run 2026-11-10-13-micro-evorder4, v423/O3XS                         | probes/evorder_lh.c  | 124 / 507 exact (24.5%)  |
+| run 2026-11-10-13-micro-evorder4, v423/Xr                           | probes/evorder_lh.c  | 211 / 507 exact (41.6%)  |
+| run 2026-11-10-13-micro-evorder4, v423/O3XSXr                       | probes/evorder_lh.c  | 109 / 507 exact (21.5%)  |
 | run 2026-11-09-9-micro-fp, v423/none                                | micro/fp.c           | 108 / 108 exact (100.0%) |
 | run 2026-11-09-9-micro-fp, v423/O3XS                                | micro/fp.c           | 108 / 108 exact (100.0%) |
 | run 2026-11-09-10-micro-fptemps, v423/none                          | micro/fp_temps.c     | 33 / 33 exact (100.0%)   |

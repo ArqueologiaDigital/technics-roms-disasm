@@ -629,6 +629,20 @@ functions the wider rule now compiles: V4.23 types a constant 128..255 as an uns
 `ldw` / `ldb` is masked at emit; and the exit label of an early return goes after the last return's call pops
 (`r3_03_06` crashed).  Gate: no ledger row down (micro 674 / 674 at all four sets, chidx 50 / 50, library 186 / 184 / 174, pairs kn5000 223 MATCH), the four evorder_d rows added; semcheck DIFFERENT 31 -> 31 (the functions the wider rule exposed are equal or refused).
 
+**Compares** (2026-11-10, midday; `corpus/probes/cmpord.c`, 507 functions, run `2026-11-10-12-micro-cmpord`): the
+same operand order, and the compare instruction per kind pair: a computed right goes to WA and a memory left stays
+in memory (`cp (_gi),WA` ordered, `cp WA,(_gi)` for `==`), a computed left goes to WA against a memory right, two
+computed operands `cp BC,WA` (the right first), a unary-minus left owns WA, a shift's value is in BC, a left `*p` stays
+`(XBC)` against a computed right, a right `*p` takes XBC (or XWA before a left value), a constant right keeps the
+left in memory (`cpw (XWA),0x7`), `==` of two offset or addressed operands loads the right; and in a condition V4.23
+compares `!x` with the truth value of a constant (`if (!gi == 7)` -> `cp WA,0x1`; as a value the 7 stays).
+`cmp_order` in `gen_compare`; the probe reads 429 / 378 / 363 / 315 of 507 at none / -O3 -XS / -Xr / -O3 -XS -Xr.
+The arguments of the long `*` `/` `%` helpers follow suit (`corpus/probes/evorder_lh.c`, run
+`2026-11-10-13-micro-evorder4`): the left in XWA, the right in XBC (`*` puts the operator rule's accumulator in XWA),
+pointer addresses first, the source value, the accumulator value, plain loads with a plain variable before a member,
+constants last, pointer loads last in place; `long_helper_order` in `gen_long_helper`; the probe reads 246 / 124 / 211 / 109 of 507 at none / -O3 -XS / -Xr / -O3 -XS -Xr
+(30 / 31 / 30 before).  Gate: no ledger row down, the eight cmpord and evorder_lh rows added, semcheck DIFFERENT 31 -> 31, pairs 223 MATCH.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

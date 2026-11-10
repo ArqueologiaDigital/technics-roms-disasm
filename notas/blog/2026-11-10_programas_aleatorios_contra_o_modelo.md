@@ -88,6 +88,16 @@ fonte, depois o acumulador, depois o operador; e os registradores seguem uma fil
 tomando WA e XBC antes de todo o resto. Com a regra no modelo, a sonda passou de 118 para 442 funções exatas
 sem opções e de 115 para 383 com `-O3 -XS`.
 
+A mesma sonda, repetida para a divisão (`evorder_d.c`), para as comparações (`cmpord.c`) e para as rotinas
+auxiliares de `long` (`evorder_lh.c`), mostrou que a regra é uma só e que o que muda é o lugar de cada operando
+na instrução final. Numa comparação, um lado calculado vai para `WA` e um lado que é variável fica na memória
+(`cp (_gi),WA` para `<`, `cp WA,(_gi)` para `==`); dois lados calculados comparam `cp BC,WA`, com o direito
+primeiro; um `*p` à esquerda fica `(XBC)`. E há um detalhe que só uma sonda sistemática pegaria: em
+`if (!gi == 7)` o compilador compara `!gi` com o *valor lógico* de 7, isto é, com 1, enquanto em `x = !gi == 7`
+o 7 fica inteiro. Nas rotinas auxiliares de `long`, o esquerdo vai em `XWA` e o direito em `XBC`, os endereços
+dos ponteiros primeiro, as constantes por último e as cargas dos ponteiros por último, no lugar. As três sondas
+passaram, respectivamente, de 86 para 252, de 0 para 429 e de 30 para 246 funções exatas sem opções.
+
 ## Onde isso deixa o modelo
 
 No fechamento do dia: as 674 funções do corpus pequeno exatas nas quatro combinações de
