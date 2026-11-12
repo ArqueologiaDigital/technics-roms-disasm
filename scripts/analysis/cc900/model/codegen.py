@@ -1431,7 +1431,7 @@ def lh_elem(F, op, l, r, lk, rk):
         if mul and o in ('P', 'D', 'M', 'X'): ld('WA', T()); ld('XWA', '(XIZ+WA)'); ld('XBC', '(XBC)'); return True
         if mul and o == 'F': ld('WA', T()); ld('XWA', '(XIZ+WA)'); ld('XBC', S()); return True
         ld('BC', T())
-        if o == 'K': ld('XWA', hx(fold(ox).value & 0xffffffff))
+        if o == 'K': F.emit(lh_ls_ld(F, ox, hx(fold(ox).value & 0xffffffff))[0], 'XWA,%s' % hx(fold(ox).value & 0xffffffff))
         elif o == 'F': ld('XWA', S())
         else: ld('XWA', '(XDE)')
         ld('XBC', '(XIZ+BC)'); return True
@@ -1494,7 +1494,7 @@ def lh_store_post(F, lv, rv):
     value as for a global store, then the address after the call -- a pointer or member in XWA, an element's index in
     WA scaled with sla and its base in XBC, a pointer element built in XWA (sd_l_d_QGP: ... / cal C9H_divls /
     ld WA,(c) / exts XWA / sll 0x2,XWA / add XWA,(_glp) / ld (XWA),XHL).  True when it emitted the statement."""
-    if F.opt or F.adecl: return False
+    if F.adecl or (F.opt and not LH_OPT_CONSTS): return False
     ks = lh_post_kinds(F, lv, rv)
     if ks is None: return False
     if any(r_ in ('WA', 'BC', 'DE', 'HL') for r_ in live_regs_read(F)): return False
@@ -1524,7 +1524,7 @@ def plan_store_x(F):
     -O or -Xr and with no IZ-family home: IZ saved and a 4-byte temporary for two memory operands, XIZ saved and a
     2-byte index temporary beside a constant (lh_store_x)"""
     F.xst = None
-    if not LH_STORE_X or F.xiz_vars or F.opt or F.adecl: return
+    if not LH_STORE_X or F.xiz_vars or F.adecl or (F.opt and not LH_OPT_CONSTS): return
     f = F.f
     if any(getattr(d, 'reg', None) in IZ_HOMES for d in list(f.params) + list(f.decls)): return
     hits = []
@@ -1610,7 +1610,7 @@ def lh_save_kinds(F, lv, rv):
 def lh_store_save(F, lv, v):
     """emit L = ga[i] op B planned with a save temporary (see edit_lh_store_save.py): the store address into XWA and
     the 4-byte temporary, the element operand through lh_elem, the call, then ld XWA,(S) / ld (XWA),XHL"""
-    if F.opt or F.adecl: return False
+    if F.adecl or (F.opt and not LH_OPT_CONSTS): return False
     L = lh_save_kinds(F, lv, v)
     if L is None: return False
     if any(r_ in ('WA', 'BC', 'DE', 'HL') for r_ in live_regs_read(F)): return False
@@ -1629,6 +1629,15 @@ def lh_store_save(F, lv, v):
     fam = gen(F, v, 'HL', 4)
     if fam != 'HL': raise Unsupported('lh_store_save: the value not in XHL')
     F.emit('ld', 'XWA,%s' % Sm()); F.emit('ld', '(XWA),XHL'); return True
+
+LH_OPT_CONSTS = True                                      # see edit_lh_opt_consts.py
+
+def lh_ls_ld(F, l, ls):
+    """the load of a long helper's left operand into XWA: under -O a constant of 8..0xffff is lda (sd_l_d_GKG -O)"""
+    c = fold(l)
+    if LH_OPT_CONSTS and F.opt and c.k == 'const' and c.value is not None and 8 <= c.value < 0x10000:
+        return ('lda', 'XWA,%s' % hx(c.value))
+    return ('ld', 'XWA,%s' % ls)
 
 def lh_member_kinds(F, op, l, r):
     """(D kind, other kind, D on the right) for a long helper with one member-through-a-pointer operand and a constant,
@@ -2047,7 +2056,7 @@ def store_div_char(F, lv, rv):
     ld DE,(c) / extz XDE / add XDE,XWA / ld (XDE),C), except beside a constant divisor, where the address comes first
     in XBC (XDE beside an element dividend; sd_c_d_PGK: ld XBC,(_gcp) / ld A,(_vc) / ... / ld (XBC),A).  True when it
     emitted the statement."""
-    if F.opt or F.adecl: return False
+    if F.adecl or (F.opt and not LH_OPT_CONSTS): return False
     x = strip(rv)
     while x.k == 'cast' and x.kind == 'IntegralCast': x = strip(x.e)
     if x.k != 'bin' or x.op not in ('/', '%') or x.ty is None or x.ty.size != 2 or not x.ty.signed: return False
@@ -4203,6 +4212,17 @@ def long_helper_order(F, e, l, r):
         elif f_ != 'WA': raise Unsupported('long helper: accumulator value')
         if is_v(src) and clobbers(F.lines[n1:], '(XBC)') and f_ != 'BC': raise Unsupported('long helper: accumulator over the source')
         if kind(src) == 'P' and clobbers(F.lines[n1:], '(XBC)'): raise Unsupported('long helper: accumulator over the pointer')
+    if F.opt and LH_OPT_CONSTS:                          # -O: XWA's operand, then XBC's, after the pointers (sd_l_d_GPG -O;
+        for x in sorted((l, r), key=lambda y: 0 if reg[id(y)] == 'XWA' else 1):   #  a multiply swaps: eh_m_PE -O)
+            if kind(x) == 'P': F.emit('ld', '%s,(%s)' % (reg[id(x)], reg[id(x)]))
+            elif ev_class(F, x) == 'K':
+                v = fold(x).value
+                F.emit('lda' if 8 <= v < 0x10000 else 'ld', '%s,%s' % (reg[id(x)], hx(v & 0xffffffff)))
+            elif not is_v(x) and kind(x) is None:
+                m = mem_operand(F, x)
+                if m is None: raise Unsupported('long helper: plain operand')
+                F.emit('ld', '%s,%s' % (reg[id(x)], m))
+        return True
     # 4. plain loads: a plain variable before a member or element, ties textual
     plain = [x for x in (l, r) if not is_v(x) and kind(x) is None and ev_class(F, x) != 'K']
     plain.sort(key=lambda x: 0 if ev_class(F, x) == 'G' else 1)
@@ -4248,30 +4268,30 @@ def gen_long_helper(F, e, l, r, fam, signed):
     if ls is None or rs is None: raise Unsupported('complex long helper operands')
     # provisional (two examples, mul_l_loc): XBC first when a register variable is involved
     rc = fold(r)
-    if F.opt and rc.k == 'const' and rc.value is not None and 0 <= rc.value < 0x10000:
+    if F.opt and rc.k == 'const' and rc.value is not None and (8 if LH_OPT_CONSTS else 0) <= rc.value < 0x10000:
         rs_ld = ('lda', 'XBC,%s' % hx(rc.value))        # -O: div_l_pk, _rand: lda XBC,0xa / lda XBC,0x7fff
     else:
         rs_ld = ('ld', 'XBC,%s' % rs)
     if F.opt and F.adecl and BINLOC_XR and bool(family_of(ls)) != bool(family_of(rs)):
         # binop-loc section 6, -O3 -XS -Xr: the register copy first (mul_l_loc: ld XBC,XIZ / ld XWA,(XSP+0x4))
-        if family_of(ls): F.emit('ld', 'XWA,%s' % ls); F.emit(*rs_ld)
-        else: F.emit(*rs_ld); F.emit('ld', 'XWA,%s' % ls)
+        if family_of(ls): F.emit(*lh_ls_ld(F, l, ls)); F.emit(*rs_ld)
+        else: F.emit(*rs_ld); F.emit(*lh_ls_ld(F, l, ls))
     elif F.opt and not F.adecl and BINLOC_XR:
         # cdecl -O3 -XS: XWA first, except a memory right operand beside a local held in XIZ, which is loaded
         # first (mul_l_loc: ld XBC,(a) / ld XWA,XIZ); a parameter in XIZ keeps XWA first (_ldiv, _ultoa:
         # ld XWA,XIZ / ld XBC,(XSP+0x20))
         if not ls.startswith('(') and rs.startswith('(') and \
-                any(d is not None and d.kind == 'local' for d in F.xiz_vars):
-            F.emit(*rs_ld); F.emit('ld', 'XWA,%s' % ls)
-        else: F.emit('ld', 'XWA,%s' % ls); F.emit(*rs_ld)
+                any(d is not None and getattr(d, 'kind', None) == 'local' for d in F.xiz_vars):
+            F.emit(*rs_ld); F.emit(*lh_ls_ld(F, l, ls))
+        else: F.emit(*lh_ls_ld(F, l, ls)); F.emit(*rs_ld)
     elif F.xiz_vars and any(d is not None and getattr(d, 'kind', None) == 'local' for d in F.xiz_vars):
-        F.emit(*rs_ld); F.emit('ld', 'XWA,%s' % ls)
+        F.emit(*rs_ld); F.emit(*lh_ls_ld(F, l, ls))
     elif LH_PLAIN_ORDER and not F.opt and not F.adecl and lh_plain(r) == 'G' and lh_plain(l) in ('K', 'M') and not (e.op == '*' and lh_plain(l) == 'K'):
-        F.emit(*rs_ld); F.emit('ld', 'XWA,%s' % ls)     # (l_div_KG: ld XBC,(_hl) / ld XWA,0x7)
+        F.emit(*rs_ld); F.emit(*lh_ls_ld(F, l, ls))     # (l_div_KG: ld XBC,(_hl) / ld XWA,0x7)
     elif LH_PLAIN_ORDER and not F.opt and not F.adecl and e.op == '*' and lh_plain(l) == 'M' and lh_plain(r) == 'M':
         F.emit('ld', 'XWA,%s' % rs); F.emit('ld', 'XBC,%s' % ls)   # (l_mul_EE: the right element into XWA)
     else:
-        F.emit('ld', 'XWA,%s' % ls); F.emit(*rs_ld)
+        F.emit(*lh_ls_ld(F, l, ls)); F.emit(*rs_ld)
     F.emit('cal', 'C9H_' + name)
     return 'HL' if fam == 'HL' else move_to(F, 'XHL', fam, 4, keep=True)
 

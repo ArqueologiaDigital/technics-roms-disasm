@@ -862,6 +862,11 @@ dividend divides 16 / 8, a divisor read through an address or a constant beside 
 implicit promotion every divisor divides 16 / 8 (the older paths).  stdiv 750 of 750 at none.  Gate clean (semcheck
 110 -> 106).
 
+**Long helpers and the division stores under -O**: a constant is ld for 0..7 and lda above; long_helper_order loads
+XWA's operand then XBC's after the pointers; the division store rules are on under -O; an older -O test no longer
+crashes on the XIZ planners' marker.  stdiv 372 -> 628 at -O3 -XS, evorder_lh 150 -> 176, stord 312 -> 322, random2
+2 -> 3.  Gate clean (semcheck 106 -> 102).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
