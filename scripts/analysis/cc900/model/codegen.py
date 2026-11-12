@@ -1283,12 +1283,12 @@ def lh_call_kinds(F, op, l, r):
         while x0.k == 'cast' and x0.kind in ('IntegralCast', 'NoOp', 'BitCast'): x0 = strip(x0.e)
         return x0.k == 'call' and not x0.args
     L, R = lk[0], rk[0]
-    def elem_ok(k): return k[0] != 'X' or (len(k) >= 4 and isinstance(k[2], str) and k[2].startswith('(') and k[3])
+    def elem_ok(k): return k[0] != 'X' or (len(k) >= 4 and isinstance(k[2], str) and (k[2].startswith('(') or LH_IDX and k[2] in ('WA', 'HL')) and k[3])
     if not (elem_ok(lk) and elem_ok(rk)): return None
     if LH_ELEM and 'X' in (L, R):
         o = L if R == 'X' else R
         if o not in ('K', 'G', 'M', 'P', 'D', 'X', 'F'): return None
-        if o == 'K' and (op == '*' or R != 'X'): return None
+        if o == 'K' and op == '*': return None
         if o == 'F' and not nocall_args(l if L == 'F' else r): return None
         return (lk, rk)
     if 'X' in (L, R): return None
@@ -1307,7 +1307,7 @@ def plan_lh_call(F):
     F.lhc = None
     if not LH_CALL or F.xiz_vars or F.adecl or (F.opt and not LH_CALL_OPT): return
     f = F.f
-    if any(d.kind == 'local' and not getattr(d, 'reg', None) and (d.ty.kind in ('array', 'struct') or not foldable(f, d))
+    if any(d.kind == 'local' and not getattr(d, 'reg', None) and (d.ty.kind in ('array', 'struct') or not foldable(f, d) and not LH_IDX)
            for d in f.decls) or any(getattr(d, 'home_slot', False) for d in f.params): return
     hits = []
     def v(n, dep):
@@ -1317,6 +1317,7 @@ def plan_lh_call(F):
     if len(hits) != 1: return
     tops = [x for x in flat(f.body) if x.k == 'expr' and x.e.k == 'bin' and x.e.op == '=' and strip(x.e.r) is hits[0] and
             (strip(x.e.l).k == 'var' and strip(x.e.l).decl.kind == 'global' and strip(x.e.l).ty.size == 4 or
+             LH_IDX and hits[0].op != '*' and strip(x.e.l).ty is not None and strip(x.e.l).ty.size == 4 and strip(x.e.l).k in ('member', 'index') and (sc_lkind(F, strip(x.e.l)) or ('',))[0] == 'M' or
              LH_STORE_POST and lh_post_kinds(F, x.e.l, hits[0]) is not None)]
     if len(tops) != 1: return
     n = hits[0]; lk, rk = lh_call_kinds(F, n.op, strip(n.l), strip(n.r)); ks = (lk[0], rk[0])
@@ -1386,6 +1387,7 @@ def lh_call(F, op, l, r):
     return True
 
 LH_ELEM = True                                            # see lh_elem
+LH_IDX = True                                             # lh_elem at a loop counter / register-temporary index (lhidx.c)
 
 def lh_elem(F, op, l, r, lk, rk):
     """the operands of a long helper with an element operand (corpus/probes/evorder_ad.c, run 2026-11-10-17): the
@@ -1406,7 +1408,11 @@ def lh_elem(F, op, l, r, lk, rk):
         if fam != 'HL': raise Unsupported('lh_elem: the call result')
         flush_pops(F)
     def dance(k, xiz=True):
-        ld('WA', k[2]); ld(T(), 'WA'); ld('WA', T()); F.emit('sla', '0x2,WA'); ld(T(), 'WA')
+        if k[2].startswith('('): ld('WA', k[2]); ld(T(), 'WA')
+        else:                                                # (lhidx.c TGX: t = gi a register temporary -> ld (T),WA)
+            ld(T(), k[2])
+            if len(k) > 4 and isinstance(k[4], tuple) and k[4][0] == 'reg': F.dead.add(k[4][1])
+        ld('WA', T()); F.emit('sla', '0x2,WA'); ld(T(), 'WA')
         if xiz: F.emit('lda', 'XIZ,%s' % k[1])
     if R == 'X':
         o, ok_, ox = L, lk, l
@@ -1446,6 +1452,8 @@ def lh_elem(F, op, l, r, lk, rk):
         if mul: ld('BC', T()); ld('XWA', ok_[1]); ld('XBC', '(XIZ+BC)')
         else: ld('WA', T()); ld('XWA', '(XIZ+WA)'); ld('XBC', ok_[1])
         return True
+    if o == 'K' and not mul:                                 # (lhidx.c CXK: ld WA,(T) / ld XWA,(XIZ+WA) / ld XBC,0x7)
+        ld('WA', T()); ld('XWA', '(XIZ+WA)'); ld('XBC', hx(fold(ox).value & 0xffffffff)); return True
     raise Unsupported('lh_elem: unfitted pair')
 
 LH_PLAIN_ORDER = True                                     # see edit_lh_plain_order.py
@@ -1469,9 +1477,10 @@ def lh_post_kinds(F, lv, rv):
     element or a pointer element, and a long * / % whose right operand is a pointer's target or an element; else None"""
     x = strip(rv)
     if x.k != 'bin' or x.op not in ('*', '/', '%') or x.ty is None or x.ty.size != 4 or x.ty.kind != 'int': return None
+    if x.op == '*' and LH_IDX: return None                   # (lhidx.c TSX x: the store address waits in a 4-byte temporary)
     if strip(lv).ty is None or strip(lv).ty.size != 4 or strip(lv).ty.kind != 'int': return None
     L = sc_lkind(F, strip(lv))
-    if L is None or L[0] not in ('P', 'D', 'X', 'Q'): return None
+    if L is None or L[0] not in ('P', 'D', 'X', 'Q', 'M'): return None
     try: rk = cw_kind(F, x.r, 4); lk = cw_kind(F, x.l, 4)
     except Unsupported: return None
     if rk is None or lk is None or rk[0] not in ('P', 'X') or lk[0] not in ('K', 'G', 'M', 'P', 'X'): return None
@@ -1491,7 +1500,8 @@ def lh_store_post(F, lv, rv):
     if fam != 'HL': raise Unsupported('lh_store_post: the value not in XHL')
     flush_pops(F)
     L = sc_lkind(F, strip(lv)); K = L[0]
-    if K in ('P', 'D'):
+    if K == 'M': m = L[1]                                    # (lhidx.c CSX: ld (_gla + 0xc),XHL)
+    elif K in ('P', 'D'):
         F.emit('ld', 'XWA,%s' % L[1]); m = '(XWA+%s)' % hx(L[2]) if L[2] else '(XWA)'
     elif K == 'X':
         F.emit('ld', 'WA,%s' % L[2]); F.emit('sla', '0x2,WA'); F.emit('lda', 'XBC,%s' % L[1]); m = '(XBC+WA)'
@@ -10766,7 +10776,7 @@ def plan_frame(F):
     calls = []
     walk(f.body, lambda n, d: calls.append(n) if n.k == 'call' or fpgen.is_fp_op(n) or (n.k == 'bin' and n.op in '*/%' and n.ty.size == 4
          and fold(n.r).k != 'const') else None)
-    if not calls: F.frame = 0; return                   # leaf functions: every local is in a register or folded
+    if not calls and not getattr(F, 'lhc', None): F.frame = 0; return                   # leaf functions: every local is in a register or folded
     # D: a struct local written member by member gets two address temporaries below it (_ldiv: (XSP+4), (XSP+8))
     F.struct_temps = {}
     for d in f.decls:

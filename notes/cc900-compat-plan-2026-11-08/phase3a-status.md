@@ -840,6 +840,11 @@ evorder_ad at -O3 -XS 969 -> 1030, stdiv 340 -> 356.  Gate clean (semcheck 110, 
 the value is that of a global store and the store address is built after the call.  stdiv 408 -> 512 at none.  Gate
 clean (semcheck 110, the same verdicts).
 
+**Long helpers at a local index** (`corpus/probes/lhidx.c`, 150 functions, run 2026-11-12-6): a local index used once is
+a register temporary copied straight into the index temporary, a constant divisor beside an element is read last,
+constant-element stores are global stores.  lhidx 36 -> 78 at none.  The loop counter is still homed in IZ by the model
+where the oracle keeps it in a frame slot.  Gate clean.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
