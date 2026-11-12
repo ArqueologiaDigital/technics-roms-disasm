@@ -244,3 +244,14 @@ terços delas por construtos que não conhece, e as que compila diferem do origi
 em que avaliam operandos e nos registradores que escolhem. O critério da fase é 95 %. A
 lição do dia não é o número: é que a métrica que importa para um compilador é a semântica,
 e que só programas que ninguém escreveu de propósito a testam de verdade.
+
+Em 12 de novembro, uma regra inofensiva expôs um erro antigo. Sob `-O`, o original não
+calcula o inicializador de uma variável local que nunca é lida; ensinar isso ao modelo
+fez uma função aleatória (`r2_05_16`, com `-O3 -XS -Xr`) seguir adiante em vez de ser
+recusada, e a verificação semântica acusou código errado na linha seguinte:
+`gu = ~(gs.u + a)` carregava `gs.u` no registrador WA, onde estava o parâmetro `a`, e somava
+WA a si mesmo. O defeito estava no modelo desde antes desta série de regras: com `-Xr`,
+`gi = gi + a` já saía como `ld WA,(_gi) / add WA,WA`. Nenhuma sonda o pegara porque nenhuma
+escrevia um global somado a um parâmetro em registrador. A correção usa a forma do próprio
+original (`add WA,(_gi)`, o operando de memória somado ao parâmetro no lugar) e recusa o
+resto.
