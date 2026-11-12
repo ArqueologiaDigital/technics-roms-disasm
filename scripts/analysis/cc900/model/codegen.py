@@ -1558,6 +1558,7 @@ STORE_DIV_DD = True                                       # see store_div: a mem
 SP_CONST_ELEM = True                                      # a long helper's constant-element operand in a planned store
 LH_STORE_AFTER = True                                     # a long helper's store through p->m / p[k]: the address after the call
 LH_MEMBER_K = True                                        # lh_member with a constant divisor (without -O)
+HELPER_IS_CALL = False                                    # a loop counter live across a long helper is homed like across a call
 LOOPCTR = True
 SHIFT_COUNT_GUARD = True                                  # see edit_shift_count_guard.py                                            # see edit_loopctr.py                                       # see edit_l2_char_swap.py                                        # see edit_lh_pk_order.py                                      # plan_store_x's ADDR form (a pointer dividend)
 
@@ -10641,6 +10642,26 @@ def plan_lh_call(F):
         for d in fake:
             if hasattr(d, 'slot'): del d.slot
 
+DEAD_CALL_STORE = True                                    # see drop_dead_call_stores
+
+def drop_dead_call_stores(f, opt, adecl):
+    """without -O (cdecl) a top-level `t = call(..);` into a local that nothing reads afterwards is only the call
+    (random r2_07_02: long t = gs.l / 7L; t = rl(65536L - t); -> .. / push XWA / cal _rl, no slot for t and no store)"""
+    if not DEAD_CALL_STORE or opt or adecl: return
+    body = f.body.body if getattr(f.body, 'k', None) == 'block' and isinstance(getattr(f.body, 'body', None), list) else None
+    if body is None: return
+    for i, st in enumerate(body):
+        if getattr(st, 'k', None) != 'expr': continue
+        e = strip(st.e)
+        if e.k != 'bin' or e.op != '=' or strip(e.l).k != 'var': continue
+        d = strip(e.l).decl
+        if d.kind != 'local' or d.addr_taken or d.ty.kind not in ('int', 'ptr'): continue
+        c = strip(e.r)
+        while c.k == 'cast' and c.kind in ('NoOp', 'BitCast'): c = strip(c.e)
+        if c.k != 'call' or c.ty is None or c.ty.size != d.ty.size: continue
+        if any(uses_decl(x, d) for x in body[i + 1:]): continue
+        st.e = e.r
+
 def merge_address_inits(f):
     """`T *p; ... p = (T *)&x;` with no use of p before: the assignment becomes p's initial value, so that a single
     use folds (_tan: p = (unsigned short *)&x; ... p[3] -> ld WA,(XSP+0x3a))"""
@@ -11572,7 +11593,10 @@ def regtemp_candidates(F):
     live_params = set()
     def calls_in(n):
         out = []
-        walk(n, lambda m, dep: out.append(m) if m.k == 'call' or fpgen.is_fp_op(m) else None)
+        walk(n, lambda m, dep: out.append(m) if m.k == 'call' or fpgen.is_fp_op(m) or (
+            HELPER_IS_CALL and not F.opt and not F.adecl and getattr(n, 'k', None) in ('for', 'while', 'do') and m.k == 'bin' and
+            m.op in ('*', '/', '%') and getattr(m, 'ty', None) is not None and m.ty.size == 4 and m.ty.kind == 'int' and
+            has_helper_call(m)) else None)                 # (a loop counter across a long helper: IZ, random r3_02_00)
         return out
     for i, c in enumerate(body):
         if c.k != 'decl': continue
@@ -11623,8 +11647,11 @@ def regtemp_candidates(F):
             if len(cl) != 1 or cl[0].k != 'call' or (lx.k == 'expr' and strip(lx.e) is not cl[0]) or lx.k != 'expr' or \
                     not any(uses_decl(a_, d) for a_ in cl[0].args) or any(calls_in(a_) for a_ in cl[0].args):
                 continue                                   # arguments it dies in (lo_i_Gga: push BC / cal _vi)
-        if has_helper_call(c.init) and strip(c.init).k != 'call': continue
-        nx_ = rest[0]
+        ci0_ = strip(c.init)                               # (a long * / % helper's result stays in XHL like a call's:
+        lhres_ = DEAD_CALL_STORE and not F.opt and not F.adecl and ci0_.k == 'bin' and ci0_.op in ('*', '/', '%') and \
+            ci0_.ty is not None and ci0_.ty.size == 4 and ci0_.ty.kind == 'int' and not nodes_in(c.init, 'call')   # r2_07_02)
+        if has_helper_call(c.init) and strip(c.init).k != 'call' and not lhres_: continue   # (a long helper's result stays in
+        nx_ = rest[0]                                                                       #  XHL like a call's: r2_07_02)
         nxcall_ = nx_.k == 'expr' and strip(nx_.e).k == 'call'
         ci = strip(c.init)
         while ci.k == 'cast': ci = strip(ci.e)
@@ -11642,7 +11669,7 @@ def regtemp_candidates(F):
         while ci.k == 'cast': ci = strip(ci.e)
         if last == 0 and d.ty.size == 1 and len(used) == 1 and rest[0].k == 'return': continue   # (a byte returned
                                                            # next: the older rule below, binop_c.c shl_c_loc: x in C)
-        cands = ['HL', 'BC', 'DE'] if ci.k == 'call' else ['WA', 'BC', 'DE', 'HL']
+        cands = ['HL', 'BC', 'DE'] if ci.k == 'call' or lhres_ else ['WA', 'BC', 'DE', 'HL']
         if getattr(c, 'ctr_loop', None) is not None: cands = loop_ctr_cands(c.ctr_loop, d)   # (loopctr.c lc_DTF: HL)
         # (WA is tried with the code in between written as if WA were free -- live_regs hides a WA temporary -- so
         # that a statement that computes anything moves the temporary to BC: lo_i_Ggs ld BC,(_gi) / ld WA,(_hj),
@@ -12240,6 +12267,7 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
     if personality not in PERSONALITIES: raise ValueError('unknown personality %s' % personality)
     personality = PERSONALITIES[personality]
     merge_address_inits(f)
+    drop_dead_call_stores(f, opt != 'none', adecl)
     lh_counter_slots(f, opt != 'none', adecl)
     fold_fp_consts(f)
     if opt != 'none' and not adecl: propagate_global_copies(f); forward_single_use(f)

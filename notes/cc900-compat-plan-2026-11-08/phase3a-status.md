@@ -979,6 +979,12 @@ runs before the frame is laid out) classifies its operands.  `lhidx.c` at none r
 left there is the multiply stored through an address and two local-index shapes.  The random corpora stay at 78: six
 of their refusals became differences.
 
+**Batch 45 (2026-11-12): a dead store of a call result.**  Without -O a top-level `t = call(..);` into a local that
+nothing reads afterwards is only the call, and a long * / % helper's result is a register temporary in XHL like a
+call's.  The random corpora read 79 of 800 at none.  A second rule tried with it -- a loop counter live across a long
+helper homed in IZ, as across a call -- is in the tree switched off (`HELPER_IS_CALL`): the oracle keeps the counter in
+its slot when the helper's operand needs XIZ, and the model's operand order changes once IZ is saved.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
