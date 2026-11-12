@@ -1318,22 +1318,24 @@ def plan_lh_call(F):
     tops = [x for x in flat(f.body) if x.k == 'expr' and x.e.k == 'bin' and x.e.op == '=' and strip(x.e.r) is hits[0] and
             (strip(x.e.l).k == 'var' and strip(x.e.l).decl.kind == 'global' and strip(x.e.l).ty.size == 4 or
              LH_IDX and hits[0].op != '*' and strip(x.e.l).ty is not None and strip(x.e.l).ty.size == 4 and strip(x.e.l).k in ('member', 'index') and (sc_lkind(F, strip(x.e.l)) or ('',))[0] == 'M' or
-             LH_STORE_POST and lh_post_kinds(F, x.e.l, hits[0]) is not None)]
+             LH_STORE_POST and lh_post_kinds(F, x.e.l, hits[0]) is not None or
+             LH_STORE_SAVE and lh_save_kinds(F, x.e.l, hits[0]) is not None)]
     if len(tops) != 1: return
     n = hits[0]; lk, rk = lh_call_kinds(F, n.op, strip(n.l), strip(n.r)); ks = (lk[0], rk[0])
     if F.opt and ks == ('X', 'X'): return                    # (-O: one index for both, unmodelled)
     from frontend import Decl, Type
     tmp = tix = None
+    save = LH_STORE_SAVE and lh_save_kinds(F, tops[0].e.l, n) is not None and not (strip(tops[0].e.l).k == 'var')
     if 'X' in ks:
         xiz = True
-        slot = 'F' in ks or (ks[0] == 'X' and ks[1] == 'D')
+        slot = 'F' in ks or (ks[0] == 'X' and ks[1] == 'D') or save
     else:
         xiz = not ('K' in ks or 'M' in ks or (F.opt and 'G' in ks))   # (-O l_div_GF: no XIZ)
         slot = 'D' in ks and ('F' in ks or ks == ('D', 'D'))
     if slot: tmp = Decl('__lhc', Type('int', 4, 2, spell='t'), '', 'local'); f.decls.append(tmp)
     if 'X' in ks: tix = Decl('__lhx', Type('int', 2, 2, spell='t'), '', 'local'); f.decls.append(tix)
     if xiz: F.xiz_vars.append('stores'); F.save_reg = 'XIZ'; F.emit('push', 'XIZ'); F.push = 4
-    F.lhc = {'node': id(n), 'slot': tmp, 'ix': tix}
+    F.lhc = {'node': id(n), 'slot': tmp, 'ix': tix, 'save': save}
 
 def lh_call(F, op, l, r):
     """the operands of a long helper planned by plan_lh_call (corpus/probes/evorder_ad.c, run 2026-11-10-17).  A call
@@ -1496,7 +1498,11 @@ def lh_store_post(F, lv, rv):
     ks = lh_post_kinds(F, lv, rv)
     if ks is None: return False
     if any(r_ in ('WA', 'BC', 'DE', 'HL') for r_ in live_regs_read(F)): return False
-    fam = gen(F, rv, 'HL', 4)
+    x = strip(rv); kl = cw_kind(F, x.l, 4); kr = ks[1]
+    if kl is not None and kl[0] == 'K' and kr[0] == 'P' and not kr[2] and x.op in ('/', '%'):   # (sd_l_d_PKP: ld XBC,(_wlp) /
+        F.emit('ld', 'XBC,%s' % kr[1]); F.emit('ld', 'XWA,%s' % hx(fold(x.l).value & 0xffffffff))   # ld XWA,0x64 / ld XBC,(XBC))
+        F.emit('ld', 'XBC,(XBC)'); F.emit('cal', 'C9H_' + {'/': 'div', '%': 'rem'}[x.op] + ('ls' if x.ty.signed else 'lu')); fam = 'HL'
+    else: fam = gen(F, rv, 'HL', 4, store=True)
     if fam != 'HL': raise Unsupported('lh_store_post: the value not in XHL')
     flush_pops(F)
     L = sc_lkind(F, strip(lv)); K = L[0]
@@ -1528,7 +1534,7 @@ def plan_store_x(F):
         if v.k != 'bin' or v.op not in ('/', '%') or v.ty is None or v.ty.size != 4 or v.ty.kind != 'int': continue
         if lv.ty is None or lv.ty.size != 4 or lv.ty.kind != 'int': continue
         k = sc_lkind(F, lv)
-        if k is None or k[0] not in ('X', 'P', 'D'): continue
+        if k is None or k[0] not in ('X', 'P', 'D', 'Q'): continue
         a, b = lh_plain(v.l), lh_plain(v.r)
         try: ak = cw_kind(F, v.l, 4)
         except Unsupported: ak = None
@@ -1555,6 +1561,11 @@ def lh_store_x(F, lk, v):
     if F.xst['form'] == 'ADDR':                          # the store address in XIZ, the value, ld (XIZ),XHL
         if lk[0] == 'P': F.emit('ld', 'XIZ,%s' % lk[1]); m = '(XIZ+%s)' % hx(lk[2]) if lk[2] else '(XIZ)'
         elif lk[0] == 'D': F.emit('ld', 'XWA,%s' % lk[1]); F.emit('lda', 'XIZ,XWA+%s' % hx(lk[2])); m = '(XIZ)'
+        elif lk[0] == 'Q':                                   # (sd_l_d_QPG: ld WA,(c) / exts XWA / sll 0x2,XWA / ld XIZ,XWA / add XIZ,(_glp))
+            im, signed = lk[2]
+            if not isinstance(im, str) or not im.startswith('(') or not signed: raise Unsupported('lh_store_x: the index')
+            F.emit('ld', 'WA,%s' % im); F.emit('exts', 'XWA'); F.emit('sll', '0x2,XWA'); F.emit('ld', 'XIZ,XWA')
+            F.emit('add', 'XIZ,%s' % lk[1]); m = '(XIZ)'
         else:
             im, signed = lk[2]
             if not isinstance(im, str) or not im.startswith('(') or not signed: raise Unsupported('lh_store_x: the index')
@@ -1579,6 +1590,45 @@ def lh_store_x(F, lk, v):
     if F.xst['form'] == 'IZ': F.emit('ld', 'XWA,%s' % Tm); F.emit('ld', '(XWA+IZ),XHL')
     else: F.emit('ld', 'WA,%s' % Tm); F.emit('ld', '(XIZ+WA),XHL')
     return True
+
+LH_STORE_SAVE = True                                      # see lh_store_save
+
+def lh_save_kinds(F, lv, rv):
+    """(lvalue kind) for lh_store_save: a long int lvalue through a plain pointer, a member, an element or a pointer
+    element at a memory index, and a long / or % of a left element and a right global, static member or constant"""
+    x = strip(rv)
+    if x.k != 'bin' or x.op not in ('/', '%') or x.ty is None or x.ty.size != 4 or x.ty.kind != 'int': return None
+    if strip(lv).ty is None or strip(lv).ty.size != 4 or strip(lv).ty.kind != 'int' or strip(lv).k == 'var': return None
+    L = sc_lkind(F, strip(lv))
+    if L is None or L[0] not in ('P', 'D', 'X', 'Q'): return None
+    try: lk = cw_kind(F, x.l, 4); rk = cw_kind(F, x.r, 4)
+    except Unsupported: return None
+    if lk is None or rk is None or lk[0] != 'X' or rk[0] not in ('G', 'M', 'K'): return None
+    if L[0] in ('X', 'Q') and L[2] == lk[2]: return None    # (one index for both: unprobed)
+    return L
+
+def lh_store_save(F, lv, v):
+    """emit L = ga[i] op B planned with a save temporary (see edit_lh_store_save.py): the store address into XWA and
+    the 4-byte temporary, the element operand through lh_elem, the call, then ld XWA,(S) / ld (XWA),XHL"""
+    if F.opt or F.adecl: return False
+    L = lh_save_kinds(F, lv, v)
+    if L is None: return False
+    if any(r_ in ('WA', 'BC', 'DE', 'HL') for r_ in live_regs_read(F)): return False
+    Sm = lambda: '(XSP+%s)' % hx(F.lhc['slot'].slot + F.push)
+    K = L[0]
+    if K in ('P', 'D'):
+        F.emit('ld', 'XWA,%s' % L[1])
+        if L[2]: F.emit('inc', '%s,XWA' % hx(L[2])) if L[2] <= 8 else F.emit('add', 'XWA,%s' % hx(L[2]))
+        F.emit('ld', '%s,XWA' % Sm())
+    elif K == 'X':
+        F.emit('ld', 'WA,%s' % L[2]); F.emit('sla', '0x2,WA'); F.emit('lda', 'XBC,%s' % L[1]); F.emit('exts', 'XWA')
+        F.emit('add', 'XWA,XBC'); F.emit('ld', '%s,XWA' % Sm())
+    else:
+        F.emit('ld', 'WA,%s' % L[2]); F.emit('exts', 'XWA'); F.emit('sll', '0x2,XWA'); F.emit('ld', '%s,XWA' % Sm())
+        F.emit('ld', 'XWA,%s' % L[1]); F.emit('add', '%s,XWA' % Sm())
+    fam = gen(F, v, 'HL', 4)
+    if fam != 'HL': raise Unsupported('lh_store_save: the value not in XHL')
+    F.emit('ld', 'XWA,%s' % Sm()); F.emit('ld', '(XWA),XHL'); return True
 
 def lh_member_kinds(F, op, l, r):
     """(D kind, other kind, D on the right) for a long helper with one member-through-a-pointer operand and a constant,
@@ -6897,6 +6947,7 @@ def gen_stmt(F, s, last):
         gen_incdec(F, s.e, 'WA', 0, value=False); return
     if s.k == 'expr' and s.e.k == 'bin' and s.e.op == '=':
         lv = strip(s.e.l)
+        if LH_STORE_SAVE and getattr(F, 'lhc', None) is not None and F.lhc.get('save') and F.lhc['node'] == id(strip(s.e.r)) and lh_store_save(F, lv, strip(s.e.r)): return   # (stdiv.c sd_l_d_PXG)
         if LH_STORE_X and getattr(F, 'xst', None) is not None and F.xst['node'] == id(strip(s.e.r)) and sp_lvalue_kind(F, lv) is not None and lh_store_x(F, sp_lvalue_kind(F, lv), strip(s.e.r)): return   # (stdiv.c sd_l_d_XGG, DPG)
         if LH_STORE_POST and lv.ty is not None and lv.ty.size == 4 and not getattr(F, 'l2', None) and not getattr(F, 'u1_i', None) and not getattr(F, 'cl_active', None) and lh_store_post(F, lv, s.e.r): return   # (stdiv.c sd_l_d_PGX)
         if STORE_DIV and lv.ty is not None and lv.ty.size == 2 and not getattr(F, 'l2', None) and not getattr(F, 'u1_i', None) and not getattr(F, 'cl_active', None) and store_div(F, lv, s.e.r): return   # (stdiv.c)

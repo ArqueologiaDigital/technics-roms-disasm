@@ -853,6 +853,10 @@ stdiv 516 -> 528 at none.  Gate clean.
 (`lda XIZ,XWA+0x4`, `lda XIZ,XBC+WA`), and long_helper_order dereferences a left pointer before loading a right
 constant.  stdiv 528 -> 556 at none.  Gate clean.
 
+**The remaining long division stores** (stdiv.c): a left element beside a plain right saves the store address in a
+4-byte temporary; a pointer-element store with a pointer dividend builds its address in XIZ; a constant over a
+pointer's target loads the pointer first.  Every long row of stdiv is exact at none (612 of 750).  Gate clean.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
