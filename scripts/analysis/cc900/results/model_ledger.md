@@ -133,7 +133,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-10-6-micro-random3, v423/O3XS                           | random3/*.c          | 5 / 200 exact (2.5%)     |
 | run 2026-11-10-6-micro-random3, v423/Xr                             | random3/*.c          | 11 / 200 exact (5.5%)    |
 | run 2026-11-10-6-micro-random3, v423/O3XSXr                         | random3/*.c          | 5 / 200 exact (2.5%)     |
-| run 2026-11-10-7-micro-random4, v423/none                            | random4/*.c          | 15 / 200 exact (7.5%)    |
+| run 2026-11-10-7-micro-random4, v423/none                            | random4/*.c          | 17 / 200 exact (8.5%)    |
 | run 2026-11-10-7-micro-random4, v423/O3XS                            | random4/*.c          | 5 / 200 exact (2.5%)     |
 | run 2026-11-10-7-micro-random4, v423/Xr                              | random4/*.c          | 13 / 200 exact (6.5%)    |
 | run 2026-11-10-7-micro-random4, v423/O3XSXr                          | random4/*.c          | 6 / 200 exact (3.0%)     |
@@ -248,7 +248,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-3-proxy-tiny, v423/O3XSXr                            | firmware/tiny.c      | 6 / 6 exact (100.0%)     |
 | run 2026-11-08-8-micro-ra, v423/O3XS                                | micro/ra_*.c         | 20 / 42 exact (47.6%)    |
 | run 2026-11-08-8-micro-ra, v423/Xr                                  | micro/ra_*.c         | 23 / 42 exact (54.8%)    |
-| run 2026-11-08-9-micro-optloops, v423/none                          | micro/opt_loops.c    | 27 / 33 exact (81.8%)    |
+| run 2026-11-08-9-micro-optloops, v423/none                          | micro/opt_loops.c    | 28 / 33 exact (84.8%)    |
 | run 2026-11-08-9-micro-optloops, v423/Xr                            | micro/opt_loops.c    | 30 / 33 exact (90.9%)    |
 | run 2026-11-08-9-micro-optloops, v423/O3XSXr                        | micro/opt_loops.c    | 30 / 33 exact (90.9%)    |
 

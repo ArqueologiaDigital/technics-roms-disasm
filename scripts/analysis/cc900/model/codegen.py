@@ -142,11 +142,20 @@ def long_arith_kept(x, size):
     ld XWA,(XSP+0x6) / sub XWA,0x2000 / push WA; -O3 -XS narrows it: ld WA,(XSP+0x6) / sub WA,0x2000)"""
     return not CUR_OPT[0] and x.k == 'bin' and x.op in ('+', '-', '&', '|', '^') and x.ty.size == 4 and size < 4
 
+LONG_LOAD_KEPT = True                                     # see long_load_kept
+
+def long_load_kept(c, size):
+    """without -O an explicit cast of a long in memory to an int or char loads the 32 bits (random r1_01_07:
+    v2(gi2, (int)gul * 8) -> ld XWA,(_gul) / sla 0x3,WA / push WA; r3_05_07: .. | (char)gla[1] -> ld XWA,(_gla + 0x4))"""
+    x = strip(c.e)
+    return LONG_LOAD_KEPT and not CUR_OPT[0] and getattr(c, 'explicit', False) and x.k == 'load' and x.ty is not None and \
+        x.ty.size == 4 and size < 4 and x.ty.kind == 'int'
+
 def narrow(e, size):
     """the value of e, known to be needed only in its low `size` bytes: drop integral casts that widen"""
     e = strip(e)
     while e.k == 'cast' and e.kind == 'IntegralCast' and strip(e.e).ty.size >= size and not wide_divide(strip(e.e), size) \
-            and not ptrdiff_arith(strip(e.e)) and not long_arith_kept(strip(e.e), size):
+            and not ptrdiff_arith(strip(e.e)) and not long_arith_kept(strip(e.e), size) and not long_load_kept(e, size):
         e = strip(e.e)                                   # / % >> on wide operands keep their width (_ultoa: val % radix)
     if e.k == 'cast' and e.kind == 'IntegralCast' and strip(e.e).ty.size < size:
         return e
@@ -10484,6 +10493,29 @@ def live_regs(F, except_decl=None):
         if r and d is not except_decl and d not in F.dead: out.add(r)
     return out
 
+FP_CONST_FOLD = True                                      # see fold_fp_consts
+
+def fold_fp_consts(f):
+    """a double + - * / of two constants is one constant (random r3_05_07: vd(3.0 + 2.5) -> lda XIY,S / .. / cal _vd
+    with S: fdatad 5.5; the model called ._fadd_d on two constants); folded bottom-up, in place"""
+    from frontend import N
+    def val(x):
+        x = strip(x)
+        return x.value if x.k == 'fconst' and x.ty is not None and x.ty.size == 8 else None
+    def folded(n):
+        if not hasattr(n, 'k'): return n
+        for key, v in list(n.__dict__.items()):
+            if key == 'ty': continue
+            if hasattr(v, 'k'): setattr(n, key, folded(v))
+            elif isinstance(v, list): setattr(n, key, [folded(x) for x in v])
+        if n.k == 'bin' and n.op in ('+', '-', '*', '/') and n.ty is not None and n.ty.kind == 'float' and n.ty.size == 8:
+            a, b = val(n.l), val(n.r)
+            if a is not None and b is not None and not (n.op == '/' and b == 0):
+                r = a + b if n.op == '+' else a - b if n.op == '-' else a * b if n.op == '*' else a / b
+                return N('fconst', value=r, ty=n.ty)
+        return n
+    if FP_CONST_FOLD: f.body = folded(f.body)
+
 def merge_address_inits(f):
     """`T *p; ... p = (T *)&x;` with no use of p before: the assignment becomes p's initial value, so that a single
     use folds (_tan: p = (unsigned short *)&x; ... p[3] -> ld WA,(XSP+0x3a))"""
@@ -12080,6 +12112,7 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
     if personality not in PERSONALITIES: raise ValueError('unknown personality %s' % personality)
     personality = PERSONALITIES[personality]
     merge_address_inits(f)
+    fold_fp_consts(f)
     if opt != 'none' and not adecl: propagate_global_copies(f); forward_single_use(f)
     gotos = []
     walk(f.body, lambda n, d: gotos.append(n) if n.k == 'goto' else None)

@@ -141,7 +141,14 @@ def frame_allocs(F):
         F._fa.remap = getattr(F, 'fp_remap', None) or None
     return F._fa, F._fb
 
+FP_UNARY_HALF = False                                     # a statement without a double + - * / uses the region D alone
+
 def begin_stmt(F, st=None):
+    bins = []                                              # (random r4_01_10: vd(-gda[0]) in dec 0x8,XSP, the temporary at XSP)
+    if st is not None and hasattr(st, 'k'):
+        C().walk(st, lambda n, d: bins.append(n) if n.k in ('bin', 'opassign') and n.op in ('+', '-', '*', '/') and
+                 is_fp(getattr(n, 'ty', None)) else None)
+    F.fp_stmt_bin = bool(bins) or st is None
     F.pend_at_stmt = F.pending                           # (kept only through a statement that calls: random r1_08_03's
     e_ = getattr(st, 'e', None) if getattr(st, 'k', None) == 'expr' else None   # vc(t); gd2 = gda[2] releases them first)
     if e_ is None or getattr(C().strip(e_), 'k', None) != 'call': F.pend_at_stmt = -1   # (a bare call statement, where gen_stmt
@@ -157,7 +164,7 @@ def temp(F, size, kind='op'):
         C().walk(F.f.body, lambda n, d_: sw.append(n) if n.k == 'switch' and getattr(C().strip(n.value), 'ty', None) is not None
                  and C().strip(n.value).ty.size <= 2 else None)   # the temporary at XSP); not a long selector (random r4_03_19)
         F.fp_has_switch = bool(sw)
-    lab = FP_SWITCH_HALF and F.fp_has_switch
+    lab = (FP_SWITCH_HALF and F.fp_has_switch) or (FP_UNARY_HALF and not F.opt and not getattr(F, 'fp_stmt_bin', True))
     d = A.get(size, kind); B.get(0 if lab else size, kind)
     F.ftemp_max = max(getattr(F, 'ftemp_max', 0), A.depth + B.depth)
     return getattr(F, 'ftemp_top', 0) - d

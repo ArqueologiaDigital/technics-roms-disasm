@@ -943,6 +943,15 @@ before), `fpargg.c` 36 / 32 / 36 / 32 of 44; fpp1, fpp3, fpp4 and fpp5 rise at n
 and the random corpora read 70 of 800 at none.  The first gate of this batch showed one row down (fpp8.c at none,
 46 -> 44: an assignment from a call must release the pops first); the rule was narrowed and the gate re-run.
 
+**Batch 40 (2026-11-12): double constants folded; the whole long under a narrowing cast.**  A double + - * / of two
+constants is one constant (`vd(3.0 + 2.5)` pushes 5.5), and without -O an explicit cast of a long in memory to an int
+or char loads the 32 bits (`(int)gul * 8` -> `ld XWA,(_gul) / sla 0x3,WA`).  The random corpora read 72 of 800 at none
+(random4 15 -> 17); opt_loops.c 27 -> 28 at none.  A third rule tried with them -- "a statement without a double binary
+operation uses the temporary region D alone", from `vd(-gda[0])` in 8 bytes -- was wrong: the first gate showed the
+fpp probes at none collapse (fpp4.c 55 -> 0), and the regression finder, whose list covers 103 of the ledger's 247
+rows, had shown nothing.  It is switched off (`FP_UNARY_HALF`), and research-scratch `gate/ledger-copy.sh` now runs the
+whole ledger on the scratch copy before a batch reaches the tree.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
