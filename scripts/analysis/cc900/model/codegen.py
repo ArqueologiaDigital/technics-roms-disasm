@@ -1322,7 +1322,7 @@ def lh_call_kinds(F, op, l, r):
     if o == 'K' and (op == '*' or L == 'F'): return None
     return (lk, rk)
 
-def plan_lh_call(F):
+def plan_lh_call0(F):
     """before the frame: one statement G = A op B with lh_call operands in a function with no other frame local and
     XIZ free; the prologue saves XIZ, and a 4-byte temporary is added below the frame for a call result beside a
     member or for the first of two members (l_div_DF: dec 0x4,XSP / push XIZ / cal _hfl / ld (XSP+0x4),XHL)"""
@@ -1337,7 +1337,11 @@ def plan_lh_call(F):
                 lh_call_kinds(F, n.op, strip(n.l), strip(n.r)) is not None: hits.append(n)
     walk(f.body, v)
     if len(hits) != 1: return
-    tops = [x for x in flat(f.body) if x.k == 'expr' and x.e.k == 'bin' and x.e.op == '=' and strip(x.e.r) is hits[0] and
+    stmts_ = flat(f.body)
+    if LH_CTR_SLOT and not F.opt and any(getattr(d, 'lh_ctr', False) for d in f.decls):   # (lhidx.c L rows: the one
+        stmts_ = []                                                                       #  statement inside a loop)
+        walk(f.body, lambda n_, d_: stmts_.append(n_) if n_.k == 'expr' else None)
+    tops = [x for x in stmts_ if x.k == 'expr' and x.e.k == 'bin' and x.e.op == '=' and strip(x.e.r) is hits[0] and
             (strip(x.e.l).k == 'var' and strip(x.e.l).decl.kind == 'global' and strip(x.e.l).ty.size == 4 or
              LH_IDX and hits[0].op != '*' and strip(x.e.l).ty is not None and strip(x.e.l).ty.size == 4 and strip(x.e.l).k in ('member', 'index') and (sc_lkind(F, strip(x.e.l)) or ('',))[0] == 'M' or
              LH_STORE_POST and lh_post_kinds(F, x.e.l, hits[0]) is not None or
@@ -1424,7 +1428,8 @@ def lh_elem(F, op, l, r, lk, rk):
     constant element.  True when it emitted them."""
     L, R = lk[0], rk[0]; mul = op == '*'
     def ld(a, b): F.emit('ld', '%s,%s' % (a, b))
-    T = lambda: '(XSP+%s)' % hx(F.lhc['ix'].slot + F.push)
+    if not hasattr(F.lhc['ix'], 'slot'): raise Unsupported('lh_elem: the index temporary has no slot')   # (with double work in
+    T = lambda: '(XSP+%s)' % hx(F.lhc['ix'].slot + F.push)                                  #  the function: random r1_08_01)
     S = lambda: '(XSP+%s)' % hx(F.lhc['slot'].slot + F.push)
     def at(reg, k): return '(%s+%s)' % (reg, hx(k[2])) if k[2] else '(%s)' % reg
     def call(x):
@@ -10600,6 +10605,42 @@ def fold_fp_consts(f):
         return n
     if FP_CONST_FOLD: f.body = folded(f.body)
 
+LH_CTR_SLOT = True                                        # see lh_counter_slots
+
+def lh_counter_slots(f, opt, adecl):
+    """without -O (cdecl) a loop counter that indexes an element operand of a long * / % helper inside its loop stays
+    in its frame slot (corpus/probes/lhidx.c lx_l_d_LGX: ldw (XSP+0x4),0x0 / cpw (XSP+0x4),0x4 / j ge / ld WA,(XSP+0x4) /
+    ld (XSP+0x6),WA / .. / lda XIZ,_vla / .. / cal C9H_divls / incw 0x1,(XSP+0x4) / cpw (XSP+0x4),0x4 / j lt); the body
+    is then the parameter-index form.  Marks such counters: no register, and a provisional slot while plan_lh_call
+    classifies the operands (it runs before the frame is laid out)."""
+    if not LH_CTR_SLOT or opt or adecl: return
+    def idx_vars(e, out):
+        def v(n, d):
+            if n.k == 'index' and n.ty is not None and n.ty.size == 4 and n.ty.kind == 'int':
+                ii = strip(n.idx)
+                while ii.k == 'cast' and ii.kind == 'IntegralCast': ii = strip(ii.e)
+                if ii.k == 'load' and strip(ii.e).k == 'var' and strip(ii.e).decl.kind == 'local' and \
+                        strip(ii.e).decl.ty.size == 2: out.append(strip(ii.e).decl)
+        if hasattr(e, 'k'): v(e, 0); walk(e, v)
+    def loop(n, d):
+        if n.k not in ('for', 'while', 'do'): return
+        hits = []
+        def h(m, dd):
+            if m.k == 'bin' and m.op in ('*', '/', '%') and getattr(m, 'ty', None) is not None and m.ty.size == 4 and \
+                    m.ty.kind == 'int':
+                idx_vars(m.l, hits); idx_vars(m.r, hits)
+        walk(n, h)
+        for dcl in hits: dcl.addr_taken = True; dcl.lh_ctr = True
+    walk(f.body, loop)
+
+def plan_lh_call(F):
+    fake = [d for d in F.f.decls if getattr(d, 'lh_ctr', False) and not hasattr(d, 'slot')]
+    for d in fake: d.slot = 0
+    try: plan_lh_call0(F)
+    finally:
+        for d in fake:
+            if hasattr(d, 'slot'): del d.slot
+
 def merge_address_inits(f):
     """`T *p; ... p = (T *)&x;` with no use of p before: the assignment becomes p's initial value, so that a single
     use folds (_tan: p = (unsigned short *)&x; ... p[3] -> ld WA,(XSP+0x3a))"""
@@ -11500,7 +11541,7 @@ def plan_regtemps(F):
     with the next one; when all fail the local keeps its slot.  The values that live across a call are homes2's
     (IZ / QIZ / XIZ)."""
     for d, cands in regtemp_candidates(F):
-        if getattr(d, 'reg', None) or getattr(d, 'home_slot', False): continue
+        if getattr(d, 'reg', None) or getattr(d, 'home_slot', False) or getattr(d, 'lh_ctr', False): continue
         k = REGTEMP_PICK[0].get(d.name, 0)
         if k >= len(cands): continue                       # every candidate was clobbered: the slot
         d.reg = cands[k]; d.regtemp = True
@@ -12199,6 +12240,7 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
     if personality not in PERSONALITIES: raise ValueError('unknown personality %s' % personality)
     personality = PERSONALITIES[personality]
     merge_address_inits(f)
+    lh_counter_slots(f, opt != 'none', adecl)
     fold_fp_consts(f)
     if opt != 'none' and not adecl: propagate_global_copies(f); forward_single_use(f)
     gotos = []

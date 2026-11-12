@@ -201,7 +201,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-12-5-micro-stdiv, v423/O3XS                             | probes/stdiv.c       | 694 / 750 exact (92.5%)  |
 | run 2026-11-12-5-micro-stdiv, v423/Xr                               | probes/stdiv.c       | 162 / 750 exact (21.6%)  |
 | run 2026-11-12-5-micro-stdiv, v423/O3XSXr                           | probes/stdiv.c       | 142 / 750 exact (18.9%)  |
-| run 2026-11-12-6-micro-lhidx, v423/none                             | probes/lhidx.c       | 78 / 150 exact (52.0%)   |
+| run 2026-11-12-6-micro-lhidx, v423/none                             | probes/lhidx.c       | 122 / 150 exact (81.3%)  |
 | run 2026-11-12-6-micro-lhidx, v423/O3XS                             | probes/lhidx.c       | 68 / 150 exact (45.3%)   |
 | run 2026-11-12-6-micro-lhidx, v423/Xr                               | probes/lhidx.c       | 0 / 150 exact (0.0%)     |
 | run 2026-11-12-6-micro-lhidx, v423/O3XSXr                           | probes/lhidx.c       | 0 / 150 exact (0.0%)     |

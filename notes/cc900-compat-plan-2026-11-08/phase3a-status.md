@@ -971,6 +971,14 @@ the planner does not take loads its address after the call; a member dividend ta
 at none and 239 -> 241 at -Xr.  The top refusal there, long helpers with an element at a variable index (about 40
 statements), needs cc900's frame-slot form (the scaled index and the store address saved in slots, the base in XIZ).
 
+**Batch 44 (2026-11-12): the loop-counter rows of lhidx.c.**  Without -O a loop counter that indexes an element
+operand of a long * / % helper stays in its frame slot (`ldw (XSP+0x4),0x0 / cpw (XSP+0x4),0x4 / j ge / .. /
+incw 0x1,(XSP+0x4)`), and the loop body is the parameter-index form the model already wrote.  Such counters are marked
+before planning, kept out of the register planners, and given a provisional slot while the long-helper planner (which
+runs before the frame is laid out) classifies its operands.  `lhidx.c` at none reads 122 of 150 (78 before); what is
+left there is the multiply stored through an address and two local-index shapes.  The random corpora stay at 78: six
+of their refusals became differences.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
