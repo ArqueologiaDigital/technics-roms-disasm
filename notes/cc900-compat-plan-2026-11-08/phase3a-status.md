@@ -952,6 +952,12 @@ fpp probes at none collapse (fpp4.c 55 -> 0), and the regression finder, whose l
 rows, had shown nothing.  It is switched off (`FP_UNARY_HALF`), and research-scratch `gate/ledger-copy.sh` now runs the
 whole ledger on the scratch copy before a batch reaches the tree.
 
+**Batch 41 (2026-11-12): an IZ home initialised through a pointer; a member store of a displaced dividend.**  Without -O
+the initialiser of an int local homed in IZ that reads through a plain pointer is computed in IZ
+(`ld XWA,(_gps) / ld IZ,(XWA+0xe) / add IZ,(_gi2)`), and `store_div` now takes `gps->i = gps->i / gi3` and
+`gps->i = gpi[3] % gi` (the pointer in XWA, the division in XBC).  The random corpora read 73 of 800 at none.  This
+batch was checked with the whole ledger on the scratch copy before it reached the tree.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

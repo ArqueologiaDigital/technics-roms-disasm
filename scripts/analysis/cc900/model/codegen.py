@@ -1548,6 +1548,8 @@ PTR_MEM_OPS = True                                        # cpw / pushw straight
 LABEL_MERGE = True                                        # two labels at one place are one (without -O)
 INCW_GLOBAL = True                                        # g += k (1..8) on an int global: incw k,(_g)
 PTR_K_LDA = True                                          # return g + k on a global pointer: ld XWA,(_g) / lda XHL,XWA+k
+IZ_PTR_INIT = True                                        # an IZ home's initialiser read through a pointer: computed in IZ
+STORE_DIV_DD = True                                       # see store_div: a member store of a displaced dividend
 LOOPCTR = True
 SHIFT_COUNT_GUARD = True                                  # see edit_shift_count_guard.py                                            # see edit_loopctr.py                                       # see edit_l2_char_swap.py                                        # see edit_lh_pk_order.py                                      # plan_store_x's ADDR form (a pointer dividend)
 
@@ -1980,7 +1982,11 @@ def store_div(F, lv, rv):
     if L is None: return False
     a, b = sd_opkind(F, x.l, 2), sd_opkind(F, x.r, 2)
     if a is None or b is None or (a[0] == 'K' and b[0] == 'K'): return False
-    if 'D' in (a[0], b[0]): return False                     # (ea_i_div_GD: the member's pointer in XWA, the division in XBC)
+    if 'D' in (a[0], b[0]) and not (STORE_DIV_DD and L[0] == 'D' and a[0] == 'D' and b[0] in ('G', 'K')):
+        return False                                         # (ea_i_div_GD: the member's pointer in XWA, the division in XBC;
+                                                             #  a member store of a displaced dividend is the DGG form, random
+                                                             #  r1_00_17: gps->i = gps->i / gi3 -> ld XWA,(_gps) / ld XBC,(_gps) /
+                                                             #  ld BC,(XBC+0x2) / exts XBC / divs XBC,(_gi3) / ld (XWA+0x2),BC)
     if a[0] == 'X' and b[0] == 'X' and a[2] == b[2]: return False   # (ea_i_div_XX: one index, cached)
     if b[0] == 'K':
         bv = b[1] & 0xffff
@@ -8149,6 +8155,29 @@ def regvar_stmt(F, e):
                 F.emit('ld', 'WA,%s' % Wr); F.emit('exts' if bw.ty.signed else 'extz', 'XWA')
                 fam = gen(F, a0, w.reg, 4)
                 F.emit('ld', '%s,%s' % (R, FAM[fam][4])); F.emit(SIMPLE_OPS[r0.op], '%s,XWA' % R); return True
+        if IZ_PTR_INIT and d.reg == 'IZ' and d.ty.size == 2 and not F.opt and not F.adecl and 'WA' not in live_regs(F):
+            v0 = strip(narrow(e.r, 2))                      # random r2_00_10: int t = gps->a[0] + gi2 (t in IZ) ->
+            def thr(x):                                     # ld XWA,(_gps) / ld IZ,(XWA+0xe) / add IZ,(_gi2), not through WA
+                x = strip(narrow(x, 2))
+                if x.k != 'load' or x.ty is None or x.ty.size != 2: return None
+                k_ = sp_lvalue_kind(F, x.e)
+                return k_ if k_ is not None and k_[0] in ('P', 'D') else None
+            def plain(x):
+                x = strip(narrow(x, 2))
+                if fold(x).k == 'const' and fold(x).value is not None: return hx(fold(x).value & 0xffff)
+                m_ = mem_operand(F, x) if x.k == 'load' and x.ty is not None and x.ty.size == 2 else None
+                return m_ if m_ is not None and m_.startswith('(') else None
+            at_ = lambda k_: '(XWA+%s)' % hx(k_[2]) if k_[2] else '(XWA)'
+            if thr(v0) is not None:
+                F.emit('ld', 'XWA,%s' % thr(v0)[1]); F.emit('ld', 'IZ,%s' % at_(thr(v0))); return True
+            if v0.k == 'bin' and v0.op in SIMPLE_OPS and v0.ty is not None and v0.ty.size == 2:
+                tl, tr = thr(v0.l), thr(v0.r)
+                if tl is not None and plain(v0.r) is not None:
+                    F.emit('ld', 'XWA,%s' % tl[1]); F.emit('ld', 'IZ,%s' % at_(tl))
+                    F.emit(SIMPLE_OPS[v0.op], 'IZ,%s' % plain(v0.r)); return True
+                if tr is not None and plain(v0.l) is not None and plain(v0.l).startswith('('):   # r1_04_16: ld XWA,(_gps) /
+                    F.emit('ld', 'XWA,%s' % tr[1]); F.emit('ld', 'IZ,%s' % plain(v0.l))            # ld IZ,(_gi) / sub IZ,(XWA+0x8)
+                    F.emit(SIMPLE_OPS[v0.op], 'IZ,%s' % at_(tr)); return True
         tgt = d.reg if d.reg in ('BC', 'DE', 'HL', 'WA') else 'WA'      # ra_noloop3: ld DE,(a) / add DE,(b)
         if getattr(d, 'regtemp', False) and d.ty.size == 1 and strip(e.r).k not in ('load', 'const'):
             tgt = 'WA'                                     # (lo_c_Bgs: ld A,(_gc) / add A,(_hc) / ld C,A)
