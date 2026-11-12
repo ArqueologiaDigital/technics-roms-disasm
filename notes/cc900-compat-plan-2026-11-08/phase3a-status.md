@@ -964,6 +964,13 @@ in the block and nothing in between touches the frame; they merge into that call
 .. / cal _v1 / inc 0x6,XSP`).  With no such call they are released at once, as before.  An unsigned long `%= 2^n` on a
 global is `ld XWA,2^n - 1 / and (_g),XWA`.  The random corpora read 77 of 800 at none (73 before).
 
+**Batch 43 (2026-11-12): long helpers in the random corpora.**  A constant element is a plain operand of a long * / %
+in a planned store (`*gpl = gla[4] / 7L` keeps the address in XIZ); a long helper stored through `p->m` or `p[k]` that
+the planner does not take loads its address after the call; a member dividend takes a constant divisor
+(`ld XIZ,(_gps) / ld XWA,(XIZ+0x4) / ld XBC,0x7`).  The random corpora read 78 of 800 at none; evorder_lh.c 286 -> 288
+at none and 239 -> 241 at -Xr.  The top refusal there, long helpers with an element at a variable index (about 40
+statements), needs cc900's frame-slot form (the scaled index and the store address saved in slots, the base in XIZ).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

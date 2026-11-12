@@ -1550,6 +1550,9 @@ INCW_GLOBAL = True                                        # g += k (1..8) on an 
 PTR_K_LDA = True                                          # return g + k on a global pointer: ld XWA,(_g) / lda XHL,XWA+k
 IZ_PTR_INIT = True                                        # an IZ home's initialiser read through a pointer: computed in IZ
 STORE_DIV_DD = True                                       # see store_div: a member store of a displaced dividend
+SP_CONST_ELEM = True                                      # a long helper's constant-element operand in a planned store
+LH_STORE_AFTER = True                                     # a long helper's store through p->m / p[k]: the address after the call
+LH_MEMBER_K = True                                        # lh_member with a constant divisor (without -O)
 LOOPCTR = True
 SHIFT_COUNT_GUARD = True                                  # see edit_shift_count_guard.py                                            # see edit_loopctr.py                                       # see edit_l2_char_swap.py                                        # see edit_lh_pk_order.py                                      # plan_store_x's ADDR form (a pointer dividend)
 
@@ -1683,7 +1686,7 @@ def lh_member_kinds(F, op, l, r):
     if (lk[0] == 'D') == (rk[0] == 'D'): return None
     dk, ok_, right = (rk, lk, True) if rk[0] == 'D' else (lk, rk, False)
     if ok_[0] not in ('K', 'G', 'M', 'P'): return None
-    if ok_[0] == 'K' and (op == '*' or not right): return None
+    if ok_[0] == 'K' and (op == '*' or (not right and not (LH_MEMBER_K and not F.opt))): return None
     return dk, ok_, right
 
 def lh_member(F, op, l, r):
@@ -1722,8 +1725,8 @@ def lh_member(F, op, l, r):
         if O == 'G':
             if F.opt: ld('XWA', mem); ld('XBC', oval)
             else: ld('XBC', oval); ld('XWA', mem)
-        elif O == 'M': ld('XWA', mem); ld('XBC', oval)
-        else: ld('XBC', ok_[1]); ld('XWA', mem); ld('XBC', '(XBC)')
+        elif O in ('M', 'K'): ld('XWA', mem); ld('XBC', oval)   # (K: random r1_07_15: gps->l / 7L -> ld XIZ,(_gps) /
+        else: ld('XBC', ok_[1]); ld('XWA', mem); ld('XBC', '(XBC)')   #  ld XWA,(XIZ+0x4) / ld XBC,0x7 / cal C9H_divls)
     return True
 
 STORE_CHAIN = True                                        # see store_chain
@@ -7236,6 +7239,15 @@ def gen_stmt(F, s, last):
             fam = gen(F, s.e.r, 'HL', size)              # _ultoa: value first (XHL / L), then the address
             t = lvalue(F, lv, ptr='XWA')
             F.emit('ld', '%s,%s' % (t, FAM[fam][size])); return
+        xr_ = strip(s.e.r)
+        if LH_STORE_AFTER and not F.opt and not F.adecl and size == 4 and xr_.k == 'bin' and xr_.op in ('*', '/', '%') and \
+                xr_.ty is not None and xr_.ty.kind == 'int' and has_helper_call(xr_) and not getattr(F, 'l2', None):
+            lk_ = sp_lvalue_kind(F, lv)                  # random r4_06_19: gpl[2] = (gla[7] - gs.l) % 10 with IZ taken ->
+            if lk_ is not None and lk_[0] in ('P', 'D'):  # .. / cal C9H_remls / ld XWA,(_gpl) / ld (XWA+0x8),XHL
+                fam = gen(F, s.e.r, 'HL', 4)
+                if fam != 'HL': raise Unsupported('a long helper store: the value in %s' % fam)
+                F.emit('ld', 'XWA,%s' % lk_[1])
+                F.emit('ld', '%s,XHL' % ('(XWA+%s)' % hx(lk_[2]) if lk_[2] else '(XWA)')); return
         sv = store_through_temp(s.e) if F.opt else None
         if sv is not None and not getattr(sv, 'reg', None) and regvar_of(strip(strip(lv.e).e)) is not None:
             pd = regvar_of(strip(strip(lv.e).e))         # _strset: lda XBC,XDE+:1 / ld WA,(XSP+0x8) / ld (XBC),A
@@ -10886,7 +10898,10 @@ def sp_value_kind(F, rv, size):
         while lk.k == 'cast' and lk.kind == 'IntegralCast': lk = strip(lk.e)
         while rk.k == 'cast' and rk.kind == 'IntegralCast': rk = strip(rk.e)
         simple = lambda y: y.k == 'const' or (y.k == 'load' and mem_operand(F, y) is not None and
-                                              strip(y.e).k in ('var', 'member') and not (strip(y.e).k == 'member' and strip(y.e).arrow))
+                                              strip(y.e).k in ('var', 'member') and not (strip(y.e).k == 'member' and strip(y.e).arrow)) or \
+            (SP_CONST_ELEM and x.op in ('*', '/', '%') and size == 4 and y.k == 'load' and strip(y.e).k == 'index' and
+             fold(strip(y.e).idx).k == 'const' and (mem_operand(F, y) or '').startswith('(_'))   # (random r1_09_04:
+                                                                 # *gpl = gla[4] / 7L, a constant element as a plain operand)
         through = lambda y: y.k == 'load' and (strip(y.e).k == 'member' and strip(y.e).arrow and sp_plain_ptr(F, strip(y.e).base) is not None
                                                or strip(y.e).k == 'deref' and sp_plain_ptr(F, strip(y.e).e) is not None)
         if x.op in ('+', '-', '&', '|', '^') and size in (2, 4) and (through(lk) and simple(rk) or simple(lk) and through(rk)):
