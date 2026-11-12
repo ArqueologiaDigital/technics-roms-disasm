@@ -42,3 +42,11 @@ near match whose name the compiled object does not define as a piece of its own.
 routines, repeated across image versions: `_ldiv` (4), `_ultoa` (9), `_ldexp` (3), `__doprnt` (9), `__facnv` (4),
 `_vsprintf` (2), `__doform`'s data (9) and TRAP's 4-byte `__FloatErrorHandle` (4).  Those are what the `kn5000`
 rules have to explain.
+
+## Scores over time: `dashboard.py`
+
+`python3 scripts/analysis/cc900/dashboard.py --serve` writes a single page to
+`~/compartilhado/tmp/cc900-dashboard/index.html` and serves it on <http://localhost:8765/>: the random corpora, the
+1997 library, the micro corpus, the probes and the semantic check's DIFFERENT count, one point per commit that changed
+`results/model_ledger.md`.  It reads those files out of git history (`git show <commit>:<file>`), measures nothing
+itself, and its output is not committed.  Without `--serve` it only writes the file.
