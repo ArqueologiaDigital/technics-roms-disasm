@@ -881,6 +881,10 @@ when calls precede the loop.  loopctr 12 -> 22 at none.  Wrong code fixed on the
 committed): a broader register-temporary rule broke the library's _frexp; an older shift op= path overwrote its
 computed count (r1_06_03).  Gate clean.
 
+**For counters and counter registers**: a for's counter is a register temporary also when calls precede the loop, and a
+counter takes the lowest of BC, DE, HL that the body's element accesses at [i] leave free.  loopctr 22 -> 29 at none,
+random1 22 -> 23.  Gate clean.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

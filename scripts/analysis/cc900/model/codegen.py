@@ -1519,6 +1519,7 @@ LH_STORE_X = True                                         # see lh_store_x
 LH_STORE_ADDR = True
 LH_PK_ORDER = True
 L2_CHAR_SWAP = True
+LOOPCTR_FOR = True                                        # see edit_loopctr2.py
 LOOPCTR = True
 SHIFT_COUNT_GUARD = True                                  # see edit_shift_count_guard.py                                            # see edit_loopctr.py                                       # see edit_l2_char_swap.py                                        # see edit_lh_pk_order.py                                      # plan_store_x's ADDR form (a pointer dividend)
 
@@ -10978,6 +10979,18 @@ def regtemp_premark(F):
     for d, cands in regtemp_candidates(F):
         if cands: d.regtemp_pre = True
 
+def loop_ctr_cands(lp, d):
+    """the register candidates of a loop counter d (loopctr.c): BC, DE, HL, skipping what the loop body's element
+    accesses at [d] take -- an element store at [d] its index copy in BC and base in XDE (HL), an element read at [d]
+    its base in XBC (DE); WA last (the loop test's)"""
+    excl = set()
+    def v(n, dep):
+        if n.k == 'bin' and n.op == '=' and strip(n.l).k == 'index' and uses_decl(strip(n.l).idx, d): excl.update(('BC', 'DE'))
+        if n.k == 'opassign' and strip(n.l).k == 'index' and uses_decl(strip(n.l).idx, d): excl.update(('BC', 'DE'))
+        if n.k == 'load' and strip(n.e).k == 'index' and uses_decl(strip(n.e).idx, d): excl.add('BC')
+    walk(lp.body if getattr(lp, 'body', None) is not None else lp, v)
+    return [r for r in ('BC', 'DE', 'HL') if r not in excl] + [r for r in ('BC', 'DE', 'HL') if r in excl] + ['WA']
+
 def regtemp_candidates(F):
     """[(decl, [candidate homes])] for plan_regtemps, from the body alone (its docstring says which locals)"""
     if not REGTEMP or (F.opt and not REGTEMP_OPT) or getattr(F, 'l2', None) or getattr(F, 'leaf', None): return []
@@ -10996,6 +11009,17 @@ def regtemp_candidates(F):
             j = next((k for k, x in enumerate(body[i + 1:]) if uses_decl(x, d0)), None)
             if j is None: continue
             x0 = body[i + 1 + j]
+            if LOOPCTR_FOR and x0.k == 'for' and x0.init is not None and not any(uses_decl(x, d0) for x in body[i + 2 + j:]):
+                fi = strip(x0.init.e if getattr(x0.init, 'k', None) == 'expr' else x0.init)
+                fs = strip(x0.inc) if x0.inc is not None else None
+                fc = strip(x0.cond) if x0.cond is not None else None
+                if fi.k == 'bin' and fi.op == '=' and strip(fi.l).k == 'var' and strip(fi.l).decl is d0 and not uses_decl(fi.r, d0) and fs is not None and fs.k == 'incdec' and strip(fs.e).k == 'var' and strip(fs.e).decl is d0 and fc is not None and fc.k == 'bin' and strip(fc.l).k == 'load' and strip(strip(fc.l).e).k == 'var' and strip(strip(fc.l).e).decl is d0:
+                    i = i + j; c = type('C', (), {'var': d0, 'init': fi.r, 'k': 'decl'})(); d = c.var   # (loopctr.c lc_FGF)
+                    rest = body[i + 1:]
+                    used = [k for k, x in enumerate(rest) if uses_decl(x, d)]
+                    if used and not any(calls_in(x) for x in rest[:used[-1]]) and not calls_in(rest[used[-1]]):
+                        out.append((d, loop_ctr_cands(x0, d))); d.regtemp_keep_wa = False
+                    continue
             if not (x0.k == 'expr' and x0.e.k == 'bin' and x0.e.op == '=' and strip(x0.e.l).k == 'var' and strip(x0.e.l).decl is d0 and not uses_decl(x0.e.r, d0)): continue
             lp0 = body[i + 2 + j] if i + 2 + j < len(body) else None   # only the counter of the do-while right after it, unused after
             cv0 = strip(lp0.cond) if lp0 is not None and lp0.k == 'do' else None   # (_frexp O3XS: nn, assigned then bumped
@@ -11005,7 +11029,7 @@ def regtemp_candidates(F):
                 walk(lp0.body, lambda n_, dd: st0.append(n_) if n_.k == 'incdec' and strip(n_.e).k == 'var' and strip(n_.e).decl is d0 else None)
                 ok0 = cw0.k == 'bin' and strip(cw0.l).k == 'load' and strip(strip(cw0.l).e).k == 'var' and strip(strip(cw0.l).e).decl is d0 and len(st0) == 1
             if not ok0 or any(uses_decl(x, d0) for x in body[i + 3 + j:]): continue   #  wrong code in WA)
-            i = i + 1 + j; c = type('C', (), {'var': d0, 'init': x0.e.r, 'k': 'decl'})()
+            i = i + 1 + j; c = type('C', (), {'var': d0, 'init': x0.e.r, 'k': 'decl', 'ctr_loop': lp0})()
         d = c.var
         if d.kind != 'local' or d.addr_taken or \
                 getattr(d, 'no_fold', False) or d.ty.kind in ('array', 'struct') or fpgen.is_fp(d.ty) or \
@@ -11041,6 +11065,7 @@ def regtemp_candidates(F):
         if last == 0 and d.ty.size == 1 and len(used) == 1 and rest[0].k == 'return': continue   # (a byte returned
                                                            # next: the older rule below, binop_c.c shl_c_loc: x in C)
         cands = ['HL', 'BC', 'DE'] if ci.k == 'call' else ['WA', 'BC', 'DE', 'HL']
+        if getattr(c, 'ctr_loop', None) is not None: cands = loop_ctr_cands(c.ctr_loop, d)   # (loopctr.c lc_DTF: HL)
         # (WA is tried with the code in between written as if WA were free -- live_regs hides a WA temporary -- so
         # that a statement that computes anything moves the temporary to BC: lo_i_Ggs ld BC,(_gi) / ld WA,(_hj),
         # while lo_i_G0d's store and push keep it in WA)

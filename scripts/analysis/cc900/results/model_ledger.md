@@ -121,7 +121,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-42-micro-homes2b, v423/O3XS                          | probes/homes2b.c     | 9 / 90 exact (10.0%)     |
 | run 2026-11-09-42-micro-homes2b, v423/Xr                            | probes/homes2b.c     | 11 / 90 exact (12.2%)    |
 | run 2026-11-09-42-micro-homes2b, v423/O3XSXr                        | probes/homes2b.c     | 11 / 90 exact (12.2%)    |
-| run 2026-11-10-1-micro-random1, v423/none                           | random/*.c           | 22 / 200 exact (11.0%)   |
+| run 2026-11-10-1-micro-random1, v423/none                           | random/*.c           | 23 / 200 exact (11.5%)   |
 | run 2026-11-10-1-micro-random1, v423/O3XS                           | random/*.c           | 7 / 200 exact (3.5%)     |
 | run 2026-11-10-1-micro-random1, v423/Xr                             | random/*.c           | 15 / 200 exact (7.5%)    |
 | run 2026-11-10-1-micro-random1, v423/O3XSXr                         | random/*.c           | 7 / 200 exact (3.5%)     |
@@ -205,9 +205,9 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-12-6-micro-lhidx, v423/O3XS                             | probes/lhidx.c       | 68 / 150 exact (45.3%)   |
 | run 2026-11-12-6-micro-lhidx, v423/Xr                               | probes/lhidx.c       | 0 / 150 exact (0.0%)     |
 | run 2026-11-12-6-micro-lhidx, v423/O3XSXr                           | probes/lhidx.c       | 0 / 150 exact (0.0%)     |
-| run 2026-11-12-7-micro-loopctr, v423/none                           | probes/loopctr.c     | 22 / 30 exact (73.3%)    |
+| run 2026-11-12-7-micro-loopctr, v423/none                           | probes/loopctr.c     | 29 / 30 exact (96.7%)    |
 | run 2026-11-12-7-micro-loopctr, v423/O3XS                           | probes/loopctr.c     | 2 / 30 exact (6.7%)      |
-| run 2026-11-12-7-micro-loopctr, v423/Xr                             | probes/loopctr.c     | 11 / 30 exact (36.7%)    |
+| run 2026-11-12-7-micro-loopctr, v423/Xr                             | probes/loopctr.c     | 14 / 30 exact (46.7%)    |
 | run 2026-11-12-7-micro-loopctr, v423/O3XSXr                         | probes/loopctr.c     | 2 / 30 exact (6.7%)      |
 | run 2026-11-09-9-micro-fp, v423/none                                | micro/fp.c           | 108 / 108 exact (100.0%) |
 | run 2026-11-09-9-micro-fp, v423/O3XS                                | micro/fp.c           | 108 / 108 exact (100.0%) |
