@@ -407,6 +407,11 @@ def emit_operands(F, dest, ops):
         put_addr(F, ops[1], 'XDE'); F.emit('ld', 'XBC,XDE')   # fp_stmts.c s_loc (-O3 -XS): a * a -> lda XDE,XSP+0x20 /
         if kinds['XWA'] != 'ld': do('XWA', None)           # ld XBC,XDE / lda XWA,.. (one address, copied)
         return
+    if held and any(getattr(fp_value_cast(x), '_xiz_opa', False) for r, x in held):
+        for r, x in items[1:]:                             # a compound assignment's target in XIZ (fpopa.c fa_m_MGT):
+            if (r, x) not in held: do(r, x)                # lda XDE,_hd / ld XBC,XIZ / ld XWA,XIZ
+        for r, x in held: do(r, x)
+        do('XWA', None); return
     for r, x in items:
         if kinds[r] == 'ld' and (r, x) not in held: do(r, x)
     for r, x in items[1:] + items[:1]:
@@ -600,8 +605,26 @@ def gen_assign(F, e):
     if e.k == 'opassign':
         from frontend import N
         lv = strip(e.l)
-        b = N('bin', op=e.op, l=N('load', e=lv, ty=lv.ty), r=e.r, ty=lv.ty)
-        eval_into(F, b, ('lv', lv)); return
+        ld_ = N('load', e=lv, ty=lv.ty)
+        b = N('bin', op=e.op, l=ld_, r=e.r, ty=lv.ty)
+        hk = opa_target(F, lv)
+        if hk is not None:                                 # probes/fpopa.c fa_m_MGT: gs.d *= hd -> lda XIZ,_gs + 0x4 /
+            for d in list(F.f.params) + list(F.f.decls):   # lda XDE,_hd / ld XBC,XIZ / ld XWA,XIZ / cal ._fmul_d
+                if getattr(d, 'reg', None) in ('IZ', 'QIZ', 'XIZ', 'QIZH') and d not in F.dead:
+                    raise cg.Unsupported('a double compound assignment over the XIZ home of %s' % d.name)
+            if F.xiz_vars != ['sret'] or needs_xiz(F) or getattr(F, 'sret_home', False) or \
+                    getattr(F, 'call_temp', None):
+                raise cg.Unsupported('a double compound assignment beside another XIZ use')
+            if hk[0] == 'S': F.emit('lda', 'XIZ,%s' % hk[1])
+            else:                                          # fa_m_XGT: ld WA,(c) / sla 0x3,WA / lda XBC,_gda / lda XIZ,XBC+WA
+                if hk[2] != 'WA': F.emit('ld', 'WA,%s' % hk[2])
+                F.emit('sla', '0x3,WA'); F.emit('lda', 'XBC,%s' % hk[1])
+                F.emit('lda', 'XIZ,XBC+WA')
+            ld_._xiz = True; ld_._xiz_opa = True           # (the target stays the left operand: ld XBC,XIZ)
+            eval_into(F, b, ('xiz',)); return
+        if OPA_XIZ and lv.k == 'index' and cg.fold(lv.idx).k != 'const':   # (fpopa.c -Xr / -O3 -XS X rows: the element's
+            raise cg.Unsupported('a double compound assignment at a computed element')   # address was built twice
+        eval_into(F, b, ('lv', lv)); return                                              # over its index: wrong code)
     eval_into(F, e.r, ('lv', strip(e.l)))
 
 def compare(F, c, value):
@@ -910,6 +933,32 @@ def elem_hoists(e):
     if hasattr(e, 'k'): visit(e, 0); C().walk(e, visit)
     return out
 
+OPA_XIZ = True                                            # see opa_target
+
+def opa_target(F, lv):
+    """the target of a double compound assignment whose address cc900 V4.23 keeps in XIZ (corpus/probes/fpopa.c, run
+    2026-11-12-10-micro-fpopa): ('S', '_gs + 0x4') a static member or constant element, ('X', '_gda', mem) a global
+    array's element at a signed int variable in memory; None for a plain variable (addressed directly) and for what
+    is not modelled.  cdecl."""
+    cg = C()
+    if not OPA_XIZ or not is_fp(getattr(lv, 'ty', None)) or lv.ty.size != 8: return None
+    lv = strip(lv)
+    if lv.k not in ('member', 'index'): return None
+    sip = getattr(F, 'sp_index_param', None)
+    try: k = cg.sp_lvalue_kind(F, lv)                      # (-Xr: the index parameter in WA, dying here: sla 0x3,WA)
+    finally: F.sp_index_param = sip
+    if k is None: return None
+    if k[0] == 'S': return ('S', k[2])
+    if k[0] == 'X' and ' + ' not in k[1] and k[2][1] and (k[2][0].startswith('(XSP') or (F.adecl and k[2][0] == 'WA')):
+        return ('X', k[1], k[2][0])
+    return None
+
+def has_opa_hoist(F):
+    found = []
+    C().walk(F.f.body, lambda n, d: found.append(n) if n.k == 'opassign' and is_fp(getattr(strip(n.l), 'ty', None))
+             and opa_target(F, strip(n.l)) is not None else None)
+    return bool(found)
+
 def has_elem_hoist(F):
     found = []
     C().walk(F.f.body, lambda n, d: found.extend(elem_hoists(n)) if n.k in ('expr', 'return', 'decl') else None)
@@ -949,6 +998,7 @@ def rank(F, x):
     """the order of commutative operands: an element or member of a global first, then a temporary, then the rest"""
     if isinstance(x, tuple): return 1
     e = fp_value_cast(x)
+    if getattr(e, '_xiz_opa', False): return 3              # (a compound assignment's target stays on the left)
     if getattr(e, '_xiz', False): return -1                 # fo_mem_n: XBC = the conversion, XDE = XIZ
     if e.k == 'fconst' and RANK_CONST: return -0.5          # fo_log, _log: 2 * s -> XBC = s, XDE = the constant
     if e.k == 'load' and (elem_member(e.e) or strip(e.e).k == 'member'): return 2   # (not d_loop's gda[i])

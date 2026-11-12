@@ -918,6 +918,13 @@ whose frame size or saved register differs; two thirds call FP helpers, and the 
 assignment's target address hoisted into XIZ and the number of double temporaries.  `corpus/probes/fpopa.c`
 (run 2026-11-12-10) asks about the first.
 
+**Batch 37 (2026-11-12): double compound assignments.**  `corpus/probes/fpopa.c` (run 2026-11-12-10, 112 functions):
+unless the target is a plain global, cc900 saves XIZ in the prologue, loads the target's address into it at the
+statement and passes it as both the left operand and the result (`lda XDE,_hd / ld XBC,XIZ / ld XWA,XIZ`).  The model
+reads 100 / 82 / 100 / 82 of 112 at none / -O3 -XS / -Xr / -O3 -XS -Xr (20 / 16 / 20 / 16 before); an older path that
+built a computed element's address two or three times over its own index (wrong code under -Xr and -O3 -XS) now
+refuses what the rule does not cover.  The random corpora read 63 of 800 at none and 21 at -O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

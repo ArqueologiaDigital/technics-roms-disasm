@@ -126,10 +126,10 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-10-1-micro-random1, v423/Xr                             | random/*.c           | 15 / 200 exact (7.5%)    |
 | run 2026-11-10-1-micro-random1, v423/O3XSXr                         | random/*.c           | 7 / 200 exact (3.5%)     |
 | run 2026-11-10-5-micro-random2, v423/none                           | random2/*.c          | 9 / 200 exact (4.5%)     |
-| run 2026-11-10-5-micro-random2, v423/O3XS                           | random2/*.c          | 3 / 200 exact (1.5%)     |
+| run 2026-11-10-5-micro-random2, v423/O3XS                           | random2/*.c          | 4 / 200 exact (2.0%)     |
 | run 2026-11-10-5-micro-random2, v423/Xr                             | random2/*.c          | 7 / 200 exact (3.5%)     |
 | run 2026-11-10-5-micro-random2, v423/O3XSXr                         | random2/*.c          | 3 / 200 exact (1.5%)     |
-| run 2026-11-10-6-micro-random3, v423/none                           | random3/*.c          | 13 / 200 exact (6.5%)    |
+| run 2026-11-10-6-micro-random3, v423/none                           | random3/*.c          | 14 / 200 exact (7.0%)    |
 | run 2026-11-10-6-micro-random3, v423/O3XS                           | random3/*.c          | 4 / 200 exact (2.0%)     |
 | run 2026-11-10-6-micro-random3, v423/Xr                             | random3/*.c          | 10 / 200 exact (5.0%)    |
 | run 2026-11-10-6-micro-random3, v423/O3XSXr                         | random3/*.c          | 4 / 200 exact (2.0%)     |
@@ -217,6 +217,10 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-12-9-micro-stvxc, v423/O3XS                             | probes/stvxc.c       | 250 / 294 exact (85.0%)  |
 | run 2026-11-12-9-micro-stvxc, v423/Xr                               | probes/stvxc.c       | 82 / 294 exact (27.9%)   |
 | run 2026-11-12-9-micro-stvxc, v423/O3XSXr                           | probes/stvxc.c       | 84 / 294 exact (28.6%)   |
+| run 2026-11-12-10-micro-fpopa, v423/none                            | probes/fpopa.c       | 100 / 112 exact (89.3%)  |
+| run 2026-11-12-10-micro-fpopa, v423/O3XS                            | probes/fpopa.c       | 82 / 112 exact (73.2%)   |
+| run 2026-11-12-10-micro-fpopa, v423/Xr                              | probes/fpopa.c       | 100 / 112 exact (89.3%)  |
+| run 2026-11-12-10-micro-fpopa, v423/O3XSXr                          | probes/fpopa.c       | 82 / 112 exact (73.2%)   |
 | run 2026-11-09-9-micro-fp, v423/none                                | micro/fp.c           | 108 / 108 exact (100.0%) |
 | run 2026-11-09-9-micro-fp, v423/O3XS                                | micro/fp.c           | 108 / 108 exact (100.0%) |
 | run 2026-11-09-10-micro-fptemps, v423/none                          | micro/fp_temps.c     | 33 / 33 exact (100.0%)   |

@@ -11580,7 +11580,7 @@ def fp_plan_frame(F):
     F.ftemp_top = top; F.ftemp_used = 0; F.fret_slot = size - (fret - fargs) if fret - fargs else None
     F.farg_slot = size - fret if fargs else None
     F.frame = size
-    if (fpgen.needs_xiz(F) or fpgen.has_elem_hoist(F)) and not F.xiz_vars:   # fp_temps.c t_mla: push XIZ
+    if (fpgen.needs_xiz(F) or fpgen.has_elem_hoist(F) or fpgen.has_opa_hoist(F)) and not F.xiz_vars:   # fp_temps.c t_mla: push XIZ
         F.lines.insert(1, '\tpush\tXIZ'); F.push += 4; F.xiz_vars.append('sret'); F.save_reg = 'XIZ'
         if fpgen.needs_sret_home(F):                       # _sin: ld XIZ,(XSP+0x38) right after the push
             F.sret_home = True
