@@ -256,6 +256,11 @@ for c in none O3XS; do    # statement stores of a computed value read through an
 done
 row "run 2026-11-12-8-micro-stvx, v423/Xr" "probes/stvx.c" "$O/2026-11-12-8-micro-stvx/out/v423/Xr/probes" corpus/probes/stvx.c --opt none --adecl
 row "run 2026-11-12-8-micro-stvx, v423/O3XSXr" "probes/stvx.c" "$O/2026-11-12-8-micro-stvx/out/v423/O3XSXr/probes" corpus/probes/stvx.c --opt O3XS --adecl
+for c in none O3XS; do    # stvx.c in the random corpora's forms: implicit char promotion, char-parameter indices (corpus/probes/stvxc.c)
+  row "run 2026-11-12-9-micro-stvxc, v423/$c" "probes/stvxc.c" "$O/2026-11-12-9-micro-stvxc/out/v423/$c/probes" corpus/probes/stvxc.c --opt $c
+done
+row "run 2026-11-12-9-micro-stvxc, v423/Xr" "probes/stvxc.c" "$O/2026-11-12-9-micro-stvxc/out/v423/Xr/probes" corpus/probes/stvxc.c --opt none --adecl
+row "run 2026-11-12-9-micro-stvxc, v423/O3XSXr" "probes/stvxc.c" "$O/2026-11-12-9-micro-stvxc/out/v423/O3XSXr/probes" corpus/probes/stvxc.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do

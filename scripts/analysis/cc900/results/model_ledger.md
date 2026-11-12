@@ -213,6 +213,10 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-12-8-micro-stvx, v423/O3XS                              | probes/stvx.c        | 93 / 135 exact (68.9%)   |
 | run 2026-11-12-8-micro-stvx, v423/Xr                                | probes/stvx.c        | 41 / 135 exact (30.4%)   |
 | run 2026-11-12-8-micro-stvx, v423/O3XSXr                            | probes/stvx.c        | 41 / 135 exact (30.4%)   |
+| run 2026-11-12-9-micro-stvxc, v423/none                             | probes/stvxc.c       | 251 / 294 exact (85.4%)  |
+| run 2026-11-12-9-micro-stvxc, v423/O3XS                             | probes/stvxc.c       | 250 / 294 exact (85.0%)  |
+| run 2026-11-12-9-micro-stvxc, v423/Xr                               | probes/stvxc.c       | 82 / 294 exact (27.9%)   |
+| run 2026-11-12-9-micro-stvxc, v423/O3XSXr                           | probes/stvxc.c       | 84 / 294 exact (28.6%)   |
 | run 2026-11-09-9-micro-fp, v423/none                                | micro/fp.c           | 108 / 108 exact (100.0%) |
 | run 2026-11-09-9-micro-fp, v423/O3XS                                | micro/fp.c           | 108 / 108 exact (100.0%) |
 | run 2026-11-09-10-micro-fptemps, v423/none                          | micro/fp_temps.c     | 33 / 33 exact (100.0%)   |

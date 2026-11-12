@@ -899,6 +899,17 @@ value reads) and one at none (`vs.p + b` zero-extending a negative b); all four 
 from 102 to 74.  The random corpora do not move (57 of 800 at none): their stores index with char parameters and
 promote char values implicitly, which `corpus/probes/stvxc.c` (run 2026-11-12-9) covers next.
 
+**Batch 35 (2026-11-12): the same stores in the random corpora's forms.**  `corpus/probes/stvxc.c` (run 2026-11-12-9,
+294 functions) repeats stvx.c with implicitly promoted char values and with char / unsigned char parameters as
+indices.  Char values are computed in A in 8 bits with the same order rule; an int or long element at a char parameter
+indexes through A (`ld A,(c) / add A,(c)` into `(XBC+A)`), at an unsigned char through `extz WA`, and a pointer element
+through a 16-bit index register.  The model reads 251 / 250 / 82 / 84 of 294 at none / -O3 -XS / -Xr / -O3 -XS -Xr
+(151 / 150 / 82 / 84 before).  The random corpora's three model crashes are gone (a double compare under a cast is now
+written; the other shapes refuse), and two older wrong-code paths the probe reached now refuse.  The random corpora
+still read 57 of 800 at none: each function there has several statements and locals, and what blocks most of them now
+is where locals live (frame slots against XIZ / QIZ, 60-odd first differences in the prologue) and the long-helper
+operands (73 refused statements), not the store shapes.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
