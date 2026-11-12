@@ -974,6 +974,15 @@ IZ_HOMES = ('IZ', 'QIZ', 'XIZ', 'QIZH')                   # homes the WA..HL rul
 SP_INDEX_IZ = True                                        # sp_plain_index accepts an IZ home
 ADDR_ELEM_WA = True                                       # &garr[i] into XWA: ld WA,(i) / add WA,WA / lda XBC,_garr / exts XWA / add XWA,XBC
 UNUSED_LOCAL_INIT = True                                  # a local with an initialiser and no use: cc900 still computes it into WA
+UNUSED_LOCAL_DROP_OPT = True
+LEFT_CLOBBER_GUARD = True                                 # see edit_left_clobber.py: the left over a register right operand
+CW_EXT_DIRECT_OPT = True                                  # cmp_wide's extensions under -O: a byte straight into its register                              # ... except under -O, where one without side effects is dropped
+
+def side_effect_free(e):
+    """no call, assignment, op= or ++ / -- anywhere in e"""
+    bad = []
+    walk(e, lambda n, d: bad.append(n) if n.k in ('call', 'incdec', 'opassign') or (n.k == 'bin' and n.op == '=') else None)
+    return not bad
 
 def cw_explicit_widening(x):
     """an explicit cast that widens: cc900 keeps it as a conversion ((long)gc < 7L: exts WA / exts XWA / cp XWA,0x7),
@@ -1400,6 +1409,11 @@ STORE_VALUE_ADDR = True                                   # see sv_regs
 SV_RANK = {('D', 'i'): 0, ('D', 'v'): 1, ('X', 'v'): 1.5, ('X', 'i'): 2, ('P', 'v'): 3, ('P', 'i'): 4, ('Q', 'i'): 4,
            ('G', 'i'): 5, ('M', 'i'): 5}
 
+def live_regs_read(F):
+    """live_regs without the parameters the function never reads (their registers are free from the start)"""
+    unread = set(r_ for d in F.f.params for r_ in [getattr(d, 'reg', None)] if r_ and not uses_decl(F.f.body, d))
+    return live_regs(F) - unread
+
 def sv_value_kind(F, v, size):
     """the kinds of a value read through an address (stval.c): ('P', ptr, 0) / ('D', ptr, off) through a plain pointer,
     ('X', sym, idxmem) a global array at a plain signed index in memory; None otherwise (nothing emitted)"""
@@ -1520,6 +1534,124 @@ def sc_addr_value(F, ok_, ik, v, size):
     else: orr = ['WA']
     om = sv_store_addr(F, ok_, orr, size); F.emit('ld', '%s,%s' % (om, R)); return True
 
+STORE_DIV = True                                          # see store_div
+STORE_DIV_OPT = True                                      # store_div under -O (stdiv.c at O3XS)
+
+def sd_opkind(F, x, size):
+    """the operand kinds of store_div: ('K', value), ('G', mem) a global or static member, ('P', ptr, off) / ('D', ptr,
+    off) a load through a plain pointer, ('X', sym, idxmem) an element at a plain signed index in memory; else None"""
+    x = strip(x)
+    while x.k == 'cast' and x.kind == 'IntegralCast' and strip(x.e).ty is not None and strip(x.e).ty.size == size: x = strip(x.e)
+    c = fold(x)
+    if c.k == 'const' and c.value is not None: return ('K', c.value)
+    if x.k != 'load' or x.ty is None or x.ty.size != size or x.ty.kind != 'int': return None
+    lv = strip(x.e)
+    if lv.k == 'var':
+        if lv.decl.kind != 'global' or getattr(lv.decl, 'reg', None): return None
+        return ('G', '(_%s)' % lv.decl.name)
+    k = sv_value_kind(F, x, size)
+    if k is not None: return k
+    if lv.k in ('member', 'index'):
+        k = sc_lkind(F, lv)
+        if k is not None and k[0] == 'M': return ('G', k[1])
+    return None
+
+def store_div(F, lv, rv):
+    """L = A / B and L = A % B for an int or unsigned (corpus/probes/stdiv.c, run 2026-11-12-5).  A divisor in memory
+    or a constant: the store address first, then the dividend, widened, in XWA (sd_i_d_PXG: ld XDE,(_gip) /
+    ld WA,(d) / add WA,WA / lda XBC,_via / ld WA,(XBC+WA) / exts XWA / divs XWA,(_wi) / ld (XDE),WA), the address
+    taking the registers the dividend does not; a member with a displacement takes XWA and the division runs in XBC
+    (sd_i_d_DGG: ld XWA,(_gsi) / ld BC,(_vi) / exts XBC / divs XBC,(_wi) / ld (XWA+0x2),BC).  A divisor read through
+    an address: the division first -- the dividend's address, the divisor's, the dividend's value -- then the result
+    moves to the register the store address will not need and the address is built (sd_i_d_XGP: ld XBC,(_wip) /
+    ld WA,(_vi) / exts XWA / divs XWA,(XBC) / ld DE,WA / ld WA,(c) / add WA,WA / lda XBC,_gia / ld (XBC+WA),DE).
+    Two elements: the dividend's base in XHL (sd_i_d_GXX).  A remainder is taken from QWA / QBC.  Unsigned: extz,
+    div.  True when it emitted the statement."""
+    if F.opt and not STORE_DIV_OPT: return False
+    if F.adecl: return False                                 # (-Xr: unprobed)
+    x = strip(rv)
+    if x.k != 'bin' or x.op not in ('/', '%') or x.ty is None or x.ty.size != 2 or x.ty.kind != 'int': return False
+    if lv.ty is None or lv.ty.size != 2 or lv.ty.kind not in ('int', 'ptr'): return False
+    L = sc_lkind(F, lv)
+    if L is None: return False
+    a, b = sd_opkind(F, x.l, 2), sd_opkind(F, x.r, 2)
+    if a is None or b is None or (a[0] == 'K' and b[0] == 'K'): return False
+    if 'D' in (a[0], b[0]): return False                     # (ea_i_div_GD: the member's pointer in XWA, the division in XBC)
+    if a[0] == 'X' and b[0] == 'X' and a[2] == b[2]: return False   # (ea_i_div_XX: one index, cached)
+    if b[0] == 'K':
+        bv = b[1] & 0xffff
+        if bv == 0 or (bv & (bv - 1)) == 0 or bv == 0xffff: return False   # (a power of two or -1: unprobed)
+    if any(r_ in ('WA', 'BC', 'DE', 'HL') for r_ in live_regs_read(F)): return False
+    signed = x.ty.signed
+    ext, dv = ('exts', 'divs') if signed else ('extz', 'div')
+    rem = x.op == '%'
+    def emit(op, args): F.emit(op, args)
+    def k32(v):
+        v &= 0xffff
+        if signed and v & 0x8000: v |= 0xffff0000
+        return hx(v)
+    def ldk(v):                                              # -O: lda for a constant past the 3-bit ld form
+        v = int(k32(v), 16)
+        return 'lda' if F.opt and 8 <= v <= 0xffff else 'ld'
+    def idx(reg, im, base, sym):
+        emit('ld', '%s,%s' % (reg, im)); emit('add', '%s,%s' % (reg, reg)); emit('lda', 'X%s,%s' % (base, sym))
+    def bop_of(k, regs):
+        if k[0] == 'G': return k[1]
+        if k[0] == 'K': return hx(k[1] & 0xffff)
+        if k[0] in ('P', 'D'): return '(X%s+%s)' % (regs[0], hx(k[2])) if k[2] else '(X%s)' % regs[0]
+        return '(X%s+%s)' % (regs[1], regs[0])
+    if b[0] in ('G', 'K'):
+        if L[0] == 'D':
+            R, base = 'BC', 'DE'
+            emit('ld', 'XWA,%s' % L[1]); m = '(XWA+%s)' % hx(L[2])
+        else:
+            R, base = 'WA', 'BC'
+            need = ['WA', 'BC'] if a[0] == 'X' else ['WA']
+            pool = [r_ for r_ in ('WA', 'BC', 'DE', 'HL') if r_ not in need]
+            n = {'P': 1, 'X': 2, 'Q': 1}.get(L[0], 0)
+            m = sv_store_addr(F, L, pool[:n], 2) if n else L[1]
+        if a[0] == 'K': emit(ldk(a[1]), 'X%s,%s' % (R, k32(a[1])))   # (-O sd_i_d_GKG: lda XWA,0x64)
+        else:
+            if a[0] == 'G': emit('ld', '%s,%s' % (R, a[1]))
+            elif a[0] in ('P', 'D'):
+                emit('ld', 'X%s,%s' % (R, a[1])); emit('ld', '%s,%s' % (R, '(X%s+%s)' % (R, hx(a[2])) if a[2] else '(X%s)' % R))
+            else: idx(R, a[2], base, a[1]); emit('ld', '%s,(X%s+%s)' % (R, base, R))
+            emit(ext, 'X' + R)
+        emit(dv, 'X%s,%s' % (R, bop_of(b, None)))
+        if rem: emit('ld', '%s,Q%s' % (R, R))
+        emit('ld', '%s,%s' % (m, R)); return True
+    # the divisor through an address: the division first, in XWA
+    if a[0] == 'X':
+        bregs = ['BC', 'DE'] if b[0] == 'X' else ['DE']
+        abase = 'HL' if b[0] == 'X' else 'BC'
+        idx('WA', a[2], abase, a[1])
+    else:
+        bregs = ['BC', 'DE'] if b[0] == 'X' else ['BC']
+        if a[0] in ('P', 'D'): emit('ld', 'XWA,%s' % a[1])
+    if b[0] in ('P', 'D'): emit('ld', 'X%s,%s' % (bregs[0], b[1]))
+    else: idx(bregs[0], b[2], bregs[1], b[1])
+    K = L[0]
+    tgt = 'DE' if K == 'X' else 'BC'
+    R0 = tgt if (F.opt and not rem and K in ('D', 'X', 'Q') and b[0] in ('P', 'D') and tgt not in bregs) else 'WA'
+    if a[0] == 'K': emit(ldk(a[1]), 'X%s,%s' % (R0, k32(a[1])))
+    else:
+        if a[0] == 'G': emit('ld', '%s,%s' % (R0, a[1]))
+        elif a[0] in ('P', 'D'): emit('ld', '%s,%s' % (R0, '(XWA+%s)' % hx(a[2]) if a[2] else '(XWA)'))
+        else: emit('ld', '%s,(X%s+WA)' % (R0, abase))
+        emit(ext, 'X' + R0)
+    emit(dv, 'X%s,%s' % (R0, bop_of(b, bregs)))
+    val = 'QWA' if rem else 'WA'
+    if K in ('G', 'M'):
+        if rem: emit('ld', 'WA,QWA')
+        emit('ld', '%s,WA' % L[1]); return True
+    if K == 'P':
+        if rem: emit('ld', 'WA,QWA')
+        m = sv_store_addr(F, L, ['BC'], 2); emit('ld', '%s,WA' % m); return True
+    R = tgt
+    if R0 != R: emit('ld', '%s,%s' % (R, val))
+    m = sv_store_addr(F, L, ['WA', 'BC'] if K == 'X' else ['WA'], 2)
+    emit('ld', '%s,%s' % (m, R)); return True
+
 def store_chain(F, lv, rv, size):
     """L1 = (L2 = V) for an int or long, after corpus/probes/stchain.c (run 2026-11-12-1-micro-stchain).  A loaded or
     constant V: the outer address is emitted first, the inner one next, the value last; the registers are taken in
@@ -1555,7 +1687,7 @@ def store_chain(F, lv, rv, size):
     elif vk == 'B': V = 'B'
     elif vk == 'C' and v.k == 'call': V = 'C'
     else: return False
-    if any(r_ in ('WA', 'BC', 'DE', 'HL') for r_ in live_regs(F)): return False
+    if any(r_ in ('WA', 'BC', 'DE', 'HL') for r_ in live_regs_read(F)): return False
     if size == 1: return sc_char(F, ok_, ik, v, V, vc)
     X_ = lambda r: 'X' + r
     W_ = lambda r: FAM[r][size]
@@ -1660,7 +1792,7 @@ def ret_assign(F, x, size):
     elif sp_value_kind(F, v, size) == 'B': V = 'B'
     elif v.k == 'call' and v.ty is not None and v.ty.size == size: V = 'C'
     else: return False
-    if any(r_ in ('WA', 'BC', 'DE', 'HL') for r_ in live_regs(F)): return False
+    if any(r_ in ('WA', 'BC', 'DE', 'HL') for r_ in live_regs_read(F)): return False
     K = k[0]; R = FAM['HL'][size]
     def addr(base):                                          # base: the first register ('WA', or 'BC' for a long K)
         nxt = {'WA': 'BC', 'BC': 'DE'}[base]
@@ -1965,12 +2097,15 @@ def _cw_ext_raw(F, zk, size, R):
     X = {'WA': 'XWA', 'BC': 'XBC', 'DE': 'XDE'}[R]; lo = {'WA': 'A', 'BC': 'C', 'DE': 'E'}[R]
     if kind == 'ZU':
         if R == 'WA': F.emit('ld', 'XWA,0x0'); F.emit('ld', 'A,%s' % m)
+        elif F.opt and CW_EXT_DIRECT_OPT: F.emit('ld', '%s,0x0' % X); F.emit('ld', '%s,%s' % (lo, m))   # (-O cl_e_UU)
         else: F.emit('ld', 'A,%s' % m); F.emit('ld', '%s,0x0' % X); F.emit('ld', '%s,A' % lo)
         return X
     ex = 'exts' if sg else 'extz'
     if isz == 1:
-        F.emit('ld', 'A,%s' % m)
-        if R != 'WA': F.emit('ld', '%s,A' % lo)
+        if F.opt and CW_EXT_DIRECT_OPT: F.emit('ld', '%s,%s' % (lo, m))   # (-O ci_e_UU: ld C,(_huc) / extz BC)
+        else:
+            F.emit('ld', 'A,%s' % m)
+            if R != 'WA': F.emit('ld', '%s,A' % lo)
         F.emit(ex, R)
         if size == 4: F.emit(ex, X)
     else:
@@ -2105,6 +2240,7 @@ def cmp_wide(F, e, l, r, size, op, cc):
             if L == 'Z' and lk[2] == 2: cw_ext(F, rk, size, 'WA'); cw_ext(F, lk, size, 'BC'); return cp(XB, XW)   # cl_l_WZ, WW
             if L == 'Z': cw_ext(F, rk, size, 'BC'); cw_ext(F, lk, size, 'WA'); return cp(XW, XB)   # cl_l_ZZ, ZW
             if L == 'ZU':                                                             # cl_l_UZ: ld XBC,XWA in between
+                if F.opt and CW_EXT_DIRECT_OPT: cw_ext(F, rk, size, 'BC'); cw_ext(F, lk, size, 'WA'); return cp(XW, XB)   # (-O cl_e_UW)
                 cw_ext(F, rk, size, 'WA'); ld(XB, XW); cw_ext(F, lk, size, 'WA'); return cp(XW, XB)
             return None
         if R == 'ZU':
@@ -2924,6 +3060,13 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
             if el is None: raise Unsupported('element operand')   # element's address, then the plain operand loaded
             F.emit('ld', '%s,%s' % (R, rs))              # and the element added to it
             F.emit(SIMPLE_OPS[op], '%s,%s' % (R, el)); return fam
+        n_l0 = len(F.lines)
+        rx0 = strip(r)
+        while rx0.k == 'cast' and rx0.kind == 'IntegralCast' and rx0.ty is not None and rx0.ty.size == size: rx0 = strip(rx0.e)
+        rv0 = regvar_of(rx0.e) if rx0.k == 'load' else None
+        lm0 = mem_operand(F, l) if strip(l).k == 'load' else None
+        if LEFT_CLOBBER_GUARD and op in ('+', '&', '|', '^') and rv0 is not None and rv0.reg == fam and mem_operand(F, rx0) == R and lm0 is not None and lm0.startswith('(') and dies_here(F, rx0) and not same_leaf(l, r):
+            F.emit(SIMPLE_OPS[op], '%s,%s' % (R, lm0)); F.dead.add(rv0); return fam   # (-Xr r2_05_16: gs.u + a -> add WA,(_gs + 0x8))
         wa_var = [d for d in list(F.f.params) + list(F.f.decls) + [getattr(F, 'cse_tmp', None)]
                   if d is not None and getattr(d, 'reg', None) == 'WA' and d not in F.dead
                   and uses_decl(e.r, d)]                   # sv_leaf: a * b + a keeps a in WA -> ld HL,DE / add HL,WA
@@ -2959,6 +3102,8 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
                     op, strip(l).k, strip(r).k, size, fam))      # (r2_02_18, r2_05_13, r2_06_05: wrong code)
         elif op == '+' and same_leaf(l, r) and regvar_of(strip(r).e) is not None:
             rs = R                                     # rh_lp_x2: x + x with x in QIZ -> ld WA,QIZ / add WA,WA
+        if LEFT_CLOBBER_GUARD and rs is not None and rs[:1].isalpha() and family_of(rs) is not None and mem_operand(F, r) == rs and not (op == '+' and same_leaf(l, r)) and clobbers(F.lines[n_l0:], '(%s)' % rs):
+            raise Unsupported('the left operand overwrites the right [%s in %s]' % (op, rs))   # (-Xr gi = gi + a: wrong code)
         rc = fold(r)
         if op in '+-' and rc.k == 'const' and 1 <= rc.value <= 8:
             F.emit('inc' if op == '+' else 'dec', '%s,%s' % (hx(rc.value), R))
@@ -6069,7 +6214,8 @@ def gen_stmt(F, s, last):
                 if UNUSED_LOCAL_INIT and not u and not any(uses_decl(x, c.var) for x in rest) and c.var.ty.size in (1, 2, 4) and \
                         getattr(c.var, 'reg', None) is None and not nodes_in(c.init, 'call') and not has_helper_call(c.init) and \
                         not fpgen.is_fp_op(c.init) and not fpgen.is_fp(c.var.ty):
-                    gen(F, c.init, 'WA', c.var.ty.size); F.dead.add(c.var); i += 1; continue   # (cmpordl2.c: an unused
+                    if not (F.opt and UNUSED_LOCAL_DROP_OPT and side_effect_free(c.init)): gen(F, c.init, 'WA', c.var.ty.size)
+                    F.dead.add(c.var); i += 1; continue   # (cmpordl2.c: an unused
                 helper_res = getattr(c.var, 'no_fold', False)                                #  int t = gi; -> ld WA,(_gi))
                 upto = rest[:next((k for k, x in enumerate(rest) if uses_decl(x, c.var)), len(rest)) + 1]
                 if len(u) == 1 and (c.var.ty.size >= 2 or (F.opt and not F.adecl)) and not call_before_use(rest, c.var) \
@@ -6424,6 +6570,7 @@ def gen_stmt(F, s, last):
         gen_incdec(F, s.e, 'WA', 0, value=False); return
     if s.k == 'expr' and s.e.k == 'bin' and s.e.op == '=':
         lv = strip(s.e.l)
+        if STORE_DIV and lv.ty is not None and lv.ty.size == 2 and not getattr(F, 'l2', None) and not getattr(F, 'u1_i', None) and not getattr(F, 'cl_active', None) and store_div(F, lv, s.e.r): return   # (stdiv.c)
         if STORE_CHAIN and (not F.opt or STORE_CHAIN_OPT) and lv.ty is not None and lv.ty.size in (1, 2, 4) and not getattr(F, 'l2', None) and \
                 not getattr(F, 'u1_i', None) and not getattr(F, 'cl_active', None) and store_chain(F, lv, s.e.r, lv.ty.size):
             return                                         # (stchain.c: L1 = (L2 = V))

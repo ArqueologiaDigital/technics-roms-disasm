@@ -810,6 +810,18 @@ Gate: no ledger row down (random1 at -O3 -XS and -O3 -XS -Xr 6 -> 7, random3 at 
 28 -> 264, the four stval rows added); no function newly inexact against 29c5f148e; pairs 223 MATCH; semcheck
 DIFFERENT 81 -> 78, none new.
 
+**Division stores, -O and -Xr widening** (`corpus/probes/stdiv.c`, 750 functions, run 2026-11-12-5): `store_div`
+models int and unsigned `L = A / B` and `L = A % B` (300 of 300 at none and -O3 -XS; a divisor in memory takes the
+store address first, a divisor read through an address the division first).  Under -O an unused local's
+side-effect-free initialiser is dropped and cmp_wide loads a byte straight into its register (cmpordl2 at -O3 -XS
+59 -> 388).  Under -Xr the store rules ignore the register of a parameter the function never reads (stval / stret /
+stchain at -Xr 33 / 31 / 49 -> 126 / 163 / 202).  **Wrong code fixed**, older than this series: under -Xr
+`gi = gi + a` loaded `gi` into WA over the parameter `a` (gen_bin); the gate's semantic check found it in
+random r2_05_16 at -O3 -XS -Xr once that function's unused local was dropped.  Long and char division are not modelled
+(the long helper's frame-slot / XIZ form; char mixes 16/8 and 32/16 division).  Gate: no ledger row down (13 up, 4
+stdiv rows added); no function newly inexact against 78e8ac600; pairs 223 MATCH; semcheck 78 -> 110, the 32 new
+verdicts stdiv char indexes past the arrays (UB, reviewed).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

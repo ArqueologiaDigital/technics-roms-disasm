@@ -236,6 +236,11 @@ for c in none O3XS; do    # an assignment whose value is read through an address
 done
 row "run 2026-11-12-4-micro-stval, v423/Xr" "probes/stval.c" "$O/2026-11-12-4-micro-stval/out/v423/Xr/probes" corpus/probes/stval.c --opt none --adecl
 row "run 2026-11-12-4-micro-stval, v423/O3XSXr" "probes/stval.c" "$O/2026-11-12-4-micro-stval/out/v423/O3XSXr/probes" corpus/probes/stval.c --opt O3XS --adecl
+for c in none O3XS; do    # a store whose value is a division or a remainder (corpus/probes/stdiv.c)
+  row "run 2026-11-12-5-micro-stdiv, v423/$c" "probes/stdiv.c" "$O/2026-11-12-5-micro-stdiv/out/v423/$c/probes" corpus/probes/stdiv.c --opt $c
+done
+row "run 2026-11-12-5-micro-stdiv, v423/Xr" "probes/stdiv.c" "$O/2026-11-12-5-micro-stdiv/out/v423/Xr/probes" corpus/probes/stdiv.c --opt none --adecl
+row "run 2026-11-12-5-micro-stdiv, v423/O3XSXr" "probes/stdiv.c" "$O/2026-11-12-5-micro-stdiv/out/v423/O3XSXr/probes" corpus/probes/stdiv.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do
