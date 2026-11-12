@@ -226,6 +226,11 @@ for c in none O3XS; do    # an assignment as a return value, char chained stores
 done
 row "run 2026-11-12-2-micro-stret, v423/Xr" "probes/stret.c" "$O/2026-11-12-2-micro-stret/out/v423/Xr/probes" corpus/probes/stret.c --opt none --adecl
 row "run 2026-11-12-2-micro-stret, v423/O3XSXr" "probes/stret.c" "$O/2026-11-12-2-micro-stret/out/v423/O3XSXr/probes" corpus/probes/stret.c --opt O3XS --adecl
+for c in none O3XS; do    # an element at a local index (corpus/probes/idxloc.c)
+  row "run 2026-11-12-3-micro-idxloc, v423/$c" "probes/idxloc.c" "$O/2026-11-12-3-micro-idxloc/out/v423/$c/probes" corpus/probes/idxloc.c --opt $c
+done
+row "run 2026-11-12-3-micro-idxloc, v423/Xr" "probes/idxloc.c" "$O/2026-11-12-3-micro-idxloc/out/v423/Xr/probes" corpus/probes/idxloc.c --opt none --adecl
+row "run 2026-11-12-3-micro-idxloc, v423/O3XSXr" "probes/idxloc.c" "$O/2026-11-12-3-micro-idxloc/out/v423/O3XSXr/probes" corpus/probes/idxloc.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do

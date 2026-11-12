@@ -208,6 +208,18 @@ inverte a ordem: guarda-se primeiro no destino de dentro e só então se monta o
 Para chars a regra muda, porque o endereço de um elemento de vetor de chars passa por XWA. O
 modelo saiu de 49 para 321 das 392 funções da primeira sonda e de 28 para 264 das 280 da segunda.
 
+## O índice que mora num registrador
+
+As sondas anteriores indexavam vetores sempre pelo parâmetro `c`, que sem otimização fica na
+pilha. Nos programas aleatórios o índice costuma ser outra coisa: o contador de um laço, uma
+variável que sobrevive a uma chamada e por isso mora em IZ, ou uma variável temporária que o
+modelo pôs num registrador. A sonda `idxloc.c` cruza essas três moradas com doze formas de
+comando. Ela mostrou que o compilador original usa o registrador do índice diretamente no
+endereçamento de um vetor de chars (`ld A,(XWA+IZ)`), e mostrou também um erro antigo do modelo:
+uma variável local lida uma única vez era "dobrada" no comando seguinte mesmo quando esse comando
+chamava uma função antes de lê-la, de modo que `int t = gi; gia[t] = ri();` lia `gi` depois da
+chamada. A verificação semântica pegou; o modelo agora mantém a variável.
+
 ## Onde isso deixa o modelo
 
 No fechamento do dia: as 674 funções do corpus pequeno exatas nas quatro combinações de

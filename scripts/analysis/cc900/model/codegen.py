@@ -968,6 +968,10 @@ CMP_WIDE = True                                           # see cmp_wide
 CMP_WIDE_OPT = True                                       # cmp_wide under -O too (553 of cmpordl.c's 680 forms are the same)
 BIN_WIDE = True                                           # see bin_wide
 CHAR_ARG_ANY = True                                       # any computed char argument: into A, exts WA / push WA (push_arg)
+CALL_FOLD_GUARD = True                                    # call_before_use: a read after a call in the same statement
+CHAR_REG_INDEX = True                                     # a char element at a register index: (XWA+IZ) (elem_addr)
+IZ_HOMES = ('IZ', 'QIZ', 'XIZ', 'QIZH')                   # homes the WA..HL rules never write (cmp_wide, bin_wide hooks)
+SP_INDEX_IZ = True                                        # sp_plain_index accepts an IZ home
 ADDR_ELEM_WA = True                                       # &garr[i] into XWA: ld WA,(i) / add WA,WA / lda XBC,_garr / exts XWA / add XWA,XBC
 UNUSED_LOCAL_INIT = True                                  # a local with an initialiser and no use: cc900 still computes it into WA
 
@@ -1006,8 +1010,8 @@ def _cw_load_raw(F, k, size, base='XBC', idx='WA'):
         F.emit('ld', 'XWA,%s' % k[1]); F.emit('ld', '%s,%s' % (R, '(XWA+%s)' % hx(k[2]) if k[2] else '(XWA)')); return R
     if k[0] == 'X':
         if size == 1:
-            if len(k) == 5:
-                cw_regidx_ok(F, k)
+            if len(k) == 5 or k[2] == 'IZ':
+                if len(k) == 5: cw_regidx_ok(F, k)
                 if base[1:] == k[2]: raise cw_base_clash(k)
                 F.emit('lda', '%s,%s' % (base, k[1])); F.emit('ld', 'A,(%s+%s)' % (base, k[2])); return 'A'
             I = base[1:]
@@ -1036,6 +1040,14 @@ def bin_wide(F, e, op, l, r, fam, size):
     lk, rk = cw_kind(F, l, size), cw_kind(F, r, size)
     if lk is None or rk is None: return None
     L, R = lk[0], rk[0]
+    if getattr(F, 'bw_any', False):                        # a pushed argument (random corpora: ld A,(b) / extz WA /
+        F.bw_any = False                                   # add WA,WA / lda XBC,_gia / ld DE,(_gi) / sub DE,(XBC+WA) /
+        if not (L in ('G', 'M', 'K') and R == 'X' and op == '-' and len(rk) == 4): return None   # push DE)
+        if any(r_ in ('WA', 'BC', 'DE') for r_ in live_regs(F)): return None
+        a = cw_addr(F, rk, size, P='XBC', I='WA', B='XBC')
+        V = FAM['DE'][size]
+        F.emit('ld', '%s,%s' % (V, hx(fold(l).value & ((1 << 8 * size) - 1)) if L == 'K' else lk[1]))
+        F.cw_opline = len(F.lines); F.emit('sub', '%s,%s' % (V, a)); return 'DE'
     if L not in ('K', 'G', 'M', 'P', 'D', 'X', 'F') or R not in ('K', 'G', 'M', 'P', 'D', 'X', 'F'): return None
     if L == 'K' and R == 'K': return None
     if L == 'F' and R == 'F':                              # (the right's result saved in XIZ: unmodelled; the older
@@ -1554,6 +1566,35 @@ def ret_assign(F, x, size):
     if fam != 'HL' or (m.startswith('(X') and clobbers(F.lines[n0:], m)): raise Unsupported('ret_assign: the value over the address')
     F.emit('ld', '%s,%s' % (m, R)); return True
 
+BIN_WIDE_ARG = True                                       # bin_wide for a pushed global minus element
+PUSH_ELEM = True                                          # see push_elem
+
+def push_elem(F, x):
+    """the address of an int element pushed as an argument (the random corpora's oracle listings): the index into WA
+    and doubled, lda XBC,_arr, pushw (XBC+WA); an unsigned char index is extended first (ld A,(b) / extz WA /
+    add WA,WA); a signed char index is doubled in the byte and used as it is (ld A,C / add A,C / lda XBC,_gia /
+    pushw (XBC+A)).  Returns the operand, or None for another shape (nothing emitted)."""
+    if x.ty is None or x.ty.size != 2: return None
+    b = strip(x.base)
+    while b.k in ('decay', 'cast', 'noop') and getattr(b, 'e', None) is not None: b = strip(b.e)
+    if b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array': sym = '_' + b.decl.name
+    elif b.k == 'member' and not b.arrow and b.ty.kind == 'array' and strip(b.base).k == 'var' and strip(b.base).decl.kind == 'global':
+        off = member_offset(b); sym = '_%s + %s' % (strip(b.base).decl.name, hx(off)) if off else '_' + strip(b.base).decl.name
+    else: return None
+    ib = strip(x.idx)
+    while ib.k == 'cast' and ib.kind == 'IntegralCast': ib = strip(ib.e)
+    if ib.k != 'load' or ib.ty is None: return None
+    m = mem_operand(F, ib)
+    if m is None or ('BC' in live_regs(F)) or (family_of(m) in ('XWA', 'XBC') and not (ib.ty.size == 2 and m == 'WA')): return None
+    if ib.ty.size == 2 and ib.ty.signed:
+        if m != 'WA': F.emit('ld', 'WA,%s' % m)
+        F.emit('add', 'WA,WA'); F.emit('lda', 'XBC,%s' % sym); return '(XBC+WA)'
+    if ib.ty.size == 1 and not ib.ty.signed:
+        F.emit('ld', 'A,%s' % m); F.emit('extz', 'WA'); F.emit('add', 'WA,WA'); F.emit('lda', 'XBC,%s' % sym); return '(XBC+WA)'
+    if ib.ty.size == 1:
+        F.emit('ld', 'A,%s' % m); F.emit('add', 'A,%s' % m); F.emit('lda', 'XBC,%s' % sym); return '(XBC+A)'
+    return None
+
 def cw_kind(F, x, size):
     """the operand kinds of cmp_wide: ('K',), ('G', mem), ('M', mem) for a static member or constant element,
     ('P', ptrmem, 0) / ('D', ptrmem, off) through a plain pointer, ('X', sym, idxmem, signed) a global or static
@@ -1646,6 +1687,8 @@ def cw_kind(F, x, size):
                 ii = (r_, xi_.ty.signed); reg = ('reg', d_)
         elif ii is not None and ii[0] == 'WA': reg = ('regp', None)   # (-Xr: the index parameter in WA, dying here)
         if ii is None: return None
+        if not ii[1] and (size in (2, 4) or ii[0] == 'IZ'): return None   # (an unsigned index is extended whole:
+                                                           #  r1_04_10, UIDX32; a char element: r4_07_10)
         b = strip(v.base)
         while b.k in ('decay', 'cast', 'noop') and getattr(b, 'e', None) is not None: b = strip(b.e)
         tag = (reg,) if reg else ()
@@ -1656,7 +1699,11 @@ def cw_kind(F, x, size):
     return None
 
 def cw_pin(F, s_):
-    """record an operand (an address or a value register) with the line count at which it became ready"""
+    """record an operand (an address or a value register) with the line count at which it became ready; an address
+    whose base and index are one register is refused (cmpordl2.c ci_l_FY once gave cp HL,(XBC+BC))"""
+    if isinstance(s_, str):
+        m_ = re.match(r'^\((X[A-Z]{2})\+([A-Z]{1,3})\)$', s_)
+        if m_ and family_of(m_.group(2)) == m_.group(1): raise Unsupported('cmp_wide: an address with its base as its index')
     if isinstance(s_, str) and getattr(F, 'cw_pins', None) is not None: F.cw_pins.append((s_, len(F.lines)))
     return s_
 
@@ -1714,8 +1761,9 @@ def _cw_addr_raw(F, k, size, P='XBC', I='BC', B='XDE', combine=False):
     if k[0] == 'X':
         sym, im, signed = k[1], k[2], k[3]
         if size == 1:
-            if len(k) == 5:                                  # the 16-bit index register as it is: (XBC+DE), (XWA+BC)
-                cw_regidx_ok(F, k); base = P
+            if len(k) == 5 or im == 'IZ':                    # the 16-bit index register as it is: (XBC+DE), (XWA+BC),
+                if len(k) == 5: cw_regidx_ok(F, k)           # (XWA+IZ) (evorder_ad.c -Xr ea_c_add_FX)
+                base = P
                 if base[1:] == im: raise cw_base_clash(k)
                 F.emit('lda', '%s,%s' % (base, sym)); return '(%s+%s)' % (base, im)
             X = 'X' + I
@@ -1986,7 +2034,7 @@ def cmp_wide(F, e, l, r, size, op, cc):
         if L == 'X' and size == 1 and len(lk) == 5 and lk[4][0] == 'regp' and R in ('P', 'D'):   # cc_l_XP -Xr: lda XBC,_gca / ld XDE,(_hp) / ld A,(XBC+WA) / cp A,(XDE)
             F.emit('lda', 'XBC,%s' % lk[1]); a = cw_addr(F, rk, size, P='XDE'); ld('A', '(XBC+WA)'); return cp('A', a)
         if L == 'F':                                       # cl_l_FP: cal _gfl / ld XWA,(_hpl) / cp XHL,(XWA); cl_e_FP: cp (XWA),XHL
-            v = value(l, lk, 'HL'); a = cw_addr(F, rk, size, P='XWA', I='WA' if size == 4 else 'BC', B='XBC')
+            v = value(l, lk, 'HL'); a = cw_addr(F, rk, size, P='XWA', I='WA' if size != 1 else 'BC', B='XBC')
             return cp(v, a) if ordered else cp(a, v)
         if not ordered and L == 'M':                       # cl_e_MP: ld XWA,(_hpl) / ld XWA,(XWA) / cp XWA,(_gs + 0x4)
             v = cw_load(F, rk, size); return cp(v, lk[1])
@@ -2480,10 +2528,11 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         e = N('bin', op='<<', l=e.l, r=N('const', value=fold(e.r).value.bit_length() - 1, ty=e.r.ty), ty=e.ty)
         op = '<<'
     rk_ = fold(e.r)
-    if BIN_WIDE and size in (1, 2, 4) and fam == 'WA' and (not any_fam or size == 1) and (op in SIMPLE_OPS or op in ('*', '/', '%')) and \
+    F.bw_any = any_fam and size in (2, 4) and op == '-' and BIN_WIDE_ARG and not F.opt
+    if BIN_WIDE and size in (1, 2, 4) and fam == 'WA' and (not any_fam or size == 1 or F.bw_any) and (op in SIMPLE_OPS or op in ('*', '/', '%')) and \
             not getattr(F, 'cl_active', None) and not getattr(F, 'l2', None) and getattr(F, 'u1_i', None) is None and \
             not getattr(F, 'elem_ops', None) and not getattr(F, 'tfam', None) and \
-            not any(any(regvar_of(strip(y.e)) is not None and not (dies_here(F, y) or strip(y.e).k == 'var' and
+            not any(any(regvar_of(strip(y.e)) is not None and getattr(regvar_of(strip(y.e)), 'reg', None) not in IZ_HOMES and not (dies_here(F, y) or strip(y.e).k == 'var' and
                                                                   not uses_after_stmt(F, strip(y.e).decl)) for y in loads_in(x)) for x in (strip(e.l), strip(e.r))):
         saved_ = (getattr(F, 'cw_pins', None), getattr(F, 'cw_start', None), getattr(F, 'cw_opline', None))
         F.cw_pins = []; F.cw_opline = None; F.cw_start = len(F.lines); bw = None
@@ -3543,7 +3592,7 @@ def gen_compare(F, e):
                                                            for x_, k_ in ((l, cw_kind(F, l, 2)), (r, cw_kind(F, r, 2)))))) and \
             not getattr(F, 'l2', None) and not getattr(F, 'cl_active', None) and \
             getattr(F, 'u1_i', None) is None and not getattr(F, 'elem_ops', None) and (not F.opt or CMP_WIDE_OPT) and \
-            not any(any(regvar_of(strip(y.e)) is not None and not (dies_here(F, y) or strip(y.e).k == 'var' and
+            not any(any(regvar_of(strip(y.e)) is not None and getattr(regvar_of(strip(y.e)), 'reg', None) not in IZ_HOMES and not (dies_here(F, y) or strip(y.e).k == 'var' and
                                                                   not uses_after_stmt(F, strip(y.e).decl)) for y in loads_in(x)) for x in (l, r)):
         nrw = size == 2 and cw_char_derived(l) and cw_char_derived(r)   # (cc900 compares two char-derived values at the
         csz = 1 if nrw else size                                        #  byte: cmpordl.c cc_l_UG ld A / neg A / cp A,(_hc))
@@ -4305,6 +4354,10 @@ def push_arg(F, a):
         if m != 'A': F.emit('ld', 'A,%s' % m)
         F.emit('exts' if strip(a0.e).ty.signed else 'extz', 'WA'); F.emit('push', 'WA')
         F.push += 2; return 2
+    if PUSH_ELEM and size == 2 and not F.opt and not F.adecl and a0.k == 'load' and strip(a0.e).k == 'index':
+        pe = push_elem(F, strip(a0.e))                     # random corpora: v2(gi, gia[t]) -> ld WA,IZ / add WA,WA /
+        if pe is not None:                                 # lda XBC,_gia / pushw (XBC+WA)
+            F.emit('pushw', pe); F.push += 2; return 2
     sx = a0
     while sx.k in ('decay', 'cast') and getattr(sx, 'kind', 'ArrayToPointerDecay') in ('ArrayToPointerDecay', 'NoOp', 'BitCast',
                                                                                     'FunctionToPointerDecay'):
@@ -4762,6 +4815,14 @@ def elem_addr(F, lv, kind):
                 if f != 'BC': F.emit('ld', 'BC,%s' % FAM[f][2])
                 F.emit('lda', 'XDE,%s' % sym); return '(XDE+BC)'
             if not plain: return None
+            if CHAR_REG_INDEX and not F.opt:                  # a register index is used as it is (idxloc.c il_c_L1:
+                ix_ = strip(lv.idx)                            # lda XWA,_gca / ld A,(XWA+IZ); il_c_L2: lda XBC,_gca /
+                while ix_.k == 'cast' and ix_.kind == 'IntegralCast': ix_ = strip(ix_.e)   # ld (XBC+IZ),A)
+                iv_ = regvar_of(strip(ix_.e)) if ix_.k == 'load' else None
+                if iv_ is not None and iv_.ty.size == 2 and iv_.ty.signed and iv_.reg in ('IZ', 'BC', 'DE', 'HL'):
+                    B_ = 'XWA' if kind == 'load' else 'XBC'
+                    if FAM.get(iv_.reg, {}).get(4) != B_ and B_[1:] not in live_regs(F):
+                        touch_home(F, iv_); F.emit('lda', '%s,%s' % (B_, g)); return '(%s+%s)' % (B_, iv_.reg)
             F.emit('lda', 'XWA,%s' % g); idx_into('BC'); F.emit('extz', 'XBC'); F.emit('add', 'XBC,XWA'); return '(XBC)'
         if not sized:
             if kind == 'rmw' and esz == 4: return None
@@ -4864,7 +4925,10 @@ def gen_load_mem(F, v, fam, size):
                     F.emit('extz', 'WA'); F.emit('lda', 'XBC,_%s' % b.decl.name)
                     F.emit('ld', '%s,(XBC+WA)' % R); return fam
             if im is None: raise Unsupported('complex index')
-            if esz == 1 and im in ('WA', 'BC', 'DE', 'HL'):       # globals.c gl_index: lda XBC,_ext_arr / ld L,(XBC+WA)
+            if esz == 1 and (im in ('WA', 'BC', 'DE', 'HL') or CHAR_REG_INDEX and im == 'IZ' and not F.opt and
+                             unpromote(i).ty is not None and unpromote(i).ty.signed):   # globals.c (an unsigned index
+                                                           #  in IZ is extended whole: r2_00_12 -Xr, r4_07_10)
+                                                                   # (idxloc.c il_c_L1: lda XWA,_gca / ld A,(XWA+IZ))
                 base = 'XBC' if im == 'WA' else 'XWA'
                 F.emit('lda', '%s,_%s' % (base, b.decl.name)); F.emit('ld', '%s,(%s+%s)' % (R, base, im)); return fam
             if esz == 1:                                           # m_gca_v
@@ -9719,6 +9783,12 @@ def call_before_use(rest, d):
         found = []
         walk(c, lambda n, dep: found.append(n) if getattr(n, 'k', None) == 'call' else None)
         if uses_decl(c, d):                                # a loop, switch or if that calls and reads d: the read
+            if found and CALL_FOLD_GUARD and c.k not in ('while', 'do', 'for', 'switch', 'if', 'block'):
+                total = uses_of([c], d, [])                    # (idxloc.c il_i_R4: gia[t] = ri() reads t after the
+                in_args = []                                   #  call: cc900 keeps t in IZ; folded, the model read gi
+                for cl_ in found:                              #  after ri(): wrong code) -- unless every read is an
+                    for a_ in getattr(cl_, 'args', []) or []: in_args += uses_of([a_], d, [])   # argument
+                return len(in_args) < len(total)
             return bool(found) and c.k in ('while', 'do', 'for', 'switch', 'if', 'block')   # may follow the call
         if found: return True                              # (r3_05_00: gps->p = t in a switch arm after vd();
     return False                                           # r3_00_06: t <= gl2 in a loop body after v2())
@@ -9778,6 +9848,8 @@ def sp_plain_index(F, e):
     if getattr(d, 'reg', None):
         if d.reg == 'WA' and d.kind == 'param' and dies_here(F, e) and not getattr(d, 'regtemp', False):
             F.sp_index_param = d; return ('WA', e.ty.signed)
+        if SP_INDEX_IZ and d.reg == 'IZ' and not F.opt:     # a local kept across a call in IZ (random r2_08_09:
+            touch_home(F, d); return ('IZ', e.ty.signed)   # gs.a[u] = r1(gi) -> ld WA,IZ / add WA,WA / lda XBC,_gs + 0xe)
         return None
     m = mem_operand(F, e)
     return (m, e.ty.signed) if m is not None else None

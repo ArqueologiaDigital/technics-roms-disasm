@@ -791,6 +791,14 @@ char argument into A, the address of an element into XWA, and the six functions 
 stret 28 -> 264, evorder_ad 987 -> 1010 at none.  Random corpora at none: refused whole 451 -> 417, exact 43 -> 51.
 Gate: no ledger row down (15 rows up -- random1 at none 17 -> 20, random2 at none 6 -> 9, random3 at none 7 -> 9, evorder_lh at none 246 -> 272, evorder_ad at none 987 -> 1010, cmpordl at -Xr 586 -> 590 -- and the eight stchain and stret rows added); the regression finder shows no function newly inexact against 9aee92699; pairs 223 MATCH; semcheck DIFFERENT 51 -> 60, the 9 new verdicts all out-of-range indexes in stret.c chains at -O and -Xr that the older store path still takes (UB, reviewed in model/semcheck_review.tsv).
 
+**Elements at a local index** (`corpus/probes/idxloc.c`, 108 functions, run 2026-11-12-3): an element indexed by a loop
+counter, a local kept across a call (IZ) or a register temporary, in twelve statement shapes.  The compare and binary
+rules now accept an operand that reads an IZ-family home, which they never write; a char element at a register index
+uses the register as it is (`lda XWA,_gca / ld A,(XWA+IZ)`); an int element is pushed from memory (`pushw (XBC+WA)`)
+and a pushed global-minus-element takes DE.  The probe also exposed a wrong-code fold the committed model had: `int t = gi;
+gia[t] = ri();` read `gi` after the call; `call_before_use` now keeps such a local.  idxloc.c 57 -> 81 at none.
+Gate: no ledger row down (5 rows up -- random3 and random4 at none by one each, cmpordl at -Xr 590 -> 594, evorder_ad at -Xr 905 -> 931, cmpordl2 at none 388 -> 394 -- and the four idxloc rows added); the regression finder shows no function newly inexact against cf6ad58b1; pairs 223 MATCH; semcheck DIFFERENT 60 -> 81: two older verdicts gone (r4_03_00 -Xr, r4_08_17), 23 new ones all idxloc.c char elements at t = gi, an index out of range (UB, reviewed in model/semcheck_review.tsv).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
