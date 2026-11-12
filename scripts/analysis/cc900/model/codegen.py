@@ -1267,6 +1267,103 @@ def cw_ext(F, *a, **k): return cw_pin(F, _cw_ext_raw(F, *a, **k))
 
 LH_MEMBER = True                                          # see lh_member
 
+LH_CALL = True                                            # see lh_call
+
+def lh_call_kinds(F, op, l, r):
+    """(left kind, right kind) for lh_call: one operand a call without arguments and the other a constant (on the left,
+    divide and remainder only), a global, a static member or constant element, a plain pointer's target or a member
+    through a pointer; or two members through pointers.  None otherwise"""
+    if op not in ('*', '/', '%'): return None
+    try: lk, rk = cw_kind(F, l, 4), cw_kind(F, r, 4)
+    except Unsupported: return None
+    if lk is None or rk is None: return None
+    def nocall_args(x):
+        x0 = strip(x)
+        while x0.k == 'cast' and x0.kind in ('IntegralCast', 'NoOp', 'BitCast'): x0 = strip(x0.e)
+        return x0.k == 'call' and not x0.args
+    L, R = lk[0], rk[0]
+    if L == 'D' and R == 'D': return (lk, rk)
+    if (L == 'F') == (R == 'F'): return None
+    if (L == 'F' and not nocall_args(l)) or (R == 'F' and not nocall_args(r)): return None
+    o = R if L == 'F' else L
+    if o not in ('K', 'G', 'M', 'P', 'D'): return None
+    if o == 'K' and (op == '*' or L == 'F'): return None
+    return (lk, rk)
+
+def plan_lh_call(F):
+    """before the frame: one statement G = A op B with lh_call operands in a function with no other frame local and
+    XIZ free; the prologue saves XIZ, and a 4-byte temporary is added below the frame for a call result beside a
+    member or for the first of two members (l_div_DF: dec 0x4,XSP / push XIZ / cal _hfl / ld (XSP+0x4),XHL)"""
+    F.lhc = None
+    if not LH_CALL or F.xiz_vars or F.opt or F.adecl: return
+    f = F.f
+    if any(d.kind == 'local' and not getattr(d, 'reg', None) and (d.ty.kind in ('array', 'struct') or not foldable(f, d))
+           for d in f.decls) or any(getattr(d, 'home_slot', False) for d in f.params): return
+    hits = []
+    def v(n, dep):
+        if n.k == 'bin' and n.op in ('*', '/', '%') and n.ty is not None and n.ty.size == 4 and n.ty.kind == 'int' and \
+                lh_call_kinds(F, n.op, strip(n.l), strip(n.r)) is not None: hits.append(n)
+    walk(f.body, v)
+    if len(hits) != 1: return
+    tops = [x for x in flat(f.body) if x.k == 'expr' and x.e.k == 'bin' and x.e.op == '=' and strip(x.e.l).k == 'var' and
+            strip(x.e.l).decl.kind == 'global' and strip(x.e.l).ty.size == 4 and strip(x.e.r) is hits[0]]
+    if len(tops) != 1: return
+    n = hits[0]; lk, rk = lh_call_kinds(F, n.op, strip(n.l), strip(n.r)); ks = (lk[0], rk[0])
+    xiz = not ('K' in ks or 'M' in ks)
+    slot = 'D' in ks and ('F' in ks or ks == ('D', 'D'))
+    tmp = None
+    if slot:
+        from frontend import Decl, Type
+        tmp = Decl('__lhc', Type('int', 4, 2, spell='t'), '', 'local'); f.decls.append(tmp)
+    if xiz: F.xiz_vars.append('stores'); F.save_reg = 'XIZ'; F.emit('push', 'XIZ'); F.push = 4
+    F.lhc = {'node': id(n), 'slot': tmp}
+
+def lh_call(F, op, l, r):
+    """the operands of a long helper planned by plan_lh_call (corpus/probes/evorder_ad.c, run 2026-11-10-17).  A call
+    beside a constant or a constant element: its result moves to its side (l_div_KF: cal _hfl / ld XBC,XHL /
+    ld XWA,0x7; a multiply puts the element in XWA, l_mul_FE: ld XBC,XHL / ld XWA,(_hla + 0xc)).  Beside a global or
+    a pointer's target the result waits in XIZ (l_div_FP: cal _gfl / ld XIZ,XHL / ld XBC,(_hpl) / ld XWA,XIZ /
+    ld XBC,(XBC); a multiply puts the global in XBC and the pointer's target in XWA).  Beside a member it waits in the
+    frame slot and XIZ takes the member's pointer (l_div_FD: ld (XSP+0x4),XHL / ld XIZ,(_hps) / ld XWA,(XSP+0x4) /
+    ld XBC,(XIZ+0x4)).  Two members: the left pointer in the slot, the right in XIZ (l_div_DD: ld XWA,(_gps) /
+    ld (XSP+0x4),XWA / ld XIZ,(_hps) / ld XWA,(XSP+0x4) / ld XWA,(XWA+0x4) / ld XBC,(XIZ+0x4); l_mul_DD: ...
+    ld XBC,(XSP+0x4) / ld XWA,(XIZ+0x4) / ld XBC,(XBC+0x4)).  True when it emitted them."""
+    ks = lh_call_kinds(F, op, l, r)
+    if ks is None: return False
+    lk, rk = ks; L, R = lk[0], rk[0]; mul = op == '*'
+    def ld(a, b): F.emit('ld', '%s,%s' % (a, b))
+    def at(reg, k): return '(%s+%s)' % (reg, hx(k[2])) if k[2] else '(%s)' % reg
+    S = lambda: '(XSP+%s)' % hx(F.lhc['slot'].slot + F.push)
+    def call(x):
+        fam = gen(F, x, 'HL', 4)
+        if fam != 'HL': raise Unsupported('lh_call: the call result')
+        flush_pops(F)
+    if L == 'D' and R == 'D':
+        ld('XWA', lk[1]); ld(S(), 'XWA'); ld('XIZ', rk[1])
+        if mul: ld('XBC', S()); ld('XWA', at('XIZ', rk)); ld('XBC', at('XBC', lk))
+        else: ld('XWA', S()); ld('XWA', at('XWA', lk)); ld('XBC', at('XIZ', rk))
+        return True
+    fx, ok_ = (l, rk) if L == 'F' else (r, lk)
+    O = ok_[0]; fside = 'XWA' if L == 'F' else 'XBC'; oside = 'XBC' if L == 'F' else 'XWA'
+    ox = r if L == 'F' else l
+    call(fx)
+    if O in ('K', 'M'):
+        if mul and O == 'M': fside, oside = 'XBC', 'XWA'
+        ld(fside, 'XHL'); ld(oside, hx(fold(ox).value & 0xffffffff) if O == 'K' else ok_[1]); return True
+    if O in ('G', 'P'):
+        ld('XIZ', 'XHL')
+        if mul:
+            if O == 'G': ld('XBC', ok_[1]); ld('XWA', 'XIZ')
+            else: ld('XWA', ok_[1]); ld('XWA', '(XWA)'); ld('XBC', 'XIZ')
+            return True
+        if O == 'G': ld(oside, ok_[1]); ld(fside, 'XIZ'); return True
+        if oside == 'XWA': ld('XWA', ok_[1]); ld('XWA', '(XWA)'); ld('XBC', 'XIZ'); return True
+        ld('XBC', ok_[1]); ld('XWA', 'XIZ'); ld('XBC', '(XBC)'); return True
+    ld(S(), 'XHL'); ld('XIZ', ok_[1])                       # O == 'D'
+    if mul or oside == 'XWA': ld('XWA', at('XIZ', ok_)); ld('XBC', S())
+    else: ld('XWA', S()); ld('XBC', at('XIZ', ok_))
+    return True
+
 def lh_member_kinds(F, op, l, r):
     """(D kind, other kind, D on the right) for a long helper with one member-through-a-pointer operand and a constant,
     global, static member or plain-pointer one; None otherwise (a constant multiplier is strength-reduced, a constant
@@ -3778,6 +3875,10 @@ def gen_long_helper(F, e, l, r, fam, signed):
             getattr(F, 'u1_i', None) is None and lh_member(F, e.op, l, r):
         F.emit('cal', 'C9H_' + name)                   # (evorder_ad.c l_div_GD: push XIZ / ld XIZ,(_hps) / ld XWA,(_gl) /
         return 'HL' if fam == 'HL' else move_to(F, 'XHL', fam, 4, keep=True)   # ld XBC,(XIZ+0x4) / cal C9H_divls)
+    if (ls is None or rs is None) and LH_CALL and getattr(F, 'lhc', None) is not None and F.lhc['node'] == id(strip(e)) and \
+            lh_call(F, e.op, l, r):
+        F.emit('cal', 'C9H_' + name)                   # (evorder_ad.c l_div_GF: push XIZ / cal _hfl / ld XIZ,XHL / ld XWA,(_gl) /
+        return 'HL' if fam == 'HL' else move_to(F, 'XHL', fam, 4, keep=True)   # ld XBC,XIZ / cal C9H_divls)
     if ls is None or rs is None: raise Unsupported('complex long helper operands')
     # provisional (two examples, mul_l_loc): XBC first when a register variable is involved
     rc = fold(r)
@@ -11113,7 +11214,7 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
     F.lines.append(('.' if adecl else '_') + f.name + ':')
     F.loops = []; F.param_copies = []; F.pushes = []
     if adecl and BINLOC_XR: xr_shift_reloc(F)
-    if not plan_leaf(F): regtemp_premark(F); plan_registers(F); plan_homes(F); plan_regtemps(F); plan_store_xiz(F)
+    if not plan_leaf(F): regtemp_premark(F); plan_registers(F); plan_homes(F); plan_regtemps(F); plan_store_xiz(F); plan_lh_call(F)
     plan_frame(F)
     for d in getattr(F, 'l2', {}).get('entry', []) if getattr(F, 'l2', None) else []:
         F.emit('ld', '%s,(XSP+%s)' % (FAM[d.reg][d.ty.size], hx(d.off + F.push)))   # (after the frame: offsets)

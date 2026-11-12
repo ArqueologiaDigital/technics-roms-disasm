@@ -822,6 +822,12 @@ random r2_05_16 at -O3 -XS -Xr once that function's unused local was dropped.  L
 stdiv rows added); no function newly inexact against 78e8ac600; pairs 223 MATCH; semcheck 78 -> 110, the 32 new
 verdicts stdiv char indexes past the arrays (UB, reviewed).
 
+**Long helpers with a call operand or two members** (`lh_call`, evorder_ad.c): what has to survive the other
+operand's call -- a call's result, a member's pointer -- goes to XIZ, saved at entry, then to a 4-byte temporary
+below the frame (`l_div_FD: dec 0x4,XSP / push XIZ / cal _gfl / ld (XSP+0x4),XHL / ld XIZ,(_hps)`).  One such
+statement `G = A op B` per function, at none only.  evorder_ad 1010 -> 1039 at none.  Gate clean (semcheck 110, the
+same verdicts).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

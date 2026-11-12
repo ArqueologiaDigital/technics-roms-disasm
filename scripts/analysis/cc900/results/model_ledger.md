@@ -173,7 +173,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-10-16-micro-cmpordl, v423/O3XS                          | probes/cmpordl.c     | 668 / 680 exact (98.2%)  |
 | run 2026-11-10-16-micro-cmpordl, v423/Xr                            | probes/cmpordl.c     | 594 / 680 exact (87.4%)  |
 | run 2026-11-10-16-micro-cmpordl, v423/O3XSXr                        | probes/cmpordl.c     | 588 / 680 exact (86.5%)  |
-| run 2026-11-10-17-micro-evorder_ad, v423/none                       | probes/evorder_ad.c  | 1010 / 1116 exact (90.5%) |
+| run 2026-11-10-17-micro-evorder_ad, v423/none                       | probes/evorder_ad.c  | 1039 / 1116 exact (93.1%) |
 | run 2026-11-10-17-micro-evorder_ad, v423/O3XS                       | probes/evorder_ad.c  | 969 / 1116 exact (86.8%) |
 | run 2026-11-10-17-micro-evorder_ad, v423/Xr                         | probes/evorder_ad.c  | 931 / 1116 exact (83.4%) |
 | run 2026-11-10-17-micro-evorder_ad, v423/O3XSXr                     | probes/evorder_ad.c  | 873 / 1116 exact (78.2%) |
