@@ -832,6 +832,10 @@ same verdicts).
 the base goes to XIZ; with the order of plain long helper operands fixed too, evorder_ad reads 1080 of 1116 at none
 (1039 before), stdiv 408 of 750, evorder_lh 284 of 507.  Gate clean (semcheck 110, the same verdicts).
 
+**lh_call and lh_elem under -O**: the none forms, except that a call beside a global moves straight to its side and an
+element beside a global reads the global last; two elements at one index share it under -O and are not planned.
+evorder_ad at -O3 -XS 969 -> 1030, stdiv 340 -> 356.  Gate clean (semcheck 110, the same verdicts).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

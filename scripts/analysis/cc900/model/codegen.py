@@ -1268,6 +1268,7 @@ def cw_ext(F, *a, **k): return cw_pin(F, _cw_ext_raw(F, *a, **k))
 LH_MEMBER = True                                          # see lh_member
 
 LH_CALL = True                                            # see lh_call
+LH_CALL_OPT = True                                        # lh_call / lh_elem under -O (evorder_ad.c at O3XS)
 
 def lh_call_kinds(F, op, l, r):
     """(left kind, right kind) for lh_call: one operand a call without arguments and the other a constant (on the left,
@@ -1304,7 +1305,7 @@ def plan_lh_call(F):
     XIZ free; the prologue saves XIZ, and a 4-byte temporary is added below the frame for a call result beside a
     member or for the first of two members (l_div_DF: dec 0x4,XSP / push XIZ / cal _hfl / ld (XSP+0x4),XHL)"""
     F.lhc = None
-    if not LH_CALL or F.xiz_vars or F.opt or F.adecl: return
+    if not LH_CALL or F.xiz_vars or F.adecl or (F.opt and not LH_CALL_OPT): return
     f = F.f
     if any(d.kind == 'local' and not getattr(d, 'reg', None) and (d.ty.kind in ('array', 'struct') or not foldable(f, d))
            for d in f.decls) or any(getattr(d, 'home_slot', False) for d in f.params): return
@@ -1318,13 +1319,14 @@ def plan_lh_call(F):
             strip(x.e.l).decl.kind == 'global' and strip(x.e.l).ty.size == 4 and strip(x.e.r) is hits[0]]
     if len(tops) != 1: return
     n = hits[0]; lk, rk = lh_call_kinds(F, n.op, strip(n.l), strip(n.r)); ks = (lk[0], rk[0])
+    if F.opt and ks == ('X', 'X'): return                    # (-O: one index for both, unmodelled)
     from frontend import Decl, Type
     tmp = tix = None
     if 'X' in ks:
         xiz = True
         slot = 'F' in ks or (ks[0] == 'X' and ks[1] == 'D')
     else:
-        xiz = not ('K' in ks or 'M' in ks)
+        xiz = not ('K' in ks or 'M' in ks or (F.opt and 'G' in ks))   # (-O l_div_GF: no XIZ)
         slot = 'D' in ks and ('F' in ks or ks == ('D', 'D'))
     if slot: tmp = Decl('__lhc', Type('int', 4, 2, spell='t'), '', 'local'); f.decls.append(tmp)
     if 'X' in ks: tix = Decl('__lhx', Type('int', 2, 2, spell='t'), '', 'local'); f.decls.append(tix)
@@ -1364,6 +1366,10 @@ def lh_call(F, op, l, r):
     if O in ('K', 'M'):
         if mul and O == 'M': fside, oside = 'XBC', 'XWA'
         ld(fside, 'XHL'); ld(oside, hx(fold(ox).value & 0xffffffff) if O == 'K' else ok_[1]); return True
+    if O == 'G' and F.opt:                                   # (-O l_div_GF: ld XBC,XHL / ld XWA,(_gl); multiply: the global in XBC)
+        if mul: ld('XWA', 'XHL'); ld('XBC', ok_[1])
+        else: ld(fside, 'XHL'); ld(oside, ok_[1])
+        return True
     if O in ('G', 'P'):
         ld('XIZ', 'XHL')
         if mul:
@@ -1411,6 +1417,7 @@ def lh_elem(F, op, l, r, lk, rk):
             ld('WA', ok_[2]); F.emit('sla', '0x2,WA'); F.emit('lda', 'XBC,%s' % ok_[1]); F.emit('lda', '%s,XBC+WA' % A)
         elif o == 'F': call(ox); ld(S(), 'XHL')
         dance(rk)
+        if o == 'G' and F.opt: ld('BC', T()); ld('XWA', ok_[1]); ld('XBC', '(XIZ+BC)'); return True   # (-O l_div_GX)
         if o == 'G': ld('XWA', ok_[1]); ld('BC', T()); ld('XBC', '(XIZ+BC)'); return True
         if mul and o in ('P', 'D', 'M', 'X'): ld('WA', T()); ld('XWA', '(XIZ+WA)'); ld('XBC', '(XBC)'); return True
         if mul and o == 'F': ld('WA', T()); ld('XWA', '(XIZ+WA)'); ld('XBC', S()); return True
@@ -1427,6 +1434,7 @@ def lh_elem(F, op, l, r, lk, rk):
         else: ld('XWA', S()); ld('DE', T()); ld('XWA', '(XWA+DE)'); ld('XBC', at('XIZ', ok_))
         return True
     dance(lk)
+    if o == 'G' and F.opt: ld('WA', T()); ld('XWA', '(XIZ+WA)'); ld('XBC', ok_[1]); return True   # (-O l_div_XG)
     if o == 'G': ld('XBC', ok_[1]); ld('WA', T()); ld('XWA', '(XIZ+WA)'); return True
     if o == 'F': ld('WA', T()); ld('XWA', '(XIZ+WA)'); ld('XBC', S()); return True
     if o == 'P':
@@ -3142,7 +3150,7 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         ev = evorder_bin(F, e, op, l, r, fam, size, ev_ctx)   # stored value), ANY (a pushed argument); evorder_l.c: longs
         if ev is not None: return ev                       # which operand is the accumulator, the order of their code
     if EVORDER and size in (2, 4) and ev_ctx in ('HL', 'WA', 'ANY') and (op in SIMPLE_OPS or op in ('*', '/', '%')) and \
-            (F.opt or F.adecl) and ev_unfitted_pair(F, l, r):   # (evorder.c s_XX, x_XS, s_PX -Xr ...: the older paths
+            (F.opt or F.adecl) and ev_unfitted_pair(F, l, r) and not (getattr(F, 'lhc', None) is not None and F.lhc['node'] == id(strip(e))):   # (evorder.c s_XX, x_XS, s_PX -Xr ...: the older paths
         raise Unsupported('unfitted operand pair (evorder)')   # were wrong code there; refused until the pair is probed)
     if op in ('+', '&', '|', '^') and fam != 'WA' and getattr(F, 'tfam', None) and reads_reg(r, fam) and not reads_reg(l, fam):
         rr = strip(r)                                # ot_cnt_abn: gc = *a + *b with b in XBC dying -> ld C,(XBC) /
@@ -3955,6 +3963,9 @@ def gen_long_helper(F, e, l, r, fam, signed):
     if e.op == '*' and CONST_LEFT_SWAP and fold(l).k == 'const' and fold(r).k != 'const':
         l, r = r, l                                      # random r1_00_05: 61613L * gl2 -> ld XWA,(_gl2) / ld XBC,0xf0ad
     ls, rs = reg_or_mem(F, l, 4), reg_or_mem(F, r, 4)
+    if (ls is None or rs is None) and LH_CALL and F.opt and getattr(F, 'lhc', None) is not None and F.lhc['node'] == id(strip(e)) and lh_call(F, e.op, l, r):
+        F.emit('cal', 'C9H_' + name)                   # (-O: before long_helper_order, which refuses l_div_PX)
+        return 'HL' if fam == 'HL' else move_to(F, 'XHL', fam, 4, keep=True)
     if (ls is None or rs is None) and LONG_HELPER_ORDER and not getattr(F, 'l2', None) and \
             not getattr(F, 'cl_active', None) and getattr(F, 'u1_i', None) is None and long_helper_order(F, e, l, r):
         F.emit('cal', 'C9H_' + name)
