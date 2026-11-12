@@ -870,6 +870,11 @@ crashes on the XIZ planners' marker.  stdiv 372 -> 628 at -O3 -XS, evorder_lh 15
 **Char division under -O**: the divisor straight into C / E, a constant dividend divided in BC beside an element
 store.  stdiv 628 -> 694 at -O3 -XS.  Gate clean.
 
+**A bare-declared loop counter** (`corpus/probes/loopctr.c`, 30 functions, run 2026-11-12-7): the oracle keeps it in the
+lowest of BC, DE, HL the loop body does not write, also when calls come before the loop; the model's leaf allocator
+does that only for for / while counters in leaf functions (not modelled further yet).  A constant-left char operation
+now loads its memory operand first.  loopctr 8 -> 12 at none, random3 10 -> 11.  Gate clean.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

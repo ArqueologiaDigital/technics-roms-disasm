@@ -246,6 +246,11 @@ for c in none O3XS; do    # long helpers with an element at a loop counter or lo
 done
 row "run 2026-11-12-6-micro-lhidx, v423/Xr" "probes/lhidx.c" "$O/2026-11-12-6-micro-lhidx/out/v423/Xr/probes" corpus/probes/lhidx.c --opt none --adecl
 row "run 2026-11-12-6-micro-lhidx, v423/O3XSXr" "probes/lhidx.c" "$O/2026-11-12-6-micro-lhidx/out/v423/O3XSXr/probes" corpus/probes/lhidx.c --opt O3XS --adecl
+for c in none O3XS; do    # a bare-declared loop counter (corpus/probes/loopctr.c)
+  row "run 2026-11-12-7-micro-loopctr, v423/$c" "probes/loopctr.c" "$O/2026-11-12-7-micro-loopctr/out/v423/$c/probes" corpus/probes/loopctr.c --opt $c
+done
+row "run 2026-11-12-7-micro-loopctr, v423/Xr" "probes/loopctr.c" "$O/2026-11-12-7-micro-loopctr/out/v423/Xr/probes" corpus/probes/loopctr.c --opt none --adecl
+row "run 2026-11-12-7-micro-loopctr, v423/O3XSXr" "probes/loopctr.c" "$O/2026-11-12-7-micro-loopctr/out/v423/O3XSXr/probes" corpus/probes/loopctr.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do

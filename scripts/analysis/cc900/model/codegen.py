@@ -1517,7 +1517,8 @@ def lh_store_post(F, lv, rv):
 
 LH_STORE_X = True                                         # see lh_store_x
 LH_STORE_ADDR = True
-LH_PK_ORDER = True                                        # see edit_lh_pk_order.py                                      # plan_store_x's ADDR form (a pointer dividend)
+LH_PK_ORDER = True
+L2_CHAR_SWAP = True                                       # see edit_l2_char_swap.py                                        # see edit_lh_pk_order.py                                      # plan_store_x's ADDR form (a pointer dividend)
 
 def plan_store_x(F):
     """before the frame: one statement ga[c] = A / B (or %) of two plain long operands, the index in memory, without
@@ -3332,7 +3333,7 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         else: F.emit('ld', '%s,%s' % (FAM[fam][2], W)); F.emit(SIMPLE_OPS[op], '%s,%s' % (FAM[fam][2], operand(F, r, 2)))
         return fam                                       # (-O3 -XS -Xr: exts WA / sub WA,.. / ld HL,WA)
     if CONST_LEFT_SWAP and op in ('+', '*', '&', '|', '^') and fold(l).k == 'const' and fold(r).k != 'const' and \
-            (mem_operand(F, r) is None or EVORDER and size == 2) and not has_helper_call(r):   # (evorder x_KG: ld HL,(_hi) / xor HL,0x7)
+            (mem_operand(F, r) is None or EVORDER and size == 2 or L2_CHAR_SWAP and size == 1 and not F.opt and not F.adecl and (mem_operand(F, r) or '').startswith('(')) and not has_helper_call(r):   # (evorder x_KG: ld HL,(_hi) / xor HL,0x7; loopctr.c lc_FGN)
         l, r = r, l; e.l, e.r = e.r, e.l                   # random r1_04_16: 255 ^ gpi[2] -> ld XWA,(_gpi) /
                                                            # ld WA,(XWA+0x4) / xor WA,0xff (the constant last)
     has_helper_call.const_div = True                     # (r2_04_15: gs.l % 3L beside rl() clobbers the call's XHL)
