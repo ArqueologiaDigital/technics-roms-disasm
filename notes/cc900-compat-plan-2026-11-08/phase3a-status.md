@@ -836,6 +836,10 @@ the base goes to XIZ; with the order of plain long helper operands fixed too, ev
 element beside a global reads the global last; two elements at one index share it under -O and are not planned.
 evorder_ad at -O3 -XS 969 -> 1030, stdiv 340 -> 356.  Gate clean (semcheck 110, the same verdicts).
 
+**Long helpers stored through an address** (`lh_store_post`, stdiv.c): with the right operand read through an address
+the value is that of a global store and the store address is built after the call.  stdiv 408 -> 512 at none.  Gate
+clean (semcheck 110, the same verdicts).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

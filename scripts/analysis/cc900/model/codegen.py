@@ -1315,8 +1315,9 @@ def plan_lh_call(F):
                 lh_call_kinds(F, n.op, strip(n.l), strip(n.r)) is not None: hits.append(n)
     walk(f.body, v)
     if len(hits) != 1: return
-    tops = [x for x in flat(f.body) if x.k == 'expr' and x.e.k == 'bin' and x.e.op == '=' and strip(x.e.l).k == 'var' and
-            strip(x.e.l).decl.kind == 'global' and strip(x.e.l).ty.size == 4 and strip(x.e.r) is hits[0]]
+    tops = [x for x in flat(f.body) if x.k == 'expr' and x.e.k == 'bin' and x.e.op == '=' and strip(x.e.r) is hits[0] and
+            (strip(x.e.l).k == 'var' and strip(x.e.l).decl.kind == 'global' and strip(x.e.l).ty.size == 4 or
+             LH_STORE_POST and lh_post_kinds(F, x.e.l, hits[0]) is not None)]
     if len(tops) != 1: return
     n = hits[0]; lk, rk = lh_call_kinds(F, n.op, strip(n.l), strip(n.r)); ks = (lk[0], rk[0])
     if F.opt and ks == ('X', 'X'): return                    # (-O: one index for both, unmodelled)
@@ -1460,6 +1461,43 @@ def lh_plain(x):
     if v.k == 'var': return 'G' if v.decl.kind == 'global' and not getattr(v.decl, 'reg', None) else None
     if v.k in ('member', 'index') and global_offset(v) is not None and global_offset(v)[0] != '__param__': return 'M'
     return None
+
+LH_STORE_POST = True                                      # see lh_store_post
+
+def lh_post_kinds(F, lv, rv):
+    """(lvalue kind, right operand kind) for lh_store_post: a long int lvalue through a plain pointer, a member, an
+    element or a pointer element, and a long * / % whose right operand is a pointer's target or an element; else None"""
+    x = strip(rv)
+    if x.k != 'bin' or x.op not in ('*', '/', '%') or x.ty is None or x.ty.size != 4 or x.ty.kind != 'int': return None
+    if strip(lv).ty is None or strip(lv).ty.size != 4 or strip(lv).ty.kind != 'int': return None
+    L = sc_lkind(F, strip(lv))
+    if L is None or L[0] not in ('P', 'D', 'X', 'Q'): return None
+    try: rk = cw_kind(F, x.r, 4); lk = cw_kind(F, x.l, 4)
+    except Unsupported: return None
+    if rk is None or lk is None or rk[0] not in ('P', 'X') or lk[0] not in ('K', 'G', 'M', 'P', 'X'): return None
+    if rk[0] == 'X' and lk[0] == 'X' and rk[2] == lk[2]: return None
+    return (L, rk)
+
+def lh_store_post(F, lv, rv):
+    """L = A op B for a long, L stored through an address and B read through one (stdiv.c, run 2026-11-12-5): the
+    value as for a global store, then the address after the call -- a pointer or member in XWA, an element's index in
+    WA scaled with sla and its base in XBC, a pointer element built in XWA (sd_l_d_QGP: ... / cal C9H_divls /
+    ld WA,(c) / exts XWA / sll 0x2,XWA / add XWA,(_glp) / ld (XWA),XHL).  True when it emitted the statement."""
+    if F.opt or F.adecl: return False
+    ks = lh_post_kinds(F, lv, rv)
+    if ks is None: return False
+    if any(r_ in ('WA', 'BC', 'DE', 'HL') for r_ in live_regs_read(F)): return False
+    fam = gen(F, rv, 'HL', 4)
+    if fam != 'HL': raise Unsupported('lh_store_post: the value not in XHL')
+    flush_pops(F)
+    L = sc_lkind(F, strip(lv)); K = L[0]
+    if K in ('P', 'D'):
+        F.emit('ld', 'XWA,%s' % L[1]); m = '(XWA+%s)' % hx(L[2]) if L[2] else '(XWA)'
+    elif K == 'X':
+        F.emit('ld', 'WA,%s' % L[2]); F.emit('sla', '0x2,WA'); F.emit('lda', 'XBC,%s' % L[1]); m = '(XBC+WA)'
+    else:
+        F.emit('ld', 'WA,%s' % L[2]); F.emit('exts', 'XWA'); F.emit('sll', '0x2,XWA'); F.emit('add', 'XWA,%s' % L[1]); m = '(XWA)'
+    F.emit('ld', '%s,XHL' % m); return True
 
 def lh_member_kinds(F, op, l, r):
     """(D kind, other kind, D on the right) for a long helper with one member-through-a-pointer operand and a constant,
@@ -6775,6 +6813,7 @@ def gen_stmt(F, s, last):
         gen_incdec(F, s.e, 'WA', 0, value=False); return
     if s.k == 'expr' and s.e.k == 'bin' and s.e.op == '=':
         lv = strip(s.e.l)
+        if LH_STORE_POST and lv.ty is not None and lv.ty.size == 4 and not getattr(F, 'l2', None) and not getattr(F, 'u1_i', None) and not getattr(F, 'cl_active', None) and lh_store_post(F, lv, s.e.r): return   # (stdiv.c sd_l_d_PGX)
         if STORE_DIV and lv.ty is not None and lv.ty.size == 2 and not getattr(F, 'l2', None) and not getattr(F, 'u1_i', None) and not getattr(F, 'cl_active', None) and store_div(F, lv, s.e.r): return   # (stdiv.c)
         if STORE_CHAIN and (not F.opt or STORE_CHAIN_OPT) and lv.ty is not None and lv.ty.size in (1, 2, 4) and not getattr(F, 'l2', None) and \
                 not getattr(F, 'u1_i', None) and not getattr(F, 'cl_active', None) and store_chain(F, lv, s.e.r, lv.ty.size):
