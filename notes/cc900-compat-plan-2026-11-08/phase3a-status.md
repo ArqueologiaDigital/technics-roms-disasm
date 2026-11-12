@@ -857,6 +857,11 @@ constant.  stdiv 528 -> 556 at none.  Gate clean.
 4-byte temporary; a pointer-element store with a pointer dividend builds its address in XIZ; a constant over a
 pointer's target loads the pointer first.  Every long row of stdiv is exact at none (612 of 750).  Gate clean.
 
+**Char division stores** (`store_div_char`, stdiv.c): with explicit `(int)` casts a divisor in memory or a constant
+dividend divides 16 / 8, a divisor read through an address or a constant beside a loaded dividend 32 / 16; with an
+implicit promotion every divisor divides 16 / 8 (the older paths).  stdiv 750 of 750 at none.  Gate clean (semcheck
+110 -> 106).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

@@ -2015,6 +2015,100 @@ def store_div(F, lv, rv):
     m = sv_store_addr(F, L, ['WA', 'BC'] if K == 'X' else ['WA'], 2)
     emit('ld', '%s,%s' % (m, R)); return True
 
+STORE_DIV_CHAR = True                                     # see store_div_char
+
+def sdc_kind(F, x):
+    """the operand kinds of store_div_char: ('K', v), ('G', mem) a char global or static member, ('P', ptr) a plain
+    pointer's char target, ('X', sym, idxmem) a global char array at a plain signed index in memory; None otherwise"""
+    x = strip(x)
+    while x.k == 'cast' and x.kind == 'IntegralCast': x = strip(x.e)
+    c = fold(x)
+    if c.k == 'const' and c.value is not None: return ('K', c.value)
+    if x.k != 'load' or x.ty is None or x.ty.size != 1 or not x.ty.signed: return None
+    lv = strip(x.e)
+    if lv.k == 'var':
+        if lv.decl.kind != 'global' or getattr(lv.decl, 'reg', None): return None
+        return ('G', '(_%s)' % lv.decl.name)
+    k = sc_lkind(F, lv)
+    if k is None: return None
+    if k[0] == 'M': return ('G', k[1])
+    if k[0] == 'P' and not k[2]: return ('P', k[1])
+    if k[0] == 'X': return ('X', k[1], k[2])
+    return None
+
+def store_div_char(F, lv, rv):
+    """L = (char)((int)A op (int)B), op / or %, signed chars (corpus/probes/stdiv.c, run 2026-11-12-5).  A divisor in
+    memory, or a constant dividend: the 16 / 8 division (sd_c_d_GGG: ld A,(_vc) / exts WA / divs WA,(_wc) /
+    ld (_gc),A; the remainder is W; sd_c_d_GKP: ld XBC,(_wcp) / ld WA,0x64 / divs WA,(XBC)).  A divisor read through
+    an address or a constant beside a loaded dividend: the 32 / 16 division, the divisor extended into BC (DE beside an
+    element dividend) first (sd_c_d_GGP: ld XWA,(_wcp) / ld A,(XWA) / ld C,A / exts BC / ld A,(_vc) / exts WA /
+    exts XWA / divs XWA,BC; sd_c_d_GGK: ... / divs XWA,0x7), the remainder from QWA (ld WA,QWA).  A store through a
+    pointer or an element builds its address after the value (an element in XDE from C: ld C,A / lda XWA,_gca /
+    ld DE,(c) / extz XDE / add XDE,XWA / ld (XDE),C), except beside a constant divisor, where the address comes first
+    in XBC (XDE beside an element dividend; sd_c_d_PGK: ld XBC,(_gcp) / ld A,(_vc) / ... / ld (XBC),A).  True when it
+    emitted the statement."""
+    if F.opt or F.adecl: return False
+    x = strip(rv)
+    while x.k == 'cast' and x.kind == 'IntegralCast': x = strip(x.e)
+    if x.k != 'bin' or x.op not in ('/', '%') or x.ty is None or x.ty.size != 2 or not x.ty.signed: return False
+    if lv.ty is None or lv.ty.size != 1 or not lv.ty.signed: return False
+    a, b = sdc_kind(F, x.l), sdc_kind(F, x.r)
+    if a is None or b is None or (a[0] == 'K' and b[0] == 'K'): return False
+    def explicit(y):                                         # (an implicit promotion divides 16 / 8 whatever the divisor:
+        y = strip(y)                                         #  evorder_ad.c c_div_GP: divs WA,(XBC); the older paths)
+        return y.k == 'cast' and getattr(y, 'explicit', False)
+    if not all(explicit(y) for y, k in ((x.l, a), (x.r, b)) if k[0] != 'K'): return False
+    if b[0] == 'K':
+        bv = b[1] & 0xffff
+        if bv == 0 or (bv & (bv - 1)) == 0 or bv == 0xffff: return False
+    for k in (a, b):
+        if k[0] == 'X' and (not isinstance(k[2], str) or not k[2].startswith('(')): return False
+    L = sc_lkind(F, strip(lv))
+    if L is None or L[0] not in ('G', 'M', 'P', 'X', 'Q') or (L[0] == 'P' and L[2]): return False
+    if L[0] in ('X', 'Q') and not (isinstance(L[2], str) and L[2].startswith('(')): return False
+    if any(r_ in ('WA', 'BC', 'DE', 'HL') for r_ in live_regs_read(F)): return False
+    rem = x.op == '%'
+    def e(op, args): F.emit(op, args)
+    def elem(sym, im, R, load):                              # a char element's address in XR (through XWA)
+        e('lda' if load == 'lda' else 'ld', 'XWA,%s' % sym); e('ld', '%s,%s' % (R, im)); e('extz', 'X' + R); e('add', 'X%s,XWA' % R)
+    def loadA(k):
+        if k[0] == 'G': e('ld', 'A,%s' % k[1])
+        elif k[0] == 'P': e('ld', 'XWA,%s' % k[1]); e('ld', 'A,(XWA)')
+        else: elem(k[1], k[2], 'BC', 'lda'); e('ld', 'A,(XBC)')
+    short = a[0] == 'K' or b[0] == 'G'
+    early = not short and b[0] == 'K'                         # the store address first (sd_c_d_PGK)
+    m = None
+    if early and L[0] in ('P', 'X', 'Q'):
+        R = 'DE' if a[0] == 'X' else 'BC'
+        if L[0] == 'P': e('ld', 'X%s,%s' % (R, L[1]))
+        else: elem(L[1], L[2], R, 'lda' if L[0] == 'X' else 'ld')
+        m = '(X%s)' % R
+    if short:
+        if a[0] == 'K':
+            if b[0] == 'G': bop = b[1]
+            elif b[0] == 'P': e('ld', 'XBC,%s' % b[1]); bop = '(XBC)'
+            else: elem(b[1], b[2], 'BC', 'lda'); bop = '(XBC)'
+            e('ld', 'WA,%s' % hx(a[1] & 0xffff))
+        else:
+            loadA(a); e('exts', 'WA'); bop = b[1]
+        e('divs', 'WA,%s' % bop); res = 'W' if rem else 'A'
+    else:
+        if b[0] == 'K': bop = hx(b[1] & 0xffff)
+        else:
+            R = 'E' if a[0] == 'X' else 'C'
+            if b[0] == 'P': e('ld', 'XWA,%s' % b[1]); e('ld', 'A,(XWA)')
+            else: elem(b[1], b[2], 'BC', 'lda'); e('ld', 'A,(XBC)')
+            e('ld', '%s,A' % R); e('exts', {'C': 'BC', 'E': 'DE'}[R]); bop = {'C': 'BC', 'E': 'DE'}[R]
+        loadA(a); e('exts', 'WA'); e('exts', 'XWA'); e('divs', 'XWA,%s' % bop)
+        if rem: e('ld', 'WA,QWA')
+        res = 'A'
+    if L[0] in ('G', 'M'): e('ld', '%s,%s' % (L[1], res)); return True
+    if m is not None: e('ld', '%s,%s' % (m, res)); return True
+    if L[0] == 'P':
+        if res != 'A': e('ld', 'A,%s' % res)
+        e('ld', 'XBC,%s' % L[1]); e('ld', '(XBC),A'); return True
+    e('ld', 'C,%s' % res); elem(L[1], L[2], 'DE', 'lda' if L[0] == 'X' else 'ld'); e('ld', '(XDE),C'); return True
+
 def store_chain(F, lv, rv, size):
     """L1 = (L2 = V) for an int or long, after corpus/probes/stchain.c (run 2026-11-12-1-micro-stchain).  A loaded or
     constant V: the outer address is emitted first, the inner one next, the value last; the registers are taken in
@@ -6950,6 +7044,7 @@ def gen_stmt(F, s, last):
         if LH_STORE_SAVE and getattr(F, 'lhc', None) is not None and F.lhc.get('save') and F.lhc['node'] == id(strip(s.e.r)) and lh_store_save(F, lv, strip(s.e.r)): return   # (stdiv.c sd_l_d_PXG)
         if LH_STORE_X and getattr(F, 'xst', None) is not None and F.xst['node'] == id(strip(s.e.r)) and sp_lvalue_kind(F, lv) is not None and lh_store_x(F, sp_lvalue_kind(F, lv), strip(s.e.r)): return   # (stdiv.c sd_l_d_XGG, DPG)
         if LH_STORE_POST and lv.ty is not None and lv.ty.size == 4 and not getattr(F, 'l2', None) and not getattr(F, 'u1_i', None) and not getattr(F, 'cl_active', None) and lh_store_post(F, lv, s.e.r): return   # (stdiv.c sd_l_d_PGX)
+        if STORE_DIV_CHAR and lv.ty is not None and lv.ty.size == 1 and not getattr(F, 'l2', None) and not getattr(F, 'u1_i', None) and not getattr(F, 'cl_active', None) and store_div_char(F, lv, s.e.r): return   # (stdiv.c sd_c_*)
         if STORE_DIV and lv.ty is not None and lv.ty.size == 2 and not getattr(F, 'l2', None) and not getattr(F, 'u1_i', None) and not getattr(F, 'cl_active', None) and store_div(F, lv, s.e.r): return   # (stdiv.c)
         if STORE_CHAIN and (not F.opt or STORE_CHAIN_OPT) and lv.ty is not None and lv.ty.size in (1, 2, 4) and not getattr(F, 'l2', None) and \
                 not getattr(F, 'u1_i', None) and not getattr(F, 'cl_active', None) and store_chain(F, lv, s.e.r, lv.ty.size):
