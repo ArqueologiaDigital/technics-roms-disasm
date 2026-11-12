@@ -1535,6 +1535,7 @@ L2_CHAR_SWAP = True
 LOOPCTR_FOR = True                                        # see edit_loopctr2.py
 LOOPCTR_BROAD = True                                      # see edit_regtemp_broad.py
 FPCMP_CAST = True                                         # see gen: a same-size cast of a double compare
+PTR_MEM_OPS = True                                        # cpw / pushw straight from a plain pointer's memory
 LOOPCTR = True
 SHIFT_COUNT_GUARD = True                                  # see edit_shift_count_guard.py                                            # see edit_loopctr.py                                       # see edit_l2_char_swap.py                                        # see edit_lh_pk_order.py                                      # plan_store_x's ADDR form (a pointer dividend)
 
@@ -4453,6 +4454,12 @@ def gen_compare(F, e):
     if rc.k == 'const' and lm is None and l.k == 'load' and strip(l.e).k == 'index' and size == 2 and \
             not getattr(F, 'l2', None) and not getattr(F, 'cl_active', None):
         lm = elem_addr(F, strip(l.e), 'cmp')               # ai_mul10: if (gsa[i] == 0) -> cpw (XBC+WA),0x0
+    if PTR_MEM_OPS and rc.k == 'const' and lm is None and l.k == 'load' and size <= 2 and not F.adecl and \
+            not getattr(F, 'l2', None) and not getattr(F, 'cl_active', None) and not getattr(F, 'u1_i', None) and \
+            'WA' not in live_regs(F):
+        pk_ = sp_lvalue_kind(F, l.e)                       # random r1_00_01: if (gps->u != 0) -> ld XWA,(_gps) /
+        if pk_ is not None and pk_[0] in ('P', 'D'):       # cpw (XWA+0x8),0x0 (the model loaded WA and compared it)
+            F.emit('ld', 'XWA,%s' % pk_[1]); lm = '(XWA+%s)' % hx(pk_[2]) if pk_[2] else '(XWA)'
     if rc.k == 'const' and lm is not None and lm.startswith('(') and size <= 2:
         F.emit('cp' + ('b' if size == 1 else 'w'), '%s,%s' % (lm, hx(rc.value & (0xff if size == 1 else 0xffff)))); return cc
         # (the immediate at the operand's width: _ldexp's `nn < -2047` in memory is cpw (XSP+..),0xf801)
@@ -5175,6 +5182,10 @@ def push_arg(F, a):
             fam = gen(F, a1, ur.reg, size)              # _ltoa: cpl DE / cpl QDE / inc 0x1,XDE / push XDE
             F.emit('push', FAM[fam][size]); F.push += size; return size
     m = mem_operand(F, a1)
+    if PTR_MEM_OPS and m is None and size == 2 and a1.k == 'load' and not F.adecl and 'WA' not in live_regs(F):
+        pk_ = sp_lvalue_kind(F, a1.e)                   # random r1_03_15: rpi(gps->i) -> ld XWA,(_gps) / pushw (XWA+0x2)
+        if pk_ is not None and pk_[0] in ('P', 'D'):
+            F.emit('ld', 'XWA,%s' % pk_[1]); m = '(XWA+%s)' % hx(pk_[2]) if pk_[2] else '(XWA)'
     if size <= 2 and m is not None and family_of(m):    # a register: push IZ (call.c k_seq under O3XS)
         F.emit('push', m if size == 2 else FAM[family_of(m)[1:]][2]); F.push += 2; return 2
     if size <= 2 and m is not None:

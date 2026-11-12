@@ -910,6 +910,14 @@ still read 57 of 800 at none: each function there has several statements and loc
 is where locals live (frame slots against XIZ / QIZ, 60-odd first differences in the prologue) and the long-helper
 operands (73 refused statements), not the store shapes.
 
+**Batch 36 (2026-11-12): memory operands through a plain pointer.**  Grouping the random corpora's first differences
+showed two small rules: a constant compare of a value read through a plain pointer compares the memory
+(`cpw (XWA+0x8),0x0`), and an int argument read through one is pushed from memory (`pushw (XWA+0x2)`).  The random
+corpora read 62 of 800 at none (57 before) and 20 at -O3 -XS (19).  The same survey (`frames.py`) counts 99 functions
+whose frame size or saved register differs; two thirds call FP helpers, and the largest groups are a double compound
+assignment's target address hoisted into XIZ and the number of double temporaries.  `corpus/probes/fpopa.c`
+(run 2026-11-12-10) asks about the first.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
