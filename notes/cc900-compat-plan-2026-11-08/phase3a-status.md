@@ -925,6 +925,15 @@ reads 100 / 82 / 100 / 82 of 112 at none / -O3 -XS / -Xr / -O3 -XS -Xr (20 / 16 
 built a computed element's address two or three times over its own index (wrong code under -Xr and -O3 -XS) now
 refuses what the rule does not cover.  The random corpora read 63 of 800 at none and 21 at -O3 -XS.
 
+**Batch 38 (2026-11-12): four small rules.**  From the random corpora's first differences and
+`corpus/probes/fpargf.c` (run 2026-11-12-11): without -O an inner `if` that ends where the enclosing `if` ends shares
+its join label (only `if` joins merge; a switch's table base and first case, a break and a continue label stay two);
+`g += k` for k in 1..8 on an int global is `incw k,(_g)`; `return g + k` on a global pointer is `ld XWA,(_g) /
+lda XHL,XWA+k`; a double helper's constant-element right operand is addressed before a plain left one.  The random
+corpora read 69 / 22 / 47 / 21 of 800 at none / -O3 -XS / -Xr / -O3 -XS -Xr (63 / 21 / 46 / 20 before).  The same probe and
+`corpus/probes/fpargg.c` (run 2026-11-12-12) show that a function containing a `switch` anywhere gets a double-temporary
+region half the usual size; that rule is next.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

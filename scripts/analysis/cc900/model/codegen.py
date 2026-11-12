@@ -1536,6 +1536,9 @@ LOOPCTR_FOR = True                                        # see edit_loopctr2.py
 LOOPCTR_BROAD = True                                      # see edit_regtemp_broad.py
 FPCMP_CAST = True                                         # see gen: a same-size cast of a double compare
 PTR_MEM_OPS = True                                        # cpw / pushw straight from a plain pointer's memory
+LABEL_MERGE = True                                        # two labels at one place are one (without -O)
+INCW_GLOBAL = True                                        # g += k (1..8) on an int global: incw k,(_g)
+PTR_K_LDA = True                                          # return g + k on a global pointer: ld XWA,(_g) / lda XHL,XWA+k
 LOOPCTR = True
 SHIFT_COUNT_GUARD = True                                  # see edit_shift_count_guard.py                                            # see edit_loopctr.py                                       # see edit_l2_char_swap.py                                        # see edit_lh_pk_order.py                                      # plan_store_x's ADDR form (a pointer dividend)
 
@@ -4066,6 +4069,10 @@ def gen_ptr_arith(F, e, fam, size):
         if lr is not None and not lr.startswith('(') and lr != R:
             F.emit('lda', '%s,%s%s%s' % (R, lr, '+' if k >= 0 else '-', hx(abs(k))))   # _ltoa: lda XWA,XBC+0x1
             return fam
+        if PTR_K_LDA and not F.opt and not F.adecl and fam == 'HL' and k and lr is not None and lr.startswith('(_') and \
+                ' ' not in lr and 'WA' not in live_regs(F) and not getattr(F, 'l2', None):
+            F.emit('ld', 'XWA,%s' % lr)                    # fpargf.c af_INNNP: return gpi + 1 -> ld XWA,(_gpi) /
+            F.emit('lda', 'XHL,XWA%s%s' % ('+' if k > 0 else '-', hx(abs(k)))); return fam   # lda XHL,XWA+0x2
         f2 = gen(F, l, fam, 4); R = FAM[f2][4]                          # _ltoa: cal _ultoa / lda XSP,XSP+0xa /
         if strip(l).k == 'call' and F.opt: flush_pops(F)                 # dec 0x1,XHL
         if 1 <= abs(k) <= 8: F.emit('inc' if k > 0 else 'dec', '%s,%s' % (hx(abs(k)), R))
@@ -6216,6 +6223,11 @@ def gen_opassign(F, e):
                                                                     # (_ungetc: orw (XWA+0xa),0x4)
         t = lvalue(F, e.l)                                # _ultoa: *p += 39 -> addb (XWA),0x27
         F.emit(SIMPLE_OPS[op] + ('b' if size == 1 else 'w'), '%s,%s' % (t, imm_of(fold(r), size))); return t
+    if INCW_GLOBAL and op in ('+', '-') and size == 2 and fold(r).k == 'const' and fold(r).value is not None and \
+            1 <= (fold(r).value & 0xffff) <= 8 and strip(e.l).k == 'var' and strip(e.l).decl.kind == 'global' and \
+            not getattr(strip(e.l).decl, 'reg', None) and not F.adecl and not getattr(F, 'l2', None):
+        t = lvalue(F, e.l)                                 # probes/fpargf.c af_VNNSP: gu += 3 -> incw 0x3,(_gu)
+        F.emit('incw' if op == '+' else 'decw', '%s,%s' % (hx(fold(r).value & 0xffff), t)); return t
     if op in SIMPLE_OPS and OPB_GLOBAL and fold(r).k == 'const' and fold(r).value is not None and size == 1 and \
             strip(e.l).k == 'var' and strip(e.l).decl.kind == 'global' and not getattr(strip(e.l).decl, 'reg', None):
         t = lvalue(F, e.l)                                 # random r1_03_19: gc |= ~'A' -> orb (_gc),0xbe
@@ -12163,6 +12175,20 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
         F.lines.insert(j, ln)
     F.lines = [l[:-len('\t;stack')] if l.endswith('\t;stack') else l for l in F.lines]
     F.lines = [l[:-len('\t;u1')] if l.endswith('\t;u1') else l for l in F.lines]
+    if LABEL_MERGE and not F.opt:                       # random r1_01_07: if (a) {..} else { if (b) ..; } -> the inner
+        import re as _re                                 # if jumps to the outer end label (j eq,L30 ... L30:), not to one
+        k = 1                                            # of its own in front of it
+        while k < len(F.lines) - 1:
+            a, b = F.lines[k], F.lines[k + 1]
+            if _re.match(r'^L\d+:$', a) and _re.match(r'^L\d+:$', b):
+                la, lb = a[:-1], b[:-1]
+                la, lb = a[:-1], b[:-1]
+                ij_ = {str(x) for x in getattr(F, 'if_joins', set())}
+                if la not in ij_ or lb not in ij_: k += 1; continue   # (only two if joins: a switch's table base and its
+                                                                       #  first case, a break and a continue label stay two)
+                F.lines = [_re.sub(r'\b%s\b' % la, lb, l) for i, l in enumerate(F.lines) if i != k]
+                continue
+            k += 1
     F.lines[1:1] = fpgen.const_block(F)                  # fp.c: d_add_pk: f_const ... S50000: fdatad ... f_code
     # a label that only a jump to `ret` uses: the oracle keeps it; nothing to do here yet
     if fp_temps is not None:

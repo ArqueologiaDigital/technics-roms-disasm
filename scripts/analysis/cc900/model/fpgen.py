@@ -148,7 +148,8 @@ def begin_stmt(F, st=None):
 def temp(F, size, kind='op'):
     """a frame temporary (FrameAlloc); the region is D + D' (s_conv2: 16 + 12 = 28; no long: twice D)"""
     A, B = frame_allocs(F)
-    d = A.get(size, kind); B.get(size, kind)
+    lab = FP_LABEL_HALF and not F.opt and any(l.startswith('L') and l.endswith(':') for l in F.lines)
+    d = A.get(size, kind); B.get(0 if lab else size, kind)   # (fpargf.c af_VNWNP: after a label the region is D alone)
     F.ftemp_max = max(getattr(F, 'ftemp_max', 0), A.depth + B.depth)
     return getattr(F, 'ftemp_top', 0) - d
 
@@ -414,7 +415,14 @@ def emit_operands(F, dest, ops):
         do('XWA', None); return
     for r, x in items:
         if kinds[r] == 'ld' and (r, x) not in held: do(r, x)
-    for r, x in items[1:] + items[:1]:
+    late = items[1:] + items[:1]
+    if XDE_ELEM_FIRST and len(ops) == 2 and not held and kinds['XBC'] == kinds['XDE'] == 'lda' and \
+            not isinstance(ops[0], tuple) and not isinstance(ops[1], tuple):
+        a_, b_ = fp_value_cast(ops[0]), fp_value_cast(ops[1])   # fpopa.c fa_m_GET, fpargf.c af_VNNNE: gd * gda[3] ->
+        if b_.k == 'load' and const_elem(b_.e) and C().strip(b_.e).k == 'index' and a_.k == 'load' and \
+                C().strip(a_.e).k == 'var':                     # lda XDE,_gda + 0x18 / lda XBC,_gd / lda XWA,..
+            late = [items[2], items[1], items[0]]
+    for r, x in late:
         if kinds[r] == 'lda' and (r, x) not in held: do(r, x)
     for r, x in held: do(r, x)
 
@@ -933,6 +941,8 @@ def elem_hoists(e):
     if hasattr(e, 'k'): visit(e, 0); C().walk(e, visit)
     return out
 
+FP_LABEL_HALF = False                                     # see temp()
+XDE_ELEM_FIRST = True                                     # see the address order above
 OPA_XIZ = True                                            # see opa_target
 
 def opa_target(F, lv):
