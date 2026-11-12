@@ -885,6 +885,9 @@ computed count (r1_06_03).  Gate clean.
 counter takes the lowest of BC, DE, HL that the body's element accesses at [i] leave free.  loopctr 22 -> 29 at none,
 random1 22 -> 23.  Gate clean.
 
+**Loop-free locals assigned before use** are register temporaries like initialised locals (a local touched by a loop
+stays with the older paths, after _frexp).  homes2a 16 -> 22, homes2b 7 -> 12 at none.  Gate clean.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

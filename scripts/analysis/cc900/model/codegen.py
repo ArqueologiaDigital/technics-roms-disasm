@@ -1520,6 +1520,7 @@ LH_STORE_ADDR = True
 LH_PK_ORDER = True
 L2_CHAR_SWAP = True
 LOOPCTR_FOR = True                                        # see edit_loopctr2.py
+LOOPCTR_BROAD = True                                      # see edit_regtemp_broad.py
 LOOPCTR = True
 SHIFT_COUNT_GUARD = True                                  # see edit_shift_count_guard.py                                            # see edit_loopctr.py                                       # see edit_l2_char_swap.py                                        # see edit_lh_pk_order.py                                      # plan_store_x's ADDR form (a pointer dividend)
 
@@ -11028,7 +11029,12 @@ def regtemp_candidates(F):
                 cw0 = strip(lp0.cond); st0 = []
                 walk(lp0.body, lambda n_, dd: st0.append(n_) if n_.k == 'incdec' and strip(n_.e).k == 'var' and strip(n_.e).decl is d0 else None)
                 ok0 = cw0.k == 'bin' and strip(cw0.l).k == 'load' and strip(strip(cw0.l).e).k == 'var' and strip(strip(cw0.l).e).decl is d0 and len(st0) == 1
-            if not ok0 or any(uses_decl(x, d0) for x in body[i + 3 + j:]): continue   #  wrong code in WA)
+            if not ok0 or any(uses_decl(x, d0) for x in body[i + 3 + j:]):
+                in_loop = []                                   # (broad form: a local assigned before use that no loop
+                for x in body[i + 1:]:                         #  touches -- homes2a / fpp10; _frexp's nn is bumped in a loop)
+                    walk(x, lambda n_, dd: in_loop.append(n_) if n_.k in ('for', 'while', 'do') and uses_decl(n_, d0) else None)
+                if not LOOPCTR_BROAD or in_loop: continue
+                lp0 = None
             i = i + 1 + j; c = type('C', (), {'var': d0, 'init': x0.e.r, 'k': 'decl', 'ctr_loop': lp0})()
         d = c.var
         if d.kind != 'local' or d.addr_taken or \
