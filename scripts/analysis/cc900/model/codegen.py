@@ -1282,6 +1282,15 @@ def lh_call_kinds(F, op, l, r):
         while x0.k == 'cast' and x0.kind in ('IntegralCast', 'NoOp', 'BitCast'): x0 = strip(x0.e)
         return x0.k == 'call' and not x0.args
     L, R = lk[0], rk[0]
+    def elem_ok(k): return k[0] != 'X' or (len(k) >= 4 and isinstance(k[2], str) and k[2].startswith('(') and k[3])
+    if not (elem_ok(lk) and elem_ok(rk)): return None
+    if LH_ELEM and 'X' in (L, R):
+        o = L if R == 'X' else R
+        if o not in ('K', 'G', 'M', 'P', 'D', 'X', 'F'): return None
+        if o == 'K' and (op == '*' or R != 'X'): return None
+        if o == 'F' and not nocall_args(l if L == 'F' else r): return None
+        return (lk, rk)
+    if 'X' in (L, R): return None
     if L == 'D' and R == 'D': return (lk, rk)
     if (L == 'F') == (R == 'F'): return None
     if (L == 'F' and not nocall_args(l)) or (R == 'F' and not nocall_args(r)): return None
@@ -1309,14 +1318,18 @@ def plan_lh_call(F):
             strip(x.e.l).decl.kind == 'global' and strip(x.e.l).ty.size == 4 and strip(x.e.r) is hits[0]]
     if len(tops) != 1: return
     n = hits[0]; lk, rk = lh_call_kinds(F, n.op, strip(n.l), strip(n.r)); ks = (lk[0], rk[0])
-    xiz = not ('K' in ks or 'M' in ks)
-    slot = 'D' in ks and ('F' in ks or ks == ('D', 'D'))
-    tmp = None
-    if slot:
-        from frontend import Decl, Type
-        tmp = Decl('__lhc', Type('int', 4, 2, spell='t'), '', 'local'); f.decls.append(tmp)
+    from frontend import Decl, Type
+    tmp = tix = None
+    if 'X' in ks:
+        xiz = True
+        slot = 'F' in ks or (ks[0] == 'X' and ks[1] == 'D')
+    else:
+        xiz = not ('K' in ks or 'M' in ks)
+        slot = 'D' in ks and ('F' in ks or ks == ('D', 'D'))
+    if slot: tmp = Decl('__lhc', Type('int', 4, 2, spell='t'), '', 'local'); f.decls.append(tmp)
+    if 'X' in ks: tix = Decl('__lhx', Type('int', 2, 2, spell='t'), '', 'local'); f.decls.append(tix)
     if xiz: F.xiz_vars.append('stores'); F.save_reg = 'XIZ'; F.emit('push', 'XIZ'); F.push = 4
-    F.lhc = {'node': id(n), 'slot': tmp}
+    F.lhc = {'node': id(n), 'slot': tmp, 'ix': tix}
 
 def lh_call(F, op, l, r):
     """the operands of a long helper planned by plan_lh_call (corpus/probes/evorder_ad.c, run 2026-11-10-17).  A call
@@ -1330,6 +1343,7 @@ def lh_call(F, op, l, r):
     ld XBC,(XSP+0x4) / ld XWA,(XIZ+0x4) / ld XBC,(XBC+0x4)).  True when it emitted them."""
     ks = lh_call_kinds(F, op, l, r)
     if ks is None: return False
+    if 'X' in (ks[0][0], ks[1][0]): return lh_elem(F, op, l, r, ks[0], ks[1])
     lk, rk = ks; L, R = lk[0], rk[0]; mul = op == '*'
     def ld(a, b): F.emit('ld', '%s,%s' % (a, b))
     def at(reg, k): return '(%s+%s)' % (reg, hx(k[2])) if k[2] else '(%s)' % reg
@@ -1363,6 +1377,81 @@ def lh_call(F, op, l, r):
     if mul or oside == 'XWA': ld('XWA', at('XIZ', ok_)); ld('XBC', S())
     else: ld('XWA', S()); ld('XBC', at('XIZ', ok_))
     return True
+
+LH_ELEM = True                                            # see lh_elem
+
+def lh_elem(F, op, l, r, lk, rk):
+    """the operands of a long helper with an element operand (corpus/probes/evorder_ad.c, run 2026-11-10-17): the
+    index is copied into a 2-byte frame temporary and scaled there, the base goes to XIZ (l_div_GX: ld WA,(c) /
+    ld (T),WA / ld WA,(T) / sla 0x2,WA / ld (T),WA / lda XIZ,_hla / ld XWA,(_gl) / ld BC,(T) / ld XBC,(XIZ+BC)).
+    The other operand's address is built in XDE first (a multiply: XBC) and read last; a call's result waits in a
+    4-byte temporary; a member through a pointer beside a left element takes XIZ and the element's base goes to the
+    4-byte temporary (l_div_XD).  Two elements: the left one's address is built directly.  A multiply puts the
+    element in XWA unless the other operand is a global or the element is the left one beside a pointer, member or
+    constant element.  True when it emitted them."""
+    L, R = lk[0], rk[0]; mul = op == '*'
+    def ld(a, b): F.emit('ld', '%s,%s' % (a, b))
+    T = lambda: '(XSP+%s)' % hx(F.lhc['ix'].slot + F.push)
+    S = lambda: '(XSP+%s)' % hx(F.lhc['slot'].slot + F.push)
+    def at(reg, k): return '(%s+%s)' % (reg, hx(k[2])) if k[2] else '(%s)' % reg
+    def call(x):
+        fam = gen(F, x, 'HL', 4)
+        if fam != 'HL': raise Unsupported('lh_elem: the call result')
+        flush_pops(F)
+    def dance(k, xiz=True):
+        ld('WA', k[2]); ld(T(), 'WA'); ld('WA', T()); F.emit('sla', '0x2,WA'); ld(T(), 'WA')
+        if xiz: F.emit('lda', 'XIZ,%s' % k[1])
+    if R == 'X':
+        o, ok_, ox = L, lk, l
+        A = 'XBC' if mul else 'XDE'                          # the other operand's address register
+        if o == 'P': ld(A, ok_[1])
+        elif o == 'D': ld('XWA', ok_[1]); F.emit('lda', '%s,XWA+%s' % (A, hx(ok_[2])))
+        elif o == 'M': F.emit('lda', '%s,%s' % (A, ok_[1][1:-1]))
+        elif o == 'X':
+            ld('WA', ok_[2]); F.emit('sla', '0x2,WA'); F.emit('lda', 'XBC,%s' % ok_[1]); F.emit('lda', '%s,XBC+WA' % A)
+        elif o == 'F': call(ox); ld(S(), 'XHL')
+        dance(rk)
+        if o == 'G': ld('XWA', ok_[1]); ld('BC', T()); ld('XBC', '(XIZ+BC)'); return True
+        if mul and o in ('P', 'D', 'M', 'X'): ld('WA', T()); ld('XWA', '(XIZ+WA)'); ld('XBC', '(XBC)'); return True
+        if mul and o == 'F': ld('WA', T()); ld('XWA', '(XIZ+WA)'); ld('XBC', S()); return True
+        ld('BC', T())
+        if o == 'K': ld('XWA', hx(fold(ox).value & 0xffffffff))
+        elif o == 'F': ld('XWA', S())
+        else: ld('XWA', '(XDE)')
+        ld('XBC', '(XIZ+BC)'); return True
+    o, ok_, ox = R, rk, r                                    # the element on the left
+    if o == 'F': call(ox); ld(S(), 'XHL')
+    if o == 'D':
+        dance(lk, xiz=False); F.emit('lda', 'XWA,%s' % lk[1]); ld(S(), 'XWA'); ld('XIZ', ok_[1])
+        if mul: ld('XBC', S()); ld('DE', T()); ld('XWA', at('XIZ', ok_)); ld('XBC', '(XBC+DE)')
+        else: ld('XWA', S()); ld('DE', T()); ld('XWA', '(XWA+DE)'); ld('XBC', at('XIZ', ok_))
+        return True
+    dance(lk)
+    if o == 'G': ld('XBC', ok_[1]); ld('WA', T()); ld('XWA', '(XIZ+WA)'); return True
+    if o == 'F': ld('WA', T()); ld('XWA', '(XIZ+WA)'); ld('XBC', S()); return True
+    if o == 'P':
+        if mul: ld('XWA', ok_[1]); ld('BC', T()); ld('XWA', '(XWA)'); ld('XBC', '(XIZ+BC)')
+        else: ld('XBC', ok_[1]); ld('WA', T()); ld('XWA', '(XIZ+WA)'); ld('XBC', '(XBC)')
+        return True
+    if o == 'M':
+        if mul: ld('BC', T()); ld('XWA', ok_[1]); ld('XBC', '(XIZ+BC)')
+        else: ld('WA', T()); ld('XWA', '(XIZ+WA)'); ld('XBC', ok_[1])
+        return True
+    raise Unsupported('lh_elem: unfitted pair')
+
+LH_PLAIN_ORDER = True                                     # see edit_lh_plain_order.py
+
+def lh_plain(x):
+    """'G' a plain global variable, 'M' another global memory operand (a constant element, a static member), 'K' a
+    constant; None otherwise"""
+    x0 = strip(x)
+    while x0.k == 'cast' and x0.kind in ('IntegralCast', 'NoOp') and strip(x0.e).ty is not None and strip(x0.e).ty.size == 4: x0 = strip(x0.e)
+    if fold(x0).k == 'const' and fold(x0).value is not None: return 'K'
+    if x0.k != 'load': return None
+    v = strip(x0.e)
+    if v.k == 'var': return 'G' if v.decl.kind == 'global' and not getattr(v.decl, 'reg', None) else None
+    if v.k in ('member', 'index') and global_offset(v) is not None and global_offset(v)[0] != '__param__': return 'M'
+    return None
 
 def lh_member_kinds(F, op, l, r):
     """(D kind, other kind, D on the right) for a long helper with one member-through-a-pointer operand and a constant,
@@ -3900,6 +3989,10 @@ def gen_long_helper(F, e, l, r, fam, signed):
         else: F.emit('ld', 'XWA,%s' % ls); F.emit(*rs_ld)
     elif F.xiz_vars and any(d is not None and getattr(d, 'kind', None) == 'local' for d in F.xiz_vars):
         F.emit(*rs_ld); F.emit('ld', 'XWA,%s' % ls)
+    elif LH_PLAIN_ORDER and not F.opt and not F.adecl and lh_plain(r) == 'G' and lh_plain(l) in ('K', 'M') and not (e.op == '*' and lh_plain(l) == 'K'):
+        F.emit(*rs_ld); F.emit('ld', 'XWA,%s' % ls)     # (l_div_KG: ld XBC,(_hl) / ld XWA,0x7)
+    elif LH_PLAIN_ORDER and not F.opt and not F.adecl and e.op == '*' and lh_plain(l) == 'M' and lh_plain(r) == 'M':
+        F.emit('ld', 'XWA,%s' % rs); F.emit('ld', 'XBC,%s' % ls)   # (l_mul_EE: the right element into XWA)
     else:
         F.emit('ld', 'XWA,%s' % ls); F.emit(*rs_ld)
     F.emit('cal', 'C9H_' + name)

@@ -828,6 +828,10 @@ below the frame (`l_div_FD: dec 0x4,XSP / push XIZ / cal _gfl / ld (XSP+0x4),XHL
 statement `G = A op B` per function, at none only.  evorder_ad 1010 -> 1039 at none.  Gate clean (semcheck 110, the
 same verdicts).
 
+**Elements as long helper operands** (`lh_elem`): the index is copied into a 2-byte frame temporary and scaled there,
+the base goes to XIZ; with the order of plain long helper operands fixed too, evorder_ad reads 1080 of 1116 at none
+(1039 before), stdiv 408 of 750, evorder_lh 284 of 507.  Gate clean (semcheck 110, the same verdicts).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
