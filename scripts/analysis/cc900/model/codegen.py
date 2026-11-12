@@ -1558,7 +1558,7 @@ STORE_DIV_DD = True                                       # see store_div: a mem
 SP_CONST_ELEM = True                                      # a long helper's constant-element operand in a planned store
 LH_STORE_AFTER = True                                     # a long helper's store through p->m / p[k]: the address after the call
 LH_MEMBER_K = True                                        # lh_member with a constant divisor (without -O)
-HELPER_IS_CALL = False                                    # a loop counter live across a long helper is homed like across a call
+HELPER_IS_CALL = True                                     # a loop counter live across a long helper is homed like across a call
 LOOPCTR = True
 SHIFT_COUNT_GUARD = True                                  # see edit_shift_count_guard.py                                            # see edit_loopctr.py                                       # see edit_l2_char_swap.py                                        # see edit_lh_pk_order.py                                      # plan_store_x's ADDR form (a pointer dividend)
 
@@ -4345,8 +4345,10 @@ def gen_long_helper(F, e, l, r, fam, signed):
                 any(d is not None and getattr(d, 'kind', None) == 'local' for d in F.xiz_vars):
             F.emit(*rs_ld); F.emit(*lh_ls_ld(F, l, ls))
         else: F.emit(*lh_ls_ld(F, l, ls)); F.emit(*rs_ld)
-    elif F.xiz_vars and any(d is not None and getattr(d, 'kind', None) == 'local' for d in F.xiz_vars):
-        F.emit(*rs_ld); F.emit(*lh_ls_ld(F, l, ls))
+    elif F.xiz_vars and any(d is not None and getattr(d, 'kind', None) == 'local' for d in F.xiz_vars) and \
+            (not HELPER_IS_CALL or F.opt or F.adecl or family_of(ls) or family_of(rs) or any(
+                d is not None and getattr(d, 'kind', None) == 'local' and d.ty.size == 4 for d in F.xiz_vars)):   # (r3_02_00: only a
+        F.emit(*rs_ld); F.emit(*lh_ls_ld(F, l, ls))                                     #  counter in IZ: XWA first)
     elif LH_PLAIN_ORDER and not F.opt and not F.adecl and lh_plain(r) == 'G' and lh_plain(l) in ('K', 'M') and not (e.op == '*' and lh_plain(l) == 'K'):
         F.emit(*rs_ld); F.emit(*lh_ls_ld(F, l, ls))     # (l_div_KG: ld XBC,(_hl) / ld XWA,0x7)
     elif LH_PLAIN_ORDER and not F.opt and not F.adecl and e.op == '*' and lh_plain(l) == 'M' and lh_plain(r) == 'M':
@@ -10662,6 +10664,17 @@ def drop_dead_call_stores(f, opt, adecl):
         if any(uses_decl(x, d) for x in body[i + 1:]): continue
         st.e = e.r
 
+def lh_plain_operand(x):
+    """a long helper operand that needs no address register: a constant, a global, a static member, a constant element"""
+    x = strip(x)
+    while x.k == 'cast' and x.kind in ('IntegralCast', 'NoOp', 'BitCast'): x = strip(x.e)
+    if fold(x).k == 'const' and fold(x).value is not None: return True
+    if x.k != 'load': return False
+    v = strip(x.e)
+    if v.k == 'var': return v.decl.kind == 'global'
+    return v.k in ('member', 'index') and global_offset(v) is not None and global_offset(v)[0] != '__param__' and \
+        not (v.k == 'index' and fold(v.idx).k != 'const')
+
 def merge_address_inits(f):
     """`T *p; ... p = (T *)&x;` with no use of p before: the assignment becomes p's initial value, so that a single
     use folds (_tan: p = (unsigned short *)&x; ... p[3] -> ld WA,(XSP+0x3a))"""
@@ -11596,7 +11609,9 @@ def regtemp_candidates(F):
         walk(n, lambda m, dep: out.append(m) if m.k == 'call' or fpgen.is_fp_op(m) or (
             HELPER_IS_CALL and not F.opt and not F.adecl and getattr(n, 'k', None) in ('for', 'while', 'do') and m.k == 'bin' and
             m.op in ('*', '/', '%') and getattr(m, 'ty', None) is not None and m.ty.size == 4 and m.ty.kind == 'int' and
-            has_helper_call(m)) else None)                 # (a loop counter across a long helper: IZ, random r3_02_00)
+            has_helper_call(m) and lh_plain_operand(m.l) and lh_plain_operand(m.r)) else None)   # (a loop counter across a
+                                                           # long helper of plain operands: IZ, random r3_02_00; an operand
+                                                           # that needs XIZ keeps the counter in its slot, r2_03_10)
         return out
     for i, c in enumerate(body):
         if c.k != 'decl': continue

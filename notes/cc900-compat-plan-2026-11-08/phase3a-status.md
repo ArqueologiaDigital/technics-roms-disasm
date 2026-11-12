@@ -985,6 +985,13 @@ call's.  The random corpora read 79 of 800 at none.  A second rule tried with it
 helper homed in IZ, as across a call -- is in the tree switched off (`HELPER_IS_CALL`): the oracle keeps the counter in
 its slot when the helper's operand needs XIZ, and the model's operand order changes once IZ is saved.
 
+**Batch 46 (2026-11-12): a loop counter across a long helper.**  Without -O a loop counter that is live across a long
+* / % helper whose operands are plain (a constant, a global, a static member, a constant element) is homed in IZ, as
+across a call; when the helper's operand needs XIZ the counter stays in its slot.  The helper then loads XWA first
+unless an operand is a register or a long local is homed in XIZ.  The random corpora read 83 of 800 at none (79
+before).  The whole-ledger check on the scratch copy caught this batch's first form before it reached the tree: it
+took six micro functions (`mul_l_loc` and its five siblings) out of exactness at none.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
