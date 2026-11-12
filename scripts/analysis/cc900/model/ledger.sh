@@ -6,7 +6,17 @@
 # (varargs.c's stdarg.h macros are what the oracle compiled; clang's builtin stdarg.h is not).  Prints "oracle | corpus | TOTAL line" rows.
 O=${ORACLE:-$HOME/compartilhado/cc900-oracle/runs}
 C=${LIBCOPY:-$HOME/compartilhado/tmp/cc900-corpus-libsrc97}
-row() { printf '%s | %s | ' "$1" "$2"; shift 2; python3 -I -B model/score.py "$@" 2>&1 | tail -1; }
+# The rows are independent: LEDGER_JOBS of them (default 8) run at a time, each into its own numbered file, and the
+# files are printed in row order at the end (one core took about 7.5 minutes for the 247 rows on 2026-11-12).
+J=${LEDGER_JOBS:-8}; LT=$(mktemp -d "${TMPDIR:-/tmp}/cc900-ledger-XXXXXX"); N=0
+ledger_row() {
+  N=$((N + 1)); f=$(printf '%s/%04d' "$LT" "$N")
+  ( printf '%s | %s | ' "$1" "$2"; shift 2; python3 -I -B model/score.py "$@" 2>&1 | tail -1 ) > "$f" &
+  [ $((N % J)) -eq 0 ] && wait
+  return 0
+}
+# (semcheck.py reads this script's rows by replacing the one-line definition below: keep it on one line)
+row() { ledger_row "$@"; }
 for c in v423/none ide2003/none v110/none v423/O3XS v423/Xr v423/O3XSXr; do
   row "run 2026-11-08-7-micro, $c" "micro/*.c" "$O/2026-11-08-7-micro/out/$c" corpus/micro/*.c
 done
@@ -284,3 +294,6 @@ done
 for c in none Xr O3XSXr; do
   row "run 2026-11-08-9-micro-optloops, v423/$c" "micro/opt_loops.c" "$O/2026-11-08-9-micro-optloops/out/v423/$c" corpus/micro/opt_loops.c
 done
+wait
+for f in "${LT:?}"/*; do [ -f "$f" ] && cat "$f"; done
+rm -rf -- "${LT:?}"

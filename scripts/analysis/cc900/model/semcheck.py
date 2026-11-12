@@ -540,14 +540,57 @@ def data_blocks_of(want, unit):
 
 # ---------------------------------------------------------------- driving
 
+_CACHE = None; _TOOLS = None
+
+def cache_key(src_bytes, oracle_bytes, name, mlines, fa, trials, limit, seed0):
+    """what a verdict depends on: the C file, the oracle's listing file, the function, the model's listing of it, the
+    convention, the trial parameters, and this checker's own code (semcheck.py, interp.py, listing.py)"""
+    import hashlib
+    global _TOOLS
+    if _TOOLS is None:
+        h = hashlib.sha256()
+        for t in ('semcheck.py', 'interp.py', 'listing.py'):
+            tp = os.path.join(HERE, t)
+            if os.path.exists(tp): h.update(open(tp, 'rb').read())
+        _TOOLS = h.hexdigest()
+    h = hashlib.sha256()
+    for part in (_TOOLS.encode(), src_bytes, oracle_bytes, name.encode(), '\n'.join(mlines or ['<none>']).encode('latin-1', 'replace'),
+                 repr((bool(fa), trials, limit, seed0)).encode()):
+        h.update(hashlib.sha256(part).digest())
+    return h.hexdigest()
+
+def cache_load():
+    """SEMCHECK_CACHE names a JSON-lines file of {key: [verdict, reason]}: a function whose model listing, oracle
+    listing and source are unchanged keeps its verdict without being simulated again (the whole --ledger --library
+    check took about 11 minutes on 2026-11-12; a batch changes a few dozen functions).  Unset: no cache."""
+    global _CACHE
+    if _CACHE is not None: return _CACHE
+    _CACHE = {}
+    path = os.environ.get('SEMCHECK_CACHE')
+    if path and os.path.exists(path):
+        import json
+        for line in open(path, encoding='utf-8'):
+            try: k, v = json.loads(line)
+            except ValueError: continue
+            _CACHE[k] = v
+    return _CACHE
+
+def cache_put(key, v, why):
+    path = os.environ.get('SEMCHECK_CACHE')
+    if not path: return
+    import json
+    with open(path, 'a', encoding='utf-8') as fh: fh.write(json.dumps([key, [v, why]]) + '\n')   # (one short line per append)
+
 def run_set(odir, files, opt, adecl, personality, defines, incs, trials, limit, only=None, verbose=False, seed0=1):
     """-> list of (file, function, verdict, reason)"""
     import score
     res = []
+    cache = cache_load()
     for f in files:
         op = score.oracle_path(odir, f)
         if not os.path.exists(op): continue
         want = listing.split(open(op, encoding='latin-1').read())
+        src_b = open(f, 'rb').read() + repr((sorted(defines), sorted(incs), opt, personality)).encode(); ora_b = open(op, 'rb').read()
         try: unit = frontend.load(f, defines, incs, adecl=adecl)
         except Exception as ex:
             res.append((os.path.basename(f), '*', 'not checked', 'front end failed')); continue
@@ -557,10 +600,14 @@ def run_set(odir, files, opt, adecl, personality, defines, incs, trials, limit, 
             fa = adecl or getattr(fn, 'adecl_attr', False)
             name = ('.' if fa else '_') + fn.name
             if only and fn.name not in only: continue
-            try:
-                v, why = check_function(fn, name, got.get(name), want.get(name), unit, blocks, fa, trials, limit, seed0)
-            except Exception as ex:
-                v, why = 'not checked', 'semcheck error: %s: %s' % (type(ex).__name__, str(ex)[:80])
+            key = cache_key(src_b, ora_b, name, got.get(name), fa, trials, limit, seed0)
+            if key in cache: v, why = cache[key]
+            else:
+                try:
+                    v, why = check_function(fn, name, got.get(name), want.get(name), unit, blocks, fa, trials, limit, seed0)
+                except Exception as ex:
+                    v, why = 'not checked', 'semcheck error: %s: %s' % (type(ex).__name__, str(ex)[:80])
+                cache_put(key, v, why)
             res.append((os.path.basename(f), name, v, why))
             if verbose: print('  %-24s %-24s %s %s' % (os.path.basename(f), name, v, why or ''))
     return res

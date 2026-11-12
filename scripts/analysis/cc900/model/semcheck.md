@@ -169,3 +169,13 @@ difference counts.
   that only shows on long loops.
 - Signed overflow is undefined in C, but the comparison treats the oracle's behaviour as the reference.  Read the
   modes in the reason before calling a DIFFERENT a bug.
+
+## Verdict cache (`SEMCHECK_CACHE`)
+
+With the environment variable `SEMCHECK_CACHE` naming a JSON-lines file, a verdict is stored under a key made of the C
+source (with its defines, include paths, option set and personality), the oracle's listing file, the function's name,
+the model's listing of that function, the calling convention, the trial count, step limit and seed, and the checker's
+own code (`semcheck.py`, `interp.py`, `listing.py`).  A function whose key is in the file is not simulated again.  The
+file is scratch: delete it to check everything from nothing.  Measured on 2026-11-12 over `--ledger --library` (235
+rows, 48,915 keys): 12 min 19 s with an empty file, 1 min 58 s with a full one, the same 73 DIFFERENT verdicts and the
+same results table both times.  Without the variable nothing is cached.
