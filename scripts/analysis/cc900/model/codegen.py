@@ -4729,6 +4729,33 @@ COND_FLUSH_POPS = True                                    # see gen_cond_false /
 UIDX32_EXPR = True                                        # see elem_addr (r3_04_11)
 CHAR_PRODUCT_DIV_GUARD = True                             # see gen_bin (r3_07_12)
 VALUE_FIRST_CHIDX = True                                  # see gen_stmt's assignment (r1_02_19)
+POP_LAZY = True                                           # see stmt_touches_stack
+
+def stmt_touches_stack(F, e):
+    """does the expression statement read or write the frame -- a parameter or local in memory, or double work
+    (frame temporaries)?  Without -O the pops of earlier calls wait until one does (random r2_07_00: gl2 = rl(gl2);
+    gu = t; gul %= 16UL; vp(gs.p) releases them only after cal _vp)"""
+    hit = []
+    def v(n, d):
+        if n.k == 'var' and n.decl.kind in ('param', 'local') and not getattr(n.decl, 'reg', None): hit.append(n)
+        elif fpgen.is_fp_op(n) or fpgen.is_fp(getattr(n, 'ty', None)): hit.append(n)
+        elif n.k == 'bin' and n.op in ('*', '/', '%') and getattr(n, 'ty', None) is not None and n.ty.size == 4: hit.append(n)
+    if hasattr(e, 'k'): v(e, 0); walk(e, v)
+    return bool(hit)
+
+def later_call_absorbs(F):
+    """is there a call statement later in this block with nothing before it that touches the frame?  Then the pending
+    pops merge into its cleanup; otherwise they are released at once (random r1_03_15: gpi = rpi(gps->i) with no call
+    after it -> cal _rpi / inc 0x2,XSP / ld (_gpi),XHL)"""
+    for x in getattr(F, 'cur_rest', None) or []:
+        if x.k != 'expr': return False
+        e = strip(x.e)
+        c = strip(e.r) if e.k == 'bin' and e.op == '=' else e
+        while c.k == 'cast': c = strip(c.e)
+        if c.k == 'call': return bool(c.args) and not fpgen.is_fp(getattr(c, 'ty', None))   # (r4_03_19: v0() absorbs nothing)
+        if nodes_in(e, 'call') or stmt_touches_stack(F, e): return False
+    return False
+
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
 SHIFT_COUNT_EXPR = True                                   # see the shift paths (r1_03_04, r1_03_06)
@@ -6227,6 +6254,13 @@ def pointer_pair_opassign(F, e, lv, r, heavy, size, op):
     F.emit(SIMPLE_OPS[op], '%s,%s' % (t, FAM[f2][size]))
     return True
 
+REM_POW2_AND = True                                       # an unsigned long %= 2^n in memory is an and (without -O)
+
+def N_load_of(lv):
+    from frontend import N
+    lv = strip(lv)
+    return N('load', e=lv, ty=lv.ty)
+
 def gen_opassign(F, e):
     """x op= y as a statement (assign.c)"""
     size = strip(e.l).ty.size; op = e.op
@@ -6238,6 +6272,12 @@ def gen_opassign(F, e):
                                                                     # (_ungetc: orw (XWA+0xa),0x4)
         t = lvalue(F, e.l)                                # _ultoa: *p += 39 -> addb (XWA),0x27
         F.emit(SIMPLE_OPS[op] + ('b' if size == 1 else 'w'), '%s,%s' % (t, imm_of(fold(r), size))); return t
+    if REM_POW2_AND and op == '%' and size == 4 and not signed and not F.opt and not F.adecl and fold(e.r).k == 'const' and \
+            fold(e.r).value is not None and fold(e.r).value >= 2 and fold(e.r).value & (fold(e.r).value - 1) == 0 and \
+            not getattr(F, 'l2', None):
+        lm_ = mem_operand(F, N_load_of(e.l)) if strip(e.l).k in ('var', 'index', 'member') else None
+        if lm_ is not None and lm_.startswith('(_'):       # random r2_07_00: gul %= 16UL -> ld XWA,0xf / and (_gul),XWA
+            F.emit('ld', 'XWA,%s' % hx(fold(e.r).value - 1)); F.emit('and', '%s,XWA' % lm_); return lm_
     if INCW_GLOBAL and op in ('+', '-') and size == 2 and fold(r).k == 'const' and fold(r).value is not None and \
             1 <= (fold(r).value & 0xffff) <= 8 and strip(e.l).k == 'var' and strip(e.l).decl.kind == 'global' and \
             not getattr(strip(e.l).decl, 'reg', None) and not F.adecl and not getattr(F, 'l2', None):
@@ -6464,7 +6504,9 @@ def store_global(F, name, e, size):
     if rc is not None and rc.k == 'const' and rc.value is not None:   # _exp, _tan: errno = ERANGE -> ldw (_errno),0x22
         F.emit('ld' + ('b' if size == 1 else 'w'), '(_%s),%s' % (name, imm_of(rc, size))); return
     if strip(e).k == 'call' and not has_helper_call(strip(e).fn):   # abi returns.c use_i: cal _x_i / ld (_gi),HL
-        gen_call(F, strip(e)); flush_pops(F); F.emit('ld', '(_%s),%s' % (name, FAM['HL'][size])); return
+        gen_call(F, strip(e))                              # (random r3_02_02: gl2 = rl(..); v1(..) -> cal _rl /
+        if not (POP_LAZY and not F.opt and not F.adecl and later_call_absorbs(F)): flush_pops(F)   # ld (_gl2),XHL / .. / inc 0x6,XSP:
+        F.emit('ld', '(_%s),%s' % (name, FAM['HL'][size])); return        # the pops wait for the next stack access)
     rv = regvar_of(getattr(strip(e), 'e', e)) if strip(e).k == 'load' else None
     if rv is not None and rv.ty.size == size:          # ra_twice: ld (_ga),HL
         if FAM[rv.reg][size] == 'QIZH':                # lo_c_Gcs: ld A,QIZH / ld (_hc2),A (no ld (mem),QIZH)
@@ -7086,7 +7128,8 @@ def gen_stmt(F, s, last):
         return
     if s.k == 'expr' and F.pending and POP_MERGE_MAX and POP_FLUSH_NOCALL and not nodes_in(s.e, 'call') and \
             not (strip(s.e).k == 'bin' and strip(s.e).op == '=' and strip(strip(s.e).l).k == 'var' and
-                 getattr(strip(strip(s.e).l).decl, 'reg', None)):
+                 getattr(strip(strip(s.e).l).decl, 'reg', None)) and \
+            not (POP_LAZY and not F.opt and not F.adecl and not stmt_touches_stack(F, s.e) and later_call_absorbs(F)):
         flush_pops(F)                                      # random r1_02_19: vd(gd2); gua[a] = ... -> cal _vd /
                                                            # inc 0x8,XSP / ld A,(XSP+0x4): the pops merge across
                                                            # statements that call, and across an assignment to a

@@ -958,6 +958,12 @@ the initialiser of an int local homed in IZ that reads through a plain pointer i
 `gps->i = gpi[3] % gi` (the pointer in XWA, the division in XBC).  The random corpora read 73 of 800 at none.  This
 batch was checked with the whole ledger on the scratch copy before it reached the tree.
 
+**Batch 42 (2026-11-12): pops that wait for a later call; an unsigned long remainder by 2^n.**  Without -O the stack
+arguments of `g = call(..)` and of earlier calls are not released while a later call statement with arguments follows
+in the block and nothing in between touches the frame; they merge into that call's cleanup (`cal _rl / ld (_gl2),XHL /
+.. / cal _v1 / inc 0x6,XSP`).  With no such call they are released at once, as before.  An unsigned long `%= 2^n` on a
+global is `ld XWA,2^n - 1 / and (_g),XWA`.  The random corpora read 77 of 800 at none (73 before).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
