@@ -251,6 +251,11 @@ for c in none O3XS; do    # a bare-declared loop counter (corpus/probes/loopctr.
 done
 row "run 2026-11-12-7-micro-loopctr, v423/Xr" "probes/loopctr.c" "$O/2026-11-12-7-micro-loopctr/out/v423/Xr/probes" corpus/probes/loopctr.c --opt none --adecl
 row "run 2026-11-12-7-micro-loopctr, v423/O3XSXr" "probes/loopctr.c" "$O/2026-11-12-7-micro-loopctr/out/v423/O3XSXr/probes" corpus/probes/loopctr.c --opt O3XS --adecl
+for c in none O3XS; do    # statement stores of a computed value read through an address (corpus/probes/stvx.c)
+  row "run 2026-11-12-8-micro-stvx, v423/$c" "probes/stvx.c" "$O/2026-11-12-8-micro-stvx/out/v423/$c/probes" corpus/probes/stvx.c --opt $c
+done
+row "run 2026-11-12-8-micro-stvx, v423/Xr" "probes/stvx.c" "$O/2026-11-12-8-micro-stvx/out/v423/Xr/probes" corpus/probes/stvx.c --opt none --adecl
+row "run 2026-11-12-8-micro-stvx, v423/O3XSXr" "probes/stvx.c" "$O/2026-11-12-8-micro-stvx/out/v423/O3XSXr/probes" corpus/probes/stvx.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do

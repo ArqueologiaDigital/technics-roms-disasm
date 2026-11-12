@@ -809,6 +809,12 @@ def gen(F, e, fam, size, then_ret=False, store=False):
                 and iv.ty.signed:                          # (r3_07_07: an unsigned index is zero-extended whole)
             touch_home(F, iv)                              # (r3_07_07: the home is loaded first; r3_04_06: a return
             X = FAM[fam][4]                                # random r1_00_00: char *u = &gca[t], t in IZ ->   zero-extends)
+            if iv.reg == fam:                              # (the index in WA itself: lda XWA,_gca would overwrite it --
+                if held_after(F, fam, e): raise Unsupported('an element address over its index')   # wrong code before;
+                T = unread_free(F, {fam}) if STVX else None   # -Xr sp_GA: lda XBC,_vca / exts XWA / add XWA,XBC)
+                if T is None: raise Unsupported('an element address over its index')
+                F.emit('lda', '%s,_%s' % (FAM[T][4], b.decl.name)); F.emit('exts', X); F.emit('add', '%s,%s' % (X, FAM[T][4]))
+                return fam
             F.emit('lda', '%s,_%s' % (X, b.decl.name))     # lda XWA,_gca / lda XWA,XWA+IZ
             F.emit('lda', '%s,%s+%s' % (X, X, FAM[iv.reg][2])); return fam
     if ADDR_ELEM_WA and e.k == 'addr' and strip(e.e).k == 'index' and fam == 'WA' and not F.opt and size == 4:
@@ -4153,6 +4159,10 @@ def gen_shift_count(F, r):
     IZ -> ld WA,IZ / and WA,0x7)"""
     rv = [regvar_of(strip(x.e)) for x in loads_in(r)]
     if rv and all(v is not None and v.ty.size == 2 for v in rv): return gen(F, r, 'WA', 2)   # (-O3 -XS r1_09_14: t in BC -> ld WA,BC)
+    lds = loads_in(r)                                    # an int parameter in memory: the count at its width too
+    if STVX and lds and all(z.ty.size == 2 and strip(z.e).k == 'var' and strip(z.e).decl.kind == 'param' and
+                            not getattr(strip(z.e).decl, 'reg', None) for z in lds):
+        return gen(F, r, 'WA', 2)                        # (probes/stvx.c sx_i_GS: ld WA,(XSP+0x4) / and WA,0x7)
     return gen(F, narrow(r, 1), 'WA', 1)
 
 LONG_HELPER_ORDER = True                                  # see long_helper_order
@@ -5654,7 +5664,8 @@ def elem_addr(F, lv, kind):
         if esz == 1:
             if plain or F.opt: idx_into('BC')
             else: idx_into('WA'); F.emit('ld', 'BC,WA')
-            F.emit('extz', 'XBC')
+            ii_ = unpromote(lv.idx)                        # (-Xr: a signed index is sign-extended, ai_c_p_div: exts XBC /
+            F.emit('exts' if STVX and F.adecl and ii_.ty is not None and ii_.ty.signed and ii_.ty.size == 2 else 'extz', 'XBC')
         elif getattr(F, 'force_base', None) and esz == 4:  # ai_l_p_div: ld WA,(i) / exts XWA / sll 0x2,XWA /
             B = F.force_base                               # ld XIZ,XWA / add XIZ,(p) (-O3 -XS too)
             idx_into('WA'); F.emit('exts', 'XWA'); scale32(F, 'XWA', esz); F.emit('ld', '%s,XWA' % B)
@@ -6414,6 +6425,10 @@ def store_global(F, name, e, size):
             getattr(xv.decl, 'reg', None) == 'XIZ':
         F.emit('ld', '(_%s),XIZ' % name); return         # lo_l_Gcs: ld (_hl2),XIZ (not through XWA)
     F.store_from = None
+    cp = cps_shape(F, e) if STVX and size == 4 else None
+    if cp is not None and cps_free(F, cp) and unread_free(F, {'WA'}) == 'BC':
+        cps_emit(F, cp, 'BC', 'WA')                        # probes/stvx.c sp_GS / sp_GA: ld XBC,(_vs + 0x8) /
+        F.emit('ld', '(_%s),XWA' % name); return           # ld WA,(b) / exts XWA / add XWA,XBC / ld (_gp),XWA
     work = 'WA'
     if getattr(F, 'tfam', None) and size == 1 and strip(e).k in ('bin', 'cast'):
         # after an R6 loop (opt_temps.c ot_cnt_abn: gc = *a + *b -> ld C,(XBC) / add C,(XWA)): the first of WA, BC,
@@ -7194,8 +7209,8 @@ def gen_stmt(F, s, last):
                 for d in list(F.f.params) + list(F.f.decls):
                     r_ = getattr(d, 'reg', None)
                     if r_ in FAM and d not in F.dead and clobbers(F.lines[nl:], '(%s)' % (FAM[r_].get(4) or r_)) and \
-                            held_after(F, r_, s.e):
-                        raise Unsupported('store address over a live register')
+                            (held_after(F, r_, s.e) or (STVX and uses_decl(s.e.r, d))):
+                        raise Unsupported('store address over a live register')   # (-Xr sx_i_QS: b in WA, read by the value)
         rv = regvar_of(strip(s.e.r).e) if strip(s.e.r).k == 'load' else None
         if rv is not None and rv.ty.size == size:
             F.emit('ld', '%s,%s' % (t, FAM[rv.reg][size])); return
@@ -10765,6 +10780,7 @@ def store_plan(F, lv, rv, size):
         return False                                       # (-O: a pointer run keeps its register: _fassign, _ungetc)
     lk = sp_lvalue_kind(F, lv)
     if lk is None: return False
+    if STVX and stvx_plan(F, lk, rv, size): return True
     vk = sp_value_kind(F, rv, size)
     if vk is None: return False
     L = lk[0]
@@ -10865,6 +10881,193 @@ def store_plan(F, lv, rv, size):
         else: raise Unsupported('store_plan: the value landed in %s, not %s [%s %s]' % (fam, V, L, vk))
     if clobbers(F.lines[n1:], t): raise Unsupported('store_plan: the value overwrote the address [%s %s]' % (L, vk))
     F.emit('ld', '%s,%s' % (t, FAM[V][size])); return True
+
+def cps_shape(F, e):
+    """a char pointer sum stored whole: &gca[b] (('lda', '_gca'), idx) or a static member's char pointer plus b
+    (('ld', '(_gs + 0x8)'), idx), b an int: idx ('M', mem) a signed int in memory, ('R', d) a parameter in WA that dies
+    here (-Xr); None otherwise"""
+    x = strip(e)
+    while x.k == 'cast' and x.kind in ('NoOp', 'BitCast'): x = strip(x.e)
+    if x.ty is None or not x.ty.is_ptr() or getattr(x.ty, 'base', None) is None or x.ty.base.size != 1: return None
+    if x.k == 'addr' and strip(x.e).k == 'index':
+        b = strip(strip(x.e).base)
+        while b.k in ('decay', 'cast', 'noop') and getattr(b, 'e', None) is not None: b = strip(b.e)
+        if not (b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array'): return None
+        base = ('lda', '_' + b.decl.name); ii = strip(strip(x.e).idx)
+    elif x.k == 'bin' and x.op == '+':
+        pm = mem_operand(F, x.l) if strip(x.l).k == 'load' and strip(strip(x.l).e).k == 'member' else None
+        if pm is None or not pm.startswith('(_') or ' + ' not in pm: return None
+        base = ('ld', pm); ii = strip(x.r)
+    else: return None
+    while ii.k == 'cast' and ii.kind in ('NoOp',): ii = strip(ii.e)
+    if ii.k != 'load' or strip(ii.e).k != 'var' or ii.ty is None or ii.ty.size != 2 or not ii.ty.signed: return None
+    d = strip(ii.e).decl
+    if getattr(d, 'reg', None):
+        if not (F.adecl and d.reg == 'WA' and d.kind == 'param' and d not in F.dead and not uses_after_stmt(F, d)):
+            return None
+        return base, ('R', d)
+    m = mem_operand(F, ii)
+    return (base, ('M', m)) if m is not None and m.startswith('(') else None
+
+def cps_emit(F, sh, B, R):
+    """emit a cps_shape sum: the base into XB first, then the index in R, sign-extended in WA and zero-extended
+    elsewhere (probes/stvx.c sp_GS: ld XBC,(_vs + 0x8) / ld WA,(b) / exts XWA / add XWA,XBC; sp_MS: ld XWA,(_vs + 0x8) /
+    ld BC,(b) / extz XBC / add XBC,XWA); returns R"""
+    base, idx = sh
+    F.emit(base[0], '%s,%s' % (FAM[B][4], base[1]))
+    if idx[0] == 'M': F.emit('ld', '%s,%s' % (FAM[R][2], idx[1]))
+    F.emit('exts' if R == 'WA' else 'extz', FAM[R][4]); F.emit('add', '%s,%s' % (FAM[R][4], FAM[B][4]))
+    if idx[0] == 'R': F.dead.add(idx[1])
+    return R
+
+def unread_free(F, avoid):
+    """the first of BC, DE, HL outside avoid whose register variable (if any) is not read again (-Xr sp_GA: c in BC,
+    never read: lda XBC,_vca)"""
+    for r in ('BC', 'DE', 'HL'):
+        if r in avoid: continue
+        if not any(getattr(d, 'reg', None) == r and d not in F.dead and uses_after_stmt(F, d)
+                   for d in list(F.f.params) + list(F.f.decls)): return r
+    return None
+
+def cps_free(F, sh):
+    """no register variable but the dying index parameter is still read"""
+    ip = sh[1][1] if sh[1][0] == 'R' else None
+    return not any(getattr(d, 'reg', None) and d is not ip and d not in F.dead and uses_after_stmt(F, d)
+                   for d in list(F.f.params) + list(F.f.decls))
+
+STVX = True                                               # see stvx_plan
+
+def stvx_operand(F, y, size):
+    """an operand of a stvx value: ('M', mem) a direct operand (a global, a static member, a constant element), ('K',
+    const), ('T', pm, off) read through a plain pointer (*p, p->m, p[3]), ('E', sym, mem) an element of a global
+    array at a signed int variable in memory; None otherwise"""
+    y = strip(y)
+    while y.k == 'cast' and y.kind in ('NoOp', 'BitCast'): y = strip(y.e)
+    c = fold(y)
+    if c.k == 'const' and c.value is not None: return ('K', c)
+    if y.k != 'load' or y.ty is None or y.ty.size != size: return None
+    a = strip(y.e)
+    if a.k == 'var' or (a.k == 'member' and not a.arrow) or (a.k == 'index' and fold(a.idx).k == 'const' and
+                                                            sp_lvalue_kind(F, a) is not None and sp_lvalue_kind(F, a)[0] == 'S'):
+        if a.k == 'var' and (getattr(a.decl, 'reg', None) or a.decl.kind != 'global'): return None
+        m = mem_operand(F, y)
+        return ('M', m) if m is not None and m.startswith('(_') else None
+    k = sp_lvalue_kind(F, a)
+    if k is None: return None
+    if k[0] in ('P', 'D'): return ('T', k[1], k[2])
+    if k[0] == 'X' and ' + ' not in k[1] and k[2][1] and k[2][0].startswith('(XSP'): return ('E', k[1], k[2][0])
+    return None
+
+def stvx_shape(F, rv, size):
+    """the shape of a stvx value: ('D', op, M, T) h op p->m, ('P', op, T, M|K) p->m op h, ('X', op, E, M|K)
+    va[b] op h, ('Y', op, M, E) h op va[b], ('E', op, M, M|K) two direct
+    operands, one a constant element or static member, ('S', ...) h >> (b & 7) (a computed count); None otherwise"""
+    x = strip(rv)
+    while x.k == 'cast' and x.kind in ('NoOp', 'BitCast'): x = strip(x.e)
+    if x.k != 'bin' or x.ty is None or x.ty.size != size or size not in (2, 4): return None
+    lo = stvx_operand(F, x.l, size)
+    if x.op in ('<<', '>>'):
+        r = strip(x.r)
+        if lo is None or lo[0] != 'M' or fold(r).k == 'const' or mem_operand(F, r) is not None: return None
+        if not all(strip(z.e).k == 'var' and strip(z.e).decl.kind == 'param' and not getattr(strip(z.e).decl, 'reg', None)
+                   and z.ty.size == 2 for z in loads_in(r)) or not loads_in(r): return None
+        return ('S', x.op, lo, None)
+    if x.op not in ('+', '-', '&', '|', '^'): return None
+    ro = stvx_operand(F, x.r, size)
+    if lo is None or ro is None: return None
+    if lo[0] == 'M' and ro[0] == 'T': return ('D', x.op, lo, ro)
+    if lo[0] == 'T' and ro[0] in ('M', 'K'): return ('P', x.op, lo, ro)
+    if lo[0] == 'E' and ro[0] in ('M', 'K'): return ('X', x.op, lo, ro)
+    if lo[0] == 'M' and ro[0] == 'E': return ('Y', x.op, lo, ro)
+    if lo[0] == 'M' and ro[0] in ('M', 'K') and (' + ' in lo[1] or ' + ' in ro[1] if ro[0] == 'M' else ' + ' in lo[1]):
+        return ('E', x.op, lo, ro)                         # (a constant element or static member: sp_value_kind's 'B'
+    return None
+
+def stvx_plan(F, lk, rv, size):
+    """a statement store L = V of an int / long V computed from an operand read through an address (corpus/probes/stvx.c,
+    run 2026-11-12-8-micro-stvx; none and -O3 -XS, cdecl).  V = h - p->m (D) and V = h >> (b & 7) (S) are computed
+    first, the pointer in XWA and the value in BC (DE when the address is an element, which takes WA / XBC), then the
+    address (sx_i_PD: ld XWA,(_vps) / ld BC,(_hv) / sub BC,(XWA+0x2) / ld XWA,(_gpi) / ld (XWA),BC).  The other values
+    come after the address: *p takes the register after the value's (sx_i_PX: ld XDE,(_gpi) / ld WA,(b) / add WA,WA /
+    lda XBC,_via / ld WA,(XBC+WA) / or WA,0x5 / ld (XDE),WA; sx_i_PY: XHL, the value WA / XBC / DE), p[c] the same,
+    built in XWA and moved (-O: built in place), p->m XWA with the value from BC (sx_i_DY: ld XWA,(_gps) / ld BC,(b) /
+    add BC,BC / lda XDE,_via / ld HL,(_hv) / xor HL,(XDE+BC)), an element BC / XDE before a pointer value and DE / XHL
+    before an element value, which keeps WA / XBC (sx_i_XY: the third register IX).  Returns False elsewhere."""
+    cp = cps_shape(F, rv) if size == 4 and lk[0] in ('S', 'D') else None
+    if cp is not None and cps_free(F, cp):                 # a char pointer sum (sp_MS, sp_DA; -Xr: b in WA)
+        reg_ix = cp[1][0] == 'R'
+        if lk[0] == 'S':
+            R = cps_emit(F, cp, 'BC', 'WA') if reg_ix else cps_emit(F, cp, 'WA', 'BC')
+            F.emit('ld', '%s,%s' % (lk[1], FAM[R][4])); return True
+        A = 'BC' if reg_ix else 'WA'                       # sp_DA: ld XWA,(_gps) / lda XBC,_vca / ld DE,(b) / extz XDE
+        F.emit('ld', '%s,%s' % (FAM[A][4], lk[1]))         # (-Xr: ld XBC,(_gps) / lda XDE,_vca / exts XWA)
+        R = cps_emit(F, cp, 'DE', 'WA') if reg_ix else cps_emit(F, cp, 'BC', 'DE')
+        F.emit('ld', '(%s+%s),%s' % (FAM[A][4], hx(lk[2]), FAM[R][4]) if lk[2] else '(%s),%s' % (FAM[A][4], FAM[R][4]))
+        return True
+    if F.adecl or size not in (2, 4): return False
+    sh = stvx_shape(F, rv, size)
+    if sh is None: return False
+    L, S_ = lk[0], sh[0]
+    if L not in ('P', 'D', 'X', 'Q', 'S'): return False
+    if L in ('X', 'Q') and not (lk[2][1] and lk[2][0].startswith('(XSP')): return False
+    if L == 'X' and ' + ' in lk[1]: return False
+    if S_ == 'P' and L != 'D': return False                # (the older paths write these: sx_i_PP, sx_i_XP, ...)
+    if S_ == 'X' and L == 'S': return False
+    if S_ == 'E' and L not in ('D', 'X'): return False     # (sx_i_PE, sx_i_QE, sx_i_ME: the older paths)
+    if live_regs(F) & {'WA', 'BC', 'DE', 'HL', 'IX', 'IY', 'IZ'}: return False
+    OPS = {'+': 'add', '-': 'sub', '&': 'and', '|': 'or', '^': 'xor'}
+    def R(f): return FAM[f][size]
+    def X4(f): return FAM[f][4]
+    def opnd(o): return o[1] if o[0] == 'M' else imm_of(o[1], size)
+    def at(f, off): return '(%s+%s)' % (X4(f), hx(off)) if off else '(%s)' % X4(f)
+    def value(P, B, V):
+        op = OPS.get(sh[1]); lo, ro = sh[2], sh[3]
+        if S_ == 'D':
+            F.emit('ld', '%s,%s' % (X4(P), ro[1])); F.emit('ld', '%s,%s' % (R(V), lo[1]))
+            F.emit(op, '%s,%s' % (R(V), at(P, ro[2]))); return V
+        if S_ == 'E':                                      # sx_i_DE: ld BC,(_via + 0xa) / and BC,(_hv)
+            F.emit('ld', '%s,%s' % (R(P), lo[1])); F.emit(op, '%s,%s' % (R(P), opnd(ro))); return P
+        if S_ == 'P':
+            F.emit('ld', '%s,%s' % (X4(P), lo[1])); F.emit('ld', '%s,%s' % (R(P), at(P, lo[2])))
+            F.emit(op, '%s,%s' % (R(P), opnd(ro))); return P
+        if S_ in ('X', 'Y'):
+            el = lo if S_ == 'X' else ro
+            F.emit('ld', '%s,%s' % (FAM[P][2], el[2])); scale16(F, FAM[P][2], size)
+            F.emit('lda', '%s,%s' % (X4(B), el[1])); ea = '(%s+%s)' % (X4(B), FAM[P][2])
+            if S_ == 'X':
+                F.emit('ld', '%s,%s' % (R(P), ea)); F.emit(op, '%s,%s' % (R(P), opnd(ro))); return P
+            F.emit('ld', '%s,%s' % (R(V), lo[1])); F.emit(op, '%s,%s' % (R(V), ea)); return V
+        n1 = len(F.lines); fam = gen(F, rv, V, size)
+        if fam != V or not F.lines[n1].startswith('\tld\tWA,'): raise Unsupported('stvx: the shift value')
+        return V
+    def address(A, B):
+        if L == 'S': return lk[1]
+        if L in ('P', 'D'):
+            F.emit('ld', '%s,%s' % (X4(A), lk[1])); return at(A, lk[2])
+        if L == 'X':
+            F.emit('ld', '%s,%s' % (FAM[A][2], lk[2][0])); scale16(F, FAM[A][2], size)
+            F.emit('lda', '%s,%s' % (X4(B), lk[1])); return '(%s+%s)' % (X4(B), FAM[A][2])
+        W = A if F.opt else 'WA'                           # Q: p[c] (-O3 -XS sx_i_QP: ld BC,(c) / exts XBC / add XBC,XBC /
+        F.emit('ld', '%s,%s' % (FAM[W][2], lk[2][0])); F.emit('exts', X4(W))   # add XBC,(_gpi))
+        scale32(F, X4(W), size)
+        if W != A: F.emit('ld', '%s,%s' % (X4(A), X4(W)))
+        F.emit('add', '%s,%s' % (X4(A), lk[1])); return '(%s)' % X4(A)
+    if S_ in ('D', 'S'):
+        V = 'DE' if L == 'X' else 'BC'
+        V = value('WA', None, V)
+        t = address('WA', 'BC')
+    else:
+        if L in ('P', 'Q'):
+            A = {'X': 'DE', 'Y': 'HL'}[S_]; t = address(A, None); V = value('WA', 'BC', 'DE')
+        elif L == 'D':
+            t = address('WA', None); V = value('BC', 'DE', 'HL')
+        elif L == 'X' and S_ == 'E':                       # sx_i_XE: ld WA,(c) / add WA,WA / lda XBC,_gia / ld DE,(..)
+            t = address('WA', 'BC'); V = value('DE', None, None)
+        elif L == 'X':
+            t = address(*(('BC', 'DE') if S_ == 'P' else ('DE', 'HL'))); V = value('WA', 'BC', 'IX')
+        else:
+            t = address(None, None); V = value('WA', 'BC', 'DE')
+    F.emit('ld', '%s,%s' % (t, R(V))); return True
 
 def sp_address(F, lk, size, P, I, B, vk):
     """emit the address of the lvalue lk (sp_lvalue_kind) and return its operand: P the pointer register, I the index

@@ -189,10 +189,10 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-12-2-micro-stret, v423/O3XS                             | probes/stret.c       | 264 / 280 exact (94.3%)  |
 | run 2026-11-12-2-micro-stret, v423/Xr                               | probes/stret.c       | 163 / 280 exact (58.2%)  |
 | run 2026-11-12-2-micro-stret, v423/O3XSXr                           | probes/stret.c       | 163 / 280 exact (58.2%)  |
-| run 2026-11-12-3-micro-idxloc, v423/none                            | probes/idxloc.c      | 81 / 108 exact (75.0%)   |
-| run 2026-11-12-3-micro-idxloc, v423/O3XS                            | probes/idxloc.c      | 30 / 108 exact (27.8%)   |
-| run 2026-11-12-3-micro-idxloc, v423/Xr                              | probes/idxloc.c      | 58 / 108 exact (53.7%)   |
-| run 2026-11-12-3-micro-idxloc, v423/O3XSXr                          | probes/idxloc.c      | 35 / 108 exact (32.4%)   |
+| run 2026-11-12-3-micro-idxloc, v423/none                            | probes/idxloc.c      | 82 / 108 exact (75.9%)   |
+| run 2026-11-12-3-micro-idxloc, v423/O3XS                            | probes/idxloc.c      | 31 / 108 exact (28.7%)   |
+| run 2026-11-12-3-micro-idxloc, v423/Xr                              | probes/idxloc.c      | 59 / 108 exact (54.6%)   |
+| run 2026-11-12-3-micro-idxloc, v423/O3XSXr                          | probes/idxloc.c      | 36 / 108 exact (33.3%)   |
 | run 2026-11-12-4-micro-stval, v423/none                             | probes/stval.c       | 208 / 221 exact (94.1%)  |
 | run 2026-11-12-4-micro-stval, v423/O3XS                             | probes/stval.c       | 206 / 221 exact (93.2%)  |
 | run 2026-11-12-4-micro-stval, v423/Xr                               | probes/stval.c       | 126 / 221 exact (57.0%)  |
@@ -209,6 +209,10 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-12-7-micro-loopctr, v423/O3XS                           | probes/loopctr.c     | 2 / 30 exact (6.7%)      |
 | run 2026-11-12-7-micro-loopctr, v423/Xr                             | probes/loopctr.c     | 14 / 30 exact (46.7%)    |
 | run 2026-11-12-7-micro-loopctr, v423/O3XSXr                         | probes/loopctr.c     | 2 / 30 exact (6.7%)      |
+| run 2026-11-12-8-micro-stvx, v423/none                              | probes/stvx.c        | 93 / 135 exact (68.9%)   |
+| run 2026-11-12-8-micro-stvx, v423/O3XS                              | probes/stvx.c        | 93 / 135 exact (68.9%)   |
+| run 2026-11-12-8-micro-stvx, v423/Xr                                | probes/stvx.c        | 41 / 135 exact (30.4%)   |
+| run 2026-11-12-8-micro-stvx, v423/O3XSXr                            | probes/stvx.c        | 41 / 135 exact (30.4%)   |
 | run 2026-11-09-9-micro-fp, v423/none                                | micro/fp.c           | 108 / 108 exact (100.0%) |
 | run 2026-11-09-9-micro-fp, v423/O3XS                                | micro/fp.c           | 108 / 108 exact (100.0%) |
 | run 2026-11-09-10-micro-fptemps, v423/none                          | micro/fp_temps.c     | 33 / 33 exact (100.0%)   |
