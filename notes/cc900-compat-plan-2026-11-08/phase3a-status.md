@@ -849,6 +849,10 @@ where the oracle keeps it in a frame slot.  Gate clean.
 array's address in a 4-byte temporary; a constant beside one keeps the index in the 2-byte temporary and the base in XIZ.
 stdiv 516 -> 528 at none.  Gate clean.
 
+**Long stores with a pointer dividend; dereference before a constant**: the whole store address goes to XIZ first
+(`lda XIZ,XWA+0x4`, `lda XIZ,XBC+WA`), and long_helper_order dereferences a left pointer before loading a right
+constant.  stdiv 528 -> 556 at none.  Gate clean.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

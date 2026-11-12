@@ -1510,6 +1510,8 @@ def lh_store_post(F, lv, rv):
     F.emit('ld', '%s,XHL' % m); return True
 
 LH_STORE_X = True                                         # see lh_store_x
+LH_STORE_ADDR = True
+LH_PK_ORDER = True                                        # see edit_lh_pk_order.py                                      # plan_store_x's ADDR form (a pointer dividend)
 
 def plan_store_x(F):
     """before the frame: one statement ga[c] = A / B (or %) of two plain long operands, the index in memory, without
@@ -1524,16 +1526,23 @@ def plan_store_x(F):
         if x.k != 'expr' or x.e.k != 'bin' or x.e.op != '=': continue
         lv, v = strip(x.e.l), strip(x.e.r)
         if v.k != 'bin' or v.op not in ('/', '%') or v.ty is None or v.ty.size != 4 or v.ty.kind != 'int': continue
-        if lv.ty is None or lv.ty.size != 4 or lv.ty.kind != 'int' or lv.k != 'index': continue
+        if lv.ty is None or lv.ty.size != 4 or lv.ty.kind != 'int': continue
         k = sc_lkind(F, lv)
-        if k is None or k[0] != 'X': continue
+        if k is None or k[0] not in ('X', 'P', 'D'): continue
         a, b = lh_plain(v.l), lh_plain(v.r)
+        try: ak = cw_kind(F, v.l, 4)
+        except Unsupported: ak = None
+        if LH_STORE_ADDR and ak is not None and ak[0] == 'P' and not ak[2] and b in ('G', 'K', 'M'):
+            hits.append((x, v, 'ADDR')); continue           # (sd_l_d_DPG: the store address in XIZ, lda)
+        if k[0] != 'X' or lv.k != 'index': continue
         if a is None or b is None or (a == 'K' and b == 'K'): continue
         hits.append((x, v, 'IZ' if 'K' not in (a, b) else 'XIZ'))
     if len(hits) != 1: return
     from frontend import Decl, Type
     x, v, form = hits[0]
-    if form == 'IZ':
+    if form == 'ADDR':
+        tmp = None; F.xiz_vars.append('stores'); F.save_reg = 'XIZ'; F.emit('push', 'XIZ'); F.push = 4
+    elif form == 'IZ':
         tmp = Decl('__lhb', Type('int', 4, 2, spell='t'), '', 'local'); f.decls.append(tmp)
         F.xiz_vars.append('stores'); F.save_reg = 'IZ'; F.emit('push', 'IZ'); F.push = 2
     else:
@@ -1543,6 +1552,18 @@ def plan_store_x(F):
 
 def lh_store_x(F, lk, v):
     """emit the statement planned by plan_store_x (see there); True when emitted"""
+    if F.xst['form'] == 'ADDR':                          # the store address in XIZ, the value, ld (XIZ),XHL
+        if lk[0] == 'P': F.emit('ld', 'XIZ,%s' % lk[1]); m = '(XIZ+%s)' % hx(lk[2]) if lk[2] else '(XIZ)'
+        elif lk[0] == 'D': F.emit('ld', 'XWA,%s' % lk[1]); F.emit('lda', 'XIZ,XWA+%s' % hx(lk[2])); m = '(XIZ)'
+        else:
+            im, signed = lk[2]
+            if not isinstance(im, str) or not im.startswith('(') or not signed: raise Unsupported('lh_store_x: the index')
+            F.emit('ld', 'WA,%s' % im); F.emit('sla', '0x2,WA'); F.emit('lda', 'XBC,%s' % lk[1]); F.emit('lda', 'XIZ,XBC+WA'); m = '(XIZ)'
+        F.sp_xiz_busy = True
+        try: fam = gen(F, v, 'HL', 4)
+        finally: F.sp_xiz_busy = False
+        if fam != 'HL': raise Unsupported('lh_store_x: the value not in XHL')
+        F.emit('ld', '%s,XHL' % m); return True
     sym, (im, signed) = lk[1], lk[2]
     if not isinstance(im, str) or not im.startswith('(') or not signed: raise Unsupported('lh_store_x: the index')
     Tm = '(XSP+%s)' % hx(F.xst['tmp'].slot + F.push)
@@ -4045,7 +4066,10 @@ def long_helper_order(F, e, l, r):
         m = mem_operand(F, x)
         if m is None: raise Unsupported('long helper: plain operand')
         F.emit('ld', '%s,%s' % (reg[id(x)], m))
-    # 5. constants
+    # 5. constants (without -O a constant right of a dereferenced pointer comes after it: stdiv.c sd_l_d_GPK)
+    if LH_PK_ORDER and not F.opt and kind(r) is None and ev_class(F, r) == 'K' and kind(l) == 'P':
+        F.emit('ld', '%s,(%s)' % (reg[id(l)], reg[id(l)])); v = fold(r).value
+        F.emit('ld', '%s,%s' % (reg[id(r)], hx(v & 0xffffffff))); return True
     for x in (l, r):
         if ev_class(F, x) == 'K':
             v = fold(x).value
@@ -6873,6 +6897,7 @@ def gen_stmt(F, s, last):
         gen_incdec(F, s.e, 'WA', 0, value=False); return
     if s.k == 'expr' and s.e.k == 'bin' and s.e.op == '=':
         lv = strip(s.e.l)
+        if LH_STORE_X and getattr(F, 'xst', None) is not None and F.xst['node'] == id(strip(s.e.r)) and sp_lvalue_kind(F, lv) is not None and lh_store_x(F, sp_lvalue_kind(F, lv), strip(s.e.r)): return   # (stdiv.c sd_l_d_XGG, DPG)
         if LH_STORE_POST and lv.ty is not None and lv.ty.size == 4 and not getattr(F, 'l2', None) and not getattr(F, 'u1_i', None) and not getattr(F, 'cl_active', None) and lh_store_post(F, lv, s.e.r): return   # (stdiv.c sd_l_d_PGX)
         if STORE_DIV and lv.ty is not None and lv.ty.size == 2 and not getattr(F, 'l2', None) and not getattr(F, 'u1_i', None) and not getattr(F, 'cl_active', None) and store_div(F, lv, s.e.r): return   # (stdiv.c)
         if STORE_CHAIN and (not F.opt or STORE_CHAIN_OPT) and lv.ty is not None and lv.ty.size in (1, 2, 4) and not getattr(F, 'l2', None) and \
@@ -10574,7 +10599,7 @@ def store_plan(F, lv, rv, size):
         t = sp_address(F, lk, size, 'XWA', 'WA', 'XBC', 'K')
         if t is None: return False
         F.emit('ld' + ('b' if size == 1 else 'w'), '%s,%s' % (t, imm_of(rc, size))); return True
-    if vk == 'H' and L == 'X' and getattr(F, 'xst', None) is not None and F.xst['node'] == id(strip(rv)): return lh_store_x(F, lk, strip(rv))
+    if vk in ('H', 'L', 'B', 'X', 'P') and L in ('X', 'P', 'D') and getattr(F, 'xst', None) is not None and F.xst['node'] == id(strip(rv)): return lh_store_x(F, lk, strip(rv))
     if vk == 'H' and L not in ('P', 'D', 'Q'): return False   # (an element: through a slot and IZ, unmodelled)
     if vk == 'H' and (any(not isinstance(z, str) for z in F.xiz_vars) or not getattr(F, 'store_xiz', False)): return False
     if vk == 'S' and L == 'Y': return False                # (st_i_YS: the index copied to IX, unmodelled)
