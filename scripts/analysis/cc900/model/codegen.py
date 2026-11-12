@@ -1509,6 +1509,56 @@ def lh_store_post(F, lv, rv):
         F.emit('ld', 'WA,%s' % L[2]); F.emit('exts', 'XWA'); F.emit('sll', '0x2,XWA'); F.emit('add', 'XWA,%s' % L[1]); m = '(XWA)'
     F.emit('ld', '%s,XHL' % m); return True
 
+LH_STORE_X = True                                         # see lh_store_x
+
+def plan_store_x(F):
+    """before the frame: one statement ga[c] = A / B (or %) of two plain long operands, the index in memory, without
+    -O or -Xr and with no IZ-family home: IZ saved and a 4-byte temporary for two memory operands, XIZ saved and a
+    2-byte index temporary beside a constant (lh_store_x)"""
+    F.xst = None
+    if not LH_STORE_X or F.xiz_vars or F.opt or F.adecl: return
+    f = F.f
+    if any(getattr(d, 'reg', None) in IZ_HOMES for d in list(f.params) + list(f.decls)): return
+    hits = []
+    for x in flat(f.body):
+        if x.k != 'expr' or x.e.k != 'bin' or x.e.op != '=': continue
+        lv, v = strip(x.e.l), strip(x.e.r)
+        if v.k != 'bin' or v.op not in ('/', '%') or v.ty is None or v.ty.size != 4 or v.ty.kind != 'int': continue
+        if lv.ty is None or lv.ty.size != 4 or lv.ty.kind != 'int' or lv.k != 'index': continue
+        k = sc_lkind(F, lv)
+        if k is None or k[0] != 'X': continue
+        a, b = lh_plain(v.l), lh_plain(v.r)
+        if a is None or b is None or (a == 'K' and b == 'K'): continue
+        hits.append((x, v, 'IZ' if 'K' not in (a, b) else 'XIZ'))
+    if len(hits) != 1: return
+    from frontend import Decl, Type
+    x, v, form = hits[0]
+    if form == 'IZ':
+        tmp = Decl('__lhb', Type('int', 4, 2, spell='t'), '', 'local'); f.decls.append(tmp)
+        F.xiz_vars.append('stores'); F.save_reg = 'IZ'; F.emit('push', 'IZ'); F.push = 2
+    else:
+        tmp = Decl('__lhx', Type('int', 2, 2, spell='t'), '', 'local'); f.decls.append(tmp)
+        F.xiz_vars.append('stores'); F.save_reg = 'XIZ'; F.emit('push', 'XIZ'); F.push = 4
+    F.xst = {'node': id(v), 'form': form, 'tmp': tmp}
+
+def lh_store_x(F, lk, v):
+    """emit the statement planned by plan_store_x (see there); True when emitted"""
+    sym, (im, signed) = lk[1], lk[2]
+    if not isinstance(im, str) or not im.startswith('(') or not signed: raise Unsupported('lh_store_x: the index')
+    Tm = '(XSP+%s)' % hx(F.xst['tmp'].slot + F.push)
+    if F.xst['form'] == 'IZ':
+        F.emit('ld', 'IZ,%s' % im); F.emit('sla', '0x2,IZ'); F.emit('lda', 'XWA,%s' % sym); F.emit('ld', '%s,XWA' % Tm)
+    else:
+        F.emit('ld', 'WA,%s' % im); F.emit('ld', '%s,WA' % Tm); F.emit('ld', 'WA,%s' % Tm); F.emit('sla', '0x2,WA')
+        F.emit('ld', '%s,WA' % Tm); F.emit('lda', 'XIZ,%s' % sym)
+    F.sp_xiz_busy = True
+    try: fam = gen(F, v, 'HL', 4)
+    finally: F.sp_xiz_busy = False
+    if fam != 'HL': raise Unsupported('lh_store_x: the value not in XHL')
+    if F.xst['form'] == 'IZ': F.emit('ld', 'XWA,%s' % Tm); F.emit('ld', '(XWA+IZ),XHL')
+    else: F.emit('ld', 'WA,%s' % Tm); F.emit('ld', '(XIZ+WA),XHL')
+    return True
+
 def lh_member_kinds(F, op, l, r):
     """(D kind, other kind, D on the right) for a long helper with one member-through-a-pointer operand and a constant,
     global, static member or plain-pointer one; None otherwise (a constant multiplier is strength-reduced, a constant
@@ -10524,6 +10574,7 @@ def store_plan(F, lv, rv, size):
         t = sp_address(F, lk, size, 'XWA', 'WA', 'XBC', 'K')
         if t is None: return False
         F.emit('ld' + ('b' if size == 1 else 'w'), '%s,%s' % (t, imm_of(rc, size))); return True
+    if vk == 'H' and L == 'X' and getattr(F, 'xst', None) is not None and F.xst['node'] == id(strip(rv)): return lh_store_x(F, lk, strip(rv))
     if vk == 'H' and L not in ('P', 'D', 'Q'): return False   # (an element: through a slot and IZ, unmodelled)
     if vk == 'H' and (any(not isinstance(z, str) for z in F.xiz_vars) or not getattr(F, 'store_xiz', False)): return False
     if vk == 'S' and L == 'Y': return False                # (st_i_YS: the index copied to IX, unmodelled)
@@ -10776,7 +10827,7 @@ def plan_frame(F):
     calls = []
     walk(f.body, lambda n, d: calls.append(n) if n.k == 'call' or fpgen.is_fp_op(n) or (n.k == 'bin' and n.op in '*/%' and n.ty.size == 4
          and fold(n.r).k != 'const') else None)
-    if not calls and not getattr(F, 'lhc', None): F.frame = 0; return                   # leaf functions: every local is in a register or folded
+    if not calls and not getattr(F, 'lhc', None) and not getattr(F, 'xst', None): F.frame = 0; return                   # leaf functions: every local is in a register or folded
     # D: a struct local written member by member gets two address temporaries below it (_ldiv: (XSP+4), (XSP+8))
     F.struct_temps = {}
     for d in f.decls:
@@ -11367,7 +11418,7 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
     F.lines.append(('.' if adecl else '_') + f.name + ':')
     F.loops = []; F.param_copies = []; F.pushes = []
     if adecl and BINLOC_XR: xr_shift_reloc(F)
-    if not plan_leaf(F): regtemp_premark(F); plan_registers(F); plan_homes(F); plan_regtemps(F); plan_store_xiz(F); plan_lh_call(F)
+    if not plan_leaf(F): regtemp_premark(F); plan_registers(F); plan_homes(F); plan_regtemps(F); plan_store_x(F); plan_store_xiz(F); plan_lh_call(F)
     plan_frame(F)
     for d in getattr(F, 'l2', {}).get('entry', []) if getattr(F, 'l2', None) else []:
         F.emit('ld', '%s,(XSP+%s)' % (FAM[d.reg][d.ty.size], hx(d.off + F.push)))   # (after the frame: offsets)

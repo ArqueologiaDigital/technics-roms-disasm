@@ -845,6 +845,10 @@ a register temporary copied straight into the index temporary, a constant diviso
 constant-element stores are global stores.  lhidx 36 -> 78 at none.  The loop counter is still homed in IZ by the model
 where the oracle keeps it in a frame slot.  Gate clean.
 
+**Long divisions stored to an element** (`lh_store_x`, stdiv.c): two memory operands keep the scaled index in IZ and the
+array's address in a 4-byte temporary; a constant beside one keeps the index in the 2-byte temporary and the base in XIZ.
+stdiv 516 -> 528 at none.  Gate clean.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

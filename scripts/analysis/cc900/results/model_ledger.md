@@ -165,7 +165,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-10-14-micro-loc0, v423/O3XS                             | probes/loc0.c        | 436 / 512 exact (85.2%)  |
 | run 2026-11-10-14-micro-loc0, v423/Xr                               | probes/loc0.c        | 510 / 512 exact (99.6%)  |
 | run 2026-11-10-14-micro-loc0, v423/O3XSXr                           | probes/loc0.c        | 380 / 512 exact (74.2%)  |
-| run 2026-11-10-15-micro-stord, v423/none                            | probes/stord.c       | 349 / 432 exact (80.8%)  |
+| run 2026-11-10-15-micro-stord, v423/none                            | probes/stord.c       | 352 / 432 exact (81.5%)  |
 | run 2026-11-10-15-micro-stord, v423/O3XS                            | probes/stord.c       | 312 / 432 exact (72.2%)  |
 | run 2026-11-10-15-micro-stord, v423/Xr                              | probes/stord.c       | 296 / 432 exact (68.5%)  |
 | run 2026-11-10-15-micro-stord, v423/O3XSXr                          | probes/stord.c       | 276 / 432 exact (63.9%)  |
@@ -197,7 +197,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-12-4-micro-stval, v423/O3XS                             | probes/stval.c       | 206 / 221 exact (93.2%)  |
 | run 2026-11-12-4-micro-stval, v423/Xr                               | probes/stval.c       | 126 / 221 exact (57.0%)  |
 | run 2026-11-12-4-micro-stval, v423/O3XSXr                           | probes/stval.c       | 126 / 221 exact (57.0%)  |
-| run 2026-11-12-5-micro-stdiv, v423/none                             | probes/stdiv.c       | 516 / 750 exact (68.8%)  |
+| run 2026-11-12-5-micro-stdiv, v423/none                             | probes/stdiv.c       | 528 / 750 exact (70.4%)  |
 | run 2026-11-12-5-micro-stdiv, v423/O3XS                             | probes/stdiv.c       | 372 / 750 exact (49.6%)  |
 | run 2026-11-12-5-micro-stdiv, v423/Xr                               | probes/stdiv.c       | 158 / 750 exact (21.1%)  |
 | run 2026-11-12-5-micro-stdiv, v423/O3XSXr                           | probes/stdiv.c       | 106 / 750 exact (14.1%)  |
