@@ -271,6 +271,11 @@ for c in none O3XS; do    # one double argument temporary and the frame around i
 done
 row "run 2026-11-12-11-micro-fpargf, v423/Xr" "probes/fpargf.c" "$O/2026-11-12-11-micro-fpargf/out/v423/Xr/probes" corpus/probes/fpargf.c --opt none --adecl
 row "run 2026-11-12-11-micro-fpargf, v423/O3XSXr" "probes/fpargf.c" "$O/2026-11-12-11-micro-fpargf/out/v423/O3XSXr/probes" corpus/probes/fpargf.c --opt O3XS --adecl
+for c in none O3XS; do    # the construct around one double temporary (corpus/probes/fpargg.c)
+  row "run 2026-11-12-12-micro-fpargg, v423/$c" "probes/fpargg.c" "$O/2026-11-12-12-micro-fpargg/out/v423/$c/probes" corpus/probes/fpargg.c --opt $c
+done
+row "run 2026-11-12-12-micro-fpargg, v423/Xr" "probes/fpargg.c" "$O/2026-11-12-12-micro-fpargg/out/v423/Xr/probes" corpus/probes/fpargg.c --opt none --adecl
+row "run 2026-11-12-12-micro-fpargg, v423/O3XSXr" "probes/fpargg.c" "$O/2026-11-12-12-micro-fpargg/out/v423/O3XSXr/probes" corpus/probes/fpargg.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do

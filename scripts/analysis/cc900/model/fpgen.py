@@ -142,14 +142,23 @@ def frame_allocs(F):
     return F._fa, F._fb
 
 def begin_stmt(F, st=None):
+    F.pend_at_stmt = F.pending                           # (kept only through a statement that calls: random r1_08_03's
+    e_ = getattr(st, 'e', None) if getattr(st, 'k', None) == 'expr' else None   # vc(t); gd2 = gda[2] releases them first)
+    if e_ is None or getattr(C().strip(e_), 'k', None) != 'call': F.pend_at_stmt = -1   # (a bare call statement, where gen_stmt
+                                                         #  applied the merge limit; fpp8.c mc03's gd3 = fd(..) releases them)
     if getattr(F, 'fp_temps', None) is None: return
     A, B = frame_allocs(F); A.begin_stmt(st); B.begin_stmt(st)
 
 def temp(F, size, kind='op'):
     """a frame temporary (FrameAlloc); the region is D + D' (s_conv2: 16 + 12 = 28; no long: twice D)"""
     A, B = frame_allocs(F)
-    lab = FP_LABEL_HALF and not F.opt and any(l.startswith('L') and l.endswith(':') for l in F.lines)
-    d = A.get(size, kind); B.get(0 if lab else size, kind)   # (fpargf.c af_VNWNP: after a label the region is D alone)
+    if getattr(F, 'fp_has_switch', None) is None:        # fpargf.c af_VNWNP, fpargg.c ag_S*: a function with a switch
+        sw = []                                           # statement, before or after, has the region D alone (8 bytes,
+        C().walk(F.f.body, lambda n, d_: sw.append(n) if n.k == 'switch' and getattr(C().strip(n.value), 'ty', None) is not None
+                 and C().strip(n.value).ty.size <= 2 else None)   # the temporary at XSP); not a long selector (random r4_03_19)
+        F.fp_has_switch = bool(sw)
+    lab = FP_SWITCH_HALF and F.fp_has_switch
+    d = A.get(size, kind); B.get(0 if lab else size, kind)
     F.ftemp_max = max(getattr(F, 'ftemp_max', 0), A.depth + B.depth)
     return getattr(F, 'ftemp_top', 0) - d
 
@@ -335,7 +344,8 @@ def eval_val(F, e, hint):
 def op_into(F, e, vals, dest):
     """the helper call of a +-*/, unary - or float/double conversion node whose operands are ready"""
     if e.k == 'bin':
-        C().flush_pops(F)                                  # _log: x /= ldexp(1, nptr) -> cal _ldexp / lda XSP,XSP+0x1e first
+        if not (FP_PEND_KEEP and not F.opt and F.pending and F.pending == getattr(F, 'pend_at_stmt', -1)):
+            C().flush_pops(F)                              # _log: x /= ldexp(1, nptr) -> cal _ldexp / lda XSP,XSP+0x1e first
         name = '._f%s_%s' % ({'+': 'add', '-': 'sub', '*': 'mul', '/': 'div'}[e.op], sfx(e.ty))
         if e.op in '+*' and rank(F, vals[1]) > rank(F, vals[0]) and not (
                 simple_addr(F, vals[0]) is not None and simple_addr(F, vals[0]) == dest_simple(F, dest)):   # _exp: t = t * w
@@ -393,7 +403,10 @@ def emit_operands(F, dest, ops):
     """the result address and the operand addresses: those that are loaded, copied or computed first, in XWA, XBC,
     XDE order (d_add_gg: ld XWA,(XSP+0x4); _modf: ld XDE,XIZ / lda XBC,XSP+0x24 / lda XWA,XSP+0x14), then the
     named and stack ones in XBC, XDE, XWA order (d_add_st: lda XBC,_gd2 / lda XDE,_gd3 / lda XWA,_gd)"""
-    C().flush_pops(F)                                      # the pending call pops go before a helper's addresses
+    if not (FP_PEND_KEEP and not F.opt and F.pending and F.pending == getattr(F, 'pend_at_stmt', -1)):
+        C().flush_pops(F)                                  # the pending call pops go before a helper's addresses; those
+                                                           # of an earlier call statement wait (fpargf.c af_VNCNP: cal _vs /
+                                                           # lda XBC,_gd / .. / lda XWA,XSP+0xc / cal ._fmul_d)
     items = [('XWA', None)] + list(zip(('XBC', 'XDE'), ops))
     kinds = {'XWA': dest_kind(F, dest)}
     for r, x in items[1:]: kinds[r] = addr_kind(F, x)
@@ -941,7 +954,8 @@ def elem_hoists(e):
     if hasattr(e, 'k'): visit(e, 0); C().walk(e, visit)
     return out
 
-FP_LABEL_HALF = False                                     # see temp()
+FP_PEND_KEEP = True                                       # see the address order: an earlier statement's pops wait
+FP_SWITCH_HALF = True                                      # see temp()
 XDE_ELEM_FIRST = True                                     # see the address order above
 OPA_XIZ = True                                            # see opa_target
 

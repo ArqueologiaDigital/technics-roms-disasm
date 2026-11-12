@@ -934,6 +934,15 @@ corpora read 69 / 22 / 47 / 21 of 800 at none / -O3 -XS / -Xr / -O3 -XS -Xr (63 
 `corpus/probes/fpargg.c` (run 2026-11-12-12) show that a function containing a `switch` anywhere gets a double-temporary
 region half the usual size; that rule is next.
 
+**Batch 39 (2026-11-12): the double-temporary region beside a switch; pending pops.**  `corpus/probes/fpargg.c` (run
+2026-11-12-12) varies the construct around one double temporary: only a `switch` changes the frame, on either side of
+the statement, and (random r4_03_19) only on an int-sized value -- such a function has the region D alone, 8 bytes
+with the temporary at XSP, instead of D + D'.  Without -O the pops left by an earlier call statement also stay
+pending through the helper calls of a bare call statement.  `fpargf.c` reads 96 / 48 / 24 / 24 of 96 (48 / 32 / 20 / 20
+before), `fpargg.c` 36 / 32 / 36 / 32 of 44; fpp1, fpp3, fpp4 and fpp5 rise at none (31 -> 32, 46 -> 48, 51 -> 55, 86 -> 91)
+and the random corpora read 70 of 800 at none.  The first gate of this batch showed one row down (fpp8.c at none,
+46 -> 44: an assignment from a call must release the pops first); the rule was narrowed and the gate re-run.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
