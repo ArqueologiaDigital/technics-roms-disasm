@@ -1312,7 +1312,7 @@ def lh_member(F, op, l, r):
     return True
 
 STORE_CHAIN = True                                        # see store_chain
-RET_ASSIGN_OPT = False                                    # ret_assign under -O (unprobed yet)
+RET_ASSIGN_OPT = True                                     # ret_assign under -O (stret.c, stval.c at O3XS)
 STORE_CHAIN_OPT = True                                    # store_chain under -O: an int constant takes ldw on both sides,
                                                           # an outer pointer element is built in its own register
 
@@ -1335,6 +1335,7 @@ def sc_lkind(F, lv):
     return None
 
 STORE_CHAIN_CHAR = True                                   # store_chain for chars (sc_char)
+STORE_CHAIN_CHAR_OPT = True                               # sc_char under -O (stret.c at O3XS)
 
 def sc_char(F, ok_, ik, v, V, vc):
     """L1 = (L2 = V) for chars (corpus/probes/stret.c, run 2026-11-12-2, sc_c_*).  A char element is built through XWA
@@ -1367,6 +1368,7 @@ def sc_char(F, ok_, ik, v, V, vc):
         val = 'C' if (V == 'G' and I == 'P') else 'A'
         inner_bc = I in ('X', 'Q')
         oreg = 'XDE' if (inner_bc or val == 'C') else 'XBC'
+        if F.opt and V == 'K' and O == 'P' and I in ('G', 'M'): oreg = 'XWA'           # (sc_c_PGK -O)
         om = None
         if O == 'P': om = ptr(ok_, oreg)
         elif O in ('X', 'Q'): om = elem(ok_, oreg)
@@ -1376,22 +1378,147 @@ def sc_char(F, ok_, ik, v, V, vc):
             F.emit('ld', '%s,%s' % (om or ok_[1], val)); return True
         Kv = hx(vc.value & 0xff)
         F.emit('ldb', '%s,%s' % (im, Kv))
-        if O == 'G': F.emit('ldb', '%s,%s' % (ok_[1], Kv)); return True
+        if O == 'G' or F.opt: F.emit('ldb', '%s,%s' % (om or ok_[1], Kv)); return True
         F.emit('ld', 'A,%s' % Kv); F.emit('ld', '%s,A' % (om or ok_[1])); return True
     # V == 'B'
     im = ptr(ik, 'XBC') if I == 'P' else (elem(ik, 'XBC') if I in ('X', 'Q') else ik[1])
     n0 = len(F.lines)
-    fam = gen(F, v, 'WA', 1)
-    if fam != 'WA' or (im.startswith('(X') and clobbers(F.lines[n0:], im)): raise Unsupported('sc_char: the value over the inner address')
     R = 'A'
-    if O in ('X', 'Q'):
-        R = 'E' if I != 'G' and I != 'M' else 'C'
-        F.emit('ld', '%s,A' % R)
+    if O in ('X', 'Q'): R = 'E' if I != 'G' and I != 'M' else 'C'
+    want = {'A': 'WA', 'C': 'BC', 'E': 'DE'}[R] if F.opt else 'WA'   # (-O: computed in place, sc_c_XGB)
+    fam = gen(F, v, want, 1)
+    if fam != want or (im.startswith('(X') and clobbers(F.lines[n0:], im)): raise Unsupported('sc_char: the value over the inner address')
+    if R != 'A' and not F.opt: F.emit('ld', '%s,A' % R)
     F.emit('ld', '%s,%s' % (im, R))
     if O in ('G', 'M'): F.emit('ld', '%s,%s' % (ok_[1], R)); return True
     if O == 'P': m = ptr(ok_, 'XBC')
     else: m = elem(ok_, 'XDE' if R == 'C' else 'XBC')
     F.emit('ld', '%s,%s' % (m, R)); return True
+
+STORE_VALUE_ADDR = True                                   # see sv_regs
+
+SV_RANK = {('D', 'i'): 0, ('D', 'v'): 1, ('X', 'v'): 1.5, ('X', 'i'): 2, ('P', 'v'): 3, ('P', 'i'): 4, ('Q', 'i'): 4,
+           ('G', 'i'): 5, ('M', 'i'): 5}
+
+def sv_value_kind(F, v, size):
+    """the kinds of a value read through an address (stval.c): ('P', ptr, 0) / ('D', ptr, off) through a plain pointer,
+    ('X', sym, idxmem) a global array at a plain signed index in memory; None otherwise (nothing emitted)"""
+    x = strip(v)
+    if x.k != 'load' or x.ty is None or x.ty.size != size: return None
+    lv = strip(x.e)
+    if lv.k not in ('deref', 'member', 'index'): return None
+    if lv.k == 'index':
+        ie = strip(lv.idx)
+        while ie.k == 'cast' and ie.kind == 'IntegralCast': ie = strip(ie.e)
+        if ie.k == 'load' and strip(ie.e).k == 'var' and getattr(strip(ie.e).decl, 'reg', None): return None
+    keep = getattr(F, 'sp_index_param', None)
+    k = sc_lkind(F, lv)
+    F.sp_index_param = keep
+    if k is None or k[0] not in ('P', 'D', 'X'): return None
+    if size == 1 and k[0] == 'D': return None              # (a char member at a displacement: unprobed)
+    return k
+
+def sv_regs(ik, vk, size, pool):
+    """the registers of a store address (kind ik) and a value read through an address (kind vk), after stval.c: the two
+    take registers in the order of SV_RANK, a member with a displacement first, a plain pointer store last (rv_i_PP:
+    ld XBC,(_gpi) / ld XWA,(_vpi); rv_i_DP: ld XWA,(_gps) / ld XBC,(_vpi); rv_i_XD: ld BC,(c) / add BC,BC /
+    lda XDE,_gia / ld XWA,(_vps)).  The store address is emitted first and lives to the end, so when the value ranks
+    first the store avoids every register of the value; when the store ranks first the value avoids only the store's
+    final registers (a char element is built through XWA into another register, rv_c_XP: lda XWA,_gca / ld BC,(c) /
+    extz XBC / add XBC,XWA / ld XWA,(_vp)).  {'i': regs, 'v': regs}, or None when the registers run out."""
+    order = sorted([('i', ik), ('v', vk)], key=lambda t: SV_RANK[(t[1][0], t[0])])
+    free = list(pool); out = {}
+    for role, k in order:
+        if k[0] in ('G', 'M'): out[role] = []; continue
+        if size == 1 and k[0] in ('X', 'Q'):
+            rest = [r for r in free if r != 'WA']
+            if not rest or (role == 'v' and 'WA' not in free): return None
+            out[role] = ['WA', rest[0]] if role == 'v' else [rest[0]]
+        else:
+            n = 2 if k[0] == 'X' else 1
+            if len(free) < n: return None
+            out[role] = free[:n]
+        free = [r for r in free if r not in out[role]]
+    return out
+
+def sv_store_addr(F, k, regs, size):
+    """emit a store address of kind k into regs (sv_regs); returns its operand"""
+    K = k[0]
+    if K in ('G', 'M'): return k[1]
+    if K in ('P', 'D'):
+        F.emit('ld', 'X%s,%s' % (regs[0], k[1]))
+        return '(X%s+%s)' % (regs[0], hx(k[2])) if k[2] else '(X%s)' % regs[0]
+    if size == 1:                                            # char X / Q: built through XWA into regs[0]
+        r = regs[0]
+        F.emit('lda' if K == 'X' else 'ld', 'XWA,%s' % k[1]); F.emit('ld', '%s,%s' % (r, k[2]))
+        F.emit('extz', 'X' + r); F.emit('add', 'X%s,XWA' % r); return '(X%s)' % r
+    if K == 'X':
+        ix, bs = regs
+        F.emit('ld', '%s,%s' % (ix, k[2]))
+        if size == 2: F.emit('add', '%s,%s' % (ix, ix))
+        else: F.emit('sla', '0x2,%s' % ix)
+        F.emit('lda', 'X%s,%s' % (bs, k[1])); return '(X%s+%s)' % (bs, ix)
+    r = regs[0]                                              # Q: built in XWA, moved to another register (rv_i_QP);
+    q = r if F.opt else 'WA'                                 # under -O built in its own register (rv_i_QP -O)
+    F.emit('ld', '%s,%s' % (q, k[2])); F.emit('exts', 'X' + q)
+    if size == 2: F.emit('add', 'X%s,X%s' % (q, q))
+    else: F.emit('sll', '0x2,X%s' % q)
+    if r != q: F.emit('ld', 'X%s,XWA' % r); F.emit('add', 'X%s,%s' % (r, k[1])); return '(X%s)' % r
+    F.emit('add', 'X%s,%s' % (q, k[1])); return '(X%s)' % q
+
+def sv_load(F, k, regs, dst, size):
+    """emit the value of kind k (sv_value_kind) into dst through regs (sv_regs)"""
+    if k[0] in ('P', 'D'):
+        F.emit('ld', 'X%s,%s' % (regs[0], k[1]))
+        F.emit('ld', '%s,%s' % (dst, '(X%s+%s)' % (regs[0], hx(k[2])) if k[2] else '(X%s)' % regs[0])); return
+    if size == 1:                                            # rv_c_GX: lda XWA,_vca / ld BC,(c) / extz XBC / add XBC,XWA / ld L,(XBC)
+        r = regs[1]
+        F.emit('lda', 'XWA,%s' % k[1]); F.emit('ld', '%s,%s' % (r, k[2])); F.emit('extz', 'X' + r)
+        F.emit('add', 'X%s,XWA' % r); F.emit('ld', '%s,(X%s)' % (dst, r)); return
+    ix, bs = regs
+    F.emit('ld', '%s,%s' % (ix, k[2]))
+    if size == 2: F.emit('add', '%s,%s' % (ix, ix))
+    else: F.emit('sla', '0x2,%s' % ix)
+    F.emit('lda', 'X%s,%s' % (bs, k[1])); F.emit('ld', '%s,(X%s+%s)' % (dst, bs, ix))
+
+def ra_addr_value(F, k, v, size):
+    """return L = V with V read through an address (stval.c rv_*): the store address, the value straight into HL / L /
+    XHL, the store; registers from sv_regs.  Two elements at one index (rv_i_XX: the store's base in XIX, rv_i_QX: the
+    index cached in BC) are left to the older paths, except for chars, which reload the index (rv_c_XX)."""
+    vk = sv_value_kind(F, v, size)
+    if vk is None: return False
+    if size != 1 and k[0] in ('X', 'Q') and vk[0] == 'X': return False
+    al = sv_regs(k, vk, size, ['WA', 'BC', 'DE'])
+    if al is None: return False
+    m = sv_store_addr(F, k, al['i'], size) if al['i'] else k[1]
+    R = FAM['HL'][size]
+    sv_load(F, vk, al['v'], R, size)
+    F.emit('ld', '%s,%s' % (m, R)); return True
+
+def sc_addr_value(F, ok_, ik, v, size):
+    """L1 = (L2 = V) for an int, V read through an address (stval.c cv_i_*): the inner address and the value's take
+    registers as sv_regs says; the value lands in the first register that neither the inner address nor the outer one
+    will need (cv_i_DXD: ld BC,(c) / add BC,BC / lda XDE,_hia / ld XWA,(_vps) / ld HL,(XWA+0x2) / ld (XDE+BC),HL /
+    ld XWA,(_gps) / ld (XWA+0x2),HL); then the outer address is built as for a computed value.  An element at the
+    shared index (an index cache in HL or IX in the oracle) is left to the older paths."""
+    O, I = ok_[0], ik[0]
+    vk = sv_value_kind(F, v, size)
+    if vk is None or size != 2: return False
+    if vk[0] == 'X' and (O in ('X', 'Q') or I in ('X', 'Q')): return False
+    pool = ['WA', 'BC', 'DE', 'HL']
+    al = sv_regs(ik, vk, size, pool)
+    if al is None: return False
+    rout = {'D': ['WA'], 'X': ['WA', 'BC'], 'Q': ['WA']}.get(O, [])
+    vf = next((r for r in pool if r not in rout and r not in al['i']), None)
+    if vf is None: return False
+    im = sv_store_addr(F, ik, al['i'], size) if al['i'] else ik[1]
+    R = FAM[vf][size]
+    sv_load(F, vk, al['v'], R, size); F.emit('ld', '%s,%s' % (im, R))
+    if O in ('G', 'M'): F.emit('ld', '%s,%s' % (ok_[1], R)); return True
+    if O == 'P': orr = [next(r for r in pool if r != vf)]
+    elif O == 'X': orr = ['WA', 'BC']
+    else: orr = ['WA']
+    om = sv_store_addr(F, ok_, orr, size); F.emit('ld', '%s,%s' % (om, R)); return True
 
 def store_chain(F, lv, rv, size):
     """L1 = (L2 = V) for an int or long, after corpus/probes/stchain.c (run 2026-11-12-1-micro-stchain).  A loaded or
@@ -1409,7 +1536,7 @@ def store_chain(F, lv, rv, size):
     (an index cache in HL or IZ in the oracle), a long pointer element and -Xr's register index are left to the older
     paths.  True when it emitted the statement."""
     if size not in (1, 2, 4): return False
-    if size == 1 and (F.opt or not STORE_CHAIN_CHAR): return False
+    if size == 1 and (not STORE_CHAIN_CHAR or (F.opt and not STORE_CHAIN_CHAR_OPT)): return False
     x = strip(rv)
     if x.k != 'bin' or x.op != '=' or x.ty is None or x.ty.size != size or lv.ty is None or lv.ty.size != size: return False
     if strip(lv).ty is not None and strip(lv).ty.kind not in ('int', 'ptr') or strip(x.l).ty.kind not in ('int', 'ptr'): return False
@@ -1422,7 +1549,9 @@ def store_chain(F, lv, rv, size):
     vk = sp_value_kind(F, v, size)
     vc = fold(v)
     if vc.k == 'const' and vc.value is not None: V = 'K'
-    elif v.k == 'load' and mem_operand(F, v) is not None and mem_operand(F, v).startswith('(_'): V = 'G'
+    elif v.k == 'load' and mem_operand(F, v) is not None and mem_operand(F, v).startswith('(_'):
+        V = 'B' if (STORE_VALUE_ADDR and size == 2 and strip(v.e).k != 'var') else 'G'   # (cv_i_PPE)
+    elif STORE_VALUE_ADDR and size == 2 and sv_value_kind(F, v, size) is not None: V = 'A'
     elif vk == 'B': V = 'B'
     elif vk == 'C' and v.k == 'call': V = 'C'
     else: return False
@@ -1478,6 +1607,7 @@ def store_chain(F, lv, rv, size):
         if O == 'G' or F.opt: F.emit('ldw', '%s,%s' % (om, K)); return True   # (-O sc_i_PGK: ldw (XWA),0x7)
         R = W_(al['v'][0] if 'v' in al else al['i'][0])
         st(R, K); st(om, R); return True
+    if V == 'A': return sc_addr_value(F, ok_, ik, v, size)
     if V == 'B':
         rout = {'D': ['WA'], 'X': ['WA', 'BC'], 'Q': ['WA']}.get(O, [])
         ir = pool[:nregs(I)]
@@ -1526,6 +1656,7 @@ def ret_assign(F, x, size):
     vc = fold(v)
     if vc.k == 'const' and vc.value is not None: V = 'K'
     elif v.k == 'load' and mem_operand(F, v) is not None and mem_operand(F, v).startswith('(_'): V = 'G'
+    elif STORE_VALUE_ADDR and sv_value_kind(F, v, size) is not None: V = 'A'
     elif sp_value_kind(F, v, size) == 'B': V = 'B'
     elif v.k == 'call' and v.ty is not None and v.ty.size == size: V = 'C'
     else: return False
@@ -1545,11 +1676,12 @@ def ret_assign(F, x, size):
             if size == 2: F.emit('add', '%s,%s' % (base, base))
             else: F.emit('sla', '0x2,%s' % base)
             F.emit('lda', 'X%s,%s' % (nxt, k[1])); return '(X%s+%s)' % (nxt, base)
-        F.emit('ld', 'WA,%s' % k[2]); F.emit('exts', 'XWA')    # Q: built in XWA (a long K: moved to XBC)
-        if size == 2: F.emit('add', 'XWA,XWA')
-        else: F.emit('sll', '0x2,XWA')
-        if base != 'WA': F.emit('ld', 'X%s,XWA' % base); F.emit('add', 'X%s,%s' % (base, k[1])); return '(X%s)' % base
-        F.emit('add', 'XWA,%s' % k[1]); return '(XWA)'
+        q = base if F.opt else 'WA'                          # Q: built in XWA (a long K: moved to XBC); under -O
+        F.emit('ld', '%s,%s' % (q, k[2])); F.emit('exts', 'X' + q)   # in its own register (rs_l_QK -O)
+        if size == 2: F.emit('add', 'X%s,X%s' % (q, q))
+        else: F.emit('sll', '0x2,X%s' % q)
+        if base != q: F.emit('ld', 'X%s,XWA' % base); F.emit('add', 'X%s,%s' % (base, k[1])); return '(X%s)' % base
+        F.emit('add', 'X%s,%s' % (q, k[1])); return '(X%s)' % q
     if V == 'C':
         fam = gen(F, v, 'HL', size)
         if fam != 'HL': raise Unsupported('ret_assign: the call result not in HL')
@@ -1560,6 +1692,7 @@ def ret_assign(F, x, size):
         if size == 4:
             m = addr('BC'); F.emit('ld', 'XWA,%s' % Kv); F.emit('ld', '%s,XWA' % m); F.emit('ld', 'XHL,%s' % Kv); return True
         m = addr('WA'); F.emit('ldb' if size == 1 else 'ldw', '%s,%s' % (m, Kv)); F.emit('ld', '%s,%s' % (R, Kv)); return True
+    if V == 'A': return ra_addr_value(F, k, v, size)
     m = addr('WA')
     n0 = len(F.lines)
     fam = gen(F, v, 'HL', size)

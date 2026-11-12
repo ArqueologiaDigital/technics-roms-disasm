@@ -799,6 +799,17 @@ and a pushed global-minus-element takes DE.  The probe also exposed a wrong-code
 gia[t] = ri();` read `gi` after the call; `call_before_use` now keeps such a local.  idxloc.c 57 -> 81 at none.
 Gate: no ledger row down (5 rows up -- random3 and random4 at none by one each, cmpordl at -Xr 590 -> 594, evorder_ad at -Xr 905 -> 931, cmpordl2 at none 388 -> 394 -- and the four idxloc rows added); the regression finder shows no function newly inexact against cf6ad58b1; pairs 223 MATCH; semcheck DIFFERENT 60 -> 81: two older verdicts gone (r4_03_00 -Xr, r4_08_17), 23 new ones all idxloc.c char elements at t = gi, an index out of range (UB, reviewed in model/semcheck_review.tsv).
 
+**Values read through an address** (`corpus/probes/stval.c`, 221 functions, run 2026-11-12-4): `return L = V` and
+int chains `L1 = (L2 = V)` whose value is a deref, a member through a pointer, an element, a constant element or a
+static member.  The store address and the value's address take registers in one fixed order (`sv_regs`: a member
+with a displacement as the store first, a plain pointer store last); a chain's value lands in the first register
+neither address needs.  `ret_assign` and the char chains are now on under -O (stret.c at -O3 -XS 28 -> 264): the
+same code as none, except a pointer element built in its own register, constants stored with `ldb` on both sides
+and values computed in the register they are stored from.  stval.c 75 -> 208 at none, 39 -> 206 at -O3 -XS.
+Gate: no ledger row down (random1 at -O3 -XS and -O3 -XS -Xr 6 -> 7, random3 at -O3 -XS 3 -> 4, stret at -O3 -XS
+28 -> 264, the four stval rows added); no function newly inexact against 29c5f148e; pairs 223 MATCH; semcheck
+DIFFERENT 81 -> 78, none new.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
