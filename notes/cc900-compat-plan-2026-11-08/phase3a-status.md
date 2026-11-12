@@ -875,6 +875,12 @@ lowest of BC, DE, HL the loop body does not write, also when calls come before t
 does that only for for / while counters in leaf functions (not modelled further yet).  A constant-left char operation
 now loads its memory operand first.  loopctr 8 -> 12 at none, random3 10 -> 11.  Gate clean.
 
+**Bare-declared loop counters in registers** (loopctr.c): the leaf planner takes a do-while's counter, the do-while test
+is dec 0x1,R / ld WA,R / cp WA,K, and a counter assigned right before its do-while / while is a register temporary also
+when calls precede the loop.  loopctr 12 -> 22 at none.  Wrong code fixed on the way (found by the gate, not
+committed): a broader register-temporary rule broke the library's _frexp; an older shift op= path overwrote its
+computed count (r1_06_03).  Gate clean.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

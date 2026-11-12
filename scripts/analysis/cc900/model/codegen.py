@@ -1518,7 +1518,9 @@ def lh_store_post(F, lv, rv):
 LH_STORE_X = True                                         # see lh_store_x
 LH_STORE_ADDR = True
 LH_PK_ORDER = True
-L2_CHAR_SWAP = True                                       # see edit_l2_char_swap.py                                        # see edit_lh_pk_order.py                                      # plan_store_x's ADDR form (a pointer dividend)
+L2_CHAR_SWAP = True
+LOOPCTR = True
+SHIFT_COUNT_GUARD = True                                  # see edit_shift_count_guard.py                                            # see edit_loopctr.py                                       # see edit_l2_char_swap.py                                        # see edit_lh_pk_order.py                                      # plan_store_x's ADDR form (a pointer dividend)
 
 def plan_store_x(F):
     """before the frame: one statement ga[c] = A / B (or %) of two plain long operands, the index in memory, without
@@ -5332,6 +5334,10 @@ def gen_incdec(F, e, fam, size, value):
     g = global_name(e.e)
     xv = strip(e.e)
     if regvar_of(xv): touch_home(F, regvar_of(xv))      # (r2_08_15: a-- on a parameter homed in IZ, loaded lazily)
+    if LOOPCTR and value and not e.post and regvar_of(xv) and regvar_of(xv).reg in FAM:   # (loopctr.c lc_DGN: --i > 0)
+        d = regvar_of(xv); R = FAM[d.reg].get(d.ty.size, FAM[d.reg].get(2))
+        step = d.ty.base.size if d.ty.kind == 'ptr' else 1
+        F.emit('inc' if e.op == '++' else 'dec', '%s,%s' % (hx(step), R)); return d.reg
     if not value and regvar_of(xv) and getattr(F, 'l2', None):
         d = regvar_of(xv); R = FAM[d.reg].get(d.ty.size, FAM[d.reg].get(2))
         step = d.ty.base.size if d.ty.kind == 'ptr' else 1
@@ -5352,6 +5358,11 @@ def gen_incdec(F, e, fam, size, value):
     if g is None and xv.k == 'index' and not value:
         op = chidx.element(F, xv, 'rmw')                 # chidx.c lc1: gca[c]++ -> lda XBC,_gca / ld XWA,0x0 / ld A,(c) /
         if op is not None: g = op[1:-1]                  # add XWA,XBC / incb 0x1,(XWA)
+    if g is None and LOOPCTR and regvar_of(xv) is not None and getattr(regvar_of(xv), 'regtemp', False) and regvar_of(xv).ty.size in (2, 4) and (not value or not e.post):
+        d = regvar_of(xv); R = FAM[d.reg][d.ty.size]          # (++ / -- on a register temporary)
+        step = d.ty.base.size if d.ty.kind == 'ptr' else 1
+        F.emit('inc' if e.op == '++' else 'dec', '%s,%s' % (hx(step), R))
+        return None if not value else d.reg
     if g is None: raise Unsupported('incdec target')
     vt = strip(e.e).ty
     step = vt.base.size if vt.kind == 'ptr' else 1
@@ -6276,7 +6287,7 @@ def gen_opassign(F, e):
                 F.emit('and', 'A,0xf'); lab = F.newlabel(); F.emit('j', 'z,%s' % lab); F.emit(mnem, 'A,%s' % V)
                 F.lines.append(lab + ':'); F.emit('ld', '%s,%s' % (t, V)); return t
         t = lvalue(F, e.l, ptr='XDE', idx='DE', base='XHL', kind='rmw')
-        V = FAM[next((x for x in ('BC', 'WA', 'DE', 'HL') if not re.search(r'\b(X?%s|%s)\b' % (x, FAM[x][1]), t)), 'BC')][size]
+        V = FAM[next((x for x in ('BC', 'WA', 'DE', 'HL') if not re.search(r'\b(X?%s|%s)\b' % (x, FAM[x][1]), t) and not (SHIFT_COUNT_GUARD and x == 'WA' and fold(r).k != 'const' and mem_operand(F, r) is None)), 'BC')][size]   # (r1_06_03: not over the computed count)
         rr = fold(r); cs = mem_operand(F, r) if rr.k != 'const' else None
         pre = rr.k != 'const' and cs is None and SHIFT_COUNT_EXPR
         if pre:                                            # random r1_03_04: gul >>= (t & 15): the count computed
@@ -8459,6 +8470,12 @@ def loop_cond(F, c, target, sense):
             F.emit('cp', '%s,%s' % (FAM[T][2], hx(fold(c.r).value & 0xffff)))
             cc = (CC_S if d.ty.signed else CC_U)[c.op]; cc = cc if sense else INV[cc]
             F.emit('ret', cc) if target == 'RET' else F.emit('j', '%s,%s' % (cc, target)); return
+    if LOOPCTR and c.k == 'bin' and c.op in CC_S and strip(c.l).k == 'incdec' and not strip(c.l).post and regvar_of(strip(c.l).e) and not F.opt and fold(c.r).k == 'const' and fold(c.r).value is not None and regvar_of(strip(c.l).e).ty.size == 2 and regvar_of(strip(c.l).e).reg != 'WA' and 'WA' not in live_regs(F):
+        d = regvar_of(strip(c.l).e); R = FAM[d.reg][2]   # loopctr.c lc_DGN: dec 0x1,BC / ld WA,BC / cp WA,0x0 / j gt
+        F.emit('dec' if strip(c.l).op == '--' else 'inc', '0x1,%s' % R)
+        F.emit('ld', 'WA,%s' % R); F.emit('cp', 'WA,%s' % hx(fold(c.r).value & 0xffff))
+        cc = (CC_S if d.ty.signed else CC_U)[c.op]; cc = cc if sense else INV[cc]
+        F.emit('ret', cc) if target == 'RET' else F.emit('j', '%s,%s' % (cc, target)); return
     if c.k == 'incdec' and not c.post and c.op == '--' and regvar_of(c.e) and F.opt and sense and target != 'RET' \
             and regvar_of(c.e).ty.size == 2:
         F.emit('djnz', '%s,%s' % (FAM[regvar_of(c.e).reg][2], target)); return   # c_do under O3XS: djnz IZ,L1
@@ -9903,6 +9920,9 @@ def leaf_l2(F):
             iv = strip(lp.inc)
             v = strip(iv.e) if iv.k == 'incdec' else strip(iv.l) if iv.k == 'opassign' else None
             if v is not None and v.k == 'var' and v.decl.kind == 'local': counters.add(v.decl)
+        if LOOPCTR and lp.k == 'do':                     # (loopctr.c lc_DGN: do { .. } while (--i > 0))
+            cv = strip(lp.cond)
+            if cv.k == 'bin' and strip(cv.l).k == 'incdec' and strip(strip(cv.l).e).k == 'var' and strip(strip(cv.l).e).decl.kind == 'local': counters.add(strip(strip(cv.l).e).decl)
     reads = {}; copies = {}                              # a parameter read only as the source of `local = p`
     def rc(n, dep):
         if n.k == 'load' and strip(n.e).k == 'var': reads[strip(n.e).decl] = reads.get(strip(n.e).decl, 0) + 1
@@ -10969,7 +10989,23 @@ def regtemp_candidates(F):
         walk(n, lambda m, dep: out.append(m) if m.k == 'call' or fpgen.is_fp_op(m) else None)
         return out
     for i, c in enumerate(body):
-        if c.k != 'decl' or c.init is None: continue
+        if c.k != 'decl': continue
+        if c.init is None:                                 # (loopctr.c lc_DGF: int i; ... i = 7; do .. while (--i > 0) -> BC)
+            if not LOOPCTR: continue
+            d0 = c.var
+            j = next((k for k, x in enumerate(body[i + 1:]) if uses_decl(x, d0)), None)
+            if j is None: continue
+            x0 = body[i + 1 + j]
+            if not (x0.k == 'expr' and x0.e.k == 'bin' and x0.e.op == '=' and strip(x0.e.l).k == 'var' and strip(x0.e.l).decl is d0 and not uses_decl(x0.e.r, d0)): continue
+            lp0 = body[i + 2 + j] if i + 2 + j < len(body) else None   # only the counter of the do-while right after it, unused after
+            cv0 = strip(lp0.cond) if lp0 is not None and lp0.k == 'do' else None   # (_frexp O3XS: nn, assigned then bumped
+            ok0 = cv0 is not None and cv0.k == 'bin' and strip(cv0.l).k == 'incdec' and strip(strip(cv0.l).e).k == 'var' and strip(strip(cv0.l).e).decl is d0
+            if not ok0 and lp0 is not None and lp0.k == 'while':   # (loopctr.c lc_WGF: while (i < 8) { .. i++; })
+                cw0 = strip(lp0.cond); st0 = []
+                walk(lp0.body, lambda n_, dd: st0.append(n_) if n_.k == 'incdec' and strip(n_.e).k == 'var' and strip(n_.e).decl is d0 else None)
+                ok0 = cw0.k == 'bin' and strip(cw0.l).k == 'load' and strip(strip(cw0.l).e).k == 'var' and strip(strip(cw0.l).e).decl is d0 and len(st0) == 1
+            if not ok0 or any(uses_decl(x, d0) for x in body[i + 3 + j:]): continue   #  wrong code in WA)
+            i = i + 1 + j; c = type('C', (), {'var': d0, 'init': x0.e.r, 'k': 'decl'})()
         d = c.var
         if d.kind != 'local' or d.addr_taken or \
                 getattr(d, 'no_fold', False) or d.ty.kind in ('array', 'struct') or fpgen.is_fp(d.ty) or \

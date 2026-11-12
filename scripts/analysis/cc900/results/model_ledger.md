@@ -205,10 +205,10 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-12-6-micro-lhidx, v423/O3XS                             | probes/lhidx.c       | 68 / 150 exact (45.3%)   |
 | run 2026-11-12-6-micro-lhidx, v423/Xr                               | probes/lhidx.c       | 0 / 150 exact (0.0%)     |
 | run 2026-11-12-6-micro-lhidx, v423/O3XSXr                           | probes/lhidx.c       | 0 / 150 exact (0.0%)     |
-| run 2026-11-12-7-micro-loopctr, v423/none                           | probes/loopctr.c     | 12 / 30 exact (40.0%)    |
-| run 2026-11-12-7-micro-loopctr, v423/O3XS                           | probes/loopctr.c     | 0 / 30 exact (0.0%)      |
-| run 2026-11-12-7-micro-loopctr, v423/Xr                             | probes/loopctr.c     | 6 / 30 exact (20.0%)     |
-| run 2026-11-12-7-micro-loopctr, v423/O3XSXr                         | probes/loopctr.c     | 0 / 30 exact (0.0%)      |
+| run 2026-11-12-7-micro-loopctr, v423/none                           | probes/loopctr.c     | 22 / 30 exact (73.3%)    |
+| run 2026-11-12-7-micro-loopctr, v423/O3XS                           | probes/loopctr.c     | 2 / 30 exact (6.7%)      |
+| run 2026-11-12-7-micro-loopctr, v423/Xr                             | probes/loopctr.c     | 11 / 30 exact (36.7%)    |
+| run 2026-11-12-7-micro-loopctr, v423/O3XSXr                         | probes/loopctr.c     | 2 / 30 exact (6.7%)      |
 | run 2026-11-09-9-micro-fp, v423/none                                | micro/fp.c           | 108 / 108 exact (100.0%) |
 | run 2026-11-09-9-micro-fp, v423/O3XS                                | micro/fp.c           | 108 / 108 exact (100.0%) |
 | run 2026-11-09-10-micro-fptemps, v423/none                          | micro/fp_temps.c     | 33 / 33 exact (100.0%)   |
