@@ -867,6 +867,9 @@ XWA's operand then XBC's after the pointers; the division store rules are on und
 crashes on the XIZ planners' marker.  stdiv 372 -> 628 at -O3 -XS, evorder_lh 150 -> 176, stord 312 -> 322, random2
 2 -> 3.  Gate clean (semcheck 106 -> 102).
 
+**Char division under -O**: the divisor straight into C / E, a constant dividend divided in BC beside an element
+store.  stdiv 628 -> 694 at -O3 -XS.  Gate clean.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

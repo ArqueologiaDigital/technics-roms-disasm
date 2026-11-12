@@ -1500,7 +1500,7 @@ def lh_store_post(F, lv, rv):
     if any(r_ in ('WA', 'BC', 'DE', 'HL') for r_ in live_regs_read(F)): return False
     x = strip(rv); kl = cw_kind(F, x.l, 4); kr = ks[1]
     if kl is not None and kl[0] == 'K' and kr[0] == 'P' and not kr[2] and x.op in ('/', '%'):   # (sd_l_d_PKP: ld XBC,(_wlp) /
-        F.emit('ld', 'XBC,%s' % kr[1]); F.emit('ld', 'XWA,%s' % hx(fold(x.l).value & 0xffffffff))   # ld XWA,0x64 / ld XBC,(XBC))
+        F.emit('ld', 'XBC,%s' % kr[1]); F.emit(*lh_ls_ld(F, x.l, hx(fold(x.l).value & 0xffffffff)))   # ld XWA,0x64 / ld XBC,(XBC); -O lda)
         F.emit('ld', 'XBC,(XBC)'); F.emit('cal', 'C9H_' + {'/': 'div', '%': 'rem'}[x.op] + ('ls' if x.ty.signed else 'lu')); fam = 'HL'
     else: fam = gen(F, rv, 'HL', 4, store=True)
     if fam != 'HL': raise Unsupported('lh_store_post: the value not in XHL')
@@ -2092,6 +2092,9 @@ def store_div_char(F, lv, rv):
         if L[0] == 'P': e('ld', 'X%s,%s' % (R, L[1]))
         else: elem(L[1], L[2], R, 'lda' if L[0] == 'X' else 'ld')
         m = '(X%s)' % R
+    if short and F.opt and a[0] == 'K' and b[0] == 'G' and not rem and L[0] in ('X', 'Q'):
+        e('ld', 'BC,%s' % hx(a[1] & 0xffff)); e('divs', 'BC,%s' % b[1])   # (-O sd_c_d_XKG: the quotient already in C)
+        elem(L[1], L[2], 'DE', 'lda' if L[0] == 'X' else 'ld'); e('ld', '(XDE),C'); return True
     if short:
         if a[0] == 'K':
             if b[0] == 'G': bop = b[1]
@@ -2105,9 +2108,12 @@ def store_div_char(F, lv, rv):
         if b[0] == 'K': bop = hx(b[1] & 0xffff)
         else:
             R = 'E' if a[0] == 'X' else 'C'
-            if b[0] == 'P': e('ld', 'XWA,%s' % b[1]); e('ld', 'A,(XWA)')
-            else: elem(b[1], b[2], 'BC', 'lda'); e('ld', 'A,(XBC)')
-            e('ld', '%s,A' % R); e('exts', {'C': 'BC', 'E': 'DE'}[R]); bop = {'C': 'BC', 'E': 'DE'}[R]
+            src = '(XWA)' if b[0] == 'P' else '(XBC)'
+            if b[0] == 'P': e('ld', 'XWA,%s' % b[1])
+            else: elem(b[1], b[2], 'BC', 'lda')
+            if F.opt: e('ld', '%s,%s' % (R, src))              # (-O sd_c_d_GGP: ld C,(XWA))
+            else: e('ld', 'A,%s' % src); e('ld', '%s,A' % R)
+            e('exts', {'C': 'BC', 'E': 'DE'}[R]); bop = {'C': 'BC', 'E': 'DE'}[R]
         loadA(a); e('exts', 'WA'); e('exts', 'XWA'); e('divs', 'XWA,%s' % bop)
         if rem: e('ld', 'WA,QWA')
         res = 'A'
