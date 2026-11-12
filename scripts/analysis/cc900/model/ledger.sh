@@ -216,6 +216,16 @@ for c in none O3XS; do    # compare operands of the second wave: casts, pointer 
 done
 row "run 2026-11-10-18-micro-cmpordl2, v423/Xr" "probes/cmpordl2.c" "$O/2026-11-10-18-micro-cmpordl2/out/v423/Xr/probes" corpus/probes/cmpordl2.c --opt none --adecl
 row "run 2026-11-10-18-micro-cmpordl2, v423/O3XSXr" "probes/cmpordl2.c" "$O/2026-11-10-18-micro-cmpordl2/out/v423/O3XSXr/probes" corpus/probes/cmpordl2.c --opt O3XS --adecl
+for c in none O3XS; do    # a store whose value is an assignment (corpus/probes/stchain.c)
+  row "run 2026-11-12-1-micro-stchain, v423/$c" "probes/stchain.c" "$O/2026-11-12-1-micro-stchain/out/v423/$c/probes" corpus/probes/stchain.c --opt $c
+done
+row "run 2026-11-12-1-micro-stchain, v423/Xr" "probes/stchain.c" "$O/2026-11-12-1-micro-stchain/out/v423/Xr/probes" corpus/probes/stchain.c --opt none --adecl
+row "run 2026-11-12-1-micro-stchain, v423/O3XSXr" "probes/stchain.c" "$O/2026-11-12-1-micro-stchain/out/v423/O3XSXr/probes" corpus/probes/stchain.c --opt O3XS --adecl
+for c in none O3XS; do    # an assignment as a return value, char chained stores (corpus/probes/stret.c)
+  row "run 2026-11-12-2-micro-stret, v423/$c" "probes/stret.c" "$O/2026-11-12-2-micro-stret/out/v423/$c/probes" corpus/probes/stret.c --opt $c
+done
+row "run 2026-11-12-2-micro-stret, v423/Xr" "probes/stret.c" "$O/2026-11-12-2-micro-stret/out/v423/Xr/probes" corpus/probes/stret.c --opt none --adecl
+row "run 2026-11-12-2-micro-stret, v423/O3XSXr" "probes/stret.c" "$O/2026-11-12-2-micro-stret/out/v423/O3XSXr/probes" corpus/probes/stret.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do

@@ -192,6 +192,22 @@ marcar os casts escritos no fonte. E uma variável local inicializada e nunca us
 calculada, em WA, e jogada fora: era a recusa "local t" que aparecia em dezenas de programas
 aleatórios.
 
+## Depois do desligamento: atribuições encadeadas
+
+O computador foi desligado no meio de um lote; a nota de retomada, escrita antes, bastou para
+reconstruir a cópia de trabalho a partir do patch e conferir que ela era idêntica à salva. O lote
+voltou ao portão e entrou.
+
+A sonda seguinte veio de uma forma que os programas aleatórios produzem e que nenhuma sonda tinha
+medido: a atribuição usada como valor de outra (`*gpl = (gla[3] = gs.l)`) e como valor de retorno
+(`return gla[t] = gl`). O compilador original resolve os dois casos com uma regra de alocação
+simples: o endereço de fora primeiro, o de dentro depois, o valor por último, e os registradores
+WA, BC, DE e HL distribuídos nessa ordem entre o ponteiro externo (quando é um membro via ponteiro),
+o endereço interno, o elemento externo, o valor e o ponteiro externo simples. Um valor calculado
+inverte a ordem: guarda-se primeiro no destino de dentro e só então se monta o endereço de fora.
+Para chars a regra muda, porque o endereço de um elemento de vetor de chars passa por XWA. O
+modelo saiu de 49 para 321 das 392 funções da primeira sonda e de 28 para 264 das 280 da segunda.
+
 ## Onde isso deixa o modelo
 
 No fechamento do dia: as 674 funções do corpus pequeno exatas nas quatro combinações de

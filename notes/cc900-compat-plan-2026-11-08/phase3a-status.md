@@ -778,6 +778,19 @@ element index stays a register temporary (`ld BC,(_gi) / add BC,BC / lda XDE,_hi
 used the same way.  cmpordl2.c: 388 of 572 (17 before); cmpordl.c at -Xr 546 -> 586.  Random corpora at none: refused
 whole 472 -> 451, exact 42 -> 43.  Gate: no ledger row down (21 rows up, the eight evorder_ad and cmpordl2 rows added; cmpordl at -Xr 546 -> 586, cmpord at -Xr 363 -> 405, evorder_st at -Xr 397 -> 420); pairs 223 MATCH (three _pow refusal reasons changed); semcheck DIFFERENT 43 -> 51, the 8 new verdicts all out-of-range indexes reviewed as UB in model/semcheck_review.tsv (cmpordl2 cc_l_YF / cc_e_YF, r2_05_11, r2_07_14).  The regression finder shows six functions newly inexact against 8b3c63aad (evorder_ad ea_i_div_DD, ea_i_rem_DD, ea_i_mul_KD; cmpordl -Xr cc_e_XG, cc_l_XE, cc_l_XG, cc_l_XM), fixed in the next commit (research-scratch fac6ec2).
 
+**Chained stores, returned assignments, long helpers with a member operand** (2026-11-12, after the reboot; the rules are
+reproducible from research-scratch `sessions/2026-11-10_cc900-refusals/patch_cmpwide.py`).  Two probes: `stchain.c`
+(`L1 = (L2 = V)` for int and long, 392 functions, run 2026-11-12-1) and `stret.c` (`return L = V` for char, int and
+long, and the char chains, 280 functions, run 2026-11-12-2).  `store_chain`: with a loaded or constant value the outer
+address comes first, the inner one next, the value last, the registers handed out in the order WA, BC, DE, HL to an
+outer member through a pointer, the inner address, an outer element, the value and an outer plain pointer; a computed
+value stores the inner first and builds the outer address after it; a call comes first.  `ret_assign`: the address
+first and the value straight into HL.  `sc_char`: chars through A or C, a char element built through XWA.  Also
+`lh_member` (a long helper with an operand read through a pointer: the pointer in XIZ, saved at entry), any computed
+char argument into A, the address of an element into XWA, and the six functions batch 14 had lost.  stchain 49 -> 321,
+stret 28 -> 264, evorder_ad 987 -> 1010 at none.  Random corpora at none: refused whole 451 -> 417, exact 43 -> 51.
+Gate: no ledger row down (15 rows up -- random1 at none 17 -> 20, random2 at none 6 -> 9, random3 at none 7 -> 9, evorder_lh at none 246 -> 272, evorder_ad at none 987 -> 1010, cmpordl at -Xr 586 -> 590 -- and the eight stchain and stret rows added); the regression finder shows no function newly inexact against 9aee92699; pairs 223 MATCH; semcheck DIFFERENT 51 -> 60, the 9 new verdicts all out-of-range indexes in stret.c chains at -O and -Xr that the older store path still takes (UB, reviewed in model/semcheck_review.tsv).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

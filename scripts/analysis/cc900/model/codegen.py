@@ -433,6 +433,9 @@ def l2_divide(F, e):
 def gen(F, e, fam, size, then_ret=False, store=False):
     """emit code leaving e's low `size` bytes in register family `fam`; returns the family actually used"""
     e0 = strip(e)
+    if RET_ASSIGN and then_ret and fam == 'HL' and e0.k == 'bin' and e0.op == '=' and not getattr(F, 'l2', None) and \
+            not getattr(F, 'cl_active', None) and getattr(F, 'u1_i', None) is None and ret_assign(F, e0, size):
+        return 'HL'                                    # (stret.c: return L = V)
     if getattr(F, 'l2', None) and e0.k == 'addr' and l2_elem_addr(F, e0) is not None:
         F.emit('lda', '%s,%s' % (FAM[fam][4], l2_elem_addr(F, e0))); return fam   # _itoa: lda XWA,XIZ+0x12
     if getattr(F, 'l2', None) and e0.k == 'bin' and e0.op in ('/', '%'):
@@ -808,6 +811,27 @@ def gen(F, e, fam, size, then_ret=False, store=False):
             X = FAM[fam][4]                                # random r1_00_00: char *u = &gca[t], t in IZ ->   zero-extends)
             F.emit('lda', '%s,_%s' % (X, b.decl.name))     # lda XWA,_gca / lda XWA,XWA+IZ
             F.emit('lda', '%s,%s+%s' % (X, X, FAM[iv.reg][2])); return fam
+    if ADDR_ELEM_WA and e.k == 'addr' and strip(e.e).k == 'index' and fam == 'WA' and not F.opt and size == 4:
+        x = strip(e.e); b = strip(x.base); ib = strip(x.idx)  # random r1_09_00: gpi = &gia[t] -> ld WA,IZ / add WA,WA /
+        while ib.k == 'cast' and ib.kind == 'IntegralCast': ib = strip(ib.e)   # lda XBC,_gia / exts XWA / add XWA,XBC;
+        im = mem_operand(F, ib) if ib.k == 'load' else None   # r1_03_02: &gca[u], u a char in E -> ld A,E / extz WA
+        if b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array' and im is not None and \
+                x.ty.size in (1, 2, 4) and 'BC' not in live_regs(F) and \
+                (ib.ty.size == 2 and ib.ty.signed or ib.ty.size == 1) and family_of(im) != 'XBC':
+            if ib.ty.size == 1:                           # a char index (r4_00_04: &gia[t], t a char in QIZH ->
+                if x.ty.size == 4: raise Unsupported('the address of a long element at a char index')   # ld A,QIZH /
+                if im != 'A': F.emit('ld', 'A,%s' % im)   # add A,QIZH / lda XBC,_gia / exts WA / exts XWA / add XWA,XBC:
+                if x.ty.size == 1 or not ib.ty.signed:   # doubled in the byte; r1_03_02: &gca[u] -> ld A,E / extz WA;
+                    F.emit('exts' if ib.ty.signed else 'extz', 'WA')   # an unsigned char is extended first and doubled
+                    if x.ty.size == 2: F.emit('add', 'WA,WA')          # in the word (r3_02_09: ld A,(b) / extz WA /
+                else: F.emit('add', 'A,%s' % ('A' if im == 'A' else im))   # add WA,WA / lda XBC,_gia / exts XWA)
+                F.emit('lda', 'XBC,_%s' % b.decl.name)
+                if x.ty.size == 2 and ib.ty.signed: F.emit('exts', 'WA')
+                F.emit('exts', 'XWA'); F.emit('add', 'XWA,XBC'); return fam
+            if im != 'WA': F.emit('ld', 'WA,%s' % im)
+            if x.ty.size == 2: F.emit('add', 'WA,WA')
+            elif x.ty.size == 4: F.emit('sla', '0x2,WA')
+            F.emit('lda', 'XBC,_%s' % b.decl.name); F.emit('exts', 'XWA'); F.emit('add', 'XWA,XBC'); return fam
     if e.k == 'addr' and strip(e.e).k == 'index' and fam != 'WA':
         x = strip(e.e); b = strip(x.base); ii = strip(x.idx)
         while ii.k == 'cast' and ii.kind == 'IntegralCast': ii = strip(ii.e)
@@ -943,6 +967,8 @@ CMP_ORDER = True                                          # see cmp_order
 CMP_WIDE = True                                           # see cmp_wide
 CMP_WIDE_OPT = True                                       # cmp_wide under -O too (553 of cmpordl.c's 680 forms are the same)
 BIN_WIDE = True                                           # see bin_wide
+CHAR_ARG_ANY = True                                       # any computed char argument: into A, exts WA / push WA (push_arg)
+ADDR_ELEM_WA = True                                       # &garr[i] into XWA: ld WA,(i) / add WA,WA / lda XBC,_garr / exts XWA / add XWA,XBC
 UNUSED_LOCAL_INIT = True                                  # a local with an initialiser and no use: cc900 still computes it into WA
 
 def cw_explicit_widening(x):
@@ -1115,7 +1141,7 @@ def bin_wide(F, e, op, l, r, fam, size):
         else: ext(W)
         emit_op(W, H); return ret('WA')
     # ---- multiply / divide with a member through a pointer as the memory operand: its pointer in XWA, the accumulator BC
-    if op in ('*', '/', '%') and size == 2 and (R == 'D' and L != 'F' and (op != '*' or L in ('G', 'K', 'D'))
+    if op in ('*', '/', '%') and size == 2 and (R == 'D' and L != 'F' and (op != '*' and L != 'D' or op == '*' and L in ('G', 'D'))
                                                 or op == '*' and L == 'D' and R in ('M', 'P', 'X')):
         dk, ok_, okind = (rk, l, lk) if R == 'D' else (lk, r, rk)
         if okind[0] == 'X' and R == 'D':                     # ea_i_div_XD: the element's address, the pointer, ld BC,(XDE+BC)
@@ -1129,14 +1155,15 @@ def bin_wide(F, e, op, l, r, fam, size):
             if op == '*':
                 F.emit('ld', 'XWA,%s' % lk[1]); F.emit('ld', 'XBC,%s' % rk[1]); F.emit('ld', 'BC,(XBC+%s)' % hx(rk[2]) if rk[2] else 'BC,(XBC)')
                 emit_op('BC', '(XWA+%s)' % hx(lk[2]) if lk[2] else '(XWA)'); return 'BC'
-            F.emit('ld', 'XBC,%s' % lk[1]); F.emit('ld', 'XWA,%s' % rk[1]); F.emit('ld', 'BC,(XBC+%s)' % hx(lk[2]) if lk[2] else 'BC,(XBC)')
-            ext('BC'); emit_op('BC', '(XWA+%s)' % hx(rk[2]) if rk[2] else '(XWA)')   # (by analogy: the divisor's pointer in XWA)
-            return 'WA' if op == '%' else 'BC'
+            return None
         elif okind[0] == 'K': F.emit('ld', 'XWA,%s' % dk[1]); F.emit('ld', 'XBC,%s' % kimm(ok_))   # ea_i_div_KD: ld XBC,0x7
         else: F.emit('ld', 'XWA,%s' % dk[1]); ldv('BC', okind, ok_)
         if okind[0] != 'K': ext('BC')
         emit_op('BC', '(XWA+%s)' % hx(dk[2]) if dk[2] else '(XWA)')
         return ret('WA') if op == '%' else 'BC'
+    if op in ('/', '%') and size == 2 and L == 'D' and R == 'D':
+        F.emit('ld', 'XWA,%s' % lk[1]); F.emit('ld', 'XBC,%s' % rk[1]); F.emit('ld', 'WA,(XWA+%s)' % hx(lk[2]) if lk[2] else 'WA,(XWA)')
+        ext('WA'); emit_op('WA', '(XBC+%s)' % hx(rk[2]) if rk[2] else '(XBC)'); return ret('WA')
     # ---- a constant on the left: the right loads (ea_c_add_KG: ld A,(_hc) / inc 0x7,A; ea_i_div_KP: ld XBC,(_hpi) / ld XWA,0x7 / divs XWA,(XBC))
     if L == 'K':
         n0 = len(F.lines); a = addr(rk)
@@ -1216,6 +1243,316 @@ def cw_addr(F, *a, **k): return cw_pin(F, _cw_addr_raw(F, *a, **k))
 def cw_load(F, *a, **k): return cw_pin(F, _cw_load_raw(F, *a, **k))
 def cw_value(F, *a, **k): return cw_pin(F, _cw_value_raw(F, *a, **k))
 def cw_ext(F, *a, **k): return cw_pin(F, _cw_ext_raw(F, *a, **k))
+
+LH_MEMBER = True                                          # see lh_member
+
+def lh_member_kinds(F, op, l, r):
+    """(D kind, other kind, D on the right) for a long helper with one member-through-a-pointer operand and a constant,
+    global, static member or plain-pointer one; None otherwise (a constant multiplier is strength-reduced, a constant
+    divisor and the element / call kinds are unprobed here)"""
+    try: lk, rk = cw_kind(F, l, 4), cw_kind(F, r, 4)
+    except Unsupported: return None
+    if lk is None or rk is None: return None
+    if (lk[0] == 'D') == (rk[0] == 'D'): return None
+    dk, ok_, right = (rk, lk, True) if rk[0] == 'D' else (lk, rk, False)
+    if ok_[0] not in ('K', 'G', 'M', 'P'): return None
+    if ok_[0] == 'K' and (op == '*' or not right): return None
+    return dk, ok_, right
+
+def lh_member(F, op, l, r):
+    """emit the operands of a long helper with a member-through-a-pointer operand (corpus/probes/evorder_ad.c, run
+    2026-11-10-17): the pointer in XIZ, saved at entry (plan_store_xiz), the member read through it.  Divide and
+    remainder: the left in XWA and the right in XBC; a left pointer's own load comes before XIZ's (ld XWA,(_gpl) /
+    ld XIZ,(_hps) / ld XWA,(XWA) / ld XBC,(XIZ+0x4)); with the member on the left, a global right loads before the
+    member (ld XIZ,(_gps) / ld XBC,(_hl) / ld XWA,(XIZ+0x4); -O: the member first), a static member or element after
+    it, a pointer's load before and its deref after.  Multiply: a global keeps its side, a static member or pointer
+    swaps sides with the member (ea_l_mul_ED: ld XIZ,(_hps) / ld XWA,(XIZ+0x4) / ld XBC,(_gla + 0xc); DE:
+    ld XIZ,(_gps) / ld XWA,(_hla + 0xc) / ld XBC,(XIZ+0x4); PD: ld XBC,(_gpl) / ld XIZ,(_hps) / ld XWA,(XIZ+0x4) /
+    ld XBC,(XBC)).  True when it emitted them."""
+    ks = lh_member_kinds(F, op, l, r)
+    if ks is None: return False
+    dk, ok_, right = ks; O = ok_[0]; ox = l if right else r
+    mem = '(XIZ+%s)' % hx(dk[2]) if dk[2] else '(XIZ)'
+    def ld(a, b): F.emit('ld', '%s,%s' % (a, b))
+    oval = hx(fold(ox).value & 0xffffffff) if O == 'K' else ok_[1]
+    if right:
+        if op == '*':
+            if O == 'G': ld('XIZ', dk[1]); ld('XWA', oval); ld('XBC', mem)
+            elif O == 'M': ld('XIZ', dk[1]); ld('XWA', mem); ld('XBC', oval)
+            else: ld('XBC', ok_[1]); ld('XIZ', dk[1]); ld('XWA', mem); ld('XBC', '(XBC)')
+        else:
+            if O == 'P': ld('XWA', ok_[1]); ld('XIZ', dk[1]); ld('XWA', '(XWA)'); ld('XBC', mem)
+            else: ld('XIZ', dk[1]); ld('XWA', oval); ld('XBC', mem)
+        return True
+    ld('XIZ', dk[1])
+    if op == '*':
+        if O == 'G':
+            if F.opt: ld('XWA', mem); ld('XBC', oval)
+            else: ld('XBC', oval); ld('XWA', mem)
+        elif O == 'M': ld('XWA', oval); ld('XBC', mem)
+        else: ld('XWA', ok_[1]); ld('XWA', '(XWA)'); ld('XBC', mem)
+    else:
+        if O == 'G':
+            if F.opt: ld('XWA', mem); ld('XBC', oval)
+            else: ld('XBC', oval); ld('XWA', mem)
+        elif O == 'M': ld('XWA', mem); ld('XBC', oval)
+        else: ld('XBC', ok_[1]); ld('XWA', mem); ld('XBC', '(XBC)')
+    return True
+
+STORE_CHAIN = True                                        # see store_chain
+RET_ASSIGN_OPT = False                                    # ret_assign under -O (unprobed yet)
+STORE_CHAIN_OPT = True                                    # store_chain under -O: an int constant takes ldw on both sides,
+                                                          # an outer pointer element is built in its own register
+
+def sc_lkind(F, lv):
+    """the lvalue kinds of store_chain: ('G', mem) a global variable, ('M', mem) a static member or constant element,
+    ('P', ptr, off) / ('D', ptr, off) through a plain pointer, ('X', sym, idxmem) a global array at a plain signed int
+    index in memory, ('Q', ptr, idxmem) a pointer at such an index; None otherwise"""
+    x = strip(lv)
+    if x.k == 'var':
+        if x.decl.kind != 'global' or getattr(x.decl, 'reg', None): return None
+        return ('G', '(_%s)' % x.decl.name)
+    k = sp_lvalue_kind(F, x)
+    if k is None: return None
+    if k[0] == 'S': return ('M', k[1])
+    if k[0] in ('P', 'D'): return ('D' if k[2] else 'P', k[1], k[2])
+    if k[0] in ('X', 'Q'):
+        im, signed = k[2]
+        if not signed or not isinstance(im, str) or not im.startswith('('): return None
+        return (k[0], k[1], im)
+    return None
+
+STORE_CHAIN_CHAR = True                                   # store_chain for chars (sc_char)
+
+def sc_char(F, ok_, ik, v, V, vc):
+    """L1 = (L2 = V) for chars (corpus/probes/stret.c, run 2026-11-12-2, sc_c_*).  A char element is built through XWA
+    into XBC or XDE (lda XWA,_gca / ld BC,(c) / extz XBC / add XBC,XWA).  A loaded value goes to A, or to C when the
+    inner address takes XWA (sc_c_GPG: ld XWA,(_hp) / ld C,(_vc)); the outer address comes first, in XBC, or in XDE
+    when XBC is taken by the inner element or the value C (sc_c_PPG: ld XDE,(_gp) / ld XWA,(_hp) / ld C,(_vc)).  A
+    constant: ldb into the inner, then ldb into a global outer or ld A,0x7 for any other (sc_c_PGK).  A computed value
+    is computed in A after the inner address (a pointer in XBC), stored into the inner, and the outer address is built
+    after it; an outer element needs XWA, so the value moves to C (outer in XDE) or, when the inner holds XBC, to E
+    (outer in XBC) (sc_c_XGB: ld C,A / ld (_hc),C / lda XWA,_gca / ld DE,(c) / extz XDE / add XDE,XWA / ld (XDE),C).
+    A call comes first; both addresses are built from XWA after it.  True when it emitted the statement."""
+    O, I = ok_[0], ik[0]
+    if O == 'D' or I == 'D': return False                  # (a char member at a displacement: unprobed)
+    if O in ('X', 'Q') and I in ('X', 'Q'): return False
+    def elem(k, reg):                                       # a char element / pointer element into reg (XBC / XDE)
+        F.emit('lda' if k[0] == 'X' else 'ld', 'XWA,%s' % k[1]); F.emit('ld', '%s,%s' % (reg[1:], k[2]))
+        F.emit('extz', reg); F.emit('add', '%s,XWA' % reg); return '(%s)' % reg
+    def ptr(k, reg): F.emit('ld', '%s,%s' % (reg, k[1])); return '(%s)' % reg
+    def addr(k, reg):
+        if k[0] in ('G', 'M'): return k[1]
+        if k[0] == 'P': return ptr(k, reg)
+        return elem(k, reg)
+    if V == 'C':
+        fam = gen(F, v, 'HL', 1)
+        if fam != 'HL': raise Unsupported('sc_char: the call result not in L')
+        flush_pops(F)
+        m = addr(ik, 'XWA' if I == 'P' else 'XBC'); F.emit('ld', '%s,L' % m)
+        m = addr(ok_, 'XWA' if O == 'P' else 'XBC'); F.emit('ld', '%s,L' % m); return True
+    if V in ('K', 'G'):
+        val = 'C' if (V == 'G' and I == 'P') else 'A'
+        inner_bc = I in ('X', 'Q')
+        oreg = 'XDE' if (inner_bc or val == 'C') else 'XBC'
+        om = None
+        if O == 'P': om = ptr(ok_, oreg)
+        elif O in ('X', 'Q'): om = elem(ok_, oreg)
+        im = addr(ik, 'XWA' if I == 'P' else 'XBC')
+        if V == 'G':
+            F.emit('ld', '%s,%s' % (val, mem_operand(F, v))); F.emit('ld', '%s,%s' % (im, val))
+            F.emit('ld', '%s,%s' % (om or ok_[1], val)); return True
+        Kv = hx(vc.value & 0xff)
+        F.emit('ldb', '%s,%s' % (im, Kv))
+        if O == 'G': F.emit('ldb', '%s,%s' % (ok_[1], Kv)); return True
+        F.emit('ld', 'A,%s' % Kv); F.emit('ld', '%s,A' % (om or ok_[1])); return True
+    # V == 'B'
+    im = ptr(ik, 'XBC') if I == 'P' else (elem(ik, 'XBC') if I in ('X', 'Q') else ik[1])
+    n0 = len(F.lines)
+    fam = gen(F, v, 'WA', 1)
+    if fam != 'WA' or (im.startswith('(X') and clobbers(F.lines[n0:], im)): raise Unsupported('sc_char: the value over the inner address')
+    R = 'A'
+    if O in ('X', 'Q'):
+        R = 'E' if I != 'G' and I != 'M' else 'C'
+        F.emit('ld', '%s,A' % R)
+    F.emit('ld', '%s,%s' % (im, R))
+    if O in ('G', 'M'): F.emit('ld', '%s,%s' % (ok_[1], R)); return True
+    if O == 'P': m = ptr(ok_, 'XBC')
+    else: m = elem(ok_, 'XDE' if R == 'C' else 'XBC')
+    F.emit('ld', '%s,%s' % (m, R)); return True
+
+def store_chain(F, lv, rv, size):
+    """L1 = (L2 = V) for an int or long, after corpus/probes/stchain.c (run 2026-11-12-1-micro-stchain).  A loaded or
+    constant V: the outer address is emitted first, the inner one next, the value last; the registers are taken in
+    the order WA, BC, DE, HL by the outer pointer when it is a member through a pointer (sc_i_DPG: ld XWA,(_gps) /
+    ld XBC,(_hpi) / ld DE,(_vi)), then the inner address (an element: its index, then its base), then the outer
+    element, then the value, then the outer plain pointer or pointer element (sc_i_PPG: ld XDE,(_gpi) / ld XWA,(_hpi) /
+    ld BC,(_vi) / ld (XWA),BC / ld (XDE),BC).  An int constant is stored into the inner with ldw and reloaded into
+    the inner address's first register (or the value's) for the outer, a global outer takes ldw too (sc_i_GPK:
+    ldw (XWA),0x7 / ldw (_gv),0x7); a long constant holds XWA throughout and is reloaded before each store
+    (sc_l_PPK: ld XDE,(_gpl) / ld XBC,(_hpl) / ld XWA,0x7 / ld (XBC),XWA / ld XWA,0x7 / ld (XDE),XWA).  A computed V
+    stores the inner first (its address from WA, the value in the first register the outer will not need) and builds
+    the outer address after it (sc_i_DPB: ld XWA,(_hpi) / ld BC,(_vi) / sub BC,(_vj) / ld (XWA),BC / ld XWA,(_gps) /
+    ld (XWA+0x2),BC); a call comes first and both addresses are built from WA after it.  Two elements at the same index
+    (an index cache in HL or IZ in the oracle), a long pointer element and -Xr's register index are left to the older
+    paths.  True when it emitted the statement."""
+    if size not in (1, 2, 4): return False
+    if size == 1 and (F.opt or not STORE_CHAIN_CHAR): return False
+    x = strip(rv)
+    if x.k != 'bin' or x.op != '=' or x.ty is None or x.ty.size != size or lv.ty is None or lv.ty.size != size: return False
+    if strip(lv).ty is not None and strip(lv).ty.kind not in ('int', 'ptr') or strip(x.l).ty.kind not in ('int', 'ptr'): return False
+    if fpgen.is_fp(x.ty): return False
+    ok_, ik = sc_lkind(F, lv), sc_lkind(F, x.l)
+    if ok_ is None or ik is None: return False
+    if size == 4 and 'Q' in (ok_[0], ik[0]): return False
+    if ok_[0] in ('X', 'Q') and ik[0] in ('X', 'Q'): return False   # (the shared index: unmodelled)
+    v = strip(x.r)
+    vk = sp_value_kind(F, v, size)
+    vc = fold(v)
+    if vc.k == 'const' and vc.value is not None: V = 'K'
+    elif v.k == 'load' and mem_operand(F, v) is not None and mem_operand(F, v).startswith('(_'): V = 'G'
+    elif vk == 'B': V = 'B'
+    elif vk == 'C' and v.k == 'call': V = 'C'
+    else: return False
+    if any(r_ in ('WA', 'BC', 'DE', 'HL') for r_ in live_regs(F)): return False
+    if size == 1: return sc_char(F, ok_, ik, v, V, vc)
+    X_ = lambda r: 'X' + r
+    W_ = lambda r: FAM[r][size]
+    O, I = ok_[0], ik[0]
+    def addr(k, regs, via_wa=False):                         # emit k's address in regs; return its operand
+        K = k[0]
+        if K in ('G', 'M'): return k[1]
+        if K in ('P', 'D'):
+            F.emit('ld', '%s,%s' % (X_(regs[0]), k[1]))
+            return '(%s+%s)' % (X_(regs[0]), hx(k[2])) if k[2] else '(%s)' % X_(regs[0])
+        if K == 'X':
+            ix, bs = regs
+            F.emit('ld', '%s,%s' % (ix, k[2]))
+            if size == 2: F.emit('add', '%s,%s' % (ix, ix))
+            else: F.emit('sla', '0x2,%s' % ix)
+            F.emit('lda', '%s,%s' % (X_(bs), k[1])); return '(%s+%s)' % (X_(bs), ix)
+        R = regs[0]                                          # Q (int): built in R, or through XWA then moved
+        if via_wa and R != 'WA':
+            F.emit('ld', 'WA,%s' % k[2]); F.emit('exts', 'XWA'); F.emit('add', 'XWA,XWA')
+            F.emit('ld', '%s,XWA' % X_(R)); F.emit('add', '%s,%s' % (X_(R), k[1])); return '(%s)' % X_(R)
+        F.emit('ld', '%s,%s' % (R, k[2])); F.emit('exts', X_(R)); F.emit('add', '%s,%s' % (X_(R), X_(R)))
+        F.emit('add', '%s,%s' % (X_(R), k[1])); return '(%s)' % X_(R)
+    def nregs(K): return 2 if K == 'X' else (1 if K in ('P', 'D', 'Q') else 0)
+    def st(m, r): F.emit('ld', '%s,%s' % (m, r))
+    pool = ['WA', 'BC', 'DE', 'HL']
+    if V in ('K', 'G'):
+        take = list(pool); al = {}
+        def get(n):
+            if len(take) < n: raise Unsupported('store_chain: out of registers')
+            r_ = take[:n]; del take[:n]; return r_
+        try:
+            if V == 'K' and size == 4: al['v'] = get(1)
+            if O == 'D': al['o'] = get(1)
+            al['i'] = get(nregs(I))
+            if O == 'X': al['o'] = get(2)
+            if V == 'G' or (V == 'K' and size == 2 and nregs(I) == 0 and not F.opt): al['v'] = get(1)
+            if O in ('P', 'Q'): al['o'] = get(1)
+        except Unsupported: return False
+        om = addr(ok_, al.get('o', []), via_wa=not F.opt) if nregs(O) else ok_[1]
+        im = addr(ik, al['i']) if nregs(I) else ik[1]
+        if V == 'G':
+            R = W_(al['v'][0]); st(R, mem_operand(F, v)); st(im, R); st(om, R); return True
+        K = hx(vc.value & ((1 << 8 * size) - 1))
+        if size == 4:
+            st('XWA', K); st(im, 'XWA')
+            if not F.opt: st('XWA', K)                       # (-O sc_l_PPK: the constant is not reloaded)
+            st(om, 'XWA'); return True
+        F.emit('ldw', '%s,%s' % (im, K))
+        if O == 'G' or F.opt: F.emit('ldw', '%s,%s' % (om, K)); return True   # (-O sc_i_PGK: ldw (XWA),0x7)
+        R = W_(al['v'][0] if 'v' in al else al['i'][0])
+        st(R, K); st(om, R); return True
+    if V == 'B':
+        rout = {'D': ['WA'], 'X': ['WA', 'BC'], 'Q': ['WA']}.get(O, [])
+        ir = pool[:nregs(I)]
+        if I == 'X' and O in ('X', 'Q'): return False
+        vf = next((r for r in pool if r not in rout and r not in ir), None)
+        if vf is None: return False
+        im = addr(ik, ir) if nregs(I) else ik[1]
+        n0 = len(F.lines)
+        fam = gen(F, v, vf, size)
+        if fam != vf or (nregs(I) and clobbers(F.lines[n0:], im)): raise Unsupported('store_chain: the value over the inner address')
+        R = W_(vf); st(im, R)
+        if O in ('G', 'M'): st(ok_[1], R); return True
+        if O == 'P': orr = [next(r for r in pool if r != vf)]
+        elif O == 'X': orr = ['WA', 'BC']
+        else: orr = ['WA']
+        om = addr(ok_, orr); st(om, R); return True
+    # V == 'C'
+    if O in ('X', 'Q') and I in ('X', 'Q'): return False
+    fam = gen(F, v, 'HL', size)
+    if fam != 'HL': raise Unsupported('store_chain: the call result not in HL')
+    flush_pops(F)
+    R = W_('HL')
+    im = addr(ik, pool[:nregs(I)]) if nregs(I) else ik[1]; st(im, R)
+    om = addr(ok_, pool[:nregs(O)]) if nregs(O) else ok_[1]; st(om, R)
+    return True
+
+RET_ASSIGN = True                                         # see ret_assign
+
+def ret_assign(F, x, size):
+    """return L = V for a char, int or long, after corpus/probes/stret.c (run 2026-11-12-2-micro-stret): the address
+    first (a pointer in XWA; an element's index in WA and its base in XBC; a pointer element built in XWA; a char
+    element: lda XWA,_gca / ld BC,(c) / extz XBC / add XBC,XWA), the value straight into HL / L / XHL and stored from
+    there (rs_i_PB: ld XWA,(_gpi) / ld HL,(_vi) / sub HL,(_vj) / ld (XWA),HL); a constant is stored with ldw / ldb and
+    then loaded (rs_i_PK: ldw (XWA),0x7 / ld HL,0x7); a long constant goes through XWA, the address moving up one
+    register (rs_l_PK: ld XBC,(_gpl) / ld XWA,0x7 / ld (XBC),XWA / ld XHL,0x7); a call comes first.  True when it
+    emitted the value and the store."""
+    if size not in (1, 2, 4) or x.ty is None or x.ty.size != size or fpgen.is_fp(x.ty): return False
+    lv = strip(x.l)
+    if lv.ty is None or lv.ty.size != size or lv.ty.kind not in ('int', 'ptr'): return False
+    if F.opt and not RET_ASSIGN_OPT: return False
+    k = sc_lkind(F, lv)
+    if k is None: return False
+    if size == 1 and k[0] == 'D': return False             # (a char member at a displacement: unprobed)
+    v = strip(x.r)
+    while v.k == 'cast' and v.kind == 'IntegralCast' and strip(v.e).ty is not None and strip(v.e).ty.size == size: v = strip(v.e)
+    vc = fold(v)
+    if vc.k == 'const' and vc.value is not None: V = 'K'
+    elif v.k == 'load' and mem_operand(F, v) is not None and mem_operand(F, v).startswith('(_'): V = 'G'
+    elif sp_value_kind(F, v, size) == 'B': V = 'B'
+    elif v.k == 'call' and v.ty is not None and v.ty.size == size: V = 'C'
+    else: return False
+    if any(r_ in ('WA', 'BC', 'DE', 'HL') for r_ in live_regs(F)): return False
+    K = k[0]; R = FAM['HL'][size]
+    def addr(base):                                          # base: the first register ('WA', or 'BC' for a long K)
+        nxt = {'WA': 'BC', 'BC': 'DE'}[base]
+        if K in ('G', 'M'): return k[1]
+        if K in ('P', 'D'):
+            F.emit('ld', 'X%s,%s' % (base, k[1]))
+            return '(X%s+%s)' % (base, hx(k[2])) if k[2] else '(X%s)' % base
+        if size == 1:                                        # char X / Q: lda XWA,_gca (ld XWA,(_gp)) / ld BC,(c) / extz XBC / add XBC,XWA
+            F.emit('lda' if K == 'X' else 'ld', 'XWA,%s' % k[1]); F.emit('ld', 'BC,%s' % k[2])
+            F.emit('extz', 'XBC'); F.emit('add', 'XBC,XWA'); return '(XBC)'
+        if K == 'X':
+            F.emit('ld', '%s,%s' % (base, k[2]))
+            if size == 2: F.emit('add', '%s,%s' % (base, base))
+            else: F.emit('sla', '0x2,%s' % base)
+            F.emit('lda', 'X%s,%s' % (nxt, k[1])); return '(X%s+%s)' % (nxt, base)
+        F.emit('ld', 'WA,%s' % k[2]); F.emit('exts', 'XWA')    # Q: built in XWA (a long K: moved to XBC)
+        if size == 2: F.emit('add', 'XWA,XWA')
+        else: F.emit('sll', '0x2,XWA')
+        if base != 'WA': F.emit('ld', 'X%s,XWA' % base); F.emit('add', 'X%s,%s' % (base, k[1])); return '(X%s)' % base
+        F.emit('add', 'XWA,%s' % k[1]); return '(XWA)'
+    if V == 'C':
+        fam = gen(F, v, 'HL', size)
+        if fam != 'HL': raise Unsupported('ret_assign: the call result not in HL')
+        flush_pops(F)
+        m = addr('WA'); F.emit('ld', '%s,%s' % (m, R)); return True
+    if V == 'K':
+        Kv = hx(vc.value & ((1 << 8 * size) - 1))
+        if size == 4:
+            m = addr('BC'); F.emit('ld', 'XWA,%s' % Kv); F.emit('ld', '%s,XWA' % m); F.emit('ld', 'XHL,%s' % Kv); return True
+        m = addr('WA'); F.emit('ldb' if size == 1 else 'ldw', '%s,%s' % (m, Kv)); F.emit('ld', '%s,%s' % (R, Kv)); return True
+    m = addr('WA')
+    n0 = len(F.lines)
+    fam = gen(F, v, 'HL', size)
+    if fam != 'HL' or (m.startswith('(X') and clobbers(F.lines[n0:], m)): raise Unsupported('ret_assign: the value over the address')
+    F.emit('ld', '%s,%s' % (m, R)); return True
 
 def cw_kind(F, x, size):
     """the operand kinds of cmp_wide: ('K',), ('G', mem), ('M', mem) for a static member or constant element,
@@ -1636,7 +1973,9 @@ def cmp_wide(F, e, l, r, size, op, cc):
             if F.opt: ld('C', rk[1])                       # -O: ld C,(_hc)
             else: ld('A', rk[1]); ld('C', 'A')
             F.emit('exts', 'BC'); cw_truth(F, l, 'WA'); return cp('WA', 'BC')
-        if L == 'X' and size == 1 and len(lk) == 5: a = cw_addr(F, lk, size, P='XWA', I='DE'); ld('A', a); return cp('A', rk[1])
+        if L == 'X' and size == 1 and len(lk) == 5:       # -Xr cc_l_XG: lda XBC,_gca / ld A,(XBC+WA); a register temporary:
+            a = cw_addr(F, lk, size, P='XBC' if lk[4][0] == 'regp' else 'XWA', I='DE')   # cc_l_YG: lda XWA,_gca / ld A,(XWA+BC)
+            ld('A', a); return cp('A', rk[1])
         Rl = XB if L == 'S' else (XH if L == 'F' else XW)
         v = value(l, lk, famof(Rl))
         return cp(v, rk[1])
@@ -3107,6 +3446,11 @@ def gen_long_helper(F, e, l, r, fam, signed):
             not getattr(F, 'cl_active', None) and getattr(F, 'u1_i', None) is None and long_helper_order(F, e, l, r):
         F.emit('cal', 'C9H_' + name)
         return 'HL' if fam == 'HL' else move_to(F, 'XHL', fam, 4, keep=True)
+    if (ls is None or rs is None) and LH_MEMBER and getattr(F, 'store_xiz', False) and F.xiz_vars == ['stores'] and \
+            not getattr(F, 'sp_xiz_busy', False) and not getattr(F, 'l2', None) and not getattr(F, 'cl_active', None) and \
+            getattr(F, 'u1_i', None) is None and lh_member(F, e.op, l, r):
+        F.emit('cal', 'C9H_' + name)                   # (evorder_ad.c l_div_GD: push XIZ / ld XIZ,(_hps) / ld XWA,(_gl) /
+        return 'HL' if fam == 'HL' else move_to(F, 'XHL', fam, 4, keep=True)   # ld XBC,(XIZ+0x4) / cal C9H_divls)
     if ls is None or rs is None: raise Unsupported('complex long helper operands')
     # provisional (two examples, mul_l_loc): XBC first when a register variable is involved
     rc = fold(r)
@@ -3940,8 +4284,13 @@ def push_arg(F, a):
                 if xm is not None and xm.startswith('('): m = xm          # the low byte is at the same address
                 elif xm in ('IX', 'IY', 'IZ', 'XIX', 'XIY', 'XIZ'): m = xm.lstrip('X') + 'L'
                 elif xm is not None and family_of(xm): m = FAM[family_of(xm)[1:]][1]
+        if m is None and CHAR_ARG_ANY and not F.opt and not F.adecl:   # random corpora: vc(gp[0]), vc((char)(gc - gca[2])),
+            f_ = gen(F, a0, 'WA', 1)                                    # vc(rc(..)): the value into A (a call's result
+            if f_ not in FAM or 1 not in FAM[f_]: raise Unsupported('complex char argument')   # from L), then exts WA /
+            m = FAM[f_][1]                                              # push WA (r2_06_07: ld XWA,(_gp) / ld A,(XWA))
         if m is None: raise Unsupported('complex char argument')
-        F.emit('ld', 'A,%s' % m); F.emit('exts' if a0.ty.signed else 'extz', 'WA'); F.emit('push', 'WA')
+        if m != 'A': F.emit('ld', 'A,%s' % m)
+        F.emit('exts' if a0.ty.signed else 'extz', 'WA'); F.emit('push', 'WA')
         F.push += 2; return 2
     if a0.k == 'call':                               # a call result is pushed from HL (call.c: k_nest)
         gen_call(F, a0); F.emit('push', FAM['HL'][size] if size >= 2 else 'HL'); F.push += max(size, 2)
@@ -5878,6 +6227,9 @@ def gen_stmt(F, s, last):
         gen_incdec(F, s.e, 'WA', 0, value=False); return
     if s.k == 'expr' and s.e.k == 'bin' and s.e.op == '=':
         lv = strip(s.e.l)
+        if STORE_CHAIN and (not F.opt or STORE_CHAIN_OPT) and lv.ty is not None and lv.ty.size in (1, 2, 4) and not getattr(F, 'l2', None) and \
+                not getattr(F, 'u1_i', None) and not getattr(F, 'cl_active', None) and store_chain(F, lv, s.e.r, lv.ty.size):
+            return                                         # (stchain.c: L1 = (L2 = V))
         if lv.k == 'var' and lv.decl.kind == 'global':
             store_global(F, lv.decl.name, s.e.r, lv.decl.ty.size); return
         size = lv.ty.size
@@ -9583,7 +9935,9 @@ def store_plan(F, lv, rv, size):
     if vk == 'H':
         t = sp_address(F, lk, size, 'XIZ', None, None, 'E')   # the pointer in XIZ across the helper
         if t is None: return False
-        fam = gen(F, x, 'HL', 4)
+        F.sp_xiz_busy = True                               # (lh_member must not take XIZ for an operand here)
+        try: fam = gen(F, x, 'HL', 4)
+        finally: F.sp_xiz_busy = False
         if fam != 'HL': return False
         F.emit('ld', '%s,XHL' % t); return True
     if vk == 'BP':
@@ -9708,6 +10062,11 @@ def plan_store_xiz(F):
             k = sp_lvalue_kind(F, n.l)
             if k is not None and k[0] in ('P', 'D', 'Q') and sp_value_kind(F, n.r, 4) == 'H': hit.append(n)
     walk(F.f.body, v)
+    if LH_MEMBER and not hit:                              # a long helper with a member-through-a-pointer operand: XIZ
+        def w(n, d):                                       # holds its pointer (lh_member)
+            if n.k == 'bin' and n.op in ('*', '/', '%') and n.ty is not None and n.ty.size == 4 and n.ty.kind == 'int' \
+                    and lh_member_kinds(F, n.op, strip(n.l), strip(n.r)) is not None: hit.append(n)
+        walk(F.f.body, w)
     if hit:
         F.store_xiz = True; F.xiz_vars.append('stores'); F.save_reg = 'XIZ'; F.emit('push', 'XIZ'); F.push = 4
 
