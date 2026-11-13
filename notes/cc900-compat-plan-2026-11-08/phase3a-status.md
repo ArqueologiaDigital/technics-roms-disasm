@@ -1019,6 +1019,19 @@ stdiv2.c 566 / 404 / 409 / 275 -> 898 / 820 / 409 / 275 of 1,020 at none / -O3 -
 left without -Xr are the unsigned long rows that keep an address in XIZ or a temporary across the helper.  Random
 programs at none 88 -> 90 of 800.  The gate for this batch took 1 min 19 s with the shared compile cache.
 
+**Batch 49 (2026-11-13): what a long division store keeps across its helper call.**  The 122 unsigned long rows of
+`stdiv2.c` that batch 48 left out follow one table (`sd4_need`, `plan_sd4`, `sd4_store`; without -O, cdecl).  A plain
+divisor (a global, a parameter, a constant) lets the store address be built before the call: kept in XIZ for a pointer
+or a member through one; for an element, the scaled index in a 2-byte temporary with the base in XIZ, or the scaled
+index in IZ with the base in a 4-byte temporary beside a plain dividend.  A dividend read through a displaced pointer
+takes XIZ for that pointer and sends the store address to a 4-byte temporary.  Any other divisor (a static member, a
+constant element, one read through an address, the stored-to object) puts the call first and the store address after
+it, with XIZ holding a displaced operand's pointer or an element operand's base.  The divisor's memory is loaded
+before a dividend that is not a plain variable.  stdiv2.c at none 898 -> 1,020 of 1,020; the other sets and the random
+corpora are unchanged (the random functions' long divisions use char, unsigned or local indices, or sit beside a
+second helper or a loop, which the plan does not claim).  A first form loaded the divisor first beside a plain
+global dividend too and lost stdiv.c 12 and stord.c 10; the scratch copy's ledger caught it.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

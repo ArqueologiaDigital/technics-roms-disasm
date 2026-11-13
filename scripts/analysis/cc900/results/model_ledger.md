@@ -231,7 +231,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-12-12-micro-fpargg, v423/O3XSXr                         | probes/fpargg.c      | 32 / 44 exact (72.7%)    |
 | run 2026-11-12-13-micro-fpord, v423/none                            | probes/fpord.c       | 288 / 288 exact (100.0%) |
 | run 2026-11-12-13-micro-fpord, v423/O3XS                            | probes/fpord.c       | 96 / 288 exact (33.3%)   |
-| run 2026-11-13-1-micro-stdiv2, v423/none                            | probes/stdiv2.c      | 898 / 1020 exact (88.0%) |
+| run 2026-11-13-1-micro-stdiv2, v423/none                            | probes/stdiv2.c      | 1020 / 1020 exact (100.0%) |
 | run 2026-11-13-1-micro-stdiv2, v423/O3XS                            | probes/stdiv2.c      | 820 / 1020 exact (80.4%) |
 | run 2026-11-13-1-micro-stdiv2, v423/Xr                              | probes/stdiv2.c      | 409 / 1020 exact (40.1%) |
 | run 2026-11-13-1-micro-stdiv2, v423/O3XSXr                          | probes/stdiv2.c      | 275 / 1020 exact (27.0%) |

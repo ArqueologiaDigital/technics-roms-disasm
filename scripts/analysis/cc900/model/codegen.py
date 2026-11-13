@@ -1327,7 +1327,7 @@ def plan_lh_call0(F):
     XIZ free; the prologue saves XIZ, and a 4-byte temporary is added below the frame for a call result beside a
     member or for the first of two members (l_div_DF: dec 0x4,XSP / push XIZ / cal _hfl / ld (XSP+0x4),XHL)"""
     F.lhc = None
-    if not LH_CALL or F.xiz_vars or F.adecl or (F.opt and not LH_CALL_OPT): return
+    if not LH_CALL or F.xiz_vars or F.adecl or (F.opt and not LH_CALL_OPT) or getattr(F, 'sd4', None): return
     f = F.f
     if any(d.kind == 'local' and not getattr(d, 'reg', None) and (d.ty.kind in ('array', 'struct') or not foldable(f, d) and not LH_IDX)
            for d in f.decls) or any(getattr(d, 'home_slot', False) for d in f.params): return
@@ -1527,6 +1527,226 @@ def lh_post_member(F, lv, rv):
     ks = lh_post_kinds(F, lv, rv)
     return ks is not None and ks[1][0] == 'M'
 
+SD_LONG = True                                            # see sd4_need: long division stores, stdiv2.c
+
+def sd4_kind(F, x):
+    """the operand kinds of sd4: ('K', value), ('G', mem) a plain global, ('R', node) a parameter in memory, ('M', mem)
+    a static member or constant element, ('P', ptrmem, 0) / ('D', ptrmem, off) through a plain pointer, ('X', sym,
+    idxmem) a global array at a plain signed int index in memory; None otherwise"""
+    x0 = strip(x)
+    while x0.k == 'cast' and x0.kind in ('IntegralCast', 'NoOp') and strip(x0.e).ty is not None and strip(x0.e).ty.size == 4:
+        x0 = strip(x0.e)
+    c = fold(x0)
+    if c.k == 'const' and c.value is not None: return ('K', c.value)
+    if x0.k != 'load' or x0.ty is None or x0.ty.size != 4 or x0.ty.kind != 'int': return None
+    v = strip(x0.e)
+    if v.k == 'var':
+        d = v.decl
+        if getattr(d, 'reg', None) or getattr(d, 'homed', False): return None
+        if d.kind == 'global': return ('G', '(_%s)' % d.name)
+        if d.kind == 'param' and not getattr(F, 'lazy_homes', None): return ('R', x0)
+        return None
+    keep = getattr(F, 'sp_index_param', None)
+    k = sc_lkind(F, v)
+    F.sp_index_param = keep
+    if k is None or k[0] not in ('M', 'P', 'D', 'X'): return None
+    return k
+
+def sd4_need(L, a, b):
+    """what a long L = A / B (or %) keeps across its helper call, without -O, cdecl (corpus/probes/stdiv2.c, run
+    2026-11-13-1-micro-stdiv2, the sd2_n_* rows): (form, register, 4-byte temporary, 2-byte temporary), or None where
+    the shape is not one of the probe's.
+
+    A plain divisor (a global, a parameter, a constant) lets the store address be built before the call and kept:
+    in XIZ for a pointer or a member through one (sd2_n_d_PMG: push XIZ / ld XIZ,(_gnp) / ld XBC,(_kn) /
+    ld XWA,(_hs + 0x4) / cal C9H_divlu / ld (XIZ),XHL); an element keeps its scaled index in a 2-byte temporary and
+    its base in XIZ beside a member / element dividend or a constant divisor (sd2_n_d_XMG), or its scaled index in IZ
+    and its base in a 4-byte temporary beside a plain dividend (sd2_n_d_XRG).  When the dividend is read through a
+    pointer with a displacement, that pointer takes XIZ and the store address waits in a 4-byte temporary
+    (sd2_n_d_PDG: ld XWA,(_gnp) / ld (XSP+0x4),XWA / ld XIZ,(_hps) / ld XBC,(_kn) / ld XWA,(XIZ+0x4) / cal /
+    ld XWA,(XSP+0x4) / ld (XWA),XHL).  L = L / B: a pointer's target is read through XIZ copied to XWA (sd2_n_d_PSG);
+    an element's address goes to the temporary and its index to another (sd2_n_d_XSG); a static member's address is
+    kept in XIZ all the same (sd2_n_d_ESG: lda XIZ,_gna + 0xc).
+
+    Any other divisor -- a static member, a constant element, one read through an address, the stored-to object --
+    puts the call first and the store address after it; XIZ then holds the pointer of a displaced operand (the
+    divisor's when both are, the dividend's waiting in the temporary: sd2_n_d_PDD), or the base of an element operand
+    whose scaled index waits in the 2-byte temporary (sd2_n_d_XSM, sd2_n_d_XMS)."""
+    def same(k):
+        if L[0] == 'P': return k[0] == 'P' and k[1] == L[1]
+        if L[0] == 'X': return k[0] == 'X' and k[1:3] == L[1:3]
+        return L[0] == 'M' and k[0] == 'M' and k[1] == L[1]
+    if L[0] not in ('P', 'D', 'X', 'M') or a[0] == 'K': return None
+    for k in (a, b):
+        if k[0] in ('P', 'X') and not same(k): return None    # (another pointer's target, another element: unprobed)
+        if k[0] == 'D' and not 1 <= k[2] < 0x8000: return None
+    if L[0] == 'D' and not 1 <= L[2] <= 8: return None
+    if L[0] == 'X' and not (isinstance(L[2], str) and L[2].startswith('(')): return None
+    A, B = a[0], b[0]
+    if A in ('P', 'X') and B in ('P', 'X'): return None
+    if B in ('G', 'R', 'K'):                                  # the store address before the call
+        if A == 'D': return ('early-D', 'XIZ', True, False)
+        if A == 'P': return ('early-PS', 'XIZ', False, False)
+        if A == 'X': return ('early-XS', 'XIZ', True, True)
+        if A == 'M' and same(a): return ('early-MS', 'XIZ', False, False)
+        if L[0] in ('P', 'D'): return ('early', 'XIZ', False, False)
+        if L[0] == 'X':
+            if A == 'M' or B == 'K': return ('early-X', 'XIZ', False, True)
+            return ('early-XI', 'IZ', True, False)
+        return ('plain', None, False, False)
+    if B == 'M':
+        if A == 'D': return ('late', 'XIZ', False, False)
+        if A == 'X': return ('late', 'XIZ', False, True)
+        return ('late', None, False, False)
+    if B == 'D':
+        if A == 'D': return ('late', 'XIZ', True, False)
+        if A == 'X': return ('late', 'XIZ', True, True)
+        return ('late', 'XIZ', False, False)
+    if B == 'P':
+        return ('late', 'XIZ' if A == 'D' else None, False, False)
+    if B == 'X':
+        if A not in ('M', 'D', 'R'): return None
+        return ('late', 'XIZ', False, True)
+    return None
+
+def sd4_stmt(F, lv, rv):
+    """(L kind, dividend kind, divisor kind, need) of a long division store, or None"""
+    if not (SD_MORE and SD_LONG) or F.adecl or F.opt: return None
+    x = strip(rv)
+    if x.k != 'bin' or x.op not in ('/', '%') or x.ty is None or x.ty.size != 4 or x.ty.kind != 'int': return None
+    l0 = strip(lv)
+    if l0.ty is None or l0.ty.size != 4 or l0.ty.kind != 'int': return None
+    keep = getattr(F, 'sp_index_param', None)
+    L = sc_lkind(F, l0)
+    F.sp_index_param = keep
+    if L is None: return None
+    a, b = sd4_kind(F, x.l), sd4_kind(F, x.r)
+    if a is None or b is None: return None
+    if b[0] == 'K' and (b[1] & 0xffffffff) in (0, 1): return None
+    need = sd4_need(L, a, b)
+    if need is None: return None
+    return L, a, b, need
+
+def plan_sd4(F):
+    """before the frame: the one long division store of a function (sd4_need) gets its register saved and its
+    temporaries"""
+    F.sd4 = None
+    if not (SD_MORE and SD_LONG) or F.xiz_vars or F.adecl or F.opt: return
+    f = F.f
+    if any(getattr(d, 'reg', None) in IZ_HOMES for d in list(f.params) + list(f.decls)): return
+    helpers = []; stores = []; loops = []
+    def v(n, dep):
+        if n.k == 'bin' and n.op in ('*', '/', '%') and n.ty is not None and n.ty.size == 4 and n.ty.kind == 'int': helpers.append(n)
+        if n.k == 'expr' and n.e.k == 'bin' and n.e.op == '=': stores.append(n.e)
+        if n.k in ('for', 'while', 'do'): loops.append(n)
+    walk(f.body, v)
+    if len(helpers) != 1 or loops: return                    # (a loop's counter has its own claim on IZ: random r2_03_10)
+    st = [e for e in stores if strip(e.r) is helpers[0]]
+    if len(st) != 1: return
+    r = sd4_stmt(F, st[0].l, st[0].r)
+    if r is None: return
+    form, reg, t4, t2 = r[3]
+    F.sd4 = {'node': id(helpers[0]), 'need': r[3], 't4': None, 't2': None}   # (the other planners leave it alone)
+    if reg is None: return
+    from frontend import Decl, Type
+    d4 = d2 = None
+    if t4: d4 = Decl('__sd4', Type('int', 4, 2, spell='t'), '', 'local'); f.decls.append(d4)
+    if t2: d2 = Decl('__sd2', Type('int', 2, 2, spell='t'), '', 'local'); f.decls.append(d2)
+    F.xiz_vars.append('stores'); F.save_reg = reg; F.emit('push', reg); F.push = 4 if reg == 'XIZ' else 2
+    F.sd4 = {'node': id(helpers[0]), 'need': r[3], 't4': d4, 't2': d2}
+
+def sd4_store(F, lv, rv):
+    """emit a long division store after sd4_need; True when emitted"""
+    r = sd4_stmt(F, lv, rv)
+    if r is None: return False
+    L, a, b, need = r
+    form, reg, t4, t2 = need
+    plan = getattr(F, 'sd4', None)
+    x = strip(rv)
+    if plan is None or plan['node'] != id(x): return False
+    if plan['need'] != need: raise Unsupported('sd4: the plan changed')
+    if any(r_ in ('WA', 'BC', 'DE', 'HL') for r_ in live_regs_read(F)): return False
+    e = F.emit
+    T4 = '(XSP+%s)' % hx(plan['t4'].slot + F.push) if t4 else None
+    T2 = '(XSP+%s)' % hx(plan['t2'].slot + F.push) if t2 else None
+    def mem(k):
+        if k[0] == 'R':
+            m = mem_operand(F, k[1])
+            if not (isinstance(m, str) and m.startswith('(XSP+')): raise Unsupported('sd4: the parameter')
+            return m
+        if k[0] == 'K': return hx(k[1] & 0xffffffff)
+        return k[1]
+    def at(R, off): return '(%s+%s)' % (R, hx(off)) if off else '(%s)' % R
+    def dance():                                              # the element's scaled index into its temporary
+        e('ld', 'WA,%s' % L[2]); e('ld', '%s,WA' % T2); e('ld', 'WA,%s' % T2); e('sla', '0x2,WA'); e('ld', '%s,WA' % T2)
+    def sa_xwa():                                             # the store address into XWA
+        if L[0] == 'P': e('ld', 'XWA,%s' % L[1])
+        elif L[0] == 'D': e('ld', 'XWA,%s' % L[1]); e('inc', '%s,XWA' % hx(L[2]))
+        elif L[0] == 'X': e('ld', 'WA,%s' % L[2]); e('sla', '0x2,WA'); e('lda', 'XBC,%s' % L[1]); e('exts', 'XWA'); e('add', 'XWA,XBC')
+        else: e('lda', 'XWA,%s' % L[1][1:-1])
+    def call(): e('cal', 'C9H_' + {'/': 'div', '%': 'rem'}[x.op] + ('ls' if x.ty.signed else 'lu'))
+    def after():                                              # the store address after the call
+        if L[0] in ('P', 'D'): e('ld', 'XWA,%s' % L[1]); e('ld', '%s,XHL' % at('XWA', L[2]))
+        elif L[0] == 'X': e('ld', 'WA,%s' % L[2]); e('sla', '0x2,WA'); e('lda', 'XBC,%s' % L[1]); e('ld', '(XBC+WA),XHL')
+        else: e('ld', '%s,XHL' % L[1])
+        return True
+    A, B = a[0], b[0]
+    def pair(aload):                                          # the divisor's memory before a dividend that is not a
+        bf = B != 'K' and A not in ('G', 'R')                 # plain variable (sd2_n_d_PMG: ld XBC,(_kn) / ld XWA,(_hs + 0x4);
+        if bf: e('ld', 'XBC,%s' % mem(b))                     # stdiv.c sd_l_d_PGG: ld XWA,(_vl) / ld XBC,(_wl)); a constant last
+        aload()
+        if not bf: e('ld', 'XBC,%s' % mem(b))
+    if form == 'plain':
+        pair(lambda: e('ld', 'XWA,%s' % mem(a))); call(); e('ld', '%s,XHL' % L[1]); return True
+    if form == 'early':
+        e('ld', 'XIZ,%s' % L[1]); pair(lambda: e('ld', 'XWA,%s' % mem(a))); call(); e('ld', '%s,XHL' % at('XIZ', L[2])); return True
+    if form == 'early-MS':
+        e('lda', 'XIZ,%s' % L[1][1:-1]); pair(lambda: e('ld', 'XWA,%s' % mem(a))); call(); e('ld', '(XIZ),XHL'); return True
+    if form == 'early-PS':
+        e('ld', 'XIZ,%s' % L[1]); e('ld', 'XWA,XIZ'); pair(lambda: e('ld', 'XWA,(XWA)')); call(); e('ld', '(XIZ),XHL'); return True
+    if form == 'early-D':
+        sa_xwa(); e('ld', '%s,XWA' % T4); e('ld', 'XIZ,%s' % a[1]); pair(lambda: e('ld', 'XWA,%s' % at('XIZ', a[2])))
+        call(); e('ld', 'XWA,%s' % T4); e('ld', '(XWA),XHL'); return True
+    if form == 'early-XS':
+        sa_xwa(); e('ld', '%s,XWA' % T4); dance(); e('lda', 'XIZ,%s' % L[1])
+        def al(): e('ld', 'WA,%s' % T2); e('ld', 'XWA,(XIZ+WA)')
+        pair(al); call(); e('ld', 'XWA,%s' % T4); e('ld', '(XWA),XHL'); return True
+    if form == 'early-X':
+        dance(); e('lda', 'XIZ,%s' % L[1]); pair(lambda: e('ld', 'XWA,%s' % mem(a))); call()
+        e('ld', 'WA,%s' % T2); e('ld', '(XIZ+WA),XHL'); return True
+    if form == 'early-XI':
+        e('ld', 'IZ,%s' % L[2]); e('sla', '0x2,IZ'); e('lda', 'XWA,%s' % L[1]); e('ld', '%s,XWA' % T4)
+        pair(lambda: e('ld', 'XWA,%s' % mem(a))); call(); e('ld', 'XWA,%s' % T4); e('ld', '(XWA+IZ),XHL'); return True
+    # the call first
+    if B == 'M':
+        if A == 'D': e('ld', 'XIZ,%s' % a[1]); e('ld', 'XWA,%s' % at('XIZ', a[2]))
+        elif A == 'X': dance(); e('lda', 'XIZ,%s' % L[1]); e('ld', 'WA,%s' % T2); e('ld', 'XWA,(XIZ+WA)')
+        elif A == 'P': e('ld', 'XWA,%s' % a[1]); e('ld', 'XWA,(XWA)')
+        else: e('ld', 'XWA,%s' % mem(a))
+        e('ld', 'XBC,%s' % b[1])
+    elif B == 'D':
+        if A == 'D':
+            e('ld', 'XWA,%s' % a[1]); e('ld', '%s,XWA' % T4); e('ld', 'XIZ,%s' % b[1]); e('ld', 'XWA,%s' % T4)
+            e('ld', 'XWA,%s' % at('XWA', a[2]))
+        elif A == 'X':
+            dance(); e('lda', 'XWA,%s' % L[1]); e('ld', '%s,XWA' % T4); e('ld', 'XIZ,%s' % b[1]); e('ld', 'XWA,%s' % T4)
+            e('ld', 'DE,%s' % T2); e('ld', 'XWA,(XWA+DE)')
+        elif A == 'P': e('ld', 'XWA,%s' % a[1]); e('ld', 'XIZ,%s' % b[1]); e('ld', 'XWA,(XWA)')
+        else: e('ld', 'XIZ,%s' % b[1]); e('ld', 'XWA,%s' % mem(a))
+        e('ld', 'XBC,%s' % at('XIZ', b[2]))
+    elif B == 'P':
+        if A == 'D': e('ld', 'XIZ,%s' % a[1]); e('ld', 'XBC,%s' % b[1]); e('ld', 'XWA,%s' % at('XIZ', a[2]))
+        else: e('ld', 'XBC,%s' % b[1]); e('ld', 'XWA,%s' % mem(a))
+        e('ld', 'XBC,(XBC)')
+    else:                                                     # the divisor is the stored-to element
+        if A == 'M': e('lda', 'XDE,%s' % a[1][1:-1])
+        elif A == 'D': e('ld', 'XWA,%s' % a[1]); e('lda', 'XDE,XWA+%s' % hx(a[2]))
+        dance(); e('lda', 'XIZ,%s' % L[1])
+        if A == 'R': e('ld', 'XWA,%s' % mem(a)); e('ld', 'BC,%s' % T2)
+        else: e('ld', 'BC,%s' % T2); e('ld', 'XWA,(XDE)')
+        e('ld', 'XBC,(XIZ+BC)')
+    call(); return after()
+
 def lh_store_post(F, lv, rv):
     """L = A op B for a long, L stored through an address and B read through one (stdiv.c, run 2026-11-12-5): the
     value as for a global store, then the address after the call -- a pointer or member in XWA, an element's index in
@@ -1578,7 +1798,7 @@ def plan_store_x(F):
     -O or -Xr and with no IZ-family home: IZ saved and a 4-byte temporary for two memory operands, XIZ saved and a
     2-byte index temporary beside a constant (lh_store_x)"""
     F.xst = None
-    if not LH_STORE_X or F.xiz_vars or F.adecl or (F.opt and not LH_OPT_CONSTS): return
+    if not LH_STORE_X or F.xiz_vars or F.adecl or (F.opt and not LH_OPT_CONSTS) or getattr(F, 'sd4', None): return
     f = F.f
     if any(getattr(d, 'reg', None) in IZ_HOMES for d in list(f.params) + list(f.decls)): return
     hits = []
@@ -7421,6 +7641,7 @@ def gen_stmt(F, s, last):
         gen_incdec(F, s.e, 'WA', 0, value=False); return
     if s.k == 'expr' and s.e.k == 'bin' and s.e.op == '=':
         lv = strip(s.e.l)
+        if SD_MORE and SD_LONG and lv.ty is not None and lv.ty.size == 4 and not getattr(F, 'l2', None) and not getattr(F, 'u1_i', None) and not getattr(F, 'cl_active', None) and sd4_store(F, lv, strip(s.e.r)): return
         if LH_STORE_SAVE and getattr(F, 'lhc', None) is not None and F.lhc.get('save') and F.lhc['node'] == id(strip(s.e.r)) and lh_store_save(F, lv, strip(s.e.r)): return   # (stdiv.c sd_l_d_PXG)
         if LH_STORE_X and getattr(F, 'xst', None) is not None and F.xst['node'] == id(strip(s.e.r)) and sp_lvalue_kind(F, lv) is not None and lh_store_x(F, sp_lvalue_kind(F, lv), strip(s.e.r)): return   # (stdiv.c sd_l_d_XGG, DPG)
         if LH_STORE_POST and lv.ty is not None and lv.ty.size == 4 and not getattr(F, 'l2', None) and not getattr(F, 'u1_i', None) and not getattr(F, 'cl_active', None) and lh_store_post(F, lv, s.e.r): return   # (stdiv.c sd_l_d_PGX)
@@ -11760,7 +11981,7 @@ def sp_address(F, lk, size, P, I, B, vk):
 def plan_store_xiz(F):
     """before the frame: a long helper stored through a pointer keeps the address in XIZ across the call
     (st_l_DV); when nothing else uses XIZ the prologue saves it for those stores"""
-    if not STORE_PLAN or F.xiz_vars: return
+    if not STORE_PLAN or F.xiz_vars or getattr(F, 'sd4', None): return
     hit = []
     def v(n, d):
         if n.k == 'bin' and n.op == '=' and n.ty is not None and n.ty.size == 4 and strip(n.r).k != 'call':
@@ -11929,7 +12150,8 @@ def plan_frame(F):
     calls = []
     walk(f.body, lambda n, d: calls.append(n) if n.k == 'call' or fpgen.is_fp_op(n) or (n.k == 'bin' and n.op in '*/%' and n.ty.size == 4
          and fold(n.r).k != 'const') else None)
-    if not calls and not getattr(F, 'lhc', None) and not getattr(F, 'xst', None): F.frame = 0; return                   # leaf functions: every local is in a register or folded
+    if not calls and not getattr(F, 'lhc', None) and not getattr(F, 'xst', None) and not (getattr(F, 'sd4', None) or {}).get('t2') \
+            and not (getattr(F, 'sd4', None) or {}).get('t4'): F.frame = 0; return                   # leaf functions: every local is in a register or folded
     # D: a struct local written member by member gets two address temporaries below it (_ldiv: (XSP+4), (XSP+8))
     F.struct_temps = {}
     for d in f.decls:
@@ -12524,7 +12746,7 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
     F.lines.append(('.' if adecl else '_') + f.name + ':')
     F.loops = []; F.param_copies = []; F.pushes = []
     if adecl and BINLOC_XR: xr_shift_reloc(F)
-    if not plan_leaf(F): regtemp_premark(F); plan_registers(F); plan_homes(F); plan_regtemps(F); plan_store_x(F); plan_store_xiz(F); plan_lh_call(F)
+    if not plan_leaf(F): regtemp_premark(F); plan_registers(F); plan_homes(F); plan_regtemps(F); plan_sd4(F); plan_store_x(F); plan_store_xiz(F); plan_lh_call(F)
     plan_frame(F)
     for d in getattr(F, 'l2', {}).get('entry', []) if getattr(F, 'l2', None) else []:
         F.emit('ld', '%s,(XSP+%s)' % (FAM[d.reg][d.ty.size], hx(d.off + F.push)))   # (after the frame: offsets)
