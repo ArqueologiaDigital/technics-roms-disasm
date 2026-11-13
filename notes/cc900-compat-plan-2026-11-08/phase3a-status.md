@@ -1956,6 +1956,14 @@ there the oracle indexes by a byte register (`ld C,A / ld XWA,(p) / ld WA,(XWA+C
 path already produces. Ledger down 0; pairs MATCH 223; semcheck 59 -> 58, the 58 reviewed before batch 142; random
 170 / 46 / 87 / 37 and rstmt at -Xr 3,043, at -O3 -XS -Xr 2,869, all unchanged.
 
+**Batch 144 (2026-11-13): no model crashes left in the random corpora.** Three crash sites become refusals or code
+(edit_batch144.py). (1) `leaf_l2`: a char local across a call makes the -O leaf allocator stand aside; it has no byte
+register in IZ, and the oracle writes `push QIZ` / `ld QIZH,A`, which the ordinary planner already produces. Random
+r3_06_07 at -O3 -XS crashed with KeyError 8 and is now exact. (2) `gen_compare` refuses an operand wider than 4 bytes
+(r4_08_05, a double compare at -O3 -XS). (3) `shared_base_opassign` declines a base that is neither a variable nor a load
+(r2_01_02, `gps->a[6] += ...`, at -O3 -XS and -O3 -XS -Xr). Ledger up 1 (random3 at -O3 -XS 8 -> 9), down 0; pairs MATCH
+223; semcheck 58, unchanged. Random 170 / 47 / 87 / 37; rstmt 3,561 / 3,005 / 3,043 / 2,869, unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

@@ -6040,7 +6040,8 @@ def gen_compare(F, e):
         if IDX_GUARD and any(getattr(d, 'reg', None) == 'WA' and d not in F.dead and uses_decl(r, d) and
                              not uses_decl(l, d) for d in list(F.f.params) + list(F.f.decls)):
             raise Unsupported('compare operand over a variable in WA')   # (c1 != c2 with c2 in A: ld A,C / cp A,A)
-        f0 = gen(F, l, 'WA', size)
+        if size not in (1, 2, 4): raise Unsupported('a %d-byte compare here' % size)   # (-O3 -XS random r4_08_05:
+        f0 = gen(F, l, 'WA', size)                                                      #  a double compare crashed)
     W = FAM[f0][size]                                      # (the value's own register: ae_i_ptr cp BC,0x0)
     if rc.k == 'const' and rc.value == 0 and size == 4 and op in ('==', '!='):
         F.emit('or', '%s,%s' % (W, W)); return cc
@@ -8110,6 +8111,7 @@ def shared_base_opassign(F, e, lv, r, heavy, size, op):
     ld DE,WA / dec 0x1,DE / lda XBC,_gca / ld A,(XBC+WA) / sra 0x8,A / add (XBC+DE),A.  True when written."""
     if len(heavy) != 1 or not SHARED_BASE: return False
     if strip(lv.base).k == 'load': return pointer_pair_opassign(F, e, lv, r, heavy, size, op)
+    if strip(lv.base).k != 'var': return False             # (-O3 -XS random r2_01_02: gps->a[6] += ... crashed)
     g = strip(lv.base).decl
     if g.ty.kind != 'array': return False
     sized = bool(getattr(g.ty, 'count', 0))
@@ -12394,7 +12396,8 @@ def leaf_l2(F):
         tab_cls[tab] = 'inv' if cond_use else ('once' if per_iter == 1 else 'multi')
         objs.append(dict(name=('tab', tab), cls=tab_cls[tab], w=32, pos=pos.get(('tab', tab), 0)))
     for i, hn in enumerate(held_nodes): objs.append(dict(name=('held', i), cls='held', w=32))
-    got = l2alloc.allocate(objs)
+    if any(o['cls'] == 'call' and o['w'] == 8 for o in objs): return False   # a char across a call: push QIZ / QIZH, which
+    got = l2alloc.allocate(objs)                                               #  the L2 allocator does not place (r3_06_07)
     if any(v is None for v in got.values()): return False
     BYTE = {'A': 'WA', 'C': 'BC', 'E': 'DE', 'L': 'HL'}
     def fam(r):

@@ -130,7 +130,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-10-5-micro-random2, v423/Xr                             | random2/*.c          | 17 / 200 exact (8.5%)      |
 | run 2026-11-10-5-micro-random2, v423/O3XSXr                         | random2/*.c          | 5 / 200 exact (2.5%)       |
 | run 2026-11-10-6-micro-random3, v423/none                           | random3/*.c          | 39 / 200 exact (19.5%)     |
-| run 2026-11-10-6-micro-random3, v423/O3XS                           | random3/*.c          | 8 / 200 exact (4.0%)       |
+| run 2026-11-10-6-micro-random3, v423/O3XS                           | random3/*.c          | 9 / 200 exact (4.5%)       |
 | run 2026-11-10-6-micro-random3, v423/Xr                             | random3/*.c          | 20 / 200 exact (10.0%)     |
 | run 2026-11-10-6-micro-random3, v423/O3XSXr                         | random3/*.c          | 7 / 200 exact (3.5%)       |
 | run 2026-11-10-7-micro-random4, v423/none                           | random4/*.c          | 40 / 200 exact (20.0%)     |
