@@ -1214,6 +1214,21 @@ pointer is `ld XWA,(_gp)` / `xorw (XWA),K`.  A char variable in QIZH / QIZL comp
 (`cp QIZH,0x0`; five in the oracle's listings, never through A).  Random programs at none 147 -> 151 of 800
 (29 / 70 / 25 at the other sets, unchanged).
 
+**Batch 73 (2026-11-13): probe stdiv3.c, and the wrong code it exposed.**  The largest remaining refusal family in the
+random programs is the generator's guarded division by an element at a variable index (`if (gua[t] != 0) gps->u =
+gua[4] / gua[t]`, about 13 functions under "the right operand overwrites the left").  `corpus/probes/stdiv3.c`
+(`gen_stdiv3.py`, run 2026-11-13-5-micro-stdiv3, 1,200 functions) asks about it: int, unsigned int and promoted char;
+the index an int or unsigned parameter, a char local kept across a call (QIZH) or not, or a loop counter.  The model
+had 234 / 186 / 76 / 80 at none / -O3 -XS / -Xr / -O3 -XS -Xr, almost all of it the int-parameter rows.  semcheck
+found 60 new wrong-code verdicts in what the model already wrote for the probe, all fixed or refused: a char element
+read or stored at a char local in QIZH went through the zero-extending sum of a char in memory, where the compiler
+indexes with the register, signed (`lda XWA,_hca` / `ld A,(XWA+QIZH)`; `ld (XBC+QIZH),A`: now written so, in
+`chidx.py` and `lvalue`); under -O the char division's sums zero-extended an int index that two arrays share, where
+-O keeps it in a register (`(XBC+DE)`: refused); and -O's `(XWA+DE)` char form at an unsigned index (refused).
+stdiv3.c now 254 / 206 / 88 / 92; semcheck back to 73, the same verdicts.  Two Sonnet sub-agents tabulated the probe at
+none: their predictors reproduce 800 of 800 int / unsigned rows and 400 of 400 char rows from the name alone
+(research-scratch `tabulation/stdiv3a-*`, `stdiv3c-*`); porting them is the next batch.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

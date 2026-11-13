@@ -320,6 +320,9 @@ def element(F, lv, kind, fam='WA'):
                 X = 'XBC' if src[1] == 'A' else 'XWA'
                 F.emit('lda', '%s,%s' % (X, gsym)); return '(%s+%s)' % (X, src[1])
             if src[0] != 'mem': return None
+            if src[1] in ('QIZH', 'QIZL'):                 # a char local in QIZ: the register indexes, signed
+                if kind != 'load': return None             # (stdiv3.c sd3_c_d_q_GXG: lda XWA,_hca / ld A,(XWA+QIZH))
+                F.emit('lda', 'XWA,%s' % gsym); return '(XWA+%s)' % src[1]
             F.emit('lda', 'XBC,%s' % gsym); F.emit('ld', 'XWA,0x0'); F.emit('ld', 'A,%s' % src[1])
             F.emit('add', 'XWA,XBC'); return '(XWA)'
         if signed and (sized or esz == 1):                 # rc2 / rc4 / mc1 / mc2 / fc2 / gc2 / hi2 / kc2: (XBC+A)

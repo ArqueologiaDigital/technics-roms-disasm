@@ -311,6 +311,11 @@ for c in none O3XS; do    # compare operands: indexed elements, casts, computed 
 done
 row "run 2026-11-13-4-micro-cmpx, v423/Xr" "probes/cmpx.c" "$O/2026-11-13-4-micro-cmpx/out/v423/Xr/probes" corpus/probes/cmpx.c --opt none --adecl
 row "run 2026-11-13-4-micro-cmpx, v423/O3XSXr" "probes/cmpx.c" "$O/2026-11-13-4-micro-cmpx/out/v423/O3XSXr/probes" corpus/probes/cmpx.c --opt O3XS --adecl
+for c in none O3XS; do    # stores of a division by an element at a variable index (corpus/probes/stdiv3.c)
+  row "run 2026-11-13-5-micro-stdiv3, v423/$c" "probes/stdiv3.c" "$O/2026-11-13-5-micro-stdiv3/out/v423/$c/probes" corpus/probes/stdiv3.c --opt $c
+done
+row "run 2026-11-13-5-micro-stdiv3, v423/Xr" "probes/stdiv3.c" "$O/2026-11-13-5-micro-stdiv3/out/v423/Xr/probes" corpus/probes/stdiv3.c --opt none --adecl
+row "run 2026-11-13-5-micro-stdiv3, v423/O3XSXr" "probes/stdiv3.c" "$O/2026-11-13-5-micro-stdiv3/out/v423/O3XSXr/probes" corpus/probes/stdiv3.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do

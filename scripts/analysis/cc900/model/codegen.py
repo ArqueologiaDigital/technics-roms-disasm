@@ -1307,6 +1307,8 @@ def bin_wide(F, e, op, l, r, fam, size):
         ext(W); emit_op(W, a, kval(rk, r)); return ret('WA')
     if L == 'X':
         if R == 'X':
+            if size == 1 and F.opt and lk[2] == rk[2] and len(lk) == 4 and not lk[3]:
+                raise Unsupported('a char element at an unsigned register index')   # (stdiv3.c sd3_c_d_u_GXX: (XWA+DE) reads e signed)
             if size == 1 and F.opt and lk[2] == rk[2] and len(lk) == 4:   # -O: lda XWA,_gca / ld DE,(c) / lda XBC,_hca / ld A,(XWA+DE) / sub A,(XBC+DE)
                 F.emit('lda', 'XWA,%s' % lk[1]); F.emit('ld', 'DE,%s' % lk[2]); F.emit('lda', 'XBC,%s' % rk[1])
                 F.emit('ld', '%s,(XWA+DE)' % W); ext(W); emit_op(W, '(XBC+DE)'); return ret('WA')
@@ -2928,6 +2930,10 @@ def store_div_char2(F, lv, rv):
     rem = x.op == '%'
     def e(op, args): F.emit(op, args)
     def elem(k, R): e('lda', 'XWA,%s' % k[1]); e('ld', '%s,%s' % (R, k[2])); e('extz', 'X' + R); e('add', 'X%s,XWA' % R)
+    xs_ = [k for k in (a, b, L) if k[0] == 'X']
+    if F.opt and len(xs_) >= 2 and len({k[1] for k in xs_}) >= 2: return False   # (-O keeps an index used by two arrays in a register and
+                                                             #  indexes (XBC+DE), signed: stdiv3.c sd3_c_d_p_XGX; the
+                                                             #  zero-extending sums there were wrong code for c < 0)
     first = len(b) == 3 or b[0] in ('P', 'X')                # the division before the store address
     if a[0] == 'X' and b[0] == 'X': return False             # (unprobed)
     def is_l(k):
@@ -7121,6 +7127,10 @@ def lvalue(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False, kind='store'):
             if ui_.ty is not None and ui_.ty.size == 1 and ui_.k == 'load' and not family_of(im):
                 # a char index in memory: the word load of it read its neighbour (r2_05_07 none: guca[a] with a char
                 # parameter a -> lda XBC,_guca / ld A,(XSP+0xa) / ld XDE,0x0 / ld E,A / add XDE,XBC / ld (XDE),A)
+                if esz == 1 and ui_.ty.signed and not combine and mem_operand(F, ui_) in ('QIZH', 'QIZL'):
+                    F.emit('lda', 'XBC,_%s' % b.decl.name)    # a char local in QIZ indexes as a register, signed
+                    return '(XBC+%s)' % mem_operand(F, ui_)   # (stdiv3.c sd3_c_d_q_XXG: lda XBC,_gca / .. /
+                                                              # ld (XBC+QIZH),A; the zero-extending sum was wrong code)
                 if esz == 1 and ui_.ty.signed and not combine and mem_operand(F, ui_) is not None:
                     F.emit('lda', 'XBC,_%s' % b.decl.name); F.emit('ld', 'A,%s' % mem_operand(F, ui_))
                     F.emit('ld', 'XDE,0x0'); F.emit('ld', 'E,A'); F.emit('add', 'XDE,XBC'); return '(XDE)'
