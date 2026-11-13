@@ -6658,6 +6658,8 @@ TEST_REG_LONG_LIVE = True                                # see test_reg_reuse_lo
 IZ_TAIL_DIRECT_OPT = True                                # see regvar_stmt: IZ_TAIL_DIRECT under cdecl -O3 -XS too
 SLOT_INIT_UNREAD = True                                  # see slot_init: an unread register parameter leaves WA free
 UNREAD_PARAM_DEAD = True                                 # see compile_function_once
+IZ_TAIL_DIRECT_XR = True                                 # see regvar_stmt: IZ_TAIL_DIRECT under -Xr too
+MEMBER_STORE_BC_XR = True                                # see gen_stmt: MEMBER_STORE_BC under -Xr too (rstmt rs_1_03_03_1)
 GUARD_DIV = True                                         # see guard_div_plan
 BASE_HOIST = True                                        # see base_hoist
 
@@ -9860,7 +9862,7 @@ def gen_stmt(F, s, last):
             t = chidx.element(F, lv, 'load')             # element reads), then the store's own (XBC+A)
             if t is None: raise Unsupported('element store')
             F.emit('ld', '%s,%s' % (t, FAM['DE'][size])); return
-        elif MEMBER_STORE_BC and not F.opt and not F.adecl and size in (2, 4) and strip(s.e.r).k == 'bin' and \
+        elif MEMBER_STORE_BC and not F.opt and (not F.adecl or MEMBER_STORE_BC_XR) and size in (2, 4) and strip(s.e.r).k == 'bin' and \
                 strip(s.e.r).op in ('+', '-', '&', '|', '^') and (sp_lvalue_kind(F, lv) or ('', '', 0))[0] == 'D' and \
                 not ({'WA', 'BC'} & live_regs(F)) and not fpgen.is_fp(lv.ty) and not strip(s.e.r).ty.is_ptr() and \
                 all(fold(y).k == 'const' and fold(y).value is not None or
@@ -10926,7 +10928,8 @@ def regvar_stmt(F, e):
         n_iz_ = len(F.lines)
         fam = gen(F, e.r, tgt, d.ty.size)
         if FAM[fam][d.ty.size] != R: F.emit('ld', '%s,%s' % (R, FAM[fam][d.ty.size]))
-        if IZ_TAIL_DIRECT and R == 'IZ' and (not F.opt or IZ_TAIL_DIRECT_OPT) and not F.adecl and F.lines[-1] == '\tld\tIZ,WA':
+        if IZ_TAIL_DIRECT and R == 'IZ' and (not F.opt or IZ_TAIL_DIRECT_OPT) and (not F.adecl or IZ_TAIL_DIRECT_XR) and \
+                F.lines[-1] == '\tld\tIZ,WA':
             # an IZ home's value loaded from memory and then worked on is loaded into IZ (random r2_07_15:
             # int u = gps->a[b] + gi3 -> .. / ld IZ,(XWA+C) / add IZ,(_gi3); r4_01_00: c[3] << 5 -> ld IZ,(XWA+0x6) / sla 0x5,IZ)
             k_ = len(F.lines) - 2

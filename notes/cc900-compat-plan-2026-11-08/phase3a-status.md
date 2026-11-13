@@ -2148,6 +2148,13 @@ avoided WA). `compile_function_once` now puts such a parameter in F.dead before 
 corpora), down 0; pairs MATCH 223; semcheck 56 -> 54 (rs_4_08_02_0 at both -Xr sets no longer compiles wrongly).
 Random 182 / 58 / 99 / 49.
 
+**Batch 165 (2026-11-13): IZ_TAIL_DIRECT and MEMBER_STORE_BC under -Xr as well.** Two rules evidenced without options
+hold under adecl too: an IZ home loaded from memory and worked on is built in IZ (random .r1_09_00), and a displaced
+member store of an arithmetic value of plain operands puts the pointer in XWA and the value in BC (rstmt
+.rs_1_03_03_1: `gps->l = gs.l - gl2` -> `ld XWA,(_gps) / ld XBC,(_gs + 0x4) / sub XBC,(_gl2) / ld (XWA+0x4),XBC`). Ledger
+up 6 (stvxc.c at -Xr 111 -> 115, stvx.c 47 -> 49, rstmt 3,195 -> 3,198 and 2,980 -> 2,982, random1 and random4 at -Xr),
+down 0; pairs MATCH 223; semcheck 54. Random 182 / 58 / 101 / 49.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
