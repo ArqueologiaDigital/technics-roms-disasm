@@ -2176,6 +2176,17 @@ _strnset, _strset) and two wrong-code verdicts. A first combined run showed that
 not committed. The library is the -O3 -XS evidence the rstmt sweep does not see; gate/lib_one.sh scores it for one model.
 Ledger up 1 (rstmt at -O3 -XS 3,065 -> 3,077), down 0; pairs MATCH 223; semcheck 54. Random 182 / 58 / 102 / 49.
 
+**Batch 168 (2026-11-13): eighteen rules evidenced without -O also apply under -O.** research-scratch gate/xrtry3.sh
+relaxes each of the 99 rules gated by `not F.opt` alone (to `True`) and scores rstmt at -O3 -XS and -O3 -XS -Xr
+(baselines 3,077 / 2,982; results in gate/xrtry-results-opt-2026-11-13.txt). Eighteen lost at neither set and gained
+four or more statements in all; each was then checked on the 1997 library (gate/lib_one.sh: 186 each, after batch 167's
+lesson). Together they give 3,143 / 3,045: NOT_PTR_ELEM_CP, NOT_CHAR8, LEFT_BIN_RIGHT_PTR, COMM_SWAP_PLAIN, PTR_K_LDA,
+UCHAR_IDX_INTPTR, SHIFT_COUNT_LOCAL, CHAIN_STATIC_WA, OPASSIGN_ZERO, OPASSIGN_CALL_ELEM, LONG_RMW_CONST_ELEM,
+MULDIV_ELEM_ADDR, XIZ_MEMBER_INIT, LOCAL_BIN_SWAP, VALUE_FIRST_PK, MEMBER_STORE_SWAP, ADD_IN_PLACE, CHAR_IDX_BC. The
+-O3 -XS -Xr sweep of the remaining no-option rules found no gain (gate/xrtry-results-o3xsxr-2026-11-13.txt). Ledger up
+23 with 275 more exact functions (fpargf.c +24 / +16, stdiv2.c +10 / +16, stvxc.c +4 / +14, stdiv.c +12, lsl.c +10 / +10,
+rstmt +66 / +63, the random corpora), down 0; pairs MATCH 223; semcheck 54. Random 182 / 60 / 102 / 52.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
