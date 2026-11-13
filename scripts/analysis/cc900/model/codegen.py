@@ -6467,6 +6467,7 @@ LH_NESTED_CALL = True                                    # see gen_long_helper
 ULONG_POW2 = True                                        # see gen_long_helper
 K_MINUS_PTR = True                                       # see gen_bin
 VALUE_FIRST_PK = True                                    # see gen_stmt's store
+LONG_RMW_CONST_ELEM = True                               # see gen_opassign's long helper
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -8366,7 +8367,10 @@ def gen_opassign(F, e):
                 F.force_base = 'XIZ'                       # arr_index.c ai_l_g_div (-O3 -XS -Xr): the element's
             try: t = lvalue(F, e.l, idx='WA')              # address lives across the helper in XIZ: push XIZ /
             finally: F.force_base = None                   # ... / ld XIZ,_gla / add XIZ,XWA / ld XWA,(XIZ) /
-            if held: t = combine_indexed(F, t, 'XIZ')
+            if held and LONG_RMW_CONST_ELEM and not F.opt and re.match(r'^\(_[\w ]+(\+ 0x[0-9a-f]+)?\)$', t):
+                F.emit('lda', 'XIZ,%s' % t[1:-1]); t = '(XIZ)'   # a constant element: its address into XIZ (rstmt
+                                                           # rs_1_03_09_2: gla[2] /= 3L -> push XIZ / lda XIZ,_gla + 0x8 / ..)
+            elif held: t = combine_indexed(F, t, 'XIZ')
             if re.search(r'\(X(WA|BC|DE|HL|IX|IY)', t) or (held and 'XIZ' not in t):   # lda XBC,0xa / cal C9H_divls /
                 raise Unsupported('long element address across a helper')        # ld (XIZ),XHL / pop XIZ
             rs = mem_operand(F, r)

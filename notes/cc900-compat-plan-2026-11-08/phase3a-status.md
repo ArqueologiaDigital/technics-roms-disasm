@@ -1873,6 +1873,13 @@ first and the pointer is loaded after it, which is what the guard of batch 34 re
 Without options.  rstmt at none 3,540 -> 3,543; stvxc.c 251 -> 255; elrd.c 274 -> 278; random at none 167 -> 168 of 800.
 The gate's semcheck shows no new verdict.
 
+**Batch 135 (2026-11-13): a long op= by a helper on a constant element holds its address in XIZ; rstmt +10.**  Found with
+single_bad_stmt.py ("long element address across a helper", 6 functions one statement from exact).  `gla[2] /= 3L` ->
+`push XIZ` / `lda XIZ,_gla + 0x8` / `ld XWA,(XIZ)` / `ld XBC,0x3` / `cal C9H_divls` / `ld (XIZ),XHL` / `pop XIZ` (rs_1_03_09_2).
+The XIZ mechanism (LONG_RMW_XIZ, for an element at a variable index) refused a constant element because its lvalue is
+direct memory; its address now goes into XIZ by `lda`.  Without options.  rstmt at none 3,543 -> 3,548 and at -Xr 3,038 ->
+3,043.  Random exact unchanged (its six functions differ elsewhere too).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
