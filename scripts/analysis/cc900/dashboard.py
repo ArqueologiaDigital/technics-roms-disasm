@@ -10,7 +10,10 @@ Question it answers: how did each score of the phase-3a effort move, commit by c
 Signal read: every commit that touched scripts/analysis/cc900/results/model_ledger.md (the rows `sh model/ledger.sh`
 prints: "oracle run, compiler/set | corpus | N / M exact") and results/semcheck.md (its "Totals per option set" table,
 column DIFFERENT), taken with `git show <commit>:<file>`.  Nothing is measured here; the page is only as fresh as the
-last committed ledger.  The output is regenerable and is not committed."""
+last committed ledger.  The output is regenerable and is not committed.
+
+.githooks/post-commit runs this script in the background after every commit that changes either results file, and the
+page reloads itself every two minutes, so a tab left open on `--serve` follows the rounds."""
 import sys, os, re, json, subprocess, html
 
 REPO = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', '..'))
@@ -82,6 +85,7 @@ def collect():
 
 PAGE = r'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="refresh" content="120">
 <title>cc900 model scores</title>
 <style>
 :root { color-scheme: light;
@@ -137,7 +141,8 @@ td.sj { max-width: 380px; overflow: hidden; text-overflow: ellipsis; text-align:
 <h1>cc900 model: scores over time</h1>
 <p class="sub">Exact-match counts of the Python model against Toshiba cc900 V4.23, one point per commit that changed
 the ledger (__N__ commits, __FIRST__ to __LAST__). The horizontal axis is one step per commit, labelled where a new day starts.
-Generated __NOW__ from git history; nothing here is measured live.</p>
+Generated __NOW__ from git history; nothing here is measured live. The page is rebuilt after every commit
+that changes the ledger, and reloads itself every two minutes.</p>
 <div class="tiles" id="tiles"></div>
 <div class="grid" id="charts"></div>
 <details><summary>Table view (every commit, newest first)</summary><div class="scroll"><table id="tbl"></table></div></details>

@@ -1,0 +1,12 @@
+#!/bin/sh
+# After a commit that changes the cc900 model's ledger or semantic-check results, rebuild the local score dashboard
+# (scripts/analysis/cc900/dashboard.py -> ~/compartilhado/tmp/cc900-dashboard/index.html) in the background, so the
+# page served by `dashboard.py --serve` shows the new round without anyone re-running it.  Never fails a commit.
+root=$(git rev-parse --show-toplevel 2>/dev/null) || exit 0
+if git diff-tree --no-commit-id --name-only -r HEAD 2>/dev/null |
+        grep -qE '^scripts/analysis/cc900/results/(model_ledger|semcheck)\.md$'; then
+    out="$HOME/compartilhado/tmp/cc900-dashboard"
+    mkdir -p "$out" 2>/dev/null
+    ( python3 "$root/scripts/analysis/cc900/dashboard.py" > "$out/build.log" 2>&1 & ) >/dev/null 2>&1
+fi
+exit 0

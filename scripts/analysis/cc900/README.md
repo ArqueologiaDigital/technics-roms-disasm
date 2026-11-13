@@ -50,3 +50,5 @@ rules have to explain.
 1997 library, the micro corpus, the probes and the semantic check's DIFFERENT count, one point per commit that changed
 `results/model_ledger.md`.  It reads those files out of git history (`git show <commit>:<file>`), measures nothing
 itself, and its output is not committed.  Without `--serve` it only writes the file.
+`.githooks/post-commit` rebuilds the page in the background after every commit that changes `results/model_ledger.md`
+or `results/semcheck.md`, and the page reloads itself every two minutes.
