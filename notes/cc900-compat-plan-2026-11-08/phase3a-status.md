@@ -1745,6 +1745,12 @@ emitted `and WA,0x7fff`.  A peephole turns an `and WA,K` whose mask clears exact
 no -O.  The evidence is three listings, all the same form; the rule is no wider.  rstmt at none 3,516 -> 3,517; the
 other sets and the random corpora unchanged.
 
+**Batch 120 (2026-11-13): a char register local compares in place; rstmt +2.**  `char t = jc; if (t != 0) ..` with `t`
+in C: the oracle writes `cp C,0x0` (rs_1_07_18_2; rs_4_04_14_4), the model copied C into A first (`ld A,C` /
+`cp A,0x0`).  The same in-place compare already existed for a char in QIZ (CP_QIZ_K, random r3_09_12); this extends it
+to the low byte of BC / DE / HL, cdecl, no -O, and only when A is not live.  rstmt at none 3,517 -> 3,519; chararith,
+chararith2 and kfold unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

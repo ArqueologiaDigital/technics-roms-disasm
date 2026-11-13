@@ -5928,6 +5928,11 @@ def gen_compare(F, e):
         F.emit('cp', '%s,%s' % (FAM[fl][size], FAM[fr][size])); return cc   # cp BC,WA
     if CMPX and getattr(F, 'u1_i', None) is None and not getattr(F, 'l2', None) and not getattr(F, 'cl_active', None) and \
             mem_operand(F, r) is None and cmpx_elem(F, op, l, r, size): return cc
+    if CP_CHAR_REG_K and size == 1 and rc.k == 'const' and rc.value is not None and not F.opt and not F.adecl and \
+            strip(l).k == 'load' and regvar_of(strip(l).e) is not None and regvar_of(strip(l).e).reg in ('BC', 'DE', 'HL') and \
+            regvar_of(strip(l).e).ty.size == 1 and 'A' not in live_regs(F):
+        rr_ = FAM[regvar_of(strip(l).e).reg][1]           # a char local in the low byte of a register compares in place
+        F.emit('cp', '%s,%s' % (rr_, hx(rc.value & 0xff))); return cc   # (rstmt rs_1_07_18_2: t != 0 -> cp C,0x0)
     if CP_QIZ_K and lm in ('QIZH', 'QIZL') and size == 1 and rc.k == 'const' and rc.value is not None and not F.opt and not F.adecl:
         F.emit('cp', '%s,%s' % (lm, hx(rc.value & 0xff))); return cc   # a char in QIZ compares in place (random r3_09_12:
                                                            # t != 0 -> cp QIZH,0x0; five in the oracle's listings, no ld A,QIZH / cp A,k)
@@ -6374,6 +6379,7 @@ WRITE_ONLY_EVAL = True                                    # see eval_write_only
 RET_PTR_LEFT = True                                       # see gen_bin
 UCHAR_IDX_INTPTR = True                                   # see gen_ptr_arith
 AND_BIT_CLR = True                                       # see the OR_BIT_SET peephole
+CP_CHAR_REG_K = True                                     # see gen_compare
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
