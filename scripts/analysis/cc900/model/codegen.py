@@ -1589,6 +1589,37 @@ def bin_wide(F, e, op, l, r, fam, size):
         emit_op(W, a, kval(rk, r)); return ret('WA')       # gc2 = 8 / gs.c -> ld WA,0x8 / divs WA,(_gs); stdiv3.c sd3_c_*K*)
     ldv(W, lk, l); ext(W); emit_op(W, a, kval(rk, r)); return ret('WA')
 
+def idx_read_again(F, idx):
+    """IDX_READ_ONCE: the int index variable of a char element is read at another place of the function too.  The
+    oracle then keeps it in a register and indexes with it, signed (rstmt rs_2_02_17_0: guca[a] .. gua[a] ->
+    ld BC,(a) / lda XWA,_guca / cpb (XWA+BC),0x80; rs_1_01_13_3: t *= 10; guca[t] &= 109 -> andb (XWA+BC),0x6d); the
+    zero-extended sum (ld BC,(a) / extz XBC / add XBC,XWA) is for an index read once, or a parameter that is an index
+    once."""
+    if not IDX_READ_ONCE or F.adecl: return False
+    x = strip(idx)
+    while x.k == 'cast' and x.kind == 'IntegralCast': x = strip(x.e)
+    if x.k != 'load' or strip(x.e).k != 'var' or x.ty is None or x.ty.size != 2: return False
+    d = strip(x.e).decl
+    if d.kind not in ('param', 'local') or getattr(d, 'reg', None): return False
+    u = []
+    def isd(n_):
+        n_ = strip(n_)
+        while n_.k == 'cast' and n_.kind == 'IntegralCast': n_ = strip(n_.e)
+        return n_.k == 'load' and strip(n_.e).k == 'var' and strip(n_.e).decl is d
+    if d.kind == 'param':                                  # (a parameter: as an index again; read again as a plain
+        walk(F.f.body, lambda n_, dd: u.append(n_) if n_.k == 'index' and isd(n_.idx) and    # operand it is read
+             getattr(n_.ty, 'size', 0) != 4 else None)     # from memory both times: rs_3_08_12_3, guca[a] <= a; and a
+    else:                                                  # long element takes it in WA: random r2_07_14, sla 0x2,WA)
+        walk(F.f.body, lambda n_, dd: u.append(n_) if n_.k == 'var' and n_.decl is d else None)
+    ids = {id(x_) for x_ in u}
+    if len(ids) < 2: return False
+    grp = {}                                               # (twice in one expression is read from memory twice:
+    for k_ in ('expr', 'return', 'decl'):                  # evorder_ad.c ea_c_add_XX, cmpordl.c cc_l_XX, stdiv3.c)
+        for st_ in nodes_in(F.f.body, k_):
+            for kk_ in ('index', 'var'):
+                for n_ in nodes_in(st_, kk_):
+                    if id(n_) in ids: grp[id(n_)] = id(st_)
+    return len({grp.get(i_, 0) for i_ in ids}) > 1
 def cw_addr(F, *a, **k): return cw_pin(F, _cw_addr_raw(F, *a, **k))
 def cw_load(F, *a, **k): return cw_pin(F, _cw_load_raw(F, *a, **k))
 def cw_value(F, *a, **k): return cw_pin(F, _cw_value_raw(F, *a, **k))
@@ -3547,6 +3578,8 @@ def cw_kind(F, x, size):
                 ii = (r_, xi_.ty.signed); reg = ('reg', d_)
         elif ii is not None and ii[0] == 'WA': reg = ('regp', None)   # (-Xr: the index parameter in WA, dying here)
         if ii is None: return None
+        if size == 1 and ii[0].startswith('(') and idx_read_again(F, v.idx):
+            raise Unsupported('a char element at an index the function reads again')
         if not ii[1] and (size in (2, 4) or ii[0] == 'IZ' or reg): return None   # (an unsigned index is extended whole:
                                                            #  a char element at an unsigned index in a register is not
                                                            #  (XBC+WA): cmpx.c cx_e_c_EYu, -Xr cx_l_c_GXu, elrd.c er_a_cdZo)
@@ -4909,7 +4942,9 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
             n1 = len(F.lines); f1 = gen(F, l, vfam, size)
             if f1 != vfam: raise Unsupported('complex shift count')
             if clobbers(F.lines[n1:], '(XWA)'):             # the value's load needs WA: the count waits in E
-                if held_after(F, 'DE', e) or clobbers(F.lines[n1:], '(XDE)'): raise Unsupported('complex shift count')
+                if held_after(F, 'DE', e) or clobbers(F.lines[n1:], '(XDE)') or 'DE' in live_regs(F) or \
+                        any(re.search(r'\b(X?DE|[DE]|QDE)\b', x_) for x_ in F.lines[n1:]):   # (or reads DE: rstmt
+                    raise Unsupported('complex shift count')   # rs_4_07_05_1, t in DE: ld E,A / ld WA,DE was wrong code)
                 F.lines.insert(n1, '\tld\tE,A'); F.emit('ld', 'A,E')   # (r1_03_06: ld E,A / ld WA,(XBC+0x2) / ld A,E)
             if size == 4:
                 lab16 = F.newlabel(); F.emit('bit', '0x4,A'); F.emit('j', 'z,%s' % lab16); F.emit(mnem, '0x0,%s' % V)
@@ -6138,6 +6173,8 @@ CHAR_REG_LDA = True                                       # see elem_addr
 SAME_REG_GUARD = True                                     # see Fn.emit
 PTR_ELEM_EXTZ = True                                      # see gen_load_mem
 STMT_PARAM_ANYSET = True                                  # see Fn.emit: a cdecl parameter the planner keeps in a register
+IDX_READ_ONCE = True                                      # see idx_read_again
+CHAIN_ELEM_REFUSE = True                                  # see gen_stmt's store
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -7173,6 +7210,7 @@ def elem_addr(F, lv, kind):
                                                            # local in QIZH / IZ: its address by the signed register index (rstmt
                                                            # rs_4_02_10_3: guca[t] /= 7 -> lda XWA,_guca / lda XBC,XWA+QIZH / ld A,(XBC);
                                                            # rs_4_08_17_5 under -O / -Xr: lda XBC,XWA+IZ)
+            if idx_read_again(F, lv.idx): raise Unsupported('a char element at an index the function reads again')
             F.emit('lda', 'XWA,%s' % g); idx_into('BC'); F.emit('extz', 'XBC'); F.emit('add', 'XBC,XWA'); return '(XBC)'
         if not sized:
             if kind == 'rmw' and esz == 4: return None
@@ -8958,6 +8996,13 @@ def gen_stmt(F, s, last):
         if XIZ_DIRECT_INIT and (not F.opt or XIZ_DIRECT_OPT) and size == 4 and rv_.k == 'load' and strip(rv_.e).k == 'var' and \
                 getattr(strip(rv_.e).decl, 'reg', None) == 'XIZ':
             F.emit('ld', '%s,XIZ' % t); return             # lo_l_Gcs: ld (_hl2),XIZ (not through XWA)
+        cv_ = rv_
+        while cv_.k == 'cast': cv_ = strip(cv_.e)
+        if CHAIN_ELEM_REFUSE and size == 1 and cv_.k == 'bin' and cv_.op == '=' and strip(lv).k == 'index' and \
+                re.match(r'^\(X\w+\+(WA|BC|DE|HL)\)$', t):
+            raise Unsupported('a chained store into a char element at a register index')   # (rstmt rs_3_01_16_2:
+            # guca[a] = guc = -guc -> the value first, in C, then lda XWA,_guca / ld DE,(a) / extz XDE / add XDE,XWA /
+            # ld (XDE),C; the model's (XDE+BC) indexed signed)
         fam = gen(F, s.e.r, work, size)                    # opt_temps.c ot_cpy_anb: ld E,(XHL+:1) / ld (XWA+:1),E
         if STORE_ADDR_GUARD and clobbers(F.lines[n0:], t):
             raise Unsupported('the value overwrites the store address')    # (wrong code otherwise)

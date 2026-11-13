@@ -1525,6 +1525,20 @@ constant written into the part (`ld W,0x0`); a narrower register load over the h
 rs_3_05_08_2 at the -Xr sets).  All four are refused, none is new code; scores unchanged.
 **Open: 58 statement findings** (semcheck 110).
 
+**Batch 100 (2026-11-13): no statement finding left at the plain set; semcheck 110 -> 98.**  Three refusals.
+(1) A shift by a computed count parked the count in E while the value's code still read DE (rs_4_07_05_1: `t` in DE,
+`ld E,A` / `ld WA,DE`); refused when DE is live or read.  (2) A char element's index that another statement reads
+again: the compiler keeps it in a register and indexes signed (rs_2_02_17_0: `guca[a]` .. `gua[a]` -> `ld BC,(a)` /
+`lda XWA,_guca` / `cpb (XWA+BC),0x80`, later `add BC,BC`; rs_1_01_13_3: `t *= 10; guca[t] &= 109` ->
+`andb (XWA+BC),0x6d`), where the model zero-extended from memory.  Refused (IDX_READ_ONCE) for a local read in
+another statement and for a parameter that is a char / int element's index in another statement.  Two narrower cases
+stay as they were, because the oracle reads memory again there: twice within one expression (evorder_ad.c
+ea_c_add_XX, cmpordl.c, stdiv3.c: a first version refused these, seven ledger rows down on the scratch copy) and a
+later long element, which takes the index in WA (random r2_07_14).  (3) A chained store into a char element at a
+register index (rs_3_01_16_2: `guca[a] = guc = -guc`, value first in C, then the zero-extended sum).  The second
+refusal also removes two older reviewed verdicts in the random corpora (r2_05_00 at none, r2_05_11 at -O3 -XS).
+Scores unchanged.  **Open: 48 statement findings** (semcheck 98): 0 none / 4 -O3 -XS / 19 -Xr / 25 -O3 -XS -Xr.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
