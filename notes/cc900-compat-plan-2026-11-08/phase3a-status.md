@@ -1065,6 +1065,15 @@ times 2^n - 1 is a shift and a subtraction.  lhx.c at none 416 -> 790 of 1,184; 
 +2 at each set, stord.c +1.  Random programs unchanged (90 of 800 at none).  The port took about 40 minutes from the
 agent's report to the commit; the agent's own run took 5.
 
+**Batch 52 (2026-11-13): long helpers with a char or unsigned parameter index.**  `lx6_lines`, from the agent's
+`lhx1-predict.py`: an element at a char or unsigned char parameter has its scaled index in the 2-byte temporary (a
+byte for char, the 16-bit form after `extz WA` for unsigned char) and its array's base in XIZ; at an unsigned int
+parameter the index is extended whole and added to the base, with no temporary.  `ga[i] = ga[i] op vv`, and
+`ga[i] = vv * wa[i]`, build the store address first and keep it.  lhx.c at none 790 -> 862 of 1,184.  The local and
+loop-counter indices of the same rows are not reached: the register planner gives such a local a register before
+this plan runs.  By now the agents' predictors reproduce every oracle form at none of lhx.c (1,184), of cmpx.c's cx
+and cc families (744) and of elrd.c's er and bc families (1,234); what limits the rate is porting them.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

@@ -1671,6 +1671,112 @@ def lx5_parts(F, lv, x):
     if b[0] == 'K' and (b[1] & 0xffffffff) in (0, 1): return None
     return L, a, b
 
+def lx6_elem(F, v):
+    """('XI', sym, index memory, 'c' | 'u' | 'w') for a long element of a global array at a char, unsigned char or
+    unsigned int parameter in memory; None otherwise"""
+    v = strip(v)
+    if v.k != 'index' or v.ty is None or v.ty.size != 4 or v.ty.kind != 'int': return None
+    b = strip(v.base)
+    while b.k in ('decay', 'cast', 'noop') and getattr(b, 'e', None) is not None: b = strip(b.e)
+    if not (b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array'): return None
+    i = strip(v.idx)
+    while i.k == 'cast' and i.kind == 'IntegralCast': i = strip(i.e)
+    if i.k != 'load' or strip(i.e).k != 'var' or i.ty is None or i.ty.kind != 'int': return None
+    d = strip(i.e).decl
+    if d.kind not in ('param', 'local') or getattr(d, 'reg', None) or getattr(d, 'homed', False) or getattr(F, 'lazy_homes', None): return None
+    it = 'c' if i.ty.size == 1 and i.ty.signed else 'u' if i.ty.size == 1 else 'w' if i.ty.size == 2 and not i.ty.signed else None
+    if it is None: return None
+    if d.kind == 'local':                                    # a local used once is its initialiser (lxi_*_?TG: ld A,(_gcc));
+        if foldable(F.f, d):                                 # one in a frame slot is read from it (lxi_*_cTE)
+            iv = strip(d.init) if getattr(d, 'init', None) is not None else None
+            while iv is not None and iv.k == 'cast' and iv.kind == 'IntegralCast': iv = strip(iv.e)
+            if iv is None or iv.k != 'load' or strip(iv.e).k != 'var' or strip(iv.e).decl.kind != 'global': return None
+            return ('XI', '_' + b.decl.name, '(_%s)' % strip(iv.e).decl.name, it)
+        if it == 'w': return None                            # (an unsigned int local lives in IZ or BC: not modelled)
+        return ('XI', '_' + b.decl.name, '(XSP+%s)' % hx(d.slot + F.push) if hasattr(d, 'slot') else '{SRC}', it)
+    m = mem_operand(F, i)
+    if not (isinstance(m, str) and m.startswith('(XSP+')): return None
+    return ('XI', '_' + b.decl.name, m, it)
+
+def lx6_parts(F, lv, x):
+    """(shape, element, the plain global's memory, the destination's symbol or memory) for lx6_lines, or None:
+    shapes G gv = vv op va[i], X gv = va[i] op vv, E ga[i] = vv op wa[i], Z ga[i] = ga[i] op vv"""
+    if not LX5 or F.adecl or F.opt or lv is None: return None
+    if x.k != 'bin' or x.op not in ('*', '/', '%') or x.ty is None or x.ty.size != 4 or x.ty.kind != 'int': return None
+    def plain(y):
+        k = sd4_kind(F, y)
+        return k[1] if k is not None and k[0] == 'G' else None
+    def elem(y):
+        y0 = strip(y)
+        while y0.k == 'cast' and y0.kind in ('IntegralCast', 'NoOp') and strip(y0.e).ty is not None and strip(y0.e).ty.size == 4: y0 = strip(y0.e)
+        return lx6_elem(F, y0.e) if y0.k == 'load' else None
+    el, er = elem(x.l), elem(x.r)
+    if (el is None) == (er is None): return None
+    g = plain(x.r if el is not None else x.l)
+    if g is None: return None
+    l0 = strip(lv)
+    if l0.ty is None or l0.ty.size != 4 or l0.ty.kind != 'int': return None
+    if l0.k == 'var':
+        if l0.decl.kind != 'global' or getattr(l0.decl, 'reg', None): return None
+        return ('X' if el is not None else 'G', el or er, g, '(_%s)' % l0.decl.name)
+    ld_ = lx6_elem(F, l0)
+    if ld_ is None or ld_[2] != (el or er)[2]: return None
+    if el is not None: return ('Z', el, g, ld_[1]) if ld_[1] == el[1] else None
+    return ('E', er, g, ld_[1]) if ld_[1] != er[1] else None
+
+def lx6_lines(parts, op, signed, T4, T2):
+    """a long helper with an element at a char, unsigned char or unsigned int parameter (lhx.c's lxi_*_?P? rows; the
+    rules of research-scratch tabulation/lhx1-FAMILIES.md, whose predictor reproduces the oracle's forms).  A char or
+    unsigned char index is scaled into the 2-byte temporary (ld A,(c) / sla 0x2,A / ld (t),A; unsigned: extz WA and
+    the 16-bit form) with the array's base in XIZ, and read back into the low half of the element's register
+    (ld C,(t) / ld XBC,(XIZ+C)).  An unsigned int index is extended whole and added to the base (ld WA,(c) /
+    extz XWA / sll 0x2,XWA / ld XBC,_vna / add XBC,XWA), with no temporary.  ga[i] = ga[i] op vv -- and ga[i] = vv *
+    wa[i] -- build the store address first and keep it (the 4-byte temporary; XIZ for the unsigned int index); the
+    other element stores build it again after the call."""
+    shape, el, g, dst = parts
+    sym, src, it = el[1], el[2], el[3]
+    held = shape == 'Z' or (shape == 'E' and op == '*')
+    left = shape in ('X', 'Z')
+    o = []
+    def e(op_, args): o.append((op_, args))
+    helper = ('cal', 'C9H_' + {'/': 'div', '%': 'rem', '*': 'mul'}[op] + ('ls' if signed else 'lu'))
+    if it == 'w':
+        def addr(R): e('ld', 'WA,%s' % src); e('extz', 'XWA'); e('sll', '0x2,XWA'); e('ld', '%s,%s' % (R, dst if R == 'XIZ' else sym)); e('add', '%s,XWA' % R)
+        if held: addr('XIZ')
+        addr('XBC')
+        if left: e('ld', 'XWA,(XBC)'); e('ld', 'XBC,%s' % g)
+        else: e('ld', 'XWA,%s' % g); e('ld', 'XBC,(XBC)')
+        o.append(helper)
+        if held: e('ld', '(XIZ),XHL')
+        elif shape == 'E':
+            e('ld', 'WA,%s' % src); e('extz', 'XWA'); e('sll', '0x2,XWA'); e('ld', 'XBC,%s' % dst); e('add', 'XBC,XWA'); e('ld', '(XBC),XHL')
+        else: e('ld', '%s,XHL' % dst)
+        return o
+    c = it == 'c'
+    if held:
+        e('ld', 'A,%s' % src)
+        if c: e('sla', '0x2,A'); e('lda', 'XBC,%s' % dst); e('lda', 'XWA,XBC+A')
+        else: e('extz', 'WA'); e('sla', '0x2,WA'); e('lda', 'XBC,%s' % dst); e('exts', 'XWA'); e('add', 'XWA,XBC')
+        e('ld', '%s,XWA' % T4)
+    e('ld', 'A,%s' % src)
+    if c: e('sla', '0x2,A'); e('ld', '%s,A' % T2)
+    else: e('extz', 'WA'); e('ld', '%s,WA' % T2); e('ld', 'WA,%s' % T2); e('sla', '0x2,WA'); e('ld', '%s,WA' % T2)
+    e('lda', 'XIZ,%s' % sym)
+    if left:
+        r = 'A' if c else 'WA'
+        e('ld', 'XBC,%s' % g); e('ld', '%s,%s' % (r, T2)); e('ld', 'XWA,(XIZ+%s)' % r)
+    else:
+        r = 'C' if c else 'BC'
+        e('ld', 'XWA,%s' % g); e('ld', '%s,%s' % (r, T2)); e('ld', 'XBC,(XIZ+%s)' % r)
+    o.append(helper)
+    if held: e('ld', 'XWA,%s' % T4); e('ld', '(XWA),XHL')
+    elif shape == 'E':
+        e('ld', 'A,%s' % src)
+        if c: e('sla', '0x2,A'); e('lda', 'XBC,%s' % dst); e('ld', '(XBC+A),XHL')
+        else: e('extz', 'WA'); e('sla', '0x2,WA'); e('lda', 'XBC,%s' % dst); e('ld', '(XBC+WA),XHL')
+    else: e('ld', '%s,XHL' % dst)
+    return o
+
 def lx5_need(lines):
     """(register, 4-byte temporary, 2-byte temporary) the lines of lx5_lines use"""
     txt = ' '.join(a for _, a in lines)
@@ -1799,8 +1905,11 @@ def plan_sd4(F):
         if len(st) > 1: return                               # (a value elsewhere -- a returned value, a call argument,
         pr = lx5_parts(F, st[0].l if st else None, helpers[0])   #  a condition -- is planned without a destination)
         ls = lx5_lines(pr[0], pr[1], pr[2], helpers[0].op, helpers[0].ty.signed, '{T4}', '{T2}') if pr is not None else None
-        if ls is None: return
-        if not st and not ({pr[1][0], pr[2][0]} & {'P', 'D', 'X'}): return   # (plain operands: the older paths, random r2_07_02)
+        if ls is None:
+            p6 = lx6_parts(F, st[0].l, helpers[0]) if st else None   # an element at a char / unsigned parameter
+            if p6 is None: return
+            ls = lx6_lines(p6, helpers[0].op, helpers[0].ty.signed, '{T4}', '{T2}')
+        elif not st and not ({pr[1][0], pr[2][0]} & {'P', 'D', 'X'}): return   # (plain operands: the older paths, random r2_07_02)
         r = (None, None, None, ('lx5',) + lx5_need(ls))
     form, reg, t4, t2 = r[3]
     F.sd4 = {'node': id(helpers[0]), 'need': r[3], 't4': None, 't2': None}   # (the other planners leave it alone)
@@ -1816,12 +1925,15 @@ def lx5_emit(F, lv, x):
     """emit the planned long helper of lx5_lines (lv None: the value alone, into XHL); True when emitted"""
     plan = getattr(F, 'sd4', None)
     if plan is None or plan['node'] != id(x) or plan['need'][0] != 'lx5': return False
-    pr = lx5_parts(F, lv, x)
-    if pr is None: raise Unsupported('lx5: the plan changed')
     T4 = '(XSP+%s)' % hx(plan['t4'].slot + F.push) if plan['t4'] is not None else '{T4}'
     T2 = '(XSP+%s)' % hx(plan['t2'].slot + F.push) if plan['t2'] is not None else '{T2}'
-    ls = lx5_lines(pr[0], pr[1], pr[2], x.op, x.ty.signed, T4, T2)
-    if ls is None or ('lx5',) + lx5_need(lx5_lines(pr[0], pr[1], pr[2], x.op, x.ty.signed, '{T4}', '{T2}')) != plan['need']:
+    pr = lx5_parts(F, lv, x)
+    mk = (lambda a4, a2: lx5_lines(pr[0], pr[1], pr[2], x.op, x.ty.signed, a4, a2)) if pr is not None else (lambda a4, a2: None)
+    if mk('{T4}', '{T2}') is None:
+        p6 = lx6_parts(F, lv, x)
+        mk = (lambda a4, a2: lx6_lines(p6, x.op, x.ty.signed, a4, a2)) if p6 is not None else (lambda a4, a2: None)
+    ls = mk(T4, T2)
+    if ls is None or ('lx5',) + lx5_need(mk('{T4}', '{T2}')) != plan['need']:
         raise Unsupported('lx5: the plan changed')
     if any(r_ in ('WA', 'BC', 'DE', 'HL') for r_ in live_regs_read(F)): raise Unsupported('lx5: a live register')
     for op_, args in ls: F.emit(op_, args)
