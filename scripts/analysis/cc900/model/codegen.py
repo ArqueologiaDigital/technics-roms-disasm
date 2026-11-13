@@ -6632,7 +6632,65 @@ def test_reg_reuse(lines):
             for k in reads: out[k + 1] = out[k + 1].replace(M, R)
             done = True; break
         i += 3 if done else 1
+    if TEST_REG_REUSE_LONG: out = test_reg_reuse_long(out)
     return out
+
+TEST_REG_REUSE_LONG = True                               # see test_reg_reuse_long
+
+def xbc_dead_at(lines, lab):
+    """is XBC dead where label lab is placed?  Every path from it (fallthrough and jumps followed) must reach a full
+    write of XBC, a call or a return before reading any part of it; a path that leaves the listing counts as live"""
+    import re as _r
+    fam = _r.compile(r'\b(XBC|QBC|BC|B|C)\b')
+    pos = {l[:-1]: k for k, l in enumerate(lines) if l and _r.match(r'^L\d+:$', l)}
+    seen = set(); todo = [lab]
+    while todo:
+        lb = todo.pop()
+        if lb in seen: continue
+        seen.add(lb)
+        if lb not in pos: return False
+        k = pos[lb] + 1
+        while True:
+            if k >= len(lines): return False
+            l = lines[k] or ''
+            if _r.match(r'^L\d+:', l): k += 1; continue
+            if l.startswith('\tret') or l.startswith('\tcal\t'): break
+            if fam.search(l):
+                if _r.match(r'^\t(ld|lda)\tXBC,', l) and not fam.search(l.split(',', 1)[1]): break
+                return False
+            jm = _r.match(r'^\tj\t(?:(\w+),)?(L\d+)$', l)
+            if jm:
+                todo.append(jm.group(2))
+                if jm.group(1) is None: break
+            elif l.startswith('\tj'): return False
+            k += 1
+    return True
+
+def test_reg_reuse_long(lines):
+    """-O3 -XS: a long static tested against zero and then a long helper's right operand is tested in XBC (random
+    r1_06_09: if (gul != 0) gula[6] = 7UL / gul -> ld XBC,(_gul) / or XBC,XBC / j eq,L / ld XWA,0x7 / cal C9H_divlu;
+    the model tested ld XWA,(_gul) / or XWA,XWA and loaded ld XBC,(_gul) again before the call).  Rewritten when the
+    block after the jump writes XWA whole before reading it, does not touch XBC before that load nor write the
+    static, and XBC is dead at the jump's label."""
+    import re as _r
+    out = list(lines)
+    for i in range(len(out) - 2):
+        m = _r.match(r'^\tld\tXWA,(\(_[\w +x0-9]+\))$', out[i] or '')
+        if not (m and out[i + 1] == '\tor\tXWA,XWA'): continue
+        j = _r.match(r'^\tj\t(eq|ne),(L\d+)$', out[i + 2] or '')
+        if not j: continue
+        M = m.group(1); tgt = None; wa_ok = False
+        for k in range(i + 3, len(out)):
+            l = out[k] or ''
+            if _r.match(r'^L\d+:|^[._]\w+:|^\tcal|^\tret|^\tj', l): break
+            if l == '\tld\tXBC,%s' % M: tgt = k; break
+            if _r.search(r'\b(XBC|QBC|BC|B|C)\b', l) or l.split('\t')[-1].split(',')[0] == M: break
+            if _r.search(r'\b(XWA|QWA|WA|W|A)\b', l):
+                if _r.match(r'^\t(ld|lda)\tXWA,', l) and not _r.search(r'\b(XWA|QWA|WA|W|A)\b', l.split(',', 1)[1]): wa_ok = True
+                else: break
+        if tgt is None or not wa_ok or not xbc_dead_at(out, j.group(2)): continue
+        out[i] = '\tld\tXBC,%s' % M; out[i + 1] = '\tor\tXBC,XBC'; out[tgt] = None
+    return [l for l in out if l is not None]
 
 def idx_var_read_elsewhere(F, idx):
     """is the variable of an int index read at some other place of the function?"""

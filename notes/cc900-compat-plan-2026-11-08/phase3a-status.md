@@ -2088,6 +2088,16 @@ memory tests whose static is read there. Without -O it never does this (none and
 static is read again). The same pass and rule now run under adecl -O. Ledger up 2 (random1 at -O3 -XS -Xr 13 -> 14,
 rstmt 2,870 -> 2,872), down 0; pairs MATCH 223; semcheck 56. Random 182 / 51 / 87 / 38.
 
+**Batch 159 (2026-11-13): under -O a long static tested against zero and then a long helper's right operand is tested
+in XBC (TEST_REG_REUSE_LONG).** The long form of batch 157's guarded division: `if (gul != 0) gula[6] = 7UL / gul` ->
+`ld XBC,(_gul) / or XBC,XBC / j eq,L / ld XWA,0x7 / cal C9H_divlu` (random r1_06_09, r3_09_08). The model tested
+`ld XWA,(_gul) / or XWA,XWA` and loaded `ld XBC,(_gul)` again before the call. `test_reg_reuse_long` rewrites that
+only under three conditions: the block writes XWA whole before reading it; it touches neither XBC nor the static
+before the load; and XBC is dead at the jump's label. `xbc_dead_at` checks the last: every path, jumps followed, must
+reach a full write, a call or a return before reading XBC. Ledger up 10 (lsl.c 19 -> 31 at both -O sets, rstmt at -O3
+-XS 3,029 -> 3,032 and at -O3 -XS -Xr 2,872 -> 2,878, random3), down 0; pairs MATCH 223; semcheck 56. Random
+182 / 55 / 87 / 42.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
