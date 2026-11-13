@@ -1378,6 +1378,24 @@ compiled and tabulated (research-scratch `tabulation/chararith-*`: a predictor f
 yet in the ledger or the model: the compiler keeps char arithmetic char-typed, and the model's C promotion is the
 cause of several of the open verdicts.  **Open: 171 of batch 83's 253** (244 - 73).
 
+**Batch 86 (2026-11-13): char arithmetic stays char-typed (probe chararith.c); semcheck 244 -> 233.**
+`corpus/probes/chararith.c` (`gen_chararith.py`, run 2026-11-13-8-micro-chararith, 238 functions): seventeen char
+expressions in fourteen int contexts.  The compiler does not apply C's integer promotion here.  `-c`, `~c`, `c + d`,
+`c - d`, `c << k`, `c / d` and products of chars are char-typed: a shift, division, remainder, comparison, negation
+or widening takes the byte (`(gc + hc) >> 3` -> .. / `sra 0x3,A` / `ld L,A` / `exts HL`; `-guc` is an unsigned char:
+`neg A` / `extz WA`), and an int consumer widens it with `exts` / `extz`.  Only a signed product is the whole 16-bit
+register where an int is wanted (returned, stored to an int, added, xor-ed, multiplied, passed), and a product with
+an unsigned char multiplies the bytes unsigned.  The model had this for `+ - & | ^ ~` (`char_narrow`); it promoted
+the rest as C does, which behaved differently in 107 of the 238 rows.  `char_narrow` now types `-`, `<<`, `/` of
+plain global chars and `*` of any chars the compiler's way; no row of the probe behaves differently any more, and
+121 are exact at none (71 before).  Three limits came from rows that were already exact: an array element negated or
+shifted is promoted (random r4_09_06 `gi2 = -gca[0]` -> `exts WA` / `neg WA`; r4_06_05), an explicit `(int)` makes it
+an int (`(int)guca[5] * 2`), and an index (`gia[u * 2]`) and a division stored to a char keep their own forms.  The
+statement guard of batch 85 now also covers register temporaries at every set (a `char u` in A overwritten by a
+pointer load), and a multiply whose right operand ended up in the accumulator is refused.  A Sonnet sub-agent's
+predictor reproduces all 238 rows at none (research-scratch `tabulation/chararith-*`); the forms it shows are not
+all ported.  **Open: 160 of batch 83's 253** (233 - 73).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

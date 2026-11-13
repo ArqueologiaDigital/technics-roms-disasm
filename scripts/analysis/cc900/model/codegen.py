@@ -162,7 +162,7 @@ class Fn:
                             not re.search(r',(X?IZ|QIZ|QIZH|IZL|X?IX|X?IY)$', args):   # (a read of a home: the
                         if rt_: raise LiveClobber('%s %s over the register temporary %s in %s' % (op, args, d.name, d.reg), d)
                         raise Unsupported('%s %s over the live parameter %s in %s' % (op, args, d.name, d.reg))   # parameter moved there, c_fordown)
-        if STMT_PARAM_GUARD and s.adecl and getattr(s, 'guard_on', False) and args is not None and \
+        if STMT_PARAM_GUARD and getattr(s, 'guard_on', False) and args is not None and \
                 getattr(getattr(s, 'cur_stmt', None), 'k', None) in ('expr', 'return') and \
                 getattr(s, 'u1_i', None) is None and not getattr(s, 'u1x', None) and not getattr(s, 'cl_active', None) \
                 and not getattr(s, 'l2', None) and not getattr(s, 'u1_inv', None):
@@ -172,9 +172,10 @@ class Fn:
             if st_ is None or st_[0] is not s.cur_stmt: st_ = s.spg = [s.cur_stmt, {}]
             parts_ = [x_.strip() for x_ in args.split(',')]
             wr_ = written_fams(op, args) if op not in ('cal', 'call') else []
-            for d in s.f.params:
-                r_ = getattr(d, 'reg', None)
-                if r_ not in ('WA', 'BC', 'DE', 'HL') or d in s.dead or getattr(d, 'regtemp', False): continue
+            for d in (s.f.params if s.adecl else []) + [x_ for x_ in s.f.decls if getattr(x_, 'regtemp', False)]:
+                r_ = getattr(d, 'reg', None)                 # (and a register temporary, at every set: rstmt rs_3_00_14_8,
+                if r_ not in ('WA', 'BC', 'DE', 'HL') or d in s.dead: continue   # char u in A under ld XWA,(_gp))
+                if getattr(d, 'regtemp', False) and (d.kind == 'param' or not local_defined_before(s, d)): continue
                 e_ = st_[1].setdefault(id(d), {'n': None, 'reads': 0, 'done': False})
                 if e_['done']: continue
                 if e_['n'] is None:
@@ -201,6 +202,8 @@ class Fn:
                         e_['done'] = True; continue     # (copied to another register: the copy serves the later uses)
                 if 'X' + r_ in wr_:
                     if e_['reads'] < e_['n']:
+                        if getattr(d, 'regtemp', False):
+                            raise LiveClobber('%s %s before the last read of the register temporary %s in %s' % (op, args, d.name, r_), d)
                         raise Unsupported('%s %s before the last read of the parameter %s in %s' % (op, args, d.name, r_))
                     e_['done'] = True
         s.lines.append('\t' + op + ('\t' + args if args else ''))
@@ -4741,6 +4744,9 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
                     op, strip(l).k, strip(r).k, size, work))                        # ga[i] * gb[i] reloaded WA
         wide = FAM[work][4] if size == 2 else FAM[work][2]
         kd_ = int(rs, 16) if re.match(r'^0x[0-9a-f]+$', rs or '') else 0
+        if rs in (FAM[work].get(1), FAM[work].get(2), FAM[work].get(4)):
+            raise Unsupported('the right operand in the accumulator')   # (rstmt rs_3_00_14_8: (*gp * u) % 7 wrote
+                                                           # ld A,(_jc) / ld XWA,(_gp) / ld A,(XWA) / muls WA,A: wrong code)
         if op == '*':
             F.emit('muls' if signed else 'mul', '%s,%s' % (wide, rs))
             res = FAM[work][size]
@@ -5991,6 +5997,7 @@ LOOP_LIVE_GUARD = True                                    # see Func.emit: a var
                                                           # *gpi++ = 16 loaded XBC over a in BC: wrong code)
 PTR_CTX = True                                            # see gen_ptr_arith: the extension of a pointer sum's index by context
 STMT_PARAM_GUARD = True                                   # see Fn.emit
+CHAR_NARROW_MORE = True                                   # see char_narrow's visit2
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -6075,8 +6082,62 @@ def char_narrow(body):
         inner = N('bin', op=op, l=x, r=r, ty=ct, narrowed=True)
         it = n.ty
         n.__dict__.clear(); n.k = 'cast'; n.kind = 'IntegralCast'; n.e = inner; n.ty = it
+    def chr2(z):                                           # an explicit (int) makes it an int (rstmt rs_3_01_15_6:
+        zz = strip(z)                                      # return (int)guca[5] * 2 -> extz WA / ld HL,WA / add HL,WA)
+        return None if zz.k == 'cast' and getattr(zz, 'explicit', False) else chr_of(z)
+    def visit2(n, parent):
+        """corpus/probes/chararith.c (run 2026-11-13-8-micro-chararith): -c, c << k, c / d and c * d of chars are
+        char-typed too.  A signed product is the whole 16-bit register where an int is wanted (returned, stored to an
+        int, added, xor-ed, multiplied, passed) and its low byte where the consumer has a type of its own (>> / %
+        compare, negation, a conversion to long or unsigned); a product with an unsigned char is an unsigned char
+        everywhere but under a conversion to unsigned int."""
+        for key, v in list(n.__dict__.items()):
+            for c in (v if isinstance(v, list) else [v]):
+                if hasattr(c, 'k'): visit2(c, n)
+        nt_ = getattr(n, 'ty', None)
+        if nt_ is None or nt_.kind != 'int' or nt_.size != 2 or not nt_.signed: return
+        def wrap(inner):
+            it = n.ty
+            n.__dict__.clear(); n.k = 'cast'; n.kind = 'IntegralCast'; n.e = inner; n.ty = it
+        def plain(z):                                      # a plain global char: what the probe asked about.  An element
+            return z is not None and z.k == 'load' and strip(z.e).k == 'var' and strip(z.e).decl.kind == 'global'   # differs:
+        if n.k == 'un' and n.op == '-':                    # random r4_09_06, gi2 = -gca[0] -> exts WA / neg WA; r4_06_05,
+            x = chr2(n.e)                                # gs.i = guca[5] << 5 -> extz WA / sla 0x5,WA
+            if plain(x) or x is not None and getattr(x, 'narrowed', False) and x.k != 'cond':   # (-(gc * hc): neg A)
+                wrap(N('un', op='-', e=x, ty=ct0(x.ty.signed), narrowed=True))
+            return
+        if n.k != 'bin': return
+        x = chr2(n.l)
+        if x is None or x.k == 'cond': return
+        rk = fold(n.r); y = chr2(n.r)
+        if n.op == '<<' and rk.k == 'const' and rk.value is not None and 1 <= rk.value <= 7 and plain(x):
+            wrap(N('bin', op='<<', l=x, r=N('const', value=rk.value, ty=ct0(x.ty.signed)), ty=ct0(x.ty.signed), narrowed=True)); return
+        to_char = parent is not None and parent.k == 'cast' and parent.kind == 'IntegralCast' and \
+            getattr(parent, 'ty', None) is not None and parent.ty.size == 1   # (stored to a char: stdiv.c's forms stand)
+        if n.op == '/' and plain(x) and plain(y) and x.ty.signed and y.ty.signed and not to_char:
+            wrap(N('bin', op='/', l=x, r=y, ty=ct0(True), narrowed=True)); return
+        if n.op == '*':
+            if rk.k == 'const' and rk.value is not None and 0 <= rk.value <= (127 if x.ty.signed else 255):
+                sg = x.ty.signed; r = N('const', value=rk.value, ty=ct0(sg))
+            elif y is not None and y.k != 'cond': sg = x.ty.signed and y.ty.signed; r = y
+            else: return
+            p = parent
+            byte = p is not None and (p.k == 'bin' and (p.op in ('>>', '/', '%') and p.l is n or p.op in ('<', '<=', '>', '>=', '==', '!=')) or
+                                      p.k == 'un' and p.op == '-' or
+                                      p.k == 'cast' and p.kind == 'IntegralCast' and p.ty is not None and
+                                      (p.ty.size == 4 or p.ty.size == 2 and not p.ty.signed and sg))
+            if not sg: byte = not (p is not None and p.k == 'cast' and p.kind == 'IntegralCast' and p.ty is not None and
+                                   p.ty.size == 2 and not p.ty.signed)
+            if p is not None and (p.k == 'index' or to_char): byte = False   # (an index: chidx.c fu2, gia[u * 2] ->
+                                                           # add A,(u), chidx.py's own forms)
+            if byte: wrap(N('bin', op='*', l=x, r=r, ty=ct0(sg), narrowed=True))
+            elif not sg and y is not None and x.ty.signed != y.ty.signed:   # the whole product of a char and an unsigned
+                for side in ('l', 'r'):                    # char multiplies the bytes unsigned (ca_msu_su: mul WA,(_guc))
+                    o = strip(getattr(n, side)); c = strip(o.e)
+                    if c.ty.signed: o.e = N('cast', kind='IntegralCast', e=c, ty=ct0(False), explicit=False)
     walk(body, visit)
     if CHAR_NARROW_TERN: walk(body, visit)                 # (a second pass sees the arms the first one narrowed)
+    if CHAR_NARROW_MORE: visit2(body, None)
 
 def copy_propagate(f):
     """-O: a local assigned exactly once, from a parameter that the function never writes, is that parameter

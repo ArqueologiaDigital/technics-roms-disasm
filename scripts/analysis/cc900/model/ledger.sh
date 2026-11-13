@@ -326,6 +326,11 @@ for c in none O3XS; do    # every statement line of the random corpora alone in 
 done
 row "run 2026-11-13-7-micro-rstmt, v423/Xr" "probes/rstmt*.c" "$O/2026-11-13-7-micro-rstmt/out/v423/Xr/probes" corpus/probes/rstmt1.c corpus/probes/rstmt2.c corpus/probes/rstmt3.c corpus/probes/rstmt4.c --opt none --adecl
 row "run 2026-11-13-7-micro-rstmt, v423/O3XSXr" "probes/rstmt*.c" "$O/2026-11-13-7-micro-rstmt/out/v423/O3XSXr/probes" corpus/probes/rstmt1.c corpus/probes/rstmt2.c corpus/probes/rstmt3.c corpus/probes/rstmt4.c --opt O3XS --adecl
+for c in none O3XS; do    # char arithmetic in an int context (corpus/probes/chararith.c)
+  row "run 2026-11-13-8-micro-chararith, v423/$c" "probes/chararith.c" "$O/2026-11-13-8-micro-chararith/out/v423/$c/probes" corpus/probes/chararith.c --opt $c
+done
+row "run 2026-11-13-8-micro-chararith, v423/Xr" "probes/chararith.c" "$O/2026-11-13-8-micro-chararith/out/v423/Xr/probes" corpus/probes/chararith.c --opt none --adecl
+row "run 2026-11-13-8-micro-chararith, v423/O3XSXr" "probes/chararith.c" "$O/2026-11-13-8-micro-chararith/out/v423/O3XSXr/probes" corpus/probes/chararith.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do
