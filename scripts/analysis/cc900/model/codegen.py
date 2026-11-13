@@ -212,6 +212,15 @@ class Fn:
                     if any(uses_decl(c_.a, d) or uses_decl(c_.b, d) for c_ in nodes_in(s.cur_stmt, 'cond')) or \
                             any(uses_decl(c_.r, d) for c_ in nodes_in(s.cur_stmt, 'bin') if c_.op in ('&&', '||')):
                         e_['n'] = 0                      # (read in one arm only: chnarrow.c cn_tern, k ? c - 32 : c)
+                        if COND_ARM_ONE_READ:            # (but once at least, and what is read outside the arms counts:
+                            arm_ = set()                 # rstmt -Xr rs_1_07_15_1, *c <= t ? gul << (a & 15) : gula[a]
+                            for c_ in nodes_in(s.cur_stmt, 'cond'):   # loaded *c into XWA over a)
+                                for x_ in (c_.a, c_.b): arm_ |= {id(n_) for n_ in nodes_in(x_, 'var') if n_.decl is d}
+                            for c_ in nodes_in(s.cur_stmt, 'bin'):
+                                if c_.op in ('&&', '||'): arm_ |= {id(n_) for n_ in nodes_in(c_.r, 'var') if n_.decl is d}
+                            e_['n'] = len({id(x_) for x_ in u_} - arm_) + 1; e_['arm'] = True
+                if e_.get('arm') and op == 'j' and e_['reads'] >= e_['n'] - 1: e_['done'] = True; continue   # (the arms begin:
+                                                         # which arm's code comes when is not judged, rs_1_01_12_1)
                 if not e_['n'] or assigns_decl(s.cur_stmt, d): e_['done'] = True; continue
                 if op in ('cal', 'call'): e_['done'] = True; continue   # (the call takes it: call.c k_nest, r1(r1(a)))
                 names_ = r'\b(X?%s|Q%s|%s|%s)\b' % (r_, r_, {'WA': 'A', 'BC': 'C', 'DE': 'E', 'HL': 'L'}[r_],
@@ -221,7 +230,10 @@ class Fn:
                 reads_ = any(re.search(names_, x_) for x_ in srcs_)
                 wd_ = 4 if dst_.startswith('X') else (1 if len(dst_) == 1 else 2)
                 if 'X' + r_ in wr_ and not dst_.startswith(('(', 'Q')) and wd_ < d.ty.size and \
-                        (op != 'ld' or re.match(r'^0x[0-9a-f]+$', parts_[-1])): reads_ = True   # (a part of it
+                        (op != 'ld' or re.match(r'^0x[0-9a-f]+$', parts_[-1]) and
+                         (not PART_HIGH_ONLY or dst_ not in ('A', 'C', 'E', 'L'))): reads_ = True   # (a part of it other than the low
+                                                         # byte: cond_bits.c cb_ul_p_ffff0000, ld WA,0x0; not ld A,0x0
+                                                         # over a long whose low byte is read next, rstmt -Xr rs_3_01_10_1)
                                                          # replaced in place is a use: cond_bits.c cb_i_p_ff, ld W,0x0)
                 if reads_:
                     e_['reads'] += 1
@@ -234,6 +246,11 @@ class Fn:
                             raise LiveClobber('%s %s before the last read of the register temporary %s in %s' % (op, args, d.name, r_), d)
                         raise Unsupported('%s %s before the last read of the parameter %s in %s' % (op, args, d.name, r_))
                     e_['done'] = True
+        if BASE_IDX_CLASH and args and '+' in args:          # (X+X's own low part) is never an operand: the base was
+            m_ = re.search(r'\(X(WA|BC|DE|HL)\+(WA|BC|DE|HL|[AWBCDEHL])\)', args)   # loaded over the index (rstmt -Xr
+            if m_ and m_.group(2)[-1] in {'WA': 'AW', 'BC': 'BC', 'DE': 'DE', 'HL': 'HL'}[m_.group(1)] and \
+                    (len(m_.group(2)) == 1 or m_.group(2) == m_.group(1)):    # rs_2_05_00_1: lda XBC,_gua / ldw (XBC+BC),0x0;
+                raise Unsupported('%s %s: the base register holds the index' % (op, args))   # rs_2_06_13_1: (XHL+L))
         s.lines.append('\t' + op + ('\t' + args if args else ''))
     def newlabel(s):
         s.label += 1; return 'L%d' % s.label
@@ -6177,6 +6194,9 @@ IDX_READ_ONCE = True                                      # see idx_read_again
 CHAIN_ELEM_REFUSE = True                                  # see gen_stmt's store
 IF_ARMS_HEAD = True                                       # see gen_stmt's if
 IZ_ONE_VAR = True                                         # see compile_function_once
+COND_ARM_ONE_READ = True                                  # see Fn.emit's statement guard
+PART_HIGH_ONLY = True                                     # see Fn.emit's statement guard
+BASE_IDX_CLASH = True                                     # see Fn.emit
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)

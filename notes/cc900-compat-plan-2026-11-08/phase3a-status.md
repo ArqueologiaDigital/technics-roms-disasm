@@ -1550,6 +1550,18 @@ defects: the functions return nothing on the path compared (`if (..) return ..;`
 stale HL; reviewed in `semcheck_review.tsv`.  Scores unchanged.
 **Open: 45 statement findings** (semcheck 93): 0 none / 2 -O3 -XS (both reviewed) / 19 -Xr / 24 -O3 -XS -Xr.
 
+**Batch 102 (2026-11-13): three refinements of the -Xr statement guard; semcheck 93 -> 79.**  (1) A register
+parameter read only in the arms of a conditional was not guarded at all (batch 87's exemption for `k ? c - 32 : c`);
+the test's code could write it (rs_1_07_15_1: `*c <= t ? gul << (a & 15) : gula[a]` loaded `*c` into XWA over `a`).
+It is now guarded until the first jump of the statement, where the arms begin; which arm's code comes when is still
+not judged (rs_1_01_12_1 stays exact).  (2) The "a part replaced in place is a use" exemption no longer covers a
+constant written over the low byte (rs_3_01_10_1: `ld A,0x0` over a long whose low byte is read next); a constant
+into another part stays a use (cond_bits.c cb_i_p_ff `ld W,0x0`, cb_ul_p_ffff0000 `ld WA,0x0`; a first version that
+kept only the high byte lost the latter on the scratch copy).  (3) An operand `(Xr+r)` whose index is a part of its
+own base register is never right: the base was loaded over the index (rs_2_05_00_1: `lda XBC,_gua` /
+`ldw (XBC+BC),0x0`; rs_2_06_13_1: `(XHL+L)`).  Refused in Fn.emit, whoever emits it.  All 14 are refusals; scores
+unchanged.  **Open: 31 statement findings** (semcheck 79): 0 none / 2 -O3 -XS (reviewed) / 11 -Xr / 18 -O3 -XS -Xr.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
