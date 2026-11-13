@@ -1575,6 +1575,7 @@ SHIFTB_A = True                                           # see gen_opassign: a 
 KOP_IN_PLACE = True                                       # see gen_stmt: g = K op g
 BYTE_RIGHT_FIRST = True                                   # see gen_bin: two computed byte operands
 IZ_TAIL_DIRECT = True                                     # see regvar_stmt: an IZ home loaded and worked on in IZ
+COND_VIA_WA = True                                        # see regvar_stmt: a ?: into a register temporary
 NESTED_IF_RET = True                                      # see gen_stmt: if (a) if (b) x; at the end of a function
 LX5 = True                                                # see lx5_lines: long helpers of lhx.c's lxo_* rows
 
@@ -4536,10 +4537,13 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
                 raise Unsupported('the right operand overwrites the left [%s %s %s size %d in %s]' % (
                     op, strip(l).k, strip(r).k, size, work))                        # ga[i] * gb[i] reloaded WA
         wide = FAM[work][4] if size == 2 else FAM[work][2]
+        kd_ = int(rs, 16) if re.match(r'^0x[0-9a-f]+$', rs or '') else 0
         if op == '*':
             F.emit('muls' if signed else 'mul', '%s,%s' % (wide, rs))
             res = FAM[work][size]
-        else:
+        elif op == '/' and DIVU_SHIFT and not signed and kd_ >= 2 and kd_ & (kd_ - 1) == 0 and not F.opt and not F.adecl:
+            F.emit('srl', '%s,%s' % (hx(kd_.bit_length() - 1), FAM[work][size])); res = FAM[work][size]   # (random r4_01_07:
+        else:                                                                                             #  vu(gu / 16) -> srl 0x4,WA)
             F.emit('exts' if signed else 'extz', wide)
             F.emit('divs' if signed else 'div', '%s,%s' % (wide, rs))
             res = FAM[work][size] if op == '/' else (Q[work] if size == 2 else HI[work])
@@ -9135,9 +9139,12 @@ def regvar_stmt(F, e):
         rb_ = strip(e.r)
         tv_ = rb_
         while tv_.k == 'cast' and tv_.kind == 'IntegralCast': tv_ = strip(tv_.e)
-        if TRUTH_VIA_WA and not F.opt and not F.adecl and getattr(d, 'regtemp', False) and d.ty.size == 2 and tgt != 'WA' and \
-                (tv_.k == 'un' and tv_.op == '!' or tv_.k == 'bin' and tv_.op in CC_S):
-            tgt = 'WA'                                     # a truth value is made in WA and moved (random r2_09_01:
+        if TRUTH_VIA_WA and not F.opt and not F.adecl and getattr(d, 'regtemp', False) and tgt != 'WA' and \
+                (d.ty.size == 2 and (tv_.k == 'un' and tv_.op == '!' or tv_.k == 'bin' and tv_.op in CC_S) or
+                 COND_VIA_WA and d.ty.size in (2, 4) and rb_.k == 'cond' and 'WA' not in live_regs(F)):
+            tgt = 'WA'                                     # (a ?: too: r2_08_14, unsigned long t = c ? gula[c] : .. ->
+                                                           #  ld XWA,(XBC+WA) in each arm, ld XDE,XWA after the join)
+                                                           # a truth value is made in WA and moved (random r2_09_01:
                                                            # int t = !(..) -> scc eq,WA / ld DE,WA)
         if REGTEMP_OPT_SCRATCH and getattr(d, 'regtemp', False) and F.opt and d.ty.size in (2, 4) and tgt in ('WA', 'BC', 'DE', 'HL') and \
                 rb_.k == 'bin' and rb_.op in ('+', '-', '&', '|', '^') and not rb_.ty.is_ptr() and \

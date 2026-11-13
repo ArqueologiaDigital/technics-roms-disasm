@@ -1129,6 +1129,11 @@ through an address and then worked on is loaded into IZ, not through WA (`int u 
 `ld IZ,(XWA+C)` / `add IZ,(_gi3)`; `c[3] << 5` -> `ld IZ,(XWA+0x6)` / `sla 0x5,IZ`).  Random programs at none
 119 -> 123 of 800.
 
+**Batch 61 (2026-11-13).**  A `?:` that initialises a register temporary is computed in WA / XWA in both arms and
+moved after the join (`unsigned long t = c ? gula[c] : ..` -> `ld XWA,(XBC+WA)` twice, then `ld XDE,XWA`); an
+unsigned value divided by a power of two in an expression is a shift, as in a compound assignment
+(`vu(gu / 16)` -> `srl 0x4,WA`).  Random programs at none 123 -> 125 of 800.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
