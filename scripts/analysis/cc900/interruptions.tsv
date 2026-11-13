@@ -26,3 +26,4 @@
 2026-11-13T03:15:53Z	2026-11-13T03:16:31Z	log	dashboard: vertical lines where probe rows were added
 2026-11-13T03:16:41Z	2026-11-13T03:53:07Z	idle	stopped after the dashboard reply (the turn ended instead of returning to the model)
 2026-11-13T11:46:37Z	2026-11-13T11:46:37Z	log	goal set again ("run the plan"): no change of course, rounds continue (batch 100)
+2026-11-13T14:01:15Z	2026-11-13T14:01:15Z	log	the owner announced a shutdown in about half an hour: batch 118 finished and committed, helper scripts committed, resume note written; the goal's rounds stop here by the owner's instruction
