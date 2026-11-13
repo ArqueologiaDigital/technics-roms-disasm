@@ -1032,6 +1032,28 @@ corpora are unchanged (the random functions' long divisions use char, unsigned o
 second helper or a loop, which the plan does not claim).  A first form loaded the divisor first beside a plain
 global dividend too and lost stdiv.c 12 and stord.c 10; the scratch copy's ledger caught it.
 
+**Batch 50 (2026-11-13): three probes written by tabulation agents, and the wrong code they exposed.**  From this
+batch on a cheaper model (Sonnet sub-agents) does the tabulation and this one the rules: an agent takes one refusal
+reason, classifies the random corpora's refused statements and writes a probe generator
+(`research-scratch/.../tabulation-BRIEF.md`, the three reports beside it); after the oracle run a second agent
+describes the oracle's forms as a standalone `predict.py` that is checked against every listing.  The three probes --
+`lhx.c` (long helpers: char / unsigned indices, more destinations, two helpers; 1,184 functions), `elrd.c` (an element
+read beside a left value, an assignment to an element used as a value; 1,234) and `cmpx.c` (compare operands; 1,192)
+-- start at 416 / 269 / 464 exact at none.  The agents' predictors already reproduce all 1,184 of lhx.c's forms at
+none; porting them is the next batch.
+
+The same probes made the semantic check go from 73 to 321 DIFFERENT, all in older paths, now fixed or refused (back to
+73, the same verdicts):
+- **struct layout**: an array member starts at an even offset, a char array too (`struct { char c; char ca[8];
+  unsigned char u; unsigned char ua[8]; int i; }`: `ca` at +2, `u` at +0xa, `i` at +0x14; the front end had 1, 9,
+  0x12).  About 190 of the verdicts.  clang's `-mabi=cc900` layout has to do the same: a point for phase 3b;
+- a widened value left outside the register being extended (`(hca[x] = 2) == gi`: the extension read A, the value was
+  in C) is refused;
+- an unsigned int extended to a long for a compare was loaded as a byte; it is `ld WA,(_hu)` / `extz XWA`;
+- a char element at an unsigned index held in a register used `(XBC+WA)`, which reads the index signed; a load now
+  extends it whole (`extz XWA` / `ld XBC,_hca` / `add XBC,XWA`), the other uses are refused;
+- `gps->l = vla[2] * 7` built the product in the register of its operand (16 times instead of 7): refused.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

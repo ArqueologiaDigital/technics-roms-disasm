@@ -296,6 +296,21 @@ for c in none O3XS; do    # stores of a division: more operand kinds (corpus/pro
 done
 row "run 2026-11-13-1-micro-stdiv2, v423/Xr" "probes/stdiv2.c" "$O/2026-11-13-1-micro-stdiv2/out/v423/Xr/probes" corpus/probes/stdiv2.c --opt none --adecl
 row "run 2026-11-13-1-micro-stdiv2, v423/O3XSXr" "probes/stdiv2.c" "$O/2026-11-13-1-micro-stdiv2/out/v423/O3XSXr/probes" corpus/probes/stdiv2.c --opt O3XS --adecl
+for c in none O3XS; do    # long helpers: char / unsigned indices, more destinations, two helpers (corpus/probes/lhx.c)
+  row "run 2026-11-13-2-micro-lhx, v423/$c" "probes/lhx.c" "$O/2026-11-13-2-micro-lhx/out/v423/$c/probes" corpus/probes/lhx.c --opt $c
+done
+row "run 2026-11-13-2-micro-lhx, v423/Xr" "probes/lhx.c" "$O/2026-11-13-2-micro-lhx/out/v423/Xr/probes" corpus/probes/lhx.c --opt none --adecl
+row "run 2026-11-13-2-micro-lhx, v423/O3XSXr" "probes/lhx.c" "$O/2026-11-13-2-micro-lhx/out/v423/O3XSXr/probes" corpus/probes/lhx.c --opt O3XS --adecl
+for c in none O3XS; do    # an element read beside a left value; an assignment used as a value (corpus/probes/elrd.c)
+  row "run 2026-11-13-3-micro-elrd, v423/$c" "probes/elrd.c" "$O/2026-11-13-3-micro-elrd/out/v423/$c/probes" corpus/probes/elrd.c --opt $c
+done
+row "run 2026-11-13-3-micro-elrd, v423/Xr" "probes/elrd.c" "$O/2026-11-13-3-micro-elrd/out/v423/Xr/probes" corpus/probes/elrd.c --opt none --adecl
+row "run 2026-11-13-3-micro-elrd, v423/O3XSXr" "probes/elrd.c" "$O/2026-11-13-3-micro-elrd/out/v423/O3XSXr/probes" corpus/probes/elrd.c --opt O3XS --adecl
+for c in none O3XS; do    # compare operands: indexed elements, casts, computed operands (corpus/probes/cmpx.c)
+  row "run 2026-11-13-4-micro-cmpx, v423/$c" "probes/cmpx.c" "$O/2026-11-13-4-micro-cmpx/out/v423/$c/probes" corpus/probes/cmpx.c --opt $c
+done
+row "run 2026-11-13-4-micro-cmpx, v423/Xr" "probes/cmpx.c" "$O/2026-11-13-4-micro-cmpx/out/v423/Xr/probes" corpus/probes/cmpx.c --opt none --adecl
+row "run 2026-11-13-4-micro-cmpx, v423/O3XSXr" "probes/cmpx.c" "$O/2026-11-13-4-micro-cmpx/out/v423/O3XSXr/probes" corpus/probes/cmpx.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do

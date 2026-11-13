@@ -37,7 +37,9 @@ class Records:
         off = 0; size = 0; out = []
         for fname, ft in fields:
             a = min(ft.align, 2)
-            if union: o = 0
+            if ft.kind == 'array': a = 2                  # an array member starts at an even offset, a char array too
+            if union: o = 0                               # (probes/elrd.c: struct { char c; char ca[8]; unsigned char u;
+                                                          #  .. }: hs.ca at +2, hs.u at +0xa: lda XDE,_hs + 0x2)
             else:
                 off = (off + a - 1) // a * a; o = off; off += ft.size
             out.append((fname, ft, o)); size = max(size, o + ft.size)

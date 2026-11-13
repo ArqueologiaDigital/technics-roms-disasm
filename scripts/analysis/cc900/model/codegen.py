@@ -552,6 +552,8 @@ def gen(F, e, fam, size, then_ret=False, store=False):
         else:
             f2 = gen(F, inner, fam, isz)       # result, binop_c.c add_c_pk, too)
             if isz >= size and f2 in FAM and f2 != fam: return f2   # (the value stayed where the chain built it)
+            if isz < size and f2 in FAM and f2 != fam:           # (elrd.c bc_c_cbC: (hca[x] = 2) == gi left its value
+                raise Unsupported('a widened value outside its register')   # in C and the extension read A: wrong code)
         sz = isz
         while sz < size:                       # one step at a time: exts HL, then exts XHL (cast_c_l)
             sz *= 2
@@ -2912,7 +2914,9 @@ def cw_kind(F, x, size):
                 ii = (r_, xi_.ty.signed); reg = ('reg', d_)
         elif ii is not None and ii[0] == 'WA': reg = ('regp', None)   # (-Xr: the index parameter in WA, dying here)
         if ii is None: return None
-        if not ii[1] and (size in (2, 4) or ii[0] == 'IZ'): return None   # (an unsigned index is extended whole:
+        if not ii[1] and (size in (2, 4) or ii[0] == 'IZ' or reg): return None   # (an unsigned index is extended whole:
+                                                           #  a char element at an unsigned index in a register is not
+                                                           #  (XBC+WA): cmpx.c cx_e_c_EYu, -Xr cx_l_c_GXu, elrd.c er_a_cdZo)
                                                            #  r1_04_10, UIDX32; a char element: r4_07_10)
         b = strip(v.base)
         while b.k in ('decay', 'cast', 'noop') and getattr(b, 'e', None) is not None: b = strip(b.e)
@@ -2988,10 +2992,14 @@ def _cw_addr_raw(F, k, size, P='XBC', I='BC', B='XDE', combine=False):
         if size == 1:
             if len(k) == 5 or im == 'IZ':                    # the 16-bit index register as it is: (XBC+DE), (XWA+BC),
                 if len(k) == 5: cw_regidx_ok(F, k)           # (XWA+IZ) (evorder_ad.c -Xr ea_c_add_FX)
+                if not signed: raise Unsupported('cmp_wide: an unsigned register index')   # (cmpx.c cx_l_c_GYu: the oracle
+                                                             #  zero-extends, ld WA,(_gu) / extz XWA / ld XBC,_hca / add XBC,XWA)
                 base = P
                 if base[1:] == im: raise cw_base_clash(k)
                 F.emit('lda', '%s,%s' % (base, sym)); return '(%s+%s)' % (base, im)
             X = 'X' + I
+            if ' + ' in sym: raise Unsupported('cmp_wide: a char array member at an index')   # (elrd.c er_e_cMaK: the oracle
+                                                             #  indexes it with the 16-bit register, lda XDE,_hs + 0x2 / (XDE+BC))
             F.emit('lda', 'XWA,%s' % sym); F.emit('ld', '%s,%s' % (I, im)); F.emit('extz', X); F.emit('add', '%s,XWA' % X)
             return '(%s)' % X
         if len(k) == 5 and B[1:] == I: raise cw_base_clash(k)
@@ -3055,6 +3063,9 @@ def _cw_ext_raw(F, zk, size, R):
         F.emit('ld', 'XWA,%s' % ik[1]); m = '(XWA+%s)' % hx(ik[2]) if ik[2] else '(XWA)'
     else: m = ik[1]
     X = {'WA': 'XWA', 'BC': 'XBC', 'DE': 'XDE'}[R]; lo = {'WA': 'A', 'BC': 'C', 'DE': 'E'}[R]
+    if kind == 'ZU' and isz == 2:                          # an unsigned int to a long (cmpx.c cc_u_l_GGl: ld WA,(_hu) /
+        if R != 'WA': raise Unsupported('cmp_wide: an unsigned int extended outside XWA')   # extz XWA; the byte forms
+        F.emit('ld', 'WA,%s' % m); F.emit('extz', 'XWA'); return X                         # below read one byte: wrong code)
     if kind == 'ZU':
         if R == 'WA': F.emit('ld', 'XWA,0x0'); F.emit('ld', 'A,%s' % m)
         elif F.opt and CW_EXT_DIRECT_OPT: F.emit('ld', '%s,0x0' % X); F.emit('ld', '%s,%s' % (lo, m))   # (-O cl_e_UU)
@@ -4619,6 +4630,8 @@ def gen_mul_const(F, l, k, fam, size, signed=True):
         F.emit('sla' if signed else 'sll', '%s,%s' % (hx(k.bit_length() - 1), X)); return f
     if x is None: raise Unsupported('complex multiplicand')
     if x.startswith('(_'):                       # an absolute operand is loaded once into XBC
+        if R == FAM['BC'][size]: raise Unsupported('a constant multiple built in the register of its operand')   # (lhx.c
+                                                 #  lxo_l_x_DEK: gps->l = vla[2] * 7 added XBC to itself: wrong code)
         F.emit('ld', '%s,%s' % (FAM['BC'][size], x)); F.emit('ld', '%s,%s' % (R, FAM['BC'][size])); x = FAM['BC'][size]
     elif F.opt and x.startswith('(XSP') and fam != 'WA' and MUL_K_XWA:   # mul_l_pk under O3XS: ld XWA,(a) /
         W = FAM['WA'][size]; F.emit('ld', '%s,%s' % (W, x)); F.emit('ld', '%s,%s' % (R, W)); x = W   # ld XHL,XWA
@@ -6017,8 +6030,12 @@ def elem_addr_regs(F, lv, b, esz, kind):
             if k: F.emit('inc' if k > 0 else 'dec', '%s,BC' % hx(abs(k)))  # (XDE+BC)
             scale16(F, 'BC', esz); F.emit('lda', 'XDE,%s' % g); return '(XDE+BC)'
         if esz == 4 and kind in ('rmw', 'andk'): return None
-        if esz > 1 and not iv.ty.signed and kind == 'load' and not pair and UIDX32:
-            X = FAM[iv.reg][4]; adjust(k); F.emit('extz', X); scale32(F, X, esz)   # r3_08_11 -Xr: an unsigned index
+        if esz == 1 and not iv.ty.signed and not (kind == 'load' and not pair and UIDX32):
+            raise Unsupported('a char element at an unsigned register index')   # ((XBC+WA) reads it signed: wrong code)
+        if not iv.ty.signed and kind == 'load' and not pair and UIDX32:           # (a char element too: elrd.c -Xr er_a_cdKo,
+            X = FAM[iv.reg][4]; adjust(k)                                        #  extz XWA / ld XBC,_hca / add XBC,XWA / ld A,(XBC))
+            F.emit('extz', X)
+            if esz > 1: scale32(F, X, esz)                                       # r3_08_11 -Xr: an unsigned index
             base = 'XBC' if iv.reg != 'BC' else 'XDE'                             # extended whole: extz XWA /
             F.emit('ld', '%s,%s' % (base, g)); F.emit('add', '%s,%s' % (base, X))  # add XWA,XWA / ld XBC,_gia /
             return '(%s)' % base                                                  # add XBC,XWA / (XBC)
