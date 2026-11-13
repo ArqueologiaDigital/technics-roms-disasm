@@ -4273,7 +4273,7 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         else: F.emit('ld', '%s,%s' % (FAM[fam][2], W)); F.emit(SIMPLE_OPS[op], '%s,%s' % (FAM[fam][2], operand(F, r, 2)))
         return fam                                       # (-O3 -XS -Xr: exts WA / sub WA,.. / ld HL,WA)
     if CONST_LEFT_SWAP and op in ('+', '*', '&', '|', '^') and fold(l).k == 'const' and fold(r).k != 'const' and \
-            (mem_operand(F, r) is None or EVORDER and size == 2 or L2_CHAR_SWAP and size == 1 and not F.opt and not F.adecl and (mem_operand(F, r) or '').startswith('(')) and not has_helper_call(r):   # (evorder x_KG: ld HL,(_hi) / xor HL,0x7; loopctr.c lc_FGN)
+            (mem_operand(F, r) is None or EVORDER and size == 2 or L2_CHAR_SWAP and size == 1 and not F.opt and (mem_operand(F, r) or '').startswith('(')) and not has_helper_call(r):   # (evorder x_KG: ld HL,(_hi) / xor HL,0x7; loopctr.c lc_FGN)
         l, r = r, l; e.l, e.r = e.r, e.l                   # random r1_04_16: 255 ^ gpi[2] -> ld XWA,(_gpi) /
                                                            # ld WA,(XWA+0x4) / xor WA,0xff (the constant last)
     has_helper_call.const_div = True                     # (r2_04_15: gs.l % 3L beside rl() clobbers the call's XHL)
@@ -5039,7 +5039,7 @@ def gen_ptr_arith(F, e, fam, size):
         if lr is not None and not lr.startswith('(') and lr != R:
             F.emit('lda', '%s,%s%s%s' % (R, lr, '+' if k >= 0 else '-', hx(abs(k))))   # _ltoa: lda XWA,XBC+0x1
             return fam
-        if PTR_K_LDA and not F.opt and not F.adecl and fam == 'HL' and k and lr is not None and lr.startswith('(_') and \
+        if PTR_K_LDA and not F.opt and fam == 'HL' and k and lr is not None and lr.startswith('(_') and \
                 ' ' not in lr and 'WA' not in live_regs(F) and not getattr(F, 'l2', None):
             F.emit('ld', 'XWA,%s' % lr)                    # fpargf.c af_INNNP: return gpi + 1 -> ld XWA,(_gpi) /
             F.emit('lda', 'XHL,XWA%s%s' % ('+' if k > 0 else '-', hx(abs(k)))); return fam   # lda XHL,XWA+0x2
@@ -5447,7 +5447,7 @@ def gen_compare(F, e):
     if rc.k == 'const' and lm is None and l.k == 'load' and strip(l.e).k == 'index' and size == 2 and \
             not getattr(F, 'l2', None) and not getattr(F, 'cl_active', None):
         lm = elem_addr(F, strip(l.e), 'cmp')               # ai_mul10: if (gsa[i] == 0) -> cpw (XBC+WA),0x0
-    if PTR_MEM_OPS and rc.k == 'const' and lm is None and l.k == 'load' and size <= 2 and not F.adecl and \
+    if PTR_MEM_OPS and rc.k == 'const' and lm is None and l.k == 'load' and size <= 2 and \
             not getattr(F, 'l2', None) and not getattr(F, 'cl_active', None) and not getattr(F, 'u1_i', None) and \
             'WA' not in live_regs(F):
         pk_ = sp_lvalue_kind(F, l.e)                       # random r1_00_01: if (gps->u != 0) -> ld XWA,(_gps) /
@@ -6364,7 +6364,7 @@ def push_arg(F, a):
             fam = gen(F, a1, ur.reg, size)              # _ltoa: cpl DE / cpl QDE / inc 0x1,XDE / push XDE
             F.emit('push', FAM[fam][size]); F.push += size; return size
     m = mem_operand(F, a1)
-    if PTR_MEM_OPS and m is None and size == 2 and a1.k == 'load' and not F.adecl and 'WA' not in live_regs(F):
+    if PTR_MEM_OPS and m is None and size == 2 and a1.k == 'load' and 'WA' not in live_regs(F):
         pk_ = sp_lvalue_kind(F, a1.e)                   # random r1_03_15: rpi(gps->i) -> ld XWA,(_gps) / pushw (XWA+0x2)
         if pk_ is not None and pk_[0] in ('P', 'D'):
             F.emit('ld', 'XWA,%s' % pk_[1]); m = '(XWA+%s)' % hx(pk_[2]) if pk_[2] else '(XWA)'
@@ -7433,7 +7433,7 @@ def gen_opassign(F, e):
             F.emit(SIMPLE_OPS[op] + 'w', '(XWA),%s' % imm_of(fold(r), size)); return '(XWA)'
         t = lvalue(F, e.l)                                # _ultoa: *p += 39 -> addb (XWA),0x27
         F.emit(SIMPLE_OPS[op] + ('b' if size == 1 else 'w'), '%s,%s' % (t, imm_of(fold(r), size))); return t
-    if REM_POW2_AND and op == '%' and size == 4 and not signed and not F.opt and not F.adecl and fold(e.r).k == 'const' and \
+    if REM_POW2_AND and op == '%' and size == 4 and not signed and not F.opt and fold(e.r).k == 'const' and \
             fold(e.r).value is not None and fold(e.r).value >= 2 and fold(e.r).value & (fold(e.r).value - 1) == 0 and \
             not getattr(F, 'l2', None):
         lm_ = mem_operand(F, N_load_of(e.l)) if strip(e.l).k in ('var', 'index', 'member') else None
@@ -8453,7 +8453,7 @@ def gen_stmt(F, s, last):
             t = lvalue(F, lv, ptr='XWA')
             F.emit('ld', '%s,%s' % (t, FAM[fam][size])); return
         xr_ = strip(s.e.r)
-        if LH_STORE_AFTER and not F.opt and not F.adecl and size == 4 and xr_.k == 'bin' and xr_.op in ('*', '/', '%') and \
+        if LH_STORE_AFTER and not F.opt and size == 4 and xr_.k == 'bin' and xr_.op in ('*', '/', '%') and \
                 xr_.ty is not None and xr_.ty.kind == 'int' and has_helper_call(xr_) and not getattr(F, 'l2', None):
             lk_ = sp_lvalue_kind(F, lv)                  # random r4_06_19: gpl[2] = (gla[7] - gs.l) % 10 with IZ taken ->
             if lk_ is not None and lk_[0] in ('P', 'D'):  # .. / cal C9H_remls / ld XWA,(_gpl) / ld (XWA+0x8),XHL

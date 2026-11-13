@@ -1316,6 +1316,13 @@ the chained-store rule of batch 30 now also runs when a variable lives in a regi
 (`gua[0] = gps->u = K` beside a long in XHL).  Random programs at none 158 -> 164 of 800 (45 / 80 / 36 at the other
 sets, unchanged).
 
+**Batch 82 (2026-11-13): seven more rules under -Xr.**  `lift_guard.py` over every rule flag (274, fpgen's included)
+at -Xr: the evaluation-order rules for a constant left operand and char swaps (one guard for CONST_LEFT_SWAP, EVORDER
+and L2_CHAR_SWAP), the store after a long helper, a pointer plus a constant through `lda`, operations on memory
+through a pointer, and an unsigned long `% 2^k` as `and` each gain there, and none loses a ledger row.  Random
+programs at -Xr 80 -> 87 of 800 (164 / 45 / 36 at none / -O3 -XS / -O3 -XS -Xr, unchanged); at -Xr lhx.c 214 -> 236,
+stdiv2.c 442 -> 458, loopctr.c 14 -> 23, stdiv.c 178 -> 186, fpargf.c 24 -> 32: eight ledger rows up by 70 functions.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
