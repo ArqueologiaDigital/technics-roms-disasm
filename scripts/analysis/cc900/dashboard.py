@@ -16,7 +16,8 @@ last committed ledger.  The output is regenerable and is not committed.
 .githooks/post-commit runs this script in the background after every commit that changes either results file, and the
 page reloads itself every two minutes, so a tab left open on `--serve` follows the rounds.
 
-Two tiles count the rounds and give the mean time of the last ten: a round's time is the wall-clock gap between its
+Three tiles count the rounds, give the time of the last one and the mean time of the last ten, and a chart and a
+table column give every round's: a round's time is the wall-clock gap between its
 commit and the round commit before it (author dates), so a pause between sessions counts as part of the next round."""
 import sys, os, re, json, subprocess, html
 
@@ -205,16 +206,23 @@ function tile(k, v, target, delta, goodUp) {
   T.push(tile("Semantic differences from the oracle", last.semdiff == null ? "–" : last.semdiff, "all reviewed; target: no wrong code",
     last.semdiff == null || prev.semdiff == null ? null : last.semdiff - prev.semdiff, false));
   // rounds, and what one costs: a round's time is the wall-clock gap between its commit and the round before it
-  const gaps = []; for (let i = 1; i < n; i++) gaps.push((new Date(R[i].date) - new Date(R[i - 1].date)) / 60e3);
+  const gaps = []; for (let i = 1; i < n; i++) gaps.push(Math.max(0, (new Date(R[i].date) - new Date(R[i - 1].date)) / 60e3));
   const fmt = m => m >= 90 ? `${Math.floor(m / 60)} h ${String(Math.round(m % 60)).padStart(2, "0")} min` : `${Math.round(m)} min`;
   const mean = a => a.reduce((x, y) => x + y, 0) / a.length;
   const l10 = gaps.slice(-10), p10 = gaps.slice(-20, -10);
   const flat = R.filter(r => !r.moved).length;
   T.push(tile("Rounds so far", n, `${n - flat} moved a score · ${flat} did not`, null, true));
+  T.push(tile("Time of the last round", gaps.length ? fmt(gaps[gaps.length - 1]) : "–",
+    gaps.length ? `${R[n - 2].date.slice(11, 16)} to ${R[n - 1].date.slice(11, 16)} on ${R[n - 1].date.slice(0, 10)} · ${R[n - 1].h}` +
+      (gaps.length > 1 ? ` · the one before: ${fmt(gaps[gaps.length - 2])}` : "") : "", null, false));
   T.push(tile(`Time per round, mean of the last ${l10.length}`, l10.length ? fmt(mean(l10)) : "–",
     "commit to commit, wall clock" + (p10.length ? ` · the ${p10.length} before: ${fmt(mean(p10))}` : ""), null, false));
   document.getElementById("tiles").innerHTML = T.join("");
 })();
+
+// ---- the wall-clock time of each round: the gap to the round commit before it, in minutes
+const GAP = R.map((r, i) => i ? Math.max(0, (new Date(r.date) - new Date(R[i - 1].date)) / 60e3) : null), CAP = 120;   // (a commit authored before its parent counts as 0)
+const fmtMin = m => m >= 90 ? `${Math.floor(m / 60)} h ${String(Math.round(m % 60)).padStart(2, "0")} min` : m < 10 ? `${m.toFixed(1)} min` : `${Math.round(m)} min`;
 
 // ---- line charts
 function chart(title, note, series, opts) {
@@ -229,7 +237,7 @@ function chart(title, note, series, opts) {
   const step = (() => { const raw = (hi - lo) / 4, p = Math.pow(10, Math.floor(Math.log10(raw))); return [1, 2, 5, 10].map(m => m * p).find(m => m >= raw); })();
   let g = "";
   for (let t = Math.ceil(lo / step) * step; t <= hi; t += step)
-    g += `<line x1="${L}" x2="${L + pw}" y1="${y(t)}" y2="${y(t)}" stroke="var(--grid)"/><text x="${L - 6}" y="${y(t) + 4}" text-anchor="end">${opts.pct ? t.toFixed(0) + " %" : t}</text>`;
+    g += `<line x1="${L}" x2="${L + pw}" y1="${y(t)}" y2="${y(t)}" stroke="var(--grid)"/><text x="${L - 6}" y="${y(t) + 4}" text-anchor="end">${opts.pct ? t.toFixed(0) + " %" : opts.cap != null && t >= opts.cap ? "≥ " + t : t}</text>`;
   let lastDay = "", lastX = -99;
   R.forEach((r, i) => { const d = r.date.slice(5, 10); if (d !== lastDay) { lastDay = d;
     if (x(i) - lastX > 28) { g += `<line x1="${x(i)}" x2="${x(i)}" y1="${Tp + ph}" y2="${Tp + ph + 4}" stroke="var(--border)"/><text x="${x(i)}" y="${H - 6}" text-anchor="middle">${d}</text>`; lastX = x(i); } } });
@@ -242,7 +250,7 @@ function chart(title, note, series, opts) {
     if (li >= 0) { g += `<circle cx="${x(li)}" cy="${y(s.v[li])}" r="4" fill="${s.c}" stroke="var(--surface-1)" stroke-width="2"/>`; ends.push({ s, yy: y(s.v[li]), v: s.v[li] }); }
   }
   ends.sort((a, b) => a.yy - b.yy); for (let i = 1; i < ends.length; i++) if (ends[i].yy - ends[i - 1].yy < 13) ends[i].yy = ends[i - 1].yy + 13;
-  for (const e of ends) g += `<text class="lab" x="${L + pw + 8}" y="${e.yy + 4}">${esc(e.s.short || e.s.name)} ${fmt(e.v, opts.pct)}</text>`;
+  for (const e of ends) g += `<text class="lab" x="${L + pw + 8}" y="${e.yy + 4}">${esc(e.s.short || e.s.name)} ${opts.fmt ? opts.fmt(e.s.tv ? e.s.tv[e.s.tv.length - 1] : e.v) : fmt(e.v, opts.pct)}</text>`;
   const legend = series.length > 1 ? `<div class="legend">${series.map(s => `<span><i style="background:${s.c}"></i>${esc(s.name)}</span>`).join("")}</div>` : "";
   card.innerHTML = `<h2>${title}</h2><p>${note}</p>${legend}<div class="plot"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${title}">${g}
     <line class="cross" x1="0" x2="0" y1="${Tp}" y2="${Tp + ph}" stroke="var(--text-muted)" stroke-width="1" visibility="hidden"/>
@@ -254,7 +262,7 @@ function chart(title, note, series, opts) {
     const r = R[i];
     cross.setAttribute("x1", x(i)); cross.setAttribute("x2", x(i)); cross.setAttribute("visibility", "visible");
     tip.innerHTML = `<div class="s">${r.date.slice(0, 16).replace("T", " ")} · ${r.h}${r.moved ? "" : " · no score changed"}<br>${esc(r.subject.slice(0, 110))}</div>` +
-      series.map(s => `<div><i style="background:${s.c}"></i>${esc(s.name)}: <b>${fmt(s.v[i], opts.pct)}</b>${s.raw && s.raw[i] ? ` <span class="s">(${s.raw[i][0]} / ${s.raw[i][1]})</span>` : ""}</div>`).join("");
+      series.map(s => `<div><i style="background:${s.c}"></i>${esc(s.name)}: <b>${opts.fmt ? opts.fmt(s.tv ? s.tv[i] : s.v[i]) : fmt(s.v[i], opts.pct)}</b>${s.raw && s.raw[i] ? ` <span class="s">(${s.raw[i][0]} / ${s.raw[i][1]})</span>` : ""}</div>`).join("");
     tip.style.display = "block";
     const px = x(i) * bb.width / W; tip.style.left = (px > bb.width / 2 ? px - tip.offsetWidth - 12 : px + 12) + "px"; tip.style.top = "8px";
   });
@@ -278,6 +286,9 @@ chart("Semantic differences from the oracle", "Functions whose model code behave
   [{ name: "DIFFERENT", c: "var(--series-1)", v: R.map(r => r.semdiff) }], { zero: true });
 chart("Probes: functions covered", "How many probe functions the ledger scores per option set: the size of the evidence base.",
   SETS.map(s => ({ name: LABEL[s], short: LABEL[s], c: COLOR[s], v: R.map(r => r.scores["probes/" + s] ? r.scores["probes/" + s][1] : null) })), { zero: true });
+chart("Wall-clock time of each round", `Minutes from the round before to this round's commit. A pause between sessions counts as part of the next round, so the plot stops at ${CAP} minutes; the tooltip gives the real time.`,
+  [{ name: "round time", short: "last", c: "var(--series-1)", v: GAP.map(g => g == null ? null : Math.min(g, CAP)), tv: GAP }],
+  { zero: true, cap: CAP, max: CAP, fmt: g => g == null ? "–" : fmtMin(g) });
 }
 charts();
 
@@ -285,11 +296,11 @@ charts();
 (function () {
   const cols = [["random/none", "random none"], ["random/O3XS", "random -O3 -XS"], ["random/Xr", "random -Xr"], ["random/O3XSXr", "random -O3 -XS -Xr"],
     ["library/O3XS", "library"], ["micro/none", "micro none"], ["micro/O3XS", "micro -O3 -XS"], ["micro/Xr", "micro -Xr"], ["micro/O3XSXr", "micro -O3 -XS -Xr"]];
-  let h = "<tr><th>commit time</th><th>commit</th>" + cols.map(c => `<th>${c[1]}</th>`).join("") + "<th>probes exact</th><th>sem. diff.</th></tr>";
+  let h = "<tr><th>commit time</th><th>commit</th>" + cols.map(c => `<th>${c[1]}</th>`).join("") + "<th>probes exact</th><th>sem. diff.</th><th>round time</th></tr>";
   for (let i = n - 1; i >= 0; i--) { const r = R[i];
     const pe = SETS.reduce((a, s) => a + (r.scores["probes/" + s] ? r.scores["probes/" + s][0] : 0), 0), pt = SETS.reduce((a, s) => a + (r.scores["probes/" + s] ? r.scores["probes/" + s][1] : 0), 0);
     h += `<tr><td>${r.date.slice(0, 16).replace("T", " ")}</td><td class="sj" title="${esc(r.subject)}">${r.h} ${esc(r.subject)}</td>` +
-      cols.map(c => `<td>${r.scores[c[0]] ? r.scores[c[0]][0] + " / " + r.scores[c[0]][1] : "–"}</td>`).join("") + `<td>${pt ? pe + " / " + pt : "–"}</td><td>${r.semdiff == null ? "–" : r.semdiff}</td></tr>`; }
+      cols.map(c => `<td>${r.scores[c[0]] ? r.scores[c[0]][0] + " / " + r.scores[c[0]][1] : "–"}</td>`).join("") + `<td>${pt ? pe + " / " + pt : "–"}</td><td>${r.semdiff == null ? "–" : r.semdiff}</td><td>${GAP[i] == null ? "–" : fmtMin(GAP[i])}</td></tr>`; }
   document.getElementById("tbl").innerHTML = h;
 })();
 </script></body></html>
