@@ -6654,6 +6654,8 @@ def test_reg_reuse(lines):
 
 TEST_REG_REUSE_LONG = True                               # see test_reg_reuse_long
 TEST_REG_LIVE = True                                     # see test_reg_reuse: reg_dead instead of "used nowhere else"
+TEST_REG_LONG_LIVE = True                                # see test_reg_reuse_long: XWA dead instead of written first
+IZ_TAIL_DIRECT_OPT = True                                # see regvar_stmt: IZ_TAIL_DIRECT under cdecl -O3 -XS too
 GUARD_DIV = True                                         # see guard_div_plan
 BASE_HOIST = True                                        # see base_hoist
 
@@ -6753,8 +6755,9 @@ def guard_div_plan(F, s):
     return D, D.ty.size, cc
 
 REG_PARTS = {'BC': ('B', 'C', 'BC', 'XBC'), 'C': ('C', 'BC', 'XBC'), 'DE': ('D', 'E', 'DE', 'XDE'), 'E': ('E', 'DE', 'XDE'),
-             'XBC': ('B', 'C', 'BC', 'QBC', 'XBC')}
-REG_KILLS = {'BC': ('BC', 'XBC'), 'C': ('C', 'BC', 'XBC'), 'DE': ('DE', 'XDE'), 'E': ('E', 'DE', 'XDE'), 'XBC': ('XBC',)}
+             'XBC': ('B', 'C', 'BC', 'QBC', 'XBC'), 'XWA': ('W', 'A', 'WA', 'QWA', 'XWA')}
+REG_KILLS = {'BC': ('BC', 'XBC'), 'C': ('C', 'BC', 'XBC'), 'DE': ('DE', 'XDE'), 'E': ('E', 'DE', 'XDE'), 'XBC': ('XBC',),
+             'XWA': ('XWA', 'WA')}                     # (a 16-bit load ends XWA's old value: nothing reads the stale QWA)
 
 def reg_dead(lines, start, R, lab=None):
     """is register R's value dead from line index start (or from label lab)?  Every path, conditional jumps followed
@@ -6841,7 +6844,11 @@ def test_reg_reuse_long(lines):
             if _r.search(r'\b(XWA|QWA|WA|W|A)\b', l):
                 if _r.match(r'^\t(ld|lda)\tXWA,', l) and not _r.search(r'\b(XWA|QWA|WA|W|A)\b', l.split(',', 1)[1]): wa_ok = True
                 else: break
-        if tgt is None or not wa_ok or not xbc_dead_at(out, j.group(2)): continue
+        if tgt is None or not xbc_dead_at(out, j.group(2)): continue
+        if not wa_ok and not (TEST_REG_LONG_LIVE and reg_dead(out[:tgt] + [None] + out[tgt + 1:], i + 3, 'XWA') and
+                              reg_dead(out, None, 'XWA', j.group(2))): continue   # (XWA no longer holds the static: dead
+                                                           # after the test and at the label; random r2_00_10, the reload
+                                                           # ld XBC,(_gul) right after the jump, then ld XWA,0x10000)
         out[i] = '\tld\tXBC,%s' % M; out[i + 1] = '\tor\tXBC,XBC'; out[tgt] = None
     return [l for l in out if l is not None]
 
@@ -10917,7 +10924,7 @@ def regvar_stmt(F, e):
         n_iz_ = len(F.lines)
         fam = gen(F, e.r, tgt, d.ty.size)
         if FAM[fam][d.ty.size] != R: F.emit('ld', '%s,%s' % (R, FAM[fam][d.ty.size]))
-        if IZ_TAIL_DIRECT and R == 'IZ' and not F.opt and not F.adecl and F.lines[-1] == '\tld\tIZ,WA':
+        if IZ_TAIL_DIRECT and R == 'IZ' and (not F.opt or IZ_TAIL_DIRECT_OPT) and not F.adecl and F.lines[-1] == '\tld\tIZ,WA':
             # an IZ home's value loaded from memory and then worked on is loaded into IZ (random r2_07_15:
             # int u = gps->a[b] + gi3 -> .. / ld IZ,(XWA+C) / add IZ,(_gi3); r4_01_00: c[3] << 5 -> ld IZ,(XWA+0x6) / sla 0x5,IZ)
             k_ = len(F.lines) - 2

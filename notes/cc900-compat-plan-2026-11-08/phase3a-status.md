@@ -2130,6 +2130,14 @@ cached across statements (rstmt rs_1_09_07_8: `return (gula[5] = gula[0])` -> `l
 ld (XWA+0x14),XHL`; random r2_05_04). Ledger up 3 (rstmt at -O3 -XS 3,039 -> 3,064, at -O3 -XS -Xr 2,883 -> 2,897,
 random2 9 -> 11), down 0; pairs MATCH 223; semcheck 56. Random 182 / 58 / 87 / 42.
 
+**Batch 163 (2026-11-13): `test_reg_reuse_long` checks XWA by liveness (TEST_REG_LONG_LIVE); IZ_TAIL_DIRECT under
+cdecl -O (IZ_TAIL_DIRECT_OPT).** In random r2_00_10 the reload `ld XBC,(_gul)` comes right after the jump, before
+`ld XWA,0x10000`, so batch 159's "XWA written whole first" did not hold. The rewrite now also applies when XWA, which
+no longer holds the static, is dead after the test and at the jump's label (`reg_dead`; a 16-bit write ends XWA's old
+value). An IZ home loaded from memory and worked on is built in IZ under cdecl -O3 -XS as it is without options
+(r1_09_00: `ld IZ,(_gi3) / sra 0xe,IZ`). Ledger up 1 (rstmt at -O3 -XS 3,064 -> 3,065), down 0; pairs MATCH 223;
+semcheck 56. Random unchanged, 182 / 58 / 87 / 42 (both functions still differ elsewhere).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
