@@ -1920,6 +1920,12 @@ option set.  It does not apply when a loop lies between the declaration and the 
 `q = s` across a loop of `val % radix` in a home (a first version lost it on the scratch ledger).  semcheck: the 30 lsl.c
 verdicts are gone, none new.  lsl.c at -Xr 19 -> 30 exact; the other scores unchanged (random 169 / 46 / 87 / 37).
 
+**Batch 140 (2026-11-13): a char local across a long helper is initialised in its slot; lsl +3 / +3.**  A char local with a
+slot was stored there only when a call followed; across a long helper it fell to the register path and was refused
+(`ld XWA,(_gl)` over it in WA).  It now goes to its one-byte slot the same way (`ld A,(_gc)` / `ld (XSP+0x4),A`; lsl.c
+ls_c_g_h_a).  lsl.c at none 47 -> 50 and at -Xr 30 -> 33.  Not done: the char shift form, which the oracle computes in W
+(`ld W,(_gca + 0x3)` / `sra 0x3,W` / `ld (XSP+0x4),W`).  Random unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

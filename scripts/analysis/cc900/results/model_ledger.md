@@ -287,9 +287,9 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-13-15-micro-pc, v423/O3XS                               | probes/pc.c          | 8 / 48 exact (16.7%)       |
 | run 2026-11-13-15-micro-pc, v423/Xr                                 | probes/pc.c          | 12 / 48 exact (25.0%)      |
 | run 2026-11-13-15-micro-pc, v423/O3XSXr                             | probes/pc.c          | 13 / 48 exact (27.1%)      |
-| run 2026-11-13-16-micro-lsl, v423/none                              | probes/lsl.c         | 47 / 126 exact (37.3%)     |
+| run 2026-11-13-16-micro-lsl, v423/none                              | probes/lsl.c         | 50 / 126 exact (39.7%)     |
 | run 2026-11-13-16-micro-lsl, v423/O3XS                              | probes/lsl.c         | 19 / 126 exact (15.1%)     |
-| run 2026-11-13-16-micro-lsl, v423/Xr                                | probes/lsl.c         | 30 / 126 exact (23.8%)     |
+| run 2026-11-13-16-micro-lsl, v423/Xr                                | probes/lsl.c         | 33 / 126 exact (26.2%)     |
 | run 2026-11-13-16-micro-lsl, v423/O3XSXr                            | probes/lsl.c         | 19 / 126 exact (15.1%)     |
 | run 2026-11-09-9-micro-fp, v423/none                                | micro/fp.c           | 108 / 108 exact (100.0%)   |
 | run 2026-11-09-9-micro-fp, v423/O3XS                                | micro/fp.c           | 108 / 108 exact (100.0%)   |

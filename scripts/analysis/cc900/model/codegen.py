@@ -8853,7 +8853,8 @@ def gen_stmt(F, s, last):
                     slot_init(F, c.var, c.init); i += 1; continue
                 calls_after = []
                 for x in rest: walk(x, lambda n, d: calls_after.append(n) if n.k == 'call' else None)
-                if len(u) >= 1 and c.var.ty.size == 1 and getattr(c.var, 'slot', None) is not None and calls_after:
+                if len(u) >= 1 and c.var.ty.size == 1 and getattr(c.var, 'slot', None) is not None and \
+                        (calls_after or getattr(c.var, 'lh_slot', False)):   # (or a long helper: lsl.c ls_c_g_h_a)
                     fam = gen(F, c.init, 'WA', 1)            # _strstr: char c = *s2; -> ld A,(XWA) / ld (XSP+0x8),A
                     F.emit('ld', '(XSP+%s),%s' % (hx(c.var.slot + F.push), FAM[fam][1])); i += 1; continue
                 if len(u) >= 1 and c.var.ty.size == 1:
