@@ -47,8 +47,7 @@ rules have to explain.
 
 `python3 scripts/analysis/cc900/dashboard.py --serve` writes a single page to
 `~/compartilhado/tmp/cc900-dashboard/index.html` and serves it on <http://localhost:8765/>: the random corpora, the
-1997 library, the micro corpus, the probes and the semantic check's DIFFERENT count, one point per commit that changed
-`results/model_ledger.md`.  It reads those files out of git history (`git show <commit>:<file>`), measures nothing
+1997 library, the micro corpus, the probes and the semantic check's DIFFERENT count, one point per round -- every commit
+that changed `model/` or `results/`, whether or not a score moved (a switch puts them on a real-time axis).  It reads those files out of git history (`git show <commit>:<file>`), measures nothing
 itself, and its output is not committed.  Without `--serve` it only writes the file.
-`.githooks/post-commit` rebuilds the page in the background after every commit that changes `results/model_ledger.md`
-or `results/semcheck.md`, and the page reloads itself every two minutes.
+`.githooks/post-commit` rebuilds the page in the background after every commit that changes `model/` or `results/`, and the page reloads itself every two minutes.

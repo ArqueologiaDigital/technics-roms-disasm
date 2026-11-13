@@ -7,9 +7,10 @@ Question it answers: how did each score of the phase-3a effort move, commit by c
     python3 scripts/analysis/cc900/dashboard.py --serve    # the same, then serves it on http://localhost:8765/
     python3 scripts/analysis/cc900/dashboard.py OUT.html
 
-Signal read: every commit that touched scripts/analysis/cc900/results/model_ledger.md (the rows `sh model/ledger.sh`
-prints: "oracle run, compiler/set | corpus | N / M exact") and results/semcheck.md (its "Totals per option set" table,
-column DIFFERENT), taken with `git show <commit>:<file>`.  Nothing is measured here; the page is only as fresh as the
+Signal read: one point per commit that touched scripts/analysis/cc900/model/ or scripts/analysis/cc900/results/ (a
+round), whether or not a score moved: the state at that commit of results/model_ledger.md (the rows `sh model/ledger.sh`
+prints: "oracle run, compiler/set | corpus | N / M exact") and of results/semcheck.md (its "Totals per option set"
+table, column DIFFERENT), taken with `git show <commit>:<file>`.  A round that changes nothing shows as a flat step.  Nothing is measured here; the page is only as fresh as the
 last committed ledger.  The output is regenerable and is not committed.
 
 .githooks/post-commit runs this script in the background after every commit that changes either results file, and the
@@ -68,18 +69,30 @@ def semcheck_scores(text):
     return out
 
 
+ROUND_PATHS = ['scripts/analysis/cc900/model', 'scripts/analysis/cc900/results']
+
+
 def collect():
-    sem = {}
-    for h, d, s in commits_of(SEMCHECK):
-        sc = semcheck_scores(git('show', '%s:%s' % (h, SEMCHECK)))
-        if sc: sem[h] = sum(sc.values())
-    rows = []; last_sem = None
-    sem_by_date = sorted((d, sem[h]) for h, d, s in commits_of(SEMCHECK) if h in sem)
-    for h, d, s in commits_of(LEDGER):
-        sc = ledger_scores(git('show', '%s:%s' % (h, LEDGER)))
+    """one row per round commit, with the ledger and the semcheck total as they stood at that commit (parsed once per
+    distinct file version: most commits leave one of the two files as it was)"""
+    seen = {}
+
+    def at(h, path, parse):
+        blob = git('rev-parse', '--verify', '-q', '%s:%s' % (h, path)).strip()
+        if not blob: return None
+        if blob not in seen: seen[blob] = parse(git('cat-file', 'blob', blob))
+        return seen[blob]
+    rows = []
+    log = git('log', '--reverse', '--format=%H%x1f%aI%x1f%s', '--', *ROUND_PATHS).splitlines()
+    for line in log:
+        h, d, s = line.split('\x1f', 2)
+        sc = at(h, LEDGER, ledger_scores)
         if not sc: continue
-        prior = [v for dd, v in sem_by_date if dd <= d]
-        rows.append({'h': h[:9], 'date': d, 'subject': s, 'scores': sc, 'semdiff': prior[-1] if prior else None})
+        sm = at(h, SEMCHECK, semcheck_scores)
+        prev = rows[-1] if rows else None
+        row = {'h': h[:9], 'date': d, 'subject': s, 'scores': sc, 'semdiff': sum(sm.values()) if sm else None}
+        row['moved'] = prev is None or prev['scores'] != sc or prev['semdiff'] != row['semdiff']
+        rows.append(row)
     return rows
 
 
@@ -109,6 +122,11 @@ body { margin: 0; background: var(--page); color: var(--text-primary);
 main { max-width: 1180px; margin: 0 auto; padding: 24px 16px 48px; }
 h1 { font-size: 22px; margin: 0 0 4px; } h2 { font-size: 15px; margin: 0 0 2px; }
 p.sub { margin: 0 0 20px; color: var(--text-secondary); }
+.bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 16px; color: var(--text-secondary); font-size: 13px; }
+.bar button { font: inherit; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface-1);
+  color: var(--text-primary); cursor: pointer; }
+.bar button[aria-pressed="true"] { border-color: var(--text-primary); font-weight: 600; }
+.bar .note { color: var(--text-muted); margin-left: 8px; }
 .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 20px; }
 .tile, .card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; }
 .tile .k { color: var(--text-secondary); font-size: 12px; }
@@ -139,10 +157,12 @@ td.sj { max-width: 380px; overflow: hidden; text-overflow: ellipsis; text-align:
 </style></head>
 <body><main>
 <h1>cc900 model: scores over time</h1>
-<p class="sub">Exact-match counts of the Python model against Toshiba cc900 V4.23, one point per commit that changed
-the ledger (__N__ commits, __FIRST__ to __LAST__). The horizontal axis is one step per commit, labelled where a new day starts.
-Generated __NOW__ from git history; nothing here is measured live. The page is rebuilt after every commit
-that changes the ledger, and reloads itself every two minutes.</p>
+<p class="sub">Exact-match counts of the Python model against Toshiba cc900 V4.23, one point per round: every
+commit that changed the model or its results (__N__ rounds, __FIRST__ to __LAST__). Generated __NOW__ from git history; nothing here is measured live. The page is rebuilt after every such
+commit and reloads itself every two minutes.</p>
+<div class="bar"><span>Horizontal axis:</span>
+<button id="ax-commit" aria-pressed="true">one step per round</button><button id="ax-time" aria-pressed="false">real time</button>
+<span class="note">__FLAT__ of the __N__ rounds changed no score; they are plotted too, as flat steps.</span></div>
 <div class="tiles" id="tiles"></div>
 <div class="grid" id="charts"></div>
 <details><summary>Table view (every commit, newest first)</summary><div class="scroll"><table id="tbl"></table></div></details>
@@ -152,6 +172,9 @@ const DATA = __DATA__;
 const SETS = ["none","O3XS","Xr","O3XSXr"], LABEL = {none:"no options", O3XS:"-O3 -XS", Xr:"-Xr", O3XSXr:"-O3 -XS -Xr"};
 const COLOR = {none:"var(--series-1)", O3XS:"var(--series-2)", Xr:"var(--series-3)", O3XSXr:"var(--series-4)"};
 const R = DATA.rows, n = R.length;
+let AXIS = "commit"; try { AXIS = localStorage.getItem("cc900-axis") || "commit"; } catch (e) {}
+const T0 = new Date(R[0].date).getTime(), T1 = new Date(R[n - 1].date).getTime();
+const frac = i => n === 1 ? 0.5 : AXIS === "time" && T1 > T0 ? (new Date(R[i].date).getTime() - T0) / (T1 - T0) : i / (n - 1);
 const val = (r, key, pct) => { const s = r.scores[key]; if (!s) return null; return pct ? 100 * s[0] / s[1] : s[0]; };
 const fmt = (v, pct) => v == null ? "–" : pct ? v.toFixed(1) + " %" : String(v);
 const esc = s => s.replace(/[&<>]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
@@ -190,7 +213,7 @@ function chart(title, note, series, opts) {
   for (const s of series) for (const v of s.v) if (v != null) { lo = Math.min(lo, v); hi = Math.max(hi, v); }
   if (opts.zero) lo = 0; if (opts.max != null) hi = Math.max(hi, opts.max);
   const pad = (hi - lo) * 0.06 || 1; if (!opts.zero) lo = Math.max(0, lo - pad); hi = hi + pad;
-  const x = i => L + (n === 1 ? pw / 2 : pw * i / (n - 1)), y = v => Tp + ph * (1 - (v - lo) / (hi - lo));
+  const x = i => L + pw * frac(i), y = v => Tp + ph * (1 - (v - lo) / (hi - lo));
   const step = (() => { const raw = (hi - lo) / 4, p = Math.pow(10, Math.floor(Math.log10(raw))); return [1, 2, 5, 10].map(m => m * p).find(m => m >= raw); })();
   let g = "";
   for (let t = Math.ceil(lo / step) * step; t <= hi; t += step)
@@ -215,9 +238,10 @@ function chart(title, note, series, opts) {
   const svg = card.querySelector("svg"), tip = card.querySelector(".tip"), cross = card.querySelector(".cross"), plot = card.querySelector(".plot");
   svg.addEventListener("mousemove", ev => {
     const bb = svg.getBoundingClientRect(), sx = (ev.clientX - bb.left) * W / bb.width;
-    const i = Math.max(0, Math.min(n - 1, Math.round((sx - L) / pw * (n - 1)))), r = R[i];
+    let i = 0, best = 1e9; for (let k = 0; k < n; k++) { const dd = Math.abs(x(k) - sx); if (dd < best) { best = dd; i = k; } }
+    const r = R[i];
     cross.setAttribute("x1", x(i)); cross.setAttribute("x2", x(i)); cross.setAttribute("visibility", "visible");
-    tip.innerHTML = `<div class="s">${r.date.slice(0, 16).replace("T", " ")} · ${r.h}<br>${esc(r.subject.slice(0, 110))}</div>` +
+    tip.innerHTML = `<div class="s">${r.date.slice(0, 16).replace("T", " ")} · ${r.h}${r.moved ? "" : " · no score changed"}<br>${esc(r.subject.slice(0, 110))}</div>` +
       series.map(s => `<div><i style="background:${s.c}"></i>${esc(s.name)}: <b>${fmt(s.v[i], opts.pct)}</b>${s.raw && s.raw[i] ? ` <span class="s">(${s.raw[i][0]} / ${s.raw[i][1]})</span>` : ""}</div>`).join("");
     tip.style.display = "block";
     const px = x(i) * bb.width / W; tip.style.left = (px > bb.width / 2 ? px - tip.offsetWidth - 12 : px + 12) + "px"; tip.style.top = "8px";
@@ -225,8 +249,14 @@ function chart(title, note, series, opts) {
   svg.addEventListener("mouseleave", () => { tip.style.display = "none"; cross.setAttribute("visibility", "hidden"); });
   document.getElementById("charts").appendChild(card);
 }
+function drawAll() { document.getElementById("charts").innerHTML = ""; charts(); }
+for (const [id, v] of [["ax-commit", "commit"], ["ax-time", "time"]]) document.getElementById(id).addEventListener("click", () => {
+  AXIS = v; try { localStorage.setItem("cc900-axis", v); } catch (e) {}
+  document.getElementById("ax-commit").setAttribute("aria-pressed", v === "commit"); document.getElementById("ax-time").setAttribute("aria-pressed", v === "time"); drawAll(); });
+document.getElementById("ax-commit").setAttribute("aria-pressed", AXIS === "commit"); document.getElementById("ax-time").setAttribute("aria-pressed", AXIS === "time");
 const bySet = (prefix, pct) => SETS.map(s => ({ name: LABEL[s], short: LABEL[s], c: COLOR[s],
   v: R.map(r => val(r, prefix + "/" + s, pct)), raw: R.map(r => r.scores[prefix + "/" + s] || null) }));
+function charts() {
 chart("Random programs: exact functions", "Four generated corpora, 800 functions per option set. Phase 3a asks for 95 % (760).", bySet("random", false), { zero: true, target: 760, max: 760 });
 chart("1997 library: exact functions", "Toshiba's own C library sources at -O3 -XS, 248 functions. Phase 3a asks for all of them.",
   [{ name: "-O3 -XS", c: "var(--series-2)", v: R.map(r => val(r, "library/O3XS", false)), raw: R.map(r => r.scores["library/O3XS"] || null) }], { target: 248, max: 248, zero: true });
@@ -236,6 +266,8 @@ chart("Semantic differences from the oracle", "Functions whose model code behave
   [{ name: "DIFFERENT", c: "var(--series-1)", v: R.map(r => r.semdiff) }], { zero: true });
 chart("Probes: functions covered", "How many probe functions the ledger scores per option set: the size of the evidence base.",
   SETS.map(s => ({ name: LABEL[s], short: LABEL[s], c: COLOR[s], v: R.map(r => r.scores["probes/" + s] ? r.scores["probes/" + s][1] : null) })), { zero: true });
+}
+charts();
 
 // ---- table view
 (function () {
@@ -259,6 +291,7 @@ def main():
     if not rows: sys.exit('no ledger history found')
     import datetime
     page = (PAGE.replace('__DATA__', json.dumps({'rows': rows}))
+            .replace('__FLAT__', str(sum(1 for r in rows if not r['moved'])))
             .replace('__N__', str(len(rows))).replace('__FIRST__', rows[0]['date'][:10]).replace('__LAST__', rows[-1]['date'][:10])
             .replace('__NOW__', datetime.datetime.now().strftime('%Y-%m-%d %H:%M')))
     os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
