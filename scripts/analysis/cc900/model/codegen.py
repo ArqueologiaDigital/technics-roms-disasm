@@ -6086,6 +6086,8 @@ def gen_compare(F, e):
 
 FOLD_CHAR = True                                          # see foldable: char v = gc used once
 CMPX = True                                               # see cmpx_elem: compares against an indexed element (cmpx.c)
+CMPX_IZ = True                                            # see cmpx_index: an unsigned index in IZ
+COND_CALL = True                                          # see compile_function_once: cal cc,f
 
 CMPX_REGS = {                                             # (index register, base register) by element size 1 / 2 / 4:
     ('none', 'X', 'c'): ('DE/BC', 'BC/DE', 'BC/DE'), ('none', 'X', 'b'): ('BC/DE', 'BC/DE', 'BC/DE'),
@@ -6111,6 +6113,10 @@ def cmpx_index(F, v):
     if i.k != 'load' or strip(i.e).k != 'var' or i.ty is None or i.ty.kind != 'int' or i.ty.size not in (1, 2): return None
     x = {(1, True): 'c', (1, False): 'b', (2, True): 'i', (2, False): 'u'}[(i.ty.size, bool(i.ty.signed))]
     d = strip(i.e).decl
+    if CMPX_IZ and x == 'u' and getattr(d, 'reg', None) == 'IZ' and d not in F.dead and not getattr(F, 'lazy_homes', None):
+        return ('_' + b.decl.name, 'IZ', 'Y', x)          # an unsigned index in IZ: the same form (rstmt rs_4_07_10_4:
+                                                           # gc > gca[u] -> ld WA,IZ / extz XWA / ld XBC,_gca / add XBC,XWA /
+                                                           # ld A,(_gc) / cp A,(XBC))
     if getattr(d, 'reg', None) or getattr(d, 'homed', False) or getattr(F, 'lazy_homes', None): return None
     if d.kind == 'global': return ('_' + b.decl.name, '(_%s)' % d.name, 'Y', x)
     if d.kind == 'param':
@@ -14827,6 +14833,13 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
                 if k + 1 < len(F.lines) and F.lines[k + 1] == '\tret': F.lines[i] = '\tret\t' + m.group(1)
     import re                                            # no self-moves: the oracle never writes ld XWA,XWA
     F.lines = [l for l in F.lines if not re.match(r'^\tld\t(\w+),\1$', l)]
+    if COND_CALL:                                        # a jump around one call is a conditional call: j le,L / cal _rp /
+        for i in range(len(F.lines) - 2):                # L: -> cal gt,_rp / L: (rstmt rs_4_07_10_4; the oracle's listings of
+            m = re.match(r'^\tj\t(\w+),(L\d+)$', F.lines[i] or '')   # all four option sets have 17 conditional calls and
+            if m and m.group(1) in INV and re.match(r'^\tcal\t[._]\w+$', F.lines[i + 1]) and \
+                    not F.lines[i + 1].startswith('\tcal\tC9H_') and F.lines[i + 2] == m.group(2) + ':':   # no jump around
+                F.lines[i] = '\tcal\t%s,%s' % (INV[m.group(1)], F.lines[i + 1].split('\t')[2]); F.lines[i + 1] = None   # a call)
+        F.lines = [l for l in F.lines if l is not None]
     F.lines = [l for i, l in enumerate(F.lines) if not (l == '\tret' and i and F.lines[i - 1] == '\tret')]
     # (a ret right after a ret is unreachable: arr_index.c ai_dig_val's trivial return after an if)
     if AND_BIT_CLR and not F.opt and not F.adecl:        # an and that clears one bit of WA is res (rstmt rs_1_04_05_0:

@@ -1973,6 +1973,13 @@ comes next, then `ld XBC,(XBC)`; a constant dividend comes after the element's l
 crashing (random r2_04_10 at none, KeyError 4; no model errors are left at any set). Ledger up 2, down 0; pairs MATCH
 223; semcheck 58. Rstmt at none 3,561 -> 3,564, random at none 170 -> 171 (random3 39 -> 40).
 
+**Batch 146 (2026-11-13): a compare with an element at an unsigned index in IZ (CMPX_IZ), and conditional calls
+(COND_CALL).** `cmpx_index` accepts an unsigned int index held in IZ and uses cmpx's unsigned-index form with `WA,IZ`
+as its source (rstmt rs_4_07_10_4: `gc > gca[u]` -> `ld WA,IZ / extz XWA / ld XBC,_gca / add XBC,XWA / ld A,(_gc) /
+cp A,(XBC)`). A jump around a single call (`j cc,L / cal f / L:`) becomes `cal !cc,f / L:`. The oracle's listings at
+all four option sets hold 17 conditional calls and no jump around a lone call; helper calls are left alone. Ledger up
+2, down 0; pairs MATCH 223; semcheck 58. Rstmt at none 3,564 -> 3,565, random at none 171 -> 172 (random4 40 -> 41).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
