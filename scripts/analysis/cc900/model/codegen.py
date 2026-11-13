@@ -1573,6 +1573,8 @@ XIZ_ADDR_WA = True                                        # see gen_stmt: an XIZ
 MULDIV_ELEM_ADDR = True                                   # see gen_opassign: gua[6] %= 3 through the element's address
 SHIFTB_A = True                                           # see gen_opassign: a byte shifted by a constant in A
 KOP_IN_PLACE = True                                       # see gen_stmt: g = K op g
+BYTE_RIGHT_FIRST = True                                   # see gen_bin: two computed byte operands
+IZ_TAIL_DIRECT = True                                     # see regvar_stmt: an IZ home loaded and worked on in IZ
 NESTED_IF_RET = True                                      # see gen_stmt: if (a) if (b) x; at the end of a function
 LX5 = True                                                # see lx5_lines: long helpers of lhx.c's lxo_* rows
 
@@ -4365,6 +4367,28 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         lm0 = mem_operand(F, l) if strip(l).k == 'load' else None
         if LEFT_CLOBBER_GUARD and op in ('+', '&', '|', '^') and rv0 is not None and rv0.reg == fam and mem_operand(F, rx0) == R and lm0 is not None and lm0.startswith('(') and dies_here(F, rx0) and not same_leaf(l, r):
             F.emit(SIMPLE_OPS[op], '%s,%s' % (R, lm0)); F.dead.add(rv0); return fam   # (-Xr r2_05_16: gs.u + a -> add WA,(_gs + 0x8))
+        def comp8_(y):
+            y = strip(y)
+            while y.k == 'cast' and y.kind == 'IntegralCast': y = strip(y.e)
+            if y.k not in ('bin', 'un') or nodes_in(y, 'call') or has_helper_call(y): return False
+            if any(n_.op in ('*', '/', '%', '<<', '>>', '&&', '||') or n_.op in CC_S for n_ in nodes_in(y, 'bin')): return False
+            for n_ in nodes_in(y, 'load'):                 # (operands that need no address register)
+                v_ = strip(n_.e)
+                if v_.k == 'var' and not getattr(v_.decl, 'reg', None): continue
+                if v_.k in ('index', 'member') and global_offset(v_) is not None and global_offset(v_)[0] != '__param__' and \
+                        not (v_.k == 'index' and fold(v_.idx).k != 'const') and not (v_.k == 'member' and v_.arrow): continue
+                return False
+            return True
+        if BYTE_RIGHT_FIRST and size == 1 and not F.opt and not F.adecl and op in ('&', '|', '^', '+') and comp8_(l) and comp8_(r) and \
+                mem_operand(F, r) is None and mem_operand(F, l) is None and not ({'WA', 'BC'} & live_regs(F)):
+            # two computed byte operands: the right one first, in A, moved to C; then the left one in A (random
+            # r3_07_13: guc = (7 + guc) ^ (guc & 162) -> ld A,(_guc) / and A,0xa2 / ld C,A / ld A,(_guc) / inc 0x7,A / xor A,C)
+            if gen(F, r, 'WA', 1) != 'WA': raise Unsupported('byte operands: the right one outside A')
+            F.emit('ld', 'C,A'); n1_ = len(F.lines)
+            if gen(F, l, 'WA', 1) != 'WA' or clobbers(F.lines[n1_:], '(XBC)'): raise Unsupported('byte operands: the left one')
+            F.emit(SIMPLE_OPS[op], 'A,C')
+            if fam != 'WA': F.emit('ld', '%s,A' % FAM[fam][1])
+            return fam
         wa_var = [d for d in list(F.f.params) + list(F.f.decls) + [getattr(F, 'cse_tmp', None)]
                   if d is not None and getattr(d, 'reg', None) == 'WA' and d not in F.dead
                   and uses_decl(e.r, d)]                   # sv_leaf: a * b + a keeps a in WA -> ld HL,DE / add HL,WA
@@ -9123,8 +9147,19 @@ def regvar_stmt(F, e):
             F.emit('ld', '%s,%s' % (FAM[sc_][d.ty.size], mem_operand(F, rb_.r)))   # ld WA,(_hi) / ld BC,(_gi) / add BC,WA)
             F.emit('ld', '%s,%s' % (R, mem_operand(F, rb_.l)))
             F.emit(SIMPLE_OPS[rb_.op], '%s,%s' % (R, FAM[sc_][d.ty.size])); return True
+        n_iz_ = len(F.lines)
         fam = gen(F, e.r, tgt, d.ty.size)
         if FAM[fam][d.ty.size] != R: F.emit('ld', '%s,%s' % (R, FAM[fam][d.ty.size]))
+        if IZ_TAIL_DIRECT and R == 'IZ' and not F.opt and not F.adecl and F.lines[-1] == '\tld\tIZ,WA':
+            # an IZ home's value loaded from memory and then worked on is loaded into IZ (random r2_07_15:
+            # int u = gps->a[b] + gi3 -> .. / ld IZ,(XWA+C) / add IZ,(_gi3); r4_01_00: c[3] << 5 -> ld IZ,(XWA+0x6) / sla 0x5,IZ)
+            k_ = len(F.lines) - 2
+            while k_ >= n_iz_ and re.match(r'^\t(add|sub|and|or|xor|sla|sra|srl|sll|inc|dec)\t(WA,(\(_[^)]*\)|0x[0-9a-f]+)|0x[0-9a-f]+,WA)$', F.lines[k_]):
+                k_ -= 1
+            if k_ >= n_iz_ and k_ < len(F.lines) - 2 and re.match(r'^\tld\tWA,\((XWA|XBC|XDE|XHL)[^)]*\)$', F.lines[k_]):
+                for j_ in range(k_, len(F.lines) - 1):
+                    F.lines[j_] = re.sub(r'\bWA\b(?=,)|(?<=,)WA$', 'IZ', F.lines[j_]) if j_ > k_ else F.lines[j_].replace('\tld\tWA,', '\tld\tIZ,', 1)
+                F.lines.pop()
         return True
     if e.k == 'opassign' and regvar_of(e.l) and e.op in ('<<', '>>') and fold(e.r).k == 'const' and \
             fold(e.r).value is not None and 1 <= fold(e.r).value <= 16 and regvar_of(e.l).reg in FAM:

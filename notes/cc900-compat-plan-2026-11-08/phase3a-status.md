@@ -1122,6 +1122,13 @@ static int element or member multiplied or divided in a compound assignment goes
 `g = K op g` on a long global loads the constant and operates in memory (`gl = -1916L ^ gl` ->
 `ld XWA,0xfffff884` / `xor (_gl),XWA`).  Random programs at none 112 -> 119 of 800.
 
+**Batch 60 (2026-11-13): two more patterns.**  Two computed byte operands whose leaves need no address register are
+evaluated right first: the right one in A, moved to C, then the left one in A (`guc = (7 + guc) ^ (guc & 162)` ->
+`ld A,(_guc)` / `and A,0xa2` / `ld C,A` / `ld A,(_guc)` / `inc 0x7,A` / `xor A,C`); an IZ home's value that is loaded
+through an address and then worked on is loaded into IZ, not through WA (`int u = gps->a[b] + gi3` ->
+`ld IZ,(XWA+C)` / `add IZ,(_gi3)`; `c[3] << 5` -> `ld IZ,(XWA+0x6)` / `sla 0x5,IZ`).  Random programs at none
+119 -> 123 of 800.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
