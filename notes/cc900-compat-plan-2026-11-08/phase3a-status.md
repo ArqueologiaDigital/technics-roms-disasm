@@ -2014,6 +2014,11 @@ v1(t)` -> `push QIZ / ld QIZH,A / .. / ld A,QIZH`). The slot is now kept for hel
 plain helper statement before a local's last use makes it homes2's, not a register temporary's (without -O and -Xr).
 Ledger up 1 (random4 41 -> 42), down 0; pairs MATCH 223; semcheck 58. Random 177 / 48 / 87 / 37.
 
+**Batch 151 (2026-11-13): a constant into a char local in QIZH is `ld QIZH,k` (QIZH_CONST).** The oracle's listings at
+all four option sets hold 19 `ld QIZH,k` and no `ld A,k / ld QIZH,A`; a reader then loads `ld A,QIZH` (random
+r3_04_03: `char u = '0'; gc = u;` -> `ld QIZH,0x30 / ld A,QIZH / ld (_gc),A`). Ledger up 3 (random3 42 -> 43, lsl.c 50
+-> 51 at none and 33 -> 34 at -Xr), down 0; pairs MATCH 223; semcheck 58. Random 178 / 48 / 87 / 37.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

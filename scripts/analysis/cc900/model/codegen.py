@@ -6549,6 +6549,7 @@ FP_OPA_NO_XIZ = True                                     # see the home planner
 LH_ACROSS_SLOT = True                                    # see regtemp_candidates
 LH_SLOT_XIZ_ONLY = True                                  # see regtemp_candidates: only a helper statement that needs XIZ
 LH_PLAIN_IZ = True                                       # see regtemp_candidates: a local across a plain long helper
+QIZH_CONST = True                                        # see regvar_stmt: ld QIZH,k
 
 def plain_long_helper_stmt(x):
     """is x a statement (or if without else around one) of the form T = A op B or T op= B, a long * / % that calls a
@@ -10365,6 +10366,10 @@ def regvar_stmt(F, e):
     if e.k == 'bin' and e.op == '=' and regvar_of(e.l) and regvar_of(e.l).reg == 'QIZH':
         if strip(e.r).k == 'call':                          # lo_c_Rca: cal _rc / ld QIZH,L
             gen_call(F, strip(e.r)); flush_pops(F); F.emit('ld', 'QIZH,L'); return True
+        k_ = fold(narrow(e.r, 1))
+        if QIZH_CONST and k_.k == 'const' and k_.value is not None:   # a constant goes straight in (random r3_04_03:
+            F.emit('ld', 'QIZH,%s' % hx(k_.value & 0xff)); return True   # char u = '0' -> ld QIZH,0x30; 19 ld QIZH,k in
+                                                           # the oracle's listings and no ld A,k / ld QIZH,A)
         f_ = gen(F, narrow(e.r, 1), 'WA', 1)                # r2_00_13: char t = gc2 -> ld A,(_gc2) / ld QIZH,A
         F.emit('ld', 'QIZH,%s' % FAM[f_][1]); return True   # (ld QIZH,(_gc2) is not an instruction)
     if F.opt and e.k == 'opassign' and e.op in '+-' and regvar_of(e.l) and regvar_of(e.l).ty.size == 2 and \
