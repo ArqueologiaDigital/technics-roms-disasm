@@ -69,6 +69,12 @@ The ledger's rows are identical in the three runs; the semantic check gives the 
 results table from an empty verdict cache through a warm compile cache; the pairs table differs only by that label.
 The directory held 65 MB after one round.
 
+`ledger.sh` runs `score.py` with `${CC900_PY:-python3 -I -B}`: with
+`CC900_PY="python3 -I -X pycache_prefix=$TMPDIR/cc900-pyc"` the model's bytecode is kept between the rows, outside the
+repository, instead of being compiled again by every process (the import takes 0.27 s without it and 0.06 s with it).
+`CC900_SCORE` names another copy's `score.py`, which is how a scratch copy of the model is scored with the same rows.
+Measured on 2026-11-13 at 1573202a7 with both caches warm: the 251 rows in 12 to 15 s (31 s before).
+
 ## Scores over time: `dashboard.py`
 
 `python3 scripts/analysis/cc900/dashboard.py --serve` writes a single page to

@@ -8,10 +8,12 @@ O=${ORACLE:-$HOME/compartilhado/cc900-oracle/runs}
 C=${LIBCOPY:-$HOME/compartilhado/tmp/cc900-corpus-libsrc97}
 # The rows are independent: LEDGER_JOBS of them (default 8) run at a time, each into its own numbered file, and the
 # files are printed in row order at the end (one core took about 7.5 minutes for the 247 rows on 2026-11-12).
+PY=${CC900_PY:-python3 -I -B}      # e.g. "python3 -I -X pycache_prefix=$TMPDIR/cc900-pyc": the model's bytecode kept between rows
+SCORE=${CC900_SCORE:-model/score.py}  # another copy's score.py scores that copy (the scratch-copy ledger)
 J=${LEDGER_JOBS:-8}; LT=$(mktemp -d "${TMPDIR:-/tmp}/cc900-ledger-XXXXXX"); N=0
 ledger_row() {
   N=$((N + 1)); f=$(printf '%s/%04d' "$LT" "$N")
-  ( printf '%s | %s | ' "$1" "$2"; shift 2; python3 -I -B model/score.py "$@" 2>&1 | tail -1 ) > "$f" &
+  ( printf '%s | %s | ' "$1" "$2"; shift 2; $PY "$SCORE" "$@" 2>&1 | tail -1 ) > "$f" &
   [ $((N % J)) -eq 0 ] && wait
   return 0
 }
