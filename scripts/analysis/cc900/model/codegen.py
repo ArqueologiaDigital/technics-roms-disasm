@@ -94,6 +94,12 @@ class Fn:
                     op, args = 'set', '%s,%s' % (hx(b_ % 16), t_[1:] if b_ < 16 else 'Q' + t_[1:])
                 elif op == 'or' and re.match(r'^(WA|BC|DE|HL|IX|IY|IZ|[WABCDEHL])$', t_) and b_ < (16 if len(t_) == 2 else 8):
                     op, args = 'set', '%s,%s' % (hx(b_), t_)
+        if NO_SELF_LD and op == 'ld' and args is not None and re.match(r'^(\w+),\1$', args) \
+                and not (s.lines and s.lines[-1].startswith('\tcal')):   # (after a call the later passes drop it: switch.c sw_local)
+            return                                         # ld WA,WA is never written (never_forms.py: fpp9.c v39 -O)
+        if QIZ_VIA_WA and op == 'ld' and args is not None and re.match(r'^QIZ,\((_|XSP)', args) and 'WA' not in live_regs(s):
+            s.emit('ld', 'WA,%s' % args[4:]); args = 'QIZ,WA'   # QIZ is never loaded from memory (372 ld QIZ,.. in the oracle's
+                                                           # listings at none: from WA, HL, IZ or a constant): through WA
         if LDK32_FORM and op in ('ld', 'lda') and args is not None:
             m_ = re.match(r'^(X(?:WA|BC|DE|HL|IX|IY|IZ)),0x([0-9a-f]+)$', args)   # a 32-bit register's constant: under -O
             if m_:                                         # 8..0xffff is lda and anything else ld; without -O always ld
@@ -1598,6 +1604,8 @@ NOT_PTR_ELEM_CP = True                                    # see gen: !p[k]
 MEMBER_STORE_BC = True                                    # see gen_stmt: p->m = a op b
 SHIFTK_WA = True                                          # see gen_opassign: any size shifted by a constant works in WA
 LDK32_FORM = True                                         # see Func.emit: ld / lda of a 32-bit constant
+NO_SELF_LD = True                                         # see Func.emit
+QIZ_VIA_WA = True                                         # see Func.emit
 NESTED_IF_RET = True                                      # see gen_stmt: if (a) if (b) x; at the end of a function
 LX5 = True                                                # see lx5_lines: long helpers of lhx.c's lxo_* rows
 

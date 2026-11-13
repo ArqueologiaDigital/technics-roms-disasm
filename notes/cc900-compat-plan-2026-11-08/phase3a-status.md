@@ -1188,6 +1188,14 @@ few places only.  Random programs at -O3 -XS 22 -> 29 and at -O3 -XS -Xr 22 -> 2
 148 -> 182, evorder_lh.c 176 -> 224 and 159 -> 204, stdiv.c 694 -> 698 and 142 -> 166 at those two sets: twelve
 ledger rows up by 207 functions.
 
+**Batch 70 (2026-11-13): forms the oracle never writes.**  `never_forms.py` (research-scratch) lists the instruction
+forms the model emits at a set that no oracle listing of that set contains.  Two were rules, applied where
+instructions are emitted: QIZ is never loaded from memory, the value goes through WA (`ld WA,(_x)` / `ld QIZ,WA`,
+when WA is free); and `ld R,R` is not written (left alone right after a call, where the later passes drop it and
+decide between `cal` / `j` and a tail jump: switch.c sw_local).  homes2a.c 22 / 9 / 36 / 32 -> 23 / 37 / 40 / 34 of
+204 and homes2b.c 12 / 9 / 19 / 16 -> 14 / 10 / 22 / 17 of 90 at none / -O3 -XS / -Xr / -O3 -XS -Xr: eight ledger
+rows up by 42 functions.  The random programs do not move (143 / 29 / 70 / 25 of 800).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
