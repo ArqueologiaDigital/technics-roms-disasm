@@ -346,6 +346,11 @@ for c in none O3XS; do    # long helpers with an element at an int or char index
 done
 row "run 2026-11-13-11-micro-lhy, v423/Xr" "probes/lhy.c" "$O/2026-11-13-11-micro-lhy/out/v423/Xr/probes" corpus/probes/lhy.c --opt none --adecl
 row "run 2026-11-13-11-micro-lhy, v423/O3XSXr" "probes/lhy.c" "$O/2026-11-13-11-micro-lhy/out/v423/O3XSXr/probes" corpus/probes/lhy.c --opt O3XS --adecl
+for c in none O3XS; do    # division / remainder stored into an element, through a pointer or a global (corpus/probes/stv.c)
+  row "run 2026-11-13-12-micro-stv, v423/$c" "probes/stv.c" "$O/2026-11-13-12-micro-stv/out/v423/$c/probes" corpus/probes/stv.c --opt $c
+done
+row "run 2026-11-13-12-micro-stv, v423/Xr" "probes/stv.c" "$O/2026-11-13-12-micro-stv/out/v423/Xr/probes" corpus/probes/stv.c --opt none --adecl
+row "run 2026-11-13-12-micro-stv, v423/O3XSXr" "probes/stv.c" "$O/2026-11-13-12-micro-stv/out/v423/O3XSXr/probes" corpus/probes/stv.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do
