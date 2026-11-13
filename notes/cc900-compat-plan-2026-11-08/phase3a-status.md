@@ -2056,6 +2056,21 @@ argument still does (r1_00_01), which a wider first try lost. r3_05_16 itself st
 8: the second temporary comes from fpgen's frame planning, not yet understood). Ledger up 2 (random4 42 -> 43, rstmt at
 none 3,569 -> 3,571), down 0; pairs MATCH 223; semcheck 58. Random 182 / 48 / 87 / 37.
 
+**Batch 156 (2026-11-13): a computed char argument under cdecl -O3 -XS (CHAR_ARG_ANY_OPT), and -O char elements at
+an int index refused where the oracle indexes signed (CHAR_ZX_OPT_GUARD).** CHAR_ARG_ANY / CHAR_ARG_GEN (a char
+argument built in A, then `exts WA / push WA`) now also apply under cdecl -O3 -XS, where 29 random functions were
+refused ("complex char argument"). That exposed three wrong-code verdicts in the zero-extending char-element forms
+(`ld BC,i / extz XBC / add XBC,XWA`). The oracle writes those forms only when it reads the index from memory once. It
+indexes signed when it keeps the index in a register: a parameter homed in IZ (random r3_07_00 and rstmt rs_4_00_14_4,
+`ld A,(XWA+IZ)`), or a parameter read again (r3_03_05: `guca[b] += ..; for (i = b; ..)` -> `ld DE,(b) /
+add (XBC+DE),A / ld IZ,DE`). Under -O both cases are now refused. A first, wider guard (every store or op= under -O)
+lost arr_index.c ai_c_g_add and three siblings at -O3 -XS, where the index is read once and zero-extended. Ledger up 4
+(rstmt at -O3 -XS 3,006 -> 3,028, chararith.c 114 -> 129, idxloc.c 41 -> 43, random4 15 -> 16), down 0; pairs MATCH 223;
+semcheck 58 -> 56 (r2_05_00 at -O3 -XS and r4_03_00 at -O3 -XS -Xr no longer compile wrongly). Random 182 / 49 / 87 / 37.
+Lead recorded, not acted on: the double temporaries' frame region (D + D', fpgen.temp). Of 156 double-using random
+functions at none, the oracle's frame is D + D' for 75 + 37, D alone for 11 (r4_01_09, r3_05_16, r4_01_10: one
+temporary for a call argument), and neither for 33 (research-scratch gate/fpframe.py).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

@@ -6583,6 +6583,17 @@ POP_LAZY_PTR = True                                      # see store_plan: *gp =
 FP_COND_CONST = True                                     # see fold_fp_consts: c ? x : y with a constant c, doubles
 IF_CALL_KEEP_POPS = True                                 # see gen_stmt's if: a test that starts with a call
 POP_LAZY_FPARG = True                                    # see later_call_absorbs: a call with a double-work argument
+CHAR_ARG_ANY_OPT = True                                  # see push_arg: CHAR_ARG_ANY / CHAR_ARG_GEN under cdecl -O3 -XS
+CHAR_ZX_OPT_GUARD = True                                 # see elem_addr, gen_load_mem: -O char elements at an int index
+
+def idx_var_read_elsewhere(F, idx):
+    """is the variable of an int index read at some other place of the function?"""
+    x = strip(idx)
+    while x.k == 'cast' and x.kind == 'IntegralCast': x = strip(x.e)
+    if x.k != 'load' or strip(x.e).k != 'var': return True
+    d = strip(x.e).decl; u = []
+    walk(F.f.body, lambda n_, dd: u.append(n_) if n_.k == 'var' and n_.decl is d else None)
+    return len({id(y) for y in u}) > 1
 
 def plain_long_helper_stmt(x):
     """is x a statement (or if without else around one) of the form T = A op B or T op= B, a long * / % that calls a
@@ -7142,7 +7153,7 @@ def push_arg(F, a):
                 elif xm is not None and xm.startswith('('): m = xm          # the low byte is at the same address
                 elif xm in ('IX', 'IY', 'IZ', 'XIX', 'XIY', 'XIZ'): m = xm.lstrip('X') + 'L'
                 elif xm is not None and family_of(xm): m = FAM[family_of(xm)[1:]][1]
-        if m is None and CHAR_ARG_ANY and not F.opt and not F.adecl:   # random corpora: vc(gp[0]), vc((char)(gc - gca[2])),
+        if m is None and CHAR_ARG_ANY and (not F.opt or CHAR_ARG_ANY_OPT) and not F.adecl:   # random corpora: vc(gp[0]), vc((char)(gc - gca[2])),
             f_ = gen(F, a0, 'WA', 1)                                    # vc(rc(..)): the value into A (a call's result
             if f_ not in FAM or 1 not in FAM[f_]: raise Unsupported('complex char argument')   # from L), then exts WA /
             m = FAM[f_][1]                                              # push WA (r2_06_07: ld XWA,(_gp) / ld A,(XWA))
@@ -7155,7 +7166,7 @@ def push_arg(F, a):
         return max(size, 2)
     if a0.k == 'cast' and a0.kind == 'IntegralCast' and strip(a0.e).ty.size == 1 and size == 2:
         m = mem_operand(F, a0.e)
-        if m is None and CHAR_ARG_GEN and not F.opt:
+        if m is None and CHAR_ARG_GEN and (not F.opt or CHAR_ARG_ANY_OPT and not F.adecl):
             f_ = gen(F, a0.e, 'WA', 1)                      # r2_06_16: vc(gps->c); r2_06_07: vc(gp[0])
             if f_ != 'WA': raise Unsupported('complex char argument')
             m = 'A'
@@ -7676,6 +7687,12 @@ def elem_addr(F, lv, kind):
                                                            # rs_4_02_10_3: guca[t] /= 7 -> lda XWA,_guca / lda XBC,XWA+QIZH / ld A,(XBC);
                                                            # rs_4_08_17_5 under -O / -Xr: lda XBC,XWA+IZ)
             if idx_read_again(F, lv.idx): raise Unsupported('a char element at an index the function reads again')
+            if CHAR_ZX_OPT_GUARD and F.opt and kind != 'load' and idx_var_read_elsewhere(F, lv.idx):
+                raise Unsupported('a char element changed at an int index read again under -O')   # (the oracle keeps the
+                                                           # index in a register and indexes signed: random r3_03_05 -O3 -XS,
+                                                           # guca[b] += ..; for (i = b; ..) -> ld DE,(b) / add (XBC+DE),A /
+                                                           # ld IZ,DE; this zero-extending form was wrong code there; read
+                                                           # once it is right, arr_index.c ai_c_g_add)
             F.emit('lda', 'XWA,%s' % g); idx_into('BC'); F.emit('extz', 'XBC'); F.emit('add', 'XBC,XWA'); return '(XBC)'
         if not sized:
             if kind == 'rmw' and esz == 4: return None
@@ -7796,6 +7813,10 @@ def gen_load_mem(F, v, fam, size):
                 F.emit('lda', '%s,_%s' % (base, b.decl.name)); F.emit('ld', '%s,(%s+%s)' % (R, base, im)); return fam
             if esz == 1:                                           # m_gca_v
                 if idx_read_again(F, i): raise Unsupported('a char element at an index the function reads again')
+                if CHAR_ZX_OPT_GUARD and F.opt and im in ('IZ', 'QIZ'):   # a parameter both homed in IZ: the oracle
+                    raise Unsupported('a char element at an int index homed in IZ under -O')   # indexes it signed,
+                                                           # ld A,(XWA+IZ) (random r3_07_00 -O3 -XS; the zero-extending
+                                                           # form here is right only when the oracle keeps it in memory, r4_03_00)
                 F.emit('lda', 'XWA,_%s' % b.decl.name); F.emit('ld', 'BC,%s' % im); F.emit('extz', 'XBC')
                 F.emit('add', 'XBC,XWA'); F.emit('ld', '%s,(XBC)' % R); return fam
             if STORE_GLOBAL_FREE and fam in ('BC', 'DE', 'HL') and held_after(F, 'WA', v) and \
