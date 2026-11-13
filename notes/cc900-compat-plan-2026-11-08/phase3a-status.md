@@ -1345,6 +1345,25 @@ and -Xr, the clean-up amount of some -Xr functions.  And compiler quirks the mod
 `char` b is zero-extended, `(gc * gc) >> 7` shifts the byte, `-guca[a] / 10` negates the byte, `(8 ^ 16) << 11` folds
 to 0.  The gate's baseline is now these 326; the next batches bring it back down, each fixing or refusing a class.
 
+**Batch 84 (2026-11-13): the first wrong-code fixes from the statement probes; semcheck 326 -> 260.**
+Five causes, 68 verdicts.  (1) A constant-false `&&` / `||` test with the function exit as its target wrote `j RET`,
+not an instruction; and a test that is a constant now writes only its live arm, as the compiler does
+(`if (0x10000UL != 0x10000UL && gu2 != 256) ++gu2;` -> `ret`).  (2) A function that ends with `retd` has no
+`ret cc`: an early exit there (a loop's entry test under -Xr with a double parameter) skipped the stack clean-up;
+every conditional return in such a function now jumps to the exit label.  (3) A constant shift of a long helper's
+result shifted a stale XWA; it now uses the register the helper left it in (`(gul * x) >> 16` -> `cal C9H_mullu` /
+`srl 0x0,XHL`).  (4) `while (a-- > 0) *gpi++ = K;` under -O and -Xr loaded the pointer into XBC over the counter in
+BC; the live-register guard now catches a 32-bit load over the home of a narrower variable that the enclosing loop
+uses (a wider version of this check refused two correct micro functions on the scratch ledger and was narrowed).
+(5) The extension of a char pointer's index depends on the context: stored into a pointer the index is
+sign-extended after the base is loaded (`gp = gp + a` -> `ld XBC,(_gp)` / `ld WA,(a)` / `exts XWA` / `add XWA,XBC`;
+the model zero-extended a signed int there), while as a local's initialiser, a return value or an argument a char is
+zero-extended whole, the compiler's own arithmetic (`char *u = gp + b` -> `ld XBC,(_gp)` / `ld XWA,0x0` / `ld A,(b)`
+/ `add XWA,XBC`); under -O an int pointer's int index read once is zero-extended too.  rstmt 3,341 / 2,943 / 2,968 /
+2,820 -> 3,350 / 2,957 / 2,969 / 2,823.  **Still open: 187 of the 253 verdicts of batch 83** (260 - 73), listed by
+`gate/rsem.sh`: char arithmetic the compiler does at byte width, constant folding at char width, element indices
+whose extension differs out of range, several -Xr forms.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

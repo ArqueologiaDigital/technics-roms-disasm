@@ -95,6 +95,10 @@ class Fn:
                     op, args = 'set', '%s,%s' % (hx(b_ % 16), t_[1:] if b_ < 16 else 'Q' + t_[1:])
                 elif op == 'or' and re.match(r'^(WA|BC|DE|HL|IX|IY|IZ|[WABCDEHL])$', t_) and b_ < (16 if len(t_) == 2 else 8):
                     op, args = 'set', '%s,%s' % (hx(b_), t_)
+        if RETD_NO_RETCC and op == 'ret' and args and getattr(s, 'retd', 0):   # a function that ends with retd has no
+            if not getattr(s, 'exit_label', None): s.exit_label = s.newlabel()   # ret cc: the early exit jumps to the
+            op, args = 'j', '%s,%s' % (args, s.exit_label)                    # exit label (ret_target; rstmt .rs_1_06_09_3
+                                                           # under -Xr wrote ret le before retd 0x8: wrong code)
         if ADD_INC and op == 'add' and args is not None:        # add R,1..8 is inc (no oracle listing adds 1..8 to a
             m_ = re.match(r'^(X?(?:WA|BC|DE|HL|IX|IY|IZ)|[WABCDEHL]),0x([1-8])$', args)   # register; 1,335 inc at none)
             if m_: op, args = 'inc', '0x%s,%s' % (m_.group(2), m_.group(1))
@@ -144,8 +148,13 @@ class Fn:
                                        args.split(',', 1)[1] if ',' in args else '')):
                         continue                         # (the read that consumes it: lo_i_G0e add WA,(_hi))
                     if getattr(d, 'reg', None) in ('WA', 'BC', 'DE', 'HL') and 'X' + d.reg == fam_ and d not in s.dead and \
-                            (param_live_after(s, d) or rt_ and uses_decl(getattr(s, 'cur_stmt', None), d)) and \
-                            not assigns_decl(getattr(s, 'cur_stmt', None), d) and \
+                            (param_live_after(s, d) or rt_ and uses_decl(getattr(s, 'cur_stmt', None), d) or
+                             LOOP_LIVE_GUARD and getattr(getattr(s, 'top_cur', None), 'k', None) in ('while', 'do', 'for') and
+                             uses_decl(s.top_cur, d) and d.ty.size < 4 and args.split(',')[0] == 'X' + d.reg and
+                             op in ('ld', 'lda')) and \
+                            not (assigns_decl(getattr(s, 'cur_stmt', None), d) and
+                                 not (LOOP_LIVE_GUARD and getattr(getattr(s, 'cur_stmt', None), 'k', None) in ('while', 'do', 'for')
+                                      and d.ty.size < 4 and args.split(',')[0] == 'X' + d.reg and op in ('ld', 'lda'))) and \
                             not (assigns_decl(getattr(s, 'top_cur', None), d) and
                                  (getattr(getattr(s, 'top_cur', None), 'k', None) not in ('while', 'do', 'for') or
                                   self_update(op, args, d))) and \
@@ -1109,6 +1118,23 @@ UNUSED_LOCAL_INIT = True                                  # a local with an init
 UNUSED_LOCAL_DROP_OPT = True
 LEFT_CLOBBER_GUARD = True                                 # see edit_left_clobber.py: the left over a register right operand
 CW_EXT_DIRECT_OPT = True                                  # cmp_wide's extensions under -O: a byte straight into its register                              # ... except under -O, where one without side effects is dropped
+
+IF_CONST_DEAD = True                                      # see gen_stmt's if
+
+def cond_const(c):
+    """True / False when the condition folds to a constant whatever its other operands (which must then be free of
+    side effects, or never evaluated), else None"""
+    c = strip(c); f = fold(c)
+    if f.k == 'const' and f.value is not None and f.ty is not None and not fpgen.is_fp(f.ty): return bool(f.value)
+    if c.k == 'bin' and c.op in ('&&', '||'):
+        l, r = cond_const(c.l), cond_const(c.r)
+        if c.op == '&&':
+            if l is False or (r is False and side_effect_free(c.l)): return False
+            if l is True and r is True: return True
+        else:
+            if l is True or (r is True and side_effect_free(c.l)): return True
+            if l is False and r is False: return False
+    return None
 
 def side_effect_free(e):
     """no call, assignment, op= or ++ / -- anywhere in e"""
@@ -4701,8 +4727,10 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
             emit_shift(F, mnem, rr.value, FAM[lr0.reg][size]); F.emit('ld', '%s,%s' % (R, FAM[lr0.reg][size]))
             return fam
         if rr.k == 'const':
-            gen(F, l, fam, size)
-            emit_shift(F, mnem, rr.value, R); return fam
+            f_ = gen(F, l, fam, size)
+            if f_ != fam and f_ in FAM and size in FAM[f_]: fam = f_; R = FAM[fam][size]   # (a helper's result stays in
+            emit_shift(F, mnem, rr.value, R); return fam   # XHL: rstmt rs_3_07_10_7, (gul * x) >> 16 -> cal C9H_mullu /
+                                                           # srl 0x0,XHL; the model shifted a stale XWA: wrong code)
         vfam = 'BC' if fam == 'WA' else fam
         if F.adecl and BINLOC_XR and fam == 'WA' and getattr(F, 'xr_reloc', False):
             vfam = free_reg(F, avoid={'WA'})               # binop-loc 3.1: shl_c_loc under -Xr, the inner shift in L
@@ -5071,6 +5099,18 @@ def gen_ptr_arith(F, e, fam, size):
         F.emit(opn, '%s,%s' % (X, pm)); return iv.reg
     ext = 'extz' if esz == 1 and PTR_CHAR_EXTZ and (getattr(F, 'ptr_arg_ctx', False) or not ii.ty.signed or
                                                    ii.ty.size != 1) else ('exts' if ii.ty.signed else 'extz')
+    def once_(n_):
+        u_ = []; n_ = strip(n_)
+        while n_.k == 'cast' and n_.kind == 'IntegralCast': n_ = strip(n_.e)
+        if n_.k == 'load' and strip(n_.e).k == 'var':
+            walk(F.f.body, lambda m_, dd: u_.append(m_) if m_.k == 'var' and m_.decl is strip(n_.e).decl else None)
+        return len({id(x_) for x_ in u_}) == 1               # (a folded initialiser is reachable twice)
+    if PTR_CTX and F.opt and esz == 2 and ii.ty.size == 2 and getattr(e, 'from_local', None) is not None and once_(ii) and \
+            isinstance(im, str) and (im.startswith('(') or F.adecl):   # (read once: r1_06_01's b, read twice, is copied
+        ext = 'extz'                                     # from a register and sign-extended)
+                                                         # -O: an int pointer's int index in a local's initialiser is
+                                                         # zero-extended (rstmt rs_1_04_15_0: int *t = gpi + c ->
+                                                         # ld WA,(c) / extz XWA / add XWA,XWA / add XWA,(_gpi))
     R = FAM[fam][4]                                      # (a char pointer's index is zero-extended: h_p_n3's int n,
                                                          # extz XHL; a char index too when the sum is pushed, r1_04_02;
                                                          # a stored char index is sign-extended, r1_00_13)
@@ -5092,8 +5132,27 @@ def gen_ptr_arith(F, e, fam, size):
             R != 'XWA' and not F.adecl and pm.startswith('(_') and ' ' in pm and im.startswith('(XSP') and MEMBER_PTR_CHAR_LDA:
         F.emit('ld', 'C,%s' % im); F.emit('ld', 'XWA,%s' % pm)   # r2_02_05: char *t = gs.p + a -> ld C,(XSP+0x8) /
         F.emit('lda', '%s,XWA+C' % R); return fam                # ld XWA,(_gs + 0xa) / lda XIZ,XWA+C
+    zctx_ = getattr(F, 'ptr_arg_ctx', False) or getattr(e, 'from_local', None) is not None or getattr(F, 'in_return', False)
+    if PTR_CTX and esz == 1 and e.op == '+' and getattr(F, 'ptr_store_ctx', False) and ii.ty is not None and ii.ty.size == 2 and \
+            ii.ty.signed and R == 'XWA' and isinstance(pm, str) and pm.startswith('(_') and 'BC' not in live_regs(F) and \
+            isinstance(im, str) and (im.startswith('(XSP') or im.startswith('(_') or im == 'WA'):
+        F.emit('ld', 'XBC,%s' % pm)                        # a char pointer plus an int stored into a pointer: the base
+        if im != 'WA': F.emit('ld', 'WA,%s' % im)          # first, the index sign-extended (rstmt rs_2_00_03_3, every set:
+        F.emit('exts', 'XWA'); F.emit('add', 'XWA,XBC'); return fam   # gp = gp + a -> ld XBC,(_gp) / ld WA,(a) / exts XWA /
+                                                           # add XWA,XBC; the model zero-extended a: wrong code)
+    if PTR_CTX and esz == 1 and e.op == '+' and zctx_ and not F.adecl and ii.ty is not None and ii.ty.size == 1 and ii.ty.signed and \
+            isinstance(im, str) and (im.startswith('(XSP') or im.startswith('(_') or im in ('QIZH', 'QIZL')) and isinstance(pm, str):
+        # a char pointer plus a char in a value context (a local's initialiser, a return, an argument): the byte is
+        # zero-extended whole, V4.23's own arithmetic (rstmt rs_1_04_19_1: char *u = gp + b -> ld XBC,(_gp) /
+        # ld XWA,0x0 / ld A,(b) / add XWA,XBC; rs_1_05_07_2: return t + b -> ld XHL,0x0 / ld L,(b) / add XHL,XBC)
+        if R == 'XWA':
+            if pm.startswith('(') and 'BC' not in live_regs(F): F.emit('ld', 'XBC,%s' % pm); pm = 'XBC'
+            F.emit('ld', 'XWA,0x0'); F.emit('ld', 'A,%s' % im); F.emit('add', 'XWA,%s' % pm); return fam
+        if R in ('XBC', 'XDE', 'XHL') and pm != R:
+            F.emit('ld', '%s,0x0' % R); F.emit('ld', '%s,%s' % (FAM[fam][1], im)); F.emit('add', '%s,%s' % (R, pm)); return fam
     if ii.ty is not None and ii.ty.size == 1 and esz == 1 and PTR_CHAR_EXTZ and im != 'WA' and e.op == '+' and \
-            (F.adecl or F.opt and pm.startswith('(_') and ' ' not in pm) and pm != 'XBC' and not im.startswith('(XBC'):
+            (F.adecl or F.opt and pm.startswith('(_') and ' ' not in pm and not PTR_CTX) and (ii.ty.signed or not PTR_CTX) and \
+            pm != 'XBC' and not im.startswith('(XBC'):
         F.emit('ld', 'XBC,%s' % pm); F.emit('ld', 'A,%s' % im)   # -O / -Xr (r1_04_19, r1_04_02): gp + b ->
         F.emit('lda', '%s,XBC+A' % R); return fam               # ld XBC,(_gp) / ld A,(b) / lda XWA,XBC+A
     if ii.ty is not None and ii.ty.size == 1 and esz == 1 and PTR_CHAR_EXTZ and im != 'WA' and \
@@ -5885,6 +5944,11 @@ NARROW_KEEPS_CAST = True                                  # see narrow: an expli
                                                           # -> ld WA,(_gua) / neg A)
 FOLD_SELF_DIV_LONG = True                                 # see fold: gul % gul is 0 for a long too (rstmt rs_2_02_15_3)
 JUMP_TO_RET = True                                        # see compile_function_once
+RETD_NO_RETCC = True                                      # see Func.emit
+LOOP_LIVE_GUARD = True                                    # see Func.emit: a variable the enclosing loop uses is live
+                                                          # in every statement of it (rstmt rs_1_00_19_5 -O3 -XS: while (a-- > 0)
+                                                          # *gpi++ = 16 loaded XBC over a in BC: wrong code)
+PTR_CTX = True                                            # see gen_ptr_arith: the extension of a pointer sum's index by context
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -6231,11 +6295,13 @@ def gen_cond_false(F, c, target):
         fl, fr = fold(c.l), fold(c.r)                   # r2_06_17: gca[a] & 0x7 || 39 < 3 -> the test of gca[a] alone
         if fr.k == 'const' and fr.value is not None:
             if c.op == '||': return None if fr.value else gen_cond_false(F, c.l, target)
-            if not fr.value: gen_cond_false(F, c.l, target); F.emit('j', target); return None
+            if not fr.value:
+                gen_cond_false(F, c.l, target)
+                F.emit('ret') if target == 'RET' else F.emit('j', target); return None   # (j RET was not code: rstmt rs_4_00_02_0)
             return gen_cond_false(F, c.l, target)
         if fl.k == 'const' and fl.value is not None:
             if c.op == '||': return None if fl.value else gen_cond_false(F, c.r, target)
-            if not fl.value: F.emit('j', target); return None
+            if not fl.value: F.emit('ret') if target == 'RET' else F.emit('j', target); return None
             return gen_cond_false(F, c.r, target)
     if FOLD_CONST_CMP and c.k == 'bin' and c.op in ('<', '<=', '>', '>=', '==', '!=') and fold(c).k == 'const':
         if not fold(c).value: F.emit('ret') if target == 'RET' else F.emit('j', target)
@@ -7735,7 +7801,9 @@ def store_global(F, name, e, size):
         work = next((r for r in ('WA', 'BC', 'DE', 'HL') if r not in held), 'WA')
     elif STORE_GLOBAL_FREE and held_after(F, 'WA', e):  # lnr.c r_p_rd (-Xr): gr = p[i] with p in XWA -> ld DE,IZ /
         work = next((r for r in ('BC', 'DE', 'HL') if not held_after(F, r, e)), 'WA')   # ... / ld DE,(XDE) /
-    fam = gen(F, e, work, size, store=True)                                           # ld (_gr),DE
+    F.ptr_store_ctx = strip(e).k == 'bin' and getattr(strip(e), 'from_local', None) is None   # (see gen_ptr_arith)
+    try: fam = gen(F, e, work, size, store=True)                                      # ld (_gr),DE
+    finally: F.ptr_store_ctx = False
     reg = F.store_from or FAM[fam][size]
     if STORE_FROM_WORK and F.opt and F.lines and size >= 1:   # -O: the value is stored from where it was computed
         m = re.match(r'^\tld\t%s,(BC|DE|HL|IX|IY|XBC|XDE|XHL|XIX|XIY|C|E|L)$' % reg, F.lines[-1])   # (assign_expr.c
@@ -8282,6 +8350,11 @@ def gen_stmt(F, s, last):
             flush_pops(F, not live_res)
                                                           # ...: the call's pops before the test (an FP test places them
                                                           # itself, before the helper's addresses)
+        ct_ = cond_const(s.cond) if IF_CONST_DEAD else None
+        if ct_ is not None:                               # a test that is a constant: only the live arm is written
+            arm_ = s.then if ct_ else s.els               # (rstmt rs_4_00_02_0: if (0x10000UL != 0x10000UL && gu2 != 256)
+            if arm_ is not None: gen_stmt(F, arm_, last)  # ++gu2; -> ret; rs_1_01_13_3: if (1 == 0 && ..) {..} else {..})
+            return
         if s.els is None:                                 # (only one arm popped them before: wrong code)
             lab = F.newulabel()
             F.if_joins = getattr(F, 'if_joins', set()) | {lab}
