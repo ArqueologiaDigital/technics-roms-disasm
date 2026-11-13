@@ -336,6 +336,11 @@ for c in none O3XS; do    # constant folding of byte-sized constants (corpus/pro
 done
 row "run 2026-11-13-9-micro-kfold, v423/Xr" "probes/kfold.c" "$O/2026-11-13-9-micro-kfold/out/v423/Xr/probes" corpus/probes/kfold.c --opt none --adecl
 row "run 2026-11-13-9-micro-kfold, v423/O3XSXr" "probes/kfold.c" "$O/2026-11-13-9-micro-kfold/out/v423/O3XSXr/probes" corpus/probes/kfold.c --opt O3XS --adecl
+for c in none O3XS; do    # char arithmetic by operand kind and shift count (corpus/probes/chararith2.c)
+  row "run 2026-11-13-10-micro-chararith2, v423/$c" "probes/chararith2.c" "$O/2026-11-13-10-micro-chararith2/out/v423/$c/probes" corpus/probes/chararith2.c --opt $c
+done
+row "run 2026-11-13-10-micro-chararith2, v423/Xr" "probes/chararith2.c" "$O/2026-11-13-10-micro-chararith2/out/v423/Xr/probes" corpus/probes/chararith2.c --opt none --adecl
+row "run 2026-11-13-10-micro-chararith2, v423/O3XSXr" "probes/chararith2.c" "$O/2026-11-13-10-micro-chararith2/out/v423/O3XSXr/probes" corpus/probes/chararith2.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do

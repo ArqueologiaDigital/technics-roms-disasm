@@ -682,6 +682,15 @@ def gen(F, e, fam, size, then_ret=False, store=False):
         return fam
     if e.k == 'cast' and e.kind == 'IntegralCast':
         inner = strip(e.e); isz = inner.ty.size
+        nn_ = strip(inner.e) if inner.k == 'cast' and inner.kind == 'IntegralCast' and isz == 2 else None
+        if UCHAR_TO_LONG and size == 4 and nn_ is not None and getattr(nn_, 'narrowed', False) and nn_.ty is not None and \
+                nn_.ty.size == 1 and not nn_.ty.signed and fam in FAM and 1 in FAM[fam]:
+            f_ = gen(F, nn_, fam, 1)                         # an unsigned char-typed value widened to a long: the high byte
+            if f_ == fam:                                    # cleared, then extz (chararith2.c cb_gu_ng_sl: neg A /
+                B1 = FAM[fam][1]                             # ld W,0x0 / extz XWA; random r4_00_12)
+                F.emit('ld', '%s,0x0' % B1.replace('L', 'H').replace('A', 'W').replace('C', 'B').replace('E', 'D'))
+                F.emit('extz', FAM[fam][4]); return fam
+            raise Unsupported('an unsigned char value outside its register')
         if size == 4 and inner.k == 'un' and inner.op == '-' and isz == 2 and strip(inner.e).k == 'cast' and \
                 strip(strip(inner.e).e).ty is not None and strip(strip(inner.e).e).ty.size == 1 and \
                 not strip(strip(inner.e).e).ty.signed and strip(strip(inner.e).e).k == 'load' and \
@@ -6072,6 +6081,7 @@ ADD_ZERO_DROP = True                                      # see Fn.emit
 UIDX_NO_SIGNED = True                                     # see elem_addr_regs
 CHAR_REG_INDEX_OPT = True                                 # see elem_addr, gen_load_mem
 UIDX_SUM = True                                           # see lvalue
+UCHAR_TO_LONG = True                                      # see gen's cast
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -6173,18 +6183,20 @@ def char_narrow(body):
         def wrap(inner):
             it = n.ty
             n.__dict__.clear(); n.k = 'cast'; n.kind = 'IntegralCast'; n.e = inner; n.ty = it
-        def plain(z):                                      # a plain global char: what the probe asked about.  An element
-            return z is not None and z.k == 'load' and strip(z.e).k == 'var' and strip(z.e).decl.kind == 'global'   # differs:
-        if n.k == 'un' and n.op == '-':                    # random r4_09_06, gi2 = -gca[0] -> exts WA / neg WA; r4_06_05,
-            x = chr2(n.e)                                # gs.i = guca[5] << 5 -> extz WA / sla 0x5,WA
-            if plain(x) or x is not None and getattr(x, 'narrowed', False) and x.k != 'cond':   # (-(gc * hc): neg A)
+        def plain(z):                                      # a plain global char (c / d: only these were asked about)
+            return z is not None and z.k == 'load' and strip(z.e).k == 'var' and strip(z.e).decl.kind == 'global'
+        def anyc(z):                                       # any char operand (probes/chararith2.c: elements, *p, p->m and
+            return z is not None and z.k != 'cond'         # parameters negate and shift as bytes too; only an explicit
+        if n.k == 'un' and n.op == '-':                    # (int) makes an int: random r4_09_06, gi2 = -(int)gca[0] ->
+            x = chr2(n.e)                                # exts WA / neg WA; r4_06_05, (int)guca[5] << 5 -> sla 0x5,WA)
+            if anyc(x):
                 wrap(N('un', op='-', e=x, ty=ct0(x.ty.signed), narrowed=True))
             return
         if n.k != 'bin': return
         x = chr2(n.l)
         if x is None or x.k == 'cond': return
         rk = fold(n.r); y = chr2(n.r)
-        if n.op == '<<' and rk.k == 'const' and rk.value is not None and 1 <= rk.value <= 7 and plain(x):
+        if n.op == '<<' and rk.k == 'const' and rk.value is not None and 1 <= rk.value <= 7 and anyc(x):
             wrap(N('bin', op='<<', l=x, r=N('const', value=rk.value, ty=ct0(x.ty.signed)), ty=ct0(x.ty.signed), narrowed=True)); return
         to_char = parent is not None and parent.k == 'cast' and parent.kind == 'IntegralCast' and \
             getattr(parent, 'ty', None) is not None and parent.ty.size == 1   # (stored to a char: stdiv.c's forms stand)

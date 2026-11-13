@@ -1440,6 +1440,18 @@ index in a register is zero-extended whole into a sum (`gia[t] <<= 15` with an u
 idxloc.c at the two optimised sets 37 -> 41 and 40 -> 45; 21 verdicts gone, several of them older ones on idxloc.c.
 **Open: about 100 of batch 83's 253** (semcheck 167, of which 106 on rstmt).
 
+**Batch 91 (2026-11-13): char typing for every operand kind (probe chararith2.c); semcheck 167 -> 163.**  Batch 86
+had limited the char typing of `-x` and `x << k` to plain globals, because two random statements with an array
+element showed int arithmetic.  `corpus/probes/chararith2.c` (`gen_chararith2.py`, run 2026-11-13-10, 576
+functions: six operand kinds, signed and unsigned, eight expressions, six contexts) shows the typing holds for a
+constant element, an element at a parameter, `*p`, `p->m` and a char parameter alike, and for every shift count up
+to 7.  The two random statements carry an explicit `(int)` (`gi2 = -(int)gca[0]`, `(int)guca[5] << 5`), which the
+model already respects; the limit is removed.  An unsigned char-typed value widened to a long clears the high byte
+and then extends (`gl = -guc` -> `neg A` / `ld W,0x0` / `extz XWA`).  chararith2.c: no row behaves differently at
+any set; 342 / 357 / 334 / 333 of 576 exact (153 at none before); chararith.c 121 -> 130 at none.  rstmt 3,363 /
+2,965 / 2,981 / 2,832 -> 3,366 / 2,967 / 2,984 / 2,834.  **Open: 102 statement findings** (semcheck 163 = 61 older
+reviewed ones + 102 on rstmt).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
