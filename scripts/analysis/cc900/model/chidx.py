@@ -288,6 +288,12 @@ def store_byte_shape(F, lv):
     return '_' + bk[1].name
 
 
+def param_mem(F, d):
+    """a stack parameter's memory operand: its home slot when it has one (-Xr), else its stack offset; None without either"""
+    if hasattr(d, 'slot'): return '(XSP+%s)' % cg.hx(d.slot + F.push)
+    if hasattr(d, 'off'): return '(XSP+%s)' % cg.hx(d.off + F.push)
+    return None
+
 def element(F, lv, kind, fam='WA'):
     if not CHIDX: return None
     lv = strip(lv)
@@ -366,8 +372,9 @@ def element(F, lv, kind, fam='WA'):
         if signed: idx_byte(F, src, esz, 'C', busy); F.emit('ld', 'XWA,(_%s)' % bk[1].name); return '(XWA+C)'
         widen(F, src, 'BC', signed, esz); F.emit('ld', 'XWA,(_%s)' % bk[1].name); return '(XWA+BC)'
     if bk[0] == 'pmem':                                    # oc2 / ou2 / oc4: through a struct pointer parameter
-        if kind != 'load' or not hasattr(bk[1], 'off'): return None   # (-Xr: a register parameter without a stack
-        pm = '(XSP+%s)' % hx(bk[1].off + F.push)        #  slot; random r3_08_13 crashed here)
+        if kind != 'load' or not hasattr(bk[1], 'off'): return None   # (-Xr, a register parameter moved to its home
+        pm = param_mem(F, bk[1])                         #  slot: the oracle indexes by a byte, ld C,A / ld XWA,(p) /
+                                                         #  ld WA,(XWA+C), rstmt rs_3_08_13_4; random r3_08_13 crashed here)
         if signed:
             idx_byte(F, src, esz, 'A', busy, bk[2]); F.emit('ld', 'W,0x0')   # oc4: sla 0x2,A / add A,0x14
         else:
@@ -396,10 +403,12 @@ def element(F, lv, kind, fam='WA'):
         if esz == 1: return None
         widen(F, src, 'BC', signed, esz); F.emit('ld', 'XWA,(_%s)' % bk[1].name); return '(XWA+BC)'
     if bk[0] == 'pptr':
-        if not hasattr(bk[1], 'off'): return None   # (-Xr: a register parameter without a stack slot)
-        pm = '(XSP+%s)' % hx(bk[1].off + F.push)
+        if param_mem(F, bk[1]) is None: return None   # (-Xr: a register parameter moved to its home slot reads the slot:
+        pm = param_mem(F, bk[1])                      #  rstmt rs_3_02_07_4, a[t] -> ld XWA,(XSP+0x4) / ld A,(XWA+QIZH))
         if kind == 'store': return None
         if esz == 1 and signed:                            # qc1: ld XWA,0x0 / ld A,im / add XWA,(p)
+            if xr and src == ('mem', 'QIZH') and hasattr(bk[1], 'slot'):   # -Xr, the parameter in its home slot:
+                F.emit('ld', 'XWA,%s' % pm); return '(XWA+QIZH)'           #  ld XWA,(p) / ld A,(XWA+QIZH) (rs_3_02_07_4)
             if src[0] != 'mem': return None
             F.emit('ld', 'XWA,0x0'); F.emit('ld', 'A,%s' % src[1]); F.emit('add', 'XWA,%s' % pm); return '(XWA)'
         if esz == 1: return None
@@ -455,7 +464,8 @@ def ptr_sum(F, e, fam):
     if pb is None or pb[0] not in ('gptr', 'pptr', 'rptr', 'lptr'): return None
     src = source(F, c, 'load')
     if src is None: return None
-    pm = '(_%s)' % pb[1].name if pb[0] == 'gptr' else '(XSP+%s)' % hx(pb[1].off + F.push) if pb[0] == 'pptr' \
+    if pb[0] == 'pptr' and param_mem(F, pb[1]) is None: return None
+    pm = '(_%s)' % pb[1].name if pb[0] == 'gptr' else param_mem(F, pb[1]) if pb[0] == 'pptr' \
         else '(XSP+%s)' % hx(pb[1].slot + F.push) if pb[0] == 'lptr' else FAM[pb[1].reg][4]
     if e.op == '-':                                        # dc2: ld A / exts WA / add WA,WA / exts XWA / ld XHL,(_gpi) / sub XHL,XWA
         if esz == 1 or not signed or pb[0] != 'gptr': return None

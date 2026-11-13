@@ -1944,6 +1944,18 @@ stack offset, and the long-helper operand classifier and two char-index element 
 compiled or refused with a reason.  No score moved.  Still crashing: three functions at -O3 -XS (`KeyError: 8`) and one
 (`'N' object has no attribute 'decl'`).
 
+**Batch 143 (2026-11-13): the wrong code batch 142 let through, fixed.** Batch 142's message said "semcheck
+unchanged"; it was not. Its gate showed one new verdict, `rstmt3.c v423/Xr .rs_3_02_07_4` (`call 2 to .vc: model args
+(0x14), oracle (0x1a)`), noticed only after the commit. The statement had crashed the model before; batch 142's
+decline made it compile through the char-index 'pptr' path, which read the element `a[t]` (t a signed char in QIZH) by
+the zero-extending memory-index form. The oracle reads the parameter's home slot and indexes by QIZH:
+`ld XWA,(XSP+0x4) / ld A,(XWA+QIZH)`. In `chidx.py` (edit_batch143_chidx.py), `param_mem(F, d)` gives a stack
+parameter's memory operand (its home slot when it has one), the 'pptr' and pointer-sum paths use it, and 'pptr' takes
+the QIZH register-index form at -Xr. The 'pmem' path (`a->a[b]`) keeps declining a parameter without a stack offset:
+there the oracle indexes by a byte register (`ld C,A / ld XWA,(p) / ld WA,(XWA+C)`, rstmt rs_3_08_13_4), which another
+path already produces. Ledger down 0; pairs MATCH 223; semcheck 59 -> 58, the 58 reviewed before batch 142; random
+170 / 46 / 87 / 37 and rstmt at -Xr 3,043, at -O3 -XS -Xr 2,869, all unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
