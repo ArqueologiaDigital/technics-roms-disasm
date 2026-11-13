@@ -1606,19 +1606,28 @@ def bin_wide(F, e, op, l, r, fam, size):
         emit_op(W, a, kval(rk, r)); return ret('WA')       # gc2 = 8 / gs.c -> ld WA,0x8 / divs WA,(_gs); stdiv3.c sd3_c_*K*)
     ldv(W, lk, l); ext(W); emit_op(W, a, kval(rk, r)); return ret('WA')
 
+def do_predec_indexed(f):
+    for n in nodes_in(f.body, 'do'):
+        c = strip(n.cond) if n.cond is not None else None
+        if c is None or c.k != 'bin' or c.op != '>' or strip(c.l).k != 'incdec': continue
+        v = strip(strip(c.l).e)
+        if v.k == 'var' and any(uses_decl(x.idx, v.decl) for x in nodes_in(n.body, 'index')): return True
+    return False
 def idx_read_again(F, idx):
     """IDX_READ_ONCE: the int index variable of a char element is read at another place of the function too.  The
     oracle then keeps it in a register and indexes with it, signed (rstmt rs_2_02_17_0: guca[a] .. gua[a] ->
     ld BC,(a) / lda XWA,_guca / cpb (XWA+BC),0x80; rs_1_01_13_3: t *= 10; guca[t] &= 109 -> andb (XWA+BC),0x6d); the
     zero-extended sum (ld BC,(a) / extz XBC / add XBC,XWA) is for an index read once, or a parameter that is an index
     once."""
-    if not IDX_READ_ONCE or F.adecl: return False
+    if not IDX_READ_ONCE: return False
     x = strip(idx)
     while x.k == 'cast' and x.kind == 'IntegralCast': x = strip(x.e)
     if x.k != 'load' or strip(x.e).k != 'var' or x.ty is None or x.ty.size != 2: return False
     d = strip(x.e).decl
     if d.kind not in ('param', 'local') or getattr(d, 'reg', None): return False
-    u = []
+    if F.adecl and d.kind == 'param': return True          # (a register parameter the model spilled: the oracle keeps
+    u = []                                                 # it in IZ and indexes signed, rstmt -Xr rs_4_00_14_4:
+                                                           # ld IZ,BC / lda XWA,_gca / ld A,(XWA+IZ))
     def isd(n_):
         n_ = strip(n_)
         while n_.k == 'cast' and n_.kind == 'IntegralCast': n_ = strip(n_.e)
@@ -1630,6 +1639,8 @@ def idx_read_again(F, idx):
         walk(F.f.body, lambda n_, dd: u.append(n_) if n_.k == 'var' and n_.decl is d else None)
     ids = {id(x_) for x_ in u}
     if len(ids) < 2: return False
+    if nodes_in(F.f.body, 'call'): return False            # (not across a call: random r3_07_00 reads c from memory
+                                                           # for gca[c] and, after cal _v1, for guca[c])
     grp = {}                                               # (twice in one expression is read from memory twice:
     for k_ in ('expr', 'return', 'decl'):                  # evorder_ad.c ea_c_add_XX, cmpordl.c cc_l_XX, stdiv3.c)
         for st_ in nodes_in(F.f.body, k_):
@@ -4793,6 +4804,13 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
                     not getattr(F, 'l2', None) and not getattr(F, 'u1_i', None) and not getattr(F, 'elem_ops', None):
                 raise Unsupported('element read over the left value')   # (ol_two_arr: ga[i] in WA, then gb[i]'s
                                                                        # index built in WA: wrong code)
+            if RIGHT_READS_HOME and F.adecl:                # (the left value sits in the home of a register parameter
+                lx_ = strip(l)                              # the right operand still reads: rstmt -Xr rs_3_01_01_2,
+                while lx_.k == 'cast': lx_ = strip(lx_.e)   # (guca[a] ^ 128) + (a - 255) read a from A after the xor)
+                for d_ in F.f.params:
+                    if getattr(d_, 'reg', None) == fam and uses_decl(r, d_) and \
+                            not (lx_.k == 'load' and strip(lx_.e).k == 'var' and strip(lx_.e).decl is d_):
+                        raise Unsupported('the right operand reads the parameter %s under the left value' % d_.name)
             n_r_ = len(F.lines); gen(F, r, other, size); rs = FAM[other][size]
             if RIGHT_CLOBBER_GUARD and clobbers(F.lines[n_r_:], '(%s)' % (FAM[fam][4] if size < 4 else FAM[fam][4])):
                 raise Unsupported('the right operand overwrites the left [%s %s %s size %d in %s]' % (
@@ -5308,7 +5326,11 @@ def gen_ptr_arith(F, e, fam, size):
                                                            # index: .rs_2_04_03_8, return gp + b -> ld XWA,(_gp) / ld HL,BC / extz XHL /
                                                            # add XHL,XWA; an argument indexes signed: .rs_1_04_15_4, vp(gp + c) -> lda XWA,XWA+DE)
         X = FAM[iv.reg][4]; F.dead.add(iv)          # mem.c m_padd under -Xr: exts XBC / add XBC,XBC, then
-        F.emit('exts' if ii.ty.signed else 'extz', X)   # -O: add XBC,XWA / ld XHL,XBC; none: ld XHL,XBC / add XHL,XWA
+        zx_ = PTR_INIT_EXTZ and F.opt and F.adecl and esz == 2 and \
+            any(c_.init is not None and strip(c_.init) is e for c_ in nodes_in(F.f.body, 'decl'))
+        # (-O3 -XS -Xr: a local's initialiser zero-extends the int index of an int pointer sum, rstmt rs_1_06_01_0:
+        #  int *t = gpi + b -> extz XBC / add XBC,XBC / add XBC,(_gpi); plain -Xr and gpi = gpi + c sign-extend)
+        F.emit('exts' if ii.ty.signed and not zx_ else 'extz', X)   # -O: add XBC,XWA / ld XHL,XBC; none: ld XHL,XBC / add XHL,XWA
         if esz == 2: F.emit('add', '%s,%s' % (X, X))
         elif esz > 2: F.emit('sll', '%s,%s' % (hx({4: 2, 8: 3}[esz]), X))
         if fam != iv.reg and not getattr(F, 'ptr_keep', False):
@@ -6199,6 +6221,9 @@ PART_HIGH_ONLY = True                                     # see Fn.emit's statem
 BASE_IDX_CLASH = True                                     # see Fn.emit
 UIDX_RMW = True                                           # see lvalue
 SWITCH_WA_PARAM = True                                    # see gen_switch
+PTR_INIT_EXTZ = True                                      # see gen_ptr_arith
+DO_PREDEC_IDX = True                                      # see the DEC_CMP_SUB peephole
+RIGHT_READS_HOME = True                                   # see gen_bin
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -7354,6 +7379,7 @@ def gen_load_mem(F, v, fam, size):
                 base = 'XBC' if im == 'WA' else 'XWA'
                 F.emit('lda', '%s,_%s' % (base, b.decl.name)); F.emit('ld', '%s,(%s+%s)' % (R, base, im)); return fam
             if esz == 1:                                           # m_gca_v
+                if idx_read_again(F, i): raise Unsupported('a char element at an index the function reads again')
                 F.emit('lda', 'XWA,_%s' % b.decl.name); F.emit('ld', 'BC,%s' % im); F.emit('extz', 'XBC')
                 F.emit('add', 'XBC,XWA'); F.emit('ld', '%s,(XBC)' % R); return fam
             if STORE_GLOBAL_FREE and fam in ('BC', 'DE', 'HL') and held_after(F, 'WA', v) and \
@@ -14183,6 +14209,10 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
         for i in range(len(F.lines) - 1):                # flags; no oracle listing has dec 0x1,R / cp R,0x0; the
             m = F.lines[i] and re.match(r'^\tdec\t0x1,(\w+)$', F.lines[i])   # overflow flag of sub ends opt_counted.c oc_down
             if m and F.lines[i + 1] == '\tcp\t%s,0x0' % m.group(1):    # at n = -32768)
+                if DO_PREDEC_IDX and F.opt and i + 2 < len(F.lines) and (F.lines[i + 2] or '').startswith('\tj\tgt,') and \
+                        do_predec_indexed(F.f):            # (rstmt -O3 -XS -Xr rs_1_00_19_4: do { .. gula[i] .. } while
+                    raise Unsupported('do .. while (--i > 0) over an element at i')   # (--i > 0) keeps dec 0x1,IY / .. /
+                                                           # cp IY,0x0 / j gt, which differs from sub at i = -32768)
                 F.lines[i] = '\tsub\t%s,0x1' % m.group(1); F.lines[i + 1] = None
         F.lines = [l for l in F.lines if l is not None]
     if F.opt and RET_KNOWN_GLOBAL: F.lines = ret_known_global(F.lines)

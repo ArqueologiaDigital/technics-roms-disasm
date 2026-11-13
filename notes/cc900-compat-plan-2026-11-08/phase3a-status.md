@@ -1573,6 +1573,24 @@ offset is added, is indexed by the byte register (rs_1_03_19_1: `a->a[b]` -> `ex
 `add BC,0xe` / `ld WA,(XWA+C)`; the model used `(XWA+BC)`).  Scores unchanged.
 **Open: 16 statement findings** (semcheck 64): 0 none / 2 -O3 -XS (reviewed) / 4 -Xr / 10 -O3 -XS -Xr.
 
+**Batch 104 (2026-11-13): the statement probes' findings are all dealt with; semcheck 64 -> 49.**  (1) The
+"index read again" refusal of batch 100 now also runs at the -Xr sets (a local read in another statement,
+rs_1_01_13_3; a register parameter the model spilled, which the oracle keeps in IZ and indexes signed, rs_4_00_14_4)
+and at gen_load_mem's char element.  It does **not** judge a function that makes a call: random r3_07_00 reads `c`
+from memory for `gca[c]` and again, after `cal _v1`, for `guca[c]`, and is exact; refusing it would cost an exact
+function.  The price: two older verdicts that batch 100 had removed are back (r2_05_00 at none, r2_05_11 at
+-O3 -XS; in both the oracle homes the index in IZ across the calls, which the model's planner does not do).  They
+differ only for an index outside the array and are reviewed as such, as before batch 100.  (2) Modelled: at
+-O3 -XS -Xr a local's initialiser zero-extends the int register index of an int pointer sum (`int *t = gpi + b` ->
+`extz XBC` / `add XBC,XBC` / `add XBC,(_gpi)`; plain -Xr and `gpi = gpi + c` sign-extend): rs_1_04_15_0,
+rs_1_06_01_0, rs_2_02_10_0 are exact now.  (3) Refused: `do .. while (--i > 0)` over an element at `i` under -O
+(rs_1_00_19_4: the oracle keeps `dec 0x1,IY` / `cp IY,0x0` / `j gt`, the model's `sub` / `j gt` leaves the loop at
+i = -32768), and a right operand that reads a register parameter whose home already holds the left value
+(rs_3_01_01_2: `(guca[a] ^ 128) + (a - 255)`).  Reviewed as no defects: rs_4_08_02_0 and rs_1_05_07_2 (no return
+value on the compared path) and rs_2_04_03_3, where V4.23 itself drops a call (case 2 of a switch whose cases 2 and
+3 are the same call goes to the default arm) and the model, right by C, does not imitate it.
+rstmt at -O3 -XS -Xr 2,836 -> 2,839.  **Open: 0 statement findings**; semcheck 49 = the reviewed rows.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
