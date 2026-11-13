@@ -14,7 +14,10 @@ table, column DIFFERENT), taken with `git show <commit>:<file>`.  A round that c
 last committed ledger.  The output is regenerable and is not committed.
 
 .githooks/post-commit runs this script in the background after every commit that changes either results file, and the
-page reloads itself every two minutes, so a tab left open on `--serve` follows the rounds."""
+page reloads itself every two minutes, so a tab left open on `--serve` follows the rounds.
+
+Two tiles count the rounds and give the mean time of the last ten: a round's time is the wall-clock gap between its
+commit and the round commit before it (author dates), so a pause between sessions counts as part of the next round."""
 import sys, os, re, json, subprocess, html
 
 REPO = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', '..'))
@@ -201,6 +204,15 @@ function tile(k, v, target, delta, goodUp) {
   T.push(tile("Probe functions exact, all option sets", `${(100*pe/pt).toFixed(1)} %`, `${pe} of ${pt} · probes are added as rules are studied`, pe - pp, true));
   T.push(tile("Semantic differences from the oracle", last.semdiff == null ? "–" : last.semdiff, "all reviewed; target: no wrong code",
     last.semdiff == null || prev.semdiff == null ? null : last.semdiff - prev.semdiff, false));
+  // rounds, and what one costs: a round's time is the wall-clock gap between its commit and the round before it
+  const gaps = []; for (let i = 1; i < n; i++) gaps.push((new Date(R[i].date) - new Date(R[i - 1].date)) / 60e3);
+  const fmt = m => m >= 90 ? `${Math.floor(m / 60)} h ${String(Math.round(m % 60)).padStart(2, "0")} min` : `${Math.round(m)} min`;
+  const mean = a => a.reduce((x, y) => x + y, 0) / a.length;
+  const l10 = gaps.slice(-10), p10 = gaps.slice(-20, -10);
+  const flat = R.filter(r => !r.moved).length;
+  T.push(tile("Rounds so far", n, `${n - flat} moved a score · ${flat} did not`, null, true));
+  T.push(tile(`Time per round, mean of the last ${l10.length}`, l10.length ? fmt(mean(l10)) : "–",
+    "commit to commit, wall clock" + (p10.length ? ` · the ${p10.length} before: ${fmt(mean(p10))}` : ""), null, false));
   document.getElementById("tiles").innerHTML = T.join("");
 })();
 
