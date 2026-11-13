@@ -1606,6 +1606,13 @@ def bin_wide(F, e, op, l, r, fam, size):
         emit_op(W, a, kval(rk, r)); return ret('WA')       # gc2 = 8 / gs.c -> ld WA,0x8 / divs WA,(_gs); stdiv3.c sd3_c_*K*)
     ldv(W, lk, l); ext(W); emit_op(W, a, kval(rk, r)); return ret('WA')
 
+def tail_if_return(f, opt):
+    st = f.body
+    while st is not None and st.k == 'block': st = st.body[-1] if st.body else None
+    if st is None or st.k != 'if' or st.els is not None: return False
+    if opt and cond_const(st.cond) is not None: return False
+    t = flat(st.then)
+    return bool(t) and t[-1].k == 'return' and getattr(t[-1], 'value', None) is not None
 def do_predec_indexed(f):
     for n in nodes_in(f.body, 'do'):
         c = strip(n.cond) if n.cond is not None else None
@@ -6224,6 +6231,7 @@ SWITCH_WA_PARAM = True                                    # see gen_switch
 PTR_INIT_EXTZ = True                                      # see gen_ptr_arith
 DO_PREDEC_IDX = True                                      # see the DEC_CMP_SUB peephole
 RIGHT_READS_HOME = True                                   # see gen_bin
+TAIL_IF_RETURN_LABEL = True                               # see compile_function_once's last passes
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -14248,6 +14256,11 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
             if a_ and b_ and a_.group(1) == b_.group(3):
                 F.lines[k_ - 1:k_ + 1] = ['\t%s\t%s,%s' % (b_.group(1), b_.group(2), a_.group(2)), F.lines[k_ - 1]]
             k_ += 1
+    if TAIL_IF_RETURN_LABEL and tail_if_return(f, F.opt) and len(F.lines) >= 2 and F.lines[-1] == '\tret' and \
+            not F.lines[-2].endswith(':'):               # the function ends in if (..) return x; and falls off its end:
+        F.lines.insert(len(F.lines) - 1, F.newlabel() + ':')   # the return's exit label stays before the ret (rstmt
+                                                         # rs_1_00_07_3: ret eq / ld HL,(_gi) / L37: / ret; not under -O when the
+                                                         # test is a constant, rs_3_00_19_3)
     if LABEL_MERGE and not F.opt:                       # random r1_01_07: if (a) {..} else { if (b) ..; } -> the inner
         import re as _re                                 # if jumps to the outer end label (j eq,L30 ... L30:), not to one
         k = 1                                            # of its own in front of it

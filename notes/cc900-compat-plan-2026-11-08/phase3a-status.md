@@ -1591,6 +1591,17 @@ value on the compared path) and rs_2_04_03_3, where V4.23 itself drops a call (c
 3 are the same call goes to the default arm) and the model, right by C, does not imitate it.
 rstmt at -O3 -XS -Xr 2,836 -> 2,839.  **Open: 0 statement findings**; semcheck 49 = the reviewed rows.
 
+**Batch 105 (2026-11-13): the exit label of a function that ends in `if (..) return x;`; rstmt +133.**  The most
+common near miss of the statement probes at the plain set (42 of 816 differing statements).  A function whose last
+statement is an `if` without `else` ending in `return x;` falls off its end after it; the return's jump to the exit
+is dropped as a jump to the next instruction, but its label stays in front of the final `ret` (rs_1_00_07_3:
+`ret eq` / `ld HL,(_gi)` / `L37:` / `ret`).  The model wrote no label.  Under -O a constant test leaves no label
+(rs_3_00_19_3: `if (guc > 1 || 65536L < 86430L) return ..` is the bare return); a first version without that
+condition lost four statements at each -O set.  The pass runs last, after -O's removal of unreachable code, which
+dropped the label when it ran before.  rstmt at none / -O3 -XS / -Xr / -O3 -XS -Xr 3,369 / 2,970 / 2,986 / 2,839 ->
+3,409 / 3,003 / 3,018 / 2,867 of 4,694.  The random corpora do not move (165 / 46 / 87 / 37): a function there
+rarely ends this way.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
