@@ -1202,6 +1202,29 @@ UNUSED_LOCAL_DROP_OPT = True
 LEFT_CLOBBER_GUARD = True                                 # see edit_left_clobber.py: the left over a register right operand
 CW_EXT_DIRECT_OPT = True                                  # cmp_wide's extensions under -O: a byte straight into its register                              # ... except under -O, where one without side effects is dropped
 
+TEST_CLOBBER = True                                       # see test_clobber_check
+
+def test_clobber_check(F, n0, n1, cond, arms, wide=False):
+    """under -Xr an if's test must not write the register of a parameter that an arm still reads (rstmt
+    .rs_2_03_12_2: if (gps->u) v2(gia[a], gi) tested with ld XWA,(_gps) / ld WA,(XWA+0x8) over a in A; the compiler
+    takes XBC for the test there)"""
+    if not TEST_CLOBBER or not F.adecl or not getattr(F, 'guard_on', False): return
+    for d in F.f.params:
+        r_ = getattr(d, 'reg', None)
+        if r_ not in ('WA', 'BC', 'DE', 'HL') or d in F.dead or assigns_decl(cond, d): continue
+        def reads_(a_):                                    # (a plain assignment to it is no read: rs_3_03_19_6,
+            tg_ = set(); us_ = []                            #  gul = b = gul >> 14)
+            walk(a_, lambda n_, dd: tg_.add(id(strip(n_.l))) if n_.k == 'bin' and n_.op == '=' and strip(n_.l).k == 'var' else None)
+            walk(a_, lambda n_, dd: us_.append(n_) if n_.k == 'var' and n_.decl is d and id(n_) not in tg_ else None)
+            return bool(us_)
+        if not any(a_ is not None and reads_(a_) for a_ in arms): continue
+        if wide and d.ty.size != 4: continue               # (a loop: only a pointer / long home, written whole by a test's
+                                                           #  16-bit load; narrower homes have their own loop planners)
+        for l_ in F.lines[n0:n1]:
+            p_ = l_.strip().split('\t')
+            if len(p_) == 2 and p_[0] not in ('cal', 'call') and 'X' + r_ in written_fams(p_[0], p_[1]):
+                raise Unsupported('the test writes %s, the home of the parameter %s that an arm reads' % (r_, d.name))
+
 IF_CONST_DEAD = True                                      # see gen_stmt's if
 
 def cond_const(c):
@@ -6038,6 +6061,7 @@ PTR_CTX = True                                            # see gen_ptr_arith: t
 STMT_PARAM_GUARD = True                                   # see Fn.emit
 CHAR_NARROW_MORE = True                                   # see char_narrow's visit2
 ADD_ZERO_DROP = True                                      # see Fn.emit
+UIDX_NO_SIGNED = True                                     # see elem_addr_regs
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -6930,6 +6954,10 @@ def elem_addr_regs(F, lv, b, esz, kind):
             base = 'XBC' if iv.reg != 'BC' else 'XDE'                             # extended whole: extz XWA /
             F.emit('ld', '%s,%s' % (base, g)); F.emit('add', '%s,%s' % (base, X))  # add XWA,XWA / ld XBC,_gia /
             return '(%s)' % base                                                  # add XBC,XWA / (XBC)
+        if UIDX_NO_SIGNED and not iv.ty.signed and iv.ty.size == 2: return None   # (an unsigned index in a 16-bit register
+                                                           # index reads as signed: rstmt .rs_4_07_01_2 -Xr, gla[b] = ..
+                                                           # with an unsigned b in BC wrote (XDE+BC); only the load form
+                                                           # above zero-extends)
         if esz == 1:
             adjust(0)
             sym = g if not k else '%s + %s' % (g, hx(k & 0xffffffff))
@@ -6937,6 +6965,10 @@ def elem_addr_regs(F, lv, b, esz, kind):
             adjust(k); scale16(F, R, esz); sym = g
         if kind == 'rmw':                                  # .as_mul_arr: the operand in BC -> XDE
             P = 'XDE' if 'BC' in live_regs(F, except_decl=iv) else 'XBC'
+            if P[1:] == iv.reg:                              # (the base over its own index was wrong code: rstmt
+                lr_ = live_regs(F, except_decl=iv)           # .rs_2_05_00_3 -Xr, guca[b] <<= 1 with b in BC)
+                P = next(('X' + x_ for x_ in ('BC', 'DE', 'HL') if x_ != iv.reg and x_ not in lr_), None)
+                if P is None: return None
             F.emit('lda', '%s,%s' % (P, sym)); F.emit('lda', '%s,%s+%s' % (P, P, R)); return '(%s)' % P
         base = 'XDE' if kind in ('store', 'add') else 'XBC'
         if base[1:] == iv.reg: return None
@@ -8506,6 +8538,7 @@ def gen_stmt(F, s, last):
             n_if0_ = len(F.lines)
             k = gen_cond_false(F, s.cond, 'RET' if last and bare else lab)          # pushed XIZ is popped first
             n_if1_ = len(F.lines)
+            test_clobber_check(F, n_if0_, n_if1_, s.cond, [s.then])
                                                                                    # (ret ne was wrong code)
             if F.lines[-1] == '\tret' and last:
                 return                               # condition always false: the statement disappears
@@ -8529,7 +8562,9 @@ def gen_stmt(F, s, last):
         lelse, lend = F.newulabel(), F.newulabel()
         F.if_joins = getattr(F, 'if_joins', set()) | {lend}
         before_trivial_ret = getattr(F, 'trivial_ret_next', False)   # c_ifelse: r = a; else r = b; return r -> j L2
+        n_ie0_ = len(F.lines)
         gen_cond_false(F, s.cond, lelse)
+        test_clobber_check(F, n_ie0_, len(F.lines), s.cond, [s.then, s.els])
         dead0 = set(F.dead)
         gen_stmt(F, s.then, last)
         if stmt_returns(s.then): F.dead = dead0         # (the else arm and what follows still read them)
@@ -8582,7 +8617,10 @@ def gen_stmt(F, s, last):
     if s.k in ('for', 'while', 'do'):
         if F.pending and LOOP_FLUSH_POPS: flush_pops(F)   # fpp7.c m14: eight fd() calls then a while: the pops come
                                                           # before the loop's test (inside the body was wrong code)
-        gen_loop(F, s, last); return
+        F.loop_stmts = getattr(F, 'loop_stmts', []) + [s]
+        try: gen_loop(F, s, last)
+        finally: F.loop_stmts = F.loop_stmts[:-1]
+        return
     if s.k == 'switch':
         if F.pending and LOOP_FLUSH_POPS: flush_pops(F)   # fpp7.c m25: the pops before the switch, not in a case arm
         gen_switch(F, s, last); return
@@ -10108,6 +10146,15 @@ def gen_switch(F, s, last):
     F.switch_table = getattr(F, 'switch_table', False) or table
 
 def loop_cond(F, c, target, sense):
+    """loop_cond_ with test_clobber_check: a loop's test must not write the home of a parameter its body reads
+    (rstmt .rs_3_01_13_4 -Xr: while (gi-- > 0) *a++ = -646 tested with ld WA,(_gi) over a in XWA)"""
+    n0 = len(F.lines)
+    r = loop_cond_(F, c, target, sense)
+    ls_ = getattr(F, 'loop_stmts', None)
+    if ls_ and getattr(ls_[-1], 'body', None) is not None: test_clobber_check(F, n0, len(F.lines), c, [ls_[-1].body], wide=True)
+    return r
+
+def loop_cond_(F, c, target, sense):
     """jump to target when c is true (sense) or false (not sense); x-- as condition (rc_while)"""
     c = strip(c)
     if table_test(c) and getattr(F, 'l2', None):         # _atoi: while (isspace(*nptr)) -> ... / bit 0x3,(XBC+WA)

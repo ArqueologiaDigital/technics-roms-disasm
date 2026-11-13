@@ -1409,6 +1409,17 @@ sets.  And `x + 0` writes no instruction (`gi + ((8 ^ 16) << 11)` -> `ld HL,(_gi
 2,824 -> 3,362 / 2,963 / 2,979 / 2,829; micro ra_*.c and fpp11.c +1 at none.  **Open: 154 of batch 83's 253**
 (227 - 73).
 
+**Batch 88 (2026-11-13): three more -Xr causes; semcheck 227 -> 195.**  (1) The test of an `if` loaded WA (or BC)
+while an arm still read the parameter kept there (`if (gps->u) v2(gia[a], gi)` tested through XWA with `a` in A;
+the compiler takes XBC for such a test): `test_clobber_check` refuses a test that writes the home of a register
+parameter an arm reads; a loop's test is checked the same way for pointer and long homes
+(`while (gi-- > 0) *a++ = K` tested with `ld WA,(_gi)` over `a` in XWA).  A parameter the arm only assigns does not
+count.  (2) A read-modify-write on an element put the array's base into the index's own register
+(`guca[b] <<= 1` with `b` in BC -> `lda XBC,_guca` / `lda XBC,XBC+BC`).  (3) An unsigned int index in a 16-bit
+register index reads as signed; only the load form zero-extends it, so the other forms decline an unsigned index
+(`gla[b] = ..` with an unsigned `b` in BC wrote `(XDE+BC)`).  32 verdicts gone, none new, no ledger row moves.
+**Open: 122 of batch 83's 253** (195 - 73).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
