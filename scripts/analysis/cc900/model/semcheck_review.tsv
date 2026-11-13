@@ -73,3 +73,4 @@ rstmt4.c	v423/O3XS,v423/O3XSXr	_rs_4_09_17_5,.rs_4_09_17_5	no defect: the functi
 rstmt4.c	v423/Xr,v423/O3XSXr	.rs_4_08_02_0	no defect: the function returns nothing when guca[c] >= gia[7] (if (..) return ..; alone); the verdict compares the stale HL of that path (the model copies c into L first)
 rstmt1.c	v423/O3XSXr	.rs_1_05_07_2	no defect: the function returns nothing when gi2 <= u; the verdict compares the stale HL of that path
 rstmt2.c	v423/O3XSXr	.rs_2_04_03_3	the model is right by C: case 2 calls vs(gps), as case 3 does.  V4.23 at -O3 -XS -Xr sends case 2 to the default arm and makes no call (its merge of the two equal arms loses one); the model does not imitate that
+stv.c	v423/none,v423/O3XS,v423/Xr,v423/O3XSXr	_sv_n_d_GG,.sv_i_d_GG,.sv_u_d_GG,.sv_l_d_GG,.sv_n_d_GG	UB only: hX / hX with the global hX = 0 (the verdict's trial): a zero division, whose result the oracle and the model leave differently
