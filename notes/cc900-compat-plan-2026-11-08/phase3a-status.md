@@ -1006,6 +1006,19 @@ function pickles instead of `copy.deepcopy` trees (identical ledger).  Tooling s
 compile through `model/cache.py` (`CC900_CACHE`; README "One compile per round"), and the dashboard counts the rounds
 and their mean time.
 
+**Batch 48 (2026-11-13): stores of a division, more operand kinds.**  `corpus/probes/stdiv2.c` (run
+2026-11-13-1-micro-stdiv2, 1,020 functions) repeats stdiv.c's `L = A / B`, `L = A % B` with the operands the random
+corpora use and stdiv.c lacked: the stored-to object itself, a member through a pointer, a static member, a constant
+element, a parameter.  Found (`SD_MORE`): a static member or constant element divisor behaves like one read through an
+address -- the division first, then the store address; a displaced divisor's pointer takes XWA and the division runs
+in XBC; `*p = *p / k` reads through the store address; an element on both sides loads its index once (into WA beside a
+plain divisor, held in HL or DE when the division comes first); -O builds the object's address once in XBC (XDE beside
+a displaced divisor) and reads and writes through it; implicitly promoted chars divide 16 / 8 whatever the divisor
+(`store_div_char2`); a long helper with a member / element divisor stores after the call and keeps no address in XIZ.
+stdiv2.c 566 / 404 / 409 / 275 -> 898 / 820 / 409 / 275 of 1,020 at none / -O3 -XS / -Xr / -O3 -XS -Xr; the misses
+left without -Xr are the unsigned long rows that keep an address in XIZ or a temporary across the helper.  Random
+programs at none 88 -> 90 of 800.  The gate for this batch took 1 min 19 s with the shared compile cache.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

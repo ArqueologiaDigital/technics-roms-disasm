@@ -289,6 +289,11 @@ row "run 2026-11-12-12-micro-fpargg, v423/O3XSXr" "probes/fpargg.c" "$O/2026-11-
 for c in none O3XS; do    # the order of a double operation's addresses (corpus/probes/fpord.c; -Xr rejects its double results)
   row "run 2026-11-12-13-micro-fpord, v423/$c" "probes/fpord.c" "$O/2026-11-12-13-micro-fpord/out/v423/$c/probes" corpus/probes/fpord.c --opt $c
 done
+for c in none O3XS; do    # stores of a division: more operand kinds (corpus/probes/stdiv2.c)
+  row "run 2026-11-13-1-micro-stdiv2, v423/$c" "probes/stdiv2.c" "$O/2026-11-13-1-micro-stdiv2/out/v423/$c/probes" corpus/probes/stdiv2.c --opt $c
+done
+row "run 2026-11-13-1-micro-stdiv2, v423/Xr" "probes/stdiv2.c" "$O/2026-11-13-1-micro-stdiv2/out/v423/Xr/probes" corpus/probes/stdiv2.c --opt none --adecl
+row "run 2026-11-13-1-micro-stdiv2, v423/O3XSXr" "probes/stdiv2.c" "$O/2026-11-13-1-micro-stdiv2/out/v423/O3XSXr/probes" corpus/probes/stdiv2.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do

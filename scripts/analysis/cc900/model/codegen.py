@@ -1512,9 +1512,20 @@ def lh_post_kinds(F, lv, rv):
     if L is None or L[0] not in ('P', 'D', 'X', 'Q', 'M'): return None
     try: rk = cw_kind(F, x.r, 4); lk = cw_kind(F, x.l, 4)
     except Unsupported: return None
+    if SD_MORE and rk is not None and lk is not None and rk[0] == 'M' and lk[0] in ('K', 'G', 'M') and x.op in ('/', '%'):
+        return (L, rk)                                       # (stdiv2.c sd2_n_d_PMM: a static member or constant element
+                                                             #  divisor: ld XWA,(_hs + 0x4) / ld XBC,(_ks + 0x4) / cal C9H_divlu /
+                                                             #  ld XWA,(_gnp) / ld (XWA),XHL)
     if rk is None or lk is None or rk[0] not in ('P', 'X') or lk[0] not in ('K', 'G', 'M', 'P', 'X'): return None
     if rk[0] == 'X' and lk[0] == 'X' and rk[2] == lk[2]: return None
     return (L, rk)
+
+def lh_post_member(F, lv, rv):
+    """lh_store_post takes this store for its static member / constant element divisor (no address is kept across the
+    helper: plan_store_xiz and plan_store_x leave it alone)"""
+    if not (SD_MORE and LH_STORE_POST) or F.adecl or (F.opt and not LH_OPT_CONSTS): return False
+    ks = lh_post_kinds(F, lv, rv)
+    return ks is not None and ks[1][0] == 'M'
 
 def lh_store_post(F, lv, rv):
     """L = A op B for a long, L stored through an address and B read through one (stdiv.c, run 2026-11-12-5): the
@@ -1585,6 +1596,7 @@ def plan_store_x(F):
             hits.append((x, v, 'ADDR')); continue           # (sd_l_d_DPG: the store address in XIZ, lda)
         if k[0] != 'X' or lv.k != 'index': continue
         if a is None or b is None or (a == 'K' and b == 'K'): continue
+        if lh_post_member(F, lv, v): continue                # (the value first: lh_store_post)
         hits.append((x, v, 'IZ' if 'K' not in (a, b) else 'XIZ'))
     if len(hits) != 1: return
     from frontend import Decl, Type
@@ -1962,14 +1974,21 @@ def sd_opkind(F, x, size):
     if x.k != 'load' or x.ty is None or x.ty.size != size or x.ty.kind != 'int': return None
     lv = strip(x.e)
     if lv.k == 'var':
-        if lv.decl.kind != 'global' or getattr(lv.decl, 'reg', None): return None
+        if getattr(lv.decl, 'reg', None): return None
+        if SD_MORE and lv.decl.kind == 'param' and size == 2 and not getattr(lv.decl, 'homed', False) \
+                and not getattr(F, 'lazy_homes', None):
+            m = mem_operand(F, x)                           # (stdiv2.c: a parameter in memory is a plain operand)
+            return ('G', m) if isinstance(m, str) and m.startswith('(XSP+') else None
+        if lv.decl.kind != 'global': return None
         return ('G', '(_%s)' % lv.decl.name)
     k = sv_value_kind(F, x, size)
     if k is not None: return k
     if lv.k in ('member', 'index'):
         k = sc_lkind(F, lv)
-        if k is not None and k[0] == 'M': return ('G', k[1])
+        if k is not None and k[0] == 'M': return ('G', k[1], 'A') if SD_MORE else ('G', k[1])
     return None
+
+SD_MORE = True                                            # store_div: stdiv2.c's operand kinds (see store_div)
 
 def store_div(F, lv, rv):
     """L = A / B and L = A % B for an int or unsigned (corpus/probes/stdiv.c, run 2026-11-12-5).  A divisor in memory
@@ -1991,7 +2010,11 @@ def store_div(F, lv, rv):
     if L is None: return False
     a, b = sd_opkind(F, x.l, 2), sd_opkind(F, x.r, 2)
     if a is None or b is None or (a[0] == 'K' and b[0] == 'K'): return False
-    if 'D' in (a[0], b[0]) and not (STORE_DIV_DD and L[0] == 'D' and a[0] == 'D' and b[0] in ('G', 'K')):
+    first = SD_MORE and not (b[0] in ('G', 'K') and len(b) == 2)   # the division before the store address (stdiv2.c)
+    if first and 'D' in (a[0], b[0]):
+        xs = [k for k in (a, b) if k[0] == 'X']             # (an element beside a displaced operand: only -O's
+        if L[0] == 'Q' or (xs and not (L[0] == 'X' and xs[0][1:3] == L[1:3])): return False   # L = L / B, L = A / L)
+    elif 'D' in (a[0], b[0]) and not (STORE_DIV_DD and L[0] == 'D' and a[0] == 'D' and b[0] in ('G', 'K')):
         return False                                         # (ea_i_div_GD: the member's pointer in XWA, the division in XBC;
                                                              #  a member store of a displaced dividend is the DGG form, random
                                                              #  r1_00_17: gps->i = gps->i / gi3 -> ld XWA,(_gps) / ld XBC,(_gps) /
@@ -2019,9 +2042,88 @@ def store_div(F, lv, rv):
         if k[0] == 'K': return hx(k[1] & 0xffff)
         if k[0] in ('P', 'D'): return '(X%s+%s)' % (regs[0], hx(k[2])) if k[2] else '(X%s)' % regs[0]
         return '(X%s+%s)' % (regs[1], regs[0])
-    if b[0] in ('G', 'K'):
-        if L[0] == 'D':
-            R, base = 'BC', 'DE'
+    def same(k):                                           # the operand is the stored-to object itself
+        if L[0] in ('P', 'D') and k[0] in ('P', 'D'): return L[1] == k[1] and L[2] == k[2]
+        if L[0] == 'X' and k[0] == 'X': return L[1] == k[1] and L[2] == k[2]
+        return L[0] == 'M' and k[0] == 'G' and L[1] == k[1]
+    sa, sb = same(a), same(b)
+    if SD_MORE and F.opt and sa != sb:
+        # -O, L = L / B or L = A / L: the object's address is built once, in XBC, and read and written through it
+        # (sd2_i_d_DSG: ld XBC,(_gps) / inc 0x2,XBC / ld WA,(XBC) / exts XWA / divs XWA,(_ki) / ld (XBC),WA; an element:
+        # ld BC,(c) / add BC,BC / lda XWA,_gia / exts XBC / add XBC,XWA; sd2_i_d_ESG: lda XBC,_gia + 0x6).  Beside a
+        # displaced divisor, whose pointer takes XWA, the address is in XDE and the division in XBC (sd2_i_d_PSD:
+        # ld XDE,(_gip) / ld XWA,(_kps) / ld BC,(XDE) / exts XBC / divs XBC,(XWA+0x2) / ld (XDE),BC); a displaced
+        # dividend's pointer is loaded first (sd2_i_d_DDS: ld XWA,(_hps) / ld XBC,(_gps) / inc 0x2,XBC / ld WA,(XWA+0x2)).
+        o = b if sa else a
+        if o[0] not in ('G', 'K', 'D') or (L[0] == 'D' and not 1 <= L[2] <= 8): return False
+        A = 'DE' if sa and o[0] == 'D' else 'BC'
+        if not sa and o[0] == 'D': emit('ld', 'XWA,%s' % o[1])
+        if L[0] in ('P', 'D'):
+            emit('ld', 'X%s,%s' % (A, L[1]))
+            if L[2]: emit('inc', '%s,X%s' % (hx(L[2]), A))
+        elif L[0] == 'X' and A == 'DE':                     # (sd2_i_d_XSD: ld BC,(c) / add BC,BC / lda XWA,_gia / lda XDE,XWA+BC)
+            emit('ld', 'BC,%s' % L[2]); emit('add', 'BC,BC'); emit('lda', 'XWA,%s' % L[1]); emit('lda', 'XDE,XWA+BC')
+        elif L[0] == 'X' and o[0] == 'D':                   # (sd2_i_d_XDS: XWA holds the dividend's pointer: ld DE,(c) /
+            emit('ld', 'DE,%s' % L[2]); emit('add', 'DE,DE'); emit('lda', 'XBC,%s' % L[1]); emit('lda', 'XBC,XBC+DE')   # add DE,DE / lda XBC,_gia / lda XBC,XBC+DE)
+        elif L[0] == 'X':
+            emit('ld', 'BC,%s' % L[2]); emit('add', 'BC,BC'); emit('lda', 'XWA,%s' % L[1]); emit('exts', 'XBC'); emit('add', 'XBC,XWA')
+        else: emit('lda', 'X%s,%s' % (A, L[1][1:-1]))
+        V = 'WA'
+        if sa and o[0] == 'D': emit('ld', 'XWA,%s' % o[1]); V = 'BC'
+        if sa: emit('ld', '%s,(X%s)' % (V, A)); emit(ext, 'X' + V)
+        elif o[0] == 'K': emit(ldk(o[1]), 'X%s,%s' % (V, k32(o[1])))
+        else: emit('ld', '%s,%s' % (V, o[1] if o[0] == 'G' else '(XWA+%s)' % hx(o[2]))); emit(ext, 'X' + V)
+        if sb: d = '(X%s)' % A
+        else: d = o[1] if o[0] == 'G' else hx(o[1] & 0xffff) if o[0] == 'K' else '(XWA+%s)' % hx(o[2])
+        emit(dv, 'X%s,%s' % (V, d))
+        if rem: emit('ld', 'WA,Q%s' % V); V = 'WA'             # (sd2_i_m_PSD: ld WA,QBC / ld (XDE),WA)
+        emit('ld', '(X%s),%s' % (A, V)); return True
+    if SD_MORE and not F.opt and sa != sb:
+        # without -O, L = L / B and L = A / L.  A pointer's target is read through the store address beside a plain
+        # divisor (sd2_i_d_PSG: ld XBC,(_gip) / ld WA,(XBC) / exts XWA / divs XWA,(_ki) / ld (XBC),WA).  An element's
+        # index is loaded once: beside a plain divisor into WA and copied for the store address (sd2_i_d_XSG:
+        # ld WA,(c) / ld DE,WA / add DE,DE / lda XHL,_gia / add WA,WA / lda XBC,_gia / ld WA,(XBC+WA) / .. /
+        # ld (XHL+DE),WA); when the division comes first it waits in HL (sd2_i_d_XSM: ld HL,(c) / ld WA,HL / add WA,WA /
+        # lda XBC,_gia / ld WA,(XBC+WA) / .. / ld DE,WA / ld WA,HL / add WA,WA / lda XBC,_gia / ld (XBC+WA),DE; as the
+        # divisor in XDE+BC, sd2_i_d_XMS), or in DE beside a displaced operand, the result then in HL (sd2_i_d_XSD,
+        # sd2_i_d_XDS).
+        o = b if sa else a
+        plain = o[0] in ('G', 'K') and len(o) == 2
+        oop = hx(o[1] & 0xffff) if o[0] == 'K' else o[1]
+        if L[0] == 'P' and sa and plain:
+            emit('ld', 'XBC,%s' % L[1]); emit('ld', 'WA,(XBC)'); emit(ext, 'XWA'); emit(dv, 'XWA,%s' % oop)
+            if rem: emit('ld', 'WA,QWA')
+            emit('ld', '(XBC),WA'); return True
+        if L[0] == 'X' and not (o[0] == 'K' and not sa):
+            im, sym = L[2], L[1]
+            def tail(C, V, src):                           # the result into V, the cached index C scaled in WA
+                emit('ld', '%s,%s' % (V, src)); emit('ld', 'WA,%s' % C); emit('add', 'WA,WA'); emit('lda', 'XBC,%s' % sym)
+                emit('ld', '(XBC+WA),%s' % V); return True
+            if sa and plain:
+                emit('ld', 'WA,%s' % im); emit('ld', 'DE,WA'); emit('add', 'DE,DE'); emit('lda', 'XHL,%s' % sym)
+                emit('add', 'WA,WA'); emit('lda', 'XBC,%s' % sym); emit('ld', 'WA,(XBC+WA)'); emit(ext, 'XWA')
+                emit(dv, 'XWA,%s' % oop)
+                if rem: emit('ld', 'WA,QWA')
+                emit('ld', '(XHL+DE),WA'); return True
+            if sa and o[0] == 'G':
+                emit('ld', 'HL,%s' % im); emit('ld', 'WA,HL'); emit('add', 'WA,WA'); emit('lda', 'XBC,%s' % sym)
+                emit('ld', 'WA,(XBC+WA)'); emit(ext, 'XWA'); emit(dv, 'XWA,%s' % oop)
+                return tail('HL', 'DE', 'QWA' if rem else 'WA')
+            if sb and o[0] == 'G':
+                emit('ld', 'HL,%s' % im); emit('ld', 'BC,HL'); emit('add', 'BC,BC'); emit('lda', 'XDE,%s' % sym)
+                emit('ld', 'WA,%s' % oop); emit(ext, 'XWA'); emit(dv, 'XWA,(XDE+BC)')
+                return tail('HL', 'DE', 'QWA' if rem else 'WA')
+            if sa and o[0] == 'D':
+                emit('ld', 'DE,%s' % im); emit('ld', 'BC,DE'); emit('add', 'BC,BC'); emit('lda', 'XHL,%s' % sym)
+                emit('ld', 'XWA,%s' % o[1]); emit('ld', 'BC,(XHL+BC)'); emit(ext, 'XBC'); emit(dv, 'XBC,(XWA+%s)' % hx(o[2]))
+                return tail('DE', 'HL', 'QBC' if rem else 'BC')
+            if sb and o[0] == 'D':
+                emit('ld', 'DE,%s' % im); emit('ld', 'XWA,%s' % o[1]); emit('ld', 'BC,DE'); emit('add', 'BC,BC')
+                emit('lda', 'XHL,%s' % sym); emit('ld', 'WA,(XWA+%s)' % hx(o[2])); emit(ext, 'XWA'); emit(dv, 'XWA,(XHL+BC)')
+                return tail('DE', 'HL', 'QWA' if rem else 'WA')
+    if b[0] in ('G', 'K') and len(b) == 2:                  # (a static member or constant element divisor: the division
+        if L[0] == 'D':                                    #  first, stdiv2.c sd2_i_d_PMM: ld WA,(_hs + 0x2) / exts XWA /
+            R, base = 'BC', 'DE'                           #  divs XWA,(_ks + 0x2) / ld XBC,(_gip) / ld (XBC),WA)
             emit('ld', 'XWA,%s' % L[1]); m = '(XWA+%s)' % hx(L[2])
         else:
             R, base = 'WA', 'BC'
@@ -2040,6 +2142,24 @@ def store_div(F, lv, rv):
         if rem: emit('ld', '%s,Q%s' % (R, R))
         emit('ld', '%s,%s' % (m, R)); return True
     # the divisor through an address: the division first, in XWA
+    if SD_MORE and b[0] == 'D' and a[0] != 'D':            # a displaced divisor's pointer takes XWA and the division runs
+        if a[0] == 'P': emit('ld', 'XBC,%s' % a[1])        # in XBC (sd2_i_d_PMD: ld XWA,(_kps) / ld BC,(_hs + 0x2) /
+        emit('ld', 'XWA,%s' % b[1])                        # exts XBC / divs XBC,(XWA+0x2) / ld XWA,(_gip) / ld (XWA),BC;
+        K = L[0]                                           # sd2_i_d_PSD: ld XBC,(_gip) / ld XWA,(_kps) / ld BC,(XBC))
+        V = 'DE' if F.opt and not rem and K == 'X' else 'BC'   # (-O sd2_i_d_XMD: the quotient straight in DE)
+        if a[0] == 'K': emit(ldk(a[1]), 'X%s,%s' % (V, k32(a[1])))
+        else:
+            emit('ld', '%s,%s' % (V, a[1] if a[0] == 'G' else '(XBC)')); emit(ext, 'X' + V)
+        emit(dv, 'X%s,(XWA+%s)' % (V, hx(b[2])))
+        if K in ('G', 'M', 'P'):                            # (a remainder moves to WA: sd2_i_m_PMD: ld WA,QBC /
+            V = 'BC'                                       #  ld XBC,(_gip) / ld (XBC),WA)
+            if rem: emit('ld', 'WA,QBC'); V = 'WA'
+            m = sv_store_addr(F, L, ['BC' if rem else 'WA'], 2) if K == 'P' else L[1]
+            emit('ld', '%s,%s' % (m, V)); return True
+        if K == 'X' and V != 'DE': emit('ld', 'DE,%s' % ('QBC' if rem else 'BC'))
+        elif rem: emit('ld', 'BC,QBC')
+        m = sv_store_addr(F, L, ['WA', 'BC'] if K == 'X' else ['WA'], 2)
+        emit('ld', '%s,%s' % (m, 'DE' if K == 'X' else 'BC')); return True
     if a[0] == 'X':
         bregs = ['BC', 'DE'] if b[0] == 'X' else ['DE']
         abase = 'HL' if b[0] == 'X' else 'BC'
@@ -2048,10 +2168,11 @@ def store_div(F, lv, rv):
         bregs = ['BC', 'DE'] if b[0] == 'X' else ['BC']
         if a[0] in ('P', 'D'): emit('ld', 'XWA,%s' % a[1])
     if b[0] in ('P', 'D'): emit('ld', 'X%s,%s' % (bregs[0], b[1]))
-    else: idx(bregs[0], b[2], bregs[1], b[1])
+    elif b[0] == 'X': idx(bregs[0], b[2], bregs[1], b[1])
+    else: bregs = []                                       # (a static member or constant element: no register)
     K = L[0]
     tgt = 'DE' if K == 'X' else 'BC'
-    R0 = tgt if (F.opt and not rem and K in ('D', 'X', 'Q') and b[0] in ('P', 'D') and tgt not in bregs) else 'WA'
+    R0 = tgt if (F.opt and not rem and K in ('D', 'X', 'Q') and b[0] in ('P', 'D', 'G') and tgt not in bregs) else 'WA'   # (-O sd2_i_d_DMM: ld BC,(_hs + 0x2) / exts XBC / divs XBC,(_ks + 0x2))
     if a[0] == 'K': emit(ldk(a[1]), 'X%s,%s' % (R0, k32(a[1])))
     else:
         if a[0] == 'G': emit('ld', '%s,%s' % (R0, a[1]))
@@ -2170,6 +2291,106 @@ def store_div_char(F, lv, rv):
         if res != 'A': e('ld', 'A,%s' % res)
         e('ld', 'XBC,%s' % L[1]); e('ld', '(XBC),A'); return True
     e('ld', 'C,%s' % res); elem(L[1], L[2], 'DE', 'lda' if L[0] == 'X' else 'ld'); e('ld', '(XDE),C'); return True
+
+def store_div_char2(F, lv, rv):
+    """L = A / B and L = A % B for signed chars promoted implicitly, without -O (corpus/probes/stdiv2.c, run
+    2026-11-13-1-micro-stdiv2): the 16 / 8 division whatever the divisor (ld A,a / exts WA / divs WA,b; the remainder
+    is W).  A plain divisor (a global, a parameter, a constant): the store address first, a pointer in XBC, an element
+    built through XWA in XBC, or in XDE when the dividend is an element (sd2_c_d_XSG), and a dividend that is the
+    stored-to pointer's target is read through it (sd2_c_d_PSG: ld XBC,(_gcp) / ld A,(XBC) / exts WA / divs WA,(_kc) /
+    ld (XBC),A).  A divisor that is a static member, a constant element or read through an address: the division
+    first -- the dividend's pointer in XWA, the divisor's address in XBC -- then the store address, a pointer in XBC
+    again (sd2_c_d_PMS: ld XBC,(_gcp) / ld A,(_hs) / exts WA / divs WA,(XBC) / ld XBC,(_gcp) / ld (XBC),A), an element
+    in XDE with the value moved to C (sd2_c_d_XMM).  True when it emitted the statement."""
+    if not SD_MORE or F.adecl or (F.opt and not LH_OPT_CONSTS): return False
+    x = strip(rv)
+    while x.k == 'cast' and x.kind == 'IntegralCast': x = strip(x.e)
+    if x.k != 'bin' or x.op not in ('/', '%') or x.ty is None or x.ty.size != 2 or not x.ty.signed: return False
+    if lv.ty is None or lv.ty.size != 1 or not lv.ty.signed: return False
+    def kind(y):
+        y0 = strip(y)
+        if y0.k == 'cast' and getattr(y0, 'explicit', False): return None
+        while y0.k == 'cast' and y0.kind == 'IntegralCast': y0 = strip(y0.e)
+        if y0.k == 'load' and y0.ty is not None and y0.ty.size == 1 and y0.ty.signed and strip(y0.e).k == 'var':
+            d = strip(y0.e).decl
+            if d.kind == 'param' and not getattr(d, 'reg', None) and not getattr(d, 'homed', False) and not getattr(F, 'lazy_homes', None):
+                m = mem_operand(F, y0)
+                return ('G', m) if isinstance(m, str) and m.startswith('(XSP+') else None
+        k = sdc_kind(F, y)
+        if k is not None and k[0] == 'G' and y0.k == 'load' and strip(y0.e).k != 'var': return ('G', k[1], 'A')
+        return k
+    a, b = kind(x.l), kind(x.r)
+    if a is None or b is None or a[0] == 'K': return False
+    if b[0] == 'K':
+        bv = b[1] & 0xffff
+        if bv == 0 or (bv & (bv - 1)) == 0 or bv == 0xffff: return False
+    for k in (a, b):
+        if k[0] == 'X' and (not isinstance(k[2], str) or not k[2].startswith('(')): return False
+    L = sc_lkind(F, strip(lv))
+    if L is None or L[0] not in ('M', 'P', 'X') or (L[0] == 'P' and L[2]): return False   # (a plain global: the older
+    if L[0] == 'X' and not (isinstance(L[2], str) and L[2].startswith('(')): return False #  paths, evorder_ad.c
+    if any(r_ in ('WA', 'BC', 'DE', 'HL') for r_ in live_regs_read(F)): return False      #  ea_c_rem_GG: ld (_gc2),W)
+    rem = x.op == '%'
+    def e(op, args): F.emit(op, args)
+    def elem(k, R): e('lda', 'XWA,%s' % k[1]); e('ld', '%s,%s' % (R, k[2])); e('extz', 'X' + R); e('add', 'X%s,XWA' % R)
+    first = len(b) == 3 or b[0] in ('P', 'X')                # the division before the store address
+    if a[0] == 'X' and b[0] == 'X': return False             # (unprobed)
+    def is_l(k):
+        if L[0] == 'P': return k[0] == 'P' and k[1] == L[1]
+        if L[0] == 'X': return k[0] == 'X' and k[1:3] == L[1:3]
+        return L[0] == 'M' and k[0] == 'G' and k[1] == L[1]
+    sa, sb = is_l(a), is_l(b)
+    if F.opt and sa != sb:
+        # -O, L = L / B and L = A / L: the object's address once, in XBC (an element through XWA; lda for a static
+        # member or constant element), read and written through it; the other operand's pointer in XWA before it when
+        # it is the dividend (XDE beside an element), in XDE after it when it is the divisor (sd2_c_d_XSD: lda XWA,_gca /
+        # ld BC,(c) / extz XBC / add XBC,XWA / ld XDE,(_kps) / ld A,(XBC) / exts WA / divs WA,(XDE) / ld (XBC),A); the
+        # remainder of a dividend read through it is stored from W.
+        o = b if sa else a
+        if o[0] == 'X': return False
+        R = None
+        if not sa and o[0] == 'P': R = 'DE' if L[0] == 'X' else 'WA'; e('ld', 'X%s,%s' % (R, o[1]))
+        if L[0] == 'P': e('ld', 'XBC,%s' % L[1])
+        elif L[0] == 'X': elem(L, 'BC')
+        else: e('lda', 'XBC,%s' % L[1][1:-1])
+        if sa and o[0] == 'P': R = 'DE'; e('ld', 'XDE,%s' % o[1])
+        oop = '(X%s)' % R if o[0] == 'P' else hx(o[1] & 0xffff) if o[0] == 'K' else o[1]
+        e('ld', 'A,%s' % ('(XBC)' if sa else oop)); e('exts', 'WA'); e('divs', 'WA,%s' % ('(XBC)' if sb else oop))
+        fromw = rem and sa and not (L[0] == 'M' and ' + ' not in L[1])   # (sd2_c_m_PSG -O: ld (XBC),W; sd2_c_m_PMS and the
+        if rem and not fromw: e('ld', 'A,W')                              #  member at offset 0, sd2_c_m_MSG: ld A,W / ld (XBC),A)
+        e('ld', '(XBC),%s' % ('W' if fromw else 'A')); return True
+    if not first:
+        same = (L[0] == 'P' and a[0] == 'P' and a[1] == L[1]) or (L[0] == 'X' and a[0] == 'X' and a[1:3] == L[1:3])
+        if a[0] == 'X' and not same: return False
+        if L[0] == 'P': e('ld', 'XBC,%s' % L[1]); m = '(XBC)'
+        elif L[0] == 'X':
+            R = 'DE' if a[0] == 'X' else 'BC'
+            elem(L, R); m = '(X%s)' % R
+        else: m = L[1]
+        if a[0] == 'X': elem(a, 'BC'); e('ld', 'A,(XBC)')
+        elif a[0] == 'G': e('ld', 'A,%s' % a[1])
+        elif same: e('ld', 'A,(XBC)')
+        else: e('ld', 'XWA,%s' % a[1]); e('ld', 'A,(XWA)')     # (sd2_c_m_PDG: ld XBC,(_gcp) / ld XWA,(_hps) / ld A,(XWA))
+        e('exts', 'WA'); e('divs', 'WA,%s' % (hx(b[1] & 0xffff) if b[0] == 'K' else b[1]))
+        if rem: e('ld', 'A,W')
+        e('ld', '%s,A' % m); return True
+    if a[0] == 'X' and b[0] == 'P':                          # (sd2_c_d_XSD: the element in XDE, the divisor's pointer in XBC)
+        elem(a, 'DE'); e('ld', 'XBC,%s' % b[1]); e('ld', 'A,(XDE)'); bop = '(XBC)'
+    elif a[0] == 'P' and b[0] == 'X':                        # (sd2_c_d_XDS: ld XDE,(_hps) / lda XWA,_gca / .. / ld A,(XDE))
+        e('ld', 'XDE,%s' % a[1]); elem(b, 'BC'); e('ld', 'A,(XDE)'); bop = '(XBC)'
+    else:
+        if a[0] == 'P': e('ld', 'XWA,%s' % a[1])
+        if b[0] == 'P': e('ld', 'XBC,%s' % b[1]); bop = '(XBC)'
+        elif b[0] == 'X': elem(b, 'BC'); bop = '(XBC)'
+        else: bop = b[1]
+        if a[0] == 'X': elem(a, 'BC'); e('ld', 'A,(XBC)')
+        else: e('ld', 'A,%s' % ('(XWA)' if a[0] == 'P' else a[1]))
+    e('exts', 'WA'); e('divs', 'WA,%s' % bop)
+    if L[0] == 'X':
+        e('ld', 'C,%s' % ('W' if rem else 'A')); elem(L, 'DE'); e('ld', '(XDE),C'); return True
+    if rem: e('ld', 'A,W')
+    if L[0] == 'P': e('ld', 'XBC,%s' % L[1]); e('ld', '(XBC),A'); return True
+    e('ld', '%s,A' % L[1]); return True
 
 def store_chain(F, lv, rv, size):
     """L1 = (L2 = V) for an int or long, after corpus/probes/stchain.c (run 2026-11-12-1-micro-stchain).  A loaded or
@@ -7203,6 +7424,7 @@ def gen_stmt(F, s, last):
         if LH_STORE_SAVE and getattr(F, 'lhc', None) is not None and F.lhc.get('save') and F.lhc['node'] == id(strip(s.e.r)) and lh_store_save(F, lv, strip(s.e.r)): return   # (stdiv.c sd_l_d_PXG)
         if LH_STORE_X and getattr(F, 'xst', None) is not None and F.xst['node'] == id(strip(s.e.r)) and sp_lvalue_kind(F, lv) is not None and lh_store_x(F, sp_lvalue_kind(F, lv), strip(s.e.r)): return   # (stdiv.c sd_l_d_XGG, DPG)
         if LH_STORE_POST and lv.ty is not None and lv.ty.size == 4 and not getattr(F, 'l2', None) and not getattr(F, 'u1_i', None) and not getattr(F, 'cl_active', None) and lh_store_post(F, lv, s.e.r): return   # (stdiv.c sd_l_d_PGX)
+        if SD_MORE and lv.ty is not None and lv.ty.size == 1 and not getattr(F, 'l2', None) and not getattr(F, 'u1_i', None) and not getattr(F, 'cl_active', None) and store_div_char2(F, lv, s.e.r): return
         if STORE_DIV_CHAR and lv.ty is not None and lv.ty.size == 1 and not getattr(F, 'l2', None) and not getattr(F, 'u1_i', None) and not getattr(F, 'cl_active', None) and store_div_char(F, lv, s.e.r): return   # (stdiv.c sd_c_*)
         if STORE_DIV and lv.ty is not None and lv.ty.size == 2 and not getattr(F, 'l2', None) and not getattr(F, 'u1_i', None) and not getattr(F, 'cl_active', None) and store_div(F, lv, s.e.r): return   # (stdiv.c)
         if STORE_CHAIN and (not F.opt or STORE_CHAIN_OPT) and lv.ty is not None and lv.ty.size in (1, 2, 4) and not getattr(F, 'l2', None) and \
@@ -11543,7 +11765,8 @@ def plan_store_xiz(F):
     def v(n, d):
         if n.k == 'bin' and n.op == '=' and n.ty is not None and n.ty.size == 4 and strip(n.r).k != 'call':
             k = sp_lvalue_kind(F, n.l)
-            if k is not None and k[0] in ('P', 'D', 'Q') and sp_value_kind(F, n.r, 4) == 'H': hit.append(n)
+            if k is not None and k[0] in ('P', 'D', 'Q') and sp_value_kind(F, n.r, 4) == 'H' and not lh_post_member(F, n.l, n.r):
+                hit.append(n)
     walk(F.f.body, v)
     if LH_MEMBER and not hit:                              # a long helper with a member-through-a-pointer operand: XIZ
         def w(n, d):                                       # holds its pointer (lh_member)
