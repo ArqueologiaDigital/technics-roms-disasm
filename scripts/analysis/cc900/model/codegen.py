@@ -162,6 +162,47 @@ class Fn:
                             not re.search(r',(X?IZ|QIZ|QIZH|IZL|X?IX|X?IY)$', args):   # (a read of a home: the
                         if rt_: raise LiveClobber('%s %s over the register temporary %s in %s' % (op, args, d.name, d.reg), d)
                         raise Unsupported('%s %s over the live parameter %s in %s' % (op, args, d.name, d.reg))   # parameter moved there, c_fordown)
+        if STMT_PARAM_GUARD and s.adecl and getattr(s, 'guard_on', False) and args is not None and \
+                getattr(getattr(s, 'cur_stmt', None), 'k', None) in ('expr', 'return') and \
+                getattr(s, 'u1_i', None) is None and not getattr(s, 'u1x', None) and not getattr(s, 'cl_active', None) \
+                and not getattr(s, 'l2', None) and not getattr(s, 'u1_inv', None):
+            # a register parameter the statement reads more often than the code has read it so far must not be written
+            # yet (rstmt, -Xr: .rs_2_01_06_1 doubled a in WA and then divided by it; .rs_1_08_00_2 loaded XWA over a)
+            st_ = getattr(s, 'spg', None)
+            if st_ is None or st_[0] is not s.cur_stmt: st_ = s.spg = [s.cur_stmt, {}]
+            parts_ = [x_.strip() for x_ in args.split(',')]
+            wr_ = written_fams(op, args) if op not in ('cal', 'call') else []
+            for d in s.f.params:
+                r_ = getattr(d, 'reg', None)
+                if r_ not in ('WA', 'BC', 'DE', 'HL') or d in s.dead or getattr(d, 'regtemp', False): continue
+                e_ = st_[1].setdefault(id(d), {'n': None, 'reads': 0, 'done': False})
+                if e_['done']: continue
+                if e_['n'] is None:
+                    u_ = []
+                    walk(s.cur_stmt, lambda n_, dd: u_.append(n_) if n_.k == 'var' and n_.decl is d else None)
+                    e_['n'] = len({id(x_) for x_ in u_})
+                    if any(uses_decl(c_.a, d) or uses_decl(c_.b, d) for c_ in nodes_in(s.cur_stmt, 'cond')) or \
+                            any(uses_decl(c_.r, d) for c_ in nodes_in(s.cur_stmt, 'bin') if c_.op in ('&&', '||')):
+                        e_['n'] = 0                      # (read in one arm only: chnarrow.c cn_tern, k ? c - 32 : c)
+                if not e_['n'] or assigns_decl(s.cur_stmt, d): e_['done'] = True; continue
+                if op in ('cal', 'call'): e_['done'] = True; continue   # (the call takes it: call.c k_nest, r1(r1(a)))
+                names_ = r'\b(X?%s|Q%s|%s|%s)\b' % (r_, r_, {'WA': 'A', 'BC': 'C', 'DE': 'E', 'HL': 'L'}[r_],
+                                                    {'WA': 'W', 'BC': 'B', 'DE': 'D', 'HL': 'H'}[r_])
+                dst_ = parts_[1] if op in ('inc', 'dec', 'sla', 'sll', 'sra', 'srl') and len(parts_) == 2 else parts_[0]
+                srcs_ = [x_ for x_ in parts_ if x_ is not dst_] + ([dst_] if op not in ('ld', 'lda', 'pop', 'scc') or dst_.startswith('(') else [])
+                reads_ = any(re.search(names_, x_) for x_ in srcs_)
+                wd_ = 4 if dst_.startswith('X') else (1 if len(dst_) == 1 else 2)
+                if 'X' + r_ in wr_ and not dst_.startswith(('(', 'Q')) and wd_ < d.ty.size: reads_ = True   # (a part of it
+                                                         # replaced in place is a use: cond_bits.c cb_i_p_ff, ld W,0x0)
+                if reads_:
+                    e_['reads'] += 1
+                    if op == 'ld' and re.match(r'^(X?(BC|DE|HL|IX|IY|IZ)|QIZ|[CEL]|QIZ[HL])$', parts_[0]) and \
+                            re.match(r'^X?%s$|^%s$' % (r_, {'WA': 'A', 'BC': 'C', 'DE': 'E', 'HL': 'L'}[r_]), parts_[1] if len(parts_) > 1 else ''):
+                        e_['done'] = True; continue     # (copied to another register: the copy serves the later uses)
+                if 'X' + r_ in wr_:
+                    if e_['reads'] < e_['n']:
+                        raise Unsupported('%s %s before the last read of the parameter %s in %s' % (op, args, d.name, r_))
+                    e_['done'] = True
         s.lines.append('\t' + op + ('\t' + args if args else ''))
     def newlabel(s):
         s.label += 1; return 'L%d' % s.label
@@ -5949,6 +5990,7 @@ LOOP_LIVE_GUARD = True                                    # see Func.emit: a var
                                                           # in every statement of it (rstmt rs_1_00_19_5 -O3 -XS: while (a-- > 0)
                                                           # *gpi++ = 16 loaded XBC over a in BC: wrong code)
 PTR_CTX = True                                            # see gen_ptr_arith: the extension of a pointer sum's index by context
+STMT_PARAM_GUARD = True                                   # see Fn.emit
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)

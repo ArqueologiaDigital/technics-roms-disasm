@@ -1364,6 +1364,20 @@ zero-extended whole, the compiler's own arithmetic (`char *u = gp + b` -> `ld XB
 `gate/rsem.sh`: char arithmetic the compiler does at byte width, constant folding at char width, element indices
 whose extension differs out of range, several -Xr forms.
 
+**Batch 85 (2026-11-13): a register parameter is not written before its last read; semcheck 260 -> 244.**  Most of
+the -Xr verdicts had one cause: the statement overwrote the first register parameter (in WA) and read it again later
+(`gps->i = gps->a[a] % a` doubled `a` in WA for the index and then divided by it; a compare loaded XWA over `a` before
+`guca[a]`).  The older guard only knows whether a parameter is read after the current statement.  STMT_PARAM_GUARD
+counts, per expression or return statement under -Xr, how often the code has read a register parameter and refuses
+a first write that comes before as many reads as the statement has uses; a copy to another register, a call, a use
+in only one arm of `?:` / `&&` / `||`, and an in-place replacement of part of the register (`ld W,0x0` for
+`x & 0xff`) count as served.  Each of those exemptions was a correct micro function the first version refused
+(call.c k_nest and k_l, chnarrow.c cn_tern, cond_bits.c cb_i_p_ff); with them no ledger row moves.  16 verdicts
+gone, none new.  The char-arithmetic probe (`corpus/probes/chararith.c`, 238 functions, run 2026-11-13-8) is
+compiled and tabulated (research-scratch `tabulation/chararith-*`: a predictor for all 238 rows at none) but not
+yet in the ledger or the model: the compiler keeps char arithmetic char-typed, and the model's C promotion is the
+cause of several of the open verdicts.  **Open: 171 of batch 83's 253** (244 - 73).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
