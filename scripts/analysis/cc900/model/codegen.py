@@ -6625,9 +6625,12 @@ def test_reg_reuse(lines):
             R = R8 if w == 'b' else R16
             fam_re = _r.compile(r'\b(X?%s|Q%s|%s|%s)\b' % (R16, R16, R16[0], R16[1]))
             if any(fam_re.search(out[k] or '') for k in blk if k <= reads[-1]): continue
-            if any(fam_re.search(l_ or '') for k, l_ in enumerate(out) if k < i or k > reads[-1]): continue   # (a register
-            # live elsewhere, a loop counter in BC: rstmt rs_3_01_01_1 -O3 -XS was wrong code; only a register the
-            # function uses nowhere else is taken)
+            jl_ = _r.match(r'^\tj\t\w+,(L\d+)$', out[i + 1]).group(1)
+            if TEST_REG_LIVE:                              # the register's old value dead after the last read taken over
+                if not (reg_dead(out, reads[-1] + 1, R) and reg_dead(out, None, R, jl_)): continue
+            elif any(fam_re.search(l_ or '') for k, l_ in enumerate(out) if k < i or k > reads[-1]): continue   # (a register
+            # live elsewhere, a loop counter in BC: rstmt rs_3_01_01_1 -O3 -XS was wrong code; batch 157 took only a
+            # register the function used nowhere else; reg_dead since batch 160)
             out[i] = '\tld\t%s,%s' % (R, M); out.insert(i + 1, '\tcp\t%s,0x0' % R)
             for k in reads: out[k + 1] = out[k + 1].replace(M, R)
             done = True; break
@@ -6636,6 +6639,45 @@ def test_reg_reuse(lines):
     return out
 
 TEST_REG_REUSE_LONG = True                               # see test_reg_reuse_long
+TEST_REG_LIVE = True                                     # see test_reg_reuse: reg_dead instead of "used nowhere else"
+
+REG_PARTS = {'BC': ('B', 'C', 'BC', 'XBC'), 'C': ('C', 'BC', 'XBC'), 'DE': ('D', 'E', 'DE', 'XDE'), 'E': ('E', 'DE', 'XDE'),
+             'XBC': ('B', 'C', 'BC', 'QBC', 'XBC')}
+REG_KILLS = {'BC': ('BC', 'XBC'), 'C': ('C', 'BC', 'XBC'), 'DE': ('DE', 'XDE'), 'E': ('E', 'DE', 'XDE'), 'XBC': ('XBC',)}
+
+def reg_dead(lines, start, R, lab=None):
+    """is register R's value dead from line index start (or from label lab)?  Every path, conditional jumps followed
+    both ways, must reach a write of all of R (an ld / lda whose destination covers R and whose source does not read
+    it), a call or a return before any instruction that names a part of R; a path that leaves the listing, an
+    indirect jump or a switch counts as live"""
+    import re as _r
+    rd = _r.compile(r'\b(%s)\b' % '|'.join(REG_PARTS[R]))
+    pos = {l[:-1]: k for k, l in enumerate(lines) if l and _r.match(r'^L\d+:$', l)}
+    seen = set(); todo = [('lab', lab)] if lab is not None else [('at', start)]
+    while todo:
+        kind, v = todo.pop()
+        if kind == 'lab':
+            if v in seen: continue
+            seen.add(v)
+            if v not in pos: return False
+            k = pos[v] + 1
+        else: k = v
+        while True:
+            if k >= len(lines): return False
+            l = lines[k] or ''
+            if _r.match(r'^L\d+:', l): k += 1; continue
+            if l.startswith('\tret') or l.startswith('\tcal\t') or _r.match(r'^\tj\t[._]\w+$', l): break   # (a tail call)
+            if rd.search(l):
+                m_ = _r.match(r'^\t(ld|lda)\t(\w+),(.*)$', l)
+                if m_ and m_.group(2) in REG_KILLS[R] and not rd.search(m_.group(3)): break
+                return False
+            jm = _r.match(r'^\tj\t(?:(\w+),)?(L\d+)$', l)
+            if jm:
+                todo.append(('lab', jm.group(2)))
+                if jm.group(1) is None: break
+            elif l.startswith('\tj') or l.startswith('\tdw'): return False
+            k += 1
+    return True
 
 def xbc_dead_at(lines, lab):
     """is XBC dead where label lab is placed?  Every path from it (fallthrough and jumps followed) must reach a full

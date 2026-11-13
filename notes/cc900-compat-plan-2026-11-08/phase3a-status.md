@@ -2098,6 +2098,15 @@ reach a full write, a call or a return before reading XBC. Ledger up 10 (lsl.c 1
 -XS 3,029 -> 3,032 and at -O3 -XS -Xr 2,872 -> 2,878, random3), down 0; pairs MATCH 223; semcheck 56. Random
 182 / 55 / 87 / 42.
 
+**Batch 160 (2026-11-13): `test_reg_reuse` takes a dead register (TEST_REG_LIVE, `reg_dead`).** Batch 157 took a
+register only if the function used it nowhere else, which forced E where the oracle uses C (random r1_05_09:
+`if (gc2 != 0) gca[2] = gs.c % gc2` -> `ld C,(_gc2) / cp C,0x0 / .. / divs WA,C`). `reg_dead(lines, start, R, lab)`
+checks every path from a line or a label, conditional jumps followed both ways. Each path must reach a write of all of
+R, a call, a tail jump to a function or a return before naming any part of R. A path off the listing, an indirect jump
+or a jump table counts as live. The pass writes only R, so R must be dead after the last read it takes over and at the
+jump's label. A first version treated a tail jump (`j _rp`) as unknown and lost r1_02_08. Ledger up 2 (rstmt at -O3 -XS
+3,032 -> 3,034, at -O3 -XS -Xr 2,878 -> 2,881), down 0; pairs MATCH 223; semcheck 56. Random 182 / 55 / 87 / 42.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
