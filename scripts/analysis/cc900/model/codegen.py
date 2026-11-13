@@ -1615,6 +1615,38 @@ def tail_if_return(f, opt):
     if cond_const(st.cond) is not None: return False       # (at every set: rs_3_00_19_3)
     t = flat(st.then)
     return bool(t) and t[-1].k == 'return' and getattr(t[-1], 'value', None) is not None
+def ret_two_level(F, e, size):
+    """RET_TWO_LEVEL: a returned ~x, -x or x << k whose operand is itself computed: the operand in WA, then the move
+    to HL and the outer operation there; ~ is done in WA before the move (rstmt rs_1_09_06_6: return (6L + gl) << 9
+    -> ld XWA,(_gl) / inc 0x6,XWA / ld XHL,XWA / sla 0x9,XHL; rs_3_08_13_5: return -(8 | (unsigned)gl) ->
+    ld XWA,(_gl) / set 0x3,WA / ld HL,WA / neg HL; rs_1_00_03_7: return ~(gul & K) -> .. cpl WA / cpl QWA /
+    ld XHL,XWA).  A plain operand is loaded into HL as before.  True when it emitted the value."""
+    x = strip(e)
+    while x.k == 'cast' and x.kind in ('NoOp', 'BitCast'): x = strip(x.e)
+    if size not in (2, 4) or x.ty is None or x.ty.size != size or x.ty.kind != 'int' or live_regs(F) or F.pending or \
+            nodes_in(x, 'call') or has_helper_call(x) or fpgen.is_fp_op(x): return False
+    def computed(y):
+        y = strip(y)
+        if fold(y).k == 'const': return False              # (a folded constant is a constant: kfold.c kf_a)
+        if y.k == 'bin' and y.op in SIMPLE_OPS: return True
+        return y.k == 'cast' and y.kind == 'IntegralCast' and getattr(y, 'explicit', False) and \
+            strip(y.e).k == 'load' and strip(y.e).ty is not None and strip(y.e).ty.size > y.ty.size
+    n0 = len(F.lines)
+    def only_wa(): return not any(re.search(r'\b(X?(BC|DE|HL|IX|IY|IZ)|[BCDEHL]|Q(BC|DE|HL)|cal|j)\b', l_) or l_.endswith(':')
+                                  for l_ in F.lines[n0:])
+    W, H = FAM['WA'][size], FAM['HL'][size]
+    if x.k == 'un' and x.op == '~' and size == 4 and computed(x.e):
+        if gen(F, x, 'WA', size) == 'WA' and only_wa(): F.emit('ld', '%s,%s' % (H, W)); return True
+    elif x.k == 'un' and x.op == '-' and size == 2 and computed(x.e):
+        if gen(F, x.e, 'WA', size) == 'WA' and only_wa(): F.emit('ld', '%s,%s' % (H, W)); F.emit('neg', H); return True
+    elif x.k == 'bin' and x.op in ('<<', '>>') and fold(x.r).k == 'const' and fold(x.r).value is not None and \
+            1 <= fold(x.r).value < 8 * size and computed(x.l) and strip(x.l).k == 'bin':
+        if gen(F, x.l, 'WA', size) == 'WA' and only_wa():
+            F.emit('ld', '%s,%s' % (H, W))
+            emit_shift(F, ('sla' if x.ty.signed else 'sll') if x.op == '<<' else ('sra' if x.ty.signed else 'srl'), fold(x.r).value, H)
+            return True
+    del F.lines[n0:]
+    return False
 def long_helpers_in(n):
     out = []
     walk(n, lambda m, dd: out.append(m) if m.k in ('bin', 'opassign') and m.op in ('*', '/', '%') and
@@ -6307,6 +6339,7 @@ SHIFT_COUNT_LOCAL = True                                  # see gen_shift_count
 MEMBER_STORE_SWAP = True                                  # see gen_stmt
 KILL_TOP = True                                           # see the across-call planner
 DEAD_INIT_CTR = True                                      # see regtemp_candidates
+RET_TWO_LEVEL = True                                      # see ret_two_level
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -8789,7 +8822,8 @@ def gen_stmt(F, s, last):
             size = F.f.ret.size
             if not has_helper_call(s.value) and F.pending:
                 flush_pops(F)                              # h_p, h_p_diff: inc 0x4,XSP / ld XHL,XIZ (none too)
-            fam = gen(F, s.value, 'HL', size, then_ret=True)
+            if RET_TWO_LEVEL and not F.opt and not F.adecl and not epi and ret_two_level(F, s.value, size): fam = 'HL'
+            else: fam = gen(F, s.value, 'HL', size, then_ret=True)
             if fam != 'HL' and FAM[fam].get(size) != FAM['HL'][size]:
                 F.emit('ld', '%s,%s' % (FAM['HL'][size], FAM[fam].get(size, FAM[fam].get(2))))
         if epi and not last:                               # -XS: _calloc: ld XHL,0x0 / j L3 ... L3: pop XIZ / ret

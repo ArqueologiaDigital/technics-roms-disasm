@@ -1697,6 +1697,16 @@ with a long or floating-point helper keep the old behaviour: there the loop's co
 sake (rs_1_05_11_4, rs_3_09_10_3; a first version lost those, and seven plain `int t = ji; t = ..;` statements that
 need no change at all).  rstmt at none 3,473 -> 3,493; the other sets unchanged.
 
+**Batch 115 (2026-11-13): a returned two-level expression; rstmt +8.**  Without -O the model computed a returned
+expression in HL throughout.  The oracle uses HL only for the outermost operation when its operand is itself
+computed: the operand goes to WA, is moved, and the outer shift or negation is done in HL (rs_1_09_06_6:
+`return (6L + gl) << 9` -> `ld XWA,(_gl)` / `inc 0x6,XWA` / `ld XHL,XWA` / `sla 0x9,XHL`; rs_3_08_13_5:
+`return -(8 | (unsigned)gl)` -> `ld XWA,(_gl)` / `set 0x3,WA` / `ld HL,WA` / `neg HL`); a long `~` is finished in
+WA before the move (rs_1_00_03_7: .. `cpl WA` / `cpl QWA` / `ld XHL,XWA`).  A plain operand is still loaded straight
+into HL (`return gl << 9`), and a folded constant is a constant (kfold.c: a first version sent `(8 ^ 16) << 11`
+down this path and cost 16 of that probe's 47 on the scratch ledger).  Only the three outer forms seen; cdecl.
+rstmt at none 3,493 -> 3,501.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
