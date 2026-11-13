@@ -1110,6 +1110,11 @@ compound assignment is a shift (`gu2 /= 16` -> `srl 0x4,WA`); a constant element
 the result from XHL (`gula[4] += rul(gul)` -> `cal _rul` / `add (_gula + 0x10),XHL`).  Random programs at none
 106 -> 110 of 800.
 
+**Batch 58 (2026-11-13): three more near misses.**  A register is compared with `cp`, never `cpb` / `cpw`
+(`cp QIZH,0x26`); `p[k]` with `p` a register temporary reads through that register (`t[1]`, t in XDE ->
+`ld A,(XDE+0x1)`); an XIZ pointer home initialised with the address of an element or member is built in XWA
+(`char *t = &gca[6]` -> `lda XWA,_gca + 0x6` / `ld XIZ,XWA`).  Random programs at none 110 -> 112 of 800.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

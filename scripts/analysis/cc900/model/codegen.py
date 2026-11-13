@@ -94,6 +94,8 @@ class Fn:
                     op, args = 'set', '%s,%s' % (hx(b_ % 16), t_[1:] if b_ < 16 else 'Q' + t_[1:])
                 elif op == 'or' and re.match(r'^(WA|BC|DE|HL|IX|IY|IZ|[WABCDEHL])$', t_) and b_ < (16 if len(t_) == 2 else 8):
                     op, args = 'set', '%s,%s' % (hx(b_), t_)
+        if op in ('cpb', 'cpw') and args is not None and re.match(r'^(Q?[A-Z]+[A-Z0-9]*),', args) and not args.startswith('('):
+            op = 'cp'                                      # a register is compared with cp (random r4_06_09: cp QIZH,0x26)
         if op == 'cp' and args is not None:
             m_ = re.match(r'^([WABCDEHL]),0x([0-9a-f]{3,})$', args)   # (r3_01_02: cp A,0xffc2 -> cp A,0xc2)
             if m_: args = '%s,%s' % (m_.group(1), hx(int(m_.group(2), 16) & 0xff))
@@ -1566,6 +1568,8 @@ ADD_IN_PLACE = True                                       # see gen_stmt: g = g 
 NOT_CHAR8 = True                                          # see gen: !x of a char value computed in a byte
 DIVU_SHIFT = True                                         # see gen_opassign: an unsigned int divided by a power of two
 OPASSIGN_CALL_ELEM = True                                 # see gen_opassign: a static long op= a call
+PTR_REG_DIRECT = True                                     # see gen_load_mem: p[k] with p in a register
+XIZ_ADDR_WA = True                                        # see gen_stmt: an XIZ pointer home initialised with an address
 NESTED_IF_RET = True                                      # see gen_stmt: if (a) if (b) x; at the end of a function
 LX5 = True                                                # see lx5_lines: long helpers of lhx.c's lxo_* rows
 
@@ -6590,7 +6594,8 @@ def gen_load_mem(F, v, fam, size):
         ic = fold(i)
         if b.k == 'load' and ic.k == 'const':                      # p[k]: m_p_k
             pm = mem_operand(F, b)
-            if getattr(F, 'u1_i', None) is not None and pm in ('XBC', 'XDE', 'XHL', 'XIX', 'XIY'):
+            if (getattr(F, 'u1_i', None) is not None or PTR_REG_DIRECT and not F.opt and not F.adecl) and \
+                    pm in ('XBC', 'XDE', 'XHL', 'XIX', 'XIY'):   # (random r3_05_19: t[1], t a register temporary in XDE -> ld A,(XDE+0x1))
                 F.emit('ld', '%s,%s' % (R, '(%s+%s)' % (pm, hx(ic.value * esz)) if ic.value else '(%s)' % pm))
                 return fam                                 # cdecl oc_max: ld XDE,(XSP+0x4) / ld HL,(XDE)
             F.emit('ld', 'XWA,%s' % pm)                    # oc_max: m = p[0] -> ld HL,(XWA)
@@ -7642,8 +7647,10 @@ def gen_stmt(F, s, last):
                     if ci_ is not None and ci_.k == 'bin' and ci_.ty.is_ptr() and \
                             any(unpromote(y).ty is not None and unpromote(y).ty.size == 1 for y in (ci_.l, ci_.r)):
                         raise Unsupported('a char index into an XIZ pointer home')   # (r1_04_19: ld XIZ,0x0 / ld IZL,A /
-                    fam = gen(F, c.init, 'WA' if XIZ_DIRECT_INIT and (not F.opt or XIZ_DIRECT_OPT) and ci_ is not None and ci_.k == 'bin'
-                              and ci_.ty.is_ptr() else 'HL', 4)   # (lo_p_Bcs: ld XWA,(_gp) / inc 0x1,XWA / ld XIZ,XWA)
+                    fam = gen(F, c.init, 'WA' if XIZ_DIRECT_INIT and (not F.opt or XIZ_DIRECT_OPT) and ci_ is not None and (ci_.k == 'bin'
+                              and ci_.ty.is_ptr() or XIZ_ADDR_WA and not F.opt and not F.adecl and ci_.k == 'addr' and
+                              strip(ci_.e).k in ('index', 'member')) else 'HL', 4)   # (lo_p_Bcs: ld XWA,(_gp) / inc 0x1,XWA /
+                                                           # ld XIZ,XWA; random r4_05_06: char *t = &gca[6] -> lda XWA,_gca + 0x6 / ld XIZ,XWA)
                     nxc = strip(F.next_stmt.e) if F.next_stmt is not None and F.next_stmt.k == 'expr' else None
                     if strip(c.init).k == 'call' and (nxc is None or nxc.k != 'call' or not nxc.args):
                         flush_pops(F)                      # h_p_only: cal _fp / inc 0x2,XSP / ld XIZ,XHL / cal _g0
