@@ -46,13 +46,11 @@ _TANH.C	*	_tanh	wrong code: ld DE,0x0 hoisted above a branch reaches the second 
 _STRTOK.C	*	_strtok	wrong code: s1 += strspn() is added to (XSP+0x8) while the two arguments are still pushed, i.e. to the saved XIZ, not to s1 (in XIZ) (fixed: 68f9fbde4)
 __DOFORM.C	*	__doudigit	wrong code: the loop tests XBC (junk after C9H_divlu) instead of the quotient, so it never ends; str is kept in XDE across the helper calls (fixed: 05bfa0948 (now refused))
 fpp10.c	*	_s01,_s04,_s05,_s10	UB only: y is read before any assignment (y = f * 2.0 + f / y; x / y), so the result depends on what the frame slot held; the model and the oracle allot y different slots (E3)
-r2_s_05.c	*	_r2_05_00,.r2_05_00	UB only: gua[b] / guca[b] with b out of the array (negative or huge): the model zero-extends a memory index where V4.23 sign-extends a homed one; in range they agree
-r2_s_06.c	v423/none,v423/O3XS	_r2_06_17	UB only: gca[a] & 7 with a negative (0xa307): the compound-form zero-extension against the oracle's (XWA+DE)
+r2_s_05.c	v423/none,v423/O3XS	_r2_05_00	UB only: gua[b] / guca[b] with b out of the array (negative or huge): the model zero-extends a memory index where V4.23 sign-extends a homed one; in range they agree
+r2_s_05.c	v423/O3XS	_r2_05_11	index out of range: gca[b] with the int parameter b = 0xffff (edge trial); the model zero-extends the index (ld BC,(XSP+0xc) / extz XBC / add XBC,XWA), the oracle indexes (XIX+DE), which sign-extends; both outside gca[16] (UB)
 r2_s_06.c	v423/Xr,v423/O3XSXr	.r2_06_13	UB only: gia[a] <<= 4 with a = (char)0xfe: out of the array
-r2_s_08.c	v423/Xr,v423/O3XSXr	.r2_08_17	UB only: guca[c] with c = 0xa133 (negative int index)
 r2_s_06.c	v423/O3XSXr	.r2_06_02	UB only: gula[b] with b = 0x13b6 reads past the array, so the branches taken differ
 r2_s_09.c	v423/Xr,v423/O3XSXr	.r2_09_07	UB only: gca[t] with a negative char t (the model zero-extends the spilled char, the oracle keeps t in E and sign-extends)
-r3_s_07.c	v423/Xr,v423/O3XSXr	.r3_07_00	UB only: gca[c] and guca[c] with c negative (0xc514): the model zero-extends the slot-held int index (ld BC,(XSP) / extz XBC / add XBC,XWA) where V4.23 homes c in IZ and (XWA+IZ) sign-extends it; in range they agree
 r4_s_03.c	v423/Xr,v423/O3XSXr	.r4_03_00	UB only: gca[a] with a negative (0xb4cf): the model zero-extends the IZ-homed int index (ld BC,IZ / extz XBC / add XBC,XWA) where V4.23 reads (XWA+IZ); in range they agree
 r4_s_08.c	*	_r4_08_17,.r4_08_17	UB only: gca[t] %= 16 with t = gi arbitrary (0x8000 and larger): out of the array; the model zero-extends the index (extz XBC / add XBC,XWA) where V4.23 uses lda XBC,XWA+IZ
 r4_s_08.c	v423/Xr,v423/O3XSXr	.r4_08_19	UB only: gca[t] with t = gia[1] & *gpi arbitrary, then guca[u] with the char read there: out of the array (edge / full trials only)
@@ -72,3 +70,6 @@ stdiv.c	v423/none,v423/O3XS	_sd_c_d_XPG,_sd_c_d_XPK,_sd_c_m_XPG,_sd_c_m_XPK	inde
 stvx.c	v423/none,v423/O3XS	_sx_c_XE,_sx_c_XP	index out of range: gca[c] = (char)((int)x op (int)y) with the int parameter c of 0x8000..0xffff (edge / full trials); the older char store path indexes with the 16-bit register (ld (XDE+BC),A), which sign-extends, where the oracle zero-extends the index (extz XDE / add XDE,XWA); both outside gca[8] (UB)
 rstmt3.c	v423/O3XS	_rs_3_06_19_0	no defect: the function returns nothing when b >= gua[b] (if (..) return ..; with no other return), and the verdict compares the stale HL of that path (the model leaves another value there than V4.23, which keeps b in HL)
 rstmt4.c	v423/O3XS,v423/O3XSXr	_rs_4_09_17_5,.rs_4_09_17_5	no defect: the function returns nothing when gi2 == 0 (if (gi2) return gi2 >> 3; with no other return); the verdict compares the stale HL of that path
+rstmt4.c	v423/Xr,v423/O3XSXr	.rs_4_08_02_0	no defect: the function returns nothing when guca[c] >= gia[7] (if (..) return ..; alone); the verdict compares the stale HL of that path (the model copies c into L first)
+rstmt1.c	v423/O3XSXr	.rs_1_05_07_2	no defect: the function returns nothing when gi2 <= u; the verdict compares the stale HL of that path
+rstmt2.c	v423/O3XSXr	.rs_2_04_03_3	the model is right by C: case 2 calls vs(gps), as case 3 does.  V4.23 at -O3 -XS -Xr sends case 2 to the default arm and makes no call (its merge of the two equal arms loses one); the model does not imitate that
