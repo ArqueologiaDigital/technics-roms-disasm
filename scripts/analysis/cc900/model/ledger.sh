@@ -356,6 +356,11 @@ for c in none O3XS; do    # the second context of the store shapes: dividend gp-
 done
 row "run 2026-11-13-13-micro-stv2, v423/Xr" "probes/stv2.c" "$O/2026-11-13-13-micro-stv2/out/v423/Xr/probes" corpus/probes/stv2.c --opt none --adecl
 row "run 2026-11-13-13-micro-stv2, v423/O3XSXr" "probes/stv2.c" "$O/2026-11-13-13-micro-stv2/out/v423/O3XSXr/probes" corpus/probes/stv2.c --opt O3XS --adecl
+for c in none O3XS; do    # when a cdecl parameter is cached in a register (corpus/probes/pc.c)
+  row "run 2026-11-13-15-micro-pc, v423/$c" "probes/pc.c" "$O/2026-11-13-15-micro-pc/out/v423/$c/probes" corpus/probes/pc.c --opt $c
+done
+row "run 2026-11-13-15-micro-pc, v423/Xr" "probes/pc.c" "$O/2026-11-13-15-micro-pc/out/v423/Xr/probes" corpus/probes/pc.c --opt none --adecl
+row "run 2026-11-13-15-micro-pc, v423/O3XSXr" "probes/pc.c" "$O/2026-11-13-15-micro-pc/out/v423/O3XSXr/probes" corpus/probes/pc.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do
