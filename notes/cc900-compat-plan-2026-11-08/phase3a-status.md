@@ -1144,6 +1144,12 @@ operands (`gca[6] ^ *gp` -> `ld XWA,(_gp)` / `ld L,(XWA)` / `xor L,(_gca + 0x6)`
 accumulator); a byte element at a loop counter held in IZ, beside a constant, takes XWA for its base
 (`guca[i] + 7` -> `lda XWA,_guca` / `ld A,(XWA+IZ)` / `inc 0x7,A`).  Random programs at none 128 -> 130 of 800.
 
+**Batch 64 (2026-11-13): the order of a double operation's addresses, four more cases.**  `gd2 *= gs.d` follows
+batch 47's rule (the member first, in XDE, then `lda XBC,_gd2` / `lda XWA,_gd2`); a constant on the left of `==` /
+`!=` becomes the right operand (`100.0 == gd` -> `lda XWA,_gd` / `lda XBC,S1`); a member / element destination is
+addressed first in a copy and in a negation too (`gda[1] = gda[2]` -> `lda XWA,_gda + 0x8` / `lda XBC,_gda + 0x10`).
+Random programs at none 130 -> 134 of 800.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

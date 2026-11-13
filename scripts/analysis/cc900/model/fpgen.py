@@ -379,9 +379,17 @@ def op_into(F, e, vals, dest):
                 dest_first(F, dest); put_addr(F, vals[1], 'XDE'); F.emit('ld', 'XBC,XDE'); F.emit('cal', name); return
         emit_operands(F, dest, vals); F.emit('cal', name); return
     if e.k == 'un':
+        if COPY_DEST_FIRST and FP_ORD and not F.opt and not F.adecl and dest[0] == 'lv' and fo_lv_kind(dest[1]) == 'A' and \
+                len(vals) == 1 and fo_kind(F, vals[0]) in ('G', 'A') and e.ty.size == 8:
+            C().flush_pops(F)                              # (random r4_06_09: gda[2] = -gda[2] -> lda XWA,_gda + 0x10 /
+            if not lvalue_addr(F, dest[1], 'XWA'): raise C().Unsupported('fp destination')   # lda XBC,_gda + 0x10 / cal ._fneg_d)
+            put_addr(F, vals[0], 'XBC'); F.emit('cal', '._fneg_d'); return
         emit_operands(F, dest, vals); F.emit('cal', '._fneg_%s' % sfx(e.ty)); return
     emit_operands(F, dest, vals); F.emit('cal', '._fld_%s%s' % (sfx(e.ty), sfx(strip(e.e).ty)))
 
+COPY_DEST_FIRST = True                                    # see eval_into: gda[1] = gda[2]
+FO_SELF = True                                            # see fo_plain: gd2 *= gs.d
+CMP_K_SWAP = True                                         # see compare: 100.0 == gd
 FP_ORD = True                                             # see fo_plain
 
 def fo_kind(F, x):
@@ -428,7 +436,10 @@ def fo_plain(F, e, vals, dest, name):
     else: dk = None
     if dk is None: return False
     sd = dest_simple(F, dest)
-    if sd is not None and sd in (simple_addr(F, vals[0]), simple_addr(F, vals[1])): return False   # (gd = gd + x: the older paths)
+    if sd is not None and sd in (simple_addr(F, vals[0]), simple_addr(F, vals[1])) and \
+            not (FO_SELF and dk == 'G' and sd == simple_addr(F, vals[0]) and kb == 'A'):
+        return False                                       # (gd = gd + x: the older paths; gd2 *= gs.d follows the
+                                                           #  rule, random r2_09_00: lda XDE,_gs + 0x1e / lda XBC,_gd2 / lda XWA,_gd2)
     comm = e.op in '+*'
     order = ['XBC', 'XDE']                                 # the registers of the left and the right operand
     if comm and (ka == 'K' or (ka == 'A' and kb == 'A')): vals = [vals[1], vals[0]]; ka, kb = kb, ka; order = ['XDE', 'XBC']
@@ -602,6 +613,12 @@ def eval_into(F, e, dest):
         call_into(F, e, dest); return
     if e.k not in ('load', 'fconst'): raise C().Unsupported('fp ' + e.k + ' ' + str(getattr(e, 'op', getattr(e, 'kind', ''))))
     # a copy (load, constant)
+    if COPY_DEST_FIRST and FP_ORD and not F.opt and not F.adecl and dest[0] == 'lv' and fo_lv_kind(dest[1]) == 'A' and \
+            fo_kind(F, e) in ('G', 'A') and e.ty.size == 8:
+        C().flush_pops(F)                                  # a member / element destination is addressed first in a copy
+        if not lvalue_addr(F, dest[1], 'XWA'): raise C().Unsupported('fp destination')   # too (random r4_07_03:
+        put_addr(F, e, 'XBC'); F.emit('cal', '._fld_dd'); return                         # gda[1] = gda[2] ->
+                                                           # lda XWA,_gda + 0x8 / lda XBC,_gda + 0x10 / cal ._fld_dd)
     emit_operands(F, dest, [e])
     F.emit('cal', '._fld_%s%s' % (sfx(e.ty), sfx(e.ty)))
 
@@ -730,6 +747,9 @@ def compare(F, c, value):
     if r.k == 'fconst' and r.value == 0.0 or (strip(r).k == 'cast' and strip(strip(r).e).k == 'const' and strip(strip(r).e).value == 0):
         a = prepare(F, [l]); cg.flush_pops(F); put_addr(F, a[0], 'XWA')
         F.emit('ld', 'BC,%s' % cg.hx(REL[op])); F.emit('cal', '._fcmp_z%s' % sfx(l.ty)); return
+    if CMP_K_SWAP and not F.opt and not F.adecl and op in ('==', '!=') and l.k == 'fconst' and r.k != 'fconst':
+        l, r = r, l                                        # a constant on the left of == / != is the right operand
+                                                           # (random r1_03_18: 100.0 == gd -> lda XWA,_gd / lda XBC,S1)
     a = prepare(F, [l, r]); cg.flush_pops(F)              # fpp1.c b1: fd(..) >= 0.5 -> cal _fd / lda XSP,XSP+0xc
     put_addr(F, a[0], 'XWA'); put_addr(F, a[1], 'XBC')     # before the compare (inside the then arm was wrong code)
     F.emit('ld', 'DE,%s' % cg.hx(REL[op])); F.emit('cal', '._fcmp_%s' % sfx(l.ty))
