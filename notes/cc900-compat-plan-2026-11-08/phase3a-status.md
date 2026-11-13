@@ -2019,6 +2019,12 @@ all four option sets hold 19 `ld QIZH,k` and no `ld A,k / ld QIZH,A`; a reader t
 r3_04_03: `char u = '0'; gc = u;` -> `ld QIZH,0x30 / ld A,QIZH / ld (_gc),A`). Ledger up 3 (random3 42 -> 43, lsl.c 50
 -> 51 at none and 33 -> 34 at -Xr), down 0; pairs MATCH 223; semcheck 58. Random 178 / 48 / 87 / 37.
 
+**Batch 152 (2026-11-13): a long register temporary initialised from a truth value (TRUTH_VIA_WA_LONG).** As
+TRUTH_VIA_WA does for an int, a long local in XBC / XDE / XHL whose initialiser is a compare or `!` widened to long is
+made in WA, moved at 16 bits and widened in place (random r2_02_14: `unsigned long t = (unsigned long)(1 >= gps->c)` ->
+`scc le,WA / ld BC,WA / exts XBC`; the model wrote `scc le,BC / exts XBC`). Without -O and -Xr. Ledger up 1 (random2
+40 -> 41), down 0; pairs MATCH 223; semcheck 58. Random 179 / 48 / 87 / 37.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

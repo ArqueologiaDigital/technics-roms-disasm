@@ -6550,6 +6550,7 @@ LH_ACROSS_SLOT = True                                    # see regtemp_candidate
 LH_SLOT_XIZ_ONLY = True                                  # see regtemp_candidates: only a helper statement that needs XIZ
 LH_PLAIN_IZ = True                                       # see regtemp_candidates: a local across a plain long helper
 QIZH_CONST = True                                        # see regvar_stmt: ld QIZH,k
+TRUTH_VIA_WA_LONG = True                                 # see regvar_stmt: a long local from a truth value
 
 def plain_long_helper_stmt(x):
     """is x a statement (or if without else around one) of the form T = A op B or T op= B, a long * / % that calls a
@@ -10568,6 +10569,14 @@ def regvar_stmt(F, e):
             F.emit('ld', '%s,%s' % (FAM[sc_][d.ty.size], mem_operand(F, rb_.r)))   # ld WA,(_hi) / ld BC,(_gi) / add BC,WA)
             F.emit('ld', '%s,%s' % (R, mem_operand(F, rb_.l)))
             F.emit(SIMPLE_OPS[rb_.op], '%s,%s' % (R, FAM[sc_][d.ty.size])); return True
+        if TRUTH_VIA_WA_LONG and not F.opt and not F.adecl and getattr(d, 'regtemp', False) and d.ty.size == 4 and \
+                R in ('XBC', 'XDE', 'XHL') and rb_.k == 'cast' and rb_.kind == 'IntegralCast' and \
+                strip(rb_.e).ty is not None and strip(rb_.e).ty.size == 2 and \
+                (tv_.k == 'un' and tv_.op == '!' or tv_.k == 'bin' and tv_.op in CC_S) and 'WA' not in live_regs(F):
+            f_ = gen(F, rb_.e, 'WA', 2)                    # a truth value widened to long: made in WA, moved, widened in
+            if f_ != 'WA': raise Unsupported('a long truth value')   # place (random r2_02_14: unsigned long t =
+            F.emit('ld', '%s,WA' % FAM[d.reg][2])          # (unsigned long)(1 >= gps->c) -> scc le,WA / ld BC,WA / exts XBC)
+            F.emit('exts' if strip(rb_.e).ty.signed else 'extz', R); return True
         n_iz_ = len(F.lines)
         fam = gen(F, e.r, tgt, d.ty.size)
         if FAM[fam][d.ty.size] != R: F.emit('ld', '%s,%s' % (R, FAM[fam][d.ty.size]))
