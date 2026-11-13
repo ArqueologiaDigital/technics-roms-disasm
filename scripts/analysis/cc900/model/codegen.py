@@ -175,10 +175,15 @@ class Fn:
             if st_ is None or st_[0] is not s.cur_stmt: st_ = s.spg = [s.cur_stmt, {}]
             parts_ = [x_.strip() for x_ in args.split(',')]
             wr_ = written_fams(op, args) if op not in ('cal', 'call') else []
-            for d in (s.f.params if s.adecl else []) + [x_ for x_ in s.f.decls if getattr(x_, 'regtemp', False)]:
+            for d in (s.f.params if s.adecl else []) + [x_ for x_ in s.f.decls if getattr(x_, 'regtemp', False) or
+                                                      (STMT_LOCAL_GUARD and x_.kind == 'local' and getattr(x_, 'reg', None))]:
                 r_ = getattr(d, 'reg', None)                 # (and a register temporary, at every set: rstmt rs_3_00_14_8,
                 if r_ not in ('WA', 'BC', 'DE', 'HL') or d in s.dead: continue   # char u in A under ld XWA,(_gp))
-                if getattr(d, 'regtemp', False) and (d.kind == 'param' or not local_defined_before(s, d)): continue
+                if d.kind != 'param' and not local_defined_before(s, d): continue
+                if d.kind == 'local' and not getattr(d, 'regtemp', False) and \
+                        (getattr(s, 'loops', None) or self_update(op, args, d)): continue   # (a loop's planners move its
+                                                         # variables themselves, and i++ is no clobber: opt_loops.c ol_while)
+                if getattr(d, 'regtemp', False) and d.kind == 'param': continue
                 e_ = st_[1].setdefault(id(d), {'n': None, 'reads': 0, 'done': False})
                 if e_['done']: continue
                 if e_['n'] is None:
@@ -6082,6 +6087,8 @@ UIDX_NO_SIGNED = True                                     # see elem_addr_regs
 CHAR_REG_INDEX_OPT = True                                 # see elem_addr, gen_load_mem
 UIDX_SUM = True                                           # see lvalue
 UCHAR_TO_LONG = True                                      # see gen's cast
+STMT_LOCAL_GUARD = True                                   # see Fn.emit: a local in a scratch register too (rstmt
+                                                          # rs_1_07_04_2: unsigned char u in A under ld WA,(_gu2))
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)

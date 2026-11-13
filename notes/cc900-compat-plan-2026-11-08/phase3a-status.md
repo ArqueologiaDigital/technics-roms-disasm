@@ -1452,6 +1452,16 @@ any set; 342 / 357 / 334 / 333 of 576 exact (153 at none before); chararith.c 12
 2,965 / 2,981 / 2,832 -> 3,366 / 2,967 / 2,984 / 2,834.  **Open: 102 statement findings** (semcheck 163 = 61 older
 reviewed ones + 102 on rstmt).
 
+**Batch 92 (2026-11-13): the statement guard for any local in a scratch register; semcheck 163 -> 155.**  The guard
+of batches 85 and 86 (no first write to a register before the statement has read the variable kept there as often
+as it uses it) covered register parameters under -Xr and register temporaries.  A plain local that the planner keeps
+in a scratch register was outside it: `unsigned char u = juc; gu = (gu2 + (unsigned)u) * gu2;` loaded WA over `u`
+in A.  It is covered now, at every set, outside loops (a loop's planners move its variables themselves) and not for
+the variable's own update (`i++`): both exemptions are from micro opt_loops.c ol_while, which a first version
+refused; I had installed that version before reading the scratch ledger's two rows down, and nothing was committed
+until they were gone.  8 verdicts gone, none new, no ledger row moves.  **Open: 94 statement findings**
+(semcheck 155 = 61 older reviewed ones + 94 on rstmt).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
