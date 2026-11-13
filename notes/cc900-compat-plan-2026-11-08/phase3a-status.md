@@ -1819,6 +1819,16 @@ later reads name the parameter's own register, so for a char the exemption is wr
 and loads the element into C (`ld C,(XBC+A)` / `add C,A`).  The two statements are now refused at -Xr and -O3 -XS -Xr
 (exact before: none).  No ledger row moved.  **Open wrong-code verdicts from the batch 125 probes: none.**
 
+**Batch 128 (2026-11-13): a static struct's int member array at a variable index is loaded; rstmt +2.**  `gs.a[i]` reads
+were refused ("memory load index"; 6 random functions among those with a member-array element).  The oracle loads them
+like a global array's element, with the member's address as the base and the index form set by the index type
+(read off 27 rstmt statements): signed int `ld WA,(b)` / `add WA,WA` / `lda XBC,_gs + 0xe` / `ld WA,(XBC+WA)`
+(rs_2_03_01_0); unsigned int with the member offset folded into the low byte, `extz XWA` / `add XWA,XWA` / `add A,0xe` /
+`lda XBC,_gs` / `(XBC+A)` (rs_3_09_11_2); char `ld A,(b)` / `add A,(b)` / `(XBC+A)`; unsigned char `extz WA` / `add WA,WA`
+/ `(XBC+WA)`.  Without options, and only with WA and BC free (the oracle moves the base to XDE when BC is busy: not
+done).  rstmt at none 3,525 -> 3,527 (rs_2_03_01_0, rs_4_06_04_2); the other statements of the family stop at other
+operations of the same statement.  Random unchanged (166 / 46 / 87 / 37).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

@@ -6397,6 +6397,7 @@ PTRARR_LVALUE = True                                     # see _lvalue_raw
 PARAM_CACHE = True                                       # see param_cache_wanted
 CHAR_IDX_OPT_REFUSE = True                               # see _lvalue_raw
 COPY_EXEMPT_NOT_CHAR = True                              # see Fn.emit's statement guard
+MEMBER_ARR_LOAD = True                                   # see gen_load_mem
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -7572,6 +7573,29 @@ def gen_load_mem(F, v, fam, size):
             F.emit('add', 'WA,WA') if esz == 2 else F.emit('sla', '%s,WA' % hx({4: 2, 8: 3}[esz]))
             B_ = 'XDE' if 'XBC' in getattr(F, 'sp_busy', ()) else 'XBC'   # (store_plan st_i_DX: the pointer in XBC)
             F.emit('lda', '%s,_%s' % (B_, b.decl.name)); F.emit('ld', '%s,(%s+WA)' % (R, B_)); return fam
+        if MEMBER_ARR_LOAD and not F.opt and not F.adecl and b.k == 'member' and not b.arrow and b.ty.kind == 'array' and \
+                strip(b.base).k == 'var' and strip(b.base).decl.kind == 'global' and esz == 2 and ic.k != 'const' and \
+                not ({'WA', 'BC'} & set(live_regs(F))) and not held_after(F, 'WA', v) and not held_after(F, 'BC', v):
+            ii = strip(i)                                  # a static struct's int member array at a variable index (rstmt
+            while ii.k == 'cast' and ii.kind == 'IntegralCast': ii = strip(ii.e)   # rs_2_03_01_0: int t = gs.a[b] ->
+            im = mem_operand(F, ii)                        # ld WA,(b) / add WA,WA / lda XBC,_gs + 0xe / ld WA,(XBC+WA))
+            if im is not None and im.startswith('(') and ii.k == 'load' and ii.ty is not None and ii.ty.kind == 'int' and \
+                    ii.ty.size in (1, 2):
+                nm_ = strip(b.base).decl.name; off_ = member_offset(b)
+                sym_ = '_%s + %s' % (nm_, hx(off_)) if off_ else '_' + nm_
+                if ii.ty.size == 2 and ii.ty.signed:
+                    F.emit('ld', 'WA,%s' % im); F.emit('add', 'WA,WA'); F.emit('lda', 'XBC,%s' % sym_)
+                    F.emit('ld', '%s,(XBC+WA)' % R); return fam
+                if ii.ty.size == 2 and off_ < 0x80:         # unsigned: the offset folded into the low byte (rs_3_09_11_2:
+                    F.emit('ld', 'WA,%s' % im); F.emit('extz', 'XWA'); F.emit('add', 'XWA,XWA')   # add A,0xe / lda XBC,_gs
+                    if off_: F.emit('add', 'A,%s' % hx(off_))
+                    F.emit('lda', 'XBC,_%s' % nm_); F.emit('ld', '%s,(XBC+A)' % R); return fam
+                if ii.ty.size == 1 and ii.ty.signed:       # (rs_3_04_19_1: ld A,(b) / add A,(b) / .. / (XBC+A))
+                    F.emit('ld', 'A,%s' % im); F.emit('add', 'A,%s' % im); F.emit('lda', 'XBC,%s' % sym_)
+                    F.emit('ld', '%s,(XBC+A)' % R); return fam
+                if ii.ty.size == 1:                        # (rs_3_02_09_0: ld A,(b) / extz WA / add WA,WA / .. / (XBC+WA))
+                    F.emit('ld', 'A,%s' % im); F.emit('extz', 'WA'); F.emit('add', 'WA,WA'); F.emit('lda', 'XBC,%s' % sym_)
+                    F.emit('ld', '%s,(XBC+WA)' % R); return fam
         if b.k == 'member' and b.arrow and b.ty.kind == 'array' and ic.k == 'const' and ic.value is not None:
             pm = mem_operand(F, b.base)                    # cond_bits.c cb_mem_b: p->b[3] -> ld A,(XWA+0xb)
             if pm is not None:
