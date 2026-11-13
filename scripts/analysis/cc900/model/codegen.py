@@ -6585,6 +6585,53 @@ IF_CALL_KEEP_POPS = True                                 # see gen_stmt's if: a 
 POP_LAZY_FPARG = True                                    # see later_call_absorbs: a call with a double-work argument
 CHAR_ARG_ANY_OPT = True                                  # see push_arg: CHAR_ARG_ANY / CHAR_ARG_GEN under cdecl -O3 -XS
 CHAR_ZX_OPT_GUARD = True                                 # see elem_addr, gen_load_mem: -O char elements at an int index
+TEST_REG_REUSE = True                                    # see test_reg_reuse
+
+def test_reg_reuse(lines):
+    """cdecl -O3 -XS: a static tested against zero and read again in the code that follows the test is loaded into a
+    register for the test, and the reads use the register (random r1_02_12: if (gc2 != 0) gca[6] = c / gc2 ->
+    ld C,(_gc2) / cp C,0x0 / j eq,L / ld A,(XSP+0x8) / exts WA / divs WA,C; r1_02_08: gs.i = gi2 / gi2 -> ld BC,(_gi2) /
+    cp BC,0x0 / .. / ld WA,BC / exts XWA / divs XWA,BC).  The oracle's -O3 -XS listings: 187 such register tests whose
+    register is read in the block after, against 867 memory tests whose static is not; BC (C) first, else DE (E).  The
+    block is the straight-line code after the jump, up to a label, call, jump or return; the static must not be
+    written there, and the register must not be touched before the last read it takes over."""
+    import re as _r
+    out = list(lines)
+    i = 0
+    while i < len(out) - 2:
+        m = _r.match(r'^\tcp([bw])\t(\(_[\w +x0-9]+\)),0x0$', out[i] or '')
+        if not (m and _r.match(r'^\tj\t(eq|ne),L\d+$', out[i + 1] or '')): i += 1; continue
+        w, M = m.group(1), m.group(2)
+        blk = []
+        for k in range(i + 2, len(out)):
+            l = out[k]
+            if _r.match(r'^L\d+:|^[._]\w+:|^\tcal|^\tret|^\tj\t|^\tcall\t', l): break
+            blk.append(k)
+        reads = []
+        for k in blk:
+            l = out[k]
+            if M not in l: continue
+            mm = _r.match(r'^\t(\w+)\t(.*)$', l)
+            if not mm: break
+            ops = mm.group(2).split(',')
+            if ops[0] == M and mm.group(1) not in ('cp',): break  # the static is written (or changed in place): stop
+            if ops[-1] == M and len(ops) == 2 and mm.group(1) in ('ld', 'div', 'divs', 'add', 'sub', 'and', 'or', 'xor', 'cp'):
+                reads.append(k)
+            else: break
+        if not reads: i += 1; continue
+        done = False
+        for R16, R8 in (('BC', 'C'), ('DE', 'E')):
+            R = R8 if w == 'b' else R16
+            fam_re = _r.compile(r'\b(X?%s|Q%s|%s|%s)\b' % (R16, R16, R16[0], R16[1]))
+            if any(fam_re.search(out[k] or '') for k in blk if k <= reads[-1]): continue
+            if any(fam_re.search(l_ or '') for k, l_ in enumerate(out) if k < i or k > reads[-1]): continue   # (a register
+            # live elsewhere, a loop counter in BC: rstmt rs_3_01_01_1 -O3 -XS was wrong code; only a register the
+            # function uses nowhere else is taken)
+            out[i] = '\tld\t%s,%s' % (R, M); out.insert(i + 1, '\tcp\t%s,0x0' % R)
+            for k in reads: out[k + 1] = out[k + 1].replace(M, R)
+            done = True; break
+        i += 3 if done else 1
+    return out
 
 def idx_var_read_elsewhere(F, idx):
     """is the variable of an int index read at some other place of the function?"""
@@ -15007,6 +15054,7 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
                 if k + 1 < len(F.lines) and F.lines[k + 1] == '\tret': F.lines[i] = '\tret\t' + m.group(1)
     import re                                            # no self-moves: the oracle never writes ld XWA,XWA
     F.lines = [l for l in F.lines if not re.match(r'^\tld\t(\w+),\1$', l)]
+    if TEST_REG_REUSE and F.opt and not F.adecl: F.lines = test_reg_reuse(F.lines)
     if COND_CALL:                                        # a jump around one call is a conditional call: j le,L / cal _rp /
         for i in range(len(F.lines) - 2):                # L: -> cal gt,_rp / L: (rstmt rs_4_07_10_4; the oracle's listings of
             m = re.match(r'^\tj\t(\w+),(L\d+)$', F.lines[i] or '')   # all four option sets have 17 conditional calls and

@@ -2071,6 +2071,17 @@ Lead recorded, not acted on: the double temporaries' frame region (D + D', fpgen
 functions at none, the oracle's frame is D + D' for 75 + 37, D alone for 11 (r4_01_09, r3_05_16, r4_01_10: one
 temporary for a call argument), and neither for 33 (research-scratch gate/fpframe.py).
 
+**Batch 157 (2026-11-13): cdecl -O3 -XS, a static tested against zero and read again is tested in a register
+(TEST_REG_REUSE).** The oracle's -O3 -XS listings hold 187 `ld R,(M) / cp R,0x0 / j` whose register is read in the
+straight-line code after the jump (65 `div XWA,BC`, 39 `divs WA,C`, 32 `divs XWA,BC`, ...), against 867 memory tests
+`cpw (M),0x0` whose static is not read there. This is the guarded division of the random corpora, `if (g != 0) x = y / g`.
+`test_reg_reuse`, a final pass under cdecl -O, rewrites the model's `cpw (M),0x0 / j` that way when (M) is read and
+not written before the next label, call, jump or return: BC (C for a byte), else DE (E). The register must appear
+nowhere else in the function. A first try checked only the block, took BC while it held a loop counter, and gave
+three wrong-code verdicts (rstmt rs_3_01_01_1, random r4_03_11, r4_05_13). Random r1_02_08 and r1_02_12 are exact.
+Ledger up 2 (random1 at -O3 -XS 16 -> 18, rstmt 3,028 -> 3,029), down 0; pairs MATCH 223; semcheck 56. Random
+182 / 51 / 87 / 37.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
