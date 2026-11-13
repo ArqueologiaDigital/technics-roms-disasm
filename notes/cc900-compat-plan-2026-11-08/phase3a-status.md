@@ -1989,6 +1989,13 @@ refused: a char element at an int index, which the oracle zero-extends (`extz XB
 `(XDE+BC)` signed (rs_3_00_08_4). Ledger up 2, down 0; pairs MATCH 223; semcheck 58. Rstmt at none 3,565 -> 3,567,
 random at none 172 -> 173 (random3 40 -> 41).
 
+**Batch 148 (2026-11-13): a chained store into a char element at an int parameter index (CHAIN_CHAR_INT_IDX).**
+`x = g[c] = v`, with g a global char array and c an int parameter in memory, gets the oracle's zero-extended address:
+`lda XWA,_g / ld BC,(c) / extz XBC / add XBC,XWA`, then the value in A and `ld (XBC),A` (rstmt rs_3_00_08_4). Batch
+147 refused it, because the model's own address was `(XDE+BC)`, which the CPU indexes signed. A global int index is
+left out: cmpx.c shows it as `(Xb+i)`. Ledger up 3 (elrd.c 278 -> 284, random3 41 -> 42, rstmt), down 0; pairs MATCH
+223; semcheck 58. Rstmt at none 3,567 -> 3,568, random at none 173 -> 174.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

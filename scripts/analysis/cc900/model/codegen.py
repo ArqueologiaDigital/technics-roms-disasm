@@ -6089,6 +6089,7 @@ CMPX = True                                               # see cmpx_elem: compa
 CMPX_IZ = True                                            # see cmpx_index: an unsigned index in IZ
 COND_CALL = True                                          # see compile_function_once: cal cc,f
 CHAIN_ADDR_BC_WA = True                                   # see gen_assign_value: an address in XBC, the value in WA
+CHAIN_CHAR_INT_IDX = True                                 # see gen_assign_value: a char element at an int index
 
 CMPX_REGS = {                                             # (index register, base register) by element size 1 / 2 / 4:
     ('none', 'X', 'c'): ('DE/BC', 'BC/DE', 'BC/DE'), ('none', 'X', 'b'): ('BC/DE', 'BC/DE', 'BC/DE'),
@@ -6882,7 +6883,20 @@ def gen_assign_value(F, e, fam, size, in_place=False):
         F.emit('ld', '%s,%s' % (t, FAM[f2][vs])); return f2
     if lv.k in ('deref', 'member', 'index'):
         if fam in ('WA',):
-            t = lvalue(F, lv, ptr='XWA')
+            t = None
+            if CHAIN_CHAR_INT_IDX and not F.opt and not F.adecl and lv.k == 'index' and vs == 1 and \
+                    not held_after(F, 'WA', e) and not ({'WA', 'BC'} & live_regs(F)):
+                b_ = strip(lv.base); i_ = ev_uncast(lv.idx)
+                while b_.k in ('decay', 'cast', 'noop') and getattr(b_, 'e', None) is not None: b_ = strip(b_.e)
+                if b_.k == 'var' and b_.decl.kind == 'global' and b_.decl.ty.kind == 'array' and i_.k == 'load' and \
+                        i_.ty is not None and i_.ty.kind == 'int' and i_.ty.size == 2 and i_.ty.signed and \
+                        strip(i_.e).k == 'var' and strip(i_.e).decl.kind == 'param' and \
+                        not getattr(strip(i_.e).decl, 'reg', None):   # (a global index is (Xb+i) in cmpx.c)
+                    im_ = mem_operand(F, i_)               # a char element at an int parameter index: the oracle
+                    if im_ is not None and im_.startswith('(XSP+'):   # zero-extends it (rstmt rs_3_00_08_4: guc = guca[c] = .. ->
+                        F.emit('lda', 'XWA,_%s' % b_.decl.name); F.emit('ld', 'BC,%s' % im_)   # lda XWA,_guca /
+                        F.emit('extz', 'XBC'); F.emit('add', 'XBC,XWA'); t = '(XBC)'   # ld BC,(c) / extz XBC / add XBC,XWA)
+            if t is None: t = lvalue(F, lv, ptr='XWA')
             if CHAIN_ADDR_BC_WA and not F.opt and not F.adecl and re.match(r'^\((XBC|X(DE|HL|IX|IY)\+C)\)$', t) and \
                     not held_after(F, 'WA', e):        # (not (XDE+BC): a char element at an int index, which the oracle
                                                        #  zero-extends, extz XBC; the CPU's (XDE+BC) is signed)
