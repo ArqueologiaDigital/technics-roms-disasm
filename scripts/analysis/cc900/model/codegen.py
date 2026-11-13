@@ -3581,6 +3581,15 @@ def cw_kind(F, x, size):
     if v.k == 'var':
         m = mem_operand(F, x0)
         return ('G', m) if m is not None and not family_of(m) else None
+    if XIZ_PTR_MEM and not F.opt and not F.adecl:          # through a pointer local held in XIZ: a plain memory operand
+        def xizp_(b_):                                     # (rstmt rs_1_08_06_3: gps->c = t[2] + t[0] -> ld A,(XIZ) /
+            b_ = strip(b_)                                 # add A,(XIZ+0x2); rs_3_03_04_2: gca[3] - t[0] -> sub A,(XIZ))
+            while b_.k in ('cast', 'noop') and getattr(b_, 'e', None) is not None: b_ = strip(b_.e)
+            return b_.k == 'load' and strip(b_.e).k == 'var' and strip(b_.e).decl.kind == 'local' and \
+                getattr(strip(b_.e).decl, 'reg', None) == 'XIZ' and strip(b_.e).decl.ty.is_ptr()
+        if v.k == 'deref' and xizp_(v.e): return ('M', '(XIZ)')
+        if v.k == 'index' and fold(v.idx).k == 'const' and fold(v.idx).value is not None and fold(v.idx).value >= 0 and xizp_(v.base):
+            return ('M', '(XIZ+%s)' % hx(fold(v.idx).value * size) if fold(v.idx).value else '(XIZ)')
     if v.k == 'deref':
         pm = sp_plain_ptr(F, v.e)
         return ('P', pm, 0) if pm is not None else None
@@ -4483,6 +4492,19 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         finally:
             F.cw_pins, F.cw_start, F.cw_opline = saved_
         if bw is not None: return bw
+    if LEFT_BIN_RIGHT_PTR and not F.opt and not F.adecl and fam == 'WA' and not any_fam and size in (1, 2, 4) and op in SIMPLE_OPS and \
+            strip(e.l).k == 'bin' and (strip(e.l).op in SIMPLE_OPS or strip(e.l).op in ('<<', '>>') or strip(e.l).op == '/' and size == 2) and \
+            not live_regs(F) and not nodes_in(e, 'call') and not has_helper_call(e) and not fpgen.is_fp_op(e) and \
+            not getattr(F, 'cl_active', None) and not getattr(F, 'l2', None) and getattr(F, 'u1_i', None) is None:
+        rk2_ = cw_kind(F, strip(e.r), size)                # a computed left beside *p / p->m: the pointer first, in XBC,
+        if rk2_ is not None and rk2_[0] in ('P', 'D'):     # then the left in WA (rstmt rs_1_08_18_6: gl = (gl >> 16) |
+            n0_ = len(F.lines); a_ = cw_addr(F, rk2_, size)   # gpl[3] -> ld XBC,(_gpl) / ld XWA,(_gl) / sra 0x0,XWA /
+            ok_ = a_.startswith('(XBC')                    # or XWA,(XBC+0xc); rs_2_08_18_1: (gu2 / 100) + gps->u)
+            if ok_:
+                n1_ = len(F.lines); f1_ = gen(F, e.l, 'WA', size)
+                ok_ = f1_ == 'WA' and not any(re.search(r'\b(X?BC|QBC|[BC])\b', x_) for x_ in F.lines[n1_:])
+            if ok_: F.emit(SIMPLE_OPS[op], '%s,%s' % (FAM['WA'][size], a_)); return 'WA'
+            del F.lines[n0_:]
     if op in ('%', '/') and F.opt and CHAR_PRODUCT_DIV_GUARD and strip(e.l).k == 'bin' and strip(e.l).op == '*' and \
             fold(strip(e.l).r).k == 'const' and strip(strip(e.l).l).k == 'cast' and strip(strip(strip(e.l).l).e).ty is not None \
             and strip(strip(strip(e.l).l).e).ty.size == 1:
@@ -6235,6 +6257,8 @@ TAIL_IF_RETURN_LABEL = True                               # see compile_function
 LOCAL_K_VIA_REG = True                                    # see store_global
 LOCAL_BIN_SWAP = True                                     # see store_global
 CALL_VALUE_FIRST = True                                   # see gen_stmt's store
+LEFT_BIN_RIGHT_PTR = True                                 # see gen_bin
+XIZ_PTR_MEM = True                                        # see cw_kind
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)

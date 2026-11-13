@@ -1631,6 +1631,19 @@ division by a constant, where the oracle takes the address first, into XIZ (rs_1
 with an element at a variable index ("complex long helper operands", 40 statements: index temporaries in stack
 slots, the element base in XIZ).  rstmt at none 3,450 -> 3,452.
 
+**Batch 109 (2026-11-13): two forms from "the right operand overwrites the left"; rstmt +4; probe lhy.c.**  (1) A
+computed left beside `*p` / `p->m`: the pointer is loaded first, into XBC, then the left is computed in WA and the
+operation reads through XBC (rs_1_08_18_6: `gl = (gl >> 16) | gpl[3]` -> `ld XBC,(_gpl)` / `ld XWA,(_gl)` /
+`sra 0x0,XWA` / `or XWA,(XBC+0xc)`; rs_2_08_18_1: `(gu2 / 100) + gps->u`).  The left may be a simple operation, a
+shift, or an int division.  (2) An operand read through a pointer local held in XIZ is a plain memory operand,
+`(XIZ)` / `(XIZ+d)` (rs_1_08_06_3: `t[2] + t[0]` -> `ld A,(XIZ)` / `add A,(XIZ+0x2)`).  Both without -O, cdecl.  The
+refusal group stays large and mixed (64 statements at the plain set: conditionals, calls, char remainders, elements
+at a variable index beside a pointer).  rstmt at none 3,452 -> 3,456.
+**New probe `lhy.c`** (run 2026-11-13-11-micro-lhy, 360 functions; commit 70fe8a2ec): long `*` `/` `%` with an
+element at an `int` or `char` index, the largest refusal group of both corpora.  The model before any rule for it:
+96 / 48 / 0 / 0 of 360.  A Sonnet agent tabulated its templates (`tabulation/lhy-predict.py`, 360 of 360 lines;
+`tabulation/lhy-FAMILIES.md`); porting them is the next batch.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
