@@ -166,17 +166,23 @@ class Fn:
                         if rt_: raise LiveClobber('%s %s over the register temporary %s in %s' % (op, args, d.name, d.reg), d)
                         raise Unsupported('%s %s over the live parameter %s in %s' % (op, args, d.name, d.reg))   # parameter moved there, c_fordown)
         if STMT_PARAM_GUARD and getattr(s, 'guard_on', False) and args is not None and \
-                getattr(getattr(s, 'cur_stmt', None), 'k', None) in ('expr', 'return') and \
+                getattr(getattr(s, 'cur_stmt', None), 'k', None) in ('expr', 'return', 'decl') and \
                 getattr(s, 'u1_i', None) is None and not getattr(s, 'u1x', None) and not getattr(s, 'cl_active', None) \
                 and not getattr(s, 'l2', None) and not getattr(s, 'u1_inv', None):
             # a register parameter the statement reads more often than the code has read it so far must not be written
             # yet (rstmt, -Xr: .rs_2_01_06_1 doubled a in WA and then divided by it; .rs_1_08_00_2 loaded XWA over a)
             st_ = getattr(s, 'spg', None)
-            if st_ is None or st_[0] is not s.cur_stmt: st_ = s.spg = [s.cur_stmt, {}]
+            if st_ is None or st_[0] is not s.cur_stmt:
+                fp_ = []
+                walk(s.cur_stmt, lambda n_, dd: fp_.append(n_) if fpgen.is_fp_op(n_) or fpgen.is_fp(getattr(n_, 'ty', None)) else None)
+                st_ = s.spg = [s.cur_stmt, {}, bool(fp_) or (s.cur_stmt.k == 'decl' and fpgen.is_fp(s.cur_stmt.var.ty))]
+                                                         # (a floating-point statement: its helper addresses are emitted
+                                                         # ahead and patched, rstmt rs_1_03_04_1; its locals are not
+                                                         # judged here, its register parameters are: .rs_3_08_04_5)
             parts_ = [x_.strip() for x_ in args.split(',')]
             wr_ = written_fams(op, args) if op not in ('cal', 'call') else []
-            for d in (s.f.params if s.adecl else []) + [x_ for x_ in s.f.decls if getattr(x_, 'regtemp', False) or
-                                                      (STMT_LOCAL_GUARD and x_.kind == 'local' and getattr(x_, 'reg', None))]:
+            for d in (s.f.params if s.adecl else []) + ([] if st_[2] else [x_ for x_ in s.f.decls if getattr(x_, 'regtemp', False) or
+                                                      (STMT_LOCAL_GUARD and x_.kind == 'local' and getattr(x_, 'reg', None))]):
                 r_ = getattr(d, 'reg', None)                 # (and a register temporary, at every set: rstmt rs_3_00_14_8,
                 if r_ not in ('WA', 'BC', 'DE', 'HL') or d in s.dead: continue   # char u in A under ld XWA,(_gp))
                 if d.kind != 'param' and not local_defined_before(s, d): continue
@@ -1230,10 +1236,12 @@ def test_clobber_check(F, n0, n1, cond, arms, wide=False):
     """under -Xr an if's test must not write the register of a parameter that an arm still reads (rstmt
     .rs_2_03_12_2: if (gps->u) v2(gia[a], gi) tested with ld XWA,(_gps) / ld WA,(XWA+0x8) over a in A; the compiler
     takes XBC for the test there)"""
-    if not TEST_CLOBBER or not F.adecl or not getattr(F, 'guard_on', False): return
-    for d in F.f.params:
-        r_ = getattr(d, 'reg', None)
-        if r_ not in ('WA', 'BC', 'DE', 'HL') or d in F.dead or assigns_decl(cond, d): continue
+    if not TEST_CLOBBER or not getattr(F, 'guard_on', False): return
+    for d in (F.f.params if F.adecl else []) + ([x_ for x_ in F.f.decls if x_.kind == 'local' and getattr(x_, 'reg', None)]
+                                                 if TEST_CLOBBER_LOCALS and not wide else []):
+        r_ = getattr(d, 'reg', None)                       # (a local in a scratch register too, at every set: rstmt
+        if r_ not in ('WA', 'BC', 'DE', 'HL') or d in F.dead or assigns_decl(cond, d): continue   # rs_4_00_05_3,
+        if d.kind == 'local' and (not local_defined_before(F, d) or getattr(F, 'loops', None)): continue   # t in BC under ld XBC,_gca)
         def reads_(a_):                                    # (a plain assignment to it is no read: rs_3_03_19_6,
             tg_ = set(); us_ = []                            #  gul = b = gul >> 14)
             walk(a_, lambda n_, dd: tg_.add(id(strip(n_.l))) if n_.k == 'bin' and n_.op == '=' and strip(n_.l).k == 'var' else None)
@@ -1245,6 +1253,8 @@ def test_clobber_check(F, n0, n1, cond, arms, wide=False):
         for l_ in F.lines[n0:n1]:
             p_ = l_.strip().split('\t')
             if len(p_) == 2 and p_[0] not in ('cal', 'call') and 'X' + r_ in written_fams(p_[0], p_[1]):
+                if getattr(d, 'regtemp', False) and d.kind == 'local':
+                    raise LiveClobber('the test writes %s, the home of %s that an arm reads' % (r_, d.name), d)
                 raise Unsupported('the test writes %s, the home of the parameter %s that an arm reads' % (r_, d.name))
 
 IF_CONST_DEAD = True                                      # see gen_stmt's if
@@ -6098,6 +6108,7 @@ UCHAR_TO_LONG = True                                      # see gen's cast
 STMT_LOCAL_GUARD = True                                   # see Fn.emit: a local in a scratch register too (rstmt
                                                           # rs_1_07_04_2: unsigned char u in A under ld WA,(_gu2))
 WIDEN_NO_WORD_LOAD = True                                 # see gen
+TEST_CLOBBER_LOCALS = True                                # see test_clobber_check
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -6210,6 +6221,9 @@ def char_narrow(body):
             return
         if n.k != 'bin': return
         x = chr2(n.l)
+        if n.op == '*' and x is None and chr2(n.r) is not None and fold(n.l).k == 'const' and fold(n.l).value is not None:
+            n.l, n.r = n.r, n.l; x = chr2(n.l)             # K * c is c * K (rstmt rs_1_00_12_6: ('0' * gp[0]) >> 5 ->
+                                                           # ld A,(XBC) / muls WA,0x30 / sra 0x5,A)
         if x is None or x.k == 'cond': return
         rk = fold(n.r); y = chr2(n.r)
         if n.op == '<<' and rk.k == 'const' and rk.value is not None and 1 <= rk.value <= 7 and anyc(x):

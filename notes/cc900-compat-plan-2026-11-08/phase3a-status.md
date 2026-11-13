@@ -1471,6 +1471,16 @@ write yet, so the statement is refused there.  Declining instead (falling into t
 verdicts on the gate; refusing makes none.  10 verdicts gone, none new, no ledger row moves.  **Open: 84 statement
 findings** (semcheck 145 = 61 older reviewed ones + 84 on rstmt).
 
+**Batch 94 (2026-11-13): the guards reach declarations and tests over locals; semcheck 145 -> 142.**  The statement
+guard now also runs in a declaration with an initialiser (`long u = gla[t] << (b & 15)` overwrote `t` in DE with
+the shift count), and an `if`'s test may not write the home of a local in a scratch register that an arm reads, at
+every set (`if (gca[t] > gc) return gca[t]` with an unsigned `t` in BC loaded XBC for the address).  `K * c` is
+typed as `c * K` (`('0' * gp[0]) >> 5` -> `muls WA,0x30` / `sra 0x5,A`).  Two false positives were met and removed
+before the commit: a floating-point initialiser, whose helper addresses the model emits ahead and patches, is not
+judged for locals (rs_1_03_04_1 stays exact), but its register parameters still are (without that, a -Xr statement
+the guard had been refusing came back wrong: 2 new verdicts on a first gate run).  **Open: 81 statement findings**
+(semcheck 142 = 61 older reviewed ones + 81 on rstmt).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
