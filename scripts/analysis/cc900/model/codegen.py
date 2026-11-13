@@ -190,7 +190,8 @@ class Fn:
                                                          # judged here, its register parameters are: .rs_3_08_04_5)
             parts_ = [x_.strip() for x_ in args.split(',')]
             wr_ = written_fams(op, args) if op not in ('cal', 'call') else []
-            for d in (s.f.params if s.adecl else []) + ([] if st_[2] else [x_ for x_ in s.f.decls if getattr(x_, 'regtemp', False) or
+            for d in (s.f.params if s.adecl else [x_ for x_ in s.f.params if STMT_PARAM_ANYSET and getattr(x_, 'reg', None)]) + \
+                    ([] if st_[2] else [x_ for x_ in s.f.decls if getattr(x_, 'regtemp', False) or
                                                       (STMT_LOCAL_GUARD and x_.kind == 'local' and getattr(x_, 'reg', None))]):
                 r_ = getattr(d, 'reg', None)                 # (and a register temporary, at every set: rstmt rs_3_00_14_8,
                 if r_ not in ('WA', 'BC', 'DE', 'HL') or d in s.dead: continue   # char u in A under ld XWA,(_gp))
@@ -199,6 +200,9 @@ class Fn:
                         (getattr(s, 'loops', None) or self_update(op, args, d)): continue   # (a loop's planners move its
                                                          # variables themselves, and i++ is no clobber: opt_loops.c ol_while)
                 if getattr(d, 'regtemp', False) and d.kind == 'param': continue
+                if not s.adecl and d.kind == 'param' and op == 'ld' and len(parts_) == 2 and \
+                        re.match(r'^X?%s$' % r_, parts_[0]) and parts_[1].startswith('(XSP+'): continue   # (its own load
+                                                         # from the stack: opt_params.c op_ret_b, ld XDE,(XSP+0x8))
                 e_ = st_[1].setdefault(id(d), {'n': None, 'reads': 0, 'done': False})
                 if e_['done']: continue
                 if e_['n'] is None:
@@ -216,7 +220,8 @@ class Fn:
                 srcs_ = [x_ for x_ in parts_ if x_ is not dst_] + ([dst_] if op not in ('ld', 'lda', 'pop', 'scc') or dst_.startswith('(') else [])
                 reads_ = any(re.search(names_, x_) for x_ in srcs_)
                 wd_ = 4 if dst_.startswith('X') else (1 if len(dst_) == 1 else 2)
-                if 'X' + r_ in wr_ and not dst_.startswith(('(', 'Q')) and wd_ < d.ty.size: reads_ = True   # (a part of it
+                if 'X' + r_ in wr_ and not dst_.startswith(('(', 'Q')) and wd_ < d.ty.size and \
+                        (op != 'ld' or re.match(r'^0x[0-9a-f]+$', parts_[-1])): reads_ = True   # (a part of it
                                                          # replaced in place is a use: cond_bits.c cb_i_p_ff, ld W,0x0)
                 if reads_:
                     e_['reads'] += 1
@@ -6132,6 +6137,7 @@ UIDX_ADDR_XR = True                                       # see gen's addr
 CHAR_REG_LDA = True                                       # see elem_addr
 SAME_REG_GUARD = True                                     # see Fn.emit
 PTR_ELEM_EXTZ = True                                      # see gen_load_mem
+STMT_PARAM_ANYSET = True                                  # see Fn.emit: a cdecl parameter the planner keeps in a register
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)

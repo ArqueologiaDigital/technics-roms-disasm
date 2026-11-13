@@ -1515,6 +1515,16 @@ recurring rule of these batches, stated once: **an index read from memory is zer
 in a register is used as a signed register index.**  rstmt at none / -O3 -XS 3,367 / 2,968 -> 3,369 / 2,970.
 **Open: 62 statement findings** (semcheck 114).
 
+**Batch 99 (2026-11-13): the statement guard covers cdecl parameters kept in a register; semcheck 114 -> 110.**  The
+guard of batch 87 (a register parameter must not be written before the statement's last read of it) ran only at the
+-Xr sets.  Under -O3 -XS the planner also keeps a cdecl parameter in a register, and the same clobbers happen there
+(rstmt rs_4_06_03_3); it now runs at every set for such parameters, with the parameter's own load from the stack
+exempt (opt_params.c op_ret_b, `ld XDE,(XSP+0x8)`, which a first version refused: four ledger rows down on the
+scratch copy, read before installing).  The guard's "a part replaced in place is a use" exemption is narrowed to a
+constant written into the part (`ld W,0x0`); a narrower register load over the home is a clobber (rs_1_02_05_6,
+rs_3_05_08_2 at the -Xr sets).  All four are refused, none is new code; scores unchanged.
+**Open: 58 statement findings** (semcheck 110).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
