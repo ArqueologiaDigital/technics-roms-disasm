@@ -104,6 +104,10 @@ class Fn:
             if not getattr(s, 'exit_label', None): s.exit_label = s.newlabel()   # ret cc: the early exit jumps to the
             op, args = 'j', '%s,%s' % (args, s.exit_label)                    # exit label (ret_target; rstmt .rs_1_06_09_3
                                                            # under -Xr wrote ret le before retd 0x8: wrong code)
+        if SAME_REG_GUARD and op in ('sub', 'and', 'cp', 'xor', 'sbc') and args is not None and \
+                re.match(r'^(X?(?:WA|BC|DE|HL|IX|IY|IZ)|[WABCDEHL]),\1$', args):
+            raise Unsupported('%s %s: an operand was overwritten by its own accumulator' % (op, args))   # (rstmt -O3 -XS:
+                                                           # rs_1_04_07_1 guca[t] - t -> sub A,A; rs_3_08_12_3 cp WA,WA: wrong code)
         if ADD_ZERO_DROP and op in ('add', 'sub', 'or', 'xor') and args is not None and \
                 re.match(r'^(X?(?:WA|BC|DE|HL|IX|IY|IZ)|[WABCDEHL]),0x0$', args):
             return                                         # x + 0 is no code (kfold.c kf_al: gi + ((8 ^ 16) << 11) -> ld HL,(_gi))
@@ -6119,6 +6123,7 @@ WIDEN_NO_WORD_LOAD = True                                 # see gen
 TEST_CLOBBER_LOCALS = True                                # see test_clobber_check
 UIDX_ADDR_XR = True                                       # see gen's addr
 CHAR_REG_LDA = True                                       # see elem_addr
+SAME_REG_GUARD = True                                     # see Fn.emit
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)

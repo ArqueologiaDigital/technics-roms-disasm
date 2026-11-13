@@ -1497,6 +1497,13 @@ index.  And `&arr[i]` with an unsigned register index under -Xr is extended whol
 sits in WA.  18 verdicts gone (several older ones on idxloc.c among them), none new; rstmt +1 / +1 / +2 / +1.
 **Open: 70 statement findings** (semcheck 122).
 
+**Batch 97 (2026-11-13): an operation of a register with itself is refused; semcheck 122 -> 118.**  Under -O3 -XS
+three statements combined a value with a copy of itself after the copy's source had been overwritten:
+`guca[t] - t` came out as `ld A,(_juc)` / `ld C,A` / .. / `ld A,(XBC+WA)` / `sub A,A`, `guca[t] & t` as `and A,A`,
+and `guca[a] <= a` as `cp WA,WA`.  No listing of the compiler has `sub`, `and`, `cp`, `xor` or `sbc` of a register
+with itself in these places, so the model now refuses to write one.  4 verdicts gone, none new, no ledger row moves.
+**Open: 66 statement findings** (semcheck 118).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
