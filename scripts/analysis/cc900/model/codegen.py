@@ -6341,6 +6341,7 @@ KILL_TOP = True                                           # see the across-call 
 DEAD_INIT_CTR = True                                      # see regtemp_candidates
 RET_TWO_LEVEL = True                                      # see ret_two_level
 CHAR_IDX_BC = True                                        # see regtemp_candidates
+WRITE_ONLY_EVAL = True                                    # see eval_write_only
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -8495,6 +8496,10 @@ def read_after_top(F):
 def gen_stmt(F, s, last):
     tix = getattr(F, 'top_ix', None)
     if tix is not None and id(s) in tix: F.cur_top = tix[id(s)]
+    if s.k == 'expr' and getattr(s, 'eval_wa', None):      # (eval_write_only: a value nobody reads, computed in WA)
+        if fold(s.e).k != 'const': gen(F, s.e, 'WA', s.eval_wa)
+        else: F.emit('ld', '%s,%s' % (FAM['WA'][s.eval_wa], hx(fold(s.e).value & ((1 << 8 * s.eval_wa) - 1))))
+        return
     if getattr(F, 'sret_home_pending', None) and tix is not None and id(s) in tix:
         r_ = []; walk(s, lambda n, d: r_.append(n) if n.k == 'return' and n.value is not None else None)
         if r_: F.lines.append(F.sret_home_pending + '\t;sret-late'); F.sret_home_pending = None
@@ -12631,6 +12636,30 @@ def plan_lh_call(F):
 
 DEAD_CALL_STORE = True                                    # see drop_dead_call_stores
 
+def eval_write_only(f, opt, adecl):
+    """WRITE_ONLY_EVAL: without -O (cdecl) a local that is only ever assigned -- never read -- has no slot; each
+    `t = e;` evaluates e into WA and stores nothing (rstmt rs_2_09_17_4: int t = ji; v0(); t = a; -> ld WA,(_ji) /
+    cal _v0 / ld WA,(a); rs_1_01_15_2: t = gps->u -> ld XWA,(_gps) / ld WA,(XWA+0x8)).  The statements are marked
+    eval_wa and gen_stmt evaluates their right sides; the declaration's initialiser goes the unused-local way."""
+    if not WRITE_ONLY_EVAL or opt or adecl: return
+    stm = []
+    walk(f.body, lambda n, d: stm.append(n) if n.k == 'expr' else None)
+    for d in [x for x in f.decls if x.kind == 'local']:
+        if d.addr_taken or d.ty is None or d.ty.kind not in ('int', 'ptr') or d.ty.size not in (1, 2, 4): continue
+        uses = []
+        walk(f.body, lambda n, dd: uses.append(n) if n.k == 'var' and n.decl is d else None)
+        if not uses: continue
+        tg = [x for x in stm if strip(x.e).k == 'bin' and strip(x.e).op == '=' and strip(strip(x.e).l).k == 'var' and
+              strip(strip(x.e).l).decl is d and not uses_decl(strip(x.e).r, d)]
+        if len(tg) != len({id(u) for u in uses}): continue
+        if any(nodes_in(strip(x.e).r, 'call') or has_helper_call(strip(x.e).r) or fpgen.is_fp_op(strip(x.e).r) or
+               strip(strip(x.e).r).ty is None or strip(strip(x.e).r).ty.size != d.ty.size for x in tg): continue
+        lp = []
+        walk(f.body, lambda n, dd: lp.append(n) if n.k in ('for', 'while', 'do', 'switch') and uses_decl(n, d) else None)
+        if lp: continue
+        for x in tg: x.eval_wa = d.ty.size; x.e = strip(x.e).r
+        if hasattr(d, 'uses'): d.uses = 0
+
 def drop_dead_call_stores(f, opt, adecl):
     """without -O (cdecl) a top-level `t = call(..);` into a local that nothing reads afterwards is only the call
     (random r2_07_02: long t = gs.l / 7L; t = rl(65536L - t); -> .. / push XWA / cal _rl, no slot for t and no store)"""
@@ -14344,6 +14373,7 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
     personality = PERSONALITIES[personality]
     merge_address_inits(f)
     drop_dead_call_stores(f, opt != 'none', adecl)
+    eval_write_only(f, opt != 'none', adecl)
     if opt != 'none' and DROP_WRITE_ONLY: drop_write_only(f)
     lh_counter_slots(f, opt != 'none', adecl)
     fold_fp_consts(f)

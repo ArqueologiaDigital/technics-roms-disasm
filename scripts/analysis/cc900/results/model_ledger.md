@@ -61,7 +61,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-40-micro-fpe2f, v423/O3XS                            | probes/fpp8.c        | 41 / 108 exact (38.0%)     |
 | run 2026-11-09-41-micro-fpe2g, v423/none                            | probes/fpp9.c        | 8 / 60 exact (13.3%)       |
 | run 2026-11-09-41-micro-fpe2g, v423/O3XS                            | probes/fpp9.c        | 8 / 60 exact (13.3%)       |
-| run 2026-11-10-2-micro-fpe3a, v423/none                             | probes/fpp10.c       | 71 / 102 exact (69.6%)     |
+| run 2026-11-10-2-micro-fpe3a, v423/none                             | probes/fpp10.c       | 73 / 102 exact (71.6%)     |
 | run 2026-11-10-2-micro-fpe3a, v423/O3XS                             | probes/fpp10.c       | 70 / 102 exact (68.6%)     |
 | run 2026-11-10-3-micro-fpe3b, v423/none                             | probes/fpp11.c       | 46 / 99 exact (46.5%)      |
 | run 2026-11-10-3-micro-fpe3b, v423/O3XS                             | probes/fpp11.c       | 40 / 99 exact (40.4%)      |
@@ -255,7 +255,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-13-6-micro-negk, v423/O3XS                              | probes/negk.c        | 38 / 38 exact (100.0%)     |
 | run 2026-11-13-6-micro-negk, v423/Xr                                | probes/negk.c        | 38 / 38 exact (100.0%)     |
 | run 2026-11-13-6-micro-negk, v423/O3XSXr                            | probes/negk.c        | 38 / 38 exact (100.0%)     |
-| run 2026-11-13-7-micro-rstmt, v423/none                             | probes/rstmt*.c      | 3506 / 4694 exact (74.7%)  |
+| run 2026-11-13-7-micro-rstmt, v423/none                             | probes/rstmt*.c      | 3510 / 4694 exact (74.8%)  |
 | run 2026-11-13-7-micro-rstmt, v423/O3XS                             | probes/rstmt*.c      | 3005 / 4694 exact (64.0%)  |
 | run 2026-11-13-7-micro-rstmt, v423/Xr                               | probes/rstmt*.c      | 3037 / 4694 exact (64.7%)  |
 | run 2026-11-13-7-micro-rstmt, v423/O3XSXr                           | probes/rstmt*.c      | 2869 / 4694 exact (61.1%)  |

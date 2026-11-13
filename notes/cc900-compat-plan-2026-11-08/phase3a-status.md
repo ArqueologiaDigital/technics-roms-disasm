@@ -1716,6 +1716,15 @@ sum (rs_2_02_19_6).  The compound assignment `guc |= guca[t] ^ 229` wants the sa
 falls to DE there).  rstmt at none 3,501 -> 3,506; idxloc.c 82 -> 85; semcheck 49 -> 48 (idxloc il_c_RA at none is
 right now; its review row still covers the other sets).
 
+**Batch 117 (2026-11-13): a write-only local has no slot; rstmt +4, fpp10 +2.**  Without -O a local that is only
+ever assigned -- never read -- gets no frame slot: its initialiser and each `t = e;` are evaluated into WA and
+nothing is stored (rs_2_09_17_4: `int t = ji; v0(); t = a;` -> `ld WA,(_ji)` / `cal _v0` / `ld WA,(XSP+0x4)`;
+rs_1_01_15_2: `t = gps->u` -> `ld XWA,(_gps)` / `ld WA,(XWA+0x8)`).  The model kept a slot and stored into it.  A
+pre-pass (eval_write_only) marks those statements; the declaration then goes the existing unused-local way.  Not for
+a variable touched in a loop or a switch, nor when a right side calls (batch 76's dead-call-store rule covers the
+plain call).  `return (t = 255);` evaluates twice (`ld WA,0xff` / `ld HL,0xff`) and is left.  rstmt at none
+3,506 -> 3,510; fpp10.c 71 -> 73.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
