@@ -4558,7 +4558,7 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
     return _gen_bin_body(F, e, fam, size, then_ret, store)
 
 def _gen_bin_body(F, e, fam, size, then_ret, store=False):
-    if CALL_SHIFT_HL and not F.opt and not F.adecl and size in (2, 4) and strip(e.l).k == 'call' and \
+    if CALL_SHIFT_HL and not F.adecl and size in (2, 4) and strip(e.l).k == 'call' and \
             not has_helper_call(strip(e.l).fn) and fold(e.r).k == 'const' and fold(e.r).value is not None and \
             not getattr(F, 'any_fam', False):
         k_ = fold(e.r).value
@@ -4775,7 +4775,7 @@ def _gen_bin_body(F, e, fam, size, then_ret, store=False):
         else: F.emit(SIMPLE_OPS[op], '%s,%s' % (R, rs0))
         return fam
     ev_ctx = 'ANY' if any_fam and fam == 'WA' else fam     # evorder.c: HL (a returned value); evorder_st.c: WA (a
-    ev_b_ = EVORDER_BYTE and size == 1 and not F.opt and not F.adecl and op in ('&', '|', '^', '+') and \
+    ev_b_ = EVORDER_BYTE and size == 1 and not F.adecl and op in ('&', '|', '^', '+') and \
         ev_class(F, l) == 'A' and ev_class(F, r) == 'A'     # (bytes: two addressed operands, random r1_04_16:
                                                             #  gca[6] ^ *gp -> ld XWA,(_gp) / ld L,(XWA) / xor L,(_gca + 0x6))
     if EVORDER and (size in (2, 4) or ev_b_) and ev_ctx in ('HL', 'WA', 'ANY') and \
@@ -5113,7 +5113,7 @@ def _gen_bin_body(F, e, fam, size, then_ret, store=False):
             mk_ = re.match(r'^\tld\t%s,0x([0-9a-f]+)$' % FAM[work][size], F.lines[-1]) if F.lines else None
             if guard_ and mk_ and size == 2 and 8 <= int(mk_.group(1), 16) < 0x8000:
                 F.lines[-1] = '\tlda\t%s,0x%s' % (wide, mk_.group(1))   # -O: lda XWA,0x64 (random r1_09_05)
-            elif K_DIVIDEND_WIDE and mk_ and not F.opt and not F.adecl and int(mk_.group(1), 16) < (0x80 if size == 1 else 0x8000):
+            elif K_DIVIDEND_WIDE and mk_ and not F.adecl and int(mk_.group(1), 16) < (0x80 if size == 1 else 0x8000):
                 F.lines[-1] = '\tld\t%s,0x%s' % (wide, mk_.group(1))   # a constant dividend is loaded wide (random
             else:                                                       # r4_03_06: gc2 = 8 / gs.c -> ld WA,0x8 / divs WA,(_gs))
                 F.emit('exts' if signed else 'extz', wide)
@@ -5827,7 +5827,7 @@ def gen_long_helper(F, e, l, r, fam, signed):
             lh_call(F, e.op, l, r):
         F.emit('cal', 'C9H_' + name)                   # (evorder_ad.c l_div_GF: push XIZ / cal _hfl / ld XIZ,XHL / ld XWA,(_gl) /
         return 'HL' if fam == 'HL' else move_to(F, 'XHL', fam, 4, keep=True)   # ld XBC,XIZ / cal C9H_divls)
-    if (ls is None or rs is None) and LH_D_COMPUTED and not F.opt and not F.adecl and e.op == '*' and not live_regs(F) and \
+    if (ls is None or rs is None) and LH_D_COMPUTED and not F.adecl and e.op == '*' and not live_regs(F) and \
             strip(r).k == 'bin' and not nodes_in(r, 'call') and not has_helper_call(r) and not fpgen.is_fp_op(r):
         try: kd_ = cw_kind(F, l, 4)
         except Unsupported: kd_ = None
@@ -6079,7 +6079,7 @@ def gen_compare(F, e):
             regvar_of(strip(l).e).ty.size == 1 and 'A' not in live_regs(F):
         rr_ = FAM[regvar_of(strip(l).e).reg][1]           # a char local in the low byte of a register compares in place
         F.emit('cp', '%s,%s' % (rr_, hx(rc.value & 0xff))); return cc   # (rstmt rs_1_07_18_2: t != 0 -> cp C,0x0)
-    if CP_QIZ_K and lm in ('QIZH', 'QIZL') and size == 1 and rc.k == 'const' and rc.value is not None and not F.opt and not F.adecl:
+    if CP_QIZ_K and lm in ('QIZH', 'QIZL') and size == 1 and rc.k == 'const' and rc.value is not None and not F.adecl:
         F.emit('cp', '%s,%s' % (lm, hx(rc.value & 0xff))); return cc   # a char in QIZ compares in place (random r3_09_12:
                                                            # t != 0 -> cp QIZH,0x0; five in the oracle's listings, no ld A,QIZH / cp A,k)
     if getattr(F, 'u1_i', None) is not None and lm is not None and lm.startswith('(X') and l.k == 'load' and \
@@ -8104,7 +8104,7 @@ def gen_load_mem(F, v, fam, size):
             F.emit('add', 'WA,WA') if esz == 2 else F.emit('sla', '%s,WA' % hx({4: 2, 8: 3}[esz]))
             B_ = 'XDE' if 'XBC' in getattr(F, 'sp_busy', ()) else 'XBC'   # (store_plan st_i_DX: the pointer in XBC)
             F.emit('lda', '%s,_%s' % (B_, b.decl.name)); F.emit('ld', '%s,(%s+WA)' % (R, B_)); return fam
-        if MEMBER_ARR_LOAD and not F.opt and not F.adecl and b.k == 'member' and not b.arrow and b.ty.kind == 'array' and \
+        if MEMBER_ARR_LOAD and not F.adecl and b.k == 'member' and not b.arrow and b.ty.kind == 'array' and \
                 strip(b.base).k == 'var' and strip(b.base).decl.kind == 'global' and esz == 2 and ic.k != 'const' and \
                 not ({'WA', 'BC'} & set(live_regs(F))) and not held_after(F, 'WA', v) and not held_after(F, 'BC', v):
             ii = strip(i)                                  # a static struct's int member array at a variable index (rstmt
@@ -8406,7 +8406,7 @@ def _lvalue_raw(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False, kind='sto
             return '(%s+%s)' % (m, hx(off)) if off else '(%s)' % m
     if lv.k == 'index':
         b, i = strip(lv.base), lv.idx
-        if MEMBER_ARR_STORE and not F.opt and not F.adecl and b.k == 'member' and not b.arrow and b.ty.kind == 'array' and \
+        if MEMBER_ARR_STORE and not F.adecl and b.k == 'member' and not b.arrow and b.ty.kind == 'array' and \
                 strip(b.base).k == 'var' and strip(b.base).decl.kind == 'global' and lv.ty.size == 2 and \
                 fold(i).k != 'const' and not ({'WA', 'BC'} & set(live_regs(F))):
             ii = strip(i)                                  # gs.a[i] as a store or op= target (rstmt rs_1_08_10_6: gs.a[b] %= 3
@@ -8643,7 +8643,7 @@ def gen_opassign(F, e):
             strip(e.l).k == 'var' and strip(e.l).ty.kind == 'int' and not nodes_in(r, 'call'):
         return None                                        # x |= 0 is no code (random r1_04_17: gi2 |= 0 * 1)
     if op in SIMPLE_OPS and fold(r).k == 'const' and size <= 2 and (getattr(F, 'naive_loads', False) or
-                                                                    (OPK_DEREF_GLOBAL and not F.opt and not F.adecl and op in '&|^' and
+                                                                    (OPK_DEREF_GLOBAL and not F.adecl and op in '&|^' and
                                                                      size == 2 and strip(e.l).k == 'deref' and
                                                                      strip(strip(e.l).e).k == 'load' and
                                                                      strip(strip(strip(e.l).e).e).k == 'var' and
@@ -9985,7 +9985,7 @@ def gen_stmt(F, s, last):
                 for R_ in ('XWA', 'WA'):                                                           # add (_gpi),XWA)
                     if F.lines[-2] == '\tadd\t%s,%s' % (R_, m_) and F.lines[-1] == '\tld\t%s,%s' % (m_, R_):
                         F.lines[-2:] = ['\tadd\t%s,%s' % (m_, R_)]
-        if SHIFT1_MEM and not F.opt and not F.adecl and s.k == 'expr' and len(F.lines) >= 3 and (
+        if SHIFT1_MEM and not F.adecl and s.k == 'expr' and len(F.lines) >= 3 and (
                 s.e.k == 'opassign' and s.e.op in ('<<', '>>') and fold(s.e.r).k == 'const' and fold(s.e.r).value == 1 or
                 s.e.k == 'bin' and s.e.op == '=' and strip(s.e.r).k == 'bin' and strip(s.e.r).op in ('<<', '>>') and
                 fold(strip(s.e.r).r).k == 'const' and fold(strip(s.e.r).r).value == 1):
@@ -15308,7 +15308,7 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
         F.lines = [l for l in F.lines if l is not None]
     F.lines = [l for i, l in enumerate(F.lines) if not (l == '\tret' and i and F.lines[i - 1] == '\tret')]
     # (a ret right after a ret is unreachable: arr_index.c ai_dig_val's trivial return after an if)
-    if AND_BIT_CLR and not F.opt and not F.adecl:        # an and that clears one bit of WA is res (rstmt rs_1_04_05_0:
+    if AND_BIT_CLR and not F.adecl:        # an and that clears one bit of WA is res (rstmt rs_1_04_05_0:
         for i, l in enumerate(F.lines):                  # gua[c] & 32767 -> .. ld WA,(XBC+A) / res 0xf,WA; the oracle has
             m = re.match(r'^\tand\tWA,0x([0-9a-f]{1,4})$', l)   # no and WA,K for a one-bit mask in its listings)
             if not m: continue

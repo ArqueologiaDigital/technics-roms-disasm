@@ -2166,6 +2166,16 @@ RET_TWO_LEVEL now skip a function that returns with `retd` (adecl with stack par
 9 with 131 more exact functions (lhx.c at -Xr 236 -> 258, stvxc.c 115 -> 129, lsl.c 34 -> 46, stdiv2.c 476 -> 483,
 rstmt 3,198 -> 3,265, ...), down 0; pairs MATCH 223; semcheck 54. Random 182 / 58 / 102 / 49.
 
+**Batch 167 (2026-11-13): ten rules evidenced without options also apply under cdecl -O3 -XS.** The same sweep as
+batch 166, at -O3 -XS (research-scratch gate/xrtry2.sh "not F.adecl" O3XS; results in
+gate/xrtry-results-o3xs-2026-11-13.txt): the 53 remaining no-option rules, each relaxed alone and scored on rstmt (baseline
+3,065). Ten of the eleven that gained are relaxed together (3,077): CALL_SHIFT_HL, EVORDER_BYTE, K_DIVIDEND_WIDE,
+LH_D_COMPUTED, CP_QIZ_K, MEMBER_ARR_LOAD, MEMBER_ARR_STORE, OPK_DEREF_GLOBAL, SHIFT1_MEM, AND_BIT_CLR. The eleventh,
+LEAF_NONE_LN1, gained 3 rstmt statements but cost the 1997 library five functions (186 -> 181: _strncmp, _strcat, _strchr,
+_strnset, _strset) and two wrong-code verdicts. A first combined run showed that in the ledger and the gate, and it was
+not committed. The library is the -O3 -XS evidence the rstmt sweep does not see; gate/lib_one.sh scores it for one model.
+Ledger up 1 (rstmt at -O3 -XS 3,065 -> 3,077), down 0; pairs MATCH 223; semcheck 54. Random 182 / 58 / 102 / 49.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
