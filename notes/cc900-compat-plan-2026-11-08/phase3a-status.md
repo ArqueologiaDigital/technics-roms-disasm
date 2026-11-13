@@ -1304,6 +1304,18 @@ nothing references, cost four random functions at none: the compiler keeps the l
 idxloc.c 31 -> 37 and 36 -> 40 at the two optimised sets, cmpord.c +1 and cmpordl.c +2 at each of the four sets:
 eighteen ledger rows up by 33 functions.
 
+**Batch 81 (2026-11-13): six rules from functions two and three lines off.**  The address of a char array element
+whose index sits in IZ takes the base first (`return &gca[t]` -> `lda XWA,_gca` / `ld HL,IZ` / `extz XHL` /
+`add XHL,XWA`).  A constant chained through a constant element or static member into a global is stored into both
+(`guc = guca[6] = 9` -> `ldb (_guca + 0x6),0x9` / `ldb (_guc),0x9`).  A stored operation on a call's result is done in
+HL, where the call left it (`gu2 = ru(..) | 1` -> `cal _ru` / `inc 0x2,XSP` / `set 0x0,HL` / `ld (_gu2),HL`).  A
+global shifted into a variable kept in IZ is loaded into IZ and shifted there (`unsigned t = gu << 7` ->
+`ld IZ,(_gu)` / `sll 0x7,IZ`).  The unsigned divide that is a shift works on a static member directly, not through
+its address as a real division does (`gs.u /= 16` -> `ld WA,(_gs + 0x8)` / `srl 0x4,WA` / `ld (_gs + 0x8),WA`).  And
+the chained-store rule of batch 30 now also runs when a variable lives in a register the chain does not need
+(`gua[0] = gps->u = K` beside a long in XHL).  Random programs at none 158 -> 164 of 800 (45 / 80 / 36 at the other
+sets, unchanged).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

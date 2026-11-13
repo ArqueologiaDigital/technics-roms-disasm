@@ -967,6 +967,10 @@ def gen(F, e, fam, size, then_ret=False, store=False):
                 if im != 'WA': F.emit('ld', 'WA,%s' % im)    # r4_01_02: &gia[b], unsigned b -> ld WA,(b) / extz XWA /
                 F.emit('extz', 'XWA'); scale32(F, 'XWA', x.ty.size)   # add XWA,XWA / lda XHL,_gia / add XHL,XWA
                 F.emit('lda', '%s,_%s' % (X, b.decl.name)); F.emit('add', '%s,XWA' % X); return fam
+            if ADDR_BASE_FIRST_IZ and x.ty.size == 1 and im == 'IZ' and fam == 'HL' and 'WA' not in live_regs(F):
+                F.emit('lda', 'XWA,_%s' % b.decl.name); F.emit('ld', '%s,IZ' % R2)   # a char element's address at an index
+                F.emit('extz', X); F.emit('add', '%s,XWA' % X); return fam             # in IZ: the base first (random r3_04_06,
+                                                           # every set: return &gca[t] -> lda XWA,_gca / ld HL,IZ / extz XHL / add XHL,XWA)
             if im != R2: F.emit('ld', '%s,%s' % (R2, im))
             scale_reg(F, R2, x.ty.size, 'sla')
             B_ = 'XWA'; ext_ = 'extz'
@@ -3082,7 +3086,8 @@ def store_chain(F, lv, rv, size):
     elif vk == 'B': V = 'B'
     elif vk == 'C' and v.k == 'call': V = 'C'
     else: return False
-    if any(r_ in ('WA', 'BC', 'DE', 'HL') for r_ in live_regs_read(F)): return False
+    lr_ = [r_ for r_ in ('WA', 'BC', 'DE', 'HL') if r_ in live_regs_read(F)]
+    if lr_ and not (CHAIN_LIVE_OK and V in ('K', 'G') and size != 1 and not F.opt and not F.adecl): return False
     if size == 1: return sc_char(F, ok_, ik, v, V, vc)
     X_ = lambda r: 'X' + r
     W_ = lambda r: FAM[r][size]
@@ -3121,6 +3126,10 @@ def store_chain(F, lv, rv, size):
             if V == 'G' or (V == 'K' and size == 2 and nregs(I) == 0 and not F.opt): al['v'] = get(1)
             if O in ('P', 'Q'): al['o'] = get(1)
         except Unsupported: return False
+        if set(lr_) & (set(pool) - set(take)) or (lr_ and 'WA' in lr_): return False   # (a live variable in a register the
+                                                           # chain needs; one elsewhere does not matter: random r3_04_05,
+                                                           # gua[0] = gps->u = K beside t in XHL -> ld XWA,(_gps) /
+                                                           # ldw (XWA+0x8),0xffff / ld WA,0xffff / ld (_gua),WA)
         om = addr(ok_, al.get('o', []), via_wa=not F.opt) if nregs(O) else ok_[1]
         im = addr(ik, al['i']) if nregs(I) else ik[1]
         if V == 'G':
@@ -4520,6 +4529,12 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
             if REGTEMP_INPLACE and rtl is not None and getattr(rtl, 'regtemp', False) and dies_here(F, strip(l)) and \
                     (rtl.reg == 'HL' or F.opt) and rtl.reg in FAM and size in FAM[rtl.reg]:
                 fam = f0 = rtl.reg; R = FAM[fam][size]; F.dead.add(rtl)   # lo_i_R0e: cal _ri / add HL,(_hi) in place
+            elif CALL_LEFT_INPLACE and strip(l).k == 'call' and size == 2 and fam == 'WA' and store and not F.opt and \
+                    not F.adecl and op in SIMPLE_OPS and not has_helper_call(strip(l).fn) and \
+                    (fold(r).k == 'const' or (mem_operand(F, r) or '').startswith('(_')) and not live_regs(F) & {'HL'}:
+                f0 = gen(F, l, 'HL', size); flush_pops(F)  # a stored operation on a call's result is done in HL (random
+                                                           # r2_00_10: gu2 = ru(gua[t]) | 1 -> cal _ru / inc 0x2,XSP /
+                                                           # set 0x0,HL / ld (_gu2),HL)
             else: f0 = gen(F, l, fam, size)
             if f0 != fam and f0 in FAM and size in FAM[f0]:   # _rand: Seed * k + 12345 -> the helper's XHL:
                 fam = f0; R = FAM[fam][size]                  # cal C9H_mullu / add XHL,0x3039 (not XWA: wrong code)
@@ -5856,6 +5871,12 @@ LH_XR_ORDER = True                                        # see gen_long_helper:
 XIZ_LDA_DIRECT = True                                     # see gen_stmt's XIZ homes
 TERN_ONE_LABEL = True                                     # see gen's -O ?:
 IF_LABEL_USED = True                                      # see gen_stmt's if
+ADDR_BASE_FIRST_IZ = True                                 # see gen's addr
+CHAIN_K_STATIC = True                                     # see store_global
+CALL_LEFT_INPLACE = True                                  # see gen_bin
+IZ_TAIL_GLOBAL = True                                     # see regvar_stmt
+DIVSHIFT_DIRECT = True                                    # see gen_opassign
+CHAIN_LIVE_OK = True                                      # see store_chain
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -7613,8 +7634,11 @@ def gen_opassign(F, e):
             ptr = 'XBC'
             if 'BC' in live_regs(F): ptr = FAM[free_reg(F, avoid={'WA', 'BC'})][4]      # .as_mul_arr: XDE
             t = lvalue(F, e.l, ptr=ptr, combine=True)
+            kq_ = fold(r).value if fold(r).k == 'const' and fold(r).value is not None else 0
             if MULDIV_ELEM_ADDR and not F.opt and strip(e.l).k in ('index', 'member') and size == 2 and \
-                    re.match(r'^\(_\w+( \+ 0x[0-9a-f]+)?\)$', t):
+                    not (DIVSHIFT_DIRECT and op == '/' and DIVU_SHIFT and not signed and kq_ >= 2 and kq_ & (kq_ - 1) == 0) and \
+                    re.match(r'^\(_\w+( \+ 0x[0-9a-f]+)?\)$', t):   # (not the divide that is a shift: random r4_08_16,
+                                                           # gs.u /= 16 -> ld WA,(_gs + 0x8) / srl 0x4,WA / ld (_gs + 0x8),WA)
                 F.emit('lda', '%s,%s' % (ptr, t[1:-1])); t = '(%s)' % ptr   # a static element or member is multiplied or
                                                            # divided through its address (random r1_06_13: gua[6] %= 3 ->
                                                            # lda XBC,_gua + 0xc / ld WA,(XBC) / .. / ld (XBC),WA)
@@ -7660,6 +7684,12 @@ def store_global(F, name, e, size):
             and strip(ia.l).decl.ty.size == size and fold(narrow(ia.r, size)).k == 'const':
         store_global(F, strip(ia.l).decl.name, ia.r, size)   # ae_i_chain_k: gi = gi2 = 7 -> ldw (_gi2),0x7 /
         store_global(F, name, ia.r, size); return            # ldw (_gi),0x7
+    if CHAIN_K_STATIC and ia.k == 'bin' and ia.op == '=' and size <= 2 and not F.opt and not F.adecl and strip(ia.l).k in ('index', 'member') and \
+            strip(ia.l).ty is not None and strip(ia.l).ty.size == size and fold(narrow(ia.r, size)).k == 'const' and \
+            fold(narrow(ia.r, size)).value is not None and (sp_lvalue_kind(F, strip(ia.l)) or ('',))[0] == 'S':
+        F.emit('ld' + ('b' if size == 1 else 'w'), '%s,%s' % (sp_lvalue_kind(F, strip(ia.l))[1], imm_of(fold(narrow(ia.r, size)), size)))
+        store_global(F, name, ia.r, size); return            # the inner a constant element / static member (random
+                                                             # r3_00_12: guc = guca[6] = 9 -> ldb (_guca + 0x6),0x9 / ldb (_guc),0x9)
     rc = fold(narrow(e, size)) if size <= 2 else None
     if rc is not None and rc.k == 'const' and rc.value is not None:   # _exp, _tan: errno = ERANGE -> ldw (_errno),0x22
         F.emit('ld' + ('b' if size == 1 else 'w'), '(_%s),%s' % (name, imm_of(rc, size))); return
@@ -9509,7 +9539,10 @@ def regvar_stmt(F, e):
             k_ = len(F.lines) - 2
             while k_ >= n_iz_ and re.match(r'^\t(add|sub|and|or|xor|sla|sra|srl|sll|inc|dec)\t(WA,(\(_[^)]*\)|0x[0-9a-f]+)|0x[0-9a-f]+,WA)$', F.lines[k_]):
                 k_ -= 1
-            if k_ >= n_iz_ and k_ < len(F.lines) - 2 and re.match(r'^\tld\tWA,\((XWA|XBC|XDE|XHL)[^)]*\)$', F.lines[k_]):
+            if k_ >= n_iz_ and k_ < len(F.lines) - 2 and (re.match(r'^\tld\tWA,\((XWA|XBC|XDE|XHL)[^)]*\)$', F.lines[k_]) or
+                    IZ_TAIL_GLOBAL and re.match(r'^\tld\tWA,\(_[^)]*\)$', F.lines[k_]) and
+                    all(re.match(r'^\t(sla|sra|srl|sll)\t', l_) for l_ in F.lines[k_ + 1:-1])):   # (random r4_04_15:
+                                                           # unsigned t = gu << 7 -> ld IZ,(_gu) / sll 0x7,IZ)
                 for j_ in range(k_, len(F.lines) - 1):
                     F.lines[j_] = re.sub(r'\bWA\b(?=,)|(?<=,)WA$', 'IZ', F.lines[j_]) if j_ > k_ else F.lines[j_].replace('\tld\tWA,', '\tld\tIZ,', 1)
                 F.lines.pop()
