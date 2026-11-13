@@ -5727,6 +5727,22 @@ def gen_long_helper(F, e, l, r, fam, signed):
             lh_call(F, e.op, l, r):
         F.emit('cal', 'C9H_' + name)                   # (evorder_ad.c l_div_GF: push XIZ / cal _hfl / ld XIZ,XHL / ld XWA,(_gl) /
         return 'HL' if fam == 'HL' else move_to(F, 'XHL', fam, 4, keep=True)   # ld XBC,XIZ / cal C9H_divls)
+    if (ls is None or rs is None) and LH_NESTED_K and not F.opt and not F.adecl and e.op in ('/', '%') and \
+            fold(r).k == 'const' and fold(r).value is not None and not live_regs(F):
+        li_ = strip(l)                                     # a helper's result as the left of another helper by a constant
+        while li_.k == 'cast' and li_.ty is not None and li_.ty.size == 4: li_ = strip(li_.e)
+        if li_.k == 'bin' and li_.ty is not None and li_.ty.size == 4 and li_.ty.kind == 'int' and \
+                (li_.op in ('/', '%') or li_.op == '*' and fold(li_.r).k != 'const'):
+            if gen(F, l, 'HL', 4) != 'HL': raise Unsupported('complex long helper operands')   # (rstmt rs_4_06_00_2:
+            flush_pops(F)                                  # (*gpl % 100L) / 100L -> .. cal C9H_remls / ld XWA,XHL /
+            kv_ = fold(r).value & 0xffffffff
+            if not signed and kv_ >= 2 and kv_ & (kv_ - 1) == 0:   # unsigned by a power of two: in XHL (rs_3_01_10_0:
+                if e.op == '%': F.emit('and', 'XHL,%s' % hx(kv_ - 1))   # gul % 3 % 2 -> cal C9H_remlu / and XHL,0x1)
+                else: emit_shift(F, 'srl', kv_.bit_length() - 1, 'XHL')
+                return 'HL' if fam == 'HL' else move_to(F, 'XHL', fam, 4, keep=True)
+            F.emit('ld', 'XWA,XHL'); F.emit('ld', 'XBC,%s' % hx(fold(r).value & 0xffffffff))   # ld XBC,0x64 /
+            F.emit('cal', 'C9H_' + name)                   # cal C9H_divls)
+            return 'HL' if fam == 'HL' else move_to(F, 'XHL', fam, 4, keep=True)
     if ls is None or rs is None: raise Unsupported('complex long helper operands')
     # provisional (two examples, mul_l_loc): XBC first when a register variable is involved
     rc = fold(r)
@@ -6404,6 +6420,7 @@ COPY_EXEMPT_NOT_CHAR = True                              # see Fn.emit's stateme
 MEMBER_ARR_LOAD = True                                   # see gen_load_mem
 MEMBER_ARR_STORE = True                                  # see _lvalue_raw
 LH_DEAD_IDX_SLOT = True                                  # see lh_counter_slots
+LH_NESTED_K = True                                       # see gen_long_helper
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)

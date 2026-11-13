@@ -1845,6 +1845,13 @@ loop-counter marking of batch 7x (LH_CTR_SLOT) also marks a local whose only lat
 instead of a new one.  rstmt at none 3,529 -> 3,530 (rs_2_09_18_5); random r2_09_18 moves from refused to compiled
 (differing elsewhere).  Random exact unchanged.
 
+**Batch 131 (2026-11-13): a long helper by a constant whose left is another helper's result; lhx +16, rstmt +2.**  From the
+single-statement blockers (long-helper operands).  `return (*gpl % 100L) / 100L;` -> `ld XWA,(_gpl)` / `ld XWA,(XWA)` /
+`ld XBC,0x64` / `cal C9H_remls` / `ld XWA,XHL` / `ld XBC,0x64` / `cal C9H_divls` (rs_4_06_00_2): the inner helper first, its
+result moved from XHL to XWA, the constant into XBC.  Unsigned by a power of two the outer is done on XHL: `gul % 3 % 2` ->
+`cal C9H_remlu` / `and XHL,0x1` (rs_3_01_10_0), and a shift right for `/`.  Without options.  lhx.c at none 864 -> 880 (its
+group 3, two helpers in one expression); rstmt at none 3,530 -> 3,532.  Random exact unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
