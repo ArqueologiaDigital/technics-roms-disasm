@@ -1294,6 +1294,9 @@ def bin_wide(F, e, op, l, r, fam, size):
             return None
         if size == 1:                                        # ea_c_sub_XG: the element's address in XBC, ld A,(XBC) / sub A,(_hc)
             if R in ('P', 'D'): al = cw_addr(F, lk, size, P='XWA', I='DE'); a = addr(rk, P='XBC')
+            elif CW_IZ_XWA and R == 'K' and lk[0] == 'X' and lk[2] == 'IZ' and len(lk) < 5 and not F.opt and not F.adecl:
+                al = cw_addr(F, lk, size, P='XWA', I='BC'); a = kimm(r)   # a byte element at a counter in IZ: the base in XWA
+                                                             # (random r2_03_18: guca[i] + 7 -> lda XWA,_guca / ld A,(XWA+IZ) / inc 0x7,A)
             else: al = cw_addr(F, lk, size, I='BC'); a = addr(rk) if R != 'K' else kimm(r)
             F.emit('ld', '%s,%s' % (W, al)); ext(W); emit_op(W, a, kval(rk, r)); return ret('WA')
         if R == 'D':                                         # ea_i_sub_XD: the element's base in XDE, the pointer in XBC
@@ -1577,6 +1580,8 @@ BYTE_RIGHT_FIRST = True                                   # see gen_bin: two com
 IZ_TAIL_DIRECT = True                                     # see regvar_stmt: an IZ home loaded and worked on in IZ
 COND_VIA_WA = True                                        # see regvar_stmt: a ?: into a register temporary
 NONE_SHARED_EXIT = True                                   # see gen_stmt: one exit for a function with an epilogue
+EVORDER_BYTE = True                                       # see gen_bin: the evaluation-order rule for two addressed bytes
+CW_IZ_XWA = True                                          # see bin_wide: a byte element at an IZ counter
 NESTED_IF_RET = True                                      # see gen_stmt: if (a) if (b) x; at the end of a function
 LX5 = True                                                # see lx5_lines: long helpers of lhx.c's lxo_* rows
 
@@ -4249,7 +4254,10 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         else: F.emit(SIMPLE_OPS[op], '%s,%s' % (R, rs0))
         return fam
     ev_ctx = 'ANY' if any_fam and fam == 'WA' else fam     # evorder.c: HL (a returned value); evorder_st.c: WA (a
-    if EVORDER and size in (2, 4) and ev_ctx in ('HL', 'WA', 'ANY') and \
+    ev_b_ = EVORDER_BYTE and size == 1 and not F.opt and not F.adecl and op in ('&', '|', '^', '+') and \
+        ev_class(F, l) == 'A' and ev_class(F, r) == 'A'     # (bytes: two addressed operands, random r1_04_16:
+                                                            #  gca[6] ^ *gp -> ld XWA,(_gp) / ld L,(XWA) / xor L,(_gca + 0x6))
+    if EVORDER and (size in (2, 4) or ev_b_) and ev_ctx in ('HL', 'WA', 'ANY') and \
             (op in SIMPLE_OPS or op in ('*', '/', '%') and size == 2 and (fold(r).k != 'const' or ev_class(F, l) == 'V')) \
             and not any(nodes_in(x, 'call') or has_helper_call(x) or fpgen.is_fp_op(x) or
                         any(regvar_of(strip(y.e)) is not None for y in loads_in(x)) for x in (l, r)) and \

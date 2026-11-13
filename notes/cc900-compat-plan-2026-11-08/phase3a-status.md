@@ -1139,6 +1139,11 @@ register, a frame) jumps to one exit label in front of the epilogue instead of r
 `j L50000` .. `L50000:` / `pop XIZ` / `ret`); the model did this only under -O and in functions with double
 temporaries.  Random programs at none 125 -> 128 of 800; ra_libshapes.c at none 12 -> 13 of 21.
 
+**Batch 63 (2026-11-13).**  The evaluation-order rule of evorder.c now also covers `& | ^ +` of two addressed byte
+operands (`gca[6] ^ *gp` -> `ld XWA,(_gp)` / `ld L,(XWA)` / `xor L,(_gca + 0x6)`: the right one is the
+accumulator); a byte element at a loop counter held in IZ, beside a constant, takes XWA for its base
+(`guca[i] + 7` -> `lda XWA,_guca` / `ld A,(XWA+IZ)` / `inc 0x7,A`).  Random programs at none 128 -> 130 of 800.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
