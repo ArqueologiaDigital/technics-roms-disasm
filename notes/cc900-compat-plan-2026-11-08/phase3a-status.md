@@ -1291,6 +1291,19 @@ And a static address that initialises a pointer kept in XIZ is loaded straight i
 `lda XIZ,_gca + 0x5`, not through XHL).  Random programs at -O3 -XS 29 -> 39 and at -O3 -XS -Xr 25 -> 32 of 800
 (158 / 79 at none / -Xr, unchanged); fpp10.c at -O3 -XS 68 -> 70.
 
+**Batch 80 (2026-11-13): five rules also under -O; two unreferenced labels.**  `lift_guard.py` ran over every one of
+the model's 252 rule flags at -O3 -XS.  Six gained one random function each; five are lifted to -O: an element's
+address through WA, the constant else-arm loaded first, the unsigned divide by a power of two as a shift, a pointer
+home's initial value, and an element pushed from memory (`pushw (XBC+WA)`).  The sixth, the general char argument
+path, also gained one but wrote wrong code under -O (semcheck: idxloc.c il_c_T7 pushed `gca[t]` through the
+zero-extending sum where -O indexes `(XWA+IZ)`; random r3_03_05), so it stays as it was.  Two labels nothing
+jumps to are no longer written: the skip label of -O's preloaded constant else-arm, and the join label of an `if`
+whose test is a constant (`if (255 != 4313) { .. }`).  A first, wider version of the second, dropping any join label
+nothing references, cost four random functions at none: the compiler keeps the label of an early-returning inner
+`if` (batch 75).  Random programs at -O3 -XS 39 -> 45, at -O3 -XS -Xr 32 -> 36 and at -Xr 79 -> 80 of 800 (none 158);
+idxloc.c 31 -> 37 and 36 -> 40 at the two optimised sets, cmpord.c +1 and cmpordl.c +2 at each of the four sets:
+eighteen ledger rows up by 33 functions.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

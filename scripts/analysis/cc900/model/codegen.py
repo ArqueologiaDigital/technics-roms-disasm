@@ -789,7 +789,9 @@ def gen(F, e, fam, size, then_ret=False, store=False):
             try: gen(F, other, fam, size)
             finally:
                 if tmpv: tmpv[0].reg = tmpv[1]
-            F.lines.append(lskip + ':'); F.lines.append(lend + ':'); return fam
+            if not (TERN_ONE_LABEL and fold(pre).k == 'const' and not pre_then):   # (random r2_00_13 -O3 -XS: a constant
+                F.lines.append(lskip + ':')                # else-arm preloaded: one label, .. / j ne,L1 / ld HL,(_gi3) / L1:)
+            F.lines.append(lend + ':'); return fam
     bs = byte_arms(e) if e.k == 'cond' and size == 2 else None
     if bs is not None:                               # chnarrow.c cn_tern: k ? c - 32 : c -> ... / ld L,A / j L1 /
         lelse, lend = F.newulabel(), F.newulabel()   # L2: ld L,(XSP+0x4) / L1: exts HL (cn_tern_cc too)
@@ -807,7 +809,7 @@ def gen(F, e, fam, size, then_ret=False, store=False):
         dead0 = set(F.dead); arm(e.a); F.dead = dead0; F.emit('j', lend); F.lines.append(lelse + ':')
         arm(e.b); F.lines.append(lend + ':')
         F.emit('exts' if bs else 'extz', FAM[fam][2]); return fam
-    if e.k == 'cond' and COND_K_PRELOAD and not F.opt and size == 2 and fam in ('WA', 'BC', 'DE', 'HL') and \
+    if e.k == 'cond' and COND_K_PRELOAD and size == 2 and fam in ('WA', 'BC', 'DE', 'HL') and \
             fold(e.b).k == 'const' and fold(e.b).value is not None and fold(e.a).k != 'const' and \
             not nodes_in(e.c, 'call') and not nodes_in(e.a, 'call') and not F.pending and \
             strip(e.a).k == 'load' and (mem_operand(F, e.a) or '').startswith('('):
@@ -934,7 +936,7 @@ def gen(F, e, fam, size, then_ret=False, store=False):
                 return fam
             F.emit('lda', '%s,_%s' % (X, b.decl.name))     # lda XWA,_gca / lda XWA,XWA+IZ
             F.emit('lda', '%s,%s+%s' % (X, X, FAM[iv.reg][2])); return fam
-    if ADDR_ELEM_WA and e.k == 'addr' and strip(e.e).k == 'index' and fam == 'WA' and not F.opt and size == 4:
+    if ADDR_ELEM_WA and e.k == 'addr' and strip(e.e).k == 'index' and fam == 'WA' and size == 4:
         x = strip(e.e); b = strip(x.base); ib = strip(x.idx)  # random r1_09_00: gpi = &gia[t] -> ld WA,IZ / add WA,WA /
         while ib.k == 'cast' and ib.kind == 'IntegralCast': ib = strip(ib.e)   # lda XBC,_gia / exts XWA / add XWA,XBC;
         im = mem_operand(F, ib) if ib.k == 'load' else None   # r1_03_02: &gca[u], u a char in E -> ld A,E / extz WA
@@ -4659,7 +4661,7 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
             res = FAM[work][size]
         elif op == '%' and REMU_AND and size == 2 and not signed and kd_ >= 2 and kd_ & (kd_ - 1) == 0 and not F.opt:
             F.emit('and', '%s,%s' % (FAM[work][size], hx(kd_ - 1))); res = FAM[work][size]   # (random r4_04_17: gu2 % 2 -> and WA,0x1)
-        elif op == '/' and DIVU_SHIFT and not signed and kd_ >= 2 and kd_ & (kd_ - 1) == 0 and not F.opt:
+        elif op == '/' and DIVU_SHIFT and not signed and kd_ >= 2 and kd_ & (kd_ - 1) == 0:
             F.emit('srl', '%s,%s' % (hx(kd_.bit_length() - 1), FAM[work][size])); res = FAM[work][size]   # (random r4_01_07:
         else:                                                                                             #  vu(gu / 16) -> srl 0x4,WA)
             mk_ = re.match(r'^\tld\t%s,0x([0-9a-f]+)$' % FAM[work][size], F.lines[-1]) if F.lines else None
@@ -5852,6 +5854,8 @@ LH_XR_ORDER = True                                        # see gen_long_helper:
                                                           # (random .r1_01_09: 65536L / gl -> ld XBC,(_gl) / ld XWA,0x10000;
                                                           # .r1_05_03: gl2 % gl beside a counter in IZ -> ld XWA,(_gl2) / ld XBC,(_gl))
 XIZ_LDA_DIRECT = True                                     # see gen_stmt's XIZ homes
+TERN_ONE_LABEL = True                                     # see gen's -O ?:
+IF_LABEL_USED = True                                      # see gen_stmt's if
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -6316,7 +6320,7 @@ def push_arg(F, a):
         if m != 'A': F.emit('ld', 'A,%s' % m)
         F.emit('exts' if strip(a0.e).ty.signed else 'extz', 'WA'); F.emit('push', 'WA')
         F.push += 2; return 2
-    if PUSH_ELEM and size == 2 and not F.opt and not F.adecl and a0.k == 'load' and strip(a0.e).k == 'index':
+    if PUSH_ELEM and size == 2 and not F.adecl and a0.k == 'load' and strip(a0.e).k == 'index':
         pe = push_elem(F, strip(a0.e))                     # random corpora: v2(gi, gia[t]) -> ld WA,IZ / add WA,WA /
         if pe is not None:                                 # lda XBC,_gia / pushw (XBC+WA)
             F.emit('pushw', pe); F.push += 2; return 2
@@ -7628,7 +7632,7 @@ def gen_opassign(F, e):
             F.emit('sll', '%s,%s' % (hx(k2_.bit_length() - 1), FAM[work][1])); res = FAM[work][1]   # (random r3_02_02:
         elif op == '*':                                                                             #  guc *= 4 -> sll 0x2,A)
             F.emit('muls' if signed else 'mul', '%s,%s' % (wide, rs)); res = FAM[work][size]
-        elif op == '/' and DIVU_SHIFT and size == 2 and not signed and k2_ >= 2 and k2_ & (k2_ - 1) == 0 and not F.opt:
+        elif op == '/' and DIVU_SHIFT and size == 2 and not signed and k2_ >= 2 and k2_ & (k2_ - 1) == 0:
             F.emit('srl', '%s,%s' % (hx(k2_.bit_length() - 1), FAM[work][2])); res = FAM[work][2]   # (random r4_05_19:
         else:                                                                                       #  gu2 /= 16 -> srl 0x4,WA)
             F.emit('exts' if signed else 'extz', wide); F.emit('divs' if signed else 'div', '%s,%s' % (wide, rs))
@@ -8245,7 +8249,9 @@ def gen_stmt(F, s, last):
             F.if_joins = getattr(F, 'if_joins', set()) | {lab}
             folded = False
             bare = not F.xiz_vars and not F.pushes and not getattr(F, 'frame', 0)   # ra_libshapes.c ls_sl_ret: a
+            n_if0_ = len(F.lines)
             k = gen_cond_false(F, s.cond, 'RET' if last and bare else lab)          # pushed XIZ is popped first
+            n_if1_ = len(F.lines)
                                                                                    # (ret ne was wrong code)
             if F.lines[-1] == '\tret' and last:
                 return                               # condition always false: the statement disappears
@@ -8262,7 +8268,9 @@ def gen_stmt(F, s, last):
                     F.lines[js_[0]] = '\tret\t' + F.lines[js_[0]].split('\t')[2].split(',')[0]
                     # (random r4_01_13: if (!gs.a[5]) { ..; if (*gpi != 0) ..; } -> ret ne / .. / ret eq / .. / L3: / ret)
             flush_pops(F)                                # _calloc: inc 0x8,XSP before the join label
-            if k is not True: F.lines.append(lab + ':')   # always true: no label (cmp_ui: ge_ui_br0)
+            if k is not True and not (IF_LABEL_USED and n_if1_ == n_if0_):   # (the test wrote no code)
+                F.lines.append(lab + ':')                  # always true: no label (cmp_ui: ge_ui_br0; random r1_09_16 -Xr:
+                                                           # if (255 != 4313) { vc(..); } -> no label)
             return
         lelse, lend = F.newulabel(), F.newulabel()
         F.if_joins = getattr(F, 'if_joins', set()) | {lend}
@@ -9445,7 +9453,7 @@ def regvar_stmt(F, e):
                 F.emit('ld', 'WA,%s' % Wr); F.emit('exts' if bw.ty.signed else 'extz', 'XWA')
                 fam = gen(F, a0, w.reg, 4)
                 F.emit('ld', '%s,%s' % (R, FAM[fam][4])); F.emit(SIMPLE_OPS[r0.op], '%s,XWA' % R); return True
-        if IZ_PTR_INIT and d.reg == 'IZ' and d.ty.size == 2 and not F.opt and not F.adecl and 'WA' not in live_regs(F):
+        if IZ_PTR_INIT and d.reg == 'IZ' and d.ty.size == 2 and not F.adecl and 'WA' not in live_regs(F):
             v0 = strip(narrow(e.r, 2))                      # random r2_00_10: int t = gps->a[0] + gi2 (t in IZ) ->
             def thr(x):                                     # ld XWA,(_gps) / ld IZ,(XWA+0xe) / add IZ,(_gi2), not through WA
                 x = strip(narrow(x, 2))
