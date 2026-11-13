@@ -5365,6 +5365,8 @@ def gen_compare(F, e):
             la2.k == 'bin' and la2.op == '=' else gen(F, l, 'BC' if fr == 'WA' else 'WA', size)
         if fl == fr: raise Unsupported('compare of two assignments in one register')
         F.emit('cp', '%s,%s' % (FAM[fl][size], FAM[fr][size])); return cc   # cp BC,WA
+    if CMPX and getattr(F, 'u1_i', None) is None and not getattr(F, 'l2', None) and not getattr(F, 'cl_active', None) and \
+            mem_operand(F, r) is None and cmpx_elem(F, op, l, r, size): return cc
     if getattr(F, 'u1_i', None) is not None and lm is not None and lm.startswith('(X') and l.k == 'load' and \
             strip(l.e).k == 'index':                       # cdecl oc_find: the chain is built once (by mem_operand)
         f0 = 'WA'; F.emit('ld', '%s,%s' % (FAM['WA'][size], lm))   # -> ld WA,(XWA) / cp WA,(XSP+0xa)
@@ -5379,6 +5381,113 @@ def gen_compare(F, e):
     rs = mem_operand(F, r)
     if rs is None: raise Unsupported('complex compare operand')
     F.emit('cp', '%s,%s' % (W, rs)); return cc
+
+FOLD_CHAR = True                                          # see foldable: char v = gc used once
+CMPX = True                                               # see cmpx_elem: compares against an indexed element (cmpx.c)
+
+CMPX_REGS = {                                             # (index register, base register) by element size 1 / 2 / 4:
+    ('none', 'X', 'c'): ('DE/BC', 'BC/DE', 'BC/DE'), ('none', 'X', 'b'): ('BC/DE', 'BC/DE', 'BC/DE'),
+    ('none', 'X', 'i'): ('BC/WA', 'BC/DE', 'BC/DE'), ('none', 'X', 'u'): ('WA/BC', 'WA/BC', 'WA/BC'),
+    ('none', 'Y', 'c'): ('DE/BC', 'BC/DE', 'BC/DE'), ('none', 'Y', 'b'): ('BC/DE', 'BC/DE', 'BC/DE'),
+    ('none', 'Y', 'i'): ('DE/BC', 'BC/DE', 'BC/DE'), ('none', 'Y', 'u'): ('WA/BC', 'WA/BC', 'WA/BC'),
+    ('swapE', 'X', 'c'): ('WA/BC', 'DE/BC', 'DE/BC'), ('swapE', 'X', 'b'): ('WA/BC', 'WA/BC', 'WA/BC'),
+    ('swapE', 'X', 'i'): ('BC/WA', 'WA/BC', 'WA/BC'), ('swapE', 'X', 'u'): ('WA/BC', 'WA/BC', 'WA/BC'),
+    ('swapE', 'Y', 'c'): ('BC/WA', None, 'DE/BC'), ('swapE', 'Y', 'b'): ('WA/BC', 'WA/BC', 'WA/BC'),
+    ('swapE', 'Y', 'i'): ('BC/WA', 'WA/BC', 'WA/BC'), ('swapE', 'Y', 'u'): ('WA/BC', 'WA/BC', 'WA/BC')}
+
+def cmpx_index(F, v):
+    """('_sym', index memory, S, x) for an int-kind element of a global array at a variable index: S 'X' a parameter
+    in memory, 'Y' a global (or a once-used local initialised from one); x the index type, c char, b unsigned char,
+    i int, u unsigned int.  None otherwise."""
+    v = strip(v)
+    if v.k != 'index' or v.ty is None or v.ty.kind != 'int' or v.ty.size not in (1, 2, 4): return None
+    b = strip(v.base)
+    while b.k in ('decay', 'cast', 'noop') and getattr(b, 'e', None) is not None: b = strip(b.e)
+    if not (b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array'): return None
+    i = strip(v.idx)
+    while i.k == 'cast' and i.kind == 'IntegralCast': i = strip(i.e)
+    if i.k != 'load' or strip(i.e).k != 'var' or i.ty is None or i.ty.kind != 'int' or i.ty.size not in (1, 2): return None
+    x = {(1, True): 'c', (1, False): 'b', (2, True): 'i', (2, False): 'u'}[(i.ty.size, bool(i.ty.signed))]
+    d = strip(i.e).decl
+    if getattr(d, 'reg', None) or getattr(d, 'homed', False) or getattr(F, 'lazy_homes', None): return None
+    if d.kind == 'global': return ('_' + b.decl.name, '(_%s)' % d.name, 'Y', x)
+    if d.kind == 'param':
+        m = mem_operand(F, i)
+        return ('_' + b.decl.name, m, 'X', x) if isinstance(m, str) and m.startswith('(XSP+') else None
+    return None
+
+def cmpx_elem(F, op, l, r, size):
+    """a plain left operand compared with an element at a variable index, without -O, cdecl (corpus/probes/cmpx.c's
+    cx_* rows, run 2026-11-13-4-micro-cmpx; the rules and the register table are those of research-scratch
+    tabulation/cmpx1-predict.py, which reproduces the 384 oracle forms).  The index and the base are built first,
+    then the left operand is loaded into the accumulator and compared with the element (cx_l_c_GXc: lda XBC,_hca /
+    ld A,(c) / ld XDE,0x0 / ld E,A / add XDE,XBC / ld A,(_gc) / cp A,(XDE)); == and != against a static member or
+    constant element load the element and compare it with that memory operand instead.  True when emitted."""
+    if not CMPX or F.opt or F.adecl: return False
+    rl = unpromote(r)
+    if rl.k != 'load' or rl.ty is None or rl.ty.size != size: return False
+    el = cmpx_index(F, rl.e)
+    if el is None: return False
+    ll = unpromote(l)
+    if ll.k != 'load' or ll.ty is None or ll.ty.size != size: return False
+    lv = strip(ll.e)
+    if lv.k == 'var':
+        if getattr(lv.decl, 'reg', None) or getattr(lv.decl, 'homed', False): return False
+        lm = mem_operand(F, ll); kind = 'none'
+        if not (isinstance(lm, str) and re.match(r'^\((_\w+|XSP\+0x[0-9a-f]+)\)$', lm)): return False
+    elif lv.k in ('index', 'member') and global_offset(lv) is not None and global_offset(lv)[0] != '__param__' and \
+            not (lv.k == 'index' and fold(lv.idx).k != 'const') and not (lv.k == 'member' and lv.arrow):
+        lm = mem_operand(F, ll); kind = 'swapE' if op in ('==', '!=') else 'none'
+        if not (isinstance(lm, str) and lm.startswith('(_')): return False
+    else: return False
+    if {'WA', 'BC', 'DE'} & live_regs(F): return False
+    sym, iv, S, x = el
+    rg = CMPX_REGS[(kind, S, x)][{1: 0, 2: 1, 4: 2}[size]]
+    if rg is None: return False
+    i, b = rg.split('/')
+    Xi, Xb, i8 = 'X' + i, 'X' + b, i[1]
+    sw = kind == 'swapE'; acc = {1: 'A', 2: 'WA', 4: 'XWA'}[size]
+    e = F.emit
+    def scale(rr, long_=False):
+        if size == 2: e('add', '%s,%s' % (rr, rr))
+        elif size == 4: e('sll' if long_ else 'sla', '0x2,%s' % rr)
+    if size == 1:
+        if x == 'c':
+            if S == 'X':
+                if i == 'WA': e('lda', '%s,%s' % (Xb, sym)); e('ld', 'XWA,0x0'); e('ld', 'A,%s' % iv); e('add', 'XWA,%s' % Xb); addr = '(XWA)'
+                else:
+                    e('lda', '%s,%s' % (Xb, sym)); e('ld', 'A,%s' % iv); e('ld', '%s,0x0' % Xi); e('ld', '%s,A' % i8)
+                    e('add', '%s,%s' % (Xi, Xb)); addr = '(%s)' % Xi
+            else: e('ld', '%s,%s' % (i8, iv)); e('lda', '%s,%s' % (Xb, sym)); addr = '(%s+%s)' % (Xb, i8)
+        elif x == 'b':
+            if S == 'X':
+                e('ld', 'A,%s' % iv)
+                if i != 'WA': e('ld', '%s,A' % i8)
+            else: e('ld', '%s,%s' % (i8, iv))
+            e('extz', i); e('lda', '%s,%s' % (Xb, sym)); addr = '(%s+%s)' % (Xb, i)
+        elif x == 'i':
+            if S == 'X': e('lda', '%s,%s' % (Xb, sym)); e('ld', '%s,%s' % (i, iv)); e('extz', Xi); e('add', '%s,%s' % (Xi, Xb)); addr = '(%s)' % Xi
+            else: e('ld', '%s,%s' % (i, iv)); e('lda', '%s,%s' % (Xb, sym)); addr = '(%s+%s)' % (Xb, i)
+        else: e('ld', '%s,%s' % (i, iv)); e('extz', Xi); e('ld', '%s,%s' % (Xb, sym)); e('add', '%s,%s' % (Xb, Xi)); addr = '(%s)' % Xb
+    else:
+        if x == 'c':
+            if S == 'X':
+                e('ld', 'A,%s' % iv)
+                if size == 2: e('add', 'A,%s' % iv)
+                else: e('sla', '0x2,A')
+            elif size == 2: e('ld', '%s,%s' % (i8, iv)); e('ld', 'A,%s' % i8); e('add', 'A,%s' % i8)
+            else: e('ld', 'A,%s' % iv); e('sla', '0x2,A')
+            if sw: e('lda', '%s,%s' % (Xb, sym)); addr = '(%s+A)' % Xb
+            else: e('ld', '%s,A' % i8); e('lda', '%s,%s' % (Xb, sym)); addr = '(%s+%s)' % (Xb, i8)
+        elif x == 'b':
+            e('ld', 'A,%s' % iv); e('extz', 'WA')
+            if i != 'WA': e('ld', '%s,WA' % i)
+            scale(i); e('lda', '%s,%s' % (Xb, sym)); addr = '(%s+%s)' % (Xb, i)
+        elif x == 'i': e('ld', '%s,%s' % (i, iv)); scale(i); e('lda', '%s,%s' % (Xb, sym)); addr = '(%s+%s)' % (Xb, i)
+        else: e('ld', '%s,%s' % (i, iv)); e('extz', Xi); scale(Xi, True); e('ld', '%s,%s' % (Xb, sym)); e('add', '%s,%s' % (Xb, Xi)); addr = '(%s)' % Xb
+    if sw: e('ld', '%s,%s' % (acc, addr)); e('cp', '%s,%s' % (acc, lm))
+    else: e('ld', '%s,%s' % (acc, lm)); e('cp', '%s,%s' % (acc, addr))
+    return True
 
 def ret_target(F, target):
     """'RET' stands for the function exit; a function that returns with retd has no `ret cc`, its early exits jump
@@ -11819,7 +11928,12 @@ def foldable(f, d):
     body = flat(f.body)
     for i, c in enumerate(body):
         if c.k == 'decl' and c.var is d:
-            if c.init is None or d.addr_taken or d.ty.size < 2 or getattr(d, 'no_fold', False): return False
+            if c.init is None or d.addr_taken or getattr(d, 'no_fold', False): return False
+            if d.ty.size < 2:                              # a char local is folded only when it copies a global of its
+                iv_ = strip(c.init)                        # own type (cmpx.c cx_l_c_GYc: char v = gc; .. hca[v] ->
+                while iv_.k == 'cast' and iv_.kind == 'IntegralCast' and iv_.ty.size == d.ty.size: iv_ = strip(iv_.e)   # ld E,(_gc))
+                if not (FOLD_CHAR and not F_OPT_HINT[0] and iv_.k == 'load' and strip(iv_.e).k == 'var' and
+                        strip(iv_.e).decl.kind == 'global' and iv_.ty.size == d.ty.size): return False
             return len(uses_of(body[i + 1:], d, [])) == 1 and not call_before_use(body[i + 1:], d) and \
                 not written_in(body[i + 1:], d)
     return False

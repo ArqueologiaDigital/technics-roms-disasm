@@ -243,7 +243,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-13-3-micro-elrd, v423/O3XS                              | probes/elrd.c        | 204 / 1234 exact (16.5%) |
 | run 2026-11-13-3-micro-elrd, v423/Xr                                | probes/elrd.c        | 101 / 1234 exact (8.2%)  |
 | run 2026-11-13-3-micro-elrd, v423/O3XSXr                            | probes/elrd.c        | 93 / 1234 exact (7.5%)   |
-| run 2026-11-13-4-micro-cmpx, v423/none                              | probes/cmpx.c        | 464 / 1192 exact (38.9%) |
+| run 2026-11-13-4-micro-cmpx, v423/none                              | probes/cmpx.c        | 553 / 1192 exact (46.4%) |
 | run 2026-11-13-4-micro-cmpx, v423/O3XS                              | probes/cmpx.c        | 409 / 1192 exact (34.3%) |
 | run 2026-11-13-4-micro-cmpx, v423/Xr                                | probes/cmpx.c        | 323 / 1192 exact (27.1%) |
 | run 2026-11-13-4-micro-cmpx, v423/O3XSXr                            | probes/cmpx.c        | 274 / 1192 exact (23.0%) |

@@ -1161,6 +1161,14 @@ none 134 -> 140 of 800; stchain.c at none 321 -> 323 of 392.
 (`gps->l = gs.l - gl2` -> `ld XWA,(_gps)` / `ld XBC,(_gs + 0x4)` / `sub XBC,(_gl2)` / `ld (XWA+0x4),XBC`); a compound
 shift by a constant works in WA at every size, not only bytes.  Random programs at none 140 -> 143 of 800.
 
+**Batch 67 (2026-11-13): compares against an indexed element.**  `cmpx_elem`, from the agent's `cmpx1-predict.py`:
+a plain left operand (a global, a parameter, a static member or constant element) compared with an element at a char,
+unsigned char, int or unsigned int index held in a parameter or a global.  The index and the base are built first
+(registers by a table over index type and element size), then the left operand is loaded and compared with the
+element; `==` / `!=` against a static member or element load the element instead.  cmpx.c at none 464 -> 553 of
+1,192.  The random corpora's 28 "complex compare operand" refusals are mostly other shapes (casts, computed operands,
+elements on both sides) and stay.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
