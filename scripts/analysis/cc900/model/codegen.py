@@ -4568,6 +4568,24 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
                 ok_ = f1_ == 'WA' and not any(re.search(r'\b(X?BC|QBC|[BC])\b', x_) for x_ in F.lines[n1_:])
             if ok_: F.emit(SIMPLE_OPS[op], '%s,%s' % (FAM['WA'][size], a_)); return 'WA'
             del F.lines[n0_:]
+    if RET_PTR_LEFT and not F.opt and not F.adecl and fam == 'HL' and getattr(F, 'in_return', False) and not any_fam and \
+            size in (2, 4) and op in ('+', '&', '|', '^') and strip(e.r).k == 'bin' and fold(e.r).k != 'const' and \
+            strip(e.r).op == '/' and size == 2 and \
+            not live_regs(F) and not F.pending and not nodes_in(e, 'call') and not has_helper_call(e) and not fpgen.is_fp_op(e) and \
+            not getattr(F, 'cl_active', None) and not getattr(F, 'l2', None) and getattr(F, 'u1_i', None) is None:
+        # (only a right side that needs WA, a division: with a simple one the pointer stays in XWA and the value is
+        #  computed in HL, evorder.c eo_x_PB: ld XWA,(_gpi) / ld HL,(_hi) / sub HL,(_hj) / xor HL,(XWA))
+        lk2_ = cw_kind(F, strip(e.l), size)                # a returned *p op (computed), op commutative: the pointer
+        if lk2_ is not None and lk2_[0] in ('P', 'D'):     # first, in XBC; the right side in WA, moved to HL; the
+            n0_ = len(F.lines); a_ = cw_addr(F, lk2_, size)   # operation reads through XBC (rstmt rs_2_08_03_6:
+            ok_ = a_.startswith('(XBC')                    # return *gpi ^ (gi / 10) -> ld XBC,(_gpi) / ld WA,(_gi) /
+            if ok_:                                        # exts XWA / divs XWA,0xa / ld HL,WA / xor HL,(XBC))
+                n1_ = len(F.lines); f1_ = gen(F, e.r, 'WA', size)
+                ok_ = f1_ == 'WA' and not any(re.search(r'\b(X?(BC|DE|HL)|Q(BC|DE|HL)|[BCDEHL])\b', x_) for x_ in F.lines[n1_:])
+            if ok_:
+                F.emit('ld', '%s,%s' % (FAM['HL'][size], FAM['WA'][size])); F.emit(SIMPLE_OPS[op], '%s,%s' % (FAM['HL'][size], a_))
+                return 'HL'
+            del F.lines[n0_:]
     if op in ('%', '/') and F.opt and CHAR_PRODUCT_DIV_GUARD and strip(e.l).k == 'bin' and strip(e.l).op == '*' and \
             fold(strip(e.l).r).k == 'const' and strip(strip(e.l).l).k == 'cast' and strip(strip(strip(e.l).l).e).ty is not None \
             and strip(strip(strip(e.l).l).e).ty.size == 1:
@@ -5494,6 +5512,17 @@ def gen_ptr_arith(F, e, fam, size):
             pm != 'XBC' and not im.startswith('(XBC'):
         F.emit('ld', 'XBC,%s' % pm); F.emit('ld', 'A,%s' % im)   # -O / -Xr (r1_04_19, r1_04_02): gp + b ->
         F.emit('lda', '%s,XBC+A' % R); return fam               # ld XBC,(_gp) / ld A,(b) / lda XWA,XBC+A
+    if UCHAR_IDX_INTPTR and not F.opt and not F.adecl and ii.ty is not None and ii.ty.size == 1 and not ii.ty.signed and \
+            esz == 2 and e.op == '+' and R == 'XWA' and re.match(r'^\(_\w+\)$', pm) and 'BC' not in live_regs(F) and \
+            not getattr(F, 'in_return', False) and not getattr(F, 'ptr_arg_ctx', False):
+        init_ = any(c_.init is not None and strip(c_.init) is e for c_ in nodes_in(F.f.body, 'decl')) or getattr(e, 'from_local', False) or getattr(e, 'from_local2', False)
+        if im != 'A': F.emit('ld', 'A,%s' % im)            # an int pointer plus an unsigned char: scaled at 16 bits.
+        F.emit('extz', 'WA')                               # Stored: the pointer in XBC and the index sign-extended
+        if init_:                                          # (rstmt rs_3_09_01_4: gpi = gpi + b -> ld A,(b) / extz WA /
+            F.emit('ld', 'BC,WA'); F.emit('add', 'BC,BC'); F.emit('ld', 'XWA,%s' % pm)   # add WA,WA / ld XBC,(_gpi) /
+            F.emit('lda', 'XWA,XWA+BC'); return fam        # exts XWA / add XWA,XBC); a local's initialiser: the index
+        F.emit('add', 'WA,WA'); F.emit('ld', 'XBC,%s' % pm)   # in BC and lda (rs_1_07_17_1: int *t = gpi + a ->
+        F.emit('exts', 'XWA'); F.emit('add', 'XWA,XBC'); return fam   # ld BC,WA / add BC,BC / ld XWA,(_gpi) / lda XWA,XWA+BC)
     if ii.ty is not None and ii.ty.size == 1 and esz == 1 and PTR_CHAR_EXTZ and im != 'WA' and \
             (getattr(F, 'ptr_arg_ctx', False) or not ii.ty.signed):
         if MEMBER_BASE_FIRST and not F.adecl and pm.startswith('(_') and ' + ' in pm and R == 'XWA' and \
@@ -6342,6 +6371,8 @@ DEAD_INIT_CTR = True                                      # see regtemp_candidat
 RET_TWO_LEVEL = True                                      # see ret_two_level
 CHAR_IDX_BC = True                                        # see regtemp_candidates
 WRITE_ONLY_EVAL = True                                    # see eval_write_only
+RET_PTR_LEFT = True                                       # see gen_bin
+UCHAR_IDX_INTPTR = True                                   # see gen_ptr_arith
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)

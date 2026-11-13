@@ -1725,6 +1725,20 @@ a variable touched in a loop or a switch, nor when a right side calls (batch 76'
 plain call).  `return (t = 255);` evaluates twice (`ld WA,0xff` / `ld HL,0xff`) and is left.  rstmt at none
 3,506 -> 3,510; fpp10.c 71 -> 73.
 
+**Batch 118 (2026-11-13): a returned `*p op division`; an int pointer plus an unsigned char; rstmt +6.**  (1) A
+returned commutative operation whose left reads through a pointer and whose right is an int division loads the
+pointer first, into XBC, divides in WA, moves the quotient to HL and reads through XBC (rs_2_08_03_6:
+`return *gpi ^ (gi / 10)` -> `ld XBC,(_gpi)` / `ld WA,(_gi)` / `exts XWA` / `divs XWA,0xa` / `ld HL,WA` /
+`xor HL,(XBC)`).  Only a right side that needs WA: with a simple one the pointer stays in XWA and the value is
+computed in HL (evorder.c eo_x_PB; a wider first version cost eight functions of evorder.c / evorder_l.c on the
+scratch ledger).  (2) `gpi = gpi + b` with an unsigned char `b` scales at 16 bits and sign-extends the result of
+that: `ld A,(b)` / `extz WA` / `add WA,WA` / `ld XBC,(_gpi)` / `exts XWA` / `add XWA,XBC` / `ld (_gpi),XWA`
+(rs_3_09_01_4); as a local's initialiser the index goes to BC and the sum is an `lda`: `ld BC,WA` / `add BC,BC` /
+`ld XWA,(_gpi)` / `lda XWA,XWA+BC` (rs_1_07_17_1).  rstmt at none 3,510 -> 3,516.
+Tried and dropped in this batch's work: a general "an array's own address goes through XWA" pass (true for a store
+into element 0 and for a double argument, false for plain globals and long-helper operands: -8 statements, -4
+random functions).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
