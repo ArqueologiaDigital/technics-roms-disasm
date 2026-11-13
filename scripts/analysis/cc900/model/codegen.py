@@ -6398,6 +6398,7 @@ PARAM_CACHE = True                                       # see param_cache_wante
 CHAR_IDX_OPT_REFUSE = True                               # see _lvalue_raw
 COPY_EXEMPT_NOT_CHAR = True                              # see Fn.emit's statement guard
 MEMBER_ARR_LOAD = True                                   # see gen_load_mem
+MEMBER_ARR_STORE = True                                  # see _lvalue_raw
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -7875,6 +7876,22 @@ def _lvalue_raw(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False, kind='sto
             return '(%s+%s)' % (m, hx(off)) if off else '(%s)' % m
     if lv.k == 'index':
         b, i = strip(lv.base), lv.idx
+        if MEMBER_ARR_STORE and not F.opt and not F.adecl and b.k == 'member' and not b.arrow and b.ty.kind == 'array' and \
+                strip(b.base).k == 'var' and strip(b.base).decl.kind == 'global' and lv.ty.size == 2 and \
+                fold(i).k != 'const' and not ({'WA', 'BC'} & set(live_regs(F))):
+            ii = strip(i)                                  # gs.a[i] as a store or op= target (rstmt rs_1_08_10_6: gs.a[b] %= 3
+            while ii.k == 'cast' and ii.kind == 'IntegralCast': ii = strip(ii.e)   # -> ld WA,(b) / add WA,WA /
+            im = mem_operand(F, ii) if ii.k == 'load' else None   # lda XBC,_gs + 0xe / lda XBC,XBC+WA / ld WA,(XBC) ..;
+            nm_ = strip(b.base).decl.name; off_ = member_offset(b)   # rs_2_07_12_6: gs.a[t] = (int)gu2 -> ld WA,IZ / ..
+            sym_ = '_%s + %s' % (nm_, hx(off_)) if off_ else '_' + nm_   # / ld (XBC+WA),DE)
+            if im is not None and ii.ty is not None and ii.ty.kind == 'int' and (ii.ty.size == 2 and ii.ty.signed or
+                                                                                ii.ty.size == 1 and not ii.ty.signed):
+                if ii.ty.size == 2: F.emit('ld', 'WA,%s' % im)
+                else:
+                    F.emit('ld', 'A,%s' % im); F.emit('extz', 'WA')
+                F.emit('add', 'WA,WA'); F.emit('lda', 'XBC,%s' % sym_)
+                if combine: F.emit('lda', 'XBC,XBC+WA'); return '(XBC)'
+                return '(XBC+WA)'
         if PTRARR_LVALUE and not F.opt and not F.adecl and not combine and b.k == 'member' and b.arrow and \
                 getattr(b, 'ty', None) is not None and b.ty.kind == 'array':
             from frontend import N                          # a pointer's member array at a plain index: the address code

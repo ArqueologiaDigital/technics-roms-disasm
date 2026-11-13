@@ -1829,6 +1829,12 @@ like a global array's element, with the member's address as the base and the ind
 done).  rstmt at none 3,525 -> 3,527 (rs_2_03_01_0, rs_4_06_04_2); the other statements of the family stop at other
 operations of the same statement.  Random unchanged (166 / 46 / 87 / 37).
 
+**Batch 129 (2026-11-13): a static struct's int member array element as a store or op= target; rstmt +2.**  The companion
+of batch 128.  `gs.a[b] %= 3` -> `ld WA,(b)` / `add WA,WA` / `lda XBC,_gs + 0xe` / `lda XBC,XBC+WA` / `ld WA,(XBC)` / ..
+(rs_1_08_10_6); a plain store keeps `(XBC+WA)` and computes the value after the address (`gs.a[t] = (int)gu2` -> .. /
+`ld DE,(_gu2)` / `ld (XBC+WA),DE`).  Signed int and unsigned char indices, without options, WA and BC free.  rstmt at
+none 3,527 -> 3,529 (rs_1_08_10_6, rs_4_00_07_4).  Random unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
