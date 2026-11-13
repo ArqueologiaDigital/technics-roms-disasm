@@ -5195,7 +5195,10 @@ def gen_ptr_arith(F, e, fam, size):
     esz = l.ty.base.size
     iv = regvar_of(ii.e) if ii.k == 'load' else None
     opn = 'add' if e.op == '+' else 'sub'
-    if iv is not None and iv.reg in ('BC', 'DE', 'HL') and dies_here(F, ii) and ii.ty.size == 2:
+    if iv is not None and iv.reg in ('BC', 'DE', 'HL') and dies_here(F, ii) and ii.ty.size == 2 and \
+            not (PTR_CTX and esz == 1 and getattr(F, 'in_return', False)):   # (a returned char pointer sum zero-extends its int
+                                                           # index: .rs_2_04_03_8, return gp + b -> ld XWA,(_gp) / ld HL,BC / extz XHL /
+                                                           # add XHL,XWA; an argument indexes signed: .rs_1_04_15_4, vp(gp + c) -> lda XWA,XWA+DE)
         X = FAM[iv.reg][4]; F.dead.add(iv)          # mem.c m_padd under -Xr: exts XBC / add XBC,XBC, then
         F.emit('exts' if ii.ty.signed else 'extz', X)   # -O: add XBC,XWA / ld XHL,XBC; none: ld XHL,XBC / add XHL,XWA
         if esz == 2: F.emit('add', '%s,%s' % (X, X))
@@ -5243,14 +5246,19 @@ def gen_ptr_arith(F, e, fam, size):
         F.emit('lda', '%s,XWA+C' % R); return fam                # ld XWA,(_gs + 0xa) / lda XIZ,XWA+C
     zctx_ = getattr(F, 'ptr_arg_ctx', False) or getattr(e, 'from_local', None) is not None or getattr(F, 'in_return', False)
     if PTR_CTX and esz == 1 and e.op == '+' and getattr(F, 'ptr_store_ctx', False) and ii.ty is not None and ii.ty.size == 2 and \
-            ii.ty.signed and R == 'XWA' and isinstance(pm, str) and pm.startswith('(_') and 'BC' not in live_regs(F) and \
+            ii.ty.signed and R == 'XWA' and isinstance(pm, str) and pm.startswith('(_') and 'BC' not in live_regs_read(F) and \
             isinstance(im, str) and (im.startswith('(XSP') or im.startswith('(_') or im == 'WA'):
         F.emit('ld', 'XBC,%s' % pm)                        # a char pointer plus an int stored into a pointer: the base
         if im != 'WA': F.emit('ld', 'WA,%s' % im)          # first, the index sign-extended (rstmt rs_2_00_03_3, every set:
         F.emit('exts', 'XWA'); F.emit('add', 'XWA,XBC'); return fam   # gp = gp + a -> ld XBC,(_gp) / ld WA,(a) / exts XWA /
                                                            # add XWA,XBC; the model zero-extended a: wrong code)
-    if PTR_CTX and esz == 1 and e.op == '+' and zctx_ and not F.adecl and ii.ty is not None and ii.ty.size == 1 and ii.ty.signed and \
-            isinstance(im, str) and (im.startswith('(XSP') or im.startswith('(_') or im in ('QIZH', 'QIZL')) and isinstance(pm, str):
+    if PTR_CTX and esz == 1 and e.op == '+' and zctx_ and ii.ty is not None and ii.ty.size == 1 and ii.ty.signed and \
+            isinstance(im, str) and (not F.adecl and (im.startswith('(XSP') or im.startswith('(_')) or im in ('QIZH', 'QIZL') or
+                                     F.adecl and im in ('C', 'E', 'L') and getattr(F, 'in_return', False) and
+                                     R != 'X' + {'C': 'BC', 'E': 'DE', 'L': 'HL'}[im]) and \
+            isinstance(pm, str):                           # (-Xr too, the char in a register: .rs_1_05_07_2, return t + b ->
+                                                           #  ld XHL,0x0 / ld L,C / add XHL,XDE; a local's initialiser there indexes signed:
+                                                           #  .rs_1_04_19_1, char *u = gp + b -> ld XWA,(_gp) / lda XWA,XWA+C)
         # a char pointer plus a char in a value context (a local's initialiser, a return, an argument): the byte is
         # zero-extended whole, V4.23's own arithmetic (rstmt rs_1_04_19_1: char *u = gp + b -> ld XBC,(_gp) /
         # ld XWA,0x0 / ld A,(b) / add XWA,XBC; rs_1_05_07_2: return t + b -> ld XHL,0x0 / ld L,(b) / add XHL,XBC)

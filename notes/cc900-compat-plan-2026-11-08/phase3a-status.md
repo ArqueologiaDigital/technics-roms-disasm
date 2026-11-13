@@ -1420,6 +1420,16 @@ register index reads as signed; only the load form zero-extends it, so the other
 (`gla[b] = ..` with an unsigned `b` in BC wrote `(XDE+BC)`).  32 verdicts gone, none new, no ledger row moves.
 **Open: 122 of batch 83's 253** (195 - 73).
 
+**Batch 89 (2026-11-13): pointer sums under -Xr; semcheck 195 -> 188.**  The context rule of batch 84 at -Xr, where
+the index sits in a register.  Stored into a pointer: the base first and the index sign-extended, also when an
+unread parameter occupies BC (`gp = gp + a` -> `ld XBC,(_gp)` / `exts XWA` / `add XWA,XBC`).  Returned: a char in a
+byte register or QIZH is zero-extended whole (`return t + b` -> `ld XHL,0x0` / `ld L,C` / `add XHL,XDE`) and an int
+index is copied and zero-extended (`return gp + b` -> `ld HL,BC` / `extz XHL` / `add XHL,(_gp)`).  But a local's
+initialiser and an argument index with the register, signed (`char *u = gp + b` -> `ld XWA,(_gp)` /
+`lda XWA,XWA+C`; `vp(gp + c)` -> `lda XWA,XWA+DE`): two first attempts that zero-extended there too were caught by
+the gate (4 new verdicts) and narrowed to the return.  rstmt at -Xr / -O3 -XS -Xr 2,979 / 2,829 -> 2,981 / 2,831.
+**Open: 115 of batch 83's 253** (188 - 73).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
