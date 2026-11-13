@@ -133,6 +133,7 @@ p.sub { margin: 0 0 20px; color: var(--text-secondary); }
 .bar .note { color: var(--text-muted); margin-left: 8px; }
 .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 20px; }
 .tile, .card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; }
+.dir { display: inline-block; font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 10px; border: 1px solid var(--border); color: var(--text-secondary); margin: 2px 0 6px; }
 .tile .k { color: var(--text-secondary); font-size: 12px; }
 .tile .v { font-size: 28px; font-weight: 650; font-variant-numeric: tabular-nums; margin: 2px 0; }
 .tile .t { color: var(--text-muted); font-size: 12px; }
@@ -262,7 +263,8 @@ function chart(title, note, series, opts) {
   ends.sort((a, b) => a.yy - b.yy); for (let i = 1; i < ends.length; i++) if (ends[i].yy - ends[i - 1].yy < 13) ends[i].yy = ends[i - 1].yy + 13;
   for (const e of ends) g += `<text class="lab" x="${L + pw + 8}" y="${e.yy + 4}">${esc(e.s.short || e.s.name)} ${opts.fmt ? opts.fmt(e.s.tv ? e.s.tv[e.s.tv.length - 1] : e.v) : fmt(e.v, opts.pct)}</text>`;
   const legend = series.length > 1 ? `<div class="legend">${series.map(s => `<span><i style="background:${s.c}"></i>${esc(s.name)}</span>`).join("")}</div>` : "";
-  card.innerHTML = `<h2>${title}</h2><p>${note}</p>${legend}<div class="plot"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${title}">${g}
+  const dir = opts.good ? `<div class="dir up">${esc(opts.good)}</div>` : "";
+  card.innerHTML = `<h2>${title}</h2>${dir}<p>${note}</p>${legend}<div class="plot"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${title}">${g}
     <line class="cross" x1="0" x2="0" y1="${Tp}" y2="${Tp + ph}" stroke="var(--text-muted)" stroke-width="1" visibility="hidden"/>
     <rect x="${L}" y="${Tp}" width="${pw}" height="${ph}" fill="transparent"/></svg><div class="tip"></div></div>`;
   const svg = card.querySelector("svg"), tip = card.querySelector(".tip"), cross = card.querySelector(".cross"), plot = card.querySelector(".plot");
@@ -287,20 +289,20 @@ document.getElementById("ax-commit").setAttribute("aria-pressed", AXIS === "comm
 const bySet = (prefix, pct) => SETS.map(s => ({ name: LABEL[s], short: LABEL[s], c: COLOR[s],
   v: R.map(r => val(r, prefix + "/" + s, pct)), raw: R.map(r => r.scores[prefix + "/" + s] || null) }));
 function charts() {
-chart("Random programs: exact functions", "Four generated corpora, 800 functions per option set. Phase 3a asks for 95 % (760).", bySet("random", false), { zero: true, target: 760, max: 760 });
+chart("Random programs: exact functions", "Four generated corpora, 800 functions per option set. Phase 3a asks for 95 % (760).", bySet("random", false), { zero: true, target: 760, max: 760, good: "▲ progress = lines going up, to the dashed target (760 of 800)" });
 chart("1997 library: exact functions", "Toshiba's own C library sources at -O3 -XS, 248 functions. Phase 3a asks for all of them.",
-  [{ name: "-O3 -XS", c: "var(--series-2)", v: R.map(r => val(r, "library/O3XS", false)), raw: R.map(r => r.scores["library/O3XS"] || null) }], { target: 248, max: 248, zero: true });
-chart("Micro corpus: exact functions", "The hand-written micro tests, 674 functions per option set. Phase 3a asks for all of them at every set.", bySet("micro", false), { target: 674, max: 674 });
-chart("Probes: share of functions exact", "All probe files together. The denominator grows whenever a new probe is added, so a dip usually means a new probe, not a regression.", bySet("probes", true), { pct: true });
+  [{ name: "-O3 -XS", c: "var(--series-2)", v: R.map(r => val(r, "library/O3XS", false)), raw: R.map(r => r.scores["library/O3XS"] || null) }], { target: 248, max: 248, zero: true, good: "▲ progress = the line going up, to the dashed target (248 of 248)" });
+chart("Micro corpus: exact functions", "The hand-written micro tests, 674 functions per option set. Phase 3a asks for all of them at every set.", bySet("micro", false), { target: 674, max: 674, good: "▲ progress = every line at the dashed target (674); any drop is a regression" });
+chart("Probes: share of functions exact", "All probe files together. The denominator grows whenever a new probe is added, so a dip usually means a new probe, not a regression.", bySet("probes", true), { pct: true, good: "▲ progress = lines going up; a sudden drop is a new probe added, not lost ground" });
 chart("Semantic differences from the oracle", "Functions whose model code behaves differently from the oracle's in the checker (all four option sets summed). Lower is better; each remaining one is reviewed.",
-  [{ name: "DIFFERENT", c: "var(--series-1)", v: R.map(r => r.semdiff) }], { zero: true });
+  [{ name: "DIFFERENT", c: "var(--series-1)", v: R.map(r => r.semdiff) }], { zero: true, good: "▼ progress = the line going down; a rise is wrong code found and has to come back down" });
 chart("Probes: functions covered", "How many probe functions the ledger scores per option set: the size of the evidence base.",
-  SETS.map(s => ({ name: LABEL[s], short: LABEL[s], c: COLOR[s], v: R.map(r => r.scores["probes/" + s] ? r.scores["probes/" + s][1] : null) })), { zero: true });
+  SETS.map(s => ({ name: LABEL[s], short: LABEL[s], c: COLOR[s], v: R.map(r => r.scores["probes/" + s] ? r.scores["probes/" + s][1] : null) })), { zero: true, good: "▲ more evidence, not a score: each step up is a new probe the model is then measured on" });
 chart("Wall-clock time of each round", `Minutes from the round before to this round's commit. A pause between sessions counts as part of the next round, so the plot stops at ${CAP} minutes; the tooltip gives the real time. The second line is the part of each round spent answering the owner's prompts instead of autonomous model work, the third the part the session spent stopped, waiting for a prompt; both from interruptions.tsv (recorded since 2026-11-12 23:10; some intervals are estimates).`,
   [{ name: "round time", short: "round", c: "var(--series-1)", v: GAP.map(g => g == null ? null : Math.min(g, CAP)), tv: GAP },
    { name: "of which on the owner's prompts (dashboard features, questions, tooling asked for)", short: "prompts", c: "var(--series-2)", v: BRK.map(g => g == null ? null : Math.min(g, CAP)), tv: BRK },
    { name: "of which stopped, waiting for a prompt", short: "idle", c: "var(--series-3)", v: IDLE.map(g => g == null ? null : Math.min(g, CAP)), tv: IDLE }],
-  { zero: true, cap: CAP, max: CAP, fmt: g => g == null ? "–" : fmtMin(g) });
+  { zero: true, cap: CAP, max: CAP, fmt: g => g == null ? "–" : fmtMin(g), good: "▼ progress = shorter rounds; the prompts and idle lines show time that was not model work" });
 }
 charts();
 
