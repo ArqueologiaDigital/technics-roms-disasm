@@ -361,6 +361,11 @@ for c in none O3XS; do    # when a cdecl parameter is cached in a register (corp
 done
 row "run 2026-11-13-15-micro-pc, v423/Xr" "probes/pc.c" "$O/2026-11-13-15-micro-pc/out/v423/Xr/probes" corpus/probes/pc.c --opt none --adecl
 row "run 2026-11-13-15-micro-pc, v423/O3XSXr" "probes/pc.c" "$O/2026-11-13-15-micro-pc/out/v423/O3XSXr/probes" corpus/probes/pc.c --opt O3XS --adecl
+for c in none O3XS; do    # a local in a frame slot across a long helper or a call (corpus/probes/lsl.c)
+  row "run 2026-11-13-16-micro-lsl, v423/$c" "probes/lsl.c" "$O/2026-11-13-16-micro-lsl/out/v423/$c/probes" corpus/probes/lsl.c --opt $c
+done
+row "run 2026-11-13-16-micro-lsl, v423/Xr" "probes/lsl.c" "$O/2026-11-13-16-micro-lsl/out/v423/Xr/probes" corpus/probes/lsl.c --opt none --adecl
+row "run 2026-11-13-16-micro-lsl, v423/O3XSXr" "probes/lsl.c" "$O/2026-11-13-16-micro-lsl/out/v423/O3XSXr/probes" corpus/probes/lsl.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do

@@ -1890,6 +1890,18 @@ random functions move from refused to compiled (r1_03_12, r1_06_02, r2_07_03, r2
 is exact yet (r1_03_12's frame is 0x14 bytes where the oracle's is 0xc: the floating-point temporaries' layout).  The
 gate's semcheck shows no new verdict, so the newly compiled code is right.  No ledger row moved.
 
+**Batch 137 (2026-11-13): a local across a long helper keeps a frame slot; probe lsl.c; random refused 382 -> 380.**  From
+the "local t" refusals (8 random functions).  New probe lsl.c (126 functions over the local's type, its initialiser, the
+middle statement -- a long helper, a call, nothing -- and its use; oracle run 2026-11-13-16).  Across a long helper the
+oracle keeps the local in a frame slot, XIZ being the helper's (`ld WA,(_gi)` / `ld (XSP+0x4),WA` / .. `cal C9H_remls` / .. /
+`ld WA,(XSP+0x4)` / `add (_gi),WA`); across a call it homes it in IZ; with nothing between, a register temporary.  The model
+now plans such a local as slot-only (no register temporary, no home, not folded) when a real long helper -- not folded,
+not an unsigned power of two -- lies between its declaration and last use and no call does.  A first version counted
+`7L * 10L` and `65536L % 4L` as helpers and ignored intervening calls: it cost three exact random functions on the scratch
+ledger and was not installed.  lsl.c at none 31 -> 42 of 126 (char locals and the built-through-the-slot initialiser,
+`ld (XSP+0x4),WA` / `ld WA,(XSP+0x4)` / `sra 0x3,WA` / `ld (XSP+0x4),WA`, are not modelled).  Random at none: exact 168
+unchanged, refused 382 -> 380.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

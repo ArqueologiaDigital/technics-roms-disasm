@@ -6469,6 +6469,7 @@ K_MINUS_PTR = True                                       # see gen_bin
 VALUE_FIRST_PK = True                                    # see gen_stmt's store
 LONG_RMW_CONST_ELEM = True                               # see gen_opassign's long helper
 FP_OPA_NO_XIZ = True                                     # see the home planner
+LH_ACROSS_SLOT = True                                    # see regtemp_candidates
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -9945,6 +9946,7 @@ def plan_homes(F):
     if FP_OPA_NO_XIZ and not F.opt and not F.adecl:      # a double op= on a non-local target needs XIZ for its address:
         walk(F.f.body, lambda n_, dd: fpopa_.append(n_) if n_.k == 'opassign' and fpgen.is_fp(getattr(strip(n_.l), 'ty', None))
              and not (strip(n_.l).k == 'var' and strip(n_.l).decl.kind in ('local', 'param')) else None)
+    winners_sorted = [d for d in winners_sorted if not getattr(d, 'lh_slot', False)]
     for d in winners_sorted:
         if d.ty.size == 4 and fpopa_ and d.kind == 'local':   # a 4-byte local then stays in its slot (random r1_03_12:
             d.no_fold = True; continue                     # char *t = gp; gda[1] *= .. -> ld (XSP+0x4),XWA / lda XIZ,_gda + 0x8)
@@ -13905,6 +13907,24 @@ def regtemp_candidates(F):
         return out
     for i, c in enumerate(body):
         if c.k != 'decl': continue
+        if LH_ACROSS_SLOT and not F.opt and not F.adecl and c.var.kind == 'local' and c.var.ty.kind in ('int', 'ptr') and \
+                c.init is not None and not getattr(c.var, 'lh_ctr', False):
+            ul_ = [k_ for k_, x in enumerate(body) if k_ > i and uses_decl(x, c.var)]
+            def real_lh_(m):                               # a long * / % that calls a helper (not folded, not a power of two)
+                if m.k not in ('bin', 'opassign') or fold(m).k == 'const': return False
+                if m.ty is None or m.ty.size != 4 or m.ty.kind != 'int': return False
+                rk_ = fold(m.r)
+                if m.op in ('/', '%'):
+                    return not (rk_.k == 'const' and rk_.value is not None and not m.ty.signed and rk_.value >= 2 and
+                                rk_.value & (rk_.value - 1) == 0)
+                return m.op == '*' and rk_.k != 'const'
+            mids_ = body[i + 1:ul_[-1]] if ul_ else []
+            if ul_ and any(real_lh_(m) for x in mids_ for m in nodes_in(x, 'bin') + nodes_in(x, 'opassign')) and \
+                    not any(nodes_in(x, 'call') or fpgen.is_fp_op(x) for x in mids_) and \
+                    not any(fpgen.is_fp_op(m) or fpgen.is_fp_copy(m) for x in mids_ for m in nodes_in(x, 'bin')):
+                c.var.no_fold = True; c.var.lh_slot = True; continue   # (a long helper between the declaration and the
+                # last use: the local lives in a frame slot, XIZ being the helper's; lsl.c ls_i_g_h_a: ld WA,(_gi) /
+                # ld (XSP+0x4),WA / .. cal C9H_remls / .. / ld WA,(XSP+0x4) / add (_gi),WA)
         dead_init_ = False
         if DEAD_INIT_CTR and c.init is not None and not F.opt and not F.adecl and c.var.ty.kind == 'int' and \
                 not nodes_in(c.init, 'call') and not has_helper_call(c.init) and not fpgen.is_fp_op(c.init):
