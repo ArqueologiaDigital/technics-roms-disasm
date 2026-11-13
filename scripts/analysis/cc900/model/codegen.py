@@ -500,6 +500,9 @@ def mem_operand(F, e):
             if getattr(d, 'homed', False) and d.reg == 'XIZ': return 'XIZ'
             if d.kind == 'local' and hasattr(d, 'slot'): return '(XSP+%s)' % hx(d.slot + F.push)
             if d.kind == 'param' and hasattr(d, 'slot'): return '(XSP+%s)' % hx(d.slot + F.push)   # homed (d_keep)
+            if d.kind == 'param' and not hasattr(d, 'off'):   # a register parameter whose register a planner took away
+                raise Unsupported('register parameter %s without a home' % d.name)   # and no slot was given (-Xr random
+                                                           # r1_01_08: a crash before, AttributeError 'off')
             if d.kind == 'param': return '(XSP+%s)' % hx(d.off + F.push)
             if d.kind in ('global', 'func') and not d.ty.kind == 'array': return '(_%s)' % d.name
             if d.kind == 'static' and not d.ty.kind == 'array' and getattr(d, 'init', None) is None:
@@ -12882,6 +12885,8 @@ def lh_counter_slots(f, opt, adecl):
 
 def plan_lh_call(F):
     fake = [d for d in F.f.decls if getattr(d, 'lh_ctr', False) and not hasattr(d, 'slot')]
+    fake += [d for d in F.f.params if getattr(d, 'home_slot', False) and not hasattr(d, 'slot')]   # (-Xr: a register
+    # parameter moved to a home slot has no slot yet while the operands are classified: random r1_01_08 crashed)
     for d in fake: d.slot = 0
     try: plan_lh_call0(F)
     finally:

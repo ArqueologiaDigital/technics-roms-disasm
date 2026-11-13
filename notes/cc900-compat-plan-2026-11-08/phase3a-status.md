@@ -1935,6 +1935,15 @@ place: `gl2 = rl(gl) << 24` -> `cal _rl` / `inc 0x4,XSP` / `sla 0x8,XHL` / `sla 
 `ld XWA,XHL` / `add XWA,XHL`; a first version shifted it and lost that micro function on the scratch ledger), and the pops
 still wait when a later call absorbs them (POP_LAZY2).  rstmt at none 3,548 -> 3,561; random at none 169 -> 170 of 800.
 
+**Batch 142 (2026-11-13): no model crash at -Xr.**  The random corpora at -Xr had 10 functions that crashed the model
+(`AttributeError: 'Decl' object has no attribute 'off'`), pre-existing (the batch-98 model crashes the same way): under -Xr a
+register parameter that a planner moves to a home slot has, until the frame is laid out, neither a register nor a slot nor a
+stack offset, and the long-helper operand classifier and two char-index element paths (chidx.py) read its offset.
+`mem_operand` now refuses such a parameter explicitly, plan_lh_call gives it a provisional slot while it classifies operands
+(as it already did loop counters), and chidx.py declines the two paths.  Model errors at -Xr 10 -> 0; the functions are
+compiled or refused with a reason.  No score moved.  Still crashing: three functions at -O3 -XS (`KeyError: 8`) and one
+(`'N' object has no attribute 'decl'`).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

@@ -366,8 +366,8 @@ def element(F, lv, kind, fam='WA'):
         if signed: idx_byte(F, src, esz, 'C', busy); F.emit('ld', 'XWA,(_%s)' % bk[1].name); return '(XWA+C)'
         widen(F, src, 'BC', signed, esz); F.emit('ld', 'XWA,(_%s)' % bk[1].name); return '(XWA+BC)'
     if bk[0] == 'pmem':                                    # oc2 / ou2 / oc4: through a struct pointer parameter
-        if kind != 'load': return None
-        pm = '(XSP+%s)' % hx(bk[1].off + F.push)
+        if kind != 'load' or not hasattr(bk[1], 'off'): return None   # (-Xr: a register parameter without a stack
+        pm = '(XSP+%s)' % hx(bk[1].off + F.push)        #  slot; random r3_08_13 crashed here)
         if signed:
             idx_byte(F, src, esz, 'A', busy, bk[2]); F.emit('ld', 'W,0x0')   # oc4: sla 0x2,A / add A,0x14
         else:
@@ -396,6 +396,7 @@ def element(F, lv, kind, fam='WA'):
         if esz == 1: return None
         widen(F, src, 'BC', signed, esz); F.emit('ld', 'XWA,(_%s)' % bk[1].name); return '(XWA+BC)'
     if bk[0] == 'pptr':
+        if not hasattr(bk[1], 'off'): return None   # (-Xr: a register parameter without a stack slot)
         pm = '(XSP+%s)' % hx(bk[1].off + F.push)
         if kind == 'store': return None
         if esz == 1 and signed:                            # qc1: ld XWA,0x0 / ld A,im / add XWA,(p)
