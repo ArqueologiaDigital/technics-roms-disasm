@@ -5860,6 +5860,14 @@ def gen_compare(F, e):
     rv = r
     while rv.k == 'cast' and rv.kind == 'IntegralCast': rv = strip(rv.e)
     rvm = mem_operand(F, rv)
+    if CMP_MEM_LEFT and not F.opt and not F.adecl and lm is not None and rvm is None and size in (2, 4) and r.k == 'cast' and \
+            not lm.startswith('(X') and not family_of(lm) and strip(l).k == 'load' and \
+            not nodes_in(r, 'call') and not has_helper_call(r) and not fpgen.is_fp_op(r) and 'WA' not in live_regs(F):
+        n0_ = len(F.lines); f_ = gen(F, r, 'WA', size)     # a memory left and a cast right: the right's value into WA first,
+        if f_ == 'WA' and not clobbers(F.lines[n0_:], lm):  # then cp mem,WA with the same flags (cc_l_u_RGr: ld XWA,(_hl) /
+            F.emit('cp', '%s,%s' % (lm, FAM['WA'][size])); return cc   # cp (_gi),WA; the probe's '!' rows)
+        del F.lines[n0_:]
+    rvm = mem_operand(F, rv)
     if e.op in ('==', '!=') and size == 1 and lm is not None and lm.startswith('(X') and rvm is not None and \
             rvm.startswith('(X') and not lm.startswith('(XSP') and not rvm.startswith('(XSP'):
         T1 = FAM[getattr(F, 'tfam', 'WA')][1]                              # ot_cmp_abn: ld C,(XHL) / cp C,(XWA)
@@ -6383,6 +6391,7 @@ AND_BIT_CLR = True                                       # see the OR_BIT_SET pe
 CP_CHAR_REG_K = True                                     # see gen_compare
 MUL_K_DOUBLE_ADD = True                                   # see gen_mul_const
 XIZ_MEMBER_INIT = True                                     # see gen_stmt's decl
+CMP_MEM_LEFT = True                                       # see gen_compare
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)

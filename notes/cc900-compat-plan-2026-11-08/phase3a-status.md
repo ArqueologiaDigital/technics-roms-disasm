@@ -1764,6 +1764,12 @@ global pointer, cdecl, no -O, and WA free.  rstmt at none 3,521 -> 3,524; charar
 lhx and lhy unchanged.  (A first version emitted a doubled `ld ld` for the zero-offset form; caught by the probe check
 before the gate and fixed.)
 
+**Batch 123 (2026-11-13): a memory left compared with a cast right; random +1, rstmt +1.**  `cp mem,WA` with the cast's
+value computed into WA first (the oracle order: right loaded, then the compare with the left in memory, `cp (_gi),WA`
+in cmpx.c's `_cc_n_i_GGr`).  The condition code stays the same, since `mem - WA` has the flags of `l op r`.  Cdecl, no
+-O, WA free.  Random at none 165 -> 166 of 800 (random3 37 -> 38); rstmt at none 3,524 -> 3,525.  The cmpx probe's
+`r` rows stay refused (their path is cmp_wide, not this one); cmpx stays at 553 exact.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
