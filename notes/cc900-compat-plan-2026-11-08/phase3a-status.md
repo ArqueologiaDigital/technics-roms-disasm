@@ -1074,6 +1074,16 @@ loop-counter indices of the same rows are not reached: the register planner give
 this plan runs.  By now the agents' predictors reproduce every oracle form at none of lhx.c (1,184), of cmpx.c's cx
 and cc families (744) and of elrd.c's er and bc families (1,234); what limits the rate is porting them.
 
+**Batch 53 (2026-11-13): near misses.**  `nearmiss.py` (research-scratch) counts, for the random functions the model
+writes but gets wrong, how many lines separate it from the oracle: of 301 at none, 14 were one line off, 45 within
+two, 82 within three, 113 within four.  Four one-line causes fixed: an OR with a one-bit constant is `set` (in a
+register, `set 0x3,WA` for `gul | 8`, `set 0x0,QWA` from bit 16 up; in a byte of memory, `set 0x0,(_guc)`; no oracle
+listing has `or R,<one bit>`); a lone `if` inside the function's last `if` returns early too (`ret lt` / .. /
+`ret eq`); a constant under a narrowing cast is loaded at the narrow width (`char f() { return 53; }` ->
+`ld L,0x35`); an unsigned char times a power of two in a compound assignment is `sll`.  Random programs
+90 / 22 / 47 / 21 -> 95 / 22 / 49 / 22 of 800.  A tabulation agent is classifying the functions within four lines by
+cause.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

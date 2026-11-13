@@ -84,6 +84,16 @@ class Fn:
         if args is not None and 'None' in args: raise Unsupported('operand None in %s %s' % (op, args))   # (r4_07_06)
         if op == 'ld' and args is not None and re.match(r'^(WA|BC|DE|HL|IX|IY|IZ),[WABCDEHL]$', args):
             raise Unsupported('a byte into a word: ld %s' % args)   # (r2_02_05 -Xr: ld WA,A for a char index)
+        if OR_BIT_SET and op in ('or', 'orb') and args is not None:   # an OR with one bit is set: random r2_05_08
+            m_ = re.match(r'^(.+),0x([0-9a-f]+)$', args)             # (gul | 8) -> set 0x3,WA; r3_08_18 guc |= 1 ->
+            v_ = int(m_.group(2), 16) if m_ else 0                    # set 0x0,(_guc); bit 16 and up: set 0x0,QWA.
+            if m_ and v_ and v_ & (v_ - 1) == 0:                      # No oracle listing has or R,<one bit>.
+                t_ = m_.group(1); b_ = v_.bit_length() - 1
+                if op == 'orb' and t_.startswith('('): op, args = 'set', '%s,%s' % (hx(b_), t_)
+                elif op == 'or' and re.match(r'^X(WA|BC|DE|HL|IX|IY|IZ)$', t_):
+                    op, args = 'set', '%s,%s' % (hx(b_ % 16), t_[1:] if b_ < 16 else 'Q' + t_[1:])
+                elif op == 'or' and re.match(r'^(WA|BC|DE|HL|IX|IY|IZ|[WABCDEHL])$', t_) and b_ < (16 if len(t_) == 2 else 8):
+                    op, args = 'set', '%s,%s' % (hx(b_), t_)
         if op == 'cp' and args is not None:
             m_ = re.match(r'^([WABCDEHL]),0x([0-9a-f]{3,})$', args)   # (r3_01_02: cp A,0xffc2 -> cp A,0xc2)
             if m_: args = '%s,%s' % (m_.group(1), hx(int(m_.group(2), 16) & 0xff))
@@ -499,6 +509,10 @@ def gen(F, e, fam, size, then_ret=False, store=False):
             not family_of(mem_operand(F, e0.e)):
         # a narrowing cast of a load reads at the source width (unop_*: cast_l_c, cast_i_c)
         isz = strip(e0.e).ty.size
+        kc_ = fold(e0.e)
+        if CONST_NARROW and kc_.k == 'const' and kc_.value is not None and not F.opt and not F.adecl:   # a constant is loaded at
+            F.emit('ld', '%s,%s' % (FAM[fam][size], hx(kc_.value & ((1 << (8 * size)) - 1)))); return fam   # the narrow width
+                                                               # (random r1_00_04: char f() { return 53; } -> ld L,0x35)
         F.emit('ld', '%s,%s' % (FAM[fam][isz], mem_operand(F, e0.e))); return fam
     if e0.k == 'cast' and e0.kind == 'IntegralCast' and strip(e0.e).ty.size > size and strip(e0.e).k == 'bin' and \
             strip(e0.e).op in SIMPLE_OPS:
@@ -1531,6 +1545,10 @@ def lh_post_member(F, lv, rv):
     ks = lh_post_kinds(F, lv, rv)
     return ks is not None and ks[1][0] == 'M'
 
+OR_BIT_SET = True                                         # see Func.emit: an OR with one bit is set
+CONST_NARROW = True                                       # see gen: a constant under a narrowing cast
+MULB_SHIFT = True                                         # see gen_opassign: an unsigned char times a power of two
+NESTED_IF_RET = True                                      # see gen_stmt: if (a) if (b) x; at the end of a function
 LX5 = True                                                # see lx5_lines: long helpers of lhx.c's lxo_* rows
 
 def lx5_lines(L, a, b, op, signed, T4, T2):
@@ -7231,7 +7249,10 @@ def gen_opassign(F, e):
         n_t = len(F.lines)                                 # (r2_06_15: gia[u] /= 10 through (XBC+WA) divided in XWA and
         F.emit('ld', '%s,%s' % (FAM[work][size], t))      # stored through the quotient; r4_02_10: guca[t] /= 7 in (XWA))
         wide = FAM[work][4] if size == 2 else FAM[work][2]
-        if op == '*':
+        k2_ = int(rs, 16) if re.match(r'^0x[0-9a-f]+$', rs or '') else 0
+        if op == '*' and MULB_SHIFT and size == 1 and not signed and k2_ >= 2 and k2_ & (k2_ - 1) == 0 and not F.opt:
+            F.emit('sll', '%s,%s' % (hx(k2_.bit_length() - 1), FAM[work][1])); res = FAM[work][1]   # (random r3_02_02:
+        elif op == '*':                                                                             #  guc *= 4 -> sll 0x2,A)
             F.emit('muls' if signed else 'mul', '%s,%s' % (wide, rs)); res = FAM[work][size]
         else:
             F.emit('exts' if signed else 'extz', wide); F.emit('divs' if signed else 'div', '%s,%s' % (wide, rs))
@@ -7845,7 +7866,9 @@ def gen_stmt(F, s, last):
             if F.lines[-1] == '\tret' and last:
                 return                               # condition always false: the statement disappears
             dead0 = set(F.dead)
-            gen_stmt(F, s.then, False)
+            inner = flat(s.then)                         # a lone if inside the last if returns early too (random
+            gen_stmt(F, s.then, bool(NESTED_IF_RET and last and bare and not F.opt and len(inner) == 1 and   # r1_07_03:
+                                     inner[0].k == 'if' and inner[0].els is None))   # if (a) if (b) x; -> ret lt / .. / ret eq)
             if stmt_returns(s.then): F.dead = dead0     # (r4_08_02: c died in the returning arm, then was read)
             flush_pops(F)                                # _calloc: inc 0x8,XSP before the join label
             if k is not True: F.lines.append(lab + ':')   # always true: no label (cmp_ui: ge_ui_br0)
