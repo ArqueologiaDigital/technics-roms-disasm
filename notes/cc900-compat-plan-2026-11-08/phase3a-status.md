@@ -1757,6 +1757,13 @@ without -O: the oracle doubles with `add XWA,XWA` (x, 2x, 3x, 6x = add, add, add
 so the rule is only the doubling step inside gen_mul_const.  rstmt at none 3,519 -> 3,521, at -Xr 3,037 -> 3,038;
 chararith, chararith2, kfold, evorder_ad, lhx and lhy unchanged.
 
+**Batch 122 (2026-11-13): a 4-byte XIZ local loads straight from a pointer member; rstmt +3.**  `long u = gps->l;`
+with `u` homed in XIZ: the oracle writes `ld XWA,(_gps)` / `ld XIZ,(XWA+0x4)` (rs_1_05_15_1; rs_4_06_10_1 with a char
+pointer at +0xa); the model loaded into HL and copied to XIZ.  Only a member or a plain pointer's target through a
+global pointer, cdecl, no -O, and WA free.  rstmt at none 3,521 -> 3,524; chararith, chararith2, kfold, evorder_ad,
+lhx and lhy unchanged.  (A first version emitted a doubled `ld ld` for the zero-offset form; caught by the probe check
+before the gate and fixed.)
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

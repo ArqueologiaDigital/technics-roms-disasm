@@ -6382,6 +6382,7 @@ UCHAR_IDX_INTPTR = True                                   # see gen_ptr_arith
 AND_BIT_CLR = True                                       # see the OR_BIT_SET peephole
 CP_CHAR_REG_K = True                                     # see gen_compare
 MUL_K_DOUBLE_ADD = True                                   # see gen_mul_const
+XIZ_MEMBER_INIT = True                                     # see gen_stmt's decl
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -8665,6 +8666,10 @@ def gen_stmt(F, s, last):
                     if ci_ is not None and ci_.k == 'bin' and ci_.ty.is_ptr() and \
                             any(unpromote(y).ty is not None and unpromote(y).ty.size == 1 for y in (ci_.l, ci_.r)):
                         raise Unsupported('a char index into an XIZ pointer home')   # (r1_04_19: ld XIZ,0x0 / ld IZL,A /
+                    kz_ = cw_kind(F, c.init, 4) if XIZ_MEMBER_INIT and not F.opt and not F.adecl and c.var.ty.size == 4 else None
+                    if kz_ is not None and kz_[0] in ('D', 'P') and kz_[1].startswith('(_') and 'WA' not in live_regs(F):
+                        F.emit('ld', 'XWA,%s' % kz_[1]); F.emit('ld', 'XIZ,%s' % ('(XWA+%s)' % hx(kz_[2]) if kz_[2] else '(XWA)'))
+                        i += 1; continue                   # (rstmt rs_1_05_15_1: long u = gps->l -> ld XWA,(_gps) / ld XIZ,(XWA+0x4))
                     fam = gen(F, c.init, 'WA' if XIZ_DIRECT_INIT and (not F.opt or XIZ_DIRECT_OPT) and ci_ is not None and (ci_.k == 'bin'
                               and ci_.ty.is_ptr() or XIZ_ADDR_WA and not F.opt and ci_.k == 'addr' and
                               strip(ci_.e).k in ('index', 'member')) else 'HL', 4)   # (lo_p_Bcs: ld XWA,(_gp) / inc 0x1,XWA /
