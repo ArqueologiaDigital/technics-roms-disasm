@@ -4559,6 +4559,23 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         finally:
             F.cw_pins, F.cw_start, F.cw_opline = saved_
         if bw is not None: return bw
+    if K_MINUS_PTR and not F.opt and not F.adecl and fam == 'WA' and not any_fam and size in (2, 4) and op == '-' and \
+            fold(e.l).k == 'const' and fold(e.l).value is not None and not ({'WA', 'BC'} & set(live_regs(F))):
+        try: kr_ = cw_kind(F, strip(e.r), size)
+        except Unsupported: kr_ = None
+        rr_ = strip(e.r)
+        while rr_.k == 'cast' and rr_.ty is not None and rr_.ty.size == size: rr_ = strip(rr_.e)
+        if kr_ is None and rr_.k == 'load' and strip(rr_.e).k == 'index' and fold(strip(rr_.e).idx).k == 'const':
+            ix_ = strip(rr_.e); bm_ = strip(ix_.base)      # p->arr[K] (gps->a[4]): the member's offset plus K elements
+            if bm_.k == 'member' and bm_.arrow and bm_.ty.kind == 'array':
+                pm_ = mem_operand(F, bm_.base)
+                if pm_ is not None and pm_.startswith('(_') and ix_.ty is not None and ix_.ty.size == size:
+                    kr_ = ('D', pm_, member_offset(bm_) + fold(ix_.idx).value * size)
+        if kr_ is not None and kr_[0] in ('D', 'P') and kr_[1].startswith('(_'):   # a constant minus a member through a
+            F.emit('ld', 'XWA,%s' % kr_[1])                # pointer: the pointer in XWA, the constant in BC (rstmt
+            F.emit('ld', '%s,%s' % (FAM['BC'][size], hx(fold(e.l).value & ((1 << 8 * size) - 1))))   # rs_1_02_13_3:
+            F.emit('sub', '%s,%s' % (FAM['BC'][size], '(XWA+%s)' % hx(kr_[2]) if kr_[2] else '(XWA)'))   # 255 - gps->a[4]
+            return 'BC'                                    # -> ld XWA,(_gps) / ld BC,0xff / sub BC,(XWA+0x16))
     if LEFT_BIN_RIGHT_PTR and not F.opt and not F.adecl and fam == 'WA' and not any_fam and size in (1, 2, 4) and op in SIMPLE_OPS and \
             strip(e.l).k == 'bin' and (strip(e.l).op in SIMPLE_OPS or strip(e.l).op in ('<<', '>>') or strip(e.l).op == '/' and size == 2) and \
             not live_regs(F) and not nodes_in(e, 'call') and not has_helper_call(e) and not fpgen.is_fp_op(e) and \
@@ -6448,6 +6465,8 @@ LH_NESTED_K = True                                       # see gen_long_helper
 LH_D_COMPUTED = True                                     # see gen_long_helper
 LH_NESTED_CALL = True                                    # see gen_long_helper
 ULONG_POW2 = True                                        # see gen_long_helper
+K_MINUS_PTR = True                                       # see gen_bin
+VALUE_FIRST_PK = True                                    # see gen_stmt's store
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -9366,7 +9385,7 @@ def gen_stmt(F, s, last):
             F.emit('ld', 'XWA,%s' % pk_[1])            # (random r2_08_05: gps->l = t, t in XDE -> ld XWA,(_gps) /
             F.emit('ld', '%s,%s' % ('(XWA+%s)' % hx(pk_[2]) if pk_[2] else '(XWA)', FAM[regvar_of(strip(s.e.r).e).reg][size])); return   # ld (XWA+0x4),XDE)
         else:                                        # add DE,DE / lda XHL,_gb / ... lda XBC,_ga / ld (XHL+DE),WA
-            nl = len(F.lines)
+            nl = len(F.lines); F.store_nl = nl
             t = lvalue(F, lv, kind='storev')         # m_ga_set, m_gps_set (a computed value: p[k] through XBC)
             if STORE_ADDR_GUARD:                     # lnr.c r_gp_wr (-Xr): ld XBC,(_gp) over d3 in BC
                 for d in list(F.f.params) + list(F.f.decls):
@@ -9413,6 +9432,16 @@ def gen_stmt(F, s, last):
             # ld (XDE),C; the model's (XDE+BC) indexed signed)
         fam = gen(F, s.e.r, work, size)                    # opt_temps.c ot_cpy_anb: ld E,(XHL+:1) / ld (XWA+:1),E
         if STORE_ADDR_GUARD and clobbers(F.lines[n0:], t):
+            nl_ = getattr(F, 'store_nl', None); pk_ = sp_lvalue_kind(F, lv)
+            if VALUE_FIRST_PK and not F.opt and not F.adecl and nl_ is not None and nl_ <= n0 and pk_ is not None and \
+                    pk_[0] in ('P', 'D') and pk_[1].startswith('(_') and F.push == push0:
+                del F.lines[nl_:]                          # the value first, then the pointer (rstmt rs_1_02_13_3:
+                fam2_ = gen(F, s.e.r, work, size)          # gpi[3] = 255 - gps->a[4] -> ld XWA,(_gps) / ld BC,0xff /
+                R2_ = FAM[fam2_][size]                     # sub BC,(XWA+0x16) / ld XWA,(_gpi) / ld (XWA+0x6),BC)
+                if fam2_ != 'WA' and FAM[fam2_][4] != 'XWA':
+                    F.emit('ld', 'XWA,%s' % pk_[1])
+                    F.emit('ld', '%s,%s' % ('(XWA+%s)' % hx(pk_[2]) if pk_[2] else '(XWA)', R2_)); F.store_nl = None; return
+            F.store_nl = None
             raise Unsupported('the value overwrites the store address')    # (wrong code otherwise)
         if F.push != push0 and t.startswith('(XSP'):        # r2_08_13: a = r2(..) << 11: the pops are still pending
             if lv.k != 'var': raise Unsupported('store address moved by the value')

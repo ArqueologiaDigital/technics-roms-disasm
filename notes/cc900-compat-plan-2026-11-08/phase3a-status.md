@@ -1864,6 +1864,15 @@ two calls no helper: `gula[a] % 2UL` -> `ld XWA,(XBC+A)` / `and XWA,0x1` (rs_3_0
 refused both ("complex long helper operands").  Without options.  rstmt at none 3,533 -> 3,540; lhx.c 880 -> 886; random
 at none 166 -> 167 of 800 (random3 38 -> 39).
 
+**Batch 134 (2026-11-13): a constant minus a pointer member; the value first for a store through a global pointer; random +1,
+rstmt +3.**  From the single-statement blockers ("the right operand overwrites the left").  `gpi[3] = 255 - gps->a[4]` ->
+`ld XWA,(_gps)` / `ld BC,0xff` / `sub BC,(XWA+0x16)` / `ld XWA,(_gpi)` / `ld (XWA+0x6),BC` (rs_1_02_13_3).  Two rules: the
+value (a constant minus a member, or a member array at a constant index, through a global pointer) is built in BC with the
+pointer in XWA; and when a value's code would overwrite the address of a store through a global pointer, the value comes
+first and the pointer is loaded after it, which is what the guard of batch 34 refused.  A value ending in WA stays refused.
+Without options.  rstmt at none 3,540 -> 3,543; stvxc.c 251 -> 255; elrd.c 274 -> 278; random at none 167 -> 168 of 800.
+The gate's semcheck shows no new verdict.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
