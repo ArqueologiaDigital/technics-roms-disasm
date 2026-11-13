@@ -6234,6 +6234,7 @@ RIGHT_READS_HOME = True                                   # see gen_bin
 TAIL_IF_RETURN_LABEL = True                               # see compile_function_once's last passes
 LOCAL_K_VIA_REG = True                                    # see store_global
 LOCAL_BIN_SWAP = True                                     # see store_global
+CALL_VALUE_FIRST = True                                   # see gen_stmt's store
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -9039,6 +9040,23 @@ def gen_stmt(F, s, last):
             t = chidx.element(F, lv, 'storeb')
             if t is None: raise Unsupported('element store')
             F.emit('ld', '%s,E' % t); return
+        elif CALL_VALUE_FIRST and not F.opt and not F.adecl and size in (2, 4) and strip(lv).k in ('index', 'deref', 'member') and \
+                not fpgen.is_fp(lv.ty) and not fpgen.is_fp_op(s.e.r) and \
+                (strip(s.e.r).k == 'call' and not has_helper_call(strip(s.e.r).fn) or
+                 size == 4 and strip(s.e.r).k == 'bin' and strip(s.e.r).op in ('*', '/', '%') and has_helper_call(s.e.r) and
+                 not nodes_in(s.e.r, 'call')) and \
+                not nodes_in(lv, 'call') and not has_helper_call(lv) and not live_regs(F) and \
+                (sp_lvalue_kind(F, lv) or ('',))[0] not in ('G', 'M', 'S'):
+            n_cv_ = len(F.lines)                         # a call's or a long helper's result is computed first and
+            fam = gen(F, s.e.r, 'HL', size)              # stored from HL; the address comes after it (rstmt
+            if fam != 'HL': raise Unsupported('call value first: the result is not in HL')   # rs_2_08_19_1: gla[b] = rl(..)
+            flush_pops(F)                                # -> cal _rl / inc 0x4,XSP / ld A,(b) / extz WA / sla 0x2,WA /
+            n_ad_ = len(F.lines)                         # lda XBC,_gla / ld (XBC+WA),XHL; rs_1_09_19_2: gula[a] =
+            t = chidx.element(F, lv, 'load') if chidx.is_elem(F, lv) else None   # gul % gula[4] -> cal C9H_remlu /
+            if t is None: t = lvalue(F, lv)              # ld A,(a) / sla 0x2,A / lda XBC,_gula / ld (XBC+A),XHL)
+            if re.search(r'HL|[HL]\b', t) or clobbers(F.lines[n_ad_:], '(XHL)'):
+                raise Unsupported('call value first: the address needs HL')
+            F.emit('ld', '%s,%s' % (t, FAM['HL'][size])); return
         elif VALUE_FIRST_CHIDX and not F.opt and not F.adecl and chidx.is_elem(F, lv) and size == 2 and \
                 any(gidx(x) for x in nodes_in(s.e.r, 'load')):
             fam = gen(F, s.e.r, 'DE', size)              # random r1_02_19: gua[a] = gua[a] + gua[6]: the value first,

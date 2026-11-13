@@ -1620,6 +1620,17 @@ keeps XBC / WA (rs_1_01_13_0, rs_3_09_13_0; a first, wider version lost those). 
 the oracle only by this WA / BC swap in other contexts (a narrowing cast, an argument, a store through a pointer);
 `swapfit.py` lists them.  rstmt at none / -Xr 3,443 / 3,026 -> 3,450 / 3,028.
 
+**Batch 108 (2026-11-13): a call's or a long helper's result is computed before the store address; rstmt +2.**
+From the largest refusal group of the statement probes ("the value overwrites the store address", 47 at the plain
+set).  Without -O, `gla[b] = rl(..)` and `gula[a] = gul % gula[4]` compute the value first and store it from HL, the
+address built afterwards in the usual registers (rs_2_08_19_1: `cal _rl` / `inc 0x4,XSP` / `ld A,(b)` / `extz WA` /
+`sla 0x2,WA` / `lda XBC,_gla` / `ld (XBC+WA),XHL`; rs_1_09_19_2: `cal C9H_remlu` / `ld A,(a)` / `sla 0x2,A` /
+`lda XBC,_gula` / `ld (XBC+A),XHL`).  Five statements leave the refusals: two exact (rs_1_09_19_2, rs_4_02_07_4),
+three that now differ elsewhere (a local the oracle keeps in QIZH, labels).  Not covered, and still refused: a long
+division by a constant, where the oracle takes the address first, into XIZ (rs_1_04_03_3), and the operand shapes
+with an element at a variable index ("complex long helper operands", 40 statements: index temporaries in stack
+slots, the element base in XIZ).  rstmt at none 3,450 -> 3,452.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
