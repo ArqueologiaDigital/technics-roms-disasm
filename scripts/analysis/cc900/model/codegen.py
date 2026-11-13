@@ -6393,6 +6393,8 @@ CP_CHAR_REG_K = True                                     # see gen_compare
 MUL_K_DOUBLE_ADD = True                                   # see gen_mul_const
 XIZ_MEMBER_INIT = True                                     # see gen_stmt's decl
 CMP_MEM_LEFT = True                                       # see gen_compare
+PTRARR_LVALUE = True                                     # see _lvalue_raw
+PARAM_CACHE = True                                       # see param_cache_wanted
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -7847,6 +7849,12 @@ def _lvalue_raw(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False, kind='sto
             return '(%s+%s)' % (m, hx(off)) if off else '(%s)' % m
     if lv.k == 'index':
         b, i = strip(lv.base), lv.idx
+        if PTRARR_LVALUE and not F.opt and not F.adecl and not combine and b.k == 'member' and b.arrow and \
+                getattr(b, 'ty', None) is not None and b.ty.kind == 'array':
+            from frontend import N                          # a pointer's member array at a plain index: the address code
+            kA_ = cw_kind(F, N('load', e=lv, ty=lv.ty), lv.ty.size)   # of the 'A' kind (cmpx.c cp_*_DA), as a store target
+            if kA_ is not None and kA_[0] == 'A':
+                return cw_addr(F, kA_, lv.ty.size, P=ptr, I=idx, B=base)
         if b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array':
             esz = lv.ty.size; im = mem_operand(F, i)
             if im is None: raise Unsupported('complex index')
@@ -13639,6 +13647,54 @@ XIZ_DIRECT_INIT = True                                    # an XIZ home's initia
 XIZ_DIRECT_OPT = True                                     # under -O as well (loc0 O3XS lo_l_Gcs: ld XIZ,(_gl))
 REGTEMP_PICK = [{}]                                       # decl name -> index of the candidate home being tried
 
+def param_cache_wanted(F, d):
+    """PARAM_CACHE (corpus/probes/pc.c, run 2026-11-13-15-micro-pc, tabulation cc900-tab/pc): without options a cdecl
+    parameter of a function with no calls is copied into a register at entry when it is read three or more times, or,
+    for a signed int, twice when an index read is followed by a non-index read (ld DE,(XSP+0x4); then DE as the index
+    and the divisor).  Reads are counted in evaluation order; the register is the first of BC, DE, HL, IX, IY the
+    statement's own code leaves alone (the regtemp retry)."""
+    roles = []
+    def visit(n, dep, role='N'):
+        if not hasattr(n, 'k'): return
+        if n.k == 'load' and strip(n.e).k == 'var' and strip(n.e).decl is d: roles.append(role)
+        for key, v in n.__dict__.items():
+            items = v if isinstance(v, list) else [v]
+            for x in items:
+                if hasattr(x, 'k'): visit(x, dep + 1, 'I' if n.k == 'index' and key == 'idx' else
+                                          ('S' if n.k in ('bin', 'opassign') and n.op in ('<<', '>>') and key in ('r',) else
+                                           ('N' if role == 'N' else role)))
+    visit(F.f.body, 0)
+    n = len(roles)
+    for cn in nodes_in(F.f.body, 'cast'):                  # a read under a narrowing cast: the cast would be done in place
+        ce = strip(cn.e)                                   # on the cached copy (wrong code): cond_bits.c cb_tern keeps the
+        while ce.k == 'cast': ce = strip(ce.e)             # older path
+        if cn.ty is not None and cn.ty.size < d.ty.size and uses_decl(ce, d): return False
+    if 'S' in roles: return False                          # (a shift count: stord.c st_i_QS / cmpordl.c cl_l_XS keep the slot)
+    if n >= 3: return True
+    if n == 2 and d.ty.size == 2 and d.ty.signed and roles[0] == 'I' and roles[1] == 'N': return True
+    return False
+
+def plan_param_cache(F):
+    if not PARAM_CACHE or F.opt or F.adecl or getattr(F, 'l2', None) or getattr(F, 'leaf', None): return
+    f = F.f; calls = []
+    walk(f.body, lambda n, dep: calls.append(n) if n.k == 'call' or fpgen.is_fp_op(n) or fpgen.is_fp_copy(n) or long_helper_node(n) else None)
+    if calls or any(d.ty.kind in ('array', 'struct') for d in f.decls if d.kind == 'local'): return
+    dv = []
+    def divisor_is_elem(n):
+        r = strip(getattr(n, 'r', None))
+        while r.k == 'cast': r = strip(r.e)
+        if r.k == 'load': r = strip(r.e)
+        return r.k == 'index' and fold(r.idx).k != 'const'
+    walk(f.body, lambda n, dep: dv.append(n) if n.k in ('bin', 'opassign') and n.op in ('/', '%') and divisor_is_elem(n) else None)
+    if dv: return                                          # (a division by an element at a variable index is sd3's: stdiv3.c)
+    for d in f.params:
+        if getattr(d, 'reg', None) or d.ty.kind != 'int' or d.ty.size not in (1, 2) or getattr(d, 'addr_taken', False): continue
+        if not param_cache_wanted(F, d): continue
+        k = REGTEMP_PICK[0].get(d.name, 0); cands = ['BC', 'DE', 'HL', 'IX', 'IY']
+        if k >= len(cands): continue
+        d.reg = cands[k]; d.regtemp = True
+        F.param_copies.append(d); F.deferred = getattr(F, 'deferred', []) + [d]
+
 def plan_regtemps(F):
     """without -O a local with an initialiser whose value never lives across a call is a register temporary
     (corpus/probes/loc0.c, run 2026-11-10-14-micro-loc0): WA when nothing intervenes between its declaration and
@@ -14447,7 +14503,7 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
     F.lines.append(('.' if adecl else '_') + f.name + ':')
     F.loops = []; F.param_copies = []; F.pushes = []
     if adecl and BINLOC_XR: xr_shift_reloc(F)
-    if not plan_leaf(F): regtemp_premark(F); plan_registers(F); plan_homes(F); plan_regtemps(F); plan_sd4(F); plan_store_x(F); plan_store_xiz(F); plan_lh_call(F)
+    if not plan_leaf(F): regtemp_premark(F); plan_registers(F); plan_homes(F); plan_regtemps(F); plan_param_cache(F); plan_sd4(F); plan_store_x(F); plan_store_xiz(F); plan_lh_call(F)
     plan_frame(F)
     for d in getattr(F, 'l2', {}).get('entry', []) if getattr(F, 'l2', None) else []:
         F.emit('ld', '%s,(XSP+%s)' % (FAM[d.reg][d.ty.size], hx(d.off + F.push)))   # (after the frame: offsets)

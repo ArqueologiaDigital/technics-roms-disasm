@@ -1777,6 +1777,24 @@ also takes a cast of a plain memory operand.  cmpx.c at none 553 -> 565 exact (`
 probes (chararith, chararith2, kfold, evorder_ad, lhx, lhy) unchanged.  `_cc_l_u_RGr` is still refused (its path
 differs; not chased).  Random and rstmt unchanged (166 and 3,525 at none).
 
+**Batch 125 (2026-11-13): a cdecl parameter read often is cached in a register; pc.c 9 -> 17 of 48 at none.**  Found by
+following the store family's refusals (stv2.c / stv3.c): with the guard turned off the model's code for `gp->arr[c] =
+.. / c` was the oracle's except that the oracle first copies the parameter into DE (`ld DE,(XSP+0x4)`) and uses the
+register as index and divisor.  The new probe pc.c (48 functions over the number of reads of a parameter, 1 to 4, and
+their roles; oracle run 2026-11-13-15) shows the rule, tabulated by a Sonnet agent (`cc900-tab/pc`, 48 of 48 with some
+per-form constants): a cdecl parameter of a function with no calls is cached at entry when it is read three or more
+times, or, for a signed int, twice when an index read is followed by a non-index read; the register is the first of
+BC, DE, HL, IX, IY that the statement's own code leaves alone.  Ported as plan_param_cache, using the regtemp retry for
+the register choice (not the agent's per-form table).  First versions cost 15 functions on stord, cmpordl and stdiv3
+and one wrong-code verdict (cond_bits.c cb_tern: `(unsigned char)c` extended the cached copy in place); the rule now
+skips a shift count (stord.c st_i_QS), a division by an element at a variable index (sd3's, stdiv3.c) and a parameter
+read under a narrowing cast.  The corpora do not move (rstmt 3,525 / 3,005 / 3,038 / 2,869; random 166 / 46 / 87 / 37):
+a function that caches a parameter also needs its other statements to pass.  pc.c at -O / -Xr: 8 / 12 / 13 of 48,
+unchanged (none only).
+**Open, newly visible (probe stv.c / pc.c, not caused by this batch):** pc.c `_pc_c_g` at -O3 -XS (a char parameter
+index store leaves the element unchanged: wrong code) and `.pc_c_d`, `.pc_c_h` at -Xr and -O3 -XS -Xr (char arithmetic
+on a parameter); the stv.c `x / x` verdicts are reviewed as zero-division only.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
