@@ -58,9 +58,9 @@ def ledger_scores(text):
         st = sm.group(1)
         if corpus.startswith('random'): add('random/' + st, e, t)
         elif corpus == 'micro/*.c': add('micro/' + st, e, t)
-        elif corpus.startswith('probes/'): add('probes/' + st, e, t)
+        elif corpus.startswith('probes/'): add('probes/' + st, e, t); acc.setdefault('__probes__', {})[corpus[7:] + ' ' + st] = t
         elif corpus == '1997 LIB/SRC': add('library/' + st, e, t)
-    return {k: tuple(v) for k, v in acc.items()}
+    return {k: (v if k == '__probes__' else tuple(v)) for k, v in acc.items()}
 
 
 def semcheck_scores(text):
@@ -94,9 +94,16 @@ def collect():
         if not sc: continue
         sm = at(h, SEMCHECK, semcheck_scores)
         prev = rows[-1] if rows else None
-        row = {'h': h[:9], 'date': d, 'subject': s, 'scores': sc, 'semdiff': sum(sm.values()) if sm else None}
+        sc = dict(sc); rowsets = sc.pop('__probes__', {})          # {"probe.c set": functions}
+        old = prev['_rows'] if prev else {}
+        names = sorted({k.split(' ')[0] for k, t in rowsets.items() if k not in old})
+        grown = sorted({k.split(' ')[0] for k, t in rowsets.items() if k in old and old[k] != t} - set(names))
+        added = sum(t for k, t in rowsets.items() if k not in old) + sum(t - old[k] for k, t in rowsets.items() if k in old)
+        row = {'h': h[:9], 'date': d, 'subject': s, 'scores': sc, 'semdiff': sum(sm.values()) if sm else None,
+               '_rows': rowsets, 'newprobes': names if prev else [], 'grown': grown if prev else [], 'added': added if prev else 0}
         row['moved'] = prev is None or prev['scores'] != sc or prev['semdiff'] != row['semdiff']
         rows.append(row)
+    for r in rows: del r['_rows']
     return rows
 
 
@@ -252,6 +259,8 @@ function chart(title, note, series, opts) {
   let lastDay = "", lastX = -99;
   R.forEach((r, i) => { const d = r.date.slice(5, 10); if (d !== lastDay) { lastDay = d;
     if (x(i) - lastX > 28) { g += `<line x1="${x(i)}" x2="${x(i)}" y1="${Tp + ph}" y2="${Tp + ph + 4}" stroke="var(--border)"/><text x="${x(i)}" y="${H - 6}" text-anchor="middle">${d}</text>`; lastX = x(i); } } });
+  if (opts.marks) R.forEach((r, i) => { if (r.newprobes && (r.newprobes.length || r.grown.length))
+    g += `<line x1="${x(i)}" x2="${x(i)}" y1="${Tp}" y2="${Tp + ph}" stroke="var(--text-muted)" stroke-width="1" stroke-dasharray="2 3" opacity="0.7"/>`; });
   if (opts.target != null && opts.target <= hi) g += `<line x1="${L}" x2="${L + pw}" y1="${y(opts.target)}" y2="${y(opts.target)}" stroke="var(--text-muted)" stroke-dasharray="4 4"/><text class="lab" x="${L + 6}" y="${y(opts.target) - 5}">target ${opts.target}</text>`;
   const ends = [];
   for (const s of series) {
@@ -274,6 +283,7 @@ function chart(title, note, series, opts) {
     const r = R[i];
     cross.setAttribute("x1", x(i)); cross.setAttribute("x2", x(i)); cross.setAttribute("visibility", "visible");
     tip.innerHTML = `<div class="s">${r.date.slice(0, 16).replace("T", " ")} · ${r.h}${r.moved ? "" : " · no score changed"}<br>${esc(r.subject.slice(0, 110))}</div>` +
+      (opts.marks && r.newprobes && (r.newprobes.length || r.grown.length) ? `<div class="s"><b>probe rows added here</b> (+${r.added} functions): ${esc(r.newprobes.concat(r.grown.map(x => x + " (more sets)")).join(", ").slice(0, 160))}</div>` : "") +
       series.map(s => `<div><i style="background:${s.c}"></i>${esc(s.name)}: <b>${opts.fmt ? opts.fmt(s.tv ? s.tv[i] : s.v[i]) : fmt(s.v[i], opts.pct)}</b>${s.raw && s.raw[i] ? ` <span class="s">(${s.raw[i][0]} / ${s.raw[i][1]})</span>` : ""}</div>`).join("");
     tip.style.display = "block";
     const px = x(i) * bb.width / W; tip.style.left = (px > bb.width / 2 ? px - tip.offsetWidth - 12 : px + 12) + "px"; tip.style.top = "8px";
@@ -293,11 +303,11 @@ chart("Random programs: exact functions", "Four generated corpora, 800 functions
 chart("1997 library: exact functions", "Toshiba's own C library sources at -O3 -XS, 248 functions. Phase 3a asks for all of them.",
   [{ name: "-O3 -XS", c: "var(--series-2)", v: R.map(r => val(r, "library/O3XS", false)), raw: R.map(r => r.scores["library/O3XS"] || null) }], { target: 248, max: 248, zero: true, good: "▲ progress = the line going up, to the dashed target (248 of 248)" });
 chart("Micro corpus: exact functions", "The hand-written micro tests, 674 functions per option set. Phase 3a asks for all of them at every set.", bySet("micro", false), { target: 674, max: 674, good: "▲ progress = every line at the dashed target (674); any drop is a regression" });
-chart("Probes: share of functions exact", "All probe files together. The denominator grows whenever a new probe is added, so a dip usually means a new probe, not a regression.", bySet("probes", true), { pct: true, good: "▲ progress = lines going up; a sudden drop is a new probe added, not lost ground" });
+chart("Probes: share of functions exact", "All probe files together. The denominator grows whenever a new probe is added: each dotted vertical line is a round whose ledger gained probe rows, and the tooltip names them. A dip on such a line is the new probe; a dip anywhere else is a regression.", bySet("probes", true), { pct: true, marks: true, good: "▲ progress = lines going up; a drop on a dotted vertical line is a new probe added (hover for its name), any other drop is lost ground" });
 chart("Semantic differences from the oracle", "Functions whose model code behaves differently from the oracle's in the checker (all four option sets summed). Lower is better; each remaining one is reviewed.",
   [{ name: "DIFFERENT", c: "var(--series-1)", v: R.map(r => r.semdiff) }], { zero: true, good: "▼ progress = the line going down; a rise is wrong code found and has to come back down" });
 chart("Probes: functions covered", "How many probe functions the ledger scores per option set: the size of the evidence base.",
-  SETS.map(s => ({ name: LABEL[s], short: LABEL[s], c: COLOR[s], v: R.map(r => r.scores["probes/" + s] ? r.scores["probes/" + s][1] : null) })), { zero: true, good: "▲ more evidence, not a score: each step up is a new probe the model is then measured on" });
+  SETS.map(s => ({ name: LABEL[s], short: LABEL[s], c: COLOR[s], v: R.map(r => r.scores["probes/" + s] ? r.scores["probes/" + s][1] : null) })), { zero: true, marks: true, good: "▲ more evidence, not a score: each step up is a new probe (dotted vertical lines) the model is then measured on" });
 chart("Wall-clock time of each round", `Minutes from the round before to this round's commit. A pause between sessions counts as part of the next round, so the plot stops at ${CAP} minutes; the tooltip gives the real time. The second line is the part of each round spent answering the owner's prompts instead of autonomous model work, the third the part the session spent stopped, waiting for a prompt; both from interruptions.tsv (recorded since 2026-11-12 23:10; some intervals are estimates).`,
   [{ name: "round time", short: "round", c: "var(--series-1)", v: GAP.map(g => g == null ? null : Math.min(g, CAP)), tv: GAP },
    { name: "of which on the owner's prompts (dashboard features, questions, tooling asked for)", short: "prompts", c: "var(--series-2)", v: BRK.map(g => g == null ? null : Math.min(g, CAP)), tv: BRK },
