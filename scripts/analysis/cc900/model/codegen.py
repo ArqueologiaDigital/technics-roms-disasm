@@ -5650,6 +5650,37 @@ def gen_shift_count(F, r):
     return gen(F, narrow(r, 1), 'WA', 1)
 
 LONG_HELPER_ORDER = True                                  # see long_helper_order
+LH_REG_UIDX = True                                        # see lh_reg_uidx
+
+def lh_reg_uidx(F, l, r):
+    """a long / or % whose divisor is an element of a global long array at an unsigned int register variable, the
+    dividend a plain global or a constant (rstmt rs_3_04_14_4: gul / gula[u], u in IZ across a call; an unsigned index
+    in memory the same way, rs_2_07_08_5: ld WA,(XSP+0xc), the constant after the element's load): the element's
+    address in XBC, built as the element load builds it, then the dividend in XWA, then the element's load in place:
+    ld WA,IZ / extz XWA / sll 0x2,XWA / ld XBC,_gula / add XBC,XWA / ld XWA,(_gul) / ld XBC,(XBC) / cal C9H_divlu.
+    Emits up to the call; False when the shape is another."""
+    rv = ev_uncast(r)
+    if rv.k != 'load' or rv.ty is None or rv.ty.size != 4: return False
+    v = strip(rv.e)
+    if v.k != 'index': return False
+    b = strip(v.base); ii = ev_uncast(v.idx)
+    if b.k != 'var' or b.decl.kind != 'global' or b.decl.ty.kind != 'array': return False
+    if ii.k != 'load' or ii.ty is None or ii.ty.size != 2 or ii.ty.kind != 'int' or getattr(ii.ty, 'signed', True): return False
+    d = regvar_of(strip(ii.e))
+    if d is not None: isrc = d.reg
+    else: isrc = mem_operand(F, ii)
+    if isrc != 'IZ' and (strip(ii.e).k != 'var' or isrc is None or not isrc.startswith('(')): return False
+    lc = fold(l)
+    if lc.k == 'const' and lc.value is not None: lop = hx(lc.value & 0xffffffff)
+    else:
+        if ev_class(F, l) != 'G': return False
+        lop = mem_operand(F, l)
+        if lop is None or not lop.startswith('(_'): return False
+    F.emit('ld', 'WA,%s' % isrc); F.emit('extz', 'XWA'); F.emit('sll', '0x2,XWA')
+    F.emit('ld', 'XBC,_%s' % b.decl.name); F.emit('add', 'XBC,XWA')
+    if lc.k == 'const': F.emit('ld', 'XBC,(XBC)'); F.emit('ld', 'XWA,%s' % lop)   # a constant last (rs_2_07_08_5:
+    else: F.emit('ld', 'XWA,%s' % lop); F.emit('ld', 'XBC,(XBC)')                 #  4L / gla[b] -> ld XBC,(XBC) / ld XWA,0x4)
+    return True
 
 def long_helper_order(F, e, l, r):
     """the arguments of a long * / % helper when one operand needs code (corpus/probes/evorder_lh.c, run
@@ -5764,6 +5795,10 @@ def gen_long_helper(F, e, l, r, fam, signed):
     ls, rs = reg_or_mem(F, l, 4), reg_or_mem(F, r, 4)
     if (ls is None or rs is None) and LH_CALL and F.opt and getattr(F, 'lhc', None) is not None and F.lhc['node'] == id(strip(e)) and lh_call(F, e.op, l, r):
         F.emit('cal', 'C9H_' + name)                   # (-O: before long_helper_order, which refuses l_div_PX)
+        return 'HL' if fam == 'HL' else move_to(F, 'XHL', fam, 4, keep=True)
+    if (ls is None or rs is None) and LH_REG_UIDX and not F.opt and not F.adecl and e.op in ('/', '%') and \
+            not (live_regs(F) - {'IZ'}) and lh_reg_uidx(F, l, r):
+        F.emit('cal', 'C9H_' + name)
         return 'HL' if fam == 'HL' else move_to(F, 'XHL', fam, 4, keep=True)
     if (ls is None or rs is None) and LONG_HELPER_ORDER and not getattr(F, 'l2', None) and \
             not getattr(F, 'cl_active', None) and getattr(F, 'u1_i', None) is None and long_helper_order(F, e, l, r):
@@ -9480,7 +9515,8 @@ def gen_stmt(F, s, last):
                 del F.lines[nl_:]                          # the value first, then the pointer (rstmt rs_1_02_13_3:
                 fam2_ = gen(F, s.e.r, work, size)          # gpi[3] = 255 - gps->a[4] -> ld XWA,(_gps) / ld BC,0xff /
                 R2_ = FAM[fam2_][size]                     # sub BC,(XWA+0x16) / ld XWA,(_gpi) / ld (XWA+0x6),BC)
-                if fam2_ != 'WA' and FAM[fam2_][4] != 'XWA':
+                if fam2_ != 'WA' and FAM[fam2_].get(4, 'XWA') != 'XWA':   # (a family without a long register refuses:
+                                                           #  random r2_04_10 crashed, KeyError 4)
                     F.emit('ld', 'XWA,%s' % pk_[1])
                     F.emit('ld', '%s,%s' % ('(XWA+%s)' % hx(pk_[2]) if pk_[2] else '(XWA)', R2_)); F.store_nl = None; return
             F.store_nl = None

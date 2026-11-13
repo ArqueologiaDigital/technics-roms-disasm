@@ -1964,6 +1964,15 @@ r3_06_07 at -O3 -XS crashed with KeyError 8 and is now exact. (2) `gen_compare` 
 (r2_01_02, `gps->a[6] += ...`, at -O3 -XS and -O3 -XS -Xr). Ledger up 1 (random3 at -O3 -XS 8 -> 9), down 0; pairs MATCH
 223; semcheck 58, unchanged. Random 170 / 47 / 87 / 37; rstmt 3,561 / 3,005 / 3,043 / 2,869, unchanged.
 
+**Batch 145 (2026-11-13): a long / or % by an element at an unsigned index (LH_REG_UIDX).** The oracle builds the
+divisor element's address in XBC as the element load does (`ld WA,i / extz XWA / sll 0x2,XWA / ld XBC,_g /
+add XBC,XWA`), whether the unsigned int index is a register variable in IZ or a variable in memory. A global dividend
+comes next, then `ld XBC,(XBC)`; a constant dividend comes after the element's load (`ld XBC,(XBC) / ld XWA,0x4`).
+`lh_reg_uidx` writes that shape without -O and -Xr; rstmt rs_3_04_14_4 (`gul / gula[u]`) and rs_2_07_08_5
+(`4L / gla[b]`) are exact. Also, the value-first store path refuses a family without a long register instead of
+crashing (random r2_04_10 at none, KeyError 4; no model errors are left at any set). Ledger up 2, down 0; pairs MATCH
+223; semcheck 58. Rstmt at none 3,561 -> 3,564, random at none 170 -> 171 (random3 39 -> 40).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
