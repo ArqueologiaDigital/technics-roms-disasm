@@ -6574,6 +6574,8 @@ TRUTH_VIA_WA_LONG = True                                 # see regvar_stmt: a lo
 POP_LAZY_FPCOPY = True                                   # see stmt_touches_stack: a double copy static <-> local
 POP_LAZY_CHAIN = True                                    # see later_call_absorbs: x = y = f(..) op k
 POP_LAZY_PTR = True                                      # see store_plan: *gp = f(..) keeps the pops pending
+FP_COND_CONST = True                                     # see fold_fp_consts: c ? x : y with a constant c, doubles
+IF_CALL_KEEP_POPS = True                                 # see gen_stmt's if: a test that starts with a call
 
 def plain_long_helper_stmt(x):
     """is x a statement (or if without else around one) of the form T = A op B or T op= B, a long * / % that calls a
@@ -9245,8 +9247,20 @@ def gen_stmt(F, s, last):
     if s.k == 'if':
         fpc = []
         walk(s.cond, lambda n, d: fpc.append(n) if fpgen.is_fp_op(n) else None)
+        def lead_call_(c):                               # the test's first evaluated operand, through && || ! compares
+            c = strip(c)
+            while True:
+                while c.k == 'cast': c = strip(c.e)
+                if c.k == 'bin' and c.op in ('&&', '||', '==', '!=', '<', '>', '<=', '>=') and \
+                        getattr(c, 'fp', None) is None: c = strip(c.l)
+                elif c.k == 'un' and c.op == '!': c = strip(c.e)
+                else: return c if c.k == 'call' and c.args and not fpgen.is_fp(getattr(c, 'ty', None)) else None
         if F.pending and IF_FLUSH_POPS and not fpc and not (IF_CONST_KEEP_POPS and IF_CONST_DEAD and
-                                                            cond_const(s.cond) is not None):
+                                                            cond_const(s.cond) is not None) and \
+                not (IF_CALL_KEEP_POPS and not F.opt and not F.adecl and lead_call_(s.cond) is not None):
+                                                          # (a test that starts with a call: its pop takes the pending
+                                                          # ones, random r4_01_01: vd(t); if (r2(gi2, gi2) && gul) ->
+                                                          # cal _vd / pushw (_gi2) / pushw (_gi2) / cal _r2 / add XSP,0xc)
                                                           # (a constant test is no test: the pops stay pending into the
                                                           # live arm, random r1_09_16: v1(t); if (255 != 4313) { vc(..); }
                                                           # -> cal _v1 / pushw 0x0 / cal _vc / inc 0x4,XSP)
@@ -12981,6 +12995,12 @@ def fold_fp_consts(f):
             if a is not None and b is not None and not (n.op == '/' and b == 0):
                 r = a + b if n.op == '+' else a - b if n.op == '-' else a * b if n.op == '*' else a / b
                 return N('fconst', value=r, ty=n.ty)
+        if FP_COND_CONST and n.k == 'cond' and n.ty is not None and n.ty.kind == 'float':
+            ct_ = cond_const(n.c)                          # a double ?: whose test is a constant is its live arm (random
+            arm_ = n.a if ct_ else n.b if ct_ is not None else None   # r4_01_01: double t = (128 == 128 ? gs.d : gs.d) ->
+            if arm_ is not None and getattr(arm_, 'ty', None) is not None and arm_.ty.kind == 'float' and \
+                    arm_.ty.size == n.ty.size:             # lda XBC,_gs + 0x1e / lda XWA,XSP / cal ._fld_dd, one temporary)
+                return arm_
         return n
     if FP_CONST_FOLD: f.body = folded(f.body)
 

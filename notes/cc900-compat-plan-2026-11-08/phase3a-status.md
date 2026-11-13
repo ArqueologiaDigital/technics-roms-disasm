@@ -2036,6 +2036,16 @@ and fpgen's `begin_stmt` (edit_batch153_fpgen.py) keeps them when a later call t
 first, as r1_08_03 and r2_01_19 showed when the first try lost them. Ledger up 1 (random1 53 -> 55), down 0; pairs MATCH
 223; semcheck 58. Random 181 / 48 / 87 / 37.
 
+**Batch 154 (2026-11-13): a double `?:` with a constant test is its live arm (FP_COND_CONST); a test that starts with
+a call keeps the pending pops (IF_CALL_KEEP_POPS).** Found among the random functions at none whose first difference is
+the frame size (44 of the 245 DIFF functions; about 95 differ first in the prologue, frame or IZ homes). `fold_fp_consts`
+folds `c ? x : y` of doubles when `cond_const(c)` is known (random r4_01_01: `double t = (128 == 128 ? gs.d : gs.d)`,
+which the model wrote with both arms and a second temporary, a 16-byte frame for the oracle's 8). An `if` whose first
+evaluated operand is a call with arguments no longer flushes the pending pops before it; the call's pop takes them
+(r4_01_01: `cal _vd / pushw (_gi2) / pushw (_gi2) / cal _r2 / add XSP,0xc`). Ledger up 4 (rstmt +1 at each set: 3,569 /
+3,006 / 3,044 / 2,870), down 0; pairs MATCH 223; semcheck 58. Random unchanged, 181 / 48 / 87 / 37 (r4_01_01 still
+differs in its return expression's registers).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
