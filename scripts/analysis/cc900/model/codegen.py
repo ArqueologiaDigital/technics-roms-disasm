@@ -6175,6 +6175,8 @@ PTR_ELEM_EXTZ = True                                      # see gen_load_mem
 STMT_PARAM_ANYSET = True                                  # see Fn.emit: a cdecl parameter the planner keeps in a register
 IDX_READ_ONCE = True                                      # see idx_read_again
 CHAIN_ELEM_REFUSE = True                                  # see gen_stmt's store
+IF_ARMS_HEAD = True                                       # see gen_stmt's if
+IZ_ONE_VAR = True                                         # see compile_function_once
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -8663,6 +8665,15 @@ def gen_stmt(F, s, last):
                 return
         raise Unsupported('conditional return')
     if s.k == 'if' and s.els is None and F.opt and getattr(F, 'u1_chain', None) and u1_cse_if(F, s): return
+    if s.k == 'if' and IF_ARMS_HEAD and F.opt and s.els is not None:
+        h_ = [strip(x_[0].e) if x_ and x_[0].k == 'expr' else None for x_ in (flat(s.then), flat(s.els))]
+        if all(x_ is not None and x_.k == 'call' and strip(x_.fn).k in ('var', 'decay', 'load') for x_ in h_):
+            c_ = [[n_.decl for n_ in nodes_in(x_.fn, 'var')] for x_ in h_]
+            if c_[0] and c_[0] == c_[1] and not h_[0].args and not h_[1].args:   # (-O moves a call without arguments that
+                                                           # both arms begin with before the test; with different
+                                                           # arguments it stays: ctrl.c c_ifchain, f1(20) / f1(30):
+                raise Unsupported('both arms of an if begin with the same call')   # rstmt rs_3_00_04_6, cal _v0 /
+                                                           # ld XWA,(_gs + 0x4) / or XWA,XWA; the model tested first)
     if s.k == 'if':
         fpc = []
         walk(s.cond, lambda n, d: fpc.append(n) if fpgen.is_fp_op(n) else None)
@@ -11932,6 +11943,8 @@ def leaf_l2(F):
         for d in across:
             if getattr(d, 'reg', None) == 'IZ' and d.ty.size == 4: d.reg = 'XIZ'; d.homed = True
         F.xiz_vars = [d for d in across if getattr(d, 'reg', None)]; F.save_reg = 'XIZ'
+        if IZ_ONE_VAR and {'IZ', 'XIZ'} <= {d.reg for d in F.xiz_vars}:   # (rstmt rs_3_04_07_6 at -O3 -XS: int i and
+            raise Unsupported('two variables in IZ and XIZ')            # char *t both there, ld IZ,0x10 over t)
         F.emit('push', 'XIZ'); F.push = 4
     return True
 

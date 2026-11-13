@@ -1539,6 +1539,17 @@ register index (rs_3_01_16_2: `guca[a] = guc = -guc`, value first in C, then the
 refusal also removes two older reviewed verdicts in the random corpora (r2_05_00 at none, r2_05_11 at -O3 -XS).
 Scores unchanged.  **Open: 48 statement findings** (semcheck 98): 0 none / 4 -O3 -XS / 19 -Xr / 25 -O3 -XS -Xr.
 
+**Batch 101 (2026-11-13): two -O refusals; semcheck 98 -> 93.**  (1) Under -O an `if` / `else` whose arms both begin
+with the same call without arguments has that call moved before the test (rstmt rs_3_00_04_6, random r3_00_04:
+`cal _v0` / `ld XWA,(_gs + 0x4)` / `or XWA,XWA`); the model tested first, which differs when the callee changes what
+is tested.  Refused (IF_ARMS_HEAD).  Calls with different arguments stay in their arms (ctrl.c c_ifchain,
+`f1(20)` / `f1(30)`; a first version without the "no arguments" condition refused six micro functions on the scratch
+copy).  (2) The across-call planner put an `int` in IZ and a pointer in XIZ at once (rs_3_04_07_6: `ld IZ,0x10`
+over `t`); refused (IZ_ONE_VAR).  The two statement findings left at -O3 -XS, rs_3_06_19_0 and rs_4_09_17_5, are no
+defects: the functions return nothing on the path compared (`if (..) return ..;` alone), so the verdict compares a
+stale HL; reviewed in `semcheck_review.tsv`.  Scores unchanged.
+**Open: 45 statement findings** (semcheck 93): 0 none / 2 -O3 -XS (both reviewed) / 19 -Xr / 24 -O3 -XS -Xr.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
