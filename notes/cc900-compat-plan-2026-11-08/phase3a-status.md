@@ -2025,6 +2025,17 @@ made in WA, moved at 16 bits and widened in place (random r2_02_14: `unsigned lo
 `scc le,WA / ld BC,WA / exts XBC`; the model wrote `scc le,BC / exts XBC`). Without -O and -Xr. Ledger up 1 (random2
 40 -> 41), down 0; pairs MATCH 223; semcheck 58. Random 179 / 48 / 87 / 37.
 
+**Batch 153 (2026-11-13): pending call pops wait through three more statement kinds (POP_LAZY_CHAIN, POP_LAZY_PTR,
+POP_LAZY_FPCOPY).** `later_call_absorbs` follows chained stores and a call that is the left operand of `+ - & | ^ << >>`
+or of `*` by a constant, whose pop takes the pending ones with it (random r1_01_03: `gul += rul(..); gia[6] %= 16;
+gs.l = gl2 = rl(gl) * 4L` -> `cal _rul / add (_gul),XHL / .. / cal _rl / inc 0x8,XSP`). `store_plan` keeps them pending
+for a store through a global pointer, as for a static target (r1_06_10: `*gp = rc(7)` -> `cal _rc / ld XWA,(_gp) /
+ld (XWA),L`). A double copied between a static and a plain local does not release them: `stmt_touches_stack` says so,
+and fpgen's `begin_stmt` (edit_batch153_fpgen.py) keeps them when a later call takes them (r1_06_10: `gd = t` ->
+`lda XBC,XSP+0x2 / lda XWA,_gd / cal ._fld_dd`, then `inc 0x6,XSP` after `cal _rul`). Without that later call they go
+first, as r1_08_03 and r2_01_19 showed when the first try lost them. Ledger up 1 (random1 53 -> 55), down 0; pairs MATCH
+223; semcheck 58. Random 181 / 48 / 87 / 37.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

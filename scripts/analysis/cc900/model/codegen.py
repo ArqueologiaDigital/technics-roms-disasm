@@ -6419,6 +6419,18 @@ def stmt_touches_stack(F, e):
             static_lv(e_.l) and static_lv(e_.r):
         return False                                       # a double copied between statics uses no frame temporary
                                                            # (random r2_09_11: gs.d = gd2 -> lda / lda / cal ._fld_dd)
+    def plain_fp_local(n):
+        n = strip(n)
+        while n.k == 'load': n = strip(n.e)
+        return n.k == 'var' and n.decl.kind in ('param', 'local') and not getattr(n.decl, 'reg', None)
+    if POP_LAZY_FPCOPY and hasattr(e_, 'k') and e_.k == 'bin' and e_.op == '=' and fpgen.is_fp(getattr(e_, 'ty', None)) and \
+            fpgen.is_fp(getattr(strip(e_.r), 'ty', None)) and getattr(strip(e_.r), 'ty', None) is not None and \
+            strip(e_.r).ty.size == e_.ty.size and \
+            (static_lv(e_.l) and plain_fp_local(e_.r) or plain_fp_local(e_.l) and static_lv(e_.r)):
+        return False                                       # a double copied between a static and a local in the frame:
+                                                           # its address is taken past the pending pops (random r1_06_10:
+                                                           # *gp = rc(7); gd = t; gul = rul(..) -> cal _rc / .. /
+                                                           # lda XBC,XSP+0x2 / lda XWA,_gd / cal ._fld_dd / .. / inc 0x6,XSP)
     def v(n, d):
         if n.k == 'var' and n.decl.kind in ('param', 'local') and not getattr(n.decl, 'reg', None): hit.append(n)
         elif fpgen.is_fp_op(n) or fpgen.is_fp(getattr(n, 'ty', None)): hit.append(n)
@@ -6443,7 +6455,15 @@ def later_call_absorbs(F):
         if x.k != 'expr': return False
         e = strip(x.e)
         c = strip(e.r) if e.k == 'bin' and e.op == '=' else e
+        while POP_LAZY_CHAIN and c.k == 'bin' and c.op == '=' and not nodes_in(c.l, 'call'): c = strip(c.r)   # x = y = f(..)
         while c.k == 'cast': c = strip(c.e)
+        if POP_LAZY_CHAIN and c.k == 'bin' and c.op in ('+', '-', '&', '|', '^', '*', '<<', '>>') and \
+                not nodes_in(c.r, 'call') and not has_helper_call(c.r) and not fpgen.is_fp_op(c) and \
+                strip(c.l).k == 'call' and (c.op != '*' or fold(c.r).k == 'const'):
+            c = strip(c.l)                                 # f(..) op k: the call's operand pop merges the pending ones
+                                                           # (random r1_01_03: gul += rul(..); gia[6] %= 16; gs.l = gl2 =
+                                                           # rl(gl) * 4L -> cal _rul / add (_gul),XHL / .. / cal _rl /
+                                                           # inc 0x8,XSP / sla 0x2,XHL)
         if c.k == 'call': return bool(c.args) and not fpgen.is_fp(getattr(c, 'ty', None))   # (r4_03_19: v0() absorbs nothing)
         if nodes_in(e, 'call') or stmt_touches_stack(F, e): return False
     return False
@@ -6551,6 +6571,9 @@ LH_SLOT_XIZ_ONLY = True                                  # see regtemp_candidate
 LH_PLAIN_IZ = True                                       # see regtemp_candidates: a local across a plain long helper
 QIZH_CONST = True                                        # see regvar_stmt: ld QIZH,k
 TRUTH_VIA_WA_LONG = True                                 # see regvar_stmt: a long local from a truth value
+POP_LAZY_FPCOPY = True                                   # see stmt_touches_stack: a double copy static <-> local
+POP_LAZY_CHAIN = True                                    # see later_call_absorbs: x = y = f(..) op k
+POP_LAZY_PTR = True                                      # see store_plan: *gp = f(..) keeps the pops pending
 
 def plain_long_helper_stmt(x):
     """is x a statement (or if without else around one) of the form T = A op B or T op= B, a long * / % that calls a
@@ -13481,7 +13504,10 @@ def store_plan(F, lv, rv, size):
     # --- the plan: (address register(s), value register)
     if vk == 'C':                                          # the call first, then the address in the WA family
         fam = gen(F, x, 'HL', size)                        # (random r2_09_11: gca[1] = rc(gs.i); gs.d = gd2; vp(gp) ->
-        if not (POP_LAZY2 and L == 'S' and not F.opt and not F.adecl and later_call_absorbs(F)): flush_pops(F)   # cal _rc / ld (_gca + 0x1),L / ..
+        if not (POP_LAZY2 and (L == 'S' or POP_LAZY_PTR and L == 'P' and str(lk[1]).startswith('(_')) and
+                not F.opt and not F.adecl and later_call_absorbs(F)): flush_pops(F)   # cal _rc / ld (_gca + 0x1),L / ..
+                                                           # (through a global pointer too: random r1_06_10, *gp = rc(7) ->
+                                                           #  cal _rc / ld XWA,(_gp) / ld (XWA),L, the pops pending)
         if fam != 'HL': return False
         if L == 'S': F.emit('ld', '%s,%s' % (lk[1], FAM['HL'][size])); return True   # st_i_MC: ld (_gs + 0x2),HL
         t = sp_address(F, lk, size, 'XWA', 'WA', 'XBC', 'C')

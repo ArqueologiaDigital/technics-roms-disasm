@@ -153,6 +153,11 @@ def begin_stmt(F, st=None):
     e_ = getattr(st, 'e', None) if getattr(st, 'k', None) == 'expr' else None   # vc(t); gd2 = gda[2] releases them first)
     if e_ is None or getattr(C().strip(e_), 'k', None) != 'call': F.pend_at_stmt = -1   # (a bare call statement, where gen_stmt
                                                          #  applied the merge limit; fpp8.c mc03's gd3 = fd(..) releases them)
+    if e_ is not None and F.pending and not F.opt and not F.adecl and getattr(C(), 'POP_LAZY_FPCOPY', False) and \
+            not C().stmt_touches_stack(F, e_) and C().later_call_absorbs(F):
+        F.pend_at_stmt = F.pending                       # (only when a later call takes them: r1_08_03, r2_01_19 flush)                       # a double copy gen_stmt left the pops pending across waits too
+                                                         # (random r1_06_10: *gp = rc(7); gd = t; gul = rul(..) -> ..
+                                                         #  lda XBC,XSP+0x2 / lda XWA,_gd / cal ._fld_dd / .. / inc 0x6,XSP)
     if getattr(F, 'fp_temps', None) is None: return
     A, B = frame_allocs(F); A.begin_stmt(st); B.begin_stmt(st)
 
