@@ -165,7 +165,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-10-14-micro-loc0, v423/O3XS                             | probes/loc0.c        | 436 / 512 exact (85.2%)  |
 | run 2026-11-10-14-micro-loc0, v423/Xr                               | probes/loc0.c        | 510 / 512 exact (99.6%)  |
 | run 2026-11-10-14-micro-loc0, v423/O3XSXr                           | probes/loc0.c        | 380 / 512 exact (74.2%)  |
-| run 2026-11-10-15-micro-stord, v423/none                            | probes/stord.c       | 355 / 432 exact (82.2%)  |
+| run 2026-11-10-15-micro-stord, v423/none                            | probes/stord.c       | 357 / 432 exact (82.6%)  |
 | run 2026-11-10-15-micro-stord, v423/O3XS                            | probes/stord.c       | 322 / 432 exact (74.5%)  |
 | run 2026-11-10-15-micro-stord, v423/Xr                              | probes/stord.c       | 296 / 432 exact (68.5%)  |
 | run 2026-11-10-15-micro-stord, v423/O3XSXr                          | probes/stord.c       | 282 / 432 exact (65.3%)  |
@@ -247,10 +247,14 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-13-4-micro-cmpx, v423/O3XS                              | probes/cmpx.c        | 409 / 1192 exact (34.3%) |
 | run 2026-11-13-4-micro-cmpx, v423/Xr                                | probes/cmpx.c        | 323 / 1192 exact (27.1%) |
 | run 2026-11-13-4-micro-cmpx, v423/O3XSXr                            | probes/cmpx.c        | 274 / 1192 exact (23.0%) |
-| run 2026-11-13-5-micro-stdiv3, v423/none                            | probes/stdiv3.c      | 254 / 1200 exact (21.2%) |
+| run 2026-11-13-5-micro-stdiv3, v423/none                            | probes/stdiv3.c      | 878 / 1200 exact (73.2%) |
 | run 2026-11-13-5-micro-stdiv3, v423/O3XS                            | probes/stdiv3.c      | 206 / 1200 exact (17.2%) |
 | run 2026-11-13-5-micro-stdiv3, v423/Xr                              | probes/stdiv3.c      | 88 / 1200 exact (7.3%)   |
 | run 2026-11-13-5-micro-stdiv3, v423/O3XSXr                          | probes/stdiv3.c      | 92 / 1200 exact (7.7%)   |
+| run 2026-11-13-6-micro-negk, v423/none                              | probes/negk.c        | 38 / 38 exact (100.0%)   |
+| run 2026-11-13-6-micro-negk, v423/O3XS                              | probes/negk.c        | 38 / 38 exact (100.0%)   |
+| run 2026-11-13-6-micro-negk, v423/Xr                                | probes/negk.c        | 38 / 38 exact (100.0%)   |
+| run 2026-11-13-6-micro-negk, v423/O3XSXr                            | probes/negk.c        | 38 / 38 exact (100.0%)   |
 | run 2026-11-09-9-micro-fp, v423/none                                | micro/fp.c           | 108 / 108 exact (100.0%) |
 | run 2026-11-09-9-micro-fp, v423/O3XS                                | micro/fp.c           | 108 / 108 exact (100.0%) |
 | run 2026-11-09-10-micro-fptemps, v423/none                          | micro/fp_temps.c     | 33 / 33 exact (100.0%)   |

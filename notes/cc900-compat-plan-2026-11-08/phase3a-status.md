@@ -1229,6 +1229,26 @@ stdiv3.c now 254 / 206 / 88 / 92; semcheck back to 73, the same verdicts.  Two S
 none: their predictors reproduce 800 of 800 int / unsigned rows and 400 of 400 char rows from the name alone
 (research-scratch `tabulation/stdiv3a-*`, `stdiv3c-*`); porting them is the next batch.
 
+**Batch 74 (2026-11-13): the stdiv3 predictors ported (`model/sd3.py`); a constant-folding quirk (probe negk.c).**
+`model/sd3.py` is the two sub-agents' predictors turned into a statement rule: `L = A / B` and `L = A % B` with an
+element at a variable index, cdecl without -O, taking the real operands and the index variable's actual home.  The
+statement is a fixed sequence of steps over temporaries (index copy, offsets, bases, pointers, dividend, quotient);
+each takes the lowest register no overlapping, already coloured temporary holds, in a fixed colouring order.  The
+temporaries are coloured without regard to the index variable's home, as the compiler colours variables last; a
+temporary that lands on a live home raises, and for a register temporary the function's allocator then tries its next
+candidate (reserving the home instead moved a loop counter from HL to DE in r4_00_08).  stdiv3.c at none 254 -> 878 of
+1,200; the 322 left are almost all rows where the model's allocator gives the char local or the loop counter another
+home than the compiler's lowest free one (`ld L,(_jc)` for `ld C,(_jc)`).  The random programs do not gain yet (151 of
+800 at none): their divisions by an element mix what the probe kept apart: a char parameter as the index, two
+different indices, a member array through a pointer, an explicit cast of a long as the dividend, other variables in
+registers.  Three random functions are no longer refused but differ elsewhere.
+One of them, r2_08_12, returned 0xfed9 for `return -40 - 255` where the compiler returns 0xffd9.  `corpus/probes/
+negk.c` (run 2026-11-13-6-micro-negk, 38 functions) shows the rule: a negated literal in -127..-1 (`-K`, `~K`) folded
+against a literal in 128..255 is taken as its unsigned byte, so `-40 - 255` is 216 - 255, `-40 * 255` is 0xd728,
+`255 - -40` is 0x27, and the result is unsigned (`gl = -40 - 255` loads 0x0000ffd9); `-40 - 256`, `-128 - 255`,
+`-40 + -255`, `40 - 255` and the long forms fold as C does.  It joins the model's rule that V4.23 types a constant in
+128..255 as an unsigned char.  negk.c 19 -> 38 of 38 at each of the four sets.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

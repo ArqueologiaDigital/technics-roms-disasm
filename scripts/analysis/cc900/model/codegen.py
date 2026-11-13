@@ -20,6 +20,7 @@ Observed rules (v423, none):
 
 import os
 import chidx                                              # char indexes (probes/chidx.c)
+import sd3                                                # divisions by an element at a variable index (probes/stdiv3.c)
 import re
 import fpgen
 import homes
@@ -225,14 +226,17 @@ def fold(e):
     if e.k == 'un' and e.op == '-' and fold(e.e).k == 'const' and fold(e.e).value is not None:
         from frontend import N                           # c_find: return -1 -> ld HL,0xffff
         v = -fold(e.e).value; sz = e.ty.size if e.ty is not None else 2
-        return N('const', value=v, ty=e.ty)
+        n = N('const', value=v, ty=e.ty); n.folded = True
+        if NEGK_UCHAR and -127 <= v <= -1 and strip(e.e).k == 'const' and sz == 2: n.neg_char = True   # (see the binary fold)
+        return n
     if e.k == 'un' and e.op == '!' and FOLD_NOT and fold(e.e).k == 'const' and fold(e.e).value is not None:
         from frontend import N                           # r3_01_13: !7UL -> 0 (the model had tested it at run time)
         return N('const', value=int(not fold(e.e).value), ty=e.ty)
     if e.k == 'un' and e.op == '~' and FOLD_NOT and fold(e.e).k == 'const' and fold(e.e).value is not None:
         from frontend import N                           # _fgetc: stream->flag &= ~__UNGETC -> andw (XBC),0xfffb
         v = fold(e.e).value
-        n = N('const', value=~v, ty=e.ty)
+        n = N('const', value=~v, ty=e.ty); n.folded = True
+        if NEGK_UCHAR and -127 <= ~v <= -1 and strip(e.e).k == 'const' and e.ty is not None and e.ty.size == 2: n.neg_char = True
         if 128 <= v <= 255: n.byte_unsigned = True       # V4.23 types a constant 128..255 as an unsigned char: ~255
         return n                                         # keeps 0xff00 for further folding (-8 ^ ~255 is 0xf8) but
                                                          # materializes as its low byte (gpi[1] = ~255 -> ldw ..,0x0,
@@ -248,8 +252,23 @@ def fold(e):
             if e.ty.signed and a & (1 << (sz - 1)): a -= 1 << sz   # 32-bit value, 0x1fffdfff; Python's >> of the
         if e.op == '<<': v = a << b                      # (computed per operator: a dict evaluated every entry, and
         elif e.op == '>>': v = a >> b                    # -8 ^ ~255 raised "negative shift count")
-        else: v = {'+': a + b, '-': a - b, '*': a * b, '|': a | b, '&': a & b, '^': a ^ b}[e.op]
-        return N('const', value=v, ty=e.ty)
+        else:
+            if NEGK_UCHAR and e.ty is not None and e.ty.size == 2:   # a negated literal in -127..-1 against a literal in
+                def raw_(x_):                                    # 128..255: V4.23 takes the negative one as its unsigned
+                    x_ = strip(x_)
+                    while x_.k == 'cast' and x_.kind == 'IntegralCast' and x_.ty is not None and x_.ty.size == 2 and \
+                            strip(x_.e).ty is not None and strip(x_.e).ty.size == 2: x_ = strip(x_.e)
+                    return fold(x_)
+                fa_, fb_ = raw_(e.l), raw_(e.r); q_ = False
+                if getattr(fa_, 'neg_char', False) and not getattr(fb_, 'folded', False) and 128 <= b <= 255: a += 256; q_ = True
+                elif getattr(fb_, 'neg_char', False) and not getattr(fa_, 'folded', False) and 128 <= a <= 255: b += 256; q_ = True
+                # byte (probes/negk.c, run 2026-11-13-6: -40 - 255 -> 0xffd9, -40 * 255 -> 0xd728, 255 - -40 -> 0x27;
+                # -40 - 256, -128 - 255, -40 + -255, 40 - 255 and the long forms fold as C does)
+            else: q_ = False
+            v = {'+': a + b, '-': a - b, '*': a * b, '|': a | b, '&': a & b, '^': a ^ b}[e.op]
+        n_ = N('const', value=v, ty=e.ty); n_.folded = True
+        if e.op not in ('<<', '>>') and q_: n_.uns16 = True  # (and the result is unsigned: gl = -40 - 255 -> ld XWA,0xffd9)
+        return n_
     if e.k == 'bin' and e.op in ('<', '<=', '>', '>=', '==', '!=') and FOLD_CONST_CMP and fold(e.l).k == 'const' and \
             fold(e.r).k == 'const' and fold(e.l).value is not None and fold(e.r).value is not None:
         from frontend import N                           # r2_06_17: gca[a] & 0x7 || 39 < 3 -> the second test is gone
@@ -279,6 +298,9 @@ def fold(e):
     if e.k == 'cast' and e.kind == 'IntegralCast':
         i = fold(e.e)
         if i.k == 'const' and i.value is not None:
+            if getattr(i, 'uns16', False) and e.ty.size == 4:    # (fold's NEGK_UCHAR result widens unsigned)
+                from frontend import N
+                return N('const', value=i.value & 0xffff, ty=e.ty)
             v = i.value & ((1 << (8 * e.ty.size)) - 1)
             if e.ty.signed and v >= 1 << (8 * e.ty.size - 1): v -= 1 << (8 * e.ty.size)
             from frontend import N
@@ -5774,6 +5796,7 @@ OPK_DEREF_GLOBAL = True                                   # see gen_opassign
 REMU_AND = True                                           # see gen_bin
 CP_QIZ_K = True                                           # see gen_compare
 NO_RELOAD = True                                          # see Func.emit
+NEGK_UCHAR = True                                         # see fold
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -8278,6 +8301,7 @@ def gen_stmt(F, s, last):
         if LH_STORE_SAVE and getattr(F, 'lhc', None) is not None and F.lhc.get('save') and F.lhc['node'] == id(strip(s.e.r)) and lh_store_save(F, lv, strip(s.e.r)): return   # (stdiv.c sd_l_d_PXG)
         if LH_STORE_X and getattr(F, 'xst', None) is not None and F.xst['node'] == id(strip(s.e.r)) and sp_lvalue_kind(F, lv) is not None and lh_store_x(F, sp_lvalue_kind(F, lv), strip(s.e.r)): return   # (stdiv.c sd_l_d_XGG, DPG)
         if LH_STORE_POST and lv.ty is not None and lv.ty.size == 4 and not getattr(F, 'l2', None) and not getattr(F, 'u1_i', None) and not getattr(F, 'cl_active', None) and lh_store_post(F, lv, s.e.r): return   # (stdiv.c sd_l_d_PGX)
+        if sd3.SD3 and not getattr(F, 'l2', None) and not getattr(F, 'cl_active', None) and sd3.stmt(F, lv, s.e.r): return   # (probes/stdiv3.c)
         if SD_MORE and lv.ty is not None and lv.ty.size == 1 and not getattr(F, 'l2', None) and not getattr(F, 'u1_i', None) and not getattr(F, 'cl_active', None) and store_div_char2(F, lv, s.e.r): return
         if STORE_DIV_CHAR and lv.ty is not None and lv.ty.size == 1 and not getattr(F, 'l2', None) and not getattr(F, 'u1_i', None) and not getattr(F, 'cl_active', None) and store_div_char(F, lv, s.e.r): return   # (stdiv.c sd_c_*)
         if STORE_DIV and lv.ty is not None and lv.ty.size == 2 and not getattr(F, 'l2', None) and not getattr(F, 'u1_i', None) and not getattr(F, 'cl_active', None) and store_div(F, lv, s.e.r): return   # (stdiv.c)

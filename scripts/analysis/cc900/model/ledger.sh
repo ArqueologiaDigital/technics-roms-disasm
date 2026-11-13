@@ -316,6 +316,11 @@ for c in none O3XS; do    # stores of a division by an element at a variable ind
 done
 row "run 2026-11-13-5-micro-stdiv3, v423/Xr" "probes/stdiv3.c" "$O/2026-11-13-5-micro-stdiv3/out/v423/Xr/probes" corpus/probes/stdiv3.c --opt none --adecl
 row "run 2026-11-13-5-micro-stdiv3, v423/O3XSXr" "probes/stdiv3.c" "$O/2026-11-13-5-micro-stdiv3/out/v423/O3XSXr/probes" corpus/probes/stdiv3.c --opt O3XS --adecl
+for c in none O3XS; do    # constant folding with a negated constant against a literal in 128..255 (corpus/probes/negk.c)
+  row "run 2026-11-13-6-micro-negk, v423/$c" "probes/negk.c" "$O/2026-11-13-6-micro-negk/out/v423/$c/probes" corpus/probes/negk.c --opt $c
+done
+row "run 2026-11-13-6-micro-negk, v423/Xr" "probes/negk.c" "$O/2026-11-13-6-micro-negk/out/v423/Xr/probes" corpus/probes/negk.c --opt none --adecl
+row "run 2026-11-13-6-micro-negk, v423/O3XSXr" "probes/negk.c" "$O/2026-11-13-6-micro-negk/out/v423/O3XSXr/probes" corpus/probes/negk.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do
