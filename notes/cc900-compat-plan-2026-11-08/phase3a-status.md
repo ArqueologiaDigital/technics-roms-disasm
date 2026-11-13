@@ -1084,6 +1084,13 @@ listing has `or R,<one bit>`); a lone `if` inside the function's last `if` retur
 90 / 22 / 47 / 21 -> 95 / 22 / 49 / 22 of 800.  A tabulation agent is classifying the functions within four lines by
 cause.
 
+**Batch 54 (2026-11-13): three more near misses.**  Element 0 of a global array as a long helper's right operand is
+read through its address (`gul % gula[0]` -> `lda XBC,_gula` / `ld XWA,(_gul)` / `ld XBC,(XBC)`; any other constant
+element is a plain memory operand); a char remainder goes through A into a member or element (`gca[2] = 0 % gc2` ->
+`ld A,W` / `ld (_gca + 0x2),A`) and straight from W only into a plain variable; a truth value that initialises a
+register temporary is made in WA and moved (`int t = !(..)` -> `scc eq,WA` / `ld DE,WA`; 114 `scc cc,WA` / `ld BC,WA`
+pairs in the oracle's listings at none).  Random programs at none 95 -> 99 of 800.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

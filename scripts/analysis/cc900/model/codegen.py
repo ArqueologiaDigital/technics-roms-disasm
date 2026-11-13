@@ -1548,6 +1548,9 @@ def lh_post_member(F, lv, rv):
 OR_BIT_SET = True                                         # see Func.emit: an OR with one bit is set
 CONST_NARROW = True                                       # see gen: a constant under a narrowing cast
 MULB_SHIFT = True                                         # see gen_opassign: an unsigned char times a power of two
+LH_ELEM0 = True                                           # see gen_long_helper: element 0 as the right operand
+REM_W_VIA_A = True                                        # see gen_stmt: a char remainder into a member or element
+TRUTH_VIA_WA = True                                       # see regvar_stmt: a truth value into a register temporary
 NESTED_IF_RET = True                                      # see gen_stmt: if (a) if (b) x; at the end of a function
 LX5 = True                                                # see lx5_lines: long helpers of lhx.c's lxo_* rows
 
@@ -5108,6 +5111,11 @@ def gen_long_helper(F, e, l, r, fam, signed):
             (not HELPER_IS_CALL or F.opt or F.adecl or family_of(ls) or family_of(rs) or any(
                 d is not None and getattr(d, 'kind', None) == 'local' and d.ty.size == 4 for d in F.xiz_vars)):   # (r3_02_00: only a
         F.emit(*rs_ld); F.emit(*lh_ls_ld(F, l, ls))                                     #  counter in IZ: XWA first)
+    elif LH_ELEM0 and not F.opt and not F.adecl and lh_plain(l) == 'G' and lh_plain(r) == 'M' and re.match(r'^\(_\w+\)$', rs) and \
+            strip(strip(r).e if strip(r).k == 'load' else r).k == 'index':
+        F.emit('lda', 'XBC,%s' % rs[1:-1]); F.emit(*lh_ls_ld(F, l, ls)); F.emit('ld', 'XBC,(XBC)')   # element 0 of an array is read
+                                                        # through its address (random r1_06_18: gul % gula[0] ->
+                                                        # lda XBC,_gula / ld XWA,(_gul) / ld XBC,(XBC))
     elif LH_PLAIN_ORDER and not F.opt and not F.adecl and lh_plain(r) == 'G' and lh_plain(l) in ('K', 'M') and not (e.op == '*' and lh_plain(l) == 'K'):
         F.emit(*rs_ld); F.emit(*lh_ls_ld(F, l, ls))     # (l_div_KG: ld XBC,(_hl) / ld XWA,0x7)
     elif LH_PLAIN_ORDER and not F.opt and not F.adecl and e.op == '*' and lh_plain(l) == 'M' and lh_plain(r) == 'M':
@@ -8137,6 +8145,10 @@ def gen_stmt(F, s, last):
             if lv.k != 'var': raise Unsupported('store address moved by the value')
             t = lvalue(F, lv, kind='storev')
         if FAM[fam][size] == 'QIZH': F.emit('ld', 'A,QIZH'); fam = 'WA'   # (lo_c_Gcs: ld A,QIZH / ld (_hc2),A)
+        if REM_W_VIA_A and FAM[fam][size] == 'W' and strip(lv).k != 'var' and not F.adecl:   # a char remainder is stored from
+            F.emit('ld', 'A,W'); F.emit('ld', '%s,A' % t); return                            # W only into a plain variable
+                                                           # (random r1_05_04: gca[2] = 0 % gc2 -> ld A,W / ld (_gca + 0x2),A;
+                                                           #  stdiv2.c sd2_c_m_EMG; evorder_ad.c ea_c_rem_GG: ld (_gc2),W)
         F.emit('ld', '%s,%s' % (t, FAM[fam][size])); return
     raise Unsupported('statement ' + s.k)
 
@@ -9018,6 +9030,12 @@ def regvar_stmt(F, e):
         if getattr(d, 'regtemp', False) and d.ty.size == 1 and strip(e.r).k not in ('load', 'const'):
             tgt = 'WA'                                     # (lo_c_Bgs: ld A,(_gc) / add A,(_hc) / ld C,A)
         rb_ = strip(e.r)
+        tv_ = rb_
+        while tv_.k == 'cast' and tv_.kind == 'IntegralCast': tv_ = strip(tv_.e)
+        if TRUTH_VIA_WA and not F.opt and not F.adecl and getattr(d, 'regtemp', False) and d.ty.size == 2 and tgt != 'WA' and \
+                (tv_.k == 'un' and tv_.op == '!' or tv_.k == 'bin' and tv_.op in CC_S):
+            tgt = 'WA'                                     # a truth value is made in WA and moved (random r2_09_01:
+                                                           # int t = !(..) -> scc eq,WA / ld DE,WA)
         if REGTEMP_OPT_SCRATCH and getattr(d, 'regtemp', False) and F.opt and d.ty.size in (2, 4) and tgt in ('WA', 'BC', 'DE', 'HL') and \
                 rb_.k == 'bin' and rb_.op in ('+', '-', '&', '|', '^') and not rb_.ty.is_ptr() and \
                 mem_operand(F, rb_.r) is not None and fold(rb_.r).k != 'const' and mem_operand(F, rb_.l) is not None and \
