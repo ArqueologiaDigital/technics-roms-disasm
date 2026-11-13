@@ -5469,8 +5469,16 @@ def gen_mul_const(F, l, k, fam, size, signed=True):
     if x is None and k & (k - 1) == 0 and (has_helper_call(l) or ldm):   # arr_index.c ai_l_p_carry: p[i] % 10 * 256 ->
         f = gen(F, l, fam, size); X = FAM[f][size]                   # cal C9H_remls / sla 0x8,XHL
         F.emit('sla' if signed else 'sll', '%s,%s' % (hx(k.bit_length() - 1), X)); return f
-    if x is None: raise Unsupported('complex multiplicand')
-    if x.startswith('(_'):                       # an absolute operand is loaded once into XBC
+    if x is None and MUL_K_ELEM and not F.opt and not F.adecl and size == 4 and fam == 'WA' and strip(l).k == 'load' and \
+            strip(strip(l).e).k == 'index' and not live_regs(F):
+        n0_ = len(F.lines)                       # an element at a variable index is loaded into XBC like an absolute
+        f_ = gen(F, l, 'BC', 4)                  # operand (lhy.c lyi_l_x_iPnK: ld WA,(c) / sla 0x2,WA / lda XBC,_vla /
+        if f_ == 'BC' and re.match(r'^\tld\tXBC,\(XBC\+(WA|A)\)$', F.lines[-1]) and \
+                not any(re.search(r'\b(X?(DE|HL|IX|IY|IZ)|cal)\b', l_) for l_ in F.lines[n0_:]):   # ld XBC,(XBC+WA) /
+            F.emit('ld', 'XWA,XBC'); x = 'XBC'   # ld XWA,XBC / sla 0x3,XWA / sub XWA,XBC)
+        else: raise Unsupported('complex multiplicand')
+    elif x is None: raise Unsupported('complex multiplicand')
+    elif x.startswith('(_'):                     # an absolute operand is loaded once into XBC
         if R == FAM['BC'][size]: raise Unsupported('a constant multiple built in the register of its operand')   # (lhx.c
                                                  #  lxo_l_x_DEK: gps->l = vla[2] * 7 added XBC to itself: wrong code)
         F.emit('ld', '%s,%s' % (FAM['BC'][size], x)); F.emit('ld', '%s,%s' % (R, FAM['BC'][size])); x = FAM['BC'][size]
@@ -6265,6 +6273,7 @@ CALL_VALUE_FIRST = True                                   # see gen_stmt's store
 LEFT_BIN_RIGHT_PTR = True                                 # see gen_bin
 XIZ_PTR_MEM = True                                        # see cw_kind
 LH_GUARDED = True                                         # see plan_lh_call0
+MUL_K_ELEM = True                                         # see gen_mul_const
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)

@@ -1656,6 +1656,17 @@ there is one label, not two.  lhy at none 96 -> 120 of 360; rstmt 3,456 / 3,003 
 3,459 / 3,005 / 3,030 / 2,869.  Left on lhy: a local index (T rows), the held destination address (shapes C, and
 E Y D under `*`), `x * 7` open coded (K J S), the char-index rows of the new shapes.
 
+**Batch 111 (2026-11-13): a constant multiple of a long element at a variable index; lhy 120 -> 128.**  Without -O,
+`gl = vla[c] * 7` loads the element into XBC as an absolute operand is loaded, and multiplies by shifts
+(lyi_l_x_iPnK: `ld WA,(c)` / `sla 0x2,WA` / `lda XBC,_vla` / `ld XBC,(XBC+WA)` / `ld XWA,XBC` / `sla 0x3,XWA` /
+`sub XWA,XBC`; a char index: `ld A,(c)` / `sla 0x2,A` / .. `(XBC+A)`).  The model refused ("complex multiplicand").
+lhy at none 120 -> 128, lhx 862 -> 864, evorder_ad 1,082 -> 1,084.
+**A limit worth stating:** of the 39 statements still refused as "complex long helper operands" at the plain set,
+most are compound (a block under an `if` or a loop holding several statements, or two helpers): the long-helper
+planner (plan_lh_call0) lays out the frame temporaries and XIZ for exactly one helper statement per function.
+Composing several is frame allocation proper, not another template; lhy's remaining families (a local index, held
+addresses) raise the probe's score but reach few corpus statements until that exists.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
