@@ -1996,6 +1996,15 @@ random at none 172 -> 173 (random3 40 -> 41).
 left out: cmpx.c shows it as `(Xb+i)`. Ledger up 3 (elrd.c 278 -> 284, random3 41 -> 42, rstmt), down 0; pairs MATCH
 223; semcheck 58. Rstmt at none 3,567 -> 3,568, random at none 173 -> 174.
 
+**Batch 149 (2026-11-13): pending call pops survive two more statement kinds (POP_LAZY_RET_BIN,
+IF_CONST_KEEP_POPS).** Found among the 46 random functions at none whose rstmt statements are all exact but which
+still differ (several of them differ only in where a call's pops go). `later_call_absorbs` lets a final
+`return f(a) op g` (op one of `+ - & | ^`, no call or helper on the right) absorb the pops pending from earlier call
+statements, as `return f(a)` does (random r1_06_19: `... pushw (XSP+0x6) / cal _r1 / inc 0x4,XSP / sub HL,(_gi3)`). An
+`if` whose test folds to a constant no longer flushes the pending pops before it; they stay pending into the live arm
+(r1_09_16: `cal _v1 / pushw 0x0 / cal _vc / inc 0x4,XSP`). Ledger up 2 (random1 at none 51 -> 53, at -O3 -XS 15 -> 16),
+down 0; pairs MATCH 223; semcheck 58. Random 176 / 48 / 87 / 37; rstmt unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

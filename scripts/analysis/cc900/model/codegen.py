@@ -6090,6 +6090,8 @@ CMPX_IZ = True                                            # see cmpx_index: an u
 COND_CALL = True                                          # see compile_function_once: cal cc,f
 CHAIN_ADDR_BC_WA = True                                   # see gen_assign_value: an address in XBC, the value in WA
 CHAIN_CHAR_INT_IDX = True                                 # see gen_assign_value: a char element at an int index
+POP_LAZY_RET_BIN = True                                   # see later_call_absorbs: return f(a) - g absorbs pops
+IF_CONST_KEEP_POPS = True                                 # see gen_stmt's if: a constant test keeps the pending pops
 
 CMPX_REGS = {                                             # (index register, base register) by element size 1 / 2 / 4:
     ('none', 'X', 'c'): ('DE/BC', 'BC/DE', 'BC/DE'), ('none', 'X', 'b'): ('BC/DE', 'BC/DE', 'BC/DE'),
@@ -6432,6 +6434,11 @@ def later_call_absorbs(F):
         if POP_LAZY2 and x.k == 'return' and x.value is not None:   # return rul(..) absorbs too (random r4_07_15:
             c = strip(x.value)                             # vl(*gpl); gps->i = gi / 4; return rul(gula[0] >> 4) ->
             while c.k == 'cast': c = strip(c.e)            # cal _vl / .. / cal _rul / inc 0x8,XSP)
+            if POP_LAZY_RET_BIN and c.k == 'bin' and c.op in ('+', '-', '&', '|', '^') and not nodes_in(c.r, 'call') and \
+                    not has_helper_call(c.r) and not fpgen.is_fp_op(c):
+                c = strip(c.l)                             # return f(a) - g: the call is the left operand (random r1_06_19:
+                while c.k == 'cast': c = strip(c.e)        # vc(..); gc /= 3; gu2 = ..; return r1(a) - gi3 -> cal _vc / .. /
+                                                           # pushw (XSP+0x6) / cal _r1 / inc 0x4,XSP / sub HL,(_gi3))
             return c.k == 'call' and bool(c.args) and not fpgen.is_fp(getattr(c, 'ty', None))
         if x.k != 'expr': return False
         e = strip(x.e)
@@ -9181,7 +9188,12 @@ def gen_stmt(F, s, last):
     if s.k == 'if':
         fpc = []
         walk(s.cond, lambda n, d: fpc.append(n) if fpgen.is_fp_op(n) else None)
-        if F.pending and IF_FLUSH_POPS and not fpc:       # ra_homes32.c h_p_p3: g2(n); if (p == 0)
+        if F.pending and IF_FLUSH_POPS and not fpc and not (IF_CONST_KEEP_POPS and IF_CONST_DEAD and
+                                                            cond_const(s.cond) is not None):
+                                                          # (a constant test is no test: the pops stay pending into the
+                                                          # live arm, random r1_09_16: v1(t); if (255 != 4313) { vc(..); }
+                                                          # -> cal _v1 / pushw 0x0 / cal _vc / inc 0x4,XSP)
+                                                          # ra_homes32.c h_p_p3: g2(n); if (p == 0)
             live_res = False                                # the previous statement's `v = call()`: v read after the
             pv = getattr(F, 'prev_stmt', None)              # test -> lda XSP,XSP+n (___fmemccpy: pos - s2 in the else
             pe = strip(pv.e) if pv is not None and pv.k == 'expr' else None   # arm); only tested -> add XSP,n
