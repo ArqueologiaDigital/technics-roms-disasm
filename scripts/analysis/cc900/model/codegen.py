@@ -5580,7 +5580,8 @@ def gen_mul_const(F, l, k, fam, size, signed=True):
     for i, b in enumerate(bits):
         run += 1
         if b == '1':
-            F.emit('sla' if signed else 'sll', '%s,%s' % (hx(run), R))
+            if run == 1 and MUL_K_DOUBLE_ADD and not F.opt: F.emit('add', '%s,%s' % (R, R))   # (rstmt rs_1_06_10_1: x * 6 ->
+            else: F.emit('sla' if signed else 'sll', '%s,%s' % (hx(run), R))   # add XWA,XWA / add XWA,XBC / add XWA,XWA)
             F.emit('add', '%s,%s' % (R, x)); run = 0
     if run == 1: F.emit('add', '%s,%s' % (R, R))
     elif run > 1: F.emit('sla' if signed else 'sll', '%s,%s' % (hx(run), R))
@@ -6380,6 +6381,7 @@ RET_PTR_LEFT = True                                       # see gen_bin
 UCHAR_IDX_INTPTR = True                                   # see gen_ptr_arith
 AND_BIT_CLR = True                                       # see the OR_BIT_SET peephole
 CP_CHAR_REG_K = True                                     # see gen_compare
+MUL_K_DOUBLE_ADD = True                                   # see gen_mul_const
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)

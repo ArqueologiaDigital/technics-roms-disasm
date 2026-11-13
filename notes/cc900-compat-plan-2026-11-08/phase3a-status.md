@@ -1751,6 +1751,12 @@ in C: the oracle writes `cp C,0x0` (rs_1_07_18_2; rs_4_04_14_4), the model copie
 to the low byte of BC / DE / HL, cdecl, no -O, and only when A is not live.  rstmt at none 3,517 -> 3,519; chararith,
 chararith2 and kfold unchanged.
 
+**Batch 121 (2026-11-13): a one-bit doubling inside a constant multiply is `add R,R`; rstmt +2.**  `gul = gula[a] * 6UL`
+without -O: the oracle doubles with `add XWA,XWA` (x, 2x, 3x, 6x = add, add, add, add), the model wrote `sll 0x1,XWA`
+(rs_1_06_10_1; rs_3_01_05_4).  The one-bit shift is kept everywhere else: the oracle has 88 `sll 0x1`/`sla 0x1` lines,
+so the rule is only the doubling step inside gen_mul_const.  rstmt at none 3,519 -> 3,521, at -Xr 3,037 -> 3,038;
+chararith, chararith2, kfold, evorder_ad, lhx and lhy unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
