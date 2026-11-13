@@ -1707,6 +1707,15 @@ into HL (`return gl << 9`), and a folded constant is a constant (kfold.c: a firs
 down this path and cost 16 of that probe's 47 on the scratch ledger).  Only the three outer forms seen; cdecl.
 rstmt at none 3,493 -> 3,501.
 
+**Batch 116 (2026-11-13): an `int` local that indexes char elements lives in BC; rstmt +5, idxloc +3.**  Without
+-O the first register of a local with an initialiser is WA; one that is only ever the index of char elements takes
+BC instead, and the element's base goes to XWA: `int t = ji; guc = guca[t];` -> `ld BC,(_ji)` / `lda XWA,_guca` /
+`ld A,(XWA+BC)` (rs_1_08_08_1); the element's address as a local's initialiser `lda XWA,XWA+BC` (rs_1_00_00_2); a
+constant store `ldb (XWA+BC),0x3` (rs_4_01_03_4).  A stored address `gp = &gca[u]` keeps WA and the sign-extended
+sum (rs_2_02_19_6).  The compound assignment `guc |= guca[t] ^ 229` wants the same and is not done yet (the model
+falls to DE there).  rstmt at none 3,501 -> 3,506; idxloc.c 82 -> 85; semcheck 49 -> 48 (idxloc il_c_RA at none is
+right now; its review row still covers the other sets).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

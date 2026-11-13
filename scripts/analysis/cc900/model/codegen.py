@@ -6340,6 +6340,7 @@ MEMBER_STORE_SWAP = True                                  # see gen_stmt
 KILL_TOP = True                                           # see the across-call planner
 DEAD_INIT_CTR = True                                      # see regtemp_candidates
 RET_TWO_LEVEL = True                                      # see ret_two_level
+CHAR_IDX_BC = True                                        # see regtemp_candidates
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -7364,7 +7365,9 @@ def elem_addr(F, lv, kind):
                 if iv_ is not None and iv_.ty.size == 2 and iv_.ty.signed and iv_.reg in ('IZ', 'QIZ', 'BC', 'DE', 'HL') and \
                         (not F.opt or iv_.reg in ('IZ', 'QIZ') and iv_.kind == 'local'):   # (-O too for a local in IZ / QIZ: rstmt rs_2_07_19_4,
                                                            # guca[t] -= K -> lda XWA,_guca / subb (XWA+IZ),0xff)
-                    B_ = 'XWA' if kind == 'load' else 'XBC'
+                    B_ = 'XWA' if kind == 'load' or CHAR_IDX_BC and iv_.reg == 'BC' and not F.opt and not F.adecl and \
+                        getattr(iv_, 'regtemp', False) else 'XBC'   # (the index in BC: the base in XWA for a store too,
+                                                           # rstmt rs_4_01_03_4: gca[t] = 3 -> lda XWA,_gca / ldb (XWA+BC),0x3)
                     if FAM.get(iv_.reg, {}).get(4) != B_ and B_[1:] not in live_regs(F):
                         touch_home(F, iv_); F.emit('lda', '%s,%s' % (B_, g)); return '(%s+%s)' % (B_, iv_.reg)
             ixu_ = unpromote(lv.idx); ixm_ = mem_operand(F, ixu_) if ixu_.k == 'load' and strip(ixu_.e).k == 'var' else None
@@ -7817,6 +7820,11 @@ def _lvalue_raw(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False, kind='sto
                 if im != 'WA': F.emit('ld', 'WA,%s' % im)
                 F.emit('extz', 'XWA'); F.emit('add', 'XWA,XWA') if esz == 2 else F.emit('sll', '0x2,XWA')
                 F.emit('ld', 'XBC,_%s' % b.decl.name); F.emit('add', 'XBC,XWA'); return '(XBC)'
+            if CHAR_IDX_BC and esz == 1 and im == 'BC' and not combine and not F.opt and not F.adecl and ut_ is not None and \
+                    ut_.size == 2 and ut_.signed and 'WA' not in live_regs(F) and unpromote(i).k == 'load' and \
+                    getattr(regvar_of(strip(unpromote(i).e)), 'regtemp', False):
+                F.emit('lda', 'XWA,_%s' % b.decl.name); return '(XWA+BC)'   # (rstmt rs_4_01_03_4: gca[t] = 3 with t in
+                                                           # BC -> lda XWA,_gca / ldb (XWA+BC),0x3)
             I = idx if not combine else 'WA'
             if im in ('WA', 'BC', 'DE') and dies_here(F, i):   # .as_add_arr: add WA,WA / (XDE+WA)
                 I = im
@@ -13683,6 +13691,18 @@ def regtemp_candidates(F):
                                                            # next: the older rule below, binop_c.c shl_c_loc: x in C)
         cands = ['HL', 'BC', 'DE'] if ci.k == 'call' or lhres_ else ['WA', 'BC', 'DE', 'HL']
         if getattr(c, 'ctr_loop', None) is not None: cands = loop_ctr_cands(c.ctr_loop, d)   # (loopctr.c lc_DTF: HL)
+        if CHAR_IDX_BC and not F.opt and not F.adecl and 'WA' in cands and d.ty.kind == 'int' and d.ty.size == 2 and d.ty.signed:
+            ix_ = []                                       # an int local that only indexes char elements lives in BC,
+            for x_ in body[i + 1:]:                        # the base in XWA (rstmt rs_1_08_08_1: int t = ji;
+                walk(x_, lambda n_, dd: ix_.append(n_) if n_.k == 'index' and getattr(n_.ty, 'size', 0) == 1 and   # guc = guca[t]
+                     unpromote(n_.idx).k == 'load' and strip(unpromote(n_.idx).e).k == 'var' and   # -> ld BC,(_ji) /
+                     strip(unpromote(n_.idx).e).decl is d else None)                             # lda XWA,_guca /
+            nu_ = []                                                                             # ld A,(XWA+BC))
+            for x_ in body[i + 1:]: walk(x_, lambda n_, dd: nu_.append(n_) if n_.k == 'var' and n_.decl is d else None)
+            st_ = [x_ for x_ in body[i + 1:] if x_.k == 'expr' and strip(x_.e).k == 'bin' and strip(x_.e).op == '=' and
+                   strip(strip(x_.e).r).k == 'addr' and uses_decl(strip(x_.e).r, d)]   # (a stored &gca[u] keeps WA and
+            if ix_ and not st_ and len({id(n_) for n_ in nu_}) == len({id(n_) for n_ in ix_}):   # sign-extends: rs_2_02_19_6)
+                cands = [r for r in cands if r != 'WA']
         # (WA is tried with the code in between written as if WA were free -- live_regs hides a WA temporary -- so
         # that a statement that computes anything moves the temporary to BC: lo_i_Ggs ld BC,(_gi) / ld WA,(_hj),
         # while lo_i_G0d's store and push keep it in WA)
