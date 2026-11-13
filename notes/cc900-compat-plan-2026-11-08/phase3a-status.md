@@ -1206,6 +1206,14 @@ and when the absorbing call is the `return`'s (`return rul(gula[0] >> 4)` -> one
 `exts WA`; an implicit conversion reads the byte).  Random programs at none 143 -> 147 of 800 (the other sets
 unchanged: 29 / 70 / 25); cmpordl2.c at -O3 -XS -Xr 349 -> 351.
 
+**Batch 72 (2026-11-13): four more near misses.**  A register is not reloaded right after it was stored: `ld Y,X`
+directly after `ld X,Y` is not written (no such pair in the cdecl listings; the -Xr listings do have them, so the
+rule is cdecl-only: without that limit the micro corpus lost 4 and 19 functions at the two -Xr sets, which the scratch
+ledger caught).  An unsigned int `% 2^k` is `and R,2^k-1`.  `*gp op= K` for `&`, `|`, `^` on an int through a global
+pointer is `ld XWA,(_gp)` / `xorw (XWA),K`.  A char variable in QIZH / QIZL compares with a constant in place
+(`cp QIZH,0x0`; five in the oracle's listings, never through A).  Random programs at none 147 -> 151 of 800
+(29 / 70 / 25 at the other sets, unchanged).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

@@ -97,6 +97,9 @@ class Fn:
         if ADD_INC and op == 'add' and args is not None:        # add R,1..8 is inc (no oracle listing adds 1..8 to a
             m_ = re.match(r'^(X?(?:WA|BC|DE|HL|IX|IY|IZ)|[WABCDEHL]),0x([1-8])$', args)   # register; 1,335 inc at none)
             if m_: op, args = 'inc', '0x%s,%s' % (m_.group(2), m_.group(1))
+        if NO_RELOAD and op == 'ld' and args is not None and s.lines and not s.adecl:   # ld Y,X right after ld X,Y is not written (no such
+            m_ = re.match(r'^(\w+),(\w+)$', args)                       # pair in the cdecl listings; -Xr has them;
+            if m_ and s.lines[-1] == '\tld\t%s,%s' % (m_.group(2), m_.group(1)): return   # random r3_09_12: ld QIZH,A / add A,QIZH)
         if NO_SELF_LD and op == 'ld' and args is not None and re.match(r'^(\w+),\1$', args) \
                 and not (s.lines and s.lines[-1].startswith('\tcal')):   # (after a call the later passes drop it: switch.c sw_local)
             return                                         # ld WA,WA is never written (never_forms.py: fpp9.c v39 -O)
@@ -4584,6 +4587,8 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         if op == '*':
             F.emit('muls' if signed else 'mul', '%s,%s' % (wide, rs))
             res = FAM[work][size]
+        elif op == '%' and REMU_AND and size == 2 and not signed and kd_ >= 2 and kd_ & (kd_ - 1) == 0 and not F.opt and not F.adecl:
+            F.emit('and', '%s,%s' % (FAM[work][size], hx(kd_ - 1))); res = FAM[work][size]   # (random r4_04_17: gu2 % 2 -> and WA,0x1)
         elif op == '/' and DIVU_SHIFT and not signed and kd_ >= 2 and kd_ & (kd_ - 1) == 0 and not F.opt and not F.adecl:
             F.emit('srl', '%s,%s' % (hx(kd_.bit_length() - 1), FAM[work][size])); res = FAM[work][size]   # (random r4_01_07:
         else:                                                                                             #  vu(gu / 16) -> srl 0x4,WA)
@@ -5391,6 +5396,9 @@ def gen_compare(F, e):
         F.emit('cp', '%s,%s' % (FAM[fl][size], FAM[fr][size])); return cc   # cp BC,WA
     if CMPX and getattr(F, 'u1_i', None) is None and not getattr(F, 'l2', None) and not getattr(F, 'cl_active', None) and \
             mem_operand(F, r) is None and cmpx_elem(F, op, l, r, size): return cc
+    if CP_QIZ_K and lm in ('QIZH', 'QIZL') and size == 1 and rc.k == 'const' and rc.value is not None and not F.opt and not F.adecl:
+        F.emit('cp', '%s,%s' % (lm, hx(rc.value & 0xff))); return cc   # a char in QIZ compares in place (random r3_09_12:
+                                                           # t != 0 -> cp QIZH,0x0; five in the oracle's listings, no ld A,QIZH / cp A,k)
     if getattr(F, 'u1_i', None) is not None and lm is not None and lm.startswith('(X') and l.k == 'load' and \
             strip(l.e).k == 'index':                       # cdecl oc_find: the chain is built once (by mem_operand)
         f0 = 'WA'; F.emit('ld', '%s,%s' % (FAM['WA'][size], lm))   # -> ld WA,(XWA) / cp WA,(XSP+0xa)
@@ -5756,6 +5764,10 @@ def later_call_absorbs(F):
     return False
 
 CAST_WORD_LOAD = True                                     # see gen
+OPK_DEREF_GLOBAL = True                                   # see gen_opassign
+REMU_AND = True                                           # see gen_bin
+CP_QIZ_K = True                                           # see gen_compare
+NO_RELOAD = True                                          # see Func.emit
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -7293,9 +7305,19 @@ def gen_opassign(F, e):
             strip(e.l).k == 'var' and strip(e.l).ty.kind == 'int' and not nodes_in(r, 'call'):
         return None                                        # x |= 0 is no code (random r1_04_17: gi2 |= 0 * 1)
     if op in SIMPLE_OPS and fold(r).k == 'const' and size <= 2 and (getattr(F, 'naive_loads', False) or
+                                                                    (OPK_DEREF_GLOBAL and not F.opt and not F.adecl and op in '&|^' and
+                                                                     size == 2 and strip(e.l).k == 'deref' and
+                                                                     strip(strip(e.l).e).k == 'load' and
+                                                                     strip(strip(strip(e.l).e).e).k == 'var' and
+                                                                     strip(strip(strip(e.l).e).e).decl.kind == 'global') or   # (random r4_06_05:
+                                                                     # *gpi ^= 26133 -> ld XWA,(_gpi) / xorw (XWA),0x6615)
                                                                     getattr(F, 'l2', None) or
                                                                     getattr(F, 'ptr_cache', None)):   # _itoa: addb (XIY),0x27
                                                                     # (_ungetc: orw (XWA+0xa),0x4)
+        if OPK_DEREF_GLOBAL and strip(e.l).k == 'deref' and not (getattr(F, 'naive_loads', False) or getattr(F, 'l2', None) or
+                                                                 getattr(F, 'ptr_cache', None)):
+            F.emit('ld', 'XWA,%s' % mem_operand(F, strip(strip(e.l).e)))
+            F.emit(SIMPLE_OPS[op] + 'w', '(XWA),%s' % imm_of(fold(r), size)); return '(XWA)'
         t = lvalue(F, e.l)                                # _ultoa: *p += 39 -> addb (XWA),0x27
         F.emit(SIMPLE_OPS[op] + ('b' if size == 1 else 'w'), '%s,%s' % (t, imm_of(fold(r), size))); return t
     if REM_POW2_AND and op == '%' and size == 4 and not signed and not F.opt and not F.adecl and fold(e.r).k == 'const' and \
