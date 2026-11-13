@@ -784,6 +784,11 @@ def gen(F, e, fam, size, then_ret=False, store=False):
                 strip(strip(strip(x.e).base).e).decl.kind == 'global' and not member_offset(strip(x.e)):
             F.emit('ld', 'XWA,(_%s)' % strip(strip(strip(x.e).base).e).decl.name)   # random r1_06_01: !gps->c ->
             F.emit('cp%s' % ('b' if xs == 1 else 'w'), '(XWA),0x0')                  # ld XWA,(_gps) / cpb (XWA),0x0
+        elif NOT_PTR_ELEM_CP and xs <= 2 and not F.opt and not F.adecl and x.k == 'load' and strip(x.e).k in ('index', 'deref') and \
+                (sp_lvalue_kind(F, strip(x.e)) or ('',))[0] in ('P', 'D') and 'WA' not in live_regs(F):
+            pk_ = sp_lvalue_kind(F, strip(x.e))            # !p[k] and !*p compare the memory (random r3_03_12: !gpi[1] ->
+            F.emit('ld', 'XWA,%s' % pk_[1])                # ld XWA,(_gpi) / cpw (XWA+0x2),0x0)
+            F.emit('cp%s' % ('b' if xs == 1 else 'w'), '%s,0x0' % ('(XWA+%s)' % hx(pk_[2]) if pk_[2] else '(XWA)'))
         elif NOT_CHAR8 and xs == 2 and m is None and not F.opt and not F.adecl and x.k == 'cast' and x.kind == 'IntegralCast' and \
                 getattr(strip(x.e), 'narrowed', False) and strip(x.e).ty is not None and strip(x.e).ty.size == 1 and \
                 strip(x.e).k in ('bin', 'un'):
@@ -1584,6 +1589,9 @@ EVORDER_BYTE = True                                       # see gen_bin: the eva
 CW_IZ_XWA = True                                          # see bin_wide: a byte element at an IZ counter
 CHAIN_STATIC_WA = True                                    # see gen_assign_value: a chained store into a static element
 SHIFT1_MEM = True                                         # see gen_stmt: a byte or word shifted by one in memory
+NOT_PTR_ELEM_CP = True                                    # see gen: !p[k]
+MEMBER_STORE_BC = True                                    # see gen_stmt: p->m = a op b
+SHIFTK_WA = True                                          # see gen_opassign: any size shifted by a constant works in WA
 NESTED_IF_RET = True                                      # see gen_stmt: if (a) if (b) x; at the end of a function
 LX5 = True                                                # see lx5_lines: long helpers of lhx.c's lxo_* rows
 
@@ -7262,7 +7270,7 @@ def gen_opassign(F, e):
                 F.emit('and', 'A,0xf'); lab = F.newlabel(); F.emit('j', 'z,%s' % lab); F.emit(mnem, 'A,%s' % V)
                 F.lines.append(lab + ':'); F.emit('ld', '%s,%s' % (t, V)); return t
         t = lvalue(F, e.l, ptr='XDE', idx='DE', base='XHL', kind='rmw')
-        V = FAM[next((x for x in (('WA', 'BC', 'DE', 'HL') if SHIFTB_A and size == 1 and fold(r).k == 'const' and not F.opt and not F.adecl
+        V = FAM[next((x for x in (('WA', 'BC', 'DE', 'HL') if SHIFTB_A and (size == 1 or SHIFTK_WA) and fold(r).k == 'const' and not F.opt and not F.adecl
                                   and 'WA' not in live_regs(F) else ('BC', 'WA', 'DE', 'HL')) if not re.search(r'\b(X?%s|%s)\b' % (x, FAM[x][1]), t) and not (SHIFT_COUNT_GUARD and x == 'WA' and fold(r).k != 'const' and mem_operand(F, r) is None)), 'BC')][size]   # (r1_06_03: not over the computed count)
         rr = fold(r); cs = mem_operand(F, r) if rr.k != 'const' else None
         pre = rr.k != 'const' and cs is None and SHIFT_COUNT_EXPR
@@ -8199,6 +8207,19 @@ def gen_stmt(F, s, last):
             t = chidx.element(F, lv, 'load')             # element reads), then the store's own (XBC+A)
             if t is None: raise Unsupported('element store')
             F.emit('ld', '%s,%s' % (t, FAM['DE'][size])); return
+        elif MEMBER_STORE_BC and not F.opt and not F.adecl and size in (2, 4) and strip(s.e.r).k == 'bin' and \
+                strip(s.e.r).op in ('+', '-', '&', '|', '^') and (sp_lvalue_kind(F, lv) or ('', '', 0))[0] == 'D' and \
+                not ({'WA', 'BC'} & live_regs(F)) and not fpgen.is_fp(lv.ty) and not strip(s.e.r).ty.is_ptr() and \
+                all(fold(y).k == 'const' and fold(y).value is not None or
+                    strip(y).k == 'load' and strip(strip(y).e).k in ('var', 'member', 'index') and
+                    re.match(r'^\(_\w+( \+ 0x[0-9a-f]+)?\)$', mem_operand(F, y) or '') for y in (strip(s.e.r).l, strip(s.e.r).r)) and \
+                strip(strip(s.e.r).l).k == 'load':
+            pk_ = sp_lvalue_kind(F, lv); bv_ = strip(s.e.r)   # a displaced member takes XWA and an arithmetic value of
+            F.emit('ld', 'XWA,%s' % pk_[1])                   # plain operands is computed in BC (random r1_03_03:
+            F.emit('ld', '%s,%s' % (FAM['BC'][size], mem_operand(F, bv_.l)))   # gps->l = gs.l - gl2 -> ld XWA,(_gps) /
+            rc_ = fold(bv_.r)                                                  # ld XBC,(_gs + 0x4) / sub XBC,(_gl2) /
+            F.emit(SIMPLE_OPS[bv_.op], '%s,%s' % (FAM['BC'][size], hx(rc_.value & ((1 << (8 * size)) - 1)) if rc_.k == 'const' else mem_operand(F, bv_.r)))
+            F.emit('ld', '(XWA+%s),%s' % (hx(pk_[2]), FAM['BC'][size])); return   # ld (XWA+0x4),XBC)
         elif REGVAL_STORE_XWA and not F.opt and not F.adecl and size in (2, 4) and strip(s.e.r).k == 'load' and \
                 regvar_of(strip(s.e.r).e) is not None and regvar_of(strip(s.e.r).e).reg in ('BC', 'DE', 'HL') and \
                 getattr(regvar_of(strip(s.e.r).e), 'regtemp', False) and regvar_of(strip(s.e.r).e).ty.size == size and \

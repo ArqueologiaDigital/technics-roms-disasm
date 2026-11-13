@@ -1156,6 +1156,11 @@ register, so its value stays in WA (`gc = gca[7] = -gc` -> `ld A,(_gc)` / `neg A
 (`a->c <<= 1` -> `ld XWA,(XSP+0x4)` / `slab (XWA)`); an IZ home's `*p - 7` uses `dec 0x7,IZ`.  Random programs at
 none 134 -> 140 of 800; stchain.c at none 321 -> 323 of 392.
 
+**Batch 66 (2026-11-13).**  `!p[k]` and `!*p` compare the memory (`!gpi[1]` -> `ld XWA,(_gpi)` /
+`cpw (XWA+0x2),0x0`); `p->m = a op b` with plain operands takes XWA for the pointer and computes the value in BC
+(`gps->l = gs.l - gl2` -> `ld XWA,(_gps)` / `ld XBC,(_gs + 0x4)` / `sub XBC,(_gl2)` / `ld (XWA+0x4),XBC`); a compound
+shift by a constant works in WA at every size, not only bytes.  Random programs at none 140 -> 143 of 800.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
