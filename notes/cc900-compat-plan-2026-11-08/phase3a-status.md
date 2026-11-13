@@ -1667,6 +1667,15 @@ planner (plan_lh_call0) lays out the frame temporaries and XIZ for exactly one h
 Composing several is frame allocation proper, not another template; lhy's remaining families (a local index, held
 addresses) raise the probe's score but reach few corpus statements until that exists.
 
+**Batch 112 (2026-11-13): two single-pattern near misses; rstmt +17.**  From diffpat's "alone" groups (statements
+whose whole difference is one pattern).  (1) A shift count that reads a forwarded `int` local is computed at 16
+bits (rs_1_04_04_2: `unsigned t = ju; gi3 <<= (t & 15)` -> `ld WA,(_ju)` / `and WA,0xf`; the model computed it in A).
+The forwarding mark of batch 106 tells the count's code that the value came from a local.  (2) A double compound
+assignment into element 0 of a global array takes the array's address through XWA (rs_3_00_17_0:
+`gda[0] *= ..` -> `lda XWA,_gda` / `ld XIZ,XWA`), where an element with an offset, or a member, is loaded straight
+into XIZ (`lda XIZ,_gda + 0x8`, 26 times in the statement probes; fpopa.c's `lda XIZ,_gs + 0x4`).  Both without -O.
+rstmt at none / -Xr 3,459 / 3,030 -> 3,469 / 3,037.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

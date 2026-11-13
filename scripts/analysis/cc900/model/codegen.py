@@ -1613,6 +1613,11 @@ def tail_if_return(f, opt):
     if cond_const(st.cond) is not None: return False       # (at every set: rs_3_00_19_3)
     t = flat(st.then)
     return bool(t) and t[-1].k == 'return' and getattr(t[-1], 'value', None) is not None
+def nodes_with(e, attr):
+    out = []
+    if getattr(e, attr, False): out.append(e)
+    walk(e, lambda n_, dd: out.append(n_) if getattr(n_, attr, False) else None)
+    return out
 def do_predec_indexed(f):
     for n in nodes_in(f.body, 'do'):
         c = strip(n.cond) if n.cond is not None else None
@@ -5505,6 +5510,9 @@ def gen_shift_count(F, r):
     IZ -> ld WA,IZ / and WA,0x7)"""
     rv = [regvar_of(strip(x.e)) for x in loads_in(r)]
     if rv and all(v is not None and v.ty.size == 2 for v in rv): return gen(F, r, 'WA', 2)   # (-O3 -XS r1_09_14: t in BC -> ld WA,BC)
+    if SHIFT_COUNT_LOCAL and not F.opt and nodes_with(r, 'from_local'):   # an int local's value, forwarded: at its width
+        return gen(F, r, 'WA', 2)                        # (rstmt rs_1_04_04_2: unsigned t = ju; gi3 <<= (t & 15) ->
+                                                         # ld WA,(_ju) / and WA,0xf)
     lds = loads_in(r)                                    # an int parameter in memory: the count at its width too
     if STVX and lds and all(z.ty.size == 2 and strip(z.e).k == 'var' and strip(z.e).decl.kind == 'param' and
                             not getattr(strip(z.e).decl, 'reg', None) for z in lds):
@@ -6274,6 +6282,7 @@ LEFT_BIN_RIGHT_PTR = True                                 # see gen_bin
 XIZ_PTR_MEM = True                                        # see cw_kind
 LH_GUARDED = True                                         # see plan_lh_call0
 MUL_K_ELEM = True                                         # see gen_mul_const
+SHIFT_COUNT_LOCAL = True                                  # see gen_shift_count
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)

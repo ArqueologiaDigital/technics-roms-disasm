@@ -727,7 +727,10 @@ def gen_assign(F, e):
             if F.xiz_vars != ['sret'] or needs_xiz(F) or getattr(F, 'sret_home', False) or \
                     getattr(F, 'call_temp', None):
                 raise cg.Unsupported('a double compound assignment beside another XIZ use')
-            if hk[0] == 'S': F.emit('lda', 'XIZ,%s' % hk[1])
+            if hk[0] == 'S' and lv.k == 'index' and ' + ' not in hk[1] and not F.opt:
+                F.emit('lda', 'XWA,%s' % hk[1]); F.emit('ld', 'XIZ,XWA')   # element 0 is the array itself, taken
+            elif hk[0] == 'S': F.emit('lda', 'XIZ,%s' % hk[1])             # through XWA (rstmt rs_3_00_17_0: gda[0] *= ..
+                                                           # -> lda XWA,_gda / ld XIZ,XWA; gda[1]: lda XIZ,_gda + 0x8)
             else:                                          # fa_m_XGT: ld WA,(c) / sla 0x3,WA / lda XBC,_gda / lda XIZ,XBC+WA
                 if hk[2] != 'WA': F.emit('ld', 'WA,%s' % hk[2])
                 F.emit('sla', '0x3,WA'); F.emit('lda', 'XBC,%s' % hk[1])
