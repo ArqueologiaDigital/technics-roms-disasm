@@ -807,6 +807,25 @@ def gen(F, e, fam, size, then_ret=False, store=False):
         dead0 = set(F.dead); arm(e.a); F.dead = dead0; F.emit('j', lend); F.lines.append(lelse + ':')
         arm(e.b); F.lines.append(lend + ':')
         F.emit('exts' if bs else 'extz', FAM[fam][2]); return fam
+    if e.k == 'cond' and COND_K_PRELOAD and not F.opt and not F.adecl and size == 2 and fam in ('WA', 'BC', 'DE', 'HL') and \
+            fold(e.b).k == 'const' and fold(e.b).value is not None and fold(e.a).k != 'const' and \
+            not nodes_in(e.c, 'call') and not nodes_in(e.a, 'call') and not F.pending and \
+            strip(e.a).k == 'load' and (mem_operand(F, e.a) or '').startswith('('):
+        # a constant else-arm is loaded first and the test skips the other arm's load (random r2_00_13:
+        # u == 2 ? gi3 : (16 - 255) -> ld HL,0xff11 / cp IZ,0x2 / j ne,L1 / ld HL,(_gi3) / L1:; r4_05_12)
+        sv_ = (list(F.lines), getattr(F, 'ulabel', 0), set(F.dead))
+        lskip = F.newulabel()
+        F.emit('ld', '%s,%s' % (FAM[fam][2], hx(fold(e.b).value & 0xffff))); n0_ = len(F.lines)
+        gen_cond_false(F, e.c, lskip)
+        hit_ = False
+        for l_ in F.lines[n0_:]:
+            p_ = l_.strip().split('\t')
+            if len(p_) == 2 and p_[0] not in ('cp', 'cpb', 'cpw', 'j', 'bit', 'or') or \
+                    len(p_) == 2 and ('X' + fam) in written_fams(p_[0], p_[1]) and p_[0] not in ('cp', 'cpb', 'cpw', 'j', 'bit'):
+                hit_ = True
+        if not hit_:
+            F.emit('ld', '%s,%s' % (FAM[fam][2], mem_operand(F, e.a))); F.lines.append(lskip + ':'); return fam
+        F.lines[:] = sv_[0]; F.ulabel = sv_[1]; F.dead = sv_[2]   # (the test needs registers: the plain form)
     if e.k == 'cond':                                # c_tern
         lelse, lend = F.newulabel(), F.newulabel()
         gen_cond_false(F, e.c, lelse)
@@ -4475,13 +4494,25 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
             F.emit(SIMPLE_OPS[op], 'A,C')
             if fam != 'WA': F.emit('ld', '%s,A' % FAM[fam][1])
             return fam
+        swapped_ = False
+        if COMM_SWAP_PLAIN and op in ('+', '&', '|', '^') and size == 2 and not F.opt and not F.adecl and \
+                strip(l).k == 'load' and strip(strip(l).e).k in ('var', 'index', 'member') and \
+                isinstance(mem_operand(F, l), str) and mem_operand(F, l).startswith('(_') and \
+                mem_operand(F, r) is None and not nodes_in(r, 'call') and not fpgen.is_fp_op(r) and \
+                not (live_regs(F) & {'WA', 'BC', 'DE', 'HL'}):
+            l, r = r, l; swapped_ = True                   # a commutative operation of plain memory and a computed
+                                                           # value: the computed side first, the memory as the operand
+                                                           # (random r2_02_03: return gi3 + (gpl[3] % 16) -> .. /
+                                                           # ld HL,QWA / add HL,(_gi3); r2_07_10: gia[0] + gps->a[5])
         wa_var = [d for d in list(F.f.params) + list(F.f.decls) + [getattr(F, 'cse_tmp', None)]
                   if d is not None and getattr(d, 'reg', None) == 'WA' and d not in F.dead
                   and uses_decl(e.r, d)]                   # sv_leaf: a * b + a keeps a in WA -> ld HL,DE / add HL,WA
         if fam != 'WA' and (natural_wa(l) or chain_wa(l) or char_widen(F, l)) and not wa_var:   # ra_noloop3: inner levels over a multiply stay in WA
             f0 = gen(F, l, 'WA', size)
             src_ = FAM[f0][size] if f0 in FAM and size in FAM[f0] else FAM['WA'][size]   # (where gen left it)
-            if src_ != FAM[fam][size]: F.emit('ld', '%s,%s' % (FAM[fam][size], src_))
+            if swapped_ and src_ == 'WA' and F.lines[-1] == '\tld\tWA,QWA' and fam in FAM:
+                F.lines[-1] = '\tld\t%s,QWA' % FAM[fam][2]   # (the remainder straight into the result: ld HL,QWA)
+            elif src_ != FAM[fam][size]: F.emit('ld', '%s,%s' % (FAM[fam][size], src_))
         else:
             rtl = regvar_of(strip(l).e) if strip(l).k == 'load' else None
             if REGTEMP_INPLACE and rtl is not None and getattr(rtl, 'regtemp', False) and dies_here(F, strip(l)) and \
@@ -5815,6 +5846,8 @@ NEGK_UCHAR = True                                         # see fold
 POP_BEFORE_LOOP_INIT = True                               # see gen_stmt: i = 0; while (..) after a call: the pops come
                                                           # before the counter's load (random r3_00_15: inc 0x2,XSP / ld DE,0x0)
 K_DIVIDEND_WIDE = True                                    # see bin_wide
+COMM_SWAP_PLAIN = True                                    # see gen_bin
+COND_K_PRELOAD = True                                     # see gen: c ? x : K
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)

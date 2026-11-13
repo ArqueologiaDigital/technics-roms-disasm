@@ -1258,6 +1258,16 @@ constant dividend is loaded at the division's width (`gc2 = 8 / gs.c` -> `ld WA,
 `ld A,0x8` / `exts WA`; stdiv3.c's K rows show the same).  Random programs at none 151 -> 154 of 800 (29 / 70 / 25
 at the other sets, unchanged).
 
+**Batch 76 (2026-11-13): two rules from functions three lines off.**  A commutative int operation (`+ & | ^`) whose
+left is plain memory (a global, a constant element, a static member) and whose right is computed evaluates the
+computed side first and takes the memory as the operand (`return gi3 + (gpl[3] % 16)` -> .. / `ld HL,QWA` /
+`add HL,(_gi3)`; `gia[0] + gps->a[5]` -> `ld XWA,(_gps)` / `ld HL,(XWA+0x18)` / `add HL,(_gia)`); a remainder then goes
+straight into the result register.  A conditional expression with a constant else-arm loads the constant first and
+the test skips the other arm's load, with one label (`u == 2 ? gi3 : (16 - 255)` -> `ld HL,0xff11` / `cp IZ,0x2` /
+`j ne,L1` / `ld HL,(_gi3)` / `L1:`); the model does this when the test is compares only and the other arm is a plain
+load, and keeps the two-label form otherwise.  Random programs at none 154 -> 158 of 800 (29 / 70 / 25 at the other
+sets, unchanged); elrd.c at none 270 -> 274.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
