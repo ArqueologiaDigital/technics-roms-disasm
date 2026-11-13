@@ -1104,6 +1104,12 @@ statement is bumped in the register first (`gc = gc2; gc++` -> `ld A,(_gc2)` / `
 have 143 `add (m),XWA` against 3 `add XWA,(m)` / `ld (m),XWA`, which come from a folded local and a chained
 assignment).  Random programs at none 103 -> 106 of 800.
 
+**Batch 57 (2026-11-13): three more near misses.**  `!x` of a char value computed in a byte is tested as a byte
+(`return !(gc - 5)` -> `ld A,(_gc)` / `dec 0x5,A` / `cp A,0x0`); an unsigned int divided by a power of two in a
+compound assignment is a shift (`gu2 /= 16` -> `srl 0x4,WA`); a constant element or static member `op=` a call takes
+the result from XHL (`gula[4] += rul(gul)` -> `cal _rul` / `add (_gula + 0x10),XHL`).  Random programs at none
+106 -> 110 of 800.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

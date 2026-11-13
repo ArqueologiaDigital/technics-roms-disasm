@@ -782,6 +782,12 @@ def gen(F, e, fam, size, then_ret=False, store=False):
                 strip(strip(strip(x.e).base).e).decl.kind == 'global' and not member_offset(strip(x.e)):
             F.emit('ld', 'XWA,(_%s)' % strip(strip(strip(x.e).base).e).decl.name)   # random r1_06_01: !gps->c ->
             F.emit('cp%s' % ('b' if xs == 1 else 'w'), '(XWA),0x0')                  # ld XWA,(_gps) / cpb (XWA),0x0
+        elif NOT_CHAR8 and xs == 2 and m is None and not F.opt and not F.adecl and x.k == 'cast' and x.kind == 'IntegralCast' and \
+                getattr(strip(x.e), 'narrowed', False) and strip(x.e).ty is not None and strip(x.e).ty.size == 1 and \
+                strip(x.e).k in ('bin', 'un'):
+            f_ = gen(F, strip(x.e), 'WA', 1)     # a char value computed in a byte is tested as a byte (random r3_08_11:
+            if f_ != 'WA': raise Unsupported('a char truth test outside A')   # !(gc - 5) -> ld A,(_gc) / dec 0x5,A /
+            F.emit('cp', 'A,0x0')                # cp A,0x0)
         elif xs == 4 or m is None:               # lnot_l: ld XWA,x / or XWA,XWA
             f_ = gen(F, x, 'WA', xs); W = FAM[f_ if f_ in FAM and xs in FAM[f_] else 'WA'][xs]
             if xs == 4: F.emit('or', '%s,%s' % (W, W))   # (random r1_00_05: !(k * gl2) tests the helper's XHL; r1_09_14:
@@ -1557,6 +1563,9 @@ ARG_CAST_COPY = True                                      # see push_arg: an exp
 REGVAL_STORE_XWA = True                                   # see gen_stmt: a register temporary stored through a pointer
 INCB_FORWARD = True                                       # see compile_function_once: gc = x; gc++
 ADD_IN_PLACE = True                                       # see gen_stmt: g = g + e
+NOT_CHAR8 = True                                          # see gen: !x of a char value computed in a byte
+DIVU_SHIFT = True                                         # see gen_opassign: an unsigned int divided by a power of two
+OPASSIGN_CALL_ELEM = True                                 # see gen_opassign: a static long op= a call
 NESTED_IF_RET = True                                      # see gen_stmt: if (a) if (b) x; at the end of a function
 LX5 = True                                                # see lx5_lines: long helpers of lhx.c's lxo_* rows
 
@@ -7097,6 +7106,13 @@ def gen_opassign(F, e):
         gen_call(F, strip(r)); flush_pops(F)               # homes2b.c HL05: b ^= g1(a) -> cal _g1 / inc 0x4,XSP /
         t = lvalue(F, e.l)                                 # xor (XSP+0x4),HL (the slot after the pops, the result as
         F.emit(SIMPLE_OPS[op], '%s,%s' % (t, FAM['HL'][size])); return t   # it is)
+    if op in SIMPLE_OPS and OPASSIGN_CALL_ELEM and strip(r).k == 'call' and not has_helper_call(strip(r).fn) and size == 4 and \
+            not F.opt and not F.adecl and not fpgen.is_fp(strip(e.l).ty) and strip(e.l).k in ('index', 'member') and \
+            global_offset(strip(e.l)) is not None and global_offset(strip(e.l))[0] != '__param__' and \
+            not (strip(e.l).k == 'index' and fold(strip(e.l).idx).k != 'const') and not (strip(e.l).k == 'member' and strip(e.l).arrow):
+        gen_call(F, strip(r))                              # a constant element or static member op= a call: the result is
+        t = lvalue(F, e.l)                                 # used from XHL (random r4_02_08: gula[4] += rul(gul) ->
+        F.emit(SIMPLE_OPS[op], '%s,XHL' % t); return t     # cal _rul / add (_gula + 0x10),XHL)
     if op in SIMPLE_OPS:
         rk = fold(r).k == 'const' and fold(r).value is not None
         heavy = []                                         # the right side reads memory through an address
@@ -7281,7 +7297,9 @@ def gen_opassign(F, e):
             F.emit('sll', '%s,%s' % (hx(k2_.bit_length() - 1), FAM[work][1])); res = FAM[work][1]   # (random r3_02_02:
         elif op == '*':                                                                             #  guc *= 4 -> sll 0x2,A)
             F.emit('muls' if signed else 'mul', '%s,%s' % (wide, rs)); res = FAM[work][size]
-        else:
+        elif op == '/' and DIVU_SHIFT and size == 2 and not signed and k2_ >= 2 and k2_ & (k2_ - 1) == 0 and not F.opt and not F.adecl:
+            F.emit('srl', '%s,%s' % (hx(k2_.bit_length() - 1), FAM[work][2])); res = FAM[work][2]   # (random r4_05_19:
+        else:                                                                                       #  gu2 /= 16 -> srl 0x4,WA)
             F.emit('exts' if signed else 'extz', wide); F.emit('divs' if signed else 'div', '%s,%s' % (wide, rs))
             res = FAM[work][size] if op == '/' else (Q[work] if size == 2 else HI[work])
         if res.startswith('Q'):                            # .as_mod_gi: ld WA,QBC into the dead operand's register
