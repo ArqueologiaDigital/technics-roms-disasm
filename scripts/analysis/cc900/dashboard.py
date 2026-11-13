@@ -222,6 +222,16 @@ function tile(k, v, target, delta, goodUp) {
 
 // ---- the wall-clock time of each round: the gap to the round commit before it, in minutes
 const GAP = R.map((r, i) => i ? Math.max(0, (new Date(r.date) - new Date(R[i - 1].date)) / 60e3) : null), CAP = 120;   // (a commit authored before its parent counts as 0)
+// the part of each round spent on the owner's prompts: the overlap of interruptions.tsv's intervals with the round
+const BRK0 = Math.min(...(DATA.breaks || []).map(k => new Date(k[0]).getTime()));   // nothing was recorded before this
+const BRK = R.map((r, i) => { if (!i) return null; const a = new Date(R[i - 1].date).getTime(), b = new Date(r.date).getTime(); let t = 0;
+  if (!(b > BRK0)) return null;
+  for (const k of (DATA.breaks || [])) if (k[2] !== "idle") t += Math.max(0, Math.min(b, new Date(k[1]).getTime()) - Math.max(a, new Date(k[0]).getTime()));
+  return t / 60e3; });
+const IDLE = R.map((r, i) => { if (!i) return null; const a = new Date(R[i - 1].date).getTime(), b = new Date(r.date).getTime(); let t = 0;
+  if (!(b > BRK0)) return null;
+  for (const k of (DATA.breaks || [])) if (k[2] === "idle") t += Math.max(0, Math.min(b, new Date(k[1]).getTime()) - Math.max(a, new Date(k[0]).getTime()));
+  return t / 60e3; });
 const fmtMin = m => m >= 90 ? `${Math.floor(m / 60)} h ${String(Math.round(m % 60)).padStart(2, "0")} min` : m < 10 ? `${m.toFixed(1)} min` : `${Math.round(m)} min`;
 
 // ---- line charts
@@ -286,8 +296,10 @@ chart("Semantic differences from the oracle", "Functions whose model code behave
   [{ name: "DIFFERENT", c: "var(--series-1)", v: R.map(r => r.semdiff) }], { zero: true });
 chart("Probes: functions covered", "How many probe functions the ledger scores per option set: the size of the evidence base.",
   SETS.map(s => ({ name: LABEL[s], short: LABEL[s], c: COLOR[s], v: R.map(r => r.scores["probes/" + s] ? r.scores["probes/" + s][1] : null) })), { zero: true });
-chart("Wall-clock time of each round", `Minutes from the round before to this round's commit. A pause between sessions counts as part of the next round, so the plot stops at ${CAP} minutes; the tooltip gives the real time.`,
-  [{ name: "round time", short: "last", c: "var(--series-1)", v: GAP.map(g => g == null ? null : Math.min(g, CAP)), tv: GAP }],
+chart("Wall-clock time of each round", `Minutes from the round before to this round's commit. A pause between sessions counts as part of the next round, so the plot stops at ${CAP} minutes; the tooltip gives the real time. The second line is the part of each round spent answering the owner's prompts instead of autonomous model work, the third the part the session spent stopped, waiting for a prompt; both from interruptions.tsv (recorded since 2026-11-12 23:10; some intervals are estimates).`,
+  [{ name: "round time", short: "round", c: "var(--series-1)", v: GAP.map(g => g == null ? null : Math.min(g, CAP)), tv: GAP },
+   { name: "of which on the owner's prompts (dashboard features, questions, tooling asked for)", short: "prompts", c: "var(--series-2)", v: BRK.map(g => g == null ? null : Math.min(g, CAP)), tv: BRK },
+   { name: "of which stopped, waiting for a prompt", short: "idle", c: "var(--series-3)", v: IDLE.map(g => g == null ? null : Math.min(g, CAP)), tv: IDLE }],
   { zero: true, cap: CAP, max: CAP, fmt: g => g == null ? "–" : fmtMin(g) });
 }
 charts();
@@ -296,15 +308,26 @@ charts();
 (function () {
   const cols = [["random/none", "random none"], ["random/O3XS", "random -O3 -XS"], ["random/Xr", "random -Xr"], ["random/O3XSXr", "random -O3 -XS -Xr"],
     ["library/O3XS", "library"], ["micro/none", "micro none"], ["micro/O3XS", "micro -O3 -XS"], ["micro/Xr", "micro -Xr"], ["micro/O3XSXr", "micro -O3 -XS -Xr"]];
-  let h = "<tr><th>commit time</th><th>commit</th>" + cols.map(c => `<th>${c[1]}</th>`).join("") + "<th>probes exact</th><th>sem. diff.</th><th>round time</th></tr>";
+  let h = "<tr><th>commit time</th><th>commit</th>" + cols.map(c => `<th>${c[1]}</th>`).join("") + "<th>probes exact</th><th>sem. diff.</th><th>round time</th><th>on prompts</th><th>idle</th></tr>";
   for (let i = n - 1; i >= 0; i--) { const r = R[i];
     const pe = SETS.reduce((a, s) => a + (r.scores["probes/" + s] ? r.scores["probes/" + s][0] : 0), 0), pt = SETS.reduce((a, s) => a + (r.scores["probes/" + s] ? r.scores["probes/" + s][1] : 0), 0);
     h += `<tr><td>${r.date.slice(0, 16).replace("T", " ")}</td><td class="sj" title="${esc(r.subject)}">${r.h} ${esc(r.subject)}</td>` +
-      cols.map(c => `<td>${r.scores[c[0]] ? r.scores[c[0]][0] + " / " + r.scores[c[0]][1] : "–"}</td>`).join("") + `<td>${pt ? pe + " / " + pt : "–"}</td><td>${r.semdiff == null ? "–" : r.semdiff}</td><td>${GAP[i] == null ? "–" : fmtMin(GAP[i])}</td></tr>`; }
+      cols.map(c => `<td>${r.scores[c[0]] ? r.scores[c[0]][0] + " / " + r.scores[c[0]][1] : "–"}</td>`).join("") + `<td>${pt ? pe + " / " + pt : "–"}</td><td>${r.semdiff == null ? "–" : r.semdiff}</td><td>${GAP[i] == null ? "–" : fmtMin(GAP[i])}</td><td>${BRK[i] ? fmtMin(BRK[i]) : "–"}</td><td>${IDLE[i] ? fmtMin(IDLE[i]) : "–"}</td></tr>`; }
   document.getElementById("tbl").innerHTML = h;
 })();
 </script></body></html>
 '''
+
+
+def interruptions():
+    """the intervals of interruptions.tsv (beside this file): [start, end, source, what]"""
+    p = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'interruptions.tsv'); out = []
+    if os.path.exists(p):
+        for line in open(p, encoding='utf-8'):
+            f = line.rstrip('\n').split('\t')
+            if line.startswith('#') or len(f) < 4: continue
+            out.append(f[:4])
+    return out
 
 
 def main():
@@ -313,7 +336,7 @@ def main():
     rows = collect()
     if not rows: sys.exit('no ledger history found')
     import datetime
-    page = (PAGE.replace('__DATA__', json.dumps({'rows': rows}))
+    page = (PAGE.replace('__DATA__', json.dumps({'rows': rows, 'breaks': interruptions()}))
             .replace('__FLAT__', str(sum(1 for r in rows if not r['moved'])))
             .replace('__N__', str(len(rows))).replace('__FIRST__', rows[0]['date'][:10]).replace('__LAST__', rows[-1]['date'][:10])
             .replace('__NOW__', datetime.datetime.now().strftime('%Y-%m-%d %H:%M')))

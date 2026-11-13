@@ -1,0 +1,24 @@
+# Time spent on the owner's prompts instead of autonomous model work, for dashboard.py's round-time chart.
+# start and end are UTC (ISO 8601); "src" says how the times are known: "log" = transcript and commit timestamps,
+# "est" = an estimate (the prompt arrived mid-turn, or the work was interleaved with model work); "idle" = the
+# session had stopped and was waiting for a prompt (from the end of the last reply to the next prompt), which is
+# plotted as a line of its own.
+# Append a row when a prompt has been dealt with.  Tab-separated: start, end, src, what.
+2026-11-12T23:10:40Z	2026-11-12T23:11:20Z	log	question: why rounds are slow, Rust
+2026-11-12T23:14:10Z	2026-11-12T23:16:37Z	log	question: dropping the VM
+2026-11-12T23:21:11Z	2026-11-12T23:49:53Z	log	tooling asked for: parallel ledger, verdict cache (df7ba3b0c)
+2026-11-12T23:49:53Z	2026-11-12T23:57:09Z	log	dashboard (850916a0a)
+2026-11-12T23:57:39Z	2026-11-13T00:07:00Z	idle	stopped after the dashboard reply
+2026-11-13T00:07:00Z	2026-11-13T00:10:52Z	log	dashboard: rebuilt after every round, a point per round (ed47b44e0, 09982faef)
+2026-11-13T00:10:52Z	2026-11-13T00:20:21Z	idle	stopped after the dashboard reply
+2026-11-13T00:20:21Z	2026-11-13T00:20:45Z	log	question: anything else to speed up
+2026-11-13T00:21:21Z	2026-11-13T00:36:00Z	est	tooling asked for: the compile cache, written and first checked (bec6e09e6; its later checks ran beside model work)
+2026-11-13T00:36:00Z	2026-11-13T00:42:28Z	log	dashboard: rounds and mean time tiles (c34efcf4d)
+2026-11-13T01:35:40Z	2026-11-13T01:37:16Z	log	dashboard: last round's time, the round-time chart (1573202a7)
+2026-11-13T01:37:22Z	2026-11-13T02:13:06Z	idle	stopped after the batch 49 summary
+2026-11-13T02:13:06Z	2026-11-13T02:13:41Z	log	question: reducing a round's time further
+2026-11-13T02:15:41Z	2026-11-13T02:15:50Z	log	question: changing the model
+2026-11-13T02:15:50Z	2026-11-13T02:18:59Z	idle	stopped after the reply
+2026-11-13T02:18:59Z	2026-11-13T02:24:22Z	log	asked for: tabulation agents set up, bytecode kept between rows (e504dd7f8)
+2026-11-13T02:39:00Z	2026-11-13T02:42:00Z	est	question: the 49-minute round
+2026-11-13T02:44:00Z	2026-11-13T02:56:00Z	est	dashboard: the prompts line on the round-time chart, this file
