@@ -1794,6 +1794,13 @@ unchanged (none only).
 **Open, newly visible (probe stv.c / pc.c, not caused by this batch):** pc.c `_pc_c_g` at -O3 -XS (a char parameter
 index store leaves the element unchanged: wrong code) and `.pc_c_d`, `.pc_c_h` at -Xr and -O3 -XS -Xr (char arithmetic
 on a parameter); the stv.c `x / x` verdicts are reviewed as zero-division only.
+**Correction, same day:** batch 125's commit also carries `PTRARR_LVALUE` (`_lvalue_raw`), an experiment from the same
+side copy that the batch text did not name: a store into a pointer's member array at a plain index builds its address
+with the `A` kind of `cw_addr` (cmpx.c's `gps->a[t]`), instead of being refused as "lvalue index".  It changes no score
+(stv2.c and stv3.c stay at 0 exact) and moved no gate figure; it only moves their refusals one layer down: stv2.c now
+16 "complex long helper operands", 8 "the right operand overwrites the left", 4 "the value overwrites the store
+address", 4 "lvalue index"; stv3.c 20 / 16 "lvalue index" / 12.  Next layer for that family: the long-helper operand
+combinations with an element at a pointer-member index.
 
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
