@@ -1912,6 +1912,14 @@ is `lda XWA,XWA+0xa`.  Random at none 168 -> 169 (random1 49 -> 50); lsl.c 42 ->
 wrong-code verdicts at -O3 -XS and -O3 -XS -Xr, every `ls_*_h_r` (a local returned after a long helper): e.g. `ls_i_g_h_r`
 returns 0x7 where the oracle returns 0xffff.
 
+**Batch 139 (2026-11-13): a local across a long helper keeps its slot at every option set; 30 wrong-code verdicts closed.**
+lsl.c showed (batch 138) that at -O3 -XS and -O3 -XS -Xr the model kept such a local in HL, which the helper's result
+overwrites: `int t = gi; .. *gpl = gla[7] % gl; return t;` returned the remainder (`ls_i_g_h_r`: 0x7 where the oracle
+returns 0xffff).  The oracle keeps the local in its frame slot at those sets too, so batch 137's rule now applies at every
+option set.  It does not apply when a loop lies between the declaration and the last use: the 1997 library's `_ultoa` keeps
+`q = s` across a loop of `val % radix` in a home (a first version lost it on the scratch ledger).  semcheck: the 30 lsl.c
+verdicts are gone, none new.  lsl.c at -Xr 19 -> 30 exact; the other scores unchanged (random 169 / 46 / 87 / 37).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

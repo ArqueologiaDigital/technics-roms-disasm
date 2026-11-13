@@ -6471,6 +6471,8 @@ LONG_RMW_CONST_ELEM = True                               # see gen_opassign's lo
 FP_OPA_NO_XIZ = True                                     # see the home planner
 LH_ACROSS_SLOT = True                                    # see regtemp_candidates
 SLOT_INIT_FORMS = True                                   # see slot_init
+LH_ACROSS_SLOT_OPT = True                                # see regtemp_candidates (-O3 -XS lsl.c: wrong code otherwise)
+LH_ACROSS_SLOT_XR = True
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -13930,7 +13932,8 @@ def regtemp_candidates(F):
         return out
     for i, c in enumerate(body):
         if c.k != 'decl': continue
-        if LH_ACROSS_SLOT and not F.opt and not F.adecl and c.var.kind == 'local' and c.var.ty.kind in ('int', 'ptr') and \
+        if LH_ACROSS_SLOT and (not F.opt or LH_ACROSS_SLOT_OPT) and (not F.adecl or LH_ACROSS_SLOT_XR) and \
+                c.var.kind == 'local' and c.var.ty.kind in ('int', 'ptr') and \
                 c.init is not None and not getattr(c.var, 'lh_ctr', False):
             ul_ = [k_ for k_, x in enumerate(body) if k_ > i and uses_decl(x, c.var)]
             def real_lh_(m):                               # a long * / % that calls a helper (not folded, not a power of two)
@@ -13944,6 +13947,8 @@ def regtemp_candidates(F):
             mids_ = body[i + 1:ul_[-1]] if ul_ else []
             if ul_ and any(real_lh_(m) for x in mids_ for m in nodes_in(x, 'bin') + nodes_in(x, 'opassign')) and \
                     not any(nodes_in(x, 'call') or fpgen.is_fp_op(x) for x in mids_) and \
+                    not any(x.k in ('for', 'while', 'do') or nodes_in(x, 'for') or nodes_in(x, 'while') or nodes_in(x, 'do')
+                            for x in mids_) and \
                     not any(fpgen.is_fp_op(m) or fpgen.is_fp_copy(m) for x in mids_ for m in nodes_in(x, 'bin')):
                 c.var.no_fold = True; c.var.lh_slot = True; continue   # (a long helper between the declaration and the
                 # last use: the local lives in a frame slot, XIZ being the helper's; lsl.c ls_i_g_h_a: ld WA,(_gi) /
