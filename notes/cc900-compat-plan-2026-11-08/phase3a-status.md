@@ -1644,6 +1644,18 @@ element at an `int` or `char` index, the largest refusal group of both corpora. 
 96 / 48 / 0 / 0 of 360.  A Sonnet agent tabulated its templates (`tabulation/lhy-predict.py`, 360 of 360 lines;
 `tabulation/lhy-FAMILIES.md`); porting them is the next batch.
 
+**Batch 110 (2026-11-13): the guarded long helper statement; the exit label before the epilogue; lhy 96 -> 120.**
+First steps on `lhy.c`, whose templates the tabulation gives in full (`tabulation/lhy-FAMILIES.md`).  (1) The planner
+of a long helper with an element operand (plan_lh_call0) took its one statement only at the top level; the random
+corpora write every division under `if (divisor != 0)`.  The guard's code is the ordinary condition and the body
+the plain form, so accepting the statement inside such an `if` is enough for the int-parameter rows
+(lyi_*_iPg G E Y J D: 0 -> 4 of 4 each).  (2) Batch 105's exit label goes in front of the epilogue, not of the
+`ret`: `L1:` / `pop XIZ` / `inc 0x2,XSP` / `ret` (lyi_l_d_iPgR); only the `inc` that undoes the frame's `dec` is
+epilogue, an argument's `inc 0x4,XSP` is not (rs_2_00_05_2), and where the `if`'s own end label already stands
+there is one label, not two.  lhy at none 96 -> 120 of 360; rstmt 3,456 / 3,003 / 3,028 / 2,867 ->
+3,459 / 3,005 / 3,030 / 2,869.  Left on lhy: a local index (T rows), the held destination address (shapes C, and
+E Y D under `*`), `x * 7` open coded (K J S), the char-index rows of the new shapes.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

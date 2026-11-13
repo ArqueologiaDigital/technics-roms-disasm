@@ -1714,6 +1714,11 @@ def plan_lh_call0(F):
     if LH_CTR_SLOT and not F.opt and any(getattr(d, 'lh_ctr', False) for d in f.decls):   # (lhidx.c L rows: the one
         stmts_ = []                                                                       #  statement inside a loop)
         walk(f.body, lambda n_, d_: stmts_.append(n_) if n_.k == 'expr' else None)
+    if LH_GUARDED and not F.opt:                           # the one statement under if (divisor != 0) (lhy.c g rows:
+        for x_ in list(stmts_):                            # the guard's own code first, then the plain form)
+            if x_.k == 'if' and x_.els is None and len(flat(x_.then)) == 1 and flat(x_.then)[0].k == 'expr' and \
+                    not nodes_in(x_.cond, 'call') and not has_helper_call(x_.cond):
+                stmts_.append(flat(x_.then)[0])
     tops = [x for x in stmts_ if x.k == 'expr' and x.e.k == 'bin' and x.e.op == '=' and strip(x.e.r) is hits[0] and
             (strip(x.e.l).k == 'var' and strip(x.e.l).decl.kind == 'global' and strip(x.e.l).ty.size == 4 or
              LH_IDX and hits[0].op != '*' and strip(x.e.l).ty is not None and strip(x.e.l).ty.size == 4 and strip(x.e.l).k in ('member', 'index') and (sc_lkind(F, strip(x.e.l)) or ('',))[0] == 'M' or
@@ -6259,6 +6264,7 @@ LOCAL_BIN_SWAP = True                                     # see store_global
 CALL_VALUE_FIRST = True                                   # see gen_stmt's store
 LEFT_BIN_RIGHT_PTR = True                                 # see gen_bin
 XIZ_PTR_MEM = True                                        # see cw_kind
+LH_GUARDED = True                                         # see plan_lh_call0
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -14328,9 +14334,19 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
             if a_ and b_ and a_.group(1) == b_.group(3):
                 F.lines[k_ - 1:k_ + 1] = ['\t%s\t%s,%s' % (b_.group(1), b_.group(2), a_.group(2)), F.lines[k_ - 1]]
             k_ += 1
-    if TAIL_IF_RETURN_LABEL and tail_if_return(f, F.opt) and len(F.lines) >= 2 and F.lines[-1] == '\tret' and \
-            not F.lines[-2].endswith(':'):               # the function ends in if (..) return x; and falls off its end:
-        F.lines.insert(len(F.lines) - 1, F.newlabel() + ':')   # the return's exit label stays before the ret (rstmt
+    if TAIL_IF_RETURN_LABEL and tail_if_return(f, F.opt) and len(F.lines) >= 2 and F.lines[-1] == '\tret':
+        k_ = len(F.lines) - 1                            # (before the epilogue, where the if's own end label may
+        fr_ = [m_.group(1) for m_ in (re.match(r'^\tdec\t(0x[0-9a-f]+),XSP$', l_) for l_ in F.lines[:2]) if m_]
+        while k_ > 0 and (F.lines[k_ - 1].startswith('\tpop\t') or        # (an inc that undoes the frame's dec, not
+                          fr_ and F.lines[k_ - 1] == '\tinc\t%s,XSP' % fr_[0]): k_ -= 1   # an argument's: rs_2_00_05_2) already
+        if k_ > 1 and F.lines[k_ - 1].endswith(':') and F.lines[k_ - 2].endswith(':'):   # (one label there, not two)
+            for j_ in (k_ - 1, k_ - 2):
+                lab_ = F.lines[j_][:-1]
+                if not any(re.search(r'[\t,]%s$' % re.escape(lab_), l_) for l_ in F.lines):
+                    del F.lines[j_]; break
+        elif k_ > 0 and not F.lines[k_ - 1].endswith(':'):  # stand: lhy.c lyi_l_d_iPgR, L1: / pop XIZ / inc 0x2,XSP / ret)
+            F.lines.insert(k_, F.newlabel() + ':')       # the function ends in if (..) return x; and falls off its end:
+                                                         # the return's exit label stays before the ret (rstmt
                                                          # rs_1_00_07_3: ret eq / ld HL,(_gi) / L37: / ret; not under -O when the
                                                          # test is a constant, rs_3_00_19_3)
     if LABEL_MERGE and not F.opt:                       # random r1_01_07: if (a) {..} else { if (b) ..; } -> the inner
