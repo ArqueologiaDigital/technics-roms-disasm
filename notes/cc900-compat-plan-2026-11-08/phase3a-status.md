@@ -2187,6 +2187,14 @@ MULDIV_ELEM_ADDR, XIZ_MEMBER_INIT, LOCAL_BIN_SWAP, VALUE_FIRST_PK, MEMBER_STORE_
 23 with 275 more exact functions (fpargf.c +24 / +16, stdiv2.c +10 / +16, stvxc.c +4 / +14, stdiv.c +12, lsl.c +10 / +10,
 rstmt +66 / +63, the random corpora), down 0; pairs MATCH 223; semcheck 54. Random 182 / 60 / 102 / 52.
 
+**Batch 169 (2026-11-13): five cdecl-only rules also apply under -Xr.** The last sweep of the series (research-scratch
+gate/xrtry4.sh; results in gate/xrtry-results-adecl-2026-11-13.txt) relaxes each of the 56 rules gated by `not F.adecl`
+alone and scores rstmt at -Xr and -O3 -XS -Xr (baselines 3,265 / 3,045). None lost. The five that gained two or more
+statements are relaxed together (3,270 / 3,051): CALL_SHIFT_HL, K_DIVIDEND_WIDE, LH_D_COMPUTED, CP_QIZ_K,
+OPK_DEREF_GLOBAL. Ledger up 5 (random1 and random4 at -Xr +2 each, stdiv.c 186 -> 190, rstmt), down 0; pairs MATCH 223;
+semcheck 54. Random 182 / 60 / 106 / 52. With batches 166 to 168 this completes the four relaxation sweeps for the
+current model.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
