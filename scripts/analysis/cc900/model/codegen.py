@@ -1075,6 +1075,13 @@ def gen(F, e, fam, size, then_ret=False, store=False):
         if b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array' and im is not None and \
                 x.ty.size in (1, 2, 4) and 'BC' not in live_regs(F) and \
                 (ib.ty.size == 2 and ib.ty.signed or ib.ty.size == 1) and family_of(im) != 'XBC':
+            if PTR_CTX and ib.ty.size == 1 and ib.ty.signed and x.ty.size == 1 and not F.adecl and \
+                    getattr(e, 'from_local', None) is not None and isinstance(im, str) and im.startswith('(') and \
+                    'BC' not in live_regs(F):
+                F.emit('lda', 'XBC,_%s' % b.decl.name); F.emit('ld', 'XWA,0x0'); F.emit('ld', 'A,%s' % im)
+                F.emit('add', 'XWA,XBC'); return fam      # a local's initialiser: the char zero-extended whole, as a pointer
+                                                           # sum's (rstmt rs_3_06_12_1: char *u = &gca[a] -> lda XBC,_gca /
+                                                           # ld XWA,0x0 / ld A,(a) / add XWA,XBC)
             if ib.ty.size == 1:                           # a char index (r4_00_04: &gia[t], t a char in QIZH ->
                 if x.ty.size == 4: raise Unsupported('the address of a long element at a char index')   # ld A,QIZH /
                 if im != 'A': F.emit('ld', 'A,%s' % im)   # add A,QIZH / lda XBC,_gia / exts WA / exts XWA / add XWA,XBC:
@@ -6124,6 +6131,7 @@ TEST_CLOBBER_LOCALS = True                                # see test_clobber_che
 UIDX_ADDR_XR = True                                       # see gen's addr
 CHAR_REG_LDA = True                                       # see elem_addr
 SAME_REG_GUARD = True                                     # see Fn.emit
+PTR_ELEM_EXTZ = True                                      # see gen_load_mem
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -7361,7 +7369,16 @@ def gen_load_mem(F, v, fam, size):
             if iv is not None and iv.reg in ('BC', 'DE', 'HL') and dies_here(F, ii) and ii.ty.size == 2:
                 W = FAM[iv.reg][4]; F.dead.add(iv)          # m_p_v under -Xr, O3XSXr: exts XBC / add XBC,XBC / add XBC,XWA /
             else: F.emit('ld', 'WA,%s' % im)                # ld HL,(XBC)
-            F.emit('exts' if ii.ty.signed else 'extz', W)
+            u1_ = []
+            if ii.k == 'load' and strip(ii.e).k == 'var':
+                walk(F.f.body, lambda n_, dd: u1_.append(n_) if n_.k == 'var' and n_.decl is strip(ii.e).decl else None)
+            if PTR_ELEM_EXTZ and esz == 1 and W == 'XWA' and not F.adecl and ii.ty.size == 2 and im.startswith('(') and \
+                    len({id(x_) for x_ in u1_}) == 1:
+                F.emit('extz', W)                           # a char pointer's int index read once, from memory, is
+            else:                                           # zero-extended (rstmt rs_3_03_00_2: t[b] -> ld WA,(b) /
+                                                            # extz XWA / add XWA,XBC); read again it sits in a register
+                                                            # and indexes signed (random r3_03_00: ld A,(XWA+IZ))
+                F.emit('exts' if ii.ty.signed else 'extz', W)
             if esz == 2: F.emit('add', '%s,%s' % (W, W))
             elif esz > 2: F.emit('sll', '%s,%s' % (hx({4: 2, 8: 3}[esz]), W))
             F.emit('add', '%s,%s' % (W, pm)); F.emit('ld', '%s,(%s)' % (R, W)); return fam

@@ -1504,6 +1504,17 @@ and `guca[a] <= a` as `cp WA,WA`.  No listing of the compiler has `sub`, `and`, 
 with itself in these places, so the model now refuses to write one.  4 verdicts gone, none new, no ledger row moves.
 **Open: 66 statement findings** (semcheck 118).
 
+**Batch 98 (2026-11-13): two more zero-extended char pointer indices; semcheck 118 -> 114.**  The address of a char
+element at a char parameter, as a local's initialiser, zero-extends the char whole like a pointer sum does
+(`char *u = &gca[a]` -> `lda XBC,_gca` / `ld XWA,0x0` / `ld A,(a)` / `add XWA,XBC`).  And an element read through a
+char pointer at an int index that is read once, from memory, zero-extends the index (`t[b]` -> `ld WA,(b)` /
+`extz XWA` / `add XWA,XBC`); the model sign-extended.  An index read again elsewhere in the function is another
+matter: the compiler keeps it in a register and indexes signed (random r3_03_00, the function this statement comes
+from: `ld A,(XWA+IZ)`), which a first version without the "read once" condition got wrong on the gate.  The
+recurring rule of these batches, stated once: **an index read from memory is zero-extended into a sum; an index held
+in a register is used as a signed register index.**  rstmt at none / -O3 -XS 3,367 / 2,968 -> 3,369 / 2,970.
+**Open: 62 statement findings** (semcheck 114).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
