@@ -1880,6 +1880,16 @@ The XIZ mechanism (LONG_RMW_XIZ, for an element at a variable index) refused a c
 direct memory; its address now goes into XIZ by `lda`.  Without options.  rstmt at none 3,543 -> 3,548 and at -Xr 3,038 ->
 3,043.  Random exact unchanged (its six functions differ elsewhere too).
 
+**Batch 136 (2026-11-13): a 4-byte local keeps its slot when a double op= needs XIZ; random refused 389 -> 382.**  From the
+43 random functions whose statements are all exact alone (single_bad_stmt.py).  `char *t = gp; gda[1] *= gs.d / 3.0; ..`:
+the model homed `t` in XIZ and then refused the double compound assignment, whose target address also needs XIZ ("a
+double compound assignment over the XIZ home of t", 5 functions).  The oracle keeps `t` in a frame slot instead
+(`ld XWA,(_gp)` / `ld (XSP+0x4),XWA` / `lda XIZ,_gda + 0x8` / ..; random r1_03_12).  Without options, a 4-byte local is not
+homed in XIZ in a function with a double op= on a non-local target, and is kept out of folding so it gets its slot.  Seven
+random functions move from refused to compiled (r1_03_12, r1_06_02, r2_07_03, r2_09_04, r3_03_04, r3_09_19, r4_06_12); none
+is exact yet (r1_03_12's frame is 0x14 bytes where the oracle's is 0xc: the floating-point temporaries' layout).  The
+gate's semcheck shows no new verdict, so the newly compiled code is right.  No ledger row moved.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

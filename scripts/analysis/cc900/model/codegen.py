@@ -6468,6 +6468,7 @@ ULONG_POW2 = True                                        # see gen_long_helper
 K_MINUS_PTR = True                                       # see gen_bin
 VALUE_FIRST_PK = True                                    # see gen_stmt's store
 LONG_RMW_CONST_ELEM = True                               # see gen_opassign's long helper
+FP_OPA_NO_XIZ = True                                     # see the home planner
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -9940,7 +9941,13 @@ def plan_homes(F):
     used = {'IZ': False, 'QIZ': False}; qizh = False
     for d in F.xiz_vars: used['IZ'] = used['QIZ'] = True
     moves = []; stores = []
+    fpopa_ = []
+    if FP_OPA_NO_XIZ and not F.opt and not F.adecl:      # a double op= on a non-local target needs XIZ for its address:
+        walk(F.f.body, lambda n_, dd: fpopa_.append(n_) if n_.k == 'opassign' and fpgen.is_fp(getattr(strip(n_.l), 'ty', None))
+             and not (strip(n_.l).k == 'var' and strip(n_.l).decl.kind in ('local', 'param')) else None)
     for d in winners_sorted:
+        if d.ty.size == 4 and fpopa_ and d.kind == 'local':   # a 4-byte local then stays in its slot (random r1_03_12:
+            d.no_fold = True; continue                     # char *t = gp; gda[1] *= .. -> ld (XSP+0x4),XWA / lda XIZ,_gda + 0x8)
         if d.ty.size == 4:
             if d.kind == 'param':
                 src = FAM[d.reg][4] if getattr(d, 'reg', None) else d
