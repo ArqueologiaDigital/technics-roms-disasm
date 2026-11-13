@@ -129,7 +129,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-10-5-micro-random2, v423/O3XS                           | random2/*.c          | 8 / 200 exact (4.0%)       |
 | run 2026-11-10-5-micro-random2, v423/Xr                             | random2/*.c          | 17 / 200 exact (8.5%)      |
 | run 2026-11-10-5-micro-random2, v423/O3XSXr                         | random2/*.c          | 5 / 200 exact (2.5%)       |
-| run 2026-11-10-6-micro-random3, v423/none                           | random3/*.c          | 38 / 200 exact (19.0%)     |
+| run 2026-11-10-6-micro-random3, v423/none                           | random3/*.c          | 39 / 200 exact (19.5%)     |
 | run 2026-11-10-6-micro-random3, v423/O3XS                           | random3/*.c          | 8 / 200 exact (4.0%)       |
 | run 2026-11-10-6-micro-random3, v423/Xr                             | random3/*.c          | 20 / 200 exact (10.0%)     |
 | run 2026-11-10-6-micro-random3, v423/O3XSXr                         | random3/*.c          | 7 / 200 exact (3.5%)       |
@@ -235,7 +235,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-13-1-micro-stdiv2, v423/O3XS                            | probes/stdiv2.c      | 820 / 1020 exact (80.4%)   |
 | run 2026-11-13-1-micro-stdiv2, v423/Xr                              | probes/stdiv2.c      | 458 / 1020 exact (44.9%)   |
 | run 2026-11-13-1-micro-stdiv2, v423/O3XSXr                          | probes/stdiv2.c      | 288 / 1020 exact (28.2%)   |
-| run 2026-11-13-2-micro-lhx, v423/none                               | probes/lhx.c         | 880 / 1184 exact (74.3%)   |
+| run 2026-11-13-2-micro-lhx, v423/none                               | probes/lhx.c         | 886 / 1184 exact (74.8%)   |
 | run 2026-11-13-2-micro-lhx, v423/O3XS                               | probes/lhx.c         | 282 / 1184 exact (23.8%)   |
 | run 2026-11-13-2-micro-lhx, v423/Xr                                 | probes/lhx.c         | 236 / 1184 exact (19.9%)   |
 | run 2026-11-13-2-micro-lhx, v423/O3XSXr                             | probes/lhx.c         | 174 / 1184 exact (14.7%)   |
@@ -255,7 +255,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-13-6-micro-negk, v423/O3XS                              | probes/negk.c        | 38 / 38 exact (100.0%)     |
 | run 2026-11-13-6-micro-negk, v423/Xr                                | probes/negk.c        | 38 / 38 exact (100.0%)     |
 | run 2026-11-13-6-micro-negk, v423/O3XSXr                            | probes/negk.c        | 38 / 38 exact (100.0%)     |
-| run 2026-11-13-7-micro-rstmt, v423/none                             | probes/rstmt*.c      | 3533 / 4694 exact (75.3%)  |
+| run 2026-11-13-7-micro-rstmt, v423/none                             | probes/rstmt*.c      | 3540 / 4694 exact (75.4%)  |
 | run 2026-11-13-7-micro-rstmt, v423/O3XS                             | probes/rstmt*.c      | 3005 / 4694 exact (64.0%)  |
 | run 2026-11-13-7-micro-rstmt, v423/Xr                               | probes/rstmt*.c      | 3038 / 4694 exact (64.7%)  |
 | run 2026-11-13-7-micro-rstmt, v423/O3XSXr                           | probes/rstmt*.c      | 2869 / 4694 exact (61.1%)  |

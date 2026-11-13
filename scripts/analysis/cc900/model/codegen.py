@@ -5707,6 +5707,14 @@ def long_helper_order(F, e, l, r):
     return True
 
 def gen_long_helper(F, e, l, r, fam, signed):
+    rk2_ = fold(r)
+    if ULONG_POW2 and not F.opt and not F.adecl and not signed and e.op in ('/', '%') and rk2_.k == 'const' and \
+            rk2_.value is not None and rk2_.value >= 2 and rk2_.value & (rk2_.value - 1) == 0 and fold(l).k != 'const':
+        from frontend import N                             # an unsigned long by a power of two is no helper: % is and,
+        k_ = rk2_.value                                    # / a shift right (rstmt rs_3_07_12_2: gula[a] % 2UL ->
+        if e.op == '%': ne_ = N('bin', op='&', l=l, r=N('const', value=k_ - 1, ty=e.ty), ty=e.ty)   # ld XWA,(XBC+A) /
+        else: ne_ = N('bin', op='>>', l=l, r=N('const', value=k_.bit_length() - 1, ty=e.ty), ty=e.ty)   # and XWA,0x1)
+        return gen(F, ne_, fam, 4)
     name = {'*': 'mul', '/': 'div', '%': 'rem'}[e.op] + ('ls' if signed else 'lu')
     if e.op == '*' and CONST_LEFT_SWAP and fold(l).k == 'const' and fold(r).k != 'const':
         l, r = r, l                                      # random r1_00_05: 61613L * gl2 -> ld XWA,(_gl2) / ld XBC,0xf0ad
@@ -5745,7 +5753,10 @@ def gen_long_helper(F, e, l, r, fam, signed):
         li_ = strip(l)                                     # a helper's result as the left of another helper by a constant
         while li_.k == 'cast' and li_.ty is not None and li_.ty.size == 4: li_ = strip(li_.e)
         if li_.k == 'bin' and li_.ty is not None and li_.ty.size == 4 and li_.ty.kind == 'int' and \
-                (li_.op in ('/', '%') or li_.op == '*' and fold(li_.r).k != 'const'):
+                (li_.op in ('/', '%') or li_.op == '*' and fold(li_.r).k != 'const') or \
+                LH_NESTED_CALL and li_.k == 'call' and li_.ty is not None and li_.ty.size == 4 and not has_helper_call(li_.fn):
+            # (a call's result too: rstmt rs_3_09_10_5, rul(gula[a]) % 10UL -> .. cal _rul / inc 0x4,XSP / ld XWA,XHL /
+            #  ld XBC,0xa / cal C9H_remlu)
             if gen(F, l, 'HL', 4) != 'HL': raise Unsupported('complex long helper operands')   # (rstmt rs_4_06_00_2:
             flush_pops(F)                                  # (*gpl % 100L) / 100L -> .. cal C9H_remls / ld XWA,XHL /
             kv_ = fold(r).value & 0xffffffff
@@ -6435,6 +6446,8 @@ MEMBER_ARR_STORE = True                                  # see _lvalue_raw
 LH_DEAD_IDX_SLOT = True                                  # see lh_counter_slots
 LH_NESTED_K = True                                       # see gen_long_helper
 LH_D_COMPUTED = True                                     # see gen_long_helper
+LH_NESTED_CALL = True                                    # see gen_long_helper
+ULONG_POW2 = True                                        # see gen_long_helper
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)

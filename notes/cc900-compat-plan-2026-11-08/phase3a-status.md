@@ -1857,6 +1857,13 @@ group 3, two helpers in one expression); rstmt at none 3,530 -> 3,532.  Random e
 (rs_1_07_12_2): the member's address is held in XBC while the right side is computed in XWA.  Multiply only (for / and % the
 left must be XWA), without options.  rstmt at none 3,532 -> 3,533.  Random exact unchanged.
 
+**Batch 133 (2026-11-13): a call's long result by a constant; an unsigned long by a power of two; random +1, rstmt +7.**
+(1) Batch 131's nested form also takes a call's result on the left: `return rul(gula[a]) % 10UL` -> .. `cal _rul` /
+`inc 0x4,XSP` / `ld XWA,XHL` / `ld XBC,0xa` / `cal C9H_remlu` (rs_3_09_10_5).  (2) An unsigned long `%` or `/` by a power of
+two calls no helper: `gula[a] % 2UL` -> `ld XWA,(XBC+A)` / `and XWA,0x1` (rs_3_07_12_2); `/` is a shift right.  The model
+refused both ("complex long helper operands").  Without options.  rstmt at none 3,533 -> 3,540; lhx.c 880 -> 886; random
+at none 166 -> 167 of 800 (random3 38 -> 39).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
