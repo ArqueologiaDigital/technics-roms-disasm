@@ -1462,6 +1462,15 @@ refused; I had installed that version before reading the scratch ledger's two ro
 until they were gone.  8 verdicts gone, none new, no ledger row moves.  **Open: 94 statement findings**
 (semcheck 155 = 61 older reviewed ones + 94 on rstmt).
 
+**Batch 93 (2026-11-13): two char-index bugs; semcheck 155 -> 145.**  (1) A char parameter used as the index of an
+int array was loaded as a word (`gua[c]` -> `ld WA,(XSP+0xc)`), reading the neighbouring byte of the stack slot;
+`gen` now refuses any narrow variable in memory asked for at a wider size.  (2) The zero-extended whole form of a
+char index in memory (`ld XWA,0x0` / `ld A,(b)` / `add XWA,XBC`) is the compiler's for a parameter read once; one
+read twice it keeps in a register and indexes signed (`ld C,(b)` / .. / `ld A,(XWA+C)`), which the model does not
+write yet, so the statement is refused there.  Declining instead (falling into the older paths) made three new
+verdicts on the gate; refusing makes none.  10 verdicts gone, none new, no ledger row moves.  **Open: 84 statement
+findings** (semcheck 145 = 61 older reviewed ones + 84 on rstmt).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

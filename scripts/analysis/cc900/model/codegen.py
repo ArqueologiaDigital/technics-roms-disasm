@@ -681,6 +681,14 @@ def gen(F, e, fam, size, then_ret=False, store=False):
             strip(e0_.e).k == 'load' and strip(e0_.e).ty.size == 2 and fam in ('WA', 'BC', 'DE', 'HL'):
         F.emit('ld', '%s,%s' % (FAM[fam][2], src)); return fam   # an explicit (char) of an int in memory reads the word
                                                            # (random r4_08_00: vc((char)gu) -> ld WA,(_gu) / exts WA)
+    if WIDEN_NO_WORD_LOAD and src is not None and src.startswith('(') and e.k == 'cast' and e.kind == 'IntegralCast' and \
+            strip(e.e).ty is not None and strip(e.e).ty.size < size and e.ty is not None and e.ty.kind == 'int':
+        src = None                                         # a widened byte in memory is not loaded as a word
+    if WIDEN_NO_WORD_LOAD and src is not None and src.startswith('(') and e.k == 'load' and e.ty is not None and \
+            e.ty.kind == 'int' and e.ty.size < size and size in (2, 4):
+        raise Unsupported('a %d-byte variable loaded at %d bytes' % (e.ty.size, size))   # (rstmt rs_3_04_13_1: gua[c] with
+                                                           # a char parameter c wrote ld WA,(XSP+0xc), reading the
+                                                           # neighbouring byte: wrong code)
     if src is not None:
         if src.startswith('X') and size < 4 and src[1:] in FAM: src = FAM[src[1:]][size]   # a long register, narrowed
         if src != FAM[fam][size]: F.emit('ld', '%s,%s' % (FAM[fam][size], src))
@@ -6089,6 +6097,7 @@ UIDX_SUM = True                                           # see lvalue
 UCHAR_TO_LONG = True                                      # see gen's cast
 STMT_LOCAL_GUARD = True                                   # see Fn.emit: a local in a scratch register too (rstmt
                                                           # rs_1_07_04_2: unsigned char u in A under ld WA,(_gu2))
+WIDEN_NO_WORD_LOAD = True                                 # see gen
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)

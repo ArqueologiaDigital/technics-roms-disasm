@@ -232,6 +232,13 @@ def widen(F, src, R, signed, esz, scale=True):
     return R
 
 
+CHIDX_ONCE = True                                         # see element
+
+def uses_in_function(F, d):
+    u = []
+    cg.walk(F.f.body, lambda n, dd: u.append(n) if n.k == 'var' and n.decl is d else None)
+    return len({id(x) for x in u})
+
 def single_use(d):
     u = getattr(d, 'uses', None)
     return not isinstance(u, int) or u <= 1
@@ -320,6 +327,11 @@ def element(F, lv, kind, fam='WA'):
                 X = 'XBC' if src[1] == 'A' else 'XWA'
                 F.emit('lda', '%s,%s' % (X, gsym)); return '(%s+%s)' % (X, src[1])
             if src[0] != 'mem': return None
+            if CHIDX_ONCE and how == 'load' and strip(x.e).k == 'var' and uses_in_function(F, strip(x.e).decl) > 1 and \
+                    src[1] not in ('QIZH', 'QIZL'):
+                raise cg.Unsupported('a char index read twice')   # a char parameter read twice is kept in a register and indexes
+                                                           # signed (rstmt rs_2_08_01_2: ld C,(b) / .. / ld A,(XWA+C)); the
+                                                           # zero-extended form is for one read only
             if src[1] in ('QIZH', 'QIZL'):                 # a char local in QIZ: the register indexes, signed
                 if kind != 'load': return None             # (stdiv3.c sd3_c_d_q_GXG: lda XWA,_hca / ld A,(XWA+QIZH))
                 F.emit('lda', 'XWA,%s' % gsym); return '(XWA+%s)' % src[1]
