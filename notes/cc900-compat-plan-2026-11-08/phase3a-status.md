@@ -1676,6 +1676,15 @@ assignment into element 0 of a global array takes the array's address through XW
 into XIZ (`lda XIZ,_gda + 0x8`, 26 times in the statement probes; fpopa.c's `lda XIZ,_gs + 0x4`).  Both without -O.
 rstmt at none / -Xr 3,459 / 3,030 -> 3,469 / 3,037.
 
+**Batch 113 (2026-11-13): a computed long stored into `p->m`; rstmt +4.**  Without -O the model always put the
+member's pointer in XBC and the value in XWA.  The oracle does so for a plain value (`gps->l = *hpl`, stord.c
+st_l_DP) and for `gps->l = (long)!hl` (st_l_DN), but mirrors the pair -- pointer in XWA, value in XBC -- for a
+compound assignment (`gps->l -= 6L | gl`, `gps->l |= gpl[3] << 8`) and for a value computed through a second
+pointer (rs_2_03_01_1: `gps->l = (long)!*gp` -> `ld XWA,(_gps)` / `ld XBC,(_gp)` / `cpb (XBC),0x0` / `scc eq,BC` /
+`exts XBC` / `ld (XWA+0x4),XBC`).  Longs only: an int member keeps XBC / WA (`gps->i = !gps->l`, `gps->u = ~gu`).
+Two wider versions were stopped before installing: one cost two exact random functions (int members), the other
+three probe rows on the scratch ledger (stord, stchain, stvx: plain long values).  rstmt at none 3,469 -> 3,473.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

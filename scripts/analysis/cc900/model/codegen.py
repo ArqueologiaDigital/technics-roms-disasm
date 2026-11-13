@@ -6283,6 +6283,7 @@ XIZ_PTR_MEM = True                                        # see cw_kind
 LH_GUARDED = True                                         # see plan_lh_call0
 MUL_K_ELEM = True                                         # see gen_mul_const
 SHIFT_COUNT_LOCAL = True                                  # see gen_shift_count
+MEMBER_STORE_SWAP = True                                  # see gen_stmt
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -9197,8 +9198,24 @@ def gen_stmt(F, s, last):
     """gen_stmt with F.in_return raised while a return statement (at any depth) is generated: the live-local guard
     then knows nothing is read after it (_strlen: if (ss == NULL) return 0xffff; writes ss's HL)"""
     prev = getattr(F, 'in_return', False); F.in_return = prev or s.k == 'return'
+    n_ms_ = len(F.lines)
     try:
         r_ = _gen_stmt_body(F, s, last)
+        if MEMBER_STORE_SWAP and not F.opt and not F.adecl and s.k == 'expr' and \
+                (s.e.k == 'opassign' or s.e.k == 'bin' and s.e.op == '=') and len(F.lines) - n_ms_ >= 4:
+            new_ = F.lines[n_ms_:]                         # a computed value stored into p->m (m displaced): the pointer
+            if re.match(r'^\tld\tXBC,\(_\w+\)$', new_[0]) and re.match(r'^\t\w+\t\(XBC\+0x[0-9a-f]+\),XWA$', new_[-1]) and \
+                    (sp_lvalue_kind(F, strip(s.e.l)) or ('',))[0] == 'D' and \
+                    (s.e.k == 'opassign' or any(not l_.startswith('\tld\t') and '(XWA' in l_ for l_ in new_[1:-1])) and \
+                    not any(l_.endswith(':') or re.search(r'\b(X?(DE|HL|IX|IY|IZ)|Q\w+|[DEHL]|cal|j)\b', l_) for l_ in new_):
+                # (an op=, or a value computed through a second pointer; gps->l = *hpl and gps->l = (long)!hl keep
+                #  XBC / WA: stord.c st_l_DP, st_l_DN)
+                def sw_(l_):                               # in XWA and the value in BC (rstmt rs_2_03_01_1: gps->l =
+                    return re.sub(r'\b(X?)(WA|BC)\b|\b([AC])\b', lambda m_: (m_.group(1) + {'WA': 'BC', 'BC': 'WA'}[m_.group(2)])
+                                  if m_.group(2) else {'A': 'C', 'C': 'A'}[m_.group(3)], l_)   # (long)!*gp -> ld XWA,(_gps) /
+                F.lines[n_ms_:] = [sw_(l_) for l_ in new_]  # ld XBC,(_gp) / cpb (XBC),0x0 / scc eq,BC / exts XBC /
+                                                           # ld (XWA+0x4),XBC; a plain value and an int member keep XBC / WA:
+                                                           # rs_3_08_02_3 gps->i = gpi[1], rs_1_03_03_2 gps->i = !gps->l)
         if ADD_IN_PLACE and not F.opt and not F.adecl and s.k == 'expr' and s.e.k == 'bin' and s.e.op == '=' and len(F.lines) >= 2:
             lv_ = strip(s.e.l); rv_ = strip(s.e.r)         # g = g + e, a global and a computed e: the sum is added into
             if lv_.k == 'var' and lv_.decl.kind == 'global' and rv_.k == 'bin' and rv_.op == '+' and strip(rv_.l).k == 'load' and \
