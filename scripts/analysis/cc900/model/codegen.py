@@ -555,6 +555,12 @@ def gen(F, e, fam, size, then_ret=False, store=False):
             F.emit('ld', '%s,%s' % (FAM[fam][size], hx(kc_.value & ((1 << (8 * size)) - 1)))); return fam   # the narrow width
                                                                # (random r1_00_04: char f() { return 53; } -> ld L,0x35)
         F.emit('ld', '%s,%s' % (FAM[fam][isz], mem_operand(F, e0.e))); return fam
+    if CAST_WORD_LOAD and e0.k == 'cast' and e0.kind == 'IntegralCast' and getattr(e0, 'explicit', False) and size == 1 and \
+            strip(e0.e).ty.size == 2 and strip(e0.e).k == 'load' and strip(strip(e0.e).e).k in ('member', 'deref', 'index') and \
+            mem_operand(F, e0.e) is None and not F.opt and not F.adecl and fam in ('WA', 'BC', 'DE', 'HL'):
+        return gen(F, e0.e, fam, 2)                        # an explicit (char) of an int read through an address reads the
+                                                           # word too (random r3_00_15: vc((char)gps->u) -> ld XWA,(_gps) /
+                                                           # ld WA,(XWA+0x8) / exts WA; r4_01_13: gca[6] = (char)gps->i)
     if e0.k == 'cast' and e0.kind == 'IntegralCast' and strip(e0.e).ty.size > size and strip(e0.e).k == 'bin' and \
             strip(e0.e).op in SIMPLE_OPS:
         b = strip(e0.e); lv = strip(b.l); rm = mem_operand(F, b.r)
@@ -1361,6 +1367,10 @@ def bin_wide(F, e, op, l, r, fam, size):
         F.emit('ld', '%s,%s' % (W, rk[1])); emit_op(W, lk[1]); return ret('WA')
     # ---- a global or static member on the left against an addressed right or a constant
     a = kimm(r) if R == 'K' else addr(rk)
+    if K_DIVIDEND_WIDE and L == 'K' and op in ('/', '%') and size == 1 and W == 'A' and sgn and not F.opt and not F.adecl \
+            and fold(l).value is not None and 0 <= fold(l).value < 0x80:
+        F.emit('ld', 'WA,%s' % hx(fold(l).value))          # a constant char dividend is loaded wide (random r4_03_06:
+        emit_op(W, a, kval(rk, r)); return ret('WA')       # gc2 = 8 / gs.c -> ld WA,0x8 / divs WA,(_gs); stdiv3.c sd3_c_*K*)
     ldv(W, lk, l); ext(W); emit_op(W, a, kval(rk, r)); return ret('WA')
 
 def cw_addr(F, *a, **k): return cw_pin(F, _cw_addr_raw(F, *a, **k))
@@ -1643,6 +1653,7 @@ LDK32_FORM = True                                         # see Func.emit: ld / 
 ADD_INC = True                                            # see Func.emit
 NO_SELF_LD = True                                         # see Func.emit
 QIZ_VIA_WA = True                                         # see Func.emit
+NESTED_IF_RET2 = True                                     # see gen_stmt: the last if of the last if's block
 NESTED_IF_RET = True                                      # see gen_stmt: if (a) if (b) x; at the end of a function
 LX5 = True                                                # see lx5_lines: long helpers of lhx.c's lxo_* rows
 
@@ -4620,7 +4631,11 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         elif op == '/' and DIVU_SHIFT and not signed and kd_ >= 2 and kd_ & (kd_ - 1) == 0 and not F.opt and not F.adecl:
             F.emit('srl', '%s,%s' % (hx(kd_.bit_length() - 1), FAM[work][size])); res = FAM[work][size]   # (random r4_01_07:
         else:                                                                                             #  vu(gu / 16) -> srl 0x4,WA)
-            F.emit('exts' if signed else 'extz', wide)
+            mk_ = re.match(r'^\tld\t%s,0x([0-9a-f]+)$' % FAM[work][size], F.lines[-1]) if F.lines else None
+            if K_DIVIDEND_WIDE and mk_ and not F.opt and not F.adecl and int(mk_.group(1), 16) < (0x80 if size == 1 else 0x8000):
+                F.lines[-1] = '\tld\t%s,0x%s' % (wide, mk_.group(1))   # a constant dividend is loaded wide (random
+            else:                                                       # r4_03_06: gc2 = 8 / gs.c -> ld WA,0x8 / divs WA,(_gs))
+                F.emit('exts' if signed else 'extz', wide)
             F.emit('divs' if signed else 'div', '%s,%s' % (wide, rs))
             res = FAM[work][size] if op == '/' else (Q[work] if size == 2 else HI[work])
         if store and res == 'W': F.store_from = 'W'; return fam
@@ -5797,6 +5812,9 @@ REMU_AND = True                                           # see gen_bin
 CP_QIZ_K = True                                           # see gen_compare
 NO_RELOAD = True                                          # see Func.emit
 NEGK_UCHAR = True                                         # see fold
+POP_BEFORE_LOOP_INIT = True                               # see gen_stmt: i = 0; while (..) after a call: the pops come
+                                                          # before the counter's load (random r3_00_15: inc 0x2,XSP / ld DE,0x0)
+K_DIVIDEND_WIDE = True                                    # see bin_wide
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -8196,6 +8214,13 @@ def gen_stmt(F, s, last):
             gen_stmt(F, s.then, bool(NESTED_IF_RET and last and bare and not F.opt and len(inner) == 1 and   # r1_07_03:
                                      inner[0].k == 'if' and inner[0].els is None))   # if (a) if (b) x; -> ret lt / .. / ret eq)
             if stmt_returns(s.then): F.dead = dead0     # (r4_08_02: c died in the returning arm, then was read)
+            if NESTED_IF_RET2 and last and bare and not F.opt and not F.adecl and len(inner) > 1 and inner[-1].k == 'if' and \
+                    inner[-1].els is None and not F.pending and F.lines[-1].endswith(':'):
+                l2_ = F.lines[-1][:-1]                   # the last if of the last if's block returns early too, and
+                js_ = [i for i, l in enumerate(F.lines) if re.search(r'[\t,]%s$' % re.escape(l2_), l)]   # its label
+                if len(js_) == 1 and re.match(r'^\tj\t\w+,', F.lines[js_[0]]):                              # stays
+                    F.lines[js_[0]] = '\tret\t' + F.lines[js_[0]].split('\t')[2].split(',')[0]
+                    # (random r4_01_13: if (!gs.a[5]) { ..; if (*gpi != 0) ..; } -> ret ne / .. / ret eq / .. / L3: / ret)
             flush_pops(F)                                # _calloc: inc 0x8,XSP before the join label
             if k is not True: F.lines.append(lab + ':')   # always true: no label (cmp_ui: ge_ui_br0)
             return
@@ -8236,7 +8261,9 @@ def gen_stmt(F, s, last):
         return
     if s.k == 'expr' and F.pending and POP_MERGE_MAX and POP_FLUSH_NOCALL and not nodes_in(s.e, 'call') and \
             not (strip(s.e).k == 'bin' and strip(s.e).op == '=' and strip(strip(s.e).l).k == 'var' and
-                 getattr(strip(strip(s.e).l).decl, 'reg', None)) and \
+                 getattr(strip(strip(s.e).l).decl, 'reg', None) and
+                 not (POP_BEFORE_LOOP_INIT and (getattr(F, 'cur_rest', None) or [None])[0] is not None and
+                      F.cur_rest[0].k in ('for', 'while', 'do', 'switch'))) and \
             not (POP_LAZY and not F.opt and not F.adecl and not stmt_touches_stack(F, s.e) and later_call_absorbs(F)):
         flush_pops(F)                                      # random r1_02_19: vd(gd2); gua[a] = ... -> cal _vd /
                                                            # inc 0x8,XSP / ld A,(XSP+0x4): the pops merge across

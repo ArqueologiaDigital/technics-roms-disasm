@@ -1249,6 +1249,15 @@ against a literal in 128..255 is taken as its unsigned byte, so `-40 - 255` is 2
 `-40 + -255`, `40 - 255` and the long forms fold as C does.  It joins the model's rule that V4.23 types a constant in
 128..255 as an unsigned char.  negk.c 19 -> 38 of 38 at each of the four sets.
 
+**Batch 75 (2026-11-13): four more near misses.**  An explicit `(char)` of an int read through an address reads the
+word, as one in plain memory does (`vc((char)gps->u)` -> `ld XWA,(_gps)` / `ld WA,(XWA+0x8)` / `exts WA`).  The pops
+pending from a call come before a loop counter's initial load when the loop follows (`vc(..); i = 0; while (..)` ->
+`inc 0x2,XSP` / `ld DE,0x0`; before a later call statement they still wait).  The last `if` of the last `if`'s block
+returns early like a lone inner `if` does, and its join label stays (`ret ne` / .. / `ret eq` / .. / `L3:` / `ret`).  A
+constant dividend is loaded at the division's width (`gc2 = 8 / gs.c` -> `ld WA,0x8` / `divs WA,(_gs)`, not
+`ld A,0x8` / `exts WA`; stdiv3.c's K rows show the same).  Random programs at none 151 -> 154 of 800 (29 / 70 / 25
+at the other sets, unchanged).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
