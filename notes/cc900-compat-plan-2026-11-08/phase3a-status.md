@@ -2005,6 +2005,15 @@ statements, as `return f(a)` does (random r1_06_19: `... pushw (XSP+0x6) / cal _
 (r1_09_16: `cal _v1 / pushw 0x0 / cal _vc / inc 0x4,XSP`). Ledger up 2 (random1 at none 51 -> 53, at -O3 -XS 15 -> 16),
 down 0; pairs MATCH 223; semcheck 58. Random 176 / 48 / 87 / 37; rstmt unchanged.
 
+**Batch 150 (2026-11-13): a local across a long helper of plain operands lives in IZ / QIZ (LH_SLOT_XIZ_ONLY,
+LH_PLAIN_IZ).** Batch 137's frame slot for a local across a long helper came from lsl.c, where the helper's
+statement `*gpl = gla[7] % gl` holds gpl in XIZ across the call. When the operands and the target need no address
+register (constants, globals, static members, constant elements), XIZ stays free, and the oracle gives the local IZ / QIZ
+as across a call (random r4_00_09: `unsigned char t = (unsigned char)gula[0]; .. if (gs.l != 0) gs.l = gl % gs.l;
+v1(t)` -> `push QIZ / ld QIZH,A / .. / ld A,QIZH`). The slot is now kept for helper statements that need XIZ, and a
+plain helper statement before a local's last use makes it homes2's, not a register temporary's (without -O and -Xr).
+Ledger up 1 (random4 41 -> 42), down 0; pairs MATCH 223; semcheck 58. Random 177 / 48 / 87 / 37.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

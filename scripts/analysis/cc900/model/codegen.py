@@ -6547,6 +6547,38 @@ VALUE_FIRST_PK = True                                    # see gen_stmt's store
 LONG_RMW_CONST_ELEM = True                               # see gen_opassign's long helper
 FP_OPA_NO_XIZ = True                                     # see the home planner
 LH_ACROSS_SLOT = True                                    # see regtemp_candidates
+LH_SLOT_XIZ_ONLY = True                                  # see regtemp_candidates: only a helper statement that needs XIZ
+LH_PLAIN_IZ = True                                       # see regtemp_candidates: a local across a plain long helper
+
+def plain_long_helper_stmt(x):
+    """is x a statement (or if without else around one) of the form T = A op B or T op= B, a long * / % that calls a
+    helper, with T, A and B constants, globals, static members or constant elements (no address register)?"""
+    while x.k == 'if' and x.els is None and not nodes_in(x.cond, 'call') and not has_helper_call(x.cond):
+        b_ = flat(x.then)
+        if len(b_) != 1: return False
+        x = b_[0]
+    if x.k != 'expr': return False
+    e = strip(x.e)
+    if e.k == 'bin' and e.op == '=': t, h = strip(e.l), strip(e.r)
+    elif e.k == 'opassign': t, h = strip(e.l), e
+    else: return False
+    while h.k == 'cast' and h.ty is not None and h.ty.size == 4: h = strip(h.e)
+    if h.k not in ('bin', 'opassign') or h.ty is None or h.ty.size != 4 or h.ty.kind != 'int' or h.op not in ('*', '/', '%'):
+        return False
+    if fold(h).k == 'const': return False
+    rk = fold(h.r)
+    if h.op in ('/', '%') and rk.k == 'const' and rk.value is not None and not h.ty.signed and rk.value >= 2 and \
+            rk.value & (rk.value - 1) == 0: return False
+    if h.op == '*' and rk.k == 'const': return False
+    if nodes_in(h, 'call') or fpgen.is_fp_op(h): return False
+    if h.k == 'bin' and not (lh_plain_operand(h.l) and lh_plain_operand(h.r)): return False
+    if h.k == 'opassign' and not lh_plain_operand(h.r): return False
+    return (t.k == 'var' and t.decl.kind == 'global') or lh_plain_operand(N_load_(t))
+
+def N_load_(v):
+    """a load node of the lvalue v (for lh_plain_operand)"""
+    from frontend import N
+    return N('load', e=v, ty=v.ty)
 SLOT_INIT_FORMS = True                                   # see slot_init
 LH_ACROSS_SLOT_OPT = True                                # see regtemp_candidates (-O3 -XS lsl.c: wrong code otherwise)
 LH_ACROSS_SLOT_XR = True
@@ -14057,7 +14089,22 @@ def regtemp_candidates(F):
                                 rk_.value & (rk_.value - 1) == 0)
                 return m.op == '*' and rk_.k != 'const'
             mids_ = body[i + 1:ul_[-1]] if ul_ else []
-            if ul_ and any(real_lh_(m) for x in mids_ for m in nodes_in(x, 'bin') + nodes_in(x, 'opassign')) and \
+            def lh_needs_xiz_(x):                          # a helper whose statement needs XIZ: not an assignment of
+                if not LH_SLOT_XIZ_ONLY: return any(real_lh_(m) for m in nodes_in(x, 'bin') + nodes_in(x, 'opassign'))
+                hs_ = [m for m in nodes_in(x, 'bin') + nodes_in(x, 'opassign') if real_lh_(m)]   # plain operands to a
+                if not hs_: return False                   # plain target (random r4_00_09: gs.l = gl % gs.l keeps the
+                plain_ = []                                # char t in QIZH; lsl.c's *gpl = gla[7] % gl holds gpl in XIZ)
+                for m in nodes_in(x, 'bin') + nodes_in(x, 'opassign'):
+                    if (m.k == 'bin' and m.op == '=') or m.k == 'opassign':
+                        tv_ = strip(m.l)
+                        if lh_plain_operand(N_load_(tv_)) or (tv_.k == 'var' and tv_.decl.kind == 'global'):
+                            plain_.append(m)
+                for h_ in hs_:
+                    if not (lh_plain_operand(h_.l) and lh_plain_operand(h_.r)): return True
+                    if h_.k == 'opassign' and h_ in plain_: continue
+                    if not any(m_.k == 'bin' and strip(m_.r) is h_ for m_ in plain_): return True
+                return False
+            if ul_ and any(lh_needs_xiz_(x) for x in mids_) and \
                     not any(nodes_in(x, 'call') or fpgen.is_fp_op(x) for x in mids_) and \
                     not any(x.k in ('for', 'while', 'do') or nodes_in(x, 'for') or nodes_in(x, 'while') or nodes_in(x, 'do')
                             for x in mids_) and \
@@ -14119,6 +14166,11 @@ def regtemp_candidates(F):
         if not used: continue
         last = used[-1]
         if any(calls_in(x) for x in rest[:last]): continue      # a call in between: homes2's case
+        if LH_PLAIN_IZ and not F.opt and not F.adecl and not getattr(d, 'lh_slot', False) and \
+                any(plain_long_helper_stmt(x) for x in rest[:last]):
+            continue                                       # a long helper of plain operands and target in between: homes2's
+                                                           # case too (random r4_00_09: unsigned char t = ..; .. gs.l = gl %
+                                                           # gs.l; v1(t) -> push QIZ / ld QIZH,A / .. / ld A,QIZH)
         lx = rest[last]
         cl = calls_in(lx)
         if cl:                                             # the last statement may call once, with the local among the
