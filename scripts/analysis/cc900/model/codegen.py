@@ -1570,6 +1570,9 @@ DIVU_SHIFT = True                                         # see gen_opassign: an
 OPASSIGN_CALL_ELEM = True                                 # see gen_opassign: a static long op= a call
 PTR_REG_DIRECT = True                                     # see gen_load_mem: p[k] with p in a register
 XIZ_ADDR_WA = True                                        # see gen_stmt: an XIZ pointer home initialised with an address
+MULDIV_ELEM_ADDR = True                                   # see gen_opassign: gua[6] %= 3 through the element's address
+SHIFTB_A = True                                           # see gen_opassign: a byte shifted by a constant in A
+KOP_IN_PLACE = True                                       # see gen_stmt: g = K op g
 NESTED_IF_RET = True                                      # see gen_stmt: if (a) if (b) x; at the end of a function
 LX5 = True                                                # see lx5_lines: long helpers of lhx.c's lxo_* rows
 
@@ -7215,7 +7218,8 @@ def gen_opassign(F, e):
                 F.emit('and', 'A,0xf'); lab = F.newlabel(); F.emit('j', 'z,%s' % lab); F.emit(mnem, 'A,%s' % V)
                 F.lines.append(lab + ':'); F.emit('ld', '%s,%s' % (t, V)); return t
         t = lvalue(F, e.l, ptr='XDE', idx='DE', base='XHL', kind='rmw')
-        V = FAM[next((x for x in ('BC', 'WA', 'DE', 'HL') if not re.search(r'\b(X?%s|%s)\b' % (x, FAM[x][1]), t) and not (SHIFT_COUNT_GUARD and x == 'WA' and fold(r).k != 'const' and mem_operand(F, r) is None)), 'BC')][size]   # (r1_06_03: not over the computed count)
+        V = FAM[next((x for x in (('WA', 'BC', 'DE', 'HL') if SHIFTB_A and size == 1 and fold(r).k == 'const' and not F.opt and not F.adecl
+                                  and 'WA' not in live_regs(F) else ('BC', 'WA', 'DE', 'HL')) if not re.search(r'\b(X?%s|%s)\b' % (x, FAM[x][1]), t) and not (SHIFT_COUNT_GUARD and x == 'WA' and fold(r).k != 'const' and mem_operand(F, r) is None)), 'BC')][size]   # (r1_06_03: not over the computed count)
         rr = fold(r); cs = mem_operand(F, r) if rr.k != 'const' else None
         pre = rr.k != 'const' and cs is None and SHIFT_COUNT_EXPR
         if pre:                                            # random r1_03_04: gul >>= (t & 15): the count computed
@@ -7288,6 +7292,11 @@ def gen_opassign(F, e):
             ptr = 'XBC'
             if 'BC' in live_regs(F): ptr = FAM[free_reg(F, avoid={'WA', 'BC'})][4]      # .as_mul_arr: XDE
             t = lvalue(F, e.l, ptr=ptr, combine=True)
+            if MULDIV_ELEM_ADDR and not F.opt and not F.adecl and strip(e.l).k in ('index', 'member') and size == 2 and \
+                    re.match(r'^\(_\w+( \+ 0x[0-9a-f]+)?\)$', t):
+                F.emit('lda', '%s,%s' % (ptr, t[1:-1])); t = '(%s)' % ptr   # a static element or member is multiplied or
+                                                           # divided through its address (random r1_06_13: gua[6] %= 3 ->
+                                                           # lda XBC,_gua + 0xc / ld WA,(XBC) / .. / ld (XBC),WA)
         rs = mem_operand(F, r)
         if rs is None: raise Unsupported('complex operand')
         in_t = {f_[1:] for f_ in ('XWA', 'XBC', 'XDE', 'XHL') if f_ in t} | \
@@ -8218,6 +8227,15 @@ def gen_stmt(F, s, last):
                 for R_ in ('XWA', 'WA'):                                                           # add (_gpi),XWA)
                     if F.lines[-2] == '\tadd\t%s,%s' % (R_, m_) and F.lines[-1] == '\tld\t%s,%s' % (m_, R_):
                         F.lines[-2:] = ['\tadd\t%s,%s' % (m_, R_)]
+        if KOP_IN_PLACE and not F.opt and not F.adecl and s.k == 'expr' and s.e.k == 'bin' and s.e.op == '=' and len(F.lines) >= 3:
+            lv_ = strip(s.e.l); rv_ = strip(s.e.r)         # g = K op g, a long global: the constant is loaded and the
+            if lv_.k == 'var' and lv_.decl.kind == 'global' and lv_.ty is not None and lv_.ty.size == 4 and rv_.k == 'bin' and \
+                    rv_.op in ('^', '|', '&', '+') and fold(rv_.l).k == 'const' and fold(rv_.l).value is not None and \
+                    strip(rv_.r).k == 'load' and strip(strip(rv_.r).e).k == 'var' and strip(strip(rv_.r).e).decl is lv_.decl:
+                m_ = '(_%s)' % lv_.decl.name; o_ = SIMPLE_OPS[rv_.op]   # operation done in memory (random r1_02_18:
+                a_ = re.match(r'^\t%s\tXWA,(0x[0-9a-f]+)$' % o_, F.lines[-2])   # gl = -1916L ^ gl -> ld XWA,0xfffff884 /
+                if F.lines[-3] == '\tld\tXWA,%s' % m_ and a_ and F.lines[-1] == '\tld\t%s,XWA' % m_:   # xor (_gl),XWA)
+                    F.lines[-3:] = ['\tld\tXWA,%s' % a_.group(1), '\t%s\t%s,XWA' % (o_, m_)]
         return r_
     finally: F.in_return = prev
 

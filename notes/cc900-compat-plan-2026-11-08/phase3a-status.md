@@ -1115,6 +1115,13 @@ the result from XHL (`gula[4] += rul(gul)` -> `cal _rul` / `add (_gula + 0x10),X
 `ld A,(XDE+0x1)`); an XIZ pointer home initialised with the address of an element or member is built in XWA
 (`char *t = &gca[6]` -> `lda XWA,_gca + 0x6` / `ld XIZ,XWA`).  Random programs at none 110 -> 112 of 800.
 
+**Batch 59 (2026-11-13): three patterns among the three-line near misses.**  A byte shifted by a constant in a
+compound assignment works in A (`guc >>= 3` -> `ld A,(_guc)` / `srl 0x3,A` / `ld (_guc),A`; the model used C); a
+static int element or member multiplied or divided in a compound assignment goes through its address
+(`gua[6] %= 3` -> `lda XBC,_gua + 0xc` / `ld WA,(XBC)` / .. / `ld (XBC),WA`; a plain global stays direct);
+`g = K op g` on a long global loads the constant and operates in memory (`gl = -1916L ^ gl` ->
+`ld XWA,0xfffff884` / `xor (_gl),XWA`).  Random programs at none 112 -> 119 of 800.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
