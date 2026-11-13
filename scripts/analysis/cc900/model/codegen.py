@@ -1551,6 +1551,10 @@ MULB_SHIFT = True                                         # see gen_opassign: an
 LH_ELEM0 = True                                           # see gen_long_helper: element 0 as the right operand
 REM_W_VIA_A = True                                        # see gen_stmt: a char remainder into a member or element
 TRUTH_VIA_WA = True                                       # see regvar_stmt: a truth value into a register temporary
+MEMBER_BASE_FIRST = True                                  # see gen_ptr_arith: a static member's pointer under a char index
+OPASSIGN_ZERO = True                                      # see gen_opassign: x |= 0
+ARG_CAST_COPY = True                                      # see push_arg: an explicit sign cast of a register temporary
+REGVAL_STORE_XWA = True                                   # see gen_stmt: a register temporary stored through a pointer
 NESTED_IF_RET = True                                      # see gen_stmt: if (a) if (b) x; at the end of a function
 LX5 = True                                                # see lx5_lines: long helpers of lhx.c's lxo_* rows
 
@@ -4906,6 +4910,10 @@ def gen_ptr_arith(F, e, fam, size):
         F.emit('lda', '%s,XBC+A' % R); return fam               # ld XBC,(_gp) / ld A,(b) / lda XWA,XBC+A
     if ii.ty is not None and ii.ty.size == 1 and esz == 1 and PTR_CHAR_EXTZ and im != 'WA' and \
             (getattr(F, 'ptr_arg_ctx', False) or not ii.ty.signed):
+        if MEMBER_BASE_FIRST and not F.opt and not F.adecl and pm.startswith('(_') and ' + ' in pm and R == 'XWA' and \
+                getattr(F, 'ptr_arg_ctx', False) and 'BC' not in live_regs(F):
+            F.emit('ld', 'XBC,%s' % pm); pm = 'XBC'            # a static member's pointer is loaded first (r1_04_02:
+                                                               # ld XBC,(_gs + 0xa) / ld XWA,0x0 / ld A,(a) / add XWA,XBC)
         F.emit('ld', 'XWA,0x0'); F.emit('ld', 'A,%s' % im)   # random r1_04_02: vp(gs.p + a), a char a on a char pointer,
     else:                                                  # pushed: the byte zero-extended whole (ld XWA,0x0 / ld A,(XSP+0x8));
         load_index16(F, ii, im); F.emit(ext, 'XWA')       # stored it is sign-extended (r1_00_13: gp = gs.p + a -> ld A,.. /
@@ -6020,6 +6028,12 @@ def push_arg(F, a):
         F.emit('push', m if size == 2 else FAM[family_of(m)[1:]][2]); F.push += 2; return 2
     if size <= 2 and m is not None:
         F.emit('pushw', m); F.push += 2; return 2
+    if ARG_CAST_COPY and size == 4 and m in ('XBC', 'XDE', 'XHL') and not F.opt and not F.adecl and a0.k == 'cast' and \
+            a0.kind == 'IntegralCast' and getattr(a0, 'explicit', False) and strip(a0.e).ty is not None and \
+            strip(a0.e).ty.size == 4 and strip(a0.e).ty.signed != a0.ty.signed and 'WA' not in live_regs(F):
+        F.emit('ld', 'XWA,%s' % m); F.emit('push', 'XWA'); F.push += 4; return 4   # an explicit sign cast of a register
+                                                           # temporary is a copy (random r1_04_12: vl((long)t) ->
+                                                           # ld XWA,XDE / push XWA)
     if size == 4 and m is not None and m in ('XIZ', 'XBC', 'XDE', 'XHL', 'XIX', 'XIY'):
         F.emit('push', m); F.push += 4; return 4          # _calloc: push XIZ
     if XIZ_DIRECT_INIT and (not F.opt or XIZ_DIRECT_OPT) and size == 4 and a1.k == 'load' and strip(a1.e).k == 'var' and \
@@ -7051,6 +7065,9 @@ def gen_opassign(F, e):
     size = strip(e.l).ty.size; op = e.op
     r = narrow(e.r, size)
     signed = strip(e.l).ty.signed
+    if OPASSIGN_ZERO and op in ('|', '^', '+', '-') and not F.opt and fold(r).k == 'const' and fold(r).value == 0 and \
+            strip(e.l).k == 'var' and strip(e.l).ty.kind == 'int' and not nodes_in(r, 'call'):
+        return None                                        # x |= 0 is no code (random r1_04_17: gi2 |= 0 * 1)
     if op in SIMPLE_OPS and fold(r).k == 'const' and size <= 2 and (getattr(F, 'naive_loads', False) or
                                                                     getattr(F, 'l2', None) or
                                                                     getattr(F, 'ptr_cache', None)):   # _itoa: addb (XIY),0x27
@@ -8099,6 +8116,13 @@ def gen_stmt(F, s, last):
             t = chidx.element(F, lv, 'load')             # element reads), then the store's own (XBC+A)
             if t is None: raise Unsupported('element store')
             F.emit('ld', '%s,%s' % (t, FAM['DE'][size])); return
+        elif REGVAL_STORE_XWA and not F.opt and not F.adecl and size in (2, 4) and strip(s.e.r).k == 'load' and \
+                regvar_of(strip(s.e.r).e) is not None and regvar_of(strip(s.e.r).e).reg in ('BC', 'DE', 'HL') and \
+                getattr(regvar_of(strip(s.e.r).e), 'regtemp', False) and regvar_of(strip(s.e.r).e).ty.size == size and \
+                (sp_lvalue_kind(F, lv) or ('',))[0] in ('P', 'D') and 'WA' not in live_regs(F):
+            pk_ = sp_lvalue_kind(F, lv)                # a register temporary stored through a pointer: the pointer in XWA
+            F.emit('ld', 'XWA,%s' % pk_[1])            # (random r2_08_05: gps->l = t, t in XDE -> ld XWA,(_gps) /
+            F.emit('ld', '%s,%s' % ('(XWA+%s)' % hx(pk_[2]) if pk_[2] else '(XWA)', FAM[regvar_of(strip(s.e.r).e).reg][size])); return   # ld (XWA+0x4),XDE)
         else:                                        # add DE,DE / lda XHL,_gb / ... lda XBC,_ga / ld (XHL+DE),WA
             nl = len(F.lines)
             t = lvalue(F, lv, kind='storev')         # m_ga_set, m_gps_set (a computed value: p[k] through XBC)

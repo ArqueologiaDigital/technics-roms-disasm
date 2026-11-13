@@ -1091,6 +1091,13 @@ element is a plain memory operand); a char remainder goes through A into a membe
 register temporary is made in WA and moved (`int t = !(..)` -> `scc eq,WA` / `ld DE,WA`; 114 `scc cc,WA` / `ld BC,WA`
 pairs in the oracle's listings at none).  Random programs at none 95 -> 99 of 800.
 
+**Batch 55 (2026-11-13): four more near misses.**  `x |= 0` with a folded zero is no code; a static member's char
+pointer plus a char index, as a call argument, loads the pointer first (`vp(gs.p + a)` -> `ld XBC,(_gs + 0xa)` /
+`ld XWA,0x0` / `ld A,(a)` / `add XWA,XBC`); an explicitly sign-cast long register temporary is copied before it is
+pushed (`vl((long)t)` -> `ld XWA,XDE` / `push XWA`); a register temporary stored through a pointer takes XWA for the
+pointer (`gps->l = t` -> `ld XWA,(_gps)` / `ld (XWA+0x4),XDE`).  Random programs at none 99 -> 103 of 800, at -Xr
+49 -> 50.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
