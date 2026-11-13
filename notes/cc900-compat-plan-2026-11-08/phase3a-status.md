@@ -2082,6 +2082,12 @@ three wrong-code verdicts (rstmt rs_3_01_01_1, random r4_03_11, r4_05_13). Rando
 Ledger up 2 (random1 at -O3 -XS 16 -> 18, rstmt 3,028 -> 3,029), down 0; pairs MATCH 223; semcheck 56. Random
 182 / 51 / 87 / 37.
 
+**Batch 158 (2026-11-13): `test_reg_reuse` under -O3 -XS -Xr as well (TEST_REG_REUSE_XR).** The oracle's -O3 -XS -Xr
+listings show the same shape as -O3 -XS: 187 register zero tests whose register is read in the block after, and 2
+memory tests whose static is read there. Without -O it never does this (none and -Xr: 255 memory tests each whose
+static is read again). The same pass and rule now run under adecl -O. Ledger up 2 (random1 at -O3 -XS -Xr 13 -> 14,
+rstmt 2,870 -> 2,872), down 0; pairs MATCH 223; semcheck 56. Random 182 / 51 / 87 / 38.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

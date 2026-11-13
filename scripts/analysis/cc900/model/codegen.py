@@ -6586,6 +6586,7 @@ POP_LAZY_FPARG = True                                    # see later_call_absorb
 CHAR_ARG_ANY_OPT = True                                  # see push_arg: CHAR_ARG_ANY / CHAR_ARG_GEN under cdecl -O3 -XS
 CHAR_ZX_OPT_GUARD = True                                 # see elem_addr, gen_load_mem: -O char elements at an int index
 TEST_REG_REUSE = True                                    # see test_reg_reuse
+TEST_REG_REUSE_XR = True                                 # see test_reg_reuse: under -O3 -XS -Xr as well
 
 def test_reg_reuse(lines):
     """cdecl -O3 -XS: a static tested against zero and read again in the code that follows the test is loaded into a
@@ -15054,7 +15055,8 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
                 if k + 1 < len(F.lines) and F.lines[k + 1] == '\tret': F.lines[i] = '\tret\t' + m.group(1)
     import re                                            # no self-moves: the oracle never writes ld XWA,XWA
     F.lines = [l for l in F.lines if not re.match(r'^\tld\t(\w+),\1$', l)]
-    if TEST_REG_REUSE and F.opt and not F.adecl: F.lines = test_reg_reuse(F.lines)
+    if TEST_REG_REUSE and F.opt and (not F.adecl or TEST_REG_REUSE_XR): F.lines = test_reg_reuse(F.lines)
+                                                           # (-O3 -XS -Xr too: 187 register tests read after, 2 memory)
     if COND_CALL:                                        # a jump around one call is a conditional call: j le,L / cal _rp /
         for i in range(len(F.lines) - 2):                # L: -> cal gt,_rp / L: (rstmt rs_4_07_10_4; the oracle's listings of
             m = re.match(r'^\tj\t(\w+),(L\d+)$', F.lines[i] or '')   # all four option sets have 17 conditional calls and
