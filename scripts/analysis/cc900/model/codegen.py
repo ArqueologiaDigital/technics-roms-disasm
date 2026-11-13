@@ -6088,6 +6088,7 @@ FOLD_CHAR = True                                          # see foldable: char v
 CMPX = True                                               # see cmpx_elem: compares against an indexed element (cmpx.c)
 CMPX_IZ = True                                            # see cmpx_index: an unsigned index in IZ
 COND_CALL = True                                          # see compile_function_once: cal cc,f
+CHAIN_ADDR_BC_WA = True                                   # see gen_assign_value: an address in XBC, the value in WA
 
 CMPX_REGS = {                                             # (index register, base register) by element size 1 / 2 / 4:
     ('none', 'X', 'c'): ('DE/BC', 'BC/DE', 'BC/DE'), ('none', 'X', 'b'): ('BC/DE', 'BC/DE', 'BC/DE'),
@@ -6882,6 +6883,13 @@ def gen_assign_value(F, e, fam, size, in_place=False):
     if lv.k in ('deref', 'member', 'index'):
         if fam in ('WA',):
             t = lvalue(F, lv, ptr='XWA')
+            if CHAIN_ADDR_BC_WA and not F.opt and not F.adecl and re.match(r'^\((XBC|X(DE|HL|IX|IY)\+C)\)$', t) and \
+                    not held_after(F, 'WA', e):        # (not (XDE+BC): a char element at an int index, which the oracle
+                                                       #  zero-extends, extz XBC; the CPU's (XDE+BC) is signed)
+                n0_ = len(F.lines); f2 = gen(F, rv, 'WA', vs)   # the address in XBC (or with C), the value in WA's family
+                if f2 != 'WA' or clobbers(F.lines[n0_:], t):     # (rstmt rs_3_06_16_2: guc = guca[a] = guca[1] -> ld WA,(a) /
+                    raise Unsupported('operator = value over its address')   # extz XWA / ld XBC,_guca / add XBC,XWA /
+                F.emit('ld', '%s,%s' % (t, FAM['WA'][vs])); return 'WA'       # ld A,(_guca + 0x1) / ld (XBC),A / ld (_guc),A)
             if 'XBC' in t or 'BC' in t.replace('XBC', ''): raise Unsupported('operator = through BC')
             V = 'BC'
             if CHAIN_STATIC_WA and not F.opt and re.match(r'^\(_\w+( \+ 0x[0-9a-f]+)?\)$', t) and \

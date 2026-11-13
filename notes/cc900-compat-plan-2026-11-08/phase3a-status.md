@@ -1980,6 +1980,15 @@ cp A,(XBC)`). A jump around a single call (`j cc,L / cal f / L:`) becomes `cal !
 all four option sets hold 17 conditional calls and no jump around a lone call; helper calls are left alone. Ledger up
 2, down 0; pairs MATCH 223; semcheck 58. Rstmt at none 3,564 -> 3,565, random at none 171 -> 172 (random4 40 -> 41).
 
+**Batch 147 (2026-11-13): a chained store whose inner target's address is in XBC keeps the value in WA
+(CHAIN_ADDR_BC_WA).** When the inner target of `x = a[i] = v` has its address in `(XBC)`, or at an 8-bit index
+`(XDE+C)` and the like, the oracle builds the value in A/WA/XWA and stores it there and then into the outer target
+(rstmt rs_3_06_16_2: `guc = guca[a] = guca[1]` -> `ld WA,(a) / extz XWA / ld XBC,_guca / add XBC,XWA /
+ld A,(_guca + 0x1) / ld (XBC),A / ld (_guc),A`). The model refused these ("operator = through BC"). `(XDE+BC)` stays
+refused: a char element at an int index, which the oracle zero-extends (`extz XBC`), while the CPU indexes
+`(XDE+BC)` signed (rs_3_00_08_4). Ledger up 2, down 0; pairs MATCH 223; semcheck 58. Rstmt at none 3,565 -> 3,567,
+random at none 172 -> 173 (random3 40 -> 41).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
