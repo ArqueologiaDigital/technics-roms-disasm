@@ -6655,6 +6655,47 @@ def test_reg_reuse(lines):
 TEST_REG_REUSE_LONG = True                               # see test_reg_reuse_long
 TEST_REG_LIVE = True                                     # see test_reg_reuse: reg_dead instead of "used nowhere else"
 GUARD_DIV = True                                         # see guard_div_plan
+BASE_HOIST = True                                        # see base_hoist
+
+def base_hoist(F, s, n0):
+    """-O: a global int array read or written at two or more constant indices in one expression or return statement
+    without a call, helper or double has its base loaded once at the statement's start, into the first of XWA, XBC,
+    XDE that the statement's code does not use, and the elements are addressed through it (rstmt rs_1_07_12_4:
+    gc2 = (gca[0] | -14) & -gca[2] -> lda XBC,_gca / ld E,(XBC+0x2) / neg E / ld A,(XBC) / ..; rs_1_09_07_8: return
+    (gula[5] = gula[0]) -> lda XWA,_gula / ld XHL,(XWA) / ld (XWA+0x14),XHL).  In the oracle's -O3 -XS rstmt listings
+    38 such statements have the base in a register and 2 do not; with a call in the statement it stays direct (5)."""
+    import re as _r
+    e = getattr(s, 'e', None) if s.k == 'expr' else getattr(s, 'init', None) if s.k == 'decl' else getattr(s, 'value', None)
+    if e is None or nodes_in(e, 'call') or has_helper_call(e) or fpgen.is_fp_op(e): return
+    if getattr(F, 'ptr_cache', None) or getattr(F, 'member_cache', None) or getattr(F, 'l2', None) or getattr(F, 'u1_i', None) is not None:
+        return
+    refs = {}
+    def v(nd, d):
+        if nd.k == 'index':
+            b = strip(nd.base)
+            while b.k in ('decay', 'cast', 'noop') and getattr(b, 'e', None) is not None: b = strip(b.e)
+            if b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array' and fold(nd.idx).k == 'const' and \
+                    nd.ty is not None and nd.ty.kind == 'int':
+                refs[b.decl.name] = refs.get(b.decl.name, 0) + 1
+        if fpgen.is_fp(getattr(nd, 'ty', None)): refs['__fp__'] = 99
+    walk(e, v); v(e, 0)
+    if '__fp__' in refs: return
+    names = [g for g, k in refs.items() if k >= 2]
+    if len(names) != 1: return
+    g = names[0]
+    seg = F.lines[n0:]
+    pat = _r.compile(r'\(_%s( \+ (0x[0-9a-f]+))?\)' % _r.escape(g))
+    uses = [i for i, l in enumerate(seg) if l and pat.search(l)]
+    if len(uses) < 2 or any(l and ('_%s' % g) in l and not pat.search(l) for l in seg): return
+    if any(l and (l.endswith(':') or l.startswith(('\tcal', '\tj', '\tcall'))) for l in seg[:uses[-1] + 1]): return
+    live = live_regs(F)
+    for R, fam in (('XWA', 'WA'), ('XBC', 'BC'), ('XDE', 'DE')):
+        parts = _r.compile(r'\b(X?%s|Q%s|%s|%s)\b' % (fam, fam, fam[0], fam[1]))
+        if fam in live or any(l and parts.search(l) for l in seg): continue   # (the statement's code leaves R alone; R
+                                                           #  holds no variable across statements)
+        new = [pat.sub(lambda m: '(%s+%s)' % (R, m.group(2)) if m.group(2) else '(%s)' % R, l) if l else l for l in seg]
+        F.lines[n0:] = ['\tlda\t%s,_%s' % (R, g)] + new
+        return
 
 def expr_key(n):
     """a structural key of an expression (kinds, operators, values, declarations): the same operand twice"""
@@ -9909,6 +9950,7 @@ def gen_stmt(F, s, last):
     n_ms_ = len(F.lines)
     try:
         r_ = _gen_stmt_body(F, s, last)
+        if BASE_HOIST and F.opt and s.k in ('expr', 'return', 'decl'): base_hoist(F, s, n_ms_)
         if MEMBER_STORE_SWAP and not F.opt and not F.adecl and s.k == 'expr' and \
                 (s.e.k == 'opassign' or s.e.k == 'bin' and s.e.op == '=') and len(F.lines) - n_ms_ >= 4:
             new_ = F.lines[n_ms_:]                         # a computed value stored into p->m (m displaced): the pointer

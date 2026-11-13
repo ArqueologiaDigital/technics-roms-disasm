@@ -2119,6 +2119,17 @@ r1_09_14 was refused by a first version), nor for D / D (r1_02_08, which the fir
 lost). Ledger up 3 (rstmt at -O3 -XS 3,034 -> 3,039 and at -O3 -XS -Xr 2,881 -> 2,883, random3 10 -> 11), down 0;
 pairs MATCH 223; semcheck 56. Random 182 / 56 / 87 / 42.
 
+**Batch 162 (2026-11-13): under -O an array read at two or more constant indices in one statement has its base in a
+register (BASE_HOIST).** In the oracle's -O3 -XS rstmt listings (research-scratch gate/basehoist.py), 38 expression or
+return statements without a call that touch one global int array at two or more constant indices load its base
+first (`lda XBC,_gca / ld E,(XBC+0x2) / .. / ld A,(XBC)`), and 2 do not; with a call in the statement the elements stay
+direct (5). `base_hoist` runs after each expression, return or declaration statement under -O that has no call,
+helper or double. It puts `lda R,_g` at the statement's start and rewrites `(_g + K)` to `(R+K)`. R is the first of
+XWA, XBC, XDE that the statement's code does not use and that holds no variable. It does not run while a pointer is
+cached across statements (rstmt rs_1_09_07_8: `return (gula[5] = gula[0])` -> `lda XWA,_gula / ld XHL,(XWA) /
+ld (XWA+0x14),XHL`; random r2_05_04). Ledger up 3 (rstmt at -O3 -XS 3,039 -> 3,064, at -O3 -XS -Xr 2,883 -> 2,897,
+random2 9 -> 11), down 0; pairs MATCH 223; semcheck 56. Random 182 / 58 / 87 / 42.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
