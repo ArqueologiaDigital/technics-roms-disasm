@@ -1685,6 +1685,18 @@ pointer (rs_2_03_01_1: `gps->l = (long)!*gp` -> `ld XWA,(_gps)` / `ld XBC,(_gp)`
 Two wider versions were stopped before installing: one cost two exact random functions (int members), the other
 three probe rows on the scratch ledger (stord, stchain, stvx: plain long values).  rstmt at none 3,469 -> 3,473.
 
+**Batch 114 (2026-11-13): a local whose value is dead across a call; rstmt +20.**  `int i = ji; v0();
+for (i = 0; i < 11; i++) ..` keeps `i` in BC: `ld BC,(_ji)` / `cal _v0` / `ld BC,0x0` / `cp BC,0xb` (rs_1_00_03_5;
+DE when the body's element reads take BC, rs_2_00_10_5).  The initialiser's value is never read -- the loop assigns
+`i` first -- so nothing lives across the call.  The model counted it as live across the call and homed `i` in IZ
+(`push IZ` .. `pop IZ`).  Three places had to agree: the across-call planner lets a top-level plain assignment after
+the call kill the earlier value (KILL_TOP; batch 87 did this only inside branches); the register-temporary planner
+plans such a local from its next assignment, as it does a counter declared without an initialiser
+(DEAD_INIT_CTR); and the live-register guard lets the call pass over the register (dead_until_redef).  Functions
+with a long or floating-point helper keep the old behaviour: there the loop's counter is in IZ for the helper's
+sake (rs_1_05_11_4, rs_3_09_10_3; a first version lost those, and seven plain `int t = ji; t = ..;` statements that
+need no change at all).  rstmt at none 3,473 -> 3,493; the other sets unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

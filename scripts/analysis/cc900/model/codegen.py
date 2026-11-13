@@ -159,6 +159,8 @@ class Fn:
                              re.search(r'\b(X?%s|%s)\b' % (d.reg, {'WA': 'A', 'BC': 'C', 'DE': 'E', 'HL': 'L'}[d.reg]),
                                        args.split(',', 1)[1] if ',' in args else '')):
                         continue                         # (the read that consumes it: lo_i_G0e add WA,(_hi))
+                    if DEAD_INIT_CTR and rt_ and op == 'cal' and dead_until_redef(s, d): continue   # (its value is not
+                                                         # read again before it is assigned: rs_1_00_03_5)
                     if getattr(d, 'reg', None) in ('WA', 'BC', 'DE', 'HL') and 'X' + d.reg == fam_ and d not in s.dead and \
                             (param_live_after(s, d) or rt_ and uses_decl(getattr(s, 'cur_stmt', None), d) or
                              LOOP_LIVE_GUARD and getattr(getattr(s, 'top_cur', None), 'k', None) in ('while', 'do', 'for') and
@@ -1613,6 +1615,25 @@ def tail_if_return(f, opt):
     if cond_const(st.cond) is not None: return False       # (at every set: rs_3_00_19_3)
     t = flat(st.then)
     return bool(t) and t[-1].k == 'return' and getattr(t[-1], 'value', None) is not None
+def long_helpers_in(n):
+    out = []
+    walk(n, lambda m, dd: out.append(m) if m.k in ('bin', 'opassign') and m.op in ('*', '/', '%') and
+         getattr(m, 'ty', None) is not None and m.ty.size == 4 and m.ty.kind == 'int' or
+         fpgen.is_fp_op(m) or fpgen.is_fp_copy(m) else None)   # (and the floating-point helpers: rs_3_09_10_3)
+    return out
+def dead_until_redef(F, d):
+    """after the current top-level statement, is the next statement that touches d an assignment to d that does not
+    read it (i = 0;, or a for loop whose initialiser is one)?  The current statement itself must not use d."""
+    body = flat(F.f.body); cur = getattr(F, 'top_cur', None)
+    if cur is None or cur not in body or uses_decl(cur, d): return False
+    for x in body[body.index(cur) + 1:]:
+        if not uses_decl(x, d): continue
+        a = None
+        if x.k == 'for' and x.init is not None: a = strip(x.init.e if getattr(x.init, 'k', None) == 'expr' else x.init)
+        elif x.k == 'expr': a = strip(x.e)
+        return a is not None and a.k == 'bin' and a.op == '=' and strip(a.l).k == 'var' and strip(a.l).decl is d and \
+            not uses_decl(a.r, d)
+    return False
 def nodes_with(e, attr):
     out = []
     if getattr(e, attr, False): out.append(e)
@@ -6284,6 +6305,8 @@ LH_GUARDED = True                                         # see plan_lh_call0
 MUL_K_ELEM = True                                         # see gen_mul_const
 SHIFT_COUNT_LOCAL = True                                  # see gen_shift_count
 MEMBER_STORE_SWAP = True                                  # see gen_stmt
+KILL_TOP = True                                           # see the across-call planner
+DEAD_INIT_CTR = True                                      # see regtemp_candidates
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -9537,7 +9560,9 @@ def plan_homes(F):
             before = {y[1] for y, py in seq0[:i] if y[0] in ('use', 'def')}
             killed = set()                                 # switch.c sw_local: r = g1(x) redefines r on the call's
             for y, py in seq0[i + 1:]:                     # own path, so the later `return r` does not keep r live
-                if KILL_AFTER_CALL and y[0] == 'def' and compatible(px, py) and px: killed.add(y[1])   # across it
+                if KILL_AFTER_CALL and y[0] == 'def' and compatible(px, py) and (px or KILL_TOP and not py and not long_helpers_in(F.f.body)): killed.add(y[1])   # across it
+                # (not in a function with a long helper: its loop keeps the counter in IZ, rs_1_05_11_4)
+                # (KILL_TOP, at the top level too: rstmt rs_1_00_03_5, int i = ji; v0(); for (i = 0; ..) keeps i in BC)
                 if x[0] == 'rcall' and (y[0] != 'use' or len(y) < 3 or y[2] != x[1]): continue
                 if y[0] == 'use' and y[1] in killed: continue
                 if y[0] == 'use' and compatible(px, py) and (y[1].kind == 'param' or y[1] in before): mark(y[1])
@@ -13540,7 +13565,20 @@ def regtemp_candidates(F):
         return out
     for i, c in enumerate(body):
         if c.k != 'decl': continue
-        if c.init is None:                                 # (loopctr.c lc_DGF: int i; ... i = 7; do .. while (--i > 0) -> BC)
+        dead_init_ = False
+        if DEAD_INIT_CTR and c.init is not None and not F.opt and not F.adecl and c.var.ty.kind == 'int' and \
+                not nodes_in(c.init, 'call') and not has_helper_call(c.init) and not fpgen.is_fp_op(c.init):
+            j_ = next((k for k, x in enumerate(body[i + 1:]) if uses_decl(x, c.var)), None)   # an initialiser nothing reads:
+            x_ = body[i + 1 + j_] if j_ is not None else None                                # the variable is planned
+            a_ = None                                                                        # from its next assignment
+            if x_ is not None and x_.k == 'for' and x_.init is not None:                     # (rstmt rs_1_00_03_5:
+                a_ = strip(x_.init.e if getattr(x_.init, 'k', None) == 'expr' else x_.init)  # int i = ji; v0();
+            elif x_ is not None and x_.k == 'expr': a_ = strip(x_.e)                         # for (i = 0; ..) keeps i in
+            dead_init_ = a_ is not None and a_.k == 'bin' and a_.op == '=' and strip(a_.l).k == 'var' and \
+                strip(a_.l).decl is c.var and not uses_decl(a_.r, c.var) and \
+                any(calls_in(x) for x in body[i + 1:i + 1 + j_]) and not long_helpers_in(F.f.body)   # BC: ld BC,(_ji) / cal _v0 /
+            # (only with a call in between: without one the initialised local is planned as before, rs_1_03_06_2)
+        if c.init is None or dead_init_:                   # ld BC,0x0) (loopctr.c lc_DGF: int i; ... i = 7; do .. while (--i > 0) -> BC)
             if not LOOPCTR: continue
             d0 = c.var
             j = next((k for k, x in enumerate(body[i + 1:]) if uses_decl(x, d0)), None)
