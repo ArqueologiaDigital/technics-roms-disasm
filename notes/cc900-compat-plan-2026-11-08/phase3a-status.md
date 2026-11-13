@@ -1562,6 +1562,17 @@ own base register is never right: the base was loaded over the index (rs_2_05_00
 `ldw (XBC+BC),0x0`; rs_2_06_13_1: `(XHL+L)`).  Refused in Fn.emit, whoever emits it.  All 14 are refusals; scores
 unchanged.  **Open: 31 statement findings** (semcheck 79): 0 none / 2 -O3 -XS (reviewed) / 11 -Xr / 18 -O3 -XS -Xr.
 
+**Batch 103 (2026-11-13): three more -Xr causes; semcheck 79 -> 64.**  (1) An element changed in place at an
+unsigned int index held in a register: the oracle extends it whole (rs_1_05_16_4: `gula[a] |= K` -> `extz XWA` /
+`sll 0x2,XWA` / `ld XBC,_gula` / `add XBC,XWA` / `or (XBC),XWA`; rs_2_04_15_2 with a local in IZ), the model indexed
+`(XDE+BC)`, signed.  Refused in a wrapper around `lvalue` for the in-place kinds (UIDX_RMW).  (2) A `switch` value
+loaded into WA over a register parameter that the body reads (rs_2_05_19_4, rs_3_05_00_2; the oracle tests in C / BC:
+`ld C,(_gc2)` / `cp C,0x2`).  Refused (SWITCH_WA_PARAM); this also removes rs_3_06_12_3, rs_3_08_00_0 and
+rs_4_09_17_3.  (3) Modelled, in chidx.py: a struct member array at an unsigned char register index, once the member
+offset is added, is indexed by the byte register (rs_1_03_19_1: `a->a[b]` -> `extz BC` / `add BC,BC` /
+`add BC,0xe` / `ld WA,(XWA+C)`; the model used `(XWA+BC)`).  Scores unchanged.
+**Open: 16 statement findings** (semcheck 64): 0 none / 2 -O3 -XS (reviewed) / 4 -Xr / 10 -O3 -XS -Xr.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

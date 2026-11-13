@@ -382,7 +382,9 @@ def element(F, lv, kind, fam='WA'):
         if signed: r = idx_byte(F, src, esz, None, busy, bk[2])
         else:
             r = widen(F, src, own_fam(F, src), signed, esz)
-            if bk[2]: F.emit('add', '%s,%s' % (r, hx(bk[2])))
+            if bk[2]:                                      # the offset's sum is used as a byte (rstmt -Xr
+                F.emit('add', '%s,%s' % (r, hx(bk[2])))    # rs_1_03_19_1: a->a[b] -> extz BC / add BC,BC / add BC,0xe /
+                if len(r) == 2 and r in ('WA', 'BC', 'DE', 'HL'): r = r[1]   # ld WA,(XWA+C))
         return '(%s+%s)' % (X, r)
     if bk[0] == 'gptr':
         if kind != 'load': return None

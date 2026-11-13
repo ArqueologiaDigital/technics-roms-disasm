@@ -6197,6 +6197,8 @@ IZ_ONE_VAR = True                                         # see compile_function
 COND_ARM_ONE_READ = True                                  # see Fn.emit's statement guard
 PART_HIGH_ONLY = True                                     # see Fn.emit's statement guard
 BASE_IDX_CLASH = True                                     # see Fn.emit
+UIDX_RMW = True                                           # see lvalue
+SWITCH_WA_PARAM = True                                    # see gen_switch
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -7513,7 +7515,19 @@ def member_run(body, i):
             rv = strip(x.e).decl
     return p, n, nonconst, rv is not None
 
-def lvalue(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False, kind='store'):
+def lvalue(F, lv, *a, **k):
+    """UIDX_RMW: an element changed in place at an unsigned int index in a register is not (Xr+rr), which indexes
+    signed: the oracle extends it whole (rstmt -Xr rs_1_05_16_4: gula[a] |= K -> extz XWA / sll 0x2,XWA / ld XBC,_gula /
+    add XBC,XWA / or (XBC),XWA; rs_2_04_15_2 with a local in IZ).  Refused."""
+    t = _lvalue_raw(F, lv, *a, **k)
+    if UIDX_RMW and k.get('kind') in ('rmw', 'andk', 'add') and isinstance(t, str) and strip(lv).k == 'index' and \
+            re.match(r'^\(X\w+\+(WA|BC|DE|HL|IZ)\)$', t):
+        x = strip(strip(lv).idx)
+        while x.k == 'cast' and x.kind == 'IntegralCast' and x.ty.size >= strip(x.e).ty.size: x = strip(x.e)
+        if x.ty is not None and x.ty.size == 2 and not x.ty.signed and x.k == 'load':
+            raise Unsupported('an element changed in place at an unsigned register index')
+    return t
+def _lvalue_raw(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False, kind='store'):
     """set up the address of lvalue lv and return its operand string (assign.c): a global or parameter is a direct
     operand; *p loads p into `ptr`; a[i] of a global array scales i in `idx` and puts the array in `base`
     (`(base+idx)`), or with combine=True adds them into `ptr` (`(ptr)`)"""
@@ -10186,6 +10200,9 @@ def gen_switch(F, s, last):
         elif keep and F.opt and sel is not None and sel.reg in ('IZ', 'QIZ') and (not F.adecl or is_tab):
             F.emit('ld', '%s,%s' % (FAM['WA'][size], R)); R = FAM['WA'][size]   # sw_loop under O3XS: ld WA,IZ
     else:
+        if SWITCH_WA_PARAM and F.adecl and any(getattr(d_, 'reg', None) == 'WA' and uses_decl(s.body, d_) for d_ in F.f.params):
+            raise Unsupported('a switch value in WA over a parameter its body reads')   # (rstmt -Xr rs_2_05_19_4,
+                                                           # rs_3_05_00_2: the oracle tests in C / BC, ld C,(_gc2) / cp C,0x2)
         fam = gen(F, e, 'WA', e.ty.size) if not (m and family_of(m) == 'XWA') else 'WA'
         R = FAM['WA'][size]
         if ext: F.emit(ext, 'WA')
