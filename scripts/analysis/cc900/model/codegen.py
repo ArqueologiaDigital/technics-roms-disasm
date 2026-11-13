@@ -818,7 +818,11 @@ def gen(F, e, fam, size, then_ret=False, store=False):
         if cc in (True, False): F.emit('ld', '%s,%s' % (FAM[fam][2], hx(int(cc))))
         else: F.emit('scc', '%s,%s' % (cc, FAM[fam][2]))
         return fam
-    if e.k == 'call': return gen_call(F, e, fam, size)
+    if e.k == 'call':
+        r_ = gen_call(F, e, fam, size)
+        if getattr(F, 'pop_call_operand', 0) and F.pending and not F.opt and not F.adecl:
+            flush_pops(F)                                  # (CALL_OPERAND_POP: a call that is an operand pops at once:
+        return r_                                          #  rstmt rs_1_01_03_2: cal _rl / inc 0x4,XSP / sla 0x2,XHL)
     if e.k == 'addr' and strip(e.e).k == 'index' and local_array_of(strip(e.e).base) in getattr(F, 'array_temps', {}) \
             and fold(strip(e.e).idx).k == 'const':
         a = local_array_of(strip(e.e).base); array_base(F, a)   # _ultoa: p = &buf[31] -> lda XWA,XWA+0x1f
@@ -4537,6 +4541,25 @@ def emit_shift(F, mnem, count, R):
     F.emit(mnem, '%s,%s' % ('0x0' if count == 16 and SHIFT_SPLIT else hx(count), R))
 
 def gen_bin(F, e, fam, size, then_ret, store=False):
+    if CALL_OPERAND_POP and not F.opt and not F.adecl and (e.op in SIMPLE_OPS or e.op in ('<<', '>>', '*')) and \
+            any(strip(x).k == 'call' and not has_helper_call(strip(x).fn) for x in (e.l, e.r)):
+        F.pop_call_operand = getattr(F, 'pop_call_operand', 0) + 1
+        try: return _gen_bin_body(F, e, fam, size, then_ret, store)
+        finally: F.pop_call_operand -= 1
+    return _gen_bin_body(F, e, fam, size, then_ret, store)
+
+def _gen_bin_body(F, e, fam, size, then_ret, store=False):
+    if CALL_SHIFT_HL and not F.opt and not F.adecl and size in (2, 4) and strip(e.l).k == 'call' and \
+            not has_helper_call(strip(e.l).fn) and fold(e.r).k == 'const' and fold(e.r).value is not None and \
+            not getattr(F, 'any_fam', False):
+        k_ = fold(e.r).value
+        sh_ = k_ if e.op in ('<<', '>>') else (k_.bit_length() - 1 if e.op == '*' and k_ >= 4 and k_ & (k_ - 1) == 0 else None)   # (* 2 doubles with an add: call.c k_l)
+        if sh_ is not None and 1 <= sh_ < 8 * size:        # a call's result shifted (or times a power of two) in HL
+            if gen(F, e.l, 'HL', size) == 'HL':            # (rstmt rs_1_01_03_2: rl(gl) * 4L -> cal _rl / inc 0x4,XSP /
+                if F.pending: flush_pops(F)                # sla 0x2,XHL; rs_1_05_17_4: << 24 -> sla 0x8,XHL / sla 0x0,XHL)
+                sg_ = e.ty is None or e.ty.signed
+                mn_ = ('sla' if sg_ else 'sll') if e.op in ('<<', '*') else ('sra' if sg_ else 'srl')
+                emit_shift(F, mn_, sh_, FAM['HL'][size]); return 'HL'
     any_fam = getattr(F, 'any_fam', False); F.any_fam = False   # (push_arg's hint, for this level only)
     op = e.op
     if op == '*' and size == 2 and e.ty.kind == 'int' and fold(e.r).k == 'const' and fold(e.r).value is not None and \
@@ -6473,6 +6496,8 @@ LH_ACROSS_SLOT = True                                    # see regtemp_candidate
 SLOT_INIT_FORMS = True                                   # see slot_init
 LH_ACROSS_SLOT_OPT = True                                # see regtemp_candidates (-O3 -XS lsl.c: wrong code otherwise)
 LH_ACROSS_SLOT_XR = True
+CALL_OPERAND_POP = True                                  # see gen / gen_bin
+CALL_SHIFT_HL = True                                     # see _gen_bin_body
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -8229,6 +8254,8 @@ def gen_opassign(F, e):
             global_offset(strip(e.l)) is not None and global_offset(strip(e.l))[0] != '__param__' and \
             not (strip(e.l).k == 'index' and fold(strip(e.l).idx).k != 'const') and not (strip(e.l).k == 'member' and strip(e.l).arrow):
         gen_call(F, strip(r))                              # a constant element or static member op= a call: the result is
+        if CALL_OPERAND_POP and not later_call_absorbs(F): flush_pops(F)   # (rstmt rs_4_02_17_5: cal _rl / inc 0x4,XSP /
+                                                           #  sub (_gla + 0xc),XHL)
         t = lvalue(F, e.l)                                 # used from XHL (random r4_02_08: gula[4] += rul(gul) ->
         F.emit(SIMPLE_OPS[op], '%s,XHL' % t); return t     # cal _rul / add (_gula + 0x10),XHL)
     if op in SIMPLE_OPS:

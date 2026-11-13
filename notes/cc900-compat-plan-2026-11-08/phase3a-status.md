@@ -1926,6 +1926,15 @@ slot was stored there only when a call followed; across a long helper it fell to
 ls_c_g_h_a).  lsl.c at none 47 -> 50 and at -Xr 30 -> 33.  Not done: the char shift form, which the oracle computes in W
 (`ld W,(_gca + 0x3)` / `sra 0x3,W` / `ld (XSP+0x4),W`).  Random unchanged.
 
+**Batch 141 (2026-11-13): a call that is an operand pops at once; its shifted result stays in HL; random +1, rstmt +13.**
+From single_bad_stmt.py (a DIFF group: `inc 0x4,XSP` against `ld XWA,XHL`).  Without options, when a call's result feeds a
+further operation in the same statement the oracle pops the arguments right after the call and works on the result in
+place: `gl2 = rl(gl) << 24` -> `cal _rl` / `inc 0x4,XSP` / `sla 0x8,XHL` / `sla 0x0,XHL` (rs_1_05_17_4); `gs.l = gl2 = rl(gl)
+* 4L` -> .. `sla 0x2,XHL` (rs_1_01_03_2); `gla[3] -= rl(gla[a])` -> `cal _rl` / `inc 0x4,XSP` / `sub (_gla + 0xc),XHL`
+(rs_4_02_17_5).  The model deferred the pops and moved the result to XWA.  Times 2 keeps the doubling by an add (call.c k_l:
+`ld XWA,XHL` / `add XWA,XHL`; a first version shifted it and lost that micro function on the scratch ledger), and the pops
+still wait when a later call absorbs them (POP_LAZY2).  rstmt at none 3,548 -> 3,561; random at none 169 -> 170 of 800.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
