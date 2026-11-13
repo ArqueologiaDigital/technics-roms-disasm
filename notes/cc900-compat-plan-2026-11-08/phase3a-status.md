@@ -2046,6 +2046,16 @@ evaluated operand is a call with arguments no longer flushes the pending pops be
 3,006 / 3,044 / 2,870), down 0; pairs MATCH 223; semcheck 58. Random unchanged, 181 / 48 / 87 / 37 (r4_01_01 still
 differs in its return expression's registers).
 
+**Batch 155 (2026-11-13): a double `?:` with a constant first arm is preloaded (FP_COND_PRELOAD); a call with a double
+`?:` argument releases the pending pops (POP_LAZY_FPARG).** In fpgen's `cond_into` (edit_batch155_fpgen.py), a double
+`?:` whose first arm is a constant and whose destination is a temporary loads the constant there first, then jumps over
+the second arm when the test holds (random r3_05_16: `vd(guca[1] ? 0.25 : gd)` -> `lda XBC,S / lda XWA,XSP+0x4 /
+cal ._fld_dd / cpb (_guca + 0x1),0x0 / j ne,L / lda XBC,_gd / lda XWA,XSP+0x4 / cal ._fld_dd / L:`). A later call whose
+argument holds a double `?:` does not absorb the pending pops (r3_05_16: `cal _vp / inc 0x4,XSP`). A double sum
+argument still does (r1_00_01), which a wider first try lost. r3_05_16 itself still differs in its frame size (16 for the oracle's
+8: the second temporary comes from fpgen's frame planning, not yet understood). Ledger up 2 (random4 42 -> 43, rstmt at
+none 3,569 -> 3,571), down 0; pairs MATCH 223; semcheck 58. Random 182 / 48 / 87 / 37.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

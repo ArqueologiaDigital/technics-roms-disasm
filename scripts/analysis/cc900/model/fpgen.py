@@ -857,10 +857,20 @@ def needs_xiz(F):
     C().walk(F.f.body, lambda n, d: rets.append(n) if n.k == 'return' and n.value is not None else None)
     return any(root_mode(F, r.value) == 'xiz' for r in rets)
 
+FP_COND_PRELOAD = True                                     # see cond_into
+
 def cond_into(F, e, dest):
     """a ?: of doubles: the result in a temporary, then copied (t_cond: ... L1: lda XBC,XSP+0xc / ld XWA,XIZ /
     cal ._fld_dd); the first arm is built in its own temporary and copied, the second built in place (t_cond_e)"""
     cg = C()
+    if FP_COND_PRELOAD and not F.opt and not F.adecl and dest[0] in ('cell', 'slot') and strip(e.a).k == 'fconst' and \
+            strip(e.a).ty is not None and strip(e.a).ty.size == 8 and not C().nodes_in(e.c, 'call') and \
+            not any(is_fp_op(n) for n in C().nodes_in(e.c, 'bin')):
+        lend = F.newulabel()                               # a constant first arm is loaded first and the test jumps over
+        eval_into(F, e.a, dest)                            # the second (random r3_05_16: vd(guca[1] ? 0.25 : gd) ->
+        cg.gen_cond_true(F, e.c, lend)                     # lda XBC,S / lda XWA,XSP+0x4 / cal ._fld_dd / cpb (_guca + 0x1),
+        eval_into(F, e.b, dest)                            # 0x0 / j ne,L / lda XBC,_gd / lda XWA,XSP+0x4 / cal ._fld_dd /
+        F.lines.append(lend + ':'); return                 # L:, one temporary)
     r = Cell(8); alloc(F, r)
     lelse = F.newulabel(); lend = F.newulabel()
     cg.gen_cond_false(F, e.c, lelse)

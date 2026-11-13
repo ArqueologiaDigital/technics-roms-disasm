@@ -6464,6 +6464,12 @@ def later_call_absorbs(F):
                                                            # (random r1_01_03: gul += rul(..); gia[6] %= 16; gs.l = gl2 =
                                                            # rl(gl) * 4L -> cal _rul / add (_gul),XHL / .. / cal _rl /
                                                            # inc 0x8,XSP / sla 0x2,XHL)
+        if c.k == 'call' and POP_LAZY_FPARG and any(n.k == 'cond' and fpgen.is_fp(getattr(n, 'ty', None))
+                                                    for a_ in c.args for n in [strip(a_)] + nodes_in(a_, 'cond')):
+            return False                                   # a double ?: argument: the pops go first (random r3_05_16:
+                                                           # vp(t); gia[1] = ~gi; vd(guca[1] ? 0.25 : gd) -> cal _vp /
+                                                           # inc 0x4,XSP / ..; a sum argument takes them: r1_00_01,
+                                                           # v2(..); guc--; vd(gs.d + gd) -> .. cal _vd / lda XSP,XSP+0xc)
         if c.k == 'call': return bool(c.args) and not fpgen.is_fp(getattr(c, 'ty', None))   # (r4_03_19: v0() absorbs nothing)
         if nodes_in(e, 'call') or stmt_touches_stack(F, e): return False
     return False
@@ -6576,6 +6582,7 @@ POP_LAZY_CHAIN = True                                    # see later_call_absorb
 POP_LAZY_PTR = True                                      # see store_plan: *gp = f(..) keeps the pops pending
 FP_COND_CONST = True                                     # see fold_fp_consts: c ? x : y with a constant c, doubles
 IF_CALL_KEEP_POPS = True                                 # see gen_stmt's if: a test that starts with a call
+POP_LAZY_FPARG = True                                    # see later_call_absorbs: a call with a double-work argument
 
 def plain_long_helper_stmt(x):
     """is x a statement (or if without else around one) of the form T = A op B or T op= B, a long * / % that calls a
