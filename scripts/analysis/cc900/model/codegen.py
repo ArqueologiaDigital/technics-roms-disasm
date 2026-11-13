@@ -1576,6 +1576,7 @@ KOP_IN_PLACE = True                                       # see gen_stmt: g = K 
 BYTE_RIGHT_FIRST = True                                   # see gen_bin: two computed byte operands
 IZ_TAIL_DIRECT = True                                     # see regvar_stmt: an IZ home loaded and worked on in IZ
 COND_VIA_WA = True                                        # see regvar_stmt: a ?: into a register temporary
+NONE_SHARED_EXIT = True                                   # see gen_stmt: one exit for a function with an epilogue
 NESTED_IF_RET = True                                      # see gen_stmt: if (a) if (b) x; at the end of a function
 LX5 = True                                                # see lx5_lines: long helpers of lhx.c's lxo_* rows
 
@@ -7878,8 +7879,11 @@ def gen_stmt(F, s, last):
         F.emit('exts' if F.f.ret.signed else 'extz', 'HL'); flush_pops(F)
         F.emit('retd', hx(F.retd)) if F.retd else F.emit('ret'); return
     if s.k == 'return':
-        epi = (F.opt or getattr(F, 'fp_temps', None) is not None) and (F.xiz_vars or F.pushes or getattr(F, 'frame', 0)) \
+        epi = (F.opt or getattr(F, 'fp_temps', None) is not None or NONE_SHARED_EXIT and not F.adecl) and \
+            (F.xiz_vars or F.pushes or getattr(F, 'frame', 0)) \
             and not getattr(F, 'shared_exit', None)       # fp_temps.c t_cmp_e (none too): ld HL,0x1 / j L50000
+                                                           # (without -O as well: random r4_00_00: an early return in a
+                                                           #  function that saved XIZ -> lda XHL,_gia + 0xc / j L50000)
         if s.value is not None:
             size = F.f.ret.size
             if not has_helper_call(s.value) and F.pending:

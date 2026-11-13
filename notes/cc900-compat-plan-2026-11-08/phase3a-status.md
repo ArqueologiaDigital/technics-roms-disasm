@@ -1134,6 +1134,11 @@ moved after the join (`unsigned long t = c ? gula[c] : ..` -> `ld XWA,(XBC+WA)` 
 unsigned value divided by a power of two in an expression is a shift, as in a compound assignment
 (`vu(gu / 16)` -> `srl 0x4,WA`).  Random programs at none 123 -> 125 of 800.
 
+**Batch 62 (2026-11-13): one exit.**  Without -O too, an early `return` in a function that has an epilogue (a saved
+register, a frame) jumps to one exit label in front of the epilogue instead of repeating it (`lda XHL,_gia + 0xc` /
+`j L50000` .. `L50000:` / `pop XIZ` / `ret`); the model did this only under -O and in functions with double
+temporaries.  Random programs at none 125 -> 128 of 800; ra_libshapes.c at none 12 -> 13 of 21.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
