@@ -321,6 +321,11 @@ for c in none O3XS; do    # constant folding with a negated constant against a l
 done
 row "run 2026-11-13-6-micro-negk, v423/Xr" "probes/negk.c" "$O/2026-11-13-6-micro-negk/out/v423/Xr/probes" corpus/probes/negk.c --opt none --adecl
 row "run 2026-11-13-6-micro-negk, v423/O3XSXr" "probes/negk.c" "$O/2026-11-13-6-micro-negk/out/v423/O3XSXr/probes" corpus/probes/negk.c --opt O3XS --adecl
+for c in none O3XS; do    # every statement line of the random corpora alone in its own function (corpus/probes/rstmt1..4.c)
+  row "run 2026-11-13-7-micro-rstmt, v423/$c" "probes/rstmt*.c" "$O/2026-11-13-7-micro-rstmt/out/v423/$c/probes" corpus/probes/rstmt1.c corpus/probes/rstmt2.c corpus/probes/rstmt3.c corpus/probes/rstmt4.c --opt $c
+done
+row "run 2026-11-13-7-micro-rstmt, v423/Xr" "probes/rstmt*.c" "$O/2026-11-13-7-micro-rstmt/out/v423/Xr/probes" corpus/probes/rstmt1.c corpus/probes/rstmt2.c corpus/probes/rstmt3.c corpus/probes/rstmt4.c --opt none --adecl
+row "run 2026-11-13-7-micro-rstmt, v423/O3XSXr" "probes/rstmt*.c" "$O/2026-11-13-7-micro-rstmt/out/v423/O3XSXr/probes" corpus/probes/rstmt1.c corpus/probes/rstmt2.c corpus/probes/rstmt3.c corpus/probes/rstmt4.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do

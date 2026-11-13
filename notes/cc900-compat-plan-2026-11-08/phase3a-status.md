@@ -1323,6 +1323,28 @@ through a pointer, and an unsigned long `% 2^k` as `and` each gain there, and no
 programs at -Xr 80 -> 87 of 800 (164 / 45 / 36 at none / -O3 -XS / -O3 -XS -Xr, unchanged); at -Xr lhx.c 214 -> 236,
 stdiv2.c 442 -> 458, loopctr.c 14 -> 23, stdiv.c 178 -> 186, fpargf.c 24 -> 32: eight ledger rows up by 70 functions.
 
+**Batch 83 (2026-11-13): the statement probes, and 253 wrong-code verdicts they expose (OPEN).**
+`corpus/probes/rstmt1.c` .. `rstmt4.c` (`gen_rstmt.py`, run 2026-11-13-7-micro-rstmt) hold every statement line of
+the four random corpora alone in its own function, 4,694 functions: the locals a line uses are initialised from
+externs, `v0();` comes first when an earlier line of the original calls.  The hand-made probes kept missing the
+combinations the random generator makes; here the shapes are the corpus's own.  This gives a statement-level score:
+the model reproduces 3,308 / 2,930 / 2,950 / 2,806 of the 4,694 at none / -O3 -XS / -Xr / -O3 -XS -Xr (70.5 / 62.4 /
+62.8 / 59.8 %), and `diffpat.py` ranks the differences that remain by pattern.  Four rules from its first list:
+an explicit `(char)` of an int in memory stays a cast through `narrow`, so that every context reads the word
+(`guca[3] = -((unsigned char)gua[0])` -> `ld WA,(_gua)` / `neg A`); a long local in XIZ passed under an explicit
+sign cast is copied through XWA; `x % x` and `x / x` fold for a long too; and a conditional jump to the label of the
+final bare `ret` is a `ret cc`, the label staying (a `break` in a function's last loop; an unconditional jump there
+stays, r2_07_14).  rstmt at none 3,308 -> 3,341, random at none 164 -> 165.
+**The cost of looking closer: semcheck on the new rows reports 253 verdicts (73 -> 326), 116 distinct statements whose
+model code behaves differently from the compiler's.**  Most belong to functions the model refuses as a whole, so
+they had never been simulated.  `notes/cc900-compat-plan-2026-11-08/rstmt-wrong-code-2026-11-13.txt` lists each
+with its sets, the first difference and the statement.  They are of two kinds.  Model bugs: a `char` parameter read
+as a word, a signed int index zero-extended (`gp = gp + a`), a helper's result shifted in XWA instead of XHL, an
+invalid `j RET` for a constant-false test, register temporaries overwritten, `while (a-- > 0) *gpi++ = K` under -O
+and -Xr, the clean-up amount of some -Xr functions.  And compiler quirks the model does not imitate: `gp + b` with a
+`char` b is zero-extended, `(gc * gc) >> 7` shifts the byte, `-guca[a] / 10` negates the byte, `(8 ^ 16) << 11` folds
+to 0.  The gate's baseline is now these 326; the next batches bring it back down, each fixing or refusing a class.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

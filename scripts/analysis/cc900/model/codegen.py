@@ -185,6 +185,9 @@ def narrow(e, size):
     """the value of e, known to be needed only in its low `size` bytes: drop integral casts that widen"""
     e = strip(e)
     while e.k == 'cast' and e.kind == 'IntegralCast' and strip(e.e).ty.size >= size and not wide_divide(strip(e.e), size) \
+            and not (NARROW_KEEPS_CAST and size == 1 and getattr(e, 'explicit', False) and e.ty.size == 1 and
+                     strip(e.e).k == 'load' and strip(e.e).ty.size == 2 and strip(strip(e.e).e).k in ('var', 'index', 'member', 'deref')
+                     and not (strip(strip(e.e).e).k == 'var' and strip(strip(e.e).e).decl.kind != 'global')) \
             and not ptrdiff_arith(strip(e.e)) and not long_arith_kept(strip(e.e), size) and not long_load_kept(e, size):
         e = strip(e.e)                                   # / % >> on wide operands keep their width (_ultoa: val % radix)
     if e.k == 'cast' and e.kind == 'IntegralCast' and strip(e.e).ty.size < size:
@@ -283,7 +286,7 @@ def fold(e):
             big = rc.value > 255
             v = {'<': big, '<=': big, '>': not big, '>=': not big, '==': False, '!=': True}[e.op]
             return N('const', value=int(v), ty=e.ty)
-    if e.k == 'bin' and e.op in ('/', '%') and FOLD_SELF_DIV and same_leaf(e.l, e.r) and e.ty is not None and e.ty.size <= 2:
+    if e.k == 'bin' and e.op in ('/', '%') and FOLD_SELF_DIV and same_leaf(e.l, e.r) and e.ty is not None and e.ty.size <= (4 if FOLD_SELF_DIV_LONG else 2) and e.ty.kind == 'int':
         from frontend import N                           # random r2_05_00: gu % gu -> 0 (V4.23 folds it; UB at 0)
         return N('const', value=0 if e.op == '%' else 1, ty=e.ty)
     if e.k == 'bin' and e.op in ('/', '%') and FOLD_DIV and fold(e.l).k == 'const' and fold(e.r).k == 'const' \
@@ -5877,6 +5880,11 @@ CALL_LEFT_INPLACE = True                                  # see gen_bin
 IZ_TAIL_GLOBAL = True                                     # see regvar_stmt
 DIVSHIFT_DIRECT = True                                    # see gen_opassign
 CHAIN_LIVE_OK = True                                      # see store_chain
+NARROW_KEEPS_CAST = True                                  # see narrow: an explicit (char) of an int in memory stays a
+                                                          # cast, so that gen reads the word (rstmt: guca[3] = -((unsigned char)gua[0])
+                                                          # -> ld WA,(_gua) / neg A)
+FOLD_SELF_DIV_LONG = True                                 # see fold: gul % gul is 0 for a long too (rstmt rs_2_02_15_3)
+JUMP_TO_RET = True                                        # see compile_function_once
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -6372,7 +6380,7 @@ def push_arg(F, a):
         F.emit('push', m if size == 2 else FAM[family_of(m)[1:]][2]); F.push += 2; return 2
     if size <= 2 and m is not None:
         F.emit('pushw', m); F.push += 2; return 2
-    if ARG_CAST_COPY and size == 4 and m in ('XBC', 'XDE', 'XHL') and not F.opt and not F.adecl and a0.k == 'cast' and \
+    if ARG_CAST_COPY and size == 4 and m in ('XBC', 'XDE', 'XHL', 'XIZ') and not F.opt and not F.adecl and a0.k == 'cast' and \
             a0.kind == 'IntegralCast' and getattr(a0, 'explicit', False) and strip(a0.e).ty is not None and \
             strip(a0.e).ty.size == 4 and strip(a0.e).ty.signed != a0.ty.signed and 'WA' not in live_regs(F):
         F.emit('ld', 'XWA,%s' % m); F.emit('push', 'XWA'); F.push += 4; return 4   # an explicit sign cast of a register
@@ -13662,6 +13670,12 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
         if F.xiz_vars: F.emit('pop', F.save_reg)
         epilogue(F)
         F.emit('retd', hx(F.retd)) if F.retd else F.emit('ret')   # op_three: an adecl stack parameter -> retd 0x2
+    import re as _rg
+    if JUMP_TO_RET and not F.opt and len(F.lines) >= 2 and F.lines[-1] == '\tret' and _rg.match(r'^L\d+:$', F.lines[-2]):
+        lx_ = F.lines[-2][:-1]                             # a jump to the label of the final bare ret returns there, and
+        for i_, l_ in enumerate(F.lines[:-2]):             # the label stays (rstmt rs_1_01_01_2: while (gi-- > 0) { if
+            m_ = _rg.match(r'^\tj\t(\w+),%s$' % lx_, l_)        # (*gp == -19) break; gp++; } -> .. / ret eq / .. / L2: / ret);
+            if m_: F.lines[i_] = '\tret\t' + m_.group(1)        # a conditional jump only (r2_07_14: a ?: arm's j L2 stays)
     import re as _rg
     F.gen_refs = {m for l in F.lines if l.startswith('\t') for m in _rg.findall(r'\b(L\d+)\b', l)}   # labels jumped to
     for t in reversed(getattr(F, 'tables', [])): F.lines[1:1] = t     # switch tables right after the label

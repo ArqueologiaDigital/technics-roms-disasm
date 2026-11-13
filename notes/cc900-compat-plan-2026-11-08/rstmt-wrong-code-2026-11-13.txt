@@ -1,0 +1,232 @@
+rs_1_00_12_6 [none,O] memory: 0x42e000: model 89, oracle 03 
+      int i = ji; int u = ji; v0(); for (i = 0; i < 8; i++) { ++gul; *gp = ('0' * gp[0]) >> 5; u = gi2; }
+rs_1_01_02_6 [none,O,Xr,OXr] return value: model 0x4, oracle 0x0 
+      return (gc * gc) >> 7;
+rs_1_01_13_3 [none,Xr] memory: 0x114b3c: model 24, oracle unchanged 
+      int t = ji; if (1 == 0 && gpi[1] > 100) { gda[2] = (2.5 + gs.d) / 0.5; gs.l = *gpl; if (gpl[2] != 0) gpl[1] = 65536L / gpl[2]; } else { t *= 10; guca[
+rs_1_04_19_1 [none,O,Xr,OXr] memory: _jp+1: model 5f, oracle 60 
+      char *u = gp + b; jp = u;
+rs_1_05_07_2 [none,O,Xr,OXr] return value: model 0x419fff, oracle 0x41a0ff 
+      char *t = jp; int u = ji; if (gi2 > u) return t + b;
+rs_1_07_04_2 [none,Xr] memory: _gu: model 80, oracle 88 
+      unsigned char u = juc; gu = (gu2 + ((unsigned int)u)) * gu2;
+rs_2_00_03_2 [none,O,Xr,OXr] memory: _guc: model 00, oracle 18 
+      guc = -guca[a] / 10;
+rs_2_00_03_3 [none,O,Xr,OXr] memory: _gp+2: model 41, oracle unchanged 
+      gp = gp + a;
+rs_2_02_05_0 [none,O] memory: _jp+1: model 5f, oracle 60 
+      char *t = gs.p + a; jp = t;
+rs_2_02_17_0 [none,O] memory: _gua: model unchanged, oracle 00 
+      if (guca[a] < 128 && !gc) { gula[5] = gul; if (gu != 0) gua[a] = 256 / gu; gul = gul % 10UL; }
+rs_2_04_15_2 [none,O,Xr,OXr] memory: _gpl+150: model 00, oracle unchanged 
+      unsigned int t = ju; v0(); gia[t] <<= 15;
+rs_2_08_01_2 [none,O] memory: _guc: model 99, oracle 73 
+      guc = (gua[b] & 1 ? guca[b] : (guc - 101));
+rs_2_09_15_6 [none,O,Xr,OXr] call 2 to _v2: model args (0x1, 0x3), oracle (0x0, 0x3) 
+      int i = ji; int t = ji; for (i = 0; i < 3; i++) { v2((((unsigned int)guca[t]) <= gu2), gi); }
+rs_3_01_02_1 [none,O,Xr,OXr] memory: _guc: model 0a, oracle e0 
+      if (gps->a[5] <= gs.a[7]) { --gu; guc = (gca[a] > -62 || gca[a] != 'a' ? guca[a] : -guc); }
+rs_3_01_16_2 [none,O] memory: _guc+1023: model ff, oracle unchanged 
+      guca[a] = guc = -guc;
+rs_3_03_00_2 [none,O] call 1 to _v1: model args (0x2), oracle (0x0) 
+      char *t = jp; v1(2 & (int)t[b]);
+rs_3_03_11_0 [none,O] memory: _jp+1: model 5f, oracle 60 
+      char *t = gp + a; jp = t;
+rs_3_04_03_9 [none,O,Xr,OXr] return value: model 0x419ffe, oracle 0x41a0fe 
+      char *t = jp; char u = jc; v0(); return t + u;
+rs_3_04_13_1 [none,O] return value: model 0xf8, oracle 0x44 
+      if (32767 > gua[c]) return gc2 / 10;
+rs_3_06_12_0 [none,O] memory: _jp+1: model 5f, oracle 60 
+      char *t = gp + a; jp = t;
+rs_3_06_12_1 [none,O] memory: _jp+1: model 07, oracle 08 
+      char *u = &gca[a]; jp = u;
+rs_3_07_10_1 [none,O] memory: _jp+1: model 5f, oracle 60 
+      char *t = gp + a; jp = t;
+rs_3_07_10_7 [none,O,Xr,OXr] memory: _gul: model 2b, oracle 00 
+      int i = ji; unsigned long u = jul; v0(); i = 8; do { gul = (gul * ((unsigned long)gps->u)) >> 16; gl = (long)gu2 / 10L; } while (--i > 0);
+rs_3_07_12_4 [none,Xr] return value: model 0x1, oracle 0xff 
+      return (gca[0] * 61) % 2;
+rs_3_08_09_2 [none] memory: _gi3: model 18, oracle c0 
+      char t = jc; if (!gs.l) { gi3 = (gs.a[3] << (t & 15)) * (gpi[2] ^ 256); gu = gua[2]; }
+rs_4_00_02_0 [none,O,Xr,OXr] model code uses an undefined label RET it never defines
+      if (0x10000UL != 0x10000UL && gu2 != 256) ++gu2;
+rs_4_00_05_3 [none] return value: model 0x2e, oracle 0xe7 
+      unsigned int t = ju; if (gca[t] > gc) return gca[t];
+rs_4_00_13_5 [none,O,Xr,OXr] return value: model 0xc000, oracle 0x0 
+      return (8 ^ 16) << 11;
+rs_4_02_10_3 [none,O,Xr,OXr] memory: _guc+980: model unchanged, oracle 1c 
+      char t = jc; v0(); guca[t] /= 7;
+rs_4_05_05_1 [none,Xr,OXr] memory: _jp: model unchanged, oracle 07 
+      unsigned char t = juc; char *u = gs.p + t; jp = u;
+rs_4_06_06_6 [none,Xr,OXr] return value: model 0x3, oracle 0x1 
+      unsigned char t = juc; return (gi3 <= gs.i) + (gps->a[t] & gi);
+rs_4_07_05_1 [none,O,Xr,OXr] memory: _jl: model 1c, oracle fc 
+      int t = ji; long u = gla[t] << (b & 15); jl = u;
+rs_1_00_19_5 [O,Xr,OXr] memory: _gpi: model 02, oracle 12 
+      while (a-- > 0) *gpi++ = 16;
+rs_1_04_07_1 [O] memory: _juc: model 00, oracle fb 
+      unsigned char t = juc; unsigned char u = guca[t] - t; juc = u;
+rs_1_04_15_0 [O,OXr] memory: _jpi+2: model 3f, oracle unchanged 
+      int *t = gpi + c; jpi = t;
+rs_1_06_01_0 [O,OXr] memory: _jpi+2: model 40, oracle 42 
+      int *t = gpi + b; jpi = t;
+rs_1_08_10_3 [O] memory: _guc: model fc, oracle 70 
+      if (a > -92) { if (c != 0) c = gl2 / c; guc = guca[a] * (guc - 226); }
+rs_1_08_16_1 [O,OXr] memory: _juc: model e2, oracle 62 
+      unsigned char t = juc; unsigned char u = guca[t] & t; juc = u;
+rs_1_08_16_4 [O,Xr,OXr] memory: _gs+11: model 9f, oracle a0 
+      unsigned char u = juc; v0(); gs.p = gp + u;
+rs_2_02_09_5 [O,Xr,OXr] status: model ok, oracle steps 
+      while (a-- > 0) *gpi++ = 100;
+rs_2_02_10_0 [O,OXr] memory: _jpi+2: model 40, oracle 42 
+      int *t = gpi + b; jpi = t;
+rs_2_05_02_6 [O,Xr,OXr] memory: _gpi: model 02, oracle 0c 
+      while (a-- > 0) *gpi++ = 127;
+rs_2_05_15_7 [O,Xr,OXr] return value: model 0x429fff, oracle 0x42a0ff 
+      unsigned char u = juc; v0(); return gp + u;
+rs_2_06_17_0 [O,OXr] memory: _jpi+2: model 3f, oracle unchanged 
+      int *t = gpi + a; jpi = t;
+rs_2_07_19_4 [O,Xr,OXr] memory: _guc+1023: model unchanged, oracle 01 
+      int t = ji; v0(); guca[t] -= (unsigned char)32767;
+rs_3_00_04_6 [O,OXr] calls: model makes 3, oracle 2 
+      char *t = jp; v0(); if (!gs.l) { v0(); if (gc != 0) gc2 = t[0] / gc; vp(t); } else { v0(); gula[0] = (unsigned long)guca[6]; gul++; }
+rs_3_00_14_8 [O] return value: model 0x4, oracle 0x5 
+      char u = jc; return (*gp * u) % 7;
+rs_3_01_19_4 [O,Xr,OXr] memory: _gpi: model 02, oracle 0e 
+      while (a-- > 0) *gpi++ = 305;
+rs_3_02_18_1 [O,OXr] memory: _jpi+2: model 3f, oracle unchanged 
+      int *t = gpi + a; jpi = t;
+rs_3_04_07_6 [O] memory: 0x410001: model 08, oracle unchanged 
+      int i = ji; char *t = jp; v0(); i = 16; do { t[0] = gp[2] * gs.c; } while (--i > 0);
+rs_3_06_10_8 [O,OXr] return value: model 0xa1, oracle 0x43 
+      int t = ji; v0(); return (int)guca[t];
+rs_3_06_19_0 [O] return value: model 0x9e80da44, oracle 0x9e80ba6f 
+      if (b < gua[b]) return gla[b] << 27;
+rs_3_08_02_5 [O,Xr,OXr] memory: _gpi: model 02, oracle 04 
+      while (b-- > 0) *gpi++ = 255;
+rs_3_08_04_0 [O,Xr,OXr] memory: _jp+1: model 5f, oracle 60 
+      char *t = gp + b; jp = t;
+rs_3_08_05_2 [O,OXr] memory: _jpi+2: model 40, oracle 42 
+      int t = ji; int *u = gpi + t; jpi = u;
+rs_3_08_12_3 [O,Xr,OXr] call 1 to _r1: model args (0x1), oracle (0x0) 
+      gi3 = gi = r1(((int)guca[a] <= a));
+rs_4_03_02_1 [O,Xr,OXr] status: model ok, oracle steps 
+      while (b-- > 0) *gpi++ = 8;
+rs_4_06_03_3 [O] return value: model 0xff00, oracle 0x4 
+      return (gpi[3] & gps->a[a]) - (256 >> (a & 15));
+rs_4_06_04_4 [O,Xr,OXr] memory: _gpi: model 02, oracle 08 
+      while (a-- > 0) *gpi++ = 100;
+rs_4_08_17_5 [O,Xr,OXr] memory: 0x0f8800: model unchanged, oracle 0b 
+      int t = ji; v0(); gca[t] %= 16;
+rs_4_09_17_5 [O,OXr] return value: model 0xda44, oracle 0x0 
+      if (gi2) return gi2 >> 3;
+rs_1_02_05_6 [Xr,OXr] memory: _guc: model fe, oracle ff 
+      guc = ~guca[6] | (((unsigned char)gla[6]) ^ ((unsigned char)a));
+rs_1_03_19_1 [Xr,OXr] memory: _gi2: model 5d, oracle 3a 
+      if ((gi2 = a->a[b]) != 1) { gul &= 0UL + gula[7]; gla[5] &= (long)(gu2 <= 256); gi <<= 5; }
+rs_1_05_13_2 [Xr,OXr] return value: model 0xfabbab39, oracle 0xfabbfa79 
+      return gpl[3] ^ (gla[a] | -54089L);
+rs_1_05_16_4 [Xr,OXr] memory: _guca+246: model 8b, oracle unchanged 
+      gula[a] |= 0x10000UL << 7;
+rs_1_06_09_3 [Xr] XSP after return: model +4, oracle +12 
+      while (gi > 0) { gi2 += *gpi++; gi--; }
+rs_1_07_15_1 [Xr,OXr] memory: _gul: model 04, oracle 08 
+      long t = jl; gul = (*c <= t ? (gul << (a & 15)) : gula[a]);
+rs_1_07_19_2 [Xr,OXr] memory: _gl: model c9, oracle 53 
+      if (*a != 0) gl = gl2 % *a;
+rs_1_08_00_2 [Xr,OXr] memory: _guca+7: model 04, oracle 06 
+      char *t = jp; if (0x10000UL != gula[5]) { guca[7] = guca[a]; } else { if (gpl[0]) if (gc2 != 0) t[2] = gca[7] / gc2; }
+rs_2_00_03_5 [Xr,OXr] call 1 to .v2: model args (0xff00, 0x3), oracle (0x0, 0x3) 
+      v2(~255, gi);
+rs_2_01_06_1 [Xr,OXr] memory: 0x412002: model unchanged, oracle 05 
+      if (a != 0) gps->i = gps->a[a] % a;
+rs_2_01_11_6 [Xr,OXr] memory: 0x412008: model 07, oracle unchanged 
+      return (29553 > gua[a] || (gps->u = gu) >= 256 ? gs.c : (gc2 + gp[1]));
+rs_2_02_15_4 [Xr,OXr] return value: model 0x2, oracle 0x5 
+      if ((gu2 = 1) == 1) return a + *gpi;
+rs_2_03_12_2 [Xr,OXr] call 1 to .v2: model args (0xfffe, 0x7), oracle (0x7, 0x7) 
+      if (gps->u) v2(gia[a], gi);
+rs_2_04_03_8 [Xr,OXr] return value: model 0x405fff, oracle 0x415fff 
+      return gp + b;
+rs_2_04_09_6 [Xr,OXr] return value: model 0x5b1c, oracle 0x5a9d 
+      return (7L < gl2 ? a : b) - (gi2 + gpi[2]);
+rs_2_04_10_1 [Xr,OXr] memory: _gda+6: model 1c, oracle 00 
+      if (gl < 65536L) { gda[0] = -(double)gia[a]; gi3 = gi2 / 4; } else { if (gps->c != 0) gca[4] = gs.c % gps->c; if (gul != 0) gul = gul / gul; }
+rs_2_04_10_6 [Xr,OXr] return value: model 0x7, oracle 0x2 
+      return (gps->u == 1 ? gua[0] : 32767) & (gua[a] & 255);
+rs_2_05_00_1 [Xr,OXr] memory: _gua+2: model unchanged, oracle 00 
+      if (gu != 0) gua[b] = gu % gu;
+rs_2_05_00_3 [Xr,OXr] memory: _guca+4: model unchanged, oracle 0c 
+      guca[b] <<= 1;
+rs_2_05_19_4 [Xr,OXr] memory: _gi3: model 5d, oracle ec 
+      switch (gc2) { case 0: case 1: gps->c &= gc2; break; case 2: gi3 = gps->a[a]; break; }
+rs_2_06_03_2 [Xr,OXr] memory: _gu: model unchanged, oracle 4e 
+      if (*gp > 73) { if (a != 0) gu = gps->u / a; if (*gpl != 0) gs.l = gl2 / *gpl; gl2 = gl; }
+rs_2_06_13_1 [Xr,OXr] memory: _gi3+1022: model unchanged, oracle 40 
+      gia[a] <<= 4;
+rs_2_08_14_3 [Xr,OXr] memory: _gul+1020: model 82, oracle unchanged 
+      unsigned long t = jul; gula[b] = t + gul;
+rs_2_09_11_0 [Xr] XSP after return: model +4, oracle +12 
+      while (gi-- > 0) { if (*a == 781) break; a++; }
+rs_3_00_02_4 [Xr,OXr] return value: model 0x1101ae, oracle 0x1201ae 
+      unsigned int t = ju; v0(); return &gia[t];
+rs_3_00_08_4 [Xr,OXr] memory: _guca: model unchanged, oracle 0c 
+      guc = guca[c] = (guca[3] + b) % 16;
+rs_3_01_01_2 [Xr] memory: _guc: model 0f, oracle 88 
+      guc = (guca[a] ^ 128) + (a - 255);
+rs_3_01_10_1 [Xr] memory: _guc: model 00, oracle fc 
+      guc = ((unsigned char)!(-72039L)) - ((unsigned char)a);
+rs_3_01_13_4 [Xr,OXr] memory: 0x420001: model 7a, oracle unchanged 
+      while (gi-- > 0) *a++ = -646;
+rs_3_04_11_4 [Xr,OXr] memory: 0x420002: model 01, oracle unchanged 
+      while (gi-- > 0) *a++ = 256;
+rs_3_04_15_8 [Xr,OXr] memory: _gi2: model 76, oracle 75 
+      gi2 = gi3 = (gps->a[a] + 256) - (a >= 128);
+rs_3_05_00_1 [Xr,OXr] memory: _guc: model 08, oracle 0d 
+      if (gc & 0x7) guc = (guca[2] + a) >> 4;
+rs_3_05_00_2 [Xr,OXr] memory: _gs+4: model 18, oracle 80 
+      char *t = jp; switch (gps->i) { case 0: case 1: vd(gda[0]); case 2: gps->p = t; break; case 3: gs.l <<= (a & 15); break; case 4: v2(gi3, gi); break; }
+rs_3_05_01_1 [Xr] XSP after return: model +4, oracle +12 
+      switch (gi2) { case 1: gs.u ^= 1; break; case 5: v0(); break; default: c = c + 9; break; }
+rs_3_06_12_3 [Xr,OXr] memory: _gpi: model 0a, oracle fe 
+      switch (gl) { case 2L: vu(gu); break; case 5L: gpi = &gia[a]; break; case 16L: case 100L: a = rc(gi3); }
+rs_3_08_00_0 [Xr,OXr] memory: _gu2: model 80, oracle 00 
+      switch (gc2) { case 0: gpi = &gia[6]; break; case 1: gs.a[6] ^= gia[2]; break; case 2: gla[2] = gs.l; break; case 3: a->u = gu2 = a->u & gua[5]; break
+rs_3_08_04_5 [Xr,OXr] memory: _gs+36: model 12, oracle 14 
+      gs.d = (guca[b] & 0x7 ? 3.0 : gs.d) - (gd + 0.5);
+rs_3_09_10_1 [Xr] memory: _juc: model 25, oracle 98 
+      unsigned char t = (gi <= gi3 ? guc : ((unsigned char)gla[a])); juc = t;
+rs_4_00_14_4 [Xr,OXr] call 1 to .r2: model args (0xff95, 0xff), oracle (0x21, 0xff) 
+      v1((r2((int)gca[b], gi) ? gi : b));
+rs_4_01_02_3 [Xr,OXr] return value: model 0x10b9ba, oracle 0x11b9ba 
+      return &gia[b];
+rs_4_02_11_3 [Xr,OXr] return value: model 0x7, oracle 0x9 
+      if (gi3 & 2) return a;
+rs_4_03_00_3 [Xr,OXr] memory: _gc: model 02, oracle 01 
+      if (gca[a]) if (gca[0] != 0) gc = gca[a] / gca[0];
+rs_4_03_19_1 [Xr,OXr] XSP after return: model +4, oracle +12 
+      switch (gl2) { case 0L: case 1L: gul = (unsigned long)(gs.c > gca[0]); break; case 2L: vs(gps); break; }
+rs_4_04_11_4 [Xr,OXr] return value: model 0x8d8a979, oracle 0xfdfaf7f 
+      return (((unsigned char)gul) != 255 ? 41939UL : (gula[a] >> 2));
+rs_4_05_04_2 [Xr] XSP after return: model +4, oracle +12 
+      while (gi-- > 0) *c++ = 2;
+rs_4_07_01_2 [Xr,OXr] memory: _gua+652: model fc, oracle unchanged 
+      gla[b] = gl ^ 7L;
+rs_4_08_00_3 [Xr,OXr] memory: _gl2+1020: model unchanged, oracle 12 
+      switch (gc) { case 1: a <<= 9; break; case 3: gla[c] = gl << 1; break; case 16: v2(b, gi); break; default: vc((char)gu); break; }
+rs_4_08_02_0 [Xr,OXr] return value: model 0xda07, oracle 0xda44 
+      if ((int)guca[c] < gia[7]) return ((unsigned int)c) & gu2;
+rs_4_08_02_1 [Xr] memory: 0x412002: model unchanged, oracle 00 
+      gps->i <<= (c & 15);
+rs_4_09_08_4 [Xr] memory: 0x406002: model unchanged, oracle 00 
+      gp[2] >>= (c & 7);
+rs_1_00_19_4 [OXr] status: model ok, oracle steps 
+      int i = ji; v0(); i = a; do { gs.u = gua[b] + (29164 % 2); gula[i] = (gps->l ? gul : gul); } while (--i > 0);
+rs_2_04_03_3 [OXr] calls: model makes 1, oracle 0 
+      switch (gu2) { case 0: v1(gi3); break; case 1: v1(gi); break; case 2: vs(gps); break; case 3: vs(gps); break; default: gpi = gpi + c; break; }
+rs_3_05_08_2 [OXr] memory: _gpi: model 14, oracle 0a 
+      unsigned char t = juc; gpi = a + t;
+rs_4_04_02_4 [OXr] memory: _guc: model ff, oracle fb 
+      int t = ji; v0(); guc = ((guca[1] = guc) ? (guc / 10) : -guca[t]);
+rs_4_09_17_3 [OXr] memory: _guc: model 05, oracle 01 
+      int i = ji; unsigned int u = ju; switch (gps->i) { case 1: vu(u); break; case 2: guc ^= a; break; case 5: case 16: v0(); break; case 20: vp(gp); break
