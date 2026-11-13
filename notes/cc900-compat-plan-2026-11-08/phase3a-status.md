@@ -1602,6 +1602,13 @@ dropped the label when it ran before.  rstmt at none / -O3 -XS / -Xr / -O3 -XS -
 3,409 / 3,003 / 3,018 / 2,867 of 4,694.  The random corpora do not move (165 / 46 / 87 / 37): a function there
 rarely ends this way.
 
+**Batch 106 (2026-11-13): an `int` local's constant goes through WA when nothing optimises; rstmt +42.**  The second
+near miss of the statement probes (34 statements).  `int t = 256 + 8; ji = t;` without -O is `ld WA,0x108` /
+`ld (_ji),WA`: the local is forwarded into its one use, but as a register value, not as an immediate; the model wrote
+`ldw (_ji),0x108`, which is what -O does.  Only the 16-bit case differed: a char local already went through A and a
+long through XWA (17 + 5 and 6 + 5 statements of those kinds were exact).  rstmt at none / -Xr 3,409 / 3,018 ->
+3,443 / 3,026 of 4,694; the -O sets and the random corpora unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

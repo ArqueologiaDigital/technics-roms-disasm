@@ -6232,6 +6232,7 @@ PTR_INIT_EXTZ = True                                      # see gen_ptr_arith
 DO_PREDEC_IDX = True                                      # see the DEC_CMP_SUB peephole
 RIGHT_READS_HOME = True                                   # see gen_bin
 TAIL_IF_RETURN_LABEL = True                               # see compile_function_once's last passes
+LOCAL_K_VIA_REG = True                                    # see store_global
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -8162,6 +8163,14 @@ def store_global(F, name, e, size):
         store_global(F, name, ia.r, size); return            # the inner a constant element / static member (random
                                                              # r3_00_12: guc = guca[6] = 9 -> ldb (_guca + 0x6),0x9 / ldb (_guc),0x9)
     rc = fold(narrow(e, size)) if size <= 2 else None
+    fl_ = e
+    while fl_ is not None and not getattr(fl_, 'from_local', False) and fl_.k in ('cast', 'noop', 'paren') and \
+            getattr(fl_, 'e', None) is not None: fl_ = fl_.e
+    if LOCAL_K_VIA_REG and not F.opt and size == 2 and rc is not None and rc.k == 'const' and rc.value is not None and \
+            fl_ is not None and getattr(fl_, 'from_local', False) and 'WA' not in live_regs(F):
+        F.emit('ld', 'WA,%s' % imm_of(rc, 2)); F.emit('ld', '(_%s),WA' % name); return   # an int local's constant
+        # goes through its register when nothing optimises (rstmt rs_1_00_15_0: int t = 256 + 8; ji = t ->
+        # ld WA,0x108 / ld (_ji),WA; -O: ldw (_ji),0x108)
     if rc is not None and rc.k == 'const' and rc.value is not None:   # _exp, _tan: errno = ERANGE -> ldw (_errno),0x22
         F.emit('ld' + ('b' if size == 1 else 'w'), '(_%s),%s' % (name, imm_of(rc, size))); return
     if strip(e).k == 'call' and not has_helper_call(strip(e).fn):   # abi returns.c use_i: cal _x_i / ld (_gi),HL
@@ -8508,6 +8517,8 @@ def gen_stmt(F, s, last):
                         and not helper_res and not written_in(upto, c.var) and \
                         not (NO_FOLD_OVER_STORE and ptr_store_before_use(rest, c.var, c.init)):   # (lnr4.c h5: c ^= s[i] then gc = c)
                                                      # (mul_l_loc under O3XSXr: x = a * b stays in a slot)
+                    if LOCAL_K_VIA_REG and not F.opt and c.var.ty.kind == 'int' and c.var.ty.size == 2:
+                        c.init.from_local = True           # (see store_global)
                     for x in rest: substitute(x, c.var, c.init)   # cdecl -O folds a char local too (add_c_loc)
                     i += 1; continue
                 if getattr(c.var, 'slot', None) is not None and c.var.ty.size >= 2 and strip(c.init).k != 'initlist':
