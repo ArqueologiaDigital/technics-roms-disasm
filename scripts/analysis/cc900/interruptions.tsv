@@ -24,3 +24,4 @@
 2026-11-13T02:44:00Z	2026-11-13T02:56:00Z	est	dashboard: the prompts line on the round-time chart, this file
 2026-11-13T03:12:11Z	2026-11-13T03:12:32Z	log	dashboard: what counts as progress, on every chart
 2026-11-13T03:15:53Z	2026-11-13T03:16:31Z	log	dashboard: vertical lines where probe rows were added
+2026-11-13T03:16:41Z	2026-11-13T03:53:07Z	idle	stopped after the dashboard reply (the turn ended instead of returning to the model)
