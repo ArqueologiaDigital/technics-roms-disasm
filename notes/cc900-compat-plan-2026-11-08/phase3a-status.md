@@ -2107,6 +2107,18 @@ or a jump table counts as live. The pass writes only R, so R must be dead after 
 jump's label. A first version treated a tail jump (`j _rp`) as unknown and lost r1_02_08. Ledger up 2 (rstmt at -O3 -XS
 3,032 -> 3,034, at -O3 -XS -Xr 2,878 -> 2,881), down 0; pairs MATCH 223; semcheck 56. Random 182 / 55 / 87 / 42.
 
+**Batch 161 (2026-11-13): under -O a guarded division takes its divisor from the test's register (GUARD_DIV).**
+Statics were handled by batch 157's listing pass; a member through a pointer needs the code generator. For an
+`if (D != 0)` without else under -O, whose then-arm starts with an assignment dividing by D (an int static, or a member
+through a global pointer), `guard_div_plan` has the test load D into BC (`ld XWA,(_gps) / ld BC,(XWA+0x2) / cp BC,0x0 /
+j eq,L`) and leaves (D, BC) for the arm. The division takes BC as its right operand when nothing since the test wrote
+BC (`writes_family`), and reads D again if the dividend's code takes BC. store_div, bin_wide and evorder_bin stand
+aside for it, and a constant dividend is `lda XWA,K` (random r1_09_05: `if (gps->i != 0) gi3 = 100 / gps->i` ->
+`.. / lda XWA,0x64 / divs XWA,BC / ld (_gi3),WA`). Not when BC holds a live variable (checked before the load; random
+r1_09_14 was refused by a first version), nor for D / D (r1_02_08, which the first version folded to a constant and
+lost). Ledger up 3 (rstmt at -O3 -XS 3,034 -> 3,039 and at -O3 -XS -Xr 2,881 -> 2,883, random3 10 -> 11), down 0;
+pairs MATCH 223; semcheck 56. Random 182 / 56 / 87 / 42.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

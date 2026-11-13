@@ -1392,6 +1392,8 @@ def bin_wide(F, e, op, l, r, fam, size):
     dividend as ld XWA,0x7 without the extension, a remainder's ld WA,QWA (ld WA,QBC from the BC accumulator).  Chars
     the same at the byte (ld A,(_gc) / sub A,(XBC); exts WA / divs WA,(_hc)); a constant left loads the right (ld A,(_hc)
     / inc 0x7,A).  Returns the register family of the result, or None where the pair is not in the table."""
+    gr_ = getattr(F, 'guard_reg', None)
+    if gr_ is not None and op in ('/', '%') and gr_[1] == FAM['BC'].get(size) and expr_key(r) == gr_[0]: return None   # (GUARD_DIV)
     lk, rk = cw_kind(F, l, size), cw_kind(F, r, size)
     if lk is None or rk is None: return None
     L, R = lk[0], rk[0]
@@ -2992,6 +2994,8 @@ def store_div(F, lv, rv):
     x = strip(rv)
     if x.k != 'bin' or x.op not in ('/', '%') or x.ty is None or x.ty.size != 2 or x.ty.kind != 'int': return False
     if lv.ty is None or lv.ty.size != 2 or lv.ty.kind not in ('int', 'ptr'): return False
+    gr_ = getattr(F, 'guard_reg', None)
+    if gr_ is not None and gr_[1] == 'BC' and expr_key(x.r) == gr_[0]: return False   # (GUARD_DIV: the divisor is in BC)
     L = sc_lkind(F, lv)
     if L is None: return False
     a, b = sd_opkind(F, x.l, 2), sd_opkind(F, x.r, 2)
@@ -4358,6 +4362,8 @@ def evorder_bin(F, e, op, l, r, fam, size, ctx='HL'):
     operand needs: the right *p takes XWA and the left XBC (s_PP, x_PP), a left *p takes XDE before a right g[i]
     (s_PX), a left g[i] keeps WA / XBC and a right *p takes XDE (s_XP).  Returns None where the shape is not one
     of these (a ?: beside a member or element, two indexed elements, a shift beside an indexed element, ...)."""
+    gr_ = getattr(F, 'guard_reg', None)
+    if gr_ is not None and op in ('/', '%') and gr_[1] == FAM['BC'].get(size) and expr_key(r) == gr_[0]: return None   # (GUARD_DIV)
     cl, cr = ev_class(F, l), ev_class(F, r)
     if cl is None or cr is None: return None
     lx, rx = ev_core(l), ev_core(r)
@@ -4996,7 +5002,11 @@ def _gen_bin_body(F, e, fam, size, then_ret, store=False):
         emit_shift(F, 'srl', fold(r).value.bit_length() - 1, FAM[f1][4]); return f1
     if op in ('*', '/', '%'):
         if size == 4: return gen_long_helper(F, e, l, r, fam, signed)
-        rs = mem_operand(F, r); n_rs = len(F.lines)
+        gr_ = getattr(F, 'guard_reg', None)
+        guard_ = gr_ is not None and op in ('/', '%') and FAM['BC'][size] == gr_[1] and expr_key(r) == gr_[0] and \
+            not writes_family(F.lines[gr_[2]:], 'BC')
+        rs = gr_[1] if guard_ else mem_operand(F, r)       # (GUARD_DIV: the divisor the test left in BC / C)
+        n_rs = len(F.lines)
         if size == 1 and rs is not None and rs.startswith('0x'): rs = hx(int(rs, 16) & 0xff)   # r2_01_17: muls WA,0xa6
         work = 'WA'
         if getattr(F, 'mul_acc_fam', None) == fam and fam in ('BC', 'DE') and size == 2: work = fam   # (store_plan)
@@ -5071,6 +5081,8 @@ def _gen_bin_body(F, e, fam, size, then_ret, store=False):
             f1 = gen(F, l, work, size)                      # ld HL,IZ / muls XHL,QIZ
             if f1 != work and f1 in FAM and f1 in ('WA', 'BC', 'DE', 'HL'):
                 work = f1                                   # (where gen left it: ra_noloop's a + b in DE, before
+        if guard_ and (writes_family(F.lines[n_rs:], 'BC') or work == 'BC'):
+            rs = mem_operand(F, r)                         # (the dividend's code took BC: the divisor is read again)
         if STORE_ADDR_GUARD and rs is not None and clobbers(F.lines[n_rs:], rs):
             raise Unsupported('the left operand overwrites the right operand\'s address')   # (lnr3.c s_mul -Xr)
         if rs is None:                                  # ra_noloop: muls XWA,BC   (a - b took WA: wrong code)
@@ -5099,7 +5111,9 @@ def _gen_bin_body(F, e, fam, size, then_ret, store=False):
             F.emit('srl', '%s,%s' % (hx(kd_.bit_length() - 1), FAM[work][size])); res = FAM[work][size]   # (random r4_01_07:
         else:                                                                                             #  vu(gu / 16) -> srl 0x4,WA)
             mk_ = re.match(r'^\tld\t%s,0x([0-9a-f]+)$' % FAM[work][size], F.lines[-1]) if F.lines else None
-            if K_DIVIDEND_WIDE and mk_ and not F.opt and not F.adecl and int(mk_.group(1), 16) < (0x80 if size == 1 else 0x8000):
+            if guard_ and mk_ and size == 2 and 8 <= int(mk_.group(1), 16) < 0x8000:
+                F.lines[-1] = '\tlda\t%s,0x%s' % (wide, mk_.group(1))   # -O: lda XWA,0x64 (random r1_09_05)
+            elif K_DIVIDEND_WIDE and mk_ and not F.opt and not F.adecl and int(mk_.group(1), 16) < (0x80 if size == 1 else 0x8000):
                 F.lines[-1] = '\tld\t%s,0x%s' % (wide, mk_.group(1))   # a constant dividend is loaded wide (random
             else:                                                       # r4_03_06: gc2 = 8 / gs.c -> ld WA,0x8 / divs WA,(_gs))
                 F.emit('exts' if signed else 'extz', wide)
@@ -6640,6 +6654,62 @@ def test_reg_reuse(lines):
 
 TEST_REG_REUSE_LONG = True                               # see test_reg_reuse_long
 TEST_REG_LIVE = True                                     # see test_reg_reuse: reg_dead instead of "used nowhere else"
+GUARD_DIV = True                                         # see guard_div_plan
+
+def expr_key(n):
+    """a structural key of an expression (kinds, operators, values, declarations): the same operand twice"""
+    n = strip(n)
+    if not hasattr(n, 'k'): return repr(n)
+    parts = [n.k, getattr(n, 'op', None), getattr(n, 'value', None), id(getattr(n, 'decl', None)) if getattr(n, 'decl', None) is not None else None,
+             getattr(n, 'name', None) if n.k == 'member' else None, getattr(n, 'arrow', None), getattr(n, 'kind', None)]
+    kids = []
+    for key in ('e', 'l', 'r', 'base', 'idx', 'fn'):
+        v = getattr(n, key, None)
+        if hasattr(v, 'k'): kids.append((key, expr_key(v)))
+    return (tuple(parts), tuple(kids))
+
+def writes_family(lines, fam):
+    """does any line write a part of the register family fam ('BC'), or call?"""
+    import re as _r
+    parts = {'BC': ('B', 'C', 'BC', 'QBC', 'XBC')}[fam]
+    for l in lines:
+        if l is None or not l.startswith('\t'): continue
+        if l.startswith('\tcal') or l.startswith('\tcall'): return True
+        m = _r.match(r'^\t(\w+)(?:\t([^,]+))?', l)
+        if m.group(1) in ('ldir', 'ldirw', 'lddr', 'lddrw', 'ldi', 'ldiw', 'ldd', 'lddw', 'cpir', 'cpdr'): return True
+        if m.group(2) in parts and m.group(1) not in ('cp', 'push', 'bit'): return True
+    return False
+
+def guard_div_plan(F, s):
+    """-O: if (D != 0) / if (D) whose then-arm starts with a statement dividing by D (an int or char static, member or
+    element read without side effects): (D, size, the jump's condition), else None.  The oracle's -O listings have
+    about 100 such tests per set, ld BC,(XWA+K) / cp BC,0x0 with the register read by the division after (65 + 37
+    div XWA,BC, 39 + 20 divs WA,C at -O3 -XS for statics and members)"""
+    c = strip(s.cond)
+    while c.k == 'cast' and c.kind == 'IntegralCast': c = strip(c.e)
+    if c.k == 'bin' and c.op in ('!=', '==') and fold(c.r).k == 'const' and fold(c.r).value == 0: D, cc = strip(c.l), 'eq' if c.op == '!=' else 'ne'
+    else: return None
+    if cc != 'eq': return None
+    while D.k == 'cast' and D.kind == 'IntegralCast' and D.ty is not None and strip(D.e).ty is not None and strip(D.e).ty.size == D.ty.size:
+        D = strip(D.e)
+    if D.k != 'load' or D.ty is None or D.ty.kind != 'int' or D.ty.size not in (1, 2): return None
+    v = strip(D.e)
+    if v.k == 'var':
+        if v.decl.kind != 'global' or getattr(v.decl, 'reg', None): return None
+    elif v.k == 'member' and v.arrow:
+        b = strip(v.base)
+        if not (b.k == 'load' and strip(b.e).k == 'var' and strip(b.e).decl.kind == 'global'): return None
+    else: return None
+    body = flat(s.then)
+    if not body or body[0].k != 'expr': return None
+    e0 = strip(body[0].e)
+    if not (e0.k == 'bin' and e0.op == '=') and e0.k != 'opassign': return None
+    divs = [n for n in nodes_in(e0, 'bin') + ([e0] if e0.k == 'opassign' else []) if n.op in ('/', '%') and
+            getattr(n, 'ty', None) is not None and n.ty.size == D.ty.size and expr_key(unpromote(n.r) if n.k == 'bin' else n.r) == expr_key(D)]
+    divs = [n for n in divs if n.k == 'bin' and expr_key(unpromote(n.l)) != expr_key(D)]   # (D / D: left to test_reg_reuse,
+                                                           # random r1_02_08 -> ld WA,BC / exts XWA / divs XWA,BC)
+    if not divs or nodes_in(e0, 'call') or has_helper_call(e0): return None
+    return D, D.ty.size, cc
 
 REG_PARTS = {'BC': ('B', 'C', 'BC', 'XBC'), 'C': ('C', 'BC', 'XBC'), 'DE': ('D', 'E', 'DE', 'XDE'), 'E': ('E', 'DE', 'XDE'),
              'XBC': ('B', 'C', 'BC', 'QBC', 'XBC')}
@@ -9462,7 +9532,17 @@ def gen_stmt(F, s, last):
             folded = False
             bare = not F.xiz_vars and not F.pushes and not getattr(F, 'frame', 0)   # ra_libshapes.c ls_sl_ret: a
             n_if0_ = len(F.lines)
-            k = gen_cond_false(F, s.cond, 'RET' if last and bare else lab)          # pushed XIZ is popped first
+            gp_ = guard_div_plan(F, s) if GUARD_DIV and F.opt and not (last and bare) and 'BC' not in live_regs(F) else None
+            k = None
+            if gp_ is not None:                          # -O: if (D != 0) .. A / D: D in BC (C) for the test and the
+                D_, sz_, cc_ = gp_                       # division (random r1_09_05: if (gps->i != 0) gi3 = 100 / gps->i
+                f_ = gen(F, D_, 'BC', sz_)               # -> ld XWA,(_gps) / ld BC,(XWA+0x2) / cp BC,0x0 / j eq,L /
+                if f_ != 'BC' or 'BC' in live_regs(F):   # lda XWA,0x64 / divs XWA,BC / ld (_gi3),WA)
+                    del F.lines[n_if0_:]; gp_ = None
+                else:
+                    F.emit('cp', '%s,0x0' % FAM['BC'][sz_]); F.emit('j', '%s,%s' % (cc_, lab))
+                    F.guard_reg = (expr_key(D_), FAM['BC'][sz_], len(F.lines))
+            if gp_ is None: k = gen_cond_false(F, s.cond, 'RET' if last and bare else lab)   # pushed XIZ is popped first
             n_if1_ = len(F.lines)
             test_clobber_check(F, n_if0_, n_if1_, s.cond, [s.then])
                                                                                    # (ret ne was wrong code)
@@ -9470,8 +9550,10 @@ def gen_stmt(F, s, last):
                 return                               # condition always false: the statement disappears
             dead0 = set(F.dead)
             inner = flat(s.then)                         # a lone if inside the last if returns early too (random
-            gen_stmt(F, s.then, bool(NESTED_IF_RET and last and bare and not F.opt and len(inner) == 1 and   # r1_07_03:
-                                     inner[0].k == 'if' and inner[0].els is None))   # if (a) if (b) x; -> ret lt / .. / ret eq)
+            try:
+                gen_stmt(F, s.then, bool(NESTED_IF_RET and last and bare and not F.opt and len(inner) == 1 and   # r1_07_03:
+                                         inner[0].k == 'if' and inner[0].els is None))   # if (a) if (b) x; -> ret lt / .. / ret eq)
+            finally: F.guard_reg = None
             if stmt_returns(s.then): F.dead = dead0     # (r4_08_02: c died in the returning arm, then was read)
             if NESTED_IF_RET2 and last and bare and not F.opt and not F.adecl and len(inner) > 1 and inner[-1].k == 'if' and \
                     inner[-1].els is None and not F.pending and F.lines[-1].endswith(':'):
