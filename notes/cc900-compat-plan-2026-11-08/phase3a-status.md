@@ -1396,6 +1396,19 @@ pointer load), and a multiply whose right operand ended up in the accumulator is
 predictor reproduces all 238 rows at none (research-scratch `tabulation/chararith-*`); the forms it shows are not
 all ported.  **Open: 160 of batch 83's 253** (233 - 73).
 
+**Batch 87 (2026-11-13): typed constant folding (probe kfold.c); semcheck 233 -> 227.**  `corpus/probes/kfold.c`
+(run 2026-11-13-9-micro-kfold, 47 functions) asked why `return (8 ^ 16) << 11` is 0.  With negk.c's rows it gives
+one rule for the compiler's folder: an operation on two byte-sized constants is char-typed, as its char arithmetic
+on variables is (batch 86): unsigned when either constant is 128..255, a negative one then counting as its unsigned
+byte (`-40 - 255` is 216 - 255); the value is kept whole (`100 + 100` is 0xc8, `127 + 1 + 1` is 0x81), but a left
+shift of such a char-typed result is cut to the byte and extended again (`(8 ^ 16) << 11` is 0, `(100 + 100) << 1`
+is 0xff90, `(200 ^ 1) << 2` is 0x24).  A bare literal shifts as an int (`8 << 11` is 0x4000), a product is whole,
+long constants fold as C does, and `~K` of 128..255 is its low byte (`~255 + 1` is 1).  `fold` now carries that type
+(`kctype`); batch 74's special case is part of it.  kfold.c 27 -> 47 of 47 and negk.c 38 of 38 at each of the four
+sets.  And `x + 0` writes no instruction (`gi + ((8 ^ 16) << 11)` -> `ld HL,(_gi)`).  rstmt 3,352 / 2,958 / 2,971 /
+2,824 -> 3,362 / 2,963 / 2,979 / 2,829; micro ra_*.c and fpp11.c +1 at none.  **Open: 154 of batch 83's 253**
+(227 - 73).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

@@ -99,6 +99,9 @@ class Fn:
             if not getattr(s, 'exit_label', None): s.exit_label = s.newlabel()   # ret cc: the early exit jumps to the
             op, args = 'j', '%s,%s' % (args, s.exit_label)                    # exit label (ret_target; rstmt .rs_1_06_09_3
                                                            # under -Xr wrote ret le before retd 0x8: wrong code)
+        if ADD_ZERO_DROP and op in ('add', 'sub', 'or', 'xor') and args is not None and \
+                re.match(r'^(X?(?:WA|BC|DE|HL|IX|IY|IZ)|[WABCDEHL]),0x0$', args):
+            return                                         # x + 0 is no code (kfold.c kf_al: gi + ((8 ^ 16) << 11) -> ld HL,(_gi))
         if ADD_INC and op == 'add' and args is not None:        # add R,1..8 is inc (no oracle listing adds 1..8 to a
             m_ = re.match(r'^(X?(?:WA|BC|DE|HL|IX|IY|IZ)|[WABCDEHL]),0x([1-8])$', args)   # register; 1,335 inc at none)
             if m_: op, args = 'inc', '0x%s,%s' % (m_.group(2), m_.group(1))
@@ -276,6 +279,35 @@ def same_size_ptr_cast(e):
         e = strip(e.e)
     return e
 
+KFOLD_CTYPE = True                                        # see fold, kctype (probes/kfold.c, negk.c)
+
+def kctype(x):
+    """the char type V4.23's folder gives a constant operand of an int operation: 'S' for a literal 0..127 or a
+    char-typed result, 'U' for a literal 128..255 or an unsigned char-typed result, None for an int"""
+    x0 = strip(x)
+    while x0.k == 'cast' and x0.kind == 'IntegralCast' and not getattr(x0, 'explicit', False) and x0.ty is not None and \
+            x0.ty.size == 2 and strip(x0.e).ty is not None and strip(x0.e).ty.size == 2: x0 = strip(x0.e)
+    f = fold(x0)
+    if f.k != 'const' or f.value is None: return None
+    if getattr(f, 'ctype', None): return f.ctype
+    if getattr(f, 'folded', False): return None
+    if x0.k == 'const' and x0.ty is not None and x0.ty.kind == 'int' and x0.ty.size <= 2:
+        return 'S' if 0 <= f.value <= 127 else ('U' if 128 <= f.value <= 255 else None)
+    return None
+
+def kraw(x):
+    """the folded constant under x's implicit same-size conversions"""
+    x0 = strip(x)
+    while x0.k == 'cast' and x0.kind == 'IntegralCast' and not getattr(x0, 'explicit', False) and x0.ty is not None and \
+            x0.ty.size == 2 and strip(x0.e).ty is not None and strip(x0.e).ty.size == 2: x0 = strip(x0.e)
+    return fold(x0)
+
+def kfolded(x):
+    """x is a folded constant expression, not a bare literal"""
+    x0 = strip(x)
+    while x0.k == 'cast' and x0.kind == 'IntegralCast' and not getattr(x0, 'explicit', False): x0 = strip(x0.e)
+    return x0.k != 'const'
+
 def fold(e):
     """constant folding of integral casts of constants"""
     e = same_size_ptr_cast(strip(e))
@@ -283,7 +315,7 @@ def fold(e):
         from frontend import N                           # c_find: return -1 -> ld HL,0xffff
         v = -fold(e.e).value; sz = e.ty.size if e.ty is not None else 2
         n = N('const', value=v, ty=e.ty); n.folded = True
-        if NEGK_UCHAR and -127 <= v <= -1 and strip(e.e).k == 'const' and sz == 2: n.neg_char = True   # (see the binary fold)
+        if NEGK_UCHAR and -127 <= v <= -1 and strip(e.e).k == 'const' and sz == 2: n.neg_char = True; n.ctype = 'S'   # (see the binary fold)
         return n
     if e.k == 'un' and e.op == '!' and FOLD_NOT and fold(e.e).k == 'const' and fold(e.e).value is not None:
         from frontend import N                           # r3_01_13: !7UL -> 0 (the model had tested it at run time)
@@ -292,7 +324,9 @@ def fold(e):
         from frontend import N                           # _fgetc: stream->flag &= ~__UNGETC -> andw (XBC),0xfffb
         v = fold(e.e).value
         n = N('const', value=~v, ty=e.ty); n.folded = True
-        if NEGK_UCHAR and -127 <= ~v <= -1 and strip(e.e).k == 'const' and e.ty is not None and e.ty.size == 2: n.neg_char = True
+        if NEGK_UCHAR and -127 <= ~v <= -1 and strip(e.e).k == 'const' and e.ty is not None and e.ty.size == 2: n.neg_char = True; n.ctype = 'S'
+        if KFOLD_CTYPE and 128 <= v <= 255 and strip(e.e).k == 'const' and e.ty is not None and e.ty.size == 2:
+            n.value = ~v & 0xff; n.ctype = 'U'           # (kfold.c: ~255 + 1 is 1)
         if 128 <= v <= 255: n.byte_unsigned = True       # V4.23 types a constant 128..255 as an unsigned char: ~255
         return n                                         # keeps 0xff00 for further folding (-8 ^ ~255 is 0xf8) but
                                                          # materializes as its low byte (gpi[1] = ~255 -> ldw ..,0x0,
@@ -306,24 +340,29 @@ def fold(e):
         if e.op == '>>' and e.ty is not None and e.ty.size in (1, 2, 4):   # 0xec in a byte)
             sz = 8 * e.ty.size; a &= (1 << sz) - 1         # (r1_02_00: ~0x10000UL >> 3 is a logical shift of the
             if e.ty.signed and a & (1 << (sz - 1)): a -= 1 << sz   # 32-bit value, 0x1fffdfff; Python's >> of the
-        if e.op == '<<': v = a << b                      # (computed per operator: a dict evaluated every entry, and
-        elif e.op == '>>': v = a >> b                    # -8 ^ ~255 raised "negative shift count")
+        ta_ = tb_ = rt_ = None; q_ = False
+        if KFOLD_CTYPE and e.ty is not None and e.ty.size == 2: ta_, tb_ = kctype(e.l), kctype(e.r)
+        if e.op == '<<':
+            v = a << b                                   # (computed per operator: a dict evaluated every entry, and
+            if ta_ and getattr(fold(e.l), 'folded', False) is not None and kfolded(e.l):   # -8 ^ ~255 raised "negative shift count")
+                v &= 0xff                                # a char-typed result shifted left is cut to its byte and
+                if ta_ == 'S' and v & 0x80: v -= 0x100   # extended again (kfold.c: (8 ^ 16) << 11 is 0, (100 + 100) << 1
+                rt_ = ta_                                # is 0xff90, (200 ^ 1) << 2 is 0x24; a bare literal shifts as an int)
+        elif e.op == '>>': v = a >> b
         else:
-            if NEGK_UCHAR and e.ty is not None and e.ty.size == 2:   # a negated literal in -127..-1 against a literal in
-                def raw_(x_):                                    # 128..255: V4.23 takes the negative one as its unsigned
-                    x_ = strip(x_)
-                    while x_.k == 'cast' and x_.kind == 'IntegralCast' and x_.ty is not None and x_.ty.size == 2 and \
-                            strip(x_.e).ty is not None and strip(x_.e).ty.size == 2: x_ = strip(x_.e)
-                    return fold(x_)
-                fa_, fb_ = raw_(e.l), raw_(e.r); q_ = False
-                if getattr(fa_, 'neg_char', False) and not getattr(fb_, 'folded', False) and 128 <= b <= 255: a += 256; q_ = True
-                elif getattr(fb_, 'neg_char', False) and not getattr(fa_, 'folded', False) and 128 <= a <= 255: b += 256; q_ = True
-                # byte (probes/negk.c, run 2026-11-13-6: -40 - 255 -> 0xffd9, -40 * 255 -> 0xd728, 255 - -40 -> 0x27;
-                # -40 - 256, -128 - 255, -40 + -255, 40 - 255 and the long forms fold as C does)
-            else: q_ = False
+            # An operation on two byte-sized constants is char-typed: unsigned when either is 128..255, and a negative
+            # one then counts as its unsigned byte (probes/negk.c: -40 - 255 -> 0xffd9, -40 * 255 -> 0xd728,
+            # 255 - -40 -> 0x27; -40 - 256, -128 - 255, -40 + -255, 40 - 255 and the long forms fold as C does).  The
+            # value is kept whole (kfold.c: 100 + 100 is 0xc8, 127 + 1 + 1 is 0x81); only << cuts it.
+            if ta_ and tb_:
+                a, b = kraw(e.l).value, kraw(e.r).value   # (under the conversion to unsigned of -40 - 255U too)
+                if ta_ == 'S' and a < 0 and tb_ == 'U': a += 256; q_ = True
+                elif tb_ == 'S' and b < 0 and ta_ == 'U': b += 256; q_ = True
+                if e.op != '*': rt_ = 'U' if 'U' in (ta_, tb_) else 'S'
             v = {'+': a + b, '-': a - b, '*': a * b, '|': a | b, '&': a & b, '^': a ^ b}[e.op]
         n_ = N('const', value=v, ty=e.ty); n_.folded = True
-        if e.op not in ('<<', '>>') and q_: n_.uns16 = True  # (and the result is unsigned: gl = -40 - 255 -> ld XWA,0xffd9)
+        if rt_: n_.ctype = rt_
+        if q_: n_.uns16 = True                           # (and the result is unsigned: gl = -40 - 255 -> ld XWA,0xffd9)
         return n_
     if e.k == 'bin' and e.op in ('<', '<=', '>', '>=', '==', '!=') and FOLD_CONST_CMP and fold(e.l).k == 'const' and \
             fold(e.r).k == 'const' and fold(e.l).value is not None and fold(e.r).value is not None:
@@ -5998,6 +6037,7 @@ LOOP_LIVE_GUARD = True                                    # see Func.emit: a var
 PTR_CTX = True                                            # see gen_ptr_arith: the extension of a pointer sum's index by context
 STMT_PARAM_GUARD = True                                   # see Fn.emit
 CHAR_NARROW_MORE = True                                   # see char_narrow's visit2
+ADD_ZERO_DROP = True                                      # see Fn.emit
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
