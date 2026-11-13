@@ -1795,7 +1795,11 @@ def plan_lh_call0(F):
         xiz = not ('K' in ks or 'M' in ks or (F.opt and 'G' in ks))   # (-O l_div_GF: no XIZ)
         slot = 'D' in ks and ('F' in ks or ks == ('D', 'D'))
     if slot: tmp = Decl('__lhc', Type('int', 4, 2, spell='t'), '', 'local'); f.decls.append(tmp)
-    if 'X' in ks: tix = Decl('__lhx', Type('int', 2, 2, spell='t'), '', 'local'); f.decls.append(tix)
+    if 'X' in ks:
+        dv_ = []                                           # (LH_DEAD_IDX_SLOT: the dead index's own slot is the temporary)
+        walk(n, lambda m_, dd: dv_.append(m_.decl) if m_.k == 'var' and getattr(m_.decl, 'lh_dead_idx', False) else None)
+        if dv_: tix = dv_[0]
+        else: tix = Decl('__lhx', Type('int', 2, 2, spell='t'), '', 'local'); f.decls.append(tix)
     if xiz: F.xiz_vars.append('stores'); F.save_reg = 'XIZ'; F.emit('push', 'XIZ'); F.push = 4
     F.lhc = {'node': id(n), 'slot': tmp, 'ix': tix, 'save': save}
 
@@ -6399,6 +6403,7 @@ CHAR_IDX_OPT_REFUSE = True                               # see _lvalue_raw
 COPY_EXEMPT_NOT_CHAR = True                              # see Fn.emit's statement guard
 MEMBER_ARR_LOAD = True                                   # see gen_load_mem
 MEMBER_ARR_STORE = True                                  # see _lvalue_raw
+LH_DEAD_IDX_SLOT = True                                  # see lh_counter_slots
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -8749,6 +8754,9 @@ def gen_stmt(F, s, last):
                 i += 1; continue
             if c.k == 'decl' and c.init is not None and fpgen.is_fp(c.var.ty):
                 fpgen.eval_into(F, c.init, ('lv', N_var(c.var))); i += 1; continue
+            if c.k == 'decl' and c.init is not None and getattr(c.var, 'lh_dead_idx', False) and \
+                    getattr(c.var, 'slot', None) is not None:
+                slot_init(F, c.var, c.init); i += 1; continue    # (LH_DEAD_IDX_SLOT: int t = ji -> ld WA,(_ji) / ld (XSP+0x4),WA)
             if c.k == 'decl' and c.init is not None and c.var.kind == 'local' and not c.var.addr_taken:
                 rest = body[i + 1:]
                 u = uses_of(rest, c.var, [])
@@ -12735,6 +12743,25 @@ def lh_counter_slots(f, opt, adecl):
         walk(n, h)
         for dcl in hits: dcl.addr_taken = True; dcl.lh_ctr = True
     walk(f.body, loop)
+    if LH_DEAD_IDX_SLOT:                                   # a local index read only by one long-helper statement after a call
+        body = flat(f.body)                                # stays in its slot, which the helper's index temporary reuses
+        for i_, st in enumerate(body):                     # (rstmt rs_2_09_18_5: int t = ji; v0(); gul = gula[t] % 7 ->
+            if st.k != 'expr': continue                    # ld WA,(_ji) / ld (XSP+0x4),WA / cal _v0 / ld WA,(XSP+0x4) /
+            hits = []                                      # ld (XSP+0x4),WA / ld WA,(XSP+0x4) / sla 0x2,WA / ..)
+            def h2(m, dd):
+                if m.k == 'bin' and m.op in ('*', '/', '%') and getattr(m, 'ty', None) is not None and m.ty.size == 4 and \
+                        m.ty.kind == 'int':
+                    idx_vars(m.l, hits); idx_vars(m.r, hits)
+            walk(st, h2)
+            for dcl in hits:
+                if getattr(dcl, 'lh_ctr', False): continue
+                uses = [x for x in body if uses_decl(x, dcl)]
+                calls_before = [x for x in body[:i_] if nodes_in(x, 'call')]
+                nreads = []
+                walk(st, lambda n_, dd: nreads.append(n_) if n_.k == 'var' and n_.decl is dcl else None)
+                if calls_before and len(nreads) == 1 and uses and uses[-1] is st and \
+                        all(x.k == 'decl' or x is st for x in uses):
+                    dcl.addr_taken = True; dcl.lh_ctr = True; dcl.lh_dead_idx = True
 
 def plan_lh_call(F):
     fake = [d for d in F.f.decls if getattr(d, 'lh_ctr', False) and not hasattr(d, 'slot')]

@@ -1835,6 +1835,16 @@ of batch 128.  `gs.a[b] %= 3` -> `ld WA,(b)` / `add WA,WA` / `lda XBC,_gs + 0xe`
 `ld DE,(_gu2)` / `ld (XBC+WA),DE`).  Signed int and unsigned char indices, without options, WA and BC free.  rstmt at
 none 3,527 -> 3,529 (rs_1_08_10_6, rs_4_00_07_4).  Random unchanged.
 
+**Batch 130 (2026-11-13): a dead local index keeps its slot, which the long helper's temporary reuses; rstmt +1.**  From
+the single-statement blockers of the random corpora (long-helper operands, 23 functions).  `int t = ji; v0(); gul =
+gula[t] % 7UL;`: `t` lives across the call, and the oracle keeps it in its frame slot, then uses that slot as the
+helper's index temporary (`ld WA,(_ji)` / `ld (XSP+0x4),WA` / `cal _v0` / `ld WA,(XSP+0x4)` / `ld (XSP+0x4),WA` / `ld WA,(XSP+0x4)`
+/ `sla 0x2,WA` / `ld (XSP+0x4),WA` / `lda XIZ,_gula` / ..).  The model refused it.  Three parts, all without options: the
+loop-counter marking of batch 7x (LH_CTR_SLOT) also marks a local whose only later read is that one statement's index
+(after a call); its declaration is initialised in the slot; plan_lh_call0 uses the variable itself as the temporary
+instead of a new one.  rstmt at none 3,529 -> 3,530 (rs_2_09_18_5); random r2_09_18 moves from refused to compiled
+(differing elsewhere).  Random exact unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
