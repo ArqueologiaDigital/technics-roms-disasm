@@ -1169,6 +1169,16 @@ element; `==` / `!=` against a static member or element load the element instead
 1,192.  The random corpora's 28 "complex compare operand" refusals are mostly other shapes (casts, computed operands,
 elements on both sides) and stay.
 
+**Batch 68 (2026-11-13): thirteen of the day's cdecl rules also hold under -Xr.**  `nearmiss.py --set Xr` showed
+functions one line off at -Xr for rules that had been made cdecl-only; `lift_adecl.py` (research-scratch) then
+removed the `not F.adecl` guard of each rule in turn and scored the random corpora at -Xr.  Thirteen gain and are
+lifted: narrow constants, a byte bumped before its store, a member / element destination first in a double copy, a
+char truth test in a byte, `p[k]` through a register, an XIZ home's address through XWA, a static element multiplied
+through its address, constant shifts in WA, the one exit, a chained store's value in WA, `!p[k]`, element 0 through
+its address, a char remainder through A.  Random programs at -Xr 50 -> 70 of 800 (none 143, -O3 -XS 22, -O3 -XS -Xr
+22 unchanged); stdiv2.c at -Xr 409 -> 426 and at -O3 -XS -Xr 275 -> 288; stchain.c and stval.c at -Xr +4 and +3.
+The rules that did not gain at -Xr stay cdecl-only.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

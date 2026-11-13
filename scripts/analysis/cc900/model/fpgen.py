@@ -379,7 +379,7 @@ def op_into(F, e, vals, dest):
                 dest_first(F, dest); put_addr(F, vals[1], 'XDE'); F.emit('ld', 'XBC,XDE'); F.emit('cal', name); return
         emit_operands(F, dest, vals); F.emit('cal', name); return
     if e.k == 'un':
-        if COPY_DEST_FIRST and FP_ORD and not F.opt and not F.adecl and dest[0] == 'lv' and fo_lv_kind(dest[1]) == 'A' and \
+        if COPY_DEST_FIRST and FP_ORD and not F.opt and dest[0] == 'lv' and fo_lv_kind(dest[1]) == 'A' and \
                 len(vals) == 1 and fo_kind(F, vals[0]) in ('G', 'A') and e.ty.size == 8:
             C().flush_pops(F)                              # (random r4_06_09: gda[2] = -gda[2] -> lda XWA,_gda + 0x10 /
             if not lvalue_addr(F, dest[1], 'XWA'): raise C().Unsupported('fp destination')   # lda XBC,_gda + 0x10 / cal ._fneg_d)
@@ -613,7 +613,7 @@ def eval_into(F, e, dest):
         call_into(F, e, dest); return
     if e.k not in ('load', 'fconst'): raise C().Unsupported('fp ' + e.k + ' ' + str(getattr(e, 'op', getattr(e, 'kind', ''))))
     # a copy (load, constant)
-    if COPY_DEST_FIRST and FP_ORD and not F.opt and not F.adecl and dest[0] == 'lv' and fo_lv_kind(dest[1]) == 'A' and \
+    if COPY_DEST_FIRST and FP_ORD and not F.opt and dest[0] == 'lv' and fo_lv_kind(dest[1]) == 'A' and \
             fo_kind(F, e) in ('G', 'A') and e.ty.size == 8:
         C().flush_pops(F)                                  # a member / element destination is addressed first in a copy
         if not lvalue_addr(F, dest[1], 'XWA'): raise C().Unsupported('fp destination')   # too (random r4_07_03:

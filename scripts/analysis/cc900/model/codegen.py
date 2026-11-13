@@ -512,7 +512,7 @@ def gen(F, e, fam, size, then_ret=False, store=False):
         # a narrowing cast of a load reads at the source width (unop_*: cast_l_c, cast_i_c)
         isz = strip(e0.e).ty.size
         kc_ = fold(e0.e)
-        if CONST_NARROW and kc_.k == 'const' and kc_.value is not None and not F.opt and not F.adecl:   # a constant is loaded at
+        if CONST_NARROW and kc_.k == 'const' and kc_.value is not None and not F.opt:   # (-Xr too: .r1_00_04)   # a constant is loaded at
             F.emit('ld', '%s,%s' % (FAM[fam][size], hx(kc_.value & ((1 << (8 * size)) - 1)))); return fam   # the narrow width
                                                                # (random r1_00_04: char f() { return 53; } -> ld L,0x35)
         F.emit('ld', '%s,%s' % (FAM[fam][isz], mem_operand(F, e0.e))); return fam
@@ -784,12 +784,12 @@ def gen(F, e, fam, size, then_ret=False, store=False):
                 strip(strip(strip(x.e).base).e).decl.kind == 'global' and not member_offset(strip(x.e)):
             F.emit('ld', 'XWA,(_%s)' % strip(strip(strip(x.e).base).e).decl.name)   # random r1_06_01: !gps->c ->
             F.emit('cp%s' % ('b' if xs == 1 else 'w'), '(XWA),0x0')                  # ld XWA,(_gps) / cpb (XWA),0x0
-        elif NOT_PTR_ELEM_CP and xs <= 2 and not F.opt and not F.adecl and x.k == 'load' and strip(x.e).k in ('index', 'deref') and \
+        elif NOT_PTR_ELEM_CP and xs <= 2 and not F.opt and x.k == 'load' and strip(x.e).k in ('index', 'deref') and \
                 (sp_lvalue_kind(F, strip(x.e)) or ('',))[0] in ('P', 'D') and 'WA' not in live_regs(F):
             pk_ = sp_lvalue_kind(F, strip(x.e))            # !p[k] and !*p compare the memory (random r3_03_12: !gpi[1] ->
             F.emit('ld', 'XWA,%s' % pk_[1])                # ld XWA,(_gpi) / cpw (XWA+0x2),0x0)
             F.emit('cp%s' % ('b' if xs == 1 else 'w'), '%s,0x0' % ('(XWA+%s)' % hx(pk_[2]) if pk_[2] else '(XWA)'))
-        elif NOT_CHAR8 and xs == 2 and m is None and not F.opt and not F.adecl and x.k == 'cast' and x.kind == 'IntegralCast' and \
+        elif NOT_CHAR8 and xs == 2 and m is None and not F.opt and x.k == 'cast' and x.kind == 'IntegralCast' and \
                 getattr(strip(x.e), 'narrowed', False) and strip(x.e).ty is not None and strip(x.e).ty.size == 1 and \
                 strip(x.e).k in ('bin', 'un'):
             f_ = gen(F, strip(x.e), 'WA', 1)     # a char value computed in a byte is tested as a byte (random r3_08_11:
@@ -5184,7 +5184,7 @@ def gen_long_helper(F, e, l, r, fam, signed):
             (not HELPER_IS_CALL or F.opt or F.adecl or family_of(ls) or family_of(rs) or any(
                 d is not None and getattr(d, 'kind', None) == 'local' and d.ty.size == 4 for d in F.xiz_vars)):   # (r3_02_00: only a
         F.emit(*rs_ld); F.emit(*lh_ls_ld(F, l, ls))                                     #  counter in IZ: XWA first)
-    elif LH_ELEM0 and not F.opt and not F.adecl and lh_plain(l) == 'G' and lh_plain(r) == 'M' and re.match(r'^\(_\w+\)$', rs) and \
+    elif LH_ELEM0 and not F.opt and lh_plain(l) == 'G' and lh_plain(r) == 'M' and re.match(r'^\(_\w+\)$', rs) and \
             strip(strip(r).e if strip(r).k == 'load' else r).k == 'index':
         F.emit('lda', 'XBC,%s' % rs[1:-1]); F.emit(*lh_ls_ld(F, l, ls)); F.emit('ld', 'XBC,(XBC)')   # element 0 of an array is read
                                                         # through its address (random r1_06_18: gul % gula[0] ->
@@ -5997,7 +5997,7 @@ def gen_assign_value(F, e, fam, size, in_place=False):
             t = lvalue(F, lv, ptr='XWA')
             if 'XBC' in t or 'BC' in t.replace('XBC', ''): raise Unsupported('operator = through BC')
             V = 'BC'
-            if CHAIN_STATIC_WA and not F.opt and not F.adecl and re.match(r'^\(_\w+( \+ 0x[0-9a-f]+)?\)$', t) and \
+            if CHAIN_STATIC_WA and not F.opt and re.match(r'^\(_\w+( \+ 0x[0-9a-f]+)?\)$', t) and \
                     not held_after(F, 'WA', e):
                 V = 'WA'                                   # a static inner target needs no address register: the value
                                                            # stays in WA (random r1_06_06: gc = gca[7] = -gc -> ld A,(_gc) /
@@ -6758,7 +6758,7 @@ def gen_load_mem(F, v, fam, size):
         ic = fold(i)
         if b.k == 'load' and ic.k == 'const':                      # p[k]: m_p_k
             pm = mem_operand(F, b)
-            if (getattr(F, 'u1_i', None) is not None or PTR_REG_DIRECT and not F.opt and not F.adecl) and \
+            if (getattr(F, 'u1_i', None) is not None or PTR_REG_DIRECT and not F.opt) and \
                     pm in ('XBC', 'XDE', 'XHL', 'XIX', 'XIY'):   # (random r3_05_19: t[1], t a register temporary in XDE -> ld A,(XDE+0x1))
                 F.emit('ld', '%s,%s' % (R, '(%s+%s)' % (pm, hx(ic.value * esz)) if ic.value else '(%s)' % pm))
                 return fam                                 # cdecl oc_max: ld XDE,(XSP+0x4) / ld HL,(XDE)
@@ -7379,7 +7379,7 @@ def gen_opassign(F, e):
                 F.emit('and', 'A,0xf'); lab = F.newlabel(); F.emit('j', 'z,%s' % lab); F.emit(mnem, 'A,%s' % V)
                 F.lines.append(lab + ':'); F.emit('ld', '%s,%s' % (t, V)); return t
         t = lvalue(F, e.l, ptr='XDE', idx='DE', base='XHL', kind='rmw')
-        V = FAM[next((x for x in (('WA', 'BC', 'DE', 'HL') if SHIFTB_A and (size == 1 or SHIFTK_WA) and fold(r).k == 'const' and not F.opt and not F.adecl
+        V = FAM[next((x for x in (('WA', 'BC', 'DE', 'HL') if SHIFTB_A and (size == 1 or SHIFTK_WA) and fold(r).k == 'const' and not F.opt
                                   and 'WA' not in live_regs(F) else ('BC', 'WA', 'DE', 'HL')) if not re.search(r'\b(X?%s|%s)\b' % (x, FAM[x][1]), t) and not (SHIFT_COUNT_GUARD and x == 'WA' and fold(r).k != 'const' and mem_operand(F, r) is None)), 'BC')][size]   # (r1_06_03: not over the computed count)
         rr = fold(r); cs = mem_operand(F, r) if rr.k != 'const' else None
         pre = rr.k != 'const' and cs is None and SHIFT_COUNT_EXPR
@@ -7453,7 +7453,7 @@ def gen_opassign(F, e):
             ptr = 'XBC'
             if 'BC' in live_regs(F): ptr = FAM[free_reg(F, avoid={'WA', 'BC'})][4]      # .as_mul_arr: XDE
             t = lvalue(F, e.l, ptr=ptr, combine=True)
-            if MULDIV_ELEM_ADDR and not F.opt and not F.adecl and strip(e.l).k in ('index', 'member') and size == 2 and \
+            if MULDIV_ELEM_ADDR and not F.opt and strip(e.l).k in ('index', 'member') and size == 2 and \
                     re.match(r'^\(_\w+( \+ 0x[0-9a-f]+)?\)$', t):
                 F.emit('lda', '%s,%s' % (ptr, t[1:-1])); t = '(%s)' % ptr   # a static element or member is multiplied or
                                                            # divided through its address (random r1_06_13: gua[6] %= 3 ->
@@ -7818,7 +7818,7 @@ def gen_stmt(F, s, last):
                             any(unpromote(y).ty is not None and unpromote(y).ty.size == 1 for y in (ci_.l, ci_.r)):
                         raise Unsupported('a char index into an XIZ pointer home')   # (r1_04_19: ld XIZ,0x0 / ld IZL,A /
                     fam = gen(F, c.init, 'WA' if XIZ_DIRECT_INIT and (not F.opt or XIZ_DIRECT_OPT) and ci_ is not None and (ci_.k == 'bin'
-                              and ci_.ty.is_ptr() or XIZ_ADDR_WA and not F.opt and not F.adecl and ci_.k == 'addr' and
+                              and ci_.ty.is_ptr() or XIZ_ADDR_WA and not F.opt and ci_.k == 'addr' and
                               strip(ci_.e).k in ('index', 'member')) else 'HL', 4)   # (lo_p_Bcs: ld XWA,(_gp) / inc 0x1,XWA /
                                                            # ld XIZ,XWA; random r4_05_06: char *t = &gca[6] -> lda XWA,_gca + 0x6 / ld XIZ,XWA)
                     nxc = strip(F.next_stmt.e) if F.next_stmt is not None and F.next_stmt.k == 'expr' else None
@@ -8011,7 +8011,7 @@ def gen_stmt(F, s, last):
         F.emit('exts' if F.f.ret.signed else 'extz', 'HL'); flush_pops(F)
         F.emit('retd', hx(F.retd)) if F.retd else F.emit('ret'); return
     if s.k == 'return':
-        epi = (F.opt or getattr(F, 'fp_temps', None) is not None or NONE_SHARED_EXIT and not F.adecl) and \
+        epi = (F.opt or getattr(F, 'fp_temps', None) is not None or NONE_SHARED_EXIT) and \
             (F.xiz_vars or F.pushes or getattr(F, 'frame', 0)) \
             and not getattr(F, 'shared_exit', None)       # fp_temps.c t_cmp_e (none too): ld HL,0x1 / j L50000
                                                            # (without -O as well: random r4_00_00: an early return in a
@@ -8382,7 +8382,7 @@ def gen_stmt(F, s, last):
             if lv.k != 'var': raise Unsupported('store address moved by the value')
             t = lvalue(F, lv, kind='storev')
         if FAM[fam][size] == 'QIZH': F.emit('ld', 'A,QIZH'); fam = 'WA'   # (lo_c_Gcs: ld A,QIZH / ld (_hc2),A)
-        if REM_W_VIA_A and FAM[fam][size] == 'W' and strip(lv).k != 'var' and not F.adecl:   # a char remainder is stored from
+        if REM_W_VIA_A and FAM[fam][size] == 'W' and strip(lv).k != 'var':   # a char remainder is stored from
             F.emit('ld', 'A,W'); F.emit('ld', '%s,A' % t); return                            # W only into a plain variable
                                                            # (random r1_05_04: gca[2] = 0 % gc2 -> ld A,W / ld (_gca + 0x2),A;
                                                            #  stdiv2.c sd2_c_m_EMG; evorder_ad.c ea_c_rem_GG: ld (_gc2),W)
@@ -13471,7 +13471,7 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
         F.lines.insert(j, ln)
     F.lines = [l[:-len('\t;stack')] if l.endswith('\t;stack') else l for l in F.lines]
     F.lines = [l[:-len('\t;u1')] if l.endswith('\t;u1') else l for l in F.lines]
-    if INCB_FORWARD and not F.opt and not F.adecl:      # a byte stored and then bumped in place is bumped in the
+    if INCB_FORWARD and not F.opt:                      # (-Xr too: .r3_02_14)      # a byte stored and then bumped in place is bumped in the
         k_ = 1                                          # register first (random r3_02_14: gc = gc2; gc++ ->
         while k_ < len(F.lines):                        # ld A,(_gc2) / inc 0x1,A / ld (_gc),A)
             a_ = re.match(r'^\tld\t(\(_\w+\)),([ACEL])$', F.lines[k_ - 1]); b_ = re.match(r'^\t(inc|dec)b\t(0x[1-8]),(\(_\w+\))$', F.lines[k_])
