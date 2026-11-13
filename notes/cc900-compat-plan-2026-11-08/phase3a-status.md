@@ -1273,6 +1273,15 @@ and at -O3 -XS.  Three gain at -Xr and are lifted there: an unsigned `% 2^k` as 
 computes its complex side first, and the constant else-arm loaded first.  None gains at -O3 -XS.  Random programs at
 -Xr 70 -> 74 of 800 (158 / 29 / 25 at none / -O3 -XS / -O3 -XS -Xr, unchanged).
 
+**Batch 78 (2026-11-13): the long helper's operand order under -Xr.**  Near misses at -Xr showed the helper's two
+plain operands loaded in the reverse of the compiler's order: the model had treated -Xr as the optimised sets (the
+divisor first beside any local in XIZ, the dividend first before a plain divisor).  Without -O, -Xr orders them as
+cdecl does: a constant or static dividend after a plain global divisor (`65536L / gl` -> `ld XBC,(_gl)` /
+`ld XWA,0x10000`), and the dividend first when only a loop counter sits in IZ (`gl2 % gl` -> `ld XWA,(_gl2)` /
+`ld XBC,(_gl)`).  The unsigned divide by a power of two as a shift also holds at -Xr.  Random programs at -Xr
+74 -> 79 of 800; lhx.c 184 -> 214, stdiv.c 162 -> 178, stdiv2.c 426 -> 442, evorder_lh.c 241 -> 249, evorder_ad.c
+933 -> 938 at -Xr: eight ledger rows up by 80 functions.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

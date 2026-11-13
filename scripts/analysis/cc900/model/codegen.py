@@ -4659,7 +4659,7 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
             res = FAM[work][size]
         elif op == '%' and REMU_AND and size == 2 and not signed and kd_ >= 2 and kd_ & (kd_ - 1) == 0 and not F.opt:
             F.emit('and', '%s,%s' % (FAM[work][size], hx(kd_ - 1))); res = FAM[work][size]   # (random r4_04_17: gu2 % 2 -> and WA,0x1)
-        elif op == '/' and DIVU_SHIFT and not signed and kd_ >= 2 and kd_ & (kd_ - 1) == 0 and not F.opt and not F.adecl:
+        elif op == '/' and DIVU_SHIFT and not signed and kd_ >= 2 and kd_ & (kd_ - 1) == 0 and not F.opt:
             F.emit('srl', '%s,%s' % (hx(kd_.bit_length() - 1), FAM[work][size])); res = FAM[work][size]   # (random r4_01_07:
         else:                                                                                             #  vu(gu / 16) -> srl 0x4,WA)
             mk_ = re.match(r'^\tld\t%s,0x([0-9a-f]+)$' % FAM[work][size], F.lines[-1]) if F.lines else None
@@ -5284,7 +5284,7 @@ def gen_long_helper(F, e, l, r, fam, signed):
             F.emit(*rs_ld); F.emit(*lh_ls_ld(F, l, ls))
         else: F.emit(*lh_ls_ld(F, l, ls)); F.emit(*rs_ld)
     elif F.xiz_vars and any(d is not None and getattr(d, 'kind', None) == 'local' for d in F.xiz_vars) and \
-            (not HELPER_IS_CALL or F.opt or F.adecl or family_of(ls) or family_of(rs) or any(
+            (not HELPER_IS_CALL or F.opt or (F.adecl and not LH_XR_ORDER) or family_of(ls) or family_of(rs) or any(
                 d is not None and getattr(d, 'kind', None) == 'local' and d.ty.size == 4 for d in F.xiz_vars)):   # (r3_02_00: only a
         F.emit(*rs_ld); F.emit(*lh_ls_ld(F, l, ls))                                     #  counter in IZ: XWA first)
     elif LH_ELEM0 and not F.opt and lh_plain(l) == 'G' and lh_plain(r) == 'M' and re.match(r'^\(_\w+\)$', rs) and \
@@ -5292,7 +5292,7 @@ def gen_long_helper(F, e, l, r, fam, signed):
         F.emit('lda', 'XBC,%s' % rs[1:-1]); F.emit(*lh_ls_ld(F, l, ls)); F.emit('ld', 'XBC,(XBC)')   # element 0 of an array is read
                                                         # through its address (random r1_06_18: gul % gula[0] ->
                                                         # lda XBC,_gula / ld XWA,(_gul) / ld XBC,(XBC))
-    elif LH_PLAIN_ORDER and not F.opt and not F.adecl and lh_plain(r) == 'G' and lh_plain(l) in ('K', 'M') and not (e.op == '*' and lh_plain(l) == 'K'):
+    elif LH_PLAIN_ORDER and not F.opt and (not F.adecl or LH_XR_ORDER) and lh_plain(r) == 'G' and lh_plain(l) in ('K', 'M') and not (e.op == '*' and lh_plain(l) == 'K'):
         F.emit(*rs_ld); F.emit(*lh_ls_ld(F, l, ls))     # (l_div_KG: ld XBC,(_hl) / ld XWA,0x7)
     elif LH_PLAIN_ORDER and not F.opt and not F.adecl and e.op == '*' and lh_plain(l) == 'M' and lh_plain(r) == 'M':
         F.emit('ld', 'XWA,%s' % rs); F.emit('ld', 'XBC,%s' % ls)   # (l_mul_EE: the right element into XWA)
@@ -5848,6 +5848,9 @@ POP_BEFORE_LOOP_INIT = True                               # see gen_stmt: i = 0;
 K_DIVIDEND_WIDE = True                                    # see bin_wide
 COMM_SWAP_PLAIN = True                                    # see gen_bin
 COND_K_PRELOAD = True                                     # see gen: c ? x : K
+LH_XR_ORDER = True                                        # see gen_long_helper: -Xr orders plain operands as cdecl does
+                                                          # (random .r1_01_09: 65536L / gl -> ld XBC,(_gl) / ld XWA,0x10000;
+                                                          # .r1_05_03: gl2 % gl beside a counter in IZ -> ld XWA,(_gl2) / ld XBC,(_gl))
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -7624,7 +7627,7 @@ def gen_opassign(F, e):
             F.emit('sll', '%s,%s' % (hx(k2_.bit_length() - 1), FAM[work][1])); res = FAM[work][1]   # (random r3_02_02:
         elif op == '*':                                                                             #  guc *= 4 -> sll 0x2,A)
             F.emit('muls' if signed else 'mul', '%s,%s' % (wide, rs)); res = FAM[work][size]
-        elif op == '/' and DIVU_SHIFT and size == 2 and not signed and k2_ >= 2 and k2_ & (k2_ - 1) == 0 and not F.opt and not F.adecl:
+        elif op == '/' and DIVU_SHIFT and size == 2 and not signed and k2_ >= 2 and k2_ & (k2_ - 1) == 0 and not F.opt:
             F.emit('srl', '%s,%s' % (hx(k2_.bit_length() - 1), FAM[work][2])); res = FAM[work][2]   # (random r4_05_19:
         else:                                                                                       #  gu2 /= 16 -> srl 0x4,WA)
             F.emit('exts' if signed else 'extz', wide); F.emit('divs' if signed else 'div', '%s,%s' % (wide, rs))
