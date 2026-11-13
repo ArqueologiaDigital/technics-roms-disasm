@@ -1902,6 +1902,16 @@ ledger and was not installed.  lsl.c at none 31 -> 42 of 126 (char locals and th
 `ld (XSP+0x4),WA` / `ld WA,(XSP+0x4)` / `sra 0x3,WA` / `ld (XSP+0x4),WA`, are not modelled).  Random at none: exact 168
 unchanged, refused 382 -> 380.
 
+**Batch 138 (2026-11-13): the initialiser of a local in a slot across a long helper; random +1, lsl 42 -> 47.**  Read off
+lsl.c (run 2026-11-13-16), without options: an int with a constant operand is computed in WA and stored (`ld WA,(_gi)` /
+`inc 0x5,WA` / `ld (XSP+0x4),WA`); a long simple operation is built in the slot (`ld XWA,(_gl2)` / `ld (XSP+0x4),XWA` /
+`ld XWA,0x5` / `add (XSP+0x4),XWA`); a shift by a constant is stored, reloaded, shifted and stored again (`exts WA` /
+`ld (XSP+0x4),WA` / `ld WA,(XSP+0x4)` / `sra 0x3,WA` / `ld (XSP+0x4),WA`, random r1_07_08's form); a pointer plus a constant
+is `lda XWA,XWA+0xa`.  Random at none 168 -> 169 (random1 49 -> 50); lsl.c 42 -> 47.
+**Open, newly visible (probe lsl.c, not caused by batches 137 / 138; the model of batch 136 gives the same results):** 30
+wrong-code verdicts at -O3 -XS and -O3 -XS -Xr, every `ls_*_h_r` (a local returned after a long helper): e.g. `ls_i_g_h_r`
+returns 0x7 where the oracle returns 0xffff.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

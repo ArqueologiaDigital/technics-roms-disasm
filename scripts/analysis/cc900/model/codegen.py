@@ -6470,6 +6470,7 @@ VALUE_FIRST_PK = True                                    # see gen_stmt's store
 LONG_RMW_CONST_ELEM = True                               # see gen_opassign's long helper
 FP_OPA_NO_XIZ = True                                     # see the home planner
 LH_ACROSS_SLOT = True                                    # see regtemp_candidates
+SLOT_INIT_FORMS = True                                   # see slot_init
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -13100,6 +13101,28 @@ def slot_init(F, d, init):
     from frontend import N
     S = mem_operand(F, N('load', e=N('var', decl=d, ty=d.ty), ty=d.ty))
     r0 = strip(init); size = d.ty.size
+    if SLOT_INIT_FORMS and not F.opt and not F.adecl and getattr(d, 'lh_slot', False) and r0.k == 'bin' and \
+            not ({'WA'} & set(live_regs(F))):              # (lsl.c, a local across a long helper; run 2026-11-13-16)
+        rk_ = fold(r0.r)
+        if size == 2 and r0.op in SIMPLE_OPS and not r0.ty.is_ptr() and rk_.k == 'const':
+            fam = gen(F, init, 'WA', 2); F.emit('ld', '%s,%s' % (S, FAM[fam][2])); return True   # ls_i_a_h: ld WA,(_gi) /
+                                                           # inc 0x5,WA / ld (XSP+0x4),WA
+        if size == 4 and r0.op in SIMPLE_OPS and not r0.ty.is_ptr():
+            lo = operand(F, r0.l, 4); ro = operand(F, r0.r, 4) if rk_.k != 'const' else hx(rk_.value & 0xffffffff)
+            if lo is not None and ro is not None:          # ls_l_a_h: ld XWA,(_gl2) / ld (XSP+0x4),XWA / ld XWA,0x5 /
+                F.emit('ld', 'XWA,%s' % lo); F.emit('ld', '%s,XWA' % S)   # add (XSP+0x4),XWA
+                F.emit('ld', 'XWA,%s' % ro); F.emit(SIMPLE_OPS[r0.op], '%s,XWA' % S); return True
+        if size == 2 and r0.op in ('<<', '>>') and rk_.k == 'const' and rk_.value is not None and 1 <= rk_.value < 16:
+            fam = gen(F, r0.l, 'WA', 2)                    # ls_i_s_h: .. exts WA / ld (XSP+0x4),WA / ld WA,(XSP+0x4) /
+            if fam == 'WA':                                # sra 0x3,WA / ld (XSP+0x4),WA
+                F.emit('ld', '%s,WA' % S); F.emit('ld', 'WA,%s' % S)
+                F.emit(('sla' if r0.ty.signed else 'sll') if r0.op == '<<' else ('sra' if r0.ty.signed else 'srl'),
+                       '%s,WA' % hx(rk_.value))
+                F.emit('ld', '%s,WA' % S); return True
+        if size == 4 and r0.ty.is_ptr() and r0.op == '+' and rk_.k == 'const' and rk_.value is not None:
+            fam = gen(F, r0.l, 'WA', 4)                    # ls_p_a_h: ld XWA,(_gpi) / lda XWA,XWA+0xa / ld (XSP+0x4),XWA
+            if fam == 'WA':
+                F.emit('lda', 'XWA,XWA+%s' % hx(rk_.value * r0.ty.base.size)); F.emit('ld', '%s,XWA' % S); return True
     if size == 2 and r0.k == 'bin' and r0.op in SIMPLE_OPS and not r0.ty.is_ptr():
         lo = operand(F, narrow(r0.l, 2), 2); ro = operand(F, narrow(r0.r, 2), 2)
         if lo is not None and ro is not None:

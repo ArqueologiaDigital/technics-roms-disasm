@@ -121,7 +121,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-42-micro-homes2b, v423/O3XS                          | probes/homes2b.c     | 10 / 90 exact (11.1%)      |
 | run 2026-11-09-42-micro-homes2b, v423/Xr                            | probes/homes2b.c     | 22 / 90 exact (24.4%)      |
 | run 2026-11-09-42-micro-homes2b, v423/O3XSXr                        | probes/homes2b.c     | 17 / 90 exact (18.9%)      |
-| run 2026-11-10-1-micro-random1, v423/none                           | random/*.c           | 49 / 200 exact (24.5%)     |
+| run 2026-11-10-1-micro-random1, v423/none                           | random/*.c           | 50 / 200 exact (25.0%)     |
 | run 2026-11-10-1-micro-random1, v423/O3XS                           | random/*.c           | 15 / 200 exact (7.5%)      |
 | run 2026-11-10-1-micro-random1, v423/Xr                             | random/*.c           | 28 / 200 exact (14.0%)     |
 | run 2026-11-10-1-micro-random1, v423/O3XSXr                         | random/*.c           | 13 / 200 exact (6.5%)      |
@@ -287,7 +287,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-13-15-micro-pc, v423/O3XS                               | probes/pc.c          | 8 / 48 exact (16.7%)       |
 | run 2026-11-13-15-micro-pc, v423/Xr                                 | probes/pc.c          | 12 / 48 exact (25.0%)      |
 | run 2026-11-13-15-micro-pc, v423/O3XSXr                             | probes/pc.c          | 13 / 48 exact (27.1%)      |
-| run 2026-11-13-16-micro-lsl, v423/none                              | probes/lsl.c         | 42 / 126 exact (33.3%)     |
+| run 2026-11-13-16-micro-lsl, v423/none                              | probes/lsl.c         | 47 / 126 exact (37.3%)     |
 | run 2026-11-13-16-micro-lsl, v423/O3XS                              | probes/lsl.c         | 19 / 126 exact (15.1%)     |
 | run 2026-11-13-16-micro-lsl, v423/Xr                                | probes/lsl.c         | 19 / 126 exact (15.1%)     |
 | run 2026-11-13-16-micro-lsl, v423/O3XSXr                            | probes/lsl.c         | 19 / 126 exact (15.1%)     |
