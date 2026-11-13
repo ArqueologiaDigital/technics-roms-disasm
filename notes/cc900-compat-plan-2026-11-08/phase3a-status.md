@@ -1054,6 +1054,17 @@ The same probes made the semantic check go from 73 to 321 DIFFERENT, all in olde
   extends it whole (`extz XWA` / `ld XBC,_hca` / `add XBC,XWA`), the other uses are refused;
 - `gps->l = vla[2] * 7` built the product in the register of its operand (16 times instead of 7): refused.
 
+**Batch 51 (2026-11-13): long helpers with address operands, ported from an agent's predictor.**  `lx5_lines` is the
+tabulation agent's `lhx2-predict.py` (840 of 840 oracle forms reproduced) rewritten over the model's operand kinds:
+a long `/`, `%` or `*` whose operands are `*p`, `p->m`, a static member / constant element or an element at an int
+parameter, used as a store (to a global, `*p`, `p->m`, an element), a returned value, a call argument or a condition.
+A goes to XWA and B to XBC (`*` exchanges them beside a pointer, member or element B); a displaced operand's pointer
+takes XIZ, an element operand keeps its scaled index in a 2-byte temporary and its base in XIZ; a plain divisor lets
+the store address be built first and kept in XIZ or a 4-byte temporary, any other rebuilds it after the call.  A long
+times 2^n - 1 is a shift and a subtraction.  lhx.c at none 416 -> 790 of 1,184; evorder_lh.c 288 -> 319, evorder_ad.c
++2 at each set, stord.c +1.  Random programs unchanged (90 of 800 at none).  The port took about 40 minutes from the
+agent's report to the commit; the agent's own run took 5.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

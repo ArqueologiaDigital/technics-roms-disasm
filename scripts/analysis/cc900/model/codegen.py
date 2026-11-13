@@ -442,6 +442,8 @@ def l2_divide(F, e):
 def gen(F, e, fam, size, then_ret=False, store=False):
     """emit code leaving e's low `size` bytes in register family `fam`; returns the family actually used"""
     e0 = strip(e)
+    if LX5 and size == 4 and getattr(F, 'sd4', None) and F.sd4['need'][0] == 'lx5' and F.sd4['node'] == id(e0) and lx5_emit(F, None, e0):
+        return 'HL'                                    # (lhx.c lxo_*_R*: the planned long helper as a value)
     if RET_ASSIGN and then_ret and fam == 'HL' and e0.k == 'bin' and e0.op == '=' and not getattr(F, 'l2', None) and \
             not getattr(F, 'cl_active', None) and getattr(F, 'u1_i', None) is None and ret_assign(F, e0, size):
         return 'HL'                                    # (stret.c: return L = V)
@@ -1529,6 +1531,151 @@ def lh_post_member(F, lv, rv):
     ks = lh_post_kinds(F, lv, rv)
     return ks is not None and ks[1][0] == 'M'
 
+LX5 = True                                                # see lx5_lines: long helpers of lhx.c's lxo_* rows
+
+def lx5_lines(L, a, b, op, signed, T4, T2):
+    """the instructions of a long D = A op B (or of A op B alone, L None: a returned value) whose operands are read
+    through addresses, without -O, cdecl -- corpus/probes/lhx.c, run 2026-11-13-2-micro-lhx, the lxo_* rows; the rules
+    are those of research-scratch tabulation/lhx2-FAMILIES.md, whose predictor reproduces the 840 oracle forms.
+    A: P *p, D p->m, M a static member or constant element, X an element at an int parameter; B: G a plain global,
+    P, D, K a constant, X.  Returns the list of (op, args), or None for a shape outside the probe.
+    - A goes to XWA and B to XBC; * exchanges them when B is P, D or X, and then loads B's value first.  The order is
+      A's set-up (its pointer), B's set-up (its pointer, or a plain global's value), A's value, B's value or constant.
+    - A displaced operand's pointer is in XIZ; of two, the divisor's, the dividend's waiting in the 4-byte temporary.
+      An element operand has its scaled index in the 2-byte temporary and its base in XIZ; beside a displaced divisor
+      the base waits in the 4-byte temporary and the index goes to DE.  Before an element divisor, the dividend's
+      ADDRESS is built first, in XDE.
+    - a plain divisor (G, K): the store address is built before the operands and kept in XIZ when the dividend is P
+      (the same pointer is shared: ld XIZ,(_gpl) / ld XWA,XIZ) or M, else in the 4-byte temporary; any other divisor:
+      the address is built again after the call."""
+    mul = op == '*'
+    A, B = a[0], b[0]
+    if A not in ('P', 'D', 'M', 'X') or B not in ('G', 'P', 'D', 'K', 'X'): return None
+    if mul and B == 'K': return None                           # (a constant multiple is not a helper call)
+    for k in (a, b):
+        if k[0] == 'D' and not 1 <= k[2] < 0x8000: return None
+        if k[0] == 'X' and not (isinstance(k[2], str) and k[2].startswith('(')): return None
+    sw = mul and B in ('P', 'D', 'X')
+    ra, rb = ('XBC', 'XWA') if sw else ('XWA', 'XBC')
+    o = []
+    def e(op_, args): o.append((op_, args))
+    def at(R, off): return '(%s+%s)' % (R, hx(off)) if off else '(%s)' % R
+    def idx(k): e('ld', 'WA,%s' % k[2]); e('ld', '%s,WA' % T2); e('ld', 'WA,%s' % T2); e('sla', '0x2,WA'); e('ld', '%s,WA' % T2)
+    def fin(fa, fb):
+        for x in ((fb, fa) if sw else (fa, fb)): o.append(x)
+    helper = ('cal', 'C9H_' + {'/': 'div', '%': 'rem', '*': 'mul'}[op] + ('ls' if signed else 'lu'))
+    # ---- the destination
+    pre = []; post = []; cse = False
+    if L is not None:
+        K = L[0]
+        if K == 'G': post = [('ld', '%s,XHL' % L[1])]
+        elif K not in ('P', 'D', 'X'): return None
+        elif K == 'D' and not 1 <= L[2] <= 8: return None
+        elif K == 'X' and not (isinstance(L[2], str) and L[2].startswith('(')): return None
+        elif B in ('P', 'D', 'X'):
+            if K in ('P', 'D'): post = [('ld', 'XWA,%s' % L[1]), ('ld', '%s,XHL' % at('XWA', L[2]))]
+            else: post = [('ld', 'WA,%s' % L[2]), ('sla', '0x2,WA'), ('lda', 'XBC,%s' % L[1]), ('ld', '(XBC+WA),XHL')]
+        else:
+            scal = [('ld', 'WA,%s' % L[2]), ('sla', '0x2,WA'), ('lda', 'XBC,%s' % L[1])] if K == 'X' else None
+            if A == 'P':
+                if K == 'P':
+                    if a[1] != L[1]: return None               # (another pointer's target: unprobed)
+                    cse = True; post = [('ld', '(XIZ),XHL')]
+                elif K == 'D': pre = [('ld', 'XWA,%s' % L[1]), ('lda', 'XIZ,XWA+%s' % hx(L[2]))]; post = [('ld', '(XIZ),XHL')]
+                else: pre = scal + [('lda', 'XIZ,XBC+WA')]; post = [('ld', '(XIZ),XHL')]
+            elif A == 'M':
+                if K in ('P', 'D'): pre = [('ld', 'XIZ,%s' % L[1])]; post = [('ld', '%s,XHL' % at('XIZ', L[2]))]
+                else:
+                    pre = [('ld', 'WA,%s' % L[2]), ('ld', '%s,WA' % T2), ('ld', 'WA,%s' % T2), ('sla', '0x2,WA'), ('ld', '%s,WA' % T2),
+                           ('lda', 'XIZ,%s' % L[1])]
+                    post = [('ld', 'WA,%s' % T2), ('ld', '(XIZ+WA),XHL')]
+            else:
+                if K == 'P': pre = [('ld', 'XWA,%s' % L[1])]
+                elif K == 'D': pre = [('ld', 'XWA,%s' % L[1]), ('inc', '%s,XWA' % hx(L[2]))]
+                else: pre = scal + [('exts', 'XWA'), ('add', 'XWA,XBC')]
+                pre.append(('ld', '%s,XWA' % T4)); post = [('ld', 'XWA,%s' % T4), ('ld', '(XWA),XHL')]
+    o.extend(pre)
+    n0 = len(o)
+    # ---- the operands
+    if B == 'X':
+        ptr = ra if sw else 'XDE'
+        if A == 'P': e('ld', '%s,%s' % (ptr, a[1]))
+        elif A == 'D': e('ld', 'XWA,%s' % a[1]); e('lda', '%s,XWA+%s' % (ptr, hx(a[2])))
+        elif A == 'M': e('lda', '%s,%s' % (ptr, a[1][1:-1]))
+        else: e('ld', 'WA,%s' % a[2]); e('sla', '0x2,WA'); e('lda', 'XBC,%s' % a[1]); e('lda', '%s,XBC+WA' % ptr)
+        idx(b); e('lda', 'XIZ,%s' % b[1]); e('ld', '%s,%s' % (rb[1:], T2))
+        fin(('ld', '%s,(%s)' % (ra, ptr)), ('ld', '%s,(XIZ+%s)' % (rb, rb[1:])))
+    else:
+        bG = ('ld', '%s,%s' % (rb, b[1])) if B == 'G' else None
+        fb = None
+        if B == 'P': fb = ('ld', '%s,(%s)' % (rb, rb))
+        elif B == 'D': fb = ('ld', '%s,%s' % (rb, at('XIZ', b[2])))
+        done = False
+        if A == 'P':
+            e('ld', '%s,%s' % (ra, a[1]))
+            if B == 'P':
+                if b[1] != a[1]: return None                   # (two pointers: unprobed)
+                e('ld', '%s,%s' % (rb, ra)); e('ld', '%s,(%s)' % (ra, ra)); e('ld', '%s,(%s)' % (rb, rb)); done = True
+            else:
+                if B == 'D': e('ld', 'XIZ,%s' % b[1])
+                if bG: o.append(bG)
+                fa = ('ld', '%s,(%s)' % (ra, ra))
+        elif A == 'D':
+            if B == 'D':
+                e('ld', 'XWA,%s' % a[1]); e('ld', '%s,XWA' % T4); e('ld', 'XIZ,%s' % b[1]); e('ld', '%s,%s' % (ra, T4))
+                fin(('ld', '%s,%s' % (ra, at(ra, a[2]))), ('ld', '%s,%s' % (rb, at('XIZ', b[2])))); done = True
+            else:
+                e('ld', 'XIZ,%s' % a[1])
+                if bG: o.append(bG)
+                if B == 'P': e('ld', '%s,%s' % (rb, b[1]))
+                fa = ('ld', '%s,%s' % (ra, at('XIZ', a[2])))
+        elif A == 'M':
+            if bG: o.append(bG)
+            if B == 'P': e('ld', '%s,%s' % (rb, b[1]))
+            if B == 'D': e('ld', 'XIZ,%s' % b[1])
+            fa = ('ld', '%s,%s' % (ra, a[1]))
+        else:
+            idx(a)
+            if B == 'D':
+                e('lda', 'XWA,%s' % a[1]); e('ld', '%s,XWA' % T4); e('ld', 'XIZ,%s' % b[1]); e('ld', '%s,%s' % (ra, T4))
+                e('ld', 'DE,%s' % T2)
+                fin(('ld', '%s,(%s+DE)' % (ra, ra)), ('ld', '%s,%s' % (rb, at('XIZ', b[2])))); done = True
+            else:
+                e('lda', 'XIZ,%s' % a[1])
+                if bG: o.append(bG)
+                if B == 'P': e('ld', '%s,%s' % (rb, b[1]))
+                e('ld', '%s,%s' % (ra[1:], T2))
+                fa = ('ld', '%s,(XIZ+%s)' % (ra, ra[1:]))
+        if not done:
+            if B == 'K': o.append(fa); e('ld', '%s,%s' % (rb, hx(b[1] & 0xffffffff)))
+            elif B == 'G': o.append(fa)
+            else: fin(fa, fb)
+    if cse: o[n0:n0 + 1] = [('ld', 'XIZ,%s' % a[1]), ('ld', 'XWA,XIZ')]
+    o.append(helper); o.extend(post)
+    return o
+
+def lx5_parts(F, lv, x):
+    """(L kind or None, A kind, B kind) of a long helper for lx5_lines, or None"""
+    if not LX5 or F.adecl or F.opt: return None
+    if x.k != 'bin' or x.op not in ('*', '/', '%') or x.ty is None or x.ty.size != 4 or x.ty.kind != 'int': return None
+    L = None
+    if lv is not None:
+        l0 = strip(lv)
+        if l0.ty is None or l0.ty.size != 4 or l0.ty.kind != 'int': return None
+        keep = getattr(F, 'sp_index_param', None)
+        L = sc_lkind(F, l0)
+        F.sp_index_param = keep
+        if L is None: return None
+    a, b = sd4_kind(F, x.l), sd4_kind(F, x.r)
+    if a is None or b is None: return None
+    if b[0] == 'K' and (b[1] & 0xffffffff) in (0, 1): return None
+    return L, a, b
+
+def lx5_need(lines):
+    """(register, 4-byte temporary, 2-byte temporary) the lines of lx5_lines use"""
+    txt = ' '.join(a for _, a in lines)
+    return ('XIZ' if 'XIZ' in txt else None, '{T4}' in txt, '{T2}' in txt)
+
 SD_LONG = True                                            # see sd4_need: long division stores, stdiv2.c
 
 def sd4_kind(F, x):
@@ -1635,6 +1782,7 @@ def plan_sd4(F):
     F.sd4 = None
     if not (SD_MORE and SD_LONG) or F.xiz_vars or F.adecl or F.opt: return
     f = F.f
+    if fpgen.uses_fp(f): return                              # (the double frame has its own layout: random r3_01_08)
     if any(getattr(d, 'reg', None) in IZ_HOMES for d in list(f.params) + list(f.decls)): return
     helpers = []; stores = []; loops = []
     def v(n, dep):
@@ -1644,9 +1792,16 @@ def plan_sd4(F):
     walk(f.body, v)
     if len(helpers) != 1 or loops: return                    # (a loop's counter has its own claim on IZ: random r2_03_10)
     st = [e for e in stores if strip(e.r) is helpers[0]]
-    if len(st) != 1: return
-    r = sd4_stmt(F, st[0].l, st[0].r)
-    if r is None: return
+    rets = []
+    walk(f.body, lambda n, dep: rets.append(n) if n.k == 'return' and getattr(n, 'value', None) is not None and strip(n.value) is helpers[0] else None)
+    r = sd4_stmt(F, st[0].l, st[0].r) if len(st) == 1 else None
+    if r is None:                                            # lhx.c's shapes (lx5_lines): a store or a returned value
+        if len(st) > 1: return                               # (a value elsewhere -- a returned value, a call argument,
+        pr = lx5_parts(F, st[0].l if st else None, helpers[0])   #  a condition -- is planned without a destination)
+        ls = lx5_lines(pr[0], pr[1], pr[2], helpers[0].op, helpers[0].ty.signed, '{T4}', '{T2}') if pr is not None else None
+        if ls is None: return
+        if not st and not ({pr[1][0], pr[2][0]} & {'P', 'D', 'X'}): return   # (plain operands: the older paths, random r2_07_02)
+        r = (None, None, None, ('lx5',) + lx5_need(ls))
     form, reg, t4, t2 = r[3]
     F.sd4 = {'node': id(helpers[0]), 'need': r[3], 't4': None, 't2': None}   # (the other planners leave it alone)
     if reg is None: return
@@ -1657,15 +1812,32 @@ def plan_sd4(F):
     F.xiz_vars.append('stores'); F.save_reg = reg; F.emit('push', reg); F.push = 4 if reg == 'XIZ' else 2
     F.sd4 = {'node': id(helpers[0]), 'need': r[3], 't4': d4, 't2': d2}
 
+def lx5_emit(F, lv, x):
+    """emit the planned long helper of lx5_lines (lv None: the value alone, into XHL); True when emitted"""
+    plan = getattr(F, 'sd4', None)
+    if plan is None or plan['node'] != id(x) or plan['need'][0] != 'lx5': return False
+    pr = lx5_parts(F, lv, x)
+    if pr is None: raise Unsupported('lx5: the plan changed')
+    T4 = '(XSP+%s)' % hx(plan['t4'].slot + F.push) if plan['t4'] is not None else '{T4}'
+    T2 = '(XSP+%s)' % hx(plan['t2'].slot + F.push) if plan['t2'] is not None else '{T2}'
+    ls = lx5_lines(pr[0], pr[1], pr[2], x.op, x.ty.signed, T4, T2)
+    if ls is None or ('lx5',) + lx5_need(lx5_lines(pr[0], pr[1], pr[2], x.op, x.ty.signed, '{T4}', '{T2}')) != plan['need']:
+        raise Unsupported('lx5: the plan changed')
+    if any(r_ in ('WA', 'BC', 'DE', 'HL') for r_ in live_regs_read(F)): raise Unsupported('lx5: a live register')
+    for op_, args in ls: F.emit(op_, args)
+    plan['done'] = True
+    return True
+
 def sd4_store(F, lv, rv):
     """emit a long division store after sd4_need; True when emitted"""
+    if lx5_emit(F, lv, strip(rv)): return True
     r = sd4_stmt(F, lv, rv)
     if r is None: return False
     L, a, b, need = r
     form, reg, t4, t2 = need
     plan = getattr(F, 'sd4', None)
     x = strip(rv)
-    if plan is None or plan['node'] != id(x): return False
+    if plan is None or plan['node'] != id(x) or plan['need'][0] == 'lx5': return False
     if plan['need'] != need: raise Unsupported('sd4: the plan changed')
     if any(r_ in ('WA', 'BC', 'DE', 'HL') for r_ in live_regs_read(F)): return False
     e = F.emit
@@ -4637,6 +4809,9 @@ def gen_mul_const(F, l, k, fam, size, signed=True):
         W = FAM['WA'][size]; F.emit('ld', '%s,%s' % (W, x)); F.emit('ld', '%s,%s' % (R, W)); x = W   # ld XHL,XWA
     else:
         F.emit('ld', '%s,%s' % (R, x))
+    if size == 4 and k >= 7 and k & (k + 1) == 0 and x != R:   # a long times 2^n - 1 is a shift and a subtraction
+        F.emit('sla' if signed else 'sll', '%s,%s' % (hx(k.bit_length()), R))   # (lhx.c lxo_l_x_GEK: ld XBC,(_vla + 0x8) /
+        F.emit('sub', '%s,%s' % (R, x)); return fam                             #  ld XWA,XBC / sla 0x3,XWA / sub XWA,XBC)
     bits = bin(k)[3:]; run = 0
     for i, b in enumerate(bits):
         run += 1
@@ -5606,6 +5781,9 @@ def gen_cond_false(F, c, target):
             F.emit('ret') if target == 'RET' else F.emit('j', target); return
         F.emit('ret', INV[cc]) if target == 'RET' else F.emit('j', '%s,%s' % (INV[cc], target))
         return
+    if LX5 and getattr(F, 'sd4', None) and F.sd4['need'][0] == 'lx5' and F.sd4['node'] == id(c) and lx5_emit(F, None, c):
+        F.emit('or', 'XHL,XHL')                            # (lhx.c lxo_l_d_QPG: .. / cal C9H_divls / or XHL,XHL / ret eq)
+        F.emit('ret', 'eq') if target == 'RET' else F.emit('j', 'eq,%s' % target); return None
     raise Unsupported('condition ' + c.k + (' ' + c.op if c.k in ('bin', 'un') else ''))
 
 def push_arg(F, a):
@@ -12772,6 +12950,8 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
     F.top_stmts = flat(f.body); F.top_ix = {id(x): k for k, x in enumerate(F.top_stmts)}
     F.guard_armed = True                                   # the live-parameter guard, from the real body on (the
     gen_stmt(F, f.body, True)                              # planners' trial code runs with the registers undecided)
+    if getattr(F, 'sd4', None) and F.sd4['need'][0] == 'lx5' and not F.sd4.get('done'):
+        raise Unsupported('lx5: the planned long helper was written by another path')
     flush_pops(F)
     if not F.lines[-1].startswith('\tret') and not (getattr(F, 'no_exit', False) and F.lines[-1].startswith('\tj\t')
                                                    and ',' not in F.lines[-1]):
