@@ -2138,6 +2138,16 @@ value). An IZ home loaded from memory and worked on is built in IZ under cdecl -
 (r1_09_00: `ld IZ,(_gi3) / sra 0xe,IZ`). Ledger up 1 (rstmt at -O3 -XS 3,064 -> 3,065), down 0; pairs MATCH 223;
 semcheck 56. Random unchanged, 182 / 58 / 87 / 42 (both functions still differ elsewhere).
 
+**Batch 164 (2026-11-13): under -Xr a register parameter the body never reads is dead from the entry
+(UNREAD_PARAM_DEAD, SLOT_INIT_UNREAD).** The random corpora's functions often take parameters they never use. Under
+adecl, those arrive in WA, BC or DE, and the model treated those registers as held for the whole function. The oracle
+uses them freely (random .r1_02_04: `char a` in A, never read -> `ld XWA,(_gp) / ld (XSP+0x2),XWA`, where the model
+avoided WA). `compile_function_once` now puts such a parameter in F.dead before the body (both -Xr sets), and
+`slot_init`'s WA guard ignores it. Ledger up 24 with 420 more exact functions (rstmt at -Xr 3,044 -> 3,195 and at -O3
+-XS -Xr 2,897 -> 2,980, stvxc.c +29 / +29, idxloc.c +19, fpargf.c +16 / +8, stdiv2.c +18 / +14, the random
+corpora), down 0; pairs MATCH 223; semcheck 56 -> 54 (rs_4_08_02_0 at both -Xr sets no longer compiles wrongly).
+Random 182 / 58 / 99 / 49.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

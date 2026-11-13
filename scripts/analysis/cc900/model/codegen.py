@@ -6656,6 +6656,8 @@ TEST_REG_REUSE_LONG = True                               # see test_reg_reuse_lo
 TEST_REG_LIVE = True                                     # see test_reg_reuse: reg_dead instead of "used nowhere else"
 TEST_REG_LONG_LIVE = True                                # see test_reg_reuse_long: XWA dead instead of written first
 IZ_TAIL_DIRECT_OPT = True                                # see regvar_stmt: IZ_TAIL_DIRECT under cdecl -O3 -XS too
+SLOT_INIT_UNREAD = True                                  # see slot_init: an unread register parameter leaves WA free
+UNREAD_PARAM_DEAD = True                                 # see compile_function_once
 GUARD_DIV = True                                         # see guard_div_plan
 BASE_HOIST = True                                        # see base_hoist
 
@@ -13644,8 +13646,11 @@ def slot_init(F, d, init):
         gen_call(F, r0); flush_pops(F)                     # ra_homes32.c h_p under O3XSXr: cal .fp /
         F.emit('ld', '%s,%s' % (S, FAM['HL'][size])); return True   # ld (XSP+0x2),XHL
     W = 'WA'
-    if STORE_ADDR_GUARD and any(getattr(x, 'reg', None) == 'WA' and x not in F.dead and x is not d
-                                for x in list(F.f.params) + list(F.f.decls)):
+    if STORE_ADDR_GUARD and any(getattr(x, 'reg', None) == 'WA' and x not in F.dead and x is not d and
+                                not (SLOT_INIT_UNREAD and x.kind == 'param' and not uses_decl(F.f.body, x))
+                                for x in list(F.f.params) + list(F.f.decls)):   # (a register parameter never read is
+                                                           # dead from the entry: random .r1_02_04 -Xr, a in A ->
+                                                           # ld XWA,(_gp) / ld (XSP+0x2),XWA)
         W = free_reg(F, avoid={'WA'})                      # switch.c sw_local (-Xr): x in WA, r = 0 (wrong code)
     fam = gen(F, init, W, size)
     F.emit('ld', '%s,%s' % (S, FAM[fam][size])); return True
@@ -15247,6 +15252,9 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
     emit_homes(F)
     if F.opt: plan_shared_exit(F)
     F.top_stmts = flat(f.body); F.top_ix = {id(x): k for k, x in enumerate(F.top_stmts)}
+    if UNREAD_PARAM_DEAD and F.adecl:                      # a register parameter the body never reads is dead from
+        for p_ in f.params:                                # the entry (-Xr: its register is free)
+            if getattr(p_, 'reg', None) in ('WA', 'BC', 'DE') and not uses_decl(f.body, p_): F.dead.add(p_)
     F.guard_armed = True                                   # the live-parameter guard, from the real body on (the
     gen_stmt(F, f.body, True)                              # planners' trial code runs with the registers undecided)
     if getattr(F, 'sd4', None) and F.sd4['need'][0] == 'lx5' and not F.sd4.get('done'):
