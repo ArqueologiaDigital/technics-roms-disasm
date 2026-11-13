@@ -1582,6 +1582,8 @@ COND_VIA_WA = True                                        # see regvar_stmt: a ?
 NONE_SHARED_EXIT = True                                   # see gen_stmt: one exit for a function with an epilogue
 EVORDER_BYTE = True                                       # see gen_bin: the evaluation-order rule for two addressed bytes
 CW_IZ_XWA = True                                          # see bin_wide: a byte element at an IZ counter
+CHAIN_STATIC_WA = True                                    # see gen_assign_value: a chained store into a static element
+SHIFT1_MEM = True                                         # see gen_stmt: a byte or word shifted by one in memory
 NESTED_IF_RET = True                                      # see gen_stmt: if (a) if (b) x; at the end of a function
 LX5 = True                                                # see lx5_lines: long helpers of lhx.c's lxo_* rows
 
@@ -5878,6 +5880,11 @@ def gen_assign_value(F, e, fam, size, in_place=False):
             t = lvalue(F, lv, ptr='XWA')
             if 'XBC' in t or 'BC' in t.replace('XBC', ''): raise Unsupported('operator = through BC')
             V = 'BC'
+            if CHAIN_STATIC_WA and not F.opt and not F.adecl and re.match(r'^\(_\w+( \+ 0x[0-9a-f]+)?\)$', t) and \
+                    not held_after(F, 'WA', e):
+                V = 'WA'                                   # a static inner target needs no address register: the value
+                                                           # stays in WA (random r1_06_06: gc = gca[7] = -gc -> ld A,(_gc) /
+                                                           # neg A / ld (_gca + 0x7),A / ld (_gc),A)
             if held_after(F, 'BC', e):                     # opt_loops.c ol_strcpy (-Xr): *d++ = *s++ with s in
                 V = next((r for r in ('DE', 'HL') if r not in t and not held_after(F, r, e)), None)   # XBC: the byte
                 if V is None: raise Unsupported('operator = value register')   # in E (ld C,(XBC+:1) was wrong code)
@@ -8267,6 +8274,23 @@ def gen_stmt(F, s, last):
                 for R_ in ('XWA', 'WA'):                                                           # add (_gpi),XWA)
                     if F.lines[-2] == '\tadd\t%s,%s' % (R_, m_) and F.lines[-1] == '\tld\t%s,%s' % (m_, R_):
                         F.lines[-2:] = ['\tadd\t%s,%s' % (m_, R_)]
+        if SHIFT1_MEM and not F.opt and not F.adecl and s.k == 'expr' and len(F.lines) >= 3 and (
+                s.e.k == 'opassign' and s.e.op in ('<<', '>>') and fold(s.e.r).k == 'const' and fold(s.e.r).value == 1 or
+                s.e.k == 'bin' and s.e.op == '=' and strip(s.e.r).k == 'bin' and strip(s.e.r).op in ('<<', '>>') and
+                fold(strip(s.e.r).r).k == 'const' and fold(strip(s.e.r).r).value == 1):
+            # a byte or word shifted by one in place is shifted in memory (random r2_02_06: guc = guc >> 1 ->
+            # srlb (_guc); r2_03_15: a->c <<= 1 -> ld XWA,(XSP+0x4) / slab (XWA))
+            a_ = re.match(r'^\tld\t([ACEL]|WA|BC|DE|HL),(\(.+\))$', F.lines[-3])
+            b_ = re.match(r'^\t(sla|sra|srl|sll)\t0x1,([ACEL]|WA|BC|DE|HL)$', F.lines[-2])
+            if a_ and b_ and a_.group(1) == b_.group(2) and F.lines[-1] == '\tld\t%s,%s' % (a_.group(2), a_.group(1)):
+                M_ = a_.group(2); sfx_ = 'b' if len(a_.group(1)) == 1 else 'w'
+                if re.match(r'^\(_\w+( \+ 0x[0-9a-f]+)?\)$', M_):
+                    F.lines[-3:] = ['\t%s%s\t%s' % (b_.group(1), sfx_, M_)]
+                else:
+                    pm_ = re.match(r'^\((XBC|XDE|XHL)(\+0x[0-9a-f]+)?\)$', M_)
+                    pl_ = re.match(r'^\tld\t(XBC|XDE|XHL),(\(.+\))$', F.lines[-4]) if len(F.lines) >= 4 and pm_ else None
+                    if pl_ and pl_.group(1) == pm_.group(1) and 'WA' not in live_regs(F):
+                        F.lines[-4:] = ['\tld\tXWA,%s' % pl_.group(2), '\t%s%s\t(XWA%s)' % (b_.group(1), sfx_, pm_.group(2) or '')]
         if KOP_IN_PLACE and not F.opt and not F.adecl and s.k == 'expr' and s.e.k == 'bin' and s.e.op == '=' and len(F.lines) >= 3:
             lv_ = strip(s.e.l); rv_ = strip(s.e.r)         # g = K op g, a long global: the constant is loaded and the
             if lv_.k == 'var' and lv_.decl.kind == 'global' and lv_.ty is not None and lv_.ty.size == 4 and rv_.k == 'bin' and \
@@ -9141,6 +9165,9 @@ def regvar_stmt(F, e):
                 tl, tr = thr(v0.l), thr(v0.r)
                 if tl is not None and plain(v0.r) is not None:
                     F.emit('ld', 'XWA,%s' % tl[1]); F.emit('ld', 'IZ,%s' % at_(tl))
+                    kc_ = fold(v0.r)
+                    if v0.op in '+-' and kc_.k == 'const' and kc_.value is not None and 1 <= kc_.value <= 8:
+                        F.emit('inc' if v0.op == '+' else 'dec', '%s,IZ' % hx(kc_.value)); return True   # (r1_09_16: *c - 7 -> dec 0x7,IZ)
                     F.emit(SIMPLE_OPS[v0.op], 'IZ,%s' % plain(v0.r)); return True
                 if tr is not None and plain(v0.l) is not None and plain(v0.l).startswith('('):   # r1_04_16: ld XWA,(_gps) /
                     F.emit('ld', 'XWA,%s' % tr[1]); F.emit('ld', 'IZ,%s' % plain(v0.l))            # ld IZ,(_gi) / sub IZ,(XWA+0x8)

@@ -1150,6 +1150,12 @@ batch 47's rule (the member first, in XDE, then `lda XBC,_gd2` / `lda XWA,_gd2`)
 addressed first in a copy and in a negation too (`gda[1] = gda[2]` -> `lda XWA,_gda + 0x8` / `lda XBC,_gda + 0x10`).
 Random programs at none 130 -> 134 of 800.
 
+**Batch 65 (2026-11-13).**  A chained store whose inner target is a static element or member needs no address
+register, so its value stays in WA (`gc = gca[7] = -gc` -> `ld A,(_gc)` / `neg A` / `ld (_gca + 0x7),A` /
+`ld (_gc),A`; the model used C / XBC); a byte or word shifted by one in place is shifted in memory
+(`a->c <<= 1` -> `ld XWA,(XSP+0x4)` / `slab (XWA)`); an IZ home's `*p - 7` uses `dec 0x7,IZ`.  Random programs at
+none 134 -> 140 of 800; stchain.c at none 321 -> 323 of 392.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
