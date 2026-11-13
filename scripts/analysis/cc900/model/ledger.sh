@@ -341,6 +341,11 @@ for c in none O3XS; do    # char arithmetic by operand kind and shift count (cor
 done
 row "run 2026-11-13-10-micro-chararith2, v423/Xr" "probes/chararith2.c" "$O/2026-11-13-10-micro-chararith2/out/v423/Xr/probes" corpus/probes/chararith2.c --opt none --adecl
 row "run 2026-11-13-10-micro-chararith2, v423/O3XSXr" "probes/chararith2.c" "$O/2026-11-13-10-micro-chararith2/out/v423/O3XSXr/probes" corpus/probes/chararith2.c --opt O3XS --adecl
+for c in none O3XS; do    # long helpers with an element at an int or char index (corpus/probes/lhy.c)
+  row "run 2026-11-13-11-micro-lhy, v423/$c" "probes/lhy.c" "$O/2026-11-13-11-micro-lhy/out/v423/$c/probes" corpus/probes/lhy.c --opt $c
+done
+row "run 2026-11-13-11-micro-lhy, v423/Xr" "probes/lhy.c" "$O/2026-11-13-11-micro-lhy/out/v423/Xr/probes" corpus/probes/lhy.c --opt none --adecl
+row "run 2026-11-13-11-micro-lhy, v423/O3XSXr" "probes/lhy.c" "$O/2026-11-13-11-micro-lhy/out/v423/O3XSXr/probes" corpus/probes/lhy.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do
