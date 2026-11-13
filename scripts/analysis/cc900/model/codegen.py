@@ -94,6 +94,9 @@ class Fn:
                     op, args = 'set', '%s,%s' % (hx(b_ % 16), t_[1:] if b_ < 16 else 'Q' + t_[1:])
                 elif op == 'or' and re.match(r'^(WA|BC|DE|HL|IX|IY|IZ|[WABCDEHL])$', t_) and b_ < (16 if len(t_) == 2 else 8):
                     op, args = 'set', '%s,%s' % (hx(b_), t_)
+        if ADD_INC and op == 'add' and args is not None:        # add R,1..8 is inc (no oracle listing adds 1..8 to a
+            m_ = re.match(r'^(X?(?:WA|BC|DE|HL|IX|IY|IZ)|[WABCDEHL]),0x([1-8])$', args)   # register; 1,335 inc at none)
+            if m_: op, args = 'inc', '0x%s,%s' % (m_.group(2), m_.group(1))
         if NO_SELF_LD and op == 'ld' and args is not None and re.match(r'^(\w+),\1$', args) \
                 and not (s.lines and s.lines[-1].startswith('\tcal')):   # (after a call the later passes drop it: switch.c sw_local)
             return                                         # ld WA,WA is never written (never_forms.py: fpp9.c v39 -O)
@@ -539,8 +542,14 @@ def gen(F, e, fam, size, then_ret=False, store=False):
             F.emit(SIMPLE_OPS[b.op], '%s,%s' % (FAM[d.reg][b.ty.size], rm))   # sw_ev: sub XBC,0x2000 / ld WA,BC
             if d.reg != fam: F.emit('ld', '%s,%s' % (FAM[fam][size], FAM[d.reg][size]))
             return fam
+    e0_ = strip(e)
     e = narrow(e, size)
     src = mem_operand(F, e)
+    if CAST_WORD_LOAD and src is not None and src.startswith('(') and size == 1 and not F.opt and not F.adecl and \
+            e0_.k == 'cast' and e0_.kind == 'IntegralCast' and getattr(e0_, 'explicit', False) and e0_.ty.size == 1 and \
+            strip(e0_.e).k == 'load' and strip(e0_.e).ty.size == 2 and fam in ('WA', 'BC', 'DE', 'HL'):
+        F.emit('ld', '%s,%s' % (FAM[fam][2], src)); return fam   # an explicit (char) of an int in memory reads the word
+                                                           # (random r4_08_00: vc((char)gu) -> ld WA,(_gu) / exts WA)
     if src is not None:
         if src.startswith('X') and size < 4 and src[1:] in FAM: src = FAM[src[1:]][size]   # a long register, narrowed
         if src != FAM[fam][size]: F.emit('ld', '%s,%s' % (FAM[fam][size], src))
@@ -1604,6 +1613,7 @@ NOT_PTR_ELEM_CP = True                                    # see gen: !p[k]
 MEMBER_STORE_BC = True                                    # see gen_stmt: p->m = a op b
 SHIFTK_WA = True                                          # see gen_opassign: any size shifted by a constant works in WA
 LDK32_FORM = True                                         # see Func.emit: ld / lda of a 32-bit constant
+ADD_INC = True                                            # see Func.emit
 NO_SELF_LD = True                                         # see Func.emit
 QIZ_VIA_WA = True                                         # see Func.emit
 NESTED_IF_RET = True                                      # see gen_stmt: if (a) if (b) x; at the end of a function
@@ -5710,6 +5720,17 @@ def stmt_touches_stack(F, e):
     (frame temporaries)?  Without -O the pops of earlier calls wait until one does (random r2_07_00: gl2 = rl(gl2);
     gu = t; gul %= 16UL; vp(gs.p) releases them only after cal _vp)"""
     hit = []
+    def static_lv(n):                                      # a global, or a member / constant element of one
+        n = strip(n)
+        while n.k == 'load': n = strip(n.e)
+        while (n.k == 'member' and not n.arrow) or (n.k == 'index' and fold(n.idx).k == 'const'):
+            n = strip(n.base)
+        return n.k == 'var' and n.decl.kind == 'global'
+    e_ = strip(e) if hasattr(e, 'k') else e
+    if POP_LAZY2 and hasattr(e_, 'k') and e_.k == 'bin' and e_.op == '=' and fpgen.is_fp(getattr(e_, 'ty', None)) and \
+            static_lv(e_.l) and static_lv(e_.r):
+        return False                                       # a double copied between statics uses no frame temporary
+                                                           # (random r2_09_11: gs.d = gd2 -> lda / lda / cal ._fld_dd)
     def v(n, d):
         if n.k == 'var' and n.decl.kind in ('param', 'local') and not getattr(n.decl, 'reg', None): hit.append(n)
         elif fpgen.is_fp_op(n) or fpgen.is_fp(getattr(n, 'ty', None)): hit.append(n)
@@ -5722,6 +5743,10 @@ def later_call_absorbs(F):
     pops merge into its cleanup; otherwise they are released at once (random r1_03_15: gpi = rpi(gps->i) with no call
     after it -> cal _rpi / inc 0x2,XSP / ld (_gpi),XHL)"""
     for x in getattr(F, 'cur_rest', None) or []:
+        if POP_LAZY2 and x.k == 'return' and x.value is not None:   # return rul(..) absorbs too (random r4_07_15:
+            c = strip(x.value)                             # vl(*gpl); gps->i = gi / 4; return rul(gula[0] >> 4) ->
+            while c.k == 'cast': c = strip(c.e)            # cal _vl / .. / cal _rul / inc 0x8,XSP)
+            return c.k == 'call' and bool(c.args) and not fpgen.is_fp(getattr(c, 'ty', None))
         if x.k != 'expr': return False
         e = strip(x.e)
         c = strip(e.r) if e.k == 'bin' and e.op == '=' else e
@@ -5730,6 +5755,8 @@ def later_call_absorbs(F):
         if nodes_in(e, 'call') or stmt_touches_stack(F, e): return False
     return False
 
+CAST_WORD_LOAD = True                                     # see gen
+POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
 SHIFT_COUNT_EXPR = True                                   # see the shift paths (r1_03_04, r1_03_06)
@@ -6161,12 +6188,15 @@ def push_arg(F, a):
                     F.emit('ld', '%s,XWA' % sm)
                     F.emit('exts' if a0.ty.signed else 'extz', 'BC'); F.emit('push', 'BC'); F.push += 2; return 2
         if m is None:                                # _fputc: (char)c of an int in IZ -> ld A,IZL / extz WA
-            x = a0
-            while x.k == 'cast' and x.kind == 'IntegralCast': x = strip(x.e)
+            x = a0; expl_ = False
+            while x.k == 'cast' and x.kind == 'IntegralCast': expl_ = expl_ or getattr(x, 'explicit', False); x = strip(x.e)
             if x.k == 'load' and x.ty.size in (2, 4):
                 if strip(x.e).k == 'var': touch_home(F, strip(x.e).decl)   # ld IZ,(XSP+0x6) first
                 xm = reg_or_mem(F, x, x.ty.size)
-                if xm is not None and xm.startswith('('): m = xm          # the low byte is at the same address
+                if CAST_WORD_LOAD and expl_ and x.ty.size == 2 and xm is not None and xm.startswith('(') and not F.opt and not F.adecl:
+                    F.emit('ld', 'WA,%s' % xm); m = 'A'    # an explicit (char) of an int in memory reads the word
+                                                           # (random r4_08_00: vc((char)gu) -> ld WA,(_gu) / exts WA)
+                elif xm is not None and xm.startswith('('): m = xm          # the low byte is at the same address
                 elif xm in ('IX', 'IY', 'IZ', 'XIX', 'XIY', 'XIZ'): m = xm.lstrip('X') + 'L'
                 elif xm is not None and family_of(xm): m = FAM[family_of(xm)[1:]][1]
         if m is None and CHAR_ARG_ANY and not F.opt and not F.adecl:   # random corpora: vc(gp[0]), vc((char)(gc - gca[2])),
@@ -7286,7 +7316,9 @@ def gen_opassign(F, e):
     if op in SIMPLE_OPS and OPASSIGN_CALL_HL and strip(r).k == 'call' and not has_helper_call(strip(r).fn) and \
             size in (2, 4) and not fpgen.is_fp(strip(e.l).ty) and regvar_of(getattr(strip(e.l), 'e', strip(e.l))) is None \
             and strip(e.l).k == 'var':
-        gen_call(F, strip(r)); flush_pops(F)               # homes2b.c HL05: b ^= g1(a) -> cal _g1 / inc 0x4,XSP /
+        gen_call(F, strip(r))                              # homes2b.c HL05: b ^= g1(a) -> cal _g1 / inc 0x4,XSP /
+        if not (POP_LAZY2 and strip(e.l).decl.kind == 'global' and not F.opt and not F.adecl and later_call_absorbs(F)):
+            flush_pops(F)                                  # (random r3_02_04: gu &= ru(32767); ..; v2(gi2, 16): the pops wait)
         t = lvalue(F, e.l)                                 # xor (XSP+0x4),HL (the slot after the pops, the result as
         F.emit(SIMPLE_OPS[op], '%s,%s' % (t, FAM['HL'][size])); return t   # it is)
     if op in SIMPLE_OPS and OPASSIGN_CALL_ELEM and strip(r).k == 'call' and not has_helper_call(strip(r).fn) and size == 4 and \
@@ -12155,7 +12187,8 @@ def store_plan(F, lv, rv, size):
     if byte and L == 'Y' and vk == 'S': return False       # (st_c_YS: the value in HL, the count copied: unmodelled)
     # --- the plan: (address register(s), value register)
     if vk == 'C':                                          # the call first, then the address in the WA family
-        fam = gen(F, x, 'HL', size); flush_pops(F)
+        fam = gen(F, x, 'HL', size)                        # (random r2_09_11: gca[1] = rc(gs.i); gs.d = gd2; vp(gp) ->
+        if not (POP_LAZY2 and L == 'S' and not F.opt and not F.adecl and later_call_absorbs(F)): flush_pops(F)   # cal _rc / ld (_gca + 0x1),L / ..
         if fam != 'HL': return False
         if L == 'S': F.emit('ld', '%s,%s' % (lk[1], FAM['HL'][size])); return True   # st_i_MC: ld (_gs + 0x2),HL
         t = sp_address(F, lk, size, 'XWA', 'WA', 'XBC', 'C')

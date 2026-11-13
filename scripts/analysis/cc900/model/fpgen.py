@@ -615,7 +615,8 @@ def eval_into(F, e, dest):
     # a copy (load, constant)
     if COPY_DEST_FIRST and FP_ORD and not F.opt and dest[0] == 'lv' and fo_lv_kind(dest[1]) == 'A' and \
             fo_kind(F, e) in ('G', 'A') and e.ty.size == 8:
-        C().flush_pops(F)                                  # a member / element destination is addressed first in a copy
+        if not (C().POP_LAZY2 and not F.adecl and C().later_call_absorbs(F)): C().flush_pops(F)   # (r2_09_11: the pops wait)
+                                                           # a member / element destination is addressed first in a copy
         if not lvalue_addr(F, dest[1], 'XWA'): raise C().Unsupported('fp destination')   # too (random r4_07_03:
         put_addr(F, e, 'XBC'); F.emit('cal', '._fld_dd'); return                         # gda[1] = gda[2] ->
                                                            # lda XWA,_gda + 0x8 / lda XBC,_gda + 0x10 / cal ._fld_dd)

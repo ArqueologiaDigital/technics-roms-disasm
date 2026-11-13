@@ -1196,6 +1196,16 @@ decide between `cal` / `j` and a tail jump: switch.c sw_local).  homes2a.c 22 / 
 204 and homes2b.c 12 / 9 / 19 / 16 -> 14 / 10 / 22 / 17 of 90 at none / -O3 -XS / -Xr / -O3 -XS -Xr: eight ledger
 rows up by 42 functions.  The random programs do not move (143 / 29 / 70 / 25 of 800).
 
+**Batch 71 (2026-11-13): near misses again.**  Three rules from random functions one or two lines off.  (1) `add R,k`
+with k from 1 to 8 is `inc k,R` (no oracle listing adds 1..8 to a register except once before a `j ne`; 1,335 `inc`
+at none).  (2) The lazy stack clean-up of batch 31 (the pops of a call wait for a later call's clean-up, cdecl without
+-O) holds in more shapes: after a static element or member takes the call's value (`gca[1] = rc(gs.i)`), after
+`G op= call()` on a global (`gu &= ru(32767)`), across a double copied between statics (it uses no frame temporary),
+and when the absorbing call is the `return`'s (`return rul(gula[0] >> 4)` -> one `inc 0x8,XSP`).  (3) An explicit
+`(char)` cast of an int in memory, passed as a char argument, reads the word (`vc((char)gu)` -> `ld WA,(_gu)` /
+`exts WA`; an implicit conversion reads the byte).  Random programs at none 143 -> 147 of 800 (the other sets
+unchanged: 29 / 70 / 25); cmpordl2.c at -O3 -XS -Xr 349 -> 351.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
