@@ -1852,6 +1852,11 @@ result moved from XHL to XWA, the constant into XBC.  Unsigned by a power of two
 `cal C9H_remlu` / `and XHL,0x1` (rs_3_01_10_0), and a shift right for `/`.  Without options.  lhx.c at none 864 -> 880 (its
 group 3, two helpers in one expression); rstmt at none 3,530 -> 3,532.  Random exact unchanged.
 
+**Batch 132 (2026-11-13): a member through a pointer times a computed long value; rstmt +1.**  `gl = gps->l * (gpl[3] + gl)`
+-> `ld XWA,(_gps)` / `lda XBC,XWA+0x4` / `ld XWA,(_gpl)` / `ld XWA,(XWA+0xc)` / `add XWA,(_gl)` / `ld XBC,(XBC)` / `cal C9H_mulls`
+(rs_1_07_12_2): the member's address is held in XBC while the right side is computed in XWA.  Multiply only (for / and % the
+left must be XWA), without options.  rstmt at none 3,532 -> 3,533.  Random exact unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

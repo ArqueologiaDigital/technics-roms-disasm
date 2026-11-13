@@ -5727,6 +5727,19 @@ def gen_long_helper(F, e, l, r, fam, signed):
             lh_call(F, e.op, l, r):
         F.emit('cal', 'C9H_' + name)                   # (evorder_ad.c l_div_GF: push XIZ / cal _hfl / ld XIZ,XHL / ld XWA,(_gl) /
         return 'HL' if fam == 'HL' else move_to(F, 'XHL', fam, 4, keep=True)   # ld XBC,XIZ / cal C9H_divls)
+    if (ls is None or rs is None) and LH_D_COMPUTED and not F.opt and not F.adecl and e.op == '*' and not live_regs(F) and \
+            strip(r).k == 'bin' and not nodes_in(r, 'call') and not has_helper_call(r) and not fpgen.is_fp_op(r):
+        try: kd_ = cw_kind(F, l, 4)
+        except Unsupported: kd_ = None
+        if kd_ is not None and kd_[0] in ('D', 'P') and kd_[1].startswith('(_'):
+            n0_ = len(F.lines)                             # a member through a pointer times a computed value: the member's
+            F.emit('ld', 'XWA,%s' % kd_[1])                # address held in XBC, the value in XWA, then the member's load
+            F.emit('lda', 'XBC,XWA+%s' % hx(kd_[2])) if kd_[2] else F.emit('ld', 'XBC,XWA')   # (rstmt rs_1_07_12_2:
+            n1_ = len(F.lines)                             # gl = gps->l * (gpl[3] + gl) -> ld XWA,(_gps) / lda XBC,XWA+0x4 /
+            if gen(F, r, 'WA', 4) == 'WA' and not any(re.search(r'\b(X?BC|QBC|[BC])\b', x_) for x_ in F.lines[n1_:]):
+                F.emit('ld', 'XBC,(XBC)'); F.emit('cal', 'C9H_' + name)   # ld XWA,(_gpl) / ld XWA,(XWA+0xc) / add XWA,(_gl) /
+                return 'HL' if fam == 'HL' else move_to(F, 'XHL', fam, 4, keep=True)   # ld XBC,(XBC) / cal C9H_mulls)
+            del F.lines[n0_:]
     if (ls is None or rs is None) and LH_NESTED_K and not F.opt and not F.adecl and e.op in ('/', '%') and \
             fold(r).k == 'const' and fold(r).value is not None and not live_regs(F):
         li_ = strip(l)                                     # a helper's result as the left of another helper by a constant
@@ -6421,6 +6434,7 @@ MEMBER_ARR_LOAD = True                                   # see gen_load_mem
 MEMBER_ARR_STORE = True                                  # see _lvalue_raw
 LH_DEAD_IDX_SLOT = True                                  # see lh_counter_slots
 LH_NESTED_K = True                                       # see gen_long_helper
+LH_D_COMPUTED = True                                     # see gen_long_helper
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
