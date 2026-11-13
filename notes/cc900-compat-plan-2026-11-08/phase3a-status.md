@@ -1098,6 +1098,12 @@ pushed (`vl((long)t)` -> `ld XWA,XDE` / `push XWA`); a register temporary stored
 pointer (`gps->l = t` -> `ld XWA,(_gps)` / `ld (XWA+0x4),XDE`).  Random programs at none 99 -> 103 of 800, at -Xr
 49 -> 50.
 
+**Batch 56 (2026-11-13): two more near misses.**  A byte global stored from a register and bumped by the next
+statement is bumped in the register first (`gc = gc2; gc++` -> `ld A,(_gc2)` / `inc 0x1,A` / `ld (_gc),A`);
+`g = g + e` with a computed `e` adds into memory (`gpi = gpi + t` -> `add (_gpi),XWA`; the oracle's listings at none
+have 143 `add (m),XWA` against 3 `add XWA,(m)` / `ld (m),XWA`, which come from a folded local and a chained
+assignment).  Random programs at none 103 -> 106 of 800.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

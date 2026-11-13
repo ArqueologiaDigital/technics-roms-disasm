@@ -1555,6 +1555,8 @@ MEMBER_BASE_FIRST = True                                  # see gen_ptr_arith: a
 OPASSIGN_ZERO = True                                      # see gen_opassign: x |= 0
 ARG_CAST_COPY = True                                      # see push_arg: an explicit sign cast of a register temporary
 REGVAL_STORE_XWA = True                                   # see gen_stmt: a register temporary stored through a pointer
+INCB_FORWARD = True                                       # see compile_function_once: gc = x; gc++
+ADD_IN_PLACE = True                                       # see gen_stmt: g = g + e
 NESTED_IF_RET = True                                      # see gen_stmt: if (a) if (b) x; at the end of a function
 LX5 = True                                                # see lx5_lines: long helpers of lhx.c's lxo_* rows
 
@@ -8181,7 +8183,17 @@ def gen_stmt(F, s, last):
     """gen_stmt with F.in_return raised while a return statement (at any depth) is generated: the live-local guard
     then knows nothing is read after it (_strlen: if (ss == NULL) return 0xffff; writes ss's HL)"""
     prev = getattr(F, 'in_return', False); F.in_return = prev or s.k == 'return'
-    try: return _gen_stmt_body(F, s, last)
+    try:
+        r_ = _gen_stmt_body(F, s, last)
+        if ADD_IN_PLACE and not F.opt and not F.adecl and s.k == 'expr' and s.e.k == 'bin' and s.e.op == '=' and len(F.lines) >= 2:
+            lv_ = strip(s.e.l); rv_ = strip(s.e.r)         # g = g + e, a global and a computed e: the sum is added into
+            if lv_.k == 'var' and lv_.decl.kind == 'global' and rv_.k == 'bin' and rv_.op == '+' and strip(rv_.l).k == 'load' and \
+                    strip(strip(rv_.l).e).k == 'var' and strip(strip(rv_.l).e).decl is lv_.decl:   # memory (random r3_02_15:
+                m_ = '(_%s)' % lv_.decl.name                                                       # gpi = gpi + t ->
+                for R_ in ('XWA', 'WA'):                                                           # add (_gpi),XWA)
+                    if F.lines[-2] == '\tadd\t%s,%s' % (R_, m_) and F.lines[-1] == '\tld\t%s,%s' % (m_, R_):
+                        F.lines[-2:] = ['\tadd\t%s,%s' % (m_, R_)]
+        return r_
     finally: F.in_return = prev
 
 def param_live_after(F, d):
@@ -13200,6 +13212,13 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
         F.lines.insert(j, ln)
     F.lines = [l[:-len('\t;stack')] if l.endswith('\t;stack') else l for l in F.lines]
     F.lines = [l[:-len('\t;u1')] if l.endswith('\t;u1') else l for l in F.lines]
+    if INCB_FORWARD and not F.opt and not F.adecl:      # a byte stored and then bumped in place is bumped in the
+        k_ = 1                                          # register first (random r3_02_14: gc = gc2; gc++ ->
+        while k_ < len(F.lines):                        # ld A,(_gc2) / inc 0x1,A / ld (_gc),A)
+            a_ = re.match(r'^\tld\t(\(_\w+\)),([ACEL])$', F.lines[k_ - 1]); b_ = re.match(r'^\t(inc|dec)b\t(0x[1-8]),(\(_\w+\))$', F.lines[k_])
+            if a_ and b_ and a_.group(1) == b_.group(3):
+                F.lines[k_ - 1:k_ + 1] = ['\t%s\t%s,%s' % (b_.group(1), b_.group(2), a_.group(2)), F.lines[k_ - 1]]
+            k_ += 1
     if LABEL_MERGE and not F.opt:                       # random r1_01_07: if (a) {..} else { if (b) ..; } -> the inner
         import re as _re                                 # if jumps to the outer end label (j eq,L30 ... L30:), not to one
         k = 1                                            # of its own in front of it
