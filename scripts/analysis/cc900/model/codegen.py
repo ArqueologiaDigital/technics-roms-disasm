@@ -1091,7 +1091,7 @@ def gen(F, e, fam, size, then_ret=False, store=False):
         im = mem_operand(F, ii)
         if b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array' and im is not None and ii.ty.size == 2:
             R2 = FAM[fam][2]; X = FAM[fam][4]                 # m_addr: &ga[i] -> ld HL,(i) / add HL,HL / lda XWA,_ga /
-            if not ii.ty.signed and (not F.adecl or UIDX_ADDR_XR and (im == 'WA' or 'WA' not in live_regs(F)) and
+            if not ii.ty.signed and (not F.adecl or UIDX_ADDR_XR and (im == 'WA' or 'WA' not in live_regs_read(F)) and
                                      x.ty.size in (2, 4)):   # extz XHL / add XHL,XWA (-Xr: ld HL,WA); an unsigned register
                                                              # index is extended whole there too (.rs_4_01_02_3: return
                                                              # &gia[b] -> ld WA,BC / extz XWA / add XWA,XWA / lda XHL,_gia / add XHL,XWA)
@@ -6118,6 +6118,7 @@ STMT_LOCAL_GUARD = True                                   # see Fn.emit: a local
 WIDEN_NO_WORD_LOAD = True                                 # see gen
 TEST_CLOBBER_LOCALS = True                                # see test_clobber_check
 UIDX_ADDR_XR = True                                       # see gen's addr
+CHAR_REG_LDA = True                                       # see elem_addr
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -7145,6 +7146,14 @@ def elem_addr(F, lv, kind):
                     B_ = 'XWA' if kind == 'load' else 'XBC'
                     if FAM.get(iv_.reg, {}).get(4) != B_ and B_[1:] not in live_regs(F):
                         touch_home(F, iv_); F.emit('lda', '%s,%s' % (B_, g)); return '(%s+%s)' % (B_, iv_.reg)
+            ixu_ = unpromote(lv.idx); ixm_ = mem_operand(F, ixu_) if ixu_.k == 'load' and strip(ixu_.e).k == 'var' else None
+            if CHAR_REG_LDA and ixm_ is not None and ixu_.ty.signed and strip(ixu_.e).decl.kind == 'local' and \
+                    (ixm_ in ('QIZH', 'QIZL') and ixu_.ty.size == 1 or ixm_ in ('IZ', 'QIZ') and ixu_.ty.size == 2 and (F.opt or F.adecl)) \
+                    and not (live_regs_read(F) & {'WA', 'BC'}):
+                F.emit('lda', 'XWA,%s' % g); F.emit('lda', 'XBC,XWA+%s' % ixm_); return '(XBC)'   # a char element changed in place at a
+                                                           # local in QIZH / IZ: its address by the signed register index (rstmt
+                                                           # rs_4_02_10_3: guca[t] /= 7 -> lda XWA,_guca / lda XBC,XWA+QIZH / ld A,(XBC);
+                                                           # rs_4_08_17_5 under -O / -Xr: lda XBC,XWA+IZ)
             F.emit('lda', 'XWA,%s' % g); idx_into('BC'); F.emit('extz', 'XBC'); F.emit('add', 'XBC,XWA'); return '(XBC)'
         if not sized:
             if kind == 'rmw' and esz == 4: return None

@@ -1489,6 +1489,14 @@ with a double parameter).  Also prepared, without effect on a verdict yet: `&arr
 index is extended whole under -Xr too, and the zero-extended sum of batch 90 serves a read-modify-write through
 XBC.  **Open: 79 statement findings** (semcheck 140 = 61 older reviewed ones + 79 on rstmt).
 
+**Batch 96 (2026-11-13): a char element's address by a QIZH / IZ register index; semcheck 140 -> 122.**  A char
+element changed in place (`guca[t] /= 7`, `gca[t] %= 16`) at a signed local kept in QIZH, or in IZ under -O or -Xr,
+takes its address from the register index: `lda XWA,_guca` / `lda XBC,XWA+QIZH` / `ld A,(XBC)` / .. / `ld (XBC),A`.
+The model built a zero-extended sum (`ld BC,QIZH` / `extz XBC` / `add XBC,XWA`), which differs for a negative
+index.  And `&arr[i]` with an unsigned register index under -Xr is extended whole also when an unread parameter
+sits in WA.  18 verdicts gone (several older ones on idxloc.c among them), none new; rstmt +1 / +1 / +2 / +1.
+**Open: 70 statement findings** (semcheck 122).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
