@@ -1179,6 +1179,15 @@ its address, a char remainder through A.  Random programs at -Xr 50 -> 70 of 800
 22 unchanged); stdiv2.c at -Xr 409 -> 426 and at -O3 -XS -Xr 275 -> 288; stchain.c and stval.c at -Xr +4 and +3.
 The rules that did not gain at -Xr stay cdecl-only.
 
+**Batch 69 (2026-11-13): the optimised sets.**  `lift_guard.py` repeated batch 68's sweep for the `not F.opt` guards
+at -O3 -XS: four rules gain there and are lifted (narrow constants, a member pointer loaded first, a byte bumped
+before its store, byte shifts in A).  And one rule for every 32-bit register constant, applied where instructions are
+emitted: under -O a constant from 8 to 0xffff is `lda` and any other `ld`; without -O it is always `ld` (the
+oracle's listings: 509 `lda` and 1,473 `ld` at -O3 -XS, 1,988 `ld` at none, no exception).  The model had this in a
+few places only.  Random programs at -O3 -XS 22 -> 29 and at -O3 -XS -Xr 22 -> 25 of 800; evorder_l.c 191 -> 233 and
+148 -> 182, evorder_lh.c 176 -> 224 and 159 -> 204, stdiv.c 694 -> 698 and 142 -> 166 at those two sets: twelve
+ledger rows up by 207 functions.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

@@ -94,6 +94,11 @@ class Fn:
                     op, args = 'set', '%s,%s' % (hx(b_ % 16), t_[1:] if b_ < 16 else 'Q' + t_[1:])
                 elif op == 'or' and re.match(r'^(WA|BC|DE|HL|IX|IY|IZ|[WABCDEHL])$', t_) and b_ < (16 if len(t_) == 2 else 8):
                     op, args = 'set', '%s,%s' % (hx(b_), t_)
+        if LDK32_FORM and op in ('ld', 'lda') and args is not None:
+            m_ = re.match(r'^(X(?:WA|BC|DE|HL|IX|IY|IZ)),0x([0-9a-f]+)$', args)   # a 32-bit register's constant: under -O
+            if m_:                                         # 8..0xffff is lda and anything else ld; without -O always ld
+                op = 'lda' if getattr(s, 'opt', False) and 8 <= int(m_.group(2), 16) <= 0xffff else 'ld'   # (every oracle listing:
+                                                           #  -O3 -XS 509 lda / 1,473 ld, none 1,988 ld, no exception)
         if op in ('cpb', 'cpw') and args is not None and re.match(r'^(Q?[A-Z]+[A-Z0-9]*),', args) and not args.startswith('('):
             op = 'cp'                                      # a register is compared with cp (random r4_06_09: cp QIZH,0x26)
         if op == 'cp' and args is not None:
@@ -512,7 +517,7 @@ def gen(F, e, fam, size, then_ret=False, store=False):
         # a narrowing cast of a load reads at the source width (unop_*: cast_l_c, cast_i_c)
         isz = strip(e0.e).ty.size
         kc_ = fold(e0.e)
-        if CONST_NARROW and kc_.k == 'const' and kc_.value is not None and not F.opt:   # (-Xr too: .r1_00_04)   # a constant is loaded at
+        if CONST_NARROW and kc_.k == 'const' and kc_.value is not None:   # (-Xr too: .r1_00_04)   # a constant is loaded at
             F.emit('ld', '%s,%s' % (FAM[fam][size], hx(kc_.value & ((1 << (8 * size)) - 1)))); return fam   # the narrow width
                                                                # (random r1_00_04: char f() { return 53; } -> ld L,0x35)
         F.emit('ld', '%s,%s' % (FAM[fam][isz], mem_operand(F, e0.e))); return fam
@@ -1592,6 +1597,7 @@ SHIFT1_MEM = True                                         # see gen_stmt: a byte
 NOT_PTR_ELEM_CP = True                                    # see gen: !p[k]
 MEMBER_STORE_BC = True                                    # see gen_stmt: p->m = a op b
 SHIFTK_WA = True                                          # see gen_opassign: any size shifted by a constant works in WA
+LDK32_FORM = True                                         # see Func.emit: ld / lda of a 32-bit constant
 NESTED_IF_RET = True                                      # see gen_stmt: if (a) if (b) x; at the end of a function
 LX5 = True                                                # see lx5_lines: long helpers of lhx.c's lxo_* rows
 
@@ -4975,7 +4981,7 @@ def gen_ptr_arith(F, e, fam, size):
         F.emit('lda', '%s,XBC+A' % R); return fam               # ld XBC,(_gp) / ld A,(b) / lda XWA,XBC+A
     if ii.ty is not None and ii.ty.size == 1 and esz == 1 and PTR_CHAR_EXTZ and im != 'WA' and \
             (getattr(F, 'ptr_arg_ctx', False) or not ii.ty.signed):
-        if MEMBER_BASE_FIRST and not F.opt and not F.adecl and pm.startswith('(_') and ' + ' in pm and R == 'XWA' and \
+        if MEMBER_BASE_FIRST and not F.adecl and pm.startswith('(_') and ' + ' in pm and R == 'XWA' and \
                 getattr(F, 'ptr_arg_ctx', False) and 'BC' not in live_regs(F):
             F.emit('ld', 'XBC,%s' % pm); pm = 'XBC'            # a static member's pointer is loaded first (r1_04_02:
                                                                # ld XBC,(_gs + 0xa) / ld XWA,0x0 / ld A,(a) / add XWA,XBC)
@@ -7379,7 +7385,7 @@ def gen_opassign(F, e):
                 F.emit('and', 'A,0xf'); lab = F.newlabel(); F.emit('j', 'z,%s' % lab); F.emit(mnem, 'A,%s' % V)
                 F.lines.append(lab + ':'); F.emit('ld', '%s,%s' % (t, V)); return t
         t = lvalue(F, e.l, ptr='XDE', idx='DE', base='XHL', kind='rmw')
-        V = FAM[next((x for x in (('WA', 'BC', 'DE', 'HL') if SHIFTB_A and (size == 1 or SHIFTK_WA) and fold(r).k == 'const' and not F.opt
+        V = FAM[next((x for x in (('WA', 'BC', 'DE', 'HL') if SHIFTB_A and (size == 1 or SHIFTK_WA) and fold(r).k == 'const'
                                   and 'WA' not in live_regs(F) else ('BC', 'WA', 'DE', 'HL')) if not re.search(r'\b(X?%s|%s)\b' % (x, FAM[x][1]), t) and not (SHIFT_COUNT_GUARD and x == 'WA' and fold(r).k != 'const' and mem_operand(F, r) is None)), 'BC')][size]   # (r1_06_03: not over the computed count)
         rr = fold(r); cs = mem_operand(F, r) if rr.k != 'const' else None
         pre = rr.k != 'const' and cs is None and SHIFT_COUNT_EXPR
@@ -13471,7 +13477,7 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
         F.lines.insert(j, ln)
     F.lines = [l[:-len('\t;stack')] if l.endswith('\t;stack') else l for l in F.lines]
     F.lines = [l[:-len('\t;u1')] if l.endswith('\t;u1') else l for l in F.lines]
-    if INCB_FORWARD and not F.opt:                      # (-Xr too: .r3_02_14)      # a byte stored and then bumped in place is bumped in the
+    if INCB_FORWARD:                      # (-Xr too: .r3_02_14)      # a byte stored and then bumped in place is bumped in the
         k_ = 1                                          # register first (random r3_02_14: gc = gc2; gc++ ->
         while k_ < len(F.lines):                        # ld A,(_gc2) / inc 0x1,A / ld (_gc),A)
             a_ = re.match(r'^\tld\t(\(_\w+\)),([ACEL])$', F.lines[k_ - 1]); b_ = re.match(r'^\t(inc|dec)b\t(0x[1-8]),(\(_\w+\))$', F.lines[k_])
