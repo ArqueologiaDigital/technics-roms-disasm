@@ -1268,6 +1268,11 @@ the test skips the other arm's load, with one label (`u == 2 ? gi3 : (16 - 255)`
 load, and keeps the two-label form otherwise.  Random programs at none 154 -> 158 of 800 (29 / 70 / 25 at the other
 sets, unchanged); elrd.c at none 270 -> 274.
 
+**Batch 77 (2026-11-13): three rules also under -Xr.**  `lift_guard.py` tried the rules of batches 71 to 76 at -Xr
+and at -O3 -XS.  Three gain at -Xr and are lifted there: an unsigned `% 2^k` as `and`, the commutative operation that
+computes its complex side first, and the constant else-arm loaded first.  None gains at -O3 -XS.  Random programs at
+-Xr 70 -> 74 of 800 (158 / 29 / 25 at none / -O3 -XS / -O3 -XS -Xr, unchanged).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

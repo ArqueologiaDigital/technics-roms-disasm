@@ -807,7 +807,7 @@ def gen(F, e, fam, size, then_ret=False, store=False):
         dead0 = set(F.dead); arm(e.a); F.dead = dead0; F.emit('j', lend); F.lines.append(lelse + ':')
         arm(e.b); F.lines.append(lend + ':')
         F.emit('exts' if bs else 'extz', FAM[fam][2]); return fam
-    if e.k == 'cond' and COND_K_PRELOAD and not F.opt and not F.adecl and size == 2 and fam in ('WA', 'BC', 'DE', 'HL') and \
+    if e.k == 'cond' and COND_K_PRELOAD and not F.opt and size == 2 and fam in ('WA', 'BC', 'DE', 'HL') and \
             fold(e.b).k == 'const' and fold(e.b).value is not None and fold(e.a).k != 'const' and \
             not nodes_in(e.c, 'call') and not nodes_in(e.a, 'call') and not F.pending and \
             strip(e.a).k == 'load' and (mem_operand(F, e.a) or '').startswith('('):
@@ -4495,7 +4495,7 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
             if fam != 'WA': F.emit('ld', '%s,A' % FAM[fam][1])
             return fam
         swapped_ = False
-        if COMM_SWAP_PLAIN and op in ('+', '&', '|', '^') and size == 2 and not F.opt and not F.adecl and \
+        if COMM_SWAP_PLAIN and op in ('+', '&', '|', '^') and size == 2 and not F.opt and \
                 strip(l).k == 'load' and strip(strip(l).e).k in ('var', 'index', 'member') and \
                 isinstance(mem_operand(F, l), str) and mem_operand(F, l).startswith('(_') and \
                 mem_operand(F, r) is None and not nodes_in(r, 'call') and not fpgen.is_fp_op(r) and \
@@ -4657,7 +4657,7 @@ def gen_bin(F, e, fam, size, then_ret, store=False):
         if op == '*':
             F.emit('muls' if signed else 'mul', '%s,%s' % (wide, rs))
             res = FAM[work][size]
-        elif op == '%' and REMU_AND and size == 2 and not signed and kd_ >= 2 and kd_ & (kd_ - 1) == 0 and not F.opt and not F.adecl:
+        elif op == '%' and REMU_AND and size == 2 and not signed and kd_ >= 2 and kd_ & (kd_ - 1) == 0 and not F.opt:
             F.emit('and', '%s,%s' % (FAM[work][size], hx(kd_ - 1))); res = FAM[work][size]   # (random r4_04_17: gu2 % 2 -> and WA,0x1)
         elif op == '/' and DIVU_SHIFT and not signed and kd_ >= 2 and kd_ & (kd_ - 1) == 0 and not F.opt and not F.adecl:
             F.emit('srl', '%s,%s' % (hx(kd_.bit_length() - 1), FAM[work][size])); res = FAM[work][size]   # (random r4_01_07:
