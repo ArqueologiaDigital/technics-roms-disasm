@@ -1430,6 +1430,16 @@ initialiser and an argument index with the register, signed (`char *u = gp + b` 
 the gate (4 new verdicts) and narrowed to the return.  rstmt at -Xr / -O3 -XS -Xr 2,979 / 2,829 -> 2,981 / 2,831.
 **Open: 115 of batch 83's 253** (188 - 73).
 
+**Batch 90 (2026-11-13): register indices for IZ homes and unsigned indices; semcheck 188 -> 167.**  A char element
+at a signed int local kept in IZ or QIZ is indexed with the register itself (`lda XWA,_guca` / `subb (XWA+IZ),0xff`;
+`ld A,(XWA+QIZ)`); the model did this without -O only (idxloc.c) and wrote the zero-extending sum under -O.  It now
+holds under -O for locals; a *parameter* the model homes in IZ is not included: the compiler reads it from memory
+and zero-extends it there (random r4_03_00, which a first version got wrong; the gate caught it).  An unsigned int
+index in a register is zero-extended whole into a sum (`gia[t] <<= 15` with an unsigned `t` in IZ -> `ld WA,IZ` /
+`extz XWA` / `add XWA,XWA` / `ld XBC,_gia` / `add XBC,XWA`), where the model used the signed `(base+R16)`.
+idxloc.c at the two optimised sets 37 -> 41 and 40 -> 45; 21 verdicts gone, several of them older ones on idxloc.c.
+**Open: about 100 of batch 83's 253** (semcheck 167, of which 106 on rstmt).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

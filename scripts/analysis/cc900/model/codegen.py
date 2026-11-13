@@ -6070,6 +6070,8 @@ STMT_PARAM_GUARD = True                                   # see Fn.emit
 CHAR_NARROW_MORE = True                                   # see char_narrow's visit2
 ADD_ZERO_DROP = True                                      # see Fn.emit
 UIDX_NO_SIGNED = True                                     # see elem_addr_regs
+CHAR_REG_INDEX_OPT = True                                 # see elem_addr, gen_load_mem
+UIDX_SUM = True                                           # see lvalue
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -7082,11 +7084,13 @@ def elem_addr(F, lv, kind):
                 if f != 'BC': F.emit('ld', 'BC,%s' % FAM[f][2])
                 F.emit('lda', 'XDE,%s' % sym); return '(XDE+BC)'
             if not plain: return None
-            if CHAR_REG_INDEX and not F.opt:                  # a register index is used as it is (idxloc.c il_c_L1:
+            if CHAR_REG_INDEX and (not F.opt or CHAR_REG_INDEX_OPT):   # a register index is used as it is (idxloc.c il_c_L1:
                 ix_ = strip(lv.idx)                            # lda XWA,_gca / ld A,(XWA+IZ); il_c_L2: lda XBC,_gca /
                 while ix_.k == 'cast' and ix_.kind == 'IntegralCast': ix_ = strip(ix_.e)   # ld (XBC+IZ),A)
                 iv_ = regvar_of(strip(ix_.e)) if ix_.k == 'load' else None
-                if iv_ is not None and iv_.ty.size == 2 and iv_.ty.signed and iv_.reg in ('IZ', 'BC', 'DE', 'HL'):
+                if iv_ is not None and iv_.ty.size == 2 and iv_.ty.signed and iv_.reg in ('IZ', 'QIZ', 'BC', 'DE', 'HL') and \
+                        (not F.opt or iv_.reg in ('IZ', 'QIZ') and iv_.kind == 'local'):   # (-O too for a local in IZ / QIZ: rstmt rs_2_07_19_4,
+                                                           # guca[t] -= K -> lda XWA,_guca / subb (XWA+IZ),0xff)
                     B_ = 'XWA' if kind == 'load' else 'XBC'
                     if FAM.get(iv_.reg, {}).get(4) != B_ and B_[1:] not in live_regs(F):
                         touch_home(F, iv_); F.emit('lda', '%s,%s' % (B_, g)); return '(%s+%s)' % (B_, iv_.reg)
@@ -7198,7 +7202,11 @@ def gen_load_mem(F, v, fam, size):
                     F.emit('extz', 'WA'); F.emit('lda', 'XBC,_%s' % b.decl.name)
                     F.emit('ld', '%s,(XBC+WA)' % R); return fam
             if im is None: raise Unsupported('complex index')
-            if esz == 1 and (im in ('WA', 'BC', 'DE', 'HL') or CHAR_REG_INDEX and im == 'IZ' and not F.opt and
+            ivl_ = unpromote(i)
+            ivl_ = strip(ivl_.e).decl if ivl_.k == 'load' and strip(ivl_.e).k == 'var' else None
+            if esz == 1 and (im in ('WA', 'BC', 'DE', 'HL') or CHAR_REG_INDEX and im in ('IZ', 'QIZ') and
+                             (not F.opt or CHAR_REG_INDEX_OPT and ivl_ is not None and ivl_.kind == 'local') and   # (a parameter
+                             # the model homes in IZ is read from memory and zero-extended by the compiler: r4_03_00)
                              unpromote(i).ty is not None and unpromote(i).ty.signed):   # globals.c (an unsigned index
                                                            #  in IZ is extended whole: r2_00_12 -Xr, r4_07_10)
                                                                    # (idxloc.c il_c_L1: lda XWA,_gca / ld A,(XWA+IZ))
@@ -7495,6 +7503,16 @@ def lvalue(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False, kind='store'):
                     F.emit('lda', 'XBC,_%s' % b.decl.name); F.emit('ld', 'A,%s' % mem_operand(F, ui_))
                     F.emit('ld', 'XDE,0x0'); F.emit('ld', 'E,A'); F.emit('add', 'XDE,XBC'); return '(XDE)'
                 raise Unsupported('a char index in memory')
+            ut_ = unpromote(i).ty
+            if UIDX_SUM and not combine and esz in (2, 4) and ut_ is not None and ut_.size == 2 and not ut_.signed and \
+                    im in ('IZ', 'WA', 'BC', 'DE', 'HL') and (im == 'WA' or 'WA' not in live_regs(F)) and \
+                    (im == 'BC' or 'BC' not in live_regs(F)) and (im == 'IZ' or dies_here(F, i)):
+                # an unsigned index in a register is zero-extended whole into a sum (rstmt rs_2_04_15_2: gia[t] <<= 15
+                # with t in IZ -> ld WA,IZ / extz XWA / add XWA,XWA / ld XBC,_gia / add XBC,XWA / ld WA,(XBC) / ..;
+                # .rs_1_05_16_4 -Xr: extz XWA / sll 0x2,XWA / ld XBC,_gula / add XBC,XWA); (base+R16) reads it signed
+                if im != 'WA': F.emit('ld', 'WA,%s' % im)
+                F.emit('extz', 'XWA'); F.emit('add', 'XWA,XWA') if esz == 2 else F.emit('sll', '0x2,XWA')
+                F.emit('ld', 'XBC,_%s' % b.decl.name); F.emit('add', 'XBC,XWA'); return '(XBC)'
             I = idx if not combine else 'WA'
             if im in ('WA', 'BC', 'DE') and dies_here(F, i):   # .as_add_arr: add WA,WA / (XDE+WA)
                 I = im
