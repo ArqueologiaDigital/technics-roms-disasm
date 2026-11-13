@@ -1609,6 +1609,17 @@ near miss of the statement probes (34 statements).  `int t = 256 + 8; ji = t;` w
 long through XWA (17 + 5 and 6 + 5 statements of those kinds were exact).  rstmt at none / -Xr 3,409 / 3,018 ->
 3,443 / 3,026 of 4,694; the -O sets and the random corpora unchanged.
 
+**Batch 107 (2026-11-13): a local's pointer-operand initialiser; a correction to batch 105; rstmt +9.**  (1) Batch
+105's exit label must not be written for a constant test at any set, not only under -O: two statements at none and
+two at -Xr had lost their exact match to it, hidden in that batch's net gain of 40 and 32 (found by diffpat's
+"model: L:" group; rs_3_00_19_3).  (2) `int t = gpi[0] & gia[3]; ji = t;` is `ld XWA,(_gpi)` / `ld BC,(_gia + 0x6)`
+/ `and BC,(XWA)` / `ld (_ji),BC`: the pointer in XWA and the value in BC, the mirror of the direct store
+`gi2 = gi & *hpi` (evorder_ad.c: XBC / WA).  Applied to a forwarded local at the plain set, and only to the shape the
+evidence covers: a pointer in a global, a plain global value, one operation.  An element operand or a widened char
+keeps XBC / WA (rs_1_01_13_0, rs_3_09_13_0; a first, wider version lost those).  Fifteen more statements differ from
+the oracle only by this WA / BC swap in other contexts (a narrowing cast, an argument, a store through a pointer);
+`swapfit.py` lists them.  rstmt at none / -Xr 3,443 / 3,026 -> 3,450 / 3,028.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

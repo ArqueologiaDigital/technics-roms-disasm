@@ -1610,7 +1610,7 @@ def tail_if_return(f, opt):
     st = f.body
     while st is not None and st.k == 'block': st = st.body[-1] if st.body else None
     if st is None or st.k != 'if' or st.els is not None: return False
-    if opt and cond_const(st.cond) is not None: return False
+    if cond_const(st.cond) is not None: return False       # (at every set: rs_3_00_19_3)
     t = flat(st.then)
     return bool(t) and t[-1].k == 'return' and getattr(t[-1], 'value', None) is not None
 def do_predec_indexed(f):
@@ -6233,6 +6233,7 @@ DO_PREDEC_IDX = True                                      # see the DEC_CMP_SUB 
 RIGHT_READS_HOME = True                                   # see gen_bin
 TAIL_IF_RETURN_LABEL = True                               # see compile_function_once's last passes
 LOCAL_K_VIA_REG = True                                    # see store_global
+LOCAL_BIN_SWAP = True                                     # see store_global
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -8208,9 +8209,25 @@ def store_global(F, name, e, size):
     elif STORE_GLOBAL_FREE and held_after(F, 'WA', e):  # lnr.c r_p_rd (-Xr): gr = p[i] with p in XWA -> ld DE,IZ /
         work = next((r for r in ('BC', 'DE', 'HL') if not held_after(F, r, e)), 'WA')   # ... / ld DE,(XDE) /
     F.ptr_store_ctx = strip(e).k == 'bin' and getattr(strip(e), 'from_local', None) is None   # (see gen_ptr_arith)
+    n_sw_ = len(F.lines)
     try: fam = gen(F, e, work, size, store=True)                                      # ld (_gr),DE
     finally: F.ptr_store_ctx = False
     reg = F.store_from or FAM[fam][size]
+    fl2_ = e
+    while fl2_ is not None and not getattr(fl2_, 'from_local2', False) and fl2_.k in ('cast', 'noop', 'paren') and \
+            getattr(fl2_, 'e', None) is not None: fl2_ = fl2_.e
+    new_ = F.lines[n_sw_:]
+    if LOCAL_BIN_SWAP and fl2_ is not None and getattr(fl2_, 'from_local2', False) and strip(fl2_).k == 'bin' and \
+            not F.store_from and fam == 'WA' and len(new_) == 3 and re.match(r'^\tld\tXBC,\(_\w+\)$', new_[0]) and \
+            re.match(r'^\tld\tX?WA,\(_[^)]*\)$', new_[1]) and re.match(r'^\t\w+\tX?WA,\(XBC(\+0x[0-9a-f]+)?\)$', new_[2]):
+        # (only this shape: a pointer in a global, a plain global value, the operation; an element operand or a
+        #  widened char keeps XBC / WA: rs_1_01_13_0, rs_3_09_13_0)
+        def sw_(l_):                                       # a local's initialiser with an operand through a pointer:
+            return re.sub(r'\b(X?)(WA|BC)\b|\b([AC])\b', lambda m_: (m_.group(1) + {'WA': 'BC', 'BC': 'WA'}[m_.group(2)])
+                          if m_.group(2) else {'A': 'C', 'C': 'A'}[m_.group(3)], l_)   # the pointer in XWA, the value
+        F.lines[n_sw_:] = [sw_(l_) for l_ in new_]         # in BC (rstmt rs_1_00_00_1: int t = gpi[0] & gia[3]; ji = t
+        reg = sw_(reg)                                     # -> ld XWA,(_gpi) / ld BC,(_gia + 0x6) / and BC,(XWA) /
+                                                           # ld (_ji),BC; the direct store gi2 = .. keeps XBC / WA)
     if STORE_FROM_WORK and F.opt and F.lines and size >= 1:   # -O: the value is stored from where it was computed
         m = re.match(r'^\tld\t%s,(BC|DE|HL|IX|IY|XBC|XDE|XHL|XIX|XIY|C|E|L)$' % reg, F.lines[-1])   # (assign_expr.c
         if m and len(m.group(1)) == len(reg): F.lines.pop(); reg = m.group(1)   # ae_i_chain_ll -O3 -XS -Xr:
@@ -8519,6 +8536,8 @@ def gen_stmt(F, s, last):
                                                      # (mul_l_loc under O3XSXr: x = a * b stays in a slot)
                     if LOCAL_K_VIA_REG and not F.opt and c.var.ty.kind == 'int' and c.var.ty.size == 2:
                         c.init.from_local = True           # (see store_global)
+                    if LOCAL_BIN_SWAP and not F.opt and not F.adecl and c.var.ty.kind == 'int' and c.var.ty.size in (2, 4):
+                        c.init.from_local2 = True          # (see store_global)
                     for x in rest: substitute(x, c.var, c.init)   # cdecl -O folds a char local too (add_c_loc)
                     i += 1; continue
                 if getattr(c.var, 'slot', None) is not None and c.var.ty.size >= 2 and strip(c.init).k != 'initlist':
