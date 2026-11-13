@@ -229,7 +229,8 @@ def lvalue_addr(F, v, reg):
         if b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array':
             i = cg.fold(v.idx)
             if i.k == 'const':
-                F.emit('lda', '%s,_%s + %s' % (reg, b.decl.name, cg.hx(i.value * v.ty.size))); return True
+                off_ = i.value * v.ty.size                   # (fpord.c fo_a_GGZ: element 0 is lda XDE,_kda)
+                F.emit('lda', '%s,_%s + %s' % (reg, b.decl.name, cg.hx(off_)) if off_ or not FP_ORD else '%s,_%s' % (reg, b.decl.name)); return True
             im = cg.mem_operand(F, cg.narrow(v.idx, 2))
             if im is None: return False
             if not im.startswith('(') and reg == 'XDE' and cg.family_of(im) not in (None, 'XWA', 'XBC'):
@@ -354,6 +355,7 @@ def op_into(F, e, vals, dest):
         if not (FP_PEND_KEEP and not F.opt and F.pending and F.pending == getattr(F, 'pend_at_stmt', -1)):
             C().flush_pops(F)                              # _log: x /= ldexp(1, nptr) -> cal _ldexp / lda XSP,XSP+0x1e first
         name = '._f%s_%s' % ({'+': 'add', '-': 'sub', '*': 'mul', '/': 'div'}[e.op], sfx(e.ty))
+        if fo_plain(F, e, vals, dest, name): return
         if e.op in '+*' and rank(F, vals[1]) > rank(F, vals[0]) and not (
                 simple_addr(F, vals[0]) is not None and simple_addr(F, vals[0]) == dest_simple(F, dest)):   # _exp: t = t * w
             vals = [vals[1], vals[0]]                      # t_amla: gd3 + gd*gd2 -> XBC = the product, XDE = _gd3;
@@ -379,6 +381,70 @@ def op_into(F, e, vals, dest):
     if e.k == 'un':
         emit_operands(F, dest, vals); F.emit('cal', '._fneg_%s' % sfx(e.ty)); return
     emit_operands(F, dest, vals); F.emit('cal', '._fld_%s%s' % (sfx(e.ty), sfx(strip(e.e).ty)))
+
+FP_ORD = True                                             # see fo_plain
+
+def fo_kind(F, x):
+    """'G' a plain global double, 'A' a static member or constant element of a global (an address with an offset
+    computation: gs.d, gda[3], gda[0]), 'K' a constant; None for anything else (a temporary, a local, a pointer)"""
+    if isinstance(x, tuple): return None
+    e = fp_value_cast(x)
+    if getattr(e, '_xiz', False): return None
+    if e.k == 'fconst': return 'K'
+    if e.k != 'load' or getattr(e, 'ty', None) is None or e.ty.size != 8: return None
+    return fo_lv_kind(e.e)
+
+def fo_lv_kind(v):
+    v = strip(v)
+    if v.k == 'var': return 'G' if v.decl.kind == 'global' and not getattr(v.decl, 'reg', None) else None
+    if v.k == 'member' and not v.arrow:
+        b = strip(v.base)
+        return 'A' if b.k == 'var' and b.decl.kind == 'global' else None
+    if v.k == 'index' and C().fold(v.idx).k == 'const':
+        b = strip(v.base)
+        while b.k in ('decay', 'cast', 'noop') and getattr(b, 'e', None) is not None: b = strip(b.e)
+        return 'A' if b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array' else None
+    return None
+
+def fo_plain(F, e, vals, dest, name):
+    """a double + - * / of two plain operands -- a global (G), a static member or constant element (A), a constant
+    (K) -- without -O, cdecl (corpus/probes/fpord.c, run 2026-11-12-13-micro-fpord):
+    - + and * swap their operands when the left is a constant or both are A (fo_a_GMM: gd = hs.d + ks.d ->
+      lda XDE,_hs + 0x2 / lda XBC,_ks + 0x2 / lda XWA,_gd); - and / never do;
+    - the A operands are addressed first, in source order, then the others, XBC before XDE (fo_a_GGM:
+      lda XDE,_ks + 0x2 / lda XBC,_hd; fo_s_GKE: lda XDE,_kda + 0x18 / lda XBC,S);
+    - a plain destination is addressed last, an A destination first (fo_a_EGM: lda XWA,_gda + 0x10 / lda XDE,_ks + 0x2 /
+      lda XBC,_hd);
+    - an A destination beside two A operands, or beside an A right operand of - or /, gets the result through a
+      temporary (fo_s_EGM: .. / lda XWA,XSP+0x8 / cal ._fsub_d / lda XWA,_gda + 0x10 / lda XBC,XSP+0x8 / cal ._fld_dd).
+    True when it wrote the call."""
+    if not FP_ORD or F.opt or F.adecl or len(vals) != 2: return False
+    ka, kb = fo_kind(F, vals[0]), fo_kind(F, vals[1])
+    if ka is None or kb is None or (ka == 'K' and kb == 'K'): return False
+    if dest[0] == 'lv':
+        dv = strip(dest[1])                                # (a local double is a plain destination: fo_a_TGM)
+        dk = 'G' if dv.k == 'var' and dv.decl.kind == 'local' and not getattr(dv.decl, 'reg', None) else fo_lv_kind(dest[1])
+    elif dest[0] in ('slot', 'cell'): dk = 'G'
+    else: dk = None
+    if dk is None: return False
+    sd = dest_simple(F, dest)
+    if sd is not None and sd in (simple_addr(F, vals[0]), simple_addr(F, vals[1])): return False   # (gd = gd + x: the older paths)
+    comm = e.op in '+*'
+    order = ['XBC', 'XDE']                                 # the registers of the left and the right operand
+    if comm and (ka == 'K' or (ka == 'A' and kb == 'A')): vals = [vals[1], vals[0]]; ka, kb = kb, ka; order = ['XDE', 'XBC']
+    kind = {'XBC': ka, 'XDE': kb}; val = {'XBC': vals[0], 'XDE': vals[1]}
+    seq = [r for r in order if kind[r] == 'A'] + [r for r in ('XBC', 'XDE') if kind[r] != 'A']
+    via = dk == 'A' and ((ka == 'A' and kb == 'A') or (not comm and kb == 'A'))
+    if dk == 'A' and not via:
+        if not lvalue_addr(F, dest[1], 'XWA'): raise C().Unsupported('fp destination')
+    for r in seq: put_addr(F, val[r], r)
+    if via:
+        t = temp(F, 8)
+        F.emit('lda', 'XWA,%s' % slot_addr(F, t)); F.emit('cal', name)
+        if not lvalue_addr(F, dest[1], 'XWA'): raise C().Unsupported('fp destination')
+        F.emit('lda', 'XBC,%s' % slot_addr(F, t)); F.emit('cal', '._fld_dd'); return True
+    if dk != 'A': dest_last(F, dest)
+    F.emit('cal', name); return True
 
 LOCAL_MEMBER_FIRST = True                                 # see addr_kind
 SAME_OPERAND_COPY = True                                  # see emit_operands

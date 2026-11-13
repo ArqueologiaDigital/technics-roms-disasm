@@ -12252,11 +12252,11 @@ PERSONALITIES = {
 def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong=0, fp_remap=None):
     F_OPT_HINT[0] = opt != 'none'
     if fp_temps is None and fpgen.uses_fp(f):
-        import copy, sys                                    # pass 1 measures the floating-point temporaries
+        import pickle, sys                                  # pass 1 measures the floating-point temporaries
         sys.setrecursionlimit(max(sys.getrecursionlimit(), 200000))
         save = fpgen.FCONST[0]
         try:
-            F1 = compile_function(copy.deepcopy(f), opt, adecl, personality, fp_temps=0)
+            F1 = compile_function(pickle.loads(pickle.dumps(f, -1)), opt, adecl, personality, fp_temps=0)
             need = F1.ftemp_used_total; nlong = F1._fa.nlong if '_fa' in F1.__dict__ else 0
             remap = None
             if fpgen.WINDOW_RULE and '_fa' in F1.__dict__:
@@ -12267,15 +12267,16 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong
         return compile_function(f, opt, adecl, personality, fp_temps=need, fp_nlong=nlong, fp_remap=remap).lines
     if not REGTEMP or (opt != 'none' and not REGTEMP_OPT):
         return compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_remap)
-    import copy
-    picks = {}; base = copy.deepcopy(f); save = fpgen.FCONST[0]
+    import pickle, sys                                      # (a pickle: the copy is built only for a retry)
+    sys.setrecursionlimit(max(sys.getrecursionlimit(), 200000))
+    picks = {}; base = pickle.dumps(f, -1); save = fpgen.FCONST[0]
     while True:
         REGTEMP_PICK[0] = picks
         try: return compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_remap)
         except LiveClobber as ex:                          # the register temporary's home was written: next candidate
             if os.environ.get('CC900_RT_DEBUG'): print('  regtemp retry %s: %s' % (f.name, ex))
             picks[ex.decl.name] = picks.get(ex.decl.name, 0) + 1
-            f = copy.deepcopy(base); fpgen.FCONST[0] = save
+            f = pickle.loads(base); fpgen.FCONST[0] = save
         finally: REGTEMP_PICK[0] = {}
 
 def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_remap):
@@ -12588,15 +12589,16 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
         fa = adecl or getattr(f, 'adecl_attr', False)        # an __adecl function in a cdecl file (__SBRK.C: .sbrk)
         name = ('.' if fa else '_') + f.name
         try:
-            import copy as _copy
-            spare = _copy.deepcopy(f) if opt != 'none' and not fa else None
+            import pickle as _pickle, sys as _sys
+            _sys.setrecursionlimit(max(_sys.getrecursionlimit(), 200000))
+            spare = _pickle.dumps(f, -1) if opt != 'none' and not fa else None
             try:
                 full = compile_function(f, opt, fa, personality)
             except Unsupported:                            # cdecl -O: what the old leaf path cannot write, L2 may
                 if spare is None: raise                    # (_strcspn); never instead of a function it can write
                 global L2_WIDE
                 L2_WIDE = True
-                try: full = compile_function(spare, opt, fa, personality)
+                try: full = compile_function(_pickle.loads(spare), opt, fa, personality)
                 finally: L2_WIDE = False
             FULL[name] = full                              # the whole function, for pairs_model.py
             import re as _re                               # an inline-assembly label named _x / .x starts a new piece in

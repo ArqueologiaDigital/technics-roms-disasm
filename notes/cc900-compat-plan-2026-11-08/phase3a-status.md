@@ -992,6 +992,20 @@ unless an operand is a register or a long local is homed in XIZ.  The random cor
 before).  The whole-ledger check on the scratch copy caught this batch's first form before it reached the tree: it
 took six micro functions (`mul_l_loc` and its five siblings) out of exactness at none.
 
+**Batch 47 (2026-11-13): the order of a double operation's addresses.**  `corpus/probes/fpord.c` (run
+2026-11-12-13-micro-fpord, 288 functions; `-Xr` rejects its double-returning functions, so only two sets have
+listings) asks in which order cc900 addresses the operands and the destination of a double `+`, `-`, `*` of two plain
+operands.  Without options (`FP_ORD`, `fo_plain` in `fpgen.py`): `+` and `*` swap their operands when the left is a
+constant or both are a static member / constant element; members and elements are addressed first, in source order,
+then the others, XBC before XDE; a plain destination (a global, a local) comes last, a member / element destination
+first, and beside two such operands or such a right operand of `-` or `/` the result goes through a temporary and
+`._fld_dd`.  Element 0 of a global array is written without `+ 0x0`.  fpord.c 64 -> 288 of 288 without options and
+64 -> 96 at -O3 -XS (the rule is not applied there: -O's order differs and is not modelled).  Random programs at none
+83 -> 88 of 800 (the other three sets stay at 22 / 47 / 21).  The same batch makes the second-attempt copies of a
+function pickles instead of `copy.deepcopy` trees (identical ledger).  Tooling since batch 46: the rounds share one
+compile through `model/cache.py` (`CC900_CACHE`; README "One compile per round"), and the dashboard counts the rounds
+and their mean time.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
