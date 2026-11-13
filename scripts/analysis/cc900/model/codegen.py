@@ -95,6 +95,11 @@ class Fn:
                     op, args = 'set', '%s,%s' % (hx(b_ % 16), t_[1:] if b_ < 16 else 'Q' + t_[1:])
                 elif op == 'or' and re.match(r'^(WA|BC|DE|HL|IX|IY|IZ|[WABCDEHL])$', t_) and b_ < (16 if len(t_) == 2 else 8):
                     op, args = 'set', '%s,%s' % (hx(b_), t_)
+        if RETD_NO_RETCC and getattr(s, 'retd', 0) and (op == 'ret' and not args or
+                                                        op == 'j' and args and re.match(r'^[._][A-Za-z_]\w*$', args)):
+            if not getattr(s, 'exit_label', None): s.exit_label = s.newlabel()   # nor a plain ret or a tail jump: the
+            if op == 'j': s.lines.append('\tcal\t' + args)                      # exit goes through the retd (rstmt
+            op, args = 'j', s.exit_label                                        # .rs_3_05_01_1, .rs_4_03_19_1 under -Xr)
         if RETD_NO_RETCC and op == 'ret' and args and getattr(s, 'retd', 0):   # a function that ends with retd has no
             if not getattr(s, 'exit_label', None): s.exit_label = s.newlabel()   # ret cc: the early exit jumps to the
             op, args = 'j', '%s,%s' % (args, s.exit_label)                    # exit label (ret_target; rstmt .rs_1_06_09_3
@@ -1086,7 +1091,10 @@ def gen(F, e, fam, size, then_ret=False, store=False):
         im = mem_operand(F, ii)
         if b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array' and im is not None and ii.ty.size == 2:
             R2 = FAM[fam][2]; X = FAM[fam][4]                 # m_addr: &ga[i] -> ld HL,(i) / add HL,HL / lda XWA,_ga /
-            if not ii.ty.signed and not F.adecl:             # extz XHL / add XHL,XWA (-Xr: ld HL,WA)
+            if not ii.ty.signed and (not F.adecl or UIDX_ADDR_XR and (im == 'WA' or 'WA' not in live_regs(F)) and
+                                     x.ty.size in (2, 4)):   # extz XHL / add XHL,XWA (-Xr: ld HL,WA); an unsigned register
+                                                             # index is extended whole there too (.rs_4_01_02_3: return
+                                                             # &gia[b] -> ld WA,BC / extz XWA / add XWA,XWA / lda XHL,_gia / add XHL,XWA)
                 if im != 'WA': F.emit('ld', 'WA,%s' % im)    # r4_01_02: &gia[b], unsigned b -> ld WA,(b) / extz XWA /
                 F.emit('extz', 'XWA'); scale32(F, 'XWA', x.ty.size)   # add XWA,XWA / lda XHL,_gia / add XHL,XWA
                 F.emit('lda', '%s,_%s' % (X, b.decl.name)); F.emit('add', '%s,XWA' % X); return fam
@@ -6109,6 +6117,7 @@ STMT_LOCAL_GUARD = True                                   # see Fn.emit: a local
                                                           # rs_1_07_04_2: unsigned char u in A under ld WA,(_gu2))
 WIDEN_NO_WORD_LOAD = True                                 # see gen
 TEST_CLOBBER_LOCALS = True                                # see test_clobber_check
+UIDX_ADDR_XR = True                                       # see gen's addr
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -7546,7 +7555,7 @@ def lvalue(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False, kind='store'):
                     F.emit('ld', 'XDE,0x0'); F.emit('ld', 'E,A'); F.emit('add', 'XDE,XBC'); return '(XDE)'
                 raise Unsupported('a char index in memory')
             ut_ = unpromote(i).ty
-            if UIDX_SUM and not combine and esz in (2, 4) and ut_ is not None and ut_.size == 2 and not ut_.signed and \
+            if UIDX_SUM and (not combine or ptr == 'XBC') and esz in (2, 4) and ut_ is not None and ut_.size == 2 and not ut_.signed and \
                     im in ('IZ', 'WA', 'BC', 'DE', 'HL') and (im == 'WA' or 'WA' not in live_regs(F)) and \
                     (im == 'BC' or 'BC' not in live_regs(F)) and (im == 'IZ' or dies_here(F, i)):
                 # an unsigned index in a register is zero-extended whole into a sum (rstmt rs_2_04_15_2: gia[t] <<= 15

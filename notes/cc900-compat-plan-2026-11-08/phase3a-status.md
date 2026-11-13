@@ -1481,6 +1481,14 @@ judged for locals (rs_1_03_04_1 stays exact), but its register parameters still 
 the guard had been refusing came back wrong: 2 new verdicts on a first gate run).  **Open: 81 statement findings**
 (semcheck 142 = 61 older reviewed ones + 81 on rstmt).
 
+**Batch 95 (2026-11-13): every exit of a `retd` function goes through the `retd`; semcheck 142 -> 140.**  Batch 84
+turned a `ret cc` in a function that ends with `retd` into a jump to the exit.  A plain `ret` (a `switch` arm that
+returned on its own) and a tail jump to another function (`j .v0`) skipped the stack clean-up in the same way; they
+are now a jump to the exit label, the tail jump as `cal` then the jump (`.rs_3_05_01_1`, `.rs_4_03_19_1` under -Xr
+with a double parameter).  Also prepared, without effect on a verdict yet: `&arr[i]` with an unsigned register
+index is extended whole under -Xr too, and the zero-extended sum of batch 90 serves a read-modify-write through
+XBC.  **Open: 79 statement findings** (semcheck 140 = 61 older reviewed ones + 79 on rstmt).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
