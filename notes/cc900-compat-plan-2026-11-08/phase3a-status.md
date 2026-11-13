@@ -1282,6 +1282,15 @@ cdecl does: a constant or static dividend after a plain global divisor (`65536L 
 74 -> 79 of 800; lhx.c 184 -> 214, stdiv.c 162 -> 178, stdiv2.c 426 -> 442, evorder_lh.c 241 -> 249, evorder_ad.c
 933 -> 938 at -Xr: eight ledger rows up by 80 functions.
 
+**Batch 79 (2026-11-13): two -O rules from the optimised sets' near misses.**  Under -O an int local or parameter
+that nothing reads produces no code: its initialiser and the statements that only write it (`++t`, `b--`, `t op= x`,
+`t = x` with x free of side effects) disappear when they stand outside any loop (`unsigned t = 3; ++t;` -> nothing;
+`b--;` on a parameter -> nothing).  Inside a loop they stay: micro ra_leaf2 accumulates `v1 += ga[i]` into IY though
+nothing reads v1, and the first version of the rule, which took those too, lost that function on the scratch ledger.
+And a static address that initialises a pointer kept in XIZ is loaded straight into it (`char *t = &gca[5]` ->
+`lda XIZ,_gca + 0x5`, not through XHL).  Random programs at -O3 -XS 29 -> 39 and at -O3 -XS -Xr 25 -> 32 of 800
+(158 / 79 at none / -Xr, unchanged); fpp10.c at -O3 -XS 68 -> 70.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

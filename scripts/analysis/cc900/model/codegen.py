@@ -5851,6 +5851,7 @@ COND_K_PRELOAD = True                                     # see gen: c ? x : K
 LH_XR_ORDER = True                                        # see gen_long_helper: -Xr orders plain operands as cdecl does
                                                           # (random .r1_01_09: 65536L / gl -> ld XBC,(_gl) / ld XWA,0x10000;
                                                           # .r1_05_03: gl2 % gl beside a counter in IZ -> ld XWA,(_gl2) / ld XBC,(_gl))
+XIZ_LDA_DIRECT = True                                     # see gen_stmt's XIZ homes
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -7979,7 +7980,10 @@ def gen_stmt(F, s, last):
                     nxc = strip(F.next_stmt.e) if F.next_stmt is not None and F.next_stmt.k == 'expr' else None
                     if strip(c.init).k == 'call' and (nxc is None or nxc.k != 'call' or not nxc.args):
                         flush_pops(F)                      # h_p_only: cal _fp / inc 0x2,XSP / ld XIZ,XHL / cal _g0
-                    F.emit('ld', 'XIZ,%s' % FAM[fam][4])
+                    if XIZ_LDA_DIRECT and F.opt and fam == 'HL' and re.match(r'^\tlda\tXHL,_', F.lines[-1]):
+                        F.lines[-1] = F.lines[-1].replace('\tlda\tXHL,', '\tlda\tXIZ,')   # -O: the address straight into
+                    else:                                  # the home (random r4_00_00: char *t = &gca[5] -> lda XIZ,_gca + 0x5)
+                        F.emit('ld', 'XIZ,%s' % FAM[fam][4])
                 i += 1; continue
             if c.k == 'decl' and c.init is not None and fpgen.is_fp(c.var.ty):
                 fpgen.eval_into(F, c.init, ('lv', N_var(c.var))); i += 1; continue
@@ -13533,11 +13537,54 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong
             f = pickle.loads(base); fpgen.FCONST[0] = save
         finally: REGTEMP_PICK[0] = {}
 
+DROP_WRITE_ONLY = True                                    # see drop_write_only
+
+def drop_write_only(f):
+    """-O: an int local or parameter whose only uses are its initialiser and statements outside any loop that only
+    write it (++t, t--, t op= x, t = x, x without side effects) is not computed at all (random r1_00_10 -O3 -XS:
+    unsigned t = 3; ++t; -> no code; r3_01_09: unsigned char t = guca[7]; ++t;  r4_07_18: b--; on a parameter).  A
+    variable accumulated in a loop and never read is kept (micro ra_leaf2: v1 += ga[i] -> add IY,(XWA)), so
+    statements inside loops are not taken; any other reference keeps the variable."""
+    def pure(x):
+        return x is None or not (nodes_in(x, 'call') or nodes_in(x, 'incdec') or nodes_in(x, 'opassign') or
+                                 any(n.op == '=' for n in nodes_in(x, 'bin')) or fpgen.is_fp_op(x))
+    blocks = []; looped = set()
+    def vb(n, d):
+        if n.k == 'block': blocks.append(n)
+        if n.k in ('for', 'while', 'do'): walk(n, lambda m, dd: looped.add(id(m)) if m.k == 'block' else None)
+    walk(f.body, vb)
+    if f.body.k == 'block' and f.body not in blocks: blocks.append(f.body)
+    blocks = [b for b in blocks if id(b) not in looped]
+    for d in list(f.params) + [x for x in f.decls if x.kind == 'local']:
+        if d.ty is None or d.ty.kind != 'int' or getattr(d, 'addr_taken', False): continue
+        total = []
+        walk(f.body, lambda n, dep: total.append(n) if n.k == 'var' and n.decl is d else None)
+        hits = []; inside = 0; decl_c = None; ok = True
+        for b in blocks:
+            for c in b.body:
+                if c.k == 'decl' and c.var is d:
+                    decl_c = c
+                    if not pure(c.init): ok = False
+                    continue
+                if c.k != 'expr': continue
+                e = strip(c.e)
+                tgt = strip(e.e) if e.k == 'incdec' else (strip(e.l) if e.k == 'opassign' or (e.k == 'bin' and e.op == '=') else None)
+                if tgt is None or tgt.k != 'var' or tgt.decl is not d: continue
+                if e.k != 'incdec' and not pure(e.r): continue
+                n_ = []
+                walk(c.e, lambda n, dep: n_.append(n) if n.k == 'var' and n.decl is d else None)
+                hits.append((b, c)); inside += len(n_)
+        if not ok or not hits or inside != len(total): continue
+        if d.kind == 'local' and decl_c is None: continue
+        for b, c in hits: b.body.remove(c)
+        if decl_c is not None: decl_c.init = None
+
 def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_remap):
     if personality not in PERSONALITIES: raise ValueError('unknown personality %s' % personality)
     personality = PERSONALITIES[personality]
     merge_address_inits(f)
     drop_dead_call_stores(f, opt != 'none', adecl)
+    if opt != 'none' and DROP_WRITE_ONLY: drop_write_only(f)
     lh_counter_slots(f, opt != 'none', adecl)
     fold_fp_consts(f)
     if opt != 'none' and not adecl: propagate_global_copies(f); forward_single_use(f)
