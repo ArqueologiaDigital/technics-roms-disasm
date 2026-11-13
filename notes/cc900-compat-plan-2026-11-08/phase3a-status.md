@@ -2155,6 +2155,17 @@ member store of an arithmetic value of plain operands puts the pointer in XWA an
 up 6 (stvxc.c at -Xr 111 -> 115, stvx.c 47 -> 49, rstmt 3,195 -> 3,198 and 2,980 -> 2,982, random1 and random4 at -Xr),
 down 0; pairs MATCH 223; semcheck 54. Random 182 / 58 / 101 / 49.
 
+**Batch 166 (2026-11-13): sixteen rules evidenced without options also apply under -Xr.** research-scratch
+gate/xrtry.sh relaxes each of the 69 rules restricted to the no-option set (`not F.opt and not F.adecl` -> `not F.opt`)
+alone and scores rstmt at -Xr (baseline 3,198; results in gate/xrtry-results-2026-11-13.txt). Sixteen gained two or
+more statements; together they give 3,265: REG_MEMBER, LEFT_BIN_RIGHT_PTR, UCHAR_IDX_INTPTR, ULONG_POW2, LH_NESTED_K,
+OPASSIGN_CALL_ELEM, XIZ_MEMBER_INIT, LOCAL_BIN_SWAP, RET_TWO_LEVEL, NESTED_IF_RET2, VALUE_FIRST_PK, MEMBER_STORE_SWAP,
+ADD_IN_PLACE, HELPER_IS_CALL, DEAD_INIT_CTR, CHAR_IDX_BC. One relaxation lost and stays as it was. NESTED_IF_RET2 and
+RET_TWO_LEVEL now skip a function that returns with `retd` (adecl with stack parameters). A first run turned
+.rs_3_05_05_2's jump to the exit into `ret eq`, which skipped its `retd 0x8` (wrong code, caught by semcheck). Ledger up
+9 with 131 more exact functions (lhx.c at -Xr 236 -> 258, stvxc.c 115 -> 129, lsl.c 34 -> 46, stdiv2.c 476 -> 483,
+rstmt 3,198 -> 3,265, ...), down 0; pairs MATCH 223; semcheck 54. Random 182 / 58 / 102 / 49.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
