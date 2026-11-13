@@ -6373,6 +6373,7 @@ CHAR_IDX_BC = True                                        # see regtemp_candidat
 WRITE_ONLY_EVAL = True                                    # see eval_write_only
 RET_PTR_LEFT = True                                       # see gen_bin
 UCHAR_IDX_INTPTR = True                                   # see gen_ptr_arith
+AND_BIT_CLR = True                                       # see the OR_BIT_SET peephole
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -14471,6 +14472,13 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
     F.lines = [l for l in F.lines if not re.match(r'^\tld\t(\w+),\1$', l)]
     F.lines = [l for i, l in enumerate(F.lines) if not (l == '\tret' and i and F.lines[i - 1] == '\tret')]
     # (a ret right after a ret is unreachable: arr_index.c ai_dig_val's trivial return after an if)
+    if AND_BIT_CLR and not F.opt and not F.adecl:        # an and that clears one bit of WA is res (rstmt rs_1_04_05_0:
+        for i, l in enumerate(F.lines):                  # gua[c] & 32767 -> .. ld WA,(XBC+A) / res 0xf,WA; the oracle has
+            m = re.match(r'^\tand\tWA,0x([0-9a-f]{1,4})$', l)   # no and WA,K for a one-bit mask in its listings)
+            if not m: continue
+            v = int(m.group(1), 16); cl = ~v & 0xffff
+            if cl and cl & (cl - 1) == 0 and not re.match(r'^\t(j|scc|ret)\b', F.lines[i + 1] if i + 1 < len(F.lines) else ''):
+                F.lines[i] = '\tres\t%s,WA' % hx(cl.bit_length() - 1)
     if OR_BIT_SET:                                       # a one-bit or is set: chnarrow.c cn_or_k c | 0x20 -> set
         for i, l in enumerate(F.lines):                  # 0x5,L (no or R,<bit> in any oracle listing so far); kept
             m = re.match(r'^\tor\t(A|W|B|C|D|E|H|L|WA|BC|DE|HL|IX|IY|IZ),0x([0-9a-f]+)$', l)   # when the flags

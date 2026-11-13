@@ -1739,6 +1739,12 @@ Tried and dropped in this batch's work: a general "an array's own address goes t
 into element 0 and for a double argument, false for plain globals and long-helper operands: -8 statements, -4
 random functions).
 
+**Batch 119 (2026-11-13): an `and` that clears one bit is `res`; rstmt +1.**  The oracle's listings contain `res 0xf,WA`
+three times, each for a mask of 0x7fff (rs_1_04_05_0: `gua[c] & 32767` -> `ld WA,(XBC+A)` / `res 0xf,WA`); the model
+emitted `and WA,0x7fff`.  A peephole turns an `and WA,K` whose mask clears exactly one bit into `res n,WA`, cdecl,
+no -O.  The evidence is three listings, all the same form; the rule is no wider.  rstmt at none 3,516 -> 3,517; the
+other sets and the random corpora unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
