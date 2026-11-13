@@ -239,7 +239,7 @@ class Fn:
                                                          # replaced in place is a use: cond_bits.c cb_i_p_ff, ld W,0x0)
                 if reads_:
                     e_['reads'] += 1
-                    if op == 'ld' and re.match(r'^(X?(BC|DE|HL|IX|IY|IZ)|QIZ|[CEL]|QIZ[HL])$', parts_[0]) and \
+                    if op == 'ld' and not (COPY_EXEMPT_NOT_CHAR and d.ty.size == 1) and re.match(r'^(X?(BC|DE|HL|IX|IY|IZ)|QIZ|[CEL]|QIZ[HL])$', parts_[0]) and \
                             re.match(r'^X?%s$|^%s$' % (r_, {'WA': 'A', 'BC': 'C', 'DE': 'E', 'HL': 'L'}[r_]), parts_[1] if len(parts_) > 1 else ''):
                         e_['done'] = True; continue     # (copied to another register: the copy serves the later uses)
                 if 'X' + r_ in wr_:
@@ -6396,6 +6396,7 @@ CMP_MEM_LEFT = True                                       # see gen_compare
 PTRARR_LVALUE = True                                     # see _lvalue_raw
 PARAM_CACHE = True                                       # see param_cache_wanted
 CHAR_IDX_OPT_REFUSE = True                               # see _lvalue_raw
+COPY_EXEMPT_NOT_CHAR = True                              # see Fn.emit's statement guard
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)

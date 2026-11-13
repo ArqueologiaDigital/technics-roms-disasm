@@ -1810,6 +1810,15 @@ r2_05_07), so only the -O path now refuses, until the oracle's form is modelled.
 that was exact was refused.  Scores unchanged.  **Still open from batch 125's finding:** `.pc_c_d` and `.pc_c_h` at -Xr
 and -O3 -XS -Xr (char arithmetic on a parameter).
 
+**Batch 127 (2026-11-13): the statement guard's copy exemption does not cover a char parameter; the last open pc.c
+verdicts closed.**  At -Xr a char parameter arrives in A.  For `gc = gca[c] + c` the model emitted `ld C,A` / `lda XWA,_gca` /
+`ld A,(XWA+C)` / `add A,A`: the element load overwrote A, and the later read of the parameter still named A, so the sum
+was element + element.  `c * c + c` ended the same way (`muls BC,A` / `ld A,C` / `add A,A`).  The guard of batch 87 lets a
+write pass once the parameter has been "copied to another register: the copy serves the later uses", but the model's
+later reads name the parameter's own register, so for a char the exemption is wrong.  The oracle keeps the parameter in A
+and loads the element into C (`ld C,(XBC+A)` / `add C,A`).  The two statements are now refused at -Xr and -O3 -XS -Xr
+(exact before: none).  No ledger row moved.  **Open wrong-code verdicts from the batch 125 probes: none.**
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
