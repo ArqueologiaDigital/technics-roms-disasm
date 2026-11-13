@@ -5860,7 +5860,8 @@ def gen_compare(F, e):
     rv = r
     while rv.k == 'cast' and rv.kind == 'IntegralCast': rv = strip(rv.e)
     rvm = mem_operand(F, rv)
-    if CMP_MEM_LEFT and not F.opt and not F.adecl and lm is not None and rvm is None and size in (2, 4) and r.k == 'cast' and \
+    if CMP_MEM_LEFT and not F.opt and not F.adecl and lm is not None and size in (2, 4) and r.k == 'cast' and \
+            mem_operand(F, r) is None and (rvm is None or rv is not r) and \
             not lm.startswith('(X') and not family_of(lm) and strip(l).k == 'load' and \
             not nodes_in(r, 'call') and not has_helper_call(r) and not fpgen.is_fp_op(r) and 'WA' not in live_regs(F):
         n0_ = len(F.lines); f_ = gen(F, r, 'WA', size)     # a memory left and a cast right: the right's value into WA first,

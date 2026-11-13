@@ -1770,6 +1770,13 @@ in cmpx.c's `_cc_n_i_GGr`).  The condition code stays the same, since `mem - WA`
 -O, WA free.  Random at none 165 -> 166 of 800 (random3 37 -> 38); rstmt at none 3,524 -> 3,525.  The cmpx probe's
 `r` rows stay refused (their path is cmp_wide, not this one); cmpx stays at 553 exact.
 
+**Batch 124 (2026-11-13): a memory left compared with a cast of a memory right; cmpx +12.**  `if (r < (unsigned int)hl)`
+(a parameter on the left, a long global cast on the right): the oracle loads the right's memory operand into WA and
+compares the left in memory, `ld XWA,(_hl)` / `cp (XSP+0x4),WA`.  Batch 123's branch took only a computed cast; it now
+also takes a cast of a plain memory operand.  cmpx.c at none 553 -> 565 exact (`_cc_n_i_GGr` now matches); the other
+probes (chararith, chararith2, kfold, evorder_ad, lhx, lhy) unchanged.  `_cc_l_u_RGr` is still refused (its path
+differs; not chased).  Random and rstmt unchanged (166 and 3,525 at none).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
