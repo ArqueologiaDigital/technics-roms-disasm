@@ -1802,6 +1802,14 @@ with the `A` kind of `cw_addr` (cmpx.c's `gps->a[t]`), instead of being refused 
 address", 4 "lvalue index"; stv3.c 20 / 16 "lvalue index" / 12.  Next layer for that family: the long-helper operand
 combinations with an element at a pointer-member index.
 
+**Batch 126 (2026-11-13): a signed char index in memory is refused under -O; one open wrong-code verdict closed.**
+`gca[c] = c` with a char parameter `c`, at -O3 -XS (pc.c `_pc_c_g`): the model zero-extended the index (`ld XDE,0x0` /
+`ld E,A` / `add XDE,XBC`), which is wrong for a negative `c`; the oracle indexes with the signed register,
+`lda XWA,_gca` / `ld C,(XSP+0x4)` / `ld (XWA+C),C`.  The zero-extending form is the right one without options (random
+r2_05_07), so only the -O path now refuses, until the oracle's form is modelled.  No ledger row moved and no function
+that was exact was refused.  Scores unchanged.  **Still open from batch 125's finding:** `.pc_c_d` and `.pc_c_h` at -Xr
+and -O3 -XS -Xr (char arithmetic on a parameter).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

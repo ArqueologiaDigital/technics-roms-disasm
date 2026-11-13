@@ -6395,6 +6395,7 @@ XIZ_MEMBER_INIT = True                                     # see gen_stmt's decl
 CMP_MEM_LEFT = True                                       # see gen_compare
 PTRARR_LVALUE = True                                     # see _lvalue_raw
 PARAM_CACHE = True                                       # see param_cache_wanted
+CHAR_IDX_OPT_REFUSE = True                               # see _lvalue_raw
 POP_LAZY2 = True                                          # see later_call_absorbs, store_plan, gen_opassign
 POP_FLUSH_NOCALL = True                                   # see gen_stmt's expression statements (r1_02_19)
 CALL_RIGHT_GENERAL = True                                 # see gen_bin (r1_04_01)
@@ -7866,6 +7867,10 @@ def _lvalue_raw(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False, kind='sto
                     F.emit('lda', 'XBC,_%s' % b.decl.name)    # a char local in QIZ indexes as a register, signed
                     return '(XBC+%s)' % mem_operand(F, ui_)   # (stdiv3.c sd3_c_d_q_XXG: lda XBC,_gca / .. /
                                                               # ld (XBC+QIZH),A; the zero-extending sum was wrong code)
+                if CHAR_IDX_OPT_REFUSE and F.opt and esz == 1 and ui_.ty.signed and not combine:
+                    raise Unsupported('a signed char index in memory under -O')   # (pc.c pc_c_g: the oracle indexes with the
+                                                           # signed register, lda XWA,_gca / ld C,(XSP+0x4) / ld (XWA+C),C; the
+                                                           # zero-extending sum is wrong for a negative index)
                 if esz == 1 and ui_.ty.signed and not combine and mem_operand(F, ui_) is not None:
                     F.emit('lda', 'XBC,_%s' % b.decl.name); F.emit('ld', 'A,%s' % mem_operand(F, ui_))
                     F.emit('ld', 'XDE,0x0'); F.emit('ld', 'E,A'); F.emit('add', 'XDE,XBC'); return '(XDE)'
