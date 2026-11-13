@@ -34,7 +34,7 @@ MODEL_DIR = os.path.abspath(_arg(ARGV, '--model-dir', HERE))
 sys.path.insert(0, HERE)
 if MODEL_DIR != HERE: sys.path.insert(0, MODEL_DIR)
 import interp
-import frontend, listing, codegen
+import frontend, listing, codegen, cache
 
 # ---------------------------------------------------------------- address space (24-bit)
 
@@ -585,23 +585,23 @@ def run_set(odir, files, opt, adecl, personality, defines, incs, trials, limit, 
     """-> list of (file, function, verdict, reason)"""
     import score
     res = []
-    cache = cache_load()
+    seen = cache_load()
     for f in files:
         op = score.oracle_path(odir, f)
         if not os.path.exists(op): continue
         want = listing.split(open(op, encoding='latin-1').read())
         src_b = open(f, 'rb').read() + repr((sorted(defines), sorted(incs), opt, personality)).encode(); ora_b = open(op, 'rb').read()
-        try: unit = frontend.load(f, defines, incs, adecl=adecl)
+        try: unit = cache.load(f, defines, incs, adecl)
         except Exception as ex:
             res.append((os.path.basename(f), '*', 'not checked', 'front end failed')); continue
-        got = codegen.compile_unit(unit, opt=opt, adecl=adecl, personality=personality)
+        unit, got = cache.compile(f, defines, incs, opt, adecl, personality)   # (CC900_CACHE: compiled once per round)
         blocks = data_blocks_of(want, unit)
         for fn in unit.functions:
             fa = adecl or getattr(fn, 'adecl_attr', False)
             name = ('.' if fa else '_') + fn.name
             if only and fn.name not in only: continue
             key = cache_key(src_b, ora_b, name, got.get(name), fa, trials, limit, seed0)
-            if key in cache: v, why = cache[key]
+            if key in seen: v, why = seen[key]
             else:
                 try:
                     v, why = check_function(fn, name, got.get(name), want.get(name), unit, blocks, fa, trials, limit, seed0)

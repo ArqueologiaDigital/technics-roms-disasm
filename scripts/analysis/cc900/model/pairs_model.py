@@ -16,7 +16,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 R = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(HERE))))
 sys.path.insert(0, os.path.join(R, 'notes/toshiba-runtime-xref-2026-11-08'))
-import frontend, codegen, to_llvm
+import frontend, codegen, to_llvm, cache
 import xref_runtime as X
 
 BIN = os.path.expanduser('~/compartilhado/llvm-project/build/bin')
@@ -75,8 +75,7 @@ def main():
             if not os.path.exists(path): tally['no source'] += 1; continue
             if path not in units:
                 try:
-                    u = frontend.load(path, defines, [os.path.join(lib, 'inc')])
-                    units[path] = codegen.compile_unit(u, opt='O3XS', adecl=False, personality=pers)
+                    u, units[path] = cache.compile(path, defines, [os.path.join(lib, 'inc')], 'O3XS', False, pers)
                 except Exception as ex: units[path] = {'__error__': str(ex)}
             out = units[path]
             lines = codegen.FULL.get(pub) or out.get(pub)    # whole function (inline-assembly labels included), or data

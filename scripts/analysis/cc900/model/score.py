@@ -13,7 +13,7 @@ differing line.
 import os, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-import frontend, listing, codegen
+import frontend, listing, codegen, cache
 
 def oracle_path(odir, src):
     p = os.path.abspath(src).replace('\\', '/')
@@ -40,9 +40,9 @@ def main():
         op = oracle_path(odir, f)
         if not os.path.exists(op): print('%-28s no oracle listing' % os.path.basename(f)); continue
         want = listing.split(open(op, encoding='latin-1').read())
-        try: unit = frontend.load(f, defines, incs, adecl=adecl)
+        try: unit = cache.load(f, defines, incs, adecl)
         except Exception as ex: print('%-28s front end failed: %s' % (os.path.basename(f), str(ex).splitlines()[-1][:80])); continue
-        got = codegen.compile_unit(unit, opt=opt, adecl=adecl, personality=personality)
+        unit, got = cache.compile(f, defines, incs, opt, adecl, personality)   # (CC900_CACHE: compiled once per round)
         n = good = 0
         for name, wl in want.items():
             gl = got.get(name, [])

@@ -179,3 +179,7 @@ own code (`semcheck.py`, `interp.py`, `listing.py`).  A function whose key is in
 file is scratch: delete it to check everything from nothing.  Measured on 2026-11-12 over `--ledger --library` (235
 rows, 48,915 keys): 12 min 19 s with an empty file, 1 min 58 s with a full one, the same 73 DIFFERENT verdicts and the
 same results table both times.  Without the variable nothing is cached.
+
+The compiles themselves are shared with `score.py` and `pairs_model.py` through `model/cache.py` (`CC900_CACHE`, README
+"One compile per round"): with both caches warm the same run took 14 s on 2026-11-13, 1 min 14 s with the verdict cache
+alone.

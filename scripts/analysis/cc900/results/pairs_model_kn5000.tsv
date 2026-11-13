@@ -145,7 +145,7 @@ subcpu v142	03e1f1	_frexp	_FREXP.C	188	185 diff first +0	exact
 subcpu v142	03e64b	_exp	_EXP.C	230	MATCH	exact
 subcpu v142	03e731	_log	_LOG.C	338	16 diff first +52	exact
 subcpu v142	03e894	__fint	__FINT.C	-	model: ; unsupported: lvalue index	exact
-subcpu v142	03ea9c	_ldexp	_LDEXP.C	-	constant S50020 not in the image	exact
+subcpu v142	03ea9c	_ldexp	_LDEXP.C	-	constant S50001 not in the image	exact
 subcpu v141	00f3ba	_g_dbltbl	__FLOAT.C	72	MATCH	exact
 subcpu v141	00f402	_g_ldbltbl	__FLOAT.C	30	MATCH	exact
 subcpu v141	00f420	_g_mathtbl	__MATH.C	8	MATCH	call
@@ -161,7 +161,7 @@ subcpu v141	03e1d9	_frexp	_FREXP.C	188	185 diff first +0	exact
 subcpu v141	03e633	_exp	_EXP.C	230	MATCH	exact
 subcpu v141	03e719	_log	_LOG.C	338	16 diff first +52	exact
 subcpu v141	03e87c	__fint	__FINT.C	-	model: ; unsupported: lvalue index	exact
-subcpu v141	03ea84	_ldexp	_LDEXP.C	-	constant S50020 not in the image	exact
+subcpu v141	03ea84	_ldexp	_LDEXP.C	-	constant S50001 not in the image	exact
 subcpu v140	00f3ba	_g_dbltbl	__FLOAT.C	72	MATCH	exact
 subcpu v140	00f402	_g_ldbltbl	__FLOAT.C	30	MATCH	exact
 subcpu v140	00f420	_g_mathtbl	__MATH.C	8	MATCH	call
@@ -177,7 +177,7 @@ subcpu v140	03e1a5	_frexp	_FREXP.C	188	185 diff first +0	exact
 subcpu v140	03e5ff	_exp	_EXP.C	230	MATCH	exact
 subcpu v140	03e6e5	_log	_LOG.C	338	16 diff first +52	exact
 subcpu v140	03e848	__fint	__FINT.C	-	model: ; unsupported: lvalue index	exact
-subcpu v140	03ea50	_ldexp	_LDEXP.C	-	constant S50020 not in the image	exact
+subcpu v140	03ea50	_ldexp	_LDEXP.C	-	constant S50001 not in the image	exact
 table data	9ffb2c	_sbrk	__SBRK.C	-	model: no function	near
 table data	9ffb2f	.sbrk	__SBRK.C	39	MATCH	exact
 table data	9ffb56	_malloc	_MALLOC.C	-	model: ; unsupported: ld XHL,(XWA) over the liv	exact

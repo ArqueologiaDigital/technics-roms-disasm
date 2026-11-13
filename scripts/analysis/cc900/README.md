@@ -43,6 +43,32 @@ routines, repeated across image versions: `_ldiv` (4), `_ultoa` (9), `_ldexp` (3
 `_vsprintf` (2), `__doform`'s data (9) and TRAP's 4-byte `__FloatErrorHandle` (4).  Those are what the `kn5000`
 rules have to explain.
 
+## One compile per round: `model/cache.py` (`CC900_CACHE`)
+
+`score.py` (and so `ledger.sh`), `semcheck.py` and `pairs_model.py` each compile the same sources with the same options.
+With the environment variable `CC900_CACHE` naming a scratch directory, `model/cache.py` keeps two things there:
+
+- the front end's result for a C file (clang's AST built into a unit), keyed by the file, its defines and include
+  directories, the convention, the clang binary and `frontend.py`: it survives edits to the model;
+- the model's listings for a C file at one option set, keyed also by the code of every model module, so the working
+  tree and a scratch copy with the same code share entries and any edit to the model misses.
+
+Without the variable nothing is cached.  Delete the directory to start cold.  `cache.compile` also restarts the model's
+`S<n>` constant labels at 50000 for every file, so a listing no longer depends on the files compiled before it in the
+same process (`results/pairs_model_kn5000.tsv` names `_ldexp`'s constant `S50001` since then; it was `S50020`).
+
+Measured on 2026-11-13 at c34efcf4d, 8 ledger jobs, each output compared with the one made without the cache:
+
+| step                                                   | no cache   | cold       | warm |
+|--------------------------------------------------------|------------|------------|------|
+| `sh model/ledger.sh` (247 rows)                        | 2 min 48 s | 1 min 42 s | 31 s |
+| `semcheck.py --ledger --library`, verdict cache full   | 1 min 14 s | not timed  | 14 s |
+| `pairs_model.py` (assembling and comparing dominate)   | 40 s       | not timed  | 40 s |
+
+The ledger's rows are identical in the three runs; the semantic check gives the same 73 DIFFERENT verdicts and the same
+results table from an empty verdict cache through a warm compile cache; the pairs table differs only by that label.
+The directory held 65 MB after one round.
+
 ## Scores over time: `dashboard.py`
 
 `python3 scripts/analysis/cc900/dashboard.py --serve` writes a single page to
