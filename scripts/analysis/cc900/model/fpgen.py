@@ -387,7 +387,7 @@ def op_into(F, e, vals, dest):
                 dest_first(F, dest); put_addr(F, vals[1], 'XDE'); F.emit('ld', 'XBC,XDE'); F.emit('cal', name); return
         emit_operands(F, dest, vals); F.emit('cal', name); return
     if e.k == 'un':
-        if COPY_DEST_FIRST and FP_ORD and not F.opt and dest[0] == 'lv' and fo_lv_kind(dest[1]) == 'A' and \
+        if COPY_DEST_FIRST and FP_ORD and dest[0] == 'lv' and fo_lv_kind(dest[1]) == 'A' and \
                 len(vals) == 1 and fo_kind(F, vals[0]) in ('G', 'A') and e.ty.size == 8:
             C().flush_pops(F)                              # (random r4_06_09: gda[2] = -gda[2] -> lda XWA,_gda + 0x10 /
             if not lvalue_addr(F, dest[1], 'XWA'): raise C().Unsupported('fp destination')   # lda XBC,_gda + 0x10 / cal ._fneg_d)
@@ -624,7 +624,7 @@ def eval_into(F, e, dest):
         call_into(F, e, dest); return
     if e.k not in ('load', 'fconst'): raise C().Unsupported('fp ' + e.k + ' ' + str(getattr(e, 'op', getattr(e, 'kind', ''))))
     # a copy (load, constant)
-    if COPY_DEST_FIRST and FP_ORD and not F.opt and dest[0] == 'lv' and fo_lv_kind(dest[1]) == 'A' and \
+    if COPY_DEST_FIRST and FP_ORD and dest[0] == 'lv' and fo_lv_kind(dest[1]) == 'A' and \
             fo_kind(F, e) in ('G', 'A') and e.ty.size == 8:
         if not (C().POP_LAZY2 and not F.adecl and C().later_call_absorbs(F)): C().flush_pops(F)   # (r2_09_11: the pops wait)
                                                            # a member / element destination is addressed first in a copy
@@ -765,7 +765,7 @@ def compare(F, c, value):
     if r.k == 'fconst' and r.value == 0.0 or (strip(r).k == 'cast' and strip(strip(r).e).k == 'const' and strip(strip(r).e).value == 0):
         a = prepare(F, [l]); cg.flush_pops(F); put_addr(F, a[0], 'XWA')
         F.emit('ld', 'BC,%s' % cg.hx(REL[op])); F.emit('cal', '._fcmp_z%s' % sfx(l.ty)); return
-    if CMP_K_SWAP and not F.opt and not F.adecl and op in ('==', '!=') and l.k == 'fconst' and r.k != 'fconst':
+    if CMP_K_SWAP and not F.opt and op in ('==', '!=') and l.k == 'fconst' and r.k != 'fconst':
         l, r = r, l                                        # a constant on the left of == / != is the right operand
                                                            # (random r1_03_18: 100.0 == gd -> lda XWA,_gd / lda XBC,S1)
     a = prepare(F, [l, r]); cg.flush_pops(F)              # fpp1.c b1: fd(..) >= 0.5 -> cal _fd / lda XSP,XSP+0xc
@@ -873,7 +873,7 @@ def cond_into(F, e, dest):
     """a ?: of doubles: the result in a temporary, then copied (t_cond: ... L1: lda XBC,XSP+0xc / ld XWA,XIZ /
     cal ._fld_dd); the first arm is built in its own temporary and copied, the second built in place (t_cond_e)"""
     cg = C()
-    if FP_COND_PRELOAD and not F.opt and not F.adecl and dest[0] in ('cell', 'slot') and strip(e.a).k == 'fconst' and \
+    if FP_COND_PRELOAD and not F.adecl and dest[0] in ('cell', 'slot') and strip(e.a).k == 'fconst' and \
             strip(e.a).ty is not None and strip(e.a).ty.size == 8 and not C().nodes_in(e.c, 'call') and \
             not any(is_fp_op(n) for n in C().nodes_in(e.c, 'bin')):
         lend = F.newulabel()                               # a constant first arm is loaded first and the test jumps over

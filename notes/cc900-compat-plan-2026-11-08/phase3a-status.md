@@ -2596,6 +2596,18 @@ ld XBC,XDE`); a first run without that lost three loopctr.c functions per -O set
 `edit_batch211_fpgen.py`). Ledger up 13 by 277 (random -O3 -XS +4, -Xr +8, -O3 -XS -Xr +3, rstmt +15 / +30 / +15,
 fpord.c -O3 -XS +192), down 0; pairs MATCH 223; semcheck 50. Random 191 / 79 / 141 / 65; library 186 / 248 at -O3 -XS.
 
+**Batch 212 (2026-11-14): three fpgen.py option gates lifted after a sweep.** Batch 211 showed that a gate in fpgen.py
+hid a rule the oracle follows at every set, and the earlier relaxation sweeps had covered codegen.py only. A new sweep
+(research-scratch `gate/fpsweep.py`) removes each `not F.opt and` / `not F.adecl and` of fpgen.py alone and scores rstmt
+at the sets it opens. Three gates gain: COPY_DEST_FIRST at -O (an addressed destination of a double copy or operation
+first; two sites, -O3 -XS +4 / +5), CMP_K_SWAP at -Xr (a double constant on the left of == / != is the right operand,
+-Xr +2), and FP_COND_PRELOAD at -O (a `?:` whose first arm is a double constant is preloaded, -O3 -XS +2). Lifted at
+-Xr, FP_COND_PRELOAD gained 2 but wrote wrong code in rstmt .rs_2_01_07_5: the preload's `cal ._fld_dd` clobbered a
+register parameter the test reads next (two semcheck verdicts in the first gate). It stays gated there. One gate lost
+-1 / -1 (the double op= element-0 form) and the rest changed nothing. fpgen.py only (`edit_batch212_fpgen.py`). Ledger
+up 3 (rstmt +11 / +2 / +10 at -O3 -XS / -Xr / -O3 -XS -Xr), down 0; pairs MATCH 223; semcheck 50. Random unchanged,
+191 / 79 / 141 / 65; library 186 / 248 at -O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
