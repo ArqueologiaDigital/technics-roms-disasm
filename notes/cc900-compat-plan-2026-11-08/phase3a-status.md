@@ -2723,6 +2723,13 @@ whose condition is constant true and whose then-branch ends with a `return`, unl
 Ledger up 4 (random3 and random4 +1 each at none and -Xr), down 0; pairs MATCH 223; semcheck 50. Random 194 / 83 / 147 /
 69; library 186 / 248 at -O3 -XS.
 
+**Batch 227 (2026-11-14): UNREACH_AFTER_RET only without -O.** Batch 226 was committed with two new semcheck verdicts
+that its gate output showed and that went unread. Random r4_06_02 at -O3 -XS and -O3 -XS -Xr jumped to an undefined label
+(`j ne,L50001 / j L50001`). Under -O plan_shared_exit has the early returns jump to a shared exit label that the
+function's last return writes, and batch 226 dropped that return as unreachable. All of batch 226's gains were without
+-O, so the rule is now off there. research-scratch `gate/commit_batch.sh` now refuses when semcheck's verdict count
+rises. Ledger unchanged against batch 226, down 0; pairs MATCH 223; semcheck 50. Random 194 / 83 / 147 / 69.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

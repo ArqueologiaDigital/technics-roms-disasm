@@ -9868,13 +9868,15 @@ def gen_stmt(F, s, last):
             F.trivial_ret_next = trivial
             gen_stmt(F, c, (last and i == len(body) - 1) or trivial); i += 1
             if not getattr(F, 'cl_active', None): F.cl_tmp_done = False
-            if UNREACH_AFTER_RET and c.k == 'if' and getattr(c, 'els', None) is None and cond_const(c.cond) is True and \
+            if UNREACH_AFTER_RET and not F.opt and c.k == 'if' and getattr(c, 'els', None) is None and \
+                    cond_const(c.cond) is True and \
                     flat(c.then) and flat(c.then)[-1].k == 'return' and \
                     not any(nodes_in(x, 'label') or getattr(x, 'k', None) == 'label' for x in body[i:]):
                 break                                      # an always-taken if that returns: the rest is unreachable and
                                                            # not written (random r3_00_19: if (guc > 1 || 65536L <
                                                            # 86430L) return gul + 3295UL; gs.i = ..; return .. -> ends at
-                                                           # the first return)
+                                                           # the first return; not under -O, whose shared exit label
+                                                           # the last return writes: r4_06_02 jumped to L50001 undefined)
         shift_decl_close(F)
         return
     if s.k == 'decl': raise Unsupported('decl')
