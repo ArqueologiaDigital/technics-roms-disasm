@@ -2695,6 +2695,16 @@ there. Two attempts to do this through GUARD_DIV instead failed: a char divisor'
 and once it was, GUARD_DIV took r1_02_12 from test_reg_reuse and divided by memory. Ledger up 2 (rstmt +15 / +13 at the
 -O sets), down 0; pairs MATCH 223; semcheck 50. Random unchanged, 191 / 81 / 143 / 66; library 186 / 248 at -O3 -XS.
 
+**Batch 223 (2026-11-14): -O3 -XS keeps a tested global pointer in XBC for the code after the test
+(PTR_TEST_REUSE).** Three -O3 -XS random functions differed in a single statement whose oracle form begins
+`ld XBC,(_gps)` where the model wrote `ld XWA,(_gps)`. A member tested through a global pointer is used again after the
+test through the same pointer. The oracle loads the pointer once, into XBC (rstmt rs_2_06_00_7: `if (gps->c != 0) gc2 =
+'a' / gps->c` -> `ld XBC,(_gps) / cpb (XBC),0x0 / ret eq / ld WA,0x61 / divs WA,(XBC)`); the model tested through XWA
+and reloaded XBC. A post-pass after test_reg_reuse now moves the test to XBC and drops the reload. It applies only when
+nothing between the two names XBC's family or reads the pointer through XWA. Ledger up 5 (random -O3 -XS +2, -O3 -XS
+-Xr +2, rstmt +10 / +9), down 0; pairs MATCH 223; semcheck 50. Random 191 / 83 / 143 / 68; library 186 / 248 at
+-O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

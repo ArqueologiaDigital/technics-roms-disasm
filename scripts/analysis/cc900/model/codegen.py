@@ -6892,6 +6892,37 @@ def test_reg_reuse(lines):
             done = True; break
         i += 3 if done else 1
     if TEST_REG_REUSE_LONG: out = test_reg_reuse_long(out)
+    if PTR_TEST_REUSE: out = ptr_test_reuse(out)
+    return out
+
+PTR_TEST_REUSE = True                                     # see ptr_test_reuse
+
+def ptr_test_reuse(lines):
+    """-O3 -XS: a member tested through a global pointer, the same pointer loaded again into XBC in the block after the
+    test: the pointer goes to XBC for the test and stays there (rstmt rs_2_06_00_7: if (gps->c != 0) gc2 = 'a' / gps->c
+    -> ld XBC,(_gps) / cpb (XBC),0x0 / ret eq / ld WA,0x61 / divs WA,(XBC); the model: ld XWA,(_gps) / cpb (XWA),0x0 /
+    ret eq / ld XBC,(_gps) / ..).  Only when nothing between the test and the reload names XBC's family."""
+    import re as _r
+    out = list(lines); i = 0
+    fam = _r.compile(r'\b(XBC|QBC|BC|B|C)\b')
+    while i < len(out) - 3:
+        m1 = _r.match(r'^\tld\tXWA,(\(_\w+\))$', out[i] or '')
+        m2 = _r.match(r'^\t(cp[bw]?)\t\(XWA(\+0x[0-9a-f]+)?\),(0x[0-9a-f]+)$', out[i + 1] or '')
+        m3 = _r.match(r'^\t(j\t(eq|ne),L\d+|ret\t(eq|ne))$', out[i + 2] or '')
+        if not (m1 and m2 and m3): i += 1; continue
+        P = m1.group(1); k = i + 3; hit = None
+        while k < len(out):
+            l = out[k] or ''
+            if _r.match(r'^L\d+:|^[._]\w+:|^\tcal|^\tret|^\tj\t|^\tcall\t', l): break
+            if l == '\tld\tXBC,%s' % P: hit = k; break
+            if fam.search(l) or P in l: break
+            if _r.search(r'\(XWA|XWA\+|,XWA$|,QWA$', l): break   # (the old pointer read through XWA: no)
+            k += 1
+        if hit is None: i += 1; continue
+        out[i] = '\tld\tXBC,%s' % P
+        out[i + 1] = '\t%s\t(XBC%s),%s' % (m2.group(1), m2.group(2) or '', m2.group(3))
+        del out[hit]
+        i += 3
     return out
 
 TEST_REG_REUSE_LONG = True                               # see test_reg_reuse_long
