@@ -2333,6 +2333,10 @@ model refused these ("element read over the left value"). Where lvalue refuses t
 Ledger up 3 (elrd.c at none 284 -> 292, rstmt 3,575 -> 3,578, random4 43 -> 44), down 0; pairs MATCH 223; semcheck 50.
 Random 185 / 61 / 125 / 54.
 
+**Batch 186 (2026-11-14): RIGHT_ELEM_FIRST under -Xr too.** Batch 185's rule gains under adecl as well and loses
+nothing; under the -O sets it gains nothing and stays off. Ledger up 3 (elrd.c at -Xr 108 -> 112, rstmt 3,316 -> 3,318,
+random4 at -Xr 31 -> 32), down 0; pairs MATCH 223; semcheck 50. Random 185 / 61 / 126 / 54.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

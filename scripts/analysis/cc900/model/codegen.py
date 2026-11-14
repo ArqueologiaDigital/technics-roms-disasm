@@ -4976,7 +4976,7 @@ def _gen_bin_body(F, e, fam, size, then_ret, store=False):
                                                            # (random r2_02_03: return gi3 + (gpl[3] % 16) -> .. /
                                                            # ld HL,QWA / add HL,(_gi3); r2_07_10: gia[0] + gps->a[5])
         ru_ = uncast_int(r)
-        if RIGHT_ELEM_FIRST and not F.opt and not F.adecl and fam == 'WA' and size in (1, 2) and op in SIMPLE_OPS and \
+        if RIGHT_ELEM_FIRST and not F.opt and fam == 'WA' and size in (1, 2) and op in SIMPLE_OPS and \
                 not swapped_ and mem_operand(F, r) is None and ru_.k == 'load' and strip(ru_.e).k == 'index' and \
                 fold(strip(ru_.e).idx).k != 'const' and not nodes_in(e, 'call') and not has_helper_call(e) and \
                 not fpgen.is_fp_op(e) and not ({'WA', 'BC'} & live_regs(F)):
