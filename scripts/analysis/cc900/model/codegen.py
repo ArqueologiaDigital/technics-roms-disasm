@@ -6577,6 +6577,7 @@ UIDX32_EXPR = True                                        # see elem_addr (r3_04
 CHAR_PRODUCT_DIV_GUARD = True                             # see gen_bin (r3_07_12)
 VALUE_FIRST_CHIDX = True                                  # see gen_stmt's assignment (r1_02_19)
 POP_LAZY = True                                           # see stmt_touches_stack
+POP_LAZY_NEXT_ASSIGN = True                               # see regvar_stmt: the next statement x = f(args)
 POP_LAZY_REGVAR_OPT = True                                # see regvar_stmt: a register local's call initialiser (r2_04_18)
 POP_LAZY_OPT = True                                       # the same under -O (random r1_01_03 -O3 -XS: inc 0x8,XSP after _rl)
 
@@ -11163,6 +11164,10 @@ def regvar_stmt(F, e):
             gen_call(F, strip(e.r))
             nx = getattr(F, 'next_stmt', None)
             nxc = strip(nx.e) if nx is not None and nx.k == 'expr' else None
+            if POP_LAZY_NEXT_ASSIGN and nxc is not None and nxc.k == 'bin' and nxc.op == '=' and strip(nxc.r).k == 'call':
+                nxc = strip(nxc.r)                     # the next statement x = f(args) takes them too (homes2a.c
+                                                       # A_ab_ba_c_e_ab: b = g1(2); a = g1(1) -> cal _g1 / ld IZ,HL /
+                                                       # pushw 0x1 / cal _g1 / inc 0x4,XSP / ld QIZ,HL)
             if R != FAM['HL'][d.ty.size] and (F.opt and not (POP_LAZY_OPT and POP_LAZY_REGVAR_OPT and not F.adecl) or
                                               nxc is None or nxc.k != 'call' or not nxc.args):
                 flush_pops(F)       # (_strcpy: a local in XHL needs no move, the pops wait); h_p: cdecl merges the

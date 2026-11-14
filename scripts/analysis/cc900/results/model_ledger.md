@@ -113,12 +113,12 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-10-4-micro-chidx, v423/O3XS                             | probes/chidx.c       | 50 / 50 exact (100.0%)     |
 | run 2026-11-10-4-micro-chidx, v423/Xr                               | probes/chidx.c       | 50 / 50 exact (100.0%)     |
 | run 2026-11-10-4-micro-chidx, v423/O3XSXr                           | probes/chidx.c       | 50 / 50 exact (100.0%)     |
-| run 2026-11-09-37-micro-homes2a, v423/none                          | probes/homes2a.c     | 23 / 204 exact (11.3%)     |
-| run 2026-11-09-37-micro-homes2a, v423/O3XS                          | probes/homes2a.c     | 52 / 204 exact (25.5%)     |
+| run 2026-11-09-37-micro-homes2a, v423/none                          | probes/homes2a.c     | 24 / 204 exact (11.8%)     |
+| run 2026-11-09-37-micro-homes2a, v423/O3XS                          | probes/homes2a.c     | 78 / 204 exact (38.2%)     |
 | run 2026-11-09-37-micro-homes2a, v423/Xr                            | probes/homes2a.c     | 40 / 204 exact (19.6%)     |
 | run 2026-11-09-37-micro-homes2a, v423/O3XSXr                        | probes/homes2a.c     | 35 / 204 exact (17.2%)     |
-| run 2026-11-09-42-micro-homes2b, v423/none                          | probes/homes2b.c     | 14 / 90 exact (15.6%)      |
-| run 2026-11-09-42-micro-homes2b, v423/O3XS                          | probes/homes2b.c     | 16 / 90 exact (17.8%)      |
+| run 2026-11-09-42-micro-homes2b, v423/none                          | probes/homes2b.c     | 15 / 90 exact (16.7%)      |
+| run 2026-11-09-42-micro-homes2b, v423/O3XS                          | probes/homes2b.c     | 17 / 90 exact (18.9%)      |
 | run 2026-11-09-42-micro-homes2b, v423/Xr                            | probes/homes2b.c     | 22 / 90 exact (24.4%)      |
 | run 2026-11-09-42-micro-homes2b, v423/O3XSXr                        | probes/homes2b.c     | 18 / 90 exact (20.0%)      |
 | run 2026-11-10-1-micro-random1, v423/none                           | random/*.c           | 57 / 200 exact (28.5%)     |

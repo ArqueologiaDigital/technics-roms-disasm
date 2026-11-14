@@ -2432,6 +2432,14 @@ incw 0x1,(_gi3) / push IZ / cal _vu / inc 0x8,XSP`). The same switch on the call
 not kept. Ledger up 4 by 23 (homes2a.c +15, homes2b.c +6, ra_homes32.c +1, random2 +1), down 0; pairs MATCH 223;
 semcheck 50. Random 189 / 72 / 131 / 59; library 186 / 248 at -O3 -XS.
 
+**Batch 196 (2026-11-14): a register local's call result keeps the pops pending for a next `x = f(args)`
+(POP_LAZY_NEXT_ASSIGN).** regvar_stmt kept the pops of `t = f(..)` pending only when the next statement was a bare call
+with arguments. The oracle also merges them into a next assignment of a call with arguments (homes2a.c A_ab_ba_c_e_ab
+-O3 -XS: `b = g1(2); a = g1(1); g0()` -> `cal _g1 / ld IZ,HL / pushw 0x1 / cal _g1 / inc 0x4,XSP / ld QIZ,HL /
+cal _g0`). It was the largest first-difference group of homes2a.c at -O3 -XS, 29 functions. Ledger up 4 by 29
+(homes2a.c +1 / +26 at none / -O3 -XS, homes2b.c +1 / +1), down 0; pairs MATCH 223; semcheck 50. Random unchanged,
+189 / 72 / 131 / 59; library 186 / 248 at -O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
