@@ -2228,6 +2228,14 @@ puts in a register is a parameter and no int parameter goes to a slot (first tri
 Ledger up 7 (homes2a.c, homes2b.c, regkw.c, the random corpora at -Xr), down 0; pairs MATCH 223; semcheck 54. Random
 182 / 61 / 115 / 53.
 
+**Batch 174 (2026-11-14): SHIFT1_MEM sees a char's shift through its narrowing cast, and applies under -Xr too.** The
+rule shifts a byte or word in memory when it is shifted by one in place. It tested `strip(s.e.r).k == 'bin'`, but
+`guc = guc >> 1` reaches it as `(unsigned char)(guc >> 1)`, so it never fired for a char. The example in the rule's own
+comment (random r2_02_06) was not exact. `uncast_int()` looks through the cast (rstmt rs_2_02_06_1 -> `srlb (_guc)`;
+rs_2_03_03_1: `guca[5] /= 2` -> `srlb (_guca + 0x5)`). The rule's `not F.adecl` goes too, since it gains under -Xr as
+well. Ledger up 6 (rstmt +1 at each set, random2 at none and -Xr), down 0; pairs MATCH 223; semcheck 54. Random
+183 / 61 / 116 / 53.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

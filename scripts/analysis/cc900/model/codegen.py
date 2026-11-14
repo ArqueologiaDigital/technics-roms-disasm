@@ -2004,6 +2004,12 @@ EVORDER_BYTE = True                                       # see gen_bin: the eva
 CW_IZ_XWA = True                                          # see bin_wide: a byte element at an IZ counter
 CHAIN_STATIC_WA = True                                    # see gen_assign_value: a chained store into a static element
 SHIFT1_MEM = True                                         # see gen_stmt: a byte or word shifted by one in memory
+
+def uncast_int(e):
+    """e without its integral casts"""
+    e = strip(e)
+    while e.k == 'cast' and e.kind == 'IntegralCast': e = strip(e.e)
+    return e
 NOT_PTR_ELEM_CP = True                                    # see gen: !p[k]
 MEMBER_STORE_BC = True                                    # see gen_stmt: p->m = a op b
 SHIFTK_WA = True                                          # see gen_opassign: any size shifted by a constant works in WA
@@ -9991,10 +9997,11 @@ def gen_stmt(F, s, last):
                 for R_ in ('XWA', 'WA'):                                                           # add (_gpi),XWA)
                     if F.lines[-2] == '\tadd\t%s,%s' % (R_, m_) and F.lines[-1] == '\tld\t%s,%s' % (m_, R_):
                         F.lines[-2:] = ['\tadd\t%s,%s' % (m_, R_)]
-        if SHIFT1_MEM and not F.adecl and s.k == 'expr' and len(F.lines) >= 3 and (
+        if SHIFT1_MEM and s.k == 'expr' and len(F.lines) >= 3 and (
                 s.e.k == 'opassign' and s.e.op in ('<<', '>>') and fold(s.e.r).k == 'const' and fold(s.e.r).value == 1 or
-                s.e.k == 'bin' and s.e.op == '=' and strip(s.e.r).k == 'bin' and strip(s.e.r).op in ('<<', '>>') and
-                fold(strip(s.e.r).r).k == 'const' and fold(strip(s.e.r).r).value == 1):
+                s.e.k == 'bin' and s.e.op == '=' and uncast_int(s.e.r).k == 'bin' and uncast_int(s.e.r).op in ('<<', '>>') and
+                fold(uncast_int(s.e.r).r).k == 'const' and fold(uncast_int(s.e.r).r).value == 1):   # (through the narrowing
+                                                           # cast of a char: guc = guc >> 1 is (unsigned char)(guc >> 1))
             # a byte or word shifted by one in place is shifted in memory (random r2_02_06: guc = guc >> 1 ->
             # srlb (_guc); r2_03_15: a->c <<= 1 -> ld XWA,(XSP+0x4) / slab (XWA))
             a_ = re.match(r'^\tld\t([ACEL]|WA|BC|DE|HL),(\(.+\))$', F.lines[-3])
