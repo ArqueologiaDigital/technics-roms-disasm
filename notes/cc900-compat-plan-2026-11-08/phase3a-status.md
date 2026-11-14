@@ -2316,6 +2316,13 @@ more and lost rows: under -O the oracle keeps both labels (two library functions
 continue label stays (switch.c sw_loop). Ledger up 2 (rstmt at -Xr 3,307 -> 3,316, random2 at -Xr 26 -> 27), down 0;
 pairs MATCH 223; semcheck 50. Random 183 / 61 / 125 / 54.
 
+**Batch 184 (2026-11-14): a widened int compared with a long element at an unsigned char index
+(CMP_WIDE_LEFT_ELEM).** For `(long)gi != gla[b]` (b an unsigned char parameter) the oracle builds the element's
+address first, then widens the int in XDE and compares: `ld A,(b) / extz WA / sla 0x2,WA / lda XBC,_gla / ld DE,(_gi) /
+exts XDE / cp XDE,(XBC+WA)`. The model refused ("complex compare operand"). `lvalue` builds `(XDE+BC)` for a char index,
+so the form is emitted directly. Without -O and -Xr. Ledger up 1 (random1 at none 55 -> 56: r1_01_05), down 0; pairs
+MATCH 223; semcheck 50. Random 184 / 61 / 125 / 54.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

@@ -121,7 +121,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-42-micro-homes2b, v423/O3XS                          | probes/homes2b.c     | 10 / 90 exact (11.1%)      |
 | run 2026-11-09-42-micro-homes2b, v423/Xr                            | probes/homes2b.c     | 22 / 90 exact (24.4%)      |
 | run 2026-11-09-42-micro-homes2b, v423/O3XSXr                        | probes/homes2b.c     | 18 / 90 exact (20.0%)      |
-| run 2026-11-10-1-micro-random1, v423/none                           | random/*.c           | 55 / 200 exact (27.5%)     |
+| run 2026-11-10-1-micro-random1, v423/none                           | random/*.c           | 56 / 200 exact (28.0%)     |
 | run 2026-11-10-1-micro-random1, v423/O3XS                           | random/*.c           | 21 / 200 exact (10.5%)     |
 | run 2026-11-10-1-micro-random1, v423/Xr                             | random/*.c           | 42 / 200 exact (21.0%)     |
 | run 2026-11-10-1-micro-random1, v423/O3XSXr                         | random/*.c           | 20 / 200 exact (10.0%)     |

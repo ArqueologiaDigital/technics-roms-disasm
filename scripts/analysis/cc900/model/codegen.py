@@ -1314,6 +1314,7 @@ UIDX_ADDR_XDE = True                                      # see gen_stmt's store
 MUL_K_ELEM_BC = True                                      # see gen_mul_const: an element times a constant, the product in XBC
 UIDX_REGPARAM = True                                      # see elem_addr and lh_reg_uidx: -Xr, an unsigned register-parameter index
 DEAD_LABEL_PAIR = True                                    # see compile_function_once
+CMP_WIDE_LEFT_ELEM = True                                 # see gen_compare: (long)int against a long element
 
 def test_to_bc(F, n0, n1):
     """-Xr: an if's test whose code writes WA, the home of a parameter an arm reads, is written in BC's family instead,
@@ -6154,6 +6155,28 @@ def gen_compare(F, e):
         if IDX_GUARD and any(getattr(d, 'reg', None) == 'WA' and d not in F.dead and uses_decl(r, d) and
                              not uses_decl(l, d) for d in list(F.f.params) + list(F.f.decls)):
             raise Unsupported('compare operand over a variable in WA')   # (c1 != c2 with c2 in A: ld A,C / cp A,A)
+        lw_ = strip(l)
+        if CMP_WIDE_LEFT_ELEM and not F.opt and not F.adecl and size == 4 and lw_.k == 'cast' and lw_.kind == 'IntegralCast' and \
+                strip(lw_.e).k == 'load' and strip(lw_.e).ty is not None and strip(lw_.e).ty.size == 2 and \
+                (mem_operand(F, lw_.e) or '').startswith('(') and strip(r).k == 'load' and strip(strip(r).e).k == 'index' and \
+                mem_operand(F, r) is None and not ({'WA', 'BC', 'DE'} & live_regs(F)) and not nodes_in(r, 'call'):
+            n_e_ = len(F.lines)                            # a widened int against a long element: the element's address
+            ix_e_ = strip(strip(strip(r).e).idx)          # first, then the int widened in XDE (rstmt rs_1_01_05_5:
+            while ix_e_.k == 'cast' and ix_e_.kind == 'IntegralCast': ix_e_ = strip(ix_e_.e)
+            bs_e_ = strip(strip(strip(r).e).base)
+            while bs_e_.k in ('decay', 'cast', 'noop') and getattr(bs_e_, 'e', None) is not None: bs_e_ = strip(bs_e_.e)
+            t_e_ = None
+            if ix_e_.k == 'load' and ix_e_.ty is not None and ix_e_.ty.size == 1 and not ix_e_.ty.signed and \
+                    (mem_operand(F, ix_e_) or '').startswith('(') and bs_e_.k == 'var' and bs_e_.decl.kind == 'global' and \
+                    strip(r).ty.size == 4:
+                F.emit('ld', 'A,%s' % mem_operand(F, ix_e_)); F.emit('extz', 'WA'); F.emit('sla', '0x2,WA')
+                F.emit('lda', 'XBC,_%s' % bs_e_.decl.name); t_e_ = '(XBC+WA)'
+            if re.match(r'^\((XBC|XWA)(\+(WA|BC|A|C))?\)$', t_e_ or '') and \
+                    not any(re.search(r'\b(X?DE|QDE|[DE])\b', l_) for l_ in F.lines[n_e_:] if l_):
+                F.emit('ld', 'DE,%s' % mem_operand(F, lw_.e))   # (long)gi != gla[b] -> ld A,(b) / extz WA / sla 0x2,WA /
+                F.emit('exts' if strip(lw_.e).ty.signed else 'extz', 'XDE')   # lda XBC,_gla / ld DE,(_gi) / exts XDE /
+                F.emit('cp', 'XDE,%s' % t_e_); return cc  # cp XDE,(XBC+WA))
+            del F.lines[n_e_:]
         if size not in (1, 2, 4): raise Unsupported('a %d-byte compare here' % size)   # (-O3 -XS random r4_08_05:
         f0 = gen(F, l, 'WA', size)                                                      #  a double compare crashed)
     W = FAM[f0][size]                                      # (the value's own register: ae_i_ptr cp BC,0x0)
