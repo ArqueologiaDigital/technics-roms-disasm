@@ -1751,6 +1751,8 @@ def lh_call_kinds(F, op, l, r):
     if not (elem_ok(lk) and elem_ok(rk)): return None
     if LH_ELEM and 'X' in (L, R):
         o = L if R == 'X' else R
+        if F.adecl and 'F' in (L, R): return None          # (-Xr: a register index would be read after the call clobbered it:
+                                                           #  evorder_ad.c .ea_l_div_XF, gla[c] / hfl() with c in WA, wrong code)
         if o not in ('K', 'G', 'M', 'P', 'D', 'X', 'F'): return None
         if o == 'K' and op == '*': return None
         if o == 'F' and not nocall_args(l if L == 'F' else r): return None
@@ -1769,7 +1771,7 @@ def plan_lh_call0(F):
     XIZ free; the prologue saves XIZ, and a 4-byte temporary is added below the frame for a call result beside a
     member or for the first of two members (l_div_DF: dec 0x4,XSP / push XIZ / cal _hfl / ld (XSP+0x4),XHL)"""
     F.lhc = None
-    if not LH_CALL or F.xiz_vars or F.adecl or (F.opt and not LH_CALL_OPT) or getattr(F, 'sd4', None): return
+    if not LH_CALL or F.xiz_vars or (F.adecl and not LH_CALL_XR) or (F.opt and not LH_CALL_OPT) or getattr(F, 'sd4', None): return
     f = F.f
     if any(d.kind == 'local' and not getattr(d, 'reg', None) and (d.ty.kind in ('array', 'struct') or not foldable(f, d) and not LH_IDX)
            for d in f.decls) or any(getattr(d, 'home_slot', False) for d in f.params): return
@@ -2008,6 +2010,7 @@ CHAIN_STATIC_WA = True                                    # see gen_assign_value
 SHIFT1_MEM = True                                         # see gen_stmt: a byte or word shifted by one in memory
 CALL_LEFT_UNARY_WA = True                                 # see _gen_bin_body: f(..) op -x computes -x in WA
 LH_ELEM_NOT_LEAF = True                                   # see plan_leaf
+LH_CALL_XR = True                                         # see plan_lh_call0: under -Xr too
 LH_IDX_BCDE = True                                        # see lh_call_kinds: a register-temporary index in BC or DE too
 
 def uncast_int(e):

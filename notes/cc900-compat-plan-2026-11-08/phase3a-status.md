@@ -2252,6 +2252,15 @@ accepted a register-temporary index only in WA / HL, while the oracle keeps i in
 `ld (XSP+0x4),DE` into the helper's slot). Ledger up 2 (lhy.c at none 128 -> 144: rows G, X, J, D of iTg; lhidx.c
 122 -> 128), down 0; pairs MATCH 223; semcheck 54. Random unchanged, 183 / 61 / 116 / 53.
 
+**Batch 177 (2026-11-14): the long-helper operand planner runs under -Xr as well (LH_CALL_XR).** `plan_lh_call0`
+returned at once for adecl, so none of the long-helper operand machinery (lh_call, lh_elem, the slot-and-XIZ element
+form) ran under -Xr. The rule sweeps could not see this, because its guard is `F.adecl`, not `not F.adecl`. Enabling it
+compiled evorder_ad.c's element-beside-a-call rows (`gla[c] / hfl()`, c in WA) wrongly: the index was read after the
+call clobbered it, six semcheck verdicts in a first run that was not committed. `lh_call_kinds` therefore leaves that
+pair alone under adecl. Ledger up 16 with 490 more exact functions (lhy.c 0 -> 52 at -Xr and 0 -> 48 at -O3 -XS -Xr,
+lhx.c 258 -> 322 and 212 -> 262, stdiv2.c, stv.c, elrd.c, ...), down 0; pairs MATCH 223; semcheck 54. Random unchanged,
+183 / 61 / 116 / 53.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
