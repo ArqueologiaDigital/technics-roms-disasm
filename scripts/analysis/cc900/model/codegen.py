@@ -9584,6 +9584,18 @@ def gen_stmt(F, s, last):
                 i += 1; continue                           # -O: an initialiser the next statement overwrites unread is
                                                            # not written (rstmt rs_4_07_00_1: int i = ji; i = 0; while ..
                                                            # -> ld IZ,0x0, no ld IZ,(_ji))
+            if K_FOLD_REGTEMP_OPT and F.opt and c.k == 'decl' and c.var.kind == 'local' and \
+                    getattr(c.var, 'regtemp', False) and c.init is not None and not c.var.addr_taken and \
+                    c.var.ty.kind == 'int' and fold(narrow(c.init, c.var.ty.size)).k == 'const' and \
+                    fold(narrow(c.init, c.var.ty.size)).value is not None:
+                rest_ = body[i + 1:]
+                upto_ = rest_[:next((k for k, x in enumerate(rest_) if uses_decl(x, c.var)), len(rest_)) + 1]
+                if len(uses_of(rest_, c.var, [])) == 1 and not written_in(upto_, c.var):
+                    from frontend import N                 # -O: a register temporary with a constant initialiser read
+                    kc_ = fold(narrow(c.init, c.var.ty.size))   # once is that constant (rstmt rs_1_01_16_1: unsigned char
+                    kn_ = N('const', value=kc_.value, ty=c.var.ty)   # t = 202; juc = t -> ldb (_juc),0xca)
+                    for x in rest_: substitute(x, c.var, kn_)
+                    F.dead.add(c.var); i += 1; continue
             if c.k == 'decl' and c.var.kind == 'local' and (getattr(c.var, 'reg', None) not in (None, 'XIZ', 'WA') or
                                                           getattr(c.var, 'reg', None) == 'WA' and getattr(c.var, 'regtemp', False)):
                 if c.init is not None:
@@ -10352,6 +10364,7 @@ _gen_stmt_body = gen_stmt
 HELPER_STORE_XIZ = True                                   # see gen_stmt's store: a long helper's value, the address in XIZ
 BIN_PTR_RIGHT_BC = True                                   # see bin_wide: memory op pointer operand, the pointer in XWA
 POP_LONE_CALL = True                                      # see gen: a statement's only call pops at once
+K_FOLD_REGTEMP_OPT = True                                 # see gen_stmt's block: -O folds a register temporary's constant
 LIVE_SHIFT = True                                         # see gen_body_shift
 _SHIFT_PARTS = {'WA': ('XWA', 'QWA', 'WA', 'QW', 'QA', 'W', 'A'), 'BC': ('XBC', 'QBC', 'BC', 'QB', 'QC', 'B', 'C'),
                 'DE': ('XDE', 'QDE', 'DE', 'QD', 'QE', 'D', 'E')}

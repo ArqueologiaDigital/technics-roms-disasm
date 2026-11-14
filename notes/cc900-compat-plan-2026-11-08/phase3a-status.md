@@ -2552,6 +2552,15 @@ statements). dead_init_later finds the first later statement of the block that m
 is dropped when that statement assigns the variable without reading it. Ledger up 4 (random -O3 -XS +1, -O3 -XS -Xr +1,
 rstmt +14 / +15), down 0; pairs MATCH 223; semcheck 50. Random 191 / 73 / 133 / 60; library 186 / 248 at -O3 -XS.
 
+**Batch 207 (2026-11-14): -O folds a register temporary's constant initialiser into its single use
+(K_FOLD_REGTEMP_OPT).** Eighteen rstmt statements at -O3 -XS began `ldb (_jc),K` / `ldb (_juc),K` in the oracle and
+`ld A,K` in the model. The probes end by storing a local to a j global. An int local with a constant was already folded,
+but a char local became a register temporary and took the register path. Now, under -O, a register temporary whose
+initialiser folds to a constant, read once and not written before that read, is replaced by that constant
+(rs_1_01_16_1: `unsigned char t = 202; juc = t` -> `ldb (_juc),0xca`). Both -O sets. Ledger up 8 (random +2 / +2 at the
+-O sets, rstmt +18 / +18, lsl.c +3 / +3), down 0; pairs MATCH 223; semcheck 50. Random 191 / 75 / 133 / 62; library 186 /
+248 at -O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
