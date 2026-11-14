@@ -2579,6 +2579,13 @@ lda XWA,XWA+BC`. Without options the memory forms hold. The same form at the ele
 not kept. Ledger up 1 (rstmt -O3 -XS +5), down 0; pairs MATCH 223; semcheck 50. Random unchanged, 191 / 75 / 133 / 62;
 library 186 / 248 at -O3 -XS.
 
+**Batch 210 (2026-11-14): -Xr widens a char index held in C or E through A when WA is free (XR_WIDEN_VIA_A).** At -Xr
+an unsigned char register parameter used as an index on a global int or long array was widened in its own register,
+with the base in XWA. When WA's family holds nothing live, the oracle copies the byte to A, widens and scales it in WA,
+and puts the base in XBC (rstmt .rs_1_04_16_1: `gua[c]` with c in E -> `ld A,E / extz WA / add WA,WA / lda XBC,_gua /
+ld WA,(XBC+WA)`). chidx.py only (research-scratch `edit_batch210_chidx.py`); without -O. Ledger up 1 (rstmt -Xr +4),
+down 0; pairs MATCH 223; semcheck 50. Random unchanged, 191 / 75 / 133 / 62.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

@@ -52,6 +52,7 @@ kind: 'load', 'storek' (a constant stored: ldw / ldb (op),K), 'rmw' (op= with a 
 """
 import codegen as cg
 
+XR_WIDEN_VIA_A = True                                      # see element: -Xr, a byte in C / E widened through A when WA is free
 CHIDX = True                                               # the whole module behind one flag
 
 FAM = {'WA': {1: 'A', 2: 'WA', 4: 'XWA'}, 'BC': {1: 'C', 2: 'BC', 4: 'XBC'}, 'DE': {1: 'E', 2: 'DE', 4: 'XDE'},
@@ -359,6 +360,14 @@ def element(F, lv, kind, fam='WA'):
         # unsigned, or a signed char on an unsized int array (xc2): widened to a word and scaled there
         if kind == 'store' or (kind == 'storek' and esz == 4):   # ku2: ld BC,WA / add BC,BC / lda XDE,_gia / op (XDE+BC),WA
             widen(F, src, 'BC', signed, esz); F.emit('lda', 'XDE,%s' % gsym); return '(XDE+BC)'
+        if XR_WIDEN_VIA_A and xr and not o and src[0] == 'reg' and src[1] in ('C', 'E', 'L') and \
+                'WA' not in cg.live_regs(F) and 'A' not in busy:
+            F.emit('ld', 'A,%s' % src[1]); F.emit('exts' if signed else 'extz', 'WA'); scale_word(F, 'WA', esz)
+            live = {'X' + f for f in cg.live_regs(F) if f in BYTE_FAM.values()} | {'X' + BYTE_FAM[b] for b in busy} | {'XWA'}
+            X = next((x for x in ('XBC', 'XDE', 'XHL') if x not in live), None)   # -Xr, the byte in C / E and WA free:
+            if X is not None:                              # copied to A, widened there, the base in XBC (rstmt
+                F.emit('lda', '%s,%s' % (X, gsym)); return '(%s+WA)' % X   # .rs_1_04_16_1: gua[c] with c in E ->
+            return None                                    # ld A,E / extz WA / add WA,WA / lda XBC,_gua / (XBC+WA))
         R = own_fam(F, src) if xr else 'WA'
         widen(F, src, R, signed, esz)
         X = 'XBC' if R == 'WA' else 'XWA'
