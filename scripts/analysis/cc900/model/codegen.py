@@ -1180,6 +1180,9 @@ def ev_addr_kind(F, x):
                 ii.ty is not None and ii.ty.size == 2 and ii.k == 'load' and strip(ii.e).k == 'var' and \
                 not getattr(strip(ii.e).decl, 'reg', None) and v.ty.size in (2, 4) and \
                 (mem_operand(F, ii) or '').startswith('('): return 'X'
+        if EV_IZ_UIDX and b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array' and \
+                ii.ty is not None and ii.ty.size == 2 and not ii.ty.signed and ii.k == 'load' and strip(ii.e).k == 'var' and \
+                getattr(strip(ii.e).decl, 'reg', None) == 'IZ' and v.ty.size in (2, 4): return 'X'   # (an unsigned index in IZ)
     return None
 
 def ev_left_kind(F, x):
@@ -1200,7 +1203,8 @@ def ev_address(F, x, P, I, B):
         off = member_offset(v) if v.k == 'member' else 0
         return '(%s+%s)' % (P, hx(off)) if off else '(%s)' % P
     b = strip(v.base); ii = ev_uncast(v.idx)
-    F.emit('ld', '%s,%s' % (I, mem_operand(F, ii)))
+    iv_ = getattr(strip(ii.e), 'decl', None) if ii.k == 'load' else None
+    F.emit('ld', '%s,%s' % (I, 'IZ' if getattr(iv_, 'reg', None) == 'IZ' else mem_operand(F, ii)))
     if not ii.ty.signed:                                   # an unsigned index is extended whole (UIDX32; r2_01_11:
         XI = 'X' + I                                       # gua[a] -> ld WA,(a) / extz XWA / add XWA,XWA / ld XBC,_gua /
         F.emit('extz', XI)                                 # add XBC,XWA / (XBC))
@@ -1317,6 +1321,8 @@ DEAD_LABEL_PAIR = True                                    # see compile_function
 CMP_WIDE_LEFT_ELEM = True                                 # see gen_compare: (long)int against a long element
 RIGHT_ELEM_FIRST = True                                   # see _gen_bin_body: an element at a variable index on the right
 LONG_RMW_GPTR = True                                      # see gen_opassign: a long op= through a global pointer
+EV_IZ_UIDX = True                                         # see ev_addr_kind: an element at an unsigned index in IZ (rstmt rs_4_05_01_6)
+EV_UIDX_WA = True                                         # see evorder_bin: an unsigned index built in WA
 
 def test_to_bc(F, n0, n1):
     """-Xr: an if's test whose code writes WA, the home of a parameter an arm reads, is written in BC's family instead,
@@ -4482,6 +4488,13 @@ def evorder_bin(F, e, op, l, r, fam, size, ctx='HL'):
     if acc_self and ak == 'P': plan[id(acc)] = ('XWA', None, None); taken.add('WA')
     for x in order:                                        # indexes first (s_XB: WA / XBC, the value in DE; s_XN: BC / XDE)
         if ev_addr_kind(F, x) == 'X' and id(x) not in plan:
+            ix_u_ = ev_uncast(strip(ev_uncast(x).e).idx)
+            oth_ = r if x is l else l
+            if EV_UIDX_WA and ix_u_.ty is not None and not ix_u_.ty.signed and 'WA' not in live and \
+                    ev_addr_kind(F, oth_) is None:         # (the other operand addressed too: its pointer may sit in XWA,
+                                                           #  rstmt rs_2_09_19_5 *gpi % gia[a] was wrong code)
+                b_ = pick(('WA',)); plan[id(x)] = (None, 'WA', 'X' + b_)   # (an unsigned index is spent building the base:
+                continue                                   #  WA is free again, rstmt rs_4_05_01_6 -> ld WA,IZ / .. / ld XBC,_gla)
             i_ = pick(); b_ = pick(); plan[id(x)] = (None, FAM[i_][2], 'X' + b_)
     if acc_self and 'WA' not in taken: taken.add('WA')
     if src_v and not src_nat_wa:                           # then the source value
@@ -4827,7 +4840,9 @@ def _gen_bin_body(F, e, fam, size, then_ret, store=False):
     if EVORDER and (size in (2, 4) or ev_b_) and ev_ctx in ('HL', 'WA', 'ANY') and \
             (op in SIMPLE_OPS or op in ('*', '/', '%') and size == 2 and (fold(r).k != 'const' or ev_class(F, l) == 'V')) \
             and not any(nodes_in(x, 'call') or has_helper_call(x) or fpgen.is_fp_op(x) or
-                        any(regvar_of(strip(y.e)) is not None for y in loads_in(x)) for x in (l, r)) and \
+                        any(regvar_of(strip(y.e)) is not None and not (EV_IZ_UIDX and regvar_of(strip(y.e)).reg == 'IZ' and
+                                                                     ev_addr_kind(F, x) == 'X')
+                            for y in loads_in(x)) for x in (l, r)) and \
             not getattr(F, 'cl_active', None) and not getattr(F, 'l2', None) and \
             getattr(F, 'u1_i', None) is None and not getattr(F, 'elem_ops', None) and not getattr(F, 'tfam', None):
         ev = evorder_bin(F, e, op, l, r, fam, size, ev_ctx)   # stored value), ANY (a pushed argument); evorder_l.c: longs

@@ -2344,6 +2344,18 @@ global pointer was refused ("long element address across a helper"). The oracle 
 /= 7L` -> `ld XWA,(_gpl) / lda XIZ,XWA+0x8` (rs_2_09_09_0). Without -O. Ledger up 2 (rstmt at none 3,578 -> 3,580 and
 at -Xr 3,318 -> 3,320), down 0; pairs MATCH 223; semcheck 50. Random 185 / 61 / 126 / 54.
 
+**Batch 188 (2026-11-14): evorder takes an element at an unsigned index in IZ, and builds such an index in WA
+(EV_IZ_UIDX, EV_UIDX_WA).** The evorder rules (the oracle's evaluation order for binary operands) turned away any
+operand involving a register variable, so `gl2 &= gla[u] & (long)gi3` with u in IZ was compiled elsewhere, in the wrong
+order. An element at an unsigned index held in IZ is now an addressed operand there (`ld WA,IZ`). In the address plan
+such an index is spent building the base, so it takes WA even when WA will hold the value built after it, and the base
+takes the next free pair (rstmt rs_4_05_01_6: `ld WA,IZ / extz XWA / sll 0x2,XWA / ld XBC,_gla / add XBC,XWA /
+ld WA,(_gi3) / exts XWA / and XWA,(XBC)`). That applies only when the other operand has no address of its own. A first
+run also did it beside `*gpi` (rs_2_09_19_5) and stdiv3.c's EDX / GDX rows, where the other pointer sits in XWA: twelve
+wrong-code verdicts, not committed. Ledger up 9 with 76 more exact functions (elrd.c +24 at none and +20 at -O3 -XS,
+stdiv3.c +24 at -O3 -XS, rstmt +2 / +2 / +1 / +1, random4 at none and -Xr), down 0; pairs MATCH 223; semcheck 50.
+Random 186 / 61 / 127 / 54.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
