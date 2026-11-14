@@ -747,7 +747,10 @@ def gen_assign(F, e):
             eval_into(F, b, ('xiz',)); return
         if OPA_XIZ and lv.k == 'index' and cg.fold(lv.idx).k != 'const':   # (fpopa.c -Xr / -O3 -XS X rows: the element's
             raise cg.Unsupported('a double compound assignment at a computed element')   # address was built twice
-        eval_into(F, b, ('lv', lv)); return                                              # over its index: wrong code)
+        F.fp_opassign = True                                                             # over its index: wrong code)
+        try: eval_into(F, b, ('lv', lv))
+        finally: F.fp_opassign = False
+        return
     eval_into(F, e.r, ('lv', strip(e.l)))
 
 def compare(F, c, value):

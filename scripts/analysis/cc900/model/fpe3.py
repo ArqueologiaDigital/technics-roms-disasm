@@ -155,7 +155,12 @@ def eval_into(F, e, dest):
                 found = []
                 fp.C().walk(x, lambda n, d: found.append(n) if n.k == 'cast' and n.kind == 'IntegralToFloating' else None)
                 return bool(found) or (x.k == 'cast' and x.kind == 'IntegralToFloating')
-            if not SW['R_R'] or has_conv(c0): fp.alloc(F, cell)      # s_conv2, s_conv_first: gd = gi * gd2 + gd3
+            if not SW['R_R'] or has_conv(c0) and (c0.k == 'bin' or not CONV_ROOT_BIN_ONLY or
+                                                   c0.k == 'cast' and not getattr(F, 'fp_opassign', False)):
+                fp.alloc(F, cell)                            # s_conv2, s_conv_first: gd = gi * gd2 + gd3; a negated
+                                                             # conversion, or one an op= takes, has its long first (rstmt
+                                                             # rs_3_06_19_2: gd2 -= (double)gpi[1], the long at +0x14 above
+                                                             # the double; rs_4_00_15_1: gd = -(double)gc / 100.0)
             if c0.k == 'call':
                 cc = fp.Cell(c0.ty.size); fp.call_into(F, c0, ('cell', cc), arg_hint=cell); vals[first] = ('slot', cc.off)
             elif c0.k == 'cast' and c0.kind == 'IntegralToFloating':
@@ -241,6 +246,8 @@ def is_reset(F, st):
     if r.k == 'var' and r.decl.kind == 'local' and getattr(r.decl, 'slot', None) is None: return False
     if r.k == 'var' and e.l is not None and fpgen.strip(e.l).k == 'var' and fpgen.strip(e.l).decl is r.decl: return False   # gi = gi
     return is_memory(F, e.l) and is_memory(F, r)
+
+CONV_ROOT_BIN_ONLY = True
 
 _orig_get0 = fpgen.FrameAlloc.get0
 _orig_a_begin = fpgen.FrameAlloc.begin_stmt

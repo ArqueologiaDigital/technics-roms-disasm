@@ -2521,6 +2521,19 @@ cal ._fmul_d`). eval_val marks a `?:` it evaluates, and cond_into then writes bo
 other destination keeps the older path. fpgen.py only (research-scratch `edit_batch203_fpgen.py`). Ledger up 2 (rstmt
 none +6, -Xr +5), down 0; pairs MATCH 223; semcheck 50. Random unchanged, 190 / 72 / 133 / 59.
 
+**Batch 204 (2026-11-14): a conversion that an op= takes, or a negated one, writes its long above its double
+(CONV_ROOT_BIN_ONLY).** fpe3's root rule allocates the root's cell before the first operand when that operand contains
+an int-to-double conversion, so the double sits above its long (fp_stmts.c s_conv2, s_conv_first: `gd = gi * gd2 +
+gd3`). For an op= whose operand is the conversion itself, and for a negated conversion, the oracle takes the long first,
+above the double (rstmt rs_3_06_19_2: `gd2 -= (double)gpi[1]` -> `ld (XSP+0x14),XWA / lda XBC,XSP+0x14 /
+lda XWA,XSP+0xc / cal ._fld_dl`; rs_4_00_15_1: `gd = -(double)gc / 100.0`). The reservation now stays only for a
+binary first operand, or a bare conversion outside an op=; gen_assign marks an op= while it is built (F.fp_opassign).
+Re-enabling LONG_TOP was tried first: rstmt +7 / +5 / +6 / +5, but fp_stmts.c -5 / -5 and fp_temps.c, fpp11.c and
+random4 lost too, so it stays off. A middle version, the reservation for a binary operand only, lost s_conv2 and fpp11.c
+d11 (`gd4 = gi * gd5`, a bare conversion in a plain assignment). fpgen.py and fpe3.py only (research-scratch
+`edit_batch204_fpgen.py`, `edit_batch204_fpe3.py`). Ledger up 8 (fpopa.c +4 / +2 / +4 / +2, rstmt +2 / +1 / +2 / +1),
+down 0; pairs MATCH 223; semcheck 50. Random unchanged, 190 / 72 / 133 / 59.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
