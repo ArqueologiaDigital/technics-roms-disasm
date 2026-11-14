@@ -9166,6 +9166,11 @@ def gen_opassign(F, e):
         rc = fold(r)
         if F.opt and size == 4 and rc.k == 'const' and rc.value is not None and 0 <= rc.value < 0x10000:
             F.emit('lda', '%s,%s' % (FAM[T][4], hx(rc.value)))   # ai_l_g_and under -O3 -XS: lda XWA,0xff
+        elif OPA_IZ_OPERAND and strip(r).k == 'load' and regvar_of(strip(r).e) is not None and \
+                regvar_of(strip(r).e).reg in ('IZ', 'XIZ') and regvar_of(strip(r).e).ty.size == size and size in (2, 4) and \
+                not re.search(r'\bX?IZ\b', t):
+            F.emit(SIMPLE_OPS[op], '%s,%s' % (t, 'IZ' if size == 2 else 'XIZ')); return t   # the home register itself
+                                                           # (random r3_03_07 -Xr: gu2 ^= a with a in IZ -> xor (_gu2),IZ)
         else:
             n0 = len(F.lines); T_ = gen(F, r, T, size)
             if STORE_ADDR_GUARD and clobbers(F.lines[n0:], t):
@@ -10463,6 +10468,7 @@ REGVAR_CHAR_SHL1 = True                                   # see regvar_stmt: a c
 CHAIN_K_STATIC_XR = True                                  # see store_global: CHAIN_K_STATIC under -Xr too
 CALL_CHAR_EXTS_OPT = True                                 # see gen: -O widens a char call result in HL
 TEST_REG_RET = True                                       # see test_reg_reuse: a test followed by ret eq / ne
+OPA_IZ_OPERAND = True                                     # see gen_opassign: op= with an IZ-homed operand
 LIVE_SHIFT = True                                         # see gen_body_shift
 _SHIFT_PARTS = {'WA': ('XWA', 'QWA', 'WA', 'QW', 'QA', 'W', 'A'), 'BC': ('XBC', 'QBC', 'BC', 'QB', 'QC', 'B', 'C'),
                 'DE': ('XDE', 'QDE', 'DE', 'QD', 'QE', 'D', 'E')}

@@ -2705,6 +2705,11 @@ nothing between the two names XBC's family or reads the pointer through XWA. Led
 -Xr +2, rstmt +10 / +9), down 0; pairs MATCH 223; semcheck 50. Random 191 / 83 / 143 / 68; library 186 / 248 at
 -O3 -XS.
 
+**Batch 224 (2026-11-14): an op= with a variable homed in IZ / XIZ as its right side uses the home register directly
+(OPA_IZ_OPERAND).** Random r3_03_07 -Xr had every statement exact alone. In the function, `gu2 ^= a` with the parameter
+a homed in IZ is `xor (_gu2),IZ`; the model copied IZ to WA first. Ledger up 2 (random3 -Xr +1, -O3 -XS -Xr +1), down 0;
+pairs MATCH 223; semcheck 50. Random 191 / 83 / 144 / 69; library 186 / 248 at -O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
