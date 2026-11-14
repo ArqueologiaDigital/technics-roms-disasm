@@ -523,7 +523,7 @@ def mem_operand(F, e):
             if (pd_, off_) in mc_: return mc_[(pd_, off_)]
             P_ = pc_[pd_]
             return '(%s+%s)' % (P_, hx(off_)) if off_ else '(%s)' % P_
-        if REG_MEMBER and not F.opt and v.k == 'member' and v.arrow:
+        if REG_MEMBER and True and v.k == 'member' and v.arrow:
             pv = strip(v.base)                           # assign_expr.c ae_fl_chain (none): cp in XBC ->
             if pv.k == 'load' and regvar_of(pv.e) and regvar_of(pv.e).ty.size == 4:   # cpw (XBC+0x4),0x4 /
                 X = FAM[regvar_of(pv.e).reg][4]; off = member_offset(v)            # ld XBC,(XBC)
@@ -2692,7 +2692,7 @@ def lh_member_kinds(F, op, l, r):
     if (lk[0] == 'D') == (rk[0] == 'D'): return None
     dk, ok_, right = (rk, lk, True) if rk[0] == 'D' else (lk, rk, False)
     if ok_[0] not in ('K', 'G', 'M', 'P'): return None
-    if ok_[0] == 'K' and (op == '*' or (not right and not (LH_MEMBER_K and not F.opt))): return None
+    if ok_[0] == 'K' and (op == '*' or (not right and not (LH_MEMBER_K and True))): return None
     return dk, ok_, right
 
 def lh_member(F, op, l, r):
@@ -4591,7 +4591,7 @@ def _gen_bin_body(F, e, fam, size, then_ret, store=False):
         finally:
             F.cw_pins, F.cw_start, F.cw_opline = saved_
         if bw is not None: return bw
-    if K_MINUS_PTR and not F.opt and fam == 'WA' and not any_fam and size in (2, 4) and op == '-' and \
+    if K_MINUS_PTR and True and fam == 'WA' and not any_fam and size in (2, 4) and op == '-' and \
             fold(e.l).k == 'const' and fold(e.l).value is not None and not ({'WA', 'BC'} & set(live_regs(F))):
         try: kr_ = cw_kind(F, strip(e.r), size)
         except Unsupported: kr_ = None
@@ -5641,7 +5641,7 @@ def gen_mul_const(F, l, k, fam, size, signed=True):
     for i, b in enumerate(bits):
         run += 1
         if b == '1':
-            if run == 1 and MUL_K_DOUBLE_ADD and not F.opt: F.emit('add', '%s,%s' % (R, R))   # (rstmt rs_1_06_10_1: x * 6 ->
+            if run == 1 and MUL_K_DOUBLE_ADD and True: F.emit('add', '%s,%s' % (R, R))   # (rstmt rs_1_06_10_1: x * 6 ->
             else: F.emit('sla' if signed else 'sll', '%s,%s' % (hx(run), R))   # add XWA,XWA / add XWA,XBC / add XWA,XWA)
             F.emit('add', '%s,%s' % (R, x)); run = 0
     if run == 1: F.emit('add', '%s,%s' % (R, R))
@@ -5840,7 +5840,7 @@ def gen_long_helper(F, e, l, r, fam, signed):
                 F.emit('ld', 'XBC,(XBC)'); F.emit('cal', 'C9H_' + name)   # ld XWA,(_gpl) / ld XWA,(XWA+0xc) / add XWA,(_gl) /
                 return 'HL' if fam == 'HL' else move_to(F, 'XHL', fam, 4, keep=True)   # ld XBC,(XBC) / cal C9H_mulls)
             del F.lines[n0_:]
-    if (ls is None or rs is None) and LH_NESTED_K and not F.opt and e.op in ('/', '%') and \
+    if (ls is None or rs is None) and LH_NESTED_K and True and e.op in ('/', '%') and \
             fold(r).k == 'const' and fold(r).value is not None and not live_regs(F):
         li_ = strip(l)                                     # a helper's result as the left of another helper by a constant
         while li_.k == 'cast' and li_.ty is not None and li_.ty.size == 4: li_ = strip(li_.e)
@@ -8054,7 +8054,7 @@ def gen_load_mem(F, v, fam, size):
         ic = fold(i)
         if b.k == 'load' and ic.k == 'const':                      # p[k]: m_p_k
             pm = mem_operand(F, b)
-            if (getattr(F, 'u1_i', None) is not None or PTR_REG_DIRECT and not F.opt) and \
+            if (getattr(F, 'u1_i', None) is not None or PTR_REG_DIRECT and True) and \
                     pm in ('XBC', 'XDE', 'XHL', 'XIX', 'XIY'):   # (random r3_05_19: t[1], t a register temporary in XDE -> ld A,(XDE+0x1))
                 F.emit('ld', '%s,%s' % (R, '(%s+%s)' % (pm, hx(ic.value * esz)) if ic.value else '(%s)' % pm))
                 return fam                                 # cdecl oc_max: ld XDE,(XSP+0x4) / ld HL,(XDE)
@@ -8458,7 +8458,7 @@ def _lvalue_raw(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False, kind='sto
                 if im != 'WA': F.emit('ld', 'WA,%s' % im)
                 F.emit('extz', 'XWA'); F.emit('add', 'XWA,XWA') if esz == 2 else F.emit('sll', '0x2,XWA')
                 F.emit('ld', 'XBC,_%s' % b.decl.name); F.emit('add', 'XBC,XWA'); return '(XBC)'
-            if CHAR_IDX_BC and esz == 1 and im == 'BC' and not combine and not F.opt and ut_ is not None and \
+            if CHAR_IDX_BC and esz == 1 and im == 'BC' and not combine and True and ut_ is not None and \
                     ut_.size == 2 and ut_.signed and 'WA' not in live_regs(F) and unpromote(i).k == 'load' and \
                     getattr(regvar_of(strip(unpromote(i).e)), 'regtemp', False):
                 F.emit('lda', 'XWA,_%s' % b.decl.name); return '(XWA+BC)'   # (rstmt rs_4_01_03_4: gca[t] = 3 with t in
@@ -8883,7 +8883,7 @@ def gen_opassign(F, e):
         F.emit('ld', '%s,%s' % (FAM[work][size], t))      # stored through the quotient; r4_02_10: guca[t] /= 7 in (XWA))
         wide = FAM[work][4] if size == 2 else FAM[work][2]
         k2_ = int(rs, 16) if re.match(r'^0x[0-9a-f]+$', rs or '') else 0
-        if op == '*' and MULB_SHIFT and size == 1 and not signed and k2_ >= 2 and k2_ & (k2_ - 1) == 0 and not F.opt:
+        if op == '*' and MULB_SHIFT and size == 1 and not signed and k2_ >= 2 and k2_ & (k2_ - 1) == 0 and True:
             F.emit('sll', '%s,%s' % (hx(k2_.bit_length() - 1), FAM[work][1])); res = FAM[work][1]   # (random r3_02_02:
         elif op == '*':                                                                             #  guc *= 4 -> sll 0x2,A)
             F.emit('muls' if signed else 'mul', '%s,%s' % (wide, rs)); res = FAM[work][size]
@@ -9491,7 +9491,7 @@ def gen_stmt(F, s, last):
             size = F.f.ret.size
             if not has_helper_call(s.value) and F.pending:
                 flush_pops(F)                              # h_p, h_p_diff: inc 0x4,XSP / ld XHL,XIZ (none too)
-            if RET_TWO_LEVEL and not F.opt and not getattr(F, 'retd', 0) and not epi and ret_two_level(F, s.value, size): fam = 'HL'
+            if RET_TWO_LEVEL and True and not getattr(F, 'retd', 0) and not epi and ret_two_level(F, s.value, size): fam = 'HL'
             else: fam = gen(F, s.value, 'HL', size, then_ret=True)
             if fam != 'HL' and FAM[fam].get(size) != FAM['HL'][size]:
                 F.emit('ld', '%s,%s' % (FAM['HL'][size], FAM[fam].get(size, FAM[fam].get(2))))

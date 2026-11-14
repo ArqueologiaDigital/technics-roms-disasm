@@ -2208,6 +2208,14 @@ statements each and are relaxed together (3,277): CW_IZ_XWA, XIZ_PTR_MEM, K_MINU
 lvalue side, KOP_IN_PLACE. Ledger up 4 (random1 at -Xr 35 -> 37, random2 20 -> 21, idxloc.c 80 -> 81, rstmt), down 0;
 pairs MATCH 223; semcheck 54. Random 182 / 60 / 111 / 52.
 
+**Batch 172 (2026-11-14): nine more rules gated by `not F.opt` apply under -O.** The -O sweep re-run on the batch-171
+model (gate/xrtry3.sh over 87 rules; baselines 3,143 / 3,051; results in gate/xrtry-results-opt2-2026-11-14.txt).
+Nine rules lost at neither -O set and gained two or more statements; each kept the 1997 library at 186. Relaxed
+together they give 3,154 / 3,063: REG_MEMBER, the -O guard of lh_member_kinds (LH_MEMBER_K), K_MINUS_PTR,
+MUL_K_DOUBLE_ADD, LH_NESTED_K, PTR_REG_DIRECT, CHAR_IDX_BC's lvalue side, MULB_SHIFT, RET_TWO_LEVEL. Ledger up 9 with
+94 more exact functions (lhx.c +32 at both -O sets, evorder_lh.c +2 / +2, idxloc.c, random2, rstmt), down 0; pairs MATCH
+223 (one refusal reason changed: the table data's _malloc, still refused); semcheck 54. Random 182 / 61 / 111 / 52.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
