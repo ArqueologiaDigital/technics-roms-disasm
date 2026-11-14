@@ -1305,7 +1305,30 @@ def test_clobber_check(F, n0, n1, cond, arms, wide=False):
             if len(p_) == 2 and p_[0] not in ('cal', 'call') and 'X' + r_ in written_fams(p_[0], p_[1]):
                 if getattr(d, 'regtemp', False) and d.kind == 'local':
                     raise LiveClobber('the test writes %s, the home of %s that an arm reads' % (r_, d.name), d)
+                if TEST_IN_BC and r_ == 'WA' and d.kind == 'param' and F.adecl and not F.opt and test_to_bc(F, n0, n1): break
+                # (not under -O3 -XS -Xr: there the arm's own code wrote WA over the parameter too, rs_2_02_15_4)
                 raise Unsupported('the test writes %s, the home of the parameter %s that an arm reads' % (r_, d.name))
+
+TEST_IN_BC = True                                         # see test_to_bc
+
+def test_to_bc(F, n0, n1):
+    """-Xr: an if's test whose code writes WA, the home of a parameter an arm reads, is written in BC's family instead,
+    as the oracle does (rstmt .rs_3_01_02_1: if (gps->a[5] <= gs.a[7]) .. a .. with a in A -> ld XBC,(_gps) /
+    ld BC,(XBC+0x18) / cp BC,(_gs + 0x1c)).  Only when the test's code names no part of BC, does not call, and BC holds
+    no live variable.  True when the lines were rewritten."""
+    import re as _r
+    seg = F.lines[n0:n1]
+    if any(_r.search(r'\b(X?BC|QBC|[BC])\b', l) for l in seg if l): return False
+    if any(l and l.startswith(('\tcal', '\tcall')) for l in seg): return False
+    if 'BC' in live_regs_read(F): return False
+    wa_ = _r.compile(r'\b(XWA|QWA|WA|W|A)\b')
+    first_ = next((l for l in seg if l and wa_.search(l)), None)   # the test must write WA before reading it (a test
+    mf_ = _r.match(r'^\t(ld|lda)\t(XWA|WA|A),(.*)$', first_ or '')   # that reads the parameter in WA, ld XWA,(XWA),
+    if not mf_ or wa_.search(mf_.group(3)): return False          # cannot move: rs_1_07_19_2 was wrong code)
+    m = {'XWA': 'XBC', 'QWA': 'QBC', 'WA': 'BC', 'W': 'B', 'A': 'C'}
+    F.lines[n0:n1] = [_r.sub(r'\b(XWA|QWA|WA|W|A)\b', lambda x: m[x.group(1)], l) if l and l.startswith('\t') else l
+                      for l in seg]
+    return True
 
 IF_CONST_DEAD = True                                      # see gen_stmt's if
 

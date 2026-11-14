@@ -2282,6 +2282,17 @@ path and was refused ("register parameter as an lvalue"). It now goes through `e
 0x0 (random .r1_03_19 -Xr: `sra 0x8,XDE / sra 0x0,XDE`; that function then stops at another refusal). Ledger up 1
 (rstmt at -Xr 3,303 -> 3,304), down 0; pairs MATCH 223; semcheck 50. Random 183 / 61 / 123 / 54.
 
+**Batch 181 (2026-11-14): under -Xr an if's test that would write WA over a parameter an arm reads is written in BC's
+family (TEST_IN_BC, test_to_bc).** test_clobber_check refused such tests. The oracle writes them in BC's family
+(rstmt .rs_3_01_02_1: `if (gps->a[5] <= gs.a[7]) .. gca[a] ..` with a in A -> `ld XBC,(_gps) / ld BC,(XBC+0x18) /
+cp BC,(_gs + 0x1c)`). `test_to_bc` renames WA's family to BC's in the test's lines under four conditions: the lines
+name no part of BC and do not call; BC holds no live variable; and the test's first mention of WA is a write that does
+not read it. Semcheck shaped those conditions in two rounds. A first run also moved `ld XWA,(XWA)`, a test reading the
+parameter itself (rs_1_07_19_2), which gave four wrong-code verdicts. At -O3 -XS -Xr the moved test exposed arms whose
+own code writes WA over the parameter (rs_2_02_15_4, rs_4_02_11_3), which the refusal had masked, so the rename applies
+under -Xr without -O only. Ledger up 3 (rstmt at -Xr 3,304 -> 3,307, lhy.c 52 -> 56, random2 at -Xr 25 -> 26), down 0;
+pairs MATCH 223; semcheck 50. Random 183 / 61 / 124 / 54.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
