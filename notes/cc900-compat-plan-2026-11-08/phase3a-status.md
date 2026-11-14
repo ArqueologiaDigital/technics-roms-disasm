@@ -2269,6 +2269,13 @@ Ledger up 16 with 559 more exact functions (stdiv2.c 487 -> 640 at -Xr and 322 -
 +36, stvxc.c +20 / +24, stv.c, stvx.c, rstmt, the random corpora), down 0; pairs MATCH 223; semcheck 54 -> 50 (stv.c's
 sv_i_d_GG and sv_u_d_GG at both -Xr sets no longer compile wrongly). Random 183 / 61 / 122 / 54.
 
+**Batch 179 (2026-11-14): a computed write to a long homed in XIZ (HOMED_WRITES_GEN); cmpx_elem under -O.** A write
+`x = v` (no call) or `x op= v` (op a long helper's) to a long homed in XIZ was refused ("write to a variable homed in
+XIZ"). The oracle builds the value as any other and moves it in (random .r1_02_00 -Xr: `a %= 2L` -> `ld XWA,XIZ /
+ld XBC,0x2 / cal C9H_remls / ld XIZ,XHL`). `cmpx_elem`'s `F.opt` early return is lifted too: gate/run7.sh found +1 / +1
+rstmt at the -O sets, with the 1997 library at 186. Ledger up 6 (cmpx.c at -O3 -XS 409 -> 431, rstmt +1 at each set,
+random1 at -Xr 41 -> 42), down 0; pairs MATCH 223; semcheck 50. Random 183 / 61 / 123 / 54.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

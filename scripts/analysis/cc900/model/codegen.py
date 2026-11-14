@@ -2012,6 +2012,7 @@ CALL_LEFT_UNARY_WA = True                                 # see _gen_bin_body: f
 LH_ELEM_NOT_LEAF = True                                   # see plan_leaf
 LH_CALL_XR = True                                         # see plan_lh_call0: under -Xr too
 LH_IDX_BCDE = True                                        # see lh_call_kinds: a register-temporary index in BC or DE too
+HOMED_WRITES_GEN = True                                   # see regvar_stmt: a computed write to a long homed in XIZ
 
 def uncast_int(e):
     """e without its integral casts"""
@@ -6173,7 +6174,7 @@ def cmpx_elem(F, op, l, r, size):
     then the left operand is loaded into the accumulator and compared with the element (cx_l_c_GXc: lda XBC,_hca /
     ld A,(c) / ld XDE,0x0 / ld E,A / add XDE,XBC / ld A,(_gc) / cp A,(XDE)); == and != against a static member or
     constant element load the element and compare it with that memory operand instead.  True when emitted."""
-    if not CMPX or F.opt or False: return False
+    if not CMPX or False or False: return False
     rl = unpromote(r)
     if rl.k != 'load' or rl.ty is None or rl.ty.size != size: return False
     el = cmpx_index(F, rl.e)
@@ -10788,6 +10789,15 @@ def regvar_stmt(F, e):
             gen_call(F, r0); flush_pops(F)               # _strtok: s1 += strspn(s1, s2) -> cal _strspn /
             F.emit('extz' if not r0.ty.signed else 'exts', 'XHL')   # inc 0x8,XSP / extz XHL / add XIZ,XHL
             F.emit(SIMPLE_OPS[e.op], 'XIZ,XHL'); return True
+    if HOMED_WRITES_GEN and hz is not None and not live_regs(F) - {'XIZ'} and (
+            e.k == 'opassign' and e.op in ('*', '/', '%') and fold(e.r).k != 'const' or
+            e.k == 'opassign' and e.op in ('/', '%') or
+            e.k == 'bin' and e.op == '=' and strip(e.r).k != 'call' and not nodes_in(e.r, 'call')):
+        from frontend import N                             # the value built as any other, then moved into XIZ (random
+        v_ = e.r if e.k == 'bin' else N('bin', op=e.op, l=N('load', e=strip(e.l), ty=hz.ty), r=e.r, ty=hz.ty)
+        f_ = gen(F, v_, 'WA', 4)                           # .r1_02_00 -Xr: a %= 2L, a homed in XIZ -> ld XWA,XIZ /
+        if f_ not in FAM or 4 not in FAM[f_]: raise Unsupported('write to a variable homed in XIZ')   # ld XBC,0x2 /
+        F.emit('ld', 'XIZ,%s' % FAM[f_][4]); return True   # cal C9H_remls / ld XIZ,XHL)
     if HOMED_WRITES and hz is not None and e.k in ('bin', 'opassign'):
         raise Unsupported('write to a variable homed in XIZ')   # (its slot is not its home: wrong code)
     if e.k == 'bin' and e.op == '=' and regvar_of(e.l) and not F.opt and regvar_of(e.l).ty.is_ptr() and \
