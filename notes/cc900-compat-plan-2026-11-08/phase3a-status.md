@@ -2710,6 +2710,12 @@ nothing between the two names XBC's family or reads the pointer through XWA. Led
 a homed in IZ is `xor (_gu2),IZ`; the model copied IZ to WA first. Ledger up 2 (random3 -Xr +1, -O3 -XS -Xr +1), down 0;
 pairs MATCH 223; semcheck 50. Random 191 / 83 / 144 / 69; library 186 / 248 at -O3 -XS.
 
+**Batch 225 (2026-11-14): a char pointer sum is built in its register temporary's home (PTR_SUM_IN_HOME).** Random
+r3_00_05 had every statement exact alone. In the function, `char *u = gs.p + t`, with t homed in IZ and u a register
+temporary in XBC, is `ld BC,IZ / extz XBC / add XBC,(_gs + 0xa)`, at none and at -Xr; the model built the sum in XWA
+and moved it. A char pointer in memory plus an int index held in a register is now built directly in the BC / DE home,
+without -O. Ledger up 2 (random3 none +1, -Xr +1), down 0; pairs MATCH 223; semcheck 50. Random 192 / 83 / 145 / 69.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

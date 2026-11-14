@@ -10469,6 +10469,7 @@ CHAIN_K_STATIC_XR = True                                  # see store_global: CH
 CALL_CHAR_EXTS_OPT = True                                 # see gen: -O widens a char call result in HL
 TEST_REG_RET = True                                       # see test_reg_reuse: a test followed by ret eq / ne
 OPA_IZ_OPERAND = True                                     # see gen_opassign: op= with an IZ-homed operand
+PTR_SUM_IN_HOME = True                                    # see regvar_stmt: a char pointer sum built in its home
 LIVE_SHIFT = True                                         # see gen_body_shift
 _SHIFT_PARTS = {'WA': ('XWA', 'QWA', 'WA', 'QW', 'QA', 'W', 'A'), 'BC': ('XBC', 'QBC', 'BC', 'QB', 'QC', 'B', 'C'),
                 'DE': ('XDE', 'QDE', 'DE', 'QD', 'QE', 'D', 'E')}
@@ -11396,6 +11397,18 @@ def regvar_stmt(F, e):
             (strip(e.r).k == 'bin' and strip(e.r).op in '+-' or
              strip(e.r).k == 'addr' and getattr(regvar_of(e.l), 'regtemp', False)) and regvar_of(e.l).reg != 'WA':
         d = regvar_of(e.l)                             # va_start without -O: lda XWA,XSP+0x4 / inc 0x2,XWA /
+        r0_ = strip(e.r)                                # (a char pointer in memory plus an int index in a register
+        if PTR_SUM_IN_HOME and r0_.k == 'bin' and r0_.op == '+' and d.reg in ('BC', 'DE') and \
+                r0_.ty.base is not None and r0_.ty.base.size == 1:   # is built in the home: random r3_00_05,
+            pl_, ix_ = strip(r0_.l), strip(r0_.r)       # char *u = gs.p + t with t in IZ -> ld BC,IZ / extz XBC /
+            while ix_.k == 'cast' and ix_.kind == 'IntegralCast': ix_ = strip(ix_.e)   # add XBC,(_gs + 0xa))
+            pm_ = mem_operand(F, pl_) if pl_.k == 'load' else None
+            iv_ = regvar_of(ix_.e) if ix_.k == 'load' else None
+            if pm_ is not None and pm_.startswith('(_') and iv_ is not None and iv_.reg in ('IZ', 'WA', 'BC', 'DE', 'HL') and \
+                    iv_.ty.size == 2 and iv_.reg != d.reg:
+                R16 = FAM[d.reg][2]; R32 = FAM[d.reg][4]
+                F.emit('ld', '%s,%s' % (R16, 'IZ' if iv_.reg == 'IZ' else FAM[iv_.reg][2]))
+                F.emit('exts' if iv_.ty.signed else 'extz', R32); F.emit('add', '%s,%s' % (R32, pm_)); return True
         f2 = gen(F, e.r, 'WA', 4)                       # ld XBC,XWA
         m_ = re.match(r'^\tinc\t(0x[0-9a-f]+),XWA$', F.lines[-1]) if F.lines else None
         if F.opt and f2 == 'WA' and m_ and getattr(d, 'regtemp', False):   # -O: lda XBC,XWA+0x1 (lo_p_Bgs O3XS)
