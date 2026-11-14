@@ -6577,6 +6577,7 @@ UIDX32_EXPR = True                                        # see elem_addr (r3_04
 CHAR_PRODUCT_DIV_GUARD = True                             # see gen_bin (r3_07_12)
 VALUE_FIRST_CHIDX = True                                  # see gen_stmt's assignment (r1_02_19)
 POP_LAZY = True                                           # see stmt_touches_stack
+UNREAD_PARAM_WRITTEN = True                               # see compile_function_once: a register parameter only assigned
 POP_OPT_FRAME = True                                      # see stmt_touches_stack: -O addresses the frame past pending pops
 POP_LAZY_NEXT_ASSIGN = True                               # see regvar_stmt: the next statement x = f(args)
 POP_LAZY_REGVAR_OPT = True                                # see regvar_stmt: a register local's call initialiser (r2_04_18)
@@ -15642,6 +15643,12 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
     if UNREAD_PARAM_DEAD and F.adecl:                      # a register parameter the body never reads is dead from
         for p_ in f.params:                                # the entry (-Xr: its register is free)
             if getattr(p_, 'reg', None) in ('WA', 'BC', 'DE') and not uses_decl(f.body, p_): F.dead.add(p_)
+            elif UNREAD_PARAM_WRITTEN and getattr(p_, 'reg', None) in ('WA', 'BC', 'DE') and not F.opt:
+                tg_ = set(); al_ = []                      # only ever assigned whole (random r1_06_02 -Xr: a = gl2 = gl):
+                walk(f.body, lambda n, dep: tg_.add(id(strip(n.l))) if n.k == 'bin' and n.op == '=' and   # dead from
+                     strip(n.l).k == 'var' and strip(n.l).decl is p_ else None)                           # the entry too
+                walk(f.body, lambda n, dep: al_.append(id(n)) if n.k == 'var' and n.decl is p_ else None)
+                if al_ and all(x in tg_ for x in al_): F.dead.add(p_)
     F.guard_armed = True                                   # the live-parameter guard, from the real body on (the
     gen_stmt(F, f.body, True)                              # planners' trial code runs with the registers undecided)
     if getattr(F, 'sd4', None) and F.sd4['need'][0] == 'lx5' and not F.sd4.get('done'):

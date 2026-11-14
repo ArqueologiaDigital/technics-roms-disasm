@@ -2449,6 +2449,16 @@ count. A call stored into a slot keeps the pops pending when a later call absorb
 the oracle's -O reuse of gk. Ledger up 2 (rstmt -O3 -XS +1, fpp11.c +1), down 0; pairs MATCH 223; semcheck 50. Random
 unchanged, 189 / 72 / 131 / 59; library 186 / 248 at -O3 -XS.
 
+**Batch 198 (2026-11-14): -Xr, a register parameter the body only ever assigns whole is dead from the entry
+(UNREAD_PARAM_WRITTEN).** Batch 181's UNREAD_PARAM_DEAD freed a register parameter that the body never mentions. A
+parameter that appears only as the target of `=` is no more read than one that does not appear at all. In random
+r1_06_02 -Xr (`long a; .. a = gl2 = gl; return 4`) the oracle uses XWA from the first statement, while the model kept
+a live in WA and refused ("over the live parameter a in WA"). The function now compiles. It still differs in where the
+long t lives: the oracle homes it in XIZ across the long helper `C9H_remlu`, which the model does not count as a call
+when it decides homes. A refinement of batch 192 that would have kept a home for a candidate not live across the double
+op= found no candidate here and was dropped. Ledger up 1 (rstmt -Xr +1), down 0; pairs MATCH 223; semcheck 50. Random
+unchanged, 189 / 72 / 131 / 59.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
