@@ -2473,6 +2473,17 @@ WA" and "array base over a live register" are separate refusals not yet routed t
 is still treated as live (rs_2_01_05_1's else arm comes out in BC where the oracle uses A: different, but correct).
 Ledger up 2 (rstmt -Xr +7, -O3 -XS -Xr +7), down 0; pairs MATCH 223; semcheck 50. Random unchanged, 189 / 72 / 131 / 59.
 
+**Batch 200 (2026-11-14): -Xr, LIVE_SHIFT for declarations too (LIVE_SHIFT_DECL).** A declaration with an initialiser is
+generated inline by the block loop, not through gen_stmt's wrapper, so batch 199 never saw one. gen_block_shift wraps
+blocks under -Xr. When a block is refused at a declaration that writes over a live register parameter the declaration
+does not use, the block is generated again from its start with that declaration marked. The loop then generates the
+declaration with the parameter waived, and renames its lines when the next statement begins (up to eight declarations
+per block). A first run renamed rstmt .rs_3_05_08_2's `unsigned char t = juc`, where the model's register temporary t
+sat in A beside the live parameter, to `ld C,(_juc)`; t's later reads of A were wrong code (one semcheck verdict). So
+shift_rename now refuses whenever the statement defines a variable with a register home, and batch 199's path follows
+the same rule. Ledger up 2 by 16 (cmpordl2.c -Xr +14, rstmt -Xr +2), down 0; pairs MATCH 223; semcheck 50. Random
+unchanged, 189 / 72 / 131 / 59.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

@@ -9472,7 +9472,10 @@ def gen_stmt(F, s, last):
         i = 0
         if s is F.f.body and getattr(F, 'guard_armed', False): F.guard_on = True   # (after the prologue, real pass only)
         while i < len(body):
+            shift_decl_close(F)
             c = body[i]; F.cur_stmt = c; F.cur_rest = body[i + 1:]   # (cur_rest: the innermost block's remainder)
+            if id(c) in getattr(F, 'shift_decl', {}):      # (LIVE_SHIFT_DECL: this declaration's lines are renamed
+                F.shift_free = {F.shift_decl[id(c)]}; F.shift_open = (len(F.lines), F.shift_decl[id(c)], c)   # when it ends)
             if s is F.f.body:
                 F.top_cur = c; F.top_rest = body[i + 1:]
                 for d_ in F.f.decls:                       # a register temporary is free once nothing after it reads it
@@ -9732,6 +9735,7 @@ def gen_stmt(F, s, last):
             F.trivial_ret_next = trivial
             gen_stmt(F, c, (last and i == len(body) - 1) or trivial); i += 1
             if not getattr(F, 'cl_active', None): F.cl_tmp_done = False
+        shift_decl_close(F)
         return
     if s.k == 'decl': raise Unsupported('decl')
     if s.k == 'return' and s.value is not None and getattr(F, 'u1_bcse', False) and F.f.ret.size == 1 and \
@@ -10327,26 +10331,75 @@ def gen_body_shift(F, s, last):
         except Unsupported:
             F.shift_free = set(); restore(); raise ex
         F.shift_free = set()
-        new = F.lines[n0:]
-        if any(l and (l.startswith(('\tcal', '\tcall', '\tswi')) or re.search(r'\t(ldir|lddr|ldi|ldd|cpir|cpdr)', l) or 'C9H_' in l)
-               for l in new):
-            restore(); raise ex
-        avoid = {x.reg for x in list(F.f.params) + list(F.f.decls) if getattr(x, 'reg', None) in _SHIFT_PARTS and
-                 (x is d or x not in F.dead)}
-        def fam_re(f_): return re.compile(r'\b(%s)\b' % '|'.join(_SHIFT_PARTS[f_]))
-        used = [f_ for f_ in ('WA', 'BC', 'DE') if any(l and fam_re(f_).search(l) for l in new)]
-        free = [f_ for f_ in ('WA', 'BC', 'DE') if f_ not in avoid]
-        if len(used) > len(free) or any(l and re.search(r'\b(X?HL|H|L)\b', l) for l in new) and 'HL' in avoid:
-            restore(); raise ex
-        mp = {}
-        for a_, b_ in zip(used, free):
-            for pa, pb in zip(_SHIFT_PARTS[a_], _SHIFT_PARTS[b_]): mp[pa] = pb
-        allp = re.compile(r'\b(%s)\b' % '|'.join(x for f_ in used for x in _SHIFT_PARTS[f_]))
-        new2 = [allp.sub(lambda m_: mp[m_.group(1)], l) if l and l.startswith('\t') else l for l in new]
-        if any(l and fam_re(d.reg).search(l) for l in new2):
-            restore(); raise ex
+        new2 = shift_rename(F, F.lines[n0:], d, s)
+        if new2 is None: restore(); raise ex
         F.lines[n0:] = new2
         return r_
+
+LIVE_SHIFT_DECL = True                                    # see shift_decl_close
+
+def shift_decl_close(F):
+    """a declaration generated with its live parameter waived (F.shift_open): rename its lines, or refuse"""
+    so = getattr(F, 'shift_open', None)
+    if so is None: return
+    F.shift_open = None; F.shift_free = set()
+    n0, d, st = so
+    new2 = shift_rename(F, F.lines[n0:], d, st)
+    if new2 is None: raise Unsupported('a declaration over the live parameter %s that its registers cannot shift past' % d.name)
+    F.lines[n0:] = new2
+
+def gen_block_shift(F, s, last):
+    """-Xr: a block refused at a declaration that writes over a live register parameter it does not use: the block
+    again, that declaration generated with the parameter waived and renamed (random r2_09_01: int t = !((unsigned
+    long)gs.u) with a in WA -> ld BC,(_gs + 0x8) / extz XBC / or XBC,XBC / scc eq,BC / ld HL,BC)"""
+    import copy as _cp
+    snap = {k: (_cp.copy(v) if isinstance(v, (list, set, dict)) else v) for k, v in F.__dict__.items()}
+    marks = {}
+    for _ in range(8):
+        try:
+            F.shift_decl = dict(marks)
+            r_ = _gen_stmt_body(F, s, last)
+            F.shift_decl = {}
+            return r_
+        except Unsupported as ex:
+            m = re.search(r'over the live parameter (\w+) in (WA|BC|DE)$', str(ex))
+            c = getattr(F, 'cur_stmt', None)
+            d = next((x for x in F.f.params if m and x.name == m.group(1)), None)
+            if not m or d is None or c is None or c.k != 'decl' or getattr(c, 'init', None) is None or \
+                    uses_decl(c, d) or id(c) in marks:
+                raise
+            marks[id(c)] = d
+            F.__dict__.clear(); F.__dict__.update({k: (_cp.copy(v) if isinstance(v, (list, set, dict)) else v) for k, v in snap.items()})
+    raise Unsupported('too many declarations to shift')
+
+def shift_rename(F, new, d, st=None):
+    """LIVE_SHIFT's renaming of a statement's lines past the live parameter d; None when it cannot (also when a
+    family it would rename is the home of a variable the statement st defines: rstmt .rs_3_05_08_2, unsigned char t =
+    juc with t a register temporary in A -- renamed to C, t's later reads of A were wrong code)"""
+    if st is not None:
+        defs = set()
+        if st.k == 'decl': defs.add(st.var)
+        walk(st, lambda n, dep: defs.add(strip(n.l).decl) if (n.k == 'opassign' or n.k == 'bin' and n.op == '=') and
+             strip(n.l).k == 'var' else defs.add(strip(n.e).decl) if n.k == 'incdec' and strip(n.e).k == 'var' else None)
+        if any(getattr(x, 'reg', None) is not None for x in defs): return None
+    if any(l and (l.startswith(('\tcal', '\tcall', '\tswi')) or re.search(r'\t(ldir|lddr|ldi|ldd|cpir|cpdr)', l) or 'C9H_' in l)
+           for l in new):
+        return None
+    avoid = {x.reg for x in list(F.f.params) + list(F.f.decls) if getattr(x, 'reg', None) in _SHIFT_PARTS and
+             (x is d or x not in F.dead)}
+    def fam_re(f_): return re.compile(r'\b(%s)\b' % '|'.join(_SHIFT_PARTS[f_]))
+    used = [f_ for f_ in ('WA', 'BC', 'DE') if any(l and fam_re(f_).search(l) for l in new)]
+    free = [f_ for f_ in ('WA', 'BC', 'DE') if f_ not in avoid]
+    if len(used) > len(free) or any(l and re.search(r'\b(X?HL|H|L)\b', l) for l in new) and 'HL' in avoid:
+        return None
+    mp = {}
+    for a_, b_ in zip(used, free):
+        for pa, pb in zip(_SHIFT_PARTS[a_], _SHIFT_PARTS[b_]): mp[pa] = pb
+    if not used: return list(new)
+    allp = re.compile(r'\b(%s)\b' % '|'.join(x for f_ in used for x in _SHIFT_PARTS[f_]))
+    new2 = [allp.sub(lambda m_: mp[m_.group(1)], l) if l and l.startswith('\t') else l for l in new]
+    if any(l and fam_re(d.reg).search(l) for l in new2): return None
+    return new2
 
 def gen_stmt(F, s, last):
     """gen_stmt with F.in_return raised while a return statement (at any depth) is generated: the live-local guard
@@ -10355,7 +10408,9 @@ def gen_stmt(F, s, last):
     n_ms_ = len(F.lines)
     try:
         r_ = gen_body_shift(F, s, last) if LIVE_SHIFT and F.adecl and s.k in ('expr', 'return', 'decl') and \
-            not getattr(F, 'shift_free', None) else _gen_stmt_body(F, s, last)
+            not getattr(F, 'shift_free', None) else \
+            gen_block_shift(F, s, last) if LIVE_SHIFT_DECL and F.adecl and s.k == 'block' and \
+            not getattr(F, 'shift_free', None) and not getattr(F, 'shift_decl', None) else _gen_stmt_body(F, s, last)
         if BASE_HOIST and F.opt and s.k in ('expr', 'return', 'decl'): base_hoist(F, s, n_ms_)
         if MEMBER_STORE_SWAP and True and s.k == 'expr' and \
                 (s.e.k == 'opassign' or s.e.k == 'bin' and s.e.op == '=') and len(F.lines) - n_ms_ >= 4:
