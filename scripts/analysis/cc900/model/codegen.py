@@ -1745,7 +1745,9 @@ def lh_call_kinds(F, op, l, r):
         while x0.k == 'cast' and x0.kind in ('IntegralCast', 'NoOp', 'BitCast'): x0 = strip(x0.e)
         return x0.k == 'call' and not x0.args
     L, R = lk[0], rk[0]
-    def elem_ok(k): return k[0] != 'X' or (len(k) >= 4 and isinstance(k[2], str) and (k[2].startswith('(') or LH_IDX and k[2] in ('WA', 'HL')) and k[3])
+    def elem_ok(k): return k[0] != 'X' or (len(k) >= 4 and isinstance(k[2], str) and (k[2].startswith('(') or LH_IDX and k[2] in
+                                           (('WA', 'HL', 'BC', 'DE') if LH_IDX_BCDE else ('WA', 'HL'))) and k[3])   # (lhy.c
+                                           # lyi_l_d_iTgG: i in DE -> ld (XSP+0x4),DE)
     if not (elem_ok(lk) and elem_ok(rk)): return None
     if LH_ELEM and 'X' in (L, R):
         o = L if R == 'X' else R
@@ -2005,6 +2007,8 @@ CW_IZ_XWA = True                                          # see bin_wide: a byte
 CHAIN_STATIC_WA = True                                    # see gen_assign_value: a chained store into a static element
 SHIFT1_MEM = True                                         # see gen_stmt: a byte or word shifted by one in memory
 CALL_LEFT_UNARY_WA = True                                 # see _gen_bin_body: f(..) op -x computes -x in WA
+LH_ELEM_NOT_LEAF = True                                   # see plan_leaf
+LH_IDX_BCDE = True                                        # see lh_call_kinds: a register-temporary index in BC or DE too
 
 def uncast_int(e):
     """e without its integral casts"""
@@ -13025,6 +13029,17 @@ def plan_leaf(F):
             temps_ptr.append(n)                            # .c_sum: p[i] in a loop needs a free address register
         if F.opt and n.k == 'bin' and n.op == '=' and store_through_temp(n): temps_bc.append(n)   # _strset
     walk(f.body, visit)
+    if LH_ELEM_NOT_LEAF and not F.opt and not F.adecl:      # a long helper with an element at a variable index is
+        def lhx_(n):                                       # plan_lh_call's (slot, XIZ): not a leaf (lhy.c lyi_l_d_iTgG:
+            if not long_helper_node(n): return False       # int i = gi; if (vla[i] != 0) gl = vl / vla[i] -> i in DE,
+            for x in (n.l, n.r):                           # ld (XSP+0x4),DE / .. / lda XIZ,_vla / ld XBC,(XIZ+BC))
+                x = strip(x)
+                while x.k == 'cast': x = strip(x.e)
+                if x.k == 'load' and strip(x.e).k == 'index' and fold(strip(x.e).idx).k != 'const': return True
+            return False
+        hx_ = []
+        walk(f.body, lambda n, d: hx_.append(n) if lhx_(n) else None)
+        if hx_: return False
     if F.opt and PTR_KLOOP and not has_call:
         lps = []
         walk(f.body, lambda n, d: lps.append(n) if n.k in ('for', 'while', 'do') else None)

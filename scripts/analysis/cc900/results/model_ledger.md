@@ -201,7 +201,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-12-5-micro-stdiv, v423/O3XS                             | probes/stdiv.c       | 698 / 750 exact (93.1%)    |
 | run 2026-11-12-5-micro-stdiv, v423/Xr                               | probes/stdiv.c       | 190 / 750 exact (25.3%)    |
 | run 2026-11-12-5-micro-stdiv, v423/O3XSXr                           | probes/stdiv.c       | 178 / 750 exact (23.7%)    |
-| run 2026-11-12-6-micro-lhidx, v423/none                             | probes/lhidx.c       | 122 / 150 exact (81.3%)    |
+| run 2026-11-12-6-micro-lhidx, v423/none                             | probes/lhidx.c       | 128 / 150 exact (85.3%)    |
 | run 2026-11-12-6-micro-lhidx, v423/O3XS                             | probes/lhidx.c       | 68 / 150 exact (45.3%)     |
 | run 2026-11-12-6-micro-lhidx, v423/Xr                               | probes/lhidx.c       | 0 / 150 exact (0.0%)       |
 | run 2026-11-12-6-micro-lhidx, v423/O3XSXr                           | probes/lhidx.c       | 0 / 150 exact (0.0%)       |
@@ -271,7 +271,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-13-10-micro-chararith2, v423/O3XS                       | probes/chararith2.c  | 357 / 576 exact (62.0%)    |
 | run 2026-11-13-10-micro-chararith2, v423/Xr                         | probes/chararith2.c  | 334 / 576 exact (58.0%)    |
 | run 2026-11-13-10-micro-chararith2, v423/O3XSXr                     | probes/chararith2.c  | 333 / 576 exact (57.8%)    |
-| run 2026-11-13-11-micro-lhy, v423/none                              | probes/lhy.c         | 128 / 360 exact (35.6%)    |
+| run 2026-11-13-11-micro-lhy, v423/none                              | probes/lhy.c         | 144 / 360 exact (40.0%)    |
 | run 2026-11-13-11-micro-lhy, v423/O3XS                              | probes/lhy.c         | 48 / 360 exact (13.3%)     |
 | run 2026-11-13-11-micro-lhy, v423/Xr                                | probes/lhy.c         | 0 / 360 exact (0.0%)       |
 | run 2026-11-13-11-micro-lhy, v423/O3XSXr                            | probes/lhy.c         | 0 / 360 exact (0.0%)       |

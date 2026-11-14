@@ -2243,6 +2243,15 @@ builds the operand in WA, applies the operator there with HL as source, and move
 negated in BC and wrote `and HL,BC`). Ledger up 1 (rstmt at none 3,572 -> 3,573), down 0; pairs MATCH 223; semcheck
 54. Random 183 / 61 / 116 / 53.
 
+**Batch 176 (2026-11-14): a guarded long helper with an element at a local index reaches plan_lh_call
+(LH_ELEM_NOT_LEAF, LH_IDX_BCDE).** The random corpora's typical shape is `int i = gi; if (vla[i] != 0) gl = vl /
+vla[i];`, lhy.c's iTg rows (0 of 32 exact). Two things kept it from batch 13x's slot-and-XIZ machinery (plan_lh_call,
+lh_elem). First, `plan_leaf` took the function as a leaf: it ignores a helper outside a loop, and i is read twice. A
+function whose long helper has an element operand at a variable index is no longer a leaf. Second, `lh_call_kinds`
+accepted a register-temporary index only in WA / HL, while the oracle keeps i in DE (`ld DE,(_gi)` for the test, then
+`ld (XSP+0x4),DE` into the helper's slot). Ledger up 2 (lhy.c at none 128 -> 144: rows G, X, J, D of iTg; lhidx.c
+122 -> 128), down 0; pairs MATCH 223; semcheck 54. Random unchanged, 183 / 61 / 116 / 53.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
