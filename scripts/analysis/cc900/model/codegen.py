@@ -3711,6 +3711,9 @@ def push_elem(F, x):
     if ib.ty.size == 1 and not ib.ty.signed:
         F.emit('ld', 'A,%s' % m); F.emit('extz', 'WA'); F.emit('add', 'WA,WA'); F.emit('lda', 'XBC,%s' % sym); return '(XBC+WA)'
     if ib.ty.size == 1:
+        if CHAR_IDX_ONCE_OPT and F.opt and m.startswith('('):   # -O: the index read once, through C (rstmt rs_2_02_05_1:
+            F.emit('ld', 'C,%s' % m); F.emit('ld', 'A,C'); F.emit('add', 'A,C')   # v2(gia[a], gi) -> ld C,(XSP+0x6) /
+            F.emit('lda', 'XBC,%s' % sym); return '(XBC+A)'                    # ld A,C / add A,C / lda XBC,_gia)
         F.emit('ld', 'A,%s' % m); F.emit('add', 'A,%s' % m); F.emit('lda', 'XBC,%s' % sym); return '(XBC+A)'
     return None
 
@@ -5735,6 +5738,9 @@ def gen_ptr_arith(F, e, fam, size):
             esz == 2 and e.op == '+' and R == 'XWA' and re.match(r'^\(_\w+\)$', pm) and 'BC' not in live_regs(F) and \
             not getattr(F, 'in_return', False) and not getattr(F, 'ptr_arg_ctx', False):
         init_ = any(c_.init is not None and strip(c_.init) is e for c_ in nodes_in(F.f.body, 'decl')) or getattr(e, 'from_local', False) or getattr(e, 'from_local2', False)
+        if CHAR_IDX_ONCE_OPT and F.opt and init_ and im.startswith('('):   # -O: straight into C (rstmt rs_1_07_17_1
+            F.emit('ld', 'C,%s' % im); F.emit('extz', 'BC'); F.emit('add', 'BC,BC')   # -O3 -XS: ld C,(XSP+0x4) / extz BC /
+            F.emit('ld', 'XWA,%s' % pm); F.emit('lda', 'XWA,XWA+BC'); return fam     # add BC,BC / ld XWA,(_gpi) / lda ..)
         if im != 'A': F.emit('ld', 'A,%s' % im)            # an int pointer plus an unsigned char: scaled at 16 bits.
         F.emit('extz', 'WA')                               # Stored: the pointer in XBC and the index sign-extended
         if init_:                                          # (rstmt rs_3_09_01_4: gpi = gpi + b -> ld A,(b) / extz WA /
@@ -10366,6 +10372,7 @@ BIN_PTR_RIGHT_BC = True                                   # see bin_wide: memory
 POP_LONE_CALL = True                                      # see gen: a statement's only call pops at once
 K_FOLD_REGTEMP_OPT = True                                 # see gen_stmt's block: -O folds a register temporary's constant
 JUMP_TO_RET_OPT = True                                    # see compile_function_once: -O, j L to a bare ret
+CHAR_IDX_ONCE_OPT = True                                  # see push_elem: -O reads a char index once, through C
 LIVE_SHIFT = True                                         # see gen_body_shift
 _SHIFT_PARTS = {'WA': ('XWA', 'QWA', 'WA', 'QW', 'QA', 'W', 'A'), 'BC': ('XBC', 'QBC', 'BC', 'QB', 'QC', 'B', 'C'),
                 'DE': ('XDE', 'QDE', 'DE', 'QD', 'QE', 'D', 'E')}

@@ -2570,6 +2570,15 @@ r` after the switch, nothing to compute), the oracle keeps the jumps. The rule n
 (JUMP_TO_RET, conditional jumps) is unchanged. Ledger up 2 (rstmt +8 / +4 at the -O sets), down 0; pairs MATCH 223;
 semcheck 50. Random unchanged, 191 / 75 / 133 / 62; library 186 / 248 at -O3 -XS.
 
+**Batch 209 (2026-11-14): -O reads a char index once, through C (CHAR_IDX_ONCE_OPT).** Eleven rstmt statements at
+-O3 -XS began `ld C,(XSP+K)` in the oracle where the model wrote `ld A,(XSP+K)`. Under -O the oracle reads a char
+parameter used as an index once, into C. Pushing an int element at a signed char index: rs_2_02_05_1 `v2(gia[a], gi)` ->
+`pushw (_gi) / ld C,(XSP+0x6) / ld A,C / add A,C / lda XBC,_gia / pushw (XBC+A)`. An int pointer plus an unsigned char
+as a local's initialiser: rs_1_07_17_1 `int *t = gpi + a` -> `ld C,(XSP+0x4) / extz BC / add BC,BC / ld XWA,(_gpi) /
+lda XWA,XWA+BC`. Without options the memory forms hold. The same form at the element-load site changed nothing and was
+not kept. Ledger up 1 (rstmt -O3 -XS +5), down 0; pairs MATCH 223; semcheck 50. Random unchanged, 191 / 75 / 133 / 62;
+library 186 / 248 at -O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
