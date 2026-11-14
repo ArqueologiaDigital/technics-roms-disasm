@@ -6577,6 +6577,7 @@ UIDX32_EXPR = True                                        # see elem_addr (r3_04
 CHAR_PRODUCT_DIV_GUARD = True                             # see gen_bin (r3_07_12)
 VALUE_FIRST_CHIDX = True                                  # see gen_stmt's assignment (r1_02_19)
 POP_LAZY = True                                           # see stmt_touches_stack
+POP_OPT_FRAME = True                                      # see stmt_touches_stack: -O addresses the frame past pending pops
 POP_LAZY_NEXT_ASSIGN = True                               # see regvar_stmt: the next statement x = f(args)
 POP_LAZY_REGVAR_OPT = True                                # see regvar_stmt: a register local's call initialiser (r2_04_18)
 POP_LAZY_OPT = True                                       # the same under -O (random r1_01_03 -O3 -XS: inc 0x8,XSP after _rl)
@@ -6609,8 +6610,11 @@ def stmt_touches_stack(F, e):
                                                            # its address is taken past the pending pops (random r1_06_10:
                                                            # *gp = rc(7); gd = t; gul = rul(..) -> cal _rc / .. /
                                                            # lda XBC,XSP+0x2 / lda XWA,_gd / cal ._fld_dd / .. / inc 0x6,XSP)
-    def v(n, d):
-        if n.k == 'var' and n.decl.kind in ('param', 'local') and not getattr(n.decl, 'reg', None): hit.append(n)
+    frame_ok = POP_OPT_FRAME and F.opt and not F.adecl   # -O: a frame slot is addressed past the pending pushes
+    def v(n, d):                                           # (homes2a.c R25: b = g1(1); a = ..; c = gk -> cal _g1 /
+                                                           #  ld (XSP+0x6),HL / .. / ld (XSP+0x8),WA, popped later)
+        if n.k == 'var' and n.decl.kind in ('param', 'local') and not getattr(n.decl, 'reg', None):
+            if not frame_ok: hit.append(n)
         elif fpgen.is_fp_op(n) or fpgen.is_fp(getattr(n, 'ty', None)): hit.append(n)
         elif n.k == 'bin' and n.op in ('*', '/', '%') and getattr(n, 'ty', None) is not None and n.ty.size == 4: hit.append(n)
     if hasattr(e, 'k'): v(e, 0); walk(e, v)
@@ -10240,8 +10244,10 @@ def gen_stmt(F, s, last):
             nx = getattr(F, 'next_stmt', None); nxe = strip(nx.e) if nx is not None and nx.k == 'expr' else None
             nxc = strip(nxe.r) if nxe is not None and nxe.k == 'bin' and nxe.op == '=' else nxe
             while nxc is not None and nxc.k == 'cast': nxc = strip(nxc.e)
-            if not (nxc is not None and nxc.k == 'call' and nxc.args):   # _strstr: len1 = strlen(s1); len2 = strlen(s2)
-                flush_pops(F)                                            # -> the pops merge (inc 0x8,XSP)
+            if not (nxc is not None and nxc.k == 'call' and nxc.args) and \
+                    not (POP_OPT_FRAME and F.opt and not F.adecl and later_call_absorbs(F)):   # (-O: homes2a.c R25)
+                flush_pops(F)                                            # _strstr: len1 = strlen(s1); len2 = strlen(s2)
+                                                                         # -> the pops merge (inc 0x8,XSP)
             t = lvalue(F, lv)                                   # (the slot's offset after the pending pushes)
             F.emit('ld', '%s,%s' % (t, FAM['HL'][size])); return   # ld (XSP+0x2),XHL
         if getattr(F, 'store_val_reg', None) and getattr(F, 'ptr_cache', None):

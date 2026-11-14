@@ -2440,6 +2440,15 @@ cal _g0`). It was the largest first-difference group of homes2a.c at -O3 -XS, 29
 (homes2a.c +1 / +26 at none / -O3 -XS, homes2b.c +1 / +1), down 0; pairs MATCH 223; semcheck 50. Random unchanged,
 189 / 72 / 131 / 59; library 186 / 248 at -O3 -XS.
 
+**Batch 197 (2026-11-14): under -O a frame slot is addressed past the pending pops (POP_OPT_FRAME).** Without options
+a statement that reads or writes the frame releases the pending argument pops first. Under -O the oracle keeps them
+and addresses the slot further up. homes2a.c R25 -O3 -XS: `b = g1(1); a = gj - gk; c = gk; sb(b)` -> `pushw 0x1 /
+cal _g1 / ld (XSP+0x6),HL / .. / ld (XSP+0x8),WA / .. / pushw (XSP+0x6) / cal _sb`, the 2 bytes popped with the later
+calls'. So under -O (not -Xr) stmt_touches_stack no longer counts a frame variable; double work and long helpers still
+count. A call stored into a slot keeps the pops pending when a later call absorbs them. R25 itself still differs, in
+the oracle's -O reuse of gk. Ledger up 2 (rstmt -O3 -XS +1, fpp11.c +1), down 0; pairs MATCH 223; semcheck 50. Random
+unchanged, 189 / 72 / 131 / 59; library 186 / 248 at -O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
