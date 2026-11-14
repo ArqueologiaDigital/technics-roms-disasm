@@ -1753,6 +1753,20 @@ def ret_two_level(F, e, size):
             F.emit('ld', '%s,%s' % (H, W))
             emit_shift(F, ('sla' if x.ty.signed else 'sll') if x.op == '<<' else ('sra' if x.ty.signed else 'srl'), fold(x.r).value, H)
             return True
+    elif RET_SCC_OP and not F.opt and x.k == 'bin' and x.op in SIMPLE_OPS:
+        lc_ = strip(x.l)
+        while lc_.k == 'cast' and lc_.kind == 'IntegralCast': lc_ = strip(lc_.e)
+        if (lc_.k == 'bin' and lc_.op in ('==', '!=', '<', '>', '<=', '>=') or lc_.k == 'un' and lc_.op == '!') and \
+                not nodes_in(x.r, 'call'):
+            rc_ = fold(x.r)                                # a returned comparison op m: the comparison in WA, moved to HL,
+            ro_ = hx(rc_.value & ((1 << 8 * size) - 1)) if rc_.k == 'const' and rc_.value is not None else operand(F, x.r, size)
+            if ro_ is not None and gen(F, x.l, 'WA', size) == 'WA' and only_wa():   # the operation there (rstmt
+                F.emit('ld', '%s,%s' % (H, W))             # (a constant 1..8 added or taken away: inc / dec,
+                if x.op in ('+', '-') and rc_.k == 'const' and rc_.value is not None and 1 <= rc_.value <= 8:   # evorder.c
+                    F.emit('inc' if x.op == '+' else 'dec', '%s,%s' % (hx(rc_.value), H)); return True     # eo_s_NK)
+                F.emit(SIMPLE_OPS[x.op], '%s,%s' % (H, ro_)); return True   # rs_2_02_15_7:
+                                                           # return (gula[1] == gul) & b -> cp XWA,(_gul) / scc eq,WA /
+                                                           # ld HL,WA / and HL,(XSP+0x6))
     del F.lines[n0:]
     return False
 def long_helpers_in(n):
@@ -10379,6 +10393,7 @@ JUMP_TO_RET_OPT = True                                    # see compile_function
 CHAR_IDX_ONCE_OPT = True                                  # see push_elem: -O reads a char index once, through C
 CALL_RIGHT_ALL_XR = True                                  # see _gen_bin_body: CALL_RIGHT_FIRST under -Xr whatever the left reads
 FP_DECL_STMT = True                                       # see gen_stmt's block: begin_stmt for a double declaration
+RET_SCC_OP = True                                         # see ret_two_level: a returned comparison op m
 LIVE_SHIFT = True                                         # see gen_body_shift
 _SHIFT_PARTS = {'WA': ('XWA', 'QWA', 'WA', 'QW', 'QA', 'W', 'A'), 'BC': ('XBC', 'QBC', 'BC', 'QB', 'QC', 'B', 'C'),
                 'DE': ('XDE', 'QDE', 'DE', 'QD', 'QE', 'D', 'E')}

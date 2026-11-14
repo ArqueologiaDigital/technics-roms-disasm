@@ -2636,6 +2636,16 @@ loop now calls it. In rstmt rs_4_06_15_1, `double t = (gi3 & 0x80 ? gs.d : gd); 
 is_reset, research-scratch `edit_batch215_fpe3.py`). Ledger up 2 (rstmt none +1, -Xr +1), down 0; pairs MATCH 223;
 semcheck 50. Random unchanged, 191 / 79 / 141 / 65; library 186 / 248 at -O3 -XS.
 
+**Batch 216 (2026-11-14): without -O a returned comparison combined with a memory operand or constant goes through WA
+(RET_SCC_OP).** Four rstmt statements at none began `scc eq,WA` in the oracle where the model wrote `scc eq,HL`. A
+returned `(cmp) op m` (op one of + - & | ^, m a memory operand or constant) computes the comparison in WA, moves it to
+HL and operates there: rs_2_02_15_7 `return (gula[1] == gul) & b` -> `cp XWA,(_gul) / scc eq,WA / ld HL,WA /
+and HL,(XSP+0x6)`; rs_3_00_19_5 `return ((unsigned long)!gs.i) | (50391UL >> 3)` -> `scc eq,WA / exts XWA /
+ld XHL,XWA / or XHL,0x189a`. A constant of 1..8 is added or subtracted with inc / dec (evorder.c eo_s_NK, `return !gi
+- 7` -> `dec 0x7,HL`, lost in a first run). Under -O the rule lost rstmt statements (2 / 1) and is off. Ledger up 4
+(evorder_l.c +8 / +8 at none / -Xr, rstmt +2 / +1), down 0; pairs MATCH 223; semcheck 50. Random unchanged, 191 / 79 /
+141 / 65; library 186 / 248 at -O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

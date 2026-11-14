@@ -145,9 +145,9 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-10-10-micro-evorder2, v423/O3XS                         | probes/evorder_st.c  | 465 / 676 exact (68.8%)    |
 | run 2026-11-10-10-micro-evorder2, v423/Xr                           | probes/evorder_st.c  | 422 / 676 exact (62.4%)    |
 | run 2026-11-10-10-micro-evorder2, v423/O3XSXr                       | probes/evorder_st.c  | 458 / 676 exact (67.8%)    |
-| run 2026-11-10-10-micro-evorder2, v423/none                         | probes/evorder_l.c   | 259 / 338 exact (76.6%)    |
+| run 2026-11-10-10-micro-evorder2, v423/none                         | probes/evorder_l.c   | 267 / 338 exact (79.0%)    |
 | run 2026-11-10-10-micro-evorder2, v423/O3XS                         | probes/evorder_l.c   | 233 / 338 exact (68.9%)    |
-| run 2026-11-10-10-micro-evorder2, v423/Xr                           | probes/evorder_l.c   | 206 / 338 exact (60.9%)    |
+| run 2026-11-10-10-micro-evorder2, v423/Xr                           | probes/evorder_l.c   | 214 / 338 exact (63.3%)    |
 | run 2026-11-10-10-micro-evorder2, v423/O3XSXr                       | probes/evorder_l.c   | 182 / 338 exact (53.8%)    |
 | run 2026-11-10-11-micro-evorder3, v423/none                         | probes/evorder_d.c   | 252 / 338 exact (74.6%)    |
 | run 2026-11-10-11-micro-evorder3, v423/O3XS                         | probes/evorder_d.c   | 202 / 338 exact (59.8%)    |
@@ -255,9 +255,9 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-13-6-micro-negk, v423/O3XS                              | probes/negk.c        | 38 / 38 exact (100.0%)     |
 | run 2026-11-13-6-micro-negk, v423/Xr                                | probes/negk.c        | 38 / 38 exact (100.0%)     |
 | run 2026-11-13-6-micro-negk, v423/O3XSXr                            | probes/negk.c        | 38 / 38 exact (100.0%)     |
-| run 2026-11-13-7-micro-rstmt, v423/none                             | probes/rstmt*.c      | 3607 / 4694 exact (76.8%)  |
+| run 2026-11-13-7-micro-rstmt, v423/none                             | probes/rstmt*.c      | 3609 / 4694 exact (76.9%)  |
 | run 2026-11-13-7-micro-rstmt, v423/O3XS                             | probes/rstmt*.c      | 3268 / 4694 exact (69.6%)  |
-| run 2026-11-13-7-micro-rstmt, v423/Xr                               | probes/rstmt*.c      | 3390 / 4694 exact (72.2%)  |
+| run 2026-11-13-7-micro-rstmt, v423/Xr                               | probes/rstmt*.c      | 3391 / 4694 exact (72.2%)  |
 | run 2026-11-13-7-micro-rstmt, v423/O3XSXr                           | probes/rstmt*.c      | 3165 / 4694 exact (67.4%)  |
 | run 2026-11-13-8-micro-chararith, v423/none                         | probes/chararith.c   | 130 / 238 exact (54.6%)    |
 | run 2026-11-13-8-micro-chararith, v423/O3XS                         | probes/chararith.c   | 129 / 238 exact (54.2%)    |
