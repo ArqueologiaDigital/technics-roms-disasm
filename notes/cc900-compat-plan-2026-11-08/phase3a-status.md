@@ -2400,6 +2400,15 @@ for an op= in XIZ lost 36 fpopa.c functions. Counting `return (m = m2)` as rule 
 r3_06_02 (`return (gi3 = gia[3])` keeps D + D'). Ledger up 8 (random +3 / +3 at none and -Xr, rstmt +1 / +1),
 down 0; pairs MATCH 223; semcheck 50. Random 189 / 62 / 131 / 55; library 186 / 248 at -O3 -XS.
 
+**Batch 193 (2026-11-14): the pending argument pops wait for a later call under -O too (POP_LAZY_OPT).** Six random
+functions at -O3 -XS had every statement exact and differed only in where a call's argument pop fell. The oracle keeps
+the pops pending under -O as it does without options: across statements that neither touch the frame nor call, merged
+into the next call's cleanup (r1_01_03: `gul += rul(gula[4]); gia[6] %= 16; gs.l = gl2 = rl(gl) * 4L` ->
+`cal _rul / add (_gul),XHL / .. / cal _rl / inc 0x8,XSP`; r3_00_09: one `inc 0x4,XSP` after the second `_v1`). The
+four sites that keep the pops pending were gated `not F.opt and not F.adecl`; -O now passes. -Xr, with or without -O,
+was tried with the same switch and changed no random function, so it stays closed there. Ledger up 3 (random -O3 -XS
++4), down 0; pairs MATCH 223; semcheck 50. Random 189 / 66 / 131 / 55; library 186 / 248 at -O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

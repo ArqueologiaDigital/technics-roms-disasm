@@ -122,7 +122,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-42-micro-homes2b, v423/Xr                            | probes/homes2b.c     | 22 / 90 exact (24.4%)      |
 | run 2026-11-09-42-micro-homes2b, v423/O3XSXr                        | probes/homes2b.c     | 18 / 90 exact (20.0%)      |
 | run 2026-11-10-1-micro-random1, v423/none                           | random/*.c           | 57 / 200 exact (28.5%)     |
-| run 2026-11-10-1-micro-random1, v423/O3XS                           | random/*.c           | 21 / 200 exact (10.5%)     |
+| run 2026-11-10-1-micro-random1, v423/O3XS                           | random/*.c           | 22 / 200 exact (11.0%)     |
 | run 2026-11-10-1-micro-random1, v423/Xr                             | random/*.c           | 44 / 200 exact (22.0%)     |
 | run 2026-11-10-1-micro-random1, v423/O3XSXr                         | random/*.c           | 20 / 200 exact (10.0%)     |
 | run 2026-11-10-5-micro-random2, v423/none                           | random2/*.c          | 42 / 200 exact (21.0%)     |
@@ -130,11 +130,11 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-10-5-micro-random2, v423/Xr                             | random2/*.c          | 27 / 200 exact (13.5%)     |
 | run 2026-11-10-5-micro-random2, v423/O3XSXr                         | random2/*.c          | 11 / 200 exact (5.5%)      |
 | run 2026-11-10-6-micro-random3, v423/none                           | random3/*.c          | 44 / 200 exact (22.0%)     |
-| run 2026-11-10-6-micro-random3, v423/O3XS                           | random3/*.c          | 12 / 200 exact (6.0%)      |
+| run 2026-11-10-6-micro-random3, v423/O3XS                           | random3/*.c          | 14 / 200 exact (7.0%)      |
 | run 2026-11-10-6-micro-random3, v423/Xr                             | random3/*.c          | 26 / 200 exact (13.0%)     |
 | run 2026-11-10-6-micro-random3, v423/O3XSXr                         | random3/*.c          | 10 / 200 exact (5.0%)      |
 | run 2026-11-10-7-micro-random4, v423/none                           | random4/*.c          | 46 / 200 exact (23.0%)     |
-| run 2026-11-10-7-micro-random4, v423/O3XS                           | random4/*.c          | 16 / 200 exact (8.0%)      |
+| run 2026-11-10-7-micro-random4, v423/O3XS                           | random4/*.c          | 17 / 200 exact (8.5%)      |
 | run 2026-11-10-7-micro-random4, v423/Xr                             | random4/*.c          | 34 / 200 exact (17.0%)     |
 | run 2026-11-10-7-micro-random4, v423/O3XSXr                         | random4/*.c          | 14 / 200 exact (7.0%)      |
 | run 2026-11-10-9-micro-evorder, v423/none                           | probes/evorder.c     | 442 / 507 exact (87.2%)    |

@@ -6577,6 +6577,7 @@ UIDX32_EXPR = True                                        # see elem_addr (r3_04
 CHAR_PRODUCT_DIV_GUARD = True                             # see gen_bin (r3_07_12)
 VALUE_FIRST_CHIDX = True                                  # see gen_stmt's assignment (r1_02_19)
 POP_LAZY = True                                           # see stmt_touches_stack
+POP_LAZY_OPT = True                                       # the same under -O (random r1_01_03 -O3 -XS: inc 0x8,XSP after _rl)
 
 def stmt_touches_stack(F, e):
     """does the expression statement read or write the frame -- a parameter or local in memory, or double work
@@ -8855,7 +8856,7 @@ def gen_opassign(F, e):
             size in (2, 4) and not fpgen.is_fp(strip(e.l).ty) and regvar_of(getattr(strip(e.l), 'e', strip(e.l))) is None \
             and strip(e.l).k == 'var':
         gen_call(F, strip(r))                              # homes2b.c HL05: b ^= g1(a) -> cal _g1 / inc 0x4,XSP /
-        if not (POP_LAZY2 and strip(e.l).decl.kind == 'global' and not F.opt and not F.adecl and later_call_absorbs(F)):
+        if not (POP_LAZY2 and strip(e.l).decl.kind == 'global' and (not F.opt or POP_LAZY_OPT) and not F.adecl and later_call_absorbs(F)):
             flush_pops(F)                                  # (random r3_02_04: gu &= ru(32767); ..; v2(gi2, 16): the pops wait)
         t = lvalue(F, e.l)                                 # xor (XSP+0x4),HL (the slot after the pops, the result as
         F.emit(SIMPLE_OPS[op], '%s,%s' % (t, FAM['HL'][size])); return t   # it is)
@@ -9123,7 +9124,7 @@ def store_global(F, name, e, size):
         F.emit('ld' + ('b' if size == 1 else 'w'), '(_%s),%s' % (name, imm_of(rc, size))); return
     if strip(e).k == 'call' and not has_helper_call(strip(e).fn):   # abi returns.c use_i: cal _x_i / ld (_gi),HL
         gen_call(F, strip(e))                              # (random r3_02_02: gl2 = rl(..); v1(..) -> cal _rl /
-        if not (POP_LAZY and not F.opt and not F.adecl and later_call_absorbs(F)): flush_pops(F)   # ld (_gl2),XHL / .. / inc 0x6,XSP:
+        if not (POP_LAZY and (not F.opt or POP_LAZY_OPT) and not F.adecl and later_call_absorbs(F)): flush_pops(F)   # ld (_gl2),XHL / .. / inc 0x6,XSP:
         F.emit('ld', '(_%s),%s' % (name, FAM['HL'][size])); return        # the pops wait for the next stack access)
     rv = regvar_of(getattr(strip(e), 'e', e)) if strip(e).k == 'load' else None
     if rv is not None and rv.ty.size == size:          # ra_twice: ld (_ga),HL
@@ -9866,7 +9867,7 @@ def gen_stmt(F, s, last):
                  getattr(strip(strip(s.e).l).decl, 'reg', None) and
                  not (POP_BEFORE_LOOP_INIT and (getattr(F, 'cur_rest', None) or [None])[0] is not None and
                       F.cur_rest[0].k in ('for', 'while', 'do', 'switch'))) and \
-            not (POP_LAZY and not F.opt and not F.adecl and not stmt_touches_stack(F, s.e) and later_call_absorbs(F)):
+            not (POP_LAZY and (not F.opt or POP_LAZY_OPT) and not F.adecl and not stmt_touches_stack(F, s.e) and later_call_absorbs(F)):
         flush_pops(F)                                      # random r1_02_19: vd(gd2); gua[a] = ... -> cal _vd /
                                                            # inc 0x8,XSP / ld A,(XSP+0x4): the pops merge across
                                                            # statements that call, and across an assignment to a
@@ -14090,7 +14091,7 @@ def store_plan(F, lv, rv, size):
     if vk == 'C':                                          # the call first, then the address in the WA family
         fam = gen(F, x, 'HL', size)                        # (random r2_09_11: gca[1] = rc(gs.i); gs.d = gd2; vp(gp) ->
         if not (POP_LAZY2 and (L == 'S' or POP_LAZY_PTR and L == 'P' and str(lk[1]).startswith('(_')) and
-                not F.opt and not F.adecl and later_call_absorbs(F)): flush_pops(F)   # cal _rc / ld (_gca + 0x1),L / ..
+                (not F.opt or POP_LAZY_OPT) and not F.adecl and later_call_absorbs(F)): flush_pops(F)   # cal _rc / ld (_gca + 0x1),L / ..
                                                            # (through a global pointer too: random r1_06_10, *gp = rc(7) ->
                                                            #  cal _rc / ld XWA,(_gp) / ld (XWA),L, the pops pending)
         if fam != 'HL': return False
