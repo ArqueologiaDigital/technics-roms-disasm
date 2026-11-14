@@ -2586,6 +2586,16 @@ and puts the base in XBC (rstmt .rs_1_04_16_1: `gua[c]` with c in E -> `ld A,E /
 ld WA,(XBC+WA)`). chidx.py only (research-scratch `edit_batch210_chidx.py`); without -O. Ledger up 1 (rstmt -Xr +4),
 down 0; pairs MATCH 223; semcheck 50. Random unchanged, 191 / 75 / 133 / 62.
 
+**Batch 211 (2026-11-14): the operand order of a double operation (fo_plain) holds at every option set.** fo_plain, the
+rule from probes/fpord.c for which register addresses which operand of a double operation, was gated to no -O and no
+-Xr. The largest -Xr first-difference group (10 statements, `lda XDE,_gs + K` against the model's `lda XBC,_gs + K`)
+showed the oracle using the same order at -Xr: rstmt .rs_1_06_10_0 `double t = gs.d + gda[0]` -> `lda XDE,_gs + 0x1e /
+lda XBC,_gda`, as at none. Lifted at every set, it is right at -O too (fpord.c -O3 -XS 96 -> 288). There it stands aside
+when both operands have the same address, which op_into's -O path copies (loopctr.c lc_DCF `gd2 * gd2` -> `lda XDE,_gd2 /
+ld XBC,XDE`); a first run without that lost three loopctr.c functions per -O set. fpgen.py only (research-scratch
+`edit_batch211_fpgen.py`). Ledger up 13 by 277 (random -O3 -XS +4, -Xr +8, -O3 -XS -Xr +3, rstmt +15 / +30 / +15,
+fpord.c -O3 -XS +192), down 0; pairs MATCH 223; semcheck 50. Random 191 / 79 / 141 / 65; library 186 / 248 at -O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

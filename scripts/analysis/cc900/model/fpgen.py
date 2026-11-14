@@ -434,7 +434,10 @@ def fo_plain(F, e, vals, dest, name):
     - an A destination beside two A operands, or beside an A right operand of - or /, gets the result through a
       temporary (fo_s_EGM: .. / lda XWA,XSP+0x8 / cal ._fsub_d / lda XWA,_gda + 0x10 / lda XBC,XSP+0x8 / cal ._fld_dd).
     True when it wrote the call."""
-    if not FP_ORD or F.opt or F.adecl or len(vals) != 2: return False
+    if not FP_ORD or len(vals) != 2: return False
+    if F.opt and simple_addr(F, vals[0]) is not None and simple_addr(F, vals[0]) == simple_addr(F, vals[1]):
+        return False                                       # (-O: one operand twice, its address copied: loopctr.c lc_DCF,
+                                                           #  gd2 * gd2 -> lda XDE,_gd2 / ld XBC,XDE; op_into's own path)
     ka, kb = fo_kind(F, vals[0]), fo_kind(F, vals[1])
     if ka is None or kb is None or (ka == 'K' and kb == 'K'): return False
     if dest[0] == 'lv':
