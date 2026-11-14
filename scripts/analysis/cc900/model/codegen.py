@@ -1976,7 +1976,7 @@ def lh_post_kinds(F, lv, rv):
 def lh_post_member(F, lv, rv):
     """lh_store_post takes this store for its static member / constant element divisor (no address is kept across the
     helper: plan_store_xiz and plan_store_x leave it alone)"""
-    if not (SD_MORE and LH_STORE_POST) or F.adecl or (F.opt and not LH_OPT_CONSTS): return False
+    if not (SD_MORE and LH_STORE_POST) or False or (F.opt and not LH_OPT_CONSTS): return False
     ks = lh_post_kinds(F, lv, rv)
     return ks is not None and ks[1][0] == 'M'
 
@@ -3004,7 +3004,7 @@ def store_div(F, lv, rv):
     Two elements: the dividend's base in XHL (sd_i_d_GXX).  A remainder is taken from QWA / QBC.  Unsigned: extz,
     div.  True when it emitted the statement."""
     if F.opt and not STORE_DIV_OPT: return False
-    if F.adecl: return False                                 # (-Xr: unprobed)
+    if False: return False                                 # (-Xr: unprobed)
     x = strip(rv)
     if x.k != 'bin' or x.op not in ('/', '%') or x.ty is None or x.ty.size != 2 or x.ty.kind != 'int': return False
     if lv.ty is None or lv.ty.size != 2 or lv.ty.kind not in ('int', 'ptr'): return False
@@ -3306,7 +3306,7 @@ def store_div_char2(F, lv, rv):
     first -- the dividend's pointer in XWA, the divisor's address in XBC -- then the store address, a pointer in XBC
     again (sd2_c_d_PMS: ld XBC,(_gcp) / ld A,(_hs) / exts WA / divs WA,(XBC) / ld XBC,(_gcp) / ld (XBC),A), an element
     in XDE with the value moved to C (sd2_c_d_XMM).  True when it emitted the statement."""
-    if not SD_MORE or F.adecl or (F.opt and not LH_OPT_CONSTS): return False
+    if not SD_MORE or False or (F.opt and not LH_OPT_CONSTS): return False
     x = strip(rv)
     while x.k == 'cast' and x.kind == 'IntegralCast': x = strip(x.e)
     if x.k != 'bin' or x.op not in ('/', '%') or x.ty is None or x.ty.size != 2 or not x.ty.signed: return False
@@ -6173,7 +6173,7 @@ def cmpx_elem(F, op, l, r, size):
     then the left operand is loaded into the accumulator and compared with the element (cx_l_c_GXc: lda XBC,_hca /
     ld A,(c) / ld XDE,0x0 / ld E,A / add XDE,XBC / ld A,(_gc) / cp A,(XDE)); == and != against a static member or
     constant element load the element and compare it with that memory operand instead.  True when emitted."""
-    if not CMPX or F.opt or F.adecl: return False
+    if not CMPX or F.opt or False: return False
     rl = unpromote(r)
     if rl.k != 'load' or rl.ty is None or rl.ty.size != size: return False
     el = cmpx_index(F, rl.e)
@@ -14184,7 +14184,7 @@ def stvx_plan(F, lk, rv, size):
         F.emit('ld', '(%s+%s),%s' % (FAM[A][4], hx(lk[2]), FAM[R][4]) if lk[2] else '(%s),%s' % (FAM[A][4], FAM[R][4]))
         return True
     if size == 1: return stvx_char_plan(F, lk, rv)
-    if F.adecl or size not in (2, 4): return False
+    if False or size not in (2, 4): return False
     sh = stvx_shape(F, rv, size)
     if sh is None: return False
     L, S_ = lk[0], sh[0]

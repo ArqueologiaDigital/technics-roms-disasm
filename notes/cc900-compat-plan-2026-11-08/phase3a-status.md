@@ -2261,6 +2261,14 @@ pair alone under adecl. Ledger up 16 with 490 more exact functions (lhy.c 0 -> 5
 lhx.c 258 -> 322 and 212 -> 262, stdiv2.c, stv.c, elrd.c, ...), down 0; pairs MATCH 223; semcheck 54. Random unchanged,
 183 / 61 / 116 / 53.
 
+**Batch 178 (2026-11-14): five planners that returned at once under adecl run under -Xr too.** research-scratch
+gate/run6.sh lifts each planner's `F.adecl` early return alone (17 of them) and scores rstmt at both -Xr sets
+(baselines 3,283 / 3,067; results in gate/adecl-return-results-2026-11-14.txt). The five that gained are lifted
+together (3,302 / 3,071): lh_post_member, store_div (marked "-Xr: unprobed"), store_div_char2, cmpx_elem, stvx_plan.
+Ledger up 16 with 559 more exact functions (stdiv2.c 487 -> 640 at -Xr and 322 -> 542 at -O3 -XS -Xr, stdiv.c +32 /
++36, stvxc.c +20 / +24, stv.c, stvx.c, rstmt, the random corpora), down 0; pairs MATCH 223; semcheck 54 -> 50 (stv.c's
+sv_i_d_GG and sv_u_d_GG at both -Xr sets no longer compile wrongly). Random 183 / 61 / 122 / 54.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
