@@ -1467,6 +1467,7 @@ def bin_wide(F, e, op, l, r, fam, size):
     if gr_ is not None and op in ('/', '%') and gr_[1] == FAM['BC'].get(size) and expr_key(r) == gr_[0]: return None   # (GUARD_DIV)
     lk, rk = cw_kind(F, l, size), cw_kind(F, r, size)
     if lk is None or rk is None: return None
+    root_ = getattr(F, 'bw_root', False); F.bw_root = False
     L, R = lk[0], rk[0]
     if getattr(F, 'bw_any', False):                        # a pushed argument (random corpora: ld A,(b) / extz WA /
         F.bw_any = False                                   # add WA,WA / lda XBC,_gia / ld DE,(_gi) / sub DE,(XBC+WA) /
@@ -1681,6 +1682,13 @@ def bin_wide(F, e, op, l, r, fam, size):
     if L == 'M' and R == 'M' and comm:                       # ea_c_add_EE: ld A,(_hca + 0x3) / add A,(_gca + 0x3)
         F.emit('ld', '%s,%s' % (W, rk[1])); emit_op(W, lk[1]); return ret('WA')
     # ---- a global or static member on the left against an addressed right or a constant
+    if BIN_PTR_RIGHT_BC and not (F.opt and F.adecl) and not root_ and L in ('G', 'M') and R in ('P', 'D') and size in (2, 4) and \
+            op in ('+', '&', '|', '^') and not wrem:       # (commutative and inside another operation or a cast only:
+        a = addr(rk, P='XWA')                              #  stored as it is, gi2 = gi + hps->i keeps ld XBC,(_hps) /
+                                                           #  ld WA,(_gi) / add WA,(XBC+0x2), evorder_ad.c ea_i_add_GD)                              # the pointer first, in XWA; the left in BC (rstmt rs_3_05_10_2:
+        B_ = FAM['BC'][size]                               # gi3 = (a | gps->i) + !255 -> ld XWA,(_gps) / ld BC,(XSP+0x4) /
+        ldv(B_, lk, l); emit_op('BC' if size == 2 else 'XBC', a)   # or BC,(XWA+0x2) / ld (_gi3),BC)
+        return 'BC'
     a = kimm(r) if R == 'K' else addr(rk)
     if K_DIVIDEND_WIDE and L == 'K' and op in ('/', '%') and size == 1 and W == 'A' and sgn and not F.opt and not F.adecl \
             and fold(l).value is not None and 0 <= fold(l).value < 0x80:
@@ -4680,6 +4688,7 @@ def _gen_bin_body(F, e, fam, size, then_ret, store=False):
         saved_ = (getattr(F, 'cw_pins', None), getattr(F, 'cw_start', None), getattr(F, 'cw_opline', None))
         F.cw_pins = []; F.cw_opline = None; F.cw_start = len(F.lines); bw = None
         try:
+            F.bw_root = store
             bw = bin_wide(F, e, op, strip(e.l), strip(e.r), fam, size)
             if bw is not None and F.cw_opline is not None: cw_guard(F, F.cw_opline, 'bin_wide')
         finally:
@@ -10320,6 +10329,7 @@ def gen_stmt(F, s, last):
 _gen_stmt_body = gen_stmt
 
 HELPER_STORE_XIZ = True                                   # see gen_stmt's store: a long helper's value, the address in XIZ
+BIN_PTR_RIGHT_BC = True                                   # see bin_wide: memory op pointer operand, the pointer in XWA
 LIVE_SHIFT = True                                         # see gen_body_shift
 _SHIFT_PARTS = {'WA': ('XWA', 'QWA', 'WA', 'QW', 'QA', 'W', 'A'), 'BC': ('XBC', 'QBC', 'BC', 'QB', 'QC', 'B', 'C'),
                 'DE': ('XDE', 'QDE', 'DE', 'QD', 'QE', 'D', 'E')}

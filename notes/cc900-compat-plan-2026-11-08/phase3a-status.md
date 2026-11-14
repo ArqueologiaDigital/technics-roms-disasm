@@ -2498,6 +2498,19 @@ overwritten by the helper's result. A base sharing the index's family refuses (t
 up 5 by 24 (lhx.c +4 / +8 at none / -O3 -XS, stdiv2.c -O3 -XS +10, rstmt +1 / +1), down 0; pairs MATCH 223; semcheck
 50. Random unchanged, 189 / 72 / 131 / 59; library 186 / 248 at -O3 -XS.
 
+**Batch 202 (2026-11-14): inside another operation, a memory operand against a pointer operand on the right puts the
+pointer in XWA and the value in BC (BIN_PTR_RIGHT_BC).** Seventeen rstmt statements at none began with the oracle's
+`ld XWA,(_gps)` where the model wrote `ld XBC,(_gps)`. When `g op p->m` (op one of + & | ^, int or long) is an operand
+of another operation or of a cast, the oracle loads the pointer first into XWA and computes in BC. rs_2_06_11_3:
+`gu2 = (gu2 + gps->u) - gu2` -> `ld XWA,(_gps) / ld BC,(_gu2) / add BC,(XWA+0x8) / ld WA,BC / sub WA,(_gu2)`;
+rs_2_08_15_3: `gu2 = (unsigned int)(gl2 + gps->l)` -> `ld XWA,(_gps) / ld XBC,(_gl2) / add XBC,(XWA+0x4) /
+ld (_gu2),BC`. Stored as it is, the same operation keeps XBC for the pointer and WA for the value (evorder_ad.c
+ea_i_add_GD, `gi2 = gi + hps->i`), and so does `-` (stvx.c sx_i_GD). A first run without both conditions lost 24
+evorder_ad.c functions per set and four stvx / stvxc ones; bin_wide now learns from `_gen_bin_body`'s store flag
+whether its operation is the stored value. -O3 -XS -Xr lost 3 rstmt statements and keeps the old order. Ledger up 7
+(random none +1, -Xr +2, rstmt +4 / +2 / +5, evorder_st.c -Xr +2), down 0; pairs MATCH 223; semcheck 50. Random
+190 / 72 / 133 / 59; library 186 / 248 at -O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
