@@ -6577,6 +6577,7 @@ UIDX32_EXPR = True                                        # see elem_addr (r3_04
 CHAR_PRODUCT_DIV_GUARD = True                             # see gen_bin (r3_07_12)
 VALUE_FIRST_CHIDX = True                                  # see gen_stmt's assignment (r1_02_19)
 POP_LAZY = True                                           # see stmt_touches_stack
+POP_LAZY_REGVAR_OPT = True                                # see regvar_stmt: a register local's call initialiser (r2_04_18)
 POP_LAZY_OPT = True                                       # the same under -O (random r1_01_03 -O3 -XS: inc 0x8,XSP after _rl)
 
 def stmt_touches_stack(F, e):
@@ -11162,7 +11163,8 @@ def regvar_stmt(F, e):
             gen_call(F, strip(e.r))
             nx = getattr(F, 'next_stmt', None)
             nxc = strip(nx.e) if nx is not None and nx.k == 'expr' else None
-            if R != FAM['HL'][d.ty.size] and (F.opt or nxc is None or nxc.k != 'call' or not nxc.args):
+            if R != FAM['HL'][d.ty.size] and (F.opt and not (POP_LAZY_OPT and POP_LAZY_REGVAR_OPT and not F.adecl) or
+                                              nxc is None or nxc.k != 'call' or not nxc.args):
                 flush_pops(F)       # (_strcpy: a local in XHL needs no move, the pops wait); h_p: cdecl merges the
                                     # pops with the next call's when that call has arguments (inc 0x4,XSP after _g2)
             F.emit('ld', '%s,%s' % (R, FAM['HL'][d.ty.size])); return True

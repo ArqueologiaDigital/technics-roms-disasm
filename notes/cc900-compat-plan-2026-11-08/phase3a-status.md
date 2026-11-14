@@ -2424,6 +2424,14 @@ recorded lines again, in order, and stands aside if one changed. A first run ren
 across a block move. Ledger up 9 (random -O3 -XS +5, -O3 -XS -Xr +4, fpp11.c +1, ra_*.c +1 / +1), down 0; pairs MATCH
 223; semcheck 50. Random 189 / 71 / 131 / 59; library 186 / 248 at -O3 -XS.
 
+**Batch 195 (2026-11-14): under -O a register local's call initialiser keeps the argument pops pending
+(POP_LAZY_REGVAR_OPT).** `t = f(..)` into a register home other than HL forced the pops out under -O, an older rule
+from before batch 193. The oracle keeps them pending when the next statement is a call with arguments, as without
+options (random r2_04_18: `unsigned t = ru(gu); vp(&gca[4]); ++gi3; vu(t)` -> `cal _ru / ld IZ,HL / .. / cal _vp /
+incw 0x1,(_gi3) / push IZ / cal _vu / inc 0x8,XSP`). The same switch on the call-operand pop changed nothing and was
+not kept. Ledger up 4 by 23 (homes2a.c +15, homes2b.c +6, ra_homes32.c +1, random2 +1), down 0; pairs MATCH 223;
+semcheck 50. Random 189 / 72 / 131 / 59; library 186 / 248 at -O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

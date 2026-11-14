@@ -34,7 +34,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-7-micro-chains, v423/Xr                              | micro/ra_chains.c    | 29 / 33 exact (87.9%)      |
 | run 2026-11-09-7-micro-chains, v423/O3XSXr                          | micro/ra_chains.c    | 29 / 33 exact (87.9%)      |
 | run 2026-11-09-8-micro-homes32, v423/none                           | micro/ra_homes32.c   | 7 / 17 exact (41.2%)       |
-| run 2026-11-09-8-micro-homes32, v423/O3XS                           | micro/ra_homes32.c   | 8 / 17 exact (47.1%)       |
+| run 2026-11-09-8-micro-homes32, v423/O3XS                           | micro/ra_homes32.c   | 9 / 17 exact (52.9%)       |
 | run 2026-11-09-8-micro-homes32, v423/Xr                             | micro/ra_homes32.c   | 5 / 17 exact (29.4%)       |
 | run 2026-11-09-8-micro-homes32, v423/O3XSXr                         | micro/ra_homes32.c   | 13 / 17 exact (76.5%)      |
 | run 2026-11-09-14-micro-libshapes, v423/none                        | micro/ra_libshapes.c | 13 / 21 exact (61.9%)      |
@@ -114,11 +114,11 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-10-4-micro-chidx, v423/Xr                               | probes/chidx.c       | 50 / 50 exact (100.0%)     |
 | run 2026-11-10-4-micro-chidx, v423/O3XSXr                           | probes/chidx.c       | 50 / 50 exact (100.0%)     |
 | run 2026-11-09-37-micro-homes2a, v423/none                          | probes/homes2a.c     | 23 / 204 exact (11.3%)     |
-| run 2026-11-09-37-micro-homes2a, v423/O3XS                          | probes/homes2a.c     | 37 / 204 exact (18.1%)     |
+| run 2026-11-09-37-micro-homes2a, v423/O3XS                          | probes/homes2a.c     | 52 / 204 exact (25.5%)     |
 | run 2026-11-09-37-micro-homes2a, v423/Xr                            | probes/homes2a.c     | 40 / 204 exact (19.6%)     |
 | run 2026-11-09-37-micro-homes2a, v423/O3XSXr                        | probes/homes2a.c     | 35 / 204 exact (17.2%)     |
 | run 2026-11-09-42-micro-homes2b, v423/none                          | probes/homes2b.c     | 14 / 90 exact (15.6%)      |
-| run 2026-11-09-42-micro-homes2b, v423/O3XS                          | probes/homes2b.c     | 10 / 90 exact (11.1%)      |
+| run 2026-11-09-42-micro-homes2b, v423/O3XS                          | probes/homes2b.c     | 16 / 90 exact (17.8%)      |
 | run 2026-11-09-42-micro-homes2b, v423/Xr                            | probes/homes2b.c     | 22 / 90 exact (24.4%)      |
 | run 2026-11-09-42-micro-homes2b, v423/O3XSXr                        | probes/homes2b.c     | 18 / 90 exact (20.0%)      |
 | run 2026-11-10-1-micro-random1, v423/none                           | random/*.c           | 57 / 200 exact (28.5%)     |
@@ -126,7 +126,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-10-1-micro-random1, v423/Xr                             | random/*.c           | 44 / 200 exact (22.0%)     |
 | run 2026-11-10-1-micro-random1, v423/O3XSXr                         | random/*.c           | 21 / 200 exact (10.5%)     |
 | run 2026-11-10-5-micro-random2, v423/none                           | random2/*.c          | 42 / 200 exact (21.0%)     |
-| run 2026-11-10-5-micro-random2, v423/O3XS                           | random2/*.c          | 15 / 200 exact (7.5%)      |
+| run 2026-11-10-5-micro-random2, v423/O3XS                           | random2/*.c          | 16 / 200 exact (8.0%)      |
 | run 2026-11-10-5-micro-random2, v423/Xr                             | random2/*.c          | 27 / 200 exact (13.5%)     |
 | run 2026-11-10-5-micro-random2, v423/O3XSXr                         | random2/*.c          | 13 / 200 exact (6.5%)      |
 | run 2026-11-10-6-micro-random3, v423/none                           | random3/*.c          | 44 / 200 exact (22.0%)     |
