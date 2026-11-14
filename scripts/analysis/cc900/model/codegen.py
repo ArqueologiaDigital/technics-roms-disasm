@@ -1315,6 +1315,7 @@ MUL_K_ELEM_BC = True                                      # see gen_mul_const: a
 UIDX_REGPARAM = True                                      # see elem_addr and lh_reg_uidx: -Xr, an unsigned register-parameter index
 DEAD_LABEL_PAIR = True                                    # see compile_function_once
 CMP_WIDE_LEFT_ELEM = True                                 # see gen_compare: (long)int against a long element
+RIGHT_ELEM_FIRST = True                                   # see _gen_bin_body: an element at a variable index on the right
 
 def test_to_bc(F, n0, n1):
     """-Xr: an if's test whose code writes WA, the home of a parameter an arm reads, is written in BC's family instead,
@@ -4974,6 +4975,29 @@ def _gen_bin_body(F, e, fam, size, then_ret, store=False):
                                                            # value: the computed side first, the memory as the operand
                                                            # (random r2_02_03: return gi3 + (gpl[3] % 16) -> .. /
                                                            # ld HL,QWA / add HL,(_gi3); r2_07_10: gia[0] + gps->a[5])
+        ru_ = uncast_int(r)
+        if RIGHT_ELEM_FIRST and not F.opt and not F.adecl and fam == 'WA' and size in (1, 2) and op in SIMPLE_OPS and \
+                not swapped_ and mem_operand(F, r) is None and ru_.k == 'load' and strip(ru_.e).k == 'index' and \
+                fold(strip(ru_.e).idx).k != 'const' and not nodes_in(e, 'call') and not has_helper_call(e) and \
+                not fpgen.is_fp_op(e) and not ({'WA', 'BC'} & live_regs(F)):
+            n_rf_ = len(F.lines)
+            iv_ = regvar_of(uncast_int(strip(ru_.e).idx).e) if uncast_int(strip(ru_.e).idx).k == 'load' else None
+            if iv_ is not None and iv_.reg in ('DE', 'HL') and ru_.ty is not None and ru_.ty.size == size:
+                try: t_rf_ = lvalue(F, strip(ru_.e), kind='cmp')   # a register index: the element is the operand (rstmt
+                except Unsupported: t_rf_ = None
+                if re.match(r'^\(XBC\+(DE|HL)\)$', t_rf_ or ''):   # rs_4_02_13_5: u ^ guca[i], i in DE -> lda XBC,_guca /
+                    n_l_ = len(F.lines); f_ = gen(F, l, 'WA', size)   # ld A,QIZH / xor A,(XBC+DE))
+                    if f_ == 'WA' and not clobbers(F.lines[n_l_:], t_rf_):
+                        F.emit(SIMPLE_OPS[op], '%s,%s' % (FAM['WA'][size], t_rf_)); return 'WA'
+                del F.lines[n_rf_:]
+            else:
+                f_ = gen(F, r, 'WA', size)                  # the element first, through WA into C / BC, then the left
+                if f_ == 'WA': F.emit('ld', '%s,%s' % (FAM['BC'][size], FAM['WA'][size])); f_ = 'BC'   # (rs_4_00_10_4:
+                if f_ == 'BC':                              # (gc2 / 100) - (char)gia[u] -> .. ld WA,(XBC+WA) / ld C,A /
+                    n_l_ = len(F.lines); f_ = gen(F, l, 'WA', size)   # ld A,(_gc2) / exts WA / divs WA,0x64 / sub A,C)
+                    if f_ == 'WA' and not writes_family(F.lines[n_l_:], 'BC'):
+                        F.emit(SIMPLE_OPS[op], '%s,%s' % (FAM['WA'][size], FAM['BC'][size])); return 'WA'
+                del F.lines[n_rf_:]
         wa_var = [d for d in list(F.f.params) + list(F.f.decls) + [getattr(F, 'cse_tmp', None)]
                   if d is not None and getattr(d, 'reg', None) == 'WA' and d not in F.dead
                   and uses_decl(e.r, d)]                   # sv_leaf: a * b + a keeps a in WA -> ld HL,DE / add HL,WA

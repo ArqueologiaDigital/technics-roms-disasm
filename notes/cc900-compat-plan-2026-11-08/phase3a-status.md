@@ -2323,6 +2323,16 @@ exts XDE / cp XDE,(XBC+WA)`. The model refused ("complex compare operand"). `lva
 so the form is emitted directly. Without -O and -Xr. Ledger up 1 (random1 at none 55 -> 56: r1_01_05), down 0; pairs
 MATCH 223; semcheck 50. Random 184 / 61 / 125 / 54.
 
+**Batch 185 (2026-11-14): an element at a variable index on the right of a char / int operation is evaluated first
+(RIGHT_ELEM_FIRST).** Without -O and -Xr, with the result in WA and op one of `+ - & | ^`, the oracle reads such a right
+operand before the left one. With the index in a register variable (DE / HL), it builds the element's address and uses
+it as the operator's memory operand after loading the left (`u ^ guca[i]` -> `lda XBC,_guca / ld A,QIZH /
+xor A,(XBC+DE)`). Otherwise it loads the element through WA into BC's family first (rstmt rs_4_00_10_4:
+`(gc2 / 100) - (char)gia[u]` -> `.. ld WA,(XBC+WA) / ld C,A / ld A,(_gc2) / exts WA / divs WA,0x64 / sub A,C`). The
+model refused these ("element read over the left value"). Where lvalue refuses the address, the old path takes over.
+Ledger up 3 (elrd.c at none 284 -> 292, rstmt 3,575 -> 3,578, random4 43 -> 44), down 0; pairs MATCH 223; semcheck 50.
+Random 185 / 61 / 125 / 54.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
