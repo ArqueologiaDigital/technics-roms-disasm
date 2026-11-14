@@ -825,6 +825,15 @@ def gen(F, e, fam, size, then_ret=False, store=False):
         return fam
     if e.k == 'call':
         r_ = gen_call(F, e, fam, size)
+        if POP_LONE_CALL and F.pending and not F.adecl and getattr(F, 'cur_stmt', None) is not None and \
+                len(nodes_in(F.cur_stmt, 'call')) == 1 and not later_call_absorbs(F):
+            mv_ = F.lines[-1] if len(F.lines) >= 2 and F.lines[-2].startswith('\tcal\t') and \
+                re.match(r'^\tld\t(X?WA|X?BC|X?DE|A|C|E|W),(X?HL|L|H)$', F.lines[-1]) else None
+            if mv_ is not None: F.lines.pop()              # (gen_call's move of the result comes after the pop)
+            flush_pops(F)
+            if mv_ is not None: F.lines.append(mv_)        # (the statement's only call, nothing later to take the pops:
+                                                           #  at once, rstmt rs_1_04_09_3: gi = (int)rc(2) -> cal _rc /
+                                                           #  inc 0x2,XSP / ld A,L / exts WA / ld (_gi),WA)
         if getattr(F, 'pop_call_operand', 0) and F.pending and not F.opt and not F.adecl:
             flush_pops(F)                                  # (CALL_OPERAND_POP: a call that is an operand pops at once:
         return r_                                          #  rstmt rs_1_01_03_2: cal _rl / inc 0x4,XSP / sla 0x2,XHL)
@@ -10330,6 +10339,7 @@ _gen_stmt_body = gen_stmt
 
 HELPER_STORE_XIZ = True                                   # see gen_stmt's store: a long helper's value, the address in XIZ
 BIN_PTR_RIGHT_BC = True                                   # see bin_wide: memory op pointer operand, the pointer in XWA
+POP_LONE_CALL = True                                      # see gen: a statement's only call pops at once
 LIVE_SHIFT = True                                         # see gen_body_shift
 _SHIFT_PARTS = {'WA': ('XWA', 'QWA', 'WA', 'QW', 'QA', 'W', 'A'), 'BC': ('XBC', 'QBC', 'BC', 'QB', 'QC', 'B', 'C'),
                 'DE': ('XDE', 'QDE', 'DE', 'QD', 'QE', 'D', 'E')}

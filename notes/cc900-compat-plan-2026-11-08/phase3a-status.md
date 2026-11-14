@@ -2534,6 +2534,16 @@ d11 (`gd4 = gi * gd5`, a bare conversion in a plain assignment). fpgen.py and fp
 `edit_batch204_fpgen.py`, `edit_batch204_fpe3.py`). Ledger up 8 (fpopa.c +4 / +2 / +4 / +2, rstmt +2 / +1 / +2 / +1),
 down 0; pairs MATCH 223; semcheck 50. Random unchanged, 190 / 72 / 133 / 59.
 
+**Batch 205 (2026-11-14): a statement's only call releases the pending pops at once when no later call takes them
+(POP_LONE_CALL).** Ten rstmt statements at none had the oracle's `inc 0x2,XSP` right after the call where the model
+moved the result first. Examples: rs_1_04_09_3 `gi = (int)rc(2)` -> `pushw 0x2 / cal _rc / inc 0x2,XSP / ld A,L /
+exts WA / ld (_gi),WA`; rs_4_05_02_4 `gc -= rc(255)` -> `cal _rc / inc 0x2,XSP / sub (_gc),L`. A cast, a `%` or an op=
+on the result had no rule of its own, so the pops waited to the end of the statement. gen now pops after a call that is
+its statement's only call when later_call_absorbs finds no taker, before gen_call's move of HL when that move is the
+last line written. Applied with and without -O (rstmt +5 / +9); the -Xr sets do not change and keep the old rule. Ledger
+up 3 (random3 none +1, rstmt +5 / +9), down 0; pairs MATCH 223; semcheck 50. Random 191 / 72 / 133 / 59; library 186 /
+248 at -O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
