@@ -116,7 +116,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-37-micro-homes2a, v423/none                          | probes/homes2a.c     | 23 / 204 exact (11.3%)     |
 | run 2026-11-09-37-micro-homes2a, v423/O3XS                          | probes/homes2a.c     | 37 / 204 exact (18.1%)     |
 | run 2026-11-09-37-micro-homes2a, v423/Xr                            | probes/homes2a.c     | 40 / 204 exact (19.6%)     |
-| run 2026-11-09-37-micro-homes2a, v423/O3XSXr                        | probes/homes2a.c     | 34 / 204 exact (16.7%)     |
+| run 2026-11-09-37-micro-homes2a, v423/O3XSXr                        | probes/homes2a.c     | 35 / 204 exact (17.2%)     |
 | run 2026-11-09-42-micro-homes2b, v423/none                          | probes/homes2b.c     | 14 / 90 exact (15.6%)      |
 | run 2026-11-09-42-micro-homes2b, v423/O3XS                          | probes/homes2b.c     | 10 / 90 exact (11.1%)      |
 | run 2026-11-09-42-micro-homes2b, v423/Xr                            | probes/homes2b.c     | 22 / 90 exact (24.4%)      |
@@ -135,7 +135,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-10-6-micro-random3, v423/O3XSXr                         | random3/*.c          | 10 / 200 exact (5.0%)      |
 | run 2026-11-10-7-micro-random4, v423/none                           | random4/*.c          | 43 / 200 exact (21.5%)     |
 | run 2026-11-10-7-micro-random4, v423/O3XS                           | random4/*.c          | 16 / 200 exact (8.0%)      |
-| run 2026-11-10-7-micro-random4, v423/Xr                             | random4/*.c          | 27 / 200 exact (13.5%)     |
+| run 2026-11-10-7-micro-random4, v423/Xr                             | random4/*.c          | 29 / 200 exact (14.5%)     |
 | run 2026-11-10-7-micro-random4, v423/O3XSXr                         | random4/*.c          | 14 / 200 exact (7.0%)      |
 | run 2026-11-10-9-micro-evorder, v423/none                           | probes/evorder.c     | 442 / 507 exact (87.2%)    |
 | run 2026-11-10-9-micro-evorder, v423/O3XS                           | probes/evorder.c     | 394 / 507 exact (77.7%)    |

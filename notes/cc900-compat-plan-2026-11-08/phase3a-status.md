@@ -2195,6 +2195,12 @@ OPK_DEREF_GLOBAL. Ledger up 5 (random1 and random4 at -Xr +2 each, stdiv.c 186 -
 semcheck 54. Random 182 / 60 / 106 / 52. With batches 166 to 168 this completes the four relaxation sweeps for the
 current model.
 
+**Batch 170 (2026-11-14): under -Xr a register parameter is dead after its last read (PARAM_DEAD_AFTER).** Batch 164's
+rule generalised. Before each top-level statement, a parameter in WA, BC or DE goes into F.dead when neither this
+statement nor a later top-level one reads it. A loop is one top-level statement, so a read inside it keeps the
+parameter live for the whole loop. Ledger up 2 (random4 at -Xr 27 -> 29, homes2a.c at -O3 -XS -Xr 34 -> 35), down 0;
+pairs MATCH 223; semcheck 54. Random 182 / 60 / 108 / 52.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

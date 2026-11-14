@@ -6658,6 +6658,7 @@ TEST_REG_LONG_LIVE = True                                # see test_reg_reuse_lo
 IZ_TAIL_DIRECT_OPT = True                                # see regvar_stmt: IZ_TAIL_DIRECT under cdecl -O3 -XS too
 SLOT_INIT_UNREAD = True                                  # see slot_init: an unread register parameter leaves WA free
 UNREAD_PARAM_DEAD = True                                 # see compile_function_once
+PARAM_DEAD_AFTER = True                                  # see gen_stmt: a register parameter dead after its last read (-Xr)
 IZ_TAIL_DIRECT_XR = True                                 # see regvar_stmt: IZ_TAIL_DIRECT under -Xr too
 MEMBER_STORE_BC_XR = True                                # see gen_stmt: MEMBER_STORE_BC under -Xr too (rstmt rs_1_03_03_1)
 GUARD_DIV = True                                         # see guard_div_plan
@@ -9166,6 +9167,11 @@ def gen_stmt(F, s, last):
                     if getattr(d_, 'regtemp', False) and d_ not in F.dead and not uses_decl(c, d_) and \
                             not any(uses_decl(y_, d_) for y_ in F.top_rest):
                         F.dead.add(d_)
+                if PARAM_DEAD_AFTER and F.adecl:           # -Xr: a register parameter nothing from here on reads is dead
+                    for p_ in F.f.params:                  # (as an unread one is from the entry, batch 164)
+                        if getattr(p_, 'reg', None) in ('WA', 'BC', 'DE') and p_ not in F.dead and not uses_decl(c, p_) and \
+                                not any(uses_decl(y_, p_) for y_ in F.top_rest):
+                            F.dead.add(p_)
             F.next_stmt = body[i + 1] if i + 1 < len(body) else None
             F.prev_stmt = body[i - 1] if i else None
             if F.opt and not F.adecl and MEMBER_RUNS and getattr(F, 'ptr_run_end', -1) == i:
