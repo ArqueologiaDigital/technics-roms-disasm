@@ -2305,6 +2305,17 @@ ld XWA,(_gl) / cp XWA,(XBC)`), right, but the statement's other code then differ
 candidate orders BC-WA-DE-HL, WA-DE-BC-HL and WA-BC-HL-DE (all worse than WA-BC-DE-HL); LH_GUARDED under -O (more
 compiled, none exact).
 
+**Batch 183 (2026-11-14): an unsigned register-parameter index under -Xr (UIDX_REGPARAM); no unreferenced if-join
+label right before another label (DEAD_LABEL_PAIR).** Under -Xr without -O, the unsigned-index element form takes a
+parameter in BC or DE as the index (`ld WA,BC`). Its base goes to XDE while BC is read again (rstmt .rs_2_07_08_5:
+`if (gla[b] != 0) ..` -> `ld WA,BC / extz XWA / sll 0x2,XWA / ld XDE,_gla / add XDE,XWA / ld XWA,(XDE)`). Batch 145's
+`lh_reg_uidx` takes the same parameter as the divisor's index where it dies (`4L / gla[b]` -> `ld WA,BC / .. /
+ld XBC,_gla / add XBC,XWA / ld XBC,(XBC) / ld XWA,0x4`). The function then differed only in an unreferenced if-join
+label written before the exit label the test jumps to; without -O that label is now dropped. Two first runs dropped
+more and lost rows: under -O the oracle keeps both labels (two library functions, chnarrow.c, pc.c), and a loop's
+continue label stays (switch.c sw_loop). Ledger up 2 (rstmt at -Xr 3,307 -> 3,316, random2 at -Xr 26 -> 27), down 0;
+pairs MATCH 223; semcheck 50. Random 183 / 61 / 125 / 54.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

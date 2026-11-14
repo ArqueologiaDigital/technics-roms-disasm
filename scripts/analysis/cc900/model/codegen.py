@@ -1312,6 +1312,8 @@ def test_clobber_check(F, n0, n1, cond, arms, wide=False):
 TEST_IN_BC = True                                         # see test_to_bc
 UIDX_ADDR_XDE = True                                      # see gen_stmt's store: a long element at an unsigned index in XDE
 MUL_K_ELEM_BC = True                                      # see gen_mul_const: an element times a constant, the product in XBC
+UIDX_REGPARAM = True                                      # see elem_addr and lh_reg_uidx: -Xr, an unsigned register-parameter index
+DEAD_LABEL_PAIR = True                                    # see compile_function_once
 
 def test_to_bc(F, n0, n1):
     """-Xr: an if's test whose code writes WA, the home of a parameter an arm reads, is written in BC's family instead,
@@ -5742,7 +5744,11 @@ def lh_reg_uidx(F, l, r):
     d = regvar_of(strip(ii.e))
     if d is not None: isrc = d.reg
     else: isrc = mem_operand(F, ii)
-    if isrc != 'IZ' and (strip(ii.e).k != 'var' or isrc is None or not isrc.startswith('(')): return False
+    if UIDX_REGPARAM and F.adecl and d is not None and d.kind == 'param' and d.reg in ('BC', 'DE') and \
+            not uses_after_stmt(F, d) and not (live_regs(F) - {'IZ', d.reg}):
+        isrc = FAM[d.reg][2]                               # (-Xr: a register parameter dead after: ld WA,BC, rs_2_07_08_5)
+    elif F.adecl and live_regs(F) - {'IZ'}: return False
+    elif isrc != 'IZ' and (strip(ii.e).k != 'var' or isrc is None or not isrc.startswith('(')): return False
     lc = fold(l)
     if lc.k == 'const' and lc.value is not None: lop = hx(lc.value & 0xffffffff)
     else:
@@ -5869,8 +5875,8 @@ def gen_long_helper(F, e, l, r, fam, signed):
     if (ls is None or rs is None) and LH_CALL and F.opt and getattr(F, 'lhc', None) is not None and F.lhc['node'] == id(strip(e)) and lh_call(F, e.op, l, r):
         F.emit('cal', 'C9H_' + name)                   # (-O: before long_helper_order, which refuses l_div_PX)
         return 'HL' if fam == 'HL' else move_to(F, 'XHL', fam, 4, keep=True)
-    if (ls is None or rs is None) and LH_REG_UIDX and not F.opt and not F.adecl and e.op in ('/', '%') and \
-            not (live_regs(F) - {'IZ'}) and lh_reg_uidx(F, l, r):
+    if (ls is None or rs is None) and LH_REG_UIDX and not F.opt and (not F.adecl or UIDX_REGPARAM) and e.op in ('/', '%') and \
+            (not (live_regs(F) - {'IZ'}) or F.adecl and UIDX_REGPARAM) and lh_reg_uidx(F, l, r):
         F.emit('cal', 'C9H_' + name)
         return 'HL' if fam == 'HL' else move_to(F, 'XHL', fam, 4, keep=True)
     if (ls is None or rs is None) and LONG_HELPER_ORDER and not getattr(F, 'l2', None) and \
@@ -7963,12 +7969,22 @@ def elem_addr(F, lv, kind):
             # ld WA,(i) / extz XWA / sll 0x2,XWA / ld XDE,_gula / add XDE,XWA / and (XDE),XWA; guca[a] ->
             # ld WA,(i) / extz XWA / ld XBC,_guca / add XBC,XWA / ld A,(XBC)
             uv_ = regvar_of(ui.e) if ui.k == 'load' else None
-            if (F.opt or F.adecl) and not (ui.k == 'load' and (uv_ is None or uv_.reg in ('IZ', 'QIZ'))):
+            regp_ = UIDX_REGPARAM and F.adecl and not F.opt and ui.k == 'load' and uv_ is not None and \
+                uv_.kind == 'param' and uv_.reg in ('BC', 'DE') and kind in ('load', 'cmp')
+            if (F.opt or F.adecl) and not regp_ and not (ui.k == 'load' and (uv_ is None or uv_.reg in ('IZ', 'QIZ'))):
                 raise Unsupported('unsigned index')        # (-O / -Xr: a register-parameter index's home lives on;
                                                            # an IZ home is copied out first: r1_01_15 O3XS ld WA,IZ /
                                                            # extz XWA / add XWA,XWA / ld XBC,_gua)
             idx_into('WA'); F.emit('extz', 'XWA'); scale32(F, 'XWA', esz)
             B = getattr(F, 'force_base', None) or ('XDE' if kind == 'add' else 'XBC')
+            reads_ = []
+            if regp_ and getattr(F, 'top_cur', None) is not None:
+                walk(F.top_cur, lambda n_, dd: reads_.append(n_) if n_.k == 'var' and n_.decl is uv_ else None)
+            if regp_ and uv_.reg == 'BC' and B == 'XBC' and (uv_ not in F.dead and uses_after_stmt(F, uv_) or
+                                                              held_after(F, 'BC', lv) or len(reads_) > 1):
+                B = 'XDE'                                  # (-Xr, the index a parameter in BC that is read again: the base
+                                                           #  in XDE, rstmt .rs_2_07_08_5: ld WA,BC / extz XWA / sll 0x2,XWA /
+                                                           #  ld XDE,_gla / add XDE,XWA / ld XWA,(XDE))
             F.emit('ld', '%s,%s' % (B, g)); F.emit('add', '%s,XWA' % B); return '(%s)' % B
         if esz == 1:
             if kind == 'cmp': return None
@@ -15397,6 +15413,12 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
                 if k + 1 < len(F.lines) and F.lines[k + 1] == '\tret': F.lines[i] = '\tret\t' + m.group(1)
     import re                                            # no self-moves: the oracle never writes ld XWA,XWA
     F.lines = [l for l in F.lines if not re.match(r'^\tld\t(\w+),\1$', l)]
+    if DEAD_LABEL_PAIR and not F.opt:                    # an unreferenced label right before another label is not
+        refs_ = {m for l in F.lines if l and l.startswith('\t') for m in re.findall(r'\b(L\d+)\b', l)}   # written
+        ij_ = getattr(F, 'if_joins', set())           # (an if's join only: a loop's continue label stays, switch.c sw_loop)
+        F.lines = [l for i, l in enumerate(F.lines) if not (l and re.match(r'^L\d+:$', l) and l[:-1] not in refs_ and l[:-1] in ij_ and
+                   i + 1 < len(F.lines) and re.match(r'^L\d+:$', F.lines[i + 1] or ''))]   # (rstmt .rs_2_07_08_5: the
+                                                           # if's join L1 before the exit L50001 the test jumps to)
     if TEST_REG_REUSE and F.opt and (not F.adecl or TEST_REG_REUSE_XR): F.lines = test_reg_reuse(F.lines)
                                                            # (-O3 -XS -Xr too: 187 register tests read after, 2 memory)
     if COND_CALL:                                        # a jump around one call is a conditional call: j le,L / cal _rp /
