@@ -2608,6 +2608,15 @@ register parameter the test reads next (two semcheck verdicts in the first gate)
 up 3 (rstmt +11 / +2 / +10 at -O3 -XS / -Xr / -O3 -XS -Xr), down 0; pairs MATCH 223; semcheck 50. Random unchanged,
 191 / 79 / 141 / 65; library 186 / 248 at -O3 -XS.
 
+**Batch 213 (2026-11-14): three codegen.py option gates lifted after re-running the sweeps.** The codegen.py
+relaxation sweeps (research-scratch `gate/xrtry3.sh`, each `not F.opt` made True alone and scored at the -O sets;
+`gate/xrtry4.sh`, each `not F.adecl` at the -Xr sets) were last run around batch 169. Re-run on batch 212's model
+(results in `gate/xrtry-results-opt3-2026-11-14.txt` and `-adecl3-`), they find three gates. LONG_RMW_GPTR (a long op=
+through a global pointer keeps its address in XIZ) under -O: rstmt +3 / +3. MEMBER_ARR_STORE (`gs.a[i]` as a store or
+op= target) under -Xr: +1. CALL_RIGHT_FIRST under -Xr whatever registers the left operand reads (CALL_RIGHT_ALL_XR):
++1. Every other site changed nothing or lost. Ledger up 4 (rstmt +3 / +2 / +3, evorder_ad.c -O3 -XS -Xr +5), down 0;
+pairs MATCH 223; semcheck 50. Random unchanged, 191 / 79 / 141 / 65; library 186 / 248 at -O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

@@ -4821,7 +4821,7 @@ def _gen_bin_body(F, e, fam, size, then_ret, store=False):
     try: l_helper = has_helper_call(l)
     finally: has_helper_call.const_div = False
     if CALL_RIGHT_FIRST and op in SIMPLE_OPS and size in (2, 4) and has_helper_call(r) and not l_helper \
-            and not plain_hl_tree(F, l) and (not F.adecl or CALL_RIGHT_XR and not any(
+            and not plain_hl_tree(F, l) and (CALL_RIGHT_ALL_XR or not F.adecl or CALL_RIGHT_XR and not any(
                 regvar_of(strip(x.e)) for x in loads_in(l))) and not reads_reg(l, 'HL') and CALL_RIGHT_GENERAL:
         hf = gen(F, r, 'HL', size)                       # random r1_04_01: gula[a] + rul(gul) -> cal _rul /
         if hf != 'HL': F.emit('ld', '%s,%s' % (FAM['HL'][size], FAM[hf][size]))   # inc 0x6,XSP / ... /
@@ -8742,7 +8742,7 @@ def _lvalue_raw(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False, kind='sto
             return '(%s+%s)' % (m, hx(off)) if off else '(%s)' % m
     if lv.k == 'index':
         b, i = strip(lv.base), lv.idx
-        if MEMBER_ARR_STORE and not F.adecl and b.k == 'member' and not b.arrow and b.ty.kind == 'array' and \
+        if MEMBER_ARR_STORE and b.k == 'member' and not b.arrow and b.ty.kind == 'array' and \
                 strip(b.base).k == 'var' and strip(b.base).decl.kind == 'global' and lv.ty.size == 2 and \
                 fold(i).k != 'const' and not ({'WA', 'BC'} & set(live_regs(F))):
             ii = strip(i)                                  # gs.a[i] as a store or op= target (rstmt rs_1_08_10_6: gs.a[b] %= 3
@@ -9169,7 +9169,7 @@ def gen_opassign(F, e):
             try: t = lvalue(F, e.l, idx='WA')              # address lives across the helper in XIZ: push XIZ /
             finally: F.force_base = None                   # ... / ld XIZ,_gla / add XIZ,XWA / ld XWA,(XIZ) /
             gp_ = None                                     # (through a global pointer: *gpl /= 7L -> ld XIZ,(_gpl);
-            if LONG_RMW_GPTR and held and not F.opt:       #  gpl[2] /= 7L -> ld XWA,(_gpl) / lda XIZ,XWA+0x8; rstmt
+            if LONG_RMW_GPTR and held:                     #  gpl[2] /= 7L -> ld XWA,(_gpl) / lda XIZ,XWA+0x8; rstmt
                 bx_ = strip(lvx.e) if lvx.k == 'deref' else strip(lvx.base) if lvx.k == 'index' and fold(lvx.idx).k == 'const' else None
                 if bx_ is not None and bx_.k == 'load' and strip(bx_.e).k == 'var' and strip(bx_.e).decl.kind == 'global' and \
                         strip(bx_.e).decl.ty.is_ptr():     # rs_4_04_07_2, rs_2_09_09_0)
@@ -10373,6 +10373,7 @@ POP_LONE_CALL = True                                      # see gen: a statement
 K_FOLD_REGTEMP_OPT = True                                 # see gen_stmt's block: -O folds a register temporary's constant
 JUMP_TO_RET_OPT = True                                    # see compile_function_once: -O, j L to a bare ret
 CHAR_IDX_ONCE_OPT = True                                  # see push_elem: -O reads a char index once, through C
+CALL_RIGHT_ALL_XR = True                                  # see _gen_bin_body: CALL_RIGHT_FIRST under -Xr whatever the left reads
 LIVE_SHIFT = True                                         # see gen_body_shift
 _SHIFT_PARTS = {'WA': ('XWA', 'QWA', 'WA', 'QW', 'QA', 'W', 'A'), 'BC': ('XBC', 'QBC', 'BC', 'QB', 'QC', 'B', 'C'),
                 'DE': ('XDE', 'QDE', 'DE', 'QD', 'QE', 'D', 'E')}
