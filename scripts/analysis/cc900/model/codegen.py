@@ -1596,7 +1596,7 @@ def bin_wide(F, e, op, l, r, fam, size):
             return None
         if size == 1:                                        # ea_c_sub_XG: the element's address in XBC, ld A,(XBC) / sub A,(_hc)
             if R in ('P', 'D'): al = cw_addr(F, lk, size, P='XWA', I='DE'); a = addr(rk, P='XBC')
-            elif CW_IZ_XWA and R == 'K' and lk[0] == 'X' and lk[2] == 'IZ' and len(lk) < 5 and not F.opt and not F.adecl:
+            elif CW_IZ_XWA and R == 'K' and lk[0] == 'X' and lk[2] == 'IZ' and len(lk) < 5 and not F.opt:
                 al = cw_addr(F, lk, size, P='XWA', I='BC'); a = kimm(r)   # a byte element at a counter in IZ: the base in XWA
                                                              # (random r2_03_18: guca[i] + 7 -> lda XWA,_guca / ld A,(XWA+IZ) / inc 0x7,A)
             else: al = cw_addr(F, lk, size, I='BC'); a = addr(rk) if R != 'K' else kimm(r)
@@ -3659,7 +3659,7 @@ def cw_kind(F, x, size):
     if v.k == 'var':
         m = mem_operand(F, x0)
         return ('G', m) if m is not None and not family_of(m) else None
-    if XIZ_PTR_MEM and not F.opt and not F.adecl:          # through a pointer local held in XIZ: a plain memory operand
+    if XIZ_PTR_MEM and not F.opt:          # through a pointer local held in XIZ: a plain memory operand
         def xizp_(b_):                                     # (rstmt rs_1_08_06_3: gps->c = t[2] + t[0] -> ld A,(XIZ) /
             b_ = strip(b_)                                 # add A,(XIZ+0x2); rs_3_03_04_2: gca[3] - t[0] -> sub A,(XIZ))
             while b_.k in ('cast', 'noop') and getattr(b_, 'e', None) is not None: b_ = strip(b_.e)
@@ -4591,7 +4591,7 @@ def _gen_bin_body(F, e, fam, size, then_ret, store=False):
         finally:
             F.cw_pins, F.cw_start, F.cw_opline = saved_
         if bw is not None: return bw
-    if K_MINUS_PTR and not F.opt and not F.adecl and fam == 'WA' and not any_fam and size in (2, 4) and op == '-' and \
+    if K_MINUS_PTR and not F.opt and fam == 'WA' and not any_fam and size in (2, 4) and op == '-' and \
             fold(e.l).k == 'const' and fold(e.l).value is not None and not ({'WA', 'BC'} & set(live_regs(F))):
         try: kr_ = cw_kind(F, strip(e.r), size)
         except Unsupported: kr_ = None
@@ -4621,7 +4621,7 @@ def _gen_bin_body(F, e, fam, size, then_ret, store=False):
                 ok_ = f1_ == 'WA' and not any(re.search(r'\b(X?BC|QBC|[BC])\b', x_) for x_ in F.lines[n1_:])
             if ok_: F.emit(SIMPLE_OPS[op], '%s,%s' % (FAM['WA'][size], a_)); return 'WA'
             del F.lines[n0_:]
-    if RET_PTR_LEFT and not F.opt and not F.adecl and fam == 'HL' and getattr(F, 'in_return', False) and not any_fam and \
+    if RET_PTR_LEFT and not F.opt and fam == 'HL' and getattr(F, 'in_return', False) and not any_fam and \
             size in (2, 4) and op in ('+', '&', '|', '^') and strip(e.r).k == 'bin' and fold(e.r).k != 'const' and \
             strip(e.r).op == '/' and size == 2 and \
             not live_regs(F) and not F.pending and not nodes_in(e, 'call') and not has_helper_call(e) and not fpgen.is_fp_op(e) and \
@@ -8458,7 +8458,7 @@ def _lvalue_raw(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False, kind='sto
                 if im != 'WA': F.emit('ld', 'WA,%s' % im)
                 F.emit('extz', 'XWA'); F.emit('add', 'XWA,XWA') if esz == 2 else F.emit('sll', '0x2,XWA')
                 F.emit('ld', 'XBC,_%s' % b.decl.name); F.emit('add', 'XBC,XWA'); return '(XBC)'
-            if CHAR_IDX_BC and esz == 1 and im == 'BC' and not combine and not F.opt and not F.adecl and ut_ is not None and \
+            if CHAR_IDX_BC and esz == 1 and im == 'BC' and not combine and not F.opt and ut_ is not None and \
                     ut_.size == 2 and ut_.signed and 'WA' not in live_regs(F) and unpromote(i).k == 'load' and \
                     getattr(regvar_of(strip(unpromote(i).e)), 'regtemp', False):
                 F.emit('lda', 'XWA,_%s' % b.decl.name); return '(XWA+BC)'   # (rstmt rs_4_01_03_4: gca[t] = 3 with t in
@@ -10008,7 +10008,7 @@ def gen_stmt(F, s, last):
                     pl_ = re.match(r'^\tld\t(XBC|XDE|XHL),(\(.+\))$', F.lines[-4]) if len(F.lines) >= 4 and pm_ else None
                     if pl_ and pl_.group(1) == pm_.group(1) and 'WA' not in live_regs(F):
                         F.lines[-4:] = ['\tld\tXWA,%s' % pl_.group(2), '\t%s%s\t(XWA%s)' % (b_.group(1), sfx_, pm_.group(2) or '')]
-        if KOP_IN_PLACE and not F.opt and not F.adecl and s.k == 'expr' and s.e.k == 'bin' and s.e.op == '=' and len(F.lines) >= 3:
+        if KOP_IN_PLACE and not F.opt and s.k == 'expr' and s.e.k == 'bin' and s.e.op == '=' and len(F.lines) >= 3:
             lv_ = strip(s.e.l); rv_ = strip(s.e.r)         # g = K op g, a long global: the constant is loaded and the
             if lv_.k == 'var' and lv_.decl.kind == 'global' and lv_.ty is not None and lv_.ty.size == 4 and rv_.k == 'bin' and \
                     rv_.op in ('^', '|', '&', '+') and fold(rv_.l).k == 'const' and fold(rv_.l).value is not None and \

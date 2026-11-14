@@ -2201,6 +2201,13 @@ statement nor a later top-level one reads it. A loop is one top-level statement,
 parameter live for the whole loop. Ledger up 2 (random4 at -Xr 27 -> 29, homes2a.c at -O3 -XS -Xr 34 -> 35), down 0;
 pairs MATCH 223; semcheck 54. Random 182 / 60 / 108 / 52.
 
+**Batch 171 (2026-11-14): six more no-option rules apply under -Xr.** The -Xr sweep re-run on the batch-170 model
+(gate/xrtry2.sh "not F.opt" Xr over the 43 remaining no-option rules; baseline 3,270; results in
+gate/xrtry-results-xr2-2026-11-14.txt) found interactions the first run could not see. Six rules gained one or two
+statements each and are relaxed together (3,277): CW_IZ_XWA, XIZ_PTR_MEM, K_MINUS_PTR, RET_PTR_LEFT, CHAR_IDX_BC's
+lvalue side, KOP_IN_PLACE. Ledger up 4 (random1 at -Xr 35 -> 37, random2 20 -> 21, idxloc.c 80 -> 81, rstmt), down 0;
+pairs MATCH 223; semcheck 54. Random 182 / 60 / 111 / 52.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
