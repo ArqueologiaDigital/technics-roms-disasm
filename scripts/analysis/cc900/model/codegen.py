@@ -10005,7 +10005,7 @@ def gen_stmt(F, s, last):
             folded = False
             bare = not F.xiz_vars and not F.pushes and not getattr(F, 'frame', 0)   # ra_libshapes.c ls_sl_ret: a
             n_if0_ = len(F.lines)
-            gp_ = guard_div_plan(F, s) if GUARD_DIV and F.opt and not (last and bare) and 'BC' not in live_regs(F) and \
+            gp_ = guard_div_plan(F, s) if GUARD_DIV and F.opt and 'BC' not in live_regs(F) and \
                 getattr(F, 'u1_i', None) is None and not getattr(F, 'l2', None) and not getattr(F, 'cl_active', None) and \
                 not getattr(F, 'counted', None) and not getattr(F, 'leaf', None) else None
             # (not inside a loop or leaf planner, whose own registers live_regs does not list: rstmt rs_2_08_12_4 -O3 -XS,

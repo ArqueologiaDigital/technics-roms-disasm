@@ -2678,6 +2678,14 @@ push HL`. The cast case is handled in gen and the char-argument case in push_arg
 value still goes through A. Ledger up 3 (random -O3 -XS +2, rstmt -O3 -XS +4), down 0; pairs MATCH 223; semcheck 50.
 Random 191 / 81 / 143 / 65; library 186 / 248 at -O3 -XS.
 
+**Batch 221 (2026-11-14): GUARD_DIV also for a frameless function's last statement.** GUARD_DIV (-O: `if (D != 0) ..
+/ D` reads D once into BC or C for both the test and the division) stood aside for the function's last statement when
+the function had no frame or saved register (`not (last and bare)`). The oracle does it there too: rstmt rs_4_04_18_6
+`if (gc2 != 0) gc2 = (char)gula[6] % gc2` -> `ld C,(_gc2) / cp C,0x0 / ret eq / ld XWA,(_gula + 0x18) / exts WA /
+divs WA,C / ld (_gc2),W`. The exclusion is dropped; lifting the leaf-planner exclusion as well changed nothing. Ledger up
+3 (random3 -O3 -XS -Xr +1, rstmt +11 / +10 at the -O sets), down 0; pairs MATCH 223; semcheck 50. Random 191 / 81 / 143 /
+66; library 186 / 248 at -O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
