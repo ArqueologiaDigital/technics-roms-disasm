@@ -2754,6 +2754,14 @@ the ledger it gains well (fpargf.c -O3 -XS +24). fpgen.py only (`edit_batch230_f
 -XS +1, fpargf.c +24, fpp1 / fpp3 / fpp4 / fpp5 +1 / +2 / +4 / +5 at -O3 -XS), down 0; pairs MATCH 223; semcheck 50.
 Random 196 / 84 / 147 / 69; library 186 / 248 at -O3 -XS.
 
+**Batch 231 (2026-11-14): FP_COND_PRELOAD under -Xr when nothing is live.** The fpgen.py gate sweep re-run with random
+scoring (research-scratch `gate/fpsweep_random.py`, after batch 230 showed that rstmt cannot see multi-statement effects)
+moved only FP_COND_PRELOAD at -Xr (random +1). Batch 212 had found it wrong code there: in rstmt .rs_2_01_07_5 the
+preload's `cal ._fld_dd` ran over a live register parameter. It now applies under -Xr only when no register holds a live
+variable. The one random function needed a live register and stays out; rstmt gains. fpgen.py only
+(`edit_batch231_fpgen.py`). Ledger up 2 (rstmt -Xr +2, -O3 -XS -Xr +2), down 0; pairs MATCH 223; semcheck 50. Random
+unchanged, 196 / 84 / 147 / 69.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

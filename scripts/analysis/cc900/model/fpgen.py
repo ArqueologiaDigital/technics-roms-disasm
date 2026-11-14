@@ -874,7 +874,7 @@ def cond_into(F, e, dest):
     """a ?: of doubles: the result in a temporary, then copied (t_cond: ... L1: lda XBC,XSP+0xc / ld XWA,XIZ /
     cal ._fld_dd); the first arm is built in its own temporary and copied, the second built in place (t_cond_e)"""
     cg = C()
-    if FP_COND_PRELOAD and not F.adecl and dest[0] in ('cell', 'slot') and strip(e.a).k == 'fconst' and \
+    if FP_COND_PRELOAD and (not F.adecl or not C().live_regs(F)) and dest[0] in ('cell', 'slot') and strip(e.a).k == 'fconst' and \
             strip(e.a).ty is not None and strip(e.a).ty.size == 8 and not C().nodes_in(e.c, 'call') and \
             not any(is_fp_op(n) for n in C().nodes_in(e.c, 'bin')):
         lend = F.newulabel()                               # a constant first arm is loaded first and the test jumps over
