@@ -2628,6 +2628,14 @@ the long first: the 1997 library's _exp, `xx *= x / i`, was lost in a first run.
 fpp1.c +4 / +3, fp_order.c +1 / +1), down 0; pairs MATCH 223; semcheck 50. Random unchanged, 191 / 79 / 141 / 65;
 library 186 / 248 at -O3 -XS.
 
+**Batch 215 (2026-11-14): a double declaration begins a statement for the frame temporaries (FP_DECL_STMT), and a `?:`
+tested on a bit resets the region (RESET_COND_BIT).** Declarations are generated inline by the block loop, so
+fpgen.begin_stmt never ran for `double t = ..`: its temporaries saw no statement begin, and rule R_E never judged it. The
+loop now calls it. In rstmt rs_4_06_15_1, `double t = (gi3 & 0x80 ? gs.d : gd); jd = t` -> `lda XSP,XSP-0x10`: the
+`?:` gets the region D alone. Like `if (m & c)`, a `?:` whose test is a bit test is a resetting statement (fpe3.py
+is_reset, research-scratch `edit_batch215_fpe3.py`). Ledger up 2 (rstmt none +1, -Xr +1), down 0; pairs MATCH 223;
+semcheck 50. Random unchanged, 191 / 79 / 141 / 65; library 186 / 248 at -O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

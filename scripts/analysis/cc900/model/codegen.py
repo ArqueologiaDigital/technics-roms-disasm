@@ -9659,6 +9659,10 @@ def gen_stmt(F, s, last):
                         F.emit('ld', 'XIZ,%s' % FAM[fam][4])
                 i += 1; continue
             if c.k == 'decl' and c.init is not None and fpgen.is_fp(c.var.ty):
+                if FP_DECL_STMT and getattr(F, 'fp_temps', None) is not None:
+                    fpgen.begin_stmt(F, c); F._root_done = False   # a double declaration is a statement for the
+                                                           # temporaries too (rstmt rs_4_06_15_1: its bit-tested ?: resets
+                                                           # the region, D alone)
                 fpgen.eval_into(F, c.init, ('lv', N_var(c.var))); i += 1; continue
             if c.k == 'decl' and c.init is not None and getattr(c.var, 'lh_dead_idx', False) and \
                     getattr(c.var, 'slot', None) is not None:
@@ -10374,6 +10378,7 @@ K_FOLD_REGTEMP_OPT = True                                 # see gen_stmt's block
 JUMP_TO_RET_OPT = True                                    # see compile_function_once: -O, j L to a bare ret
 CHAR_IDX_ONCE_OPT = True                                  # see push_elem: -O reads a char index once, through C
 CALL_RIGHT_ALL_XR = True                                  # see _gen_bin_body: CALL_RIGHT_FIRST under -Xr whatever the left reads
+FP_DECL_STMT = True                                       # see gen_stmt's block: begin_stmt for a double declaration
 LIVE_SHIFT = True                                         # see gen_body_shift
 _SHIFT_PARTS = {'WA': ('XWA', 'QWA', 'WA', 'QW', 'QA', 'W', 'A'), 'BC': ('XBC', 'QBC', 'BC', 'QB', 'QC', 'B', 'C'),
                 'DE': ('XDE', 'QDE', 'DE', 'QD', 'QE', 'D', 'E')}

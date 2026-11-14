@@ -231,6 +231,12 @@ def is_reset(F, st):
     memory object with a memory operand, a long ++ / --, a bit test `if (m & c)`"""
     if st is None: return False
     k = getattr(st, 'k', None)
+    if RESET_COND_BIT and k in ('expr', 'decl', 'return'):   # a ?: tested on a bit, m & c (rstmt rs_4_06_15_1: double t =
+        for c_ in fpgen.C().nodes_in(st, 'cond'):          # (gi3 & 0x80 ? gs.d : gd) -> region D alone)
+            t_ = fpgen.strip(c_.c)
+            if t_.k == 'bin' and t_.op == '&' and mem_leaf(t_.l) is not None and fpgen.strip(t_.r).k == 'const' and \
+                    not fpgen.is_fp(t_.ty):
+                return True
     if k == 'if':
         c = fpgen.strip(st.cond)
         return c.k == 'bin' and c.op == '&' and mem_leaf(c.l) is not None and fpgen.strip(c.r).k == 'const' and not fpgen.is_fp(c.ty)
@@ -257,6 +263,7 @@ def is_reset(F, st):
     return is_memory(F, e.l) and is_memory(F, r)
 
 CONV_ROOT_BIN_ONLY = True
+RESET_COND_BIT = True                                      # see is_reset
 CONV_OPA_NONE = True                                       # without -O an op= reserves no root cell (rstmt rs_4_01_04_2;
                                                            # -O3 -XS keeps it for a product: random r4_01_19)
 CONV_LOCAL_FIRST = True                                    # see eval_val
