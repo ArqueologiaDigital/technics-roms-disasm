@@ -2459,6 +2459,20 @@ when it decides homes. A refinement of batch 192 that would have kept a home for
 op= found no candidate here and was dropped. Ledger up 1 (rstmt -Xr +1), down 0; pairs MATCH 223; semcheck 50. Random
 unchanged, 189 / 72 / 131 / 59.
 
+**Batch 199 (2026-11-14): -Xr, a statement's registers shift past a live register parameter (LIVE_SHIFT).** About 90 of
+the -Xr statement refusals are register conflicts: the model's code for the statement writes the register of a live
+parameter. The oracle seems to allocate its temporaries in the order WA, BC, DE and skip the live one, so every family
+shifts. In rstmt .rs_2_02_14_4, char a is live in WA and `if (*gpl != gpl[3])` becomes `ld XDE,(_gpl) /
+ld XBC,(_gpl) / ld XBC,(XBC+0xc) / cp XBC,(XDE)`; without the parameter it is `ld XBC,(_gpl) / ld XWA,(_gpl) /
+ld XWA,(XWA+0xc) / cp XWA,(XBC)`. gen_body_shift wraps leaf statements under -Xr. On a refusal "over the live parameter
+p" for a parameter the statement does not use, it restores Fn's state (attributes, one level deep), generates the
+statement again with the guards waiving p, and renames the WA / BC / DE families in order onto the free ones. It gives
+up when the code calls, uses a helper or a block move, needs more families than are free, or still names p's family.
+This first cut takes only the emit guards' "over the live parameter" refusals; "the test writes WA", "a switch value in
+WA" and "array base over a live register" are separate refusals not yet routed through it. A dead-in-this-arm parameter
+is still treated as live (rs_2_01_05_1's else arm comes out in BC where the oracle uses A: different, but correct).
+Ledger up 2 (rstmt -Xr +7, -O3 -XS -Xr +7), down 0; pairs MATCH 223; semcheck 50. Random unchanged, 189 / 72 / 131 / 59.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

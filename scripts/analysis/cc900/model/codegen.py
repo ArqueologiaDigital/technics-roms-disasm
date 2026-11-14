@@ -144,6 +144,7 @@ class Fn:
             for fam_ in written_fams(op, args):
                 cur_k = getattr(getattr(s, 'cur_stmt', None), 'k', None)
                 for d in list(s.f.params) + (list(s.f.decls) if LIVE_LOCAL_GUARD else []):
+                    if d in getattr(s, 'shift_free', ()): continue   # (LIVE_SHIFT: its family is renamed afterwards)
                     rt_ = getattr(d, 'regtemp', False)
                     if cur_k == 'return' or getattr(s, 'in_return', False) or d in getattr(s, 'deferred', ()) or \
                             (d.kind != 'param' and ((op == 'cal' and not rt_) or cur_k is None or getattr(s, 'counted', None) or
@@ -197,6 +198,7 @@ class Fn:
                                                       (STMT_LOCAL_GUARD and x_.kind == 'local' and getattr(x_, 'reg', None))]):
                 r_ = getattr(d, 'reg', None)                 # (and a register temporary, at every set: rstmt rs_3_00_14_8,
                 if r_ not in ('WA', 'BC', 'DE', 'HL') or d in s.dead: continue   # char u in A under ld XWA,(_gp))
+                if d in getattr(s, 'shift_free', ()): continue
                 if d.kind != 'param' and not local_defined_before(s, d): continue
                 if d.kind == 'local' and not getattr(d, 'regtemp', False) and \
                         (getattr(s, 'loops', None) or self_update(op, args, d)): continue   # (a loop's planners move its
@@ -10293,13 +10295,67 @@ def gen_stmt(F, s, last):
     raise Unsupported('statement ' + s.k)
 
 _gen_stmt_body = gen_stmt
+
+LIVE_SHIFT = True                                         # see gen_body_shift
+_SHIFT_PARTS = {'WA': ('XWA', 'QWA', 'WA', 'QW', 'QA', 'W', 'A'), 'BC': ('XBC', 'QBC', 'BC', 'QB', 'QC', 'B', 'C'),
+                'DE': ('XDE', 'QDE', 'DE', 'QD', 'QE', 'D', 'E')}
+
+def gen_body_shift(F, s, last):
+    """-Xr: a statement refused because its code writes over a live register parameter that the statement itself does
+    not use is generated again as if that register were free, and its WA / BC / DE families are then renamed, in
+    order, onto the families left free (the oracle allocates its temporaries in the order WA, BC, DE, skipping the live
+    ones: rstmt .rs_2_02_14_4 -Xr, char a live in WA: if (*gpl != gpl[3]) -> ld XDE,(_gpl) / ld XBC,(_gpl) /
+    ld XBC,(XBC+0xc) / cp XBC,(XDE), where without the parameter the code is ld XBC,(_gpl) / ld XWA,(_gpl) /
+    ld XWA,(XWA+0xc) / cp XWA,(XBC)).  Not when the code calls (fixed argument registers), uses a block move or a
+    helper; the parameter's family must then appear nowhere in the renamed code."""
+    import copy as _cp
+    snap = {k: (_cp.copy(v) if isinstance(v, (list, set, dict)) else v) for k, v in F.__dict__.items()}
+    n0 = len(F.lines)
+    try:
+        return _gen_stmt_body(F, s, last)
+    except Unsupported as ex:
+        m = re.search(r'over the live parameter (\w+) in (WA|BC|DE)$', str(ex))
+        if not m: raise
+        d = next((x for x in F.f.params if x.name == m.group(1)), None)
+        if d is None or uses_decl(s, d): raise
+        def restore():
+            F.__dict__.clear(); F.__dict__.update({k: (_cp.copy(v) if isinstance(v, (list, set, dict)) else v) for k, v in snap.items()})
+        restore()
+        F.shift_free = {d}
+        try:
+            r_ = _gen_stmt_body(F, s, last)
+        except Unsupported:
+            F.shift_free = set(); restore(); raise ex
+        F.shift_free = set()
+        new = F.lines[n0:]
+        if any(l and (l.startswith(('\tcal', '\tcall', '\tswi')) or re.search(r'\t(ldir|lddr|ldi|ldd|cpir|cpdr)', l) or 'C9H_' in l)
+               for l in new):
+            restore(); raise ex
+        avoid = {x.reg for x in list(F.f.params) + list(F.f.decls) if getattr(x, 'reg', None) in _SHIFT_PARTS and
+                 (x is d or x not in F.dead)}
+        def fam_re(f_): return re.compile(r'\b(%s)\b' % '|'.join(_SHIFT_PARTS[f_]))
+        used = [f_ for f_ in ('WA', 'BC', 'DE') if any(l and fam_re(f_).search(l) for l in new)]
+        free = [f_ for f_ in ('WA', 'BC', 'DE') if f_ not in avoid]
+        if len(used) > len(free) or any(l and re.search(r'\b(X?HL|H|L)\b', l) for l in new) and 'HL' in avoid:
+            restore(); raise ex
+        mp = {}
+        for a_, b_ in zip(used, free):
+            for pa, pb in zip(_SHIFT_PARTS[a_], _SHIFT_PARTS[b_]): mp[pa] = pb
+        allp = re.compile(r'\b(%s)\b' % '|'.join(x for f_ in used for x in _SHIFT_PARTS[f_]))
+        new2 = [allp.sub(lambda m_: mp[m_.group(1)], l) if l and l.startswith('\t') else l for l in new]
+        if any(l and fam_re(d.reg).search(l) for l in new2):
+            restore(); raise ex
+        F.lines[n0:] = new2
+        return r_
+
 def gen_stmt(F, s, last):
     """gen_stmt with F.in_return raised while a return statement (at any depth) is generated: the live-local guard
     then knows nothing is read after it (_strlen: if (ss == NULL) return 0xffff; writes ss's HL)"""
     prev = getattr(F, 'in_return', False); F.in_return = prev or s.k == 'return'
     n_ms_ = len(F.lines)
     try:
-        r_ = _gen_stmt_body(F, s, last)
+        r_ = gen_body_shift(F, s, last) if LIVE_SHIFT and F.adecl and s.k in ('expr', 'return', 'decl') and \
+            not getattr(F, 'shift_free', None) else _gen_stmt_body(F, s, last)
         if BASE_HOIST and F.opt and s.k in ('expr', 'return', 'decl'): base_hoist(F, s, n_ms_)
         if MEMBER_STORE_SWAP and True and s.k == 'expr' and \
                 (s.e.k == 'opassign' or s.e.k == 'bin' and s.e.op == '=') and len(F.lines) - n_ms_ >= 4:
