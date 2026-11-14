@@ -255,7 +255,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-13-6-micro-negk, v423/O3XS                              | probes/negk.c        | 38 / 38 exact (100.0%)     |
 | run 2026-11-13-6-micro-negk, v423/Xr                                | probes/negk.c        | 38 / 38 exact (100.0%)     |
 | run 2026-11-13-6-micro-negk, v423/O3XSXr                            | probes/negk.c        | 38 / 38 exact (100.0%)     |
-| run 2026-11-13-7-micro-rstmt, v423/none                             | probes/rstmt*.c      | 3574 / 4694 exact (76.1%)  |
+| run 2026-11-13-7-micro-rstmt, v423/none                             | probes/rstmt*.c      | 3575 / 4694 exact (76.2%)  |
 | run 2026-11-13-7-micro-rstmt, v423/O3XS                             | probes/rstmt*.c      | 3156 / 4694 exact (67.2%)  |
 | run 2026-11-13-7-micro-rstmt, v423/Xr                               | probes/rstmt*.c      | 3307 / 4694 exact (70.5%)  |
 | run 2026-11-13-7-micro-rstmt, v423/O3XSXr                           | probes/rstmt*.c      | 3072 / 4694 exact (65.4%)  |

@@ -1310,6 +1310,8 @@ def test_clobber_check(F, n0, n1, cond, arms, wide=False):
                 raise Unsupported('the test writes %s, the home of the parameter %s that an arm reads' % (r_, d.name))
 
 TEST_IN_BC = True                                         # see test_to_bc
+UIDX_ADDR_XDE = True                                      # see gen_stmt's store: a long element at an unsigned index in XDE
+MUL_K_ELEM_BC = True                                      # see gen_mul_const: an element times a constant, the product in XBC
 
 def test_to_bc(F, n0, n1):
     """-Xr: an if's test whose code writes WA, the home of a parameter an arm reads, is written in BC's family instead,
@@ -5674,6 +5676,14 @@ def gen_mul_const(F, l, k, fam, size, signed=True):
                 not any(re.search(r'\b(X?(DE|HL|IX|IY|IZ)|cal)\b', l_) for l_ in F.lines[n0_:]):   # ld XBC,(XBC+WA) /
             F.emit('ld', 'XWA,XBC'); x = 'XBC'   # ld XWA,XBC / sla 0x3,XWA / sub XWA,XBC)
         else: raise Unsupported('complex multiplicand')
+    elif x is None and MUL_K_ELEM_BC and not F.opt and not F.adecl and size == 4 and fam == 'BC' and strip(l).k == 'load' and \
+            strip(strip(l).e).k == 'index' and not live_regs(F) - {'DE'}:
+        n0_ = len(F.lines)                       # the same, the product in XBC (rstmt rs_4_09_01_2: gla[b] = gla[c] * 10L ->
+        f_ = gen(F, l, 'WA', 4)                  # .. lda XBC,_gla / ld XWA,(XBC+WA) / ld XBC,XWA / sla 0x2,XBC /
+        if f_ == 'WA' and re.match(r'^\tld\tXWA,\(XBC\+(WA|A)\)$', F.lines[-1]) and \
+                not any(re.search(r'\b(X?(DE|HL|IX|IY|IZ)|cal)\b', l_) for l_ in F.lines[n0_:]):   # add XBC,XWA / add XBC,XBC)
+            F.emit('ld', 'XBC,XWA'); x = 'XWA'
+        else: raise Unsupported('complex multiplicand')
     elif x is None: raise Unsupported('complex multiplicand')
     elif x.startswith('(_'):                     # an absolute operand is loaded once into XBC
         if R == FAM['BC'][size]: raise Unsupported('a constant multiple built in the register of its operand')   # (lhx.c
@@ -9940,6 +9950,16 @@ def gen_stmt(F, s, last):
         else:                                        # add DE,DE / lda XHL,_gb / ... lda XBC,_ga / ld (XHL+DE),WA
             nl = len(F.lines); F.store_nl = nl
             t = lvalue(F, lv, kind='storev')         # m_ga_set, m_gps_set (a computed value: p[k] through XBC)
+            if UIDX_ADDR_XDE and size == 4 and t == '(XBC)' and not F.opt and 'DE' not in live_regs(F):
+                seg_ = F.lines[nl:]                  # a long element at an unsigned index, its address in XDE when the value
+                rr_ = strip(s.e.r)                   # is computed (rstmt rs_4_09_01_2: gla[b] = gla[c] * 10L -> ld WA,(b) /
+                while rr_.k == 'cast': rr_ = strip(rr_.e)   # extz XWA / sll 0x2,XWA / ld XDE,_gla / add XDE,XWA / .. /
+                if len(seg_) == 5 and re.match(r'^\tld\tWA,', seg_[0]) and seg_[1] == '\textz\tXWA' and \
+                        seg_[2] == '\tsll\t0x2,XWA' and re.match(r'^\tld\tXBC,_\w+$', seg_[3]) and seg_[4] == '\tadd\tXBC,XWA' and \
+                        rr_.k == 'bin' and not nodes_in(rr_, 'call') and not has_helper_call(rr_) and \
+                        mem_operand(F, s.e.r) is None:   # ld (XDE),XBC)
+                    F.lines[nl + 3] = seg_[3].replace('XBC', 'XDE'); F.lines[nl + 4] = '\tadd\tXDE,XWA'; t = '(XDE)'
+                    F.uidx_value_bc = True
             if STORE_ADDR_GUARD:                     # lnr.c r_gp_wr (-Xr): ld XBC,(_gp) over d3 in BC
                 for d in list(F.f.params) + list(F.f.decls):
                     r_ = getattr(d, 'reg', None)
@@ -9950,6 +9970,7 @@ def gen_stmt(F, s, last):
         if rv is not None and rv.ty.size == size:
             F.emit('ld', '%s,%s' % (t, FAM[rv.reg][size])); return
         work = getattr(F, 'tfam', 'WA')
+        if getattr(F, 'uidx_value_bc', False): work = 'BC'; F.uidx_value_bc = False
         if getattr(F, 'tfam', None) and not F.loops and size == 1:   # op_two_loops: *a = *b after the loops ->
             need = set()                                             # ld C,(XBC) / ld (XWA),C
             walk(lv, lambda m, d: need.add(strip(m.e).decl) if m.k == 'load' and strip(m.e).k == 'var' else None)

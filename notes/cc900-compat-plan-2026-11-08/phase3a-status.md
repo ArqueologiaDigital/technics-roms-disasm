@@ -2293,6 +2293,18 @@ own code writes WA over the parameter (rs_2_02_15_4, rs_4_02_11_3), which the re
 under -Xr without -O only. Ledger up 3 (rstmt at -Xr 3,304 -> 3,307, lhy.c 52 -> 56, random2 at -Xr 25 -> 26), down 0;
 pairs MATCH 223; semcheck 50. Random 183 / 61 / 124 / 54.
 
+**Batch 182 (2026-11-14): a long element target at an unsigned index takes its address in XDE when the value is
+computed, and a constant multiple of an element can be built in XBC (UIDX_ADDR_XDE, MUL_K_ELEM_BC).** For
+`gla[b] = gla[c] * 10L` (rstmt rs_4_09_01_2, b an unsigned parameter) the oracle builds the target's address in XDE
+(`ld WA,(b) / extz XWA / sll 0x2,XWA / ld XDE,_gla / add XDE,XWA`). The value goes to XBC (`ld XWA,(XBC+WA) /
+ld XBC,XWA / sla 0x2,XBC / add XBC,XWA / add XBC,XBC`), then `ld (XDE),XBC`. The model built the address in XBC and
+refused ("the value overwrites the store address"). Without -O. Ledger up 1 (rstmt at none 3,574 -> 3,575), down 0;
+pairs MATCH 223; semcheck 50. Random 183 / 61 / 124 / 54.
+Tried and not kept this round: a long compare through a global pointer (`gl > *gpl` -> `ld XBC,(_gpl) /
+ld XWA,(_gl) / cp XWA,(XBC)`), right, but the statement's other code then differed (no gain); the register-temporary
+candidate orders BC-WA-DE-HL, WA-DE-BC-HL and WA-BC-HL-DE (all worse than WA-BC-DE-HL); LH_GUARDED under -O (more
+compiled, none exact).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
