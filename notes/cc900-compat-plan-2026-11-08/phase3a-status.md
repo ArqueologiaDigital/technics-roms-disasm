@@ -2686,6 +2686,15 @@ divs WA,C / ld (_gc2),W`. The exclusion is dropped; lifting the leaf-planner exc
 3 (random3 -O3 -XS -Xr +1, rstmt +11 / +10 at the -O sets), down 0; pairs MATCH 223; semcheck 50. Random 191 / 81 / 143 /
 66; library 186 / 248 at -O3 -XS.
 
+**Batch 222 (2026-11-14): test_reg_reuse also for a test that returns (TEST_REG_RET).** The -O3 -XS post-pass that loads
+a tested static into a register for the test and the reads after it (`ld C,(_gc2) / cp C,0x0 / .. / divs WA,C`) only
+looked for a test followed by `j eq` / `j ne`. As the function's last statement, the jump has become `ret eq`, so
+rstmt rs_1_05_04_4 `if (gl2 & 4) if (gc2 != 0) gca[2] = 0 % gc2` kept `cpb (_gc2),0x0 / ret eq / .. /
+divs WA,(_gc2)`. A returning test now counts, and its returning path needs no liveness check because the register is dead
+there. Two attempts to do this through GUARD_DIV instead failed: a char divisor's promoted test was never a plain load,
+and once it was, GUARD_DIV took r1_02_12 from test_reg_reuse and divided by memory. Ledger up 2 (rstmt +15 / +13 at the
+-O sets), down 0; pairs MATCH 223; semcheck 50. Random unchanged, 191 / 81 / 143 / 66; library 186 / 248 at -O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

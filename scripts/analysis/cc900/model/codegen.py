@@ -6853,7 +6853,10 @@ def test_reg_reuse(lines):
     i = 0
     while i < len(out) - 2:
         m = _r.match(r'^\tcp([bw])\t(\(_[\w +x0-9]+\)),0x0$', out[i] or '')
-        if not (m and _r.match(r'^\tj\t(eq|ne),L\d+$', out[i + 1] or '')): i += 1; continue
+        if not (m and (_r.match(r'^\tj\t(eq|ne),L\d+$', out[i + 1] or '') or
+                       TEST_REG_RET and _r.match(r'^\tret\t(eq|ne)$', out[i + 1] or ''))): i += 1; continue
+                                                   # (a test that returns: rstmt rs_4_04_18_6, if (gc2 != 0) gc2 = ..
+                                                   #  % gc2 as the last statement -> ld C,(_gc2) / cp C,0x0 / ret eq)
         w, M = m.group(1), m.group(2)
         blk = []
         for k in range(i + 2, len(out)):
@@ -6877,9 +6880,10 @@ def test_reg_reuse(lines):
             R = R8 if w == 'b' else R16
             fam_re = _r.compile(r'\b(X?%s|Q%s|%s|%s)\b' % (R16, R16, R16[0], R16[1]))
             if any(fam_re.search(out[k] or '') for k in blk if k <= reads[-1]): continue
-            jl_ = _r.match(r'^\tj\t\w+,(L\d+)$', out[i + 1]).group(1)
+            mj_ = _r.match(r'^\tj\t\w+,(L\d+)$', out[i + 1])
+            jl_ = mj_.group(1) if mj_ else None             # (ret eq / ne: that path returns, the register is dead)
             if TEST_REG_LIVE:                              # the register's old value dead after the last read taken over
-                if not (reg_dead(out, reads[-1] + 1, R) and reg_dead(out, None, R, jl_)): continue
+                if not (reg_dead(out, reads[-1] + 1, R) and (jl_ is None or reg_dead(out, None, R, jl_))): continue
             elif any(fam_re.search(l_ or '') for k, l_ in enumerate(out) if k < i or k > reads[-1]): continue   # (a register
             # live elsewhere, a loop counter in BC: rstmt rs_3_01_01_1 -O3 -XS was wrong code; batch 157 took only a
             # register the function used nowhere else; reg_dead since batch 160)
@@ -10427,6 +10431,7 @@ SW_SEL_WRITE_ONLY = True                                  # see gen_switch: a se
 REGVAR_CHAR_SHL1 = True                                   # see regvar_stmt: a char << 1 is add R,R
 CHAIN_K_STATIC_XR = True                                  # see store_global: CHAIN_K_STATIC under -Xr too
 CALL_CHAR_EXTS_OPT = True                                 # see gen: -O widens a char call result in HL
+TEST_REG_RET = True                                       # see test_reg_reuse: a test followed by ret eq / ne
 LIVE_SHIFT = True                                         # see gen_body_shift
 _SHIFT_PARTS = {'WA': ('XWA', 'QWA', 'WA', 'QW', 'QA', 'W', 'A'), 'BC': ('XBC', 'QBC', 'BC', 'QB', 'QC', 'B', 'C'),
                 'DE': ('XDE', 'QDE', 'DE', 'QD', 'QE', 'D', 'E')}
