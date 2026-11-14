@@ -2013,6 +2013,7 @@ LH_ELEM_NOT_LEAF = True                                   # see plan_leaf
 LH_CALL_XR = True                                         # see plan_lh_call0: under -Xr too
 LH_IDX_BCDE = True                                        # see lh_call_kinds: a register-temporary index in BC or DE too
 HOMED_WRITES_GEN = True                                   # see regvar_stmt: a computed write to a long homed in XIZ
+REG_SHIFT_SPLIT = True                                    # see regvar_stmt: a register long shifted by 17..31
 
 def uncast_int(e):
     """e without its integral casts"""
@@ -10985,10 +10986,13 @@ def regvar_stmt(F, e):
                 F.lines.pop()
         return True
     if e.k == 'opassign' and regvar_of(e.l) and e.op in ('<<', '>>') and fold(e.r).k == 'const' and \
-            fold(e.r).value is not None and 1 <= fold(e.r).value <= 16 and regvar_of(e.l).reg in FAM:
+            fold(e.r).value is not None and 1 <= fold(e.r).value <= (31 if REG_SHIFT_SPLIT else 16) and regvar_of(e.l).reg in FAM and \
+            (fold(e.r).value <= 16 or regvar_of(e.l).ty.size == 4):
         d = regvar_of(e.l); R = FAM[d.reg].get(d.ty.size, FAM[d.reg].get(2))   # cond_bits.c cb_while: x >>= 1 with x
         mn = ('sla' if d.ty.signed else 'sll') if e.op == '<<' else ('sra' if d.ty.signed else 'srl')   # in WA ->
-        F.emit(mn, '%s,%s' % (hx(fold(e.r).value), R)); return True                                     # srl 0x1,WA
+        if fold(e.r).value > 16: emit_shift(F, mn, fold(e.r).value, R); return True   # srl 0x1,WA; a long by more
+        F.emit(mn, '%s,%s' % (hx(fold(e.r).value), R)); return True                 # than 16 in two (random .r1_03_19
+                                                                                     # -Xr: c >>= 24 -> sra 0x8,XDE / sra 0x0,XDE)
     if e.k == 'opassign' and regvar_of(e.l) and e.op in SIMPLE_OPS:
         d = regvar_of(e.l); R = FAM[d.reg].get(d.ty.size, FAM[d.reg].get(2))
         rc = fold(narrow(e.r, d.ty.size))

@@ -2276,6 +2276,12 @@ ld XBC,0x2 / cal C9H_remls / ld XIZ,XHL`). `cmpx_elem`'s `F.opt` early return is
 rstmt at the -O sets, with the 1997 library at 186. Ledger up 6 (cmpx.c at -O3 -XS 409 -> 431, rstmt +1 at each set,
 random1 at -Xr 41 -> 42), down 0; pairs MATCH 223; semcheck 50. Random 183 / 61 / 123 / 54.
 
+**Batch 180 (2026-11-14): a long register variable shifted in place by 17..31 is two shifts (REG_SHIFT_SPLIT).**
+`regvar_stmt` took shift counts 1..16 only, so `c >>= 24` with c a long register parameter fell through to the lvalue
+path and was refused ("register parameter as an lvalue"). It now goes through `emit_shift`: k - 16, then 16 written as
+0x0 (random .r1_03_19 -Xr: `sra 0x8,XDE / sra 0x0,XDE`; that function then stops at another refusal). Ledger up 1
+(rstmt at -Xr 3,303 -> 3,304), down 0; pairs MATCH 223; semcheck 50. Random 183 / 61 / 123 / 54.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
