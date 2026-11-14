@@ -2654,6 +2654,16 @@ lost el_s_KU at -O3 -XS. Ledger up 10 (evorder_st.c +2 / +5 and evorder_l.c +1 /
 rstmt +1 at every set), down 0; pairs MATCH 223; semcheck 50. Random unchanged, 191 / 79 / 141 / 65; library 186 / 248 at
 -O3 -XS.
 
+**Batch 218 (2026-11-14): a char register variable times a constant goes through A (REGVAR_CHAR_MULK); a switch
+selector the body only assigns is compared in place (SW_SEL_WRITE_ONLY).** "Register parameter as an lvalue" refused
+three -Xr random functions with a single bad statement. In two of them it came from `c *= K` on a char register
+parameter, which regvar_stmt did not take. The oracle writes rstmt .rs_1_08_15_0 `c *= 3` (c in E) as `ld A,E /
+mul WA,0x3 / ld E,A`, and the model now does the same when WA holds nothing live. In .rs_3_06_15_2, `switch (c) { case
+2: c = gs.i << 4; .. }` with c in DE, the oracle compares DE in place. The model copied DE to WA because c appears in the
+body; now only a read of the selector in the body counts. That function still differs in a member store. Ledger up 1
+(rstmt -Xr +1), down 0; pairs MATCH 223; semcheck 50. Random unchanged, 191 / 79 / 141 / 65; library 186 / 248 at
+-O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

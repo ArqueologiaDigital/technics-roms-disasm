@@ -10407,6 +10407,8 @@ CALL_RIGHT_ALL_XR = True                                  # see _gen_bin_body: C
 FP_DECL_STMT = True                                       # see gen_stmt's block: begin_stmt for a double declaration
 RET_SCC_OP = True                                         # see ret_two_level: a returned comparison op m
 ADD_NEG_SUB = True                                        # see gen_bin: a + -b is a - b
+REGVAR_CHAR_MULK = True                                   # see regvar_stmt: a char register variable *= K through A
+SW_SEL_WRITE_ONLY = True                                  # see gen_switch: a selector only assigned in the body
 LIVE_SHIFT = True                                         # see gen_body_shift
 _SHIFT_PARTS = {'WA': ('XWA', 'QWA', 'WA', 'QW', 'QA', 'W', 'A'), 'BC': ('XBC', 'QBC', 'BC', 'QB', 'QC', 'B', 'C'),
                 'DE': ('XDE', 'QDE', 'DE', 'QD', 'QE', 'D', 'E')}
@@ -11527,6 +11529,13 @@ def regvar_stmt(F, e):
         if fold(e.r).value > 16: emit_shift(F, mn, fold(e.r).value, R); return True   # srl 0x1,WA; a long by more
         F.emit(mn, '%s,%s' % (hx(fold(e.r).value), R)); return True                 # than 16 in two (random .r1_03_19
                                                                                      # -Xr: c >>= 24 -> sra 0x8,XDE / sra 0x0,XDE)
+    if REGVAR_CHAR_MULK and e.k == 'opassign' and e.op == '*' and regvar_of(e.l) and regvar_of(e.l).ty.size == 1 and \
+            regvar_of(e.l).reg in ('BC', 'DE', 'HL') and fold(e.r).k == 'const' and fold(e.r).value is not None and \
+            'WA' not in live_regs(F, except_decl=regvar_of(e.l)):
+        d = regvar_of(e.l); R = FAM[d.reg][1]              # a char register variable times a constant through A
+        F.emit('ld', 'A,%s' % R)                           # (rstmt .rs_1_08_15_0 -Xr: c *= 3 with c in E ->
+        F.emit('muls' if d.ty.signed else 'mul', 'WA,%s' % hx(fold(e.r).value & 0xff))   # ld A,E / mul WA,0x3 /
+        F.emit('ld', '%s,A' % R); return True              # ld E,A)
     if e.k == 'opassign' and regvar_of(e.l) and e.op in SIMPLE_OPS:
         d = regvar_of(e.l); R = FAM[d.reg].get(d.ty.size, FAM[d.reg].get(2))
         rc = fold(narrow(e.r, d.ty.size))
@@ -11696,7 +11705,14 @@ def gen_switch(F, s, last):
         F.loops.pop(); F.lines.append(end + ':'); return
     if m is not None and family_of(m) and not ext:
         R = FAM[family_of(m)[1:] if family_of(m) != 'XIZ' else 'IZ'][size]
-        keep = in_body or (sel is not None and sel.reg in ('IZ', 'QIZ', 'XIZ'))   # sw_loop: ld WA,IZ
+        rd_body = in_body
+        if SW_SEL_WRITE_ONLY and in_body and sel is not None:   # a selector the body only assigns whole is compared in
+            tg_ = set(); al_ = []                               # place (rstmt .rs_3_06_15_2 -Xr: switch (c) { case 2:
+            walk(s.body, lambda n, dep: tg_.add(id(strip(n.l))) if n.k == 'bin' and n.op == '=' and   # c = gs.i << 4; ..}
+                 strip(n.l).k == 'var' and strip(n.l).decl is sel else None)                       # -> cp DE,0x3e8)
+            walk(s.body, lambda n, dep: al_.append(id(n)) if n.k == 'var' and n.decl is sel else None)
+            rd_body = not all(x in tg_ for x in al_)
+        keep = rd_body or (sel is not None and sel.reg in ('IZ', 'QIZ', 'XIZ'))   # sw_loop: ld WA,IZ
         n_ = len(vals); lo_ = min(v for v, _, _ in vals) if vals else 0; hi_ = max(v for v, _, _ in vals) if vals else 0
         is_tab = n_ >= 6 and hi_ - lo_ + 1 <= 2 * n_       # (a jump table; a compare chain keeps the register: sw_ev)
         if keep and (not F.opt or (F.adecl and in_body and is_tab and sel is not None and sel.reg in ('WA', 'BC', 'DE'))):
