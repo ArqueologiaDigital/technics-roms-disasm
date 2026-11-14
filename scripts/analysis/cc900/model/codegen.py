@@ -6704,6 +6704,11 @@ def later_call_absorbs(F):
                 while c.k == 'cast': c = strip(c.e)        # vc(..); gc /= 3; gu2 = ..; return r1(a) - gi3 -> cal _vc / .. /
                                                            # pushw (XSP+0x6) / cal _r1 / inc 0x4,XSP / sub HL,(_gi3))
             return c.k == 'call' and bool(c.args) and not fpgen.is_fp(getattr(c, 'ty', None))
+        if POP_LAZY_DECL and x.k == 'decl':                 # a declaration whose initialiser neither calls nor touches
+            if x.init is None: continue                    # the frame is passed over (random r4_07_09: int t = r1(..);
+            if nodes_in(x.init, 'call') or has_helper_call(x.init) or stmt_touches_stack(F, x.init): return False
+            if getattr(x.var, 'slot', None) is not None and not getattr(x.var, 'reg', None): return False
+            continue                                       # int u = t; gl2--; gi = u; v1(t) -> the pops wait for _v1)
         if x.k != 'expr': return False
         e = strip(x.e)
         c = strip(e.r) if e.k == 'bin' and e.op == '=' else e
@@ -10480,6 +10485,8 @@ TEST_REG_RET = True                                       # see test_reg_reuse: 
 OPA_IZ_OPERAND = True                                     # see gen_opassign: op= with an IZ-homed operand
 PTR_SUM_IN_HOME = True                                    # see regvar_stmt: a char pointer sum built in its home
 UNREACH_AFTER_RET = True                                  # see gen_stmt's block: code after an always-taken return
+REGVAR_HL_POP = True                                      # see regvar_stmt
+POP_LAZY_DECL = True                                      # see later_call_absorbs
 LIVE_SHIFT = True                                         # see gen_body_shift
 _SHIFT_PARTS = {'WA': ('XWA', 'QWA', 'WA', 'QW', 'QA', 'W', 'A'), 'BC': ('XBC', 'QBC', 'BC', 'QB', 'QC', 'B', 'C'),
                 'DE': ('XDE', 'QDE', 'DE', 'QD', 'QE', 'D', 'E')}
@@ -11478,6 +11485,10 @@ def regvar_stmt(F, e):
                 nxc = strip(nxc.r)                     # the next statement x = f(args) takes them too (homes2a.c
                                                        # A_ab_ba_c_e_ab: b = g1(2); a = g1(1) -> cal _g1 / ld IZ,HL /
                                                        # pushw 0x1 / cal _g1 / inc 0x4,XSP / ld QIZ,HL)
+            if R == FAM['HL'][d.ty.size] and REGVAR_HL_POP and not F.opt and not F.adecl and F.pending and not later_call_absorbs(F):
+                flush_pops(F)                          # (in HL the pops wait only for a later call that takes them:
+                                                       #  random r3_03_13, char t = rc(gi); char u = t; .. -> cal _rc /
+                                                       #  inc 0x2,XSP / ld A,L)
             if R != FAM['HL'][d.ty.size] and (F.opt and not (POP_LAZY_OPT and POP_LAZY_REGVAR_OPT and not F.adecl) or
                                               nxc is None or nxc.k != 'call' or not nxc.args):
                 flush_pops(F)       # (_strcpy: a local in XHL needs no move, the pops wait); h_p: cdecl merges the
@@ -11609,7 +11620,7 @@ def regvar_stmt(F, e):
             (fold(e.r).value <= 16 or regvar_of(e.l).ty.size == 4):
         d = regvar_of(e.l); R = FAM[d.reg].get(d.ty.size, FAM[d.reg].get(2))   # cond_bits.c cb_while: x >>= 1 with x
         mn = ('sla' if d.ty.signed else 'sll') if e.op == '<<' else ('sra' if d.ty.signed else 'srl')   # in WA ->
-        if REGVAR_CHAR_SHL1 and F.adecl and e.op == '<<' and fold(e.r).value == 1 and d.ty.size == 1:
+        if REGVAR_CHAR_SHL1 and d.reg in ('WA', 'BC', 'DE', 'HL') and e.op == '<<' and fold(e.r).value == 1 and d.ty.size == 1:
             F.emit('add', '%s,%s' % (R, R)); return True    # a char shifted left once is added to itself (random
                                                            # r3_03_13 -Xr: t <<= 1 with t in L -> add L,L)
         if fold(e.r).value > 16: emit_shift(F, mn, fold(e.r).value, R); return True   # srl 0x1,WA; a long by more

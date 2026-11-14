@@ -2730,6 +2730,16 @@ function's last return writes, and batch 226 dropped that return as unreachable.
 -O, so the rule is now off there. research-scratch `gate/commit_batch.sh` now refuses when semcheck's verdict count
 rises. Ledger unchanged against batch 226, down 0; pairs MATCH 223; semcheck 50. Random 194 / 83 / 147 / 69.
 
+**Batch 228 (2026-11-14): pops after an HL temporary's call, declarations in later_call_absorbs, and `char << 1` at
+every set.** Random r3_03_13 at none had every statement exact alone. `char t = rc(gi); char u = t; ..` -> `cal _rc /
+inc 0x2,XSP / ld A,L`: a call result whose register temporary is in HL's family now releases the pops at once when no
+later call takes them, without -O (REGVAR_HL_POP; under -O3 -XS the library's `_strcpy` keeps them pending and was lost
+in a first run). That rule alone lost r4_07_09, because later_call_absorbs gave up at `int u = t` before the absorbing
+`v1(t)`. A declaration whose initialiser neither calls nor touches the frame is now passed over (POP_LAZY_DECL).
+`t <<= 1` is `add L,L` at none too: batch 219's REGVAR_CHAR_SHL1 now applies at every set to a char in WA / BC / DE /
+HL, while a char homed in QIZH keeps `sla 0x1,QIZH` (rstmt rs_3_03_13_2). Ledger up 2 (random3 none +1, rstmt -Xr +1),
+down 0; pairs MATCH 223; semcheck 50. Random 195 / 83 / 147 / 69; library 186 / 248 at -O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
