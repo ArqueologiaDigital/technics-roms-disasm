@@ -2617,6 +2617,17 @@ op= target) under -Xr: +1. CALL_RIGHT_FIRST under -Xr whatever registers the lef
 +1. Every other site changed nothing or lost. Ledger up 4 (rstmt +3 / +2 / +3, evorder_ad.c -O3 -XS -Xr +5), down 0;
 pairs MATCH 223; semcheck 50. Random unchanged, 191 / 79 / 141 / 65; library 186 / 248 at -O3 -XS.
 
+**Batch 214 (2026-11-14): more of where a conversion's long sits against its double (CONV_OPA_NONE, CONV_LOCAL_FIRST,
+fpe3.py).** The frame and slot first-differences at none were mostly int-to-double conversions with their long on the
+wrong side of their double. Without -O, an op= with a binary operand that contains a conversion takes the long first,
+above the double (rstmt rs_4_01_04_2: `gd2 -= (double)gu2 - 2.5` -> `ld (XSP+0x14),XWA / lda XBC,XSP+0x14 /
+lda XWA,XSP+0xc / cal ._fld_dul`). Batch 204 had covered only a bare conversion; -O3 -XS keeps the reservation for a
+product (random r4_01_19, `gd *= (double)gps->c * 3.0`, lost in a first run). A declaration of a local takes the double
+first (rs_4_03_13_0: `double t = (double)gc2 - gd2` -> the long at +0xc, the double at +0x10). An op= into a local keeps
+the long first: the 1997 library's _exp, `xx *= x / i`, was lost in a first run. Ledger up 8 (rstmt +5 / +3 / +5 / +3,
+fpp1.c +4 / +3, fp_order.c +1 / +1), down 0; pairs MATCH 223; semcheck 50. Random unchanged, 191 / 79 / 141 / 65;
+library 186 / 248 at -O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

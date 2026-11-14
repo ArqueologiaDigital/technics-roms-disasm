@@ -125,6 +125,11 @@ def eval_val(F, e, hint):
                 else: vals[comp[0]] = fp.eval_val(F, ops[comp[0]], None)
             fp.op_into(F, e, vals, ('cell', cell)); return ('slot', cell.off)
         fp.op_into(F, e, vals, dst); return dst
+    if CONV_LOCAL_FIRST and e.k == 'cast' and e.kind == 'IntegralToFloating' and hint is None and \
+            getattr(F, 'conv_local_dest', False) and not getattr(F, 'fp_opassign', False):   # (not an op=: _exp's
+                                                           # xx *= x / i keeps the long first) a local destination: the conversion's double before its
+        cell = fp.Cell(e.ty.size); fp.alloc(F, cell)       # long (rstmt rs_4_03_13_0: double t = (double)gc2 - gd2 ->
+        fp.eval_into(F, e, ('cell', cell)); return ('slot', cell.off)   # the long at +0xc, the double at +0x10)
     if e.k == 'cond' or e.k == 'cast':
         return _orig_eval_val(F, e, hint)
     return _orig_eval_val(F, e, hint)
@@ -155,8 +160,9 @@ def eval_into(F, e, dest):
                 found = []
                 fp.C().walk(x, lambda n, d: found.append(n) if n.k == 'cast' and n.kind == 'IntegralToFloating' else None)
                 return bool(found) or (x.k == 'cast' and x.kind == 'IntegralToFloating')
-            if not SW['R_R'] or has_conv(c0) and (c0.k == 'bin' or not CONV_ROOT_BIN_ONLY or
-                                                   c0.k == 'cast' and not getattr(F, 'fp_opassign', False)):
+            if not SW['R_R'] or has_conv(c0) and (not CONV_ROOT_BIN_ONLY or c0.k in ('bin', 'cast') and
+                                                   not (getattr(F, 'fp_opassign', False) and
+                                                        (c0.k == 'cast' or CONV_OPA_NONE and not F.opt))):
                 fp.alloc(F, cell)                            # s_conv2, s_conv_first: gd = gi * gd2 + gd3; a negated
                                                              # conversion, or one an op= takes, has its long first (rstmt
                                                              # rs_3_06_19_2: gd2 -= (double)gpi[1], the long at +0x14 above
@@ -170,7 +176,10 @@ def eval_into(F, e, dest):
                 if i != first: vals[i] = fp.eval_val(F, ops[i], cell if c0.k == 'call' and fp.ROOT_CELL_AFTER_CALL else None)
             if len(comp) == 2 and first == 0 and e.op in ('+', '*') and fp.COMMUTE_LAST_XBC: vals = [vals[1], vals[0]]
             fp.op_into(F, e, vals, dest); return
-    return _orig_eval_into(F, e, dest)
+    ldest = dest[0] == 'lv' and fp.strip(dest[1]).k == 'var' and fp.strip(dest[1]).decl.kind == 'local'
+    prev = getattr(F, 'conv_local_dest', False); F.conv_local_dest = ldest
+    try: return _orig_eval_into(F, e, dest)
+    finally: F.conv_local_dest = prev
 
 _orig_gen_return = fpgen.gen_return
 
@@ -248,6 +257,9 @@ def is_reset(F, st):
     return is_memory(F, e.l) and is_memory(F, r)
 
 CONV_ROOT_BIN_ONLY = True
+CONV_OPA_NONE = True                                       # without -O an op= reserves no root cell (rstmt rs_4_01_04_2;
+                                                           # -O3 -XS keeps it for a product: random r4_01_19)
+CONV_LOCAL_FIRST = True                                    # see eval_val
 
 _orig_get0 = fpgen.FrameAlloc.get0
 _orig_a_begin = fpgen.FrameAlloc.begin_stmt
