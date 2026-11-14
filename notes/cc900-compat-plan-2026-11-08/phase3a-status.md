@@ -2484,6 +2484,20 @@ shift_rename now refuses whenever the statement defines a variable with a regist
 the same rule. Ledger up 2 by 16 (cmpordl2.c -Xr +14, rstmt -Xr +2), down 0; pairs MATCH 223; semcheck 50. Random
 unchanged, 189 / 72 / 131 / 59.
 
+**Batch 201 (2026-11-14): a long helper's value stored into an element at a register index keeps the element's
+address in XIZ (HELPER_STORE_XIZ).** "The value overwrites the store address" is the largest single refusal reason in
+the random functions at none (42 statements). One of its shapes is a long helper's result stored into a global element
+at a variable index. The oracle moves the element's address into XIZ before the helper call (rstmt rs_1_04_03_3, none
+and -O3 -XS: `gula[c] = ((unsigned long)guc) % 3UL` -> `push XIZ / ld WA,(XSP+0xe) / sla 0x2,WA / lda XBC,_gula /
+lda XIZ,XBC+WA / ld XWA,0x0 / ld A,(_guc) / ld XBC,0x3 / cal C9H_remlu / ld (XIZ),XHL`). The store now does the same:
+it drops the lines from the address on, inserts `push XIZ` into the prologue, rebuilds the address and moves it to XIZ,
+then generates the value. It stands aside when an earlier line uses XSP or IZ, or after an early exit, and while a
+register variable is still read afterwards (or inside a loop). A first run without the last two conditions gave nine
+semcheck verdicts: crashes after a `ret eq` written before the push, and random r3_09_05 -Xr, whose t in XHL was
+overwritten by the helper's result. A base sharing the index's family refuses (the -Xr lvalue gave `(XDE+DE)`). Ledger
+up 5 by 24 (lhx.c +4 / +8 at none / -O3 -XS, stdiv2.c -O3 -XS +10, rstmt +1 / +1), down 0; pairs MATCH 223; semcheck
+50. Random unchanged, 189 / 72 / 131 / 59; library 186 / 248 at -O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

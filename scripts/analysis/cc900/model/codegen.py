@@ -10285,6 +10285,25 @@ def gen_stmt(F, s, last):
                                                            #  random r2_04_10 crashed, KeyError 4)
                     F.emit('ld', 'XWA,%s' % pk_[1])
                     F.emit('ld', '%s,%s' % ('(XWA+%s)' % hx(pk_[2]) if pk_[2] else '(XWA)', R2_)); F.store_nl = None; return
+            if HELPER_STORE_XIZ and size == 4 and nl_ is not None and nl_ <= n0 and \
+                    F.push == push0 and any('\tcal\tC9H_' in l for l in F.lines[n0:] if l) and not F.xiz_vars and \
+                    'XIZ' not in F.pushes and not any(l and re.search(r'XSP|\bX?IZ\b|QIZ', l) for l in F.lines[1:nl_]) and \
+                    re.match(r'^\((XWA|XBC|XDE|XHL)\+(WA|BC|DE)\)$', t) and not nodes_in(s.e.r, 'call') and \
+                    not any(l and l.startswith(('\tret', '\tj\t')) for l in F.lines[1:nl_]) and \
+                    not any(getattr(x_, 'reg', None) in ('WA', 'BC', 'DE', 'HL') and x_ not in F.dead and
+                            (getattr(F, 'loops', None) or
+                             any(uses_decl(y_, x_) for y_ in list(getattr(F, 'cur_rest', None) or []) +
+                                 list(getattr(F, 'top_rest', None) or [])))
+                            for x_ in list(F.f.params) + list(F.f.decls)):   # (no exit before the push; no register
+                                                           # variable read after the helper: random r3_09_05, t in XHL)
+                del F.lines[nl_:]                          # a long helper's value into an element at a register index: the
+                F.lines.insert(1, '\tpush\tXIZ'); F.push += 4; F.pushes.append('XIZ')   # address goes to XIZ first
+                t2_ = lvalue(F, lv, kind='storev') if F.adecl else lvalue(F, lv, idx='WA', base='XBC')  # (rstmt rs_1_04_03_3: gula[c] = ((unsigned long)guc) % 3UL ->
+                m2_ = re.match(r'^\((X\w+)\+(\w+)\)$', t2_ or '')   # push XIZ / ld WA,(c) / sla 0x2,WA / lda XBC,_gula /
+                if m2_ and m2_.group(1)[1:] != m2_.group(2):   # lda XIZ,XBC+WA / .. / cal C9H_remlu / ld (XIZ),XHL)
+                    F.emit('lda', 'XIZ,%s+%s' % (m2_.group(1), m2_.group(2)))
+                    fam3_ = gen(F, s.e.r, work, size)
+                    F.emit('ld', '(XIZ),%s' % FAM[fam3_][size]); F.store_nl = None; return
             F.store_nl = None
             raise Unsupported('the value overwrites the store address')    # (wrong code otherwise)
         if F.push != push0 and t.startswith('(XSP'):        # r2_08_13: a = r2(..) << 11: the pops are still pending
@@ -10300,6 +10319,7 @@ def gen_stmt(F, s, last):
 
 _gen_stmt_body = gen_stmt
 
+HELPER_STORE_XIZ = True                                   # see gen_stmt's store: a long helper's value, the address in XIZ
 LIVE_SHIFT = True                                         # see gen_body_shift
 _SHIFT_PARTS = {'WA': ('XWA', 'QWA', 'WA', 'QW', 'QA', 'W', 'A'), 'BC': ('XBC', 'QBC', 'BC', 'QB', 'QC', 'B', 'C'),
                 'DE': ('XDE', 'QDE', 'DE', 'QD', 'QE', 'D', 'E')}
