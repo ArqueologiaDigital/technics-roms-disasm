@@ -1322,6 +1322,10 @@ CMP_WIDE_LEFT_ELEM = True                                 # see gen_compare: (lo
 DEAD_INIT_OPT = True                                      # see gen_stmt's block: -O drops a dead initialiser
 WHILE_KNOWN_FIRST = True                                  # see while_first_true
 FOR_TESTED_NO_EXIT = True                                 # see gen_loop: no unreferenced exit label after a decided first test
+OPA_NO_HOMES = True                                       # see plan_homes: a double op= in XIZ leaves no register home
+OPA_NO_HOMES_ELEM = False
+SLOT_LOCAL_SIGNED_IDX = True                              # see gen_load_mem: guca[t], t a signed local in a slot
+OPA_LOST_LOW = True                                       # see fp_plan_frame: those locals below the temporaries
 
 def while_first_true(F, s):
     """is the first test of while (v op K) known true from the statement before it, v = K0?"""
@@ -8255,6 +8259,12 @@ def gen_load_mem(F, v, fam, size):
                     raise Unsupported('a char element at an int index homed in IZ under -O')   # indexes it signed,
                                                            # ld A,(XWA+IZ) (random r3_07_00 -O3 -XS; the zero-extending
                                                            # form here is right only when the oracle keeps it in memory, r4_03_00)
+                if SLOT_LOCAL_SIGNED_IDX and ivl_ is not None and ivl_.kind == 'local' and \
+                        getattr(ivl_, 'slot', None) is not None and unpromote(i).ty is not None and unpromote(i).ty.signed:
+                    if fam != 'WA': raise Unsupported('a char element at a signed local index in a slot')
+                    F.emit('lda', 'XBC,_%s' % b.decl.name); F.emit('ld', 'WA,%s' % im)   # random r3_01_06: guca[t], t an
+                    F.emit('ld', '%s,(XBC+WA)' % R); return fam                         # int in a slot -> lda XBC,_guca /
+                                                           # ld WA,(XSP+0x4) / ld A,(XBC+WA): indexed signed, not extz XBC
                 F.emit('lda', 'XWA,_%s' % b.decl.name); F.emit('ld', 'BC,%s' % im); F.emit('extz', 'XBC')
                 F.emit('add', 'XBC,XWA'); F.emit('ld', '%s,(XBC)' % R); return fam
             if STORE_GLOBAL_FREE and fam in ('BC', 'DE', 'HL') and held_after(F, 'WA', v) and \
@@ -10561,7 +10571,9 @@ def plan_homes(F):
         pvals = [d for d in F.f.params if not getattr(d, 'reg', None) and d in across and d.ty.kind in ('int', 'ptr')
                  and d.ty.size in (2, 4) and d is not F.sret]
     vals = pvals + locs
-    winners = []
+    if OPA_NO_HOMES and fpgen.uses_fp(F.f) and (fpgen.has_opa_hoist(F) or OPA_NO_HOMES_ELEM and fpgen.has_elem_hoist(F)):
+        F.opa_lost = [d for d in locs]; vals = []           # (random r3_01_06: gda[1] *= -gd keeps the target in XIZ;
+    winners = []                                           # t and u go to slots, no register home)
     setname = ('O3XSXr' if F.opt else 'Xr') if F.adecl else ('O3XS' if F.opt else 'none')
     if setname in R3_SETS:
         if vals and not F.xiz_vars:
@@ -14911,6 +14923,9 @@ def fp_plan_frame(F):
             and d.uses]                                    # _frexp: the union d (8 bytes) in the frame
     ints += [d for d in f.params if getattr(d, 'home_slot', False)]   # adecl homes, below the locals, the last
                     # parameter lowest (probes/adfp.c ad_ifi: dec 0x6,XSP / push IZ / ld (XSP+0x2),DE / ld (XSP+0x4),XBC)
+    low = [d for d in f.decls if d in getattr(F, 'opa_lost', ()) and not getattr(d, 'reg', None)] if OPA_LOST_LOW else []   # (random r3_01_06: the
+    ints = [d for d in ints if d not in low]               # candidates a double op= kept out of XIZ sit below the
+    Ilow = sum((d.ty.size + 1) // 2 * 2 for d in low)      # temporaries, the first declared lowest: t +0x4, u +0x6)
     I = sum((d.ty.size + 1) // 2 * 2 for d in ints)          # _log: nptr (address taken) at the very top
     L = sum((d.ty.size + 1) // 2 * 2 for d in locs)
     rets = []
@@ -14927,9 +14942,11 @@ def fp_plan_frame(F):
         walk(f.body, fa)
     fret += fargs
     T = F.fp_temps                                         # the region, D + D' (fpgen.FrameAlloc)
-    size = I + L + T + fret
+    size = I + L + T + fret + Ilow
     size = (size + 1) // 2 * 2
     top = size - fret
+    lp_ = 0
+    for d in low: d.slot = lp_; lp_ += (d.ty.size + 1) // 2 * 2
     for d in ints + locs:
         top -= (d.ty.size + 1) // 2 * 2; d.slot = top
     F.ftemp_top = top; F.ftemp_used = 0; F.fret_slot = size - (fret - fargs) if fret - fargs else None

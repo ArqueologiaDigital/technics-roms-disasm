@@ -2385,6 +2385,21 @@ dropped it there too and lost five micro functions (opt_loops.c -4 at -O3 -XS -X
 (rstmt +9 / +9, idxloc.c +21 / +21, loopctr.c +2 / +2, random2 +1 / +1), down 0; pairs MATCH 223; semcheck 50. Random
 186 / 62 / 128 / 55 (-O3 -XS and -O3 -XS -Xr +1 each); library 186 / 248 at -O3 -XS.
 
+**Batch 192 (2026-11-14): a function with a double compound assignment whose target's address cc900 keeps in XIZ
+gives no local a register home, and those locals sit below the double temporaries (OPA_NO_HOMES, OPA_LOST_LOW,
+SLOT_LOCAL_SIGNED_IDX).** Four random functions at none refused with "a double compound assignment over the XIZ home of
+t", although every one of their statements is exact on its own: the model homed t in XIZ, which the op= needs for its
+target (`gda[1] *= -gd` -> `lda XIZ,_gda + 0x8 / .. / ld XBC,XIZ / ld XWA,XIZ / cal ._fmul_d`). The oracle homes
+nothing there. The locals that would have been homed go to slots at the bottom of the frame, the first declared
+lowest, with the temporaries above them (r3_01_06: t +0x4, u +0x6, the negation's temporary +0x8 after `push XIZ`).
+A first run exposed a latent wrong-code path. A char element at an index read from memory was built as `ld BC,(..) /
+extz XBC / add XBC,XWA`, which fits globals and parameters. For a signed local in a slot the oracle indexes signed
+(`lda XBC,_guca / ld WA,(XSP+0x4) / ld A,(XBC+WA)`), and the model now does too, refusing outside WA. The first run
+gave four semcheck verdicts for r3_01_06. Two hypotheses were tried for the region size and dropped. Keeping only D
+for an op= in XIZ lost 36 fpopa.c functions. Counting `return (m = m2)` as rule R_E's reset gained r4_09_13 and lost
+r3_06_02 (`return (gi3 = gia[3])` keeps D + D'). Ledger up 8 (random +3 / +3 at none and -Xr, rstmt +1 / +1),
+down 0; pairs MATCH 223; semcheck 50. Random 189 / 62 / 131 / 55; library 186 / 248 at -O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
