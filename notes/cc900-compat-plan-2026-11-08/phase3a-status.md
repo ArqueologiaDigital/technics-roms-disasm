@@ -2671,6 +2671,13 @@ statement, so it is -Xr only. In r3_00_12, `guc = guca[6] = 9` is `ldb (_guca + 
 constant store had been gated to no -Xr. Ledger up 1 (random3 -Xr +2), down 0; pairs MATCH 223; semcheck 50. Random
 191 / 79 / 143 / 65.
 
+**Batch 220 (2026-11-14): -O widens a char call result in HL (CALL_CHAR_EXTS_OPT).** Two -O3 -XS random functions
+differed only in a char call result widened through A. Under -O the oracle extends it in place: rstmt rs_1_04_09_3 `gi =
+(int)rc(2)` -> `cal _rc / inc 0x2,XSP / exts HL / ld (_gi),HL`; rs_3_04_00_3 `vc(rc(16))` -> `cal _rc / exts HL /
+push HL`. The cast case is handled in gen and the char-argument case in push_arg, ahead of CHAR_ARG_ANY. Without -O the
+value still goes through A. Ledger up 3 (random -O3 -XS +2, rstmt -O3 -XS +4), down 0; pairs MATCH 223; semcheck 50.
+Random 191 / 81 / 143 / 65; library 186 / 248 at -O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

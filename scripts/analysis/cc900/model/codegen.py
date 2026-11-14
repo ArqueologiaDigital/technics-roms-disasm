@@ -739,6 +739,12 @@ def gen(F, e, fam, size, then_ret=False, store=False):
         return fam
     if e.k == 'cast' and e.kind == 'IntegralCast':
         inner = strip(e.e); isz = inner.ty.size
+        if CALL_CHAR_EXTS_OPT and F.opt and not F.adecl and isz == 1 and size == 2 and inner.k == 'call' and \
+                not has_helper_call(inner.fn) and fam in ('WA', 'HL', 'ANY') and 'HL' not in live_regs(F):
+            f_ = gen(F, inner, 'HL', 1)                      # -O: a char call result widened in place (rstmt
+            if f_ == 'HL':                                   # rs_1_04_09_3: gi = (int)rc(2) -> cal _rc / inc 0x2,XSP /
+                F.emit('exts' if inner.ty.signed else 'extz', 'HL'); return 'HL'   # exts HL / ld (_gi),HL)
+            raise Unsupported('a char call result outside HL')
         nn_ = strip(inner.e) if inner.k == 'cast' and inner.kind == 'IntegralCast' and isz == 2 else None
         if UCHAR_TO_LONG and size == 4 and nn_ is not None and getattr(nn_, 'narrowed', False) and nn_.ty is not None and \
                 nn_.ty.size == 1 and not nn_.ty.signed and fam in FAM and 1 in FAM[fam]:
@@ -7769,6 +7775,14 @@ def push_arg(F, a):
                 elif xm is not None and xm.startswith('('): m = xm          # the low byte is at the same address
                 elif xm in ('IX', 'IY', 'IZ', 'XIX', 'XIY', 'XIZ'): m = xm.lstrip('X') + 'L'
                 elif xm is not None and family_of(xm): m = FAM[family_of(xm)[1:]][1]
+        cc_ = strip(a0)
+        while cc_.k == 'cast' and cc_.kind == 'IntegralCast' and strip(cc_.e).ty.size == 1: cc_ = strip(cc_.e)
+        if m is None and CALL_CHAR_EXTS_OPT and F.opt and not F.adecl and cc_.k == 'call' and \
+                not has_helper_call(cc_.fn) and 'HL' not in live_regs(F):
+            f_ = gen(F, cc_, 'HL', 1)                       # -O: a char call result widened in HL and pushed (rstmt
+            if f_ != 'HL': raise Unsupported('complex char argument')   # rs_3_04_00_3: vc(rc(16)) -> cal _rc /
+            F.emit('exts' if cc_.ty.signed else 'extz', 'HL'); F.emit('push', 'HL')   # exts HL / push HL)
+            F.push += 2; return 2
         if m is None and CHAR_ARG_ANY and (not F.opt or CHAR_ARG_ANY_OPT) and not F.adecl:   # random corpora: vc(gp[0]), vc((char)(gc - gca[2])),
             f_ = gen(F, a0, 'WA', 1)                                    # vc(rc(..)): the value into A (a call's result
             if f_ not in FAM or 1 not in FAM[f_]: raise Unsupported('complex char argument')   # from L), then exts WA /
@@ -10412,6 +10426,7 @@ REGVAR_CHAR_MULK = True                                   # see regvar_stmt: a c
 SW_SEL_WRITE_ONLY = True                                  # see gen_switch: a selector only assigned in the body
 REGVAR_CHAR_SHL1 = True                                   # see regvar_stmt: a char << 1 is add R,R
 CHAIN_K_STATIC_XR = True                                  # see store_global: CHAIN_K_STATIC under -Xr too
+CALL_CHAR_EXTS_OPT = True                                 # see gen: -O widens a char call result in HL
 LIVE_SHIFT = True                                         # see gen_body_shift
 _SHIFT_PARTS = {'WA': ('XWA', 'QWA', 'WA', 'QW', 'QA', 'W', 'A'), 'BC': ('XBC', 'QBC', 'BC', 'QB', 'QC', 'B', 'C'),
                 'DE': ('XDE', 'QDE', 'DE', 'QD', 'QE', 'D', 'E')}
