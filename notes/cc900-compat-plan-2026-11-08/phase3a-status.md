@@ -2544,6 +2544,14 @@ last line written. Applied with and without -O (rstmt +5 / +9); the -Xr sets do 
 up 3 (random3 none +1, rstmt +5 / +9), down 0; pairs MATCH 223; semcheck 50. Random 191 / 72 / 133 / 59; library 186 /
 248 at -O3 -XS.
 
+**Batch 206 (2026-11-14): -O drops an initialiser that is overwritten unread further down the block
+(DEAD_INIT_SKIP).** Batch 190's DEAD_INIT_OPT dropped an initialiser only when the very next statement overwrote it.
+The -O3 -XS rstmt probes have a `v0()` between the two (rs_1_05_03_5: `int i = ji; v0(); for (i = 3; i > 0; i--)
+..` -> `push IZ / cal _v0 / ld IZ,0x3`, no `ld IZ,(_ji)`): the two largest first-difference groups at -O3 -XS (36
+statements). dead_init_later finds the first later statement of the block that mentions the variable. The initialiser
+is dropped when that statement assigns the variable without reading it. Ledger up 4 (random -O3 -XS +1, -O3 -XS -Xr +1,
+rstmt +14 / +15), down 0; pairs MATCH 223; semcheck 50. Random 191 / 73 / 133 / 60; library 186 / 248 at -O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

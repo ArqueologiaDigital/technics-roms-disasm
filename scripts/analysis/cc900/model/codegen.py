@@ -1356,6 +1356,17 @@ def while_first_true(F, s):
     return {'<': operator.lt, '<=': operator.le, '>': operator.gt, '>=': operator.ge,
             '==': operator.eq, '!=': operator.ne}[c.op](fold(e.r).value, k2.value)
 
+DEAD_INIT_SKIP = True                                     # see dead_init_later
+
+def dead_init_later(body, i, d):
+    """-O: the first later statement of the block that mentions d assigns it unread, and the statements before it do
+    not mention d (rstmt rs_1_05_03_5: int i = ji; v0(); for (i = 3; ..) -> push IZ / cal _v0 / ld IZ,0x3)"""
+    for x in body[i + 1:]:
+        if x.k == 'decl' and getattr(x, 'var', None) is not d and not uses_decl(x, d): continue
+        if not uses_decl(x, d): continue
+        return init_overwritten_next(x, d)
+    return False
+
 def init_overwritten_next(x, d):
     """does statement x assign d first without reading it (d = e with e free of d, or a for whose init does)?"""
     if x.k == 'for' and getattr(x, 'init', None) is not None:
@@ -9568,7 +9579,8 @@ def gen_stmt(F, s, last):
                     F.deferred.remove(d)
             if DEAD_INIT_OPT and F.opt and c.k == 'decl' and c.init is not None and c.var.kind == 'local' and \
                     not c.var.addr_taken and side_effect_free(c.init) and not nodes_in(c.init, 'call') and \
-                    i + 1 < len(body) and init_overwritten_next(body[i + 1], c.var):
+                    i + 1 < len(body) and (init_overwritten_next(body[i + 1], c.var) or
+                                           DEAD_INIT_SKIP and dead_init_later(body, i, c.var)):
                 i += 1; continue                           # -O: an initialiser the next statement overwrites unread is
                                                            # not written (rstmt rs_4_07_00_1: int i = ji; i = 0; while ..
                                                            # -> ld IZ,0x0, no ld IZ,(_ji))
