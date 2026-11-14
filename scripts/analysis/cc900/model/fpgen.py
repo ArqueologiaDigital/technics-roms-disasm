@@ -352,7 +352,10 @@ def eval_val(F, e, hint):
             op_into(F, e, vals, ('cell', cell)); return ('slot', cell.off)
         op_into(F, e, vals, dst); return dst
     cell = hint if hint is not None else Cell(e.ty.size)
-    eval_into(F, e, ('cell', cell)); return ('slot', cell.off)
+    F.cond_operand = e.k == 'cond'
+    try: eval_into(F, e, ('cell', cell))
+    finally: F.cond_operand = False
+    return ('slot', cell.off)
 
 def op_into(F, e, vals, dest):
     """the helper call of a +-*/, unary - or float/double conversion node whose operands are ready"""
@@ -857,6 +860,7 @@ def needs_xiz(F):
     C().walk(F.f.body, lambda n, d: rets.append(n) if n.k == 'return' and n.value is not None else None)
     return any(root_mode(F, r.value) == 'xiz' for r in rets)
 
+FP_COND_CELL = True                                        # see cond_into: an operand's ?: in its own temporary
 FP_COND_PRELOAD = True                                     # see cond_into
 
 def cond_into(F, e, dest):
@@ -871,6 +875,11 @@ def cond_into(F, e, dest):
         cg.gen_cond_true(F, e.c, lend)                     # lda XBC,S / lda XWA,XSP+0x4 / cal ._fld_dd / cpb (_guca + 0x1),
         eval_into(F, e.b, dest)                            # 0x0 / j ne,L / lda XBC,_gd / lda XWA,XSP+0x4 / cal ._fld_dd /
         F.lines.append(lend + ':'); return                 # L:, one temporary)
+    if FP_COND_CELL and dest[0] == 'cell' and getattr(F, 'cond_operand', False):
+        lelse = F.newulabel(); lend = F.newulabel()        # an operand's temporary takes both arms in place (rstmt
+        cg.gen_cond_false(F, e.c, lelse)                   # rs_3_00_13_5: gda[1] *= (guc ? gd2 : gs.d) -> cpb / j eq,L /
+        eval_into(F, e.a, dest); F.emit('j', lend); F.lines.append(lelse + ':')   # lda XBC,_gd2 / lda XWA,XSP+0xc /
+        eval_into(F, e.b, dest); F.lines.append(lend + ':'); return               # cal ._fld_dd / j L2 / L: / .. / L2:)
     r = Cell(8); alloc(F, r)
     lelse = F.newulabel(); lend = F.newulabel()
     cg.gen_cond_false(F, e.c, lelse)

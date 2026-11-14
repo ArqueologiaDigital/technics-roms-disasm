@@ -2511,6 +2511,16 @@ whether its operation is the stored value. -O3 -XS -Xr lost 3 rstmt statements a
 (random none +1, -Xr +2, rstmt +4 / +2 / +5, evorder_st.c -Xr +2), down 0; pairs MATCH 223; semcheck 50. Random
 190 / 72 / 133 / 59; library 186 / 248 at -O3 -XS.
 
+**Batch 203 (2026-11-14): a double `?:` used as an operand is built in the operand's own temporary (FP_COND_CELL).**
+Eight rstmt statements at none had a frame of 0x20 where the oracle has 0x10, most of them a double `?:` used as an
+operand. The model built the `?:` in a temporary of its own and copied it into a second one for the operation. The
+oracle builds both arms in place (rs_3_00_13_5: `gda[1] *= (guc ? gd2 : gs.d)` -> `lda XSP,XSP-0x10 / push XIZ /
+lda XIZ,_gda + 0x8 / cpb (_guc),0x0 / j eq,L / lda XBC,_gd2 / lda XWA,XSP+0xc / cal ._fld_dd / j L2 / L: /
+lda XBC,_gs + 0x1e / lda XWA,XSP+0xc / cal ._fld_dd / L2: / lda XDE,XSP+0xc / ld XBC,XIZ / ld XWA,XIZ /
+cal ._fmul_d`). eval_val marks a `?:` it evaluates, and cond_into then writes both arms into that temporary. Every
+other destination keeps the older path. fpgen.py only (research-scratch `edit_batch203_fpgen.py`). Ledger up 2 (rstmt
+none +6, -Xr +5), down 0; pairs MATCH 223; semcheck 50. Random unchanged, 190 / 72 / 133 / 59.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
