@@ -2409,6 +2409,21 @@ four sites that keep the pops pending were gated `not F.opt and not F.adecl`; -O
 was tried with the same switch and changed no random function, so it stays closed there. Ledger up 3 (random -O3 -XS
 +4), down 0; pairs MATCH 223; semcheck 50. Random 189 / 66 / 131 / 55; library 186 / 248 at -O3 -XS.
 
+**Batch 194 (2026-11-14): -O shares a global struct's or array's address across the statements of a straight run
+(STRUCT_BASE_CSE).** Five random functions at -O3 -XS had every statement exact and differed only in a base register:
+the oracle loads `&gs` once and addresses the members of the following statements through it until a call, label,
+jump or return (r3_07_15: `gua[1] -= ~gs.u; return (gl2 = gs.l)` -> `lda XBC,_gs / ld WA,(XBC+0x8) / .. /
+ld XHL,(XBC+0x4)`). The register is the first of XWA, XBC, XDE that no line from the first use up to the last use's
+statement touches. When the last use's statement used that register before the use, its own register moves to the next
+free family (r1_03_01: `ld XDE,(_gpl) / ld XWA,(XBC+0x4) / .. / xor (XDE),XWA`; r1_01_03: `lda XWA,_gs / .. /
+ld BC,(_gi2) / sra 0x1,BC / xor (XWA+0x2),BC`). A family holding a variable that is still read is not taken. A forward
+scan decides that: a full write kills the variable, and a loop back above the use keeps it live. The same holds for a
+global array's constant elements, and under -O3 -XS -Xr. The pass runs after the body. It finds each leaf statement's
+recorded lines again, in order, and stands aside if one changed. A first run renamed the source register of
+`cal ._fneg_d` in r2_07_07 (two semcheck verdicts). A statement with a call is now never renamed, and BC is never taken
+across a block move. Ledger up 9 (random -O3 -XS +5, -O3 -XS -Xr +4, fpp11.c +1, ra_*.c +1 / +1), down 0; pairs MATCH
+223; semcheck 50. Random 189 / 71 / 131 / 59; library 186 / 248 at -O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

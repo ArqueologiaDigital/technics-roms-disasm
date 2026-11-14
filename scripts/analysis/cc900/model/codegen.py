@@ -6866,6 +6866,119 @@ def base_hoist(F, s, n0):
         F.lines[n0:] = ['\tlda\t%s,_%s' % (R, g)] + new
         return
 
+STRUCT_BASE_CSE = True                                    # see struct_base_cse
+STRUCT_BASE_ARRAYS = True
+STRUCT_BASE_XR = True
+
+def struct_base_cse(F):
+    """-O: a global struct whose members are addressed in two or more statements of one straight run (no label, call,
+    jump or return between) has its address loaded once, before the first use, into the first of XWA, XBC, XDE that
+    no line from that use up to the last use's statement touches; if the last use's statement used that register
+    before the use, its own register moves to the next family it leaves free (random -O3 -XS r3_07_15: gua[1] -=
+    ~gs.u; return (gl2 = gs.l) -> lda XBC,_gs / ld WA,(XBC+0x8) / .. / ld XHL,(XBC+0x4); r1_03_01: gs.p = rp(); ..;
+    *gpl ^= 6L + gs.l -> lda XBC,_gs / ld (XBC+0xa),XHL / .. / ld XDE,(_gpl) / ld XWA,(XBC+0x4) / .. / xor (XDE),XWA;
+    r1_01_03: .. gs.l = gl2 = ..; gs.i ^= gi2 >> 1 -> lda XWA,_gs / ld (XWA+0x4),XHL / ld BC,(_gi2) / sra 0x1,BC /
+    xor (XWA+0x2),BC; r2_07_18: gp = gs.p + 1; if (gs.d != gd ..) -> lda XBC,_gs / .. / lda XWA,XBC+0x1e)."""
+    import re as _r
+    if getattr(F, 'l2', None) or getattr(F, 'u1_i', None) is not None or getattr(F, 'ptr_cache', None) or \
+            getattr(F, 'member_cache', None): return
+    spans = getattr(F, 'leaf_spans', [])
+    if not spans: return
+    L = F.lines; bounds = set(); pos = 0
+    for tup in spans:
+        if not tup: continue
+        n = len(tup); i = pos
+        while i + n <= len(L) and tuple(L[i:i + n]) != tup: i += 1
+        if i + n > len(L): return                          # a statement's code was changed after it was written
+        bounds.add(i); bounds.add(i + n); pos = i + n
+    bl = sorted(bounds)
+    def seg(k):                                            # the segment (statement, or the code between two) of line k
+        lo = max([b for b in bl if b <= k] or [0]); hi = min([b for b in bl if b > k] or [len(L)])
+        return lo, hi
+    homes = {getattr(d, 'reg', None) for d in list(F.f.params) + list(F.f.decls) if getattr(d, 'reg', None)}
+    homefam = set()
+    for h in homes:
+        for fam in ('WA', 'BC', 'DE'):
+            if h in ('X' + fam, fam, 'Q' + fam, fam[0], fam[1]): homefam.add(fam)
+    gdecl = {}
+    walk(F.f.body, lambda n, dep: gdecl.setdefault(n.decl.name, n.decl) if n.k == 'var' and
+         getattr(n.decl, 'kind', None) == 'global' else None)
+    def parts(fam): return _r.compile(r'\b(X?%s|Q%s|%s|%s)\b' % (fam, fam, fam[0], fam[1]))
+    def home_live(fam, start):                             # a variable homed in fam still read at or after line start?
+        if fam not in homefam: return False                # (a full write of the register before any read kills it:
+        pt = parts(fam)                                    #  r1_03_01's t in BC, then ld XBC,(_gpl))
+        labs = {L[j][:-1]: j for j in range(len(L)) if L[j] and L[j].endswith(':')}
+        for i in range(start, len(L)):                     # a loop back to above start: live wherever it is read
+            m_ = _r.match(r'^\t(j|jr|djnz|ret)\b.*?(\w+)$', L[i] or '')
+            if m_ and labs.get(m_.group(2), len(L)) < start: return any(pt.search(l) for l in L if l)
+        for i in range(start, len(L)):
+            l = L[i]
+            if not pt.search(l): continue
+            m_ = _r.match(r'^\t(ld|lda)\t(X%s),(.*)$' % fam, l)
+            if m_ and not pt.search(m_.group(3)) and not l.endswith(':'): return False
+            return True
+        return False
+    k = 0
+    while k < len(L):                                      # the straight runs
+        if not L[k] or not L[k].startswith('\t') or L[k].startswith(('\tcal', '\tj', '\tret')):
+            k += 1; continue
+        e = k
+        while e < len(L) and L[e] and L[e].startswith('\t') and not L[e].startswith(('\tcal', '\tj', '\tret')): e += 1
+        names = set()
+        for l in L[k:e]:
+            for m in _r.finditer(r'_(\w+)', l): names.add(m.group(1))
+        done = False
+        for g in sorted(names):
+            d = gdecl.get(g)
+            ty = getattr(d, 'ty', None) if d is not None else None
+            if ty is None or not (ty.kind == 'struct' or STRUCT_BASE_ARRAYS and ty.kind == 'array'): continue
+            mp = _r.compile(r'\(_%s( \+ (0x[0-9a-f]+))?\)' % _r.escape(g))
+            ap = _r.compile(r'^\tlda\t(X\w+),_%s( \+ (0x[0-9a-f]+))?$' % _r.escape(g))
+            uses = [i for i in range(k, e) if mp.search(L[i]) or ap.match(L[i])]
+            if len(uses) < 2: continue
+            if any(('_%s' % g) in L[i] and _r.search(r'_%s\b' % _r.escape(g), L[i]) and i not in uses for i in range(k, e)): continue
+            if any(len(mp.findall(L[i])) + (1 if ap.match(L[i]) else 0) != 1 for i in uses): continue
+            if len({seg(i) for i in uses}) < 2: continue
+            first, last = uses[0], uses[-1]; ls0, ls1 = seg(last)
+            if ls0 <= first: continue
+            def strip_use(l): return ap.sub(lambda m_: '\tlda\t%s,' % m_.group(1), mp.sub('()', l))
+            R = None; ren = None
+            for fam in ('WA', 'BC', 'DE'):
+                pt = parts(fam)
+                if home_live(fam, first): continue           # (a home used later;
+                                                           # r1_03_01's t, a temporary in BC, is dead by then)
+                if any(pt.search(L[i]) for i in range(first, ls0)): continue
+                if fam == 'BC' and any(_r.search(r'\t(ldir|lddr|cpir|cpdr|ldi|ldd)', L[i] or '') for i in range(first, ls1)):
+                    continue                               # (block moves count in BC without naming it)
+                pre = any(pt.search(strip_use(L[i]) if i in uses else L[i]) for i in range(ls0, last + 1))
+                if pre and any((L[i] or '').startswith('\tcal') for i in range(ls0, ls1)):
+                    continue                               # (a call's argument registers are fixed: random r2_07_07,
+                                                           #  gs.d = -gd -> lda XBC,_gd / .. / cal ._fneg_d)
+                if pre:
+                    S = next((f2 for f2 in ('WA', 'BC', 'DE') if f2 != fam and
+                              not home_live(f2, first) and
+                              not any(parts(f2).search(L[i]) for i in range(ls0, ls1))), None)
+                    if S is None: continue
+                    ren = (fam, S)
+                R = fam; break
+            if R is None: continue
+            XR = 'X' + R
+            def sub_use(l):
+                l = mp.sub(lambda m_: '(%s+%s)' % (XR, m_.group(2)) if m_.group(2) else '(%s)' % XR, l)
+                return ap.sub(lambda m_: '\tlda\t%s,%s+%s' % (m_.group(1), XR, m_.group(3)) if m_.group(3) else
+                              '\tld\t%s,%s' % (m_.group(1), XR), l)
+            new = list(L)
+            if ren:
+                a_, b_ = ren
+                mp_ = {('X' + a_): 'X' + b_, ('Q' + a_): 'Q' + b_, a_: b_, a_[0]: b_[0], a_[1]: b_[1]}
+                pr = _r.compile(r'\b(X%s|Q%s|%s|%s|%s)\b' % (a_, a_, a_, a_[0], a_[1]))
+                for i in range(ls0, ls1): new[i] = pr.sub(lambda m_: mp_[m_.group(1)], new[i])
+            for i in uses: new[i] = sub_use(new[i])
+            new.insert(first, '\tlda\t%s,_%s' % (XR, g))
+            L[:] = new; done = True; break
+        k = e + 1 if not done else k
+    F.lines = L
+
 def expr_key(n):
     """a structural key of an expression (kinds, operators, values, declarations): the same operand twice"""
     n = strip(n)
@@ -10229,6 +10342,8 @@ def gen_stmt(F, s, last):
                 a_ = re.match(r'^\t%s\tXWA,(0x[0-9a-f]+)$' % o_, F.lines[-2])   # gl = -1916L ^ gl -> ld XWA,0xfffff884 /
                 if F.lines[-3] == '\tld\tXWA,%s' % m_ and a_ and F.lines[-1] == '\tld\t%s,XWA' % m_:   # xor (_gl),XWA)
                     F.lines[-3:] = ['\tld\tXWA,%s' % a_.group(1), '\t%s\t%s,XWA' % (o_, m_)]
+        if STRUCT_BASE_CSE and F.opt and s.k in ('expr', 'return', 'decl'):
+            F.leaf_spans = getattr(F, 'leaf_spans', []) + [tuple(F.lines[n_ms_:])]   # (struct_base_cse)
         return r_
     finally: F.in_return = prev
 
@@ -15519,6 +15634,7 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
     if getattr(F, 'sd4', None) and F.sd4['need'][0] == 'lx5' and not F.sd4.get('done'):
         raise Unsupported('lx5: the planned long helper was written by another path')
     flush_pops(F)
+    if STRUCT_BASE_CSE and F.opt and (not F.adecl or STRUCT_BASE_XR): struct_base_cse(F)
     if not F.lines[-1].startswith('\tret') and not (getattr(F, 'no_exit', False) and F.lines[-1].startswith('\tj\t')
                                                    and ',' not in F.lines[-1]):
         xl = getattr(F, 'exit_label', None)                # a void function's early return jumps here (the 1997
