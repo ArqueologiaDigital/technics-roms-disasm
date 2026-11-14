@@ -2337,6 +2337,13 @@ Random 185 / 61 / 125 / 54.
 nothing; under the -O sets it gains nothing and stays off. Ledger up 3 (elrd.c at -Xr 108 -> 112, rstmt 3,316 -> 3,318,
 random4 at -Xr 31 -> 32), down 0; pairs MATCH 223; semcheck 50. Random 185 / 61 / 126 / 54.
 
+**Batch 187 (2026-11-14): a long op= through a global pointer keeps the target's address in XIZ (LONG_RMW_GPTR).** In
+the long helper op= path (push XIZ, the target's address across the helper in XIZ), a target `*gp` or `gp[k]` with gp a
+global pointer was refused ("long element address across a helper"). The oracle loads the address directly: `*gpl /= 7L`
+-> `push XIZ / ld XIZ,(_gpl) / ld XWA,(XIZ) / ld XBC,0x7 / cal C9H_divls / ld (XIZ),XHL` (rstmt rs_4_04_07_2); `gpl[2]
+/= 7L` -> `ld XWA,(_gpl) / lda XIZ,XWA+0x8` (rs_2_09_09_0). Without -O. Ledger up 2 (rstmt at none 3,578 -> 3,580 and
+at -Xr 3,318 -> 3,320), down 0; pairs MATCH 223; semcheck 50. Random 185 / 61 / 126 / 54.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

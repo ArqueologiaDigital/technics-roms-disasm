@@ -1316,6 +1316,7 @@ UIDX_REGPARAM = True                                      # see elem_addr and lh
 DEAD_LABEL_PAIR = True                                    # see compile_function_once
 CMP_WIDE_LEFT_ELEM = True                                 # see gen_compare: (long)int against a long element
 RIGHT_ELEM_FIRST = True                                   # see _gen_bin_body: an element at a variable index on the right
+LONG_RMW_GPTR = True                                      # see gen_opassign: a long op= through a global pointer
 
 def test_to_bc(F, n0, n1):
     """-Xr: an if's test whose code writes WA, the home of a parameter an arm reads, is written in BC's family instead,
@@ -8952,9 +8953,21 @@ def gen_opassign(F, e):
             if LONG_RMW_XIZ and lvx.k in ('index', 'deref') and not F.xiz_vars and len(F.lines) == 1:
                 F.lines.insert(1, '\tpush\tXIZ'); F.push += 4; F.pushes.append('XIZ'); held = True
                 F.force_base = 'XIZ'                       # arr_index.c ai_l_g_div (-O3 -XS -Xr): the element's
+            n_lv_ = len(F.lines)
             try: t = lvalue(F, e.l, idx='WA')              # address lives across the helper in XIZ: push XIZ /
             finally: F.force_base = None                   # ... / ld XIZ,_gla / add XIZ,XWA / ld XWA,(XIZ) /
-            if held and LONG_RMW_CONST_ELEM and True and re.match(r'^\(_[\w ]+(\+ 0x[0-9a-f]+)?\)$', t):
+            gp_ = None                                     # (through a global pointer: *gpl /= 7L -> ld XIZ,(_gpl);
+            if LONG_RMW_GPTR and held and not F.opt:       #  gpl[2] /= 7L -> ld XWA,(_gpl) / lda XIZ,XWA+0x8; rstmt
+                bx_ = strip(lvx.e) if lvx.k == 'deref' else strip(lvx.base) if lvx.k == 'index' and fold(lvx.idx).k == 'const' else None
+                if bx_ is not None and bx_.k == 'load' and strip(bx_.e).k == 'var' and strip(bx_.e).decl.kind == 'global' and \
+                        strip(bx_.e).decl.ty.is_ptr():     # rs_4_04_07_2, rs_2_09_09_0)
+                    gp_ = (strip(bx_.e).decl.name, 0 if lvx.k == 'deref' else fold(lvx.idx).value * size)
+            if gp_ is not None:
+                del F.lines[n_lv_:]
+                if gp_[1]: F.emit('ld', 'XWA,(_%s)' % gp_[0]); F.emit('lda', 'XIZ,XWA+%s' % hx(gp_[1]))
+                else: F.emit('ld', 'XIZ,(_%s)' % gp_[0])
+                t = '(XIZ)'
+            elif held and LONG_RMW_CONST_ELEM and True and re.match(r'^\(_[\w ]+(\+ 0x[0-9a-f]+)?\)$', t):
                 F.emit('lda', 'XIZ,%s' % t[1:-1]); t = '(XIZ)'   # a constant element: its address into XIZ (rstmt
                                                            # rs_1_03_09_2: gla[2] /= 3L -> push XIZ / lda XIZ,_gla + 0x8 / ..)
             elif held: t = combine_indexed(F, t, 'XIZ')
