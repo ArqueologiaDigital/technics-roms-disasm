@@ -141,6 +141,7 @@ def frame_allocs(F):
         F._fa.remap = getattr(F, 'fp_remap', None) or None
     return F._fa, F._fb
 
+FP_PEND_KEEP_OPT = True
 FP_UNARY_HALF = False                                     # a statement without a double + - * / uses the region D alone
 
 def begin_stmt(F, st=None):
@@ -360,7 +361,7 @@ def eval_val(F, e, hint):
 def op_into(F, e, vals, dest):
     """the helper call of a +-*/, unary - or float/double conversion node whose operands are ready"""
     if e.k == 'bin':
-        if not (FP_PEND_KEEP and not F.opt and F.pending and F.pending == getattr(F, 'pend_at_stmt', -1)):
+        if not (FP_PEND_KEEP and (not F.opt or FP_PEND_KEEP_OPT) and F.pending and F.pending == getattr(F, 'pend_at_stmt', -1)):
             C().flush_pops(F)                              # _log: x /= ldexp(1, nptr) -> cal _ldexp / lda XSP,XSP+0x1e first
         name = '._f%s_%s' % ({'+': 'add', '-': 'sub', '*': 'mul', '/': 'div'}[e.op], sfx(e.ty))
         if fo_plain(F, e, vals, dest, name): return
@@ -498,7 +499,7 @@ def emit_operands(F, dest, ops):
     """the result address and the operand addresses: those that are loaded, copied or computed first, in XWA, XBC,
     XDE order (d_add_gg: ld XWA,(XSP+0x4); _modf: ld XDE,XIZ / lda XBC,XSP+0x24 / lda XWA,XSP+0x14), then the
     named and stack ones in XBC, XDE, XWA order (d_add_st: lda XBC,_gd2 / lda XDE,_gd3 / lda XWA,_gd)"""
-    if not (FP_PEND_KEEP and not F.opt and F.pending and F.pending == getattr(F, 'pend_at_stmt', -1)):
+    if not (FP_PEND_KEEP and (not F.opt or FP_PEND_KEEP_OPT) and F.pending and F.pending == getattr(F, 'pend_at_stmt', -1)):
         C().flush_pops(F)                                  # the pending call pops go before a helper's addresses; those
                                                            # of an earlier call statement wait (fpargf.c af_VNCNP: cal _vs /
                                                            # lda XBC,_gd / .. / lda XWA,XSP+0xc / cal ._fmul_d)

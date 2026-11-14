@@ -2746,6 +2746,14 @@ WA,0x10 / ld (XSP+0x4),WA`, where the model stored the constant to the slot and 
 left of a commutative operator and a memory operand on the right, the value is now built in WA. Ledger up 1 (random2
 none +1), down 0; pairs MATCH 223; semcheck 50. Random 196 / 83 / 147 / 69; library 186 / 248 at -O3 -XS.
 
+**Batch 230 (2026-11-14): a double operation keeps the call's pending pops under -O too (FP_PEND_KEEP_OPT).** Random
+r1_00_01 at -O3 -XS had every statement exact alone; in the function, `v2(gi2, gi3); guc--; vd(gs.d + gd)` keeps the
+pops pending through the double sum and merges them after `_vd`. FP_PEND_KEEP was gated to no -O. Batch 212's fpgen.py
+sweep scored this gate on rstmt only, whose single statements never leave pops pending, so it showed no change there. On
+the ledger it gains well (fpargf.c -O3 -XS +24). fpgen.py only (`edit_batch230_fpgen.py`). Ledger up 6 by 37 (random -O3
+-XS +1, fpargf.c +24, fpp1 / fpp3 / fpp4 / fpp5 +1 / +2 / +4 / +5 at -O3 -XS), down 0; pairs MATCH 223; semcheck 50.
+Random 196 / 84 / 147 / 69; library 186 / 248 at -O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

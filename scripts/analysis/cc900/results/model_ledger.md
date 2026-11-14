@@ -45,14 +45,14 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-15-micro-fporder, v423/O3XS                          | micro/fp_order.c     | 11 / 18 exact (61.1%)      |
 | run 2026-11-09-18-micro-fpprepass, v423/none                        | probes/fpp1.c        | 36 / 71 exact (50.7%)      |
 | run 2026-11-09-19-micro-fpprepass2, v423/none                       | probes/fpp2.c        | 25 / 49 exact (51.0%)      |
-| run 2026-11-09-18-micro-fpprepass, v423/O3XS                        | probes/fpp1.c        | 34 / 71 exact (47.9%)      |
+| run 2026-11-09-18-micro-fpprepass, v423/O3XS                        | probes/fpp1.c        | 35 / 71 exact (49.3%)      |
 | run 2026-11-09-19-micro-fpprepass2, v423/O3XS                       | probes/fpp2.c        | 25 / 49 exact (51.0%)      |
 | run 2026-11-09-26-micro-fpe2, v423/none                             | probes/fpp3.c        | 48 / 59 exact (81.4%)      |
 | run 2026-11-09-28-micro-fpe2b, v423/none                            | probes/fpp4.c        | 55 / 59 exact (93.2%)      |
-| run 2026-11-09-26-micro-fpe2, v423/O3XS                             | probes/fpp3.c        | 47 / 59 exact (79.7%)      |
-| run 2026-11-09-28-micro-fpe2b, v423/O3XS                            | probes/fpp4.c        | 51 / 59 exact (86.4%)      |
+| run 2026-11-09-26-micro-fpe2, v423/O3XS                             | probes/fpp3.c        | 49 / 59 exact (83.1%)      |
+| run 2026-11-09-28-micro-fpe2b, v423/O3XS                            | probes/fpp4.c        | 55 / 59 exact (93.2%)      |
 | run 2026-11-09-36-micro-fpe2c, v423/none                            | probes/fpp5.c        | 91 / 100 exact (91.0%)     |
-| run 2026-11-09-36-micro-fpe2c, v423/O3XS                            | probes/fpp5.c        | 86 / 100 exact (86.0%)     |
+| run 2026-11-09-36-micro-fpe2c, v423/O3XS                            | probes/fpp5.c        | 91 / 100 exact (91.0%)     |
 | run 2026-11-09-38-micro-fpe2d, v423/none                            | probes/fpp6.c        | 33 / 56 exact (58.9%)      |
 | run 2026-11-09-38-micro-fpe2d, v423/O3XS                            | probes/fpp6.c        | 18 / 56 exact (32.1%)      |
 | run 2026-11-09-39-micro-fpe2e, v423/none                            | probes/fpp7.c        | 44 / 79 exact (55.7%)      |
@@ -122,7 +122,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-42-micro-homes2b, v423/Xr                            | probes/homes2b.c     | 22 / 90 exact (24.4%)      |
 | run 2026-11-09-42-micro-homes2b, v423/O3XSXr                        | probes/homes2b.c     | 18 / 90 exact (20.0%)      |
 | run 2026-11-10-1-micro-random1, v423/none                           | random/*.c           | 57 / 200 exact (28.5%)     |
-| run 2026-11-10-1-micro-random1, v423/O3XS                           | random/*.c           | 27 / 200 exact (13.5%)     |
+| run 2026-11-10-1-micro-random1, v423/O3XS                           | random/*.c           | 28 / 200 exact (14.0%)     |
 | run 2026-11-10-1-micro-random1, v423/Xr                             | random/*.c           | 46 / 200 exact (23.0%)     |
 | run 2026-11-10-1-micro-random1, v423/O3XSXr                         | random/*.c           | 24 / 200 exact (12.0%)     |
 | run 2026-11-10-5-micro-random2, v423/none                           | random2/*.c          | 44 / 200 exact (22.0%)     |
@@ -222,7 +222,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-12-10-micro-fpopa, v423/Xr                              | probes/fpopa.c       | 108 / 112 exact (96.4%)    |
 | run 2026-11-12-10-micro-fpopa, v423/O3XSXr                          | probes/fpopa.c       | 84 / 112 exact (75.0%)     |
 | run 2026-11-12-11-micro-fpargf, v423/none                           | probes/fpargf.c      | 96 / 96 exact (100.0%)     |
-| run 2026-11-12-11-micro-fpargf, v423/O3XS                           | probes/fpargf.c      | 72 / 96 exact (75.0%)      |
+| run 2026-11-12-11-micro-fpargf, v423/O3XS                           | probes/fpargf.c      | 96 / 96 exact (100.0%)     |
 | run 2026-11-12-11-micro-fpargf, v423/Xr                             | probes/fpargf.c      | 48 / 96 exact (50.0%)      |
 | run 2026-11-12-11-micro-fpargf, v423/O3XSXr                         | probes/fpargf.c      | 48 / 96 exact (50.0%)      |
 | run 2026-11-12-12-micro-fpargg, v423/none                           | probes/fpargg.c      | 36 / 44 exact (81.8%)      |
