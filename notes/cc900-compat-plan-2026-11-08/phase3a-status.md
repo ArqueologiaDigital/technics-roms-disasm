@@ -2236,6 +2236,13 @@ rs_2_03_03_1: `guca[5] /= 2` -> `srlb (_guca + 0x5)`). The rule's `not F.adecl` 
 well. Ledger up 6 (rstmt +1 at each set, random2 at none and -Xr), down 0; pairs MATCH 223; semcheck 54. Random
 183 / 61 / 116 / 53.
 
+**Batch 175 (2026-11-14): a call's result combined with a negated operand computes the operand in WA
+(CALL_LEFT_UNARY_WA).** For `f(..) op -x` or `f(..) op !x` (op one of `& | ^ +`, int, result wanted in HL) the oracle
+builds the operand in WA, applies the operator there with HL as source, and moves WA to HL (rstmt rs_2_04_05_2:
+`return r2(gi2, a[7]) & -gi2` -> `.. cal _r2 / inc 0x4,XSP / ld WA,(_gi2) / neg WA / and WA,HL / ld HL,WA`; the model
+negated in BC and wrote `and HL,BC`). Ledger up 1 (rstmt at none 3,572 -> 3,573), down 0; pairs MATCH 223; semcheck
+54. Random 183 / 61 / 116 / 53.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

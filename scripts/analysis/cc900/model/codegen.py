@@ -2004,6 +2004,7 @@ EVORDER_BYTE = True                                       # see gen_bin: the eva
 CW_IZ_XWA = True                                          # see bin_wide: a byte element at an IZ counter
 CHAIN_STATIC_WA = True                                    # see gen_assign_value: a chained store into a static element
 SHIFT1_MEM = True                                         # see gen_stmt: a byte or word shifted by one in memory
+CALL_LEFT_UNARY_WA = True                                 # see _gen_bin_body: f(..) op -x computes -x in WA
 
 def uncast_int(e):
     """e without its integral casts"""
@@ -4960,6 +4961,16 @@ def _gen_bin_body(F, e, fam, size, then_ret, store=False):
             if f0 != fam and f0 in FAM and size in FAM[f0]:   # _rand: Seed * k + 12345 -> the helper's XHL:
                 fam = f0; R = FAM[fam][size]                  # cal C9H_mullu / add XHL,0x3039 (not XWA: wrong code)
         rs = mem_operand(F, r)
+        rxu_ = strip(r)
+        while rxu_.k == 'cast' and rxu_.kind == 'IntegralCast': rxu_ = strip(rxu_.e)
+        if CALL_LEFT_UNARY_WA and rs is None and fam == 'HL' and op in ('&', '|', '^', '+') and size == 2 and \
+                strip(l).k == 'call' and rxu_.k == 'un' and rxu_.op in ('-', '!') and \
+                not nodes_in(r, 'call') and not has_helper_call(r) and not ({'WA'} & live_regs(F)):
+            n_u_ = len(F.lines); fu_ = gen(F, r, 'WA', size)   # a call's result with a negated operand: the operand in WA,
+            if fu_ == 'WA' and not any(re.search(r'\b(X?HL|[HL])\b', l_) for l_ in F.lines[n_u_:]):   # the operator there,
+                F.emit(SIMPLE_OPS[op], 'WA,HL'); F.emit('ld', 'HL,WA'); return 'HL'   # then HL (rstmt rs_2_04_05_2:
+            del F.lines[n_u_:]                             # r2(..) & -gi2 -> cal _r2 / .. / ld WA,(_gi2) / neg WA /
+                                                           # and WA,HL / ld HL,WA)
         if rs is None:
             other = 'BC' if fam != 'BC' else 'DE'
             if IDX_GUARD and held_after(F, other, r):       # (ol_two_arr: DE held i)
