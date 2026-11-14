@@ -2561,6 +2561,15 @@ initialiser folds to a constant, read once and not written before that read, is 
 -O sets, rstmt +18 / +18, lsl.c +3 / +3), down 0; pairs MATCH 223; semcheck 50. Random 191 / 75 / 133 / 62; library 186 /
 248 at -O3 -XS.
 
+**Batch 208 (2026-11-14): -O writes a jump to a bare `ret` as that `ret` (JUMP_TO_RET_OPT).** Fifteen rstmt statements at
+-O3 -XS had the oracle's `ret` where the model jumped to the function's last label (rs_1_00_19_2: `switch (gi) { case
+0: gp = rp(); break; .. }` -> `.. ld (_gp),XHL / ret / L87: / .. / ret / L88: / addb (_guc),0xff / L86: / ret`; the
+model wrote `j L4` twice). The label stays. A first run applied it everywhere and lost the 1997 library 2 functions at
+-O3 -XS, micro switch.c sw_local at -O3 -XS -Xr, and chnarrow.c: when the function ends with a `return` statement (`return
+r` after the switch, nothing to compute), the oracle keeps the jumps. The rule now stands aside there. The none rule
+(JUMP_TO_RET, conditional jumps) is unchanged. Ledger up 2 (rstmt +8 / +4 at the -O sets), down 0; pairs MATCH 223;
+semcheck 50. Random unchanged, 191 / 75 / 133 / 62; library 186 / 248 at -O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

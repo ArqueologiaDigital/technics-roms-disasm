@@ -10365,6 +10365,7 @@ HELPER_STORE_XIZ = True                                   # see gen_stmt's store
 BIN_PTR_RIGHT_BC = True                                   # see bin_wide: memory op pointer operand, the pointer in XWA
 POP_LONE_CALL = True                                      # see gen: a statement's only call pops at once
 K_FOLD_REGTEMP_OPT = True                                 # see gen_stmt's block: -O folds a register temporary's constant
+JUMP_TO_RET_OPT = True                                    # see compile_function_once: -O, j L to a bare ret
 LIVE_SHIFT = True                                         # see gen_body_shift
 _SHIFT_PARTS = {'WA': ('XWA', 'QWA', 'WA', 'QW', 'QA', 'W', 'A'), 'BC': ('XBC', 'QBC', 'BC', 'QB', 'QC', 'B', 'C'),
                 'DE': ('XDE', 'QDE', 'DE', 'QD', 'QE', 'D', 'E')}
@@ -15865,6 +15866,12 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
                 if k + 1 < len(F.lines) and F.lines[k + 1] == '\tret': F.lines[i] = '\tret\t' + m.group(1)
     import re                                            # no self-moves: the oracle never writes ld XWA,XWA
     F.lines = [l for l in F.lines if not re.match(r'^\tld\t(\w+),\1$', l)]
+    if JUMP_TO_RET_OPT and F.opt and not (F.f.body.k == 'block' and F.f.body.body and F.f.body.body[-1].k == 'return'):
+        # -O: a jump to a label whose next line is a bare ret is that ret (not when the function ends with a return
+        # statement: switch.c sw_local's breaks keep j L128 to L128: / ret)
+        rl_ = {F.lines[k][:-1] for k in range(len(F.lines) - 1)   # ret, the label kept (rstmt rs_1_00_19_2: switch ..
+               if F.lines[k] and re.match(r'^L\d+:$', F.lines[k]) and F.lines[k + 1] == '\tret'}   # break -> ret)
+        F.lines = ['\tret' if l and re.match(r'^\tj\t(L\d+)$', l) and l.split('\t')[2] in rl_ else l for l in F.lines]
     if DEAD_LABEL_PAIR and not F.opt:                    # an unreferenced label right before another label is not
         refs_ = {m for l in F.lines if l and l.startswith('\t') for m in re.findall(r'\b(L\d+)\b', l)}   # written
         ij_ = getattr(F, 'if_joins', set())           # (an if's join only: a loop's continue label stays, switch.c sw_loop)
