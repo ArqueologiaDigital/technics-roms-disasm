@@ -2664,6 +2664,13 @@ body; now only a read of the selector in the body counts. That function still di
 (rstmt -Xr +1), down 0; pairs MATCH 223; semcheck 50. Random unchanged, 191 / 79 / 141 / 65; library 186 / 248 at
 -O3 -XS.
 
+**Batch 219 (2026-11-14): -Xr, a char register shifted left once is `add R,R` (REGVAR_CHAR_SHL1), and CHAIN_K_STATIC
+holds under -Xr (CHAIN_K_STATIC_XR).** Two -Xr random functions had every statement exact alone and differed in one
+line. In random r3_03_13, `t <<= 1` with t in L is `add L,L`, not `sla 0x1,L`; without options this lost a rstmt
+statement, so it is -Xr only. In r3_00_12, `guc = guca[6] = 9` is `ldb (_guca + 0x6),0x9 / ldb (_guc),0x9`: the chained
+constant store had been gated to no -Xr. Ledger up 1 (random3 -Xr +2), down 0; pairs MATCH 223; semcheck 50. Random
+191 / 79 / 143 / 65.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

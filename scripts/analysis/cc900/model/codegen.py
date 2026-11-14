@@ -9288,7 +9288,8 @@ def store_global(F, name, e, size):
             and strip(ia.l).decl.ty.size == size and fold(narrow(ia.r, size)).k == 'const':
         store_global(F, strip(ia.l).decl.name, ia.r, size)   # ae_i_chain_k: gi = gi2 = 7 -> ldw (_gi2),0x7 /
         store_global(F, name, ia.r, size); return            # ldw (_gi),0x7
-    if CHAIN_K_STATIC and ia.k == 'bin' and ia.op == '=' and size <= 2 and not F.opt and not F.adecl and strip(ia.l).k in ('index', 'member') and \
+    if CHAIN_K_STATIC and ia.k == 'bin' and ia.op == '=' and size <= 2 and not F.opt and (not F.adecl or CHAIN_K_STATIC_XR) and \
+            strip(ia.l).k in ('index', 'member') and \
             strip(ia.l).ty is not None and strip(ia.l).ty.size == size and fold(narrow(ia.r, size)).k == 'const' and \
             fold(narrow(ia.r, size)).value is not None and (sp_lvalue_kind(F, strip(ia.l)) or ('',))[0] == 'S':
         F.emit('ld' + ('b' if size == 1 else 'w'), '%s,%s' % (sp_lvalue_kind(F, strip(ia.l))[1], imm_of(fold(narrow(ia.r, size)), size)))
@@ -10409,6 +10410,8 @@ RET_SCC_OP = True                                         # see ret_two_level: a
 ADD_NEG_SUB = True                                        # see gen_bin: a + -b is a - b
 REGVAR_CHAR_MULK = True                                   # see regvar_stmt: a char register variable *= K through A
 SW_SEL_WRITE_ONLY = True                                  # see gen_switch: a selector only assigned in the body
+REGVAR_CHAR_SHL1 = True                                   # see regvar_stmt: a char << 1 is add R,R
+CHAIN_K_STATIC_XR = True                                  # see store_global: CHAIN_K_STATIC under -Xr too
 LIVE_SHIFT = True                                         # see gen_body_shift
 _SHIFT_PARTS = {'WA': ('XWA', 'QWA', 'WA', 'QW', 'QA', 'W', 'A'), 'BC': ('XBC', 'QBC', 'BC', 'QB', 'QC', 'B', 'C'),
                 'DE': ('XDE', 'QDE', 'DE', 'QD', 'QE', 'D', 'E')}
@@ -11526,6 +11529,9 @@ def regvar_stmt(F, e):
             (fold(e.r).value <= 16 or regvar_of(e.l).ty.size == 4):
         d = regvar_of(e.l); R = FAM[d.reg].get(d.ty.size, FAM[d.reg].get(2))   # cond_bits.c cb_while: x >>= 1 with x
         mn = ('sla' if d.ty.signed else 'sll') if e.op == '<<' else ('sra' if d.ty.signed else 'srl')   # in WA ->
+        if REGVAR_CHAR_SHL1 and F.adecl and e.op == '<<' and fold(e.r).value == 1 and d.ty.size == 1:
+            F.emit('add', '%s,%s' % (R, R)); return True    # a char shifted left once is added to itself (random
+                                                           # r3_03_13 -Xr: t <<= 1 with t in L -> add L,L)
         if fold(e.r).value > 16: emit_shift(F, mn, fold(e.r).value, R); return True   # srl 0x1,WA; a long by more
         F.emit(mn, '%s,%s' % (hx(fold(e.r).value), R)); return True                 # than 16 in two (random .r1_03_19
                                                                                      # -Xr: c >>= 24 -> sra 0x8,XDE / sra 0x0,XDE)
