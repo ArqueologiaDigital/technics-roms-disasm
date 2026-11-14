@@ -10213,7 +10213,7 @@ R3_SETS = ('none', 'Xr', 'O3XSXr', 'O3XS')
 # CC900_HOMES2 overrides it, so ledger.sh, pairs_model.py and semcheck.py can measure each policy unchanged.
 # 'fallback-noloop' (2026-11-10) is the one policy that moved no ledger row down (regalloc_notes.md, "The homes2
 # rule, ported"); 'r4keep' gains the most but loses ra_homes Xr / O3XSXr and one micro function per set.
-HOMES2 = os.environ.get('CC900_HOMES2', 'fallback-noloop')
+HOMES2 = os.environ.get('CC900_HOMES2', 'xr-fallback-noloop')
 FP_AGGR = True
 MUL_K_XWA = True
 IFCHAIN_JOIN = True

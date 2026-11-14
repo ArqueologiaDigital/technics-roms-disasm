@@ -59,6 +59,8 @@ POLICIES = {
                 'accumulators: c_nested, rc_loop2-4, rh_loop*, sv_register), under every option set',
     'noloop-r4keep': 'noloop, and cdecl -O3 -XS with a 32-bit candidate keeps homes.py\'s R4',
     'fallback-noloop': 'fallback, in functions without a loop only',
+    'xr-fallback-noloop': 'homes2 under -Xr and -O3 -XS -Xr where it homes only parameters; fallback-noloop under cdecl -O3 -XS (2026-11-14, '
+                          'measured on the random corpora: -Xr 111 -> 115, -O3 -XS -Xr 52 -> 53, none 182 -> 180 with all)',
 }
 
 
@@ -74,6 +76,14 @@ def applies(policy, setname, r4_fired, fn=None):
     if policy == 'noloop': return not has_loop(fn)
     if policy == 'noloop-r4keep': return not has_loop(fn) and not r4_fired
     if policy == 'fallback-noloop': return setname == 'O3XS' and not r4_fired and not has_loop(fn)
+    if policy == 'xr-fallback-noloop':
+        if setname in ('Xr', 'O3XSXr') and fn is not None:   # adecl: only when homes2 puts parameters alone in registers
+            H = predict(fn, setname)                           # (random .r1_04_02, .r2_02_07, .r2_08_11, .r3_07_00 gain;
+            regs = [d for d, h in H.items() if h in ('IZ', 'QIZ', 'XIZ')]   # a local in IZ / QIZ is homes.py's: call.c
+            if any(d.kind == 'param' and h == 'slot' and d.ty.size <= 2 for d, h in H.items()): return False
+            # (an int parameter losing to another: the oracle homes the first, ra_homes.c rh_pp_b2 a in IZ, homes2 b)
+            return bool(regs) and all(d.kind == 'param' for d in regs)   # k_keep, ra_homes.c rh_ll lost under homes2)
+        return setname == 'O3XS' and not r4_fired and not has_loop(fn)
     raise ValueError('unknown HOMES2 policy %r (one of %s)' % (policy, ', '.join(POLICIES)))
 
 

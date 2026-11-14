@@ -2216,6 +2216,18 @@ MUL_K_DOUBLE_ADD, LH_NESTED_K, PTR_REG_DIRECT, CHAR_IDX_BC's lvalue side, MULB_S
 94 more exact functions (lhx.c +32 at both -O sets, evorder_lh.c +2 / +2, idxloc.c, random2, rstmt), down 0; pairs MATCH
 223 (one refusal reason changed: the table data's _malloc, still refused); semcheck 54. Random 182 / 61 / 111 / 52.
 
+**Batch 173 (2026-11-14): under the -Xr sets the homes2 rule decides where it homes parameters alone (HOMES2 policy
+xr-fallback-noloop, edit_batch173_homes2.py).** The policy in use handed only cdecl -O3 -XS functions without a loop to
+homes2; everywhere else homes.py decided. Each policy was measured as a model copy's default: the listing cache is keyed
+by the model's files, so CC900_HOMES2 in the environment does not show through it, and an earlier check that way was
+void. With homes2 everywhere the random scores read 180 / 61 / 115 / 53 against 182 / 61 / 111 / 52. The ledger showed
+homes2 losing micro and probe functions under -Xr (call.c k_keep, ra_homes.c rh_ll, rh_pp_b2 ...: a local in IZ / QIZ,
+the halves of two locals, the first of two int parameters). Its gains (random .r1_04_02, .r2_02_07, .r2_08_11,
+.r3_07_00) all home a parameter alone. The new policy lets homes2 decide under -Xr and -O3 -XS -Xr when every value it
+puts in a register is a parameter and no int parameter goes to a slot (first tries lost 9, 6 and 1 ledger rows).
+Ledger up 7 (homes2a.c, homes2b.c, regkw.c, the random corpora at -Xr), down 0; pairs MATCH 223; semcheck 54. Random
+182 / 61 / 115 / 53.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
