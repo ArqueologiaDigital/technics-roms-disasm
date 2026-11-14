@@ -1319,6 +1319,34 @@ MUL_K_ELEM_BC = True                                      # see gen_mul_const: a
 UIDX_REGPARAM = True                                      # see elem_addr and lh_reg_uidx: -Xr, an unsigned register-parameter index
 DEAD_LABEL_PAIR = True                                    # see compile_function_once
 CMP_WIDE_LEFT_ELEM = True                                 # see gen_compare: (long)int against a long element
+DEAD_INIT_OPT = True                                      # see gen_stmt's block: -O drops a dead initialiser
+WHILE_KNOWN_FIRST = True                                  # see while_first_true
+
+def while_first_true(F, s):
+    """is the first test of while (v op K) known true from the statement before it, v = K0?"""
+    import operator
+    pv = getattr(F, 'prev_stmt', None)
+    if pv is None or pv.k != 'expr': return False
+    e = strip(pv.e)
+    if not (e.k == 'bin' and e.op == '=' and strip(e.l).k == 'var') or fold(e.r).k != 'const' or fold(e.r).value is None:
+        return False
+    c = strip(s.cond)
+    if c.k != 'bin' or c.op not in ('<', '<=', '>', '>=', '==', '!='): return False
+    lv = strip(c.l)
+    while lv.k == 'cast': lv = strip(lv.e)
+    if not (lv.k == 'load' and strip(lv.e).k == 'var' and strip(lv.e).decl is strip(e.l).decl): return False
+    k2 = fold(c.r)
+    if k2.k != 'const' or k2.value is None: return False
+    return {'<': operator.lt, '<=': operator.le, '>': operator.gt, '>=': operator.ge,
+            '==': operator.eq, '!=': operator.ne}[c.op](fold(e.r).value, k2.value)
+
+def init_overwritten_next(x, d):
+    """does statement x assign d first without reading it (d = e with e free of d, or a for whose init does)?"""
+    if x.k == 'for' and getattr(x, 'init', None) is not None:
+        x = x.init if getattr(x.init, 'k', None) == 'expr' else type('S', (), {'k': 'expr', 'e': x.init})()
+    if x.k != 'expr': return False
+    e = strip(x.e)
+    return e.k == 'bin' and e.op == '=' and strip(e.l).k == 'var' and strip(e.l).decl is d and not uses_decl(e.r, d)
 RIGHT_ELEM_FIRST = True                                   # see _gen_bin_body: an element at a variable index on the right
 LONG_RMW_GPTR = True                                      # see gen_opassign: a long op= through a global pointer
 EV_IZ_UIDX = True                                         # see ev_addr_kind: an element at an unsigned index in IZ (rstmt rs_4_05_01_6)
@@ -9383,6 +9411,12 @@ def gen_stmt(F, s, last):
                     setup_struct_temps(F, c)
                     F.emit('ld', '%s,(XSP+%s)' % ('XIZ' if d.reg == 'XIZ' else FAM[d.reg][d.ty.size], hx(d.off + F.push)))
                     F.deferred.remove(d)
+            if DEAD_INIT_OPT and F.opt and c.k == 'decl' and c.init is not None and c.var.kind == 'local' and \
+                    not c.var.addr_taken and side_effect_free(c.init) and not nodes_in(c.init, 'call') and \
+                    i + 1 < len(body) and init_overwritten_next(body[i + 1], c.var):
+                i += 1; continue                           # -O: an initialiser the next statement overwrites unread is
+                                                           # not written (rstmt rs_4_07_00_1: int i = ji; i = 0; while ..
+                                                           # -> ld IZ,0x0, no ld IZ,(_ji))
             if c.k == 'decl' and c.var.kind == 'local' and (getattr(c.var, 'reg', None) not in (None, 'XIZ', 'WA') or
                                                           getattr(c.var, 'reg', None) == 'WA' and getattr(c.var, 'regtemp', False)):
                 if c.init is not None:
@@ -9740,7 +9774,11 @@ def gen_stmt(F, s, last):
             folded = False
             bare = not F.xiz_vars and not F.pushes and not getattr(F, 'frame', 0)   # ra_libshapes.c ls_sl_ret: a
             n_if0_ = len(F.lines)
-            gp_ = guard_div_plan(F, s) if GUARD_DIV and F.opt and not (last and bare) and 'BC' not in live_regs(F) else None
+            gp_ = guard_div_plan(F, s) if GUARD_DIV and F.opt and not (last and bare) and 'BC' not in live_regs(F) and \
+                getattr(F, 'u1_i', None) is None and not getattr(F, 'l2', None) and not getattr(F, 'cl_active', None) and \
+                not getattr(F, 'counted', None) and not getattr(F, 'leaf', None) else None
+            # (not inside a loop or leaf planner, whose own registers live_regs does not list: rstmt rs_2_08_12_4 -O3 -XS,
+            #  the pointer-walk's XBC under ld BC,(_gu2), was wrong code)
             k = None
             if gp_ is not None:                          # -O: if (D != 0) .. A / D: D in BC (C) for the test and the
                 D_, sz_, cc_ = gp_                       # division (random r1_09_05: if (gps->i != 0) gi3 = 100 / gps->i
@@ -11832,7 +11870,10 @@ def gen_loop(F, s, last):
             F.lines.append(body + ':'); loop_cond(F, s.cond, body, True); return
         if F.pending and LOOP_FLUSH_POPS: flush_pops(F)    # the 1997 library's _fread: fgetc(stream)'s pop went into
         test = F.newulabel(); body = F.newulabel()          # the loop body and ran every iteration (wrong code)
-        F.emit('j', test); F.lines.append(body + ':')
+        known_ = WHILE_KNOWN_FIRST and F.opt and s.k == 'while' and while_first_true(F, s)
+        if not known_:
+            F.emit('j', test)                              # (-O: a first test known true is not jumped to, rstmt
+        F.lines.append(body + ':')                         #  rs_4_07_00_1: i = 0; while (i < 6) -> ld IZ,0x0 / L: ..)
         cont = [None]; brk = [None]
         def getc2():
             if cont[0] is None: cont[0] = F.newulabel()
@@ -11842,7 +11883,8 @@ def gen_loop(F, s, last):
             if brk[0] is None: brk[0] = F.newulabel()
             return brk[0]
         F.loops.append((LazyLabel(getb), getc2)); gen_stmt(F, s.body, False); flush_pops(F); F.loops.pop()
-        F.lines.append(test + ':')
+        if not known_ or cont[0] is not None or any(re.search(r'[\t,]%s$' % test, l_) for l_ in F.lines if l_):
+            F.lines.append(test + ':')                     # (no jump to it: no label)
         loop_cond(F, s.cond, body, True)
         if brk[0] is not None: F.lines.append(brk[0] + ':')
         return

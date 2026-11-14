@@ -2364,6 +2364,17 @@ again but costs the library five functions, and stays. Ledger up 6 (lhy.c at -O3
 Random 186 / 61 / 128 / 54. Tried and not kept this round: comparing two computed sides right first
 (`cmp_order` or the byte narrowing takes those statements first; no gain).
 
+**Batch 190 (2026-11-14): under -O a dead initialiser is not written, and a while whose first test is known true is not
+jumped into (DEAD_INIT_OPT, WHILE_KNOWN_FIRST).** The top -O3 -XS single-statement difference (seven random functions)
+was `int i = ji; i = 0; while ..`. The oracle writes no `ld IZ,(_ji)`: a side-effect-free initialiser that the next
+statement overwrites without reading it is now skipped under -O. It also enters `i = 0; while (i < 6)` without the jump
+to the test (`ld IZ,0x0 / L: .. / cp IZ,0x6 / j lt,L`): after `v = K0`, a first test known true is not jumped to, and
+the test's label is written only if something jumps to it. A first run exposed latent wrong code: dropping the
+initialiser lets the pointer-walk loop planner take rstmt rs_2_08_12_4, and batch 161's GUARD_DIV loaded `ld BC,(_gu2)`
+over its pointer XBC (two semcheck verdicts). GUARD_DIV now stands aside while a loop or leaf planner is active. Ledger
+up 4 (rstmt at -O3 -XS 3,159 -> 3,163 and at -O3 -XS -Xr 3,073 -> 3,075, loopctr.c +2 / +2), down 0; pairs MATCH 223;
+semcheck 50. Random unchanged, 186 / 61 / 128 / 54.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
