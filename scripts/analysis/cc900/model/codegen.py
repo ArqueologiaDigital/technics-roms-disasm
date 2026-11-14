@@ -1321,6 +1321,7 @@ DEAD_LABEL_PAIR = True                                    # see compile_function
 CMP_WIDE_LEFT_ELEM = True                                 # see gen_compare: (long)int against a long element
 DEAD_INIT_OPT = True                                      # see gen_stmt's block: -O drops a dead initialiser
 WHILE_KNOWN_FIRST = True                                  # see while_first_true
+FOR_TESTED_NO_EXIT = True                                 # see gen_loop: no unreferenced exit label after a decided first test
 
 def while_first_true(F, s):
     """is the first test of while (v op K) known true from the statement before it, v = K0?"""
@@ -11893,7 +11894,7 @@ def gen_loop(F, s, last):
     def getc():
         if cont[0] is None: cont[0] = F.newulabel()
         return cont[0]
-    rotated = None
+    rotated = None; decided_true_ = False
     if F.opt and s.k == 'for' and s.cond is not None:
         ini = flat(s.init) if s.init is not None else []
         cnd = strip(s.cond)
@@ -11915,7 +11916,7 @@ def gen_loop(F, s, last):
                 holds = {'<': operator.lt, '<=': operator.le, '>': operator.gt, '>=': operator.ge,
                          '==': operator.eq, '!=': operator.ne}[cnd.op](k0.value, fold(x).value)
                 if not holds: F.emit('j', exitl) if not (after_ret and not F.loops) else F.emit('ret')
-                rotated = 'tested'; xm = None
+                rotated = 'tested'; xm = None; decided_true_ = holds
             xd = strip(x.e).decl if x.k == 'load' and strip(x.e).k == 'var' else None
             if xm is not None and getattr(F, 'u1_bounds', None) and xd in F.u1_bounds:
                 F.u1_bounds.remove(xd)                     # O3XS oc_nested: ld DE,(XSP+0x8) before the outer test,
@@ -11963,6 +11964,10 @@ def gen_loop(F, s, last):
     else: F.emit('j', body)
     if s.cond is None and F.opt and not any(re.search(r'[\t,]%s$' % exitl, l) for l in F.lines if l.startswith('\t')):
         F.no_exit = True; return                       # c_inf at -O: for (;;) with no break -> nothing after j L1
+    if FOR_TESTED_NO_EXIT and F.opt and rotated == 'tested' and decided_true_ and \
+            not any(re.search(r'[\t,]%s$' % exitl, l) for l in F.lines if l and l.startswith('\t')):
+        return                                         # (-O, the first test decided true and nothing jumping out: no exit
+                                                       #  label, random r3_03_12: for (i = 0; i < 4; i++) .. j lt,L / pushw)
     F.lines.append(exitl + ':')
 
 def N_expr(e):

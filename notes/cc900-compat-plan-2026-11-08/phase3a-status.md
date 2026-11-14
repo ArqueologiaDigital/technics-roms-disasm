@@ -2375,6 +2375,16 @@ over its pointer XBC (two semcheck verdicts). GUARD_DIV now stands aside while a
 up 4 (rstmt at -O3 -XS 3,159 -> 3,163 and at -O3 -XS -Xr 3,073 -> 3,075, loopctr.c +2 / +2), down 0; pairs MATCH 223;
 semcheck 50. Random unchanged, 186 / 61 / 128 / 54.
 
+**Batch 191 (2026-11-14): under -O a for loop whose first test is decided true writes no exit label that nothing
+jumps to (FOR_TESTED_NO_EXIT).** In random r3_03_12 the oracle closes `for (i = 0; i < 4; i++)` with
+`cp IZ,0x4 / j lt,L` and goes straight on to the next statement. The model wrote an unreferenced exit label there,
+which split the block, and the following code then differed. The label is now written only when some jump refers to it.
+The rule applies only when the first test is decided true at compile time. With a real first test (opt_loops.c
+ol_gptr: `cp WA,0x0 / ret le`, where the exit jump became a return) the oracle keeps the label before `ret`. A first run
+dropped it there too and lost five micro functions (opt_loops.c -4 at -O3 -XS -Xr, ra_*.c -1 at -O3 -XS). Ledger up 8
+(rstmt +9 / +9, idxloc.c +21 / +21, loopctr.c +2 / +2, random2 +1 / +1), down 0; pairs MATCH 223; semcheck 50. Random
+186 / 62 / 128 / 55 (-O3 -XS and -O3 -XS -Xr +1 each); library 186 / 248 at -O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
