@@ -4689,6 +4689,18 @@ def emit_shift(F, mnem, count, R):
     F.emit(mnem, '%s,%s' % ('0x0' if count == 16 and SHIFT_SPLIT else hx(count), R))
 
 def gen_bin(F, e, fam, size, then_ret, store=False):
+    if ADD_NEG_SUB and (e.op == '+' or e.op == '-' and not F.opt) and e.ty is not None and e.ty.kind == 'int' and \
+            not fpgen.is_fp(e.ty):                         # (-O keeps a - -b: evorder_l.c el_s_KU, 7L - -hl)
+        rn_ = strip(e.r)                                   # a + -b is a - b, a - -b is a + b (rstmt rs_3_05_12_2:
+        if rn_.k == 'un' and rn_.op == '-' and rn_.ty is not None and rn_.ty.size == e.ty.size and \
+                fold(rn_.e).k != 'const':                  # gps->i + -gi3 -> ld WA,(XWA+0x2) / sub WA,(_gi3))
+            from frontend import N
+            ln_ = strip(e.l)
+            if e.op == '-' and fold(e.l).k == 'const': pass   # (K - -b stays: evorder_l.c el_s_KU, 7L - -hl)
+            elif e.op == '-' and ln_.k == 'un' and ln_.op == '-' and ln_.ty is not None and ln_.ty.size == e.ty.size:
+                e = N('bin', op='-', l=rn_.e, r=ln_.e, ty=e.ty)   # -a - -b is b - a (el_s_UU: -gl - -hl ->
+            else:                                                 # ld XHL,(_hl) / sub XHL,(_gl))
+                e = N('bin', op='-' if e.op == '+' else '+', l=e.l, r=rn_.e, ty=e.ty)
     if CALL_OPERAND_POP and not F.opt and not F.adecl and (e.op in SIMPLE_OPS or e.op in ('<<', '>>', '*')) and \
             any(strip(x).k == 'call' and not has_helper_call(strip(x).fn) for x in (e.l, e.r)):
         F.pop_call_operand = getattr(F, 'pop_call_operand', 0) + 1
@@ -10394,6 +10406,7 @@ CHAR_IDX_ONCE_OPT = True                                  # see push_elem: -O re
 CALL_RIGHT_ALL_XR = True                                  # see _gen_bin_body: CALL_RIGHT_FIRST under -Xr whatever the left reads
 FP_DECL_STMT = True                                       # see gen_stmt's block: begin_stmt for a double declaration
 RET_SCC_OP = True                                         # see ret_two_level: a returned comparison op m
+ADD_NEG_SUB = True                                        # see gen_bin: a + -b is a - b
 LIVE_SHIFT = True                                         # see gen_body_shift
 _SHIFT_PARTS = {'WA': ('XWA', 'QWA', 'WA', 'QW', 'QA', 'W', 'A'), 'BC': ('XBC', 'QBC', 'BC', 'QB', 'QC', 'B', 'C'),
                 'DE': ('XDE', 'QDE', 'DE', 'QD', 'QE', 'D', 'E')}

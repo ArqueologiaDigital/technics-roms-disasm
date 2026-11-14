@@ -2646,6 +2646,14 @@ ld XHL,XWA / or XHL,0x189a`. A constant of 1..8 is added or subtracted with inc 
 (evorder_l.c +8 / +8 at none / -Xr, rstmt +2 / +1), down 0; pairs MATCH 223; semcheck 50. Random unchanged, 191 / 79 /
 141 / 65; library 186 / 248 at -O3 -XS.
 
+**Batch 217 (2026-11-14): an int `a + -b` is generated as `a - b` (ADD_NEG_SUB).** rstmt rs_3_05_12_2: `gs.a[5] =
+gps->i + -gi3` -> `ld XWA,(_gps) / ld WA,(XWA+0x2) / sub WA,(_gi3)`; the model negated gi3 and added. At every set.
+Without -O, `a - -b` is `a + b` too, except that a constant on the left stays (evorder_l.c el_s_KU, `7L - -hl`), and
+`-a - -b` is `b - a` (el_s_UU: `ld XHL,(_hl) / sub XHL,(_gl)`). Under -O, `a - -b` keeps its negation; a first run
+lost el_s_KU at -O3 -XS. Ledger up 10 (evorder_st.c +2 / +5 and evorder_l.c +1 / +3 at none / -Xr, evorder.c -Xr +1,
+rstmt +1 at every set), down 0; pairs MATCH 223; semcheck 50. Random unchanged, 191 / 79 / 141 / 65; library 186 / 248 at
+-O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
