@@ -2356,6 +2356,14 @@ wrong-code verdicts, not committed. Ledger up 9 with 76 more exact functions (el
 stdiv3.c +24 at -O3 -XS, rstmt +2 / +2 / +1 / +1, random4 at none and -Xr), down 0; pairs MATCH 223; semcheck 50.
 Random 186 / 61 / 127 / 54.
 
+**Batch 189 (2026-11-14): three more no-option rules apply at another set.** The relaxation sweeps were re-run on the
+batch-188 model (gate/xrtry-results-xr4-2026-11-14.txt, gate/xrtry-results-o3xs3-2026-11-14.txt). BYTE_RIGHT_FIRST
+and CP_CHAR_REG_K now apply under -Xr, and MUL_K_ELEM under cdecl -O3 -XS (library 186). LEAF_NONE_LN1 gained on rstmt
+again but costs the library five functions, and stays. Ledger up 6 (lhy.c at -O3 -XS 48 -> 56, lhx.c and evorder_ad.c
++2 each there, rstmt +1 at -O3 -XS and +2 at -Xr, random1 at -Xr 42 -> 43), down 0; pairs MATCH 223; semcheck 50.
+Random 186 / 61 / 128 / 54. Tried and not kept this round: comparing two computed sides right first
+(`cmp_order` or the byte narrowing takes those statements first; no gain).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

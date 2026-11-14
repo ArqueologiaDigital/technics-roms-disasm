@@ -4971,7 +4971,7 @@ def _gen_bin_body(F, e, fam, size, then_ret, store=False):
                         not (v_.k == 'index' and fold(v_.idx).k != 'const') and not (v_.k == 'member' and v_.arrow): continue
                 return False
             return True
-        if BYTE_RIGHT_FIRST and size == 1 and not F.opt and not F.adecl and op in ('&', '|', '^', '+') and comp8_(l) and comp8_(r) and \
+        if BYTE_RIGHT_FIRST and size == 1 and not F.opt and op in ('&', '|', '^', '+') and comp8_(l) and comp8_(r) and \
                 mem_operand(F, r) is None and mem_operand(F, l) is None and not ({'WA', 'BC'} & live_regs(F)):
             # two computed byte operands: the right one first, in A, moved to C; then the left one in A (random
             # r3_07_13: guc = (7 + guc) ^ (guc & 162) -> ld A,(_guc) / and A,0xa2 / ld C,A / ld A,(_guc) / inc 0x7,A / xor A,C)
@@ -5711,7 +5711,7 @@ def gen_mul_const(F, l, k, fam, size, signed=True):
     if x is None and k & (k - 1) == 0 and (has_helper_call(l) or ldm):   # arr_index.c ai_l_p_carry: p[i] % 10 * 256 ->
         f = gen(F, l, fam, size); X = FAM[f][size]                   # cal C9H_remls / sla 0x8,XHL
         F.emit('sla' if signed else 'sll', '%s,%s' % (hx(k.bit_length() - 1), X)); return f
-    if x is None and MUL_K_ELEM and not F.opt and not F.adecl and size == 4 and fam == 'WA' and strip(l).k == 'load' and \
+    if x is None and MUL_K_ELEM and not F.adecl and size == 4 and fam == 'WA' and strip(l).k == 'load' and \
             strip(strip(l).e).k == 'index' and not live_regs(F):
         n0_ = len(F.lines)                       # an element at a variable index is loaded into XBC like an absolute
         f_ = gen(F, l, 'BC', 4)                  # operand (lhy.c lyi_l_x_iPnK: ld WA,(c) / sla 0x2,WA / lda XBC,_vla /
@@ -6180,7 +6180,7 @@ def gen_compare(F, e):
         F.emit('cp', '%s,%s' % (FAM[fl][size], FAM[fr][size])); return cc   # cp BC,WA
     if CMPX and getattr(F, 'u1_i', None) is None and not getattr(F, 'l2', None) and not getattr(F, 'cl_active', None) and \
             mem_operand(F, r) is None and cmpx_elem(F, op, l, r, size): return cc
-    if CP_CHAR_REG_K and size == 1 and rc.k == 'const' and rc.value is not None and not F.opt and not F.adecl and \
+    if CP_CHAR_REG_K and size == 1 and rc.k == 'const' and rc.value is not None and not F.opt and \
             strip(l).k == 'load' and regvar_of(strip(l).e) is not None and regvar_of(strip(l).e).reg in ('BC', 'DE', 'HL') and \
             regvar_of(strip(l).e).ty.size == 1 and 'A' not in live_regs(F):
         rr_ = FAM[regvar_of(strip(l).e).reg][1]           # a char local in the low byte of a register compares in place
