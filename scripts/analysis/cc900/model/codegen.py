@@ -9868,6 +9868,13 @@ def gen_stmt(F, s, last):
             F.trivial_ret_next = trivial
             gen_stmt(F, c, (last and i == len(body) - 1) or trivial); i += 1
             if not getattr(F, 'cl_active', None): F.cl_tmp_done = False
+            if UNREACH_AFTER_RET and c.k == 'if' and getattr(c, 'els', None) is None and cond_const(c.cond) is True and \
+                    flat(c.then) and flat(c.then)[-1].k == 'return' and \
+                    not any(nodes_in(x, 'label') or getattr(x, 'k', None) == 'label' for x in body[i:]):
+                break                                      # an always-taken if that returns: the rest is unreachable and
+                                                           # not written (random r3_00_19: if (guc > 1 || 65536L <
+                                                           # 86430L) return gul + 3295UL; gs.i = ..; return .. -> ends at
+                                                           # the first return)
         shift_decl_close(F)
         return
     if s.k == 'decl': raise Unsupported('decl')
@@ -10470,6 +10477,7 @@ CALL_CHAR_EXTS_OPT = True                                 # see gen: -O widens a
 TEST_REG_RET = True                                       # see test_reg_reuse: a test followed by ret eq / ne
 OPA_IZ_OPERAND = True                                     # see gen_opassign: op= with an IZ-homed operand
 PTR_SUM_IN_HOME = True                                    # see regvar_stmt: a char pointer sum built in its home
+UNREACH_AFTER_RET = True                                  # see gen_stmt's block: code after an always-taken return
 LIVE_SHIFT = True                                         # see gen_body_shift
 _SHIFT_PARTS = {'WA': ('XWA', 'QWA', 'WA', 'QW', 'QA', 'W', 'A'), 'BC': ('XBC', 'QBC', 'BC', 'QB', 'QC', 'B', 'C'),
                 'DE': ('XDE', 'QDE', 'DE', 'QD', 'QE', 'D', 'E')}

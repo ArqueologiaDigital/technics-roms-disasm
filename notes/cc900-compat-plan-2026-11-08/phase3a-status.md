@@ -2716,6 +2716,13 @@ temporary in XBC, is `ld BC,IZ / extz XBC / add XBC,(_gs + 0xa)`, at none and at
 and moved it. A char pointer in memory plus an int index held in a register is now built directly in the BC / DE home,
 without -O. Ledger up 2 (random3 none +1, -Xr +1), down 0; pairs MATCH 223; semcheck 50. Random 192 / 83 / 145 / 69.
 
+**Batch 226 (2026-11-14): statements after an always-taken return are not generated (UNREACH_AFTER_RET).** Random
+r3_00_19 had every statement exact alone: `if (guc > 1 || 65536L < 86430L) return gul + 3295UL;` is always taken
+(cond_const folds the `||`), and the oracle writes nothing after that return. The block loop now stops after an `if`
+whose condition is constant true and whose then-branch ends with a `return`, unless a later statement holds a label.
+Ledger up 4 (random3 and random4 +1 each at none and -Xr), down 0; pairs MATCH 223; semcheck 50. Random 194 / 83 / 147 /
+69; library 186 / 248 at -O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
