@@ -2740,6 +2740,12 @@ in a first run). That rule alone lost r4_07_09, because later_call_absorbs gave 
 HL, while a char homed in QIZH keeps `sla 0x1,QIZH` (rstmt rs_3_03_13_2). Ledger up 2 (random3 none +1, rstmt -Xr +1),
 down 0; pairs MATCH 223; semcheck 50. Random 195 / 83 / 147 / 69; library 186 / 248 at -O3 -XS.
 
+**Batch 229 (2026-11-14): a slot local initialised with `K op m` is built in WA (SLOT_INIT_KCOMM).** Random r2_09_18 had
+every statement exact alone. In the function, the slot local `int t = 16 ^ gia[2]` is `ld WA,(_gia + 0x4) / xor
+WA,0x10 / ld (XSP+0x4),WA`, where the model stored the constant to the slot and xored in memory. With a constant on the
+left of a commutative operator and a memory operand on the right, the value is now built in WA. Ledger up 1 (random2
+none +1), down 0; pairs MATCH 223; semcheck 50. Random 196 / 83 / 147 / 69; library 186 / 248 at -O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

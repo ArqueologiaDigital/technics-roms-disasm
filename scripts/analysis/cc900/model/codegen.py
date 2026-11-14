@@ -10487,6 +10487,7 @@ PTR_SUM_IN_HOME = True                                    # see regvar_stmt: a c
 UNREACH_AFTER_RET = True                                  # see gen_stmt's block: code after an always-taken return
 REGVAR_HL_POP = True                                      # see regvar_stmt
 POP_LAZY_DECL = True                                      # see later_call_absorbs
+SLOT_INIT_KCOMM = True                                    # see slot_init: K op m with op commutative
 LIVE_SHIFT = True                                         # see gen_body_shift
 _SHIFT_PARTS = {'WA': ('XWA', 'QWA', 'WA', 'QW', 'QA', 'W', 'A'), 'BC': ('XBC', 'QBC', 'BC', 'QB', 'QC', 'B', 'C'),
                 'DE': ('XDE', 'QDE', 'DE', 'QD', 'QE', 'D', 'E')}
@@ -14351,6 +14352,12 @@ def slot_init(F, d, init):
                 F.emit('lda', 'XWA,XWA+%s' % hx(rk_.value * r0.ty.base.size)); F.emit('ld', '%s,XWA' % S); return True
     if size == 2 and r0.k == 'bin' and r0.op in SIMPLE_OPS and not r0.ty.is_ptr():
         lo = operand(F, narrow(r0.l, 2), 2); ro = operand(F, narrow(r0.r, 2), 2)
+        if SLOT_INIT_KCOMM and lo is not None and ro is not None and fold(r0.l).k == 'const' and r0.op in ('+', '&', '|', '^') \
+                and ro.startswith('(') and 'WA' not in live_regs(F):
+            F.emit('ld', 'WA,%s' % ro); F.emit(SIMPLE_OPS[r0.op], 'WA,%s' % lo)   # a constant on the left of a commutative
+            F.emit('ld', '%s,WA' % S); return True         # operator: the memory operand in WA, then the constant (random
+                                                           # r2_09_18: int t = 16 ^ gia[2] -> ld WA,(_gia + 0x4) /
+                                                           # xor WA,0x10 / ld (XSP+0x4),WA)
         if lo is not None and ro is not None:
             for src, opn in ((lo, 'ld'), (ro, SIMPLE_OPS[r0.op])):
                 if src.startswith('('): F.emit('ld', 'WA,%s' % src); src = 'WA'
