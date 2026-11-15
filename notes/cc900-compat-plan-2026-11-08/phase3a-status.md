@@ -3281,6 +3281,18 @@ were tightened before this batch.  Their other firings lift evorder / evorder_st
 cmpordl2, stchain, stret, lhidx and lhx rows; rstmt and random are unchanged.  Ledger up 34 rows by 8,188, down 0;
 library 186/248, pairs 223, semcheck 50 with the same verdicts.
 
+**Batch 298 (2026-11-15): a write-only pointer dropped; a copy read only as a source.** DROP_WRITE_ONLY_PTR
+(`drop_write_only`): an -O local pointer whose only uses write it is not computed, as an int already was (random
+r4_08_16: `int *t = gpi; --t;` -> no code), but only when the dropped statements read no other local or parameter:
+in random r2_06_17 (`int *t = gpi + a; t = &gia[a];`) dropping them let the function compile, and the model then
+zero-extended the parameter index of `gca[a]` where the oracle uses it as a signed register index (`ld A,(XWA+BC)`),
+which semcheck reported as wrong code (that is a model gap of its own, still open). COPY_PROP_OPT (-O cdecl, finished
+listing): `ld X,Y` whose X is only read as a stored, pushed or compared source until it dies, in straight code with Y
+unchanged, is dropped and the reads take Y (random r4_07_09: `int u = t; gi = u;` with t in HL -> `ld (_gi),HL`);
+not under -Xr, where a call reads its register arguments and `reg_dead` would take the call as the end of X. Random
+-O3 -XS 110 -> 112, -O3 -XS -Xr 93 -> 94; rstmt -O3 -XS 3399 -> 3412, -O3 -XS -Xr 3284 -> 3297; ledger up 4 rows by
+29, down 0; library 186/248, pairs 223, semcheck 50 with the same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

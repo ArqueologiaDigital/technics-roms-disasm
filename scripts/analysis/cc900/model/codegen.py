@@ -7138,6 +7138,8 @@ BASE_HOIST_REGDECL = True                                # see gen_stmt (block)
 CP_Q_DIRECT = True                                       # see compile_unit
 ELRDW_WHOLE = True                                       # see compile_unit
 CMPXW_WHOLE = True                                       # see compile_unit
+DROP_WRITE_ONLY_PTR = True                               # see drop_write_only
+COPY_PROP_OPT = True                                     # see compile_unit
 IMM_WIDTH_MASK = True                                    # see Fn.emit
 ELEM0_VIA_XWA = True                                     # see elem0_via_xwa
 
@@ -16613,8 +16615,9 @@ def drop_write_only(f):
     if f.body.k == 'block' and f.body not in blocks: blocks.append(f.body)
     blocks = [b for b in blocks if id(b) not in looped]
     for d in list(f.params) + [x for x in f.decls if x.kind == 'local']:
-        if d.ty is None or d.ty.kind != 'int' or getattr(d, 'addr_taken', False): continue
-        total = []
+        if d.ty is None or d.ty.kind not in (('int', 'ptr') if DROP_WRITE_ONLY_PTR else ('int',)) or \
+                getattr(d, 'addr_taken', False): continue    # (a pointer too: random r4_08_16, int *t = gpi; --t;
+        total = []                                         #  -> no code)
         walk(f.body, lambda n, dep: total.append(n) if n.k == 'var' and n.decl is d else None)
         hits = []; inside = 0; decl_c = None; ok = True
         for b in blocks:
@@ -16633,6 +16636,13 @@ def drop_write_only(f):
                 hits.append((b, c)); inside += len(n_)
         if not ok or not hits or inside != len(total): continue
         if d.kind == 'local' and decl_c is None: continue
+        if d.ty.kind == 'ptr':                             # a pointer only when what is dropped reads no other local or
+            others_ = []                                   # parameter (random r2_06_17 -O3 -XS: int *t = gpi + a; t =
+            for x_ in [c for _, c in hits] + ([decl_c] if decl_c is not None else []):   # &gia[a]: dropping them
+                walk(x_.e if x_.k == 'expr' else x_.init, lambda n, dep: others_.append(n) if n.k == 'var' and   # left a
+                     n.decl is not d and n.decl.kind in ('local', 'param') else None) if (x_.e if x_.k == 'expr' else x_.init) is not None else None
+            if others_: continue                           # read twice that the model then extends as a memory index,
+                                                           # zero for the oracle's signed register index: wrong code)
         for b, c in hits: b.body.remove(c)
         if decl_c is not None: decl_c.init = None
 
@@ -17103,6 +17113,37 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                             (m2_.group(2) != '0x0' or re.match(r'^\t(j|scc)\t(eq|ne|z|nz),', nx_ or '')):   # a long's
                         full[k_:k_ + 2] = ['\tcp\t%s,%s' % (m_.group(2), m2_.group(2)), None]   # sign tested in its
                 full = [l for l in full if l is not None]  # high word stays ld WA,QBC / cp WA,0x0 / j ge: _itoa)
+            if COPY_PROP_OPT and opt != 'none' and not fa:   # -O cdecl (reg_dead takes a call as the end of X; under
+                                                           # -Xr a call reads WA / BC / DE): ld X,Y with X only read
+                                                           # until it dies, Y unchanged,
+                fams_ = {'WA': 'W|A|WA|QWA|XWA', 'BC': 'B|C|BC|QBC|XBC', 'DE': 'D|E|DE|QDE|XDE', 'HL': 'H|L|HL|QHL|XHL'}
+                k_ = 0                                     # in straight code: the reads take Y (random r4_07_09:
+                while k_ < len(full) - 1:                  # int u = t; gi = u; with t in HL -> ld (_gi),HL)
+                    m_ = re.match(r'^\tld\t(WA|BC|DE|HL),(WA|BC|DE|HL)$', full[k_] or '')
+                    if not m_ or m_.group(1) == m_.group(2): k_ += 1; continue
+                    X_, Y_ = m_.group(1), m_.group(2)
+                    rx_ = re.compile(r'\b(%s)\b' % fams_[X_]); ry_ = re.compile(r'\b(%s)\b' % fams_[Y_])
+                    uses_ = []; j_ = k_ + 1; okc_ = False
+                    while j_ < len(full):
+                        l_ = full[j_] or ''
+                        if not l_.startswith('\t') or re.match(r'^\t(j|jr|jp|cal|call|ret|retd|ldir|lddr|ldi|ldd|swi|dw)\b', l_): break
+                        mm_ = re.match(r'^\t(\w+)(?:\t(.*))?$', l_); op_, args_ = mm_.group(1), mm_.group(2) or ''
+                        ops_ = args_.split(',') if args_ else []
+                        if rx_.search(l_):
+                            if (op_ in ('ld', 'push', 'cp') and ops_ and ops_[-1] == X_ and not rx_.search(','.join(ops_[:-1])) and
+                                    (op_ != 'ld' or ops_[0].startswith('('))) or (op_ == 'push' and ops_ == [X_]):
+                                uses_.append(j_)
+                            else: break
+                        if ops_ and op_ not in ('cp', 'push', 'bit') and ry_.search(ops_[0]): break   # Y written
+                        if op_ in ('pop', 'ex', 'mul', 'muls', 'div', 'divs') : break
+                        j_ += 1
+                        if uses_ and reg_dead(full, j_, 'X' + X_ if X_ != 'HL' else 'XWA') and X_ != 'HL':
+                            okc_ = True; break
+                    if okc_ and uses_ and not any(ry_.search((full[u_] or '').split('\t', 2)[-1].rsplit(',', 1)[0]) for u_ in uses_ if ',' in (full[u_] or '')):
+                        for u_ in uses_: full[u_] = re.sub(r'\b%s$' % X_, Y_, full[u_])
+                        full[k_] = None
+                    k_ += 1
+                full = [l for l in full if l is not None]
             if SCC_DIRECT_OPT and opt != 'none':           # -O: scc cc,WA / ld S,WA with XWA dead after is scc cc,S
                 for k_ in range(len(full) - 1):            # (random r2_06_16: int t = !gi3 in IZ -> scc eq,IZ; the
                     m_ = re.match(r'^\tscc\t(\w+),(WA|BC|DE)$', full[k_] or '')   # -O3 -XS listings: scc IZ 4, BC
