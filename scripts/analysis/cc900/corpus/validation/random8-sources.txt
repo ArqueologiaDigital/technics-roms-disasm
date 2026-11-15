@@ -1,0 +1,10 @@
+random8/r8_s_00.c
+random8/r8_s_01.c
+random8/r8_s_02.c
+random8/r8_s_03.c
+random8/r8_s_04.c
+random8/r8_s_05.c
+random8/r8_s_06.c
+random8/r8_s_07.c
+random8/r8_s_08.c
+random8/r8_s_09.c
