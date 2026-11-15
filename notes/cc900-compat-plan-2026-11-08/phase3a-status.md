@@ -3044,6 +3044,12 @@ XWA,0xd676 / cp XWA,0x4`), the long form of batch 260's ASSIGN_K_VALUE and of RE
 costs rstmt -1 at both sets, so not there. rstmt none +2, -Xr +1, random3 -Xr +1, stchain none +1; library 186/248,
 pairs 223, semcheck 50 unchanged.
 
+**Batch 268 (2026-11-15): a parameter that is only assigned leaves its register to a temporary (-Xr).**
+PARAM_WRITE_ONLY_FREE (`regtemp_candidates`, -Xr without -O): a register parameter that the body only ever assigns
+(no read, `op=`, `++` / `--` or `&`) no longer keeps its register from a register temporary (random .r4_07_06: with
+`a = gc2` later, `char u = gs.c; gc = u` takes A: `ld A,(_gs) / ld (_gc),A`, not `ld C,(_gs) / ld (_gc),C`).
+random4 -Xr +2; library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

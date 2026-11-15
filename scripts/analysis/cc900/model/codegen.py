@@ -7053,6 +7053,7 @@ MULDIV_ELEM_ADDR_CHAR = True                             # see gen_opassign
 MULDIV_ELEM_ZERO = True                                  # see gen_opassign
 UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
 ARG_CAST_LOAD = True                                     # see push_arg
+PARAM_WRITE_ONLY_FREE = True                             # see regtemp_candidates
 ASSIGN_K_VALUE_LONG = True                               # see gen_assign_value
 NOT_LONG_REGVAR = True                                   # see gen: !
 NO_RELOAD_XR_Q = True                                    # see Fn.emit's NO_RELOAD
@@ -15845,6 +15846,15 @@ def regtemp_candidates(F):
         # while lo_i_G0d's store and push keep it in WA)
         for p in F.f.params:                               # -Xr: a register parameter still read keeps its register
             if getattr(p, 'reg', None) in ('WA', 'BC', 'DE') and any(uses_decl(x, p) for x in body[i:]):
+                def other_use_(x, p=p):                    # a read, an op=, ++ / -- or & of p
+                    hit = []
+                    walk(x, lambda n_, dep: hit.append(n_) if (n_.k == 'load' and strip(n_.e).k == 'var' and strip(n_.e).decl is p) or
+                         (n_.k == 'opassign' and strip(n_.l).k == 'var' and strip(n_.l).decl is p) or
+                         (n_.k in ('incdec', 'addr') and strip(n_.e).k == 'var' and strip(n_.e).decl is p) else None)
+                    return bool(hit)
+                if PARAM_WRITE_ONLY_FREE and not F.opt and not any(other_use_(x) for x in body):
+                    continue                               # (a parameter that is only ever assigned leaves its register:
+                                                           #  random .r4_07_06, a = gc2 later -> char u = gs.c in A)
                 cands = [r for r in cands if r != p.reg]
         d.regtemp_keep_wa = False
         if F.adecl and F.opt and cl and lx is rest[-1] and 'WA' in cands and d.ty.size in (2, 4):
