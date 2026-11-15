@@ -3637,6 +3637,14 @@ calls, about 30 kinds of first difference).  rstmt +7 / +18 / +21 / +7 at none /
 unchanged; no function lost; the functions the rules newly compile semcheck equal.  Ledger up 4 rows by 53, down 0;
 library 189/248, pairs 223, semcheck 9 with the same verdicts.
 
+**Batch 332 (2026-11-15): write-only pointers that read other locals dropped at -O.** lane_idx 02 lifts
+`drop_write_only`'s guard on write-only pointers whose dropped statements read other locals: it existed because random
+r2_06_17 came out with a zero-extended parameter index (batch 298), which PARAM_IDX_CACHE_OPT (batch 330) has fixed;
+r2_06_17 is now exact.  The earlier failure blamed on this rule (rs_4_01_15_0, batch 330's first try) came from a
+draft of rule 01 taken while the lane was editing it.  Random -O3 -XS 125 -> 127, -O3 -XS -Xr 114 -> 115; rstmt +5 / +5
+at the -O sets; no function lost.  Ledger up 4 rows by 13, down 0; library 189/248, pairs 223, semcheck 9 with the
+same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

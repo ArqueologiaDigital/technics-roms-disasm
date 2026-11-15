@@ -7387,6 +7387,7 @@ BASE_HOIST_REGDECL = True                                # see gen_stmt (block)
 CP_Q_DIRECT = True                                       # see compile_unit
 ELRDW_WHOLE = True                                       # see compile_unit
 CMPXW_WHOLE = True                                       # see compile_unit
+DROP_PTR_OTHERS_GUARD = False                             # see drop_write_only (rule 02: r2_06_17 is rule 01's now)
 DROP_WRITE_ONLY_PTR = True                               # see drop_write_only
 COPY_PROP_OPT = True                                     # see compile_unit
 LHYW_WHOLE = True                                        # see compile_unit
@@ -18326,7 +18327,7 @@ def drop_write_only(f):
             for x_ in [c for _, c in hits] + ([decl_c] if decl_c is not None else []):   # &gia[a]: dropping them
                 walk(x_.e if x_.k == 'expr' else x_.init, lambda n, dep: others_.append(n) if n.k == 'var' and   # left a
                      n.decl is not d and n.decl.kind in ('local', 'param') else None) if (x_.e if x_.k == 'expr' else x_.init) is not None else None
-            if others_: continue                           # read twice that the model then extends as a memory index,
+            if others_ and DROP_PTR_OTHERS_GUARD: continue                           # read twice that the model then extends as a memory index,
                                                            # zero for the oracle's signed register index: wrong code)
         keep_ = set()
         if DEAD_COND_INIT_LOAD:                            # a ?: arm reading a local initialised from a global: the
