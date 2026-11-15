@@ -1,0 +1,11 @@
+holdout/random5/r5_s_00.c
+holdout/random5/r5_s_01.c
+holdout/random5/r5_s_02.c
+holdout/random5/r5_s_03.c
+holdout/random5/r5_s_04.c
+holdout/random5/r5_s_05.c
+holdout/random5/r5_s_06.c
+holdout/random5/r5_s_07.c
+holdout/random5/r5_s_08.c
+holdout/random5/r5_s_09.c
+holdout/rstmt5.c
