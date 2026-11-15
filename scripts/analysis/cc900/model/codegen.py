@@ -7150,6 +7150,7 @@ CA2W_WHOLE = True                                        # see compile_unit
 STCHW_WHOLE = True                                       # see compile_unit
 EVSTW_WHOLE = True                                       # see compile_unit
 EARLY_DEST_ADDR = True                                   # see early_dest_addr
+CAW_WHOLE = True                                         # see compile_unit
 IMM_WIDTH_MASK = True                                    # see Fn.emit
 ELEM0_VIA_XWA = True                                     # see elem0_via_xwa
 
@@ -17158,13 +17159,14 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                 try:                                       # tabulation/cmpordl2-ast: 572 / 572 each; 36 functions of
                     alt_ = cmpo2w.whole(f, ('O3XS' if opt != 'none' else '') + ('Xr' if adecl else '') or 'none')
                 except Exception: alt_ = None              # the other oracle runs written, all exact)
-            for flag_, mod_ in ((CA2W_WHOLE, 'ca2w'), (STCHW_WHOLE, 'stchw'), (EVSTW_WHOLE, 'evstw')):   # probes
+            for flag_, mod_ in ((CA2W_WHOLE, 'ca2w'), (STCHW_WHOLE, 'stchw'), (EVSTW_WHOLE, 'evstw'), (CAW_WHOLE, 'caw')):   # probes
                                                            # chararith2 (ca2w.py, 576 /
                 if alt_ is None and flag_ and opt in ('none', 'O3XS') and bool(fa) == bool(adecl):   # 576; 192 functions
                     try:                                   # of chararith.c written, all exact) and stchain (stchw.py,
                         alt_ = __import__(mod_).whole(f, ('O3XS' if opt != 'none' else '') + ('Xr' if adecl else '') or 'none')
                     except Exception: alt_ = None          # 392 / 392; 4 elsewhere, exact): research-scratch tabulation
                                                            # (evorder_st: evstw.py, 676 / 676; 324 elsewhere, exact)
+                                                           # (chararith: caw.py, 238 / 238, and chararith2 too)
             try:
                 full = [name + ':'] + alt_ if alt_ is not None else compile_function(f, opt, fa, personality)
             except Unsupported:                            # cdecl -O: what the old leaf path cannot write, L2 may

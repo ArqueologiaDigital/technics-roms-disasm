@@ -3368,6 +3368,13 @@ of 11 such statements have it at each set (the others fold the ?:, call, use a d
 global destination never does (32 of 32).  Random +1 and rstmt +1 at every set (r4_09_19 and its statement); ledger
 up 8 rows by 8, down 0; library 186/248, pairs 223, semcheck 44 with the same verdicts.
 
+**Batch 307 (2026-11-15): probe chararith at every set.** CAW_WHOLE (`compile_unit`, after ca2w / stchw / evstw):
+probe chararith's shapes go through `model/caw.py` (research-scratch tabulation/chararith-ast, written by the
+subagent that wrote ca2w; it also accepts all of chararith2 and gives the same code as ca2w where both accept;
+renamed globals score the same).  chararith 157 / 155 / 157 / 155 -> 238 at none / -O3 -XS / -Xr / -O3 -XS -Xr.  Over
+every other run it writes 52 functions outside the two probes (binop_c, evorder_ad), all exact.  rstmt and random
+unchanged.  Ledger up 4 rows by 328, down 0; library 186/248, pairs 223, semcheck 44 with the same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

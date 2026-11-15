@@ -259,10 +259,10 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-13-7-micro-rstmt, v423/O3XS                             | probes/rstmt*.c      | 3414 / 4694 exact (72.7%)  |
 | run 2026-11-13-7-micro-rstmt, v423/Xr                               | probes/rstmt*.c      | 3469 / 4694 exact (73.9%)  |
 | run 2026-11-13-7-micro-rstmt, v423/O3XSXr                           | probes/rstmt*.c      | 3299 / 4694 exact (70.3%)  |
-| run 2026-11-13-8-micro-chararith, v423/none                         | probes/chararith.c   | 157 / 238 exact (66.0%)    |
-| run 2026-11-13-8-micro-chararith, v423/O3XS                         | probes/chararith.c   | 155 / 238 exact (65.1%)    |
-| run 2026-11-13-8-micro-chararith, v423/Xr                           | probes/chararith.c   | 157 / 238 exact (66.0%)    |
-| run 2026-11-13-8-micro-chararith, v423/O3XSXr                       | probes/chararith.c   | 155 / 238 exact (65.1%)    |
+| run 2026-11-13-8-micro-chararith, v423/none                         | probes/chararith.c   | 238 / 238 exact (100.0%)   |
+| run 2026-11-13-8-micro-chararith, v423/O3XS                         | probes/chararith.c   | 238 / 238 exact (100.0%)   |
+| run 2026-11-13-8-micro-chararith, v423/Xr                           | probes/chararith.c   | 238 / 238 exact (100.0%)   |
+| run 2026-11-13-8-micro-chararith, v423/O3XSXr                       | probes/chararith.c   | 238 / 238 exact (100.0%)   |
 | run 2026-11-13-9-micro-kfold, v423/none                             | probes/kfold.c       | 47 / 47 exact (100.0%)     |
 | run 2026-11-13-9-micro-kfold, v423/O3XS                             | probes/kfold.c       | 47 / 47 exact (100.0%)     |
 | run 2026-11-13-9-micro-kfold, v423/Xr                               | probes/kfold.c       | 47 / 47 exact (100.0%)     |
