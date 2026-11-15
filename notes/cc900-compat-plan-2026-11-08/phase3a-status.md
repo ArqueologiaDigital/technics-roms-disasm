@@ -3775,6 +3775,12 @@ changed functions are now equal or refused); pairs 223.  The honest wrong-code m
 validation corpus (batch 342: 16 / 14 / 8 / 8 random functions DIFFERENT), and lane_nm's stptr probe
 (oracle run 2026-11-15-8) shows 47 / 55 / 38 / 43 DIFFERENT of 825 / 788 / 697 / 697 compiled store shapes, being fixed.
 
+**Batch 344 (2026-11-15).**  lane_o3 33 CHAR_UNARY_ACC: a char `|` `&` `^` of a complemented global char and a char
+read through a pointer takes the pointer in XBC, the complement in A and `op A,(XBC+d)` (with the pointer a register
+parameter in XWA, the complement in C); the shp2 probe shows that form in all 12 variants at all four sets.  shp2
+uc_* 12 exact at every set; random 232 / 140 / 189 / 126 (+1 / +1 / 0 / 0); ledger up 10, down 0; validation and
+library unchanged; pairs 223; semcheck 9, same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

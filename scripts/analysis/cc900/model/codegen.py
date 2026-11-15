@@ -4980,6 +4980,9 @@ def emit_shift(F, mnem, count, R):
     F.emit(mnem, '%s,%s' % ('0x0' if count == 16 and SHIFT_SPLIT else hx(count), R))
 
 def gen_bin(F, e, fam, size, then_ret, store=False):
+    if CHAR_UNARY_ACC and size == 1:
+        r_ = char_unary_acc(F, e)
+        if r_ is not None: return r_
     if ADD_NEG_SUB and (e.op == '+' or e.op == '-' and not F.opt) and e.ty is not None and e.ty.kind == 'int' and \
             not fpgen.is_fp(e.ty):                         # (-O keeps a - -b: evorder_l.c el_s_KU, 7L - -hl)
         rn_ = strip(e.r)                                   # a + -b is a - b, a - -b is a + b (rstmt rs_3_05_12_2:
@@ -7505,6 +7508,7 @@ HOMES2W_WHOLE = True                                     # see compile_unit
 FPPW_WHOLE = True                                        # see compile_unit
 CONT_TO_TEST = True                                      # see gen_stmt (while)
 IMM_WIDTH_MASK = True                                    # see Fn.emit
+CHAR_UNARY_ACC = True                                    # see char_unary_acc
 CHAR_LOCAL_IDX_SIGNED = True                             # see elem_addr
 PARAM_COPY_RET_GUARD = True                              # see Fn.emit's live guard
 LONG_INDEX_REFUSE = True                                 # see compile_function_once
@@ -8195,6 +8199,48 @@ def tern_const_pre(F, e, fam, size, force=False):
         del F.lines[n1:]; F.dead = dead0; return None
     F.lines.append(lab + ':')
     return R
+
+def char_unary_acc(F, e):
+    """CHAR_UNARY_ACC (see the flag's note): the family holding the result, or None (nothing emitted)"""
+    if e.op not in ('|', '&', '^'): return None
+    def core(x):
+        x = strip(x)
+        while x.k == 'cast' and x.kind == 'IntegralCast': x = strip(x.e)
+        return x
+    def unary(x):                                          # ~g, g a static char
+        x = core(x)
+        if x.k != 'un' or x.op != '~': return None
+        y = core(x.e)
+        if y.k != 'load' or y.ty is None or y.ty.size != 1 or strip(y.e).k != 'var' or strip(y.e).decl.kind != 'global': return None
+        m = mem_operand(F, y)
+        return m if m is not None and m.startswith('(_') else None
+    def through(x):                                        # p[K] or *p, p a pointer variable (not a register home but XWA)
+        x = core(x)
+        if x.k != 'load' or x.ty is None or x.ty.size != 1: return None
+        v = strip(x.e)
+        if v.k == 'deref': b, off = strip(v.e), 0
+        elif v.k == 'index' and fold(v.idx).k == 'const' and fold(v.idx).value is not None: b, off = strip(v.base), fold(v.idx).value
+        else: return None
+        while b.k in ('cast', 'noop') and getattr(b, 'e', None) is not None: b = strip(b.e)
+        if b.k != 'load' or strip(b.e).k != 'var' or not b.ty.is_ptr(): return None
+        pm = mem_operand(F, b)
+        if pm is None or not (pm.startswith('(') or pm == 'XWA'): return None
+        if pm == 'XWA' and not (F.adecl and getattr(strip(b.e).decl, 'kind', None) == 'param'): return None
+        return pm, off
+    for u_, t_ in ((e.l, e.r), (e.r, e.l)):
+        g = unary(u_); pt = through(t_)
+        if g is None or pt is None: continue
+        pm, off = pt
+        live = set(live_regs(F))
+        mn = {'|': 'or', '&': 'and', '^': 'xor'}[e.op]
+        if pm == 'XWA':
+            if 'BC' in live: return None
+            F.emit('ld', 'C,%s' % g); F.emit('cpl', 'C')
+            F.emit(mn, 'C,%s' % ('(XWA+%s)' % hx(off) if off else '(XWA)')); return 'BC'
+        if live & {'WA', 'BC'}: return None
+        F.emit('ld', 'XBC,%s' % pm); F.emit('ld', 'A,%s' % g); F.emit('cpl', 'A')
+        F.emit(mn, 'A,%s' % ('(XBC+%s)' % hx(off) if off else '(XBC)')); return 'WA'
+    return None
 
 def xbase_cse(F):
     """XBASE_CSE: struct_base_cse across labels and jumps (see the flag's note)"""
