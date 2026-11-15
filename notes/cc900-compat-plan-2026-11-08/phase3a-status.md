@@ -3015,6 +3015,13 @@ XWA,_gca / ld A,(XWA+E)`, not `ld C,E / .. / (XWA+C)`); an unsigned one is still
 writes the register's high byte (-Xr r1_06_01). random2 none +1, pc none +2; library 186/248, pairs 223, semcheck 50
 unchanged.
 
+**Batch 264 (2026-11-15): a computed left operand before a cast long on the right.** RIGHT_LONG_LEFT_COMPUTED
+(`_gen_bin_body`, before RIGHT_LONG_FIRST): a commutative operation (`& | ^ +`) of a computed left operand and a cast
+long in memory on the right builds the left first, moves it to C / BC, then loads the long into XWA (random r3_05_07:
+`(gca[5] ^ *gp) | (char)gla[1]` -> `ld XWA,(_gp) / ld A,(XWA) / xor A,(_gca + 0x5) / ld C,A / ld XWA,(_gla + 0x4) /
+or A,C`); a constant or another cast long on the left keeps batch 239's right-first order. rstmt none and -Xr +1,
+random3 none and -Xr +1; library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

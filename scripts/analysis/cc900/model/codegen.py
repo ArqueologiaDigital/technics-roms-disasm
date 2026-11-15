@@ -5216,6 +5216,17 @@ def _gen_bin_body(F, e, fam, size, then_ret, store=False):
                 (kl_(r) or kl_(l) and mem_operand(F, r) is None and fold(r).k != 'const') and \
                 not nodes_in(e, 'call') and not has_helper_call(e) and not fpgen.is_fp_op(e) and \
                 not ({'WA', 'BC'} & live_regs(F)):
+            lc_ = strip(l)
+            while lc_.k == 'cast' and lc_.kind == 'IntegralCast': lc_ = strip(lc_.e)
+            if RIGHT_LONG_LEFT_COMPUTED and kl_(r) and not kl_(l) and op in ('&', '|', '^', '+') and \
+                    lc_.k in ('bin', 'un') and mem_operand(F, l) is None and fold(l).k != 'const':
+                n_lf_ = len(F.lines); f_ = gen(F, l, 'WA', size)   # a computed left operand first, moved to C / BC; the
+                if f_ == 'WA':                                     # cast long after it in XWA (random r3_05_07:
+                    F.emit('ld', '%s,%s' % (FAM['BC'][size], FAM['WA'][size]))   # (gca[5] ^ *gp) | (char)gla[1] ->
+                    n_r2_ = len(F.lines); f_ = gen(F, r, 'WA', size)        # .. / xor A,(_gca + 0x5) / ld C,A /
+                    if f_ == 'WA' and not writes_family(F.lines[n_r2_:], 'BC'):   # ld XWA,(_gla + 0x4) / or A,C)
+                        F.emit(SIMPLE_OPS[op], '%s,%s' % (FAM['WA'][size], FAM['BC'][size])); return 'WA'
+                del F.lines[n_lf_:]
             n_rf_ = len(F.lines); f_ = gen(F, r, 'WA', size)   # a cast long in memory is loaded whole into XWA: on the
             if f_ == 'WA':                                  # right it is loaded first and moved to C / BC, the left
                 F.emit('ld', '%s,%s' % (FAM['BC'][size], FAM['WA'][size]))   # then built in WA (rstmt rs_1_02_06_3:
@@ -7037,6 +7048,7 @@ MULDIV_ELEM_ADDR_CHAR = True                             # see gen_opassign
 MULDIV_ELEM_ZERO = True                                  # see gen_opassign
 UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
 ARG_CAST_LOAD = True                                     # see push_arg
+RIGHT_LONG_LEFT_COMPUTED = True                          # see _gen_bin_body's RIGHT_LONG_FIRST
 CALL_HELPER_ARG_POP = True                               # see gen_stmt's call statements
 NOT_MEMBER_PTR = True                                    # see gen: !
 ASSIGN_K_VALUE = True                                    # see gen_assign_value
