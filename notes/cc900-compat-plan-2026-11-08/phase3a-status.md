@@ -3076,6 +3076,16 @@ afterwards (fpp3.c k1: `gi = gd4 > gd` -> `cal ._fcmp_d / ld (_gi),HL`); the ora
 (2 and 5 times), never at the other sets. From `never_pairs.py` (32 model pairs). rstmt -Xr +2, fpp3 +1, fpp7 +4,
 evorder_ad none and -Xr +10; library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 273 (2026-11-15): a truth-tested ?: with global arms keeps the plain form under -O.** TERN_TRUTH_PLAIN (`gen`'s
+-O `?:`): a `?:` whose condition is a truth test (`x == 0` / `x != 0`) and whose preloaded arm is a global is written
+without the preload (probe evorder_st es_s_TK -O3 -XS: `(gc ? gi : gj) - 7` -> `cpw (_gc),0x0 / j eq,L22 / ld WA,(_gi)
+/ j L21 / L22: ld WA,(_gj) / L21:`). A comparison of two values keeps the preload (ctrl.c c_tern), and so do byte arms
+(the library's `_strncmp`, chnarrow cn_tern) and a parameter arm (pc.c pc_i_k, chnarrow cn_tern_i): the first two
+versions lost those on the scratch ledger and were narrowed. Found with `never_pairs.py` at -O3 -XS (`ld WA / BC /
+HL,(_g)` then `cpw (_g),0x0`, about 400 model pairs, none in the oracle). 17 ledger rows up by 484 at the -O sets
+(evorder_st +50 / +50, cmpord +54 / +51, evorder_lh +32 / +29, evorder_l +27 / +23, evorder_d +26 / +24, stord +16 /
++16, cmpx +2 / +2, fpp11 +1); rstmt and random unchanged; library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

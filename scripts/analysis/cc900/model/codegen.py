@@ -955,6 +955,13 @@ def gen(F, e, fam, size, then_ret=False, store=False):
             x = strip(x)
             return x.k == 'bin' or x.k == 'cast' and x.kind == 'IntegralCast' and strip(x.e).k == 'bin'
         narrow_ok = pre is not None and size == 2 and char_valued(a) and char_valued(b) and (binish(a) or binish(b))
+        if pre is not None and TERN_TRUTH_PLAIN and not narrow_ok and c.op in ('==', '!=') and fold(c.r).k == 'const' and \
+                fold(c.r).value == 0 and (mem_operand(F, strip(narrow(pre, size))) or '').startswith('(_'):   # (a parameter
+                                                           # arm keeps it: pc.c pc_i_k, chnarrow.c cn_tern_i)
+            pre = None                                     # a truth test keeps the plain form (probe evorder_st es_s_TK
+                                                           # -O3 -XS: (gc ? gi : gj) - 7 -> cpw (_gc),0x0 / j eq,L22 / ld
+                                                           # WA,(_gi) / j L21 / L22: ld WA,(_gj)); byte arms keep the
+                                                           # preload (_strncmp, chnarrow.c cn_tern)
         if pre is not None:
             lskip, lend = F.newulabel(), F.newulabel()
             lm = mem_operand(F, c.l); rv = strip(c.r)
@@ -7059,6 +7066,7 @@ MULDIV_ELEM_ADDR_CHAR = True                             # see gen_opassign
 MULDIV_ELEM_ZERO = True                                  # see gen_opassign
 UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
 ARG_CAST_LOAD = True                                     # see push_arg
+TERN_TRUTH_PLAIN = True                                  # see gen's -O ?:
 STORE_HL_DIRECT = True                                   # see compile_unit
 CHAR_CHAIN_VIA_A = True                                  # see gen: a narrowed char chain widened
 CHAR_SHR_AFTER_NARROW = True                             # see char_narrow's visit2
