@@ -3062,6 +3062,14 @@ semcheck 50 unchanged.
 option set has that pair (random .r3_00_09 -O3 -XS -Xr: `unsigned char t = b << 4` with b in C -> `sll 0x4,C / ld
 QIZH,C`). random3 -O3 -XS -Xr +1; library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 271 (2026-11-15): a byte operation shifted right stays in the byte.** CHAR_SHR_AFTER_NARROW (`char_narrow`'s
+visit2): a byte operation shifted right by a constant 1..7 stays in the byte, logical for an unsigned char.
+CHAR_CHAIN_VIA_A (`gen`, without -O): a chain of two byte operations, widened, is built in A and moved (chararith2
+cb_gu_s1_sr: `(guc << 1) >> 3` -> `ld A,(_guc) / sll 0x1,A / srl 0x3,A / ld L,A / extz HL`; a single operation stays
+in L, cb_gu_s1_ri). Found with the new research-scratch `never_pairs.py` (instruction pairs the model writes and the
+oracle never does; `extz HL / sra n,HL` was 52 times in the model). chararith +13 at none and -Xr, chararith2 +70 at
+none and +50 at -Xr; rstmt and random unchanged; library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

@@ -810,6 +810,12 @@ def gen(F, e, fam, size, then_ret=False, store=False):
                 (mem_operand(F, inner.l) or '').startswith('('):
             f2 = gen(F, inner, 'WA', 1)        # chnarrow.c cn_sub_k (no -O): ld A,(XSP+0x4) / sub A,0x30 / ld L,A /
             F.emit('ld', '%s,%s' % (FAM[fam][1], FAM[f2][1]))   # exts HL (& | and a char operand work in L; a char
+        elif CHAR_CHAIN_VIA_A and isz == 1 and size == 2 and not F.opt and fam not in ('WA',) and fam in FAM and \
+                getattr(inner, 'narrowed', False) and inner.k == 'bin' and strip(inner.l).k == 'bin' and \
+                getattr(strip(inner.l), 'narrowed', False) and 'WA' not in live_regs(F):
+            f2 = gen(F, inner, 'WA', 1)        # two byte operations in a chain are built in A, then moved (chararith2
+            if f2 != 'WA': raise Unsupported('a byte chain outside A')   # cb_gu_s1_sr: (guc << 1) >> 3 -> ld A,(_guc) /
+            F.emit('ld', '%s,A' % FAM[fam][1])   # sll 0x1,A / srl 0x3,A / ld L,A / extz HL; one operation stays in L)
         else:
             f2 = gen(F, inner, fam, isz)       # result, binop_c.c add_c_pk, too)
             if isz >= size and f2 in FAM and f2 != fam: return f2   # (the value stayed where the chain built it)
@@ -7053,6 +7059,8 @@ MULDIV_ELEM_ADDR_CHAR = True                             # see gen_opassign
 MULDIV_ELEM_ZERO = True                                  # see gen_opassign
 UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
 ARG_CAST_LOAD = True                                     # see push_arg
+CHAR_CHAIN_VIA_A = True                                  # see gen: a narrowed char chain widened
+CHAR_SHR_AFTER_NARROW = True                             # see char_narrow's visit2
 QIZH_DIRECT = True                                       # see compile_unit
 XR_CHAR_ARG_INPLACE_OPT = True                           # see gen_call_adecl
 PARAM_WRITE_ONLY_FREE = True                             # see regtemp_candidates
@@ -7808,6 +7816,11 @@ def char_narrow(body):
         rk = fold(n.r); y = chr2(n.r)
         if n.op == '<<' and rk.k == 'const' and rk.value is not None and 1 <= rk.value <= 7 and anyc(x):
             wrap(N('bin', op='<<', l=x, r=N('const', value=rk.value, ty=ct0(x.ty.signed)), ty=ct0(x.ty.signed), narrowed=True)); return
+        if CHAR_SHR_AFTER_NARROW and n.op == '>>' and rk.k == 'const' and rk.value is not None and 1 <= rk.value <= 7 and \
+                x.k == 'bin' and getattr(x, 'narrowed', False):   # a byte operation shifted right stays in the byte
+            wrap(N('bin', op='>>', l=x, r=N('const', value=rk.value, ty=ct0(x.ty.signed)), ty=ct0(x.ty.signed), narrowed=True))
+            return                                         # (chararith2 cb_gu_s1_sr: (guc << 1) >> 3 -> sll 0x1,A /
+                                                           # srl 0x3,A / ld L,A / extz HL)
         to_char = parent is not None and parent.k == 'cast' and parent.kind == 'IntegralCast' and \
             getattr(parent, 'ty', None) is not None and parent.ty.size == 1   # (stored to a char: stdiv.c's forms stand)
         if n.op == '/' and plain(x) and plain(y) and x.ty.signed and y.ty.signed and not to_char:
