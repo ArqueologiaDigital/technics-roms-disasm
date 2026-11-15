@@ -3293,6 +3293,15 @@ not under -Xr, where a call reads its register arguments and `reg_dead` would ta
 -O3 -XS 110 -> 112, -O3 -XS -Xr 93 -> 94; rstmt -O3 -XS 3399 -> 3412, -O3 -XS -Xr 3284 -> 3297; ledger up 4 rows by
 29, down 0; library 186/248, pairs 223, semcheck 50 with the same verdicts.
 
+**Batch 299 (2026-11-15): probe lhy at every set.** LHYW_WHOLE (`compile_unit`, after cmpxw): probe lhy's shapes (a
+long helper with an element at a variable index, int or char, parameter or local, in loops and under guards) go
+through `model/lhyw.py` (research-scratch tabulation/lhy-ast/lhy_ast.py, written by a subagent from the probe's oracle
+listings; it declines anything outside the probe's grammar).  lhy 144 / 56 / 56 / 48 -> 360 at none / -O3 -XS / -Xr /
+-O3 -XS -Xr.  Over every other oracle run it writes 608 of 97,378 functions, all exact (lhx, lhidx, stv, evorder_ad,
+stord, evorder_lh, elrd): lhx none 890 -> 914, -O3 -XS 327 -> 376, -Xr 479 -> 534, -O3 -XS -Xr 263 -> 314; lhidx
+-O sets and -Xr 75 -> 91.  rstmt and random unchanged.  Ledger up 24 rows by 1,419, down 0; library 186/248, pairs
+223, semcheck 50 with the same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
