@@ -3228,6 +3228,12 @@ for long values that live across the helper call, stack parameters for cdecl (fi
 families file). stdiv2 -O3 -XS 840 -> 1,020, -O3 -XS -Xr 542 -> 1,020, so stdiv2 is now exact at every set; rstmt and
 random unchanged; library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 293 (2026-11-15): a computed register argument over a global another argument loads.** XR_ARG_CSE_COMPUTED
+(`gen_call_adecl`, -Xr without -O): a computed register argument `g op K`, where a plain argument also loads g, is built
+through the plain argument's register, which is then loaded again (random .r3_04_17: `v2(gi2, gi2 + 16)` -> `ld
+WA,(_gi2) / ld BC,WA / add BC,0x10 / ld WA,(_gi2) / cal .v2`). rstmt -Xr +1, random3 -Xr +1; library 186/248, pairs
+223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

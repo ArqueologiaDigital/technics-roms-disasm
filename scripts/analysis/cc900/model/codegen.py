@@ -7085,6 +7085,7 @@ MULDIV_ELEM_ZERO = True                                  # see gen_opassign
 UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
 ARG_CAST_LOAD = True                                     # see push_arg
 SHIFT1_MEM_REG = True                                    # see SHIFT1_MEM
+XR_ARG_CSE_COMPUTED = True                               # see gen_call_adecl
 SD2XR_OPT = True                                         # see compile_unit: sd2xr at the -O sets
 STORE_HL_DIRECT_BC = True                                # see STORE_HL_DIRECT
 SDXR_CDECL_OPT = True                                    # see compile_unit: sdxr for cdecl -O3 -XS
@@ -8503,6 +8504,24 @@ def gen_call_adecl(F, fn, args, fam, size):
     for t, a in groups['reg']:
         sz = strip(a).ty.size; m = mem_operand(F, strip(a))
         if m != FAM[t][sz]: F.emit('ld', '%s,%s' % (FAM[t][sz], m))
+    pre_cse_ = {}                                          # (XR_ARG_CSE_COMPUTED: a computed argument over a global that a
+    if XR_ARG_CSE_COMPUTED and not F.opt:                   #  plain argument loads too: built through the plain one's
+        for t, a in list(groups['computed']):               #  register, which is loaded again (random .r3_04_17: v2(gi2,
+            a0 = strip(a)                                   #  gi2 + 16) -> ld WA,(_gi2) / ld BC,WA / add BC,0x10 / ld WA,(_gi2))
+            if a0.k == 'bin' and a0.op in ('+', '-', '&', '|', '^') and a0.ty is not None and a0.ty.size == 2 and \
+                    strip(a0.l).k == 'load' and (mem_operand(F, strip(a0.l)) or '').startswith('(_') and \
+                    fold(a0.r).k == 'const' and fold(a0.r).value is not None:
+                m_ = mem_operand(F, strip(a0.l))
+                hit_ = next(((t2, a2) for t2, a2 in groups['mem'] if strip(a2).ty is not None and strip(a2).ty.size == 2 and
+                             mem_operand(F, strip(a2)) == m_ and t2 != t), None)
+                if hit_ is not None and t not in ('WA',) and hit_[0] not in [t for t, _ in groups['computed']]:
+                    F.emit('ld', '%s,%s' % (FAM[hit_[0]][2], m_))   # (the plain argument is loaded again later)
+                    F.emit('ld', '%s,%s' % (FAM[t][2], FAM[hit_[0]][2]))
+                    kv_ = fold(a0.r).value
+                    if a0.op in '+-' and 1 <= kv_ <= 8:
+                        F.emit('inc' if a0.op == '+' else 'dec', '%s,%s' % (hx(kv_), FAM[t][2]))
+                    else: F.emit(SIMPLE_OPS[a0.op], '%s,%s' % (FAM[t][2], hx(kv_ & 0xffff)))
+                    groups['computed'].remove((t, a))
     for t, a in groups['computed']:
         a0 = strip(a)
         if a0.ty.size == 1:
