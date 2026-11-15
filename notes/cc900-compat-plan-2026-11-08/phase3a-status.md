@@ -3604,6 +3604,15 @@ Random -O3 -XS 123 -> 124, -O3 -XS -Xr 112 -> 113; rstmt -O3 -XS +8, -O3 -XS -Xr
 r2_05_11's -O3 -XS verdict is gone); no function lost at any set.  Ledger up 4 rows by 16, down 0; library 189/248,
 pairs 223.
 
+**Batch 329 (2026-11-15): a global aggregate's base kept across jumps at -O.** XBASE_CSE (lane_o3): `struct_base_cse`
+now also works across labels and jumps -- a global array or struct used at two or more offsets gets one `lda` at the
+start of the first use's statement, in the first of XWA, XBC, XDE the span leaves free (random r4_07_04: `lda
+XBC,_gua / .. / ret le / ld WA,(XBC+0xe)`); never above a call (a first version put it above `cal ._fneg_d` in
+r2_00_01 and semcheck caught the wrong code), not in loops, not with a jump into the span.  Across a jump or label
+with no call between, the oracle keeps the base in a register in 86 of 117 cases (the rest mostly loops or a later
+helper call, where it uses XIZ).  Random -O3 -XS 124 -> 125, -O3 -XS -Xr 113 -> 114; rstmt +4 / +3; no function lost.
+Ledger up 4 rows by 9, down 0; library 189/248, pairs 223, semcheck 10 with the same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

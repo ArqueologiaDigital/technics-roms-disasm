@@ -7363,6 +7363,7 @@ HOMES2W_WHOLE = True                                     # see compile_unit
 FPPW_WHOLE = True                                        # see compile_unit
 CONT_TO_TEST = True                                      # see gen_stmt (while)
 IMM_WIDTH_MASK = True                                    # see Fn.emit
+XBASE_CSE = True                                         # see xbase_cse
 SHIFT_RMW_XBC = True                                     # see gen_opassign
 XR_UNARY_ARG_BC = True                                   # see compile_function_once's -O passes
 GUARD_DIV_DE = True                                      # see gen_stmt's GUARD_DIV
@@ -7868,6 +7869,86 @@ def base_hoist(F, s, n0):
 STRUCT_BASE_CSE = True                                    # see struct_base_cse
 STRUCT_BASE_ARRAYS = True
 STRUCT_BASE_XR = True
+
+def xbase_cse(F):
+    """XBASE_CSE: struct_base_cse across labels and jumps (see the flag's note)"""
+    import re as _r
+    if getattr(F, 'l2', None) or getattr(F, 'u1_i', None) is not None or getattr(F, 'ptr_cache', None) or \
+            getattr(F, 'member_cache', None) or getattr(F, 'loops', None): return
+    L = F.lines
+    gdecl = {}
+    walk(F.f.body, lambda n, dep: gdecl.setdefault(n.decl.name, n.decl) if n.k == 'var' and
+         getattr(n.decl, 'kind', None) == 'global' else None)
+    homes = {getattr(d, 'reg', None) for d in list(F.f.params) + list(F.f.decls) if getattr(d, 'reg', None)}
+    def parts(fam): return _r.compile(r'\b(X?%s|Q%s|%s|%s)\b' % (fam, fam, fam[0], fam[1]))
+    labs = {L[j][:-1]: j for j in range(len(L)) if L[j] and _r.match(r'^L\d+:$', L[j])}
+    jumps = [(j, _r.search(r'(L\d+)$', L[j]).group(1)) for j in range(len(L)) if L[j] and
+             _r.match(r'^\t(j|jr|djnz)\t', L[j]) and _r.search(r'(L\d+)$', L[j])]
+    if any(labs.get(t, len(L)) <= j for j, t in jumps): return   # (a loop anywhere: left alone)
+    bounds = set(); pos = 0                                # statement starts, as struct_base_cse finds them
+    for tup in getattr(F, 'leaf_spans', []):
+        if not tup: continue
+        n = len(tup); i = pos
+        while i + n <= len(L) and tuple(L[i:i + n]) != tup: i += 1
+        if i + n > len(L): bounds = set(); break
+        bounds.add(i); pos = i + n
+    for g in sorted(gdecl):
+        d = gdecl[g]; ty = getattr(d, 'ty', None)
+        if ty is None or ty.kind not in ('struct', 'array') or getattr(d, 'reg', None): continue
+        mp = _r.compile(r'\(_%s( \+ (0x[0-9a-f]+))?\)' % _r.escape(g))
+        ap = _r.compile(r'^\tlda\t(X\w+),_%s( \+ (0x[0-9a-f]+))?$' % _r.escape(g))
+        uses = [i for i in range(len(L)) if L[i] and (mp.search(L[i]) or ap.match(L[i]))]
+        if len(uses) < 2 or any(ap.match(L[i]) for i in uses): continue   # (memory operands only: an lda is a base already)
+        if any(L[i] and _r.search(r'_%s\b' % _r.escape(g), L[i]) and i not in uses for i in range(len(L))): continue
+        if any(len(mp.findall(L[i])) + (1 if ap.match(L[i]) else 0) != 1 for i in uses): continue
+        first, last = uses[0], uses[-1]
+        if any((L[i] or '').startswith('\tcal') for i in range(first, len(L))): continue   # (a call after: the
+                                                           #  oracle keeps the base in XIZ, rstmt rs_3_04_03_5)
+        ins = max([b for b in bounds if b <= first] or [first])   # the start of the first use's statement (random
+        ins = max([ins] + [i + 1 for i in range(ins, first) if _r.match(r'^(L\d+:|\tj\t|\tret\t\w)', L[i] or '')])
+                                                           # (not above a jump or label: rstmt rs_4_08_18_2)
+        if any((L[i] or '').startswith('\tcal') for i in range(ins, len(L))): continue   # (nor above a call)
+        span = range(ins, last + 1)                        #  r4_07_04: lda XBC,_gua / ld WA,(_gu) / dec 0x1,WA / ..)
+        if not any(_r.match(r'^(L\d+:|\tj\t|\tret\t\w)', L[i] or '') for i in span): continue
+        offs = set()
+        for i in uses:
+            m_ = mp.search(L[i]) or ap.match(L[i]); offs.add(m_.group(2 if mp.search(L[i]) else 3) or '0')
+        if len(offs) < 2: continue                         # (one operand twice: value reuse, not a base)
+        if any(labs.get(t, -1) in span and not (first <= j <= last) for j, t in jumps): continue   # (entered from outside)
+        def strip_use(l): return ap.sub(lambda m_: '\tlda\t%s,' % m_.group(1), mp.sub('()', l))
+        R = None
+        tst_ = [_r.match(r'^\tcp[wb]?\t(\([^)]*\)),0x0$', L[i] or '') for i in span]
+        reuse_bc_ = any(t_ and any(t_.group(1) in (L[j] or '') for j in range(span[0] + k_ + 1, len(L)))
+                        for k_, t_ in enumerate(tst_))     # (a tested operand read again: test_reg_reuse puts it in BC)
+        live_in_ = {f_ for f_ in ('BC', 'DE') if any(parts(f_).search(L[i] or '') for i in range(1, span[0]))}
+        for fam in ('WA', 'BC', 'DE'):
+            pt = parts(fam)
+            if fam == 'BC' and reuse_bc_: continue
+            if fam in live_in_ and fam != 'WA': R = None; break   # (a value from before in BC / DE: the oracle may give
+                                                           #  the base that register and move the value, rs_3_05_15_5)
+            if any(h in ('X' + fam, fam, 'Q' + fam, fam[0], fam[1]) for h in homes): continue
+            if any(pt.search(strip_use(L[i]) if i in uses else L[i] or '') for i in span): continue
+            ok = True                                      # after the span: the next mention writes it whole
+            for l in L[last + 1:]:
+                if not l or not pt.search(l): continue
+                m_ = _r.match(r'^\t(ld|lda)\t(X?%s|%s|%s),(.*)$' % (fam, fam[0], fam[1]), l)
+                ok = bool(m_ and not pt.search(m_.group(3))); break   # (a write of any part: rstmt rs_1_07_04_4)
+            if any(_r.search(r'\t(ldir|lddr|cpir|cpdr|ldi|ldd|swi)', L[i] or '') for i in span): ok = False   # (block
+                                                           #  moves use XDE, XHL and BC without naming them)
+            if ok: R = fam; break
+        if R is None: continue
+        if R == 'BC' and any(parts('DE').search(L[i] or '') for i in span): continue   # (a value in DE beside it: the
+                                                           #  oracle's base may be XDE and the value BC, rstmt rs_3_05_12_3)
+        XR = 'X' + R
+        def sub_use(l):
+            l = mp.sub(lambda m_: '(%s+%s)' % (XR, m_.group(2)) if m_.group(2) else '(%s)' % XR, l)
+            return ap.sub(lambda m_: '\tlda\t%s,%s+%s' % (m_.group(1), XR, m_.group(3)) if m_.group(3) else
+                          '\tld\t%s,%s' % (m_.group(1), XR), l)
+        if any(re.match(r'^L\d+:$', L[i] or '') for i in range(ins, first)): continue
+        for i in uses: L[i] = sub_use(L[i])
+        L.insert(ins, '\tlda\t%s,_%s' % (XR, g))
+        return xbase_cse(F)                                # (indices moved: once more for the next global)
+    F.lines = L
 
 def struct_base_cse(F):
     """-O: a global struct whose members are addressed in two or more statements of one straight run (no label, call,
@@ -17902,6 +17983,7 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
         raise Unsupported('lx5: the planned long helper was written by another path')
     flush_pops(F)
     if STRUCT_BASE_CSE and F.opt and (not F.adecl or STRUCT_BASE_XR): struct_base_cse(F)
+    if XBASE_CSE and F.opt and STRUCT_BASE_CSE and (not F.adecl or STRUCT_BASE_XR): xbase_cse(F)
     if not F.lines[-1].startswith('\tret') and not (getattr(F, 'no_exit', False) and F.lines[-1].startswith('\tj\t')
                                                    and ',' not in F.lines[-1]):
         xl = getattr(F, 'exit_label', None)                # a void function's early return jumps here (the 1997
