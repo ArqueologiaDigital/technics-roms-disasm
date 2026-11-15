@@ -3591,6 +3591,19 @@ it declines 36 of the 136 lnr functions; over every other run it writes 217 func
 -Xr 18 -> 102; micro ra_homes -O3 -XS and ra_* -Xr +1; no function lost at any set.  Ledger up 20 rows by 126, down 0;
 library 189/248, pairs 223, semcheck 11 with the same verdicts.
 
+**Batch 328 (2026-11-15): -O loop strength reduction, first part.** A fresh subagent lane (research-scratch
+tabulation/lanes-2026-11-15/lane_loop) continued the leaf generator's -O notes as rules in the model's own loop code:
+L2_DEAD_INIT_ACROSS (`int i = ji; v0(); i = 0; ..` no longer homes the counter in IZ), CTR_FIRST_FREE (a counter the
+body never reads takes the first free register; the oracle 60 against 2), LOOP_ADDR_HOIST (a global array or struct
+member / constant element used outside any if arm has its address loaded before the loop; 39 against 1), WALK_LOOP
+(a counter that only indexes one sized global array becomes a walking pointer and an end pointer, up or down; 59
+against 0), IDX_REREAD_GUARD (refuses a char element indexed by a signed int parameter that is also read as a value
+across a call, which the model zero-extends where the oracle indexes signed).  The lane semchecked the 51 functions
+its rules newly compile.  The lnr probes' -O form is not done: their listings do not follow one register order.
+Random -O3 -XS 123 -> 124, -O3 -XS -Xr 112 -> 113; rstmt -O3 -XS +8, -O3 -XS -Xr +6; semcheck 11 -> 10 (random
+r2_05_11's -O3 -XS verdict is gone); no function lost at any set.  Ledger up 4 rows by 16, down 0; library 189/248,
+pairs 223.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

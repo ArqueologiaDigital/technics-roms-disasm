@@ -1961,6 +1961,14 @@ def idx_read_again(F, idx):
     else:                                                  # long element takes it in WA: random r2_07_14, sla 0x2,WA)
         walk(F.f.body, lambda n_, dd: u.append(n_) if n_.k == 'var' and n_.decl is d else None)
     ids = {id(x_) for x_ in u}
+    if IDX_REREAD_GUARD and F.opt and d.kind == 'param' and d.ty.signed and nodes_in(F.f.body, 'call'):
+        under_ = set()                                     # (read as a plain value too, across a call: the oracle keeps
+        for n_ in nodes_in(F.f.body, 'index'):             #  it in IZ and indexes signed; rule 05, random r4_00_14)
+            walk(n_.idx, lambda m_, dd: under_.add(id(m_)))
+        plain_ = []
+        walk(F.f.body, lambda m_, dd: plain_.append(m_) if m_.k == 'load' and strip(m_.e).k == 'var' and
+             strip(m_.e).decl is d and id(m_) not in under_ else None)
+        if plain_: raise Unsupported('a char index parameter read again as a value across a call')
     if len(ids) < 2: return False
     if nodes_in(F.f.body, 'call'): return False            # (not across a call: random r3_07_00 reads c from memory
                                                            # for gca[c] and, after cal _v1, for guca[c])
@@ -7152,6 +7160,7 @@ SHIFT_COUNT_LOCAL = True                                  # see gen_shift_count
 MEMBER_STORE_SWAP = True                                  # see gen_stmt
 KILL_TOP = True                                           # see the across-call planner
 DEAD_INIT_CTR_OPT = True                                  # see regtemp_candidates: DEAD_INIT_CTR under -O
+L2_DEAD_INIT_ACROSS = True                                # see leaf_l2: a value killed after the early call
 DEAD_INIT_CTR = True                                      # see regtemp_candidates
 RET_TWO_LEVEL = True                                      # see ret_two_level
 CHAR_IDX_BC = True                                        # see regtemp_candidates
@@ -7310,6 +7319,10 @@ CALL_HELPER_ARG_POP = True                               # see gen_stmt's call s
 NOT_MEMBER_PTR = True                                    # see gen: !
 ASSIGN_K_VALUE = True                                    # see gen_assign_value
 AND_FF_LD = True                                         # see compile_unit
+WALK_LOOP = True                                         # see walk_loop (gen_loop, -O)
+IDX_REREAD_GUARD = True                                  # see idx_read_again: -O, a refusal
+CTR_FIRST_FREE = True                                    # see ctr_first_free (compile_unit, -O)
+LOOP_ADDR_HOIST = True                                   # see loop_addr_hoist (compile_unit, -O)
 INC_LD_LDA = True                                        # see compile_unit
 SD3W_WHOLE = True                                        # see compile_unit
 SCC_DIRECT_OPT = True                                    # see compile_unit
@@ -7380,6 +7393,7 @@ CHAIN_ELEM_BASE_XWA = True                               # see gen_assign_value:
 GUARD_ELEM_REGS = True                                   # see compile_unit
 GUARD_DIV_LONG = True                                    # see guard_div_plan / gen_long_helper
 GUARD_LONG_FIRED = [False]                               # (set by gen_long_helper, read by compile_unit)
+L2_DIA_FIRED = [False]                                   # (set by leaf_l2's L2_DEAD_INIT_ACROSS, read by compile_unit)
 XR_CHAR_EXT_WA = True                                    # see compile_unit
 LOCAL_TEST_REG = True                                    # see local_test_k
 
@@ -8046,6 +8060,213 @@ REG_KILLS.update({'A': ('A', 'WA', 'XWA'), 'L': ('L', 'HL', 'XHL')})
 REG_PARTS.setdefault('A', ('A', 'WA', 'XWA')); REG_KILLS.setdefault('A', ('A', 'WA', 'XWA'))   # (BYTE_STORE_DIRECT_NOOPT)
 
 REG_PARTS.setdefault('A', ('A', 'WA', 'XWA')); REG_KILLS.setdefault('A', ('A', 'WA', 'XWA'))   # (BYTE_SLOT_DIRECT)
+
+CC_PARTS = {'WA': ('A', 'W', 'WA', 'XWA'), 'BC': ('C', 'B', 'BC', 'XBC'), 'DE': ('E', 'D', 'DE', 'XDE'),
+            'HL': ('L', 'H', 'HL', 'XHL'), 'IX': ('IX', 'XIX', 'IXL', 'IXH'), 'IY': ('IY', 'XIY', 'IYL', 'IYH'),
+            'IZ': ('IZ', 'XIZ', 'IZL', 'IZH'), 'QWA': ('QWA', 'XWA', 'QA', 'QW'), 'QBC': ('QBC', 'XBC', 'QC', 'QB'),
+            'QDE': ('QDE', 'XDE', 'QE', 'QD'), 'QHL': ('QHL', 'XHL', 'QL', 'QH'), 'QIX': ('QIX', 'XIX'),
+            'QIY': ('QIY', 'XIY'), 'QIZ': ('QIZ', 'XIZ', 'QIZL', 'QIZH')}
+
+def ctr_clobbered(full):
+    """is the counter of a counted loop (latch: inc 0x1,R / cp R,K / j lt, or sub R,0x1 / j gt) written, or a call
+    made, between its loop label and its latch?"""
+    import re as _r
+    for k, l in enumerate(full):
+        m = _r.match(r'^\tj\t(lt|gt|ne),(L\d+)$', l or '')
+        if not m: continue
+        top = next((t for t, x in enumerate(full) if x == m.group(2) + ':'), None)
+        if top is None or top >= k: continue
+        R = None
+        mc = _r.match(r'^\tcp\t(\w+),0x[0-9a-f]+$', full[k - 1] or '')
+        if mc and full[k - 2] == '\tinc\t0x1,%s' % mc.group(1): R, end = mc.group(1), k - 2
+        ms = _r.match(r'^\tsub\t(\w+),0x1$', full[k - 1] or '')
+        if ms: R, end = ms.group(1), k - 1
+        if R not in CC_PARTS: continue
+        parts = CC_PARTS[R]
+        for x in full[top + 1:end]:
+            if not x or not x.startswith('\t'): continue
+            if x.startswith('\tcal'): return True
+            op, _, args = x[1:].partition('\t')
+            ops = args.split(',')
+            if op in ('cp', 'cpw', 'cpb', 'bit', 'push', 'pushw', 'j', 'jr', 'jp', 'ret', 'nop', 'djnz'): continue
+            dst = ops[1] if op in ('inc', 'dec', 'incw', 'decw', 'incb', 'decb', 'sla', 'sra', 'sll', 'srl', 'rlc', 'rrc',
+                                   'rl', 'rr', 'scc', 'set', 'res', 'chg', 'tset') and len(ops) > 1 else ops[0]
+            if dst in parts: return True
+            if op in ('ex',) and any(o in parts for o in ops): return True
+    return False
+
+CFF_PARTS = {'WA': ('A', 'W', 'WA', 'QWA', 'XWA', 'QA', 'QW'), 'BC': ('C', 'B', 'BC', 'QBC', 'XBC', 'QC', 'QB'),
+             'DE': ('E', 'D', 'DE', 'QDE', 'XDE', 'QE', 'QD'), 'HL': ('L', 'H', 'HL', 'QHL', 'XHL', 'QL', 'QH'),
+             'IX': ('IX', 'XIX', 'QIX', 'IXL', 'IXH', 'QIXL', 'QIXH'), 'IY': ('IY', 'XIY', 'QIY', 'IYL', 'IYH', 'QIYL', 'QIYH'),
+             'IZ': ('IZ', 'XIZ', 'QIZ', 'IZL', 'IZH', 'QIZL', 'QIZH')}
+CFF_ORDER = ('WA', 'BC', 'DE', 'HL', 'IX', 'IY')
+
+def cff_names(l, F):
+    import re as _r
+    return bool(_r.search(r'\b(%s)\b' % '|'.join(CFF_PARTS[F]), (l or '').split(';')[0]))
+
+def cff_low(l, F):
+    import re as _r
+    return bool(_r.search(r'\b(%s)\b' % '|'.join(x for x in CFF_PARTS[F] if not x.startswith('Q')), (l or '').split(';')[0]))
+
+def cff_dead(lines, start, F):
+    """is family F (16-bit word and both halves) dead from line index start?  every path must write all of X<F> /
+    <F> (an ld / lda not reading it), reach a call, or a return (a return reads HL) before naming it"""
+    import re as _r
+    pos = {l[:-1]: k for k, l in enumerate(lines) if l and _r.match(r'^L\d+:$', l)}
+    seen = set(); todo = [start]
+    while todo:
+        k = todo.pop()
+        if k in seen: continue
+        seen.add(k)
+        while True:
+            if k >= len(lines): return False
+            l = lines[k] or ''
+            if _r.match(r'^L\d+:', l): k += 1; continue
+            if l.startswith('\tret'):
+                if F == 'HL': return False
+                break
+            if l.startswith('\tcal\t') or _r.match(r'^\tj\t[._]\w+$', l):
+                if F in ('IZ',): return False
+                break
+            if cff_low(l, F):                                # (a Q half alone is not the counter's word)
+                m_ = _r.match(r'^\t(ld|lda)\t(\w+),(.*)$', l)
+                if m_ and m_.group(2) in (F, 'X' + F) and not cff_low(m_.group(3), F): break
+                return False
+            jm = _r.match(r'^\tj\t(?:(\w+),)?(L\d+)$', l)
+            if jm:
+                if jm.group(2) not in pos: return False
+                todo.append(pos[jm.group(2)] + 1)
+                if jm.group(1) is None: break
+            elif l.startswith('\tj') or l.startswith('\tdw') or l.startswith('\tdjnz'): return False
+            k += 1
+    return True
+
+def counted_loops(out):
+    """the counted loops of a listing: (init, top, latch, k, R) for `ld R,K / [straight-line preheader] / L: body /
+    inc 0x1,R / cp R,K2 / j lt,L` (latch = the inc) and `ld R,K / .. / L: body / sub R,0x1 / j gt,L` (latch = the sub);
+    no call, return or jump out of the body, no jump into it"""
+    import re as _r
+    res = []
+    for k in range(len(out)):
+        m = _r.match(r'^\tj\t(lt|gt),(L\d+)$', out[k] or '')
+        if not m or k < 3: continue
+        top = next((t for t, l in enumerate(out) if l == m.group(2) + ':'), None)
+        if top is None or top >= k: continue
+        if m.group(1) == 'lt':
+            mc = _r.match(r'^\tcp\t(WA|BC|DE|HL|IX|IY|IZ),0x[0-9a-f]+$', out[k - 1] or '')
+            if not mc or out[k - 2] != '\tinc\t0x1,%s' % mc.group(1): continue
+            R = mc.group(1); latch = k - 2
+        else:
+            ms = _r.match(r'^\tsub\t(WA|BC|DE|HL|IX|IY|IZ),0x1$', out[k - 1] or '')
+            if not ms: continue
+            R = ms.group(1); latch = k - 1
+        init = None
+        for j in range(top - 1, max(top - 14, -1), -1):
+            l = out[j] or ''
+            if _r.match(r'^\tld\t%s,0x[0-9a-f]+$' % R, l): init = j; break
+            if not l.startswith('\t') or l.startswith('\tj') or l.startswith('\tcal') or l.startswith('\tret') or \
+                    cff_names(l, R): break
+        if init is None: continue
+        body = out[top + 1:latch]
+        if any((l or '').startswith(('\tcal', '\tret', '\tdjnz', '\tjp', '\tdw')) for l in body): continue
+        inner = {l[:-1] for l in body if _r.match(r'^L\d+:$', l or '')} | {m.group(2)}
+        bad = False
+        for l in body:
+            jm = _r.match(r'^\tj\t(?:\w+,)?(\S+)$', l or '')
+            if jm and jm.group(1) not in inner: bad = True
+        for t, l in enumerate(out):
+            if init <= t <= k: continue
+            jm = _r.match(r'^\tj\t(?:\w+,)?(\S+)$', l or '')
+            if jm and jm.group(1) in inner: bad = True
+        if not bad: res.append((init, top, latch, k, R))
+    return res
+
+def body_reads(out, top, latch, F):
+    """does some path from the loop label read family F's low word before writing all of it, within the body (the
+    counter's value, read by the body itself; reaching the latch is not a read here)?"""
+    import re as _r
+    pos = {l[:-1]: t for t, l in enumerate(out) if l and _r.match(r'^L\d+:$', l)}
+    seen = set(); todo = [top + 1]
+    while todo:
+        t = todo.pop()
+        if t in seen: continue
+        seen.add(t)
+        while True:
+            if t >= latch: break
+            l = out[t] or ''
+            if _r.match(r'^L\d+:', l): t += 1; continue
+            if cff_low(l, F):
+                m_ = _r.match(r'^\t(ld|lda)\t(\w+),(.*)$', l)
+                if m_ and m_.group(2) in (F, 'X' + F) and not cff_low(m_.group(3), F): break
+                return True
+            jm = _r.match(r'^\tj\t(?:(\w+),)?(L\d+)$', l)
+            if jm:
+                if jm.group(2) not in pos: return True
+                todo.append(pos[jm.group(2)] + 1)
+                if jm.group(1) is None: break
+            t += 1
+    return False
+
+def ctr_lines(out, init, latch, k):
+    return [init, latch] + ([k - 1] if out[k].startswith('\tj\tlt,') else [])
+
+CFF_X = ('WA', 'BC', 'DE', 'HL', 'IX', 'IY')
+
+def loop_addr_hoist(full, agg):
+    """LOOP_ADDR_HOIST (rule 03's docstring)"""
+    import re as _r
+    out = list(full)
+    for init, top, latch, k, R in reversed(counted_loops(out)):
+        body = out[top + 1:latch]
+        cond = set()                                       # body lines inside a forward branch's region
+        pos = {l[:-1]: t for t, l in enumerate(body) if _r.match(r'^L\d+:$', l or '')}
+        for t, l in enumerate(body):
+            jm = _r.match(r'^\tj\t(?:\w+,)?(L\d+)$', l or '')
+            if jm and jm.group(1) in pos and pos[jm.group(1)] > t: cond.update(range(t + 1, pos[jm.group(1)]))
+        uses = []
+        for t, l in enumerate(body):
+            for mm in _r.finditer(r'\((_(\w+)(?: \+ 0x[0-9a-f]+)?)\)', (l or '').split(';')[0]):
+                if mm.group(2) in agg: uses.append((t, mm.group(1)))
+        if len(uses) != 1 or uses[0][0] in cond: continue
+        t, addr = uses[0]
+        cl = ctr_lines(out, init, latch, k)
+        if not body_reads(out, top, latch, R) and cff_dead(out, k + 1, R):   # the counter parks in the last free
+            others = [l for j, l in enumerate(out[init:k + 1]) if init + j not in cl]   # family (rule 02 then gives
+            G = next((x for x in reversed(CFF_X) if x != R and not any(cff_names(l, x) for l in others) and   # it the
+                      cff_dead(out, k + 1, x) and cff_dead(out, init + 1, x)), None)                  # first free)
+            if G is not None:
+                for j in cl: out[j] = _r.sub(r'\b%s\b' % R, G, out[j])
+        region = out[init:k + 1]
+        F = next((x for x in CFF_X if not any(cff_names(l, x) for l in region) and cff_dead(out, k + 1, x) and
+                  cff_dead(out, init + 1, x)), None)
+        if F is None: continue
+        out[top + 1 + t] = out[top + 1 + t].replace('(%s)' % addr, '(X%s)' % F, 1)
+        out[init + 1:init + 1] = ['\tlda\tX%s,%s' % (F, addr)]
+    return out
+
+def ctr_first_free(full):
+    """CTR_FIRST_FREE: a counted loop's counter that the body does not read moves to the first free family (docstring
+    of rule 02); only the counter's own lines (init, step, compare) are renamed, so a body that reuses the counter's
+    register as a temporary (the L2 allocator's WA, rs_4_04_10_3) gets its counter out of the way"""
+    import re as _r
+    out = list(full)
+    for init, top, latch, k, R in counted_loops(out):
+        if body_reads(out, top, latch, R): continue
+        if not cff_dead(out, k + 1, R): continue
+        cl = ctr_lines(out, init, latch, k)
+        region = [l for t, l in enumerate(out[init:k + 1]) if init + t not in cl]
+        clob = any(cff_names(l, R) for l in region)
+        new = None
+        for F in CFF_ORDER:
+            if F == R and not clob: break
+            if F == R: continue
+            if any(cff_names(l, F) for l in region): continue
+            if not cff_dead(out, k + 1, F) or not cff_dead(out, init + 1, F): continue
+            new = F; break
+        if new is None: continue
+        for t in cl: out[t] = _r.sub(r'\b%s\b' % R, new, out[t])
+    return out
 
 def reg_dead(lines, start, R, lab=None):
     """is register R's value dead from line index start (or from label lab)?  Every path, conditional jumps followed
@@ -13578,6 +13799,162 @@ def byte_compare_in(c):
     walk(c, v)
     return bool(found)
 
+def walk_parts(F, s):
+    """WALK_LOOP's shape: (i, up, K0, K1, body statements, the plain `i = K;` statement before s or None) or None"""
+    def var_of(x):
+        x = strip(x)
+        while x.k == 'cast': x = strip(x.e)
+        if x.k == 'load': x = strip(x.e)
+        return x.decl if x.k == 'var' else None
+    def kval(x):
+        x = fold(x)
+        return x.value if x.k == 'const' and x.value is not None else None
+    def assign_k(x):                                     # i = K -> (i, K)
+        x = strip(x.e if getattr(x, 'k', None) == 'expr' else x)
+        if x.k == 'bin' and x.op == '=' and strip(x.l).k == 'var' and kval(x.r) is not None: return strip(x.l).decl, kval(x.r)
+        return None
+    top = flat(F.f.body)
+    if s not in top: return None
+    prev = top[top.index(s) - 1] if top.index(s) > 0 else None
+    if s.k == 'for':
+        if s.init is None or s.cond is None or s.inc is None: return None
+        ini = flat(s.init) if getattr(s.init, 'k', None) == 'block' else [s.init]
+        if len(ini) != 1: return None
+        a = assign_k(ini[0])
+        if a is None: return None
+        i, k0 = a
+        c = strip(s.cond); inc = strip(s.inc)
+        if c.k != 'bin' or var_of(c.l) is not i or inc.k != 'incdec' or var_of(inc.e) is not i: return None
+        body = flat(s.body) if s.body is not None else []
+        if c.op == '<' and inc.op == '++' and kval(c.r) is not None: return i, True, k0, kval(c.r), body, None
+        if c.op == '>' and inc.op == '--' and kval(c.r) == 0: return i, False, k0, 0, body, None
+        return None
+    if prev is None or prev.k != 'expr' or assign_k(prev) is None: return None
+    i, k0 = assign_k(prev)
+    c = strip(s.cond)
+    if s.k == 'while':
+        st = flat(s.body)
+        if not st or st[-1].k != 'expr' or strip(st[-1].e).k != 'incdec' or strip(st[-1].e).op != '++' or \
+                var_of(strip(st[-1].e).e) is not i: return None
+        if c.k == 'bin' and c.op == '<' and var_of(c.l) is i and kval(c.r) is not None:
+            return i, True, k0, kval(c.r), st[:-1], prev
+        return None
+    if s.k == 'do':
+        if c.k == 'bin' and c.op == '>' and kval(c.r) == 0 and strip(c.l).k == 'incdec' and strip(c.l).op == '--' and \
+                strip(c.l).prefix if hasattr(strip(c.l), 'prefix') else False:
+            pass
+        if c.k == 'bin' and c.op == '>' and kval(c.r) == 0 and strip(c.l).k == 'incdec' and strip(c.l).op == '--' and \
+                var_of(strip(c.l).e) is i and getattr(strip(c.l), 'pre', getattr(strip(c.l), 'prefix', None)) in (True, None):
+            return i, False, k0, 0, flat(s.body), prev
+    return None
+
+def walk_loop(F, s):
+    """WALK_LOOP (rule 04's docstring): True when the loop was written"""
+    import re as _r
+    if getattr(F, 'l2', None) and getattr(F, 'l2_ivloop', None) is s: return False
+    p = walk_parts(F, s)
+    if p is None: return False
+    i, up, k0, k1, body, prev = p
+    if i.kind != 'local' or i.ty.kind != 'int' or i.ty.size != 2 or i.addr_taken: return False
+    n = (k1 - k0) if up else k0
+    if n <= 0 or n > 0x7fff: return False
+    if s.k == 'do' and getattr(strip(strip(s.cond).l), 'op', None) != '--': return False
+    top = flat(F.f.body)
+    if any(uses_decl(x, i) for x in top[top.index(s) + 1:]): return False
+    bad = []; idx = []
+    def v(m, d):
+        if m.k in ('call', 'for', 'while', 'do', 'break', 'continue', 'return', 'switch', 'goto', 'label', 'asm'): bad.append(m)
+        if fpgen.is_fp_op(m) or has_helper_call(m): bad.append(m)
+        if m.k == 'index' and uses_decl(m.idx, i): idx.append(m)
+    for x in body: walk(x, v)
+    if bad or not idx: return False
+    arr = None; esz = None
+    for m in idx:
+        b = strip(m.base)
+        if b.k == 'decay': b = strip(b.e)
+        x = strip(m.idx)
+        while x.k == 'cast' and x.kind == 'IntegralCast': x = strip(x.e)
+        if not (x.k == 'load' and strip(x.e).k == 'var' and strip(x.e).decl is i): return False
+        if not (b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array' and (b.decl.ty.count or 0) > 0):
+            return False
+        if arr is None: arr = b.decl; esz = m.ty.size
+        if b.decl is not arr or m.ty.size != esz or esz not in (1, 2, 4): return False
+    nuse = []
+    for x in body: walk(x, lambda m, d: nuse.append(m) if m.k == 'var' and m.decl is i else None)
+    if len(nuse) != len(idx): return False                 # (i used other than as the index)
+    n0 = len(F.lines)
+    if prev is not None:                                   # the `i = K;` already written: ld R,K
+        R = getattr(i, 'reg', None)
+        if not R or R not in FAM or F.lines[-1] != '\t%s\t%s,%s' % ('ld', FAM[R][2], hx(k0)): return False
+        n0 -= 1
+    saved = list(F.lines); keep_eo = getattr(F, 'elem_ops', None); keep_ul = getattr(F, 'ulabel', 0)
+    was_dead = i in F.dead
+    F.dead.add(i)                                          # (the counter holds nothing: its register is free)
+    def undo():
+        F.lines[:] = saved; F.ulabel = keep_ul
+        if not was_dead: F.dead.discard(i)
+        return False
+    del F.lines[n0:]
+    bodyl = F.newulabel()
+    F.lines.append(bodyl + ':'); nb = len(F.lines)
+    F.elem_ops = dict(keep_eo or {}); F.elem_ops.update({id(m): '(XIY)' for m in idx})
+    from frontend import N
+    ok = False
+    try:
+        F.loops.append((None, lambda: None))
+        try: gen_stmt(F, N('block', body=body), False)
+        finally: F.loops.pop()
+        ok = True
+    except Unsupported:
+        ok = False
+    finally:
+        F.elem_ops = keep_eo
+    blines = F.lines[nb:]
+    def strip_ph(l): return (l or '').replace('(XIY)', '')
+    if ok and (any(cff_names(strip_ph(l), 'IY') for l in blines) or any((l or '').startswith(('\tcal', '\tret', '\tj\t[._]'))
+                                                                    for l in blines)):
+        ok = False
+    if ok and sum((l or '').count('(XIY)') for l in blines) != len(idx): ok = False   # (every access through the walk:
+                                                           #  rs_4_01_12_7 -Xr had 8 % gia[i] built from i's HL)
+    if ok:
+        for l in blines:
+            jm = _r.match(r'^\tj\t(?:\w+,)?(\S+)$', l or '')
+            if jm and not any(x == jm.group(1) + ':' for x in blines): ok = False
+    if not ok:
+        return undo()
+    lv = set()
+    for d in list(F.f.params) + list(F.f.decls):
+        r_ = getattr(d, 'reg', None)
+        if r_ and d is not i and d not in F.dead:
+            fam_ = r_[1:] if r_.startswith('X') else r_[1:] if r_.startswith('Q') else r_
+            lv.add(fam_ if fam_ in CFF_PARTS else r_)
+    used = {x for x in CFF_ORDER if any(cff_names(strip_ph(l), x) for l in blines)}
+    free = [x for x in CFF_ORDER if x not in used and x not in lv]
+    if len(free) < 2: return undo()
+    W, E = free[0], free[1]
+    S = next((x for x in CFF_ORDER if x != W and x not in lv), None)
+    if S is None: return undo()
+    if S != E and S in used and False: pass
+    if S != E: E2 = E
+    else: E2 = S
+    start = (k0 if up else k0) * esz
+    delta = n * esz
+    sym = '_%s' % arr.name + (' + %s' % hx(start) if start else '')
+    pre = ['\tlda\tX%s,%s' % (S, sym), '\tld\tX%s,X%s' % (W, S)]
+    if E2 == S and 1 <= delta <= 8: pre.append('\t%s\t%s,X%s' % ('inc' if up else 'dec', hx(delta), S))
+    else: pre.append('\tlda\tX%s,X%s%s%s' % (E2, S, '+' if up else '-', hx(delta)))
+    blines = [(l or '').replace('(XIY)', '(X%s)' % W) if l else l for l in blines]
+    stepped = False
+    if up:
+        last = max(t for t, l in enumerate(blines) if '(X%s)' % W in (l or ''))
+        if not any(_r.match(r'^L\d+:$', l or '') for l in blines[last + 1:]):
+            blines[last] = blines[last].replace('(X%s)' % W, '(X%s+:%d)' % (W, esz)); stepped = True
+    latch = [] if stepped else ['\t%s\t%s,X%s' % ('inc' if up else 'dec', hx(esz), W)]
+    latch += ['\tcp\tX%s,X%s' % (W, E2), '\tj\t%s,%s' % ('ult' if up else 'ugt', bodyl)]
+    F.lines[n0:] = pre + [bodyl + ':'] + blines + latch
+    F.dead.add(i)
+    return True
+
 def gen_loop(F, s, last):
     """for / while / do (regalloc_notes.md, loop shapes); labels: exit first, then body"""
     cl = getattr(F, 'counted', {}).get(id(s))
@@ -13616,6 +13993,7 @@ def gen_loop(F, s, last):
         F.lines.append(body + ':')
         F.loops.append((exitl, lambda: body)); gen_stmt(F, s.body, False); flush_pops(F); F.loops.pop()
         F.emit('sub', '%s,0x1' % I); F.emit('j', 'ge,%s' % body); F.lines.append(exitl + ':'); return
+    if WALK_LOOP and F.opt and walk_loop(F, s): return     # (a counter that only indexes one array: a walking pointer)
     if s.k == 'for' and s.init is not None:
         gen_stmt(F, s.init, False)
         if getattr(F, 'u1_down', None) is s: F.lines[-1] += '\t;u1'   # oc_down: dec 0x1,DE / j L1 is not merged
@@ -14782,6 +15160,18 @@ def leaf_l2(F):
             if x[0] == 'loop':
                 for y in x[1]:
                     if y[0] == 'use' and y[1] in before: across.add(y[1])
+        if L2_DEAD_INIT_ACROSS:                          # (a local the first thing after the call assigns, unread:
+            for d_ in list(across):                      #  its value before the call is dead -- rstmt rs_3_06_09_4:
+                if getattr(d_, 'kind', None) != 'local': continue   # int i = ji; v0(); i = 0; while .. -> WA)
+                first_ = None
+                for x in seq[ci + 1:]:
+                    if x[0] == 'branch':
+                        y_ = x
+                        while y_[0] == 'branch': y_ = y_[3]
+                        if y_[0] in ('use', 'def') and y_[1] is d_: first_ = 'branch'; break
+                        continue
+                    if x[0] in ('use', 'def') and x[1] is d_: first_ = x[0]; break
+                if first_ == 'def': across.discard(d_); L2_DIA_FIRED[0] = True
     pos = {}; k = [0]
     def order(n, dep):
         k[0] += 1
@@ -17905,6 +18295,7 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
         fa = adecl or getattr(f, 'adecl_attr', False)        # an __adecl function in a cdecl file (__SBRK.C: .sbrk)
         name = ('.' if fa else '_') + f.name
         GUARD_LONG_FIRED[0] = False                       # (GUARD_DIV_LONG fired in this function)
+        L2_DIA_FIRED[0] = False
         try:
             import pickle as _pickle, sys as _sys
             _sys.setrecursionlimit(max(_sys.getrecursionlimit(), 200000))
@@ -18004,6 +18395,15 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                 import re as _rl
                 full = ['\tlda\t' + l[4:] if _rl.match(r'^\tld\tX(WA|BC|DE|HL|IX|IY|IZ),0x([0-9a-f]+)$', l) and
                         9 <= int(l.rsplit('0x', 1)[1], 16) <= 0xffff else l for l in full]
+            if LOOP_ADDR_HOIST and opt != 'none' and alt_ is None:   # -O: an aggregate's constant address used on
+                agg_ = set()                               # every iteration is hoisted (rs_3_00_12_4)
+                walk(f.body, lambda n_, d_: agg_.add(n_.decl.name) if n_.k == 'var' and n_.decl.kind == 'global' and
+                     n_.decl.ty.kind in ('array', 'struct') else None)
+                full = loop_addr_hoist(full, agg_)
+            if CTR_FIRST_FREE and opt != 'none' and alt_ is None:   # -O: a counter its loop body does not read
+                full = ctr_first_free(full)                # takes the first free register (rs_3_06_09_4: WA)
+            if L2_DIA_FIRED[0] and ctr_clobbered(full):     # (the L2 allocator does not see the body's temporaries:
+                raise Unsupported('a loop counter overwritten in its body')   # rs_3_04_07_6 muls WA over i in WA)
             if AND_FF_LD:                                  # an AND that keeps the low byte (word) of a register and
                 for k_ in range(len(full)):                # whose flags nothing reads clears the high part with ld
                     m_ = re.match(r'^\tand\t(?:(WA|BC|DE|HL),0xff|X(WA|BC|DE|HL|IX|IY|IZ),0xffff)$', full[k_])   # (random
